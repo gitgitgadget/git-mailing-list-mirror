@@ -2,136 +2,206 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 716721F42D
-	for <e@80x24.org>; Thu, 31 May 2018 21:45:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE6311F42D
+	for <e@80x24.org>; Thu, 31 May 2018 21:49:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751058AbeEaVpM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 May 2018 17:45:12 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:42567 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750732AbeEaVpL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 May 2018 17:45:11 -0400
-Received: by mail-wr0-f195.google.com with SMTP id w10-v6so34378402wrk.9
-        for <git@vger.kernel.org>; Thu, 31 May 2018 14:45:11 -0700 (PDT)
+        id S1750739AbeEaVtI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 May 2018 17:49:08 -0400
+Received: from mail-yb0-f194.google.com ([209.85.213.194]:42734 "EHLO
+        mail-yb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750726AbeEaVtH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 May 2018 17:49:07 -0400
+Received: by mail-yb0-f194.google.com with SMTP id d123-v6so8093009ybh.9
+        for <git@vger.kernel.org>; Thu, 31 May 2018 14:49:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=A5Him+o6cP3Fae1xt+b61vtpaCnk6w/WWKhe5wXSBV8=;
-        b=l3zT2Z3Z0kJqxsec19lev/GffvuO11P1bK1Rm5y8w218mNZbs5U10wcZKSPyCYuX1n
-         i51/BIBCQQjUP+3GFDG4W/JEnCpbKTMNyUK9bmO4EmLlxbhI3YDDdWSooc4vWWr8Z/OS
-         p1eUv8TmuATQd3bhA1iCuheRVQ/0tEo81S/JxoVT7J8d27MuoGQSiDshaqYIiy6XEIyA
-         jXRHOyV0ATnpPjuii+O9JxoLiveVN6lBH33+AfoOWMOjZsTr9sJv9wkX2vwznVMxxIxV
-         c4xc952fNpB6RydUIkRaj3JHpSOjUnGfksZI+aJvj261/E80qiwz71wmt5sRsmOtIarE
-         JOQQ==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=8BPIGUyifnPzCYbREHKpXdVlDlsFkKhYuWhopR8Xk2Q=;
+        b=V77jD+BPkX2SC5s2GKDJTqEU8WaFBGCeZNrA3YU/nmFd6TYhKR2lBtT0bCiHfAvdaU
+         tlqEpn/5/xolZyF8hf3xtxN4+t2nrBhAQc+uYqip//PEtTsohsKLhigOBPALhjiDm4fF
+         8zxYwUPIaCNrvoGqnRuBe+MPgQNehqKx4Ud52SnJ/wV7sJUZVvqFdFmeTOtovH/UgKDM
+         7GO7NLXAiYbkCq36ghF+NE7o2altuOtnImRRmdVN9M9SeQsUkovQhUCQC6BhYvUSXOeF
+         xX1T0W19qJ18O18CxaIo+0esD05PTz4E1BXkoALK0NdjN9GQKlZ1doXhKXmuGT4yDknK
+         leQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=A5Him+o6cP3Fae1xt+b61vtpaCnk6w/WWKhe5wXSBV8=;
-        b=Q+Fs4XbuJFzhOlejMzaOTY9Y2nuWeeOjMpg9BuhpUyo80zRUrcAVbCHYv3w2zY8Z76
-         WAtJkCJAMA8iMc7p1kkMkSe91Wa4yDcUkbDpX1KOEf1AIweVrK+pGoA7O7fNwvmYupsW
-         +Lzt+uqMq1xfiK0rvNmjkzF6wAqPUqUwmSrfKigRzi1eP3C8IXZL2Ib/D22dpZ5eip/k
-         edvGi8i8XZixVIre8QyVcJ158pcDmW+3Ng2snAOlQtJJVdfDnQ7IayNRQ2R1y3ax/MzY
-         vVu2DE7ujb5rcaQRbVQJxMs9iUaUQSuPg6FkRK6HwZx4BBDrGD7A6xVstLp7O8dPx/ln
-         4sEQ==
-X-Gm-Message-State: ALKqPwc/pX1VtHeSjLqJaeFRBX/5k2k7IVATEBNJy3ZbbJMpBv1XnOkO
-        mxWVjOovzvUvuxDiwqHjx7Y=
-X-Google-Smtp-Source: ADUXVKLqNdkKfi7MKDwu9lEwiqihAFXEcpEyxu7JXAj5hMLBlIPovceFgiWB3NMaXk4kr38G8pHuMA==
-X-Received: by 2002:adf:b710:: with SMTP id l16-v6mr6877250wre.115.1527803110487;
-        Thu, 31 May 2018 14:45:10 -0700 (PDT)
-Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id 67-v6sm411756wmw.32.2018.05.31.14.45.09
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 31 May 2018 14:45:09 -0700 (PDT)
-Date:   Thu, 31 May 2018 22:45:46 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=8BPIGUyifnPzCYbREHKpXdVlDlsFkKhYuWhopR8Xk2Q=;
+        b=bQ5uXRkolPm9qT2BM3LK/iZ+usLKvXRub7W+iJV4rRQ1CG6tYVUq+dAm23dKeypnnx
+         z3C5LRxodtO3Eq2oUCIearMDcMlOl6xiTUToPr+xQCPKsZeDEJYGjJ8DE49+4R0MbQGZ
+         3YutzoqAQFmVvVvDI2OkV57wN/3cByBpPNEtNEKLjEMjowEQSj4I4Lb5WtstvV0AsyqK
+         Filfl8ZRYKh48bk0wbdyZ4X2TSGA3QKL1Ni0hA0XxvUjwpyUKf6DUGV2tL16PE3ExXTr
+         4tdeHy0i0CMBtWaXpjXsoUQX5uE9CFZek8BJ6p2pdaHO4buNnlUXYpd0cCXhBHW9CtoY
+         kXCA==
+X-Gm-Message-State: APt69E2jOit32drSHgu0wwT/f0IZxFkVdWm1oe4Ajg5py4BVYOSaor6Z
+        XSB1XE05jYP/xdmyeQEojIH2kuuPg9GDReesh0gjHegDfYM=
+X-Google-Smtp-Source: ADUXVKJZEOBzMcNpEl+mn6fH4e3fwcDyRHcTwhxtm1zEMFkBFJneKOW4RaZrz84L5O9xGtOyWImQ3jIKHxHkQdpgF8E=
+X-Received: by 2002:a25:6853:: with SMTP id d80-v6mr1779218ybc.515.1527803346604;
+ Thu, 31 May 2018 14:49:06 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 2002:a25:e87:0:0:0:0:0 with HTTP; Thu, 31 May 2018 14:49:06 -0700 (PDT)
+In-Reply-To: <20180531195252.29173-10-avarab@gmail.com>
+References: <87a7sg9sjz.fsf@evledraar.gmail.com> <20180531195252.29173-1-avarab@gmail.com>
+ <20180531195252.29173-10-avarab@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 31 May 2018 14:49:06 -0700
+Message-ID: <CAGZ79kZKaZq+bqFTwe+Y3FU-1DHPjzNrvMNU=DM10EyOXxZJVw@mail.gmail.com>
+Subject: Re: [PATCH v4 9/9] checkout & worktree: introduce checkout.defaultRemote
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Thomas Gummerer <t.gummerer@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 3/9] checkout.[ch]: move struct declaration into *.h
-Message-ID: <20180531214546.GC26159@hank.intra.tgummerer.com>
-References: <87a7sg9sjz.fsf@evledraar.gmail.com>
- <20180531195252.29173-4-avarab@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180531195252.29173-4-avarab@gmail.com>
-User-Agent: Mutt/1.9.5 (2018-04-13)
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/31, Ævar Arnfjörð Bjarmason wrote:
-> Move the tracking_name_data struct used in checkout.c into its
-> corresponding header file. This wasn't done in 7c85a87c54 ("checkout:
-> factor out functions to new lib file", 2017-11-26) when checkout.[ch]
-> were created, and is more consistent with the rest of the codebase.
+Hi =C3=86var,
 
-We seem to have plenty of structs defined in '.c' files, if they are
-only needed there.  Its use also seems to be single purpose for the
-callback data, so I'm a bit puzzled how having this in a header file
-instead of the .c file would be helpful?
+Sorry for chiming in late. I have a couple of thoughts:
 
-I feel like having only the "public" part in the header file also
-helps developers that are just looking for documentation of the
-functions they are looking at, by having less things to go through,
-that they wouldn't necessarily care about.
+>     (
+>         cd /tmp &&
+>         rm -rf tbdiff &&
+>         git clone git@github.com:trast/tbdiff.git &&
+>         cd tbdiff &&
+>         git branch -m topic &&
+>         git checkout master
+>     )
+>
+> That will output:
+>
+>     Branch 'master' set up to track remote branch 'master' from 'origin'.
+>     Switched to a new branch 'master'
 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->  checkout.c | 7 -------
->  checkout.h | 7 +++++++
->  2 files changed, 7 insertions(+), 7 deletions(-)
-> 
-> diff --git a/checkout.c b/checkout.c
-> index bdefc888ba..8d68f75ad1 100644
-> --- a/checkout.c
-> +++ b/checkout.c
-> @@ -3,13 +3,6 @@
->  #include "refspec.h"
->  #include "checkout.h"
->  
-> -struct tracking_name_data {
-> -	/* const */ char *src_ref;
-> -	char *dst_ref;
-> -	struct object_id *dst_oid;
-> -	int unique;
-> -};
-> -
->  static int check_tracking_name(struct remote *remote, void *cb_data)
->  {
->  	struct tracking_name_data *cb = cb_data;
-> diff --git a/checkout.h b/checkout.h
-> index 4cd4cd1c23..04b52f9ffe 100644
-> --- a/checkout.h
-> +++ b/checkout.h
-> @@ -3,6 +3,13 @@
->  
->  #include "cache.h"
->  
-> +struct tracking_name_data {
-> +	/* const */ char *src_ref;
-> +	char *dst_ref;
-> +	struct object_id *dst_oid;
-> +	int unique;
-> +};
-> +
->  /*
->   * Check if the branch name uniquely matches a branch name on a remote
->   * tracking branch.  Return the name of the remote if such a branch
-> -- 
-> 2.17.0.290.gded63e768a
-> 
+I thought master is already there after the clone operation and
+you'd merely switch back to the local branch that was created at
+clone time?
+
+    $ git clone git@github.com:trast/tbdiff.git && cd tbdiff
+    $ git branch
+    * master
+    $ cat .git/config
+...
+[branch "master"]
+    remote =3D origin
+    merge =3D refs/heads/master
+
+But the observation is right, we get that message. When do we
+do the setup for the master branch specifically?
+
+>
+> But as soon as a new remote is added (e.g. just to inspect something
+> from someone else) the DWIMery goes away:
+>
+>     (
+>         cd /tmp &&
+>         rm -rf tbdiff &&
+>         git clone git@github.com:trast/tbdiff.git &&
+>         cd tbdiff &&
+>         git branch -m topic &&
+>         git remote add avar git@github.com:avar/tbdiff.git &&
+>         git fetch avar &&
+>         git checkout master
+>     )
+>
+> Will output (without the advice output added earlier in this series):
+>
+>     error: pathspec 'master' did not match any file(s) known to git.
+>
+> The new checkout.defaultRemote config allows me to say that whenever
+> that ambiguity comes up I'd like to prefer "origin", and it'll still
+> work as though the only remote I had was "origin".
+>
+> Also adjust the advice.checkoutAmbiguousRemoteBranchName message to
+> mention this new config setting to the user, the full output on my
+> git.git is now (the last paragraph is new):
+>
+>     $ ./git --exec-path=3D$PWD checkout master
+>     error: pathspec 'master' did not match any file(s) known to git.
+>     hint: The argument 'master' matched more than one remote tracking bra=
+nch.
+>     hint: We found 26 remotes with a reference that matched. So we fell b=
+ack
+>     hint: on trying to resolve the argument as a path, but failed there t=
+oo!
+>     hint:
+>     hint: Perhaps you meant fully qualify the branch name? E.g. origin/<n=
+ame>
+
+s/meant fully/meant to fully/
+s/? E.g./?\nFor example/
+
+>     hint: instead of <name>?
+
+In builtin/submodule--helper.c there is get_default_remote() which also
+hardcodes "origin". I think that is a safe thing to do.
+
+>     hint:
+>     hint: If you'd like to always have checkouts of 'master' prefer one r=
+emote,
+>     hint: e.g. the 'origin' remote, consider setting checkout.defaultRemo=
+te=3Dorigin
+>     hint: in your config. See the 'git-config' manual page for details.
+
+his new setting elevates one remote over all others, which may
+be enough for most setups and not confusing, too.
+Consider the following:
+
+    git clone https://kernel.googlesource.com/pub/scm/git/git && cd git
+    git remote add gitster https://github.com/gitster/git
+    git remote add interesting-patches https://github.com/avar/git
+    git remote add my-github https://github.com/stefanbeller/git
+
+    git checkout master
+
+This probably means I want to have origin/master (from kernel.org)
+
+    git checkout ab/checkout-implicit-remote
+
+This probably wants to have it from gitster/ (as it is not found on kernel.=
+org);
+I am not sure if it would want to look at interesting-patches/ that mirrors
+github, but probably if it were not to be found at gitster.
+
+So maybe we rather want a setup to give a defined priority for
+the search order:
+
+  git config dwim.remoteSearchOrder origin gitster avar
+
+Stepping back a bit, there is already an order in the config file
+for the remotes, and that order is used for example for 'fetch --all'.
+
+I wonder if we want to take that order? (Or are the days of hand
+editing the config over and this is too arcane? We would need a
+config command to re order remotes). Then we could just have a
+boolean switch to use the config order on ambiguity.
+Although you might want to have a different order for fetching
+and looking for the right checkout.
+
+> I considered splitting this into checkout.defaultRemote and
+> worktree.defaultRemote, but it's probably less confusing to break our
+> own rules that anything shared between config should live in core.*
+> than have two config settings, and I couldn't come up with a short
+> name under core.* that made sense (core.defaultRemoteForCheckout?).
+
+  core.dwimRemote ? It's a bit cryptic, though.
+
+> See also 70c9ac2f19 ("DWIM "git checkout frotz" to "git checkout -b
+> frotz origin/frotz"", 2009-10-18) which introduced this DWIM feature
+> to begin with, and 4e85333197 ("worktree: make add <path> <branch>
+> dwim", 2017-11-26) which added it to git-worktree.
+
+Stefan
