@@ -8,58 +8,61 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F22E31F51C
-	for <e@80x24.org>; Thu, 31 May 2018 07:42:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 541F41F51C
+	for <e@80x24.org>; Thu, 31 May 2018 07:46:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754029AbeEaHmH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 May 2018 03:42:07 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:32822 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753934AbeEaHmG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 May 2018 03:42:06 -0400
-Received: by mail-wr0-f194.google.com with SMTP id k16-v6so4699685wro.0
-        for <git@vger.kernel.org>; Thu, 31 May 2018 00:42:06 -0700 (PDT)
+        id S1754015AbeEaHp7 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 May 2018 03:45:59 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:36121 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753957AbeEaHp6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 May 2018 03:45:58 -0400
+Received: by mail-wm0-f66.google.com with SMTP id v131-v6so32948893wma.1
+        for <git@vger.kernel.org>; Thu, 31 May 2018 00:45:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version:content-transfer-encoding;
-        bh=WKZYHNutWmQjGEFPyaS/O0nqsjAtEMKi/nW5VnlQuwo=;
-        b=i/nx9S/n8SxKHal4yo5XfhmKVlixQElaAtFnFito4wHoXfrd+JrPQIMMf1rzYlj9Fy
-         6R0NI4M6oAxAgtEF+QS97L5hf+QQo8YTR/rWJOCSFcjyZoyV9nmjKLrHHQgBoF1CuRB0
-         sNtvsCe4EVDRYmkmm3f7rc/1l6eWB1bPSzX8SddDSHUEZ5oBkJWCu+se7FHuTRQ+1y5m
-         /MQ+MkGItgqanGrUwFxDd1KE1CQu5nIFdSSdm5L9VqoDI/150CieU3uags9fYPFSI63M
-         orW3JQi6J4VWI7+ii1/c0tsU0bgiIPGyf9BtmbePID0N32Uo6Ea/+F8lL35uPHxiH2Pv
-         wj9g==
+        bh=B08nti+yA/YyJ34JQXtgQRRfVo1upie31OlWkiQr7T4=;
+        b=b54clX0AI5up/eY7gjfXwJYpnKx7Y6gZy6a3qWnFc8h/DstO8sNq8TVyNsOKHsP3IG
+         cPOLgKPuyFczaGEtXVTghaghPDhUiSFeDpl0sFMZEWZvGp4jcyAPQIm0+0vP2y0/lzQq
+         lBV3XgY1XuP1EI2QT8v9P+KAbPOMxzu+E6D52GUGTsTM/JRYWCq9dlKhCBcAMbjYEDhF
+         OBbNrEA9uc6va+3RtGzSQ2amWdIXb3oju75PoefNkhp2k5cui13KbdfOI+1Z6dKi0JhG
+         jr8fcZv39oluykTvHpUzDxyoxOKHIlDFSkljfhmh0mb/FX89g9xMNwG7taWIWTCEq7BH
+         uZVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=WKZYHNutWmQjGEFPyaS/O0nqsjAtEMKi/nW5VnlQuwo=;
-        b=mbnSptw7xMAqr6wQOYy6//cjIiNzhZB+LsA6d65UH3ruWRThoHk78KeWvB7glhv/6H
-         L642sloAta2faKOpDexHf4RrVFB3JVDWTMOC2Wk3dLvXOEstlCupC9WLcRMcpgwoTVBK
-         cbs6CY/GK7C7nvrluVwCOCwwtR9jJWwMy9oyzMGRxgTbQStwZVKptn52C/kvX79bQVc3
-         zso1dyoLeF1RaE1fMH42TvngKnBLMhVU/UCf88LElEmMNvDVdf03j38O7pDdYORO1VD7
-         MczccpOjQX1YuqHVak14RG4QiT3dB9IIjgEBsYKPU9BkI3Pf4yAP3IfetRQNM/M9KLkc
-         YnPw==
-X-Gm-Message-State: ALKqPwdBLwtxho1kdx9jGMjLalCT6lEAvHk/M4Le0NAC22K2xFI4kKIp
-        wEk5j5UvzCMYifRMCzH4Nm4=
-X-Google-Smtp-Source: ADUXVKK+eYU5Ymyq5BDuRh3OFrqWuj7A8aLeYkplDt1QHXyV/z7SZHGfvI/5nHWqjqQdZs40s2P9Hw==
-X-Received: by 2002:adf:8854:: with SMTP id e20-v6mr4863737wre.30.1527752525479;
-        Thu, 31 May 2018 00:42:05 -0700 (PDT)
+        bh=B08nti+yA/YyJ34JQXtgQRRfVo1upie31OlWkiQr7T4=;
+        b=anUBhaUR7IFOaoRmkU4JYCqViPdoUnZKnFuMISIdfXShrn5/i54RYY8B1bBbkSMAX9
+         T+I+LuoZ3VppZ08MhiKb8qxr7zTS0SLHP1SlL15HPRpfkg9Uk4ZEQwkRaBKxGnpCAVgU
+         gAg6uwCrOJj2KwrGi2BHP81tvFoPJekLfPP1yLMMv9W/ODxGhByzXDU4tmNiUwbgmgtJ
+         Og+eJkiNomkMQ3Azlacp4CDHPJ8fpJ48TgDW5GeADooR/9K4FYZnNuShGNa9fcgTqUVK
+         0K/chCcy3DKQZY4q1ESiDbQDU8RHDaFIeWf3zOpjg9eICe0HuZZa/3c6MsO1PB0ou0Lr
+         +61Q==
+X-Gm-Message-State: ALKqPwfJVNmRyvCeuGC0yC+Ac+oxKabV7VDQ09iKuzbn7g5mX14lHTX+
+        8pAcFzxfcUNf2X2HnqicHh2bipSw
+X-Google-Smtp-Source: ADUXVKJUP52Ys2O9C5akqgDkEWqP0GWpyi4omGuLvDGwz9xh5qkq+30la0hVnzkKkAQDntGCrBthBg==
+X-Received: by 2002:a1c:8012:: with SMTP id b18-v6mr3323242wmd.13.1527752756616;
+        Thu, 31 May 2018 00:45:56 -0700 (PDT)
 Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id 72-v6sm35916683wrb.22.2018.05.31.00.42.04
+        by smtp.gmail.com with ESMTPSA id o138-v6sm566011wmg.10.2018.05.31.00.45.54
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 31 May 2018 00:42:04 -0700 (PDT)
+        Thu, 31 May 2018 00:45:54 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Is origin/HEAD only being created on clone a bug? #leftoverbits
-References: <87bmcyfh67.fsf@evledraar.gmail.com> <xmqqo9gyey13.fsf@gitster-ct.c.googlers.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkg?= =?utf-8?B?Tmfhu41j?= Duy 
+        <pclouds@gmail.com>, Thomas Gummerer <t.gummerer@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3] checkout & worktree: introduce checkout.implicitRemote
+References: <CAPig+cR59-OEDL7GDNZF2v7a-NOrUH2zC9EwDvuog8QLRtvKTA@mail.gmail.com> <20180524194704.936-1-avarab@gmail.com>
 User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <xmqqo9gyey13.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 31 May 2018 09:42:03 +0200
-Message-ID: <87bmcw9sqc.fsf@evledraar.gmail.com>
+In-reply-to: <20180524194704.936-1-avarab@gmail.com>
+Date:   Thu, 31 May 2018 09:45:52 +0200
+Message-ID: <87a7sg9sjz.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
@@ -69,75 +72,107 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Wed, May 30 2018, Junio C Hamano wrote:
+On Thu, May 24 2018, Ævar Arnfjörð Bjarmason wrote:
 
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
->
->> If you make an initial commit and push to a remote repo "origin", you
->> don't get a remote origin/HEAD reference, and a "fetch" won't create it
->> either.
->> ...
->> Some code spelunking reveals remote_head_points_at, guess_remote_head()
->> etc. in builtin/clone.c. I.e. this is special-cased as part of the
->> "clone".
->
-> Correct.  Originally, there was *no* way in the protocol to carry
-> the information, so the code always had to guess.  The point of
-> setting origin/HEAD was mostly so that you can say "log origin.."
-> and rely on it getting dwimmed down to "refs/remotes/%s/HEAD..",
-> and it wasn't a common practice to interact with multiple remotes
-> with remote tracking branches (integrator interacting with dozens
-> of remotes, responding to pull requests using explicit URL but
-> without configured remotes was not uncommon), so it was sufficient
-> for "git clone" to create it, and "git remote add" did not exist
-> back then anyway.
->
-> There are two aspects in my answer to your question.
->
->  - If we create additional remote (that is, other than the one we
->    get when we create a repository via "clone", so if your "origin"
->    is from "git init there && cd there && git remote add origin", it
->    does count in this category), should we get a remote-tracking
->    symref $name/HEAD so that we can say "log $name.."?
->
->    We absolutely should.  We (eh, rather, those who added "remote
->    add"; this was not my itch and I am using "royal we" in this
->    sentence) just did not bother to and I think it is a bug that you
->    cannot say "log $name.."  Of course, it is just a "git symbolic-ref"
->    away to make it possible locally, so it is understandable if
->    "remote add" did not bother to.
->
->  - When we fetch from a remote that has refs/remotes/$name/HEAD, and
->    if the protocol notices that their HEAD today is pointing to a
->    branch different from what our side has, should we repoint ours
->    to match?
->
->    I am leaning against doing this, but mostly out of superstition.
->    Namely, I feel uneasy about the fact that the meaning of "log
->    ..origin" changes across a fetch in this sequence:
->
->      log ..origin && fetch origin && log ..origin
->
->    Without repointing origin/HEAD, two occurrences of "log ..origin"
->    both means "how much ahead the primary branch we have been
->    interested in from this remote is, relative to our effort?".
->    Even though we fully expect that two "log ..origin" would report
->    different results (after all, that is the whole point of doing
->    another one after "fetch" in such a sequence like this example),
->    our question is about the same "primary branch we have been
->    interested in".  But once fetch starts messing with where
->    origin/HEAD points at, that would no longer be the case, which is
->    why I am against doing something magical like that.
+>  struct tracking_name_data {
+>  	/* const */ char *src_ref;
+>  	char *dst_ref;
+>  	struct object_id *dst_oid;
+>  	int unique;
+> +	const char *implicit_remote;
+> +	char *implicit_dst_ref;
+>  };
 
-We already have to deal with this special case of origin/HEAD being
-re-pointed in a repository that we "clone", so we would just do whatever
-happens to a repository that's cloned.
+There's a bug here that I'll fix in a v3. We need to have a implicit_*
+variant for dst_oid as well. Currently this will be buggy and check out
+origin/<branch>, but then check the index out to the tree of whatever
+the last <someremote>/<branch> we iterated over was.
 
-I.e. the "clone" sets the origin/HEAD up as a one-off, and then keeps
-updating it on the basis of updating existing refs. We'd similarly set
-it up as a one-off if we ever "fetch" and notice that the ref doesn't
-exist yet, and then we'd update it in the same way we update it now.
+Easiy fix and I already have it locally, I just want to improve some of
+the testing. I missed it because in my tests I'd just re-add the same
+remote again, so the trees were the same.
 
-So this seems like a non-issue to me as far as me coming up with some
-patch to one-off write the origin/HEAD on the first "fetch", or am I
-missing something?
+>  static int check_tracking_name(struct remote *remote, void *cb_data)
+> @@ -20,6 +23,8 @@ static int check_tracking_name(struct remote *remote, void *cb_data)
+>  		free(query.dst);
+>  		return 0;
+>  	}
+> +	if (cb->implicit_remote && !strcmp(remote->name, cb->implicit_remote))
+> +		cb->implicit_dst_ref = xstrdup(query.dst);
+>  	if (cb->dst_ref) {
+>  		free(query.dst);
+>  		cb->unique = 0;
+> @@ -31,13 +36,21 @@ static int check_tracking_name(struct remote *remote, void *cb_data)
+>
+>  const char *unique_tracking_name(const char *name, struct object_id *oid)
+>  {
+> -	struct tracking_name_data cb_data = { NULL, NULL, NULL, 1 };
+> +	const char *implicit_remote = NULL;
+> +	struct tracking_name_data cb_data = { NULL, NULL, NULL, 1, NULL, NULL };
+> +	if (!git_config_get_string_const("checkout.implicitremote", &implicit_remote))
+> +		cb_data.implicit_remote = implicit_remote;
+>  	cb_data.src_ref = xstrfmt("refs/heads/%s", name);
+>  	cb_data.dst_oid = oid;
+>  	for_each_remote(check_tracking_name, &cb_data);
+>  	free(cb_data.src_ref);
+> -	if (cb_data.unique)
+> +	free((char *)implicit_remote);
+> +	if (cb_data.unique) {
+> +		free(cb_data.implicit_dst_ref);
+>  		return cb_data.dst_ref;
+> +	}
+>  	free(cb_data.dst_ref);
+> +	if (cb_data.implicit_dst_ref)
+> +		return cb_data.implicit_dst_ref;
+>  	return NULL;
+>  }
+> diff --git a/t/t2024-checkout-dwim.sh b/t/t2024-checkout-dwim.sh
+> index 3e5ac81bd2..da6bd74bbc 100755
+> --- a/t/t2024-checkout-dwim.sh
+> +++ b/t/t2024-checkout-dwim.sh
+> @@ -68,6 +68,16 @@ test_expect_success 'checkout of branch from multiple remotes fails #1' '
+>  	test_branch master
+>  '
+>
+> +test_expect_success 'checkout of branch from multiple remotes succeeds with checkout.implicitRemote #1' '
+> +	git checkout -B master &&
+> +	test_might_fail git branch -D foo &&
+> +
+> +	git -c checkout.implicitRemote=repo_a checkout foo &&
+> +	test_branch foo &&
+> +	test_cmp_rev remotes/repo_a/foo HEAD &&
+> +	test_branch_upstream foo repo_a foo
+> +'
+> +
+>  test_expect_success 'checkout of branch from a single remote succeeds #1' '
+>  	git checkout -B master &&
+>  	test_might_fail git branch -D bar &&
+> diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
+> index 2240498924..271a6413f0 100755
+> --- a/t/t2025-worktree-add.sh
+> +++ b/t/t2025-worktree-add.sh
+> @@ -402,6 +402,24 @@ test_expect_success '"add" <path> <branch> dwims' '
+>  	)
+>  '
+>
+> +test_expect_success '"add" <path> <branch> dwims with checkout.implicitRemote' '
+> +	test_when_finished rm -rf repo_upstream repo_dwim foo &&
+> +	setup_remote_repo repo_upstream repo_dwim &&
+> +	git init repo_dwim &&
+> +	(
+> +		cd repo_dwim &&
+> +		git remote add repo_upstream2 ../repo_upstream &&
+> +		git fetch repo_upstream2 &&
+> +		test_must_fail git worktree add ../foo foo &&
+> +		git -c checkout.implicitRemote=repo_upstream worktree add ../foo foo
+> +	) &&
+> +	(
+> +		cd foo &&
+> +		test_branch_upstream foo repo_upstream foo &&
+> +		test_cmp_rev refs/remotes/repo_upstream/foo refs/heads/foo
+> +	)
+> +'
+> +
+>  test_expect_success 'git worktree add does not match remote' '
+>  	test_when_finished rm -rf repo_a repo_b foo &&
+>  	setup_remote_repo repo_a repo_b &&
