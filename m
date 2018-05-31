@@ -6,88 +6,74 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 46C0E1F42D
-	for <e@80x24.org>; Thu, 31 May 2018 05:44:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CED2F1F42D
+	for <e@80x24.org>; Thu, 31 May 2018 05:44:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753760AbeEaFn6 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 May 2018 01:43:58 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57414 "HELO cloud.peff.net"
+        id S1753851AbeEaFoy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 May 2018 01:44:54 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57426 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751660AbeEaFn5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 May 2018 01:43:57 -0400
-Received: (qmail 12544 invoked by uid 109); 31 May 2018 05:43:57 -0000
+        id S1751037AbeEaFoy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 May 2018 01:44:54 -0400
+Received: (qmail 12569 invoked by uid 109); 31 May 2018 05:44:54 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 31 May 2018 05:43:57 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 31 May 2018 05:44:54 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9373 invoked by uid 111); 31 May 2018 05:44:08 -0000
+Received: (qmail 9394 invoked by uid 111); 31 May 2018 05:45:05 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 31 May 2018 01:44:08 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 31 May 2018 01:45:05 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 31 May 2018 01:43:55 -0400
-Date:   Thu, 31 May 2018 01:43:55 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 31 May 2018 01:44:52 -0400
+Date:   Thu, 31 May 2018 01:44:52 -0400
 From:   Jeff King <peff@peff.net>
-To:     Kevin Bracey <kevin@bracey.fi>
-Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: Weird revision walk behaviour
-Message-ID: <20180531054355.GA17344@sigill.intra.peff.net>
-References: <CAM0VKjkr71qLfksxZy59o4DYCM-x=podsCf6Qv+PzZuSe1gXZw@mail.gmail.com>
- <20180523173246.GA10299@sigill.intra.peff.net>
- <20180523173523.GB10299@sigill.intra.peff.net>
- <869a4045-0527-3dcf-33b3-90de2a45cd51@bracey.fi>
- <cb1d7c86-a989-300a-01d2-923e9c29e834@bracey.fi>
- <20180528220651.20287-1-szeder.dev@gmail.com>
- <20180529210434.GA3857@sigill.intra.peff.net>
- <97644280-2187-d314-37ce-2c79935a63bc@bracey.fi>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] branch: issue "-l" deprecation warning after pager starts
+Message-ID: <20180531054451.GB17344@sigill.intra.peff.net>
+References: <1527174618.10589.4.camel@gmail.com>
+ <20180524192214.GA21535@sigill.intra.peff.net>
+ <20180524193105.GB21535@sigill.intra.peff.net>
+ <xmqqh8mwpkgu.fsf@gitster-ct.c.googlers.com>
+ <20180525024002.GA1998@sigill.intra.peff.net>
+ <xmqqd0xknmf1.fsf@gitster-ct.c.googlers.com>
+ <xmqq1sdzno3g.fsf@gitster-ct.c.googlers.com>
+ <20180529212029.GB7964@sigill.intra.peff.net>
+ <20180529212142.GA8767@sigill.intra.peff.net>
+ <xmqq7enlg8ov.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <97644280-2187-d314-37ce-2c79935a63bc@bracey.fi>
+In-Reply-To: <xmqq7enlg8ov.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 30, 2018 at 11:20:40AM +0300, Kevin Bracey wrote:
+On Wed, May 30, 2018 at 11:48:32AM +0900, Junio C Hamano wrote:
 
-> On 30/05/2018 00:04, Jeff King wrote:
-> > 
-> > Do we even need to do the parent rewriting here? By definition those
-> > parents aren't interesting, and we're TREESAME to whatever is in
-> > treesame_parents. So conceptually it seems like we just need a flag "I
-> > found a treesame parent", but we only convert that into a TREESAME flag
-> > if there are no relevant parents.
+> Jeff King <peff@peff.net> writes:
 > 
-> I think it's necessary to make the rules consistent. To mark the commit as
-> TREESAME here when it's not TREESAME to all its parents would be
-> inconsistent with the definition of the TREESAME flag used everywhere else:
+> >> -		if (list) {
+> >> -			warning("the '-l' option is an alias for '--create-reflog' and");
+> >> -			warning("has no effect in list mode. This option will soon be");
+> >> -			warning("removed and you should omit it (or use '--list' instead).");
+> >> -		} else {
+> >> -			warning("the '-l' alias for '--create-reflog' is deprecated;");
+> >> -			warning("it will be removed in a future version of Git");
+> >> -		}
+> >> -	}
+> >> -
+> >
+> > Oh, and did we want to mark these for translation on the step 0 branch?
+> > Obviously that would impact this hunk.
 > 
-> * Original definition: "A commit is TREESAME if it is treesame to any
-> parent"
-> * d0af66 definition: "A commit is TREESAME if it is treesame to all parents"
-> * Current 4d8266 definition: "A commit is TREESAME if it is treesame to all
-> relevant parents; if no relevant parents then if it is treesame to all
-> (irrelevant) parents."
-> 
-> The current problem is that the node is not marked TREESAME, but that's
-> consistent with the definition. I think we do have to rewrite the commit so
-> it is TREESAME as per the definition. Not flag it as TREESAME in violation
-> of it.
+> I was hoping that we can settle the "multi-line message translation
+> that can potentially result in different number of lines" issue
+> before we have to mark the above for translation ;-)
 
-If there are zero parents (neither relevant nor irrelevant), is it still
-TREESAME? I would say in theory yes. So what I was proposing would be to
-rewrite the parents to the empty set.
-
-But anyway, I agree with you that the first-treesame-parent strategy is
-not any more complex than the boolean, and is probably less likely to
-cause unintended headaches later on.
-
-What next here? It looks like we have a proposed solution. Do you want
-to try to work up a set of tests based on what you wrote earlier?
-
-I'd also love to hear from Junio as the expert in this area, but I think
-he's been a bit busy with maintainer stuff recently. So maybe I should
-just be patient. :)
+Yeah, right after saying that I realized it would create horrible
+translation-lego. I agree we should punt for now.
 
 -Peff
