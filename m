@@ -2,174 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B6CF1F51C
-	for <e@80x24.org>; Thu, 31 May 2018 07:24:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 45BB61F51C
+	for <e@80x24.org>; Thu, 31 May 2018 07:32:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754030AbeEaHYL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 May 2018 03:24:11 -0400
-Received: from mail-pl0-f68.google.com ([209.85.160.68]:37910 "EHLO
-        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754026AbeEaHYH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 May 2018 03:24:07 -0400
-Received: by mail-pl0-f68.google.com with SMTP id c11-v6so12695483plr.5
-        for <git@vger.kernel.org>; Thu, 31 May 2018 00:24:06 -0700 (PDT)
+        id S1753957AbeEaHc3 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 May 2018 03:32:29 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:55240 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753846AbeEaHc2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 May 2018 03:32:28 -0400
+Received: by mail-wm0-f67.google.com with SMTP id f6-v6so52095108wmc.4
+        for <git@vger.kernel.org>; Thu, 31 May 2018 00:32:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=/9mpLWiDuIxaVJDwU6rRWWD6FLBkSrkYAcg5ctriDu4=;
-        b=U5DgOBkObG5d3ShRf+ZkT6YI275gJsFoFAdqc8pQlDgNm6LpmY2+UrpnchrleQbuT9
-         RHoyX0sL08oy7nFhULjoYfpQkE9o+EcVMEZVyieEQFwAUm1MEms7lVZ0d/J88GPGwX0y
-         An3hncAGwglrePKCvuWBMdFhlUAJJuZKlnwuLwMrSOfYudLO/lpfDe8FVf4VAxyGZmkq
-         at/+kHCHYqGugUYp+bImvA4uMDd1qn3JbgCapA8aPPfkAHrOVhYU7YYIRWf7nMAoPbYP
-         9Bwy0lrs8997UGmO+9ejwD3JS6uZpkZ/JePR/FHF/dROR90hgm5LWRljt8UI86JLSuzz
-         /U8Q==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=Oegfd0I3gezD3TQMJ535VlqueQTKuWtaxdcgtOhJjJA=;
+        b=EifnsMsNb7v2epkLlkuxawOEZDkSJ4bEQhc+afBISqZRo+/Tnxjga3ff/xzHK+VnU+
+         3kOkQe3gLbgNpV25n1EA2J/I2SfUh0tYIY4MZrguRNdLTm01xJLuO8HN4Cqrie7tcZol
+         njt3fJtOmRMTQRZIsSub0GfPhxcjsIdT9f4hx6CE2diREAMasqavvGewdk9SIht9yg1C
+         mjjr/BN//gqmU0O/Mural2nyxTRJskjmy3mkUyxRbI6cSJFh9yOws3vcGKkK0XWwNb9k
+         DkJfqV4vhSeaQyO2iHIVJD2ZZws/P1XpB4/eRK7JRrGuaX8QrfvZU1mRDmypvs2YXMC3
+         SrsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=/9mpLWiDuIxaVJDwU6rRWWD6FLBkSrkYAcg5ctriDu4=;
-        b=NHA6oXRWXdBOx044aNnstA3k+WoNrBOqFrTcWTUhdcYbRu6voQVIYBKDrfJkSfA6S5
-         NJBvQifWqSqHI28+ODoxmxf/iL+qfdvqw/7usKHUzsyqw640M9PHwNM2X8AzXXXvPyAf
-         r98YfcY8PHVPbhAPPaVctlOryVT1LqSzZOgeX5NPWi1Va4/bo2Np1yj7j5tHqRJCLBkR
-         aRogJD6tq7fUFBEN7f7aSnTsihjphmWrjDKb7e04HH1NvuTSYvPK3X0l9cGqOzYpZuyn
-         n4yBsRkcUIl/tXIjsxfSvZEOIGaylKuFUYNoWXYGaBD1Sd28KOkZ8fwbhBpAbBXr7yNg
-         HIUg==
-X-Gm-Message-State: ALKqPwfhIZRUGYmjF3qkaemULgW8vkr+R/u5f/oTpDqr79AOp+Xzy8A+
-        jBvAodXzEkiYynuAuYsggVw=
-X-Google-Smtp-Source: ADUXVKJ8PvVuXz4BlsX2rRO8rdoNrsVyvfi8PSGhqZUUE2T/XXIHXK5bzHwtuSp9C18zJXqoZt/7gw==
-X-Received: by 2002:a17:902:189:: with SMTP id b9-v6mr5986778plb.204.1527751446469;
-        Thu, 31 May 2018 00:24:06 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id n10-v6sm83510662pfj.68.2018.05.31.00.24.05
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=Oegfd0I3gezD3TQMJ535VlqueQTKuWtaxdcgtOhJjJA=;
+        b=iooJM1eIR3JmLfLAVtWTeX/9BuYAH5cFwnA8rYzfF64oX3jZOl2rxkFmZ4wVObqoH8
+         kUGScrp14TFhzshcfdlJMLNdNR5Ip7vPliuEHaDjOb0zqIj8xIhKCipJk6Q3zRJOyEyE
+         GfzXf86iqfvWn4BXF/ukMnqC/6h7L/kI3H3E46OxLObF5EzL8Z+c+Zh0/6W5kT2IoztV
+         3TX6sk10brmJdv2+6cEM3JdsHeipyPMEOSd0weK9E5c6NBA+tpB4hIONQTVe+PFeCDPu
+         8cnQaxBudAyXy2e2NU/aRw5hsHYMqUIGXXqN1PcJfkgx3QcCfXE61n85tskzDeQBTNd5
+         bVtw==
+X-Gm-Message-State: ALKqPweRh6RiuHMCNZQo5KhgiY/QInZhNCYEBo1xBB3QGA/q/DsatQta
+        pEFJbZmEYh4OCAg725egkug=
+X-Google-Smtp-Source: ADUXVKL1qtClZki3OX/mp8yuYWJIo/YY187K6iJWt7hfLXW8+PT1Gw3rLPOsDOjN8Y3ODTMnvObvWg==
+X-Received: by 2002:a50:b14c:: with SMTP id l12-v6mr6543816edd.65.1527751947040;
+        Thu, 31 May 2018 00:32:27 -0700 (PDT)
+Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
+        by smtp.gmail.com with ESMTPSA id b4-v6sm20239983edr.29.2018.05.31.00.32.25
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 31 May 2018 00:24:05 -0700 (PDT)
-Date:   Thu, 31 May 2018 00:23:39 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] fetch: do not pass ref-prefixes for fetch by exact SHA1
-Message-ID: <20180531072339.GA43435@aiede.svl.corp.google.com>
-References: <20180516225823.235426-1-bmwill@google.com>
- <20180516234822.182663-1-bmwill@google.com>
- <20180516234822.182663-2-bmwill@google.com>
+        Thu, 31 May 2018 00:32:25 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 3/4] config doc: elaborate on what transfer.fsckObjects does
+References: <20180524190214.GA21354@sigill.intra.peff.net>
+        <20180524193516.28713-1-avarab@gmail.com>
+        <20180524193516.28713-4-avarab@gmail.com>
+        <CAPig+cSd32O3ELaHxLD0_yRFmjMAo2k-jApopJmuEt7Z6W40-g@mail.gmail.com>
+        <xmqq4liwpggs.fsf@gitster-ct.c.googlers.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <xmqq4liwpggs.fsf@gitster-ct.c.googlers.com>
+Date:   Thu, 31 May 2018 09:32:24 +0200
+Message-ID: <87d0xc9t6f.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180516234822.182663-2-bmwill@google.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When v2.18.0-rc0~10^2~1 (refspec: consolidate ref-prefix generation
-logic, 2018-05-16) factored out the ref-prefix generation code for
-reuse, it left out the 'if (!item->exact_sha1)' test in the original
-ref-prefix generation code. As a result, fetches by SHA-1 generate
-ref-prefixes as though the SHA-1 being fetched were an abbreviated ref
-name:
 
- $ GIT_TRACE_PACKET=1 bin-wrappers/git -c protocol.version=2 \
-	fetch origin 12039e008f9a4e3394f3f94f8ea897785cb09448
-[...]
- packet:        fetch> ref-prefix 12039e008f9a4e3394f3f94f8ea897785cb09448
- packet:        fetch> ref-prefix refs/12039e008f9a4e3394f3f94f8ea897785cb09448
- packet:        fetch> ref-prefix refs/tags/12039e008f9a4e3394f3f94f8ea897785cb09448
- packet:        fetch> ref-prefix refs/heads/12039e008f9a4e3394f3f94f8ea897785cb09448
- packet:        fetch> ref-prefix refs/remotes/12039e008f9a4e3394f3f94f8ea897785cb09448
- packet:        fetch> ref-prefix refs/remotes/12039e008f9a4e3394f3f94f8ea897785cb09448/HEAD
- packet:        fetch> 0000
+On Fri, May 25 2018, Junio C Hamano wrote:
 
-If there is another ref name on the command line or the object being
-fetched is already available locally, then that's mostly harmless.
-But otherwise, we error out with
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+>
+>>> +will instead be left unreferenced in the repository. That's considered
+>>> +a bug, and hopefully future git release will implement a quarantine
+>>> +for the "fetch" side as well.
+>>
+>> If this was a "BUGS" section in a man-page, the above might be less
+>> scary. In this context, however, I wonder if it makes sense to tone it
+>> down a bit:
+>>
+>>     On the fetch side, malformed objects will instead be left
+>>     unreferenced in the repository. (However, in the future, such
+>>     objects may be quarantined for "fetch", as well.)
+>
+> I had an impression that nobody else sayd it is considered as a
+> bug.  Do we need to say it in this series?  I'd rather not--with or
+> without such a future modification (or lack of plan thereof),
+> teaching the fetch side to pay attention to the various fsck tweaks
+> is an improvement.
 
- fatal: no matching remote head
+I changed this in v2 to tone it down, but given what Jeff's mentioned in
+https://public-inbox.org/git/20180531060259.GE17344@sigill.intra.peff.net/
+I'm inclined to bring back some stronger wording for it. Something like:
 
-since the server did not send any refs we are interested in.  Filter
-out the exact_sha1 refspecs to avoid this.
+    Due to the non-quarantine nature of the fetch.fsckObjects
+    implementation it can not be relied upon like receive.fsckObjects
+    can. As objects are unpacked they're written to the object store, so
+    there can be cases where malicious objects get introduced even
+    though the "fetch" fail, only to have a subsequent "fetch" succeed
+    because only new incoming objects are checked, not those that have
+    already been written to the store.
 
-This patch adds a test to check this behavior that notices another
-behavior difference between protocol v0 and v2 in the process.  Add a
-NEEDSWORK comment to clear it up.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Here's the change described in
-https://public-inbox.org/git/20180531010739.GB36515@aiede.svl.corp.google.com/
-as a proper patch.
-
-Thoughts of all kinds welcome, as always.
-
- refspec.c             |  2 ++
- refspec.h             |  4 ++++
- t/t5516-fetch-push.sh | 19 +++++++++++++++++++
- 3 files changed, 25 insertions(+)
-
-diff --git a/refspec.c b/refspec.c
-index c59a4ccf1e..ada7854f7a 100644
---- a/refspec.c
-+++ b/refspec.c
-@@ -202,6 +202,8 @@ void refspec_ref_prefixes(const struct refspec *rs,
- 		const struct refspec_item *item = &rs->items[i];
- 		const char *prefix = NULL;
- 
-+		if (item->exact_sha1)
-+			continue;
- 		if (rs->fetch == REFSPEC_FETCH)
- 			prefix = item->src;
- 		else if (item->dst)
-diff --git a/refspec.h b/refspec.h
-index 01b700e094..3a9363887c 100644
---- a/refspec.h
-+++ b/refspec.h
-@@ -42,6 +42,10 @@ void refspec_clear(struct refspec *rs);
- int valid_fetch_refspec(const char *refspec);
- 
- struct argv_array;
-+/*
-+ * Determine what <prefix> values to pass to the peer in ref-prefix lines
-+ * (see Documentation/technical/protocol-v2.txt).
-+ */
- void refspec_ref_prefixes(const struct refspec *rs,
- 			  struct argv_array *ref_prefixes);
- 
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index f4d28288f0..a5077d8b7c 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -1121,6 +1121,25 @@ test_expect_success 'fetch exact SHA1' '
- 	)
- '
- 
-+test_expect_success 'fetch exact SHA1 in protocol v2' '
-+	mk_test testrepo heads/master hidden/one &&
-+	git push testrepo master:refs/hidden/one &&
-+	git -C testrepo config transfer.hiderefs refs/hidden &&
-+	check_push_result testrepo $the_commit hidden/one &&
-+
-+	mk_child testrepo child &&
-+	git -C child config protocol.version 2 &&
-+
-+	# make sure $the_commit does not exist here
-+	git -C child repack -a -d &&
-+	git -C child prune &&
-+	test_must_fail git -C child cat-file -t $the_commit &&
-+
-+	# fetching the hidden object succeeds by default
-+	# NEEDSWORK: should this match the v0 behavior instead?
-+	git -C child fetch -v ../testrepo $the_commit:refs/heads/copy
-+'
-+
- for configallowtipsha1inwant in true false
- do
- 	test_expect_success "shallow fetch reachable SHA1 (but not a ref), allowtipsha1inwant=$configallowtipsha1inwant" '
--- 
-2.17.1.1185.g55be947832
-
+    This is considered a bug and will likely be fixed in future versions
+    of git. For now the paranoid need to find some way to emulate the
+    quarantine environment if they'd like the same protection as
+    "push". E.g. in the case of an internal mirror do the mirroring in
+    two steps, one to fetch the untrusted objects, and then do a second
+    "push" (which will use the quarantine) to another internal repo, and
+    have internal clients consume this pushed-to repository, or embargo
+    internal fetches and only allow them once a full "fsck" has run (and
+    no new fetches have happened in the meantime).
