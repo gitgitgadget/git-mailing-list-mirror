@@ -2,120 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D9CF11F42D
-	for <e@80x24.org>; Thu, 31 May 2018 19:29:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 235C21F42D
+	for <e@80x24.org>; Thu, 31 May 2018 19:33:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754155AbeEaT3t (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 May 2018 15:29:49 -0400
-Received: from mail-yb0-f195.google.com ([209.85.213.195]:37304 "EHLO
-        mail-yb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754067AbeEaT3t (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 May 2018 15:29:49 -0400
-Received: by mail-yb0-f195.google.com with SMTP id h141-v6so758691ybg.4
-        for <git@vger.kernel.org>; Thu, 31 May 2018 12:29:48 -0700 (PDT)
+        id S1754213AbeEaTd1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 May 2018 15:33:27 -0400
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:55111 "EHLO
+        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754210AbeEaTdV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 May 2018 15:33:21 -0400
+Received: by mail-wm0-f52.google.com with SMTP id f6-v6so55949976wmc.4
+        for <git@vger.kernel.org>; Thu, 31 May 2018 12:33:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=sUONfJoRp8kJMi5Zl8HzBrXK8uVjxV/UJuyZ1qJPrrg=;
-        b=OyG3XvZaku/KLMLja0P/phbXHwiXXUaCyOC8pTFseM8pEaE053dkKYNPUqB18pu8Mr
-         ZxkGrmiDTzYm1PkktaY/6WbITDIRmsIFDTOdv6dfzkrFADgryVtLeXT5yduD3PCWq2I2
-         oMUGpT6FsCVsmtMDDAS25uEMHIT5fKXTV0ZN9thmsV8F7To4CBFYFtG9YXKoribSK3JL
-         pvFrShGiK/AxB+hltsOiSptU/75cuy9qFN9AMlwoiTDlZp6bbFvY9xe3NBffPApipZbv
-         KT7fS7uNdE4E6fwnQJ8528lgvG/NCJDD9LQB/H4UsLdYuE7xhPzvBrtJJVXTXX3PmMAw
-         UMew==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:openpgp:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=zZx9CgPMpFTkt+CTufj8zDSZxRvAV71WykmfHDTqk9k=;
+        b=oHbChd9YP3IqfP7L6GLyyTqZXMAIjV0KccFvRMnC60HffzxxNQumnO+m2QaRpz2Pw8
+         o8lElFKrvBPdoGQblllmzTS5VDr+WVtbIkW3dBLY2NWY1+RAfm5cYrmHACdxvO4PnfR9
+         W1c2U+NZ7Dr98e0Cx7X4m2DKV/lYVL/1vtX+jx7ziQP3FjIUlF3fIj2BWx/GvcIqqlRm
+         PRAjdD3am3PQCu1HheguSGks3EclQoFzFZ828oYoTWdhQKX4u+TwJKz612yQewQsWceJ
+         4pdFnHXPXG8nBt8UOpfDW6IhNemmC/YPl8XvLcyuwAre31FuclOsDx35Zcm+uqM+Xi2a
+         4uzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=sUONfJoRp8kJMi5Zl8HzBrXK8uVjxV/UJuyZ1qJPrrg=;
-        b=biib5m9XMmBrvwR34QQJEMeZUo+1eg0KQATgIvV+a+6Q/RmxOpWE7CXJ1kjiFCHQlb
-         XJqfDupNmNRzdeivSvSzXVqYdhM/xPi/bD/h11FIO4RyCzQJKTF5DBMpOrayEElIOPZy
-         SRmYg5d6FGZzNbkuC/pz7SAve7D8VCCGZwi9pjxIFku/WbsgeZXLs1O0wSg+9p5IHwMJ
-         DoUWTwaTG9XXuabASHF9x+WyqrYgm5/yZc9p5rEwI5+r4oBvEV9IDle2yZYscr1Q3269
-         77AZwXA7penflPc+st9u0Ae+W/Lyi6hgicaPpw8vzgZlPNcIAtdQ19aNL9Sn9iBQOcSV
-         y8MQ==
-X-Gm-Message-State: ALKqPwesq2tZHJQYR+127JnHkqd2oQ+OkiEebgOiDKd+XTnLdwSrVexb
-        3Bz0rMS83F0ldu0tpE2g25YbJncUTlcChR/+3jnZAw==
-X-Google-Smtp-Source: ADUXVKIcA+TzXh5nlCEEE0rKLUW4Yg3xGLzpQ6pcPg1pngpgAv92zfnnFZaVu2USgK9BN79DB+kg4WmBhIOoSmaE9tw=
-X-Received: by 2002:a25:31c3:: with SMTP id x186-v6mr4603773ybx.352.1527794987984;
- Thu, 31 May 2018 12:29:47 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
+         :date:user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=zZx9CgPMpFTkt+CTufj8zDSZxRvAV71WykmfHDTqk9k=;
+        b=SLVHHVXdOrtqkxoDduqAlOW0pVmEAnGd/jutsACsf4J57wbrUBqTQeTLkFM8Od+O1B
+         6wD/pR7JlOXcPuVFh2lj0nXg7BsCMNitd9MSl/9rGHwXCQd7yntASpbOtsv/hMibaBrY
+         PqTEtj9AFka3HMUCZAXNgPuAzXaMYiR1VBF9vluCIJLrl8/E2es5ho+1gypjbUS4a8v9
+         WxCgTWKcMhVHVynjbhHkz4I5fCTBj0jzTbQzKFjWUrNB85yXc45hKx0uwwDkIVzF3+ok
+         Ox6oMnQh+cwjcZb65z5ZjR1p8oVC6rRdip0VYT0tY8nLCYvIRWn6wzrvcJWb/GIm5H68
+         MsOw==
+X-Gm-Message-State: ALKqPwfTRpQofpzxAcg9oLTXPRoy2Bs88R/sIDRUgUrehTc0wTDI/ipT
+        zDuBm4B4V693k7J5Hav/s2txyzS8
+X-Google-Smtp-Source: ADUXVKJ9ediF4xjWy+dx1Wl4n6Niy3egwb9AVSwvbceyruBaIA2lQQIPdAjc+DTX1t09B+Lp/520gw==
+X-Received: by 2002:a50:aec8:: with SMTP id f8-v6mr9110655edd.72.1527795200099;
+        Thu, 31 May 2018 12:33:20 -0700 (PDT)
+Received: from [192.168.0.104] (AToulouse-658-1-184-117.w86-199.abo.wanadoo.fr. [86.199.39.117])
+        by smtp.gmail.com with ESMTPSA id z44-v6sm10574038edb.72.2018.05.31.12.33.18
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 31 May 2018 12:33:19 -0700 (PDT)
+Subject: Re: [GSoC][PATCH 0/2] rebase -i: rewrite append_todo_help() in C
+To:     Stefan Beller <sbeller@google.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20180531110130.18839-1-alban.gruin@gmail.com>
+ <a6d6e5c1-e7ea-1131-c798-9d5e44603d87@talktalk.net>
+ <CAGZ79kZ7HiyZTS40XPwpjN3PBbdW0ETN=dfzeE-90Rp+irXnSA@mail.gmail.com>
+From:   Alban Gruin <alban.gruin@gmail.com>
+Openpgp: preference=signencrypt
+Message-ID: <2bf2d178-d286-c566-f68e-79c70fe66dbf@gmail.com>
+Date:   Thu, 31 May 2018 21:33:18 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-Received: by 2002:a25:e87:0:0:0:0:0 with HTTP; Thu, 31 May 2018 12:29:47 -0700 (PDT)
-In-Reply-To: <20180531174024.124488-6-dstolee@microsoft.com>
-References: <20180531174024.124488-1-dstolee@microsoft.com> <20180531174024.124488-6-dstolee@microsoft.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 31 May 2018 12:29:47 -0700
-Message-ID: <CAGZ79kZp3SG8D_aap7k7TDUaGsA7_8ufhkiJK7VR4nGQohVDDQ@mail.gmail.com>
-Subject: Re: [RFC PATCH 5/6] fetch: destroy commit graph on shallow parameters
-To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "jnareb@gmail.com" <jnareb@gmail.com>,
-        "stolee@gmail.com" <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAGZ79kZ7HiyZTS40XPwpjN3PBbdW0ETN=dfzeE-90Rp+irXnSA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr-FR
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 31, 2018 at 10:41 AM, Derrick Stolee <dstolee@microsoft.com> wrote:
-> The commit-graph feature is not compatible with history-rewriting
-> features such as shallow clones.
+Hi Stefan,
 
-I associate "history rewriting" with changing objects in the history.
-For example interactive rebase or the BFG cleaner[1] / filter-branch
-to remove certain commits from other commits as parents.
-This history rewriting leads to different sha1s, and the commit
-graph feature is compatible with that in the sense that you can
-add all the new sha1s /commits to the graph and prune out the
-old unreferenced commits.
+Le 31/05/2018 à 20:44, Stefan Beller a écrit :
+> On Thu, May 31, 2018 at 10:48 AM, Phillip Wood
+> <phillip.wood@talktalk.net> wrote:
+>> Hi Alban, it's great to see you working on this
+>>
+>> On 31/05/18 12:01, Alban Gruin wrote:
+>>> This series rewrites append_todo_help() from shell to C. This is part
+>>> of the effort to rewrite interactive rebase in C.
+>>>
+>>> The first commit rewrites append_todo_help() in C (the C version
+>>> covers a bit more than the old shell version), adds some parameters to
+>>> rebase--helper, etc.
+>>
+>> I've had a read of the first patch and I think it looks fine, my only
+>> comment would be that the help for '--edit-todo' is a bit misleading at
+>> the moment as currently it's just a flag to tell rebase-helper that the
+>> todo list is being edited rather than actually implementing the
+>> functionality to edit the list (but hopefully that will follow in the
+>> future).
+> 
+> Would you have better suggestions for the name of the flag?
+> Of the top of my head:
+>   --write-edit-todo
+>   --hint-todo-edit
+>   --include-todo-edit-hint
+> not sure I like these names, though they seem to reflect the
+> nature of that flag a little bit better.
+> 
 
-Shallow clones are not rewriting history IMHO, as the sha1s do
-not change. What changes is the assumption of presence of
-the parent commits (which makes it hard to compute the
-generation number), by the grafting trick, that "overlays" (?)
-history.
+As my next patch series will probably be about rewriting edit-todo in C,
+do you really think I should rename the flag?
 
-This is more of a nit, though.
+> If you feel strongly, I'd rather see Alban drop this second patch and
+> move on instead of waiting for our argument to settle. ( I do not feel
+> strongly about it, but put it out as a suggestion as that seemed like
+> it would lead to a better end state for the project).
+> 
 
-[1] https://rtyley.github.io/bfg-repo-cleaner/
+Okay, so I drop this patch and reroll the other?
 
-> When running a 'git fetch' with
-> any of the shallow/unshallow options, destroy the commit-graph
-> file and override core.commitGraph to be false.
 
-We do that *before* the actual fetch happens such that
-the improved negotiation of the future cannot even try to
-benefit from generation numbers?
+Cheers,
+Alban
 
-We do it at fetch time instead of other local operations
-as that is an entry point to commit-graph incompatible
-features. Would this also be needed in clone?
-
-I was about to ask if a more fine grained inclusion to
-lookup_commit would make sense, but that is explicitely
-called out in the cover letter as 'too hard for now'.
-
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  builtin/fetch.c | 6 ++++++
->  1 file changed, 6 insertions(+)
->
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index af896e4b74..2001dca881 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -1452,6 +1452,12 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
->                 }
->         }
->
-> +       if (update_shallow || depth || deepen_since || deepen_not.nr ||
-> +           deepen_relative || unshallow || update_shallow || is_repository_shallow()) {
-> +               destroy_commit_graph(get_object_directory());
-> +               core_commit_graph = 0;
