@@ -2,115 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 241C61F42D
-	for <e@80x24.org>; Thu, 31 May 2018 19:41:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B9B7C1F42D
+	for <e@80x24.org>; Thu, 31 May 2018 19:53:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754159AbeEaTld (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 May 2018 15:41:33 -0400
-Received: from mail-yw0-f173.google.com ([209.85.161.173]:41343 "EHLO
-        mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754076AbeEaTlc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 May 2018 15:41:32 -0400
-Received: by mail-yw0-f173.google.com with SMTP id s201-v6so6193597ywg.8
-        for <git@vger.kernel.org>; Thu, 31 May 2018 12:41:32 -0700 (PDT)
+        id S1754101AbeEaTxV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 May 2018 15:53:21 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:34273 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753983AbeEaTxU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 May 2018 15:53:20 -0400
+Received: by mail-wm0-f67.google.com with SMTP id q4-v6so3980526wmq.1
+        for <git@vger.kernel.org>; Thu, 31 May 2018 12:53:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=zI+JgtZpuOYVCcEqS7GEbcSfssYXIcm7yeEQjg+/TDY=;
-        b=rbA4wQ4RWO0dIlMa1hC2ZltA4LJDJ0R5GshXchpP7g8f8O0Fd2xGInknPVTT1w3ZHu
-         Go59/Zo3/TqU+diMxg1KrahPAyCDgqwaXopDS6ecDx0CGz5knBzb0X2WDjLMGAY3KADl
-         YIr0R8Ke71naCggQCojMLxXzfIN/F1iu9nNEMcr6+Ia/UmKQKHDAwLxchIvLj608uhpe
-         E4TqScVHwm2/OHIIaOZdqTIPR+W+27FqEjaBLBoiAaY3JcFjaASY7yDFZI9XuS3amZI7
-         kejvyRPKILz69FsGOUYh9+Q7ndF68DAl7thk0Uz8Ee72MWHs4LBRk9cXQ/1kuO/F8YiY
-         SmNQ==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=eOly7nmEsQY8QRNU4Sre/ERzbADW7ADfLWW6G7L8T9g=;
+        b=PY6JZQgqSDaPj0aBBTnGRelmkJvoDJ7Hrwmrov5tvl9yO+w2HZcV5azGaEiwbLJLna
+         p9bRCwaWLELv7J9ZOUC5NhTD5poMU1EVg75Huj+RAE1tt79Vx4a1PwMa+Yrf6uoE3XVV
+         RP264ScEsTwGTBByASkN0u1j1P3x8oazE7gQo55FZ5Nd+iMh8qQyJpA+YdpRq2//f85h
+         6HY4Oa/zr9HAGZx8dg8T70xJ/kPOeUSeQvq/ODMXoagNDUGyh/h/uP6wpmAXbi7Wqmwg
+         KqUHgP/Pj1EMoBfIifxbtEO86XZPlXHpMS1Vd91TeqgRnZH/zPWKMQadzINw4k0ugl1P
+         j6iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=zI+JgtZpuOYVCcEqS7GEbcSfssYXIcm7yeEQjg+/TDY=;
-        b=ia9H3L0ckRarYcFp/+0PXXUFUPi6vRrvjpBeJQn0u+Ps26RP4Sj7Ql1kyTAjQ07w7i
-         MGMeLZUIFpbtokTDBbKgET/XNdvpgPHn6inhmOg+QUWzhVTyoHNgpIfsseU0jRXW0KVx
-         xgrOO1C1vMKqRls+lq5whU0Wj7jEPPnCBFMbfe6gjt4h6YNoRAOqefPLk9mqJwj4k3bf
-         jvxoSO/yrnaK5j5UPo/O4piGRqraXaTN7j/h8QrTxkQWWLBGn6tlTiMVgMDyz07X6FbI
-         TKDYUkQ5Y2CQ1lb0Xk82e9ZYJxdGuLQmnRrt7cfuc5JUZJuya4pzcMQl+tVK3oR0Ue0u
-         eS2g==
-X-Gm-Message-State: APt69E3bvdi78vXWtPuEdmhwXIr3TSmlLra9LEoapCGqSvcs5BEHlHfS
-        usLVlWa22sfJwTYWx7vB+MamETaz6m5zts/1pPgBM0X2
-X-Google-Smtp-Source: ADUXVKIfrImU6kcuLXdajX/FT5hkUsHrSS5H2aTSlaDrVbvlL60uZJ1Vv5AvigW5pC/tOLmY6S5MKTvAeYCrQYW5s8s=
-X-Received: by 2002:a81:4d43:: with SMTP id a64-v6mr1255597ywb.33.1527795691257;
- Thu, 31 May 2018 12:41:31 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=eOly7nmEsQY8QRNU4Sre/ERzbADW7ADfLWW6G7L8T9g=;
+        b=X1WLHAjw8jzXBPDQiAJX1CP59gv3psLT7bqz0HoJgVNfGfr86ruKbVYwa/J8ugMFJ6
+         o4Qlnbuk3sHGgTluTSA9JKW/5f9ucB+LyRJjjCmHK2ujPzzklM9xwv1EZNpR4SZtdEev
+         v6yBK9k3CT7oYp0C1M2S58ZBpashqEQKXHTNaUY6BFX8yPsobGvsDrl+Y/W5eIfdcyoB
+         siT7a/6N2DecOjNMJ6Pe5oI9fJTfkSOYN306w+HGTk9n6HcYwcWFkzEzf5I0gM3S3CzH
+         +5gUKZx5nnzkHSCIRtMsBT9TKnz2cgfSKa6i47+8qWNXSKbbEdod8Im2EOulwUP1k2nb
+         mmCQ==
+X-Gm-Message-State: ALKqPwfNNVc3xHR2NIEuyvbiuckcS+BDDoXpMJwR6GI/xCh3ywptokQg
+        ICrrxobUNwtMLvFY07WkLXo3xvuN
+X-Google-Smtp-Source: ADUXVKKkmeMNbSG7/jr+ahRIuswCXnHq14DPsxQOtdQ+fup7mbCuRoImnwhjnAejOgLdMgkVPmZdiA==
+X-Received: by 2002:a1c:d546:: with SMTP id m67-v6mr825936wmg.117.1527796398966;
+        Thu, 31 May 2018 12:53:18 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id l10-v6sm19809118wrm.29.2018.05.31.12.53.17
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 31 May 2018 12:53:17 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Thomas Gummerer <t.gummerer@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v4 0/9] ambiguous checkout UI & checkout.defaultRemote
+Date:   Thu, 31 May 2018 19:52:43 +0000
+Message-Id: <20180531195252.29173-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.17.0.290.gded63e768a
+In-Reply-To: <87a7sg9sjz.fsf@evledraar.gmail.com>
+References: <87a7sg9sjz.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: by 2002:a25:e87:0:0:0:0:0 with HTTP; Thu, 31 May 2018 12:41:30 -0700 (PDT)
-In-Reply-To: <2bf2d178-d286-c566-f68e-79c70fe66dbf@gmail.com>
-References: <20180531110130.18839-1-alban.gruin@gmail.com> <a6d6e5c1-e7ea-1131-c798-9d5e44603d87@talktalk.net>
- <CAGZ79kZ7HiyZTS40XPwpjN3PBbdW0ETN=dfzeE-90Rp+irXnSA@mail.gmail.com> <2bf2d178-d286-c566-f68e-79c70fe66dbf@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 31 May 2018 12:41:30 -0700
-Message-ID: <CAGZ79kbj=6FPHYR==kwWyv8DaA5SkhO6jGffAXOi=8Wcn5pL5Q@mail.gmail.com>
-Subject: Re: [GSoC][PATCH 0/2] rebase -i: rewrite append_todo_help() in C
-To:     Alban Gruin <alban.gruin@gmail.com>
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 31, 2018 at 12:33 PM, Alban Gruin <alban.gruin@gmail.com> wrote=
-:
-> Hi Stefan,
->
-> Le 31/05/2018 =C3=A0 20:44, Stefan Beller a =C3=A9crit :
->> On Thu, May 31, 2018 at 10:48 AM, Phillip Wood
->> <phillip.wood@talktalk.net> wrote:
->>> Hi Alban, it's great to see you working on this
->>>
->>> On 31/05/18 12:01, Alban Gruin wrote:
->>>> This series rewrites append_todo_help() from shell to C. This is part
->>>> of the effort to rewrite interactive rebase in C.
->>>>
->>>> The first commit rewrites append_todo_help() in C (the C version
->>>> covers a bit more than the old shell version), adds some parameters to
->>>> rebase--helper, etc.
->>>
->>> I've had a read of the first patch and I think it looks fine, my only
->>> comment would be that the help for '--edit-todo' is a bit misleading at
->>> the moment as currently it's just a flag to tell rebase-helper that the
->>> todo list is being edited rather than actually implementing the
->>> functionality to edit the list (but hopefully that will follow in the
->>> future).
->>
->> Would you have better suggestions for the name of the flag?
->> Of the top of my head:
->>   --write-edit-todo
->>   --hint-todo-edit
->>   --include-todo-edit-hint
->> not sure I like these names, though they seem to reflect the
->> nature of that flag a little bit better.
->>
->
-> As my next patch series will probably be about rewriting edit-todo in C,
-> do you really think I should rename the flag?
+v4 started as a simple bug-fix for this one-part series, but since
+it's not going to make 2.18.0 at this point I thought I'd do some more
+work on it. Comments on patches below:
 
-If you reroll, you could think of doing that. If you have the next series
-prepared already that build on top, it may not be worth it.
+Ævar Arnfjörð Bjarmason (9):
+  checkout tests: index should be clean after dwim checkout
 
->> If you feel strongly, I'd rather see Alban drop this second patch and
->> move on instead of waiting for our argument to settle. ( I do not feel
->> strongly about it, but put it out as a suggestion as that seemed like
->> it would lead to a better end state for the project).
->>
->
-> Okay, so I drop this patch and reroll the other?
+Tests that would have revealed the bug in v3.
 
-Sure, but maybe give Philip some time to react?
+  checkout.h: wrap the arguments to unique_tracking_name()
+  checkout.[ch]: move struct declaration into *.h
+
+Boring moving code around.
+
+  checkout.[ch]: introduce an *_INIT macro
+
+Make checkout.h have a TRACKING_NAME_DATA_INIT for its struct.
+
+  checkout.[ch]: change "unique" member to "num_matches"
+  checkout: pass the "num_matches" up to callers
+  builtin/checkout.c: use "ret" variable for return
+
+Refactoring with no changes yet to make subsequent changes smaller.
+
+  checkout: add advice for ambiguous "checkout <branch>"
+
+Even if checkout.defaultRemote is off we now print advice telling the
+user why their "git checkout branch" didn't work.
+
+  checkout & worktree: introduce checkout.defaultRemote
+
+It's now called checkout.defaultRemote not checkout.implicitRemote on
+Junio's suggestion. On reflection that's better.
+
+Improved tests for git-worktree (similar to the dwim checkout tests
+improvements earlier), and the the documentation for git-checkout &
+git-worktree.
+
+I'm omitting the tbdiff because most of it's because of the new
+patches in this series. Better just to read them.
+
+ Documentation/config.txt       | 26 +++++++++++++++
+ Documentation/git-checkout.txt |  9 ++++++
+ Documentation/git-worktree.txt |  9 ++++++
+ advice.c                       |  2 ++
+ advice.h                       |  1 +
+ builtin/checkout.c             | 44 ++++++++++++++++++++------
+ builtin/worktree.c             |  4 +--
+ checkout.c                     | 37 +++++++++++++++-------
+ checkout.h                     | 16 +++++++++-
+ t/t2024-checkout-dwim.sh       | 58 +++++++++++++++++++++++++++++++++-
+ t/t2025-worktree-add.sh        | 21 ++++++++++++
+ 11 files changed, 203 insertions(+), 24 deletions(-)
+
+-- 
+2.17.0.290.gded63e768a
+
