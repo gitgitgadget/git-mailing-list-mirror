@@ -2,202 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D11921F42D
-	for <e@80x24.org>; Thu, 31 May 2018 18:33:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7FA381F42D
+	for <e@80x24.org>; Thu, 31 May 2018 18:33:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755894AbeEaSd0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 May 2018 14:33:26 -0400
-Received: from mail-yb0-f195.google.com ([209.85.213.195]:46283 "EHLO
-        mail-yb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755848AbeEaSdZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 May 2018 14:33:25 -0400
-Received: by mail-yb0-f195.google.com with SMTP id p22-v6so7905122yba.13
-        for <git@vger.kernel.org>; Thu, 31 May 2018 11:33:25 -0700 (PDT)
+        id S1755912AbeEaSdb (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 May 2018 14:33:31 -0400
+Received: from mail-it0-f53.google.com ([209.85.214.53]:38262 "EHLO
+        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755848AbeEaSd2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 May 2018 14:33:28 -0400
+Received: by mail-it0-f53.google.com with SMTP id q4-v6so29252632ite.3
+        for <git@vger.kernel.org>; Thu, 31 May 2018 11:33:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=mHEWUfkKGo+QohKL3rG0naWZi95xh7RKMyG/hKfFcaU=;
-        b=MS+aDlXs7BxTadJzefCXroBHgrYXTQ3yhc6RIZOyAQKVkPNzkwvG4Mgl4Y89fRyeSx
-         htk2tonyXuqksNlLpOOJih0hMFDgojqgRZ3yBH91yFDNhRD3/fYxYBYZxf63tydeDCQY
-         f8qaEWxl8ln3vxhKPTpszo/qPRj7Ifh2N90yghhPvOjfZkDbMZg/1bYQtSTcAaodO56e
-         woAyfj2B8q9ZeBhgz++PB0suYo6deyy6Jxt+G6CPUcI0rj21cEsmYP7dyYaTmalhQDDu
-         1UFOcqrgPhjoflL3NnDADsXJWqOu+L/aJ71/1/UOj1cT/DMkWoLFnEeFKWK41t1MMg3N
-         dYHw==
+        bh=ex3+WrsKO2x2zVFhQqbwMfsSZcyaa/Q0wHVneuDWoN4=;
+        b=SDygcfPpz3i2TPqW+uXoSas8/OBehrbRwCuAzHGXBEELtNALWBjC7d6z8+Wh/gj1pP
+         jTrjr8cG6jZmDh475YxpNxxTYvAul91MhNhYTi6OjhQRcLukcp5zuwNQGi8uWkRTcWvF
+         xu7PlQ8rBaJl4KMdYpN5846GnW3NZCYNXpadMN7xpHQupqVhSq7f1fWtxBBdy/+h7w5z
+         Bmws6jK+7V42vEy8aQZm53Tu14xIVKoaxTHeDJkmOKJcpa20w8VGiLS4XoPQqE1b+nur
+         aCzK7WXcH6EXeV6s6Mc2NWdVJGVLiTk7Z4Ip5hqwLSJTT63hNRNGhmEJ927tWDCBuXv/
+         XSJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=mHEWUfkKGo+QohKL3rG0naWZi95xh7RKMyG/hKfFcaU=;
-        b=QVURqrqdg8/my7J3JU5lSeGbipWyB79n1dxtliuzD/TrpRVxDajdrGz55fOZAxmfoa
-         w/ULqnwlaopZvzMKIUjYOjdaiG0ls1cPdZ4UqsP8qaPSy7f6yLflBi1jSutu8ksXXqvX
-         1eKyI+WrBPOrDWlvPsfJwchi9Lgix0YiZHA+8SlHJGeMDGO2ifOFSJeLVc1pce5b7+21
-         CcmnqcnpLetL7IXHi3AmUjkoPDM5enG9kFZhd5c7gYahGCMOvxOLGM1JrdybYCxfrdi9
-         8tjCA4VXsPYSKqUmdCxJMIGsONaky20KLNH7eSXjUjw54AwXF2x9gSocH9SgrwW4G65Q
-         kthw==
-X-Gm-Message-State: ALKqPwefd80O9F8lv35FR9Rmae5ONwVKQFVyGU7us1wJ+shMtyjYZNnh
-        8ShiFDoUZqr87YTeeERR07yBIjahYlknZ2A9lHvjkw==
-X-Google-Smtp-Source: ADUXVKKXa4pCwaHHLmyCDZahZ+3QTs//Xnqs2ooFfYEWviuTTnIrmPs2ubUVXW4Ud/pqdBqU3Hg8OHYlP6tf1bFxIMc=
-X-Received: by 2002:a25:d707:: with SMTP id o7-v6mr4478928ybg.292.1527791604466;
- Thu, 31 May 2018 11:33:24 -0700 (PDT)
+        bh=ex3+WrsKO2x2zVFhQqbwMfsSZcyaa/Q0wHVneuDWoN4=;
+        b=qj/mJ/+Tyd88U1HEog+Xe9ypC+onetK/wAMj+4kmhJPwhZEixOlA4/KAXqlaGvg7GM
+         Ilgq/i3Lq6J0XOAuMyOBKHvOuqFWXjGO4is3jUZjcrO0THa9lixe+r9+pT8d9TqOADXN
+         2P9QexaDuAZZtd67/oif9+ocEsL6lMXawtDRgyUCGxFtmcsdePHLjI8SRRSjXzubG7yw
+         lUvbvq+Ug6Ya13x/DxME7MefdimHDzEGRsdnx0hep7WRbv4TSfzVL88PlJLiRPecA+iJ
+         e55j5ecDLPzfalchH34MUHcYl6r334xT6IZjEcZ2Us5HcsBpNDneW6Uf7VxA9bZ9T2Yc
+         La8g==
+X-Gm-Message-State: APt69E0T1lOmxw7BAeZXoZTMV5AcJqzvbyoay+JcRL8n/RnC6Uu9Yvkz
+        a66mtGUGFo9ILgus6DftrnrGyazLOhgabZ0dvUApv/S1
+X-Google-Smtp-Source: ADUXVKJivZkWJRj9U2br+5MoA67DX0uSPjDbq6IK9m3jtKA6be4msqE1AJ7KzWKOzQmvqLOM4KXufaXdHBy6IiFo9bE=
+X-Received: by 2002:a24:3d8c:: with SMTP id n134-v6mr1197275itn.40.1527791607522;
+ Thu, 31 May 2018 11:33:27 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a25:e87:0:0:0:0:0 with HTTP; Thu, 31 May 2018 11:33:23 -0700 (PDT)
-In-Reply-To: <20180531174024.124488-1-dstolee@microsoft.com>
-References: <20180531174024.124488-1-dstolee@microsoft.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 31 May 2018 11:33:23 -0700
-Message-ID: <CAGZ79kYCi_=LRuq35Fh0jGYw9kiW9i=6t1YwLuNj7MfezywZDw@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/6] Fix commit-graph/graft/replace/shallow combo
-To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "jnareb@gmail.com" <jnareb@gmail.com>,
-        "stolee@gmail.com" <stolee@gmail.com>
+Received: by 2002:a4f:22d0:0:0:0:0:0 with HTTP; Thu, 31 May 2018 11:33:26
+ -0700 (PDT)
+In-Reply-To: <d464115b7c2ee5f9084ae9bd33cebea1@posteo.de>
+References: <d464115b7c2ee5f9084ae9bd33cebea1@posteo.de>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 31 May 2018 20:33:26 +0200
+Message-ID: <CAP8UFD10BW=WYmv2Vz8cFCt1OofpsrhBGR0z7C5tp0ixrpwwgg@mail.gmail.com>
+Subject: Re: Bug: Install from .tar.xz fails without write permission on /usr/local/share/man/man3
+To:     mlell@posteo.de
+Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 31, 2018 at 10:40 AM, Derrick Stolee <dstolee@microsoft.com> wrote:
-> The commit-graph file stores a condensed version of the commit history.
-> This helps speed up several operations involving commit walks. This
-> feature does not work well if those commits "change" using features like
-> commit grafts, replace objects, or shallow clones.
+Hi,
+
+On Thu, May 31, 2018 at 6:30 PM,  <mlell@posteo.de> wrote:
 >
-> Since the commit-graph feature is optional, hidden behind the
-> 'core.commitGraph' config option, and requires manual maintenance (until
-> ds/commit-graph-fsck' is merged), these issues only arise for expert
-> users who decided to opt-in.
+> I was trying to build git 2.9.5 as a normal user, as I have no root access
+> on a cluster with outdated software.
 >
-> This RFC is a first attempt at rectify the issues that come up when
-> these features interact. I have not succeeded entirely, as I will
-> discuss below.
+> The build fails, unless I change the PREFIX=/usr/local line in
+> per/perl.mak:80 to a folder where I have write permission.
+> Apparently, perl.mak does not honour the --prefix= setting of ./configure.
 >
-> The first two "DO NOT MERGE" commits are not intended to be part of the
-> main product, but are ways to help the full test suite run while
-> computing and consuming commit-graph files. This is acheived by calling
-> write_commit_graph_reachable() from `git fetch` and `git commit`. I
-> believe this is the only dependence on ds/commit-graph-fsck. The other
-> commits should only depend on ds/commit-graph-lockfile-fix.
+> Is it possible to change perl.mak to honor the PREFIX?
 
-I applied these patches on top of ds/commit-graph-fsck
-(it would have been nice if you mentioned that it applies there)
-Running the test suite with all patches applied results in:
+I don't think we will support old versions like v2.9.X.
 
-./t0410-partial-clone.sh                    (Wstat: 256 Tests: 15 Failed: 2)
-  Failed tests:  5, 8
-./t5307-pack-missing-commit.sh              (Wstat: 256 Tests: 5 Failed: 2)
-  Failed tests:  3-4
-./t5500-fetch-pack.sh                       (Wstat: 256 Tests: 353 Failed: 1)
-  Failed test:  348
-./t6011-rev-list-with-bad-commit.sh         (Wstat: 256 Tests: 6 Failed: 1)
-  Failed test:  4
-./t6024-recursive-merge.sh                  (Wstat: 256 Tests: 6 Failed: 1)
-  Failed test:  4
+There was a security release and we only released v2.17.1, v2.13.7,
+v2.14.4, v2.15.2 and v2.16.4:
 
-which you identified as 4x noise and t5500 as not understood.
+https://public-inbox.org/git/xmqqy3g2flb6.fsf@gitster-ct.c.googlers.com/
 
-$ GIT_TRACE=1 ./t5500-fetch-pack.sh -d -i -v -x
-[...]
-expecting success:
-git -C shallow12 fetch --shallow-exclude one origin &&
-git -C shallow12 log --pretty=tformat:%s origin/master >actual &&
-test_write_lines three two >expected &&
-test_cmp expected actual
+So it looks like v2.13.X is the oldest version we support. Do you
+really need v2.9.5?
 
-++ git -C shallow12 fetch --shallow-exclude one origin
-trace: built-in: git fetch --shallow-exclude one origin
-trace: run_command: unset GIT_PREFIX; 'git-upload-pack
-'\''/u/git/t/trash directory.t5500-fetch-pack/shallow-exclude/.'\'''
-trace: run_command: git --shallow-file  pack-objects --revs --thin
---stdout --shallow --progress --delta-base-offset --include-tag
-trace: built-in: git pack-objects --revs --thin --stdout --shallow
---progress --delta-base-offset --include-tag
-remote: Counting objects: 4, done.
-remote: Compressing objects: 100% (3/3), done.
-remote: Total 4 (delta 0), reused 0 (delta 0)
-trace: run_command: git --shallow-file  unpack-objects --pack_header=2,4
-trace: built-in: git unpack-objects --pack_header=2,4
-Unpacking objects: 100% (4/4), done.
-trace: run_command: git rev-list --objects --stdin --not --all --quiet
-trace: built-in: git rev-list --objects --stdin --not --all --quiet
-trace: run_command: unset GIT_PREFIX; 'git-upload-pack
-'\''/u/git/t/trash directory.t5500-fetch-pack/shallow-exclude/.'\'''
-trace: run_command: git pack-objects --revs --thin --stdout --progress
---delta-base-offset
-trace: built-in: git pack-objects --revs --thin --stdout --progress
---delta-base-offset
-remote: Total 0 (delta 0), reused 0 (delta 0)
-trace: run_command: git unpack-objects --pack_header=2,0
-trace: built-in: git unpack-objects --pack_header=2,0
-trace: run_command: git rev-list --objects --stdin --not --all --quiet
-trace: built-in: git rev-list --objects --stdin --not --all --quiet
-From file:///u/git/t/trash directory.t5500-fetch-pack/shallow-exclude/.
- * [new tag]         one        -> one
- * [new tag]         two        -> two
-run_processes_parallel: preparing to run up to 1 tasks
-run_processes_parallel: done
-trace: run_command: git gc --auto
-trace: built-in: git gc --auto
-++ git -C shallow12 log --pretty=tformat:%s origin/master
-trace: built-in: git log '--pretty=tformat:%s' origin/master
-++ test_write_lines three two
-++ printf '%s\n' three two
-++ test_cmp expected actual
-++ diff -u expected actual
---- expected 2018-05-31 18:14:25.944540810 +0000
-+++ actual 2018-05-31 18:14:25.944540810 +0000
-@@ -1,2 +1,3 @@
- three
- two
-+one
-error: last command exited with $?=1
-not ok 348 - fetch exclude tag one
-#
-# git -C shallow12 fetch --shallow-exclude one origin &&
-# git -C shallow12 log --pretty=tformat:%s origin/master >actual &&
-# test_write_lines three two >expected &&
-# test_cmp expected actual
-#
-
-
-> After these changes, there is one test case that still fails, and I
-> cannot understand why:
->
-> t5500-fetch-pack.sh                     Failed test:  348
->
-> This test fails when performing a `git fetch --shallow-exclude`. When I
-> halt the test using `t5500-fetch-pack.sh -d -i` and navigate to the
-> directory to replay the fetch it performs as expected.
-
-What is "as expected" ?
-
-When I insert a test_pause before that first line, such that:
-
-test_expect_success 'fetch exclude tag one' '
-    test_pause &&
-    git -C shallow12 fetch --shallow-exclude one origin &&
-    git -C shallow12 log --pretty=tformat:%s origin/master >actual &&
-    test_write_lines three two >expected &&
-    test_cmp expected actual
-'
-
-and then run
-
-  rm "shallow-exclude/.git/objects/info/commit-graph
-
-the test works after exiting the test_pause.
-
-Note how the shallow-exclude is the *remote* of the fetch.
-So I think you also want to introduce the destruction
-of commit graphs in upload-pack.c which is the remote counter part to fetch.
-
-Why do you think these other tests are noice?
-
-Thanks,
-Stefan
+Best,
+Christian.
