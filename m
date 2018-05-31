@@ -2,99 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E466A1F42D
-	for <e@80x24.org>; Thu, 31 May 2018 16:30:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE6421F42D
+	for <e@80x24.org>; Thu, 31 May 2018 16:39:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755594AbeEaQaW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 May 2018 12:30:22 -0400
-Received: from mout01.posteo.de ([185.67.36.65]:35808 "EHLO mout01.posteo.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755557AbeEaQaW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 May 2018 12:30:22 -0400
-Received: from submission (posteo.de [89.146.220.130]) 
-        by mout01.posteo.de (Postfix) with ESMTPS id 4DBB921103
-        for <git@vger.kernel.org>; Thu, 31 May 2018 18:30:20 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.de; s=2017;
-        t=1527784220; bh=Hu2LcT5a5LJYQJqq7xoetwvfMHLUS1k9+kXF7cXP24w=;
-        h=Date:From:To:Subject:From;
-        b=JDDf6DLCNtwH1+4nahHR5PjayEMLeGX4HW+XoBpCxgdznJvj/37SBbALC6Q0hYX4g
-         QpNfKH7vFowgEbODH8RlKyRKLd3XMunMg/FrF9Fo7z+fFD7nfI/LAJJ5UvH/fVi/ZI
-         iL6xX3bUNMS6oawrUCBdRx1U8cvZu0KG9ODahQYzSpOTr/DH9PUj+reGiJxtOpYoxM
-         R0sRy0IwRw9DLFkr1g5XaAljYPeeYvnSashKYVt9bzGD8nEZ42ALNRHHM0/feaWxVH
-         pISnPOMf75z0zbyPKzweKJFJ/u9L8DB7dOXVIW8UDvuEx2blanUFgLfIVqNOBg9Ksp
-         kFWp6blUiH+6A==
-Received: from customer (localhost [127.0.0.1])
-        by submission (posteo.de) with ESMTPSA id 40xXxk70M4z9rxM
-        for <git@vger.kernel.org>; Thu, 31 May 2018 18:30:18 +0200 (CEST)
+        id S1755831AbeEaQj4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 May 2018 12:39:56 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58044 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1755697AbeEaQjy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 May 2018 12:39:54 -0400
+Received: (qmail 11147 invoked by uid 109); 31 May 2018 16:39:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 31 May 2018 16:39:54 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15166 invoked by uid 111); 31 May 2018 16:40:05 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 31 May 2018 12:40:05 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 31 May 2018 12:39:52 -0400
+Date:   Thu, 31 May 2018 12:39:52 -0400
+From:   Jeff King <peff@peff.net>
+To:     Erika Voss <erikav@zillowgroup.com>
+Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Git Vulnerability Announced?
+Message-ID: <20180531163952.GA9423@sigill.intra.peff.net>
+References: <D47B86A7-2E5A-4401-99B2-E59FD859C7E6@zillowgroup.com>
+ <001301d3f8f8$65bc6660$31353320$@nexbridge.com>
+ <E1D8F36A-9317-41ED-B761-2AE15B54B927@zillowgroup.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 31 May 2018 18:30:18 +0200
-From:   mlell@posteo.de
-To:     git@vger.kernel.org
-Subject: Bug: Install from .tar.xz fails without write permission on
- /usr/local/share/man/man3
-Message-ID: <d464115b7c2ee5f9084ae9bd33cebea1@posteo.de>
-X-Sender: mlell@posteo.de
-User-Agent: Posteo Webmail
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <E1D8F36A-9317-41ED-B761-2AE15B54B927@zillowgroup.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Thu, May 31, 2018 at 04:00:38PM +0000, Erika Voss wrote:
 
-I was trying to build git 2.9.5 as a normal user, as I have no root 
-access on a cluster with outdated software.
+> Yes here is what was sent to me - 
+> 
+> https://www.theregister.co.uk/2018/05/30/git_vulnerability_could_lead_to_an_attack_of_the_repo_clones/
+> https://www.debian.org/security/2018/dsa-4212
 
-The build fails, unless I change the PREFIX=/usr/local line in 
-per/perl.mak:80 to a folder where I have write permission.
-Apparently, perl.mak does not honour the --prefix= setting of 
-./configure.
+Yeah, the release announcement from the project is at:
 
-Is it possible to change perl.mak to honor the PREFIX?
+  https://public-inbox.org/git/xmqqy3g2flb6.fsf@gitster-ct.c.googlers.com/
 
-Best,
-Mo
+> The one that I could find from online was:
+> https://git-scm.com/download/mac
+> 
+> But, the latest version available on this site was 2.17.0, which does
+> not include the security patch.
 
+The binary installs for MacOS are done by a third party, and sometimes
+lag the source releases. You can build it from source yourself, either
+from a tarball:
 
-Steps to reproduce:
+  https://git.kernel.org/pub/software/scm/git/git-2.17.1.tar.gz
 
-wget 
-https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.9.5.tar.xz
-tar xf git-2.9.5.tar.xz
-cd git-2.9.5
-./configure --prefix=$HOME/.usr
-make
-make install # fails
+or by cloning with git:
 
-Output (last lines):
+  https://kernel.org/pub/scm/git/git.git
 
-install -d -m 755 '/qg-10/data/AGR-QG/lell/.usr/share/locale'
-(cd po/build/locale && gtar cf - .) | \
-(cd '/qg-10/data/AGR-QG/lell/.usr/share/locale' && umask 022 && gtar xof 
--)
-make -C perl prefix='/qg-10/data/AGR-QG/lell/.usr' DESTDIR='' install
-make[1]: Entering directory 
-`/qg-10/data/AGR-QG/lell/.usr/git-2.9.5/perl'
-make[2]: Entering directory 
-`/qg-10/data/AGR-QG/lell/.usr/git-2.9.5/perl'
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-ERROR: Can't create '/usr/local/share/man/man3'
-Do not have write permissions on '/usr/local/share/man/man3'
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  at -e line 1.
-make[2]: *** [pure_site_install] Error 13
-make[2]: Leaving directory `/qg-10/data/AGR-QG/lell/.usr/git-2.9.5/perl'
-make[1]: *** [install] Error 2
-make[1]: Leaving directory `/qg-10/data/AGR-QG/lell/.usr/git-2.9.5/perl'
-make: *** [install] Error 2
+There are some instructions in the INSTALL file, which you can also read
+online:
 
+  https://github.com/git/git/blob/master/INSTALL
 
+You can also use Homebrew to install, which usually updates to new
+versions pretty promptly:
 
+  https://brew.sh/
+
+-Peff
