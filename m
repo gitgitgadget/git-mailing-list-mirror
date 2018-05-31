@@ -2,144 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 74CFE1F51C
-	for <e@80x24.org>; Thu, 31 May 2018 11:03:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B07E71F51C
+	for <e@80x24.org>; Thu, 31 May 2018 11:49:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754583AbeEaLD0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 May 2018 07:03:26 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:52299 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754441AbeEaLDV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 May 2018 07:03:21 -0400
-Received: by mail-wm0-f68.google.com with SMTP id 18-v6so47711644wml.2
-        for <git@vger.kernel.org>; Thu, 31 May 2018 04:03:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=jiQ+ZN1kZwups/JLCM7s4i9WtgYUYRtJs2H1HQHaMUg=;
-        b=Uwpp2XxVd2W8SFZtaKwfRN2m5eqX1+/4tSsW9z1qUOpTxDnMGVRoJpp6k50zhldLky
-         lFD6cek3X6Oa94wG58Hqya4TxQm9SBxGu6RHfAE/FI19QSIGGyiz7JpW+nlpbbqUyLc1
-         KvZQRpDfUdJK6GZ6dxj7iRnhs0FxRBoMlFec1MwGnH2EZo0/XJeRFwKyjKnKKsZJo3gQ
-         XjwuKuWHjgPrqXLtKA5QCdlbyyBxspo0vm+6ZEK5TRprIaBlb/uzQX2FDAAd+irtg8hc
-         eg64HJeaIYw1Bh9kzujDMnUf9QyFbTszb7IHfZswzqL8uxZXTeH8yk17HoXWNePZhc2H
-         tpqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=jiQ+ZN1kZwups/JLCM7s4i9WtgYUYRtJs2H1HQHaMUg=;
-        b=N3kmBq7g9PZZLa0VasyP4gxNOPk0uHDVYD41MvuGVapc8HqpxkaTRJ6MSl5I3XVmod
-         wH9PemAQZVcFJyEkF1C16Q5VwQLuPBNCIHC/6dMR+XSaq2Mkc3V441BLDQL4DwUqgNuU
-         mH878uQmEARb9e0fFPxNYYt08CRuC+sbwKZLZ54Jh6VbJesfXNCLX5rDivvtBJoyQFHO
-         C3pxvxNaBWSlTVVCy0Xt7NvFiegBcMfRD6NU5Bi2gyhxYbxkqWjYmXIBIy+3LRp3r8V+
-         zOK89WmuYaOtxtYmWj+uv1XR0zQHGwhrVSMd+9Ng/hh+f5EyrDbXyCfnWYobMD/8z0+e
-         AJLQ==
-X-Gm-Message-State: ALKqPwfyc61IKKUyASUcIm/X/3G+XenKOtqODqE3/vSUFQ3hvhR0AjsU
-        MVgGfVIIfsANVLsKweHM8CNsxge1
-X-Google-Smtp-Source: ADUXVKJjSKqhgLzWZAB/qASfMLMmxF4v8f7bLQin+RTPGrqMN7B86PC8uXLW4x8PEjDlCLO2rGOedw==
-X-Received: by 2002:a50:9434:: with SMTP id p49-v6mr7532010eda.107.1527764599955;
-        Thu, 31 May 2018 04:03:19 -0700 (PDT)
-Received: from localhost.localdomain (AToulouse-658-1-184-117.w86-199.abo.wanadoo.fr. [86.199.39.117])
-        by smtp.googlemail.com with ESMTPSA id f2-v6sm5887419edq.28.2018.05.31.04.03.18
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 31 May 2018 04:03:18 -0700 (PDT)
-From:   Alban Gruin <alban.gruin@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        phillip.wood@dunelm.org.uk, Alban Gruin <alban.gruin@gmail.com>
-Subject: [GSoC][PATCH 2/2] sequencer: remove newlines from append_todo_help() messages
-Date:   Thu, 31 May 2018 13:01:30 +0200
-Message-Id: <20180531110130.18839-3-alban.gruin@gmail.com>
-X-Mailer: git-send-email 2.16.4
-In-Reply-To: <20180531110130.18839-1-alban.gruin@gmail.com>
-References: <20180531110130.18839-1-alban.gruin@gmail.com>
+        id S1754837AbeEaLtf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 May 2018 07:49:35 -0400
+Received: from mout.gmx.net ([212.227.15.19]:55411 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754586AbeEaLtb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 May 2018 07:49:31 -0400
+Received: from [192.168.0.129] ([37.201.195.106]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LxPNC-1gPOB23YAU-016zbi; Thu, 31
+ May 2018 13:49:18 +0200
+Date:   Thu, 31 May 2018 13:49:18 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] sequencer: ensure labels that are object IDs are
+ rewritten
+In-Reply-To: <20180530222011.GC671367@genre.crustytoothpaste.net>
+Message-ID: <nycvar.QRO.7.76.6.1805311347380.82@tvgsbejvaqbjf.bet>
+References: <20180529163236.646275-1-sandals@crustytoothpaste.net> <nycvar.QRO.7.76.6.1805301144470.82@tvgsbejvaqbjf.bet> <20180530222011.GC671367@genre.crustytoothpaste.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:URR9TE/HDgaeA7vK2IRNLK4HG40o82xiKzBZrveVyA8MdmKAazi
+ E/AcZnEHKycb7KWKlF1CAqJeKR58uges1XkB7lLfIyC+EphqqBIntMPZUahUzT+4tk6+qC+
+ Q68CNhyFHAjnSLJbtJCQ7xzwKq2H1j49lAKMN9cId9wb6L6zfgbrLLF6A8Rx3LI5RMIUcOq
+ y9BsYRka+R2Uk6i7qFM+g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:7Y3hg0+JhtM=:H3B/ROraI9zaNfTjDbQ+mp
+ GF9s4H27tvwJ/3Uz859TBr99AFNgrvG7kV9zkt35/W1+yLUzVHYLhwBmcFEwzu7LhZM6oqHL4
+ +lTcSgyGnU6qrKQrnOZIBj4wGro+ueNkLYZ7VMYdc1f4aJTUzQDfJWgowm+CnZPNKbsUU8NXQ
+ s2BhoMZumXk3p3T6CCpZlk1/PtOcj0LJS2Pv5jxzyxA3RrB09Zb/CQnjPYBwFtlcEDEmUv+Rf
+ AJjylCVU+JS4lGAVQKm4whOj1GGCxjTskpz6mSVNVIYcBEBdPsy82Jc+BhRJyPudBt2UrNqTr
+ ulYNm8TnjTSxTBD8aaTqWUn0vIY7p591YKhOWqi2SMNhEUwPiIz9I3Ke4vOVA15w2WFMIBTyd
+ y5zjioI0ndr4F/83gXjdhU5HMqLFDvB3cX0pLyOaJ9KLtZEyo+80VaNUKWspYfazNgjymvIF4
+ 6WyqAN5Ssz3FKCc6+i+niDRdyneNXm0rRFZ3HTXQn1hfvp6809Fh+OanYJNfIbslemTBw90h+
+ VGjdFHBfKHDW9wbaphOHi3kwpr+YKUjV4Pr9bNb91NXm36WDCc2AFDhrZlnyu824VfLTETqqx
+ EUDg6KRy7t7JgXmyLFkxqGYRTyL0gDtU/tIX+dvlvE1HenUQ2QH8fW+QJKxq9TNH+H7it+Oah
+ MiBsJC+nyxPHpmUDLnsCfowcokEpYI0yrKIXC6u3QfR4Dm5/cxlZNkijKGJ1jpPMyvlME1fda
+ 2aYsRAvGsc1QVnhTwRbDqQhZEZwlwq9hXTPP/ggvJPgJ5jz9M+a5FD+/6u9XTiUbu80o7ZeEw
+ 6FTUP3+
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This removes newlines before and after the messages in
-append_todo_help(). This is done to avoid confusions from
-translators.
+Hi Brian,
 
-These newlines are now inserted with
-`strbuf_add_commented_lines()`. Messages were ended by two newlines
-characters, but here we only insert one at a time. This is because
-`strbuf_add_commented_lines()` automatically inserts a newline at the
-end of the input, and ignore the last from the input.
+On Wed, 30 May 2018, brian m. carlson wrote:
 
-Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
----
- sequencer.c | 24 ++++++++++++++----------
- 1 file changed, 14 insertions(+), 10 deletions(-)
+> On Wed, May 30, 2018 at 11:54:27AM +0200, Johannes Schindelin wrote:
+> 
+> > > +	third=$(git rev-parse HEAD) &&
+> > > +	git checkout -b labels master &&
+> > > +	git merge --no-commit third &&
+> > > +	test_tick &&
+> > > +	git commit -m "Merge commit '\''$third'\'' into labels" &&
+> > 
+> > Here, the test_tick is required because we commit via `git commit`.
+> > 
+> > BTW another thing that I had been meaning to address but totally forgot is
+> > this '\'' ugliness. I had been meaning to define SQ="'" before all test
+> > cases and then use $SQ everywhere. Not your problem, though.
+> > 
+> > > +	cp script-from-scratch-orig script-from-scratch &&
+> > 
+> > There is nothing in that script that you need. Why not simply
+> > 
+> > 	echo noop >script-from-scratch
+> > 
+> > or if you care about the branch,
+> > 
+> > 	echo reset $third >script-from-scratch
+> 
+> That would be simpler.  You read my mind: I needed some script to make
+> the sequence editor work, but anything would be fine.
 
-diff --git a/sequencer.c b/sequencer.c
-index 9b291845e..9ab6c28d7 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -4228,7 +4228,7 @@ int append_todo_help(unsigned edit_todo, unsigned keep_empty)
- 	struct strbuf buf = STRBUF_INIT;
- 	FILE *todo;
- 	int ret;
--	const char *msg = _("\nCommands:\n"
-+	const char *msg = _("Commands:\n"
- "p, pick <commit> = use commit\n"
- "r, reword <commit> = use commit, but edit the commit message\n"
- "e, edit <commit> = use commit, but stop for amending\n"
-@@ -4243,33 +4243,37 @@ int append_todo_help(unsigned edit_todo, unsigned keep_empty)
- ".       message (or the oneline, if no original merge commit was\n"
- ".       specified). Use -c <commit> to reword the commit message.\n"
- "\n"
--"These lines can be re-ordered; they are executed from top to bottom.\n");
-+"These lines can be re-ordered; they are executed from top to bottom.");
- 
- 	todo = fopen_or_warn(rebase_path_todo(), "a");
- 	if (!todo)
- 		return 1;
- 
-+	strbuf_add_commented_lines(&buf, "\n", 1);
- 	strbuf_add_commented_lines(&buf, msg, strlen(msg));
- 
- 	if (get_missing_commit_check_level() == CHECK_ERROR)
--		msg = _("\nDo not remove any line. Use 'drop' "
--			 "explicitly to remove a commit.\n");
-+		msg = _("Do not remove any line. Use 'drop' "
-+			 "explicitly to remove a commit.");
- 	else
--		msg = _("\nIf you remove a line here "
--			 "THAT COMMIT WILL BE LOST.\n");
-+		msg = _("If you remove a line here "
-+			 "THAT COMMIT WILL BE LOST.");
- 
-+	strbuf_add_commented_lines(&buf, "\n", 1);
- 	strbuf_add_commented_lines(&buf, msg, strlen(msg));
- 
- 	if (edit_todo)
--		msg = _("\nYou are editing the todo file "
-+		msg = _("You are editing the todo file "
- 			"of an ongoing interactive rebase.\n"
- 			"To continue rebase after editing, run:\n"
--			"    git rebase --continue\n\n");
-+			"    git rebase --continue");
- 	else
--		msg = _("\nHowever, if you remove everything, "
--			"the rebase will be aborted.\n\n");
-+		msg = _("However, if you remove everything, "
-+			"the rebase will be aborted.");
- 
-+	strbuf_add_commented_lines(&buf, "\n", 1);
- 	strbuf_add_commented_lines(&buf, msg, strlen(msg));
-+	strbuf_add_commented_lines(&buf, "\n", 1);
- 
- 	if (!keep_empty) {
- 		msg = _("Note that empty commits are commented out");
--- 
-2.16.4
+I would not go that far. Sometimes I wish I could read minds. More often,
+I am glad that I cannot. I simply guessed correctly in this case ;-)
 
+But yes, I think it would not only be simpler, but would also avoid the
+head-scratching why the earlier `cp script-from-scratch
+script-from-scratch-orig`, and it would also make it more robust to future
+changes (e.g. if somebody decides to move test cases around, or introduce
+prereqs that skip some).
+
+Ciao,
+Dscho
