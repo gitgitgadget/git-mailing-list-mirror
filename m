@@ -8,59 +8,59 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0DB961F51C
-	for <e@80x24.org>; Thu, 31 May 2018 07:10:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0295D1F51C
+	for <e@80x24.org>; Thu, 31 May 2018 07:17:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753909AbeEaHKD (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 May 2018 03:10:03 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:36644 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753825AbeEaHKC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 May 2018 03:10:02 -0400
-Received: by mail-wm0-f65.google.com with SMTP id v131-v6so32778417wma.1
-        for <git@vger.kernel.org>; Thu, 31 May 2018 00:10:01 -0700 (PDT)
+        id S1753984AbeEaHRp (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 May 2018 03:17:45 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:35389 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753952AbeEaHRo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 May 2018 03:17:44 -0400
+Received: by mail-wm0-f66.google.com with SMTP id j15-v6so637551wme.0
+        for <git@vger.kernel.org>; Thu, 31 May 2018 00:17:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version:content-transfer-encoding;
-        bh=RDgSVDzy1Bvshx9TKzZltoXOeKwoMDwwZrAObF/A0Og=;
-        b=SOem1J1LqSpnB63rmlyXlZUCDBT/1Lt5y4CfY/XCBxzdvHK/ZirHv2sk7Ko6cPuHBK
-         Nug9oqps2XXdS2E+mxYuxKMfWb9rhJ6LySLdRvlOJe/2t0079td2XSJiVNxcdh2RNVNB
-         1GUgjWJcNq1t/YApG6GGGYurRuWpcIVPqZd7I0xq4B+Tc889VTrfPQaHHAIITYpv6xqm
-         +Bfftt4petWVpsVD90m2kd0GIgjb5+7t2H4gcr9X0yAnJ+CeJubZ8PqoJWswvagyeWBY
-         m6tFCrJxsGH2Kr+suL43bvANa4PevXi6KoQbzmtLyoLmJIf2/xsLVzOVjns9aDx5gK9o
-         TTpg==
+        bh=TA2x8NefcmszIRLD9l8GWObHkcbFYiF8p+H3p1P0u+4=;
+        b=QC2oDC2l6s9YHIbZVM69ksTfJu7jB/HdsV6+F1sL2Bz8rJrm4NTAgVFJB6GWm0ycLe
+         Phnqcr18goZCFV6iDWEzqejLHO1LFOnQh8byCOrVHBsd4/GJH6LvIEw7ZuuCm7UCLrtQ
+         yHtM10KFo+3q+6/pfeuR+/I+/vAnl7QSHP6O+WypvzUCRynUg7W5i01wyGlJfRb7Do2A
+         7mPPPl0YF8LdWj92Pju1d9RIu5OZc+eGP8ETVYmScnhhsPI9sYMfbW9D2CwG//zXCCHr
+         NyGBvFV7UsyAuS01TYbmtNgWULeqeyUDdUI2TeJ94hHuiTTyaiOtk3OH7s0iJc+iYoL0
+         nucA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=RDgSVDzy1Bvshx9TKzZltoXOeKwoMDwwZrAObF/A0Og=;
-        b=oJi6eq4oRlnH1szuPTXKGimlDTUhRvmJEBfscKKBHISpDBv+iHx1pM8Grw0v5saR/n
-         tLnCtisdarYlm5GNpovhikkaranQGqLz903FBaFKhpoCMhREQd+vIVFkvGiuLDt64PnQ
-         JVPRLxOCSU4OG2WNCQfG2vOr6JOm4nvMY4w2LsraxifM7pxtpXmi24vLCz5tBJ2IRT1n
-         NJp0W5SDR6OZrrjy+L+byrydJkpflYlbzTC4+Tka9giUeTtukOKBbKnAUEfDxMs7YejM
-         4LEq77VqwczgSFczQNNwTfwZF5mgg9cr8ks8bgF2PxmSfivJIECALxbRTBUbWWpmUe+S
-         4/7Q==
-X-Gm-Message-State: ALKqPwdO3CBmUbaGqb2OurGnBne3Cu0nhWr5QyUbiZABHU0RaK7u6yKs
-        Do+sFaeOKddhQqSgcxS3axA=
-X-Google-Smtp-Source: ADUXVKIO2cPCkUIUYEFMqLmkap5ltCTzmbHR5vTAc+yje1EmspnR4Sr732MzrJmDRlH51b71aAiRTw==
-X-Received: by 2002:a50:d6d7:: with SMTP id l23-v6mr6682843edj.259.1527750601335;
-        Thu, 31 May 2018 00:10:01 -0700 (PDT)
+        bh=TA2x8NefcmszIRLD9l8GWObHkcbFYiF8p+H3p1P0u+4=;
+        b=sfdQp7bUY1BCHaIHqzCU8dnE2+fggTmBGeed8nLsJfftH02pMfr93z7yH5jid5fMs5
+         cJITm4Gmb/p7IxqplgWeOuJxmt5yfGAqdidl6WOyUJyMFP03zNiq55sGHePdslrACAjf
+         OgSUdzKEZmhxRX6F/T2n7Z/0AHOFZZDsiUpE0byzTTBZ9pahJTrAZr10e3Zw76HEMGh+
+         wbec5Y7DfP4VaUnL17nM1mzG5aVZy9DHQ/vtE4Bu4SInyk9oJB6l5BBtYW+GRgO3KQDG
+         Yf7+kHsr/NhJ5dLWIu7Sut/44NO42HQ8BNnlg5W4D3CbBpdJcUS5qvmnT6kJf3SFQ4ar
+         KApA==
+X-Gm-Message-State: ALKqPwcaAvko71NsgEJM83U3UXQeF3hzZ+XjNwKAlMVZiwT8iNjhzHCO
+        796Q9TQj28JCjXHeG9BK9b4g7Zsr
+X-Google-Smtp-Source: ADUXVKKgc7MaBU5xR+2o3Li8MtOQuY6uSuY5WJQAW9Owa4RyFnsW8FNxs/I/DIlRvYvuXsbyj0RZrg==
+X-Received: by 2002:a50:a845:: with SMTP id j63-v6mr6567635edc.210.1527751063012;
+        Thu, 31 May 2018 00:17:43 -0700 (PDT)
 Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id d8-v6sm21570946edk.50.2018.05.31.00.09.58
+        by smtp.gmail.com with ESMTPSA id y63-v6sm21484272edy.63.2018.05.31.00.17.41
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 31 May 2018 00:09:58 -0700 (PDT)
+        Thu, 31 May 2018 00:17:42 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 1/4] config doc: move color.ui documentation to one place
-References: <20180530210641.19771-1-avarab@gmail.com> <20180530210641.19771-2-avarab@gmail.com> <20180531052538.GB17068@sigill.intra.peff.net>
+Subject: Re: [RFC PATCH 3/4] color.ui config: don't die on unknown values
+References: <20180530210641.19771-1-avarab@gmail.com> <20180530210641.19771-4-avarab@gmail.com> <xmqqin74d9rh.fsf@gitster-ct.c.googlers.com>
 User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180531052538.GB17068@sigill.intra.peff.net>
-Date:   Thu, 31 May 2018 09:09:58 +0200
-Message-ID: <87in749u7t.fsf@evledraar.gmail.com>
+In-reply-to: <xmqqin74d9rh.fsf@gitster-ct.c.googlers.com>
+Date:   Thu, 31 May 2018 09:17:41 +0200
+Message-ID: <87h8mo9tuy.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
@@ -70,52 +70,50 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, May 31 2018, Jeff King wrote:
+On Wed, May 30 2018, Junio C Hamano wrote:
 
-> On Wed, May 30, 2018 at 09:06:38PM +0000, Ævar Arnfjörð Bjarmason wrote:
+> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 >
->> Ever since b982592d66 ("git-status: document colorization config
->> options", 2006-09-11) we've slowly been accumulating more and more
->> color.* options, where the documentation for each new one has
->> seemingly been copy/pasted with minor adjustments from the last.
+>> Before this change git will die on any unknown color.ui values:
 >>
->> This has resulted in documentation where we're describing what sort of
->> values color.ui or its overriding variables can take a grand total of
->> 9 times.
+>>     $ git -c color.ui=doesnotexist show
+>>     fatal: bad numeric config value 'doesnotexist' for 'color.ui': invalid unit
 >
-> Yeah, I agree the current state is poor.
->
->> This makes for hard and tedious reading, and is going to be a royal
->> pain if we're ever going to add more color.ui values.
->>
->> Instead let's briefly describe what each variable is for, and then
->> copy/paste a new boilerplate saying that this variable takes the exact
->> same values as color.ui, and if it's unset it'll fallback to whatever
->> color.ui is set to.
->
-> Definitely an improvement. Though I wonder if we should go further and
-> show the user the relationship in the documentation explicitly. Like:
->
->   color.<system>::
-> 	A boolean to enable/disable color in a particular part of Git,
-> 	overriding `color.ui` (see `color.ui` for possible values). The
-> 	current set of systems is:
->
-> 	advice::
-> 		Hints shown with the "hint:" prefix, controlled by
-> 		`advice.*` config.
->
-> 	branch::
-> 		Output from the linkgit:git-branch[1] command.
->
-> 	...etc...
->
-> We could possibly do the same with color.<system>.<slot>. Or maybe even
-> make a single hierarchical list of systems, and then the color slots
-> under each. I think if our mental model in adding these options is
-> to have this kind of hierarchy, then it makes sense to communicate it
-> explicitly to the user and get them using the same mental model.
+> I do not think "unit" is correct, so there may be some room for
+> improvement.  For _this_ particular case, I agree that it is not the
+> end of the world if we did not color the output (because we do not
+> know what the 'doesnotyetexist' token from the future is trying to
+> tell us), but as a general principle, we should diagnose and die, if
+> a misconfiguration is easy to correct.
 
-I wouldn't be opposed to some twist on that, but I really dislike the
-variables that are documented in such a way that you can't find them in
-the documentation by searching for their fully qualified name.
+Many users (including myself) use the same ~/.gitconfig on many
+different machines with different git versions. Maybe at some point I'm
+willing to set the new setting to a value I know is supported on most of
+them, but it sucks at that point if I logging into 1-3% of old machines
+ends up killing git on any invocation.
+
+> than blindly go ahead and do random things that the end-user did not
+> expect by giving something we do not (but they thought they do)
+> understand.
+
+I think this is highly dependent on what variables we give this
+treatment. There may be some where we genuinely have no idea what they
+mean, but in this case and for http.sslVersion (which warns, doesn't die
+on unknown values) it's reasonable to assume that degrading to a known
+value is better than outright dying.
+
+> If we really want to introduce "here is a setting you may not
+> understand, in which case you may safely ignore", the right way to
+> do so is to follow the model the index extension took, where from
+> the syntax of the unknown thing an old/existing code can tell if it
+> is optional.  Forcing all codepaths to forever ignore what they do
+> not understand and what they happen to think is a safe fallback is
+> simply being irresponsible---the existing code does not understand
+> the new setting so they do not even know if their "current
+> behaviour" as a fallback is a safe and sensible one from the point
+> of view of the person who asked for the feature from the future.
+
+This seems needlessly complex. color.ui is one of the most prominent
+config variales, so you're proposing we split it up into some dual-key
+arrangement and force all users to migrate? I think just following what
+we're doing with http.sslVersion makes more sense.
