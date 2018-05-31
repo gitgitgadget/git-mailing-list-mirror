@@ -2,100 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A621C1F42D
-	for <e@80x24.org>; Thu, 31 May 2018 17:42:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7159D1F42D
+	for <e@80x24.org>; Thu, 31 May 2018 17:48:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755945AbeEaRmS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 May 2018 13:42:18 -0400
-Received: from mail-oi0-f66.google.com ([209.85.218.66]:36029 "EHLO
-        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755875AbeEaRmN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 May 2018 13:42:13 -0400
-Received: by mail-oi0-f66.google.com with SMTP id 14-v6so12213551oie.3
-        for <git@vger.kernel.org>; Thu, 31 May 2018 10:42:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=MU9QHz9esV4FA/FzL70qfjyfoxNDdxrYKp3A7OSZw/g=;
-        b=K7D3ChrNaFsqf6LujKp4P3tizNvb/+8AY6649dhP5VdzNVED5yShpsXtKRhwuXcNJs
-         7eD3zP2W9NY5Wujtb/NmbOtRaKtrt8g+cSK2+zzy4z6WCxR1QjohcYG+M3vIrOJkJVHO
-         bXs5MagkbyuXhycLeo+6ePBqB+WX/mK14/hbYK7cyEv2nd+mUukihQSvwezNLSm1siQs
-         idAeDJsl7mNU9ZpzYYVvf/Dys5PyhUWZnpjrEDUdYszmQHyquRpnazzyz5TDSgfXku4Z
-         fYKTzK+tSXrwYhJVZxexCVpGvEKtixMwMgRD+Wbb6rKzv3zqc3ATTJrLX31XdJev5JnB
-         vvSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=MU9QHz9esV4FA/FzL70qfjyfoxNDdxrYKp3A7OSZw/g=;
-        b=tzdp/WXsceUUKgpzjhzxmQ/8J1TPXKXU1pRLSiau/lErvFwPnrA8AByq8eVP0rCfuW
-         +L/fOMCEwh8Kez/TpUM7IZD1BEqv1cjaa/6MUKCPdgpN5pp9bdaSOB1zI+TLKBuZhSpI
-         aUb1DzJdO5yfqhErEtZFWOI7yurV0Ey3AfIlEmM++S5msGQ4pb8eCAAqppuw1axD5YZF
-         9E915FQAriqGS6rNwb/1gkQN0T433koIBKg37ySzhrEyFIz64kaRttcCNFtAi6/agIj+
-         rJl0OZae9HSClabCHFBtDpMJsZ91xC3yFl6NGrmVJVpwqEe63bTwaBmoIz1sS1PsjJ3L
-         NENA==
-X-Gm-Message-State: ALKqPwezXkzD1AGcEKBZ80Qw3aaL3Kh9AFkqZ7Yxdk3xl5Hu6wVioJ/c
-        pRWntYXZnuN9hU+mbIOg/CKvRfzfsg0gcbAQpa8=
-X-Google-Smtp-Source: ADUXVKLnltuIV6lVvxWPwDnVHSO8g/LAyhVEev7X8gArWIwEsNmL5p2kF7U83ITEO1llV+iOoQvMdF2J8dW1rEhssXk=
-X-Received: by 2002:aca:52ce:: with SMTP id g197-v6mr2113344oib.228.1527788532967;
- Thu, 31 May 2018 10:42:12 -0700 (PDT)
+        id S1755826AbeEaRsS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 May 2018 13:48:18 -0400
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:63999 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755796AbeEaRsR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 May 2018 13:48:17 -0400
+Received: from [192.168.2.201] ([89.242.184.94])
+        by smtp.talktalk.net with SMTP
+        id ORgMfoiiQpXFjORgMfxt5U; Thu, 31 May 2018 18:48:15 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1527788895;
+        bh=/EP91pQhV3EGovN7IbAdySzZ2QjaOnWT3OUG6Tlb3bA=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=cmLIhcdxhcT01P9QcrGUhQUITliSWiRgFyeQ1rCAtv5dMS1d8AT/9oKyS6LGtjHnv
+         d5B5MURbIiGCD4FC6KTklUJ5uxgesQeMKW7JQbrikKOc8RQ5C9wz/M+0Faqr+kA22m
+         zAu7qhY1MBKAi/T3jIS4NA19pFLC+FRm2JM17gZI=
+X-Originating-IP: [89.242.184.94]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=Ob228CbY c=1 sm=1 tr=0 a=SNYNCI/Ed5RqTX+Z+9mojA==:117
+ a=SNYNCI/Ed5RqTX+Z+9mojA==:17 a=IkcTkHD0fZMA:10 a=zEFx3JUFB4X-6XZ9rFIA:9
+ a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [GSoC][PATCH 0/2] rebase -i: rewrite append_todo_help() in C
+To:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org
+Cc:     Stefan Beller <sbeller@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        phillip.wood@dunelm.org.uk
+References: <20180531110130.18839-1-alban.gruin@gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <a6d6e5c1-e7ea-1131-c798-9d5e44603d87@talktalk.net>
+Date:   Thu, 31 May 2018 18:48:13 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-Received: by 2002:a4a:b285:0:0:0:0:0 with HTTP; Thu, 31 May 2018 10:41:42
- -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.21.1805311323220.17047@localhost.localdomain>
-References: <alpine.LFD.2.21.1805311235410.15130@localhost.localdomain>
- <CACsJy8CP=1_bHAzs+mveaJvbOOzr9vny-2xz6kM4cEcCYWmOOw@mail.gmail.com> <alpine.LFD.2.21.1805311323220.17047@localhost.localdomain>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 31 May 2018 19:41:42 +0200
-Message-ID: <CACsJy8Do6iqvv=XvOu4YoD07t0OjckrpvNeF+XnH__w2+a=Big@mail.gmail.com>
-Subject: Re: is there a reason pre-commit.sample uses "git diff-index"?
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Git Mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20180531110130.18839-1-alban.gruin@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfHspCjnoE4fQ16zm32TmV6A4ofjI4l6ZOUCSa4OhT9GLKhR1nOWwTSR4/1+f1E9Svn/+PyX6poqWHQV/CsKzU1sPoJMYOgQbDajhhjsFljSrLfBjSP3O
+ mMBnTS4MOUTvascUdMncS+hfH8+jQR0L1xiZUS0mk+HfL+ZK9dklV/Dqf5gF20HiIXLcQcn5O2n6uSYXhi9q6cMxh35GA+3ELStium/3sAO8k4PSACJFMLZ8
+ ny5Kyn/zmin6uLlwKDTri3Qojx6GBqOZUU7aHqreWMADsenIrsM1WNcrdzeM7/D9trIh+Si8wR1ybV4OInuGJW3YK2XyAN6tFu/3lygN3gVHC0tLvtO+75mb
+ nLAH389H
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 31, 2018 at 7:27 PM, Robert P. J. Day <rpjday@crashcourse.ca> wrote:
-> On Thu, 31 May 2018, Duy Nguyen wrote:
->
->> On Thu, May 31, 2018 at 6:38 PM, Robert P. J. Day <rpjday@crashcourse.ca> wrote:
->> >
->> >   was going over some hooks and writing some tutorials for some of
->> > the commit-related, client-side hooks, and was wondering (perhaps
->> > stupidly) why the pre-commit.sample hook uses, as its last line:
->> >
->> >   exec git diff-index --check --cached $against --
->> >            ^^^^^^^^^^
->> >
->> > as in, could this not be done equivalently with just git diff, not
->> > git diff-index? i just did a quick test and it seems to do the
->> > same thing, but i've never taken a close look at git diff-index
->> > before so i may just be clueless about some important distinction.
->>
->> git diff-index is "plumbing", designed for writing scripts. "git
->> diff" on the other hand is for users and its behavior may change
->> even if it breaks backward compatibility.
->
->   ah, this was a philosophical underpinning i was unaware of. i see
-> occasional explanations of git porcelain versus plumbing, but i don't
-> recall anyone simply stating that the plumbing is meant to have a
-> long-term stability that is not guaranteed for the porcelain.
->
->   in any event, this does mean that, stability issues aside, "git
-> diff" would apparently have worked just fine for that hook.
+Hi Alban, it's great to see you working on this
 
-I think there are also stuff like config variables which can change
-porcelain command behavior but usually not plumbing. Command exit code
-may be another area where porcelain and plumbing differ. But in this
-particular case, I think "git diff" works fine (but still should not
-be used unless you're just writing a quick throwaway script).
--- 
-Duy
+On 31/05/18 12:01, Alban Gruin wrote:
+> This series rewrites append_todo_help() from shell to C. This is part
+> of the effort to rewrite interactive rebase in C.
+> 
+> The first commit rewrites append_todo_help() in C (the C version
+> covers a bit more than the old shell version), adds some parameters to
+> rebase--helper, etc.
+
+I've had a read of the first patch and I think it looks fine, my only
+comment would be that the help for '--edit-todo' is a bit misleading at
+the moment as currently it's just a flag to tell rebase-helper that the
+todo list is being edited rather than actually implementing the
+functionality to edit the list (but hopefully that will follow in the
+future).
+
+> 
+> The second one strips newlines from append_todo_help() messages, which
+> require to update the translations. This change was advised to me by
+> Stefan Beller, but Johannes Schindelin voiced concerns. I don’t really
+> have a strong opinion about it, so feel free to give yours.
+
+I'm not sure I understand what the point of this patch is, if the
+newlines are unnecessary then I'd just omit them from the first patch -
+am I missing something?
+
+Best Wishes
+
+Phillip
+
+> Alban Gruin (2):
+>   rebase--interactive: rewrite append_todo_help() in C
+>   sequencer: remove newlines from append_todo_help() messages
+> 
+>  builtin/rebase--helper.c   | 10 ++++++--
+>  git-rebase--interactive.sh | 52 ++-----------------------------------
+>  sequencer.c                | 64 ++++++++++++++++++++++++++++++++++++++++++++++
+>  sequencer.h                |  1 +
+>  4 files changed, 75 insertions(+), 52 deletions(-)
+> 
+
