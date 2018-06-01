@@ -2,133 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF1FF1F42D
-	for <e@80x24.org>; Fri,  1 Jun 2018 19:56:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B2531F42D
+	for <e@80x24.org>; Fri,  1 Jun 2018 19:59:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752704AbeFAT4g (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Jun 2018 15:56:36 -0400
-Received: from prvmx05.microfocus.com ([130.57.1.220]:11914 "EHLO
-        prvmx05.microfocus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752105AbeFAT4f (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Jun 2018 15:56:35 -0400
-X-Greylist: delayed 900 seconds by postgrey-1.27 at vger.kernel.org; Fri, 01 Jun 2018 15:56:35 EDT
-Received: from prvxcaht03.microfocus.com (Not Verified[137.65.248.137]) by prvmx05.microfocus.com with Trustwave SEG (v7,5,8,10121) (using TLS: TLSv1.2, AES256-SHA256)
-        id <B5b11a16f0000>; Fri, 01 Jun 2018 13:41:35 -0600
-Received: from NAM01-SN1-obe.outbound.protection.outlook.com (137.65.224.21)
- by mail.microfocus.com (137.65.248.137) with Microsoft SMTP Server (TLS) id
- 14.3.339.0; Fri, 1 Jun 2018 13:41:34 -0600
+        id S1753331AbeFAT7k (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Jun 2018 15:59:40 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:51905 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752268AbeFAT7j (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Jun 2018 15:59:39 -0400
+Received: by mail-wm0-f66.google.com with SMTP id r15-v6so5006268wmc.1
+        for <git@vger.kernel.org>; Fri, 01 Jun 2018 12:59:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=MicroFocusInternational.onmicrosoft.com; s=selector1-microfocus-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=FTwKfBKbcGzirdyOe8gHX8ALN3HuGGw6UxahDLUZZXM=;
- b=T1HM8w2GBvnBxg5MadNi1Osa4hDdDiuzLNf0DPCT6k+34Jydq/sODWlKDZmqCt9tdGswgmL9jGJQt12Awz9h4XZZa4HgfTNoB2xw7gvdLyis3bEtVg62aViFUj+tLy5V6uba5ERK8jrtaGHcXVuXDdVFTZdkaZnUMls8dWnKsTA=
-Received: from MW2PR18MB2284.namprd18.prod.outlook.com (52.132.183.149) by
- MW2PR18MB2300.namprd18.prod.outlook.com (52.132.183.153) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id
- 15.20.797.11; Fri, 1 Jun 2018 19:41:33 +0000
-Received: from MW2PR18MB2284.namprd18.prod.outlook.com
- ([fe80::3578:79db:ad07:8bce]) by MW2PR18MB2284.namprd18.prod.outlook.com
- ([fe80::3578:79db:ad07:8bce%13]) with mapi id 15.20.0797.020; Fri, 1 Jun 2018
- 19:41:33 +0000
-From:   Isaac Chou <Isaac.Chou@microfocus.com>
-To:     =?utf-8?B?TWFydGluIMOFZ3Jlbg==?= <martin.agren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-CC:     Git Mailing List <git@vger.kernel.org>,
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=hxU0XZe39sSpukBAWpCJNlcIwDfVPkUX1/EVfTiH36s=;
+        b=rhwDyptAD+xrbnTQYXw6Oq9OW9IkxgSH/2q7gKeGVe9utW1jdv6TpDy0ub3q+/ra6y
+         KMryQCbdqGcVKaudWvRzYiGBrG6jx/SXXpKo+MxJAlgk8rL6srfc7XRoQ7MvdKP9eOaQ
+         MxEh7TUMlbwUrqjwVTvJEkTtyjxzjIJDrxx9FIwOC1SXkpo1Ozfh/4ZaNCaozk8JSyLQ
+         7EFLCqCPOd0vGopewa1dagtoqFYyAQalG4hjS4ktl2Oc6n+qoIQykgQvupw2jyvlyuyP
+         YXJLTLMooT09q3gJmp9e7WKZzulayfueY6oJyrIY+pS0vHwH42L/os3e3V3gQkVA+OoZ
+         PUbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=hxU0XZe39sSpukBAWpCJNlcIwDfVPkUX1/EVfTiH36s=;
+        b=nw8eTOs1Bm7Od++eePQp2w8Y0W9xRlbARBTtyEO49GEh5W/qOO5FP8j/AasekPhvEI
+         eIB+ImKpCfXAI994CkIF4fY+4iOIOEJ2M8mbIGy2fzCsX6WEZ+5Qv4cc/qGM1P91pSQ2
+         LpRn6tgdh4rXKbWg3Z+yT1tV4ti2v33/ZYRCsZZDq2y60thSFj8Brrw1GrK4m+eEJwow
+         v7SO88K1yonQ/dzuHIesZbZfIftW/1+6brVGduFgzHlYfRpzI3gpDEsoIl3emTOEd6u1
+         KdwIeyLozLyDSLrNIN+C1frru8VgjwP+SfIKyFQo0oJkhQUlBMy4ptkACigFU7iFj6Sk
+         Kc0g==
+X-Gm-Message-State: ALKqPwcpgUJSMzINQdvicyoqAzvmb3rNpivgAVzkFr5Po+Q2o8EqTIZX
+        4i6ESJN57o8Zjlvj3XvuvbU=
+X-Google-Smtp-Source: ADUXVKIyhz+1M3TIdw8YyZXsx1jiapxL6Jye0MsxoG0WFupeJbEKjhpJN5cCLgqWji0dA8BGCtj6FA==
+X-Received: by 2002:a50:f5d7:: with SMTP id x23-v6mr13458567edm.132.1527883178352;
+        Fri, 01 Jun 2018 12:59:38 -0700 (PDT)
+Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
+        by smtp.gmail.com with ESMTPSA id v23-v6sm22077600edr.48.2018.06.01.12.59.37
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 01 Jun 2018 12:59:37 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: RE: [PATCH v3] fast-export: fix regression skipping some
- merge-commits
-Thread-Topic: [PATCH v3] fast-export: fix regression skipping some
- merge-commits
-Thread-Index: AQHT2PTXTyCh0ZhfU0ya0Uk3uyTvrqQKk/G4gAA2+4CAQT7dwA==
-Date:   Fri, 1 Jun 2018 19:41:33 +0000
-Message-ID: <MW2PR18MB22845EE9631BB6586BA4E8E8E5620@MW2PR18MB2284.namprd18.prod.outlook.com>
-References: <nycvar.QRO.7.76.6.1804202258071.4241@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <20180420221231.4131611-1-martin.agren@gmail.com>
- <xmqqh8o5b4ww.fsf@gitster-ct.c.googlers.com>
- <CAN0heSqQckJT-4mHbwoP_XjbE2-UH8+k2nG6mnN76_t3nzO_xw@mail.gmail.com>
-In-Reply-To: <CAN0heSqQckJT-4mHbwoP_XjbE2-UH8+k2nG6mnN76_t3nzO_xw@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [74.122.108.54]
-x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;MW2PR18MB2300;7:7LyyD8fnsOOgQZ6OARl9WZoVVIWXjZt7l97mwJtpK53l85WxUnSFVNJwkE8tqD4p6D8N3xvAW/cDf+IPt9xUZu0AhvNxDuLgNCFXL38toGwnR8urtnAuV3//6vKnR7l3qoOWWCHIo+B17I8XolCmBBpTTsNQPifKyOTmvcoNLY3yeI1myfQdC4H6riM55Yu+O9zqToOHOOGSy0ArAy7sLE+idTRHiAWprPMhrNV5vHgQ1lqBJjW5Up80hOTKmulU
-x-ms-exchange-antispam-srfa-diagnostics: SOS;
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(5600026)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7153060)(7193020);SRVR:MW2PR18MB2300;
-x-ms-traffictypediagnostic: MW2PR18MB2300:
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=Isaac.Chou@microfocus.com; 
-x-microsoft-antispam-prvs: <MW2PR18MB230006AAEDE7AA6C53C05C43E5620@MW2PR18MB2300.namprd18.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(26323138287068)(9452136761055)(85827821059158)(211936372134217)(153496737603132)(100324003535756);
-x-ms-exchange-senderadcheck: 1
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(5005006)(8121501046)(3231254)(944501410)(52105095)(10201501046)(93006095)(93001095)(3002001)(149027)(150027)(6041310)(20161123560045)(20161123558120)(20161123564045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123562045)(6072148)(201708071742011)(7699016);SRVR:MW2PR18MB2300;BCL:0;PCL:0;RULEID:;SRVR:MW2PR18MB2300;
-x-forefront-prvs: 0690E5FF22
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(396003)(366004)(39860400002)(39380400002)(376002)(346002)(199004)(189003)(13464003)(3660700001)(81166006)(9686003)(39060400002)(68736007)(8936002)(99286004)(105586002)(33656002)(25786009)(26005)(5660300001)(72206003)(86362001)(305945005)(76176011)(106356001)(5250100002)(3280700002)(81156014)(3846002)(6116002)(2906002)(74316002)(53936002)(8676002)(55016002)(8666007)(7736002)(6246003)(14454004)(2900100001)(66066001)(229853002)(478600001)(186003)(4326008)(6506007)(6436002)(446003)(93886005)(54906003)(7696005)(97736004)(8656006)(11346002)(110136005)(476003)(486006)(316002)(53546011)(102836004)(14547495005)(554374003);DIR:OUT;SFP:1102;SCL:1;SRVR:MW2PR18MB2300;H:MW2PR18MB2284.namprd18.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
-received-spf: None (protection.outlook.com: microfocus.com does not designate
- permitted sender hosts)
-x-microsoft-antispam-message-info: mhpeMheLih51p+TZ3PqffLTYihLbTfh4KK8jxZLn2QYMYXobsOSadDwCHhhQjP8/u8F5KDrwhyxXkR4zCgoNOnr7aUhdJbrhLCTBy72lMc1RBr3JexRrQxo2v7YXcf9GQ7+APuLRvw+Mz8rotDRBx1A5QfKGWXPigF7g6UEdE56XZeEqI3bt3sF/5UHNTV5o
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH v4 8/9] checkout: add advice for ambiguous "checkout <branch>"
+References: <87a7sg9sjz.fsf@evledraar.gmail.com> <20180531195252.29173-1-avarab@gmail.com> <20180531195252.29173-9-avarab@gmail.com> <CAPig+cQfw8-qJSt=Xbyxy1SUUDQZ-e1cGrG4g0KnO4zd7m+2dw@mail.gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <CAPig+cQfw8-qJSt=Xbyxy1SUUDQZ-e1cGrG4g0KnO4zd7m+2dw@mail.gmail.com>
+Date:   Fri, 01 Jun 2018 21:59:36 +0200
+Message-ID: <87wovi8ehj.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-X-MS-Office365-Filtering-Correlation-Id: b7958537-bce2-462a-9708-08d5c7f7ae08
-X-MS-Exchange-CrossTenant-Network-Message-Id: b7958537-bce2-462a-9708-08d5c7f7ae08
-X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Jun 2018 19:41:33.2347
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 856b813c-16e5-49a5-85ec-6f081e13b527
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW2PR18MB2300
-X-OriginatorOrg: microfocus.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SGVsbG8sIEkgbmVlZCBoZWxwIG9uIHRoaXMgdG9waWMgYWdhaW4uICBJIG5lZWQgdG8gaW5mb3Jt
-IG91ciBjdXN0b21lcnMgd2hhdCByZWxlYXNlIHRoaXMgaXNzdWUgd2lsbCBiZSBhZGRyZXNzZWQg
-aW4uICBJIGNoZWNrZWQgdGhlIDIuMTcuMSBiaW5hcnkgcmVsZWFzZSByZWNlbnRseSBhbmQgZm91
-bmQgdGhhdCB0aGUgZml4IGlzIG5vdCBpbmNsdWRlZC4gIENhbiBzb21lb25lIGhlbHAgbWUgd2l0
-aCB0aGF0IGluZm9ybWF0aW9uIG9yIHBvaW50IG1lIHRvIGEgZG9jdW1lbnQgdGhhdCBJIGNhbiB1
-c2UgdG8gZGV0ZXJtaW5lIGl0IG15c2VsZj8NCg0KVGhhbmtzLA0KDQpJc2FhYw0KDQotLS0tLU9y
-aWdpbmFsIE1lc3NhZ2UtLS0tLQ0KRnJvbTogTWFydGluIMOFZ3JlbiBbbWFpbHRvOm1hcnRpbi5h
-Z3JlbkBnbWFpbC5jb21dIA0KU2VudDogU2F0dXJkYXksIEFwcmlsIDIxLCAyMDE4IDM6MDAgQU0N
-ClRvOiBKdW5pbyBDIEhhbWFubyA8Z2l0c3RlckBwb2JveC5jb20+DQpDYzogR2l0IE1haWxpbmcg
-TGlzdCA8Z2l0QHZnZXIua2VybmVsLm9yZz47IEpvaGFubmVzIFNjaGluZGVsaW4gPGpvaGFubmVz
-LnNjaGluZGVsaW5AZ214LmRlPjsgSXNhYWMgQ2hvdSA8SXNhYWMuQ2hvdUBtaWNyb2ZvY3VzLmNv
-bT47IEpvbmF0aGFuIFRhbiA8am9uYXRoYW50YW5teUBnb29nbGUuY29tPg0KU3ViamVjdDogUmU6
-IFtQQVRDSCB2M10gZmFzdC1leHBvcnQ6IGZpeCByZWdyZXNzaW9uIHNraXBwaW5nIHNvbWUgbWVy
-Z2UtY29tbWl0cw0KDQpPbiAyMSBBcHJpbCAyMDE4IGF0IDA1OjQzLCBKdW5pbyBDIEhhbWFubyA8
-Z2l0c3RlckBwb2JveC5jb20+IHdyb3RlOg0KPiBidXQgSSBkbyBub3QgdGhpbmsgdGhlIHVwZGF0
-ZWQgImZpeCIgYmVsb3cgaXMgYmV0dGVyLiAgSXQgbWlnaHQgYmUgDQo+IGp1c3QgYWVzdGhldGlj
-cyBhbmQgSSBzdXNwZWN0IEkgd29uJ3QgZmluZCBpdCBhcyBkaXN0dXJiaW5nIGlmIHdlIA0KPiBj
-b3VsZCBwdXNoIHdpdGgNCj4NCj4gICAgICAgICBvYmplY3RfYXJyYXlfcHVzaChjb21taXRzLCAo
-c3RydWN0IG9iamVjdCAqKWNvbW1pdCk7DQo+DQo+IG9yIHNvbWV0aGluZyB0aGF0IGlzIG1vcmUg
-Y2xlYXJseSBzeW1tZXRyaWMgdG8gb2JqZWN0X2FycmF5X3BvcCgpLg0KPiBUaGUgIlF1ZXVlIGFn
-YWluIiBjb21tZW50IGlzIG5lZWRlZCBvbmx5IGJlY2F1c2UgdXNlIG9mICJhZGQiDQo+IGhpZ2hs
-aWdodHMgdGhlIGxhY2sgb2Ygc3ltbWV0cnkuDQo+DQo+IFdpdGggYWRkX29iamVjdF9hcnJheSgp
-LCBpdCBsb29rcyBzb21ld2hhdCBtb3JlIG9kZCB0aGFuIHlvdXIgcHJldmlvdXMNCj4NCj4gICAg
-ICAgICBwZWVrIGl0IHRvIGNoZWNrOw0KPiAgICAgICAgIGlmIChpdCBzaG91bGQgbm90IGJlIG1v
-bGVzdGVkKQ0KPiAgICAgICAgICAgICAgICAgcmV0dXJuOw0KPiAgICAgICAgIHBvcCB0byBtYXJr
-IGl0IGNvbnN1bWVkOw0KPiAgICAgICAgIGNvbnN1bWUgaXQ7DQo+DQo+IHNlcXVlbmNlLCBpbiB3
-aGljaCBwZWVrKCkgYW5kIHBvcCgpIHdlcmUgbW9yZSBvYnZpb3VzbHkgcmVsYXRlZCANCj4gb3Bl
-cmF0aW9ucyBvbiB0aGUgc2FtZSAiYXJyYXkiIG9iamVjdC4NCj4NCj4gQW5kIEkgZG8gbm90IHRo
-aW5rIGl0IGlzIGEgZ29vZCBpZGVhIHRvIGludHJvZHVjZSBfcHVzaCgpIG9ubHkgZm9yIA0KPiBz
-eW1tZXRyeSAoaXQgd291bGQgbWVyZWx5IGJlIGEgbGVzcyBjYXBhYmxlIHZlcnNpb24gb2YgYWRk
-IHdob3NlIG5hbWUgDQo+IGlzIHNwZWxsZWQgZGlmZmVyZW50bHkpLiAgSGVuY2UgbXkgcHJlZmVy
-ZW5jZSBmb3IgcGVlay1jaGVjay1wb3Agb3ZlciANCj4gcG9wLW9vcHMtcHVzaC1hZ2Fpbi1idXQt
-cHVzaC1zcGVsbGVkLWFzLWFkZC4NCj4NCj4gTm90IHdvcnRoIGEgcmVyb2xsLCB0aG91Z2guICBJ
-IGp1c3Qgd2FudGVkIHRvIHNwcmVhZCBiZXR0ZXIgZGVzaWduIA0KPiBzZW5zZSB0byBjb250cmli
-dXRvcnMgOy0pDQoNClRoYW5rcyBmb3IgeW91ciB3aXNlIHdvcmRzLiA6LSkgT25lIHRoaW5nIHRo
-YXQganVzdCBvY2N1cnJlZCB0byBtZSBpcyB0aGF0IGlmIHRoZSBvcmlnaW5hbCBzaXRlIHdoZXJl
-IHdlIGBhZGRfb2JqZWN0X2FycmF5KClgIGFsbCBvYmplY3RzIHN0YXJ0cyBhZGRpbmcgYSBub24t
-TlVMTCBgbmFtZWAgZm9yIHNvbWUgcmVhc29uLCB0aGVuIHdlIG5lZWQgdG8gcmVtZW1iZXIgdG8g
-ZG8gdGhlIHNhbWUgd2l0aCB0aGlzIG5ldyBjYWxsZXIuIEkgc3VzcGVjdCB0aGF0IGF0IHRoYXQg
-dGltZSwgYXQgdGhlIGxhdGVzdCwgd2Ugd2lsbCBiZSBzd2l0Y2hpbmcgdG8gcGVlay1jaGVjay1w
-b3AuDQoNClRoYW5rcyBmb3Igc2hhcmluZyB5b3VyIHRob3VnaHRzLg0KDQpNYXJ0aW4NCg==
+
+On Fri, Jun 01 2018, Eric Sunshine wrote:
+
+> On Thu, May 31, 2018 at 3:52 PM, Ævar Arnfjörð Bjarmason
+> <avarab@gmail.com> wrote:
+>> As the "checkout" documentation describes:
+>>
+>>     If <branch> is not found but there does exist a tracking branch in
+>>     exactly one remote (call it <remote>) with a matching name, treat
+>>     as equivalent to [...] <remote>/<branch.
+>>
+>> This is a really useful feature, the problem is that when you another
+>
+> s/, the/. The/
+> s/you/& add/
+
+Thanks!
+
+>> remote (e.g. a fork) git won't find a unique branch name anymore, and
+>> will instead print this nondescript message:
+>>
+>>     $ git checkout master
+>>     error: pathspec 'master' did not match any file(s) known to git
+>>
+>> Now it will, on my git.git checkout, print:
+>>
+>>     $ ./git --exec-path=$PWD checkout master
+>>     error: pathspec 'master' did not match any file(s) known to git.
+>>     hint: The argument 'master' matched more than one remote tracking branch.
+>>     hint: We found 26 remotes with a reference that matched. So we fell back
+>>     hint: on trying to resolve the argument as a path, but failed there too!
+>>     hint:
+>>     hint: Perhaps you meant fully qualify the branch name? E.g. origin/<name>
+>
+> s/meant/& to/
+>
+>>     hint: instead of <name>?
+>>
+>> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+>> ---
+>> diff --git a/builtin/checkout.c b/builtin/checkout.c
+>> @@ -1269,6 +1270,16 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+>> +               if (ret && dwim_remotes_matched > 1 &&
+>> +                   advice_checkout_ambiguous_remote_branch_name)
+>> +                       advise(_("The argument '%s' matched more than one remote tracking branch.\n"
+>> +                                "We found %d remotes with a reference that matched. So we fell back\n"
+>> +                                "on trying to resolve the argument as a path, but failed there too!\n"
+>> +                                "\n"
+>> +                                "Perhaps you meant fully qualify the branch name? E.g. origin/<name>\n"
+>
+> s/meant/& to/
+>
+>> +                                "instead of <name>?"),
+
+Will rephrase to make this less confusing.
