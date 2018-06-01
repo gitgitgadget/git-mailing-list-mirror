@@ -3,94 +3,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ECDAC1F42D
-	for <e@80x24.org>; Fri,  1 Jun 2018 01:46:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F2BB1F42D
+	for <e@80x24.org>; Fri,  1 Jun 2018 02:01:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750914AbeFABqv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 May 2018 21:46:51 -0400
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:34682 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750869AbeFABqt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 May 2018 21:46:49 -0400
-Received: by mail-qt0-f194.google.com with SMTP id m5-v6so30359169qti.1
-        for <git@vger.kernel.org>; Thu, 31 May 2018 18:46:49 -0700 (PDT)
+        id S1751168AbeFACBd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 May 2018 22:01:33 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:32843 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750868AbeFACBc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 May 2018 22:01:32 -0400
+Received: by mail-wm0-f68.google.com with SMTP id z6-v6so3672272wma.0
+        for <git@vger.kernel.org>; Thu, 31 May 2018 19:01:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=hcJ982fehKz2uZyjoj5jrjuEvTeBVhLrASGTvdI6A8w=;
-        b=PhAMirZCJc3a5dr6luo4G8Tpu3srNHgRApqan+kQa0qHibMTxEquvdGeheqSFu4Wzr
-         4jg74Lv3taaBe3oyWI3h5N9dDZvlKW3AbSsHfEt6pup7aseHxjNUivTJ5K4eduuh9Glr
-         2QyoPKG7fbqWYfvJk2fxXcAgZPHm15sYtYe2u2CPctPujqvOCce57U0rVA0GWyir1oQC
-         42wmuxFRk+uo7QiYZdnsDTdSInXdroRhBv2hv/Po0rv90UmIWWi2ZrPrV/oFGwmGmAjA
-         DLwm35xiw93TPYqPQ9d2GSBkse5EN58AZAFT2y16ydd9RuDiMadfBcFvXNm3Rd2uGTi+
-         0e8g==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=a9oeIrvJtgISPwQnjjS1q//rSVoc57XzBMkrGK/VP0s=;
+        b=Qy0JgVWd/rCxq9JRNQ5X9QOtiOZK+M0rofVmmCEyqS30hU+W64X9+13kfUndq4zYtw
+         /JOI5wgeC1Qx3BNgaZoem/MSTnvhVPKhPfJSAULyI5gNRRFTDS/sDLCAqpVk+p848vwG
+         uDN0UgszBWVX9jeDcGcUjC5jlIn/CCRj8WVokt7aDJ8Ky8tg9ihyWs73hzLTqBmDyg0I
+         KR4PePE5by1FCgInSlClDzU4n+HemrrC2kn+wvMyoPEysZUZI5aLZ0rvdHg3fkReSW3/
+         +jXT6FKhe03wpe28a7rSoes1zIwiauuvOFZjqiZttU0CVq0YRaXHJbpAB+zxs2ezh6oT
+         ZUAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=hcJ982fehKz2uZyjoj5jrjuEvTeBVhLrASGTvdI6A8w=;
-        b=enal8Nytj57refv2Z9Z20mU7wQhyAzDvxgUGu4gmZerAAOQEsTT3qol4pUnzfL8sf2
-         hDPrSEZv9da83KDWi5lYd6+AE312oTGmd39SF3X/PAf9+iBkxaJFr+nWfIde2NrG1y8f
-         CdSGbioH9ZffxG4sKJkIJ24FZKCdlQoPSNfBzNVUjYfDgZM2HHGU6sS12aPM6eE0KMD/
-         TVh53PYMdGmNxsDDs1/H4mG8Lz6tAFD7x8xy9l2bmROW8e40iwPnBsxd//4AJTq/yik5
-         Xv6rrHyfj5sMfbkFDx9yw0hgQ06xM6h1xplWfWM5ZIe0SOo5wS9JViLRFGLrpmLxFh0o
-         Lzvw==
-X-Gm-Message-State: APt69E0Rowp7C+jV8BxTa9lSbeeP4G6Uu5PDAc5pW4edrJ/iIIkQF7bf
-        NpJISE+74uoXfaG2n41mp9cDV0RpHYb5iIK///4=
-X-Google-Smtp-Source: ADUXVKJQwd1/3yRvO8UkIvOqMBaZieIg2U6TQ62nBvtoMNLMJBuT7eUVnQCgLRPLM56RqSrQ4w1gkQM3l2oFNKLbDGg=
-X-Received: by 2002:ac8:43d5:: with SMTP id w21-v6mr9010395qtn.137.1527817609357;
- Thu, 31 May 2018 18:46:49 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=a9oeIrvJtgISPwQnjjS1q//rSVoc57XzBMkrGK/VP0s=;
+        b=aZUJDIAj8ikm+ElKnRFB1SuIfP/jtTQy3I66cME9qLRQYnIrRPPqQuv+oTist++rTN
+         bi/onCxshVsHSmAIYVA3Fh45bOBO9MR0Dku0ApQpOteWrldjqgdd9BDc66MY4cByREKS
+         gTDLaU8CcuIv1sU1LG02+AfyANAb1b2nHvaIVRmleCXADUsiPo98CHVgFEuR6axJlcPL
+         t+V12FeP0gSbTVf7+HbApXSn+t4Xcmg0ZoSXnRorkKrP4UPKboEYboA3kEKkWVe3BrnL
+         UnLQ22vDev8IoqkvFVu2sU/9Aq8JgpHQtTyiJ2B2h+mNDIWlbdtdpHyyF3FoXs1LD1oM
+         01tg==
+X-Gm-Message-State: ALKqPwcDYMiLW4t4k9x1BZiYrQuDuDE3FozxqIWeN5aN8edtUZ+UFfZb
+        OVnb7FYu6/8cDDOEVMxvPzs=
+X-Google-Smtp-Source: ADUXVKL7+bmmzc0dCqtOdkBqozfyrCyKiX+xTtkzGrPQDJGYRKKCTNAHNVhTT5dr+JU07ouoBGSGiQ==
+X-Received: by 2002:a1c:6c09:: with SMTP id h9-v6mr1374318wmc.138.1527818491275;
+        Thu, 31 May 2018 19:01:31 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id k28-v6sm52245459wrk.46.2018.05.31.19.01.30
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 31 May 2018 19:01:30 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org, bmwill@google.com
+Subject: Re: [PATCH 5/5] refspec.c: use rhs in parse_refspec instead of potentially uninitialized item->dst
+References: <20180530170433.191495-1-sbeller@google.com>
+Date:   Fri, 01 Jun 2018 11:01:29 +0900
+In-Reply-To: <20180530170433.191495-1-sbeller@google.com> (Stefan Beller's
+        message of "Wed, 30 May 2018 10:04:33 -0700")
+Message-ID: <xmqqzi0f9see.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 2002:a0c:b48d:0:0:0:0:0 with HTTP; Thu, 31 May 2018 18:46:48
- -0700 (PDT)
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Fri, 1 Jun 2018 09:46:48 +0800
-Message-ID: <CANYiYbG=eGa08LKh_D4a0xDx6vY0wJ53Y8HuAzbZzVfuSim6pQ@mail.gmail.com>
-Subject: [L10N] Kickoff of translation for Git 2.18.0 round 1
-To:     Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        Ralf Thielow <ralf.thielow@gmail.com>,
-        =?UTF-8?Q?Christopher_D=C3=ADaz?= <christopher.diaz.riv@gmail.com>,
-        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
-        Marco Paolone <marcopaolone@gmail.com>,
-        Changwoo Ryu <cwryu@debian.org>,
-        Vasco Almeida <vascomalmeida@sapo.pt>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-        Jiang Xin <worldhello.net@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Stefan Beller <sbeller@google.com> writes:
 
-Git v2.18.0-rc0 has been released, and it's time to start new round of git =
-l10n.
-This time there are 108 updated messages need to be translated since last
-update:
+> 'item->dst' has not been assigned if '!rhs' is true. As the caller is allowed to pass in uninitialized
+> memory (we don't assume 'item' was zeroed out before calling), this fixes an access to
+> uninitialized memory.
 
-    l10n: git.pot: v2.18.0 round 1 (108 new, 14 removed)
+Did I miss the other 4 patches that this might depend on it?
 
-    Generate po/git.pot from v2.18.0-rc0 for git v2.18.0 l10n round 1.
+> diff --git a/refspec.c b/refspec.c
+> index c59a4ccf1e5..ea169dec0d3 100644
+> --- a/refspec.c
+> +++ b/refspec.c
+> @@ -108,7 +108,7 @@ static int parse_refspec(struct refspec_item *item, const char *refspec, int fet
+>  		 * - empty is not allowed.
+>  		 * - otherwise it must be a valid looking ref.
+>  		 */
+> -		if (!item->dst) {
+> +		if (!rhs) {
+>  			if (check_refname_format(item->src, flags))
+>  				return 0;
+>  		} else if (!*item->dst) {
 
-    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+Perhaps a better fisx is to explicitly assign NULL to item->dst when
+we see there is no right-hand-side.
 
-You can get it from the usual place:
+Aside from the "uninitialized" issue, the original if/else cascade
+around here makes a lot more sense than the updated version.  If we
+do not leave item->dst uninitialized, the control (and the readers'
+understanding) can flow without having to carry the invariant
+"item->dst is set ONLY when rhs != NULL" throughout this codepath,
+in order to understand that this if/else cascade is asking: is
+pointer NULL?  then do one thing, otherwise is pointee NUL? then do
+another thing, otherwise we have a non-empty string so do something
+on it.
 
-    https://github.com/git-l10n/git-po/
 
-As how to update your XX.po and help to translate Git, please see
-"Updating a XX.po file" and other sections in =E2=80=9Cpo/README" file.
 
---
-Jiang Xin
