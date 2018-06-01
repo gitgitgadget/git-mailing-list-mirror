@@ -2,144 +2,232 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 679561F51C
-	for <e@80x24.org>; Fri,  1 Jun 2018 09:44:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61F361F51C
+	for <e@80x24.org>; Fri,  1 Jun 2018 09:47:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750795AbeFAJoI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Jun 2018 05:44:08 -0400
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:26842 "EHLO
-        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750737AbeFAJoH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Jun 2018 05:44:07 -0400
-Received: from [192.168.2.240] ([92.22.30.137])
-        by smtp.talktalk.net with SMTP
-        id OgbNfTKcJoI6LOgbNfr0J4; Fri, 01 Jun 2018 10:44:06 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1527846246;
-        bh=O6OgRmwIA44uDoE4eKjOi1K3D+fPUmaTbQNmekfje10=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=mXKaeoU3MmJPN26fz6grbN6jqYmu8SBvEFpDYu/gk/MmFv0JnDUr9vSMEkZIEJx3u
-         T8pWGxYMjYzgWhP52/OdVHk95ifQCaRYC1JACN+MWigNWQ6SWrFEH/lS1UsSf8W7Al
-         DwAkRcUUVyqAMuw/rwb57U4tPgHlOGNr4sBy1R1Y=
-X-Originating-IP: [92.22.30.137]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=FOE1Odgs c=1 sm=1 tr=0 a=2E67H+H4u1YVIwSqTyRiqw==:117
- a=2E67H+H4u1YVIwSqTyRiqw==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
- a=vJk4UQTCGuZNAsvI6JQA:9 a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [GSoC][PATCH 0/2] rebase -i: rewrite append_todo_help() in C
-To:     Stefan Beller <sbeller@google.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Alban Gruin <alban.gruin@gmail.com>, git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20180531110130.18839-1-alban.gruin@gmail.com>
- <a6d6e5c1-e7ea-1131-c798-9d5e44603d87@talktalk.net>
- <CAGZ79kZ7HiyZTS40XPwpjN3PBbdW0ETN=dfzeE-90Rp+irXnSA@mail.gmail.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <061ebcf7-f88e-4d4d-da73-f81e9251ee3b@talktalk.net>
-Date:   Fri, 1 Jun 2018 10:44:04 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+        id S1751327AbeFAJrg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Jun 2018 05:47:36 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:50422 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750739AbeFAJrf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Jun 2018 05:47:35 -0400
+Received: by mail-wm0-f68.google.com with SMTP id t11-v6so1848463wmt.0
+        for <git@vger.kernel.org>; Fri, 01 Jun 2018 02:47:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=HBXqkXtP/6A4Qr2jgj9CrF3z37Fcy8e6dDZmobsskEo=;
+        b=krKLzblvohhUbnBw8gnRwjeqqMrPgQSKNTF1DnJJH720XJMZ/wx3las+BV7UsikNyF
+         wNV3PDa3YDaMXADx9U7n+AgfPkJ5L77gVFy9HVm/SY6NrYAsQzC7RrYrwSH+Is3m9Uaf
+         kw/gVETBgfmFo5yw3bFJZcYIURMY1/68SUqBuVs2b1VqBVFJzXeHdhYmfs2WJBDebhMR
+         tpPwtR8Tos9MyAz/7m/V/RuS6FEnrGFgMbT6foOFiWO8U6ScceshkGCupHBkxJxSNM8D
+         LEj5xYrWKGAAFVb7+8GKK0IOaQhoJJd3BCZghJwYmwt5zkk2ZDAyQ8h44yo9kqbSdHiD
+         K14w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=HBXqkXtP/6A4Qr2jgj9CrF3z37Fcy8e6dDZmobsskEo=;
+        b=mtc4zdlES48Aa2NBnADAJXKN8rqeaek2bHxhwgt6knwZEwjWhN0PlrDf4COtHKNzdC
+         VIU8OzP/frzsAKvb1/zqqd7o7FjkGYTKG7L9vi0CDbNiV4kaDH6+/06C1x2ZoXr50tcS
+         9q1k/a7NH1cUPcGE0hn+1TAmyOEieTZkClw6jbkoZ3Fr7dbJOuABKYGsFTNMy9vzxHoO
+         wXBP1U0vZznG1YAJG9JmMYC/JT/KXp7ahLkewmUMhlnM9MJ0fAJmdOpFyLqwOhZ9vbPv
+         JaNTI24Hz86mmXoJL6Rkod8ktwJX4luu2XQkP3W1An/7w9J+oAW+3amcGGMm7hniYTNb
+         ccxQ==
+X-Gm-Message-State: ALKqPwe7fiKpYrr6LQTJ8C0boxWo7GRM8tAMSuu+90AMTqQvMyuyuZWG
+        8kwMGLmpMAmb+8/dLWf50iI=
+X-Google-Smtp-Source: ADUXVKKbATTAvQuErRaZuVawPIusuN4l6eep8zLvckjKB9QQkyknE6BJ3lThiTKf+nEhOa7KbeMmZA==
+X-Received: by 2002:a50:a4c5:: with SMTP id x5-v6mr6372908edb.247.1527846453768;
+        Fri, 01 Jun 2018 02:47:33 -0700 (PDT)
+Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
+        by smtp.gmail.com with ESMTPSA id c46-v6sm9931332edc.34.2018.06.01.02.47.32
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 01 Jun 2018 02:47:32 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4 9/9] checkout & worktree: introduce checkout.defaultRemote
+References: <87a7sg9sjz.fsf@evledraar.gmail.com>
+        <20180531195252.29173-1-avarab@gmail.com>
+        <20180531195252.29173-10-avarab@gmail.com>
+        <CAGZ79kZKaZq+bqFTwe+Y3FU-1DHPjzNrvMNU=DM10EyOXxZJVw@mail.gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <CAGZ79kZKaZq+bqFTwe+Y3FU-1DHPjzNrvMNU=DM10EyOXxZJVw@mail.gmail.com>
+Date:   Fri, 01 Jun 2018 11:47:32 +0200
+Message-ID: <874limale3.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kZ7HiyZTS40XPwpjN3PBbdW0ETN=dfzeE-90Rp+irXnSA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfMIB/835kZ8NjArdN+LPmJ9SQ4UyW9u5GVBOFHJChCMyHwQW71ERf8Wa0BozkTbMODNDclDmIBmLLhXJ2wUvHit6nATKQW0Xwh1SCEgeVI6s5qrp19tA
- i/Fn03s8XIDAQDo/c8IepnEtKdCuotTiefkZU13l3M8ZkW0CjPO2weYk/R3/1rB9gHQdwTpfjqk19Z8eKOQBr3MfyMA0SWMVQ28jN9S7GQrM99DRJ47FGGKs
- fWJ4nwKAHPAnCaQEjNdm8a7UoXkRgFKN1z/ag7B1ejAVIrfNW7NvlC5bi1p/ih+v0iGLGdjwDlcf/ldOfjSlARSBH9VhX8WvB2zFt1Vs5jF19pnD9HDvM6z0
- Co7s8n3M
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 31/05/18 19:44, Stefan Beller wrote:
-> On Thu, May 31, 2018 at 10:48 AM, Phillip Wood
-> <phillip.wood@talktalk.net> wrote:
->> Hi Alban, it's great to see you working on this
+
+On Thu, May 31 2018, Stefan Beller wrote:
+
+> Hi Ævar,
+>
+> Sorry for chiming in late. I have a couple of thoughts:
+>
+>>     (
+>>         cd /tmp &&
+>>         rm -rf tbdiff &&
+>>         git clone git@github.com:trast/tbdiff.git &&
+>>         cd tbdiff &&
+>>         git branch -m topic &&
+>>         git checkout master
+>>     )
 >>
->> On 31/05/18 12:01, Alban Gruin wrote:
->>> This series rewrites append_todo_help() from shell to C. This is part
->>> of the effort to rewrite interactive rebase in C.
->>>
->>> The first commit rewrites append_todo_help() in C (the C version
->>> covers a bit more than the old shell version), adds some parameters to
->>> rebase--helper, etc.
+>> That will output:
 >>
->> I've had a read of the first patch and I think it looks fine, my only
->> comment would be that the help for '--edit-todo' is a bit misleading at
->> the moment as currently it's just a flag to tell rebase-helper that the
->> todo list is being edited rather than actually implementing the
->> functionality to edit the list (but hopefully that will follow in the
->> future).
-> 
-> Would you have better suggestions for the name of the flag?
-> Of the top of my head:
->    --write-edit-todo
->    --hint-todo-edit
->    --include-todo-edit-hint
-> not sure I like these names, though they seem to reflect the
-> nature of that flag a little bit better.
-> 
->>> The second one strips newlines from append_todo_help() messages, which
->>> require to update the translations. This change was advised to me by
->>> Stefan Beller, but Johannes Schindelin voiced concerns. I don’t really
->>> have a strong opinion about it, so feel free to give yours.
+>>     Branch 'master' set up to track remote branch 'master' from 'origin'.
+>>     Switched to a new branch 'master'
+>
+> I thought master is already there after the clone operation and
+> you'd merely switch back to the local branch that was created at
+> clone time?
+>
+>     $ git clone git@github.com:trast/tbdiff.git && cd tbdiff
+>     $ git branch
+>     * master
+>     $ cat .git/config
+> ...
+> [branch "master"]
+>     remote = origin
+>     merge = refs/heads/master
+>
+> But the observation is right, we get that message. When do we
+> do the setup for the master branch specifically?
+
+What you're missing is this part:
+
+    git branch -m topic
+
+I.e. we clone the repo, and have a "master" branch, we then rename
+"master" to "topic", now there's no local master branch. Then we
+checkout master either with only one remote or two.
+
 >>
->> I'm not sure I understand what the point of this patch is, if the
->> newlines are unnecessary then I'd just omit them from the first patch -
->> am I missing something?
+>> But as soon as a new remote is added (e.g. just to inspect something
+>> from someone else) the DWIMery goes away:
 >>
-> 
-> The new lines are part of the output and are currently in the part to
-> be translated:
-> For example from the German translation file:
-> 
-> #: git-rebase--interactive.sh:171
-> msgid ""
-> "\n"
-> "Do not remove any line. Use 'drop' explicitly to remove a commit.\n"
-> msgstr ""
-> "\n"
-> "Keine Zeile entfernen. Benutzen Sie 'drop', um explizit einen Commit zu\n"
-> "entfernen.\n"
-> 
-> After patch 2 is applied, the translators only see
-> "Do not remove any line. Use 'drop' explicitly to remove a commit."
-> as a need to translate, and the two additional new lines (one in front
-> and one after the string) are just put in place autormatically.
-> 
-> Usually we do not want to play sentence lego, but this is a whole
-> sentence for translation; it is rather about formatting the output for
-> the terminal, adding new lines to separate some messages.
-> 
-> I thought this patch would just show goodwill towards translators
-> that do not need to replicate the formatting exactly.
-> 
-> If you feel strongly, I'd rather see Alban drop this second patch and
-> move on instead of waiting for our argument to settle. ( I do not feel
-> strongly about it, but put it out as a suggestion as that seemed like
-> it would lead to a better end state for the project).
+>>     (
+>>         cd /tmp &&
+>>         rm -rf tbdiff &&
+>>         git clone git@github.com:trast/tbdiff.git &&
+>>         cd tbdiff &&
+>>         git branch -m topic &&
+>>         git remote add avar git@github.com:avar/tbdiff.git &&
+>>         git fetch avar &&
+>>         git checkout master
+>>     )
+>>
+>> Will output (without the advice output added earlier in this series):
+>>
+>>     error: pathspec 'master' did not match any file(s) known to git.
+>>
+>> The new checkout.defaultRemote config allows me to say that whenever
+>> that ambiguity comes up I'd like to prefer "origin", and it'll still
+>> work as though the only remote I had was "origin".
+>>
+>> Also adjust the advice.checkoutAmbiguousRemoteBranchName message to
+>> mention this new config setting to the user, the full output on my
+>> git.git is now (the last paragraph is new):
+>>
+>>     $ ./git --exec-path=$PWD checkout master
+>>     error: pathspec 'master' did not match any file(s) known to git.
+>>     hint: The argument 'master' matched more than one remote tracking branch.
+>>     hint: We found 26 remotes with a reference that matched. So we fell back
+>>     hint: on trying to resolve the argument as a path, but failed there too!
+>>     hint:
+>>     hint: Perhaps you meant fully qualify the branch name? E.g. origin/<name>
+>
+> s/meant fully/meant to fully/
+> s/? E.g./?\nFor example/
 
-Thanks for the explanation, I see what you're trying to do. I don't have 
-a strong feeling either way, I can see the potential advantage but as it 
-changes strings that are currently translated I'm not sure it is cost 
-free. Do you know how the translators feel about the change as they're 
-the ones it is aimed at?
+Thanks, will fix.
 
-Best Wishes
+>>     hint: instead of <name>?
+>
+> In builtin/submodule--helper.c there is get_default_remote() which also
+> hardcodes "origin". I think that is a safe thing to do.
+>
+>>     hint:
+>>     hint: If you'd like to always have checkouts of 'master' prefer one remote,
+>>     hint: e.g. the 'origin' remote, consider setting checkout.defaultRemote=origin
+>>     hint: in your config. See the 'git-config' manual page for details.
+>
+> his new setting elevates one remote over all others, which may
+> be enough for most setups and not confusing, too.
+> Consider the following:
+>
+>     git clone https://kernel.googlesource.com/pub/scm/git/git && cd git
+>     git remote add gitster https://github.com/gitster/git
+>     git remote add interesting-patches https://github.com/avar/git
+>     git remote add my-github https://github.com/stefanbeller/git
+>
+>     git checkout master
+>
+> This probably means I want to have origin/master (from kernel.org)
+>
+>     git checkout ab/checkout-implicit-remote
+>
+> This probably wants to have it from gitster/ (as it is not found on kernel.org);
+> I am not sure if it would want to look at interesting-patches/ that mirrors
+> github, but probably if it were not to be found at gitster.
+>
+> So maybe we rather want a setup to give a defined priority for
+> the search order:
+>
+>   git config dwim.remoteSearchOrder origin gitster avar
+>
+> Stepping back a bit, there is already an order in the config file
+> for the remotes, and that order is used for example for 'fetch --all'.
+>
+> I wonder if we want to take that order? (Or are the days of hand
+> editing the config over and this is too arcane? We would need a
+> config command to re order remotes). Then we could just have a
+> boolean switch to use the config order on ambiguity.
+> Although you might want to have a different order for fetching
+> and looking for the right checkout.
 
-Phillip
+I thought about this use-case, and if we want this in the future I think
+the most straightforward way is not to invent some new search order
+variable, but just make use of git config allowing multi-values, i.e.:
 
-> 
-> Thanks,
-> Stefan
-> 
+    [checkout]
+        defaultRemote = origin
+        defaultRemote = gitster
 
+Although I'm not interested in implementing that now, and unlike just
+having one special remote I don't think it's of interest to the vast
+majority of git users.
+
+>> I considered splitting this into checkout.defaultRemote and
+>> worktree.defaultRemote, but it's probably less confusing to break our
+>> own rules that anything shared between config should live in core.*
+>> than have two config settings, and I couldn't come up with a short
+>> name under core.* that made sense (core.defaultRemoteForCheckout?).
+>
+>   core.dwimRemote ? It's a bit cryptic, though.
+
+Covered by Eric's reply in
+<CAPig+cSk9Dt3ZLQRjWwpxqMyP3npu3KbEQxkNfjV5RxRtro82Q@mail.gmail.com>
+
+>> See also 70c9ac2f19 ("DWIM "git checkout frotz" to "git checkout -b
+>> frotz origin/frotz"", 2009-10-18) which introduced this DWIM feature
+>> to begin with, and 4e85333197 ("worktree: make add <path> <branch>
+>> dwim", 2017-11-26) which added it to git-worktree.
