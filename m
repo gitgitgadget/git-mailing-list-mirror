@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC9471F42D
-	for <e@80x24.org>; Fri,  1 Jun 2018 21:10:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F7E51F42D
+	for <e@80x24.org>; Fri,  1 Jun 2018 21:10:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751007AbeFAVKi (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Jun 2018 17:10:38 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:36611 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750861AbeFAVKf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Jun 2018 17:10:35 -0400
-Received: by mail-wr0-f195.google.com with SMTP id f16-v6so22179342wrm.3
-        for <git@vger.kernel.org>; Fri, 01 Jun 2018 14:10:34 -0700 (PDT)
+        id S1751053AbeFAVKl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Jun 2018 17:10:41 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:32932 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750940AbeFAVKh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Jun 2018 17:10:37 -0400
+Received: by mail-wr0-f194.google.com with SMTP id k16-v6so10267272wro.0
+        for <git@vger.kernel.org>; Fri, 01 Jun 2018 14:10:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=rKYvEF+swU/2WALNlaiUJm8QtnHf8iC+tCfnyYJ2MrQ=;
-        b=qaMpgkPrngQJxnOm0kydO2QF6X4QVGU3rF2qPfW5u8af9IyfuH7XFUfH9ESeL759Og
-         JrSIoWXcs+1O+gI06zM8Vi4hwcquaXFtkDiE5eX914k0N9IoBbydmGC5Muh87kwWAmuO
-         OCqkfEExGKG8Qn/jHgGz/9jd+1Ry1ovFJiDlsvVKLFngaSRm4mieYsubfbUY7qKsg+42
-         /iHYKnQSH7UA7MCu9x7U3Awbjo/d4hGUHcw4QUQQdFX+DGPdEoxlGdzrHe0aie0mLR/P
-         KfeXexuQwbbfXN3gGp1+3kuup5TtSsCpbTShdOS+Zcn1xNsoiZ+DVpPe4qgMb62Cm8rq
-         ZPiQ==
+        bh=Iw2YiB/ZkIh4oCVAMKTf2c/oj+UFgHHJJM7iLMD06Cw=;
+        b=mhaBeA21FVWwEWLOZaHOBl1Ph56tQDJXkUgLItu0gFlzCcxKfpBvtbmxTJ53Pk5ylY
+         m31f4gxhpfWGtFIXe1V7BqKDvp1mlVSI8J2nfi4ZwkYW9OcJAwsqddb9gGu0yxfVDF2B
+         8fn/s1NkrF+BW+uKll5RuZqXX2K/tRIcYzAsMe40Oev7tCnIFarvFiTb9PfzH7P8d+xV
+         LiFvBPaJj5wYKrUYnco2yxL9S07+bDsoRKaaK7P9HLEjJM2z+nhKzvgkDuCmE3oJU1kc
+         u27aTFThKpJewm9BAZ2gkWrUUVgKLLAylu/qTORwNaPtHw87/TwSxiDMJaBHkgBvGleI
+         2f1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=rKYvEF+swU/2WALNlaiUJm8QtnHf8iC+tCfnyYJ2MrQ=;
-        b=JDnDVxWQDJxz55hD3Su2LeqgDSpeXckHgSxxIlfn+s4xh9qsNh2UO23skmvZ1G90ck
-         D7ZO0fjEXKm8YU7Gi8HfTBolO9pC907Zm/x8Bxa6OxfDjF3uBpBeY1fgXlsptDIES5HY
-         NCPGZdpoCRkP8EILDCxYVdBlYGG4ji+rT4/3iiAmNc+REtZ/doP2emkGg/VqKZWnIUfR
-         0n+wdc7Ytn0wKetj0buPXw1cTgSi7/S54XDD9ipbPe2V5cuOUVd+hj2TysW/tASzX6Eg
-         +XeptxKk7wiYVGvFqSiYGoTZuzCE+abPoMbpgoy2gwv9fHpc4+S6JQPR7A5L0cOxGYnN
-         uAZg==
-X-Gm-Message-State: ALKqPwdSKc6unquSPTOudEUA8n6sRzrvRHoq53KlE/EehordPVDexfwZ
-        sqLYmx5aGwsuWkCjMh5jvuv/4h3X
-X-Google-Smtp-Source: ADUXVKK+Ts2LR5TqU+0jeg+HHxWkZo8WSxFHr6vYCB7gwtdWrrE6Utl3Q6UhO/iqOvArpoicv/6HLw==
-X-Received: by 2002:adf:91e5:: with SMTP id 92-v6mr9747116wri.124.1527887434077;
-        Fri, 01 Jun 2018 14:10:34 -0700 (PDT)
+        bh=Iw2YiB/ZkIh4oCVAMKTf2c/oj+UFgHHJJM7iLMD06Cw=;
+        b=TK+FCv6coC0dc5k9VMuvvdiwMtxN86qRq3zIgurfTO0Jib+duryFCGQGnCeXAKVPNw
+         OuykkA88xAYP/Ciz9AHy96Mzmh/i5lsTfpg9WxdYnkBvGe2t5bvqY7LhBmUxywkzDh1S
+         E5KMaawApN4LK07Z0c9EYMdG+mmNaTwmpBiiMiZe8Y9HpM+pQ78Dtz43QdsSgstMZfPz
+         h7hV3dbyD4XcLPJ5cDfUCM+aYNZ5zUnal+fDj0/lPPaQ4/WSPwfjxKDSsfvuWpNjd1NJ
+         oWOVhcnbkgPlPwxPU0K8W/6HHBenWgam36BMTPsiv+tLwrylUUPFxst1LpFrXNzk9B8R
+         0oQg==
+X-Gm-Message-State: ALKqPwdBWKYDa55Hcw6FOnnYLyP6hjJByu6slNtAFTFQqXY9Cl8sbS1A
+        1u2dYt/gLL2qIn+teWfHIscFrFI6
+X-Google-Smtp-Source: ADUXVKIkNpsqkzS0D9AhWKQCph+L4AP0vQeAh7M6yre1nGq4Vhmvy5kFl3vL2pPis7VBK989H2x8Yw==
+X-Received: by 2002:adf:e644:: with SMTP id b4-v6mr10679070wrn.254.1527887435959;
+        Fri, 01 Jun 2018 14:10:35 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id k126-v6sm3516235wmd.45.2018.06.01.14.10.32
+        by smtp.gmail.com with ESMTPSA id k126-v6sm3516235wmd.45.2018.06.01.14.10.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 01 Jun 2018 14:10:33 -0700 (PDT)
+        Fri, 01 Jun 2018 14:10:35 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 2/8] checkout.h: wrap the arguments to unique_tracking_name()
-Date:   Fri,  1 Jun 2018 21:10:09 +0000
-Message-Id: <20180601211015.11919-3-avarab@gmail.com>
+Subject: [PATCH v5 3/8] checkout.[ch]: introduce an *_INIT macro
+Date:   Fri,  1 Jun 2018 21:10:10 +0000
+Message-Id: <20180601211015.11919-4-avarab@gmail.com>
 X-Mailer: git-send-email 2.17.0.290.gded63e768a
 In-Reply-To: <20180601211015.11919-1-avarab@gmail.com>
 References: <20180601211015.11919-1-avarab@gmail.com>
@@ -76,27 +76,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The line was too long already, and will be longer still when a later
-change adds another argument.
+Add an *_INIT macro for the tracking_name_data similar to what exists
+elsewhere in the codebase, e.g. OID_ARRAY_INIT in sha1-array.h. This
+will make it more idiomatic in later changes to add more fields to the
+struct & its initialization macro.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- checkout.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ checkout.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/checkout.h b/checkout.h
-index 9980711179..4cd4cd1c23 100644
---- a/checkout.h
-+++ b/checkout.h
-@@ -8,6 +8,7 @@
-  * tracking branch.  Return the name of the remote if such a branch
-  * exists, NULL otherwise.
-  */
--extern const char *unique_tracking_name(const char *name, struct object_id *oid);
-+extern const char *unique_tracking_name(const char *name,
-+					struct object_id *oid);
+diff --git a/checkout.c b/checkout.c
+index bdefc888ba..80e430cda8 100644
+--- a/checkout.c
++++ b/checkout.c
+@@ -10,6 +10,8 @@ struct tracking_name_data {
+ 	int unique;
+ };
  
- #endif /* CHECKOUT_H */
++#define TRACKING_NAME_DATA_INIT { NULL, NULL, NULL, 1 }
++
+ static int check_tracking_name(struct remote *remote, void *cb_data)
+ {
+ 	struct tracking_name_data *cb = cb_data;
+@@ -32,7 +34,7 @@ static int check_tracking_name(struct remote *remote, void *cb_data)
+ 
+ const char *unique_tracking_name(const char *name, struct object_id *oid)
+ {
+-	struct tracking_name_data cb_data = { NULL, NULL, NULL, 1 };
++	struct tracking_name_data cb_data = TRACKING_NAME_DATA_INIT;
+ 	cb_data.src_ref = xstrfmt("refs/heads/%s", name);
+ 	cb_data.dst_oid = oid;
+ 	for_each_remote(check_tracking_name, &cb_data);
 -- 
 2.17.0.290.gded63e768a
 
