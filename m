@@ -2,124 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6AF881F42D
-	for <e@80x24.org>; Fri,  1 Jun 2018 19:43:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0205B1F42D
+	for <e@80x24.org>; Fri,  1 Jun 2018 19:46:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752572AbeFATnW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Jun 2018 15:43:22 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:38443 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751801AbeFATnV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Jun 2018 15:43:21 -0400
-Received: by mail-wm0-f66.google.com with SMTP id m129-v6so4382447wmb.3
-        for <git@vger.kernel.org>; Fri, 01 Jun 2018 12:43:20 -0700 (PDT)
+        id S1753488AbeFATqr (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Jun 2018 15:46:47 -0400
+Received: from mail-yw0-f170.google.com ([209.85.161.170]:34315 "EHLO
+        mail-yw0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753470AbeFATqn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Jun 2018 15:46:43 -0400
+Received: by mail-yw0-f170.google.com with SMTP id b125-v6so5681107ywe.1
+        for <git@vger.kernel.org>; Fri, 01 Jun 2018 12:46:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=85avf/3kCvldjCrAp5EhM9jexzEihWG2ae/uRvqlyys=;
-        b=AhJ3gAr+AG9c0dDLXVQGqg4CObb+jPBRABt4dfLACIs0mHmL96ieNpw/NlX/iGUghj
-         KKAbzz770RIxBH1wC3WEzJ4Dn6gugs4MRbOeV3idQMMk5rN8iMpG83QDCd+QvB5ZQjr8
-         SgytODvIv/9HkdP01u6leJ67YEir5CpRw6FwjTDgi/qBT8BzzgHxllbgjCP+0BlS+8NJ
-         emLbCUVyiFZnApBvsu02oqrmoOaTqpcxAQgTPnROdtu5WkIMNCWnF1gIj2eIOdcDLZ+t
-         WW3icTXyCNLCHkprTBU6tHYv/PglfDstfgwNfRqS6eCsgoX6sjSvS3kO3RYb+NoQ6E8E
-         sypg==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=V5DAe8VogVO6a1AZn/Pci+6cz5fPzGjEYtD62jfbg7Q=;
+        b=mRYntgfu2sjybI14GUakQwwklOrM8XI6vbB6rCQl3Di1ck8lXkgCPgGtveo06THXHr
+         byrOWj7pOiagRcJUFdsmI+eAsKzL5lndGIniktqtnm014lxeFQBBQ+3Hj0V9B7Tyo0xE
+         q11maUZQt7XSLts1wTStIu4DogFHdn+SfZb33I0rWGkphCx3RLcvFEFZumWli4GV5pWb
+         femFGq9jDuQg2XqolvpF7aexxo8lOasa14bPWNa5my+n4GN+amNl6txqEGmvv/4AHi58
+         AimoPWXwrazrDDVjRkWQZo/cw18d1jshXYsol6Jm9EDeNeudgSeD7gXs7LkijMx7aJR4
+         x3iA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=85avf/3kCvldjCrAp5EhM9jexzEihWG2ae/uRvqlyys=;
-        b=lhTCvSJI69BPVwGoVXIpO3v9hfQ9elRYMSymEAQHDxqlvvzcumenijOFa2tv+L+KGv
-         fC5WfbSfZmucduEHaaqjxwaVh7FNTn7yymIQ03XQ8xRV+uCkUUjKNEy996+ec1Ka7oWe
-         JKoJxK6I9EGaSqoG/71rurjr+BRnWXfHrWM/Cbtg7K7CYSyPNgJLe6hTWH+YfcLMssUc
-         UrwNp2m1f82S/DwxzEStiM0HS6RALYZyU5sJbkT3DFTib9GKhjlDpXtLiIDTrjoU6BKb
-         yT1OT1i8KrOZnwoBz1DVwJ2CRQL4q1RyyUVm8tHj5D8P695nMLO2OjcWAIn8xF9XFZzk
-         PZlQ==
-X-Gm-Message-State: APt69E25VgNS1C/1s+V1op62KHPxDj/YBJ+J4niQaFNCGe7Ks+SEfHI/
-        VfAswJgxzTRROqkLlyIzAPo=
-X-Google-Smtp-Source: ADUXVKJWoCs/riCKSWnqpamoLLhg0YXuFLZxfcrpSef+sh4Vt4qitI8TSK/3M9eC66oX3ulZgQioGA==
-X-Received: by 2002:a50:b723:: with SMTP id g32-v6mr2137887ede.139.1527882200174;
-        Fri, 01 Jun 2018 12:43:20 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id u8-v6sm23767142edj.2.2018.06.01.12.43.18
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 01 Jun 2018 12:43:19 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 1/9] checkout tests: index should be clean after dwim checkout
-References: <20180531195252.29173-1-avarab@gmail.com> <87a7sg9sjz.fsf@evledraar.gmail.com> <20180531195252.29173-2-avarab@gmail.com> <xmqqwovj882f.fsf@gitster-ct.c.googlers.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <xmqqwovj882f.fsf@gitster-ct.c.googlers.com>
-Date:   Fri, 01 Jun 2018 21:43:18 +0200
-Message-ID: <87y3fy8f8p.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=V5DAe8VogVO6a1AZn/Pci+6cz5fPzGjEYtD62jfbg7Q=;
+        b=W2WOQUAjPXoe6dD2giZgevnKOTxhHMXEjfao7e/ONg6LIY1Z4qiLghmTvXxZVwN8bs
+         sNm3oGU1TumZHQpfivBpmofpIbd/33d3KoSKkPHv4y1yE33s5neMu5w1oc4y5gw+h2HF
+         KPpsaADs41rhsLJ5La10kZVBoPVEEwaB5XRuWdgxykeQlbWRVOqwX2uxUFQidZfef2+N
+         EswbDNYYkI+0MPFcAwpR+zrVYINDpFycKYjQdxgICcrR2MIYIjHwngY3Yt1sjN29oYkh
+         9prhTWfyQcxQM423H/JHW0VCL/Lh0jB7BnkZllXHJ5izJI+Ty8mt/DP72kRgBs1QnTFl
+         YuVg==
+X-Gm-Message-State: ALKqPwcDVXZ6u4eQYv84B0CgricUBoD88djrhrDTdBoEKNGpGEEYFmXe
+        UhIJjXx60/yVkxgwRN/JEQoosy1SNJb80iey7Wrk3w==
+X-Google-Smtp-Source: ADUXVKK/xfatzVV+J+C5aF+9r0EnTmZQCQdkx7xz+5s7jwY9TBDJKWll0eUf8RnzlLR3ZIVT/Le/266r1tE174l4AtM=
+X-Received: by 2002:a81:50d4:: with SMTP id e203-v6mr6825672ywb.421.1527882402671;
+ Fri, 01 Jun 2018 12:46:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a25:e87:0:0:0:0:0 with HTTP; Fri, 1 Jun 2018 12:46:42 -0700 (PDT)
+In-Reply-To: <061ebcf7-f88e-4d4d-da73-f81e9251ee3b@talktalk.net>
+References: <20180531110130.18839-1-alban.gruin@gmail.com> <a6d6e5c1-e7ea-1131-c798-9d5e44603d87@talktalk.net>
+ <CAGZ79kZ7HiyZTS40XPwpjN3PBbdW0ETN=dfzeE-90Rp+irXnSA@mail.gmail.com> <061ebcf7-f88e-4d4d-da73-f81e9251ee3b@talktalk.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 1 Jun 2018 12:46:42 -0700
+Message-ID: <CAGZ79ka7SMLdiVJVNU9Dzpzv4yQSYeODFnBxpwTDEhNnNkj7eg@mail.gmail.com>
+Subject: Re: [GSoC][PATCH 0/2] rebase -i: rewrite append_todo_help() in C
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Alban Gruin <alban.gruin@gmail.com>, git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+> Thanks for the explanation, I see what you're trying to do. I don't have a
+> strong feeling either way, I can see the potential advantage but as it
+> changes strings that are currently translated I'm not sure it is cost free.
+> Do you know how the translators feel about the change as they're the ones it
+> is aimed at?
 
-On Fri, Jun 01 2018, Junio C Hamano wrote:
+No, not at all.
 
-> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
->
->> Assert that whenever there's a DWIM checkout that the index should be
->> clean afterwards, in addition to the correct branch being checked-out.
->> ...
->> So let's amend the tests (mostly added in) 399e4a1c56 ("t2024: Add
->> tests verifying current DWIM behavior of 'git checkout <branch>'",
->> 2013-04-21) to always assert that "status" is clean after we run
->> "checkout", that's being done with "-uno" because there's going to be
->> some untracked files related to the test itself which we don't care
->> about.
->
-> It might not be absolutely necessary to state, but it would be
-> helpful to say that you are assuming to start a checkout (DWIM or
-> otherwise) from a clean state; without the assumption, the readers
-> need to think for a few breaths why "the index should be clean" is
-> true.
->
-> The intention and the implementation of the change both mostly look
-> good to me from a quick read.
-
-Makes sense, will fix.
-
->>  test_expect_success 'setup' '
->>  	test_commit my_master &&
->>  	git init repo_a &&
->> @@ -55,6 +61,7 @@ test_expect_success 'checkout of non-existing branch fails' '
->>  	test_might_fail git branch -D xyzzy &&
->>
->>  	test_must_fail git checkout xyzzy &&
->> +	status_uno_is_clean &&
->>  	test_must_fail git rev-parse --verify refs/heads/xyzzy &&
->>  	test_branch master
->>  '
->> @@ -64,8 +71,10 @@ test_expect_success 'checkout of branch from multiple remotes fails #1' '
->>  	test_might_fail git branch -D foo &&
->>
->>  	test_must_fail git checkout foo &&
->> +	status_uno_is_clean &&
->>  	test_must_fail git rev-parse --verify refs/heads/foo &&
->> -	test_branch master
->> +	test_branch master &&
->> +	status_uno_is_clean
->
-> Hmm, what's the point of this second one?
->
->>  '
-
-Slipped in, will remove. Thanks.
+Hence I am being vague on how much we desire it.
