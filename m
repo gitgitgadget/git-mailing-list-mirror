@@ -7,109 +7,119 @@ X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E9DBA1F51C
-	for <e@80x24.org>; Fri,  1 Jun 2018 08:23:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 804781F51C
+	for <e@80x24.org>; Fri,  1 Jun 2018 08:28:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750991AbeFAIXU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Jun 2018 04:23:20 -0400
-Received: from mout.gmx.net ([212.227.17.20]:42737 "EHLO mout.gmx.net"
+        id S1751357AbeFAI2M (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Jun 2018 04:28:12 -0400
+Received: from mout.gmx.net ([212.227.15.18]:56053 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750869AbeFAIXS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Jun 2018 04:23:18 -0400
-Received: from [192.168.0.129] ([37.201.195.106]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MIMyZ-1fSFhh0PRX-004AbP; Fri, 01
- Jun 2018 10:23:10 +0200
-Date:   Fri, 1 Jun 2018 10:23:09 +0200 (DST)
+        id S1750869AbeFAI2J (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Jun 2018 04:28:09 -0400
+Received: from [192.168.0.129] ([37.201.195.106]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MJBEo-1fRQJ42ArS-002oCm; Fri, 01
+ Jun 2018 10:28:04 +0200
+Date:   Fri, 1 Jun 2018 10:28:04 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Thomas Rast <tr@thomasrast.ch>,
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org, Thomas Rast <tr@thomasrast.ch>,
         Thomas Gummerer <t.gummerer@gmail.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
         <avarab@gmail.com>
-Subject: Re: [PATCH 02/18] Add a new builtin: branch-diff
-In-Reply-To: <8876f376-db86-c3e1-b97d-9e33506f2df2@ramsayjones.plus.com>
-Message-ID: <nycvar.QRO.7.76.6.1806011017560.82@tvgsbejvaqbjf.bet>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de> <8bc517e35d4842f8d9d98f3b99adb9475d6db2d2.1525361419.git.johannes.schindelin@gmx.de> <71b00bbf-07e7-11e1-046b-f0241b82ebd3@ramsayjones.plus.com> <nycvar.QRO.7.76.6.1805032224150.77@tvgsbejvaqbjf.bet>
- <850f1ad6-752d-85ae-ebad-feae09a76c54@ramsayjones.plus.com> <nycvar.QRO.7.76.6.1805040829390.77@tvgsbejvaqbjf.bet> <019cce70-c109-496e-e043-c471dcb21e00@ramsayjones.plus.com> <nycvar.QRO.7.76.6.1805052130360.77@tvgsbejvaqbjf.bet>
- <8876f376-db86-c3e1-b97d-9e33506f2df2@ramsayjones.plus.com>
+Subject: Re: [PATCH 00/18] Add `branch-diff`, a `tbdiff` lookalike
+In-Reply-To: <xmqqmuwszcs4.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1806011023430.82@tvgsbejvaqbjf.bet>
+References: <cover.1525361419.git.johannes.schindelin@gmx.de> <xmqqvabh1ung.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1805211144340.77@tvgsbejvaqbjf.bet> <xmqqmuwszcs4.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Ti8tIxlRxaavB/V5QA5FhFhXOEjLGsaVJY6GyeCp9C9o6uBij5U
- FDSZUX+jvPN9frQBFCeALm4MvEZpI2s8pM3CmqdTfDBmiXJdV9AgeVvEwgxRrk/Oi+KubGd
- YwGtsWsHDxcxpSr3T09IOjanaBfHVmzsHKFdXLDIDUVl5Kq+xdur75KCZd88i3IwkLUaTNv
- eiEI1aBuFCiRGrVLg6eNg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:LYLuxeaenxc=:RYHF8wVVE1UTW3eIV+/p3j
- Avskp7/l5qRh6KaN58lQfUFcQav2jIlBNAPXbU/CEJNEGCuULm/FTJAsvWUsWO8OIBqeWJy3E
- Twp4UCk3OlKgpaRmxN/DaiQKlEM5Zgcyna/f6B0JZjmbQGQm5aTDvKrgWDB8UhvMokhTTh2Lq
- gdg7eTnnX+8Ty9ClIPWb+Ks9IPsyDXF/lVYfG847ygeDeb5Eyp2sRdsmL1Ye4YFJgYEQWQib/
- 2k0pZFaYeYPkWJOgJNMDF8OcynWXdBlo4LdDaqcjNvVvnFiNcYAaCSdXfgNrj7PL3KxYV71eA
- kI2/vaSiPkzn7P4da3lnJRK80H0dGskRS9LCT22D8rGdr/oCP8RkBvuYUUKrznJVU2VqzwpmR
- w5iJeD2xJNaM+gPIh3EW/L86pqzIHKWuBF4P7wYRM78epB/wBw+N5xJ8Nk1Ko9CMB8UIL9qBT
- esG7ASnEff7ap9EYnc9xyDyLNNVZlyY13KcWSt1afwBVNrLG2WAcB9a4ct1rmFyznkgw5h1r+
- Kxyrv0VE9KmA/kmgb4mnhRpmczH+DCrA4tVDcf/K+65xJvqoTQAXcjfI3jYoX/aIoDGGPxo11
- gpKUYp2/aIMhWOoq6bQv7VlrGamz4QQus5ZQSPh71ALIjZ/Al6LSIdyzUOMeJI/GENTNQMsr1
- IXR+dZTc+A/yMC/3H0f7AYaTDdpU+t+vOR8j8C2bhTOhUuhjChIa1sD1T63lHodxv8USia26c
- uze0gwv2492FvQhEy9eDx2Wx2moeXA6Kje7JYdY4c1pxoKKfUdnwLH7k0wxUik2EO7YBhgua6
- X+H8UcE
+X-Provags-ID: V03:K1:UEnxPoNL9d2/p9+Ozgeugdws8wfAO8o4YgowegG5WvLQmDu21JO
+ zfatUzVNuSJFNjMuulKBi6bWxWBbKGBxe66UuRolgP9pWw/idSpF1wFCPMD3z4kUN1Za+UI
+ VsP7bJH9dmfI0AxAM4d0tmY0llkORldPPwjWxnMHEcwKzAq9NQh/zXgriWxTPqUoHv833Tx
+ kAiNP091DO2beVG+c/Rig==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:2yIXt8E9ono=:zDXYxIpl5jJIUYtZrH4/7T
+ JrTl+4/dSuj0qQ+O6k8zKWiyYoyo/DSn6+p1ikpjoLHypTEANaFhYr3AtmK4ZgzqUtdGcFV4c
+ Ak+H8TBMV9qipe4Tjm6rsSitS6ilGi07eMLddGxsYstyLVK2e8sJmjYr1BcqC0WQKZH1xs5Fr
+ 7WCiPj0h/4QntoewCBMNupIcGjEaQDapIbqzNZ5egO4soS+CvOUqmLTKGHmWQJDuIbl1Ueym5
+ 1tMnwstE6kjxA8pvuXUvhuNqxHHXMWNpyDJAMuiw3kGbo5ejMY7OWHK19WuzZ4JwDI1yCt6eI
+ xsnlz00hxsNkVjzJVjNfLPLMVNvG75dSRe/l+B7Hh8sWJazsu0e2dGyfc1mO5/di2aPjeQHQi
+ GX7/BZAvv0igA0OiTthOHRdKOnre3cY+0sDrQWMMb5rlL7LzFAp8cTnzskvSCNA16E5ZkTt0l
+ CSfNnaAOeQUJkgUNiWCR7cBP4YXQi58xTKLvw8DltMqzw+ykc+ZoDuONqtJdJbnlDYqfwN7a8
+ 9xDTO73z1ZfCyB+hhwKcDB1E+95tZB/425PBQ9TKQY3m9yeLsh+5EgngQQvNXobA7/E87yZhL
+ KvvYV6Tu28Xk3z0Xe/4Jdbcd0HrmWhLE/AwWGZwNmNCNvG1c0NhIA1lMQ1WMp75ztaA2nCj87
+ 2ZKkV4g7abeCVPCtUlLharhpTw3F6qV8NnZcBBEgLXh/uJ665Y4o8/DAPrpl8XbAAgdc8KuMa
+ f1aGkvQIm5xp6+1VEf74UHS8ayMQ6zfugInm4OqGvArPRJfBUusqr2K1YlypP3ApfhmAzuhMY
+ Ys+5KA9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ramsay,
+Hi Junio,
 
-On Wed, 9 May 2018, Ramsay Jones wrote:
+On Tue, 22 May 2018, Junio C Hamano wrote:
 
-> On 05/05/18 20:41, Johannes Schindelin wrote:
-> [snip]
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> [Sorry for the late reply - still catching up after (long weekend)
-> UK public holiday]
+> >> In the picture, the three pre-context lines that are all indented by
+> >> a HT are prefixed by a SP, and that is prefixed by a '+' sign of the
+> >> outer diff.
+> >
+> > Yep, that's exactly it.
+> >
+> > The way tbdiff did it was to parse the diff and re-roll the coloring on
+> > its own. I am not really keen on doing that in `branch --diff`, too.
 > 
-> > Well, what I would want to do is let the cloud work for me. By adding an
-> > automated build to my Visual Studio Team Services (VSTS) account, of
-> > course, as I have "cloud privilege" (i.e. I work in the organization
-> > providing the service, so I get to play with all of it for free).
-> > 
-> > So I really don't want to build sparse every time a new revision needs to
-> > be tested (whether that be from one of my branches, an internal PR for
-> > pre-review of patches to be sent to the mailing list, or maybe even `pu`
-> > or the personalized branches on https://github.com/gitster/git).
-> > 
-> > I really would need a ready-to-install sparse, preferably as light-weight
-> > as possible (by not requiring any dependencies outside what is available
-> > in VSTS' hosted Linux build agents.
-> > 
-> > Maybe there is a specific apt source for sparse?
+> Are you saying that these are "whitespace errors" getting painted?
+
+Indentation errors, to be precise. Yes.
+
+> It is somewhat odd because my whitespace errors are configured to be
+> painted in "reverse blue".  Perhaps you are forcing the internal
+> diff not to pay attention to the end-user configuration---which
+> actually does make sense, as reusing of "git diff" to take "diff of
+> diff" is a mere implementation detail.
+
+It may have been the case before I introduced that call to
+git_diff_ui_config(), but that happened after -v2, and I did not
+contribute -v3 yet.
+
+> In any case, the "whitespace errors" in "diff of diff" are mostly
+> distracting.
+
+Precisely. That's why I tried to suppress them in --dual-color mode.
+
+I did not try to suppress them in --color (--no-dual-color) mode, as I
+find that mode pretty useless.
+
+> > I was wondering from the get-go whether it would make sense to make
+> > --dual-color the default.
+> >
+> > But now I wonder whether there is actually *any* use in `--color` without
+> > `--dual-color`.
+> >
+> > What do you think? Should I make the dual color mode the *only* color
+> > mode?
 > 
-> Not that I'm aware of, sorry! :(
+> Sorry but you are asking a good question to a wrong person.
 > 
-> [release _source_ tar-balls are available, but that's not
-> what you are after, right?]
+> I normally do not seek much useful information in colored output, so
+> my reaction would not be very useful.  Non dual-color mode irritates
+> me due to the false whitespace errors, and dual-color mode irritates
+> me because it looks sufficiently different from tbdiff output that I
+> am used to see.
 
-No, that's not what I am after, because my goal is not to build sparse
-every time somebody pushes a new commit.
+Do you use --dual-color normally?
 
-I want to use the Hosted Agents of Visual Studio Team Services (because I
-have cloud privilege, as part of the team working on VSTS, I can use them
-for free, as much as I want, within reason of course). And yes, I want to
-use the Hosted Linux Agents for the sparse job.
+I derive *a ton* of information from the colored diff. It really helps me
+navigate the output of range-diff very quickly.
 
-So I cannot compile sparse and then install it into an agent. Those agents
-are recycled after every build, so that every new build starts from a
-clean slate.
-
-If you have anything in the way of providing some easily-consumable
-package, that would do the job. I guess I could build sparse.deb via
-checkinstall in one VSTS build, offer it as artifact, and consume that
-from the VSTS job that uses it on the Git branches.
-
-Could you point me to a robus, yet current revision of sparse (and ideally
-provide me with precise instructions how to build it so that I do not have
-to hunt for that information)?
+I ask whether you use --dual-color because in that case I would consider
+scrapping the way I handle color right now and try to imitate tbdiff's
+way. But that would lose whitespace error coloring *altogether*. So I, for
+one, would be unable to see where a subsequent patch series iteration
+fixes whitespace errors of a previous iteration.
 
 Ciao,
 Dscho
