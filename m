@@ -2,83 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 29D841F51C
-	for <e@80x24.org>; Fri,  1 Jun 2018 08:04:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C829F1F51C
+	for <e@80x24.org>; Fri,  1 Jun 2018 08:15:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751010AbeFAIED (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Jun 2018 04:04:03 -0400
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:38657 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750771AbeFAIEB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Jun 2018 04:04:01 -0400
-Received: by mail-qt0-f195.google.com with SMTP id x34-v6so17844310qtk.5
-        for <git@vger.kernel.org>; Fri, 01 Jun 2018 01:04:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=LuMAv9LLv6YfOWDSSEOAZcsgWKxTj72wKJH6QNQTNwI=;
-        b=psL3tfv0Aj1qMPCF2SQgVMPXVyIGOIJHX4x2KM9ZzPDe/cbQOF21z7w518ybolJwxX
-         C8OX3jk8zdCSR8uba0Y6nMyPW28687/hz+Ivm/xTqJE8e1ujkDZACagDHYXDTTHtEKpu
-         H993KnfYyvrHOQPRO6fYYuOvtJA0wgz+9K+a//v4IVd5i9jSKjOIEMeMB3v5jsUkA0mr
-         Ei+TqssJOiJvs/mVt3lr5ePXS/6rMlu7i/U2rURMSizLDv8m0lBF72T0u+8EIs7SGr6x
-         HUQ88mFd6dyKwlMSkzLyN7YA9+v0fw7m46uyqwcS5wA8CH4ZQMOX+EcBFjUHwM4roTRF
-         rU5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=LuMAv9LLv6YfOWDSSEOAZcsgWKxTj72wKJH6QNQTNwI=;
-        b=asa8gIkDNggF6CgCsOL/4DcXjDLAna4Mxj1ilviFkv1zvWoCIu0JoMgZRtUjf4gHEL
-         cxwsqz+7G+vy8YX6tZTEQ7c2ry8FYJVW0p0q9fPQkBpUtzF1U2VpiQq5hRljCF4lwzmf
-         gfHZjiJcdn0Gbt7P4RZaeBcL8u1mQlLT6xPWHt9zIz8tVf1+dfJDUaNzZF39jlfOd3QD
-         0ePCEfibkfZNGHJhtfA9g0h3n0IaWmNR/3qzf166LZqE6begfWTrD2Sjhe2EgQfRgoKf
-         mFjFlLwGRb4s8HhtuqfsLepUWvoy0+pTNU5H7/GbQq5WeqgEmTaej3LgiI6xbmnJbHGG
-         9gmA==
-X-Gm-Message-State: APt69E2SXNNiF4p9gOgfPeUW9PjLJpZm5LYC1j21YkUW+9YdPzHOMq4m
-        826Dsii+P30yOh5cKUC56um5Fij22+im5vgTkErVOQ==
-X-Google-Smtp-Source: ADUXVKIDeaWK7X04QgDAoS8zswlRO54jGLiqqr0zuZlw97EB+hxDcy3HGYGEf/h9eHbC1z+5k37ugYSsz8hiHRjQjGc=
-X-Received: by 2002:ac8:3886:: with SMTP id f6-v6mr9359788qtc.165.1527840240672;
- Fri, 01 Jun 2018 01:04:00 -0700 (PDT)
+        id S1750973AbeFAIPv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Jun 2018 04:15:51 -0400
+Received: from mout.gmx.net ([212.227.17.21]:48343 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750917AbeFAIPs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Jun 2018 04:15:48 -0400
+Received: from [192.168.0.129] ([37.201.195.106]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0La2Xx-1g9s4h2xqv-00lobX; Fri, 01
+ Jun 2018 10:15:26 +0200
+Date:   Fri, 1 Jun 2018 10:15:25 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=98yvind_R=C3=B8nningstad?= <ronningstad@gmail.com>
+cc:     Stefan Beller <sbeller@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Thomas Rast <tr@thomasrast.ch>, git <git@vger.kernel.org>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+Subject: Re: [PATCH v2 02/18] Add a new builtin: branch-diff
+In-Reply-To: <CAA8fPEkNjy+ETz4Mx+C2kUfLjLzR9uuOmO3GfN48ZH1SwyfE1A@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1806011013340.82@tvgsbejvaqbjf.bet>
+References: <cover.1525448066.git.johannes.schindelin@gmx.de> <a1ea0320b64527ee6ce9856dcf359513d13052b7.1525448066.git.johannes.schindelin@gmx.de> <20180505182631.GC17700@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1805052355190.77@tvgsbejvaqbjf.bet>
+ <39282590-576f-1ac1-6a16-80ad317ec7ed@gmail.com> <nycvar.QRO.7.76.6.1805061408150.77@tvgsbejvaqbjf.bet> <e0db15c5-e897-5b03-20ff-d83f38496e61@gmail.com> <nycvar.QRO.7.76.6.1805062124470.77@tvgsbejvaqbjf.bet> <3b4591cd-6dde-31ee-f0b1-42b5353086e5@gmail.com>
+ <CAGZ79kZbRCH2OiTW1Ge31R9JN+vWD6tcjNWVGSzkSBcYZvwDjw@mail.gmail.com> <20180508034429.GA7242@sigill.intra.peff.net> <87in7f9aym.fsf@evledraar.gmail.com> <CAGZ79kZg-24OtWp-qk4gAyU3O8vJBdDH_maTERqzqHSE86_fqg@mail.gmail.com>
+ <CAA8fPEkNjy+ETz4Mx+C2kUfLjLzR9uuOmO3GfN48ZH1SwyfE1A@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 2002:a0c:aa4b:0:0:0:0:0 with HTTP; Fri, 1 Jun 2018 01:04:00 -0700 (PDT)
-In-Reply-To: <CAGZ79kZKaZq+bqFTwe+Y3FU-1DHPjzNrvMNU=DM10EyOXxZJVw@mail.gmail.com>
-References: <87a7sg9sjz.fsf@evledraar.gmail.com> <20180531195252.29173-1-avarab@gmail.com>
- <20180531195252.29173-10-avarab@gmail.com> <CAGZ79kZKaZq+bqFTwe+Y3FU-1DHPjzNrvMNU=DM10EyOXxZJVw@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 1 Jun 2018 04:04:00 -0400
-X-Google-Sender-Auth: glLv3cV9u9slXhhrsKLmfaQh3T0
-Message-ID: <CAPig+cSk9Dt3ZLQRjWwpxqMyP3npu3KbEQxkNfjV5RxRtro82Q@mail.gmail.com>
-Subject: Re: [PATCH v4 9/9] checkout & worktree: introduce checkout.defaultRemote
-To:     Stefan Beller <sbeller@google.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Thomas Gummerer <t.gummerer@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/mixed; boundary="8323328-1838849697-1527840928=:82"
+X-Provags-ID: V03:K1:ACqZyznsJpLaPsWH9lU8xf5NZoAqQUquh5RGwd7eJfkhkbNUoVZ
+ w89JUxWVfI5MmoeeHdzlKtvfeRARSVBssJ2m5kgeDxXnMWdojO/cE+3N894+OvHmptsp5wJ
+ yr2S8nAiLnZk9QsQgBdchUF0xk8n4NUqfo/Tfe0lykgaszQq5pVpTtKqL6mBacx210XlNW3
+ x7QnAZYsAPi4Ue2XCGf4Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:KmcbGFMg+OU=:5tbyjuEN7gTjlXizGeVqjc
+ cloG0BAk+aBc2R4uwvQPIu0+9iHbw7Zu94bOI+DeFk7QYyr2p2iPUKayeVbXyOd0YROwmi5S7
+ pdakIkbvNi96vrFi0Pgmh87w7UZiOb7SebTcEVjg/tnhxT3y2Fz23bKKXrBr1QwMLl7VKNiXZ
+ H3147/IwGWXx4LhcGllbxhx6/1Cb9wycQd6fnHLNAX1+oCGEDjJwrsFtMwag6Qn3jQoxtiPUb
+ X330u9Acvr24t3kjl1i5UNuUyC9RlTLCtyarPX1tXrctYXd9M05Vnf8BGx5Z9QChHuGjaT8Sa
+ aSAFTjCgjE7cKQDX2BIMjXxBJPgLNrnHA53WujoqN9T5EGR7x0kJky2OlzLr5j9+lwByFzrtF
+ thLD8pllPdWeEQvfqV21HQYQGxqsrUm6zwhKwNgqtc20XVqB42YRmGbAOIGslhWlLkNkr9Obs
+ mFiCD9QAoz/RY64NZjPNVGQORodUjjgd+02rIrRldRkuiPtJoe5fCJDKoILWxvdM9QVvopjO4
+ 7RBfv2soxwlvdUsh99V2ZBkY2tsU29Dw/LlXackW3nYi1j7PHFd713Qk4xF7A0JuGbbwFvIV9
+ yFifW3n9d14BCu3QlYDmbrGrQA9BqrQU7ptJM+E7ZD7jQ6c4CZ8Sn3xQD3KWbOqiQsfXn5+6c
+ Zn0fefhdtyLLh8QGNaL7I82VnETqd4EIIFTyd13oBoK9T0d50ccMeB+7Lh4RNhg8JHEeyRDmr
+ lZdQ77WhJXjDNqBbpp/eMIXZ2PMo8bGIMf5BhnvYcSjE8PuG2MMZtIG/xYubTX0FLSPxB8VcK
+ IP916Dd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 31, 2018 at 5:49 PM, Stefan Beller <sbeller@google.com> wrote:
->> I considered splitting this into checkout.defaultRemote and
->> worktree.defaultRemote, but it's probably less confusing to break our
->> own rules that anything shared between config should live in core.*
->> than have two config settings, and I couldn't come up with a short
->> name under core.* that made sense (core.defaultRemoteForCheckout?).
->
->   core.dwimRemote ? It's a bit cryptic, though.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-This option started out as 'core.dwimRemote' in the very first version
-of this series[1], but someone argued against it for several reasons
-and suggested 'defaultRemote' instead[2].
+--8323328-1838849697-1527840928=:82
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-[1]: https://public-inbox.org/git/20180502105452.17583-1-avarab@gmail.com/
-[2]: https://public-inbox.org/git/CAPig+cTZyYC-1_TxL2PrfOF6HAktUxxM+g5EXcByS5fCDMdCHg@mail.gmail.com/
+Hi team,
+
+especially Stefan: your thorough investigation about a better name than
+range-diff gives me confidence that my decision to retract my objection
+against has merit: it seems to be by far the one name that everybody but
+me agrees on. And I can adapt easily.
+
+On Sat, 26 May 2018, =C3=98yvind R=C3=B8nningstad wrote:
+
+> Just want to throw my support in for range-diff since ranges is what you
+> pass to the command.
+
+`range-diff` it is.
+
+Ciao,
+Dscho
+--8323328-1838849697-1527840928=:82--
