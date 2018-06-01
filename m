@@ -2,93 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 599C81F51C
-	for <e@80x24.org>; Fri,  1 Jun 2018 11:07:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB01D1F51C
+	for <e@80x24.org>; Fri,  1 Jun 2018 11:26:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751554AbeFALHm (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Jun 2018 07:07:42 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:53551 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751068AbeFALHk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Jun 2018 07:07:40 -0400
-Received: by mail-it0-f67.google.com with SMTP id a195-v6so1220101itd.3
-        for <git@vger.kernel.org>; Fri, 01 Jun 2018 04:07:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=/tjbJcx2QsxBO6FiWouW0mh2+YgjdtAXU/Af8sNuZLI=;
-        b=D5KAGV65jSUBwOWfaL2UHpq7qXchHw86vuLI4vTfc7XtQTtXz6pIqi5Uj6l4Yg5QVB
-         Z1eUYefpnVDPSV5o+QjUSrN9MSmPhLmXA3f9c68dWCKyUe9NNSyFqPUNof9kFUu0VVJt
-         ko3JAa3p3z/FuNH77DJDfP5FRv2Ix4gZoHf98=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=/tjbJcx2QsxBO6FiWouW0mh2+YgjdtAXU/Af8sNuZLI=;
-        b=k8n1vTwqOzTxHz2/6oACiYN5yVJvbKophIFgQeK99BfP1XO2XOOlh6VExawoOzDaWM
-         ug/maYmxuL6kzvdKiruUdlhBwkArldJz6UV94l33gLJX33hyBTGiShp35GyPI2zVEvqU
-         veZIv253GiewkbaDb3GIVXAdk3qelxI9mXLspPovoU4bmEs+XfdoAAU/f12Vxq/4g7Hv
-         AmTfqfMwPKVYd+Op+d4KBxXj1NasdaanYNWLJjQA2vJVMelOd8GlSrR/8AKBExKg3pKu
-         zxQkZiaZMiljrLtx6SZavE4Ppvd4L5dRLF79lwXZJ8gOAxIVmtdChY5A2h/MVzIhF84q
-         Q7NA==
-X-Gm-Message-State: APt69E1BzdWkyvxoJPMbHhDfZQlxDJGlPGXfKUUCkGny8aXoJRL4ppL+
-        RMmOqN0kPezGKzE/ymIZ1leYJgJ4Dhg02lH4nlc=
-X-Google-Smtp-Source: ADUXVKJuUQ2cceeKJ5xPUleHn4aZEM1YKcgBquRQQWaoGtRycHe0TZlAfT5QH6vgoB27YyfBlofTnKXG9mFR9N9HC3c=
-X-Received: by 2002:a24:8046:: with SMTP id g67-v6mr3678134itd.16.1527851259454;
- Fri, 01 Jun 2018 04:07:39 -0700 (PDT)
+        id S1751876AbeFAL0Q (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Jun 2018 07:26:16 -0400
+Received: from mout.gmx.net ([212.227.17.22]:41483 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751293AbeFAL0I (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Jun 2018 07:26:08 -0400
+Received: from [192.168.0.129] ([37.201.195.106]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LgZ7h-1g3FWb1JtV-00nvmS; Fri, 01
+ Jun 2018 13:25:48 +0200
+Date:   Fri, 1 Jun 2018 13:25:29 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Christian Couder <christian.couder@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Stefan Beller <sbeller@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@dwim.me>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        David Turner <novalis@novalis.org>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] t9104: kosherly remove remote refs
+In-Reply-To: <20180601050833.27676-1-chriscool@tuxfamily.org>
+Message-ID: <nycvar.QRO.7.76.6.1806011324530.77@tvgsbejvaqbjf.bet>
+References: <20180601050833.27676-1-chriscool@tuxfamily.org>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <alpine.LFD.2.21.999.1805261449160.6211@i7.lan>
- <xmqqd0xim1tp.fsf@gitster-ct.c.googlers.com> <20180601070456.GB15578@sigill.intra.peff.net>
-In-Reply-To: <20180601070456.GB15578@sigill.intra.peff.net>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Fri, 1 Jun 2018 06:07:28 -0500
-Message-ID: <CA+55aFz5cwZa_PWMV2aGv0TGBpBz8OUB-dPvdwv4ouQs1t1mzA@mail.gmail.com>
-Subject: Re: [RFC] git gc "--prune=now" semantics considered harmful
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:g44wmjS7syJWBGYrmIR3Ykae/d9fpL556psEhIB93umdekkJQx5
+ yxeFuxbNmSu8G3JpD2kJVprJN4SObZjCLHJfHvpDnpHJ/6TU65f7HmKGN/mFiViUJoEJ4Gv
+ NX7GOhPSkcCW7DnPozauRSzHKA0gbw+fs7DGClCBjd7p2brIiXAX+0K982U30ghqt2HbVox
+ cDb+xyXjzwFUe9kKcI8HQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:mNtONZDAQIw=:lRsnnjbiRQh0diSIK2aMoL
+ t2OvNTKi8jikkMXx1mkamtAAGm/7B5xV425igVDFR+KvA94wyjYPG1na013R16dKbJR0mF5cA
+ ith5XPHSG1dM1Qja9QRQv7idbigePDtYGgAsotrqXx61IbErOmJzwqWYmXQ07TEEE5pfUpbZe
+ RsEDykavCpUDIXoEKNUn2yihS6rHeWaTMnVCdQ3fUFhlLsAHkMQKFXKzxTSfEpIscSjiuICG+
+ yBfxLgB8XwoRX15TH8efdXWOQvXIzqx4NuI5Ci42Kg/25S9CunoQBWKo3N953XbcUTpN2dawK
+ nOJ2On7JQxyu8E1t1Tfhmef01gsSNGuD4o42HiKZ1t6AU4TgSdX6+V81qGYj4GHtoqlXwV5JQ
+ QvsBvSFC45INF56CJRmvY+czpUaYUl/JO2QhdL/2gq9e7XfuPy8tpHgP5npJcMmaRjhbrVrhy
+ RwGuPw3Fr2Dr1VYy/ZI1ikjmekb2rUQVzrDur9PDpoN3gvp4LslkVycvoFk1pBl65c/zDyZNa
+ lZ+ftm91N5nxlQdl5QddHP9owyRYIme8iyM6m4s7b+YwyupOWq/qpH0HQQrppJVgYKGr/3z7A
+ SCEDXyUx56Z7DBqudnbUc6vLWCLSqQX6AuvD23vxIoCyJxy36DA+lp6JV70q09Jl7FtBFBUvC
+ yN+4jRYq5mM7Jaredxk/h/PtrKFJS6VhoyQ9K97BF0HH4l5F11zaTYmJqj7SJa9ZaXNm+FU19
+ +WItY9ZxjacSabLHYEzv+KG5zzHw9d/Apm1hoFAi2Jk9H5Czb9+N7iWK+LAi26XXNQ3J3s21M
+ 6X1sAsw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 1, 2018 at 2:04 AM Jeff King <peff@peff.net> wrote:
->
-> We'd also accept relative times like "5.minutes.ago" (in fact, the
-> default is a relative 2.weeks.ago, though it's long enough that the
-> difference between "2 weeks" and "2 weeks plus 5 minutes" may not matter
-> much). So we probably ought to just normalize _everything_ without even
-> bothering to match "now". It's a noop for non-relative times, but that's
-> OK.
+Hi Chris,
 
-Heh. That's what I tried to do at first.
+On Fri, 1 Jun 2018, Christian Couder wrote:
 
-It's surprisingly hard.
+> As there are plans to implement other ref storage systems,
+> let's use a way to remove remote refs that does not depend
+> on refs being files.
+> 
+> This makes it clear to readers that this test does not
+> depend on which ref backend is used.
+> 
+> Suggested-by: Michael Haggerty <mhagger@alum.mit.edu>
+> Helped-by: Jeff King <peff@peff.net>
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+> This was suggested and discussed in:
+> 
+> https://public-inbox.org/git/20180525085906.GA2948@sigill.intra.peff.net/
+> 
+>  t/t9104-git-svn-follow-parent.sh | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/t/t9104-git-svn-follow-parent.sh b/t/t9104-git-svn-follow-parent.sh
+> index 9c49b6c1fe..5e0ad19177 100755
+> --- a/t/t9104-git-svn-follow-parent.sh
+> +++ b/t/t9104-git-svn-follow-parent.sh
+> @@ -215,7 +215,9 @@ test_expect_success "multi-fetch continues to work" "
+>  	"
+>  
+>  test_expect_success "multi-fetch works off a 'clean' repository" '
+> -	rm -rf "$GIT_DIR/svn" "$GIT_DIR/refs/remotes" &&
+> +	rm -rf "$GIT_DIR/svn" &&
+> +	git for-each-ref --format="option no-deref%0adelete %(refname)" refs/remotes |
+> +	git update-ref --stdin &&
 
-You can't normalize it as a date, because we have a few times that
-aren't expressible as dates because they are just the maximum value
-(ie "all").
+Apart from the line longer than our conventions allow, this looks fine to
+me!
 
-And then I tried to just express it just as a standard numerical
-value, which we accept on input. But we *only* accept that if it's
-more than eight digits.
+>  	git reflog expire --all --expire=all &&
+>  	mkdir "$GIT_DIR/svn" &&
+>  	git svn multi-fetch
+> -- 
+> 2.17.0.1035.g12039e008f
 
-And regardless, you need to special-case "now", since
-parse_expiry_date() special cases it.
+Please upgrade ;-)
 
-Or you'd need to just make another version of parse_expiry_date() entirely.
-
-End result: I only special-cased "now".
-
-> There are still possibilities for a race, even with the grace period.
-
-Agreed. But you *really* have to work at it.
-
-              Linus
+Ciao,
+Dscho
