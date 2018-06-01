@@ -2,104 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 363A11F42D
-	for <e@80x24.org>; Fri,  1 Jun 2018 04:32:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E24F51F42D
+	for <e@80x24.org>; Fri,  1 Jun 2018 05:09:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750776AbeFAEcs (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Jun 2018 00:32:48 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:52385 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750738AbeFAEcr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Jun 2018 00:32:47 -0400
-Received: by mail-wm0-f65.google.com with SMTP id 18-v6so427365wml.2
-        for <git@vger.kernel.org>; Thu, 31 May 2018 21:32:46 -0700 (PDT)
+        id S1750866AbeFAFJB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Jun 2018 01:09:01 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:39881 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750770AbeFAFJA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Jun 2018 01:09:00 -0400
+Received: by mail-wm0-f68.google.com with SMTP id f8-v6so440175wmc.4
+        for <git@vger.kernel.org>; Thu, 31 May 2018 22:09:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=lSEGJCOgbXxOo5Nh/lEtTi8Cp8rR1MlbQDzAdWlDid4=;
-        b=D9ZMCPsIoqrMNOFI8N+DPFFklOKSShSgZ3kF2yCuST1ZHQRxyBTJGsP249+App+aHJ
-         yQj7TzPKPfH/LVmLLxDsfr18ZGgU1rtiIAX6VelJE3ZV0QZ6niPKHqAagQAoa3VJR7Lp
-         XMWx30JlbdDFFezGRzUh1ukqdSyAEeaL20ePH6VJBNsGiXjPu5galY93rVcJUrxdXdZh
-         bIFahz2r0WMP15527ueHbSdhAxaH5g7bkeDUx8YbLpBDFehhifkuwuMk8lvufrNKJHCm
-         7r0dDXPQ/JdeeVYri8vPRxtY+3UwNq4OA9pfdmO2zSkOBDi344LpERiLFuZIlXS2V1S7
-         7mvg==
+        h=from:to:cc:subject:date:message-id;
+        bh=8p6y2PNYu/ZMma0ewfigkH8vE3nD+inS+B8fVQS5hPI=;
+        b=iE+3q7eticLn0jy+JBbXkaY0bLycL6Y9tv4dKF02rBcWfvzXjB6AC9dRnSO+termlb
+         bzlgl+ZwzQVbtXrrcThriVYUMIndoW8T0iUI+9U/RbbD2RWyTg4tRHN/J+PhEblp//2E
+         6yty82KVbtB+AEfcjEbS/QngTq2nw9s3dHwK6pmhn0HCn27WY/zVc44GLgYnYrcMUgJV
+         AmCAG7gOrexmkvxyxN3OmKAKoU6GPMXCHbdRoNEEEAMKJ5P5bPB0DsHMQgS0MtfQ2gWk
+         pd4ZGE9OU5Sg1YjulRs2nNZ+xDvs+B2K6EF+AbbfoIrX8qj9TreV5j2KrYK0oGz0F9be
+         5Jxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=lSEGJCOgbXxOo5Nh/lEtTi8Cp8rR1MlbQDzAdWlDid4=;
-        b=VPHfxsOhCJEsnWa5TtCBVPvkMyq575fj2iU0sN65xhwXshFQt9RTrI4PrtlQCxpctK
-         H0/OBWmAvhhpDviNddgOf0mmUQpRPNyiGJf0zAyi6q4/jHhWJksgIIYDbq3xu3XpVnel
-         To2+7s5VJ4u+vvYJEIwheDjozoZ2JzK2gNC+5Gq8FuBhJA5Zak/cGD749S6CsmQ0BRH2
-         6B6WgN5s9KpG41psbaoez48XC21wQwqrFkBeYUleErdjyROcQNNzfRjTYJ0Fks6wtujq
-         eJhB6qN0O8AY9fBn5uYn3TmOxovt8EacpoO7OU66ozdq5grH9Okn87nm3XAvsb7DccfH
-         mgxA==
-X-Gm-Message-State: APt69E2pJmF9e7uaV7iUKmSJ5/cBdQjKk3Dm/FtajeRZTmidK9ud5lSr
-        CwUIQ0JJCC2V10O2Ar7P9IU=
-X-Google-Smtp-Source: ADUXVKJchicbiDB44yJNAn3cnZsaDHpkDqp0JVB0u7311p2fT957myKMXCgX29Y0t6bovUNDYhlhZA==
-X-Received: by 2002:a1c:d391:: with SMTP id k139-v6mr1386654wmg.45.1527827566013;
-        Thu, 31 May 2018 21:32:46 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id i46-v6sm18325529wra.36.2018.05.31.21.32.45
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 31 May 2018 21:32:45 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 8/9] checkout: add advice for ambiguous "checkout <branch>"
-References: <20180531195252.29173-1-avarab@gmail.com>
-        <87a7sg9sjz.fsf@evledraar.gmail.com>
-        <20180531195252.29173-9-avarab@gmail.com>
-Date:   Fri, 01 Jun 2018 13:32:44 +0900
-In-Reply-To: <20180531195252.29173-9-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 31 May 2018 19:52:51 +0000")
-Message-ID: <xmqqin7386tv.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=8p6y2PNYu/ZMma0ewfigkH8vE3nD+inS+B8fVQS5hPI=;
+        b=lXacuxeaHt1aMTMdh+5grhjUYiDdikxsMmDRXpLB1gHnEwApszJzItCEwy4ypSQmJx
+         KuW9oU1UMxk/QLpuGf6ELGn9RbHJ4OveloQWCItolOHl7ACtLhCmg6/iUjyTOdvpY3JA
+         uyqZQrOQJJr8TnEa7gkYE7GRxQ0yHdM9UvX14dasrqjotCHCOVFLvKT3kxTxj3UHD0tA
+         jmX1QwI86oZ82JPQZX9B/vjtfs20UiXz/sFG+XdNY08rpbdlIRG7enkx/D5rx3YBHgkR
+         hHnmOQF//Ae5LasC7eQKTmGnG7Pmn02Zm4irEsk2mITMPb8RID+FNDbgQIM4VgjFHPN8
+         T1dA==
+X-Gm-Message-State: APt69E2K9CTBjN6zakuoSD4+Qg50ek0eu5MqKNvD+QLf8u+wpM88ckwI
+        AhpwzyIwUh2Q1SQHkR0In3g9IWmn
+X-Google-Smtp-Source: ADUXVKIIMcrG6nuSrzQwnMsSDdYF8fAgdOAgYWoEU04+cg/eD0zYuCTo39Lx0ZpVHs2qYPMK7ZWamQ==
+X-Received: by 2002:a1c:8c6:: with SMTP id 189-v6mr1492078wmi.19.1527829739198;
+        Thu, 31 May 2018 22:08:59 -0700 (PDT)
+Received: from localhost.localdomain (89-95-107-230.abo.bbox.fr. [89.95.107.230])
+        by smtp.gmail.com with ESMTPSA id 67-v6sm959664wmw.32.2018.05.31.22.08.57
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 31 May 2018 22:08:58 -0700 (PDT)
+From:   Christian Couder <christian.couder@gmail.com>
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Stefan Beller <sbeller@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@dwim.me>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        David Turner <novalis@novalis.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] t9104: kosherly remove remote refs
+Date:   Fri,  1 Jun 2018 07:08:33 +0200
+Message-Id: <20180601050833.27676-1-chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.17.0.1035.g12039e008f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+As there are plans to implement other ref storage systems,
+let's use a way to remove remote refs that does not depend
+on refs being files.
 
-> @@ -1269,6 +1270,16 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
->  	if (opts.patch_mode || opts.pathspec.nr) {
->  		int ret = checkout_paths(&opts, new_branch_info.name,
->  					 &dwim_remotes_matched);
-> +		if (ret && dwim_remotes_matched > 1 &&
-> +		    advice_checkout_ambiguous_remote_branch_name)
-> +			advise(_("The argument '%s' matched more than one remote tracking branch.\n"
-> +				 "We found %d remotes with a reference that matched. So we fell back\n"
-> +				 "on trying to resolve the argument as a path, but failed there too!\n"
-> +				 "\n"
-> +				 "Perhaps you meant fully qualify the branch name? E.g. origin/<name>\n"
-> +				 "instead of <name>?"),
-> +			       argv[0],
-> +			       dwim_remotes_matched);
->  		return ret;
+This makes it clear to readers that this test does not
+depend on which ref backend is used.
 
-Do we give "checkout -p no-such-file" the above wall of text?
+Suggested-by: Michael Haggerty <mhagger@alum.mit.edu>
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+This was suggested and discussed in:
 
-Somehow checkout_paths(), which is "we were given a tree-ish and
-pathspec and told to grab the matching paths out of it and stuff
-them to the index and the working tree", is a wrong place to be
-doing the "oh, what the caller thought was pathspec may turn out to
-be a rev, so check that too for such a confused caller".  Shouldn't
-the caller be doing all that (which would mean we wan't need to pass
-"remotes-matched" to the function, as the helper has nothing to do
-with deciding which arg is the tree-ish).
+https://public-inbox.org/git/20180525085906.GA2948@sigill.intra.peff.net/
+
+ t/t9104-git-svn-follow-parent.sh | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/t/t9104-git-svn-follow-parent.sh b/t/t9104-git-svn-follow-parent.sh
+index 9c49b6c1fe..5e0ad19177 100755
+--- a/t/t9104-git-svn-follow-parent.sh
++++ b/t/t9104-git-svn-follow-parent.sh
+@@ -215,7 +215,9 @@ test_expect_success "multi-fetch continues to work" "
+ 	"
+ 
+ test_expect_success "multi-fetch works off a 'clean' repository" '
+-	rm -rf "$GIT_DIR/svn" "$GIT_DIR/refs/remotes" &&
++	rm -rf "$GIT_DIR/svn" &&
++	git for-each-ref --format="option no-deref%0adelete %(refname)" refs/remotes |
++	git update-ref --stdin &&
+ 	git reflog expire --all --expire=all &&
+ 	mkdir "$GIT_DIR/svn" &&
+ 	git svn multi-fetch
+-- 
+2.17.0.1035.g12039e008f
 
