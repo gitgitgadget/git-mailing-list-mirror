@@ -2,110 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4BDA1F42D
-	for <e@80x24.org>; Fri,  1 Jun 2018 02:46:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF9FC1F42D
+	for <e@80x24.org>; Fri,  1 Jun 2018 02:49:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750736AbeFACqE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 May 2018 22:46:04 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:54292 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750715AbeFACqD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 May 2018 22:46:03 -0400
-Received: by mail-wm0-f68.google.com with SMTP id o13-v6so134769wmf.4
-        for <git@vger.kernel.org>; Thu, 31 May 2018 19:46:03 -0700 (PDT)
+        id S1750941AbeFACtt (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 May 2018 22:49:49 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:46145 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750724AbeFACtb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 May 2018 22:49:31 -0400
+Received: by mail-pg0-f67.google.com with SMTP id a3-v6so10565977pgt.13
+        for <git@vger.kernel.org>; Thu, 31 May 2018 19:49:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=b0rKimdauZ+SyhVQFaXyM1d7OE8lSkZ0Vjup/stUttk=;
-        b=B/UfglooZCclK9FmcTTXfMPn5w0EOccMnqXB6xCslRiP3PgIeuyreJ2zdAUau/YmzV
-         7UrkKjl4uw00k1Jt+2S2bW79avvXrRwT689bxO6GTGmsQZ9Qw/Gh7iz4sLL62+z3So8P
-         G7KxEdpepI/9DyeS+zA2OpcHcSoF7vf9Fe+t2LHWPTaBmvF+OQ+zOLUtvEVi0EwsT283
-         TbyoEMneaEYYTy1jwJnZ83snDlRrtDlWNT3YX96u+DAdDyt801BEDzps4we9U8zjcVHg
-         pSQ5LM1B5RAJAwaFyuVMRKEy1vzhZiQEWuXElOWYmSpnFDu/u36pZcSnBIOjurXXxzCX
-         g8/A==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=PicWejSsHIwlsTBVPA9byRsuXsUwxp+CfZc8LT4VhmM=;
+        b=dVKIv7+cR6yg6kdd73r/cWyiYablQ6bek8Zv1/PWsgCPwleZx3dP0bIxzTfZcUgH02
+         76aCCUfpSF9uJ7svH704X+dzrkHhlHhrqvw61H59sgAFsrSYGbo8UKhaWpNiOeXY2UDA
+         MXYI/4e2S3iWowO5gGYqSTC6D0SdSJ5fc3goDY/lixhCsZYxJhBo4mGAXToGqHlNTW5w
+         XKUqlqCeF/NUPE73yfw3E3w4JF1NXhkumvtbxg7AKecbgJhGtOCKFfANf0oEhVxFyE00
+         8MmVpMH3rvNpv9NIVNoRHl81xjCeM2hSe9olop6yWTQ0xc7nW0SpK2nEkcxfyTrYBf5V
+         ULqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=b0rKimdauZ+SyhVQFaXyM1d7OE8lSkZ0Vjup/stUttk=;
-        b=nMTWXJBwAFG+Sx5BcWBjlV808WTueyP7Rn1vp0y2Mo7Pg4ymymc4cnq1NGIyPOylrc
-         /3DmEx9lYE2R9+cgGcUl/50/lOi/J94omMymiK1WRrY27ZXo4fJqr5IsGfVDxjXfGePM
-         Pc8h+gLnRhYPht+FpOUbcaawibW3OHdILUs25FUaQegtUA9+PFhihrHmcrnciws3uy5p
-         USU3E5TfxXZY2RGrCf+wXZO7Splsjvco7xqkM1g6JaVd6BMNiEkLw/2BZGMgkwRf3G5t
-         EvomqmzVUjWXphNHJKLREtvz4pdlqmpREorFtOAAIES0AiGzLylbDSXyl0VH0mLxSIht
-         P5Iw==
-X-Gm-Message-State: APt69E3VjbIgBNaPK4BOAAQ768ewy2ZtK4+AZZUtik64ea5/RwTKoUah
-        e/P6JSFa8m7EwCo0zRWtfA0=
-X-Google-Smtp-Source: ADUXVKLhYLpJzPv/cYAlklKenMfGDM0ZGY/mJxaTEGhiX7+zUulvt1mgbN/tbvuW/VIRpx30/GIi0g==
-X-Received: by 2002:a1c:6503:: with SMTP id z3-v6mr1236200wmb.11.1527821162619;
-        Thu, 31 May 2018 19:46:02 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id b15-v6sm37079103wri.14.2018.05.31.19.46.01
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=PicWejSsHIwlsTBVPA9byRsuXsUwxp+CfZc8LT4VhmM=;
+        b=HRvXK1+KRGDi05CM0PgkIFwY2EMjCuSO36BEydbwGUHG/hwCD/3Y6GJrX8uZ6Z4awe
+         XPEha0mcxiQeMjVLWrkQ39SSwZxyiriJuLBprrdxCk5LVqyu62er/dlIr/rkqILzTEzU
+         Yg9gounsvDH/afwO4HLa2ZRzVJhoTd/7lfhqdZrIAB6LtGwrywnC01sd+L6sGF9vIQoe
+         dVDxqOYtsPIHy0+LKgTSJGcWiHXLE1TYumjAEcIzWzFx/LME06/jp6omBROfQtSTjW3i
+         SxqocwcpV33+LZfsa1rh9U8DYfW7+SrD//FoVMrxdaWPM/q7/pFGOSGGW/joh8K2i1SH
+         JqgQ==
+X-Gm-Message-State: ALKqPwdas/N/CcBQmzgqK13BEw08DcP/9U1aeUf5xMCYX2sXH7C7Q0yi
+        UB0tb5xrRb+SD3JJJHoJOpw=
+X-Google-Smtp-Source: ADUXVKIwGi1N+Th6nz+8dyyrXyuM/DEl329dqYAhpFTb5gBw0lSjsfLXYKTAnyGLkF2RSNF+1By6FQ==
+X-Received: by 2002:a63:6185:: with SMTP id v127-v6mr7238228pgb.301.1527821370435;
+        Thu, 31 May 2018 19:49:30 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id s1-v6sm56183207pgr.66.2018.05.31.19.49.29
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 31 May 2018 19:46:01 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, bmwill@google.com
-Subject: Re: [PATCH 5/5] refspec.c: use rhs in parse_refspec instead of potentially uninitialized item->dst
-References: <20180530170433.191495-1-sbeller@google.com>
-        <xmqqzi0f9see.fsf@gitster-ct.c.googlers.com>
-Date:   Fri, 01 Jun 2018 11:46:01 +0900
-In-Reply-To: <xmqqzi0f9see.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Fri, 01 Jun 2018 11:01:29 +0900")
-Message-ID: <xmqq8t7z9qc6.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        Thu, 31 May 2018 19:49:29 -0700 (PDT)
+Date:   Thu, 31 May 2018 19:49:24 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH] fetch: do not pass ref-prefixes for fetch by exact SHA1
+Message-ID: <20180601024924.GA111965@aiede.svl.corp.google.com>
+References: <20180516225823.235426-1-bmwill@google.com>
+ <20180516234822.182663-1-bmwill@google.com>
+ <20180516234822.182663-2-bmwill@google.com>
+ <20180531072339.GA43435@aiede.svl.corp.google.com>
+ <xmqqtvqn9rwa.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqtvqn9rwa.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> Perhaps a better fisx is to explicitly assign NULL to item->dst when
-> we see there is no right-hand-side.
+>> This patch adds a test to check this behavior that notices another
+>> behavior difference between protocol v0 and v2 in the process.  Add a
+>> NEEDSWORK comment to clear it up.
+>
+> Thanks.
+>
+> I wonder if there is a more effective way to smoke out other bugs
+> remaining in proto v2.  When the fetch-by-SHA1 feature was added
+> originally, we certainly would have added a test or two to make sure
+> it won't break.  The root cause of this breakage is that we lack the
+> ability to easily exercise proto v2 on these existing tests that
+> were written back in the proto v0 days.  It there were such a way
+> (like, a common set of tests that are run with all supported
+> protos), we would have caught the breakge even before the topic hit
+> 'next'.
 
--- >8 --
-Subject: [PATCH] refspec-api: avoid uninitialized field in refspec item
+I had a similar thought.
 
-When parse_refspec() function was created at 3eec3700 ("refspec:
-factor out parsing a single refspec", 2018-05-16) to take a caller
-supplied piece of memory to fill parsed refspec_item, it forgot that
-a refspec without colon must set item->dst to NULL to let the users
-of refspec know that the result of the fetch does not get stored in
-an ref on our side.
+I am not sure I agree about the root cause, but root causes are
+generally slippery to define.  Because this bug had significant
+internal impact, we came up with a few next steps:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+- shore up protocol v2 test coverage, as you described
 
- * The original before that change filled a callee prepared piece of
-   memory that was obtained from xcalloc(), and did not need to
-   explicitly assign NULL to the field after noticing that there is
-   no colon in the refspec, so it is understandable how this
-   misconvesion happened.
+- arrange for long refactoring series we submit to be divided up for
+  the team to review, to avoid reviewer fatigue.  Hopefully this will
+  make us a better example for other submitters of long series.  We're
+  open to cooperating with others --- maybe we can set up a volunteer
+  reviewer brigade to get a more diverse set of eyes on each series
+  --- though organizing that is harder.
 
- refspec.c | 2 ++
- 1 file changed, 2 insertions(+)
+- improve telemetry for our internal deployment, to get earlier notice
+  when Git is producing more errors.  I suspect other installations
+  may want something like this too --- e.g. I think this is one of the
+  benefits of what Jeff Hostetler is starting to build with json-writer.
 
-diff --git a/refspec.c b/refspec.c
-index 97e76e8b1d..6e45365a23 100644
---- a/refspec.c
-+++ b/refspec.c
-@@ -48,6 +48,8 @@ static int parse_refspec(struct refspec_item *item, const char *refspec, int fet
- 		size_t rlen = strlen(++rhs);
- 		is_glob = (1 <= rlen && strchr(rhs, '*'));
- 		item->dst = xstrndup(rhs, rlen);
-+	} else {
-+		item->dst = NULL;
- 	}
- 
- 	llen = (rhs ? (rhs - lhs - 1) : strlen(lhs));
--- 
-2.18.0-rc0
+- help internal users triage errors from Git (like those decision
+  trees parents have to help decide when to bring a child to the
+  doctor), so that we get earlier notice and can roll back and report
+  upstream more quickly when they've run into a Git bug
 
+Or in other words, please expect more in this area soon, and feel free
+to pester me if the test coverage doesn't arrive. :)
+
+Thanks,
+Jonathan
