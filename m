@@ -2,120 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF9FC1F42D
-	for <e@80x24.org>; Fri,  1 Jun 2018 02:49:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3ED8F1F42D
+	for <e@80x24.org>; Fri,  1 Jun 2018 04:06:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750941AbeFACtt (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 May 2018 22:49:49 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:46145 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750724AbeFACtb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 May 2018 22:49:31 -0400
-Received: by mail-pg0-f67.google.com with SMTP id a3-v6so10565977pgt.13
-        for <git@vger.kernel.org>; Thu, 31 May 2018 19:49:30 -0700 (PDT)
+        id S1750790AbeFAEGE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Jun 2018 00:06:04 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:40512 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750715AbeFAEGD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Jun 2018 00:06:03 -0400
+Received: by mail-wm0-f68.google.com with SMTP id x2-v6so285960wmh.5
+        for <git@vger.kernel.org>; Thu, 31 May 2018 21:06:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=PicWejSsHIwlsTBVPA9byRsuXsUwxp+CfZc8LT4VhmM=;
-        b=dVKIv7+cR6yg6kdd73r/cWyiYablQ6bek8Zv1/PWsgCPwleZx3dP0bIxzTfZcUgH02
-         76aCCUfpSF9uJ7svH704X+dzrkHhlHhrqvw61H59sgAFsrSYGbo8UKhaWpNiOeXY2UDA
-         MXYI/4e2S3iWowO5gGYqSTC6D0SdSJ5fc3goDY/lixhCsZYxJhBo4mGAXToGqHlNTW5w
-         XKUqlqCeF/NUPE73yfw3E3w4JF1NXhkumvtbxg7AKecbgJhGtOCKFfANf0oEhVxFyE00
-         8MmVpMH3rvNpv9NIVNoRHl81xjCeM2hSe9olop6yWTQ0xc7nW0SpK2nEkcxfyTrYBf5V
-         ULqA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=biPq/NNZvlM5bIYkhsk91OuRbmcYH5Q7Bwbo5vPJEbg=;
+        b=IlLD5bXfIsbOBB9fOexR4BaOeMsEJQHoXW33xwFMarxLFSIFfDenk7gGFju0fkG/Xx
+         pAJSctCCpL4LhGDXQ5XrKBg3IEDPJF94giZEPTbOkPY9QpZlUMoOHbGLFNc74CiJt7PX
+         aQh8UH7/bahr/IfVr0wcG8qKDbGSawYhpJKddOu2H3WuhKzhHVejwmZRwoz2pRNQJdxb
+         bXwx8q/8xd9kIW/DStWezToSnqM7qLMGHW0nI4H+gFuiguCtNoJiRN30vEeVqADB9rfL
+         TzeabK+C0xFXDWw11C0kYuEXeUJoUtZjmn7sdjqmYnu4vr0xSbDf+TQQ8G47bFdVLfOt
+         GY3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=PicWejSsHIwlsTBVPA9byRsuXsUwxp+CfZc8LT4VhmM=;
-        b=HRvXK1+KRGDi05CM0PgkIFwY2EMjCuSO36BEydbwGUHG/hwCD/3Y6GJrX8uZ6Z4awe
-         XPEha0mcxiQeMjVLWrkQ39SSwZxyiriJuLBprrdxCk5LVqyu62er/dlIr/rkqILzTEzU
-         Yg9gounsvDH/afwO4HLa2ZRzVJhoTd/7lfhqdZrIAB6LtGwrywnC01sd+L6sGF9vIQoe
-         dVDxqOYtsPIHy0+LKgTSJGcWiHXLE1TYumjAEcIzWzFx/LME06/jp6omBROfQtSTjW3i
-         SxqocwcpV33+LZfsa1rh9U8DYfW7+SrD//FoVMrxdaWPM/q7/pFGOSGGW/joh8K2i1SH
-         JqgQ==
-X-Gm-Message-State: ALKqPwdas/N/CcBQmzgqK13BEw08DcP/9U1aeUf5xMCYX2sXH7C7Q0yi
-        UB0tb5xrRb+SD3JJJHoJOpw=
-X-Google-Smtp-Source: ADUXVKIwGi1N+Th6nz+8dyyrXyuM/DEl329dqYAhpFTb5gBw0lSjsfLXYKTAnyGLkF2RSNF+1By6FQ==
-X-Received: by 2002:a63:6185:: with SMTP id v127-v6mr7238228pgb.301.1527821370435;
-        Thu, 31 May 2018 19:49:30 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id s1-v6sm56183207pgr.66.2018.05.31.19.49.29
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=biPq/NNZvlM5bIYkhsk91OuRbmcYH5Q7Bwbo5vPJEbg=;
+        b=K8YvOdrFUxBDkErXucEwnDljwcLCcQ30wOn7gB1+oooBCnxorAG6hurXaofDBchwYv
+         uWeLxR9biB5oU0rOp6G62oiF1NJ1BZwcDCA1fLI+eAggyf74dVGnLhiPeKRrkfga7WmW
+         yrjcKqMx5bm657jPKklUvper1o5nHVBDcl6HoEj9lcKtTTJxrUCDoB0qGShBruFVL31i
+         r4SyfdT3eC2/8D165MtUgnEk6NCE5h13X1VJuu2RTuIVEU4A2mYyTqoJBMq/hlSdhlby
+         tYbIRX93Az0E2qcPAkfhC6HX2OcCFeP6LwcJfe/Sog5JqzWy+KGGCI7oIIr6nhQfXe6L
+         pMWw==
+X-Gm-Message-State: ALKqPweFWeA6dCtMcBqdicyQTDVdtaS5iHS47sBeWe8saQaQn+aBV9ci
+        QQLcuo92UddrcGFNK3VhGCs=
+X-Google-Smtp-Source: ADUXVKKpSdRZDlb/8xiuAFJiFEBeJQiiDzQXCcA8WF7blNLNuUNZERFKG7j+hqOFzDYF0w3aZC3//w==
+X-Received: by 2002:a1c:a750:: with SMTP id q77-v6mr1389887wme.111.1527825961759;
+        Thu, 31 May 2018 21:06:01 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id h65-v6sm999143wmf.7.2018.05.31.21.06.00
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 31 May 2018 19:49:29 -0700 (PDT)
-Date:   Thu, 31 May 2018 19:49:24 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH] fetch: do not pass ref-prefixes for fetch by exact SHA1
-Message-ID: <20180601024924.GA111965@aiede.svl.corp.google.com>
-References: <20180516225823.235426-1-bmwill@google.com>
- <20180516234822.182663-1-bmwill@google.com>
- <20180516234822.182663-2-bmwill@google.com>
- <20180531072339.GA43435@aiede.svl.corp.google.com>
- <xmqqtvqn9rwa.fsf@gitster-ct.c.googlers.com>
+        Thu, 31 May 2018 21:06:00 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4 1/9] checkout tests: index should be clean after dwim checkout
+References: <20180531195252.29173-1-avarab@gmail.com>
+        <87a7sg9sjz.fsf@evledraar.gmail.com>
+        <20180531195252.29173-2-avarab@gmail.com>
+Date:   Fri, 01 Jun 2018 13:06:00 +0900
+In-Reply-To: <20180531195252.29173-2-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Thu, 31 May 2018 19:52:44 +0000")
+Message-ID: <xmqqwovj882f.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqtvqn9rwa.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
->> This patch adds a test to check this behavior that notices another
->> behavior difference between protocol v0 and v2 in the process.  Add a
->> NEEDSWORK comment to clear it up.
->
-> Thanks.
->
-> I wonder if there is a more effective way to smoke out other bugs
-> remaining in proto v2.  When the fetch-by-SHA1 feature was added
-> originally, we certainly would have added a test or two to make sure
-> it won't break.  The root cause of this breakage is that we lack the
-> ability to easily exercise proto v2 on these existing tests that
-> were written back in the proto v0 days.  It there were such a way
-> (like, a common set of tests that are run with all supported
-> protos), we would have caught the breakge even before the topic hit
-> 'next'.
+> Assert that whenever there's a DWIM checkout that the index should be
+> clean afterwards, in addition to the correct branch being checked-out.
+> ...
+> So let's amend the tests (mostly added in) 399e4a1c56 ("t2024: Add
+> tests verifying current DWIM behavior of 'git checkout <branch>'",
+> 2013-04-21) to always assert that "status" is clean after we run
+> "checkout", that's being done with "-uno" because there's going to be
+> some untracked files related to the test itself which we don't care
+> about.
 
-I had a similar thought.
+It might not be absolutely necessary to state, but it would be
+helpful to say that you are assuming to start a checkout (DWIM or
+otherwise) from a clean state; without the assumption, the readers
+need to think for a few breaths why "the index should be clean" is
+true.
 
-I am not sure I agree about the root cause, but root causes are
-generally slippery to define.  Because this bug had significant
-internal impact, we came up with a few next steps:
+The intention and the implementation of the change both mostly look
+good to me from a quick read.
 
-- shore up protocol v2 test coverage, as you described
+>  test_expect_success 'setup' '
+>  	test_commit my_master &&
+>  	git init repo_a &&
+> @@ -55,6 +61,7 @@ test_expect_success 'checkout of non-existing branch fails' '
+>  	test_might_fail git branch -D xyzzy &&
+>  
+>  	test_must_fail git checkout xyzzy &&
+> +	status_uno_is_clean &&
+>  	test_must_fail git rev-parse --verify refs/heads/xyzzy &&
+>  	test_branch master
+>  '
+> @@ -64,8 +71,10 @@ test_expect_success 'checkout of branch from multiple remotes fails #1' '
+>  	test_might_fail git branch -D foo &&
+>  
+>  	test_must_fail git checkout foo &&
+> +	status_uno_is_clean &&
+>  	test_must_fail git rev-parse --verify refs/heads/foo &&
+> -	test_branch master
+> +	test_branch master &&
+> +	status_uno_is_clean
 
-- arrange for long refactoring series we submit to be divided up for
-  the team to review, to avoid reviewer fatigue.  Hopefully this will
-  make us a better example for other submitters of long series.  We're
-  open to cooperating with others --- maybe we can set up a volunteer
-  reviewer brigade to get a more diverse set of eyes on each series
-  --- though organizing that is harder.
+Hmm, what's the point of this second one?
 
-- improve telemetry for our internal deployment, to get earlier notice
-  when Git is producing more errors.  I suspect other installations
-  may want something like this too --- e.g. I think this is one of the
-  benefits of what Jeff Hostetler is starting to build with json-writer.
-
-- help internal users triage errors from Git (like those decision
-  trees parents have to help decide when to bring a child to the
-  doctor), so that we get earlier notice and can roll back and report
-  upstream more quickly when they've run into a Git bug
-
-Or in other words, please expect more in this area soon, and feel free
-to pester me if the test coverage doesn't arrive. :)
-
-Thanks,
-Jonathan
+>  '
