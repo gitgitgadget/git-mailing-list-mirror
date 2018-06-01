@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 757161F42D
-	for <e@80x24.org>; Fri,  1 Jun 2018 21:10:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5DD721F42D
+	for <e@80x24.org>; Fri,  1 Jun 2018 21:10:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751085AbeFAVKn (ORCPT <rfc822;e@80x24.org>);
+        id S1751191AbeFAVKq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Jun 2018 17:10:46 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:35146 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751123AbeFAVKn (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 1 Jun 2018 17:10:43 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:34172 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750934AbeFAVKk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Jun 2018 17:10:40 -0400
-Received: by mail-wm0-f68.google.com with SMTP id q4-v6so7778704wmq.1
-        for <git@vger.kernel.org>; Fri, 01 Jun 2018 14:10:39 -0700 (PDT)
+Received: by mail-wr0-f193.google.com with SMTP id l10-v6so2654196wrn.2
+        for <git@vger.kernel.org>; Fri, 01 Jun 2018 14:10:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=b4kqkIWu7jnlbGjduBQ1ykNY896p5Rm+wG/zMyO7kZE=;
-        b=Ee5wIbdwCKjw1r/aFYf8osgMDNW6EOtpzz66rjFGFWA32FAGVY6DRAZHAObSnHb7pq
-         2CmW3gR9+Rg0X7zEqQvPbzRBr21lNZ6fhk+SH+3bkEG+myb329P7XX9X5PUPsFTky8/+
-         tDCm8oUpGluwCb1YbOYDCzZhrleuJXy8Ok4mI3uajhSiC00yL2ZZKeEhTNYOnUmbu0+q
-         CVwehG3BUmH6rbFlAYQYgqa3IhVjLsuPEU7Au58XgfTOhNpFcjJKDawRabO0HKn++HXl
-         +5lKbWGvS6AXg0v643DMt1+VFQfBxcNfeAlbFmd0Jwz2Qe63HzXybbaLnMB/5WD1UpUF
-         /HZw==
+        bh=bzFNuGMt8urtyjrCh2SToKlXKZnF5YcilkIqNpeteGA=;
+        b=giPkeO2Z58YBhPxi6uOEWAHBZr8ek7CpE45002hYlTeLfc1gZPWyg1vW4uV5MyFAzG
+         tzKaHVzoSNUCIXm9NVmFaSyQJYbi4/5SAKlcvU2ZuXhFd3AVYx6toK8GG4oUz18R9CmS
+         4QCuawQ11ZUfq/40RzyKpvYyGYRr0aZ57nmi0pGklB4ri9MdGDwwoYG1WxYoyBh2MnFp
+         8brYbjyOqeCwVdYGk27UdbdH+kccTwmHLxoVhmgAePIx0KFXLTpCZHKtLDDi/2v0ZCPz
+         agOoEgwXLkZlVP3PN4IJgOHJnng4X8tJssuSpdPNAr9SW7m9zhH3ZmGzNAr8W757KipH
+         7dxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=b4kqkIWu7jnlbGjduBQ1ykNY896p5Rm+wG/zMyO7kZE=;
-        b=Wbty0vd2knB7wgdRnmV5JhsrgfwElHj9gqXOPNQya4ps2uL98PqKSohCTlKfnypxKx
-         nNgRE1Quf8DlqwjoI13kDH1HhOYs5WlWLCkL7LvffgDKx1K+HixWB+cdvZL4ZgSeg0By
-         Zp7y0RLqc2g6OMCHi8MZaNt/HxcZX2ZTHGmdw+Nl7DdTRPt06NHtXiQpSe83HzTMuXTK
-         yj5iLK3++WVM+e2qn+/OHOcavbWkiyIr6n1fZVMg0A2jnpiakYxd0ZCYfORalkpz3W3u
-         051LdLqJE7fiU0efAKyUJVY6BD03X5xhme3eVGVfJmR5GcXkc/iSGCFflc5g4pmK8nK9
-         sfdw==
-X-Gm-Message-State: APt69E3OVof/6VafwIVQMZ0PxQv1tCHnAaT6t4o3oxyhKt4WQ6LAP8EY
-        ZUs253olh8auX2VISsnoIfLTG218
-X-Google-Smtp-Source: ADUXVKKtk+bNGCG4KxAmg6rULfDxM8iDzBmShpLqZFnOM9n/QcyvfrSrgWw1Ig9V2XdnKH8hndcUSQ==
-X-Received: by 2002:a1c:91c4:: with SMTP id t187-v6mr3896986wmd.51.1527887438755;
-        Fri, 01 Jun 2018 14:10:38 -0700 (PDT)
+        bh=bzFNuGMt8urtyjrCh2SToKlXKZnF5YcilkIqNpeteGA=;
+        b=IBfmEVwsNnS9VeuMjyCm1hhgGXoXdO6zcoZbFbQnOMyRBWr7OJDGK57ysMAEVNFfyO
+         mzSDcTEUIw9L4jGU6QyEwkOHoK8Fi/n6i2CgFkK/94hP6hJnrzLKiMIVG3WADbBFGhMy
+         mCCPT3bed4am4ih9kSmd1jybR8HomOwZG/41u9skJOAGrLuzaAnKOlu19YgxamtP5V+z
+         f+WBFBmUmVSog8kjIZAS399R+3nixvZJCNLoHohs5+Tha53wRPEVTFIDdVPZCupCJZ2q
+         1WZGXG3zcClj8iwGnQVu88SwpILhHiflX1kk+WwiCqrwPCcQONnqvBRSq2+rpewP35zY
+         7jNQ==
+X-Gm-Message-State: ALKqPwc4RIRCmgxa0KFoKiTcms3EzLsjDa8GJB0SNNfMgroplK+YzQFK
+        wgereuMOw/DidFuJK+9PndaaP+pc
+X-Google-Smtp-Source: ADUXVKLoMlLpx0hQYFIMfioGPVJlbr/sCxS3Biyydqc7LdBRnvSVvt5FNLuTdboOefMH7l0CR7L56g==
+X-Received: by 2002:adf:c08a:: with SMTP id d10-v6mr9237367wrf.268.1527887442160;
+        Fri, 01 Jun 2018 14:10:42 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id k126-v6sm3516235wmd.45.2018.06.01.14.10.37
+        by smtp.gmail.com with ESMTPSA id k126-v6sm3516235wmd.45.2018.06.01.14.10.41
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 01 Jun 2018 14:10:38 -0700 (PDT)
+        Fri, 01 Jun 2018 14:10:41 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 4/8] checkout.[ch]: change "unique" member to "num_matches"
-Date:   Fri,  1 Jun 2018 21:10:11 +0000
-Message-Id: <20180601211015.11919-5-avarab@gmail.com>
+Subject: [PATCH v5 6/8] builtin/checkout.c: use "ret" variable for return
+Date:   Fri,  1 Jun 2018 21:10:13 +0000
+Message-Id: <20180601211015.11919-7-avarab@gmail.com>
 X-Mailer: git-send-email 2.17.0.290.gded63e768a
 In-Reply-To: <20180601211015.11919-1-avarab@gmail.com>
 References: <20180601211015.11919-1-avarab@gmail.com>
@@ -76,52 +76,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Internally track how many matches we find in the check_tracking_name()
-callback. Nothing uses this now, but it will be made use of in a later
-change.
+There is no point in doing this right now, but in later change the
+"ret" variable will be inspected. This change makes that meaningful
+change smaller.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- checkout.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ builtin/checkout.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/checkout.c b/checkout.c
-index 80e430cda8..7662a39a62 100644
---- a/checkout.c
-+++ b/checkout.c
-@@ -7,10 +7,10 @@ struct tracking_name_data {
- 	/* const */ char *src_ref;
- 	char *dst_ref;
- 	struct object_id *dst_oid;
--	int unique;
-+	int num_matches;
- };
- 
--#define TRACKING_NAME_DATA_INIT { NULL, NULL, NULL, 1 }
-+#define TRACKING_NAME_DATA_INIT { NULL, NULL, NULL, 0 }
- 
- static int check_tracking_name(struct remote *remote, void *cb_data)
- {
-@@ -23,9 +23,9 @@ static int check_tracking_name(struct remote *remote, void *cb_data)
- 		free(query.dst);
- 		return 0;
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 72457fb7d5..8c93c55cbc 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1265,8 +1265,10 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
  	}
-+	cb->num_matches++;
- 	if (cb->dst_ref) {
- 		free(query.dst);
--		cb->unique = 0;
- 		return 0;
- 	}
- 	cb->dst_ref = query.dst;
-@@ -39,7 +39,7 @@ const char *unique_tracking_name(const char *name, struct object_id *oid)
- 	cb_data.dst_oid = oid;
- 	for_each_remote(check_tracking_name, &cb_data);
- 	free(cb_data.src_ref);
--	if (cb_data.unique)
-+	if (cb_data.num_matches == 1)
- 		return cb_data.dst_ref;
- 	free(cb_data.dst_ref);
- 	return NULL;
+ 
+ 	UNLEAK(opts);
+-	if (opts.patch_mode || opts.pathspec.nr)
+-		return checkout_paths(&opts, new_branch_info.name);
+-	else
++	if (opts.patch_mode || opts.pathspec.nr) {
++		int ret = checkout_paths(&opts, new_branch_info.name);
++		return ret;
++	} else {
+ 		return checkout_branch(&opts, &new_branch_info);
++	}
+ }
 -- 
 2.17.0.290.gded63e768a
 
