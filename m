@@ -2,134 +2,250 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C182C1F42D
-	for <e@80x24.org>; Fri,  1 Jun 2018 14:36:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8FB741F42D
+	for <e@80x24.org>; Fri,  1 Jun 2018 16:12:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752485AbeFAOgR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Jun 2018 10:36:17 -0400
-Received: from mail-qk0-f175.google.com ([209.85.220.175]:43429 "EHLO
-        mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751501AbeFAOgQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Jun 2018 10:36:16 -0400
-Received: by mail-qk0-f175.google.com with SMTP id h19-v6so20008953qkj.10
-        for <git@vger.kernel.org>; Fri, 01 Jun 2018 07:36:16 -0700 (PDT)
+        id S1752416AbeFAQME (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Jun 2018 12:12:04 -0400
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:33504 "EHLO
+        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751777AbeFAQMD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Jun 2018 12:12:03 -0400
+Received: by mail-lf0-f67.google.com with SMTP id y20-v6so15608080lfy.0
+        for <git@vger.kernel.org>; Fri, 01 Jun 2018 09:12:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=JkZU1BRrM9MbdzoA9vPExlljAJ10vJkwWzN9jDHM0Pw=;
-        b=VZ6O13xmdOhmKaECRXFCTh5orucqspqMpQjxOHGgFPggvt/4gdMGlo2fzd06ZqFV8s
-         1FTZNKlbsxiZ6A9TLJlaaCa5TwC7UjE3zbZ7rC2demvEl93+athXKNUAt9eSPcEPaA6q
-         joIG5dNTUXNSLWlCcM0gnVG82XQBwp+AEDWCyG3KEWKdNp/Z/wwNNzi/hbwC726c0DFI
-         hv8IjCZSxlfRIS8FNfX+cGWxTC1iMVTnHFh2X+GMRy1xKj2JdqawxzpLORRXukXmN50p
-         rlXb9tNbGT2eGZ0tUpXqEF2CC/lv2rLWEMGYyHw2L7k8d+Y7X7Y4jRaR391ixvxQMU+f
-         NllA==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=cLq1OMth/4T3yI9ogRS3cO1pLKBoT2RDEh9M0JCP/J4=;
+        b=OrsCUfdCavYhM24ndaJBXopbU1SQSiC/L7ruNvDlaisfi8zcQSxuwF3TwaNhGae9Ou
+         c0GxtD20JboBnjWvd6ajbo3+m8ts4ZlvNs2/U6dY7nsnkh8NyCwVTo80c+Qp8lBC6sQq
+         kw2+3Is6vTGB5u29o+McHrWFSryI5wUu9AivwKgqRHpbq5GzgQkGPhJqBpAMoWKrOLGv
+         NMPSwcw88GuhPSwLtrWlTwQvLspcAEe2sk6AJ6P95md8pgRifSporDExblKclosaYnMb
+         vT2NrCicgcsbAmeV0wtDPEVoLtMwgRjWGWS8C1EsIttScivv9xZyQ5/anTB7DsEBjZrA
+         QmQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=JkZU1BRrM9MbdzoA9vPExlljAJ10vJkwWzN9jDHM0Pw=;
-        b=ru8H4DgukVS0xP5eHy6lByPKmtOguhr3tgv5o3JJamIye/emAQyZMf61TqUJDFwIKa
-         Jjn6Mj6sr7NjMfqpAw90XU28SVrXkAQTxDKoFZUY3VmfkEgx9dadDu7rXcNmI66w2YLG
-         eS9KXLy2BBZyLZQt0nAl2yBpJrO5fuSzZwwG0Vx6FLPk7HGlgNOv2IcTick6CLmGouaV
-         dff0iUSpfdpcbno3MApST2S3DgDl+Nv+VFVkOB4UgGdDmLV11pkpM55/ve0P7zA/1AK0
-         jbEK3gX08ulNZX/t4N5UKjwwFgG26ywRgxJiAeSGRNyb93+xGRf03koNq0m+sALjtVa+
-         XT7A==
-X-Gm-Message-State: APt69E2vJ87Ny6CgetDcRyOCQGfdm5oXu6kvS+fRRJ4mItFrcVyCCfi1
-        AoHwg55nNgOcp3QqJXnueGbIyQ==
-X-Google-Smtp-Source: ADUXVKKEAPilhLw00BjVYkOGB5BscZNVSW1CIfrEQgKvmglLDnV3LZAoWyf8m5zvxTB/mLjCtHZAGA==
-X-Received: by 2002:a37:dd45:: with SMTP id n66-v6mr10690986qki.442.1527863776027;
-        Fri, 01 Jun 2018 07:36:16 -0700 (PDT)
-Received: from LykOS.localdomain (216-165-95-149.NATPOOL.NYU.EDU. [216.165.95.149])
-        by smtp.gmail.com with ESMTPSA id h48-v6sm32448583qta.43.2018.06.01.07.36.14
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 01 Jun 2018 07:36:15 -0700 (PDT)
-Date:   Fri, 1 Jun 2018 10:38:25 -0400
-From:   Santiago Torres <santiago@nyu.edu>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        "Robert P. J. Day" <rpjday@crashcourse.ca>,
-        Git Mailing list <git@vger.kernel.org>
-Subject: Re: does a new repo actually *need* default template content?
-Message-ID: <20180601143823.h7fvri25q7om4whn@LykOS.localdomain>
-References: <alpine.LFD.2.21.1805280836140.10191@localhost.localdomain>
- <87h8mr7jgj.fsf@evledraar.gmail.com>
- <20180601070609.GC15578@sigill.intra.peff.net>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=cLq1OMth/4T3yI9ogRS3cO1pLKBoT2RDEh9M0JCP/J4=;
+        b=XDIMqIGPUMQ6K9qwj8YpjUkbnTuMDqm5fRQR1pOuJjSP+8tr36jPLAB/7Fhg0ZZXuu
+         xBw7FekFMa+NliutcOaypuKIJkMHiVXe8626V4mZmWU2CpFfrZWTgJ7kfCJ5h52SCpIl
+         edJyfp/BaTxeWfyj67oN+psitwmhMaySe+RbhlCyowJijjhHXBuPgT9YsUg3y9hLIvgI
+         sHUmDH/iTtxeioQrLRB9z5cx4yhCXAkZztV83zaJZBJgkrZElTTqGJsntcPZ2qI6TFKj
+         wT/8e04+boib8p+QDJmQVla2Qe7f0kgzEi9hHb5hBwVrKbe89PMq2ba+pwfim+SkhuL9
+         CZqg==
+X-Gm-Message-State: ALKqPwdDq+IBveSBoPy+oQumW909/YVia29m+TNZTClM48FufQpe3Y06
+        0SU6gEETtw4IYAN4zx1WtDYqCA==
+X-Google-Smtp-Source: ADUXVKI/iRCx2RBVWI84yIQvmVk+Q3bDajq+UZIcQQp2x6oMnj+IJjsAW98RW2+YycFVnrVRRdcIpg==
+X-Received: by 2002:a19:c452:: with SMTP id u79-v6mr6947647lff.5.1527869521271;
+        Fri, 01 Jun 2018 09:12:01 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id p28-v6sm567566lfh.24.2018.06.01.09.11.58
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 01 Jun 2018 09:11:59 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH/RFC/BUG] unpack-trees.c: do not use "the_index"
+Date:   Fri,  1 Jun 2018 18:11:53 +0200
+Message-Id: <20180601161153.15192-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.18.0.rc0.309.g77c7720784
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="ohajyoirdoi2q66r"
-Content-Disposition: inline
-In-Reply-To: <20180601070609.GC15578@sigill.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+unpack-trees code works on multiple indexes specified in
+unpack_trees_options. Although they normally all refer to the_index at
+the call site, that is the caller's business. unpack-trees.c should
+not make any assumption about that and should use the correct index
+field in unpack_trees_options.
 
---ohajyoirdoi2q66r
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This patch is actually confusing because sometimes the function
+parameter is also named "the_index" while some other times "the_index"
+is the global variable because the function just does not have a
+parameter of the same name! The only subtle difference is that the
+function parameter is a pointer while the global one is not.
 
-On Fri, Jun 01, 2018 at 03:06:10AM -0400, Jeff King wrote:
-> On Mon, May 28, 2018 at 07:56:12PM +0200, =C6var Arnfj=F6r=F0 Bjarmason w=
-rote:
->=20
-> >=20
-> > On Mon, May 28 2018, Robert P. J. Day wrote:
-> >=20
-> > >   (apologies for more pedantic nitpickery, just little things i'm
-> > > running across in my travels. aside: i actually teach git courses, so
-> > > it's a bit embarrassing that i don't know some of this stuff. *sigh*.)
-> >=20
-> > Aside from maybe the empty branches/ directory (see c8a58ac5a5 ("Revert
-> > "Don't create the $GIT_DIR/branches directory on init"", 2009-10-31)),
-> > none of this is needed.
-> >=20
-> > I wish we didn't create any of this stuff, but have never been inclined
-> > to make that my hill to die on.
-> >=20
-> > I think we're much better off just shipping e.g. a single README file in
-> > hooks/, or just nothing at all.
->=20
-> FWIW, that's my opinion, too (including the "hill to die on" part).
->=20
+This is more of a bug report than an actual fix because I'm not sure
+if "o->src_index" is always the correct answer instead of "the_index"
+here. But this is very similar to 7db118303a (unpack_trees: fix
+breakage when o->src_index != o->dst_index - 2018-04-23) and could
+potentially break things again...
 
-+1. It'd probably be worth having the sample hooks be part of the
-installation, but not as part of every repository (e.g., hold them under
-/usr/share/git/samples/hooks/ or something along those lines).
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ unpack-trees.c | 45 ++++++++++++++++++++++++++-------------------
+ 1 file changed, 26 insertions(+), 19 deletions(-)
 
-> I also wish hooks were just shell snippets in the config files that
-> could follow the usual config-precedence rules.
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 3a85a02a77..114496cfc2 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -18,6 +18,9 @@
+ #include "fsmonitor.h"
+ #include "fetch-object.h"
+ 
++/* Do not use the_index here, you probably want o->src_index */
++#define the_index the_index_should_not_be_used here
++
+ /*
+  * Error messages expected by scripts out of plumbing commands such as
+  * read-tree.  Non-scripted Porcelain is not required to use these messages
+@@ -1085,13 +1088,15 @@ static int unpack_callback(int n, unsigned long mask, unsigned long dirmask, str
+ 	return mask;
+ }
+ 
+-static int clear_ce_flags_1(struct cache_entry **cache, int nr,
++static int clear_ce_flags_1(struct index_state *istate,
++			    struct cache_entry **cache, int nr,
+ 			    struct strbuf *prefix,
+ 			    int select_mask, int clear_mask,
+ 			    struct exclude_list *el, int defval);
+ 
+ /* Whole directory matching */
+-static int clear_ce_flags_dir(struct cache_entry **cache, int nr,
++static int clear_ce_flags_dir(struct index_state *istate,
++			      struct cache_entry **cache, int nr,
+ 			      struct strbuf *prefix,
+ 			      char *basename,
+ 			      int select_mask, int clear_mask,
+@@ -1100,7 +1105,7 @@ static int clear_ce_flags_dir(struct cache_entry **cache, int nr,
+ 	struct cache_entry **cache_end;
+ 	int dtype = DT_DIR;
+ 	int ret = is_excluded_from_list(prefix->buf, prefix->len,
+-					basename, &dtype, el, &the_index);
++					basename, &dtype, el, istate);
+ 	int rc;
+ 
+ 	strbuf_addch(prefix, '/');
+@@ -1122,7 +1127,7 @@ static int clear_ce_flags_dir(struct cache_entry **cache, int nr,
+ 	 * calling clear_ce_flags_1(). That function will call
+ 	 * the expensive is_excluded_from_list() on every entry.
+ 	 */
+-	rc = clear_ce_flags_1(cache, cache_end - cache,
++	rc = clear_ce_flags_1(istate, cache, cache_end - cache,
+ 			      prefix,
+ 			      select_mask, clear_mask,
+ 			      el, ret);
+@@ -1145,7 +1150,8 @@ static int clear_ce_flags_dir(struct cache_entry **cache, int nr,
+  *   cache[0]->name[0..(prefix_len-1)]
+  * Top level path has prefix_len zero.
+  */
+-static int clear_ce_flags_1(struct cache_entry **cache, int nr,
++static int clear_ce_flags_1(struct index_state *istate,
++			    struct cache_entry **cache, int nr,
+ 			    struct strbuf *prefix,
+ 			    int select_mask, int clear_mask,
+ 			    struct exclude_list *el, int defval)
+@@ -1179,7 +1185,7 @@ static int clear_ce_flags_1(struct cache_entry **cache, int nr,
+ 			len = slash - name;
+ 			strbuf_add(prefix, name, len);
+ 
+-			processed = clear_ce_flags_dir(cache, cache_end - cache,
++			processed = clear_ce_flags_dir(istate, cache, cache_end - cache,
+ 						       prefix,
+ 						       prefix->buf + prefix->len - len,
+ 						       select_mask, clear_mask,
+@@ -1193,7 +1199,7 @@ static int clear_ce_flags_1(struct cache_entry **cache, int nr,
+ 			}
+ 
+ 			strbuf_addch(prefix, '/');
+-			cache += clear_ce_flags_1(cache, cache_end - cache,
++			cache += clear_ce_flags_1(istate, cache, cache_end - cache,
+ 						  prefix,
+ 						  select_mask, clear_mask, el, defval);
+ 			strbuf_setlen(prefix, prefix->len - len - 1);
+@@ -1203,7 +1209,7 @@ static int clear_ce_flags_1(struct cache_entry **cache, int nr,
+ 		/* Non-directory */
+ 		dtype = ce_to_dtype(ce);
+ 		ret = is_excluded_from_list(ce->name, ce_namelen(ce),
+-					    name, &dtype, el, &the_index);
++					    name, &dtype, el, istate);
+ 		if (ret < 0)
+ 			ret = defval;
+ 		if (ret > 0)
+@@ -1213,15 +1219,17 @@ static int clear_ce_flags_1(struct cache_entry **cache, int nr,
+ 	return nr - (cache_end - cache);
+ }
+ 
+-static int clear_ce_flags(struct cache_entry **cache, int nr,
+-			    int select_mask, int clear_mask,
+-			    struct exclude_list *el)
++static int clear_ce_flags(struct index_state *istate,
++			  int select_mask, int clear_mask,
++			  struct exclude_list *el)
+ {
+ 	static struct strbuf prefix = STRBUF_INIT;
+ 
+ 	strbuf_reset(&prefix);
+ 
+-	return clear_ce_flags_1(cache, nr,
++	return clear_ce_flags_1(istate,
++				istate->cache,
++				istate->cache_nr,
+ 				&prefix,
+ 				select_mask, clear_mask,
+ 				el, 0);
+@@ -1231,7 +1239,7 @@ static int clear_ce_flags(struct cache_entry **cache, int nr,
+  * Set/Clear CE_NEW_SKIP_WORKTREE according to $GIT_DIR/info/sparse-checkout
+  */
+ static void mark_new_skip_worktree(struct exclude_list *el,
+-				   struct index_state *the_index,
++				   struct index_state *istate,
+ 				   int select_flag, int skip_wt_flag)
+ {
+ 	int i;
+@@ -1240,8 +1248,8 @@ static void mark_new_skip_worktree(struct exclude_list *el,
+ 	 * 1. Pretend the narrowest worktree: only unmerged entries
+ 	 * are checked out
+ 	 */
+-	for (i = 0; i < the_index->cache_nr; i++) {
+-		struct cache_entry *ce = the_index->cache[i];
++	for (i = 0; i < istate->cache_nr; i++) {
++		struct cache_entry *ce = istate->cache[i];
+ 
+ 		if (select_flag && !(ce->ce_flags & select_flag))
+ 			continue;
+@@ -1256,8 +1264,7 @@ static void mark_new_skip_worktree(struct exclude_list *el,
+ 	 * 2. Widen worktree according to sparse-checkout file.
+ 	 * Matched entries will have skip_wt_flag cleared (i.e. "in")
+ 	 */
+-	clear_ce_flags(the_index->cache, the_index->cache_nr,
+-		       select_flag, skip_wt_flag, el);
++	clear_ce_flags(istate, select_flag, skip_wt_flag, el);
+ }
+ 
+ static int verify_absent(const struct cache_entry *,
+@@ -1636,7 +1643,7 @@ static int verify_clean_subdirectory(const struct cache_entry *ce,
+ 	memset(&d, 0, sizeof(d));
+ 	if (o->dir)
+ 		d.exclude_per_dir = o->dir->exclude_per_dir;
+-	i = read_directory(&d, &the_index, pathbuf, namelen+1, NULL);
++	i = read_directory(&d, o->src_index, pathbuf, namelen+1, NULL);
+ 	if (i)
+ 		return o->gently ? -1 :
+ 			add_rejected_path(o, ERROR_NOT_UPTODATE_DIR, ce->name);
+@@ -1678,7 +1685,7 @@ static int check_ok_to_remove(const char *name, int len, int dtype,
+ 		return 0;
+ 
+ 	if (o->dir &&
+-	    is_excluded(o->dir, &the_index, name, &dtype))
++	    is_excluded(o->dir, o->src_index, name, &dtype))
+ 		/*
+ 		 * ce->name is explicitly excluded, so it is Ok to
+ 		 * overwrite it.
+-- 
+2.18.0.rc0.309.g77c7720784
 
-I like this idea, but I'd probably keep the snippets in a separate file
-to keep things clean.
-
-Thanks,
--Santiago.
-
---ohajyoirdoi2q66r
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEkDurc2QOttZVM+/zRo8SLOgWIpUFAlsRWl8ACgkQRo8SLOgW
-IpW25RAAxfO22UCUL4VmLcu2h7ssGWdzYzWlOjris1TFJxlpt6ZzYgL1e46UfMcY
-54MGZJ/Olxp1b1EpTByqfTLYksmSKMYDFRhpruQQQoxrvLucdfsnOfRHIv0mYQgd
-wxsPwJgInrep34WlsaPov7i6aQ4WSllSog/qAjSwG+haJH6APIumRZS42Jgv9dnr
-fgbvB+L1eccOzBuz9OIMIg1rmz1PqWMgmUkMzBsPNPFGcv9Pg23zDStpSSoD6fyv
-/SGwZR03su5uU7wt9YAe9TaRxq6RXyGlQKAH1+e/GgAnq+8+Zq/rEEAmBaFIilvS
-Jvc925hthtq3dza56JyhlqTLn8yJhOzakqJdcb5thDOtw4KDkhN6kxRmZ5ceEEx5
-YJ2inmDZeJvSk9C/8keUaHLmvElUDU5txI3fsm8/h+IMRAVg20KMpu9QA9i6AfPI
-UaU/76eA9xUtYlBNKg5Bbi5kCAyH1fZ6WaQqOWr0n8R4GI4b78i+UxGDKCzdsas4
-l86LEGHFKtBctuWIP7RJCCWBZohroOjkyPHkTeOcQLceNUTTIL7JXuiMjUVaY65E
-2rVyRTp9YGGk8+nlMXlrKFskXzNHsp9ib4UT80ZFuiAM/hYWtM7akMcb/Ynbh5MD
-TL7Xb4sjrPre8+U7i9mn4rTo2ALdareBUvqYz5Q9+Nymhx7zDqo=
-=bd6X
------END PGP SIGNATURE-----
-
---ohajyoirdoi2q66r--
