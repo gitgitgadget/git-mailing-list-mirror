@@ -2,71 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 83FCF1F42D
-	for <e@80x24.org>; Fri,  1 Jun 2018 18:51:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 333D31F42D
+	for <e@80x24.org>; Fri,  1 Jun 2018 19:02:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752704AbeFASvb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Jun 2018 14:51:31 -0400
-Received: from mail-yw0-f180.google.com ([209.85.161.180]:39206 "EHLO
-        mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751584AbeFASva (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Jun 2018 14:51:30 -0400
-Received: by mail-yw0-f180.google.com with SMTP id 81-v6so4976132ywb.6
-        for <git@vger.kernel.org>; Fri, 01 Jun 2018 11:51:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=MCLEu0kxP17B1y39/XKvczyzF0jUxjOulHBqZUc2sTc=;
-        b=YoZjaZS6Ep4r42+b0wM5Z7UFievVGtdD1peiX5T2Sxnvv1ez4OzyUZ2sKQoR+keHRE
-         NLIGMO5A3UAHY/JPkrOVRDNl3KJhW+AI/GQPIjlYIvIbx5ZmaUuWYtCOOEm27oESbYON
-         sE3pbaK8e3FP4aAfiC9GquIZMEv0SNzXsC+KIOfLrcvISB39tS/3c0W1Qr9L67QL5Qxo
-         Q0toJHyuVz/xvtW3SBssCz5K7/VuqBE8jDYRv16TaB1EicE89QtFHBfD9C4H739EOn99
-         VWLLsdBNZf9f1T8Uun9AgqPs+5FpMWe/UmCdCHlbfm0w13lb4ym86emie20XUiAEQqVE
-         inYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=MCLEu0kxP17B1y39/XKvczyzF0jUxjOulHBqZUc2sTc=;
-        b=sPgAzIzuzjTN9MCbkZdt9Y+7wEf8vLXIaVoJSZ4tLWeJEwqVbuT93yb4N9pXIxyi7+
-         lh8/cHorbUO6UZJ+NxGO6WQBfoigQm733VK2vuWt/pdwDnoKq27OX64auczMO2PoEgOj
-         5ePBw+rDJ5PDj9pt5OCKCjBKZnt5ocQ4KjdPKwQiYithEOSHGC2rgv6BtbfwaVEfkVwS
-         hN0kB897gab13qjhOm3QIEpyA9blEE+i10gdYcGgBEXxbAJFGuk9zmoNI9iuHZ1Nde1d
-         Cax8LM+Ct8Y1nzNudgvmHHcWdfBz7nEKE8Fg7+JfARoZ9VhDWLMd/JNQhqTvXbjgtoBU
-         nHyA==
-X-Gm-Message-State: ALKqPwceT+KZDYWUeAeodJ+WSloj9GRBEYHLaBt7rDxHGEYtAjsBPATv
-        wyW/2JGn8BbpQIK5bEkTFWhRFasLHEAw+3p+df/fWg==
-X-Google-Smtp-Source: ADUXVKLr8s+Aw/9cuVHbHJ31uFti1aVbebBHomhXw7EWx+qfWn6eeR0/BYOx4AyxR5IAfhOTyPpr2snu/WGc0PvwAwc=
-X-Received: by 2002:a81:50d4:: with SMTP id e203-v6mr6723860ywb.421.1527879089766;
- Fri, 01 Jun 2018 11:51:29 -0700 (PDT)
+        id S1753146AbeFATCQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Jun 2018 15:02:16 -0400
+Received: from mout.gmx.net ([212.227.15.19]:36385 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753047AbeFATCP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Jun 2018 15:02:15 -0400
+Received: from [192.168.0.129] ([37.201.195.106]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MYfX0-1flSnP3Bcg-00VS1J; Fri, 01
+ Jun 2018 21:02:05 +0200
+Date:   Fri, 1 Jun 2018 21:01:48 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] sequencer: ensure labels that are object IDs are
+ rewritten
+In-Reply-To: <20180601174639.875215-1-sandals@crustytoothpaste.net>
+Message-ID: <nycvar.QRO.7.76.6.1806012101370.77@tvgsbejvaqbjf.bet>
+References: <20180529163236.646275-1-sandals@crustytoothpaste.net> <20180601174639.875215-1-sandals@crustytoothpaste.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 2002:a25:e87:0:0:0:0:0 with HTTP; Fri, 1 Jun 2018 11:51:29 -0700 (PDT)
-In-Reply-To: <CABPp-BFaFR-ZTg2Wj4gcBPLyb4sejw+guNhWRFXfRRR0UZq4nw@mail.gmail.com>
-References: <20180601161153.15192-1-pclouds@gmail.com> <CABPp-BFaFR-ZTg2Wj4gcBPLyb4sejw+guNhWRFXfRRR0UZq4nw@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 1 Jun 2018 11:51:29 -0700
-Message-ID: <CAGZ79kbOKPgBPJpoez7S5k7Y6L-+ncjcAvs3MaADLT1z_dv3+A@mail.gmail.com>
-Subject: Re: [PATCH/RFC/BUG] unpack-trees.c: do not use "the_index"
-To:     Elijah Newren <newren@gmail.com>
-Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:520aCCTdB1LXbJzemikbE/ZS1mK04YOJsbtEYRbKirz3pAIMwc3
+ oxB6aUcrVNJWNZuXkxBMjaupZYCgZaTmKndcoebgiOYhNm7WL817cJSHe1M3l5AjOiLHGFv
+ 5ewJhbZKnlfbgmcS6q4aOfQ0NX5MaEn0W4mG7Qs79iaP8f2Y4c/qpM/5bgFC6Oc+4fYFbzM
+ WhVZg61cnml+INnDufTNw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:9kRl7+I4mXk=:q8Pi/prpHaTkeuZLLObPLG
+ QU/HPmCmf4ItlH807+EHuP1JMZ6Ir0a9M3FAO+VJChNuChYg/76bYNYNmlU7wKZAtK6TJvg65
+ JR5L7I9xbuPZ80OEvKyr1uxwMNTczCL02oXytSQdxeYVTVSG3g74491cOqBsP9stub92btqY8
+ hLryMN25AyBHwtlbMUyfcD7XtNpZQO+qhJGNstO1R6nb0X4ytiPZHBzeqgisHNzCPU53ZJr1P
+ HW5COQ7nve3z2G9QWAd6OvKlK0sPngbR6fOsztDx5K+WWJ37vyLUBzjd0Ewl5J10ykzf028W1
+ oTT3u4WjQ7x/OYf9bT/yIRqwS04WNtRp+E3fcjsmXhQtgSahVloN62svuPCJUjAMUHFx5KEpU
+ UzoE7qN6br4KT9+hngLH1LYQbQarDkagfCaSZQy0b/6/3GYpm6RzURIXfUOpvqWQDg8COT1h/
+ R/SscJsnLEN8L+Twfm8GZ/X1S88787xSg0XiumHRXywWLxYqxeabyjqO7zLdGMRKHdm93sAlg
+ cM+zndtSuZD4K4mr7gDbvL2F0+Lnxn3smTFVMhQwr+rLiZWWNznxiRsdksqOC6b0S35p4XMtp
+ 9ku83MgTRMLdou1QzZATxtKEsy0Ib+ISmJU8fELElaYqZQ8xsHt68j6JDXRd+pNJnE2CRyTRO
+ QaczAHdHag+JcOE/1LyD2aJ8zbzUacrEaehcCxkvRTH7FWIZpBmFSO0mZgCvEOg/xaiMDi5p5
+ OSgT07UVPkdOto7AtJEiLrZpx06GuBOdAEcF+nz/iOnLZHxQMdxRjq5nuUQRenu7npmlJ7etM
+ JLHKOWo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 1, 2018 at 11:34 AM, Elijah Newren <newren@gmail.com> wrote:
+Hi Brian,
 
->> +/* Do not use the_index here, you probably want o->src_index */
->> +#define the_index the_index_should_not_be_used here
->
-> Good call.
+On Fri, 1 Jun 2018, brian m. carlson wrote:
 
-Is the space instead of the underscore between the last two words intentional?
+> When writing the todo script for --rebase-merges, we try to find a label
+> for certain commits.  If the label ends up being a valid object ID, such
+> as when we merge a detached commit, we want to rewrite it so it is no
+> longer a valid object ID.
+> 
+> However, the code path that does this checks for its length to be
+> equivalent to GIT_SHA1_RAWSZ, which isn't correct, since what we are
+> reading is a hex object ID.  Instead, check for the length being
+> equivalent to that of a hex object ID.  Use the_hash_algo so this code
+> works regardless of the hash size.
+> 
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+
+ACK!
+Dscho
