@@ -7,116 +7,109 @@ X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 80B661F51C
-	for <e@80x24.org>; Fri,  1 Jun 2018 08:17:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9DBA1F51C
+	for <e@80x24.org>; Fri,  1 Jun 2018 08:23:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750974AbeFAIRl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Jun 2018 04:17:41 -0400
-Received: from mout.gmx.net ([212.227.15.19]:54339 "EHLO mout.gmx.net"
+        id S1750991AbeFAIXU (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Jun 2018 04:23:20 -0400
+Received: from mout.gmx.net ([212.227.17.20]:42737 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750961AbeFAIRh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Jun 2018 04:17:37 -0400
-Received: from [192.168.0.129] ([37.201.195.106]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LcBin-1g7f7K0RkL-00jZaq; Fri, 01
- Jun 2018 10:17:27 +0200
-Date:   Fri, 1 Jun 2018 10:17:26 +0200 (DST)
+        id S1750869AbeFAIXS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Jun 2018 04:23:18 -0400
+Received: from [192.168.0.129] ([37.201.195.106]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MIMyZ-1fSFhh0PRX-004AbP; Fri, 01
+ Jun 2018 10:23:10 +0200
+Date:   Fri, 1 Jun 2018 10:23:09 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Todd Zullinger <tmz@pobox.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
 cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Thomas Rast <tr@thomasrast.ch>,
         Thomas Gummerer <t.gummerer@gmail.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Stefan Beller <sbeller@google.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 12/18] branch-diff: use color for the commit pairs
-In-Reply-To: <20180508021029.GC26695@zaya.teonanacatl.net>
-Message-ID: <nycvar.QRO.7.76.6.1806011016150.82@tvgsbejvaqbjf.bet>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de> <cover.1525448066.git.johannes.schindelin@gmx.de> <ba4791918c78770005d552856d8669648d7004f1.1525448066.git.johannes.schindelin@gmx.de> <20180505234852.GR26695@zaya.teonanacatl.net>
- <nycvar.QRO.7.76.6.1805062146070.77@tvgsbejvaqbjf.bet> <20180508021029.GC26695@zaya.teonanacatl.net>
+        <avarab@gmail.com>
+Subject: Re: [PATCH 02/18] Add a new builtin: branch-diff
+In-Reply-To: <8876f376-db86-c3e1-b97d-9e33506f2df2@ramsayjones.plus.com>
+Message-ID: <nycvar.QRO.7.76.6.1806011017560.82@tvgsbejvaqbjf.bet>
+References: <cover.1525361419.git.johannes.schindelin@gmx.de> <8bc517e35d4842f8d9d98f3b99adb9475d6db2d2.1525361419.git.johannes.schindelin@gmx.de> <71b00bbf-07e7-11e1-046b-f0241b82ebd3@ramsayjones.plus.com> <nycvar.QRO.7.76.6.1805032224150.77@tvgsbejvaqbjf.bet>
+ <850f1ad6-752d-85ae-ebad-feae09a76c54@ramsayjones.plus.com> <nycvar.QRO.7.76.6.1805040829390.77@tvgsbejvaqbjf.bet> <019cce70-c109-496e-e043-c471dcb21e00@ramsayjones.plus.com> <nycvar.QRO.7.76.6.1805052130360.77@tvgsbejvaqbjf.bet>
+ <8876f376-db86-c3e1-b97d-9e33506f2df2@ramsayjones.plus.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:lMt5XlMvZ0QfU8MUy7MbDRoeSJ8tKXgdCjGdItukivqgcT/w+G5
- U23hRRiUTwOhhhBuPx7QOc9DemFaFqlbkMjx3VmY/g3B3/V+EU0eHpKThwrL77OLS3JGG60
- c2BpiGB5XmezOGEjyLFviOcaaO0X+j375ajWrY45ZXdckN55D8QTCgN7Zxu86PqE6CqN7I5
- mNBvPEr5XxVRPRKtDkoeQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:hH24si2JE+E=:rAxv6dmbWkj3Hv2kxhnSDt
- MGgK3VP075ENQWyERpINBLSiNN2qXCM24doA/8MPJs6rcYSdQpV8wvuwvvGW231sAaSD3jQBH
- EamfxHxm8hvImPbK5u2I/rIYHmuE8hHNt1jz1cygVjiF8tKUn0jx/ylTTMkT0fNHS0SnbesHd
- sm2XC3ApMfqsN7bSgKM63y4s9iMecEe0ynZ+uF2gwwNTmDdKwU3wLfya3UUa4soinDXHfjZKv
- DZOtfoFZ25IBznLG4REYSncbYgu4HGArHaxdF0NLgYzXxzNhZxIByXc4p/OIwzeOcXdmE22sL
- 4yxSU1XxtMc1Zo9KAfDip4hcHRQgpulefvnmdqg3f0eD1pQzcFPXEmD2CMtaKz2dwqQO9BATZ
- a0vJMgh/cyvl1Y27CygvHFepf5OZS3ltrOTsNGmEbCIS4e4lXB5Dyzn584NYxraOQn6WuuDC8
- fjjMHnKfUzB+fBcl+5JWwIrtvcpE4JsYJ5Eqh/9/VMwDvWlRs4lpL7M++OhBRCeYewsWRTEEh
- 4mpkdpnqslYHbkDJuMRxa35khprWYaPSotysUw+u2DBfXe7P/jfs9I0Y/2szqQp3d+GU8ZyB3
- zYObiWxv1f2mfY55wITYq4D5/fY06RjfyIGDm0wEjSbVGFLFPWOtITTAIUS0jQCoYMCVyFDzn
- pDjAaxzqKXtBPaDMuIisiwELBSdHf0t6eYRy2vvj0MDGEQ7jLgQF3Jkbe4yuLY3nEVZyOKoeu
- 0HLhlHl60lwjZv5nkk8Ds63jpRHUX3kfxiA0VY7Gm66rhbqtf+NtvHqhnFpDu6AejNugrbxxC
- zOPlQxo
+X-Provags-ID: V03:K1:Ti8tIxlRxaavB/V5QA5FhFhXOEjLGsaVJY6GyeCp9C9o6uBij5U
+ FDSZUX+jvPN9frQBFCeALm4MvEZpI2s8pM3CmqdTfDBmiXJdV9AgeVvEwgxRrk/Oi+KubGd
+ YwGtsWsHDxcxpSr3T09IOjanaBfHVmzsHKFdXLDIDUVl5Kq+xdur75KCZd88i3IwkLUaTNv
+ eiEI1aBuFCiRGrVLg6eNg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:LYLuxeaenxc=:RYHF8wVVE1UTW3eIV+/p3j
+ Avskp7/l5qRh6KaN58lQfUFcQav2jIlBNAPXbU/CEJNEGCuULm/FTJAsvWUsWO8OIBqeWJy3E
+ Twp4UCk3OlKgpaRmxN/DaiQKlEM5Zgcyna/f6B0JZjmbQGQm5aTDvKrgWDB8UhvMokhTTh2Lq
+ gdg7eTnnX+8Ty9ClIPWb+Ks9IPsyDXF/lVYfG847ygeDeb5Eyp2sRdsmL1Ye4YFJgYEQWQib/
+ 2k0pZFaYeYPkWJOgJNMDF8OcynWXdBlo4LdDaqcjNvVvnFiNcYAaCSdXfgNrj7PL3KxYV71eA
+ kI2/vaSiPkzn7P4da3lnJRK80H0dGskRS9LCT22D8rGdr/oCP8RkBvuYUUKrznJVU2VqzwpmR
+ w5iJeD2xJNaM+gPIh3EW/L86pqzIHKWuBF4P7wYRM78epB/wBw+N5xJ8Nk1Ko9CMB8UIL9qBT
+ esG7ASnEff7ap9EYnc9xyDyLNNVZlyY13KcWSt1afwBVNrLG2WAcB9a4ct1rmFyznkgw5h1r+
+ Kxyrv0VE9KmA/kmgb4mnhRpmczH+DCrA4tVDcf/K+65xJvqoTQAXcjfI3jYoX/aIoDGGPxo11
+ gpKUYp2/aIMhWOoq6bQv7VlrGamz4QQus5ZQSPh71ALIjZ/Al6LSIdyzUOMeJI/GENTNQMsr1
+ IXR+dZTc+A/yMC/3H0f7AYaTDdpU+t+vOR8j8C2bhTOhUuhjChIa1sD1T63lHodxv8USia26c
+ uze0gwv2492FvQhEy9eDx2Wx2moeXA6Kje7JYdY4c1pxoKKfUdnwLH7k0wxUik2EO7YBhgua6
+ X+H8UcE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Todd,
+Hi Ramsay,
 
-On Mon, 7 May 2018, Todd Zullinger wrote:
+On Wed, 9 May 2018, Ramsay Jones wrote:
 
-> Johannes Schindelin wrote:
-> > 
-> > On Sat, 5 May 2018, Todd Zullinger wrote:
-> > 
-> >>> @@ -430,6 +451,8 @@ int cmd_branch_diff(int argc, const char **argv, const char *prefix)
-> >>>  	struct string_list branch1 = STRING_LIST_INIT_DUP;
-> >>>  	struct string_list branch2 = STRING_LIST_INIT_DUP;
-> >>>  
-> >>> +	git_diff_basic_config("diff.color.frag", "magenta", NULL);
-> >>> +
-> >>>  	diff_setup(&diffopt);
-> >>>  	diffopt.output_format = DIFF_FORMAT_PATCH;
-> >>>  	diffopt.flags.suppress_diff_headers = 1;
-> >> 
-> >> Should this also (or only) check color.diff.frag?
-> > 
-> > This code is not querying diff.color.frag, it is setting it. Without
-> > any way to override it.
-> > 
-> > Having thought about it longer, and triggered by Peff's suggestion to
-> > decouple the "reverse" part from the actual color, I fixed this by
-> > 
-> > - *not* setting .frag to magenta,
-> > 
-> > - using the reverse method also to mark outer *hunk headers* (not only
-> > the outer -/+ markers).
-> > 
-> > - actually calling git_diff_ui_config()...
+> On 05/05/18 20:41, Johannes Schindelin wrote:
+> [snip]
 > 
-> Excellent.  That seems to work nicely now, respecting the
-> color.diff.<slot> config.
+> [Sorry for the late reply - still catching up after (long weekend)
+> UK public holiday]
 > 
-> > The current work in progress can be pulled as `branch-diff` from
-> > https://github.com/dscho/git, if I could ask you to test?
+> > Well, what I would want to do is let the cloud work for me. By adding an
+> > automated build to my Visual Studio Team Services (VSTS) account, of
+> > course, as I have "cloud privilege" (i.e. I work in the organization
+> > providing the service, so I get to play with all of it for free).
+> > 
+> > So I really don't want to build sparse every time a new revision needs to
+> > be tested (whether that be from one of my branches, an internal PR for
+> > pre-review of patches to be sent to the mailing list, or maybe even `pu`
+> > or the personalized branches on https://github.com/gitster/git).
+> > 
+> > I really would need a ready-to-install sparse, preferably as light-weight
+> > as possible (by not requiring any dependencies outside what is available
+> > in VSTS' hosted Linux build agents.
+> > 
+> > Maybe there is a specific apt source for sparse?
 > 
-> While the colors and 'branch --diff' usage seem to work
-> nicely, I found that with 4ac3413cc8 ("branch-diff: left-pad
-> patch numbers", 2018-05-05), 'git branch' itself is broken.
+> Not that I'm aware of, sorry! :(
 > 
-> Running 'git branch' creates a branch named 'branch'.
-> Calling 'git branch --list' shows only 'branch' as the only
-> branch.
-> 
-> I didn't look too closely, but I'm guessing that the argv
-> handling is leaving the 'branch' argument in place where it
-> should be stripped?
-> 
-> This unsurprisingly breaks a large number of tests. :)
+> [release _source_ tar-balls are available, but that's not
+> what you are after, right?]
 
-You will be delighted to learn that all of this is now moot, as I renamed
-the command to `range-diff`, as this is what the wisdom of the crowd
-chose.
+No, that's not what I am after, because my goal is not to build sparse
+every time somebody pushes a new commit.
+
+I want to use the Hosted Agents of Visual Studio Team Services (because I
+have cloud privilege, as part of the team working on VSTS, I can use them
+for free, as much as I want, within reason of course). And yes, I want to
+use the Hosted Linux Agents for the sparse job.
+
+So I cannot compile sparse and then install it into an agent. Those agents
+are recycled after every build, so that every new build starts from a
+clean slate.
+
+If you have anything in the way of providing some easily-consumable
+package, that would do the job. I guess I could build sparse.deb via
+checkinstall in one VSTS build, offer it as artifact, and consume that
+from the VSTS job that uses it on the Git branches.
+
+Could you point me to a robus, yet current revision of sparse (and ideally
+provide me with precise instructions how to build it so that I do not have
+to hunt for that information)?
 
 Ciao,
-Johannes
+Dscho
