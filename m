@@ -2,86 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C08F61F42D
-	for <e@80x24.org>; Fri,  1 Jun 2018 21:57:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D75F31F42D
+	for <e@80x24.org>; Fri,  1 Jun 2018 22:40:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750996AbeFAV5n (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Jun 2018 17:57:43 -0400
-Received: from cpanel4.indieserve.net ([199.212.143.9]:36992 "EHLO
-        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750934AbeFAV5n (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Jun 2018 17:57:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
-        Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=nomDj+HhJhrF9huEL7wxevMFYwwLERUy8dD4FlaGFa0=; b=CIPA/dnlSrSVtm6iVmFWCpc96
-        x1SgL79ozejPtG4cpCxbC6bT9qyKBvLzmpaddQXb/ckWsuLV1Shj5Cjsm6mQ0L5VH4PHO7N4gDs86
-        Jofqm7GwXMQD7OL9amvTKIKuntBy4EzmEhOakeBFLmOi9TR/ZJT6Cj6+eALSIHiPigWq4ugrNYX9D
-        1byi2iZr/Uc3z2ZkIIy3opfZpVaTOGNxUuTxpx5YOdMjeX6Vo6V/C5EzK/K9CNGGEoOy5+VQCxxUH
-        EfjI44PcO1BVugHs8FH8HewU/Ut5p4hab71Dsug3753MiHz3Ukq5ym4Eoj/MQfEsDmRSfR6qnRiJS
-        Cs95eveMA==;
-Received: from cpef81d0f814063-cmf81d0f814060.cpe.net.cable.rogers.com ([174.114.57.56]:35580 helo=localhost.localdomain)
-        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1fOs3J-00CEYn-60; Fri, 01 Jun 2018 17:57:42 -0400
-Date:   Fri, 1 Jun 2018 17:55:38 -0400 (EDT)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Jeff King <peff@peff.net>
-cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: how exactly can git config section names contain periods?
-In-Reply-To: <20180601210731.GA20974@sigill.intra.peff.net>
-Message-ID: <alpine.LFD.2.21.1806011754510.14826@localhost.localdomain>
-References: <alpine.LFD.2.21.1806011606490.11215@localhost.localdomain> <20180601210731.GA20974@sigill.intra.peff.net>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1750981AbeFAWkK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Jun 2018 18:40:10 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:42031 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750812AbeFAWkJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Jun 2018 18:40:09 -0400
+Received: by mail-qt0-f194.google.com with SMTP id y31-v6so4022524qty.9
+        for <git@vger.kernel.org>; Fri, 01 Jun 2018 15:40:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=nIr6bt6pB7IqBGr+Yo+o5MCyv1buPZrfQFTLTpaz3no=;
+        b=D3xu/BWyvXQWBDWP2DpDMlNB7V60tPFjyB/8maxpXaepI9h9H6OpOGmS3EDVcqKG9Z
+         4iOvT1Gxva068geDeaq/P+m/OEsRoN9/PB1cJ6aEEMAmMYPCuRJ0iYqP8nCDdm0yIwaW
+         yuC3abZ9reVAc8IX3BpPF5xhznFeOB6N1DUeRIY3qdlJPN59FaaT80Iuzw/iLC9MlFoX
+         1VPkUfg87WwgALaYanaG1XdwM1qXVL0oWxmyPeFIHWej03Xv0wuDmkHvbQHGkyKfgnIG
+         V9aBgb9X+4uQF6DsLf4nSvnbSjFUyY77aqY+ddF6QEbqo5WLeWHdI6CKKrX7C9vbY8sV
+         huGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=nIr6bt6pB7IqBGr+Yo+o5MCyv1buPZrfQFTLTpaz3no=;
+        b=GlaJe6j865cllT5tBZBbAqi5EFpVeB8XHyAMeZTevdd0diCrjsnIUg3VCZxl+HdaH7
+         J1rAcyUPdX6fE7lVYxVeFqUhJNlmHgz/CdIwPBWubWFnNfgFS/Kvr4Ucq4IKuHdcnY7c
+         +uPVUNDLRbiycYySK2766h8ny8MFfu6V+WqAL/Jj9S026S5sNzjC8Na1/GXKchsHe971
+         FE+9JL3euzUxj1RN3zmuP1H7HvQqEYsIEk8TrmvVsKXK3esB6DSJkcNKX1WnDwEnE/XZ
+         SgeMrH6kqvw3Ji3UXfYFzVuV9AToBUYRSK7FfxOQPa4EtlDk6BwGfi2rQ+nPtXnT7f79
+         8OJA==
+X-Gm-Message-State: APt69E07bc64X22rdFjNg4nKJGwhKffGSbIOHRE+8sJhD7PxuI7l4Jy4
+        j0/MPxKonmSycCW5HvUStLWFPX3HCa/j5W6ntsI=
+X-Google-Smtp-Source: ADUXVKKylEumkP59fXdGUDRq6/5wEztCkzWjLebHM/zE4HwV77QpxImS/e6jGMHuidFcsoRV/nge2ffnNf3Eyvzyt4k=
+X-Received: by 2002:a0c:9487:: with SMTP id j7-v6mr9198757qvj.41.1527892809110;
+ Fri, 01 Jun 2018 15:40:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-OutGoing-Spam-Status: No, score=-0.2
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Received: by 2002:a0c:aa4b:0:0:0:0:0 with HTTP; Fri, 1 Jun 2018 15:40:08 -0700 (PDT)
+In-Reply-To: <20180601211015.11919-4-avarab@gmail.com>
+References: <20180531195252.29173-1-avarab@gmail.com> <20180601211015.11919-1-avarab@gmail.com>
+ <20180601211015.11919-4-avarab@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 1 Jun 2018 18:40:08 -0400
+X-Google-Sender-Auth: fKSQsHhiDgcNczquuRQY-jh2Wcs
+Message-ID: <CAPig+cR-4ni9nuKp8buvBOKe-43DM7g5Y_pfEcQDuM5n9xuhVg@mail.gmail.com>
+Subject: Re: [PATCH v5 3/8] checkout.[ch]: introduce an *_INIT macro
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Thomas Gummerer <t.gummerer@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 1 Jun 2018, Jeff King wrote:
+On Fri, Jun 1, 2018 at 5:10 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> checkout.[ch]: introduce an *_INIT macro
 
-> This is mentioned later:
+   checkout.c: introduce...
+
+> Add an *_INIT macro for the tracking_name_data similar to what exists
+> elsewhere in the codebase, e.g. OID_ARRAY_INIT in sha1-array.h. This
+> will make it more idiomatic in later changes to add more fields to the
+> struct & its initialization macro.
 >
->   There is also a deprecated [section.subsection] syntax. With this
->   syntax, the subsection name is converted to lower-case and is also
->   compared case sensitively. These subsection names follow the same
->   restrictions as section names.
-
-> This has been deprecated since 2011. Maybe it's time to finally get
-> rid of it.
-
-  seven years seems sufficient for deprecation.
-
-rday
-
--- 
-
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                  http://crashcourse.ca/dokuwiki
-
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
