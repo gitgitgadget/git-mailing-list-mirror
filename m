@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 659A61F42D
-	for <e@80x24.org>; Fri,  1 Jun 2018 21:10:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65E881F42D
+	for <e@80x24.org>; Fri,  1 Jun 2018 21:10:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751209AbeFAVKw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Jun 2018 17:10:52 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:36629 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751123AbeFAVKr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Jun 2018 17:10:47 -0400
-Received: by mail-wm0-f66.google.com with SMTP id v131-v6so4676046wma.1
-        for <git@vger.kernel.org>; Fri, 01 Jun 2018 14:10:46 -0700 (PDT)
+        id S1751223AbeFAVKy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Jun 2018 17:10:54 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:39421 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751135AbeFAVKp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Jun 2018 17:10:45 -0400
+Received: by mail-wm0-f67.google.com with SMTP id p11-v6so4190763wmc.4
+        for <git@vger.kernel.org>; Fri, 01 Jun 2018 14:10:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=GRicabhpnUdJ/lndNfCwTpTW4RfvX5EjYQtRWqu+We8=;
-        b=Ix/TERtGXYUQtrTLCsHdPaguK0LpBRA9117wPfprzACWss2Gc9yShia5Z7W+AyU6xq
-         Cd1oedlAALkhCtNBfE1joHg/Vq/RYH1ur9QRcKWDjd5Ax72XVfujoa57BYhmVxxBif1n
-         esIxwn6cd+IOP5uQspjQ9rUWkpkLfnMyYFalTCXwpQbSkQ/ktxrH1ZeknF6ETh8e9B32
-         +WtyZRNXHhWdz5T9BiNFkb9lGXZmgGeUKwmtUxTCbtL6R8VF7/IoNWiKmagMBu+dKIXf
-         Dxg8KYtXRRpSRWeAnVH1sJ3nmi19sNMoxQqDsWRvgTIQPBpJ2dNRx36Zh2XLKdml6pCQ
-         qgTQ==
+        bh=OdWZS9NGMluAmwkYpFpJxA5V05m6iTzwWrNioYIn8gA=;
+        b=JqPaHGkK7mxCsYXlL+mUQFJBULSv3Mex0/dUyaANiCjr3LNtPRO8k8pAmRMqH6wMoY
+         DnDLgtGSFPSBMlPGIdgZqGrnTfO+xAveoUrLbyybfDcl4zbaVKyrDfOvuXAD0+Cn+bEW
+         oVJGnhjmW3hzUBJk7Ggi2QjXOdhNW7+vUo70mRSmEItLSe6145gvjS04NNTiDXHZ+2ne
+         AXAr7UZHL9+nVqNaZ0srVALI/i2JFhDF4FFQU9Yj1StjgTElOxLPyqfbOyV+1tSV7+MC
+         rpAjPzs94xeHzlq7emZ/vfbES63Ao21XbXbN/46y3+aTi2cxXtT1ZEM0jRX2pjyMQyIu
+         7wFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=GRicabhpnUdJ/lndNfCwTpTW4RfvX5EjYQtRWqu+We8=;
-        b=WZoyJAOHjCi+vhvAthX1DMuEQungx0sF30QIATFwu1qV3OBWV2CLCpDGuVADGJJXz3
-         Cy9lLiJ8PQ/r8AKqTBfu6ndiuSwC7Nr1bQCLSYtTDVs+LzkBB16yQGlLyhQmm9YVtVOu
-         jZZsl8iPGl2SXc0I0yjTBt5XY7e/os98SE9/DrYhsI9kcdeULo73nNvH8XNxmAORgcBu
-         OwUcfqH0KZy4yDd7DWInBuQqxvl1wR8T3vv13XDGXsaRaccJ3QQV/uW2VOTxm4pVcqXe
-         fIix/WR03FaEf8s732fGgRLpWC6xhYkqUK9ImBmKv79fiJyf/WxYlmgv9DFrhsXolPIk
-         2reg==
-X-Gm-Message-State: ALKqPwcf2nnuqmqFnERP5HPhfqoAl5QpPd0cS+f/TDJXK7AdDwKzSsVv
-        fkxX49pVybu/5bXaxb5f7gdMnOOj
-X-Google-Smtp-Source: ADUXVKLl7cVb5Q8uWbAKLR7BDCdwKd9K2qOR63SzA6PqcZArQeixwaOl5BjKtNhIRdHw2oU7wl5dbg==
-X-Received: by 2002:a1c:aac3:: with SMTP id t186-v6mr3714526wme.14.1527887445528;
-        Fri, 01 Jun 2018 14:10:45 -0700 (PDT)
+        bh=OdWZS9NGMluAmwkYpFpJxA5V05m6iTzwWrNioYIn8gA=;
+        b=mkXZ7dzNmB6JWRFzWIaP6wEGO8yngXGQizLaSc4B9ba7FNOwqgRq4znj5ojd8Yehcd
+         dbW6IQJo5xQ1UE9QJabNc+CxoatJmqWN3JI0ixkHcjPerzsJ0jcliM6//SL7BXVrbORK
+         aKW6mWlXzNfcw4SuMyzQP0d51ONISUiVPT2oGbQOrUo/FfH0E72n6W5IVp4lfVeauYP6
+         Bpo4uo4uLhm4kBh3YEeq4oRGObf2FJhFs6VAnOQ/WOVV39pQfxIejD36PnoB8wFzJh7I
+         lB+UC/iQZEjBK/YUqSJyu7xZQhFnJSr0y1lFxuQLoPYXq7kZCJvTHU4rhYEp1/kkpX+d
+         CVrg==
+X-Gm-Message-State: APt69E2NM6B+e2+5KyFpIY2xRatubtazrLLd3Nyzg1EKYO5sg3xrmc4k
+        ssNHteMAXWe/WLohVmd9719cTJ5U
+X-Google-Smtp-Source: ADUXVKLFliFMWUu+rvoL012YQUwVLhvlIiNDkGsfgQ5aL1HZL4U08YUZLkkAn40RAtsjflvFIalybQ==
+X-Received: by 2002:a1c:6d85:: with SMTP id b5-v6mr3419811wmi.135.1527887443889;
+        Fri, 01 Jun 2018 14:10:43 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id k126-v6sm3516235wmd.45.2018.06.01.14.10.44
+        by smtp.gmail.com with ESMTPSA id k126-v6sm3516235wmd.45.2018.06.01.14.10.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 01 Jun 2018 14:10:44 -0700 (PDT)
+        Fri, 01 Jun 2018 14:10:43 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 8/8] checkout & worktree: introduce checkout.defaultRemote
-Date:   Fri,  1 Jun 2018 21:10:15 +0000
-Message-Id: <20180601211015.11919-9-avarab@gmail.com>
+Subject: [PATCH v5 7/8] checkout: add advice for ambiguous "checkout <branch>"
+Date:   Fri,  1 Jun 2018 21:10:14 +0000
+Message-Id: <20180601211015.11919-8-avarab@gmail.com>
 X-Mailer: git-send-email 2.17.0.290.gded63e768a
 In-Reply-To: <20180601211015.11919-1-avarab@gmail.com>
 References: <20180601211015.11919-1-avarab@gmail.com>
@@ -76,54 +76,20 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Introduce a checkout.defaultRemote setting which can be used to
-designate a remote to prefer (via checkout.defaultRemote=origin) when
-running e.g. "git checkout master" to mean origin/master, even though
-there's other remotes that have the "master" branch.
+As the "checkout" documentation describes:
 
-I want this because it's very handy to use this workflow to checkout a
-repository and create a topic branch, then get back to a "master" as
-retrieved from upstream:
+    If <branch> is not found but there does exist a tracking branch in
+    exactly one remote (call it <remote>) with a matching name, treat
+    as equivalent to [...] <remote>/<branch.
 
-    (
-        cd /tmp &&
-        rm -rf tbdiff &&
-        git clone git@github.com:trast/tbdiff.git &&
-        cd tbdiff &&
-        git branch -m topic &&
-        git checkout master
-    )
+This is a really useful feature. The problem is that when you and
+another remote (e.g. a fork) git won't find a unique branch name
+anymore, and will instead print this nondescript message:
 
-That will output:
+    $ git checkout master
+    error: pathspec 'master' did not match any file(s) known to git
 
-    Branch 'master' set up to track remote branch 'master' from 'origin'.
-    Switched to a new branch 'master'
-
-But as soon as a new remote is added (e.g. just to inspect something
-from someone else) the DWIMery goes away:
-
-    (
-        cd /tmp &&
-        rm -rf tbdiff &&
-        git clone git@github.com:trast/tbdiff.git &&
-        cd tbdiff &&
-        git branch -m topic &&
-        git remote add avar git@github.com:avar/tbdiff.git &&
-        git fetch avar &&
-        git checkout master
-    )
-
-Will output (without the advice output added earlier in this series):
-
-    error: pathspec 'master' did not match any file(s) known to git.
-
-The new checkout.defaultRemote config allows me to say that whenever
-that ambiguity comes up I'd like to prefer "origin", and it'll still
-work as though the only remote I had was "origin".
-
-Also adjust the advice.checkoutAmbiguousRemoteBranchName message to
-mention this new config setting to the user, the full output on my
-git.git is now (the last paragraph is new):
+Now it will, on my git.git checkout, print:
 
     $ ./git --exec-path=$PWD checkout master
     error: pathspec 'master' did not match any file(s) known to git.
@@ -135,269 +101,122 @@ git.git is now (the last paragraph is new):
     hint: you can do so by fully-qualifying the name with the --track option:
     hint:
     hint:     git checkout --track origin/<name>
-    hint:
-    hint: If you'd like to always have checkouts of an ambiguous <name> prefer
-    hint: one remote, e.g. the 'origin' remote, consider setting
-    hint: checkout.defaultRemote=origin in your config.
-
-I considered splitting this into checkout.defaultRemote and
-worktree.defaultRemote, but it's probably less confusing to break our
-own rules that anything shared between config should live in core.*
-than have two config settings, and I couldn't come up with a short
-name under core.* that made sense (core.defaultRemoteForCheckout?).
-
-See also 70c9ac2f19 ("DWIM "git checkout frotz" to "git checkout -b
-frotz origin/frotz"", 2009-10-18) which introduced this DWIM feature
-to begin with, and 4e85333197 ("worktree: make add <path> <branch>
-dwim", 2017-11-26) which added it to git-worktree.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/config.txt       | 21 ++++++++++++++++++++-
- Documentation/git-checkout.txt |  9 +++++++++
- Documentation/git-worktree.txt |  9 +++++++++
- builtin/checkout.c             | 12 +++++++++---
- checkout.c                     | 26 ++++++++++++++++++++++++--
- t/t2024-checkout-dwim.sh       | 18 +++++++++++++++++-
- t/t2025-worktree-add.sh        | 21 +++++++++++++++++++++
- 7 files changed, 109 insertions(+), 7 deletions(-)
+ Documentation/config.txt |  7 +++++++
+ advice.c                 |  2 ++
+ advice.h                 |  1 +
+ builtin/checkout.c       | 13 +++++++++++++
+ t/t2024-checkout-dwim.sh | 14 ++++++++++++++
+ 5 files changed, 37 insertions(+)
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index dfc0413a84..aef2769211 100644
+index ab641bf5a9..dfc0413a84 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -350,7 +350,10 @@ advice.*::
- 		remote tracking branch on more than one remote in
- 		situations where an unambiguous argument would have
- 		otherwise caused a remote-tracking branch to be
--		checked out.
-+		checked out. See the `checkout.defaultRemote`
-+		configuration variable for how to set a given remote
-+		to used by default in some situations where this
-+		advice would be printed.
+@@ -344,6 +344,13 @@ advice.*::
+ 		Advice shown when you used linkgit:git-checkout[1] to
+ 		move to the detach HEAD state, to instruct how to create
+ 		a local branch after the fact.
++	checkoutAmbiguousRemoteBranchName::
++		Advice shown when the argument to
++		linkgit:git-checkout[1] ambiguously resolves to a
++		remote tracking branch on more than one remote in
++		situations where an unambiguous argument would have
++		otherwise caused a remote-tracking branch to be
++		checked out.
  	amWorkDir::
  		Advice that shows the location of the patch file when
  		linkgit:git-am[1] fails to apply it.
-@@ -1105,6 +1108,22 @@ browser.<tool>.path::
- 	browse HTML help (see `-w` option in linkgit:git-help[1]) or a
- 	working repository in gitweb (see linkgit:git-instaweb[1]).
+diff --git a/advice.c b/advice.c
+index 370a56d054..75e7dede90 100644
+--- a/advice.c
++++ b/advice.c
+@@ -21,6 +21,7 @@ int advice_add_embedded_repo = 1;
+ int advice_ignored_hook = 1;
+ int advice_waiting_for_editor = 1;
+ int advice_graft_file_deprecated = 1;
++int advice_checkout_ambiguous_remote_branch_name = 1;
  
-+checkout.defaultRemote::
-+	When you run 'git checkout <something>' and only have one
-+	remote, it may implicitly fall back on checking out and
-+	tracking e.g. 'origin/<something>'. This stops working as soon
-+	as you have more than one remote with a '<something>'
-+	reference. This setting allows for setting the name of a
-+	preferred remote that should always win when it comes to
-+	disambiguation. The typical use-case is to set this to
-+	`origin`.
-++
-+Currently this is used by linkgit:git-checkout[1] when 'git checkout
-+<something>' will checkout the '<something>' branch on another remote,
-+and by linkgit:git-worktree[1] when 'git worktree add' refers to a
-+remote branch. This setting might be used for other checkout-like
-+commands or functionality in the future.
-+
- clean.requireForce::
- 	A boolean to make git-clean do nothing unless given -f,
- 	-i or -n.   Defaults to true.
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index ca5fc9c798..9db02928c4 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -38,6 +38,15 @@ equivalent to
- $ git checkout -b <branch> --track <remote>/<branch>
- ------------
- +
-+If the branch exists in multiple remotes and one of them is named by
-+the `checkout.defaultRemote` configuration variable, we'll use that
-+one for the purposes of disambiguation, even if the `<branch>` isn't
-+unique across all remotes. Set it to
-+e.g. `checkout.defaultRemote=origin` to always checkout remote
-+branches from there if `<branch>` is ambiguous but exists on the
-+'origin' remote. See also `checkout.defaultRemote` in
-+linkgit:git-config[1].
-++
- You could omit <branch>, in which case the command degenerates to
- "check out the current branch", which is a glorified no-op with
- rather expensive side-effects to show only the tracking information,
-diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index afc6576a14..9c26be40f4 100644
---- a/Documentation/git-worktree.txt
-+++ b/Documentation/git-worktree.txt
-@@ -60,6 +60,15 @@ with a matching name, treat as equivalent to:
- $ git worktree add --track -b <branch> <path> <remote>/<branch>
- ------------
- +
-+If the branch exists in multiple remotes and one of them is named by
-+the `checkout.defaultRemote` configuration variable, we'll use that
-+one for the purposes of disambiguation, even if the `<branch>` isn't
-+unique across all remotes. Set it to
-+e.g. `checkout.defaultRemote=origin` to always checkout remote
-+branches from there if `<branch>` is ambiguous but exists on the
-+'origin' remote. See also `checkout.defaultRemote` in
-+linkgit:git-config[1].
-++
- If `<commit-ish>` is omitted and neither `-b` nor `-B` nor `--detach` used,
- then, as a convenience, the new worktree is associated with a branch
- (call it `<branch>`) named after `$(basename <path>)`.  If `<branch>`
+ static int advice_use_color = -1;
+ static char advice_colors[][COLOR_MAXLEN] = {
+@@ -72,6 +73,7 @@ static struct {
+ 	{ "ignoredhook", &advice_ignored_hook },
+ 	{ "waitingforeditor", &advice_waiting_for_editor },
+ 	{ "graftfiledeprecated", &advice_graft_file_deprecated },
++	{ "checkoutambiguousremotebranchname", &advice_checkout_ambiguous_remote_branch_name },
+ 
+ 	/* make this an alias for backward compatibility */
+ 	{ "pushnonfastforward", &advice_push_update_rejected }
+diff --git a/advice.h b/advice.h
+index 9f5064e82a..4d11d51d43 100644
+--- a/advice.h
++++ b/advice.h
+@@ -22,6 +22,7 @@ extern int advice_add_embedded_repo;
+ extern int advice_ignored_hook;
+ extern int advice_waiting_for_editor;
+ extern int advice_graft_file_deprecated;
++extern int advice_checkout_ambiguous_remote_branch_name;
+ 
+ int git_default_advice_config(const char *var, const char *value);
+ __attribute__((format (printf, 1, 2)))
 diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 4dfb8f1535..b78481dead 100644
+index 8c93c55cbc..4dfb8f1535 100644
 --- a/builtin/checkout.c
 +++ b/builtin/checkout.c
-@@ -912,8 +912,10 @@ static int parse_branchname_arg(int argc, const char **argv,
- 	 *   (b) If <something> is _not_ a commit, either "--" is present
- 	 *       or <something> is not a path, no -t or -b was given, and
- 	 *       and there is a tracking branch whose name is <something>
--	 *       in one and only one remote, then this is a short-hand to
--	 *       fork local <something> from that remote-tracking branch.
-+	 *       in one and only one remote (or if the branch exists on the
-+	 *       remote named in checkout.defaultRemote), then this is a
-+	 *       short-hand to fork local <something> from that
-+	 *       remote-tracking branch.
- 	 *
- 	 *   (c) Otherwise, if "--" is present, treat it like case (1).
- 	 *
-@@ -1277,7 +1279,11 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 				 "If you meant to check out a remote tracking branch on e.g. 'origin'\n"
- 				 "you can do so by fully-qualifying the name with the --track option:\n"
- 				 "\n"
--				 "    git checkout --track origin/<name>"),
-+				 "    git checkout --track origin/<name>\n"
+@@ -22,6 +22,7 @@
+ #include "resolve-undo.h"
+ #include "submodule-config.h"
+ #include "submodule.h"
++#include "advice.h"
+ 
+ static const char * const checkout_usage[] = {
+ 	N_("git checkout [<options>] <branch>"),
+@@ -1267,6 +1268,18 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 	UNLEAK(opts);
+ 	if (opts.patch_mode || opts.pathspec.nr) {
+ 		int ret = checkout_paths(&opts, new_branch_info.name);
++		if (ret && dwim_remotes_matched > 1 &&
++		    advice_checkout_ambiguous_remote_branch_name)
++			advise(_("The argument '%s' matched more than one remote tracking branch.\n"
++				 "We found %d remotes with a reference that matched. So we fell back\n"
++				 "on trying to resolve the argument as a path, but failed there too!\n"
 +				 "\n"
-+				 "If you'd like to always have checkouts of an ambiguous <name> prefer\n"
-+				 "one remote, e.g. the 'origin' remote, consider setting\n"
-+				 "checkout.defaultRemote=origin in your config."),
- 			       argv[0],
- 			       dwim_remotes_matched);
++				 "If you meant to check out a remote tracking branch on e.g. 'origin'\n"
++				 "you can do so by fully-qualifying the name with the --track option:\n"
++				 "\n"
++				 "    git checkout --track origin/<name>"),
++			       argv[0],
++			       dwim_remotes_matched);
  		return ret;
-diff --git a/checkout.c b/checkout.c
-index ee3a7e9c05..c72e9f9773 100644
---- a/checkout.c
-+++ b/checkout.c
-@@ -2,15 +2,19 @@
- #include "remote.h"
- #include "refspec.h"
- #include "checkout.h"
-+#include "config.h"
- 
- struct tracking_name_data {
- 	/* const */ char *src_ref;
- 	char *dst_ref;
- 	struct object_id *dst_oid;
- 	int num_matches;
-+	const char *default_remote;
-+	char *default_dst_ref;
-+	struct object_id *default_dst_oid;
- };
- 
--#define TRACKING_NAME_DATA_INIT { NULL, NULL, NULL, 0 }
-+#define TRACKING_NAME_DATA_INIT { NULL, NULL, NULL, 0, NULL, NULL, NULL }
- 
- static int check_tracking_name(struct remote *remote, void *cb_data)
- {
-@@ -24,6 +28,12 @@ static int check_tracking_name(struct remote *remote, void *cb_data)
- 		return 0;
- 	}
- 	cb->num_matches++;
-+	if (cb->default_remote && !strcmp(remote->name, cb->default_remote)) {
-+		struct object_id *dst = xmalloc(sizeof(*cb->default_dst_oid));
-+		cb->default_dst_ref = xstrdup(query.dst);
-+		oidcpy(dst, cb->dst_oid);
-+		cb->default_dst_oid = dst;
-+	}
- 	if (cb->dst_ref) {
- 		free(query.dst);
- 		return 0;
-@@ -36,14 +46,26 @@ const char *unique_tracking_name(const char *name, struct object_id *oid,
- 				 int *dwim_remotes_matched)
- {
- 	struct tracking_name_data cb_data = TRACKING_NAME_DATA_INIT;
-+	const char *default_remote = NULL;
-+	if (!git_config_get_string_const("checkout.defaultremote", &default_remote))
-+		cb_data.default_remote = default_remote;
- 	cb_data.src_ref = xstrfmt("refs/heads/%s", name);
- 	cb_data.dst_oid = oid;
- 	for_each_remote(check_tracking_name, &cb_data);
- 	if (dwim_remotes_matched)
- 		*dwim_remotes_matched = cb_data.num_matches;
- 	free(cb_data.src_ref);
--	if (cb_data.num_matches == 1)
-+	free((char *)default_remote);
-+	if (cb_data.num_matches == 1) {
-+		free(cb_data.default_dst_ref);
-+		free(cb_data.default_dst_oid);
- 		return cb_data.dst_ref;
-+	}
- 	free(cb_data.dst_ref);
-+	if (cb_data.default_dst_ref) {
-+		oidcpy(oid, cb_data.default_dst_oid);
-+		free(cb_data.default_dst_oid);
-+		return cb_data.default_dst_ref;
-+	}
- 	return NULL;
- }
+ 	} else {
+ 		return checkout_branch(&opts, &new_branch_info);
 diff --git a/t/t2024-checkout-dwim.sh b/t/t2024-checkout-dwim.sh
-index fef263a858..1495c248a7 100755
+index ed32828105..fef263a858 100755
 --- a/t/t2024-checkout-dwim.sh
 +++ b/t/t2024-checkout-dwim.sh
-@@ -87,7 +87,23 @@ test_expect_success 'checkout of branch from multiple remotes fails with advice'
- 		checkout foo 2>stderr &&
- 	test_branch master &&
- 	status_uno_is_clean &&
--	test_i18ngrep ! "^hint: " stderr
-+	test_i18ngrep ! "^hint: " stderr &&
-+	# Make sure the likes of checkout -p don not print this hint
-+	git checkout -p foo 2>stderr &&
-+	test_i18ngrep ! "^hint: " stderr &&
-+	status_uno_is_clean
-+'
-+
-+test_expect_success 'checkout of branch from multiple remotes succeeds with checkout.defaultRemote #1' '
+@@ -76,6 +76,20 @@ test_expect_success 'checkout of branch from multiple remotes fails #1' '
+ 	test_branch master
+ '
+ 
++test_expect_success 'checkout of branch from multiple remotes fails with advice' '
 +	git checkout -B master &&
-+	status_uno_is_clean &&
 +	test_might_fail git branch -D foo &&
-+
-+	git -c checkout.defaultRemote=repo_a checkout foo &&
++	test_must_fail git checkout foo 2>stderr &&
++	test_branch master &&
 +	status_uno_is_clean &&
-+	test_branch foo &&
-+	test_cmp_rev remotes/repo_a/foo HEAD &&
-+	test_branch_upstream foo repo_a foo
- '
- 
- test_expect_success 'checkout of branch from a single remote succeeds #1' '
-diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
-index d2e49f7632..be6e093142 100755
---- a/t/t2025-worktree-add.sh
-+++ b/t/t2025-worktree-add.sh
-@@ -402,6 +402,27 @@ test_expect_success '"add" <path> <branch> dwims' '
- 	)
- '
- 
-+test_expect_success '"add" <path> <branch> dwims with checkout.defaultRemote' '
-+	test_when_finished rm -rf repo_upstream repo_dwim foo &&
-+	setup_remote_repo repo_upstream repo_dwim &&
-+	git init repo_dwim &&
-+	(
-+		cd repo_dwim &&
-+		git remote add repo_upstream2 ../repo_upstream &&
-+		git fetch repo_upstream2 &&
-+		test_must_fail git worktree add ../foo foo &&
-+		git -c checkout.defaultRemote=repo_upstream worktree add ../foo foo &&
-+		>status.expect &&
-+		git status -uno --porcelain >status.actual &&
-+		test_cmp status.expect status.actual
-+	) &&
-+	(
-+		cd foo &&
-+		test_branch_upstream foo repo_upstream foo &&
-+		test_cmp_rev refs/remotes/repo_upstream/foo refs/heads/foo
-+	)
++	test_i18ngrep "^hint: " stderr &&
++	test_must_fail git -c advice.checkoutAmbiguousRemoteBranchName=false \
++		checkout foo 2>stderr &&
++	test_branch master &&
++	status_uno_is_clean &&
++	test_i18ngrep ! "^hint: " stderr
 +'
 +
- test_expect_success 'git worktree add does not match remote' '
- 	test_when_finished rm -rf repo_a repo_b foo &&
- 	setup_remote_repo repo_a repo_b &&
+ test_expect_success 'checkout of branch from a single remote succeeds #1' '
+ 	git checkout -B master &&
+ 	test_might_fail git branch -D bar &&
 -- 
 2.17.0.290.gded63e768a
 
