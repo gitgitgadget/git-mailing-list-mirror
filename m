@@ -2,67 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1DDC71F42D
-	for <e@80x24.org>; Fri,  1 Jun 2018 02:17:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 105BC1F42D
+	for <e@80x24.org>; Fri,  1 Jun 2018 02:23:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750766AbeFACRt (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 May 2018 22:17:49 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:38058 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750711AbeFACRt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 May 2018 22:17:49 -0400
-Received: by mail-wm0-f68.google.com with SMTP id m129-v6so59347wmb.3
-        for <git@vger.kernel.org>; Thu, 31 May 2018 19:17:48 -0700 (PDT)
+        id S1750794AbeFACXx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 May 2018 22:23:53 -0400
+Received: from mail-wr0-f172.google.com ([209.85.128.172]:42195 "EHLO
+        mail-wr0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750715AbeFACXw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 May 2018 22:23:52 -0400
+Received: by mail-wr0-f172.google.com with SMTP id w10-v6so34796612wrk.9
+        for <git@vger.kernel.org>; Thu, 31 May 2018 19:23:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=0WudxENpRhS6FvVEhDzfmxcw0zd96DI2l3JfzWOwF58=;
-        b=o1wyiqwRqSEJ3RHr/6+zzfGPuR2/ICt6t/0/PcmOQpRIDtdwAoBWAZCC3n5BGtOO6/
-         +dBcAllKklt2i8VKHwpWOd6q7lFss+TY8IsJ1J9aJ3oc6/eboFa7Lkj+FYx0VgHNlLUw
-         GVUg4/RDb95hrJZrn5U1yu8igOFpPlGOWfsqPZylIHC4F7fje5+q8FtFku1sckxPKZqe
-         4R0sro83GhC9SRmkbG9ww3Q4+AOiIdSLEDYwAQ2E63yI5SFyk8ZqCI1cPOccsZO9OdHA
-         EcphU3SwB02Ohs43NYhulfguZTLA2tq8Ubomc4p98yxm58Pbd56loZNAJs7ucB+HJbAZ
-         xs7g==
+        bh=pVROc1vmJ7Nxr//zyncUqpSas//WLB5/89E1c3ty734=;
+        b=H+DJ7kBwU6/3aLZx2GULv2riAHCs1kAZwybj1UsrLL5GWqGGjkGdRrScBs4vtDME8q
+         nvBdz9ZVrwEAMZIDn6XFGHkqxehqXhTlkxG7fyuLR5gp6BTVbdN3QZQcpla66NYPFTX0
+         VZozgNtfTvs+MF2k0cjRHgFIk5LudNskcmunbtoLff2p/B0miaeFgkhP6+fUdUJH8prk
+         LyqpIWhSsj1ErO/LCnTD+mr86K9wmvB8uTtigx0+DOiRyl2bDUYKH71llNhSzdkyxGAP
+         nbwx8Ki6NyEaAqXxxtpuB0qqD6YFdUeDGAHN9brXYMqAvaQpUnQ57yST1aSa8vlo3aPi
+         bBRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=0WudxENpRhS6FvVEhDzfmxcw0zd96DI2l3JfzWOwF58=;
-        b=PPxv9y3JqfKCtx6x83Izi3dC2keraKq4RpIO1f59nWkCPAXc+xNcAiMbc2cF6uoBWi
-         pqQLfPbchQFrDpfMhG1NYH3AbKv6EO7xl+0y0g4PcZK9gEJiewrVPs8NFt6T8R1J40sE
-         uobUu90SbTbclrC3T+g5okaCcGRkej+fSZwTlLoJzN+RTOZtcV2/yq8oGrC/xiu+Wmu1
-         KEVRv7fj+WZsrVK6SE2fcgNLuBuPeLFXoFplxAkPO6+wH0wU/hLmWLHO6bwVycrVoKHB
-         6Df4ZRjUY5wdXiVPCcX9deFfs4iil0q29MphMO+5SWreJtDtCSXsfxL57GezC403DUSs
-         C9xA==
-X-Gm-Message-State: APt69E2vP1e4RkI+8uAIOJ7axH1CzaKDLrCBOP+fjnGUngzBRjDN2df6
-        VZoW1rhWnAcrFcRy0Ae81c8=
-X-Google-Smtp-Source: ADUXVKKcMrbHq6/4XXDRzd+Wmxda6CvJOEyS6mJMvyxAkO5stsCc2FZrzmCfZQFWv1Rpq0SyFn1clg==
-X-Received: by 2002:a1c:15c3:: with SMTP id 186-v6mr1422467wmv.39.1527819467724;
-        Thu, 31 May 2018 19:17:47 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id c53-v6sm31950156wrg.12.2018.05.31.19.17.46
+        bh=pVROc1vmJ7Nxr//zyncUqpSas//WLB5/89E1c3ty734=;
+        b=P13ti+5IYD6E0bh0BUtPwY4tOhB/EKRbPWZDpOjpJETI7p6At/MYpRJJv/WxqFuoHc
+         Hk52Z2ATFYOl4VRf5RvzM/1ZPihzcFXb38cn+A8xOPIP9VeXvHjUVrEzqFRC+zOo6Qoc
+         S+0uYp3H5YaacZri5W5/fB6wGmUlVYeUGiLY5NAbKA795c0RBuYO2JnsOpy4OiKL9+6I
+         P9Z5/SE14NVYSWYCj+3XV4f/mbMaDyUi56HG6jIkw+6LR6OuSTdtDWBTw7yi3uy5A9+U
+         /iRFfLRzWxBF1Po+n0n9fkQ7VGNuQiImOiYz+u6dvvKg0ai3bNZU+045g1qWirU5YB3K
+         lvLA==
+X-Gm-Message-State: ALKqPwd57k2HT4cfKodZlt+PCqApXsfuD/dNCKE+dL3v1X4xkMQQ3eP/
+        LdRfNFhWlyzgxjbAEEcfCaM=
+X-Google-Smtp-Source: ADUXVKI8fp8KkoI60q+fVCfA7JLTWWixF7402r2KuudV3CEetHw+rlJCFQQSkWOF9FfsiIRRMQE1kw==
+X-Received: by 2002:adf:e084:: with SMTP id c4-v6mr6876966wri.199.1527819830742;
+        Thu, 31 May 2018 19:23:50 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id k4-v6sm1871258wrr.68.2018.05.31.19.23.49
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 31 May 2018 19:17:46 -0700 (PDT)
+        Thu, 31 May 2018 19:23:50 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 9/9] checkout & worktree: introduce checkout.defaultRemote
-References: <87a7sg9sjz.fsf@evledraar.gmail.com>
-        <20180531195252.29173-10-avarab@gmail.com>
-        <20180531222253.GD26159@hank.intra.tgummerer.com>
-Date:   Fri, 01 Jun 2018 11:17:46 +0900
-In-Reply-To: <20180531222253.GD26159@hank.intra.tgummerer.com> (Thomas
-        Gummerer's message of "Thu, 31 May 2018 23:22:53 +0100")
-Message-ID: <xmqqlgbz9rn9.fsf@gitster-ct.c.googlers.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "Robert P. J. Day" <rpjday@crashcourse.ca>,
+        Johannes Sixt <j6t@kdbg.org>, Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing list <git@vger.kernel.org>
+Subject: Re: is there a reason pre-commit.sample uses "git diff-index"?
+References: <alpine.LFD.2.21.1805311235410.15130@localhost.localdomain>
+        <CACsJy8CP=1_bHAzs+mveaJvbOOzr9vny-2xz6kM4cEcCYWmOOw@mail.gmail.com>
+        <alpine.LFD.2.21.1805311323220.17047@localhost.localdomain>
+        <f27d8344-4acb-3e87-3bd9-b23b21c4b82a@kdbg.org>
+        <alpine.LFD.2.21.1805311907280.19720@localhost.localdomain>
+        <CAGZ79kZ9x2OWU+qfZRckZFAdy1KFqttAZqkJwbzsvQfqUokg3A@mail.gmail.com>
+Date:   Fri, 01 Jun 2018 11:23:49 +0900
+In-Reply-To: <CAGZ79kZ9x2OWU+qfZRckZFAdy1KFqttAZqkJwbzsvQfqUokg3A@mail.gmail.com>
+        (Stefan Beller's message of "Thu, 31 May 2018 16:25:04 -0700")
+Message-ID: <xmqqh8mn9rd6.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -71,16 +72,20 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
->> I considered splitting this into checkout.defaultRemote and
->> worktree.defaultRemote, but it's probably less confusing to break our
->> own rules that anything shared between config should live in core.*
->> than have two config settings, and I couldn't come up with a short
->> name under core.* that made sense (core.defaultRemoteForCheckout?).
+> plumbing command, so the likelihood of git-log calls in scripts out
+> there is high.
+>
+> So maybe the community should strive to be more aggressive about
+> changing the porcelain interface for the better.
 
-I do think "checkout" in name is grately helpful.  I do not see why
-it is a bad idea for the worktree codepath to pay attention to the
-checkout.defaultRemote configuration variable, especially when those
-who are discussing this thread agree "checkout" and "worktree add"
-are quite similar in end-users' minds.
+To me, these two paragraphs are being incoherent.
+
+If plumbing these days lag behind "log" Porcelain and tempt script
+writers more towards "log", we should aggressively reject attempts
+to change the "log" Porcelain behaviour to keep it stable, until a
+suitable plumbing that scripters can rely on catches up.
+
+Or course, aggressively improving plumbing would be a good solution
+to that problem as well ;-)
