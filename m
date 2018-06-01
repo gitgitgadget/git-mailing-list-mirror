@@ -2,114 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB01D1F51C
-	for <e@80x24.org>; Fri,  1 Jun 2018 11:26:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3863D1F51C
+	for <e@80x24.org>; Fri,  1 Jun 2018 11:39:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751876AbeFAL0Q (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Jun 2018 07:26:16 -0400
-Received: from mout.gmx.net ([212.227.17.22]:41483 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751293AbeFAL0I (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Jun 2018 07:26:08 -0400
-Received: from [192.168.0.129] ([37.201.195.106]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LgZ7h-1g3FWb1JtV-00nvmS; Fri, 01
- Jun 2018 13:25:48 +0200
-Date:   Fri, 1 Jun 2018 13:25:29 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Christian Couder <christian.couder@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Stefan Beller <sbeller@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@dwim.me>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        David Turner <novalis@novalis.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] t9104: kosherly remove remote refs
-In-Reply-To: <20180601050833.27676-1-chriscool@tuxfamily.org>
-Message-ID: <nycvar.QRO.7.76.6.1806011324530.77@tvgsbejvaqbjf.bet>
-References: <20180601050833.27676-1-chriscool@tuxfamily.org>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751327AbeFALjt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Jun 2018 07:39:49 -0400
+Received: from mail-qk0-f182.google.com ([209.85.220.182]:38171 "EHLO
+        mail-qk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751012AbeFALjs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Jun 2018 07:39:48 -0400
+Received: by mail-qk0-f182.google.com with SMTP id y4-v6so1429113qka.5
+        for <git@vger.kernel.org>; Fri, 01 Jun 2018 04:39:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding:content-language;
+        bh=8c/XDkbng6s3GM2kazUUuVjOBM7ntdpAAAPabos/EMk=;
+        b=Qv3+3EIrN2jL30UCY/3EmO3NmEAsqRtRII1KcXDmsJMhf/eqpvUNXjCW3W+rMmwwl0
+         Jnpsa8YzcbODYXeDM1Tinik7GHdmas4XPuY8P4P8Gg/CdytGWNvHBuWtvbVJ/tHX1MkR
+         EJrtPnn0hIRNL4taJ3RjjrYQCxBKjVgfSdflD74c5V9bRCooY5gtwjBrnBo6klermFJV
+         VKzNLl/U3wM1638ec0XjOriplFskyRXbzFRd6AzJzB/9eP9pexrskLuNcRx/kpTSruf6
+         91JhjqU0OiPWJ46FeF+HDc+1azbd/gBahNa9WqDLRjuMlWz5UOnEXvfq8VQrD/SH4m0h
+         iYGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=8c/XDkbng6s3GM2kazUUuVjOBM7ntdpAAAPabos/EMk=;
+        b=uFdk8iiecJWij2hw8R4v+1Bkf+B2c5xRPnLr6T8HzgpagHv2vCqphzx92FEC8ESCB6
+         eiyLRrgKOoKug+0Y8h74RQd/z+jgCYIy/OH+59PQo5fFY54O18bOmdS8b5SWm9Cbzyqn
+         mMKZ6zfQ13+vXeRrTD/vGhJuupu0GKyqWwxXvJlReaslAqDyLTpiRrsPYAyhxI/J5oLo
+         ADvDqJACP1qr55dlQlbptxVc6U2SAcXpre/AbJHOLRiY+6JhgNPq5jfo19GbvZptp9+o
+         6+O7vXLfrLLCr4K65f9VM/irw2KLXYAfF0mT8Ft0u4643BCfAcb3UhxaiRVbXaLzcroB
+         GmeQ==
+X-Gm-Message-State: APt69E18miccOJm98fey4dSyR6Xdr84dTen1K/XlBgFujyyEdW9c+KuY
+        eKYbfy1FveMl/zbDtRumqr3m6IAZ
+X-Google-Smtp-Source: ADUXVKJ4Q42yRKdHCP2YplMQZnmEAzs6kaXV/fQltvZ9QAKyP4uoNw7s495TP+5RyOXp54paxfgogA==
+X-Received: by 2002:a37:5445:: with SMTP id i66-v6mr9238780qkb.392.1527853187357;
+        Fri, 01 Jun 2018 04:39:47 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:2cb8:1b85:8d36:d4f1? ([2001:4898:8010:0:15ee:1b85:8d36:d4f1])
+        by smtp.gmail.com with ESMTPSA id t14-v6sm9565080qtp.65.2018.06.01.04.39.46
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 01 Jun 2018 04:39:46 -0700 (PDT)
+Subject: ds/generation-numbers (was Re: What's cooking in git.git (Jun 2018,
+ #01; Fri, 1))
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqa7sf7yzs.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <4a7c6695-52cf-46a1-5a21-bf2e03a85f6b@gmail.com>
+Date:   Fri, 1 Jun 2018 07:39:45 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:g44wmjS7syJWBGYrmIR3Ykae/d9fpL556psEhIB93umdekkJQx5
- yxeFuxbNmSu8G3JpD2kJVprJN4SObZjCLHJfHvpDnpHJ/6TU65f7HmKGN/mFiViUJoEJ4Gv
- NX7GOhPSkcCW7DnPozauRSzHKA0gbw+fs7DGClCBjd7p2brIiXAX+0K982U30ghqt2HbVox
- cDb+xyXjzwFUe9kKcI8HQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:mNtONZDAQIw=:lRsnnjbiRQh0diSIK2aMoL
- t2OvNTKi8jikkMXx1mkamtAAGm/7B5xV425igVDFR+KvA94wyjYPG1na013R16dKbJR0mF5cA
- ith5XPHSG1dM1Qja9QRQv7idbigePDtYGgAsotrqXx61IbErOmJzwqWYmXQ07TEEE5pfUpbZe
- RsEDykavCpUDIXoEKNUn2yihS6rHeWaTMnVCdQ3fUFhlLsAHkMQKFXKzxTSfEpIscSjiuICG+
- yBfxLgB8XwoRX15TH8efdXWOQvXIzqx4NuI5Ci42Kg/25S9CunoQBWKo3N953XbcUTpN2dawK
- nOJ2On7JQxyu8E1t1Tfhmef01gsSNGuD4o42HiKZ1t6AU4TgSdX6+V81qGYj4GHtoqlXwV5JQ
- QvsBvSFC45INF56CJRmvY+czpUaYUl/JO2QhdL/2gq9e7XfuPy8tpHgP5npJcMmaRjhbrVrhy
- RwGuPw3Fr2Dr1VYy/ZI1ikjmekb2rUQVzrDur9PDpoN3gvp4LslkVycvoFk1pBl65c/zDyZNa
- lZ+ftm91N5nxlQdl5QddHP9owyRYIme8iyM6m4s7b+YwyupOWq/qpH0HQQrppJVgYKGr/3z7A
- SCEDXyUx56Z7DBqudnbUc6vLWCLSqQX6AuvD23vxIoCyJxy36DA+lp6JV70q09Jl7FtBFBUvC
- yN+4jRYq5mM7Jaredxk/h/PtrKFJS6VhoyQ9K97BF0HH4l5F11zaTYmJqj7SJa9ZaXNm+FU19
- +WItY9ZxjacSabLHYEzv+KG5zzHw9d/Apm1hoFAi2Jk9H5Czb9+N7iWK+LAi26XXNQ3J3s21M
- 6X1sAsw
+In-Reply-To: <xmqqa7sf7yzs.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Chris,
+On 6/1/2018 3:21 AM, Junio C Hamano wrote:
+>
+> * ds/commit-graph-lockfile-fix (2018-05-22) 1 commit
+>    (merged to 'next' on 2018-05-24 at 3d12a02b0c)
+>   + commit-graph: fix UX issue when .lock file exists
+>   (this branch is used by ds/commit-graph-fsck; uses ds/generation-numbers.)
+>
+>   Update to ds/generation-numbers topic.
+>
+>   Wait for ds/generation-numbers
+>
+>
+> * ds/generation-numbers (2018-05-22) 11 commits
+>    (merged to 'next' on 2018-05-24 at 56fc38a1b6)
+>   + commit-graph.txt: update design document
+>   + merge: check config before loading commits
+>   + commit: use generation number in remove_redundant()
+>   + commit: add short-circuit to paint_down_to_common()
+>   + commit: use generation numbers for in_merge_bases()
+>   + ref-filter: use generation number for --contains
+>   + commit-graph: always load commit-graph information
+>   + commit: use generations in paint_down_to_common()
+>   + commit-graph: compute generation numbers
+>   + commit: add generation number to struct commit
+>   + ref-filter: fix outdated comment on in_commit_list
+>   (this branch is used by ds/commit-graph-fsck and ds/commit-graph-lockfile-fix.)
+>
+>   A recently added "commit-graph" datafile has learned to store
+>   pre-computed generation numbers to speed up the decisions to stop
+>   history traversal.
+>
+>   Will cook in 'next'.
 
-On Fri, 1 Jun 2018, Christian Couder wrote:
+On Wednesday, these were marked as "Will merge to 'master'" What changed?
 
-> As there are plans to implement other ref storage systems,
-> let's use a way to remove remote refs that does not depend
-> on refs being files.
-> 
-> This makes it clear to readers that this test does not
-> depend on which ref backend is used.
-> 
-> Suggested-by: Michael Haggerty <mhagger@alum.mit.edu>
-> Helped-by: Jeff King <peff@peff.net>
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
-> This was suggested and discussed in:
-> 
-> https://public-inbox.org/git/20180525085906.GA2948@sigill.intra.peff.net/
-> 
->  t/t9104-git-svn-follow-parent.sh | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/t/t9104-git-svn-follow-parent.sh b/t/t9104-git-svn-follow-parent.sh
-> index 9c49b6c1fe..5e0ad19177 100755
-> --- a/t/t9104-git-svn-follow-parent.sh
-> +++ b/t/t9104-git-svn-follow-parent.sh
-> @@ -215,7 +215,9 @@ test_expect_success "multi-fetch continues to work" "
->  	"
->  
->  test_expect_success "multi-fetch works off a 'clean' repository" '
-> -	rm -rf "$GIT_DIR/svn" "$GIT_DIR/refs/remotes" &&
-> +	rm -rf "$GIT_DIR/svn" &&
-> +	git for-each-ref --format="option no-deref%0adelete %(refname)" refs/remotes |
-> +	git update-ref --stdin &&
-
-Apart from the line longer than our conventions allow, this looks fine to
-me!
-
->  	git reflog expire --all --expire=all &&
->  	mkdir "$GIT_DIR/svn" &&
->  	git svn multi-fetch
-> -- 
-> 2.17.0.1035.g12039e008f
-
-Please upgrade ;-)
-
-Ciao,
-Dscho
+Thanks,
+-Stolee
