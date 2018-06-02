@@ -2,71 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 202941F491
-	for <e@80x24.org>; Sat,  2 Jun 2018 09:26:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 26F311F491
+	for <e@80x24.org>; Sat,  2 Jun 2018 09:43:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750877AbeFBJ0H (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Jun 2018 05:26:07 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60050 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750821AbeFBJ0H (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Jun 2018 05:26:07 -0400
-Received: (qmail 4529 invoked by uid 109); 2 Jun 2018 09:26:06 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 02 Jun 2018 09:26:06 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31181 invoked by uid 111); 2 Jun 2018 09:26:18 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 02 Jun 2018 05:26:18 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 02 Jun 2018 05:26:05 -0400
-Date:   Sat, 2 Jun 2018 05:26:05 -0400
-From:   Jeff King <peff@peff.net>
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: how exactly can git config section names contain periods?
-Message-ID: <20180602092604.GC3200@sigill.intra.peff.net>
-References: <alpine.LFD.2.21.1806011606490.11215@localhost.localdomain>
- <20180601210731.GA20974@sigill.intra.peff.net>
- <alpine.LFD.2.21.1806020448030.24235@localhost.localdomain>
+        id S1751037AbeFBJnt (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Jun 2018 05:43:49 -0400
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:54126 "EHLO
+        alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750881AbeFBJns (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 2 Jun 2018 05:43:48 -0400
+X-AuditID: 1207440c-bffff70000000b63-4a-5b1266d34b7c
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id A8.B8.02915.3D6621B5; Sat,  2 Jun 2018 05:43:47 -0400 (EDT)
+Received: from mail-lf0-f47.google.com (mail-lf0-f47.google.com [209.85.215.47])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id w529hj5P014646
+        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT)
+        for <git@vger.kernel.org>; Sat, 2 Jun 2018 05:43:46 -0400
+Received: by mail-lf0-f47.google.com with SMTP id n15-v6so928869lfn.10
+        for <git@vger.kernel.org>; Sat, 02 Jun 2018 02:43:46 -0700 (PDT)
+X-Gm-Message-State: ALKqPwd1l9TvKPsY8vegZmXJkR1KFsCliE4keNq12EtS+IkhG3TuLyf7
+        fJeHbI4gusHnobnZkpgpCxbeWnJDp7nYuOMSVN4=
+X-Google-Smtp-Source: ADUXVKJhyOJZcVUGOC/VRJe1jKvO3SiwLLNx/224a563jRDkKwqHxNEJh225CtnA0LLKRX9l0VWl73SKV3k33uyqQPg=
+X-Received: by 2002:a19:6348:: with SMTP id x69-v6mr8948596lfb.104.1527932625340;
+ Sat, 02 Jun 2018 02:43:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.21.1806020448030.24235@localhost.localdomain>
+Reply-To: mhagger@alum.mit.edu
+Received: by 2002:a2e:9ec3:0:0:0:0:0 with HTTP; Sat, 2 Jun 2018 02:43:44 -0700 (PDT)
+In-Reply-To: <20180601050833.27676-1-chriscool@tuxfamily.org>
+References: <20180601050833.27676-1-chriscool@tuxfamily.org>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Date:   Sat, 2 Jun 2018 11:43:44 +0200
+X-Gmail-Original-Message-ID: <CAMy9T_Edbrd-90=Zrp_3bSyuT8GhEu9228_iiaGzwLwAVDn40w@mail.gmail.com>
+Message-ID: <CAMy9T_Edbrd-90=Zrp_3bSyuT8GhEu9228_iiaGzwLwAVDn40w@mail.gmail.com>
+Subject: Re: [PATCH] t9104: kosherly remove remote refs
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@dwim.me>,
+        David Turner <novalis@novalis.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprOKsWRmVeSWpSXmKPExsUixO6iqHs5TSja4OdEZYuuK91MDowenzfJ
+        BTBGcdmkpOZklqUW6dslcGXMufGEteAad8XStSINjOs5uxg5OSQETCTur57DCGILCexgkuib
+        U9rFyAVkP2SSOH3gITuEM4FR4uzbXhaIjnKJqZ2zWSHsIonetbPYIexKif3fd7CB2LwCghIn
+        Zz5hgZgqJ/Fqww2oDSESx088A6vnFLCVuL12B1SNjcTXp5+YQWw2AV2JRT3NTCA2i4CKxM9v
+        T4B6OYDmJ0r0zFKFGB8gcWvCS7ASYQFziR3nP4GdIyJgKDHn9xKwm5kFVrFKLH1yA2w+s4Cm
+        ROv23+wTGEVmITlvFpLUAkamVYxyiTmlubq5iZk5xanJusXJiXl5qUW6hnq5mSV6qSmlmxgh
+        oc2zg/HbOplDjAIcjEo8vAHOgtFCrIllxZW5hxglOZiURHmfVQGF+JLyUyozEosz4otKc1KL
+        DzFKcDArifCGewLleFMSK6tSi/JhUtIcLErivKwme6OEBNITS1KzU1MLUotgsjIcHEoSvLyp
+        QtFCgkWp6akVaZk5JQhpJg5OkOE8QMO9QGp4iwsSc4sz0yHypxiNOZY87e5h5liwZVIPsxBL
+        Xn5eqpQ4bzhIqQBIaUZpHtw0WHp6xSgO9Jww73SQKh5gaoOb9wpoFRPQqteyAiCrShIRUlIN
+        jPXtSQo+uYxstRF1kVf/TF7b1STkuGaDmejGcNXoU9rJTX/0JCqzfR4e16/gP3pK/2DWbwuG
+        fdv3e9rNYfN0yth4IIVP7mj9ks3HRT5sYGUL4X4b+XD/rZxbDqsuLevqVZDL2uZseMFu8p9l
+        vHctpyzY7Nh1cgq3oO3M1/LXF3+y9Zy8ItZythJLcUaioRZzUXEiAC9eyC4qAwAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jun 02, 2018 at 04:50:57AM -0400, Robert P. J. Day wrote:
+On Fri, Jun 1, 2018 at 7:08 AM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> As there are plans to implement other ref storage systems,
+> let's use a way to remove remote refs that does not depend
+> on refs being files.
+>
+> This makes it clear to readers that this test does not
+> depend on which ref backend is used.
+>
+> Suggested-by: Michael Haggerty <mhagger@alum.mit.edu>
+> Helped-by: Jeff King <peff@peff.net>
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+> This was suggested and discussed in:
+>
+> https://public-inbox.org/git/20180525085906.GA2948@sigill.intra.peff.net/
+>
+>  t/t9104-git-svn-follow-parent.sh | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/t/t9104-git-svn-follow-parent.sh b/t/t9104-git-svn-follow-parent.sh
+> index 9c49b6c1fe..5e0ad19177 100755
+> --- a/t/t9104-git-svn-follow-parent.sh
+> +++ b/t/t9104-git-svn-follow-parent.sh
+> @@ -215,7 +215,9 @@ test_expect_success "multi-fetch continues to work" "
+>         "
+>
+>  test_expect_success "multi-fetch works off a 'clean' repository" '
+> -       rm -rf "$GIT_DIR/svn" "$GIT_DIR/refs/remotes" &&
+> +       rm -rf "$GIT_DIR/svn" &&
+> +       git for-each-ref --format="option no-deref%0adelete %(refname)" refs/remotes |
+> +       git update-ref --stdin &&
+>         git reflog expire --all --expire=all &&
+>         mkdir "$GIT_DIR/svn" &&
+>         git svn multi-fetch
+> --
+> 2.17.0.1035.g12039e008f
 
-> On Fri, 1 Jun 2018, Jeff King wrote:
-> 
-> > On Fri, Jun 01, 2018 at 04:14:12PM -0400, Robert P. J. Day wrote:
-> >
-> > >   $ git config --global a.b.c.d.e rday
-> > >
-> > > huh ... seemed to work fine, and added this to my ~/.gitconfig:
-> > >
-> > >   [a "b.c.d"]
-> > >           e = rday
-> > >
-> > > as i see it, the first component is intgerpreted as the section
-> > > name, the last component is the variable/key(?) name, and
-> > > everything in between is treated as subsection(s), which is not at
-> > > all obvious from that Doc file, or from "man git-config".
-> >
-> > Yep, your understanding is correct.
-> 
->   just to be precise regarding terminology, in my example above, is
-> "b.c.d" a single subsection, or does it refer to three subsections?
-> i'm guessing it refers to a single subsection, which is fine with me,
-> as long as it's very clearly explained that way in the docs.
++1 LGTM.
 
-It's a single subsection. Each config key at most one subsection.
-
--Peff
+Michael
