@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E63071F42D
-	for <e@80x24.org>; Sat,  2 Jun 2018 12:39:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E48B1F42D
+	for <e@80x24.org>; Sat,  2 Jun 2018 15:52:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751355AbeFBMjd (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Jun 2018 08:39:33 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:43563 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750831AbeFBMjc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Jun 2018 08:39:32 -0400
-Received: by mail-wr0-f195.google.com with SMTP id d2-v6so23252301wrm.10
-        for <git@vger.kernel.org>; Sat, 02 Jun 2018 05:39:31 -0700 (PDT)
+        id S1751068AbeFBPwr (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Jun 2018 11:52:47 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:39272 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750850AbeFBPwp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Jun 2018 11:52:45 -0400
+Received: by mail-wm0-f66.google.com with SMTP id p11-v6so6772190wmc.4
+        for <git@vger.kernel.org>; Sat, 02 Jun 2018 08:52:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=Avgi8WHTELa+/WDrwp52yTdAWrg4aHSlCJzWsNa53Vg=;
-        b=BuaghzyUZy7zRcDDWkBnWnDgyt042ERv15n3DwNPAx97OxKOo6i7Ifb4Bi2u3b3J19
-         aBRol1/WOdIs2c9IOzecri4+f0HhysKQOCTc6EhuuiqtS6/sS06LOi/u/Ujt2nDtLZq9
-         VssxMb6gLfBaNgg+IGsNQBkP5b4i2i+aRZY64YbK8TKCieyJs8rwOSTtkoBuXOt3W9XO
-         nNPsXUs/N1gZGPbJlJ8ZeAuXzlhWMhVkWa2xcOGYDHNiyYHtAvwrFy45XAUr0ykQ6lV9
-         P7/VFmtnSxFBUD/LTPRVnfVPi/UwmNSRTC+jwJ5xGBNEebA957eQFNtCXNmEfhknltnC
-         MQjg==
+        bh=HmDg8dfkJi8T/NBHbcbSX8oScjpRBufDqDrm7M9Ttyk=;
+        b=kiwLHkojl0sHbC8+Ef6K9GI4LFoq9ks9Qvgh9xHf/FsMchYN7UGo+I1sLYRQk+tHyU
+         eopFM+E0HKFk9QV5rnHABm9esAr/6w40R6lVgLhxts53/GnBIiNvduLIpqBX9AskniV+
+         k+/YmrE8U5bUCa7Z/8Fq3CZEsfYNJ+i1ejKdk+7OSfJqot/dGMdTwxPOpmZNsjBypt28
+         yfls+L6P4Nu+i3dBReCcNwuPZlBqGQaCCjnBrBhsrZUVAQEyt/cH+gzPdYut3VhR8FjU
+         ISkqU466bDYSTTPviS5xw9BzHD+/7wGTXJPKgnEPb2bcCWE8g0wkaOFZgAuFlS8StwSe
+         mgwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
          :message-id:user-agent:mime-version;
-        bh=Avgi8WHTELa+/WDrwp52yTdAWrg4aHSlCJzWsNa53Vg=;
-        b=GncECwaW0Gc5BXX1LfM9EcylP7e/X1mm9N61PJ2iwXrqYdG+4ULAz09Hqt9i/th2CA
-         ugp0Eh5H8EqDVoZfEM+99DHWnsEfdeR8MhZNLWucGACzY3WYoDmLKlSsYQIZtrZAIS1Y
-         MvsAx5wsGduO0yHBuYUwHBci1hHGBnH/ppFh6oO0ycdZQvLBTRLK97ftf1UtMsY57Wde
-         HSXsZbli4YSA2Jdf49uQX0CEsFQq1LOwv/aC3YAxJIqntw7Oy47/XiWlcMrvvv/6jZ2b
-         /cOhAXI/m4fdrtGNjLlMlcCd38+CnyJcZsy1ZT4SHg4z8HI41Vis7ALHEYNXd/hdzlt+
-         dhvg==
-X-Gm-Message-State: ALKqPwen/mwH7uZ2tgsmvV10T8kEpW7Mof8BpK/xK1CrzudAsUGjQ71e
-        sjBfsBmQmgNOo/taZ92Ge4ZUH1AC
-X-Google-Smtp-Source: ADUXVKI/d/J1oXbxFj6ZYKU6mIPLWW9nArdxGZVROGQxM0W59j3/1Z07CUvzrk6GuDNC7Q7YDRKT5w==
-X-Received: by 2002:adf:f7cf:: with SMTP id a15-v6mr11073059wrq.108.1527943170808;
-        Sat, 02 Jun 2018 05:39:30 -0700 (PDT)
+        bh=HmDg8dfkJi8T/NBHbcbSX8oScjpRBufDqDrm7M9Ttyk=;
+        b=Vp7+8HJu62By4zHeo9NS74eTpJvZ6qUUQmiqKY1KBOBE/dJ9HLG30K7PeYXL3G02cy
+         H8ipQvSLmJ483I1E3niKCmYIMkIK+VSbRZ2HSDJAqCsQWqoi6rcuCbZB6QSWgSYluYWm
+         tpmPXhI60Rbq3ZLrHObpg3XGWNDMzKZrj1bZAt01PM5IMcYJjvruORV0sFk3mH7EEwug
+         5WyIMBPfgo/P5NM4hsIf+cYIEet4bx1LmLOaNj9BV8Gt1H56tsqeT1REmASorh/mg0aq
+         hNSlP82VJgagtqOZWx0If8KA6Nmwi9Owb/WzMMTZlcYpLBnvw8aSoSPkGVff2+eu/j1s
+         AzrA==
+X-Gm-Message-State: APt69E17oudP0DSTCZYe/V1snCuBeNbvwspjF7VcwGr9Rc3pEOxxxmBD
+        L/EsspymKjFodYByKGPR3Y4=
+X-Google-Smtp-Source: ADUXVKJZ/ajSUajpjWX72APQNNkcpcp7KGGcTN79k6jRX07mMUDaOAW+6h/KMWj1FEXu0DCTFqk2aw==
+X-Received: by 2002:a1c:3a91:: with SMTP id h139-v6mr4209695wma.94.1527954764522;
+        Sat, 02 Jun 2018 08:52:44 -0700 (PDT)
 Received: from Laptop-Acer-Aspire-F15 (abri204.neoplus.adsl.tpnet.pl. [83.8.102.204])
-        by smtp.gmail.com with ESMTPSA id c53-v6sm39832744wrg.12.2018.06.02.05.39.28
+        by smtp.gmail.com with ESMTPSA id e63-v6sm3202434wma.46.2018.06.02.08.52.42
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 02 Jun 2018 05:39:29 -0700 (PDT)
+        Sat, 02 Jun 2018 08:52:43 -0700 (PDT)
 From:   Jakub Narebski <jnareb@gmail.com>
 To:     Derrick Stolee <dstolee@microsoft.com>
 Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
@@ -57,14 +57,14 @@ Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
         "avarab\@gmail.com" <avarab@gmail.com>,
         "marten.agren\@gmail.com" <marten.agren@gmail.com>,
         "peff\@peff.net" <peff@peff.net>
-Subject: Re: [PATCH v3 15/20] commit-graph: test for corrupted octopus edge
+Subject: Re: [PATCH v3 16/20] commit-graph: verify contents match checksum
 References: <20180511211504.79877-1-dstolee@microsoft.com>
         <20180524162504.158394-1-dstolee@microsoft.com>
-        <20180524162504.158394-16-dstolee@microsoft.com>
-Date:   Sat, 02 Jun 2018 14:39:26 +0200
-In-Reply-To: <20180524162504.158394-16-dstolee@microsoft.com> (Derrick
-        Stolee's message of "Thu, 24 May 2018 16:25:59 +0000")
-Message-ID: <86tvqltla9.fsf@gmail.com>
+        <20180524162504.158394-17-dstolee@microsoft.com>
+Date:   Sat, 02 Jun 2018 17:52:40 +0200
+In-Reply-To: <20180524162504.158394-17-dstolee@microsoft.com> (Derrick
+        Stolee's message of "Thu, 24 May 2018 16:26:01 +0000")
+Message-ID: <86muwdtcc7.fsf@gmail.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -75,68 +75,120 @@ X-Mailing-List: git@vger.kernel.org
 
 Derrick Stolee <dstolee@microsoft.com> writes:
 
-> The commit-graph file has an extra chunk to store the parent int-ids for
-> parents beyond the first parent for octopus merges. Our test repo has a
-> single octopus merge that we can manipulate to demonstrate the 'verify'
-> subcommand detects incorrect values in that chunk.
+> The commit-graph file ends with a SHA1 hash of the previous contents. If
+> a commit-graph file has errors but the checksum hash is correct, then we
+> know that the problem is a bug in Git and not simply file corruption
+> after-the-fact.
+>
+> Compute the checksum right away so it is the first error that appears,
+> and make the message translatable since this error can be "corrected" by
+> a user by simply deleting the file and recomputing. The rest of the
+> errors are useful only to developers.
 
-If I understand it correctly the above means that our _reading_ code
-checks for validity (which then 'git commit-graph verify' uses), just
-there were not any tests for that.
+Should we then provide --quiet / --verbose options, so that ordinary
+user is not flooded with error messages meant for power users and Git
+developers, then?
+
+>
+> Be sure to continue checking the rest of the file data if the checksum
+> is wrong. This is important for our tests, as we break the checksum as
+> we modify bytes of the commit-graph file.
+
+Well, we could have used sha1sum program, or test-sha1 helper to fix the
+checksum after corrupting the commit-graph file...
 
 >
 > Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 > ---
->  t/t5318-commit-graph.sh | 10 ++++++++++
->  1 file changed, 10 insertions(+)
+>  commit-graph.c          | 16 ++++++++++++++--
+>  t/t5318-commit-graph.sh |  6 ++++++
+>  2 files changed, 20 insertions(+), 2 deletions(-)
 >
+> diff --git a/commit-graph.c b/commit-graph.c
+> index d2b291aca2..a33600c584 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -841,6 +841,7 @@ void write_commit_graph(const char *obj_dir,
+>  	oids.nr = 0;
+>  }
+>  
+> +#define VERIFY_COMMIT_GRAPH_ERROR_HASH 2
+>  static int verify_commit_graph_error;
+>  
+>  static void graph_report(const char *fmt, ...)
+> @@ -860,7 +861,9 @@ static void graph_report(const char *fmt, ...)
+>  int verify_commit_graph(struct commit_graph *g)
+>  {
+>  	uint32_t i, cur_fanout_pos = 0;
+> -	struct object_id prev_oid, cur_oid;
+> +	struct object_id prev_oid, cur_oid, checksum;
+> +	struct hashfile *f;
+> +	int devnull;
+>  
+>  	if (!g) {
+>  		graph_report("no commit-graph file loaded");
+> @@ -879,6 +882,15 @@ int verify_commit_graph(struct commit_graph *g)
+>  	if (verify_commit_graph_error)
+>  		return verify_commit_graph_error;
+>  
+> +	devnull = open("/dev/null", O_WRONLY);
+> +	f = hashfd(devnull, NULL);
+> +	hashwrite(f, g->data, g->data_len - g->hash_len);
+> +	finalize_hashfile(f, checksum.hash, CSUM_CLOSE);
+> +	if (hashcmp(checksum.hash, g->data + g->data_len - g->hash_len)) {
+> +		graph_report(_("the commit-graph file has incorrect checksum and is likely corrupt"));
+> +		verify_commit_graph_error = VERIFY_COMMIT_GRAPH_ERROR_HASH;
+> +	}
+
+Is it the best way of calculating the SHA-1 checksum that out internal
+APIs provide?  Is it how SHA-1 checksum is calculated and checked for
+packfiles?
+
+> +
+>  	for (i = 0; i < g->num_commits; i++) {
+>  		struct commit *graph_commit;
+>  
+> @@ -916,7 +928,7 @@ int verify_commit_graph(struct commit_graph *g)
+>  		cur_fanout_pos++;
+>  	}
+>  
+> -	if (verify_commit_graph_error)
+> +	if (verify_commit_graph_error & ~VERIFY_COMMIT_GRAPH_ERROR_HASH)
+>  		return verify_commit_graph_error;
+
+So if we detected that checksum do not match, but we have not found an
+error, we say that it is all right?
+
+>  
+>  	for (i = 0; i < g->num_commits; i++) {
 > diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-> index 58adb8246d..240aef6add 100755
+> index 240aef6add..2680a2ebff 100755
 > --- a/t/t5318-commit-graph.sh
 > +++ b/t/t5318-commit-graph.sh
-> @@ -248,6 +248,7 @@ test_expect_success 'git commit-graph verify' '
->  '
->  
->  NUM_COMMITS=9
-> +NUM_OCTOPUS_EDGES=2
->  HASH_LEN=20
->  GRAPH_BYTE_VERSION=4
->  GRAPH_BYTE_HASH=5
-> @@ -274,6 +275,10 @@ GRAPH_BYTE_COMMIT_EXTRA_PARENT=`expr $GRAPH_COMMIT_DATA_OFFSET + $HASH_LEN + 4`
->  GRAPH_BYTE_COMMIT_WRONG_PARENT=`expr $GRAPH_COMMIT_DATA_OFFSET + $HASH_LEN + 3`
->  GRAPH_BYTE_COMMIT_GENERATION=`expr $GRAPH_COMMIT_DATA_OFFSET + $HASH_LEN + 8`
->  GRAPH_BYTE_COMMIT_DATE=`expr $GRAPH_COMMIT_DATA_OFFSET + $HASH_LEN + 12`
-> +GRAPH_COMMIT_DATA_WIDTH=`expr $HASH_LEN + 16`
-> +GRAPH_OCTOPUS_DATA_OFFSET=`expr $GRAPH_COMMIT_DATA_OFFSET + \
-> +				$GRAPH_COMMIT_DATA_WIDTH \* $NUM_COMMITS`
-> +GRAPH_BYTE_OCTOPUS=`expr $GRAPH_OCTOPUS_DATA_OFFSET + 4`
+> @@ -279,6 +279,7 @@ GRAPH_COMMIT_DATA_WIDTH=`expr $HASH_LEN + 16`
+>  GRAPH_OCTOPUS_DATA_OFFSET=`expr $GRAPH_COMMIT_DATA_OFFSET + \
+>  				$GRAPH_COMMIT_DATA_WIDTH \* $NUM_COMMITS`
+>  GRAPH_BYTE_OCTOPUS=`expr $GRAPH_OCTOPUS_DATA_OFFSET + 4`
+> +GRAPH_BYTE_FOOTER=`expr $GRAPH_OCTOPUS_DATA_OFFSET + 4 \* $NUM_OCTOPUS_EDGES`
 >  
 >  # usage: corrupt_graph_and_verify <position> <data> <string>
 >  # Manipulates the commit-graph file at the position
-> @@ -378,4 +383,9 @@ test_expect_success 'detect incorrect commit date' '
->  		"commit date"
+> @@ -388,4 +389,9 @@ test_expect_success 'detect incorrect parent for octopus merge' '
+>  		"invalid parent"
 >  '
 >  
-> +test_expect_success 'detect incorrect parent for octopus merge' '
-> +	corrupt_graph_and_verify $GRAPH_BYTE_OCTOPUS "\01" \
-> +		"invalid parent"
+> +test_expect_success 'detect invalid checksum hash' '
+> +	corrupt_graph_and_verify $GRAPH_BYTE_FOOTER "\00" \
+> +		"incorrect checksum"
+
+This would not work under GETTEXT_POISON, as the message is marked as
+translatable, but corrupt_graph_and_verify uses 'grep' and not
+'test_i18grep' from t/test-lib-functions.sh
+
 > +'
 
-So we change the int-id to non-existing commit, and check that
-commit-graph code checks for that.
-
-What about the case when there are octopus merges, but no EDGE chunk
-(which I think we can emulate by changing / corrupting number of
-chunks)?
-
-What about the case where int-id of edge in EDGE chunk is correct, that
-is points to a valid commit, but does not agree with what is in the
-object database (what parents octopus merge has in reality)?
-
-Do we detect the situation where the second parent value in the commit
-data stores an array position within a Large Edge chunk, but we do not
-reach a value with the most-significant bit on when reaching the end of
-Large Edge chunk?
+If it is pure checksum corruption, wouldn't this fail because it is not
+a failure (exit code is 0)?
 
 > +
 >  test_done
