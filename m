@@ -2,78 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F46F1F42D
-	for <e@80x24.org>; Sat,  2 Jun 2018 04:39:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7EE661F42D
+	for <e@80x24.org>; Sat,  2 Jun 2018 04:41:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750821AbeFBEjJ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Jun 2018 00:39:09 -0400
-Received: from mail-ot0-f195.google.com ([74.125.82.195]:38230 "EHLO
-        mail-ot0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750750AbeFBEjJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Jun 2018 00:39:09 -0400
-Received: by mail-ot0-f195.google.com with SMTP id n3-v6so31620843ota.5
-        for <git@vger.kernel.org>; Fri, 01 Jun 2018 21:39:08 -0700 (PDT)
+        id S1750812AbeFBEli (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Jun 2018 00:41:38 -0400
+Received: from mail-oi0-f67.google.com ([209.85.218.67]:37088 "EHLO
+        mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750748AbeFBElh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Jun 2018 00:41:37 -0400
+Received: by mail-oi0-f67.google.com with SMTP id l22-v6so16473113oib.4
+        for <git@vger.kernel.org>; Fri, 01 Jun 2018 21:41:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=+BIP+m8PSJFv46kuVx5ZZNmaFgSwNbZncvumiGNU4JQ=;
-        b=hVNdWqZLWfBpjWbKEGrTyU2wjryaWTwXN+v/vjZdZaprhrP3iN/HdQ8sUVLFGZHAlT
-         CuIJc1ZCUxjs9+ZTxUbL6peunesShM2K+kN1p9loKBPb3GXVFNy1bD3tZCAKTNSCtq1+
-         O+hAMPqOKLtRl+/BfpcmKev+PLguYjTSj0g9cGXo4J0mGGK2Bjw59LfuhfuujWsDdR29
-         Evjq9JVvCLH1SVdQWd36lUGbe+THFPHk0x1egQBOpDQaGtp03Qt1vgDzlEeFMciRMvMJ
-         I+QWgmq4yyJkguQcWUlsuUxZ2d3wR/xvPCcdDxbUS+ArXUnr9ZEuBbRwtIY16/T4NWM0
-         TJjA==
+        bh=3UdaVeBR5RiNAmswgopb6BjbP/6uEt7FpfVwOMRMcUY=;
+        b=SdkBJt5XfzxNHaDGPRaPBfKYvetRHizOqxM7WmAx3VLNvLjPxZAOoezu+MGIvMr4Wt
+         05Stjv7wyw+1rshHNDrlezB/e5VDnhvXjjYcllUUBZkpcpKhQyaqLE7Y89RpOMsEF0ld
+         3n/kKXjtda25X413rs+KNf9+USh9dIEKmEuO//2OEgwZ5ySUN+XwLuzL2108VLrJbnHe
+         BsDU/h0o170R6qkUbhKs+MTuKKdmkyATrfXS9BJadWl5XljnoQ7OlRwzMWRKGxvE0oTU
+         5hMtpoP2Rj3X/SuVotunyUEqGTrYk/f4uoDCHz0W7wTbNtEyPuz1vUj33K0qRvPswKyf
+         cAKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=+BIP+m8PSJFv46kuVx5ZZNmaFgSwNbZncvumiGNU4JQ=;
-        b=TJSYCTqETcis5ZE1s5+OG4puBqA+9ODS6Tdz4nVSlOLUl2vlwiN2FldWJ89KCjUEBw
-         M0qVBey5RWBtdp6znTAL4Qm+T4E6AYyTpgWPmHoXoVWEWQrgBa2ZkLzsoCq91jj9ifF/
-         jCLY91mHrFwaYWVEQB1vnQ/XsYB1/8uHPRJueqshO5TqQ1HsIJybFeXIGdEHz8+aIF6z
-         cZJNtApyxox9w49pMUD+lhrZ9L91dVcItp/1QvpKF3DohEgPJIRGcdO5HTxG00SqWaCo
-         k9A9vTQ0EqX1aYKLo9ALPx2b1KJLJu2d31k0LvkpjWyhQQ5OpkjS7MWOrUOnD/nvCR9T
-         z3sg==
-X-Gm-Message-State: APt69E3Ni9pyo5jrgejTq+gttuBUsCHO3y1+M944YIiXx4mXAS94/PAe
-        yAPnB926Wn2IeF0vbMkD4OZ5hqMLPXOqbdHhjF0=
-X-Google-Smtp-Source: ADUXVKJjMNiR//EXonThN97TIlMTnPipoRz6D3TfzPlu2C4+t4UfS5NfvyXKTv2aXTJIpakph4hl/QFm1t7iYjztLHk=
-X-Received: by 2002:a9d:124:: with SMTP id 33-v6mr4012488otu.65.1527914348565;
- Fri, 01 Jun 2018 21:39:08 -0700 (PDT)
+        bh=3UdaVeBR5RiNAmswgopb6BjbP/6uEt7FpfVwOMRMcUY=;
+        b=Svcy5TL6uy/vUg2ijXYSEwWvNYECVCWFLoDbmxMnjKzdX7TQUyvjXaxZewdbtsy27Z
+         bnlzQHkdw3ld9MwMfer68R1V9OwzwYvU4JOr/vYyi1KK+nGbDapLjzssSF19F5bmU0oY
+         b9VzVfsOuO0/VxSpEIC6LDJdV0AbjcZl5h3PihhH5ngGABQIevPl0Ng+vuWh37ZU1cfs
+         1/pVQnvFQ4LJzyDCMHfMosSd9sSVx8mpOBEtDrBlBIj8tDZh3vpbcIyBT7Cjuzcf9ToG
+         L5j33KghE3dHIRargOquWL9ZiR93P+IlRJJ526yDe3/4XyaDkJItSStHVUCv7++DFZcm
+         JY/g==
+X-Gm-Message-State: APt69E1fNWE8GtCZfLRiwOFWvmDHBRZnWBsKTkA3h1GBNiSMN8S/tS2B
+        aK+w5go+zBFkLSFAT5j+5mWC1SaX70N1F6c+C6Q=
+X-Google-Smtp-Source: ADUXVKIfiowlhJIphQIHsldlugL3gElJLJdiuRjENLHWaRXMCbm8q4xOLXvwkfr6WBvcZvWMH7LObVeuLClQ0TxyGGA=
+X-Received: by 2002:aca:5144:: with SMTP id f65-v6mr7670045oib.32.1527914496994;
+ Fri, 01 Jun 2018 21:41:36 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a4a:b285:0:0:0:0:0 with HTTP; Fri, 1 Jun 2018 21:38:38 -0700 (PDT)
-In-Reply-To: <20180524162504.158394-10-dstolee@microsoft.com>
-References: <20180511211504.79877-1-dstolee@microsoft.com> <20180524162504.158394-1-dstolee@microsoft.com>
- <20180524162504.158394-10-dstolee@microsoft.com>
+Received: by 2002:a4a:b285:0:0:0:0:0 with HTTP; Fri, 1 Jun 2018 21:41:06 -0700 (PDT)
+In-Reply-To: <20180326143136.47116-2-git@jeffhostetler.com>
+References: <20180326143136.47116-1-git@jeffhostetler.com> <20180326143136.47116-2-git@jeffhostetler.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 2 Jun 2018 06:38:38 +0200
-Message-ID: <CACsJy8A8NofWCo0MbMxCe=xKTrnAqmM5D+FHSJXC-wO-DPnXwg@mail.gmail.com>
-Subject: Re: [PATCH v3 09/20] commit-graph: verify corrupt OID fanout and lookup
-To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "jnareb@gmail.com" <jnareb@gmail.com>,
-        "stolee@gmail.com" <stolee@gmail.com>,
-        "avarab@gmail.com" <avarab@gmail.com>,
-        "marten.agren@gmail.com" <marten.agren@gmail.com>,
-        "peff@peff.net" <peff@peff.net>
+Date:   Sat, 2 Jun 2018 06:41:06 +0200
+Message-ID: <CACsJy8DcGp29iJDZKUz0JM-bvbE_G3KnqWyLk_efjd7T3URTYw@mail.gmail.com>
+Subject: Re: [PATCH v4] json_writer: new routines to create data in JSON format
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, wink@saville.com,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 24, 2018 at 6:25 PM, Derrick Stolee <dstolee@microsoft.com> wrote:
-> +               if (i && oidcmp(&prev_oid, &cur_oid) >= 0)
-> +                       graph_report("commit-graph has incorrect OID order: %s then %s",
-> +                                    oid_to_hex(&prev_oid),
-> +                                    oid_to_hex(&cur_oid));
+On Mon, Mar 26, 2018 at 4:31 PM,  <git@jeffhostetler.com> wrote:
+> +static inline void assert_in_array(const struct json_writer *jw)
+> +{
+> +       if (!jw->open_stack.len)
+> +               die("json-writer: array: missing jw_array_begin()");
 
-Should these strings be marked for translation with _()?
+When you reroll, please consider marking all these string for
+translation with _(), unless these are for machine consumption.
+
+> +       if (jw->open_stack.buf[jw->open_stack.len - 1] != '[')
+> +               die("json-writer: array: not in array");
 -- 
 Duy
