@@ -2,109 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 421921F42D
-	for <e@80x24.org>; Sat,  2 Jun 2018 19:43:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA4C61F42D
+	for <e@80x24.org>; Sat,  2 Jun 2018 20:46:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751890AbeFBTn2 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Jun 2018 15:43:28 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:34552 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751724AbeFBTn1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Jun 2018 15:43:27 -0400
-Received: by mail-wr0-f194.google.com with SMTP id a12-v6so4336764wro.1
-        for <git@vger.kernel.org>; Sat, 02 Jun 2018 12:43:27 -0700 (PDT)
+        id S1750964AbeFBUqP (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Jun 2018 16:46:15 -0400
+Received: from mail-wm0-f50.google.com ([74.125.82.50]:51890 "EHLO
+        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750827AbeFBUqO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Jun 2018 16:46:14 -0400
+Received: by mail-wm0-f50.google.com with SMTP id r15-v6so8722553wmc.1
+        for <git@vger.kernel.org>; Sat, 02 Jun 2018 13:46:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=nvu3vUls5hkppEeqX8w1QJOMM8h8idjHTx92ZbzljXc=;
-        b=sNsgXTwwCV6H7IGxcFPxZXXpjf59PxRQz11fYKb3wv5D3sSpAFZD3Phl40swlu18b8
-         p4gjgUIkhrt9IUvm6yQf4+BtQMyuYvnX5wYQTEJpzCaZCz7c3fPcyD4Hi9ThnTZuI7p4
-         XRud8m46rGjOUKhOM76ga7ZVJKD8vcrm7j3INQpQqif6oI3LevEePhUPGXOND3my/YV5
-         OTGm1H0QPVsZk0hb7p9De5tBD7ZkjPgpuDo+iKE/B+yso+8UEaTkbqMAtc9Syt9mxUIL
-         Cs24oHZA1HnBdMpjAn2UoTFwlvRQjrdIciG/y1MixvPtLvP0mrbZnRgyJu8UUlm5HP1n
-         TWqw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=+Jmm0tuj+ocHLCbuHIm5vdTurdAkA2Ue8iSxsScf/b0=;
+        b=kPiKRx/5vhR1bcDmAxJy8zUafnyZi9mQJOP3P2ePpuIGQbEYjp//tnP0jgFzGEbB1y
+         D07FCJmXlCJWECtkAornt0Qa/DsKXEzSSxZIoRbK3kwlEh/P2MEQiZ3A4b4d2eCr62nG
+         6BG0p9SxDrJhgXGyziR64UcjZGIgufTcLuP1k5L35ia0LV4KmqwHgy7RulLktLassRiR
+         j5S5eJ498BWzwDDaB4mk/Ga4LQqsxVS8fq9VQjqRjxzmxggIVJumElYrd9YxhKKMxGtb
+         oa5qqazj3u1YxOLXMcN6wjOvnvFbonMfKhXIEEX7OGrjhA3fW/BXFeoQc2Pe2JoncWE4
+         RN/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=nvu3vUls5hkppEeqX8w1QJOMM8h8idjHTx92ZbzljXc=;
-        b=C8Qqf85G1laTH4d8pz3TyYW39f8GqpgVO8p9JTJ4yhuVx/my/ErXEM5fzcYjh/Gnsc
-         ei49d0JMLsWVmIo5/VN9L846vyYWFnuy6w7ugyMRYkSVx0UlVolxaQIqrsHG7Dbx8vln
-         VY6n8WNzHhWscSJjn400tpcwnyRZEBsO4SCmkuBxQR3uBYW0zPdbDR/U6KjgDzCOMVgt
-         hEJ/HbtEcqzeGLDzdVTIWvtZc0Hw3uG87ojecHv0DZaf3qmxL0Z4yN726eigS6r+ofYu
-         M8yO3+sUncymebRJj6GpGU4S2v8aZUc4xTB2JlzJ+gYoZXKd8rL+gOplpzyKHTl9uKPm
-         DBLQ==
-X-Gm-Message-State: ALKqPweMbtnohKWjd4M2nz9I+XOtaIiAzPNMUGYbgkAzA13K6a6FIReU
-        S7UhYV+aSPfEp60irG8VrIU=
-X-Google-Smtp-Source: ADUXVKI3zYLonWqxae8NuOkvQMF/GOs/OCJ5q72RNHNRJUpC12XUTZJ0SkDwG9qccil51GNpn85BFA==
-X-Received: by 2002:adf:84c2:: with SMTP id 60-v6mr12560864wrg.167.1527968606500;
-        Sat, 02 Jun 2018 12:43:26 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (abri112.neoplus.adsl.tpnet.pl. [83.8.102.112])
-        by smtp.gmail.com with ESMTPSA id 184-v6sm5249862wmv.33.2018.06.02.12.43.24
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=+Jmm0tuj+ocHLCbuHIm5vdTurdAkA2Ue8iSxsScf/b0=;
+        b=PEc3430mFqo5sgWxIRdR6tg3SmTgG9HN1mlJoBeMBqjCnFgncnl7J5efLkpiP/6f9k
+         1okT4EtQBM3SeZ/42H+Mw6bETGSL7P5rSgiItl302aDEcEHRPryBHTNYbLTqOUarV85f
+         AEz7bgwlWqv5mu3cBajhndE9z4qfMUT7Fhvt5UGK/DtXuCZWN2VfNbgyUwiMeLFZ9ns3
+         /hpX/CKWgGIls0IWftAfgZipJ+CS1/VDTac6m9gD+DvuWIqgEF/Z7rrexIu+OaUJ6MsR
+         ieouWq9yF2H3NYpqR6M9zuBqPxOJr5ipdjtmFcRu8UXwValHhVaMhbXJIbYJllcbIwwL
+         77FA==
+X-Gm-Message-State: APt69E1O8nIyj9S+PYijRCW/0VbmV3Cg6QF0j16HVaFIZxVqK27oqqaT
+        o2HTFHqQCjG/eZyGur/Cvzn+KyeB
+X-Google-Smtp-Source: ADUXVKLChvsrntluw2ZR+q+T8Qrof3Afg3ugrMtmajoKlNVe42N09lVKmUBBzQDLJPGzulCJWtTWQA==
+X-Received: by 2002:a1c:3710:: with SMTP id e16-v6mr1678034wma.58.1527972373577;
+        Sat, 02 Jun 2018 13:46:13 -0700 (PDT)
+Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
+        by smtp.gmail.com with ESMTPSA id f133-v6sm5197148wme.42.2018.06.02.13.46.11
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 02 Jun 2018 12:43:25 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org,
-        "gitster\@pobox.com" <gitster@pobox.com>,
-        "stolee\@gmail.com" <stolee@gmail.com>,
-        "avarab\@gmail.com" <avarab@gmail.com>,
-        "marten.agren\@gmail.com" <marten.agren@gmail.com>,
-        "peff\@peff.net" <peff@peff.net>
-Subject: Re: [PATCH v3 02/20] commit-graph: fix GRAPH_MIN_SIZE
-References: <20180511211504.79877-1-dstolee@microsoft.com>
-        <20180524162504.158394-1-dstolee@microsoft.com>
-        <20180524162504.158394-3-dstolee@microsoft.com>
-        <868t861ci6.fsf@gmail.com>
-        <20180526203036.GL652292@genre.crustytoothpaste.net>
-Date:   Sat, 02 Jun 2018 21:43:22 +0200
-In-Reply-To: <20180526203036.GL652292@genre.crustytoothpaste.net> (brian
-        m. carlson's message of "Sat, 26 May 2018 20:30:36 +0000")
-Message-ID: <86lgbxq8it.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        Sat, 02 Jun 2018 13:46:12 -0700 (PDT)
+Date:   Sat, 2 Jun 2018 21:46:50 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     Git Mailing list <git@vger.kernel.org>
+Subject: Re: does a stash *need* any reference to the branch on which it was
+ created?
+Message-ID: <20180602204650.GE26159@hank.intra.tgummerer.com>
+References: <alpine.LFD.2.21.1806021525120.19865@localhost.localdomain>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <alpine.LFD.2.21.1806021525120.19865@localhost.localdomain>
+User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On 06/02, Robert P. J. Day wrote:
+> 
+>   i realize that, when you "git stash push", stash graciously saves
+> the branch you were on as part of the commit message, but does any
+> subsequent stash operation technically *need* that branch name?
 
-> On Sat, May 26, 2018 at 08:46:09PM +0200, Jakub Narebski wrote:
->> One issue: in the future when Git moves to NewHash, it could encounter
->> then both commit-graph files using SHA-1 and using NewHash.  What about
->> GRPH_OID_LEN then: for one of those it would be incorrect.  Unless it is
->> about minimal length of checksum, that is we assume that NewHash would
->> be longer than SHA-1, but ten why name it GRAPH_OID_LEN?
->
-> My proposal is that whatever we're using in the .git directory is
-> consistent.  If we're using SHA-1 for objects, then everything is SHA-1.
-> If we're using NewHash for objects, then all data is stored in NewHash
-> (except translation tables and such).  Any conversions between SHA-1 and
-> NewHash require a lookup through the standard techniques.
->
-> I agree that here it would be more helpful if it were a reference to
-> the_hash_algo, and I've applied a patch to my object-id-part14 series to
-> make that conversion.
+    $ git stash list
+    stash@{0}: WIP on master: 4e5a9c0166 checkout & worktree: introduce checkout.defaultRemote
+                      ^^^^^^
 
-All right, I can agree that it would make most sense to always use SHA-1
-for OID, or always use NewHash for objects.  This would make
-commit-graph file with SHA-1 hash invalid for NewHash-using Git version.
+Do you mean this branch name?  If so, no, afaik nothing in git stash
+needs that.  It's merely a convenience for the user so they know which
+branch the stash was based on.
 
-It would be nice, however, to avoid having to redo all the hard work,
-like calculating generation numbers (from old commit-graph file, or from
-server that does not support NewHash yet -- the latter is not
-implemented, but IIUC planned feature).  But we can do it with explicit
-conversion step, e.g. 'git commit-graph convert' or 'upgrade'.
+>   it doesn't seem like it -- even "git stash branch" really only needs
+> the commit that was the basis of that stash to create the new branch.
 
-But all that is in the future.
---=20
-Jakub Nar=C4=99bski
+Correct, and it knows that by checking the parents of the stash (note
+that a stash is represented internally as just a commit):
+
+    $ git cat-file commit stash@{0}                                                                                                                                                                          ∞
+    tree 9fc2608506404bebdeb0aea54e8c76944ae88a1a
+    parent 4e5a9c01669919bcc2452e8e2491ee31dbf647fc
+    parent 9e457faad129f832ce0070dcfd1f4cfd3f322df3
+    author Thomas Gummerer <t.gummerer@gmail.com> 1527971565 +0100
+    committer Thomas Gummerer <t.gummerer@gmail.com> 1527971565 +0100
+
+    WIP on master: 4e5a9c0166 checkout & worktree: introduce checkout.defaultRemote
+
+The first parent here is the commit the stash is based on, so that's
+what 'git stash branch' is using to base the new branch on.
+
+>   so, does any stash operation actually need the originating branch
+> name? (i'm guessing no, but i've been wrong before.)
+> 
+> rday
+> 
+> -- 
+> 
+> ========================================================================
+> Robert P. J. Day                                 Ottawa, Ontario, CANADA
+>                   http://crashcourse.ca/dokuwiki
+> 
+> Twitter:                                       http://twitter.com/rpjday
+> LinkedIn:                               http://ca.linkedin.com/in/rpjday
+> ========================================================================
