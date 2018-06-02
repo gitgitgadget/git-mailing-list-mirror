@@ -2,94 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 71DEF1F42D
-	for <e@80x24.org>; Sat,  2 Jun 2018 18:39:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B99131F42D
+	for <e@80x24.org>; Sat,  2 Jun 2018 19:30:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752094AbeFBSj4 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Jun 2018 14:39:56 -0400
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:50229 "EHLO
-        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752003AbeFBSjz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Jun 2018 14:39:55 -0400
-Received: by mail-wm0-f50.google.com with SMTP id t11-v6so8475273wmt.0
-        for <git@vger.kernel.org>; Sat, 02 Jun 2018 11:39:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=DD1j5YgR5xas2D6Tx0WsDAJpjCha2EAvt9K367KsI4A=;
-        b=To7Md6Fh+kwNRF3XhGNOnN+VSR3F/3AKpM0FG5f7ROCuMKrX4Gq1MLpWAICqIepDKH
-         Q+wEWqBQC6yjJMrSuLsqkmIC2OlKNeNFLOeERf5GBMGD+u3cJlPjhIp+81FRKvKE7YXL
-         7eoLU6wPA0KwapEFCJA3lbYRnlunZpHY4e94jyV5SIIYWVrnXwcj3aGVGmbXmqmnT9Z2
-         7X/oFMS0+7MF9nsUmoFeEB5SHLd5t2uM4ZX/awdjiL+y/mFnAKE93P0KWt1cQS7+6eHV
-         PjSmetDcmQeS/ZHsr9p+LwC/CSZ6wX4lsVNempFrGPYcaHUGmlyIiXuRWPU2gM4Ej7ib
-         UTng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=DD1j5YgR5xas2D6Tx0WsDAJpjCha2EAvt9K367KsI4A=;
-        b=sv3PLOpCR8D12D9S65R1eJwbnRNmb3dDGHsJFxTlMQnMSnc6VPKCNy6+nVONGbSywR
-         28aWJ3PGEnzTb6/13754HeYw4ptczsN4BI+10N10CcKWuzrUoKhwSTZSuftEy3oBtbtq
-         B3qfs+dYIshgct/XDFOiPGmcERxNJdzBMUR2UO59SLKtaUINmx/F67xxMyojR9TU+mGV
-         Fu3V8voH338oxNLjOyxfrRGhXAyDKjgYUtgMIV75o3dBk7F/dnUyJtfyT8uyVt+HUaaI
-         9IVkSJmtybT65ofHE5M2xxVIu6N6U9G4S3gjYjy+pfUm7v//E5DBVoYlfIy8AxECP8AA
-         P0Jg==
-X-Gm-Message-State: ALKqPwdKayqsVUixaEz1XRqo25kCYqs0WGEK9N8OIjynJqJVMnCT4guA
-        lQRBlWv9BiU1DQge3YabVHg=
-X-Google-Smtp-Source: ADUXVKIYDgx9AyZNcYMsOX/iR7Occnh8SqMbg84cYUK2DiRZoCMkyYw+xPlCQRzQEjI4qFLLgxE/Ug==
-X-Received: by 2002:a1c:11c3:: with SMTP id 186-v6mr5899399wmr.139.1527964794518;
-        Sat, 02 Jun 2018 11:39:54 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (abri204.neoplus.adsl.tpnet.pl. [83.8.102.204])
-        by smtp.gmail.com with ESMTPSA id 141-v6sm7230350wmf.35.2018.06.02.11.39.52
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 02 Jun 2018 11:39:52 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "sbeller\@google.com" <sbeller@google.com>
-Subject: Re: [RFC PATCH 4/6] commit-graph: avoid writing when repo is shallow
-References: <20180531174024.124488-1-dstolee@microsoft.com>
-        <20180531174024.124488-5-dstolee@microsoft.com>
-        <xmqqd0xb9r1k.fsf@gitster-ct.c.googlers.com>
-        <95354da4-7590-4fa6-de83-30f883d77188@gmail.com>
-Date:   Sat, 02 Jun 2018 20:39:49 +0200
-In-Reply-To: <95354da4-7590-4fa6-de83-30f883d77188@gmail.com> (Derrick
-        Stolee's message of "Fri, 1 Jun 2018 07:46:08 -0400")
-Message-ID: <86r2lpqbgq.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        id S1752051AbeFBTaP (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Jun 2018 15:30:15 -0400
+Received: from cpanel4.indieserve.net ([199.212.143.9]:47668 "EHLO
+        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751503AbeFBTaO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Jun 2018 15:30:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
+        To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=IoKAln8VFjzHa/Y0Cijwzg2LLUtBGP/PNRKmonH6H24=; b=YRyHn7LJEXApg/fMULfZUtyh/q
+        xrn8X39f2ENXxWgHAHpryVlTS9yAlqU+w3QBtt4QD6RFqczg56LRp8g7ehS4XXaABll1BzCvd0jMS
+        HSaSRMPlpKsNH11zSnb8P1P/Ip7UpQGstEvIi+iw14P38LEJZ38+/s2dzAgoI0s1/kiywrFYkMjwy
+        iRoYnQQmojDJaF2JAjHHeyzJ+VGWpvT+03UO5Jz3UB0V0Kd/wg+AYTY3cFQDl6G4smzMTIPmmTK3c
+        osUfZhjrvkpJ5ny1t9JkvF4zcqeDcflB5BTBzyZVdvozaK3+9SBllaIXWvrRNIlzy2qlBs+/MI1cZ
+        o1WzQ1jw==;
+Received: from cpef81d0f814063-cmf81d0f814060.cpe.net.cable.rogers.com ([174.114.57.56]:35556 helo=localhost.localdomain)
+        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1fPCE8-0002Ef-IQ
+        for git@vger.kernel.org; Sat, 02 Jun 2018 15:30:13 -0400
+Date:   Sat, 2 Jun 2018 15:28:09 -0400 (EDT)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Git Mailing list <git@vger.kernel.org>
+Subject: does a stash *need* any reference to the branch on which it was
+ created?
+Message-ID: <alpine.LFD.2.21.1806021525120.19865@localhost.localdomain>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-OutGoing-Spam-Status: No, score=-0.2
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
-> On 5/31/2018 10:30 PM, Junio C Hamano wrote:
->> Derrick Stolee <dstolee@microsoft.com> writes:
->>
->>> Shallow clones do not interact well with the commit-graph feature for
->>> several reasons. Instead of doing the hard thing to fix those
->>> interactions, instead prevent reading or writing a commit-graph file for
->>> shallow repositories.
->>
->> The latter instead would want to vanish, I would guess.
->
-> Do you mean that we should call destroy_commit_graph() if we detect a
-> shallow repository during write_commit_graph(), then I can make that
-> change.
 
-I think Junio meant here the "instead" word, because you have it twice
-in the second sentence of quoted paragraph.
+  i realize that, when you "git stash push", stash graciously saves
+the branch you were on as part of the commit message, but does any
+subsequent stash operation technically *need* that branch name?
 
---=20
-Jakub Nar=C4=99bski
+  it doesn't seem like it -- even "git stash branch" really only needs
+the commit that was the basis of that stash to create the new branch.
+
+  so, does any stash operation actually need the originating branch
+name? (i'm guessing no, but i've been wrong before.)
+
+rday
+
+-- 
+
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                  http://crashcourse.ca/dokuwiki
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
