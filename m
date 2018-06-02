@@ -2,402 +2,199 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 83A5A1F491
-	for <e@80x24.org>; Sat,  2 Jun 2018 11:51:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E7F81F42D
+	for <e@80x24.org>; Sat,  2 Jun 2018 12:24:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751758AbeFBLvU (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Jun 2018 07:51:20 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:40012 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750927AbeFBLvG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Jun 2018 07:51:06 -0400
-Received: by mail-wm0-f65.google.com with SMTP id x2-v6so6621161wmh.5
-        for <git@vger.kernel.org>; Sat, 02 Jun 2018 04:51:05 -0700 (PDT)
+        id S1750964AbeFBMYA (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Jun 2018 08:24:00 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:38212 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750740AbeFBMX7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Jun 2018 08:23:59 -0400
+Received: by mail-wr0-f194.google.com with SMTP id 94-v6so38659993wrf.5
+        for <git@vger.kernel.org>; Sat, 02 Jun 2018 05:23:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=uRpJLaNcARB9avyqO8wO8lxypCjY+PMgakP76iBSuR4=;
-        b=H2kLLDZrgpl34VzcyxodrVsPPgO8Du8HNa9uhQGL65mgbBZSYqQCl/rDX/bU+mOSYk
-         R36IrxALCte1iAsAPFmLh4K7PKEtiLIMP6aFVme0LN9J06SDf3m/WbFdETLn7BP4HDak
-         gpfpiIml56FR48WX7OGBGdyuRRwfghlGnMLmnkfKlJSFgCWc/rMr1RyPOTiET4Jqm5Vb
-         2zHoLX6xsiHxPJR6/AWvIqxqASMSsXp8ODq8Ch75NZV0Oe9fZQyJngghZescPdh3OfUk
-         w+OeERwelApgqTtGv4M55ocJWJcNR9livH607iXRgPaPtjWWoVaTtt7PPC9FAhsGOLHM
-         g8lQ==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=+0UaHRsqGLbZWF/Z+iyQhGB8HKkfwmy8e1sx6rqwALU=;
+        b=rTcc412m+PvdgCklRm3JD+xvSGocBNHlOMLeAB3bH1UuPMSuBaRSg0WTy6BmOFtvwE
+         hPRw+gcTviyNPMKl7khrAulS6mewJesspGb7vN64FiwB3BAtD6B5TNQSuKMZjrRboshV
+         hWkkz8PpuvMitZiowCCLkWp/40E+puixseCUqMiJ3aPknjWojnTWoJGUaNxHIa1V7ilG
+         UyX7TK8PBmLLXDQcMJefs78mkBwfD4ESj+IIWVnVKP94b0UA/l6CRtaDyjDIoTEvr/79
+         Qbg99vs0WcqFRu7QpS1RAePmiVEYJ1PaQCerfcStrxzUfPEQa7iMvc7fat4OGH+XD9cY
+         XRsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=uRpJLaNcARB9avyqO8wO8lxypCjY+PMgakP76iBSuR4=;
-        b=MwE/iYAdR73p+lFlLdMPJWV1ntcKDGIbgvLFKs0mct1FWCIuhqKvLCZb+Jqh/YcZM+
-         KwvdD4YnRuk/1m6l5hHfosOR79OvxjtEpq/1NUkXokDPfp8ajOdOFPaD8D0pWyKm/kWZ
-         4y80l2HyC5IoINVxTk5beq+GIBFxLM/+ms4JJVBMwtKSapHO6a3+QeDV1Se/Di06o4OP
-         9iLQGZusKneVun7WhrrAy0LqwPMQ2FF5LvIyL2Z3qRSXlRYr/3Zcpr689qs+gupDfVoO
-         CmDInuRP0MKkY96YXmybO/800Ez3NcWpUbwyk5NrE4tMVp/ub3AZnDsPkqO9ZLi7s4Aw
-         kwtQ==
-X-Gm-Message-State: ALKqPwe8vy9YPUVyu3MGtEvcoxsmtlwXcaTReVNKk0omnfQeMA//0i3B
-        i2kOrXtZk6C9pusWUbmoCfV0qFp0
-X-Google-Smtp-Source: ADUXVKLwD7XZue2ZE8Q1knDwdyW/2MKLmZJRGN1B4HjHO5nIJqig5mBl7o9d+zSN1hKIgeBV3lPBHQ==
-X-Received: by 2002:a1c:3607:: with SMTP id d7-v6mr5290006wma.39.1527940264745;
-        Sat, 02 Jun 2018 04:51:04 -0700 (PDT)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id v31-v6sm58977794wrc.80.2018.06.02.04.51.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 02 Jun 2018 04:51:04 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Thomas Gummerer <t.gummerer@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v6 8/8] checkout & worktree: introduce checkout.defaultRemote
-Date:   Sat,  2 Jun 2018 11:50:42 +0000
-Message-Id: <20180602115042.18167-9-avarab@gmail.com>
-X-Mailer: git-send-email 2.17.0.290.gded63e768a
-In-Reply-To: <20180602115042.18167-1-avarab@gmail.com>
-References: <20180602115042.18167-1-avarab@gmail.com>
-In-Reply-To: <20180601211015.11919-1-avarab@gmail.com>
-References: <20180601211015.11919-1-avarab@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=+0UaHRsqGLbZWF/Z+iyQhGB8HKkfwmy8e1sx6rqwALU=;
+        b=XZNKfhaIxEHU2/zUCrPKKRsbAIhsuQbOnF5QyRrP4EldPV86z24Tn+TpGxSzs7Y1D8
+         L7y8uZ49tKKvXcVG9Xgqwl1zgT0IsY5Rz56hkJBWMBUzGPT/yr95od4X7j/HDmAm1wD/
+         Y5dTGJcMI4vNV+K0koKMZUFdGt8jcSbsJ4SUq/HAVI7+pZymZG4ecau206a9ZxQt4W7K
+         rVgWGoZGY3OC2MIEgAwcNHejRTpK1G7EIxrcAhSl6YuxkDyc6T4JzLlKjpnxrvxvpB4F
+         m90ptD6BLado2SR933trxVBSejKfLbupAGL+SW5zLhTYHxplqhwCZpBIdhNApuebUoD0
+         zbCQ==
+X-Gm-Message-State: ALKqPwds7Jp41dWyf8C5oCwBcaVYl547zkePywczxqR/Kfxfc3hSEl+a
+        vTn49HOaDTKsJKVvMkuImsQ=
+X-Google-Smtp-Source: ADUXVKJ7SWtiGdSblofrDpsa2Ga6UUJhhWIQRLoJMJJjmdg67vXMqRvmAmXJTqlOM+a34safVh6POg==
+X-Received: by 2002:adf:91e5:: with SMTP id 92-v6mr11255686wri.124.1527942238282;
+        Sat, 02 Jun 2018 05:23:58 -0700 (PDT)
+Received: from Laptop-Acer-Aspire-F15 (abri204.neoplus.adsl.tpnet.pl. [83.8.102.204])
+        by smtp.gmail.com with ESMTPSA id k126-v6sm5593668wmd.45.2018.06.02.05.23.56
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 02 Jun 2018 05:23:56 -0700 (PDT)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     Derrick Stolee <dstolee@microsoft.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
+        "gitster\@pobox.com" <gitster@pobox.com>,
+        "stolee\@gmail.com" <stolee@gmail.com>,
+        "avarab\@gmail.com" <avarab@gmail.com>,
+        "marten.agren\@gmail.com" <marten.agren@gmail.com>,
+        "peff\@peff.net" <peff@peff.net>
+Subject: Re: [PATCH v3 13/20] commit-graph: verify generation number
+References: <20180511211504.79877-1-dstolee@microsoft.com>
+        <20180524162504.158394-1-dstolee@microsoft.com>
+        <20180524162504.158394-14-dstolee@microsoft.com>
+Date:   Sat, 02 Jun 2018 14:23:53 +0200
+In-Reply-To: <20180524162504.158394-14-dstolee@microsoft.com> (Derrick
+        Stolee's message of "Thu, 24 May 2018 16:25:54 +0000")
+Message-ID: <868t7xv0km.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Introduce a checkout.defaultRemote setting which can be used to
-designate a remote to prefer (via checkout.defaultRemote=origin) when
-running e.g. "git checkout master" to mean origin/master, even though
-there's other remotes that have the "master" branch.
+Derrick Stolee <dstolee@microsoft.com> writes:
 
-I want this because it's very handy to use this workflow to checkout a
-repository and create a topic branch, then get back to a "master" as
-retrieved from upstream:
+> While iterating through the commit parents, perform the generation
+> number calculation and compare against the value stored in the
+> commit-graph.
 
-    (
-        cd /tmp &&
-        rm -rf tbdiff &&
-        git clone git@github.com:trast/tbdiff.git &&
-        cd tbdiff &&
-        git branch -m topic &&
-        git checkout master
-    )
+All right, that's good.
 
-That will output:
+What about commit-graph files that have GENERATION_NUMBER_ZERO for all
+its commits (because we verify single commit-graph file only, there
+wouldn't be GENERATION_NUMBER_ZERO mixed with non-zero generation
+numbers)?
 
-    Branch 'master' set up to track remote branch 'master' from 'origin'.
-    Switched to a new branch 'master'
+Unless we can assume that no commit-graph file in the wild would have
+GENERATION_NUMBER_ZERO.
 
-But as soon as a new remote is added (e.g. just to inspect something
-from someone else) the DWIMery goes away:
+>
+> The tests demonstrate that having a different set of parents affects
+> the generation number calculation, and this value propagates to
+> descendants. Hence, we drop the single-line condition on the output.
 
-    (
-        cd /tmp &&
-        rm -rf tbdiff &&
-        git clone git@github.com:trast/tbdiff.git &&
-        cd tbdiff &&
-        git branch -m topic &&
-        git remote add avar git@github.com:avar/tbdiff.git &&
-        git fetch avar &&
-        git checkout master
-    )
+I don't understand what part of changes this paragraph of the commit
+message refers to.
 
-Will output (without the advice output added earlier in this series):
+Anyway, changing parents may not lead to changed generation numbers;
+take for example commit with single parent, which we change to other
+commit with the same generation number.
 
-    error: pathspec 'master' did not match any file(s) known to git.
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  commit-graph.c          | 18 ++++++++++++++++++
+>  t/t5318-commit-graph.sh |  6 ++++++
 
-The new checkout.defaultRemote config allows me to say that whenever
-that ambiguity comes up I'd like to prefer "origin", and it'll still
-work as though the only remote I had was "origin".
+Sidenote: I have just realized that it may be better to put
+validation-related tests into different test file.
 
-Also adjust the advice.checkoutAmbiguousRemoteBranchName message to
-mention this new config setting to the user, the full output on my
-git.git is now (the last paragraph is new):
+>  2 files changed, 24 insertions(+)
+>
+> diff --git a/commit-graph.c b/commit-graph.c
+> index fff22dc0c3..ead92460c1 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -922,6 +922,7 @@ int verify_commit_graph(struct commit_graph *g)
+>  	for (i = 0; i < g->num_commits; i++) {
+>  		struct commit *graph_commit, *odb_commit;
+>  		struct commit_list *graph_parents, *odb_parents;
+> +		uint32_t max_generation = 0;
+>  
+>  		hashcpy(cur_oid.hash, g->chunk_oid_lookup + g->hash_len * i);
+>  
+> @@ -956,6 +957,9 @@ int verify_commit_graph(struct commit_graph *g)
+>  					     oid_to_hex(&graph_parents->item->object.oid),
+>  					     oid_to_hex(&odb_parents->item->object.oid));
+>  
+> +			if (graph_parents->item->generation > max_generation)
+> +				max_generation = graph_parents->item->generation;
+> +
 
-    $ ./git --exec-path=$PWD checkout master
-    error: pathspec 'master' did not match any file(s) known to git.
-    hint: The argument 'master' matched more than one remote tracking branch.
-    hint: We found 26 remotes with a reference that matched. So we fell back
-    hint: on trying to resolve the argument as a path, but failed there too!
-    hint:
-    hint: If you meant to check out a remote tracking branch on e.g. 'origin'
-    hint: you can do so by fully-qualifying the name with the --track option:
-    hint:
-    hint:     git checkout --track origin/<name>
-    hint:
-    hint: If you'd like to always have checkouts of an ambiguous <name> prefer
-    hint: one remote, e.g. the 'origin' remote, consider setting
-    hint: checkout.defaultRemote=origin in your config.
+All right, that calculates the maximum of generation number of commit
+parents.
 
-I considered splitting this into checkout.defaultRemote and
-worktree.defaultRemote, but it's probably less confusing to break our
-own rules that anything shared between config should live in core.*
-than have two config settings, and I couldn't come up with a short
-name under core.* that made sense (core.defaultRemoteForCheckout?).
+>  			graph_parents = graph_parents->next;
+>  			odb_parents = odb_parents->next;
+>  		}
+> @@ -963,6 +967,20 @@ int verify_commit_graph(struct commit_graph *g)
+>  		if (odb_parents != NULL)
+>  			graph_report("commit-graph parent list for commit %s terminates early",
+>  				     oid_to_hex(&cur_oid));
+> +
+> +		/*
+> +		 * If one of our parents has generation GENERATION_NUMBER_MAX, then
+> +		 * our generation is also GENERATION_NUMBER_MAX. Decrement to avoid
+> +		 * extra logic in the following condition.
+> +		 */
 
-See also 70c9ac2f19 ("DWIM "git checkout frotz" to "git checkout -b
-frotz origin/frotz"", 2009-10-18) which introduced this DWIM feature
-to begin with, and 4e85333197 ("worktree: make add <path> <branch>
-dwim", 2017-11-26) which added it to git-worktree.
+Nice trick.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- Documentation/config.txt       | 21 ++++++++++++++++++++-
- Documentation/git-checkout.txt |  9 +++++++++
- Documentation/git-worktree.txt |  9 +++++++++
- builtin/checkout.c             | 12 +++++++++---
- checkout.c                     | 26 ++++++++++++++++++++++++--
- t/t2024-checkout-dwim.sh       | 18 +++++++++++++++++-
- t/t2025-worktree-add.sh        | 21 +++++++++++++++++++++
- 7 files changed, 109 insertions(+), 7 deletions(-)
+> +		if (max_generation == GENERATION_NUMBER_MAX)
+> +			max_generation--;
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index dfc0413a84..aef2769211 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -350,7 +350,10 @@ advice.*::
- 		remote tracking branch on more than one remote in
- 		situations where an unambiguous argument would have
- 		otherwise caused a remote-tracking branch to be
--		checked out.
-+		checked out. See the `checkout.defaultRemote`
-+		configuration variable for how to set a given remote
-+		to used by default in some situations where this
-+		advice would be printed.
- 	amWorkDir::
- 		Advice that shows the location of the patch file when
- 		linkgit:git-am[1] fails to apply it.
-@@ -1105,6 +1108,22 @@ browser.<tool>.path::
- 	browse HTML help (see `-w` option in linkgit:git-help[1]) or a
- 	working repository in gitweb (see linkgit:git-instaweb[1]).
- 
-+checkout.defaultRemote::
-+	When you run 'git checkout <something>' and only have one
-+	remote, it may implicitly fall back on checking out and
-+	tracking e.g. 'origin/<something>'. This stops working as soon
-+	as you have more than one remote with a '<something>'
-+	reference. This setting allows for setting the name of a
-+	preferred remote that should always win when it comes to
-+	disambiguation. The typical use-case is to set this to
-+	`origin`.
-++
-+Currently this is used by linkgit:git-checkout[1] when 'git checkout
-+<something>' will checkout the '<something>' branch on another remote,
-+and by linkgit:git-worktree[1] when 'git worktree add' refers to a
-+remote branch. This setting might be used for other checkout-like
-+commands or functionality in the future.
-+
- clean.requireForce::
- 	A boolean to make git-clean do nothing unless given -f,
- 	-i or -n.   Defaults to true.
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index ca5fc9c798..9db02928c4 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -38,6 +38,15 @@ equivalent to
- $ git checkout -b <branch> --track <remote>/<branch>
- ------------
- +
-+If the branch exists in multiple remotes and one of them is named by
-+the `checkout.defaultRemote` configuration variable, we'll use that
-+one for the purposes of disambiguation, even if the `<branch>` isn't
-+unique across all remotes. Set it to
-+e.g. `checkout.defaultRemote=origin` to always checkout remote
-+branches from there if `<branch>` is ambiguous but exists on the
-+'origin' remote. See also `checkout.defaultRemote` in
-+linkgit:git-config[1].
-++
- You could omit <branch>, in which case the command degenerates to
- "check out the current branch", which is a glorified no-op with
- rather expensive side-effects to show only the tracking information,
-diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index afc6576a14..9c26be40f4 100644
---- a/Documentation/git-worktree.txt
-+++ b/Documentation/git-worktree.txt
-@@ -60,6 +60,15 @@ with a matching name, treat as equivalent to:
- $ git worktree add --track -b <branch> <path> <remote>/<branch>
- ------------
- +
-+If the branch exists in multiple remotes and one of them is named by
-+the `checkout.defaultRemote` configuration variable, we'll use that
-+one for the purposes of disambiguation, even if the `<branch>` isn't
-+unique across all remotes. Set it to
-+e.g. `checkout.defaultRemote=origin` to always checkout remote
-+branches from there if `<branch>` is ambiguous but exists on the
-+'origin' remote. See also `checkout.defaultRemote` in
-+linkgit:git-config[1].
-++
- If `<commit-ish>` is omitted and neither `-b` nor `-B` nor `--detach` used,
- then, as a convenience, the new worktree is associated with a branch
- (call it `<branch>`) named after `$(basename <path>)`.  If `<branch>`
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index baa027455a..5b357e922a 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -912,8 +912,10 @@ static int parse_branchname_arg(int argc, const char **argv,
- 	 *   (b) If <something> is _not_ a commit, either "--" is present
- 	 *       or <something> is not a path, no -t or -b was given, and
- 	 *       and there is a tracking branch whose name is <something>
--	 *       in one and only one remote, then this is a short-hand to
--	 *       fork local <something> from that remote-tracking branch.
-+	 *       in one and only one remote (or if the branch exists on the
-+	 *       remote named in checkout.defaultRemote), then this is a
-+	 *       short-hand to fork local <something> from that
-+	 *       remote-tracking branch.
- 	 *
- 	 *   (c) Otherwise, if "--" is present, treat it like case (1).
- 	 *
-@@ -1277,7 +1279,11 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 				 "If you meant to check out a remote tracking branch on, e.g. 'origin',\n"
- 				 "you can do so by fully qualifying the name with the --track option:\n"
- 				 "\n"
--				 "    git checkout --track origin/<name>"),
-+				 "    git checkout --track origin/<name>\n"
-+				 "\n"
-+				 "If you'd like to always have checkouts of an ambiguous <name> prefer\n"
-+				 "one remote, e.g. the 'origin' remote, consider setting\n"
-+				 "checkout.defaultRemote=origin in your config."),
- 			       argv[0],
- 			       dwim_remotes_matched);
- 		return ret;
-diff --git a/checkout.c b/checkout.c
-index ee3a7e9c05..c72e9f9773 100644
---- a/checkout.c
-+++ b/checkout.c
-@@ -2,15 +2,19 @@
- #include "remote.h"
- #include "refspec.h"
- #include "checkout.h"
-+#include "config.h"
- 
- struct tracking_name_data {
- 	/* const */ char *src_ref;
- 	char *dst_ref;
- 	struct object_id *dst_oid;
- 	int num_matches;
-+	const char *default_remote;
-+	char *default_dst_ref;
-+	struct object_id *default_dst_oid;
- };
- 
--#define TRACKING_NAME_DATA_INIT { NULL, NULL, NULL, 0 }
-+#define TRACKING_NAME_DATA_INIT { NULL, NULL, NULL, 0, NULL, NULL, NULL }
- 
- static int check_tracking_name(struct remote *remote, void *cb_data)
- {
-@@ -24,6 +28,12 @@ static int check_tracking_name(struct remote *remote, void *cb_data)
- 		return 0;
- 	}
- 	cb->num_matches++;
-+	if (cb->default_remote && !strcmp(remote->name, cb->default_remote)) {
-+		struct object_id *dst = xmalloc(sizeof(*cb->default_dst_oid));
-+		cb->default_dst_ref = xstrdup(query.dst);
-+		oidcpy(dst, cb->dst_oid);
-+		cb->default_dst_oid = dst;
-+	}
- 	if (cb->dst_ref) {
- 		free(query.dst);
- 		return 0;
-@@ -36,14 +46,26 @@ const char *unique_tracking_name(const char *name, struct object_id *oid,
- 				 int *dwim_remotes_matched)
- {
- 	struct tracking_name_data cb_data = TRACKING_NAME_DATA_INIT;
-+	const char *default_remote = NULL;
-+	if (!git_config_get_string_const("checkout.defaultremote", &default_remote))
-+		cb_data.default_remote = default_remote;
- 	cb_data.src_ref = xstrfmt("refs/heads/%s", name);
- 	cb_data.dst_oid = oid;
- 	for_each_remote(check_tracking_name, &cb_data);
- 	if (dwim_remotes_matched)
- 		*dwim_remotes_matched = cb_data.num_matches;
- 	free(cb_data.src_ref);
--	if (cb_data.num_matches == 1)
-+	free((char *)default_remote);
-+	if (cb_data.num_matches == 1) {
-+		free(cb_data.default_dst_ref);
-+		free(cb_data.default_dst_oid);
- 		return cb_data.dst_ref;
-+	}
- 	free(cb_data.dst_ref);
-+	if (cb_data.default_dst_ref) {
-+		oidcpy(oid, cb_data.default_dst_oid);
-+		free(cb_data.default_dst_oid);
-+		return cb_data.default_dst_ref;
-+	}
- 	return NULL;
- }
-diff --git a/t/t2024-checkout-dwim.sh b/t/t2024-checkout-dwim.sh
-index fef263a858..1495c248a7 100755
---- a/t/t2024-checkout-dwim.sh
-+++ b/t/t2024-checkout-dwim.sh
-@@ -87,7 +87,23 @@ test_expect_success 'checkout of branch from multiple remotes fails with advice'
- 		checkout foo 2>stderr &&
- 	test_branch master &&
- 	status_uno_is_clean &&
--	test_i18ngrep ! "^hint: " stderr
-+	test_i18ngrep ! "^hint: " stderr &&
-+	# Make sure the likes of checkout -p don not print this hint
-+	git checkout -p foo 2>stderr &&
-+	test_i18ngrep ! "^hint: " stderr &&
-+	status_uno_is_clean
-+'
-+
-+test_expect_success 'checkout of branch from multiple remotes succeeds with checkout.defaultRemote #1' '
-+	git checkout -B master &&
-+	status_uno_is_clean &&
-+	test_might_fail git branch -D foo &&
-+
-+	git -c checkout.defaultRemote=repo_a checkout foo &&
-+	status_uno_is_clean &&
-+	test_branch foo &&
-+	test_cmp_rev remotes/repo_a/foo HEAD &&
-+	test_branch_upstream foo repo_a foo
- '
- 
- test_expect_success 'checkout of branch from a single remote succeeds #1' '
-diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
-index d2e49f7632..be6e093142 100755
---- a/t/t2025-worktree-add.sh
-+++ b/t/t2025-worktree-add.sh
-@@ -402,6 +402,27 @@ test_expect_success '"add" <path> <branch> dwims' '
- 	)
- '
- 
-+test_expect_success '"add" <path> <branch> dwims with checkout.defaultRemote' '
-+	test_when_finished rm -rf repo_upstream repo_dwim foo &&
-+	setup_remote_repo repo_upstream repo_dwim &&
-+	git init repo_dwim &&
-+	(
-+		cd repo_dwim &&
-+		git remote add repo_upstream2 ../repo_upstream &&
-+		git fetch repo_upstream2 &&
-+		test_must_fail git worktree add ../foo foo &&
-+		git -c checkout.defaultRemote=repo_upstream worktree add ../foo foo &&
-+		>status.expect &&
-+		git status -uno --porcelain >status.actual &&
-+		test_cmp status.expect status.actual
-+	) &&
-+	(
-+		cd foo &&
-+		test_branch_upstream foo repo_upstream foo &&
-+		test_cmp_rev refs/remotes/repo_upstream/foo refs/heads/foo
-+	)
-+'
-+
- test_expect_success 'git worktree add does not match remote' '
- 	test_when_finished rm -rf repo_a repo_b foo &&
- 	setup_remote_repo repo_a repo_b &&
--- 
-2.17.0.290.gded63e768a
+What about GENERATION_NUMBER_ZERO?
 
+> +
+> +		if (graph_commit->generation != max_generation + 1)
+> +			graph_report("commit-graph generation for commit %s is %u != %u",
+> +				     oid_to_hex(&cur_oid),
+> +				     graph_commit->generation,
+> +				     max_generation + 1);
+
+I think we should also check that generation numbers do not exceed
+GENERATION_NUMBER_MAX... unless it is already taken care of?
+
+>  	}
+>  
+>  	return verify_commit_graph_error;
+> diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+> index 12f0d7f54d..673b0d37d5 100755
+> --- a/t/t5318-commit-graph.sh
+> +++ b/t/t5318-commit-graph.sh
+> @@ -272,6 +272,7 @@ GRAPH_BYTE_COMMIT_TREE=$GRAPH_COMMIT_DATA_OFFSET
+>  GRAPH_BYTE_COMMIT_PARENT=`expr $GRAPH_COMMIT_DATA_OFFSET + $HASH_LEN`
+>  GRAPH_BYTE_COMMIT_EXTRA_PARENT=`expr $GRAPH_COMMIT_DATA_OFFSET + $HASH_LEN + 4`
+>  GRAPH_BYTE_COMMIT_WRONG_PARENT=`expr $GRAPH_COMMIT_DATA_OFFSET + $HASH_LEN + 3`
+> +GRAPH_BYTE_COMMIT_GENERATION=`expr $GRAPH_COMMIT_DATA_OFFSET + $HASH_LEN + 8`
+>  
+>  # usage: corrupt_graph_and_verify <position> <data> <string>
+>  # Manipulates the commit-graph file at the position
+> @@ -366,4 +367,9 @@ test_expect_success 'detect incorrect tree OID' '
+>  		"commit-graph parent for"
+>  '
+>  
+> +test_expect_success 'detect incorrect generation number' '
+> +	corrupt_graph_and_verify $GRAPH_BYTE_COMMIT_GENERATION "\01" \
+
+I assume that you have checked that it actually corrupts generation
+number (without affecting commit date).
+
+> +		"generation"
+
+A very minor nitpick: Not "generation for commit"?
+
+> +'
+> +
+>  test_done
