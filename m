@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D2B641F42D
-	for <e@80x24.org>; Sat,  2 Jun 2018 04:33:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8455E1F42D
+	for <e@80x24.org>; Sat,  2 Jun 2018 04:33:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751769AbeFBEdq (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Jun 2018 00:33:46 -0400
-Received: from mail-lf0-f44.google.com ([209.85.215.44]:35627 "EHLO
-        mail-lf0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751533AbeFBEdM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Jun 2018 00:33:12 -0400
-Received: by mail-lf0-f44.google.com with SMTP id y72-v6so17596866lfd.2
-        for <git@vger.kernel.org>; Fri, 01 Jun 2018 21:33:11 -0700 (PDT)
+        id S1751771AbeFBEdu (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Jun 2018 00:33:50 -0400
+Received: from mail-lf0-f51.google.com ([209.85.215.51]:46412 "EHLO
+        mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751469AbeFBEdK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Jun 2018 00:33:10 -0400
+Received: by mail-lf0-f51.google.com with SMTP id j13-v6so13160864lfb.13
+        for <git@vger.kernel.org>; Fri, 01 Jun 2018 21:33:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=GBXTMcv5l61RfMvZc0NNbOFU5+yTy6/CeV6dxEs5cls=;
-        b=ftcb1TO/T0Lmsvfs9dKZLetcXPsaqNn5beL9GeJXVON6WfoOjMW1DQvOUgnzXMA64p
-         96w1VGR8p0k5RHa4wU/WhCrg8+BZwRLTb4d0I1zKiPWUdEgWTw+NvvlowOUyEg7zpXXJ
-         8kZT8ZRLbv658EvY+bIsDxgq01VXczjPbUazVS/8+xM9DBrum5rhZJoRa8nU4QDM/aXu
-         WVvrp9et4sG6Cv4cgTXkj52rV3FvtPg2CQidFDYJYu1FSlsjAfnZe9H7SCcOJ3FCynuR
-         2tXpbctLevK8rChlHJ1TwiD/TugU5H0+WVQbLWGofQeGwifyaZ5+trxRA4Cazp2LSpYF
-         zwjQ==
+        bh=1BSZACuIHt71vhDC7FnLnNT4sFBg+4RNugY68KHLXfc=;
+        b=RAqDdQAzD3+eEzKFthlZBARO6MvbtD9xt0hto8ubHRq0c/Ku8pq35Zlj2YhNxXsqzK
+         zBIwqmvXFHz4w+OQWKrwHp/R+GZuFPpwVZPepc3rXXeDQWNSxg2FFtGeiDxT1Xw1cMnI
+         8ogCMNXLS5rl+OndgwkgowmKT5JDqXQuVrT2u86DQRWVVtp7pwqprtTi//NrDEeXLzv/
+         MeIXzZyhbCS2nwv4rpMHIPqqltOIz9EWSiRVd4oYb2aM0aRwHQBKJRcj0vCctMThVfWd
+         eMqPX2E8iHHG00Pf8lZLZY8MoK7yPo8BA7psfYf4LpMUvCJTGjRXrPmm7N+ot5JNrfTL
+         5KHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=GBXTMcv5l61RfMvZc0NNbOFU5+yTy6/CeV6dxEs5cls=;
-        b=LVsQiGiyTGp85tbMBPh9S2rcfGVMXsSTytMOtYb8rZ+b1W77Tmvvir0dBU+H+sLwcy
-         KwhTcXCFEr9C+sUxRWLOoI7tfFKQAALksVI/Q/goKDKyi2kuJhDxh6QeJrDBIqfH8r5B
-         c813BJ9Y8BHW3lVtBI8SYOjvRHz9P7rzf0YhNjoME8+lAYTkYmoY9Y5AHZvOY+OMGftx
-         RjFLXvfSRST1D1d6bWEIYIQOLDKJvNZQn7lYEucOaLjQPSZe3oVUMOzz4pswvj2XoYhu
-         2ICetCcfiMXcEPnLF36T3d5APxZH7EIW0IYDHS23+9fakybVZp6xF96kIhqzTMh9tLsk
-         ZVVg==
-X-Gm-Message-State: ALKqPweQIr4+s9JK2LZCHzCSXtDgkEQUMGdu5wWbiQ6Ps0ddFHZLltI+
-        Pa85ROf2sAPansaWFOqMIp3Mqw==
-X-Google-Smtp-Source: ADUXVKJpMzBsOT5A7hFN2HBSSzS8ELQLavPvwJ9qEWugO9vbNdHxRipb88IkyEX3Jpx6VUCDTaZuSg==
-X-Received: by 2002:a2e:594d:: with SMTP id n74-v6mr10117450ljb.128.1527913989612;
-        Fri, 01 Jun 2018 21:33:09 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id o11-v6sm644776lji.0.2018.06.01.21.33.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        bh=1BSZACuIHt71vhDC7FnLnNT4sFBg+4RNugY68KHLXfc=;
+        b=U528Mq4H8dKbgL04Z8acZb4PHaR/K0x0yYhx1OM7KSKpATipdC/5MzujeVQ7ux5llA
+         Q++Kz0Kn2aKtNkMCdamXr/a1wPRV+vEgbeAQA+3UnSeTuw6OAc3frB8l+v5oGEiAznK2
+         5j6E/RfdL2t+Bwcy3iq6SGvdeplbyAm6C9CxehMYVAomVAFiu+7iQYGQi4iyjIT1l6Gu
+         oeo5EyBPsxJ58NjQMdijrSm/qYZpCXS8Y0vqi94/E/ln+9/BZigFMgz4NzaHkaiyngeS
+         88wyqSEgm20Vt66S2A5GjaLFk2xv0x8WaqIg3tmDrEZjrbQloHQe967WGqtGd/p0nUD3
+         duyw==
+X-Gm-Message-State: ALKqPweKlrl1iJjYs639hQFaft3ngCv2GDGZwRD8HVXnwr7fu2++jqgG
+        lp2mcI9XnZiWZUf5chS8xA6CzQ==
+X-Google-Smtp-Source: ADUXVKL7TqpJUlosJMst8fz1x0TbU1uix3v/8JXGt12VfjgR0/YAMbvSyIjzC0RYOvPmDCs06FwFTQ==
+X-Received: by 2002:a19:14ca:: with SMTP id 71-v6mr8451639lfu.126.1527913988467;
         Fri, 01 Jun 2018 21:33:08 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id o11-v6sm644776lji.0.2018.06.01.21.33.07
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 01 Jun 2018 21:33:07 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 18/22] replace-object.c: mark more strings for translation
-Date:   Sat,  2 Jun 2018 06:32:37 +0200
-Message-Id: <20180602043241.9941-19-pclouds@gmail.com>
+Subject: [PATCH 17/22] refspec.c: mark more strings for translation
+Date:   Sat,  2 Jun 2018 06:32:36 +0200
+Message-Id: <20180602043241.9941-18-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc0.309.g77c7720784
 In-Reply-To: <20180602043241.9941-1-pclouds@gmail.com>
 References: <20180602043241.9941-1-pclouds@gmail.com>
@@ -70,38 +70,22 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- replace-object.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ refspec.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/replace-object.c b/replace-object.c
-index 801b5c1678..ddc1546b8c 100644
---- a/replace-object.c
-+++ b/replace-object.c
-@@ -17,7 +17,7 @@ static int register_replace_ref(const char *refname,
+diff --git a/refspec.c b/refspec.c
+index ada7854f7a..1266e509c2 100644
+--- a/refspec.c
++++ b/refspec.c
+@@ -127,7 +127,7 @@ void refspec_item_init(struct refspec_item *item, const char *refspec, int fetch
+ 	memset(item, 0, sizeof(*item));
  
- 	if (get_oid_hex(hash, &repl_obj->original.oid)) {
- 		free(repl_obj);
--		warning("bad replace ref name: %s", refname);
-+		warning(_("bad replace ref name: %s"), refname);
- 		return 0;
- 	}
- 
-@@ -26,7 +26,7 @@ static int register_replace_ref(const char *refname,
- 
- 	/* Register new object */
- 	if (oidmap_put(the_repository->objects->replace_map, repl_obj))
--		die("duplicate replace ref: %s", refname);
-+		die(_("duplicate replace ref: %s"), refname);
- 
- 	return 0;
+ 	if (!parse_refspec(item, refspec, fetch))
+-		die("Invalid refspec '%s'", refspec);
++		die(_("invalid refspec '%s'"), refspec);
  }
-@@ -69,5 +69,5 @@ const struct object_id *do_lookup_replace_object(struct repository *r,
- 			return cur;
- 		cur = &repl_obj->replacement;
- 	}
--	die("replace depth too high for object %s", oid_to_hex(oid));
-+	die(_("replace depth too high for object %s"), oid_to_hex(oid));
- }
+ 
+ void refspec_item_clear(struct refspec_item *item)
 -- 
 2.18.0.rc0.309.g77c7720784
 
