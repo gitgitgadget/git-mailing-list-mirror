@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E097B1F491
-	for <e@80x24.org>; Sat,  2 Jun 2018 11:51:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4AA001F491
+	for <e@80x24.org>; Sat,  2 Jun 2018 11:51:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751515AbeFBLvF (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Jun 2018 07:51:05 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35346 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750927AbeFBLu6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Jun 2018 07:50:58 -0400
-Received: by mail-wm0-f67.google.com with SMTP id j15-v6so6667595wme.0
-        for <git@vger.kernel.org>; Sat, 02 Jun 2018 04:50:57 -0700 (PDT)
+        id S1751553AbeFBLvH (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Jun 2018 07:51:07 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:33903 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750952AbeFBLu7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Jun 2018 07:50:59 -0400
+Received: by mail-wm0-f68.google.com with SMTP id q4-v6so9363756wmq.1
+        for <git@vger.kernel.org>; Sat, 02 Jun 2018 04:50:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=Iw2YiB/ZkIh4oCVAMKTf2c/oj+UFgHHJJM7iLMD06Cw=;
-        b=rZG8MwJ6ItF9nmQqvU4MKWaScJADgNknahTY0ko7kH1nvg9lnBvKRhqDqxEaabymc8
-         b+BJfzF5bCqhxRdwX92bbX8oKepW6BsuisXNtZk81YEgnT0Hh0EPMvAGrtelqnJHTZKQ
-         KM8C+WTLzelkZZVjzGlysK6uukZXK+t15Ym9reYuVjpknTwFuggPIVSM3FzEtjjASAsb
-         /c7YdR01x4Rb9ctQzmVxUIg3yO/eKt/d/sqlZQeJocgZrWXc1qaykYvS39ibJyaWcE/x
-         mIcE//6LFbhm3FPJ6h/ooAxbAcGSe63VqWp5Du4a2EZxYBizGPdhvf+y+MHBMN5M6ZXA
-         yDjQ==
+        bh=b4kqkIWu7jnlbGjduBQ1ykNY896p5Rm+wG/zMyO7kZE=;
+        b=kNbg2jmfcHwp1MmNPP0Ukbv15YpJabL2qly2vO79ZCu2SJ2+fB7t5mGFSEACDq5U8P
+         wr+x9D2t63TAF6xvWClYk5L/+Z0Wf+yi1W4Qh1uNKlDfufMcelqrT555sdoSnmiuPZ8K
+         H1ICYieQLwf3dKfzI/WwUWoHEYMM4lfpgsJuNZcwPyZFpqL3Espsm9yolad1LdiJgAkn
+         auWN034yTFuE1OObFSDewGdV1ABBPNeEs/qnMpqJt5YYFQCtaiVntCbi4gNUTjtGJMop
+         5VeF+WW7ZlB0Bwzx/M6mrBrrsWWcR+G816hy/vZinqPKWcCFaYKJRVfhOm9dKpmOPeKw
+         b0CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=Iw2YiB/ZkIh4oCVAMKTf2c/oj+UFgHHJJM7iLMD06Cw=;
-        b=CtTv/YEIbzRTCLYu+cRwyt/9jS2DVji164XTA/loumU9fQrDXcQNYlUEkNWSp8QIGI
-         K2X5kqeUDmg8NtQjScqr0Ub7vmLN+5KYyEeJYp0ZFTrCKxurIX5YYcp1UBw4XPAzlv9F
-         0H7ekGqjSu4/kKS5P6NPlsvHsuM1HSsuoeItOhsq3u84jzfsFbWebwJFMGK/f+UXDaLU
-         53LBJYv0hVazuaEHCwBz8CbtxRJRYJcfgsiPnlUfzltfwzMJIDC/hpQD898x457Qw47I
-         aNVFj4WD2jQXowhHkDzCCaVfugpXBmi2hyHqI4ZiKkl7F6jaITij+IZWKMCnRaubE43g
-         hzVw==
-X-Gm-Message-State: APt69E0Wwph+kXlXsLs/iBRlCf70E5/w4bgt8s7PtRLuZMkJF3n5H/kK
-        J9zSYUbzDRQ8jI6fMgSfkA+wi6+L
-X-Google-Smtp-Source: ADUXVKIurfjlWkaJMHuKwpmMgnK26kTFwLINFSsUwyRsyTcVmq/XqaJdxDZnIN0AK9fK0lTov8GhGA==
-X-Received: by 2002:a1c:eecd:: with SMTP id j74-v6mr5366368wmi.137.1527940256583;
-        Sat, 02 Jun 2018 04:50:56 -0700 (PDT)
+        bh=b4kqkIWu7jnlbGjduBQ1ykNY896p5Rm+wG/zMyO7kZE=;
+        b=JScwMUPnVtBN2JWeV3QasE4BrDdzq57SVGD/Jmgw+x5lwO7o5owffWkO7wrACZlKox
+         61fyJesn+3PikfeBu7ZCV/e7mQn56JoqnlZ8BlxcUCKbhTcvzi5fkPQrhQsq8PVTsd4o
+         Lx4cJQminsqL3VPxJ+YnZvASiYhmmwfJpPPnvNO4YIhrQh4VTxgqaS1Izsos7h6Dsr9p
+         tD5Wa92Zpm95Vm8YELO0wW63IHKxpDDYCwjraboECoU8spaSR8RshF2IPTozrY32PPp/
+         g/PTdNxnsm2/45IvOlj/XsNh7bbTTrxXcWSX7LSijlWljh/H43A164nJLE1djS9YE9Ku
+         jBXg==
+X-Gm-Message-State: ALKqPwdFn/lDksExeYuin39ZSwHrdaJRfge9E2I3VUUVUEKMtR0sHOby
+        Z7n1FwV2kyyhrZgU4vcrqyDmbSpb
+X-Google-Smtp-Source: ADUXVKIDNNj1TNoCz5BihVzdOlo3alJ1GE8CgZAyWagi/ZpcoIf3sXoZyDpr/1sIzq8UfSlwKsolSA==
+X-Received: by 2002:a1c:1f13:: with SMTP id f19-v6mr4526413wmf.73.1527940258290;
+        Sat, 02 Jun 2018 04:50:58 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id v31-v6sm58977794wrc.80.2018.06.02.04.50.55
+        by smtp.gmail.com with ESMTPSA id v31-v6sm58977794wrc.80.2018.06.02.04.50.57
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 02 Jun 2018 04:50:55 -0700 (PDT)
+        Sat, 02 Jun 2018 04:50:57 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v6 3/8] checkout.c: introduce an *_INIT macro
-Date:   Sat,  2 Jun 2018 11:50:37 +0000
-Message-Id: <20180602115042.18167-4-avarab@gmail.com>
+Subject: [PATCH v6 4/8] checkout.c]: change "unique" member to "num_matches"
+Date:   Sat,  2 Jun 2018 11:50:38 +0000
+Message-Id: <20180602115042.18167-5-avarab@gmail.com>
 X-Mailer: git-send-email 2.17.0.290.gded63e768a
 In-Reply-To: <20180602115042.18167-1-avarab@gmail.com>
 References: <20180602115042.18167-1-avarab@gmail.com>
@@ -76,38 +76,52 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add an *_INIT macro for the tracking_name_data similar to what exists
-elsewhere in the codebase, e.g. OID_ARRAY_INIT in sha1-array.h. This
-will make it more idiomatic in later changes to add more fields to the
-struct & its initialization macro.
+Internally track how many matches we find in the check_tracking_name()
+callback. Nothing uses this now, but it will be made use of in a later
+change.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- checkout.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ checkout.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/checkout.c b/checkout.c
-index bdefc888ba..80e430cda8 100644
+index 80e430cda8..7662a39a62 100644
 --- a/checkout.c
 +++ b/checkout.c
-@@ -10,6 +10,8 @@ struct tracking_name_data {
- 	int unique;
+@@ -7,10 +7,10 @@ struct tracking_name_data {
+ 	/* const */ char *src_ref;
+ 	char *dst_ref;
+ 	struct object_id *dst_oid;
+-	int unique;
++	int num_matches;
  };
  
-+#define TRACKING_NAME_DATA_INIT { NULL, NULL, NULL, 1 }
-+
+-#define TRACKING_NAME_DATA_INIT { NULL, NULL, NULL, 1 }
++#define TRACKING_NAME_DATA_INIT { NULL, NULL, NULL, 0 }
+ 
  static int check_tracking_name(struct remote *remote, void *cb_data)
  {
- 	struct tracking_name_data *cb = cb_data;
-@@ -32,7 +34,7 @@ static int check_tracking_name(struct remote *remote, void *cb_data)
- 
- const char *unique_tracking_name(const char *name, struct object_id *oid)
- {
--	struct tracking_name_data cb_data = { NULL, NULL, NULL, 1 };
-+	struct tracking_name_data cb_data = TRACKING_NAME_DATA_INIT;
- 	cb_data.src_ref = xstrfmt("refs/heads/%s", name);
+@@ -23,9 +23,9 @@ static int check_tracking_name(struct remote *remote, void *cb_data)
+ 		free(query.dst);
+ 		return 0;
+ 	}
++	cb->num_matches++;
+ 	if (cb->dst_ref) {
+ 		free(query.dst);
+-		cb->unique = 0;
+ 		return 0;
+ 	}
+ 	cb->dst_ref = query.dst;
+@@ -39,7 +39,7 @@ const char *unique_tracking_name(const char *name, struct object_id *oid)
  	cb_data.dst_oid = oid;
  	for_each_remote(check_tracking_name, &cb_data);
+ 	free(cb_data.src_ref);
+-	if (cb_data.unique)
++	if (cb_data.num_matches == 1)
+ 		return cb_data.dst_ref;
+ 	free(cb_data.dst_ref);
+ 	return NULL;
 -- 
 2.17.0.290.gded63e768a
 
