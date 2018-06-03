@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B149B1F403
-	for <e@80x24.org>; Sun,  3 Jun 2018 16:34:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B46C1F403
+	for <e@80x24.org>; Sun,  3 Jun 2018 16:35:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751315AbeFCQez (ORCPT <rfc822;e@80x24.org>);
+        id S1751357AbeFCQe5 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Jun 2018 12:34:57 -0400
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:42610 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750996AbeFCQez (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 3 Jun 2018 12:34:55 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:34880 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751183AbeFCQer (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Jun 2018 12:34:47 -0400
-Received: by mail-lf0-f65.google.com with SMTP id y72-v6so21551188lfd.2
-        for <git@vger.kernel.org>; Sun, 03 Jun 2018 09:34:46 -0700 (PDT)
+Received: by mail-lf0-f66.google.com with SMTP id v135-v6so21572282lfa.9
+        for <git@vger.kernel.org>; Sun, 03 Jun 2018 09:34:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Hum09VQ3ktB2K3enD9CZZVRTtOT41uUJBMzhHZwscnE=;
-        b=hntSAPvZ4EoJJsEFCbr75o6c3vdwUZ9aqBdK+gtKySJZZj3fjnAvlXYVMSbsKoxQFO
-         RENbRMyG0kifvxGDqzRsbkckgdEpGve0srLEdrRC5Jx5QFqmV/t+bOnb2cW3dklZdj5k
-         W2NBgJw9fFCLg0DF/trdnyYjBY2xepGs+LBFjrlPYaGNyqsk3eYjYK0kREM20eQmY8zy
-         t2Tu8Mhr7N7m/w6dadTgraFhWtWJSlKghROZ9hQpQHu5ZArhqQ6dUe2+GdgIVBEuflA8
-         VWKxl5PhuMWAQ8StXY4Pc2MFRjwQIG6TCuFlxxZMHq/yXdVXZxxnDuJbBCR4n3YBQ0NR
-         ZggQ==
+        bh=Ol7XCRn8uBkXw+pm2GCnzst7ydRuLiVogIXwPeartlo=;
+        b=AxyiW7j9beih3BVAuvN6Tp/fhejmqlIWoVhINxHQ/oXIYpHah0s3CNNCrHEGWYIVnA
+         YChIogx+5OrRHjoH+U5XGDBrVPpc5+EMVakgRu9eJT+yWGLeeCMPSzNHVM7EQODgcQVl
+         vpYehC1wCqZOe5xNTQGFicMYvL5fQ9o+QSCWhTXAxPd0/xyItDbojxvsRQFm5pqui25p
+         TsxDwlpp+Vou6+sUrVuZ+6tp3YHP2TtQs8dY1TJidFgRkJJTq6bfKe9it3+ZY0NYki+N
+         pwNwmCeI5rdQ95AXW9As5vZjpN922Pv/PIdYyYRmMi43/P+P2d5M868s9ck2acuJYmN3
+         8Wsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Hum09VQ3ktB2K3enD9CZZVRTtOT41uUJBMzhHZwscnE=;
-        b=kz5Aib6uOCXb9DHjIlh/9ubsJnBcH9/aHUfsr65ys+SuA3KSBkizzj6OVCqN5JmzkJ
-         QhDyao3Jbd4t4PKICKYqrcw4lK/APf4A8Yyfix/ci6CvDEs6lXoqmR3VuRQI4GEI75nL
-         X9ClzVembVoLuO1iI2Dfjm2HVLSQMhXci9MXUS/MWbfsoBiDRzQwkXY/VmyDoCix2mdn
-         z3bljx16h/7snoSRL3tu0KKtRpv60CBR0PEwp1JSOZ+RyLkWnkMLFBT3QSSzS5yoO9Uw
-         AhahhWcgldY+CGD8eCuFFwhgGelHCu2S6es/AO4YbjGTePo2JHsKCbdL6BJktaF/nmUM
-         rOXw==
-X-Gm-Message-State: APt69E0W9LA8D9Vhfj77Ehy6OCHdIHhll4FFYpg8q4ZuTNRgv9sHd/DT
-        paDcHFB8ut8N081eK9XMpbk=
-X-Google-Smtp-Source: ADUXVKJclir3JQj/eCKeRGrSzVbUIVwrGgrZlVZm/aIDP4TNJvlD4VCb02N3Ns+OUQesfB7gIbOcjw==
-X-Received: by 2002:a2e:2f07:: with SMTP id v7-v6mr1995090ljv.113.1528043686010;
-        Sun, 03 Jun 2018 09:34:46 -0700 (PDT)
+        bh=Ol7XCRn8uBkXw+pm2GCnzst7ydRuLiVogIXwPeartlo=;
+        b=jPnxQ3axfsQQEzUU7xf+185s81Fd0zC7St7F5nHhDPWSYlPwalrE61zifcg0UlJPNf
+         iQPuIB4VtQQXlc4zDiyYasP9bV5laGf//m0tRBxbvxO1Tss1iNO3P2/brb1DgBhACzep
+         Ek2y3F+gMp4Dm7mmFmddNLA944JkE6v4Z9gK6+w/zor9t+S8y1TV0Q6tUv/zduwkOHGO
+         L0Be1U+u6SAth1mhYp6Si/hNg2hIUOJRR7R8P9K+yG0Yzzg/Ik1Ot4yjtd3wVEnhG/t6
+         7mswtAeBOd2JicBuDmzyMjvkNh+T3ZDo60s2wj7XJbzcX2Unv8B3f2Io2xoiN4fDLzdS
+         V2uQ==
+X-Gm-Message-State: ALKqPwc45ddCaXm9wmbbpurC86oSXzz9Po8pFu1hWoTQ6JZv+wsbdUjZ
+        XbDB7RxhEJ0K0UTAvNfXmXA=
+X-Google-Smtp-Source: ADUXVKJhSzE4PuBgjDn/juXmkqlTaRte/TB/xyW9kozBAJBbquByG7ysqIGhxa+B5O8AYKMvit+W/Q==
+X-Received: by 2002:a2e:1945:: with SMTP id p66-v6mr12801542lje.114.1528043693768;
+        Sun, 03 Jun 2018 09:34:53 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id v79-v6sm4726895lfd.32.2018.06.03.09.34.45
+        by smtp.gmail.com with ESMTPSA id v79-v6sm4726895lfd.32.2018.06.03.09.34.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 03 Jun 2018 09:34:45 -0700 (PDT)
+        Sun, 03 Jun 2018 09:34:52 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 04/23] builtin/config.c: mark more strings for translation
-Date:   Sun,  3 Jun 2018 18:34:01 +0200
-Message-Id: <20180603163420.13702-5-pclouds@gmail.com>
+Subject: [PATCH v2 11/23] convert.c: mark more strings for translation
+Date:   Sun,  3 Jun 2018 18:34:08 +0200
+Message-Id: <20180603163420.13702-12-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc0.333.g22e6ee6cdf
 In-Reply-To: <20180603163420.13702-1-pclouds@gmail.com>
 References: <20180602043241.9941-1-pclouds@gmail.com>
@@ -70,195 +70,172 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/config.c      | 48 +++++++++++++++++++++----------------------
- t/t1308-config-set.sh |  2 +-
- 2 files changed, 25 insertions(+), 25 deletions(-)
+ convert.c             | 38 ++++++++++++++++++++------------------
+ t/t0021-conversion.sh |  2 +-
+ 2 files changed, 21 insertions(+), 19 deletions(-)
 
-diff --git a/builtin/config.c b/builtin/config.c
-index ebeb4c5638..3c26df6c48 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -110,7 +110,7 @@ static int option_parse_type(const struct option *opt, const char *arg,
- 		 * --int' and '--type=bool
- 		 * --type=int'.
- 		 */
--		error("only one type at a time");
-+		error(_("only one type at a time"));
- 		usage_with_options(builtin_config_usage,
- 			builtin_config_options);
+diff --git a/convert.c b/convert.c
+index f47e60022e..e53911d4f8 100644
+--- a/convert.c
++++ b/convert.c
+@@ -190,7 +190,7 @@ static enum eol output_eol(enum crlf_action crlf_action)
+ 		/* fall through */
+ 		return text_eol_is_crlf() ? EOL_CRLF : EOL_LF;
  	}
-@@ -161,9 +161,9 @@ static void check_argc(int argc, int min, int max) {
- 	if (argc >= min && argc <= max)
- 		return;
- 	if (min == max)
--		error("wrong number of arguments, should be %d", min);
-+		error(_("wrong number of arguments, should be %d"), min);
- 	else
--		error("wrong number of arguments, should be from %d to %d",
-+		error(_("wrong number of arguments, should be from %d to %d"),
- 		      min, max);
- 	usage_with_options(builtin_config_usage, builtin_config_options);
+-	warning("illegal crlf_action %d", (int)crlf_action);
++	warning(_("illegal crlf_action %d"), (int)crlf_action);
+ 	return core_eol;
  }
-@@ -297,7 +297,7 @@ static int get_value(const char *key_, const char *regex_)
  
- 		key_regexp = (regex_t*)xmalloc(sizeof(regex_t));
- 		if (regcomp(key_regexp, key, REG_EXTENDED)) {
--			error("invalid key pattern: %s", key_);
-+			error(_("invalid key pattern: %s"), key_);
- 			FREE_AND_NULL(key_regexp);
- 			ret = CONFIG_INVALID_PATTERN;
- 			goto free_strings;
-@@ -317,7 +317,7 @@ static int get_value(const char *key_, const char *regex_)
- 
- 		regexp = (regex_t*)xmalloc(sizeof(regex_t));
- 		if (regcomp(regexp, regex_, REG_EXTENDED)) {
--			error("invalid pattern: %s", regex_);
-+			error(_("invalid pattern: %s"), regex_);
- 			FREE_AND_NULL(regexp);
- 			ret = CONFIG_INVALID_PATTERN;
- 			goto free_strings;
-@@ -390,7 +390,7 @@ static char *normalize_value(const char *key, const char *value)
- 	if (type == TYPE_COLOR) {
- 		char v[COLOR_MAXLEN];
- 		if (git_config_color(v, key, value))
--			die("cannot parse color '%s'", value);
-+			die(_("cannot parse color '%s'"), value);
- 
+@@ -207,7 +207,7 @@ static void check_global_conv_flags_eol(const char *path, enum crlf_action crlf_
+ 		else if (conv_flags & CONV_EOL_RNDTRP_WARN)
+ 			warning(_("CRLF will be replaced by LF in %s.\n"
+ 				  "The file will have its original line"
+-				  " endings in your working directory."), path);
++				  " endings in your working directory"), path);
+ 	} else if (old_stats->lonelf && !new_stats->lonelf ) {
  		/*
- 		 * The contents of `v` now contain an ANSI escape
-@@ -485,13 +485,13 @@ static int get_colorbool(const char *var, int print)
- static void check_write(void)
- {
- 	if (!given_config_source.file && !startup_info->have_repository)
--		die("not in a git directory");
-+		die(_("not in a git directory"));
- 
- 	if (given_config_source.use_stdin)
--		die("writing to stdin is not supported");
-+		die(_("writing to stdin is not supported"));
- 
- 	if (given_config_source.blob)
--		die("writing config blobs is not supported");
-+		die(_("writing config blobs is not supported"));
+ 		 * CRLFs would be added by checkout
+@@ -217,7 +217,7 @@ static void check_global_conv_flags_eol(const char *path, enum crlf_action crlf_
+ 		else if (conv_flags & CONV_EOL_RNDTRP_WARN)
+ 			warning(_("LF will be replaced by CRLF in %s.\n"
+ 				  "The file will have its original line"
+-				  " endings in your working directory."), path);
++				  " endings in your working directory"), path);
+ 	}
  }
  
- struct urlmatch_current_candidate_value {
-@@ -599,7 +599,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+@@ -492,7 +492,7 @@ static int encode_to_worktree(const char *path, const char *src, size_t src_len,
+ 	dst = reencode_string_len(src, src_len, enc, default_encoding,
+ 				  &dst_len);
+ 	if (!dst) {
+-		error("failed to encode '%s' from %s to %s",
++		error(_("failed to encode '%s' from %s to %s"),
+ 		      path, default_encoding, enc);
+ 		return 0;
+ 	}
+@@ -670,7 +670,8 @@ static int filter_buffer_or_fd(int in, int out, void *data)
  
- 	if (use_global_config + use_system_config + use_local_config +
- 	    !!given_config_source.file + !!given_config_source.blob > 1) {
--		error("only one config file at a time");
-+		error(_("only one config file at a time"));
- 		usage_with_options(builtin_config_usage, builtin_config_options);
+ 	if (start_command(&child_process)) {
+ 		strbuf_release(&cmd);
+-		return error("cannot fork to run external filter '%s'", params->cmd);
++		return error(_("cannot fork to run external filter '%s'"),
++			     params->cmd);
  	}
  
-@@ -626,7 +626,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 			 * location; error out even if XDG_CONFIG_HOME
- 			 * is set and points at a sane location.
- 			 */
--			die("$HOME is not set");
-+			die(_("$HOME is not set"));
+ 	sigchain_push(SIGPIPE, SIG_IGN);
+@@ -689,13 +690,14 @@ static int filter_buffer_or_fd(int in, int out, void *data)
+ 	if (close(child_process.in))
+ 		write_err = 1;
+ 	if (write_err)
+-		error("cannot feed the input to external filter '%s'", params->cmd);
++		error(_("cannot feed the input to external filter '%s'"),
++		      params->cmd);
  
- 		if (access_or_warn(user_config, R_OK, 0) &&
- 		    xdg_config && !access_or_warn(xdg_config, R_OK, 0)) {
-@@ -663,12 +663,12 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 	}
+ 	sigchain_pop(SIGPIPE);
  
- 	if ((actions & (ACTION_GET_COLOR|ACTION_GET_COLORBOOL)) && type) {
--		error("--get-color and variable type are incoherent");
-+		error(_("--get-color and variable type are incoherent"));
- 		usage_with_options(builtin_config_usage, builtin_config_options);
- 	}
+ 	status = finish_command(&child_process);
+ 	if (status)
+-		error("external filter '%s' failed %d", params->cmd, status);
++		error(_("external filter '%s' failed %d"), params->cmd, status);
  
- 	if (HAS_MULTI_BITS(actions)) {
--		error("only one action at a time");
-+		error(_("only one action at a time"));
- 		usage_with_options(builtin_config_usage, builtin_config_options);
- 	}
- 	if (actions == 0)
-@@ -681,19 +681,19 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		}
- 	if (omit_values &&
- 	    !(actions == ACTION_LIST || actions == ACTION_GET_REGEXP)) {
--		error("--name-only is only applicable to --list or --get-regexp");
-+		error(_("--name-only is only applicable to --list or --get-regexp"));
- 		usage_with_options(builtin_config_usage, builtin_config_options);
- 	}
+ 	strbuf_release(&cmd);
+ 	return (write_err || status);
+@@ -730,13 +732,13 @@ static int apply_single_file_filter(const char *path, const char *src, size_t le
+ 		return 0;	/* error was already reported */
  
- 	if (show_origin && !(actions &
- 		(ACTION_GET|ACTION_GET_ALL|ACTION_GET_REGEXP|ACTION_LIST))) {
--		error("--show-origin is only applicable to --get, --get-all, "
--			  "--get-regexp, and --list.");
-+		error(_("--show-origin is only applicable to --get, --get-all, "
-+			"--get-regexp, and --list"));
- 		usage_with_options(builtin_config_usage, builtin_config_options);
+ 	if (strbuf_read(&nbuf, async.out, len) < 0) {
+-		err = error("read from external filter '%s' failed", cmd);
++		err = error(_("read from external filter '%s' failed"), cmd);
+ 	}
+ 	if (close(async.out)) {
+-		err = error("read from external filter '%s' failed", cmd);
++		err = error(_("read from external filter '%s' failed"), cmd);
+ 	}
+ 	if (finish_async(&async)) {
+-		err = error("external filter '%s' failed", cmd);
++		err = error(_("external filter '%s' failed"), cmd);
  	}
  
- 	if (default_value && !(actions & ACTION_GET)) {
--		error("--default is only applicable to --get");
-+		error(_("--default is only applicable to --get"));
- 		usage_with_options(builtin_config_usage,
- 			builtin_config_options);
+ 	if (!err) {
+@@ -790,7 +792,7 @@ static void handle_filter_error(const struct strbuf *filter_status,
+ 		 * Something went wrong with the protocol filter.
+ 		 * Force shutdown and restart if another blob requires filtering.
+ 		 */
+-		error("external filter '%s' failed", entry->subprocess.cmd);
++		error(_("external filter '%s' failed"), entry->subprocess.cmd);
+ 		subprocess_stop(&subprocess_map, &entry->subprocess);
+ 		free(entry);
  	}
-@@ -707,10 +707,10 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 					&given_config_source,
- 					&config_options) < 0) {
- 			if (given_config_source.file)
--				die_errno("unable to read config file '%s'",
-+				die_errno(_("unable to read config file '%s'"),
- 					  given_config_source.file);
- 			else
--				die("error processing config file(s)");
-+				die(_("error processing config file(s)"));
- 		}
- 	}
- 	else if (actions == ACTION_EDIT) {
-@@ -718,11 +718,11 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+@@ -838,7 +840,7 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
+ 	else if (wanted_capability & CAP_SMUDGE)
+ 		filter_type = "smudge";
+ 	else
+-		die("unexpected filter type");
++		die(_("unexpected filter type"));
  
- 		check_argc(argc, 0, 0);
- 		if (!given_config_source.file && nongit)
--			die("not in a git directory");
-+			die(_("not in a git directory"));
- 		if (given_config_source.use_stdin)
--			die("editing stdin is not supported");
-+			die(_("editing stdin is not supported"));
- 		if (given_config_source.blob)
--			die("editing blobs is not supported");
-+			die(_("editing blobs is not supported"));
- 		git_config(git_default_config, NULL);
- 		config_file = given_config_source.file ?
- 				xstrdup(given_config_source.file) :
-@@ -823,7 +823,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		if (ret < 0)
- 			return ret;
- 		if (ret == 0)
--			die("no such section: %s", argv[0]);
-+			die(_("no such section: %s"), argv[0]);
- 	}
- 	else if (actions == ACTION_REMOVE_SECTION) {
- 		int ret;
-@@ -834,7 +834,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		if (ret < 0)
- 			return ret;
- 		if (ret == 0)
--			die("no such section: %s", argv[0]);
-+			die(_("no such section: %s"), argv[0]);
- 	}
- 	else if (actions == ACTION_GET_COLOR) {
- 		check_argc(argc, 1, 2);
-diff --git a/t/t1308-config-set.sh b/t/t1308-config-set.sh
-index 3e00d1af01..d0a2727b85 100755
---- a/t/t1308-config-set.sh
-+++ b/t/t1308-config-set.sh
-@@ -233,7 +233,7 @@ test_expect_success 'check line errors for malformed values' '
+ 	sigchain_push(SIGPIPE, SIG_IGN);
  
- test_expect_success 'error on modifying repo config without repo' '
- 	nongit test_must_fail git config a.b c 2>err &&
--	grep "not in a git directory" err
-+	test_i18ngrep "not in a git directory" err
- '
+@@ -849,7 +851,7 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
  
- cmdline_config="'foo.bar=from-cmdline'"
+ 	err = strlen(path) > LARGE_PACKET_DATA_MAX - strlen("pathname=\n");
+ 	if (err) {
+-		error("path name too long for external filter");
++		error(_("path name too long for external filter"));
+ 		goto done;
+ 	}
+ 
+@@ -923,8 +925,8 @@ int async_query_available_blobs(const char *cmd, struct string_list *available_p
+ 	assert(subprocess_map_initialized);
+ 	entry = (struct cmd2process *)subprocess_find_entry(&subprocess_map, cmd);
+ 	if (!entry) {
+-		error("external filter '%s' is not available anymore although "
+-		      "not all paths have been filtered", cmd);
++		error(_("external filter '%s' is not available anymore although "
++			"not all paths have been filtered"), cmd);
+ 		return 0;
+ 	}
+ 	process = &entry->subprocess.process;
+@@ -1395,7 +1397,7 @@ int convert_to_git(const struct index_state *istate,
+ 
+ 	ret |= apply_filter(path, src, len, -1, dst, ca.drv, CAP_CLEAN, NULL);
+ 	if (!ret && ca.drv && ca.drv->required)
+-		die("%s: clean filter '%s' failed", path, ca.drv->name);
++		die(_("%s: clean filter '%s' failed"), path, ca.drv->name);
+ 
+ 	if (ret && dst) {
+ 		src = dst->buf;
+@@ -1429,7 +1431,7 @@ void convert_to_git_filter_fd(const struct index_state *istate,
+ 	assert(ca.drv->clean || ca.drv->process);
+ 
+ 	if (!apply_filter(path, NULL, 0, fd, dst, ca.drv, CAP_CLEAN, NULL))
+-		die("%s: clean filter '%s' failed", path, ca.drv->name);
++		die(_("%s: clean filter '%s' failed"), path, ca.drv->name);
+ 
+ 	encode_to_git(path, dst->buf, dst->len, dst, ca.working_tree_encoding, conv_flags);
+ 	crlf_to_git(istate, path, dst->buf, dst->len, dst, ca.crlf_action, conv_flags);
+@@ -1472,7 +1474,7 @@ static int convert_to_working_tree_internal(const char *path, const char *src,
+ 	ret_filter = apply_filter(
+ 		path, src, len, -1, dst, ca.drv, CAP_SMUDGE, dco);
+ 	if (!ret_filter && ca.drv && ca.drv->required)
+-		die("%s: smudge filter %s failed", path, ca.drv->name);
++		die(_("%s: smudge filter %s failed"), path, ca.drv->name);
+ 
+ 	return ret | ret_filter;
+ }
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index 9479a4aaab..306b862d7f 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -583,7 +583,7 @@ test_expect_success PERL 'process filter should restart after unexpected write f
+ 		git checkout --quiet --no-progress . 2>git-stderr.log &&
+ 
+ 		grep "smudge write error at" git-stderr.log &&
+-		grep "error: external filter" git-stderr.log &&
++		test_i18ngrep "error: external filter" git-stderr.log &&
+ 
+ 		cat >expected.log <<-EOF &&
+ 			START
 -- 
 2.18.0.rc0.333.g22e6ee6cdf
 
