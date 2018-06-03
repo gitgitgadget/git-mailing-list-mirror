@@ -2,124 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E2811F403
-	for <e@80x24.org>; Sun,  3 Jun 2018 14:18:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A9CBC1F403
+	for <e@80x24.org>; Sun,  3 Jun 2018 14:29:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751258AbeFCOSR (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Jun 2018 10:18:17 -0400
-Received: from titan.plasma.xg8.de ([85.10.203.189]:41054 "EHLO
-        titan.PLASMA.Xg8.DE" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751228AbeFCOSQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Jun 2018 10:18:16 -0400
-Received: from titan.PLASMA.Xg8.DE (localhost [127.0.0.1])
-        by titan.PLASMA.Xg8.DE (8.15.2/8.15.2) with ESMTPS id w53EIEGu004161
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Sun, 3 Jun 2018 16:18:14 +0200
-Received: (from uucp@localhost)
-        by titan.PLASMA.Xg8.DE (8.15.2/8.15.2/Submit) with UUCP id w53EIEBM004160;
-        Sun, 3 Jun 2018 16:18:14 +0200
-Received: from helen.PLASMA.Xg8.DE (localhost.localdomain [127.0.0.1])
-        by helen.PLASMA.Xg8.DE (8.15.2/8.15.2) with ESMTP id w53EI2qp009306;
-        Sun, 3 Jun 2018 16:18:02 +0200
-Received: (from rtc@localhost)
-        by helen.PLASMA.Xg8.DE (8.15.2/8.15.2/Submit) id w53EI1tJ009305;
-        Sun, 3 Jun 2018 16:18:01 +0200
-Date:   Sun, 3 Jun 2018 16:18:01 +0200
-From:   Peter Backes <rtc@helen.PLASMA.Xg8.DE>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: GDPR compliance best practices?
-Message-ID: <20180603141801.GA8898@helen.PLASMA.Xg8.DE>
-References: <20180417191549.GA1199@helen.PLASMA.Xg8.DE>
- <87y3hlecod.fsf@evledraar.gmail.com>
- <20180603092736.GA5510@helen.PLASMA.Xg8.DE>
- <87vab087y2.fsf@evledraar.gmail.com>
- <20180603112557.GA6564@helen.PLASMA.Xg8.DE>
- <87tvqk81qp.fsf@evledraar.gmail.com>
+        id S1751315AbeFCO3Y (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Jun 2018 10:29:24 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:51225 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751228AbeFCO3X (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Jun 2018 10:29:23 -0400
+Received: by mail-wm0-f68.google.com with SMTP id r15-v6so10808553wmc.1
+        for <git@vger.kernel.org>; Sun, 03 Jun 2018 07:29:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=/rNxL4Pil4tzfixyczGOUpC9q2qHIq+vVD+3+BzTEo8=;
+        b=kpZ/O9HZYte4zLLBEyFt9MEvo26JxLxsSo5s2Oo5YFPvMfATr0JZzMlBryh7oPEuDR
+         UoTT+cfL/WLWEx7zAuawrkLzUfyrBwcdxvwsvi8mah6PkNMJ07Xz4Bv3slXzbIsrBehf
+         nq8z64LSfw7W8G+XcpaFaj6H7RKY0gMf/dv5nSW5QiSuYPC94ZRXHDb91rqtt27foM51
+         rXdfLTUNWjJeEh97mLcJX7i2u4yy9KkNT+gQ0R2f31x/HWhlTIQvG74iFpTAIGQEHPqJ
+         MlG3lnYIOSWLllgYc45pLrJ5jWjOfdtW+2PFT06sG43bc9UjYgwqjy4bGZrq+7BvJZ/I
+         92QQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=/rNxL4Pil4tzfixyczGOUpC9q2qHIq+vVD+3+BzTEo8=;
+        b=eajLPUb26DBQBSXEoZpl4R6nrAKDyFzUp9JZ1RsLL2pr7T4EeNUMkGHfxULoBW25HQ
+         QhMd9C8Vkda3ifYYPf/WdlXZCCVg2pSVVLFvYLO81xtFt/KThtjFOCLljDTe0GF8tsno
+         oDkF9pII0tYNUYeOYsghcIcgn+uReKmNgi+Rx66udEC8rOUjxIQrNnhSx9TnrqjsWQsz
+         N/XCtidrMkLFEkqxss8DV92bMYlmiZpAWCAYhUFoETVP+9imaDgqLJKau4HyaLG35QWt
+         AGoLk1aR9M8/TPEwP1Z70zf+Gp60Tx9iqH86VYPmXxKfmy6Fpm5DYwc3CopjiKZffbkh
+         KkAg==
+X-Gm-Message-State: ALKqPwfsCHNDOMiKKqTdNIV+54n6qCRw9s9aKl3KNu3GgvHGxh8xKruD
+        YNfqTxDUF/jp5WdAFjHTAhs=
+X-Google-Smtp-Source: ADUXVKKbz+AeaejqtvNjjbCcrG2ytLe8O/olAWjW5nP5+nb8iqErgO+vchuGAH4quOEnB1hdtbCDfQ==
+X-Received: by 2002:a1c:f415:: with SMTP id z21-v6mr6598479wma.80.1528036162039;
+        Sun, 03 Jun 2018 07:29:22 -0700 (PDT)
+Received: from localhost.localdomain (x590e56c9.dyn.telefonica.de. [89.14.86.201])
+        by smtp.gmail.com with ESMTPSA id r11-v6sm3237132wrn.34.2018.06.03.07.29.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 03 Jun 2018 07:29:21 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Git Mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH] sha1-file.c: Correct $GITDIR to $GIT_DIR
+Date:   Sun,  3 Jun 2018 16:29:10 +0200
+Message-Id: <20180603142910.6211-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.18.0.rc0.207.ga6211da864
+In-Reply-To: <alpine.LFD.2.21.1806030820180.14575@localhost.localdomain>
+References: 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87tvqk81qp.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jun 03, 2018 at 02:59:26PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> I'm not trying to be selfish, I'm just trying to counter your literal
-> reading of the law with a comment of "it'll depend".
+Could you please add "in a comment" to the end of the subject line?
+So it will be immediately clear to future readers of 'git log
+--oneline' that this is not a bugfix.
+
+> Fix single misspelling of $GITDIR to correct $GIT_DIR.
 > 
-> Just like there's a law against public urination in many places, but
-> this is applied very differently to someone taking a piss in front of
-> parliament v.s. someone taking a piss in the forest on a hike, even
-> though the law itself usually makes no distinction about the two.
-
-We have huge companies using git now. This is not the tool used by a 
-few kernel hackers anymore.
-
-> In this example once you'd delete the UUID ref you don't have the UUID
-> -> author mapping anymore (and b.t.w. that could be a many to one
-> mapping).
-
-It is not relevant whether you have that mapping or not, it is enough 
-that with additional information you could obtain it. For example, say, 
-you have 5000 commits with the same UUID. Now your delete the mapping. 
-But your friend still has it on his local copy. Now your friendly 
-merely needs to tell you who is behind that UUID and instantly you can 
-associate all 5000 commits with that person again.
-
-The GDPR is very explict about this, see recital 26. It says that 
-pseudonymization is not enough, you need anonymization if you want to 
-be free from regulation.
-
-In addition, and in contrast to my proposal, your solution doesn't 
-allow verification of the author field.
-
-> I think again that this is taking too much of a literalist view. The
-> intent of that policy is to ensure that companies like Google can't just
-> close down their EU offices weasel out of compliance be saying "we're
-> just doing business from the US, it doesn't apply to us".
+> Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
 > 
-> It will not be used against anyone who's taking every reasonable
-> precaution from doing business with EU customers.
-
-I think you are underestimating the political intention behind the 
-GDPR. It has kind of an imperialist goal, to set international 
-standards, to enforce them against foreign companies and to pressure 
-other nations to establish the same standards.
-
-If I would read the GPDR in a literal sense, I would in fact come to 
-the same conclusion as you: It's about companies doing substantial 
-business in the EU. But the GDPR is carefully constructed in such a way 
-that it is hard not to be affected by the GDPR in one way or another, 
-and the obvious way to cope with that risk is to more or less obey the 
-GDPR rules even if one does not have substantial business interests in 
-the EU. 
-
-> What do you imagine that this is going to be like? That some EU citizen
-> is going to walk into a small business in South America one day, which
-> somehow is violating the GPDR, and when that business owner goes on
-> holiday to the EU they're going to get detained? Not even the US policy
-> against Cuba is anywhere remotely close to that.
-
-Well not if he's locally interacting with that business, a situation 
-which I am sure is not regulated by the GDPR.
-
-However, if a large US website accepts users from the EU and uses the 
-data gathered in conflict with the GDPR, perhaps selling it for use in 
-political campaigns, and it gets several fines for this by EU 
-authorities but ignores them and doesn't pay them, and the CEO one day 
-takes a flight to Frankfurt to continue by train to Switzerland to get 
-some cash from his bank account, then he will most likely not reach 
-Swiss territory.
-
-Best wishes
-Peter
--- 
-Peter Backes, rtc@helen.PLASMA.Xg8.DE
+> ---
+> 
+> only occurrence in entire code base that i ran across, so i figured
+> might as well fix it.
+> 
+> diff --git a/sha1-file.c b/sha1-file.c
+> index 555e780f4..695e5c627 100644
+> --- a/sha1-file.c
+> +++ b/sha1-file.c
+> @@ -610,7 +610,7 @@ void add_to_alternates_memory(const char *reference)
+>  /*
+>   * Compute the exact path an alternate is at and returns it. In case of
+>   * error NULL is returned and the human readable error is added to `err`
+> - * `path` may be relative and should point to $GITDIR.
+> + * `path` may be relative and should point to $GIT_DIR.
+>   * `err` must not be null.
+>   */
+>  char *compute_alternate_path(const char *path, struct strbuf *err)
