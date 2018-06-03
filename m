@@ -6,53 +6,53 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4CC881F403
-	for <e@80x24.org>; Sun,  3 Jun 2018 08:46:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A74F01F403
+	for <e@80x24.org>; Sun,  3 Jun 2018 08:47:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751005AbeFCIq0 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Jun 2018 04:46:26 -0400
-Received: from mail-yw0-f193.google.com ([209.85.161.193]:45880 "EHLO
-        mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750847AbeFCIqZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Jun 2018 04:46:25 -0400
-Received: by mail-yw0-f193.google.com with SMTP id v190-v6so7233790ywa.12
-        for <git@vger.kernel.org>; Sun, 03 Jun 2018 01:46:25 -0700 (PDT)
+        id S1751028AbeFCIrl (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Jun 2018 04:47:41 -0400
+Received: from mail-yb0-f194.google.com ([209.85.213.194]:39831 "EHLO
+        mail-yb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750847AbeFCIrl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Jun 2018 04:47:41 -0400
+Received: by mail-yb0-f194.google.com with SMTP id m137-v6so7792826ybm.6
+        for <git@vger.kernel.org>; Sun, 03 Jun 2018 01:47:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-transfer-encoding;
-        bh=3FM++eoyIwqPs4TPIL+0cGXLxLZGcC9ZmEFDgUAF7ng=;
-        b=PiuGFQFft2svHEl4ICLAoLKgcZarDUUs/b62eeANQISR1sqXXChpQulhw4UD8z9eKJ
-         thP/+gYFXll4GvTbr2cQ1WYdF4V5qakfa/4QI4VxbvI9R8BfbL+LRtC1if90/SKOPrhm
-         w9h8s5QSyZYdgn1vfl/whiR3rCntvGtjkT9JDscbtmMIOgROitdG7rqKocJTHNoTrgoq
-         FgO5sP1ruvSF1sp79+MywwqsXZEmb6QeC0Qtv6eGuF0xg65J8/a/rAn29QPrQcarKwW0
-         cTRQ9R12PwCgW8zro6JnsUq1yrloi39AVvmsoP1YhCJF4jqNiX9Ne/FC+f1Z71AUevQp
-         6oTg==
+        bh=sULYoVF//d5NAIoqxcmHxOxaIwcjFdlKFuXpS89yd2Q=;
+        b=GuNlB6AIXZsBiAmQJu1EKf+2a3vhUdt3kaDBSWWCdStqWyLKvMJEAytnXKJgLAnVmp
+         SKrQZyVWd+tuI8Upexj4qqOYHpQJzZR6Gg0PLsv8qqaw1NG6u3uMBxMqEH4DH952GB0r
+         P4hwDWO8/N3nbpYNiRrre4BWW7SqAOCLLCaTtNLb1Riame1jnAtawDA1yVqA7Cd2eFdC
+         DnUPO4+vtOyKWDtdmniD4lcm+RYLkk8cc5YVH7aOX5kbNhTsbtGI/NMmZXxac6pliFxf
+         7onIvcVF3P2ObCmZJHJTY3gXG+XuYS6ciDKWGxUHOl5rGtlvXooJuO6RMkJjX2YLIanP
+         Gllw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=3FM++eoyIwqPs4TPIL+0cGXLxLZGcC9ZmEFDgUAF7ng=;
-        b=te59bJ/bsvgq7skkUib08X6oDQEtoadNJfGi+/cjV0ZscuGaHXOZPhmDZu0kTKQbYH
-         XyShoWaJipxWWV5SllT83NYfuMyY4AEXDn7B52qKPB2cE9SZ/JTWpM2j+Eqs5XQL+J66
-         A41vYve6PgUuSErK2KktNi5N1p5RegiwBu9teArecVgDIFNZMRt+I5jt9doRxPmY9iLo
-         dqmAYqHS+reeJl0dX3VOkf1ZICFh3vJHYCIQn2zGs1twJT8/pV2aDTt3zUFpfBL1MZGM
-         +37Am17p2gMu4/3+n2VsC201MGgL7IPD7cQUZMB4n5AoOhm8YzCZb6Ip/48ZDhjGsfLy
-         uM5A==
-X-Gm-Message-State: ALKqPwc+9JIxYP0QnfrBg3CLkdFlzW53bbKEjZrRGTe17DvZqR1Q8tEU
-        JHJq3cbEYHKMBIOaHTS6ONeecA3RA65osC8fYy0=
-X-Google-Smtp-Source: ADUXVKIFxC04i0gj5FtgWSvqdo/1/SvLNxSghTL10ollO3H49JVsIDwk4BVvylkzQxn/a6m4HbVsVXxev9Ia/s5hIRM=
-X-Received: by 2002:a81:7b0a:: with SMTP id w10-v6mr8877791ywc.70.1528015584908;
- Sun, 03 Jun 2018 01:46:24 -0700 (PDT)
+        bh=sULYoVF//d5NAIoqxcmHxOxaIwcjFdlKFuXpS89yd2Q=;
+        b=lFi4rQ+JJK61L11DgDMtQivbyogbPcN1ZKUtSBakYWPwdMQfo3ogzv7Kl/TcfJ51n4
+         LA3rONKoF0N3MCpXeCkJfi5ILX+qjDEhoJfPTEQqfDCJKRPErV/txq5Zj2GEfd8SQ4h0
+         ZTRLG29EHyR3VpZHOaFDqOnxJvD0XB9WRPn5wD+U1Ydlmho9mqgQQvziwOIJWO8oLuRU
+         ldJ0auqg+/2CEzs3Y2RR/bY13jWJOWnrqKMI1sRIAUSRvicjZIEjnxK9+EvS3I7cV+vs
+         +eRtm34HwgCGxvIsP9WdsPnm/VwtghdWUJwIjW7f9yNSX7qVb970To0jWYsQWBnZUgID
+         w0WA==
+X-Gm-Message-State: ALKqPwcySde+NnHZo4mMRpb+wnDM48dfTSzMORFyVw5QC4O3jbJT0Ejp
+        nhH9R7pTbMFhuQI9wyccesq8+JM+fzUcHJAfcKY=
+X-Google-Smtp-Source: ADUXVKIAmm3hNdONJi9WENlrO6Vv6GZIePE7CL4PPgZcegJ5Z2ExnAza2vRo+WUEe46si+cZHv+WpVaaWvtLtH8cyIs=
+X-Received: by 2002:a25:d612:: with SMTP id n18-v6mr9144341ybg.12.1528015660403;
+ Sun, 03 Jun 2018 01:47:40 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a5b:784:0:0:0:0:0 with HTTP; Sun, 3 Jun 2018 01:46:24 -0700 (PDT)
-In-Reply-To: <20180602043241.9941-11-pclouds@gmail.com>
-References: <20180602043241.9941-1-pclouds@gmail.com> <20180602043241.9941-11-pclouds@gmail.com>
+Received: by 2002:a5b:784:0:0:0:0:0 with HTTP; Sun, 3 Jun 2018 01:47:40 -0700 (PDT)
+In-Reply-To: <20180602043241.9941-12-pclouds@gmail.com>
+References: <20180602043241.9941-1-pclouds@gmail.com> <20180602043241.9941-12-pclouds@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 3 Jun 2018 04:46:24 -0400
-X-Google-Sender-Auth: xMcsj088HGd9-3zvjTks1cWWGeU
-Message-ID: <CAPig+cRP65ioZ15RvTuyCqxYJY4wDAYtCepQ0kM1-g=q9rzueQ@mail.gmail.com>
-Subject: Re: [PATCH 10/22] convert.c: mark more strings for translation
+Date:   Sun, 3 Jun 2018 04:47:40 -0400
+X-Google-Sender-Auth: a3AzGcp14g0LMjQDaN5yjookVc4
+Message-ID: <CAPig+cSkChhUOWO-V5FgCW+u09tVoZ_giDNNk15kP=QJhEA3zw@mail.gmail.com>
+Subject: Re: [PATCH 11/22] dir.c: mark more strings for translation
 To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
         <pclouds@gmail.com>
 Cc:     Git List <git@vger.kernel.org>
@@ -68,48 +68,12 @@ On Sat, Jun 2, 2018 at 12:32 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
 > Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
 om>
 > ---
-> diff --git a/convert.c b/convert.c
-> @@ -203,11 +203,11 @@ static void check_global_conv_flags_eol(const char =
-*path, enum crlf_action crlf_
->                 if (conv_flags & CONV_EOL_RNDTRP_DIE)
-> -                       die(_("CRLF would be replaced by LF in %s."), pat=
-h);
-> +                       die(_("CRLF would be replaced by LF in %s"), path=
-);
->                 else if (conv_flags & CONV_EOL_RNDTRP_WARN)
->                         warning(_("CRLF will be replaced by LF in %s.\n"
->                                   "The file will have its original line"
-> -                                 " endings in your working directory."),=
- path);
-> +                                 " endings in your working directory"), =
-path);
-> @@ -217,7 +217,7 @@ static void check_global_conv_flags_eol(const char *p=
-ath, enum crlf_action crlf_
->                 else if (conv_flags & CONV_EOL_RNDTRP_WARN)
->                         warning(_("LF will be replaced by CRLF in %s.\n"
->                                   "The file will have its original line"
-> -                                 " endings in your working directory."),=
- path);
-> +                                 " endings in your working directory"), =
-path);
->         }
->  }
+> diff --git a/dir.c b/dir.c
+> @@ -560,7 +560,7 @@ int report_path_error(const char *ps_matched,
+> -               error("pathspec '%s' did not match any file(s) known to g=
+it.",
+> +               error(_("pathspec '%s' did not match any file(s) known to=
+ git."),
 
-For these two, perhaps:
-
-    <blah> ... replace by <blah> in %s;
-    the file will have its original line
-    endings in your working directory
-
-> @@ -492,8 +492,8 @@ static int encode_to_worktree(const char *path, const=
- char *src, size_t src_len,
->         dst =3D reencode_string_len(src, src_len, enc, default_encoding,
->                                   &dst_len);
->         if (!dst) {
-> -               error("failed to encode '%s' from %s to %s",
-> -                       path, default_encoding, enc);
-> +               error(_("failed to encode '%s' from %s to %s"),
-> +                     path, default_encoding, enc);
-
-The whitespace change on the second line fixes alignment with the
-opening '('. Okay.
+Drop the trailing period for consistency with other messages you've changed=
+.
