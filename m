@@ -7,35 +7,35 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2063C1F403
-	for <e@80x24.org>; Sun,  3 Jun 2018 06:58:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D20F1F403
+	for <e@80x24.org>; Sun,  3 Jun 2018 06:58:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751085AbeFCG6S (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Jun 2018 02:58:18 -0400
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:41278 "EHLO
+        id S1751123AbeFCG6T (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Jun 2018 02:58:19 -0400
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:41280 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750983AbeFCG6Q (ORCPT
+        by vger.kernel.org with ESMTP id S1750992AbeFCG6Q (ORCPT
         <rfc822;git@vger.kernel.org>); Sun, 3 Jun 2018 02:58:16 -0400
 Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w536w4tW027372;
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w536w6La027377;
         Sat, 2 Jun 2018 23:58:13 -0700
 Authentication-Results: palantir.com;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2jbr4js7rv-1;
+        by mx0a-00153501.pphosted.com with ESMTP id 2jbr4js7ru-1;
         Sat, 02 Jun 2018 23:58:13 -0700
 Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 78CDC228A266;
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 6F1A6228A265;
         Sat,  2 Jun 2018 23:58:13 -0700 (PDT)
 Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
-        by smtp.yojoe.local (Postfix) with ESMTP id 6FD422CDE66;
+        by smtp.yojoe.local (Postfix) with ESMTP id 660982CDE66;
         Sat,  2 Jun 2018 23:58:13 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     jrnieder@gmail.com, Elijah Newren <newren@gmail.com>
-Subject: [RFC PATCH 3/7] merge-recursive: make sure when we say we abort that we actually abort
-Date:   Sat,  2 Jun 2018 23:58:06 -0700
-Message-Id: <20180603065810.23841-4-newren@gmail.com>
+Subject: [RFC PATCH 2/7] t6044: add a testcase for index matching head, when head doesn't match HEAD
+Date:   Sat,  2 Jun 2018 23:58:05 -0700
+Message-Id: <20180603065810.23841-3-newren@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc0.49.g3c08dc0fef
 In-Reply-To: <20180603065810.23841-1-newren@gmail.com>
 References: <20180603065810.23841-1-newren@gmail.com>
@@ -53,50 +53,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In commit 65170c07d4 ("merge-recursive: avoid incorporating uncommitted
-changes in a merge", 2017-12-21), it was noted that there was a special
-case when merge-recursive didn't rely on unpack_trees() to enforce the
-index == HEAD requirement, and thus that it needed to do that enforcement
-itself.  Unfortunately, it returned the wrong exit status, signalling that
-the merge completed but had conflicts, rather than that it was aborted.
-Fix the return code, and while we're at it, change the error message to
-match what unpack_trees() would have printed.
+The `git merge-recursive` command allows the user to directly specify
+three commits to merge -- base, head, and remote.  (More than three can be
+specified in the case of multiple merge bases.)  Note that since the user
+is allowed to specify head, it need not match HEAD.
+
+Virtually every test and script in the current git.git codebase calls `git
+merge-recursive` with head=HEAD, and likely external callers do as well,
+which is why this has gone unnoticed.  There is one notable
+counter-example: git-stash.sh.  However, git-stash called `git
+merge-recursive` with an index that matches the expected merge result,
+which happens to be a currently allowed exception to the "index must match
+head" rule, so this never triggered an error previously.
+
+Since we would like to tighten up the "index must match head" rule, we
+need to make sure we are comparing to the correct head.  Add a testcase
+that demonstrates the failure when we check the wrong HEAD.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c                        | 4 ++--
- t/t6044-merge-unrelated-index-changes.sh | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ t/t6044-merge-unrelated-index-changes.sh | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index ac27abbd4c..b3deb7b182 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -3264,9 +3264,9 @@ int merge_trees(struct merge_options *o,
- 		struct strbuf sb = STRBUF_INIT;
- 
- 		if (!o->call_depth && index_has_changes(&sb)) {
--			err(o, _("Dirty index: cannot merge (dirty: %s)"),
-+			err(o, _("Your local changes to the following files would be overwritten by merge:\n  %s"),
- 			    sb.buf);
--			return 0;
-+			return -1;
- 		}
- 		output(o, 0, _("Already up to date!"));
- 		*result = head;
 diff --git a/t/t6044-merge-unrelated-index-changes.sh b/t/t6044-merge-unrelated-index-changes.sh
-index 92ec552558..3876cfa4fa 100755
+index f9c2f8179e..92ec552558 100755
 --- a/t/t6044-merge-unrelated-index-changes.sh
 +++ b/t/t6044-merge-unrelated-index-changes.sh
-@@ -116,7 +116,7 @@ test_expect_success 'recursive' '
+@@ -126,6 +126,17 @@ test_expect_failure 'recursive, when merge branch matches merge base' '
  	test_path_is_missing .git/MERGE_HEAD
  '
  
--test_expect_failure 'recursive, when merge branch matches merge base' '
-+test_expect_success 'recursive, when merge branch matches merge base' '
++test_expect_failure 'merge-recursive, when index==head but head!=HEAD' '
++	git reset --hard &&
++	git checkout C^0 &&
++
++	# Make index match B
++	git diff C B | git apply --cached &&
++	# Merge B & F, with B as "head"
++	git merge-recursive A -- B F > out &&
++	test_i18ngrep "Already up to date" out
++'
++
+ test_expect_success 'octopus, unrelated file touched' '
  	git reset --hard &&
  	git checkout B^0 &&
- 
 -- 
 2.18.0.rc0.49.g3c08dc0fef
 
