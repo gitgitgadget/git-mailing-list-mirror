@@ -2,94 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A9CBC1F403
-	for <e@80x24.org>; Sun,  3 Jun 2018 14:29:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 815801F403
+	for <e@80x24.org>; Sun,  3 Jun 2018 14:35:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751315AbeFCO3Y (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Jun 2018 10:29:24 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:51225 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751228AbeFCO3X (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Jun 2018 10:29:23 -0400
-Received: by mail-wm0-f68.google.com with SMTP id r15-v6so10808553wmc.1
-        for <git@vger.kernel.org>; Sun, 03 Jun 2018 07:29:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=/rNxL4Pil4tzfixyczGOUpC9q2qHIq+vVD+3+BzTEo8=;
-        b=kpZ/O9HZYte4zLLBEyFt9MEvo26JxLxsSo5s2Oo5YFPvMfATr0JZzMlBryh7oPEuDR
-         UoTT+cfL/WLWEx7zAuawrkLzUfyrBwcdxvwsvi8mah6PkNMJ07Xz4Bv3slXzbIsrBehf
-         nq8z64LSfw7W8G+XcpaFaj6H7RKY0gMf/dv5nSW5QiSuYPC94ZRXHDb91rqtt27foM51
-         rXdfLTUNWjJeEh97mLcJX7i2u4yy9KkNT+gQ0R2f31x/HWhlTIQvG74iFpTAIGQEHPqJ
-         MlG3lnYIOSWLllgYc45pLrJ5jWjOfdtW+2PFT06sG43bc9UjYgwqjy4bGZrq+7BvJZ/I
-         92QQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=/rNxL4Pil4tzfixyczGOUpC9q2qHIq+vVD+3+BzTEo8=;
-        b=eajLPUb26DBQBSXEoZpl4R6nrAKDyFzUp9JZ1RsLL2pr7T4EeNUMkGHfxULoBW25HQ
-         QhMd9C8Vkda3ifYYPf/WdlXZCCVg2pSVVLFvYLO81xtFt/KThtjFOCLljDTe0GF8tsno
-         oDkF9pII0tYNUYeOYsghcIcgn+uReKmNgi+Rx66udEC8rOUjxIQrNnhSx9TnrqjsWQsz
-         N/XCtidrMkLFEkqxss8DV92bMYlmiZpAWCAYhUFoETVP+9imaDgqLJKau4HyaLG35QWt
-         AGoLk1aR9M8/TPEwP1Z70zf+Gp60Tx9iqH86VYPmXxKfmy6Fpm5DYwc3CopjiKZffbkh
-         KkAg==
-X-Gm-Message-State: ALKqPwfsCHNDOMiKKqTdNIV+54n6qCRw9s9aKl3KNu3GgvHGxh8xKruD
-        YNfqTxDUF/jp5WdAFjHTAhs=
-X-Google-Smtp-Source: ADUXVKKbz+AeaejqtvNjjbCcrG2ytLe8O/olAWjW5nP5+nb8iqErgO+vchuGAH4quOEnB1hdtbCDfQ==
-X-Received: by 2002:a1c:f415:: with SMTP id z21-v6mr6598479wma.80.1528036162039;
-        Sun, 03 Jun 2018 07:29:22 -0700 (PDT)
-Received: from localhost.localdomain (x590e56c9.dyn.telefonica.de. [89.14.86.201])
-        by smtp.gmail.com with ESMTPSA id r11-v6sm3237132wrn.34.2018.06.03.07.29.19
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 03 Jun 2018 07:29:21 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Git Mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH] sha1-file.c: Correct $GITDIR to $GIT_DIR
-Date:   Sun,  3 Jun 2018 16:29:10 +0200
-Message-Id: <20180603142910.6211-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.18.0.rc0.207.ga6211da864
-In-Reply-To: <alpine.LFD.2.21.1806030820180.14575@localhost.localdomain>
-References: 
+        id S1751393AbeFCOe7 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Jun 2018 10:34:59 -0400
+Received: from cpanel4.indieserve.net ([199.212.143.9]:42532 "EHLO
+        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751228AbeFCOe6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Jun 2018 10:34:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
+        To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=0lU/IL9pl0lLplxEqQAoBHEmPLJ3EzbJBKl1kqL5Ktc=; b=0Fn2bekcckrzMfGj+/dOpg5Rs9
+        YHUnmxT35AL9z5bvKGtLuagL3Bh6uhPvzE0+ZA0ExBb3QWrh1DxYRlaZbtLEuZ1IH5zSQ513Y4Eqo
+        s48TlCBfdfVhiZEFlMqxr19AiLW34RI12nsYJsgmhpnZ0aFHOpZM6nySDEsiEXmKpSmVXxBo+Ux7C
+        H/4bswU6k5HkzIIr3nOaR5u6ZeLHoXer1Zz7Y9y2Adz/8JGD7kfKVPt2Zran9L+2dwXrBp4ES2J0S
+        2hk0s3Yqr1OCnl1lsnNAIIMyUF+DnAg3Dr+2Weju5K7YaG7SVLsW3jteDIunV7duzaXB7cpgMRsVN
+        9n+uURHg==;
+Received: from cpeac202e043973-cmac202e043970.cpe.net.cable.rogers.com ([174.112.22.87]:60966 helo=localhost.localdomain)
+        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1fPU5v-005A2Q-TE
+        for git@vger.kernel.org; Sun, 03 Jun 2018 10:34:57 -0400
+Date:   Sun, 3 Jun 2018 10:32:50 -0400 (EDT)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Git Mailing list <git@vger.kernel.org>
+Subject: [PATCH v2] sha1-file.c: correct $GITDIR to $GIT_DIR in a comment
+Message-ID: <alpine.LFD.2.21.1806031030570.23993@localhost.localdomain>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-OutGoing-Spam-Status: No, score=-0.2
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Could you please add "in a comment" to the end of the subject line?
-So it will be immediately clear to future readers of 'git log
---oneline' that this is not a bugfix.
+Fix single misspelling of $GITDIR to correct $GIT_DIR in a comment.
 
-> Fix single misspelling of $GITDIR to correct $GIT_DIR.
-> 
-> Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
-> 
-> ---
-> 
-> only occurrence in entire code base that i ran across, so i figured
-> might as well fix it.
-> 
-> diff --git a/sha1-file.c b/sha1-file.c
-> index 555e780f4..695e5c627 100644
-> --- a/sha1-file.c
-> +++ b/sha1-file.c
-> @@ -610,7 +610,7 @@ void add_to_alternates_memory(const char *reference)
->  /*
->   * Compute the exact path an alternate is at and returns it. In case of
->   * error NULL is returned and the human readable error is added to `err`
-> - * `path` may be relative and should point to $GITDIR.
-> + * `path` may be relative and should point to $GIT_DIR.
->   * `err` must not be null.
->   */
->  char *compute_alternate_path(const char *path, struct strbuf *err)
+Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
+
+---
+
+  updated patch to clarify that the misspelling is only in a comment.
+
+diff --git a/sha1-file.c b/sha1-file.c
+index 555e780f4..695e5c627 100644
+--- a/sha1-file.c
++++ b/sha1-file.c
+@@ -610,7 +610,7 @@ void add_to_alternates_memory(const char *reference)
+ /*
+  * Compute the exact path an alternate is at and returns it. In case of
+  * error NULL is returned and the human readable error is added to `err`
+- * `path` may be relative and should point to $GITDIR.
++ * `path` may be relative and should point to $GIT_DIR.
+  * `err` must not be null.
+  */
+ char *compute_alternate_path(const char *path, struct strbuf *err)
+
+rday
+
+-- 
+
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                  http://crashcourse.ca/dokuwiki
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
