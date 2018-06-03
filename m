@@ -2,42 +2,43 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D61901F403
-	for <e@80x24.org>; Sun,  3 Jun 2018 20:52:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 84BF51F403
+	for <e@80x24.org>; Sun,  3 Jun 2018 21:03:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751210AbeFCUwy (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Jun 2018 16:52:54 -0400
-Received: from titan.plasma.xg8.de ([85.10.203.189]:41110 "EHLO
-        titan.PLASMA.Xg8.DE" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751057AbeFCUwx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Jun 2018 16:52:53 -0400
-Received: from titan.PLASMA.Xg8.DE (localhost [127.0.0.1])
-        by titan.PLASMA.Xg8.DE (8.15.2/8.15.2) with ESMTPS id w53KqmTp005335
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Sun, 3 Jun 2018 22:52:48 +0200
-Received: (from uucp@localhost)
-        by titan.PLASMA.Xg8.DE (8.15.2/8.15.2/Submit) with UUCP id w53KqmqD005334;
-        Sun, 3 Jun 2018 22:52:48 +0200
-Received: from helen.PLASMA.Xg8.DE (localhost.localdomain [127.0.0.1])
-        by helen.PLASMA.Xg8.DE (8.15.2/8.15.2) with ESMTP id w53KqY5i013548;
-        Sun, 3 Jun 2018 22:52:34 +0200
-Received: (from rtc@localhost)
-        by helen.PLASMA.Xg8.DE (8.15.2/8.15.2/Submit) id w53KqXRH013547;
-        Sun, 3 Jun 2018 22:52:33 +0200
-Date:   Sun, 3 Jun 2018 22:52:33 +0200
-From:   Peter Backes <rtc@helen.PLASMA.Xg8.DE>
-To:     "Theodore Y. Ts'o" <tytso@mit.edu>
+        id S1751183AbeFCVDs (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Jun 2018 17:03:48 -0400
+Received: from imap.thunk.org ([74.207.234.97]:58994 "EHLO imap.thunk.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751123AbeFCVDr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Jun 2018 17:03:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org;
+         s=ef5046eb; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
+        Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=3/VNW5xq2gFQpQSaA+psPa7IwAVICTtW+qIcZ8qLwRI=; b=ozGSm1SwQe/43sl/UsQqlhFaLM
+        w9GEwbnZoXf6QHPY2WLePX4Bnz/xmYTUzQGJeKa2HKtcYx0gauA+vlvC1sM5bZgoSmp1KUZcSEVLp
+        83FoI1YbCgV+YOvlBs9OyYvy2aCMAspYYx3Fen+fB1L3Xu0HHAWoJPUoxpC5Wm+FlNPs=;
+Received: from root (helo=callcc.thunk.org)
+        by imap.thunk.org with local-esmtp (Exim 4.89)
+        (envelope-from <tytso@thunk.org>)
+        id 1fPaAD-0006FB-9C; Sun, 03 Jun 2018 21:03:45 +0000
+Received: by callcc.thunk.org (Postfix, from userid 15806)
+        id 3AF277A60A6; Sun,  3 Jun 2018 17:03:44 -0400 (EDT)
+Date:   Sun, 3 Jun 2018 17:03:44 -0400
+From:   "Theodore Y. Ts'o" <tytso@mit.edu>
+To:     Peter Backes <rtc@helen.PLASMA.Xg8.DE>
 Cc:     Philip Oakley <philipoakley@iee.org>,
         =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         Git Mailing List <git@vger.kernel.org>
 Subject: Re: GDPR compliance best practices?
-Message-ID: <20180603205233.GA13451@helen.PLASMA.Xg8.DE>
-References: <87vab087y2.fsf@evledraar.gmail.com>
- <20180603112557.GA6564@helen.PLASMA.Xg8.DE>
+Message-ID: <20180603210344.GF1750@thunk.org>
+References: <20180603112557.GA6564@helen.PLASMA.Xg8.DE>
  <87tvqk81qp.fsf@evledraar.gmail.com>
  <20180603141801.GA8898@helen.PLASMA.Xg8.DE>
  <6BE308009FFA4CCDB5B3B47C2AC53E20@PhilipOakley>
@@ -46,42 +47,33 @@ References: <87vab087y2.fsf@evledraar.gmail.com>
  <20180603191107.GA12182@helen.PLASMA.Xg8.DE>
  <20180603192417.GA12416@helen.PLASMA.Xg8.DE>
  <20180603200739.GC1750@thunk.org>
+ <20180603205233.GA13451@helen.PLASMA.Xg8.DE>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20180603200739.GC1750@thunk.org>
-User-Agent: Mutt/1.9.1 (2017-09-22)
+In-Reply-To: <20180603205233.GA13451@helen.PLASMA.Xg8.DE>
+User-Agent: Mutt/1.10.0 (2018-05-17)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jun 03, 2018 at 04:07:39PM -0400, Theodore Y. Ts'o wrote:
-> Why don't you try to implement your proposal then, and then benchmark
-> it.  After you find out how much of a performance disaster it's going
-> to be, especially for large git repos, we can discuss who is being
-> tyrannical.
+On Sun, Jun 03, 2018 at 10:52:33PM +02h00, hPeter Backes wrote:
+> But I will take your message as saying you at least don't see any 
+> obvious criticism leading to complete rejection of the approach.
 
-See, Ted, but I have this other hobby project with git stash preserving 
-timestamps, which is 90% done but not yet finished. I am a very busy 
-person. I might implement it but it's not the topmost priority. Thus, 
-first I want to discuss to not waste too much time implementing 
-something that's then rejected by valid criticism while that criticms 
-could have been raised beforehand. Perhaps I can convince my employer 
-to work on it on their account. But there's so much to do at the moment.
+If you don't think a potential 2x -- 10x performance hit isn't a
+blocking factor --- sure, go ahead and try implementing it.  And good
+luck to you.  And this is not a guarantee that it won't get rejected.
+I certainly don't have the power to make that guarantee.
 
-I have a PhD, about very complex things like static program analysis by 
-abstract interpretation. I love hacking very much but I can mostly only 
-do it as a hobby because humanity is better served doing the complex 
-things that not every hacker can do.
+If you don't have time to implement, why do you think it's fair to
+inflict on everyone else the request for time to do a design review
+for something for which the need hasn't even been established?
 
-I know I am being whiny but that's how it is.
+Regards,
 
-But I will take your message as saying you at least don't see any 
-obvious criticism leading to complete rejection of the approach.
-
-Best wishes
-Peter
-
--- 
-Peter Backes, rtc@helen.PLASMA.Xg8.DE
+	      	    	     	    	 - Ted
