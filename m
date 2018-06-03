@@ -2,123 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E83131F403
-	for <e@80x24.org>; Sun,  3 Jun 2018 17:13:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 68B921F403
+	for <e@80x24.org>; Sun,  3 Jun 2018 17:34:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751342AbeFCRNR (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Jun 2018 13:13:17 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:34301 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750996AbeFCRNP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Jun 2018 13:13:15 -0400
-Received: by mail-pg0-f68.google.com with SMTP id k2-v6so13376606pgc.1
-        for <git@vger.kernel.org>; Sun, 03 Jun 2018 10:13:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=TTY8w5Q/ZAlbAuhcpHXA+jOjFdmNTd7wCNiy8YCXP7U=;
-        b=E5wls4rKCdcNApBPE4ekssgUuGfr/sHiJ+976EddCn3NQY1AIqLmccQl1dyohvFzdw
-         7huT0GYFjtrWkM4PlpFoqJ6Le9xGL+QsHWGnnB8VhuIhUeOzsXAWMqDp8ChbZe6Yf/6A
-         TW9TpqRNozO2AHU9u+tgjebd8JpKw/IYW3x1p9kKiGw0Mns+hehwFg3CjagCSycFhjFN
-         xlz7iy13FcXsbujY7Xf2fo1Z99qRZN0Jjy1zzGyNXK2JKMTbSKRa98oAO6kFMzXFWJto
-         raG2/F1XVUfhfo6nMCEyVL/ZeJrgqsghPC/BtvX+24rUTsqwsvfMfL3ASqQ3HbeXh5rG
-         MoEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=TTY8w5Q/ZAlbAuhcpHXA+jOjFdmNTd7wCNiy8YCXP7U=;
-        b=Rv3V8LJqt0/S/TdFCwQco3VVVuKhn/qRQrJtZNj5L/uCnFc2KldpdMIizPxHltjU2l
-         QAiVFThEOKrURxnXUg/qKq+fElZDEdrwH+wi73iYE096Qw97Yyr+5Ix67H4U1Y9AggGM
-         xsZ8zpSfpoDboBIC65CULF+Tx1Mt8RUR5O+PLZhopSBDjeuHqAZ3MFBHTEHqAI3NjbAB
-         EerQsOEZlVMYfOqrtxZ0GPqOO/SepyhZ+LhUNxrYaBjLz++L7a9Wj/5Tp9lzzWDypYcE
-         0XbgaT2o1BN5I5XHfcHFeHoYNuUb2q6oK9qfFOCVGz2wlQOeISAyC6dF2v2EOj2D6gTT
-         OSgQ==
-X-Gm-Message-State: ALKqPwflrm1XIh19cIyyG+qaVfhgcOHvBhxsDY80+s42J9KHwLTdMO2Z
-        hcagZH3snJJ3tZt7DXAzW3HeE2qc5VTmSzVgSiHFiP/c
-X-Google-Smtp-Source: ADUXVKIfpirvGp+1jN+r3D0+f6/3mPA0IJBq/OXkpoTwmNhLvqD7ZLb6bzhnNU81GEml5vSC5P98r2EyuujmX+64c8s=
-X-Received: by 2002:a62:da59:: with SMTP id w25-v6mr13625182pfl.161.1528045995520;
- Sun, 03 Jun 2018 10:13:15 -0700 (PDT)
+        id S1750996AbeFCRe0 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Jun 2018 13:34:26 -0400
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:36880 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750791AbeFCRe0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Jun 2018 13:34:26 -0400
+Received: from PhilipOakley ([92.29.14.162])
+        by smtp.talktalk.net with SMTP
+        id PWtSfuvxRpXFjPWtbfzJRg; Sun, 03 Jun 2018 18:34:24 +0100
+X-Originating-IP: [92.29.14.162]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=Ob228CbY c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
+ a=NXc+vVEgz70gitWznrz3ig==:17 a=8nJEP1OIZ-IA:10 a=pGLkceISAAAA:8
+ a=anyJmfQTAAAA:8 a=ZZAyCCvrgUPzNPYAjKEA:9 a=wPNLvfGTeEIA:10
+ a=YJ_ntbLOlx1v6PCnmBeL:22
+Message-ID: <CE0F075DBC5A41FE87088A8E6B754D32@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Yubin Ruan" <ablacktshirt@gmail.com>,
+        "Git List" <git@vger.kernel.org>
+Cc:     "Geekaholic" <geekaholiclin@gmail.com>
+References: <20180603005834.rwl5mx7llrv767xn@HP>
+Subject: Re: git glob pattern in .gitignore and git command
+Date:   Sun, 3 Jun 2018 18:34:09 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Received: by 2002:a17:90a:760e:0:0:0:0 with HTTP; Sun, 3 Jun 2018 10:13:14
- -0700 (PDT)
-In-Reply-To: <20180516225823.235426-6-bmwill@google.com>
-References: <20180514215626.164960-1-bmwill@google.com> <20180516225823.235426-1-bmwill@google.com>
- <20180516225823.235426-6-bmwill@google.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sun, 3 Jun 2018 19:13:14 +0200
-Message-ID: <CAN0heSr6dPa+--Mut0+3Zgy-mWF0d2762vKU=d08CKhR8BnKmA@mail.gmail.com>
-Subject: Re: [PATCH v2 05/36] refspec: convert valid_fetch_refspec to use parse_refspec
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Antivirus: AVG (VPS 180603-4, 03/06/2018), Outbound message
+X-Antivirus-Status: Clean
+X-CMAE-Envelope: MS4wfGpOCQCWWpEFdzItXk7QkdaJ1/GRD9VKp+PICgQ5vAoDihKRqq7EQZSEqgHBykJi5lB8+uWLn25vucExkYM20k+UHpKhpI0NWWAJE4Mx2JpS7PnW91rR
+ ImL/13/qqJooFzXp0A2QXsiRssnttb3xJU33ZYdwJtxwwuO4V4NDu2WJ/ybacb/IgmO1L0bc34WbB2ASthpTdUPO3AixnZRD3aqgW/27Al7n2g5WJjh+jPvp
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Brandon,
+Hi Yubun,
 
-On 17 May 2018 at 00:57, Brandon Williams <bmwill@google.com> wrote:
-> Convert 'valid_fetch_refspec()' to use the new 'parse_refspec()'
-> function to only parse a single refspec and eliminate an allocation.
+From: "Yubin Ruan" <ablacktshirt@gmail.com>
+> To ignore all .js file under a directory `lib', I can use "lib/**/js" to
+> match
+> them. But when using git command such as "git add", using "git add
+> lib/\*.js"
+> is sufficient. Why is this difference in glob mode?
 >
-> Signed-off-by: Brandon Williams <bmwill@google.com>
-> ---
->  refspec.c | 17 ++++++++---------
->  refspec.h |  3 ++-
->  2 files changed, 10 insertions(+), 10 deletions(-)
+> I have heard that there are many different glob mode out there (e.g., bash
+> has
+> many different glob mode). So, which classes of glob mode does these two
+> belong to? Do they have a name?
 >
-> diff --git a/refspec.c b/refspec.c
-> index af9d0d4b3..ab37b5ba1 100644
-> --- a/refspec.c
-> +++ b/refspec.c
-> @@ -146,15 +146,6 @@ static struct refspec_item *parse_refspec_internal(int nr_refspec, const char **
->         die("Invalid refspec '%s'", refspec[i]);
->  }
->
-> -int valid_fetch_refspec(const char *fetch_refspec_str)
-> -{
-> -       struct refspec_item *refspec;
-> -
-> -       refspec = parse_refspec_internal(1, &fetch_refspec_str, 1, 1);
-> -       free_refspec(1, refspec);
-> -       return !!refspec;
-> -}
-> -
->  struct refspec_item *parse_fetch_refspec(int nr_refspec, const char **refspec)
->  {
->         return parse_refspec_internal(nr_refspec, refspec, 1, 0);
-> @@ -242,3 +233,11 @@ void refspec_clear(struct refspec *rs)
->
->         rs->fetch = 0;
->  }
-> +
-> +int valid_fetch_refspec(const char *fetch_refspec_str)
-> +{
-> +       struct refspec_item refspec;
-> +       int ret = parse_refspec(&refspec, fetch_refspec_str, REFSPEC_FETCH);
-> +       refspec_item_clear(&refspec);
-> +       return ret;
-> +}
 
-My compiler warned about this function. The `dst` and `src` pointers
-will equal some random data on the stack, then they may or may not be
-assigned to, then we will call `free()` on them.
+Is this a question about `git add` being able to add a file that is marked
+as being ignored in the .gitignore file? [Yes it can.]
 
-At least I *think* that we "may or may not" assign to them. I don't have
-much or any time to really dig into this right now unfortunately.
+Or, is this simply about the many different globbing capabilities of one's
+shell, and of Git?
 
-I suppose this could use a REFSPEC_ITEM_INIT, or a memset inside
-`parse_refspec()`, but I am very unfamiliar with this code.
+The double asterix (star) is specific/local to Git. It is described in the
+various commands that use it, especially the gitignore man page `git help
+ignore` or  https://git-scm.com/docs/gitignore.
+"Two consecutive asterisks ("**") in patterns matched against full pathname
+may have special meaning: ... "
 
-Martin
+The single asterix does have two modes depending on how you quote it. It is
+described in the command line interface (cli) man page ` git help cli` or
+https://git-scm.com/docs/gitcli.
+"Many commands allow wildcards in paths, but you need to protect them from
+getting globbed by the shell. These two mean different things: ... "
+
+A common proper name for these asterix style characters is a "wildcards".
+Try 'bash wildcards' or linux wildcards' in your favourite search engine.
+
+--
+Philip
+
