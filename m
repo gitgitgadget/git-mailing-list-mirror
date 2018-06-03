@@ -2,139 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F43B1F403
-	for <e@80x24.org>; Sun,  3 Jun 2018 10:45:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 167D41F403
+	for <e@80x24.org>; Sun,  3 Jun 2018 11:26:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751217AbeFCKp3 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Jun 2018 06:45:29 -0400
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:39045 "EHLO
-        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751040AbeFCKp2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Jun 2018 06:45:28 -0400
-Received: by mail-wm0-f46.google.com with SMTP id p11-v6so9005454wmc.4
-        for <git@vger.kernel.org>; Sun, 03 Jun 2018 03:45:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=kcW6MVRyQKUAUFWe7B1STP4jfJLHESqnUFh5yqnGZc0=;
-        b=RSwDb41B6kJVAFjCzsQQXdSvnwsPrlqnb+um+yX+LnU//BHXNjh3YRilDKWdEvVBSN
-         g5tViRDKYs52/o4b7wisbu6Q93cmL0f8bmHgfrZEmmVoFV4K5yjEH9snqSHDj0JDFq2n
-         xu6IE+VJTGyie7ZZ/yL26h8f+Hqqy9B/OQ1Vjo1JWRj8dHQUOUrbHbkbJUXLqAGYqoF9
-         NWH3JmtIspC4DPyWc2KgMs31FymTNbcmyFX7lVKQfg46f23bStaCKElvo/AUTMhYrIAG
-         UuqkcS/cqTQQ6nD/NVwPbb96eDRUKcOMlTWYZX3nycwyeQSpKBQvIEZ82+kieUWN1H4o
-         tMWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=kcW6MVRyQKUAUFWe7B1STP4jfJLHESqnUFh5yqnGZc0=;
-        b=NjBSh0vTMkVuqqUKcle9nJRKzXXzW48/LLy2AhsyQF+jpMWkgXeX8gtGSEmYOJmzm+
-         SuoJfSS20TbcWuvXux9iRAYphgASe2lAiNeaGXBLdaN64nhvHM0r/oj7DoFv/Vouxqah
-         6gVVET0vGyfsFgr6kEmAxtqIjLh5ORRXRfNkwrOO3tROFH+vfvu9411xnsTzkCREZkJY
-         EqnxVIFltSW7JBGlyEKc/QJgiTEL3OwRWqoEMSwv+DB38iWzmWSO2/IiHuDRlOH+8p7s
-         sqyu1GjsYhxTPf0f/LItapaFLYA3BgxqxwbaJ35vK4W1hUMBkBlHM1dRm4a/mmAjqTC1
-         6SbQ==
-X-Gm-Message-State: ALKqPwdcWTtgfwou/7K6+/KZZ9TsaGYkD/FmQYDtY0ySCEYIpRkb/kbI
-        zb8p6g0hVDFwAlXRq3lYkm8PwAIo
-X-Google-Smtp-Source: ADUXVKK4B+u1X9sEtmKLsHVlolnD8e3XoRLkD2JPWmZAnBcxKB9lpUax60FylRvj2Bi+uU6bIO8wMA==
-X-Received: by 2002:a50:d59d:: with SMTP id v29-v6mr19717475edi.167.1528022727266;
-        Sun, 03 Jun 2018 03:45:27 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id e56-v6sm14330369edb.31.2018.06.03.03.45.25
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 03 Jun 2018 03:45:26 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Peter Backes <rtc@helen.PLASMA.Xg8.DE>
+        id S1751048AbeFCL0M (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Jun 2018 07:26:12 -0400
+Received: from titan.plasma.xg8.de ([85.10.203.189]:41036 "EHLO
+        titan.PLASMA.Xg8.DE" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750847AbeFCL0M (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Jun 2018 07:26:12 -0400
+Received: from titan.PLASMA.Xg8.DE (localhost [127.0.0.1])
+        by titan.PLASMA.Xg8.DE (8.15.2/8.15.2) with ESMTPS id w53BQ97a003671
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Sun, 3 Jun 2018 13:26:09 +0200
+Received: (from uucp@localhost)
+        by titan.PLASMA.Xg8.DE (8.15.2/8.15.2/Submit) with UUCP id w53BQ9eV003670;
+        Sun, 3 Jun 2018 13:26:09 +0200
+Received: from helen.PLASMA.Xg8.DE (localhost.localdomain [127.0.0.1])
+        by helen.PLASMA.Xg8.DE (8.15.2/8.15.2) with ESMTP id w53BPvF5006965;
+        Sun, 3 Jun 2018 13:25:57 +0200
+Received: (from rtc@localhost)
+        by helen.PLASMA.Xg8.DE (8.15.2/8.15.2/Submit) id w53BPv1r006964;
+        Sun, 3 Jun 2018 13:25:57 +0200
+Date:   Sun, 3 Jun 2018 13:25:57 +0200
+From:   Peter Backes <rtc@helen.PLASMA.Xg8.DE>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>
 Subject: Re: GDPR compliance best practices?
-References: <20180417191549.GA1199@helen.PLASMA.Xg8.DE> <87y3hlecod.fsf@evledraar.gmail.com> <20180603092736.GA5510@helen.PLASMA.Xg8.DE>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180603092736.GA5510@helen.PLASMA.Xg8.DE>
-Date:   Sun, 03 Jun 2018 12:45:25 +0200
-Message-ID: <87vab087y2.fsf@evledraar.gmail.com>
+Message-ID: <20180603112557.GA6564@helen.PLASMA.Xg8.DE>
+References: <20180417191549.GA1199@helen.PLASMA.Xg8.DE>
+ <87y3hlecod.fsf@evledraar.gmail.com>
+ <20180603092736.GA5510@helen.PLASMA.Xg8.DE>
+ <87vab087y2.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87vab087y2.fsf@evledraar.gmail.com>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, Jun 03, 2018 at 12:45:25PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> protection". I.e. regulators / prosecutors are much likely to go after
+> some advertising company than some project using a Git repo.
 
-On Sun, Jun 03 2018, Peter Backes wrote:
+Well, it is indeed rather unlikely that one particular git repo project 
+will be targeted, but I guess it is basically certain that at least 
+some of them will be.
 
-> Unfortunatly this important topic of GDPR compliance has not seen much
-> interest.
+It is the same as a lottery, it's very unlikely you win the jackpot, 
+yet someone wins it every few months. We should care about the entire 
+community, not be too selfish.
 
-I don't think you can infer that there's not much interest, but maybe
-people just don't have anything to say about it.
+> Since the Author is free-form this sort of thing doesn't need to be part
+> of the git data format. You can just generate a UUID like
+> "5c679eda-b4e5-4f35-b691-8e13862d4f79" and then set user.name to
+> "refval:5c679eda-b4e5-4f35-b691-8e13862d4f79" and user.email to
+> "refval:5c679eda-b4e5-4f35-b691-8e13862d4f79".
 
-There's a lot of discussions about this that I've seen, but what they
-all have in common is that nobody really knows. Just like nobody really
-knew what the "cookie law" would be like.
+Well, this is merely pseudonymization, not anonymization. Note that the 
+UUID, innocent as it may look, is not in any way less "personal data" 
+than the author string itself. Your proposal would thus not actually 
+solve the problem, only slightly transform it. Only when you truly 
+anonymize (see my proposal about one way to to it), you can completely 
+evade the GDPR.
 
-So I think all of us are just waiting to see.
+> Sites that are paranoid about the GDPR could have a pre-receive hook
+> rejecting any pushes from EU customers unless their commits were in this
+> format.
 
-I took the bite and tried to paraphrase some stuff I've read about it,
-but as you pointed out in 20180417232504.GA4626@helen.PLASMA.Xg8.DE I
-incorrectly surmised some stuff, although I very much suspect that *in
-practice* the GDPR is going to be more about "consumer
-protection". I.e. regulators / prosecutors are much likely to go after
-some advertising company than some project using a Git repo.
+This won't work either. The GDPR makes each data processor directly 
+responsible in relation to the data subject. So it does not matter at 
+all who is pushing, it matters who is in the author field of the 
+commits that were pushed. And since you don't have any information 
+about whether those authors are residing within the EU or not, you have 
+to assume they are and you have to obey the GDPR. Even if you are 
+outside the EU and do not have any subsidiaries within the EU, the GDPR 
+sill applies as long as you are processing personal data of EU citizen. 
+Perhaps the authorities in your country will refuse to obey letters of 
+request if the EU authorities try to enforce the GDPR on an 
+international scope, but if you have a record of GDPR violation and you 
+ever set foot on EU territory, you are fair game.
 
-Just like nobody's going after some local computer club's internal-only
-website because it sets cookies without asking, but they might go after
-Facebook for doing the same.
+> Instead I'll have a daily UUID issued from a government API
 
-> [...]
-> In course of this, anonymization could also be added. My idea would be
-> as follows:
->
-> Do not hash anything directly to obtain the commit ID. Instead, hash a
-> list of hashes of [$random_number, $information] pairs. $information
-> could be an author id, a commit date, a comment, or anything else. Then
-> store the commit id, the list of hashes, and the list of pairs to form
-> the commit.
->
-> If someone requests erasure, simply empty the corresponding pair in the
-> list. All that would be left would be the hash of the pair, which is
-> completely anonymous (not more useful than a random number) and thus
-> not covered by the GDPR. The history could still be completely
-> verified, and when displaying the log, the erased entry could be
-> displayed as "<<ERASED>>".
->
-> What do you think about this?
+Heaven forbid. ;) There is an old German proverb, warning that even 
+humorous trolling might be dangerous: "Man soll den Teufel nicht an die 
+Wand malen!" ;)
 
-Since the Author is free-form this sort of thing doesn't need to be part
-of the git data format. You can just generate a UUID like
-"5c679eda-b4e5-4f35-b691-8e13862d4f79" and then set user.name to
-"refval:5c679eda-b4e5-4f35-b691-8e13862d4f79" and user.email to
-"refval:5c679eda-b4e5-4f35-b691-8e13862d4f79".
+Best wishes
+Peter
 
-Then you'd create a ref on the server like
-refs/refval/5c679eda-b4e5-4f35-b691-8e13862d4f79 containing the real
-"$user <$email>". If you then wanted to erase that field you'd just
-delete the ref, and it would be much easier to teach stuff that renders
-the likes of git-log to lookup these refs than changing the data format.
-
-Sites that are paranoid about the GDPR could have a pre-receive hook
-rejecting any pushes from EU customers unless their commits were in this
-format.
-
-Perhaps some variation of this is where the GDPR v2 will go. It'll be an
-"obligation to be forgotten", and I won't be allowed to use my own name
-anymore. Instead I'll have a daily UUID issued from a government API to
-use on various forms, and the only way for anyone to resolve that will
-be going through a webservice that'll reject UUID lookups older than N
-months, caching those requests will be met with the death penalty. We'll
-all be free at last.
-
-Okey, that last paragraph is just trolling, but I think that refval: ->
-ref convention is something worth considering if things *really* go in
-this direction.
+-- 
+Peter Backes, rtc@helen.PLASMA.Xg8.DE
