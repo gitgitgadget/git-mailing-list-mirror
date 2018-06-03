@@ -2,123 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 456BA1F403
-	for <e@80x24.org>; Sun,  3 Jun 2018 14:36:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 843C91F403
+	for <e@80x24.org>; Sun,  3 Jun 2018 15:01:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751321AbeFCOg4 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Jun 2018 10:36:56 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:33533 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751228AbeFCOgz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Jun 2018 10:36:55 -0400
-Received: by mail-wm0-f68.google.com with SMTP id z6-v6so11016019wma.0
-        for <git@vger.kernel.org>; Sun, 03 Jun 2018 07:36:55 -0700 (PDT)
+        id S1751685AbeFCPBP (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Jun 2018 11:01:15 -0400
+Received: from mail-ot0-f193.google.com ([74.125.82.193]:37176 "EHLO
+        mail-ot0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751321AbeFCPBO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Jun 2018 11:01:14 -0400
+Received: by mail-ot0-f193.google.com with SMTP id 101-v6so12158400oth.4
+        for <git@vger.kernel.org>; Sun, 03 Jun 2018 08:01:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=7MC5xrz4xJ1at/NbJaHdbXRmplcZLnKEG9dTheufaTM=;
-        b=mFaDGV8P2pGH2uczOjwVL1PmkjkyCuWkngb8vjkGhfrrDloh6sGOPEV0HMZTbk8j1T
-         gnV8RPPXklylI/NaGR6vc5cAIwDcqgnu4Z7NDadjTjjMGnaC64Bi4yDAGkcUKtz4wwYg
-         QLcqwmuO6Ft09pwEBlP7kyIJln9KSOaGN81x8e61lBBEciYFMhs4VESm2mEOM3G3zcah
-         7srPkPoGWs3yH2+5Q0yMxOTUCiy2AgV03+1ouSqpPyq36MPv0qcklUibLM6IxDHAEOfZ
-         34jPQQbiPBlSogSVqB4btj+mo0v8UI85Jl7ACgh6gIpsvvA/moi6xFAJvUaUYTU7N/xy
-         zkXg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=obdULkMICD1hO6AG06HpYIp6MXqkn23G8vttn84FapY=;
+        b=N2A4n2BbvMnMIr2sQQv/UTpxG2nYejfYVaJsu3B0PFQQo4XlFlsEfoSGfhZqsqJG9U
+         +JUHOELab3nReYqFeAWvfvCqT7kTQIif7rEeaSCRrNt4FIYD0/rIJ3mPjQpUgfk3W5nE
+         675njB+mGR/4QHlTFB/p+Z1P75MzKDjipTNfByeDcUttBBfeT+KD5kCTNeiDUq5UrpFi
+         /6utSgtusuafT2bVU97EXvOOVbJD9vy5ny+ZtFaqQXq2FTiTY43uZDDQiOAN7GJSpWf6
+         zaI90WDVXEit8K7Mc8JEZ2GontSBZiEw0+iei9aXwzw3rLn/ahWoxIeZNVnaVMVUxPJw
+         7HbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=7MC5xrz4xJ1at/NbJaHdbXRmplcZLnKEG9dTheufaTM=;
-        b=KHwzHHIiq2MAFG+px8srUjCH+ab5oaG+fOCazhy8aWAgXa5/ZTw67m6J2mDx2tElj1
-         SgL6XRSCKO1QFHYVclYLSgKw790aweW9VwtFnLbJrLzBW7uC4m5ZIy0Yy8pnax3VHSvj
-         Z46EVKOeKrd+A5wQFxH7zvvXJsg6JDWaSMqbI2zjVtYikE81jMH/a0kNUKLCu6NFEhAf
-         O0H2/fJRM8Wi1YftriMZ2Rb+hErFkTDOBS4ayoSa8isDRpGSGDWRrkQdm4Ksz5EhpxhE
-         kJZwlXxNoLp+X0Tqq6FV1h6flRg6W5td70Pg9N+tTZh+uua4jtmmJ3W0XJhlEY3YmplA
-         0QDA==
-X-Gm-Message-State: ALKqPwdLC/+G3O+n1X9b+hqG5ST+tRApN3eW4TwoSVVoY77PiWkr0wP9
-        UWLU7XOW4fWIc2VzYwcXJUS31Q==
-X-Google-Smtp-Source: ADUXVKJ7FB8s6HxCtmsJ9J16ScJLI8DT4hvaYBYNzU5CpYa7wWlspjjQBEokI3PBtQm79mEHV3zj7A==
-X-Received: by 2002:a1c:2143:: with SMTP id h64-v6mr7810333wmh.114.1528036614462;
-        Sun, 03 Jun 2018 07:36:54 -0700 (PDT)
-Received: from localhost.localdomain (x590e56c9.dyn.telefonica.de. [89.14.86.201])
-        by smtp.gmail.com with ESMTPSA id g75-v6sm9609649wmd.15.2018.06.03.07.36.53
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 03 Jun 2018 07:36:54 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH] update-ref --stdin: use skip_prefix()
-Date:   Sun,  3 Jun 2018 16:36:51 +0200
-Message-Id: <20180603143651.6844-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.18.0.rc0.207.ga6211da864
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=obdULkMICD1hO6AG06HpYIp6MXqkn23G8vttn84FapY=;
+        b=auHwVmJSTIMJbqRiYZr5sFe3gWq5cDmoxEhyydKMsoxJIS6k/kNh37KD083pespdf+
+         Lp/C5oRdjHfqgE8iEW4AlSF5qORw5936h+vZAYXnYiiGitJGUMfdHJWL9SJPzGEzDg6z
+         S1/kt/Jk33BNvYhV7XMGuAF2SATa2uO0XbtKXOlgiqxH7C3E9yi+AyzyYtXXKfbZ3Oy/
+         Va2h25Zno2a9Mrz6ARVtnVLwV9A0StG0khbBx9ZYt4Tmbo7f0+duUxBhoXEXAlnRHXwe
+         KjLj5Uegh1CBsxB3Gk94ojD3GvJH26UBXH4Z+bdempJZWgKjTDFAj8Q2XsiT/j22gNtH
+         biRg==
+X-Gm-Message-State: ALKqPwc27DBpQmzsu4gdBF1LKdLKPg+m6PxVNIlz9CrwRSrUnY+2iAVt
+        kqK2uF3i1aaMFNtmkBWZgwEV/EuhBVEmvF/1oAY=
+X-Google-Smtp-Source: ADUXVKKyIguoC9s0BN/ekZPJIADu8yIaqwt/Y6y2Ay7qkkZfr8JkZ6hdIBksrcxHYnP/mky5+aR1uPrXo0Rv3lXnbAU=
+X-Received: by 2002:a9d:2f91:: with SMTP id r17-v6mr13233408otb.356.1528038074191;
+ Sun, 03 Jun 2018 08:01:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a4a:b285:0:0:0:0:0 with HTTP; Sun, 3 Jun 2018 08:00:43 -0700 (PDT)
+In-Reply-To: <CAPig+cQ8p=V7nCJDgJvD2f7pAjykBjN_4BnjY0XHPugE3yL_Tg@mail.gmail.com>
+References: <20180602043241.9941-1-pclouds@gmail.com> <20180602043241.9941-4-pclouds@gmail.com>
+ <CAPig+cQ8p=V7nCJDgJvD2f7pAjykBjN_4BnjY0XHPugE3yL_Tg@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sun, 3 Jun 2018 17:00:43 +0200
+Message-ID: <CACsJy8BorDWr-MyfDGrDQ+dWP5OvtFjXqEW-m=TxOFJrZ+62tg@mail.gmail.com>
+Subject: Re: [PATCH 03/22] builtin/config.c: mark more strings for translation
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Use skip_prefix() instead of starts_with() and strcmp() when parsing
-'git update-ref's stdin to avoid a couple of magic numbers.
+On Sun, Jun 3, 2018 at 11:01 AM, Eric Sunshine <sunshine@sunshineco.com> wr=
+ote:
+> On Sat, Jun 2, 2018 at 12:32 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Du=
+y <pclouds@gmail.com> wrote:
+>> There are also some minor adjustments in the strings.
+>>
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.=
+com>
+>> ---
+>> diff --git a/builtin/config.c b/builtin/config.c
+>> @@ -746,7 +746,7 @@ int cmd_config(int argc, const char **argv, const ch=
+ar *prefix)
+>>                 if (ret =3D=3D CONFIG_NOTHING_SET)
+>>                         error(_("cannot overwrite multiple values with a=
+ single value\n"
+>> -                       "       Use a regexp, --add or --replace-all to =
+change %s."), argv[0]);
+>> +                       "       Use a regexp, --add or --replace-all to =
+change %s"), argv[0]);
+>
+> Perhaps?
+>
+>     cannot overwrite multiple values with a single value;
+>     use a regexp, --add or --replace-all to change %s
 
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
- builtin/update-ref.c | 25 +++++++++++++------------
- 1 file changed, 13 insertions(+), 12 deletions(-)
+I'll probably leave these multi sentence errors alone. There's some
+work going on about these multiple sentence messages. We can come back
+after that series settles.
 
-diff --git a/builtin/update-ref.c b/builtin/update-ref.c
-index 4b4714b3fd..4fa3c0a86f 100644
---- a/builtin/update-ref.c
-+++ b/builtin/update-ref.c
-@@ -311,11 +311,12 @@ static const char *parse_cmd_verify(struct ref_transaction *transaction,
- 
- static const char *parse_cmd_option(struct strbuf *input, const char *next)
- {
--	if (!strncmp(next, "no-deref", 8) && next[8] == line_termination)
-+	const char *rest;
-+	if (skip_prefix(next, "no-deref", &rest) && *rest == line_termination)
- 		update_flags |= REF_NO_DEREF;
- 	else
- 		die("option unknown: %s", next);
--	return next + 8;
-+	return rest;
- }
- 
- static void update_refs_stdin(struct ref_transaction *transaction)
-@@ -332,16 +333,16 @@ static void update_refs_stdin(struct ref_transaction *transaction)
- 			die("empty command in input");
- 		else if (isspace(*next))
- 			die("whitespace before command: %s", next);
--		else if (starts_with(next, "update "))
--			next = parse_cmd_update(transaction, &input, next + 7);
--		else if (starts_with(next, "create "))
--			next = parse_cmd_create(transaction, &input, next + 7);
--		else if (starts_with(next, "delete "))
--			next = parse_cmd_delete(transaction, &input, next + 7);
--		else if (starts_with(next, "verify "))
--			next = parse_cmd_verify(transaction, &input, next + 7);
--		else if (starts_with(next, "option "))
--			next = parse_cmd_option(&input, next + 7);
-+		else if (skip_prefix(next, "update ", &next))
-+			next = parse_cmd_update(transaction, &input, next);
-+		else if (skip_prefix(next, "create ", &next))
-+			next = parse_cmd_create(transaction, &input, next);
-+		else if (skip_prefix(next, "delete ", &next))
-+			next = parse_cmd_delete(transaction, &input, next);
-+		else if (skip_prefix(next, "verify ", &next))
-+			next = parse_cmd_verify(transaction, &input, next);
-+		else if (skip_prefix(next, "option ", &next))
-+			next = parse_cmd_option(&input, next);
- 		else
- 			die("unknown command: %s", next);
- 
--- 
-2.18.0.rc0.207.ga6211da864
+>> @@ -819,7 +819,7 @@ int cmd_config(int argc, const char **argv, const ch=
+ar *prefix)
+>>                 if (ret =3D=3D 0)
+>> -                       die("No such section!");
+>> +                       die(_("no such section!"));
+>> @@ -830,7 +830,7 @@ int cmd_config(int argc, const char **argv, const ch=
+ar *prefix)
+>>                 if (ret =3D=3D 0)
+>> -                       die("No such section!");
+>> +                       die(_("no such section!"));
+>
+> In other patches, you dropped the trailing "!"; perhaps do so for
+> these two also?
+>
+> Maybe even:
+>
+>     die(_("no such section: %s", whatever);
+>
+> Though, that may be out of scope of this patch series.
 
+Might as well do it while I'm at it. I'll do it in a separate patch
+though and try to keep these i18n patches about _() only.
+--=20
+Duy
