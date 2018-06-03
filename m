@@ -2,94 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7CF9D1F403
-	for <e@80x24.org>; Sun,  3 Jun 2018 10:16:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A3C081F403
+	for <e@80x24.org>; Sun,  3 Jun 2018 10:35:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751206AbeFCKQ4 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Jun 2018 06:16:56 -0400
-Received: from cpanel4.indieserve.net ([199.212.143.9]:33846 "EHLO
-        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750847AbeFCKQz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Jun 2018 06:16:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
-        To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=zs1n1PY4zOjBvx5dRLwzqgc7F6fcbk6b9UQAotDDAMk=; b=nJtbgraGoUDKV5JFIxUHeBSS9t
-        HviwRy01ibr1D0h7Lok/x46iuBAFLL5SxB8TLcnrDsLS0Zd3krpAGIX+NZlZ6QmN3zxzDUeAqvWQ8
-        sAztJjvQCawTjLKKDYvweiIjNyOQk8V1seCMh12p0/+0BTO0Y6/ekvKuggfJK69v5ju9awFeiEj24
-        pTKAMvkmp5aPtNKMM2JviPM3cnraLKbLkFblof1j+wi14AjdVIDmf7w8OXsXh/p5Ej7hquV7YMcTI
-        QamOJckCFW0jeYv9lBu2WoQVR2G9jc3iZxo2k+XX/1DWk90lYKqopF5U5JQEZ66ipZ3iHqWQUnXea
-        1N3Rm48A==;
-Received: from cpeac202e043973-cmac202e043970.cpe.net.cable.rogers.com ([174.112.22.87]:57594 helo=localhost.localdomain)
-        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1fPQ4D-00416i-28
-        for git@vger.kernel.org; Sun, 03 Jun 2018 06:16:54 -0400
-Date:   Sun, 3 Jun 2018 06:14:44 -0400 (EDT)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Git Mailing list <git@vger.kernel.org>
-Subject: [PATCH v2] t/perf/run: Use proper "--get-regexp", not
- "--get-regex"
-Message-ID: <alpine.LFD.2.21.1806030613080.7681@localhost.localdomain>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1751013AbeFCKfW (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Jun 2018 06:35:22 -0400
+Received: from mail-wr0-f179.google.com ([209.85.128.179]:40002 "EHLO
+        mail-wr0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750847AbeFCKfV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Jun 2018 06:35:21 -0400
+Received: by mail-wr0-f179.google.com with SMTP id l41-v6so40259940wre.7
+        for <git@vger.kernel.org>; Sun, 03 Jun 2018 03:35:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=dZofIii0B/4Oi8Xgvs7RtIWeyxHxs/gi0/EEY0vJ9kY=;
+        b=OJ0F+UKOKDe5S2U3L9mLEI1P46BhWUQrK7FPucPwnXoqqS3J0ZdxVsDHYLyzc1p3XU
+         1sQpilWHp24OguufwQEB3uV+BDXRFW7tVoFqEcEStDuR12MlMaL/FlpeBnns+/Z4uF0i
+         mYvaZOLZ2VcsuOIboxsf5gkR1YT21PSnCA99uRplV9T2dOTxnAgBkdfGg+DEzWJR3CCZ
+         HcQgnTJ1nmdctxDbF1LMqs7+a3t6IRK1hBCZqC+QqKnGwjYuktPWtVDoKbKdWeP1KHbC
+         GZ8KgbcSlSaJUKi2M0Xf7p1ZGcepAz0zmsXaz8EQqbkGyUfMJhpd8q/CL1aKwzwyPAks
+         Cgkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=dZofIii0B/4Oi8Xgvs7RtIWeyxHxs/gi0/EEY0vJ9kY=;
+        b=NTkXM66tKDPHqmAOni98RWC538QAgwLx9JGrsfvWZMEOgOCkOtOIFjCKKgcROYpuDb
+         soGQ8RXfRbkOq4LdQRnfL5dk5JgqRnvqSFli650O7JU/8jTBbmnQMkmj5+D0jaaFohk0
+         2QqH09SDGeaQoSxS2/ohn258tTdK9qf5zoyGcg8LNgLGNCBfqDO/uOOl/UTW7g2Vwusj
+         Wb/864GPJGuRP64KslTG/e/4FlsiEfLU7HJ8JfabkMhslnWYDEM87RkEIblznejfgkpw
+         p9aWVWZrwfeTD0vKdUDLlQx3PZHZ8y9YGSc2NHD1XiJJI+lT5g1F8WrZculaDl1SSJc8
+         7iag==
+X-Gm-Message-State: ALKqPwfcrbM5wAZOfEm8uPOsjexAj28U6PTuNdz0n1iwqOAdgy6oflBD
+        +yxk/LEkSgbFXJ1oeNKV03A=
+X-Google-Smtp-Source: ADUXVKLKdwPRwqKXDNadooOPCO5BOLnMPJXqZyWZMsD3CKgqngaeyYFL5dTsgW8a/aE+vTmPejM96A==
+X-Received: by 2002:adf:9441:: with SMTP id 59-v6mr8994488wrq.274.1528022119906;
+        Sun, 03 Jun 2018 03:35:19 -0700 (PDT)
+Received: from localhost.localdomain (x590e56c9.dyn.telefonica.de. [89.14.86.201])
+        by smtp.gmail.com with ESMTPSA id n7-v6sm4973535wrr.39.2018.06.03.03.35.18
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 03 Jun 2018 03:35:19 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Git Mailing list <git@vger.kernel.org>
+Subject: Re: how exactly can git config section names contain periods?
+Date:   Sun,  3 Jun 2018 12:35:10 +0200
+Message-Id: <20180603103510.21020-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.18.0.rc0.207.ga6211da864
+In-Reply-To: <alpine.LFD.2.21.1806030547070.5332@localhost.localdomain>
+References: <alpine.LFD.2.21.1806011606490.11215@localhost.localdomain> <20180601210731.GA20974@sigill.intra.peff.net> <alpine.LFD.2.21.1806030547070.5332@localhost.localdomain>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-OutGoing-Spam-Status: No, score=-0.2
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-Even though "--get-regex" appears to work with "git config", the
-clear standard is to spell out the action in full.
 
-Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
+> On Fri, 1 Jun 2018, Jeff King wrote:
+> 
+> > On Fri, Jun 01, 2018 at 04:14:12PM -0400, Robert P. J. Day wrote:
+> > >   ok, so how on earth would i use "git config" at the command line
+> > > to set a config variable with some arbitrary level of subsections?
+> > > let's try this:
+> >
+> > You don't. There are only three levels: section, (optional)
+> > subsection, and key. If there is a subsection, it consists of
+> > _everything_ between the two outer periods.
 
----
+<snip>
 
-this is the only occurrence i saw of this in the entire code base, so
-it seemed worth tweaking just for consistency.
+>   if (for some weird reason) i wanted to define a multi-level
+> subsection,
 
-diff --git a/t/perf/run b/t/perf/run
-index 9aaa733c7..fb5753ea2 100755
---- a/t/perf/run
-+++ b/t/perf/run
-@@ -110,7 +110,7 @@ run_dirs () {
- get_subsections () {
- 	section="$1"
- 	test -z "$GIT_PERF_CONFIG_FILE" && return
--	git config -f "$GIT_PERF_CONFIG_FILE" --name-only --get-regex "$section\..*\.[^.]+" |
-+	git config -f "$GIT_PERF_CONFIG_FILE" --name-only --get-regexp "$section\..*\.[^.]+" |
- 	sed -e "s/$section\.\(.*\)\..*/\1/" | sort | uniq
- }
+You can't, there are no multi-level subsections, see above.
 
 
--- 
-
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                  http://crashcourse.ca/dokuwiki
-
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
