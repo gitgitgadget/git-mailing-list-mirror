@@ -6,60 +6,56 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 274E41F403
-	for <e@80x24.org>; Sun,  3 Jun 2018 07:58:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 048B81F403
+	for <e@80x24.org>; Sun,  3 Jun 2018 08:08:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750983AbeFCH6E (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Jun 2018 03:58:04 -0400
-Received: from mail-yb0-f194.google.com ([209.85.213.194]:47081 "EHLO
-        mail-yb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750847AbeFCH6C (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Jun 2018 03:58:02 -0400
-Received: by mail-yb0-f194.google.com with SMTP id p22-v6so10096074yba.13
-        for <git@vger.kernel.org>; Sun, 03 Jun 2018 00:58:02 -0700 (PDT)
+        id S1751028AbeFCIIt (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Jun 2018 04:08:49 -0400
+Received: from mail-yw0-f194.google.com ([209.85.161.194]:41220 "EHLO
+        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750862AbeFCIIr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Jun 2018 04:08:47 -0400
+Received: by mail-yw0-f194.google.com with SMTP id s201-v6so8231987ywg.8
+        for <git@vger.kernel.org>; Sun, 03 Jun 2018 01:08:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-transfer-encoding;
-        bh=c3cbHom1Qwg+zLauzNlMkD/bHgCEcEY2PgYsLMN+mzA=;
-        b=tlwHm6Z9n9oNCRrJvzCeRUmNwp4+NE4RQ3SaIYAIBCo/cwJdr5G+IeV7fmzX7OVxws
-         rPQA3dhFdsSuRqUxe7UGuIYrep7ogbK1hJjiwWclsFGTEZHjAhr4pOlr2ZsZ9igGfIYx
-         vnTn8e3y+TKp5NTgJf5s6B+nlGRuqtVA8a7HZBDlIvC5JPGeUY+tdNAPSo8nBfcu/Cng
-         L9kORbw3Jol3mbPtG+61R7ipQFtetMmmYayrWoMEnAMjQDiJniQZD+wmB6YyOCVTXf49
-         D5r/bnK5ZjkLCUdPIoMDTQT46Lz9xC5X0CH9ykLFdvND0EZkwxbpQT85t46Uy4OScls/
-         IfNA==
+        bh=2vablAXiimcKAKcZnFrDsWbUfBwU455dNdqkZ0lL0Os=;
+        b=j7Q3AIp92Bh3uslgNsO40kUY1cBePB51GGd4twAFKWqwLop4UZ8/0BT++HQbN4F7TM
+         bzwGFklAzpEwry1d9NIVInMuDH5acnZBJ4ORFVdVBzrfcl/nlK1YgwnyN27bNqnXgOoO
+         u2pVl5o60RQK/FEzNA4pLWavIRNo2uk2v1rl24L2dwyQA6xo8FMwDsXz/+u7k/fnHQmC
+         TtclaLzEnChXFPTlgsM4ep15oobt6Y08kobLE9n8zCoah5FbhcTGVnwTxV/cZGLcRpXp
+         lFVVjPRA2ybRgv8g+cq5QCWfm6vKYjEXdlxna836dCl/CoXzE5ffpJYTK5xvzwkWxSSA
+         M0Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=c3cbHom1Qwg+zLauzNlMkD/bHgCEcEY2PgYsLMN+mzA=;
-        b=DZuCahmOJ6nm4NLoqlT/9ue854joeGqR9qJSTM53bbXC3BnHkM5ixRzORS3d7J5Y1E
-         S5Sgg6MNxru29GA6lW6fn14A7dyKo+vEnWkM/YMXprnPcDuyjZJ12yz5CmX+jNOLDamN
-         FQeNx8VXUIcMxw8MV0Ht47vXhnHhja68DVG3kIfaHuyVhZuAlnWd1dElBN2Q+jYD6wAn
-         O6Tp/klmPR1bhrL0GJaPQfQV0tbZWJo7T0NvhKsG9mHGdQOa5MJHCIjPY1f+wkfa4kU7
-         WWWy8EjfbJWyOfl4X4ccpno4ciKRT+c+wHsT8KJesiCdNsTAGazX8Cv7WykGQbRv8SYt
-         HxMQ==
-X-Gm-Message-State: ALKqPwc6L4Ucd1eQB8IzlNIMKXJaWLfbv74Gb5yl2aX+Aa6lgn6+iokC
-        1Q0KI0obHzXyzQFJhstHPfLt9cwxzF/SoJmg1YE=
-X-Google-Smtp-Source: ADUXVKKhDFz9EDCqH0I+LjGHA4co0tz1xtBZf3GY52vlscBc3PaTx54cNhLAmPrwYXUuTq5+oghMyspr3sJdiRdnOfA=
-X-Received: by 2002:a5b:a8b:: with SMTP id h11-v6mr7647561ybq.287.1528012682153;
- Sun, 03 Jun 2018 00:58:02 -0700 (PDT)
+        bh=2vablAXiimcKAKcZnFrDsWbUfBwU455dNdqkZ0lL0Os=;
+        b=UzDG5Wae93RX3E2pJeQaeBkA+MJnJg6NmQZPP3rV+RqzAIZTv2DADdJITWwOP8pmNK
+         36zHs3SZp9tOoZ7pzkwvn4A0JmwWuuCKKbn3Tu4AACiGWYrk+FMdTgZLLoDcaGOnJTQj
+         SfaD2ooqsA+tSGEPPcSy94DbnntPEBb7Vrq6Cox75VU+5b94wzy0bg5/TelRLAswzJEA
+         YfNaWRmb5gvr8O855UCNf8WOc62ohaEH4oPEY+1xoUELiiCzNDD4xTqKa9Ci/1RGTE0k
+         Uk/Cwd5GEsLUPqiar1jGDT/z3XmOOWHIgpXqst1PmsC6IDsYqM57crsii6IgDDX6i1HR
+         6MIg==
+X-Gm-Message-State: ALKqPwecUX+gHuvXTX7ww6B55Kr0JiKWoyZd37U1T4WQqhWl0+1wNbQX
+        LAgstWg/YW1+M03wRhRdAdXBZGGtVGJTSli7jT5Gkg==
+X-Google-Smtp-Source: ADUXVKJmjwlT52uMHRkSk3Rl2aSzM0Yxkp8Q9s+zfYoWzmFPfEizEwyiZN6fMVeQmKbOGhqEuBuKWy/OB2AI4KpRRas=
+X-Received: by 2002:a81:8203:: with SMTP id s3-v6mr8862018ywf.131.1528013327177;
+ Sun, 03 Jun 2018 01:08:47 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a5b:784:0:0:0:0:0 with HTTP; Sun, 3 Jun 2018 00:58:01 -0700 (PDT)
-In-Reply-To: <20180602115042.18167-9-avarab@gmail.com>
-References: <20180601211015.11919-1-avarab@gmail.com> <20180602115042.18167-1-avarab@gmail.com>
- <20180602115042.18167-9-avarab@gmail.com>
+Received: by 2002:a5b:784:0:0:0:0:0 with HTTP; Sun, 3 Jun 2018 01:08:46 -0700 (PDT)
+In-Reply-To: <20180602043241.9941-17-pclouds@gmail.com>
+References: <20180602043241.9941-1-pclouds@gmail.com> <20180602043241.9941-17-pclouds@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 3 Jun 2018 03:58:01 -0400
-X-Google-Sender-Auth: GR0X7sXlkwTcv2w6YcLE8d-Sk_Y
-Message-ID: <CAPig+cQRm+KM+JLxR0ch2_ydMFg2xg9FFAA-=VkfqgtSkV6q0w@mail.gmail.com>
-Subject: Re: [PATCH v6 8/8] checkout & worktree: introduce checkout.defaultRemote
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Thomas Gummerer <t.gummerer@gmail.com>
+Date:   Sun, 3 Jun 2018 04:08:46 -0400
+X-Google-Sender-Auth: JYWCYTwA1lAywuJQB5znCumHG1s
+Message-ID: <CAPig+cSC0dx9hwMQt9wAMQNezPNm7_GP9UqbxH1ZtuqrqaS=pA@mail.gmail.com>
+Subject: Re: [PATCH 16/22] refs.c: mark more strings for translation
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -67,42 +63,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jun 2, 2018 at 7:50 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> Introduce a checkout.defaultRemote setting which can be used to
-> designate a remote to prefer (via checkout.defaultRemote=3Dorigin) when
-> running e.g. "git checkout master" to mean origin/master, even though
-> there's other remotes that have the "master" branch.
-> [...]
-> Also adjust the advice.checkoutAmbiguousRemoteBranchName message to
-> mention this new config setting to the user, the full output on my
-> git.git is now (the last paragraph is new):
->
->     $ ./git --exec-path=3D$PWD checkout master
->     error: pathspec 'master' did not match any file(s) known to git.
->     hint: The argument 'master' matched more than one remote tracking bra=
-nch.
-
-In v6, the "The argument" prefix has been dropped from the hint, so
-this commit message needs a tweak to match.
-
->     hint: We found 26 remotes with a reference that matched. So we fell b=
-ack
->     hint: on trying to resolve the argument as a path, but failed there t=
-oo!
-> [...]
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+On Sat, Jun 2, 2018 at 12:32 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
+<pclouds@gmail.com> wrote:
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
+om>
 > ---
-> diff --git a/t/t2024-checkout-dwim.sh b/t/t2024-checkout-dwim.sh
-> @@ -87,7 +87,23 @@ test_expect_success 'checkout of branch from multiple =
-remotes fails with advice'
-> -       test_i18ngrep ! "^hint: " stderr
-> +       test_i18ngrep ! "^hint: " stderr &&
-> +       # Make sure the likes of checkout -p don not print this hint
+> diff --git a/refs.c b/refs.c
+> @@ -1845,7 +1845,7 @@ int ref_update_reject_duplicates(struct string_list=
+ *refnames,
+>                 if (!cmp) {
+>                         strbuf_addf(err,
+> -                                   "multiple updates for ref '%s' not al=
+lowed.",
+> +                                   _("multiple updates for ref '%s' not =
+allowed."),
 
-s/don/do/
+In other messages in this patch, you dropped the period at the end of
+the message. Perhaps do so here too.
 
-> +       git checkout -p foo 2>stderr &&
-> +       test_i18ngrep ! "^hint: " stderr &&
-> +       status_uno_is_clean
-> +'
+>                                     refnames->items[i].string);
+>                         return 1;
+>                 } else if (cmp > 0) {
+> diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+> @@ -390,7 +390,7 @@ test_expect_success 'Query "master@{2005-05-26 23:33:=
+01}" (middle of history wit
+>         test_when_finished "rm -f o e" &&
+>         git rev-parse --verify "master@{2005-05-26 23:33:01}" >o 2>e &&
+>         test $B =3D $(cat o) &&
+> -       test "warning: Log for ref $m has gap after $gd." =3D "$(cat e)"
+> +       test_i18ngrep -F "warning: log for ref $m has gap after $gd" e
+>  '
+
+The change from '$(cat e)' to bare 'e' caught me off guard for a
+moment, but use of test_i18ngrep explains it. Okay.
+
+> diff --git a/t/t3310-notes-merge-manual-resolve.sh b/t/t3310-notes-merge-=
+manual-resolve.sh
+> @@ -541,9 +541,9 @@ EOF
+> -       grep -q "refs/notes/m" output &&
+> -       grep -q "$(git rev-parse refs/notes/m)" output &&
+> -       grep -q "$(git rev-parse NOTES_MERGE_PARTIAL^1)" output &&
+> +       test_i18ngrep -q "refs/notes/m" output &&
+> +       test_i18ngrep -q "$(git rev-parse refs/notes/m)" output &&
+> +       test_i18ngrep -q "$(git rev-parse NOTES_MERGE_PARTIAL^1)" output =
+&&
+
+I hadn't seen test_i18ngrep take argument -q elsewhere, so I wondered
+if it handled it correctly. Checking the implementation, I see that it
+does pass it along to the underlying grep. Okay.
+
+I also wondered briefly if it made sense to drop -q here since it
+doesn't necessarily help debugging the test upon failure, but I
+suppose such a change is outside the scope of this patch series, so
+probably better not to.
