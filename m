@@ -2,123 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ED3981F403
-	for <e@80x24.org>; Sun,  3 Jun 2018 06:10:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2063C1F403
+	for <e@80x24.org>; Sun,  3 Jun 2018 06:58:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750846AbeFCGKP (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Jun 2018 02:10:15 -0400
-Received: from mga04.intel.com ([192.55.52.120]:56789 "EHLO mga04.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750791AbeFCGKO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Jun 2018 02:10:14 -0400
-X-Amp-Result: UNKNOWN
-X-Amp-Original-Verdict: FILE UNKNOWN
-X-Amp-File-Uploaded: False
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 02 Jun 2018 23:10:14 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.49,472,1520924400"; 
-   d="scan'208";a="53179135"
-Received: from yexl-desktop.sh.intel.com (HELO localhost) ([10.239.159.124])
-  by fmsmga002.fm.intel.com with ESMTP; 02 Jun 2018 23:10:13 -0700
-Date:   Sun, 3 Jun 2018 14:07:02 +0800
-From:   Ye Xiaolong <xiaolong.ye@intel.com>
-To:     Eduardo Habkost <ehabkost@redhat.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: Re: format-patch: no 'prerequisite-patch-id' info when specifying
- commit range
-Message-ID: <20180603060702.GA1306@yexl-desktop>
-Mail-Followup-To: Eduardo Habkost <ehabkost@redhat.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Stefan Beller <sbeller@google.com>
-References: <20180529184651.GB14525@localhost.localdomain>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180529184651.GB14525@localhost.localdomain>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        id S1751085AbeFCG6S (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Jun 2018 02:58:18 -0400
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:41278 "EHLO
+        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750983AbeFCG6Q (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 3 Jun 2018 02:58:16 -0400
+Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w536w4tW027372;
+        Sat, 2 Jun 2018 23:58:13 -0700
+Authentication-Results: palantir.com;
+        spf=softfail smtp.mailfrom=newren@gmail.com
+Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
+        by mx0a-00153501.pphosted.com with ESMTP id 2jbr4js7rv-1;
+        Sat, 02 Jun 2018 23:58:13 -0700
+Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 78CDC228A266;
+        Sat,  2 Jun 2018 23:58:13 -0700 (PDT)
+Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
+        by smtp.yojoe.local (Postfix) with ESMTP id 6FD422CDE66;
+        Sat,  2 Jun 2018 23:58:13 -0700 (PDT)
+From:   Elijah Newren <newren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     jrnieder@gmail.com, Elijah Newren <newren@gmail.com>
+Subject: [RFC PATCH 3/7] merge-recursive: make sure when we say we abort that we actually abort
+Date:   Sat,  2 Jun 2018 23:58:06 -0700
+Message-Id: <20180603065810.23841-4-newren@gmail.com>
+X-Mailer: git-send-email 2.18.0.rc0.49.g3c08dc0fef
+In-Reply-To: <20180603065810.23841-1-newren@gmail.com>
+References: <20180603065810.23841-1-newren@gmail.com>
+X-Proofpoint-SPF-Result: softfail
+X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-06-03_04:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1805220000 definitions=main-1806030084
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Junio
+In commit 65170c07d4 ("merge-recursive: avoid incorporating uncommitted
+changes in a merge", 2017-12-21), it was noted that there was a special
+case when merge-recursive didn't rely on unpack_trees() to enforce the
+index == HEAD requirement, and thus that it needed to do that enforcement
+itself.  Unfortunately, it returned the wrong exit status, signalling that
+the merge completed but had conflicts, rather than that it was aborted.
+Fix the return code, and while we're at it, change the error message to
+match what unpack_trees() would have printed.
 
-On 05/29, Eduardo Habkost wrote:
->Hi,
->
->I'm trying to use git-format-patch --base to generate the list of
->prerequisite patches for a series, but the behavior of git
->doesn't seem to match the documentation:
->
->When using a commit count (e.g.: "-2"), git-format-patch generates the
->prerequisite-patch-id lines as expected.  But when using a commit range like
->"Z..C", the prerequisite-patch-id lines are missing.
->
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ merge-recursive.c                        | 4 ++--
+ t/t6044-merge-unrelated-index-changes.sh | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-I narrowed down the problem to revision walk, if users specify the commit range
-via "Z..C" pattern, the first prepare_revision_walk function called in
-cmd_format_patch would mark all parents (ancestors) of Z to be uninteresting,
-thus the next revision walk in prepare_bases wouldn't be able to reach
-prerequisite patches, one quick solution I can think of is to clear
-UNINTERESTING flag in reset_revision_walk, like below:
+diff --git a/merge-recursive.c b/merge-recursive.c
+index ac27abbd4c..b3deb7b182 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -3264,9 +3264,9 @@ int merge_trees(struct merge_options *o,
+ 		struct strbuf sb = STRBUF_INIT;
+ 
+ 		if (!o->call_depth && index_has_changes(&sb)) {
+-			err(o, _("Dirty index: cannot merge (dirty: %s)"),
++			err(o, _("Your local changes to the following files would be overwritten by merge:\n  %s"),
+ 			    sb.buf);
+-			return 0;
++			return -1;
+ 		}
+ 		output(o, 0, _("Already up to date!"));
+ 		*result = head;
+diff --git a/t/t6044-merge-unrelated-index-changes.sh b/t/t6044-merge-unrelated-index-changes.sh
+index 92ec552558..3876cfa4fa 100755
+--- a/t/t6044-merge-unrelated-index-changes.sh
++++ b/t/t6044-merge-unrelated-index-changes.sh
+@@ -116,7 +116,7 @@ test_expect_success 'recursive' '
+ 	test_path_is_missing .git/MERGE_HEAD
+ '
+ 
+-test_expect_failure 'recursive, when merge branch matches merge base' '
++test_expect_success 'recursive, when merge branch matches merge base' '
+ 	git reset --hard &&
+ 	git checkout B^0 &&
+ 
+-- 
+2.18.0.rc0.49.g3c08dc0fef
 
-void reset_revision_walk(void)
-{
-	clear_object_flags(SEEN | ADDED | SHOWN| UNINTERESTING);
-}
-
-Though I'm not sure whether it has some side effects, or whether it would impact
-behavior of other reference of reset_revision_walk. If you think it's a sensible
-solution, I'll submit a patch.
-
-Thanks,
-Xiaolong
-
-
->Is this intentional, or it is a bug?
->
->Example using git.git commits:
->
->  $ git format-patch --stdout --cover-letter --stdout --base b7b1fca17~5 -2 b7b1fca17 | egrep 'base-commit|prereq'
->  base-commit: 2738744426c161a98c2ec494d41241a4c5eef9ef
->  prerequisite-patch-id: 080ac2faf21a6a7f9b23cb68286866d026a92930
->  prerequisite-patch-id: e3ee77500c9aa70248e7ee814662d01f79d0dcdb
->  prerequisite-patch-id: 6d831e23e33075681e6b74553151a32b73092013
->  (ehabkost@localhost:~/rh/proj/git (ok) 1j)
->  $ git format-patch --stdout --cover-letter --stdout --base b7b1fca17~5 b7b1fca17~2..b7b1fca17 | egrep 'base-commit|prereq'
->  base-commit: 2738744426c161a98c2ec494d41241a4c5eef9ef
->  $ git --version
->  git version 2.17.1
->  $ git log --graph --pretty=oneline -6 b7b1fca17
->  * b7b1fca175f1ed7933f361028c631b9ac86d868d fsck: complain when .gitmodules is a symlink
->  * 73c3f0f704a91b6792e0199a3f3ab6e3a1971675 index-pack: check .gitmodules files with --strict
->  * 6e328d6caef218db320978e3e251009135d87d0e unpack-objects: call fsck_finish() after fscking objects
->  * 1995b5e03e1cc97116be58cdc0502d4a23547856 fsck: call fsck_finish() after fscking objects
->  * ed8b10f631c9a71df3351d46187bf7f3fa4f9b7e fsck: check .gitmodules content
->  * 2738744426c161a98c2ec494d41241a4c5eef9ef fsck: handle promisor objects in .gitmodules check
->  $ 
->
->If I understand the documentation correctly, both "-3 C" or "Z..C" were
->supposed to be equivalent:
->
->> With `git format-patch --base=P -3 C` (or variants thereof, e.g. with
->> `--cover-letter` or using `Z..C` instead of `-3 C` to specify the
->> range), the base tree information block is shown at the end of the
->> first message the command outputs (either the first patch, or the
->> cover letter), like this:
->> 
->> ------------
->> base-commit: P
->> prerequisite-patch-id: X
->> prerequisite-patch-id: Y
->> prerequisite-patch-id: Z
->> ------------
->
->-- 
->Eduardo
