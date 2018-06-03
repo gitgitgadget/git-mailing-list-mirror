@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A0CEF1F403
-	for <e@80x24.org>; Sun,  3 Jun 2018 16:35:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19DFE1F403
+	for <e@80x24.org>; Sun,  3 Jun 2018 16:35:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751336AbeFCQfd (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Jun 2018 12:35:33 -0400
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:44582 "EHLO
-        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750996AbeFCQfA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Jun 2018 12:35:00 -0400
-Received: by mail-lf0-f68.google.com with SMTP id 36-v6so19620255lfr.11
-        for <git@vger.kernel.org>; Sun, 03 Jun 2018 09:34:59 -0700 (PDT)
+        id S1751303AbeFCQew (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Jun 2018 12:34:52 -0400
+Received: from mail-lf0-f46.google.com ([209.85.215.46]:34555 "EHLO
+        mail-lf0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750952AbeFCQep (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Jun 2018 12:34:45 -0400
+Received: by mail-lf0-f46.google.com with SMTP id o9-v6so21558778lfk.1
+        for <git@vger.kernel.org>; Sun, 03 Jun 2018 09:34:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=2uCcXhrk9DK6YqOxDS/6hpT8TOvoNcAgIEYnApHAftc=;
-        b=uvojboVymIq8/ySqh5QFr3nyWsFaF8JrJ2luQMWdwiPXfjuiGONT+LIoF7HrIT+Msu
-         iQUdrZN0OWM/LZbh7vEFI7OZ4S4bE7s8xXGOGmxqNQTCFjTaxzdSKAbo13H9T2sLb37A
-         fy/Kz/MZLJSnWqWuJeI5ymwrVjupsyroPDyf/J1rna0C8eEzA7+CXEfUNJA5xHmy1a6q
-         fWGvRB/8fJvR1rQlMs8fhZYudmG01szQsyq7b+pg8XYojvh5XGDiP99QWACk6eHWMUGC
-         mXa7nICAyUUM7uGqufYestx11OQnqm+o2YztVmd7j7yvOotLzCcZaHH7AIbjllw3y5zx
-         3mzQ==
+        bh=XnuOqa9VfDtodrttorSpv9QRkyyjTm71R5Yc58SjEpM=;
+        b=QwuqOWGanTNREtEr0yABZh578uzwWtqKP682fjmNKSu2VhOMebLVe6OiWop6Ftottc
+         dxw3z6Rj8Tuhmvq+7t0g1ZhXaIODLp9mSR+xlbuCVwu7RpGliLwjGGee4Pw83yp7sF/9
+         IKINwuDyTJ33TReuYy3z/xW2icK19Jj57tejFVFlK1/d106S4EipYLn+p9EJ4R/L3x/X
+         RzaBt59O0CO52XXaDCnQFioaLLZcH8f1JGBYHFu+z60RfrwrI8QRXn1T3yNOHJ93l5kc
+         DPBB6nUbpmk8WNDWYhcodLz6Dg6tBIb5/EDfmIDrC4NbLGpVoYXhUxsy/CsArriYilHE
+         GeWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=2uCcXhrk9DK6YqOxDS/6hpT8TOvoNcAgIEYnApHAftc=;
-        b=qFo4j/q3NyKTN8qrAmMTcz6VzasmoPhDGfABFDDFqY3c1ieZcK/UXaDYDn5q5uVPI5
-         crC3zOheR1uBtQOvc4dTPZiAv9SfaNHpJUmsCnFY7oGojThnHZ6IPTN5BEDP/c1GgPpO
-         zokB6CIpMoXc/QB2pB5rjw3X2hylRaZtKAhCbNGd0sBywZJCknciCxivn0WD3jITlAFc
-         tTkciCtr5bYtX7Toy6iTUYDf/GS6NT9aZqKcZZ+2XzlOnnz8u78S2uwi1UgTvcenKYuR
-         lWeZGWwVHIvAe+juy3MhMkX9JxrZ/EdU2eT60GGE7oFFOh/H+xxAWkzzsrK19uw7ayc8
-         H+aQ==
-X-Gm-Message-State: ALKqPwejAf29KzLQwD4J8SGcQUivJCZ8Wcki1Z0ntaFl/+b+SZXOx8Nh
-        AFp2vEoq5piM4nyJTQXdDP9mMA==
-X-Google-Smtp-Source: ADUXVKKqwwtJDkWQN0w4TlO51fTjfpIuQ1EZijAY9rMPCsEYhf3UjBcvrIOZsl6rVXSWbk9REyFqvw==
-X-Received: by 2002:a2e:9ed7:: with SMTP id h23-v6mr12858512ljk.88.1528043698778;
-        Sun, 03 Jun 2018 09:34:58 -0700 (PDT)
+        bh=XnuOqa9VfDtodrttorSpv9QRkyyjTm71R5Yc58SjEpM=;
+        b=qxAfA/hloddvEA71eo/ynZ0nqgTWdEbaE3gM06G4DiCp0KyrjXzud+fVjt7ZbX7emV
+         jXOeUsWxSG9fN/1fAk8sOLNXGgesILjm9tFMVOsIZ9VVthDjADSgqev2HjUL00looVMf
+         BkOiDctyYsAbWRqRXUt1VrNInoMgb30qumlv+88NW4Y/U284Q06Bnr6FfXcsX3yr2Wx+
+         Z24yMKfV51PpXFb+X2Rr+YRfObWvFIVzc4T1Nx2hXUTxIaK1Hj9VSVe4jL0A+X9pxQ9I
+         dxjpjqG3nc4biYTARTbR9DOntFT5JM8AuF+WRLRT3umTONAkJn8YIJ/YnLQwExKSTZOm
+         7fqA==
+X-Gm-Message-State: APt69E17GzCIgMGLaitMY7OCrX9F9bBwB0iWXAHoS37dnv4g3wb0Fv9p
+        ZA+0JO8K/bePu6lftCBaPIs=
+X-Google-Smtp-Source: ADUXVKIS7M/H6Ty/LJsiqz0QOO1KEkpX4wvpK+S9ohCPIt3KulUlo7J17jHgSP2gzJ1CwW4zyQqfzA==
+X-Received: by 2002:a2e:8605:: with SMTP id a5-v6mr1577284lji.43.1528043683995;
+        Sun, 03 Jun 2018 09:34:43 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id v79-v6sm4726895lfd.32.2018.06.03.09.34.57
+        by smtp.gmail.com with ESMTPSA id v79-v6sm4726895lfd.32.2018.06.03.09.34.43
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 03 Jun 2018 09:34:58 -0700 (PDT)
+        Sun, 03 Jun 2018 09:34:43 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 16/23] pkt-line.c: mark more strings for translation
-Date:   Sun,  3 Jun 2018 18:34:13 +0200
-Message-Id: <20180603163420.13702-17-pclouds@gmail.com>
+Subject: [PATCH v2 02/23] archive-tar.c: mark more strings for translation
+Date:   Sun,  3 Jun 2018 18:33:59 +0200
+Message-Id: <20180603163420.13702-3-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc0.333.g22e6ee6cdf
 In-Reply-To: <20180603163420.13702-1-pclouds@gmail.com>
 References: <20180602043241.9941-1-pclouds@gmail.com>
@@ -70,119 +70,61 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- pkt-line.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ archive-tar.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/pkt-line.c b/pkt-line.c
-index 941e41dfc1..04d10bbd03 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -101,7 +101,7 @@ int packet_flush_gently(int fd)
- {
- 	packet_trace("0000", 4, 1);
- 	if (write_in_full(fd, "0000", 4) < 0)
--		return error("flush packet write failed");
-+		return error(_("flush packet write failed"));
- 	return 0;
- }
+diff --git a/archive-tar.c b/archive-tar.c
+index b6f58ddf38..68e72d9176 100644
+--- a/archive-tar.c
++++ b/archive-tar.c
+@@ -121,7 +121,7 @@ static int stream_blocked(const struct object_id *oid)
  
-@@ -139,7 +139,7 @@ static void format_packet(struct strbuf *out, const char *fmt, va_list args)
- 	n = out->len - orig_len;
- 
- 	if (n > LARGE_PACKET_MAX)
--		die("protocol error: impossibly long line");
-+		die(_("protocol error: impossibly long line"));
- 
- 	set_packet_header(&out->buf[orig_len], n);
- 	packet_trace(out->buf + orig_len + 4, n - 4, 1);
-@@ -155,9 +155,9 @@ static int packet_write_fmt_1(int fd, int gently,
- 	if (write_in_full(fd, buf.buf, buf.len) < 0) {
- 		if (!gently) {
- 			check_pipe(errno);
--			die_errno("packet write with format failed");
-+			die_errno(_("packet write with format failed"));
- 		}
--		return error("packet write with format failed");
-+		return error(_("packet write with format failed"));
- 	}
- 
- 	return 0;
-@@ -189,21 +189,21 @@ static int packet_write_gently(const int fd_out, const char *buf, size_t size)
- 	size_t packet_size;
- 
- 	if (size > sizeof(packet_write_buffer) - 4)
--		return error("packet write failed - data exceeds max packet size");
-+		return error(_("packet write failed - data exceeds max packet size"));
- 
- 	packet_trace(buf, size, 1);
- 	packet_size = size + 4;
- 	set_packet_header(packet_write_buffer, packet_size);
- 	memcpy(packet_write_buffer + 4, buf, size);
- 	if (write_in_full(fd_out, packet_write_buffer, packet_size) < 0)
--		return error("packet write failed");
-+		return error(_("packet write failed"));
- 	return 0;
- }
- 
- void packet_write(int fd_out, const char *buf, size_t size)
- {
- 	if (packet_write_gently(fd_out, buf, size))
--		die_errno("packet write failed");
-+		die_errno(_("packet write failed"));
- }
- 
- void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
-@@ -225,7 +225,7 @@ void packet_buf_write_len(struct strbuf *buf, const char *data, size_t len)
- 	n = buf->len - orig_len;
- 
- 	if (n > LARGE_PACKET_MAX)
--		die("protocol error: impossibly long line");
-+		die(_("protocol error: impossibly long line"));
- 
- 	set_packet_header(&buf->buf[orig_len], n);
- 	packet_trace(data, len, 1);
-@@ -288,7 +288,7 @@ static int get_packet_data(int fd, char **src_buf, size_t *src_size,
+ 	st = open_istream(oid, &type, &sz, NULL);
+ 	if (!st)
+-		return error("cannot stream blob %s", oid_to_hex(oid));
++		return error(_("cannot stream blob %s"), oid_to_hex(oid));
+ 	for (;;) {
+ 		readlen = read_istream(st, buf, sizeof(buf));
+ 		if (readlen <= 0)
+@@ -256,7 +256,7 @@ static int write_tar_entry(struct archiver_args *args,
+ 		*header.typeflag = TYPEFLAG_REG;
+ 		mode = (mode | ((mode & 0100) ? 0777 : 0666)) & ~tar_umask;
  	} else {
- 		ret = read_in_full(fd, dst, size);
- 		if (ret < 0)
--			die_errno("read error");
-+			die_errno(_("read error"));
+-		return error("unsupported file mode: 0%o (SHA1: %s)",
++		return error(_("unsupported file mode: 0%o (SHA1: %s)"),
+ 			     mode, oid_to_hex(oid));
  	}
+ 	if (pathlen > sizeof(header.name)) {
+@@ -283,7 +283,7 @@ static int write_tar_entry(struct archiver_args *args,
+ 		enum object_type type;
+ 		buffer = object_file_to_archive(args, path, oid, old_mode, &type, &size);
+ 		if (!buffer)
+-			return error("cannot read %s", oid_to_hex(oid));
++			return error(_("cannot read %s"), oid_to_hex(oid));
+ 	} else {
+ 		buffer = NULL;
+ 		size = 0;
+@@ -454,17 +454,17 @@ static int write_tar_filter_archive(const struct archiver *ar,
+ 	filter.in = -1;
  
- 	/* And complain if we didn't get enough bytes to satisfy the read. */
-@@ -296,7 +296,7 @@ static int get_packet_data(int fd, char **src_buf, size_t *src_size,
- 		if (options & PACKET_READ_GENTLE_ON_EOF)
- 			return -1;
+ 	if (start_command(&filter) < 0)
+-		die_errno("unable to start '%s' filter", argv[0]);
++		die_errno(_("unable to start '%s' filter"), argv[0]);
+ 	close(1);
+ 	if (dup2(filter.in, 1) < 0)
+-		die_errno("unable to redirect descriptor");
++		die_errno(_("unable to redirect descriptor"));
+ 	close(filter.in);
  
--		die("the remote end hung up unexpectedly");
-+		die(_("the remote end hung up unexpectedly"));
- 	}
+ 	r = write_tar_archive(ar, args);
  
- 	return ret;
-@@ -324,7 +324,7 @@ enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
- 	len = packet_length(linelen);
+ 	close(1);
+ 	if (finish_command(&filter) != 0)
+-		die("'%s' filter reported error", argv[0]);
++		die(_("'%s' filter reported error"), argv[0]);
  
- 	if (len < 0) {
--		die("protocol error: bad line length character: %.4s", linelen);
-+		die(_("protocol error: bad line length character: %.4s"), linelen);
- 	} else if (!len) {
- 		packet_trace("0000", 4, 0);
- 		*pktlen = 0;
-@@ -334,12 +334,12 @@ enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
- 		*pktlen = 0;
- 		return PACKET_READ_DELIM;
- 	} else if (len < 4) {
--		die("protocol error: bad line length %d", len);
-+		die(_("protocol error: bad line length %d"), len);
- 	}
- 
- 	len -= 4;
- 	if ((unsigned)len >= size)
--		die("protocol error: bad line length %d", len);
-+		die(_("protocol error: bad line length %d"), len);
- 
- 	if (get_packet_data(fd, src_buffer, src_len, buffer, len, options) < 0) {
- 		*pktlen = -1;
+ 	strbuf_release(&cmd);
+ 	return r;
 -- 
 2.18.0.rc0.333.g22e6ee6cdf
 
