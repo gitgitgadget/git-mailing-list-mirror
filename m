@@ -2,94 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC3CD1F403
-	for <e@80x24.org>; Sun,  3 Jun 2018 09:45:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8860F1F403
+	for <e@80x24.org>; Sun,  3 Jun 2018 09:55:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750983AbeFCJpL (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Jun 2018 05:45:11 -0400
-Received: from titan.plasma.xg8.de ([85.10.203.189]:41024 "EHLO
-        titan.PLASMA.Xg8.DE" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750810AbeFCJpK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Jun 2018 05:45:10 -0400
-X-Greylist: delayed 1039 seconds by postgrey-1.27 at vger.kernel.org; Sun, 03 Jun 2018 05:45:10 EDT
-Received: from titan.PLASMA.Xg8.DE (localhost [127.0.0.1])
-        by titan.PLASMA.Xg8.DE (8.15.2/8.15.2) with ESMTPS id w539Rl7F003329
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Sun, 3 Jun 2018 11:27:47 +0200
-Received: (from uucp@localhost)
-        by titan.PLASMA.Xg8.DE (8.15.2/8.15.2/Submit) with UUCP id w539RlVi003328;
-        Sun, 3 Jun 2018 11:27:47 +0200
-Received: from helen.PLASMA.Xg8.DE (localhost.localdomain [127.0.0.1])
-        by helen.PLASMA.Xg8.DE (8.15.2/8.15.2) with ESMTP id w539RaWY005661;
-        Sun, 3 Jun 2018 11:27:36 +0200
-Received: (from rtc@localhost)
-        by helen.PLASMA.Xg8.DE (8.15.2/8.15.2/Submit) id w539Rad1005660;
-        Sun, 3 Jun 2018 11:27:36 +0200
-Date:   Sun, 3 Jun 2018 11:27:36 +0200
-From:   Peter Backes <rtc@helen.PLASMA.Xg8.DE>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: GDPR compliance best practices?
-Message-ID: <20180603092736.GA5510@helen.PLASMA.Xg8.DE>
-References: <20180417191549.GA1199@helen.PLASMA.Xg8.DE>
- <87y3hlecod.fsf@evledraar.gmail.com>
+        id S1751048AbeFCJz2 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Jun 2018 05:55:28 -0400
+Received: from cpanel4.indieserve.net ([199.212.143.9]:55296 "EHLO
+        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751028AbeFCJz1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Jun 2018 05:55:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
+        Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=MLmgvTDzaBFT9jmtSCYaltJYq/OEyWgMcB+a3+o25lA=; b=fohZergN7ijyqRPPKjA6OY31k
+        9CH6Pzn0salfvxScif+zpFJIcqWfYijW4tyrDc8ELZ4fYcw55jsZhkS+6zJ+OV8o/UTyIaquvTq6Z
+        pjOnxeXh5dqRhz0nt3WDZixPPeS6zivYzP/+b+Qay3P4/ZHnMhLyXQfD0PojeO+dxX+uVml++9hQa
+        HjKmRnNhovaVSuG3lf5Uy8a6/1YurpcDSkAqGEbszWdJi4dm3Gz/LwShIxpEcuxq+x0zi0a7q81hl
+        XdCqIz87uVsIrgEbMjAhlp+HCmivhfsAFTVsBqns3hf5n4H3MUVjwAU+QTQjC/hxX8qAoBBA6dx0I
+        0o7RhNjqQ==;
+Received: from cpeac202e043973-cmac202e043970.cpe.net.cable.rogers.com ([174.112.22.87]:57374 helo=localhost.localdomain)
+        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1fPPjP-003v7j-Qe; Sun, 03 Jun 2018 05:55:25 -0400
+Date:   Sun, 3 Jun 2018 05:53:18 -0400 (EDT)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Jeff King <peff@peff.net>
+cc:     Git Mailing list <git@vger.kernel.org>
+Subject: Re: how exactly can git config section names contain periods?
+In-Reply-To: <20180601210731.GA20974@sigill.intra.peff.net>
+Message-ID: <alpine.LFD.2.21.1806030547070.5332@localhost.localdomain>
+References: <alpine.LFD.2.21.1806011606490.11215@localhost.localdomain> <20180601210731.GA20974@sigill.intra.peff.net>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87y3hlecod.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.9.1 (2017-09-22)
+Content-Type: text/plain; charset=US-ASCII
+X-OutGoing-Spam-Status: No, score=-0.2
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Fri, 1 Jun 2018, Jeff King wrote:
 
-Unfortunatly this important topic of GDPR compliance has not seen much 
-interest.
+> On Fri, Jun 01, 2018 at 04:14:12PM -0400, Robert P. J. Day wrote:
 
-After asking github about how they would cope with the issue of erasing 
-the author field, they changed their privacy policy, which now 
-clarifies that this won't be done.
+... snip ...
 
-My guess is that this would ultimately rely on "overriding legitimate 
-grounds for the processing" (Art. 17 (1) point (a) GDPR) which is one 
-of the most fragile legitimizations avaiblable in the GDPR.
+> >   ok, so how on earth would i use "git config" at the command line
+> > to set a config variable with some arbitrary level of subsections?
+> > let's try this:
+>
+> You don't. There are only three levels: section, (optional)
+> subsection, and key. If there is a subsection, it consists of
+> _everything_ between the two outer periods.
+>
+> >   $ git config --global a.b.c.d.e rday
+> >
+> > huh ... seemed to work fine, and added this to my ~/.gitconfig:
+> >
+> >   [a "b.c.d"]
+> >           e = rday
+> >
+> > as i see it, the first component is intgerpreted as the section name,
+> > the last component is the variable/key(?) name, and everything in
+> > between is treated as subsection(s), which is not at all obvious from
+> > that Doc file, or from "man git-config".
+>
+> Yep, your understanding is correct.
+>
+> >   and if a section name can contain periods, how would you specify
+> > that at the command line?
+>
+> You can't, because section names cannot contain periods. ;)
 
-The GDPR emphasizes the importance of using state of the art 
-technology, including anonymization, in as much as possible to ensure 
-privacy.
+  if (for some weird reason) i wanted to define a multi-level
+subsection, is there any benefit to using periods as i did above, as
+opposed to any other delimiting character? apparently, running this:
 
-At 
-https://public-inbox.org/git/CA+dhYEViN4-boZLN+5QJyE7RtX+q6a92p0C2O6TA53==BZfTrQ@mail.gmail.com/T/ 
-there is already some discussion about transitioning to a different 
-hashing algorithm to get more in line with state of the art in hashing. 
-(My clear favourite would be SHA-3.)
+  $ git config --global a.b_c_d.e rday
 
-In course of this, anonymization could also be added. My idea would be 
-as follows:
+dumps this into my ~/.gitconfig:
 
-Do not hash anything directly to obtain the commit ID. Instead, hash a 
-list of hashes of [$random_number, $information] pairs. $information 
-could be an author id, a commit date, a comment, or anything else. Then 
-store the commit id, the list of hashes, and the list of pairs to form 
-the commit.
+  [a "b_c_d"]
+	e = rday
 
-If someone requests erasure, simply empty the corresponding pair in the 
-list. All that would be left would be the hash of the pair, which is 
-completely anonymous (not more useful than a random number) and thus 
-not covered by the GDPR. The history could still be completely 
-verified, and when displaying the log, the erased entry could be 
-displayed as "<<ERASED>>".
+if i wanted to do something this admittedly awkward, would using
+periods give me some benefit related to, i don't know, regex matching,
+as compared to using a different character? or am i just way
+overthinking this? is anyone out there actually taking advantage of
+multi-level subsections?
 
-What do you think about this?
-
-Best wishes
-Peter
+rday
 
 -- 
-Peter Backes, rtc@helen.PLASMA.Xg8.DE
+
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                  http://crashcourse.ca/dokuwiki
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
