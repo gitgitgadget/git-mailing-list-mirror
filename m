@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 070081F403
-	for <e@80x24.org>; Sun,  3 Jun 2018 16:35:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 18D3B1F403
+	for <e@80x24.org>; Sun,  3 Jun 2018 16:36:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751477AbeFCQft (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Jun 2018 12:35:49 -0400
-Received: from mail-lf0-f53.google.com ([209.85.215.53]:34570 "EHLO
-        mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751057AbeFCQev (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Jun 2018 12:34:51 -0400
-Received: by mail-lf0-f53.google.com with SMTP id o9-v6so21559027lfk.1
-        for <git@vger.kernel.org>; Sun, 03 Jun 2018 09:34:51 -0700 (PDT)
+        id S1751502AbeFCQf6 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Jun 2018 12:35:58 -0400
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:44027 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751147AbeFCQet (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Jun 2018 12:34:49 -0400
+Received: by mail-lf0-f66.google.com with SMTP id n15-v6so4268288lfn.10
+        for <git@vger.kernel.org>; Sun, 03 Jun 2018 09:34:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=hlMfvvKdDJPUYi6MdoUMy2oTk+rfIebDwc5HHHAnbto=;
-        b=a1pC5PdiSp8RL90QX4x+VXt5sCeWw3qhkLtLXN1+ROY/q77ufXxAjFxUdT/NfnvrXO
-         pzLtql4iQeRmgZTzl/4F1uXQzF49mUWNw9C3iMsF717Nmr2HFYAk85Phm7F4Za8AKjDP
-         738qW1FwsXhO30zSYkzEeEe3TCOjcBFsgwSLwDuCv2eX4eEwPLQYmmEDeZlj7XDEngby
-         Es4hbh4OcYvlIWVeg4ypvUKhAKpxkqV36w9vb40xwZT7pRIht9su2a3/xcBtPN53a0cm
-         4FLAdiQbjL6fbKE1dFIjQv17w5Y3iV2Jf6b1FOIC7BYORoVvIVHIcgqtRGqxDJJreiHg
-         zx3g==
+        bh=NtWIwGhW35vC5jNaupmLoEELuEkxkPIRC/V0zOc7po0=;
+        b=LgAyYv8N2fbWTO/Mq3mfl58ml3cGSKBQmiLVjiYCGAN/eeDzY5YyEkVpvygsmvJSZo
+         TJWy8y1Cqezpu+zd3CMY/IvNpsyWQtCZw5ZlvB3aF33IPvLE0G7h+G6nmAUr12+7aRDk
+         /gLiqiP6E78UhD1DssUWoHsbM1hZ3wB1LHYUeLbuMbF91AOStNWIF+bGByc1YIpD4CTw
+         4Ff22xujTwrgrlxdfSm8CYtF/lHtyVVf1yddIKAs3x9F6N3WjTcq68+JOivJy85UKlZh
+         rnyD8/BjYEcssi73ix27WIXFmxrmom2Yfyj4ZWoPQ3AKaOTIRcuHFAt2781K+n5w7VMd
+         OE1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=hlMfvvKdDJPUYi6MdoUMy2oTk+rfIebDwc5HHHAnbto=;
-        b=i9RbDMffT+YhNAXnjvfdaUZiEhexYUpgW68HfG8QROpqnmRRasCZcuAB73LNi92Jcl
-         Y5qpIV4VGlCX35lZ23eYu7nEi3y9FtbaeRGbSvFNInjsES3Iww/zCQnTa260vz8ee8iG
-         fFgENMFDYjOV2gxKAScrE5JNvQm2F8pPVOBimD7d1rY/ZR06H7VAXF3hFlSJrg7v0rAe
-         A5fQuRpptGvShcY5Vg4/dGQMVmeiYqOCLyV9l8Z0HJ0VBTMXR3sAg0S291QI5IlVTDCo
-         MpRp3uV3kEk62CxPsrQGYJwdbwIkw4ppIA3gmu/wNfdzrnXyDLOIjk/76zUNvOotSR5F
-         jU+A==
-X-Gm-Message-State: ALKqPwdnmtZ96N9Rd7V+TDlayc4tbvTMuV4YkaeKEwLWB+mnDRabrED8
-        M63TK/gpKLCHX2XgNxpY3M4=
-X-Google-Smtp-Source: ADUXVKJld8pUMAUANMRx34ik0UlE6WIPB8VYrlG16DMD8UOSgy+g6Nl91H8C20kbj1ov18Jv3iisAg==
-X-Received: by 2002:a2e:8246:: with SMTP id j6-v6mr12954543ljh.72.1528043690404;
-        Sun, 03 Jun 2018 09:34:50 -0700 (PDT)
+        bh=NtWIwGhW35vC5jNaupmLoEELuEkxkPIRC/V0zOc7po0=;
+        b=Kk8yOOSi0BELk/iiYT+vZnuLScv/nEpAvvjyOFEMyhuXWpxCJQLiG66Okpc5wrPBfD
+         9s3m/YEUeXohEL+9odsRXt8AL7usyEQjQg9nkoH05q1sNsfsA7rHsnQFMF5C2dAdwMmH
+         /lZdijOwN8dDptwdB+8mVM7o/p8qaXsodjHpCwmeqSGLIOmDtVEU9b/IaN9LJtwA4shf
+         p3TceB35sw1zgbzJ1XFz+Ckyve+NFBgzzWHXBcv43nI97X+RhTiMrNoBO07KGnXVBpYB
+         r+copS7+/no4nj94wzIp8wVju8F8eq4kt9Q/cAgvY5eQKM97+l6SVQxFv+0Z0I2kwrCB
+         U0iQ==
+X-Gm-Message-State: ALKqPweXYoxPF2yZW5L8bX8jPx48g8Mky+JKZdHBhoFBvkT3FmDUDT7c
+        b4I8UCyrQO6Zc5Po1/a8tjI=
+X-Google-Smtp-Source: ADUXVKLjdPqbJ4PLbqj9gCx3rtQ2mXbinlJnpK0tL9sF44I8TtXwFQKEFlNXY7QGSQrMIdGg0PQzpg==
+X-Received: by 2002:a2e:1545:: with SMTP id 5-v6mr7580761ljv.56.1528043688144;
+        Sun, 03 Jun 2018 09:34:48 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id v79-v6sm4726895lfd.32.2018.06.03.09.34.49
+        by smtp.gmail.com with ESMTPSA id v79-v6sm4726895lfd.32.2018.06.03.09.34.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 03 Jun 2018 09:34:49 -0700 (PDT)
+        Sun, 03 Jun 2018 09:34:47 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 08/23] commit-graph.c: mark more strings for translation
-Date:   Sun,  3 Jun 2018 18:34:05 +0200
-Message-Id: <20180603163420.13702-9-pclouds@gmail.com>
+Subject: [PATCH v2 06/23] builtin/pack-objects.c: mark more strings for translation
+Date:   Sun,  3 Jun 2018 18:34:03 +0200
+Message-Id: <20180603163420.13702-7-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc0.333.g22e6ee6cdf
 In-Reply-To: <20180603163420.13702-1-pclouds@gmail.com>
 References: <20180602043241.9941-1-pclouds@gmail.com>
@@ -68,96 +68,428 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Most of these are straight forward. GETTEXT_POISON does catch the last
+string in cmd_pack_objects(), but since this is --progress output, it's
+not supposed to be machine-readable.
+
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- commit-graph.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ builtin/pack-objects.c | 108 +++++++++++++++++++++--------------------
+ t/t5500-fetch-pack.sh  |   2 +-
+ 2 files changed, 56 insertions(+), 54 deletions(-)
 
-diff --git a/commit-graph.c b/commit-graph.c
-index 4c6127088f..5a300535b2 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -76,28 +76,28 @@ struct commit_graph *load_commit_graph_one(const char *graph_file)
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 1a6ece425d..5c697279a9 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -140,7 +140,7 @@ static void *get_delta(struct object_entry *entry)
  
- 	if (graph_size < GRAPH_MIN_SIZE) {
- 		close(fd);
--		die("graph file %s is too small", graph_file);
-+		die(_("graph file %s is too small"), graph_file);
- 	}
- 	graph_map = xmmap(NULL, graph_size, PROT_READ, MAP_PRIVATE, fd, 0);
- 	data = (const unsigned char *)graph_map;
+ 	buf = read_object_file(&entry->idx.oid, &type, &size);
+ 	if (!buf)
+-		die("unable to read %s", oid_to_hex(&entry->idx.oid));
++		die(_("unable to read %s"), oid_to_hex(&entry->idx.oid));
+ 	base_buf = read_object_file(&DELTA(entry)->idx.oid, &type,
+ 				    &base_size);
+ 	if (!base_buf)
+@@ -149,7 +149,7 @@ static void *get_delta(struct object_entry *entry)
+ 	delta_buf = diff_delta(base_buf, base_size,
+ 			       buf, size, &delta_size, 0);
+ 	if (!delta_buf || delta_size != DELTA_SIZE(entry))
+-		die("delta size changed");
++		die(_("delta size changed"));
+ 	free(buf);
+ 	free(base_buf);
+ 	return delta_buf;
+@@ -406,7 +406,7 @@ static off_t write_reuse_object(struct hashfile *f, struct object_entry *entry,
+ 	datalen = revidx[1].offset - offset;
+ 	if (!pack_to_stdout && p->index_version > 1 &&
+ 	    check_pack_crc(p, &w_curs, offset, datalen, revidx->nr)) {
+-		error("bad packed object CRC for %s",
++		error(_("bad packed object CRC for %s"),
+ 		      oid_to_hex(&entry->idx.oid));
+ 		unuse_pack(&w_curs);
+ 		return write_no_reuse_object(f, entry, limit, usable_delta);
+@@ -417,7 +417,7 @@ static off_t write_reuse_object(struct hashfile *f, struct object_entry *entry,
  
- 	graph_signature = get_be32(data);
- 	if (graph_signature != GRAPH_SIGNATURE) {
--		error("graph signature %X does not match signature %X",
-+		error(_("graph signature %X does not match signature %X"),
- 		      graph_signature, GRAPH_SIGNATURE);
- 		goto cleanup_fail;
- 	}
+ 	if (!pack_to_stdout && p->index_version == 1 &&
+ 	    check_pack_inflate(p, &w_curs, offset, datalen, entry_size)) {
+-		error("corrupt packed object for %s",
++		error(_("corrupt packed object for %s"),
+ 		      oid_to_hex(&entry->idx.oid));
+ 		unuse_pack(&w_curs);
+ 		return write_no_reuse_object(f, entry, limit, usable_delta);
+@@ -548,7 +548,7 @@ static enum write_one_status write_one(struct hashfile *f,
+ 	 */
+ 	recursing = (e->idx.offset == 1);
+ 	if (recursing) {
+-		warning("recursive delta detected for object %s",
++		warning(_("recursive delta detected for object %s"),
+ 			oid_to_hex(&e->idx.oid));
+ 		return WRITE_ONE_RECURSIVE;
+ 	} else if (e->idx.offset || e->preferred_base) {
+@@ -582,7 +582,7 @@ static enum write_one_status write_one(struct hashfile *f,
  
- 	graph_version = *(unsigned char*)(data + 4);
- 	if (graph_version != GRAPH_VERSION) {
--		error("graph version %X does not match version %X",
-+		error(_("graph version %X does not match version %X"),
- 		      graph_version, GRAPH_VERSION);
- 		goto cleanup_fail;
- 	}
- 
- 	hash_version = *(unsigned char*)(data + 5);
- 	if (hash_version != GRAPH_OID_VERSION) {
--		error("hash version %X does not match version %X",
-+		error(_("hash version %X does not match version %X"),
- 		      hash_version, GRAPH_OID_VERSION);
- 		goto cleanup_fail;
- 	}
-@@ -121,7 +121,7 @@ struct commit_graph *load_commit_graph_one(const char *graph_file)
- 		chunk_lookup += GRAPH_CHUNKLOOKUP_WIDTH;
- 
- 		if (chunk_offset > graph_size - GIT_MAX_RAWSZ) {
--			error("improper chunk offset %08x%08x", (uint32_t)(chunk_offset >> 32),
-+			error(_("improper chunk offset %08x%08x"), (uint32_t)(chunk_offset >> 32),
- 			      (uint32_t)chunk_offset);
- 			goto cleanup_fail;
- 		}
-@@ -157,7 +157,7 @@ struct commit_graph *load_commit_graph_one(const char *graph_file)
- 		}
- 
- 		if (chunk_repeated) {
--			error("chunk id %08x appears multiple times", chunk_id);
-+			error(_("chunk id %08x appears multiple times"), chunk_id);
- 			goto cleanup_fail;
- 		}
- 
-@@ -243,7 +243,7 @@ static struct commit_list **insert_parent_or_die(struct commit_graph *g,
- 	hashcpy(oid.hash, g->chunk_oid_lookup + g->hash_len * pos);
- 	c = lookup_commit(&oid);
- 	if (!c)
--		die("could not find commit %s", oid_to_hex(&oid));
-+		die(_("could not find commit %s"), oid_to_hex(&oid));
- 	c->graph_pos = pos;
- 	return &commit_list_insert(c, pptr)->next;
+ 	/* make sure off_t is sufficiently large not to wrap */
+ 	if (signed_add_overflows(*offset, size))
+-		die("pack too large for current definition of off_t");
++		die(_("pack too large for current definition of off_t"));
+ 	*offset += size;
+ 	return WRITE_ONE_WRITTEN;
  }
-@@ -516,7 +516,7 @@ static int add_packed_commits(const struct object_id *oid,
+@@ -748,7 +748,8 @@ static struct object_entry **compute_write_order(void)
+ 	}
  
- 	oi.typep = &type;
- 	if (packed_object_info(the_repository, pack, offset, &oi) < 0)
--		die("unable to get type of object %s", oid_to_hex(oid));
-+		die(_("unable to get type of object %s"), oid_to_hex(oid));
+ 	if (wo_end != to_pack.nr_objects)
+-		die("ordered %u objects, expected %"PRIu32, wo_end, to_pack.nr_objects);
++		die(_("ordered %u objects, expected %"PRIu32),
++		    wo_end, to_pack.nr_objects);
  
- 	if (type != OBJ_COMMIT)
- 		return 0;
-@@ -624,9 +624,9 @@ void write_commit_graph(const char *obj_dir,
- 			strbuf_addstr(&packname, pack_indexes[i]);
- 			p = add_packed_git(packname.buf, packname.len, 1);
- 			if (!p)
--				die("error adding pack %s", packname.buf);
-+				die(_("error adding pack %s"), packname.buf);
- 			if (open_pack_index(p))
--				die("error opening index for %s", packname.buf);
-+				die(_("error opening index for %s"), packname.buf);
- 			for_each_object_in_pack(p, add_packed_commits, &oids);
- 			close_pack(p);
+ 	return wo;
+ }
+@@ -760,15 +761,15 @@ static off_t write_reused_pack(struct hashfile *f)
+ 	int fd;
+ 
+ 	if (!is_pack_valid(reuse_packfile))
+-		die("packfile is invalid: %s", reuse_packfile->pack_name);
++		die(_("packfile is invalid: %s"), reuse_packfile->pack_name);
+ 
+ 	fd = git_open(reuse_packfile->pack_name);
+ 	if (fd < 0)
+-		die_errno("unable to open packfile for reuse: %s",
++		die_errno(_("unable to open packfile for reuse: %s"),
+ 			  reuse_packfile->pack_name);
+ 
+ 	if (lseek(fd, sizeof(struct pack_header), SEEK_SET) == -1)
+-		die_errno("unable to seek in reused packfile");
++		die_errno(_("unable to seek in reused packfile"));
+ 
+ 	if (reuse_packfile_offset < 0)
+ 		reuse_packfile_offset = reuse_packfile->pack_size - the_hash_algo->rawsz;
+@@ -779,7 +780,7 @@ static off_t write_reused_pack(struct hashfile *f)
+ 		int read_pack = xread(fd, buffer, sizeof(buffer));
+ 
+ 		if (read_pack <= 0)
+-			die_errno("unable to read from reused packfile");
++			die_errno(_("unable to read from reused packfile"));
+ 
+ 		if (read_pack > to_write)
+ 			read_pack = to_write;
+@@ -882,7 +883,7 @@ static void write_pack_file(void)
+ 			 * to preserve this property.
+ 			 */
+ 			if (stat(pack_tmp_name, &st) < 0) {
+-				warning_errno("failed to stat %s", pack_tmp_name);
++				warning_errno(_("failed to stat %s"), pack_tmp_name);
+ 			} else if (!last_mtime) {
+ 				last_mtime = st.st_mtime;
+ 			} else {
+@@ -890,7 +891,7 @@ static void write_pack_file(void)
+ 				utb.actime = st.st_atime;
+ 				utb.modtime = --last_mtime;
+ 				if (utime(pack_tmp_name, &utb) < 0)
+-					warning_errno("failed utime() on %s", pack_tmp_name);
++					warning_errno(_("failed utime() on %s"), pack_tmp_name);
+ 			}
+ 
+ 			strbuf_addf(&tmpname, "%s-", base_name);
+@@ -935,8 +936,8 @@ static void write_pack_file(void)
+ 	free(write_order);
+ 	stop_progress(&progress_state);
+ 	if (written != nr_result)
+-		die("wrote %"PRIu32" objects while expecting %"PRIu32,
+-			written, nr_result);
++		die(_("wrote %"PRIu32" objects while expecting %"PRIu32),
++		    written, nr_result);
+ }
+ 
+ static int no_try_delta(const char *path)
+@@ -1480,7 +1481,7 @@ static void check_object(struct object_entry *entry)
+ 			while (c & 128) {
+ 				ofs += 1;
+ 				if (!ofs || MSB(ofs, 7)) {
+-					error("delta base offset overflow in pack for %s",
++					error(_("delta base offset overflow in pack for %s"),
+ 					      oid_to_hex(&entry->idx.oid));
+ 					goto give_up;
+ 				}
+@@ -1489,7 +1490,7 @@ static void check_object(struct object_entry *entry)
+ 			}
+ 			ofs = entry->in_pack_offset - ofs;
+ 			if (ofs <= 0 || ofs >= entry->in_pack_offset) {
+-				error("delta base offset out of bound for %s",
++				error(_("delta base offset out of bound for %s"),
+ 				      oid_to_hex(&entry->idx.oid));
+ 				goto give_up;
+ 			}
+@@ -1974,10 +1975,10 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
+ 		trg->data = read_object_file(&trg_entry->idx.oid, &type, &sz);
+ 		read_unlock();
+ 		if (!trg->data)
+-			die("object %s cannot be read",
++			die(_("object %s cannot be read"),
+ 			    oid_to_hex(&trg_entry->idx.oid));
+ 		if (sz != trg_size)
+-			die("object %s inconsistent object length (%lu vs %lu)",
++			die(_("object %s inconsistent object length (%lu vs %lu)"),
+ 			    oid_to_hex(&trg_entry->idx.oid), sz,
+ 			    trg_size);
+ 		*mem_usage += sz;
+@@ -1990,7 +1991,7 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
+ 			if (src_entry->preferred_base) {
+ 				static int warned = 0;
+ 				if (!warned++)
+-					warning("object %s cannot be read",
++					warning(_("object %s cannot be read"),
+ 						oid_to_hex(&src_entry->idx.oid));
+ 				/*
+ 				 * Those objects are not included in the
+@@ -2000,11 +2001,11 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
+ 				 */
+ 				return 0;
+ 			}
+-			die("object %s cannot be read",
++			die(_("object %s cannot be read"),
+ 			    oid_to_hex(&src_entry->idx.oid));
  		}
+ 		if (sz != src_size)
+-			die("object %s inconsistent object length (%lu vs %lu)",
++			die(_("object %s inconsistent object length (%lu vs %lu)"),
+ 			    oid_to_hex(&src_entry->idx.oid), sz,
+ 			    src_size);
+ 		*mem_usage += sz;
+@@ -2014,7 +2015,7 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
+ 		if (!src->index) {
+ 			static int warned = 0;
+ 			if (!warned++)
+-				warning("suboptimal pack - out of memory");
++				warning(_("suboptimal pack - out of memory"));
+ 			return 0;
+ 		}
+ 		*mem_usage += sizeof_delta_index(src->index);
+@@ -2341,8 +2342,8 @@ static void ll_find_deltas(struct object_entry **list, unsigned list_size,
+ 		return;
+ 	}
+ 	if (progress > pack_to_stdout)
+-		fprintf_ln(stderr, "Delta compression using up to %d threads.",
+-				delta_search_threads);
++		fprintf_ln(stderr, _("Delta compression using up to %d threads"),
++			   delta_search_threads);
+ 	p = xcalloc(delta_search_threads, sizeof(*p));
+ 
+ 	/* Partition the work amongst work threads. */
+@@ -2382,7 +2383,7 @@ static void ll_find_deltas(struct object_entry **list, unsigned list_size,
+ 		ret = pthread_create(&p[i].thread, NULL,
+ 				     threaded_find_deltas, &p[i]);
+ 		if (ret)
+-			die("unable to create thread: %s", strerror(ret));
++			die(_("unable to create thread: %s"), strerror(ret));
+ 		active_threads++;
+ 	}
+ 
+@@ -2477,7 +2478,7 @@ static void add_tag_chain(const struct object_id *oid)
+ 	tag = lookup_tag(oid);
+ 	while (1) {
+ 		if (!tag || parse_tag(tag) || !tag->tagged)
+-			die("unable to pack objects reachable from tag %s",
++			die(_("unable to pack objects reachable from tag %s"),
+ 			    oid_to_hex(oid));
+ 
+ 		add_object_entry(&tag->object.oid, OBJ_TAG, NULL, 0);
+@@ -2543,7 +2544,7 @@ static void prepare_pack(int window, int depth)
+ 		if (!entry->preferred_base) {
+ 			nr_deltas++;
+ 			if (oe_type(entry) < 0)
+-				die("unable to get type of object %s",
++				die(_("unable to get type of object %s"),
+ 				    oid_to_hex(&entry->idx.oid));
+ 		} else {
+ 			if (oe_type(entry) < 0) {
+@@ -2567,7 +2568,7 @@ static void prepare_pack(int window, int depth)
+ 		ll_find_deltas(delta_list, n, window+1, depth, &nr_done);
+ 		stop_progress(&progress_state);
+ 		if (nr_done != nr_deltas)
+-			die("inconsistency with delta count");
++			die(_("inconsistency with delta count"));
+ 	}
+ 	free(delta_list);
+ }
+@@ -2607,11 +2608,11 @@ static int git_pack_config(const char *k, const char *v, void *cb)
+ 	if (!strcmp(k, "pack.threads")) {
+ 		delta_search_threads = git_config_int(k, v);
+ 		if (delta_search_threads < 0)
+-			die("invalid number of threads specified (%d)",
++			die(_("invalid number of threads specified (%d)"),
+ 			    delta_search_threads);
+ #ifdef NO_PTHREADS
+ 		if (delta_search_threads != 1) {
+-			warning("no threads support, ignoring %s", k);
++			warning(_("no threads support, ignoring %s"), k);
+ 			delta_search_threads = 0;
+ 		}
+ #endif
+@@ -2620,7 +2621,7 @@ static int git_pack_config(const char *k, const char *v, void *cb)
+ 	if (!strcmp(k, "pack.indexversion")) {
+ 		pack_idx_opts.version = git_config_int(k, v);
+ 		if (pack_idx_opts.version > 2)
+-			die("bad pack.indexversion=%"PRIu32,
++			die(_("bad pack.indexversion=%"PRIu32),
+ 			    pack_idx_opts.version);
+ 		return 0;
+ 	}
+@@ -2646,13 +2647,13 @@ static void read_object_list_from_stdin(void)
+ 		}
+ 		if (line[0] == '-') {
+ 			if (get_oid_hex(line+1, &oid))
+-				die("expected edge object ID, got garbage:\n %s",
++				die(_("expected edge object ID, got garbage:\n %s"),
+ 				    line);
+ 			add_preferred_base(&oid);
+ 			continue;
+ 		}
+ 		if (parse_oid_hex(line, &oid, &p))
+-			die("expected object ID, got garbage:\n %s", line);
++			die(_("expected object ID, got garbage:\n %s"), line);
+ 
+ 		add_preferred_base_object(p + 1);
+ 		add_object_entry(&oid, OBJ_NONE, p + 1, 0);
+@@ -2791,7 +2792,7 @@ static void add_objects_in_unpacked_packs(struct rev_info *revs)
+ 		if (!p->pack_local || p->pack_keep || p->pack_keep_in_core)
+ 			continue;
+ 		if (open_pack_index(p))
+-			die("cannot open pack index");
++			die(_("cannot open pack index"));
+ 
+ 		ALLOC_GROW(in_pack.array,
+ 			   in_pack.nr + p->num_objects,
+@@ -2822,7 +2823,7 @@ static int add_loose_object(const struct object_id *oid, const char *path,
+ 	enum object_type type = oid_object_info(the_repository, oid, NULL);
+ 
+ 	if (type < 0) {
+-		warning("loose object at %s could not be examined", path);
++		warning(_("loose object at %s could not be examined"), path);
+ 		return 0;
+ 	}
+ 
+@@ -2899,7 +2900,7 @@ static void loosen_unused_packed_objects(struct rev_info *revs)
+ 			continue;
+ 
+ 		if (open_pack_index(p))
+-			die("cannot open pack index");
++			die(_("cannot open pack index"));
+ 
+ 		for (i = 0; i < p->num_objects; i++) {
+ 			nth_packed_object_oid(&oid, p, i);
+@@ -2907,7 +2908,7 @@ static void loosen_unused_packed_objects(struct rev_info *revs)
+ 			    !has_sha1_pack_kept_or_nonlocal(&oid) &&
+ 			    !loosened_object_can_be_discarded(&oid, p->mtime))
+ 				if (force_object_loose(&oid, p->mtime))
+-					die("unable to force loose object");
++					die(_("unable to force loose object"));
+ 		}
+ 	}
+ }
+@@ -2991,17 +2992,17 @@ static void get_object_list(int ac, const char **av)
+ 				use_bitmap_index = 0;
+ 				continue;
+ 			}
+-			die("not a rev '%s'", line);
++			die(_("not a rev '%s'"), line);
+ 		}
+ 		if (handle_revision_arg(line, &revs, flags, REVARG_CANNOT_BE_FILENAME))
+-			die("bad revision '%s'", line);
++			die(_("bad revision '%s'"), line);
+ 	}
+ 
+ 	if (use_bitmap_index && !get_object_list_from_bitmap(&revs))
+ 		return;
+ 
+ 	if (prepare_revision_walk(&revs))
+-		die("revision walk setup failed");
++		die(_("revision walk setup failed"));
+ 	mark_edges_uninteresting(&revs, show_edge);
+ 
+ 	if (!fn_show_object)
+@@ -3014,9 +3015,9 @@ static void get_object_list(int ac, const char **av)
+ 		revs.ignore_missing_links = 1;
+ 		if (add_unseen_recent_objects_to_traversal(&revs,
+ 				unpack_unreachable_expiration))
+-			die("unable to add recent objects");
++			die(_("unable to add recent objects"));
+ 		if (prepare_revision_walk(&revs))
+-			die("revision walk setup failed");
++			die(_("revision walk setup failed"));
+ 		traverse_commit_list(&revs, record_recent_commit,
+ 				     record_recent_object, NULL);
+ 	}
+@@ -3251,35 +3252,35 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 	if (pack_compression_level == -1)
+ 		pack_compression_level = Z_DEFAULT_COMPRESSION;
+ 	else if (pack_compression_level < 0 || pack_compression_level > Z_BEST_COMPRESSION)
+-		die("bad pack compression level %d", pack_compression_level);
++		die(_("bad pack compression level %d"), pack_compression_level);
+ 
+ 	if (!delta_search_threads)	/* --threads=0 means autodetect */
+ 		delta_search_threads = online_cpus();
+ 
+ #ifdef NO_PTHREADS
+ 	if (delta_search_threads != 1)
+-		warning("no threads support, ignoring --threads");
++		warning(_("no threads support, ignoring --threads"));
+ #endif
+ 	if (!pack_to_stdout && !pack_size_limit)
+ 		pack_size_limit = pack_size_limit_cfg;
+ 	if (pack_to_stdout && pack_size_limit)
+-		die("--max-pack-size cannot be used to build a pack for transfer.");
++		die(_("--max-pack-size cannot be used to build a pack for transfer"));
+ 	if (pack_size_limit && pack_size_limit < 1024*1024) {
+-		warning("minimum pack size limit is 1 MiB");
++		warning(_("minimum pack size limit is 1 MiB"));
+ 		pack_size_limit = 1024*1024;
+ 	}
+ 
+ 	if (!pack_to_stdout && thin)
+-		die("--thin cannot be used to build an indexable pack.");
++		die(_("--thin cannot be used to build an indexable pack"));
+ 
+ 	if (keep_unreachable && unpack_unreachable)
+-		die("--keep-unreachable and --unpack-unreachable are incompatible.");
++		die(_("--keep-unreachable and --unpack-unreachable are incompatible"));
+ 	if (!rev_list_all || !rev_list_reflog || !rev_list_index)
+ 		unpack_unreachable_expiration = 0;
+ 
+ 	if (filter_options.choice) {
+ 		if (!pack_to_stdout)
+-			die("cannot use --filter without --stdout.");
++			die(_("cannot use --filter without --stdout"));
+ 		use_bitmap_index = 0;
+ 	}
+ 
+@@ -3353,8 +3354,9 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 		prepare_pack(window, depth);
+ 	write_pack_file();
+ 	if (progress)
+-		fprintf_ln(stderr, "Total %"PRIu32" (delta %"PRIu32"),"
+-			   " reused %"PRIu32" (delta %"PRIu32")",
+-			   written, written_delta, reused, reused_delta);
++		fprintf_ln(stderr,
++			   _("Total %"PRIu32" (delta %"PRIu32"),"
++			     " reused %"PRIu32" (delta %"PRIu32")"),
++			written, written_delta, reused, reused_delta);
+ 	return 0;
+ }
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index d4f435155f..6e16f47ec4 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -403,7 +403,7 @@ test_expect_success 'fetch creating new shallow root' '
+ 		git fetch --depth=1 --progress 2>actual &&
+ 		# This should fetch only the empty commit, no tree or
+ 		# blob objects
+-		grep "remote: Total 1" actual
++		test_i18ngrep "remote: Total 1" actual
+ 	)
+ '
+ 
 -- 
 2.18.0.rc0.333.g22e6ee6cdf
 
