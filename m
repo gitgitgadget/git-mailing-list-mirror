@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B46C1F403
-	for <e@80x24.org>; Sun,  3 Jun 2018 16:35:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B90C71F403
+	for <e@80x24.org>; Sun,  3 Jun 2018 16:35:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751357AbeFCQe5 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Jun 2018 12:34:57 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:42610 "EHLO
+        id S1751377AbeFCQfB (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Jun 2018 12:35:01 -0400
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:43012 "EHLO
         mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750996AbeFCQez (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Jun 2018 12:34:55 -0400
-Received: by mail-lf0-f66.google.com with SMTP id v135-v6so21572282lfa.9
-        for <git@vger.kernel.org>; Sun, 03 Jun 2018 09:34:54 -0700 (PDT)
+        with ESMTP id S1751361AbeFCQe6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Jun 2018 12:34:58 -0400
+Received: by mail-lf0-f66.google.com with SMTP id n15-v6so4268561lfn.10
+        for <git@vger.kernel.org>; Sun, 03 Jun 2018 09:34:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Ol7XCRn8uBkXw+pm2GCnzst7ydRuLiVogIXwPeartlo=;
-        b=AxyiW7j9beih3BVAuvN6Tp/fhejmqlIWoVhINxHQ/oXIYpHah0s3CNNCrHEGWYIVnA
-         YChIogx+5OrRHjoH+U5XGDBrVPpc5+EMVakgRu9eJT+yWGLeeCMPSzNHVM7EQODgcQVl
-         vpYehC1wCqZOe5xNTQGFicMYvL5fQ9o+QSCWhTXAxPd0/xyItDbojxvsRQFm5pqui25p
-         TsxDwlpp+Vou6+sUrVuZ+6tp3YHP2TtQs8dY1TJidFgRkJJTq6bfKe9it3+ZY0NYki+N
-         pwNwmCeI5rdQ95AXW9As5vZjpN922Pv/PIdYyYRmMi43/P+P2d5M868s9ck2acuJYmN3
-         8Wsw==
+        bh=8xYAAqOEiOMcwQpMHDw5QFymDmbBnlUQn/nONWS0XlY=;
+        b=uJRSzNldJi1c/gD+T8e8ctePKACZf6CrkwwNmJJjxPYjxNcyYX+17ZmcYkUF9eaVHQ
+         B8SNHrCl0hdl+JdeM2smgPuaV82KCvw3OMJv1dIkfAys6jMw8v2jkvcPDbYjZmIl6Nwi
+         uhs+7reZzVoQ1QFz0Xht4O2eNIwdVunDF9AhITM1z8BbHa61GUcS76aM1vujDC88cdY+
+         MZQD0hNm7JbMq8J0SOooTMT03Is+HtdOueCCtmBIBEpbGL9GHcVQeQOlj1Y3DEcscXPe
+         3hTYuZ425rFf+gqB1jc5UF9e2N3rmtDG39m2CgRXT7NEYprIfpmbakmrgeqUHSicZcwT
+         r0Iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Ol7XCRn8uBkXw+pm2GCnzst7ydRuLiVogIXwPeartlo=;
-        b=jPnxQ3axfsQQEzUU7xf+185s81Fd0zC7St7F5nHhDPWSYlPwalrE61zifcg0UlJPNf
-         iQPuIB4VtQQXlc4zDiyYasP9bV5laGf//m0tRBxbvxO1Tss1iNO3P2/brb1DgBhACzep
-         Ek2y3F+gMp4Dm7mmFmddNLA944JkE6v4Z9gK6+w/zor9t+S8y1TV0Q6tUv/zduwkOHGO
-         L0Be1U+u6SAth1mhYp6Si/hNg2hIUOJRR7R8P9K+yG0Yzzg/Ik1Ot4yjtd3wVEnhG/t6
-         7mswtAeBOd2JicBuDmzyMjvkNh+T3ZDo60s2wj7XJbzcX2Unv8B3f2Io2xoiN4fDLzdS
-         V2uQ==
-X-Gm-Message-State: ALKqPwc45ddCaXm9wmbbpurC86oSXzz9Po8pFu1hWoTQ6JZv+wsbdUjZ
-        XbDB7RxhEJ0K0UTAvNfXmXA=
-X-Google-Smtp-Source: ADUXVKJhSzE4PuBgjDn/juXmkqlTaRte/TB/xyW9kozBAJBbquByG7ysqIGhxa+B5O8AYKMvit+W/Q==
-X-Received: by 2002:a2e:1945:: with SMTP id p66-v6mr12801542lje.114.1528043693768;
-        Sun, 03 Jun 2018 09:34:53 -0700 (PDT)
+        bh=8xYAAqOEiOMcwQpMHDw5QFymDmbBnlUQn/nONWS0XlY=;
+        b=ekPId/9ef13jmc+5AsvW1M/4i3IMXp2mgb2DiRsdGmi7rIFaoX7RASqemcu3qnYTBS
+         ZrJdjyWIi4ZMwMztLV0j2s7RrLPEJ/IzOMQsvN4xRf09V7QdwBM81cvHBwXxOzBsVwTs
+         G7xsHPLFgPXyVUOrgjq5VbZG/Nnbts+vX/maqEalKUNzd+IxXtdDyidsYWOtq5nW6JiI
+         u8SYG2AKqBg7YaA4Ix3G6q+v4N7h/TTfhBP9sSSZWsGJP8PZoCooWfja2gRhnv2JJw1l
+         ws+MnyGPJcPLFmk9aSJIge8SQJKg0L84oMXofNYZYIGqX2OzoZbMsswllQaWS7wVNBy0
+         ttBw==
+X-Gm-Message-State: APt69E3kImoPqZ/MMLIYfy3DJPgs9XaHOx36Xj/0gFkQwBnHnp+bj/sI
+        a5mKVvZLeX9sK5ZTDTlK+t0=
+X-Google-Smtp-Source: ADUXVKL4Wor5CHmBR0DBh72mhhREiDbNPDYd7GrZ1sb5Afgo7eDxHxzdtTNaGw74Q/ytKWM/cY7KYw==
+X-Received: by 2002:a2e:870d:: with SMTP id m13-v6mr1308429lji.139.1528043696983;
+        Sun, 03 Jun 2018 09:34:56 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id v79-v6sm4726895lfd.32.2018.06.03.09.34.52
+        by smtp.gmail.com with ESMTPSA id v79-v6sm4726895lfd.32.2018.06.03.09.34.55
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 03 Jun 2018 09:34:52 -0700 (PDT)
+        Sun, 03 Jun 2018 09:34:56 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 11/23] convert.c: mark more strings for translation
-Date:   Sun,  3 Jun 2018 18:34:08 +0200
-Message-Id: <20180603163420.13702-12-pclouds@gmail.com>
+Subject: [PATCH v2 14/23] exec-cmd.c: mark more strings for translation
+Date:   Sun,  3 Jun 2018 18:34:11 +0200
+Message-Id: <20180603163420.13702-15-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc0.333.g22e6ee6cdf
 In-Reply-To: <20180603163420.13702-1-pclouds@gmail.com>
 References: <20180602043241.9941-1-pclouds@gmail.com>
@@ -70,172 +70,22 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- convert.c             | 38 ++++++++++++++++++++------------------
- t/t0021-conversion.sh |  2 +-
- 2 files changed, 21 insertions(+), 19 deletions(-)
+ exec-cmd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/convert.c b/convert.c
-index f47e60022e..e53911d4f8 100644
---- a/convert.c
-+++ b/convert.c
-@@ -190,7 +190,7 @@ static enum eol output_eol(enum crlf_action crlf_action)
- 		/* fall through */
- 		return text_eol_is_crlf() ? EOL_CRLF : EOL_LF;
+diff --git a/exec-cmd.c b/exec-cmd.c
+index 02d31ee897..4f81f44310 100644
+--- a/exec-cmd.c
++++ b/exec-cmd.c
+@@ -358,7 +358,7 @@ int execl_git_cmd(const char *cmd, ...)
  	}
--	warning("illegal crlf_action %d", (int)crlf_action);
-+	warning(_("illegal crlf_action %d"), (int)crlf_action);
- 	return core_eol;
- }
+ 	va_end(param);
+ 	if (MAX_ARGS <= argc)
+-		return error("too many args to run %s", cmd);
++		return error(_("too many args to run %s"), cmd);
  
-@@ -207,7 +207,7 @@ static void check_global_conv_flags_eol(const char *path, enum crlf_action crlf_
- 		else if (conv_flags & CONV_EOL_RNDTRP_WARN)
- 			warning(_("CRLF will be replaced by LF in %s.\n"
- 				  "The file will have its original line"
--				  " endings in your working directory."), path);
-+				  " endings in your working directory"), path);
- 	} else if (old_stats->lonelf && !new_stats->lonelf ) {
- 		/*
- 		 * CRLFs would be added by checkout
-@@ -217,7 +217,7 @@ static void check_global_conv_flags_eol(const char *path, enum crlf_action crlf_
- 		else if (conv_flags & CONV_EOL_RNDTRP_WARN)
- 			warning(_("LF will be replaced by CRLF in %s.\n"
- 				  "The file will have its original line"
--				  " endings in your working directory."), path);
-+				  " endings in your working directory"), path);
- 	}
- }
- 
-@@ -492,7 +492,7 @@ static int encode_to_worktree(const char *path, const char *src, size_t src_len,
- 	dst = reencode_string_len(src, src_len, enc, default_encoding,
- 				  &dst_len);
- 	if (!dst) {
--		error("failed to encode '%s' from %s to %s",
-+		error(_("failed to encode '%s' from %s to %s"),
- 		      path, default_encoding, enc);
- 		return 0;
- 	}
-@@ -670,7 +670,8 @@ static int filter_buffer_or_fd(int in, int out, void *data)
- 
- 	if (start_command(&child_process)) {
- 		strbuf_release(&cmd);
--		return error("cannot fork to run external filter '%s'", params->cmd);
-+		return error(_("cannot fork to run external filter '%s'"),
-+			     params->cmd);
- 	}
- 
- 	sigchain_push(SIGPIPE, SIG_IGN);
-@@ -689,13 +690,14 @@ static int filter_buffer_or_fd(int in, int out, void *data)
- 	if (close(child_process.in))
- 		write_err = 1;
- 	if (write_err)
--		error("cannot feed the input to external filter '%s'", params->cmd);
-+		error(_("cannot feed the input to external filter '%s'"),
-+		      params->cmd);
- 
- 	sigchain_pop(SIGPIPE);
- 
- 	status = finish_command(&child_process);
- 	if (status)
--		error("external filter '%s' failed %d", params->cmd, status);
-+		error(_("external filter '%s' failed %d"), params->cmd, status);
- 
- 	strbuf_release(&cmd);
- 	return (write_err || status);
-@@ -730,13 +732,13 @@ static int apply_single_file_filter(const char *path, const char *src, size_t le
- 		return 0;	/* error was already reported */
- 
- 	if (strbuf_read(&nbuf, async.out, len) < 0) {
--		err = error("read from external filter '%s' failed", cmd);
-+		err = error(_("read from external filter '%s' failed"), cmd);
- 	}
- 	if (close(async.out)) {
--		err = error("read from external filter '%s' failed", cmd);
-+		err = error(_("read from external filter '%s' failed"), cmd);
- 	}
- 	if (finish_async(&async)) {
--		err = error("external filter '%s' failed", cmd);
-+		err = error(_("external filter '%s' failed"), cmd);
- 	}
- 
- 	if (!err) {
-@@ -790,7 +792,7 @@ static void handle_filter_error(const struct strbuf *filter_status,
- 		 * Something went wrong with the protocol filter.
- 		 * Force shutdown and restart if another blob requires filtering.
- 		 */
--		error("external filter '%s' failed", entry->subprocess.cmd);
-+		error(_("external filter '%s' failed"), entry->subprocess.cmd);
- 		subprocess_stop(&subprocess_map, &entry->subprocess);
- 		free(entry);
- 	}
-@@ -838,7 +840,7 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
- 	else if (wanted_capability & CAP_SMUDGE)
- 		filter_type = "smudge";
- 	else
--		die("unexpected filter type");
-+		die(_("unexpected filter type"));
- 
- 	sigchain_push(SIGPIPE, SIG_IGN);
- 
-@@ -849,7 +851,7 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
- 
- 	err = strlen(path) > LARGE_PACKET_DATA_MAX - strlen("pathname=\n");
- 	if (err) {
--		error("path name too long for external filter");
-+		error(_("path name too long for external filter"));
- 		goto done;
- 	}
- 
-@@ -923,8 +925,8 @@ int async_query_available_blobs(const char *cmd, struct string_list *available_p
- 	assert(subprocess_map_initialized);
- 	entry = (struct cmd2process *)subprocess_find_entry(&subprocess_map, cmd);
- 	if (!entry) {
--		error("external filter '%s' is not available anymore although "
--		      "not all paths have been filtered", cmd);
-+		error(_("external filter '%s' is not available anymore although "
-+			"not all paths have been filtered"), cmd);
- 		return 0;
- 	}
- 	process = &entry->subprocess.process;
-@@ -1395,7 +1397,7 @@ int convert_to_git(const struct index_state *istate,
- 
- 	ret |= apply_filter(path, src, len, -1, dst, ca.drv, CAP_CLEAN, NULL);
- 	if (!ret && ca.drv && ca.drv->required)
--		die("%s: clean filter '%s' failed", path, ca.drv->name);
-+		die(_("%s: clean filter '%s' failed"), path, ca.drv->name);
- 
- 	if (ret && dst) {
- 		src = dst->buf;
-@@ -1429,7 +1431,7 @@ void convert_to_git_filter_fd(const struct index_state *istate,
- 	assert(ca.drv->clean || ca.drv->process);
- 
- 	if (!apply_filter(path, NULL, 0, fd, dst, ca.drv, CAP_CLEAN, NULL))
--		die("%s: clean filter '%s' failed", path, ca.drv->name);
-+		die(_("%s: clean filter '%s' failed"), path, ca.drv->name);
- 
- 	encode_to_git(path, dst->buf, dst->len, dst, ca.working_tree_encoding, conv_flags);
- 	crlf_to_git(istate, path, dst->buf, dst->len, dst, ca.crlf_action, conv_flags);
-@@ -1472,7 +1474,7 @@ static int convert_to_working_tree_internal(const char *path, const char *src,
- 	ret_filter = apply_filter(
- 		path, src, len, -1, dst, ca.drv, CAP_SMUDGE, dco);
- 	if (!ret_filter && ca.drv && ca.drv->required)
--		die("%s: smudge filter %s failed", path, ca.drv->name);
-+		die(_("%s: smudge filter %s failed"), path, ca.drv->name);
- 
- 	return ret | ret_filter;
- }
-diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index 9479a4aaab..306b862d7f 100755
---- a/t/t0021-conversion.sh
-+++ b/t/t0021-conversion.sh
-@@ -583,7 +583,7 @@ test_expect_success PERL 'process filter should restart after unexpected write f
- 		git checkout --quiet --no-progress . 2>git-stderr.log &&
- 
- 		grep "smudge write error at" git-stderr.log &&
--		grep "error: external filter" git-stderr.log &&
-+		test_i18ngrep "error: external filter" git-stderr.log &&
- 
- 		cat >expected.log <<-EOF &&
- 			START
+ 	argv[argc] = NULL;
+ 	return execv_git_cmd(argv);
 -- 
 2.18.0.rc0.333.g22e6ee6cdf
 
