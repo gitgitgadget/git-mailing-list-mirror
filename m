@@ -2,99 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2CBED1F403
-	for <e@80x24.org>; Mon,  4 Jun 2018 13:33:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32C7E1F403
+	for <e@80x24.org>; Mon,  4 Jun 2018 13:39:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753063AbeFDNdi (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Jun 2018 09:33:38 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:39152 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753197AbeFDNdh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Jun 2018 09:33:37 -0400
-Received: by mail-wr0-f194.google.com with SMTP id w7-v6so31582089wrn.6
-        for <git@vger.kernel.org>; Mon, 04 Jun 2018 06:33:36 -0700 (PDT)
+        id S1753147AbeFDNjc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Jun 2018 09:39:32 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:34637 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753063AbeFDNjc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Jun 2018 09:39:32 -0400
+Received: by mail-wr0-f195.google.com with SMTP id a12-v6so8618459wro.1
+        for <git@vger.kernel.org>; Mon, 04 Jun 2018 06:39:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=f+MmqoI02JhB93ZxctEwjGEdFgOMW6YsokLDsVeWs1s=;
-        b=TXX+Y0ZpQHIiGcVOIC7XLgkg0Ib/UiDnuEPOdEZGvPC3U9dSYw5kzSPmrLgjq9vENE
-         3CXkgKwxTaP+yqDGrsuK/r1aMt/VUKZYn47sZqpO17R/RLYaQFwvK0B1/eNYj4HEsuXb
-         iQVaAlX0+JYmjxBH/O4vx98ALqMoNtnJFDYuAzZNQ9m/04pdreLc3vy2QaoG1knNEFNd
-         /0XNvb7fgvSsCBl5QQm57NJ+PTCZrB0kL6U2B7gkLfH9J6rNgviGOCfAmFxc8OoKzC0j
-         IadzNmb469NxFZ1fR7wbsdSUo+rnsxnVvPVGePS1Sl94CFGqMBEoOS13N+UvEoNNQ6Am
-         ehCQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=IiMhe2rINtcGBf5Yr1ZjNvg7Q48ScnfZtsJ4NsXFcIk=;
+        b=rt8xuk1D72nMLDXkHy4u2CxIWi5OHQ+sWp1FSvwATGNtg0T0pvQUwhrCXsAnCijDY6
+         NIJ9MfshnLh/6yiZ3+lBLwQsqzYlq9JRWUd2K1BDwtDMcMjE9KHtTu1+c9W25JGeBqo4
+         TzTdL2ywodac4iWXnoQaTxJ5EwE5m6BmNLTafczt2PbDWdhuzbzFq0CS/o9EimZ/+xhe
+         wydoMpu2tEsurhrBJEfWDBkF5uB2uCeb+J3UN3lxbB0RDykS3daavh4iQoZy3wMT8w+W
+         dsSZVcIGQwFo9VDoZYU+P3Xd3ftvFa5DEmBsvp8JKnbOZHO0Eir5L/GGDR6LiUDvLKvb
+         jWNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=f+MmqoI02JhB93ZxctEwjGEdFgOMW6YsokLDsVeWs1s=;
-        b=f10EjcTu354GgrlRUBd24nKj8ix3/r6aZ3ytMoHM3qdFIg0vB7C5XUAoN0qCg2btgu
-         FCt36yaVXi1McJGqPqOgw+bMTvh7aZaP80wcMTb/Lx7FoXCjaDckskj67L0T2vyK6Qt4
-         srjeLPX1PgNMI9wZ4J2f+UckcFbEoafgP4Knf0nUjIG9lJxbCh/DSazbMjtuaDSmhXeI
-         rvvUhvCRbxQmZPoSErzXGYsXYaimRDyqR0NUye8VnbsuqDqnKffRCviAzW3sa/RW5K/l
-         Zz3NqZroe9HpdO2KrrxxWJJPGPYSWznveZJBv6+OwUQOf6Tg8vrhg1UYjyL1qOrPOoG9
-         qPQA==
-X-Gm-Message-State: APt69E3qDREnL1YOqUpDljMJXD9KACuy8JbVVHApfFonQ4AmsNmENhgZ
-        SGLZ1cCWVusPuo+FjHNn4Hs=
-X-Google-Smtp-Source: ADUXVKKYii3N6aCWlNJNaGTZ7WcNPf1tQxaHfGZLBuYKLA3rpnFl+gQKkhkDaat9s7sllhxMaIe8uw==
-X-Received: by 2002:a1c:7d56:: with SMTP id y83-v6mr10377434wmc.65.1528119215351;
-        Mon, 04 Jun 2018 06:33:35 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id u3-v6sm24057746wrm.60.2018.06.04.06.33.33
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 04 Jun 2018 06:33:34 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Philip Oakley <philipoakley@iee.org>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Git Mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH v2] t/perf/run: Use proper "--get-regexp", not "--get-regex"
-References: <alpine.LFD.2.21.1806030613080.7681@localhost.localdomain>
-        <20180603133039.GF26159@hank.intra.tgummerer.com>
-        <alpine.LFD.2.21.1806030935010.21364@localhost.localdomain>
-        <0AE4648A05C445FBA049864F455B35A7@PhilipOakley>
-        <alpine.LFD.2.21.1806040659590.11594@localhost.localdomain>
-Date:   Mon, 04 Jun 2018 22:33:33 +0900
-In-Reply-To: <alpine.LFD.2.21.1806040659590.11594@localhost.localdomain>
-        (Robert P. J. Day's message of "Mon, 4 Jun 2018 07:03:25 -0400 (EDT)")
-Message-ID: <xmqq1sdm65hu.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=IiMhe2rINtcGBf5Yr1ZjNvg7Q48ScnfZtsJ4NsXFcIk=;
+        b=l/QUQIGBZaAT+eYmCYu/4zqsabuVrxQrWTxVn6Ga4LLPI9C2VBoSt6KvLlqmyr3ZDf
+         noXFJPTBrOevQV8Narra9CDV+9m0PPvcZd2gwuPjhC2weYo19bO8DE3jhwEiL/29Vlvw
+         GbZyeoOvaTL8e0FcDI4B7dGkRF9897LoJJR93W9kJBvtOr16LP7iLNgHh0dgGeRMYh+V
+         6e3RNdSw7JZouqtD5Pxs6cWD9EuQw47aOWcNuU4kos6ScP3FSfdsfxRgfRsnzO2cBaj6
+         xS8TLo7Xsoj508Gs6HIg8DfnDim7kTzv3k4ilnqJx3xVPzpC7x5GLZfe7wHgx77+IMhq
+         uBmA==
+X-Gm-Message-State: ALKqPwdjm3sZ9hbcitzF2yUTB/nM9a82UdthTKiXP4LkypMtqHQ7IOAd
+        CP3IzJgwfOSlCDFkED+7keA=
+X-Google-Smtp-Source: ADUXVKJw9b5a7EcgtRhHlKkBNEgf1mZhYbQ1p5vRqd7aCCjpwwn+kBT7tWutMpTj+Nv7f7DAvGk+wA==
+X-Received: by 2002:a50:8b45:: with SMTP id l63-v6mr24389969edl.240.1528119570997;
+        Mon, 04 Jun 2018 06:39:30 -0700 (PDT)
+Received: from localhost.localdomain (x590cb90a.dyn.telefonica.de. [89.12.185.10])
+        by smtp.gmail.com with ESMTPSA id j22-v6sm24970750edq.92.2018.06.04.06.39.29
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 04 Jun 2018 06:39:30 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH 1/2] t7510-signed-commit: use 'test_must_fail'
+Date:   Mon,  4 Jun 2018 15:39:25 +0200
+Message-Id: <20180604133926.16558-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.18.0.rc0.207.ga6211da864
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Robert P. J. Day" <rpjday@crashcourse.ca> writes:
+The two tests 'detect fudged signature' and 'detect fudged signature
+with NUL' in 't7510-signed-commit.sh' check that 'git verify-commit'
+errors out when encountering a forged commit, but they do so by
+running
 
-> one thing i don't see there, and it's based on an observation someone
-> once made (i believe on this list), is that even if there is
-> absolutely no ambiguity in a command, even if there are no pathspec
-> arguments, it's still worthwhile to add a trailing "--":
->
->   $ git command options/treeish ... --
->
-> since that guarantees that git will waste no time trying to identify
-> any ambiguity since you're being so precise. is that worth mentioning
-> in that page?
+  ! git verify-commit ...
 
-I do not think it is worth mentioning _anywhere_ if you sell its
-benefit as "even there is no ambiguity it won't spend cycles".  
+Use 'test_must_fail' instead, because that would catch potential
+unexpected errors like a segfault as well.
 
-The point of "git cmd X --" and "git cmd -- X" is that they save
-your human cycle, not machine cycle; you do not have to waste time
-wondering if you happen to have X as path in the working tree.  That
-may be worth mentioning, but only "maybe" I would think.
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ t/t7510-signed-commit.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-A more important reason is you may not _know_ beforehand if X you
-mean to be a rev also happens to be a path (or vice versa) when you
-are scripting.  Writing 'git checkout master', 'git diff HEAD',
-etc., in a script you intend to be generic enough is risky if
-'master', HEAD, etc. can be both rev and path at the same time, but
-that is already described in gitcli page ;-)
+diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
+index 762135adea..663bf68def 100755
+--- a/t/t7510-signed-commit.sh
++++ b/t/t7510-signed-commit.sh
+@@ -145,7 +145,7 @@ test_expect_success GPG 'detect fudged signature' '
+ 
+ 	sed -e "s/seventh/7th forged/" raw >forged1 &&
+ 	git hash-object -w -t commit forged1 >forged1.commit &&
+-	! git verify-commit $(cat forged1.commit) &&
++	test_must_fail git verify-commit $(cat forged1.commit) &&
+ 	git show --pretty=short --show-signature $(cat forged1.commit) >actual1 &&
+ 	grep "BAD signature from" actual1 &&
+ 	! grep "Good signature from" actual1
+@@ -156,7 +156,7 @@ test_expect_success GPG 'detect fudged signature with NUL' '
+ 	cat raw >forged2 &&
+ 	echo Qwik | tr "Q" "\000" >>forged2 &&
+ 	git hash-object -w -t commit forged2 >forged2.commit &&
+-	! git verify-commit $(cat forged2.commit) &&
++	test_must_fail git verify-commit $(cat forged2.commit) &&
+ 	git show --pretty=short --show-signature $(cat forged2.commit) >actual2 &&
+ 	grep "BAD signature from" actual2 &&
+ 	! grep "Good signature from" actual2
+-- 
+2.18.0.rc0.207.ga6211da864
+
