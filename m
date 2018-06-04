@@ -2,96 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E31171F403
-	for <e@80x24.org>; Mon,  4 Jun 2018 10:13:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3292F1F403
+	for <e@80x24.org>; Mon,  4 Jun 2018 10:46:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752256AbeFDKNP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Jun 2018 06:13:15 -0400
-Received: from cpanel4.indieserve.net ([199.212.143.9]:38384 "EHLO
-        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751989AbeFDKNO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Jun 2018 06:13:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
-        Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=gaW/5DlxAMFesSiVCe6FlG8zMAs5z2nr+7lXoT1nDUM=; b=OamqZKrvDnD3MaNWjI4d3SlaM
-        /1MPeqecUrB5hCTEoIVOr/PQ2lmbRct2gFJt8bzEaHPyHfCjj9n3NQ97f0V71HsdRXnOwLf8p3vOc
-        NcwNrayXXnSc7Qzg7GtiGqgSBfAOO11TsfSBpr8YS/aF6l16PxYqZmQ1cPdgb8KR+aNewVdRvBkFR
-        tFRXrLbbK0CaGVKI7Zjnc56ZaI1yeBZf8AR6iTlaw/fT4/pKFXEuRm4o3NKk/eACOphl9gWXU9lit
-        j1ynKkhWnB7gZrRVWFuBWAWaMQNTWFqScOvj3ayCLJt2f2+0lOuLtdhWK3qh/HV7cAMfvjzA5gvEK
-        C01sNebAg==;
-Received: from cpeac202e043973-cmac202e043970.cpe.net.cable.rogers.com ([174.112.22.87]:42480 helo=localhost.localdomain)
-        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1fPmUB-00AOBm-0J; Mon, 04 Jun 2018 06:13:12 -0400
-Date:   Mon, 4 Jun 2018 06:11:00 -0400 (EDT)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: does a stash *need* any reference to the branch on which it was
- created?
-In-Reply-To: <xmqq4lij6ym4.fsf@gitster-ct.c.googlers.com>
-Message-ID: <alpine.LFD.2.21.1806040609290.7584@localhost.localdomain>
-References: <alpine.LFD.2.21.1806021525120.19865@localhost.localdomain> <xmqq4lij6ym4.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1752464AbeFDKqc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Jun 2018 06:46:32 -0400
+Received: from mail-wr0-f174.google.com ([209.85.128.174]:42182 "EHLO
+        mail-wr0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751782AbeFDKqb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Jun 2018 06:46:31 -0400
+Received: by mail-wr0-f174.google.com with SMTP id w10-v6so42724699wrk.9
+        for <git@vger.kernel.org>; Mon, 04 Jun 2018 03:46:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=rrtsTmOTy1cZU1b0dsBKOeBl8C2ybdibr3YkUgLFEUs=;
+        b=uQlQ5w9ilxKa0nGvMteAz4TEfKoKmUFFTkgrTKQx2pB+DmTFO8Y1LYpm8atSRmZ+8Z
+         rBp0TXuP6Zwk9Ye7mV9Y0OCCgOrrZoDYT2deYPL6yiAESS2gCggSsWwWEfVYiHeM7vkH
+         ERULScX8ZY8ZvS0/0kVKC6S+O5VFGZwUKjFKM7QsxSg6kGPzxQLbWyYKO1cRyRXjfllQ
+         0RFxKBlsehcSs1zqvNXIdd7Ghfxmq80fQj2SqNXoYXh1Sa4CpVD9JBYzUy3+NtK2Qahc
+         VbMgldXet+k8rXseAao+V55TVfC0Ydd7w59TGTD79AgMU6OtxqtAupkhJSxUOiIJDVHO
+         02ZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=rrtsTmOTy1cZU1b0dsBKOeBl8C2ybdibr3YkUgLFEUs=;
+        b=I1LTJsYOdeZ5RjuW4BId4tnBk9xyFGpRmx5hJp4ldgxp9uB5iUE9tJB6d/9uBXTBNb
+         hN9hNL1WgutS7YttlTJmrvmiO4ipqsmb5ogUang4OvwEG1YvgyNgIsfCJ6Um3BneSrk8
+         2n/QY1hk81ldZ+BmN1yttBo1pJW7f+4Th1inFYj2aP3I4pk99jESuWUQOpG+yUjUPtB9
+         cxDLdG55pyZCHi+hb0e+3s1CHH5IpqpdOBgXMUmhcRexlQvXYgKws007Vgygk6EvPp9G
+         7eQrw0Fq4SuHpu4K7L+SsAoneHYO5WIrpwOj4ojz9eJtg4WNi0mEivlT4GfFrWBr7DLF
+         IGHQ==
+X-Gm-Message-State: ALKqPwe2bwBpRCw7xQ0l1pXFsEBVeu7mh+kGmt2NzMX+djCNuCu5LJTS
+        8JHKzKKb/xEVP6U9Pd/ZTP8=
+X-Google-Smtp-Source: ADUXVKK80oNzTdMhyRVXl78NDmNOpovM3JxfoVuHMzbLReQp8HFUOBTSttTZt1PJXHizIvTqbZdE7A==
+X-Received: by 2002:adf:e20b:: with SMTP id j11-v6mr15913119wri.205.1528109189772;
+        Mon, 04 Jun 2018 03:46:29 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id d9-v6sm39174766wrn.71.2018.06.04.03.46.28
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 04 Jun 2018 03:46:28 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, a.krey@gmx.de
+Subject: Re: [PATCH] upload-pack: reject shallow requests that would return nothing
+References: <20180522194854.GA29564@inner.h.apk.li>
+        <20180526113518.22403-1-pclouds@gmail.com>
+Date:   Mon, 04 Jun 2018 19:46:27 +0900
+In-Reply-To: <20180526113518.22403-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Sat, 26 May 2018 13:35:18 +0200")
+Message-ID: <xmqq602y6d8c.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-OutGoing-Spam-Status: No, score=-0.2
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 4 Jun 2018, Junio C Hamano wrote:
+Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-> "Robert P. J. Day" <rpjday@crashcourse.ca> writes:
+> Shallow clones with --shallow-since or --shalow-exclude work by
+> running rev-list to get all reachable commits, then draw a boundary
+> between reachable and unreachable and send "shallow" requests based on
+> that.
 >
-> >   i realize that, when you "git stash push", stash graciously
-> > saves the branch you were on as part of the commit message, but
-> > does any subsequent stash operation technically *need* that branch
-> > name?
->
-> It is not "saves", but "the message it automatically generates
-> includes <branch> and <commit title> as a human readable reminder".
+> The code does miss one corner case: if rev-list returns nothing, we'll
+> have no border and we'll send no shallow requests back to the client
+> (i.e. no history cuts). This essentially means a full clone (or a full
+> branch if the client requests just one branch). One example is the
+> oldest commit is older than what is specified by --shallow-since.
 
-  sorry, poor choice of words (particularly embarrassing as i'm such a
-stickler for wording :-P)
-
-> "git stash" does not have to read that message, as it is not
-> prepared to read and understand what you wrote after you ran your
-> own "git stash push -m 'my random message'" anyway.  It is merely
-> for your consumption, especially when it appears in "git stash
-> list".
-
-  right, that's what i wanted to confirm, thanks.
-
-rday
-
--- 
-
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                  http://crashcourse.ca/dokuwiki
-
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
+"the newest commit is older than", isn't it?  That is, the cutoff
+point specified is newer than the existing history.
