@@ -2,106 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 652D31F403
-	for <e@80x24.org>; Sun,  3 Jun 2018 23:37:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7434D1F403
+	for <e@80x24.org>; Mon,  4 Jun 2018 01:58:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751585AbeFCXhx (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Jun 2018 19:37:53 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:60780 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751412AbeFCXhw (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 3 Jun 2018 19:37:52 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:54a4:7f2e:59a2:6beb])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 6369B6073C;
-        Sun,  3 Jun 2018 23:37:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1528069071;
-        bh=jsfl5LUikOjJVDckMxWosXE0BHDI8L9DRf1FNMYE39A=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=aSPd46BUxL9yMSW63WhadaZPdgqiLvAite2rmyfudxOJfUfc/4lOP0dI3u0h9QwNH
-         da9vtILwr4YngAfcx5OswPRgmklann6FKzoqkMNPQkFfnCderJbu7QTaIO8MQnAPA0
-         6chnafjK6+/NsoEKe0xuWb6SevBC91Z6QCp6UG3VkwJOv6hKwHVdlnjrhSE63OpGr8
-         HhlkR3E5eR3rvgR0ZpG0uJJ/+GjCLKK/uJTiOkCQCpN4mtscfNBqdZNoGbGZaUkJBA
-         oMaR6UMIbwWGqc+A0htkG1CRGxXty5qg6OIlzil6bHbs3Amw9QBi9Z1atH9xQhp+zG
-         Ub4m7793ihvqkEKSrBmG3FCEwluZa4d1P5aZ8MMrRlSjg8Ah/DPAqMnAghwQyNvVWF
-         pYsg7HXM+SCfnWkn1y/pX6lcCphtFVpdhAEexm/ie3Nk5CFbxLIk8jRk1+DWu6Mi/O
-         b58KjNqOkXQdBkPRYeQ92dACeWidIs0gSTTSYvUS/+1egoRu/Q1
-Date:   Sun, 3 Jun 2018 23:37:47 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Elijah Newren <newren@gmail.com>, git@vger.kernel.org,
-        jrnieder@gmail.com
-Subject: Re: [RFC PATCH 4/7] merge-recursive: fix assumption that head tree
- being merged is HEAD
-Message-ID: <20180603233747.GB288937@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Elijah Newren <newren@gmail.com>, git@vger.kernel.org,
-        jrnieder@gmail.com
-References: <20180603065810.23841-1-newren@gmail.com>
- <20180603065810.23841-5-newren@gmail.com>
- <d8f9f7a4-16c7-8258-1210-ad3d32f3d57b@ramsayjones.plus.com>
+        id S1751461AbeFDB60 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Jun 2018 21:58:26 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:40527 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751300AbeFDB6Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Jun 2018 21:58:25 -0400
+Received: by mail-wm0-f68.google.com with SMTP id x2-v6so11709781wmh.5
+        for <git@vger.kernel.org>; Sun, 03 Jun 2018 18:58:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=9bBVO30m2lONHkhRQuCNfR0E5XG7/pesSBkxzd52j6w=;
+        b=FNzKof+FAg334tyPtei6IYnv/c29X/4p5Bcye79+Wi7rg7otqVNlPoPiwfta4504tW
+         keuWDlY/A67zAvU/iegzuSRPigCfFnuaOJ4/X5RYOzSfZWQJCkUJIhuF6s+9R1iLZ4wE
+         me/zH0Ag4LKJfbNeDymOPNkJDE2tm0G77+QMYM46Jh2C0lJQ3j0lYCmylXDMzbCETDIs
+         1e3iAbqzAcov47B/VZftce1eoygnCX6SWMtPlJ8i9nXBr9hQ5XDf+wF6E+F3HKSao0UC
+         KboTBmgPdCeQ86Lk5qmx/T3ltjs2cogbKd9LYFBV5yj7h4Hs5RQKIKA8fFmL2SvJVxV1
+         mHhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=9bBVO30m2lONHkhRQuCNfR0E5XG7/pesSBkxzd52j6w=;
+        b=KO91TbPhhMPuO9L6YnNE+W6oiOYupMHW37LZ8Gm93f16Jcojjaonk25ZmKnwttWs8A
+         +/lQZEhspo7n4uC8bMmLl+pQay0GmDkbncLpj3yNDW+cPmkwmDSx+0ZsBgQXyICIl532
+         orkzido+7/pURtimNp/4M1OSkC5lBKhOQM41sAatsd3KGqgN1RXZeNSXUCHUosk6BY1N
+         bXgTI0+p7PtSfF2J/oo78ti1oJ4hU5FbkGZaI2vCj2BFylP3JR+bhiB98ZxxeTsdLt9/
+         g9AzcQNuuIwXwTuEv2V9gkDd5yguI496RlZm0IxR+/TKpwDkmxC4beDOcWQ24MX+biQE
+         dCxw==
+X-Gm-Message-State: ALKqPwemD57o7EP53k9uY2kkQEDfpRNFAuH8sDIXpZjgjgSPfyNAU4nm
+        nc44a2TRewblBZRDzQgO0JQ=
+X-Google-Smtp-Source: ADUXVKIb0RV7bGkFNRaWBfKAUgewZ0paOBNSh7S6ZIJV8fXESRXue6PG/gTxkda5/L+FEefioF6qDw==
+X-Received: by 2002:a1c:dc41:: with SMTP id t62-v6mr8057566wmg.42.1528077503759;
+        Sun, 03 Jun 2018 18:58:23 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 141-v6sm10613706wmf.35.2018.06.03.18.58.21
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 03 Jun 2018 18:58:22 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4 8/9] checkout: add advice for ambiguous "checkout <branch>"
+References: <20180531195252.29173-1-avarab@gmail.com>
+        <87a7sg9sjz.fsf@evledraar.gmail.com>
+        <20180531195252.29173-9-avarab@gmail.com>
+        <xmqqin7386tv.fsf@gitster-ct.c.googlers.com>
+        <xmqqefhr850j.fsf@gitster-ct.c.googlers.com>
+        <871sdqal2g.fsf@evledraar.gmail.com>
+Date:   Mon, 04 Jun 2018 10:58:21 +0900
+In-Reply-To: <871sdqal2g.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Fri, 01 Jun 2018 11:54:31 +0200")
+Message-ID: <xmqqlgbv71oi.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="uQr8t48UFsdbeI+V"
-Content-Disposition: inline
-In-Reply-To: <d8f9f7a4-16c7-8258-1210-ad3d32f3d57b@ramsayjones.plus.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.16.0-2-amd64)
-User-Agent: Mutt/1.10.0 (2018-05-17)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
---uQr8t48UFsdbeI+V
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> I.e. I was trying to avoid printing out the "error: pathspec 'master'
+> did not match any file(s) known to git." error altogether. That's still
+> arguably a good direction, since we *know* "master" would have otherwise
+> matched a remote branch, so that's probably a more informative message
+> than falling back to checking out pathspecs and failing, and complaining
+> about there being no such pathspec.
 
-On Sun, Jun 03, 2018 at 02:52:12PM +0100, Ramsay Jones wrote:
-> On 03/06/18 07:58, Elijah Newren wrote:
-> > I'm really unsure where the index_has_changes() declaration should go;
-> > I stuck it in tree.h, but is there a better spot?
->=20
-> Err, leave it where it is and '#include "tree.h"' ? :-D
+That ideal behaviour makes sense.
 
-Or leave it where it is and use a forward structure declaration?
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+> But it was a pain to handle the various edge cases, e.g.:
+>
+>     $ ./git --exec-path=$PWD checkout x y z
+>     error: pathspec 'x' did not match any file(s) known to git.
+>     error: pathspec 'y' did not match any file(s) known to git.
+>     error: pathspec 'z' did not match any file(s) known to git.
 
---uQr8t48UFsdbeI+V
-Content-Type: application/pgp-signature; name="signature.asc"
+Let's take a detour to a tangent, as this example does not have
+anything to do with the remote-tracking auto-dwimming. 
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.7 (GNU/Linux)
+Ideally what do we want to say in this case?  What's allowed for 'x'
+(2 possibilities) is different from whats allowed for 'y' and 'z'
+(only 1 possibility)---do we want to complain that 'x' is not a rev
+noris a file (we do not say 'x' could be a misspelt rev name right
+now), and then 'y' and 'z' are not files (which is what we do now)?
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlsUe8oACgkQv1NdgR9S
-9ouY4g/+P0pTv+/jEDjRWPzEp8ju4dBPG0VYvs9Hzfx4DpokzsAdDEL1tHk1EURM
-ni1VqLbq+M7r1qeIKBAClbm7cOUNjQiNZm4ou/gTZ3+Hq3u1Z6KQacQlO/9cZdQx
-CzbSehf2YHzL10se5emJXIELp6HNXjTfIRkfdwazvv5+PpsmGCDuevRNh2QoiI2d
-B1GwQKWLP0bG7+W2SM9djQ4KRZNNf1iDnbZOHjqd4+yqzbYHaqc6iVKkN9nmWboC
-e4pzpFna8tmw9wWP9pCv44r9//YVtzDNF4u1T9XcIaaDjNKJDHSveaZPTiD9NcqS
-mQ3dlK9O0TzZ89eCas4S2N0iYUFsOoEX1qbGK72TuGaxe8cAhdFHntVilZmB2nKu
-ZsiAQ6ReoD+rH/ahYVeGUBvPadKYfgbYWRPxK3PVSVxbIACZ5cAEUJfJEZdlgFYS
-sAgRJk3ufrNtJQfu9PJTEdkREv001fFQW82Bue2cq8CnBFsMy2RSMkXC9exnwVc1
-G+eXpox/PQ2L6fPXTTB52hzXv48xFzzp77PhmOYcHov6LEty9XwQeoyJ4kOG7UEA
-gQop5vbGfxPySrL+4YPu2vkWTswZCcTnEw8oqIgYYiVaDKoD+L0ODfQ9+HvPGB5F
-2J6ocy+1NcwKI/biRlLKro1iSgtGB+k4l1MnyYetpzlXcC2JOMc=
-=H3PU
------END PGP SIGNATURE-----
+That might be an improvement.  I dunno.  In any case, that is a
+tangent that we do not have to address with these patches.
 
---uQr8t48UFsdbeI+V--
+In contrast, the command line without y and z gives three
+possibilities to 'x'.  'x' is not a rev, is not a remote-tracking
+branch name that only a single remote has, and is not a file.  Now,
+if we are going to mention that we failed to interpret it as the
+latter two, perhaps we should also mention that it was not a rev
+(which could have been misspelt)?
+
+> So I decided just to let checkout_paths() to its thing and then print
+> out an error about dwim branches if applicable if it failed.
+
+Yeah, I think I get it now.  If you want to silence the "error" from
+report_path_error() and replace it with something else, you would
+need to change checout_paths(), as this function is sort-of used as
+the last ditch effort after all else failed, and right now it is not
+aware of what exactly all these other failed efforts were.
+
+Thanks.  I'm looking at v6 reroll for queuing.
+
+
+
