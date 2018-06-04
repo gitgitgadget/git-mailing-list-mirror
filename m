@@ -2,108 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1584A1F403
-	for <e@80x24.org>; Mon,  4 Jun 2018 14:42:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A32C71F403
+	for <e@80x24.org>; Mon,  4 Jun 2018 14:44:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751953AbeFDOml (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Jun 2018 10:42:41 -0400
-Received: from mail-oi0-f65.google.com ([209.85.218.65]:39928 "EHLO
-        mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751782AbeFDOmk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Jun 2018 10:42:40 -0400
-Received: by mail-oi0-f65.google.com with SMTP id t22-v6so25203487oih.6
-        for <git@vger.kernel.org>; Mon, 04 Jun 2018 07:42:40 -0700 (PDT)
+        id S1752113AbeFDOoV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Jun 2018 10:44:21 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:41099 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751473AbeFDOoU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Jun 2018 10:44:20 -0400
+Received: by mail-wr0-f194.google.com with SMTP id h10-v6so2922890wrq.8
+        for <git@vger.kernel.org>; Mon, 04 Jun 2018 07:44:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=+T94QejrCALoe/wbfpVLr3WozYyzMOCsl7xOxTNJ5FQ=;
-        b=KsKIUwOyNt0oDJcn0oF9XlaCOKMzY1JCGnt/LbD/l+WLie+ijGZzP3Ef4l3HZp3BcW
-         72o5x+5yJAfe4t6hwNijvIzyVc1iXTPRqbynod6TJe7fT8o9yH0bjMutjrjBKu0Zn0NZ
-         xIu3R5uqCpeJNZBBKmYNkWRk7N+OszAl5wq3dZcyKHu4EhMRxxtvZevwP6H9Wb2pr8aN
-         U3YWQ+QZacpfaSta7V20HjNrtAkZbwkiM3TWPMS/nmbuxU/PBho0O7m5haCDSx7DFLow
-         UcYeGhjzDjzfh8CRtDP+4Cal+HMRdsZtaymQVufrqam3se/sp8BLvGT2azCi2UATqGdW
-         L76A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=zliaOFa8MGeCgUKyUOvUwamoeII0dHb2OoPxgkPJbII=;
+        b=oWeGCEhCUVsRWgMRhBGZ9oZzY1ettU0/2dMhoJRSNbQYhErJc2t5qMsSAemN5vPqdU
+         X7Dh2u8kgsOkG0gnKcw26jN/BejoVuOMGr2gl4LkqBwIZ9ngx8tMd1qcWz/EZJ4YqlZd
+         ErQab5RdwsCO2CNhXW3PTxdm4dMcybok2oY9DvhjaMFftSbuAIsLkraGkv+JLOxJUMuP
+         1GT61E532F08fFTQXbmytI0iFwlQzoAX4QylF+qebk0smu1phMq1SJ3lduGl1+GaL1r+
+         6qXdwWXAcbU1oZn5xiJbvJts3O4PBqmaR3msQfR8qIl8sUiy/CbJW9G+omElSBko/Us4
+         xpIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=+T94QejrCALoe/wbfpVLr3WozYyzMOCsl7xOxTNJ5FQ=;
-        b=rGfIx4h8ZxUpQcCp6xLwh3NvBioZ0f94I5HoH0zP509Ob786dxud8t3LBIkwIHFSf+
-         x5lgzELpAAE2Dw3T1CHxB3+sY5eYTM/j3IZFBhK+58mOc2kGZa+Ag6dg+aCoUcBGOQlg
-         d8JJj1B6KtfHFsdQT1SxzIPNsAM6k8mOdhT1rmHGTFiJnSj1QzfXHiDGmYfJGZv8OhZv
-         /bWbJHiwLqiz5G9T0Y2jqp88lX+MJFUH0sxnh6xK8xqerMPgnGshdcxHorJVCJdVfmP1
-         sVT/iZnws9PUO/w5MfQzIxwrsZ9TwyBFXt1Bo/rLmE3ZQU4aKjCynHv2gUVa9+2JnbTN
-         IT2A==
-X-Gm-Message-State: ALKqPwc92Yt7UEy8mOWamP7NPiiE7K6WXxEmVhJo8/AYVGGeks4zHvxl
-        u6gaeMqszufneGANOxL99njwhiTiVpamuNcaN+o=
-X-Google-Smtp-Source: ADUXVKJPKzAi6XjfiH2Neer8aDr84hIlk3u0s0TzLQGiJvACZUNpvr7FsOsb+It8oxJRVWqpkOqKW51MXgheDQCrCSE=
-X-Received: by 2002:aca:aa54:: with SMTP id t81-v6mr9682762oie.30.1528123359650;
- Mon, 04 Jun 2018 07:42:39 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=zliaOFa8MGeCgUKyUOvUwamoeII0dHb2OoPxgkPJbII=;
+        b=VdREij9Dj9rrUBR3CL8i/GzAGmRRYcz7ftX+DR9TlU3vHXV1bllCjiPqv4wDjZTaTy
+         xHk4Tj8v/eF9XCnP0rQx/UH7Co5wGUaOUbgpQIe9e2NeqB0cQSs2BDwR2DgDKeGnincl
+         0ZNZUyxDxWvle82b6EC43kiyTXIi1uSPn3Kr+XGooydqR50eE4oCCGMWNLJBE9QWTMM1
+         MPeQo9jZEI+Z38VVIDIUR1C5U29+1HxaciA05e/rn21khEoWeVdh8TyhE8yTGIj1Voky
+         JeowNI3sroXPc1kICaohBfxj8gDItWstlq3cQ4gOm7FmbiDypNLrIFPJdhaap4gCVYYm
+         tl5Q==
+X-Gm-Message-State: APt69E1fFCi0Ld/0qVmkLRQS5ow+i7vYSOXUDe0t0TWv07BUlg7qoBIy
+        scLlg6xLo5B6WeyRAFz5VlR4vgR+
+X-Google-Smtp-Source: ADUXVKJfNQ6yXmBicdr0M2AACe79Wz7Y6micnShlhdjsfA94llfZty6zP6pedNWCO3/mvqmdVPAyoA==
+X-Received: by 2002:a1c:f513:: with SMTP id t19-v6mr9712397wmh.50.1528123459428;
+        Mon, 04 Jun 2018 07:44:19 -0700 (PDT)
+Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
+        by smtp.gmail.com with ESMTPSA id n56-v6sm49781756wrn.72.2018.06.04.07.44.17
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 04 Jun 2018 07:44:18 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Brandon Williams <bmwill@google.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: [PATCH] refspec: initalize `refspec_item` in `valid_fetch_refspec()`
+Date:   Mon,  4 Jun 2018 16:43:05 +0200
+Message-Id: <20180604144305.29909-1-martin.agren@gmail.com>
+X-Mailer: git-send-email 2.18.0.rc0.43.gb85e7bcbff
+In-Reply-To: <CAN0heSr6dPa+--Mut0+3Zgy-mWF0d2762vKU=d08CKhR8BnKmA@mail.gmail.com>
+References: <CAN0heSr6dPa+--Mut0+3Zgy-mWF0d2762vKU=d08CKhR8BnKmA@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 2002:a4a:b285:0:0:0:0:0 with HTTP; Mon, 4 Jun 2018 07:42:09 -0700 (PDT)
-In-Reply-To: <86d82fe4-3dcc-48a1-6800-70d49e30af8c@gmail.com>
-References: <20180511211504.79877-1-dstolee@microsoft.com> <20180524162504.158394-1-dstolee@microsoft.com>
- <20180524162504.158394-10-dstolee@microsoft.com> <CACsJy8A8NofWCo0MbMxCe=xKTrnAqmM5D+FHSJXC-wO-DPnXwg@mail.gmail.com>
- <86d82fe4-3dcc-48a1-6800-70d49e30af8c@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 4 Jun 2018 16:42:09 +0200
-Message-ID: <CACsJy8CGqrAH0A8TvSju8MqJihn6vym8PrLvtuf5bbczj=kUwQ@mail.gmail.com>
-Subject: Re: [PATCH v3 09/20] commit-graph: verify corrupt OID fanout and lookup
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee <dstolee@microsoft.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "jnareb@gmail.com" <jnareb@gmail.com>,
-        "avarab@gmail.com" <avarab@gmail.com>,
-        "marten.agren@gmail.com" <marten.agren@gmail.com>,
-        "peff@peff.net" <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 4, 2018 at 1:32 PM, Derrick Stolee <stolee@gmail.com> wrote:
-> On 6/2/2018 12:38 AM, Duy Nguyen wrote:
->>
->> On Thu, May 24, 2018 at 6:25 PM, Derrick Stolee <dstolee@microsoft.com>
->> wrote:
->>>
->>> +               if (i && oidcmp(&prev_oid, &cur_oid) >= 0)
->>> +                       graph_report("commit-graph has incorrect OID
->>> order: %s then %s",
->>> +                                    oid_to_hex(&prev_oid),
->>> +                                    oid_to_hex(&cur_oid));
->>
->> Should these strings be marked for translation with _()?
->
-> I've been asking myself "Is this message helpful to anyone other than a Git
-> developer?" and for this series the only one that is helpful to an end-user
-> is the message about the final hash. If the hash is correct, but these other
-> messages appear, then there is a bug in the code that wrote the file.
-> Otherwise, file corruption is more likely and the correct course of action
-> is to delete and rebuild.
+We allocate a `struct refspec_item` on the stack without initializing
+it. In particular, its `dst` and `src` members will contain some random
+data from the stack. When we later call `refspec_item_clear()`, it will
+call `free()` on those pointers. So if the call to `parse_refspec()` did
+not assign to them, we will be freeing some random "pointers". This is
+undefined behavior.
 
-Dev-only strings like this are typically prefixed with "BUG:" or
-"internal error:" (unless BUG() is a better choice). Git is
-unfortunately not fully i18n-ized and devs from time to time still
-forget to mark string for translations when appropriate, including me.
-Because of this, we still have to slowly scan through the code base
-and mark more strings for translation. Something to say clearly "not
-translatable on purpose" would help a lot. If "BUG:" and friends are
-too much noise, a /* no translate */ comment or some other form could
-also help.
+To the best of my understanding, this cannot currently be triggered by
+user-provided data. And for what it's worth, the test-suite does not
+trigger this with SANITIZE=address. It can be provoked by calling
+`valid_fetch_refspec(":*")`.
 
-But your explanation to me still sounds like corrupted file in some
-form, which should be translated unless it's too cryptic. commit-graph
-format may be available in non-English languages and people can still
-try to figure out the problem without relying entirely on git
-developers.
+Zero the struct, as is done in other users of `struct refspec_item`.
+
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+I found some time to look into this. It does not seem to be a
+user-visible bug, so not particularly critical.
+
+ refspec.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/refspec.c b/refspec.c
+index ada7854f7a..7dd7e361e5 100644
+--- a/refspec.c
++++ b/refspec.c
+@@ -189,7 +189,10 @@ void refspec_clear(struct refspec *rs)
+ int valid_fetch_refspec(const char *fetch_refspec_str)
+ {
+ 	struct refspec_item refspec;
+-	int ret = parse_refspec(&refspec, fetch_refspec_str, REFSPEC_FETCH);
++	int ret;
++
++	memset(&refspec, 0, sizeof(refspec));
++	ret = parse_refspec(&refspec, fetch_refspec_str, REFSPEC_FETCH);
+ 	refspec_item_clear(&refspec);
+ 	return ret;
+ }
 -- 
-Duy
+2.18.0.rc0.43.gb85e7bcbff
+
