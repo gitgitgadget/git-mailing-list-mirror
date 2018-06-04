@@ -2,88 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 935E21F403
-	for <e@80x24.org>; Mon,  4 Jun 2018 02:41:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E238F1F403
+	for <e@80x24.org>; Mon,  4 Jun 2018 02:44:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751699AbeFDClF (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Jun 2018 22:41:05 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:38442 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751597AbeFDClE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Jun 2018 22:41:04 -0400
-Received: by mail-wr0-f193.google.com with SMTP id 94-v6so41499285wrf.5
-        for <git@vger.kernel.org>; Sun, 03 Jun 2018 19:41:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=OljyrbtE1cpWHRxLMFz+qDDwMf+J4H+Chg31Kyewxsg=;
-        b=AzVvlQQZctSISAaWhR7sI3PqUPuwwwQXbps4MXMWQX3t8NG8vg8mCE5JUWumJe54/8
-         cikcJOHNSVUO0uApgqTqH5+rHi1Cs2hp2LwxAGDAB6tkoIDny7kXbJ6jLOS88wBlny3a
-         NraB3U4rL3ibV2zISDVIrSzTWMvA83qUpIliOMyKA9icsiGvuaqRC2MCEhcuWEmeJ6Og
-         hZO1/XVuE+v4DsuM/YnF1xFOWbwwzeCamJYKLLmJD59ixzFKAI3ujsNWnlbQ6yAe81/6
-         Kj7Dvz2L0dSN68FqaaNjh4xSr99TmlPx5uL4hNnAHEJZK78FxtjDOOot2PWa01VYZ6QK
-         EjVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=OljyrbtE1cpWHRxLMFz+qDDwMf+J4H+Chg31Kyewxsg=;
-        b=KbDULe7gCkhHGRP3BPWSAxK9kRPAuaLD8DxkTJpz8BoUGsSWPn7NcH+JobRGrspYh8
-         /AnxJ9N5MRq1r7auTQayF9jH4nfjgoLLpuFciBVOniFWJ+p2TCUBCM0aQD8XpaPUbV1W
-         xyCksRKMEfE9CRCvGfCNypy0Nux7p0TpMKq8Ns2AcF8M5zfIOIdp5ioAOpzbKUvW01r6
-         +0ANfCaSmthKAw+rTy78mFtG6ss5y+K4U3nv0rHcHWenuf++T0a0KZnBtwEjT7KQwhry
-         AQlaSDO3KL7QfOyow2lXNZ7h7gEhILp6gfi4CrDG/4qp4ab9CJAU7I6BH2C/n40E2Pb1
-         9jUA==
-X-Gm-Message-State: ALKqPweZHgDGrQEWC8blyC8rCWj3rdYHMIH93JdUk8ip2eYc7kpylm1w
-        r5HJ42dGMgE/QpCczYQ5iek=
-X-Google-Smtp-Source: ADUXVKJrMP2SPR0o5rK8DIjPrI5jPgEdrsZtdoeqLCeYtaPazEWogsoruNNN4b0YqEsFzZ4aTOg+5A==
-X-Received: by 2002:adf:ba8f:: with SMTP id p15-v6mr7891326wrg.139.1528080063287;
-        Sun, 03 Jun 2018 19:41:03 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id a14-v6sm6106735wmb.44.2018.06.03.19.41.02
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 03 Jun 2018 19:41:02 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] sequencer.c: plug mem leak in git_sequencer_config
-References: <20180601200146.114919-1-sbeller@google.com>
-        <20180601200146.114919-2-sbeller@google.com>
-Date:   Mon, 04 Jun 2018 11:41:02 +0900
-In-Reply-To: <20180601200146.114919-2-sbeller@google.com> (Stefan Beller's
-        message of "Fri, 1 Jun 2018 13:01:46 -0700")
-Message-ID: <xmqq8t7v6zpd.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751482AbeFDCoQ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Jun 2018 22:44:16 -0400
+Received: from mga07.intel.com ([134.134.136.100]:43959 "EHLO mga07.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751373AbeFDCoP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Jun 2018 22:44:15 -0400
+X-Amp-Result: UNSCANNABLE
+X-Amp-File-Uploaded: False
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by orsmga105.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 03 Jun 2018 19:44:14 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.49,473,1520924400"; 
+   d="scan'208";a="229644060"
+Received: from yexl-desktop.sh.intel.com (HELO localhost) ([10.239.159.124])
+  by orsmga005.jf.intel.com with ESMTP; 03 Jun 2018 19:44:13 -0700
+Date:   Mon, 4 Jun 2018 10:41:01 +0800
+From:   Ye Xiaolong <xiaolong.ye@intel.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Eduardo Habkost <ehabkost@redhat.com>, git@vger.kernel.org,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: format-patch: no 'prerequisite-patch-id' info when specifying
+ commit range
+Message-ID: <20180604024101.GO27396@yexl-desktop>
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>,
+        Eduardo Habkost <ehabkost@redhat.com>, git@vger.kernel.org,
+        Stefan Beller <sbeller@google.com>
+References: <20180529184651.GB14525@localhost.localdomain>
+ <20180603060702.GA1306@yexl-desktop>
+ <xmqqh8mj70w6.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqh8mj70w6.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
-
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  sequencer.c | 1 +
->  1 file changed, 1 insertion(+)
+On 06/04, Junio C Hamano wrote:
+>Ye Xiaolong <xiaolong.ye@intel.com> writes:
 >
-> diff --git a/sequencer.c b/sequencer.c
-> index b98690ecd41..aba03e9429a 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -175,6 +175,7 @@ static int git_sequencer_config(const char *k, const char *v, void *cb)
->  			warning(_("invalid commit message cleanup mode '%s'"),
->  				  s);
->  
-> +		free(s);
->  		return status;
->  	}
+>> I narrowed down the problem to revision walk, if users specify the commit range
+>> via "Z..C" pattern, the first prepare_revision_walk function called in
+>> cmd_format_patch would mark all parents (ancestors) of Z to be uninteresting,
+>> thus the next revision walk in prepare_bases wouldn't be able to reach
+>> prerequisite patches, one quick solution I can think of is to clear
+>> UNINTERESTING flag in reset_revision_walk, like below:
+>>
+>> void reset_revision_walk(void)
+>> {
+>> 	clear_object_flags(SEEN | ADDED | SHOWN| UNINTERESTING);
+>> }
+>
+>When you are done with objects that are UNINTERESTING in your
+>application (i.e. only when "format-patch" is told to compute list
+>of prereq patches by doing an extra revision walk), your application
+>can call clear_object_flags() on the flags you are done with, I
+>would think.
+>
+>But the current callers of reset_revision_walk() do not expect any
+>flags other than the ones that are used to keep track of the
+>traversal state, so it is likely you will break them if you suddenly
+>started to clear flags randomly.
 
-Shouldn't 's' now lose 'const'?  After all, git_config_string()
-gives you an allocated memory so...
+Got it, I'll try to call clear_object_flags in format-patch related codepatch
+only, not to touch the global reset_revision_walk.
+
+Thanks,
+Xiaolong
