@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF1051F403
-	for <e@80x24.org>; Mon,  4 Jun 2018 17:29:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B65F71F403
+	for <e@80x24.org>; Mon,  4 Jun 2018 17:30:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751342AbeFDR3y (ORCPT <rfc822;e@80x24.org>);
+        id S1751348AbeFDRaA (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Jun 2018 13:30:00 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:45300 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751149AbeFDR3y (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 4 Jun 2018 13:29:54 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:40670 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751309AbeFDR3w (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Jun 2018 13:29:52 -0400
-Received: by mail-pf0-f194.google.com with SMTP id z24-v6so2119368pfe.7
-        for <git@vger.kernel.org>; Mon, 04 Jun 2018 10:29:52 -0700 (PDT)
+Received: by mail-pf0-f195.google.com with SMTP id a22-v6so3181370pfo.12
+        for <git@vger.kernel.org>; Mon, 04 Jun 2018 10:29:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=9FAed05FktJGIz+9YtVE7iLigJZ4hNcd92anbn3BQ1I=;
-        b=Wz/D1AgK8juPxtEBxac7tooy5mCCP4bWb5qGhtbwhk+Rl5fDCSlk+skvpGNsY0jE50
-         SpxYXYtBG6MGNB9Z6khm0/EU8iLegpeLYZ9u9i5C5+uNJ8qpxG8fEH8nak7Ml8UtDVHw
-         YjfY1lINR15rBdN8Qxy7R+kYMLDW/WPzLNNEvf6LEsla34g6HwC5ZGBGuhi1gDtCTDEh
-         hmMrRR49+0bh0B7xj2MmU9IyZruRKZgwXjTeAkjNhIhHtUMs+R9Zra9LJW9fkB2IbOPS
-         AxJtg2M3r86HK/R2Vu5mxI+X+AH8118wUShrmgOedlR6WhvbkXeN0c42x/Idl+li7Mcu
-         +sPw==
+        bh=JXs6u9Z398TPeN8Oy+ndJVsMHwM+aA777E7fH3lUFcM=;
+        b=E9YE5QgGh3kOGlHbjC9lArDqH2YAY8ihe2W8FO2V6q+FmehSLsFe6dDP0iG5kWYfMP
+         bediM7GRIjYw/iADY84KbDZLpkzfEkWmWeu4HFZAU9CdUEQOdPW00dMuNzztovd9Cg9L
+         GtqomRNw9GI+QSSc8GQF3swBtH/G9fWejaxE78rl6dQ81Qt0OUDCUrbptrRcMgPgrCgZ
+         KNQnEQHTR9gtXesv5h9prwS9JFG7dckTuSORSPrHUPqAjzVn/WMoDj8EjD07nv/kD4sI
+         py98h1UF50s0iwB1WZ7MhbAFEw6Qi137YmJWClidPJzL/P6KMlZkzRp7fIkg1y6TSL91
+         jnYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=9FAed05FktJGIz+9YtVE7iLigJZ4hNcd92anbn3BQ1I=;
-        b=RMR/jjHg02eBK8falxUhauAPBkLlDY8pila5ayUw9LNbzSQv415IRpXDca/iF5yGdR
-         HCWr5sUTlRibn0KKmbZBWNis+5Ttm7s6gilpV/0eI9SiFssmzw3V6VW0Dx/Ns3AeSjwd
-         c/Ix7Ost4yk3Anh0/s1IrIhNFWJKrzAPF8lbd2xY9QCrdKbyHdGl9yR36r8fgJViewCo
-         kPQ83EM938E8aVgcCXw4pFkfZLgOG7OR1MIjufiRurt7EcuWhLB+Xy7nonP4JefnapjG
-         pZoMf6XHVy2kgE2Z5c/6K3znI+swHS62EaKnBSUpLlrqPCzsgZeKGT+umqC85v5i32NH
-         qRjw==
-X-Gm-Message-State: ALKqPwcL8v0Rp0zpeMYfgnEfieuV8RsIslqCwxn3gKn55h4HyBCphyFl
-        eIQvk0Ph+3XeJQHSo2JulToY2dpIBjQ=
-X-Google-Smtp-Source: ADUXVKKVrHWE2YxRYIsmiLZtDbjZrIs3uynmVtIJBqk9mOa79Y1025hqozYrDE5NkztjbQ0tLoXnaA==
-X-Received: by 2002:a65:47c8:: with SMTP id f8-v6mr17939761pgs.430.1528133390830;
-        Mon, 04 Jun 2018 10:29:50 -0700 (PDT)
+        bh=JXs6u9Z398TPeN8Oy+ndJVsMHwM+aA777E7fH3lUFcM=;
+        b=Rd6voEdFG3R5Jnb+fWjvsH7Z/92oODhh/NOVeVjLGQ1MrUyAmYOmC6rtAw/qcIk6t2
+         SgNmDMTcBbp4rBzQ+SdFj4kqfLQ+C9kVJKu03tnyVldY0rgf9omIfI7wlR8ErTKHmd5I
+         rentx4lWzLHG98jcCL7Qgo+k2HdHlEE468NZStxNtaTdoy1zlq41u6+0fvDv349MEZWR
+         v6mBezKP8kdxdW/T6i24cPwOE+bBNfXtCRGbBneJAiv6iFjr9AIKp/IzsLrkyNBjIMP/
+         Vswy0e35XKZ15vYvbfhzrBOWBhSYUwnJqF2hB6iNK3wikjkAoYw/r+Uh2Z7eFf6EEiDY
+         rfYA==
+X-Gm-Message-State: APt69E0JSLAVXRqWi0h4WqxryWvMtc+3YA0S3Y9OzqNfyeV81g5bV7eT
+        2gIHrJViC0VUfEF+bRFkgP3fTA3c1f8=
+X-Google-Smtp-Source: ADUXVKK8EEQw1px3o8T3myM6purwSErrm2HfOMvCP53xDwm/z/nOk/hZXICuILvEp5a09C2S6Cj5Ww==
+X-Received: by 2002:a62:40dc:: with SMTP id f89-v6mr1154032pfd.194.1528133392959;
+        Mon, 04 Jun 2018 10:29:52 -0700 (PDT)
 Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
-        by smtp.gmail.com with ESMTPSA id x2-v6sm4491994pfn.11.2018.06.04.10.29.49
+        by smtp.gmail.com with ESMTPSA id x2-v6sm4491994pfn.11.2018.06.04.10.29.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 04 Jun 2018 10:29:49 -0700 (PDT)
+        Mon, 04 Jun 2018 10:29:51 -0700 (PDT)
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
         bmwill@google.com
-Subject: [PATCH 4/6] fetch-pack: make negotiation-related vars local
-Date:   Mon,  4 Jun 2018 10:29:34 -0700
-Message-Id: <8bda254e73fb00ff8448031002c7619bbe1dc285.1527894919.git.jonathantanmy@google.com>
+Subject: [PATCH 5/6] fetch-pack: move common check and marking together
+Date:   Mon,  4 Jun 2018 10:29:35 -0700
+Message-Id: <02577402adaf0d109f74e59486d8a23f6ae68663.1527894919.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.17.0.768.g1526ddbba1.dirty
 In-Reply-To: <cover.1527894919.git.jonathantanmy@google.com>
 References: <cover.1527894919.git.jonathantanmy@google.com>
@@ -63,383 +63,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Reduce the number of global variables by making the priority queue and
-the count of non-common commits in it local, passing them as a struct to
-various functions where necessary.
-
-This also helps in the case that fetch_pack() is invoked twice in the
-same process (when tag following is required when using a transport that
-does not support tag following), in that different priority queues will
-now be used in each invocation, instead of reusing the possibly
-non-empty one.
-
-The struct containing these variables is named "data" to ease review of
-a subsequent patch in this series - in that patch, this struct
-definition and several functions will be moved to a negotiation-specific
-file, and this allows the move to be verbatim.
+This enables the calculation of was_common and the invocation to
+mark_common() to be abstracted into a single call to the negotiator API
+(to be introduced in a subsequent patch).
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- fetch-pack.c | 104 +++++++++++++++++++++++++++++----------------------
- 1 file changed, 59 insertions(+), 45 deletions(-)
+ fetch-pack.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/fetch-pack.c b/fetch-pack.c
-index 192771a8f..ec92929bc 100644
+index ec92929bc..54dd3feb8 100644
 --- a/fetch-pack.c
 +++ b/fetch-pack.c
-@@ -50,8 +50,12 @@ static int marked;
-  */
- #define MAX_IN_VAIN 256
- 
--static struct prio_queue rev_list = { compare_commits_by_commit_date };
--static int non_common_revs, multi_ack, use_sideband;
-+struct data {
-+	struct prio_queue rev_list;
-+	int non_common_revs;
-+};
-+
-+static int multi_ack, use_sideband;
- /* Allow specifying sha1 if it is a ref tip. */
- #define ALLOW_TIP_SHA1	01
- /* Allow request of a sha1 if it is reachable from a ref (possibly hidden ref). */
-@@ -93,7 +97,8 @@ static void cache_one_alternate(const char *refname,
- 	cache->items[cache->nr++] = obj;
- }
- 
--static void for_each_cached_alternate(void (*cb)(struct object *))
-+static void for_each_cached_alternate(struct data *data,
-+				      void (*cb)(struct data *, struct object *))
- {
- 	static int initialized;
- 	static struct alternate_object_cache cache;
-@@ -105,10 +110,10 @@ static void for_each_cached_alternate(void (*cb)(struct object *))
- 	}
- 
- 	for (i = 0; i < cache.nr; i++)
--		cb(cache.items[i]);
-+		cb(data, cache.items[i]);
- }
- 
--static void rev_list_push(struct commit *commit, int mark)
-+static void rev_list_push(struct data *data, struct commit *commit, int mark)
- {
- 	if (!(commit->object.flags & mark)) {
- 		commit->object.flags |= mark;
-@@ -116,19 +121,20 @@ static void rev_list_push(struct commit *commit, int mark)
- 		if (parse_commit(commit))
- 			return;
- 
--		prio_queue_put(&rev_list, commit);
-+		prio_queue_put(&data->rev_list, commit);
- 
- 		if (!(commit->object.flags & COMMON))
--			non_common_revs++;
-+			data->non_common_revs++;
- 	}
- }
- 
--static int rev_list_insert_ref(const char *refname, const struct object_id *oid)
-+static int rev_list_insert_ref(struct data *data, const char *refname,
-+			       const struct object_id *oid)
- {
- 	struct object *o = deref_tag(parse_object(oid), refname, 0);
- 
- 	if (o && o->type == OBJ_COMMIT)
--		rev_list_push((struct commit *)o, SEEN);
-+		rev_list_push(data, (struct commit *)o, SEEN);
- 
- 	return 0;
- }
-@@ -136,7 +142,7 @@ static int rev_list_insert_ref(const char *refname, const struct object_id *oid)
- static int rev_list_insert_ref_oid(const char *refname, const struct object_id *oid,
- 				   int flag, void *cb_data)
- {
--	return rev_list_insert_ref(refname, oid);
-+	return rev_list_insert_ref(cb_data, refname, oid);
- }
- 
- static int clear_marks(const char *refname, const struct object_id *oid,
-@@ -156,7 +162,7 @@ static int clear_marks(const char *refname, const struct object_id *oid,
-    when only the server does not yet know that they are common).
- */
- 
--static void mark_common(struct commit *commit,
-+static void mark_common(struct data *data, struct commit *commit,
- 		int ancestors_only, int dont_parse)
- {
- 	if (commit != NULL && !(commit->object.flags & COMMON)) {
-@@ -166,12 +172,12 @@ static void mark_common(struct commit *commit,
- 			o->flags |= COMMON;
- 
- 		if (!(o->flags & SEEN))
--			rev_list_push(commit, SEEN);
-+			rev_list_push(data, commit, SEEN);
- 		else {
- 			struct commit_list *parents;
- 
- 			if (!ancestors_only && !(o->flags & POPPED))
--				non_common_revs--;
-+				data->non_common_revs--;
- 			if (!o->parsed && !dont_parse)
- 				if (parse_commit(commit))
- 					return;
-@@ -179,7 +185,7 @@ static void mark_common(struct commit *commit,
- 			for (parents = commit->parents;
- 					parents;
- 					parents = parents->next)
--				mark_common(parents->item, 0, dont_parse);
-+				mark_common(data, parents->item, 0, dont_parse);
- 		}
- 	}
- }
-@@ -188,7 +194,7 @@ static void mark_common(struct commit *commit,
-   Get the next rev to send, ignoring the common.
- */
- 
--static const struct object_id *get_rev(void)
-+static const struct object_id *get_rev(struct data *data)
- {
- 	struct commit *commit = NULL;
- 
-@@ -196,16 +202,16 @@ static const struct object_id *get_rev(void)
- 		unsigned int mark;
- 		struct commit_list *parents;
- 
--		if (rev_list.nr == 0 || non_common_revs == 0)
-+		if (data->rev_list.nr == 0 || data->non_common_revs == 0)
- 			return NULL;
- 
--		commit = prio_queue_get(&rev_list);
-+		commit = prio_queue_get(&data->rev_list);
- 		parse_commit(commit);
- 		parents = commit->parents;
- 
- 		commit->object.flags |= POPPED;
- 		if (!(commit->object.flags & COMMON))
--			non_common_revs--;
-+			data->non_common_revs--;
- 
- 		if (commit->object.flags & COMMON) {
- 			/* do not send "have", and ignore ancestors */
-@@ -220,9 +226,9 @@ static const struct object_id *get_rev(void)
- 
- 		while (parents) {
- 			if (!(parents->item->object.flags & SEEN))
--				rev_list_push(parents->item, mark);
-+				rev_list_push(data, parents->item, mark);
- 			if (mark & COMMON)
--				mark_common(parents->item, 1, 0);
-+				mark_common(data, parents->item, 1, 0);
- 			parents = parents->next;
- 		}
- 	}
-@@ -296,9 +302,9 @@ static void send_request(struct fetch_pack_args *args,
- 		write_or_die(fd, buf->buf, buf->len);
- }
- 
--static void insert_one_alternate_object(struct object *obj)
-+static void insert_one_alternate_object(struct data *data, struct object *obj)
- {
--	rev_list_insert_ref(NULL, &obj->oid);
-+	rev_list_insert_ref(data, NULL, &obj->oid);
- }
- 
- #define INITIAL_FLUSH 16
-@@ -321,7 +327,7 @@ static int next_flush(int stateless_rpc, int count)
- 	return count;
- }
- 
--static int find_common(struct fetch_pack_args *args,
-+static int find_common(struct data *data, struct fetch_pack_args *args,
- 		       int fd[2], struct object_id *result_oid,
- 		       struct ref *refs)
- {
-@@ -337,8 +343,8 @@ static int find_common(struct fetch_pack_args *args,
- 	if (args->stateless_rpc && multi_ack == 1)
- 		die(_("--stateless-rpc requires multi_ack_detailed"));
- 
--	for_each_ref(rev_list_insert_ref_oid, NULL);
--	for_each_cached_alternate(insert_one_alternate_object);
-+	for_each_ref(rev_list_insert_ref_oid, data);
-+	for_each_cached_alternate(data, insert_one_alternate_object);
- 
- 	fetching = 0;
- 	for ( ; refs ; refs = refs->next) {
-@@ -456,7 +462,7 @@ static int find_common(struct fetch_pack_args *args,
- 	retval = -1;
- 	if (args->no_dependents)
- 		goto done;
--	while ((oid = get_rev())) {
-+	while ((oid = get_rev(data))) {
- 		packet_buf_write(&req_buf, "have %s\n", oid_to_hex(oid));
- 		print_verbose(args, "have %s", oid_to_hex(oid));
- 		in_vain++;
-@@ -514,7 +520,7 @@ static int find_common(struct fetch_pack_args *args,
+@@ -499,11 +499,14 @@ static int find_common(struct data *data, struct fetch_pack_args *args,
+ 				case ACK_continue: {
+ 					struct commit *commit =
+ 						lookup_commit(result_oid);
++					int was_common;
+ 					if (!commit)
+ 						die(_("invalid commit %s"), oid_to_hex(result_oid));
++					was_common = commit->object.flags & COMMON;
++					mark_common(data, commit, 0, 1);
+ 					if (args->stateless_rpc
+ 					 && ack == ACK_common
+-					 && !(commit->object.flags & COMMON)) {
++					 && !was_common) {
+ 						/* We need to replay the have for this object
+ 						 * on the next RPC request so the peer knows
+ 						 * it is in common with us.
+@@ -520,7 +523,6 @@ static int find_common(struct data *data, struct fetch_pack_args *args,
  					} else if (!args->stateless_rpc
  						   || ack != ACK_common)
  						in_vain = 0;
--					mark_common(commit, 0, 1);
-+					mark_common(data, commit, 0, 1);
+-					mark_common(data, commit, 0, 1);
  					retval = 0;
  					got_continue = 1;
  					if (ack == ACK_ready)
-@@ -704,7 +710,7 @@ static void filter_refs(struct fetch_pack_args *args,
- 	*refs = newlist;
- }
- 
--static void mark_alternate_complete(struct object *obj)
-+static void mark_alternate_complete(struct data *unused, struct object *obj)
- {
- 	mark_complete(&obj->oid);
- }
-@@ -731,7 +737,8 @@ static int add_loose_objects_to_set(const struct object_id *oid,
- 	return 0;
- }
- 
--static int everything_local(struct fetch_pack_args *args,
-+static int everything_local(struct data *data,
-+			    struct fetch_pack_args *args,
- 			    struct ref **refs,
- 			    struct ref **sought, int nr_sought)
- {
-@@ -784,7 +791,7 @@ static int everything_local(struct fetch_pack_args *args,
- 	if (!args->no_dependents) {
- 		if (!args->deepen) {
- 			for_each_ref(mark_complete_oid, NULL);
--			for_each_cached_alternate(mark_alternate_complete);
-+			for_each_cached_alternate(NULL, mark_alternate_complete);
- 			commit_list_sort_by_date(&complete);
- 			if (cutoff)
- 				mark_recent_complete_commits(args, cutoff);
-@@ -802,9 +809,10 @@ static int everything_local(struct fetch_pack_args *args,
- 				continue;
- 
- 			if (!(o->flags & SEEN)) {
--				rev_list_push((struct commit *)o, COMMON_REF | SEEN);
-+				rev_list_push(data, (struct commit *)o,
-+					      COMMON_REF | SEEN);
- 
--				mark_common((struct commit *)o, 1, 1);
-+				mark_common(data, (struct commit *)o, 1, 1);
- 			}
- 		}
- 	}
-@@ -978,6 +986,7 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
- 	struct object_id oid;
- 	const char *agent_feature;
- 	int agent_len;
-+	struct data data = { { compare_commits_by_commit_date } };
- 
- 	sort_ref_list(&ref, ref_compare_name);
- 	QSORT(sought, nr_sought, cmp_ref_by_name);
-@@ -1053,11 +1062,11 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
- 	if (marked)
- 		for_each_ref(clear_marks, NULL);
- 	marked = 1;
--	if (everything_local(args, &ref, sought, nr_sought)) {
-+	if (everything_local(&data, args, &ref, sought, nr_sought)) {
- 		packet_flush(fd[1]);
- 		goto all_done;
- 	}
--	if (find_common(args, fd, &oid, ref) < 0)
-+	if (find_common(&data, args, fd, &oid, ref) < 0)
- 		if (!args->keep_pack)
- 			/* When cloning, it is not unusual to have
- 			 * no common commit.
-@@ -1138,13 +1147,14 @@ static void add_common(struct strbuf *req_buf, struct oidset *common)
- 	}
- }
- 
--static int add_haves(struct strbuf *req_buf, int *haves_to_send, int *in_vain)
-+static int add_haves(struct data *data, struct strbuf *req_buf,
-+		     int *haves_to_send, int *in_vain)
- {
- 	int ret = 0;
- 	int haves_added = 0;
- 	const struct object_id *oid;
- 
--	while ((oid = get_rev())) {
-+	while ((oid = get_rev(data))) {
- 		packet_buf_write(req_buf, "have %s\n", oid_to_hex(oid));
- 		if (++haves_added >= *haves_to_send)
- 			break;
-@@ -1163,7 +1173,8 @@ static int add_haves(struct strbuf *req_buf, int *haves_to_send, int *in_vain)
- 	return ret;
- }
- 
--static int send_fetch_request(int fd_out, const struct fetch_pack_args *args,
-+static int send_fetch_request(struct data *data, int fd_out,
-+			      const struct fetch_pack_args *args,
- 			      const struct ref *wants, struct oidset *common,
- 			      int *haves_to_send, int *in_vain)
- {
-@@ -1219,7 +1230,7 @@ static int send_fetch_request(int fd_out, const struct fetch_pack_args *args,
- 		add_common(&req_buf, common);
- 
- 		/* Add initial haves */
--		ret = add_haves(&req_buf, haves_to_send, in_vain);
-+		ret = add_haves(data, &req_buf, haves_to_send, in_vain);
- 	}
- 
- 	/* Send request */
-@@ -1256,7 +1267,8 @@ static int process_section_header(struct packet_reader *reader,
- 	return ret;
- }
- 
--static int process_acks(struct packet_reader *reader, struct oidset *common)
-+static int process_acks(struct data *data, struct packet_reader *reader,
-+			struct oidset *common)
- {
- 	/* received */
- 	int received_ready = 0;
-@@ -1275,7 +1287,7 @@ static int process_acks(struct packet_reader *reader, struct oidset *common)
- 				struct commit *commit;
- 				oidset_insert(common, &oid);
- 				commit = lookup_commit(&oid);
--				mark_common(commit, 0, 1);
-+				mark_common(data, commit, 0, 1);
- 			}
- 			continue;
- 		}
-@@ -1353,6 +1365,7 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
- 	struct packet_reader reader;
- 	int in_vain = 0;
- 	int haves_to_send = INITIAL_FLUSH;
-+	struct data data = { { compare_commits_by_commit_date } };
- 	packet_reader_init(&reader, fd[0], NULL, 0,
- 			   PACKET_READ_CHOMP_NEWLINE);
- 
-@@ -1373,16 +1386,17 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
- 			marked = 1;
- 
- 			/* Filter 'ref' by 'sought' and those that aren't local */
--			if (everything_local(args, &ref, sought, nr_sought))
-+			if (everything_local(&data, args, &ref, sought, nr_sought))
- 				state = FETCH_DONE;
- 			else
- 				state = FETCH_SEND_REQUEST;
- 
--			for_each_ref(rev_list_insert_ref_oid, NULL);
--			for_each_cached_alternate(insert_one_alternate_object);
-+			for_each_ref(rev_list_insert_ref_oid, &data);
-+			for_each_cached_alternate(&data,
-+						  insert_one_alternate_object);
- 			break;
- 		case FETCH_SEND_REQUEST:
--			if (send_fetch_request(fd[1], args, ref, &common,
-+			if (send_fetch_request(&data, fd[1], args, ref, &common,
- 					       &haves_to_send, &in_vain))
- 				state = FETCH_GET_PACK;
- 			else
-@@ -1390,7 +1404,7 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
- 			break;
- 		case FETCH_PROCESS_ACKS:
- 			/* Process ACKs/NAKs */
--			switch (process_acks(&reader, &common)) {
-+			switch (process_acks(&data, &reader, &common)) {
- 			case 2:
- 				state = FETCH_GET_PACK;
- 				break;
 -- 
 2.17.0.768.g1526ddbba1.dirty
 
