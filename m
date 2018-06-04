@@ -7,123 +7,106 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F20A1F403
-	for <e@80x24.org>; Mon,  4 Jun 2018 22:33:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CBCAB1F517
+	for <e@80x24.org>; Mon,  4 Jun 2018 23:52:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751555AbeFDWdn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Jun 2018 18:33:43 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:33136 "EHLO
+        id S1751223AbeFDXwo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Jun 2018 19:52:44 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:33168 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751209AbeFDWdm (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 4 Jun 2018 18:33:42 -0400
+        by vger.kernel.org with ESMTP id S1751000AbeFDXwn (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 4 Jun 2018 19:52:43 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:54a4:7f2e:59a2:6beb])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id AA78960732;
-        Mon,  4 Jun 2018 22:33:40 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 2120B60732;
+        Mon,  4 Jun 2018 23:52:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1528151621;
-        bh=yRND2uvwzbVBqZkVRbY/bYr/aqbPEVTPs3hyBsS0jE4=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+        s=default; t=1528156361;
+        bh=AiAigYXVbnramj9EQuFCMPv2M+kLR/3M7bcY7N1v9mo=;
+        h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=Jk1QKzvbbC+jvPpYMal45p+OQI4fM3gXl7LsDZdszPDu4Rc6tguh1+69/xX/eLEDw
-         PysytC3TPbFRcRwpldxFSBgYdS1JsEXtouVmRqLSSUiJ7BpkH+0A+h9H8Rp+9Geq8C
-         fFqL/ab6Fyfdbe0jDUT5pc6GurTq+a66Z87OEJdoNe/Mb0VtI4widfDYQ9tB32OSGW
-         UfhmgzJjPTvGqH+laBUpMSA3yWfH0Dcn21Ph6kHvLq96eS70kk32GSR0PkAbkOsYmg
-         OJ2IVQ0CR3ANb39jMw7+X1yl0+j1gqGjGWOJBDSzq3O2WZj+XaYZTmnWlkM4r0X/yf
-         6n1K4fOOfLqi3T7ddFYmLarPjL4xyPyPb99pOnEyvZnLH+xa8cfP2opgufQNfF2IE0
-         /OUnzAnElRUcQMCQOezhlnxUhQS9TdAa1nqCo0u5H3G9+62PpsCIOcWCOlDIk2SsgR
-         Vz1A/FTuEeHVeyDXvjMZYM8QpJBPMrRYMh+4TKefv1cqgt09LFn
-Date:   Mon, 4 Jun 2018 22:33:36 +0000
+        b=qnI+TRx+w2mOWknggEp41tRYjGpHQ41vN7Y2b1/iOjDv53QW4wZgkKccWonUwoLIa
+         9TbRBhgPmZE3oSkLBchmkBv7LxRGPoqqpyymULZxK2ADLAPauolkIrNaZ26cd+NnU3
+         QkmI3er2YWWsDbZ6WYvyi0yI1FdnWOXwsLJk5HT8iE87MU0irthZ66T3yonLoC3a3d
+         wRS+RWeqFifiTXIc7zZ0Ql6eUK789ovX6ZqiNNNgsy/mYp0N8VWOkSMgWptsssKA5X
+         3zpRqAbNOJFMcV2PJfUXJOeNE42azj0YUmgIzvru5PPeyP0P/qKcaB79ZKNVQ9vDnY
+         LJwYwcNI9Ya1MCDihKIPp54d3hQi0F+TTe21h5vE4n9TTpeHmbdWOCrUGCIKbq6WUB
+         ZimhQVt/LRqDIv87tdHAXikxsFhmB+BilzkFQ6P9Vkz3b2J877kx9KnEIEfrkZcxcm
+         MFllqrMekNwo6IFamdh4aZJsDc8Lc1W4jlZIT4RIphPy9IeE7xO
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] tests: make forging GPG signed commits and tags more
- robust
-Message-ID: <20180604223335.GC288937@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <20180604133926.16558-1-szeder.dev@gmail.com>
- <20180604133926.16558-2-szeder.dev@gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="mvpLiMfbWzRoNl4x"
-Content-Disposition: inline
-In-Reply-To: <20180604133926.16558-2-szeder.dev@gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.16.0-2-amd64)
-User-Agent: Mutt/1.10.0 (2018-05-17)
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>
+Subject: [PATCH 00/10] Hash-independent tests (part 3)
+Date:   Mon,  4 Jun 2018 23:52:19 +0000
+Message-Id: <20180604235229.279814-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.17.1.1185.g55be947832
 X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This is next in the series of improvements to make tests
+hash-independent.
 
---mvpLiMfbWzRoNl4x
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Introduced here is a test helper, test_translate, that allows lookups in
+tests based on the hash algorithm in use.  Alternatives are either
+specified inline (the former for SHA-1, the latter for NewHash), or
+(more commonly) from a file based on a key.  Some basic examples of
+translations are provided and used throughout the tests.
 
-On Mon, Jun 04, 2018 at 03:39:26PM +0200, SZEDER G=C3=A1bor wrote:
-> On rare occasions the given pattern occurs not only in the commit
-> message but in the GPG signature as well, and after it's replaced in
-> the signature the resulting signature becomes invalid, GPG will report
-> CRC error and that it couldn't find any signature, which will then
-> ultimately cause the test failure.
+The ultimate idea is that tests can simply drop a file into the
+translation directory and use their own test-specific translations if
+convenient.
 
-Ooh, I hadn't seen these failures, but thanks for tracking this down.
+This series (and subsequent series) attempt to standardize slightly on
+our use of invalid object IDs in tests.  Since the actual invalid IDs
+aren't usually very important, the translations I've made using the
+tables aren't necessarily entirely faithful: we will sometimes use
+different SHA-1 object IDs than before, but we substitute only invalid
+object IDs for different invalid ones.
 
-> Since in all three cases the pattern to be replaced during the forgery
-> is the first word of the commit message's subject line, and since the
-> GPG signature in the commit object is indented by a space, let's just
-> anchor those patterns to the beginning of the line to prevent this
-> issue.
->=20
-> The test script 't7030-verify-tag.sh' creates a forged signed tag
-> object in a similar way by replacing the pattern "seventh", but the
-> GPG signature in tag objects is not indented by a space, so the above
-> solution is not applicable in this case.  However, in the tag object
-> in question the pattern "seventh" occurs not only in the tag message
-> but in the 'tag' header as well.  To create a forged tag object it's
-> sufficient to replace only one of the two occurences, so modify the
-> sed script to limit the pattern to the 'tag' header (i.e. a line
-> beginning with "tag ", which, because of the space character, can
-> never occur in the base64-encoded GPG signature).
->=20
-> Note that the forgery in 't7004-tag.sh' is not affected by this issue:
-> while 't7004' does create a forged signed tag kind of the same way,
-> it replaces "signed-tag" in the tag object, which, because of the '-'
-> character, can never occur in the base64-encoded GPG signarute.
+It's likely in the future that test_translate will support additional
+options depending on whether we want input, output, or internal formats.
 
-This seems sane and obviously correct, and the other patch looked good,
-too.  Thanks.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+I had mentioned in a previous comment that a given test would be
+included in "the next series" (this one), but I redid the series and
+decided to split it into smaller pieces, so it isn't included.  Sorry.
 
---mvpLiMfbWzRoNl4x
-Content-Type: application/pgp-signature; name="signature.asc"
+Comments on any aspect of the series are welcome, but thoughts on design
+and naming would be especially valuable.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.7 (GNU/Linux)
+brian m. carlson (10):
+  t: add tool to translate hash-related values
+  t0000: use hash translation table
+  t0002: abstract away SHA-1-specific constants
+  t0027: use $ZERO_OID
+  t0064: make hash size independent
+  t1006: make hash size independent
+  t1400: switch hard-coded object ID to variable
+  t1405: make hash size independent
+  t1406: make hash-size independent
+  t1407: make hash size independent
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlsVvj8ACgkQv1NdgR9S
-9ovPVhAApk7YF8Ozqa6rqttbpe6yMd0je0hgjJzpr9ebCIRD+7BcpFuxM4NHit2V
-U6WpCYAhgU4iH5gxDLdNVfOqY+DmKVY5KvqiKHJyLsUzfw6ZBdOwuhH8ktPBvSR+
-l/j2iWjl1mgq9u7WLa1yJC4tZtLSH3ZZJdSWUiqosesTJ7lh0iJc+g7hFi/d6NTB
-YxctGd6RzirSoq7vfNTNJ+JCXVwES1oYCtKAjzLrdctpzrRnwuM3BKad0oN05JSz
-bKLhLCtgOTu8LvooWS5n80fzB7r8SovA/cfqIpVhYi4iqyM25RmJQ8+aa0QlPyo4
-pbhCHfMeRiaW8f16BC7GEVXmv7m2M81s8e8BBXAM46LnGaZbi9fHx4JO7GPI2ykE
-KbWHBaaxm2zmsjLhQ8/6RqlBnPsooVIRJvfrf/rAt/9At4r+MRdNGNIawRUwOOBt
-FmomNsw1tcUag75Sx9N+owtiYd1xwHl/8rIXnsCe+3cMASDHgtg1/wUWO4QVU3ee
-KcsZrlZQTMh77HgAsVqeIVQPMCpLtZHSY8YUYJSrXfuljHcOvg/Uv+NRALvLcdWn
-3HhkYwcKSDjr5cUJCmtgBtFpR+w255FW8zn9DPfFdF16JgUiippIb1r/mA2n9VJM
-/gqFPOqTxUl5fm6pQYYV4052gcjTz3LcugMXX7aU153wycoMQ9k=
-=kccf
------END PGP SIGNATURE-----
+ t/t0000-basic.sh               | 13 ++++-----
+ t/t0002-gitfile.sh             | 26 +++++++++---------
+ t/t0027-auto-crlf.sh           | 14 +++++-----
+ t/t0064-sha1-array.sh          | 49 +++++++++++++++++++---------------
+ t/t1006-cat-file.sh            |  4 +--
+ t/t1400-update-ref.sh          |  2 +-
+ t/t1405-main-ref-store.sh      |  4 +--
+ t/t1406-submodule-ref-store.sh |  6 ++---
+ t/t1407-worktree-ref-store.sh  |  4 +--
+ t/test-lib-functions.sh        | 40 +++++++++++++++++++++++++++
+ t/translate/hash-info          |  9 +++++++
+ t/translate/oid                | 15 +++++++++++
+ 12 files changed, 129 insertions(+), 57 deletions(-)
+ create mode 100644 t/translate/hash-info
+ create mode 100644 t/translate/oid
 
---mvpLiMfbWzRoNl4x--
