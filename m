@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 253721F517
-	for <e@80x24.org>; Mon,  4 Jun 2018 23:53:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1365B1F517
+	for <e@80x24.org>; Mon,  4 Jun 2018 23:53:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751465AbeFDXxE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Jun 2018 19:53:04 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:33250 "EHLO
+        id S1751474AbeFDXxM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Jun 2018 19:53:12 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:33184 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751290AbeFDXxC (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 4 Jun 2018 19:53:02 -0400
+        by vger.kernel.org with ESMTP id S1751085AbeFDXwp (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 4 Jun 2018 19:52:45 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:54a4:7f2e:59a2:6beb])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4973A60749;
-        Mon,  4 Jun 2018 23:53:00 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 458B560742;
+        Mon,  4 Jun 2018 23:52:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1528156380;
-        bh=O8G2TknhGB20+Eg0MVuhjhEd8j2HtADkxm5OMfazT0M=;
+        s=default; t=1528156364;
+        bh=qBZhsaP40Y/4+vAh4A4XQviRmyeAqRqt0DK12b4Qk1k=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=STX5BJcv5KEwkHPmLA0Z2yWRVPoCvgABKn6BgZpK+OVhPZefrIpzaBdOnYKlb9i24
-         pq1hFrBkfjuXLdzhk0zIQcOgNLGrDsFt3MM5DsTbe2wX4rTvlMEw9TjM0NVyjmKJLA
-         2dm9VybqsxlGrhi2qOJHbdHCcfs5LiwIr5mIJ8pZ3NoSCVfxy4CERavdu0PKMPlPNj
-         t2KHkphRFe84LvDVu1tGk7/lbWKV96gihnAEdR+O9lOmO9DRHHEuO7vK1KS0h6S47o
-         8qOXXGbIGB8V8zhU6ifVfwus+Ndw7SFtz6gx8iGKl7BM00YyMg0r3IyB0Ey+NydqBX
-         bWXIT2dMJyXiCSvLoBCtL0knmsORTXvKFfiLE5OrT20dk0vtdPJBjIs4ZoRq3aIiaw
-         yXLUsjpQY5RXLXRjSoYYkHAvKcpaPk7DwmAWyWFmN3s8ntL8cFg2YiY0exzfvUAwQb
-         dhuYx0B516qy3Gs13s5lHNn062xm6UOI/yXEdFaMnNT9ejwFqD6
+        b=CHSefwmd0Uz/omFV6v+010RZjTJ6i6YOOE/QAOCruPqnntx+/P9s78hB6sjz2EcPF
+         tGD/U1OeMqkgZpi4ke0XrZJAWjEGEBIXUl6gxsblzAB/JjrJm15vllGDjPfZHtfoZh
+         lkH4g3vus/8RM3U37lpUgLQenItXuyPN+OZm14oOFgCTN1lwR2+Te8uD7zCek9fB8K
+         oH74zBGJpdJe4PF3oNueJyuXYVmB2Q9S0tvR52FQMq0uzrR6TuRQajnnhStncTFO9U
+         vZsnhJV+h1PXlKC25s/h1QArTYkfMiT+WjEueh531N7+NUzbhp2d7jyELq7v8JZK6t
+         Psk1n7lHhrJmC5jth5p3YPsyTcB0snEVM+TcACt+vYiYJDJBA+R6TD0FhtQ3V2tvRt
+         Qf9mqfJnVmIM+dJLrTAuuOkRWKt+P62BAjKHjJCNsiaA+0DX7ggYvD/B7l2tC/NJCl
+         DgNClVLudhScLwvqwUKSgEsEkf+uaoOeE1VnwzSrkEdrJkNa4li
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -42,9 +42,9 @@ Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
         =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
         Jeff King <peff@peff.net>,
         =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>
-Subject: [PATCH 10/10] t1407: make hash size independent
-Date:   Mon,  4 Jun 2018 23:52:29 +0000
-Message-Id: <20180604235229.279814-11-sandals@crustytoothpaste.net>
+Subject: [PATCH 02/10] t0000: use hash translation table
+Date:   Mon,  4 Jun 2018 23:52:21 +0000
+Message-Id: <20180604235229.279814-3-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.1.1185.g55be947832
 In-Reply-To: <20180604235229.279814-1-sandals@crustytoothpaste.net>
 References: <20180604235229.279814-1-sandals@crustytoothpaste.net>
@@ -54,33 +54,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of hard-coding a 40-based constant, split the output of
-for-each-ref and for-each-reflog by field.
+If the hash we're using is 32 bytes in size, attempting to insert a
+20-byte object name won't work.  Since these are synthesized objects
+that are almost all zeros, look them up in a translation table.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t1407-worktree-ref-store.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t0000-basic.sh | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/t/t1407-worktree-ref-store.sh b/t/t1407-worktree-ref-store.sh
-index 4623ae15c4..9a84858118 100755
---- a/t/t1407-worktree-ref-store.sh
-+++ b/t/t1407-worktree-ref-store.sh
-@@ -58,7 +58,7 @@ test_expect_success 'for_each_reflog()' '
- 	mkdir -p     .git/worktrees/wt/logs/refs/bisect &&
- 	echo $ZERO_OID > .git/worktrees/wt/logs/refs/bisect/wt-random &&
+diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+index af61d083b4..27ef9ecab2 100755
+--- a/t/t0000-basic.sh
++++ b/t/t0000-basic.sh
+@@ -978,12 +978,13 @@ test_expect_success SHA1 'validate object ID for a known tree' '
  
--	$RWT for-each-reflog | cut -c 42- | sort >actual &&
-+	$RWT for-each-reflog | cut -d" " -f 2- | sort >actual &&
- 	cat >expected <<-\EOF &&
- 	HEAD 0x1
- 	PSEUDO-WT 0x0
-@@ -68,7 +68,7 @@ test_expect_success 'for_each_reflog()' '
+ test_expect_success 'put invalid objects into the index' '
+ 	rm -f .git/index &&
+-	cat >badobjects <<-\EOF &&
+-	100644 blob 1000000000000000000000000000000000000000	dir/file1
+-	100644 blob 2000000000000000000000000000000000000000	dir/file2
+-	100644 blob 3000000000000000000000000000000000000000	dir/file3
+-	100644 blob 4000000000000000000000000000000000000000	dir/file4
+-	100644 blob 5000000000000000000000000000000000000000	dir/file5
++	suffix=$(echo $ZERO_OID | sed -e "s/^.//") &&
++	cat >badobjects <<-EOF &&
++	100644 blob $(test_translate -f oid 001)	dir/file1
++	100644 blob $(test_translate -f oid 002)	dir/file2
++	100644 blob $(test_translate -f oid 003)	dir/file3
++	100644 blob $(test_translate -f oid 004)	dir/file4
++	100644 blob $(test_translate -f oid 005)	dir/file5
  	EOF
- 	test_cmp expected actual &&
- 
--	$RMAIN for-each-reflog | cut -c 42- | sort >actual &&
-+	$RMAIN for-each-reflog | cut -d" " -f 2- | sort >actual &&
- 	cat >expected <<-\EOF &&
- 	HEAD 0x1
- 	PSEUDO-MAIN 0x0
+ 	git update-index --index-info <badobjects
+ '
