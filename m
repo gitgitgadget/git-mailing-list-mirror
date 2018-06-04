@@ -2,144 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D27741F403
-	for <e@80x24.org>; Mon,  4 Jun 2018 13:09:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2CBED1F403
+	for <e@80x24.org>; Mon,  4 Jun 2018 13:33:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753147AbeFDNJD (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Jun 2018 09:09:03 -0400
-Received: from mail-qt0-f178.google.com ([209.85.216.178]:43958 "EHLO
-        mail-qt0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753140AbeFDNJC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Jun 2018 09:09:02 -0400
-Received: by mail-qt0-f178.google.com with SMTP id y89-v6so14888731qtd.10
-        for <git@vger.kernel.org>; Mon, 04 Jun 2018 06:09:02 -0700 (PDT)
+        id S1753063AbeFDNdi (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Jun 2018 09:33:38 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:39152 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753197AbeFDNdh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Jun 2018 09:33:37 -0400
+Received: by mail-wr0-f194.google.com with SMTP id w7-v6so31582089wrn.6
+        for <git@vger.kernel.org>; Mon, 04 Jun 2018 06:33:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=tlyoiWu/3ZWKn0WHNP9eSRJUGKo55Mk/HYaNlHBbiLY=;
-        b=ltC77mT8eyuVQD+E9QEia9yf5tZt4xMYdlp+como9suGLBY1FScVk0cFlsHWq4qGj0
-         vsySvAXv5yoi1+KulVsga37yooEvUtU0bU77ssYYohlkiH2pZctyHyFtN1oEMRCRhEIt
-         MuQZLOZ1t6szzFQqpdfksFw2iM3c/e/M3RJOiSvwJzLCwVS5qmEcof/nlfLwqMK7lThA
-         b87S/MABFssmVMr7uxa8i1vr8SE+XDuxLYT3WhecW+0DyffzFl5VgMgQhD+EiDNRD2Uy
-         uy+G5mLQjwjbs1T83uhbg/DTUff2hiSX9b82l9kz7GAHajolkVnDOKCbRbdf+iup++Tj
-         F3jA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=f+MmqoI02JhB93ZxctEwjGEdFgOMW6YsokLDsVeWs1s=;
+        b=TXX+Y0ZpQHIiGcVOIC7XLgkg0Ib/UiDnuEPOdEZGvPC3U9dSYw5kzSPmrLgjq9vENE
+         3CXkgKwxTaP+yqDGrsuK/r1aMt/VUKZYn47sZqpO17R/RLYaQFwvK0B1/eNYj4HEsuXb
+         iQVaAlX0+JYmjxBH/O4vx98ALqMoNtnJFDYuAzZNQ9m/04pdreLc3vy2QaoG1knNEFNd
+         /0XNvb7fgvSsCBl5QQm57NJ+PTCZrB0kL6U2B7gkLfH9J6rNgviGOCfAmFxc8OoKzC0j
+         IadzNmb469NxFZ1fR7wbsdSUo+rnsxnVvPVGePS1Sl94CFGqMBEoOS13N+UvEoNNQ6Am
+         ehCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=tlyoiWu/3ZWKn0WHNP9eSRJUGKo55Mk/HYaNlHBbiLY=;
-        b=oqzzcz+4GafGqum5E2IpiFTiQ4lOp6qa5bx21K1gEKo2HNG7riSzICYdgHWwtsJbTd
-         QJb46MedDwr1n96yLt5XgN+OFjm5BaNGOXPKGEW9VUQnXq33kQA3wLAa/xba80FFpfBA
-         d7iImOJHKVp27TjunvR/UzZurbMSoVZDQU/dwdPuogT4WkA8upEpt4J9wly100C9Na0U
-         OpbleOcqxgxST2yNvv0ZMr9GDDHDm6Oaqi6eL6sfrLLKNYiPKk4D7bbU9o9O2glx7ym0
-         fJpYRa0sQPrgeA14zSkvXh/EJwmMcciW/cAxAjGl2Wyf2U1JxULMjaZxRNCm6TuUg4F0
-         K9JQ==
-X-Gm-Message-State: APt69E3OTTooDx+HJCjiXd+qXKbL8gCvhiseqcCzG+b+KsqOmvr+GvsD
-        FerNzeat7pnIoTS0fx8Nz3Y=
-X-Google-Smtp-Source: ADUXVKKvvoGJZJA2J9EL0JoJ6x6mpXeYL+RiU7y1U1q2a75D/0jCT3e6sjk8ydS/kUIBkVdAuCPGXw==
-X-Received: by 2002:a0c:ca12:: with SMTP id c18-v6mr19954485qvk.62.1528117741605;
-        Mon, 04 Jun 2018 06:09:01 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:6990:e1e1:697d:a15? ([2001:4898:8010:0:52c6:e1e1:697d:a15])
-        by smtp.gmail.com with ESMTPSA id o10-v6sm222136qkl.94.2018.06.04.06.08.59
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 04 Jun 2018 06:09:00 -0700 (PDT)
-Subject: Re: [PATCH v3 15/20] commit-graph: test for corrupted octopus edge
-To:     Jakub Narebski <jnareb@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "avarab@gmail.com" <avarab@gmail.com>,
-        "marten.agren@gmail.com" <marten.agren@gmail.com>,
-        "peff@peff.net" <peff@peff.net>
-References: <20180511211504.79877-1-dstolee@microsoft.com>
- <20180524162504.158394-1-dstolee@microsoft.com>
- <20180524162504.158394-16-dstolee@microsoft.com> <86tvqltla9.fsf@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <7665886b-1343-ca9d-aa41-db7a5b7d2735@gmail.com>
-Date:   Mon, 4 Jun 2018 09:08:59 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=f+MmqoI02JhB93ZxctEwjGEdFgOMW6YsokLDsVeWs1s=;
+        b=f10EjcTu354GgrlRUBd24nKj8ix3/r6aZ3ytMoHM3qdFIg0vB7C5XUAoN0qCg2btgu
+         FCt36yaVXi1McJGqPqOgw+bMTvh7aZaP80wcMTb/Lx7FoXCjaDckskj67L0T2vyK6Qt4
+         srjeLPX1PgNMI9wZ4J2f+UckcFbEoafgP4Knf0nUjIG9lJxbCh/DSazbMjtuaDSmhXeI
+         rvvUhvCRbxQmZPoSErzXGYsXYaimRDyqR0NUye8VnbsuqDqnKffRCviAzW3sa/RW5K/l
+         Zz3NqZroe9HpdO2KrrxxWJJPGPYSWznveZJBv6+OwUQOf6Tg8vrhg1UYjyL1qOrPOoG9
+         qPQA==
+X-Gm-Message-State: APt69E3qDREnL1YOqUpDljMJXD9KACuy8JbVVHApfFonQ4AmsNmENhgZ
+        SGLZ1cCWVusPuo+FjHNn4Hs=
+X-Google-Smtp-Source: ADUXVKKYii3N6aCWlNJNaGTZ7WcNPf1tQxaHfGZLBuYKLA3rpnFl+gQKkhkDaat9s7sllhxMaIe8uw==
+X-Received: by 2002:a1c:7d56:: with SMTP id y83-v6mr10377434wmc.65.1528119215351;
+        Mon, 04 Jun 2018 06:33:35 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id u3-v6sm24057746wrm.60.2018.06.04.06.33.33
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 04 Jun 2018 06:33:34 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     Philip Oakley <philipoakley@iee.org>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Git Mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH v2] t/perf/run: Use proper "--get-regexp", not "--get-regex"
+References: <alpine.LFD.2.21.1806030613080.7681@localhost.localdomain>
+        <20180603133039.GF26159@hank.intra.tgummerer.com>
+        <alpine.LFD.2.21.1806030935010.21364@localhost.localdomain>
+        <0AE4648A05C445FBA049864F455B35A7@PhilipOakley>
+        <alpine.LFD.2.21.1806040659590.11594@localhost.localdomain>
+Date:   Mon, 04 Jun 2018 22:33:33 +0900
+In-Reply-To: <alpine.LFD.2.21.1806040659590.11594@localhost.localdomain>
+        (Robert P. J. Day's message of "Mon, 4 Jun 2018 07:03:25 -0400 (EDT)")
+Message-ID: <xmqq1sdm65hu.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <86tvqltla9.fsf@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/2/2018 8:39 AM, Jakub Narebski wrote:
-> Derrick Stolee <dstolee@microsoft.com> writes:
->
->> The commit-graph file has an extra chunk to store the parent int-ids for
->> parents beyond the first parent for octopus merges. Our test repo has a
->> single octopus merge that we can manipulate to demonstrate the 'verify'
->> subcommand detects incorrect values in that chunk.
-> If I understand it correctly the above means that our _reading_ code
-> checks for validity (which then 'git commit-graph verify' uses), just
-> there were not any tests for that.
->
->> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
->> ---
->>   t/t5318-commit-graph.sh | 10 ++++++++++
->>   1 file changed, 10 insertions(+)
->>
->> diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
->> index 58adb8246d..240aef6add 100755
->> --- a/t/t5318-commit-graph.sh
->> +++ b/t/t5318-commit-graph.sh
->> @@ -248,6 +248,7 @@ test_expect_success 'git commit-graph verify' '
->>   '
->>   
->>   NUM_COMMITS=9
->> +NUM_OCTOPUS_EDGES=2
->>   HASH_LEN=20
->>   GRAPH_BYTE_VERSION=4
->>   GRAPH_BYTE_HASH=5
->> @@ -274,6 +275,10 @@ GRAPH_BYTE_COMMIT_EXTRA_PARENT=`expr $GRAPH_COMMIT_DATA_OFFSET + $HASH_LEN + 4`
->>   GRAPH_BYTE_COMMIT_WRONG_PARENT=`expr $GRAPH_COMMIT_DATA_OFFSET + $HASH_LEN + 3`
->>   GRAPH_BYTE_COMMIT_GENERATION=`expr $GRAPH_COMMIT_DATA_OFFSET + $HASH_LEN + 8`
->>   GRAPH_BYTE_COMMIT_DATE=`expr $GRAPH_COMMIT_DATA_OFFSET + $HASH_LEN + 12`
->> +GRAPH_COMMIT_DATA_WIDTH=`expr $HASH_LEN + 16`
->> +GRAPH_OCTOPUS_DATA_OFFSET=`expr $GRAPH_COMMIT_DATA_OFFSET + \
->> +				$GRAPH_COMMIT_DATA_WIDTH \* $NUM_COMMITS`
->> +GRAPH_BYTE_OCTOPUS=`expr $GRAPH_OCTOPUS_DATA_OFFSET + 4`
->>   
->>   # usage: corrupt_graph_and_verify <position> <data> <string>
->>   # Manipulates the commit-graph file at the position
->> @@ -378,4 +383,9 @@ test_expect_success 'detect incorrect commit date' '
->>   		"commit date"
->>   '
->>   
->> +test_expect_success 'detect incorrect parent for octopus merge' '
->> +	corrupt_graph_and_verify $GRAPH_BYTE_OCTOPUS "\01" \
->> +		"invalid parent"
->> +'
-> So we change the int-id to non-existing commit, and check that
-> commit-graph code checks for that.
->
-> What about the case when there are octopus merges, but no EDGE chunk
-> (which I think we can emulate by changing / corrupting number of
-> chunks)?
->
-> What about the case where int-id of edge in EDGE chunk is correct, that
-> is points to a valid commit, but does not agree with what is in the
-> object database (what parents octopus merge has in reality)?
->
-> Do we detect the situation where the second parent value in the commit
-> data stores an array position within a Large Edge chunk, but we do not
-> reach a value with the most-significant bit on when reaching the end of
-> Large Edge chunk?
+"Robert P. J. Day" <rpjday@crashcourse.ca> writes:
 
-There are a few holes like this, but I think they are better suited to a 
-follow-up series, as this series is already quite large.
+> one thing i don't see there, and it's based on an observation someone
+> once made (i believe on this list), is that even if there is
+> absolutely no ambiguity in a command, even if there are no pathspec
+> arguments, it's still worthwhile to add a trailing "--":
+>
+>   $ git command options/treeish ... --
+>
+> since that guarantees that git will waste no time trying to identify
+> any ambiguity since you're being so precise. is that worth mentioning
+> in that page?
 
--Stolee
+I do not think it is worth mentioning _anywhere_ if you sell its
+benefit as "even there is no ambiguity it won't spend cycles".  
+
+The point of "git cmd X --" and "git cmd -- X" is that they save
+your human cycle, not machine cycle; you do not have to waste time
+wondering if you happen to have X as path in the working tree.  That
+may be worth mentioning, but only "maybe" I would think.
+
+A more important reason is you may not _know_ beforehand if X you
+mean to be a rev also happens to be a path (or vice versa) when you
+are scripting.  Writing 'git checkout master', 'git diff HEAD',
+etc., in a script you intend to be generic enough is risky if
+'master', HEAD, etc. can be both rev and path at the same time, but
+that is already described in gitcli page ;-)
