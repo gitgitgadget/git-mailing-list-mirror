@@ -2,82 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BD5F81F403
-	for <e@80x24.org>; Tue,  5 Jun 2018 12:25:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C1FA1F403
+	for <e@80x24.org>; Tue,  5 Jun 2018 12:53:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751877AbeFEMZy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Jun 2018 08:25:54 -0400
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:37406 "EHLO
-        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751718AbeFEMZx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jun 2018 08:25:53 -0400
-Received: by mail-wm0-f41.google.com with SMTP id r125-v6so4611848wmg.2
-        for <git@vger.kernel.org>; Tue, 05 Jun 2018 05:25:52 -0700 (PDT)
+        id S1751732AbeFEMxs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Jun 2018 08:53:48 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:37942 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751625AbeFEMxr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jun 2018 08:53:47 -0400
+Received: by mail-wm0-f67.google.com with SMTP id m129-v6so4882921wmb.3
+        for <git@vger.kernel.org>; Tue, 05 Jun 2018 05:53:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=NEQqeQABwwwkar97StA5Pv0Tbzuq0NKsr/4xEl6GsUg=;
-        b=GQGGNuRe3iNMW9cW7mrch9N2dDNUb5t9txvQwrLd4YvJajF2Z2hDVjb3bNOFZx0XbU
-         K3LUSIegTdvVObhVjh5aGcT6UwLMcw+jFfTGI66u5kwZDWW38LcyBfKSOvFkdi3EOLI6
-         ch6aJQyfN1SsNR65w2qvw3K460ADtyqIqz2V/S0jCQnSMLzL6Sl+rizI7Stz8PsICOWx
-         URxd0OsOwb1R9JN1bVrHdVT8Cqak3xPKfVI8zxp6GoP1xi0ZaMk54BkVA96p0tXyLylT
-         URXbKloLwem7uKsThQbqp81y4VvYQVPhVE4JppTNS1dmz6Ym2PkzUG5S09VznoML7whP
-         EjbA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=pyttUPnuTsr1LnRbKPOK5NJIyNMFqXhi6oMuHzlUwtU=;
+        b=DKSifZv60Ece/+483c9E0RbB3+Agjlsbt29F6RXkjP6oMoPfOphujkSpYHaKNCNL3q
+         QokJ80k6Uf8Q0p76xkwerZls122lX3U8R1+v5OwThJT3792JwJ49PUIuPwFAEg0QxjdP
+         A6Cqx0H1u1De4QeuUOONWTvS1YJNo7WPqh3Ynr6h6BQ+XbsJMRotfP+XU9i0jQsJwZI/
+         SRVfYRA9MV79K7R3nbMSC+yc5Ao6p/XZPqOjO5JJfz9cJQCq4AS9N8j3BCMjmWU/oqdb
+         2gmcBNAM0FcqqUZfvvD3UerWMBqZXgHRsb1BMmj0FeFrPSSM9WDM2RcbuanQmkuge35t
+         u1WA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=NEQqeQABwwwkar97StA5Pv0Tbzuq0NKsr/4xEl6GsUg=;
-        b=tEdARGZEDncLEuIVvYhnLuSrCDwkXecdxpeE3+Bor5EGn/xNyGIUebcfpOwxXew3Qi
-         Xv09Fkh5qYjQkmex8z/478E9TMlAXnhPgHYcNi2bqHRYRj8tv6YVyZkjNpbaxGeRiFf+
-         Xrz3z2WVAzqoeEZ/I2Sy2FAP6zmujn65p0p9sU8IVPplksfpn8Drrj3GNTrg41JxIm2f
-         G/ZehDsVCatkchjF9NxfIUQaQYRyns6c+dhYR2MF8gXgvuCOLQh5KP8wgiidbNlgbVWs
-         Bg/t7z0ZwtkHjcfz5DEiWwvbRCy1LCn0ZCx/O7KqNANvuHFY2ipNofdM4renY46IsO1o
-         ibpA==
-X-Gm-Message-State: ALKqPweOxw/+qPZxWWwSJRPYrhs1VwIyHNnf6cEG9khep2RHoByweIOE
-        4KNQXcG0KWNgLr2REq4B2Ao=
-X-Google-Smtp-Source: ADUXVKKc21QCws+zbjkdvnFw2hlZ7uGOXkvds3trF2+1eYgiIruUajmjI4KCrthW0Vnca1/rTdywSg==
-X-Received: by 2002:a50:f5a1:: with SMTP id u30-v6mr25808516edm.93.1528201551854;
-        Tue, 05 Jun 2018 05:25:51 -0700 (PDT)
-Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id k1-v6sm20521437eda.35.2018.06.05.05.25.50
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 05 Jun 2018 05:25:51 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Tim Friske <me@tifr.de>
-Cc:     git@vger.kernel.org
-Subject: Re: Git not creating merge commit when merging signed/annotated tag
-References: <374116891.50361.1528200631824@office.mailbox.org>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <374116891.50361.1528200631824@office.mailbox.org>
-Date:   Tue, 05 Jun 2018 14:25:50 +0200
-Message-ID: <87r2llzagh.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=pyttUPnuTsr1LnRbKPOK5NJIyNMFqXhi6oMuHzlUwtU=;
+        b=Mxkev2CXVldqmS706jeAToKgTi6HZoc+fAseSsOeCab/VOOpN8sCeZusOMmxm2T5sI
+         FD42Q2lbLzxHYUNBC92YIsB4OSANiJAjDG9/R7J0mKDnwdn+/bAIHwFEWG0HgY/+iLBq
+         Y+xMZOcCfW/nX8rPFN1KJ/X3fpBTIx7/IjR6oxBcw1KhltgZSXvjKjMDoOZeAuTwG4qT
+         BbxWpwrmRVaDuc4S8b4/HdaTe0QDLp4ldULtLPMl7Vx3VS2I3uyiRhQ9pIfV6ck+IVGd
+         5WU731IEj79raUEMNce/tBpAJQzVZKrtuY1S+esLI1ytpyeteSjoeCHQG/HKNSzGa2DK
+         82XA==
+X-Gm-Message-State: ALKqPwcJJHU9g+3TOKwfHJa5qChZUiz216cyQWDcxCG756T03Ea1nidt
+        VUoAbS4/Tf5XlYo4fi8WFcLgdGGT
+X-Google-Smtp-Source: ADUXVKL5zIbt9atblE5xnPfpWRkZOixIHVGxH0E4Jj0uxuLxeZ2X3mMif7JT7K+kJX9e8YTg4Rkv3Q==
+X-Received: by 2002:a50:95f0:: with SMTP id x45-v6mr29104405eda.99.1528203225937;
+        Tue, 05 Jun 2018 05:53:45 -0700 (PDT)
+Received: from localhost.localdomain (AToulouse-658-1-184-117.w86-199.abo.wanadoo.fr. [86.199.39.117])
+        by smtp.googlemail.com with ESMTPSA id i38-v6sm4439480ede.41.2018.06.05.05.53.43
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 05 Jun 2018 05:53:44 -0700 (PDT)
+From:   Alban Gruin <alban.gruin@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Stefan Beller <sbeller@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        phillip.wood@dunelm.org.uk, Alban Gruin <alban.gruin@gmail.com>
+Subject: [GSoC][PATCH v2 0/1] rebase -i: rewrite append_todo_help() in C
+Date:   Tue,  5 Jun 2018 14:53:33 +0200
+Message-Id: <20180605125334.14082-1-alban.gruin@gmail.com>
+X-Mailer: git-send-email 2.16.4
+In-Reply-To: <20180531110130.18839-1-alban.gruin@gmail.com>
+References: <20180531110130.18839-1-alban.gruin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This patch rewrites append_todo_help() from shell to C. The C version
+covers a bit more than the old shell version. To achieve that, some
+parameters were added to rebase--helper.
 
-On Tue, Jun 05 2018, Tim Friske wrote:
+This is part of the effort to rewrite interactive rebase in C.
 
-> Hi Everyone,
->
-> ten days ago I asked on https://unix.stackexchange.com/ why Git is not creating a merge commit when merging a signed/annotated tag. Does someone has an answer to my question https://unix.stackexchange.com/questions/446154/git-not-creating-merge-commit-when-merging-signed-annotated-tag?
->
-> Thank you in advance!
+Changes since v1:
 
-I believe my answer in this recent thread which brought up the same
-topic applies to your situation as well:
-https://public-inbox.org/git/CANgJU+VFCY0LNRLMSGtD7ScpcLaPFMzUOyw6Bjgk6q=Kx9DvCg@mail.gmail.com/
+ - Renaming the parameter to insert the edit-todo message from
+   `edit-todo` to `write-edit-todo`.
 
-Try to apply the patch I noted to builtin/merge.c there and see if you
-don't get the same message printed out.
+ - Clarifying the `write-edit-todo` help message.
+
+ - Dropping the commit that removed newlines in the messages.
+
+Alban Gruin (1):
+  rebase--interactive: rewrite append_todo_help() in C
+
+ builtin/rebase--helper.c   | 10 ++++++--
+ git-rebase--interactive.sh | 52 ++--------------------------------------
+ sequencer.c                | 60 ++++++++++++++++++++++++++++++++++++++++++++++
+ sequencer.h                |  1 +
+ 4 files changed, 71 insertions(+), 52 deletions(-)
+
+-- 
+2.16.4
+
