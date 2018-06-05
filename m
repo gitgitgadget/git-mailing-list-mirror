@@ -2,80 +2,193 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3827B1F403
-	for <e@80x24.org>; Tue,  5 Jun 2018 17:54:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 974921F403
+	for <e@80x24.org>; Tue,  5 Jun 2018 17:58:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753283AbeFERyl (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Jun 2018 13:54:41 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35062 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752696AbeFERyi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jun 2018 13:54:38 -0400
-Received: (qmail 31656 invoked by uid 109); 5 Jun 2018 17:54:38 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 05 Jun 2018 17:54:38 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28583 invoked by uid 111); 5 Jun 2018 17:54:50 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 05 Jun 2018 13:54:50 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Jun 2018 13:54:36 -0400
-Date:   Tue, 5 Jun 2018 13:54:36 -0400
-From:   Jeff King <peff@peff.net>
-To:     Sean Hunt <seandhunt_7@icloud.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Where is git checkout --orphan implemented at.
-Message-ID: <20180605175435.GA22321@sigill.intra.peff.net>
-References: <2ED916AA-3E6A-4E22-9B9B-13C3B687B357@icloud.com>
+        id S1753149AbeFER6u (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Jun 2018 13:58:50 -0400
+Received: from mail-it0-f74.google.com ([209.85.214.74]:42234 "EHLO
+        mail-it0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752726AbeFERwO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jun 2018 13:52:14 -0400
+Received: by mail-it0-f74.google.com with SMTP id c7-v6so2816831itd.7
+        for <git@vger.kernel.org>; Tue, 05 Jun 2018 10:52:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
+         :cc;
+        bh=aQZhKDSaTlgV+q5c1WqgXZUpmzDEDSI89x9Be7zyCpk=;
+        b=Kbtqvtmalfm2n/rw7PztXTNFjmMrAIpZjN8xwjS/RNclZ2zSGbhxwY2ap7veb71olF
+         CKLRh9n0sL9EunQeC9pBOwO2XQXPrAExEC0aIhc+rPOvhPDtZcn14hPF2Orhiob8Ch8L
+         pUaOUV+I9l46ETZszQBfhSIsZ/nastOW8vcousZJEB9b5Wh4z1KCOsd8hE8PiMA0y3ti
+         8PN8V+7Fo88ltLMjLzeJlz1nIApdYBOEDSvl1SaSIh6Q8HvKZei0d9F7GpI1SsdXGnzf
+         d/1u4OSdrPJZYsRwAsmCeVvihz+tVHHJqtYmPpydUTYwvCT6RZywRTVOhXcBeovzUdU0
+         wcdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
+         :references:subject:from:to:cc;
+        bh=aQZhKDSaTlgV+q5c1WqgXZUpmzDEDSI89x9Be7zyCpk=;
+        b=DvWvKP3v1iYNJdAZEd9ax+2Kv4j26lFiZwKo6ZodRsm4XPpnJVQt2zZmACsf3XrZCZ
+         Erg/UwTPqNSXB/+7YBWcoYgKd+uIl1YBBf0DWjWySqa0izkT9/bIZVEKY2pZ4V+KTXhi
+         ZRMbLFb0mZciFWTL9sEf+Um1x0TcGEYnU2GmcpTU9vHNpvPpmCRuv/n7Tw9YklNjQ9Zr
+         azx6zJibr+/0qDCL4CiMLfZG2IH/yuZ2KnlT4sUcFFWNxqKiRXUx3NzRy9vaa/6Pra8M
+         KeWgqlJwCJIb7imjy0/VuY0Z/kriMJmO/7FzPCDbykB5nFifGWe/OKI2zf53PanZZEGQ
+         vcXg==
+X-Gm-Message-State: APt69E0/6pFDCRPN/1EFh83BqzszxXKqEivXkD+POClBDs3lB312I5I5
+        CAGMY9qtsJpR++y5l+AuCWchCu3viWKetsj7HsKPNY2wXwZmdYwI4poogF5ph1w3SYa35ZefwHE
+        UJL87dNcyPkJdmoojsdFXEIPHnbVPVgCcBvJTn8I2N1nT0DtyXeoeFHCGJg==
+X-Google-Smtp-Source: ADUXVKLvV0zbyYzySFa+/vsFUIHB7iRMTCU5PN3l7PJWdGK3ms+ZobmQ5YEYckk9YkfRKRk/fnTS954hCxo=
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <2ED916AA-3E6A-4E22-9B9B-13C3B687B357@icloud.com>
+X-Received: by 2002:a24:b51b:: with SMTP id v27-v6mr72422ite.17.1528221133459;
+ Tue, 05 Jun 2018 10:52:13 -0700 (PDT)
+Date:   Tue,  5 Jun 2018 10:51:44 -0700
+In-Reply-To: <20180605175144.4225-1-bmwill@google.com>
+Message-Id: <20180605175144.4225-9-bmwill@google.com>
+References: <20180605175144.4225-1-bmwill@google.com>
+X-Mailer: git-send-email 2.17.1.1185.g55be947832-goog
+Subject: [PATCH 8/8] fetch-pack: implement ref-in-want
+From:   Brandon Williams <bmwill@google.com>
+To:     git@vger.kernel.org
+Cc:     Brandon Williams <bmwill@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 05, 2018 at 12:02:12PM -0400, Sean Hunt wrote:
+Implement ref-in-want on the client side so that when a server supports
+the "ref-in-want" feature, a client will send "want-ref" lines for each
+reference the client wants to fetch.
 
-> I would like to see the source code to git checkout --orphan so I can
-> learn how it works and so I can manually do what it does by hand on
-> making a new branch with no history in the refs folder. I can only do
-> it on my iPhone as my laptop has no internet or way to do it there,
-> and the program on my iPhone does not have the method implemented yet
-> visually to do it, forcing manual creation of the orphan branch by
-> hand in the end. If the public github had all the codes to all
-> commands and subcommands like the one above it would be nice or well
-> at least a file that explains the source file each command and
-> subcommands are from so that way a person like me can use as a
-> reference to make our own git gui that has 100% of command line git
-> features.
+Signed-off-by: Brandon Williams <bmwill@google.com>
+---
+ fetch-pack.c                       | 35 +++++++++++++++++++++++++++---
+ remote.c                           |  1 +
+ remote.h                           |  1 +
+ t/t5703-upload-pack-ref-in-want.sh |  4 ++--
+ 4 files changed, 36 insertions(+), 5 deletions(-)
 
-The code for "checkout --orphan" is in builtin/checkout.c[1].
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 7799ee2cd..51e8356ba 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -1102,9 +1102,10 @@ static void add_shallow_requests(struct strbuf *req_buf,
+ 
+ static void add_wants(const struct ref *wants, struct strbuf *req_buf)
+ {
++	int use_ref_in_want = server_supports_feature("fetch", "ref-in-want", 0);
++
+ 	for ( ; wants ; wants = wants->next) {
+ 		const struct object_id *remote = &wants->old_oid;
+-		const char *remote_hex;
+ 		struct object *o;
+ 
+ 		/*
+@@ -1122,8 +1123,10 @@ static void add_wants(const struct ref *wants, struct strbuf *req_buf)
+ 			continue;
+ 		}
+ 
+-		remote_hex = oid_to_hex(remote);
+-		packet_buf_write(req_buf, "want %s\n", remote_hex);
++		if (!use_ref_in_want || wants->exact_sha1)
++			packet_buf_write(req_buf, "want %s\n", oid_to_hex(remote));
++		else
++			packet_buf_write(req_buf, "want-ref %s\n", wants->name);
+ 	}
+ }
+ 
+@@ -1334,6 +1337,29 @@ static void receive_shallow_info(struct fetch_pack_args *args,
+ 	args->deepen = 1;
+ }
+ 
++static void receive_wanted_refs(struct packet_reader *reader, struct ref *refs)
++{
++	process_section_header(reader, "wanted-refs", 0);
++	while (packet_reader_read(reader) == PACKET_READ_NORMAL) {
++		struct object_id oid;
++		const char *end;
++		struct ref *r = NULL;
++
++		if (parse_oid_hex(reader->line, &oid, &end) || *end++ != ' ')
++			die("expected wanted-ref, got '%s'", reader->line);
++
++		for (r = refs; r; r = r->next) {
++			if (!strcmp(end, r->name)) {
++				oidcpy(&r->old_oid, &oid);
++				break;
++			}
++		}
++	}
++
++	if (reader->status != PACKET_READ_DELIM)
++		die("error processing wanted refs: %d", reader->status);
++}
++
+ enum fetch_state {
+ 	FETCH_CHECK_LOCAL = 0,
+ 	FETCH_SEND_REQUEST,
+@@ -1408,6 +1434,9 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 			if (process_section_header(&reader, "shallow-info", 1))
+ 				receive_shallow_info(args, &reader);
+ 
++			if (process_section_header(&reader, "wanted-refs", 1))
++				receive_wanted_refs(&reader, ref);
++
+ 			/* get the pack */
+ 			process_section_header(&reader, "packfile", 0);
+ 			if (get_pack(args, fd, pack_lockfile))
+diff --git a/remote.c b/remote.c
+index abe80c139..c9d452ac0 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1735,6 +1735,7 @@ int get_fetch_map(const struct ref *remote_refs,
+ 		if (refspec->exact_sha1) {
+ 			ref_map = alloc_ref(name);
+ 			get_oid_hex(name, &ref_map->old_oid);
++			ref_map->exact_sha1 = 1;
+ 		} else {
+ 			ref_map = get_remote_ref(remote_refs, name);
+ 		}
+diff --git a/remote.h b/remote.h
+index 45ecc6cef..e5338e368 100644
+--- a/remote.h
++++ b/remote.h
+@@ -73,6 +73,7 @@ struct ref {
+ 		force:1,
+ 		forced_update:1,
+ 		expect_old_sha1:1,
++		exact_sha1:1,
+ 		deletion:1;
+ 
+ 	enum {
+diff --git a/t/t5703-upload-pack-ref-in-want.sh b/t/t5703-upload-pack-ref-in-want.sh
+index 979ab6d03..b94a51380 100755
+--- a/t/t5703-upload-pack-ref-in-want.sh
++++ b/t/t5703-upload-pack-ref-in-want.sh
+@@ -204,7 +204,7 @@ test_expect_success 'server is initially ahead - no ref in want' '
+ 	grep "ERR upload-pack: not our ref" err
+ '
+ 
+-test_expect_failure 'server is initially ahead - ref in want' '
++test_expect_success 'server is initially ahead - ref in want' '
+ 	git -C "$REPO" config uploadpack.allowRefInWant true &&
+ 	rm -rf local &&
+ 	cp -r "$LOCAL_PRISTINE" local &&
+@@ -228,7 +228,7 @@ test_expect_success 'server is initially behind - no ref in want' '
+ 	test_cmp expected actual
+ '
+ 
+-test_expect_failure 'server is initially behind - ref in want' '
++test_expect_success 'server is initially behind - ref in want' '
+ 	git -C "$REPO" config uploadpack.allowRefInWant true &&
+ 	rm -rf local &&
+ 	cp -r "$LOCAL_PRISTINE" local &&
+-- 
+2.17.1.1185.g55be947832-goog
 
-But if you want to do roughly the same thing with other tools, you can
-do:
-
- git symbolic-ref HEAD refs/heads/new-branch
-
-If you don't even have symbolic-ref handy, you can do:
-
-  echo "ref: refs/heads/new-branch" >.git/HEAD
-
-That's not generally recommended, since future versions of Git may
-change the ref storage format, but it would work with any current
-version of Git.
-
--Peff
-
-[1] Try update_refs_for_switch(), especially:
-
-    https://github.com/git/git/blob/61856ae69a2ceb241a90e47953e18f218e4d5f2f/builtin/checkout.c#L635
-
-    and
-
-    https://github.com/git/git/blob/61856ae69a2ceb241a90e47953e18f218e4d5f2f/builtin/checkout.c#L695
