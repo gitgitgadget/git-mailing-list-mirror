@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3CEAE1F403
-	for <e@80x24.org>; Tue,  5 Jun 2018 18:00:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A4CA1F403
+	for <e@80x24.org>; Tue,  5 Jun 2018 18:00:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752939AbeFESAM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Jun 2018 14:00:12 -0400
-Received: from mail-qk0-f201.google.com ([209.85.220.201]:49377 "EHLO
-        mail-qk0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752683AbeFERv5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jun 2018 13:51:57 -0400
-Received: by mail-qk0-f201.google.com with SMTP id w203-v6so3215972qkb.16
-        for <git@vger.kernel.org>; Tue, 05 Jun 2018 10:51:57 -0700 (PDT)
+        id S1753012AbeFESAK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Jun 2018 14:00:10 -0400
+Received: from mail-ua0-f201.google.com ([209.85.217.201]:44157 "EHLO
+        mail-ua0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752692AbeFERwA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jun 2018 13:52:00 -0400
+Received: by mail-ua0-f201.google.com with SMTP id t14-v6so1072801ual.11
+        for <git@vger.kernel.org>; Tue, 05 Jun 2018 10:52:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=sYEe8iRPTrOcHM3mkoOecfjMEKrpiQl9wbZfoQa3/WU=;
-        b=SXHiSoPP+IsNJj5ujIG9q/QAJsK7cADezBTzd5t8mWzXU4h58lxZcIKpqzeVsnPBPD
-         LcJygzGFzgACWhoIqYXPpfvf9UbR13cAmFOlaDgnpIGVxZybo3VgFSjsDpfXZRU7jy/G
-         Qrw7c4+QdFRU780FJ9IBcWi9ha1wBQ9eV5vMoiGA2D7WWl/ONRWCmGyz8uuxSE9Kz33C
-         aW8MxRkABh007C6B0OVAibs0TNsoQZ2Wo58a+biW84xFBywKsvk8cD/0MdbYLsdEHNBU
-         7lTsFJKmakXZZH+vDbj077HxpDuLBxF1k9GgzuEaOV2W1e+9E3Y9eTE+zWj5J++J4nD/
-         KqUw==
+        bh=vfkqaJW9oJJsBUXFqSSL0+B0EcQBpcBaglBuCHFTAb0=;
+        b=O5P4CgyYYI3QwjuIaDTlDW9sbnQY6bIQD5zBzlJQz/m5DIzzb7EtYvUkFhXdAPo9L2
+         5qGbpC2+3PV+N22pBfbh7C6NjRm8gd3Z9RbvUnavFiEucZnDlHJu9bqnadjSR17/GbGg
+         NGcpeQAx+w/N+yAMHsIGFJ4FLgTf+rL3hTaEKc/olITQZjnUMF//vqzYCvtHENp/92PG
+         +ZO9TiGYIScqxDYizCJciLNsRAQKXCwIb//+taRrpSzdx0l585v9JpjzEbR0r8JR0Hfx
+         Mo+jdKP0WX/9/+lHn4mQW7X3NdQexDC0OtUEZYScQtD/xcxAZyd1f4zwHFbLZQxfz+GX
+         HyIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=sYEe8iRPTrOcHM3mkoOecfjMEKrpiQl9wbZfoQa3/WU=;
-        b=XcQ1H/H0SZaaJnE5Go5Qw5JYMmxMftC4kBQD8AqcHV8A1zRBjXwKXNZyQFjiuaG/sU
-         tM1LgXw80a5l3EcMNG9izGWogm2Dj7O1MK5XJ4t6oXlpjzEJYTcRtbxxGIEBz/xQnIoC
-         TuDiint/ueR9r6x9g8b17oIn7J4Ve+XtYBQXekIwGUVKe9i5FblF7hJS3JviiucF7aXs
-         A4J/J4SkFEjLDc2RHq7D2C2apvSqzmaYqi0ab72ypF0r0YjplnVb5vF9ptZssHFdnrVZ
-         zOfDbFl8mA7UJM88QGuJirGIcKzkQ8sAeO0cfCBpIUZnRPDMVYWodrdVCiJSdRiCBY8d
-         rQXQ==
-X-Gm-Message-State: APt69E3/6ZMxLoEaN2pFb2vE10oqDzRSV/lKuW/0din0WyTyq0OU1VNk
-        d9Ytq0fvthULPNM6lzqtbAi7Qp72zLAOYwnKMp0bVs8lvSYyvdZwrcwTRA4altJxLdniXrmf5Cc
-        Epm/O6ynALOrJviOkqlfkgCmRjjUAKfw1qqU3u0hTQgYT8SjdALodS3Zahg==
-X-Google-Smtp-Source: ADUXVKK3l0PVmfQT7rXlbYYxyUBEtPiwaxQ841UP5L+ppaGAYtF8V89OUGpRa1RyAX2niTvjpIawnsjjlLM=
+        bh=vfkqaJW9oJJsBUXFqSSL0+B0EcQBpcBaglBuCHFTAb0=;
+        b=e7LvvAmydz7G5P175fQ7rA8wR/uv2uOgw/VUu8pP8kdDQS76vi/2pYqKDRklXogFZo
+         IOo9oLdjiR36bgvGaK5uuzVipRW788VDQNRFRTPNGpvgJ/5CMSxZRnj4c0/ae9nri+71
+         XMoajjbQP75ZHQ5tSh7XiwyZqzhc+wjA/opm013z0Xu6PB0iNC+03e36O1Zyo8Qv6wt5
+         9QhLk2dd29B6unIQdA8uzHIN9twUaDJeMLs+MjsRkkhOxSK1egH2q8W9uyAweyKSCGof
+         hmvPFjnDXNkadeSNAWFa8LYCndzXY8h66DM1ShntnnxzulRB8H+udRhiLziMcqPpO5QR
+         zkfA==
+X-Gm-Message-State: APt69E3JujelouRLipdz9qLFiq7Gev/YvOdYc2LgeWoB43PHivdQz0w1
+        BZFUt0cmDRBISQTwlCLzPBlWn/yU6KaYOoBp/uCJWWZj0MkpBVv+dEaCcdnYcHTELwWFARhrAFj
+        aMjXyw44EQBI+BYv6DwNnPvJPGW0X4YfDao1PJLJaIU1EjyMq5397x5UfGA==
+X-Google-Smtp-Source: ADUXVKK3dvSKO2BFr54j5PlNNn9+nCMV5BgvupJQO9ib5Z80KmEaw0sgu5GbkCQkw0cj1ZiRWszTTv07rVw=
 MIME-Version: 1.0
-X-Received: by 2002:a0c:9416:: with SMTP id h22-v6mr11709427qvh.41.1528221117184;
- Tue, 05 Jun 2018 10:51:57 -0700 (PDT)
-Date:   Tue,  5 Jun 2018 10:51:37 -0700
+X-Received: by 2002:a9f:2e17:: with SMTP id t23-v6mr7485237uaj.75.1528221119624;
+ Tue, 05 Jun 2018 10:51:59 -0700 (PDT)
+Date:   Tue,  5 Jun 2018 10:51:38 -0700
 In-Reply-To: <20180605175144.4225-1-bmwill@google.com>
-Message-Id: <20180605175144.4225-2-bmwill@google.com>
+Message-Id: <20180605175144.4225-3-bmwill@google.com>
 References: <20180605175144.4225-1-bmwill@google.com>
 X-Mailer: git-send-email 2.17.1.1185.g55be947832-goog
-Subject: [PATCH 1/8] test-pkt-line: add unpack-sideband subcommand
+Subject: [PATCH 2/8] upload-pack: implement ref-in-want
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>
@@ -62,73 +62,410 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add an 'unpack-sideband' subcommand to the test-pkt-line helper to
-enable unpacking packet line data sent multiplexed using a sideband.
+Currently, while performing packfile negotiation, clients are only
+allowed to specify their desired objects using object ids.  This causes
+a vulnerability to failure when an object turns non-existent during
+negotiation, which may happen if, for example, the desired repository is
+provided by multiple Git servers in a load-balancing arrangement.
+
+In order to eliminate this vulnerability, implement the ref-in-want
+feature for the 'fetch' command in protocol version 2.  This feature
+enables the 'fetch' command to support requests in the form of ref names
+through a new "want-ref <ref>" parameter.  At the conclusion of
+negotiation, the server will send a list of all of the wanted references
+(as provided by "want-ref" lines) in addition to the generated packfile.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- t/helper/test-pkt-line.c | 37 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+ Documentation/config.txt                |   4 +
+ Documentation/technical/protocol-v2.txt |  28 ++++-
+ t/t5703-upload-pack-ref-in-want.sh      | 153 ++++++++++++++++++++++++
+ upload-pack.c                           |  64 ++++++++++
+ 4 files changed, 248 insertions(+), 1 deletion(-)
+ create mode 100755 t/t5703-upload-pack-ref-in-want.sh
 
-diff --git a/t/helper/test-pkt-line.c b/t/helper/test-pkt-line.c
-index 0f19e53c7..2a55ffff1 100644
---- a/t/helper/test-pkt-line.c
-+++ b/t/helper/test-pkt-line.c
-@@ -1,3 +1,4 @@
-+#include "cache.h"
- #include "pkt-line.h"
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index ab641bf5a..acafe6c8d 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -3479,6 +3479,10 @@ Note that this configuration variable is ignored if it is seen in the
+ repository-level config (this is a safety measure against fetching from
+ untrusted repositories).
  
- static void pack_line(const char *line)
-@@ -48,6 +49,40 @@ static void unpack(void)
- 	}
- }
++uploadpack.allowRefInWant::
++	If this option is set, `upload-pack` will support the `ref-in-want`
++	feature of the protocol version 2 `fetch` command.
++
+ url.<base>.insteadOf::
+ 	Any URL that starts with this value will be rewritten to
+ 	start, instead, with <base>. In cases where some site serves a
+diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
+index 49bda76d2..8367e09b8 100644
+--- a/Documentation/technical/protocol-v2.txt
++++ b/Documentation/technical/protocol-v2.txt
+@@ -299,12 +299,21 @@ included in the client's request:
+ 	for use with partial clone and partial fetch operations. See
+ 	`rev-list` for possible "filter-spec" values.
  
-+static void unpack_sideband(void)
-+{
-+	struct packet_reader reader;
-+	packet_reader_init(&reader, 0, NULL, 0,
-+			   PACKET_READ_GENTLE_ON_EOF |
-+			   PACKET_READ_CHOMP_NEWLINE);
++If the 'ref-in-want' feature is advertised, the following argument can
++be included in the client's request as well as the potential addition of
++the 'wanted-refs' section in the server's response as explained below.
 +
-+	while (packet_reader_read(&reader) != PACKET_READ_EOF) {
-+		int band;
-+		int fd;
++    want-ref <ref>
++	Indicates to the server than the client wants to retrieve a
++	particular ref, where <ref> is the full name of a ref on the
++	server.
 +
-+		switch (reader.status) {
-+		case PACKET_READ_EOF:
-+			break;
-+		case PACKET_READ_NORMAL:
-+			band = reader.line[0] & 0xff;
-+			if (band == 1)
-+				fd = 1;
-+			else
-+				fd = 2;
+ The response of `fetch` is broken into a number of sections separated by
+ delimiter packets (0001), with each section beginning with its section
+ header.
+ 
+     output = *section
+-    section = (acknowledgments | shallow-info | packfile)
++    section = (acknowledgments | shallow-info | wanted-refs | packfile)
+ 	      (flush-pkt | delim-pkt)
+ 
+     acknowledgments = PKT-LINE("acknowledgments" LF)
+@@ -319,6 +328,10 @@ header.
+     shallow = "shallow" SP obj-id
+     unshallow = "unshallow" SP obj-id
+ 
++    wanted-refs = PKT-LINE("wanted-refs" LF)
++		  *PKT-Line(wanted-ref LF)
++    wanted-ref = obj-id SP refname
 +
-+			write_or_die(fd, reader.line+1, reader.pktlen-1);
+     packfile = PKT-LINE("packfile" LF)
+ 	       *PKT-LINE(%x01-03 *%x00-ff)
+ 
+@@ -379,6 +392,19 @@ header.
+ 	* This section is only included if a packfile section is also
+ 	  included in the response.
+ 
++    wanted-refs section
++	* This section is only included if the client has requested a
++	  ref using a 'want-ref' line and if a packfile section is also
++	  included in the response.
 +
-+			if (band == 3)
-+				die("sind-band error");
-+			break;
-+		case PACKET_READ_FLUSH:
-+			return;
-+		case PACKET_READ_DELIM:
-+			break;
-+		}
-+	}
++	* Always begins with the section header "wanted-refs"
++
++	* The server will send a ref listing ("<oid> <refname>") for
++	  each reference requested using 'want-ref' lines.
++
++	* Ther server MUST NOT send any refs which were not requested
++	  using 'want-ref' lines.
++
+     packfile section
+ 	* This section is only included if the client has sent 'want'
+ 	  lines in its request and either requested that no more
+diff --git a/t/t5703-upload-pack-ref-in-want.sh b/t/t5703-upload-pack-ref-in-want.sh
+new file mode 100755
+index 000000000..0ef182970
+--- /dev/null
++++ b/t/t5703-upload-pack-ref-in-want.sh
+@@ -0,0 +1,153 @@
++#!/bin/sh
++
++test_description='upload-pack ref-in-want'
++
++. ./test-lib.sh
++
++get_actual_refs() {
++	sed -n '/wanted-refs/,/0001/p' <out | sed '1d;$d' | test-pkt-line unpack >actual_refs
 +}
 +
- int cmd_main(int argc, const char **argv)
- {
- 	if (argc < 2)
-@@ -57,6 +92,8 @@ int cmd_main(int argc, const char **argv)
- 		pack(argc - 2, argv + 2);
- 	else if (!strcmp(argv[1], "unpack"))
- 		unpack();
-+	else if (!strcmp(argv[1], "unpack-sideband"))
-+		unpack_sideband();
- 	else
- 		die("invalid argument '%s'", argv[1]);
++get_actual_commits() {
++	sed -n '/packfile/,/0000/p' <out | sed '1d' | test-pkt-line unpack-sideband >o.pack &&
++	git index-pack o.pack &&
++	git verify-pack -v o.idx | grep commit | cut -c-40 | sort >actual_commits
++}
++
++check_output() {
++	get_actual_refs &&
++	test_cmp expected_refs actual_refs &&
++	get_actual_commits &&
++	test_cmp expected_commits actual_commits
++}
++
++# c(o/foo) d(o/bar)
++#        \ /
++#         b   e(baz)  f(master)
++#          \__  |  __/
++#             \ | /
++#               a
++test_expect_success 'setup repository' '
++	test_commit a &&
++	git checkout -b o/foo &&
++	test_commit b &&
++	test_commit c &&
++	git checkout -b o/bar b &&
++	test_commit d &&
++	git checkout -b baz a &&
++	test_commit e &&
++	git checkout master &&
++	test_commit f
++'
++
++test_expect_success 'config controls ref-in-want advertisement' '
++	git serve --advertise-capabilities >out &&
++	! grep -a ref-in-want out &&
++
++	git config uploadpack.allowRefInWant false &&
++	git serve --advertise-capabilities >out &&
++	! grep -a ref-in-want out &&
++
++	git config uploadpack.allowRefInWant true &&
++	git serve --advertise-capabilities >out &&
++	grep -a ref-in-want out
++'
++
++test_expect_success 'invalid want-ref line' '
++	test-pkt-line pack >in <<-EOF &&
++	command=fetch
++	0001
++	no-progress
++	want-ref refs/heads/non-existent
++	done
++	0000
++	EOF
++
++	test_must_fail git serve --stateless-rpc 2>out <in &&
++	grep "unknown ref" out
++'
++
++test_expect_success 'basic want-ref' '
++	cat >expected_refs <<-EOF &&
++	$(git rev-parse f) refs/heads/master
++	EOF
++	git rev-parse f | sort >expected_commits &&
++
++	test-pkt-line pack >in <<-EOF &&
++	command=fetch
++	0001
++	no-progress
++	want-ref refs/heads/master
++	have $(git rev-parse a)
++	done
++	0000
++	EOF
++
++	git serve --stateless-rpc >out <in &&
++	check_output
++'
++
++test_expect_success 'multiple want-ref lines' '
++	cat >expected_refs <<-EOF &&
++	$(git rev-parse c) refs/heads/o/foo
++	$(git rev-parse d) refs/heads/o/bar
++	EOF
++	git rev-parse c d | sort >expected_commits &&
++
++	test-pkt-line pack >in <<-EOF &&
++	command=fetch
++	0001
++	no-progress
++	want-ref refs/heads/o/foo
++	want-ref refs/heads/o/bar
++	have $(git rev-parse b)
++	done
++	0000
++	EOF
++
++	git serve --stateless-rpc >out <in &&
++	check_output
++'
++
++test_expect_success 'mix want and want-ref' '
++	cat >expected_refs <<-EOF &&
++	$(git rev-parse f) refs/heads/master
++	EOF
++	git rev-parse e f | sort >expected_commits &&
++
++	test-pkt-line pack >in <<-EOF &&
++	command=fetch
++	0001
++	no-progress
++	want-ref refs/heads/master
++	want $(git rev-parse e)
++	have $(git rev-parse a)
++	done
++	0000
++	EOF
++
++	git serve --stateless-rpc >out <in &&
++	check_output
++'
++
++test_expect_success 'want-ref with ref we already have commit for' '
++	cat >expected_refs <<-EOF &&
++	$(git rev-parse c) refs/heads/o/foo
++	EOF
++	>expected_commits &&
++
++	test-pkt-line pack >in <<-EOF &&
++	command=fetch
++	0001
++	no-progress
++	want-ref refs/heads/o/foo
++	have $(git rev-parse c)
++	done
++	0000
++	EOF
++
++	git serve --stateless-rpc >out <in &&
++	check_output
++'
++
++test_done
+diff --git a/upload-pack.c b/upload-pack.c
+index 87c6722ea..47858d367 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -64,6 +64,7 @@ static const char *pack_objects_hook;
  
+ static int filter_capability_requested;
+ static int allow_filter;
++static int allow_ref_in_want;
+ static struct list_objects_filter_options filter_options;
+ 
+ static void reset_timeout(void)
+@@ -1075,6 +1076,8 @@ static int upload_pack_config(const char *var, const char *value, void *unused)
+ 			return git_config_string(&pack_objects_hook, var, value);
+ 	} else if (!strcmp("uploadpack.allowfilter", var)) {
+ 		allow_filter = git_config_bool(var, value);
++	} else if (!strcmp("uploadpack.allowrefinwant", var)) {
++		allow_ref_in_want = git_config_bool(var, value);
+ 	}
+ 	return parse_hide_refs_config(var, value, "uploadpack");
+ }
+@@ -1114,6 +1117,7 @@ void upload_pack(struct upload_pack_options *options)
+ 
+ struct upload_pack_data {
+ 	struct object_array wants;
++	struct string_list wanted_refs;
+ 	struct oid_array haves;
+ 
+ 	struct object_array shallows;
+@@ -1135,12 +1139,14 @@ struct upload_pack_data {
+ static void upload_pack_data_init(struct upload_pack_data *data)
+ {
+ 	struct object_array wants = OBJECT_ARRAY_INIT;
++	struct string_list wanted_refs = STRING_LIST_INIT_DUP;
+ 	struct oid_array haves = OID_ARRAY_INIT;
+ 	struct object_array shallows = OBJECT_ARRAY_INIT;
+ 	struct string_list deepen_not = STRING_LIST_INIT_DUP;
+ 
+ 	memset(data, 0, sizeof(*data));
+ 	data->wants = wants;
++	data->wanted_refs = wanted_refs;
+ 	data->haves = haves;
+ 	data->shallows = shallows;
+ 	data->deepen_not = deepen_not;
+@@ -1149,6 +1155,7 @@ static void upload_pack_data_init(struct upload_pack_data *data)
+ static void upload_pack_data_clear(struct upload_pack_data *data)
+ {
+ 	object_array_clear(&data->wants);
++	string_list_clear(&data->wanted_refs, 1);
+ 	oid_array_clear(&data->haves);
+ 	object_array_clear(&data->shallows);
+ 	string_list_clear(&data->deepen_not, 0);
+@@ -1185,6 +1192,32 @@ static int parse_want(const char *line)
+ 	return 0;
+ }
+ 
++static int parse_want_ref(const char *line, struct string_list *wanted_refs)
++{
++	const char *arg;
++	if (skip_prefix(line, "want-ref ", &arg)) {
++		struct object_id oid;
++		struct string_list_item *item;
++		struct object *o;
++
++		if (read_ref(arg, &oid))
++			die("unknown ref %s", arg);
++
++		item = string_list_append(wanted_refs, arg);
++		item->util = oiddup(&oid);
++
++		o = parse_object_or_die(&oid, arg);
++		if (!(o->flags & WANTED)) {
++			o->flags |= WANTED;
++			add_object_array(o, NULL, &want_obj);
++		}
++
++		return 1;
++	}
++
++	return 0;
++}
++
+ static int parse_have(const char *line, struct oid_array *haves)
+ {
+ 	const char *arg;
+@@ -1210,6 +1243,8 @@ static void process_args(struct packet_reader *request,
+ 		/* process want */
+ 		if (parse_want(arg))
+ 			continue;
++		if (allow_ref_in_want && parse_want_ref(arg, &data->wanted_refs))
++			continue;
+ 		/* process have line */
+ 		if (parse_have(arg, &data->haves))
+ 			continue;
+@@ -1352,6 +1387,24 @@ static int process_haves_and_send_acks(struct upload_pack_data *data)
+ 	return ret;
+ }
+ 
++static void send_wanted_ref_info(struct upload_pack_data *data)
++{
++	const struct string_list_item *item;
++
++	if (!data->wanted_refs.nr)
++		return;
++
++	packet_write_fmt(1, "wanted-refs\n");
++
++	for_each_string_list_item(item, &data->wanted_refs) {
++		packet_write_fmt(1, "%s %s\n",
++				 oid_to_hex(item->util),
++				 item->string);
++	}
++
++	packet_delim(1);
++}
++
+ static void send_shallow_info(struct upload_pack_data *data)
+ {
+ 	/* No shallow info needs to be sent */
+@@ -1418,6 +1471,7 @@ int upload_pack_v2(struct repository *r, struct argv_array *keys,
+ 				state = FETCH_DONE;
+ 			break;
+ 		case FETCH_SEND_PACK:
++			send_wanted_ref_info(&data);
+ 			send_shallow_info(&data);
+ 
+ 			packet_write_fmt(1, "packfile\n");
+@@ -1438,12 +1492,22 @@ int upload_pack_advertise(struct repository *r,
+ {
+ 	if (value) {
+ 		int allow_filter_value;
++		int allow_ref_in_want;
++
+ 		strbuf_addstr(value, "shallow");
++
+ 		if (!repo_config_get_bool(the_repository,
+ 					 "uploadpack.allowfilter",
+ 					 &allow_filter_value) &&
+ 		    allow_filter_value)
+ 			strbuf_addstr(value, " filter");
++
++		if (!repo_config_get_bool(the_repository,
++					 "uploadpack.allowrefinwant",
++					 &allow_ref_in_want) &&
++		    allow_ref_in_want)
++			strbuf_addstr(value, " ref-in-want");
+ 	}
++
+ 	return 1;
+ }
 -- 
 2.17.1.1185.g55be947832-goog
 
