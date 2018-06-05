@@ -2,115 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-8.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72B111F403
-	for <e@80x24.org>; Tue,  5 Jun 2018 19:55:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4EF61F403
+	for <e@80x24.org>; Tue,  5 Jun 2018 19:58:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752411AbeFETzA (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Jun 2018 15:55:00 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:40976 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752380AbeFETyz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jun 2018 15:54:55 -0400
-Received: by mail-wr0-f193.google.com with SMTP id h10-v6so3689860wrq.8
-        for <git@vger.kernel.org>; Tue, 05 Jun 2018 12:54:54 -0700 (PDT)
+        id S1752082AbeFET6T (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Jun 2018 15:58:19 -0400
+Received: from mail-pl0-f66.google.com ([209.85.160.66]:39606 "EHLO
+        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751950AbeFET6S (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jun 2018 15:58:18 -0400
+Received: by mail-pl0-f66.google.com with SMTP id f1-v6so2188998plt.6
+        for <git@vger.kernel.org>; Tue, 05 Jun 2018 12:58:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=rseXWAEWzGIJL8ZnqvruII/12SqgVLomIti3nIGKpuU=;
-        b=WO0QkNFNW++3ZiJnskcXXxBEAKtYnutrgYmR9zalXOKfeEtO30NMdCa3G/6HAOz1Gh
-         VbDbdHW0Im7/zVMFSCTFsYgnjqrBcjY8us0817zwSthp6CFAVFHLHe+zivKzBGqOWWps
-         HdXM/eGM4A6a21CZ5/Xxrz7SvCIDojGsS4WRV12RU7qlMlYe8EDO0AJ7Xhiso9mme6e0
-         pVVW72Rp908FuuUuKI6YnYoacWJ4DcVLU7hYZ1n8joh15KRG0mwJ57hzzinlqqYt1xzb
-         vsscqRhhxGQhkD0IO98y93wIw3zgiUr1n34cjDY/umf6WJ1ane9mEfvuueHRJ6JkFNZn
-         cU/Q==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=fIBVXgmR5oDdVVZOIiXCWkwCJkdGPsKzGkfynDEnAQs=;
+        b=IRuCk78YEnVCq41YyQQ+Qm/TqYYjB+RNMtZks3KM5bnYgBuIVOBB35W5WIF3CX4GHH
+         0lo/kPS3kvRswHV1USAq9eFaZCBee5rQUS9kli6Pud6uKl3T/hu/cgSltUsksjr15mDM
+         O/tJkQqsORbZ+GvszhnOUHo95RwqufjU26gRmLWdZiAtFkGkf/EWeJ48wumUTQjrL4LT
+         MAnbHR9+vM7jZsetpOQktpxK8TceFEftutraWc6zPa3Nk8qcQyIcseh0FxKp32sjCFyE
+         P9Itij3s5IoXh0eObYWKVv5OmFz502iJSkhczVahJhuO3LvB/593tJ0MfTWWkT06Yhy2
+         0JKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=rseXWAEWzGIJL8ZnqvruII/12SqgVLomIti3nIGKpuU=;
-        b=SCAPYV7VZNArjGRTTbtR/trixsh2oO4MnbbBnm5YRdhVa2RFrVcZMtIEhCnAaR8tgx
-         2xfQ/ycXeMa/UIN3eFoyLeKHJ3q1yOPyUpVH8LDM5BY+sC5UgV2YaZhnxuevgYMBnQJ9
-         MN4+N9Qg7hcuC9cJC32gLoHxxm5IReKc7B/1KokUOf5Rt95lEGa+Jq6xR1GGeHqbQWIW
-         L7xNDIyjUBzTtve3sg65sqIlS5MWt3/OppSN0rc5vRFdYUMeNNZnIuxtIZy7p6Fl/LTA
-         zepxN3uaV6Oz4GC9rPLJ6NFYUpOYRkdOzXKHiO0UYTWnZhpTIq/ReyBtMDwxBquvu0uh
-         jw3A==
-X-Gm-Message-State: APt69E3IScb5W/31RvkyjCt0uS/ielQQikLyQG/yB9g3AHDwCCiKXMRy
-        g2a5dlEMGn9GAw1vIv56/Ab8NQt+
-X-Google-Smtp-Source: ADUXVKJHUxuW1f0fapfzJsqb8l3XSukzFJWcTAn6Fk8jUYsNGH/gxYfEmfLcxOOFyL7CPv5SGMBhnQ==
-X-Received: by 2002:adf:b587:: with SMTP id c7-v6mr12537wre.141.1528228493609;
-        Tue, 05 Jun 2018 12:54:53 -0700 (PDT)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id o2-v6sm2252533wmo.24.2018.06.05.12.54.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 05 Jun 2018 12:54:52 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Stefan Beller <sbeller@google.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 3/3] refspec: initalize `refspec_item` in `valid_fetch_refspec()`
-Date:   Tue,  5 Jun 2018 19:54:40 +0000
-Message-Id: <20180605195440.8505-4-avarab@gmail.com>
-X-Mailer: git-send-email 2.17.0.290.gded63e768a
-In-Reply-To: <20180605195440.8505-1-avarab@gmail.com>
-References: <20180605195440.8505-1-avarab@gmail.com>
-In-Reply-To: <20180605162939.GA158365@google.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=fIBVXgmR5oDdVVZOIiXCWkwCJkdGPsKzGkfynDEnAQs=;
+        b=btZuzYSkBcXISr0zeUOn4yA8f8MzgzPskwWwZEB7JvGAQa2CHGPlGT2vYjUMtpT10+
+         dVutVxtucWNVu6wURYbQk6QlpB8bhZLidtHgd7FQnPWeC/diKXINRxfCRtye2uPVztud
+         mAPeuFC5sUcxh9EVx/Zd+LDQnFZEiT1LQSzVTJLT8vPQQmMJ+L1yrHyrLZhNE985Ct3+
+         V7Bi8yX47nfd3Cw/4AYufAw8l8B1R/4ByBZFU+UyO5ZbGsOTEIVepYtJtwEwKq3cMiYC
+         EC7aknTJHDwTaF9jJN+ySPPFlJjPi1yTomxKjZj0BBfAStDORZHhM9uBX59QUHgKhmw+
+         5CRw==
+X-Gm-Message-State: APt69E2fQRq4wsAcxSUjK2cWD1YCJYzFXN2/JjJ5eBpzGj6etNUxnFYC
+        ti/M9R/tDhy1JvLn2qNGoR0KPKZ6w0A=
+X-Google-Smtp-Source: ADUXVKJwp6ZVb/cdFcZ5XxAhiC5jFchE62y2Hd5dxsjWIMU1BXBqcNqd+7Podp8q0h3/+xKzlSUTMg==
+X-Received: by 2002:a17:902:d886:: with SMTP id b6-v6mr16809plz.361.1528228698213;
+        Tue, 05 Jun 2018 12:58:18 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id w1-v6sm66341303pgp.3.2018.06.05.12.58.16
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 05 Jun 2018 12:58:17 -0700 (PDT)
+Date:   Tue, 5 Jun 2018 12:58:16 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 0/3] refspec: refactor & fix free() behavior
+Message-ID: <20180605195816.GC158365@google.com>
 References: <20180605162939.GA158365@google.com>
+ <20180605195440.8505-1-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180605195440.8505-1-avarab@gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Martin √Ögren <martin.agren@gmail.com>
+On 06/05, ∆var Arnfjˆr Bjarmason wrote:
+> Since Martin & Brandon both liked this direction I've fixed it
+> up.
+> 
+> Martin: I didn't want to be the author of the actual fix for the bug
+> you found, so I rewrote your commit in 3/3. The diff is different, and
+> I slightly modified the 3rd paragraph of the commit message & added my
+> sign-off, but otherwise it's the same.
 
-We allocate a `struct refspec_item` on the stack without initializing
-it. In particular, its `dst` and `src` members will contain some random
-data from the stack. When we later call `refspec_item_clear()`, it will
-call `free()` on those pointers. So if the call to `parse_refspec()` did
-not assign to them, we will be freeing some random "pointers". This is
-undefined behavior.
+Thanks for writing up a proper patch series for this fix.  I liked
+breaking up your diff into two different patches to make it clear that
+all callers of refpsec_item_init relying on dieing.
 
-To the best of my understanding, this cannot currently be triggered by
-user-provided data. And for what it's worth, the test-suite does not
-trigger this with SANITIZE=address. It can be provoked by calling
-`valid_fetch_refspec(":*")`.
+> 
+> Martin ≈gren (1):
+>   refspec: initalize `refspec_item` in `valid_fetch_refspec()`
+> 
+> ∆var Arnfjˆr Bjarmason (2):
+>   refspec: s/refspec_item_init/&_or_die/g
+>   refspec: add back a refspec_item_init() function
+> 
+>  builtin/clone.c |  2 +-
+>  builtin/pull.c  |  2 +-
+>  refspec.c       | 13 +++++++++----
+>  refspec.h       |  5 ++++-
+>  4 files changed, 15 insertions(+), 7 deletions(-)
+> 
+> -- 
+> 2.17.0.290.gded63e768a
+> 
 
-Zero the struct, as is done in other users of `struct refspec_item` by
-using the refspec_item_init() initialization function.
-
-Signed-off-by: Martin √Ögren <martin.agren@gmail.com>
-Signed-off-by: √Üvar Arnfj√∂r√∞ Bjarmason <avarab@gmail.com>
----
- refspec.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/refspec.c b/refspec.c
-index a35493e35e..e8010dce0c 100644
---- a/refspec.c
-+++ b/refspec.c
-@@ -196,7 +196,7 @@ void refspec_clear(struct refspec *rs)
- int valid_fetch_refspec(const char *fetch_refspec_str)
- {
- 	struct refspec_item refspec;
--	int ret = parse_refspec(&refspec, fetch_refspec_str, REFSPEC_FETCH);
-+	int ret = refspec_item_init(&refspec, fetch_refspec_str, REFSPEC_FETCH);
- 	refspec_item_clear(&refspec);
- 	return ret;
- }
 -- 
-2.17.0.290.gded63e768a
-
+Brandon Williams
