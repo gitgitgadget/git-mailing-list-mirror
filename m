@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE6E31F403
-	for <e@80x24.org>; Tue,  5 Jun 2018 20:48:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A21211F403
+	for <e@80x24.org>; Tue,  5 Jun 2018 20:48:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752552AbeFEUsE (ORCPT <rfc822;e@80x24.org>);
+        id S1752578AbeFEUsH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Jun 2018 16:48:07 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:36554 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752559AbeFEUsE (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 5 Jun 2018 16:48:04 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:40398 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752025AbeFEUsB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jun 2018 16:48:01 -0400
-Received: by mail-wr0-f195.google.com with SMTP id l41-v6so3849035wre.7
-        for <git@vger.kernel.org>; Tue, 05 Jun 2018 13:48:00 -0700 (PDT)
+Received: by mail-wr0-f194.google.com with SMTP id f16-v6so3856492wrm.3
+        for <git@vger.kernel.org>; Tue, 05 Jun 2018 13:48:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=BfrrDtpptUTBtyotj+SQGhhD4e7XiSTukVqyXDXwVx0=;
-        b=tuXyLNGELCdBH4I7SQozMvemCN3YQB8wRkImnGEqmMx2QlKva18e7G3q4OZZH1H0L1
-         +Fo0dKb71ykwrzP/CUzU0H3lRhE0YfKOgNnAkfKIkKE+XCmw6oqRxBUAtLBGvB0dgS2f
-         umAgP/uYYyqHc/IZJ++zfZhH1UuC9cl4crNh1+vCusSoJNNArYz9ckEDn1tBvRQFKMRW
-         R0/rHY32/bFGWeFFz63+rGrC/U5WzEuq+0A8FwWSrKaxbWDCIalytdNAAwYvYJdHMWJj
-         992U8liZeSQrmqAUw6VJDJoM0yu/l3heHpxckBPM5lzsBJV2xZQFI8rtz11Doq8EKDVk
-         HWFQ==
+        bh=mj2evgPeY1ZnqAdko1EVQNIwaOwSSUkCGcwyqOb236A=;
+        b=l4kG554afXMzcHD6D6BNDfu0NDtiETAkcPJL9YKlzUm8W3zEmROoxbT6/hoMUHjpHf
+         kF6KW6A0WYShwK1yJd4DwGD4GVlahxLbdf6fbjKry+QPfSdZEUzRTcVetAu0wZnS/e4E
+         LFyRrYdJI3tbhZoZG4QrpX7tBD5Lb2g9gXmt+FBzk1N1rPJRLQpxV2UScbftMyvfbfXP
+         YZuZKr8zMBRMFVlHDFX0BMPP2z4oGOj5mxcmUvMkMKTglMmGgYbrW46fwSDlqGJXqKEw
+         GC0QlN11SKPvcbrD5XF5CNAd2TeJ18Q16g+B0z8ofDM07XiExLzzF6cIXX7we3jwM1iQ
+         AmvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=BfrrDtpptUTBtyotj+SQGhhD4e7XiSTukVqyXDXwVx0=;
-        b=rJXe0hWM12BJQtFunj8CxMZepioCauSrh3+zovllG8lCbCfJExr45nfqFDnOatfdOB
-         9IDdBayjFBil3OSBi+pyQtV2c6GVz1EjRmksM5cGNKoRIQs5c7uvUCKCfZ2tQd7q1W0g
-         eEqEJXDp8T3+SF76ln1F+SZ4CPPAquGR8gGOSekpCZ44I/SoGSwnvZsYYgvn06xCR9+4
-         W6cmuUvFeWvSgstrp8imJEzkdkEquf7NPS1sQcv0vkPQOBabKKzeP4J7EDKamGMbyJ/U
-         B+X8zTiD8kxqCPkRZXjil5qrF1OOwXlvno1AqsJWNG7q92Ns9tCqs/uDtCvlr1m/8NJi
-         9xqQ==
-X-Gm-Message-State: APt69E3eFPdvtYaMmRkBcHubPlGrNTOmfUsuw4uVDIQY/o/s/h/qO9e1
-        VUxXIh58oSVKIOIfLi9l8ccfBvoh
-X-Google-Smtp-Source: ADUXVKKaceRP5DpXHJxWQo8wIznVFVRXdN0ZptMi/jCIq8jzseYea6zI/Xaj1VHzUE1dw2rJc44KGw==
-X-Received: by 2002:a5d:4407:: with SMTP id z7-v6mr117445wrq.227.1528231679600;
-        Tue, 05 Jun 2018 13:47:59 -0700 (PDT)
+        bh=mj2evgPeY1ZnqAdko1EVQNIwaOwSSUkCGcwyqOb236A=;
+        b=ldTUhWiDSAPO9thS3t2MNrAmXFbGLw3KZewVRrEsnSKChxR2c2j72NGucpvJx/dIk5
+         xBv2YHAYyaYGhgWR2dRadrMKlbs5E2dEUWydNkI37lzQ8rk+eWXj8KxAIeWAtbKyWvkl
+         9sTe7ocC1GswaiENGUlJshQdHZ2J4sKjrPaNdkhDDEPL4Iic9EX7zj5BJ2aMJEG4OVk8
+         YbVwvCNFj3Z+MIOm7Mjp8YqIeoP6+FRZ8jDPsjCJjF1FmshZicUlReuh4AIeKgWpUIP9
+         otEsbcvnqjMvQkfc8WarYMB+2uaND9Jhv5+WAAZEzv/PgZEL3XffecMS/drfD3H09fN3
+         bf1A==
+X-Gm-Message-State: APt69E1ZQr3YJc/cbjKUMRK0caKO+NhSh77+Z+KgKV6bGprqkGlZy+ps
+        +yZ1fzaiuZq1MQxOVhcw/c+V1QlJ
+X-Google-Smtp-Source: ADUXVKI9NT6E+I3Qj20cKJ0yUmDgpsZoCQ6jtlDFEMdv65Vqh3LoSSNHxe9gpodt83f3C24rBJdfDg==
+X-Received: by 2002:adf:88b2:: with SMTP id f47-v6mr109584wrf.55.1528231683128;
+        Tue, 05 Jun 2018 13:48:03 -0700 (PDT)
 Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id r5-v6sm31410632wrp.59.2018.06.05.13.47.58
+        by smtp.gmail.com with ESMTPSA id d3-v6sm31841327wri.24.2018.06.05.13.48.01
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 05 Jun 2018 13:47:58 -0700 (PDT)
+        Tue, 05 Jun 2018 13:48:02 -0700 (PDT)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v2 03/10] rerere: wrap paths in output in sq
-Date:   Tue,  5 Jun 2018 22:52:12 +0100
-Message-Id: <20180605215219.28783-4-t.gummerer@gmail.com>
+Subject: [PATCH v2 05/10] rerere: add some documentation
+Date:   Tue,  5 Jun 2018 22:52:14 +0100
+Message-Id: <20180605215219.28783-6-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.17.0.410.g65aef3a6c4
 In-Reply-To: <20180605215219.28783-1-t.gummerer@gmail.com>
 References: <20180520211210.1248-1-t.gummerer@gmail.com>
@@ -64,123 +64,180 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It looks like most paths in the output in the git codebase are wrapped
-in single quotes.  Standardize on that in rerere as well.
+Add some documentation for the logic behind the conflict normalization
+in rerere.
 
-Apart from being more consistent, this also makes some of the strings
-match strings that are already translated in other parts of the
-codebase, thus reducing the work for translators, when the strings are
-marked for translation in a subsequent commit.
-
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- builtin/rerere.c |  2 +-
- rerere.c         | 26 +++++++++++++-------------
- 2 files changed, 14 insertions(+), 14 deletions(-)
+ Documentation/technical/rerere.txt | 142 +++++++++++++++++++++++++++++
+ rerere.c                           |   4 -
+ 2 files changed, 142 insertions(+), 4 deletions(-)
+ create mode 100644 Documentation/technical/rerere.txt
 
-diff --git a/builtin/rerere.c b/builtin/rerere.c
-index 0bc40298c2..e0c67c98e9 100644
---- a/builtin/rerere.c
-+++ b/builtin/rerere.c
-@@ -107,7 +107,7 @@ int cmd_rerere(int argc, const char **argv, const char *prefix)
- 			const char *path = merge_rr.items[i].string;
- 			const struct rerere_id *id = merge_rr.items[i].util;
- 			if (diff_two(rerere_path(id, "preimage"), path, path, path))
--				die("unable to generate diff for %s", rerere_path(id, NULL));
-+				die("unable to generate diff for '%s'", rerere_path(id, NULL));
- 		}
- 	} else
- 		usage_with_options(rerere_usage, options);
+diff --git a/Documentation/technical/rerere.txt b/Documentation/technical/rerere.txt
+new file mode 100644
+index 0000000000..2c517fe0fc
+--- /dev/null
++++ b/Documentation/technical/rerere.txt
+@@ -0,0 +1,142 @@
++Rerere
++======
++
++This document describes the rerere logic.
++
++Conflict normalization
++----------------------
++
++To ensure recorded conflict resolutions can be looked up in the rerere
++database, even when branches are merged in a different order,
++different branches are merged that result in the same conflict, or
++when different conflict style settings are used, rerere normalizes the
++conflicts before writing them to the rerere database.
++
++Differnt conflict styles and branch names are dealt with by stripping
++that information from the conflict markers, and removing extraneous
++information from the `diff3` conflict style.
++
++Branches being merged in different order are dealt with by sorting the
++conflict hunks.  More on each of those parts in the following
++sections.
++
++Once these two normalization operations are applied, a conflict ID is
++created based on the normalized conflict, which is later used by
++rerere to look up the conflict in the rerere database.
++
++Stripping extraneous information
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++Say we have three branches AB, AC and AC2.  The common ancestor of
++these branches has a file with with a line with the string "A" (for
++brevity this line is called "line A" for brevity in the following) in
++it.  In branch AB this line is changed to "B", in AC, this line is
++changed to C, and branch AC2 is forked off of AC, after the line was
++changed to C.
++
++Now forking a branch ABAC off of branch AB and then merging AC into it,
++we'd get a conflict like the following:
++
++    <<<<<<< HEAD
++    B
++    =======
++    C
++    >>>>>>> AC
++
++Now doing the analogous with AC2 (forking a branch ABAC2 off of branch
++AB and then merging branch AC2 into it), maybe using the diff3
++conflict style, we'd get a conflict like the following:
++
++    <<<<<<< HEAD
++    B
++    ||||||| merged common ancestors
++    A
++    =======
++    C
++    >>>>>>> AC2
++
++By resolving this conflict, to leave line D, the user declares:
++
++    After examining what branches AB and AC did, I believe that making
++    line A into line D is the best thing to do that is compatible with
++    what AB and AC wanted to do.
++
++As branch AC2 refers to the same commit as AC, the above implies that
++this is also compatible what AB and AC2 wanted to do.
++
++By extension, this means that rerere should recognize that the above
++conflicts are the same.  To do this, the labels on the conflict
++markers are stripped, and the diff3 output is removed.  The above
++examples would both result in the following normalized conflict:
++
++    <<<<<<<
++    B
++    =======
++    C
++    >>>>>>>
++
++Sorting hunks
++~~~~~~~~~~~~~
++
++As before, lets imagine that a common ancestor had a file with line A
++its early part, and line X in its late part.  And then four branches
++are forked that do these things:
++
++    - AB: changes A to B
++    - AC: changes A to C
++    - XY: changes X to Y
++    - XZ: changes X to Z
++
++Now, forking a branch ABAC off of branch AB and then merging AC into
++it, and forking a branch ACAB off of branch AC and then merging AB
++into it, would yield the conflict in a different order.  The former
++would say "A became B or C, what now?" while the latter would say "A
++became C or B, what now?"
++
++As a reminder, the act of merging AC into ABAC and resolving the
++conflict to leave line D means that the user declares:
++
++    After examining what branches AB and AC did, I believe that
++    making line A into line D is the best thing to do that is
++    compatible with what AB and AC wanted to do.
++
++So the conflict we would see when merging AB into ACAB should be
++resolved the same way---it is the resolution that is in line with that
++declaration.
++
++Imagine that similarly previously a branch XYXZ was forked from XY,
++and XZ was merged into it, and resolved "X became Y or Z" into "X
++became W".
++
++Now, if a branch ABXY was forked from AB and then merged XY, then ABXY
++would have line B in its early part and line Y in its later part.
++Such a merge would be quite clean.  We can construct 4 combinations
++using these four branches ((AB, AC) x (XY, XZ)).
++
++Merging ABXY and ACXZ would make "an early A became B or C, a late X
++became Y or Z" conflict, while merging ACXY and ABXZ would make "an
++early A became C or B, a late X became Y or Z".  We can see there are
++4 combinations of ("B or C", "C or B") x ("X or Y", "Y or X").
++
++By sorting, the conflict is given its canonical name, namely, "an
++early part became B or C, a late part becames X or Y", and whenever
++any of these four patterns appear, and we can get to the same conflict
++and resolution that we saw earlier.
++
++Without the sorting, we'd have to somehow find a previous resolution
++from combinatorial explosion.
++
++Conflict ID calculation
++~~~~~~~~~~~~~~~~~~~~~~~
++
++Once the conflict normalization is done, the conflict ID is calculated
++as the sha1 hash of the conflict hunks appended to each other,
++separated by <NUL> characters.  The conflict markers are stripped out
++before the sha1 is calculated.  So in the example above, where we
++merge branch AC which changes line A to line C, into branch AB, which
++changes line A to line C, the conflict ID would be
++SHA1('B<NUL>C<NUL>').
++
++If there are multiple conflicts in one file, the sha1 is calculated
++the same way with all hunks appended to each other, in the order in
++which they appear in the file, separated by a <NUL> character.
 diff --git a/rerere.c b/rerere.c
-index eca182023f..0e5956a51c 100644
+index 74ce422634..ef23abe4dd 100644
 --- a/rerere.c
 +++ b/rerere.c
-@@ -484,12 +484,12 @@ static int handle_file(const char *path, unsigned char *sha1, const char *output
- 	io.input = fopen(path, "r");
- 	io.io.wrerror = 0;
- 	if (!io.input)
--		return error_errno("could not open %s", path);
-+		return error_errno("could not open '%s'", path);
- 
- 	if (output) {
- 		io.io.output = fopen(output, "w");
- 		if (!io.io.output) {
--			error_errno("could not write %s", output);
-+			error_errno("could not write '%s'", output);
- 			fclose(io.input);
- 			return -1;
- 		}
-@@ -499,15 +499,15 @@ static int handle_file(const char *path, unsigned char *sha1, const char *output
- 
- 	fclose(io.input);
- 	if (io.io.wrerror)
--		error("there were errors while writing %s (%s)",
-+		error("there were errors while writing '%s' (%s)",
- 		      path, strerror(io.io.wrerror));
- 	if (io.io.output && fclose(io.io.output))
--		io.io.wrerror = error_errno("failed to flush %s", path);
-+		io.io.wrerror = error_errno("failed to flush '%s'", path);
- 
- 	if (hunk_no < 0) {
- 		if (output)
- 			unlink_or_warn(output);
--		return error("could not parse conflict hunks in %s", path);
-+		return error("could not parse conflict hunks in '%s'", path);
- 	}
- 	if (io.io.wrerror)
- 		return -1;
-@@ -684,17 +684,17 @@ static int merge(const struct rerere_id *id, const char *path)
- 	 * Mark that "postimage" was used to help gc.
- 	 */
- 	if (utime(rerere_path(id, "postimage"), NULL) < 0)
--		warning_errno("failed utime() on %s",
-+		warning_errno("failed utime() on '%s'",
- 			      rerere_path(id, "postimage"));
- 
- 	/* Update "path" with the resolution */
- 	f = fopen(path, "w");
- 	if (!f)
--		return error_errno("could not open %s", path);
-+		return error_errno("could not open '%s'", path);
- 	if (fwrite(result.ptr, result.size, 1, f) != 1)
--		error_errno("could not write %s", path);
-+		error_errno("could not write '%s'", path);
- 	if (fclose(f))
--		return error_errno("writing %s failed", path);
-+		return error_errno("writing '%s' failed", path);
- 
- out:
- 	free(cur.ptr);
-@@ -879,7 +879,7 @@ static int is_rerere_enabled(void)
- 		return rr_cache_exists;
- 
- 	if (!rr_cache_exists && mkdir_in_gitdir(git_path_rr_cache()))
--		die("could not create directory %s", git_path_rr_cache());
-+		die("could not create directory '%s'", git_path_rr_cache());
- 	return 1;
- }
- 
-@@ -1068,9 +1068,9 @@ static int rerere_forget_one_path(const char *path, struct string_list *rr)
- 	filename = rerere_path(id, "postimage");
- 	if (unlink(filename)) {
- 		if (errno == ENOENT)
--			error("no remembered resolution for %s", path);
-+			error("no remembered resolution for '%s'", path);
- 		else
--			error_errno("cannot unlink %s", filename);
-+			error_errno("cannot unlink '%s'", filename);
- 		goto fail_exit;
- 	}
- 
-@@ -1089,7 +1089,7 @@ static int rerere_forget_one_path(const char *path, struct string_list *rr)
- 	item = string_list_insert(rr, path);
- 	free_rerere_id(item);
- 	item->util = id;
--	fprintf(stderr, "Forgot resolution for %s\n", path);
-+	fprintf(stderr, "Forgot resolution for '%s'\n", path);
- 	return 0;
- 
- fail_exit:
+@@ -394,10 +394,6 @@ static int is_cmarker(char *buf, int marker_char, int marker_size)
+  * and NUL concatenated together.
+  *
+  * Return the number of conflict hunks found.
+- *
+- * NEEDSWORK: the logic and theory of operation behind this conflict
+- * normalization may deserve to be documented somewhere, perhaps in
+- * Documentation/technical/rerere.txt.
+  */
+ static int handle_path(unsigned char *sha1, struct rerere_io *io, int marker_size)
+ {
 -- 
 2.17.0.410.g65aef3a6c4
 
