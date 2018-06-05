@@ -7,48 +7,49 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 195321F403
-	for <e@80x24.org>; Tue,  5 Jun 2018 14:41:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 44B9C1F403
+	for <e@80x24.org>; Tue,  5 Jun 2018 14:41:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752405AbeFEOlB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Jun 2018 10:41:01 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:36433 "EHLO
+        id S1752445AbeFEOlF (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Jun 2018 10:41:05 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:36437 "EHLO
         mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751959AbeFEOlA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jun 2018 10:41:00 -0400
-Received: by mail-wr0-f193.google.com with SMTP id f16-v6so2725000wrm.3
-        for <git@vger.kernel.org>; Tue, 05 Jun 2018 07:40:59 -0700 (PDT)
+        with ESMTP id S1751959AbeFEOlC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jun 2018 10:41:02 -0400
+Received: by mail-wr0-f193.google.com with SMTP id f16-v6so2725144wrm.3
+        for <git@vger.kernel.org>; Tue, 05 Jun 2018 07:41:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=WxSKVPJSpTeH+iHSgbSlP6HDcTQ3whTeWYZMm/SRK50=;
-        b=UBvQMKRJw+MRnPNUFLzdIx0hppZfxUOvH8NR//CwCiXvR6AsRPyZ9918Dsxr2ZVAO8
-         Yjfbzd786do3EYmksBx3F9pQZ89xRI/Zxtj7UJNPyXmJl3E7uBKwa1Hn6KJ7gqqyRbAo
-         86ixiY1XK6g6UbumEwCzv2EegzxzvlLxcJ3C09h6Kg2uI7Hz2KYy8/sWNksSzN7GAGQC
-         Wm3wext/3j4gzch/JWpwBV+5xZ72d0u4Xey6LB5iKSQmhfRmX8VDB3A6edWvEAP9TOgR
-         6SfPxFMWef96Teo/nwOL0qQscgh6EiNQR+tS1yBNDp05WGVTYF2ixlBynMyFBgvsORmy
-         YtgQ==
+         :in-reply-to:references:mime-version:content-transfer-encoding;
+        bh=8TjUMKpPdfFF93U1IxQ1u8UdADEqUf1WeoD9cLPsziU=;
+        b=jWL1bNzqwWXmR9UxuXJGdPLQcR13/SSEb/1/I7chQ4kX646XRnUstEv37UO/RtfgTr
+         kZadQU5EZWUdZa2AT2IdfnGs7c71rqS5CI3LgNWeeh6BppHqn3Kdw/wvkb0CG/3AoN7f
+         NnbSW/gtysiYaS8wWPmVdQzQrL/8JlngYH7Mx1jF+DEw2UK5UU/xOgPkIcGzNpMsI+Hl
+         wVrAUjuhC3xrGJN7C24NHxL1FQSCMrxCpjSjzNxX8061gzdDHvflIqlZbF6p1lSlNXxD
+         osfXjsBG1aPIj7klLiUuuSW701ejFLpXXNxXDt1OYK/0AOlRP/IEqGAToiYW5TpV75EP
+         DsNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=WxSKVPJSpTeH+iHSgbSlP6HDcTQ3whTeWYZMm/SRK50=;
-        b=PRixz4emXwudG13gadx+XN09eRIuRDWv348yKzdk0XzpnEjbemXS17ZnrCP4J7DrQe
-         N/pcxIpckPtlz7YKzNEAIk60A9bxqXr5Opas91+x4RDxcSLaX9129P8aX7M6jaxegIeJ
-         xOIA3qzawb4ttvBtSN4ZvsQ7fIi7QMbbAITk6rt+qgOA5PNFTd9BkpAvPexzjRGjmTX9
-         2f2MgMgtbAWEYhUFHIMN1vg5jxParR5m1kmDxFLJRNxbgRn5tzGa9+eUy1rLYynqHEcM
-         qjT8FJBtQCpI0M57qnuVbjenXoqPSVjPXJdYI1MEDxY8nuHdj7TnvvjVxdMmXN+W/c/m
-         UZ7g==
-X-Gm-Message-State: ALKqPwfe1fzXM8pSd6vkDyMZdZnY7d28tW6ZXNXJjXdZ3P67XU9jYwEO
-        JL5u2dYRRtZhn5DxJWfHmwoLw70R
-X-Google-Smtp-Source: ADUXVKK2qtba+DeWvjLyb7M/ifDE/dTfGB5dJBJu5YPDgrfIdbRObyDRr3G0mSd7Tr9ghRMu86Tl7g==
-X-Received: by 2002:adf:8e89:: with SMTP id q9-v6mr19821468wrb.269.1528209658529;
-        Tue, 05 Jun 2018 07:40:58 -0700 (PDT)
+         :references:in-reply-to:references:mime-version
+         :content-transfer-encoding;
+        bh=8TjUMKpPdfFF93U1IxQ1u8UdADEqUf1WeoD9cLPsziU=;
+        b=n14bYq4FVa3exlwb0iWZjxD/sFyFFdNAg1WtGq8mik8FMh9zYzE4/KFSn4njkacj3C
+         KEkr9JDFR1cVBBe5nRctprVY/jCtkSuwQ+cCJEKkEKoIns2YiMV7RI1NUUupZh3uHWso
+         N+Q3NIvFtZn03DqQJcDuXlrvU/06aPsWygIlcYGsYWqMzaL5pKAm6XqP9QtLegi9hMGS
+         dAgHjjvTZLKpbCUvQht8syD1tLlwo/5N0aqIgWk3mH0wckOjWFbh6V/QbJuTQrzzWBws
+         FmhDTftP2mqyGCxXowsLwCSaxvGLxMHDrL9kFeKCoE1mRViLJw6Nj868rVQR8YcgmK92
+         ko+A==
+X-Gm-Message-State: ALKqPwcjSouPB3JyIgAWpMbtyD5AX9IQF6zy1w2Adkrj0CLPSZKCdnGg
+        otG77CiO4ddH/OCargzneP7jogj0
+X-Google-Smtp-Source: ADUXVKIXYUVNGZKrnRFUgKLkah1IlJhVDJ1iE8w34MOIbCceq7X+nylq0QBXnrun0bTkA8hOgtxhLw==
+X-Received: by 2002:adf:9405:: with SMTP id 5-v6mr17561521wrq.283.1528209660843;
+        Tue, 05 Jun 2018 07:41:00 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id i76-v6sm2458910wmd.20.2018.06.05.07.40.57
+        by smtp.gmail.com with ESMTPSA id i76-v6sm2458910wmd.20.2018.06.05.07.40.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 05 Jun 2018 07:40:57 -0700 (PDT)
+        Tue, 05 Jun 2018 07:40:59 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,10 +60,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v7 0/8] ambiguous checkout UI & checkout.defaultRemote
-Date:   Tue,  5 Jun 2018 14:40:41 +0000
-Message-Id: <20180605144049.26488-1-avarab@gmail.com>
+Subject: [PATCH v7 1/8] checkout tests: index should be clean after dwim checkout
+Date:   Tue,  5 Jun 2018 14:40:42 +0000
+Message-Id: <20180605144049.26488-2-avarab@gmail.com>
 X-Mailer: git-send-email 2.17.0.290.gded63e768a
+In-Reply-To: <20180605144049.26488-1-avarab@gmail.com>
+References: <20180605144049.26488-1-avarab@gmail.com>
 In-Reply-To: <20180602115042.18167-1-avarab@gmail.com>
 References: <20180602115042.18167-1-avarab@gmail.com>
 MIME-Version: 1.0
@@ -73,103 +76,214 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fixes issues noted with v6, hopefully ready for queuing. A tbdiff with
-v6:
+Assert that whenever there's a DWIM checkout that the index should be
+clean afterwards, in addition to the correct branch being checked-out.
 
-1: ab4529d9f5 = 1: 2ca81c76fc checkout tests: index should be clean after dwim checkout
-2: c8bbece403 = 2: 19b14a1c75 checkout.h: wrap the arguments to unique_tracking_name()
-3: 881fe63f4f = 3: 8bc6a9c052 checkout.c: introduce an *_INIT macro
-4: 72ddaeddd3 ! 4: 34f3b67f9b checkout.c: change "unique" member to "num_matches"
-    @@ -1,6 +1,6 @@
-     Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-    -    checkout.c]: change "unique" member to "num_matches"
-    +    checkout.c: change "unique" member to "num_matches"
-         
-         Internally track how many matches we find in the check_tracking_name()
-         callback. Nothing uses this now, but it will be made use of in a later
-5: 5e8c82680b = 5: 7d81c06a23 checkout: pass the "num_matches" up to callers
-6: 07e667f80a = 6: e86636ad2c builtin/checkout.c: use "ret" variable for return
-7: 0a148182e6 ! 7: c2130b347c checkout: add advice for ambiguous "checkout <branch>"
-    @@ -27,6 +27,28 @@
-             hint: you can do so by fully qualifying the name with the --track option:
-             hint:
-             hint:     git checkout --track origin/<name>
-    +    
-    +    Note that the "error: pathspec[...]" message is still printed. This is
-    +    because whatever else checkout may have tried earlier, its final
-    +    fallback is to try to resolve the argument as a path. E.g. in this
-    +    case:
-    +    
-    +        $ ./git --exec-path=$PWD checkout master pu
-    +        error: pathspec 'master' did not match any file(s) known to git.
-    +        error: pathspec 'pu' did not match any file(s) known to git.
-    +    
-    +    There we don't print the "hint:" implicitly due to earlier logic
-    +    around the DWIM fallback. That fallback is only used if it looks like
-    +    we have one argument that might be a branch.
-    +    
-    +    I can't think of an intrinsic reason for why we couldn't in some
-    +    future change skip printing the "error: pathspec[...]" error. However,
-    +    to do so we'd need to pass something down to checkout_paths() to make
-    +    it suppress printing an error on its own, and for us to be confident
-    +    that we're not silencing cases where those errors are meaningful.
-    +    
-    +    I don't think that's worth it since determining whether that's the
-    +    case could easily change due to future changes in the checkout logic.
-         
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-8: f3a52a26a2 ! 8: f1ac0f7351 checkout & worktree: introduce checkout.defaultRemote
-    @@ -53,12 +53,12 @@
-         
-             $ ./git --exec-path=$PWD checkout master
-             error: pathspec 'master' did not match any file(s) known to git.
-    -        hint: The argument 'master' matched more than one remote tracking branch.
-    +        hint: 'master' matched more than one remote tracking branch.
-             hint: We found 26 remotes with a reference that matched. So we fell back
-             hint: on trying to resolve the argument as a path, but failed there too!
-             hint:
-    -        hint: If you meant to check out a remote tracking branch on e.g. 'origin'
-    -        hint: you can do so by fully-qualifying the name with the --track option:
-    +        hint: If you meant to check out a remote tracking branch on, e.g. 'origin',
-    +        hint: you can do so by fully qualifying the name with the --track option:
-             hint:
-             hint:     git checkout --track origin/<name>
-             hint:
-    @@ -263,7 +263,7 @@
-      	status_uno_is_clean &&
-     -	test_i18ngrep ! "^hint: " stderr
-     +	test_i18ngrep ! "^hint: " stderr &&
-    -+	# Make sure the likes of checkout -p don not print this hint
-    ++	# Make sure the likes of checkout -p do not print this hint
-     +	git checkout -p foo 2>stderr &&
-     +	test_i18ngrep ! "^hint: " stderr &&
-     +	status_uno_is_clean
+The way the DWIM checkout code in checkout.[ch] works is by looping
+over all remotes, and for each remote trying to find if a given
+reference name only exists on that remote, or if it exists anywhere
+else.
 
-Ævar Arnfjörð Bjarmason (8):
-  checkout tests: index should be clean after dwim checkout
-  checkout.h: wrap the arguments to unique_tracking_name()
-  checkout.c: introduce an *_INIT macro
-  checkout.c: change "unique" member to "num_matches"
-  checkout: pass the "num_matches" up to callers
-  builtin/checkout.c: use "ret" variable for return
-  checkout: add advice for ambiguous "checkout <branch>"
-  checkout & worktree: introduce checkout.defaultRemote
+This is done by starting out with a `unique = 1` tracking variable in
+a struct shared by the entire loop, which will get set to `0` if the
+data reference is not unique.
 
- Documentation/config.txt       | 26 +++++++++++++++
- Documentation/git-checkout.txt |  9 ++++++
- Documentation/git-worktree.txt |  9 ++++++
- advice.c                       |  2 ++
- advice.h                       |  1 +
- builtin/checkout.c             | 41 ++++++++++++++++++-----
- builtin/worktree.c             |  4 +--
- checkout.c                     | 37 ++++++++++++++++++---
- checkout.h                     |  4 ++-
- t/t2024-checkout-dwim.sh       | 59 ++++++++++++++++++++++++++++++++++
- t/t2025-worktree-add.sh        | 21 ++++++++++++
- 11 files changed, 197 insertions(+), 16 deletions(-)
+Thus if we find a match we know the dst_oid member of
+tracking_name_data must be correct, since it's associated with the
+only reference on the only remote that could have matched our query.
 
+But if there was ever a mismatch there for some reason we might end up
+with the correct branch checked out, but at the wrong oid, which would
+show whatever the difference between the two staged in the
+index (checkout branch A, stage changes from the state of branch B).
+
+So let's amend the tests (mostly added in) 399e4a1c56 ("t2024: Add
+tests verifying current DWIM behavior of 'git checkout <branch>'",
+2013-04-21) to always assert that "status" is clean after we run
+"checkout", that's being done with "-uno" because there's going to be
+some untracked files related to the test itself which we don't care
+about.
+
+In all these tests (DWIM or otherwise) we start with a clean index, so
+these tests are asserting that that's still the case after the
+"checkout", failed or otherwise.
+
+Then if we ever run into this sort of regression, either in the
+existing code or with a new feature, we'll know.
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ t/t2024-checkout-dwim.sh | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
+
+diff --git a/t/t2024-checkout-dwim.sh b/t/t2024-checkout-dwim.sh
+index 3e5ac81bd2..ed32828105 100755
+--- a/t/t2024-checkout-dwim.sh
++++ b/t/t2024-checkout-dwim.sh
+@@ -23,6 +23,12 @@ test_branch_upstream () {
+ 	test_cmp expect.upstream actual.upstream
+ }
+ 
++status_uno_is_clean() {
++	>status.expect &&
++	git status -uno --porcelain >status.actual &&
++	test_cmp status.expect status.actual
++}
++
+ test_expect_success 'setup' '
+ 	test_commit my_master &&
+ 	git init repo_a &&
+@@ -55,6 +61,7 @@ test_expect_success 'checkout of non-existing branch fails' '
+ 	test_might_fail git branch -D xyzzy &&
+ 
+ 	test_must_fail git checkout xyzzy &&
++	status_uno_is_clean &&
+ 	test_must_fail git rev-parse --verify refs/heads/xyzzy &&
+ 	test_branch master
+ '
+@@ -64,6 +71,7 @@ test_expect_success 'checkout of branch from multiple remotes fails #1' '
+ 	test_might_fail git branch -D foo &&
+ 
+ 	test_must_fail git checkout foo &&
++	status_uno_is_clean &&
+ 	test_must_fail git rev-parse --verify refs/heads/foo &&
+ 	test_branch master
+ '
+@@ -73,6 +81,7 @@ test_expect_success 'checkout of branch from a single remote succeeds #1' '
+ 	test_might_fail git branch -D bar &&
+ 
+ 	git checkout bar &&
++	status_uno_is_clean &&
+ 	test_branch bar &&
+ 	test_cmp_rev remotes/repo_a/bar HEAD &&
+ 	test_branch_upstream bar repo_a bar
+@@ -83,6 +92,7 @@ test_expect_success 'checkout of branch from a single remote succeeds #2' '
+ 	test_might_fail git branch -D baz &&
+ 
+ 	git checkout baz &&
++	status_uno_is_clean &&
+ 	test_branch baz &&
+ 	test_cmp_rev remotes/other_b/baz HEAD &&
+ 	test_branch_upstream baz repo_b baz
+@@ -90,6 +100,7 @@ test_expect_success 'checkout of branch from a single remote succeeds #2' '
+ 
+ test_expect_success '--no-guess suppresses branch auto-vivification' '
+ 	git checkout -B master &&
++	status_uno_is_clean &&
+ 	test_might_fail git branch -D bar &&
+ 
+ 	test_must_fail git checkout --no-guess bar &&
+@@ -99,6 +110,7 @@ test_expect_success '--no-guess suppresses branch auto-vivification' '
+ 
+ test_expect_success 'setup more remotes with unconventional refspecs' '
+ 	git checkout -B master &&
++	status_uno_is_clean &&
+ 	git init repo_c &&
+ 	(
+ 		cd repo_c &&
+@@ -128,27 +140,33 @@ test_expect_success 'setup more remotes with unconventional refspecs' '
+ 
+ test_expect_success 'checkout of branch from multiple remotes fails #2' '
+ 	git checkout -B master &&
++	status_uno_is_clean &&
+ 	test_might_fail git branch -D bar &&
+ 
+ 	test_must_fail git checkout bar &&
++	status_uno_is_clean &&
+ 	test_must_fail git rev-parse --verify refs/heads/bar &&
+ 	test_branch master
+ '
+ 
+ test_expect_success 'checkout of branch from multiple remotes fails #3' '
+ 	git checkout -B master &&
++	status_uno_is_clean &&
+ 	test_might_fail git branch -D baz &&
+ 
+ 	test_must_fail git checkout baz &&
++	status_uno_is_clean &&
+ 	test_must_fail git rev-parse --verify refs/heads/baz &&
+ 	test_branch master
+ '
+ 
+ test_expect_success 'checkout of branch from a single remote succeeds #3' '
+ 	git checkout -B master &&
++	status_uno_is_clean &&
+ 	test_might_fail git branch -D spam &&
+ 
+ 	git checkout spam &&
++	status_uno_is_clean &&
+ 	test_branch spam &&
+ 	test_cmp_rev refs/remotes/extra_dir/repo_c/extra_dir/spam HEAD &&
+ 	test_branch_upstream spam repo_c spam
+@@ -156,9 +174,11 @@ test_expect_success 'checkout of branch from a single remote succeeds #3' '
+ 
+ test_expect_success 'checkout of branch from a single remote succeeds #4' '
+ 	git checkout -B master &&
++	status_uno_is_clean &&
+ 	test_might_fail git branch -D eggs &&
+ 
+ 	git checkout eggs &&
++	status_uno_is_clean &&
+ 	test_branch eggs &&
+ 	test_cmp_rev refs/repo_d/eggs HEAD &&
+ 	test_branch_upstream eggs repo_d eggs
+@@ -166,32 +186,38 @@ test_expect_success 'checkout of branch from a single remote succeeds #4' '
+ 
+ test_expect_success 'checkout of branch with a file having the same name fails' '
+ 	git checkout -B master &&
++	status_uno_is_clean &&
+ 	test_might_fail git branch -D spam &&
+ 
+ 	>spam &&
+ 	test_must_fail git checkout spam &&
++	status_uno_is_clean &&
+ 	test_must_fail git rev-parse --verify refs/heads/spam &&
+ 	test_branch master
+ '
+ 
+ test_expect_success 'checkout of branch with a file in subdir having the same name fails' '
+ 	git checkout -B master &&
++	status_uno_is_clean &&
+ 	test_might_fail git branch -D spam &&
+ 
+ 	>spam &&
+ 	mkdir sub &&
+ 	mv spam sub/spam &&
+ 	test_must_fail git -C sub checkout spam &&
++	status_uno_is_clean &&
+ 	test_must_fail git rev-parse --verify refs/heads/spam &&
+ 	test_branch master
+ '
+ 
+ test_expect_success 'checkout <branch> -- succeeds, even if a file with the same name exists' '
+ 	git checkout -B master &&
++	status_uno_is_clean &&
+ 	test_might_fail git branch -D spam &&
+ 
+ 	>spam &&
+ 	git checkout spam -- &&
++	status_uno_is_clean &&
+ 	test_branch spam &&
+ 	test_cmp_rev refs/remotes/extra_dir/repo_c/extra_dir/spam HEAD &&
+ 	test_branch_upstream spam repo_c spam
+@@ -200,6 +226,7 @@ test_expect_success 'checkout <branch> -- succeeds, even if a file with the same
+ test_expect_success 'loosely defined local base branch is reported correctly' '
+ 
+ 	git checkout master &&
++	status_uno_is_clean &&
+ 	git branch strict &&
+ 	git branch loose &&
+ 	git commit --allow-empty -m "a bit more" &&
+@@ -210,7 +237,9 @@ test_expect_success 'loosely defined local base branch is reported correctly' '
+ 	test_config branch.loose.merge master &&
+ 
+ 	git checkout strict | sed -e "s/strict/BRANCHNAME/g" >expect &&
++	status_uno_is_clean &&
+ 	git checkout loose | sed -e "s/loose/BRANCHNAME/g" >actual &&
++	status_uno_is_clean &&
+ 
+ 	test_cmp expect actual
+ '
 -- 
 2.17.0.290.gded63e768a
 
