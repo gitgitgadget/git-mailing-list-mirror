@@ -2,114 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A42821F403
-	for <e@80x24.org>; Tue,  5 Jun 2018 22:14:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5CF0D1F403
+	for <e@80x24.org>; Tue,  5 Jun 2018 22:19:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752520AbeFEWOb (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Jun 2018 18:14:31 -0400
-Received: from mail-oi0-f68.google.com ([209.85.218.68]:36311 "EHLO
-        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751730AbeFEWOa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jun 2018 18:14:30 -0400
-Received: by mail-oi0-f68.google.com with SMTP id 14-v6so3611900oie.3
-        for <git@vger.kernel.org>; Tue, 05 Jun 2018 15:14:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=t/f2gZXbkdhwsl6xO87Drb5+ch/5O/ihCl15qD983TU=;
-        b=D4szPKJe6S7kRVfrBFdHl8xmFDHq9QXccIc0bwyTsu35SfpSFNTWEqU5g0B6zkFpsD
-         0VjS/9yvjRWSda0rhdtLYK3fj+5O/OPqJcB/Rku7NzR7fKqgF6Be9udan79HsyvEuzGA
-         1he7jbSMthTQq9rtHIUwwpfzZVUyoeCpoIvnk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=t/f2gZXbkdhwsl6xO87Drb5+ch/5O/ihCl15qD983TU=;
-        b=brwi1Ev8i+rk6WDzhn8HUI3K9tvHBRf3GdRM9CNXCPg/IM5FutJMJeQwEN0YYywqLB
-         PeWlz5I9wUBOa+4beDQuWhr5Pk1/LdS/Ssc3APGKi7BXFETUMdzwSz1GG7G0zsBadngz
-         76OM9EDMHXpXXHysEDFVggFAPFKkLtN50N8yYkCXg6UmRN6aMxUuomJTT8yQPmkDQ3te
-         /XNtCGgYa+ZHcYufUYR9FnDy9Ga5V/5SeVHIRK3N2TZg5w30XxBA7G91822iDkamrwmT
-         D3oknK7+TkaKvkUcjL7yyWWhA6APDI+b6XT4cNZsXKPstIOMgspRDBZMweLl1IyW+5T7
-         EJNA==
-X-Gm-Message-State: APt69E2Bko7o5wyuwUV0VMq+Z5ShtnXHAeUZA1BlpDMe3wReBheUizws
-        d9yvKdWKTOOFkX72E8pXwAVeIkpB2w1WEpiKe/qZxA==
-X-Google-Smtp-Source: ADUXVKKBFXPnKI5cf9aySI9uMB7PqndAk+m40f2S8sr9+54/l8i5kU6hLgOmfQ2Syc21gXjbiRTr8jgOaU9Vi8X3lRk=
-X-Received: by 2002:aca:4ed6:: with SMTP id c205-v6mr271621oib.254.1528236870368;
- Tue, 05 Jun 2018 15:14:30 -0700 (PDT)
+        id S1752621AbeFEWTv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Jun 2018 18:19:51 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:42995 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752396AbeFEWTu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jun 2018 18:19:50 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w55MJLod051569
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Tue, 5 Jun 2018 18:19:21 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Heinz, Steve'" <SHeinz@aaanortheast.com>, <git@vger.kernel.org>
+References: <BN7PR15MB23394E6E4AB05C17287E8F55BB660@BN7PR15MB2339.namprd15.prod.outlook.com>
+In-Reply-To: <BN7PR15MB23394E6E4AB05C17287E8F55BB660@BN7PR15MB2339.namprd15.prod.outlook.com>
+Subject: RE: git question from a newbie
+Date:   Tue, 5 Jun 2018 18:19:12 -0400
+Message-ID: <000901d3fd1b$3eeb7900$bcc26b00$@nexbridge.com>
 MIME-Version: 1.0
-Received: by 2002:a9d:2f8e:0:0:0:0:0 with HTTP; Tue, 5 Jun 2018 15:14:29 -0700 (PDT)
-In-Reply-To: <CAPig+cTSrzmOtYPwPWLpGfDa5tt0SV6Aq8SmhYTTicK0ikst7Q@mail.gmail.com>
-References: <20180605091350.14476-1-luke@diamand.org> <20180605091350.14476-2-luke@diamand.org>
- <CAPig+cQTTY8wc4d=4jV8GxHDOjF7xk1vjA62JS6s4Zr0uXiegg@mail.gmail.com>
- <CAE5ih7-1StB8RNrobO+hpG2QOSdoscUNfVP9+muZV0_b+m+XSw@mail.gmail.com> <CAPig+cTSrzmOtYPwPWLpGfDa5tt0SV6Aq8SmhYTTicK0ikst7Q@mail.gmail.com>
-From:   Luke Diamand <luke@diamand.org>
-Date:   Tue, 5 Jun 2018 23:14:29 +0100
-Message-ID: <CAE5ih7-HMRJ3nFNuQCXmJEC4Ar4PZY=_4Q=4gDK+VTFRhMvCGA@mail.gmail.com>
-Subject: Re: [PATCHv1 1/3] git-p4: raise exceptions from p4CmdList based on
- error from p4 server
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Merland Romain <merlorom@yahoo.fr>,
-        Miguel Torroja <miguel.torroja@gmail.com>,
-        vin ku <viniciusalexandre@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Lex Spoon <lex@lexspoon.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQGZnygOe1TPCQlnto8dL1AfgSBrSKTG98Mg
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5 June 2018 at 20:41, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Tue, Jun 5, 2018 at 6:56 AM Luke Diamand <luke@diamand.org> wrote:
->> On 5 June 2018 at 10:54, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> > On Tue, Jun 5, 2018 at 5:14 AM Luke Diamand <luke@diamand.org> wrote:
->> >> +                    m = re.search('Too many rows scanned \(over (\d+)\)', data)
->> >> +                    if not m:
->> >> +                        m = re.search('Request too large \(over (\d+)\)', data)
->> >
->> > Does 'p4' localize these error messages?
->>
->> That's a good question.
->>
->> It turns out that Perforce open-sourced the P4 client in 2014 (I only
->> recently found this out) so we can actually look at the code now!
->>
->> Here's the code:
->>
->>     // ErrorId graveyard: retired/deprecated ErrorIds.
->
-> Hmm, the "too many rows" error you're seeing is retired/deprecated(?).
+On June 5, 2018 5:24 PM, Steve Heinz wrote:
+> I am new to Git and have read quite a few articles on it.
+> I am planning on setting up a remote repository on a windows 2012 R2
+server
+> and will access it via HTTPS.
+> I am setting up a local repository on my desk top (others in my group will
+do
+> the same).
+> On "server1":  I install Git and create a repository "repos".
+> On "server1":  I create a dummy webpage "default.htm" and place it in the
+> repo folder.
+> On "server1":  I create a web application in IIS pointing to Git
+> On Server1":   change permissions so IIS_User  has access to the folders.
+> On "server1":  inside the "repos" folder and right click and choose "bash
+> here"
+> On "server1":   $ git init  -bare    (it's really 2 hyphens)
+> 
+> On Desktop:  open Chrome and type in URL to make sure we can access it
+> https://xyz/repos/default.htm
+>       ** make sure you have access, no certificate issues or firewall
+issues.  The
+> pages shows up fine
+> 
+> On Desktop:  install Git and create repository "repos".
+> On Desktop:  right click in "repos" folder and choose "bash here"
+> On Desktop:  $ git init
+> On Desktop : add a folder "testProject" under the "repos" folder and add
+> some files to the folder
+> On Desktop:  $ git add .                 (will add files and folder to
+working tree)
+> On Desktop   $ git status               (shows it recognizes the filed
+were added)
+> On Desktop   $ git commit -m "test project commit"           (will stage
+changes)
+> On Desktop   $ git push https://xyz.domainname.com/repos master
+> 
+> ** this is the error I get,  I have tried many different things.  I am
+sure I am
+> doing something stupid
+> ** I have tried a bunch of variations but I always get the same error.  It
+looks
+> like some type of network/permission
+> ** thing but everything seems OK.
+>        Fatal: repository 'https://xyz.domainname.com/repos/' not found
+> 
+> *** this is where I get the error trying to push staged items to the
+remote
+> repository.
+> *** I have tried to clone the empty remote repository still same error
+> *** I checked port 443 is opened and being used for https
+> *** tried to set origin to https://xyz.domainname.com/repos" and then $git
+> push origin master   (same error)
+> *** I tried passing credentials to the remote server as well
 
-There's some code elsewhere that suggests it's being kept alive:
+Missing glue - git remote
 
-    // Retired ErrorIds. We need to keep these so that clients
-    // built with newer apis can commnunicate with older servers
-    // still sending these.
+git remote add origin https://xyz.domainname.com/repos
 
-    static ErrorId MaxResults; // DEPRECATED
-    static ErrorId MaxScanRows; // DEPRECATED
+Cheers,
+Randall
+
+-- Brief whoami:
+ NonStop developer since approximately 211288444200000000
+ UNIX developer since approximately 421664400
+-- In my real life, I talk too much.
 
 
->
->>     ErrorId MsgDb::MaxResults              = { ErrorOf( ES_DB, 32,
->> E_FAILED, EV_ADMIN, 1 ), "Request too large (over %maxResults%); see
->> 'p4 help maxresults'." } ;//NOTRANS
->>     ErrorId MsgDb::MaxScanRows             = { ErrorOf( ES_DB, 61,
->> E_FAILED, EV_ADMIN, 1 ), "Too many rows scanned (over %maxScanRows%);
->> see 'p4 help maxscanrows'." } ;//NOTRANS
->>
->> I don't think there's actually a way to make it return any language
->> other than English though. [...]
->> So I think probably the language is always English.
->
-> The "NOTRANS" annotation on the error messages is reassuring.
 
-I'll check it works OK on Windows; charset translation might cause a problem.
