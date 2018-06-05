@@ -2,153 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6D1B1F403
-	for <e@80x24.org>; Tue,  5 Jun 2018 21:40:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A42821F403
+	for <e@80x24.org>; Tue,  5 Jun 2018 22:14:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751619AbeFEVk5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Jun 2018 17:40:57 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:40891 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752003AbeFEVkz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jun 2018 17:40:55 -0400
-Received: by mail-pf0-f194.google.com with SMTP id z24-v6so2011799pfe.7
-        for <git@vger.kernel.org>; Tue, 05 Jun 2018 14:40:55 -0700 (PDT)
+        id S1752520AbeFEWOb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Jun 2018 18:14:31 -0400
+Received: from mail-oi0-f68.google.com ([209.85.218.68]:36311 "EHLO
+        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751730AbeFEWOa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jun 2018 18:14:30 -0400
+Received: by mail-oi0-f68.google.com with SMTP id 14-v6so3611900oie.3
+        for <git@vger.kernel.org>; Tue, 05 Jun 2018 15:14:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=kgLUHXy6IkQy46NSx/OZTHHdnpv7RttMXMznxgMv7Os=;
-        b=hZ9Zx0e6IKJrApn1/NdOqSF/06OVvaRAsFudsgnWQVcv26xJe94tCpCBhc6SOtVOAk
-         ofZmyFryusQMuiOxUpgxm3t6PndTXabLlAHsSK6DfdPtfHoJKFz3mabvWzb+VeY6lh7h
-         q+2fan6M26s5lELLjJCp5wIZLrSgaoghYbDaUrEW5u32O8qSsd61knWB9E9NEm701kVK
-         g6YkEdJIq6GLhnE+dGwgRMbjALO+mH3IGeAZSEh9G37RiYvVSEcOCSaMVomX9G85pzgj
-         H9o6QXIpBaS9jQh21UJOwmK2p5cXh2xjHi7NCBfnCIHec3V3saraMgpFyMZDIJfXdgyP
-         FN5A==
+        d=diamand.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=t/f2gZXbkdhwsl6xO87Drb5+ch/5O/ihCl15qD983TU=;
+        b=D4szPKJe6S7kRVfrBFdHl8xmFDHq9QXccIc0bwyTsu35SfpSFNTWEqU5g0B6zkFpsD
+         0VjS/9yvjRWSda0rhdtLYK3fj+5O/OPqJcB/Rku7NzR7fKqgF6Be9udan79HsyvEuzGA
+         1he7jbSMthTQq9rtHIUwwpfzZVUyoeCpoIvnk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=kgLUHXy6IkQy46NSx/OZTHHdnpv7RttMXMznxgMv7Os=;
-        b=YS1XTKkKUBDBNoBuFyRl4hyN1AeOjAZCFZA11DlKACwqU2H1aQKO7kXCwL3Eky7FIL
-         GOLxSUjJmnDFAy3WOE7WGzHkGsm+fMOwGk+WvLke28rURnVd2hrM7WuNAOhelP5vfxqS
-         Q/L39UnExwCgwe8wN3DqkVAWCtFeP1PckDl979I0GGYi9IxEew90PGDS4YiCTce4h5Oy
-         18VA03QhXyF5Y1opTH34xBlfEoDQ9xOIM4l8uJvq3z7PkuZbtxFKJ3Nv4ftLgy8oKxXN
-         p80tNVJ8znpZ3RvciSqdr3E98BMrLF9Jx58yW9436gJZepVTef73sD1ZoNCubKUCI4Yt
-         WGrg==
-X-Gm-Message-State: APt69E090NTzQ7oXg/6j/28oNaMp54vsUC8ue+As3IbpZtWslBeU3WKN
-        VIIOzZjxh/42iOKnTTvbokWVPCTphD8=
-X-Google-Smtp-Source: ADUXVKL51svtTiYg4MtAM3P3W1dtb89CnHtXMq1rRVc/XiLcmG45YpPz1MEzEyqdHPYyf9aYJwWndw==
-X-Received: by 2002:a63:24c4:: with SMTP id k187-v6mr268754pgk.434.1528234854452;
-        Tue, 05 Jun 2018 14:40:54 -0700 (PDT)
-Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
-        by smtp.gmail.com with ESMTPSA id 76-v6sm27451138pfr.172.2018.06.05.14.40.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 05 Jun 2018 14:40:53 -0700 (PDT)
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, bmwill@google.com
-Subject: [PATCH v2 2/2] fetch: send "refs/tags/" prefix upon CLI refspecs
-Date:   Tue,  5 Jun 2018 14:40:36 -0700
-Message-Id: <c6910161aab1f383b5721bdc91969baad8c10a66.1528234587.git.jonathantanmy@google.com>
-X-Mailer: git-send-email 2.17.0.768.g1526ddbba1.dirty
-In-Reply-To: <cover.1528234587.git.jonathantanmy@google.com>
-References: <cover.1528233146.git.jonathantanmy@google.com> <cover.1528234587.git.jonathantanmy@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=t/f2gZXbkdhwsl6xO87Drb5+ch/5O/ihCl15qD983TU=;
+        b=brwi1Ev8i+rk6WDzhn8HUI3K9tvHBRf3GdRM9CNXCPg/IM5FutJMJeQwEN0YYywqLB
+         PeWlz5I9wUBOa+4beDQuWhr5Pk1/LdS/Ssc3APGKi7BXFETUMdzwSz1GG7G0zsBadngz
+         76OM9EDMHXpXXHysEDFVggFAPFKkLtN50N8yYkCXg6UmRN6aMxUuomJTT8yQPmkDQ3te
+         /XNtCGgYa+ZHcYufUYR9FnDy9Ga5V/5SeVHIRK3N2TZg5w30XxBA7G91822iDkamrwmT
+         D3oknK7+TkaKvkUcjL7yyWWhA6APDI+b6XT4cNZsXKPstIOMgspRDBZMweLl1IyW+5T7
+         EJNA==
+X-Gm-Message-State: APt69E2Bko7o5wyuwUV0VMq+Z5ShtnXHAeUZA1BlpDMe3wReBheUizws
+        d9yvKdWKTOOFkX72E8pXwAVeIkpB2w1WEpiKe/qZxA==
+X-Google-Smtp-Source: ADUXVKKBFXPnKI5cf9aySI9uMB7PqndAk+m40f2S8sr9+54/l8i5kU6hLgOmfQ2Syc21gXjbiRTr8jgOaU9Vi8X3lRk=
+X-Received: by 2002:aca:4ed6:: with SMTP id c205-v6mr271621oib.254.1528236870368;
+ Tue, 05 Jun 2018 15:14:30 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 2002:a9d:2f8e:0:0:0:0:0 with HTTP; Tue, 5 Jun 2018 15:14:29 -0700 (PDT)
+In-Reply-To: <CAPig+cTSrzmOtYPwPWLpGfDa5tt0SV6Aq8SmhYTTicK0ikst7Q@mail.gmail.com>
+References: <20180605091350.14476-1-luke@diamand.org> <20180605091350.14476-2-luke@diamand.org>
+ <CAPig+cQTTY8wc4d=4jV8GxHDOjF7xk1vjA62JS6s4Zr0uXiegg@mail.gmail.com>
+ <CAE5ih7-1StB8RNrobO+hpG2QOSdoscUNfVP9+muZV0_b+m+XSw@mail.gmail.com> <CAPig+cTSrzmOtYPwPWLpGfDa5tt0SV6Aq8SmhYTTicK0ikst7Q@mail.gmail.com>
+From:   Luke Diamand <luke@diamand.org>
+Date:   Tue, 5 Jun 2018 23:14:29 +0100
+Message-ID: <CAE5ih7-HMRJ3nFNuQCXmJEC4Ar4PZY=_4Q=4gDK+VTFRhMvCGA@mail.gmail.com>
+Subject: Re: [PATCHv1 1/3] git-p4: raise exceptions from p4CmdList based on
+ error from p4 server
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Merland Romain <merlorom@yahoo.fr>,
+        Miguel Torroja <miguel.torroja@gmail.com>,
+        vin ku <viniciusalexandre@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Lex Spoon <lex@lexspoon.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When performing tag following, in addition to using the server's
-"include-tag" capability to send tag objects (and emulating it if the
-server does not support that capability), "git fetch" relies upon the
-presence of refs/tags/* entries in the initial ref advertisement to
-locally create refs pointing to the aforementioned tag objects. When
-using protocol v2, refs/tags/* entries in the initial ref advertisement
-may be suppressed by a ref-prefix argument, leading to the tag object
-being downloaded, but the ref not being created.
+On 5 June 2018 at 20:41, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Tue, Jun 5, 2018 at 6:56 AM Luke Diamand <luke@diamand.org> wrote:
+>> On 5 June 2018 at 10:54, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> > On Tue, Jun 5, 2018 at 5:14 AM Luke Diamand <luke@diamand.org> wrote:
+>> >> +                    m = re.search('Too many rows scanned \(over (\d+)\)', data)
+>> >> +                    if not m:
+>> >> +                        m = re.search('Request too large \(over (\d+)\)', data)
+>> >
+>> > Does 'p4' localize these error messages?
+>>
+>> That's a good question.
+>>
+>> It turns out that Perforce open-sourced the P4 client in 2014 (I only
+>> recently found this out) so we can actually look at the code now!
+>>
+>> Here's the code:
+>>
+>>     // ErrorId graveyard: retired/deprecated ErrorIds.
+>
+> Hmm, the "too many rows" error you're seeing is retired/deprecated(?).
 
-Commit dcc73cf7ff ("fetch: generate ref-prefixes when using a configured
-refspec", 2018-05-18) ensured that "refs/tags/" is always sent as a ref
-prefix when "git fetch" is invoked with no refspecs, but not when "git
-fetch" is invoked with refspecs. Extend that functionality to make it
-work in both situations.
+There's some code elsewhere that suggests it's being kept alive:
 
-This also necessitates a change another test which tested ref
-advertisement filtering using tag refs - since tag refs are sent by
-default now, the test has been switched to using branch refs instead.
+    // Retired ErrorIds. We need to keep these so that clients
+    // built with newer apis can commnunicate with older servers
+    // still sending these.
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
- builtin/fetch.c        |  2 +-
- t/t5702-protocol-v2.sh | 24 +++++++++++++++++++++---
- 2 files changed, 22 insertions(+), 4 deletions(-)
+    static ErrorId MaxResults; // DEPRECATED
+    static ErrorId MaxScanRows; // DEPRECATED
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index ea5b9669a..1f447f1e8 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -359,7 +359,7 @@ static struct ref *get_ref_map(struct transport *transport,
- 		refspec_ref_prefixes(&transport->remote->fetch, &ref_prefixes);
- 
- 	if (ref_prefixes.argc &&
--	    (tags == TAGS_SET || (tags == TAGS_DEFAULT && !rs->nr))) {
-+	    (tags == TAGS_SET || tags == TAGS_DEFAULT)) {
- 		argv_array_push(&ref_prefixes, "refs/tags/");
- 	}
- 
-diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index 261e82b0f..b31b6d8d3 100755
---- a/t/t5702-protocol-v2.sh
-+++ b/t/t5702-protocol-v2.sh
-@@ -204,6 +204,7 @@ test_expect_success 'ref advertisment is filtered during fetch using protocol v2
- 	test_when_finished "rm -f log" &&
- 
- 	test_commit -C file_parent three &&
-+	git -C file_parent branch unwanted-branch three &&
- 
- 	GIT_TRACE_PACKET="$(pwd)/log" git -C file_child -c protocol.version=2 \
- 		fetch origin master &&
-@@ -212,9 +213,8 @@ test_expect_success 'ref advertisment is filtered during fetch using protocol v2
- 	git -C file_parent log -1 --format=%s >expect &&
- 	test_cmp expect actual &&
- 
--	! grep "refs/tags/one" log &&
--	! grep "refs/tags/two" log &&
--	! grep "refs/tags/three" log
-+	grep "refs/heads/master" log &&
-+	! grep "refs/heads/unwanted-branch" log
- '
- 
- test_expect_success 'server-options are sent when fetching' '
-@@ -406,6 +406,24 @@ test_expect_success 'fetch supports various ways of have lines' '
- 		$(git -C server rev-parse completely-unrelated)
- '
- 
-+test_expect_success 'fetch supports include-tag and tag following' '
-+	rm -rf server client trace &&
-+	git init server &&
-+
-+	test_commit -C server to_fetch &&
-+	git -C server tag -a annotated_tag -m message &&
-+
-+	git init client &&
-+	GIT_TRACE_PACKET="$(pwd)/trace" git -C client -c protocol.version=2 \
-+		fetch "$(pwd)/server" to_fetch:to_fetch &&
-+
-+	grep "fetch> ref-prefix to_fetch" trace &&
-+	grep "fetch> ref-prefix refs/tags/" trace &&
-+	grep "fetch> include-tag" trace &&
-+
-+	git -C client cat-file -e $(git -C client rev-parse annotated_tag)
-+'
-+
- # Test protocol v2 with 'http://' transport
- #
- . "$TEST_DIRECTORY"/lib-httpd.sh
--- 
-2.17.0.768.g1526ddbba1.dirty
 
+>
+>>     ErrorId MsgDb::MaxResults              = { ErrorOf( ES_DB, 32,
+>> E_FAILED, EV_ADMIN, 1 ), "Request too large (over %maxResults%); see
+>> 'p4 help maxresults'." } ;//NOTRANS
+>>     ErrorId MsgDb::MaxScanRows             = { ErrorOf( ES_DB, 61,
+>> E_FAILED, EV_ADMIN, 1 ), "Too many rows scanned (over %maxScanRows%);
+>> see 'p4 help maxscanrows'." } ;//NOTRANS
+>>
+>> I don't think there's actually a way to make it return any language
+>> other than English though. [...]
+>> So I think probably the language is always English.
+>
+> The "NOTRANS" annotation on the error messages is reassuring.
+
+I'll check it works OK on Windows; charset translation might cause a problem.
