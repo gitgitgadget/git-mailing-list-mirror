@@ -7,62 +7,64 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 371D31F403
-	for <e@80x24.org>; Tue,  5 Jun 2018 15:44:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27E181F403
+	for <e@80x24.org>; Tue,  5 Jun 2018 15:45:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752156AbeFEPoB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Jun 2018 11:44:01 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:33430 "EHLO
-        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751733AbeFEPnn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jun 2018 11:43:43 -0400
-Received: by mail-lf0-f66.google.com with SMTP id y20-v6so4361923lfy.0
-        for <git@vger.kernel.org>; Tue, 05 Jun 2018 08:43:43 -0700 (PDT)
+        id S1752016AbeFEPpQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Jun 2018 11:45:16 -0400
+Received: from mail-wm0-f53.google.com ([74.125.82.53]:39236 "EHLO
+        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751717AbeFEPpQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jun 2018 11:45:16 -0400
+Received: by mail-wm0-f53.google.com with SMTP id p11-v6so6020690wmc.4
+        for <git@vger.kernel.org>; Tue, 05 Jun 2018 08:45:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=On6o8HUHOTTxiiS9KhMFX/PrBnZW6xB8vvPhBydwVB4=;
-        b=pEmlr7CSPsgpbsxkk3X6V200futqZ3y0x9aVBNldVdY97HT1kWl2BcglfvF3TioCfH
-         Idl+f8Fb2nRQ5Uz2pC38q72eshuamPDy02SlABO7nqYYHBVWH4F4N64SAC7Djw/E6mTC
-         Ep0wgqJ/YXPCif84dvcI6uKtl6qrj8X/pGocamwFo9rBdh4fC6IIx1InGYTJLqYSQgtd
-         MhpAoJDVz0xO9Czic1zYBL/RIpBrc7z/PFxWUYGbJbCtwuFsuCwAmIAxrjDWd6nt4TQP
-         DyHrbcHTi9/psMGJtx80Vik7E/wzOoFR3tgQ9WwPb4y2D/SFAFs3lFw3fH9sgNisGmP1
-         j1Mg==
+        bh=E4SCIuycH00SvSBn99r/mLJPPAcY9vOmtw0UA9+GH4U=;
+        b=qKPbmbNLfDXmi9kL+pZA4XIkVm6F991vBHPDMpdC+AB+r2RJozorcJyPvHcWSlFeXx
+         FQjmndVVLpTcXgE9a3N/NfVAQzszHdk4jLMf+w2IVcqGLGcmNcbdD6ymHrka4DAe1udD
+         gfSftIeBWyR5dZM3r/BZ7bl9dpPQGbsVRPi1Us88j9etGY7aH7TWaNklBGuM3KQiOGxp
+         Tkw4kH4W8qB4/ors8chHULr39SdR1SdF7pFWqQjQn6Z53WbwVMDGF59KMqdgjWWY8dtG
+         HKswG6jEFwDJRTrBkicggOHxzulbLlvY7rvfHetnxBMbYsFhu5ftzykVtnKbma36b++l
+         jwLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=On6o8HUHOTTxiiS9KhMFX/PrBnZW6xB8vvPhBydwVB4=;
-        b=II+1tHQSrqzwMjUWul/lsxKcGX9uDUnHDD6oG6nEJUMrbnCtGNufh20e/dXSIr+iAQ
-         Z+J54Q1UmkQWUEBqylTScXQFVTNZ+7TrJGcUuxpijHaPL+DPIFBH5i5ccIl2fschUSNq
-         SSg0KLwfdBUv5WmXqckhc486A3WAsPUBsdtZibsB60YWnGOwtVRH/2DPAOB12Yw9MIcW
-         QWjnURb71w4ogi9/uB8sL28jsbpjZ/fJZgQRHMK66jC0yR5+C01U0MqKOHtGV5nLL01R
-         aUzkTaHM4DEw4LaFXgSnMimTgdd/g5gj7wWVecc7LZXsa70pS7M/Pv2HSlV5OrfXBTH0
-         tyVg==
-X-Gm-Message-State: APt69E1SzNdnpGz3wN0gv+rf2W+MQ2yqABHlRoRE77qcBna89KskUvYo
-        N/L3Xea/lyzF2V3W93My7MWb+Q==
-X-Google-Smtp-Source: ADUXVKJxgZYXrdSObAlnM42tjWF+yQPP01QvTiKKI2YUbHnRyd12vmpXLWTRvwdlPrxspDfc+tuGfA==
-X-Received: by 2002:a19:5943:: with SMTP id n64-v6mr1932841lfb.107.1528213422179;
-        Tue, 05 Jun 2018 08:43:42 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id o9-v6sm5161054lfk.2.2018.06.05.08.43.40
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 05 Jun 2018 08:43:41 -0700 (PDT)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
+        bh=E4SCIuycH00SvSBn99r/mLJPPAcY9vOmtw0UA9+GH4U=;
+        b=VnmmM0U2ihG9M9YdFjGvSU056X3OyOiALxZtUfPzEQhI4bTq4m1fp7Fuh757bUAbTV
+         aBwcv4AYiM873B0Lpr3ELdXpE9t5sPyg6c/K2LM4NzwfkkW+U7M55BVoms0mxjYnxqW7
+         VJhLyrvT2owrPaTEV/71WmRvjSSfmMQrpJIKvBld3/FVHcKUWX4KmZ47v6QcgZiNQLgL
+         XvWQhljTqbr3QjoGIFMys7G4Pi1msZsuiUJniZSZZGUbK1luZE6eWoqSlUfOvv+8XgZG
+         uIfZm5KrgV69GfDaFZQ2pvH2mog5opu0BXzOcQj9L70U5MOAlk019K+WC1eILRjkQDNo
+         N3MA==
+X-Gm-Message-State: ALKqPwe3KTgzn9vsaKdpMmCfDy3sEex5QeQi2caEDrdd12G1g4kcKmlY
+        1pyYDNP3c+TJFX/KJqSPONFWsA==
+X-Google-Smtp-Source: ADUXVKImJWM993eXT/4ZOgRopn5OG3JeDFivw+W6y8xSns+SC1UHaEPjTDq2KxwMLkf+UdQ7vIBUCw==
+X-Received: by 2002:a1c:3fc2:: with SMTP id m185-v6mr10788467wma.37.1528213514990;
+        Tue, 05 Jun 2018 08:45:14 -0700 (PDT)
+Received: from localhost.localdomain (x590daf56.dyn.telefonica.de. [89.13.175.86])
+        by smtp.gmail.com with ESMTPSA id r11-v6sm9195638wrn.34.2018.06.05.08.45.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 05 Jun 2018 08:45:14 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH 2/6] unpack-trees: add a note about path invalidation
-Date:   Tue,  5 Jun 2018 17:43:30 +0200
-Message-Id: <20180605154334.22613-3-pclouds@gmail.com>
-X-Mailer: git-send-email 2.18.0.rc0.333.g22e6ee6cdf
-In-Reply-To: <20180605154334.22613-1-pclouds@gmail.com>
-References: <20180601161153.15192-1-pclouds@gmail.com>
- <20180605154334.22613-1-pclouds@gmail.com>
+        <pclouds@gmail.com>, Thomas Gummerer <t.gummerer@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v7 1/8] checkout tests: index should be clean after dwim checkout
+Date:   Tue,  5 Jun 2018 17:45:01 +0200
+Message-Id: <20180605154501.13502-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.18.0.rc0.207.ga6211da864
+In-Reply-To: <20180605144049.26488-2-avarab@gmail.com>
+References: <20180605144049.26488-1-avarab@gmail.com> <20180602115042.18167-1-avarab@gmail.com> <20180605144049.26488-2-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,33 +73,21 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- unpack-trees.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+> diff --git a/t/t2024-checkout-dwim.sh b/t/t2024-checkout-dwim.sh
+> index 3e5ac81bd2..ed32828105 100755
+> --- a/t/t2024-checkout-dwim.sh
+> +++ b/t/t2024-checkout-dwim.sh
+> @@ -23,6 +23,12 @@ test_branch_upstream () {
+>  	test_cmp expect.upstream actual.upstream
+>  }
+>  
+> +status_uno_is_clean() {
+> +	>status.expect &&
+> +	git status -uno --porcelain >status.actual &&
+> +	test_cmp status.expect status.actual
 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 3a85a02a77..5d06aa9c98 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1545,6 +1545,17 @@ static int verify_uptodate_sparse(const struct cache_entry *ce,
- 	return verify_uptodate_1(ce, o, ERROR_SPARSE_NOT_UPTODATE_FILE);
- }
- 
-+/*
-+ * TODO: We should actually invalidate o->result, not src_index [1].
-+ * But since cache tree and untracked cache both are not copied to
-+ * o->result until unpacking is complete, we invalidate them on
-+ * src_index instead with the assumption that they will be copied to
-+ * dst_index at the end.
-+ *
-+ * [1] src_index->cache_tree is also used in unpack_callback() so if
-+ * we invalidate o->result, we need to update it to use
-+ * o->result.cache_tree as well.
-+ */
- static void invalidate_ce_path(const struct cache_entry *ce,
- 			       struct unpack_trees_options *o)
- {
--- 
-2.18.0.rc0.333.g22e6ee6cdf
+This function could be written a tad simpler as:
+
+  git status -uno --porcelain >status.actual &&
+  test_must_be_empty status.actual
 
