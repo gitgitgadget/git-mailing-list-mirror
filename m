@@ -6,83 +6,72 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D9761F403
-	for <e@80x24.org>; Tue,  5 Jun 2018 19:41:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 89EB61F403
+	for <e@80x24.org>; Tue,  5 Jun 2018 19:44:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752050AbeFETl0 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Jun 2018 15:41:26 -0400
-Received: from mail-yw0-f193.google.com ([209.85.161.193]:46690 "EHLO
-        mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751816AbeFETlZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jun 2018 15:41:25 -0400
-Received: by mail-yw0-f193.google.com with SMTP id v197-v6so1121310ywc.13
-        for <git@vger.kernel.org>; Tue, 05 Jun 2018 12:41:25 -0700 (PDT)
+        id S1751965AbeFETox (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Jun 2018 15:44:53 -0400
+Received: from mail-yw0-f181.google.com ([209.85.161.181]:45699 "EHLO
+        mail-yw0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751849AbeFETow (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jun 2018 15:44:52 -0400
+Received: by mail-yw0-f181.google.com with SMTP id v190-v6so1124711ywa.12
+        for <git@vger.kernel.org>; Tue, 05 Jun 2018 12:44:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=OU2XJiaBzvVRM69uTTeKGsELolpufcQz5GJVoyRpIS8=;
-        b=meODIWXqUnpRT8LwIiOoDqjGKBogrL/a6g8Rjd4B80nVpbDpGL09hhy7jsEB9UNNwY
-         fkXg2cgdaiavyfIFPTeX2Bu3WU/lFcTcIRqUsq6PrD3y4Pm2wkN+tKqltO785Gdwa3lH
-         kutMKWvwclH3/+NFO01wpvC7jbeMKPp91y2gDzdJnV9ATraLWyXJJEMw82xJ3JU+hifc
-         UPOu8AEfNYK4buqJd4Po+LxnKXfLFkCk+bDxC5NA/jBO+055vcZIVce7gZIVHErZR0by
-         js1EZK9i4uLaZV7uM4OGCSNXH/HpCNt+32EZqd7e+Ljx323rR1jsf/4Hd6gjk+OEH6b5
-         T2mA==
-X-Gm-Message-State: APt69E1CXjOeRLzS9qNyVXSOFlV6q8c3b+VV7XA8YCgpzjxJY9KLSWJA
-        b8eJtc0KZUHmyovvLolQm64t1cJwktvPCAkTR7Y=
-X-Google-Smtp-Source: ADUXVKL5sWTUzkwfMZPnqCJIlJcJgRbCi4W/GEHwOXPpfqbKUk8t7M3OE5C7hLJ9aaRVRbYmqjBfK5Ng0K4/VdY9EBo=
-X-Received: by 2002:a0d:c105:: with SMTP id c5-v6mr933995ywd.131.1528227684365;
- Tue, 05 Jun 2018 12:41:24 -0700 (PDT)
+        bh=zaKXkNwIQtjQ8qq7gcbBCXYL7CKHPu6hOu165/5FEPU=;
+        b=NFbtubOC68wCDlvqO2PzuYd+C9HKs4mZ5drn517ce1Me0gk+dj6612e9AtdbRfGV3U
+         o+U3yIwyXpaQH97fnnlqmW98Kg9Epl0WXiJasbotzY+yCQ68d67K4DOcotBHMD6KgGtr
+         WaTXOnbj+lSVQBXY4SFrMwBYTbz3P7LugXLJIwx+Lb0O7Td0CjdekQbHZXZmF4uh8dV0
+         pyMIKZr7QsgS/L9/I6SGZTTSKFXYrOx+woWAbDGmpTYwVZLwz7PU2amOHitnvDYYjnd1
+         OnCFqNFPdnmb17Wq+mL7ytyYfDhwEyTQNf1GszqPtBiSFJoH9znDaUE3CABHK++vRq2z
+         0LpQ==
+X-Gm-Message-State: APt69E1rXLe5/aQA+o+HMcJeOUiG+9QfdUdX6k005BiKk1S+vIvRJYBN
+        WksPuddTIKDR3exL+swKSSmWqFFC4eBpi2YBChs=
+X-Google-Smtp-Source: ADUXVKJQHhxF/IJsszwtGgj9cTu303NtS/6FPCTV+yjsWseFfD90qClZt5K5CmcHQnbiknAbQUDsUuNZDtfO3P/rvbk=
+X-Received: by 2002:a81:3c0d:: with SMTP id j13-v6mr15566ywa.16.1528227892038;
+ Tue, 05 Jun 2018 12:44:52 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180605091350.14476-1-luke@diamand.org> <20180605091350.14476-2-luke@diamand.org>
- <CAPig+cQTTY8wc4d=4jV8GxHDOjF7xk1vjA62JS6s4Zr0uXiegg@mail.gmail.com> <CAE5ih7-1StB8RNrobO+hpG2QOSdoscUNfVP9+muZV0_b+m+XSw@mail.gmail.com>
-In-Reply-To: <CAE5ih7-1StB8RNrobO+hpG2QOSdoscUNfVP9+muZV0_b+m+XSw@mail.gmail.com>
+References: <20180605085524.10838-1-luke@diamand.org> <20180605085524.10838-2-luke@diamand.org>
+ <777690205.383623.1528195798488@mail.yahoo.com> <CAE5ih7_01ZixwnFP2kGN9Y5M26MyNai82USUr2UfunL3Ubztdg@mail.gmail.com>
+In-Reply-To: <CAE5ih7_01ZixwnFP2kGN9Y5M26MyNai82USUr2UfunL3Ubztdg@mail.gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 5 Jun 2018 15:41:12 -0400
-Message-ID: <CAPig+cTSrzmOtYPwPWLpGfDa5tt0SV6Aq8SmhYTTicK0ikst7Q@mail.gmail.com>
-Subject: Re: [PATCHv1 1/3] git-p4: raise exceptions from p4CmdList based on
- error from p4 server
+Date:   Tue, 5 Jun 2018 15:44:40 -0400
+Message-ID: <CAPig+cSP5RJedaoO1T=j4qmbAGmrNh_bJkamKcJRS+kF5wq0JQ@mail.gmail.com>
+Subject: Re: [PATCHv1 1/1] git-p4: better error reporting when p4 fails
 To:     Luke Diamand <luke@diamand.org>
-Cc:     Git List <git@vger.kernel.org>,
+Cc:     merlorom@yahoo.fr, Git List <git@vger.kernel.org>,
         =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        merlorom@yahoo.fr, Miguel Torroja <miguel.torroja@gmail.com>,
+        Miguel Torroja <miguel.torroja@gmail.com>,
         vin ku <viniciusalexandre@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>, lex@lexspoon.org
+        Lars Schneider <larsxschneider@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 5, 2018 at 6:56 AM Luke Diamand <luke@diamand.org> wrote:
-> On 5 June 2018 at 10:54, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > On Tue, Jun 5, 2018 at 5:14 AM Luke Diamand <luke@diamand.org> wrote:
-> >> +                    m = re.search('Too many rows scanned \(over (\d+)\)', data)
-> >> +                    if not m:
-> >> +                        m = re.search('Request too large \(over (\d+)\)', data)
+On Tue, Jun 5, 2018 at 6:59 AM Luke Diamand <luke@diamand.org> wrote:
+> On 5 June 2018 at 11:49, Merland Romain <merlorom@yahoo.fr> wrote:
+> >> +    # now check that we can actually talk to the server
+> >> +    global p4_access_checked
+> >> +    if not p4_access_checked:
+> >> +        p4_access_checked = True
+> >> +        p4_check_access()
+> >> +
 > >
-> > Does 'p4' localize these error messages?
+> > Just switch the 2 lines 'p4_access_checked = True' and 'p4_check_access()'
+> > It seems to me more logical
 >
-> That's a good question.
+> Like this:
 >
-> It turns out that Perforce open-sourced the P4 client in 2014 (I only
-> recently found this out) so we can actually look at the code now!
+> +        p4_check_access()
+> +        p4_access_checked = True
 >
-> Here's the code:
->
->     // ErrorId graveyard: retired/deprecated ErrorIds.
+> You need to set p4_access_checked first so that it doesn't go and try
+> to check the p4 access before running "p4 login -s", which would then
+> get stuck forever.
 
-Hmm, the "too many rows" error you're seeing is retired/deprecated(?).
-
->     ErrorId MsgDb::MaxResults              = { ErrorOf( ES_DB, 32,
-> E_FAILED, EV_ADMIN, 1 ), "Request too large (over %maxResults%); see
-> 'p4 help maxresults'." } ;//NOTRANS
->     ErrorId MsgDb::MaxScanRows             = { ErrorOf( ES_DB, 61,
-> E_FAILED, EV_ADMIN, 1 ), "Too many rows scanned (over %maxScanRows%);
-> see 'p4 help maxscanrows'." } ;//NOTRANS
->
-> I don't think there's actually a way to make it return any language
-> other than English though. [...]
-> So I think probably the language is always English.
-
-The "NOTRANS" annotation on the error messages is reassuring.
+Such subtlety may deserve an in-code comment.
