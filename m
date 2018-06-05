@@ -2,76 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89EB61F403
-	for <e@80x24.org>; Tue,  5 Jun 2018 19:44:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27C691F403
+	for <e@80x24.org>; Tue,  5 Jun 2018 19:54:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751965AbeFETox (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Jun 2018 15:44:53 -0400
-Received: from mail-yw0-f181.google.com ([209.85.161.181]:45699 "EHLO
-        mail-yw0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751849AbeFETow (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jun 2018 15:44:52 -0400
-Received: by mail-yw0-f181.google.com with SMTP id v190-v6so1124711ywa.12
-        for <git@vger.kernel.org>; Tue, 05 Jun 2018 12:44:52 -0700 (PDT)
+        id S1752345AbeFETyv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Jun 2018 15:54:51 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:46637 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752302AbeFETyu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jun 2018 15:54:50 -0400
+Received: by mail-wr0-f195.google.com with SMTP id v13-v6so3688682wrp.13
+        for <git@vger.kernel.org>; Tue, 05 Jun 2018 12:54:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=sg/1DFQGRRrX0ZrlygwRs79r5wXIC6vEflTdSBBU2U4=;
+        b=lSk4iNXtHnQUi6yst3ZLi8myceksDfrV6fDf4HQxy+7EULeaGfjIgBtj5qUzGg3glK
+         g631VDJkipK4tDt2/my4Bz63wJIlcrwQzv/c8GLW9uMJMBNZmLN4MY+quNGXjwb0FgrL
+         uPfM5QGsnrHdfZ7vIRPAQiAo6zK8Hlx/PHepaNp8mOKamzGcS02JoL5YBIkLKszuzVvO
+         omnGWAEYJsEkB9YuaJYko6NUMeQJ3BzHzk0LVORClKQwYfhAPd8JeNPMztSk4R+DcIKZ
+         hay0DrHKMs6BIO44pr0npj6XZ/YjE6JVzQDbthRz+cC1OLb3JvktjlxJ6ii02Iv4T1Bd
+         jgHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=zaKXkNwIQtjQ8qq7gcbBCXYL7CKHPu6hOu165/5FEPU=;
-        b=NFbtubOC68wCDlvqO2PzuYd+C9HKs4mZ5drn517ce1Me0gk+dj6612e9AtdbRfGV3U
-         o+U3yIwyXpaQH97fnnlqmW98Kg9Epl0WXiJasbotzY+yCQ68d67K4DOcotBHMD6KgGtr
-         WaTXOnbj+lSVQBXY4SFrMwBYTbz3P7LugXLJIwx+Lb0O7Td0CjdekQbHZXZmF4uh8dV0
-         pyMIKZr7QsgS/L9/I6SGZTTSKFXYrOx+woWAbDGmpTYwVZLwz7PU2amOHitnvDYYjnd1
-         OnCFqNFPdnmb17Wq+mL7ytyYfDhwEyTQNf1GszqPtBiSFJoH9znDaUE3CABHK++vRq2z
-         0LpQ==
-X-Gm-Message-State: APt69E1rXLe5/aQA+o+HMcJeOUiG+9QfdUdX6k005BiKk1S+vIvRJYBN
-        WksPuddTIKDR3exL+swKSSmWqFFC4eBpi2YBChs=
-X-Google-Smtp-Source: ADUXVKJQHhxF/IJsszwtGgj9cTu303NtS/6FPCTV+yjsWseFfD90qClZt5K5CmcHQnbiknAbQUDsUuNZDtfO3P/rvbk=
-X-Received: by 2002:a81:3c0d:: with SMTP id j13-v6mr15566ywa.16.1528227892038;
- Tue, 05 Jun 2018 12:44:52 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=sg/1DFQGRRrX0ZrlygwRs79r5wXIC6vEflTdSBBU2U4=;
+        b=pjAxecia8/WFBexPQ7wRa2EKEh5RQHYj0c4YXabJWemE7lvzyk53keSOvOrxVDLJez
+         s6KBgwdGsdoJLgQD4Gia8pSfrC9e2Ob1v555MkM0LWsfGMJ3MH+YTGycSX2RejXqMzQ7
+         KwULRYyJlzFATykxfCKxvo/nWxk797alPXGI3AopN7SS9RnPiJ9OO+MW5m7pgIq3eHyb
+         zZCzrShNIEIgN+4LYPnhoa8FHtRDwIW4pMLK3Q5hH+qmzRpfAaz18gpNv/M7pWxwZFTe
+         CmQWDDGpAwB8hxkviBUHFPgOTBMULVa76FZGQFpCHyLbI7OGV867hTN2GRjY+SiByXzZ
+         ecjA==
+X-Gm-Message-State: APt69E3mDH6B5tyUMhf+xAoeHQRKh/ee0P3j6xchyWNAokBC76zbr84v
+        ohTlnH3EJMmOKb7Vk0b3Sxgh3YZW
+X-Google-Smtp-Source: ADUXVKJvZzlY7vHifPSzIZQzkLM6R9LiE/Q7KPlq6aC5ePO5a+QRLQ89BgkOGtt0De451CLbXjwLhA==
+X-Received: by 2002:adf:8142:: with SMTP id 60-v6mr25837wrm.192.1528228488769;
+        Tue, 05 Jun 2018 12:54:48 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id o2-v6sm2252533wmo.24.2018.06.05.12.54.47
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 05 Jun 2018 12:54:48 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Stefan Beller <sbeller@google.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 0/3] refspec: refactor & fix free() behavior
+Date:   Tue,  5 Jun 2018 19:54:37 +0000
+Message-Id: <20180605195440.8505-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.17.0.290.gded63e768a
+In-Reply-To: <20180605162939.GA158365@google.com>
+References: <20180605162939.GA158365@google.com>
 MIME-Version: 1.0
-References: <20180605085524.10838-1-luke@diamand.org> <20180605085524.10838-2-luke@diamand.org>
- <777690205.383623.1528195798488@mail.yahoo.com> <CAE5ih7_01ZixwnFP2kGN9Y5M26MyNai82USUr2UfunL3Ubztdg@mail.gmail.com>
-In-Reply-To: <CAE5ih7_01ZixwnFP2kGN9Y5M26MyNai82USUr2UfunL3Ubztdg@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 5 Jun 2018 15:44:40 -0400
-Message-ID: <CAPig+cSP5RJedaoO1T=j4qmbAGmrNh_bJkamKcJRS+kF5wq0JQ@mail.gmail.com>
-Subject: Re: [PATCHv1 1/1] git-p4: better error reporting when p4 fails
-To:     Luke Diamand <luke@diamand.org>
-Cc:     merlorom@yahoo.fr, Git List <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Miguel Torroja <miguel.torroja@gmail.com>,
-        vin ku <viniciusalexandre@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 5, 2018 at 6:59 AM Luke Diamand <luke@diamand.org> wrote:
-> On 5 June 2018 at 11:49, Merland Romain <merlorom@yahoo.fr> wrote:
-> >> +    # now check that we can actually talk to the server
-> >> +    global p4_access_checked
-> >> +    if not p4_access_checked:
-> >> +        p4_access_checked = True
-> >> +        p4_check_access()
-> >> +
-> >
-> > Just switch the 2 lines 'p4_access_checked = True' and 'p4_check_access()'
-> > It seems to me more logical
->
-> Like this:
->
-> +        p4_check_access()
-> +        p4_access_checked = True
->
-> You need to set p4_access_checked first so that it doesn't go and try
-> to check the p4 access before running "p4 login -s", which would then
-> get stuck forever.
+Since Martin & Brandon both liked this direction I've fixed it
+up.
 
-Such subtlety may deserve an in-code comment.
+Martin: I didn't want to be the author of the actual fix for the bug
+you found, so I rewrote your commit in 3/3. The diff is different, and
+I slightly modified the 3rd paragraph of the commit message & added my
+sign-off, but otherwise it's the same.
+
+Martin Ågren (1):
+  refspec: initalize `refspec_item` in `valid_fetch_refspec()`
+
+Ævar Arnfjörð Bjarmason (2):
+  refspec: s/refspec_item_init/&_or_die/g
+  refspec: add back a refspec_item_init() function
+
+ builtin/clone.c |  2 +-
+ builtin/pull.c  |  2 +-
+ refspec.c       | 13 +++++++++----
+ refspec.h       |  5 ++++-
+ 4 files changed, 15 insertions(+), 7 deletions(-)
+
+-- 
+2.17.0.290.gded63e768a
+
