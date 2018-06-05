@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-11.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D301C1F403
-	for <e@80x24.org>; Tue,  5 Jun 2018 21:40:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B6D1B1F403
+	for <e@80x24.org>; Tue,  5 Jun 2018 21:40:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751989AbeFEVkx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Jun 2018 17:40:53 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:36988 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751619AbeFEVkx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jun 2018 17:40:53 -0400
-Received: by mail-pg0-f68.google.com with SMTP id r21-v6so1537788pgv.4
-        for <git@vger.kernel.org>; Tue, 05 Jun 2018 14:40:53 -0700 (PDT)
+        id S1751619AbeFEVk5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Jun 2018 17:40:57 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:40891 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752003AbeFEVkz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jun 2018 17:40:55 -0400
+Received: by mail-pf0-f194.google.com with SMTP id z24-v6so2011799pfe.7
+        for <git@vger.kernel.org>; Tue, 05 Jun 2018 14:40:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=LUFcF7PxWywM2w46Url7ye1IjlmCkKZaV+DGZvpBbOI=;
-        b=hWIjrlB+59HdBEC7aPcgZjqooTCFtTF4Q7XCKDqf3vJ/SZgXA/ziOUKD4z3iosT9BB
-         47M7VrhqvPldOaABIiRvdD+z8cqaLbqHQoTNNfKctYyejo5HDfQVqclrZFy689VtsBF8
-         RoiUkuanmm1X7OtfL1s0GnOXpUsFS9qKGGi7yc80oWuYy7+DAN9xmlzSFqCCJJ6LpkC7
-         YWxwyU52pgQNWk3UdCFnMOYaiQ00yFYoJb1aSRgNQue+3jXgImmjG+M8B7Dp7wsV26xU
-         JfKB7vCNinWDsVWZrLiz/4R4AbRTBaoYneVBwuYzRRjzsccL5IZAqcHPJlJqDEH/+MMO
-         q6kw==
+        bh=kgLUHXy6IkQy46NSx/OZTHHdnpv7RttMXMznxgMv7Os=;
+        b=hZ9Zx0e6IKJrApn1/NdOqSF/06OVvaRAsFudsgnWQVcv26xJe94tCpCBhc6SOtVOAk
+         ofZmyFryusQMuiOxUpgxm3t6PndTXabLlAHsSK6DfdPtfHoJKFz3mabvWzb+VeY6lh7h
+         q+2fan6M26s5lELLjJCp5wIZLrSgaoghYbDaUrEW5u32O8qSsd61knWB9E9NEm701kVK
+         g6YkEdJIq6GLhnE+dGwgRMbjALO+mH3IGeAZSEh9G37RiYvVSEcOCSaMVomX9G85pzgj
+         H9o6QXIpBaS9jQh21UJOwmK2p5cXh2xjHi7NCBfnCIHec3V3saraMgpFyMZDIJfXdgyP
+         FN5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=LUFcF7PxWywM2w46Url7ye1IjlmCkKZaV+DGZvpBbOI=;
-        b=PsI1RaLXtRKd94HkSw5gTrpoUip8UfRIFWti5mWvE27x77k7ubaS9yfQ6Gha9zSjQk
-         tjLGSUVTwmIMPoBu6RDAY25qVjIrAQIF4yCDTv8tgg05kae5aISCzwwK7ctZ1d9l6rIy
-         6S/bnVQom3AYIAvf7SxVwxbPsCyQXs0byh7SBwU3ZA2mcEZa4ESyti+OGEYfRW/ze4Qr
-         TIsY6uGmgobDsixAjefg8aypfkU7h4oTvuIUcUfymV7O4+Z/5yEJ5Oq+j0NAedImzgnt
-         rTcw08hRXMSepQI2TOJLnsZIdeGFwVkANwXIdfVtb1LK90QVZOAYxoSyEHNZBeJZFOac
-         bzOQ==
-X-Gm-Message-State: APt69E2uIMXXP+LhyF0WO3ECYvcFxsQXGB0aMu3JTZvEB3BDx/nxuc4s
-        owN31zSWu9WSs4z/5hW42Pv7vm2b90Y=
-X-Google-Smtp-Source: ADUXVKJ4WnAYlahuiqDCkAC5gpU205TY2B9EAVQe12iO38UJdwAFLxuCWe/ezM0oUAUo9WtTcL+7Ww==
-X-Received: by 2002:aa7:850f:: with SMTP id v15-v6mr327723pfn.144.1528234852140;
-        Tue, 05 Jun 2018 14:40:52 -0700 (PDT)
+        bh=kgLUHXy6IkQy46NSx/OZTHHdnpv7RttMXMznxgMv7Os=;
+        b=YS1XTKkKUBDBNoBuFyRl4hyN1AeOjAZCFZA11DlKACwqU2H1aQKO7kXCwL3Eky7FIL
+         GOLxSUjJmnDFAy3WOE7WGzHkGsm+fMOwGk+WvLke28rURnVd2hrM7WuNAOhelP5vfxqS
+         Q/L39UnExwCgwe8wN3DqkVAWCtFeP1PckDl979I0GGYi9IxEew90PGDS4YiCTce4h5Oy
+         18VA03QhXyF5Y1opTH34xBlfEoDQ9xOIM4l8uJvq3z7PkuZbtxFKJ3Nv4ftLgy8oKxXN
+         p80tNVJ8znpZ3RvciSqdr3E98BMrLF9Jx58yW9436gJZepVTef73sD1ZoNCubKUCI4Yt
+         WGrg==
+X-Gm-Message-State: APt69E090NTzQ7oXg/6j/28oNaMp54vsUC8ue+As3IbpZtWslBeU3WKN
+        VIIOzZjxh/42iOKnTTvbokWVPCTphD8=
+X-Google-Smtp-Source: ADUXVKL51svtTiYg4MtAM3P3W1dtb89CnHtXMq1rRVc/XiLcmG45YpPz1MEzEyqdHPYyf9aYJwWndw==
+X-Received: by 2002:a63:24c4:: with SMTP id k187-v6mr268754pgk.434.1528234854452;
+        Tue, 05 Jun 2018 14:40:54 -0700 (PDT)
 Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
-        by smtp.gmail.com with ESMTPSA id 76-v6sm27451138pfr.172.2018.06.05.14.40.50
+        by smtp.gmail.com with ESMTPSA id 76-v6sm27451138pfr.172.2018.06.05.14.40.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 05 Jun 2018 14:40:51 -0700 (PDT)
+        Tue, 05 Jun 2018 14:40:53 -0700 (PDT)
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, bmwill@google.com
-Subject: [PATCH v2 1/2] t5702: test fetch with multiple refspecs at a time
-Date:   Tue,  5 Jun 2018 14:40:35 -0700
-Message-Id: <2bc7df55a6451afbd35638b31a1551c648129b22.1528234587.git.jonathantanmy@google.com>
+Subject: [PATCH v2 2/2] fetch: send "refs/tags/" prefix upon CLI refspecs
+Date:   Tue,  5 Jun 2018 14:40:36 -0700
+Message-Id: <c6910161aab1f383b5721bdc91969baad8c10a66.1528234587.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.17.0.768.g1526ddbba1.dirty
 In-Reply-To: <cover.1528234587.git.jonathantanmy@google.com>
 References: <cover.1528233146.git.jonathantanmy@google.com> <cover.1528234587.git.jonathantanmy@google.com>
@@ -62,68 +62,88 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Extend the protocol v2 tests to also test fetches with multiple refspecs
-specified. This also covers the previously uncovered cases of fetching
-with prefix matching and fetching by SHA-1.
+When performing tag following, in addition to using the server's
+"include-tag" capability to send tag objects (and emulating it if the
+server does not support that capability), "git fetch" relies upon the
+presence of refs/tags/* entries in the initial ref advertisement to
+locally create refs pointing to the aforementioned tag objects. When
+using protocol v2, refs/tags/* entries in the initial ref advertisement
+may be suppressed by a ref-prefix argument, leading to the tag object
+being downloaded, but the ref not being created.
+
+Commit dcc73cf7ff ("fetch: generate ref-prefixes when using a configured
+refspec", 2018-05-18) ensured that "refs/tags/" is always sent as a ref
+prefix when "git fetch" is invoked with no refspecs, but not when "git
+fetch" is invoked with refspecs. Extend that functionality to make it
+work in both situations.
+
+This also necessitates a change another test which tested ref
+advertisement filtering using tag refs - since tag refs are sent by
+default now, the test has been switched to using branch refs instead.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- t/t5702-protocol-v2.sh | 47 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 47 insertions(+)
+ builtin/fetch.c        |  2 +-
+ t/t5702-protocol-v2.sh | 24 +++++++++++++++++++++---
+ 2 files changed, 22 insertions(+), 4 deletions(-)
 
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index ea5b9669a..1f447f1e8 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -359,7 +359,7 @@ static struct ref *get_ref_map(struct transport *transport,
+ 		refspec_ref_prefixes(&transport->remote->fetch, &ref_prefixes);
+ 
+ 	if (ref_prefixes.argc &&
+-	    (tags == TAGS_SET || (tags == TAGS_DEFAULT && !rs->nr))) {
++	    (tags == TAGS_SET || tags == TAGS_DEFAULT)) {
+ 		argv_array_push(&ref_prefixes, "refs/tags/");
+ 	}
+ 
 diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index a4fe6508b..261e82b0f 100755
+index 261e82b0f..b31b6d8d3 100755
 --- a/t/t5702-protocol-v2.sh
 +++ b/t/t5702-protocol-v2.sh
-@@ -359,6 +359,53 @@ test_expect_success 'default refspec is used to filter ref when fetchcing' '
- 	grep "ref-prefix refs/tags/" log
+@@ -204,6 +204,7 @@ test_expect_success 'ref advertisment is filtered during fetch using protocol v2
+ 	test_when_finished "rm -f log" &&
+ 
+ 	test_commit -C file_parent three &&
++	git -C file_parent branch unwanted-branch three &&
+ 
+ 	GIT_TRACE_PACKET="$(pwd)/log" git -C file_child -c protocol.version=2 \
+ 		fetch origin master &&
+@@ -212,9 +213,8 @@ test_expect_success 'ref advertisment is filtered during fetch using protocol v2
+ 	git -C file_parent log -1 --format=%s >expect &&
+ 	test_cmp expect actual &&
+ 
+-	! grep "refs/tags/one" log &&
+-	! grep "refs/tags/two" log &&
+-	! grep "refs/tags/three" log
++	grep "refs/heads/master" log &&
++	! grep "refs/heads/unwanted-branch" log
  '
  
-+test_expect_success 'fetch supports various ways of have lines' '
+ test_expect_success 'server-options are sent when fetching' '
+@@ -406,6 +406,24 @@ test_expect_success 'fetch supports various ways of have lines' '
+ 		$(git -C server rev-parse completely-unrelated)
+ '
+ 
++test_expect_success 'fetch supports include-tag and tag following' '
 +	rm -rf server client trace &&
 +	git init server &&
-+	test_commit -C server dwim &&
-+	TREE=$(git -C server rev-parse HEAD^{tree}) &&
-+	git -C server tag exact \
-+		$(git -C server commit-tree -m a "$TREE") &&
-+	git -C server tag dwim-unwanted \
-+		$(git -C server commit-tree -m b "$TREE") &&
-+	git -C server tag exact-unwanted \
-+		$(git -C server commit-tree -m c "$TREE") &&
-+	git -C server tag prefix1 \
-+		$(git -C server commit-tree -m d "$TREE") &&
-+	git -C server tag prefix2 \
-+		$(git -C server commit-tree -m e "$TREE") &&
-+	git -C server tag fetch-by-sha1 \
-+		$(git -C server commit-tree -m f "$TREE") &&
-+	git -C server tag completely-unrelated \
-+		$(git -C server commit-tree -m g "$TREE") &&
-+	
++
++	test_commit -C server to_fetch &&
++	git -C server tag -a annotated_tag -m message &&
++
 +	git init client &&
 +	GIT_TRACE_PACKET="$(pwd)/trace" git -C client -c protocol.version=2 \
-+		fetch "file://$(pwd)/server" \
-+		dwim \
-+		refs/tags/exact \
-+		refs/tags/prefix*:refs/tags/prefix* \
-+		"$(git -C server rev-parse fetch-by-sha1)" &&
++		fetch "$(pwd)/server" to_fetch:to_fetch &&
 +
-+	# Ensure that the appropriate prefixes are sent (using a sample)
-+	grep "fetch> ref-prefix dwim" trace &&
-+	grep "fetch> ref-prefix refs/heads/dwim" trace &&
-+	grep "fetch> ref-prefix refs/tags/prefix" trace &&
++	grep "fetch> ref-prefix to_fetch" trace &&
++	grep "fetch> ref-prefix refs/tags/" trace &&
++	grep "fetch> include-tag" trace &&
 +
-+	# Ensure that the correct objects are returned
-+	git -C client cat-file -e $(git -C server rev-parse dwim) &&
-+	git -C client cat-file -e $(git -C server rev-parse exact) &&
-+	git -C client cat-file -e $(git -C server rev-parse prefix1) &&
-+	git -C client cat-file -e $(git -C server rev-parse prefix2) &&
-+	git -C client cat-file -e $(git -C server rev-parse fetch-by-sha1) &&
-+	test_must_fail git -C client cat-file -e \
-+		$(git -C server rev-parse dwim-unwanted) &&
-+	test_must_fail git -C client cat-file -e \
-+		$(git -C server rev-parse exact-unwanted) &&
-+	test_must_fail git -C client cat-file -e \
-+		$(git -C server rev-parse completely-unrelated)
++	git -C client cat-file -e $(git -C client rev-parse annotated_tag)
 +'
 +
  # Test protocol v2 with 'http://' transport
