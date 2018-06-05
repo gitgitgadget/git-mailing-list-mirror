@@ -2,176 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 09E521F403
-	for <e@80x24.org>; Tue,  5 Jun 2018 09:14:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A37341F403
+	for <e@80x24.org>; Tue,  5 Jun 2018 09:54:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751886AbeFEJOH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Jun 2018 05:14:07 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:38147 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751857AbeFEJOC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jun 2018 05:14:02 -0400
-Received: by mail-wr0-f196.google.com with SMTP id 94-v6so1554462wrf.5
-        for <git@vger.kernel.org>; Tue, 05 Jun 2018 02:14:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=o5nmkpPdpBdRM0A7phvnbwfR+StIx84lNZH3CMvaljU=;
-        b=dsjhb6zA8yJyufwqQcDX3Hf6DEFLOPcv9qS7eU/PPXrBLBYzoOvpdwwCOYDP7U5/Yl
-         22ctXBtiPAXjVm7yZYrQqyc6xOfT2k9jKggZZLFtOUIVt5GGfgcm3gumDfoTgZLGGxh8
-         LIeED6CETJTVgkAdHA58ftfA0HXoy9U3ok3uM=
+        id S1751827AbeFEJyP (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Jun 2018 05:54:15 -0400
+Received: from mail-yw0-f180.google.com ([209.85.161.180]:33456 "EHLO
+        mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751822AbeFEJyN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jun 2018 05:54:13 -0400
+Received: by mail-yw0-f180.google.com with SMTP id u124-v6so527500ywg.0
+        for <git@vger.kernel.org>; Tue, 05 Jun 2018 02:54:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=o5nmkpPdpBdRM0A7phvnbwfR+StIx84lNZH3CMvaljU=;
-        b=MBb0ML1F+AR3qU0a2pODzmzLJG+FFN2T//RXJV7/6XdDyPWK728FM4Ev02WoT6wwRJ
-         3ZO2fe3bAfViKzBcBbMNrTdlL42itFIdPvrOY9zv+PFia48uMDAq2aoKYS8KxgZkv0pS
-         gutY04PMbLEIjKP9EVi6u7OWgdjLtYtqDAi5lxgto3S0v2nTbRMy7YQWNqRIMNuMyMM0
-         /Len0NZoIwqtHfr38vowAOfN19hYHOLZFQHbcTqHanBb0filWWv3Pznfkgsqh8LeZYni
-         XZUWlE7Q+bYWLsRtK5nAYSH5UyB39CjvX4B0I2toaAiXwXxpeaJsO0lAVEnsVBQ60w3O
-         x22w==
-X-Gm-Message-State: ALKqPwcpbwGtb+tHUkiBwQy0cb4xXpIHvUAfB1flnJ8YS/Wp3n0snGqB
-        W8/0f2WIJjnjAqRlOCFAlCXibM6rpp8=
-X-Google-Smtp-Source: ADUXVKJ8YNfPUkvU5dRjgZXOzFOhPQ30kSn5/r0VLn2V8jAHSDRccZ0oivFQuK6wtAT7Sk5EjWpa3g==
-X-Received: by 2002:adf:edc6:: with SMTP id v6-v6mr17690729wro.264.1528190040297;
-        Tue, 05 Jun 2018 02:14:00 -0700 (PDT)
-Received: from ethel.corp.roku (cpc92728-cmbg20-2-0-cust351.5-4.cable.virginm.net. [82.29.15.96])
-        by smtp.gmail.com with ESMTPSA id i46-v6sm42018545wra.36.2018.06.05.02.13.59
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 05 Jun 2018 02:13:59 -0700 (PDT)
-From:   Luke Diamand <luke@diamand.org>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Romain Merland <merlorom@yahoo.fr>,
-        Miguel Torroja <miguel.torroja@gmail.com>,
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=FbXDNeTWw+SjwnJSdlMhjh76l4z4hS+WRtkjRxXUnEY=;
+        b=VOuFvLtbf1yTEtk+teaT3nHi0EAvnyCnsE4+rmEc4i47G6mMOyYhDmWsIdU2ErT7ih
+         7I2GKRxbMdFKGrhros5kwd9x5O1Kluzcp8qo9OGiUAU2TXky4j6UwWWTnWS1SGT88IZv
+         nek+GJzqKvbDdy9BSAhjFFYEP0jLzsC+h9hVRMgl4NgFzOuK10CMwtK1V2xIFTKT9ysx
+         mtWbOaWbzf/AVqwiARKicS4rg53UyD16r6tkyauMji66AA8zxUyhGmTE7HVEAD8wERDB
+         22RX9wReHcHokUiSO3yA98IRjmtDzW46NCtBhVnleScJJycfInRRDkTKSTLtXo7cFrkw
+         C75A==
+X-Gm-Message-State: ALKqPwe2/EShovahuUS3Yi1uEkTFHukj2pjMVRSFcGxNvTvMcpZAZuGk
+        6QLNFIdv2YfPCFqL/5iWmejmKCtYLn8ejYjpxHs=
+X-Google-Smtp-Source: ADUXVKJNwPZ2f/doWJ14IfiiWIW9f4tq5zbc7DNi3lKBZoUIolo3oIXYP/sh/x+0SfqgKZ21J34qQZCVCt2f2ip8n7I=
+X-Received: by 2002:a81:738b:: with SMTP id o133-v6mr8168108ywc.120.1528192452671;
+ Tue, 05 Jun 2018 02:54:12 -0700 (PDT)
+MIME-Version: 1.0
+References: <20180605091350.14476-1-luke@diamand.org> <20180605091350.14476-2-luke@diamand.org>
+In-Reply-To: <20180605091350.14476-2-luke@diamand.org>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 5 Jun 2018 05:54:01 -0400
+Message-ID: <CAPig+cQTTY8wc4d=4jV8GxHDOjF7xk1vjA62JS6s4Zr0uXiegg@mail.gmail.com>
+Subject: Re: [PATCHv1 1/3] git-p4: raise exceptions from p4CmdList based on
+ error from p4 server
+To:     Luke Diamand <luke@diamand.org>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        merlorom@yahoo.fr, Miguel Torroja <miguel.torroja@gmail.com>,
         viniciusalexandre@gmail.com,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Lex Spoon <lex@lexspoon.org>, Luke Diamand <luke@diamand.org>
-Subject: [PATCHv1 3/3] git-p4: auto-size the block
-Date:   Tue,  5 Jun 2018 10:13:50 +0100
-Message-Id: <20180605091350.14476-4-luke@diamand.org>
-X-Mailer: git-send-email 2.17.0.392.gdeb1a6e9b7
-In-Reply-To: <20180605091350.14476-1-luke@diamand.org>
-References: <20180605091350.14476-1-luke@diamand.org>
+        Lars Schneider <larsxschneider@gmail.com>, lex@lexspoon.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git-p4 originally would fetch changes in one query. On large repos this
-could fail because of the limits that Perforce imposes on the number of
-items returned and the number of queries in the database.
+On Tue, Jun 5, 2018 at 5:14 AM Luke Diamand <luke@diamand.org> wrote:
+> This change lays some groundwork for better handling of rowcount errors
+> from the server, where it fails to send us results because we requested
+> too many.
+>
+> It adds an option to p4CmdList() to return errors as a Python exception.
+>
+> The exceptions are derived from P4Exception (something went wrong),
+> P4ServerException (the server sent us an error code) and
+> P4RequestSizeException (we requested too many rows/results from the
+> server database).
+>
+> This makes makes the code that handles the errors a bit easier.
+>
+> The default behavior is unchanged; the new code is enabled with a flag.
+>
+> Signed-off-by: Luke Diamand <luke@diamand.org>
+> ---
+> diff --git a/git-p4.py b/git-p4.py
+> @@ -566,10 +566,30 @@ def isModeExec(mode):
+> +class P4ServerException(Exception):
+> +    """ Base class for exceptions where we get some kind of marshalled up result from the server """
+> +    def __init__(self, exit_code, p4_result):
+> +        super(P4ServerException, self).__init__(exit_code)
+> +        self.p4_result = p4_result
+> +        self.code = p4_result[0]['code']
+> +        self.data = p4_result[0]['data']
 
-To fix this, git-p4 learned to query changes in blocks of 512 changes,
-However, this can be very slow - if you have a few million changes,
-with each chunk taking about a second, it can be an hour or so.
+The subsequent patches never seem to access any of these fields, so
+it's difficult to judge whether it's worthwhile having 'code' and
+'data' bits split out like this.
 
-Although it's possible to tune this value manually with the
-"--changes-block-size" option, it's far from obvious to ordinary users
-that this is what needs doing.
+> @@ -616,9 +636,25 @@ def p4CmdList(cmd, stdin=None, stdin_mode='w+b', cb=None, skip_info=False):
+>      if exitCode != 0:
+> -        entry = {}
+> -        entry["p4ExitCode"] = exitCode
+> -        result.append(entry)
+> +        if errors_as_exceptions:
+> +            if len(result) > 0:
+> +                data = result[0].get('data')
+> +                if data:
+> +                    m = re.search('Too many rows scanned \(over (\d+)\)', data)
+> +                    if not m:
+> +                        m = re.search('Request too large \(over (\d+)\)', data)
 
-This change alters the block size dynamically by looking for the
-specific error messages returned from the Perforce server, and reducing
-the block size if the error is seen, either to the limit reported by the
-server, or to half the current block size.
+Does 'p4' localize these error messages?
 
-That means we can start out with a very large block size, and then let
-it automatically drop down to a value that works without error, while
-still failing correctly if some other error occurs.
-
-Signed-off-by: Luke Diamand <luke@diamand.org>
----
- git-p4.py               | 26 +++++++++++++++++++++-----
- t/t9818-git-p4-block.sh | 11 +++++++++++
- 2 files changed, 32 insertions(+), 5 deletions(-)
-
-diff --git a/git-p4.py b/git-p4.py
-index b337562b39..6736f81b60 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -48,7 +48,8 @@ def __str__(self):
- defaultLabelRegexp = r'[a-zA-Z0-9_\-.]+$'
- 
- # Grab changes in blocks of this many revisions, unless otherwise requested
--defaultBlockSize = 512
-+# The code should now automatically reduce the block size if it is required
-+defaultBlockSize = 1<<20
- 
- p4_access_checked = False
- 
-@@ -969,7 +970,8 @@ def p4ChangesForPaths(depotPaths, changeRange, requestedBlockSize):
-     changes = set()
- 
-     # Retrieve changes a block at a time, to prevent running
--    # into a MaxResults/MaxScanRows error from the server.
-+    # into a MaxResults/MaxScanRows error from the server. If
-+    # we _do_ hit one of those errors, turn down the block size
- 
-     while True:
-         cmd = ['changes']
-@@ -983,10 +985,24 @@ def p4ChangesForPaths(depotPaths, changeRange, requestedBlockSize):
-         for p in depotPaths:
-             cmd += ["%s...@%s" % (p, revisionRange)]
- 
-+        # fetch the changes
-+        try:
-+            result = p4CmdList(cmd, errors_as_exceptions=True)
-+        except P4RequestSizeException as e:
-+            if not block_size:
-+                block_size = e.limit
-+            elif block_size > e.limit:
-+                block_size = e.limit
-+            else:
-+                block_size = max(2, block_size // 2)
-+
-+            if verbose: print("block size error, retry with block size {0}".format(block_size))
-+            continue
-+        except P4Exception as e:
-+            die('Error retrieving changes description ({0})'.format(e.p4ExitCode))
-+
-         # Insert changes in chronological order
--        for entry in reversed(p4CmdList(cmd)):
--            if entry.has_key('p4ExitCode'):
--                die('Error retrieving changes descriptions ({})'.format(entry['p4ExitCode']))
-+        for entry in reversed(result):
-             if not entry.has_key('change'):
-                 continue
-             changes.add(int(entry['change']))
-diff --git a/t/t9818-git-p4-block.sh b/t/t9818-git-p4-block.sh
-index 8840a183ac..e5ec9cdec8 100755
---- a/t/t9818-git-p4-block.sh
-+++ b/t/t9818-git-p4-block.sh
-@@ -129,6 +129,7 @@ test_expect_success 'Create a repo with multiple depot paths' '
- '
- 
- test_expect_success 'Clone repo with multiple depot paths' '
-+	test_when_finished cleanup_git &&
- 	(
- 		cd "$git" &&
- 		git p4 clone --changes-block-size=4 //depot/pathA@all //depot/pathB@all \
-@@ -138,6 +139,16 @@ test_expect_success 'Clone repo with multiple depot paths' '
- 	)
- '
- 
-+test_expect_success 'Clone repo with self-sizing block size' '
-+	test_when_finished cleanup_git &&
-+	git p4 clone --changes-block-size=1000000 //depot@all --destination="$git" &&
-+	(
-+		cd "$git" &&
-+		git log --oneline > log &&
-+		test_line_count \> 10 log
-+	)
-+'
-+
- test_expect_success 'kill p4d' '
- 	kill_p4d
- '
--- 
-2.17.0.392.gdeb1a6e9b7
-
+> +                    if m:
+> +                        limit = int(m.group(1))
+> +                        raise P4RequestSizeException(exitCode, result, limit)
+> +
+> +                raise P4ServerException(exitCode, result)
+> +            else:
+> +                raise P4Exception(exitCode)
+> +        else:
+> +            entry = {}
+> +            entry["p4ExitCode"] = exitCode
+> +            result.append(entry)
