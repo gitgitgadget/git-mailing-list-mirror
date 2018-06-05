@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44B9C1F403
-	for <e@80x24.org>; Tue,  5 Jun 2018 14:41:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9F1C1F403
+	for <e@80x24.org>; Tue,  5 Jun 2018 14:41:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752445AbeFEOlF (ORCPT <rfc822;e@80x24.org>);
+        id S1752486AbeFEOlH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Jun 2018 10:41:07 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:42750 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752457AbeFEOlF (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 5 Jun 2018 10:41:05 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:36437 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751959AbeFEOlC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jun 2018 10:41:02 -0400
-Received: by mail-wr0-f193.google.com with SMTP id f16-v6so2725144wrm.3
-        for <git@vger.kernel.org>; Tue, 05 Jun 2018 07:41:01 -0700 (PDT)
+Received: by mail-wr0-f194.google.com with SMTP id w10-v6so2711040wrk.9
+        for <git@vger.kernel.org>; Tue, 05 Jun 2018 07:41:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=8TjUMKpPdfFF93U1IxQ1u8UdADEqUf1WeoD9cLPsziU=;
-        b=jWL1bNzqwWXmR9UxuXJGdPLQcR13/SSEb/1/I7chQ4kX646XRnUstEv37UO/RtfgTr
-         kZadQU5EZWUdZa2AT2IdfnGs7c71rqS5CI3LgNWeeh6BppHqn3Kdw/wvkb0CG/3AoN7f
-         NnbSW/gtysiYaS8wWPmVdQzQrL/8JlngYH7Mx1jF+DEw2UK5UU/xOgPkIcGzNpMsI+Hl
-         wVrAUjuhC3xrGJN7C24NHxL1FQSCMrxCpjSjzNxX8061gzdDHvflIqlZbF6p1lSlNXxD
-         osfXjsBG1aPIj7klLiUuuSW701ejFLpXXNxXDt1OYK/0AOlRP/IEqGAToiYW5TpV75EP
-         DsNQ==
+        bh=Iw2YiB/ZkIh4oCVAMKTf2c/oj+UFgHHJJM7iLMD06Cw=;
+        b=d2JIKOcbreJkZWMzEboN/FM871A1Azc+8NKbKTKhjQrdcL2JqRNmj/bmJ3g9//TTmF
+         bucCiwleF8/43JfmQy/LzJlx7ohGuhDIIYGpUY2zwDpqVb62LGe2ccS9StkkDr3SOzPO
+         vzcoJXN3T+lweR/Mmji0yoeZy6D2H+icMbwVTjdAT08QeX8ryWtw+QpsiCdKkZnH9l1w
+         N6ZAOsef2LgZX1HdVC7gAaKjj1gsW2aP6OTyPq7VocvkH51z2fVLYeVQ+dWuiPQrvXg2
+         KlKyzbBvBPl4Eq4NUFhZz6mpaoycMI9VyaYtHBQYwmBRgiPKzrqkEi51EOe4iLy/ASIw
+         N2pA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=8TjUMKpPdfFF93U1IxQ1u8UdADEqUf1WeoD9cLPsziU=;
-        b=n14bYq4FVa3exlwb0iWZjxD/sFyFFdNAg1WtGq8mik8FMh9zYzE4/KFSn4njkacj3C
-         KEkr9JDFR1cVBBe5nRctprVY/jCtkSuwQ+cCJEKkEKoIns2YiMV7RI1NUUupZh3uHWso
-         N+Q3NIvFtZn03DqQJcDuXlrvU/06aPsWygIlcYGsYWqMzaL5pKAm6XqP9QtLegi9hMGS
-         dAgHjjvTZLKpbCUvQht8syD1tLlwo/5N0aqIgWk3mH0wckOjWFbh6V/QbJuTQrzzWBws
-         FmhDTftP2mqyGCxXowsLwCSaxvGLxMHDrL9kFeKCoE1mRViLJw6Nj868rVQR8YcgmK92
-         ko+A==
-X-Gm-Message-State: ALKqPwcjSouPB3JyIgAWpMbtyD5AX9IQF6zy1w2Adkrj0CLPSZKCdnGg
-        otG77CiO4ddH/OCargzneP7jogj0
-X-Google-Smtp-Source: ADUXVKIXYUVNGZKrnRFUgKLkah1IlJhVDJ1iE8w34MOIbCceq7X+nylq0QBXnrun0bTkA8hOgtxhLw==
-X-Received: by 2002:adf:9405:: with SMTP id 5-v6mr17561521wrq.283.1528209660843;
-        Tue, 05 Jun 2018 07:41:00 -0700 (PDT)
+        bh=Iw2YiB/ZkIh4oCVAMKTf2c/oj+UFgHHJJM7iLMD06Cw=;
+        b=kNuWT/NjrLOU2sCHO9upH9b6FackFFXPuBQNMSOyOKY7iV/4i5w0HKNcwdgZnXqRjS
+         Cre9Ddbkki+CIbvysyfEkCW+LhiazM7/QFcutYvZ44BFIXyGPRhrJIAjDaoN5vscKr2A
+         mlhG7DjvrDs8kK32CheS05eXdB2g7tqICOctifHj0K5JXksFjgt8QeX4aj8V0nwJjVUI
+         IY0WWKVdqhC33AnJN/9XTMGWyITO6p4lZVlm0mCmPONPVhPk+H7AX+znki9eJJxb4iPr
+         b/+T7wNLmma2WZlyXcF5eUDDDNIpqok1zJgJaK6UMaxqujD2O99zXZEeNf7Xd6nid180
+         RILQ==
+X-Gm-Message-State: ALKqPwcZD2s1EyjlR3qKgrWzguIFHtVDEuYVy9HfzlpN/azJ07/xk0YP
+        w0br+EvhX2b6OZ6E/1z4Qr2udbqU
+X-Google-Smtp-Source: ADUXVKKGisf3ZVc5M0xhh1IvFsAXeapmG3vePz7P3s+LFLuEELR72pksS1DUpLdLCl1OyYMXaxdTYQ==
+X-Received: by 2002:adf:8bdb:: with SMTP id w27-v6mr20293108wra.169.1528209664187;
+        Tue, 05 Jun 2018 07:41:04 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id i76-v6sm2458910wmd.20.2018.06.05.07.40.59
+        by smtp.gmail.com with ESMTPSA id i76-v6sm2458910wmd.20.2018.06.05.07.41.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 05 Jun 2018 07:40:59 -0700 (PDT)
+        Tue, 05 Jun 2018 07:41:03 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v7 1/8] checkout tests: index should be clean after dwim checkout
-Date:   Tue,  5 Jun 2018 14:40:42 +0000
-Message-Id: <20180605144049.26488-2-avarab@gmail.com>
+Subject: [PATCH v7 3/8] checkout.c: introduce an *_INIT macro
+Date:   Tue,  5 Jun 2018 14:40:44 +0000
+Message-Id: <20180605144049.26488-4-avarab@gmail.com>
 X-Mailer: git-send-email 2.17.0.290.gded63e768a
 In-Reply-To: <20180605144049.26488-1-avarab@gmail.com>
 References: <20180605144049.26488-1-avarab@gmail.com>
@@ -76,214 +76,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Assert that whenever there's a DWIM checkout that the index should be
-clean afterwards, in addition to the correct branch being checked-out.
-
-The way the DWIM checkout code in checkout.[ch] works is by looping
-over all remotes, and for each remote trying to find if a given
-reference name only exists on that remote, or if it exists anywhere
-else.
-
-This is done by starting out with a `unique = 1` tracking variable in
-a struct shared by the entire loop, which will get set to `0` if the
-data reference is not unique.
-
-Thus if we find a match we know the dst_oid member of
-tracking_name_data must be correct, since it's associated with the
-only reference on the only remote that could have matched our query.
-
-But if there was ever a mismatch there for some reason we might end up
-with the correct branch checked out, but at the wrong oid, which would
-show whatever the difference between the two staged in the
-index (checkout branch A, stage changes from the state of branch B).
-
-So let's amend the tests (mostly added in) 399e4a1c56 ("t2024: Add
-tests verifying current DWIM behavior of 'git checkout <branch>'",
-2013-04-21) to always assert that "status" is clean after we run
-"checkout", that's being done with "-uno" because there's going to be
-some untracked files related to the test itself which we don't care
-about.
-
-In all these tests (DWIM or otherwise) we start with a clean index, so
-these tests are asserting that that's still the case after the
-"checkout", failed or otherwise.
-
-Then if we ever run into this sort of regression, either in the
-existing code or with a new feature, we'll know.
+Add an *_INIT macro for the tracking_name_data similar to what exists
+elsewhere in the codebase, e.g. OID_ARRAY_INIT in sha1-array.h. This
+will make it more idiomatic in later changes to add more fields to the
+struct & its initialization macro.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t2024-checkout-dwim.sh | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ checkout.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/t/t2024-checkout-dwim.sh b/t/t2024-checkout-dwim.sh
-index 3e5ac81bd2..ed32828105 100755
---- a/t/t2024-checkout-dwim.sh
-+++ b/t/t2024-checkout-dwim.sh
-@@ -23,6 +23,12 @@ test_branch_upstream () {
- 	test_cmp expect.upstream actual.upstream
- }
+diff --git a/checkout.c b/checkout.c
+index bdefc888ba..80e430cda8 100644
+--- a/checkout.c
++++ b/checkout.c
+@@ -10,6 +10,8 @@ struct tracking_name_data {
+ 	int unique;
+ };
  
-+status_uno_is_clean() {
-+	>status.expect &&
-+	git status -uno --porcelain >status.actual &&
-+	test_cmp status.expect status.actual
-+}
++#define TRACKING_NAME_DATA_INIT { NULL, NULL, NULL, 1 }
 +
- test_expect_success 'setup' '
- 	test_commit my_master &&
- 	git init repo_a &&
-@@ -55,6 +61,7 @@ test_expect_success 'checkout of non-existing branch fails' '
- 	test_might_fail git branch -D xyzzy &&
+ static int check_tracking_name(struct remote *remote, void *cb_data)
+ {
+ 	struct tracking_name_data *cb = cb_data;
+@@ -32,7 +34,7 @@ static int check_tracking_name(struct remote *remote, void *cb_data)
  
- 	test_must_fail git checkout xyzzy &&
-+	status_uno_is_clean &&
- 	test_must_fail git rev-parse --verify refs/heads/xyzzy &&
- 	test_branch master
- '
-@@ -64,6 +71,7 @@ test_expect_success 'checkout of branch from multiple remotes fails #1' '
- 	test_might_fail git branch -D foo &&
- 
- 	test_must_fail git checkout foo &&
-+	status_uno_is_clean &&
- 	test_must_fail git rev-parse --verify refs/heads/foo &&
- 	test_branch master
- '
-@@ -73,6 +81,7 @@ test_expect_success 'checkout of branch from a single remote succeeds #1' '
- 	test_might_fail git branch -D bar &&
- 
- 	git checkout bar &&
-+	status_uno_is_clean &&
- 	test_branch bar &&
- 	test_cmp_rev remotes/repo_a/bar HEAD &&
- 	test_branch_upstream bar repo_a bar
-@@ -83,6 +92,7 @@ test_expect_success 'checkout of branch from a single remote succeeds #2' '
- 	test_might_fail git branch -D baz &&
- 
- 	git checkout baz &&
-+	status_uno_is_clean &&
- 	test_branch baz &&
- 	test_cmp_rev remotes/other_b/baz HEAD &&
- 	test_branch_upstream baz repo_b baz
-@@ -90,6 +100,7 @@ test_expect_success 'checkout of branch from a single remote succeeds #2' '
- 
- test_expect_success '--no-guess suppresses branch auto-vivification' '
- 	git checkout -B master &&
-+	status_uno_is_clean &&
- 	test_might_fail git branch -D bar &&
- 
- 	test_must_fail git checkout --no-guess bar &&
-@@ -99,6 +110,7 @@ test_expect_success '--no-guess suppresses branch auto-vivification' '
- 
- test_expect_success 'setup more remotes with unconventional refspecs' '
- 	git checkout -B master &&
-+	status_uno_is_clean &&
- 	git init repo_c &&
- 	(
- 		cd repo_c &&
-@@ -128,27 +140,33 @@ test_expect_success 'setup more remotes with unconventional refspecs' '
- 
- test_expect_success 'checkout of branch from multiple remotes fails #2' '
- 	git checkout -B master &&
-+	status_uno_is_clean &&
- 	test_might_fail git branch -D bar &&
- 
- 	test_must_fail git checkout bar &&
-+	status_uno_is_clean &&
- 	test_must_fail git rev-parse --verify refs/heads/bar &&
- 	test_branch master
- '
- 
- test_expect_success 'checkout of branch from multiple remotes fails #3' '
- 	git checkout -B master &&
-+	status_uno_is_clean &&
- 	test_might_fail git branch -D baz &&
- 
- 	test_must_fail git checkout baz &&
-+	status_uno_is_clean &&
- 	test_must_fail git rev-parse --verify refs/heads/baz &&
- 	test_branch master
- '
- 
- test_expect_success 'checkout of branch from a single remote succeeds #3' '
- 	git checkout -B master &&
-+	status_uno_is_clean &&
- 	test_might_fail git branch -D spam &&
- 
- 	git checkout spam &&
-+	status_uno_is_clean &&
- 	test_branch spam &&
- 	test_cmp_rev refs/remotes/extra_dir/repo_c/extra_dir/spam HEAD &&
- 	test_branch_upstream spam repo_c spam
-@@ -156,9 +174,11 @@ test_expect_success 'checkout of branch from a single remote succeeds #3' '
- 
- test_expect_success 'checkout of branch from a single remote succeeds #4' '
- 	git checkout -B master &&
-+	status_uno_is_clean &&
- 	test_might_fail git branch -D eggs &&
- 
- 	git checkout eggs &&
-+	status_uno_is_clean &&
- 	test_branch eggs &&
- 	test_cmp_rev refs/repo_d/eggs HEAD &&
- 	test_branch_upstream eggs repo_d eggs
-@@ -166,32 +186,38 @@ test_expect_success 'checkout of branch from a single remote succeeds #4' '
- 
- test_expect_success 'checkout of branch with a file having the same name fails' '
- 	git checkout -B master &&
-+	status_uno_is_clean &&
- 	test_might_fail git branch -D spam &&
- 
- 	>spam &&
- 	test_must_fail git checkout spam &&
-+	status_uno_is_clean &&
- 	test_must_fail git rev-parse --verify refs/heads/spam &&
- 	test_branch master
- '
- 
- test_expect_success 'checkout of branch with a file in subdir having the same name fails' '
- 	git checkout -B master &&
-+	status_uno_is_clean &&
- 	test_might_fail git branch -D spam &&
- 
- 	>spam &&
- 	mkdir sub &&
- 	mv spam sub/spam &&
- 	test_must_fail git -C sub checkout spam &&
-+	status_uno_is_clean &&
- 	test_must_fail git rev-parse --verify refs/heads/spam &&
- 	test_branch master
- '
- 
- test_expect_success 'checkout <branch> -- succeeds, even if a file with the same name exists' '
- 	git checkout -B master &&
-+	status_uno_is_clean &&
- 	test_might_fail git branch -D spam &&
- 
- 	>spam &&
- 	git checkout spam -- &&
-+	status_uno_is_clean &&
- 	test_branch spam &&
- 	test_cmp_rev refs/remotes/extra_dir/repo_c/extra_dir/spam HEAD &&
- 	test_branch_upstream spam repo_c spam
-@@ -200,6 +226,7 @@ test_expect_success 'checkout <branch> -- succeeds, even if a file with the same
- test_expect_success 'loosely defined local base branch is reported correctly' '
- 
- 	git checkout master &&
-+	status_uno_is_clean &&
- 	git branch strict &&
- 	git branch loose &&
- 	git commit --allow-empty -m "a bit more" &&
-@@ -210,7 +237,9 @@ test_expect_success 'loosely defined local base branch is reported correctly' '
- 	test_config branch.loose.merge master &&
- 
- 	git checkout strict | sed -e "s/strict/BRANCHNAME/g" >expect &&
-+	status_uno_is_clean &&
- 	git checkout loose | sed -e "s/loose/BRANCHNAME/g" >actual &&
-+	status_uno_is_clean &&
- 
- 	test_cmp expect actual
- '
+ const char *unique_tracking_name(const char *name, struct object_id *oid)
+ {
+-	struct tracking_name_data cb_data = { NULL, NULL, NULL, 1 };
++	struct tracking_name_data cb_data = TRACKING_NAME_DATA_INIT;
+ 	cb_data.src_ref = xstrfmt("refs/heads/%s", name);
+ 	cb_data.dst_oid = oid;
+ 	for_each_remote(check_tracking_name, &cb_data);
 -- 
 2.17.0.290.gded63e768a
 
