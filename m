@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 528DB1F403
-	for <e@80x24.org>; Tue,  5 Jun 2018 17:59:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3CEAE1F403
+	for <e@80x24.org>; Tue,  5 Jun 2018 18:00:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753074AbeFER7i (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Jun 2018 13:59:38 -0400
-Received: from mail-yb0-f202.google.com ([209.85.213.202]:54064 "EHLO
-        mail-yb0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752715AbeFERwH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jun 2018 13:52:07 -0400
-Received: by mail-yb0-f202.google.com with SMTP id i3-v6so2445828ybp.20
-        for <git@vger.kernel.org>; Tue, 05 Jun 2018 10:52:07 -0700 (PDT)
+        id S1752939AbeFESAM (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Jun 2018 14:00:12 -0400
+Received: from mail-qk0-f201.google.com ([209.85.220.201]:49377 "EHLO
+        mail-qk0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752683AbeFERv5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jun 2018 13:51:57 -0400
+Received: by mail-qk0-f201.google.com with SMTP id w203-v6so3215972qkb.16
+        for <git@vger.kernel.org>; Tue, 05 Jun 2018 10:51:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=flzHSwaXiolpmAAu7YcUJ+uGBvpAB8eVri6wi4lzA9w=;
-        b=giDJI/SXpVaSQObQB0Q5xcnITpSzASFC0EKoSA09PvPD5j9DGN+/o5Sgjo2q13Tss7
-         dM6H1I5rCqlJY3RmjV13aR6zaNi1+1nykfSsZIKAj9MoHvEgf+zsGouiN6p0yaDlXjGE
-         JeMXOt9TYqeqsQEbWQft2Kqx+IRdAd5wCdMTdMTc7JBJ/8CuVTNfwXCfVZy6BFdGVq9C
-         O5zrSjeZcLzTzGVlebJDOtlD4UULgICfNbLygQc9gQ47rdA/RP/kutg+Rk2XkX0IHtJ4
-         bajTp36x58vT/XPNaRB0+S1JMAkkNClal1MezBUNFYcbWJs0QtFfyog2ZECK5DeOSj8S
-         DQFg==
+        bh=sYEe8iRPTrOcHM3mkoOecfjMEKrpiQl9wbZfoQa3/WU=;
+        b=SXHiSoPP+IsNJj5ujIG9q/QAJsK7cADezBTzd5t8mWzXU4h58lxZcIKpqzeVsnPBPD
+         LcJygzGFzgACWhoIqYXPpfvf9UbR13cAmFOlaDgnpIGVxZybo3VgFSjsDpfXZRU7jy/G
+         Qrw7c4+QdFRU780FJ9IBcWi9ha1wBQ9eV5vMoiGA2D7WWl/ONRWCmGyz8uuxSE9Kz33C
+         aW8MxRkABh007C6B0OVAibs0TNsoQZ2Wo58a+biW84xFBywKsvk8cD/0MdbYLsdEHNBU
+         7lTsFJKmakXZZH+vDbj077HxpDuLBxF1k9GgzuEaOV2W1e+9E3Y9eTE+zWj5J++J4nD/
+         KqUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=flzHSwaXiolpmAAu7YcUJ+uGBvpAB8eVri6wi4lzA9w=;
-        b=hMhd7H8Yhl7uulK+23lKAms/SWRrENIEJdHucGl/OreIHX/l/y7XsI/6Xh/Bb5W+Hb
-         Bwt/QL3FYbQPyq0onqA/+EG0xbL3b3pZY2qAEmyXPISXA7hX1MuIuEJCwgZn0wqV2+km
-         734GMU8x/+U7cHJOuPpV/AD6NwT2VNh7ttf3mNDrLv4N9D2pXkGy0eyaEZPX2bD/Rc6M
-         PqhBNd3cvdv4RuZ8dL0yFukD/ddaTQJG9b4ZVCYyu6uiETxL4hfRPPcEo78DDeO6AD32
-         maGHMH5C78coX/RfHF80qFc3FuKC4CnV4U6YSxrIa7KhuQnxALPQtfCwBsWsqGqntior
-         qmeA==
-X-Gm-Message-State: ALKqPweY4a6zTCWeoSzkZm5pHvaD371YuQyeaUKQu+Zrk5ZFIUAPO5Eb
-        dIeJiozcaomINjE44sTmKRtGkTUwigRL9o9x0XNwU0w2b2t1w+6TeYRM99dkSjISdR6P/qz7/Ow
-        sLGzillbAZAzD/0H/5dBN96tDETaTJWcHzE5AHUHqDnDdOC7jg+EtGj3aqg==
-X-Google-Smtp-Source: ADUXVKL3OFLFrrWJ/D4YuWHXG4GLFx0ABM2sLsFg1QaERcPy4CUNZ9QHy5y7GrTGyipPQCV1cPcUUv41c7o=
+        bh=sYEe8iRPTrOcHM3mkoOecfjMEKrpiQl9wbZfoQa3/WU=;
+        b=XcQ1H/H0SZaaJnE5Go5Qw5JYMmxMftC4kBQD8AqcHV8A1zRBjXwKXNZyQFjiuaG/sU
+         tM1LgXw80a5l3EcMNG9izGWogm2Dj7O1MK5XJ4t6oXlpjzEJYTcRtbxxGIEBz/xQnIoC
+         TuDiint/ueR9r6x9g8b17oIn7J4Ve+XtYBQXekIwGUVKe9i5FblF7hJS3JviiucF7aXs
+         A4J/J4SkFEjLDc2RHq7D2C2apvSqzmaYqi0ab72ypF0r0YjplnVb5vF9ptZssHFdnrVZ
+         zOfDbFl8mA7UJM88QGuJirGIcKzkQ8sAeO0cfCBpIUZnRPDMVYWodrdVCiJSdRiCBY8d
+         rQXQ==
+X-Gm-Message-State: APt69E3/6ZMxLoEaN2pFb2vE10oqDzRSV/lKuW/0din0WyTyq0OU1VNk
+        d9Ytq0fvthULPNM6lzqtbAi7Qp72zLAOYwnKMp0bVs8lvSYyvdZwrcwTRA4altJxLdniXrmf5Cc
+        Epm/O6ynALOrJviOkqlfkgCmRjjUAKfw1qqU3u0hTQgYT8SjdALodS3Zahg==
+X-Google-Smtp-Source: ADUXVKK3l0PVmfQT7rXlbYYxyUBEtPiwaxQ841UP5L+ppaGAYtF8V89OUGpRa1RyAX2niTvjpIawnsjjlLM=
 MIME-Version: 1.0
-X-Received: by 2002:a81:9dd8:: with SMTP id u207-v6mr7320481ywg.194.1528221126604;
- Tue, 05 Jun 2018 10:52:06 -0700 (PDT)
-Date:   Tue,  5 Jun 2018 10:51:41 -0700
+X-Received: by 2002:a0c:9416:: with SMTP id h22-v6mr11709427qvh.41.1528221117184;
+ Tue, 05 Jun 2018 10:51:57 -0700 (PDT)
+Date:   Tue,  5 Jun 2018 10:51:37 -0700
 In-Reply-To: <20180605175144.4225-1-bmwill@google.com>
-Message-Id: <20180605175144.4225-6-bmwill@google.com>
+Message-Id: <20180605175144.4225-2-bmwill@google.com>
 References: <20180605175144.4225-1-bmwill@google.com>
 X-Mailer: git-send-email 2.17.1.1185.g55be947832-goog
-Subject: [PATCH 5/8] fetch: refactor fetch_refs into two functions
+Subject: [PATCH 1/8] test-pkt-line: add unpack-sideband subcommand
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>
@@ -62,58 +62,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Refactor the fetch_refs function into a function that does the fetching
-of refs and another function that stores them.
+Add an 'unpack-sideband' subcommand to the test-pkt-line helper to
+enable unpacking packet line data sent multiplexed using a sideband.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/fetch.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ t/helper/test-pkt-line.c | 37 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 545635448..ee8b87c78 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -967,10 +967,16 @@ static int fetch_refs(struct transport *transport, struct ref *ref_map)
- 	int ret = quickfetch(ref_map);
- 	if (ret)
- 		ret = transport_fetch_refs(transport, ref_map);
--	if (!ret)
--		ret |= store_updated_refs(transport->url,
--				transport->remote->name,
--				ref_map);
-+	if (ret)
-+		transport_unlock_pack(transport);
-+	return ret;
+diff --git a/t/helper/test-pkt-line.c b/t/helper/test-pkt-line.c
+index 0f19e53c7..2a55ffff1 100644
+--- a/t/helper/test-pkt-line.c
++++ b/t/helper/test-pkt-line.c
+@@ -1,3 +1,4 @@
++#include "cache.h"
+ #include "pkt-line.h"
+ 
+ static void pack_line(const char *line)
+@@ -48,6 +49,40 @@ static void unpack(void)
+ 	}
+ }
+ 
++static void unpack_sideband(void)
++{
++	struct packet_reader reader;
++	packet_reader_init(&reader, 0, NULL, 0,
++			   PACKET_READ_GENTLE_ON_EOF |
++			   PACKET_READ_CHOMP_NEWLINE);
++
++	while (packet_reader_read(&reader) != PACKET_READ_EOF) {
++		int band;
++		int fd;
++
++		switch (reader.status) {
++		case PACKET_READ_EOF:
++			break;
++		case PACKET_READ_NORMAL:
++			band = reader.line[0] & 0xff;
++			if (band == 1)
++				fd = 1;
++			else
++				fd = 2;
++
++			write_or_die(fd, reader.line+1, reader.pktlen-1);
++
++			if (band == 3)
++				die("sind-band error");
++			break;
++		case PACKET_READ_FLUSH:
++			return;
++		case PACKET_READ_DELIM:
++			break;
++		}
++	}
 +}
 +
-+static int consume_refs(struct transport *transport, struct ref *ref_map)
-+{
-+	int ret = store_updated_refs(transport->url,
-+				     transport->remote->name,
-+				     ref_map);
- 	transport_unlock_pack(transport);
- 	return ret;
- }
-@@ -1116,7 +1122,8 @@ static void backfill_tags(struct transport *transport, struct ref *ref_map)
- 	transport_set_option(transport, TRANS_OPT_FOLLOWTAGS, NULL);
- 	transport_set_option(transport, TRANS_OPT_DEPTH, "0");
- 	transport_set_option(transport, TRANS_OPT_DEEPEN_RELATIVE, NULL);
--	fetch_refs(transport, ref_map);
-+	if (!fetch_refs(transport, ref_map))
-+		consume_refs(transport, ref_map);
+ int cmd_main(int argc, const char **argv)
+ {
+ 	if (argc < 2)
+@@ -57,6 +92,8 @@ int cmd_main(int argc, const char **argv)
+ 		pack(argc - 2, argv + 2);
+ 	else if (!strcmp(argv[1], "unpack"))
+ 		unpack();
++	else if (!strcmp(argv[1], "unpack-sideband"))
++		unpack_sideband();
+ 	else
+ 		die("invalid argument '%s'", argv[1]);
  
- 	if (gsecondary) {
- 		transport_disconnect(gsecondary);
-@@ -1165,7 +1172,7 @@ static int do_fetch(struct transport *transport,
- 				   transport->url);
- 		}
- 	}
--	if (fetch_refs(transport, ref_map)) {
-+	if (fetch_refs(transport, ref_map) || consume_refs(transport, ref_map)) {
- 		free_refs(ref_map);
- 		retcode = 1;
- 		goto cleanup;
 -- 
 2.17.1.1185.g55be947832-goog
 
