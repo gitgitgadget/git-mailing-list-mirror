@@ -2,144 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 431D51F517
-	for <e@80x24.org>; Tue,  5 Jun 2018 21:28:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC5801F403
+	for <e@80x24.org>; Tue,  5 Jun 2018 21:33:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752479AbeFEV2d (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Jun 2018 17:28:33 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:33521 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752408AbeFEV2c (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jun 2018 17:28:32 -0400
-Received: by mail-pf0-f194.google.com with SMTP id b17-v6so1999420pfi.0
-        for <git@vger.kernel.org>; Tue, 05 Jun 2018 14:28:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=hR0SLo1WHcQ7qj5pocC6sFf1t12q95Rqa/5OEYmON50=;
-        b=YekbZ1+5Hmsj/4yqch4nmFQi1+b1IqCwW72wKf+Uq8gacHxJeOLN6QE5NYeJJkYRg6
-         6ApCZPYdZy+zNv91FryLNmdMRFdPRS7gqFW9SWBYQF+H1vr+MP8OUymlAL1U7cyRuDkH
-         I50K6mWk4HGYPwEtyNNGjD36GKEDrtSPCGo+KYVLQ8Z8INSFIpiUdXiZNw0aJXoqulJ4
-         glgNNirXtH19I1dCNXSouvl8FjWHXAksEVLi115f812IznR6REdizm5KdXgpV2KexhQD
-         aQRobPq8lgLp0BOnTVHeCT9jWPR9jaHbkU0db3M7DfODV3EUB0kS4hnP09myd3k44Ptd
-         MAoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=hR0SLo1WHcQ7qj5pocC6sFf1t12q95Rqa/5OEYmON50=;
-        b=JaJNyKuQb5ObkfRiaDhw3z56IrKDhGLpqg1WCbfMEn6TTRzojTKwLWxbIBnVDSWDgG
-         /pESgL7QU6F3HEyMOuOnQO2GB6y9doz+xEOFur5OGm6oNl713KLNA9brrHJ/EcEofwu7
-         WTb26gGJgiw1/R+J1H1JrdkSE1MF+qZ4QPRpV5ymP1VgDGvl1bznElBCSPsgGEzYzMg+
-         yL1hGk5dGTGMUKLAxPiS2FhRDxZr+Lqm6EndSoiVj+8CFnVLqkG9ZMPbsscRV8Z1Jq+y
-         qWUYpehbo6SaBrVY1fXWsQg6t2okXn0p/mqwcmbSZUAGpWkYh+4oo/IHUwVsyVJLwMQ4
-         wg2Q==
-X-Gm-Message-State: APt69E1SqasJuIURYZ8KxfVsSkYVc5jXYbxh0xWXaglFU0NtXlnoOAIn
-        IGOqr5rYssdSIPRuBW2zmufg2CaybfU=
-X-Google-Smtp-Source: ADUXVKKEhomNYJ1KRxJ3KZPd8QkUxmTrz9qyBs45dQb8BQBWwWntjhMnxkNufD4HnjsqYShpK2n9SQ==
-X-Received: by 2002:a62:5004:: with SMTP id e4-v6mr272117pfb.71.1528234111721;
-        Tue, 05 Jun 2018 14:28:31 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id o72-v6sm18722015pfk.76.2018.06.05.14.28.30
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 05 Jun 2018 14:28:30 -0700 (PDT)
-Date:   Tue, 5 Jun 2018 14:28:29 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/2] fetch: send "refs/tags/" prefix upon CLI refspecs
-Message-ID: <20180605212829.GG158365@google.com>
-References: <cover.1528233146.git.jonathantanmy@google.com>
- <4d69aa14dadbbc53defa6d7d6c9a62f2b02a0bfb.1528233146.git.jonathantanmy@google.com>
+        id S1751819AbeFEVds (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Jun 2018 17:33:48 -0400
+Received: from esa2.hc2413-78.iphmx.com ([216.71.148.46]:7568 "EHLO
+        esa2.hc2413-78.iphmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751619AbeFEVds (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jun 2018 17:33:48 -0400
+X-Greylist: delayed 570 seconds by postgrey-1.27 at vger.kernel.org; Tue, 05 Jun 2018 17:33:47 EDT
+X-IronPort-AV: E=Sophos;i="5.49,479,1520913600"; 
+   d="scan'208";a="2609781"
+X-Attachment_name: 
+X-BodySize: 8116
+Received: from mail-cys01nam02lp0054.outbound.protection.outlook.com (HELO NAM02-CY1-obe.outbound.protection.outlook.com) ([207.46.163.54])
+  by ob1.hc2413-78.iphmx.com with ESMTP/TLS/AES256-SHA256; 05 Jun 2018 17:24:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aaane.onmicrosoft.com;
+ s=selector1-aaanortheast-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=R4WAwua5MRf/yZ8xvLNaMlHMfAO9tmBaE9n8kXwUTgw=;
+ b=T+e+c+MT6XLlaS8vc/rM2AYMcHu5COSZnK0W4kXt7fpHJP+zwY7k6gyRsnxwtK2ljtLWNqOvkmEVQfCDs0Yz0Nifophk9xmKCWBIZq+1JsEsf3P/cIsAb3NW5YQsWaCn58AAkOATB5etR67M0G1VbZ0gd1ys9saHzWb1TqWAfCc=
+Received: from BN7PR15MB2339.namprd15.prod.outlook.com (52.132.217.158) by
+ BN7PR15MB2418.namprd15.prod.outlook.com (52.132.218.138) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.841.14; Tue, 5 Jun 2018 21:24:14 +0000
+Received: from BN7PR15MB2339.namprd15.prod.outlook.com
+ ([fe80::ad23:ffbe:ed6b:a909]) by BN7PR15MB2339.namprd15.prod.outlook.com
+ ([fe80::ad23:ffbe:ed6b:a909%5]) with mapi id 15.20.0820.015; Tue, 5 Jun 2018
+ 21:24:13 +0000
+From:   "Heinz, Steve" <SHeinz@aaanortheast.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+CC:     "Heinz, Steve" <SHeinz@aaanortheast.com>
+Subject: git question from a newbie
+Thread-Topic: git question from a newbie
+Thread-Index: AdP9E4Hrau+PXdtYS1KEfyewyALLmQ==
+Date:   Tue, 5 Jun 2018 21:24:13 +0000
+Message-ID: <BN7PR15MB23394E6E4AB05C17287E8F55BB660@BN7PR15MB2339.namprd15.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=SHeinz@aaanortheast.com; 
+x-originating-ip: [12.40.107.100]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;BN7PR15MB2418;7:VbRtmlHxVVkVmduHUlRkFOt7tB+EV3lsc2tLUI3btL3KPod3cAqQuxnatnaeYXIQdd71sKQCFUDoR/bqjh5iKhaD0vk9p8acRW2rWY8Xg/GEzzQ+gGoW3gHsLx5KMLYVpAEtiILoMf278d+vFnTbp2tjS5KpI5U84Dp0t3IsqPCAAilMQTBOJDJEQZxhEwPkD8Z3/nAEEMqF30KuHa8anKBKxWnK3pKcT6v7BZj5gf8R9EsnAtPKe8OUFBXdygRG
+x-ms-exchange-antispam-srfa-diagnostics: SOS;SOR;
+x-forefront-antispam-report: SFV:SKI;SCL:-1;SFV:NSPM;SFS:(10009020)(39860400002)(39380400002)(366004)(376002)(396003)(346002)(199004)(189003)(6506007)(6916009)(99286004)(8676002)(2906002)(966005)(3660700001)(7696005)(476003)(7736002)(97736004)(316002)(5660300001)(72206003)(478600001)(8936002)(6436002)(102836004)(6306002)(55016002)(1730700003)(66066001)(14454004)(486006)(68736007)(5640700003)(4326008)(81166006)(59450400001)(2351001)(81156014)(26005)(3280700002)(2501003)(25786009)(5250100002)(5890100001)(86362001)(9686003)(33656002)(74316002)(186003)(6116002)(2900100001)(53936002)(107886003)(106356001)(3846002)(105586002)(80792005)(305945005);DIR:OUT;SFP:1101;SCL:1;SRVR:BN7PR15MB2418;H:BN7PR15MB2339.namprd15.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:0;MX:1;
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(5600026)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7153060)(7193020);SRVR:BN7PR15MB2418;
+x-ms-traffictypediagnostic: BN7PR15MB2418:
+x-microsoft-antispam-prvs: <BN7PR15MB2418E291D011CDF83519A5C4BB660@BN7PR15MB2418.namprd15.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:(158342451672863)(17755550239193);
+x-ms-exchange-senderadcheck: 1
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(6040522)(2401047)(5005006)(8121501046)(3002001)(3231254)(944501410)(52105095)(10201501046)(93006095)(93001095)(149027)(150027)(6041310)(20161123564045)(20161123558120)(20161123560045)(20161123562045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(6072148)(201708071742011)(7699016);SRVR:BN7PR15MB2418;BCL:0;PCL:0;RULEID:;SRVR:BN7PR15MB2418;
+x-forefront-prvs: 0694C54398
+received-spf: None (protection.outlook.com: aaanortheast.com does not
+ designate permitted sender hosts)
+x-microsoft-antispam-message-info: BwOU4++Bk8lU6qUUPzrjX6BS0+PFPUqiZWG+6/hTO0ex0SUhlEBmmVKQv1DTayNAfLr58GV87EaOf3ygXs16T0Er+9orozygO6c+3gSM0ikx2qHbEAYVUorMOnLow7v9ak2Ulmm3g4bvUKaq+72DCRLtW14I58Ct8LlG9Rbni4+EXlp4c0Cx///VTL5hj1ai
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4d69aa14dadbbc53defa6d7d6c9a62f2b02a0bfb.1528233146.git.jonathantanmy@google.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+X-MS-Office365-Filtering-Correlation-Id: 4de8a024-04e0-4da0-5af8-08d5cb2aafab
+X-OriginatorOrg: aaanortheast.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4de8a024-04e0-4da0-5af8-08d5cb2aafab
+X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Jun 2018 21:24:13.7850
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 0ccc4f56-0dac-42a5-a6f6-467387e586c0
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN7PR15MB2418
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/05, Jonathan Tan wrote:
-> When performing tag following, in addition to using the server's
-> "include-tag" capability to send tag objects (and emulating it if the
-> server does not support that capability), "git fetch" relies upon the
-> presence of refs/tags/* entries in the initial ref advertisement to
-> locally create refs pointing to the aforementioned tag objects. When
-> using protocol v2, refs/tags/* entries in the initial ref advertisement
-> may be suppressed by a ref-prefix argument, leading to the tag object
-> being downloaded, but the ref not being created.
-> 
-> Commit dcc73cf7ff ("fetch: generate ref-prefixes when using a configured
-> refspec", 2018-05-18) ensured that "refs/tags/" is always sent as a ref
-> prefix when "git fetch" is invoked with no refspecs, but not when "git
-> fetch" is invoked with refspecs. Extend that functionality to make it
-> work in both situations.
-> 
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
->  builtin/fetch.c        |  2 +-
->  t/t5702-protocol-v2.sh | 18 ++++++++++++++++++
->  2 files changed, 19 insertions(+), 1 deletion(-)
-> 
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index ea5b9669a..1f447f1e8 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -359,7 +359,7 @@ static struct ref *get_ref_map(struct transport *transport,
->  		refspec_ref_prefixes(&transport->remote->fetch, &ref_prefixes);
->  
->  	if (ref_prefixes.argc &&
-> -	    (tags == TAGS_SET || (tags == TAGS_DEFAULT && !rs->nr))) {
-> +	    (tags == TAGS_SET || tags == TAGS_DEFAULT)) {
->  		argv_array_push(&ref_prefixes, "refs/tags/");
->  	}
+Hi.
 
-This is difficult...Really I don't think the default should be to follow
-tags.  Mostly because this defeats the purpose of ref filtering when a
-user only requests the master branch.  Now instead of the server only
-sending the master branch, you get the whole tags namespace as well.
+I am new to Git and have read quite a few articles on it.
+I am planning on setting up a remote repository on a windows 2012 R2 server=
+ and will access it via HTTPS.
+I am setting up a local repository on my desk top (others in my group will =
+do the same).
+On "server1":  I install Git and create a repository "repos".
+On "server1":  I create a dummy webpage "default.htm" and place it in the r=
+epo folder.
+On "server1":  I create a web application in IIS pointing to Git
+On Server1":   change permissions so IIS_User  has access to the folders.
+On "server1":  inside the "repos" folder and right click and choose "bash h=
+ere"
+On "server1":   $ git init  -bare    (it's really 2 hyphens)
 
->  
-> diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-> index 261e82b0f..6733579c1 100755
-> --- a/t/t5702-protocol-v2.sh
-> +++ b/t/t5702-protocol-v2.sh
-> @@ -406,6 +406,24 @@ test_expect_success 'fetch supports various ways of have lines' '
->  		$(git -C server rev-parse completely-unrelated)
->  '
->  
-> +test_expect_success 'fetch supports include-tag and tag following' '
-> +	rm -rf server client trace &&
-> +	git init server &&
-> +
-> +	test_commit -C server to_fetch &&
-> +	git -C server tag -a annotated_tag -m message &&
-> +
-> +	git init client &&
-> +	GIT_TRACE_PACKET="$(pwd)/trace" git -C client -c protocol.version=2 \
-> +		fetch "$(pwd)/server" to_fetch:to_fetch &&
-> +
-> +	grep "fetch> ref-prefix to_fetch" trace &&
-> +	grep "fetch> ref-prefix refs/tags/" trace &&
-> +	grep "fetch> include-tag" trace &&
-> +
-> +	git -C client cat-file -e $(git -C client rev-parse annotated_tag)
-> +'
-> +
->  # Test protocol v2 with 'http://' transport
->  #
->  . "$TEST_DIRECTORY"/lib-httpd.sh
-> -- 
-> 2.17.0.768.g1526ddbba1.dirty
-> 
+On Desktop:  open Chrome and type in URL to make sure we can access it    h=
+ttps://xyz/repos/default.htm
+      ** make sure you have access, no certificate issues or firewall issue=
+s.  The pages shows up fine
 
--- 
-Brandon Williams
+On Desktop:  install Git and create repository "repos".
+On Desktop:  right click in "repos" folder and choose "bash here"
+On Desktop:  $ git init
+On Desktop : add a folder "testProject" under the "repos" folder and add so=
+me files to the folder
+On Desktop:  $ git add .                 (will add files and folder to work=
+ing tree)
+On Desktop   $ git status               (shows it recognizes the filed were=
+ added)
+On Desktop   $ git commit -m "test project commit"           (will stage ch=
+anges)
+On Desktop   $ git push https://xyz.domainname.com/repos master
+
+** this is the error I get,  I have tried many different things.  I am sure=
+ I am doing something stupid
+** I have tried a bunch of variations but I always get the same error.  It =
+looks like some type of network/permission
+** thing but everything seems OK.
+       Fatal: repository 'https://xyz.domainname.com/repos/' not found
+
+*** this is where I get the error trying to push staged items to the remote=
+ repository.
+*** I have tried to clone the empty remote repository still same error
+*** I checked port 443 is opened and being used for https
+*** tried to set origin to https://xyz.domainname.com/repos" and then $git =
+push origin master   (same error)
+*** I tried passing credentials to the remote server as well
+
+
+Any ideas would be greatly appreciated.
+Thanks
+Steve
+
+
+
+The information contained in this email message is intended only for the pr=
+ivate and confidential use of the recipient(s) named above, unless the send=
+er expressly agrees otherwise. In no event shall AAA Northeast or any of it=
+s affiliates accept any responsibility for the loss, use or misuse of any i=
+nformation including confidential information, which is sent to AAA Northea=
+st or its affiliates via email, or email attachment. AAA Northeast does not=
+ guarantee the accuracy of any email or email attachment. If the reader of =
+this message is not the intended recipient and/or you have received this em=
+ail in error, you must take no action based on the information in this emai=
+l and you are hereby notified that any dissemination, misuse or copying or =
+disclosure of this communication is strictly prohibited. If you have receiv=
+ed this communication in error, please notify us immediately by email and d=
+elete the original message.
