@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 01AFF1F403
-	for <e@80x24.org>; Tue,  5 Jun 2018 15:43:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 371D31F403
+	for <e@80x24.org>; Tue,  5 Jun 2018 15:44:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752152AbeFEPnz (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Jun 2018 11:43:55 -0400
-Received: from mail-lf0-f52.google.com ([209.85.215.52]:33657 "EHLO
-        mail-lf0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751968AbeFEPnu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jun 2018 11:43:50 -0400
-Received: by mail-lf0-f52.google.com with SMTP id y20-v6so4362509lfy.0
-        for <git@vger.kernel.org>; Tue, 05 Jun 2018 08:43:50 -0700 (PDT)
+        id S1752156AbeFEPoB (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Jun 2018 11:44:01 -0400
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:33430 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751733AbeFEPnn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jun 2018 11:43:43 -0400
+Received: by mail-lf0-f66.google.com with SMTP id y20-v6so4361923lfy.0
+        for <git@vger.kernel.org>; Tue, 05 Jun 2018 08:43:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=aQaYtMega9z16tixnazUw9IyVMqQX/sEb/1VT3Hhv8U=;
-        b=jhUtH7x26CmgPK54IPuLXfLXj0NTgRjYzhsGWCwFUHMHj9OycBpVbT5KThZKkI8dPC
-         d50NbajiJXNk8/W2aFgJdPv9avYwlxtVsKrKBQ+bZfs94OFlIDZ51Tb1mXUG320iJ0ss
-         0nn8mdJwHH7KnSJpcU7GwlhXGR94gwECN/VpDqMKd91bEURPQDvMRiIsd1PCBnUgm2Ju
-         HA75vm7LEnIOxmdCen61y9CJFjRyCyMCDhMeX5GicX6SvJpUJsHaGomY54r4U4i2a/8x
-         Nk7t1687FiAqUbDU3VQIZoWDX0Nzfve8b9LIvecCH90n4HEWaaDJSQu2xIuk4CnkydDz
-         9ejg==
+        bh=On6o8HUHOTTxiiS9KhMFX/PrBnZW6xB8vvPhBydwVB4=;
+        b=pEmlr7CSPsgpbsxkk3X6V200futqZ3y0x9aVBNldVdY97HT1kWl2BcglfvF3TioCfH
+         Idl+f8Fb2nRQ5Uz2pC38q72eshuamPDy02SlABO7nqYYHBVWH4F4N64SAC7Djw/E6mTC
+         Ep0wgqJ/YXPCif84dvcI6uKtl6qrj8X/pGocamwFo9rBdh4fC6IIx1InGYTJLqYSQgtd
+         MhpAoJDVz0xO9Czic1zYBL/RIpBrc7z/PFxWUYGbJbCtwuFsuCwAmIAxrjDWd6nt4TQP
+         DyHrbcHTi9/psMGJtx80Vik7E/wzOoFR3tgQ9WwPb4y2D/SFAFs3lFw3fH9sgNisGmP1
+         j1Mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=aQaYtMega9z16tixnazUw9IyVMqQX/sEb/1VT3Hhv8U=;
-        b=FeSHOLUzWrKwBXQQdch/eTXINEvL6raqROL/G0voSrSRISLsYJWj7hJX8qtIP0fyXK
-         8jpwLVRqRYsMqKSQRuHw0UbUXRj6kI1BYZuFg6se8gqQOES2aipz/iIYOrfsTN2ZsLA2
-         fSlgygZLH2I3rZB0fypHMJfxtISPyfLxpUTenDQDud6oKhfA0ahYNW4lJZS09UwZ9ILO
-         ZAXCYz1d0Rx6OhpPLi4VywD56SXs5I/cOJbrrgdGVKEOZUNeWvwxe93Emr/V1VOD2qvQ
-         2vuPntc+3RG+wuZB3RrM4aWMJc8mT8tlSFhZu4v79c/ug0r4OOrlJTe5AcR8vl8hoZj3
-         aRRQ==
-X-Gm-Message-State: APt69E0swqGHzK+mUwAPC5qvLYjn8bG2yegvw93RYQhzFzuqxEDUyuwb
-        +5nMvqZ3Wf4DuBhyOpkbITsKIA==
-X-Google-Smtp-Source: ADUXVKLfIdMKQAh4W+jtpigBdOQBXyoG1bfKLkneeyl74tTyS8ZJVu0yqjKZoWgpZt36L4yHfVu2oA==
-X-Received: by 2002:a19:ce87:: with SMTP id e129-v6mr2074574lfg.57.1528213428893;
-        Tue, 05 Jun 2018 08:43:48 -0700 (PDT)
+        bh=On6o8HUHOTTxiiS9KhMFX/PrBnZW6xB8vvPhBydwVB4=;
+        b=II+1tHQSrqzwMjUWul/lsxKcGX9uDUnHDD6oG6nEJUMrbnCtGNufh20e/dXSIr+iAQ
+         Z+J54Q1UmkQWUEBqylTScXQFVTNZ+7TrJGcUuxpijHaPL+DPIFBH5i5ccIl2fschUSNq
+         SSg0KLwfdBUv5WmXqckhc486A3WAsPUBsdtZibsB60YWnGOwtVRH/2DPAOB12Yw9MIcW
+         QWjnURb71w4ogi9/uB8sL28jsbpjZ/fJZgQRHMK66jC0yR5+C01U0MqKOHtGV5nLL01R
+         aUzkTaHM4DEw4LaFXgSnMimTgdd/g5gj7wWVecc7LZXsa70pS7M/Pv2HSlV5OrfXBTH0
+         tyVg==
+X-Gm-Message-State: APt69E1SzNdnpGz3wN0gv+rf2W+MQ2yqABHlRoRE77qcBna89KskUvYo
+        N/L3Xea/lyzF2V3W93My7MWb+Q==
+X-Google-Smtp-Source: ADUXVKJxgZYXrdSObAlnM42tjWF+yQPP01QvTiKKI2YUbHnRyd12vmpXLWTRvwdlPrxspDfc+tuGfA==
+X-Received: by 2002:a19:5943:: with SMTP id n64-v6mr1932841lfb.107.1528213422179;
+        Tue, 05 Jun 2018 08:43:42 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id o9-v6sm5161054lfk.2.2018.06.05.08.43.47
+        by smtp.gmail.com with ESMTPSA id o9-v6sm5161054lfk.2.2018.06.05.08.43.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 05 Jun 2018 08:43:47 -0700 (PDT)
+        Tue, 05 Jun 2018 08:43:41 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Elijah Newren <newren@gmail.com>,
         Brandon Williams <bmwill@google.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 6/6] Forbid "the_index" in dir.c and unpack-trees.c
-Date:   Tue,  5 Jun 2018 17:43:34 +0200
-Message-Id: <20180605154334.22613-7-pclouds@gmail.com>
+Subject: [PATCH 2/6] unpack-trees: add a note about path invalidation
+Date:   Tue,  5 Jun 2018 17:43:30 +0200
+Message-Id: <20180605154334.22613-3-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc0.333.g22e6ee6cdf
 In-Reply-To: <20180605154334.22613-1-pclouds@gmail.com>
 References: <20180601161153.15192-1-pclouds@gmail.com>
@@ -71,65 +71,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Use of global variables like the_index makes it very hard to follow
-the code flow, especially when it's buried deep in some minor helper
-function.
-
-We are gradually avoiding global variables, this hopefully will make
-it one step closer. The end game is, the set of "library" source files
-will have just one macro set: "LIB_CODE" (or something). This macro
-will prevent access to most (if not all) global variables in those
-files. We can't do that now, so we just prevent one thing at a time.
-
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Should I keep my trick of defining the_index to
- the_index_should_not_be_used_here? It may help somewhat when people
- accidentally use the_index.
+ unpack-trees.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
- cache.h        | 2 ++
- dir.c          | 2 ++
- unpack-trees.c | 2 ++
- 3 files changed, 6 insertions(+)
-
-diff --git a/cache.h b/cache.h
-index 89a107a7f7..ecc96ccb0e 100644
---- a/cache.h
-+++ b/cache.h
-@@ -330,7 +330,9 @@ struct index_state {
- 	struct ewah_bitmap *fsmonitor_dirty;
- };
- 
-+#ifndef NO_GLOBAL_INDEX
- extern struct index_state the_index;
-+#endif
- 
- /* Name hashing */
- extern int test_lazy_init_name_hash(struct index_state *istate, int try_threaded);
-diff --git a/dir.c b/dir.c
-index ccf8b4975e..74d848db5a 100644
---- a/dir.c
-+++ b/dir.c
-@@ -8,6 +8,8 @@
-  *		 Junio Hamano, 2005-2006
-  */
- #define NO_THE_INDEX_COMPATIBILITY_MACROS
-+/* Do not use the_index. You should have access to it via function arg */
-+#define NO_GLOBAL_INDEX
- #include "cache.h"
- #include "config.h"
- #include "dir.h"
 diff --git a/unpack-trees.c b/unpack-trees.c
-index 3ace82ca27..9aebe9762b 100644
+index 3a85a02a77..5d06aa9c98 100644
 --- a/unpack-trees.c
 +++ b/unpack-trees.c
-@@ -1,4 +1,6 @@
- #define NO_THE_INDEX_COMPATIBILITY_MACROS
-+/* Do not use the_index here, you probably want o->src_index */
-+#define NO_GLOBAL_INDEX
- #include "cache.h"
- #include "argv-array.h"
- #include "repository.h"
+@@ -1545,6 +1545,17 @@ static int verify_uptodate_sparse(const struct cache_entry *ce,
+ 	return verify_uptodate_1(ce, o, ERROR_SPARSE_NOT_UPTODATE_FILE);
+ }
+ 
++/*
++ * TODO: We should actually invalidate o->result, not src_index [1].
++ * But since cache tree and untracked cache both are not copied to
++ * o->result until unpacking is complete, we invalidate them on
++ * src_index instead with the assumption that they will be copied to
++ * dst_index at the end.
++ *
++ * [1] src_index->cache_tree is also used in unpack_callback() so if
++ * we invalidate o->result, we need to update it to use
++ * o->result.cache_tree as well.
++ */
+ static void invalidate_ce_path(const struct cache_entry *ce,
+ 			       struct unpack_trees_options *o)
+ {
 -- 
 2.18.0.rc0.333.g22e6ee6cdf
 
