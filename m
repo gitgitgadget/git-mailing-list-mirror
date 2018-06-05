@@ -7,48 +7,49 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27C691F403
-	for <e@80x24.org>; Tue,  5 Jun 2018 19:54:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F1281F517
+	for <e@80x24.org>; Tue,  5 Jun 2018 19:54:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752345AbeFETyv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Jun 2018 15:54:51 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:46637 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752302AbeFETyu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jun 2018 15:54:50 -0400
-Received: by mail-wr0-f195.google.com with SMTP id v13-v6so3688682wrp.13
-        for <git@vger.kernel.org>; Tue, 05 Jun 2018 12:54:49 -0700 (PDT)
+        id S1752386AbeFETyz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Jun 2018 15:54:55 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:37076 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752358AbeFETyy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jun 2018 15:54:54 -0400
+Received: by mail-wr0-f193.google.com with SMTP id d8-v6so3707445wro.4
+        for <git@vger.kernel.org>; Tue, 05 Jun 2018 12:54:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=sg/1DFQGRRrX0ZrlygwRs79r5wXIC6vEflTdSBBU2U4=;
-        b=lSk4iNXtHnQUi6yst3ZLi8myceksDfrV6fDf4HQxy+7EULeaGfjIgBtj5qUzGg3glK
-         g631VDJkipK4tDt2/my4Bz63wJIlcrwQzv/c8GLW9uMJMBNZmLN4MY+quNGXjwb0FgrL
-         uPfM5QGsnrHdfZ7vIRPAQiAo6zK8Hlx/PHepaNp8mOKamzGcS02JoL5YBIkLKszuzVvO
-         omnGWAEYJsEkB9YuaJYko6NUMeQJ3BzHzk0LVORClKQwYfhAPd8JeNPMztSk4R+DcIKZ
-         hay0DrHKMs6BIO44pr0npj6XZ/YjE6JVzQDbthRz+cC1OLb3JvktjlxJ6ii02Iv4T1Bd
-         jgHA==
+         :in-reply-to:references:mime-version:content-transfer-encoding;
+        bh=AopLXcbByy/MiHrT3wzXJny9/g++5a0kFUa9dshBEi0=;
+        b=HqLnZxch2nvfpI4wV1H7GpSp2/yE3LIRjF/8FlMeyyNImXTaVIdP2ESKKsN6LHw0fW
+         6OWR/Mf/NyppPCwJuKDo54QrDhsc3zoqWPT1zQMMZOQF2G+gfQKFtqlATObULxDzT4Ct
+         tNR1KiWNo1nvmDbPSzviE3XtsbYSdTRHnPD4I7l/gf0HJPk8yrKwjI2Kp6mHffILPUr/
+         fkYdfMNKq5v0bW2HURAW7QpIclezo7Z/ceWEw1k1veWZNpKgzelKqpuW+DxIm45Iqt6v
+         i5OBzVPiVH87zwGc76Up9Fy3UQn1yJtVJNd9nDt78ScybrYHli1sWdzhjXR7xnCPt2DU
+         jdxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=sg/1DFQGRRrX0ZrlygwRs79r5wXIC6vEflTdSBBU2U4=;
-        b=pjAxecia8/WFBexPQ7wRa2EKEh5RQHYj0c4YXabJWemE7lvzyk53keSOvOrxVDLJez
-         s6KBgwdGsdoJLgQD4Gia8pSfrC9e2Ob1v555MkM0LWsfGMJ3MH+YTGycSX2RejXqMzQ7
-         KwULRYyJlzFATykxfCKxvo/nWxk797alPXGI3AopN7SS9RnPiJ9OO+MW5m7pgIq3eHyb
-         zZCzrShNIEIgN+4LYPnhoa8FHtRDwIW4pMLK3Q5hH+qmzRpfAaz18gpNv/M7pWxwZFTe
-         CmQWDDGpAwB8hxkviBUHFPgOTBMULVa76FZGQFpCHyLbI7OGV867hTN2GRjY+SiByXzZ
-         ecjA==
-X-Gm-Message-State: APt69E3mDH6B5tyUMhf+xAoeHQRKh/ee0P3j6xchyWNAokBC76zbr84v
-        ohTlnH3EJMmOKb7Vk0b3Sxgh3YZW
-X-Google-Smtp-Source: ADUXVKJvZzlY7vHifPSzIZQzkLM6R9LiE/Q7KPlq6aC5ePO5a+QRLQ89BgkOGtt0De451CLbXjwLhA==
-X-Received: by 2002:adf:8142:: with SMTP id 60-v6mr25837wrm.192.1528228488769;
-        Tue, 05 Jun 2018 12:54:48 -0700 (PDT)
+         :references:in-reply-to:references:mime-version
+         :content-transfer-encoding;
+        bh=AopLXcbByy/MiHrT3wzXJny9/g++5a0kFUa9dshBEi0=;
+        b=kjbFiaKgwJf29aIsBy25BKw1g/ntb42FTtmueyb8KW+BbTc234Qdgrt6mCd4ts6PTr
+         pwWcErDzmqTMrmRyAzd9wWr+ZuL4Kp4+Jmdn5x1Iik81IJiJa4z1fmPPXPQ4igiY35Pd
+         vcb+AgGFBA4zLFrPKHyecjlv+AOxOSJ82qs6Fd/XiB0PCP+GjztcNzY7mdaQv+7N6pF4
+         6c/SWS2tTEEdDvYreovMJOMe9aa18EUc9oXgwsDk0n/RCj9YChC2ynZEMA0bSl7HETy1
+         CyqSl6v7GcjkUdf1pxgJaXgw/SQWRDSPc2wn/TakfGSyCleYJM57bPNxFBsZCtquZssE
+         J7GQ==
+X-Gm-Message-State: APt69E31gl7elLyY2J6iufDcUkn45z0hC7ZHTUhe3wstV0r477Dj1Ov8
+        AO6LEXBly5kq1eacRgQOnukuxXET
+X-Google-Smtp-Source: ADUXVKIYhATXSRs3AIEc46WJE0r5g9V5utXD585j6TGV+Hyc393YFGTDGiXWTO6D0OgRBPaU6Rxnqg==
+X-Received: by 2002:adf:d204:: with SMTP id g4-v6mr7567wri.229.1528228492263;
+        Tue, 05 Jun 2018 12:54:52 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id o2-v6sm2252533wmo.24.2018.06.05.12.54.47
+        by smtp.gmail.com with ESMTPSA id o2-v6sm2252533wmo.24.2018.06.05.12.54.51
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 05 Jun 2018 12:54:48 -0700 (PDT)
+        Tue, 05 Jun 2018 12:54:51 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,10 +59,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 0/3] refspec: refactor & fix free() behavior
-Date:   Tue,  5 Jun 2018 19:54:37 +0000
-Message-Id: <20180605195440.8505-1-avarab@gmail.com>
+Subject: [PATCH 2/3] refspec: add back a refspec_item_init() function
+Date:   Tue,  5 Jun 2018 19:54:39 +0000
+Message-Id: <20180605195440.8505-3-avarab@gmail.com>
 X-Mailer: git-send-email 2.17.0.290.gded63e768a
+In-Reply-To: <20180605195440.8505-1-avarab@gmail.com>
+References: <20180605195440.8505-1-avarab@gmail.com>
 In-Reply-To: <20180605162939.GA158365@google.com>
 References: <20180605162939.GA158365@google.com>
 MIME-Version: 1.0
@@ -72,27 +75,57 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since Martin & Brandon both liked this direction I've fixed it
-up.
+Re-add the non-fatal version of refspec_item_init_or_die() renamed
+away in an earlier change to get a more minimal diff. This should be
+used by callers that have their own error handling.
 
-Martin: I didn't want to be the author of the actual fix for the bug
-you found, so I rewrote your commit in 3/3. The diff is different, and
-I slightly modified the 3rd paragraph of the commit message & added my
-sign-off, but otherwise it's the same.
+This new function could be marked "static" since nothing outside of
+refspec.c uses it, but expecting future use of it, let's make it
+available to other users.
 
-Martin Ågren (1):
-  refspec: initalize `refspec_item` in `valid_fetch_refspec()`
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ refspec.c | 10 +++++++---
+ refspec.h |  2 ++
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
-Ævar Arnfjörð Bjarmason (2):
-  refspec: s/refspec_item_init/&_or_die/g
-  refspec: add back a refspec_item_init() function
-
- builtin/clone.c |  2 +-
- builtin/pull.c  |  2 +-
- refspec.c       | 13 +++++++++----
- refspec.h       |  5 ++++-
- 4 files changed, 15 insertions(+), 7 deletions(-)
-
+diff --git a/refspec.c b/refspec.c
+index 0fd392e96b..a35493e35e 100644
+--- a/refspec.c
++++ b/refspec.c
+@@ -124,12 +124,16 @@ static int parse_refspec(struct refspec_item *item, const char *refspec, int fet
+ 	return 1;
+ }
+ 
+-void refspec_item_init_or_die(struct refspec_item *item, const char *refspec,
+-			      int fetch)
++int refspec_item_init(struct refspec_item *item, const char *refspec, int fetch)
+ {
+ 	memset(item, 0, sizeof(*item));
++	return parse_refspec(item, refspec, fetch);
++}
+ 
+-	if (!parse_refspec(item, refspec, fetch))
++void refspec_item_init_or_die(struct refspec_item *item, const char *refspec,
++			      int fetch)
++{
++	if (!refspec_item_init(item, refspec, fetch))
+ 		die("Invalid refspec '%s'", refspec);
+ }
+ 
+diff --git a/refspec.h b/refspec.h
+index 4caaf1f8e3..9b6e64a824 100644
+--- a/refspec.h
++++ b/refspec.h
+@@ -32,6 +32,8 @@ struct refspec {
+ 	int fetch;
+ };
+ 
++int refspec_item_init(struct refspec_item *item, const char *refspec,
++		      int fetch);
+ void refspec_item_init_or_die(struct refspec_item *item, const char *refspec,
+ 			      int fetch);
+ void refspec_item_clear(struct refspec_item *item);
 -- 
 2.17.0.290.gded63e768a
 
