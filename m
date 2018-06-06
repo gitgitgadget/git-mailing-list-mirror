@@ -7,203 +7,120 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 06E101F403
-	for <e@80x24.org>; Wed,  6 Jun 2018 11:42:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 13F3E1F403
+	for <e@80x24.org>; Wed,  6 Jun 2018 12:05:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751925AbeFFLl7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Jun 2018 07:41:59 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:52911 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751729AbeFFLl5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jun 2018 07:41:57 -0400
-Received: by mail-wm0-f67.google.com with SMTP id p126-v6so10939370wmb.2
-        for <git@vger.kernel.org>; Wed, 06 Jun 2018 04:41:56 -0700 (PDT)
+        id S1751907AbeFFMFB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Jun 2018 08:05:01 -0400
+Received: from mail-it0-f67.google.com ([209.85.214.67]:36979 "EHLO
+        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750864AbeFFMFA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jun 2018 08:05:00 -0400
+Received: by mail-it0-f67.google.com with SMTP id l6-v6so7595104iti.2
+        for <git@vger.kernel.org>; Wed, 06 Jun 2018 05:05:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=yl0otF/KXSQxt1xjYZstPuVK9/h3syCqOGXOBZZmk/I=;
-        b=Cilz40S9jvvuHEaOtAh4bK6/rIBWNkzq+Tbrt5/VXXlQ4oMOLWVJpkOAZH2O/6gUWr
-         PJuHPfANbx8IojJ7Q2hOoPieJMz0JKdDKM0AnAROXRj4aX3aXAXnMZVzf716v3qtdeR/
-         glOP7KrWt2WckHOtRZ5Qi53KuOxpaXgv1ZpxmU2yRChNEeX8KFKtTNCh1GhLEBNgGzJj
-         mOsAIHmboKCyjnqpt5tVKV9JSlBBuRrinrUpGGJnrh85EPhogBmTdJMFRoyvtg0aDxb4
-         vsPPGN+iYZPJ/dKiZH7Bz9S8rckl34YYZuyemErVJwlxO+eq6HR447NrNN8daIiIgIqI
-         y4vw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=/kzdiFaCMtapSbqgk2/kZpecnmu3LfXs2cz+ka0+200=;
+        b=lE/ZDBHpkoCvZTMI+pkdEBAYAra6f7ku6ig5Ce/RwursJooo1/lzDYUtkJqCd2ojFP
+         7B8+8ZFXUdMOK6XK24RX+lxgPhcHoNDFGncGnlRKx0DELBYIfC4Xe8Ek1k2LUz4F14oC
+         M0Bh46qwzmTCGUtu7uqa/mX0EGd9Obn3N5LWCpYWz4RvYhsG/HjNQLgyOoCgURk6ca/K
+         VU/WHYvf0bu/MHXIMt2M2OGBA9D/ERPjvRm9Yd0i9sdyhBfwxp0AoO+F/CBLr6EoG6PU
+         LDQHpWQYrTJS5jJwF2dgPHN8I0yXtTE8YHdVHbcUxkYozeamP+6BOqIxFiODYsOPQmlU
+         7lKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=yl0otF/KXSQxt1xjYZstPuVK9/h3syCqOGXOBZZmk/I=;
-        b=dcEKP0xOjcS71PGx95JcOsI86HKR/u2r+SsWLxBQgjO/2gBZSX6dh8p073RO2X1cfV
-         4xudHxeXhUSvjMn4VkuHFXg5y0zZXoLLXMKn50I48T6NKNodJX/9MChSALLCCyckZqLX
-         4RF/++D61GGuvVKi8NOOGxczeCSBG6uchCJ1FP0XIlMeLSZLIkSZ0xExKHPsaBOuPq85
-         c347rc7tb33zVeo5OLIl6a5PaLNTVm+RnarMcJDuU4BqySYzdIb5TxoPnf/uRUbSlnsf
-         QZYsH3dUmH5Seruh8aKCxhee/zFng3kb4IyYZOa1dChEOTyeNxVNi43FMDCvpAfs9Ibz
-         NY3Q==
-X-Gm-Message-State: APt69E3gn6MH0ZImay+4iXwBm4p4+69qRGNTScx/5uQTFNLnzBmKyDaI
-        FXtxBEHTvIf7XYhXOLTnr+s=
-X-Google-Smtp-Source: ADUXVKKxU4LVC0iShN9ZN17odH0JVWfLksHWC20n27suD/2WR+OQtQIX+4iaym5qRJXqwcMMJdFFJQ==
-X-Received: by 2002:a1c:540c:: with SMTP id i12-v6mr1574854wmb.131.1528285312943;
-        Wed, 06 Jun 2018 04:41:52 -0700 (PDT)
-Received: from localhost.localdomain (x590e531a.dyn.telefonica.de. [89.14.83.26])
-        by smtp.gmail.com with ESMTPSA id b80-v6sm6241533wmf.2.2018.06.06.04.41.51
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 06 Jun 2018 04:41:51 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Rick van Hattem <wolph@wol.ph>
-Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] Use ZSH_NAME instead of ZSH_VERSION because it's redefined by git-completion.zsh
-Date:   Wed,  6 Jun 2018 13:41:47 +0200
-Message-Id: <20180606114147.7753-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.18.0.rc0.207.ga6211da864
-In-Reply-To: <CAJAwA=xjS6bWO2Cy+-pz-Es_RjvSyno9JNBGdPAve1L9ctOy-A@mail.gmail.com>
-References: <01020163c683e753-04629405-15f8-4a30-9dc3-e4e3f2a5aa26-000000@eu-west-1.amazonses.com> <xmqqr2ln5ide.fsf@gitster-ct.c.googlers.com> <CAJAwA=xjS6bWO2Cy+-pz-Es_RjvSyno9JNBGdPAve1L9ctOy-A@mail.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=/kzdiFaCMtapSbqgk2/kZpecnmu3LfXs2cz+ka0+200=;
+        b=Kyke536IKNPWyo2eKNga9sqPTJ4d9KjlikzowsSB3i3YNZKICtdvP40Ts+d1bT2j1S
+         dVpKn1mtXFSfvoeQVO5166gItdYgWPSq6ZMabdrXwb3QrPV5+1WVn0tYm6D6Vhb17gtD
+         eABaxD+uCL3A2dB7HhCTcWScAkgTIOw0r24puPjKX2sYGlblbbxLtqizwnDYqIiN5okr
+         hsVl4M98ipjItAEZ9NlM7pSsOlCdmFzh6ujAf5xjQWCZPPy3KXkSBPo6WpM5D36ncI10
+         Ed0iXAo119AfomR8jhpFPt0AoN7Te67qxEnaFT/UtLQFBBJF1oRHqig7iKLo2aD3o3m6
+         GxKQ==
+X-Gm-Message-State: APt69E2LGDWzVsIL2TPyh84pidXrRPhhBDJXzj8Y+yTMRroBgDUI9Mq1
+        9xPYx1DkZBlTK6y/Dnr28H2zc9BL+wqGXSrPlzI=
+X-Google-Smtp-Source: ADUXVKJj+IDldAbJpkVAFy1gKConPwcx5YLUoTs/LXTtHpikOGwKemcz9e3aV/8y/kn8dQmCVEqKTns+VGJwFLDXUdc=
+X-Received: by 2002:a24:b21a:: with SMTP id u26-v6mr2174967ite.81.1528286699660;
+ Wed, 06 Jun 2018 05:04:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a4f:22d0:0:0:0:0:0 with HTTP; Wed, 6 Jun 2018 05:04:59 -0700 (PDT)
+In-Reply-To: <20180606102719.27145-3-avarab@gmail.com>
+References: <87lgbsz61p.fsf@evledraar.gmail.com> <20180606102719.27145-1-avarab@gmail.com>
+ <20180606102719.27145-3-avarab@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 6 Jun 2018 14:04:59 +0200
+Message-ID: <CAP8UFD1VcQceStBFp9A_j5ts5W2GT12n=jE91osHvhYqKPGrHA@mail.gmail.com>
+Subject: Re: [RFC PATCH 2/2] sha1-name: add core.validateAbbrev & relative core.abbrev
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        dstolee@microsoft.com, Jeff Hostetler <git@jeffhostetler.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Jun 6, 2018 at 12:27 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 
-> On 4 June 2018 at 05:40, Junio C Hamano <gitster@pobox.com> wrote:
-> Rick van Hattem <wolph@wol.ph> writes:
-> 
-> > > The `git-completion.zsh` unsets the `$ZSH_VERSION` which makes this check moot. The result (at least for me) is that zsh segfaults because of all the variables it's unsetting.
-> > > ---
-> >
-> > Overlong line, lack of sign-off.
-> 
-> Apologies for the long lines, I wrote the message on Github where this
-> message is properly formatted, apparently the submitgit script can be
-> considered broken as it truncates the message when converting to email.
-> 
-> The original message can be found here: https://github.com/git/git/pull/500
+> +This setting changes that to `O(1)`, but with the trade-off that
+> +depending on the value of `core.abbrev` way may be printing
 
-That link points to the pull request.  The important thing is the
-actual commit message, which can be found here:
+s/way may be printing/we may be printing/
 
-  https://github.com/git/git/pull/500/commits/b740bc3fedf419c7ee12364279cad84e1f2f7bb7
+> +abbreviated hashes that collide. Too see how likely this is, try
 
-So submitgit neither truncated the commit message nor changed its
-formatting.
+s/Too see/To see/
 
-> Below is the original message with proper formatting:
-> 
-> > A recent change (94408dc) broke zsh for me (actually segfault zsh when
-> > trying to use git completion)
-> >
-> > The reason is that the `git-completion.zsh` sets the `ZSH_VERSION`
-> > variable to an empty string:
-> >     ...
-> >     ZSH_VERSION='' . "$script"
-> >     ...
-> >
-> > I'm not sure if @szeder or @gitster used a different zsh version for
-> > testing commit 94408dc but it segfaults zsh 5.5.1
-> > (x86_64-apple-darwin15.6.0) on my OS X 10.11.6 machine.
+> +running:
 
-I used "zsh 5.1.1 (x86_64-ubuntu-linux-gnu)", the one shipped in this
-LTS of a Debian derivative's derivative, for superficial testing:
-started zsh, dot-sourced 'git-completion.bash' (yes, .bash), it
-appeared to be doing what I thought it should be doing, great, done.
+[...]
 
-I don't test 'git-completion.zsh': merely sourcing it doesn't seem to
-work at all for me, I still get ZSH's git completion.
+> +Even without `core.validateAbbrev=3Dfalse` the results abbreviation
+> +already a bit of a probability game.
 
-> > The proposed fix is quite simple and shouldn't break any backwards
-> > compatibility.
-> 
-> Hopefully that clears a little bit of the confusion.
-> 
-> > >  # Clear the variables caching builtins' options when (re-)sourcing
-> > >  # the completion script.
-> > > -if [[ -n ${ZSH_VERSION-} ]]; then
-> > > +if [[ -n ${ZSH_NAME-} ]]; then
-> >
-> > I am not a zsh user, and I do not know how reliable $ZSH_NAME can be
-> > taken as an indication that we are running zsh and have already
-> > found a usable git-completion-.bash script.
-> 
-> >From what I gathered this variable has been available since 1995. But
-> I'm not ZSH expert...
-> 
-> You can search for ZSH_NAME in the 3.0 changelog:
-> http://zsh.sourceforge.net/Etc/changelog-3.0.html
-> 
-> > I think what the proposed log message refers to as "unsets" is this
-> > part of the script:
-> 
-> As mentioned above, I was referring to commit 94408dc which changed the
-> behaviour of the bash completion script.
-> 
-> Specifically:
-> 
->     ...
->     if [[ -n ${ZSH_VERSION-} ]]; then
->         unset $(set |sed -ne
-> 's/^\(__gitcomp_builtin_[a-zA-Z0-9_][a-zA-Z0-9_]*\)=.*/\1/p')
-> 2>/dev/null
->     else
->         unset $(compgen -v __gitcomp_builtin_)
->     fi
->     ...
-> 
-> Because the ZSH script unsets the ZSH_VERSION variable (which is needed
-> because the bash script checks for that later in the script) it defaults
-> to the bash behaviour resulting in a segfault.
+s/the results abbreviation already a bit of/the resulting abbreviation
+is already a bit of/ maybe?
 
-I think this segfault issue should definitely be addressed in ZSH.  No
-matter what foolish or downright wrong thing a script does, the shell
-should not segfault.
+> diff --git a/sha1-name.c b/sha1-name.c
+> index 60d9ef3c7e..aa7ccea14d 100644
+> --- a/sha1-name.c
+> +++ b/sha1-name.c
+> @@ -576,6 +576,7 @@ int find_unique_abbrev_r(char *hex, const struct obje=
+ct_id *oid, int len)
+>         struct disambiguate_state ds;
+>         struct min_abbrev_data mad;
+>         struct object_id oid_ret;
+> +       int dar =3D default_abbrev_relative;
+>         if (len < 0) {
+>                 unsigned long count =3D approximate_object_count();
+>                 /*
+> @@ -602,6 +603,20 @@ int find_unique_abbrev_r(char *hex, const struct obj=
+ect_id *oid, int len)
+>         if (len =3D=3D GIT_SHA1_HEXSZ || !len)
+>                 return GIT_SHA1_HEXSZ;
+>
+> +       if (dar) {
+> +               if (len + dar < MINIMUM_ABBREV) {
+> +                       len =3D MINIMUM_ABBREV;
+> +                       dar =3D 0;
+> +               }
+> +
+> +               if (validate_abbrev) {
+> +                       len +=3D dar;
+> +               } else {
+> +                       hex[len + dar] =3D 0;
+> +                       return len + dar;
+> +               }
 
-> > If your ZSH_VERSION is empty, doesn't it indicate that the script
-> > did not find a usable git-completion.bash script (to which it
-> > outsources the bulk of the completion work)?  I do agree segfaulting
-> > is not a friendly way to tell you that your setup is lacking to make
-> > it work, but I have a feeling that what you are seeing is an
-> > indication of a bigger problem, which will be sweeped under the rug
-> > with this patch but without getting fixed...
-> 
-> The git-completion.zsh script purposefully unsets the ZSH_VERSION
-> before including the git-completion.bash script like this:
-> 
->     ...
->     ZSH_VERSION='' . "$script"
->     ...
+I wonder what happens if len + dar > GIT_SHA1_HEXSZ
 
-Oh, I was not aware of this.  It does feel a bit hackish, doesn't it.
-
-> The reason for that is (presumably) the check that's used within the
-> git-completion.bash script to warn ZSH users:
-> 
->     ...
->     if [[ -n ${ZSH_VERSION-} ]]; then
->     echo "WARNING: this script is deprecated, please see
-> git-completion.zsh" 1>&2
->     ...
-
-And, perhaps more importantly, to not load a bunch of shell functions
-that follow that warning.
-
-> >>  # Clear the variables caching builtins' options when (re-)sourcing
-> >>  # the completion script.
-> >> -if [[ -n ${ZSH_VERSION-} ]]; then
-> >> +if [[ -n ${ZSH_NAME-} ]]; then
-
-Looking at $ZSH_VERSION is our standard check both in the completion
-and prompt scripts.  Changing only one of those checks to look at
-$ZSH_NAME instead brings inconcistency and confusion.
-
-I think it would be better to eliminate that "let's pretend it's not
-ZSH" hack and make 'git-completion.zsh' more explicit by sourcing
-'git-completion.bash' something like this:
-
-  DOT_SOURCING_FROM_GIT_COMPLETION_ZSH=PleaseSkipDeprecatedFunctions . "$script"
-
-(with a more sensible variable name, of course :), and
-'git-completion.bash' should additionally check this variable as well.
-
-
+> +       }
