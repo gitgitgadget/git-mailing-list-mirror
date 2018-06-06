@@ -2,97 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C1761F403
-	for <e@80x24.org>; Wed,  6 Jun 2018 00:01:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E3711F403
+	for <e@80x24.org>; Wed,  6 Jun 2018 00:32:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932309AbeFFABu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Jun 2018 20:01:50 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:46061 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752980AbeFFABt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jun 2018 20:01:49 -0400
-Received: by mail-pg0-f67.google.com with SMTP id z1-v6so2027067pgv.12
-        for <git@vger.kernel.org>; Tue, 05 Jun 2018 17:01:49 -0700 (PDT)
+        id S932895AbeFFAcS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Jun 2018 20:32:18 -0400
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:34410 "EHLO
+        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932897AbeFFAcR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jun 2018 20:32:17 -0400
+Received: by mail-pl0-f65.google.com with SMTP id g20-v6so2635230plq.1
+        for <git@vger.kernel.org>; Tue, 05 Jun 2018 17:32:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=dNi+MxDskk9ADXeu2cOxV5ub0TQ+SHkO7NNi5AxHcdA=;
-        b=qGlRcwWFHrvulhAFkl2qGoro3gAQPJzwvb2T52kgg2bkEijEaiv80GC28wdHT9eLOb
-         6eu5I6nILuVxySsNqLMrxZbGX49WgiiKoxBoHbOmlaW6nL6wd6o0sygCKrmhQqhnQGe9
-         PvBoLuPvT0Oqtz2DTuThq91QFM55YHabUZANCC51PYFaH5F0rK5tc4GfQcvHui4ghjYM
-         pD1XCfU97OuIoqD7ubGrgIWMfW1oa/REO04Y+snQ0yIR8r/VKlsjFacQuDgga/vK6Pwx
-         e7wlMvpIvsLw6p6RhM3uloxGmbe0OE/eARpds/HA+sRUPV7A10blprL5b9W4v5PK1p4L
-         YNkw==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=okPEUAL1Z6+yyeKYOvu+azpwXJZ8owmjaxIQ8CLDH24=;
+        b=PITrhJN1hxAZGzSoVu9cCMskVr0dfNNB1ixTWDuqInGf//6ime8p37RpPF40mdL2uw
+         DiigwelrtkQXEd5ulUVrmrK7TJ4RxO0YbVJgGwi+lUpoj1WKk2NhFpumYLpvKcy+AJ67
+         lRIFqR0Yfe0W3oZfO6pfLdKjftm9pVBY1QofJQmTFdV/Z0Vjk7xOzKSQzXHzOln4GQ3E
+         BSDjRlompnTw2U0kIc6gi+Kc7nKRGUL2fljgwtjPPGijxZWpuiUu2XMp0PeaoyGxPkvw
+         9SEJDlt4EPZfefKv7DpG7EK2+MehUbeL9m7iooEeWDO/LH+1tj7eH2v3S5T+P/wv9Um3
+         eB2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=dNi+MxDskk9ADXeu2cOxV5ub0TQ+SHkO7NNi5AxHcdA=;
-        b=dD0YZRIDFmW84doIL0VYrXXjK5NoPeCqtq3ZMkIfS9LvC4HLxFQ+ROPxeDHFVGQZxS
-         tPfuD3NeriJtSKQksmirf5qpoy/B5LL9MLIOeLzDa8ySsYXTDR388WCGMir+mNwBhZZO
-         wu7fneArVHAdX/0TW67omXFCbP2g09S+wcHV7t6+kjneSHmCO+DUw2xc44TLOrwbi/mp
-         MymztW1xbJHZd+N/4J5BuGvLjPcICK5zXwNeQ8cfv+Lvaf+HwSToy3NsAnvtoJIHtaQN
-         Par08uRVM9ZP0/9MCw5YHJatOe26gjlu94H1VD5YSHAD//Pkj54J7KsQh+ZovlKy75AV
-         D3mg==
-X-Gm-Message-State: APt69E2caUIiYi6Q6khmFOVOX5OJxXHf0GfAc5yH6EpqU6o9vWDEuFRL
-        vo8zLFMnrYqxNgjaakZtwMQ=
-X-Google-Smtp-Source: ADUXVKIIoFYB1E08d1lIehzVR+fE6oiMWpDogv57LfBs7LM/bKli2xWNbMB6iBv85ctWotqLtJw2yw==
-X-Received: by 2002:a63:7c0b:: with SMTP id x11-v6mr582458pgc.384.1528243308601;
-        Tue, 05 Jun 2018 17:01:48 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id a22-v6sm12316241pfi.124.2018.06.05.17.01.47
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=okPEUAL1Z6+yyeKYOvu+azpwXJZ8owmjaxIQ8CLDH24=;
+        b=QfFuUA5Tu2Wa9kG36wEUSU7eQ9c9lErWshNeAAJpcpFALW4TM0ED/IW7QAKxRTpt8P
+         yNErnl3dn8GEwL4BBNzWqjqIqQqeDUo5O+6dT9rCCgItn+hZ2UAj7DpSQxXdKKmG7k1o
+         8jAcJ43ecFOta0JYKPZw7pyhvujCBiDLgwe4PqMql8OrfM2r2gPnQi8SjiIRUVusJ2m2
+         EhYcJyaNEDH3WD9iXTI1reaHMncI1lQUUjogSNNndYrGX9Xppsv93qhD4XWKiNV9mdsI
+         qpzR9y8itSt7Uy++tP6nOnyOqgH464tTB0wS1EQJAgB3RfljOGveRaGRzVMFc8jWKo4z
+         cXQw==
+X-Gm-Message-State: APt69E1Lumfi9n48DMqX8k76etrqy5r5xT4HmBAbqGbRLR6tQGxc2CCh
+        MuhvBVK0KKzYHIRpT4t/Z7aOdZGOn0Q=
+X-Google-Smtp-Source: ADUXVKJ4tYRwuweLjsbOBtldF/QfmRO1/nlut0zTMBXmEEHQ5Dv3YhS+IsgbrQxorkg4iKcqew07bg==
+X-Received: by 2002:a17:902:b416:: with SMTP id x22-v6mr826484plr.267.1528245136843;
+        Tue, 05 Jun 2018 17:32:16 -0700 (PDT)
+Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
+        by smtp.gmail.com with ESMTPSA id j14-v6sm77086337pfn.151.2018.06.05.17.32.15
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 05 Jun 2018 17:01:47 -0700 (PDT)
-Date:   Tue, 5 Jun 2018 17:01:46 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
+        Tue, 05 Jun 2018 17:32:15 -0700 (PDT)
+Date:   Tue, 5 Jun 2018 17:32:14 -0700
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
 Cc:     git@vger.kernel.org, gitster@pobox.com, bmwill@google.com
-Subject: Re: [PATCH 5/6] fetch-pack: move common check and marking together
-Message-ID: <20180606000146.GH9266@aiede.svl.corp.google.com>
+Subject: Re: [PATCH 1/6] fetch-pack: clear marks before everything_local()
+Message-Id: <20180605173214.c3920e67cbbbd463be33bc70@google.com>
+In-Reply-To: <20180605230821.GC9266@aiede.svl.corp.google.com>
 References: <cover.1527894919.git.jonathantanmy@google.com>
- <02577402adaf0d109f74e59486d8a23f6ae68663.1527894919.git.jonathantanmy@google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <02577402adaf0d109f74e59486d8a23f6ae68663.1527894919.git.jonathantanmy@google.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+        <b9d6d8fef370fae316f78c851833dbd706ff6f7c.1527894919.git.jonathantanmy@google.com>
+        <20180605230821.GC9266@aiede.svl.corp.google.com>
+X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Tue, 5 Jun 2018 16:08:21 -0700
+Jonathan Nieder <jrnieder@gmail.com> wrote:
 
-Jonathan Tan wrote:
+> Hi,
+> 
+> Jonathan Tan wrote:
+> 
+> > If tag following is required when using a transport that does not
+> > support tag following, fetch_pack() will be invoked twice in the same
+> > process, necessitating a clearing of the object flags used by
+> > fetch_pack() sometime during the second invocation. This is currently
+> > done in find_common(), which means that the work done by
+> > everything_local() in marking complete remote refs as COMMON_REF is
+> > wasted.
+> >
+> > To avoid this wastage, move this clearing from find_common() to its
+> > parent function do_fetch_pack(), right before it calls
+> > everything_local().
+> 
+> I had to read this a few times and didn't end up understanding it.
+> 
+> Is the idea that this will speed something up?  Can you provide e.g.
+> "perf stat" output (or even a new perf test in t/perf) demonstrating
+> the improvement?  Or is it a cleanup?
 
-> This enables the calculation of was_common and the invocation to
-> mark_common() to be abstracted into a single call to the negotiator API
-> (to be introduced in a subsequent patch).
+Firstly, I don't know of a practical way to demonstrate this, because we
+don't have an implementation of a transport that does not support tag
+following. If we could demonstrate this, I think we can demonstrating it
+by constructing a negotiation scenario in which COMMON_REF would have
+been helpful, e.g. the following (untested) scenario:
 
-I like it.  I think it should be possible to describe the benefit of
-this patch without reference to the specifics of the subsequent one.
-Maybe something like:
+ T C (T=tag, C=commit)
+ |/
+ O
 
-	When receiving 'ACK <object-id> continue' for a common commit,
-	check if the commit was already known to be common and mark it
-	as such if not up front.  This should make future refactoring
-	of how the information about common commits is stored more
-	straightforward.
+We run "git fetch C" and on the second round (when we fetch T), if we
+wiped the flags *after* everything_local() (as is currently done),
+negotiation would send "have C" and "have O". But if we wiped the flags
+*before* everything_local(), then C would have the COMMON_REF flag and
+we will see that we only send "have C". So we have more efficient
+negotiation.
 
-	No visible change intended.
+> As an experiment, I tried applying the '-' part of the change without
+> the '+' part to get confidence that tests cover this well.  To my
+> chagrin, all tests still passed. :/
 
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
->  fetch-pack.c | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
+Yes, because we don't have tests against a transport which doesn't
+support tag following.
 
-With or without such a clarification,
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+> In the preimage, we call clear_marks in find_common.  This is right
+> before we start setting up the revision walk, e.g. by inserting
+> revisions for each ref.  In the postimage, we call clear_marks in
+> do_fetch_pack.  This is right before we call everything_local.
+> 
+> I end up feeling that I don't understand the code well, neither before
+> nor after the patch.  Ideas for making it clearer?
 
-Thanks.
+One idea is to first separate everything_local() into its side effect
+parts and the "true" check that everything is local. I'll do that and
+send it as part of v2 of this patch series.
