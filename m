@@ -2,212 +2,268 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8DE611F403
-	for <e@80x24.org>; Wed,  6 Jun 2018 15:50:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7493C1F403
+	for <e@80x24.org>; Wed,  6 Jun 2018 16:50:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752214AbeFFPua (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Jun 2018 11:50:30 -0400
-Received: from mail-pl0-f43.google.com ([209.85.160.43]:43317 "EHLO
-        mail-pl0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752042AbeFFPu2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jun 2018 11:50:28 -0400
-Received: by mail-pl0-f43.google.com with SMTP id c41-v6so4072913plj.10
-        for <git@vger.kernel.org>; Wed, 06 Jun 2018 08:50:28 -0700 (PDT)
+        id S933539AbeFFQuf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Jun 2018 12:50:35 -0400
+Received: from mail-lf0-f51.google.com ([209.85.215.51]:34997 "EHLO
+        mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933488AbeFFQue (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jun 2018 12:50:34 -0400
+Received: by mail-lf0-f51.google.com with SMTP id y72-v6so10163919lfd.2
+        for <git@vger.kernel.org>; Wed, 06 Jun 2018 09:50:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:openpgp:autocrypt:reply-to:message-id
-         :date:user-agent:mime-version:in-reply-to;
-        bh=m4suCf+z6WH0fk4bkPwSFDi0dafwOrFxQDCRx0hF1RE=;
-        b=MZOzobZ5co6aCUxb0OiAdLxd+5fo8N3f7tG48ULzfxhm19W8Uju/sN2pUfX7ygtGbB
-         LdSy3yNOK4r9ZcJO9LUn6Aitc1tEweHwWmyGRhiJfWhBOGP4C/jwRzjHfyCZJhgWI05A
-         q/uV/oQm4bc+4/4CLEa18MtSe7F94olIF3Y6MDXtI0avuj0OKhECHtGyPyPCVtFLG2c5
-         6iEpHj3O9iRQF5lgDAGXHKu4jyxZg3ZELJEMGeQh3iVEGxsvg+7D7ym06PKUw7f1qE78
-         NgRMmlYEWAVZdiwVPfxvDjnVVnHwEhW7CTm4a37n8JhCmjIWjnq6yc8G/0DUO9OmHBZ9
-         UpHQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=SUQle/3SPmgSEqGSL8iZpbXw3n/BqL1+omgZH6OfnMA=;
+        b=ZFzwvCczc5xcm4DWnKdbuuglCWIPXrDBizAWau3TuliIwXXiY/kl7Arb7a9Hta+a7p
+         iMMYXvO4XcbEA5HNP2Ds/XTcdaSyOTxHQuU4KQ7mpbPChlsPVKUwfT9vfs3ijrKXUF5q
+         iDCaR0+8rGangh4zOYyVxXso5Ay8PzQqXDZEkMyxWz6TDCpq6TqEH92MZa3qEMwZPdHz
+         bJNT8SGaBPiQHRxU5Pb20APqlsUIird6yadkA2WMhjPCjDoSK7wqbCzaBjB5foVlFHXJ
+         4+EkPhEosOpOmqs5pK2u147By3tkC2upHPsQK+vFUge1zH3np7IrbKXVJtjpb+AVs777
+         Fvtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
-         :reply-to:message-id:date:user-agent:mime-version:in-reply-to;
-        bh=m4suCf+z6WH0fk4bkPwSFDi0dafwOrFxQDCRx0hF1RE=;
-        b=j51huZQUxwewYEg6aAP2VMV2Sprz4n5vsREv+7rBRlMH8RR70Ncrf/U2haShs68nRE
-         qM2vLQn9SjDu/wyE22vWes93M8IqZ/7IwTXyZXp7/L540uOW8UDFT9jVWLQHqEkxicdV
-         tWnHyK1xGi2g7JBSxARe0GQUzq4jfy1zt7BrpfzS531mFuZAmhJM+CQRft1ieyfyc6lv
-         qSQsPIywXw7n8WU3iigNICrbVaaTMCY2nUqUKWFYvaYugeoKasP9MT/rpzmAZMNxy/p1
-         2hikVu8DAXqSoZLUY9JFhuUWKFDQOoNvdqC3fzArNonX5aVQ5JBsM154uBMQoQNelfVR
-         wAuA==
-X-Gm-Message-State: APt69E34MzzdCA+dWRJoWqeFsFez2OD3BgrA/SV2uMASlNHC8FGyUeRR
-        hxKRMIDbZM2N0OuZNJe9iD2IWcGw
-X-Google-Smtp-Source: ADUXVKIiyVxH8JZii46n+8t0QsoA/lDpuB+sZJ79Y5kPviphA3vN1rwZtXJQ/Ie8V68r3khDBKKxFA==
-X-Received: by 2002:a17:902:6b44:: with SMTP id g4-v6mr3705117plt.390.1528300228126;
-        Wed, 06 Jun 2018 08:50:28 -0700 (PDT)
-Received: from [192.168.206.100] ([117.209.171.202])
-        by smtp.gmail.com with ESMTPSA id s75-v6sm12581841pfj.125.2018.06.06.08.50.24
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=SUQle/3SPmgSEqGSL8iZpbXw3n/BqL1+omgZH6OfnMA=;
+        b=F8kXqffxniDy2jitwn2VJphBWj2MGcbuHyd8oVDXaBvfwex04RyR+mlSpxAMk5kheg
+         Jcf0gFAhJVrpOT4gjxIVmf3li41GIZ2oXRKuH5KxCKHDHaoNHWgKRqXTFZY9CW8Di26C
+         d8jZZPyp6quChVPGOTgdraMvM0dH27TrUjkcTZW6W5Ww9ebAAdSQIxVcTACHZJWlT0Av
+         njWmAr+VoCaDs6giaUX1UIte/NQYmKFXXJ1OwnghoQqtVdOfT8bH8sEUWYWP5X3OBwbG
+         VsI1mJhTdZmmx5avKvsFiXTH95NUYWfKRfXyTD9tcopXq22jTu5remv/31G1awSdd5Qv
+         laXA==
+X-Gm-Message-State: APt69E04rNpLGWmOfjTlcWtMwxaAeVScvDKosc6/GRt5Qj8j0C+A2+La
+        iZZfoy8HW3obs960fFlzkJTkpA==
+X-Google-Smtp-Source: ADUXVKKfTsvoHsjw4syJ0EUZDWOBE84NTIBHzLCd96XTCHr6DCMzWK9TnU1QkXZ4CyCHiTuDH3FVdg==
+X-Received: by 2002:a2e:9744:: with SMTP id f4-v6mr2614592ljj.5.1528303832404;
+        Wed, 06 Jun 2018 09:50:32 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id y6-v6sm909489ljc.67.2018.06.06.09.50.30
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 06 Jun 2018 08:50:27 -0700 (PDT)
-Subject: Re: [PATCH] t3200-branch.sh: use "--set-upstream-to" in test
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-Cc:     "Robert P. J. Day" <rpjday@crashcourse.ca>,
-        Git Mailing list <git@vger.kernel.org>
-References: <alpine.LFD.2.21.1806050712270.10467@localhost.localdomain>
- <20180605112446.17016-1-szeder.dev@gmail.com>
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=kaarticsivaraam91196@gmail.com; prefer-encrypt=mutual;
- keydata=
- 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
- IZ7P/DJ/
-Reply-To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Message-ID: <8af183f2-7ca5-86ba-b189-6b6885158453@gmail.com>
-Date:   Wed, 6 Jun 2018 21:20:17 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+        Wed, 06 Jun 2018 09:50:30 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     pclouds@gmail.com
+Cc:     bmwill@google.com, git@vger.kernel.org, newren@gmail.com,
+        ramsay@ramsayjones.plus.com
+Subject: [PATCH v4 00/23] Fix incorrect use of the_index
+Date:   Wed,  6 Jun 2018 18:49:53 +0200
+Message-Id: <20180606165016.3285-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.18.0.rc0.333.g22e6ee6cdf
+In-Reply-To: <20180606073933.14755-1-pclouds@gmail.com>
+References: <20180606073933.14755-1-pclouds@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20180605112446.17016-1-szeder.dev@gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="puJv4Fb674cxZDz6SyvhnbFKJqFUi4jL5"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---puJv4Fb674cxZDz6SyvhnbFKJqFUi4jL5
-Content-Type: multipart/mixed; boundary="8WVbJRtcnBABCguCOO4S70lMItWit4XHl";
- protected-headers="v1"
-From: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Reply-To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To: =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-Cc: "Robert P. J. Day" <rpjday@crashcourse.ca>,
- Git Mailing list <git@vger.kernel.org>
-Message-ID: <8af183f2-7ca5-86ba-b189-6b6885158453@gmail.com>
-Subject: Re: [PATCH] t3200-branch.sh: use "--set-upstream-to" in test
-References: <alpine.LFD.2.21.1806050712270.10467@localhost.localdomain>
- <20180605112446.17016-1-szeder.dev@gmail.com>
-In-Reply-To: <20180605112446.17016-1-szeder.dev@gmail.com>
+v4 fixes some commit messages and killed a couple more the_index
+references after I tried to merge this with 'pu'
 
---8WVbJRtcnBABCguCOO4S70lMItWit4XHl
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+diff --git a/apply.c b/apply.c
+index 811ff2ad5e..82f681972f 100644
+--- a/apply.c
++++ b/apply.c
+@@ -4090,9 +4090,9 @@ static int build_fake_ancestor(struct apply_state *state, struct patch *list)
+ 			return error(_("sha1 information is lacking or useless "
+ 				       "(%s)."), name);
+ 
+-		ce = make_cache_entry(&the_index, patch->old_mode, oid.hash, name, 0, 0);
++		ce = make_index_entry(&result, patch->old_mode, oid.hash, name, 0, 0);
+ 		if (!ce)
+-			return error(_("make_cache_entry failed for path '%s'"),
++			return error(_("make_index_entry failed for path '%s'"),
+ 				     name);
+ 		if (add_index_entry(&result, ce, ADD_CACHE_OK_TO_ADD)) {
+ 			free(ce);
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 3c8218304e..4dbcab3727 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -230,9 +230,9 @@ static int checkout_merged(int pos, const struct checkout *state)
+ 	if (write_object_file(result_buf.ptr, result_buf.size, blob_type, &oid))
+ 		die(_("Unable to add merge result for '%s'"), path);
+ 	free(result_buf.ptr);
+-	ce = make_cache_entry(&the_index, mode, oid.hash, path, 2, 0);
++	ce = make_index_entry(state->istate, mode, oid.hash, path, 2, 0);
+ 	if (!ce)
+-		die(_("make_cache_entry failed for path '%s'"), path);
++		die(_("make_index_entry failed for path '%s'"), path);
+ 	status = checkout_entry(ce, state, NULL);
+ 	free(ce);
+ 	return status;
+diff --git a/builtin/difftool.c b/builtin/difftool.c
+index e34e75a42d..c7d6296762 100644
+--- a/builtin/difftool.c
++++ b/builtin/difftool.c
+@@ -321,7 +321,7 @@ static int checkout_path(unsigned mode, struct object_id *oid,
+ 	struct cache_entry *ce;
+ 	int ret;
+ 
+-	ce = make_cache_entry(&the_index, mode, oid->hash, path, 0, 0);
++	ce = make_index_entry(state->istate, mode, oid->hash, path, 0, 0);
+ 	ret = checkout_entry(ce, state, NULL);
+ 
+ 	free(ce);
+@@ -488,7 +488,7 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+ 				 * index.
+ 				 */
+ 				struct cache_entry *ce2 =
+-					make_cache_entry(&the_index, rmode, roid.hash,
++					make_index_entry(&wtindex, rmode, roid.hash,
+ 							 dst_path, 0, 0);
+ 
+ 				add_index_entry(&wtindex, ce2,
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 0ea0a19d5e..067f535031 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -134,10 +134,10 @@ static void update_index_from_diff(struct diff_queue_struct *q,
+ 			continue;
+ 		}
+ 
+-		ce = make_cache_entry(&the_index, one->mode, one->oid.hash, one->path,
++		ce = make_index_entry(&the_index, one->mode, one->oid.hash, one->path,
+ 				      0, 0);
+ 		if (!ce)
+-			die(_("make_cache_entry failed for path '%s'"),
++			die(_("make_index_entry failed for path '%s'"),
+ 			    one->path);
+ 		if (is_missing) {
+ 			ce->ce_flags |= CE_INTENT_TO_ADD;
+diff --git a/cache.h b/cache.h
+index 242aaa5498..eb8c79b8a1 100644
+--- a/cache.h
++++ b/cache.h
+@@ -699,7 +699,7 @@ extern int remove_file_from_index(struct index_state *, const char *path);
+ extern int add_to_index(struct index_state *, const char *path, struct stat *, int flags);
+ extern int add_file_to_index(struct index_state *, const char *path, int flags);
+ 
+-extern struct cache_entry *make_cache_entry(struct index_state *istate,unsigned int mode, const unsigned char *sha1, const char *path, int stage, unsigned int refresh_options);
++extern struct cache_entry *make_index_entry(struct index_state *istate, unsigned int mode, const unsigned char *sha1, const char *path, int stage, unsigned int refresh_options);
+ extern int chmod_index_entry(struct index_state *, struct cache_entry *ce, char flip);
+ extern int ce_same_name(const struct cache_entry *a, const struct cache_entry *b);
+ extern void set_object_name_for_intent_to_add_entry(struct cache_entry *ce);
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 9280deb6a1..4f054d6dbb 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -315,7 +315,7 @@ static int add_cacheinfo(struct merge_options *o,
+ 	struct cache_entry *ce;
+ 	int ret;
+ 
+-	ce = make_cache_entry(&the_index, mode, oid ? oid->hash : null_sha1, path, stage, 0);
++	ce = make_index_entry(&the_index, mode, oid ? oid->hash : null_sha1, path, stage, 0);
+ 	if (!ce)
+ 		return err(o, _("add_cacheinfo failed for path '%s'; merge aborting."), path);
+ 
+diff --git a/read-cache.c b/read-cache.c
+index c083318aa7..4352aac521 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -745,7 +745,7 @@ int add_file_to_index(struct index_state *istate, const char *path, int flags)
+ 	return add_to_index(istate, path, &st, flags);
+ }
+ 
+-struct cache_entry *make_cache_entry(struct index_state *istate,
++struct cache_entry *make_index_entry(struct index_state *istate,
+ 				     unsigned int mode,
+ 				     const unsigned char *sha1,
+ 				     const char *path, int stage,
+diff --git a/resolve-undo.c b/resolve-undo.c
+index a4918546c3..2377995d6d 100644
+--- a/resolve-undo.c
++++ b/resolve-undo.c
+@@ -147,7 +147,7 @@ int unmerge_index_entry_at(struct index_state *istate, int pos)
+ 		struct cache_entry *nce;
+ 		if (!ru->mode[i])
+ 			continue;
+-		nce = make_cache_entry(istate, ru->mode[i], ru->oid[i].hash,
++		nce = make_index_entry(istate, ru->mode[i], ru->oid[i].hash,
+ 				       name, i + 1, 0);
+ 		if (matched)
+ 			nce->ce_flags |= CE_MATCHED;
 
-On Tuesday 05 June 2018 04:54 PM, SZEDER G=C3=A1bor wrote:
->=20
-> Though arguably the test name could be more descriptive and tell why
-> it should fail.
->=20
+Nguyễn Thái Ngọc Duy (23):
+  unpack-trees: remove 'extern' on function declaration
+  unpack-trees: add a note about path invalidation
+  unpack-trees: don't shadow global var the_index
+  unpack-tress: convert clear_ce_flags* to avoid the_index
+  unpack-trees: avoid the_index in verify_absent()
+  attr.h: drop extern from function declaration
+  attr: remove an implicit dependency on the_index
+  convert.h: drop 'extern' from function declaration
+  convert.c: remove an implicit dependency on the_index
+  dir.c: remove an implicit dependency on the_index in pathspec code
+  ls-files: correct index argument to get_convert_attr_ascii()
+  pathspec.c: use the right index instead of the_index
+  submodule.c: use the right index instead of the_index
+  entry.c: use the right index instead of the_index
+  attr: remove index from git_attr_set_direction()
+  preload-index.c: use the right index instead of the_index
+  read-cache.c: remove an implicit dependency on the_index
+  apply.c: use the right index instead of the_index
+  difftool: use the right index instead of the_index
+  checkout: avoid the_index when possible
+  resolve-undo.c: use the right index instead of the_index
+  grep: use the right index instead of the_index
+  cache.h: make the_index part of "compatibility macros"
 
-That's arguable, indeed. I was about to send a patch that gives a better
-description for the test. I didn't do it as I started wondering, Is it
-even worth testing whether a removed option fails? Is this done for
-other options that have been removed in the past? Should we just remove
-the test completely?
+ apply.c                     |  6 ++--
+ archive.c                   |  8 ++---
+ attr.c                      | 52 ++++++++++++++++++-------------
+ attr.h                      | 31 ++++++++++---------
+ builtin/add.c               |  6 ++--
+ builtin/cat-file.c          |  2 +-
+ builtin/check-attr.c        |  6 ++--
+ builtin/checkout-index.c    |  1 +
+ builtin/checkout.c          |  6 ++--
+ builtin/clean.c             |  2 +-
+ builtin/commit.c            |  2 +-
+ builtin/difftool.c          |  4 +--
+ builtin/grep.c              |  6 ++--
+ builtin/ls-files.c          | 17 ++++++-----
+ builtin/pack-objects.c      |  2 +-
+ builtin/reset.c             |  4 +--
+ builtin/rm.c                |  2 +-
+ builtin/submodule--helper.c |  2 +-
+ builtin/update-index.c      |  2 +-
+ cache.h                     |  9 +++---
+ convert.c                   | 41 ++++++++++++++-----------
+ convert.h                   | 61 +++++++++++++++++++++----------------
+ diff-lib.c                  |  4 +--
+ diff.c                      |  2 +-
+ dir.c                       | 27 +++++++++-------
+ dir.h                       | 16 ++++++----
+ entry.c                     | 10 +++---
+ ll-merge.c                  |  4 +--
+ merge-recursive.c           |  4 +--
+ pathspec.c                  |  2 +-
+ preload-index.c             |  3 +-
+ read-cache.c                | 19 +++++++-----
+ rerere.c                    |  2 +-
+ resolve-undo.c              |  5 +--
+ revision.c                  |  2 +-
+ sha1-file.c                 |  4 +--
+ submodule.c                 |  8 ++---
+ unpack-trees.c              | 57 +++++++++++++++++++++-------------
+ unpack-trees.h              |  4 +--
+ userdiff.c                  |  2 +-
+ ws.c                        |  2 +-
+ wt-status.c                 |  6 ++--
+ 42 files changed, 258 insertions(+), 197 deletions(-)
 
---=20
-Sivaraam
+-- 
+2.18.0.rc0.333.g22e6ee6cdf
 
-QUOTE:
-
-=E2=80=9CThe three principal virtues of a programmer are Laziness, Impati=
-ence,
-and Hubris.=E2=80=9D
-
-	- Camel book
-
-Sivaraam?
-
-You possibly might have noticed that my signature recently changed from
-'Kaartic' to 'Sivaraam' both of which are parts of my name. I find the
-new signature to be better for several reasons one of which is that the
-former signature has a lot of ambiguities in the place I live as it is a
-common name (NOTE: it's not a common spelling, just a common name). So,
-I switched signatures before it's too late.
-
-That said, I won't mind you calling me 'Kaartic' if you like it [of
-course ;-)]. You can always call me using either of the names.
-
-
-KIND NOTE TO THE NATIVE ENGLISH SPEAKER:
-
-As I'm not a native English speaker myself, there might be mistaeks in
-my usage of English. I apologise for any mistakes that I make.
-
-It would be "helpful" if you take the time to point out the mistakes.
-
-It would be "super helpful" if you could provide suggestions about how
-to correct those mistakes.
-
-Thanks in advance!
-
-
---8WVbJRtcnBABCguCOO4S70lMItWit4XHl--
-
---puJv4Fb674cxZDz6SyvhnbFKJqFUi4jL5
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEmrp5T6QugsbUnN0Nveda2sPWGWkFAlsYArkACgkQveda2sPW
-GWkMJg/9HxC7Unfx+GBKTmKrX+jdRQUR9eCFFp3Any1nM9TbGbOX4bbNchmN7Mpl
-USJ6cisF4Q0qGp/FMuBvtVa54MuEr6svqaot6voY2EemJvv3wUpLYPhpe4oboYf4
-GtvTS8IzJG8EpHih0ShBITTmZRCRHDIMIgCtQpG5rHbfcNojKN2s87k9ISM4s+C/
-FJ0V/AhGBuVpYwj8dlq0ZMh9ppvIW8ABOi0pCkOTl8wieAfrnyOl1FrBGMPBaoCR
-ijTe5bTKRAAvLDT1pHrWORiOtaHaeaZP5qaz//8FZOeEGegepZG0tVdo8sdPLYlL
-MouYBmpNmiKbBLA18Hhjvu4p3mSaSDqKi2QgUsmut5GGM9s530V/Vf4C0KmOQ9WN
-cMqUStiekYsgoR3OFIlg2Xy4X1jhhS7/E1GaKbrNvEweRwbyhDAv3QitXds4yy+t
-L1/3W3usVFpBaJH8t3T2kjMNyKJ79vMcbPa/ULLXa31ywB9+CpcnQsV7opgZ72a6
-BhNqrfM5DhFgB3vYUbO8TlTaYUrqhgWVkxeuDBLn3m5XQbnG68Bg72dV26R7k3JT
-cQUZAH5g9xI0Npnty4d5La4FBGHPowZIeRBqdeC/Vntc9GcqoUA0M9xK1cqjbn9S
-vRxj3Mgt8tvyjNytAa/ZI0RCjq2LzMBwIEGAyh8r00FQf45MYf0=
-=QGJy
------END PGP SIGNATURE-----
-
---puJv4Fb674cxZDz6SyvhnbFKJqFUi4jL5--
