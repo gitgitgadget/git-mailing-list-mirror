@@ -7,29 +7,29 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 14B991F403
-	for <e@80x24.org>; Wed,  6 Jun 2018 11:36:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A2961F403
+	for <e@80x24.org>; Wed,  6 Jun 2018 11:36:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752077AbeFFLgx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Jun 2018 07:36:53 -0400
-Received: from mail-co1nam03on0126.outbound.protection.outlook.com ([104.47.40.126]:21958
+        id S1752051AbeFFLgl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Jun 2018 07:36:41 -0400
+Received: from mail-co1nam03on0102.outbound.protection.outlook.com ([104.47.40.102]:12016
         "EHLO NAM03-CO1-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1751907AbeFFLgm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jun 2018 07:36:42 -0400
+        id S1751907AbeFFLgd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jun 2018 07:36:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=AGtnpb/Hl1FgZiDjTm/uG88m3em1yB5UXKguCNt6GfQ=;
- b=mBcc0Zqnq7eAXV6HsI7MYmG2/BfqvPh6nrYzpy1OzCqLD8MYUtRL6+QVueh5xyEXVMUzh9pjT9Xr8lbGIi3SzlEKrowNspHHoVUa16fg46RFDqiipU5H9fN/h0jMJzdwgJt7mP2+hcAFY2lphkRDoydfzIJmmJp0it+q+C4U6W8=
+ bh=XK0+fqF9cmHmKr0Q786aeUxNyBxSZyZESI4Dygp0nbk=;
+ b=QN9Shbm7XlAAk8+j1OiV2r0Ba3PMYOHKPWtFo3/BtCZOBPogR7K4jfTnQgMiQ7ApCf/TD/jmjqW1SIbOLp24Tw4txilry+M5V3XNaBtO4YefWVmm6JKGj3iYDyJl/JSGV4jGZ4mMlp/Tvxn5YT4JoPPRZsx3OLPqLg7r8BDUX5Y=
 Received: from BL0PR2101MB1011.namprd21.prod.outlook.com (52.132.24.10) by
  BL0PR2101MB1044.namprd21.prod.outlook.com (52.132.24.14) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.863.2; Wed, 6 Jun 2018 11:36:39 +0000
+ 15.20.863.2; Wed, 6 Jun 2018 11:36:31 +0000
 Received: from BL0PR2101MB1011.namprd21.prod.outlook.com
  ([fe80::d1f2:1d69:2567:e0a9]) by BL0PR2101MB1011.namprd21.prod.outlook.com
  ([fe80::d1f2:1d69:2567:e0a9%2]) with mapi id 15.20.0863.004; Wed, 6 Jun 2018
- 11:36:39 +0000
+ 11:36:31 +0000
 From:   Derrick Stolee <dstolee@microsoft.com>
 To:     "git@vger.kernel.org" <git@vger.kernel.org>
 CC:     "stolee@gmail.com" <stolee@gmail.com>,
@@ -38,11 +38,11 @@ CC:     "stolee@gmail.com" <stolee@gmail.com>,
         "marten.agren@gmail.com" <marten.agren@gmail.com>,
         "gitster@pobox.com" <gitster@pobox.com>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v5 20/21] gc: automatically write commit-graph files
-Thread-Topic: [PATCH v5 20/21] gc: automatically write commit-graph files
-Thread-Index: AQHT/YqiPtczRcOm3ECvxWELNN+J1A==
-Date:   Wed, 6 Jun 2018 11:36:39 +0000
-Message-ID: <20180606113611.87822-21-dstolee@microsoft.com>
+Subject: [PATCH v5 10/21] commit-graph: verify objects exist
+Thread-Topic: [PATCH v5 10/21] commit-graph: verify objects exist
+Thread-Index: AQHT/YqdQdWi3GB4U0ixVs5n3swMvQ==
+Date:   Wed, 6 Jun 2018 11:36:31 +0000
+Message-ID: <20180606113611.87822-11-dstolee@microsoft.com>
 References: <20180604165200.29261-1-dstolee@microsoft.com>
  <20180606113611.87822-1-dstolee@microsoft.com>
 In-Reply-To: <20180606113611.87822-1-dstolee@microsoft.com>
@@ -56,31 +56,30 @@ x-clientproxiedby: BN4PR11CA0018.namprd11.prod.outlook.com
 x-ms-exchange-messagesentrepresentingtype: 1
 x-originating-ip: [2001:4898:8010:0:eb4a:5dff:fe0f:730f]
 x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;BL0PR2101MB1044;7:yw4+LOWEZIxBDbBYuakCgVcrij9BPbtjl7iqM2lde1f8Gn5YvEBwJTaQjVZawqD6Aq8XDis5JD6ttlL7aEmnTwVKUFNzCDQxgOBP2jTJADI8T+wLw/xluUTgowO2k71wSSvaigoNJvEJOzymreEumsw1aLJ1QtcBbyH+eEqGHaxl7LjW0lGtPAxEWHQdJl6+V8juHawzj51XdMCo/GtlVDBJXuWkasdB1oFOpWC41kg4+u7LGu2x4fbe31OAcJeZ
+x-microsoft-exchange-diagnostics: 1;BL0PR2101MB1044;7:400vT91aQnWczOXwD4OoE2AplcoARZQsOEusPmxcHkOeTepMhpDHcqhFWyjns9RZ21RuhDptE2gjQMazVJbfDd9oB7i1XbI6r0LL2pigorZeh/sFfJgNCOhmy9UZ3wD9NLXmDudk0xYavj9504C+67ECqHyWweRCvlvJ7WK7kt/h9Zg9AgwlAa6OZ6b3fNQsC2BkH9Oluw/smB9Ev32F/GYF7niB3vV86SCDHocxD82w+GecoVtiTsCPoySOxjCj
 x-ms-office365-filtering-ht: Tenant
 x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(48565401081)(5600026)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7193020);SRVR:BL0PR2101MB1044;
 x-ms-traffictypediagnostic: BL0PR2101MB1044:
 authentication-results: spf=none (sender IP is )
  smtp.mailfrom=dstolee@microsoft.com; 
-x-microsoft-antispam-prvs: <BL0PR2101MB10442FBB6F54877AE8660BF2A1650@BL0PR2101MB1044.namprd21.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171)(85827821059158);
+x-microsoft-antispam-prvs: <BL0PR2101MB1044BEADEC2DBB01CB615379A1650@BL0PR2101MB1044.namprd21.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171);
 x-ms-exchange-senderadcheck: 1
 x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(5005006)(8121501046)(3231254)(2018427008)(944501410)(52105095)(3002001)(10201501046)(93006095)(93001095)(6055026)(149027)(150027)(6041310)(20161123564045)(20161123562045)(20161123560045)(20161123558120)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(6072148)(201708071742011)(7699016);SRVR:BL0PR2101MB1044;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB1044;
 x-forefront-prvs: 06952FC175
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(1496009)(39860400002)(396003)(376002)(346002)(39380400002)(366004)(199004)(189003)(2616005)(316002)(22452003)(10090500001)(105586002)(86612001)(10290500003)(107886003)(14454004)(8656006)(1730700003)(52116002)(76176011)(6506007)(386003)(8936002)(478600001)(8676002)(106356001)(102836004)(59450400001)(81156014)(25786009)(2351001)(486006)(11346002)(476003)(446003)(54906003)(4326008)(186003)(305945005)(7736002)(2900100001)(97736004)(46003)(2501003)(99286004)(81166006)(36756003)(39060400002)(6916009)(5660300001)(5250100002)(3280700002)(53936002)(68736007)(2906002)(86362001)(6116002)(6436002)(6512007)(6486002)(1076002)(5640700003)(3660700001)(22906009);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB1044;H:BL0PR2101MB1011.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(979002)(39860400002)(396003)(376002)(346002)(39380400002)(366004)(199004)(189003)(2616005)(316002)(22452003)(10090500001)(105586002)(86612001)(10290500003)(107886003)(14454004)(8656006)(1730700003)(52116002)(76176011)(6506007)(386003)(8936002)(478600001)(8676002)(106356001)(102836004)(59450400001)(81156014)(25786009)(2351001)(486006)(11346002)(476003)(446003)(54906003)(4326008)(186003)(305945005)(7736002)(2900100001)(97736004)(46003)(2501003)(99286004)(81166006)(36756003)(39060400002)(15650500001)(6916009)(5660300001)(5250100002)(3280700002)(53936002)(68736007)(2906002)(86362001)(6116002)(6436002)(6512007)(6486002)(1076002)(5640700003)(3660700001)(22906009)(969003)(989001)(999001)(1009001)(1019001);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB1044;H:BL0PR2101MB1011.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
 received-spf: None (protection.outlook.com: microsoft.com does not designate
  permitted sender hosts)
-x-microsoft-antispam-message-info: cQIl6u54oHez0uMpzy7bLPuZLxacGjWuLVROkcmmVD56t+SzDgDyKrGu3L/5h2PznGBA44q0O0/raNgswNz3gf5lIXmd687ld6NFruwdlgoaMPTKdIk1bsWJQVP6MCVqWY42kF3GYiE6b7UbZ6jRWSnEHFQsHoAQeEZJaYWVbkihVbnlyhx+yojs8yVT8/wi
+x-microsoft-antispam-message-info: WblfeLn+Suw0ADFWHn/S4AdZkEVsD7u2FPtUEHaAMLbu6imkoVnZlRmmjzMW/QB4FkztRI7ihyISD1C3EEPCDKoJSyQgZcq+bxyzRU3jh3il/2NLH+E8JjNfOPboyBHvcuur07F9G+sUzv83lA7FwCxRe753ou0Q1BHwkxisp+1RRR8uCPCE0Ymi3Pw2S2nG
 spamdiagnosticoutput: 1:99
 spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <1D1597508EE63E4EB99161512247EE70@namprd21.prod.outlook.com>
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-MS-Office365-Filtering-Correlation-Id: 5c1a94e5-1fd2-46be-e59e-08d5cba1c4a7
+X-MS-Office365-Filtering-Correlation-Id: 08de5f8c-ed42-4807-c62a-08d5cba1bf7e
 X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5c1a94e5-1fd2-46be-e59e-08d5cba1c4a7
-X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Jun 2018 11:36:39.6547
+X-MS-Exchange-CrossTenant-Network-Message-Id: 08de5f8c-ed42-4807-c62a-08d5cba1bf7e
+X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Jun 2018 11:36:31.3478
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
@@ -90,98 +89,83 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-VGhlIGNvbW1pdC1ncmFwaCBmaWxlIGlzIGEgdmVyeSBoZWxwZnVsIGZlYXR1cmUgZm9yIHNwZWVk
-aW5nIHVwIGdpdA0Kb3BlcmF0aW9ucy4gSW4gb3JkZXIgdG8gbWFrZSBpdCBtb3JlIHVzZWZ1bCwg
-bWFrZSBpdCBwb3NzaWJsZSB0bw0Kd3JpdGUgdGhlIGNvbW1pdC1ncmFwaCBmaWxlIGR1cmluZyBz
-dGFuZGFyZCBnYXJiYWdlIGNvbGxlY3Rpb24NCm9wZXJhdGlvbnMuDQoNCkFkZCBhICdnYy5jb21t
-aXRHcmFwaCcgY29uZmlnIHNldHRpbmcgdGhhdCB0cmlnZ2VycyB3cml0aW5nIGENCmNvbW1pdC1n
-cmFwaCBmaWxlIGFmdGVyIGFueSBub24tdHJpdmlhbCAnZ2l0IGdjJyBjb21tYW5kLiBEZWZhdWx0
-cyB0bw0KZmFsc2Ugd2hpbGUgdGhlIGNvbW1pdC1ncmFwaCBmZWF0dXJlIG1hdHVyZXMuIFdlIHNw
-ZWNpZmljYWxseSBkbyBub3QNCndhbnQgdG8gaGF2ZSB0aGlzIG9uIGJ5IGRlZmF1bHQgdW50aWwg
-dGhlIGNvbW1pdC1ncmFwaCBmZWF0dXJlIGlzIGZ1bGx5DQppbnRlZ3JhdGVkIHdpdGggaGlzdG9y
-eS1tb2RpZnlpbmcgZmVhdHVyZXMgbGlrZSBzaGFsbG93IGNsb25lcy4NCg0KSGVscGVkLWJ5OiDD
-hnZhciBBcm5masO2csOwIEJqYXJtYXNvbiA8YXZhcmFiQGdtYWlsLmNvbT4NClNpZ25lZC1vZmYt
-Ynk6IERlcnJpY2sgU3RvbGVlIDxkc3RvbGVlQG1pY3Jvc29mdC5jb20+DQotLS0NCiBEb2N1bWVu
-dGF0aW9uL2NvbmZpZy50eHQgfCAxMCArKysrKysrKystDQogRG9jdW1lbnRhdGlvbi9naXQtZ2Mu
-dHh0IHwgIDQgKysrKw0KIGJ1aWx0aW4vZ2MuYyAgICAgICAgICAgICB8ICA2ICsrKysrKw0KIHQv
-dDUzMTgtY29tbWl0LWdyYXBoLnNoICB8IDE0ICsrKysrKysrKysrKysrDQogNCBmaWxlcyBjaGFu
-Z2VkLCAzMyBpbnNlcnRpb25zKCspLCAxIGRlbGV0aW9uKC0pDQoNCmRpZmYgLS1naXQgYS9Eb2N1
-bWVudGF0aW9uL2NvbmZpZy50eHQgYi9Eb2N1bWVudGF0aW9uL2NvbmZpZy50eHQNCmluZGV4IGFi
-NjQxYmY1YTkuLmYyYjVlZDE3YzggMTAwNjQ0DQotLS0gYS9Eb2N1bWVudGF0aW9uL2NvbmZpZy50
-eHQNCisrKyBiL0RvY3VtZW50YXRpb24vY29uZmlnLnR4dA0KQEAgLTkwNiw3ICs5MDYsOCBAQCB0
-aGUgYEdJVF9OT1RFU19SRUZgIGVudmlyb25tZW50IHZhcmlhYmxlLiAgU2VlIGxpbmtnaXQ6Z2l0
-LW5vdGVzWzFdLg0KIA0KIGNvcmUuY29tbWl0R3JhcGg6Og0KIAlFbmFibGUgZ2l0IGNvbW1pdCBn
-cmFwaCBmZWF0dXJlLiBBbGxvd3MgcmVhZGluZyBmcm9tIHRoZQ0KLQljb21taXQtZ3JhcGggZmls
-ZS4NCisJY29tbWl0LWdyYXBoIGZpbGUuIFNlZSBgZ2MuY29tbWl0R3JhcGhgIGZvciBhdXRvbWF0
-aWNhbGx5DQorCW1haW50YWluaW5nIHRoZSBmaWxlLg0KIA0KIGNvcmUuc3BhcnNlQ2hlY2tvdXQ6
-Og0KIAlFbmFibGUgInNwYXJzZSBjaGVja291dCIgZmVhdHVyZS4gU2VlIHNlY3Rpb24gIlNwYXJz
-ZSBjaGVja291dCIgaW4NCkBAIC0xNjQ3LDYgKzE2NDgsMTMgQEAgdGhpcyBjb25maWd1cmF0aW9u
-IHZhcmlhYmxlIGlzIGlnbm9yZWQsIGFsbCBwYWNrcyBleGNlcHQgdGhlIGJhc2UgcGFjaw0KIHdp
-bGwgYmUgcmVwYWNrZWQuIEFmdGVyIHRoaXMgdGhlIG51bWJlciBvZiBwYWNrcyBzaG91bGQgZ28g
-YmVsb3cNCiBnYy5hdXRvUGFja0xpbWl0IGFuZCBnYy5iaWdQYWNrVGhyZXNob2xkIHNob3VsZCBi
-ZSByZXNwZWN0ZWQgYWdhaW4uDQogDQorZ2MuY29tbWl0R3JhcGg6Og0KKwlJZiB0cnVlLCB0aGVu
-IGdjIHdpbGwgcmV3cml0ZSB0aGUgY29tbWl0LWdyYXBoIGZpbGUgd2hlbg0KKwlsaW5rZ2l0Omdp
-dC1nY1sxXSBpcyBydW4uIFdoZW4gdXNpbmcgbGlua2dpdDpnaXQtZ2NbMV0NCisJJy0tYXV0bycg
-dGhlIGNvbW1pdC1ncmFwaCB3aWxsIGJlIHVwZGF0ZWQgaWYgaG91c2VrZWVwaW5nIGlzDQorCXJl
-cXVpcmVkLiBEZWZhdWx0IGlzIGZhbHNlLiBTZWUgbGlua2dpdDpnaXQtY29tbWl0LWdyYXBoWzFd
-DQorCWZvciBkZXRhaWxzLg0KKw0KIGdjLmxvZ0V4cGlyeTo6DQogCUlmIHRoZSBmaWxlIGdjLmxv
-ZyBleGlzdHMsIHRoZW4gYGdpdCBnYyAtLWF1dG9gIHdvbid0IHJ1bg0KIAl1bmxlc3MgdGhhdCBm
-aWxlIGlzIG1vcmUgdGhhbiAnZ2MubG9nRXhwaXJ5JyBvbGQuICBEZWZhdWx0IGlzDQpkaWZmIC0t
-Z2l0IGEvRG9jdW1lbnRhdGlvbi9naXQtZ2MudHh0IGIvRG9jdW1lbnRhdGlvbi9naXQtZ2MudHh0
-DQppbmRleCAyNGIyZGQ0NGZlLi5mNWJjOThjY2IzIDEwMDY0NA0KLS0tIGEvRG9jdW1lbnRhdGlv
-bi9naXQtZ2MudHh0DQorKysgYi9Eb2N1bWVudGF0aW9uL2dpdC1nYy50eHQNCkBAIC0xMzYsNiAr
-MTM2LDEwIEBAIFRoZSBvcHRpb25hbCBjb25maWd1cmF0aW9uIHZhcmlhYmxlIGBnYy5wYWNrUmVm
-c2AgZGV0ZXJtaW5lcyBpZg0KIGl0IHdpdGhpbiBhbGwgbm9uLWJhcmUgcmVwb3Mgb3IgaXQgY2Fu
-IGJlIHNldCB0byBhIGJvb2xlYW4gdmFsdWUuDQogVGhpcyBkZWZhdWx0cyB0byB0cnVlLg0KIA0K
-K1RoZSBvcHRpb25hbCBjb25maWd1cmF0aW9uIHZhcmlhYmxlIGBnYy5jb21taXRHcmFwaGAgZGV0
-ZXJtaW5lcyBpZg0KKydnaXQgZ2MnIHNob3VsZCBydW4gJ2dpdCBjb21taXQtZ3JhcGggd3JpdGUn
-LiBUaGlzIGNhbiBiZSBzZXQgdG8gYQ0KK2Jvb2xlYW4gdmFsdWUuIFRoaXMgZGVmYXVsdHMgdG8g
-ZmFsc2UuDQorDQogVGhlIG9wdGlvbmFsIGNvbmZpZ3VyYXRpb24gdmFyaWFibGUgYGdjLmFnZ3Jl
-c3NpdmVXaW5kb3dgIGNvbnRyb2xzIGhvdw0KIG11Y2ggdGltZSBpcyBzcGVudCBvcHRpbWl6aW5n
-IHRoZSBkZWx0YSBjb21wcmVzc2lvbiBvZiB0aGUgb2JqZWN0cyBpbg0KIHRoZSByZXBvc2l0b3J5
-IHdoZW4gdGhlIC0tYWdncmVzc2l2ZSBvcHRpb24gaXMgc3BlY2lmaWVkLiAgVGhlIGxhcmdlcg0K
-ZGlmZiAtLWdpdCBhL2J1aWx0aW4vZ2MuYyBiL2J1aWx0aW4vZ2MuYw0KaW5kZXggY2NmYjFjZWFl
-Yi4uNGUwNmU4MzcyZCAxMDA2NDQNCi0tLSBhL2J1aWx0aW4vZ2MuYw0KKysrIGIvYnVpbHRpbi9n
-Yy5jDQpAQCAtMjAsNiArMjAsNyBAQA0KICNpbmNsdWRlICJzaWdjaGFpbi5oIg0KICNpbmNsdWRl
-ICJhcmd2LWFycmF5LmgiDQogI2luY2x1ZGUgImNvbW1pdC5oIg0KKyNpbmNsdWRlICJjb21taXQt
-Z3JhcGguaCINCiAjaW5jbHVkZSAicGFja2ZpbGUuaCINCiAjaW5jbHVkZSAib2JqZWN0LXN0b3Jl
-LmgiDQogI2luY2x1ZGUgInBhY2suaCINCkBAIC00MCw2ICs0MSw3IEBAIHN0YXRpYyBpbnQgYWdn
-cmVzc2l2ZV9kZXB0aCA9IDUwOw0KIHN0YXRpYyBpbnQgYWdncmVzc2l2ZV93aW5kb3cgPSAyNTA7
-DQogc3RhdGljIGludCBnY19hdXRvX3RocmVzaG9sZCA9IDY3MDA7DQogc3RhdGljIGludCBnY19h
-dXRvX3BhY2tfbGltaXQgPSA1MDsNCitzdGF0aWMgaW50IGdjX2NvbW1pdF9ncmFwaCA9IDA7DQog
-c3RhdGljIGludCBkZXRhY2hfYXV0byA9IDE7DQogc3RhdGljIHRpbWVzdGFtcF90IGdjX2xvZ19l
-eHBpcmVfdGltZTsNCiBzdGF0aWMgY29uc3QgY2hhciAqZ2NfbG9nX2V4cGlyZSA9ICIxLmRheS5h
-Z28iOw0KQEAgLTEyOSw2ICsxMzEsNyBAQCBzdGF0aWMgdm9pZCBnY19jb25maWcodm9pZCkNCiAJ
-Z2l0X2NvbmZpZ19nZXRfaW50KCJnYy5hZ2dyZXNzaXZlZGVwdGgiLCAmYWdncmVzc2l2ZV9kZXB0
-aCk7DQogCWdpdF9jb25maWdfZ2V0X2ludCgiZ2MuYXV0byIsICZnY19hdXRvX3RocmVzaG9sZCk7
-DQogCWdpdF9jb25maWdfZ2V0X2ludCgiZ2MuYXV0b3BhY2tsaW1pdCIsICZnY19hdXRvX3BhY2tf
-bGltaXQpOw0KKwlnaXRfY29uZmlnX2dldF9ib29sKCJnYy5jb21taXRncmFwaCIsICZnY19jb21t
-aXRfZ3JhcGgpOw0KIAlnaXRfY29uZmlnX2dldF9ib29sKCJnYy5hdXRvZGV0YWNoIiwgJmRldGFj
-aF9hdXRvKTsNCiAJZ2l0X2NvbmZpZ19nZXRfZXhwaXJ5KCJnYy5wcnVuZWV4cGlyZSIsICZwcnVu
-ZV9leHBpcmUpOw0KIAlnaXRfY29uZmlnX2dldF9leHBpcnkoImdjLndvcmt0cmVlcHJ1bmVleHBp
-cmUiLCAmcHJ1bmVfd29ya3RyZWVzX2V4cGlyZSk7DQpAQCAtNjQxLDYgKzY0NCw5IEBAIGludCBj
-bWRfZ2MoaW50IGFyZ2MsIGNvbnN0IGNoYXIgKiphcmd2LCBjb25zdCBjaGFyICpwcmVmaXgpDQog
-CWlmIChwYWNrX2dhcmJhZ2UubnIgPiAwKQ0KIAkJY2xlYW5fcGFja19nYXJiYWdlKCk7DQogDQor
-CWlmIChnY19jb21taXRfZ3JhcGgpDQorCQl3cml0ZV9jb21taXRfZ3JhcGhfcmVhY2hhYmxlKGdl
-dF9vYmplY3RfZGlyZWN0b3J5KCksIDApOw0KKw0KIAlpZiAoYXV0b19nYyAmJiB0b29fbWFueV9s
-b29zZV9vYmplY3RzKCkpDQogCQl3YXJuaW5nKF8oIlRoZXJlIGFyZSB0b28gbWFueSB1bnJlYWNo
-YWJsZSBsb29zZSBvYmplY3RzOyAiDQogCQkJInJ1biAnZ2l0IHBydW5lJyB0byByZW1vdmUgdGhl
-bS4iKSk7DQpkaWZmIC0tZ2l0IGEvdC90NTMxOC1jb21taXQtZ3JhcGguc2ggYi90L3Q1MzE4LWNv
-bW1pdC1ncmFwaC5zaA0KaW5kZXggZmZiMmVkN2M5NS4uYjI0ZThiNjY4OSAxMDA3NTUNCi0tLSBh
-L3QvdDUzMTgtY29tbWl0LWdyYXBoLnNoDQorKysgYi90L3Q1MzE4LWNvbW1pdC1ncmFwaC5zaA0K
-QEAgLTI0NSw2ICsyNDUsMjAgQEAgdGVzdF9leHBlY3Rfc3VjY2VzcyAncGVyZm9ybSBmYXN0LWZv
-cndhcmQgbWVyZ2UgaW4gZnVsbCByZXBvJyAnDQogCXRlc3RfY21wIGV4cGVjdCBvdXRwdXQNCiAn
-DQogDQordGVzdF9leHBlY3Rfc3VjY2VzcyAnY2hlY2sgdGhhdCBnYyBjb21wdXRlcyBjb21taXQt
-Z3JhcGgnICcNCisJY2QgIiRUUkFTSF9ESVJFQ1RPUlkvZnVsbCIgJiYNCisJZ2l0IGNvbW1pdCAt
-LWFsbG93LWVtcHR5IC1tICJibGFuayIgJiYNCisJZ2l0IGNvbW1pdC1ncmFwaCB3cml0ZSAtLXJl
-YWNoYWJsZSAmJg0KKwljcCAkb2JqZGlyL2luZm8vY29tbWl0LWdyYXBoIGNvbW1pdC1ncmFwaC1i
-ZWZvcmUtZ2MgJiYNCisJZ2l0IHJlc2V0IC0taGFyZCBIRUFEfjEgJiYNCisJZ2l0IGNvbmZpZyBn
-Yy5jb21taXRHcmFwaCB0cnVlICYmDQorCWdpdCBnYyAmJg0KKwljcCAkb2JqZGlyL2luZm8vY29t
-bWl0LWdyYXBoIGNvbW1pdC1ncmFwaC1hZnRlci1nYyAmJg0KKwkhIHRlc3RfY21wIGNvbW1pdC1n
-cmFwaC1iZWZvcmUtZ2MgY29tbWl0LWdyYXBoLWFmdGVyLWdjICYmDQorCWdpdCBjb21taXQtZ3Jh
-cGggd3JpdGUgLS1yZWFjaGFibGUgJiYNCisJdGVzdF9jbXAgY29tbWl0LWdyYXBoLWFmdGVyLWdj
-ICRvYmpkaXIvaW5mby9jb21taXQtZ3JhcGgNCisnDQorDQogIyB0aGUgdmVyaWZ5IHRlc3RzIGJl
-bG93IGV4cGVjdCB0aGUgY29tbWl0LWdyYXBoIHRvIGNvbnRhaW4NCiAjIGV4YWN0bHkgdGhlIGNv
-bW1pdHMgcmVhY2hhYmxlIGZyb20gdGhlIGNvbW1pdHMvOCBicmFuY2guDQogIyBJZiB0aGUgZmls
-ZSBjaGFuZ2VzIHRoZSBzZXQgb2YgY29tbWl0cyBpbiB0aGUgbGlzdCwgdGhlbiB0aGUNCi0tIA0K
-Mi4xOC4wLnJjMQ0KDQo=
+In the 'verify' subcommand, load commits directly from the object
+database to ensure they exist. Parse by skipping the commit-graph.
+
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ commit-graph.c          | 17 +++++++++++++++++
+ t/t5318-commit-graph.sh |  7 +++++++
+ 2 files changed, 24 insertions(+)
+
+diff --git a/commit-graph.c b/commit-graph.c
+index d7a5b50a6c..893cc2f346 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -242,6 +242,7 @@ static struct commit_list **insert_parent_or_die(struct=
+ commit_graph *g,
+ {
+ 	struct commit *c;
+ 	struct object_id oid;
++
+ 	hashcpy(oid.hash, g->chunk_oid_lookup + g->hash_len * pos);
+ 	c =3D lookup_commit(&oid);
+ 	if (!c)
+@@ -893,5 +894,21 @@ int verify_commit_graph(struct commit_graph *g)
+ 		cur_fanout_pos++;
+ 	}
+=20
++	if (verify_commit_graph_error)
++		return verify_commit_graph_error;
++
++	for (i =3D 0; i < g->num_commits; i++) {
++		struct commit *odb_commit;
++
++		hashcpy(cur_oid.hash, g->chunk_oid_lookup + g->hash_len * i);
++
++		odb_commit =3D (struct commit *)create_object(cur_oid.hash, alloc_commit=
+_node());
++		if (parse_commit_internal(odb_commit, 0, 0)) {
++			graph_report("failed to parse %s from object database",
++				     oid_to_hex(&cur_oid));
++			continue;
++		}
++	}
++
+ 	return verify_commit_graph_error;
+ }
+diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+index c29eae47c9..cf60e48496 100755
+--- a/t/t5318-commit-graph.sh
++++ b/t/t5318-commit-graph.sh
+@@ -247,6 +247,7 @@ test_expect_success 'git commit-graph verify' '
+ 	git commit-graph verify >output
+ '
+=20
++NUM_COMMITS=3D9
+ HASH_LEN=3D20
+ GRAPH_BYTE_VERSION=3D4
+ GRAPH_BYTE_HASH=3D5
+@@ -265,6 +266,7 @@ GRAPH_BYTE_FANOUT1=3D$(($GRAPH_FANOUT_OFFSET + 4 \* 4))
+ GRAPH_BYTE_FANOUT2=3D$(($GRAPH_FANOUT_OFFSET + 4 \* 255))
+ GRAPH_OID_LOOKUP_OFFSET=3D$(($GRAPH_FANOUT_OFFSET + 4 \* 256))
+ GRAPH_BYTE_OID_LOOKUP_ORDER=3D$(($GRAPH_OID_LOOKUP_OFFSET + $HASH_LEN \* 8=
+))
++GRAPH_BYTE_OID_LOOKUP_MISSING=3D$(($GRAPH_OID_LOOKUP_OFFSET + $HASH_LEN \*=
+ 4 + 10))
+=20
+ # usage: corrupt_graph_and_verify <position> <data> <string>
+ # Manipulates the commit-graph file at the position
+@@ -334,4 +336,9 @@ test_expect_success 'detect incorrect OID order' '
+ 		"incorrect OID order"
+ '
+=20
++test_expect_success 'detect OID not in object database' '
++	corrupt_graph_and_verify $GRAPH_BYTE_OID_LOOKUP_MISSING "\01" \
++		"from object database"
++'
++
+ test_done
+--=20
+2.18.0.rc1
+
