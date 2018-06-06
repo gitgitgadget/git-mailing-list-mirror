@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D65A21F403
-	for <e@80x24.org>; Wed,  6 Jun 2018 17:03:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 58B6D1F403
+	for <e@80x24.org>; Wed,  6 Jun 2018 17:03:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933697AbeFFRDj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Jun 2018 13:03:39 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:38053 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933796AbeFFRDN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jun 2018 13:03:13 -0400
-Received: by mail-lf0-f65.google.com with SMTP id i83-v6so10229882lfh.5
-        for <git@vger.kernel.org>; Wed, 06 Jun 2018 10:03:13 -0700 (PDT)
+        id S933801AbeFFRDM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Jun 2018 13:03:12 -0400
+Received: from mail-lf0-f68.google.com ([209.85.215.68]:37255 "EHLO
+        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933796AbeFFRDK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jun 2018 13:03:10 -0400
+Received: by mail-lf0-f68.google.com with SMTP id g21-v6so8238672lfb.4
+        for <git@vger.kernel.org>; Wed, 06 Jun 2018 10:03:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=KQgZet+/EcDn/nPwpITlVINZeYRX4GFoZAUtUSsN9no=;
-        b=XoR6wgVUqh4cB5Hu0Btz/OOsDNoL1JgXxjXUC/T4cjoQpJ01J4loSqFjs2XlFvbhAC
-         h12BmPF56ERvOf1GWyhkRus9dxlOjFuGdP6r4gJziYZ7UG7vwtwtixcmk3+OOKGLGLKo
-         et58BiX97EfCL6tKmMeg+rHI0EXzNyOMj6GqBUD/BCSEtdrvDSu6Vn2tcUFjH6tswm0a
-         diobVHdwothCbnGpgoscOh29f3CU4FgS0rhnFX2AhY+dHpfEywM4Q8pEcoBTQj1ZDBE0
-         dekfO6KQVqFHqI1m8Ogj/WDpMj1yRZeGEi6yf7hC+F60dCqB84Yz1vcv9EAyxQio+drn
-         Vc8Q==
+        bh=S/tTtRAWHjTHnRAdB3nnsEgAzLE3j+oQJ40DStrNGTs=;
+        b=LPyXSkKBtC+PBxFs5X4toRVP/5dbfmHVlrhzwOLmkj3Fc76PtfBiGGlWUwCEAx1aqk
+         B4rh3Q79UZaPljEcCeVILGhDug9k3CtD6cKSMbsSOf5pJddpv1+vpTYSvvQMRxTeQ4uQ
+         osR6XiSmbt88SCjyiHpKej/m8i4CuCRlwG+DwVfNp1oVGz73g8UBkw4C8RUabZeJDshw
+         nqmDVshjcZHU1uL7fhJYtHBzbgDuoh8vmDHQaXAYaBF6c9HTESSNyP+E6OF23Ku3PIOZ
+         59j11ACwifp8+umLtLI4JxLTV3PJNg0ftQSjaWnij9/sgLAg1ei+IG6sUsVUP40NPN/t
+         r7UA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=KQgZet+/EcDn/nPwpITlVINZeYRX4GFoZAUtUSsN9no=;
-        b=CVW/TUCFAxidFuO7iQbHFQ3Iw3Rur+EFY7SGgRIqwg4qlx57zdQS3hdxRiJZY3QK+H
-         D5SJt8ZHpXlve0VARr0boEvBgX47DnvQsDMuziaBBEo5zmFAN/rsgSrSm0It6iWUjeUL
-         dszkpBmxB6rql9uT6inIDhTkp1Vc4roNXZVM22buy9I9kwqeMlbTEXVyK38BCL7SRMHB
-         +skNr0OePMtQ4pjBRY+DBbkjxuD8SeZmC/jJN9I+T0sbuo7cMFTuPSJHlR1vKJYv4Zbh
-         KB15BOKyRc3q77ZEVJuSO5CvYvRYtGqs0B1+uUE3SZS4pX6FSMHqlP+tF9dBBHdPqGPv
-         91WA==
-X-Gm-Message-State: APt69E1fqtR8vWknyESM7NnphZxtno3SbNNk6v6tiSZBzm3PdtovKuvS
-        pkwfW07wpdsK1FpFTLzTzS8=
-X-Google-Smtp-Source: ADUXVKKED++f8gQS+US4gxlVa7Jsvl0Q2YQm0rziSKCKc9Rm/fhMbwMab1Yw5PYghnZ8XCstW6/Ung==
-X-Received: by 2002:a19:15da:: with SMTP id 87-v6mr2486164lfv.136.1528304592366;
-        Wed, 06 Jun 2018 10:03:12 -0700 (PDT)
+        bh=S/tTtRAWHjTHnRAdB3nnsEgAzLE3j+oQJ40DStrNGTs=;
+        b=IVPnihStIyc/+rr55A7QzQnAbqNbPcrTty9nWv1icK9UbS5e4PMr8myRYBJ6q7zt9A
+         xnXFY69so/ZJWujjCgEzRvpo0GHAv4UTXvM4OT1uherbybffADBAGYcxFkV9z1Dfd+gC
+         Eez6Um5ARtkMK3uon1pNcJ8Ek75JQOBfBnIedkpSMNfuDQG9fOlfaiDvA8HOJmlh6eRc
+         bQqjspa7/DxmBZr88w7OzO9Md7q8Q86Y4AfbKEmDqIfJOkV2QNayHsU6+LmJe67v9y+3
+         0Q5Ieoib1Lqx81sO2loGbziWsfZuOHttYyp0U+iYtazLq6KmbM13A1NDGXoEciFB1rzN
+         ODSg==
+X-Gm-Message-State: APt69E1z0111V7bb6DWPLFn/zzM6OXCh6e5IzdTTQBN1ULwZJJirF+Fc
+        bfNxHCf4aZFIF95o8MZ/Rok=
+X-Google-Smtp-Source: ADUXVKIEagnxNNrMyuOi0FqPYvP6nFrRTIjGA7Jlse/9wMd5Vj+i8t76PLOfNBFOs52XFhwm2FI2hQ==
+X-Received: by 2002:a19:e82c:: with SMTP id f44-v6mr2319341lfh.19.1528304588671;
+        Wed, 06 Jun 2018 10:03:08 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id g14-v6sm1485305lfb.36.2018.06.06.10.03.11
+        by smtp.gmail.com with ESMTPSA id g14-v6sm1485305lfb.36.2018.06.06.10.03.07
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 06 Jun 2018 10:03:11 -0700 (PDT)
+        Wed, 06 Jun 2018 10:03:07 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     bmwill@google.com, git@vger.kernel.org, newren@gmail.com,
         ramsay@ramsayjones.plus.com
-Subject: [PATCH v4 18/23] apply.c: use the right index instead of the_index
-Date:   Wed,  6 Jun 2018 19:02:38 +0200
-Message-Id: <20180606170243.4169-13-pclouds@gmail.com>
+Subject: [PATCH v4 15/23] attr: remove index from git_attr_set_direction()
+Date:   Wed,  6 Jun 2018 19:02:35 +0200
+Message-Id: <20180606170243.4169-10-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc0.333.g22e6ee6cdf
 In-Reply-To: <20180606170243.4169-1-pclouds@gmail.com>
 References: <20180606165016.3285-1-pclouds@gmail.com>
@@ -69,24 +69,133 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Since attr checking API now take the index, there's no need to set an
+index in advance with this call. Most call sites are straightforward
+because they either pass the_index or NULL (which defaults back to
+the_index previously). There's only one suspicious call site in
+unpack-trees.c where it sets a different index.
+
+This code in unpack-trees is about to checking out entries from the
+new/temporary index after merging is done in it. The attributes will
+be used by entry.c code to do crlf conversion if needed. entry.c now
+respects struct checkout's istate field, and this field is correctly
+set in unpack-trees.c, there should be no regression from this change.
+
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- apply.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ archive.c            |  2 +-
+ attr.c               | 15 +++------------
+ attr.h               |  3 +--
+ builtin/check-attr.c |  2 +-
+ unpack-trees.c       |  4 ++--
+ 5 files changed, 8 insertions(+), 18 deletions(-)
 
-diff --git a/apply.c b/apply.c
-index fc42a0eadf..82f681972f 100644
---- a/apply.c
-+++ b/apply.c
-@@ -4090,7 +4090,7 @@ static int build_fake_ancestor(struct apply_state *state, struct patch *list)
- 			return error(_("sha1 information is lacking or useless "
- 				       "(%s)."), name);
+diff --git a/archive.c b/archive.c
+index 1b44503ebb..d1d0a0d6b3 100644
+--- a/archive.c
++++ b/archive.c
+@@ -273,7 +273,7 @@ int write_archive_entries(struct archiver_args *args,
+ 		init_tree_desc(&t, args->tree->buffer, args->tree->size);
+ 		if (unpack_trees(1, &t, &opts))
+ 			return -1;
+-		git_attr_set_direction(GIT_ATTR_INDEX, &the_index);
++		git_attr_set_direction(GIT_ATTR_INDEX);
+ 	}
  
--		ce = make_index_entry(&the_index, patch->old_mode, oid.hash, name, 0, 0);
-+		ce = make_index_entry(&result, patch->old_mode, oid.hash, name, 0, 0);
- 		if (!ce)
- 			return error(_("make_index_entry failed for path '%s'"),
- 				     name);
+ 	err = read_tree_recursive(args->tree, "", 0, 0, &args->pathspec,
+diff --git a/attr.c b/attr.c
+index 863fad3bd1..98e4953f6e 100644
+--- a/attr.c
++++ b/attr.c
+@@ -708,10 +708,8 @@ static struct attr_stack *read_attr_from_array(const char **list)
+  * another thread could potentially be calling into the attribute system.
+  */
+ static enum git_attr_direction direction;
+-static const struct index_state *use_index;
+ 
+-void git_attr_set_direction(enum git_attr_direction new_direction,
+-			    const struct index_state *istate)
++void git_attr_set_direction(enum git_attr_direction new_direction)
+ {
+ 	if (is_bare_repository() && new_direction != GIT_ATTR_INDEX)
+ 		BUG("non-INDEX attr direction in a bare repo");
+@@ -720,7 +718,6 @@ void git_attr_set_direction(enum git_attr_direction new_direction,
+ 		drop_all_attr_stacks();
+ 
+ 	direction = new_direction;
+-	use_index = istate;
+ }
+ 
+ static struct attr_stack *read_attr_from_file(const char *path, int macro_ok)
+@@ -750,17 +747,11 @@ static struct attr_stack *read_attr_from_index(const struct index_state *istate,
+ 	struct attr_stack *res;
+ 	char *buf, *sp;
+ 	int lineno = 0;
+-	const struct index_state *to_read_from;
+ 
+-	/*
+-	 * Temporary workaround for c24f3abace (apply: file commited
+-	 * with CRLF should roundtrip diff and apply - 2017-08-19)
+-	 */
+-	to_read_from = use_index ? use_index : istate;
+-	if (!to_read_from)
++	if (!istate)
+ 		return NULL;
+ 
+-	buf = read_blob_data_from_index(to_read_from, path, NULL);
++	buf = read_blob_data_from_index(istate, path, NULL);
+ 	if (!buf)
+ 		return NULL;
+ 
+diff --git a/attr.h b/attr.h
+index 3daca3c0cb..01dab4a126 100644
+--- a/attr.h
++++ b/attr.h
+@@ -77,8 +77,7 @@ enum git_attr_direction {
+ 	GIT_ATTR_CHECKOUT,
+ 	GIT_ATTR_INDEX
+ };
+-void git_attr_set_direction(enum git_attr_direction new_direction,
+-			    const struct index_state *istate);
++void git_attr_set_direction(enum git_attr_direction new_direction);
+ 
+ void attr_start(void);
+ 
+diff --git a/builtin/check-attr.c b/builtin/check-attr.c
+index f7b59993d3..c05573ff9c 100644
+--- a/builtin/check-attr.c
++++ b/builtin/check-attr.c
+@@ -120,7 +120,7 @@ int cmd_check_attr(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	if (cached_attrs)
+-		git_attr_set_direction(GIT_ATTR_INDEX, NULL);
++		git_attr_set_direction(GIT_ATTR_INDEX);
+ 
+ 	doubledash = -1;
+ 	for (i = 0; doubledash < 0 && i < argc; i++) {
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 3ace82ca27..8cb407173e 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -361,7 +361,7 @@ static int check_updates(struct unpack_trees_options *o)
+ 	progress = get_progress(o);
+ 
+ 	if (o->update)
+-		git_attr_set_direction(GIT_ATTR_CHECKOUT, index);
++		git_attr_set_direction(GIT_ATTR_CHECKOUT);
+ 
+ 	if (should_update_submodules() && o->update && !o->dry_run)
+ 		load_gitmodules_file(index, NULL);
+@@ -421,7 +421,7 @@ static int check_updates(struct unpack_trees_options *o)
+ 	stop_progress(&progress);
+ 	errs |= finish_delayed_checkout(&state);
+ 	if (o->update)
+-		git_attr_set_direction(GIT_ATTR_CHECKIN, NULL);
++		git_attr_set_direction(GIT_ATTR_CHECKIN);
+ 	return errs != 0;
+ }
+ 
 -- 
 2.18.0.rc0.333.g22e6ee6cdf
 
