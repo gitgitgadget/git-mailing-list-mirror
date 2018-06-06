@@ -2,120 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 600FC1F403
-	for <e@80x24.org>; Wed,  6 Jun 2018 19:32:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D4E771F403
+	for <e@80x24.org>; Wed,  6 Jun 2018 19:32:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752036AbeFFTc2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Jun 2018 15:32:28 -0400
-Received: from mail-oi0-f53.google.com ([209.85.218.53]:33130 "EHLO
-        mail-oi0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751980AbeFFTc1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jun 2018 15:32:27 -0400
-Received: by mail-oi0-f53.google.com with SMTP id c6-v6so5241456oiy.0
-        for <git@vger.kernel.org>; Wed, 06 Jun 2018 12:32:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=krWjIq5zoKHONiPQl5Yw46MsPGhdGvoa3BWSNUJYybM=;
-        b=fq3dLmXoPoJE5PebgN115/jk7XECcxpFvmttYThztxFSX9qgarvhtb7tJI28ovR5wq
-         8vP6rsJDUAcNZuxuaGGz9aJaDNaZCqbHA97aCf9/TrSW0LSOrxBx1N4RRBcEp8ydEL8j
-         FNlArz5ABDBZnKS+1F3LwYYdeLqDZCKHwwYKTaA7MF7zXxYFuUVauNYyYMrNSdV3unEa
-         tXOuKYLF9fZ2C+VeSfvUrKq62jzfNCloYsFkKTxt/mcbvwGPM08TdQpai5i/qGHf9ygC
-         rnzzDQ+egTO8Rai1Z4XyuGu1VxQOPt33v3nf1tXlOFcFyELa85rg5zqdv1jfzlpdG9kr
-         EDrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=krWjIq5zoKHONiPQl5Yw46MsPGhdGvoa3BWSNUJYybM=;
-        b=SfnlwhmypygLPofXLsnckpX5q6Xlt1dewpKNj7aMHj/n29zkLLKPaSq7lT1Y9ZgVdF
-         dpjj/rkkgCIkMu0VtBeHVkHR3V7eugYbneZKqFCuPiJrR23pSnI4zcrjXJ8+W9e7QF5a
-         omccNpXsWL3rqng8BEtRQYr4xNGan+uBAtqk9APJic3vRFATX3wnEv5ttgFsyQGJJz2K
-         gE0q5g60o5dtvTksFWQrC9mZ7itgw98DgCY6tQeo2XAHwXeo6PeRE1BO3i7mZur0gC9r
-         C9bPx20ga/bsR3Vze3VnQPzap/0eukyWF39sG17j+H7gYUlZWpX80kGKNGcFHANW6n+r
-         vLsA==
-X-Gm-Message-State: APt69E3dBJCFmcYwvCHadipLV22mD79aP1frJKls7YG/0eB3wTVo5zDz
-        YJ9PK6BBgf8/5dYk3oMNKBrZWU+u8Ig3icgW1Oc=
-X-Google-Smtp-Source: ADUXVKIbTaLrBOlN8V6SeddhjmU94xv3kLmknYGD0iINtJYQkQCk2qIHwJM2MvjOljgE+d3XMvr5eUIP9msZa/NbchA=
-X-Received: by 2002:aca:f02:: with SMTP id 2-v6mr2566512oip.216.1528313546927;
- Wed, 06 Jun 2018 12:32:26 -0700 (PDT)
+        id S1752112AbeFFTcj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Jun 2018 15:32:39 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:51625 "EHLO
+        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752000AbeFFTci (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 6 Jun 2018 15:32:38 -0400
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+        by mailout.nyi.internal (Postfix) with ESMTP id 3006121D02
+        for <git@vger.kernel.org>; Wed,  6 Jun 2018 15:32:38 -0400 (EDT)
+Received: from web6 ([10.202.2.216])
+  by compute2.internal (MEProxy); Wed, 06 Jun 2018 15:32:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+        content-transfer-encoding:content-type:date:from:message-id
+        :mime-version:subject:to:x-me-sender:x-me-sender:x-sasl-enc; s=
+        fm3; bh=wLKoyYpT9S8GOyzg89LnyPxHtaCNPDzoqytPM8DOya0=; b=sBPdSwzE
+        0zTmh5GSHOajAybmNVJuIIP+wyydlB85mnsOy7Ri18Kn1mvU3vhLDgeqbxb32Jau
+        iKZYRlSygE3xrTuYAfGORJGGJ7Yyv6bhxhgSki/v0Z3P8NUPSfDhmUOWeMSFzhpU
+        arrub+SnLOU+ADOKwV4jwetBxoMS2AN3LzpAKJWJ3V4bURYwU2R4+4nfN7z2gTUf
+        Pgxwjuw4bwU2TIL4btP/ZRZlE+O7E2KGQVZrd5izXY5PXYqSHRzWPvlgoMnyJ0DC
+        fAUgs8YE3epsEhfQNEN+0cTK/8hFSeM0E/EpHrw3gTbEUZcBjFItItCvS56y0esV
+        huvLBj6kMc2dTA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=content-transfer-encoding:content-type
+        :date:from:message-id:mime-version:subject:to:x-me-sender
+        :x-me-sender:x-sasl-enc; s=fm2; bh=wLKoyYpT9S8GOyzg89LnyPxHtaCNP
+        DzoqytPM8DOya0=; b=KmqRnCfhljGGWdu6jMXVtNQIgW+gnZ+Wf7NXZqbVcPvR0
+        gHsLnwCLC4bg8U/rSAiciI9G15C077/P/IMdBM97wyXp2WW0XT5U/leOkqVghJpS
+        nQXs0ZNLNKSnbO97wPUZzK/iTb7D6z7iyb66iEz8wWak8SO4DyRbC/GHwkB88g39
+        18NTytXkTOdCNE/ae+SHJYNltMulRwmZmPEwmsaw98ozZ9Jee/UT2mMwPyy7zJaq
+        EMzSTT6pajrawplpWiLgPwZpymEdt4IvL/tgy790GnBxoODDAVhiBWEPRnDVmCuR
+        mR1KE8LpWPgHVx4D3ZVjnBONezFvjANdQbt6AAZMg==
+X-ME-Proxy: <xmx:1jYYW3HP2KWQi4SULpa-w5vjANSGrJ4SedNTQZ4jbP08X46HPxrSZA>
+X-ME-Proxy: <xmx:1jYYWyt09PiH943WXxQLkf3L0QGFM4XsPXLknDP1gr2WhTcWro3VJg>
+X-ME-Proxy: <xmx:1jYYWxMkKFW45uk_oCWVeHRl6zM72ZIfbnEi_kpndehct2iHKhpuUA>
+X-ME-Proxy: <xmx:1jYYW6Tu5QXjYtch571WCVgZqP3STJHxXCPr9MfZy1UJls4giU4AlQ>
+X-ME-Proxy: <xmx:1jYYWxAJIGoJ1JpxRBzw-DEyj0vUrqsMq0t4DAI7TdhnKlQ5txqXaQ>
+X-ME-Proxy: <xmx:1jYYW1m4KTVDwF0oJy5uWAJafVq2spLGqxkPfsAjdWAxaGdcpVrhuQ>
+X-ME-Sender: <xms:1jYYW_2J3aqAzqMnB1B3-_EVd_vp8zothLcuad1LMUrWGKAxRVsRHA>
+Received: by mailuser.nyi.internal (Postfix, from userid 99)
+        id 0863F42A1; Wed,  6 Jun 2018 15:32:38 -0400 (EDT)
+Message-Id: <1528313557.2662346.1398855328.3E0F8023@webmail.messagingengine.com>
+From:   Thomas Fischer <thomasfischer@fastmail.com>
+To:     git@vger.kernel.org
 MIME-Version: 1.0
-Received: by 2002:a4a:2082:0:0:0:0:0 with HTTP; Wed, 6 Jun 2018 12:31:56 -0700 (PDT)
-In-Reply-To: <20180530004810.30076-29-sbeller@google.com>
-References: <20180530004810.30076-1-sbeller@google.com> <20180530004810.30076-29-sbeller@google.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 6 Jun 2018 21:31:56 +0200
-Message-ID: <CACsJy8BQGqNDkoL0ykNdbgAx75MjPzW3Ki5+rbHxxJ8TNWDZcw@mail.gmail.com>
-Subject: Re: [PATCH 28/35] commit.c: migrate the commit buffer to the parsed
- object store
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+X-Mailer: MessagingEngine.com Webmail Interface - ajax-fb4a77ea
+Subject: git rm bug
+Date:   Wed, 06 Jun 2018 14:32:37 -0500
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 30, 2018 at 2:48 AM, Stefan Beller <sbeller@google.com> wrote:
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  commit.c | 29 +++++++++++++++++++++++------
->  commit.h |  2 ++
->  object.c |  5 +++++
->  object.h |  2 ++
->  4 files changed, 32 insertions(+), 6 deletions(-)
->
-> diff --git a/commit.c b/commit.c
-> index fd31c453fdc..45dbf6f1453 100644
-> --- a/commit.c
-> +++ b/commit.c
-> @@ -248,18 +248,32 @@ struct commit_buffer {
->         unsigned long size;
->  };
->  define_commit_slab(buffer_slab, struct commit_buffer);
+OVERVIEW
 
-struct buffer_slab is defined locally here...
+"git rm" will remove more files than specified. This is either a bug or undocumented behavior (not in the man pages).
 
-> diff --git a/commit.h b/commit.h
-> index 536fa03955f..df199498bfb 100644
-> --- a/commit.h
-> +++ b/commit.h
-> @@ -81,6 +81,8 @@ static inline int parse_commit_the_repository(struct commit *item)
->  }
->  void parse_commit_or_die(struct commit *item);
->
-> +struct buffer_slab *allocate_commit_buffer_slab(void);
+SETUP
 
-So you would need a forward declaration of struct buffer_slab in
-commit.h before it's referenced here?
+1. In a git repository, create an empty directory OR a chain of empty directories
 
-> diff --git a/object.h b/object.h
-> index 6adc8323ca4..45e22282101 100644
-> --- a/object.h
-> +++ b/object.h
-> @@ -22,6 +22,8 @@ struct parsed_object_pool {
->         char *alternate_shallow_file;
->
->         int commit_graft_prepared;
-> +
-> +       struct buffer_slab *buffer_slab;
+$ mkdir -p path/to/some/
 
-and maybe here as well
+2. Create a file in the deepest directory and add it to tracking
 
->  };
->
->  struct parsed_object_pool *parsed_object_pool_new(void);
-> --
-> 2.17.0.582.gccdcbd54c44.dirty
->
+$ touch path/to/some/file
+$ git add path/to/some/file
+$ git commit -m 'add path/to/some/file'
 
+THE BUG
 
+Run 'git rm' on the tracked file. 
 
--- 
-Duy
+EXPECTED BEHAVIOR
+
+$ git rm path/to/some/file
+rm 'path/to/some/file'
+$ ls path
+to/
+$ ls path/to
+some/
+
+Note that path/, path/to/, and path/to/some/ still exist.
+
+ACTUAL BEHAVIOR
+
+$ git rm path/to/some/file
+rm 'path/to/some/file'
+$ ls path
+ls: cannot access 'path': No such file or directory
+
+The entire chain of empty directories is removed, despite the fact the git outputs only "rm 'path/to/some/file'".
+
+This ONLY occurs when all the directories in the chain are empty after the tracked file has been removed.
+
+This behavior is NOT documented in the man pages.
+
+I propose that 'rmdir' statements are added to 'git rm' output, or that the man pages be updated to reflect this behavior.
+
+Best,
+Thomas Fischer
