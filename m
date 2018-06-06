@@ -2,108 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E1111F403
-	for <e@80x24.org>; Wed,  6 Jun 2018 19:35:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E6261F403
+	for <e@80x24.org>; Wed,  6 Jun 2018 19:39:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752393AbeFFTfp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Jun 2018 15:35:45 -0400
-Received: from cpanel4.indieserve.net ([199.212.143.9]:35546 "EHLO
-        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752228AbeFFTfo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jun 2018 15:35:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
-        Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=r7cTv2eA5yGcm8pypiQ5DC159+bmRYTNqa7VpGsScFE=; b=uwVioPN/vNm1W/6TPlEvDXoyW
-        mA0lGcBZUCUXXkyN7OEsdEoix1ihygd5p9ptpl1IlwoLHslGeLnJT3eEpe+44Mclku1bWT0ya8fln
-        N7pFVU5Nenbjp4BQlTGojLThLh2nf7OZu+77akOHlSzoRAntTXQ/tvxTj2B304aZ2K+KkhGhQ12Bo
-        klZjtmZAbwsqzQVaFDHjfI2MTx7q4EIWzFnj3GJJAneOvliax/9h1yRJOstwlCdnqG5Tgyp2/WgfF
-        NpxUOM0tUcTaahFaSpOkOtBYd7EeJR457jICT47ORjv8QDxneM2UK9730dKSw7QCmFPoi/amrh+sh
-        YLVJIPJkA==;
-Received: from cpef81d0f814063-cmf81d0f814060.cpe.net.cable.rogers.com ([174.114.57.56]:54386 helo=localhost.localdomain)
-        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1fQeDe-009iJY-4R; Wed, 06 Jun 2018 15:35:43 -0400
-Date:   Wed, 6 Jun 2018 15:33:27 -0400 (EDT)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Thomas Fischer <thomasfischer@fastmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: git rm bug
-In-Reply-To: <1528313557.2662346.1398855328.3E0F8023@webmail.messagingengine.com>
-Message-ID: <alpine.LFD.2.21.1806061532420.9259@localhost.localdomain>
-References: <1528313557.2662346.1398855328.3E0F8023@webmail.messagingengine.com>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1752934AbeFFTjA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Jun 2018 15:39:00 -0400
+Received: from mail-oi0-f49.google.com ([209.85.218.49]:39527 "EHLO
+        mail-oi0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752263AbeFFTi5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jun 2018 15:38:57 -0400
+Received: by mail-oi0-f49.google.com with SMTP id t22-v6so6375008oih.6
+        for <git@vger.kernel.org>; Wed, 06 Jun 2018 12:38:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=fktilsZrV7aslno15qgBKIv9rCFXs8TgMbXRIjamcmU=;
+        b=Ad2pa8IqPXOusTQK1wGPHJuxWVEjCWTLZBx64RdKxaa6gutkl5SvIin4wW3+UM8wk7
+         aoal1EJdy12oIhSBf1dwc4r4lTHkm/2hCkx/rxvRAOF/t0JW5jJlriQJjkOdBctqd/jD
+         nbJ/3IuevcK6LZT5ocFLwIn/nbVL2VjjE1RlXz+n4QBof8QuQP3OoNIMq92XNNlOpKvn
+         nILe4QfQE+5bpF9l/VAGl5CJno7B1YEjWn6dYt0eWowyv1a6JSTcs6mFNnKHGqSicx1d
+         K8lQY1RIq211MzVavg/r1iNeu+OhV5FL+uJG8IIF4B+SFeSHKXA3UTTsxqbDr8XiBjif
+         YPPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=fktilsZrV7aslno15qgBKIv9rCFXs8TgMbXRIjamcmU=;
+        b=N+IJ3nTHoERbk7lPH4md+27tqYWH8zR3U7R5txJTqR+yfyMt3lS8iDMkcozcZ1ph4h
+         6I/UfRl7eVAhnziBIqXrfbglNlNXB0SJE00IR8PRJ1b9OpFwZpTtwBC2CYDJFWIwKD/9
+         lXc/C1G7xjdr7Si89s9bU+/nQDpDba2hg4CLOmNclbrP7fq9dqCxFO5Q+xnIdIHfxdFg
+         QwghLtLQ44Ll8TMNpddFsvn5WGKdI0sYifT7oMEK21LvpEDYbAnNZpb2aXyDlJaApKVu
+         r5quG//GfYOpIirW83ppGG4sIJERud1kJXbu8phcBomu8uTp4RYW9mMdnXsiid6Fx2JA
+         QwEg==
+X-Gm-Message-State: APt69E1QUUJSFBBkcSP6di2bBjKf4XF7+wRk8+IrVYQj8A3JVCjNsAIY
+        N9kWFGzq0C32Oy5hQKLOEDjxqJsriwGmucEtXDM=
+X-Google-Smtp-Source: ADUXVKI4yJ9s1eRAjJdS2zTxTW8A+1S3Z0kWy4CWGPaCZiXgoWEjLYCQIJZk9fng5Oth/+BG3Jgu0q2rWuCGCXkmKOE=
+X-Received: by 2002:aca:f594:: with SMTP id t142-v6mr2609292oih.56.1528313936619;
+ Wed, 06 Jun 2018 12:38:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-OutGoing-Spam-Status: No, score=-1.0
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Received: by 2002:a4a:2082:0:0:0:0:0 with HTTP; Wed, 6 Jun 2018 12:38:26 -0700 (PDT)
+In-Reply-To: <20180530004810.30076-4-sbeller@google.com>
+References: <20180530004810.30076-1-sbeller@google.com> <20180530004810.30076-4-sbeller@google.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 6 Jun 2018 21:38:26 +0200
+Message-ID: <CACsJy8C=YNRmawuR3SZDMpmkKHMp=kPJsDjffCrcONe+CDpJ_g@mail.gmail.com>
+Subject: Re: [PATCH 03/35] object: add repository argument to lookup_unknown_object
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 6 Jun 2018, Thomas Fischer wrote:
+On Wed, May 30, 2018 at 2:47 AM, Stefan Beller <sbeller@google.com> wrote:
+> diff --git a/object.c b/object.c
+> index 4de4fa58d59..def3c71cac2 100644
+> --- a/object.c
+> +++ b/object.c
+> @@ -177,7 +177,7 @@ void *object_as_type(struct object *obj, enum object_type type, int quiet)
+>         }
+>  }
+>
+> -struct object *lookup_unknown_object(const unsigned char *sha1)
+> +struct object *lookup_unknown_object_the_repository(const unsigned char *sha1)
 
-> OVERVIEW
->
-> "git rm" will remove more files than specified. This is either a bug or undocumented behavior (not in the man pages).
->
-> SETUP
->
-> 1. In a git repository, create an empty directory OR a chain of empty directories
->
-> $ mkdir -p path/to/some/
->
-> 2. Create a file in the deepest directory and add it to tracking
->
-> $ touch path/to/some/file
-> $ git add path/to/some/file
-> $ git commit -m 'add path/to/some/file'
->
-> THE BUG
->
-> Run 'git rm' on the tracked file.
->
-> EXPECTED BEHAVIOR
->
-> $ git rm path/to/some/file
-> rm 'path/to/some/file'
-> $ ls path
-> to/
-> $ ls path/to
-> some/
->
-> Note that path/, path/to/, and path/to/some/ still exist.
->
-> ACTUAL BEHAVIOR
->
-> $ git rm path/to/some/file
-> rm 'path/to/some/file'
-> $ ls path
-> ls: cannot access 'path': No such file or directory
->
-> The entire chain of empty directories is removed, despite the fact
-> the git outputs only "rm 'path/to/some/file'".
+I'm looking at your branch and this function (with the _the_repository
+suffix) is still there. Did you forget to send a patch to convert this
+function?
 
-  git cannot track empty directories. as that was the *only* content
-in that whole hierarchy, the entire hierarchy had to be deleted.
-
-rday
+>  {
+>         struct object *obj = lookup_object(the_repository, sha1);
+>         if (!obj)
+-- 
+Duy
