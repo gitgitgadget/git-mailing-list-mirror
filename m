@@ -2,66 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ABAEF1F403
-	for <e@80x24.org>; Wed,  6 Jun 2018 13:35:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC4E31F403
+	for <e@80x24.org>; Wed,  6 Jun 2018 15:49:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752395AbeFFNfF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Jun 2018 09:35:05 -0400
-Received: from avasout01.plus.net ([84.93.230.227]:52629 "EHLO
-        avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752137AbeFFNfE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jun 2018 09:35:04 -0400
-Received: from [10.0.2.15] ([80.189.70.162])
-        by smtp with ESMTPA
-        id QYabfl62BxrERQYacfxvwM; Wed, 06 Jun 2018 14:35:02 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=Es38UxUA c=1 sm=1 tr=0
- a=zzlqjQC3YyNvDZl/Gy+4mg==:117 a=zzlqjQC3YyNvDZl/Gy+4mg==:17
- a=IkcTkHD0fZMA:10 a=Ab81Q3oNE8BwJf4blnsA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v3 07/20] attr: remove an implicit dependency on the_index
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     bmwill@google.com, git@vger.kernel.org, newren@gmail.com
-References: <20180606050207.13556-1-pclouds@gmail.com>
- <20180606073933.14755-1-pclouds@gmail.com>
- <20180606073933.14755-8-pclouds@gmail.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <62c2ef14-03c4-4602-0e50-242c9edd513f@ramsayjones.plus.com>
-Date:   Wed, 6 Jun 2018 14:35:01 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+        id S1752139AbeFFPt3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Jun 2018 11:49:29 -0400
+Received: from mout.web.de ([212.227.15.14]:53789 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752042AbeFFPt2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jun 2018 11:49:28 -0400
+Received: from localhost ([213.64.64.87]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0Ldn19-1g9aDr3XTn-00j0FT; Wed, 06
+ Jun 2018 17:49:20 +0200
+Date:   Wed, 6 Jun 2018 17:53:09 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Anthony Sottile <asottile@umich.edu>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] config.c: fix regression for core.safecrlf false
+Message-ID: <20180606155309.GA5624@atze2.lan>
+References: <20180604201742.18992-1-asottile@umich.edu>
 MIME-Version: 1.0
-In-Reply-To: <20180606073933.14755-8-pclouds@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfHsmIVL30y9ApJRyljAS5ZhZqK9y7kONuYggbtkswQcGIL3JshjWIL2tSUbOxFOIYtPvaWbVU2fqLQbRCxylRV/MsV90kX7K1wSKq/0ex/Uw2Pu6CMWP
- XVkyp0T4ag/lUVxzIwsVtBQD+OgHChrEr+08zhPC1FmHCxhvIWwhQndsC6RnOyvqvmbEpI0wXGbDEw==
+In-Reply-To: <20180604201742.18992-1-asottile@umich.edu>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K1:saw9juWAvg339lzZaQUAisYm3NR5cjAvciyANfMheCgPawK3EtQ
+ McXhWutGc5cLbIBNVz1pJgb96pftYXp3tBVy9oRzBjhEpDG+UxGeh+R8oJsCZH1V7xtfSmw
+ 9KSLq5dUXQOUzEZkKbfmDsV6otE3/2DLgNWqyys1AZ2XsTIljOkYDFvaCDLbjlNwTP7LRsz
+ ZoCC1W66d9Q9FBanzzsMA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:cJRQ8tNgXks=:Mu5pkVtCZqFSEy2keurlPO
+ 1sgtmEePKi/FoekUxzDEc7oPFoy8hJ3VlmfcFY07qvwO1/R9ojPB+IxqhwZRPXxllpaYcxSNn
+ X40KdgkGKOOAitRqo7Id0cNr2w3xL3/Kcmy5/rX6UMg3YnAYWX6RbSu/vgi5zoaNfOirmzSy4
+ RG3XvprpPuH0PmdCYCca8pFZL1b2jDqvX5zr3MapdOy/gYkpLPOnFxRPrjZZFR3YDsw4EGUL2
+ +nj+f2j+SjX3gLfwaUCS/XmQVrdNPR2LbLiZR2VfGnANY9A05Tb8c1h5E0gFXQ5IkIgluRnID
+ wEgIf+bLTIz2Q+In7jRH643ryMIGkCoamSu4afOknpsQkfan6+8v9c5EvOrbLzFgx4vcGvOax
+ uPJqssZw2oOQswGtXh3ekopHfJNRAt/DEk9jqNeP4/tDg4Z/MwIij9AWJYW4kz9EBi3zp3vs1
+ lXDW5uwa9eurUtJL5rlPokoTvB5DAfh2P2FwA67XHRQXqoFBsDWKfg7k/IDPCRmLncSamD0FI
+ 2cV2nmhgfqJ/xMz+KWXNaN2BKbdrcPE4zSbNNo9VYOJZwSPm7c5zOsaV5FXELizNJBN5UIuUm
+ mKU7z3CyD9wGvAKWynMose0BS77oxgbzso63n/+aoz0XOn8QsE6fUrjxyyyTdm8/ujuh45PTw
+ o/GXJGcVRqK5VkRmvqIsSfiYvDmgCcDwnRWtEWT3sbULL67P2+LO3xEdIlMup8sXcPScKTrhX
+ zWxZ/1bJFjqY6SobUuajVczsQ+MUnJHSSYMdN30p1CHFbpZ5f5QX/mc7I4U=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 06/06/18 08:39, Nguyễn Thái Ngọc Duy wrote:
-> Make the attr API take an index_state instead of assuming the_index in
-> attr code. All call sites are converted blindly to keep the patch
-> simple and retain current behavior. Individual call sites may receive
-> further updates to use the right index instead of the_index.
+On Mon, Jun 04, 2018 at 01:17:42PM -0700, Anthony Sottile wrote:
+> A regression introduced in 8462ff43e42ab67cecd16fdfb59451a53cc8a945 caused
+> autocrlf rewrites to produce a warning message despite setting safecrlf=false.
 > 
-> There is one ugly temporary workaround added in attr.c that needs some
-> more explanation.
+> Signed-off-by: Anthony Sottile <asottile@umich.edu>
+> ---
+>  config.c        |  2 +-
+>  t/t0020-crlf.sh | 10 ++++++++++
+>  2 files changed, 11 insertions(+), 1 deletion(-)
 > 
-> Commit c24f3abace (apply: file commited * with CRLF should roundtrip
+> diff --git a/config.c b/config.c
+> index fbbf0f8..de24e90 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -1233,7 +1233,7 @@ static int git_default_core_config(const char *var, const char *value)
+>  		}
+>  		eol_rndtrp_die = git_config_bool(var, value);
+>  		global_conv_flags_eol = eol_rndtrp_die ?
+> -			CONV_EOL_RNDTRP_DIE : CONV_EOL_RNDTRP_WARN;
+> +			CONV_EOL_RNDTRP_DIE : 0;
+>  		return 0;
+>  	}
+>  
+> diff --git a/t/t0020-crlf.sh b/t/t0020-crlf.sh
+> index 71350e0..5f05698 100755
+> --- a/t/t0020-crlf.sh
+> +++ b/t/t0020-crlf.sh
+> @@ -98,6 +98,16 @@ test_expect_success 'safecrlf: git diff demotes safecrlf=true to warn' '
+>  '
+>  
+>  
+> +test_expect_success 'safecrlf: no warning with safecrlf=false' '
+> +	git config core.autocrlf input &&
+> +	git config core.safecrlf false &&
+> +
+> +	for w in I am all CRLF; do echo $w; done | append_cr >allcrlf &&
+> +	git add allcrlf 2>err &&
+> +	test_must_be_empty err
+> +'
+> +
+> +
+>  test_expect_success 'switch off autocrlf, safecrlf, reset HEAD' '
+>  	git config core.autocrlf false &&
+>  	git config core.safecrlf false &&
+> -- 
+> 2.7.4
+> 
 
-s/commited * with/commited with/
+Looks good to me, thanks for cleaning my mess.
 
-ATB,
-Ramsay Jones
-
+Acked-By: Torsten B�gershausen <tboegi@web.de>
