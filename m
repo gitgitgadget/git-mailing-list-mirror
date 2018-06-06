@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BED91F403
-	for <e@80x24.org>; Wed,  6 Jun 2018 05:02:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 360341F403
+	for <e@80x24.org>; Wed,  6 Jun 2018 05:02:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932089AbeFFFC1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Jun 2018 01:02:27 -0400
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:33041 "EHLO
-        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752073AbeFFFCZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jun 2018 01:02:25 -0400
-Received: by mail-lf0-f67.google.com with SMTP id y20-v6so7062178lfy.0
-        for <git@vger.kernel.org>; Tue, 05 Jun 2018 22:02:25 -0700 (PDT)
+        id S932104AbeFFFCc (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Jun 2018 01:02:32 -0400
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:46455 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932093AbeFFFC3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jun 2018 01:02:29 -0400
+Received: by mail-lf0-f66.google.com with SMTP id j13-v6so7005325lfb.13
+        for <git@vger.kernel.org>; Tue, 05 Jun 2018 22:02:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=L332VTrnguNRWJBGhfGFO92Iw8pRUTSzYMMIxIRTGM0=;
-        b=l6Afp+IX2g4tzRsn8y9PQHELUpQ5qITMb7XhZUv0jVKhEZZm3XMwk0V62yHMjlMEd5
-         cJ9Vec0vLUgBzRqpHX+GSdB48IGmDpCejMx+goKu7NGZQmDfU7rJvO0rM7XU4nhtPheE
-         zwBe40SdIchznOU2P5SNiJOYK8VKwA9AUpKQmlZUaENPFiBshNM8c9mlr2xYYVOBHEPn
-         APBOYRGLuqw8acytT6VNhK0V4oPk4lOyNAWTx1QUAdjXlB57j1gxl8OMsXGPvpnQ4mYX
-         PoQF2DnftzIvZrxA/G+bw1S8JjMX0QFMafSDV2mUvdVc7dbLfJwxWNIcYnjDPComlnNv
-         iS/g==
+        bh=jKv9fCub1rNsUQeVIXNPO/AcEeLjGWLPRoTNeGIzWiU=;
+        b=BayEg5mUd71WAjixmugbfOo90TY0kSNBrpBU6MKUb8KLO6nvJjzLMPPsKSt82QP7s4
+         mrWJP5kThk51K+XHMhoZQtpGKPM6h2O1hd9lxjJpTZiCBfzOM/Vl/rhQJkpCw+nyJQMF
+         6U2TbgY+c4UrUxRAWonQkLK4JHUxpHQcY+PsWDEO48/roLImCV7zu02B+6cxM+SxB7a7
+         93nt5pVOLaLi3hGlg1wrSIcqhX1FrJ5H+DHZMOGp0PH2jum0HK3bepmOhFKU19HJ04YX
+         qX2yDQKwSIB5C0rih9+4iMWHC+Rquti9F9ClmNU+W9RSlPKa6S5c0TIoo5OHTWQ7fYvg
+         SBUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=L332VTrnguNRWJBGhfGFO92Iw8pRUTSzYMMIxIRTGM0=;
-        b=UiJsTUB2RaQ0fMcu97XRjSlBpNJhqoshXrMx7m1MnXMrzLsNuhSNZM+gJldY24JIBf
-         lBYH+MAb7RDiYRPU0/wDnKQF2gf4Vc2hKESIEz8M9QHTcAIF5U/YagJDmfBO+QdZLsM/
-         WLoy5PatSID7hGVoPwtO3DXDEv1dUetj9WPZSxWiMfjcUzbOuVN6b44JsexUQ8QoQy39
-         Okpunbb6o4a3BXkW4nlr3PN3KA2uiO67IP3yHpfzgdGatTIhNPH0823igYpHB0Wk1xTp
-         HM7WULzcmjkjH6P5CyKFkNKI6UiVp+1DqNWKntXGzmYlAWKWQsYAUMZuZPi6RIcaZpCZ
-         AzJw==
-X-Gm-Message-State: APt69E2cUIEhlzpVWIuFcUaqrHpKB3ViXwfaVyTXcQIcgl4/z6vM/kXt
-        IpuvAskfCA29mP7ooj0pbJY=
-X-Google-Smtp-Source: ADUXVKIBMev5+/dg1YCjjsm4wBv909uAl6io25NIE3bEOxWrlXMOMvIPjEY80y5/ONbqUjaYi0pJ9g==
-X-Received: by 2002:a19:1714:: with SMTP id n20-v6mr790655lfi.54.1528261344467;
-        Tue, 05 Jun 2018 22:02:24 -0700 (PDT)
+        bh=jKv9fCub1rNsUQeVIXNPO/AcEeLjGWLPRoTNeGIzWiU=;
+        b=euplTBurOasmywH+CeFShmaE4QaNv2LzzEAuLZRgrGhsY+2TrITr0GgJb4toKDCvSW
+         Dh1z0eMjARnbylgIxzzNXu9E9R38EhmmmVC4uEBnh/w/KWANNqDJi15ZOEC2Uaer9CA3
+         AJ+7YvuJt8sepft5cFPNHHIV4bONz8T6RppYM/3b8VS7WPOt6+dOPgL1KzblEJn1saKa
+         E5qxvVyPM5yU/VwRN3zVAwybV74ZMTvsp7KThZPJhRvClQ6p2LEudHjse5ijebOWk6yU
+         J3UX9r46I16UlG7Mn74l/h7L6SS0Py/ftLP6o1LXZXu48e8PLS+eqvVHQ54tv6Yna651
+         IPJw==
+X-Gm-Message-State: APt69E2q/d9INiURuhiprsImfhoto6WfWorugRc7EHqLbgaJM2rG+KbH
+        RoWWR/Lfjx4p6HoVYQfsIxs=
+X-Google-Smtp-Source: ADUXVKJhbA8l2KAnNeD3ajP8Emunu3or6TIp9PQzonfpDOZGqOcFAZCQuJzmkfWDgsqaNDQdYvsc8g==
+X-Received: by 2002:a19:428c:: with SMTP id p134-v6mr758948lfa.4.1528261347985;
+        Tue, 05 Jun 2018 22:02:27 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id u3-v6sm4125798lji.4.2018.06.05.22.02.23
+        by smtp.gmail.com with ESMTPSA id u3-v6sm4125798lji.4.2018.06.05.22.02.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 05 Jun 2018 22:02:23 -0700 (PDT)
+        Tue, 05 Jun 2018 22:02:27 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     bmwill@google.com, git@vger.kernel.org, newren@gmail.com,
         Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v2 1/5] unpack-trees: remove 'extern' on function declaration
-Date:   Wed,  6 Jun 2018 07:02:03 +0200
-Message-Id: <20180606050207.13556-2-pclouds@gmail.com>
+Subject: [PATCH v2 4/5] unpack-tress: convert clear_ce_flags* to avoid the_index
+Date:   Wed,  6 Jun 2018 07:02:06 +0200
+Message-Id: <20180606050207.13556-5-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc0.333.g22e6ee6cdf
 In-Reply-To: <20180606050207.13556-1-pclouds@gmail.com>
 References: <20180605154334.22613-1-pclouds@gmail.com>
@@ -69,26 +69,136 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Prior to fba92be8f7, this code implicitly (and incorrectly) assumes
+the_index when running the exclude machinery. fba92be8f7 helps show
+this problem clearer because unpack-trees operation is supposed to
+work on whatever index the caller specifies... not specifically
+the_index.
+
+Update the code to use "istate" argument that's originally from
+mark_new_skip_worktree(). From the call sites, both in unpack_trees(),
+you can see that this function works on two separate indexes:
+o->src_index and o->result. The second mark_new_skip_worktree() so far
+has incorecctly applied exclude rules on o->src_index instead of
+o->result. It's unclear what is the consequences of this, but it's
+definitely wrong.
+
+[1] fba92be8f7 (dir: convert is_excluded_from_list to take an index -
+    2017-05-05)
+
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- unpack-trees.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ unpack-trees.c | 31 ++++++++++++++++++-------------
+ 1 file changed, 18 insertions(+), 13 deletions(-)
 
-diff --git a/unpack-trees.h b/unpack-trees.h
-index c2b434c606..534358fcc5 100644
---- a/unpack-trees.h
-+++ b/unpack-trees.h
-@@ -82,8 +82,8 @@ struct unpack_trees_options {
- 	struct exclude_list *el; /* for internal use */
- };
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 45fcda3169..5268de7af5 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1085,13 +1085,15 @@ static int unpack_callback(int n, unsigned long mask, unsigned long dirmask, str
+ 	return mask;
+ }
  
--extern int unpack_trees(unsigned n, struct tree_desc *t,
--		struct unpack_trees_options *options);
-+int unpack_trees(unsigned n, struct tree_desc *t,
-+		 struct unpack_trees_options *options);
+-static int clear_ce_flags_1(struct cache_entry **cache, int nr,
++static int clear_ce_flags_1(struct index_state *istate,
++			    struct cache_entry **cache, int nr,
+ 			    struct strbuf *prefix,
+ 			    int select_mask, int clear_mask,
+ 			    struct exclude_list *el, int defval);
  
- int verify_uptodate(const struct cache_entry *ce,
- 		    struct unpack_trees_options *o);
+ /* Whole directory matching */
+-static int clear_ce_flags_dir(struct cache_entry **cache, int nr,
++static int clear_ce_flags_dir(struct index_state *istate,
++			      struct cache_entry **cache, int nr,
+ 			      struct strbuf *prefix,
+ 			      char *basename,
+ 			      int select_mask, int clear_mask,
+@@ -1100,7 +1102,7 @@ static int clear_ce_flags_dir(struct cache_entry **cache, int nr,
+ 	struct cache_entry **cache_end;
+ 	int dtype = DT_DIR;
+ 	int ret = is_excluded_from_list(prefix->buf, prefix->len,
+-					basename, &dtype, el, &the_index);
++					basename, &dtype, el, istate);
+ 	int rc;
+ 
+ 	strbuf_addch(prefix, '/');
+@@ -1122,7 +1124,7 @@ static int clear_ce_flags_dir(struct cache_entry **cache, int nr,
+ 	 * calling clear_ce_flags_1(). That function will call
+ 	 * the expensive is_excluded_from_list() on every entry.
+ 	 */
+-	rc = clear_ce_flags_1(cache, cache_end - cache,
++	rc = clear_ce_flags_1(istate, cache, cache_end - cache,
+ 			      prefix,
+ 			      select_mask, clear_mask,
+ 			      el, ret);
+@@ -1145,7 +1147,8 @@ static int clear_ce_flags_dir(struct cache_entry **cache, int nr,
+  *   cache[0]->name[0..(prefix_len-1)]
+  * Top level path has prefix_len zero.
+  */
+-static int clear_ce_flags_1(struct cache_entry **cache, int nr,
++static int clear_ce_flags_1(struct index_state *istate,
++			    struct cache_entry **cache, int nr,
+ 			    struct strbuf *prefix,
+ 			    int select_mask, int clear_mask,
+ 			    struct exclude_list *el, int defval)
+@@ -1179,7 +1182,7 @@ static int clear_ce_flags_1(struct cache_entry **cache, int nr,
+ 			len = slash - name;
+ 			strbuf_add(prefix, name, len);
+ 
+-			processed = clear_ce_flags_dir(cache, cache_end - cache,
++			processed = clear_ce_flags_dir(istate, cache, cache_end - cache,
+ 						       prefix,
+ 						       prefix->buf + prefix->len - len,
+ 						       select_mask, clear_mask,
+@@ -1193,7 +1196,7 @@ static int clear_ce_flags_1(struct cache_entry **cache, int nr,
+ 			}
+ 
+ 			strbuf_addch(prefix, '/');
+-			cache += clear_ce_flags_1(cache, cache_end - cache,
++			cache += clear_ce_flags_1(istate, cache, cache_end - cache,
+ 						  prefix,
+ 						  select_mask, clear_mask, el, defval);
+ 			strbuf_setlen(prefix, prefix->len - len - 1);
+@@ -1203,7 +1206,7 @@ static int clear_ce_flags_1(struct cache_entry **cache, int nr,
+ 		/* Non-directory */
+ 		dtype = ce_to_dtype(ce);
+ 		ret = is_excluded_from_list(ce->name, ce_namelen(ce),
+-					    name, &dtype, el, &the_index);
++					    name, &dtype, el, istate);
+ 		if (ret < 0)
+ 			ret = defval;
+ 		if (ret > 0)
+@@ -1213,15 +1216,17 @@ static int clear_ce_flags_1(struct cache_entry **cache, int nr,
+ 	return nr - (cache_end - cache);
+ }
+ 
+-static int clear_ce_flags(struct cache_entry **cache, int nr,
+-			    int select_mask, int clear_mask,
+-			    struct exclude_list *el)
++static int clear_ce_flags(struct index_state *istate,
++			  int select_mask, int clear_mask,
++			  struct exclude_list *el)
+ {
+ 	static struct strbuf prefix = STRBUF_INIT;
+ 
+ 	strbuf_reset(&prefix);
+ 
+-	return clear_ce_flags_1(cache, nr,
++	return clear_ce_flags_1(istate,
++				istate->cache,
++				istate->cache_nr,
+ 				&prefix,
+ 				select_mask, clear_mask,
+ 				el, 0);
+@@ -1256,7 +1261,7 @@ static void mark_new_skip_worktree(struct exclude_list *el,
+ 	 * 2. Widen worktree according to sparse-checkout file.
+ 	 * Matched entries will have skip_wt_flag cleared (i.e. "in")
+ 	 */
+-	clear_ce_flags(istate->cache, istate->cache_nr, select_flag, skip_wt_flag, el);
++	clear_ce_flags(istate, select_flag, skip_wt_flag, el);
+ }
+ 
+ static int verify_absent(const struct cache_entry *,
 -- 
 2.18.0.rc0.333.g22e6ee6cdf
 
