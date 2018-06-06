@@ -8,63 +8,68 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3BE6D1F403
-	for <e@80x24.org>; Wed,  6 Jun 2018 12:21:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D86CA1F403
+	for <e@80x24.org>; Wed,  6 Jun 2018 12:26:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751878AbeFFMVU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Jun 2018 08:21:20 -0400
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:35255 "EHLO
-        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751864AbeFFMVT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jun 2018 08:21:19 -0400
-Received: by mail-wm0-f51.google.com with SMTP id j15-v6so11671753wme.0
-        for <git@vger.kernel.org>; Wed, 06 Jun 2018 05:21:18 -0700 (PDT)
+        id S1751730AbeFFM0h (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Jun 2018 08:26:37 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:36173 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750795AbeFFM0g (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jun 2018 08:26:36 -0400
+Received: by mail-wm0-f67.google.com with SMTP id v131-v6so11625681wma.1
+        for <git@vger.kernel.org>; Wed, 06 Jun 2018 05:26:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=nW5RJUDU251bYTNDVShUhv5Nuuhm1WvUDyM5TTsXGGc=;
-        b=Fz6w4in0D/nM15uK/+/wcdq4Z7XvR3xBfWOTjhPVT3Z5fM/va1c/CWePFcg/F6jkCY
-         QNVTPc/Fbg5VwgDynkOxypLV0mIoLMHCB1ncgQ0q4kPV2LJThdzkOzPJkRwjwfgJo+6I
-         SoeF1ZuoDtqDUls+05HM9LSKzC8Ktu5o2m68DBCJORsun1M8mb/cuoAcfMsqwlwadZfI
-         5c061C7I0+np4KyJuh9jGv+2dVa81prElxmUYP1EwgyoJT6qY+bf20RS/B3V43VE8mOq
-         CxRw3xW+CNCH+BL5W5XBXJMe6XZcynsIRtbpX7OPpmcZtniAm/AImOy5sWidH/tDNaOX
-         0e4A==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=JUDbkoval7jEWNCEDaUN/mAvPnbWAi+wSkRr9DgJKKw=;
+        b=GrTV+lWzE7cJWOmnAsetOkotQQxnYheMNthRHCmZFQC/YXfum87XgeQPuks00g+8V8
+         b2Dzt3TnrfaXx9yQ/WO7qKbWmFuR0ZAOoWBb0tvr343thUCJnNGALlJCd60qcu06YN20
+         zsA9CS1hO6e5of/KCqhtCrFnLm3fbGR5gSDuuW4Y+lgnffnOJ6Ph0HFAzjZvXP4I+jDa
+         4g49DHuf9pnq99TV9/Egb92lm1seWOpc2ZzDuztR4tFg+NsbG5OfeimSRIQAkG/DG/9W
+         owrD1LI9yKuDUq7brvcOBv6fE2j2ji5TQTHKFRQ0i9mJ2sNkW8BHCGQAwiIel2DNUkba
+         Vhxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=nW5RJUDU251bYTNDVShUhv5Nuuhm1WvUDyM5TTsXGGc=;
-        b=aUzha3SGycfcVuuT6nR48YBpxoNomZ25mn8sAJRPDK90/AKTd045CmeARTz42aExan
-         R5Dhc83pjMkWlI0ixt2gSNbxUOnUKeTAvoPijxESj+qdcCZRytXFF/w9RxQQECbAouOc
-         q3rycG06cAYASxLeb6o/D7atPeyRONf9z4FEmqFN9sECRE1XwPeCX+SJtnsiVb3iDR+j
-         MXgssApXphWpV7M/SmTQLohDxMEmT/FzjCMrwDE4jv4du0a2DeLl6Yuvb1jQ0OtdRnrV
-         k7+jzz/CzKM9S4tURxjpKgP9ivkZ7fnXixkXNFW0+nCYUsKnKI08y0T0EBi0O7OVKEZY
-         8W+g==
-X-Gm-Message-State: APt69E0ccmckKowtgO4a9+nHMQtHffP/vjyE395A9fuH3JvOXiiU7+wd
-        R2bDCpk9BJFsq7hZXBtBu9s=
-X-Google-Smtp-Source: ADUXVKK6AmF9mWW9mJkB7h2H5PSFfpO25cJ4sNuHYCcSOJ0oVAkiytSXmDq8hGKpcYkTpqQZugnVcQ==
-X-Received: by 2002:a50:f043:: with SMTP id u3-v6mr3494314edl.91.1528287678339;
-        Wed, 06 Jun 2018 05:21:18 -0700 (PDT)
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=JUDbkoval7jEWNCEDaUN/mAvPnbWAi+wSkRr9DgJKKw=;
+        b=r6Yz/jt61e9H39Ihs9dobY2HYDclm0iwZr/v4WSqx3o4AYTrMNh6qMteXOaYJuRCUd
+         rBgCQpyBFPxn8JxjhweyhELH4q6zTpDjxf729ZZ165JnycLSejXDbYBWBVIqt7g5msbH
+         2aCnMALEIo348Xza9F7edJ9p3xKTTKCdTw/MhLQYGWMhzVZj9BxRv8LDzFeXisffQMUt
+         oCiMRvR6SWDehMZakCcMHnDwDIqqXE4l/BRbT2ZwrAGqeYXCLr/dsWy/BFAkW2LA8PhX
+         WdBZdKWGwZ9LyOpSmSJhtQ70A1jRBmCYkzZfNCGa/i2YRvefIXVwZ35FWjDcbXftwRgy
+         3OiQ==
+X-Gm-Message-State: APt69E1WqJdeSgHQ0FCP6P4Am8ORukpr71apMkwseLhJysdNd8zMbUgq
+        RS24YhpiYkvL38VMs3szfvo=
+X-Google-Smtp-Source: ADUXVKLnYPLImBdBcURmEl9KBcUbfkbHjRtsNm8Kt71k+9HQ/ysF0DkSpyH/hM4eMGpoGN8RB16nRQ==
+X-Received: by 2002:a50:c29a:: with SMTP id o26-v6mr3548946edf.156.1528287994858;
+        Wed, 06 Jun 2018 05:26:34 -0700 (PDT)
 Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id j5-v6sm29460039edd.37.2018.06.06.05.21.17
+        by smtp.gmail.com with ESMTPSA id c13-v6sm6765811edr.78.2018.06.06.05.26.33
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 06 Jun 2018 05:21:17 -0700 (PDT)
+        Wed, 06 Jun 2018 05:26:34 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "stolee\@gmail.com" <stolee@gmail.com>,
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee <dstolee@microsoft.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
         "jnareb\@gmail.com" <jnareb@gmail.com>,
         "marten.agren\@gmail.com" <marten.agren@gmail.com>,
         "gitster\@pobox.com" <gitster@pobox.com>
-Subject: Re: [PATCH v5 08/21] commit-graph: verify required chunks are present
-References: <20180604165200.29261-1-dstolee@microsoft.com> <20180606113611.87822-1-dstolee@microsoft.com> <20180606113611.87822-9-dstolee@microsoft.com>
+Subject: Re: [PATCH v5 18/21] commit-graph: use string-list API for input
+References: <20180604165200.29261-1-dstolee@microsoft.com>
+        <20180606113611.87822-1-dstolee@microsoft.com>
+        <20180606113611.87822-19-dstolee@microsoft.com>
+        <87h8mgyv0f.fsf@evledraar.gmail.com>
+        <aa4c3a93-0c63-f424-db0b-0e451bbaa91e@gmail.com>
 User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180606113611.87822-9-dstolee@microsoft.com>
-Date:   Wed, 06 Jun 2018 14:21:16 +0200
-Message-ID: <87fu20yukj.fsf@evledraar.gmail.com>
+In-reply-to: <aa4c3a93-0c63-f424-db0b-0e451bbaa91e@gmail.com>
+Date:   Wed, 06 Jun 2018 14:26:33 +0200
+Message-ID: <87efhkyubq.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -73,29 +78,127 @@ X-Mailing-List: git@vger.kernel.org
 
 On Wed, Jun 06 2018, Derrick Stolee wrote:
 
-> diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-> index c0c1ff09b9..846396665e 100755
-> --- a/t/t5318-commit-graph.sh
-> +++ b/t/t5318-commit-graph.sh
-> @@ -249,6 +249,15 @@ test_expect_success 'git commit-graph verify' '
+> On 6/6/2018 8:11 AM, Ævar Arnfjörð Bjarmason wrote:
+>> On Wed, Jun 06 2018, Derrick Stolee wrote:
+>>
+>>> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+>>> ---
+>>>   builtin/commit-graph.c | 39 +++++++++++++--------------------------
+>>>   commit-graph.c         | 15 +++++++--------
+>>>   commit-graph.h         |  7 +++----
+>>>   3 files changed, 23 insertions(+), 38 deletions(-)
+>>> diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+>>> index 3079cde6f9..d8eb8278b3 100644
+>>> --- a/builtin/commit-graph.c
+>>> +++ b/builtin/commit-graph.c
+>>> @@ -118,13 +118,9 @@ static int graph_read(int argc, const char **argv)
+>>>
+>>>   static int graph_write(int argc, const char **argv)
+>>>   {
+>>> -	const char **pack_indexes = NULL;
+>>> -	int packs_nr = 0;
+>>> -	const char **commit_hex = NULL;
+>>> -	int commits_nr = 0;
+>>> -	const char **lines = NULL;
+>>> -	int lines_nr = 0;
+>>> -	int lines_alloc = 0;
+>>> +	struct string_list *pack_indexes = NULL;
+>>> +	struct string_list *commit_hex = NULL;
+>>> +	struct string_list lines;
+>>>
+>>>   	static struct option builtin_commit_graph_write_options[] = {
+>>>   		OPT_STRING(0, "object-dir", &opts.obj_dir,
+>>> @@ -150,32 +146,23 @@ static int graph_write(int argc, const char **argv)
+>>>
+>>>   	if (opts.stdin_packs || opts.stdin_commits) {
+>>>   		struct strbuf buf = STRBUF_INIT;
+>>> -		lines_nr = 0;
+>>> -		lines_alloc = 128;
+>>> -		ALLOC_ARRAY(lines, lines_alloc);
+>>> -
+>>> -		while (strbuf_getline(&buf, stdin) != EOF) {
+>>> -			ALLOC_GROW(lines, lines_nr + 1, lines_alloc);
+>>> -			lines[lines_nr++] = strbuf_detach(&buf, NULL);
+>>> -		}
+>>> -
+>>> -		if (opts.stdin_packs) {
+>>> -			pack_indexes = lines;
+>>> -			packs_nr = lines_nr;
+>>> -		}
+>>> -		if (opts.stdin_commits) {
+>>> -			commit_hex = lines;
+>>> -			commits_nr = lines_nr;
+>>> -		}
+>>> +		string_list_init(&lines, 0);
+>>> +
+>>> +		while (strbuf_getline(&buf, stdin) != EOF)
+>>> +			string_list_append(&lines, strbuf_detach(&buf, NULL));
+>>> +
+>>> +		if (opts.stdin_packs)
+>>> +			pack_indexes = &lines;
+>>> +		if (opts.stdin_commits)
+>>> +			commit_hex = &lines;
+>>>   	}
+>>>
+>>>   	write_commit_graph(opts.obj_dir,
+>>>   			   pack_indexes,
+>>> -			   packs_nr,
+>>>   			   commit_hex,
+>>> -			   commits_nr,
+>>>   			   opts.append);
+>>>
+>>> +	string_list_clear(&lines, 0);
+>>>   	return 0;
+>>>   }
+>> This results in an invalid free() & segfault because you're freeing
+>> &lines which may not have been allocated by string_list_init().
 >
->  GRAPH_BYTE_VERSION=4
->  GRAPH_BYTE_HASH=5
-> +GRAPH_BYTE_CHUNK_COUNT=6
-> +GRAPH_CHUNK_LOOKUP_OFFSET=8
-> +GRAPH_CHUNK_LOOKUP_WIDTH=12
-> +GRAPH_CHUNK_LOOKUP_ROWS=5
-> +GRAPH_BYTE_OID_FANOUT_ID=$GRAPH_CHUNK_LOOKUP_OFFSET
-> +GRAPH_BYTE_OID_LOOKUP_ID=$(($GRAPH_CHUNK_LOOKUP_OFFSET + \
-> +			    1 \* $GRAPH_CHUNK_LOOKUP_WIDTH))
+> Good point. Did my tests not catch this? (seems it requires calling
+> `git commit-graph write` with no `--stdin-packs` or
+> `--stdin-commits`).
 
-On GNU bash, version 4.1.2(2)-release (x86_64-redhat-linux-gnu) this
-emits:
+Most of your tests (t5318-commit-graph.sh) segfaulted, but presumably
+you're on a more forgiving compiler/platform/options. I compiled with
+-O0 -g on clang 4.0.1-8 + Debian testing.
 
-./t5318-commit-graph.sh: line 285: 8 +                      1 \* 12: syntax error: invalid arithmetic operator (error token is "\* 12")
+>>
+>> Monkeypatch on top which I used to fix it:
+>>
+>>      diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+>>      index 76423b3fa5..c7eb68aa3a 100644
+>>      --- a/builtin/commit-graph.c
+>>      +++ b/builtin/commit-graph.c
+>>      @@ -122,6 +122,7 @@ static int graph_write(int argc, const char **argv)
+>>              struct string_list *pack_indexes = NULL;
+>>              struct string_list *commit_hex = NULL;
+>>              struct string_list lines;
+>>      +       int free_lines = 0;
+>>
+>>              static struct option builtin_commit_graph_write_options[] = {
+>>                      OPT_STRING(0, "object-dir", &opts.obj_dir,
+>>      @@ -155,6 +156,7 @@ static int graph_write(int argc, const char **argv)
+>>              if (opts.stdin_packs || opts.stdin_commits) {
+>>                      struct strbuf buf = STRBUF_INIT;
+>>                      string_list_init(&lines, 0);
+>>      +               free_lines = 1;
+>>
+>>                      while (strbuf_getline(&buf, stdin) != EOF)
+>>                              string_list_append(&lines, strbuf_detach(&buf, NULL));
+>>      @@ -170,7 +172,8 @@ static int graph_write(int argc, const char **argv)
+>>                                 commit_hex,
+>>                                 opts.append);
+>>
+>>      -       string_list_clear(&lines, 0);
+>>      +       if (free_lines)
+>>      +               string_list_clear(&lines, 0);
+>>              return 0;
+>>       }
+>>
+>> But probably having a pointer to the struct which is NULL etc. is
+>> better.
+>
+> Wouldn't the easiest fix be to call `string_list_init(&lines, 0)`
+> outside of any conditional?
 
-The same goes for the rest of this "\*" within $((...)) in this file, it
-should just be "*"..
-
-> +GRAPH_BYTE_COMMIT_DATA_ID=$(($GRAPH_CHUNK_LOOKUP_OFFSET + \
-> +			     2 \* $GRAPH_CHUNK_LOOKUP_WIDTH))
+Sure that works too. We'd be doing the init when we don't need it, but
+it's not like this part is performance critical or anything...
