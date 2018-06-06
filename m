@@ -2,108 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 22A831F403
-	for <e@80x24.org>; Wed,  6 Jun 2018 07:02:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A9F41F403
+	for <e@80x24.org>; Wed,  6 Jun 2018 07:39:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932217AbeFFHCl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Jun 2018 03:02:41 -0400
-Received: from mout.web.de ([212.227.15.3]:45745 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932116AbeFFHCk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jun 2018 03:02:40 -0400
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LaZQd-1g8d3P0n7v-00mOT2; Wed, 06
- Jun 2018 09:02:24 +0200
-Date:   Wed, 6 Jun 2018 09:02:23 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Jeff King <peff@peff.net>,
-        =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH 04/10] t0027: use $ZERO_OID
-Message-ID: <20180606070222.GA11992@tor.lan>
-References: <20180604235229.279814-1-sandals@crustytoothpaste.net>
- <20180604235229.279814-5-sandals@crustytoothpaste.net>
+        id S932237AbeFFHjq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Jun 2018 03:39:46 -0400
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:39122 "EHLO
+        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932134AbeFFHjp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jun 2018 03:39:45 -0400
+Received: by mail-lf0-f67.google.com with SMTP id t134-v6so7555172lff.6
+        for <git@vger.kernel.org>; Wed, 06 Jun 2018 00:39:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=R3c6kztesS3HOjZay/k1nMWk205V7RoQ8Hx/+X/4ygs=;
+        b=pNQR3mZb116qaLR79rridxocXj9phVxGN7c8n5s6hmKwplZuX/W1YnT8JO+tv4XpZe
+         R87z9n+YeVQYHpDtpdSGS+X8+TA9X0VWyvFQqe2XP///UhZ2XEiin3F4ofy9TVhx3qr6
+         FvWUzEPpvMcdU0l2h+dVJRjmjAUu/s1qGAWfbWpgm7cDHF+vgx6zhiswEM66+XUwIoX9
+         UDcbRuCIJKeCEGJcOxV0//AA31ue2EI6wh0SmAZF27Q/B2SUfE1c3rcXXPANDE46hgHm
+         V4Ggw9EfpOoEfy2hzwuNveTgqGxmzBbC3njoL0/BpDvw9OrC868S5bs66hzWNTFudTQ2
+         /TZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=R3c6kztesS3HOjZay/k1nMWk205V7RoQ8Hx/+X/4ygs=;
+        b=JkUepJkqHLQlsAqXmlKCj6HIMk8ORDxYdDOi6TjmkTG6n+sjwnsUzbAoydKgaXs1wO
+         rlTTvwWXkTms5u4Ze3sFxa68A1ebVtI5abZsLiu6pLM8mGZ3a1DYIpCyzcsqS8rTwl/g
+         phANF+C+jxfPSpIcupI6vxAf6vHKWtDsRnXKwscGCujYiEhb4nC5eAAIEMsSOdOv3Ic9
+         Vm9XD8NRrdkIthFjmVYGX2d1LwlgnAI2zCXS6TfGD6IIRu9zXzL2gvGpVG/pCOiROOvb
+         xPrylFHP6PvK7J+1CFpyCOBgQZ0UV8GHkukMV4Z4AyD/IciM0IKdsmYiBaGsX8MWhUsH
+         TR7A==
+X-Gm-Message-State: APt69E2+eM1adQVlCA+Vr3M62/sTfOc5qe1Vtfbt+g2jSev2kKkyllew
+        k/bZ0DGZ1Qy9Bo1aUT5sPw0=
+X-Google-Smtp-Source: ADUXVKIjrB9nCirdBkyTV43MqcEPeE8dF/f28ddWx1M9epm3/DafxmPmSnybTGFm3bmQ79p+C6OCEA==
+X-Received: by 2002:a2e:21c7:: with SMTP id h68-v6mr1253291lji.108.1528270784250;
+        Wed, 06 Jun 2018 00:39:44 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id u3-v6sm4189048lji.4.2018.06.06.00.39.42
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 06 Jun 2018 00:39:43 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     pclouds@gmail.com
+Cc:     bmwill@google.com, git@vger.kernel.org, newren@gmail.com,
+        ramsay@ramsayjones.plus.com
+Subject: [PATCH v3 00/20] Fix incorrect use of the_index
+Date:   Wed,  6 Jun 2018 09:39:13 +0200
+Message-Id: <20180606073933.14755-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.18.0.rc0.333.g22e6ee6cdf
+In-Reply-To: <20180606050207.13556-1-pclouds@gmail.com>
+References: <20180606050207.13556-1-pclouds@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180604235229.279814-5-sandals@crustytoothpaste.net>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Provags-ID: V03:K1:Znj/DTIQhJegK7Lh7sYOjcIzU05Y2F3Yo8muoqFnHpgJgPmJEdz
- gn5bPPigo4V7QGvqj2f3Hy/o5BoGYvkffReXiPkmpM1NMflxVW2zhgqY8HEGlmX7EXrvk99
- 9VfdQlRJbHQxCQm91dVvVIc6GETzK79ejdE88frrFr7tNSzdgtmB/2A/ZYAIWgcc5DrnqXm
- bbnyuA/WOfVvOq+x9wY7A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:3LYW7/XcyL4=:5PjMmFnlssBcUG977GR5qx
- HBVacEX/lulN8kfsuvlPc3/RgrUrIRh035tFJhZtMDL8IYQgQoYw6aonoKHJGM84UvWnDeDbR
- KtYjlD7cYhkVuWYoV+AYXBUsH9KO+ZXsWqM60JPdnwBJzFcrQcj9yD4JRdTrr0HoTr88q2YWC
- n5dQDmsZ8bc4+cXjmlcD9+6kHzEvUiSaZ0NpPBftrA8Dany5UAlK0Cy+hyf8mST4NUIYUvPDq
- VtpaEq/uCG12XZUOfE2xSHanPHbEWuwgTUOi6OwhLY9Abc+w0U+tB95HdNaGMlYPPHWKeW78G
- GTrcKhJK2Jd6+fnfS4UT2LrgCoz5cSoDV/wa8s3CT5wJAaFtk2rYB6TBHpcUsIH72Z7KFB8KZ
- kel2Ms9TpVv3t62VyosF29MRbHoWbagn/r7WnG60r2VP22sGWhsBtlzuzauRHh91Dk+vQI2Bh
- HbbRI9T24FvNMDqP3zFjEF37Zmx+Q6kqAtWCLZv5ypCWUJnG082wEGJmTIIVoHRz9TbpnkfBy
- K5PlL3HCygRKWyz+ZB80gLhGKi+2avYWer06dam3Ftq5pvhGmVSf/yvJlHFFeG+F+TUU3Mwrk
- 2O0trc5TLNCAo4dCCHYnR2MhN+iVc9vUlb8esLNiV4mN3ANB7e/d4Z7b2pF3OYiUA9LcOT6L2
- ciCEPss+wDMABQLt7oSP43z5M8LmS0Fets3QipmtGZCufQkcW3glWNEdnBDEtmld3pcOf5sDk
- 2bfOy2nGO5ZCiD2NSQaNqS3HFxOkd4w+7q1EbyXmlhz/yd9zoC5ZgyKdqIc=
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 04, 2018 at 11:52:23PM +0000, brian m. carlson wrote:
-> Use the ZERO_OID variable to express the all-zeros object ID so that it
-> works with hash algorithms of all sizes.
-> 
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
->  t/t0027-auto-crlf.sh | 14 +++++++-------
->  1 file changed, 7 insertions(+), 7 deletions(-)
-> 
-> diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
-> index beb5927f77..14fcd3f49f 100755
-> --- a/t/t0027-auto-crlf.sh
-> +++ b/t/t0027-auto-crlf.sh
-> @@ -371,13 +371,13 @@ test_expect_success 'setup master' '
->  	git checkout -b master &&
->  	git add .gitattributes &&
->  	git commit -m "add .gitattributes" . &&
-> -	printf "\$Id: 0000000000000000000000000000000000000000 \$\nLINEONE\nLINETWO\nLINETHREE"     >LF &&
-> -	printf "\$Id: 0000000000000000000000000000000000000000 \$\r\nLINEONE\r\nLINETWO\r\nLINETHREE" >CRLF &&
-> -	printf "\$Id: 0000000000000000000000000000000000000000 \$\nLINEONE\r\nLINETWO\nLINETHREE"   >CRLF_mix_LF &&
-> -	printf "\$Id: 0000000000000000000000000000000000000000 \$\nLINEONE\nLINETWO\rLINETHREE"     >LF_mix_CR &&
-> -	printf "\$Id: 0000000000000000000000000000000000000000 \$\r\nLINEONE\r\nLINETWO\rLINETHREE"   >CRLF_mix_CR &&
-> -	printf "\$Id: 0000000000000000000000000000000000000000 \$\r\nLINEONEQ\r\nLINETWO\r\nLINETHREE" | q_to_nul >CRLF_nul &&
-> -	printf "\$Id: 0000000000000000000000000000000000000000 \$\nLINEONEQ\nLINETWO\nLINETHREE" | q_to_nul >LF_nul &&
-> +	printf "\$Id: $ZERO_OID \$\nLINEONE\nLINETWO\nLINETHREE"     >LF &&
-> +	printf "\$Id: $ZERO_OID \$\r\nLINEONE\r\nLINETWO\r\nLINETHREE" >CRLF &&
-> +	printf "\$Id: $ZERO_OID \$\nLINEONE\r\nLINETWO\nLINETHREE"   >CRLF_mix_LF &&
-> +	printf "\$Id: $ZERO_OID \$\nLINEONE\nLINETWO\rLINETHREE"     >LF_mix_CR &&
-> +	printf "\$Id: $ZERO_OID \$\r\nLINEONE\r\nLINETWO\rLINETHREE"   >CRLF_mix_CR &&
-> +	printf "\$Id: $ZERO_OID \$\r\nLINEONEQ\r\nLINETWO\r\nLINETHREE" | q_to_nul >CRLF_nul &&
-> +	printf "\$Id: $ZERO_OID \$\nLINEONEQ\nLINETWO\nLINETHREE" | q_to_nul >LF_nul &&
->  	create_NNO_MIX_files &&
->  	git -c core.autocrlf=false add NNO_*.txt MIX_*.txt &&
->  	git commit -m "mixed line endings" &&
+On Wed, Jun 6, 2018 at 7:02 AM, Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
+> v2 fixes an incorrect patch splitting (I should have built one more
+> time :P) between 3/5 and 4/5. v1's 6/6 is dropped. Brandon suggested a
+> better way of doing it which may happen later.
 
-Nothing wrong with the patch.
-There is, however, a trick in t0027 to transform the different IDs back to a bunch of '0'.
-The content of the file use only uppercase letters, and all lowercase ad digits
-are converted like this:
+I started looking into Brandon's suggestion, did some mindless
+conversion, then found out a couple more incorrect uses of the_index
+:( So here's the whole thing.
 
-compare_ws_file () {
-	pfx=$1
-	exp=$2.expect
-	act=$pfx.actual.$3
-	tr '\015\000abcdef0123456789' QN00000000000000000 <"$2" >"$exp" &&
-	tr '\015\000abcdef0123456789' QN00000000000000000 <"$3" >"$act" &&
-	test_cmp "$exp" "$act" &&
-	rm "$exp" "$act"
-}
+Nguyễn Thái Ngọc Duy (20):
+  unpack-trees: remove 'extern' on function declaration
+  unpack-trees: add a note about path invalidation
+  unpack-trees: don't shadow global var the_index
+  unpack-tress: convert clear_ce_flags* to avoid the_index
+  unpack-trees: avoid the_index in verify_absent()
+  attr.h: drop extern from function declaration
+  attr: remove an implicit dependency on the_index
+  convert.h: drop 'extern' from function declaration
+  convert.c: remove an implicit dependency on the_index
+  dir.c: remove an implicit dependency on the_index in pathspec code
+  ls-files: correct index argument to get_convert_attr_ascii()
+  pathspec.c: use the right index instead of the_index
+  submodule.c: use the right index instead of the_index
+  entry.c: use the right index instead of the_index
+  attr: remove index from git_attr_set_direction()
+  preload-index.c: use the right index instead of the_index
+  cache.c: remove an implicit dependency on the_index
+  resolve-undo.c: use the right index instead of the_index
+  grep: use the right index instead of the_index
+  cache.h: make the_index part of "compatibility macros"
 
-In the long term the 'tr' may need an additional 'sed' expression.
+ apply.c                     |  4 +--
+ archive.c                   |  8 ++---
+ attr.c                      | 52 ++++++++++++++++++-------------
+ attr.h                      | 31 ++++++++++---------
+ builtin/add.c               |  6 ++--
+ builtin/cat-file.c          |  2 +-
+ builtin/check-attr.c        |  6 ++--
+ builtin/checkout-index.c    |  1 +
+ builtin/checkout.c          |  4 +--
+ builtin/clean.c             |  2 +-
+ builtin/commit.c            |  2 +-
+ builtin/difftool.c          |  4 +--
+ builtin/grep.c              |  6 ++--
+ builtin/ls-files.c          | 17 ++++++-----
+ builtin/pack-objects.c      |  2 +-
+ builtin/reset.c             |  2 +-
+ builtin/rm.c                |  2 +-
+ builtin/submodule--helper.c |  2 +-
+ builtin/update-index.c      |  2 +-
+ cache.h                     |  9 +++---
+ convert.c                   | 41 ++++++++++++++-----------
+ convert.h                   | 61 +++++++++++++++++++++----------------
+ diff-lib.c                  |  4 +--
+ diff.c                      |  2 +-
+ dir.c                       | 27 +++++++++-------
+ dir.h                       | 16 ++++++----
+ entry.c                     | 10 +++---
+ ll-merge.c                  |  4 +--
+ merge-recursive.c           |  4 +--
+ pathspec.c                  |  2 +-
+ preload-index.c             |  3 +-
+ read-cache.c                | 19 +++++++-----
+ rerere.c                    |  2 +-
+ resolve-undo.c              |  5 +--
+ revision.c                  |  2 +-
+ sha1-file.c                 |  4 +--
+ submodule.c                 |  8 ++---
+ unpack-trees.c              | 57 +++++++++++++++++++++-------------
+ unpack-trees.h              |  4 +--
+ userdiff.c                  |  2 +-
+ ws.c                        |  2 +-
+ wt-status.c                 |  6 ++--
+ 42 files changed, 255 insertions(+), 194 deletions(-)
+
+-- 
+2.18.0.rc0.333.g22e6ee6cdf
+
