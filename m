@@ -2,269 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A73AE1F403
-	for <e@80x24.org>; Wed,  6 Jun 2018 17:05:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A0FB1F403
+	for <e@80x24.org>; Wed,  6 Jun 2018 17:11:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933618AbeFFRFs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Jun 2018 13:05:48 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:45192 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753417AbeFFRAp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jun 2018 13:00:45 -0400
-Received: by mail-pf0-f193.google.com with SMTP id a22-v6so3436478pfo.12
-        for <git@vger.kernel.org>; Wed, 06 Jun 2018 10:00:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=yKUb2Gc5nNFu0egz2ybh0p77ROLbb3IswlvHQ1WBkVk=;
-        b=P9ASHvOyNAzIOyBmUoNEUR807jiZkFMpmtX9oPawzkMvfktdUsH+GPlpQAcoyepLcB
-         ekUHPjp5WY+lJkjZb6AO1ay7oDnfrh7MSfxrES+pYSHYtah75pCQbOxB8aGerMNGJFl6
-         FYLS07+ZNPGdMEpjp5G0UBS0eki8zI4TaJLuWRyruB2Hrf92JqfvNnEbUeaVrOz4tB7t
-         blXa4vIm9ltYYMsi++P9JKa94YFWVAmIFZ95LBcdNkIWG7aHyxglfes3RI+RmSEoZcnu
-         LV6seZmhvmYvW7G3ho3IrQGoUCguCetKwQHouyo6km+EgX3f/jlzvtVecAo1cSjQoFp3
-         w7KQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=yKUb2Gc5nNFu0egz2ybh0p77ROLbb3IswlvHQ1WBkVk=;
-        b=ld43zcjuCUWz8Q4jaA8XuKCSpfbGQ4edZDFo+F/C+sXIt9UJOUled31IZrh71OVpgQ
-         szG+O78+tKhubzJJxG9xo7wsdOMP0lVCN2Cj3SjLX1xx7VaaOQMb9Pnu5nNoZhsLDRvL
-         n7TChnDJlNnU8PzpbGMlEDHXjfZtXh9fv4YqIuZjfs2T5bWeoQPj4e9N+OkaZi+d7PoH
-         EZNEojg4eCz5ljc/UiqcqAnutaYlvdGwHcSykBWk5u32t7TAxpHgmTQgBeO4TXOhplPY
-         ZPIpv5ZjyMe81hW14YssLRidx4lLFqc1zf5hKeN1hfB4fCos+VNtsy0S1yvrOTFWC6oa
-         OMUw==
-X-Gm-Message-State: APt69E2nOdJKdHmQC/Is731MzkWNj0VR3PGw+6qcsWZu06hagj24BfLg
-        4EUVrRZzbSo+pUEDdmIbEGDTXw==
-X-Google-Smtp-Source: ADUXVKJs134gIAj8P3nVePgxgpLTqvQzdEx0zt9sxNRIUdS7ANerwW2KeM20GoshRT6QWCqju3H/EQ==
-X-Received: by 2002:a65:61d1:: with SMTP id j17-v6mr3262124pgv.447.1528304444498;
-        Wed, 06 Jun 2018 10:00:44 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id b3-v6sm91849434pff.132.2018.06.06.10.00.43
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 06 Jun 2018 10:00:43 -0700 (PDT)
-Date:   Wed, 6 Jun 2018 10:00:42 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, newren@gmail.com, ramsay@ramsayjones.plus.com
-Subject: Re: [PATCH v3 17/20] cache.c: remove an implicit dependency on
- the_index
-Message-ID: <20180606170042.GJ158365@google.com>
-References: <20180606050207.13556-1-pclouds@gmail.com>
- <20180606073933.14755-1-pclouds@gmail.com>
- <20180606073933.14755-18-pclouds@gmail.com>
+        id S933638AbeFFRK6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Jun 2018 13:10:58 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52331 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933589AbeFFRK5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jun 2018 13:10:57 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 56FEFE6194;
+        Wed,  6 Jun 2018 13:10:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to; s=sasl; bh=qwgI0J1Rah0a+P6+3mjzavV1ocI=; b=ZRpWWa2
+        Mi5WOW+b3Pen4o0EiCdQqE4Ohuc1M2ibA2GP2ywz8BFdSBJarFDkuu7sd6vZhf8h
+        ZhhZoETiX3Sxv4pzj442E8iJBlzHb/DuOgHEDH6BNZSJrbV2keGeE5pT20CKKCpP
+        n82UwjRI/oW0C+wU2x51cFgTI6Tx3NNQKnXM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to; q=dns; s=sasl; b=UUX0airH1jCqFJtnjU1ffwXTrnHWQvqPo
+        EtmPOIWsezUCe/sNJj09+kqefuc0vd9pXgr01DxGrpJfWHHkjTjamwO4uqwrDigQ
+        V7heCsPW1yzjWRYiiWGm2xkTK1KnGyLl7RiH8pAXsUIVc7hLC36nBgw/nQI/q7vF
+        0B5kLY6+3Y=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4DA8BE6192;
+        Wed,  6 Jun 2018 13:10:54 -0400 (EDT)
+Received: from zaya.teonanacatl.net (unknown [98.111.125.125])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CCEA7E618F;
+        Wed,  6 Jun 2018 13:10:53 -0400 (EDT)
+Date:   Wed, 6 Jun 2018 13:10:52 -0400
+From:   Todd Zullinger <tmz@pobox.com>
+To:     git@jeffhostetler.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v7 2/2] json-writer: t0019: add Python unit test
+Message-ID: <20180606171052.GI3094@zaya.teonanacatl.net>
+References: <20180605163358.119080-1-git@jeffhostetler.com>
+ <20180605163358.119080-3-git@jeffhostetler.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180606073933.14755-18-pclouds@gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+In-Reply-To: <20180605163358.119080-3-git@jeffhostetler.com>
+User-Agent: Mutt/1.9.5 (2018-04-13)
+X-Pobox-Relay-ID: 91F64640-69AC-11E8-B925-67830C78B957-09356542!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/06, Nguyễn Thái Ngọc Duy wrote:
-> Make some index API take an index_state instead of assuming the_index
-> in read-cache.c. All external call sites are converted blindly to keep
-> the patch simple and retain current behavior.  Individual call sites
-> may receive further updates to use the right index instead of the_index.
-> 
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  apply.c            |  2 +-
->  builtin/checkout.c |  2 +-
->  builtin/difftool.c |  4 ++--
->  builtin/reset.c    |  2 +-
->  cache.h            |  5 +++--
->  merge-recursive.c  |  2 +-
->  read-cache.c       | 19 +++++++++++--------
->  resolve-undo.c     |  2 +-
->  8 files changed, 21 insertions(+), 17 deletions(-)
-> 
-> diff --git a/apply.c b/apply.c
-> index 9720855590..811ff2ad5e 100644
-> --- a/apply.c
-> +++ b/apply.c
-> @@ -4090,7 +4090,7 @@ static int build_fake_ancestor(struct apply_state *state, struct patch *list)
->  			return error(_("sha1 information is lacking or useless "
->  				       "(%s)."), name);
->  
-> -		ce = make_cache_entry(patch->old_mode, oid.hash, name, 0, 0);
-> +		ce = make_cache_entry(&the_index, patch->old_mode, oid.hash, name, 0, 0);
->  		if (!ce)
->  			return error(_("make_cache_entry failed for path '%s'"),
->  				     name);
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> index f8c208cea1..3c8218304e 100644
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -230,7 +230,7 @@ static int checkout_merged(int pos, const struct checkout *state)
->  	if (write_object_file(result_buf.ptr, result_buf.size, blob_type, &oid))
->  		die(_("Unable to add merge result for '%s'"), path);
->  	free(result_buf.ptr);
-> -	ce = make_cache_entry(mode, oid.hash, path, 2, 0);
-> +	ce = make_cache_entry(&the_index, mode, oid.hash, path, 2, 0);
->  	if (!ce)
->  		die(_("make_cache_entry failed for path '%s'"), path);
->  	status = checkout_entry(ce, state, NULL);
-> diff --git a/builtin/difftool.c b/builtin/difftool.c
-> index bc97d4aef2..e34e75a42d 100644
-> --- a/builtin/difftool.c
-> +++ b/builtin/difftool.c
-> @@ -321,7 +321,7 @@ static int checkout_path(unsigned mode, struct object_id *oid,
->  	struct cache_entry *ce;
->  	int ret;
->  
-> -	ce = make_cache_entry(mode, oid->hash, path, 0, 0);
-> +	ce = make_cache_entry(&the_index, mode, oid->hash, path, 0, 0);
->  	ret = checkout_entry(ce, state, NULL);
->  
->  	free(ce);
-> @@ -488,7 +488,7 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
->  				 * index.
->  				 */
->  				struct cache_entry *ce2 =
-> -					make_cache_entry(rmode, roid.hash,
-> +					make_cache_entry(&the_index, rmode, roid.hash,
->  							 dst_path, 0, 0);
->  
->  				add_index_entry(&wtindex, ce2,
-> diff --git a/builtin/reset.c b/builtin/reset.c
-> index a862c70fab..0ea0a19d5e 100644
-> --- a/builtin/reset.c
-> +++ b/builtin/reset.c
-> @@ -134,7 +134,7 @@ static void update_index_from_diff(struct diff_queue_struct *q,
->  			continue;
->  		}
->  
-> -		ce = make_cache_entry(one->mode, one->oid.hash, one->path,
-> +		ce = make_cache_entry(&the_index, one->mode, one->oid.hash, one->path,
->  				      0, 0);
->  		if (!ce)
->  			die(_("make_cache_entry failed for path '%s'"),
-> diff --git a/cache.h b/cache.h
-> index 89a107a7f7..5939233eb7 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -355,6 +355,7 @@ extern void free_name_hash(struct index_state *istate);
->  #define unmerged_cache() unmerged_index(&the_index)
->  #define cache_name_pos(name, namelen) index_name_pos(&the_index,(name),(namelen))
->  #define add_cache_entry(ce, option) add_index_entry(&the_index, (ce), (option))
-> +#define refresh_cache_entry(ce, flags) refresh_index_entry(&the_index, ce, flags)
->  #define rename_cache_entry_at(pos, new_name) rename_index_entry_at(&the_index, (pos), (new_name))
->  #define remove_cache_entry_at(pos) remove_index_entry_at(&the_index, (pos))
->  #define remove_file_from_cache(path) remove_file_from_index(&the_index, (path))
-> @@ -698,7 +699,7 @@ extern int remove_file_from_index(struct index_state *, const char *path);
->  extern int add_to_index(struct index_state *, const char *path, struct stat *, int flags);
->  extern int add_file_to_index(struct index_state *, const char *path, int flags);
->  
-> -extern struct cache_entry *make_cache_entry(unsigned int mode, const unsigned char *sha1, const char *path, int stage, unsigned int refresh_options);
-> +extern struct cache_entry *make_cache_entry(struct index_state *istate,unsigned int mode, const unsigned char *sha1, const char *path, int stage, unsigned int refresh_options);
+git@jeffhostetler.com wrote:
+> +# As a sanity check, ask Python to parse our generated JSON.  Let Python
+> +# recursively dump the resulting dictionary in sorted order.  Confirm that
+> +# that matches our expectations.
+> +test_expect_success PYTHON 'parse JSON using Python' '
+[...]
+> +	python "$TEST_DIRECTORY"/t0019/parse_json_1.py <output.json >actual &&
 
-minor nit: s/istate,unsigned/istate, unsigned/
-
->  extern int chmod_index_entry(struct index_state *, struct cache_entry *ce, char flip);
->  extern int ce_same_name(const struct cache_entry *a, const struct cache_entry *b);
->  extern void set_object_name_for_intent_to_add_entry(struct cache_entry *ce);
-> @@ -751,7 +752,7 @@ extern void fill_stat_cache_info(struct cache_entry *ce, struct stat *st);
->  #define REFRESH_IGNORE_SUBMODULES	0x0010	/* ignore submodules */
->  #define REFRESH_IN_PORCELAIN	0x0020	/* user friendly output, not "needs update" */
->  extern int refresh_index(struct index_state *, unsigned int flags, const struct pathspec *pathspec, char *seen, const char *header_msg);
-> -extern struct cache_entry *refresh_cache_entry(struct cache_entry *, unsigned int);
-> +extern struct cache_entry *refresh_index_entry(struct index_state *istate, struct cache_entry *, unsigned int);
->  
->  /*
->   * Opportunistically update the index but do not complain if we can't.
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> index b404ebac7c..9280deb6a1 100644
-> --- a/merge-recursive.c
-> +++ b/merge-recursive.c
-> @@ -315,7 +315,7 @@ static int add_cacheinfo(struct merge_options *o,
->  	struct cache_entry *ce;
->  	int ret;
->  
-> -	ce = make_cache_entry(mode, oid ? oid->hash : null_sha1, path, stage, 0);
-> +	ce = make_cache_entry(&the_index, mode, oid ? oid->hash : null_sha1, path, stage, 0);
->  	if (!ce)
->  		return err(o, _("add_cacheinfo failed for path '%s'; merge aborting."), path);
->  
-> diff --git a/read-cache.c b/read-cache.c
-> index 12cc22d157..c083318aa7 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -745,9 +745,11 @@ int add_file_to_index(struct index_state *istate, const char *path, int flags)
->  	return add_to_index(istate, path, &st, flags);
->  }
->  
-> -struct cache_entry *make_cache_entry(unsigned int mode,
-> -		const unsigned char *sha1, const char *path, int stage,
-> -		unsigned int refresh_options)
-> +struct cache_entry *make_cache_entry(struct index_state *istate,
-> +				     unsigned int mode,
-> +				     const unsigned char *sha1,
-> +				     const char *path, int stage,
-> +				     unsigned int refresh_options)
->  {
->  	int size, len;
->  	struct cache_entry *ce, *ret;
-> @@ -767,7 +769,7 @@ struct cache_entry *make_cache_entry(unsigned int mode,
->  	ce->ce_namelen = len;
->  	ce->ce_mode = create_ce_mode(mode);
->  
-> -	ret = refresh_cache_entry(ce, refresh_options);
-> +	ret = refresh_index_entry(istate, ce, refresh_options);
->  	if (ret != ce)
->  		free(ce);
->  	return ret;
-> @@ -1415,7 +1417,7 @@ int refresh_index(struct index_state *istate, unsigned int flags,
->  		if (ignore_submodules && S_ISGITLINK(ce->ce_mode))
->  			continue;
->  
-> -		if (pathspec && !ce_path_match(&the_index, ce, pathspec, seen))
-> +		if (pathspec && !ce_path_match(istate, ce, pathspec, seen))
->  			filtered = 1;
->  
->  		if (ce_stage(ce)) {
-> @@ -1473,10 +1475,11 @@ int refresh_index(struct index_state *istate, unsigned int flags,
->  	return has_errors;
->  }
->  
-> -struct cache_entry *refresh_cache_entry(struct cache_entry *ce,
-> -					       unsigned int options)
-> +struct cache_entry *refresh_index_entry(struct index_state *istate,
-> +					struct cache_entry *ce,
-> +					unsigned int options)
->  {
-> -	return refresh_cache_ent(&the_index, ce, options, NULL, NULL);
-> +	return refresh_cache_ent(istate, ce, options, NULL, NULL);
->  }
->  
->  
-> diff --git a/resolve-undo.c b/resolve-undo.c
-> index 5e4c8c5f75..9c45fe5d1d 100644
-> --- a/resolve-undo.c
-> +++ b/resolve-undo.c
-> @@ -146,7 +146,7 @@ int unmerge_index_entry_at(struct index_state *istate, int pos)
->  		struct cache_entry *nce;
->  		if (!ru->mode[i])
->  			continue;
-> -		nce = make_cache_entry(ru->mode[i], ru->oid[i].hash,
-> +		nce = make_cache_entry(&the_index, ru->mode[i], ru->oid[i].hash,
->  				       name, i + 1, 0);
->  		if (matched)
->  			nce->ce_flags |= CE_MATCHED;
-> -- 
-> 2.18.0.rc0.333.g22e6ee6cdf
-> 
+Would this be better using $PYTHON_PATH rather than
+hard-coding python as the command?
 
 -- 
-Brandon Williams
+Todd
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Sometimes I think I understand everything, then I regain
+consciousness.
+
