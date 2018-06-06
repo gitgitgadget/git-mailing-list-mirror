@@ -2,120 +2,179 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BB661F403
-	for <e@80x24.org>; Wed,  6 Jun 2018 05:02:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5ABC51F403
+	for <e@80x24.org>; Wed,  6 Jun 2018 06:19:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932106AbeFFFCj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Jun 2018 01:02:39 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:34950 "EHLO
-        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932097AbeFFFCa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jun 2018 01:02:30 -0400
-Received: by mail-lf0-f66.google.com with SMTP id y72-v6so7035527lfd.2
-        for <git@vger.kernel.org>; Tue, 05 Jun 2018 22:02:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=L/2BQM1FKIBjodlNSVRAke+U2HyaX9rVQDXnjip3ICQ=;
-        b=YHNWNHZo8GKNsgp7xSoUh/N8UgS5G40sXB/nN5vfvOlSZ6QVlXZA1uZfXVOJXGKMwi
-         Om9bmrpNgWwFADc0D77v88D7GGgSbuhus1z+K1HEDJtyU8JyCILVyQ6oBXuzNCmROPPI
-         rm+9ebEZz0fKhdRZkBR5PXGjALPJZRU6LF3ODrWM/S/tAKDQED51Zsy5gBTjkwAk7e2k
-         7Qvldi5qgPmqrBwC1PhuV18sQw9jMYti5bq7vtxLEiTaKEJoS6jKFefgRY/u59c8zL2p
-         M9dMIAVMwYGAs2Pw8aSsvCWUrrwZbxcn0msaWec5STMOdbFWbc9qw2io9dDLVnyd0utq
-         CRzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=L/2BQM1FKIBjodlNSVRAke+U2HyaX9rVQDXnjip3ICQ=;
-        b=iCu/J8HK5Q0a7BGlVwNyxaF/2ZkUirnNohXB9qclv3ArXSIIKaqM+i++V8DVlHgL40
-         akQg4iQuFyF+LIBAZ3f/7mcxYnfm+rsrHP/nMDktrXLzxzna5YOJwqs95H4hbGHtiElc
-         HCXENOY3ys4uIFUcRN8MIogM/cd57u2z+Xxf0IKxOHLWyx2wp7J9IEx17aTILbk7BTVB
-         HmP1wEDfyfDRymQ5MrnInaH34NsEjVxvRiEWw973NdEzrMTw2J3eDKT/7iZs+QQlnvcz
-         LFvepUYnzCS6kVNXBWzS4bYgZE7I9vHTzRGE8Q9qj9MW+joH/Buk08EBOu+RAb9f0ju3
-         wzVw==
-X-Gm-Message-State: APt69E2/ImNt+z9AoEr20oA87N6Ii/W7yIbnytb4szHT1690jjJX3o/1
-        XjyAMRhtjRQAld1u8obf6K1VmA==
-X-Google-Smtp-Source: ADUXVKJo7teTA60dlj6edgshrzubBXjQ1b4rap5u9T4IT0wTbtuqXuL0KabgwoSUnHVdlBM0hTtjcw==
-X-Received: by 2002:a19:1c5:: with SMTP id 188-v6mr827146lfb.67.1528261349041;
-        Tue, 05 Jun 2018 22:02:29 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id u3-v6sm4125798lji.4.2018.06.05.22.02.28
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 05 Jun 2018 22:02:28 -0700 (PDT)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     pclouds@gmail.com
-Cc:     bmwill@google.com, git@vger.kernel.org, newren@gmail.com,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v2 5/5] unpack-trees: avoid the_index in verify_absent()
-Date:   Wed,  6 Jun 2018 07:02:07 +0200
-Message-Id: <20180606050207.13556-6-pclouds@gmail.com>
-X-Mailer: git-send-email 2.18.0.rc0.333.g22e6ee6cdf
-In-Reply-To: <20180606050207.13556-1-pclouds@gmail.com>
-References: <20180605154334.22613-1-pclouds@gmail.com>
- <20180606050207.13556-1-pclouds@gmail.com>
+        id S1752173AbeFFGTz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Jun 2018 02:19:55 -0400
+Received: from mout.web.de ([212.227.15.4]:45089 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751330AbeFFGTy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jun 2018 02:19:54 -0400
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MevzF-1ffTfV1wAD-00OUET; Wed, 06
+ Jun 2018 08:19:28 +0200
+Date:   Wed, 6 Jun 2018 08:19:27 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH 01/10] t: add tool to translate hash-related values
+Message-ID: <20180606061927.GA7098@tor.lan>
+References: <20180604235229.279814-1-sandals@crustytoothpaste.net>
+ <20180604235229.279814-2-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180604235229.279814-2-sandals@crustytoothpaste.net>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K1:MGTB+BAXs5w+R0EDQZ0LuFPmLXF1o4z+mZLhmEDz3Dv5hRnzuJD
+ QEL1d95T2h9zqp75Fef7DYbu6Fk0yU2/lcp5R8fo+yujjFR9Dyyjk62d1/DH/bHOxSbp4to
+ JNjdtIphjNOAsjfXM/TwgJ62Prb70y1aARfvLC5q70cvK2gV8zKsU4kTG6SPvqO9+zph28l
+ HDa17iINEnsYNuwNlMLtg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:E3QPosJiD1g=:IkzcAhhaQ5RPDPPJn7bhV4
+ N1g1f61DV6JWSW6xBACAQdm07NTiUluu3bW0zXOTlBNtdg3kX/FddJhIZ+HNCnbNW58+e1EGn
+ lTEcpSEFui1Qxg6l664G1hGIRxt3Z4EcAlRHA9JvO5veofB5K0BezCwMoYg5Vy3QlKEp4YmnC
+ 4W9+/cGyeX7S8dnUl3tDde3//OV7MbcvITbVjM9RtZP2uyPrAF5XpQI5bhYoJYxzDsWC6OOeK
+ 0kvLBzhkNbf1IvT2yeWL01HR5AwA02pfraLLDn4VSnm05bkZG5fxpmLCKriTGXTbaumzC5YpA
+ pUnTYRH6GdOyOdMepsOVkoi/c+eoU85qi5B8jDDYDuV41M1kMfA164oZoOJ2iM3iomCWGkhGd
+ ckhpiN82Rcfcs3R/UY5LcpIfSkPU9xLuVQPXOdp/ikqlIzLA8Uwe03DqPsKe2Bl2cNyFKRUjT
+ 6xInyGnleBf67bzuLBh6RhpABhahecJuiLOZ+9npUOG8MUYKD5yUr7nq+SSobpmVIkGtSwPI6
+ OHOpiZUsfvuDDHGknXupX9MVrzn4Oe34u7LrPJRuAsEL3N02dTfCEcJqVhBT4ZWpfMn3eCtMT
+ qYn0xQUck2wlmmcpbmOX0riKTeamTcaF+UNj+56mG4KNMbk3/6+SPm3IGWETgDzQgv94n9amh
+ WIkZ7FkvIyeEpiorqI7QNRmjznr89NJCRJwhyXxOUsOcdXdWyHUO5cwbmZ5NpZ9oDSSNBa1kP
+ SA8XhIl+iFkxGwKrqGsH1p5jOz7SHttV4ipGbKUSN2KsrjPXzCukEE2oloM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Both functions that are updated in this commit are called by
-verify_absent(), which is part of the "unpack-trees" operation that is
-supposed to work on any index file specified by the caller. Thanks to
-Brandon [1] [2], an implicit dependency on the_index is exposed. This
-commit fixes it.
+Some style nite inline
 
-In both functions, it makes sense to use src_index to check for
-exclusion because it's almost unchanged and should give us the same
-outcome as if running the exclude check before the unpack.
+On Mon, Jun 04, 2018 at 11:52:20PM +0000, brian m. carlson wrote:
+> Add a test function helper, test_translate, that will produce its first
+> argument if the hash in use is SHA-1 and the second if its argument is
+> NewHash.  Implement a mode that can read entries from a file as well for
+> reusability across tests.
+> 
+> For the moment, use the length of the empty blob to determine the hash
+> in use.  In the future, we can change this code so that it can use the
+> configuration and learn about the difference in input, output, and
+> on-disk formats.
+> 
+> Implement two basic lookup charts, one for common invalid or synthesized
+> object IDs, and one for various facts about the hash function in use.
+> 
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>  t/test-lib-functions.sh | 40 ++++++++++++++++++++++++++++++++++++++++
+>  t/translate/hash-info   |  9 +++++++++
+>  t/translate/oid         | 15 +++++++++++++++
+>  3 files changed, 64 insertions(+)
+>  create mode 100644 t/translate/hash-info
+>  create mode 100644 t/translate/oid
+> 
+> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+> index 2b2181dca0..0e7067460b 100644
+> --- a/t/test-lib-functions.sh
+> +++ b/t/test-lib-functions.sh
+> @@ -1147,3 +1147,43 @@ depacketize () {
+>  		}
+>  	'
+>  }
+> +
+> +test_translate_f_ () {
+> +	local file="$TEST_DIRECTORY/translate/$2" &&
 
-It's "almost unchanged" because we do invalidate cache-tree and
-untracked cache in the source index. But this should not affect how
-exclude machinery uses the index: to see if a file is tracked, and to
-read a blob from the index instead of worktree if it's marked
-skip-worktree (i.e. it's not available in worktree)
+Unless I'm wrong, we don't use the "local" keyword ?
 
-[1] a0bba65b10 (dir: convert is_excluded to take an index - 2017-05-05
-[2] 2c1eb10454 (dir: convert read_directory to take an index - 2017-05-05)
+> +	perl -e '
 
-Helped-by: Elijah Newren <newren@gmail.com>
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- unpack-trees.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+The bare "perl" is better spelled as "$PERL_PATH"
 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 5268de7af5..3ace82ca27 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1651,7 +1651,7 @@ static int verify_clean_subdirectory(const struct cache_entry *ce,
- 	memset(&d, 0, sizeof(d));
- 	if (o->dir)
- 		d.exclude_per_dir = o->dir->exclude_per_dir;
--	i = read_directory(&d, &the_index, pathbuf, namelen+1, NULL);
-+	i = read_directory(&d, o->src_index, pathbuf, namelen+1, NULL);
- 	if (i)
- 		return o->gently ? -1 :
- 			add_rejected_path(o, ERROR_NOT_UPTODATE_DIR, ce->name);
-@@ -1693,7 +1693,7 @@ static int check_ok_to_remove(const char *name, int len, int dtype,
- 		return 0;
- 
- 	if (o->dir &&
--	    is_excluded(o->dir, &the_index, name, &dtype))
-+	    is_excluded(o->dir, o->src_index, name, &dtype))
- 		/*
- 		 * ce->name is explicitly excluded, so it is Ok to
- 		 * overwrite it.
--- 
-2.18.0.rc0.333.g22e6ee6cdf
 
+> +		$delim = "\t";
+> +		($hoidlen, $file, $arg) = @ARGV;
+> +		open($fh, "<", $file) or die "open: $!";
+> +		while (<$fh>) {
+> +			# Allow specifying other delimiters.
+> +			$delim = $1 if /^#!\sdelimiter\s(.)/;
+> +			next if /^#/;
+> +			@fields = split /$delim/, $_, 3;
+> +			if ($fields[0] eq $arg) {
+> +				print($hoidlen == 40 ? $fields[1] : $fields[2]);
+> +				last;
+> +			}
+> +		}
+> +	' "$1" "$file" "$3"
+> +}
+> +
+> +# Without -f, print the first argument if we are using SHA-1 and the second if
+> +# we're using NewHash.
+> +# With -f FILE ARG, read the (by default) tab-delimited file from
+> +# t/translate/FILE, finding the first field matching ARG and printing either the
+> +# second or third field depending on the hash in use.
+> +test_translate () {
+> +	local hoidlen=$(printf "%s" "$EMPTY_BLOB" | wc -c) &&
+> +	if [ "$1" = "-f" ]
+
+Style nit, please avoid [] and use test:
+	if test "$1" = "-f"
+
+And more [] below
+
+> +	then
+> +		shift &&
+> +		test_translate_f_ "$hoidlen" "$@"
+> +	else
+> +		if [ "$hoidlen" -eq 40 ]
+> +		then
+> +			printf "%s" "$1"
+> +		else
+> +			printf "%s" "$2"
+> +		fi
+> +	fi
+> +}
+> diff --git a/t/translate/hash-info b/t/translate/hash-info
+> new file mode 100644
+> index 0000000000..36cbd9a8eb
+> --- /dev/null
+> +++ b/t/translate/hash-info
+> @@ -0,0 +1,9 @@
+> +# Various facts about the hash algorithm in use for easy access in tests.
+> +#
+> +# Several aliases are provided for easy recall.
+> +rawsz	20	32
+> +oidlen	20	32
+> +hexsz	40	64
+> +hexoidlen	40	64
+> +zero	0000000000000000000000000000000000000000	0000000000000000000000000000000000000000000000000000000000000000
+> +zero-oid	0000000000000000000000000000000000000000	0000000000000000000000000000000000000000000000000000000000000000
+> diff --git a/t/translate/oid b/t/translate/oid
+> new file mode 100644
+> index 0000000000..8de0fd64af
+> --- /dev/null
+> +++ b/t/translate/oid
+> @@ -0,0 +1,15 @@
+> +# These are some common invalid and partial object IDs used in tests.
+> +001	0000000000000000000000000000000000000001	0000000000000000000000000000000000000000000000000000000000000001
+> +002	0000000000000000000000000000000000000002	0000000000000000000000000000000000000000000000000000000000000002
+> +003	0000000000000000000000000000000000000003	0000000000000000000000000000000000000000000000000000000000000003
+> +004	0000000000000000000000000000000000000004	0000000000000000000000000000000000000000000000000000000000000004
+> +005	0000000000000000000000000000000000000005	0000000000000000000000000000000000000000000000000000000000000005
+> +006	0000000000000000000000000000000000000006	0000000000000000000000000000000000000000000000000000000000000006
+> +007	0000000000000000000000000000000000000007	0000000000000000000000000000000000000000000000000000000000000007
+> +# All zeros or Fs missing one or two hex segments.
+> +zero-1	000000000000000000000000000000000000000	000000000000000000000000000000000000000000000000000000000000000
+> +zero-2	00000000000000000000000000000000000000	00000000000000000000000000000000000000000000000000000000000000
+> +ff-1	fffffffffffffffffffffffffffffffffffffff	fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+> +ff-2	ffffffffffffffffffffffffffffffffffffff	ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+> +numeric	0123456789012345678901234567890123456789	0123456789012345678901234567890123456789012345678901234567890123
+> +deadbeef	deadbeefdeadbeefdeadbeefdeadbeefdeadbeef	deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef
