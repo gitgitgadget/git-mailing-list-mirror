@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D99BC1F403
-	for <e@80x24.org>; Wed,  6 Jun 2018 07:40:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 18B1E1F403
+	for <e@80x24.org>; Wed,  6 Jun 2018 07:40:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932353AbeFFHkU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Jun 2018 03:40:20 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:42903 "EHLO
-        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932340AbeFFHkJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jun 2018 03:40:09 -0400
-Received: by mail-lf0-f66.google.com with SMTP id v135-v6so7556181lfa.9
-        for <git@vger.kernel.org>; Wed, 06 Jun 2018 00:40:08 -0700 (PDT)
+        id S932356AbeFFHkZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Jun 2018 03:40:25 -0400
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:46102 "EHLO
+        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932316AbeFFHkE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jun 2018 03:40:04 -0400
+Received: by mail-lf0-f65.google.com with SMTP id j13-v6so7537326lfb.13
+        for <git@vger.kernel.org>; Wed, 06 Jun 2018 00:40:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=1fkbk0meiv+hB7yEtgM1B0zj2vrSSv0SACukNoDaejQ=;
-        b=Phx3kYyk4INeDeP8Y8hzHVnPoxKWvlEVwo4MrMmAjppTipwjhC7fM2fXzOXb6gKEJB
-         HPLxCk4B9t1XUpgGxocIhQaEqJzOwb6qnWqP97xL2qX40umwiAdykGFFaX7f5UuulRZu
-         9xknbcF0FcmZSPuBxt0+3ZjKAqWfIB2wtzOE86EtvKFSf3zDAMbLVnB6y31IFtPBeehO
-         RTUgPJ9nZVeIGUp5A+G2Yj6/91vTM9+JTKHX1FJg7nhdqGbofgH7MXZ7YGKQUjc8QTpH
-         KjPUl8Q8Pdd31VUw4zgDyINBPcdlGsN5zxPMEkoF9kH2y4vRkq4UFtARXGQ/Ej/Hl+rM
-         a7Sg==
+        bh=7Euk4diy/4P77yW0831lQLiBWzlNcv1SeUwVpoiSHgs=;
+        b=stO6i7cGtyfmG0lLwEq9KVSPdt9hNyjcR+an4ec5NW2ScVekhpHcm9mQQOTdwLC2DP
+         /5UpSTTf8CeSr9glcUMXBYaAz0v+0JCpR73zoTEd3Ouk/rD9Ydt0k4LV8b6JeZtFrBnJ
+         +FVdGKzPqKinhL1OpYUsMV6zXEKHRBvgioxb3Ikz7G2T6HrIbJOXZuyhL4yz7YbG67Cx
+         4kl42vaWRd4FEbqQHQ706zTm2F2BAviwa/NiwmgxwfLZJXPSl6WHackiD8/MPr7SUHEL
+         14fgx3VbsH4hKaPYc/1uDDnS/J9y9gZ46oMS+YwJPOPMUj2JOs/EoY99C9jKm4uORgfn
+         w0Qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=1fkbk0meiv+hB7yEtgM1B0zj2vrSSv0SACukNoDaejQ=;
-        b=VsjhI5ei+3zIuOOJ5yIcE69f0FG23jb2eQ8/67dUhxqDTR9sbrwWSe8Y5MmbDHxvQG
-         I1qsnKXOstQLEnLQumvNoRo4UyJy335aL70BUb+a1Xmg98NSTNmiK4we5orztK5d+eYQ
-         1kL9C/tXH7JaX2zw17/auQaPQDh95UTIYDDBLNbCdjpCSMMuGyVZgDAXI/yu7zFEjA1G
-         7HKIaH5i8fH+rZWfTLqE1Z5rbfk+gKS6reSR/sCQ5RZF9zUovlQTFEgZLJl2W00uMU1m
-         pK4GaSr0aCTM1I2PS07lPv9OPRcf/SOlFmDJQyW82tFDJGlRtpKSkxsuAw5vtecUrt5H
-         wMqA==
-X-Gm-Message-State: APt69E1/2K4SLOt9+Wg71/xJX4DHy5VyOLpCtJKchv4pgge+aguN0kFv
-        zpQAvGx6UfZfLA9gxLaJifNgzA==
-X-Google-Smtp-Source: ADUXVKITSqo9AZWnxtEjtyDkLpCo8KzwihKIqCZBKaUO8WcR3EESBn7UC9WJ3pSLcYGfte0teRZqlQ==
-X-Received: by 2002:a2e:7d10:: with SMTP id y16-v6mr1235053ljc.29.1528270808279;
-        Wed, 06 Jun 2018 00:40:08 -0700 (PDT)
+        bh=7Euk4diy/4P77yW0831lQLiBWzlNcv1SeUwVpoiSHgs=;
+        b=BY70I/yCy4oIZC/CfyFQl9Oou6L0ExSWqkMQfz/JRO5xhBib3SRN9RCAEvnt0TejpW
+         0FRMHmRmEm221njExnfVtyht1EfLjAJ7sMJn+Wu2FEUvcD8H56nYmDs+rYOUEMovRn+P
+         b824JNVDmx5v7T1e61fWIxGsFHQLvl08MmBJEBfu8f9bQ1KxSmSz468w5k/mK3zX9N/H
+         zlqa+kkURoWfqfEwOo3pU/rmB++nd9N4oPxv8Eh4XLBbycc2j4aFXT7G5KYzZovv5amD
+         IlC2Ic8JYODsx2gH8vOQJR0iYml9n0b1pgkd3gg41TjLwKoihl3rUWo3sIpjDZQJOmhK
+         ZrzQ==
+X-Gm-Message-State: APt69E0hPonqj8emuH7yP78no7zqZoVyjTdQr9ugc800O0ZE0VxdZbBQ
+        /OeIFgk66PtzE1jJFIWxXYM=
+X-Google-Smtp-Source: ADUXVKIDUjM0gCTOc9ZFgmknUZ1j5d4nROc1bzSu70pQYC/mT9u0/Sv/MO3oNr4I9ExeSA+2M7wU8Q==
+X-Received: by 2002:a19:6387:: with SMTP id v7-v6mr1107586lfi.74.1528270802892;
+        Wed, 06 Jun 2018 00:40:02 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id u3-v6sm4189048lji.4.2018.06.06.00.40.06
+        by smtp.gmail.com with ESMTPSA id u3-v6sm4189048lji.4.2018.06.06.00.40.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 06 Jun 2018 00:40:07 -0700 (PDT)
+        Wed, 06 Jun 2018 00:40:02 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     bmwill@google.com, git@vger.kernel.org, newren@gmail.com,
         ramsay@ramsayjones.plus.com
-Subject: [PATCH v3 20/20] cache.h: make the_index part of "compatibility macros"
-Date:   Wed,  6 Jun 2018 09:39:33 +0200
-Message-Id: <20180606073933.14755-21-pclouds@gmail.com>
+Subject: [PATCH v3 16/20] preload-index.c: use the right index instead of the_index
+Date:   Wed,  6 Jun 2018 09:39:29 +0200
+Message-Id: <20180606073933.14755-17-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc0.333.g22e6ee6cdf
 In-Reply-To: <20180606073933.14755-1-pclouds@gmail.com>
 References: <20180606050207.13556-1-pclouds@gmail.com>
@@ -69,41 +69,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While the_index is not actually a macro, its use throughout the code
-base is dangerous because developers sometimes may not see that some
-function is using the_index (instead of some other index that the devs
-are interested in).
-
-By keeping the_index part of this NO_ macro, we try to reduce its use
-more and more until it's completely gone.
-
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- cache.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ preload-index.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/cache.h b/cache.h
-index 5939233eb7..242aaa5498 100644
---- a/cache.h
-+++ b/cache.h
-@@ -330,8 +330,6 @@ struct index_state {
- 	struct ewah_bitmap *fsmonitor_dirty;
- };
- 
--extern struct index_state the_index;
--
- /* Name hashing */
- extern int test_lazy_init_name_hash(struct index_state *istate, int try_threaded);
- extern void add_name_hash(struct index_state *istate, struct cache_entry *ce);
-@@ -340,6 +338,8 @@ extern void free_name_hash(struct index_state *istate);
- 
- 
- #ifndef NO_THE_INDEX_COMPATIBILITY_MACROS
-+extern struct index_state the_index;
-+
- #define active_cache (the_index.cache)
- #define active_nr (the_index.cache_nr)
- #define active_alloc (the_index.cache_alloc)
+diff --git a/preload-index.c b/preload-index.c
+index d61d7662d5..cc2b579791 100644
+--- a/preload-index.c
++++ b/preload-index.c
+@@ -1,6 +1,7 @@
+ /*
+  * Copyright (C) 2008 Linus Torvalds
+  */
++#define NO_THE_INDEX_COMPATIBILITY_MACROS
+ #include "cache.h"
+ #include "pathspec.h"
+ #include "dir.h"
+@@ -58,7 +59,7 @@ static void *preload_thread(void *_data)
+ 			continue;
+ 		if (ce->ce_flags & CE_FSMONITOR_VALID)
+ 			continue;
+-		if (!ce_path_match(&the_index, ce, &p->pathspec, NULL))
++		if (!ce_path_match(index, ce, &p->pathspec, NULL))
+ 			continue;
+ 		if (threaded_has_symlink_leading_path(&cache, ce->name, ce_namelen(ce)))
+ 			continue;
 -- 
 2.18.0.rc0.333.g22e6ee6cdf
 
