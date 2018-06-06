@@ -2,437 +2,185 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8ACC11F403
-	for <e@80x24.org>; Wed,  6 Jun 2018 07:40:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A05D1F403
+	for <e@80x24.org>; Wed,  6 Jun 2018 08:13:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932365AbeFFHkl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Jun 2018 03:40:41 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:45548 "EHLO
-        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932280AbeFFHjy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jun 2018 03:39:54 -0400
-Received: by mail-lf0-f66.google.com with SMTP id n3-v6so7533328lfe.12
-        for <git@vger.kernel.org>; Wed, 06 Jun 2018 00:39:53 -0700 (PDT)
+        id S932466AbeFFIN2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Jun 2018 04:13:28 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:33566 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932462AbeFFIN0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jun 2018 04:13:26 -0400
+Received: by mail-wm0-f67.google.com with SMTP id z6-v6so20862126wma.0
+        for <git@vger.kernel.org>; Wed, 06 Jun 2018 01:13:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=9er/9rom5KPFlkpoi3uMCieU9kURXQ45FDrjt3VQOPU=;
-        b=EtOV5a8SHl1qzWniQtok/+06BJnkk0t8DwSRH+z4d8o4i7qYUiZ1fBLd9MVUgKibDs
-         NC8j2vcMejtk6XUI4rHr5ydCKdhUKj7BTEf5k5eo8J/LqxPrZ55W9fkfu41qgFZdF52z
-         Aq9iIfAWowV9e7Uq6shMA3zhGuN9kz+M6XvKxrpF8HgKW93G9g6Mw5ihTX0c0GDwD78P
-         YE6DnNKtDCztGWbrWI2I815hVLxqn7/2ZXcY15ftRqx+Itf5fuKvzrCC0b76dznfMXFN
-         AxaOPAk2A8m3PBkN9e+17uXTx7jdjSbrAK/eRrJOickGuvqIXiE9lydJGMUcsd22WF0z
-         8ZOg==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=WmpB2APppQI2R7wnfjqjMdzvgUliwnfYK1uSLHWi4rs=;
+        b=gDJyiMFTVdxZHg62af/gOpf+EYcywEehkzK8iw40SY02JPoOlEnXOlCu4/Jeru63IZ
+         AYBoY04KSKc0WQn2PBElvayOismCD0YbMhb6ckDzmFy1v8at4UIasJCD0PQG3Jwrugc9
+         aY2cwOE/eyyJDoEZYvMxObwQz6lyB8cCXLurfEI1axxks/tjFOrXxap83Vid43rQzUy/
+         EutboJ1zgOlfVqr+duu8l38/nUdTdnEz+//vam/5Fx1Fxw1T+r1AP2MXEnoLqhvakJfg
+         HFJZWu8jM93vXdnPucNKiRd/sXQZJ881JTBMNkYhnRz0C1xMESY2sRZiDL0cIlDVT1si
+         glZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=9er/9rom5KPFlkpoi3uMCieU9kURXQ45FDrjt3VQOPU=;
-        b=f4jk5kmR6jwsyPpjZx76Fz8vgAoeWymidT2xSsdbT+nzcpFC4YyeO8P3Qh9idS/MNw
-         PlV6vUPuSp0Hxl+qN6Gl+lJKBt90qGUQhpdWjn5yxPd+DCP7co0RpF2F0THT2Dy7zYsD
-         7lfskbMG5yxn4Kr//B2bWwu1rXwfCHqnFnQX25/aVUv5jnSJIdMthH4945LlLTdC1Vhr
-         Zq+0JowdlRXuL7qDJuLtTQdkVlHHmDZCJmEDctbBo9J+1o6nxDa0LH6WSWJ275BIIuTU
-         NRFPPPnUHQwcfvt8i8hOIZWopomGRFtAGPi4Koff7eR0BdzjOGB/TZiJWMuTmVI+17Dh
-         vvPQ==
-X-Gm-Message-State: APt69E1ZBrGx/M3HlSKZbR8Q3Y9ctls244lPIT3YAO38bMAchZtoHT6y
-        c3DcgmmJD+Td6570cxyuzYyvEA==
-X-Google-Smtp-Source: ADUXVKLw/wqHT2ivjLWfVji/px/NN8r8HUJbK1/aCUgvIw3CaYs0y6DzwVy9mBdCFSmSKNa7/sPutw==
-X-Received: by 2002:a19:f86:: with SMTP id 6-v6mr1078106lfp.15.1528270792600;
-        Wed, 06 Jun 2018 00:39:52 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id u3-v6sm4189048lji.4.2018.06.06.00.39.51
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 06 Jun 2018 00:39:51 -0700 (PDT)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     pclouds@gmail.com
-Cc:     bmwill@google.com, git@vger.kernel.org, newren@gmail.com,
-        ramsay@ramsayjones.plus.com
-Subject: [PATCH v3 07/20] attr: remove an implicit dependency on the_index
-Date:   Wed,  6 Jun 2018 09:39:20 +0200
-Message-Id: <20180606073933.14755-8-pclouds@gmail.com>
-X-Mailer: git-send-email 2.18.0.rc0.333.g22e6ee6cdf
-In-Reply-To: <20180606073933.14755-1-pclouds@gmail.com>
-References: <20180606050207.13556-1-pclouds@gmail.com>
- <20180606073933.14755-1-pclouds@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=WmpB2APppQI2R7wnfjqjMdzvgUliwnfYK1uSLHWi4rs=;
+        b=p85JUgxSLLWRJzaC+/oIxIqmapSTjaayRn8SRab+yWZxZf/pv3IvlmdgGlYbCFzB3I
+         Hc+BBaMu40SBhLhWN0GW0IQhiSom+O6gzjs9TNLT//uRs/wt+rjPlJiT84ge1kg5Bp9/
+         8zjvbnkXLQmJ7ZqyFbOjUviSVqUZviO527IAqFuzIBrncA69B8ICJtwHQuqDqbcdeB2X
+         q+BvF4AK5FJ2zisnb6CjWzG+GYG8sJBLY/NWRyNxxgM7HrRxt0LsIMsOHq1M6okJ4zF4
+         Pj17yAMz27gxo3NdOjsw2sqykgzYwjQoYCwvdzm1B5ILMd4c8VVgQCoUjbtKNF1E5cZX
+         P4bQ==
+X-Gm-Message-State: APt69E3gdz+6YY1osbwitIYnumQ6FBJyP4l8lhPXBULd1JUBnNw0ruaK
+        g26rfOInwQR6NzF4bfLyhU4IiwhS
+X-Google-Smtp-Source: ADUXVKL7NvwoiIwaY4ZBsgXmj41frXFeQfqIjrJb3O2Xge2fQR4eZvZdHeU0xDj5Hf/q36aeoqW/NA==
+X-Received: by 2002:a50:8bfa:: with SMTP id n55-v6mr2607710edn.216.1528272804478;
+        Wed, 06 Jun 2018 01:13:24 -0700 (PDT)
+Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
+        by smtp.gmail.com with ESMTPSA id w1-v6sm30143796edk.7.2018.06.06.01.13.23
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 06 Jun 2018 01:13:23 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com, git@jeffhostetler.com,
+        peff@peff.net, gitster@pobox.com, johannes.schindelin@gmx.de,
+        jrnieder@gmail.com
+Subject: Re: [RFC PATCH 00/18] Multi-pack index (MIDX)
+References: <20180107181459.222909-1-dstolee@microsoft.com> <87k1wtb8a4.fsf@evledraar.gmail.com> <c08416f1-bbec-2037-34a6-f454d85de439@gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <c08416f1-bbec-2037-34a6-f454d85de439@gmail.com>
+Date:   Wed, 06 Jun 2018 10:13:22 +0200
+Message-ID: <87lgbsz61p.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Make the attr API take an index_state instead of assuming the_index in
-attr code. All call sites are converted blindly to keep the patch
-simple and retain current behavior. Individual call sites may receive
-further updates to use the right index instead of the_index.
 
-There is one ugly temporary workaround added in attr.c that needs some
-more explanation.
+On Mon, Jan 08 2018, Derrick Stolee wrote:
 
-Commit c24f3abace (apply: file commited * with CRLF should roundtrip
-diff and apply - 2017-08-19) forces one convert_to_git() call to NOT
-read the index at all. But what do you know, we read it anyway by
-falling back to the_index. When "istate" from convert_to_git is now
-propagated down to read_attr_from_array() we will hit segfault
-somewhere inside read_blob_data_from_index.
+> On 1/7/2018 5:42 PM, Ævar Arnfjörð Bjarmason wrote:
+>>
+>> On Sun, Jan 07 2018, Derrick Stolee jotted:
+>>
+>>>      git log --oneline --raw --parents
+>>>
+>>> Num Packs | Before MIDX | After MIDX |  Rel % | 1 pack %
+>>> ----------+-------------+------------+--------+----------
+>>>          1 |     35.64 s |    35.28 s |  -1.0% |   -1.0%
+>>>         24 |     90.81 s |    40.06 s | -55.9% |  +12.4%
+>>>        127 |    257.97 s |    42.25 s | -83.6% |  +18.6%
+>>>
+>>> The last column is the relative difference between the MIDX-enabled repo
+>>> and the single-pack repo. The goal of the MIDX feature is to present the
+>>> ODB as if it was fully repacked, so there is still room for improvement.
+>>>
+>>> Changing the command to
+>>>
+>>>      git log --oneline --raw --parents --abbrev=40
+>>>
+>>> has no observable difference (sub 1% change in all cases). This is likely
+>>> due to the repack I used putting commits and trees in a small number of
+>>> packfiles so the MRU cache workes very well. On more naturally-created
+>>> lists of packfiles, there can be up to 20% improvement on this command.
+>>>
+>>> We are using a version of this patch with an upcoming release of GVFS.
+>>> This feature is particularly important in that space since GVFS performs
+>>> a "prefetch" step that downloads a pack of commits and trees on a daily
+>>> basis. These packfiles are placed in an alternate that is shared by all
+>>> enlistments. Some users have 150+ packfiles and the MRU misses and
+>>> abbreviation computations are significant. Now, GVFS manages the MIDX file
+>>> after adding new prefetch packfiles using the following command:
+>>>
+>>>      git midx --write --update-head --delete-expired --pack-dir=<alt>
+>>
+>> (Not a critique of this, just a (stupid) question)
+>>
+>> What's the practical use-case for this feature? Since it doesn't help
+>> with --abbrev=40 the speedup is all in the part that ensures we don't
+>> show an ambiguous SHA-1.
+>
+> The point of including the --abbrev=40 is to point out that object
+> lookups do not get slower with the MIDX feature. Using these "git log"
+> options is a good way to balance object lookups and abbreviations with
+> object parsing and diff machinery.[...]
 
-The right way of dealing with this is to kill "use_index" variable and
-only follow "istate" but at this stage we are not ready for that:
-while most git_attr_set_direction() calls just passes the_index to be
-assigned to use_index, unpack-trees passes a different one which is
-used by entry.c code, which has no way to know what index to use if we
-delete use_index. So this has to be done later.
+[snip]
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- archive.c              |  2 +-
- attr.c                 | 57 ++++++++++++++++++++++++++++--------------
- attr.h                 | 10 +++++---
- builtin/check-attr.c   |  4 +--
- builtin/pack-objects.c |  2 +-
- convert.c              |  2 +-
- dir.c                  |  2 +-
- ll-merge.c             |  4 +--
- userdiff.c             |  2 +-
- ws.c                   |  2 +-
- 10 files changed, 55 insertions(+), 32 deletions(-)
+> [...]And while the public data shape I shared did not show a
+> difference, our private testing of the Windows repository did show a
+> valuable improvement when isolating to object lookups and ignoring
+> abbreviation calculations.
 
-diff --git a/archive.c b/archive.c
-index 4fe7bec60c..3b4db8956a 100644
---- a/archive.c
-+++ b/archive.c
-@@ -108,7 +108,7 @@ static const struct attr_check *get_archive_attrs(const char *path)
- 	static struct attr_check *check;
- 	if (!check)
- 		check = attr_check_initl("export-ignore", "export-subst", NULL);
--	return git_check_attr(path, check) ? NULL : check;
-+	return git_check_attr(&the_index, path, check) ? NULL : check;
- }
- 
- static int check_attr_export_ignore(const struct attr_check *check)
-diff --git a/attr.c b/attr.c
-index 067fb9e0c0..863fad3bd1 100644
---- a/attr.c
-+++ b/attr.c
-@@ -708,10 +708,10 @@ static struct attr_stack *read_attr_from_array(const char **list)
-  * another thread could potentially be calling into the attribute system.
-  */
- static enum git_attr_direction direction;
--static struct index_state *use_index;
-+static const struct index_state *use_index;
- 
- void git_attr_set_direction(enum git_attr_direction new_direction,
--			    struct index_state *istate)
-+			    const struct index_state *istate)
- {
- 	if (is_bare_repository() && new_direction != GIT_ATTR_INDEX)
- 		BUG("non-INDEX attr direction in a bare repo");
-@@ -743,13 +743,24 @@ static struct attr_stack *read_attr_from_file(const char *path, int macro_ok)
- 	return res;
- }
- 
--static struct attr_stack *read_attr_from_index(const char *path, int macro_ok)
-+static struct attr_stack *read_attr_from_index(const struct index_state *istate,
-+					       const char *path,
-+					       int macro_ok)
- {
- 	struct attr_stack *res;
- 	char *buf, *sp;
- 	int lineno = 0;
-+	const struct index_state *to_read_from;
- 
--	buf = read_blob_data_from_index(use_index ? use_index : &the_index, path, NULL);
-+	/*
-+	 * Temporary workaround for c24f3abace (apply: file commited
-+	 * with CRLF should roundtrip diff and apply - 2017-08-19)
-+	 */
-+	to_read_from = use_index ? use_index : istate;
-+	if (!to_read_from)
-+		return NULL;
-+
-+	buf = read_blob_data_from_index(to_read_from, path, NULL);
- 	if (!buf)
- 		return NULL;
- 
-@@ -768,15 +779,16 @@ static struct attr_stack *read_attr_from_index(const char *path, int macro_ok)
- 	return res;
- }
- 
--static struct attr_stack *read_attr(const char *path, int macro_ok)
-+static struct attr_stack *read_attr(const struct index_state *istate,
-+				    const char *path, int macro_ok)
- {
- 	struct attr_stack *res = NULL;
- 
- 	if (direction == GIT_ATTR_INDEX) {
--		res = read_attr_from_index(path, macro_ok);
-+		res = read_attr_from_index(istate, path, macro_ok);
- 	} else if (!is_bare_repository()) {
- 		if (direction == GIT_ATTR_CHECKOUT) {
--			res = read_attr_from_index(path, macro_ok);
-+			res = read_attr_from_index(istate, path, macro_ok);
- 			if (!res)
- 				res = read_attr_from_file(path, macro_ok);
- 		} else if (direction == GIT_ATTR_CHECKIN) {
-@@ -788,7 +800,7 @@ static struct attr_stack *read_attr(const char *path, int macro_ok)
- 				 * We allow operation in a sparsely checked out
- 				 * work tree, so read from it.
- 				 */
--				res = read_attr_from_index(path, macro_ok);
-+				res = read_attr_from_index(istate, path, macro_ok);
- 		}
- 	}
- 
-@@ -859,7 +871,8 @@ static void push_stack(struct attr_stack **attr_stack_p,
- 	}
- }
- 
--static void bootstrap_attr_stack(struct attr_stack **stack)
-+static void bootstrap_attr_stack(const struct index_state *istate,
-+				 struct attr_stack **stack)
- {
- 	struct attr_stack *e;
- 
-@@ -883,7 +896,7 @@ static void bootstrap_attr_stack(struct attr_stack **stack)
- 	}
- 
- 	/* root directory */
--	e = read_attr(GITATTRIBUTES_FILE, 1);
-+	e = read_attr(istate, GITATTRIBUTES_FILE, 1);
- 	push_stack(stack, e, xstrdup(""), 0);
- 
- 	/* info frame */
-@@ -896,7 +909,8 @@ static void bootstrap_attr_stack(struct attr_stack **stack)
- 	push_stack(stack, e, NULL, 0);
- }
- 
--static void prepare_attr_stack(const char *path, int dirlen,
-+static void prepare_attr_stack(const struct index_state *istate,
-+			       const char *path, int dirlen,
- 			       struct attr_stack **stack)
- {
- 	struct attr_stack *info;
-@@ -917,7 +931,7 @@ static void prepare_attr_stack(const char *path, int dirlen,
- 	 * .gitattributes in deeper directories to shallower ones,
- 	 * and finally use the built-in set as the default.
- 	 */
--	bootstrap_attr_stack(stack);
-+	bootstrap_attr_stack(istate, stack);
- 
- 	/*
- 	 * Pop the "info" one that is always at the top of the stack.
-@@ -973,7 +987,7 @@ static void prepare_attr_stack(const char *path, int dirlen,
- 		strbuf_add(&pathbuf, path + pathbuf.len, (len - pathbuf.len));
- 		strbuf_addf(&pathbuf, "/%s", GITATTRIBUTES_FILE);
- 
--		next = read_attr(pathbuf.buf, 0);
-+		next = read_attr(istate, pathbuf.buf, 0);
- 
- 		/* reset the pathbuf to not include "/.gitattributes" */
- 		strbuf_setlen(&pathbuf, len);
-@@ -1095,7 +1109,9 @@ static void determine_macros(struct all_attrs_item *all_attrs,
-  * If check->check_nr is non-zero, only attributes in check[] are collected.
-  * Otherwise all attributes are collected.
-  */
--static void collect_some_attrs(const char *path, struct attr_check *check)
-+static void collect_some_attrs(const struct index_state *istate,
-+			       const char *path,
-+			       struct attr_check *check)
- {
- 	int i, pathlen, rem, dirlen;
- 	const char *cp, *last_slash = NULL;
-@@ -1114,7 +1130,7 @@ static void collect_some_attrs(const char *path, struct attr_check *check)
- 		dirlen = 0;
- 	}
- 
--	prepare_attr_stack(path, dirlen, &check->stack);
-+	prepare_attr_stack(istate, path, dirlen, &check->stack);
- 	all_attrs_init(&g_attr_hashmap, check);
- 	determine_macros(check->all_attrs, check->stack);
- 
-@@ -1136,11 +1152,13 @@ static void collect_some_attrs(const char *path, struct attr_check *check)
- 	fill(path, pathlen, basename_offset, check->stack, check->all_attrs, rem);
- }
- 
--int git_check_attr(const char *path, struct attr_check *check)
-+int git_check_attr(const struct index_state *istate,
-+		   const char *path,
-+		   struct attr_check *check)
- {
- 	int i;
- 
--	collect_some_attrs(path, check);
-+	collect_some_attrs(istate, path, check);
- 
- 	for (i = 0; i < check->nr; i++) {
- 		size_t n = check->items[i].attr->attr_nr;
-@@ -1153,12 +1171,13 @@ int git_check_attr(const char *path, struct attr_check *check)
- 	return 0;
- }
- 
--void git_all_attrs(const char *path, struct attr_check *check)
-+void git_all_attrs(const struct index_state *istate,
-+		   const char *path, struct attr_check *check)
- {
- 	int i;
- 
- 	attr_check_reset(check);
--	collect_some_attrs(path, check);
-+	collect_some_attrs(istate, path, check);
- 
- 	for (i = 0; i < check->all_attrs_nr; i++) {
- 		const char *name = check->all_attrs[i].attr->name;
-diff --git a/attr.h b/attr.h
-index 46340010bb..3daca3c0cb 100644
---- a/attr.h
-+++ b/attr.h
-@@ -1,6 +1,8 @@
- #ifndef ATTR_H
- #define ATTR_H
- 
-+struct index_state;
-+
- /* An attribute is a pointer to this opaque structure */
- struct git_attr;
- 
-@@ -60,13 +62,15 @@ void attr_check_free(struct attr_check *check);
-  */
- const char *git_attr_name(const struct git_attr *);
- 
--int git_check_attr(const char *path, struct attr_check *check);
-+int git_check_attr(const struct index_state *istate,
-+		   const char *path, struct attr_check *check);
- 
- /*
-  * Retrieve all attributes that apply to the specified path.
-  * check holds the attributes and their values.
-  */
--void git_all_attrs(const char *path, struct attr_check *check);
-+void git_all_attrs(const struct index_state *istate,
-+		   const char *path, struct attr_check *check);
- 
- enum git_attr_direction {
- 	GIT_ATTR_CHECKIN,
-@@ -74,7 +78,7 @@ enum git_attr_direction {
- 	GIT_ATTR_INDEX
- };
- void git_attr_set_direction(enum git_attr_direction new_direction,
--			    struct index_state *istate);
-+			    const struct index_state *istate);
- 
- void attr_start(void);
- 
-diff --git a/builtin/check-attr.c b/builtin/check-attr.c
-index 91444dc044..f7b59993d3 100644
---- a/builtin/check-attr.c
-+++ b/builtin/check-attr.c
-@@ -63,9 +63,9 @@ static void check_attr(const char *prefix,
- 		prefix_path(prefix, prefix ? strlen(prefix) : 0, file);
- 
- 	if (collect_all) {
--		git_all_attrs(full_path, check);
-+		git_all_attrs(&the_index, full_path, check);
- 	} else {
--		if (git_check_attr(full_path, check))
-+		if (git_check_attr(&the_index, full_path, check))
- 			die("git_check_attr died");
- 	}
- 	output_attr(check, file);
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 71056d8294..0a2e801549 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -945,7 +945,7 @@ static int no_try_delta(const char *path)
- 
- 	if (!check)
- 		check = attr_check_initl("delta", NULL);
--	if (git_check_attr(path, check))
-+	if (git_check_attr(&the_index, path, check))
- 		return 0;
- 	if (ATTR_FALSE(check->items[0].value))
- 		return 1;
-diff --git a/convert.c b/convert.c
-index 64d0d30e08..9d5dc32564 100644
---- a/convert.c
-+++ b/convert.c
-@@ -1302,7 +1302,7 @@ static void convert_attrs(struct conv_attrs *ca, const char *path)
- 		git_config(read_convert_config, NULL);
- 	}
- 
--	if (!git_check_attr(path, check)) {
-+	if (!git_check_attr(&the_index, path, check)) {
- 		struct attr_check_item *ccheck = check->items;
- 		ca->crlf_action = git_path_check_crlf(ccheck + 4);
- 		if (ca->crlf_action == CRLF_UNDEFINED)
-diff --git a/dir.c b/dir.c
-index ccf8b4975e..a541be3032 100644
---- a/dir.c
-+++ b/dir.c
-@@ -280,7 +280,7 @@ static int match_attrs(const char *name, int namelen,
- {
- 	int i;
- 
--	git_check_attr(name, item->attr_check);
-+	git_check_attr(&the_index, name, item->attr_check);
- 	for (i = 0; i < item->attr_match_nr; i++) {
- 		const char *value;
- 		int matched;
-diff --git a/ll-merge.c b/ll-merge.c
-index a6ad2ec12d..0e2800f7bb 100644
---- a/ll-merge.c
-+++ b/ll-merge.c
-@@ -371,7 +371,7 @@ int ll_merge(mmbuffer_t *result_buf,
- 	if (!check)
- 		check = attr_check_initl("merge", "conflict-marker-size", NULL);
- 
--	if (!git_check_attr(path, check)) {
-+	if (!git_check_attr(&the_index, path, check)) {
- 		ll_driver_name = check->items[0].value;
- 		if (check->items[1].value) {
- 			marker_size = atoi(check->items[1].value);
-@@ -398,7 +398,7 @@ int ll_merge_marker_size(const char *path)
- 
- 	if (!check)
- 		check = attr_check_initl("conflict-marker-size", NULL);
--	if (!git_check_attr(path, check) && check->items[0].value) {
-+	if (!git_check_attr(&the_index, path, check) && check->items[0].value) {
- 		marker_size = atoi(check->items[0].value);
- 		if (marker_size <= 0)
- 			marker_size = DEFAULT_CONFLICT_MARKER_SIZE;
-diff --git a/userdiff.c b/userdiff.c
-index a69241b25d..e835e78dd5 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -278,7 +278,7 @@ struct userdiff_driver *userdiff_find_by_path(const char *path)
- 		check = attr_check_initl("diff", NULL);
- 	if (!path)
- 		return NULL;
--	if (git_check_attr(path, check))
-+	if (git_check_attr(&the_index, path, check))
- 		return NULL;
- 
- 	if (ATTR_TRUE(check->items[0].value))
-diff --git a/ws.c b/ws.c
-index a07caedd5a..5b67b426e7 100644
---- a/ws.c
-+++ b/ws.c
-@@ -78,7 +78,7 @@ unsigned whitespace_rule(const char *pathname)
- 	if (!attr_whitespace_rule)
- 		attr_whitespace_rule = attr_check_initl("whitespace", NULL);
- 
--	if (!git_check_attr(pathname, attr_whitespace_rule)) {
-+	if (!git_check_attr(&the_index, pathname, attr_whitespace_rule)) {
- 		const char *value;
- 
- 		value = attr_whitespace_rule->items[0].value;
--- 
-2.18.0.rc0.333.g22e6ee6cdf
+Replying to this old thread since I see you're prepearing the MIDX for
+submission again and this seemed like the best venue.
 
+Your WIP branch (github.com/git/derrickstolee/midx/upstream) still only
+references the speedups in abbreviation calculations, but here you
+allude to other improvements. It would be very nice to have some summary
+of that in docs / commit messages when you submit this.
+
+I've been meaning to get around to submitting something like I mentioned
+in https://public-inbox.org/git/87efn0bkls.fsf@evledraar.gmail.com/
+i.e. a way to expand the abbrev mode to not check disambiguations, which
+would look something like:
+
+    core.abbrev = 20
+    core.validateAbbrev = false
+
+Or:
+
+    core.abbrev = +2
+    core.validateAbbrev = false
+
+So, using the example from the above referenced E-Mail +2 would make
+linux.git emit hashes of 14 characters, without any abbreviation
+checking (just trusting in statistics to work in your favor).
+
+As noted by JS in this thread that wouldn't be acceptable for your
+use-case, but there's plenty of people (including me) who'd appreciate
+the speedup without being a 100% sure we're emitting unambiguous hashes,
+since that trade-off is better than time spent generating another index
+on-disk. So I see it as a complimentary & orthogonal feature.
+
+But with that implemented I wouldn't get any benefit from things that
+use the MIDX that aren't abbreviations, so what are those?
+
+>> The reason we do that at all is because it makes for a prettier UI.
+>
+> We tried setting core.abbrev=40 on GVFS enlistments to speed up
+> performance and the users rebelled against the hideous output. They
+> would rather have slower speeds than long hashes.
+>
+>> Are there things that both want the pretty SHA-1 and also care about the
+>> throughput? I'd have expected machine parsing to just use
+>> --no-abbrev-commit.
+>
+> The --raw flag outputs blob hashes, so the --abbrev=40 covers all hashes.
+>
+>> If something cares about both throughput and e.g. is saving the
+>> abbreviated SHA-1s isn't it better off picking some arbitrary size
+>> (e.g. --abbrev=20), after all the default abbreviation is going to show
+>> something as small as possible, which may soon become ambigous after the
+>> next commit.
+>
+> Unfortunately, with the way the abbreviation algorithms work, using
+> --abbrev=20 will have similar performance problems because you still
+> need to inspect all packfiles to ensure there isn't a collision in the
+> first 20 hex characters.
+>
+> Thanks,
+> -Stolee
