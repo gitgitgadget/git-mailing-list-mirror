@@ -2,62 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A05B1F403
-	for <e@80x24.org>; Wed,  6 Jun 2018 07:40:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D99BC1F403
+	for <e@80x24.org>; Wed,  6 Jun 2018 07:40:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932344AbeFFHkK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Jun 2018 03:40:10 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:35759 "EHLO
+        id S932353AbeFFHkU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Jun 2018 03:40:20 -0400
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:42903 "EHLO
         mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932214AbeFFHkG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jun 2018 03:40:06 -0400
-Received: by mail-lf0-f66.google.com with SMTP id y72-v6so7564735lfd.2
-        for <git@vger.kernel.org>; Wed, 06 Jun 2018 00:40:06 -0700 (PDT)
+        with ESMTP id S932340AbeFFHkJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jun 2018 03:40:09 -0400
+Received: by mail-lf0-f66.google.com with SMTP id v135-v6so7556181lfa.9
+        for <git@vger.kernel.org>; Wed, 06 Jun 2018 00:40:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=yMyuoCd+xmPgJJqGRzMqZKb2QeI+uMmxnUNlJb8uh98=;
-        b=K7O2TSEyOIz7F1x90i4zxlUa/gfweqBQbT5YVwc8fjLNDviQeB8dMHU2uhLTcoBxHD
-         8yuwU1EkhdakkqX1iX/JuN5BwbWzr4S4MN+xq7ZmEWC/C08BXLhXVmUl0cIqrOinRAs3
-         cX4NbdyPBFRbhE9aENXp0IRA/EItDczVDodEXo5gtUyqkHQogqvOaVE35vKgYuSP3Yov
-         sMk3DdpqtHFYLQNsxA14tSfOZcHG/jqLJjXIOKzXFLa3mCbWda0mKd9ogTT7LzxIBF8J
-         2eEhCBHkfi5d1w7hpXcgxTu0rgy9qPIoU5VCeBdD61UUnvQcIDvOHaDsDlmvao05u4JN
-         pIBA==
+        bh=1fkbk0meiv+hB7yEtgM1B0zj2vrSSv0SACukNoDaejQ=;
+        b=Phx3kYyk4INeDeP8Y8hzHVnPoxKWvlEVwo4MrMmAjppTipwjhC7fM2fXzOXb6gKEJB
+         HPLxCk4B9t1XUpgGxocIhQaEqJzOwb6qnWqP97xL2qX40umwiAdykGFFaX7f5UuulRZu
+         9xknbcF0FcmZSPuBxt0+3ZjKAqWfIB2wtzOE86EtvKFSf3zDAMbLVnB6y31IFtPBeehO
+         RTUgPJ9nZVeIGUp5A+G2Yj6/91vTM9+JTKHX1FJg7nhdqGbofgH7MXZ7YGKQUjc8QTpH
+         KjPUl8Q8Pdd31VUw4zgDyINBPcdlGsN5zxPMEkoF9kH2y4vRkq4UFtARXGQ/Ej/Hl+rM
+         a7Sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=yMyuoCd+xmPgJJqGRzMqZKb2QeI+uMmxnUNlJb8uh98=;
-        b=KZW4GkBJsD+Z7Bt7fK41vkv/wDgNF3tQgASaW9GiCd9c71kaIc2ZamLLas3UJ+MpTz
-         rSGHHuQHmNFTop8mzmBPDaHyBPtI/JeBm0VeRwGkTGdiR347uJYiriQY+uX3dx1VVZD0
-         Y+ZTJtUSDhllY04jEu4BXsWWp48O6QabECLLVWSt3Ryhzj+lI0qye/60M+1tQkZ2cyKD
-         vDbFqmYT2ns+wtDgkl+nJcKpInnkDgLZQOBUkcerhoSkFprnuNzcxrA57iAGw9rRw8f9
-         78yiahwV7DrvXTYCjCmmRpgvzpt4TD6e2x1m5t/RZVGDQtFTR1pnzXo87WsUbIUEMm9M
-         MXJw==
-X-Gm-Message-State: APt69E3MT4VCzy4CjP6JkkRIqYEFEP2Q4igUxgbpsaeOYYoMF8ti6qd0
-        ov8rUDZ20+lf5B08suY0k0U83g==
-X-Google-Smtp-Source: ADUXVKLEB4FERsq9WsNkbI+2kgcQkkgzmJqkCUE2pGtnhCIgsZ+O049Z5Kh4yzzEGX/jhY61zGPGvw==
-X-Received: by 2002:a2e:92cb:: with SMTP id k11-v6mr1260298ljh.18.1528270805393;
-        Wed, 06 Jun 2018 00:40:05 -0700 (PDT)
+        bh=1fkbk0meiv+hB7yEtgM1B0zj2vrSSv0SACukNoDaejQ=;
+        b=VsjhI5ei+3zIuOOJ5yIcE69f0FG23jb2eQ8/67dUhxqDTR9sbrwWSe8Y5MmbDHxvQG
+         I1qsnKXOstQLEnLQumvNoRo4UyJy335aL70BUb+a1Xmg98NSTNmiK4we5orztK5d+eYQ
+         1kL9C/tXH7JaX2zw17/auQaPQDh95UTIYDDBLNbCdjpCSMMuGyVZgDAXI/yu7zFEjA1G
+         7HKIaH5i8fH+rZWfTLqE1Z5rbfk+gKS6reSR/sCQ5RZF9zUovlQTFEgZLJl2W00uMU1m
+         pK4GaSr0aCTM1I2PS07lPv9OPRcf/SOlFmDJQyW82tFDJGlRtpKSkxsuAw5vtecUrt5H
+         wMqA==
+X-Gm-Message-State: APt69E1/2K4SLOt9+Wg71/xJX4DHy5VyOLpCtJKchv4pgge+aguN0kFv
+        zpQAvGx6UfZfLA9gxLaJifNgzA==
+X-Google-Smtp-Source: ADUXVKITSqo9AZWnxtEjtyDkLpCo8KzwihKIqCZBKaUO8WcR3EESBn7UC9WJ3pSLcYGfte0teRZqlQ==
+X-Received: by 2002:a2e:7d10:: with SMTP id y16-v6mr1235053ljc.29.1528270808279;
+        Wed, 06 Jun 2018 00:40:08 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id u3-v6sm4189048lji.4.2018.06.06.00.40.04
+        by smtp.gmail.com with ESMTPSA id u3-v6sm4189048lji.4.2018.06.06.00.40.06
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 06 Jun 2018 00:40:04 -0700 (PDT)
+        Wed, 06 Jun 2018 00:40:07 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     bmwill@google.com, git@vger.kernel.org, newren@gmail.com,
         ramsay@ramsayjones.plus.com
-Subject: [PATCH v3 18/20] resolve-undo.c: use the right index instead of the_index
-Date:   Wed,  6 Jun 2018 09:39:31 +0200
-Message-Id: <20180606073933.14755-19-pclouds@gmail.com>
+Subject: [PATCH v3 20/20] cache.h: make the_index part of "compatibility macros"
+Date:   Wed,  6 Jun 2018 09:39:33 +0200
+Message-Id: <20180606073933.14755-21-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc0.333.g22e6ee6cdf
 In-Reply-To: <20180606073933.14755-1-pclouds@gmail.com>
 References: <20180606050207.13556-1-pclouds@gmail.com>
@@ -70,38 +69,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+While the_index is not actually a macro, its use throughout the code
+base is dangerous because developers sometimes may not see that some
+function is using the_index (instead of some other index that the devs
+are interested in).
+
+By keeping the_index part of this NO_ macro, we try to reduce its use
+more and more until it's completely gone.
+
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- resolve-undo.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ cache.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/resolve-undo.c b/resolve-undo.c
-index 9c45fe5d1d..a4918546c3 100644
---- a/resolve-undo.c
-+++ b/resolve-undo.c
-@@ -1,3 +1,4 @@
-+#define NO_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
- #include "dir.h"
- #include "resolve-undo.h"
-@@ -146,7 +147,7 @@ int unmerge_index_entry_at(struct index_state *istate, int pos)
- 		struct cache_entry *nce;
- 		if (!ru->mode[i])
- 			continue;
--		nce = make_cache_entry(&the_index, ru->mode[i], ru->oid[i].hash,
-+		nce = make_cache_entry(istate, ru->mode[i], ru->oid[i].hash,
- 				       name, i + 1, 0);
- 		if (matched)
- 			nce->ce_flags |= CE_MATCHED;
-@@ -186,7 +187,7 @@ void unmerge_index(struct index_state *istate, const struct pathspec *pathspec)
+diff --git a/cache.h b/cache.h
+index 5939233eb7..242aaa5498 100644
+--- a/cache.h
++++ b/cache.h
+@@ -330,8 +330,6 @@ struct index_state {
+ 	struct ewah_bitmap *fsmonitor_dirty;
+ };
  
- 	for (i = 0; i < istate->cache_nr; i++) {
- 		const struct cache_entry *ce = istate->cache[i];
--		if (!ce_path_match(&the_index, ce, pathspec, NULL))
-+		if (!ce_path_match(istate, ce, pathspec, NULL))
- 			continue;
- 		i = unmerge_index_entry_at(istate, i);
- 	}
+-extern struct index_state the_index;
+-
+ /* Name hashing */
+ extern int test_lazy_init_name_hash(struct index_state *istate, int try_threaded);
+ extern void add_name_hash(struct index_state *istate, struct cache_entry *ce);
+@@ -340,6 +338,8 @@ extern void free_name_hash(struct index_state *istate);
+ 
+ 
+ #ifndef NO_THE_INDEX_COMPATIBILITY_MACROS
++extern struct index_state the_index;
++
+ #define active_cache (the_index.cache)
+ #define active_nr (the_index.cache_nr)
+ #define active_alloc (the_index.cache_alloc)
 -- 
 2.18.0.rc0.333.g22e6ee6cdf
 
