@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-11.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EFC2D1F403
-	for <e@80x24.org>; Wed,  6 Jun 2018 20:47:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4F291F403
+	for <e@80x24.org>; Wed,  6 Jun 2018 20:47:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932083AbeFFUr3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Jun 2018 16:47:29 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:35378 "EHLO
+        id S1752541AbeFFUrb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Jun 2018 16:47:31 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:44091 "EHLO
         mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752240AbeFFUr0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jun 2018 16:47:26 -0400
-Received: by mail-pf0-f193.google.com with SMTP id c22-v6so3297800pfi.2
-        for <git@vger.kernel.org>; Wed, 06 Jun 2018 13:47:25 -0700 (PDT)
+        with ESMTP id S932080AbeFFUr3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jun 2018 16:47:29 -0400
+Received: by mail-pf0-f193.google.com with SMTP id h12-v6so3707011pfk.11
+        for <git@vger.kernel.org>; Wed, 06 Jun 2018 13:47:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=r6tQzjObKtvFQd/OiVYx8DLIqw/u7lQ1iqPpTBtuoYA=;
-        b=Wk0ngOcWVMdezDfPq0GKc+9J2ADkmnVIc29fZ+zcPgmrfN3KYiFBG2uouaMvURN3Ma
-         SS5sWtraveQvlL5mS6+o8MWwgEmvZZMWFJ6L6Dg9jSpDUaQ9RX9TntotbFEQJSATRBaK
-         zJeRJcMbFwc6l2Z57yxmVieBa35cOFhpiHhpR6CF3zafaPmt/iXIkuADnQXCIqUMu3e/
-         KT4ynlTdzjkUUr5/U5Os/VujdjppSJ9f+WHl6/mC6OJ8IwSzKQDtc6udsQyD0ygcsNnL
-         LYZxw9kyuwx8UqQxftGQYkcpha9yFGPfGiupjigh0zLAbRYuIpF8gWa2uL6pPxKfxQtj
-         n62A==
+        bh=D48DHgFJJ+eYzMl51t7Yc8S/zV8EGb9UDUjZtNf4Mrg=;
+        b=BQ59fAj5pmgBhvlRVIyG5T9Ey2wHpa1QHTJUiG38RuAAwOh1VKq4PKSLWs1p1a6IVI
+         2vr1zRhbaPdFu/aq7iHKVb9TuRavd8gkcUmWEkoU0MowuTvDmxrSy8vyJSdSwhenO6Xv
+         AKSqq9CChrLAU6LE/hL3GsHSALZLg/cPE34wK+g9glnzunpAd02t5xVFQEdZM/aEM2gP
+         hO9TpWxtvLc2/8jKZjJfiaf2WHCYnWfMhak9zva5+ebcIBJ9cWJwGlI4S0q7/VULtGW3
+         ssxy4+ZtHamRYMpVAf/w/1F7YYdSvn92DnJOKGjVJvsaK/cS9lA1wnrWS4uLU2orRFIr
+         8tdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=r6tQzjObKtvFQd/OiVYx8DLIqw/u7lQ1iqPpTBtuoYA=;
-        b=YJoi6b3Vp/WtkhuAv9CWAHEEs5DSt/kHiaoAWof2l+L02Pl1Si9B9skSegR3ih0g5C
-         sut1aW1aCRJzg6sc1PSyTT7LvStB7wZMhvAGjoPPAVO9SsYzofTCH21QlOC+NPa1dkvK
-         buTLVoMU/85QONIVuYFRev0I4suKcbw4oyT2nV39aUI4xFKHus9mYElnizw/XKVF2509
-         I1BJ2g7e3QUQMbYts7JD297hke6QCtuXTSk87494YHpCmm2OAm1JntV5BE4BZJj1Riz7
-         tuT07xHw2inGbia9a5xmxoKkQ4mKMrRsCndB5m1vAsYassPLOwtr4awVlWeaYmXP08Tv
-         Tuog==
-X-Gm-Message-State: APt69E3K7x1HKxuf8TrW0rsibkaC22eBfFRNNdbUSJ/hM51kJlR5gbM9
-        Ny1g9XiK9CV0GN6zx7SjJIomexSYQ04=
-X-Google-Smtp-Source: ADUXVKISJ5GBHWwIyXNdlKWcLywyTkwpP7r2H3GoDtNjR8YA+61L5/ZaQXb2ACagy4IhQmncWyBlYA==
-X-Received: by 2002:a65:4a90:: with SMTP id b16-v6mr3781388pgu.136.1528318044815;
-        Wed, 06 Jun 2018 13:47:24 -0700 (PDT)
+        bh=D48DHgFJJ+eYzMl51t7Yc8S/zV8EGb9UDUjZtNf4Mrg=;
+        b=EtuqjZ5/KpLA0Shik6O0++tku6LjCp76Ykj0haRnPp7290nViZyU8oH88pBkR5Dc6d
+         3wKbF8RdUC8dQH+rFGsKAZzpDvNT3WdlukxmISah7gt3o5b4sxfCXpX+OvCwf3khPLEx
+         Ls3xiMadw7JHkILh6nZLIrRFuzFP649XjnuhX4xtTyvF1nyvYuxakYk4WTJ0jcNBkM8d
+         WxAZVOb6YpMbKWLHKw9i5XG8IhzmuJcsZmuvJaV3Nm7CIrivF8W51V06k/GOcdrRXLLH
+         2TPTIHTIMdYYcyampRu4FqUB49Q7W/eJ0x1jEneg1V1/XxpbzHpB8OKzTEGnmI6OuM2B
+         7qow==
+X-Gm-Message-State: APt69E2lhp+UiksJ+9bdxcJZlm9MNRpd4Ii8AF3Kb5KetcicExhNHDe3
+        jH+R1+DQiR2UpuzZSlgvhhE9k1OF8ZE=
+X-Google-Smtp-Source: ADUXVKLY9JsY3qUT/uy6FAEmZ5MiqSBMBnjUxvgEp2JeZOoiZf/ZSc2V4Xqhwyqmo7jqBNr+HMrKyw==
+X-Received: by 2002:a65:6250:: with SMTP id q16-v6mr3849986pgv.113.1528318048306;
+        Wed, 06 Jun 2018 13:47:28 -0700 (PDT)
 Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
-        by smtp.gmail.com with ESMTPSA id m1-v6sm20703323pfh.155.2018.06.06.13.47.22
+        by smtp.gmail.com with ESMTPSA id m1-v6sm20703323pfh.155.2018.06.06.13.47.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 06 Jun 2018 13:47:22 -0700 (PDT)
+        Wed, 06 Jun 2018 13:47:27 -0700 (PDT)
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, jrnieder@gmail.com
-Subject: [PATCH v2 2/8] fetch-pack: clear marks before re-marking
-Date:   Wed,  6 Jun 2018 13:47:08 -0700
-Message-Id: <dca6619c551b8259aef0476146184996657a80e9.1528317619.git.jonathantanmy@google.com>
+Subject: [PATCH v2 4/8] fetch-pack: use ref adv. to prune "have" sent
+Date:   Wed,  6 Jun 2018 13:47:10 -0700
+Message-Id: <f12342fb2760eb0449c86c66bf44d39f5871be57.1528317619.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.17.0.768.g1526ddbba1.dirty
 In-Reply-To: <cover.1528317619.git.jonathantanmy@google.com>
 References: <cover.1527894919.git.jonathantanmy@google.com> <cover.1528317619.git.jonathantanmy@google.com>
@@ -62,57 +62,108 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If tag following is required when using a transport that does not
-support tag following, fetch_pack() will be invoked twice in the same
-process, necessitating a clearing of the object flags used by
-fetch_pack() sometime during the second invocation. This is currently
-done in find_common(), which means that the invocation of
-mark_complete_and_common_ref() in do_fetch_pack() is useless.
+In negotiation using protocol v2, fetch-pack sometimes does not make
+full use of the information obtained in the ref advertisement:
+specifically, that if the server advertises a commit that the client
+also has, the client never needs to inform the server that it has the
+commit's parents, since it can just tell the server that it has the
+advertised commit and it knows that the server can and will infer the
+rest.
 
-(This cannot be reproduced with Git alone, because all transports that
-come with Git support tag following.)
+This is because, in do_fetch_pack_v2(), rev_list_insert_ref_oid() is
+invoked before everything_local(). This means that if we have a commit
+that is both our ref and their ref, it would be enqueued by
+rev_list_insert_ref_oid() as SEEN, and since it is thus already SEEN,
+everything_local() would not enqueue it.
 
-Therefore, move this clearing from find_common() to its
-parent function do_fetch_pack(), right before it calls
-mark_complete_and_common_ref().
+If everything_local() were invoked first, as it is in do_fetch_pack()
+for protocol v0, then everything_local() would enqueue it with
+COMMON_REF | SEEN. The addition of COMMON_REF ensures that its parents
+are not sent as "have" lines.
 
-This has been occurring since the commit that introduced the clearing of
-marks, 420e9af498 ("Fix tag following", 2008-03-19).
-
-The corresponding code for protocol v2 in do_fetch_pack_v2() does not
-have this problem, as the clearing of flags is done before any marking
-(whether by rev_list_insert_ref_oid() or
-mark_complete_and_common_ref()).
+Change the order in do_fetch_pack_v2() to be consistent with
+do_fetch_pack(), and to avoid sending unnecessary "have" lines.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- fetch-pack.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fetch-pack.c          |  6 +++---
+ t/t5500-fetch-pack.sh | 39 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 42 insertions(+), 3 deletions(-)
 
 diff --git a/fetch-pack.c b/fetch-pack.c
-index 5c87bb8bb..2812499a5 100644
+index 09f5c83c4..114207b8e 100644
 --- a/fetch-pack.c
 +++ b/fetch-pack.c
-@@ -336,9 +336,6 @@ static int find_common(struct fetch_pack_args *args,
+@@ -1391,9 +1391,6 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 				for_each_ref(clear_marks, NULL);
+ 			marked = 1;
  
- 	if (args->stateless_rpc && multi_ack == 1)
- 		die(_("--stateless-rpc requires multi_ack_detailed"));
--	if (marked)
--		for_each_ref(clear_marks, NULL);
--	marked = 1;
+-			for_each_ref(rev_list_insert_ref_oid, NULL);
+-			for_each_cached_alternate(insert_one_alternate_object);
+-
+ 			/* Filter 'ref' by 'sought' and those that aren't local */
+ 			mark_complete_and_common_ref(args, &ref);
+ 			filter_refs(args, &ref, sought, nr_sought);
+@@ -1401,6 +1398,9 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 				state = FETCH_DONE;
+ 			else
+ 				state = FETCH_SEND_REQUEST;
++
++			for_each_ref(rev_list_insert_ref_oid, NULL);
++			for_each_cached_alternate(insert_one_alternate_object);
+ 			break;
+ 		case FETCH_SEND_REQUEST:
+ 			if (send_fetch_request(fd[1], args, ref, &common,
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index d4f435155..026ba9c9e 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -755,6 +755,45 @@ test_expect_success 'fetching deepen' '
+ 	)
+ '
  
- 	for_each_ref(rev_list_insert_ref_oid, NULL);
- 	for_each_cached_alternate(insert_one_alternate_object);
-@@ -1070,6 +1067,9 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
- 	if (!server_supports("deepen-relative") && args->deepen_relative)
- 		die(_("Server does not support --deepen"));
- 
-+	if (marked)
-+		for_each_ref(clear_marks, NULL);
-+	marked = 1;
- 	mark_complete_and_common_ref(args, &ref);
- 	filter_refs(args, &ref, sought, nr_sought);
- 	if (everything_local(args, &ref)) {
++test_expect_success 'use ref advertisement to prune "have" lines sent' '
++	rm -rf server client &&
++	git init server &&
++	test_commit -C server both_have_1 &&
++	git -C server tag -d both_have_1 &&
++	test_commit -C server both_have_2 &&
++
++	# In this test, the ref name that only the server has is a prefix of all
++	# other refs. This is because in protocol v2, the client sends
++	# "ref-prefix" to limit the ref advertisement. Naming the ref "bo" means
++	# that "ref-prefix refs/tags/bo*" is sent, resulting in the client also
++	# knowing about refs/tags/both_have_2, just as it would when it uses
++	# protocol v0.
++	git clone server client &&
++	test_commit -C server bo &&
++	test_commit -C client client_has &&
++
++	# In both protocol v0 and v2, ensure that the parent of both_have_2 is
++	# not sent as a "have" line. The client should know that the server has
++	# both_have_2, so it only needs to inform the server that it has
++	# both_have_2, and the server can infer the rest.
++
++	rm -f trace &&
++	cp -r client clientv0 &&
++	GIT_TRACE_PACKET="$(pwd)/trace" git -C clientv0 \
++		fetch origin bo &&
++	grep "have $(git -C client rev-parse client_has)" trace &&
++	grep "have $(git -C client rev-parse both_have_2)" trace &&
++	! grep "have $(git -C client rev-parse both_have_2^)" trace &&
++
++	rm -f trace &&
++	cp -r client clientv2 &&
++	GIT_TRACE_PACKET="$(pwd)/trace" git -C clientv2 -c protocol.version=2 \
++		fetch origin bo &&
++	grep "have $(git -C client rev-parse client_has)" trace &&
++	grep "have $(git -C client rev-parse both_have_2)" trace &&
++	! grep "have $(git -C client rev-parse both_have_2^)" trace
++'
++
+ test_expect_success 'filtering by size' '
+ 	rm -rf server client &&
+ 	test_create_repo server &&
 -- 
 2.17.0.768.g1526ddbba1.dirty
 
