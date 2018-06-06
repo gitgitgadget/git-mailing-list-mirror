@@ -7,59 +7,60 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC1A51F403
-	for <e@80x24.org>; Wed,  6 Jun 2018 09:42:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 93EC31F403
+	for <e@80x24.org>; Wed,  6 Jun 2018 09:42:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932462AbeFFJmE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Jun 2018 05:42:04 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:37200 "EHLO
-        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932395AbeFFJmD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jun 2018 05:42:03 -0400
-Received: by mail-lf0-f66.google.com with SMTP id g21-v6so6100169lfb.4
-        for <git@vger.kernel.org>; Wed, 06 Jun 2018 02:42:02 -0700 (PDT)
+        id S932499AbeFFJmJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Jun 2018 05:42:09 -0400
+Received: from mail-lf0-f54.google.com ([209.85.215.54]:40305 "EHLO
+        mail-lf0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932395AbeFFJmG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jun 2018 05:42:06 -0400
+Received: by mail-lf0-f54.google.com with SMTP id q11-v6so8079086lfc.7
+        for <git@vger.kernel.org>; Wed, 06 Jun 2018 02:42:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=S6ScC1TvT7W8wK6gzI/3oUNbSdON5+mKI92eVxpROJU=;
-        b=ViBGk70AvxI+pQ1wO2hWAc4vh9AXjpf8AOLe6LcusqYZV+PcxlcE+K21VBjcenJl7e
-         fNdaVolw2t50un4cv2dvSypy/l68F4v/3uLzFVeJ/xeEqPQGPi5VItgSftiiy1Nqhn7O
-         CGBgh7erlL9/4Fd+1uAGLS+dXs0yrR3BzYmP8i/dxsjoMdj068OtXwq71S+ZIylnxdO8
-         V7f32B2dVtQrdCJC/jQnSdmFco8cezzFc/qMa6pZrMD2h45IVPPiHKQ3EFAeei6W77YD
-         1DrtIOr5v8y8BULiHLf5jePd5rDcDNTqGd0UNDuGxqXXookAFKnZdMxsK3aWvT276mlV
-         mRaw==
+        bh=9VmgIwlgqH5xYfJbt88/rz2UCnF+DVgMSBvAp/JdPt4=;
+        b=Wd6pkU+jpQ5eTvv2wZQE7UeAlOEiNlFuIdNNfqKpLmGHvu/qmYjgMegrBbJKI5bUy/
+         4S+UNQfo3vnwJF8d3c5vAZiLNDWXMVzDf++ogUjK8brDI7RjMlNLry1wyjqxFJFGEi4O
+         rQfA7/2OwYJE4ojvIAsEkrb++6WjRV3MG37xF4McuFIazLzeeWcAAc7iuaNmV+xrEzD8
+         79W8yBu6U4SD7mqws8Ca5tcpd16K6vH/1zdgrFW01Tqq0Ob/aP8uo+9pFxilEgF0Jx7Z
+         5eJp1ZhdMVwM0ilzqfZ+gZP/eDTpweGGRUsm+gbvrKeGxcQXsBoKFRt54VqXnnDp/6tn
+         AOvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=S6ScC1TvT7W8wK6gzI/3oUNbSdON5+mKI92eVxpROJU=;
-        b=lmrDFJVE2WbKBiiml/9WnYbVOMHn+p5ao3kBrzLd/zOWVN8cWX93dUP+UbBxHg8uc6
-         c3iNuT8nV+qXGi+Ko0nZr8Q2g02HUaEreI4w+RATBUvetaeLfvhbKYsdI4/XSZt6zyiM
-         PNCv312fJuZWaSTOzb5mWutzJIRYmOZtj0Jt9PJNIL+l++M7AWszGGFbWIHN4Qh36T2c
-         gYjnI/+HiHJRLA9EkntVuf2dSxC2bOFdHETAvfOSkE3/hKHCfZS31/Rm+AdnjMqtjrbt
-         xs7SEm4r954krP9RsEMwYFOK5mRxeyrwhzlexQrnVxixIGzOdJhoFyyJ6nB4Ycbkln7r
-         3q2g==
-X-Gm-Message-State: APt69E2+JPaNSxgGiRN1yJJrugg0TZgteF/nTRjHnmUhWdYQVcxcveS0
-        XQjhKfM2vzb3BtoTUV6em2Q=
-X-Google-Smtp-Source: ADUXVKIJGqXN4oom+B1loLpPIVT1j9+eKoJ0fKxP783my8ZkL3QCyfpht2/GQZEschdujIh/b0/pRA==
-X-Received: by 2002:a2e:9b52:: with SMTP id o18-v6mr1557241ljj.49.1528278122274;
-        Wed, 06 Jun 2018 02:42:02 -0700 (PDT)
+        bh=9VmgIwlgqH5xYfJbt88/rz2UCnF+DVgMSBvAp/JdPt4=;
+        b=Vah4UX5cQqxtRQS8tLUXRJ7r+GkqRfLGSZkJgBt1V4TIb3RX7FQpN2sHetdDaxSJHL
+         JVuiH5FJ5sTBLKfJxr+DfnA+OJDZ7lkXIq1tBtcbUxUwEYGwKW4DgZ4su1l7AjPtfkub
+         sXmouhi1+wvFcgAhS7ox1iPYyjd6Ecn1wIHkX1ok5deLRIGuaVdDD03PixSx5XnVtRwA
+         8ZpJPTLROQlF2M1/dvA+pUrupaILafM7HNdgOXMnTox4e6y6UfRR+jImvF2p4coUIIm6
+         xjGAK8Mz+yDv3NakgtV/qLy5CoPMNC8VFNiBTXNGTfo43J0BTI2FWkIDP6HJ6vCMQZps
+         f/MQ==
+X-Gm-Message-State: APt69E1psw/6h7Nf6yzuCvBVpzcD/AAvvxxUjSEFSveZwyzrGmd9lqp2
+        hSieHkc0SVr643uoiC23hRf+gA==
+X-Google-Smtp-Source: ADUXVKL4lErJkgSG+5omsRCQjdaEhZ8Sanvz5QDmKNPjWHGT+g86mXD0BIUPpbGNDQHe0p0fUgoc+g==
+X-Received: by 2002:a2e:8951:: with SMTP id b17-v6mr1652658ljk.111.1528278124748;
+        Wed, 06 Jun 2018 02:42:04 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id v2-v6sm2987062ljj.71.2018.06.06.02.42.00
+        by smtp.gmail.com with ESMTPSA id v2-v6sm2987062ljj.71.2018.06.06.02.42.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 06 Jun 2018 02:42:01 -0700 (PDT)
+        Wed, 06 Jun 2018 02:42:03 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH v3 0/3] ompletion: complete all possible -no-<options>
-Date:   Wed,  6 Jun 2018 11:41:36 +0200
-Message-Id: <20180606094139.30906-1-pclouds@gmail.com>
+Subject: [PATCH v3 2/3] completion: suppress some -no- options
+Date:   Wed,  6 Jun 2018 11:41:38 +0200
+Message-Id: <20180606094139.30906-3-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc0.333.g22e6ee6cdf
-In-Reply-To: <20180527083828.6919-1-pclouds@gmail.com>
+In-Reply-To: <20180606094139.30906-1-pclouds@gmail.com>
 References: <20180527083828.6919-1-pclouds@gmail.com>
+ <20180606094139.30906-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,94 +69,57 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-v3 fixes an annoying bug in 3/3. If you do "git commit --fi<tab>"
-then the "fi" part is eaten up by bash and you got back to
-"git commit --" on the command line.
+Most --no- options do have some use, even if rarely to negate some
+option that's specified in an alias.
 
-This is because we give COMPREPLY with two options "--fixup" and
-"--no-...". The second one forces the common prefix "--" for both
-of them, instead of "--fi". Bash does the rest according to the book.
+These options --no-ours and --no-theirs however have no clear
+semantics. If I specify "--ours --no-theirs", the second will reset
+writeout stage and is equivalent of "--no-ours --no-theirs" which is
+not that easy to see. Drop them. You can either switch from --ours to
+--theirs and back but you can never negate them.
 
-Some tests are added to verify new behavior in __gitcomp and make sure
-this does not happen again.
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/checkout.c    | 10 ++++++----
+ t/t9902-completion.sh |  2 --
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 4eef353ee2..425d06256f 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -286,7 +286,10 @@ __gitcomp ()
- 		local c i=0 IFS=$' \t\n'
- 		for c in $1; do
- 			if [[ $c == "--" ]]; then
--				COMPREPLY[i++]="${2-}--no-...${4-} "
-+				c="--no-...${4-}"
-+				if [[ $c == "$cur_"* ]]; then
-+					COMPREPLY[i++]="${2-}$c "
-+				fi
- 				break
- 			fi
- 			c="$c${4-}"
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 2b3b768eff..c7670dbbfe 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1119,10 +1119,12 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 		OPT_SET_INT('t', "track",  &opts.track, N_("set upstream info for new branch"),
+ 			BRANCH_TRACK_EXPLICIT),
+ 		OPT_STRING(0, "orphan", &opts.new_orphan_branch, N_("new-branch"), N_("new unparented branch")),
+-		OPT_SET_INT('2', "ours", &opts.writeout_stage, N_("checkout our version for unmerged files"),
+-			    2),
+-		OPT_SET_INT('3', "theirs", &opts.writeout_stage, N_("checkout their version for unmerged files"),
+-			    3),
++		OPT_SET_INT_F('2', "ours", &opts.writeout_stage,
++			      N_("checkout our version for unmerged files"),
++			      2, PARSE_OPT_NONEG),
++		OPT_SET_INT_F('3', "theirs", &opts.writeout_stage,
++			      N_("checkout their version for unmerged files"),
++			      3, PARSE_OPT_NONEG),
+ 		OPT__FORCE(&opts.force, N_("force checkout (throw away local modifications)"),
+ 			   PARSE_OPT_NOCOMPLETE),
+ 		OPT_BOOL('m', "merge", &opts.merge, N_("perform a 3-way merge with the new branch")),
 diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index eb4a43584a..157ee7085d 100755
+index 07c3e3b760..7e5e3ad5b1 100755
 --- a/t/t9902-completion.sh
 +++ b/t/t9902-completion.sh
-@@ -459,6 +459,42 @@ test_expect_success '__gitcomp - suffix' '
- 	EOF
- '
- 
-+test_expect_success '__gitcomp - ignore optional negative options' '
-+	test_gitcomp "--" "--abc --def --no-one -- --no-two" <<-\EOF
-+	--abc Z
-+	--def Z
-+	--no-one Z
-+	--no-... Z
-+	EOF
-+'
-+
-+test_expect_success '__gitcomp - ignore/narrow optional negative options' '
-+	test_gitcomp "--a" "--abc --abcdef --no-one -- --no-two" <<-\EOF
-+	--abc Z
-+	--abcdef Z
-+	EOF
-+'
-+
-+test_expect_success '__gitcomp - ignore/narrow optional negative options' '
-+	test_gitcomp "--n" "--abc --def --no-one -- --no-two" <<-\EOF
-+	--no-one Z
-+	--no-... Z
-+	EOF
-+'
-+
-+test_expect_success '__gitcomp - expand all negative options' '
-+	test_gitcomp "--no-" "--abc --def --no-one -- --no-two" <<-\EOF
-+	--no-one Z
-+	--no-two Z
-+	EOF
-+'
-+
-+test_expect_success '__gitcomp - expand/narrow all negative options' '
-+	test_gitcomp "--no-o" "--abc --def --no-one -- --no-two" <<-\EOF
-+	--no-one Z
-+	EOF
-+'
-+
- test_expect_success '__gitcomp - doesnt fail because of invalid variable name' '
- 	__gitcomp "$invalid_variable_name"
- '
-
-
-Nguyễn Thái Ngọc Duy (3):
-  parse-options: option to let --git-completion-helper show negative
-    form
-  completion: suppress some -no- options
-  completion: collapse extra --no-.. options
-
- builtin/checkout.c                     | 10 +++--
- contrib/completion/git-completion.bash | 61 ++++++++++++++++----------
- parse-options.c                        | 58 ++++++++++++++++++++++--
- t/t9902-completion.sh                  | 41 ++++++++++++++++-
- 4 files changed, 136 insertions(+), 34 deletions(-)
-
+@@ -1245,9 +1245,7 @@ test_expect_success 'double dash "git checkout"' '
+ 	--orphan=Z
+ 	--no-orphan Z
+ 	--ours Z
+-	--no-ours Z
+ 	--theirs Z
+-	--no-theirs Z
+ 	--merge Z
+ 	--no-merge Z
+ 	--conflict=Z
 -- 
 2.18.0.rc0.333.g22e6ee6cdf
 
