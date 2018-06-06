@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 58B6D1F403
-	for <e@80x24.org>; Wed,  6 Jun 2018 17:03:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 39A3A1F62D
+	for <e@80x24.org>; Wed,  6 Jun 2018 17:03:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933801AbeFFRDM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Jun 2018 13:03:12 -0400
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:37255 "EHLO
-        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933796AbeFFRDK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jun 2018 13:03:10 -0400
-Received: by mail-lf0-f68.google.com with SMTP id g21-v6so8238672lfb.4
-        for <git@vger.kernel.org>; Wed, 06 Jun 2018 10:03:09 -0700 (PDT)
+        id S933693AbeFFRDm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Jun 2018 13:03:42 -0400
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:40370 "EHLO
+        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933045AbeFFRDN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jun 2018 13:03:13 -0400
+Received: by mail-lf0-f67.google.com with SMTP id q11-v6so10219896lfc.7
+        for <git@vger.kernel.org>; Wed, 06 Jun 2018 10:03:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=S/tTtRAWHjTHnRAdB3nnsEgAzLE3j+oQJ40DStrNGTs=;
-        b=LPyXSkKBtC+PBxFs5X4toRVP/5dbfmHVlrhzwOLmkj3Fc76PtfBiGGlWUwCEAx1aqk
-         B4rh3Q79UZaPljEcCeVILGhDug9k3CtD6cKSMbsSOf5pJddpv1+vpTYSvvQMRxTeQ4uQ
-         osR6XiSmbt88SCjyiHpKej/m8i4CuCRlwG+DwVfNp1oVGz73g8UBkw4C8RUabZeJDshw
-         nqmDVshjcZHU1uL7fhJYtHBzbgDuoh8vmDHQaXAYaBF6c9HTESSNyP+E6OF23Ku3PIOZ
-         59j11ACwifp8+umLtLI4JxLTV3PJNg0ftQSjaWnij9/sgLAg1ei+IG6sUsVUP40NPN/t
-         r7UA==
+        bh=VVm4mIx3HZDZA2SCbJWyiVuWBq49LGkgivi6yAmkZTg=;
+        b=f5J4qpa/hiWwqirye/sGeez5hEFcIv3OHQ2QazCu9gZ6FVkDBzbbAKK/qfUtIRS83H
+         PWWdHMBNqhlnAAJEUsX/lXAC6XcbRdPnFAsaIGT4HEtqQDNutNyGjL45Fq4L/Andc5Yi
+         ZfrSzHD51q9IshJjgx215uck94/+zYcs6419JHEpaCuPDg9BX3SaSd7vC5n+uBgEN9nm
+         YTmMkE+sL0+BTLAgZnkH4x3IvsfG99oCg7ZHhFc6x3wc54WzEXFvJDaWAyVHtMN/lT3h
+         3lnbLk+ps8MVEUNJBadev9Q2904kBigI8NJfnS+Oew8eM4K5pVq32v/UmKtYzUFlGcB7
+         qEfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=S/tTtRAWHjTHnRAdB3nnsEgAzLE3j+oQJ40DStrNGTs=;
-        b=IVPnihStIyc/+rr55A7QzQnAbqNbPcrTty9nWv1icK9UbS5e4PMr8myRYBJ6q7zt9A
-         xnXFY69so/ZJWujjCgEzRvpo0GHAv4UTXvM4OT1uherbybffADBAGYcxFkV9z1Dfd+gC
-         Eez6Um5ARtkMK3uon1pNcJ8Ek75JQOBfBnIedkpSMNfuDQG9fOlfaiDvA8HOJmlh6eRc
-         bQqjspa7/DxmBZr88w7OzO9Md7q8Q86Y4AfbKEmDqIfJOkV2QNayHsU6+LmJe67v9y+3
-         0Q5Ieoib1Lqx81sO2loGbziWsfZuOHttYyp0U+iYtazLq6KmbM13A1NDGXoEciFB1rzN
-         ODSg==
-X-Gm-Message-State: APt69E1z0111V7bb6DWPLFn/zzM6OXCh6e5IzdTTQBN1ULwZJJirF+Fc
-        bfNxHCf4aZFIF95o8MZ/Rok=
-X-Google-Smtp-Source: ADUXVKIEagnxNNrMyuOi0FqPYvP6nFrRTIjGA7Jlse/9wMd5Vj+i8t76PLOfNBFOs52XFhwm2FI2hQ==
-X-Received: by 2002:a19:e82c:: with SMTP id f44-v6mr2319341lfh.19.1528304588671;
-        Wed, 06 Jun 2018 10:03:08 -0700 (PDT)
+        bh=VVm4mIx3HZDZA2SCbJWyiVuWBq49LGkgivi6yAmkZTg=;
+        b=TE8C2kDlF0qvrMTjVf7+eGCUK44JDGoc/OrliaK+/T19sH1l/PmXSgAmkgaqbiJBjh
+         S0tcN70r9tl/yOr+8RfnnPNkH/WrZ8hGrNPmasP6FvDb4sHbkMHXd2apm7ponBB06NPb
+         INEM2qPtqXq3uCLaekPOAwVvFF0VncN+jv7VsrCgUL6Dflm4LiCfUG48MrurD/NQ05IZ
+         KKQGs7U0uSnvxODmudwBr+8i+9+KQ0znVyeovkCwrNKvzLfJuOkQom+XAPL+3qYqih2Y
+         5jOrxGB4t9QpDaAI6ySLoG3QOG9n9Khg5H54+fhGs2qUasJtILkt8E4JOhfYMxCzygHm
+         XZwQ==
+X-Gm-Message-State: APt69E0YpOqyPSvD4x5zdBhVTlM3ZQw0WJyPBxE2dF+QqEtqZOm83W5e
+        gwcniMlJB1d21FjlFH8ZkHY=
+X-Google-Smtp-Source: ADUXVKK/+CMlndTY40IybtolVCONC/Fp17x7iQmlIKpotJx/W8ekWZd7dT/YF62JRZEuVmEGa1L1Mg==
+X-Received: by 2002:a19:a413:: with SMTP id q19-v6mr2299247lfc.143.1528304591277;
+        Wed, 06 Jun 2018 10:03:11 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id g14-v6sm1485305lfb.36.2018.06.06.10.03.07
+        by smtp.gmail.com with ESMTPSA id g14-v6sm1485305lfb.36.2018.06.06.10.03.09
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 06 Jun 2018 10:03:07 -0700 (PDT)
+        Wed, 06 Jun 2018 10:03:10 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     bmwill@google.com, git@vger.kernel.org, newren@gmail.com,
         ramsay@ramsayjones.plus.com
-Subject: [PATCH v4 15/23] attr: remove index from git_attr_set_direction()
-Date:   Wed,  6 Jun 2018 19:02:35 +0200
-Message-Id: <20180606170243.4169-10-pclouds@gmail.com>
+Subject: [PATCH v4 17/23] read-cache.c: remove an implicit dependency on the_index
+Date:   Wed,  6 Jun 2018 19:02:37 +0200
+Message-Id: <20180606170243.4169-12-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc0.333.g22e6ee6cdf
 In-Reply-To: <20180606170243.4169-1-pclouds@gmail.com>
 References: <20180606165016.3285-1-pclouds@gmail.com>
@@ -69,133 +69,202 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since attr checking API now take the index, there's no need to set an
-index in advance with this call. Most call sites are straightforward
-because they either pass the_index or NULL (which defaults back to
-the_index previously). There's only one suspicious call site in
-unpack-trees.c where it sets a different index.
-
-This code in unpack-trees is about to checking out entries from the
-new/temporary index after merging is done in it. The attributes will
-be used by entry.c code to do crlf conversion if needed. entry.c now
-respects struct checkout's istate field, and this field is correctly
-set in unpack-trees.c, there should be no regression from this change.
+Make some index API take an index_state instead of assuming the_index
+in read-cache.c. All external call sites are converted blindly to keep
+the patch simple and retain current behavior.  Individual call sites
+may receive further updates to use the right index instead of the_index.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- archive.c            |  2 +-
- attr.c               | 15 +++------------
- attr.h               |  3 +--
- builtin/check-attr.c |  2 +-
- unpack-trees.c       |  4 ++--
- 5 files changed, 8 insertions(+), 18 deletions(-)
+ apply.c            |  4 ++--
+ builtin/checkout.c |  4 ++--
+ builtin/difftool.c |  4 ++--
+ builtin/reset.c    |  4 ++--
+ cache.h            |  5 +++--
+ merge-recursive.c  |  2 +-
+ read-cache.c       | 19 +++++++++++--------
+ resolve-undo.c     |  2 +-
+ 8 files changed, 24 insertions(+), 20 deletions(-)
 
-diff --git a/archive.c b/archive.c
-index 1b44503ebb..d1d0a0d6b3 100644
---- a/archive.c
-+++ b/archive.c
-@@ -273,7 +273,7 @@ int write_archive_entries(struct archiver_args *args,
- 		init_tree_desc(&t, args->tree->buffer, args->tree->size);
- 		if (unpack_trees(1, &t, &opts))
- 			return -1;
--		git_attr_set_direction(GIT_ATTR_INDEX, &the_index);
-+		git_attr_set_direction(GIT_ATTR_INDEX);
- 	}
+diff --git a/apply.c b/apply.c
+index 9720855590..fc42a0eadf 100644
+--- a/apply.c
++++ b/apply.c
+@@ -4090,9 +4090,9 @@ static int build_fake_ancestor(struct apply_state *state, struct patch *list)
+ 			return error(_("sha1 information is lacking or useless "
+ 				       "(%s)."), name);
  
- 	err = read_tree_recursive(args->tree, "", 0, 0, &args->pathspec,
-diff --git a/attr.c b/attr.c
-index 863fad3bd1..98e4953f6e 100644
---- a/attr.c
-+++ b/attr.c
-@@ -708,10 +708,8 @@ static struct attr_stack *read_attr_from_array(const char **list)
-  * another thread could potentially be calling into the attribute system.
-  */
- static enum git_attr_direction direction;
--static const struct index_state *use_index;
+-		ce = make_cache_entry(patch->old_mode, oid.hash, name, 0, 0);
++		ce = make_index_entry(&the_index, patch->old_mode, oid.hash, name, 0, 0);
+ 		if (!ce)
+-			return error(_("make_cache_entry failed for path '%s'"),
++			return error(_("make_index_entry failed for path '%s'"),
+ 				     name);
+ 		if (add_index_entry(&result, ce, ADD_CACHE_OK_TO_ADD)) {
+ 			free(ce);
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index f8c208cea1..d2257e0d82 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -230,9 +230,9 @@ static int checkout_merged(int pos, const struct checkout *state)
+ 	if (write_object_file(result_buf.ptr, result_buf.size, blob_type, &oid))
+ 		die(_("Unable to add merge result for '%s'"), path);
+ 	free(result_buf.ptr);
+-	ce = make_cache_entry(mode, oid.hash, path, 2, 0);
++	ce = make_index_entry(&the_index, mode, oid.hash, path, 2, 0);
+ 	if (!ce)
+-		die(_("make_cache_entry failed for path '%s'"), path);
++		die(_("make_index_entry failed for path '%s'"), path);
+ 	status = checkout_entry(ce, state, NULL);
+ 	free(ce);
+ 	return status;
+diff --git a/builtin/difftool.c b/builtin/difftool.c
+index bc97d4aef2..fb2ccfe6f0 100644
+--- a/builtin/difftool.c
++++ b/builtin/difftool.c
+@@ -321,7 +321,7 @@ static int checkout_path(unsigned mode, struct object_id *oid,
+ 	struct cache_entry *ce;
+ 	int ret;
  
--void git_attr_set_direction(enum git_attr_direction new_direction,
--			    const struct index_state *istate)
-+void git_attr_set_direction(enum git_attr_direction new_direction)
+-	ce = make_cache_entry(mode, oid->hash, path, 0, 0);
++	ce = make_index_entry(&the_index, mode, oid->hash, path, 0, 0);
+ 	ret = checkout_entry(ce, state, NULL);
+ 
+ 	free(ce);
+@@ -488,7 +488,7 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+ 				 * index.
+ 				 */
+ 				struct cache_entry *ce2 =
+-					make_cache_entry(rmode, roid.hash,
++					make_index_entry(&the_index, rmode, roid.hash,
+ 							 dst_path, 0, 0);
+ 
+ 				add_index_entry(&wtindex, ce2,
+diff --git a/builtin/reset.c b/builtin/reset.c
+index a862c70fab..067f535031 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -134,10 +134,10 @@ static void update_index_from_diff(struct diff_queue_struct *q,
+ 			continue;
+ 		}
+ 
+-		ce = make_cache_entry(one->mode, one->oid.hash, one->path,
++		ce = make_index_entry(&the_index, one->mode, one->oid.hash, one->path,
+ 				      0, 0);
+ 		if (!ce)
+-			die(_("make_cache_entry failed for path '%s'"),
++			die(_("make_index_entry failed for path '%s'"),
+ 			    one->path);
+ 		if (is_missing) {
+ 			ce->ce_flags |= CE_INTENT_TO_ADD;
+diff --git a/cache.h b/cache.h
+index 89a107a7f7..64abd3e55c 100644
+--- a/cache.h
++++ b/cache.h
+@@ -355,6 +355,7 @@ extern void free_name_hash(struct index_state *istate);
+ #define unmerged_cache() unmerged_index(&the_index)
+ #define cache_name_pos(name, namelen) index_name_pos(&the_index,(name),(namelen))
+ #define add_cache_entry(ce, option) add_index_entry(&the_index, (ce), (option))
++#define refresh_cache_entry(ce, flags) refresh_index_entry(&the_index, ce, flags)
+ #define rename_cache_entry_at(pos, new_name) rename_index_entry_at(&the_index, (pos), (new_name))
+ #define remove_cache_entry_at(pos) remove_index_entry_at(&the_index, (pos))
+ #define remove_file_from_cache(path) remove_file_from_index(&the_index, (path))
+@@ -698,7 +699,7 @@ extern int remove_file_from_index(struct index_state *, const char *path);
+ extern int add_to_index(struct index_state *, const char *path, struct stat *, int flags);
+ extern int add_file_to_index(struct index_state *, const char *path, int flags);
+ 
+-extern struct cache_entry *make_cache_entry(unsigned int mode, const unsigned char *sha1, const char *path, int stage, unsigned int refresh_options);
++extern struct cache_entry *make_index_entry(struct index_state *istate, unsigned int mode, const unsigned char *sha1, const char *path, int stage, unsigned int refresh_options);
+ extern int chmod_index_entry(struct index_state *, struct cache_entry *ce, char flip);
+ extern int ce_same_name(const struct cache_entry *a, const struct cache_entry *b);
+ extern void set_object_name_for_intent_to_add_entry(struct cache_entry *ce);
+@@ -751,7 +752,7 @@ extern void fill_stat_cache_info(struct cache_entry *ce, struct stat *st);
+ #define REFRESH_IGNORE_SUBMODULES	0x0010	/* ignore submodules */
+ #define REFRESH_IN_PORCELAIN	0x0020	/* user friendly output, not "needs update" */
+ extern int refresh_index(struct index_state *, unsigned int flags, const struct pathspec *pathspec, char *seen, const char *header_msg);
+-extern struct cache_entry *refresh_cache_entry(struct cache_entry *, unsigned int);
++extern struct cache_entry *refresh_index_entry(struct index_state *istate, struct cache_entry *, unsigned int);
+ 
+ /*
+  * Opportunistically update the index but do not complain if we can't.
+diff --git a/merge-recursive.c b/merge-recursive.c
+index b404ebac7c..4f054d6dbb 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -315,7 +315,7 @@ static int add_cacheinfo(struct merge_options *o,
+ 	struct cache_entry *ce;
+ 	int ret;
+ 
+-	ce = make_cache_entry(mode, oid ? oid->hash : null_sha1, path, stage, 0);
++	ce = make_index_entry(&the_index, mode, oid ? oid->hash : null_sha1, path, stage, 0);
+ 	if (!ce)
+ 		return err(o, _("add_cacheinfo failed for path '%s'; merge aborting."), path);
+ 
+diff --git a/read-cache.c b/read-cache.c
+index 12cc22d157..4352aac521 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -745,9 +745,11 @@ int add_file_to_index(struct index_state *istate, const char *path, int flags)
+ 	return add_to_index(istate, path, &st, flags);
+ }
+ 
+-struct cache_entry *make_cache_entry(unsigned int mode,
+-		const unsigned char *sha1, const char *path, int stage,
+-		unsigned int refresh_options)
++struct cache_entry *make_index_entry(struct index_state *istate,
++				     unsigned int mode,
++				     const unsigned char *sha1,
++				     const char *path, int stage,
++				     unsigned int refresh_options)
  {
- 	if (is_bare_repository() && new_direction != GIT_ATTR_INDEX)
- 		BUG("non-INDEX attr direction in a bare repo");
-@@ -720,7 +718,6 @@ void git_attr_set_direction(enum git_attr_direction new_direction,
- 		drop_all_attr_stacks();
+ 	int size, len;
+ 	struct cache_entry *ce, *ret;
+@@ -767,7 +769,7 @@ struct cache_entry *make_cache_entry(unsigned int mode,
+ 	ce->ce_namelen = len;
+ 	ce->ce_mode = create_ce_mode(mode);
  
- 	direction = new_direction;
--	use_index = istate;
+-	ret = refresh_cache_entry(ce, refresh_options);
++	ret = refresh_index_entry(istate, ce, refresh_options);
+ 	if (ret != ce)
+ 		free(ce);
+ 	return ret;
+@@ -1415,7 +1417,7 @@ int refresh_index(struct index_state *istate, unsigned int flags,
+ 		if (ignore_submodules && S_ISGITLINK(ce->ce_mode))
+ 			continue;
+ 
+-		if (pathspec && !ce_path_match(&the_index, ce, pathspec, seen))
++		if (pathspec && !ce_path_match(istate, ce, pathspec, seen))
+ 			filtered = 1;
+ 
+ 		if (ce_stage(ce)) {
+@@ -1473,10 +1475,11 @@ int refresh_index(struct index_state *istate, unsigned int flags,
+ 	return has_errors;
  }
  
- static struct attr_stack *read_attr_from_file(const char *path, int macro_ok)
-@@ -750,17 +747,11 @@ static struct attr_stack *read_attr_from_index(const struct index_state *istate,
- 	struct attr_stack *res;
- 	char *buf, *sp;
- 	int lineno = 0;
--	const struct index_state *to_read_from;
- 
--	/*
--	 * Temporary workaround for c24f3abace (apply: file commited
--	 * with CRLF should roundtrip diff and apply - 2017-08-19)
--	 */
--	to_read_from = use_index ? use_index : istate;
--	if (!to_read_from)
-+	if (!istate)
- 		return NULL;
- 
--	buf = read_blob_data_from_index(to_read_from, path, NULL);
-+	buf = read_blob_data_from_index(istate, path, NULL);
- 	if (!buf)
- 		return NULL;
- 
-diff --git a/attr.h b/attr.h
-index 3daca3c0cb..01dab4a126 100644
---- a/attr.h
-+++ b/attr.h
-@@ -77,8 +77,7 @@ enum git_attr_direction {
- 	GIT_ATTR_CHECKOUT,
- 	GIT_ATTR_INDEX
- };
--void git_attr_set_direction(enum git_attr_direction new_direction,
--			    const struct index_state *istate);
-+void git_attr_set_direction(enum git_attr_direction new_direction);
- 
- void attr_start(void);
- 
-diff --git a/builtin/check-attr.c b/builtin/check-attr.c
-index f7b59993d3..c05573ff9c 100644
---- a/builtin/check-attr.c
-+++ b/builtin/check-attr.c
-@@ -120,7 +120,7 @@ int cmd_check_attr(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (cached_attrs)
--		git_attr_set_direction(GIT_ATTR_INDEX, NULL);
-+		git_attr_set_direction(GIT_ATTR_INDEX);
- 
- 	doubledash = -1;
- 	for (i = 0; doubledash < 0 && i < argc; i++) {
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 3ace82ca27..8cb407173e 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -361,7 +361,7 @@ static int check_updates(struct unpack_trees_options *o)
- 	progress = get_progress(o);
- 
- 	if (o->update)
--		git_attr_set_direction(GIT_ATTR_CHECKOUT, index);
-+		git_attr_set_direction(GIT_ATTR_CHECKOUT);
- 
- 	if (should_update_submodules() && o->update && !o->dry_run)
- 		load_gitmodules_file(index, NULL);
-@@ -421,7 +421,7 @@ static int check_updates(struct unpack_trees_options *o)
- 	stop_progress(&progress);
- 	errs |= finish_delayed_checkout(&state);
- 	if (o->update)
--		git_attr_set_direction(GIT_ATTR_CHECKIN, NULL);
-+		git_attr_set_direction(GIT_ATTR_CHECKIN);
- 	return errs != 0;
+-struct cache_entry *refresh_cache_entry(struct cache_entry *ce,
+-					       unsigned int options)
++struct cache_entry *refresh_index_entry(struct index_state *istate,
++					struct cache_entry *ce,
++					unsigned int options)
+ {
+-	return refresh_cache_ent(&the_index, ce, options, NULL, NULL);
++	return refresh_cache_ent(istate, ce, options, NULL, NULL);
  }
  
+ 
+diff --git a/resolve-undo.c b/resolve-undo.c
+index 5e4c8c5f75..383231b011 100644
+--- a/resolve-undo.c
++++ b/resolve-undo.c
+@@ -146,7 +146,7 @@ int unmerge_index_entry_at(struct index_state *istate, int pos)
+ 		struct cache_entry *nce;
+ 		if (!ru->mode[i])
+ 			continue;
+-		nce = make_cache_entry(ru->mode[i], ru->oid[i].hash,
++		nce = make_index_entry(&the_index, ru->mode[i], ru->oid[i].hash,
+ 				       name, i + 1, 0);
+ 		if (matched)
+ 			nce->ce_flags |= CE_MATCHED;
 -- 
 2.18.0.rc0.333.g22e6ee6cdf
 
