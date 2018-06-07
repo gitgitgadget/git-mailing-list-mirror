@@ -7,59 +7,58 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E8061F517
-	for <e@80x24.org>; Thu,  7 Jun 2018 00:58:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5FE991F403
+	for <e@80x24.org>; Thu,  7 Jun 2018 01:26:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752241AbeFGA5M (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Jun 2018 20:57:12 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:34526 "EHLO
+        id S1752552AbeFGBZ6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Jun 2018 21:25:58 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:34544 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752175AbeFGA5L (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 6 Jun 2018 20:57:11 -0400
+        by vger.kernel.org with ESMTP id S1752456AbeFGBZ5 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 6 Jun 2018 21:25:57 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:54a4:7f2e:59a2:6beb])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id AC86560129;
-        Thu,  7 Jun 2018 00:57:09 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id EFF0060129;
+        Thu,  7 Jun 2018 01:25:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1528333030;
-        bh=Pkjora8tnRYdIG6TvECX6yIhAuGSaATR35zeyYlP8w4=;
+        s=default; t=1528334755;
+        bh=yQMgU09mIls9r6KjRbT0wxvPRMRQjaIV33QZDlKzxJU=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=IVlzt4shwRZ1Mku92FZa54SeqQIAqy7XSsMQPcHFVPuE3tcbZsORL/evYzFo6q5bR
-         Tmy34fd7rtOzvk+fPKJkKMuNriznWVGtqcrChH38QkofEjc4l1U3j+mH+/1IKl/zGp
-         dl28ZsB6Ec3ZJmyL0RNAmA1A7ZoGJ1fE4IPQilTrzoVcZE1FqAVIIovUwr/SOcv2CN
-         jMlItg5URNkvKNER253sNk9+jYAVu9tp1vmd//rtTpkIxDZg8hIsrmf38Jzo5XVS/K
-         i60SJBMT0pOU9W+AXaOACBG4CKHflQ+7I8QBTFfXD9dB3B2ZxlACOKzuCJRu+4KSCw
-         BvNJyR2jpQPw4xt2OA/JvEMbLKmoVWzaKB90IaVh4JhI2luG7e8S5Da9v4OjomEZkc
-         UnrCE1PCHStiv2oDwtO6uvnLq63NSiSx7lyUs/eCbNAezlpnrPISlTLuG8BnJNa0uy
-         1Ytpq4Dexfjwi4aIeZgvhgoLoPYD4oUEGI5j3NQreku4dRvBSdV
-Date:   Thu, 7 Jun 2018 00:57:04 +0000
+        b=udzRxZ1cjIhjs3ys05ySp5Qn+ou/WIRQHkXIs5y6u+JnM2uD5dMEzrybDIQdnX5ZA
+         Pu4sIYPzG89XWDzf5KXHoyRWgDQXsbboOlNt1yK+S4lU0TlXl7APfjGUBGid5jB64x
+         Wd3G0QI/+iJLoRPws5EnN/H/JFjMwL3VhpX1cGiLgTG9CyxsWoqxeum+1gGOSxwNPd
+         ocN26npbdyu3OuRHEnGwaMb6ABcdFN949mlKw9TJQuTgidYXH6X0/0T5MHqsElmcDM
+         M5yTx8/bXJz9ua6LHuvZs4c96EbYVX/O5C1cZcSLtRbPuvcA7HXvwChiJ2gN8AcpRL
+         aalR10qLAxJ7LKaWgPjbjJP7RVOTS782lffYiInea+Tdw6dobbB0w8nv/czy23B6fj
+         d38DcFDrDApExONw2uSVMSkB3C7KvR0h+ykhUvzJo+ItkYEXBjr/Ac/1pWPhokjyQs
+         p+B7HSiPQ6Kd9BEHuVTM3d6aXfDvIiJOIO6+lMk2BD2ztKQ98H9
+Date:   Thu, 7 Jun 2018 01:25:50 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        git@vger.kernel.org,
+To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     git@vger.kernel.org,
         =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH 01/10] t: add tool to translate hash-related values
-Message-ID: <20180607005704.GA862596@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
         Jeff King <peff@peff.net>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH 04/10] t0027: use $ZERO_OID
+Message-ID: <20180607012549.GB862596@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
         Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
         git@vger.kernel.org,
         =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Jeff King <peff@peff.net>,
         =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
 References: <20180604235229.279814-1-sandals@crustytoothpaste.net>
- <20180604235229.279814-2-sandals@crustytoothpaste.net>
- <20180606061927.GA7098@tor.lan>
- <20180606205845.GB1381@sigill.intra.peff.net>
+ <20180604235229.279814-5-sandals@crustytoothpaste.net>
+ <20180606070222.GA11992@tor.lan>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="/9DWx/yDrRhgMJTb"
+        protocol="application/pgp-signature"; boundary="U+BazGySraz5kW0T"
 Content-Disposition: inline
-In-Reply-To: <20180606205845.GB1381@sigill.intra.peff.net>
+In-Reply-To: <20180606070222.GA11992@tor.lan>
 X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
  4.16.0-2-amd64)
 User-Agent: Mutt/1.10.0 (2018-05-17)
@@ -70,71 +69,55 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---/9DWx/yDrRhgMJTb
+--U+BazGySraz5kW0T
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jun 06, 2018 at 04:58:46PM -0400, Jeff King wrote:
-> On Wed, Jun 06, 2018 at 08:19:27AM +0200, Torsten B=C3=B6gershausen wrote:
+On Wed, Jun 06, 2018 at 09:02:23AM +0200, Torsten B=C3=B6gershausen wrote:
+> Nothing wrong with the patch.
+> There is, however, a trick in t0027 to transform the different IDs back t=
+o a bunch of '0'.
+> The content of the file use only uppercase letters, and all lowercase ad =
+digits
+> are converted like this:
 >=20
-> > > +test_translate_f_ () {
-> > > +	local file=3D"$TEST_DIRECTORY/translate/$2" &&
-> >=20
-> > Unless I'm wrong, we don't use the "local" keyword ?
+> compare_ws_file () {
+> 	pfx=3D$1
+> 	exp=3D$2.expect
+> 	act=3D$pfx.actual.$3
+> 	tr '\015\000abcdef0123456789' QN00000000000000000 <"$2" >"$exp" &&
+> 	tr '\015\000abcdef0123456789' QN00000000000000000 <"$3" >"$act" &&
+> 	test_cmp "$exp" "$act" &&
+> 	rm "$exp" "$act"
+> }
 >=20
-> We've got a test balloon out; see 01d3a526ad (t0000: check whether the
-> shell supports the "local" keyword, 2017-10-26). I think it's reasonable
-> to consider starting its use.
+> In the long term the 'tr' may need an additional 'sed' expression.
 
-I used it because it's already in use earlier in the file in some of the
-mingw_* functions.  Perhaps we happen to know that our mingw systems
-will always have a suitable /bin/sh, but I suppose some less capable
-shells would still have choked on it by now.
-
-I can remove it if necessary, but it didn't seem necessary.
-
-> > > +	perl -e '
-> >=20
-> > The bare "perl" is better spelled as "$PERL_PATH"
->=20
-> This use is OK. Since a0e0ec9f7d (t: provide a perl() function which
-> uses $PERL_PATH, 2013-10-28), most common uses handle this automatically
-> (there are some exceptions, covered in t/README).
-
-This was exactly my reasoning.
-
-> > > +	if [ "$1" =3D "-f" ]
-> >=20
-> > Style nit, please avoid [] and use test:
-> > 	if test "$1" =3D "-f"
->=20
-> This I agree with. :)
-
-Yeah, I forgot that that's our style.  I'll fix that.
+I'll take a look.  That may end up being a more robust solution.
 --=20
 brian m. carlson: Houston, Texas, US
 OpenPGP: https://keybase.io/bk2204
 
---/9DWx/yDrRhgMJTb
+--U+BazGySraz5kW0T
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.7 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlsYguAACgkQv1NdgR9S
-9ouJyQ/9H8dsFQdP8g3ai8bVdKKkC0Fg5SIPtfqsmuKrjq5MvDzeG7ss7NSYHT2y
-ZTQ2d66Ex/1SE18pWybvgxGAeIqXfHS3B0/4Y57V4gOOFOCLTSYaEuPmWOolIj72
-5TJ19spOGhfGER9cmx2o655t6m4Bb/Jb0CGHSBmVo6OJQ/NuiUQmaFjhbB26jeMV
-NniInZ9pBx5/hJpXOdoAoX2UYEHLSqQDTvuaOH1SiOCgR53nWA7A4seJ+2b0Y1kM
-/l+MXl+57imyr/MA74cb79rSpCoRBm6nCOmpy/KlM0QmygntvgY9lWbpa3u9Gjhu
-nqjGq2vOWLggjH3xDLOuUNhUDdjomLHWoU2hvWxzdJI/1zb57bXRLcErwP5Sss7P
-Pgv980+YVOD/sizdAWIYOCA5f8ADc/cd+JjGqLuppGPFAMJIaWWeudgJ3vHj0+yo
-Dsp/HRfYWG1dIQyxmQIGyVRPpOd8tKRI4QKUWsl1Mc8wus1GxJt+PhCu3czaQCk+
-xPRzWkTJk84CvnvE7C1j5wyx44VJ1AkBeN6Urh1gtQuFPgsex70HyVazRIPrQmVm
-y6xSPLP1GoLc69I5AoTnC22r5ZfERpeHG4JbRF/Qmq7itFFmAiGTpAG9CXsbrmrA
-+p9oIMb8I/RtnGRMFY17wdpU5zm7cjhOIhBwkNzglT4/T6q5Zn0=
-=MGEZ
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlsYiZ0ACgkQv1NdgR9S
+9ovo6RAArXHSIokzJ1YKRptndy0pntI998qE62++apsWBnVw1g3ZJScqCY1jM/Bg
+3nu/3l5wk/M9SdBGYAOZjXu5fI3E+IgllT77K9F1NammggI0L4uxLxgfPuCiOsAS
+mlJpJkzMbWu7B4W+f5MdwIBzp4FOSgetSVumKlPwNKNg8ZZvAulLgccCRYxcCFur
+0dtw+CC/jcFqWX7l/SnRBoKvUmldp2/+fOwrY8JbPJcveGhM6UyOZv2mc10EeVsB
+Mn/Hvx0dFaeGt4XsatwnwpKlNodpef+CzAJ/GL07IifJtyfFoe8fXKdtQs5LlDnm
+YG7HJMncn29N/Gg7ci5l2W2KE4YImxyWoqXBDl7LxkUWys/Odm+Z0xgEzsaaD8oU
+m91dwOgcJvXvAx7VVMYa4dtw/FUnFs8GMyaossmXxf3NpBcDRH3dwN09cebvidBU
+BoH+xcuWxQfBNw6R0q7eGl0nkOFbmv4FbFTBK0K5CpKXRNSCiQfopV5pl2Z9RDpP
+fogYKRrhIM1VdRDTySuXZEv+4K1HgxzpDS0IauW/HI6FeDyHETCgNtt4PQArPLv3
+Jf6GV7EZB9tNLHGBPI2uroh6IYaaJSyqsT2KtouowCFPod9HuyXaM5dKEImlqa+m
+i8uICABNlp9LrvuzhcvfgRazjN73W3GR9Ic+7KlmuqUdige4ojk=
+=5FxT
 -----END PGP SIGNATURE-----
 
---/9DWx/yDrRhgMJTb--
+--U+BazGySraz5kW0T--
