@@ -2,148 +2,250 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D61E41F403
-	for <e@80x24.org>; Thu,  7 Jun 2018 12:46:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 406031F403
+	for <e@80x24.org>; Thu,  7 Jun 2018 14:03:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932124AbeFGMqm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Jun 2018 08:46:42 -0400
-Received: from esa2.hc2413-78.iphmx.com ([216.71.148.46]:55168 "EHLO
-        esa2.hc2413-78.iphmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753120AbeFGMqm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jun 2018 08:46:42 -0400
-X-IronPort-AV: E=Sophos;i="5.49,486,1520913600"; 
-   d="scan'208";a="2699587"
-X-Attachment_name: 
-X-BodySize: 10005
-Received: from mail-sn1nam01lp0113.outbound.protection.outlook.com (HELO NAM01-SN1-obe.outbound.protection.outlook.com) ([207.46.163.113])
-  by ob1.hc2413-78.iphmx.com with ESMTP/TLS/AES256-SHA256; 07 Jun 2018 08:46:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aaane.onmicrosoft.com;
- s=selector1-aaanortheast-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=bca/En0d5oaWg/+eRgDBmS31w6Iic/CMiqIpGIDWRR4=;
- b=WBZFx3WTkoHasgfbrz1f8S6hK0cbL6vvzMGHyBzpS33Hh0fvqVMGlUBXRbp9pBWz3P58sye496SaY27qD5MHrMIOMhA4/99Bu+sF3jtcL3sSi5z60Vn/rkLj03LdbhqwQtVNRC23GAGXqVjcGpGEh3jjSAlhKQR41O16jKbg4n0=
-Received: from BN7PR15MB2339.namprd15.prod.outlook.com (52.132.217.158) by
- BN7PR15MB2324.namprd15.prod.outlook.com (52.132.217.154) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.841.13; Thu, 7 Jun 2018 12:46:40 +0000
-Received: from BN7PR15MB2339.namprd15.prod.outlook.com
- ([fe80::ad23:ffbe:ed6b:a909]) by BN7PR15MB2339.namprd15.prod.outlook.com
- ([fe80::ad23:ffbe:ed6b:a909%6]) with mapi id 15.20.0841.011; Thu, 7 Jun 2018
- 12:46:40 +0000
-From:   "Heinz, Steve" <SHeinz@aaanortheast.com>
-To:     Bryan Turner <bturner@atlassian.com>
-CC:     Git Users <git@vger.kernel.org>
-Subject: RE: git question from a newbie
-Thread-Topic: git question from a newbie
-Thread-Index: AdP9E4Hrau+PXdtYS1KEfyewyALLmQACR2IAAFAJZyA=
-Date:   Thu, 7 Jun 2018 12:46:40 +0000
-Message-ID: <BN7PR15MB23395DFAB46C52BE7F414B43BB640@BN7PR15MB2339.namprd15.prod.outlook.com>
-References: <BN7PR15MB23394E6E4AB05C17287E8F55BB660@BN7PR15MB2339.namprd15.prod.outlook.com>
- <CAGyf7-GN=wx4cc7WxbmMweC0VSnp_9aZ8fTUGE0W6vLK63qpVw@mail.gmail.com>
-In-Reply-To: <CAGyf7-GN=wx4cc7WxbmMweC0VSnp_9aZ8fTUGE0W6vLK63qpVw@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=SHeinz@aaanortheast.com; 
-x-originating-ip: [12.40.107.100]
-x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;BN7PR15MB2324;7:B1fccXVHu6AMBevWkh1L7iD31aORao+6yijvZWkzmEjS52aUlYLYlbp5wLNKo3Iluh2vMFoPMA99+W9im0RcXlhW/zzDEGY3pzZRbEi3FhYVbCwol8DxGh/HguG83q2GQaCWCZLKFOi8XIf0RXb/3lj46l8pstyycQuZISoEjtPm3nD1UFbQE2XUBRVuW5GIMnBX/e95iFm/+6yTRVXXM4U3/1F4cOtNqe/4kDBcQMU/YALZ6g6Pdx+Vv8UzWLzs
-x-ms-exchange-antispam-srfa-diagnostics: SOS;
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(5600026)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7153060)(7193020);SRVR:BN7PR15MB2324;
-x-ms-traffictypediagnostic: BN7PR15MB2324:
-x-microsoft-antispam-prvs: <BN7PR15MB2324FB01C5EAE6F192741905BB640@BN7PR15MB2324.namprd15.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(158342451672863)(253373257661254)(166708455590820)(9452136761055)(107958610860442)(17755550239193);
-x-ms-exchange-senderadcheck: 1
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(6040522)(2401047)(5005006)(8121501046)(3002001)(3231254)(944501410)(52105095)(93006095)(93001095)(10201501046)(149027)(150027)(6041310)(20161123564045)(20161123558120)(20161123560045)(20161123562045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(6072148)(201708071742011)(7699016);SRVR:BN7PR15MB2324;BCL:0;PCL:0;RULEID:;SRVR:BN7PR15MB2324;
-x-forefront-prvs: 06968FD8C4
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(396003)(39380400002)(39860400002)(346002)(376002)(366004)(13464003)(189003)(199004)(81166006)(81156014)(5660300001)(102836004)(99286004)(7736002)(6916009)(305945005)(86362001)(76176011)(66066001)(14454004)(186003)(6436002)(6506007)(53546011)(55016002)(2900100001)(74316002)(97736004)(229853002)(8936002)(7696005)(3846002)(6116002)(316002)(68736007)(26005)(8676002)(33656002)(966005)(6306002)(72206003)(478600001)(9686003)(59450400001)(80792005)(5890100001)(53936002)(105586002)(106356001)(446003)(6246003)(25786009)(2906002)(5250100002)(486006)(476003)(3280700002)(4326008)(11346002)(3660700001);DIR:OUT;SFP:1101;SCL:1;SRVR:BN7PR15MB2324;H:BN7PR15MB2339.namprd15.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:0;
-received-spf: None (protection.outlook.com: aaanortheast.com does not
- designate permitted sender hosts)
-x-microsoft-antispam-message-info: SEJvyxcz6wp4hGbDh6080SSPK1rbehAScWryQ54AlgIFKQIFSSk0UXEJ7vPaRMSng4m7ubGevp5vcVdDPlgvncO85mypmCj2QdDnSiatsgOEglju9wgTR4Y0XeojwE5QkMjdHSANUYzlzLCn2Pz+sJv7d5mrnGWs0S8NftCiLUvzMeHp2p+cPcOPnayDPGxy
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
-X-MS-Office365-Filtering-Correlation-Id: 95e202d4-4748-4fd9-6752-08d5cc74b71b
-X-OriginatorOrg: aaanortheast.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 95e202d4-4748-4fd9-6752-08d5cc74b71b
-X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Jun 2018 12:46:40.1661
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 0ccc4f56-0dac-42a5-a6f6-467387e586c0
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN7PR15MB2324
+        id S932779AbeFGODp (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Jun 2018 10:03:45 -0400
+Received: from mail-qk0-f195.google.com ([209.85.220.195]:35572 "EHLO
+        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932279AbeFGODn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jun 2018 10:03:43 -0400
+Received: by mail-qk0-f195.google.com with SMTP id d130-v6so6610335qkc.2
+        for <git@vger.kernel.org>; Thu, 07 Jun 2018 07:03:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=AKVGwwQBg9u//cZKs+NAd3asRfxgbRAH0cDBZUTGd3A=;
+        b=hqCo17FPbpat5toVvDLQ7HlnVTmqddMAzUnO3yOo5OWjPT7eqZMdNa8ovZLbY+oih9
+         YAJgNqBwNTyPvFFADbVixjq6yL+KZ+Lk2pPyYXVnW8dfMT4OLOnSEZN1F46yAWNMoTwa
+         K1NCGXNSsJ/dZgBYNk3ZsvbjWtESNpU/8+7GyF3/VW0LujNgv7sMksAmbx0rjAYim9hU
+         uodAO9+rllweBqV4mOIZOgTKzTyeYES0U/1MoSihLe2PUryxyvfzXbFu7/Xf68TC0X8T
+         WD4vK4SLM5wJxHFt3YyRmW8Rs8Fcnzj2baAku/bsodHggJ+SadSct59CrigwOmF9biUc
+         ZifA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=AKVGwwQBg9u//cZKs+NAd3asRfxgbRAH0cDBZUTGd3A=;
+        b=bEiJPx59SiloEYCa6+c6+T+IpXyVHrZfcbcj+hhKFbIcbkNoOPhFlKIiRSk8vEOKYO
+         KFHjZVlYhYVm2iKLkIaXvaPhAUSP6fP8gFuzWbvFLZ1n90XF58btK+oHZK/YFptxyqGj
+         c65NJTbk8jHrrCwbYcAnLFgo5QVcPf5a1sxjHwVAhXRcUgpBV965r8oE3ox6hKH0VucJ
+         ZfUPZSkw0KB4NQCqNvmuNFR5RPbDX88g2YCqGsWGfrcdCm8SicAaNeZRIFL0S7YDPYbR
+         r+SkW7sT3THR2A9h77wee6lmIHyzGNa8h4gmlNyjjVnTTDtPzgeVW4l6LGoE0wwrGF65
+         4abw==
+X-Gm-Message-State: APt69E2Sv96uvvjOQhRmTNXOMUpgeBL+qTbnppkvQMOvBEoZqJInEEuc
+        ZK+tr8oIyfSVC1lbehxt2f4pifRT
+X-Google-Smtp-Source: ADUXVKJUPke2+jGpoHeYhlsSD46alHnCGzX+s1ReG5LD6Bj7ZDgonXF2dj0z1WO3/+MH7lOC3V274Q==
+X-Received: by 2002:a37:150b:: with SMTP id f11-v6mr1606761qkh.170.1528380222299;
+        Thu, 07 Jun 2018 07:03:42 -0700 (PDT)
+Received: from stolee-linux-2.corp.microsoft.com ([2001:4898:8010:0:eb4a:5dff:fe0f:730f])
+        by smtp.gmail.com with ESMTPSA id u74-v6sm12532763qku.55.2018.06.07.07.03.40
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 07 Jun 2018 07:03:41 -0700 (PDT)
+From:   Derrick Stolee <stolee@gmail.com>
+X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
+To:     git@vger.kernel.org
+Cc:     sbeller@google.com, dstolee@microsoft.com, avarab@gmail.com,
+        jrnieder@gmail.com, jonathantanmy@google.com, mfick@codeaurora.org
+Subject: [PATCH 00/23] Multi-pack-index (MIDX)
+Date:   Thu,  7 Jun 2018 10:03:15 -0400
+Message-Id: <20180607140338.32440-1-dstolee@microsoft.com>
+X-Mailer: git-send-email 2.18.0.rc1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-QnJ5YW4NCg0KVGhhbmsgeW91LiAgSSBkaWRuJ3QgcmVhbGl6ZSB0aGF0IHdoZW4geW91IHNldCB1
-cCBhIHJlbW90ZSByZXBvc2l0b3J5LCBpdCBpcyBqdXN0IGEgZm9sZGVyLiAgSSB0aG91Z2h0IHRo
-ZSBmYWN0IHRoYXQgSSBoYWQgaXQgc2V0dXAgYXMgYSB3ZWJzaXRlLCB3YXMgZ29pbmcgdG8gaGFu
-ZGxlIHdoYXQgSSBuZWVkZWQuDQpJdCB3YXNuJ3QgdW50aWwgeW91ciBlbWFpbCB0aGF0IEkgcmVh
-bGl6ZWQgSSBoYWQgdG8gdXNlIHNvbWUgdHlwZSBvZiBjbGllbnQuICBJIGluc3RhbGxlZCBCb25v
-Ym8gYXMgdGhlIHJlbW90ZSByZXBvc2l0b3J5IGFuZCBiYW0gaXQgd29ya2VkIQ0KDQpZb3UgYXJl
-IHJpZ2h0IHRoYXQgdGhlIGluZm8gb24gV2luZG93cyBpcyBhIGJpdCBzcGFyc2UuICBJIGxlYXJu
-ZWQgYSBsb3QgYW5kIHdhbnQgdG8gdGhhbmsgeW91IGFnYWluLg0KDQpTdGV2ZSBIZWlueg0KDQoN
-ClN0ZXZlIEhlaW56IHwgTGVhZCBQcm9ncmFtbWVyIEFuYWx5c3QsIEluZm9ybWF0aW9uIFRlY2hu
-b2xvZ3kNCkFBQSBOb3J0aGVhc3QgfCAxNDE1IEtlbGx1bSBQbGFjZSB8IEdhcmRlbiBDaXR5LCBO
-WSAxMTUzMA0KWDgwNDIgfCBUIDUxNi01MzUtMjU4MSB8IEYgNTE2LTg3My0yMjExDQpzaGVpbnpA
-YWFhbm9ydGhlYXN0LmNvbSB8IEFBQS5jb20NCg0KDQogICAgIEl0IFBheXMgdG8gQmVsb25nLg0K
-DQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiBCcnlhbiBUdXJuZXIgPGJ0dXJu
-ZXJAYXRsYXNzaWFuLmNvbT4NClNlbnQ6IFR1ZXNkYXksIEp1bmUgMDUsIDIwMTggNjoyOSBQTQ0K
-VG86IEhlaW56LCBTdGV2ZSA8U0hlaW56QGFhYW5vcnRoZWFzdC5jb20+DQpDYzogR2l0IFVzZXJz
-IDxnaXRAdmdlci5rZXJuZWwub3JnPg0KU3ViamVjdDogUmU6IGdpdCBxdWVzdGlvbiBmcm9tIGEg
-bmV3YmllDQoNCk9uIFR1ZSwgSnVuIDUsIDIwMTggYXQgMjozMyBQTSBIZWlueiwgU3RldmUgPFNI
-ZWluekBhYWFub3J0aGVhc3QuY29tPiB3cm90ZToNCj4NCj4gSGkuDQo+DQo+IEkgYW0gbmV3IHRv
-IEdpdCBhbmQgaGF2ZSByZWFkIHF1aXRlIGEgZmV3IGFydGljbGVzIG9uIGl0Lg0KPiBJIGFtIHBs
-YW5uaW5nIG9uIHNldHRpbmcgdXAgYSByZW1vdGUgcmVwb3NpdG9yeSBvbiBhIHdpbmRvd3MgMjAx
-MiBSMiBzZXJ2ZXIgYW5kIHdpbGwgYWNjZXNzIGl0IHZpYSBIVFRQUy4NCj4gSSBhbSBzZXR0aW5n
-IHVwIGEgbG9jYWwgcmVwb3NpdG9yeSBvbiBteSBkZXNrIHRvcCAob3RoZXJzIGluIG15IGdyb3Vw
-IHdpbGwgZG8gdGhlIHNhbWUpLg0KPiBPbiAic2VydmVyMSI6ICBJIGluc3RhbGwgR2l0IGFuZCBj
-cmVhdGUgYSByZXBvc2l0b3J5ICJyZXBvcyIuDQo+IE9uICJzZXJ2ZXIxIjogIEkgY3JlYXRlIGEg
-ZHVtbXkgd2VicGFnZSAiZGVmYXVsdC5odG0iIGFuZCBwbGFjZSBpdCBpbiB0aGUgcmVwbyBmb2xk
-ZXIuDQo+IE9uICJzZXJ2ZXIxIjogIEkgY3JlYXRlIGEgd2ViIGFwcGxpY2F0aW9uIGluIElJUyBw
-b2ludGluZyB0byBHaXQNCj4gT24gU2VydmVyMSI6ICAgY2hhbmdlIHBlcm1pc3Npb25zIHNvIElJ
-U19Vc2VyICBoYXMgYWNjZXNzIHRvIHRoZSBmb2xkZXJzLg0KPiBPbiAic2VydmVyMSI6ICBpbnNp
-ZGUgdGhlICJyZXBvcyIgZm9sZGVyIGFuZCByaWdodCBjbGljayBhbmQgY2hvb3NlICJiYXNoIGhl
-cmUiDQo+IE9uICJzZXJ2ZXIxIjogICAkIGdpdCBpbml0ICAtYmFyZSAgICAoaXQncyByZWFsbHkg
-MiBoeXBoZW5zKQ0KDQoNClRoaXMgbWlnaHQgY3JlYXRlIGEgX3JlcG9zaXRvcnlfLCBidXQgaXQn
-cyBub3QgZ29pbmcgdG8gc2V0IHVwIGFueSBHaXQgaG9zdGluZyBwcm9jZXNzaW5nIGZvciBpdC4g
-WW91IG1pZ2h0IGJlIGFibGUgdG8gY2xvbmUgdXNpbmcgdGhlIGZhbGxiYWNrIHRvIHRoZSAiZHVt
-YiIgSFRUUCBwcm90b2NvbCAodGhvdWdoIEkgZG91YnQgaXQsIHdpdGggdGhlIHN0ZXBzIHlvdSd2
-ZSBzaG93bikgLCBidXQgeW91IHdvbid0IGJlIGFibGUgdG8gcHVzaC4NCg0KWW91IG5lZWQgaGFu
-ZGxlcnMgZm9yIGdpdC1odHRwLWJhY2tlbmQgd2hpY2ggaGFuZGxlIGluZm8vcmVmcyBhbmQgb3Ro
-ZXIgcmVxdWVzdHMgdGhhdCBhcmUgcmVsYXRlZCB0byB0aGUgR2l0IEhUVFAgd2lyZSBwcm90b2Nv
-bC5bMV0NCg0KRG9jdW1lbnRhdGlvbiBmb3Igc2V0dGluZyB1cCBHaXQncyBIVFRQIHByb3RvY29s
-IHZpYSBBcGFjaGUgYXJlIHByZXR0eSBlYXN5IHRvIGZpbmRbMl0sIGJ1dCBJSVMgaW5zdHJ1Y3Rp
-b25zIGFyZSBhIGJpdCBtb3JlIHNwYXJzZS4gSSBkb24ndCBrbm93IG9mIGFueSBnb29kIG9uZXMg
-b2ZmIHRoZSB0b3Agb2YgbXkgaGVhZC4gQnV0IHRoYXQncyB5b3VyIGlzc3VlOyB5b3VyIElJUyBz
-ZXR1cCBpc24ndCByZWFsbHkgYSB2YWxpZCBHaXQgcmVtb3RlOyBpdCdzIGp1c3QgYSBHaXQgcmVw
-b3NpdG9yeSB3aXRoIGNvbnRlbnRzIHZpc2libGUgdmlhIEhUVFAuDQoNClsxXSBodHRwczovL2dp
-dGh1Yi5jb20vZ2l0L2dpdC9ibG9iL21hc3Rlci9Eb2N1bWVudGF0aW9uL3RlY2huaWNhbC9odHRw
-LXByb3RvY29sLnR4dA0KWzJdIGh0dHBzOi8vZ2l0aHViLmNvbS9naXQvZ2l0L2Jsb2IvbWFzdGVy
-L0RvY3VtZW50YXRpb24vaG93dG8vc2V0dXAtZ2l0LXNlcnZlci1vdmVyLWh0dHAudHh0DQoNCkJy
-eWFuDQpUaGUgaW5mb3JtYXRpb24gY29udGFpbmVkIGluIHRoaXMgZW1haWwgbWVzc2FnZSBpcyBp
-bnRlbmRlZCBvbmx5IGZvciB0aGUgcHJpdmF0ZSBhbmQgY29uZmlkZW50aWFsIHVzZSBvZiB0aGUg
-cmVjaXBpZW50KHMpIG5hbWVkIGFib3ZlLCB1bmxlc3MgdGhlIHNlbmRlciBleHByZXNzbHkgYWdy
-ZWVzIG90aGVyd2lzZS4gSW4gbm8gZXZlbnQgc2hhbGwgQUFBIE5vcnRoZWFzdCBvciBhbnkgb2Yg
-aXRzIGFmZmlsaWF0ZXMgYWNjZXB0IGFueSByZXNwb25zaWJpbGl0eSBmb3IgdGhlIGxvc3MsIHVz
-ZSBvciBtaXN1c2Ugb2YgYW55IGluZm9ybWF0aW9uIGluY2x1ZGluZyBjb25maWRlbnRpYWwgaW5m
-b3JtYXRpb24sIHdoaWNoIGlzIHNlbnQgdG8gQUFBIE5vcnRoZWFzdCBvciBpdHMgYWZmaWxpYXRl
-cyB2aWEgZW1haWwsIG9yIGVtYWlsIGF0dGFjaG1lbnQuIEFBQSBOb3J0aGVhc3QgZG9lcyBub3Qg
-Z3VhcmFudGVlIHRoZSBhY2N1cmFjeSBvZiBhbnkgZW1haWwgb3IgZW1haWwgYXR0YWNobWVudC4g
-SWYgdGhlIHJlYWRlciBvZiB0aGlzIG1lc3NhZ2UgaXMgbm90IHRoZSBpbnRlbmRlZCByZWNpcGll
-bnQgYW5kL29yIHlvdSBoYXZlIHJlY2VpdmVkIHRoaXMgZW1haWwgaW4gZXJyb3IsIHlvdSBtdXN0
-IHRha2Ugbm8gYWN0aW9uIGJhc2VkIG9uIHRoZSBpbmZvcm1hdGlvbiBpbiB0aGlzIGVtYWlsIGFu
-ZCB5b3UgYXJlIGhlcmVieSBub3RpZmllZCB0aGF0IGFueSBkaXNzZW1pbmF0aW9uLCBtaXN1c2Ug
-b3IgY29weWluZyBvciBkaXNjbG9zdXJlIG9mIHRoaXMgY29tbXVuaWNhdGlvbiBpcyBzdHJpY3Rs
-eSBwcm9oaWJpdGVkLiBJZiB5b3UgaGF2ZSByZWNlaXZlZCB0aGlzIGNvbW11bmljYXRpb24gaW4g
-ZXJyb3IsIHBsZWFzZSBub3RpZnkgdXMgaW1tZWRpYXRlbHkgYnkgZW1haWwgYW5kIGRlbGV0ZSB0
-aGUgb3JpZ2luYWwgbWVzc2FnZS4NCg==
+This patch series includes a rewrite of the previous
+multi-pack-index RFC [1] using the feedback from the
+commit-graph feature.
+
+I based this series on 'next' as it requires the
+recent object-store patches.
+
+The multi-pack-index (MIDX) is explained fully in
+the design document 'Documentation/technical/midx.txt'.
+The short description is that the MIDX stores the
+information from all of the IDX files in a pack
+directory. The crucial design decision is that the
+IDX files still exist, so we can fall back to the IDX
+files if there is any issue with the MIDX (or core.midx
+is set to false, or a user downgrades Git, etc.)
+
+The MIDX feature has been part of our GVFS releases
+for a few months (since the RFC). It has behaved well,
+indexing over 31 million commits and trees across up
+to 250 packfiles. These MIDX files are nearly 1GB in
+size and take ~20 seconds to rewrite when adding new
+IDX information. This ~20s mark is something I'd like
+to improve, and I mention how to make the file
+incremental (similar to split-index) in the design
+document. I also want to make the commit-graph file
+incremental, so I'd like to do that at the same time
+after both the MIDX and commit-graph are stable.
+
+
+Lookup Speedups
+---------------
+
+When looking for an object, Git uses an most-recently-
+used (MRU) cache of packfiles. This does pretty well to
+minimize the number of misses when searching through
+packfiles for an object, especially if there is one
+"big" packfile that contains most of the objets (so it
+will rarely miss and is usually one of the first two
+packfiles in the list). The MIDX does provide a way
+to remove these misses, improving lookup time. However,
+this lookup time greatly depends on the arrangement of
+the packfiles.
+
+For instance, if you take the Linux repository and repack
+using `git repack -adfF --max-pack-size=128m` then all
+commits will be in one packfile, all trees will be in
+a small set of packfiles and organized well so 'git
+rev-list --objects HEAD^{tree}' only inspects one or two
+packfiles.
+
+GVFS has the notion of a "prefetch packfile". These are
+packfiles that are precomputed by cache servers to
+contain the commits and trees introduced to the remote
+each day. GVFS downloads these packfiles and places them
+in an alternate. Since these are organized by "first
+time introduced" and the working directory is so large,
+the MRU misses are significant when performing a checkout
+and updating the .git/index file.
+
+To test the performance in this situation, I created a
+script that organizes the Linux repository in a similar
+fashion. I split the commit history into 50 parts by
+creating branches on every 10,000 commits of the first-
+parent history. Then, `git rev-list --objects A ^B`
+provides the list of objects reachable from A but not B,
+so I could send that to `git pack-objects` to create
+these "time-based" packfiles. With these 50 packfiles
+(deleting the old one from my fresh clone, and deleting
+all tags as they were no longer on-disk) I could then
+test 'git rev-list --objects HEAD^{tree}' and see:
+
+        Before: 0.17s
+        After:  0.13s
+        % Diff: -23.5%
+
+By adding logic to count hits and misses to bsearch_pack,
+I was able to see that the command above calls that
+method 266,930 times with a hit rate of 33%. The MIDX
+has the same number of calls with a 100% hit rate.
+
+
+
+Abbreviation Speedups
+---------------------
+
+To fully disambiguate an abbreviation, we must iterate
+through all packfiles to ensure no collision exists in
+any packfile. This requires O(P log N) time. With the
+MIDX, this is only O(log N) time. Our standard test [2]
+is 'git log --oneline --parents --raw' because it writes
+many abbreviations while also doing a lot of other work
+(walking commits and trees to compute the raw diff).
+
+For a copy of the Linux repository with 50 packfiles
+split by time, we observed the following:
+
+        Before: 100.5 s
+        After:   58.2 s
+        % Diff: -59.7%
+
+
+Request for Review Attention
+----------------------------
+
+I tried my best to take the feedback from the commit-graph
+feature and apply it to this feature. I also worked to
+follow the object-store refactoring as I could. I also have
+some local commits that create a 'verify' subcommand and
+integrate with 'fsck' similar to the commit-graph, but I'll
+leave those for a later series (and review is still underway
+for that part of the commit-graph).
+
+One place where I could use some guidance is related to the
+current state of 'the_hash_algo' patches. The file format
+allows a different "hash version" which then indicates the
+length of the hash. What's the best way to ensure this
+feature doesn't cause extra pain in the hash-agnostic series?
+This will inform how I go back and make the commit-graph
+feature better in this area, too.
+
+
+Thanks,
+-Stolee
+
+[1] https://public-inbox.org/git/20180107181459.222909-1-dstolee@microsoft.com/T/#u
+    Previous MIDX RFC.
+
+[2] https://public-inbox.org/git/20171012120220.226427-1-dstolee@microsoft.com/
+    A patch series on abbreviation speedups
+
+
+Derrick Stolee (23):
+  midx: add design document
+  midx: add midx format details to pack-format.txt
+  midx: add midx builtin
+  midx: add 'write' subcommand and basic wiring
+  midx: write header information to lockfile
+  midx: struct midxed_git and 'read' subcommand
+  midx: expand test data
+  midx: read packfiles from pack directory
+  midx: write pack names in chunk
+  midx: write a lookup into the pack names chunk
+  midx: sort and deduplicate objects from packfiles
+  midx: write object ids in a chunk
+  midx: write object id fanout chunk
+  midx: write object offsets
+  midx: create core.midx config setting
+  midx: prepare midxed_git struct
+  midx: read objects from multi-pack-index
+  midx: use midx in abbreviation calculations
+  midx: use existing midx when writing new one
+  midx: use midx in approximate_object_count
+  midx: prevent duplicate packfile loads
+  midx: use midx to find ref-deltas
+  midx: clear midx on repack
+
+ .gitignore                              |   1 +
+ Documentation/config.txt                |   4 +
+ Documentation/git-midx.txt              |  60 ++
+ Documentation/technical/midx.txt        | 109 +++
+ Documentation/technical/pack-format.txt |  82 +++
+ Makefile                                |   2 +
+ builtin.h                               |   1 +
+ builtin/midx.c                          |  88 +++
+ builtin/repack.c                        |   8 +
+ cache.h                                 |   1 +
+ command-list.txt                        |   1 +
+ config.c                                |   5 +
+ environment.c                           |   1 +
+ git.c                                   |   1 +
+ midx.c                                  | 923 ++++++++++++++++++++++++
+ midx.h                                  |  23 +
+ object-store.h                          |  35 +
+ packfile.c                              |  47 +-
+ packfile.h                              |   1 +
+ sha1-name.c                             |  70 ++
+ t/t5319-midx.sh                         | 192 +++++
+ 21 files changed, 1652 insertions(+), 3 deletions(-)
+ create mode 100644 Documentation/git-midx.txt
+ create mode 100644 Documentation/technical/midx.txt
+ create mode 100644 builtin/midx.c
+ create mode 100644 midx.c
+ create mode 100644 midx.h
+ create mode 100755 t/t5319-midx.sh
+
+-- 
+2.18.0.rc1
+
