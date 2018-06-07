@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C8531F403
-	for <e@80x24.org>; Thu,  7 Jun 2018 05:07:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B82D1F403
+	for <e@80x24.org>; Thu,  7 Jun 2018 05:08:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752577AbeFGFH4 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Jun 2018 01:07:56 -0400
-Received: from mail-oi0-f68.google.com ([209.85.218.68]:45891 "EHLO
+        id S1752631AbeFGFIx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Jun 2018 01:08:53 -0400
+Received: from mail-oi0-f68.google.com ([209.85.218.68]:37699 "EHLO
         mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750897AbeFGFH4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jun 2018 01:07:56 -0400
-Received: by mail-oi0-f68.google.com with SMTP id b130-v6so7406403oif.12
-        for <git@vger.kernel.org>; Wed, 06 Jun 2018 22:07:55 -0700 (PDT)
+        with ESMTP id S1751650AbeFGFIw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jun 2018 01:08:52 -0400
+Received: by mail-oi0-f68.google.com with SMTP id l22-v6so7444081oib.4
+        for <git@vger.kernel.org>; Wed, 06 Jun 2018 22:08:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=k8FStSTpoVlHWBPmwK8K+R521XNUQliuA7SKgd0XOiI=;
-        b=Gq4HFnYsnh7GqvzUx76exgn6oPWJREHC1NGixZDZ/YyBCoKY5roKxnJ2bayGbQLlRM
-         wbvdXg/ELqn5kb5PzZ0ebUfzTUlQvtgetSbceb+y0socOFT6nlAR9yUUo0IuZ2Ob0mvi
-         nQBlTi5uAphqFX4tYKDRrNJG+YxMDRI48Hq0cxWOc4ufisQ3RiJ7b6rEZ76lfhZNdbAg
-         CCoZZR47Q2qAENnn8L6BDU4fEUk0TkO//hZyyhLaYp9vgv1bX03mz2CJRaHSoVeeqCgD
-         33zzNqYEaljA+7GwPwKtwkvHwGu1jTRidN9wfDDTLGhvB4nm2JZeup9rHx/+ocgbE8Ln
-         r5mg==
+        bh=7e9EHjVnhRgKbFxjJW35tl/wYSpHDYYt8MoFtBUxG3U=;
+        b=ES69klM/Rwca4Ns5ehRLDbGH1A7+oKtjgW7g2mikvFDpdI04Lq5jl0S0gQQkJzZGBJ
+         agZfHTlPZHvqjk2Edn8P2hZnh3etAvuyGHZEU6cJ8NRtViXzSFf9/7pz+DVFNYsuX2j+
+         oqWlIG7zOckg049jcBweQ6SdBT1ARly0/3nLpIIunHS5iwdh53NeEQuvgAYmSgQObVZM
+         y/LfbA2Ddp2w87T3oLAiXaDq96spHmd25rvy29BTIxqQ6ocQdqZUePJVEpYS98U5vmIB
+         52Bk3pSGioS1zesLLhO2c74Ed3lMJyahfamqtgKn2EZSmqRPzs4nF6W9V1GNgyEaEMQw
+         lN3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=k8FStSTpoVlHWBPmwK8K+R521XNUQliuA7SKgd0XOiI=;
-        b=ak3dhWZdZTYlRpry3gGYg2HXlCRzg/B3DLrKd70i3IqUyknO2AvZghVYaJdEmRC+Mv
-         EfnRNApVT0l8dL+sAQdhsYmB5ZWcJP+oKyxNyB4FrECkdIoYI/FIekWhkKr9wXse01ac
-         R3Z5F2eiVL+NlPf9o8AGXR/arNOalpLMr9Sfhk5FokzGEf5gr4lUfuaOy9yyaWXUo717
-         Bvt67HDnW+lTuGGRTv7s87Jj00C/XmFa4YKrUte81ggEx89UWPjky6sp9oBurBv32PKQ
-         dEQ9knqBFeEiDjRJJDxIYRx4fNs6NpJolk5J6n/OPOU1OLa6FtGu3DMNaF1sLCAk5aFe
-         qBIg==
-X-Gm-Message-State: APt69E3gjfaTwHoOMOa4cEVQIyXe7GlHimklGrTPGAdbY0rW3O6rQx6M
-        QFqcMjC29tFpY1jf7qTKg2iLYA==
-X-Google-Smtp-Source: ADUXVKLLVaxMQExbnYkkBEIVTvVKG1GV18jGwxYn1PBkp2CfOCIxIbRi+P4Wsz9E5+UVvcGg+2jVuQ==
-X-Received: by 2002:aca:4046:: with SMTP id n67-v6mr142361oia.205.1528348075231;
-        Wed, 06 Jun 2018 22:07:55 -0700 (PDT)
+        bh=7e9EHjVnhRgKbFxjJW35tl/wYSpHDYYt8MoFtBUxG3U=;
+        b=LxsxiTAqwHSgxnVKRLhP0OF37q2jc7erlyny5Es53xIhnyIAMJBBaFmQv3ZWnJpemG
+         r2LOgHHUuQjEvYzEnpKfFLXf/s3XLHdGSjsdJiReCxE0uJTgOGIQXfKDiBaMWZruRjyz
+         xh/F9fcpQ8eNAjIEiNwGkSMFCgQb0zn8lECO5ti48lgzfTDEVqj+rHcOB0jv6leYVFN7
+         ZTZESPzSsuqIJMnSZ+CwZMWWAuTfwN0bfJOJeKHCsswIUuKZpY568m2ffinL6VCG32JU
+         ZjZcoOsvGrwih7TxJcFzUjWIv7ADWCTPaMPfCuZ6SfOZ+7WZGBEsQze/ibunk0rdMKDv
+         6yLw==
+X-Gm-Message-State: APt69E26k638kb63pV3l/UnFSDmqH553aT6NW2goUg4SQ0vBlm77rb7H
+        K0ztV62kbfGPND6CT8HlhvBANg==
+X-Google-Smtp-Source: ADUXVKIfWo2vyDW/CArUkYafH6xO+wkgZIaggJPhbEuh0z0/q+So6In+AJX4LLfTGM70P8MY1jtl5Q==
+X-Received: by 2002:aca:6b89:: with SMTP id g131-v6mr155003oic.118.1528348131956;
+        Wed, 06 Jun 2018 22:08:51 -0700 (PDT)
 Received: from tiger.attlocal.net ([2602:30a:2c28:20f0:7c1a:85e3:2ea9:5d7e])
-        by smtp.gmail.com with ESMTPSA id 64-v6sm4158258ots.36.2018.06.06.22.07.54
+        by smtp.gmail.com with ESMTPSA id f97-v6sm7200539otb.9.2018.06.06.22.08.50
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 06 Jun 2018 22:07:54 -0700 (PDT)
+        Wed, 06 Jun 2018 22:08:51 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>
-Subject: [PATCH] git-rebase.sh: handle keep-empty like all other options
-Date:   Wed,  6 Jun 2018 22:07:47 -0700
-Message-Id: <20180607050747.19726-1-newren@gmail.com>
+Subject: [PATCH 1/2] t3418: add testcase showing problems with rebase -i and strategy options
+Date:   Wed,  6 Jun 2018 22:08:44 -0700
+Message-Id: <20180607050845.19779-1-newren@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc0.46.g9cee8fce43
 In-Reply-To: <CABPp-BGxaroePB6aKWAkZeADLB7VE3y1CPy2RyNwpn=+C01g3A@mail.gmail.com>
 References: <CABPp-BGxaroePB6aKWAkZeADLB7VE3y1CPy2RyNwpn=+C01g3A@mail.gmail.com>
@@ -62,35 +62,59 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+We are not passing the same args to merge strategies when we are doing an
+--interactive rebase as we do with a --merge rebase.  The merge strategy
+should not need to be aware of which type of rebase is in effect.  Add a
+testcase which checks for the appropriate args.
+
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- git-rebase.sh | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ t/t3418-rebase-continue.sh | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 40be59ecc4..a56b286372 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -276,6 +276,7 @@ do
- 		;;
- 	--keep-empty)
- 		keep_empty=yes
-+		test -z "$interactive_rebase" && interactive_rebase=implied
- 		;;
- 	--allow-empty-message)
- 		allow_empty_message=--allow-empty-message
-@@ -480,11 +481,6 @@ then
- 	test -z "$interactive_rebase" && interactive_rebase=implied
- fi
+diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
+index 03bf1b8a3b..872022106f 100755
+--- a/t/t3418-rebase-continue.sh
++++ b/t/t3418-rebase-continue.sh
+@@ -74,6 +74,38 @@ test_expect_success 'rebase --continue remembers merge strategy and options' '
+ 	test -f funny.was.run
+ '
  
--if test -n "$keep_empty"
--then
--	test -z "$interactive_rebase" && interactive_rebase=implied
--fi
--
- if test -n "$interactive_rebase"
- then
- 	type=interactive
++test_expect_failure 'rebase -i --continue handles merge strategy and options' '
++	rm -fr .git/rebase-* &&
++	git reset --hard commit-new-file-F2-on-topic-branch &&
++	test_commit "commit-new-file-F3-on-topic-branch-for-dash-i" F3 32 &&
++	test_when_finished "rm -fr test-bin funny.was.run funny.args" &&
++	mkdir test-bin &&
++	cat >test-bin/git-merge-funny <<-EOF &&
++	#!$SHELL_PATH
++	echo "\$@" >>funny.args
++	case "\$1" in --opt) ;; *) exit 2 ;; esac
++	case "\$2" in --foo) ;; *) exit 2 ;; esac
++	case "\$4" in --) ;; *) exit 2 ;; esac
++	shift 2 &&
++	>funny.was.run &&
++	exec git merge-recursive "\$@"
++	EOF
++	chmod +x test-bin/git-merge-funny &&
++	(
++		PATH=./test-bin:$PATH
++		test_must_fail git rebase -i -s funny -Xopt -Xfoo master topic
++	) &&
++	test -f funny.was.run &&
++	rm funny.was.run &&
++	echo "Resolved" >F2 &&
++	git add F2 &&
++	(
++		PATH=./test-bin:$PATH
++		git rebase --continue
++	) &&
++	test -f funny.was.run
++'
++
+ test_expect_success 'rebase passes merge strategy options correctly' '
+ 	rm -fr .git/rebase-* &&
+ 	git reset --hard commit-new-file-F3-on-topic-branch &&
 -- 
 2.18.0.rc0.46.g9cee8fce43
 
