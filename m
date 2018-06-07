@@ -2,82 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 402041F403
-	for <e@80x24.org>; Thu,  7 Jun 2018 01:47:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9EF81F403
+	for <e@80x24.org>; Thu,  7 Jun 2018 01:49:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752322AbeFGBrS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Jun 2018 21:47:18 -0400
-Received: from lang.hm ([66.167.227.134]:41170 "EHLO bifrost.lang.hm"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752423AbeFGBrR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jun 2018 21:47:17 -0400
-X-Greylist: delayed 489 seconds by postgrey-1.27 at vger.kernel.org; Wed, 06 Jun 2018 21:47:17 EDT
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-        by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id w571ctXA014717;
-        Wed, 6 Jun 2018 18:38:55 -0700
-Date:   Wed, 6 Jun 2018 18:38:55 -0700 (PDT)
-From:   David Lang <david@lang.hm>
-X-X-Sender: dlang@asgard.lang.hm
-To:     Peter Backes <rtc@helen.PLASMA.Xg8.DE>
-cc:     Philip Oakley <philipoakley@iee.org>,
-        =?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: GDPR compliance best practices?
-In-Reply-To: <20180603174617.GA10900@helen.PLASMA.Xg8.DE>
-Message-ID: <alpine.DEB.2.02.1806061831340.7659@nftneq.ynat.uz>
-References: <20180417191549.GA1199@helen.PLASMA.Xg8.DE> <87y3hlecod.fsf@evledraar.gmail.com> <20180603092736.GA5510@helen.PLASMA.Xg8.DE> <87vab087y2.fsf@evledraar.gmail.com> <20180603112557.GA6564@helen.PLASMA.Xg8.DE> <87tvqk81qp.fsf@evledraar.gmail.com>
- <20180603141801.GA8898@helen.PLASMA.Xg8.DE> <6BE308009FFA4CCDB5B3B47C2AC53E20@PhilipOakley> <20180603174617.GA10900@helen.PLASMA.Xg8.DE>
-User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
+        id S1752788AbeFGBtN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Jun 2018 21:49:13 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62978 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752316AbeFGBtM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jun 2018 21:49:12 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CB7D6EE97E;
+        Wed,  6 Jun 2018 21:49:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to; s=sasl; bh=MaWwTXDImOi3reK/Wx8O115GZyw=; b=bvNU8yz
+        /kQmOwdx79ZTszDuJD8bc4kAEFX2OhyPjQTGUd6ICJckfYfTVlpu95VT89WmCOas
+        k5qQ4BJBKuFl426q6NZrfIe2LbiSFuqSEwCJht2lZmefW9qS6MLjcD3Hjbqq2TY2
+        I2oHFt/XiwyJfMR8pbY7qUPb0qt+iOKRdHJ4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to; q=dns; s=sasl; b=aDqZUknpmFzQaX4MzskVi3KRLlHDBQRrS
+        0imSA0HBhWwCuyr/cxrhRIDRT2HTlkjldz8JtbfGVQdo6g2KmzsdrsmBpQbGbulP
+        TocRAlvffrEwQ5QXzhk9VdHDUY2Nkrgbxpnh0hUWIsyHtO4DYA47E5zlceL8yE9o
+        0osYARCaKQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C1002EE97D;
+        Wed,  6 Jun 2018 21:49:11 -0400 (EDT)
+Received: from zaya.teonanacatl.net (unknown [98.111.125.125])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4B104EE979;
+        Wed,  6 Jun 2018 21:49:11 -0400 (EDT)
+Date:   Wed, 6 Jun 2018 21:49:09 -0400
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Jeff King <peff@peff.net>, git@jeffhostetler.com,
+        git@vger.kernel.org, gitster@pobox.com,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v7 2/2] json-writer: t0019: add Python unit test
+Message-ID: <20180607014909.GL3094@zaya.teonanacatl.net>
+References: <20180605163358.119080-1-git@jeffhostetler.com>
+ <20180605163358.119080-3-git@jeffhostetler.com>
+ <20180606171052.GI3094@zaya.teonanacatl.net>
+ <20180606210300.GA1879@sigill.intra.peff.net>
+ <a50f4a76-7534-b036-e1a4-5560178bd044@ramsayjones.plus.com>
 MIME-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a50f4a76-7534-b036-e1a4-5560178bd044@ramsayjones.plus.com>
+User-Agent: Mutt/1.9.5 (2018-04-13)
+X-Pobox-Relay-ID: F98284A2-69F4-11E8-A738-44CE1968708C-09356542!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I'm going to take the risk of inserting actual real-world data into the mix 
-rather than just speculation :-)
+Ramsay Jones wrote:
+[...]
+> I don't run the p4 or svn tests, so ... :-D
 
-Here is an example of that the Rsyslog project is doing (main developers based 
-in Germany). I'll say as someone who's day job has been very involved with GDPR 
-stuff recently, this looks like a very reasonable statement to me. But I am not 
-a lawyer. I will also say that I think it would be very reasonable for projects 
-to not accept code from someone who doesn't give them any way to contact them 
-later in case there is a question about authorship or licensing.
+Heh, lucky you. :)
 
-David Lang
+I try to run them all as part of the fedora builds since
+they cover much more than I'd ever use.  That's the main
+reason I noticed the bare python.  That would trip me up
+when it came time to build on a near-future fedora where
+python isn't installed by default and I only wanted to
+require python3 for the build/runtime scripts.
 
+> On 06/06/18 22:03, Jeff King wrote:
+>> really the only user in the whole code base outside of a few fringe
+>> commands). Leaving aside any perl vs python flame-war, I think there's
+>> value in keeping the number of languages limited when there's not a
+>> compelling reason to do otherwise.
+> 
+> I agree that fewer languages is (generally) a good idea.
 
-https://github.com/rsyslog/rsyslog/pull/2746/files
+Yep, that's certainly even better and if Jeff H. can use
+perl relatively easily (or one of the many perl folks here
+can help with that part of the test), that's great.  The
+best way to solve many problems is avoid having them. :)
 
-LEGAL GDPR NOTICE:
-According to the European data protection laws (GDPR), we would like to make you
-aware that contributing to rsyslog via git will permanently store the
-name and email address you provide as well as the actual commit and the
-time and date you made it inside git's version history. This is inevitable,
-because it is a main feature git. If you are concerned about your
-privacy, we strongly recommend to use
+Thanks,
 
---author "anonymous <gdpr@example.com>"
+-- 
+Todd
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Chaos, panic, and disorder - my job is done here.
 
-together with your commit. Also please do NOT sign your commit in this case,
-as that potentially could lead back to you. Please note that if you use your
-real identity, the GDPR grants you the right to have this information removed
-later. However, we have valid reasons why we cannot remove that information
-later on. The reasons are:
-
-* this would break git history and make future merges unworkable
-* the rsyslog projects has legitimate interest to keep a permanent record of the
-   contributor identity, once given, for
-   - copyright verification
-   - being able to provide proof should a malicious commit be made
-
-Please also note that your commit is public and as such will potentially be
-processed by many third-parties. Git's distributed nature makes it impossible
-to track where exactly your commit, and thus your personal data, will be stored
-and be processed. If you would not like to accept this risk, please do either
-commit anonymously or refrain from contributing to the rsyslog project.
