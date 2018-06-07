@@ -7,245 +7,184 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 406031F403
-	for <e@80x24.org>; Thu,  7 Jun 2018 14:03:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A9931F403
+	for <e@80x24.org>; Thu,  7 Jun 2018 14:03:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932779AbeFGODp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Jun 2018 10:03:45 -0400
-Received: from mail-qk0-f195.google.com ([209.85.220.195]:35572 "EHLO
-        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932279AbeFGODn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jun 2018 10:03:43 -0400
-Received: by mail-qk0-f195.google.com with SMTP id d130-v6so6610335qkc.2
-        for <git@vger.kernel.org>; Thu, 07 Jun 2018 07:03:43 -0700 (PDT)
+        id S932784AbeFGODq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Jun 2018 10:03:46 -0400
+Received: from mail-qt0-f196.google.com ([209.85.216.196]:36818 "EHLO
+        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932767AbeFGODo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jun 2018 10:03:44 -0400
+Received: by mail-qt0-f196.google.com with SMTP id o9-v6so9922459qtp.3
+        for <git@vger.kernel.org>; Thu, 07 Jun 2018 07:03:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=AKVGwwQBg9u//cZKs+NAd3asRfxgbRAH0cDBZUTGd3A=;
-        b=hqCo17FPbpat5toVvDLQ7HlnVTmqddMAzUnO3yOo5OWjPT7eqZMdNa8ovZLbY+oih9
-         YAJgNqBwNTyPvFFADbVixjq6yL+KZ+Lk2pPyYXVnW8dfMT4OLOnSEZN1F46yAWNMoTwa
-         K1NCGXNSsJ/dZgBYNk3ZsvbjWtESNpU/8+7GyF3/VW0LujNgv7sMksAmbx0rjAYim9hU
-         uodAO9+rllweBqV4mOIZOgTKzTyeYES0U/1MoSihLe2PUryxyvfzXbFu7/Xf68TC0X8T
-         WD4vK4SLM5wJxHFt3YyRmW8Rs8Fcnzj2baAku/bsodHggJ+SadSct59CrigwOmF9biUc
-         ZifA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Av4fwk7O73swp0yX1Q4jmNtB1LNbb8WWr9NH4g8iWhc=;
+        b=MQ5oPKpXl7gqmwVgZi6LsIK+nM7hc+PuYwdYs1I+WbgOlXB/bz31sEns4k5/rL/Kx3
+         x/shIensdtT7yBLcEQ/xIQHXrYrj/pw74bTdH9NfltAqvmneUN6pChLeHuc4p5+b0yIH
+         iqDhj4q4icRpZjwTJzjJod5dbG/65M4EyQhf22mPiTH+R7UoAaReZxkx2Pb3QWf5gsOZ
+         KTL7pM4yggaeczpdH4ivUzUNWrQAhhGI9EzcRdoYR/G8HZsW4NQDzbXi7g8kS6QeBtCn
+         zGv6pSrKKk/k9596vKHSO/NxINDLlg4E6itWQh+TmZKVVztfJOKCcSBsUOny5+7FnC0H
+         UiwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=AKVGwwQBg9u//cZKs+NAd3asRfxgbRAH0cDBZUTGd3A=;
-        b=bEiJPx59SiloEYCa6+c6+T+IpXyVHrZfcbcj+hhKFbIcbkNoOPhFlKIiRSk8vEOKYO
-         KFHjZVlYhYVm2iKLkIaXvaPhAUSP6fP8gFuzWbvFLZ1n90XF58btK+oHZK/YFptxyqGj
-         c65NJTbk8jHrrCwbYcAnLFgo5QVcPf5a1sxjHwVAhXRcUgpBV965r8oE3ox6hKH0VucJ
-         ZfUPZSkw0KB4NQCqNvmuNFR5RPbDX88g2YCqGsWGfrcdCm8SicAaNeZRIFL0S7YDPYbR
-         r+SkW7sT3THR2A9h77wee6lmIHyzGNa8h4gmlNyjjVnTTDtPzgeVW4l6LGoE0wwrGF65
-         4abw==
-X-Gm-Message-State: APt69E2Sv96uvvjOQhRmTNXOMUpgeBL+qTbnppkvQMOvBEoZqJInEEuc
-        ZK+tr8oIyfSVC1lbehxt2f4pifRT
-X-Google-Smtp-Source: ADUXVKJUPke2+jGpoHeYhlsSD46alHnCGzX+s1ReG5LD6Bj7ZDgonXF2dj0z1WO3/+MH7lOC3V274Q==
-X-Received: by 2002:a37:150b:: with SMTP id f11-v6mr1606761qkh.170.1528380222299;
-        Thu, 07 Jun 2018 07:03:42 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=Av4fwk7O73swp0yX1Q4jmNtB1LNbb8WWr9NH4g8iWhc=;
+        b=KZCdgptd4romMftPTOROxIlMJYYdJQlh7Qx/XGdAls8Lar3pzEoPTTz6fq2Db5EMwP
+         wA8jTQF3eyic1YAhDGwqGtEw9v003NSHHPHWJhFWxWHmIKmbEG08ogd+88zHU9jwxUux
+         rGnu1e/dTN4qrkwg4AzzMAOcfcxvB+5fOx0u8QbH+gqajLTO0POA9TX+0RoifZpg8JJG
+         l9IuuMq6jmwMbmyMjcqzeFJrBpbj5d8IlUbUgZN/eM5Aafl4Y89CGLQCh+7Wryi3iK9e
+         rJif9vKSp08C6GuLm820HAKUHU5Bp+6M6LkfmcPYWU0rpF50SSiDMCof0GU7eWN8fRpT
+         zBDg==
+X-Gm-Message-State: APt69E0pIc8hSgRouc7YM5DDxPjLiW2USht/UsJ7UlKYLgLgI6p7yzBk
+        WRuN8CR/UUnd64PBWmwX1CgNV4vD
+X-Google-Smtp-Source: ADUXVKLTbEiEsIbrKa7mdAdRKMyNyXKi+LAqJIQAEcqYFBkYV0aNlG3cGe5t7U6EOJNSVG5s8sWcfA==
+X-Received: by 2002:aed:21ce:: with SMTP id m14-v6mr1867847qtc.292.1528380223731;
+        Thu, 07 Jun 2018 07:03:43 -0700 (PDT)
 Received: from stolee-linux-2.corp.microsoft.com ([2001:4898:8010:0:eb4a:5dff:fe0f:730f])
-        by smtp.gmail.com with ESMTPSA id u74-v6sm12532763qku.55.2018.06.07.07.03.40
+        by smtp.gmail.com with ESMTPSA id u74-v6sm12532763qku.55.2018.06.07.07.03.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 07 Jun 2018 07:03:41 -0700 (PDT)
+        Thu, 07 Jun 2018 07:03:43 -0700 (PDT)
 From:   Derrick Stolee <stolee@gmail.com>
 X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, dstolee@microsoft.com, avarab@gmail.com,
         jrnieder@gmail.com, jonathantanmy@google.com, mfick@codeaurora.org
-Subject: [PATCH 00/23] Multi-pack-index (MIDX)
-Date:   Thu,  7 Jun 2018 10:03:15 -0400
-Message-Id: <20180607140338.32440-1-dstolee@microsoft.com>
+Subject: [PATCH 01/23] midx: add design document
+Date:   Thu,  7 Jun 2018 10:03:16 -0400
+Message-Id: <20180607140338.32440-2-dstolee@microsoft.com>
 X-Mailer: git-send-email 2.18.0.rc1
+In-Reply-To: <20180607140338.32440-1-dstolee@microsoft.com>
+References: <20180607140338.32440-1-dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch series includes a rewrite of the previous
-multi-pack-index RFC [1] using the feedback from the
-commit-graph feature.
-
-I based this series on 'next' as it requires the
-recent object-store patches.
-
-The multi-pack-index (MIDX) is explained fully in
-the design document 'Documentation/technical/midx.txt'.
-The short description is that the MIDX stores the
-information from all of the IDX files in a pack
-directory. The crucial design decision is that the
-IDX files still exist, so we can fall back to the IDX
-files if there is any issue with the MIDX (or core.midx
-is set to false, or a user downgrades Git, etc.)
-
-The MIDX feature has been part of our GVFS releases
-for a few months (since the RFC). It has behaved well,
-indexing over 31 million commits and trees across up
-to 250 packfiles. These MIDX files are nearly 1GB in
-size and take ~20 seconds to rewrite when adding new
-IDX information. This ~20s mark is something I'd like
-to improve, and I mention how to make the file
-incremental (similar to split-index) in the design
-document. I also want to make the commit-graph file
-incremental, so I'd like to do that at the same time
-after both the MIDX and commit-graph are stable.
-
-
-Lookup Speedups
----------------
-
-When looking for an object, Git uses an most-recently-
-used (MRU) cache of packfiles. This does pretty well to
-minimize the number of misses when searching through
-packfiles for an object, especially if there is one
-"big" packfile that contains most of the objets (so it
-will rarely miss and is usually one of the first two
-packfiles in the list). The MIDX does provide a way
-to remove these misses, improving lookup time. However,
-this lookup time greatly depends on the arrangement of
-the packfiles.
-
-For instance, if you take the Linux repository and repack
-using `git repack -adfF --max-pack-size=128m` then all
-commits will be in one packfile, all trees will be in
-a small set of packfiles and organized well so 'git
-rev-list --objects HEAD^{tree}' only inspects one or two
-packfiles.
-
-GVFS has the notion of a "prefetch packfile". These are
-packfiles that are precomputed by cache servers to
-contain the commits and trees introduced to the remote
-each day. GVFS downloads these packfiles and places them
-in an alternate. Since these are organized by "first
-time introduced" and the working directory is so large,
-the MRU misses are significant when performing a checkout
-and updating the .git/index file.
-
-To test the performance in this situation, I created a
-script that organizes the Linux repository in a similar
-fashion. I split the commit history into 50 parts by
-creating branches on every 10,000 commits of the first-
-parent history. Then, `git rev-list --objects A ^B`
-provides the list of objects reachable from A but not B,
-so I could send that to `git pack-objects` to create
-these "time-based" packfiles. With these 50 packfiles
-(deleting the old one from my fresh clone, and deleting
-all tags as they were no longer on-disk) I could then
-test 'git rev-list --objects HEAD^{tree}' and see:
-
-        Before: 0.17s
-        After:  0.13s
-        % Diff: -23.5%
-
-By adding logic to count hits and misses to bsearch_pack,
-I was able to see that the command above calls that
-method 266,930 times with a hit rate of 33%. The MIDX
-has the same number of calls with a 100% hit rate.
-
-
-
-Abbreviation Speedups
----------------------
-
-To fully disambiguate an abbreviation, we must iterate
-through all packfiles to ensure no collision exists in
-any packfile. This requires O(P log N) time. With the
-MIDX, this is only O(log N) time. Our standard test [2]
-is 'git log --oneline --parents --raw' because it writes
-many abbreviations while also doing a lot of other work
-(walking commits and trees to compute the raw diff).
-
-For a copy of the Linux repository with 50 packfiles
-split by time, we observed the following:
-
-        Before: 100.5 s
-        After:   58.2 s
-        % Diff: -59.7%
-
-
-Request for Review Attention
-----------------------------
-
-I tried my best to take the feedback from the commit-graph
-feature and apply it to this feature. I also worked to
-follow the object-store refactoring as I could. I also have
-some local commits that create a 'verify' subcommand and
-integrate with 'fsck' similar to the commit-graph, but I'll
-leave those for a later series (and review is still underway
-for that part of the commit-graph).
-
-One place where I could use some guidance is related to the
-current state of 'the_hash_algo' patches. The file format
-allows a different "hash version" which then indicates the
-length of the hash. What's the best way to ensure this
-feature doesn't cause extra pain in the hash-agnostic series?
-This will inform how I go back and make the commit-graph
-feature better in this area, too.
-
-
-Thanks,
--Stolee
-
-[1] https://public-inbox.org/git/20180107181459.222909-1-dstolee@microsoft.com/T/#u
-    Previous MIDX RFC.
-
-[2] https://public-inbox.org/git/20171012120220.226427-1-dstolee@microsoft.com/
-    A patch series on abbreviation speedups
-
-
-Derrick Stolee (23):
-  midx: add design document
-  midx: add midx format details to pack-format.txt
-  midx: add midx builtin
-  midx: add 'write' subcommand and basic wiring
-  midx: write header information to lockfile
-  midx: struct midxed_git and 'read' subcommand
-  midx: expand test data
-  midx: read packfiles from pack directory
-  midx: write pack names in chunk
-  midx: write a lookup into the pack names chunk
-  midx: sort and deduplicate objects from packfiles
-  midx: write object ids in a chunk
-  midx: write object id fanout chunk
-  midx: write object offsets
-  midx: create core.midx config setting
-  midx: prepare midxed_git struct
-  midx: read objects from multi-pack-index
-  midx: use midx in abbreviation calculations
-  midx: use existing midx when writing new one
-  midx: use midx in approximate_object_count
-  midx: prevent duplicate packfile loads
-  midx: use midx to find ref-deltas
-  midx: clear midx on repack
-
- .gitignore                              |   1 +
- Documentation/config.txt                |   4 +
- Documentation/git-midx.txt              |  60 ++
- Documentation/technical/midx.txt        | 109 +++
- Documentation/technical/pack-format.txt |  82 +++
- Makefile                                |   2 +
- builtin.h                               |   1 +
- builtin/midx.c                          |  88 +++
- builtin/repack.c                        |   8 +
- cache.h                                 |   1 +
- command-list.txt                        |   1 +
- config.c                                |   5 +
- environment.c                           |   1 +
- git.c                                   |   1 +
- midx.c                                  | 923 ++++++++++++++++++++++++
- midx.h                                  |  23 +
- object-store.h                          |  35 +
- packfile.c                              |  47 +-
- packfile.h                              |   1 +
- sha1-name.c                             |  70 ++
- t/t5319-midx.sh                         | 192 +++++
- 21 files changed, 1652 insertions(+), 3 deletions(-)
- create mode 100644 Documentation/git-midx.txt
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ Documentation/technical/midx.txt | 109 +++++++++++++++++++++++++++++++
+ 1 file changed, 109 insertions(+)
  create mode 100644 Documentation/technical/midx.txt
- create mode 100644 builtin/midx.c
- create mode 100644 midx.c
- create mode 100644 midx.h
- create mode 100755 t/t5319-midx.sh
 
+diff --git a/Documentation/technical/midx.txt b/Documentation/technical/midx.txt
+new file mode 100644
+index 0000000000..789f410d71
+--- /dev/null
++++ b/Documentation/technical/midx.txt
+@@ -0,0 +1,109 @@
++Multi-Pack-Index (MIDX) Design Notes
++====================================
++
++The Git object directory contains a 'pack' directory containing
++packfiles (with suffix ".pack") and pack-indexes (with suffix
++".idx"). The pack-indexes provide a way to lookup objects and
++navigate to their offset within the pack, but these must come
++in pairs with the packfiles. This pairing depends on the file
++names, as the pack-index differs only in suffix with its pack-
++file. While the pack-indexes provide fast lookup per packfile,
++this performance degrades as the number of packfiles increases,
++because abbreviations need to inspect every packfile and we are
++more likely to have a miss on our most-recently-used packfile.
++For some large repositories, repacking into a single packfile
++is not feasible due to storage space or excessive repack times.
++
++The multi-pack-index (MIDX for short) stores a list of objects
++and their offsets into multiple packfiles. It contains:
++
++- A list of packfile names.
++- A sorted list of object IDs.
++- A list of metadata for the ith object ID including:
++  - A value j referring to the jth packfile.
++  - An offset within the jth packfile for the object.
++- If large offsets are required, we use another list of large
++  offsets similar to version 2 pack-indexes.
++
++Thus, we can provide O(log N) lookup time for any number
++of packfiles.
++
++Design Details
++--------------
++
++- The MIDX is stored in a file named 'multi-pack-index' in the
++  .git/objects/pack directory. This could be stored in the pack
++  directory of an alternate. It refers only to packfiles in that
++  same directory.
++
++- The core.midx config setting must be on to consume MIDX files.
++
++- The file format includes parameters for the object ID hash
++  function, so a future change of hash algorithm does not require
++  a change in format.
++
++- The MIDX keeps only one record per object ID. If an object appears
++  in multiple packfiles, then the MIDX selects the copy in the most-
++  recently modified packfile.
++
++- If there exist packfiles in the pack directory not registered in
++  the MIDX, then those packfiles are loaded into the `packed_git`
++  list and `packed_git_mru` cache.
++
++- The pack-indexes (.idx files) remain in the pack directory so we
++  can delete the MIDX file, set core.midx to false, or downgrade
++  without any loss of information.
++
++- The MIDX file format uses a chunk-based approach (similar to the
++  commit-graph file) that allows optional data to be added.
++
++Future Work
++-----------
++
++- Add a 'verify' subcommand to the 'git midx' builtin to verify the
++  contents of the multi-pack-index file match the offsets listed in
++  the corresponding pack-indexes.
++
++- The multi-pack-index allows many packfiles, especially in a context
++  where repacking is expensive (such as a very large repo), or
++  unexpected maintenance time is unacceptable (such as a high-demand
++  build machine). However, the multi-pack-index needs to be rewritten
++  in full every time. We can extend the format to be incremental, so
++  writes are fast. By storing a small "tip" multi-pack-index that
++  points to large "base" MIDX files, we can keep writes fast while
++  still reducing the number of binary searches required for object
++  lookups.
++
++- The reachability bitmap is currently paired directly with a single
++  packfile, using the pack-order as the object order to hopefully
++  compress the bitmaps well using run-length encoding. This could be
++  extended to pair a reachability bitmap with a multi-pack-index. If
++  the multi-pack-index is extended to store a "stable object order"
++  (a function Order(hash) = integer that is constant for a given hash,
++  even as the multi-pack-index is updated) then a reachability bitmap
++  could point to a multi-pack-index and be updated independently.
++
++- Packfiles can be marked as "special" using empty files that share
++  the initial name but replace ".pack" with ".keep" or ".promisor".
++  We can add an optional chunk of data to the multi-pack-index that
++  records flags of information about the packfiles. This allows new
++  states, such as 'repacked' or 'redeltified', that can help with
++  pack maintenance in a multi-pack environment. It may also be
++  helpful to organize packfiles by object type (commit, tree, blob,
++  etc.) and use this metadata to help that maintenance.
++
++- The partial clone feature records special "promisor" packs that
++  may point to objects that are not stored locally, but available
++  on request to a server. The multi-pack-index does not currently
++  track these promisor packs.
++
++Related Links
++-------------
++[0] https://bugs.chromium.org/p/git/issues/detail?id=6
++    Chromium work item for: Multi-Pack Index (MIDX)
++
++[1] https://public-inbox.org/git/20180107181459.222909-1-dstolee@microsoft.com/
++    An earlier RFC for the multi-pack-index feature
++
++[2] https://public-inbox.org/git/alpine.DEB.2.20.1803091557510.23109@alexmv-linux/
++    Git Merge 2018 Contributor's summit notes (includes discussion of MIDX)
 -- 
 2.18.0.rc1
 
