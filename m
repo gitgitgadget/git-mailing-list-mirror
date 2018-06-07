@@ -2,204 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F220B1F403
-	for <e@80x24.org>; Thu,  7 Jun 2018 05:48:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 38C5B1F403
+	for <e@80x24.org>; Thu,  7 Jun 2018 06:32:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752521AbeFGFsk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Jun 2018 01:48:40 -0400
-Received: from mail-pl0-f67.google.com ([209.85.160.67]:39563 "EHLO
-        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751675AbeFGFsj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jun 2018 01:48:39 -0400
-Received: by mail-pl0-f67.google.com with SMTP id f1-v6so5351061plt.6
-        for <git@vger.kernel.org>; Wed, 06 Jun 2018 22:48:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=ak0WTHFthY5uX5iQgIRceBFc8i6DGvFTkocUhsZAz9A=;
-        b=btovduDTDcPZGSQHo5j5c2J2MKxgPVhPdr4ZjyPxv0ejX6snKkIaH5D96IVff7XJJQ
-         gbqTjHIj8X4DuqJFz5c6ISOF6/+UUJm4uoD3V4LZQ7uxxK0ziEv0PlGX3L/xit3y0L8y
-         RchE7vnUUo/BA1T8e6svg0cID7x/JgQM7ESXykwqTYYCVK6gfFzLsjWPnXjvduWLGKsT
-         KwN1/QCSFHCvhAt5RUNreUagAISCaW8Czq/Q8RIE/crYVpKJChdYze5LVt+UJxgQKXBD
-         oGerQ0zZ4a/YMr97pV1aZwDYYCndwADXTkE7tb4Njyv/AFA9fA6VKNuDaNkFNJ1PtN5n
-         Fffg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=ak0WTHFthY5uX5iQgIRceBFc8i6DGvFTkocUhsZAz9A=;
-        b=UBvBaHbZWTjig/ecd5EqpBUY5zhOmaH2frV0kCFtAuwG7lolwQlR/EWT23hjae3lmz
-         zGI0UvzpH8rrXXSF8GDL/Pm8EQuG/8LJIeActQ4XeO86qeAdvLAwA3dDjYHeQtPe7c0M
-         UFYGshEnYSmyVoB6QWiRqSQYYS7LJ5lGwhNkP6EUh5DJITaMlyNaqbkKue5if99ZW+At
-         mcVQ4ChC4dREJNw0Srd4oYlOqUb+a8wkR5/+MGuMnRSONug5wuKJV1jWsWXYUB1B14RN
-         pcTR5/GuaRKFlFfWl5SfjOdZAmC5d9f76BtJsTpMya6bohfcDtrTh2PC2aSfhYq5d/yO
-         20Pw==
-X-Gm-Message-State: APt69E0Od9k1b7m0NbvQG/r4q1MFZGQeaACicRXA6uVV1kFkZIU0fZIO
-        xG12szrri24V6Z49q6UW4YI=
-X-Google-Smtp-Source: ADUXVKJMify90bkLw1OqG2A0iXZTEsLHBa+UiWKWCRDCnPnoy+hQucWdFLs6XaHSsBXL7qaqVMI27w==
-X-Received: by 2002:a17:902:bf01:: with SMTP id bi1-v6mr556283plb.43.1528350518317;
-        Wed, 06 Jun 2018 22:48:38 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id z4-v6sm60213743pfm.28.2018.06.06.22.48.37
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 06 Jun 2018 22:48:37 -0700 (PDT)
-Date:   Wed, 6 Jun 2018 22:48:34 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Matthew Coleman <matt@1eanda.com>,
-        Stephon Harris <theonestep4@gmail.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
-        git@vger.kernel.org, Rick van Hattem <wolph@wol.ph>,
-        Dave Borowitz <dborowitz@google.com>
-Subject: Re: [PATCH v2] completion: reduce overhead of clearing cached
- --options
-Message-ID: <20180607054834.GB6567@aiede.svl.corp.google.com>
-References: <xmqqmuy2wz4j.fsf@gitster-ct.c.googlers.com>
- <20180417220219.30445-1-szeder.dev@gmail.com>
+        id S1752568AbeFGGcy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Jun 2018 02:32:54 -0400
+Received: from titan.plasma.xg8.de ([85.10.203.189]:41234 "EHLO
+        titan.PLASMA.Xg8.DE" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751353AbeFGGcx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jun 2018 02:32:53 -0400
+Received: from titan.PLASMA.Xg8.DE (localhost [127.0.0.1])
+        by titan.PLASMA.Xg8.DE (8.15.2/8.15.2) with ESMTPS id w576WfgY018462
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Thu, 7 Jun 2018 08:32:41 +0200
+Received: (from uucp@localhost)
+        by titan.PLASMA.Xg8.DE (8.15.2/8.15.2/Submit) with UUCP id w576Wef5018461;
+        Thu, 7 Jun 2018 08:32:40 +0200
+Received: from helen.PLASMA.Xg8.DE (localhost.localdomain [127.0.0.1])
+        by helen.PLASMA.Xg8.DE (8.15.2/8.15.2) with ESMTP id w576WQ9o028675;
+        Thu, 7 Jun 2018 08:32:26 +0200
+Received: (from rtc@localhost)
+        by helen.PLASMA.Xg8.DE (8.15.2/8.15.2/Submit) id w576WPpp028673;
+        Thu, 7 Jun 2018 08:32:25 +0200
+Date:   Thu, 7 Jun 2018 08:32:25 +0200
+From:   Peter Backes <rtc@helen.PLASMA.Xg8.DE>
+To:     David Lang <david@lang.hm>
+Cc:     Philip Oakley <philipoakley@iee.org>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: GDPR compliance best practices?
+Message-ID: <20180607063225.GA28343@helen.PLASMA.Xg8.DE>
+References: <20180417191549.GA1199@helen.PLASMA.Xg8.DE>
+ <87y3hlecod.fsf@evledraar.gmail.com>
+ <20180603092736.GA5510@helen.PLASMA.Xg8.DE>
+ <87vab087y2.fsf@evledraar.gmail.com>
+ <20180603112557.GA6564@helen.PLASMA.Xg8.DE>
+ <87tvqk81qp.fsf@evledraar.gmail.com>
+ <20180603141801.GA8898@helen.PLASMA.Xg8.DE>
+ <6BE308009FFA4CCDB5B3B47C2AC53E20@PhilipOakley>
+ <20180603174617.GA10900@helen.PLASMA.Xg8.DE>
+ <alpine.DEB.2.02.1806061831340.7659@nftneq.ynat.uz>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180417220219.30445-1-szeder.dev@gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+In-Reply-To: <alpine.DEB.2.02.1806061831340.7659@nftneq.ynat.uz>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi David,
 
-SZEDER Gábor wrote:
+thanks for your input on the issue.
 
-> Other Bash versions, notably 4.4.19 on macOS via homebrew (i.e. a
-> newer version on the same platform) and 3.2.25 on CentOS (i.e. a
-> slightly earlier version, though on a different platform) are not
-> affected.  ZSH in macOS (the versions shipped by default or installed
-> via homebrew) or on other platforms isn't affected either.
-[...]
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -282,7 +282,11 @@ __gitcomp ()
->  
->  # Clear the variables caching builtins' options when (re-)sourcing
->  # the completion script.
-> -unset $(set |sed -ne 's/^\(__gitcomp_builtin_[a-zA-Z0-9_][a-zA-Z0-9_]*\)=.*/\1/p') 2>/dev/null
-> +if [[ -n ${ZSH_VERSION-} ]]; then
-> +	unset $(set |sed -ne 's/^\(__gitcomp_builtin_[a-zA-Z0-9_][a-zA-Z0-9_]*\)=.*/\1/p') 2>/dev/null
-> +else
-> +	unset $(compgen -v __gitcomp_builtin_)
-> +fi
+> LEGAL GDPR NOTICE:
+> According to the European data protection laws (GDPR), we would like to make you
+> aware that contributing to rsyslog via git will permanently store the
+> name and email address you provide as well as the actual commit and the
+> time and date you made it inside git's version history. This is inevitable,
+> because it is a main feature git.
 
-As discussed at [1], this fails catastrophically when sourced by
-git-completion.zsh, which explicitly clears ZSH_VERSION.  By
-catastrophically, I mean that Rick van Hattem and Dave Borowitz report
-that it segfaults.
+As we can, see, rsyslog tries to solve the issue by the already 
+discussed legal "technology" of disclaimers (which is certainly not 
+accepted as state of the art technology by the GDPR). In essence, they 
+are giving excuses for why they are not honoring the right to be 
+forgotten.
 
-I can't reproduce it since I am having trouble following the
-instructions at the top of git-completion.zsh to get the recommended
-zsh completion script loading mechanism working at all.  (I've
-succeeded in using git's bash completion on zsh before, but that was
-many years ago.)  First attempt:
+Disclaimers do not work. They have no legal effect, they are placebos.
 
- 1. rm -fr ~/.zsh ~/.zshrc
-    # you can move them out of the way instead for a less destructive
-    # reproduction recipe
- 2. zsh
- 3. hit "q"
- 4. zstyle ':completion:*:*:git:*' script \
-      $(pwd)/contrib/completion/git-completion.zsh
- 5. git checkout <TAB>
+The GDPR does not accept such excuses. If it would, companies could 
+arbitrarily design their data storage such as to make it "the main 
+feature" to not honor the right to be forgotten and/or other GDPR 
+rights. It is obvious that this cannot work, as it would completely 
+undermine those rights.
 
-Expected result: segfault
+The GDPR honors technology as a means to protect the individual's 
+rights, not as a means to subvert them.
 
-Actual result: succeeds, using zsh's standard completion script (not
-git's).
+> If you are concerned about your
+> privacy, we strongly recommend to use
+> 
+> --author "anonymous <gdpr@example.com>"
+> 
+> together with your commit.
 
-I also tried
+This can only be a solution if the project rejects any commits which 
+are not anonymous.
 
- 1. rm -fr ~/.zsh ~/.zshrc
-    # you can move them out of the way instead for a less destructive
-    # reproduction recipe
- 2. zsh
- 3. hit "2"
- 4. mkdir ~/.zsh; cp contrib/completion/git-completion.zsh ~/.zsh/_git
- 5. echo 'fpath=(~/.zsh $fpath)' >>~/.zshrc
- 6. ^D; zsh
- 7. git checkout <TAB>
+> However, we have valid reasons why we cannot remove that information
+> later on. The reasons are:
+> 
+> * this would break git history and make future merges unworkable
 
-and a similar process with fpath earlier in the zshrc file.  Whatever
-I try, I end up with one of two results: either it uses zsh's standard
-completion, or it spews a stream of errors about missing functions
-like compgen.  What am I doing wrong?
+This is not a valid excuse (see above). The technology has to be 
+designed or applied in such a way that the individuals rights are 
+honored, not the other way around.
 
-Related question: what would it take to add a zsh completion sanity
-check to t/t9902-completion.sh?
+In absence of other means, the project has to rewrite history if it 
+gets a valid request by someone exercising his right to be forgotten, 
+even if that causes a lot of hazzle for everyone.
 
-When running with "set -x", here is what Dave Borowitz gets before the
-segfault.  I don't have a stacktrace because, as mentioned above, I
-haven't been able to reproduce it.
+> * the rsyslog projects has legitimate interest to keep a permanent record of the
+>   contributor identity, once given, for
+>   - copyright verification
+>   - being able to provide proof should a malicious commit be made
 
-	str=git
-	[[ -n git ]]
-	service=git
-	i=
-	_compskip=default
-	eval ''
-	ret=0
-	[[ default = *patterns* ]]
-	[[ default = all ]]
-	str=/usr/bin/git
-	[[ -n /usr/bin/git ]]
-	service=_dispatch:70: bad math expression: operand expected at `/usr/bin/g...'
+True, but that doesn't justify publishing that information and keeping 
+it published even when someone exercises his right to be forgotten.
 
-	zsh: segmentation fault  zsh
+In that case, "legitimate interest" is not enough. There need to be 
+"overriding legitimate grounds". I don't see them here.
 
-Here's a minimal fix, untested.  As a followup, as Gábor suggests at [2],
-it would presumably make sense to stop overriding ZSH_VERSION, using
-this GIT_ scoped variable everywhere instead.
+> Please also note that your commit is public and as such will potentially be
+> processed by many third-parties. Git's distributed nature makes it impossible
+> to track where exactly your commit, and thus your personal data, will be stored
+> and be processed. If you would not like to accept this risk, please do either
+> commit anonymously or refrain from contributing to the rsyslog project.
 
-Thoughts?
+This is one of those statements that ultimately say "we do not honor 
+the GDPR; either accept that or don't submit". That's the old, arguably 
+ignorant mentality, and won't stand.
 
-Reported-by: Rick van Hattem <wolph@wol.ph>
-Reported-by: Dave Borowitz <dborowitz@google.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+The project has to have a legal basis for publishing the personal 
+metadata contained in the repository. In doubt, it needs to be consent 
+based, as that is practically the only basis that allows putting the 
+data on the internet for everyone to download. And consent can be 
+withdrawn at any time.
 
-[1] https://public-inbox.org/git/01020163c683e753-04629405-15f8-4a30-9dc3-e4e3f2a5aa26-000000@eu-west-1.amazonses.com/
-[2] https://public-inbox.org/git/20180606114147.7753-1-szeder.dev@gmail.com/
+The GDPR's transitional period started over two years ago. There was 
+enough time to get everything GDPR compliant.
 
-diff --git i/contrib/completion/git-completion.bash w/contrib/completion/git-completion.bash
-index 12814e9bbf..e4bcc435ea 100644
---- i/contrib/completion/git-completion.bash
-+++ w/contrib/completion/git-completion.bash
-@@ -348,7 +348,7 @@ __gitcomp ()
- 
- # Clear the variables caching builtins' options when (re-)sourcing
- # the completion script.
--if [[ -n ${ZSH_VERSION-} ]]; then
-+if [[ -n ${ZSH_VERSION-} || -n ${GIT_SOURCING_ZSH_COMPLETION-} ]]; then
- 	unset $(set |sed -ne 's/^\(__gitcomp_builtin_[a-zA-Z0-9_][a-zA-Z0-9_]*\)=.*/\1/p') 2>/dev/null
- else
- 	unset $(compgen -v __gitcomp_builtin_)
-diff --git i/contrib/completion/git-completion.zsh w/contrib/completion/git-completion.zsh
-index 53cb0f934f..c7be9fd4dc 100644
---- i/contrib/completion/git-completion.zsh
-+++ w/contrib/completion/git-completion.zsh
-@@ -39,7 +39,7 @@ if [ -z "$script" ]; then
- 		test -f $e && script="$e" && break
- 	done
- fi
--ZSH_VERSION='' . "$script"
-+GIT_SOURCING_ZSH_COMPLETION=1 ZSH_VERSION='' . "$script"
- 
- __gitcomp ()
- {
+It might be possible to implement my solution without changing git, 
+btw. Simply use the anonymous hash as author name, and store the random 
+number and the author as a git-notes. git-notes can be rewritten or 
+deleted at any time without changing the commit ID. I am currently 
+looking into this solution. One just needs to add something that can 
+verify and resolve those anonymous hashes.
+
+Best wishes
+Peter
+
+
+-- 
+Peter Backes, rtc@helen.PLASMA.Xg8.DE
