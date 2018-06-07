@@ -7,92 +7,73 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 90B8C1F403
-	for <e@80x24.org>; Thu,  7 Jun 2018 05:22:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B47B1F403
+	for <e@80x24.org>; Thu,  7 Jun 2018 05:24:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752669AbeFGFWb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Jun 2018 01:22:31 -0400
-Received: from mail-ua0-f193.google.com ([209.85.217.193]:39658 "EHLO
-        mail-ua0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752562AbeFGFW3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jun 2018 01:22:29 -0400
-Received: by mail-ua0-f193.google.com with SMTP id n4-v6so5647909uad.6
-        for <git@vger.kernel.org>; Wed, 06 Jun 2018 22:22:28 -0700 (PDT)
+        id S1752631AbeFGFYg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Jun 2018 01:24:36 -0400
+Received: from mail-ua0-f196.google.com ([209.85.217.196]:37225 "EHLO
+        mail-ua0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752571AbeFGFYf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jun 2018 01:24:35 -0400
+Received: by mail-ua0-f196.google.com with SMTP id i3-v6so5644870uad.4
+        for <git@vger.kernel.org>; Wed, 06 Jun 2018 22:24:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=7/Rk77xvmsPoKvMF/DZkgS/qiywZlX4WGo6TmWyBY0Q=;
-        b=Mbu1rwph4zWOdtvccPo8n8bmArvboaKC2ZxTXUrceeN7upXldm/sqGti2QS/KMegeV
-         aKSJxVF7aer2rnCG2h5SCEp77pCiBs83RzM5OP8Nr6VPwyMnX4/kbQ3OrBGceC4ZlQk2
-         w97dTvA7apOPLsahybPUrehFEDn5y0KcA6VHFPfth5d4rqErvQSebqQ7SiMAsmVVKWZe
-         YwYQjrFn4MGmJc9tYTXM88ixP9wgXk1FudGS4GuhemgLMSEruwBkidWRW9KosmQOWjXs
-         HgQavsTe6FEOyUNcdU/OvIWQVdf2+jofqAErFA1g9JnWLFt5vwDpo6ji4dCaa/u1f+H8
-         sR6w==
+        bh=UEW3Ha7UKbm/25Kw2G/3JFVf/WZsIlgo/yvZDS9ViH0=;
+        b=dH2aaunEDfTFvQ3rCNyr79yd2npVdjM1/oL6GTj2EoZTCTGrpTaGszWkf3eAB0HQH1
+         0g41gGx+lVq7NHn+03pMlhJfQR/4fmfrn7goudeAvT1xFnLovvpE9FHRSFdibwoadTnm
+         pPeDRuO5Y9hk9h87zvtJyiokLGkOaKVwG7IAoBS1jkMRzs+MdmMK1A1SZzX8VGRA982s
+         KEkznRLaf797E1yHWZDdajAtWd1YpeaBGL4jsogMkKsTD4kvEPiVl02hPjNXECP6OVrr
+         2iNUzx3tdXbkmzyQ8DvbuuSpyzQqooEfQ04Z5eV7WnWKidg3ehscapRFBEgISkccvoh4
+         NZyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=7/Rk77xvmsPoKvMF/DZkgS/qiywZlX4WGo6TmWyBY0Q=;
-        b=k8SEXP5nCFt7eMlxtb5gLSuPB/f4gvUYU97h6d8JC38FjXXUeTehO1m+PLwF1w5JUW
-         uCqYlagEcgITUY2JGNCbxBrz9oxtYaPiKFfK/YDRdAnqkR72AtauoMplEzP4jGx2Jt3o
-         KMdZZbitx3K1kOLZTQf9jzuruCkbwy6vvIl+3hVFbNioYAJLqQJXl9MhLnCS0d3/Yixr
-         mfLWWyrayBly465dxs6QPQpBSn8kQ8GRtmfLQHUJI0yRi3G0HhE8MmiBJu2NFZKoO1Co
-         R95EsPNksVvTtAFZaxE8EZojzBwzeMpTFnTj4XlddShsvzx1+4W5PBF7Il8en7KnY/QT
-         F7pw==
-X-Gm-Message-State: APt69E1iazfWhbK+JlKjKP7VOL2b0J6RZTZoYmNMO7sN6m6kOV69lCfG
-        sISPjbDLqdwwJ15A/DMkCZVRRkjGMqBDQvkNdws=
-X-Google-Smtp-Source: ADUXVKIxCceS5RYDub/4ppAMZGqf4FSM9Di0EcpoXi38gy5+MfXOekhHwNqFciKYU34Oet08NZqqACVvWc6LvAMDvzE=
-X-Received: by 2002:ab0:5e83:: with SMTP id y3-v6mr252620uag.112.1528348948063;
- Wed, 06 Jun 2018 22:22:28 -0700 (PDT)
+        bh=UEW3Ha7UKbm/25Kw2G/3JFVf/WZsIlgo/yvZDS9ViH0=;
+        b=iEgl1pRonbvOHKuPNnjf0gxF06RdQpn7ujauSIf3JlzNsk/1EZhDk3GBLLy3OJxcys
+         XqeqRFJJrdYUbvXJM3zf4xhtG+oQ41gADHHYLzWx7wZQ/pI1govrUQvMJ4jbadbIeZ8r
+         X/XgO1YrgZtJmJt9aBmad6RkoCYLAlG6zrWUZTWoddm9LGmhnCZTz6mF0vkjbohR/4HP
+         qxj2Cg43+0Vwqfa/PmsxxDaAG5im2RLJ5ZOd/+VsFe5To4zZubzJvqzRSzOly6s3TWvN
+         89aQwLpIL5hAI8B43rgL5Rl2+WjcBQdP4Zl8ee4lX1fk4oMfHzKTaJ+5jT9/H2VGNrJN
+         DeXQ==
+X-Gm-Message-State: APt69E1HR/5y4FbngYzWoqpEkmnK6sB8penzRsgTtqp6v9Jc4YvMsSeo
+        DYjastklAqD+bjdrIJjievdDuIAMlb+eL1P0iGU=
+X-Google-Smtp-Source: ADUXVKJ7W/w0OWLXaMIv19NwUnhBdraUjSsPya+ujVE9GuV+TSjMwAPlQPHVOYGeLKZmZA+X9u7hUeMPsG4/QAh3jHQ=
+X-Received: by 2002:ab0:596f:: with SMTP id o44-v6mr247227uad.29.1528349074701;
+ Wed, 06 Jun 2018 22:24:34 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:ab0:5f28:0:0:0:0:0 with HTTP; Wed, 6 Jun 2018 22:22:27 -0700 (PDT)
-In-Reply-To: <20180604184805.36332-2-leif.middelschulte@gmail.com>
-References: <xmqqk1s474vx.fsf@gitster-ct.c.googlers.com> <20180604184805.36332-1-leif.middelschulte@gmail.com>
- <20180604184805.36332-2-leif.middelschulte@gmail.com>
+Received: by 2002:ab0:5f28:0:0:0:0:0 with HTTP; Wed, 6 Jun 2018 22:24:34 -0700 (PDT)
+In-Reply-To: <20180607050615.19598-1-newren@gmail.com>
+References: <CABPp-BGxaroePB6aKWAkZeADLB7VE3y1CPy2RyNwpn=+C01g3A@mail.gmail.com>
+ <20180607050615.19598-1-newren@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 6 Jun 2018 22:22:27 -0700
-Message-ID: <CABPp-BEdaSVG9GGwxLwr=neWGq-vO39njC+Ri4tDmN5PPtAntg@mail.gmail.com>
-Subject: Re: [PATCH 1/1] merge-recursive: give notice when submodule commit
- gets fast-forwarded
-To:     Leif Middelschulte <leif.middelschulte@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>
+Date:   Wed, 6 Jun 2018 22:24:34 -0700
+Message-ID: <CABPp-BEJncFwszHvEX1U9FGz6AwjOEb2mTj0=iNt+60m8uB_2A@mail.gmail.com>
+Subject: Re: [PATCH] git-rebase--merge: modernize "git-$cmd" to "git $cmd"
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Elijah Newren <newren@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Leif,
-
-On Mon, Jun 4, 2018 at 11:48 AM, Leif Middelschulte
-<leif.middelschulte@gmail.com> wrote:
-> From: Leif Middelschulte <Leif.Middelschulte@gmail.com>
+On Wed, Jun 6, 2018 at 10:06 PM, Elijah Newren <newren@gmail.com> wrote:
+> <Comments for after diffstat:>
+> I tend to think git-rebase--merge is less popular than the other rebase
+> types, leading to it being more overlooked and less well tested than the
+> other ones.  This git-$cmd usage seems to support that argument.
 >
-> Since submodules are treated similarly to ordinary files (i.e. not as 'dumb'
-> pointers), an automatic merge should be mentioned if the user asks for it.
-> Just as it is mentioned for oridnary files.
+> Anyway, this patch may be irrelevant if others agree with my goal to
+> delete git-rebase--merge and implement --merge on top of the --interactive
+> machinery, but sending it along in case others don't agree with that goal.
+> </Comments>
 
-Thanks for following up; sorry it took me a few days to respond.
-However, it looks like Junio merged the
-sb/submodule-merge-in-merge-recursive topic, including your patch, to
-master back on May 30.  As such, instead of re-rolling your patch,
-we'd need a patch on top of the other existing change.
+I would forget to pull that out of the commit message area and put
+that next to the diffstat in the email.  Whoops.
 
-Also, take a look at the preliminary release announcement -- you show
-up as a new contributor to git!  See it at
-  https://public-inbox.org/git/xmqqwove4pzo.fsf@gitster-ct.c.googlers.com/
-
-
-> +                       output(o, 2, _("Auto-merging %s"), path);
-...
-> +                       output(o, 2, _("Auto-merging %s"), path);
-
-I preferred your old initial wording here, "Fast-forwarding submodule
-%s" (I just wanted the "to %s" part at the end removed).  I'm afraid
-that users who saw "Auto-merging $submodule" would assume that we
-descended into the submodule and ran a full merge there.
-
-Could you submit a patch that just removed that "to %s" part?
+Oh, well.
