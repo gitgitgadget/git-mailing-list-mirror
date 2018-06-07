@@ -6,70 +6,57 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00F3D1F403
-	for <e@80x24.org>; Thu,  7 Jun 2018 02:40:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBEBD1F403
+	for <e@80x24.org>; Thu,  7 Jun 2018 02:49:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753179AbeFGCkw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Jun 2018 22:40:52 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37158 "HELO cloud.peff.net"
+        id S1753488AbeFGCtQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Jun 2018 22:49:16 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37174 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1753163AbeFGCkv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jun 2018 22:40:51 -0400
-Received: (qmail 14339 invoked by uid 109); 7 Jun 2018 02:40:51 -0000
+        id S1753074AbeFGCtP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jun 2018 22:49:15 -0400
+Received: (qmail 14688 invoked by uid 109); 7 Jun 2018 02:49:15 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 07 Jun 2018 02:40:51 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 07 Jun 2018 02:49:15 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11894 invoked by uid 111); 7 Jun 2018 02:41:04 -0000
+Received: (qmail 11966 invoked by uid 111); 7 Jun 2018 02:49:28 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 06 Jun 2018 22:41:04 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 06 Jun 2018 22:49:28 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 06 Jun 2018 22:40:49 -0400
-Date:   Wed, 6 Jun 2018 22:40:49 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 06 Jun 2018 22:49:13 -0400
+Date:   Wed, 6 Jun 2018 22:49:13 -0400
 From:   Jeff King <peff@peff.net>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH 01/10] t: add tool to translate hash-related values
-Message-ID: <20180607024048.GC3898@sigill.intra.peff.net>
-References: <20180604235229.279814-1-sandals@crustytoothpaste.net>
- <20180604235229.279814-2-sandals@crustytoothpaste.net>
- <20180606061927.GA7098@tor.lan>
- <20180606205845.GB1381@sigill.intra.peff.net>
- <20180607005704.GA862596@genre.crustytoothpaste.net>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Todd Zullinger <tmz@pobox.com>, git@jeffhostetler.com,
+        git@vger.kernel.org, gitster@pobox.com,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v7 2/2] json-writer: t0019: add Python unit test
+Message-ID: <20180607024913.GA9351@sigill.intra.peff.net>
+References: <20180605163358.119080-1-git@jeffhostetler.com>
+ <20180605163358.119080-3-git@jeffhostetler.com>
+ <20180606171052.GI3094@zaya.teonanacatl.net>
+ <20180606210300.GA1879@sigill.intra.peff.net>
+ <a50f4a76-7534-b036-e1a4-5560178bd044@ramsayjones.plus.com>
+ <20180607022353.GA3898@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20180607005704.GA862596@genre.crustytoothpaste.net>
+In-Reply-To: <20180607022353.GA3898@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 07, 2018 at 12:57:04AM +0000, brian m. carlson wrote:
+On Wed, Jun 06, 2018 at 10:23:53PM -0400, Jeff King wrote:
 
-> > > Unless I'm wrong, we don't use the "local" keyword ?
-> > 
-> > We've got a test balloon out; see 01d3a526ad (t0000: check whether the
-> > shell supports the "local" keyword, 2017-10-26). I think it's reasonable
-> > to consider starting its use.
-> 
-> I used it because it's already in use earlier in the file in some of the
-> mingw_* functions.  Perhaps we happen to know that our mingw systems
-> will always have a suitable /bin/sh, but I suppose some less capable
-> shells would still have choked on it by now.
+> Though maybe I am wrong that the remote-svn stuff requires python. I
+> thought it did, but poking around, it looks like it's all C, and just
+> the "svnrdump_sim" helper is python.
 
-We do know in that case; it's always bash under mingw.
+I think I was getting this mixed up with the git_remote_helpers python
+work, which was removed long ago in ae34ac126f (git_remote_helpers:
+remove little used Python library, 2013-09-07).
 
-That said...
-
-> I can remove it if necessary, but it didn't seem necessary.
-
-I feel OK about starting to use it, with the knowledge that we may get a
-late-comer who hasn't even tested v2.16.0 yet and says "no, wait! My
-shell doesn't support local!". And then we'd have to deal with it then.
-But I suspect that won't happen, or it will turn out that the shell in
-question is unusable for some other reason anyway.
+Note that it really changes much, but I was curious enough to dig down.
 
 -Peff
