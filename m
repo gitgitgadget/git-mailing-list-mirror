@@ -2,91 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89B1F1F403
-	for <e@80x24.org>; Thu,  7 Jun 2018 15:27:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C0FE01F403
+	for <e@80x24.org>; Thu,  7 Jun 2018 15:30:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935569AbeFGP1O (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Jun 2018 11:27:14 -0400
-Received: from bombadil.infradead.org ([198.137.202.133]:48650 "EHLO
-        bombadil.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935504AbeFGP1M (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jun 2018 11:27:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20170209; h=Content-Type:MIME-Version:Message-ID:
-        Subject:To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=8vfkYhagLmtvhDkq9jknO9ybcVkc9eMXcuHWj+L2pKA=; b=gBrnFC7ahqql2nhMJ79smbXCuD
-        LDf+ODfGFMQwRo91hVClzq6leXJPx9kWn8P7LtUg6vQHWH/wKQBC6ThCEv2tWv1i6em2HDMPdRZPi
-        j15sj27ZTR7ZbIkiKFewQkZiMb08A/wfsgIud7Fh0+vwiz1/1BJcd8ijfmKNEuCrk0k3ELL6et9Rk
-        cPlUWusraAePcdXzHtHiY29X0l5yC2uYri0VHVCUoagfniTwowcI8y9yGxxdiyHRew97nc82NZaJW
-        Q+xgOUANTWQrDPbyM0ZOgSzVSkCkr/ybhviiaTayazvDAxenNXimfCzXi5hTQAHsF7rW//aRf5k7W
-        7eu433Tg==;
-Received: from willy by bombadil.infradead.org with local (Exim 4.90_1 #2 (Red Hat Linux))
-        id 1fQwoi-0005Px-3u
-        for git@vger.kernel.org; Thu, 07 Jun 2018 15:27:12 +0000
-Date:   Thu, 7 Jun 2018 08:27:11 -0700
-From:   Matthew Wilcox <willy@infradead.org>
-To:     git@vger.kernel.org
-Subject: git grep with leading inverted bracket expression
-Message-ID: <20180607152711.GA27079@bombadil.infradead.org>
+        id S934696AbeFGOyS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Jun 2018 10:54:18 -0400
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:42899 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934972AbeFGOyP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jun 2018 10:54:15 -0400
+Received: by mail-qk0-f194.google.com with SMTP id j80-v6so6710492qke.9
+        for <git@vger.kernel.org>; Thu, 07 Jun 2018 07:54:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=XEJHmIWbpcKkujM0HJLABQyJDhVg90XuG5Syf4NSf/Q=;
+        b=OINj00Cr8rFLzCbfZYVRdZFuZYKR31gm/iTnvnjrgeIAYxs2TfS7Vj3dZaLegBQtH9
+         +osBA2oY5UxUZXC2AQqi55wSoyNbELFkR4iR8VEdpZM8aAlVrw52CIzxRu5D9fvXdHGm
+         gPD2wevjHBPe6t3XGeEKBrv7ZYQN7X3JDzJqiEP4NIdfS0bA3FHt4zAZZGZ76kYy+cXT
+         7Ru0wCv397S59G33H2J0AGx/R1s15KiKrnXCnyjO5TMDTS2z9et1+yHV0nVRN3zGvP1r
+         Ri/6skaGTKhZYzFDUsLhBFw1xtwwxXvJmOA1Kv6aLv2Hz51hEUi+yuEIwwg24lj0mjzW
+         Y73g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=XEJHmIWbpcKkujM0HJLABQyJDhVg90XuG5Syf4NSf/Q=;
+        b=hZJ8YwZ+yvfYECITbi7aTub1ZhdX8E1mo+NSk1TQqZLNYLEk8/3tnAk2mdj4Pzgc0+
+         QuAZdlWjj8VjCF9znmoBn81teXqjShSQ2/Sqt5sTHNbE0cfWSUMpFva2KxQglpUSTGd+
+         Xk2xl0cO8eH6/P5Stynxh8zWzaipQR1xiJN8fimE759G3oCK83piXAgzN3+0YCpUXOL8
+         lWiBTrDzf4lRzGOjf2Ta6j6vSik6yVCtuo/bZkjVVuTpP5iXUfGzmzumtK5lJlQ7WvYt
+         q2mKzrL38mOi023dpZxQx3Lorxe3zh+eodfMYxOdt2AfNstOb3S3l8vc5HITGZaeqNT3
+         FZsg==
+X-Gm-Message-State: APt69E2MIVU6sTk1VjKd3u6BLY+vTcdv7sQvOcsrTzZoFrb30h41F9O9
+        wj4rh+l57ni1ZpL6jgAPZnk=
+X-Google-Smtp-Source: ADUXVKLMtGhxFAjxdA2ITYv7RyeUZ3ny4FmtDI8jln8BMe+DovGM5m9/TtyuqNYCF1TvUiC3Tcn0Cw==
+X-Received: by 2002:a37:1828:: with SMTP id j40-v6mr1747026qkh.11.1528383254843;
+        Thu, 07 Jun 2018 07:54:14 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:f8c8:bc46:d69b:91c2? ([2001:4898:8010:0:e1fe:bc46:d69b:91c2])
+        by smtp.gmail.com with ESMTPSA id j190-v6sm8832474qkd.59.2018.06.07.07.54.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 07 Jun 2018 07:54:14 -0700 (PDT)
+Subject: Re: [PATCH 00/23] Multi-pack-index (MIDX)
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, dstolee@microsoft.com,
+        jrnieder@gmail.com, jonathantanmy@google.com, mfick@codeaurora.org
+References: <20180607140338.32440-1-dstolee@microsoft.com>
+ <877enazmdd.fsf@evledraar.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <b81eedfe-e789-7ce3-cdd5-2754c8bbc40a@gmail.com>
+Date:   Thu, 7 Jun 2018 10:54:13 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.9.2 (2017-12-15)
+In-Reply-To: <877enazmdd.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 6/7/2018 10:45 AM, Ævar Arnfjörð Bjarmason wrote:
+> On Thu, Jun 07 2018, Derrick Stolee wrote:
+>
+>> To test the performance in this situation, I created a
+>> script that organizes the Linux repository in a similar
+>> fashion. I split the commit history into 50 parts by
+>> creating branches on every 10,000 commits of the first-
+>> parent history. Then, `git rev-list --objects A ^B`
+>> provides the list of objects reachable from A but not B,
+>> so I could send that to `git pack-objects` to create
+>> these "time-based" packfiles. With these 50 packfiles
+>> (deleting the old one from my fresh clone, and deleting
+>> all tags as they were no longer on-disk) I could then
+>> test 'git rev-list --objects HEAD^{tree}' and see:
+>>
+>>          Before: 0.17s
+>>          After:  0.13s
+>>          % Diff: -23.5%
+>>
+>> By adding logic to count hits and misses to bsearch_pack,
+>> I was able to see that the command above calls that
+>> method 266,930 times with a hit rate of 33%. The MIDX
+>> has the same number of calls with a 100% hit rate.
+> Do you have the script you used for this? It would be very interesting
+> as something we could stick in t/perf/ to test this use-case in the
+> future.
+>
+> How does this & the numbers below compare to just a naïve
+> --max-pack-size=<similar size> on linux.git?
+>
+> Is it possible for you to tar this test repo up and share it as a
+> one-off? I've been polishing the core.validateAbbrev series I have, and
+> it would be interesting to compare some of the (abbrev) numbers.
 
-If the first atom of a regex is a bracket expression with an inverted range,
-git grep is very slow.
+Here is what I used. You will want to adjust your constants for whatever 
+repo you are using. This is for the Linux kernel which has a 
+first-parent history of ~50,000 commits. It also leaves a bunch of extra 
+files around, so it is nowhere near incorporating into the code.
 
-$ time git grep 'struct_size' >/dev/null
+#!/bin/bash
 
-real	0m0.368s
-user	0m0.563s
-sys	0m0.453s
+for i in `seq 1 50`
+do
+         ORDER=$((51 - $i))
+         NUM_BACK=$((1000 * ($i - 1)))
+         echo creating batch/$ORDER
+         git branch -f batch/$ORDER HEAD~$NUM_BACK
+         echo batch/$ORDER
+         git rev-parse batch/$ORDER
+done
 
-$ time git grep '[^t]truct_size' >/dev/null
+lastbranch=""
+for i in `seq 1 50`
+do
+         branch=batch/$i
+         if [$lastbranch -eq ""]
+         then
+                 echo "$branch"
+                 git rev-list --objects $branch | sed 's/ .*//' 
+ >objects-$i.txt
+         else
+                 echo "$lastbranch"
+                 echo "$branch"
+                 git rev-list --objects $branch ^$lastbranch | sed 's/ 
+.*//' >objects-$i.txt
+         fi
 
-real	0m31.529s
-user	1m54.909s
-sys	0m0.805s
+         git pack-objects --no-reuse-delta 
+.git/objects/pack/branch-split2 <objects-$i.txt
+         lastbranch=$branch
+done
 
-If the bracket expression is moved to even the second position in the string,
-it runs much faster:
 
-$ time git grep 's[^p]ruct_size' >/dev/null
+for tag in `git tag --list`
+do
+         git tag -d $tag
+done
 
-real	0m3.989s
-user	0m13.939s
-sys	0m0.403s
+rm -rf .git/objects/pack/pack-*
+git midx write
 
-It's pretty bad with even a '.' as the first character:
-
-$ time git grep '.truct_size' >/dev/null
-
-real	0m14.514s
-user	0m52.624s
-sys	0m0.598s
-
-$ git --version
-git version 2.17.1
-
-Setting LANG=C improves matters by a factor of 3-4 (depending if you
-count real or user time):
-
-$ time git grep '[^t]truct_size' >/dev/null
-real	0m10.035s
-user	0m28.795s
-sys	0m0.537s
-
-(this is using something pretty close to Linus' current HEAD of the
-linux repository, an i7-7500, 16GB memory).
