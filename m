@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B11D31F403
-	for <e@80x24.org>; Thu,  7 Jun 2018 14:04:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D90641F403
+	for <e@80x24.org>; Thu,  7 Jun 2018 14:04:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932897AbeFGOEj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Jun 2018 10:04:39 -0400
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:43382 "EHLO
+        id S932854AbeFGODx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Jun 2018 10:03:53 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:43331 "EHLO
         mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753499AbeFGOEE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jun 2018 10:04:04 -0400
-Received: by mail-qt0-f194.google.com with SMTP id y89-v6so9923383qtd.10
-        for <git@vger.kernel.org>; Thu, 07 Jun 2018 07:04:04 -0700 (PDT)
+        with ESMTP id S932838AbeFGODt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jun 2018 10:03:49 -0400
+Received: by mail-qt0-f194.google.com with SMTP id y89-v6so9922424qtd.10
+        for <git@vger.kernel.org>; Thu, 07 Jun 2018 07:03:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=W2o3RrPX9psSmScwYx0A+DhEU1dfG5U7JK8NcUjQWHo=;
-        b=NS4vEdMJa4r2jxZesmxd69CIkad3STWYFwRRaoL8DRWMvMAcIbl8vSSn7vHPTPXgDi
-         QAJKkGFhS6y2Or/IXiFeZ1au3vX0+kDwvOCNKsuejIGE557F44OXB0ceWU1uukZzWY9E
-         VPLvBYvYXFZIOgjivNbqccp2JAY8m/fvvyh14SBadQV0U+vfSWFbi0kaRp0RM8L6L58L
-         DGeCQP8A0vNq3wXYzsPcxoBUshMcOE1DVlqyDZ5Y61zCAE/SGQPEd9asMDW8fS7VyCMO
-         zn53SJBvxQX8+I8R259ugdJdSepGOcpi9ENb3qcmXTkYrRPwDbln3tLXCyOTIKm180MY
-         EsWA==
+        bh=OonMk2nL/xwyzD28ffj8EPSroJJkBtXOfRJYfif5kAU=;
+        b=CXAjGPbwNmOoZUuPM8vW63rIswhpYlhM7LpB8Cbx2zky1o7S67VN/nF3Esk9Yh4ZvS
+         zhaCQ76BNFQxexnNQGktvKE9I8nymAjc9ZOaDiO+MudZvoKpqlTNEj43A27Xc0CcWdCt
+         UD7WqSp9GPoVWPMQwdWjMY1+cxjY6dGMuhAD1rIw8HFerSJv8H2eGm9WYlynXpRkQIfW
+         WxT4OFlnvFmDKHVp0Gltp2qqwk5oiL94RZwtCIOHOU9jEaa61/ZCGsetOvfORqGUY+EP
+         8e0DRnBxUG9O/9mo9MCy5+yC+2A0D7AvtjX1PXj3+rkwTEIbTvOan6VWK4fALiFme/mQ
+         AxkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=W2o3RrPX9psSmScwYx0A+DhEU1dfG5U7JK8NcUjQWHo=;
-        b=U30fFS5a0e66kFyg+XcMg41Aw+oSHzbNUHnLDgHj8wkCLXyMdQfswutTrdPWRTe2sp
-         aZvOVVCdRzqCmVecZdOK4a+bazW+Mn4cC3rOa4nQ542P3iVvvoICkPn3+FE7cMqXKMEe
-         hAVYVwJ62rks4WykZvvLe/foNoafKkhAzHkho8hfmyhzbFhQlwhgbH2Rbb9xfDvrGwOH
-         W8ZzeHwoa7Okq2Wiq+ehM/mFmHu5fMhMjKVNbJDEtR/s5KAhHfgPv4Wgd97xL0fTnGcV
-         qMRjabVk82l3Az9hIhe3vzRw1NitCd6kQraODEGCx5YGRQAv5aDdktXHyGrUz72Ru11p
-         2NBQ==
-X-Gm-Message-State: APt69E1GyP4o3mIvA454A7TTtU6BPSu3PxIa6izshtbhhBJYAhG0cpqv
-        dI3aeipbzPwKhdaxxKGKZKfhB9uO
-X-Google-Smtp-Source: ADUXVKKAYttk2OjWFZ9fLVEaxzcvaTrgvUhZMvmf5hG8WKGPm29ymgEx29uFEIztvLXLTqvgtTg2IA==
-X-Received: by 2002:a0c:e946:: with SMTP id n6-v6mr1755611qvo.196.1528380243505;
-        Thu, 07 Jun 2018 07:04:03 -0700 (PDT)
+        bh=OonMk2nL/xwyzD28ffj8EPSroJJkBtXOfRJYfif5kAU=;
+        b=rjAubZwg0K8Zah6b4DBva8z//0ZFPH/SDIvFZFOz3NdchT8bkVhZ2uBqwfntj58Gnv
+         5h/sSyGr3ZVQeVr2BNBclWUnDBzSRBDzqd5uwhpjpvX/NuvMVkf0xCxoqeYKKaKHJCUM
+         YUD63KIUuCUIQWF2RlA0/F0Sg/Wldfo0KLQqCiItHfaPQzTH8FsnNigSNsMvqay/6j40
+         dFFVwANVUhdIMhvEH9L0BBEQBHjUxLxdlDwme1G2Hc8VqC1E7SRfwddXK5GJSrFk7g5S
+         sDdN+Qsyr3tTDGR9P4BAnE/ha9E+fa4YgmNDxcV+SbOiB8Pb5QFx6dyKu136E6KhQovV
+         FoRg==
+X-Gm-Message-State: APt69E0RHZb9SkT4TzhXmVJtY5Ku4BAPFOAy5T+CEMqplQBX0glt1Q8a
+        4lvUE4wLKagX5XLsIvuQ7EKIk2i9
+X-Google-Smtp-Source: ADUXVKJ/Px4nY3sFGajbV92Cz6jHngNqwRXvNXnlcDb/8+pIoBnP2yQvPl8wQHmoPVRQ2h8znX7jgA==
+X-Received: by 2002:a0c:ae0a:: with SMTP id y10-v6mr1756228qvc.157.1528380228655;
+        Thu, 07 Jun 2018 07:03:48 -0700 (PDT)
 Received: from stolee-linux-2.corp.microsoft.com ([2001:4898:8010:0:eb4a:5dff:fe0f:730f])
-        by smtp.gmail.com with ESMTPSA id u74-v6sm12532763qku.55.2018.06.07.07.04.02
+        by smtp.gmail.com with ESMTPSA id u74-v6sm12532763qku.55.2018.06.07.07.03.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 07 Jun 2018 07:04:02 -0700 (PDT)
+        Thu, 07 Jun 2018 07:03:48 -0700 (PDT)
 From:   Derrick Stolee <stolee@gmail.com>
 X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, dstolee@microsoft.com, avarab@gmail.com,
         jrnieder@gmail.com, jonathantanmy@google.com, mfick@codeaurora.org
-Subject: [PATCH 17/23] midx: read objects from multi-pack-index
-Date:   Thu,  7 Jun 2018 10:03:32 -0400
-Message-Id: <20180607140338.32440-18-dstolee@microsoft.com>
+Subject: [PATCH 05/23] midx: write header information to lockfile
+Date:   Thu,  7 Jun 2018 10:03:20 -0400
+Message-Id: <20180607140338.32440-6-dstolee@microsoft.com>
 X-Mailer: git-send-email 2.18.0.rc1
 In-Reply-To: <20180607140338.32440-1-dstolee@microsoft.com>
 References: <20180607140338.32440-1-dstolee@microsoft.com>
@@ -64,190 +64,109 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+As we begin writing the multi-pack-index format to disk, start with
+the basics: the 12-byte header and the 20-byte checksum footer. Start
+with these basics so we can add the rest of the format in small
+increments.
+
+As we implement the format, we will use a technique to check that our
+computed offsets within the multi-pack-index file match what we are
+actually writing. Each method that writes to the hashfile will return
+the number of bytes written, and we will track that those values match
+our expectations.
+
+Currently, write_midx_header() returns 12, but is not checked. We will
+check the return value in a later commit.
+
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- midx.c         | 96 ++++++++++++++++++++++++++++++++++++++++++++++++--
- midx.h         |  2 ++
- object-store.h |  1 +
- packfile.c     |  8 ++++-
- 4 files changed, 104 insertions(+), 3 deletions(-)
+ midx.c          | 53 +++++++++++++++++++++++++++++++++++++++++++++++++
+ t/t5319-midx.sh |  5 +++--
+ 2 files changed, 56 insertions(+), 2 deletions(-)
 
 diff --git a/midx.c b/midx.c
-index 5e9290ca8f..6eca8f1b12 100644
+index 616af66b13..3e55422a21 100644
 --- a/midx.c
 +++ b/midx.c
-@@ -3,6 +3,7 @@
+@@ -1,9 +1,62 @@
+ #include "git-compat-util.h"
+ #include "cache.h"
  #include "dir.h"
- #include "csum-file.h"
- #include "lockfile.h"
-+#include "sha1-lookup.h"
- #include "object-store.h"
- #include "packfile.h"
++#include "csum-file.h"
++#include "lockfile.h"
  #include "midx.h"
-@@ -64,7 +65,7 @@ struct midxed_git *load_midxed_git(const char *object_dir)
  
- 	m = xcalloc(1, sizeof(*m) + strlen(object_dir) + 1);
- 	strcpy(m->object_dir, object_dir);
--	m->data = midx_map;
-+	m->data = (const unsigned char*)midx_map;
- 
- 	m->signature = get_be32(m->data);
- 	if (m->signature != MIDX_SIGNATURE) {
-@@ -145,7 +146,9 @@ struct midxed_git *load_midxed_git(const char *object_dir)
- 
- 	m->num_objects = ntohl(m->chunk_oid_fanout[255]);
- 
--	m->pack_names = xcalloc(m->num_packs, sizeof(const char *));
-+	m->packs = xcalloc(m->num_packs, sizeof(*m->packs));
++#define MIDX_SIGNATURE 0x4d494458 /* "MIDX" */
++#define MIDX_VERSION 1
++#define MIDX_HASH_VERSION 1 /* SHA-1 */
++#define MIDX_HEADER_SIZE 12
 +
-+	ALLOC_ARRAY(m->pack_names, m->num_packs);
- 	for (i = 0; i < m->num_packs; i++) {
- 		if (i) {
- 			if (ntohl(m->chunk_pack_lookup[i]) <= ntohl(m->chunk_pack_lookup[i - 1])) {
-@@ -175,6 +178,95 @@ struct midxed_git *load_midxed_git(const char *object_dir)
- 	exit(1);
++static char *get_midx_filename(const char *object_dir)
++{
++	struct strbuf midx_name = STRBUF_INIT;
++	strbuf_addstr(&midx_name, object_dir);
++	strbuf_addstr(&midx_name, "/pack/multi-pack-index");
++	return strbuf_detach(&midx_name, NULL);
++}
++
++static size_t write_midx_header(struct hashfile *f,
++				unsigned char num_chunks,
++				uint32_t num_packs)
++{
++	char byte_values[4];
++	hashwrite_be32(f, MIDX_SIGNATURE);
++	byte_values[0] = MIDX_VERSION;
++	byte_values[1] = MIDX_HASH_VERSION;
++	byte_values[2] = num_chunks;
++	byte_values[3] = 0; /* unused */
++	hashwrite(f, byte_values, sizeof(byte_values));
++	hashwrite_be32(f, num_packs);
++
++	return MIDX_HEADER_SIZE;
++}
++
+ int write_midx_file(const char *object_dir)
+ {
++	unsigned char num_chunks = 0;
++	uint32_t num_packs = 0;
++	char *midx_name;
++	struct hashfile *f;
++	struct lock_file lk;
++
++	midx_name = get_midx_filename(object_dir);
++	if (safe_create_leading_directories(midx_name)) {
++		UNLEAK(midx_name);
++		die_errno(_("unable to create leading directories of %s"),
++			  midx_name);
++	}
++
++	hold_lock_file_for_update(&lk, midx_name, LOCK_DIE_ON_ERROR);
++	f = hashfd(lk.tempfile->fd, lk.tempfile->filename.buf);
++	FREE_AND_NULL(midx_name);
++
++	write_midx_header(f, num_chunks, num_packs);
++
++	finalize_hashfile(f, NULL, CSUM_FSYNC | CSUM_HASH_IN_STREAM);
++	commit_lock_file(&lk);
++
+ 	return 0;
  }
+diff --git a/t/t5319-midx.sh b/t/t5319-midx.sh
+index a590137af7..80f9389837 100755
+--- a/t/t5319-midx.sh
++++ b/t/t5319-midx.sh
+@@ -3,8 +3,9 @@
+ test_description='multi-pack-indexes'
+ . ./test-lib.sh
  
-+static int prepare_midx_pack(struct midxed_git *m, uint32_t pack_int_id)
-+{
-+	struct strbuf pack_name = STRBUF_INIT;
-+
-+	if (pack_int_id >= m->num_packs)
-+		BUG("bad pack-int-id");
-+
-+	if (m->packs[pack_int_id])
-+		return 0;
-+
-+	strbuf_addstr(&pack_name, m->object_dir);
-+	strbuf_addstr(&pack_name, "/pack/");
-+	strbuf_addstr(&pack_name, m->pack_names[pack_int_id]);
-+
-+	m->packs[pack_int_id] = add_packed_git(pack_name.buf, pack_name.len, 1);
-+	strbuf_release(&pack_name);
-+	return !m->packs[pack_int_id];
-+}
-+
-+int bsearch_midx(const struct object_id *oid, struct midxed_git *m, uint32_t *result)
-+{
-+	return bsearch_hash(oid->hash, m->chunk_oid_fanout, m->chunk_oid_lookup,
-+			    MIDX_HASH_LEN, result);
-+}
-+
-+static off_t nth_midxed_offset(struct midxed_git *m, uint32_t pos)
-+{
-+	const unsigned char *offset_data;
-+	uint32_t offset32;
-+
-+	offset_data = m->chunk_object_offsets + pos * MIDX_CHUNK_OFFSET_WIDTH;
-+	offset32 = get_be32(offset_data + sizeof(uint32_t));
-+
-+	if (m->chunk_large_offsets && offset32 & MIDX_LARGE_OFFSET_NEEDED) {
-+		if (sizeof(offset32) < sizeof(uint64_t))
-+			die(_("multi-pack-index stores a 64-bit offset, but off_t is too small"));
-+
-+		offset32 ^= MIDX_LARGE_OFFSET_NEEDED;
-+		return get_be64(m->chunk_large_offsets + sizeof(uint64_t) * offset32);
-+	}
-+
-+	return offset32;
-+}
-+
-+static uint32_t nth_midxed_pack_int_id(struct midxed_git *m, uint32_t pos)
-+{
-+	return get_be32(m->chunk_object_offsets + pos * MIDX_CHUNK_OFFSET_WIDTH);
-+}
-+
-+static int nth_midxed_pack_entry(struct midxed_git *m, struct pack_entry *e, uint32_t pos)
-+{
-+	uint32_t pack_int_id;
-+	struct packed_git *p;
-+
-+	if (pos >= m->num_objects)
-+		return 0;
-+
-+	pack_int_id = nth_midxed_pack_int_id(m, pos);
-+
-+	if (prepare_midx_pack(m, pack_int_id))
-+		die(_("error preparing packfile from multi-pack-index"));
-+	p = m->packs[pack_int_id];
-+
-+	/*
-+	* We are about to tell the caller where they can locate the
-+	* requested object.  We better make sure the packfile is
-+	* still here and can be accessed before supplying that
-+	* answer, as it may have been deleted since the MIDX was
-+	* loaded!
-+	*/
-+	if (!is_pack_valid(p))
-+		return 0;
-+
-+	e->offset = nth_midxed_offset(m, pos);
-+	e->p = p;
-+
-+	return 1;
-+}
-+
-+int fill_midx_entry(const struct object_id *oid, struct pack_entry *e, struct midxed_git *m)
-+{
-+	uint32_t pos;
-+
-+	if (!bsearch_midx(oid, m, &pos))
-+		return 0;
-+
-+	return nth_midxed_pack_entry(m, e, pos);
-+}
-+
- int prepare_midxed_git_one(struct repository *r, const char *object_dir)
- {
- 	struct midxed_git *m = r->objects->midxed_git;
-diff --git a/midx.h b/midx.h
-index 793203fc4a..0c66812229 100644
---- a/midx.h
-+++ b/midx.h
-@@ -8,6 +8,8 @@
- #include "repository.h"
+-test_expect_success 'write midx with no pakcs' '
+-	git midx --object-dir=. write
++test_expect_success 'write midx with no packs' '
++	git midx --object-dir=. write &&
++	test_path_is_file pack/multi-pack-index
+ '
  
- struct midxed_git *load_midxed_git(const char *object_dir);
-+int bsearch_midx(const struct object_id *oid, struct midxed_git *m, uint32_t *result);
-+int fill_midx_entry(const struct object_id *oid, struct pack_entry *e, struct midxed_git *m);
- int prepare_midxed_git_one(struct repository *r, const char *object_dir);
- 
- int write_midx_file(const char *object_dir);
-diff --git a/object-store.h b/object-store.h
-index 7908d46e34..5af2a852bc 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -108,6 +108,7 @@ struct midxed_git {
- 	const unsigned char *chunk_large_offsets;
- 
- 	const char **pack_names;
-+	struct packed_git **packs;
- 	char object_dir[FLEX_ARRAY];
- };
- 
-diff --git a/packfile.c b/packfile.c
-index b91ca9b9f5..73f8cc28ee 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -1857,11 +1857,17 @@ static int fill_pack_entry(const struct object_id *oid,
- int find_pack_entry(struct repository *r, const struct object_id *oid, struct pack_entry *e)
- {
- 	struct list_head *pos;
-+	struct midxed_git *m;
- 
- 	prepare_packed_git(r);
--	if (!r->objects->packed_git)
-+	if (!r->objects->packed_git && !r->objects->midxed_git)
- 		return 0;
- 
-+	for (m = r->objects->midxed_git; m; m = m->next) {
-+		if (fill_midx_entry(oid, e, m))
-+			return 1;
-+	}
-+
- 	list_for_each(pos, &r->objects->packed_git_mru) {
- 		struct packed_git *p = list_entry(pos, struct packed_git, mru);
- 		if (fill_pack_entry(oid, e, p)) {
+ test_done
 -- 
 2.18.0.rc1
 
