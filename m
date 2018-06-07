@@ -2,90 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A427C1F403
-	for <e@80x24.org>; Thu,  7 Jun 2018 18:31:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0FAF41F403
+	for <e@80x24.org>; Thu,  7 Jun 2018 19:03:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934835AbeFGSbh (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Jun 2018 14:31:37 -0400
-Received: from mail-oi0-f52.google.com ([209.85.218.52]:42703 "EHLO
-        mail-oi0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934029AbeFGSbg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jun 2018 14:31:36 -0400
-Received: by mail-oi0-f52.google.com with SMTP id k190-v6so9516174oib.9
-        for <git@vger.kernel.org>; Thu, 07 Jun 2018 11:31:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=tW+Em0ZeMAR9J5n5a2EVYOZjbSxvgHmxPq0FJltIL5Q=;
-        b=RhMeUOtdEV3Feyyrwdp1MHkRkaIPrIc6xbX0k+qVgKYzgZCNLTkeZhA10W50VweaFs
-         ZjwFS67cd3JNNNipXt20bDsPH2mctOX12EcZRZxwsHUZUk3jDn6R7eWyx0aGexG3/dJP
-         YOwYlMUQKWMO0fHi37roz79XbgmLZGCnTf03JV599nySWQ7js/+L9b/CPGvCbBqnfTZQ
-         CeZxxuwLN/jsCXTHoc0BnNtiSvBE3V2U26wTWpYLEaQ3Mo7gVn7pkIpWr8D+4knob/rc
-         NnNhlQZf4wM6k9fM5V91bdUXV+m2AGENukQ6vrg7apk9WYK3uaI5DBMUU3uIhOZAahSF
-         7QTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=tW+Em0ZeMAR9J5n5a2EVYOZjbSxvgHmxPq0FJltIL5Q=;
-        b=nRBbQJtY8n3xXaCcucreDpBH8euUtK80ro8fDBSqjgsxU/hr+vwcdgWBpxQu+GVN+J
-         j5J7D11JZtm9H4uxAykwztJOh3SNbBgOZNyRh539GF50jGJrnKRoKGypRRqsL34hjGax
-         QSl2xJNUCmv8Au7MZb1j50X215yyDxu3hj1OcMlgGR/kBEaUwlcdQ2V5qFqRain+KVKz
-         pOQPQ1sS6UmveZZNXXnNza49yFlazLoGuk2AOj80RhIirAfhKMcWY5pHJU2lT6E+oF7F
-         H7hVH4xNcGTQ5EWNyi/3VXvziLp7CmaAJ7K4A0QARcN5pRhq5DLiNiox7ttmT6kBQkjT
-         44mg==
-X-Gm-Message-State: APt69E1e8Mvf/pXlwwQ1RKlbtjvpEFXD8TS+3IhCgtC4BcZAKXtH3Hzi
-        hCCTVN9oQ7D9wrNEWV2mEQ9pmazRR9sIqgIkYpk=
-X-Google-Smtp-Source: ADUXVKJz9lLpUCQmipKOrBxr5Lnt17kwlAczJttEYedkr0k/eByn8CZ13WaSIX961yj2uFL5qtC1XRzjle63gl7MXHs=
-X-Received: by 2002:aca:f594:: with SMTP id t142-v6mr1594702oih.56.1528396296372;
- Thu, 07 Jun 2018 11:31:36 -0700 (PDT)
+        id S1753140AbeFGTDZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Jun 2018 15:03:25 -0400
+Received: from avasout04.plus.net ([212.159.14.19]:44760 "EHLO
+        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750933AbeFGTDY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jun 2018 15:03:24 -0400
+Received: from [10.0.2.15] ([80.189.70.162])
+        by smtp with ESMTPA
+        id R0BtfMfdZI9T1R0BufS4Hf; Thu, 07 Jun 2018 20:03:23 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=Z6vC4kZA c=1 sm=1 tr=0
+ a=zzlqjQC3YyNvDZl/Gy+4mg==:117 a=zzlqjQC3YyNvDZl/Gy+4mg==:17
+ a=IkcTkHD0fZMA:10 a=b85PRglOYvoSmf1xjLMA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH v7 2/2] json-writer: t0019: add Python unit test
+To:     Jeff King <peff@peff.net>
+Cc:     Todd Zullinger <tmz@pobox.com>, git@jeffhostetler.com,
+        git@vger.kernel.org, gitster@pobox.com,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <20180605163358.119080-1-git@jeffhostetler.com>
+ <20180605163358.119080-3-git@jeffhostetler.com>
+ <20180606171052.GI3094@zaya.teonanacatl.net>
+ <20180606210300.GA1879@sigill.intra.peff.net>
+ <a50f4a76-7534-b036-e1a4-5560178bd044@ramsayjones.plus.com>
+ <20180607022353.GA3898@sigill.intra.peff.net>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <b244717e-bc96-0c15-5bf0-1ce50fa63cf1@ramsayjones.plus.com>
+Date:   Thu, 7 Jun 2018 20:03:21 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-Received: by 2002:a4a:2082:0:0:0:0:0 with HTTP; Thu, 7 Jun 2018 11:31:05 -0700 (PDT)
-In-Reply-To: <20180607140338.32440-7-dstolee@microsoft.com>
-References: <20180607140338.32440-1-dstolee@microsoft.com> <20180607140338.32440-7-dstolee@microsoft.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 7 Jun 2018 20:31:05 +0200
-Message-ID: <CACsJy8DG1-YTSBSFkpM8BPcnKmvC-BjjK0W0+EckkdENPC7Ohg@mail.gmail.com>
-Subject: Re: [PATCH 06/23] midx: struct midxed_git and 'read' subcommand
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Martin Fick <mfick@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20180607022353.GA3898@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfCEBqRHlkok4odqEsuj7fsBWzb48eTrL3JsXufiiKbHYBZhU2L/5VYQ5t2+lKT7P+E1PYQep8pPqnUOJngoV7mlqzZREV5M4kc1DcwtEU8mmcG/UAi9p
+ 3r7BNVhVi5DLMIwi8FUXG2GCgXW9HTSv2xhIeaZFsiU+trkzZVnSwing
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 7, 2018 at 4:03 PM, Derrick Stolee <stolee@gmail.com> wrote:
-> diff --git a/Documentation/git-midx.txt b/Documentation/git-midx.txt
-> index dcaeb1a91b..919283fdd8 100644
-> --- a/Documentation/git-midx.txt
-> +++ b/Documentation/git-midx.txt
-> @@ -23,6 +23,11 @@ OPTIONS
->         <dir>/packs/multi-pack-index for the current MIDX file, and
->         <dir>/packs for the pack-files to index.
->
-> +read::
-> +       When given as the verb, read the current MIDX file and output
-> +       basic information about its contents. Used for debugging
-> +       purposes only.
 
-On second thought. If you just need a temporary debugging interface,
-adding a program in t/helper may be a better option. In the end we
-might still need 'read' to dump a file out, but we should have some
-stable output format (and json might be a good choice).
 
-That's it I'm done for today. I will continue on the rest some day, hopefully.
--- 
-Duy
+On 07/06/18 03:23, Jeff King wrote:
+> On Thu, Jun 07, 2018 at 01:16:14AM +0100, Ramsay Jones wrote:
+> 
+>>> Probably. We may want to go the same route as we did for perl in 
+>>> a0e0ec9f7d (t: provide a perl() function which uses $PERL_PATH,
+>>> 2013-10-28) so that test writers don't have to remember this.
+>>>
+>>> That said, I wonder if it would be hard to simply do the python bits
+>>> here in perl. This is the first use of python in our test scripts (and
+>>
+>> Hmm, not quite the _first_ use:
+>>
+>> $ git grep PYTHON_PATH -- t
+>> t/lib-git-p4.sh:        (cd / && "$PYTHON_PATH" -c 'import time; print(int(time.time()))')
+>> t/lib-git-p4.sh:        "$PYTHON_PATH" "$TRASH_DIRECTORY/marshal-dump.py"
+>> t/t9020-remote-svn.sh:export PATH PYTHON_PATH GIT_BUILD_DIR
+>> t/t9020-remote-svn.sh:exec "$PYTHON_PATH" "$GIT_BUILD_DIR/contrib/svn-fe/svnrdump_sim.py" "$@"
+>> t/t9802-git-p4-filetype.sh:             "$PYTHON_PATH" "$TRASH_DIRECTORY/k_smush.py" <"$cli/k-text-k" >cli-k-text-k-smush &&
+>> t/t9802-git-p4-filetype.sh:             "$PYTHON_PATH" "$TRASH_DIRECTORY/ko_smush.py" <"$cli/k-text-ko" >cli-k-text-ko-smush &&
+>> t/t9802-git-p4-filetype.sh:             "$PYTHON_PATH" "$TRASH_DIRECTORY/gendouble.py" >%double.png &&
+>> t/t9810-git-p4-rcs.sh:  "$PYTHON_PATH" "$TRASH_DIRECTORY/scrub_k.py" <"$git/$file" >"$scrub" &&
+>> t/t9810-git-p4-rcs.sh:  "$PYTHON_PATH" "$TRASH_DIRECTORY/scrub_ko.py" <"$git/$file" >"$scrub" &&
+>> $ 
+> 
+> OK, the first for a feature that is not already written in python
+> (leading into my second claim that python is used only for fringe
+> commands ;) ).
+> 
+> Though maybe I am wrong that the remote-svn stuff requires python. I
+> thought it did, but poking around, it looks like it's all C, and just
+> the "svnrdump_sim" helper is python.
+
+Heh, I was a bit tired last night, so although I knew that
+I required python to be installed to run the test-suite, I
+could not remember why. As soon as I went to bed, ... :)
+
+I recently installed Ubuntu 18.04, so that I could get a heads
+up on any possible problems later this month when I install
+Linux Mint 19. In order to get the test-suite to run, I had
+to set 'PYTHON_PATH = /usr/bin/python3' in my config.mak file.
+(yes, I could have set NO_PYTHON, but you get the idea).
+
+Ubuntu 18.04 no longer installs python2 by default (it has
+ported to python3), but presumably you can still install it
+as '/usr/bin/python' (I didn't check).
+
+In any event, it was t9020-remote-svn.sh that was failing
+which, despite the name, does not depend on 'svn'. As you
+already noted, it does run svnrdump_sim.py and the git-remote-testsvn.
+
+> At any rate, I think the point still stands that perl is our main
+> scripting language. I'd rather keep us to that unless there's a good
+> reason not to.
+
+Agreed. And I see it has come to pass ... :-D
+
+ATB,
+Ramsay Jones
+
+
