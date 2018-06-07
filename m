@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA6C11F403
-	for <e@80x24.org>; Thu,  7 Jun 2018 05:07:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C8531F403
+	for <e@80x24.org>; Thu,  7 Jun 2018 05:07:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752588AbeFGFHF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Jun 2018 01:07:05 -0400
-Received: from mail-ot0-f194.google.com ([74.125.82.194]:42737 "EHLO
-        mail-ot0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752532AbeFGFHB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jun 2018 01:07:01 -0400
-Received: by mail-ot0-f194.google.com with SMTP id 92-v6so10014554otw.9
-        for <git@vger.kernel.org>; Wed, 06 Jun 2018 22:07:01 -0700 (PDT)
+        id S1752577AbeFGFH4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Jun 2018 01:07:56 -0400
+Received: from mail-oi0-f68.google.com ([209.85.218.68]:45891 "EHLO
+        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750897AbeFGFH4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jun 2018 01:07:56 -0400
+Received: by mail-oi0-f68.google.com with SMTP id b130-v6so7406403oif.12
+        for <git@vger.kernel.org>; Wed, 06 Jun 2018 22:07:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=F9K1+ESpkb1kmbcIOFyu0Y+oDPPMaf2X78NboyotTDc=;
-        b=W9v7psft5LFOaZW4fscc32lKS0R+FiGK3Y//XEJy75aRLmqnNwoIU69LPHhqBGbOWQ
-         IagC12TKkyJ4kDNIp0gPa7wz5TmAjmjobmDHols8oP9RU6NiOkrZq/chcF0gdD8Eik5p
-         Ok6Ai4kefjHaYmqJPeS8bl+jfiXKWubBKLD+esSpItZrtxNVG/mlBYOMxDmIwe4dPg2w
-         bvTVCoKI4DNoGWn+4sTx5blhwQ7cXCcrNDZjA9SjvwnqZ9QTp5+oYlOgPz0/D5SrLm06
-         /Hj8M0Wd3rKePco/0SY0IpauJBqQw3OOUJDIoD906g7UxrRwnIwomts2UvgOHVxN8ndr
-         Vqsw==
+        bh=k8FStSTpoVlHWBPmwK8K+R521XNUQliuA7SKgd0XOiI=;
+        b=Gq4HFnYsnh7GqvzUx76exgn6oPWJREHC1NGixZDZ/YyBCoKY5roKxnJ2bayGbQLlRM
+         wbvdXg/ELqn5kb5PzZ0ebUfzTUlQvtgetSbceb+y0socOFT6nlAR9yUUo0IuZ2Ob0mvi
+         nQBlTi5uAphqFX4tYKDRrNJG+YxMDRI48Hq0cxWOc4ufisQ3RiJ7b6rEZ76lfhZNdbAg
+         CCoZZR47Q2qAENnn8L6BDU4fEUk0TkO//hZyyhLaYp9vgv1bX03mz2CJRaHSoVeeqCgD
+         33zzNqYEaljA+7GwPwKtwkvHwGu1jTRidN9wfDDTLGhvB4nm2JZeup9rHx/+ocgbE8Ln
+         r5mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=F9K1+ESpkb1kmbcIOFyu0Y+oDPPMaf2X78NboyotTDc=;
-        b=n0hrCBCnq94AYo4jlnk9EMvvv0MDz/Q+f/i9Vfwhsp06X5cP12CW9IE4zQ3G045BAp
-         Kp42PWX+xaoGiO0A+Jdh5hQo14qb/sTwegbs5eMg/3PLXAJ9RtnUZMM1UnorUITCO/iF
-         k+VZ1H+lWRS+mRfQdNe2LQku85kepNbVyNTw4NGXO0wlaWgvdAVvhEsKrqn2WVOseJ9e
-         h1zgDM4xhqaAD9WFcyADDVjO0CkiOUf8dTcaKLN/OuV5+uA/V6I2MXiDSnFVx+a86Ni5
-         MLxLiMKLYBK+a6GgTVTT7ESNPXplNWkICPhD2gdaucSsO7DM/GpXvg82KBWreB5ETvrF
-         Vgmg==
-X-Gm-Message-State: APt69E20p0c6Fw0q/zvyYHLTfWGaEhgqlGRAO3o78De1ycy1/S53Q5EN
-        ePBGgeGjMNyJtluwMXGTQS75bw==
-X-Google-Smtp-Source: ADUXVKI825J/btm5irYzkumZIxipTpCX4jhcjqL9DWMRg8NZTL1keWlFKcw/xfba8OzeQkpUfQIw6g==
-X-Received: by 2002:a9d:3666:: with SMTP id w93-v6mr169963otb.394.1528348020718;
-        Wed, 06 Jun 2018 22:07:00 -0700 (PDT)
+        bh=k8FStSTpoVlHWBPmwK8K+R521XNUQliuA7SKgd0XOiI=;
+        b=ak3dhWZdZTYlRpry3gGYg2HXlCRzg/B3DLrKd70i3IqUyknO2AvZghVYaJdEmRC+Mv
+         EfnRNApVT0l8dL+sAQdhsYmB5ZWcJP+oKyxNyB4FrECkdIoYI/FIekWhkKr9wXse01ac
+         R3Z5F2eiVL+NlPf9o8AGXR/arNOalpLMr9Sfhk5FokzGEf5gr4lUfuaOy9yyaWXUo717
+         Bvt67HDnW+lTuGGRTv7s87Jj00C/XmFa4YKrUte81ggEx89UWPjky6sp9oBurBv32PKQ
+         dEQ9knqBFeEiDjRJJDxIYRx4fNs6NpJolk5J6n/OPOU1OLa6FtGu3DMNaF1sLCAk5aFe
+         qBIg==
+X-Gm-Message-State: APt69E3gjfaTwHoOMOa4cEVQIyXe7GlHimklGrTPGAdbY0rW3O6rQx6M
+        QFqcMjC29tFpY1jf7qTKg2iLYA==
+X-Google-Smtp-Source: ADUXVKLLVaxMQExbnYkkBEIVTvVKG1GV18jGwxYn1PBkp2CfOCIxIbRi+P4Wsz9E5+UVvcGg+2jVuQ==
+X-Received: by 2002:aca:4046:: with SMTP id n67-v6mr142361oia.205.1528348075231;
+        Wed, 06 Jun 2018 22:07:55 -0700 (PDT)
 Received: from tiger.attlocal.net ([2602:30a:2c28:20f0:7c1a:85e3:2ea9:5d7e])
-        by smtp.gmail.com with ESMTPSA id v141-v6sm13002019oie.34.2018.06.06.22.06.59
+        by smtp.gmail.com with ESMTPSA id 64-v6sm4158258ots.36.2018.06.06.22.07.54
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 06 Jun 2018 22:07:00 -0700 (PDT)
+        Wed, 06 Jun 2018 22:07:54 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>
-Subject: [PATCH 1/2] t3422: new testcases for checking when incompatible options passed
-Date:   Wed,  6 Jun 2018 22:06:53 -0700
-Message-Id: <20180607050654.19663-1-newren@gmail.com>
+Subject: [PATCH] git-rebase.sh: handle keep-empty like all other options
+Date:   Wed,  6 Jun 2018 22:07:47 -0700
+Message-Id: <20180607050747.19726-1-newren@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc0.46.g9cee8fce43
 In-Reply-To: <CABPp-BGxaroePB6aKWAkZeADLB7VE3y1CPy2RyNwpn=+C01g3A@mail.gmail.com>
 References: <CABPp-BGxaroePB6aKWAkZeADLB7VE3y1CPy2RyNwpn=+C01g3A@mail.gmail.com>
@@ -62,93 +62,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git rebase is split into three types: am, merge, and interactive.  Various
-options imply different types, and which mode we are using determine which
-sub-script (git-rebase--$type) is executed to finish the work.  Not all
-options work with all types, so add tests for combinations where we expect
-to receive an error rather than having options be silently ignored.
-
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t3422-rebase-incompatible-options.sh | 69 ++++++++++++++++++++++++++
- 1 file changed, 69 insertions(+)
- create mode 100755 t/t3422-rebase-incompatible-options.sh
+ git-rebase.sh | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/t/t3422-rebase-incompatible-options.sh b/t/t3422-rebase-incompatible-options.sh
-new file mode 100755
-index 0000000000..04cdae921b
---- /dev/null
-+++ b/t/t3422-rebase-incompatible-options.sh
-@@ -0,0 +1,69 @@
-+#!/bin/sh
-+
-+test_description='test if rebase detects and aborts on incompatible options'
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	test_seq 2 9 >foo &&
-+	git add foo &&
-+	git commit -m orig &&
-+
-+	git branch A &&
-+	git branch B &&
-+
-+	git checkout A &&
-+	test_seq 1 9 >foo &&
-+	git add foo &&
-+	git commit -m A &&
-+
-+	git checkout B &&
-+	# This is indented with HT SP HT.
-+	echo "	 	foo();" >>foo &&
-+	git add foo &&
-+	git commit -m B
-+'
-+
-+#
-+# Rebase has lots of useful options like --whitepsace=fix, which are
-+# actually all built in terms of flags to git-am.  Since neither
-+# --merge nor --interactive (nor any options that imply those two) use
-+# git-am, using them together will result in flags like --whitespace=fix
-+# being ignored.  Make sure rebase warns the user and aborts instead.
-+#
-+
-+test_run_rebase () {
-+	opt=$1
-+	shift
-+	test_expect_failure "$opt incompatible with --merge" "
-+		git checkout B^0 &&
-+		test_must_fail git rebase $opt --merge A
-+	"
-+
-+	test_expect_failure "$opt incompatible with --strategy=ours" "
-+		git checkout B^0 &&
-+		test_must_fail git rebase $opt --strategy=ours A
-+	"
-+
-+	test_expect_failure "$opt incompatible with --strategy-option=ours" "
-+		git checkout B^0 &&
-+		test_must_fail git rebase $opt --strategy=ours A
-+	"
-+
-+	test_expect_failure "$opt incompatible with --interactive" "
-+		git checkout B^0 &&
-+		test_must_fail git rebase $opt --interactive A
-+	"
-+
-+	test_expect_failure "$opt incompatible with --exec" "
-+		git checkout B^0 &&
-+		test_must_fail git rebase $opt --exec 'true' A
-+	"
-+
-+}
-+
-+test_run_rebase --whitespace=fix
-+test_run_rebase --ignore-whitespace
-+test_run_rebase --committer-date-is-author-date
-+test_run_rebase -C4
-+
-+test_done
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 40be59ecc4..a56b286372 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -276,6 +276,7 @@ do
+ 		;;
+ 	--keep-empty)
+ 		keep_empty=yes
++		test -z "$interactive_rebase" && interactive_rebase=implied
+ 		;;
+ 	--allow-empty-message)
+ 		allow_empty_message=--allow-empty-message
+@@ -480,11 +481,6 @@ then
+ 	test -z "$interactive_rebase" && interactive_rebase=implied
+ fi
+ 
+-if test -n "$keep_empty"
+-then
+-	test -z "$interactive_rebase" && interactive_rebase=implied
+-fi
+-
+ if test -n "$interactive_rebase"
+ then
+ 	type=interactive
 -- 
 2.18.0.rc0.46.g9cee8fce43
 
