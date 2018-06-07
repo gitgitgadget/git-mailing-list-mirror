@@ -2,97 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D9EF81F403
-	for <e@80x24.org>; Thu,  7 Jun 2018 01:49:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5DE31F403
+	for <e@80x24.org>; Thu,  7 Jun 2018 02:24:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752788AbeFGBtN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Jun 2018 21:49:13 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62978 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752316AbeFGBtM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jun 2018 21:49:12 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CB7D6EE97E;
-        Wed,  6 Jun 2018 21:49:11 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-        :cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to; s=sasl; bh=MaWwTXDImOi3reK/Wx8O115GZyw=; b=bvNU8yz
-        /kQmOwdx79ZTszDuJD8bc4kAEFX2OhyPjQTGUd6ICJckfYfTVlpu95VT89WmCOas
-        k5qQ4BJBKuFl426q6NZrfIe2LbiSFuqSEwCJht2lZmefW9qS6MLjcD3Hjbqq2TY2
-        I2oHFt/XiwyJfMR8pbY7qUPb0qt+iOKRdHJ4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-        :subject:message-id:references:mime-version:content-type
-        :in-reply-to; q=dns; s=sasl; b=aDqZUknpmFzQaX4MzskVi3KRLlHDBQRrS
-        0imSA0HBhWwCuyr/cxrhRIDRT2HTlkjldz8JtbfGVQdo6g2KmzsdrsmBpQbGbulP
-        TocRAlvffrEwQ5QXzhk9VdHDUY2Nkrgbxpnh0hUWIsyHtO4DYA47E5zlceL8yE9o
-        0osYARCaKQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C1002EE97D;
-        Wed,  6 Jun 2018 21:49:11 -0400 (EDT)
-Received: from zaya.teonanacatl.net (unknown [98.111.125.125])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4B104EE979;
-        Wed,  6 Jun 2018 21:49:11 -0400 (EDT)
-Date:   Wed, 6 Jun 2018 21:49:09 -0400
-From:   Todd Zullinger <tmz@pobox.com>
+        id S1753046AbeFGCX5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Jun 2018 22:23:57 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37104 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752991AbeFGCX4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jun 2018 22:23:56 -0400
+Received: (qmail 13598 invoked by uid 109); 7 Jun 2018 02:23:56 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 07 Jun 2018 02:23:56 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11720 invoked by uid 111); 7 Jun 2018 02:24:09 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 06 Jun 2018 22:24:09 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 06 Jun 2018 22:23:54 -0400
+Date:   Wed, 6 Jun 2018 22:23:54 -0400
+From:   Jeff King <peff@peff.net>
 To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Jeff King <peff@peff.net>, git@jeffhostetler.com,
+Cc:     Todd Zullinger <tmz@pobox.com>, git@jeffhostetler.com,
         git@vger.kernel.org, gitster@pobox.com,
         Jeff Hostetler <jeffhost@microsoft.com>
 Subject: Re: [PATCH v7 2/2] json-writer: t0019: add Python unit test
-Message-ID: <20180607014909.GL3094@zaya.teonanacatl.net>
+Message-ID: <20180607022353.GA3898@sigill.intra.peff.net>
 References: <20180605163358.119080-1-git@jeffhostetler.com>
  <20180605163358.119080-3-git@jeffhostetler.com>
  <20180606171052.GI3094@zaya.teonanacatl.net>
  <20180606210300.GA1879@sigill.intra.peff.net>
  <a50f4a76-7534-b036-e1a4-5560178bd044@ramsayjones.plus.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <a50f4a76-7534-b036-e1a4-5560178bd044@ramsayjones.plus.com>
-User-Agent: Mutt/1.9.5 (2018-04-13)
-X-Pobox-Relay-ID: F98284A2-69F4-11E8-A738-44CE1968708C-09356542!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ramsay Jones wrote:
-[...]
-> I don't run the p4 or svn tests, so ... :-D
+On Thu, Jun 07, 2018 at 01:16:14AM +0100, Ramsay Jones wrote:
 
-Heh, lucky you. :)
-
-I try to run them all as part of the fedora builds since
-they cover much more than I'd ever use.  That's the main
-reason I noticed the bare python.  That would trip me up
-when it came time to build on a near-future fedora where
-python isn't installed by default and I only wanted to
-require python3 for the build/runtime scripts.
-
-> On 06/06/18 22:03, Jeff King wrote:
->> really the only user in the whole code base outside of a few fringe
->> commands). Leaving aside any perl vs python flame-war, I think there's
->> value in keeping the number of languages limited when there's not a
->> compelling reason to do otherwise.
+> > Probably. We may want to go the same route as we did for perl in 
+> > a0e0ec9f7d (t: provide a perl() function which uses $PERL_PATH,
+> > 2013-10-28) so that test writers don't have to remember this.
+> > 
+> > That said, I wonder if it would be hard to simply do the python bits
+> > here in perl. This is the first use of python in our test scripts (and
 > 
-> I agree that fewer languages is (generally) a good idea.
+> Hmm, not quite the _first_ use:
+> 
+> $ git grep PYTHON_PATH -- t
+> t/lib-git-p4.sh:        (cd / && "$PYTHON_PATH" -c 'import time; print(int(time.time()))')
+> t/lib-git-p4.sh:        "$PYTHON_PATH" "$TRASH_DIRECTORY/marshal-dump.py"
+> t/t9020-remote-svn.sh:export PATH PYTHON_PATH GIT_BUILD_DIR
+> t/t9020-remote-svn.sh:exec "$PYTHON_PATH" "$GIT_BUILD_DIR/contrib/svn-fe/svnrdump_sim.py" "$@"
+> t/t9802-git-p4-filetype.sh:             "$PYTHON_PATH" "$TRASH_DIRECTORY/k_smush.py" <"$cli/k-text-k" >cli-k-text-k-smush &&
+> t/t9802-git-p4-filetype.sh:             "$PYTHON_PATH" "$TRASH_DIRECTORY/ko_smush.py" <"$cli/k-text-ko" >cli-k-text-ko-smush &&
+> t/t9802-git-p4-filetype.sh:             "$PYTHON_PATH" "$TRASH_DIRECTORY/gendouble.py" >%double.png &&
+> t/t9810-git-p4-rcs.sh:  "$PYTHON_PATH" "$TRASH_DIRECTORY/scrub_k.py" <"$git/$file" >"$scrub" &&
+> t/t9810-git-p4-rcs.sh:  "$PYTHON_PATH" "$TRASH_DIRECTORY/scrub_ko.py" <"$git/$file" >"$scrub" &&
+> $ 
 
-Yep, that's certainly even better and if Jeff H. can use
-perl relatively easily (or one of the many perl folks here
-can help with that part of the test), that's great.  The
-best way to solve many problems is avoid having them. :)
+OK, the first for a feature that is not already written in python
+(leading into my second claim that python is used only for fringe
+commands ;) ).
 
-Thanks,
+Though maybe I am wrong that the remote-svn stuff requires python. I
+thought it did, but poking around, it looks like it's all C, and just
+the "svnrdump_sim" helper is python.
 
--- 
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Chaos, panic, and disorder - my job is done here.
+At any rate, I think the point still stands that perl is our main
+scripting language. I'd rather keep us to that unless there's a good
+reason not to.
 
+-Peff
