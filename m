@@ -2,96 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C8C341F403
-	for <e@80x24.org>; Thu,  7 Jun 2018 08:34:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 097F41F403
+	for <e@80x24.org>; Thu,  7 Jun 2018 10:30:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753326AbeFGIeg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Jun 2018 04:34:36 -0400
-Received: from mail-yb0-f195.google.com ([209.85.213.195]:33635 "EHLO
-        mail-yb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752570AbeFGIed (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jun 2018 04:34:33 -0400
-Received: by mail-yb0-f195.google.com with SMTP id x36-v6so2955071ybi.0
-        for <git@vger.kernel.org>; Thu, 07 Jun 2018 01:34:33 -0700 (PDT)
+        id S1753605AbeFGKa4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Jun 2018 06:30:56 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:40842 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753571AbeFGKaz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jun 2018 06:30:55 -0400
+Received: by mail-wm0-f67.google.com with SMTP id n5-v6so17780655wmc.5
+        for <git@vger.kernel.org>; Thu, 07 Jun 2018 03:30:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=QTbV+vpHy/+sLtp7elw7Bgcau//FBDyiiz0EOrL3kgc=;
-        b=KjkSUbJFRgBK8MRWjHEvST9MqFZ3g3CrPA3jbzUlgUnmExemdblMdr57VjTvCZjL/P
-         Ea46CxGEtVhEs6MQUognUCzVM2no4jWwggdpYSAbMcZnyBOWpRbUcDa6Ka7gfF/N45Qs
-         +voWbD5q5zeBgyDUW717JMMcY4LkRCxWWmovvkX2n7W3Mqyc8Pq+vmCG162UTOSvD9PF
-         K438LNAeBHm7ZnEhoL6jv/nP0jBxM5t77MAoPpYjTwH5ho9+EH6N8oAM+dNbG+NfQHnu
-         fGlSG1Wh7a0z+ptv+S76Y/8onqH3tQdBtw9pqMZat+XelhA1rEGTLijI7C/6maVqXHPf
-         Ey/A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=k+MMprjvJ9EXNOB5XXGYRbfRHt39fZoUH5Tcr3uN3OU=;
+        b=X5/QIsypqgtzHqMgB4YKKeATF/pP0Ac2Y4KCzukdUowS90P9mdDi/NVSdj5lo/L62Q
+         fcpFbsvD7JO0/Xo1gyrtZvCoZsPvvmQbWgeQjvuygUN2AGOJ2XvbVdUXZy4nojAhmWFh
+         gnkJfJ569tdDKuLwZiJXpd/c9EDTU/JyTgBRo+/dectbajBbuLt2UquI4OTN0XrthWqz
+         ISb2TGBU0bJT8ePshDRzaDCkCK5BGNoGe6VKeW7Fu4dFvx0mUdiwbk1lxyGRPPlMPq/N
+         eHiWmWQdZZ3dMq8yrMbVh1wpBzsX4e6EsQt+AHmFY9mp+SGwh6rFIwCaBeJb8jq2uJEd
+         QrMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=QTbV+vpHy/+sLtp7elw7Bgcau//FBDyiiz0EOrL3kgc=;
-        b=CK4KjcPIhNWpwsYofWr3llwYRD3r8lukfC+iXm1MOBLfWBlCiEudKx46GFC4LqMQy0
-         xc1OGWPycboIVIuEtIqigT9/vKkqHiCDSeTm0A6YXenlqMM5Fr8CRGCqVZj6/jsdaSv8
-         vHAA6cNWOOubfBDBL226e6bkvFrYZqrdzzkuR2SaunJ+pSZfrrPPWr4o+NyqwgGxCmXw
-         OsFZcTc/wpKGOugDUfyOwlXpRKAlrVoxqPfvaAhlT7m3GnmufGqWhg6kV6b5LBpiQS0s
-         IWF31SWGWqBNwNT9612K63ofn2bWfWs01AewTj0OSauy0iMmULRWZt51WDXyrA4HxFSe
-         96xA==
-X-Gm-Message-State: APt69E0uV0fY0OaOECjP6o+QiAIWqxwL/gJ+G5PouVjcUf/e6Bhp00fh
-        49LRQDRJsr3IsYzTD3uNmXGr7BRFPg73IQGMqx8=
-X-Google-Smtp-Source: ADUXVKIOpGBruRRR47eRj7um+rJ2TfjQeH7xyDf2nmkT4eoKqxm0TblRJl7Jmwy0vdXPZc0ZKR8edyFuX1sYi6NpMaI=
-X-Received: by 2002:a25:2284:: with SMTP id i126-v6mr462236ybi.295.1528360472894;
- Thu, 07 Jun 2018 01:34:32 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a5b:784:0:0:0:0:0 with HTTP; Thu, 7 Jun 2018 01:34:32 -0700 (PDT)
-In-Reply-To: <CACsJy8D=6fAEpO5m4cc7KZyggAW1AosSkUWaunQBFH0nr-YrdA@mail.gmail.com>
-References: <20180530080325.37520-1-sunshine@sunshineco.com> <CACsJy8D=6fAEpO5m4cc7KZyggAW1AosSkUWaunQBFH0nr-YrdA@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 7 Jun 2018 04:34:32 -0400
-X-Google-Sender-Auth: LGmrXiV4ZW0cjdpemTRA5Jbivwg
-Message-ID: <CAPig+cS1M3U0T7yd2hKv4Uv1NMub20bTy13-D-6drpJLJjNNAA@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/5] format-patch: automate cover letter range-diff
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=k+MMprjvJ9EXNOB5XXGYRbfRHt39fZoUH5Tcr3uN3OU=;
+        b=dYLRzqfrkzXAXBGF2+N2u3kClhpMIR8yPLvo24AljR6f+j/j2sIK+9XDQUapB0Sm9b
+         Z9RwjuIfemAq2ItXGwdEC5F9LkTzlkbkYVFrQDj7N3KMsXgTKVtlmct/mTIVjaTj7fKt
+         eahUhlwWqK9pZlsyb2mZJQizQTPfbAvKPAf55XxjawE1WDDiTjbaq6MLaan5KK45jL0O
+         y3wP147tX8ZijcheSadbKC05tUNB+hUA09lvft17ANTXWPUjGpxHtxR9EAG+F21cgWqb
+         mNpdpbpPbz6LLN//OEu0/sMPNz+WdQRX83+RA5Q2ETcLYYFiHipJDSG2JmERx+da6NKh
+         xTOw==
+X-Gm-Message-State: APt69E0GNEFtjYBfcqB+hL6f64o7BbWdgdGUpwnXHdhAVX+XljqsxffH
+        vTNLot7vAEpBWpAugUPS8S4VBbK5
+X-Google-Smtp-Source: ADUXVKIfunBCYt9VV/kgMX+bQdtv+OGwL085dvalVEoe7uUDrV12xFM84Wlj9w4eA1CkPToCGam/Pw==
+X-Received: by 2002:a1c:6545:: with SMTP id z66-v6mr1109061wmb.86.1528367454353;
+        Thu, 07 Jun 2018 03:30:54 -0700 (PDT)
+Received: from localhost.localdomain (AToulouse-658-1-25-147.w86-222.abo.wanadoo.fr. [86.222.24.147])
+        by smtp.googlemail.com with ESMTPSA id v138-v6sm1871573wmd.47.2018.06.07.03.30.52
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 07 Jun 2018 03:30:52 -0700 (PDT)
+From:   Alban Gruin <alban.gruin@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Stefan Beller <sbeller@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        phillip.wood@dunelm.org.uk, Alban Gruin <alban.gruin@gmail.com>
+Subject: [GSoC][PATCH v3 0/1] rebase -i: rewrite append_todo_help() in C
+Date:   Thu,  7 Jun 2018 12:30:11 +0200
+Message-Id: <20180607103012.22981-1-alban.gruin@gmail.com>
+X-Mailer: git-send-email 2.16.4
+In-Reply-To: <20180605125334.14082-1-alban.gruin@gmail.com>
+References: <20180605125334.14082-1-alban.gruin@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 6, 2018 at 3:16 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Wed, May 30, 2018 at 10:03 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> Dscho recently implemented a 'tbdiff' replacement as a Git builtin named
->> git-branch-diff[1] which computes differences between two versions of a
->> patch series. Such a diff can be a useful aid for reviewers when
->> inserted into a cover letter. However, doing so requires manual
->> generation (invoking git-branch-diff) and copy/pasting the result into
->> the cover letter.
->
-> Another option which I wanted to go is delegate part of cover letter
-> generation to a hook (or just a config key that contains a shell
-> command). This way it's easier to customize cover letters. We could
-> still have a good fallback that does shortlog, diffstat and tbdiff.
+This patch rewrites append_todo_help() from shell to C. The C version
+covers a bit more than the old shell version. To achieve that, some
+parameters were added to rebase--helper.
 
-It is common on this mailing list to turn down requests for new hooks
-when the requested functionality could just as easily be implemented
-via a wrapper script. So, my knee-jerk reaction is that a hook to
-customize the cover letter may be overkill when the same functionality
-could likely be implemented relatively easily by a shell script which
-invokes git-format-patch and customizes the cover letter
-after-the-fact. Same argument regarding a config key holding a shell
-command. But, perhaps there are cases which don't occur to me which
-could be helped by a config variable or such.
+This is part of the effort to rewrite interactive rebase in C.
 
-Of course, by the same reasoning, the --range-diff functionality
-implemented by this patch series, which is just a convenience, could
-be handled by a wrapper script, thus is not strictly needed. On the
-other hand, given that interdiffs and range-diffs are so regularly
-used in re-rolls on this list (and perhaps other mailing list-based
-projects) may be argument enough in favor of having such an option
-built into git-format-patch.
+Changes since v2:
+
+ - Renaming the variable `edit_todo` to `write_edit_todo` to avoid
+   confusions, after a comment by Christian Couder[1].
+
+[1] https://github.com/git/git/pull/503#discussion_r193392270
+
+Alban Gruin (1):
+  rebase--interactive: rewrite append_todo_help() in C
+
+ builtin/rebase--helper.c   | 10 ++++++--
+ git-rebase--interactive.sh | 52 ++--------------------------------------
+ sequencer.c                | 60 ++++++++++++++++++++++++++++++++++++++++++++++
+ sequencer.h                |  1 +
+ 4 files changed, 71 insertions(+), 52 deletions(-)
+
+-- 
+2.16.4
+
