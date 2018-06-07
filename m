@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1DB151F403
-	for <e@80x24.org>; Thu,  7 Jun 2018 17:55:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 048DB1F403
+	for <e@80x24.org>; Thu,  7 Jun 2018 18:03:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934251AbeFGRzX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Jun 2018 13:55:23 -0400
-Received: from mail-ot0-f195.google.com ([74.125.82.195]:35847 "EHLO
-        mail-ot0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933639AbeFGRzW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jun 2018 13:55:22 -0400
-Received: by mail-ot0-f195.google.com with SMTP id c15-v6so2718623otl.3
-        for <git@vger.kernel.org>; Thu, 07 Jun 2018 10:55:22 -0700 (PDT)
+        id S1753734AbeFGSDg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Jun 2018 14:03:36 -0400
+Received: from mail-ot0-f177.google.com ([74.125.82.177]:34640 "EHLO
+        mail-ot0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753103AbeFGSDf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jun 2018 14:03:35 -0400
+Received: by mail-ot0-f177.google.com with SMTP id i5-v6so12609342otf.1
+        for <git@vger.kernel.org>; Thu, 07 Jun 2018 11:03:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=qE3gh3laP/76gpkNQL95tuWOVCqkdRa1PVbAsGjodFQ=;
-        b=bPtVB7ABsAJlk96v8gtqlI6KUQmAJaaMj8FhneRq0GdMB2+psPsUNrXYuLqLYvDS7S
-         aaHDHeS1666NaOotj4YlczMCQSEmPgTwyVUsFbOmXVdszCTRXbvRfNIO+ZJZZmF+jHGp
-         LlV1NLcEPEcanf/jsz9HIVhhUZRqbXCd+vYiFUrVDr8wnnvmEGzMpE6vy90uEpf9jxav
-         Y3LREyTLcoQEIabf4cL1yTElrSzUk0F3Eb3//ws3K4/bwjFwgfhmhTAN8rkH0tk0rWlO
-         DuneC8DXNg9w3OEtEfBE/xS/QnLp6ut7icNth4yVQn7IDEOCWDqK1R5QDvnHMW3vYo+v
-         b/bA==
+        bh=9xix0IUM9EPrLelyLVcdCiss5X8Wx4t9Zauqg4kSWdQ=;
+        b=QJ8g6Tk7n1fXCrtPdAyd9Ig7gfZPp6oPX/kK7ybqFHcXbTPG0epFyBCSmmCiXtQj+1
+         pNnIXK372h40Wepa66w/HFTm9eD7Q4i8zu4snSDigNjct0YB9hBDo+mjLT+W82YIeUlr
+         fZlzKf1YRUOGvIuDE+WPHOPxVJVQDFlgBLdoP7B91OJ35tRBZ71LLzEnRRDP/ZS44xpb
+         gK6mTJdc35rYUSLmaXrcUJ/Sirt8XZHCtgf+SeeHMv/GIef3170y91e6bu237sgJI35W
+         RzdmwHaIhOSZXBk93kd8RUn5qFURgPbCwQzdfgjGwF+G475p5fR4tQFp6442kfkR82LL
+         Txbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=qE3gh3laP/76gpkNQL95tuWOVCqkdRa1PVbAsGjodFQ=;
-        b=gLt06cfUcBoASiiF2pFONi7YL7f7RP5Dw4gg/AKjcBj7gqX4ANQ+IqYKybbYhjy0br
-         Re94B4Zjs1PgvGs4eK0VMoBPmboHhjvpiyA3WQ16MIQUxoU1ysneEyNRDjREAdLSXalL
-         bny75yEuc547gvPtylksAdxrONddNzgSJiTiLeKMFdhHYw0ocyASh3baqbnv8mr6e0XV
-         01711lOsI9jfvhgzWW5gQNWlXYoRjJXZYQyZGCdCIKWUqqmEfOFg+z5ZHOtIcBWJ3dDg
-         JrRGuhF2nztb2BBeD2vnkWdjVBtH88uTHcGzKkaODe59LEYZ9kUkSeBPat2VFg57HOmy
-         0a+g==
-X-Gm-Message-State: APt69E3IzGUGgBAasdv+uLAq2sNemDmHdUQpTcNTRecsqdBxvVynpI3G
-        WhesBVNXHkk5xKMjeJpb5bSn7glER3PeAc2zxZc=
-X-Google-Smtp-Source: ADUXVKLpa3Gd+V7075y4sxXA8nieIjC1T+avNZnApdXMBr/iIWK8XEQHM+aOgsho6wa8Q8Wyy5DrnGABCEyKhQ460bY=
-X-Received: by 2002:a9d:c61:: with SMTP id 88-v6mr1709145otr.173.1528394121816;
- Thu, 07 Jun 2018 10:55:21 -0700 (PDT)
+        bh=9xix0IUM9EPrLelyLVcdCiss5X8Wx4t9Zauqg4kSWdQ=;
+        b=No7B8ZMGIo1DrwGr8bmXBHPrFmSrHEh2lqczgDqlOnCU9HTuNqWfYpwd+pBJ2h/c/6
+         +XG7u2ss049dEK996UMn7dhpT3eJqDHVq3TE412Bb1CMz17oUoSuP3MkFTAaei+u4rq0
+         4+oEg74wfIlmlyghu1Wx29oKij7YsP2kXNZxz+YCb+NkHfIksXfcCiDVqrYim+bnhxMO
+         uDwq9jDv0p0chRia1mMOv/I0AyHj3ve/Fvx7rNWVTdGk8eYcur+pMz3nfB/7gb6boMcb
+         4uCN7OzYfZI5X49ClHFB+tpOL0n7CltkIhQQxXqaRw9qyuXtG2bpOx/G/we38cMtHPY6
+         dJhA==
+X-Gm-Message-State: APt69E3328oWez1Z6pc1PlsaoDNS+ADZyT97+GnH5Wdp5sKMYLby8akn
+        cg10P/nDUJu4bb2SUzU6+i550UNwDDT2rSZEVcI=
+X-Google-Smtp-Source: ADUXVKKPt4hmE3Q51HDh5mzqHIwFSFP4E6VDcH3+wgmB1F0eT2B/ANXYinBDQ8peBLM5V+TRhJYNya/djWJNHwSjnT4=
+X-Received: by 2002:a9d:2f91:: with SMTP id r17-v6mr1772602otb.356.1528394614569;
+ Thu, 07 Jun 2018 11:03:34 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a4a:2082:0:0:0:0:0 with HTTP; Thu, 7 Jun 2018 10:54:51 -0700 (PDT)
-In-Reply-To: <20180607140338.32440-7-dstolee@microsoft.com>
-References: <20180607140338.32440-1-dstolee@microsoft.com> <20180607140338.32440-7-dstolee@microsoft.com>
+Received: by 2002:a4a:2082:0:0:0:0:0 with HTTP; Thu, 7 Jun 2018 11:03:04 -0700 (PDT)
+In-Reply-To: <20180607140338.32440-9-dstolee@microsoft.com>
+References: <20180607140338.32440-1-dstolee@microsoft.com> <20180607140338.32440-9-dstolee@microsoft.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 7 Jun 2018 19:54:51 +0200
-Message-ID: <CACsJy8A3qVRXrQ9YiiN3Ggrcc5XFJWaWRrTbdO8E_48yRmzrqQ@mail.gmail.com>
-Subject: Re: [PATCH 06/23] midx: struct midxed_git and 'read' subcommand
+Date:   Thu, 7 Jun 2018 20:03:04 +0200
+Message-ID: <CACsJy8BS1x2yqzongv7iPsBbQxxZ5fO4ZbwdX5BPrzePvpJB=Q@mail.gmail.com>
+Subject: Re: [PATCH 08/23] midx: read packfiles from pack directory
 To:     Derrick Stolee <stolee@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Stefan Beller <sbeller@google.com>,
@@ -68,173 +68,55 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Thu, Jun 7, 2018 at 4:03 PM, Derrick Stolee <stolee@gmail.com> wrote:
-> As we build the multi-pack-index feature by adding chunks at a time,
-> we want to test that the data is being written correctly.
+> @@ -114,14 +119,56 @@ int write_midx_file(const char *object_dir)
+>                           midx_name);
+>         }
 >
-> Create struct midxed_git to store an in-memory representation of a
-
-A word play on 'packed_git'? Amusing. Some more descriptive name would
-be better though. midxed looks almost like random letters thrown
-together.
-
-> multi-pack-index and a memory-map of the binary file. Initialize this
-> struct in load_midxed_git(object_dir).
-
-> +static int read_midx_file(const char *object_dir)
-> +{
-> +       struct midxed_git *m = load_midxed_git(object_dir);
+> +       strbuf_addf(&pack_dir, "%s/pack", object_dir);
+> +       dir = opendir(pack_dir.buf);
 > +
-> +       if (!m)
-> +               return 0;
-
-This looks like an error case, please don't just return zero,
-typically used to say "success". I don't know if this command stays
-"for debugging purposes" until the end. Of course in that case it does
-not really matter.
-
-> +struct midxed_git *load_midxed_git(const char *object_dir)
-> +{
-> +       struct midxed_git *m;
-> +       int fd;
-> +       struct stat st;
-> +       size_t midx_size;
-> +       void *midx_map;
-> +       const char *midx_name = get_midx_filename(object_dir);
-
-mem leak? This function returns allocated memory if I remember correctly.
-
-> +
-> +       fd = git_open(midx_name);
-> +       if (fd < 0)
-> +               return NULL;
-
-do an error_errno() so we know what went wrong at least.
-
-> +       if (fstat(fd, &st)) {
-> +               close(fd);
-> +               return NULL;
-
-same here, we should know why fstat() fails.
-
-> +       }
-> +       midx_size = xsize_t(st.st_size);
-> +
-> +       if (midx_size < MIDX_MIN_SIZE) {
-> +               close(fd);
-> +               die("multi-pack-index file %s is too small", midx_name);
+> +       if (!dir) {
+> +               error_errno("unable to open pack directory: %s",
+> +                           pack_dir.buf);
 
 _()
 
-The use of die() should be discouraged though. Many people still try
-(or wish) to libify code and new die() does not help. I think error()
-here would be enough then you can return NULL. Or you can go fancier
-and store the error string in a strbuf like refs code.
-
+> +               strbuf_release(&pack_dir);
+> +               return 1;
 > +       }
 > +
-> +       midx_map = xmmap(NULL, midx_size, PROT_READ, MAP_PRIVATE, fd, 0);
+> +       strbuf_addch(&pack_dir, '/');
+> +       pack_dir_len = pack_dir.len;
+> +       ALLOC_ARRAY(packs, alloc_packs);
+> +       while ((de = readdir(dir)) != NULL) {
+> +               if (is_dot_or_dotdot(de->d_name))
+> +                       continue;
 > +
-> +       m = xcalloc(1, sizeof(*m) + strlen(object_dir) + 1);
-> +       strcpy(m->object_dir, object_dir);
-> +       m->data = midx_map;
+> +               if (ends_with(de->d_name, ".idx")) {
+> +                       ALLOC_GROW(packs, nr_packs + 1, alloc_packs);
 > +
-> +       m->signature = get_be32(m->data);
-> +       if (m->signature != MIDX_SIGNATURE) {
-> +               error("multi-pack-index signature %X does not match signature %X",
-> +                     m->signature, MIDX_SIGNATURE);
-
-_(). Maybe 0x%08x instead of %x
-
-> +               goto cleanup_fail;
+> +                       strbuf_setlen(&pack_dir, pack_dir_len);
+> +                       strbuf_addstr(&pack_dir, de->d_name);
+> +
+> +                       packs[nr_packs] = add_packed_git(pack_dir.buf,
+> +                                                        pack_dir.len,
+> +                                                        0);
+> +                       if (!packs[nr_packs])
+> +                               warning("failed to add packfile '%s'",
+> +                                       pack_dir.buf);
+> +                       else
+> +                               nr_packs++;
+> +               }
 > +       }
-> +
-> +       m->version = *(m->data + 4);
+> +       closedir(dir);
+> +       strbuf_release(&pack_dir);
 
-m->data[4] instead? shorter and easier to understand.
+Can we refactor and share this scanning-for-packs code with
+packfile.c? I'm pretty sure it does something similar in there.
 
-Same comment on "*(m->data + x)" and error() without _() for the rest.
+> -       write_midx_header(f, num_chunks, num_packs);
+> +       write_midx_header(f, num_chunks, nr_packs);
 
-> +       if (m->version != MIDX_VERSION) {
-> +               error("multi-pack-index version %d not recognized",
-> +                     m->version);
-
-_()
-
-> +               goto cleanup_fail;
-> +       }
-> +
-> +       m->hash_version = *(m->data + 5);
-
-m->data[5]
-
-> +cleanup_fail:
-> +       FREE_AND_NULL(m);
-> +       munmap(midx_map, midx_size);
-> +       close(fd);
-> +       exit(1);
-
-It's bad enough that you die() but exit() in this code seems too much.
-Please just return NULL and let the caller handle the error.
-
-> diff --git a/midx.h b/midx.h
-> index 3a63673952..a1d18ed991 100644
-> --- a/midx.h
-> +++ b/midx.h
-> @@ -1,4 +1,13 @@
-> +#ifndef MIDX_H
-> +#define MIDX_H
-> +
-> +#include "git-compat-util.h"
->  #include "cache.h"
-> +#include "object-store.h"
-
-I don't really think you need object-store here (git-compat-util.h
-too). "struct mixed_git;" would be enough for load_midxed_git
-declaration below.
-
->  #include "packfile.h"
->
-> +struct midxed_git *load_midxed_git(const char *object_dir);
-> +
->  int write_midx_file(const char *object_dir);
-> +
-> +#endif
-> diff --git a/object-store.h b/object-store.h
-> index d683112fd7..77cb82621a 100644
-> --- a/object-store.h
-> +++ b/object-store.h
-> @@ -84,6 +84,25 @@ struct packed_git {
->         char pack_name[FLEX_ARRAY]; /* more */
->  };
->
-> +struct midxed_git {
-> +       struct midxed_git *next;
-
-Do we really have multiple midx files?
-
-> +
-> +       int fd;
-> +
-> +       const unsigned char *data;
-> +       size_t data_len;
-> +
-> +       uint32_t signature;
-> +       unsigned char version;
-> +       unsigned char hash_version;
-> +       unsigned char hash_len;
-> +       unsigned char num_chunks;
-> +       uint32_t num_packs;
-> +       uint32_t num_objects;
-> +
-> +       char object_dir[FLEX_ARRAY];
-
-Why do you need to keep object_dir when it could be easily retrieved
-when the repo is available?
-
-> +};
-> +
->  struct raw_object_store {
->         /*
->          * Path to the repository's object store.
+Hmm.. could have stuck to one name from the beginning...
 -- 
 Duy
