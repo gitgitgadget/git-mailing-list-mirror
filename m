@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D72AA1F403
-	for <e@80x24.org>; Thu,  7 Jun 2018 05:05:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E67821F403
+	for <e@80x24.org>; Thu,  7 Jun 2018 05:06:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752523AbeFGFF6 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Jun 2018 01:05:58 -0400
-Received: from mail-ot0-f193.google.com ([74.125.82.193]:41295 "EHLO
-        mail-ot0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751318AbeFGFF5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jun 2018 01:05:57 -0400
-Received: by mail-ot0-f193.google.com with SMTP id d19-v6so4476173oti.8
-        for <git@vger.kernel.org>; Wed, 06 Jun 2018 22:05:56 -0700 (PDT)
+        id S1751956AbeFGFGX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Jun 2018 01:06:23 -0400
+Received: from mail-ot0-f195.google.com ([74.125.82.195]:46661 "EHLO
+        mail-ot0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751318AbeFGFGW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jun 2018 01:06:22 -0400
+Received: by mail-ot0-f195.google.com with SMTP id q1-v6so10004099oth.13
+        for <git@vger.kernel.org>; Wed, 06 Jun 2018 22:06:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=N79offoimsq/O4uGjTdslVFNGLUC/4NdPrHknxnYFiM=;
-        b=Yfm4h6AEIOr7a9Y+Zkgk/Y4QX/o07QisfRxYXxkr9NEt8wMlRmZJvF/IDV9cqni+/9
-         MPr26A4g8UN8p89EbNZ9tcGjbHwlFVeb6EhsFuc6HHEzF8a0a44FqVgV1J/TfTNan5pn
-         Ar2DlbdOjehL+cXv0w3gDh/usdBpuDp2MSDJDaL0WmDCY6Q3b3Xtv2VjHSeKH+snnodA
-         qaAHES9b5SInnBnymRVZlAlKaiTXPpDuoDV6oYNm3z8FRhEhazjJdFLCgr4rEm/LYg4Y
-         q+qF5zlWADMrjnvUNYN50ILr+tSMnSNBOeh2+PU4ymWKmLhc3MHY3yyC1AdZTLcsf46t
-         tbyw==
+        bh=ndjDklWF78AvxNjlc96dgfWAVfyomgRHumiXQjQpJfc=;
+        b=l/DNW4/1bk9VA075ySS5s2khLkiNDGXgWFx5qBjVc0yh9U/3wGVfqBTZ3Qw57xuvsV
+         YEfKPg/jkfAKlkgQY51tiJiQfb1BY1OpsAAMWjfNBS6qSl3XW7LilS36HWbC4/GS9jdw
+         DGbRMRDOlMpPduG5ptYt7UVrgWJ8JbAGjk5zfe9ruhtj6knAIgDYV9Ynd+kfQIRqLkXI
+         XiTfas+sUQjKl6RHvcW/Ev8xOMdDZYNOOCQ3hdlgf1RpAtR8mNgl4fOUNLpz4o4gQFYV
+         tPnc+Kl9Hjtg9my1bW1kNHqZH0fgoGUFYeLfFyvlEmeRVc2b4OGe4DpJPVIFd+5DkCks
+         d9gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=N79offoimsq/O4uGjTdslVFNGLUC/4NdPrHknxnYFiM=;
-        b=Ivi+sc/nnH5WdW33FsOkc1C2/XpIWzpUkYkkFzrlmF87i3BHn2+jTYrqIzV8PfzC2o
-         g4h0pU0AIz1FCaiDJv2Uvi93shhiAe+8QxjoB1WGd0HKLm5ijaDKMlHMulpCsR0OG8lZ
-         WSQ+yGzDsHQG2Xv5dk6A4MpSXj5rZ8y6nRr7rS9Br5dhGBb2zKyTYNYBcM0P5qNNwIxU
-         XU7GeHDwOn2j8J9pikOkw62wa86yliejXS4HcdT5YQjf83o7yZ0h5aKlQndkywgld6fY
-         qfUFqTSGtQY2A2VF1+NrmJ4N1CNXnimVN8TMK/sgF0Kvm/9lbNg5xwsyJzNU4fTvqXp0
-         uuMQ==
-X-Gm-Message-State: APt69E1PM+oatMAASYRAkYr30ZpHj16CREL/f7Q3cpopmKbiwbue8luR
-        uykjdGCEuHRAO4yU0qbi6BdEwA==
-X-Google-Smtp-Source: ADUXVKKUVxxIcmx5sqSfvdimzPWCh3m8FRKGxL5Dozoe4TzCLSmcZyZmAo01klasPBsR1nA7kGuoUg==
-X-Received: by 2002:a9d:c41:: with SMTP id 59-v6mr161089otr.255.1528347956386;
-        Wed, 06 Jun 2018 22:05:56 -0700 (PDT)
+        bh=ndjDklWF78AvxNjlc96dgfWAVfyomgRHumiXQjQpJfc=;
+        b=Mo/WsJw1w79gefhitBF8D+s54cs4g4eP4LzkJhpfaQnsEdeHhyQFY6Tu3Hxz35M/vb
+         33dCGqg98OyeD1y8ct49I3bEyBimhTlSi6lJlTunWhUJZryaTIVvDWhnY4hDAUDP5qZc
+         4sCe0WlFXMOl+KZ/WUdN99WFdnNQXv74hKQeArNlD/mk4GPDF0I7sx01meSpKW9ZrLgE
+         zNUyBi698pUQqOz/9XHnJTq5FWE8xzHmdfOTI7KFqvwRsw/mJtfEJE37cNZVcSSDJCRD
+         6MjU2diHw1HLwJByw+9BVJMh5PH2hWj7+bt6YkJr5RR4nCVIDKLd2GF17Se2Qlkaa79N
+         ot/w==
+X-Gm-Message-State: APt69E0b5thAuJpvxV+W/9XwvKzIFJJZK+GWemL0IYTQcfsb79gOoVeQ
+        r0mZBFrhCAEpfrdtS0h61NVuFg==
+X-Google-Smtp-Source: ADUXVKLGwM5JMANU1oDpQsyX/GXNXSiwhJXz1yL2ItdglyTJg0468kk6+qYmu4d4T5tCwM32LSeuMg==
+X-Received: by 2002:a9d:14f3:: with SMTP id r48-v6mr186823otr.279.1528347981485;
+        Wed, 06 Jun 2018 22:06:21 -0700 (PDT)
 Received: from tiger.attlocal.net ([2602:30a:2c28:20f0:7c1a:85e3:2ea9:5d7e])
-        by smtp.gmail.com with ESMTPSA id q7-v6sm9704086otq.39.2018.06.06.22.05.55
+        by smtp.gmail.com with ESMTPSA id w10-v6sm2303776oif.41.2018.06.06.22.06.20
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 06 Jun 2018 22:05:55 -0700 (PDT)
+        Wed, 06 Jun 2018 22:06:21 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>
-Subject: [PATCH] t5407: fix test to cover intended arguments
-Date:   Wed,  6 Jun 2018 22:05:50 -0700
-Message-Id: <20180607050550.19546-1-newren@gmail.com>
+Subject: [PATCH] git-rebase--merge: modernize "git-$cmd" to "git $cmd"
+Date:   Wed,  6 Jun 2018 22:06:15 -0700
+Message-Id: <20180607050615.19598-1-newren@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc0.46.g9cee8fce43
 In-Reply-To: <CABPp-BGxaroePB6aKWAkZeADLB7VE3y1CPy2RyNwpn=+C01g3A@mail.gmail.com>
 References: <CABPp-BGxaroePB6aKWAkZeADLB7VE3y1CPy2RyNwpn=+C01g3A@mail.gmail.com>
@@ -62,30 +62,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Test 8 in t5407 appears to be an accidental exact duplicate of of test 5;
-the testcode is identical and has identical repo state, but the test
-description is different and suggests that rebase -m followed by rebase
---skip was what was actually supposed to be tested.  Modify the test to
-include the -m option.
+<Comments for after diffstat:>
+I tend to think git-rebase--merge is less popular than the other rebase
+types, leading to it being more overlooked and less well tested than the
+other ones.  This git-$cmd usage seems to support that argument.
+
+Anyway, this patch may be irrelevant if others agree with my goal to
+delete git-rebase--merge and implement --merge on top of the --interactive
+machinery, but sending it along in case others don't agree with that goal.
+</Comments>
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t5407-post-rewrite-hook.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ git-rebase--merge.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t5407-post-rewrite-hook.sh b/t/t5407-post-rewrite-hook.sh
-index 7a48236e87..9b2a274c71 100755
---- a/t/t5407-post-rewrite-hook.sh
-+++ b/t/t5407-post-rewrite-hook.sh
-@@ -113,7 +113,7 @@ test_expect_success 'git rebase -m' '
- test_expect_success 'git rebase -m --skip' '
- 	git reset --hard D &&
- 	clear_hook_input &&
--	test_must_fail git rebase --onto A B &&
-+	test_must_fail git rebase -m --onto A B &&
- 	test_must_fail git rebase --skip &&
- 	echo D > foo &&
- 	git add foo &&
+diff --git a/git-rebase--merge.sh b/git-rebase--merge.sh
+index cf4c042214..aa2f2f0872 100644
+--- a/git-rebase--merge.sh
++++ b/git-rebase--merge.sh
+@@ -71,7 +71,7 @@ call_merge () {
+ 	test -z "$strategy" && strategy=recursive
+ 	# If cmt doesn't have a parent, don't include it as a base
+ 	base=$(git rev-parse --verify --quiet $cmt^)
+-	eval 'git-merge-$strategy' $strategy_opts $base ' -- "$hd" "$cmt"'
++	eval 'git merge-$strategy' $strategy_opts $base ' -- "$hd" "$cmt"'
+ 	rv=$?
+ 	case "$rv" in
+ 	0)
+@@ -88,7 +88,7 @@ call_merge () {
+ 		;;
+ 	*)
+ 		die "Unknown exit code ($rv) from command:" \
+-			"git-merge-$strategy $cmt^ -- HEAD $cmt"
++			"git merge-$strategy $cmt^ -- HEAD $cmt"
+ 		;;
+ 	esac
+ }
 -- 
 2.18.0.rc0.46.g9cee8fce43
 
