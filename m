@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35AE71F403
-	for <e@80x24.org>; Fri,  8 Jun 2018 22:42:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B06121F403
+	for <e@80x24.org>; Fri,  8 Jun 2018 22:42:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753232AbeFHWl7 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Jun 2018 18:41:59 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:37001 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753215AbeFHWlz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jun 2018 18:41:55 -0400
-Received: by mail-wr0-f195.google.com with SMTP id d8-v6so14787783wro.4
-        for <git@vger.kernel.org>; Fri, 08 Jun 2018 15:41:55 -0700 (PDT)
+        id S1753241AbeFHWmB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Jun 2018 18:42:01 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:35666 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752898AbeFHWl5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jun 2018 18:41:57 -0400
+Received: by mail-wr0-f193.google.com with SMTP id l10-v6so14783256wrn.2
+        for <git@vger.kernel.org>; Fri, 08 Jun 2018 15:41:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=wHtSXel47iYlwQQl80+guEnuNvU3g0nL+LnWI1twPD4=;
-        b=lwddAd7JKTaSvRrctY7MhqeUtvK/b6OM4v+7LOO0wp3XTDeafv84G0Q7xTtlUKquyb
-         uI1GYqLzJTShLDfr/flQAmk3hbYXnq5wgdMnUVwPPPH7id7r4lJDh6lmL16CWDAXRO8R
-         WvgGCv24z0Shn83cbU08p5NASCiPYJKL+FsuDlItY77Dg0PHc3XpToRzGw3praIjRXiw
-         Ldu3HvQ4Hz4V8QNWRtjfDkdxJUUFhLx+3ZYQH+Y049CxGRvg1N8hKV0/UYd5VTaot8RB
-         IHhIU1j719I8yFBUW9qDpdEU3yNfffKb/Vyv/aC4yRAWjw0edfmNNJcadjc3/oFUFf3X
-         8pCA==
+        bh=XGhTEgk+XQ2Dzz6XoZfAmbq2YgYRW9LXphsPkpdDWiE=;
+        b=puW6bQYbi+MHnmdJ0Jih0ig3hNcitukxhmxhsID1kN4889na09qel1BmgA0WslAPLp
+         +W6kEHGM9IoViTkEn2qA7cl/13oJ4fE+Ary+clKkOQRrdKtC2pzZR3wR97hoBhH6Rxu5
+         IxTEnFa7XRORofsC3axRCZIIm1msAmAoSZWtYPyfbot3GmFvmk/jjTURJWoVx4SBWTIk
+         bHiDk2pkweL+UohtYBLkVi+WHa7IMqy1x8L+iQFuhFca54GGoDLNmHZvtgV4j7sf9Uua
+         qx2eUb+NrSvT+5OLouzxnAx8zow7L2pIpEkS4q7RSNtPzwgEPle57TqvhZz9uozTHYEt
+         qGWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=wHtSXel47iYlwQQl80+guEnuNvU3g0nL+LnWI1twPD4=;
-        b=oJ/yH3waWLrPQAA3YmYp0KWSxPiOR87lFWOy/V8uXNANv4MIgk46mCRaAYDWnAismW
-         lNwgTSvVICQ+XSM1txUaAbr8xM294CdrG/DFrInnrgPjhakqT2VWv/uK2YiqNV/eSzau
-         PGwWQUjJs5cfVkvyaq1yW3uDppt7hzwlZZgpekeUJKz9Z6PJ3/2jwciPutFUAPZ7ILKV
-         0KoJrfwXfkT34+3QZs+N2x1qTThWPurApCWqN0yknjU1g4UTIS0qj3dsKHmrmLVC4tSy
-         PfjsIT82XYPxy0YsH0JH+i9fVrBebMoLbh/N/I0qBDZDzpdbkjvLfSvfRyZrQpz0XWKv
-         IqAA==
-X-Gm-Message-State: APt69E1HbsKJWDaE+QCIHi9xSFs7SCRAFEnOein/kJqAe0iWtbWppylZ
-        aHuvf2CB85rBQ7Tf0/vowPelw+La
-X-Google-Smtp-Source: ADUXVKISGNnbY8SW2AU1RN1V6mfvQ3WninDeCbrMLKVJ4RKcQg5DrRx4wklcCAAo1Tuqqc3QPO8o8Q==
-X-Received: by 2002:adf:a045:: with SMTP id l5-v6mr5729707wrl.153.1528497713803;
-        Fri, 08 Jun 2018 15:41:53 -0700 (PDT)
+        bh=XGhTEgk+XQ2Dzz6XoZfAmbq2YgYRW9LXphsPkpdDWiE=;
+        b=LgzbJChRuULQthNQ6euIZdjE8taGNRhrDgZFpGBA2ckdAW7iJRrlH9BtqAl7GEzpHl
+         JIOKacdBAonrJQHQVy2qGcED+uYAJU6kqOa40oucJZkypsw9i9tQkWhq/VgIpdI1du37
+         NT+9zBDyEtl4VOKrmBEFhTnbiMAfOOaMo5CTsCZTzHlacHYkhzYUdd0sNTxRvGX15GCB
+         YhVBgsteb/WnDtUlUCQyNZ+8q+dhrHi9i0ZoYn1d7py3n6LBIhDnw6FQCU0nAAJ0mSCE
+         P/VFZ2cDASjZ+MjJ+jM0DDLs8VGFf5Epgg6sybCw0BS7Lq09nu6zTUJ9Dsu8aevCgTFV
+         prWw==
+X-Gm-Message-State: APt69E1hW9NqmKj6VH0XzKnb30kuLujJmAxjFG3ieAIJbvq2GlFVq1NT
+        LbZyHjgsnbkrQDG89tnVD15snXnV
+X-Google-Smtp-Source: ADUXVKJE+I24T5aZlsWQGir6U/TjCxJdYsyPo9M64fYPASylacTx0BsmsvS5B/GRuBw9jRJdoB30yg==
+X-Received: by 2002:a5d:44ca:: with SMTP id z10-v6mr6628623wrr.210.1528497716072;
+        Fri, 08 Jun 2018 15:41:56 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id w15-v6sm36350010wro.52.2018.06.08.15.41.52
+        by smtp.gmail.com with ESMTPSA id w15-v6sm36350010wro.52.2018.06.08.15.41.54
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 08 Jun 2018 15:41:53 -0700 (PDT)
+        Fri, 08 Jun 2018 15:41:55 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, dstolee@microsoft.com,
         jrnieder@gmail.com, Linus Torvalds <torvalds@linux-foundation.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 02/20] test library: add a test_byte_count
-Date:   Fri,  8 Jun 2018 22:41:18 +0000
-Message-Id: <20180608224136.20220-3-avarab@gmail.com>
+Subject: [PATCH 04/20] abbrev tests: add tests for core.abbrev and --abbrev
+Date:   Fri,  8 Jun 2018 22:41:20 +0000
+Message-Id: <20180608224136.20220-5-avarab@gmail.com>
 X-Mailer: git-send-email 2.17.0.290.gded63e768a
 In-Reply-To: <20180608224136.20220-1-avarab@gmail.com>
 References: <20180608224136.20220-1-avarab@gmail.com>
@@ -71,90 +71,158 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This new function is like test_line_count except it uses "wc -c"
-instead of "wc -l". Perhaps this should be a parameter, but I don't
-see us needing "wc -m" (chars), "wc -w" (words) etc.
+How hashes are abbreviated is a core feature of git, and should have
+its own t0*.sh tests. There's a few tests for core.abbrev and --abbrev
+already, but none of those stress the feature itself and its edge
+cases much. We should have tests for those in one place.
 
-Change a couple of existing tests that use this, I expect to use this
-in later patches when adding more tests.
+I don't like some of this behavior of --abbrev being looser about
+input values that core.abbrev, But let's start by asserting the
+current behavior we have before we change any of it.
+
+That difference in behavior wasn't intentional. The code that does the
+command-line parsing was initially added in 0ce865b134 ("Add shortcuts
+for very often used options.", 2007-10-14), and it wasn't until much
+later in dce9648916 ("Make the default abbrev length configurable",
+2010-10-28) when core.abbrev was added with stricter parsing.
+
+That's also only most of the command-line parsing. The diff and log
+family of commands have their own parsing for it in diff.c and
+revision.c, respectively. Those were added earlier in
+47dd0d595d ("diff: --abbrev option", 2005-12-13) and 508d9e372e ("Fix
+"--abbrev=xyz" for revision listing", 2006-05-27), although note that
+sometimes diff goes via the revision.c path.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/README                   |  4 ++++
- t/t6006-rev-list-format.sh |  6 ++----
- t/test-lib-functions.sh    | 23 +++++++++++++++++++++++
- 3 files changed, 29 insertions(+), 4 deletions(-)
+ t/t0014-abbrev.sh | 118 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 118 insertions(+)
+ create mode 100755 t/t0014-abbrev.sh
 
-diff --git a/t/README b/t/README
-index eede11d649..3139c27e4e 100644
---- a/t/README
-+++ b/t/README
-@@ -728,6 +728,10 @@ library for your script to use.
-    Check whether the <expected> rev points to the same commit as the
-    <actual> rev.
- 
-+ - test_byte_count (= | -lt | -ge | ...) <length> <file>
+diff --git a/t/t0014-abbrev.sh b/t/t0014-abbrev.sh
+new file mode 100755
+index 0000000000..1c60f5ff93
+--- /dev/null
++++ b/t/t0014-abbrev.sh
+@@ -0,0 +1,118 @@
++#!/bin/sh
 +
-+   Check whether a file has the number of bytes it is expected to.
++test_description='test core.abbrev and related features'
 +
-  - test_line_count (= | -lt | -ge | ...) <length> <file>
- 
-    Check whether a file has the number of lines it is expected to.
-diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
-index ec42c2f779..ec068c55ab 100755
---- a/t/t6006-rev-list-format.sh
-+++ b/t/t6006-rev-list-format.sh
-@@ -456,14 +456,12 @@ test_expect_success '--abbrev' '
- 
- test_expect_success '%H is not affected by --abbrev-commit' '
- 	git log -1 --format=%H --abbrev-commit --abbrev=20 HEAD >actual &&
--	len=$(wc -c <actual) &&
--	test $len = 41
-+	test_byte_count = 41 actual
- '
- 
- test_expect_success '%h is not affected by --abbrev-commit' '
- 	git log -1 --format=%h --abbrev-commit --abbrev=20 HEAD >actual &&
--	len=$(wc -c <actual) &&
--	test $len = 21
-+	test_byte_count = 21 actual
- '
- 
- test_expect_success '"%h %gD: %gs" is same as git-reflog' '
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 2b2181dca0..91a566f14e 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -589,6 +589,29 @@ test_path_is_missing () {
- 	fi
- }
- 
-+# test_byte_count checks that a file has the number of bytes it
-+# ought to. For example:
-+#
-+#	test_expect_success 'produce exactly one byte of output' '
-+#		do something >output &&
-+#		test_byte_count = 1 output
-+#	'
-+#
-+# is like "test $(wc -c <output) = 1" except that it passes the
-+# output through when the number of bytes is wrong.
++. ./test-lib.sh
 +
-+test_byte_count () {
-+	if test $# != 3
-+	then
-+		error "bug in the test script: not 3 parameters to test_byte_count"
-+	elif ! test $(wc -c <"$3") "$1" "$2"
-+	then
-+		echo "test_byte_count: byte count for $3 !$1 $2"
-+		cat "$3"
-+		return 1
-+	fi
++tr_d_n() {
++	tr -d '\n'
 +}
 +
- # test_line_count checks that a file has the number of lines it
- # ought to. For example:
- #
++cut_tr_d_n_field_n() {
++	cut -d " " -f $1 | tr_d_n
++}
++
++test_expect_success 'setup' '
++	test_commit A &&
++	git tag -a -mannotated A.annotated &&
++	test_commit B &&
++	test_commit C &&
++	mkdir X Y &&
++	touch X/file1 Y/file2
++'
++
++test_expect_success 'the FALLBACK_DEFAULT_ABBREV is 7' '
++	git log -1 --pretty=format:%h >log &&
++	test_byte_count = 7 log
++'
++
++test_expect_success 'abbrev empty value handling differs ' '
++	test_must_fail git -c core.abbrev= log -1 --pretty=format:%h 2>stderr &&
++	test_i18ngrep "bad numeric config value.*invalid unit" stderr &&
++
++	git branch -v --abbrev= | cut_tr_d_n_field_n 3 >branch &&
++	test_byte_count = 40 branch &&
++
++	git log --abbrev= -1 --pretty=format:%h >log &&
++	test_byte_count = 4 log &&
++
++	git diff --raw --abbrev= HEAD~ >diff &&
++	cut_tr_d_n_field_n 3 <diff >diff.3 &&
++	test_byte_count = 4 diff.3 &&
++	cut_tr_d_n_field_n 4 <diff >diff.4 &&
++	test_byte_count = 4 diff.4 &&
++
++	test_must_fail git diff --raw --abbrev= --no-index X Y >diff &&
++	cut_tr_d_n_field_n 3 <diff >diff.3 &&
++	test_byte_count = 4 diff.3 &&
++	cut_tr_d_n_field_n 4 <diff >diff.4 &&
++	test_byte_count = 4 diff.4
++'
++
++test_expect_success 'abbrev non-integer value handling differs ' '
++	test_must_fail git -c core.abbrev=XYZ log -1 --pretty=format:%h 2>stderr &&
++	test_i18ngrep "bad numeric config value.*invalid unit" stderr &&
++
++	test_must_fail git branch -v --abbrev=XYZ 2>stderr &&
++	test_i18ngrep "expects a numerical value" stderr &&
++
++	git log --abbrev=XYZ -1 --pretty=format:%h 2>stderr &&
++	! test -s stderr &&
++
++	git diff --raw --abbrev=XYZ HEAD~ 2>stderr &&
++	! test -s stderr &&
++
++	test_must_fail git diff --raw --abbrev=XYZ --no-index X Y 2>stderr &&
++	! test -s stderr
++'
++
++for i in -41 -20 -10 -1 0 1 2 3 41
++do
++	test_expect_success "core.abbrev value $i out of range errors out" "
++		test_must_fail git -c core.abbrev=$i log -1 --pretty=format:%h 2>stderr &&
++		test_i18ngrep 'abbrev length out of range' stderr
++	"
++done
++
++for i in -41 -20 -10 -1
++do
++	test_expect_success "negative --abbrev=$i value out of range means --abbrev=40" "
++		git log --abbrev=$i -1 --pretty=format:%h >log &&
++		test_byte_count = 40 log
++	"
++done
++
++for i in 0 1 2 3 4
++do
++	test_expect_success "non-negative --abbrev=$i value <MINIMUM_ABBREV falls back on MINIMUM_ABBREV" "
++		git log --abbrev=$i -1 --pretty=format:%h >log &&
++		test_byte_count = 4 log
++	"
++done
++
++for i in 41 9001
++do
++	test_expect_success "non-negative --abbrev=$i value >MINIMUM_ABBREV falls back on 40" "
++		git log --abbrev=$i -1 --pretty=format:%h >log &&
++		test_byte_count = 40 log
++	"
++done
++
++for i in $(test_seq 4 40)
++do
++	test_expect_success "core.abbrev=$i and --abbrev=$i in combination within the valid range" "
++		# Both core.abbrev=X and --abbrev=X do the same thing
++		# in isolation
++		git -c core.abbrev=$i log -1 --pretty=format:%h >log &&
++		test_byte_count = $i log &&
++		git log --abbrev=$i -1 --pretty=format:%h >log &&
++		test_byte_count = $i log &&
++
++		# The --abbrev option should take priority over
++		# core.abbrev
++		git -c core.abbrev=20 log --abbrev=$i -1 --pretty=format:%h >log &&
++		test_byte_count = $i log
++	"
++done
++
++test_done
 -- 
 2.17.0.290.gded63e768a
 
