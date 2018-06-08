@@ -7,29 +7,29 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 790341F403
-	for <e@80x24.org>; Fri,  8 Jun 2018 13:57:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC21D1F403
+	for <e@80x24.org>; Fri,  8 Jun 2018 13:57:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752911AbeFHN5a (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Jun 2018 09:57:30 -0400
-Received: from mail-eopbgr730112.outbound.protection.outlook.com ([40.107.73.112]:2144
-        "EHLO NAM05-DM3-obe.outbound.protection.outlook.com"
+        id S1752920AbeFHN5e (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Jun 2018 09:57:34 -0400
+Received: from mail-by2nam01on0095.outbound.protection.outlook.com ([104.47.34.95]:42112
+        "EHLO NAM01-BY2-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1751719AbeFHN4S (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jun 2018 09:56:18 -0400
+        id S1751265AbeFHN4Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jun 2018 09:56:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0owqcj3hgRL3j+r6qVBo8P+nY2PqBmBuLeHfzFKCSlM=;
- b=ZNIaNbtPV71zYaoBJbnvZ4yMoxRrs6wSYMUESk9hFYgrcD7ft7/x74BCHzm7LZqRoc0gd45Y/x/E9kjSjpGLLJzJCnATOsKddZiDVWdmUf+ZI5qq6GFm7Nd0iSuoUA5PEktx/TrFzPlhImNSCOouAnNRqmndLQqAWCQaFlckERc=
+ bh=OJn1H+Gb/aGxGrvDfH+XD/8hxIgPtxIMjybZiNN+JpQ=;
+ b=fkImvOvQeaHm+xpDB4OThSQElHQso9wbJUUf0+3699XMyjdH7GjlMVmchPvkCXfaeqrrBA+Y2MuTWGHgUHQL0ROYqqrpzDli7YyHNGRPiuXLkn2cApmVOKaeNyNjiwWCq7VjVtwgCN6iXETk5JKjh67R9OalfwHsg7xHzfxjeV4=
 Received: from BL0PR2101MB1011.namprd21.prod.outlook.com (52.132.24.10) by
- BL0PR2101MB0979.namprd21.prod.outlook.com (52.132.20.160) with Microsoft SMTP
+ BL0PR2101MB0963.namprd21.prod.outlook.com (52.132.20.156) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.863.2; Fri, 8 Jun 2018 13:56:16 +0000
+ 15.20.863.2; Fri, 8 Jun 2018 13:56:13 +0000
 Received: from BL0PR2101MB1011.namprd21.prod.outlook.com
  ([fe80::d1f2:1d69:2567:e0a9]) by BL0PR2101MB1011.namprd21.prod.outlook.com
  ([fe80::d1f2:1d69:2567:e0a9%2]) with mapi id 15.20.0863.004; Fri, 8 Jun 2018
- 13:56:16 +0000
+ 13:56:13 +0000
 From:   Derrick Stolee <dstolee@microsoft.com>
 To:     "git@vger.kernel.org" <git@vger.kernel.org>
 CC:     "avarab@gmail.com" <avarab@gmail.com>,
@@ -38,12 +38,11 @@ CC:     "avarab@gmail.com" <avarab@gmail.com>,
         "marten.agren@gmail.com" <marten.agren@gmail.com>,
         "gitster@pobox.com" <gitster@pobox.com>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v6 04/21] commit: force commit to parse from object database
-Thread-Topic: [PATCH v6 04/21] commit: force commit to parse from object
- database
-Thread-Index: AQHT/zB3B+bRvYIb406WvCqkbV7Vug==
-Date:   Fri, 8 Jun 2018 13:56:15 +0000
-Message-ID: <20180608135548.216405-5-dstolee@microsoft.com>
+Subject: [PATCH v6 01/21] commit-graph: UNLEAK before die()
+Thread-Topic: [PATCH v6 01/21] commit-graph: UNLEAK before die()
+Thread-Index: AQHT/zB2fXu6yR9lGE6lo3yX7AMd5A==
+Date:   Fri, 8 Jun 2018 13:56:13 +0000
+Message-ID: <20180608135548.216405-2-dstolee@microsoft.com>
 References: <20180606113611.87822-1-dstolee@microsoft.com>
  <20180608135548.216405-1-dstolee@microsoft.com>
 In-Reply-To: <20180608135548.216405-1-dstolee@microsoft.com>
@@ -57,107 +56,61 @@ x-clientproxiedby: BN6PR11CA0071.namprd11.prod.outlook.com
 x-ms-exchange-messagesentrepresentingtype: 1
 x-originating-ip: [2001:4898:8010:0:eb4a:5dff:fe0f:730f]
 x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;BL0PR2101MB0979;7:2A1bDHTSuoqJKp5eM0hsJO4FMO458yb2Era5tPlNwAe1/+8A6BcptBO4pveI0zJyKQ9Nbl0hL8wJEC2IXsP9kUcjzJMDiJ/LzimoZWa39FN2q4Zu+x5xfZGi/9eHA6Xq0wL8/F6OuUut9kkTd5lbv1WTwzKJZ0S1upHIWHz+4q2ScjEGyhQgKe2KCkkvJxR0/fSS3rjSxVTAGuALn0wRqgcZWNGgw13U+76MAA5qdOJhv1eHd29FfCZRLxJtxkna
+x-microsoft-exchange-diagnostics: 1;BL0PR2101MB0963;7:ZuvYNSs9PvUL8M3wfnii1zw5aZVmpzqWPUhXrFqrMha5p5OrMC2ktthnFIV68xFeWxbImUEZYq7eN5df1u4vhR7pfcbUINUOLz4WzF5ChlPcOiuiBqWYG/xs0NMwPM1Z/cdbM0UfPAVFDWFrWlVJtxAWcroc8v73heXUvms59ds0ZK6XaVMX4ENAv9qf/7wWczatk853f/CmCdMNKMDanjc7EYvrLA3dwsuckIM0a4VI6IAIJL/4SmfknqS2+AuO
 x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(48565401081)(5600026)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7193020);SRVR:BL0PR2101MB0979;
-x-ms-traffictypediagnostic: BL0PR2101MB0979:
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(48565401081)(5600026)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7193020);SRVR:BL0PR2101MB0963;
+x-ms-traffictypediagnostic: BL0PR2101MB0963:
 authentication-results: spf=none (sender IP is )
  smtp.mailfrom=dstolee@microsoft.com; 
-x-microsoft-antispam-prvs: <BL0PR2101MB0979AFDA0E7B9254569810F4A17B0@BL0PR2101MB0979.namprd21.prod.outlook.com>
+x-microsoft-antispam-prvs: <BL0PR2101MB09631E1F821E7601D18CFD29A17B0@BL0PR2101MB0963.namprd21.prod.outlook.com>
 x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171);
 x-ms-exchange-senderadcheck: 1
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(10201501046)(93006095)(93001095)(3002001)(3231254)(2018427008)(944501410)(52105095)(6055026)(149027)(150027)(6041310)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123560045)(20161123558120)(20161123562045)(20161123564045)(6072148)(201708071742011)(7699016);SRVR:BL0PR2101MB0979;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB0979;
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(10201501046)(93006095)(93001095)(3002001)(3231254)(2018427008)(944501410)(52105095)(6055026)(149027)(150027)(6041310)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123560045)(20161123558120)(20161123562045)(20161123564045)(6072148)(201708071742011)(7699016);SRVR:BL0PR2101MB0963;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB0963;
 x-forefront-prvs: 06973FFAD3
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(366004)(39860400002)(396003)(376002)(39380400002)(346002)(189003)(199004)(36756003)(8676002)(10290500003)(22452003)(2351001)(81166006)(1730700003)(8656006)(99286004)(5660300001)(6916009)(97736004)(14454004)(6116002)(305945005)(478600001)(5640700003)(86362001)(81156014)(476003)(316002)(54906003)(6486002)(6436002)(7736002)(2616005)(86612001)(575784001)(1076002)(186003)(3660700001)(2906002)(386003)(76176011)(6506007)(105586002)(46003)(2900100001)(4326008)(446003)(3280700002)(25786009)(102836004)(106356001)(68736007)(2501003)(39060400002)(6512007)(11346002)(8936002)(10090500001)(52116002)(107886003)(5250100002)(53936002)(486006)(22906009);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB0979;H:BL0PR2101MB1011.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(396003)(376002)(346002)(39380400002)(39860400002)(366004)(189003)(199004)(6116002)(81166006)(1076002)(5660300001)(186003)(8936002)(478600001)(10290500003)(81156014)(1730700003)(8676002)(59450400001)(486006)(76176011)(7736002)(386003)(476003)(102836004)(446003)(6506007)(305945005)(11346002)(2616005)(6916009)(25786009)(105586002)(2900100001)(106356001)(46003)(68736007)(10090500001)(22452003)(6436002)(52116002)(5640700003)(36756003)(6486002)(2906002)(3660700001)(107886003)(8656006)(97736004)(99286004)(3280700002)(2351001)(4326008)(54906003)(6512007)(316002)(53936002)(86612001)(5250100002)(575784001)(86362001)(2501003)(39060400002)(14454004)(22906009);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB0963;H:BL0PR2101MB1011.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
 received-spf: None (protection.outlook.com: microsoft.com does not designate
  permitted sender hosts)
-x-microsoft-antispam-message-info: cWcEl/G0yPFx02CS//9SyWzEtQ/c7C4Ura2xKZIGZ2zmOZNPuxXDOBkF4RqiiDTLFcSZJTs2P6ihgTvOYlxUncSu6fAJLU85Geaz4bhfC9MPGsCbqQOpAG1y+iY4346O9u26eYf6iBjRi3wYXQXgvYMB+EZmfue59YARiuxQzfYr0NudxQLNCJ5HXGRqLZSP
+x-microsoft-antispam-message-info: HckRAzUerUE71tMHwxf4u1TUZ66o6vW71eUQVZQuwMpn7Q18Og2bcFHpqOzoMptB61JdV5Qg1DRtq8bOZvf4z7q22uQaDAHkxH4spgjCbmX4j4Ah1iIOsfr2rAgGYcu5MfVzSYNVB58AwstwT/uHPcWsQhTfwea6Og3iHFFe3LRxhSdngYRn0WavRh17O8E9
 spamdiagnosticoutput: 1:99
 spamdiagnosticmetadata: NSPM
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-MS-Office365-Filtering-Correlation-Id: 45c99301-2615-4001-a822-08d5cd479a14
+X-MS-Office365-Filtering-Correlation-Id: e7839079-dfe7-455b-ad88-08d5cd479883
 X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 45c99301-2615-4001-a822-08d5cd479a14
-X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Jun 2018 13:56:15.8643
+X-MS-Exchange-CrossTenant-Network-Message-Id: e7839079-dfe7-455b-ad88-08d5cd479883
+X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Jun 2018 13:56:13.3275
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB0979
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB0963
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In anticipation of verifying commit-graph file contents against the
-object database, create parse_commit_internal() to allow side-stepping
-the commit-graph file and parse directly from the object database.
-
-Due to the use of generation numbers, this method should not be called
-unless the intention is explicit in avoiding commits from the
-commit-graph file.
-
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- commit.c | 9 +++++++--
- commit.h | 1 +
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ builtin/commit-graph.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/commit.c b/commit.c
-index d53dc16d72..720c6acddf 100644
---- a/commit.c
-+++ b/commit.c
-@@ -418,7 +418,7 @@ int parse_commit_buffer(struct commit *item, const void=
- *buffer, unsigned long s
- 	return 0;
- }
+diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+index 37420ae0fd..f0875b8bf3 100644
+--- a/builtin/commit-graph.c
++++ b/builtin/commit-graph.c
+@@ -51,8 +51,11 @@ static int graph_read(int argc, const char **argv)
+ 	graph_name =3D get_commit_graph_filename(opts.obj_dir);
+ 	graph =3D load_commit_graph_one(graph_name);
 =20
--int parse_commit_gently(struct commit *item, int quiet_on_missing)
-+int parse_commit_internal(struct commit *item, int quiet_on_missing, int u=
-se_commit_graph)
- {
- 	enum object_type type;
- 	void *buffer;
-@@ -429,7 +429,7 @@ int parse_commit_gently(struct commit *item, int quiet_=
-on_missing)
- 		return -1;
- 	if (item->object.parsed)
- 		return 0;
--	if (parse_commit_in_graph(item))
-+	if (use_commit_graph && parse_commit_in_graph(item))
- 		return 0;
- 	buffer =3D read_object_file(&item->object.oid, &type, &size);
- 	if (!buffer)
-@@ -450,6 +450,11 @@ int parse_commit_gently(struct commit *item, int quiet=
-_on_missing)
- 	return ret;
- }
-=20
-+int parse_commit_gently(struct commit *item, int quiet_on_missing)
-+{
-+	return parse_commit_internal(item, quiet_on_missing, 1);
-+}
+-	if (!graph)
++	if (!graph) {
++		UNLEAK(graph_name);
+ 		die("graph file %s does not exist", graph_name);
++	}
 +
- void parse_commit_or_die(struct commit *item)
- {
- 	if (parse_commit(item))
-diff --git a/commit.h b/commit.h
-index 3ad07c2e3d..7e0f273720 100644
---- a/commit.h
-+++ b/commit.h
-@@ -77,6 +77,7 @@ struct commit *lookup_commit_reference_by_name(const char=
- *name);
- struct commit *lookup_commit_or_die(const struct object_id *oid, const cha=
-r *ref_name);
+ 	FREE_AND_NULL(graph_name);
 =20
- int parse_commit_buffer(struct commit *item, const void *buffer, unsigned =
-long size, int check_graph);
-+int parse_commit_internal(struct commit *item, int quiet_on_missing, int u=
-se_commit_graph);
- int parse_commit_gently(struct commit *item, int quiet_on_missing);
- static inline int parse_commit(struct commit *item)
- {
+ 	printf("header: %08x %d %d %d %d\n",
 --=20
 2.18.0.rc1
 
