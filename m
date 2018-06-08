@@ -2,114 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 145981F403
-	for <e@80x24.org>; Fri,  8 Jun 2018 15:58:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1593E1F403
+	for <e@80x24.org>; Fri,  8 Jun 2018 16:00:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751524AbeFHP6a (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Jun 2018 11:58:30 -0400
-Received: from mail-ot0-f195.google.com ([74.125.82.195]:41908 "EHLO
-        mail-ot0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751224AbeFHP63 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jun 2018 11:58:29 -0400
-Received: by mail-ot0-f195.google.com with SMTP id d19-v6so10693138oti.8
-        for <git@vger.kernel.org>; Fri, 08 Jun 2018 08:58:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ppEuYabWuO3aX5lIlm4x2SDxB9eHIM6cEulzQ8BCFcQ=;
-        b=i3+LMT32WJ4q09LDMd0dRAxgqGsuzs5W19vruSTM1V8DPRTOZpUyOdsy5WFek30R49
-         RNI8S6Ikwu5b7PzAzksxT+C+BmUuY0Yg489V0D5T0mJz9tXVysV4UcgNmr2E8ksABu9f
-         tBg/BgvRfiuLLaVNsKa9RBRzW7IwCyMUVN6fe/rT/EB1CbIcM2lVpt9IvjZKsUG1bWnl
-         78xSmqd5vSkt5W29fRwq2Ke6kt+rVwhIfa0Yb+qxt16DIQMPcgZmTIX7CD5ld6xqDtLj
-         XsBiF0iSXEKRucdiOXnvHHv1ggOLNd2Fk9dqenH887wx3kTcMeRuIDnKcAlbMoEobCEI
-         VH9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ppEuYabWuO3aX5lIlm4x2SDxB9eHIM6cEulzQ8BCFcQ=;
-        b=TUzo+A+lm6Nxog85pde+P4l79rhOTV2k3u05+sP6CjBF6JRDDdU/IOuj7PTAKnNZqz
-         qYmBEHnNLpQavtpzSgyvva+DBcgDoo/7JH0znfAi5Y9lRe8e9NgZymBrOfX3tIfLviZh
-         XJ0rASV5n1G/zNLtcRLyo4T/qQSzLU8ydkZV82AUK0BcrXLoGFBGaYUUIHA399GV+xMN
-         9xyabXpcXWbDrr4j6Yg8Rho2L1I9FiokUxnMKcdf+ojHGL9udYLlCZC9+kGxGLvrrrdo
-         N+SgDVve5mBfkyUM3rIZ9CCCpF/7bQW18L0CnN4yEYjU3dF0yZawIjAKphDqX0b7Lrxa
-         0+OQ==
-X-Gm-Message-State: APt69E2IFcylxD2xwfAXUWZmsaOesp7XkbWOCt9ul6HJwifa2/+v0PYS
-        bxD2qJFGr9xgeyOVcuyNglZ0O6S1A/tIhQpz5tU=
-X-Google-Smtp-Source: ADUXVKJ1q+nVG7VzRbbiFj72sWOxdFos+6VQshklZqZBdw55PnizBm8kmJ3ySJIEpHyzayl7o2O8s0eV5kfkJamwAIA=
-X-Received: by 2002:a9d:124:: with SMTP id 33-v6mr4223691otu.65.1528473508510;
- Fri, 08 Jun 2018 08:58:28 -0700 (PDT)
+        id S1751614AbeFHQAl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Jun 2018 12:00:41 -0400
+Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:36202 "EHLO
+        wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751141AbeFHQAk (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 8 Jun 2018 12:00:40 -0400
+Received: from p5099125b.dip0.t-ipconnect.de ([80.153.18.91] helo=[192.168.100.43]); authenticated
+        by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        id 1fRJob-0002Ki-0O; Fri, 08 Jun 2018 18:00:37 +0200
+Subject: Re: [RFC PATCH v1] telemetry design overview (part 1)
+To:     Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
+Cc:     git@jeffhostetler.com, git@vger.kernel.org, gitster@pobox.com,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <20180607145313.25015-1-git@jeffhostetler.com>
+ <c3ed8128-1184-8199-06e5-a4e96b2bc7c5@kdbg.org>
+ <20180608090758.GA15112@sigill.intra.peff.net>
+From:   Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Message-ID: <688240ef-34a1-ee9a-215a-b4f9628e7c72@virtuell-zuhause.de>
+Date:   Fri, 8 Jun 2018 18:00:28 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-References: <20180606073933.14755-1-pclouds@gmail.com> <20180606165016.3285-1-pclouds@gmail.com>
- <20180606165016.3285-5-pclouds@gmail.com> <CABPp-BFzOkX_uSyiVH-S8mqxeOin0xcYR-EzXUtvcdN7dGhidQ@mail.gmail.com>
- <CACsJy8AwjMsCR=gbT1ZLbEwve7hzuPBF7tT7m+P1DJ4rRx_jrw@mail.gmail.com>
-In-Reply-To: <CACsJy8AwjMsCR=gbT1ZLbEwve7hzuPBF7tT7m+P1DJ4rRx_jrw@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 8 Jun 2018 17:58:01 +0200
-Message-ID: <CACsJy8Dk8jS-m9vPdHY3r8iGV0DA7v_V8uOFn7+7WqTev-ajdg@mail.gmail.com>
-Subject: Re: [PATCH v4 04/23] unpack-tress: convert clear_ce_flags* to avoid the_index
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20180608090758.GA15112@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1528473640;dcb2c4b0;
+X-HE-SMSGID: 1fRJob-0002Ki-0O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 7, 2018 at 5:11 PM Duy Nguyen <pclouds@gmail.com> wrote:
->
-> On Thu, Jun 7, 2018 at 9:41 AM, Elijah Newren <newren@gmail.com> wrote:
-> > Subject line: unpack-trees rather than unpack-tress.
-> >
-> >
-> >
-> > On Wed, Jun 6, 2018 at 9:49 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
-uy <pclouds@gmail.com> wrote:
-> >> Prior to fba92be8f7, this code implicitly (and incorrectly) assumes
-> >> the_index when running the exclude machinery. fba92be8f7 helps show
-> >> this problem clearer because unpack-trees operation is supposed to
-> >> work on whatever index the caller specifies... not specifically
-> >> the_index.
-> >>
-> >> Update the code to use "istate" argument that's originally from
-> >> mark_new_skip_worktree(). From the call sites, both in unpack_trees(),
-> >> you can see that this function works on two separate indexes:
-> >> o->src_index and o->result. The second mark_new_skip_worktree() so far
-> >> has incorecctly applied exclude rules on o->src_index instead of
-> >> o->result. It's unclear what is the consequences of this, but it's
-> >> definitely wrong.
-> >>
-> >> [1] fba92be8f7 (dir: convert is_excluded_from_list to take an index -
-> >>     2017-05-05)
-> >>
-> >> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmai=
-l.com>
-> >
-> > A somewhat curious finding: when I was rebuilding and re-testing all
-> > 23 patches, I got a failure on this patch in test 31 of
-> > t7063-status-untracked-cache.sh. I did not get any test failures with
-> > any of the other patches.  However, after re-running that test or the
-> > whole suite half a dozen times with just up to this patch applied, I
-> > was not able to trigger the failure again.  Is there a rare race in
-> > that testcase?
->
-> Untracked cache tests are very time-sensitive. I'll try to run and
-> re-run them a couple times to understand more. Thanks for pointing it
-> out.
+Am 08.06.2018 um 11:07 schrieb Jeff King:
+> On Thu, Jun 07, 2018 at 11:10:52PM +0200, Johannes Sixt wrote:
+> 
+>> Am 07.06.2018 um 16:53 schrieb git@jeffhostetler.com:
+>>> From: Jeff Hostetler <jeffhost@microsoft.com>
+>>>
+>>> I've been working to add code to Git to optionally collect telemetry data.
+>>> The goal is to be able to collect performance data from Git commands and
+>>> allow it to be aggregated over a user community to find "slow commands".
+>>
+>> Seriously? "add code to collect telemetry data" said by somebody whose email
+>> address ends with @microsoft.com is very irritating. I really don't want to
+>> have yet another switch that I must check after every update that it is
+>> still off.
+> 
+> If you look at the design document, it's off by default and would write
+> to a file on the filesystem. That doesn't seem all that different from
+> GIT_TRACE.
 
-after hours of running tests, either with full 23 patches or just the
-first 4, and failing to catch the failure, i declare (or more like,
-pray) that you ran into a crack of time that led to a race. I'll take
-no action on this, but I'll remember this and watch out for untracked
-cache related mails for some time.
---=20
-Duy
+The patch also includes the following part
+
++telemetry.plugin
++----------------
++
++If the config setting "telemetry.plugin" contains the pathname to a shared
++library, the library will be dynamically loaded during start up and events
++will be sent to it using the plugin API.
++
++This plugin model allows an organization to define a custom or private
++telemetry solution while using a stock version of Git.
++
++For example, on Windows, it allows telemetry events to go directly to the
++kernel via the plugin using the high performance Event Tracing for Windows
++(ETW) facility.
++
++The contrib/telemetry-plugin-examples directory contains two example
++plugins:
++ * A trivial log to stderr
++ * A trivial ETW writer
+
+which is not a file but, if enabled, some windows internal thingie where the data is gone/duplicated/sent out/whatever.
+
+I for my part would much rather prefer that to be a compile time option so that I don't need to check on every git update on windows if this is now enabled or not.
