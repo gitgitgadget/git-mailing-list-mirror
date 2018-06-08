@@ -2,85 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1593E1F403
-	for <e@80x24.org>; Fri,  8 Jun 2018 16:00:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 268F41F403
+	for <e@80x24.org>; Fri,  8 Jun 2018 16:02:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751614AbeFHQAl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Jun 2018 12:00:41 -0400
-Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:36202 "EHLO
-        wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751141AbeFHQAk (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 8 Jun 2018 12:00:40 -0400
-Received: from p5099125b.dip0.t-ipconnect.de ([80.153.18.91] helo=[192.168.100.43]); authenticated
-        by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        id 1fRJob-0002Ki-0O; Fri, 08 Jun 2018 18:00:37 +0200
-Subject: Re: [RFC PATCH v1] telemetry design overview (part 1)
-To:     Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
-Cc:     git@jeffhostetler.com, git@vger.kernel.org, gitster@pobox.com,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <20180607145313.25015-1-git@jeffhostetler.com>
- <c3ed8128-1184-8199-06e5-a4e96b2bc7c5@kdbg.org>
- <20180608090758.GA15112@sigill.intra.peff.net>
-From:   Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Message-ID: <688240ef-34a1-ee9a-215a-b4f9628e7c72@virtuell-zuhause.de>
-Date:   Fri, 8 Jun 2018 18:00:28 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+        id S1751846AbeFHQCe (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Jun 2018 12:02:34 -0400
+Received: from titan.plasma.xg8.de ([85.10.203.189]:41388 "EHLO
+        titan.PLASMA.Xg8.DE" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751280AbeFHQCd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jun 2018 12:02:33 -0400
+Received: from titan.PLASMA.Xg8.DE (localhost [127.0.0.1])
+        by titan.PLASMA.Xg8.DE (8.15.2/8.15.2) with ESMTPS id w58G2MUZ023958
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Fri, 8 Jun 2018 18:02:22 +0200
+Received: (from uucp@localhost)
+        by titan.PLASMA.Xg8.DE (8.15.2/8.15.2/Submit) with UUCP id w58G2LfI023957;
+        Fri, 8 Jun 2018 18:02:21 +0200
+Received: from helen.PLASMA.Xg8.DE (localhost.localdomain [127.0.0.1])
+        by helen.PLASMA.Xg8.DE (8.15.2/8.15.2) with ESMTP id w58G295q014672;
+        Fri, 8 Jun 2018 18:02:09 +0200
+Received: (from rtc@localhost)
+        by helen.PLASMA.Xg8.DE (8.15.2/8.15.2/Submit) id w58G27YB014671;
+        Fri, 8 Jun 2018 18:02:07 +0200
+Date:   Fri, 8 Jun 2018 18:02:07 +0200
+From:   Peter Backes <rtc@helen.PLASMA.Xg8.DE>
+To:     "Theodore Y. Ts'o" <tytso@mit.edu>
+Cc:     David Lang <david@lang.hm>, Philip Oakley <philipoakley@iee.org>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: GDPR compliance best practices?
+Message-ID: <20180608160207.GA14472@helen.PLASMA.Xg8.DE>
+References: <20180603174617.GA10900@helen.PLASMA.Xg8.DE>
+ <alpine.DEB.2.02.1806061831340.7659@nftneq.ynat.uz>
+ <20180607063225.GA28343@helen.PLASMA.Xg8.DE>
+ <3EF5AC29192A4D179B6D8689ECB991CC@PhilipOakley>
+ <20180607223442.GA5322@helen.PLASMA.Xg8.DE>
+ <alpine.DEB.2.02.1806071535510.27871@nftneq.ynat.uz>
+ <20180607232128.GA5879@helen.PLASMA.Xg8.DE>
+ <20180608025313.GA12749@thunk.org>
+ <20180608062657.GB9383@helen.PLASMA.Xg8.DE>
+ <20180608144551.GB12749@thunk.org>
 MIME-Version: 1.0
-In-Reply-To: <20180608090758.GA15112@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1528473640;dcb2c4b0;
-X-HE-SMSGID: 1fRJob-0002Ki-0O
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180608144551.GB12749@thunk.org>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 08.06.2018 um 11:07 schrieb Jeff King:
-> On Thu, Jun 07, 2018 at 11:10:52PM +0200, Johannes Sixt wrote:
-> 
->> Am 07.06.2018 um 16:53 schrieb git@jeffhostetler.com:
->>> From: Jeff Hostetler <jeffhost@microsoft.com>
->>>
->>> I've been working to add code to Git to optionally collect telemetry data.
->>> The goal is to be able to collect performance data from Git commands and
->>> allow it to be aggregated over a user community to find "slow commands".
->>
->> Seriously? "add code to collect telemetry data" said by somebody whose email
->> address ends with @microsoft.com is very irritating. I really don't want to
->> have yet another switch that I must check after every update that it is
->> still off.
-> 
-> If you look at the design document, it's off by default and would write
-> to a file on the filesystem. That doesn't seem all that different from
-> GIT_TRACE.
+On Fri, Jun 08, 2018 at 10:45:51AM -0400, Theodore Y. Ts'o wrote:
+> *Anyone* can run a repository.  It's not just github and gitlab.  The
+> hobbiest in New Zealand, who might never visit Europe (so she can't
+> be arrested when she visits the fair shores of Europe) and who has no
+> business interests in Europe, can host such a web site.
 
-The patch also includes the following part
+Just because letters of request are hardly enforced doesn't make it 
+legal to break the GDPR. For sure, a hobbyist would not have much to 
+fear, even if he is violating the GDPR and coming to Europe. The GDPR 
+is mostly about taming the megacorporations, not about arresting 
+tourists.
 
-+telemetry.plugin
-+----------------
-+
-+If the config setting "telemetry.plugin" contains the pathname to a shared
-+library, the library will be dynamically loaded during start up and events
-+will be sent to it using the plugin API.
-+
-+This plugin model allows an organization to define a custom or private
-+telemetry solution while using a stock version of Git.
-+
-+For example, on Windows, it allows telemetry events to go directly to the
-+kernel via the plugin using the high performance Event Tracing for Windows
-+(ETW) facility.
-+
-+The contrib/telemetry-plugin-examples directory contains two example
-+plugins:
-+ * A trivial log to stderr
-+ * A trivial ETW writer
+> So the person trying to engage in censorship
 
-which is not a file but, if enabled, some windows internal thingie where the data is gone/duplicated/sent out/whatever.
+Censorship? The GDPR is not about censorship.
 
-I for my part would much rather prefer that to be a compile time option so that I don't need to check on every git update on windows if this is now enabled or not.
+If you want to write an opionion about someone by name, the GDPR gives 
+you all legitimization to do so, against that person's will.
+
+This is about removing the data under ordinary circumstances.
+
+> would need to contact *everyone*.
+
+This is the subject's problem, not the repository provider's.
+
+> And someone who has a git note in their private repo who
+> then pushes to github/gitlab would end up pushing that note back up to
+> the web server.
+
+If that note has been deleted based on the right to be forgotten, you 
+as the repository provider have to make sure you don't publish it 
+again. Since you are allowed to keep a private copy, ensuring that 
+shouldn't be a problem for you. 
+
+> Great, so you can get github and gitlab to get rid of the information.
+> But it's *pointless*.
+
+It's up to the subject to consider it pointless or not to exercise his 
+rights...
+
+> Your problem is in the word: "a"
+
+...and against whom, whether one repository provider, the major ones, 
+all of them he can find.
+
+Best wishes
+Peter
+
+-- 
+Peter Backes, rtc@helen.PLASMA.Xg8.DE
