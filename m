@@ -2,97 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.3 required=3.0 tests=BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19D541F403
-	for <e@80x24.org>; Fri,  8 Jun 2018 17:15:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 084C11F403
+	for <e@80x24.org>; Fri,  8 Jun 2018 18:26:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752970AbeFHRPT (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Jun 2018 13:15:19 -0400
-Received: from mail-qk0-f172.google.com ([209.85.220.172]:43607 "EHLO
-        mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752680AbeFHRPS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jun 2018 13:15:18 -0400
-Received: by mail-qk0-f172.google.com with SMTP id g126-v6so9182240qke.10
-        for <git@vger.kernel.org>; Fri, 08 Jun 2018 10:15:18 -0700 (PDT)
+        id S1752662AbeFHS0H (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Jun 2018 14:26:07 -0400
+Received: from mail-lf0-f45.google.com ([209.85.215.45]:34867 "EHLO
+        mail-lf0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752609AbeFHS0G (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jun 2018 14:26:06 -0400
+Received: by mail-lf0-f45.google.com with SMTP id i15-v6so11122598lfc.2
+        for <git@vger.kernel.org>; Fri, 08 Jun 2018 11:26:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=1teenCJQZYDvRcxjxQGSykcTRofZ+k0coNVCR2wIY8g=;
-        b=uaGrHWQseThz1KjBFwtZSFh1DFS33NXhVUuq4p3la/PM0FkezTspssdKKdea7c/tuO
-         RQxitrYMRANQ34MTrXQHeSAm27BK5TmS7/JZRaWJOLCesJ9fmRy+DaxQrtTequoTDeVu
-         WWmHnulZ35EbPtJXyWy0lU9DNB5MFuVQ7PzNBFh+6malW3e0VBsMoN+vPpNXp0ShR/nY
-         6OCT9d0N2km+s2XrZnbpHuNCh6VA683VRBeBF2Xs5/S5mSHFdf2lHD5JTKKE+NPNs4mv
-         U2OBiFschTfO4ZwXMbAUc6e9+86ZwAsd3wN9LnYeV/0faYzLulwYsTR5nmC/EG1q4rxU
-         rcuQ==
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=EMA6flwOYnQ88Egkj8iaLvNA54K3OvFGNpLuZWQtS7A=;
+        b=NCbVuji2vvOQZAPvLmgYALV1byhw9Zoh+zaOQ42wXELBhDBHx2UCzHzsg1ip86hbxs
+         FjF0tbh5AMcdZOdronRUlqCMkbExyrjnPKBK1SlBbhWFL+zLMKBc2YjDsoYmmj/STRhb
+         US34OtPryWwjh+aQcy8aUTLjO1fQ/7utcAjnGrAsb9f/5EEi68FLq/l0oF+ms1cxvluR
+         wkqkT4Ye/mWACPAO1Hc7CpzIkWPbIoQxs0KFs1vUohz9PgjA9buEnu5t5GuLNFjFGTNk
+         ylM/dVD3YH42SDZ7oJrJvvYx4rVAz5MtJjgEJGhK9uVHJFaNGs1hayvQIHa00/nTbQam
+         5Hcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=1teenCJQZYDvRcxjxQGSykcTRofZ+k0coNVCR2wIY8g=;
-        b=kyKonhK02FXcy+mT4fz6g39z17z4bEzpNIpqOE27wsIG08XQZd8Ivi48Vusmc9sK95
-         uvLHdAZKbv6vdt8x43MEwd73B7lb7AgvyXPuLyF5M1LMMujNvaURWdccDqZfgrAWLv9Q
-         bhIEP1BXGUZGrhTiOltjQOmSZKQnuhhUxEL2hZlK2Wd6cEctGgicZYaAZUwgedl2ZUg3
-         mLc6kpTbnx6ThYKUkg4t3a/NW+BXF81U4bmofEQZ1o9t5888sH6ucCOMF6E2zZEXSYZ7
-         2KA9t0b6fzPkiooo2qtjpyBDXP48DjfVXeca9DmBSxdQtljMY9XYt1oQG3Fk7z10ffPu
-         GeEw==
-X-Gm-Message-State: APt69E1g6eGtjI0l4M8mKy5zkq71yX6Yd0fSKqTf37PkdVoimS+Nq3xl
-        qv7i8JeI8GwMFT1cY08c8LOwTNKH
-X-Google-Smtp-Source: ADUXVKLib7uPms40RER61OKhCNzUiqCukJjz+wh0V8BufBlrhDzJL524WEeRIqZx4W1EAIS7xiQSpw==
-X-Received: by 2002:ae9:edc6:: with SMTP id c189-v6mr6102847qkg.58.1528478117160;
-        Fri, 08 Jun 2018 10:15:17 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:5dc2:24cc:4e85:52e? ([2001:4898:8010:0:46f8:24cc:4e85:52e])
-        by smtp.gmail.com with ESMTPSA id m2-v6sm31723112qta.87.2018.06.08.10.15.16
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 08 Jun 2018 10:15:16 -0700 (PDT)
-Subject: Re: is there a canonical doc about how to deal with whitespace
- issues?
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>,
-        Git Mailing list <git@vger.kernel.org>
-References: <alpine.LFD.2.21.1806080914520.20892@localhost.localdomain>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <b8801d73-71c4-15c8-4b29-8e4edb3faec9@gmail.com>
-Date:   Fri, 8 Jun 2018 13:15:15 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=EMA6flwOYnQ88Egkj8iaLvNA54K3OvFGNpLuZWQtS7A=;
+        b=OSfBrXI6iCWb3MZEzEdyU1fW7JYOWjhrCUjjXyOJDfxWkkdAl6ZT2W6uzReixYPYEv
+         PjZDR594rVOVDR3SPLUabE8gtJkkglGOSNv/MWVOOCS7x++HpgfknKjnLIknx5RkWPgd
+         pL1Uru6Wsbw7aaJesgPt8xNm7WsrCkThriB/+5EaZIwM9frWIZI4y4b2S7E1CaJ6eadq
+         2SdqRckOhJ1mxQmMGrbvDIc5h0BowLLhdRN3HBgxqoxauha8xc5MEwoDjiVOi+HoGdOH
+         D0aYaubLepEu814D3gqH4GSMtjHIe9jFeTDwi4Le07/kfullWVhxtBFHhYgYsBIPspKu
+         SdhQ==
+X-Gm-Message-State: APt69E3Fa/dH/ex5ywzTPISGb9I9z0GtpGT7qRcgUF8FsmF0GQSvI3Z0
+        QTACTst6ijorXqxuwoWHY65H9en8AtWlmGT3Bwt1gj5y
+X-Google-Smtp-Source: ADUXVKJ4/Qa+Phu9/HX5NTVG8yzZTHSKzRXxYLxquqqE7/7157Da9y6W0VOphXhRZLbP5RQ+lL2b/eUEdai5OO4IAlw=
+X-Received: by 2002:a19:5ad4:: with SMTP id y81-v6mr4773776lfk.82.1528482364562;
+ Fri, 08 Jun 2018 11:26:04 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <alpine.LFD.2.21.1806080914520.20892@localhost.localdomain>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+From:   Vitaly Potyarkin <sio.wtf@gmail.com>
+Date:   Fri, 8 Jun 2018 21:25:29 +0300
+Message-ID: <CA+v=Qh7eiLoN4YcnSdtjL4-wp8rTjCpA85BkQD2fRoG7u=9_Fw@mail.gmail.com>
+Subject: Truncating file names with Unicode characters
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/8/2018 9:18 AM, Robert P. J. Day wrote:
->    for one of my courses, i wanted to write a section about the various
-> techniques for dealing with whitespace issues in git, so i started
-> making a list, things like:
->
->    - running "git diff --check"
->    - "git commit --cleanup=" possibilities
->    - config options like core.{eol,safecrlf,autocrlf}
->    - i'm sure there are client-side hooks that can be mentioned
->
-> etc, etc.
->
->    has anyone ever written a doc that collects these things in one
-> place? if not, i guess i have to write one.
->
-> rday
->
+# Truncating file names with Unicode characters
 
-I don't know of a doc for whitespace issues, but the contributing guide 
-on GitForWindows [1] recommends `git rebase --whitespace=fix`.
+When shortening file names that contain Unicode characters, git performs
+truncation without awareness of two-byte characters. That often leads to
+splitting a character in half and displaying a garbage byte that's left.
 
-Thanks,
--Stolee
+Unawareness of Unicode also means that filename length is calculated incorr=
+ectly
+and some output gets misaligned.
 
-[1] 
-https://github.com/git-for-windows/git/blob/master/CONTRIBUTING.md#polish-your-commits
+I have tested this with git 2.14.1 on Windows and with git 2.11.0 on Linux.=
+ My
+configuration includes setting `core.quotepath =3D off` to display Unicode =
+paths.
+
+# Example: `git log --stat`
+
+## Bad output: half-characters and wrong text alignment
+
+The last file name gets truncated in the middle of the character (`=CB=86` =
+is
+what's left of it). Text alignment is off because string lengths are calcul=
+ated
+in bytes instead of characters.
+
+    Extension/README.md                                |  28 +++++++++
+    .../Catalog.=D0=9D=D0=BE=D0=BC=D0=B5=D0=BD=D0=BA=D0=BB=D0=B0=D1=82=D1=
+=83=D1=80=D0=B0.xml           |  32 ++++++++++
+    .../Configuration.xml                              |   5 +-
+    ...=D0=B5=D1=82=D0=9F=D0=B5=D1=80=D0=B5=D1=80=D0=B0=D0=B1=D0=BE=D1=82=
+=D1=87=D0=B8=D0=BA=D0=B0.ObjectModule.txt |  39 ++++++++++++
+    ...cument.=D0=9E=D1=82=D1=87=D0=B5=D1=82=D0=9F=D0=B5=D1=80=D0=B5=D1=80=
+=D0=B0=D0=B1=D0=BE=D1=82=D1=87=D0=B8=D0=BA=D0=B0.xml |  68 ++++++++++++++++=
++++++
+    .../Enum.=D0=A1=D1=82=D0=B0=D0=B2=D0=BA=D0=B8=D0=9D=D0=94=D0=A1.xml    =
+                |  24 ++++++++
+    ...=CB=86=D0=B8=D1=80=D0=B5=D0=BD=D0=B8=D0=B5ERP=D0=9F=D0=BE=D1=82=D1=
+=8F=D1=80=D0=BA=D0=B8=D0=BD_2018-06-05.cfe | Bin 0 -> 22018 bytes
+    7 files changed, 195 insertions(+), 1 deletion(-)
+
+## Good output with ASCII file names
+
+Truncation and alignment are done right because each character is represent=
+ed
+by a single byte.
+
+    .../index.html                                             | 14
+++++++++++++++
+    docs/posts/2017/loops-in-power-query-m-language/index.html | 14
+++++++++++++++
+    .../index.html                                             |  7 +++++++
+    .../temporary-virtual-environment-for-python/index.html    | 14
+++++++++++++++
+    .../index.html                                             | 14
+++++++++++++++
+    docs/posts/2018/getting-started-with-libpq/index.html      | 14
+++++++++++++++
+    .../index.html                                             | 14
+++++++++++++++
+    .../2018/unit-testing-in-power-query-m-language/index.html |  7 +++++++
+    8 files changed, 98 insertions(+)
