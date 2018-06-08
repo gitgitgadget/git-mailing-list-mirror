@@ -2,112 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIM_INVALID shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 41DEE1F403
-	for <e@80x24.org>; Fri,  8 Jun 2018 15:11:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 89C6E1F403
+	for <e@80x24.org>; Fri,  8 Jun 2018 15:16:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751224AbeFHPLH (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Jun 2018 11:11:07 -0400
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:35308 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751087AbeFHPLG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jun 2018 11:11:06 -0400
-Received: by mail-qt0-f194.google.com with SMTP id s9-v6so13755700qtg.2
-        for <git@vger.kernel.org>; Fri, 08 Jun 2018 08:11:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=xneOGN9W82bqs60A3+uUOqKGlhf8nWrz2Er1zx+Moyk=;
-        b=VCHVA4oS1YxTN13D1PM2vgSkFjBPStlo0y9rAdxNJq4hWEfaIIcTZDlf23ROYGS2L5
-         qT2T8FOyTk27FZ5qPkgydQd5p/eGXEmpRu9qfzQCRAz6njfUYMJ6NEiKNzug0P/BmLak
-         FWGw+ceBoCNqQkoAbKVPrd2MrrMtfohHVMX4tkuwxV/VVBMy0LfAlwIooOlnNo8nptBt
-         Btk33rBwHiI4y37f1qIs5XeTB2BP3oTOhnxDAnme28Y9vrCpUmiCEsuQCMeK90SMo0D/
-         ibX2z3R24+rq6wfykMzUb8iBOgcNaZ9IKjCBCjVmnNlW8JU0znDOjA/+9n1gVpDN49u8
-         NQxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=xneOGN9W82bqs60A3+uUOqKGlhf8nWrz2Er1zx+Moyk=;
-        b=W54T/PZElodLZjkqJ1kHpt+SnyGqHrBpVYSpM4A/b7VDAS0wrj5zgFl2KU25UM4uWr
-         FxxZCLrGti8QrD2QsGQZRl5LqED7AhqkvPOm5QwbuJA9jhpL+J02YpYUaBaHTKBVab9y
-         vfTh6EvpmDpIUBNAX0e0GED9SQ54NnyjWTiEuYmT4oN4pby1cpFaB7Fxze2ItFuwuAdZ
-         0sQ3WphvqsUPZZSddDS/wue/dO60sFXUXb7cWoRf9aOiDYGkPCmGLj7c3yKKTXTBWHwk
-         pNfZAx8u6JlsAHy0ECJWWpi4zsNrTm6bBocexzOvx6+W37fS3DdMWjqU9186h0avAb4J
-         qssg==
-X-Gm-Message-State: APt69E0GS8muaUi7jjDD6DdaOh+5wd3SERE9joOf3pmRX0zU7+OU0ouN
-        Vm0deIOjtvJC3t6lM+Z9Jjo=
-X-Google-Smtp-Source: ADUXVKJsKsdvdrYuthNrH8ORfgOn5TgmKAUd7JexbrXkwam1Ce4jls+lSLTbUTPQXYTeFfbyVgtE8A==
-X-Received: by 2002:ac8:241:: with SMTP id o1-v6mr6180947qtg.39.1528470665866;
-        Fri, 08 Jun 2018 08:11:05 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:5dc2:24cc:4e85:52e? ([2001:4898:8010:0:46f8:24cc:4e85:52e])
-        by smtp.gmail.com with ESMTPSA id d72-v6sm24269291qkj.17.2018.06.08.08.11.04
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 08 Jun 2018 08:11:05 -0700 (PDT)
-Subject: Re: [PATCH v6 00/21] Integrate commit-graph into 'fsck' and 'gc'
-To:     =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Cc:     git <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
-        <avarab@gmail.com>, Stefan Beller <sbeller@google.com>,
-        =?UTF-8?Q?Martin_=c3=85gren?= <marten.agren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20180606113611.87822-1-dstolee@microsoft.com>
- <20180608135548.216405-1-dstolee@microsoft.com>
- <CANQwDwdRUFnqYva+mvPh8fijcYNGNDRac857aHMhzHUOLeASpw@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <2d50791e-f957-077e-a5a8-b2a8882f90c5@gmail.com>
-Date:   Fri, 8 Jun 2018 11:11:04 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+        id S1751523AbeFHPQD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Jun 2018 11:16:03 -0400
+Received: from forward23p.cmail.yandex.net ([77.88.31.52]:53341 "EHLO
+        forward23p.cmail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751140AbeFHPQC (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 8 Jun 2018 11:16:02 -0400
+X-Greylist: delayed 659 seconds by postgrey-1.27 at vger.kernel.org; Fri, 08 Jun 2018 11:16:02 EDT
+Received: from mxback10g.mail.yandex.net (mxback10g.mail.yandex.net [IPv6:2a02:6b8:0:1472:2741:0:8b7:171])
+        by forward23p.cmail.yandex.net (Yandex) with ESMTP id A8A5721124
+        for <git@vger.kernel.org>; Fri,  8 Jun 2018 18:05:00 +0300 (MSK)
+Received: from localhost (localhost [::1])
+        by mxback10g.mail.yandex.net (nwsmtp/Yandex) with ESMTP id y7CX0N4qNh-4v78G0Co;
+        Fri, 08 Jun 2018 18:04:57 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1528470297;
+        bh=aPMZHHBgNpA7tsWLSQlXsZGCywXbkB61QXAPr6mbFes=;
+        h=From:To:Subject:Date:Message-Id;
+        b=GlkLiGfEy8r/QBKNB3+EtTB8YLDd3hK69NiaRFVOsBTe9ns/KpyNc2mZy+80vwzrd
+         JiwsT8jcRWqstJlobpwWbA4xlScte4xyKHP4wOKgXTfZhTRtAcTylZYlEE2QCJUsN+
+         w8k8SQ4EGgC5VOIIBt1Bd5gdeEDhdrd4QVpBdVzE=
+Authentication-Results: mxback10g.mail.yandex.net; dkim=pass header.i=@yandex.ru
+Received: by web41o.yandex.ru with HTTP;
+        Fri, 08 Jun 2018 18:04:57 +0300
+From:   KES <kes-kes@yandex.ru>
+Envelope-From: kes-kes@yandex.com
+To:     git <git@vger.kernel.org>
+Subject: BUG: Merge commits are displayed by `--cherry-pick` despite on they introduce same change
 MIME-Version: 1.0
-In-Reply-To: <CANQwDwdRUFnqYva+mvPh8fijcYNGNDRac857aHMhzHUOLeASpw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date:   Fri, 08 Jun 2018 18:04:57 +0300
+Message-Id: <41901528470297@web41o.yandex.ru>
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/8/2018 11:05 AM, Jakub Narębski wrote:
-> On Fri, 8 Jun 2018 at 15:56, Derrick Stolee <dstolee@microsoft.com> wrote:
->
->> [..], the following
->> diff occurs from the previous patch:
-> [...]
->> diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
->> index b24e8b6689..9a0661983c 100755
->> --- a/t/t5318-commit-graph.sh
->> +++ b/t/t5318-commit-graph.sh
->> @@ -33,8 +33,8 @@ test_expect_success 'create commits and repack' '
->>   '
->>
->>   graph_git_two_modes() {
->> -       git -c core.commitGraph=true $1 >output
->> -       git -c core.commitGraph=false $1 >expect
->> +       git -c core.graph=true $1 >output
->> +       git -c core.graph=false $1 >expect
->>          test_cmp output expect
->>   }
-> It seems that you have accidentally removed the fix from previous version.
-> It needs to be core.commitGraph, not core.graph.
->
->
+The `--cherry-pick` option states:
 
-I didn't rebase the fix that I sent as a separate patch [1] (we want 
-that change applied to 'master' while this one targets topics in 'next' 
-and 'pu'). So this specific diff is unfortunate noise.
+>Omit any commit that introduces the same change as another commit on the “other side”
 
-Thanks!
--Stolee
 
-[1] 
-https://public-inbox.org/git/20180604123906.136417-1-dstolee@microsoft.com/
-     [PATCH] t5318-commit-graph.sh: use core.commitGraph
+For next git command I see next tree:
+
+    $ git log --graph --decorate --pretty=oneline --abbrev-commit --cherry-mark --boundary --left-right
+    
+    <   bc2820d (openapi3) Merge branch 'openapi3_exception_handling' into openapi3
+    |\
+    | = 4e1e0aa Testcase for not_found/exception requests to api
+    | = b39673d 'not_found' templates should not be probed automatically. Only when fallback
+    | = a8677df Dump empty schemas and non empty data
+    | = 27db48f Implemente before_render hook
+    |/
+    <   aa60f0a Merge branch 'hide_temporal_interface' into openapi3
+    |\
+    | = 5dd02f2 Mutate current object after update
+    | = d58c0ab Install missed modules
+    |/
+    | >   b8d09ce (xtucha/openapi3) Merge branch 'openapi3_exception_handling' into openapi3
+    | |\
+    | | = b6362ad Testcase for not_found/exception requests to api
+    | | = dc926cc 'not_found' templates should not be probed automatically. Only when fallback
+    | | = 55dc88d Dump empty schemas and non empty data
+    | | = 8369185 Implemente before_render hook
+    | |/
+    | >   c03438d Merge branch 'hide_temporal_interface' into openapi3
+    | |\
+    | | = d534cc4 Mutate current object after update
+    | | = 1b6af27 Install modules required by MonkeyMan
+    | |/
+    | > a3b7230 Clarify schema
+    |/
+    o f5b06ed Assign some defaults
+
+If I want to see only new commit I add `--left-only` option and get merge commits in output.
+
+
+    <   bc2820d (openapi3) Merge branch 'openapi3_exception_handling' into 
+    <   aa60f0a Merge branch 'hide_temporal_interface' into openapi3
+
+This commits introduce same change as another merge commit on the "other side"
+Thus they should not be displayed
+
+
