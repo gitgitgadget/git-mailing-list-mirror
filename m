@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7AADE1F403
-	for <e@80x24.org>; Fri,  8 Jun 2018 22:42:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8FC2D1F403
+	for <e@80x24.org>; Fri,  8 Jun 2018 22:42:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753273AbeFHWm0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Jun 2018 18:42:26 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:37149 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753260AbeFHWmN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jun 2018 18:42:13 -0400
-Received: by mail-wm0-f65.google.com with SMTP id r125-v6so6247760wmg.2
-        for <git@vger.kernel.org>; Fri, 08 Jun 2018 15:42:12 -0700 (PDT)
+        id S1753031AbeFHWmH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Jun 2018 18:42:07 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:54537 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753225AbeFHWmD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jun 2018 18:42:03 -0400
+Received: by mail-wm0-f66.google.com with SMTP id o13-v6so5695199wmf.4
+        for <git@vger.kernel.org>; Fri, 08 Jun 2018 15:42:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=o86v17yX/rrhZoapMbqR50SOZ66KyeTiV0zWdEvxo2E=;
-        b=cYlwK3mQ/vwrix9iDQAFK9rF0J1Sl13JtPk560RA5HMhdjj8xoaB2cKkW1OOO+j3EO
-         s8o9Gm8+beeBb8tiXfMDWO/TOSX+clKe308zR9YM8HCBleBOiRZrVRL8TkZky74BIR+i
-         MKoy4RgPPpc5gX9AxNqTQ4LX6KFZESjuQhDUqRTnjgYRlFyKRcRWVPl6O+rNKyt53wja
-         h8BBDX0proc76bj10ehH8Ao+yPWjAY1+4Z7UhSoc7I5kUmLZw3Sl/iA7LTM378A+uuI8
-         mayH1L8tXjfrSwSOY2KGPnWGjlNkp5kg8PjjlwjaTZXtSQI1GBd8hgIALj7kqYT/0rfD
-         pxdA==
+        bh=qHgsM16Pf6WHuFJflnnW2gkk1K5WKTGD7ev3tx9eR5I=;
+        b=M9LSETDoBcPeu2Ossau8oPSCp7MMqb+GPgFkNI3ZydzFxeril3VsiW/j6yA2obhuJb
+         eb54IpRZ6OTebtKwWwUPBR5yd1sgRkT7xQQs/rjrkc3ac3QsoJLd53Fxwxx9UGQJwiIL
+         JGUUjQlMeVarw37w1g3aLC+j7WEbNy7TfcA49YNpFLmS6XI0puawDQ3pSImLyl8k7Ron
+         50kXBTojjQ6mVICaOPXsjkq5Cy3nAip3dhGxL/PzMFi5lVf/izC9pt96Qbwt5HXXbWe/
+         Vcz5DYIRJ9FirnBIyRsye0hGeoJ5wC2lstLQFyRkBekGrE2vh46o0w1nV9DfmDEQxcdy
+         ZbeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=o86v17yX/rrhZoapMbqR50SOZ66KyeTiV0zWdEvxo2E=;
-        b=bAiLA65pPJhFXO074jbzk8MKnnrbAk4hb+uU/HBNe34iYSitlF5D+NEtx9ENodco7q
-         BRfy8mE6NiJuH4P/ToDgZPW5pzVHoEOE8xNqnYFyuTPIsILBuYeMlEByobwwvjf/T3mg
-         u46drF0CfJRrHy6lAhlfkbYceijv9kpQlqon/2rS1lhK1QZHd1mTfHWbojyWs016/+UD
-         mKo4QZt3Yc3rrUM1pCvedk/rAHQirRBYcwXQCRExOH0nNo21ejcOLcVEkC9/LsarIw5S
-         naMRaFDnLPY/8WmoY4oC/mUS2oW+cVXN06oSIhva2SAYzM8aG4Aa9U8T4pvJY+RwZxxZ
-         dbTQ==
-X-Gm-Message-State: APt69E0K9t0gho3niS/NmM8bAI6rNUcDrIYAUHuSkj47S2t17PyCj10g
-        QRM5PJ6u3L7D1mBS9JzFzvSelmNb
-X-Google-Smtp-Source: ADUXVKJ/nvEusOkVqGDuUIHQhrXxDABc6CBrAm7YM6MTW7IpE0oDVKJsfGKuvtUGRC09oTmH2IJoPQ==
-X-Received: by 2002:a1c:4405:: with SMTP id r5-v6mr2427757wma.62.1528497731869;
-        Fri, 08 Jun 2018 15:42:11 -0700 (PDT)
+        bh=qHgsM16Pf6WHuFJflnnW2gkk1K5WKTGD7ev3tx9eR5I=;
+        b=Jr7a1FaGPZCiEIFrNCkfBpX/PTzHCDbR8BThIg+bfZNoQdfJ8c49gVBtXWKMWhO/Zo
+         Wz9VBUwQ0btJVeIH5iixNRdQR707lJ+r20PogfuqJHSv64ZFEOMVCuz9err7ygfZv0gD
+         7RjcYN/ox+M/77DJ0F/bFo6nBX6NGy/WHFxYtkeF8jdHgqXTqWhrsZXleb2XDnCcDBWq
+         plHRBGNZ716FwWcqo962U2P1XMk+inpOv7lEsc2pDQprTeEcmk765Y04o8tbImUaGUt1
+         LQcyJbumuchapb+zrhNIGQrNpwpXUrfZRJ3SsQA11z1aPWmZHyzxa2U6J7ekyWh9i+ei
+         AzdA==
+X-Gm-Message-State: APt69E0pwjedVzQASQdp7cd5NytF4vhE6UC9B1J9N0UvCFlL0Rg5+pea
+        psrhzU/A4wEQSg8TKWAtaODpeBhv
+X-Google-Smtp-Source: ADUXVKJkP6v4gSVrTYt8E9oGUUQ/TKxgDd5v1hVBAr4IeMfFlAgrV8S7unjaqmN38yrlvooCkwoaqg==
+X-Received: by 2002:a1c:42d7:: with SMTP id k84-v6mr2558536wmi.159.1528497722023;
+        Fri, 08 Jun 2018 15:42:02 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id w15-v6sm36350010wro.52.2018.06.08.15.42.10
+        by smtp.gmail.com with ESMTPSA id w15-v6sm36350010wro.52.2018.06.08.15.42.00
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 08 Jun 2018 15:42:11 -0700 (PDT)
+        Fri, 08 Jun 2018 15:42:01 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, dstolee@microsoft.com,
         jrnieder@gmail.com, Linus Torvalds <torvalds@linux-foundation.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 18/20] abbrev parsing: use braces on multiple conditional arms
-Date:   Fri,  8 Jun 2018 22:41:34 +0000
-Message-Id: <20180608224136.20220-19-avarab@gmail.com>
+Subject: [PATCH 09/20] abbrev tests: test for "git-log" behavior
+Date:   Fri,  8 Jun 2018 22:41:25 +0000
+Message-Id: <20180608224136.20220-10-avarab@gmail.com>
 X-Mailer: git-send-email 2.17.0.290.gded63e768a
 In-Reply-To: <20180608224136.20220-1-avarab@gmail.com>
 References: <20180608224136.20220-1-avarab@gmail.com>
@@ -71,52 +71,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adjust this code that'll be modified in a subsequent change to have
-more than one line per branch to use braces per the CodingGuidelines,
-this makes the later change easier to understand.
+The "log" family of commands does its own parsing for --abbrev in
+revision.c, so having dedicated tests for it makes sense.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- diff.c     | 5 +++--
- revision.c | 5 +++--
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ t/t0014-abbrev.sh | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/diff.c b/diff.c
-index cab79d24ab..e0141cfbc0 100644
---- a/diff.c
-+++ b/diff.c
-@@ -4807,10 +4807,11 @@ int diff_opt_parse(struct diff_options *options,
- 		options->abbrev = strtoul(arg, &end, 10);
- 		if (*end)
- 			die("--abbrev expects a numerical value, got '%s'", arg);
--		if (options->abbrev < MINIMUM_ABBREV)
-+		if (options->abbrev < MINIMUM_ABBREV) {
- 			options->abbrev = MINIMUM_ABBREV;
--		else if (the_hash_algo->hexsz < options->abbrev)
-+		} else if (the_hash_algo->hexsz < options->abbrev) {
- 			options->abbrev = the_hash_algo->hexsz;
-+		}
- 	}
- 	else if ((argcount = parse_long_opt("src-prefix", av, &optarg))) {
- 		options->a_prefix = optarg;
-diff --git a/revision.c b/revision.c
-index d39a292895..2a75fef22d 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2053,10 +2053,11 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->abbrev = strtoul(optarg, &end, 10);
- 		if (*end)
- 			die("--abbrev expects a numerical value, got '%s'", optarg);
--		if (revs->abbrev < MINIMUM_ABBREV)
-+		if (revs->abbrev < MINIMUM_ABBREV) {
- 			revs->abbrev = MINIMUM_ABBREV;
--		else if (revs->abbrev > hexsz)
-+		} else if (revs->abbrev > hexsz) {
- 			revs->abbrev = hexsz;
-+		}
- 	} else if (!strcmp(arg, "--abbrev-commit")) {
- 		revs->abbrev_commit = 1;
- 		revs->abbrev_commit_given = 1;
+diff --git a/t/t0014-abbrev.sh b/t/t0014-abbrev.sh
+index 645bcca1d1..a66051c040 100755
+--- a/t/t0014-abbrev.sh
++++ b/t/t0014-abbrev.sh
+@@ -203,4 +203,14 @@ do
+ 	"
+ done
+ 
++for i in $(test_seq 4 40)
++do
++	test_expect_success "log core.abbrev=$i and --abbrev=$i" "
++		git -c core.abbrev=$i log --pretty=format:%h -1 | tr_d_n >log &&
++		test_byte_count = $i log &&
++		git log --abbrev=$i --pretty=format:%h -1 | tr_d_n >log &&
++		test_byte_count = $i log
++	"
++done
++
+ test_done
 -- 
 2.17.0.290.gded63e768a
 
