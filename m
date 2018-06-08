@@ -2,92 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A60851F403
-	for <e@80x24.org>; Fri,  8 Jun 2018 15:06:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 41DEE1F403
+	for <e@80x24.org>; Fri,  8 Jun 2018 15:11:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751186AbeFHPGa (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Jun 2018 11:06:30 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:41800 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751140AbeFHPGa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jun 2018 11:06:30 -0400
-Received: by mail-lf0-f65.google.com with SMTP id d24-v6so20545517lfa.8
-        for <git@vger.kernel.org>; Fri, 08 Jun 2018 08:06:29 -0700 (PDT)
+        id S1751224AbeFHPLH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Jun 2018 11:11:07 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:35308 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751087AbeFHPLG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jun 2018 11:11:06 -0400
+Received: by mail-qt0-f194.google.com with SMTP id s9-v6so13755700qtg.2
+        for <git@vger.kernel.org>; Fri, 08 Jun 2018 08:11:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=5eglXWnyA71F4N8upMfl+87HhmxPu7nbBc+yUssHxQY=;
-        b=VWEyZ4LKcVfgBw2o9yqxXw0fjDZ7lwqGA9N+J8V+8GODi3lGdcrc+CUOorOYLReGBT
-         N1bTse3hiotkp2op7ThEVrg96byxlhrFl392pd/5mKVCkKVe6Sxa+74GVUrq0knum3Ro
-         +mTh4nr/6X3eHkVYNG0zLWEAYAeCU31PFlE2W5Me3WJyIa0PArrOaEhOKmIfCYk+Eg5w
-         C5WNN4BKlsmd7wwqOQIOe3u36Jud1B65N6voIxce9R3UhLg2AfGlJK/5+smvLiinuDcq
-         Hm1dhp8Y9oT0TqZYhVAo+WxjbQ9UrMohO8qi8mD9PzvC/05ImRZPDUmZHBj0P3JRGkNH
-         CxKQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=xneOGN9W82bqs60A3+uUOqKGlhf8nWrz2Er1zx+Moyk=;
+        b=VCHVA4oS1YxTN13D1PM2vgSkFjBPStlo0y9rAdxNJq4hWEfaIIcTZDlf23ROYGS2L5
+         qT2T8FOyTk27FZ5qPkgydQd5p/eGXEmpRu9qfzQCRAz6njfUYMJ6NEiKNzug0P/BmLak
+         FWGw+ceBoCNqQkoAbKVPrd2MrrMtfohHVMX4tkuwxV/VVBMy0LfAlwIooOlnNo8nptBt
+         Btk33rBwHiI4y37f1qIs5XeTB2BP3oTOhnxDAnme28Y9vrCpUmiCEsuQCMeK90SMo0D/
+         ibX2z3R24+rq6wfykMzUb8iBOgcNaZ9IKjCBCjVmnNlW8JU0znDOjA/+9n1gVpDN49u8
+         NQxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=5eglXWnyA71F4N8upMfl+87HhmxPu7nbBc+yUssHxQY=;
-        b=s0I9C3ukM2S09b/zE1vm2pMuW0fzjAOv0Egq43HUJmJhicIfegdDFA1eP6MrExIh9V
-         iq6HEb947TA1Qh+mFJYca2CVzgnf0Pr83UTFzALk98ukYKLV56cqDRTHm/IZ38yFppJR
-         /HBQiKu8+so0QEq918Tj9iGMG46z32li9mZp5AL+sQoT3tADsfAuy9m2WDNlARKyOj/Y
-         kJ73ifnZ0XZh7nEqF3e3x1RnB5pQDuOdxXFb/L0d659DGZATr46+P8BcJ/vdHGa5X9/X
-         /T9QcAr6daOU/JH/ZqpoSF+p7P3TRnGThkMvmdMGnG8cqG5tk15pGzY6P0bkbIoJQRNA
-         2Qvg==
-X-Gm-Message-State: APt69E37izUEKRV0gs+vvXHvbWPGDLeYvSthXcphlim0bZ9U48iIBZKO
-        UvbRLTbvkqwW2n2HwUb+LSoph9JljzNB4HfFeb8=
-X-Google-Smtp-Source: ADUXVKK17oqXyId6HbRghb5ocs3ULlAvXDvmBk7K9Xpvt38e8S4srh7wrZtyzn1y82RnYgQlTH+b2/hOEjspYgC74PM=
-X-Received: by 2002:a2e:3613:: with SMTP id d19-v6mr1333906lja.31.1528470388714;
- Fri, 08 Jun 2018 08:06:28 -0700 (PDT)
-MIME-Version: 1.0
-References: <20180606113611.87822-1-dstolee@microsoft.com> <20180608135548.216405-1-dstolee@microsoft.com>
-In-Reply-To: <20180608135548.216405-1-dstolee@microsoft.com>
-From:   =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Date:   Fri, 8 Jun 2018 17:05:50 +0200
-Message-ID: <CANQwDwdRUFnqYva+mvPh8fijcYNGNDRac857aHMhzHUOLeASpw@mail.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=xneOGN9W82bqs60A3+uUOqKGlhf8nWrz2Er1zx+Moyk=;
+        b=W54T/PZElodLZjkqJ1kHpt+SnyGqHrBpVYSpM4A/b7VDAS0wrj5zgFl2KU25UM4uWr
+         FxxZCLrGti8QrD2QsGQZRl5LqED7AhqkvPOm5QwbuJA9jhpL+J02YpYUaBaHTKBVab9y
+         vfTh6EvpmDpIUBNAX0e0GED9SQ54NnyjWTiEuYmT4oN4pby1cpFaB7Fxze2ItFuwuAdZ
+         0sQ3WphvqsUPZZSddDS/wue/dO60sFXUXb7cWoRf9aOiDYGkPCmGLj7c3yKKTXTBWHwk
+         pNfZAx8u6JlsAHy0ECJWWpi4zsNrTm6bBocexzOvx6+W37fS3DdMWjqU9186h0avAb4J
+         qssg==
+X-Gm-Message-State: APt69E0GS8muaUi7jjDD6DdaOh+5wd3SERE9joOf3pmRX0zU7+OU0ouN
+        Vm0deIOjtvJC3t6lM+Z9Jjo=
+X-Google-Smtp-Source: ADUXVKJsKsdvdrYuthNrH8ORfgOn5TgmKAUd7JexbrXkwam1Ce4jls+lSLTbUTPQXYTeFfbyVgtE8A==
+X-Received: by 2002:ac8:241:: with SMTP id o1-v6mr6180947qtg.39.1528470665866;
+        Fri, 08 Jun 2018 08:11:05 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:5dc2:24cc:4e85:52e? ([2001:4898:8010:0:46f8:24cc:4e85:52e])
+        by smtp.gmail.com with ESMTPSA id d72-v6sm24269291qkj.17.2018.06.08.08.11.04
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 08 Jun 2018 08:11:05 -0700 (PDT)
 Subject: Re: [PATCH v6 00/21] Integrate commit-graph into 'fsck' and 'gc'
-To:     Derrick Stolee <dstolee@microsoft.com>
+To:     =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Cc:     git <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <marten.agren@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
+        <avarab@gmail.com>, Stefan Beller <sbeller@google.com>,
+        =?UTF-8?Q?Martin_=c3=85gren?= <marten.agren@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+References: <20180606113611.87822-1-dstolee@microsoft.com>
+ <20180608135548.216405-1-dstolee@microsoft.com>
+ <CANQwDwdRUFnqYva+mvPh8fijcYNGNDRac857aHMhzHUOLeASpw@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <2d50791e-f957-077e-a5a8-b2a8882f90c5@gmail.com>
+Date:   Fri, 8 Jun 2018 11:11:04 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
+MIME-Version: 1.0
+In-Reply-To: <CANQwDwdRUFnqYva+mvPh8fijcYNGNDRac857aHMhzHUOLeASpw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 8 Jun 2018 at 15:56, Derrick Stolee <dstolee@microsoft.com> wrote:
-
-> [..], the following
-> diff occurs from the previous patch:
-[...]
-> diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-> index b24e8b6689..9a0661983c 100755
-> --- a/t/t5318-commit-graph.sh
-> +++ b/t/t5318-commit-graph.sh
-> @@ -33,8 +33,8 @@ test_expect_success 'create commits and repack' '
->  '
+On 6/8/2018 11:05 AM, Jakub Narębski wrote:
+> On Fri, 8 Jun 2018 at 15:56, Derrick Stolee <dstolee@microsoft.com> wrote:
 >
->  graph_git_two_modes() {
-> -       git -c core.commitGraph=3Dtrue $1 >output
-> -       git -c core.commitGraph=3Dfalse $1 >expect
-> +       git -c core.graph=3Dtrue $1 >output
-> +       git -c core.graph=3Dfalse $1 >expect
->         test_cmp output expect
->  }
+>> [..], the following
+>> diff occurs from the previous patch:
+> [...]
+>> diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+>> index b24e8b6689..9a0661983c 100755
+>> --- a/t/t5318-commit-graph.sh
+>> +++ b/t/t5318-commit-graph.sh
+>> @@ -33,8 +33,8 @@ test_expect_success 'create commits and repack' '
+>>   '
+>>
+>>   graph_git_two_modes() {
+>> -       git -c core.commitGraph=true $1 >output
+>> -       git -c core.commitGraph=false $1 >expect
+>> +       git -c core.graph=true $1 >output
+>> +       git -c core.graph=false $1 >expect
+>>          test_cmp output expect
+>>   }
+> It seems that you have accidentally removed the fix from previous version.
+> It needs to be core.commitGraph, not core.graph.
+>
+>
 
-It seems that you have accidentally removed the fix from previous version.
-It needs to be core.commitGraph, not core.graph.
+I didn't rebase the fix that I sent as a separate patch [1] (we want 
+that change applied to 'master' while this one targets topics in 'next' 
+and 'pu'). So this specific diff is unfortunate noise.
 
-Best,
---=20
-Jakub Nar=C4=99bski
+Thanks!
+-Stolee
+
+[1] 
+https://public-inbox.org/git/20180604123906.136417-1-dstolee@microsoft.com/
+     [PATCH] t5318-commit-graph.sh: use core.commitGraph
