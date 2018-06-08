@@ -2,92 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E19D1F403
-	for <e@80x24.org>; Fri,  8 Jun 2018 01:22:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B849E1F403
+	for <e@80x24.org>; Fri,  8 Jun 2018 02:53:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752328AbeFHBWC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Jun 2018 21:22:02 -0400
-Received: from mail-qt0-f174.google.com ([209.85.216.174]:46781 "EHLO
-        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752202AbeFHBWB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jun 2018 21:22:01 -0400
-Received: by mail-qt0-f174.google.com with SMTP id h5-v6so11915043qtm.13
-        for <git@vger.kernel.org>; Thu, 07 Jun 2018 18:22:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=b2EtXhXQp/N4klu6iCtwBUR+Ts65BlG9QOOf+P1VZGo=;
-        b=f3cc8Fc1M1OgXhlW7Rmac/B08OzhcJVxHgsEbcdaasLnF304EAtg/a3nc/mBBQWC3D
-         R8Pn6VKe7eMZ1A1/QVsgSi7ztWuV2A11lGy5fpRcDPPKqkH7Eq+tCKCN4NraUXN56+fn
-         2zDdqJ1+KDpJbmPpHZXgO1Lc5euId1F3iV6RJPX8lSSvW7FTAwOw4Ai1zLCkHJuDiyPk
-         Mwy7bWcVEsk73mdMcViDjD4TlP1sYhkrxKzFGKOSVrRWyC3MLrB/vqlrM3ZqjbO4Hudi
-         M/v6eM2n2wzcN7Qdj1PwG4d7qWIHlscAWC4PivOzx9JBlWvNPOZtVqUPokLBju5f7oGd
-         oW3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=b2EtXhXQp/N4klu6iCtwBUR+Ts65BlG9QOOf+P1VZGo=;
-        b=lnLeyVS/mGRT6DdnVcsgM9SkI8tn/o/yEur8yYsNVsAbxUm5gzSsG2uXczyWnzkdBS
-         TFPtGFZiumxaKW9BKSTQOOTPwL6mFuS5/kbxT5HPu9RZN2/zIsUYlNrXKGTQrxpuRZNH
-         A0cGx2BWphH8L0lnVyyT74rI60DVV7xm3sx7I85Dptng2GLEU/HIbBu0LfywKun3ajtl
-         hnml1tIzJwkWCOLQKKYBufl/ch/049D2YS52qR7iZJIlhkCDgjRxaS5PAUJcdVap3cS6
-         tY02wZ8OQvVSiBkNt3DrGyq0aiIcxJ0i204VYLn6jvomxUEwujGQtcKewB3y289I2xHx
-         DYxQ==
-X-Gm-Message-State: APt69E1VgQYXNF0MJZIxjUmhKeo293zkAqvJht5SQDsA3o0d3N+sTgVQ
-        hgHKn7B8glqbx9fQZPHMs7EjP7ghRPcYa9kffiI=
-X-Google-Smtp-Source: ADUXVKJrbtysOFMxfKnXg0wMOy08gkka4x6EgCgDlSPEm0ldWS81kPqSFe//ruhR3LPLu41AlK2lI+vtyuNIYp1RFzA=
-X-Received: by 2002:aed:3ec9:: with SMTP id o9-v6mr3909020qtf.242.1528420920789;
- Thu, 07 Jun 2018 18:22:00 -0700 (PDT)
+        id S1752642AbeFHCxV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Jun 2018 22:53:21 -0400
+Received: from imap.thunk.org ([74.207.234.97]:48760 "EHLO imap.thunk.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752415AbeFHCxU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jun 2018 22:53:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org;
+         s=ef5046eb; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
+        Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=LcMH4B+UpCUHGVkPWsTShgzvE5eoWQtn+CnjgDA53tc=; b=JsEz309K5eb8P9FjdKBTt/hvSG
+        rtLAY8GM1tLHtLyA7cj0ZJW1VR8nZiTPdqjFidtsmPHHA2QkVYl4+MLP6eggttjl+eUH1WnYBO8gw
+        R5QaXpOWkV4ixiZzf89UQDq3gj6wUXqgfcRCyLKDiahAUCiE635sWfEaPCBtBlxVNsOQ=;
+Received: from root (helo=callcc.thunk.org)
+        by imap.thunk.org with local-esmtp (Exim 4.89)
+        (envelope-from <tytso@thunk.org>)
+        id 1fR7Wb-0000ge-WA; Fri, 08 Jun 2018 02:53:14 +0000
+Received: by callcc.thunk.org (Postfix, from userid 15806)
+        id 3C3497A417D; Thu,  7 Jun 2018 22:53:13 -0400 (EDT)
+Date:   Thu, 7 Jun 2018 22:53:13 -0400
+From:   "Theodore Y. Ts'o" <tytso@mit.edu>
+To:     Peter Backes <rtc@helen.PLASMA.Xg8.DE>
+Cc:     David Lang <david@lang.hm>, Philip Oakley <philipoakley@iee.org>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: GDPR compliance best practices?
+Message-ID: <20180608025313.GA12749@thunk.org>
+References: <87tvqk81qp.fsf@evledraar.gmail.com>
+ <20180603141801.GA8898@helen.PLASMA.Xg8.DE>
+ <6BE308009FFA4CCDB5B3B47C2AC53E20@PhilipOakley>
+ <20180603174617.GA10900@helen.PLASMA.Xg8.DE>
+ <alpine.DEB.2.02.1806061831340.7659@nftneq.ynat.uz>
+ <20180607063225.GA28343@helen.PLASMA.Xg8.DE>
+ <3EF5AC29192A4D179B6D8689ECB991CC@PhilipOakley>
+ <20180607223442.GA5322@helen.PLASMA.Xg8.DE>
+ <alpine.DEB.2.02.1806071535510.27871@nftneq.ynat.uz>
+ <20180607232128.GA5879@helen.PLASMA.Xg8.DE>
 MIME-Version: 1.0
-Received: by 2002:a0c:b490:0:0:0:0:0 with HTTP; Thu, 7 Jun 2018 18:21:59 -0700 (PDT)
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Fri, 8 Jun 2018 09:21:59 +0800
-Message-ID: <CANYiYbGF=jr8EoUg-0sMDP-c6N8kN41NRJtGHGXOUOQc7aRPQQ@mail.gmail.com>
-Subject: [L10N] Kickoff for Git 2.18.0 l10n round 2
-To:     Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        Ralf Thielow <ralf.thielow@gmail.com>,
-        =?UTF-8?Q?Christopher_D=C3=ADaz?= <christopher.diaz.riv@gmail.com>,
-        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
-        Marco Paolone <marcopaolone@gmail.com>,
-        Changwoo Ryu <cwryu@debian.org>,
-        Vasco Almeida <vascomalmeida@sapo.pt>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-        Jiang Xin <worldhello.net@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180607232128.GA5879@helen.PLASMA.Xg8.DE>
+User-Agent: Mutt/1.10.0 (2018-05-17)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Fri, Jun 08, 2018 at 01:21:29AM +0200, Peter Backes wrote:
+> On Thu, Jun 07, 2018 at 03:38:49PM -0700, David Lang wrote:
+> > > Again: The GDPR certainly allows you to keep a proof of copyright
+> > > privately if you have it. However, it does not allow you to keep
+> > > publishing it if someone exercises his right to be forgotten.
+> > someone is granting the world the right to use the code and you are claiming
+> > that the evidence that they have granted this right is illegal to have?
+> 
+> Hell no! Please read what I wrote:
+> 
+> - "allows you to keep a proof ... privately"
+> - "However, it does not allow you to keep publishing it"
 
-Git 2.18.0-rc1 has been released, and introduced 36 more messages (144
-total) need to be translated. Let's start the 2nd round of l10n for
-Git 2.18.0.
+The problem is you've left undefined who is "you"?  With an open
+source project, anyone who has contributed to open source project has
+a copyright interest.  That hobbyist in German who submitted a patch?
+They have a copyright interest.  That US Company based in Redmond,
+Washington?  They own a copyright interest.  Huawei in China?  They
+have a copyright interest.
 
-The new "git.pot" is generated in commit v2.18.0-rc1:
+So there is no "privately".  And "you" numbers in the thousands and
+thousands of copyright holders of portions of the open source code.
 
-    l10n: git.pot: v2.18.0 round 2 (144 new, 6 removed)
+And of course, that's the other thing you seem to fundamentally not
+understand about how git works.  Every developer in the world working
+on that open source project has their own copy.  There is
+fundamentally no way that you can expunge that information from every
+single git repository in the world.  You can remote a git note from a
+single repository.  But that doesn't affect my copy of the repository
+on my laptop.  And if I push that repository to my server, it git note
+will be out there for the whole world to see.
 
-    Generate po/git.pot from v2.18.0-rc1 for git v2.18.0 l10n round 2.
+So someone could *try* sending a public request to the entire world,
+saying, "I am a European and I demand that you disassociate commit
+DEADBEF12345 from my name".  They could try serving legal papers on
+everyone.  But at this point, it's going to trigger something called
+the "Streisand Effect".  If you haven't heard of it, I suggest you
+look it up:
 
-    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+http://mentalfloss.com/article/67299/how-barbra-streisand-inspired-streisand-effect
 
-You can get it from the usual place:
+Regards,
 
-    https://github.com/git-l10n/git-po/
-
-As how to update your XX.po and help to translate Git, please see
-"Updating a XX.po file" and other sections in "po/README" file.
-
---
-Jiang Xin
+						- Ted
