@@ -2,68 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ED0381F403
-	for <e@80x24.org>; Fri,  8 Jun 2018 22:24:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE08C1F403
+	for <e@80x24.org>; Fri,  8 Jun 2018 22:41:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752885AbeFHWYd (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Jun 2018 18:24:33 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:36882 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752756AbeFHWYc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jun 2018 18:24:32 -0400
-Received: by mail-wr0-f193.google.com with SMTP id d8-v6so14762510wro.4
-        for <git@vger.kernel.org>; Fri, 08 Jun 2018 15:24:32 -0700 (PDT)
+        id S1752910AbeFHWlw (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Jun 2018 18:41:52 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:40326 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752898AbeFHWlu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jun 2018 18:41:50 -0400
+Received: by mail-wr0-f194.google.com with SMTP id l41-v6so14772455wre.7
+        for <git@vger.kernel.org>; Fri, 08 Jun 2018 15:41:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=oYI15CHl/QwfS1RuhBrnVvwyyiluEAI1Q/1q7g4nWzc=;
-        b=lqZQWZWeQMdMCTpT4zGdKYaQKRv59pNVvts7LXpdzY51PXFDe7JIcBg6xJDmjLt/KC
-         /h5LNf+3A77y7qZeihYheCdE657RHUdWDGB/N2MVVtFR7rNjgNoL0ZKJe5EYdTHN5InI
-         c9WVnxOkTB4RuVCWHDsHzARFhNdrzvc0vbO9lxcCR2vhhNnziOZSfaBcVLmJUwxuDAaz
-         eb76v85KHm3Y/+5Rnl6q2Rjx7ZRM7WhvK38jyfb1saJSFy3Fd569wL0boDhiiG9H3Ioz
-         FI8SvWmdf3GoKFw7Bg2trRmnbShAUSUL9J/mWA+bVvGwQR56biZsGYlVhOz5TKNFUNoL
-         bcxg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GFEgbOBVJ53u/1ZqtHI51Xi7QhEoNZ3Zvb+Wq4kxL/M=;
+        b=Dok4xYDhdiG9hrFormFX/UgMQd6IHcrm+2FZgsBnJzqLw0tJ1PZEdrlF57QKcztPt9
+         S+VFf981d2F94AJoCRqIWBGktGI+nvEzQZuGT6nJ7/Bwp8u0jtpJ5eQdMU853BYRQn78
+         PFNPPtlhlL3iubd1WIrwibSsAd1tSwLhl7qPRrXKwv5viPSQwk5NZwbxf34N5lj0Z5iZ
+         GazbJuGdiWTqbaDL17jgiUM/Rl6J2jFagUVVpjjj3Ce30x1y7alg5P66b+ai11+MiuYv
+         V035w+QxUilYZy9ibNKAPttfTY9jtGNiTGV6TdMMMIaU/C2EmEpRw8l1pX3/nZoPt3+g
+         5Ugw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=oYI15CHl/QwfS1RuhBrnVvwyyiluEAI1Q/1q7g4nWzc=;
-        b=qF2RfywH9T1WK5YZs0elcV9qZ2KhBny4Utwh3M3qNti+AKqlZgoTe7AoVqgRUgCGS7
-         UL4Puk2gXAFDNRB/FkNETYFnzwaZgMszNFpoHQCS5ZRu/k+S3evyqsJzVbxb5cjxZsh8
-         NYV57/GNYqFXKtqyv2gh2ktIXXPEZWvUFI8AoCXmdHbdPW1g1SOjrARpdrrZLC1lHsmv
-         GUwBkj/SM5hmq0hcKPBRrPRSIBacqFQoXXHH3+tn2GKSTR8Pd4J79rf1P6OAyuoZqzUV
-         ccSXTEO6lgWX85MrYp79sU87/byMmnn1SSpgD+VRMTH70Zv/7vX5+60w/iK5seklDfZK
-         j4tg==
-X-Gm-Message-State: APt69E0iFyxS0x7Ti7H1qSYSen3HAFhaxRTXobOs8XuZ1wvj+KO9nWLZ
-        Md1/h0N31X0WJRuHAD7yNw8=
-X-Google-Smtp-Source: ADUXVKL4Y2+DCTlLepCN44fRvGs/pq+kANpRMWkDYsJV8D6jBbueo8aEymEjH8gNUsIO89F+6/Ds5A==
-X-Received: by 2002:adf:9a4c:: with SMTP id z70-v6mr6645820wrb.118.1528496671614;
-        Fri, 08 Jun 2018 15:24:31 -0700 (PDT)
-Received: from localhost.localdomain (x590e2083.dyn.telefonica.de. [89.14.32.131])
-        by smtp.gmail.com with ESMTPSA id 12-v6sm4207486wmt.19.2018.06.08.15.24.30
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 08 Jun 2018 15:24:30 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "avarab@gmail.com" <avarab@gmail.com>,
-        "sbeller@google.com" <sbeller@google.com>,
-        "jnareb@gmail.com" <jnareb@gmail.com>,
-        "marten.agren@gmail.com" <marten.agren@gmail.com>,
-        "gitster@pobox.com" <gitster@pobox.com>
-Subject: Re: [PATCH v6 20/21] gc: automatically write commit-graph files
-Date:   Sat,  9 Jun 2018 00:24:14 +0200
-Message-Id: <20180608222414.11306-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.18.0.rc0.207.ga6211da864
-In-Reply-To: <20180608135548.216405-21-dstolee@microsoft.com>
-References: <20180606113611.87822-1-dstolee@microsoft.com> <20180608135548.216405-1-dstolee@microsoft.com> <20180608135548.216405-21-dstolee@microsoft.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GFEgbOBVJ53u/1ZqtHI51Xi7QhEoNZ3Zvb+Wq4kxL/M=;
+        b=uEYAHsZ7qtQ1wTwsMgBaH+2dLnygneB0gUOGpKIYljU8MTZ6TEtcvmdVHbIDAE66U8
+         beyloKminOGAn3guyNYab7fr+9KgrTRusa1aRejaKgc9Ga5WNGbHqxa62gXAeu59nYaS
+         1JPlaVpVGuVaE2DDhCuTAByPYUnY4H3ER30G1vr8m+ABvKVyHruCAfD0Pf9Y6W+9LbxI
+         Z8F+ooxaZ2iVrqVzYpm9V8dfqezXdiIaW8B+Sa3QZtAQ2G/piBLvq5Jhr6/SRCm+5HjW
+         znPzRHsdDh4jVj9qUjNUVRRlnQGUMe1hiRZsCNiO7vAQIDVR2PT/f+vx08ueAcvVXBs1
+         +5jg==
+X-Gm-Message-State: APt69E0TGlse+HyNWyesYqgV5aidZSZkOSAtikv4MXPCfE4deH1bsMqg
+        Sz5edIf673JcAnZhCpvkS+4G4jjq
+X-Google-Smtp-Source: ADUXVKJK1kd7c5EuvcZvS8xvB9z2gjIDMVcKvZLMmrs/K5LrRZVN1Wr7QwokD5cHvGUekxi8XOWSFQ==
+X-Received: by 2002:adf:f090:: with SMTP id n16-v6mr6733771wro.49.1528497709268;
+        Fri, 08 Jun 2018 15:41:49 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id w15-v6sm36350010wro.52.2018.06.08.15.41.47
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 08 Jun 2018 15:41:48 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, dstolee@microsoft.com,
+        git@jeffhostetler.com, peff@peff.net, johannes.schindelin@gmx.de,
+        jrnieder@gmail.com, Linus Torvalds <torvalds@linux-foundation.org>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 00/20] unconditional O(1) SHA-1 abbreviation
+Date:   Fri,  8 Jun 2018 22:41:16 +0000
+Message-Id: <20180608224136.20220-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.17.0.290.gded63e768a
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,41 +69,89 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This patch series implements an entirely alternate method of achieving
+some of the same ends as the MIDX, using the approach suggested by
+Jeff King from the RFC thread back in January[1]. You can now do:
 
-> The commit-graph file is a very helpful feature for speeding up git
-> operations. In order to make it more useful, make it possible to
-> write the commit-graph file during standard garbage collection
-> operations.
-> 
-> Add a 'gc.commitGraph' config setting that triggers writing a
-> commit-graph file after any non-trivial 'git gc' command. Defaults to
-> false while the commit-graph feature matures. We specifically do not
-> want to have this on by default until the commit-graph feature is fully
-> integrated with history-modifying features like shallow clones.
+    core.abbrev = 20
+    core.validateAbbrev = false
 
-So I played around with an earlier version of this patch series a
-while ago... and as I looked into my gitconfig today I was surprised
-to have both 'core.commitGraph' and 'gc.commitGraph' config variables
-set.  When I looked into it I came across this email from Ævar:
+Or:
 
-  https://public-inbox.org/git/87fu3peni2.fsf@evledraar.gmail.com/
+    core.abbrev = +2
+    core.validateAbbrev = false
 
-  > Other than the question if 'gc.commitGraph' and 'core.commitGraph'
-  > should be independent config variables, and the exact wording of the
-  > git-gc docs, it looks good to me.
+On linux.git `git log --oneline --raw --parents` with 64MB packs gives
+this improvement with core.abbrev=15 & core.validateAbbrev=false
+(v.s. true):
 
-  Sans doc errors you pointed out in other places (you need to set
-  core.commitGraph so it's read at all), I think it's very useful to have
-  these split up. It's simliar to pack.useBitmaps & pack.writeBitmaps.
+    Test                                        HEAD~               HEAD
+    ----------------------------------------------------------------------------------------
+    0014.1: git log --oneline --raw --parents   95.68(95.07+0.53)   42.74(42.33+0.39) -55.3%
 
-I think the comparison with pack bitmaps makes a lot of sense and I
-have to say that I really like those 'useBitmaps' and 'writeBitmaps'
-variable names, because it's clear right away which one is which,
-without consulting the documentation.  I think having 'useCommitGraph'
-and 'writeCommitGraph' variables would be a lot better than the same
-variable name in two different sections, and I'm sure that then I
-wouldn't have been caught off guard.
+While cleaning up the RFC version of this which I sent in [2] I
+discovered that almost none of the existing functionality was tested
+for, and was very inconsistent since we have 4 different places where
+the abbrev config is parsed.
 
-Yeah, I know, my timing sucks, with 'core.commitGraph' already out
-there in the -rc releases...  sorry.
+See 19/20 and 20/20 for what this whole thing is building towards, the
+rest is all tests, cleanup, and preparatory work.
+
+(There's still other long-standing issues with the existing behavior
+which this doesn't change, but I had to stop somewhere to make this
+digestible).
+
+1. https://public-inbox.org/git/20180108102029.GA21232@sigill.intra.peff.net/
+2. https://public-inbox.org/git/20180606102719.27145-1-avarab@gmail.com/
+
+Ævar Arnfjörð Bjarmason (20):
+  t/README: clarify the description of test_line_count
+  test library: add a test_byte_count
+  blame doc: explicitly note how --abbrev=40 gives 39 chars
+  abbrev tests: add tests for core.abbrev and --abbrev
+  abbrev tests: test "git-blame" behavior
+  blame: fix a bug, core.abbrev should work like --abbrev
+  abbrev tests: test "git branch" behavior
+  abbrev tests: test for "git-describe" behavior
+  abbrev tests: test for "git-log" behavior
+  abbrev tests: test for "git-diff" behavior
+  abbrev tests: test for plumbing behavior
+  abbrev tests: test for --abbrev and core.abbrev=[+-]N
+  parse-options-cb.c: convert uses of 40 to GIT_SHA1_HEXSZ
+  config.c: use braces on multiple conditional arms
+  parse-options-cb.c: use braces on multiple conditional arms
+  abbrev: unify the handling of non-numeric values
+  abbrev: unify the handling of empty values
+  abbrev parsing: use braces on multiple conditional arms
+  abbrev: support relative abbrev values
+  abbrev: add a core.validateAbbrev setting
+
+ Documentation/config.txt            |  49 +++
+ Documentation/diff-options.txt      |   3 +
+ Documentation/git-blame.txt         |  14 +
+ Documentation/git-branch.txt        |   3 +
+ Documentation/git-describe.txt      |   3 +
+ Documentation/git-ls-files.txt      |   3 +
+ Documentation/git-ls-tree.txt       |   3 +
+ Documentation/git-show-ref.txt      |   3 +
+ builtin/blame.c                     |   2 +
+ cache.h                             |   2 +
+ config.c                            |  22 +-
+ diff.c                              |  24 +-
+ environment.c                       |   2 +
+ parse-options-cb.c                  |  19 +-
+ revision.c                          |  24 +-
+ sha1-name.c                         |  15 +
+ t/README                            |   6 +-
+ t/perf/p0014-abbrev.sh              |  13 +
+ t/t0014-abbrev.sh                   | 452 ++++++++++++++++++++++++++++
+ t/t1512-rev-parse-disambiguation.sh |  47 +++
+ t/t6006-rev-list-format.sh          |   6 +-
+ t/test-lib-functions.sh             |  23 ++
+ 22 files changed, 722 insertions(+), 16 deletions(-)
+ create mode 100755 t/perf/p0014-abbrev.sh
+ create mode 100755 t/t0014-abbrev.sh
+
+-- 
+2.17.0.290.gded63e768a
 
