@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA4F71F403
-	for <e@80x24.org>; Fri,  8 Jun 2018 22:42:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4E671F403
+	for <e@80x24.org>; Fri,  8 Jun 2018 22:42:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753263AbeFHWmO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Jun 2018 18:42:14 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:35682 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753253AbeFHWmL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jun 2018 18:42:11 -0400
-Received: by mail-wm0-f65.google.com with SMTP id j15-v6so6293151wme.0
-        for <git@vger.kernel.org>; Fri, 08 Jun 2018 15:42:10 -0700 (PDT)
+        id S1753267AbeFHWmP (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Jun 2018 18:42:15 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:54554 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753215AbeFHWmM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jun 2018 18:42:12 -0400
+Received: by mail-wm0-f66.google.com with SMTP id o13-v6so5695569wmf.4
+        for <git@vger.kernel.org>; Fri, 08 Jun 2018 15:42:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=SWpgLJhTD54kRlWzUXC2X9KCWDW15+uFjhqQwMehicA=;
-        b=KaujKsSa1fSyDPpaaMSlHYMmImnVpaz545gdCXDPEaWVI11i8g21P3kRlaTcMX9CzI
-         OzKc9JoIsTQCBWeDx2hfx8ukBwE3tqTkMnlK9NmrN4Eqqwr6XuqReqCvt8nQZR94Xk81
-         Ttl19OBd+U9nEhDci0BhyLAgxy29tU3IX/bFIbJ9TbKSdvLonpjCgzDl8Jil3JAXy3B3
-         jHYu75yvV72BPfLsyP5Ww7UQ8mNrQpFlPPTqTeodDK7vLISUOIgrnuKwdAI0ao4YqMUc
-         fTznOvYGE5vNZ/7xfL+k9fGO1hfg3cmc1PQg3royYVjc2lzetDWwQiueZ2WwBGR4g14h
-         KYuQ==
+        bh=8XRxgJoafas8capSj9n2tmppJFU3FBRRz0OZ7IOwgcA=;
+        b=DV6zy7MH1ock37ZZ3ccG8kPhQKD5jh7yUCx3CIXixup0sYB7t8rXG1QLz7pEHw3lJt
+         awIXfyMvAxF2aWFMOc/YRr7G4VLyR4xx5pRYdqbqA56wS0lnUBVx+lck/tgCPGGHvS9T
+         6sz836ej+4NOiUJO3DTQMaDIKQ3/aVRzUhetLQUExEn+kwhCVfhXYmallXlLl7EGAr9L
+         M/cMWzyiU1Grg7V3QOFAfQAtZp86AQeQ0cyLSvO6swMH1sFlGH8taS4Hde9zHBDeZNrI
+         8oM8zS4+ORAMMhFmivVIqZ1cCKcYM5syp7Fyn8aI0Fq8nnB/txBVTDHA0YZp2IcCeiRq
+         Ubow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=SWpgLJhTD54kRlWzUXC2X9KCWDW15+uFjhqQwMehicA=;
-        b=RRaWPx1WjHQnSYSttcYGlFfpz3XrUhrPj60JRB/jWjftPHx73hJEniZaUzJ3/7KNd3
-         C7PSQSu9C9mPWpuiQj43HgMoSGkiyhYMZ83K5D/4UvNELSExSsDZYuTfxQYG+WZMR2VO
-         3GNELcpRHerVPt+KJbhELX8vxBE8mc48bsffbou4dqGsYLpr6SPvWNj5d/uDPFW7H/Ul
-         KEfhbSd4WGjpUPD8VyluArg9Q+W5ShG6Uro4izLdzuQ9BEkxw4tRi10V3b48kwAN3NPE
-         8o4BA8LQ6sM3oIjtjoMWdQvf6jJ8Pbz3OepV7TdUho2fSsHcnLSwXSOMB8rBR1fSN8hM
-         qlBg==
-X-Gm-Message-State: APt69E0e/iAumtrTU6n/tjBBbsaS7KK245DPUFvrXJRTYroaLN1G5tfB
-        i6YuEpdUJLv8hS6g75gdhHXagDtC
-X-Google-Smtp-Source: ADUXVKITk7YjeBPuk260e0+hKgwJHJhgtv7wJ69EpYXDxRlMgriRRXkrtxHEMTcwNrQiPvn5UP2rTQ==
-X-Received: by 2002:a1c:d543:: with SMTP id m64-v6mr2473484wmg.12.1528497729832;
-        Fri, 08 Jun 2018 15:42:09 -0700 (PDT)
+        bh=8XRxgJoafas8capSj9n2tmppJFU3FBRRz0OZ7IOwgcA=;
+        b=GInFioYIGrUAN+iRaqqan+8ucI9g6SwdRs3qFzxYXA0eUUip/vxTVkwZsTamlUctgy
+         +rx58abRfFAY4Dm1nVtzmvLkEPfuFCv+gExEbd51Hyi5j4L/UXCZEn2shj9y6/DDsMvW
+         YDum81rGv7+BXDIVgApT1K29paOmwNiGzErYO5g2yNrheD7isOLjMWl+enMyvr0fx/uv
+         JPhRYWt/pECpRB7KWY9jyKNoChOYTSJV75PJKzrYptHEPhJ3Q+6zGbcRhXLhGJ3kA7xY
+         vyfGlxOjuDaMzJAeketVx8cfWHsw41fvAV+xoEPNF15p2XzVtH+N1j9uZAM+sO473L2f
+         80pw==
+X-Gm-Message-State: APt69E102dRYr1FOqgsZGw0wbxLEUEHrIGtyGSEgn6u1xVg9vufYVVRc
+        A0fpd0CATaRVqTLU0dn5tVlAf8N0
+X-Google-Smtp-Source: ADUXVKIw6Yk3OfHzCb5muaXtHwsyCmu47ixYnAAh8xysziAxfLfxlpihc1pMPg1ugO1pyLi/KGnlxg==
+X-Received: by 2002:a1c:150:: with SMTP id 77-v6mr2848321wmb.3.1528497730927;
+        Fri, 08 Jun 2018 15:42:10 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id w15-v6sm36350010wro.52.2018.06.08.15.42.08
+        by smtp.gmail.com with ESMTPSA id w15-v6sm36350010wro.52.2018.06.08.15.42.09
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 08 Jun 2018 15:42:09 -0700 (PDT)
+        Fri, 08 Jun 2018 15:42:10 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, dstolee@microsoft.com,
         jrnieder@gmail.com, Linus Torvalds <torvalds@linux-foundation.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 16/20] abbrev: unify the handling of non-numeric values
-Date:   Fri,  8 Jun 2018 22:41:32 +0000
-Message-Id: <20180608224136.20220-17-avarab@gmail.com>
+Subject: [PATCH 17/20] abbrev: unify the handling of empty values
+Date:   Fri,  8 Jun 2018 22:41:33 +0000
+Message-Id: <20180608224136.20220-18-avarab@gmail.com>
 X-Mailer: git-send-email 2.17.0.290.gded63e768a
 In-Reply-To: <20180608224136.20220-1-avarab@gmail.com>
 References: <20180608224136.20220-1-avarab@gmail.com>
@@ -71,74 +71,94 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Unify how --abbrev=XYZ and core.abbrev=XYZ is handled. 2/4 parsers for
-these values would just let these invalid values pass, treating them
-as though "0" was provided, which due to other inconsistent fallback
-logic (soon to be fixed) would be treated as providing MINIMUM_ABBREV.
+For no good reason the --abbrev= command-line option was less strict
+than the core.abbrev config option, which came down to the latter
+using git_config_int() which rejects an empty string, but the rest of
+the parsing using strtoul() which will convert it to 0.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- diff.c            |  5 ++++-
- revision.c        |  5 ++++-
- t/t0014-abbrev.sh | 10 +++++-----
- 3 files changed, 13 insertions(+), 7 deletions(-)
+ diff.c             |  2 ++
+ parse-options-cb.c |  2 ++
+ revision.c         |  2 ++
+ t/t0014-abbrev.sh  | 22 ++++++++--------------
+ 4 files changed, 14 insertions(+), 14 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index 136d44b455..75935322f1 100644
+index 75935322f1..cab79d24ab 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -4801,7 +4801,10 @@ int diff_opt_parse(struct diff_options *options,
- 	else if (!strcmp(arg, "--abbrev"))
+@@ -4802,6 +4802,8 @@ int diff_opt_parse(struct diff_options *options,
  		options->abbrev = DEFAULT_ABBREV;
  	else if (skip_prefix(arg, "--abbrev=", &arg)) {
--		options->abbrev = strtoul(arg, NULL, 10);
-+		char *end;
-+		options->abbrev = strtoul(arg, &end, 10);
-+		if (*end)
-+			die("--abbrev expects a numerical value, got '%s'", arg);
- 		if (options->abbrev < MINIMUM_ABBREV)
- 			options->abbrev = MINIMUM_ABBREV;
- 		else if (the_hash_algo->hexsz < options->abbrev)
+ 		char *end;
++		if (!strcmp(arg, ""))
++			die("--abbrev expects a value, got '%s'", arg);
+ 		options->abbrev = strtoul(arg, &end, 10);
+ 		if (*end)
+ 			die("--abbrev expects a numerical value, got '%s'", arg);
+diff --git a/parse-options-cb.c b/parse-options-cb.c
+index e3cd87fbd6..aa9984f164 100644
+--- a/parse-options-cb.c
++++ b/parse-options-cb.c
+@@ -16,6 +16,8 @@ int parse_opt_abbrev_cb(const struct option *opt, const char *arg, int unset)
+ 	if (!arg) {
+ 		v = unset ? 0 : DEFAULT_ABBREV;
+ 	} else {
++		if (!strcmp(arg, ""))
++			return opterror(opt, "expects a value", 0);
+ 		v = strtol(arg, (char **)&arg, 10);
+ 		if (*arg)
+ 			return opterror(opt, "expects a numerical value", 0);
 diff --git a/revision.c b/revision.c
-index 40fd91ff2b..aa87afa77f 100644
+index aa87afa77f..d39a292895 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -2047,7 +2047,10 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 	} else if (!strcmp(arg, "--abbrev")) {
+@@ -2048,6 +2048,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
  		revs->abbrev = DEFAULT_ABBREV;
  	} else if (skip_prefix(arg, "--abbrev=", &optarg)) {
--		revs->abbrev = strtoul(optarg, NULL, 10);
-+		char *end;
-+		revs->abbrev = strtoul(optarg, &end, 10);
-+		if (*end)
-+			die("--abbrev expects a numerical value, got '%s'", optarg);
- 		if (revs->abbrev < MINIMUM_ABBREV)
- 			revs->abbrev = MINIMUM_ABBREV;
- 		else if (revs->abbrev > hexsz)
+ 		char *end;
++		if (!strcmp(optarg, ""))
++			die("--abbrev expects a value, got '%s'", optarg);
+ 		revs->abbrev = strtoul(optarg, &end, 10);
+ 		if (*end)
+ 			die("--abbrev expects a numerical value, got '%s'", optarg);
 diff --git a/t/t0014-abbrev.sh b/t/t0014-abbrev.sh
-index 6dee92f35e..203fe316b9 100755
+index 203fe316b9..8448f78560 100755
 --- a/t/t0014-abbrev.sh
 +++ b/t/t0014-abbrev.sh
-@@ -64,14 +64,14 @@ test_expect_success 'abbrev non-integer value handling differs ' '
- 	test_must_fail git branch -v --abbrev=XYZ 2>stderr &&
- 	test_i18ngrep "expects a numerical value" stderr &&
+@@ -38,23 +38,17 @@ test_expect_success 'abbrev empty value handling differs ' '
+ 	test_must_fail git -c core.abbrev= log -1 --pretty=format:%h 2>stderr &&
+ 	test_i18ngrep "bad numeric config value.*invalid unit" stderr &&
  
--	git log --abbrev=XYZ -1 --pretty=format:%h 2>stderr &&
--	! test -s stderr &&
-+	test_must_fail git log --abbrev=XYZ -1 --pretty=format:%h 2>stderr &&
-+	test_i18ngrep "expects a numerical value" stderr &&
+-	git branch -v --abbrev= | cut_tr_d_n_field_n 3 >branch &&
+-	test_byte_count = 40 branch &&
++	test_must_fail git branch -v --abbrev= 2>stderr &&
++	test_i18ngrep "expects a value" stderr &&
  
--	git diff --raw --abbrev=XYZ HEAD~ 2>stderr &&
--	! test -s stderr &&
-+	test_must_fail git diff --raw --abbrev=XYZ HEAD~ 2>stderr &&
-+	test_i18ngrep "expects a numerical value" stderr &&
+-	git log --abbrev= -1 --pretty=format:%h >log &&
+-	test_byte_count = 4 log &&
++	test_must_fail git log --abbrev= -1 --pretty=format:%h 2>stderr &&
++	test_i18ngrep "expects a value" stderr &&
  
- 	test_must_fail git diff --raw --abbrev=XYZ --no-index X Y 2>stderr &&
--	! test -s stderr
-+	test_i18ngrep "expects a numerical value" stderr
+-	git diff --raw --abbrev= HEAD~ >diff &&
+-	cut_tr_d_n_field_n 3 <diff >diff.3 &&
+-	test_byte_count = 4 diff.3 &&
+-	cut_tr_d_n_field_n 4 <diff >diff.4 &&
+-	test_byte_count = 4 diff.4 &&
++	test_must_fail git diff --raw --abbrev= HEAD~ 2>stderr &&
++	test_i18ngrep "expects a value" stderr &&
+ 
+-	test_must_fail git diff --raw --abbrev= --no-index X Y >diff &&
+-	cut_tr_d_n_field_n 3 <diff >diff.3 &&
+-	test_byte_count = 4 diff.3 &&
+-	cut_tr_d_n_field_n 4 <diff >diff.4 &&
+-	test_byte_count = 4 diff.4
++	test_must_fail git diff --raw --abbrev= --no-index X Y 2>stderr &&
++	test_i18ngrep "expects a value" stderr
  '
  
- for i in -41 -20 -10 -1 -0 +0 0 1 2 3 41
+ test_expect_success 'abbrev non-integer value handling differs ' '
 -- 
 2.17.0.290.gded63e768a
 
