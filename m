@@ -7,101 +7,106 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E28121F403
-	for <e@80x24.org>; Fri,  8 Jun 2018 03:15:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D0A9E1F403
+	for <e@80x24.org>; Fri,  8 Jun 2018 03:51:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752428AbeFHDPV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Jun 2018 23:15:21 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:39402 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752312AbeFHDPU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jun 2018 23:15:20 -0400
-Received: by mail-pg0-f65.google.com with SMTP id w12-v6so5698165pgc.6
-        for <git@vger.kernel.org>; Thu, 07 Jun 2018 20:15:20 -0700 (PDT)
+        id S1752769AbeFHDve (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Jun 2018 23:51:34 -0400
+Received: from mail-qk0-f178.google.com ([209.85.220.178]:41405 "EHLO
+        mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752621AbeFHDvd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jun 2018 23:51:33 -0400
+Received: by mail-qk0-f178.google.com with SMTP id w23-v6so7983300qkb.8
+        for <git@vger.kernel.org>; Thu, 07 Jun 2018 20:51:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=SGsS8Ute3YglNgkGQiO78ym8hiaxuns7xlAsw9jLZnk=;
-        b=hZNTVcAukXBy2ElnWzTBJyQlHsGvXzsdkTOsu4w8HqqTeYcM5hJ6WtnE4H48CfUgUl
-         l0UhO6dezBICLONCT85632DGsH/CiihvlwxaZ7cuZWKhYQEylwG3YyNi+ogBFcb0Et2U
-         ON+dNNdLZzcclfudbleAzduhISFIZgSBCTebQGFU7lwDoJfk9kmdtJldiT+m9xfr5m+O
-         TeaQNvdoYlp0y5G9K67RCG4KkUpv0NVv0YRJuHOT1eIjtQiF3DWZV0uyR0RgPy0Q9ZeW
-         ZLoh8qvug4Pxw3lK9TN1yHbeSk/VUInxYJagl8sBXSqRWomY8rebOoYkkospcoaIJH9G
-         b2yQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=aKSPvCL/P2fSDqHsLqybahjJO4WmO3NCrAYdVYJJs3E=;
+        b=GCwdV8+2pP9K3QPLyHnR/ornhWrraOwz5XFqDeYrI38IqT3NOOKYQywEmCCZ+qlm6+
+         wDC0+2HBLr+rMCPNRZwAx1rI5xmDU1kudaYO8Fa5LH2958gOEeWuHx0Q5nc1MF+EdiHp
+         WRFYL3k3hHoPPf5r/NO9pAH9eFszXNr6VrzvWC0VnkDTiSihxrWl7mXWMuuEKho/xDUL
+         5IzfK7GcWIbaoGIYj6Qj6gtGBDtvzl/hvEd03E26+rsy8BmO6SuRilQpFsUOUvPkREVy
+         vRS3GeuRhFUb1ieDONGUXNI6TGfyF/zcrrcoPxtawsighYbD25EcF8J25Hp/kZ8VsTqB
+         iWcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=SGsS8Ute3YglNgkGQiO78ym8hiaxuns7xlAsw9jLZnk=;
-        b=DapLKdUgIwHp5RWJ4IUCIIPKq/PpHnpT7X7eJTxao6M3d4KXicZ1ZeLboiOHnDH7ye
-         x5U2855ukttOhiZqRh7o8u78Ew2CbncoIufbyde3b3duD2LrAkM0lpYVbRNLjcUMKevI
-         EYMVcnIXX3hSYZZMkvBI6syYSloAZFr9XJUValejWeNIYnpNMosnYD4S7YdefiMQyo0e
-         aA81Db1kx/YuKDOZzrxRy2yS2W8bef0YsgW5zGdf07+DwvOGY+pZxF4oGfVNuQP3/Kf9
-         BwdcQ1QMdhrv6OI0ouGkcG7VL4fVNw6ZQVtdo4GwtwIs5q45fcmk/ZhaGlbxvadvNYGS
-         ws9g==
-X-Gm-Message-State: APt69E0kfRC9z/AbTXTcpneA1o9f00CunxS9pcdH55mlrrM9OxD4c8Pm
-        yHg6V96qHm2Lgn20O/TdIeI=
-X-Google-Smtp-Source: ADUXVKLvHvHjaR+l31jbWlhPs7dWt58CSwKDorSZFnbY+xC/28Nc+C+3MXR4G03HpzQy5wgX2h+/ig==
-X-Received: by 2002:a63:7c12:: with SMTP id x18-v6mr3762775pgc.220.1528427720256;
-        Thu, 07 Jun 2018 20:15:20 -0700 (PDT)
-Received: from macpc0swsu4.ads.autodesk.com ([132.188.71.4])
-        by smtp.gmail.com with ESMTPSA id p22-v6sm47812798pfj.166.2018.06.07.20.15.19
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 07 Jun 2018 20:15:19 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [RFC PATCH v1] http: add http.keepRejectedCredentials config
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20180604185551.GA4296@sigill.intra.peff.net>
-Date:   Thu, 7 Jun 2018 20:15:16 -0700
-Cc:     Martin-Louis Bright <mlbright@gmail.com>,
-        lars.schneider@autodesk.com, git@vger.kernel.org,
-        sandals@crustytoothpaste.net, Johannes.Schindelin@gmx.de,
-        pstodulk@redhat.com, nickh@reactrix.com, jeremy.wyman@microsoft.com
-Content-Transfer-Encoding: 7bit
-Message-Id: <46F82119-D185-4B41-828B-FC92709CFCDA@gmail.com>
-References: <20180604122635.95342-1-lars.schneider@autodesk.com> <20180604144747.GA27655@sigill.intra.peff.net> <CAG2PGsoHajiYbS29F2nD+_0i2b4+Min5NR3tQYDb3MH=BW=0Aw@mail.gmail.com> <20180604185551.GA4296@sigill.intra.peff.net>
-To:     Jeff King <peff@peff.net>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=aKSPvCL/P2fSDqHsLqybahjJO4WmO3NCrAYdVYJJs3E=;
+        b=WKXSt8TLu+K+sTtaTnZ8ATx+ET76HhammEbwFxd3c9eTyER4OsWIMLcxqEfLgbhY3i
+         OOpilp+KxWOh4BusHawcz0piAkFYks3UWmh46w6UOQphs6a9hS22iZ00Qqr35RLjkHG5
+         k2vRgRchuxSl+bbiJ2VIk2u7tidsxxQavRlCGLs6+cBByXCjq9OAVxmzQhOTjl2OX77i
+         OAsWxtYtpb6nBI/5ls7sHMx05XKnNWHoDRzD1jH3VqbUxCh/2+jWM6Jp/PITEl8k+Lrn
+         ISKoDNbU89AOthDldHjKZnYqkSEyeqIZfEBdeVkWjmz/Cpc9pPiQKTSyaIQ/KMQ2/NUU
+         S8Lg==
+X-Gm-Message-State: APt69E2dLVK1D5jqlK0wM/reyPKKpkT89QPQ4Z4SLluD0rhcEmstmxRx
+        nh5wSKQbEnHjgCTS/LL80Cjf0y1lNDTRmP4zgDQ=
+X-Google-Smtp-Source: ADUXVKJNsO5C7YYfLBLeu5AnrBUwEsxYhu8ZPXFi5iT/FypaECZT92s0Qmb5vzMLQ/Ml7GzIyqINdqklTqkb/mTuct4=
+X-Received: by 2002:a37:ddd1:: with SMTP id u78-v6mr4069638qku.363.1528429893129;
+ Thu, 07 Jun 2018 20:51:33 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 2002:a0c:b490:0:0:0:0:0 with HTTP; Thu, 7 Jun 2018 20:51:32 -0700 (PDT)
+In-Reply-To: <CANYiYbGF=jr8EoUg-0sMDP-c6N8kN41NRJtGHGXOUOQc7aRPQQ@mail.gmail.com>
+References: <CANYiYbGF=jr8EoUg-0sMDP-c6N8kN41NRJtGHGXOUOQc7aRPQQ@mail.gmail.com>
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Fri, 8 Jun 2018 11:51:32 +0800
+Message-ID: <CANYiYbHbh+mTCRgo1GdBNqVUsoSxrOEuWre_H3LLXU7pwJRCvg@mail.gmail.com>
+Subject: Re: [L10N] Kickoff for Git 2.18.0 l10n round 2
+To:     Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        =?UTF-8?Q?Christopher_D=C3=ADaz?= <christopher.diaz.riv@gmail.com>,
+        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
+        Marco Paolone <marcopaolone@gmail.com>,
+        Changwoo Ryu <cwryu@debian.org>,
+        Vasco Almeida <vascomalmeida@sapo.pt>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+        Jiang Xin <worldhello.net@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+All these 144 new messages in this round of Git l10n are introduced by
+commit f318d73915 (generate-cmds.sh: export all commands to
+command-list.h). The updated script `generate-cmds.sh` will export
+more commands and one line introductions in file `command-list.h` than
+v2.18.0-rc0:
 
-> On 04 Jun 2018, at 11:55, Jeff King <peff@peff.net> wrote:
-> 
-> On Mon, Jun 04, 2018 at 12:18:59PM -0400, Martin-Louis Bright wrote:
-> 
->> Why must the credentials must be deleted after receiving the 401 (or
->> any) error? What's the rationale for this?
-> 
-> Because Git only tries a single credential per invocation. So if a
-> helper provides one, it doesn't prompt. If you get a 401 and then the
-> program aborts, invoking it again is just going to try the same
-> credential over and over. Dropping the credential from the helper breaks
-> out of that loop.
-> 
-> In fact, this patch probably should give the user some advice in that
-> regard (either in the documentation, or as a warning when we skip the
-> rejection). If you _do_ have a bogus credential and set the new option,
-> you'd need to reject it manually (you can do it with "git credential
-> reject", but it's probably easier to just unset the option temporarily
-> and re-invoke the original command).
+    $ git checkout -q v2.18.0-rc0 && ./generate-cmdlist.sh
+command-list.txt | wc -l
+      38
 
-I like the advice idea very much!
+    $ git checkout -q v2.18.0-rc1 && ./generate-cmdlist.sh
+command-list.txt | wc -l
+      207
 
-How about this?
-
-$ git fetch
-hint: Git has stored invalid credentials.
-hint: Reject them with 'git credential reject' or
-hint: disable the Git config 'http.keepRejectedCredentials'.
-remote: Invalid username or password.
-fatal: Authentication failed for 'https://server.com/myrepo.git/'
-
-I am not really sure about the grammar :-)
-
-Thanks,
-Lars
+2018-06-08 9:21 GMT+08:00 Jiang Xin <worldhello.net@gmail.com>:
+> Hi,
+>
+> Git 2.18.0-rc1 has been released, and introduced 36 more messages (144
+> total) need to be translated. Let's start the 2nd round of l10n for
+> Git 2.18.0.
+>
+> The new "git.pot" is generated in commit v2.18.0-rc1:
+>
+>     l10n: git.pot: v2.18.0 round 2 (144 new, 6 removed)
+>
+>     Generate po/git.pot from v2.18.0-rc1 for git v2.18.0 l10n round 2.
+>
+>     Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+>
+> You can get it from the usual place:
+>
+>     https://github.com/git-l10n/git-po/
+>
+> As how to update your XX.po and help to translate Git, please see
+> "Updating a XX.po file" and other sections in "po/README" file.
+>
+> --
+> Jiang Xin
