@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D579F1F403
-	for <e@80x24.org>; Fri,  8 Jun 2018 22:42:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 794B41F403
+	for <e@80x24.org>; Fri,  8 Jun 2018 22:42:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753249AbeFHWmI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Jun 2018 18:42:08 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:52442 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753215AbeFHWmE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jun 2018 18:42:04 -0400
-Received: by mail-wm0-f67.google.com with SMTP id p126-v6so5738157wmb.2
-        for <git@vger.kernel.org>; Fri, 08 Jun 2018 15:42:04 -0700 (PDT)
+        id S1753259AbeFHWmL (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Jun 2018 18:42:11 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:37136 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753215AbeFHWmJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jun 2018 18:42:09 -0400
+Received: by mail-wm0-f65.google.com with SMTP id r125-v6so6247547wmg.2
+        for <git@vger.kernel.org>; Fri, 08 Jun 2018 15:42:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=gGlbexiUV1WiF5bRoU4i1vv42/+5dEoH/w3Fq/UW8cw=;
-        b=pQbIf1PjBPYTPWIJUDrLDDh5Z2EGOq2XmA1H2j0DhzYEtHlLaJxn1rrWEoinp+4ZWz
-         /Cjv8Nxye8SXA8tMIis1Vqy5/TUog9KEjPhrRtHxbZrGRdXCHUBa93bY+KZgOlToNtqi
-         bIbsZNJSc03HDg/WmwIiR8YhfqdspYVqqvQRoaEzfgj0GPplYSiPWAS8WJrLDZAE+7XZ
-         iEMViHFmb6B9i6MS5sCqSLCrjETV+csy5lI4KSbhOidPK1dV/p2IdEL+7yBAQQfT4KTW
-         SFbIfOC9ixCiqodof4WYxCmZbQrwMznfzfruYz8Z02IE3sRgxVpHgZaTwd/jBn6mMHpB
-         UW/g==
+        bh=1TUqJx+6PV/3NnXAP0d5u/U7OJuI6b+qmH1PhGeXghw=;
+        b=Wnu06MKkPOU2q7LwkYkGuoK/lMOFNMRKe1Huv/jFGHUJSC+PLikKhZt9pMQOC8pRyk
+         UtUMEruDz4mKVsMkuV9Ln/Mmp5r7srr3C/Gdi+cjTrCDm0V0PQmuDaaXAlUwhb+DscnO
+         K6BGcN7d0lLE2Cc8X9Gr5yY56hMnTmvJKOCTk5vA0TORE/1/DYLhAcOnbyfXpYSgA4od
+         LlnWuHslD5JA/B/ozlVLTHGl66x76PeWIqxnW+I1XMnSqu1gDRJng1l98mG/MupZ3gJI
+         7xr5g7DRZ1iymMFM3bWJ8koS+8pKwnACLlwfCHr5z2ziMeEDdmDLnNoZiKSl3mti5Hr6
+         lszg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=gGlbexiUV1WiF5bRoU4i1vv42/+5dEoH/w3Fq/UW8cw=;
-        b=n5gjmcc3q7mNCQ8M+ufD1ESepqplze7Wz19pXNmoL7PQt22R2sJRnuZpRPXxoF8W9G
-         QT8Sen37mWrSEzyXoUxhSyBulFbJEXA8GMT17Y73r75KFZj/NsqyEO8BRYntn09uhme4
-         GRL0HhvIx0EQen57Vknz+dERKATEIyJCbZng2I72zWkFMLXjChpr7pAQQRhAQxIboM5V
-         GJj8rw1LDT+T+UTVYOOxG/EsuDN2GjRSbxmNBSB7ULxGaDvhjyrLZapJ12M3uxYOZF6Y
-         uuOjIGv80//ljLR4TIi07pIEp6C0RCLw+e68AMVcuVH5ADkpRl2ePspT4Tjry1nTMps1
-         pH1Q==
-X-Gm-Message-State: APt69E0MzGD1oPV0RG0dDH4/dp3o1jKrKkw0Ul+5TtYfSQmCFwyDH1r3
-        EEMlH9fBItVyAHEI3G8CVcE+xEaa
-X-Google-Smtp-Source: ADUXVKKJlyk7w9y7UPFg29aqUiCyhLbwJBf4uxJ69Or+gUB1gnKDNWt3MeDz/CTRPshdZUdt3el96Q==
-X-Received: by 2002:a1c:6545:: with SMTP id z66-v6mr2427941wmb.86.1528497723111;
-        Fri, 08 Jun 2018 15:42:03 -0700 (PDT)
+        bh=1TUqJx+6PV/3NnXAP0d5u/U7OJuI6b+qmH1PhGeXghw=;
+        b=UAde0sJ9HZsmGzjW1XP+/PRDSBD17yC6VR0yxuAiKIbLTaldnoe8rMIkLT8Jhmfr2y
+         u4Kslm48pmgAe/3C5fCEJ7mDgbmY/SmcQH8wGc+Qy544w4q4W9gfCHRAdf//U83GEyug
+         2ETZmzXfB96X+2g2z9JP9CHVSUwbBswbYp3LEW24tphJqTBmTN7wVJcF0Bqih2sexQK7
+         bPf5062soIiFgQupHkHycIpjxEtpip9WOnbZ9lVW2C89nWsjiuSsM7/WtYIb62qosgjy
+         bnZWD/nO8yuF9nqv08MuM4WyTnt+0iozw2Cjg0wNOLTtMeX3FdkKYbdaHd8+tWS9Dhvk
+         prbQ==
+X-Gm-Message-State: APt69E3q0t199LfcLg36q4CBlC8UgAIWIidN+GZCx1oqEPyG4OWGEgf/
+        YmumStGvOYvoaiJbOFBb5GC9e7m+
+X-Google-Smtp-Source: ADUXVKJ4C/SgVSTUrMzVgUT5oZEyO/N6YqzcPFAVZ/eKVTtnxhHuaHGQXRerpFsD8JzTQnTpDaQE6g==
+X-Received: by 2002:a1c:43c5:: with SMTP id q188-v6mr2794890wma.69.1528497727672;
+        Fri, 08 Jun 2018 15:42:07 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id w15-v6sm36350010wro.52.2018.06.08.15.42.02
+        by smtp.gmail.com with ESMTPSA id w15-v6sm36350010wro.52.2018.06.08.15.42.06
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 08 Jun 2018 15:42:02 -0700 (PDT)
+        Fri, 08 Jun 2018 15:42:06 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, dstolee@microsoft.com,
         jrnieder@gmail.com, Linus Torvalds <torvalds@linux-foundation.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 10/20] abbrev tests: test for "git-diff" behavior
-Date:   Fri,  8 Jun 2018 22:41:26 +0000
-Message-Id: <20180608224136.20220-11-avarab@gmail.com>
+Subject: [PATCH 14/20] config.c: use braces on multiple conditional arms
+Date:   Fri,  8 Jun 2018 22:41:30 +0000
+Message-Id: <20180608224136.20220-15-avarab@gmail.com>
 X-Mailer: git-send-email 2.17.0.290.gded63e768a
 In-Reply-To: <20180608224136.20220-1-avarab@gmail.com>
 References: <20180608224136.20220-1-avarab@gmail.com>
@@ -71,54 +71,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The "diff" family of commands does its own parsing for --abbrev in
-diff.c, so having dedicated tests for it makes sense.
+Adjust this code that'll be modified in a subsequent change to have
+more than one line per branch to use braces per the CodingGuidelines,
+this makes the later change easier to understand.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t0014-abbrev.sh | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ config.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t0014-abbrev.sh b/t/t0014-abbrev.sh
-index a66051c040..783807475f 100755
---- a/t/t0014-abbrev.sh
-+++ b/t/t0014-abbrev.sh
-@@ -213,4 +213,35 @@ do
- 	"
- done
- 
-+for i in $(test_seq 4 40)
-+do
-+	test_expect_success "diff --no-index --raw core.abbrev=$i and --abbrev=$i" "
-+		test_must_fail git -c core.abbrev=$i diff --no-index --raw X Y >diff &&
-+		cut_tr_d_n_field_n 3 <diff >diff.3 &&
-+		test_byte_count = $i diff.3 &&
-+		cut_tr_d_n_field_n 4 <diff >diff.4 &&
-+		test_byte_count = $i diff.4 &&
-+
-+		test_must_fail git diff --no-index --raw --abbrev=$i X Y >diff &&
-+		cut_tr_d_n_field_n 3 <diff >diff.3 &&
-+		test_byte_count = $i diff.3 &&
-+		cut_tr_d_n_field_n 4 <diff >diff.4 &&
-+		test_byte_count = $i diff.4
-+	"
-+
-+	test_expect_success "diff --raw core.abbrev=$i and --abbrev=$i" "
-+		git -c core.abbrev=$i diff --raw HEAD~ >diff &&
-+		cut_tr_d_n_field_n 3 <diff >diff.3 &&
-+		test_byte_count = $i diff.3 &&
-+		cut_tr_d_n_field_n 4 <diff >diff.4 &&
-+		test_byte_count = $i diff.4 &&
-+
-+		git diff --raw --abbrev=$i HEAD~ >diff &&
-+		cut_tr_d_n_field_n 3 <diff >diff.3 &&
-+		test_byte_count = $i diff.3 &&
-+		cut_tr_d_n_field_n 4 <diff >diff.4 &&
-+		test_byte_count = $i diff.4
-+	"
-+done
-+
- test_done
+diff --git a/config.c b/config.c
+index fbbf0f8e9f..12f762ad92 100644
+--- a/config.c
++++ b/config.c
+@@ -1149,9 +1149,9 @@ static int git_default_core_config(const char *var, const char *value)
+ 	if (!strcmp(var, "core.abbrev")) {
+ 		if (!value)
+ 			return config_error_nonbool(var);
+-		if (!strcasecmp(value, "auto"))
++		if (!strcasecmp(value, "auto")) {
+ 			default_abbrev = -1;
+-		else {
++		} else {
+ 			int abbrev = git_config_int(var, value);
+ 			if (abbrev < minimum_abbrev || abbrev > 40)
+ 				return error("abbrev length out of range: %d", abbrev);
 -- 
 2.17.0.290.gded63e768a
 
