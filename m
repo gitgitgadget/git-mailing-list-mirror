@@ -2,151 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE3801F403
-	for <e@80x24.org>; Fri,  8 Jun 2018 22:42:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00DC41F403
+	for <e@80x24.org>; Fri,  8 Jun 2018 22:53:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753287AbeFHWmy (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Jun 2018 18:42:54 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:55851 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753110AbeFHWl6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jun 2018 18:41:58 -0400
-Received: by mail-wm0-f65.google.com with SMTP id v16-v6so5723011wmh.5
-        for <git@vger.kernel.org>; Fri, 08 Jun 2018 15:41:58 -0700 (PDT)
+        id S1752981AbeFHWxL (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Jun 2018 18:53:11 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:52832 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752774AbeFHWxK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jun 2018 18:53:10 -0400
+Received: by mail-wm0-f67.google.com with SMTP id p126-v6so5764384wmb.2
+        for <git@vger.kernel.org>; Fri, 08 Jun 2018 15:53:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=WQuWJeuo25Zr6NFcvNNcfaZSY2FzwG/kwFrjdbiWLg8=;
-        b=hfj0b8kiqMZ1zKuhHCS9FJZkYeobVmh/j0qewOpIGpJ6ZQUBdNUcHOUowj5tQNTAkT
-         +aClyjjYM+lpBtf6Lb/YV3OZTKNo7cjWVPYEx3pRIC3v1C5WZDCKKBAy3/z0IUjDAP3/
-         BKCb2JwbBMMBR7i9Chu3O2W07R254iHJClQmSVsE8tz0sRXSFVRL/l08ym2Wb6PAvrII
-         B0NTMI2SBIiqhEcMEE4SuY4sSDNhQFbSOC4J3GbJiTKbkjdELRqF5M2BHZeUleS/w3DS
-         +woNv+gfbx/I99cnmn/64vCrWLY16u+dbTeGuaM+HLXefMl78d1++qoeDjNFgUVp59/T
-         jw3g==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=zD11sJxh8VMHnr13VPTd8xouyC8fWzALPPUnR5LgzoE=;
+        b=rxSeyG4dQizdZNWJYjzsOqZL8SMbnQysdM8n5IeKuZjnNyxmxF3zamfTD9Ygk6NgyQ
+         GgGpo4yWqmJpsGnZIV1QrJSc6CgxEj32u+eO/AzV5/mJjJu2G/RXfUPSovoT1ZTGLR4t
+         8P53nOidplwY/ITnFPXXqRf2XLs9jdoCDL+Z3e8GChWqGYQ291w7jXFOTBrQiRo0U1Yk
+         ZEKeWHCryrUuNetJ/FPTPBiCECt0dWXUmt9dLnZbhTM04M9VDo3RU1NR+0azj+5b2Hai
+         /tWfJFe/b1ic6WLRZc2b3xZ6lWu3QxRefu2NZ6bPTt0o3Im0XEZ4GeFQ5APY/TR+Eayx
+         7VSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=WQuWJeuo25Zr6NFcvNNcfaZSY2FzwG/kwFrjdbiWLg8=;
-        b=SuFzVi65UOSf/Q0yTv8+7QajHwoQpn8grePNLx9l/y28VDtJK7jIbfzYHCYccqJ6Ix
-         2sq8PeHP0ivns0oJuezCFexa2QyCJ7kefBuplege3cjzocWpNcI7SVwlgQFRlVUN++8Q
-         9x3vepavPd1ww2W1UMrN7rflskdgcyfERNJ9hZ3ucb4W+wEpp2AWvlFd/m8xl0GtsRxY
-         MMncmAEJXxYywgTpb/Bzz7uhXyqOQII0i5W48o9PK7JnVVuj/Vfixe++ww8GMiGqa6Q/
-         pkHyZ3DEriE242uRlJtsmVgp5J2CWeJxpUIaOgYZQAjln9DaYmY6ke6melq0Fr0Ppp26
-         YcsA==
-X-Gm-Message-State: APt69E2lGL2I2X6p4eHDO12Lbji8eHqQwCpbTHuztzpIbAq3UA9+NoQq
-        z6+uRoXUrHVEX+JwxsH6v/ZlUnP9
-X-Google-Smtp-Source: ADUXVKIkToIcNd5Gso6pioYb+mwKEPmliJny++yTflpKcF+5XNzB2CNUCup0dimLRIwPW9ZS5uQWNA==
-X-Received: by 2002:a1c:b484:: with SMTP id d126-v6mr2677658wmf.0.1528497717209;
-        Fri, 08 Jun 2018 15:41:57 -0700 (PDT)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id w15-v6sm36350010wro.52.2018.06.08.15.41.56
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 08 Jun 2018 15:41:56 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, dstolee@microsoft.com,
-        git@jeffhostetler.com, peff@peff.net, johannes.schindelin@gmx.de,
-        jrnieder@gmail.com, Linus Torvalds <torvalds@linux-foundation.org>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 05/20] abbrev tests: test "git-blame" behavior
-Date:   Fri,  8 Jun 2018 22:41:21 +0000
-Message-Id: <20180608224136.20220-6-avarab@gmail.com>
-X-Mailer: git-send-email 2.17.0.290.gded63e768a
-In-Reply-To: <20180608224136.20220-1-avarab@gmail.com>
-References: <20180608224136.20220-1-avarab@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=zD11sJxh8VMHnr13VPTd8xouyC8fWzALPPUnR5LgzoE=;
+        b=nHCCYecTvXU8xiYtQ28FLa2p70rbtCDoUQ+WP06JBEYgINswcUTeT9rf2d8mRhfiWm
+         14ZhqaQAvkTBQKs/MtLtgLe2fO2HEcuWOFKXw2XYUCDKYArD1cobkpVjIg3p77+MoIhL
+         peg2aJALjWXo0uwUP8hfVhQEaK2Ng82qiYLqCe3D/wwxultqF25goqhtp25+vVfMKl1d
+         uCgP7kIDVHq+m0iIKSQMnnKaB5BDBOw1VzBmWB2hz6uXbPq0OjTE4NuF1NASSpDwSTeP
+         YmDqFKB4BQpkkcA10ZjJi9efqaoulhloTMxcfdTLg2wicagRUfUzSwqhnP7rIxPElJyX
+         0RVw==
+X-Gm-Message-State: APt69E0wh8FPcrWqyd/nu1nNa9FwGn1myzPLiOVhE1X7//2VSlw/flha
+        4cb6gC4vRWqoyJk8WDywMkY/hOZZ
+X-Google-Smtp-Source: ADUXVKInQmQ/A6CmGJZMKDw/PqmXPilPhTker/BsLIbNqzKDYb0Wt0RIKhCrSYNXYDMsikDeMl3nnw==
+X-Received: by 2002:aa7:d84a:: with SMTP id f10-v6mr8808628eds.157.1528498389200;
+        Fri, 08 Jun 2018 15:53:09 -0700 (PDT)
+Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
+        by smtp.gmail.com with ESMTPSA id r10-v6sm7695321edo.77.2018.06.08.15.53.07
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 08 Jun 2018 15:53:08 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Peter Backes <rtc@helen.PLASMA.Xg8.DE>
+Cc:     "Theodore Y. Ts'o" <tytso@mit.edu>, David Lang <david@lang.hm>,
+        Philip Oakley <philipoakley@iee.org>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: GDPR compliance best practices?
+References: <20180603174617.GA10900@helen.PLASMA.Xg8.DE>
+        <alpine.DEB.2.02.1806061831340.7659@nftneq.ynat.uz>
+        <20180607063225.GA28343@helen.PLASMA.Xg8.DE>
+        <3EF5AC29192A4D179B6D8689ECB991CC@PhilipOakley>
+        <20180607223442.GA5322@helen.PLASMA.Xg8.DE>
+        <alpine.DEB.2.02.1806071535510.27871@nftneq.ynat.uz>
+        <20180607232128.GA5879@helen.PLASMA.Xg8.DE>
+        <20180608025313.GA12749@thunk.org>
+        <20180608062657.GB9383@helen.PLASMA.Xg8.DE>
+        <8736xxzof3.fsf@evledraar.gmail.com>
+        <20180608120320.GB12013@helen.PLASMA.Xg8.DE>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20180608120320.GB12013@helen.PLASMA.Xg8.DE>
+Date:   Sat, 09 Jun 2018 00:53:07 +0200
+Message-ID: <87efhg51rg.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add tests showing how "git-blame" behaves. As noted in an earlier
-change there's a behavior difference between core.abbrev=40 and
---abbrev=40.
 
-Let's also assert that neither way of changing the abbreviation length
-modifies the porcelain output.
+On Fri, Jun 08 2018, Peter Backes wrote:
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- t/t0014-abbrev.sh | 48 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 48 insertions(+)
+> On Fri, Jun 08, 2018 at 10:13:20AM +0200, Ævar Arnfjörð Bjarmason wrote:
+>> Can you walk us through how anyone would be expected to fork (as create
+>> a new project, not the github-ism) existing projects under such a
+>> regiment?
+>
+> I don't see your point. Copy the repository to fork. Nothing changes
+> about that. Nothing prevents anyone from forking a repository which had
+> some of its author names removed from the commits.
 
-diff --git a/t/t0014-abbrev.sh b/t/t0014-abbrev.sh
-index 1c60f5ff93..77f15d5b0b 100755
---- a/t/t0014-abbrev.sh
-+++ b/t/t0014-abbrev.sh
-@@ -12,6 +12,10 @@ cut_tr_d_n_field_n() {
- 	cut -d " " -f $1 | tr_d_n
- }
- 
-+nocaret() {
-+	sed 's/\^//'
-+}
-+
- test_expect_success 'setup' '
- 	test_commit A &&
- 	git tag -a -mannotated A.annotated &&
-@@ -115,4 +119,48 @@ do
- 	"
- done
- 
-+for i in $(test_seq 4 40)
-+do
-+	for opt in --porcelain --line-porcelain
-+	do
-+		test_expect_success "blame $opt ignores core.abbrev=$i and --abbrev=$i" "
-+			git -c core.abbrev=$i blame $opt A.t | head -n 1 | cut_tr_d_n_field_n 1 >blame &&
-+			test_byte_count = 40 blame &&
-+			git blame $opt --abbrev=$i A.t | head -n 1 | cut_tr_d_n_field_n 1 >blame &&
-+			test_byte_count = 40 blame
-+		"
-+	done
-+
-+
-+	test_expect_success "blame core.abbrev=$i and --abbrev=$i with boundary" "
-+		# See the blame documentation for why this is off-by-one
-+		git -c core.abbrev=$i blame A.t | cut_tr_d_n_field_n 1 | nocaret >blame &&
-+		test_byte_count = $i blame &&
-+		git blame --abbrev=$i A.t | cut_tr_d_n_field_n 1 | nocaret >blame &&
-+		if test $i -eq 40
-+		then
-+			test_byte_count = 39 blame
-+		else
-+			test_byte_count = $i blame
-+		fi
-+	"
-+
-+	test_expect_success "blame core.abbrev=$i and --abbrev=$i without boundary" "
-+		git -c core.abbrev=$i blame B.t | cut_tr_d_n_field_n 1 | nocaret >blame &&
-+		if test $i -eq 40
-+		then
-+			test_byte_count = $i blame
-+		else
-+			test_byte_count = \$(($i + 1)) blame
-+		fi &&
-+		git blame --abbrev=$i B.t | cut_tr_d_n_field_n 1 | nocaret >blame &&
-+		if test $i -eq 40
-+		then
-+			test_byte_count = $i blame
-+		else
-+			test_byte_count = \$(($i + 1)) blame
-+		fi
-+	"
-+done
-+
- test_done
--- 
-2.17.0.290.gded63e768a
+This basically the same as saying the whole notion of Signed-off-by
+should be abandoned entirely, since in this case the fork will only have
+a partial set of these.
 
+The point is that we're recording information so each line in the
+repository can be traced back to a SOB.
+
+These sorts of take-downs would destroy that information, and the
+proposed solution of having some party retain these creates a special
+class of free software users who are capable of following that line of
+attributions.
