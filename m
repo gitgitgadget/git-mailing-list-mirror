@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB71D1F403
-	for <e@80x24.org>; Fri,  8 Jun 2018 22:42:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE3801F403
+	for <e@80x24.org>; Fri,  8 Jun 2018 22:42:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753226AbeFHWl6 (ORCPT <rfc822;e@80x24.org>);
+        id S1753287AbeFHWmy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Jun 2018 18:42:54 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:55851 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753110AbeFHWl6 (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 8 Jun 2018 18:41:58 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:37001 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753221AbeFHWl4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jun 2018 18:41:56 -0400
-Received: by mail-wr0-f193.google.com with SMTP id d8-v6so14787806wro.4
-        for <git@vger.kernel.org>; Fri, 08 Jun 2018 15:41:55 -0700 (PDT)
+Received: by mail-wm0-f65.google.com with SMTP id v16-v6so5723011wmh.5
+        for <git@vger.kernel.org>; Fri, 08 Jun 2018 15:41:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=dLhGwHtJCI/AXaxI76u++ur/YGZWeolVtw7Ul866o/s=;
-        b=U3hSv2MHrUoqn3SyS+yiGCpqgNt8WwPGEsZN0Ly6Sg06fBenX7nxz4YDrMUv12lwe4
-         nLrCEWWBFjX2ttXDJtzc2EpBvLX1MmOh8W57TM9kSaQNSebvamPkIaOQh9sAxBhwoYho
-         u/yh3mjL21WzvRDteZ3sKlc/vy0UOYuZc5n8JtAdVbscjL7269l2nxpfbJRK8e8PQRuo
-         oM7mScpI5lMLNAuiZG2YzhYQPVvMQU6dpjXCCbQOKkJG4G/3J51RgfxTQSdC8e0CMTjX
-         CBzmDZ/O54qHdqknVwZF77rRx6s11FV2Iv6KjaBscoDqjiNUZHFzrVUxUKDgMAOikOpm
-         iLxA==
+        bh=WQuWJeuo25Zr6NFcvNNcfaZSY2FzwG/kwFrjdbiWLg8=;
+        b=hfj0b8kiqMZ1zKuhHCS9FJZkYeobVmh/j0qewOpIGpJ6ZQUBdNUcHOUowj5tQNTAkT
+         +aClyjjYM+lpBtf6Lb/YV3OZTKNo7cjWVPYEx3pRIC3v1C5WZDCKKBAy3/z0IUjDAP3/
+         BKCb2JwbBMMBR7i9Chu3O2W07R254iHJClQmSVsE8tz0sRXSFVRL/l08ym2Wb6PAvrII
+         B0NTMI2SBIiqhEcMEE4SuY4sSDNhQFbSOC4J3GbJiTKbkjdELRqF5M2BHZeUleS/w3DS
+         +woNv+gfbx/I99cnmn/64vCrWLY16u+dbTeGuaM+HLXefMl78d1++qoeDjNFgUVp59/T
+         jw3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=dLhGwHtJCI/AXaxI76u++ur/YGZWeolVtw7Ul866o/s=;
-        b=LYWrenjelAeUyLetdEwWAQyUYTgNYXIFiKo6Oc6vF0eHhCilaUfBE7a3VoS9SA2Gga
-         B/5cPP+2Gr42UEj8gwlCVF4h4y+R/oTlh8IwKTvDSjyswQhx9NmLf6a3PjXr//mySZ8K
-         uq3adupvYdJIit9LYarLSNZpKvUcbAkTk+4lTA050m12C4unLfg43m6+cm3MXrV0B3oD
-         pK7dST21nDpCbF+1EbeUJcUReDTAMhNe4H4NFhi2lCrWxqiwXChI+zbTAFetLTUUv6QL
-         0pTiBYiLyWKf8IbtBgZcGAmXnteWjSUlrSR1eSCHcIxYgo++7+WcC/J1/EqWAagBr6Ky
-         CczA==
-X-Gm-Message-State: APt69E2zCmRnksAhhEpU0OtXl/nnRaSiHh6uD3WtMfY/mEk/Ovib/s7W
-        XIQUZ0AQzlT/0V+8FfK2xbRCt7f7
-X-Google-Smtp-Source: ADUXVKLursC1X3QWfKw8n3PZAg3D5l0lPBNivw5qAmJDlOdz6g6IPZZ6jZw7TzMfelHbkHf36SU3Vg==
-X-Received: by 2002:adf:f281:: with SMTP id k1-v6mr5894792wro.263.1528497714919;
-        Fri, 08 Jun 2018 15:41:54 -0700 (PDT)
+        bh=WQuWJeuo25Zr6NFcvNNcfaZSY2FzwG/kwFrjdbiWLg8=;
+        b=SuFzVi65UOSf/Q0yTv8+7QajHwoQpn8grePNLx9l/y28VDtJK7jIbfzYHCYccqJ6Ix
+         2sq8PeHP0ivns0oJuezCFexa2QyCJ7kefBuplege3cjzocWpNcI7SVwlgQFRlVUN++8Q
+         9x3vepavPd1ww2W1UMrN7rflskdgcyfERNJ9hZ3ucb4W+wEpp2AWvlFd/m8xl0GtsRxY
+         MMncmAEJXxYywgTpb/Bzz7uhXyqOQII0i5W48o9PK7JnVVuj/Vfixe++ww8GMiGqa6Q/
+         pkHyZ3DEriE242uRlJtsmVgp5J2CWeJxpUIaOgYZQAjln9DaYmY6ke6melq0Fr0Ppp26
+         YcsA==
+X-Gm-Message-State: APt69E2lGL2I2X6p4eHDO12Lbji8eHqQwCpbTHuztzpIbAq3UA9+NoQq
+        z6+uRoXUrHVEX+JwxsH6v/ZlUnP9
+X-Google-Smtp-Source: ADUXVKIkToIcNd5Gso6pioYb+mwKEPmliJny++yTflpKcF+5XNzB2CNUCup0dimLRIwPW9ZS5uQWNA==
+X-Received: by 2002:a1c:b484:: with SMTP id d126-v6mr2677658wmf.0.1528497717209;
+        Fri, 08 Jun 2018 15:41:57 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id w15-v6sm36350010wro.52.2018.06.08.15.41.53
+        by smtp.gmail.com with ESMTPSA id w15-v6sm36350010wro.52.2018.06.08.15.41.56
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 08 Jun 2018 15:41:54 -0700 (PDT)
+        Fri, 08 Jun 2018 15:41:56 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, dstolee@microsoft.com,
         jrnieder@gmail.com, Linus Torvalds <torvalds@linux-foundation.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 03/20] blame doc: explicitly note how --abbrev=40 gives 39 chars
-Date:   Fri,  8 Jun 2018 22:41:19 +0000
-Message-Id: <20180608224136.20220-4-avarab@gmail.com>
+Subject: [PATCH 05/20] abbrev tests: test "git-blame" behavior
+Date:   Fri,  8 Jun 2018 22:41:21 +0000
+Message-Id: <20180608224136.20220-6-avarab@gmail.com>
 X-Mailer: git-send-email 2.17.0.290.gded63e768a
 In-Reply-To: <20180608224136.20220-1-avarab@gmail.com>
 References: <20180608224136.20220-1-avarab@gmail.com>
@@ -71,37 +71,82 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a later change I'm adding stress testing of the commit abbreviation
-as it relates to git-blame and others, and initially thought that the
-inability to extract full SHA-1s from the non-"--porcelain" output was
-a bug.
+Add tests showing how "git-blame" behaves. As noted in an earlier
+change there's a behavior difference between core.abbrev=40 and
+--abbrev=40.
 
-In hindsight I could have read the existing paragraph more carefully,
-but let's make this clearer by explicitly stating this limitation of
---abbrev as it relates to git-blame, it is not shared by any other
-command that supports core.abbrev or --abbrev.
+Let's also assert that neither way of changing the abbreviation length
+modifies the porcelain output.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-blame.txt | 5 +++++
- 1 file changed, 5 insertions(+)
+ t/t0014-abbrev.sh | 48 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 48 insertions(+)
 
-diff --git a/Documentation/git-blame.txt b/Documentation/git-blame.txt
-index 16323eb80e..7b562494ac 100644
---- a/Documentation/git-blame.txt
-+++ b/Documentation/git-blame.txt
-@@ -88,6 +88,11 @@ include::blame-options.txt[]
- 	Instead of using the default 7+1 hexadecimal digits as the
- 	abbreviated object name, use <n>+1 digits. Note that 1 column
- 	is used for a caret to mark the boundary commit.
-++
-+Because of this UI design, the only way to get the full SHA-1 of the
-+boundary commit is to use the `--porcelain` format. With `--abbrev=40`
-+only 39 characters of the boundary SHA-1 will be emitted, since one
-+will be used for the caret to mark the boundary.
+diff --git a/t/t0014-abbrev.sh b/t/t0014-abbrev.sh
+index 1c60f5ff93..77f15d5b0b 100755
+--- a/t/t0014-abbrev.sh
++++ b/t/t0014-abbrev.sh
+@@ -12,6 +12,10 @@ cut_tr_d_n_field_n() {
+ 	cut -d " " -f $1 | tr_d_n
+ }
  
++nocaret() {
++	sed 's/\^//'
++}
++
+ test_expect_success 'setup' '
+ 	test_commit A &&
+ 	git tag -a -mannotated A.annotated &&
+@@ -115,4 +119,48 @@ do
+ 	"
+ done
  
- THE PORCELAIN FORMAT
++for i in $(test_seq 4 40)
++do
++	for opt in --porcelain --line-porcelain
++	do
++		test_expect_success "blame $opt ignores core.abbrev=$i and --abbrev=$i" "
++			git -c core.abbrev=$i blame $opt A.t | head -n 1 | cut_tr_d_n_field_n 1 >blame &&
++			test_byte_count = 40 blame &&
++			git blame $opt --abbrev=$i A.t | head -n 1 | cut_tr_d_n_field_n 1 >blame &&
++			test_byte_count = 40 blame
++		"
++	done
++
++
++	test_expect_success "blame core.abbrev=$i and --abbrev=$i with boundary" "
++		# See the blame documentation for why this is off-by-one
++		git -c core.abbrev=$i blame A.t | cut_tr_d_n_field_n 1 | nocaret >blame &&
++		test_byte_count = $i blame &&
++		git blame --abbrev=$i A.t | cut_tr_d_n_field_n 1 | nocaret >blame &&
++		if test $i -eq 40
++		then
++			test_byte_count = 39 blame
++		else
++			test_byte_count = $i blame
++		fi
++	"
++
++	test_expect_success "blame core.abbrev=$i and --abbrev=$i without boundary" "
++		git -c core.abbrev=$i blame B.t | cut_tr_d_n_field_n 1 | nocaret >blame &&
++		if test $i -eq 40
++		then
++			test_byte_count = $i blame
++		else
++			test_byte_count = \$(($i + 1)) blame
++		fi &&
++		git blame --abbrev=$i B.t | cut_tr_d_n_field_n 1 | nocaret >blame &&
++		if test $i -eq 40
++		then
++			test_byte_count = $i blame
++		else
++			test_byte_count = \$(($i + 1)) blame
++		fi
++	"
++done
++
+ test_done
 -- 
 2.17.0.290.gded63e768a
 
