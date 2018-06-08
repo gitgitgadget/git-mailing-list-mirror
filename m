@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE0891F403
-	for <e@80x24.org>; Fri,  8 Jun 2018 22:42:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C87371F403
+	for <e@80x24.org>; Fri,  8 Jun 2018 22:42:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753247AbeFHWml (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Jun 2018 18:42:41 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:40444 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752898AbeFHWmC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jun 2018 18:42:02 -0400
-Received: by mail-wm0-f66.google.com with SMTP id n5-v6so6228538wmc.5
-        for <git@vger.kernel.org>; Fri, 08 Jun 2018 15:42:01 -0700 (PDT)
+        id S1753174AbeFHWmk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Jun 2018 18:42:40 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:39782 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753247AbeFHWmF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jun 2018 18:42:05 -0400
+Received: by mail-wm0-f67.google.com with SMTP id p11-v6so6242196wmc.4
+        for <git@vger.kernel.org>; Fri, 08 Jun 2018 15:42:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=f4fQkB37GuNhTcJKM39yBHjzVc7ahTZkfvE8uqOAogY=;
-        b=PrR3oSaMGWej9BosPNFrI4u0ifYU7zEzpvfc58+qWTGbf51CNUDc/FVd2kvkRXtrxE
-         V+3vddnN9Vra4+sLI3p7td7J4kb/umOq7hbND4ez5SiCbaYI2CkTQGNu3O+e5fFdOyG0
-         vF+OktOcLmfefEM65kESstIlAohSXPq9tOLzBc4wAKxw5C55JcRweYfazWG7oCjjR/Ge
-         JY2NBD9qTYmO/GcP5PMnBb+DgwIu6A6a2Qp+TtqmJl+wDOzqKPfOf/zJwEvdrKi5uejN
-         G+4seXyvOekdQZNAnDv7ST5qfG51vpeKUpWB+Jv6MkPMmH68LIK2y/Jymj67/q6/IQoJ
-         gqFA==
+        bh=/VelICxfAJLo9jH0LnhAPrwVUbfkO0bkW4Jg47TUfp8=;
+        b=fxjKZItbYqXOWyGjvqFxD97ei6o8jT0aQRfsPTbCe028qnTrwhM+TNTc0Xvo1sIDzl
+         kInt2BxLtE9RAIZ+/ybUCtMe9SXgZSuBr94xhVkLgJ7Uumgix6InIWzUczcAkUKm77Bn
+         gC1KNJ92dQhu+F8Y+zMMC7lKmr2BluRxsdCIwhtEDj+WJOLpNJWanzlLquYMXwstQjPD
+         //Rh2gbom8d+zpUkp5iNIhQQDa/NhIWkBURkCT3FBD6FgnaoPepdXPgCn+Yxx3QcNvwh
+         f/YjZ9cO9RmP+OAJ6Lkqwd9c9gpYPUptGhAgtOuF77bEJIZT1ErEMjLhRkIIYFpBAgrJ
+         INTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=f4fQkB37GuNhTcJKM39yBHjzVc7ahTZkfvE8uqOAogY=;
-        b=QolMqooujISX7/uAFjKOlELPvL5mArmJAtLmQIDue1njRut45F0z3PlgqvBjiFHVR7
-         gsSdBy3JVK6RnH6VOKM+YPBsy+2oj74CERBuAwL9MuKdcOQLNtE1+KvFuxRyFMyusXut
-         BU+kdLeAgYXGw+Ng/0iwc76URLBKGBTUytFqZh4PeoOslXRpwqDK1v7sUtSBmsm8nYu/
-         YJra2xIymzNYftM18a6iWCJthePrgRrSFDTxqDu3yWyJJdGuq3isJFmY+HnKjfqs/YWQ
-         8q+Ev0H8YZRIUfh1/bmWp6uub90ywIp6sZS/GVC0O3wHz2vm2VAdtKJioNTEHX94+ZM5
-         Pncg==
-X-Gm-Message-State: APt69E0cCy5ITGyjtgcm42wKZs8eBgnf7QPCLTI5f9l4kQoLL+p8I6iP
-        pgHzGA9t7TKodwkjVnSQt7pjd9F7
-X-Google-Smtp-Source: ADUXVKKVutO8gOJxx+bm4KvlWLTisPpCbmTPQNcjiaaV7K02yWPAuR2EJnsP0lyWl+U2+FwDswItQQ==
-X-Received: by 2002:a1c:168c:: with SMTP id 134-v6mr2679963wmw.53.1528497720840;
-        Fri, 08 Jun 2018 15:42:00 -0700 (PDT)
+        bh=/VelICxfAJLo9jH0LnhAPrwVUbfkO0bkW4Jg47TUfp8=;
+        b=V4U8c70azPOX7n0dSL6OMWbjNQAbO+yy7YmHDxhGgupRlnyquy/nVKnqblfRWA6uzo
+         yENXzqv/DjnOHQtT4rvAldCp4u73XY93yS1tsGkLWjKpyJapywDCx2WeEqz7QIPPbRJM
+         V4I7J5GG4Zwd8repoOCwqRpv6BY4DCwVQsoj25G0Y3RSpQ9BESWpDbmUlhoMHTOrlIph
+         KQRaEhVntCU3NCFJc7v6d1Mg/yxKrmTEz8DjyzjcGAE1BPp99EAijzbALNcjUqErXVkD
+         il91YQiBCJ/Pj2RyWXl32A+zIEptUIJQKG4nNmfq/gpqOrxTGXpn1//1Yn15ibhRC5ph
+         veRA==
+X-Gm-Message-State: APt69E1i+mMMK4TtX7K2JtLtr5hFQlZ1nN00RzL9M7s0bbPhfAUZnSu6
+        pHTtO7heXKrMsmmm2/IZ9tOHaiEt
+X-Google-Smtp-Source: ADUXVKJWn+dIokOuNuZpuDgmxSGS+KizZ81A3w+IGym1l4KAW1PnyGDVnTsO5TalZQ+SJiB7rQW0iA==
+X-Received: by 2002:a1c:6803:: with SMTP id d3-v6mr2856714wmc.70.1528497724341;
+        Fri, 08 Jun 2018 15:42:04 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id w15-v6sm36350010wro.52.2018.06.08.15.41.59
+        by smtp.gmail.com with ESMTPSA id w15-v6sm36350010wro.52.2018.06.08.15.42.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 08 Jun 2018 15:42:00 -0700 (PDT)
+        Fri, 08 Jun 2018 15:42:03 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, dstolee@microsoft.com,
         jrnieder@gmail.com, Linus Torvalds <torvalds@linux-foundation.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 08/20] abbrev tests: test for "git-describe" behavior
-Date:   Fri,  8 Jun 2018 22:41:24 +0000
-Message-Id: <20180608224136.20220-9-avarab@gmail.com>
+Subject: [PATCH 11/20] abbrev tests: test for plumbing behavior
+Date:   Fri,  8 Jun 2018 22:41:27 +0000
+Message-Id: <20180608224136.20220-12-avarab@gmail.com>
 X-Mailer: git-send-email 2.17.0.290.gded63e768a
 In-Reply-To: <20180608224136.20220-1-avarab@gmail.com>
 References: <20180608224136.20220-1-avarab@gmail.com>
@@ -71,51 +71,52 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The only thing out of the ordinary with git-describe is the --abbrev=0
-special-case.
+The "git-{ls-files,ls-tree,show-ref}" commands all have in common that
+the core.abbrev variable is ignored, and only --abbrev works. This is
+intentional since these are all plumbing.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t0014-abbrev.sh | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ t/t0014-abbrev.sh | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
 diff --git a/t/t0014-abbrev.sh b/t/t0014-abbrev.sh
-index d8b060d922..645bcca1d1 100755
+index 783807475f..5a99cbe434 100755
 --- a/t/t0014-abbrev.sh
 +++ b/t/t0014-abbrev.sh
-@@ -16,6 +16,10 @@ nocaret() {
- 	sed 's/\^//'
- }
- 
-+sed_g_tr_d_n() {
-+	sed 's/.*g//' | tr_d_n
-+}
-+
- test_expect_success 'setup' '
- 	test_commit A &&
- 	git tag -a -mannotated A.annotated &&
-@@ -178,4 +182,25 @@ do
+@@ -244,4 +244,36 @@ do
  	"
  done
  
-+test_expect_success 'describe core.abbrev and --abbrev special cases' '
-+	# core.abbrev=0 behaves as usual...
-+	test_must_fail git -c core.abbrev=0 describe &&
-+
-+	# ...but --abbrev=0 is special-cased to print the nearest tag,
-+	# not fall back on "4" like git-log.
-+	echo A.annotated >expected &&
-+	git describe --abbrev=0 >actual &&
-+	test_cmp expected actual
-+'
++for i in $(test_seq 4 40)
++do
++	test_expect_success "ls-files core.abbrev=$i and --abbrev=$i" "
++		git -c core.abbrev=$i ls-files --stage A.t | cut_tr_d_n_field_n 2 >ls-files &&
++		test_byte_count = 40 ls-files &&
++		git ls-files --abbrev=$i --stage A.t | cut_tr_d_n_field_n 2 >ls-files &&
++		test_byte_count = $i ls-files
++	"
++done
 +
 +for i in $(test_seq 4 40)
 +do
-+	test_expect_success "describe core.abbrev=$i and --abbrev=$i" "
-+		git -c core.abbrev=$i describe | sed_g_tr_d_n >describe &&
-+		test_byte_count = $i describe &&
-+		git describe --abbrev=$i | sed_g_tr_d_n >describe &&
-+		test_byte_count = $i describe
++	test_expect_success "ls-tree core.abbrev=$i and --abbrev=$i" "
++		git -c core.abbrev=$i ls-tree HEAD A.t | cut -f 1 | cut_tr_d_n_field_n 3 >ls-tree &&
++		test_byte_count = 40 ls-tree &&
++		git ls-tree --abbrev=$i HEAD A.t | cut -f 1 | cut_tr_d_n_field_n 3 >ls-tree &&
++		test_byte_count = $i ls-tree
++	"
++done
++
++for i in $(test_seq 4 40)
++do
++	test_expect_success "show-ref core.abbrev=$i and --abbrev=$i" "
++		git -c core.abbrev=$i show-ref --hash refs/heads/master | tr_d_n >show-ref &&
++		test_byte_count = 40 show-ref &&
++		git show-ref --hash --abbrev=$i refs/heads/master | tr_d_n >show-ref &&
++		test_byte_count = $i show-ref &&
++		git show-ref --hash=$i refs/heads/master | tr_d_n >show-ref &&
++		test_byte_count = $i show-ref
 +	"
 +done
 +
