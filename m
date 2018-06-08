@@ -7,29 +7,29 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C21C91F403
-	for <e@80x24.org>; Fri,  8 Jun 2018 13:56:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 54F831F403
+	for <e@80x24.org>; Fri,  8 Jun 2018 13:56:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752693AbeFHN40 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Jun 2018 09:56:26 -0400
-Received: from mail-eopbgr730113.outbound.protection.outlook.com ([40.107.73.113]:7405
-        "EHLO NAM05-DM3-obe.outbound.protection.outlook.com"
+        id S1752716AbeFHN4c (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Jun 2018 09:56:32 -0400
+Received: from mail-by2nam03on0121.outbound.protection.outlook.com ([104.47.42.121]:37792
+        "EHLO NAM03-BY2-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1752349AbeFHN4Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jun 2018 09:56:24 -0400
+        id S1752478AbeFHN4Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jun 2018 09:56:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=DBS+4Cqn1m/ivQhLIqEwNh3M1IPiZ9yoXQvLG2y3O4I=;
- b=lHbcOHWZ0Dk/ROr+BgX/C5J+M3juaI15JXAsSTVuKx0YIzUx5hHY6OIhriFPQu/6huIn9FuArUhTzDeafWmkp6eDUodao2iV8dQ4Kpzzpm6QJ3+msG6jpmDuTEmmWZZAp8EGjWVykwIlqMqtfWAE44z6lSFLMYhWp9ch9MjFJVY=
+ bh=rggUxrTRvH6zSRgu0a6nzPz3DNNTqMz+6UtsaJEKe5w=;
+ b=Duf+rOvj3OWMDpfd6lBBI2tE2vOCQ/loXxB2SWRiu8U7cPiLkACa7uz1JvWPLVDSN02pB7MRTKhsXrtZrPVmdmrVWsvd+IH5oa/DPtcXUcdTdmAfoaYDToe3RKF9qqCWZIf5aauRqdIZzRIXEDAca7rPjnETcKx3vHKdO8yAmsI=
 Received: from BL0PR2101MB1011.namprd21.prod.outlook.com (52.132.24.10) by
- BL0PR2101MB0979.namprd21.prod.outlook.com (52.132.20.160) with Microsoft SMTP
+ BL0PR2101MB0963.namprd21.prod.outlook.com (52.132.20.156) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.863.2; Fri, 8 Jun 2018 13:56:20 +0000
+ 15.20.863.2; Fri, 8 Jun 2018 13:56:23 +0000
 Received: from BL0PR2101MB1011.namprd21.prod.outlook.com
  ([fe80::d1f2:1d69:2567:e0a9]) by BL0PR2101MB1011.namprd21.prod.outlook.com
  ([fe80::d1f2:1d69:2567:e0a9%2]) with mapi id 15.20.0863.004; Fri, 8 Jun 2018
- 13:56:20 +0000
+ 13:56:23 +0000
 From:   Derrick Stolee <dstolee@microsoft.com>
 To:     "git@vger.kernel.org" <git@vger.kernel.org>
 CC:     "avarab@gmail.com" <avarab@gmail.com>,
@@ -38,12 +38,11 @@ CC:     "avarab@gmail.com" <avarab@gmail.com>,
         "marten.agren@gmail.com" <marten.agren@gmail.com>,
         "gitster@pobox.com" <gitster@pobox.com>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v6 09/21] commit-graph: verify corrupt OID fanout and lookup
-Thread-Topic: [PATCH v6 09/21] commit-graph: verify corrupt OID fanout and
- lookup
-Thread-Index: AQHT/zB6ckouWo3K+USsNlZ4q2+Ycw==
-Date:   Fri, 8 Jun 2018 13:56:20 +0000
-Message-ID: <20180608135548.216405-10-dstolee@microsoft.com>
+Subject: [PATCH v6 12/21] commit-graph: verify parent list
+Thread-Topic: [PATCH v6 12/21] commit-graph: verify parent list
+Thread-Index: AQHT/zB7lVaC1tpjKECMudcWpe9O4g==
+Date:   Fri, 8 Jun 2018 13:56:22 +0000
+Message-ID: <20180608135548.216405-13-dstolee@microsoft.com>
 References: <20180606113611.87822-1-dstolee@microsoft.com>
  <20180608135548.216405-1-dstolee@microsoft.com>
 In-Reply-To: <20180608135548.216405-1-dstolee@microsoft.com>
@@ -57,155 +56,151 @@ x-clientproxiedby: BN6PR11CA0071.namprd11.prod.outlook.com
 x-ms-exchange-messagesentrepresentingtype: 1
 x-originating-ip: [2001:4898:8010:0:eb4a:5dff:fe0f:730f]
 x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;BL0PR2101MB0979;7:4UfaWCdrPEq0r97tCh4xXXnufkTladmIqxVSrS+xpe+/KfwlGbyRGxnQJRofkf+gF7TBXhxOs/24dDVpL1ZW0QKfoKVW8V6BRogaUDTDz8+/gAfl2jOEsesi9k+CPt4kHYiul27om0FY7vPujC829HXDhLtZAKVP9LdQg0N+tRfo09aEzuq7d+1BVSSqrd/PNnb8XecPHresfqaBAVTALaNGev5irjHNv1ShVANhZO83yBbHeZTQHKaN8bVh14L1
+x-microsoft-exchange-diagnostics: 1;BL0PR2101MB0963;7:6QvqH3jFt6uBZnNQkcheMSZS83BR174+M7+oLFM56C3i0q57x342TTlJayuKk86fBNPKTDIu+2Udp9kablxhUHY4+ZzLT0kLePe5R4Lo+0aRCF7Hf9bFVXKJWcvk6J0Dd8ZApzfo/cuPMJl/ld3pXaZtMpfivzSY0/yuTjGdk4PLU1WIfXQ8oXbeHddydI0Vlo/39M8AnWBBY0zrVsOBXCxJpFMqSVQj8WEjqgSEOaVVaksMJI7KEAlPdTUH6NjI
 x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(48565401081)(5600026)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7193020);SRVR:BL0PR2101MB0979;
-x-ms-traffictypediagnostic: BL0PR2101MB0979:
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(48565401081)(5600026)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7193020);SRVR:BL0PR2101MB0963;
+x-ms-traffictypediagnostic: BL0PR2101MB0963:
 authentication-results: spf=none (sender IP is )
  smtp.mailfrom=dstolee@microsoft.com; 
-x-microsoft-antispam-prvs: <BL0PR2101MB097957F7F08DC11494FFD3B8A17B0@BL0PR2101MB0979.namprd21.prod.outlook.com>
+x-microsoft-antispam-prvs: <BL0PR2101MB0963C6227D3B0EFE1B830377A17B0@BL0PR2101MB0963.namprd21.prod.outlook.com>
 x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171);
 x-ms-exchange-senderadcheck: 1
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(10201501046)(93006095)(93001095)(3002001)(3231254)(2018427008)(944501410)(52105095)(6055026)(149027)(150027)(6041310)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123560045)(20161123558120)(20161123562045)(20161123564045)(6072148)(201708071742011)(7699016);SRVR:BL0PR2101MB0979;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB0979;
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(10201501046)(93006095)(93001095)(3002001)(3231254)(2018427008)(944501410)(52105095)(6055026)(149027)(150027)(6041310)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123560045)(20161123558120)(20161123562045)(20161123564045)(6072148)(201708071742011)(7699016);SRVR:BL0PR2101MB0963;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB0963;
 x-forefront-prvs: 06973FFAD3
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(366004)(39860400002)(396003)(376002)(39380400002)(346002)(189003)(199004)(36756003)(8676002)(10290500003)(22452003)(2351001)(81166006)(1730700003)(8656006)(99286004)(5660300001)(6916009)(97736004)(14454004)(6116002)(305945005)(478600001)(5640700003)(86362001)(81156014)(476003)(316002)(54906003)(6486002)(6436002)(7736002)(2616005)(86612001)(1076002)(186003)(3660700001)(2906002)(386003)(59450400001)(76176011)(6506007)(105586002)(46003)(2900100001)(4326008)(446003)(3280700002)(25786009)(15650500001)(102836004)(106356001)(68736007)(2501003)(39060400002)(6512007)(11346002)(8936002)(10090500001)(52116002)(107886003)(5250100002)(53936002)(486006)(22906009);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB0979;H:BL0PR2101MB1011.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(396003)(376002)(346002)(39380400002)(39860400002)(366004)(189003)(199004)(6116002)(81166006)(1076002)(5660300001)(186003)(8936002)(478600001)(10290500003)(81156014)(1730700003)(8676002)(59450400001)(486006)(76176011)(7736002)(386003)(476003)(102836004)(446003)(6506007)(305945005)(11346002)(2616005)(6916009)(25786009)(105586002)(2900100001)(106356001)(46003)(68736007)(10090500001)(22452003)(6436002)(52116002)(15650500001)(5640700003)(36756003)(6486002)(2906002)(3660700001)(107886003)(8656006)(97736004)(99286004)(3280700002)(2351001)(4326008)(54906003)(6512007)(316002)(53936002)(86612001)(5250100002)(86362001)(2501003)(39060400002)(14454004)(22906009);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB0963;H:BL0PR2101MB1011.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
 received-spf: None (protection.outlook.com: microsoft.com does not designate
  permitted sender hosts)
-x-microsoft-antispam-message-info: /v9XwXR0DeJksaHz9lnRNMhDFkXQnAbIMsl0xWFWZdJG8RCFy28Cl5nPjF/Pybepepv+wjNoChZjcFNAB1OQn7fLh1406wU5qlGlb1vNRavRYD605SpCNEslkLB3GgXYVF/+vZph+XWyPIITyIer3d0ra6L0bKa1Vrg19wpT3+jG0GIax9uTfLSAP2kdeLc5
+x-microsoft-antispam-message-info: MyVGD2wkU5h1BF2iz7sWZPF16oHyS1dzjPWCWVDt+/0wtX0JDKzCu51wFaQMjed6pCqYGhMmpLapYR3m66HaNcDpmGeE3PuyLCXhnfQVMDemuLqsRWnzGaXhufRBGxiW2+6VraJNwiarodzI/3+r/VY/A1+7Lj2ZEmH/EuwChJYoKP2EtW8tP0XtEwg/E7n5
 spamdiagnosticoutput: 1:99
 spamdiagnosticmetadata: NSPM
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-MS-Office365-Filtering-Correlation-Id: 69e83476-afe0-41d6-64fd-08d5cd479cb0
+X-MS-Office365-Filtering-Correlation-Id: 499dc665-f059-4ca8-d72c-08d5cd479e4a
 X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 69e83476-afe0-41d6-64fd-08d5cd479cb0
-X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Jun 2018 13:56:20.2424
+X-MS-Exchange-CrossTenant-Network-Message-Id: 499dc665-f059-4ca8-d72c-08d5cd479e4a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Jun 2018 13:56:22.9253
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB0979
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB0963
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the commit-graph file, the OID fanout chunk provides an index into
-the OID lookup. The 'verify' subcommand should find incorrect values
-in the fanout.
+The commit-graph file stores parents in a two-column portion of the
+commit data chunk. If there is only one parent, then the second column
+stores 0xFFFFFFFF to indicate no second parent.
 
-Similarly, the 'verify' subcommand should find out-of-order values in
-the OID lookup.
+The 'verify' subcommand checks the parent list for the commit loaded
+from the commit-graph and the one parsed from the object database. Test
+these checks for corrupt parents, too many parents, and wrong parents.
+
+Add a boundary check to insert_parent_or_die() for when the parent
+position value is out of range.
+
+The octopus merge will be tested in a later commit.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- commit-graph.c          | 36 ++++++++++++++++++++++++++++++++++++
- t/t5318-commit-graph.sh | 22 ++++++++++++++++++++++
- 2 files changed, 58 insertions(+)
+ commit-graph.c          | 28 ++++++++++++++++++++++++++++
+ t/t5318-commit-graph.sh | 18 ++++++++++++++++++
+ 2 files changed, 46 insertions(+)
 
 diff --git a/commit-graph.c b/commit-graph.c
-index f30b4ccee9..866a9e7e41 100644
+index 5df18394f9..6d8d774eb0 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -843,6 +843,9 @@ static void graph_report(const char *fmt, ...)
+@@ -244,6 +244,9 @@ static struct commit_list **insert_parent_or_die(struct=
+ commit_graph *g,
+ 	struct commit *c;
+ 	struct object_id oid;
 =20
- int verify_commit_graph(struct repository *r, struct commit_graph *g)
- {
-+	uint32_t i, cur_fanout_pos =3D 0;
-+	struct object_id prev_oid, cur_oid;
++	if (pos >=3D g->num_commits)
++		die("invalid parent position %"PRIu64, pos);
 +
- 	if (!g) {
- 		graph_report("no commit-graph file loaded");
- 		return 1;
-@@ -857,5 +860,38 @@ int verify_commit_graph(struct repository *r, struct c=
+ 	hashcpy(oid.hash, g->chunk_oid_lookup + g->hash_len * pos);
+ 	c =3D lookup_commit(&oid);
+ 	if (!c)
+@@ -907,6 +910,7 @@ int verify_commit_graph(struct repository *r, struct co=
+mmit_graph *g)
+=20
+ 	for (i =3D 0; i < g->num_commits; i++) {
+ 		struct commit *graph_commit, *odb_commit;
++		struct commit_list *graph_parents, *odb_parents;
+=20
+ 		hashcpy(cur_oid.hash, g->chunk_oid_lookup + g->hash_len * i);
+=20
+@@ -924,6 +928,30 @@ int verify_commit_graph(struct repository *r, struct c=
 ommit_graph *g)
- 	if (!g->chunk_commit_data)
- 		graph_report("commit-graph is missing the Commit Data chunk");
-=20
-+	if (verify_commit_graph_error)
-+		return verify_commit_graph_error;
+ 				     oid_to_hex(&cur_oid),
+ 				     oid_to_hex(get_commit_tree_oid(graph_commit)),
+ 				     oid_to_hex(get_commit_tree_oid(odb_commit)));
 +
-+	for (i =3D 0; i < g->num_commits; i++) {
-+		hashcpy(cur_oid.hash, g->chunk_oid_lookup + g->hash_len * i);
++		graph_parents =3D graph_commit->parents;
++		odb_parents =3D odb_commit->parents;
 +
-+		if (i && oidcmp(&prev_oid, &cur_oid) >=3D 0)
-+			graph_report("commit-graph has incorrect OID order: %s then %s",
-+				     oid_to_hex(&prev_oid),
-+				     oid_to_hex(&cur_oid));
++		while (graph_parents) {
++			if (odb_parents =3D=3D NULL) {
++				graph_report("commit-graph parent list for commit %s is too long",
++					     oid_to_hex(&cur_oid));
++				break;
++			}
 +
-+		oidcpy(&prev_oid, &cur_oid);
++			if (oidcmp(&graph_parents->item->object.oid, &odb_parents->item->object=
+.oid))
++				graph_report("commit-graph parent for %s is %s !=3D %s",
++					     oid_to_hex(&cur_oid),
++					     oid_to_hex(&graph_parents->item->object.oid),
++					     oid_to_hex(&odb_parents->item->object.oid));
 +
-+		while (cur_oid.hash[0] > cur_fanout_pos) {
-+			uint32_t fanout_value =3D get_be32(g->chunk_oid_fanout + cur_fanout_pos=
-);
-+			if (i !=3D fanout_value)
-+				graph_report("commit-graph has incorrect fanout value: fanout[%d] =3D =
-%u !=3D %u",
-+					     cur_fanout_pos, fanout_value, i);
-+
-+			cur_fanout_pos++;
++			graph_parents =3D graph_parents->next;
++			odb_parents =3D odb_parents->next;
 +		}
-+	}
 +
-+	while (cur_fanout_pos < 256) {
-+		uint32_t fanout_value =3D get_be32(g->chunk_oid_fanout + cur_fanout_pos)=
-;
-+
-+		if (g->num_commits !=3D fanout_value)
-+			graph_report("commit-graph has incorrect fanout value: fanout[%d] =3D %=
-u !=3D %u",
-+				     cur_fanout_pos, fanout_value, i);
-+
-+		cur_fanout_pos++;
-+	}
-+
++		if (odb_parents !=3D NULL)
++			graph_report("commit-graph parent list for commit %s terminates early",
++				     oid_to_hex(&cur_oid));
+ 	}
+=20
  	return verify_commit_graph_error;
- }
 diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index c03792a8ed..4809cc881f 100755
+index 2b9214bc83..9a3481c30f 100755
 --- a/t/t5318-commit-graph.sh
 +++ b/t/t5318-commit-graph.sh
-@@ -247,6 +247,7 @@ test_expect_success 'git commit-graph verify' '
- 	git commit-graph verify >output
- '
-=20
-+HASH_LEN=3D20
- GRAPH_BYTE_VERSION=3D4
- GRAPH_BYTE_HASH=3D5
- GRAPH_BYTE_CHUNK_COUNT=3D6
-@@ -258,6 +259,12 @@ GRAPH_BYTE_OID_LOOKUP_ID=3D$(($GRAPH_CHUNK_LOOKUP_OFFS=
-ET + \
- 			    1 * $GRAPH_CHUNK_LOOKUP_WIDTH))
- GRAPH_BYTE_COMMIT_DATA_ID=3D$(($GRAPH_CHUNK_LOOKUP_OFFSET + \
- 			     2 * $GRAPH_CHUNK_LOOKUP_WIDTH))
-+GRAPH_FANOUT_OFFSET=3D$(($GRAPH_CHUNK_LOOKUP_OFFSET + \
-+		       $GRAPH_CHUNK_LOOKUP_WIDTH * $GRAPH_CHUNK_LOOKUP_ROWS))
-+GRAPH_BYTE_FANOUT1=3D$(($GRAPH_FANOUT_OFFSET + 4 * 4))
-+GRAPH_BYTE_FANOUT2=3D$(($GRAPH_FANOUT_OFFSET + 4 * 255))
-+GRAPH_OID_LOOKUP_OFFSET=3D$(($GRAPH_FANOUT_OFFSET + 4 * 256))
-+GRAPH_BYTE_OID_LOOKUP_ORDER=3D$(($GRAPH_OID_LOOKUP_OFFSET + $HASH_LEN * 8)=
-)
+@@ -269,6 +269,9 @@ GRAPH_BYTE_OID_LOOKUP_ORDER=3D$(($GRAPH_OID_LOOKUP_OFFS=
+ET + $HASH_LEN * 8))
+ GRAPH_BYTE_OID_LOOKUP_MISSING=3D$(($GRAPH_OID_LOOKUP_OFFSET + $HASH_LEN * =
+4 + 10))
+ GRAPH_COMMIT_DATA_OFFSET=3D$(($GRAPH_OID_LOOKUP_OFFSET + $HASH_LEN * $NUM_=
+COMMITS))
+ GRAPH_BYTE_COMMIT_TREE=3D$GRAPH_COMMIT_DATA_OFFSET
++GRAPH_BYTE_COMMIT_PARENT=3D$(($GRAPH_COMMIT_DATA_OFFSET + $HASH_LEN))
++GRAPH_BYTE_COMMIT_EXTRA_PARENT=3D$(($GRAPH_COMMIT_DATA_OFFSET + $HASH_LEN =
++ 4))
++GRAPH_BYTE_COMMIT_WRONG_PARENT=3D$(($GRAPH_COMMIT_DATA_OFFSET + $HASH_LEN =
++ 3))
 =20
  # usage: corrupt_graph_and_verify <position> <data> <string>
  # Manipulates the commit-graph file at the position
-@@ -312,4 +319,19 @@ test_expect_success 'detect missing commit data chunk'=
- '
- 		"missing the Commit Data chunk"
+@@ -348,4 +351,19 @@ test_expect_success 'detect incorrect tree OID' '
+ 		"root tree OID for commit"
  '
 =20
-+test_expect_success 'detect incorrect fanout' '
-+	corrupt_graph_and_verify $GRAPH_BYTE_FANOUT1 "\01" \
-+		"fanout value"
++test_expect_success 'detect incorrect parent int-id' '
++	corrupt_graph_and_verify $GRAPH_BYTE_COMMIT_PARENT "\01" \
++		"invalid parent"
 +'
 +
-+test_expect_success 'detect incorrect fanout final value' '
-+	corrupt_graph_and_verify $GRAPH_BYTE_FANOUT2 "\01" \
-+		"fanout value"
++test_expect_success 'detect extra parent int-id' '
++	corrupt_graph_and_verify $GRAPH_BYTE_COMMIT_EXTRA_PARENT "\00" \
++		"is too long"
 +'
 +
-+test_expect_success 'detect incorrect OID order' '
-+	corrupt_graph_and_verify $GRAPH_BYTE_OID_LOOKUP_ORDER "\01" \
-+		"incorrect OID order"
++test_expect_success 'detect wrong parent' '
++	corrupt_graph_and_verify $GRAPH_BYTE_COMMIT_WRONG_PARENT "\01" \
++		"commit-graph parent for"
 +'
 +
  test_done
