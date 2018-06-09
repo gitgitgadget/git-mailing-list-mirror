@@ -2,56 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A8AC31F403
-	for <e@80x24.org>; Sat,  9 Jun 2018 17:48:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E6281F403
+	for <e@80x24.org>; Sat,  9 Jun 2018 17:56:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932141AbeFIRsR (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Jun 2018 13:48:17 -0400
-Received: from mail-oi0-f66.google.com ([209.85.218.66]:36314 "EHLO
-        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753342AbeFIRsQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Jun 2018 13:48:16 -0400
-Received: by mail-oi0-f66.google.com with SMTP id 14-v6so14589690oie.3
-        for <git@vger.kernel.org>; Sat, 09 Jun 2018 10:48:16 -0700 (PDT)
+        id S932165AbeFIR4k (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Jun 2018 13:56:40 -0400
+Received: from mail-ot0-f169.google.com ([74.125.82.169]:47073 "EHLO
+        mail-ot0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932146AbeFIR4k (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Jun 2018 13:56:40 -0400
+Received: by mail-ot0-f169.google.com with SMTP id q1-v6so19323423oth.13
+        for <git@vger.kernel.org>; Sat, 09 Jun 2018 10:56:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=OxW4HP/iKJp53TnZGWhuP0584tC4iHMuvF4AMKtiI/k=;
-        b=lZlyY0ahsj+MRDVElDKvE5lJ5Eqg/oY8whw6ud/PGT+tEFc4loJshtvhNBUvRAnUrD
-         j+l27hX44xc10pGf3oeC+qLPww7KurHKxbAr/t0z1OWx5VNsg8cIaPRYHFda1tIS9b4T
-         3mnHs6uBxFHtMtvDn548U5mdpEIUcLFwz+JezXi8F4H3c3ADL1ZewaWfGojb8zsInK5p
-         Wxigb5vzs7FGQh4/B4qsBlNSnGTnHm83WwW0BOZNv9oWep5A2mGk/TNcHjfNIUe/sdKY
-         Xn9pzJoIurM3efVCfrkMPmjaFpUpDgNOBX6nVwycfWx3U+m5nwNgxZGM/V2tIZThHViE
-         Ir4w==
+        bh=tRAG+eKG8J/VO17aNxtV0LlI35HdK4Ct/7VFSMsazSA=;
+        b=gtqXcGCYpWLmja/yZat2624v//aA2TFqvGxQQRhaekR4/dewJjUGUUGKnDw7Oo4UVK
+         5FWgtuCnWANv5qIhNExs6wbD9rdv9cnnS251n+woRU1j/GfvY2PspbL/W4RPxj5yocfp
+         ca6tVgHRJRLoibJEnqZludsmTr9vtAPC9q3brT3E7mx3HV+gFEuQgtj9chZc0rQjQY0l
+         iMAnByZaaXs3mINpVgPgM1IjkXyR5zP8CUP8xZiacpg5IuzhKNx5ltBdci/j0mI6CF2P
+         DCJcrBjvsjroefyT8+lCtTrIA3jXRVP120bqBi8Hi2h0WzX0zCOkDUQBoDAR8E7/Yaly
+         nxFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=OxW4HP/iKJp53TnZGWhuP0584tC4iHMuvF4AMKtiI/k=;
-        b=GPM3nQml1INbZAxiHgy+NlNTvkxZzx3CSmDcX5UA+bl+lGf24Aa5kP1BtekF3jkRxg
-         Rer2eHVxZREtiTBg1jESN3MeqsMjhbx0QaryldnKtK5Lm0vE/3MadUvUMkzD/4IqG4eG
-         n6v2kwcIO0PmhUIiECNusyHyV3xAgWJBIHKXaRxVkAvpPy87rYFQRhzpmnuRwlYWiQYI
-         5OSSIEKj+jXvmzOKDux7yPvIpYRabieU0WNBJjixZfoRnVyaTIjr0l5XSoYi+mO/KQPa
-         CAr01CyQCJZub7I5LiCg0uuXOSyfYr+yFkSPwlh/SjBPr848DvtaZEytnf/vWlQ1G1di
-         v9zw==
-X-Gm-Message-State: APt69E0gaeCicawI45TWNhXx+Vap8DLdKeSxiocj449SZJhT+VAXfFAc
-        Kv7hE/gq3s0GHgOvvKRZs/MYy1CTPfuLipbdS5A=
-X-Google-Smtp-Source: ADUXVKI9NnKOWlPw9nvLDqo6CRLta8B2uimUotboQaqeuzbeWKzVqWnVAcXFdlYjxTDhRjaexnqDANopPKOrITDD+nw=
-X-Received: by 2002:aca:f02:: with SMTP id 2-v6mr5780204oip.216.1528566496064;
- Sat, 09 Jun 2018 10:48:16 -0700 (PDT)
+        bh=tRAG+eKG8J/VO17aNxtV0LlI35HdK4Ct/7VFSMsazSA=;
+        b=RJ6OCudfmr/5jMQ2/fIT1/Ty23Sqk6sQsKthy78FWj6wakyAyi7dKuWY/chGCnBYsv
+         4aplGBsWDhSdvlVHcuA03sGPmVupu80j4pQXOaBsnoUkaH2hyrg6QCEr57cSFVfHb7Im
+         lAO5oDwHQbiAIUhGaYo0mdxHGqZWN+uT9nNp12Cr/GEp8AebWKRQJwC1dcybKGTuBVS6
+         12V2pgCTIhMBGieMJGC4QyluCFCWtSDtwPtODhEq8eBd5TM8EbslsDfBHX1VZdXqeVAF
+         whiJB9TkqI3QHjWJUtY/wxwQH4sbN024cnd/Xcm1pOvSrSJ9s/LTKylTTQCqBRw2hslj
+         tMBA==
+X-Gm-Message-State: APt69E2wMQt7+wuecyqwxw2gqlRAXMAJvbtOUh4WmuUc7RsKeWbi+H39
+        Sk0muXRLGBifqv1zFlGd/uNJXFzZnJHq0+tH8zk=
+X-Google-Smtp-Source: ADUXVKIhkqYYKb09dj848gyLOKvsLhnkk0czhVbHZzAIUFP/tJmrVYG8Vi6kN6mL3+swiRtaDmmyVH/fiyaGD/6sSwg=
+X-Received: by 2002:a9d:2989:: with SMTP id n9-v6mr6799105otb.152.1528566999458;
+ Sat, 09 Jun 2018 10:56:39 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180607140338.32440-1-dstolee@microsoft.com> <20180607140338.32440-17-dstolee@microsoft.com>
-In-Reply-To: <20180607140338.32440-17-dstolee@microsoft.com>
+References: <20180607140338.32440-1-dstolee@microsoft.com> <20180607140338.32440-18-dstolee@microsoft.com>
+In-Reply-To: <20180607140338.32440-18-dstolee@microsoft.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 9 Jun 2018 19:47:50 +0200
-Message-ID: <CACsJy8BD+hiA61gUb-EjoUnx2E9WtCrSBAtHDZuEVFp3M+jOWw@mail.gmail.com>
-Subject: Re: [PATCH 16/23] midx: prepare midxed_git struct
+Date:   Sat, 9 Jun 2018 19:56:13 +0200
+Message-ID: <CACsJy8CqoKWgd=ekxozaKzRjrU3NN9KUxrspk_iP+zxBVcV5pA@mail.gmail.com>
+Subject: Re: [PATCH 17/23] midx: read objects from multi-pack-index
 To:     Derrick Stolee <stolee@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Stefan Beller <sbeller@google.com>,
@@ -66,117 +66,83 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 7, 2018 at 7:02 PM Derrick Stolee <stolee@gmail.com> wrote:
+On Thu, Jun 7, 2018 at 6:55 PM Derrick Stolee <stolee@gmail.com> wrote:
 >
 > Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 > ---
->  midx.c         | 22 ++++++++++++++++++++++
+>  midx.c         | 96 ++++++++++++++++++++++++++++++++++++++++++++++++--
 >  midx.h         |  2 ++
->  object-store.h |  7 +++++++
->  packfile.c     |  6 +++++-
->  4 files changed, 36 insertions(+), 1 deletion(-)
+>  object-store.h |  1 +
+>  packfile.c     |  8 ++++-
+>  4 files changed, 104 insertions(+), 3 deletions(-)
 >
 > diff --git a/midx.c b/midx.c
-> index a49300bf75..5e9290ca8f 100644
+> index 5e9290ca8f..6eca8f1b12 100644
 > --- a/midx.c
 > +++ b/midx.c
-> @@ -175,6 +175,28 @@ struct midxed_git *load_midxed_git(const char *object_dir)
+> @@ -3,6 +3,7 @@
+>  #include "dir.h"
+>  #include "csum-file.h"
+>  #include "lockfile.h"
+> +#include "sha1-lookup.h"
+>  #include "object-store.h"
+>  #include "packfile.h"
+>  #include "midx.h"
+> @@ -64,7 +65,7 @@ struct midxed_git *load_midxed_git(const char *object_dir)
+>
+>         m = xcalloc(1, sizeof(*m) + strlen(object_dir) + 1);
+>         strcpy(m->object_dir, object_dir);
+> -       m->data = midx_map;
+> +       m->data = (const unsigned char*)midx_map;
+
+Hmm? Why is this typecast only needed now? Or is it not really needed at all?
+
+>
+>         m->signature = get_be32(m->data);
+>         if (m->signature != MIDX_SIGNATURE) {
+> @@ -145,7 +146,9 @@ struct midxed_git *load_midxed_git(const char *object_dir)
+>
+>         m->num_objects = ntohl(m->chunk_oid_fanout[255]);
+>
+> -       m->pack_names = xcalloc(m->num_packs, sizeof(const char *));
+> +       m->packs = xcalloc(m->num_packs, sizeof(*m->packs));
+> +
+> +       ALLOC_ARRAY(m->pack_names, m->num_packs);
+
+Please make this ALLOC_ARRAY change in the patch that adds
+xcalloc(m->num_packs).
+
+>         for (i = 0; i < m->num_packs; i++) {
+>                 if (i) {
+>                         if (ntohl(m->chunk_pack_lookup[i]) <= ntohl(m->chunk_pack_lookup[i - 1])) {
+> @@ -175,6 +178,95 @@ struct midxed_git *load_midxed_git(const char *object_dir)
 >         exit(1);
 >  }
 >
-> +int prepare_midxed_git_one(struct repository *r, const char *object_dir)
+> +static int prepare_midx_pack(struct midxed_git *m, uint32_t pack_int_id)
 > +{
-> +       struct midxed_git *m = r->objects->midxed_git;
-> +       struct midxed_git *m_search;
+> +       struct strbuf pack_name = STRBUF_INIT;
 > +
-> +       if (!core_midx)
+> +       if (pack_int_id >= m->num_packs)
+> +               BUG("bad pack-int-id");
+> +
+> +       if (m->packs[pack_int_id])
 > +               return 0;
 > +
-> +       for (m_search = m; m_search; m_search = m_search->next)
-> +               if (!strcmp(object_dir, m_search->object_dir))
-> +                       return 1;
+> +       strbuf_addstr(&pack_name, m->object_dir);
+> +       strbuf_addstr(&pack_name, "/pack/");
+> +       strbuf_addstr(&pack_name, m->pack_names[pack_int_id]);
+
+Just use strbuf_addf()
+
 > +
-> +       r->objects->midxed_git = load_midxed_git(object_dir);
-> +
-> +       if (r->objects->midxed_git) {
-> +               r->objects->midxed_git->next = m;
-> +               return 1;
-> +       }
-> +
-> +       return 0;
+> +       m->packs[pack_int_id] = add_packed_git(pack_name.buf, pack_name.len, 1);
+> +       strbuf_release(&pack_name);
+> +       return !m->packs[pack_int_id];
+
+This is a weird return value convention. Normally we go zero/negative
+or non-zero/zero for success/failure.
+
 > +}
-> +
->  static size_t write_midx_header(struct hashfile *f,
->                                 unsigned char num_chunks,
->                                 uint32_t num_packs)
-> diff --git a/midx.h b/midx.h
-> index a1d18ed991..793203fc4a 100644
-> --- a/midx.h
-> +++ b/midx.h
-> @@ -5,8 +5,10 @@
->  #include "cache.h"
->  #include "object-store.h"
->  #include "packfile.h"
-> +#include "repository.h"
->
->  struct midxed_git *load_midxed_git(const char *object_dir);
-> +int prepare_midxed_git_one(struct repository *r, const char *object_dir);
->
->  int write_midx_file(const char *object_dir);
->
-> diff --git a/object-store.h b/object-store.h
-> index 9b671f1b0a..7908d46e34 100644
-> --- a/object-store.h
-> +++ b/object-store.h
-> @@ -130,6 +130,13 @@ struct raw_object_store {
->          */
->         struct oidmap *replace_map;
->
-> +       /*
-> +        * private data
-> +        *
-> +        * should only be accessed directly by packfile.c and midx.c
-> +        */
-> +       struct midxed_git *midxed_git;
-> +
->         /*
->          * private data
->          *
-> diff --git a/packfile.c b/packfile.c
-> index 1a714fbde9..b91ca9b9f5 100644
-> --- a/packfile.c
-> +++ b/packfile.c
-> @@ -15,6 +15,7 @@
->  #include "tree-walk.h"
->  #include "tree.h"
->  #include "object-store.h"
-> +#include "midx.h"
->
->  char *odb_pack_name(struct strbuf *buf,
->                     const unsigned char *sha1,
-> @@ -893,10 +894,13 @@ static void prepare_packed_git(struct repository *r)
->
->         if (r->objects->packed_git_initialized)
->                 return;
-> +       prepare_midxed_git_one(r, r->objects->objectdir);
->         prepare_packed_git_one(r, r->objects->objectdir, 1);
->         prepare_alt_odb(r);
-> -       for (alt = r->objects->alt_odb_list; alt; alt = alt->next)
-> +       for (alt = r->objects->alt_odb_list; alt; alt = alt->next) {
-> +               prepare_midxed_git_one(r, alt->path);
->                 prepare_packed_git_one(r, alt->path, 0);
-> +       }
-
-Ah, so the object path and the linked list in midxed_git is for
-alternates. Makes sense. Would have saved me the trouble if you only
-introduced those fields now, when they are actually used (and become
-self explanatory)
-
->         rearrange_packed_git(r);
->         prepare_packed_git_mru(r);
->         r->objects->packed_git_initialized = 1;
-> --
-> 2.18.0.rc1
->
 -- 
 Duy
