@@ -2,162 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 670661F403
-	for <e@80x24.org>; Sat,  9 Jun 2018 18:14:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E63981F403
+	for <e@80x24.org>; Sat,  9 Jun 2018 18:46:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753484AbeFISOO (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Jun 2018 14:14:14 -0400
-Received: from mail-ot0-f195.google.com ([74.125.82.195]:34690 "EHLO
-        mail-ot0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753392AbeFISON (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Jun 2018 14:14:13 -0400
-Received: by mail-ot0-f195.google.com with SMTP id r18-v6so4910262otk.1
-        for <git@vger.kernel.org>; Sat, 09 Jun 2018 11:14:13 -0700 (PDT)
+        id S933270AbeFISqF (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Jun 2018 14:46:05 -0400
+Received: from mail-oi0-f68.google.com ([209.85.218.68]:38596 "EHLO
+        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933150AbeFISqE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Jun 2018 14:46:04 -0400
+Received: by mail-oi0-f68.google.com with SMTP id d5-v6so14634934oib.5
+        for <git@vger.kernel.org>; Sat, 09 Jun 2018 11:46:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=xWYDdiq1CFHEXEZpa2Fif/5D6P/F0gOvMRYpTLWofFg=;
-        b=Tuz3IzlUfsTjt6MZfItdP42w5nC5iI2LcY+UP7uZu2VdgJPRjZxDM4cB64SwgVw5aK
-         jkZmZ7aGSBmR+5p4fXjb0BcGkw5d0TA19Eyd91mGqTr3qh9kaQu72ekjfw69TomNwqFz
-         M0PmMgEnOcOyBTu4w2jsGFDLV9BJlxp2sM/qOQwzrz6Ka9ChOp+w2eoQrdNJIfo+35rj
-         ChaVr619CQ4a2bUybxCtP2iufIRPAE6hTfeSYTclzV8GB65Qt4+V/iNP+U9bCDfnPHtU
-         FCBI3nO8E4At9fRQJ4Bm4XfbKcRv0pTiTPywJ96Mae57a2XBMUzOty/S/T/klMy0UAEW
-         6WKQ==
+         :cc:content-transfer-encoding;
+        bh=Q5doa5BCZZ7GH4gFdAzV4kbuTSA3n29/LTI6aEuTweM=;
+        b=A6E6AEMeudyFq2eSTxtZEdg/WMHh4+nmXtC45jDW9mCapNkyzhYcD0khfBFvTXiWCu
+         xF27CMzrqeBuv+9RrH6pgIy6/2aQ/BgqRCSxlaqCh2BoY6nNtBs7+EfyhoRshjqqzb8g
+         HJIgXeEXNQxz8X7NTc34w3SFOganY7pYga/OL9n6NieLSS5kUQGivLE6OqSIVce9TJoa
+         S94i9Oz7M46obstgVHfHNbPDd2KCA5C+f7mno8t2yFRWIO25VXaKur3I0+5RQHikHDMY
+         t3gaH1bQq9GIDGk6buV65nomIcb69NGgVla9stLl63LPpdPix51/821aETrxEwyN5OlG
+         et3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=xWYDdiq1CFHEXEZpa2Fif/5D6P/F0gOvMRYpTLWofFg=;
-        b=e9uE1aMdqYKW+MB+5PGaaaH6DaDL9sjm96CipUnRtMpEfaSTFjlNDg2ggfhQMQ1ko1
-         EJo6EOOnL+7xSVs+NRyUG2z/WFItCub92TkPIIDHWr7S17F/pmGvCIdZw1NEKbXI70QM
-         D9QAkuw5lpmf3f3aotXwhZA9xJ4fMfHJVR+d6C8gBIhO4TgkOtyJbv78AHG6lQ/oLfj3
-         H7ZQ+c8+QGP3uuFLbPu7AynFNk2rduS7AM6SK7InsiyYmmc+0IEM380WFP9RuyvbfaCu
-         P/39PuUUXIHwCYki2x2dNHg4ZXY+QZzqOv4YQcqHlVtBKM6BAj6ODoIG9cstJn/7IXRd
-         HJsg==
-X-Gm-Message-State: APt69E0rnt+Yt0vShYkcjVp7hSGkay+W4jyag1ezv2DDhgs21jr1UgUM
-        6z3Hry6HbEYw67jj2jwx0leEpRqNm6il2Zib5zk=
-X-Google-Smtp-Source: ADUXVKKqG1Hsbm357UqOM+HvvHoPUxd4IeRXyGbtRTrkqGy6yCMoJ9UlSrLDmevuudPr2IkhMqpdvNLXVKi3XiYez0s=
-X-Received: by 2002:a9d:32e1:: with SMTP id u88-v6mr1161355otb.173.1528568053122;
- Sat, 09 Jun 2018 11:14:13 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Q5doa5BCZZ7GH4gFdAzV4kbuTSA3n29/LTI6aEuTweM=;
+        b=WXTIyjgi1jy7i3KYgf8hgw0+nihoU8qD/cehI2j7rJwcCyrB7VJKQna/1qRJCJiIcF
+         obn/FvjibwpH4nMW0IeLi/wkbe3QfU1Nmn4WtSbwbXeT2+UgVASn3VdTCPcGs9w7Zhe7
+         I6iQfN8LfCl82WoqYGIHhAaTrjQR0j1fnaHT7Jsc7KpRzgYToeaF7CNRkg37u5jFaJNO
+         Qz31tHU7S/nb6Q/Mi9FkUrO7pBMF1O5cAWNfULOa/quOTMQ5TE0bwh576OgZVxzQvymX
+         PwwLXL1y1B6LIbnwRdJLUH6LU6h2AIktk6a4kvultxF2u6kmCde6S1t5+EQryz1sohY4
+         69Cg==
+X-Gm-Message-State: APt69E3+NPx1eAririAdwcGWDDqrWGR1pSvUBEql5zjmcMnPE0gi60kj
+        j5zaEcc9oiiPIEFCxxnF7ur3JDmCEKhKaRLk5Jw=
+X-Google-Smtp-Source: ADUXVKIXh59oFeQVTvsF65I7Dpn8kDl/FwAVAxGn1VhLjefBe3UqewOgRFO/J6Q0AzryNoGBUkVd/xYe/xEp4CQ2BT0=
+X-Received: by 2002:aca:fcc8:: with SMTP id a191-v6mr6010595oii.34.1528569964266;
+ Sat, 09 Jun 2018 11:46:04 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180607140338.32440-1-dstolee@microsoft.com> <20180607140338.32440-24-dstolee@microsoft.com>
-In-Reply-To: <20180607140338.32440-24-dstolee@microsoft.com>
+References: <20180606165016.3285-1-pclouds@gmail.com> <20180606170243.4169-1-pclouds@gmail.com>
+ <20180606170243.4169-12-pclouds@gmail.com> <CABPp-BGn8mz5tPrVk6fX3JKcaSuz4_XQSsSmvEMT_H5i4mF2Lg@mail.gmail.com>
+In-Reply-To: <CABPp-BGn8mz5tPrVk6fX3JKcaSuz4_XQSsSmvEMT_H5i4mF2Lg@mail.gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 9 Jun 2018 20:13:47 +0200
-Message-ID: <CACsJy8BHgqqrDNvU_oy0+_QmDW-wt-jBvWT9oJ9H1pA_tmuVFg@mail.gmail.com>
-Subject: Re: [PATCH 23/23] midx: clear midx on repack
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Martin Fick <mfick@codeaurora.org>
+Date:   Sat, 9 Jun 2018 20:45:38 +0200
+Message-ID: <CACsJy8DoU_qkghnNWKPy9+z=Lktg6jSbBFk6xEUFwAUos4Gu5A@mail.gmail.com>
+Subject: Re: [PATCH v4 17/23] read-cache.c: remove an implicit dependency on the_index
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 7, 2018 at 4:07 PM Derrick Stolee <stolee@gmail.com> wrote:
+On Sat, Jun 9, 2018 at 8:10 PM Elijah Newren <newren@gmail.com> wrote:
 >
-> If a 'git repack' command replaces existing packfiles, then we must
-> clear the existing multi-pack-index before moving the packfiles it
-> references.
-
-I think there are other places where we add or remove pack files and
-need to reprepare_packed_git(). Any midx invalidation should be part
-of that as well.
-
+> On Wed, Jun 6, 2018 at 10:02 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Du=
+y <pclouds@gmail.com> wrote:
+> > diff --git a/merge-recursive.c b/merge-recursive.c
+> > index b404ebac7c..4f054d6dbb 100644
+> > --- a/merge-recursive.c
+> > +++ b/merge-recursive.c
+> > @@ -315,7 +315,7 @@ static int add_cacheinfo(struct merge_options *o,
+> >         struct cache_entry *ce;
+> >         int ret;
+> >
+> > -       ce =3D make_cache_entry(mode, oid ? oid->hash : null_sha1, path=
+, stage, 0);
+> > +       ce =3D make_index_entry(&the_index, mode, oid ? oid->hash : nul=
+l_sha1, path, stage, 0);
+> >         if (!ce)
+> >                 return err(o, _("add_cacheinfo failed for path '%s'; me=
+rge aborting."), path);
 >
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  builtin/repack.c | 8 ++++++++
->  midx.c           | 8 ++++++++
->  midx.h           | 1 +
->  3 files changed, 17 insertions(+)
->
-> diff --git a/builtin/repack.c b/builtin/repack.c
-> index 6c636e159e..66a7d8e8ea 100644
-> --- a/builtin/repack.c
-> +++ b/builtin/repack.c
-> @@ -8,6 +8,7 @@
->  #include "strbuf.h"
->  #include "string-list.h"
->  #include "argv-array.h"
-> +#include "midx.h"
->
->  static int delta_base_offset = 1;
->  static int pack_kept_objects = -1;
-> @@ -174,6 +175,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
->         int no_update_server_info = 0;
->         int quiet = 0;
->         int local = 0;
-> +       int midx_cleared = 0;
->
->         struct option builtin_repack_options[] = {
->                 OPT_BIT('a', NULL, &pack_everything,
-> @@ -340,6 +342,12 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
->                                 continue;
->                         }
->
-> +                       if (!midx_cleared) {
-> +                               /* if we move a packfile, it will invalidated the midx */
+> There's also a refresh_cache_entry() call about ten lines after this;
+> since you converted all other make_cache_entry() and
+> refresh_cache_entry() calls in this patch, I'm curious if that one was
+> left out for a reason or was just an oversight.
 
-What about removing packs, which also happens in repack? If the
-removed pack is part of midx, then midx becomes invalid as well.
+Ah I didn't mean to convert or kill refresh_cache_entry(), not outside
+read-cache.c. I rely on NO_THE_INDEX_COMPATIBILITY_MACROS to catch
+*cache* functions and if we set it in this file, we're going to have a
+lot more work to do and plenty of the_index will show up.
 
-> +                               clear_midx_file(get_object_directory());
-> +                               midx_cleared = 1;
-> +                       }
-> +
->                         fname_old = mkpathdup("%s/old-%s%s", packdir,
->                                                 item->string, exts[ext].name);
->                         if (file_exists(fname_old))
-> diff --git a/midx.c b/midx.c
-> index e46f392fa4..1043c01fa7 100644
-> --- a/midx.c
-> +++ b/midx.c
-> @@ -913,3 +913,11 @@ int write_midx_file(const char *object_dir)
->         FREE_AND_NULL(pack_names);
->         return 0;
->  }
-> +
-> +void clear_midx_file(const char *object_dir)
+> There are also a lot of add_cache_entry() calls in this function.  I'm
+> guessing we should either convert all of those too, or just change
+> back this particular make_index_entry to make_cache_entry() as it was;
+> it seems weird to have a mix of explicit the_index and implicit
+> the_index usages in the same function.
 
-delete_ may be more obvious than clear_
+Yes some files still have the mix of the_index and *cache*(). This one
+and apply.c come to mind. There's more work to do to kill all
+the_index outside builtin/
 
-> +{
-> +       char *midx = get_midx_filename(object_dir);
-> +
-> +       if (remove_path(midx))
-> +               die(_("failed to clear multi-pack-index at %s"), midx);
+> If we convert them all,
+> perhaps we should consider having merge_options store the index we're
+> working on?  If you want to punt this until later or leave it for me
+> while I make all my ongoing merge-recursive changes, that's fine.
+> Just thought I'd point it out.
 
-die_errno()
-
-> +}
-> diff --git a/midx.h b/midx.h
-> index 6996b5ff6b..46f9f44c94 100644
-> --- a/midx.h
-> +++ b/midx.h
-> @@ -18,5 +18,6 @@ int midx_contains_pack(struct midxed_git *m, const char *idx_name);
->  int prepare_midxed_git_one(struct repository *r, const char *object_dir);
->
->  int write_midx_file(const char *object_dir);
-> +void clear_midx_file(const char *object_dir);
->
->  #endif
-> --
-> 2.18.0.rc1
->
-
-
--- 
+Right you're updating merge-recursive.c, I'd love it if you could
+define NO_THE_INDEX_COMPATIBILITY_MACROS here. Yes merge_options
+sounds like a good place to tell merge-recursive where to get a struct
+index_state.
+--=20
 Duy
