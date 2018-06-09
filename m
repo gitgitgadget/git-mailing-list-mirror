@@ -7,56 +7,63 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3305A1F403
-	for <e@80x24.org>; Sat,  9 Jun 2018 13:44:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17E411F403
+	for <e@80x24.org>; Sat,  9 Jun 2018 13:56:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753278AbeFINoc (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Jun 2018 09:44:32 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:43899 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753036AbeFINob (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Jun 2018 09:44:31 -0400
-Received: by mail-pf0-f193.google.com with SMTP id j20-v6so7965169pff.10
-        for <git@vger.kernel.org>; Sat, 09 Jun 2018 06:44:31 -0700 (PDT)
+        id S1753194AbeFIN4Z (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Jun 2018 09:56:25 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:40184 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753062AbeFIN4Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Jun 2018 09:56:24 -0400
+Received: by mail-pg0-f66.google.com with SMTP id l2-v6so7645702pgc.7
+        for <git@vger.kernel.org>; Sat, 09 Jun 2018 06:56:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=c7O5OLXRpCYWNc0M8ImdyR1cfB8Cly8/w7YNQSc0F/w=;
-        b=VDRpx7CZhmEibJ0nvpSlj0XFOvhQwBB1l9hk+wtyK9+349iGwcs+6p8t9t64LUGKSm
-         2vipYszfdinqMRvcLUbY/S4uOE4h6wsEDMX6BfE12O+j2dZ3pci3el48ejGY/b46UlFb
-         OMn/hFfQkoblyGiWBHrdZB12ZOv0Fe8dgCRnxMyskxFPPAJavRg0OTHf0//y5yhYWYVl
-         ys6IDoKVO4v2fczqlM4zparWiiS/zes5oEHo4S7eSejUEA1Tcpt0v/4rW3ZyQ4cpf+tZ
-         ddgancHA/MP3sbKPTVtjCP8Rq7tf/pWTtQ1/SgKIyYeExBDIP8NbdviQzuFxqrlOajNl
-         /ZZg==
+        bh=X9QiuW856+ytAltrd5eTSRjmipdBl14OhTRwqoY3m0g=;
+        b=ksc37k6JMnsM3Fixlpx+ZNF2soX0qOy6mYWBW8+mUNmeSPqsNVV3vbzAAjVvt3PYo0
+         XRiNzcF9gFwuv331zajpJ0J9yQxHL47OLUoESSxH0JV4umgojRq4h2VvlI3XZnwH88o1
+         f20vtkgYkuGWDD7zVo7I329wrwSRMJM0NzzQABVh8WsMtcHa2IhVQnGvRINvyBmM3+0X
+         4wdZk7EcpxVhWvcYoXq9YSm/nsR+Xb/AhRRIjKxrSGdSLt4HsX+csHCD+vJnytlQ9dQl
+         qnjN7oWqQqchPLMKAiwZONzECHZXOwczdWlLe3myvZ+CnrdVqeL4C8xT2A86CWoVqdQ0
+         PY+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=c7O5OLXRpCYWNc0M8ImdyR1cfB8Cly8/w7YNQSc0F/w=;
-        b=clv+Vr1i7lI8DasJiQ39jkldWWGncIovYrz6cluu+Fmem6GPuyLe32zGsvudnMUPOk
-         q8p1j5y0++FFjn4QpVLtTO4/f4JOC5qnM7ZT1PfVT9cN+pRRbHkEYLYfJu5EIQkDtGqv
-         VOZ7b0oSPSpQHU1q0FmE0mVD9HmWduDhmi84JZlvBvPVpdOnpwiXeqr02oTr6Hd9Invm
-         V5fZ/c135NeJtyorVEHH/VSJ8I7/XEhOggTE2xLP93Ss+wFjBYUBR9wYZ0t09P3PvuKU
-         /+SYNArwz6rC0FfCnFUVZutHmNSKm+PrFpBDm3p63MW3T+IcRXEI/vpaRfiuvo9lFRru
-         Nu6Q==
-X-Gm-Message-State: APt69E3iJHJBtp6+kNDRYUgVSpOE1vcNpVN+i4/hK4fIrrkSZvk+IAvW
-        cm+8GRb2ztdUQU4zHkq/BggvtX/cFl+Raw2OAk02FnFk
-X-Google-Smtp-Source: ADUXVKJDlPybUlcZ42wMtCwCYF1QThTAjvcwmtpkQwYDTbhWd6uEdkJ6blmytUS/JKUjkco4Of3949mMEizzqDG47oU=
-X-Received: by 2002:a63:6dc3:: with SMTP id i186-v6mr9000530pgc.316.1528551870792;
- Sat, 09 Jun 2018 06:44:30 -0700 (PDT)
+        bh=X9QiuW856+ytAltrd5eTSRjmipdBl14OhTRwqoY3m0g=;
+        b=ofYj1GT65ec310FTtncdqnmitQFVQ8Yc72iikK8I9Ylc/u+gfLudh6gX5moYsCycvZ
+         ASRR0j7pPDC888qINCD/dKg4rZhGhaAWrfCHlUFHZxt4AKQxF6N/nGNtToAgpc5h3/RV
+         CNSNh5iulkyxQjNS+NPg7sPtEOqjFM4qoOVuqN7jDu9JU5lEg9PFS6gI35RRqAd8NIoh
+         gOYlwAkCvxT/6Mwmn10OJT9zySDPZT8K2x2WYpfHQrG5oMP7ug6nipakX6t4XhghS4tk
+         8WlhM9U35puJbgd5Auo0hde0e1Gak7H6d9V5ahZ0inbbcs0yTvNKaDAt2lOrRe/J+fNa
+         5rlg==
+X-Gm-Message-State: APt69E3idOvykGLBz2QLpoN81bUyuYdME226M8l/IWXTRWHRXNkmyWyB
+        5K1EEmImpr1bmwJSyot2btFQpCDidpu823ONWak=
+X-Google-Smtp-Source: ADUXVKIRWbjAoq+Q61LK5Jtc4EUEjfF8EDYKyiFSqDVRfTklZvgVM+b4gXoJXf2yvup1ai8+3SIUA4GUVVEGyz7Mf6E=
+X-Received: by 2002:a62:da59:: with SMTP id w25-v6mr10274633pfl.161.1528552584083;
+ Sat, 09 Jun 2018 06:56:24 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a17:90a:760e:0:0:0:0 with HTTP; Sat, 9 Jun 2018 06:44:30
+Received: by 2002:a17:90a:760e:0:0:0:0 with HTTP; Sat, 9 Jun 2018 06:56:23
  -0700 (PDT)
-In-Reply-To: <20180609092135.GC6817@sigill.intra.peff.net>
-References: <20180609083159.GA6158@sigill.intra.peff.net> <CAN0heSqHRpOerHV8tgA-ntU6QvYQMxgrXPCPsrVcHLKUSwANXQ@mail.gmail.com>
- <20180609092135.GC6817@sigill.intra.peff.net>
+In-Reply-To: <87a7s4471y.fsf@evledraar.gmail.com>
+References: <20180608224136.20220-1-avarab@gmail.com> <20180608224136.20220-10-avarab@gmail.com>
+ <CAN0heSoaNotgsvbLv03tqRxC75rXzS6LvvnYBrS=f6pk-Y_x3Q@mail.gmail.com> <87a7s4471y.fsf@evledraar.gmail.com>
 From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sat, 9 Jun 2018 15:44:30 +0200
-Message-ID: <CAN0heSqkcZ5KBpaq7R45A7wPxQ3F=6PKeHqwAQztdJyz31Vdwg@mail.gmail.com>
-Subject: Re: [PATCH] fsck: avoid looking at NULL blob->object
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Date:   Sat, 9 Jun 2018 15:56:23 +0200
+Message-ID: <CAN0heSrh6kJyiAATc377sEg46O=ofEnczCrBubrSM5pxT72W7Q@mail.gmail.com>
+Subject: Re: [PATCH 09/20] abbrev tests: test for "git-log" behavior
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -64,27 +71,57 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9 June 2018 at 11:21, Jeff King <peff@peff.net> wrote:
-> On Sat, Jun 09, 2018 at 10:50:36AM +0200, Martin =C3=85gren wrote:
+On 9 June 2018 at 11:56, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gma=
+il.com> wrote:
 >
->> On 9 June 2018 at 10:32, Jeff King <peff@peff.net> wrote:
->> > Except it _does_ do one non-trivial thing, which is call the
->> > report() function, which wants us to pass a pointer to a
->> > "struct object". Which we don't have (we have only a "struct
->> > object_id"). So we erroneously passed the NULL object, which
+> On Sat, Jun 09 2018, Martin =C3=85gren wrote:
+>
+>> On 9 June 2018 at 00:41, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@=
+gmail.com> wrote:
+>>> The "log" family of commands does its own parsing for --abbrev in
+>>> revision.c, so having dedicated tests for it makes sense.
 >>
->> s/passed/dereferenced/? Probably doesn't affect the fix though.
+>>> +for i in $(test_seq 4 40)
+>>
+>> I've just been skimming so might have missed something, but I see
+>> several instances of this construct, and I wonder what this brute-force
+>> approach really buys us. An alternative would be, e.g., "for i in 4 23
+>> 40". That is, min/max and some arbitrary number in between (odd because
+>> the others are even).
+>>
+>> Of course, we might have a bug which magically happens for the number 9,
+>> but I'd expect us to test for that only if we have some reason to
+>> believe that number 9 is indeed magical.
 >
-> Well, we passed it, and then that function dereferenced it. :)
+> Good point, I'll change this in v2, or at least guard it with
+> EXPENSIVE. I hacked it up like this while exhaustively testing things
+> during development, and discovered some edge cases (e.g. "0" is special
+> sometimes).
+
+Ah, "useful during hacking" explains why you did it like this. Of your
+two approaches, I'd probably favour "make it cheaper" over "mark it as
+EXPENSIVE". Nothing I feel strongly about.
+
+>> Also, 40 is of course tied to SHA-1. You could perhaps define a variable
+>> at the top of this file to simplify a future generalization. (Same for
+>> 39/41 which are related to 40.)
 >
-> I'm going to re-roll for the minor bits that Eric pointed out, so I'll
-> try to word this better.
+> I forgot to note this in the commit message, but I intentionally didn't
+> guard this test with the SHA1 prereq, there's nothing per-se specific to
+> SHA-1 here, it's not a given that whatever our NewHash is that we won't
+> use 40 characters, and the rest of the magic constants like 4 and 7 is
+> something we're likely to retain with NewHash.
 
-My bad. I somehow thought we get into trouble already before we call
-`report()`. Well, we do, since we have undefined behavior. But for all
-practical purposes `&blob->object` and `blob` are the same
-(NULL-)pointer so we only crash after we call `report()`.
+I'd tend to agree about not marking this SHA1.
 
-Anyway, obviously no need to do anything about this in a v3.
+> Although maybe we should expose GIT_SHA1_HEXSZ to the test suite.
+
+It seems like brian's "test_translate"-approach [1] would be a good
+choice of tool for this. That is, you'd just define something at the top
+of this file for now, then once that tool is in place, a one-line change
+could get "hexsz" from `test_translate` instead.
+
+[1] https://public-inbox.org/git/20180604235229.279814-2-sandals@crustytoot=
+hpaste.net/
 
 Martin
