@@ -2,110 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4DBF71F403
-	for <e@80x24.org>; Sat,  9 Jun 2018 11:04:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 469B31F403
+	for <e@80x24.org>; Sat,  9 Jun 2018 11:27:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753122AbeFILEU (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Jun 2018 07:04:20 -0400
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:42068 "EHLO
-        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752923AbeFILET (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Jun 2018 07:04:19 -0400
-Received: by mail-lf0-f68.google.com with SMTP id v135-v6so23751141lfa.9
-        for <git@vger.kernel.org>; Sat, 09 Jun 2018 04:04:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Ry/HemQtbLhD06EiCKz3S4dCvVqbsLkEPHDD9ik+FRw=;
-        b=kr8oH4cNWnTWnOJQEkUmNKtdierWPVwotHtnifYhTQyJfGthLqnzjI3Ngfu7LkAVtH
-         9yn5BJQoFQvYgBUzNJPoS0cmKneFa+639SLmtuJt3e9cSezdtuy862bdFftca73A7CYo
-         hO9YNf+CxlK6FSLE4lrfZNgT6ZO9ir22nubdKUiASv4QopO109yUBq3KB6Wc2KodziXa
-         0oYCOw6S4ojatvcVrewrEdL/UpO2nfS0k01g0Yke7NizVa5kk1aUsIs6NY9hlNM50C+5
-         1MlWL2XBt+WjAu8V/vDRI2HFMfv7UAh4hjtPqnFiA0v0VEEcbxSYGuQ8atoQdacfd8Yi
-         qQAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Ry/HemQtbLhD06EiCKz3S4dCvVqbsLkEPHDD9ik+FRw=;
-        b=YE8uDT9qWj8F+ojoUrvHri/pT8kZnNHtsamsFgTSdrYSYZhd0mZHtTpOeP7JIXG4fz
-         G5i8NrmV7aG47rfKHsVSrMEl/oh36MAdvOz3JxBh/QMYmJrw7mrVN4xdqD7/Sj+JL5kP
-         O6OCrYKJMYfN+6liRMKzvAvijiqxI1nIeYL6fo6Ju2orhMcXmDb0dmyzk3eTH2icJbQo
-         JtAk4lCmWzDeirMHWV4Ak9Evn4ZV/AySPWgsFmWo7pWF31GiwzacAmqPbIzV7VgZLYUe
-         V9L7JIEShZlhEOqtM9961clrRZuMY9zf4ikuZmIId7zONKiW0OTuXoDpwOk+X4TUiii8
-         D+Xw==
-X-Gm-Message-State: APt69E3vXlWxG4x0HSdCCJ6VvOfxrHB/1G+JQZoqToFlgo+QR1OTbj91
-        4UhsCKk0jUiWuqB3mQngHApiIw==
-X-Google-Smtp-Source: ADUXVKKoYKcelO2Ed2RQoCc+WH9UYVzI2uqSubMUV6+siS2jsNwZzQvKpzLz5/+9L0nQYA3Vb7/bxg==
-X-Received: by 2002:a2e:9b52:: with SMTP id o18-v6mr4580057ljj.49.1528542257603;
-        Sat, 09 Jun 2018 04:04:17 -0700 (PDT)
-Received: from duynguyen.home (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id a125-v6sm5425070lfb.61.2018.06.09.04.04.16
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 09 Jun 2018 04:04:16 -0700 (PDT)
-Date:   Sat, 9 Jun 2018 13:04:15 +0200
-From:   Duy Nguyen <pclouds@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>,
-        Heiko Voigt <hvoigt@hvoigt.net>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Subject: Re: BUG: submodule code prints '(null)'
-Message-ID: <20180609110414.GA5273@duynguyen.home>
-References: <CACsJy8CNrQ-CKoJ+1NCR1rsO+v0ZNZ9CVAFsJpmcRWZY6HUtKw@mail.gmail.com>
+        id S1753120AbeFIL1D (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Jun 2018 07:27:03 -0400
+Received: from mout.web.de ([212.227.15.14]:52125 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752923AbeFIL1C (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Jun 2018 07:27:02 -0400
+Received: from [192.168.178.36] ([79.237.242.156]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MDPYb-1fUa0m2gVZ-00Gt9R; Sat, 09
+ Jun 2018 13:26:53 +0200
+Subject: Re: [PATCH 2/2] builtin/blame: highlight recently changed lines
+To:     Stefan Beller <sbeller@google.com>
+Cc:     avarab@gmail.com, git@vger.kernel.org, gitster@pobox.com
+References: <CAGZ79kYjV6Wpzymx1phL7EC3BxdWr5gitCOdE6=fJFFnz4zYiA@mail.gmail.com>
+ <20180417213049.118995-1-sbeller@google.com>
+ <20180417213049.118995-2-sbeller@google.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <737e4f2e-9896-0119-2c43-655ac29fe018@web.de>
+Date:   Sat, 9 Jun 2018 13:26:53 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACsJy8CNrQ-CKoJ+1NCR1rsO+v0ZNZ9CVAFsJpmcRWZY6HUtKw@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20180417213049.118995-2-sbeller@google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:+dR18Jo4iiGQQTaH58uYn1lpft7eC6rQVaO3V92d8x7Rj3Cu8lr
+ Ude28NJH5s4lk+dVVmywcurXilyhmTUa6YbipL+3GRmTXUnY0ZKBCjGcLXcfjKadQwc0j0N
+ tU5aNpy0LCb3ZdedFa33BDIRueGwUaZRWwhscCT105mtBkRXs6YfcL2wBbZygdYiB0Iw63o
+ RO9+mq2XRQnac2c37rzGA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ce6OS3frKiM=:3lFfjMuB0u1F3Cgr3htjju
+ WIJMH6njVamQNJFPEw13g3/9NqDKHIVIyZVSIbxCJJ8jFxcEcV7Qf75GpxGs7jMAYguGcsJZe
+ PmPWF7fzOd94imSgdw+P9PKAnhaf4ECRbG5JLt95erUdioCYjYXV7phiZQzyILcEKVXWpvbHH
+ V1Fb1mFW4gGtdtWGFJ5b8BUCRiOdJzXRRKLmP0V3i5vbvfY+6npNJc94uWyNZTF3FEA9j+zX5
+ TtBm6Zcln9hiTNAGy78DL/VkJOU6OJNZWi8T2UnwPkGdH9JS+oISnysGiI8vZzVefSHYHdCRt
+ ShyrIWAdSQOMkGyrThT8d+UrlXOaQOApKlZcJb0iCNCgUnf2lWB/wt9w/QkzxqPoEznDsVwav
+ sorMLCtlU26O9bDdZcKTYh8H8jxld3YVicWUBOuSWSgGed2CWz5kv5HIXaSYYRT+EhGXOKNJ7
+ uhIViImVEFQNGcYb0ePvtPb8pJO6oMPg2H/KUo0DnbRcBxfjSJevdhet09+nwAtcpfb5DX6AL
+ C2PM84e4LHSTYMRAM+yKR3HCB2zSTNsZuqQ/AWIry6Ykhc2BCHYcVInAthYIyZ9zC+THjlmtC
+ 0ThIuL4Fn+YtkBFdxcFagEVFZexiRT2tLHzM9N8rrQjv7nLzzCrUtoPFKTvfsJEt07dlZOLuR
+ 2FMR1xAv6OMf2ph9Twl353cYUtWwKwDXg8DZOE8poVvyUyps4UZ4wnL3sMtswOSIiQ/txJadl
+ bA49+7/sA7RFwNvpXyP7SNGavqcdHDYLTWlw6wTDu+X2hrvUbgll+o6/4p5ujcmnay+aZMLDx
+ RseiBkL
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 05, 2018 at 05:31:41PM +0200, Duy Nguyen wrote:
-> I do not know how to reproduce this (and didn't bother to look deeply
-> into it after I found it was not a trivial fix) but one of my "git
-> fetch" showed
-> 
-> warning: Submodule in commit be2db96a6c506464525f588da59cade0cedddb5e
-> at path: '(null)' collides with a submodule named the same. Skipping
-> it.
+Am 17.04.2018 um 23:30 schrieb Stefan Beller:
+> +static void parse_color_fields(const char *s)
+> +{
+> +	struct string_list l = STRING_LIST_INIT_DUP;
+> +	struct string_list_item *item;
+> +	enum { EXPECT_DATE, EXPECT_COLOR } next = EXPECT_COLOR;
+> +
+> +	colorfield_nr = 0;
+> +
+> +	/* Ideally this would be stripped and split at the same time? */
 
-The problem is default_name_or_path() can return NULL when a submodule
-is not populated. The fix could simply be printing path instead of
-name (because we are talking about path in the commit message), like
-below.
+Why?  Both approxidate() and color_parse() handle spaces.
 
-But I don't really understand c68f837576 (implement fetching of moved
-submodules - 2017-10-16), the commit that made this change, and not
-sure if we should be reporting name here or path. Heiko?
+> +	string_list_split(&l, s, ',', -1);
+> +	ALLOC_GROW(colorfield, colorfield_nr + 1, colorfield_alloc);
+> +
+> +	for_each_string_list_item(item, &l) {
+> +		switch (next) {
+> +		case EXPECT_DATE:
+> +			colorfield[colorfield_nr].hop = approxidate(item->string);
+> +			next = EXPECT_COLOR;
+> +			colorfield_nr++;
+> +			ALLOC_GROW(colorfield, colorfield_nr + 1, colorfield_alloc);
+> +			break;
+> +		case EXPECT_COLOR:
+> +			if (color_parse(item->string, colorfield[colorfield_nr].col))
+> +				die(_("expecting a color: %s"), item->string);
+> +			next = EXPECT_DATE;
+> +			break;
+> +		}
+> +	}
+> +
+> +	if (next == EXPECT_COLOR)
+> +		die (_("must end with a color"));
+> +
+> +	colorfield[colorfield_nr].hop = TIME_MAX;
+> +}
 
-diff --git a/submodule.c b/submodule.c
-index 939d6870ec..61c2177755 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -745,7 +745,7 @@ static void collect_changed_submodules_cb(struct diff_queue_struct *q,
- 				warning("Submodule in commit %s at path: "
- 					"'%s' collides with a submodule named "
- 					"the same. Skipping it.",
--					oid_to_hex(commit_oid), name);
-+					oid_to_hex(commit_oid), p->two->path);
- 				name = NULL;
- 			}
- 		}
+This adds a minor memory leak; fix below.
 
+-- >8 --
+Subject: [PATCH] blame: release string_list after use in parse_color_fields()
 
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ builtin/blame.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-> 
-> I think it's reported that some libc implementation will not be able
-> to gracefully handle NULL strings like glibc and may crash instead of
-> printing '(null)' here. I'll leave it to submodule people to fix this
-> :)
-> -- 
-> Duy
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 4202584f97..3295718841 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -411,6 +411,7 @@ static void parse_color_fields(const char *s)
+ 		die (_("must end with a color"));
+ 
+ 	colorfield[colorfield_nr].hop = TIME_MAX;
++	string_list_clear(&l, 0);
+ }
+ 
+ static void setup_default_color_by_age(void)
+-- 
+2.17.1
