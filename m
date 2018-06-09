@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9DBEF1F403
-	for <e@80x24.org>; Sat,  9 Jun 2018 17:29:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C14121F403
+	for <e@80x24.org>; Sat,  9 Jun 2018 17:42:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753323AbeFIR30 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Jun 2018 13:29:26 -0400
-Received: from mail-ot0-f196.google.com ([74.125.82.196]:38978 "EHLO
-        mail-ot0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753268AbeFIR3Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Jun 2018 13:29:25 -0400
-Received: by mail-ot0-f196.google.com with SMTP id l15-v6so18278976oth.6
-        for <git@vger.kernel.org>; Sat, 09 Jun 2018 10:29:25 -0700 (PDT)
+        id S1753359AbeFIRmB (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Jun 2018 13:42:01 -0400
+Received: from mail-ot0-f194.google.com ([74.125.82.194]:41044 "EHLO
+        mail-ot0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753302AbeFIRmA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Jun 2018 13:42:00 -0400
+Received: by mail-ot0-f194.google.com with SMTP id d19-v6so13764868oti.8
+        for <git@vger.kernel.org>; Sat, 09 Jun 2018 10:42:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=mBOlsA9V/4h62UZPCSmMWU6z4RD4Wb/bCCXYrnMLjyk=;
-        b=RXDtkhFa8CC6MphotV8fPnb92xssGYBzbe7VEOT7KqqOkFScs3CGVsLKwPK/UUwb7f
-         tEGimIZfLzMMrtLUiB2Ep64FoOm7Mljln5QKqlmUspMdQMI31Hk4ijXbvlGloyQSP3W/
-         ScQqcL3G433NVb6RwLw3on0oj7J4sArDS8G9wPzGDmPas38jbpfcawZ6fMfabYUTjyUa
-         xZ+5NGIZgCrD36wgW5VEFerYYcrlHroY+aO+PoX1HUjg/9lD6EfE5AXRD0w6WzY+pOxv
-         tkoMPe6VpGO8NcARuYpgQtT5N7vdiyGshQ1iuX+LfgFq+KQ5TIakRVwBCKrw1Rsfatjs
-         rOQQ==
+        bh=76q6oNkLaISoUw/HRUklDvQmZA1yo/HCOfsuWk+x+Qk=;
+        b=Fx7WLCwJkjpT0hIDPHfH6E0y+l2cf7gfwyrfpj1xShOOuo2smClZYgfat1PhAvCfw7
+         G5PzlNbYiXo7jazgu/6VeIfCYfS0syIl/3fDEOyTzJUXz17o84wE7oAWHrJodzX3X935
+         kTXi7ZvKVwFlSBHj6h10rDz1yVFsJMTfdV2RBTjjxqs2UzNW4QaqQ3wPhTSZ6HRktNPD
+         EyDhGLDH+jmPcgHNcw9Y/ksSJoV534TbYRQOPzJHcXJjyvWiYZyyml2Qca8N6e7jGkqM
+         XtxEC20Vslh2fDeQqpASkHedNWBf4yAYCTZ6lv65cbNJzP+ECmiN8et1z3C3cAWabdKP
+         j35g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=mBOlsA9V/4h62UZPCSmMWU6z4RD4Wb/bCCXYrnMLjyk=;
-        b=PN+puF4ad2+mTtDLQsHnCOa0+LY4vxSdBtsuHq1rHnYJ8lcrDYOQpfBmwsL8JDSsMh
-         xbsWa94cbHklMccxbdOehsJkjhVEhnNoY6ZgI3OSD5sivCJSL9OD75T/FDAQMSjIGBLl
-         PPXgTAmcQ4OOCv8lQ2cs/QAzaAAss2mtHA7TOQJAWjyVPRvb+5bY+PMUYUexIbqXwoC0
-         GXJUG+G+EuLMC45muFySSKPu8d+10WKxnSiZ6/o9Bk2EPP3nojT+nsKCQcbsyv3B66A3
-         1dNVNoKzUZi9cDtZMraJbhZ5DxpmZKYBl5mdTi+DPH8NUZiOnZvB+FffEgBw9BKYiN3F
-         espg==
-X-Gm-Message-State: APt69E0l/nKuVT9TwSOozajqfJl3je+X2R20FublpFQIFdykYcT4C80O
-        +4W9R0bGHuhUXmcibD4hIwqRV/LgDJbiIuMC5no=
-X-Google-Smtp-Source: ADUXVKLbFU/6M6ghl3RFziAQceN2K4OFUMDtKP5pW0KeeaRioNVw0F1jTh+l8NmI7ZK3e4/nKnUS3Xf60+Jd1qGvTho=
-X-Received: by 2002:a9d:55a8:: with SMTP id m37-v6mr6758376oth.75.1528565363702;
- Sat, 09 Jun 2018 10:29:23 -0700 (PDT)
+        bh=76q6oNkLaISoUw/HRUklDvQmZA1yo/HCOfsuWk+x+Qk=;
+        b=gYbM6rg2wfsbgFUmY1LMj90ku5BBE5g5syB3h2o79IPJkPXs7xFeYVEAUDmD6hKjh7
+         R6aojLXI+IR/AFeff2rM8JnFkgUXMSvP7nFyGIRubSk/DTLgVAxgH4r9OU01CyAi2NjG
+         zLrIjOo2GfG+EWXSICn9VMtqcqBNodIS+fcecxu0EGVlIUiPZ84VHs3dxL/Q+454f0lD
+         vHQ5wJmHYnm1+XCDTuYg9taCF3Gr8FZ6Ga1ly/7xSleMyxjJNkU0j+ckfjqZcymd//QD
+         3Z+5xqFRDy4LomeCS2U5RTYZoL+BqVr7Wdq0wIPVxcxIRSzVW4+Rcb0HL1EXX6iPXbxp
+         UlOg==
+X-Gm-Message-State: APt69E2fByRn58lca68pBJlHZ1KONyJbrI9mijboJ7DR4TxP9ewd3VOZ
+        ZQYcn8K9hD3APFj1q0ksKkEBtj8AptSQQaiTFk0=
+X-Google-Smtp-Source: ADUXVKImoWZopogSd6v/6xrCzkp7CFpAIOiPbVNBqHon0IJgtYok0UollvY6Q+iNJJ18wctefWHLgCdcRZc35pPSlW4=
+X-Received: by 2002:a9d:2c94:: with SMTP id p20-v6mr6703412otb.14.1528566120077;
+ Sat, 09 Jun 2018 10:42:00 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180607140338.32440-1-dstolee@microsoft.com> <20180607140338.32440-14-dstolee@microsoft.com>
-In-Reply-To: <20180607140338.32440-14-dstolee@microsoft.com>
+References: <20180607140338.32440-1-dstolee@microsoft.com> <20180607140338.32440-15-dstolee@microsoft.com>
+In-Reply-To: <20180607140338.32440-15-dstolee@microsoft.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 9 Jun 2018 19:28:57 +0200
-Message-ID: <CACsJy8DW8foQ8+KDdjf4g_3UNi5oSqJyHYo5d9j4cth_yBXDCA@mail.gmail.com>
-Subject: Re: [PATCH 13/23] midx: write object id fanout chunk
+Date:   Sat, 9 Jun 2018 19:41:33 +0200
+Message-ID: <CACsJy8CX5HVNXfiFjOSVJUkyKEfMTcrGKN3T93kyJoG8L00kPg@mail.gmail.com>
+Subject: Re: [PATCH 14/23] midx: write object offsets
 To:     Derrick Stolee <stolee@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Stefan Beller <sbeller@google.com>,
@@ -66,37 +66,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 7, 2018 at 4:06 PM Derrick Stolee <stolee@gmail.com> wrote:
-> @@ -117,9 +123,13 @@ struct midxed_git *load_midxed_git(const char *object_dir)
->                 die("MIDX missing required pack lookup chunk");
->         if (!m->chunk_pack_names)
->                 die("MIDX missing required pack-name chunk");
-> +       if (!m->chunk_oid_fanout)
-> +               die("MIDX missing required OID fanout chunk");
-
-_()
-
-> @@ -501,9 +540,13 @@ int write_midx_file(const char *object_dir)
->         chunk_offsets[cur_chunk] = chunk_offsets[cur_chunk - 1] + nr_packs * sizeof(uint32_t);
->
->         cur_chunk++;
-> -       chunk_ids[cur_chunk] = MIDX_CHUNKID_OIDLOOKUP;
-> +       chunk_ids[cur_chunk] = MIDX_CHUNKID_OIDFANOUT;
-
-Err.. mistake?
-
->         chunk_offsets[cur_chunk] = chunk_offsets[cur_chunk - 1] + pack_name_concat_len;
->
-> +       cur_chunk++;
-> +       chunk_ids[cur_chunk] = MIDX_CHUNKID_OIDLOOKUP;
-
-Same here.
-
-> +       chunk_offsets[cur_chunk] = chunk_offsets[cur_chunk - 1] + MIDX_CHUNK_FANOUT_SIZE;
+On Thu, Jun 7, 2018 at 7:02 PM Derrick Stolee <stolee@gmail.com> wrote:
+> +static size_t write_midx_large_offsets(struct hashfile *f, uint32_t nr_large_offset,
+> +                                      struct pack_midx_entry *objects, uint32_t nr_objects)
+> +{
+> +       struct pack_midx_entry *list = objects;
+> +       size_t written = 0;
 > +
->         cur_chunk++;
->         chunk_ids[cur_chunk] = 0;
->         chunk_offsets[cur_chunk] = chunk_offsets[cur_chunk - 1] + nr_entries * MIDX_HASH_LEN;
->
+> +       while (nr_large_offset) {
+> +               struct pack_midx_entry *obj = list++;
+> +               uint64_t offset = obj->offset;
+> +
+> +               if (!(offset >> 31))
+> +                       continue;
+> +
+> +               hashwrite_be32(f, offset >> 32);
+> +               hashwrite_be32(f, offset & 0xffffffff);
+
+Not sure if you need UL suffix or something here on 32-bit platform.
+
+> +               written += 2 * sizeof(uint32_t);
+> +
+> +               nr_large_offset--;
+> +       }
+> +
+> +       return written;
+> +}
+> +
 -- 
 Duy
