@@ -2,180 +2,208 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21EC21F403
-	for <e@80x24.org>; Sat,  9 Jun 2018 20:56:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 904981F403
+	for <e@80x24.org>; Sat,  9 Jun 2018 21:18:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753250AbeFIU4h (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Jun 2018 16:56:37 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:36266 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753221AbeFIU4g (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 9 Jun 2018 16:56:36 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:54a4:7f2e:59a2:6beb])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id C08D06046C
-        for <git@vger.kernel.org>; Sat,  9 Jun 2018 20:56:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1528577793;
-        bh=MvCN77JLRVIUXw3yAgJnFsTQdMK2f39XxoHgL62u5+c=;
-        h=Date:From:To:Subject:Content-Type:Content-Disposition:From:
-         Reply-To:Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:
-         Resent-Cc:In-Reply-To:References:Content-Type:Content-Disposition;
-        b=Gm2tIjRl6T6NJ9mLrBjB3W/flEcpSCJhbp36k7mUxPfFCqtjn8CSHbU/vIK8HZpyg
-         Bw9dzgOidJulszBKgYszg7Xc5L89cPcXoNCwOZWVyXELR7+ZhUKMqWam6lSE3FIxsZ
-         IUevJ4O6pSY0A7+NQydHIdcwQQTesfGNAg5Ia2UIzwDKOJzLeNFD91VfgVEw7Dm6SH
-         c1mo4wcFU87FrKLtlaCTzhFE+LNsdc8tHlWWJlJxWOdvEUVClgiJV7JjLuxtbYZPGV
-         EjZ4FNlZNsV18SgE91Nr0non6AV5GCB3LN2rDcNnmpu0945hMldCzk2ohj+425HpNr
-         tCb2X6L7WjrS4zT1h3hxxlfA26PCatu1gyDZ4aBlV8MfqXRQ66vojED98egcMwmJ1y
-         CI23t1d68GMRcFx0mvLjgNxMPdFIw8PayKWpDmfy4CfZeNujgB2Gyxo/6kdkxxPoaa
-         JrrqddJkKM1HN1UlZrWWQwDfuNxHLCw7XVYIMWeOfXlggx9UqB6
-Date:   Sat, 9 Jun 2018 20:56:28 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     git@vger.kernel.org
-Subject: State of NewHash work, future directions, and discussion
-Message-ID: <20180609205628.GB38834@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
+        id S1753377AbeFIVSS (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Jun 2018 17:18:18 -0400
+Received: from mail-ua0-f194.google.com ([209.85.217.194]:35088 "EHLO
+        mail-ua0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753254AbeFIVSR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Jun 2018 17:18:17 -0400
+Received: by mail-ua0-f194.google.com with SMTP id s13-v6so7706765uad.2
+        for <git@vger.kernel.org>; Sat, 09 Jun 2018 14:18:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=G+oJ9o7bt4sWFac6TavJ+lbYdedap6pdS/we5AruBaM=;
+        b=CBovoEeDzbMGRU6XJajXwC8BNRibtr2R6DeN/hQ75AA1xZtHeolo2zLmIMdKGg/sZi
+         qsNYde7bMqRBg2fgK5/1lDmBc9VIucils2T8Uvyp8KsVTYD7xCtkzrwP023NxCc6znvj
+         8rsI38pOJW/ggXu5sZSlaI24TlFQntxH5clMyTskCsP6OUzVRgBoUUxTCxZgqNfhwxmp
+         eVeEUOCh67YryDvQdV7iZAfeFW3KQ/zLVeNpnn6fuN0fNZNd/5OmnDnnjkQ7sbj6K/fr
+         yld+sqI3LHtnqvZIeojj00S8QJ5tc9fEz3ksvQ4oUOf/o3RIB+6/Ituv8xbmw+Vvc2P8
+         Km4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=G+oJ9o7bt4sWFac6TavJ+lbYdedap6pdS/we5AruBaM=;
+        b=b9rQDKSPeS/X/kL9MQEhRYXT4Ue+Okulu40DwYxen1zfnl4S7MFP1T57LGlsFwlkV4
+         8pyYXoP/21+ytZAhGRcKKWbyKqMwYeqMKX9alFmDbsUk80hRnstHqHIIcyJwzxvEw/K6
+         gwETZnVuiGS4VIfkVfDZl3ZuBBs/Ro3Hj1qv4RboMzUZ4B21VSvdXkEFYrMi4wadMJwD
+         OsO9FY6PVZsAhuAe5aUbztYNrnhcTwGL9mju5plgHmZyA3mX7kINLZ8+XK2w1OBidNv5
+         WeOw+h4KXiR+VyJn01xQPip1ylhiiMcpSIF7qWEBDN4K1obvNu1Vi8GJx9U7+vFdNbcA
+         3vag==
+X-Gm-Message-State: APt69E3sqCE+ZzeLX16FfcdBAT8xF5r1DuqVW/yOywJ60iai9L2R3d0+
+        /ALFcFzr0D5w7npME8JnAOZL5kVCmWG6jrhb/z4=
+X-Google-Smtp-Source: ADUXVKKfp35SHs/iyDFwKqIVZHcDBGvPiTjLuG7frsWmmceAcOHX3MPA3YwNu8GdyUQYwRarYejFC5syVKAUPKU0v1k=
+X-Received: by 2002:ab0:22:: with SMTP id 31-v6mr3976659uai.151.1528579096683;
+ Sat, 09 Jun 2018 14:18:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Y7xTucakfITjPcLV"
-Content-Disposition: inline
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.16.0-2-amd64)
-User-Agent: Mutt/1.10.0 (2018-05-17)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+References: <20180607051958.759-1-tmz@pobox.com>
+In-Reply-To: <20180607051958.759-1-tmz@pobox.com>
+From:   Luis Marsano <luis.marsano@gmail.com>
+Date:   Sat, 9 Jun 2018 17:18:04 -0400
+Message-ID: <CAHqJXRHGq9ofPcCzffUbTmuL6fuoB=33aZnwqNdqYy+nAVA_gw@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/2] contrib/credential/netrc Makefile & test improvements
+To:     tmz@pobox.com
+Cc:     git@vger.kernel.org, Ted Zlatanov <tzz@lifelogs.com>,
+        avarab@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Thanks for looking into this and addressing these issues.
 
---Y7xTucakfITjPcLV
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Thu, Jun 7, 2018 at 1:20 AM Todd Zullinger <tmz@pobox.com> wrote:
+>
+> Hi,
+>
+> I noticed failures from the contrib/credential/netrc tests
+> while building 2.18.0 release candidates.  I was surprised
+> to see the tests being run when called with a simple 'make'
+> command.
+>
+> The first patch in the series adds an empty 'all::' make
+> target to match most of our other Makefiles and avoid the
+> surprise of running tests by default.  (When the netrc
+> helper was added to the fedora builds, it copied the same
+> 'make -C contrib/credential/...' pattern from other
+> credential helpers -- despite the lack of anything to
+> build.)
 
-Since there's been a lot of questions recently about the state of the
-NewHash work, I thought I'd send out a summary.
+I think this is a good idea.
 
-=3D=3D Status
+> The actual test failures were initially due to my build
+> environment lacking the perl autodie module, which was added
+> in 786ef50a23 ("git-credential-netrc: accept gpg option",
+> 2018-05-12).
 
-I have patches to make the entire codebase work, including passing all
-tests, when Git is converted to use a 256-bit hash algorithm.
-Obviously, such a Git is incompatible with the current version, but it
-means that we've fixed essentially all of the hard-coded 20 and 40
-constants (and therefore Git doesn't segfault).
+I added 'use autodie;' without realizing it had external dependencies.
+According to the documentation
+http://perldoc.perl.org/autodie.html
+it's a pragma since perl 5.10.1
+Removing 'use autodie;' should be fine: it's not critical.
 
-I'm working on getting a 256-bit Git to work with SHA-1 being the
-default.  Currently, this involves doing things like writing transport
-code, since in order to clone a repository, you need to be able to set
-up the hash algorithm correctly.  I know that this was a non-goal in the
-transition plan, but since the testsuite doesn't pass without it, it's
-become necessary.
+> After installing the autodie module, the failures were due
+> to the build environment lacking a git install (specifically
+> the perl Git module).  The tests needing a pre-installed
+> perl Git seemed odd and worth fixing.
 
-Some of these patches will be making their way to the list soon.
-They're hanging out in the normal places in the object-id-part14 branch
-(which may be rebased).
+I mistakenly thought 'use lib (split(/:/, $ENV{GITPERLLIB}));' in
+test.pl handled this.
+Since it doesn't, and I was only following an example from
+t/t9700/test.pl that doesn't fit, this line should be removed and it
+might make more sense to set the environment from
+t-git-credential-netrc.sh near '. ./test-lib.sh', which also sets the
+environment.
+Something like
 
-=3D=3D Future Design
+diff --git a/contrib/credential/netrc/t-git-credential-netrc.sh
+b/contrib/credential/netrc/t-git-credential-netrc.sh
+index 58191a6..9e18611 100755
+--- a/contrib/credential/netrc/t-git-credential-netrc.sh
++++ b/contrib/credential/netrc/t-git-credential-netrc.sh
+@@ -23,5 +23,6 @@
+        # The external test will outputs its own plan
+        test_external_has_tap=3D1
 
-The work I've done necessarily involves porting everything to use
-the_hash_algo.  Essentially, when the piece I'm currently working on is
-complete, we'll have a transition stage 4 implementation (all NewHash).
-Stage 2 and 3 will be implemented next.
++       export PERL5LIB=3D"$GITPERLLIB"
+        test_external \
+     'git-credential-netrc' \
 
-My vision of how data is stored is that the .git directory is, except
-for pack indices and the loose object lookup table, entirely in one
-format.  It will be all SHA-1 or all NewHash.  This algorithm will be
-stored in the_hash_algo.
+Your solution, however, is reasonable, and I don't know which is preferred.
 
-I plan on introducing an array of hash algorithms into struct repository
-(and wrapper macros) which stores, in order, the output hash, and if
-used, the additional input hash.
+> The second patch in the series aims to fix this.  I'm not
+> sure if there's a better or more preferable way to fix this,
+> which is one of the reasons for the RFC tag. (It's also why
+> I added you to the Cc =C3=86var, as you're one of the
+> knowledgeable perl folks here.)
+>
+> The other reason for the RFC tag is that I'm unsure of how
+> to fix the last issue I found.  The tests exit cleanly even
+> when there are failures, which seems undesirable.  I'm not
+> familiar with the perl test_external framework to suggest a
+> fix in patch form.  It might be a matter of adding something
+> like this, from t/t9700/test.pl:
+>
+>     my $is_passing =3D eval { Test::More->is_passing };
+>     exit($is_passing ? 0 : 1) unless $@ =3D~ /Can't locate object method/=
+;
+>
+> ?  But that's a wild guess which I haven't tested.
 
-Functions like get_oid_hex and parse_oid_hex will acquire an internal
-version, which knows about parsing things (like refs) in the internal
-format, and one which knows about parsing in the UI formats.  Similarly,
-oid_to_hex will have an internal version that handles data in the .git
-directory, and an external version that produces data in the output
-format.  Translation will take place at the outer edges of the program.
+Good idea.
+It looks like you found an issue with t/t9700/test.pl, too.
+When altered to fail, it first reports ok (then reports failed and
+returns non-0).
 
-The transition plan anticipates a stage 1 where accept only SHA-1 on
-input and produce only SHA-1 on output, but store in NewHash.  As I've
-worked with our tests, I've realized such an implementation is not
-entirely possible.  We have various tools that expect to accept invalid
-object IDs, and obviously there's no way to have those continue to work.
-We'd have to either reject invalid data in such a case or combine stages
-1 and 2.
+not ok 46 - unquote simple quoted path
+not ok 47 - unquote escape sequences
+1..47
+# test_external test Perl API was ok
+# test_external_without_stderr test no stderr: Perl API failed: perl
+/home/luism/project/git/t/t9700/test.pl:
+$ echo $?
+1
 
-=3D=3D Compatibility with this Work
+To make git-credential-netrc tests behave correctly, I ended up making
+the changes below.
+They might be okay, unless someone knows better.
 
-If you're working on new features and you'd like to implement the best
-possible compatibility with this work, here are some recommendations:
+diff --git a/contrib/credential/netrc/t-git-credential-netrc.sh
+b/contrib/credential/netrc/t-git-credential-netrc.sh
+index 58191a6..9e18611 100755
+--- a/contrib/credential/netrc/t-git-credential-netrc.sh
++++ b/contrib/credential/netrc/t-git-credential-netrc.sh
+@@ -23,9 +23,10 @@
+        # The external test will outputs its own plan
+        test_external_has_tap=3D1
 
-* Assume everything in the .git directory but pack indices and the loose
-  object index will be in the same algorithm and that that algorithm is
-  the_hash_algo.
-* For the moment, use the_hash_algo to look up the size of all
-  hash-related constants.  Use GIT_MAX_* for allocations.
-* If you are writing a new data format, add a version number.
-* If you need to serialize an algorithm identifier into your data
-  format, use the format_id field of struct git_hash_algo.  It's
-  designed specifically for that purpose.
-* You can safely assume that the_hash_algo will be suitably initialized
-  to the correct algorithm for your repository.
-* Keep using the object ID functions and struct object_id.
-* Try not to use mmap'd structs for reading and writing formats on disk,
-  since these are hard to make hash size agnostic.
++       export PERL5LIB=3D"$GITPERLLIB"
+        test_external \
+     'git-credential-netrc' \
+-    perl "$TEST_DIRECTORY"/../contrib/credential/netrc/test.pl
++    perl "$GIT_BUILD_DIR"/contrib/credential/netrc/test.pl
 
-=3D=3D Discussion about an Actual NewHash
+        test_done
+ )
+diff --git a/contrib/credential/netrc/test.pl b/contrib/credential/netrc/te=
+st.pl
+index 1e10010..abc9081 100755
+--- a/contrib/credential/netrc/test.pl
++++ b/contrib/credential/netrc/test.pl
+@@ -1,6 +1,4 @@
+ #!/usr/bin/perl
+-use lib (split(/:/, $ENV{GITPERLLIB}));
+-
+ use warnings;
+ use strict;
+ use Test::More qw(no_plan);
+@@ -12,7 +10,6 @@ BEGIN
+        # t-git-credential-netrc.sh kicks off our testing, so we have to go
+        # from there.
+        Test::More->builder->current_test(1);
+-       Test::More->builder->no_ending(1);
+ }
 
-Since I'll be writing new code, I'll be writing tests for this code.
-However, writing tests for creating and initializing repositories
-requires that I be able to test that objects are being serialized
-correctly, and therefore requires that I actually know what the hash
-algorithm is going to be.  I also can't submit code for multi-hash packs
-when we officially only support one hash algorithm.
+ my @global_credential_args =3D @ARGV;
+@@ -104,6 +101,9 @@ BEGIN
 
-I know that we have long tried to avoid discussing the specific
-algorithm to use, in part because the last discussion generated more
-heat than light, and settled on referring to it as NewHash for the time
-being.  However, I think it's time to pick this topic back up, since I
-can't really continue work in this direction without us picking a
-NewHash.
+ ok(scalar keys %$cred =3D=3D 2, 'Got keys decrypted by command option');
 
-If people are interested, I've done some analysis on availability of
-implementations, performance, and other attributes described in the
-transition plan and can send that to the list.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---Y7xTucakfITjPcLV
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.8 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlscPvwACgkQv1NdgR9S
-9otu8A/+N4Pn5gJfJrxKrF9DZEBYV1DTgU4aLx78ED63eGhOXyUp+bOUm9PKE9Yy
-0pZVl0X4x523eySU/dzYsZhPxjyyE7oTo6U7+J1NpfcWcpd4Tr7/w8mnp9GdS3WE
-udXSz9kovXqmXXQU9bCspZZZAUWcULtn5U7nQ7tDWAWgD3oPVt23lBsF8y6V5QRQ
-ezrYyalPKaIIFMIxFC40cpg/SXn4BYfRirlXl032vBbOMnF8v4q5FI0Z5cyyLO1e
-LJfCBOu4xxUcTee+2y9ApYAWuyNW8GhDxzltCpfnGsEONKQ/6l/ymVHOgHyH8dZ9
-HsTaWA/1j/77ZEvsXqMQYTSfdRyKNzYEfki29qR9Am3XgOSeiqsawK1oLH7jtod6
-0Lvm6zhbmvF0/xJn+YbS02qJKhKjw2FOQVEbO1jRwPOxClZlEs4SD/ig9tqtrh2M
-mCDeovcLv/etpTCYTU/zHZ4o/oQlLtbSGq1fUqI3kgvdJjH3gHNPLoItaCO1OXg/
-FDDZPUqpIbsnwLRxZhCNUPe72B9MHg1k/64Ys7bK12Vz4HgogQyDY1bzQ/qMaVE5
-lEhldB0lhmCtaeHH9Z1DvtHZA9GDGeNTwfxWxUeOE4NuyUb2/HdX4NWIehzPWfPD
-C0jJy0AHPWV0kcHq0a4cppyvAq+Pb+YA9ucP6evXv2VVL5wiOU8=
-=kNlf
------END PGP SIGNATURE-----
-
---Y7xTucakfITjPcLV--
++my $is_passing =3D eval { Test::More->is_passing };
++exit($is_passing ? 0 : 1) unless $@ =3D~ /Can't locate object method/;
++
+ sub run_credential
+ {
+        my $args =3D shift @_;
