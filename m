@@ -2,120 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 469B31F403
-	for <e@80x24.org>; Sat,  9 Jun 2018 11:27:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3305A1F403
+	for <e@80x24.org>; Sat,  9 Jun 2018 13:44:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753120AbeFIL1D (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Jun 2018 07:27:03 -0400
-Received: from mout.web.de ([212.227.15.14]:52125 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752923AbeFIL1C (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Jun 2018 07:27:02 -0400
-Received: from [192.168.178.36] ([79.237.242.156]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MDPYb-1fUa0m2gVZ-00Gt9R; Sat, 09
- Jun 2018 13:26:53 +0200
-Subject: Re: [PATCH 2/2] builtin/blame: highlight recently changed lines
-To:     Stefan Beller <sbeller@google.com>
-Cc:     avarab@gmail.com, git@vger.kernel.org, gitster@pobox.com
-References: <CAGZ79kYjV6Wpzymx1phL7EC3BxdWr5gitCOdE6=fJFFnz4zYiA@mail.gmail.com>
- <20180417213049.118995-1-sbeller@google.com>
- <20180417213049.118995-2-sbeller@google.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <737e4f2e-9896-0119-2c43-655ac29fe018@web.de>
-Date:   Sat, 9 Jun 2018 13:26:53 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+        id S1753278AbeFINoc (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Jun 2018 09:44:32 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:43899 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753036AbeFINob (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Jun 2018 09:44:31 -0400
+Received: by mail-pf0-f193.google.com with SMTP id j20-v6so7965169pff.10
+        for <git@vger.kernel.org>; Sat, 09 Jun 2018 06:44:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=c7O5OLXRpCYWNc0M8ImdyR1cfB8Cly8/w7YNQSc0F/w=;
+        b=VDRpx7CZhmEibJ0nvpSlj0XFOvhQwBB1l9hk+wtyK9+349iGwcs+6p8t9t64LUGKSm
+         2vipYszfdinqMRvcLUbY/S4uOE4h6wsEDMX6BfE12O+j2dZ3pci3el48ejGY/b46UlFb
+         OMn/hFfQkoblyGiWBHrdZB12ZOv0Fe8dgCRnxMyskxFPPAJavRg0OTHf0//y5yhYWYVl
+         ys6IDoKVO4v2fczqlM4zparWiiS/zes5oEHo4S7eSejUEA1Tcpt0v/4rW3ZyQ4cpf+tZ
+         ddgancHA/MP3sbKPTVtjCP8Rq7tf/pWTtQ1/SgKIyYeExBDIP8NbdviQzuFxqrlOajNl
+         /ZZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=c7O5OLXRpCYWNc0M8ImdyR1cfB8Cly8/w7YNQSc0F/w=;
+        b=clv+Vr1i7lI8DasJiQ39jkldWWGncIovYrz6cluu+Fmem6GPuyLe32zGsvudnMUPOk
+         q8p1j5y0++FFjn4QpVLtTO4/f4JOC5qnM7ZT1PfVT9cN+pRRbHkEYLYfJu5EIQkDtGqv
+         VOZ7b0oSPSpQHU1q0FmE0mVD9HmWduDhmi84JZlvBvPVpdOnpwiXeqr02oTr6Hd9Invm
+         V5fZ/c135NeJtyorVEHH/VSJ8I7/XEhOggTE2xLP93Ss+wFjBYUBR9wYZ0t09P3PvuKU
+         /+SYNArwz6rC0FfCnFUVZutHmNSKm+PrFpBDm3p63MW3T+IcRXEI/vpaRfiuvo9lFRru
+         Nu6Q==
+X-Gm-Message-State: APt69E3iJHJBtp6+kNDRYUgVSpOE1vcNpVN+i4/hK4fIrrkSZvk+IAvW
+        cm+8GRb2ztdUQU4zHkq/BggvtX/cFl+Raw2OAk02FnFk
+X-Google-Smtp-Source: ADUXVKJDlPybUlcZ42wMtCwCYF1QThTAjvcwmtpkQwYDTbhWd6uEdkJ6blmytUS/JKUjkco4Of3949mMEizzqDG47oU=
+X-Received: by 2002:a63:6dc3:: with SMTP id i186-v6mr9000530pgc.316.1528551870792;
+ Sat, 09 Jun 2018 06:44:30 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20180417213049.118995-2-sbeller@google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:+dR18Jo4iiGQQTaH58uYn1lpft7eC6rQVaO3V92d8x7Rj3Cu8lr
- Ude28NJH5s4lk+dVVmywcurXilyhmTUa6YbipL+3GRmTXUnY0ZKBCjGcLXcfjKadQwc0j0N
- tU5aNpy0LCb3ZdedFa33BDIRueGwUaZRWwhscCT105mtBkRXs6YfcL2wBbZygdYiB0Iw63o
- RO9+mq2XRQnac2c37rzGA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ce6OS3frKiM=:3lFfjMuB0u1F3Cgr3htjju
- WIJMH6njVamQNJFPEw13g3/9NqDKHIVIyZVSIbxCJJ8jFxcEcV7Qf75GpxGs7jMAYguGcsJZe
- PmPWF7fzOd94imSgdw+P9PKAnhaf4ECRbG5JLt95erUdioCYjYXV7phiZQzyILcEKVXWpvbHH
- V1Fb1mFW4gGtdtWGFJ5b8BUCRiOdJzXRRKLmP0V3i5vbvfY+6npNJc94uWyNZTF3FEA9j+zX5
- TtBm6Zcln9hiTNAGy78DL/VkJOU6OJNZWi8T2UnwPkGdH9JS+oISnysGiI8vZzVefSHYHdCRt
- ShyrIWAdSQOMkGyrThT8d+UrlXOaQOApKlZcJb0iCNCgUnf2lWB/wt9w/QkzxqPoEznDsVwav
- sorMLCtlU26O9bDdZcKTYh8H8jxld3YVicWUBOuSWSgGed2CWz5kv5HIXaSYYRT+EhGXOKNJ7
- uhIViImVEFQNGcYb0ePvtPb8pJO6oMPg2H/KUo0DnbRcBxfjSJevdhet09+nwAtcpfb5DX6AL
- C2PM84e4LHSTYMRAM+yKR3HCB2zSTNsZuqQ/AWIry6Ykhc2BCHYcVInAthYIyZ9zC+THjlmtC
- 0ThIuL4Fn+YtkBFdxcFagEVFZexiRT2tLHzM9N8rrQjv7nLzzCrUtoPFKTvfsJEt07dlZOLuR
- 2FMR1xAv6OMf2ph9Twl353cYUtWwKwDXg8DZOE8poVvyUyps4UZ4wnL3sMtswOSIiQ/txJadl
- bA49+7/sA7RFwNvpXyP7SNGavqcdHDYLTWlw6wTDu+X2hrvUbgll+o6/4p5ujcmnay+aZMLDx
- RseiBkL
+Received: by 2002:a17:90a:760e:0:0:0:0 with HTTP; Sat, 9 Jun 2018 06:44:30
+ -0700 (PDT)
+In-Reply-To: <20180609092135.GC6817@sigill.intra.peff.net>
+References: <20180609083159.GA6158@sigill.intra.peff.net> <CAN0heSqHRpOerHV8tgA-ntU6QvYQMxgrXPCPsrVcHLKUSwANXQ@mail.gmail.com>
+ <20180609092135.GC6817@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Sat, 9 Jun 2018 15:44:30 +0200
+Message-ID: <CAN0heSqkcZ5KBpaq7R45A7wPxQ3F=6PKeHqwAQztdJyz31Vdwg@mail.gmail.com>
+Subject: Re: [PATCH] fsck: avoid looking at NULL blob->object
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 17.04.2018 um 23:30 schrieb Stefan Beller:
-> +static void parse_color_fields(const char *s)
-> +{
-> +	struct string_list l = STRING_LIST_INIT_DUP;
-> +	struct string_list_item *item;
-> +	enum { EXPECT_DATE, EXPECT_COLOR } next = EXPECT_COLOR;
-> +
-> +	colorfield_nr = 0;
-> +
-> +	/* Ideally this would be stripped and split at the same time? */
+On 9 June 2018 at 11:21, Jeff King <peff@peff.net> wrote:
+> On Sat, Jun 09, 2018 at 10:50:36AM +0200, Martin =C3=85gren wrote:
+>
+>> On 9 June 2018 at 10:32, Jeff King <peff@peff.net> wrote:
+>> > Except it _does_ do one non-trivial thing, which is call the
+>> > report() function, which wants us to pass a pointer to a
+>> > "struct object". Which we don't have (we have only a "struct
+>> > object_id"). So we erroneously passed the NULL object, which
+>>
+>> s/passed/dereferenced/? Probably doesn't affect the fix though.
+>
+> Well, we passed it, and then that function dereferenced it. :)
+>
+> I'm going to re-roll for the minor bits that Eric pointed out, so I'll
+> try to word this better.
 
-Why?  Both approxidate() and color_parse() handle spaces.
+My bad. I somehow thought we get into trouble already before we call
+`report()`. Well, we do, since we have undefined behavior. But for all
+practical purposes `&blob->object` and `blob` are the same
+(NULL-)pointer so we only crash after we call `report()`.
 
-> +	string_list_split(&l, s, ',', -1);
-> +	ALLOC_GROW(colorfield, colorfield_nr + 1, colorfield_alloc);
-> +
-> +	for_each_string_list_item(item, &l) {
-> +		switch (next) {
-> +		case EXPECT_DATE:
-> +			colorfield[colorfield_nr].hop = approxidate(item->string);
-> +			next = EXPECT_COLOR;
-> +			colorfield_nr++;
-> +			ALLOC_GROW(colorfield, colorfield_nr + 1, colorfield_alloc);
-> +			break;
-> +		case EXPECT_COLOR:
-> +			if (color_parse(item->string, colorfield[colorfield_nr].col))
-> +				die(_("expecting a color: %s"), item->string);
-> +			next = EXPECT_DATE;
-> +			break;
-> +		}
-> +	}
-> +
-> +	if (next == EXPECT_COLOR)
-> +		die (_("must end with a color"));
-> +
-> +	colorfield[colorfield_nr].hop = TIME_MAX;
-> +}
+Anyway, obviously no need to do anything about this in a v3.
 
-This adds a minor memory leak; fix below.
-
--- >8 --
-Subject: [PATCH] blame: release string_list after use in parse_color_fields()
-
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- builtin/blame.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 4202584f97..3295718841 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -411,6 +411,7 @@ static void parse_color_fields(const char *s)
- 		die (_("must end with a color"));
- 
- 	colorfield[colorfield_nr].hop = TIME_MAX;
-+	string_list_clear(&l, 0);
- }
- 
- static void setup_default_color_by_age(void)
--- 
-2.17.1
+Martin
