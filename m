@@ -2,163 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2DD761F403
-	for <e@80x24.org>; Sat,  9 Jun 2018 18:06:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F7531F403
+	for <e@80x24.org>; Sat,  9 Jun 2018 18:10:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753464AbeFISGH (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Jun 2018 14:06:07 -0400
-Received: from mail-oi0-f68.google.com ([209.85.218.68]:40856 "EHLO
-        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753359AbeFISGG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Jun 2018 14:06:06 -0400
-Received: by mail-oi0-f68.google.com with SMTP id f79-v6so14590361oib.7
-        for <git@vger.kernel.org>; Sat, 09 Jun 2018 11:06:05 -0700 (PDT)
+        id S1753464AbeFISKZ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Jun 2018 14:10:25 -0400
+Received: from mail-ua0-f196.google.com ([209.85.217.196]:42510 "EHLO
+        mail-ua0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753450AbeFISKY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Jun 2018 14:10:24 -0400
+Received: by mail-ua0-f196.google.com with SMTP id x18-v6so10999626uaj.9
+        for <git@vger.kernel.org>; Sat, 09 Jun 2018 11:10:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=qpu87oM2VkDd4iVhjMiRmuob9aMk+8DIbdRxFVMdH88=;
-        b=kxYS3zGWnRiIPoMtDXQREsI/8mPrIXZoMngBh9/XElcpsKDS3VvmYRWskeCC8pVlnn
-         ecbS/tE2NtFqRfWAAIpG/eEVgcgUCZY2iPpBqCg3ris7/leyMM3fdg26KHQmnXSCg84Y
-         PToGfvq8THe0q7bJUbVvIqBDCERwTUz6HM1bldJwJzN465U52pwcfbre8urp0Hz0gAGH
-         ab79Ev2utGzopDvOFMiMe7n/lIkmWaZyKVkeqJjeFrWoP6iS2JR7ibKvcMiGRrrtJF96
-         LsU7qSNeVPtGr1Z56+KEUH35OUSLACzJVu2pBiwpsyn77MrJpUMJvDv+RSjbNcGMFrDV
-         83dg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=cXPyAtdtRG0V2oYuTaYrlJLavmzgScGno/Ip1T/Mwho=;
+        b=RycUfWCcD3aNCRMnZHYbZ0BSYq3t+oDYO1KRmZkAQH/1uD0hIUyUfAAMSnxlmotK3t
+         Zt0Oup78xMjcU6MiwGRx85GtA3E0Mtz9TbLgw5FDUDFz5y6dST8i4xcF3cn6CnI26arH
+         sekrW19wCZHuNK6/ch87tMgaVPO5NiqSpDTJZkVfBmLjD4rbKxM9h3peRJrIPT2lTTcJ
+         jm0AE+IUlsOwrJsLyFY1lH571hNT9NfhHBHALUHeq1AxPpF0upwCswS6pGzEekODDCWU
+         Wu1ON8gjEI6ZR3C3q1Xj+Tjgd5ilr+5mnyl8lS/Y21I61TS9Df82e8oFDqb0DYM1BjY/
+         VMmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=qpu87oM2VkDd4iVhjMiRmuob9aMk+8DIbdRxFVMdH88=;
-        b=aK5TZBphlERFr8eChwDxUcEYVprnGgJpRDZQ2d7xMvPUCcfEsUl1cwD9sBMyFLnGeL
-         PzQ+g18bD7SNOPuLGYQkrGAGexZzKY9wwwxWWex3VDNThNW4cbAbKFZV6UDYFfTu3KJS
-         4rtDdbrHryhj9O02ti3ctx9Gredjj5c0cg2JXlTxRvjnsSXN+cJMmWmEry7SoNrIWnoC
-         +hKzGv+gGRt/IQ84uUMndWlO/Y0g1h9Nn6ARwb+6cpOSfEcAcsHLuF0Fm1KYSZoafPEy
-         xLMcxANsj1EPxqNy2/8FgQWjYvKzScP4tdCfw0L0kDiD+nHUHC5T8qrTKiJnJwmOnvIF
-         ad8w==
-X-Gm-Message-State: APt69E05qZzlc+G1Ya9Cz3QXkAjs8rc/1PS53K0htEbuptUssXKsdKtl
-        FKRtM3uQzcI5Zk52b0/B4BuFyT32dAwjrkS/VwA=
-X-Google-Smtp-Source: ADUXVKIX96g0WlJxOtGqE0udWsUMujf+8QcMb9JIdeVXQC0c8BQw0UqQTmrd/YcgzlyqsFOHu5NirTH1jGO32V0eIlA=
-X-Received: by 2002:aca:aa54:: with SMTP id t81-v6mr5516441oie.30.1528567565593;
- Sat, 09 Jun 2018 11:06:05 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=cXPyAtdtRG0V2oYuTaYrlJLavmzgScGno/Ip1T/Mwho=;
+        b=UqYYgevTwNpMc9baI7ujZxW9t5uw9eVDieHTiAHVuxODFoLN7k9soOnadJjz9cznbK
+         09gyHygj242autwpoSnO/3EF+qoaLJDPR40qzwauC1rFamAWwOqSnkUIipG5qarujSmh
+         ruobQYmq/1mlpgBpth17GMV6SHeHQ6iegzOCfJG1PoFyIZzWtrGKe0CVYx9dfzyPbszh
+         YywgaNpllc4R2WiITLgyrsopdEbpypUKHOqMIviaDm1kHHkXVg9ishv9Dt+HZXX+FH8i
+         4KMWOWWNFNwLk4Di/kSvFoHokQoY2zgHu4yA9vtyWf20UIYFUhqT7iGuhAZwOTAzpAq/
+         V72w==
+X-Gm-Message-State: APt69E3qSg8iGQatgWB0UDpnMAyEw9+T/t5ecU4tmWH0X69tfl1buExg
+        q5FGq7tUEU7i55wXVkqb6x5i6h2y3rlVkSfTpVI=
+X-Google-Smtp-Source: ADUXVKLftMQdrCJcLH2OVdqQMxgktreuwgyzjNQYS+z3RvLo1H42oVD27gLrgBNRgDcJD3mC19iyBLe27qHUivc1Ve4=
+X-Received: by 2002:ab0:596f:: with SMTP id o44-v6mr7350584uad.29.1528567823935;
+ Sat, 09 Jun 2018 11:10:23 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180607140338.32440-1-dstolee@microsoft.com> <20180607140338.32440-22-dstolee@microsoft.com>
-In-Reply-To: <20180607140338.32440-22-dstolee@microsoft.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 9 Jun 2018 20:05:39 +0200
-Message-ID: <CACsJy8DbF3AXuHK9yaEtYPwkhP_BC47b50iTT0tHqODGVp7FCA@mail.gmail.com>
-Subject: Re: [PATCH 21/23] midx: prevent duplicate packfile loads
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Martin Fick <mfick@codeaurora.org>
+Received: by 2002:ab0:5f28:0:0:0:0:0 with HTTP; Sat, 9 Jun 2018 11:10:23 -0700 (PDT)
+In-Reply-To: <20180606170243.4169-12-pclouds@gmail.com>
+References: <20180606165016.3285-1-pclouds@gmail.com> <20180606170243.4169-1-pclouds@gmail.com>
+ <20180606170243.4169-12-pclouds@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Sat, 9 Jun 2018 11:10:23 -0700
+Message-ID: <CABPp-BGn8mz5tPrVk6fX3JKcaSuz4_XQSsSmvEMT_H5i4mF2Lg@mail.gmail.com>
+Subject: Re: [PATCH v4 17/23] read-cache.c: remove an implicit dependency on the_index
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 7, 2018 at 4:07 PM Derrick Stolee <stolee@gmail.com> wrote:
+On Wed, Jun 6, 2018 at 10:02 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
+<pclouds@gmail.com> wrote:
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> index b404ebac7c..4f054d6dbb 100644
+> --- a/merge-recursive.c
+> +++ b/merge-recursive.c
+> @@ -315,7 +315,7 @@ static int add_cacheinfo(struct merge_options *o,
+>         struct cache_entry *ce;
+>         int ret;
 >
-> If the multi-pack-index contains a packfile, then we do not need to add
-> that packfile to the packed_git linked list or the MRU list.
+> -       ce =3D make_cache_entry(mode, oid ? oid->hash : null_sha1, path, =
+stage, 0);
+> +       ce =3D make_index_entry(&the_index, mode, oid ? oid->hash : null_=
+sha1, path, stage, 0);
+>         if (!ce)
+>                 return err(o, _("add_cacheinfo failed for path '%s'; merg=
+e aborting."), path);
 
-Because...?
+There's also a refresh_cache_entry() call about ten lines after this;
+since you converted all other make_cache_entry() and
+refresh_cache_entry() calls in this patch, I'm curious if that one was
+left out for a reason or was just an oversight.
 
-I think I see the reason, but I'd like it spelled out to avoid any
-misunderstanding.
-
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  midx.c     | 23 +++++++++++++++++++++++
->  midx.h     |  1 +
->  packfile.c |  7 +++++++
->  3 files changed, 31 insertions(+)
->
-> diff --git a/midx.c b/midx.c
-> index 388d79b7d9..3242646fe0 100644
-> --- a/midx.c
-> +++ b/midx.c
-> @@ -278,6 +278,29 @@ int fill_midx_entry(const struct object_id *oid, struct pack_entry *e, struct mi
->         return nth_midxed_pack_entry(m, e, pos);
->  }
->
-> +int midx_contains_pack(struct midxed_git *m, const char *idx_name)
-> +{
-> +       uint32_t first = 0, last = m->num_packs;
-> +
-> +       while (first < last) {
-> +               uint32_t mid = first + (last - first) / 2;
-> +               const char *current;
-> +               int cmp;
-> +
-> +               current = m->pack_names[mid];
-> +               cmp = strcmp(idx_name, current);
-> +               if (!cmp)
-> +                       return 1;
-> +               if (cmp > 0) {
-> +                       first = mid + 1;
-> +                       continue;
-> +               }
-> +               last = mid;
-> +       }
-> +
-> +       return 0;
-> +}
-> +
->  int prepare_midxed_git_one(struct repository *r, const char *object_dir)
->  {
->         struct midxed_git *m = r->objects->midxed_git;
-> diff --git a/midx.h b/midx.h
-> index 497bdcc77c..c1db58d8c4 100644
-> --- a/midx.h
-> +++ b/midx.h
-> @@ -13,6 +13,7 @@ struct object_id *nth_midxed_object_oid(struct object_id *oid,
->                                         struct midxed_git *m,
->                                         uint32_t n);
->  int fill_midx_entry(const struct object_id *oid, struct pack_entry *e, struct midxed_git *m);
-> +int midx_contains_pack(struct midxed_git *m, const char *idx_name);
->  int prepare_midxed_git_one(struct repository *r, const char *object_dir);
->
->  int write_midx_file(const char *object_dir);
-> diff --git a/packfile.c b/packfile.c
-> index 059b2aa097..479cb69b9f 100644
-> --- a/packfile.c
-> +++ b/packfile.c
-> @@ -746,6 +746,11 @@ static void prepare_packed_git_one(struct repository *r, char *objdir, int local
->         DIR *dir;
->         struct dirent *de;
->         struct string_list garbage = STRING_LIST_INIT_DUP;
-> +       struct midxed_git *m = r->objects->midxed_git;
-> +
-> +       /* look for the multi-pack-index for this object directory */
-> +       while (m && strcmp(m->object_dir, objdir))
-> +               m = m->next;
->
->         strbuf_addstr(&path, objdir);
->         strbuf_addstr(&path, "/pack");
-> @@ -772,6 +777,8 @@ static void prepare_packed_git_one(struct repository *r, char *objdir, int local
->                 base_len = path.len;
->                 if (strip_suffix_mem(path.buf, &base_len, ".idx")) {
->                         /* Don't reopen a pack we already have. */
-> +                       if (m && midx_contains_pack(m, de->d_name))
-> +                               continue;
->                         for (p = r->objects->packed_git; p;
->                              p = p->next) {
->                                 size_t len;
-> --
-> 2.18.0.rc1
->
-
-
--- 
-Duy
+There are also a lot of add_cache_entry() calls in this function.  I'm
+guessing we should either convert all of those too, or just change
+back this particular make_index_entry to make_cache_entry() as it was;
+it seems weird to have a mix of explicit the_index and implicit
+the_index usages in the same function.  If we convert them all,
+perhaps we should consider having merge_options store the index we're
+working on?  If you want to punt this until later or leave it for me
+while I make all my ongoing merge-recursive changes, that's fine.
+Just thought I'd point it out.
