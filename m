@@ -2,87 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 353461F403
-	for <e@80x24.org>; Sat,  9 Jun 2018 21:26:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C47A1F403
+	for <e@80x24.org>; Sat,  9 Jun 2018 21:46:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753381AbeFIV0h (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Jun 2018 17:26:37 -0400
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:53648 "EHLO
-        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753278AbeFIV0g (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Jun 2018 17:26:36 -0400
-Received: by mail-wm0-f47.google.com with SMTP id x6-v6so8565830wmc.3
-        for <git@vger.kernel.org>; Sat, 09 Jun 2018 14:26:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=rxxHZVQMIb1/KcUdIOyDzwooy1pwLJEuyw5zE1zhZHI=;
-        b=MCZ971jmVVm93aErHSyxVIZFWJ0/6we+xzWockz3fBjUXbCLwe6chDLhOYH7zTgOMT
-         iKFq0031Wwe1dYf9T9pI0U9evp+VUhKJgWoPp4n3CO7d2rv0Ef4I5WEvLlvw2nt1yu3a
-         32oVKz1LpteA9I9GMmNJ9jLXFoKgEHP7OsREIKXJt8rigkjmtqGYYZ6yeEoHQugmyyfW
-         fYeJ3eiwvfNbfsQzfOywTyWmo3ktEfinAWkx3h8T6txOO6JLEzt/WJlyfkzB5g8dlL/d
-         3wcrX7z0E0kFoDv7s3ZqQsWAjjBbYExPuO++5NlX0OEsNdrFwJ/rBp54bwzdZ1iJu6/n
-         /ckA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=rxxHZVQMIb1/KcUdIOyDzwooy1pwLJEuyw5zE1zhZHI=;
-        b=cXnQhyCSF086HU709cqNKT7MS9Fvs4IFJD4HcHmYnen+ZjHS5qgJTq99Nhy0h6OdbR
-         FDPNCmTnd0FuLhBKZpr7NVZ1wmVvLBFCPSiMbBQKwsBWGbVZvCCMwonlPGuvASm+o7IC
-         SDyzasTip5faeeG0WJzh6745WFVIsnuAXZR5GW4CmL5aYpPh2bQQtt0xX1fWg1Qy/HWa
-         wWHvp3LmHjXjc1r4c7Ujphm97YyUlcFspukHOwBEiu3qbKm8zTyQL3Rl84pP0c3t63eF
-         E/gybCIKGTxGzUsMtp4w8n09EkTpp7VjCqi8RJk1QZfBMOczdzV9uDK51O15Znn6MOSo
-         ZiDQ==
-X-Gm-Message-State: APt69E1OBFLMXIhuwNuduHL/Ykg+t1JIGMctUAT9nTVkKxhPJ2L5k5EV
-        vZa9Wputia6X8dhJl9gdpK8qJG4J
-X-Google-Smtp-Source: ADUXVKKgeHm351hHvO6w8zaRMQlZJDmaAu3E9rldG8mwMWmyNelcYTTZ8caX/v63VKAUvBXVXdn6PQ==
-X-Received: by 2002:a50:a666:: with SMTP id d93-v6mr3858138edc.294.1528579595645;
-        Sat, 09 Jun 2018 14:26:35 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id b32-v6sm2888507edd.85.2018.06.09.14.26.34
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 09 Jun 2018 14:26:34 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org
-Subject: Re: State of NewHash work, future directions, and discussion
-References: <20180609205628.GB38834@genre.crustytoothpaste.net>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180609205628.GB38834@genre.crustytoothpaste.net>
-Date:   Sat, 09 Jun 2018 23:26:34 +0200
-Message-ID: <87fu1vwt11.fsf@evledraar.gmail.com>
+        id S1753383AbeFIVqI (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Jun 2018 17:46:08 -0400
+Received: from mout.gmx.net ([212.227.15.18]:33605 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753373AbeFIVqH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Jun 2018 17:46:07 -0400
+Received: from [192.168.0.129] ([37.201.195.106]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lt1eU-1gPo3s1MZW-012bt8; Sat, 09
+ Jun 2018 23:46:02 +0200
+Date:   Sat, 9 Jun 2018 23:45:46 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Elijah Newren <newren@gmail.com>
+cc:     git@vger.kernel.org, gitster@pobox.com, alban.gruin@gmail.com
+Subject: Re: [RFC PATCH 1/3] git-rebase, sequencer: add a --quiet option for
+ the interactive machinery
+In-Reply-To: <20180607171344.23331-2-newren@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1806092336320.77@tvgsbejvaqbjf.bet>
+References: <CABPp-BGxaroePB6aKWAkZeADLB7VE3y1CPy2RyNwpn=+C01g3A@mail.gmail.com> <20180607171344.23331-1-newren@gmail.com> <20180607171344.23331-2-newren@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:10n5bxQK48MyKn5VTr4g3kWFrfieiW45+RuBeFiHRl8PweSfTo8
+ CXNGs0ppJhUh16vV8cZWH2tAMo9QYKzx/jjHPsxnAY/EP/G/8VuGd6y/rGhOI7+n28tjzPM
+ Cn8zMZlsiIh/lxrbIdIxiHbt56bk7oVHFwqpovUOkiov36WH0kqHH4eoqlcxgx6sHImYPSB
+ EWFziawglTSRf4KZXJung==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:pGUhBLFcB9s=:YIEDOiRkGO3pKeVX6EsIHU
+ K3003YPiv6YaigX3F6SjnR3zYGibv5HWOkUrB2UctpyDlU4zTtebDKrFvPUL3+mr/P9AipQdU
+ ZAaALaEOPKbl2zeq7dtTnFW1qnnvrsGW4778ymtd9QHJ0BZnjgEopTlRfcNcpB5mERnEdum4T
+ 4wnXwUJGJqxRoni6+/ioRM4Fn1T+f/wuiT795Z+SGSdX3AKH/RL+avVm5pfa5zTPMIEAU5mo9
+ AthfGrmS7P9lKHCMLjTLTjC7L1YIC7saeJYJUCR6gPOB3a6qlbtinUDZzZTAIngaxMph/8imV
+ 9gQ4sFKb3vnY1YMt+DyWCQR3BhFtEcddVy6eANOfBvGJjdhyp4CiU68xKpigi8CF20+FNSSih
+ rR4rmOEPzdlevcGwvkc/spZJNgTYWEeiTrxJgjzfSAhNhaAOSjMS7JpF5BQFRxWZR6hk1Kn7+
+ BYpUVN2dfxc0YEknOmqhJ0JMFS+MLVW2Time5Qrt7C+cCzl9hjGnhwnDa0WTN8ubPPNOszX2V
+ cS43vY6el7Wzj+EhHkpZPFohJObed0jPKARmX2phi0/5egZdVdsHR7Fab1S9yYNJm5xrFpVJw
+ UVtg7e/vRR/6wGL/yoc6CC8/1w5v2RtKRDh0oBg4j3gBv+yUxV/F4r0YZBJrQWlrgRalqRb0i
+ +ganXtfjlRtajimVc5aaBWLrTw6puT7ro6p75s3oakNdI7d63Hw/0CMX+lHhRXFf8p6gwJerf
+ 7XRgByTb8ZbUTe4w0Opi/6BmViAEoFPB6TDMm0oP7QKeLGC2/utnZkee4YYK8Trgf7ccvCjNL
+ QIOmq9W
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Elijah,
 
-On Sat, Jun 09 2018, brian m. carlson wrote:
+On Thu, 7 Jun 2018, Elijah Newren wrote:
 
-> Since there's been a lot of questions recently about the state of the
-> NewHash work, I thought I'd send out a summary.
+> While 'quiet' and 'interactive' may sound like antonyms, the interactive
+> machinery actually has logic that implements several
+> interactive_rebase=implied cases (--exec, --keep-empty, --rebase-merges)
+> which won't pop up an editor.  Further, we want to make the interactive
+> machinery also take over for git-rebase--merge and become the default
+> merge strategy, so it makes sense for these other cases to have a quiet
+> option.
+> 
+> git-rebase--interactive was already somewhat quieter than
+> git-rebase--merge and git-rebase--am, possibly because cherry-pick has
+> just traditionally been quieter.  As such, we only drop a few
+> informational messages -- "Rebasing (n/m)" and "Succesfully rebased..."
 
-Thanks for all your work on this.
+Makes sense. As long as it is coordinated with Alban and Pratik, as both
+of their GSoC projects are affected by this.
 
-> I know that we have long tried to avoid discussing the specific
-> algorithm to use, in part because the last discussion generated more
-> heat than light, and settled on referring to it as NewHash for the time
-> being.  However, I think it's time to pick this topic back up, since I
-> can't really continue work in this direction without us picking a
-> NewHash.
->
-> If people are interested, I've done some analysis on availability of
-> implementations, performance, and other attributes described in the
-> transition plan and can send that to the list.
+In particular Pratik's project, I think, would actually *benefit* from
+your work, as it might even make it possible to turn all modes but
+--preserve-merges into pure builtin code, which would be awesome.
 
-Let's see it!
+> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+> index 06a7b79307..1f2401f702 100644
+> --- a/git-rebase--interactive.sh
+> +++ b/git-rebase--interactive.sh
+> @@ -139,8 +139,12 @@ mark_action_done () {
+>  	if test "$last_count" != "$new_count"
+>  	then
+>  		last_count=$new_count
+> -		eval_gettext "Rebasing (\$new_count/\$total)"; printf "\r"
+> -		test -z "$verbose" || echo
+> +		if test -z "$GIT_QUIET"
+> +		then
+> +			eval_gettext "Rebasing (\$new_count/\$total)";
+> +			printf "\r"
+> +			test -z "$verbose" || echo
+> +		fi
+>  	fi
+>  }
+>  
+> @@ -713,6 +717,7 @@ Commit or stash your changes, and then run
+>  		"$hook" rebase < "$rewritten_list"
+>  		true # we don't care if this hook failed
+>  	fi &&
+> +		test -z "$GIT_QUIET" &&
+>  		warn "$(eval_gettext "Successfully rebased and updated \$head_name.")"
+
+In general, I tried the statements to return success at all times. That
+means that
+
+		test -n "$GIT_QUIET" ||
+
+would be better in this case.
+
+> diff --git a/git-rebase.sh b/git-rebase.sh
+> index 7d1612b31b..b639c0d4fe 100755
+> --- a/git-rebase.sh
+> +++ b/git-rebase.sh
+> @@ -136,7 +136,7 @@ write_basic_state () {
+>  	echo "$head_name" > "$state_dir"/head-name &&
+>  	echo "$onto" > "$state_dir"/onto &&
+>  	echo "$orig_head" > "$state_dir"/orig-head &&
+> -	echo "$GIT_QUIET" > "$state_dir"/quiet &&
+> +	test t = "$GIT_QUIET" && : > "$state_dir"/quiet
+
+Maybe it would be better to `echo t` into that file? That way, scripts
+that used the value in that file would continue to work. (But maybe there
+were no scripts that could use it, as only the interactive rebase allows
+scripting, and it did not handle that flag before?)
+
+The rest looks obviously good.
+
+Thank you!
+Dscho
