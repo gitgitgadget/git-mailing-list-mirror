@@ -3,87 +3,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5639F1F403
-	for <e@80x24.org>; Sat,  9 Jun 2018 14:32:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9CB3B1F403
+	for <e@80x24.org>; Sat,  9 Jun 2018 15:19:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753302AbeFIOb7 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Jun 2018 10:31:59 -0400
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:39691 "EHLO
-        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753171AbeFIOb6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Jun 2018 10:31:58 -0400
-Received: by mail-pl0-f65.google.com with SMTP id f1-v6so9856560plt.6
-        for <git@vger.kernel.org>; Sat, 09 Jun 2018 07:31:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=jUEuLP3KABd0vP41GUMsug7bsxOAJPaHvblSBcCb1/s=;
-        b=BLZJiB7JhawlOMGMTs9YpAF8StRue9oQ0lB4NMz9fYoWQhOO0ZLNNaRk58xvm7w6+7
-         tJvfdIWtvuJHBU9jiUknnO7KDEepZm9zAeV/efzw5BcbA/GM/NGBw767ADYf/q4MJ3M7
-         HC9Ct3+uvxoU9F4wtQANIKK9DhmGE9JN0KYY63LAs5c+ZRnbfcgxTUeA7lkopFPJUaGY
-         Gm3S6uMaXGelT7NYCau28xR/1KDa+mwaKjT2VWg79w32nydUqUbZ3VuQyffUQlTeLylL
-         W7kgB1nwsUf6cUzGwSBumTHY86K75FRSjr73gf8g0tkonXOtdpK8HYVJCs/0kVgub6Zb
-         760w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=jUEuLP3KABd0vP41GUMsug7bsxOAJPaHvblSBcCb1/s=;
-        b=eCoG78Hq/PcTOPXF0PYmIbDNLZmAJTDJ4OryYXvLPp3gJbPuVKAU5AH//tFAHvdehm
-         RJ8TBaZ50BxiH9jTMrjIJouJthEVWlmK0zt1rl/vG4ADsWo9WgBTFKFY4+srUd8ugyjo
-         7X9YvtjPg4zGHgOKA3ufwBxHLSf+V93T9LQsaNOspawpCJ9qEi5Djplkw0f5X5ODeCfU
-         4FOURjHsxkxF0/k2xngYTUhw3XNTmPnoL/2zdsvOOxYMVR+2RmPCctNuliR5qZeURHm8
-         gfj2YRdgji0M3Howk12Vj1djUIaZgZ7MsZEna3ZHn5QuiP9/iEJxbY0Do5BfhR5vIOAC
-         MZ/A==
-X-Gm-Message-State: APt69E1E2zm1S28u3zjBYHlv2d/l4aPR7EF5eX4gVlzIJOZyFpG7IqeL
-        1LsjMKsUZOnLF8bn3xwS+E9UfvwYC/5epSzCbl4=
-X-Google-Smtp-Source: ADUXVKJNL3AZ867lcbXtDOym2emr1WT+kR8QXmNQxAUWI+MXH/FjS0HPX5Izx0wHrNIP9iQJYxUS1Kc/muaNf1FF82Q=
-X-Received: by 2002:a17:902:543:: with SMTP id 61-v6mr11127101plf.47.1528554718330;
- Sat, 09 Jun 2018 07:31:58 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a17:90a:760e:0:0:0:0 with HTTP; Sat, 9 Jun 2018 07:31:57
- -0700 (PDT)
-In-Reply-To: <CAN0heSqrgUw1u8Ykk-9eGosWwFS0NFM7sLBe5Loo4cN=tkrXaA@mail.gmail.com>
-References: <20180608224136.20220-1-avarab@gmail.com> <20180608224136.20220-18-avarab@gmail.com>
- <CAN0heSqrgUw1u8Ykk-9eGosWwFS0NFM7sLBe5Loo4cN=tkrXaA@mail.gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sat, 9 Jun 2018 16:31:57 +0200
-Message-ID: <CAN0heSpMSmn=34ze4GmuETzR=VZ2TO4ooNC=PS+OM5yAawB3og@mail.gmail.com>
-Subject: Re: [PATCH 17/20] abbrev: unify the handling of empty values
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        id S1753231AbeFIPTw (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Jun 2018 11:19:52 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62051 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753062AbeFIPTv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Jun 2018 11:19:51 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CC7C9DD1D5;
+        Sat,  9 Jun 2018 11:19:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:date:message-id; s=sasl; bh=GNu+4B5lB9kAKuVy8dI+L4CO90M
+        =; b=hDq48ipAQ3Q1uj2WsxSkxP5q6ftHEUZUchUWyX4ZTfN/24NcN2W6lrCZq30
+        aD560fpbQJTlE/XWJgROGqIMOu35HkKZ2UOXT8l97wdPoqDZSu/zNGYxjJkoxOCB
+        NwPl5IIn2qL87GmnyMeEuqfhRTmW/vZVi78/zlVnxnlucgXk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C25DCDD1D4;
+        Sat,  9 Jun 2018 11:19:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=kyleam.com;
+ h=from:to:cc:subject:date:message-id; s=mesmtp;
+ bh=IOvJ3GUbXRGrA+8S9ugHb05vMs0vwXgHeFxM98afuT8=;
+ b=x7qSTqnC5mW/QWIzC+I00TIGE9Au7xaOeGScosb0OpCk4Aofaiv6r90UtriqfckLQ1d0Gj2HR+FiE6Lk2AlDDKsO2IhZt2SsQvkVPJYFyMIMRmOp/69icbDVTH2h0e3lNEAV3EZXYYGpz8NHWkfBP1131Zis1zonWo/tSciTyZg=
+Received: from kmlap.local (unknown [76.118.43.98])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 25265DD1D3;
+        Sat,  9 Jun 2018 11:19:48 -0400 (EDT)
+From:   Kyle Meyer <kyle@kyleam.com>
+To:     git@vger.kernel.org
+Cc:     Kyle Meyer <kyle@kyleam.com>
+Subject: [PATCH] gitworkflows: fix grammar in 'Merge upwards' rule
+Date:   Sat,  9 Jun 2018 11:19:43 -0400
+Message-Id: <20180609151943.7387-1-kyle@kyleam.com>
+X-Mailer: git-send-email 2.17.1
+X-Pobox-Relay-ID: 8C264906-6BF8-11E8-A57B-67830C78B957-24757444!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9 June 2018 at 16:24, Martin =C3=85gren <martin.agren@gmail.com> wrote:
-> On 9 June 2018 at 00:41, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@g=
-mail.com> wrote:
->> For no good reason the --abbrev=3D command-line option was less strict
->> than the core.abbrev config option, which came down to the latter
->> using git_config_int() which rejects an empty string, but the rest of
->> the parsing using strtoul() which will convert it to 0.
->
-> It will still be less strict in that it accepts trailing garbage, e.g.,
-> `--abbrev=3D7a`. Probably ok to leave it at that in this series, but
-> possibly useful to mention here that this only makes these options "less
-> differently strict".
+Signed-off-by: Kyle Meyer <kyle@kyleam.com>
+---
+ Documentation/gitworkflows.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Hmpf, please ignore. That's what I get for looking at a few patches,
-taking a break, picking it up again and completely forgetting what's
-going on...
+diff --git a/Documentation/gitworkflows.txt b/Documentation/gitworkflows.txt
+index 926e044d0..ca11c7bda 100644
+--- a/Documentation/gitworkflows.txt
++++ b/Documentation/gitworkflows.txt
+@@ -107,7 +107,7 @@ the unstable branch into the stable one.  Hence the following:
+ .Merge upwards
+ [caption="Rule: "]
+ =====================================
+-Always commit your fixes to the oldest supported branch that require
++Always commit your fixes to the oldest supported branch that requires
+ them.  Then (periodically) merge the integration branches upwards into each
+ other.
+ =====================================
+-- 
+2.11.0
+
