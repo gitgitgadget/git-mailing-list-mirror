@@ -3,97 +3,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB6751F403
-	for <e@80x24.org>; Sat,  9 Jun 2018 08:38:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 58A561F403
+	for <e@80x24.org>; Sat,  9 Jun 2018 08:43:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753158AbeFIIi4 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Jun 2018 04:38:56 -0400
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:39138 "EHLO
-        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751581AbeFIIiz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Jun 2018 04:38:55 -0400
-Received: by mail-yw0-f194.google.com with SMTP id 81-v6so4865086ywb.6
-        for <git@vger.kernel.org>; Sat, 09 Jun 2018 01:38:55 -0700 (PDT)
+        id S1753164AbeFIInZ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Jun 2018 04:43:25 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:42476 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751581AbeFIInX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Jun 2018 04:43:23 -0400
+Received: by mail-pg0-f65.google.com with SMTP id c10-v6so1815178pgu.9
+        for <git@vger.kernel.org>; Sat, 09 Jun 2018 01:43:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=UoEI/buuyA20isHywqNRJSRokNY33QoMKVnD3myEfCk=;
-        b=JgIhwdQVgPGEZk5bQehd/KglvuOQsMTNFCd8SNQsW+x0NMPnMe74Tp330Xae23kSb6
-         H+g7rMJMl82OKZ6l9F/SxrgL/awDBtVhcMAApOlojcvuPjGUzGn9xmKH6wtJp7NJapmq
-         zW4gVdUa5oWBRcPKrSN9lEkT09LHIwZNHvBan4Z0ZVZDGw+44e2Yh7rkF/eMfIbfe1I3
-         R8IDkOmDUTLSaxs0gP7hs5BkaT5yIFxJFeyjqnFP12Ox7NjucRKI6rY2tSdaWioJ9ZCV
-         a1TtV4SoCb6a7o+BAFjhoJ23ATVYrrErA+RYOzBWPMY5N669L9RR3TVh5/NbGjW824+l
-         PrmA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=d/v14jNI8zePt9M2+0ZDFNhgADRUuZjPJwFqLs6WUEs=;
+        b=CnlGFLJxnONLGSCKuBBckj7Rph4ZQS2cyIwED8OefvKSPr3BBXHpoaB/XP51Dg8n1u
+         wbLbXY+MaKIVxbu9iLUHRKozxyBwuYnXjUPbdEqGUWbatW1F6RH5PG5/TEH8kon0XRAq
+         DVqMKzwipdjJ0t0SLt5Zw/1+JL51IOhWdoi9fcs+lBMuuXBjbER5aPLfZEJFf05JSG3o
+         QR7ivwzZKhnI2s1myPCMpvlaOvV3Gq50PeRxkHk07t3h3sTILUfCLlwTJ5czKq/FRbaA
+         BWbIofYryWf+EEcVaKX+bj+Df49hIDeh84XG3SmtSZFUJhW3jys/qj3HiIzn+Ocm0EuH
+         zASg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=UoEI/buuyA20isHywqNRJSRokNY33QoMKVnD3myEfCk=;
-        b=TNZx8bqoeuoMJyKzAPMojN1IId20my1GrazHNGE+EYQ1s1lbzWCU7vjn+EuZZaI8jE
-         D+C9v2IAhezRiq/ZEUZp62OuCtwPmhkse57n5w7zpJxwrx0CH3m6mS5M1XgGf7Rv41+i
-         4S9LMZpKc514qGm6lLORurzJzp4Od4xQihmJiVQiFiaa+m5wnqCmA+8p3VW1kGGiSbTp
-         MVyt+Xa+RMZbe7MqIYQ7BSTousTYGUFtWl6IKoIzrSBB/Y1HmUodfGTS7piAx0BscAY9
-         0HXdK9kDFCE+3RreVjTuf8tngRH+Qlj/I7Q2Gcyz7YCEllnhikAKXG08pLnL4Q70N6Ex
-         qpdQ==
-X-Gm-Message-State: APt69E3onJ1OlCdK9yfAdEtyYCj9/C05g34TMKqi7irG6kJlmjBe7GXM
-        gNTTIW96SAtQrcbZiUuZn6rX7SM+wfQKLmugDuQ=
-X-Google-Smtp-Source: ADUXVKJuUTURqB4HhfYVdfajatjK4T+LKHUSzdg+mgA4PRM//zrqH54jYspRqwsX/6KTnYeeaJEN9cq/vomUJzQFkTo=
-X-Received: by 2002:a0d:c105:: with SMTP id c5-v6mr5427616ywd.131.1528533534878;
- Sat, 09 Jun 2018 01:38:54 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=d/v14jNI8zePt9M2+0ZDFNhgADRUuZjPJwFqLs6WUEs=;
+        b=GLmuKlN+l8F8j2KTsxIwqN/58OUo3TvLh0zxCASn13/O2fEakzsYi2NjL1g/jAfH3q
+         DrdQuiNvwzd8SMTU8QbjaTTDo4UmecwcTIMd+BisMkos+UcBoStB6bs4UhWNKZ24gSUj
+         O51evDKllS1ZKkd/VOgleyMJInsYbPWCAg+NzUWR4pT1aYlg+0apr7U/IK/JDD/ReSlD
+         Ua0S6RIMmtAzFqRDEGUBnQooIcCBfD00Qh6fR8TRVuzxpcJf+bNYMyIJxyvLw4fhjev2
+         +Kn8T6HxME+8t66khBsrbTztMkA+DaysjFJjUFoQBVNcLF0jYu9R3dAdQU55uTUKgjqr
+         XZ4A==
+X-Gm-Message-State: APt69E1FUGW/tnVXx2/XtRkMxHojqlTYO9/El/UqIConJILa0II+eRzT
+        Sxe7dTHVz+wHcsNDeRvqhiEqdfgh7wlgNaG58Fk=
+X-Google-Smtp-Source: ADUXVKLSb6g3d5BREArdO5O5CSSSbt3GUwfxf+eo4u8j7NLJuxyOrEIk77sVfgDlAtdVDsbbCvZhmbzxOw8IUymigR4=
+X-Received: by 2002:a63:6dc3:: with SMTP id i186-v6mr8253716pgc.316.1528533803352;
+ Sat, 09 Jun 2018 01:43:23 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a25:3dc7:0:0:0:0:0 with HTTP; Sat, 9 Jun 2018 01:38:54 -0700 (PDT)
-In-Reply-To: <20180609083159.GA6158@sigill.intra.peff.net>
-References: <20180609083159.GA6158@sigill.intra.peff.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 9 Jun 2018 04:38:54 -0400
-X-Google-Sender-Auth: pVCflBKdneKDD2BH9B_FPzH3RqI
-Message-ID: <CAPig+cTgCD5=96XG=Z5FwOsPbN409DxzAfPy0p=wnoLywu++dw@mail.gmail.com>
-Subject: Re: [PATCH] fsck: avoid looking at NULL blob->object
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>
+Received: by 2002:a17:90a:760e:0:0:0:0 with HTTP; Sat, 9 Jun 2018 01:43:22
+ -0700 (PDT)
+In-Reply-To: <20180608224136.20220-10-avarab@gmail.com>
+References: <20180608224136.20220-1-avarab@gmail.com> <20180608224136.20220-10-avarab@gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Sat, 9 Jun 2018 10:43:22 +0200
+Message-ID: <CAN0heSoaNotgsvbLv03tqRxC75rXzS6LvvnYBrS=f6pk-Y_x3Q@mail.gmail.com>
+Subject: Re: [PATCH 09/20] abbrev tests: test for "git-log" behavior
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jun 9, 2018 at 4:32 AM, Jeff King <peff@peff.net> wrote:
-> Commit 159e7b080b (fsck: detect gitmodules files,
-> 2018-05-02) taught fsck to look at the content of
-> .gitmodules files. If the object turns out not to be a blob
-> at all, we just complain and punt on checking the content.
-> And since this was such an obvious and trivial code path, I
-> didn't even bother to add a test.
-> [...]
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> diff --git a/t/t7415-submodule-names.sh b/t/t7415-submodule-names.sh
-> @@ -151,4 +151,22 @@ test_expect_success 'fsck detects symlinked .gitmodules file' '
-> +test_expect_success 'fsck detects non-blob .gitmodules' '
-> +       git init non-blob &&
-> +       (
-> +               cd non-blob &&
-> +
-> +               # As above, make the funny directly to avoid index restrictions.
+On 9 June 2018 at 00:41, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gma=
+il.com> wrote:
+> The "log" family of commands does its own parsing for --abbrev in
+> revision.c, so having dedicated tests for it makes sense.
 
-Is there a word missing after "funny"?
+> +for i in $(test_seq 4 40)
 
-> +               mkdir subdir &&
-> +               cp ../.gitmodules subdir/file &&
-> +               git add subdir/file &&
-> +               git commit -m ok &&
-> +               tree=$(git ls-tree HEAD | sed s/subdir/.gitmodules/ | git mktree) &&
-> +               commit=$(git commit-tree $tree) &&
+I've just been skimming so might have missed something, but I see
+several instances of this construct, and I wonder what this brute-force
+approach really buys us. An alternative would be, e.g., "for i in 4 23
+40". That is, min/max and some arbitrary number in between (odd because
+the others are even).
 
-I see that this is just mirroring the preceding test, but do you need
-to assign to variable 'commit' which is never consulted by anything
-later in the test?
+Of course, we might have a bug which magically happens for the number 9,
+but I'd expect us to test for that only if we have some reason to
+believe that number 9 is indeed magical.
 
-> +               test_must_fail git fsck 2>output &&
-> +               grep gitmodulesBlob output
-> +       )
-> +'
+Also, 40 is of course tied to SHA-1. You could perhaps define a variable
+at the top of this file to simplify a future generalization. (Same for
+39/41 which are related to 40.)
+
+Martin
