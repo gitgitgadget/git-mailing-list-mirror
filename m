@@ -2,104 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D014A1F403
-	for <e@80x24.org>; Sat,  9 Jun 2018 05:10:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB8AA1F403
+	for <e@80x24.org>; Sat,  9 Jun 2018 06:04:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751314AbeFIFEV (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Jun 2018 01:04:21 -0400
-Received: from mail-oi0-f66.google.com ([209.85.218.66]:37745 "EHLO
-        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751283AbeFIFEU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Jun 2018 01:04:20 -0400
-Received: by mail-oi0-f66.google.com with SMTP id l22-v6so13636919oib.4
-        for <git@vger.kernel.org>; Fri, 08 Jun 2018 22:04:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=vXjQfY0C1ApFTUGRPCR79lzTBHf6k9UfD/D4uYSiWuA=;
-        b=NmRjeCyYAZIdDn+RYQVgUQFTEfvH8TxMTB6pOS1JTUkaU9XFhrYUjTQESECoL94Q5f
-         ZnuroU/3V7BsQz1pTPLF319Z4Pqnx4ZnBfJ4Ia+iLUU5zyPjMCPnhEyKh8OvPzEbZObL
-         jbU4HtJ5nnvkVtZBvDEtRohOWDuj+e2lAL2TC7e85cc8W3QUkyAkiSOHJ6W27oxlYJRz
-         rLT4KpFZD2VXsI3tL6RnPOHgEqgyvZBYbBlmauck6qiYk2SIREn2EwGI3zrEx59tIT8y
-         y5zbx1QRlw0qyZzDeXjfVMS6JQvL79vf/NRhPE+090Y9ToEKkwAf4RtdoRTi2EJSCliB
-         Cj7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=vXjQfY0C1ApFTUGRPCR79lzTBHf6k9UfD/D4uYSiWuA=;
-        b=TP580eSg2BvoBGfFBntoIesZ3XTeEt4iAitDk8IKEM5xLOwr53z2zYperQyCxE8Jas
-         yle8thG024hJOG5TbdF3fJ8z4/sGjMHX/U+q5mHa5uuBJEpvySFtQRk4mEtWQgJ4+ecv
-         QV8zDhsqYyNQ+dS12nGENUtYN32sljzrWspboVTYCyCSxcPJ/V+QJbpj+Gy8+GpCNfyN
-         TegBDx4pO38CQTuN24CLUQoTm79SmcZmJU2EDPqFDNI5kqjjvZTqc/YqfyuuVptzqwWL
-         2/9wlnr1uY6YV/0KUf3/Kh1I0wpfwi0cNbixu4IFgM2HrQGXKQB8uXFPI7Uq+1SYR1SB
-         6OKQ==
-X-Gm-Message-State: APt69E0y5ipDs1baddbUZHXtkvkqXDmq4TG5bbpaVN5vesfc71bzG/nG
-        k/oEClIXSlMUBV5+IizfkM0HB/D1Z6SgInAPJ+c=
-X-Google-Smtp-Source: ADUXVKKo9OfPTGpULJvEDJDXT6dtijf+2v7UPMXXC7Lo5BEWdZ0PccIKBizQRdfbMRPxxo1GnlQ0AAn0CZVjJrAbqC0=
-X-Received: by 2002:aca:f594:: with SMTP id t142-v6mr4821066oih.56.1528520659766;
- Fri, 08 Jun 2018 22:04:19 -0700 (PDT)
+        id S1752599AbeFIGEk (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Jun 2018 02:04:40 -0400
+Received: from cloud.peff.net ([104.130.231.41]:39792 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1753144AbeFIGEk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Jun 2018 02:04:40 -0400
+Received: (qmail 18899 invoked by uid 109); 9 Jun 2018 06:04:40 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 09 Jun 2018 06:04:40 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 857 invoked by uid 111); 9 Jun 2018 06:04:53 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 09 Jun 2018 02:04:53 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 09 Jun 2018 02:04:38 -0400
+Date:   Sat, 9 Jun 2018 02:04:38 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com
+Subject: Re: [PATCH 1/2] pack-bitmap: remove bitmap_git global variable
+Message-ID: <20180609060437.GA30224@sigill.intra.peff.net>
+References: <cover.1528397984.git.jonathantanmy@google.com>
+ <d4d4fec265c1c53e14da465904d93e559ff2c17d.1528397984.git.jonathantanmy@google.com>
 MIME-Version: 1.0
-References: <20180607145313.25015-1-git@jeffhostetler.com> <c3ed8128-1184-8199-06e5-a4e96b2bc7c5@kdbg.org>
- <20180608090758.GA15112@sigill.intra.peff.net> <688240ef-34a1-ee9a-215a-b4f9628e7c72@virtuell-zuhause.de>
- <9ab3eec1-40c1-8543-e122-ed4ccfd367b4@kdbg.org> <87fu1w53af.fsf@evledraar.gmail.com>
-In-Reply-To: <87fu1w53af.fsf@evledraar.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 9 Jun 2018 07:03:53 +0200
-Message-ID: <CACsJy8BPhzs5M4peHN2HczmDxGmAuKZ0corzT66i+rJ2UQRTHQ@mail.gmail.com>
-Subject: Re: [RFC PATCH v1] telemetry design overview (part 1)
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Thomas Braun <thomas.braun@virtuell-zuhause.de>,
-        Jeff King <peff@peff.net>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <d4d4fec265c1c53e14da465904d93e559ff2c17d.1528397984.git.jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jun 9, 2018 at 12:22 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
->
-> On Fri, Jun 08 2018, Johannes Sixt wrote:
->
-> > Am 08.06.2018 um 18:00 schrieb Thomas Braun:
-> >> I for my part would much rather prefer that to be a compile time
-> >> option so that I don't need to check on every git update on windows
-> >> if  this is now enabled or not.
-> >
-> > This exactly my concern, too! A compile-time option may make it a good
-> > deal less worrisome.
->
-> Can you elaborate on how someone who can maintain inject malicious code
-> into your git package + config would be thwarted by this being some
-> compile-time option, wouldn't they just compile it in?
+On Thu, Jun 07, 2018 at 12:04:13PM -0700, Jonathan Tan wrote:
 
+> Remove the bitmap_git global variable. Instead, generate on demand an
+> instance of struct bitmap_index for code that needs to access it.
+> 
+> This allows us significant control over the lifetime of instances of
+> struct bitmap_index. In particular, packs can now be closed without
+> worrying if an unnecessarily long-lived "pack" field in struct
+> bitmap_index still points to it.
+> 
+> The bitmap API is also clearer in that we need to first obtain a struct
+> bitmap_index, then we use it.
 
-Look at this from a different angle. This is driven by the needs to
-collect telemetry in _controlled_ environment (mostly server side, I
-guess) and it should be no problem to make custom builds there for
-you. Not making it a compile-time option could force [1] linux distro
-to carry this function to everybody even if they don't use it (and
-it's kinda dangerous to misuse if you don't anonymize the data
-properly). I also prefer this a compile time option.
+I think this is the right direction, and overall it looks pretty good.
+There's one call that gave me pause:
 
-[1] Of course many distros can choose to patch it out. But it's the
-same argument as bringing this option in in the first place: you guys
-already have that code in private and now want to put it in stock git
-to reduce maintenance cost, why add extra cost on linux distro
-maintenance?
---=20
-Duy
+> -int prepare_bitmap_git(void)
+> +struct bitmap_index *prepare_bitmap_git(void)
+>  {
+> -	if (bitmap_git.loaded)
+> -		return 0;
+> +	struct bitmap_index *bitmap_git = xcalloc(1, sizeof(*bitmap_git));
+
+This function used to be idempotent, so any code which wanted to use the
+global bitmap_git could call it "just in case". After your patch, it's
+not. I think it's probably OK, since such functions would generally now
+take a bitmap_git argument and use that (e.g., rebuild_existing_bitmaps
+works that way after your patch).
+
+> -	if (!open_pack_bitmap())
+> -		return load_pack_bitmap();
+> +	if (!open_pack_bitmap(bitmap_git) && !load_pack_bitmap(bitmap_git))
+> +		return bitmap_git;
+>  
+> -	return -1;
+> +	return NULL;
+>  }
+
+We probably need to free(bitmap_git) before returning NULL here (this is
+still in prepare_bitmap_git()).
+
+> @@ -662,12 +686,11 @@ int prepare_bitmap_walk(struct rev_info *revs)
+>  	struct bitmap *wants_bitmap = NULL;
+>  	struct bitmap *haves_bitmap = NULL;
+>  
+> -	if (!bitmap_git.loaded) {
+> -		/* try to open a bitmapped pack, but don't parse it yet
+> -		 * because we may not need to use it */
+> -		if (open_pack_bitmap() < 0)
+> -			return -1;
+> -	}
+> +	struct bitmap_index *bitmap_git = xcalloc(1, sizeof(*bitmap_git));
+> +	/* try to open a bitmapped pack, but don't parse it yet
+> +	 * because we may not need to use it */
+> +	if (open_pack_bitmap(bitmap_git) < 0)
+> +		return NULL;
+
+Ditto here (and probably other error returns lower in the function, but
+I didn't go through it carefully).
+
+-Peff
