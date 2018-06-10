@@ -2,77 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 24D961F403
-	for <e@80x24.org>; Sun, 10 Jun 2018 16:08:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C47381F403
+	for <e@80x24.org>; Sun, 10 Jun 2018 19:26:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753507AbeFJQIU (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Jun 2018 12:08:20 -0400
-Received: from mout.web.de ([212.227.15.14]:46525 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752158AbeFJQIT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Jun 2018 12:08:19 -0400
-Received: from localhost ([213.64.64.87]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LdalO-1gAlYh0FQQ-00inxM for
- <git@vger.kernel.org>; Sun, 10 Jun 2018 18:08:17 +0200
-Date:   Sun, 10 Jun 2018 18:11:53 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     git@vger.kernel.org
-Subject: Re: Why is there no force pull?
-Message-ID: <20180610161153.GA27202@atze2.lan>
-References: <20180609190154.yl4ig6dxfihgm5qi@christoph-lap>
+        id S1753675AbeFJT0v (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Jun 2018 15:26:51 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:24451 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752723AbeFJT0v (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Jun 2018 15:26:51 -0400
+Received: from [192.168.2.240] ([92.22.21.50])
+        by smtp.talktalk.net with SMTP
+        id S5zEf7eawbZX5S5zEfWdqw; Sun, 10 Jun 2018 20:26:49 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1528658809;
+        bh=7DOqA5Hg9oGji5Wb1SM7/xkY1oa/h3S9seeVkLAeO5w=;
+        h=Reply-To:Subject:To:References:From:Date:In-Reply-To;
+        b=ThfO5vS1QvW8pdP3axgVSuLparRuNVdxohOUetQ5XC5rYufGUFuSXgWYTr0gTWw+s
+         OK7Kcp7QuIhHSyOKOmpOD0BhoUwh2ktTtwFpYIzafyryZr/ROsM1gXI0Q2/+C9uhhZ
+         gQBTr2MoaPTe/dU2Td387n+wvwf5nf9ZWupq2bFI=
+X-Originating-IP: [92.22.21.50]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=Poq9kTE3 c=1 sm=1 tr=0 a=WogICo9TToZCqFjIzRluTQ==:117
+ a=WogICo9TToZCqFjIzRluTQ==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=gd-c90epqYwOYwZxZcwA:9 a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] git-rebase.sh: handle keep-empty like all other options
+To:     Elijah Newren <newren@gmail.com>, git@vger.kernel.org
+References: <CABPp-BGxaroePB6aKWAkZeADLB7VE3y1CPy2RyNwpn=+C01g3A@mail.gmail.com>
+ <20180607050747.19726-1-newren@gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <8f19c8c2-d050-2d51-756d-d78b9f2bd335@talktalk.net>
+Date:   Sun, 10 Jun 2018 20:26:47 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180609190154.yl4ig6dxfihgm5qi@christoph-lap>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Provags-ID: V03:K1:AWPVPwhWum4MPiMs8WePezz32pZD0Bb0msZWhu89Q5PQqnJVWPz
- DYRzj2QR6FZfPHSoVYNWav82ffFNzbGrSLK/Px9fAq15Fuv/0GXtOl0LiS3P0ypkxvoslkQ
- WK6/C84PwzHsHEXcwmkovqo2TWBr9UQpqyZmcDixAJw9j9z3Qm6cdO461v6vLBxo7w/Ioak
- q8WS1suD5zaDmrpMfzyjg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:B7Tm2cWg8+I=:QHSD9zISHNdE4Z0MmmYWlX
- g+2zzoCVzjxq3iTfX9fY12K90bhfCbQESFeg7XP/2+9wYqv6MRKsyD8bfjCGVfNuLigIGka3R
- YTsl6a3rEI/6eoJRNxNKy8fgyq8lODeMYCXHGh8GLQ8Jn1RnM2RYjtqpLfwrmIvdqx1+7rYFn
- XuZ+MEf3PCngGw+l+2ydGGQEbe4M1Qg8H0WgHcusBGmGglO02i7OeCMg8ip7Wn2r4EiwWZc5T
- bN5st/ULF0+dBvXvkHNIezSFL1GQJ+iQllfxt6r+pz123a/iL/tqsaxkbxkXLSsWMGUPibzRy
- RYvkmKSJpWQ3ajCouQ/PxOkhdjXbKY38EzT7R6GsQXFF8Wul9eNJJP4MfaZhjGB0XMgKWlr75
- Pb0wmxKdu/2k8eJlHHb5pC7RbMvyraXdt9pFsGq+Iu4w0BlVHPuIHcYYxpk4KWWgwygsOxIPF
- LFGLHL3/5m4Qu1/jiDwCwBh0It8EapHnOLHGx4Qr5rkpR93QPTENHb/r/fZX5k7EAlDBaO2hg
- YOLK0eXVeNkB02MA4RQ1UTS5c57RUBYxRq+E+a3PrDD91rfO58NH+EBRPYuowRQV0eb2d7Z/w
- M3RHyrphugzVYl4hHjH2EG+flMwYpMj4QlJpNE9Z2hkKgx34UvVGpwD+8pJmdFXZYWV/BfjDw
- SXPFkt1Mjbd4DFcVSO5IDTtaEn+F3+Twdr4SYxCnJng0KOVZhVMBMSTnN7VmcKUzGjAnPpsm2
- f/a+VQX4qmkC4/ysHoCBk8yuY6fFIPHVk+NNML+v2gtqJWQGdkCp8f8i3u4=
+In-Reply-To: <20180607050747.19726-1-newren@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfBj+DMQ//rqOGT6pm6euqCQobbe6GFP2zUkEWCPhtVs3zoFdvv4oW1LgghCVfT6wF0pPeREObHFPk2EsgTi8w66IHEX8ynTeOtx41CLxJ8EwMhQsJkbL
+ yLb4Y2YwhWtmjl3/9Ql50jHlrOri+9SQxzcAgg2MLojbNWBoqH8uObqrK8ztel7vO9FXvoo9ECh5ud3uE7MIeYZhPeWz95UGpu0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jun 09, 2018 at 09:01:54PM +0200, Christoph Böhmwalder wrote:
-> Hi,
+Hi Elijah
+On 07/06/18 06:07, Elijah Newren wrote:
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>   git-rebase.sh | 6 +-----
+>   1 file changed, 1 insertion(+), 5 deletions(-)
 > 
-> Since this is a use case that actually comes up quite often in
-> day-to-day use, especially among git beginners, I was wondering: is
-> there a specific reason why a command like "fetch changes from remote,
-> overwriting everything in my current working directory including all
-> commits I've made" doesn't exist? Now, I'm quite aware that something
-> like
+> diff --git a/git-rebase.sh b/git-rebase.sh
+> index 40be59ecc4..a56b286372 100755
+> --- a/git-rebase.sh
+> +++ b/git-rebase.sh
+> @@ -276,6 +276,7 @@ do
+>   		;;
+>   	--keep-empty)
+>   		keep_empty=yes
+> +		test -z "$interactive_rebase" && interactive_rebase=implied
+
+I think you need to wait until all the options have been parsed before 
+setting the implied interactive rebase in case the user specifies has 
+'--keep-empty' in an alias and specifies '--no-keep-empty' with some am 
+options on the command line.
+
+Best Wishes
+
+Phillip
+>   		;;
+>   	--allow-empty-message)
+>   		allow_empty_message=--allow-empty-message
+> @@ -480,11 +481,6 @@ then
+>   	test -z "$interactive_rebase" && interactive_rebase=implied
+>   fi
+>   
+> -if test -n "$keep_empty"
+> -then
+> -	test -z "$interactive_rebase" && interactive_rebase=implied
+> -fi
+> -
+>   if test -n "$interactive_rebase"
+>   then
+>   	type=interactive
 > 
->     $ git fetch origin/branch
->     $ git reset --hard origin/branch
 
-This is not exactly what you askeded for, but I tend not to recommend
-people using "git reset --hard" at all.
-Either use a "stash", just in case.
-
-Or, in your case:
-$ git fetch origin  && git checkout origin/branch
-
-This will put your working tree onto origin/branch.
-
-As a bonus, in case that you have done commits, which are now no longer
-visible, "git reflog" is typically able to find them.
