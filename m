@@ -7,120 +7,89 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A8481F403
-	for <e@80x24.org>; Sun, 10 Jun 2018 10:56:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CDF741F403
+	for <e@80x24.org>; Sun, 10 Jun 2018 11:03:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753869AbeFJK4r (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Jun 2018 06:56:47 -0400
-Received: from mout.web.de ([217.72.192.78]:34763 "EHLO mout.web.de"
+        id S1753868AbeFJLDX (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Jun 2018 07:03:23 -0400
+Received: from mout.web.de ([217.72.192.78]:39001 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751815AbeFJK4q (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Jun 2018 06:56:46 -0400
-Received: from [192.168.178.36] ([79.237.242.156]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MdLsF-1fjuFN3MGZ-00IXDq; Sun, 10
- Jun 2018 12:56:34 +0200
+        id S1751815AbeFJLDW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Jun 2018 07:03:22 -0400
+Received: from [192.168.178.36] ([79.237.242.156]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MejmG-1fd3vP1nlw-00OEuH; Sun, 10
+ Jun 2018 13:03:15 +0200
 Subject: Re: [PATCH 24/30] merge-recursive: Add computation of collisions due
  to dir rename & merging
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
 To:     Elijah Newren <newren@gmail.com>, git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
 References: <20171110190550.27059-1-newren@gmail.com>
  <20171110190550.27059-25-newren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <7d1237c7-5a83-d766-7d93-5f0d59166067@web.de>
-Date:   Sun, 10 Jun 2018 12:56:31 +0200
+ <7d1237c7-5a83-d766-7d93-5f0d59166067@web.de>
+Message-ID: <e702fb82-2dd2-5060-3f34-0f60882e05c2@web.de>
+Date:   Sun, 10 Jun 2018 13:03:12 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.8.0
 MIME-Version: 1.0
-In-Reply-To: <20171110190550.27059-25-newren@gmail.com>
+In-Reply-To: <7d1237c7-5a83-d766-7d93-5f0d59166067@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:xtHgT2Hiq+swmI0fowr0OaWrgZKUzx9GisUxXlcfRUxFWzS7JbO
- iaLRPNptE1s9PLp3RbSM7R+3IDYwtNaCQ2q7tLsjU8ChOfTKEOux1gtNgSkRwmHF8TvBu5a
- YpjeI3tkDLGzLJKb1F4BE0aU0PoWwWzFWvqZNH9GKABqQs+x+66tbBbO6CsHAThyx54Mu94
- NmvXFRPLXqOtKbpcqMnkQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:eh6dwt9jN7g=:b6hCKHS+/O+uc1Rr7egert
- WoxcZE9MyXTwFhEg2xFT80hhiENq/9+YFEiwZ4VeYUYDktQjsJEqJvOftf/RUi6yKM3xEs10M
- 6TyGCNHlDWE7pZOankJQ3mG/5KlDowdR2jwTZIsymWUx6DNY05suPI14l2B9sb1/7985YtBF5
- ao3BhpZbYQKEOf24bQqcBIdoGOZ23g1L759PxaS007szkJn6fnSfxqeJ/kYtT3k/1iweeR8a4
- wvck9kZxWJJWHmv72DjLtkPJXt2RuGod4Huh2PF1vh70SICrm2fqgoX8AdFXAgDeNdtPpedF8
- wjW4HDr3viRph5dt9a7eZH/XQceQ07ARLXQ3M97R0wBtUEnkHluXCOxE92MYQJvq+QKp3PB4C
- ZSp/393F9goT8L1P/fD8Lr9GkMbKiHBHMGsB/5Chg8qliakaldoY5XPNKjF29845nCUbld0JW
- klrChEJtUZfdAHgdIU42iW6FlrHpUUYcuztYqdkUznzh4IVFWIsuoQOT35LgtrexWh6aSvCDN
- p6z2YZSnTsHLkThyoQjPBLm8/I6NCqqkzO7O32TH5qySheDKETeYr0le7kma0Xak2YxAXixDJ
- C/VJRHDKP7cJAUOKxoBB9wOaO4G/CY0QnNFFcWkjRL2O8u8cIr12M2vrLBGRg0FI91x+Rxu8w
- i8qoMtMIwU8TgUh4ZqnHrANNXwkIRPfOi519nPqH5lsFirxCVyNXZuRmZkM2TT+Lz4f1nvdpW
- 7fFGzjykcO5f4qjlZxYusRog1W4Mz8Uy8JgIq1GioMgpbY/v/GTS+Ps4zU3Q4Eo+l53KpEPJq
- /nYRfdQ
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:JWtoayV3dAUrY3V9t6acFihm1ra3H0OtbvexB05hTj4AVFen6b4
+ PiiEaRllQMvzJgM2QNzqP9OnYakLk0IeoZF9z0pOe3U/3Y4jGWsQmEZZV6IJqCo1JUPBhtO
+ 2oUaKKRG8CX6LBGdTSPNAdWt+bbEeLjoSElqABB4VJc1KP+i+68C7aYRYJ/UkhctYjkEcdg
+ 2pXQgbjpYijBLnQdU4uVw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:L7Bq5zy23qY=:oECGCkEgkyr55izQh9SAYr
+ FJPqVCk212nIPKoFq8fJs0DCdQ0RHvoaR1L96K5SStfyc1hzBxOzoBtAnxJaA5VET5M2WlUib
+ Zsz2urUFPIPNlBOh7kofm8Fw0J8+HWgDx05f7KyFNfYM7SePPzRHU8Z7o1pGCU3I5w5YuVxRc
+ f2quGkfMFM9iY+YN+mG5XXxJAeQGQARZAWjpV+xUpAb5CoCpSqrIcA/LIx2nRiPVmnjm24o48
+ 4euxrxzcZOeLC5UCV+BQXcD95qslnVDGGZXGIDDSt89Jt8WQC+5Yz/r3Lb+xqOqio1KubteKd
+ tHmewnl95Z2wpWjenOF3k6b+cZRhSwz7Rh2vIUQB1rxcj6EiG6XYydxZrGECurk6pnUuEkROt
+ RSx4GhgCWT+nZs2lHy+7Kf4MvhkWrSMPlVjHKwYGtfH0UQ3RbkrSLDf4z/ZOKheovUe/9/o/8
+ vtNFErWmexd5Y/Mcun+h7yjt1ClpU7e/lui94PdHSTXVRV52q1RF44ocKJMAZmTe15X58ahxr
+ iNFFr4298vsHL8nkG+aB25n00IR0VratWZA6yoviDPe9TiIzhH/lEzH1JvcZcZU3Oa1SuTs6c
+ rf6CtmcSMb1DoHrGFbtGHp28orb62o4v1vxOtSooW795dJyrIz11hWSW1GBu8+mKZsuM6EGbe
+ CaVq9gWaiyCgtQeSAtXK03dttAbpvEYDGGHnaB0bJMBYwUbsnAUjfgPtHljwdjk88jYrunaT7
+ Htaj4N7yXA0LvidGi/XFDMmtRHL06byOc+JiNCDCWtQDj0XhKkxD1R7Ts4emUi3vEqXAsc8cu
+ yJOKcVm
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 10.11.2017 um 20:05 schrieb Elijah Newren:
-> +static struct dir_rename_entry *check_dir_renamed(const char *path,
-> +						  struct hashmap *dir_renames) {
-> +	char temp[PATH_MAX];
-> +	char *end;
-> +	struct dir_rename_entry *entry;
-> +
-> +	strcpy(temp, path);
-> +	while ((end = strrchr(temp, '/'))) {
-> +		*end = '\0';
-> +		entry = dir_rename_find_entry(dir_renames, temp);
-> +		if (entry)
-> +			return entry;
-> +	}
-> +	return NULL;
-> +}
+Am 10.06.2018 um 12:56 schrieb René Scharfe:
+> Am 10.11.2017 um 20:05 schrieb Elijah Newren:
+>> +static struct dir_rename_entry *check_dir_renamed(const char *path,
+>> +						  struct hashmap *dir_renames) {
+>> +	char temp[PATH_MAX];
+>> +	char *end;
+>> +	struct dir_rename_entry *entry;
+>> +
+>> +	strcpy(temp, path);
+>> +	while ((end = strrchr(temp, '/'))) {
+>> +		*end = '\0';
+>> +		entry = dir_rename_find_entry(dir_renames, temp);
+>> +		if (entry)
+>> +			return entry;
+>> +	}
+>> +	return NULL;
+>> +}
+> 
+> The value of PATH_MAX is platform-dependent, so it's easy to exceed when
+> doing cross-platform development.  It's also not a hard limit on most
+> operating systems, not even on Windows.  Further reading:
+> 
+>     https://insanecoding.blogspot.com/2007/11/pathmax-simply-isnt.html
+> 
+> So using a fixed buffer is not a good idea, and writing to it without
+> checking is dangerous.  Here's a fix:
 
-The value of PATH_MAX is platform-dependent, so it's easy to exceed when
-doing cross-platform development.  It's also not a hard limit on most
-operating systems, not even on Windows.  Further reading:
+Argh, I meant to reply to v10 of that patch, i.e. this:
 
-   https://insanecoding.blogspot.com/2007/11/pathmax-simply-isnt.html
+   https://public-inbox.org/git/20180419175823.7946-21-newren@gmail.com/
 
-So using a fixed buffer is not a good idea, and writing to it without
-checking is dangerous.  Here's a fix:
+The cited code wasn't changed and is in current master, though, so both
+that part and my patch are still relevant.
 
--- >8 --
-Subject: [PATCH] merge-recursive: use xstrdup() instead of fixed buffer
-
-Paths can be longer than PATH_MAX.  Avoid a buffer overrun in
-check_dir_renamed() by using xstrdup() to make a private copy safely.
-
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- merge-recursive.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/merge-recursive.c b/merge-recursive.c
-index ac27abbd4c..db708176c5 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -2211,18 +2211,18 @@ static struct hashmap *get_directory_renames(struct diff_queue_struct *pairs,
- static struct dir_rename_entry *check_dir_renamed(const char *path,
- 						  struct hashmap *dir_renames)
- {
--	char temp[PATH_MAX];
-+	char *temp = xstrdup(path);
- 	char *end;
--	struct dir_rename_entry *entry;
-+	struct dir_rename_entry *entry = NULL;;
- 
--	strcpy(temp, path);
- 	while ((end = strrchr(temp, '/'))) {
- 		*end = '\0';
- 		entry = dir_rename_find_entry(dir_renames, temp);
- 		if (entry)
--			return entry;
-+			break;
- 	}
--	return NULL;
-+	free(temp);
-+	return entry;
- }
- 
- static void compute_collisions(struct hashmap *collisions,
--- 
-2.17.1
+René
