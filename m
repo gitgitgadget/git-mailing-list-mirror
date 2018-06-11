@@ -7,106 +7,137 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 32AE21F403
-	for <e@80x24.org>; Mon, 11 Jun 2018 14:42:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F28F51F403
+	for <e@80x24.org>; Mon, 11 Jun 2018 15:03:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932345AbeFKOm3 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Jun 2018 10:42:29 -0400
-Received: from mail-ua0-f194.google.com ([209.85.217.194]:44500 "EHLO
+        id S1754014AbeFKPDD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Jun 2018 11:03:03 -0400
+Received: from mail-ua0-f194.google.com ([209.85.217.194]:35531 "EHLO
         mail-ua0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932300AbeFKOm2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jun 2018 10:42:28 -0400
-Received: by mail-ua0-f194.google.com with SMTP id f30-v6so13681166uab.11
-        for <git@vger.kernel.org>; Mon, 11 Jun 2018 07:42:28 -0700 (PDT)
+        with ESMTP id S1751991AbeFKPDC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jun 2018 11:03:02 -0400
+Received: by mail-ua0-f194.google.com with SMTP id s13-v6so10296593uad.2
+        for <git@vger.kernel.org>; Mon, 11 Jun 2018 08:03:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=JQKUY4VTZ2g52EzlvotAiggkT147DJeWtgqr0R0cAAc=;
-        b=EWHv7dv86oJbgtor+uMfT/7f0u4QylGRpl21IEQCri3vzOSCxvz4Z6o5LV51SsN7wg
-         Rxt0U9Q6obMxOvmGuOo3LcER32sN9KlFzYjME1Wt35PDaDxYkxVaAqJDW6GXFZcqkEqR
-         OIOxghKmz5Re1y3oVO+f06TQ9f6EGg7j9wd+OESOB7nBCOIA0NslwZC++0G0UQCrpFg4
-         9Rgyr4onqVHe+Pyl8ysEPqyJ74WYMmMRrTLr/oeW+Pckcj8LxStKxUdWEDuMAhEHYbUs
-         CMMdgeuO/xeLJOJrT71dm3WzAVbBXCxx89AhlkfPjSjRv7yTvhxL43mTjoudRuiykKzh
-         /GRw==
+         :cc:content-transfer-encoding;
+        bh=gbvGA20C107ykdcQh7KUhAdMmgsaBwejlGFQnBTa9Rc=;
+        b=fUwsRId4faISVHuLScH7W2wqUhmKDfSggDY/AcmHTc1ESuF3ZNd4oIq1XGmEGbJxbs
+         sBpdm7GlckWubkiBkPnNHWPgGvvD2rlmIH2947RhGAGlI1XM/BdRF6+Us2elmhTbSYqe
+         ObvBjgbvsgigoPfdQ2IvYZ1JQV3Y7VbIraqAV83cZzNW1Log2h+fnmiKHwkSkzsNZBPa
+         NMYW66tGv66iXNgDfKITE0j8ol1A7rTbD+Gs6xxTYa5oVgJ3YCCJkfK4WuO9bsRPEtmd
+         ER7w4cmQ4eoW7dQnkJgvWgtxD2KJkKyZoIj1hdP2qTyWOgtFfepjOlaItGaDsuNWl2FZ
+         kZDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=JQKUY4VTZ2g52EzlvotAiggkT147DJeWtgqr0R0cAAc=;
-        b=Qf237zGbIqD2nJTMnxgjW/cGcIkeax8WAZH7htey3ApaL137DbOxWWPFYVliJ0mUT/
-         QJs4LBivJgK6VLVMBvREoC2gR3O/9arI37otY9eH/wg/Uh5KbGGHdmpFdTJlWBMO+Ild
-         sHXIpJBxV0mfOd73exsDpHjDx9ANer6XSJmFMm0HgcsMkanLOtikjM7L82VyXGh8oCHT
-         HPWVCsb2+2x/OD+RI8lEhqLbkl2UoBGtL29GrFvhU+q6V11SGBb9ux6thh+Gtz2kTD5b
-         Am7UO6GVEp34M4sr0lyzICa3WRLSnG0h+1KmjumtLPeT5FBMptP0qVeBCR5/NUcD3rPW
-         1qTQ==
-X-Gm-Message-State: APt69E0j5gdCUJrOm/SN6Mt6N7NeOSCa2XTFvij0FjReypqeDmZCfrzy
-        pVWB8ED4lmipYV/T7Sf7t0l5J2BDZBghJyjejL8=
-X-Google-Smtp-Source: ADUXVKLn3j+PgWzK0n4EQbWihM6s4x/cjboMJjYmigXt50oBIIuV7oGiXiH9C0m4ZBM2qd/mN5m3R9+cYJ0eD3gNj9w=
-X-Received: by 2002:ab0:596f:: with SMTP id o44-v6mr11519408uad.29.1528728147495;
- Mon, 11 Jun 2018 07:42:27 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=gbvGA20C107ykdcQh7KUhAdMmgsaBwejlGFQnBTa9Rc=;
+        b=Rhqh653Y1IkUfaFhS+dz5oJ93P9bGspIuATI9Kxx/D+N0SSc0hvb9yJ6YBww483Qtp
+         ak7g4GsSeRk644/KFziK111hwiq/FxPvehQCiRl+lwGJSka0YOkzwcneDosgWEiSHEF4
+         XcBkkNm5dOA74TK/R+nLqQbkHXQU8Np1ZaDcYBD5CASBade8JRsd9bVq+J+mpbplHLke
+         xamzaP6vDFSa9QaLnmG4XbNS41OHKLxnUUcmEeqMW+01Fslqd9+/RKmgPIy38ITkrQXh
+         FZiVYcy8JAGJogmMK1YFYrpg8JhHN9Ps2IG4TgwtZeSx1KmrLYsLY1l6KkdvMAaoJTp+
+         jy5A==
+X-Gm-Message-State: APt69E12gEeK6T23uoBeP340Y1fpks6IA+mqTDTlsfkDzD6hHAfMZ4K1
+        NpVZs+miR4B7NNAFwju5Ku5fZehVr6utY71LoVI=
+X-Google-Smtp-Source: ADUXVKINU7h1+tXHwpZ+REUJFpUiS1Ogsvkg9iE08HgXSZOWIuXBptp5pwFrlYdKeAvyf9kwGLnLwAC5WtYNyy83av0=
+X-Received: by 2002:ab0:1723:: with SMTP id j35-v6mr11701656uaf.154.1528729381423;
+ Mon, 11 Jun 2018 08:03:01 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:ab0:5f28:0:0:0:0:0 with HTTP; Mon, 11 Jun 2018 07:42:26
+Received: by 2002:ab0:5f28:0:0:0:0:0 with HTTP; Mon, 11 Jun 2018 08:03:00
  -0700 (PDT)
-In-Reply-To: <8f19c8c2-d050-2d51-756d-d78b9f2bd335@talktalk.net>
-References: <CABPp-BGxaroePB6aKWAkZeADLB7VE3y1CPy2RyNwpn=+C01g3A@mail.gmail.com>
- <20180607050747.19726-1-newren@gmail.com> <8f19c8c2-d050-2d51-756d-d78b9f2bd335@talktalk.net>
+In-Reply-To: <7d1237c7-5a83-d766-7d93-5f0d59166067@web.de>
+References: <20171110190550.27059-1-newren@gmail.com> <20171110190550.27059-25-newren@gmail.com>
+ <7d1237c7-5a83-d766-7d93-5f0d59166067@web.de>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 11 Jun 2018 07:42:26 -0700
-Message-ID: <CABPp-BF7POrGTRbVOZ-AGjRHKcpExMQcA4uSPvrRONbnG2CE8w@mail.gmail.com>
-Subject: Re: [PATCH] git-rebase.sh: handle keep-empty like all other options
-To:     phillip.wood@dunelm.org.uk
-Cc:     Git Mailing List <git@vger.kernel.org>
+Date:   Mon, 11 Jun 2018 08:03:00 -0700
+Message-ID: <CABPp-BF3gUf_hzUNXtXdyv01R1hQzLCKdRgb+iKPnBgLYi6d+Q@mail.gmail.com>
+Subject: Re: [PATCH 24/30] merge-recursive: Add computation of collisions due
+ to dir rename & merging
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
-
-On Sun, Jun 10, 2018 at 12:26 PM, Phillip Wood
-<phillip.wood@talktalk.net> wrote:
-> On 07/06/18 06:07, Elijah Newren wrote:
->>
->> Signed-off-by: Elijah Newren <newren@gmail.com>
->> ---
->>   git-rebase.sh | 6 +-----
->>   1 file changed, 1 insertion(+), 5 deletions(-)
->>
->> diff --git a/git-rebase.sh b/git-rebase.sh
->> index 40be59ecc4..a56b286372 100755
->> --- a/git-rebase.sh
->> +++ b/git-rebase.sh
->> @@ -276,6 +276,7 @@ do
->>                 ;;
->>         --keep-empty)
->>                 keep_empty=yes
->> +               test -z "$interactive_rebase" &&
->> interactive_rebase=implied
+On Sun, Jun 10, 2018 at 3:56 AM, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+> Am 10.11.2017 um 20:05 schrieb Elijah Newren:
+>> +static struct dir_rename_entry *check_dir_renamed(const char *path,
+>> +                                               struct hashmap *dir_rena=
+mes) {
+>> +     char temp[PATH_MAX];
+>> +     char *end;
+>> +     struct dir_rename_entry *entry;
+>> +
+>> +     strcpy(temp, path);
+>> +     while ((end =3D strrchr(temp, '/'))) {
+>> +             *end =3D '\0';
+>> +             entry =3D dir_rename_find_entry(dir_renames, temp);
+>> +             if (entry)
+>> +                     return entry;
+>> +     }
+>> +     return NULL;
+>> +}
 >
+> The value of PATH_MAX is platform-dependent, so it's easy to exceed when
+> doing cross-platform development.  It's also not a hard limit on most
+> operating systems, not even on Windows.  Further reading:
 >
-> I think you need to wait until all the options have been parsed before
-> setting the implied interactive rebase in case the user specifies has
-> '--keep-empty' in an alias and specifies '--no-keep-empty' with some am
-> options on the command line.
+>    https://insanecoding.blogspot.com/2007/11/pathmax-simply-isnt.html
+>
+> So using a fixed buffer is not a good idea, and writing to it without
+> checking is dangerous.  Here's a fix:
 
-Ah, indeed you are right.  Let's drop this patch then.
+Thanks for the pointers, and for providing a fix.
 
-However, we have a bigger problem with empty commits, in that there
-are really three modes rather than two:
-  * Automatically drop empty commits (default for am-based rebase)
-  * Automatically keep empty commits (as done with --keep-empty)
-  * Halt the rebase and tell the user how to specify if they want to
-keep it (default for interactive rebases)
+> -- >8 --
+> Subject: [PATCH] merge-recursive: use xstrdup() instead of fixed buffer
+>
+> Paths can be longer than PATH_MAX.  Avoid a buffer overrun in
+> check_dir_renamed() by using xstrdup() to make a private copy safely.
+>
+> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+> ---
+>  merge-recursive.c | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
+>
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> index ac27abbd4c..db708176c5 100644
+> --- a/merge-recursive.c
+> +++ b/merge-recursive.c
+> @@ -2211,18 +2211,18 @@ static struct hashmap *get_directory_renames(stru=
+ct diff_queue_struct *pairs,
+>  static struct dir_rename_entry *check_dir_renamed(const char *path,
+>                                                   struct hashmap *dir_ren=
+ames)
+>  {
+> -       char temp[PATH_MAX];
+> +       char *temp =3D xstrdup(path);
+>         char *end;
+> -       struct dir_rename_entry *entry;
+> +       struct dir_rename_entry *entry =3D NULL;;
+>
+> -       strcpy(temp, path);
+>         while ((end =3D strrchr(temp, '/'))) {
+>                 *end =3D '\0';
+>                 entry =3D dir_rename_find_entry(dir_renames, temp);
+>                 if (entry)
+> -                       return entry;
+> +                       break;
+>         }
+> -       return NULL;
+> +       free(temp);
+> +       return entry;
+>  }
+>
+>  static void compute_collisions(struct hashmap *collisions,
+> --
+> 2.17.1
 
-Currently, only the first option is available to am-based rebases, and
-only the second two options are available to interactive-based
-rebases.  But if we want to make all three available to
-interactive-based rebases, what should the command line option look
-like?  --empty={drop,ask,keep}?
-
-(And deprecate but continue to support --[no-]keep-empty?)
-
-And should the two rebase modes really have a different default?  What
-should the default be?
+Reviewed-by: Elijah Newren <newren@gmail.com>
