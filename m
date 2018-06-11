@@ -3,229 +3,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3441D1F403
-	for <e@80x24.org>; Mon, 11 Jun 2018 15:32:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F0C741F403
+	for <e@80x24.org>; Mon, 11 Jun 2018 15:49:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932744AbeFKPcz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Jun 2018 11:32:55 -0400
-Received: from smtp-out-6.talktalk.net ([62.24.135.70]:31725 "EHLO
-        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932433AbeFKPcy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jun 2018 11:32:54 -0400
-Received: from [192.168.2.240] ([92.22.39.132])
-        by smtp.talktalk.net with SMTP
-        id SOoNfBUzUpXFjSOoOf2wlS; Mon, 11 Jun 2018 16:32:53 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1528731173;
-        bh=cgKEx6yv6OxPDpgN5EoUMl8cbED1epg5cNUoAdUE9NI=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=QApiR+XQ3cnB1eHRR7dZ+AAS8XB4o0Dr2B0U/aXNgUOJSolliOPQv4PSpLus9t/ZL
-         bBsMbHdw3AO1Keu/KBamWN9MR0iokAFfJBTKpj28FbqzJWiq68mgDXToP02eKzp2QV
-         44F8Eq3BPAdBY1KrJ9fDLjdWm8iw25yDx7tJX9Fk=
-X-Originating-IP: [92.22.39.132]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=Ob228CbY c=1 sm=1 tr=0 a=AATg4WxWBR3MjRzlB3y0Ow==:117
- a=AATg4WxWBR3MjRzlB3y0Ow==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
- a=b_pqZEi0Kq4EG3XY7q8A:9 a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [GSoC][PATCH 1/1] rebase--interactive: rewrite the edit-todo
- functionality in C
-To:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        phillip.wood@dunelm.org.uk, Elijah Newren <newren@gmail.com>
-References: <20180611135714.29378-1-alban.gruin@gmail.com>
- <20180611135714.29378-2-alban.gruin@gmail.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <3bfd3470-4482-fe6a-2cd9-08311a0bbaac@talktalk.net>
-Date:   Mon, 11 Jun 2018 16:32:50 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+        id S932941AbeFKPtR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Jun 2018 11:49:17 -0400
+Received: from mail-ua0-f196.google.com ([209.85.217.196]:34713 "EHLO
+        mail-ua0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932914AbeFKPtQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jun 2018 11:49:16 -0400
+Received: by mail-ua0-f196.google.com with SMTP id 74-v6so13863903uav.1
+        for <git@vger.kernel.org>; Mon, 11 Jun 2018 08:49:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=MUXkqO+K3h9hZ98U3wpewU98aghsIyAI1AJJb8IdRPE=;
+        b=FrOlpCOjU5bi/Kbi2o7YOSQrii5de5ochxQulXnCuA2JVP17AIyEvEbnwlIwNSb8tr
+         v1Z3kDT5OT9OpFOSks//Fi8MYI//ruJT31MctORhuEC/A0FlbpleQdpOcKeStgp1sSPd
+         7zIDOA2jx/qX2ULSXH6/ozuvWqsCYzd2f5CfnaUeOt/WwmM9N8BVqEdD8P+WczC6+qaU
+         IosNQnZTYS4p6FQfKt3buwGcAO3PcJG0F9VKJXjYtg6idUEVFQILngZ/EGGYnsUb0ITK
+         wIj1Eyk/MD/EEUFe9c160UhcY+r2NjpKN3V441oMJSJ/aOAhBnUQZna7po8EJOAZ+eMa
+         3MvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=MUXkqO+K3h9hZ98U3wpewU98aghsIyAI1AJJb8IdRPE=;
+        b=Ro57oYg8Ef0iVwWe6gckfTrD7AMDe+otjExGKaSO3g6PS3T6n1ZlWN4K7esS9m+9N5
+         2pyAU17PqHQ2CuHnxTvwa23me4LrOkG9OEnhaSAOkI2BaTVKzDmdKuLUvfKKcDo4nXW6
+         bZ/5aMbZMlvHdOXyRy6tAW7iQZ0AwgbzJP8qrekRixrFD2Byl+VrRHiRVLLoMR+H6Dvk
+         MwLUDvni32JkAmHj/1GvIju0LxCoRsO3mFKQIXNTErNU28dFTZwvKYb912eJa7AMtPKS
+         JCyvbUMBAzpJWV5rmoIJ1B9i4+FGdpKf58g+Atm0TdZ7iDaUrz5/312gZ3yrD0clhx1h
+         boEw==
+X-Gm-Message-State: APt69E3s20kyGqZMBVPsFKIZ19SrpOiH9N1umYTQZ8QELdDFRAUHq9uk
+        5tbLqT40wjT12r1KdNWqcMEsQtITXn/e8NbrlpLJgA==
+X-Google-Smtp-Source: ADUXVKIUHeg7f/EpyJPxMv/qhnVpxpZUYhbrnmgjB6sgcpVs8a2Jy/WcQoPVUnSxTBoT62If5ASKWxybFjPo1sYFo/c=
+X-Received: by 2002:ab0:596f:: with SMTP id o44-v6mr11701870uad.29.1528732155213;
+ Mon, 11 Jun 2018 08:49:15 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20180611135714.29378-2-alban.gruin@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfEFlQRxq/d0JOV4NzPYY2Tm7LySK3bTcW/CZ2pqaf6prTHOoVkbdf7b33eOp2iOmQhTHXN6BWWQDdzvEv2UXnulIZa1Am1c6h6/VttBGj3iqT71w8iCQ
- 8eVjJSc8imBb36dMV4G/qaLu1Qi4Ja6oRFlznSa9WI0EAE1ogU7IsGSHzmeBWN2b8CR2VvBGdh+Cln9eCSKsvYxg0PzGrY882Tqtdjzl1S0S+oHt7e8gpb0I
- /Yz0e/V1o70VfSHq41YgFCTfxrkDzkGSmyVDeWRn7lQdvGhevK52lU9TNYEPJIFHtCUQPC6nCDRpgBKMu9xSwNRLOoqsKsLnxYlUNVzYwEpQmJUZ0bZuG8AC
- b9zsWI9Z2LkSqVjAgfUWnt7sFx0UYQ==
+Received: by 2002:ab0:5f28:0:0:0:0:0 with HTTP; Mon, 11 Jun 2018 08:49:14
+ -0700 (PDT)
+In-Reply-To: <cec770a8-28ee-d546-8c27-905d2fcdb0c8@talktalk.net>
+References: <CABPp-BGxaroePB6aKWAkZeADLB7VE3y1CPy2RyNwpn=+C01g3A@mail.gmail.com>
+ <20180607050654.19663-1-newren@gmail.com> <20180607050654.19663-2-newren@gmail.com>
+ <cec770a8-28ee-d546-8c27-905d2fcdb0c8@talktalk.net>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 11 Jun 2018 08:49:14 -0700
+Message-ID: <CABPp-BF6HapQ=tcWu4j=L-sjgTRbdLnhYXBWwdWm+oThav_zJw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] git-rebase: error out when incompatible options passed
+To:     phillip.wood@dunelm.org.uk
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alban, it's great to see you making progress with this.
+Another thing I missed...
 
-I don't want to add to your workload but a couple of things that might 
-be nice to have in the future would be
+On Sun, Jun 10, 2018 at 12:40 PM, Phillip Wood
+<phillip.wood@talktalk.net> wrote:
+> On 07/06/18 06:06, Elijah Newren wrote:
 
-1) avoid rewriting the todo list and running the editor if 
-GIT_SEQUENCE_EDITOR is ':', especially when creating the todo list for 
-implicit interactive rebases.
+>> Some exceptions I left out:
+>>
+>>    * --merge and --interactive are technically incompatible since they are
+>>      supposed to run different underlying scripts, but with a few small
+>>      changes, --interactive can do everything that --merge can.  In fact,
+>>      I'll shortly be sending another patch to remove git-rebase--merge and
+>>      reimplement it on top of git-rebase--interactive.
+>
+> Excellent I've wondered about doing that but never got round to it. One
+> thing I was slightly concerned about was that someone maybe parsing the
+> output of git-rebase--merge and they'll get a nasty shock when that output
+> changes as a result of using the sequencer.
 
-2) have --edit-todo warn if the user drops commits, in the same way as 
-rebase does for the initial edit of the todo list. This should also make 
-it easier to use the same code for the initial edit as well as when the 
-user does 'rebase --edit-todo'
+I can see the minor worry, but I think upon inspection it's not
+something that concerns me, for a few reasons:
 
-I've got a couple of comments on this patch below.
+In terms of use, given that rebase --merge was introduced to handle
+renames in mid-2006, but plain rebase has been able to handle them
+since late 2008 (though directory renames changes that again), the
+utility of rebase --merge has been somewhat limited.  I think that
+limits the exposure.  But to address the 'break' more directly...
 
-On 11/06/18 14:57, Alban Gruin wrote:
-> This rewrites the edit-todo functionality from shell to C.
-> 
-> To achieve that, a new command mode, `edit-todo`, is added, and the
-> `write-edit-todo` flag is removed, as the shell script does not need to
-> write the edit todo help message to the todo list anymore.
-> 
-> The shell version is then stripped in favour of a call to the helper.
-> 
-> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
-> ---
->   builtin/rebase--helper.c   | 13 ++++++++-----
->   git-rebase--interactive.sh | 11 +----------
->   sequencer.c                | 31 +++++++++++++++++++++++++++++++
->   sequencer.h                |  1 +
->   4 files changed, 41 insertions(+), 15 deletions(-)
-> 
-> diff --git a/builtin/rebase--helper.c b/builtin/rebase--helper.c
-> index ded5e291d..d2990b210 100644
-> --- a/builtin/rebase--helper.c
-> +++ b/builtin/rebase--helper.c
-> @@ -12,12 +12,12 @@ static const char * const builtin_rebase_helper_usage[] = {
->   int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
->   {
->   	struct replay_opts opts = REPLAY_OPTS_INIT;
-> -	unsigned flags = 0, keep_empty = 0, rebase_merges = 0, write_edit_todo = 0;
-> +	unsigned flags = 0, keep_empty = 0, rebase_merges = 0;
->   	int abbreviate_commands = 0, rebase_cousins = -1;
->   	enum {
->   		CONTINUE = 1, ABORT, MAKE_SCRIPT, SHORTEN_OIDS, EXPAND_OIDS,
->   		CHECK_TODO_LIST, SKIP_UNNECESSARY_PICKS, REARRANGE_SQUASH,
-> -		ADD_EXEC, APPEND_TODO_HELP
-> +		ADD_EXEC, APPEND_TODO_HELP, EDIT_TODO
->   	} command = 0;
->   	struct option options[] = {
->   		OPT_BOOL(0, "ff", &opts.allow_ff, N_("allow fast-forward")),
-> @@ -27,8 +27,6 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
->   		OPT_BOOL(0, "rebase-merges", &rebase_merges, N_("rebase merge commits")),
->   		OPT_BOOL(0, "rebase-cousins", &rebase_cousins,
->   			 N_("keep original branch points of cousins")),
-> -		OPT_BOOL(0, "write-edit-todo", &write_edit_todo,
-> -			 N_("append the edit-todo message to the todo-list")),
->   		OPT_CMDMODE(0, "continue", &command, N_("continue rebase"),
->   				CONTINUE),
->   		OPT_CMDMODE(0, "abort", &command, N_("abort rebase"),
-> @@ -49,6 +47,9 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
->   			N_("insert exec commands in todo list"), ADD_EXEC),
->   		OPT_CMDMODE(0, "append-todo-help", &command,
->   			    N_("insert the help in the todo list"), APPEND_TODO_HELP),
-> +		OPT_CMDMODE(0, "edit-todo", &command,
-> +			    N_("edit the todo list during an interactive rebase"),
-> +			    EDIT_TODO),
->   		OPT_END()
->   	};
->   
-> @@ -89,6 +90,8 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
->   	if (command == ADD_EXEC && argc == 2)
->   		return !!sequencer_add_exec_commands(argv[1]);
->   	if (command == APPEND_TODO_HELP && argc == 1)
-> -		return !!append_todo_help(write_edit_todo, keep_empty);
-> +		return !!append_todo_help(0, keep_empty);
-> +	if (command == EDIT_TODO && argc == 1)
-> +		return !!edit_todo_list(flags);
->   	usage_with_options(builtin_rebase_helper_usage, options);
->   }
-> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> index 94c23a7af..2defe607f 100644
-> --- a/git-rebase--interactive.sh
-> +++ b/git-rebase--interactive.sh
-> @@ -108,16 +108,7 @@ initiate_action () {
->   		     --continue
->   		;;
->   	edit-todo)
-> -		git stripspace --strip-comments <"$todo" >"$todo".new
-> -		mv -f "$todo".new "$todo"
-> -		collapse_todo_ids
-> -		git rebase--helper --append-todo-help --write-edit-todo
-> -
-> -		git_sequence_editor "$todo" ||
-> -			die "$(gettext "Could not execute editor")"
-> -		expand_todo_ids
-> -
-> -		exit
-> +		exec git rebase--helper --edit-todo
->   		;;
->   	show-current-patch)
->   		exec git show REBASE_HEAD --
-> diff --git a/sequencer.c b/sequencer.c
-> index 1ffd990f7..1c1799c91 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -4386,6 +4386,37 @@ int append_todo_help(unsigned edit_todo, unsigned keep_empty)
->   	return ret;
->   }
->   
-> +int edit_todo_list(unsigned flags)
-> +{
-> +	struct strbuf buf = STRBUF_INIT;
-> +	const char *todo_file = rebase_path_todo();
-> +	FILE *todo;
-> +
-> +	if (strbuf_read_file(&buf, todo_file, 0) < 0)
-> +		return error_errno(_("could not read '%s'."), todo_file);
-> +
-> +	strbuf_stripspace(&buf, 1);
-> +	todo = fopen_or_warn(todo_file, "w");
-> +	if (!todo) {
-> +		strbuf_release(&buf);
-> +		return 1;
-> +	}
-> +
-> +	strbuf_write(&buf, todo);
-> +	fclose(todo);
-> +	strbuf_release(&buf);
-> +
-> +	transform_todos(flags | TODO_LIST_SHORTEN_IDS);
-> +	append_todo_help(1, 0);
-> +
-> +	if (launch_editor(todo_file, NULL, NULL))
+If we were to agree that we needed to support folks parsing rebase
+output, that would be a really strict requirement that I think would
+prevent lots of fixes.  And if so, it's one we've violated a number of
+times.  For example, I certainly wasn't thinking about rebase when I
+modified messages in merge-recursive.c over the years, but they'd leak
+through for rebase --merge.  (Those messages would not leak through to
+rebase --interactive as much, since the sequencer sets o.buffer_output
+and then only conditionally shows the output.)  Also, changes that
+have occurred in the past, like adding 'git gc --auto' to rebase,
+modifying error messages directly found in git-rebase--merge.sh would
+have been considered breaks.
 
-I'm not sure that this will respect GIT_SEQUENCE_EDITOR, it would be 
-nice to have a launch_sequence_editor() function that shared as much 
-code as possible with launch_editor()
+Finally, looking over all the differences in output while fixing up
+testcases makes me think we've done much less around designing the
+output based on what we want the user to see, and more around what
+minimal fixups can we do to these lower level commands that provide
+useful functionality to the user?  We linearize history differently
+for different rebase modes, have different entries in the reflog
+depending on which mode, and we often times implement features for
+just one mode and then sometimes add it to others.  In fact, I think
+the primary reason that am-based and merge-based rebases had a --quiet
+option and the interactive rebases didn't, is mostly attributable to
+the defaults of the lower level commands these three were built on top
+of (git-am vs. git-merge-recursive vs. git-cherry-pick).  The noiser
+two merited a quiet option, and the option was never added for the
+last one.
 
-> +		return 1;
-> +
-> +	transform_todos(flags & ~(TODO_LIST_SHORTEN_IDS));
-> +
-> +	return 0;
-> +}
-> +
->   static int rewrite_file(const char *path, const char *buf, size_t len)
->   {
->   	int rc = 0;
-> diff --git a/sequencer.h b/sequencer.h
-> index e14f6590e..35730b13e 100644
-> --- a/sequencer.h
-> +++ b/sequencer.h
-> @@ -81,6 +81,7 @@ int sequencer_add_exec_commands(const char *command);
->   int transform_todos(unsigned flags);
->   int check_todo_list(void);
->   int append_todo_help(unsigned edit_todo, unsigned keep_empty);
-
-Can this declaration be removed now?
-
-> +int edit_todo_list(unsigned flags);
->   int skip_unnecessary_picks(void);
->   int rearrange_squash(void);
-
-Best Wishes
-
-Phillip
-
+Anyway, that's my rationale.  I'm curious to hear if folks disagree or
+see things I'm overlooking or have reasons I might be weighting
+tradeoffs less than optimally.
