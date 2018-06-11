@@ -3,102 +3,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC4671F403
-	for <e@80x24.org>; Mon, 11 Jun 2018 16:14:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7FB841F403
+	for <e@80x24.org>; Mon, 11 Jun 2018 16:15:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932573AbeFKQOM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Jun 2018 12:14:12 -0400
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:52533 "EHLO
-        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932436AbeFKQOM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jun 2018 12:14:12 -0400
-Received: by mail-wm0-f43.google.com with SMTP id p126-v6so15719648wmb.2
-        for <git@vger.kernel.org>; Mon, 11 Jun 2018 09:14:11 -0700 (PDT)
+        id S933241AbeFKQPK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Jun 2018 12:15:10 -0400
+Received: from mail-vk0-f66.google.com ([209.85.213.66]:45399 "EHLO
+        mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933120AbeFKQPH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jun 2018 12:15:07 -0400
+Received: by mail-vk0-f66.google.com with SMTP id l64-v6so5034682vkl.12
+        for <git@vger.kernel.org>; Mon, 11 Jun 2018 09:15:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=KMn21k0LmOmAYeQkJ1IL8iWSz8GKFKHZ4W3ovqAzkro=;
-        b=oMkO5op71xhlTtGwA0SHmeKsk3X33TFuoEQL5eP2r+xdEW7jrCOw4PBUMEDdfJsOcT
-         R0oyo9low1hO0o8etdHwkA1yZPyMp7SQXQ8hnkZqPV/7dIytCPhFvD+rFI3TrBE2SF9F
-         1duWwi1D/228gPNEODNF9En+6O74+SFYuJlEKsHRvBJxrLtnUWfzUD7tEIBVZXsawnc/
-         BfS1NI7woMW2IzVDjLNpb128vSd1NMa9LL1aLhssVRSHyP+RJxZz9YcvzHDJJ9wdQLCb
-         aCezVMQya0g/GGcm5r7eMyXACjqVdviW8ZOV6jfsYJDNsPAwiTNN4xGQv3R2DFNPCESi
-         hEnw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=czfTY5/poyFG77YZ339/2oi5ej/hF6f9P2noHD6aP10=;
+        b=NnD6lsccJ5AVDNjvwWKZ5fAc5AWMgrinZjwqqWPW8AzPLIbjyLM2JiUvatTRb5FoMg
+         SvLPWkwFDBT/zeUjp8vJGOqAj7iAsh9aHR0FXOQwEz+1YzNfW/b81lPRSIDdA1ECx+34
+         JK4zSBeoZs7vHCL/lAefHBC6kOyMRvk7G8fJJqjK9sKd0/aytTC7ahTS3GKbf5g83nSa
+         JaaHD3W8CvdCPsBIsHLsLyee/vIjHVEM6sL0kKGZtE2quE/ZNnJuJmdsY050cfMi/e26
+         8IC5wiJtw+BIVgkeZ4YuCFF/6I8pNK257PAp9nCs5gpQt7w8WuFk3anjtrEI4R/Iu9eh
+         PEYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=KMn21k0LmOmAYeQkJ1IL8iWSz8GKFKHZ4W3ovqAzkro=;
-        b=kl6ufjsV6Q030LAGF0GPYSmjEM0gkN1s03orMR2Jtmses1jq/0cB4xxsZV2OqYTkZn
-         1qCh7kC2XS1wlpm0ndaBF9lz4+nM0THaGr32c/xZ88FPbN9kTAcZL3BGisQHQ5f/VHAv
-         SRUap3C/S7ltU0PYnXRRwYuz93a7YGogxyLBA/4/kYtTmiQxc3nOB1PBUfSSn+WAZBTm
-         QXLidWlAO2d46OFhyRfLruHX0VOQe2S9xhRgMMnHcXSj4IqqK4HiIdsldt1TmVBCq9Kd
-         nyJ4ojd6Z6Z1jcLFEK5w4rANcluykgtM2gnwSSYJiB/M2i3UHTSKAtv0A4bzwjxFE9SO
-         zdaw==
-X-Gm-Message-State: APt69E1ZeRCNoIZab9eT5uD09UJYglTZYvFK2nvDX0Ty7HgDG69AXeZf
-        cyO+DjMGLg3fskFj+ElSxMw=
-X-Google-Smtp-Source: ADUXVKLpk+NT0tAqDy4CA8aFwx99gStx8Wa427i58cT8pphyr4BnikIeqFy+ijRHxDs96vgDSqTZzA==
-X-Received: by 2002:a1c:16cc:: with SMTP id 195-v6mr3616770wmw.87.1528733650592;
-        Mon, 11 Jun 2018 09:14:10 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id b124-v6sm11598773wmf.11.2018.06.11.09.14.09
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 11 Jun 2018 09:14:09 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: [ANNOUNCE] Git v2.18.0-rc1
-References: <xmqqwove4pzo.fsf@gitster-ct.c.googlers.com>
-        <781A6400-477F-4A7B-8C17-65BFD280B331@gmail.com>
-Date:   Tue, 12 Jun 2018 01:14:09 +0900
-In-Reply-To: <781A6400-477F-4A7B-8C17-65BFD280B331@gmail.com> (Lars
-        Schneider's message of "Mon, 4 Jun 2018 18:27:52 -0700")
-Message-ID: <xmqqmuw147xq.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=czfTY5/poyFG77YZ339/2oi5ej/hF6f9P2noHD6aP10=;
+        b=GOxEGxg+g152CO1PwkjngJ3B5iSCtyPsskMPL0LuelLcZrcYXkgw+vZipc58R/RvHy
+         SHwnI52E95OCS2Pya1KJyeIknqWN3MSC0AnlJ6XpwpleMqWrdJ4/lXDc0K1gYjEWUiDT
+         iE5ZoBhPRHPpvq23GFFNHkhjZYPcdWm/+0zSMfY1ZNX7Ur8RakvOyIbSSoiCcR2cINEI
+         dlZMOdI8PVdT3MONAH7Ko8kaT016acF6sbWmNPUTUZXX/NCeJPizcCDjvAimG5czHIXr
+         KR3zSK58B431TW3/k0vYNtt4hqqIpJw10fI6Kx3A6wZ+LGSe22h6LoZUlkFknUaMDnRz
+         wbKA==
+X-Gm-Message-State: APt69E0mu3bAvH0A0o5+2YMEIR8OjhE71O36htz6/rJIoW8lvvNOQGUx
+        nGfpjOYvl5CoMIR+MnSxKZ1WoqgS2thKEypZBSMlTw==
+X-Google-Smtp-Source: ADUXVKIi/QIRvVgs/XW37MhxsTBzKbNX+0LKR6GCBC/Qlk3m3pBIFgjGDrJ96DFV5IAShzek1NlSPYgJcY1vxIz1wyc=
+X-Received: by 2002:a1f:a102:: with SMTP id k2-v6mr10854671vke.118.1528733707041;
+ Mon, 11 Jun 2018 09:15:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 2002:ab0:5f28:0:0:0:0:0 with HTTP; Mon, 11 Jun 2018 09:15:06
+ -0700 (PDT)
+In-Reply-To: <CABPp-BERW3VtKxwKZ=-K6=pdVZydHRRKKGce2S=sttqfcDeRDA@mail.gmail.com>
+References: <20180603065810.23841-1-newren@gmail.com> <20180603065810.23841-5-newren@gmail.com>
+ <xmqqvaaz5jcv.fsf@gitster-ct.c.googlers.com> <CABPp-BERW3VtKxwKZ=-K6=pdVZydHRRKKGce2S=sttqfcDeRDA@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 11 Jun 2018 09:15:06 -0700
+Message-ID: <CABPp-BFhneCqGBRT3qtS_d2eUdjgj+5PWsyWJ7XGHBD6dxunqQ@mail.gmail.com>
+Subject: Re: [RFC PATCH 4/7] merge-recursive: fix assumption that head tree
+ being merged is HEAD
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Lars Schneider <larsxschneider@gmail.com> writes:
-
->> On 04 Jun 2018, at 06:53, Junio C Hamano <gitster@pobox.com> wrote:
->> 
->> A release candidate Git v2.18.0-rc1 is now available for testing
->> at the usual places.  It is comprised of 842 non-merge commits
->> since v2.17.0, contributed by 65 people, 20 of which are new faces.
->> 
->> ...
->> 
->> * The new "checkout-encoding" attribute can ask Git to convert the
->>   contents to the specified encoding when checking out to the working
->>   tree (and the other way around when checking in).
+On Tue, Jun 5, 2018 at 12:14 AM, Elijah Newren <newren@gmail.com> wrote:
+> On Sun, Jun 3, 2018 at 8:19 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Elijah Newren <newren@gmail.com> writes:
+>>
+>>> `git merge-recursive` does a three-way merge between user-specified trees
+>>> base, head, and remote.  Since the user is allowed to specify head, we can
+>>> not necesarily assume that head == HEAD.
+>>>
+>>> We modify index_has_changes() to take an extra argument specifying the
+>>> tree to compare the index to.  If NULL, it will compare to HEAD.  We then
+>>> use this from merge-recursive to make sure we compare to the
+>>> user-specified head.
+>>>
+>>> Signed-off-by: Elijah Newren <newren@gmail.com>
+>>> ---
+>>>
+>>> I'm really unsure where the index_has_changes() declaration should go;
+>>> I stuck it in tree.h, but is there a better spot?
+>>
+>> I think I saw you tried to lift an assumption that we're always
+>> working on the_index in a separate patch recently.  Should that
+>> logic apply also to this part of the codebase?  IOW, shouldn't
+>> index_has_changes() take a pointer to istate (as opposed to a
+>> function that uses the implicit the_index that should be named as
+>> "cache_has_changes()" or something?)
+>>
+>> I tend to think this function as part of the larger read-cache.c
+>> family whose definitions are in cache.h and accompanied by macros
+>> that are protected by NO_THE_INDEX_COMPATIBILITY_MACROS so if we
+>> were to move it elsewhere, I'd keep the header part as-is and
+>> implementation to read-cache.c to keep it together with the family,
+>> but I do not see a huge issue with the current placement, either.
 >
-> Did you call the feature "checkout-encoding" here intentionally?
-> The attribute is called "working-tree-encoding" in the final and
-> merged round. Shouldn't we call it that way here too?
+> That's good point; the goal to lift assumptions on the_index should
+> probably also apply here.  I'll make the change.
+> (And it was actually Duy's patch that I was reviewing, but close
+> enough.)   I'll take a look at moving it to read-cache.c as well.
 
-No.  Yes, absolutely.  Thanks.
-
- Documentation/RelNotes/2.18.0.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/RelNotes/2.18.0.txt b/Documentation/RelNotes/2.18.0.txt
-index 8d0ee5c426..ecd9f8849e 100644
---- a/Documentation/RelNotes/2.18.0.txt
-+++ b/Documentation/RelNotes/2.18.0.txt
-@@ -50,7 +50,7 @@ UI, Workflows & Features
-    have been replaced with a stub that errors out and tells the user
-    there are replacements.
- 
-- * The new "checkout-encoding" attribute can ask Git to convert the
-+ * The new "working-tree-encoding" attribute can ask Git to convert the
-    contents to the specified encoding when checking out to the working
-    tree (and the other way around when checking in).
- 
+Making it not depend on the_index will require changes to make
+diff-lib.c not depend on the_index first, so this is going to have to
+wait for Duy's changes mentioned at
+https://public-inbox.org/git/CACsJy8Ba74iSPf4_zFxuV=_uNJgL6Z2QunOvAvi3qab-6EWi5g@mail.gmail.com/.
+I'll re-roll this series on top of Duy's when it comes out.
