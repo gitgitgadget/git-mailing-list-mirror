@@ -2,163 +2,190 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CAB1E1F403
-	for <e@80x24.org>; Mon, 11 Jun 2018 19:23:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9A3191F403
+	for <e@80x24.org>; Mon, 11 Jun 2018 19:29:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933595AbeFKTT1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Jun 2018 15:19:27 -0400
-Received: from mail-yw0-f195.google.com ([209.85.161.195]:41915 "EHLO
-        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932897AbeFKTT0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jun 2018 15:19:26 -0400
-Received: by mail-yw0-f195.google.com with SMTP id s201-v6so6691246ywg.8
-        for <git@vger.kernel.org>; Mon, 11 Jun 2018 12:19:25 -0700 (PDT)
+        id S1754049AbeFKT3q (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Jun 2018 15:29:46 -0400
+Received: from mail-pl0-f67.google.com ([209.85.160.67]:44581 "EHLO
+        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752804AbeFKT3p (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jun 2018 15:29:45 -0400
+Received: by mail-pl0-f67.google.com with SMTP id z9-v6so12891476plk.11
+        for <git@vger.kernel.org>; Mon, 11 Jun 2018 12:29:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=6MnLBSEPNO8uVOKunR99M3iaCWff9gTsj8Z7EHa2268=;
-        b=uIDpgiANbcwP91qb3G4GzcG2Riw5woiGhWyGPaO5sCkuGQzIUi21YJP/9/Lw1K+PrZ
-         eFuaLrxVpaoo/0lw7kqYRDjiIdmorlV5M95BMrQxKh2Xtnq4A28zeN6ePnHQvykqo5M/
-         eVqnyKQDvKEecAG6TVpDqWZQ07Y40xXtX2jbAxOTOLWPvhUkZDnQoTflNNge+O+22h+R
-         VrCbL7w1Zstpjtc/AgmmTAvz+PE9qAb8aZD0dkyQg9Fmp2wOEw3WRvXnWM+n9yzm/s/+
-         ohVMc4409AkhIcPMmBW8jZWuUpbsfBWAzVvc6oI5+BPjpEOEQfA4Li7yR5QRhzaN2rwY
-         tCug==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=uPcTFhW+BmEcTh4tvWXimeYLVhjFFvRSRNxNkaFr9/I=;
+        b=RtA8mQ8KoOEL8Ggl3OHw0pNhAvRvSOAXNXD09zm9mwlgIr4hGtW1UlFhr/99nBahn4
+         2+YGlhMkz3thgNyj6K1xnnq1Bi+TlhNSvI19anJAJl3KA6wOV4tumY/l5NzQ9602iXP2
+         ZgR7oYfDV5fvW8gvLHzWplhiFy3b08CcGqeXWkWldoV7XRSKmvr06f3T2cdeX9ayH8Zr
+         8IAhzZC42uwxc83tkEBSsrbxkqLqrLBxFU+AVi75+Tit6accIj+U3c9q6DqcRQY8pafE
+         Nh4hPbNuuMCOc8w+N97lInO8ES+cZUZnhi6teIy1r6V+WrHTGsF/Ducpwiz2hgBxIyfB
+         ZkpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=6MnLBSEPNO8uVOKunR99M3iaCWff9gTsj8Z7EHa2268=;
-        b=q/Q0fFN1x+3f4aWAOmpP3sJUvqHlZtHp1SN4IiTGRKeS1bH7ypHqdl3IVzsm47plPB
-         2EsLhiEJ++RysyUtUBRmFhTqwnzAleNST3+ULlKKeU5eEJ6a+dNc678ghWNoJvTYDk2A
-         6zCoHWOdcfcJs2VVG3WGtYBt+E2qX6XB7+xc0LnT8cxPj1sHs3Q+WI2bTnAv34ntBX7d
-         9KFboNNh6ksT70gVZLdq3l41m8etk3AWhBxQmXmxO4mXzw7UU0EuUeyqZUbq+RxzPu7L
-         5GPTBm7LU+ZU8bz5XpV7fRngLu4P86Cg9n47gfWR48m1aB6Ehg1nui2cvDkkc3W0oKRo
-         +Kng==
-X-Gm-Message-State: APt69E0FoMxCwaeBm23fMNJYLcY+AsGjaA6CzZlxqqJ7v63mh0Zk6pa2
-        VrXmZAx8/gDE3IVwUSnyqQaEYQTBJZ6j9Z/p3EBw8Lyl
-X-Google-Smtp-Source: ADUXVKJ0rDc1dWBvwazAEj1Ie7VyzyAVJiU8Yx/YV865RHyYS28mIWEOi34raDpZjdC2lHh6Qj7mBDu48hGnjuC4NRg=
-X-Received: by 2002:a81:3712:: with SMTP id e18-v6mr269751ywa.340.1528744764826;
- Mon, 11 Jun 2018 12:19:24 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=uPcTFhW+BmEcTh4tvWXimeYLVhjFFvRSRNxNkaFr9/I=;
+        b=Jl13QDOLx/qiG4NE8seND/fu+CmOsVECLbKwi60UNNrXkCd7+USo5pjdk5vosD2pnV
+         5dz2g4tfu2I0+5iRnkhQOKtVG+lNpjA6qVV6QuWj3hsYZFz6LXprLSk06RlGh9zMrtZ1
+         6/PFtfg/qKdA2lC8jWxmPq2v/OTYbWqZVOUwZ12IkySWy/KBDtjzhOdIh1n1f5EJdxFz
+         Fpa5ob4K0dKtY0QB8nAjplnbr9RAinvsYq7YwX2IS7HCx8j7nCANfsOnhlu692p2M/g2
+         0UTWYpDg5l6jSO2pHwWUitSDhnLMdoTMZvpjqA+wM61+8tC2n1KB0qXB8KN2MPZIYR1D
+         zk3A==
+X-Gm-Message-State: APt69E3XUZMO0AZUPlj5J/bj7/qTPQw+oWHkl/cojIEUR08TOATnU3F6
+        7Ewt1Y3jeizfF+GDIeAgP9s=
+X-Google-Smtp-Source: ADUXVKIqaubEN136LzqOAUfLZFxzBn+JpOxTO/nwy4IgthlQ9/ylRnjxFJuKTh72rdEQV7QWgmg21g==
+X-Received: by 2002:a17:902:5ac8:: with SMTP id g8-v6mr469602plm.221.1528745384703;
+        Mon, 11 Jun 2018 12:29:44 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id h12-v6sm13568428pfi.114.2018.06.11.12.29.43
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 11 Jun 2018 12:29:43 -0700 (PDT)
+Date:   Mon, 11 Jun 2018 12:29:42 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        demerphq <demerphq@gmail.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Adam Langley <agl@google.com>,
+        The Keccak Team <keccak@noekeon.org>
+Subject: Re: Hash algorithm analysis
+Message-ID: <20180611192942.GC20665@aiede.svl.corp.google.com>
+References: <20180609205628.GB38834@genre.crustytoothpaste.net>
+ <20180609224913.GC38834@genre.crustytoothpaste.net>
 MIME-Version: 1.0
-References: <20180607140338.32440-1-dstolee@microsoft.com> <20180607140338.32440-3-dstolee@microsoft.com>
-In-Reply-To: <20180607140338.32440-3-dstolee@microsoft.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 11 Jun 2018 12:19:13 -0700
-Message-ID: <CAGZ79kaDiXnAuRym3HHQPEZh9z0-sPL5V4Yur5-_RojsyLJsYA@mail.gmail.com>
-Subject: Re: [PATCH 02/23] midx: add midx format details to pack-format.txt
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git <git@vger.kernel.org>, Derrick Stolee <dstolee@microsoft.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Martin Fick <mfick@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180609224913.GC38834@genre.crustytoothpaste.net>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Derrick,
-On Thu, Jun 7, 2018 at 7:03 AM Derrick Stolee <stolee@gmail.com> wrote:
+Hi,
+
+brian m. carlson wrote:
+
+> == Discussion of Candidates
 >
-> The multi-pack-index (MIDX) feature generalizes the existing pack-
-> index (IDX) feature by indexing objects across multiple pack-files.
+> I've implemented and tested the following algorithms, all of which are
+> 256-bit (in alphabetical order):
+
+Thanks for this.  Where can I read your code?
+
+[...]
+> I also rejected some other candidates.  I couldn't find any reference or
+> implementation of SHA256×16, so I didn't implement it.
+
+Reference: https://eprint.iacr.org/2012/476.pdf
+
+If consensus turns toward it being the right hash function to use,
+then we can pursue finding or writing a good high-quality
+implementation.  But I tend to suspect that the lack of wide
+implementation availability is a reason to avoid it unless we find
+SHA-256 to be too slow.
+
+[...]
+> * BLAKE2bp, as implemented in libb2, uses OpenMP (and therefore
+>   multithreading) by default.  It was no longer possible to run the
+>   testsuite with -j3 on my laptop in this configuration.
+
+My understanding is that BLAKE2bp is better able to make use of simd
+instructions than BLAKE2b.  Is there a way to configure libb2 to take
+advantage of that without multithreading?
+
+E.g. https://github.com/sneves/blake2-avx2 looks promising for that.
+
+[...]
+> |===
+> | Implementation             | 256 B  | 1 KiB  | 8 KiB  | 16 KiB |
+> | SHA-1 (OpenSSL)            | 513963 | 685966 | 748993 | 754270 |
+> | BLAKE2b (libb2)            | 488123 | 552839 | 576246 | 579292 |
+> | SHA-512/256 (OpenSSL)      | 181177 | 349002 | 499113 | 495169 |
+> | BLAKE2bp (libb2)           | 139891 | 344786 | 488390 | 522575 |
+> | SHA-256 (OpenSSL)          | 264276 | 333560 | 357830 | 355761 |
+> | KangarooTwelve             | 239305 | 307300 | 355257 | 364261 |
+> | SHAKE128 (OpenSSL)         | 154775 | 253344 | 337811 | 346732 |
+> | SHA3-256 (OpenSSL)         | 128597 | 185381 | 198931 | 207365 |
+> | BLAKE2bp (libb2; threaded) |  12223 |  49306 | 132833 | 179616 |
+> |===
+
+That's a bit surprising, since my impression (e.g. in the SUPERCOP
+benchmarks you cite) is that there are secure hash functions that
+allow comparable or even faster performance than SHA-1 with large
+inputs on a single core.  In Git we also care about performance with
+small inputs, creating a bit of a trade-off.
+
+More on the subject of blake2b vs blake2bp:
+
+- blake2b is faster for small inputs (under 1k, say). If this is
+  important then we could set a threshold, e.g. 512 bytes, for
+  swtiching to blake2bp.
+
+- blake2b is supported in OpenSSL and likely to get x86-optimized
+  versions in the future. blake2bp is not in OpenSSL.
+
+[...]
+> == Summary
 >
-> Describe the basic file format, using a 12-byte header followed by
-> a lookup table for a list of "chunks" which will be described later.
-> The file ends with a footer containing a checksum using the hash
-> algorithm.
+> The algorithms with the greatest implementation availability are
+> SHA-256, SHA3-256, BLAKE2b, and SHAKE128.
 >
-> The header allows later versions to create breaking changes by
-> advancing the version number. We can also change the hash algorithm
-> using a different version value.
+> In terms of command-line availability, BLAKE2b, SHA-256, SHA-512/256,
+> and SHA3-256 should be available in the near future on a reasonably
+> small Debian, Ubuntu, or Fedora install.
 >
-> We will add the individual chunk format information as we introduce
-> the code that writes that information.
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  Documentation/technical/pack-format.txt | 49 +++++++++++++++++++++++++
->  1 file changed, 49 insertions(+)
->
-> diff --git a/Documentation/technical/pack-format.txt b/Documentation/technical/pack-format.txt
-> index 70a99fd142..17666b4bfc 100644
-> --- a/Documentation/technical/pack-format.txt
-> +++ b/Documentation/technical/pack-format.txt
-> @@ -252,3 +252,52 @@ Pack file entry: <+
->      corresponding packfile.
->
->      20-byte SHA-1-checksum of all of the above.
-> +
-> +== midx-*.midx files have the following format:
-> +
-> +The meta-index files refer to multiple pack-files and loose objects.
+> As far as security, the most conservative choices appear to be SHA-256,
+> SHA-512/256, and SHA3-256.
 
-So is it meta or multi?
+SHA-256x16 has the same security properties as SHA-256.  Picking
+between those two is a tradeoff between performance and implementation
+availability.
 
-> +In order to allow extensions that add extra data to the MIDX, we organize
-> +the body into "chunks" and provide a lookup table at the beginning of the
-> +body. The header includes certain length values, such as the number of packs,
-> +the number of base MIDX files, hash lengths and types.
-> +
-> +All 4-byte numbers are in network order.
-> +
-> +HEADER:
-> +
-> +       4-byte signature:
-> +           The signature is: {'M', 'I', 'D', 'X'}
-> +
-> +       1-byte version number:
-> +           Git only writes or recognizes version 1
-> +
-> +       1-byte Object Id Version
-> +           Git only writes or recognizes verion 1 (SHA-1)
+My understanding is that all the algorithms we're discussing are
+believed to be approximately equivalent in security.  That's a strange
+thing to say when e.g. K12 uses fewer rounds than SHA3 of the same
+permutation, but it is my understanding nonetheless.  We don't know
+yet how these hash algorithms will ultimately break.
 
-s/verion/version/
+My understanding of the discussion so far:
 
-> +       1-byte number (C) of "chunks"
-> +
-> +       1-byte number (I) of base multi-pack-index files:
-> +           This value is currently always zero.
+Keccak team encourages us[1] to consider a variant like K12 instead of
+SHA3.
 
-Oh? Are meta-index and multi-index files different things?
+AGL explains[2] that the algorithms considered all seem like
+reasonable choices and we should decide using factors like
+implementation ease and performance.
 
-> +       4-byte number (P) of pack files
-> +
-> +CHUNK LOOKUP:
-> +
-> +       (C + 1) * 12 bytes providing the chunk offsets:
-> +           First 4 bytes describe chunk id. Value 0 is a terminating label.
-> +           Other 8 bytes provide offset in current file for chunk to start.
-> +           (Chunks are provided in file-order, so you can infer the length
-> +           using the next chunk position if necessary.)
+If we choose a Keccak-based function, AGL also[3] encourages using a
+variant like K12 instead of SHA3.
 
-It is so nice to have the header also have 12 bytes, so it fits right into the
-lookup table. So an alternative point of view:
+Dscho strongly prefers[4] SHA-256, because of
+- wide implementation availability, including in future hardware
+- has been widely analyzed
+- is fast
 
-  If a chunk needs to store more than 8 bytes, we'll have an offset after
-  the first 4 bytes that describe the chunk, otherwise you can store the 8 bytes
-  of information directly after the 4 bytes.
-   "MIDX" is a special chunk and must come first (does it?) and only once
-  as it contains the version number.
+Yves Orton and Linus Torvalds prefer[5] SHA3 over SHA2 because of how
+it is constructed.
 
-> +       The remaining data in the body is described one chunk at a time, and
-> +       these chunks may be given in any order. Chunks are required unless
-> +       otherwise specified.
-> +
-> +CHUNK DATA:
-> +
-> +       (This section intentionally left incomplete.)
-> +
-> +TRAILER:
-> +
-> +       H-byte HASH-checksum of all of the above.
+Thanks,
+Jonathan
 
-This means we have to rehash the whole file for updating its contents.
-okay.
+[1] https://public-inbox.org/git/91a34c5b-7844-3db2-cf29-411df5bcf886@noekeon.org/
+[2] https://public-inbox.org/git/CAL9PXLzhPyE+geUdcLmd=pidT5P8eFEBbSgX_dS88knz2q_LSw@mail.gmail.com/
+[3] https://www.imperialviolet.org/2017/05/31/skipsha3.html
+[4] https://public-inbox.org/git/alpine.DEB.2.21.1.1706151122180.4200@virtualbox/
+[5] https://public-inbox.org/git/CA+55aFwUn0KibpDQK2ZrxzXKOk8-aAub2nJZQqKCpq1ddhDcMQ@mail.gmail.com/
