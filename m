@@ -2,83 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1841B1F403
-	for <e@80x24.org>; Mon, 11 Jun 2018 14:27:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32AE21F403
+	for <e@80x24.org>; Mon, 11 Jun 2018 14:42:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933037AbeFKO1N (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Jun 2018 10:27:13 -0400
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:53076 "EHLO
-        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934570AbeFKOZm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jun 2018 10:25:42 -0400
-Received: by mail-wm0-f52.google.com with SMTP id p126-v6so15070832wmb.2
-        for <git@vger.kernel.org>; Mon, 11 Jun 2018 07:25:41 -0700 (PDT)
+        id S932345AbeFKOm3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Jun 2018 10:42:29 -0400
+Received: from mail-ua0-f194.google.com ([209.85.217.194]:44500 "EHLO
+        mail-ua0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932300AbeFKOm2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jun 2018 10:42:28 -0400
+Received: by mail-ua0-f194.google.com with SMTP id f30-v6so13681166uab.11
+        for <git@vger.kernel.org>; Mon, 11 Jun 2018 07:42:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=to:cc:from:subject:openpgp:message-id:date:user-agent:mime-version
-         :content-language:content-transfer-encoding;
-        bh=1Wl4vUQ+9JNYjGwzcYugfqKvGvplpvWytr+oITEAVMg=;
-        b=duK0UjbAeTgd+/fEbNkpdpB2wY6/WH88mOLz9ZynnI7mwbPifQtM4/9ffv9yymxIAr
-         FA8ikRGmeY9xlVMbDrMEJmsKTtnenlxVDYzzqoOytkhcdsdhe9v15bUpzIxrC4IV86ij
-         Tu+QD6g62g6Eh+dN2AEK4OoixFvGCM2C9FcY40kqn0OZk0JUlcfgF4NV5e5y1DMNKsYW
-         QDK1nb/9uR+oGu74M0AaSl4noQX/qQ8JMto/Fwf3RkIXFz1+PFUfFMDz1rOqxCqX61dy
-         CwftXFjOoVgEiIcvU/rxYFoZlKE4ZiRgLWSmkYE2VhI6C9JoMYMlS5alNDjPLc0fm+oC
-         d8Xg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=JQKUY4VTZ2g52EzlvotAiggkT147DJeWtgqr0R0cAAc=;
+        b=EWHv7dv86oJbgtor+uMfT/7f0u4QylGRpl21IEQCri3vzOSCxvz4Z6o5LV51SsN7wg
+         Rxt0U9Q6obMxOvmGuOo3LcER32sN9KlFzYjME1Wt35PDaDxYkxVaAqJDW6GXFZcqkEqR
+         OIOxghKmz5Re1y3oVO+f06TQ9f6EGg7j9wd+OESOB7nBCOIA0NslwZC++0G0UQCrpFg4
+         9Rgyr4onqVHe+Pyl8ysEPqyJ74WYMmMRrTLr/oeW+Pckcj8LxStKxUdWEDuMAhEHYbUs
+         CMMdgeuO/xeLJOJrT71dm3WzAVbBXCxx89AhlkfPjSjRv7yTvhxL43mTjoudRuiykKzh
+         /GRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:cc:from:subject:openpgp:message-id:date
-         :user-agent:mime-version:content-language:content-transfer-encoding;
-        bh=1Wl4vUQ+9JNYjGwzcYugfqKvGvplpvWytr+oITEAVMg=;
-        b=uaP6a4x7GSNR/QXNw6yUM9nL/e28h7cKJggNiyTloqyC77WqyaW791rlYbxBLGacen
-         gXww4Pg/r241hCI/3Mf4LgsWteIy6jajM1cRjYXaIUVAy4SKpyYQBQXlvLKxH2b3+nVP
-         JVul+6QvvSqzsjjcqhrTY1YwA8Xbga3saOUgmP3+5vAbFpcc3uK5TjHjeXnh+kjpuWpg
-         0+boa5f9rQ8pWO1hrG4MMc0q7ZUOJvTWvKRAordB0CE4aaD2xc/B14e9xZsFg1NiZUK4
-         3HzIun7Zyrh6FFSpwNh283pD7GCnxHzzeZZtrC2O0HKr9H1825r8tqbjXyfWY0KTpMbp
-         uBRg==
-X-Gm-Message-State: APt69E2miqGOd1cBNt2HSlaqWbVVAXrKKI9yxd0NeKCD8JBQjSnqoMvO
-        +kLVmyMoU/+QTbiLLulp258=
-X-Google-Smtp-Source: ADUXVKLRxzczfaRIAbkHUhlDByOgoCTZOGpR6SLR+H7wFUunqMT6+zYlt0M6lWf/fuF80H922Ca5tA==
-X-Received: by 2002:a1c:448b:: with SMTP id r133-v6mr7829145wma.55.1528727140728;
-        Mon, 11 Jun 2018 07:25:40 -0700 (PDT)
-Received: from [192.168.0.104] (AToulouse-658-1-25-147.w86-222.abo.wanadoo.fr. [86.222.24.147])
-        by smtp.gmail.com with ESMTPSA id e81-v6sm10972016wmi.28.2018.06.11.07.25.38
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 11 Jun 2018 07:25:39 -0700 (PDT)
-To:     git@vger.kernel.org
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-From:   Alban Gruin <alban.gruin@gmail.com>
-Subject: [GSoC] GSoC with git, week 6
-Openpgp: preference=signencrypt
-Message-ID: <bcb4a1e3-3e72-749e-dfb3-09acbd049b87@gmail.com>
-Date:   Mon, 11 Jun 2018 16:25:30 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=JQKUY4VTZ2g52EzlvotAiggkT147DJeWtgqr0R0cAAc=;
+        b=Qf237zGbIqD2nJTMnxgjW/cGcIkeax8WAZH7htey3ApaL137DbOxWWPFYVliJ0mUT/
+         QJs4LBivJgK6VLVMBvREoC2gR3O/9arI37otY9eH/wg/Uh5KbGGHdmpFdTJlWBMO+Ild
+         sHXIpJBxV0mfOd73exsDpHjDx9ANer6XSJmFMm0HgcsMkanLOtikjM7L82VyXGh8oCHT
+         HPWVCsb2+2x/OD+RI8lEhqLbkl2UoBGtL29GrFvhU+q6V11SGBb9ux6thh+Gtz2kTD5b
+         Am7UO6GVEp34M4sr0lyzICa3WRLSnG0h+1KmjumtLPeT5FBMptP0qVeBCR5/NUcD3rPW
+         1qTQ==
+X-Gm-Message-State: APt69E0j5gdCUJrOm/SN6Mt6N7NeOSCa2XTFvij0FjReypqeDmZCfrzy
+        pVWB8ED4lmipYV/T7Sf7t0l5J2BDZBghJyjejL8=
+X-Google-Smtp-Source: ADUXVKLn3j+PgWzK0n4EQbWihM6s4x/cjboMJjYmigXt50oBIIuV7oGiXiH9C0m4ZBM2qd/mN5m3R9+cYJ0eD3gNj9w=
+X-Received: by 2002:ab0:596f:: with SMTP id o44-v6mr11519408uad.29.1528728147495;
+ Mon, 11 Jun 2018 07:42:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr-FR
-Content-Transfer-Encoding: 7bit
+Received: by 2002:ab0:5f28:0:0:0:0:0 with HTTP; Mon, 11 Jun 2018 07:42:26
+ -0700 (PDT)
+In-Reply-To: <8f19c8c2-d050-2d51-756d-d78b9f2bd335@talktalk.net>
+References: <CABPp-BGxaroePB6aKWAkZeADLB7VE3y1CPy2RyNwpn=+C01g3A@mail.gmail.com>
+ <20180607050747.19726-1-newren@gmail.com> <8f19c8c2-d050-2d51-756d-d78b9f2bd335@talktalk.net>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 11 Jun 2018 07:42:26 -0700
+Message-ID: <CABPp-BF7POrGTRbVOZ-AGjRHKcpExMQcA4uSPvrRONbnG2CE8w@mail.gmail.com>
+Subject: Re: [PATCH] git-rebase.sh: handle keep-empty like all other options
+To:     phillip.wood@dunelm.org.uk
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Phillip,
 
-I published a new blog post about last week:
+On Sun, Jun 10, 2018 at 12:26 PM, Phillip Wood
+<phillip.wood@talktalk.net> wrote:
+> On 07/06/18 06:07, Elijah Newren wrote:
+>>
+>> Signed-off-by: Elijah Newren <newren@gmail.com>
+>> ---
+>>   git-rebase.sh | 6 +-----
+>>   1 file changed, 1 insertion(+), 5 deletions(-)
+>>
+>> diff --git a/git-rebase.sh b/git-rebase.sh
+>> index 40be59ecc4..a56b286372 100755
+>> --- a/git-rebase.sh
+>> +++ b/git-rebase.sh
+>> @@ -276,6 +276,7 @@ do
+>>                 ;;
+>>         --keep-empty)
+>>                 keep_empty=yes
+>> +               test -z "$interactive_rebase" &&
+>> interactive_rebase=implied
+>
+>
+> I think you need to wait until all the options have been parsed before
+> setting the implied interactive rebase in case the user specifies has
+> '--keep-empty' in an alias and specifies '--no-keep-empty' with some am
+> options on the command line.
 
-  https://blog.pa1ch.fr/posts/2018/06/11/en/gsoc2018-week-6.html
+Ah, indeed you are right.  Let's drop this patch then.
 
-Any feedback is welcome! :)
+However, we have a bigger problem with empty commits, in that there
+are really three modes rather than two:
+  * Automatically drop empty commits (default for am-based rebase)
+  * Automatically keep empty commits (as done with --keep-empty)
+  * Halt the rebase and tell the user how to specify if they want to
+keep it (default for interactive rebases)
 
-Cheers,
-Alban
+Currently, only the first option is available to am-based rebases, and
+only the second two options are available to interactive-based
+rebases.  But if we want to make all three available to
+interactive-based rebases, what should the command line option look
+like?  --empty={drop,ask,keep}?
 
+(And deprecate but continue to support --[no-]keep-empty?)
+
+And should the two rebase modes really have a different default?  What
+should the default be?
