@@ -2,99 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 43B841F403
-	for <e@80x24.org>; Mon, 11 Jun 2018 21:58:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 20DB31F517
+	for <e@80x24.org>; Mon, 11 Jun 2018 22:08:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754148AbeFKV62 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Jun 2018 17:58:28 -0400
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:36892 "EHLO
-        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751712AbeFKV61 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jun 2018 17:58:27 -0400
-Received: by mail-yw0-f194.google.com with SMTP id j190-v6so6841933ywe.4
-        for <git@vger.kernel.org>; Mon, 11 Jun 2018 14:58:27 -0700 (PDT)
+        id S1752768AbeFKWIp (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Jun 2018 18:08:45 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:37192 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751148AbeFKWIp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jun 2018 18:08:45 -0400
+Received: by mail-wr0-f194.google.com with SMTP id d8-v6so21978708wro.4
+        for <git@vger.kernel.org>; Mon, 11 Jun 2018 15:08:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=JgbHg+sBvN9oA3oSTxugeBuAK+6Qjj7doZtfYtRKQjA=;
-        b=Zohp3YWbrxPw4Nu8LRsSAg2s0Zr1eu1GfwPIbhHQmSG9h1gHX4JGSfKw6wef/idPnK
-         jfXTnnLNsc8ZVyt974/2nLXpaK1pAbOON4qhFdSOgQSL12Ejy5HzJmU6QOy7ssKfBuOS
-         ZAjrFNAU4OrxWwHvs5zel+61V48bjumR9UvAHykTlN34lcb3Wz80LXqM5bY8ZFvqDU3Y
-         ymjgg8rWQl6hcTGAIZUH4LyHYLQBwSu4NFERgZZvTX1/dcx/C+HfANiu4eU8r4qL45vy
-         VvvjlHuwNMvsW4/blR2hVuNDIyOEh1rghUdPzHi9RZh/LjW8hGypGFUJ+Kx6c0i49vbA
-         KyJQ==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=Ew4Wb9Uktyqxb+bl26k63ujdIw3QTvwzMUQ2x74s8H4=;
+        b=rsKODt9SiBGumIXWcBLi42IzjqqXJ3z0zNuCD5q4ev9rvPtHMFWNHhphV9VZtnwKvB
+         +tV1UVxmsj3JvAZgxJ8sUvWpMCioWAMvpFDkhMrnOIcCUDEQKQOOD9hyisVL9Cx/ReaU
+         B0PgNhf5idZofJEWh/XsnmLOayUmLO2MYo5wnZxxTXe/2TN0Rt5vTRJQsZMkTKvUTJ52
+         K7LUMUHlOsar5PRl54gEw2Vq/pvvbdQKdfNubR6/exXbNbCPlS+KwTinKXoVLcEcLAFB
+         cyI8+V8cdF2kpdStKt83xZxOoYks3IavrTxN2b95UrdeGdqSvFNVCN352Jh4ZJC5i5dq
+         gsug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=JgbHg+sBvN9oA3oSTxugeBuAK+6Qjj7doZtfYtRKQjA=;
-        b=EZMqa3F/x4FCCDXKAQbXF5TWuDHsQk6O3BZNwryiSOhtL01s6x0XA6KWi0AGF49k+z
-         E5SwZ0fV6kdCDjWz3NzOrF8Fm8j5S/ffaQkxcMwSf5zpbUX7jnOOX85ZcCwlumywdeZP
-         TxRHLDAXy2ECjytHCNP6yaO6Axeez+SepUmSXWoMCGnyrg4oaFHWtvEeQpFtluffDhZ9
-         gxxPvkYv8eYAtdeS/poHELl2hf1hXcO+yZPOHr8WJjtwC/eKXnFtPmltLWlqI8+SSsns
-         rQB46+7lyz9zSL2OeFW1kBwWlMP8uyyQpeliYb2jLnjyI3WOTysATUzAN+IliyMO/z7n
-         qOYw==
-X-Gm-Message-State: APt69E3ZMsBsZMCA3yGebOCcktrrPSUvbAQt5gDucS87wfFtHaz9nNSF
-        hhUSlJxNZf4wD4DQY7aSPpdwWsv17ckKsBN6023Hgg==
-X-Google-Smtp-Source: ADUXVKLdPWXqNI+2wfitDI5q9HXX82zIa+mxdYXWe2AcMaIhf6gjF+essOolcIG4prB3IYgC29HCcZZWAHjvJ+6I5fc=
-X-Received: by 2002:a81:4d43:: with SMTP id a64-v6mr442513ywb.33.1528754306154;
- Mon, 11 Jun 2018 14:58:26 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Ew4Wb9Uktyqxb+bl26k63ujdIw3QTvwzMUQ2x74s8H4=;
+        b=E3NqWBO7HhNNekOBxJV0t1Cp1sEBTTcFmTXgCJQGdd+oHWRIUNgeT6K/2/DFUhXy0/
+         JRhBWoQZaPlhq8nrXTBMQNds5+7ORcv6DWTViRugYTh+emwjsymLT9b0ctprwlssJayU
+         vsm342pWiCimNdWozjzZGnmeoTKO2Sqw+lVWRx+k6Hc+uiShQ8WRIE6yA2U9Hr2OpJCZ
+         OTKy1S5lNS7dDfUzUGbCcLTi1WuDutCk3QTI3I7ckG7xpUBrj7AoAQ6wpl5HII608w4e
+         pHzoCwOz/D4v3HEj2wpVmj7vt68XkXIRSMjNWG24bgfQqHbJqrvMugwsnwNDG8uJ+7IG
+         a7oA==
+X-Gm-Message-State: APt69E1YLSeIIMVJt9mq4FwziQf7DugTxxUKqv/ioS8XEiRCmtWbcTko
+        SAcUZe/SOG2LvDl3TxJLJqjh9FSc
+X-Google-Smtp-Source: ADUXVKIoQxeetGKUumMYu9OqLK9fbKDml3DHOKtAv5MP3yI569JWteYnGhMv8DZV3gPhIMzpE024Vg==
+X-Received: by 2002:adf:b053:: with SMTP id g19-v6mr648449wra.128.1528754923375;
+        Mon, 11 Jun 2018 15:08:43 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id f2-v6sm11581294wre.16.2018.06.11.15.08.42
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 11 Jun 2018 15:08:42 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jun 2018, #02; Mon, 4)
+References: <xmqqr2lm4pth.fsf@gitster-ct.c.googlers.com>
+        <20180604141230.GA26961@sigill.intra.peff.net>
+Date:   Mon, 11 Jun 2018 15:08:42 -0700
+In-Reply-To: <20180604141230.GA26961@sigill.intra.peff.net> (Jeff King's
+        message of "Mon, 4 Jun 2018 10:12:30 -0400")
+Message-ID: <xmqqmuw1asd1.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <74c84bda-4f3d-b2d3-91cf-e80e84fe46b1@gortan.org>
- <3a3eb88e-0d7b-e689-c4e4-207569ebd667@macq.eu> <xmqqd0z61xsv.fsf@gitster-ct.c.googlers.com>
- <CAKPyHN0j0VPcMCN4huVP2Dqsg0g3WmOw304S8dcRbWVtZTphHQ@mail.gmail.com>
-In-Reply-To: <CAKPyHN0j0VPcMCN4huVP2Dqsg0g3WmOw304S8dcRbWVtZTphHQ@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 11 Jun 2018 14:58:15 -0700
-Message-ID: <CAGZ79kazAU-=Z0Q+X6_TimMbkyDQZ4c3mAVuGH0rrR_HenqPPw@mail.gmail.com>
-Subject: Re: git-gui ignores core.hooksPath
-To:     Bert Wesarg <bert.wesarg@googlemail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, chris.maes@macq.eu,
-        philipp@gortan.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git <git@vger.kernel.org>, Philip Oakley <philipoakley@iee.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 4, 2018 at 10:48 PM Bert Wesarg <bert.wesarg@googlemail.com> wrote:
->
-> On Wed, Apr 11, 2018 at 12:50 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> > Chris Maes <chris.maes@macq.eu> writes:
-> >
-> >> Is there any hope from here that anyone will pick up this / these
-> >> changes? Will anyone else be assigned the main responsible for this
-> >> git-gui repository?
-> >>
-> >> Just hoping to revive the discussion here, since the
-> >> https://github.com/patthoyts/git-gui/ repository seems quite dead.
-> >
-> > It indeed does.
-> >
-> > I've played a patch-monkey in the past for git-gui and have a few
-> > topics queued still in my tree, but that serves merely as a bookmark
-> > that is slightly better than a pointer to the mailing list archive.
-> >
-> > We need a volunteer to take over this part of the subsystem;
-> > somebody who actually uses it, passionate about improving it, and
-> > can speak tcl/tk somewhat fluently (I qualify none of these three
-> > criteria myself).
-> >
-> > Any takers?
->
-> the last time this topic came up, Stefan (in Cc) offered to volunteer.
-> Stefan, is this offer still open? I would support this.
+Jeff King <peff@peff.net> writes:
 
-After I made this offer, I started looking at the code base more and trying
-to add a feature just to discover I do not qualify as fluent in tcl/tk.
-Also I have some issues managing my time, so I retract that offer.
-Though I'd still review the code in this area.
+> On Mon, Jun 04, 2018 at 10:57:30PM +0900, Junio C Hamano wrote:
+>
+>> * jk/index-pack-maint (2018-06-01) 2 commits
+>>   (merged to 'next' on 2018-06-04 at c553a485e8)
+>>  + index-pack: handle --strict checks of non-repo packs
+>>  + prepare_commit_graft: treat non-repository as a noop
+>> 
+>>  "index-pack --strict" has been taught to make sure that it runs the
+>>  final object integrity checks after making the freshly indexed
+>>  packfile available to itself.
+>> 
+>>  Will cook in 'next'.
+>
+> This second patch fixes a regression in v2.18.0-rc1 and in v2.17.1. I
+> don't know if we'd want to consider it for v2.18 or not (it should be
+> able to be applied independently from the first).
+
+I gave the topic -maint suffix, but I'd need a little fix-up patch
+on top to actually make it mergeable to the maintenance track.  With
+that, let's merge it to 'master' before v2.18 final happens and then
+also to 'maint'.
+
+
+ builtin/index-pack.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 7b399478dd..3030c88d38 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -1484,7 +1484,7 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
+ 		struct packed_git *p;
+ 		p = add_packed_git(final_index_name, strlen(final_index_name), 0);
+ 		if (p)
+-			install_packed_git(the_repository, p);
++			install_packed_git(p);
+ 	}
+ 
+ 	if (!from_stdin) {
