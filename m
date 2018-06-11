@@ -6,193 +6,75 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0625A1F403
-	for <e@80x24.org>; Mon, 11 Jun 2018 05:54:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 60FAD1F403
+	for <e@80x24.org>; Mon, 11 Jun 2018 05:56:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753901AbeFKFx7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Jun 2018 01:53:59 -0400
-Received: from cloud.peff.net ([104.130.231.41]:41004 "HELO cloud.peff.net"
+        id S1753911AbeFKF4m (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Jun 2018 01:56:42 -0400
+Received: from cloud.peff.net ([104.130.231.41]:41024 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1753866AbeFKFx7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jun 2018 01:53:59 -0400
-Received: (qmail 5265 invoked by uid 109); 11 Jun 2018 05:53:59 -0000
+        id S1753866AbeFKF4l (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jun 2018 01:56:41 -0400
+Received: (qmail 5389 invoked by uid 109); 11 Jun 2018 05:56:42 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 11 Jun 2018 05:53:59 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 11 Jun 2018 05:56:42 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13505 invoked by uid 111); 11 Jun 2018 05:54:13 -0000
+Received: (qmail 13542 invoked by uid 111); 11 Jun 2018 05:56:56 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 11 Jun 2018 01:54:13 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 11 Jun 2018 01:56:56 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Jun 2018 01:53:57 -0400
-Date:   Mon, 11 Jun 2018 01:53:57 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Jun 2018 01:56:39 -0400
+Date:   Mon, 11 Jun 2018 01:56:39 -0400
 From:   Jeff King <peff@peff.net>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Kirill Smelkov <kirr@nexedi.com>,
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Duy Nguyen <pclouds@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
+        Thomas Braun <thomas.braun@virtuell-zuhause.de>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Brandon Williams <bmwill@google.com>,
-        Takuto Ikuta <tikuta@chromium.org>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Git List <git@vger.kernel.org>
-Subject: [PATCH v2] fetch-pack: don't try to fetch peel values with --all
-Message-ID: <20180611055357.GA16430@sigill.intra.peff.net>
-References: <20180610143231.7131-1-kirr@nexedi.com>
- <20180611042016.GA31642@sigill.intra.peff.net>
- <20180611044710.GB31642@sigill.intra.peff.net>
- <CAPig+cT73d0rYoSbt7oHVG4MYHVvjKidP0ogRwV+9F73jcjZEA@mail.gmail.com>
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [RFC PATCH v1] telemetry design overview (part 1)
+Message-ID: <20180611055639.GA28598@sigill.intra.peff.net>
+References: <20180607145313.25015-1-git@jeffhostetler.com>
+ <c3ed8128-1184-8199-06e5-a4e96b2bc7c5@kdbg.org>
+ <20180608090758.GA15112@sigill.intra.peff.net>
+ <688240ef-34a1-ee9a-215a-b4f9628e7c72@virtuell-zuhause.de>
+ <9ab3eec1-40c1-8543-e122-ed4ccfd367b4@kdbg.org>
+ <87fu1w53af.fsf@evledraar.gmail.com>
+ <CACsJy8BPhzs5M4peHN2HczmDxGmAuKZ0corzT66i+rJ2UQRTHQ@mail.gmail.com>
+ <87bmck4gip.fsf@evledraar.gmail.com>
+ <20180609065635.GE30224@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1806092200490.77@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAPig+cT73d0rYoSbt7oHVG4MYHVvjKidP0ogRwV+9F73jcjZEA@mail.gmail.com>
+In-Reply-To: <nycvar.QRO.7.76.6.1806092200490.77@tvgsbejvaqbjf.bet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 11, 2018 at 01:28:23AM -0400, Eric Sunshine wrote:
+On Sat, Jun 09, 2018 at 10:05:49PM +0200, Johannes Schindelin wrote:
 
-> On Mon, Jun 11, 2018 at 12:47 AM, Jeff King <peff@peff.net> wrote:
-> > Subject: fetch-pack: don't try to fetch peeled values with --all
-> > [...]
-> > Original report and test from Kirill Smelkov.
-> >
-> > Signed-off-by: Kirill Smelkov <kirr@nexedi.com>
-> > Signed-off-by: Jeff King <peff@peff.net>
-> > ---
-> > diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-> > @@ -506,30 +506,45 @@ test_expect_success 'test missing ref before existing' '
-> > +test_expect_success 'test --all wrt tag to non-commits' '
-> > +       blob_sha1=$(echo "hello blob" | git hash-object -t blob -w --stdin) &&
-> > +       git tag -a -m "tag -> blob" tag-to-blob $blob_sha1 &&
-> > +       tree_sha1=$(printf "100644 blob $blob_sha1\tfile\n" | git mktree) &&
+> > E.g., could we have a flag or environment variable to have the existing
+> > traces output JSON? I guess right now they're inherently free-form via
+> > trace_printf, so it would involve adding some structured interface
+> > calls. Which is more or less what I guess JeffH's proposed feature to
+> > look like.
 > 
-> Perhaps modernize these names to 'blob_oid' and 'tree_oid', or even
-> simpler, just 'blob' and 'tree'.
+> I think that is a much larger project than what JeffHost proposed, and
+> would unfortunately put too much of a brake on his project.
 
-Looking deeper, we do not need these trees and blobs at all. The problem
-is really just a tag that peels to an object that is not otherwise a ref
-tip, regardless of its type.
+I definitely don't want to stall somebody else's momentum with a bunch
+of what-if's. But I also don't want to end up down the road with two
+nearly-identical systems for tracing information. That's confusing to
+users, and to developers who must choose which system to use for any new
+tracing information they add.
 
-So below is a patch that simplifies the test even further (the actual
-code change is the same).
+So I think it's worth at least giving a little thought to how we might
+leverage similarities between the trace system and this. Even if we
+don't implement it now, it would be nice to have a vague sense of how
+they could grow together in the long run.
 
-> > +       git tag -a -m "tag -> tree" tag-to-tree $tree_sha1 &&
-> > +       mkdir fetchall &&
-> > +       (
-> > +               cd fetchall &&
-> > +               git init &&
-> > +               git fetch-pack --all .. &&
-> 
-> Simpler:
-> 
->     git init fetchall &&
->     (
->         cd fetchall &&
->         git fetch-pack --all .. &&
-> 
-> Although, I see that this script already has a mix of the two styles
-> (simpler and not-so-simple), so...
-
-The nearby tests actually reuse the "client" directory. We can do that,
-too, if we simply create new objects for our test, to make sure they
-still need fetching. See below (we could also use "git -C" there, but
-the subshell matches the other tests).
-
--- >8 --
-Subject: fetch-pack: don't try to fetch peel values with --all
-
-When "fetch-pack --all" sees a tag-to-blob on the remote, it
-tries to fetch both the tag itself ("refs/tags/foo") and the
-peeled value that the remote advertises ("refs/tags/foo^{}").
-Asking for the object pointed to by the latter can cause
-upload-pack to complain with "not our ref", since it does
-not mark the peeled objects with the OUR_REF (unless they
-were at the tip of some other ref).
-
-Arguably upload-pack _should_ be marking those peeled
-objects. But it never has in the past, since clients would
-generally just ask for the tag and expect to get the peeled
-value along with it. And that's how "git fetch" works, as
-well as older versions of "fetch-pack --all".
-
-The problem was introduced by 5f0fc64513 (fetch-pack:
-eliminate spurious error messages, 2012-09-09). Before then,
-the matching logic was something like:
-
-  if (refname is ill-formed)
-     do nothing
-  else if (doing --all)
-     always consider it matched
-  else
-     look through list of sought refs for a match
-
-That commit wanted to flip the order of the second two arms
-of that conditional. But we ended up with:
-
-  if (refname is ill-formed)
-    do nothing
-  else
-    look through list of sought refs for a match
-
-  if (--all and no match so far)
-    always consider it matched
-
-That means tha an ill-formed ref will trigger the --all
-conditional block, even though we should just be ignoring
-it. We can fix that by having a single "else" with all of
-the well-formed logic, that checks the sought refs and
-"--all" in the correct order.
-
-Reported-by: Kirill Smelkov <kirr@nexedi.com>
-Signed-off-by: Jeff King <peff@peff.net>
----
- fetch-pack.c          |  8 ++++----
- t/t5500-fetch-pack.sh | 10 ++++++++++
- 2 files changed, 14 insertions(+), 4 deletions(-)
-
-diff --git a/fetch-pack.c b/fetch-pack.c
-index a320ce9872..cc7a42fee9 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -657,11 +657,11 @@ static void filter_refs(struct fetch_pack_args *args,
- 				}
- 				i++;
- 			}
--		}
- 
--		if (!keep && args->fetch_all &&
--		    (!args->deepen || !starts_with(ref->name, "refs/tags/")))
--			keep = 1;
-+			if (!keep && args->fetch_all &&
-+			    (!args->deepen || !starts_with(ref->name, "refs/tags/")))
-+				keep = 1;
-+		}
- 
- 		if (keep) {
- 			*newtail = ref;
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index d4f435155f..5726f83ea3 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -518,6 +518,16 @@ test_expect_success 'test --all, --depth, and explicit tag' '
- 	) >out-adt 2>error-adt
- '
- 
-+test_expect_success 'test --all with tag to non-tip' '
-+	git commit --allow-empty -m non-tip &&
-+	git commit --allow-empty -m tip &&
-+	git tag -m "annotated" non-tip HEAD^ &&
-+	(
-+		cd client &&
-+		git fetch-pack --all ..
-+	)
-+'
-+
- test_expect_success 'shallow fetch with tags does not break the repository' '
- 	mkdir repo1 &&
- 	(
--- 
-2.18.0.rc1.446.g4486251e51
-
+-Peff
