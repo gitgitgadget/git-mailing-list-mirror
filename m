@@ -2,113 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A02981F403
-	for <e@80x24.org>; Mon, 11 Jun 2018 18:50:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 107271F403
+	for <e@80x24.org>; Mon, 11 Jun 2018 19:01:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932355AbeFKSuu (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Jun 2018 14:50:50 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:46072 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932081AbeFKSut (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jun 2018 14:50:49 -0400
-Received: by mail-pf0-f196.google.com with SMTP id a22-v6so10701705pfo.12
-        for <git@vger.kernel.org>; Mon, 11 Jun 2018 11:50:49 -0700 (PDT)
+        id S934523AbeFKTBI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Jun 2018 15:01:08 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:34287 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934038AbeFKTBH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jun 2018 15:01:07 -0400
+Received: by mail-pg0-f68.google.com with SMTP id q4-v6so9133912pgr.1
+        for <git@vger.kernel.org>; Mon, 11 Jun 2018 12:01:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=nWTIS5afMLTAt3dTG8q4F3/KI+BrKYFKU0aZ57mWcCA=;
-        b=Tp1v/+/vTNNQif1Ar+QxoNahxx2aoP8oWvtQF6kBEhY/cbVWvvj9lKHz+84eSo8aGE
-         Oa4gwbEQ91D6fJjHLikNgY3x0KillmgGiWVKGK38cpSUPoB5cjFazOVAHk+X5p2hXjao
-         DeRFuD2JIOxom8m4JXl8lijjO1hHtEhyPV6NHaKlURp/at0XT2IS5AS5rF5hImfG/u5j
-         aZ7+eUPY8G8hbvO2AhQRaCYLhZYsCxEI6o7bEu2dWrsJDszAvJT313w699C8pVW2CC0l
-         lWrd4P6r3/jtLwVtozhFYa5npELt/yP87Q5ptoSfEz6eksb04kSUM/2a1gSXpj8oQJ7s
-         NcOA==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=lmV6k1FDGxnVSQ3Y4Nqrw9TqPV0/kNYdleQ08kJzhc0=;
+        b=AJe7pCYIxYvd6gy24k+lOOkd3H1fUoDtyXpVM9HnXjZm0etw3aMPeFYF8b8Ff2vXtt
+         Ovfxyzxy6kIrJxhES79EvxburjUvNFD5cNZ1m0WaXXtW9AJN4EyP5Ri/KUhfPr+YQp5v
+         kwS3h/aQxo8sgrcKdtj6NP0rkRjabXt2RR7CRtnl8M+8+60/Z2EPDbPjTdVKdU0mx4me
+         KtyeAQJNezwAHXcfgZNqBO3cuZEk83kV/ClF/XmaRBMJ82C8ImnvyRdH1aksg/EeapuJ
+         1+NPKV+TeNZjJar4fon1S02TqkwQbWsVF3XxG4SBDpF0mLdKMiULlRcXxT0evCcztdID
+         HWZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=nWTIS5afMLTAt3dTG8q4F3/KI+BrKYFKU0aZ57mWcCA=;
-        b=AgFeqJ/HOP3JbgmEIx2XcJMi+9aLyclZOu1RS3N4l3jo/O0V3iEmOQ8qLCqAiRWbJm
-         4t4c9dNSY0UvtKd8LG8A5+80aQU33Pt6aF4yzgBsutuGCwJYv1UoagDpvRG8TSOw+Tms
-         KCKbUQU3pgA8zH83tdBbLvzofPV+Jw8Ms4Ym+bNBdgDmpFXeU061LSmHr/e6jVYO8Vtu
-         kIEwE7dAKiW1+vUsRuAz+jbxsGv2eNIDu3LIKgIEHugdY1B6hNuD80O4maAlvsxy+Qj7
-         t8PKNywlNp90fuypO21I5z1vqul5Dn5orC6Mtr3bjWOZlql/UkbMOVqb5A9reEsyeTV+
-         qtUg==
-X-Gm-Message-State: APt69E3bA0BDjidiPV/yvWBDgjle9L9Sn7u8ptGRhRit5EW5V0yFBVvs
-        hRsxsLxu/h1sOEi92WuKf9KUYQ==
-X-Google-Smtp-Source: ADUXVKJHfJ7z0h9pykaa7gUOAFLIT6zTyJv+Cl6K95f/lY1fWIDgadyRcA3dkLQIkFfCFszH53VRJg==
-X-Received: by 2002:a62:66c6:: with SMTP id s67-v6mr336007pfj.139.1528743049093;
-        Mon, 11 Jun 2018 11:50:49 -0700 (PDT)
-Received: from twelve3.svl.corp.google.com ([2620:15c:2e4:700:e67c:8726:af4f:3e3d])
-        by smtp.gmail.com with ESMTPSA id h16-v6sm7083044pfn.80.2018.06.11.11.50.47
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=lmV6k1FDGxnVSQ3Y4Nqrw9TqPV0/kNYdleQ08kJzhc0=;
+        b=MvRPPJNV3Eo+Tm/jTDZA2LlPM0f24vdJhyK55Opiuy7Mzl7fb+8aXgv+/rjxeIkf1P
+         i+V/jQ6ofiXqIArNnaZ9A9qNa88KRG7LAPTVhn1jH0iAPm/HwAvTbKglR+vTBBKyURUE
+         b6uGDn6CbKAPJpM6uRpg2169yq2CccQ6FlGZgjs/wIxtCiE/3MlcJWmYIMrUZ9Dc0sQj
+         e/s7gm/2jp1MGgC4oT/cnftELvHu51ujZxmRXZ9upISA6e+C7FGKtyrxdL5B8X3237gy
+         38vEuYzThzuZIh2pHIFhiIPjlUcLEtFvUf7r8aDLQx3NWIh/ZLmXbfF1np59AENKJo+A
+         Q0kA==
+X-Gm-Message-State: APt69E0G0yQXFdrk2ROMg3UwG00272wPKRkbEG3NW/OKDbBWLaxG1v3C
+        Yw6hnI/ZM1M5kH52kje1hQ0=
+X-Google-Smtp-Source: ADUXVKJDvSzZhW4tr8IvXtJjHGv+NYf1qcW3/6W91U2Zm8g7i+/trHOmP2mQf2XrZUouRrpEqHp6kQ==
+X-Received: by 2002:a65:6559:: with SMTP id a25-v6mr347797pgw.82.1528743665331;
+        Mon, 11 Jun 2018 12:01:05 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id z3-v6sm19444634pfn.36.2018.06.11.12.01.04
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 11 Jun 2018 11:50:47 -0700 (PDT)
-Date:   Mon, 11 Jun 2018 11:50:46 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, sbeller@google.com
-Subject: Re: [PATCH 1/2] pack-bitmap: remove bitmap_git global variable
-Message-Id: <20180611115046.d03f8093347dc6c0e9b116fc@google.com>
-In-Reply-To: <20180609060437.GA30224@sigill.intra.peff.net>
-References: <cover.1528397984.git.jonathantanmy@google.com>
-        <d4d4fec265c1c53e14da465904d93e559ff2c17d.1528397984.git.jonathantanmy@google.com>
-        <20180609060437.GA30224@sigill.intra.peff.net>
-X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        Mon, 11 Jun 2018 12:01:04 -0700 (PDT)
+Date:   Mon, 11 Jun 2018 12:01:03 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>
+Subject: Re: State of NewHash work, future directions, and discussion
+Message-ID: <20180611190103.GB20665@aiede.svl.corp.google.com>
+References: <20180609205628.GB38834@genre.crustytoothpaste.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180609205628.GB38834@genre.crustytoothpaste.net>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 9 Jun 2018 02:04:38 -0400
-Jeff King <peff@peff.net> wrote:
+Hi,
 
-> This function used to be idempotent, so any code which wanted to use the
-> global bitmap_git could call it "just in case". After your patch, it's
-> not. I think it's probably OK, since such functions would generally now
-> take a bitmap_git argument and use that (e.g., rebuild_existing_bitmaps
-> works that way after your patch).
+brian m. carlson wrote:
 
-Yes, and I've checked that the existing callers do not use bitmaps
-twice. I've appended an extra paragraph for the commit message to this
-e-mail below that will hopefully clarify things.
+> Since there's been a lot of questions recently about the state of the
+> NewHash work, I thought I'd send out a summary.
 
-> We probably need to free(bitmap_git) before returning NULL here (this is
-> still in prepare_bitmap_git()).
+Yay!
 
-[snip]
+[...]
+> I plan on introducing an array of hash algorithms into struct repository
+> (and wrapper macros) which stores, in order, the output hash, and if
+> used, the additional input hash.
 
-> Ditto here (and probably other error returns lower in the function, but
-> I didn't go through it carefully).
+Interesting.  In principle the four following are separate things:
 
-The contents of the struct also need to be handled, and I wanted to
-handle it all at once in the subsequent patch. But you're right that the
-commit message should explain that.
+ 1. Hash to be used for command output to the terminal
+ 2. Hash used in pack files
+ 3. Additional hashes (beyond (2)) that we can look up using the
+    translation table
+ 4. Additional hashes (beyond (1)) accepted in input from the command
+    line and stdin
 
-Here's an paragraph to be added to the end of the commit message. I can
-send a reroll with the exact same code but with the updated commit
-message if Junio requests it.
+In principle, (1) and (4) would be globals, and (2) and (3) would be
+tied to the repository.  I think this is always what Duy was hinting
+at.
 
-[additional paragraph begin]
+All that said, as long as there is some notion of (1) and (4), I'm
+excited. :)  Details of how they are laid out in memory are less
+important.
 
-This patch raises two potential issues: (1) memory for the struct
-bitmap_index is allocated without being freed, and (2)
-prepare_bitmap_git() and prepare_bitmap_walk() can reuse a previously
-loaded bitmap. For (1), this will be dealt with in a subsequent patch in
-this patch set that also deals with freeing the contents of the struct
-bitmap_index (which were not freed previously, because they have global
-scope). For (2), current bitmap users only load the bitmap once at most
-(note that pack-objects can use bitmaps or write bitmaps, but not both
-at the same time), so support for reuse has no effect - and future users
-can pass around the struct bitmap_index * obtained if they need to do 2
-or more things with the same bitmap.
+[...]
+> The transition plan anticipates a stage 1 where accept only SHA-1 on
+> input and produce only SHA-1 on output, but store in NewHash.  As I've
+> worked with our tests, I've realized such an implementation is not
+> entirely possible.  We have various tools that expect to accept invalid
+> object IDs, and obviously there's no way to have those continue to work.
 
-[additional paragraph end]
+Can you give an example?  Do you mean commands like "git mktree"?
+
+[...]
+> If you're working on new features and you'd like to implement the best
+> possible compatibility with this work, here are some recommendations:
+
+This list is great.  Thanks for it.
+
+[...]
+> == Discussion about an Actual NewHash
+>
+> Since I'll be writing new code, I'll be writing tests for this code.
+> However, writing tests for creating and initializing repositories
+> requires that I be able to test that objects are being serialized
+> correctly, and therefore requires that I actually know what the hash
+> algorithm is going to be.  I also can't submit code for multi-hash packs
+> when we officially only support one hash algorithm.
+
+Thanks for restarting this discussion as well.
+
+You can always use something like e.g. "doubled SHA-1" as a proof of
+concept, but I agree that it's nice to be able to avoid some churn by
+using an actual hash function that we're likely to switch to.
+
+Sincerely,
+Jonathan
