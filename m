@@ -7,111 +7,99 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7ED061F403
-	for <e@80x24.org>; Mon, 11 Jun 2018 18:10:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 714FC1F403
+	for <e@80x24.org>; Mon, 11 Jun 2018 18:20:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933923AbeFKSKP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Jun 2018 14:10:15 -0400
-Received: from mail-ot0-f193.google.com ([74.125.82.193]:42969 "EHLO
-        mail-ot0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932740AbeFKSKO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jun 2018 14:10:14 -0400
-Received: by mail-ot0-f193.google.com with SMTP id 92-v6so24862659otw.9
-        for <git@vger.kernel.org>; Mon, 11 Jun 2018 11:10:14 -0700 (PDT)
+        id S934093AbeFKSUb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Jun 2018 14:20:31 -0400
+Received: from mail-ot0-f194.google.com ([74.125.82.194]:39480 "EHLO
+        mail-ot0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933493AbeFKSUa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jun 2018 14:20:30 -0400
+Received: by mail-ot0-f194.google.com with SMTP id l15-v6so23907264oth.6
+        for <git@vger.kernel.org>; Mon, 11 Jun 2018 11:20:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=S+LtmzR2sjGgpSZG7GrGdqaGAg0DgHezIgaULNIvqVs=;
-        b=UvEIiF+Syd95KHn4HjAj47ym1DI9U+BtaVDxXpIxGBnfqNH26SpyWPvwRBG7s9To1O
-         rWwJgFvctRJk0qdcXrR72eVXo5I0X6zKH0VzmF+8kd20MW3SfqVUWGcLrST/gfn17N8e
-         PZ+TlIF2gDyQWunwB+QENX56VqXqG5hyFKmUqc2Wzwufd4szd4pMcoX4DuxFuEIBJmwc
-         98y1nJdfHHENImWEMOJskqXqir+7YIBXKDb9aNo4fkIzMY133vGFtJptF5TZFwPd5dRN
-         ERqY4k507uI/VC3nGm0qWTX7LrIkoCTQUPDSZrG3PFbbWcIPbATIHF0Lke9Pj7NF6+BV
-         jmvg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=lRbN1ifMRENrXpRyrjQP0tq9ftPYfhZlSOQzoPrFbrQ=;
+        b=WMDF6xXKTMqRg6zTy2Gjpfl0avei4Ctfsh8Yg/dcX7x25rWoyXwGcx3f+BuRLi3OWx
+         bUS84N8AHWCyLIFbhgx7UyehYmaxmf2aejZcjVUgUK6D0X/yzUHfJryXzYMhkZycUnvc
+         EjRBSqF2LeMd+yMMQh3fwh0APBXRBMEQLQR2C1JpMa7ty2MYxhbUkhComvRdcBKwQcpd
+         ct0hkF7YVBoGvL5t4TrG8FDaKv+4/fqLYQvuSLn7fIm8oo5xwfNglWXXxYWExiONJF0o
+         4WZ7+/8EthaqVU/7n04CzE5L8w+d1Lr3oxk/I+ku/KL/j9G4UhJBiP6KqaWEDAHhxnJC
+         Y7lA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=S+LtmzR2sjGgpSZG7GrGdqaGAg0DgHezIgaULNIvqVs=;
-        b=GGK0Y0FIFZi4vbu4nrZsOPtbuw/KD7vI/AM3v3G5llAbQBsTYaH8HZfeYYr+7lPikL
-         48HV0kNqkVIGeeBoPKmduQ+Q+KzTuNvNlzepNY4OG4E5eSnu675LTjv3gHDtcPByCuCA
-         XEVd1fC6tC04so0dK/SlMP31IQgMBkSKpgE6STuUH8aiLvMNuL3IV35cvJURb5I6MybJ
-         OrI5PLmANt84ZatScxs4ID1uewi9//Fvse624A6sAML5eKQ3VkZXc+X3xAy2wLI7upFQ
-         7yWnT40s2Vt3BPGZLljl8mRhOyh1JJYkhmP/svp+ojz1zWhqPzljFoGJ3F6+ncnmUCMu
-         kMBQ==
-X-Gm-Message-State: APt69E1K27oTt9Azqgbi2tEUAhTM5ObMGyZnbyRN+KLpSAiEpCfiQThT
-        FIWd4zKFJyuFyob2Hc01kthcJMyB79Bpi8+HwOE=
-X-Google-Smtp-Source: ADUXVKIqiDEd+Zt+w7XHwuTvgUFGoSpEG3cqiACHZ2+kXMxmjmlqYo1aHW182w6jeVP9jx1XK0jmSsajCzVOOzDmEfE=
-X-Received: by 2002:a9d:2989:: with SMTP id n9-v6mr181115otb.152.1528740614205;
- Mon, 11 Jun 2018 11:10:14 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=lRbN1ifMRENrXpRyrjQP0tq9ftPYfhZlSOQzoPrFbrQ=;
+        b=lv/H2VZXlqMT/sw/fianvJtOLfeUzEXV4mKCyHZ70H+Cxzsxf/Mraezi4mZBez46qh
+         rgcjYLZA8EET1Nn/iLo2usmNEnbFk8J/VSUtcA2ZeBHhzqb3RQ11WtdQ+M08VYnEcBAI
+         IbH7/O1Y/AL1lMTR6+IX8unsAw5Ec3yT2X9M8TDDEfLNNfsKl3edNZbnDbsHuqAMt10E
+         0pVjrgkrsAK9CSdQ0DkzUaDct8n0Nmg6MCE2AeTvP4QHQp0nc9M/LTW2xDCcj/Bq6kve
+         /y56XgOwen+eBJaDTyuU0yOgYWbPUNGltoGI9833gx78eavxoPBY1+XPJM4N/or22y+Z
+         Ns+Q==
+X-Gm-Message-State: APt69E3pOfdgisuZegUubUuvvCjBL40YzsaDANH3vfqRNrHBXS2lzvnG
+        ogvY79by9ExPf5hCJ8H4zq99Fqs0eslngBV2LKc=
+X-Google-Smtp-Source: ADUXVKLriCOK25z18VnHkZZ41BB5EMsl0ZFjeyvfgrcuNCrUwV91aFk/CwA8fPBnYerlh+JHmo/44736ikxhxg0ui6U=
+X-Received: by 2002:a9d:55a8:: with SMTP id m37-v6mr184477oth.75.1528741229783;
+ Mon, 11 Jun 2018 11:20:29 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180609205628.GB38834@genre.crustytoothpaste.net>
-In-Reply-To: <20180609205628.GB38834@genre.crustytoothpaste.net>
+References: <20180606073933.14755-1-pclouds@gmail.com> <20180606165016.3285-1-pclouds@gmail.com>
+ <CABPp-BEngspJMEpwoiTq7SCdsQt7fOT_uePS3c6nRxTVqOnNeQ@mail.gmail.com>
+ <CABPp-BGa+v2x1oeitVDMkQf3qFWx6kUT4wdWhCxjWwPyaW=3bg@mail.gmail.com> <CACsJy8Ba74iSPf4_zFxuV=_uNJgL6Z2QunOvAvi3qab-6EWi5g@mail.gmail.com>
+In-Reply-To: <CACsJy8Ba74iSPf4_zFxuV=_uNJgL6Z2QunOvAvi3qab-6EWi5g@mail.gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 11 Jun 2018 20:09:47 +0200
-Message-ID: <CACsJy8CJrFCUnVMes=3_gQKNTiyHsKkawWNQ1aB_GCvOh1rKcw@mail.gmail.com>
-Subject: Re: State of NewHash work, future directions, and discussion
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Git Mailing List <git@vger.kernel.org>
+Date:   Mon, 11 Jun 2018 20:20:03 +0200
+Message-ID: <CACsJy8CDwGwiVk_Y-dbDowYjJH3iDQHntb_HvwK7R5-4Gy4SzA@mail.gmail.com>
+Subject: Re: [PATCH v4 00/23] Fix incorrect use of the_index
+To:     Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jun 9, 2018 at 10:57 PM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
+On Mon, Jun 11, 2018 at 6:05 PM Duy Nguyen <pclouds@gmail.com> wrote:
 >
-> Since there's been a lot of questions recently about the state of the
-> NewHash work, I thought I'd send out a summary.
+> On Sat, Jun 9, 2018 at 9:58 PM Elijah Newren <newren@gmail.com> wrote:
+> > I read over the rest.  Found a small grammatical error in a commit
+> > message.  Found multiple places that still need conversion, from
+> > pushing up &the_index usages to callers of ll-merge.c and sha1-file.c
+> > instead of having them in those files, to mixes of _cache_ and _index_
+> > functions as in apply.c and merge-recursive.c.  However, Duy pointed
+> > out there was more work to do,
 >
-> == Status
+> Yes. This is just fyi, 40 patches later, ...
+
+Junio, just to be clear, I think I'll withdraw this 23-patch series
+(reviews are still welcome though). It does fix some potential bugs
+but it's not that critical. This will let me merge it with the other
+40+ patches and reorganize better (after all this started out as a
+single rfc patch, I didn't realize what I got myself into)
+
+> i'm down to leaving the_index
+> in three files outside builtin/: merge-recursive, notes-merge.c and
+> transport.c. Even after the conversion we may need some more follow-up
+> patches because it now shows places where we should _not_ touch the
+> index at all, which may involve not simply passing NULL index_state to
+> some functions, but fixing them up to tolerate NULL index_state. So
+> it's going to be a few patch series until the_index is gone for good
+> [1].
 >
-> I have patches to make the entire codebase work, including passing all
-> tests, when Git is converted to use a 256-bit hash algorithm.
-> Obviously, such a Git is incompatible with the current version, but it
-> means that we've fixed essentially all of the hard-coded 20 and 40
-> constants (and therefore Git doesn't segfault).
+> [1] but like cheap horror movies, there's always a sequel:
+> the_repository is still spread in many places and hides dependencies
+> in the same way. We can't do anything about it though until struct
+> repository conversion is more or less complete.
+> --
+> Duy
 
-This is so cool!
 
-> == Future Design
->
-> The work I've done necessarily involves porting everything to use
-> the_hash_algo.  Essentially, when the piece I'm currently working on is
-> complete, we'll have a transition stage 4 implementation (all NewHash).
-> Stage 2 and 3 will be implemented next.
->
-> My vision of how data is stored is that the .git directory is, except
-> for pack indices and the loose object lookup table, entirely in one
-> format.  It will be all SHA-1 or all NewHash.  This algorithm will be
-> stored in the_hash_algo.
->
-> I plan on introducing an array of hash algorithms into struct repository
-> (and wrapper macros) which stores, in order, the output hash, and if
-> used, the additional input hash.
 
-I'm actually thinking that putting the_hash_algo inside struct
-repository is a mistake. We have code that's supposed to work without
-a repo and it shows this does not really make sense to forcefully use
-a partially-valid repo. Keeping the_hash_algo a separate variable
-sounds more elegant.
-
-> If people are interested, I've done some analysis on availability of
-> implementations, performance, and other attributes described in the
-> transition plan and can send that to the list.
-
-I quickly skimmed through that document. I have two more concerns that
-are less about any specific hash algorithm:
-
-- how does larger hash size affects git (I guess you covered cpu
-aspect, but what about cache-friendliness, disk usage, memory
-consumption)
-
-- how does all the function redirection (from abstracting away SHA-1)
-affects git performance. E.g. hashcmp could be optimized and inlined
-by the compiler. Now it still probably can optimize the memcmp(,,20),
-but we stack another indirect function call on top. I guess I might be
-just paranoid and this is not a big deal after all.
 -- 
 Duy
