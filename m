@@ -2,210 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4488E1F403
-	for <e@80x24.org>; Mon, 11 Jun 2018 13:58:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F30CE1F403
+	for <e@80x24.org>; Mon, 11 Jun 2018 13:58:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933231AbeFKN6R (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Jun 2018 09:58:17 -0400
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:36806 "EHLO
-        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933007AbeFKN6P (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jun 2018 09:58:15 -0400
-Received: by mail-wm0-f45.google.com with SMTP id v131-v6so16737702wma.1
-        for <git@vger.kernel.org>; Mon, 11 Jun 2018 06:58:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=HpWRWQNYUtvBDyBGUIDGJrALpKfOQDJ61tpyK8jZT6g=;
-        b=qwhS5CqFafDNk5SX6Yge1vvQkipSyw6gkEJDEBWF0Fclm2D4Szy4Na1ik2blcT26Ut
-         nVHIjiVLS5i5PDpqqYOzkqeUhTPVCLnem2DwvJQXBMgekz+aFJTHMWV+LA/QfoUyog+w
-         +ou0JVPZ9j43rG1NSBGxiTFqF54RYGGi0LbTruvurPNOtYDNjjons/bqaIHboAPY/MnU
-         NpVg/B0k3666KH4Vf8SJmZhFqGFhOPy9U6c/ZRLnw7XLVVFd1hIum8/248XsjHbBkiwu
-         Ldwae1NkrwZGvT0hcDwyQtAuUuW+F9J9RGuqEG+xukopwzALpbO4EGZu9ccLfoSX5Jwo
-         cPJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=HpWRWQNYUtvBDyBGUIDGJrALpKfOQDJ61tpyK8jZT6g=;
-        b=F/ygT/Mhr/gBwlDtqsV6M5z7+CFhR52Ql4c22Iq+ob7lwkO3muMQke7DnHxWbBWXvA
-         +pZiglKpwGMw+lWW3Dwy764sn9qJhJavWfBeVlsnYKkjFD+kzd2LaPKXa+IdRFGs4aNt
-         prZRfbCcV0To5efxunTNyXWA/noGm+3lwIdIJU4NEC6Uv2EOyT8mfjehfnIUpmJza3ok
-         TSrnB2c7BLkBvdM7jYAo/TGV0VuHkKv34Hp7SaNAHJjZzPS0Ipt3x7/88GdK45Km5Dfm
-         VJtm1TBJBqrqyCh8UVlL/cEGvVshTnlsTGpnFfE8zY6/A+vAqI6E1rVmEbvUrq++hfDC
-         4ztw==
-X-Gm-Message-State: APt69E2zxfQRd7u5vr1AV94WhJwZT3A+7WaIYAmVoBrSjBZsh8dLUqQV
-        JQcldirgGq5Wre/dOCE8oiD2gpYj
-X-Google-Smtp-Source: ADUXVKKZPbh/nc4TnNoevz3EsmnmjJoBoirvLUwQMJqCZTVH77MduQpJXMjYJ6iS0jWoBApCr/EtSw==
-X-Received: by 2002:a1c:5c93:: with SMTP id q141-v6mr7975656wmb.77.1528725494347;
-        Mon, 11 Jun 2018 06:58:14 -0700 (PDT)
-Received: from localhost.localdomain (AToulouse-658-1-25-147.w86-222.abo.wanadoo.fr. [86.222.24.147])
-        by smtp.googlemail.com with ESMTPSA id g11-v6sm10522944wrr.46.2018.06.11.06.58.12
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 11 Jun 2018 06:58:13 -0700 (PDT)
-From:   Alban Gruin <alban.gruin@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        phillip.wood@dunelm.org.uk, Elijah Newren <newren@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>
-Subject: [GSoC][PATCH 1/1] rebase--interactive: rewrite the edit-todo functionality in C
-Date:   Mon, 11 Jun 2018 15:57:14 +0200
-Message-Id: <20180611135714.29378-2-alban.gruin@gmail.com>
-X-Mailer: git-send-email 2.16.4
-In-Reply-To: <20180611135714.29378-1-alban.gruin@gmail.com>
-References: <20180611135714.29378-1-alban.gruin@gmail.com>
+        id S933240AbeFKN6m (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Jun 2018 09:58:42 -0400
+Received: from cpanel4.indieserve.net ([199.212.143.9]:54862 "EHLO
+        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933007AbeFKN6l (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jun 2018 09:58:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
+        To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=4ZdFoqvCRgQdNwCQ/3yR/5t05wQH1p4caUjjN3OthZ8=; b=cxYF6ZneH6vraTpjOUHZy/Ic4f
+        s/PB3oEHnxU0fT1eph+Ln/0p0hAUVkdcRophoQjSg2Xuk6xTqdksF4RxqXYq2In8vRXlyXUnXcatm
+        6pw8MoWLY+Bl2ImXMcAzeyJQKK45YC6G+eJANetEWwZZ4H2+f1LEVnJt/eg6QCxBpevBZ+OkYZEwa
+        f7uadlfODuh0F5E0hjbEYhASqXZjhLvG8TLvsyBsn8unPK/DbISbi6NTuu6D2TednaD0N6qfap1Iq
+        2kxXyyHwSgTcKZMlS4hrh3/J/Fq1+48j0zk/yuq3chqMSreXzclaB2+SMxQfK0Lr/T3NB1J1KvXbJ
+        9JhivALQ==;
+Received: from cpeac202e043973-cmac202e043970.cpe.net.cable.rogers.com ([174.112.22.87]:46844 helo=localhost.localdomain)
+        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1fSNLD-004Ib1-4o
+        for git@vger.kernel.org; Mon, 11 Jun 2018 09:58:40 -0400
+Date:   Mon, 11 Jun 2018 09:56:13 -0400 (EDT)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Git Mailing list <git@vger.kernel.org>
+Subject: [PATCH] diff-options.txt: fix minor typos, font inconsistencies, in
+ docs
+Message-ID: <alpine.LFD.2.21.1806110954470.14784@localhost.localdomain>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-OutGoing-Spam-Status: No, score=-0.2
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This rewrites the edit-todo functionality from shell to C.
+Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
 
-To achieve that, a new command mode, `edit-todo`, is added, and the
-`write-edit-todo` flag is removed, as the shell script does not need to
-write the edit todo help message to the todo list anymore.
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index f466600972..30aad8396d 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -64,7 +64,7 @@ ifndef::git-format-patch[]
+ endif::git-format-patch[]
 
-The shell version is then stripped in favour of a call to the helper.
+ --indent-heuristic::
+-	Enable the heuristic that shift diff hunk boundaries to make patches
++	Enable the heuristic that shifts diff hunk boundaries to make patches
+ 	easier to read. This is the default.
 
-Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
----
- builtin/rebase--helper.c   | 13 ++++++++-----
- git-rebase--interactive.sh | 11 +----------
- sequencer.c                | 31 +++++++++++++++++++++++++++++++
- sequencer.h                |  1 +
- 4 files changed, 41 insertions(+), 15 deletions(-)
+ --no-indent-heuristic::
+@@ -106,7 +106,7 @@ diff" algorithm internally.
+ 	low-occurrence common elements".
+ --
+ +
+-For instance, if you configured diff.algorithm variable to a
++For instance, if you configured the `diff.algorithm` variable to a
+ non-default value and want to use the default one, then you
+ have to use `--diff-algorithm=default` option.
 
-diff --git a/builtin/rebase--helper.c b/builtin/rebase--helper.c
-index ded5e291d..d2990b210 100644
---- a/builtin/rebase--helper.c
-+++ b/builtin/rebase--helper.c
-@@ -12,12 +12,12 @@ static const char * const builtin_rebase_helper_usage[] = {
- int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
- {
- 	struct replay_opts opts = REPLAY_OPTS_INIT;
--	unsigned flags = 0, keep_empty = 0, rebase_merges = 0, write_edit_todo = 0;
-+	unsigned flags = 0, keep_empty = 0, rebase_merges = 0;
- 	int abbreviate_commands = 0, rebase_cousins = -1;
- 	enum {
- 		CONTINUE = 1, ABORT, MAKE_SCRIPT, SHORTEN_OIDS, EXPAND_OIDS,
- 		CHECK_TODO_LIST, SKIP_UNNECESSARY_PICKS, REARRANGE_SQUASH,
--		ADD_EXEC, APPEND_TODO_HELP
-+		ADD_EXEC, APPEND_TODO_HELP, EDIT_TODO
- 	} command = 0;
- 	struct option options[] = {
- 		OPT_BOOL(0, "ff", &opts.allow_ff, N_("allow fast-forward")),
-@@ -27,8 +27,6 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL(0, "rebase-merges", &rebase_merges, N_("rebase merge commits")),
- 		OPT_BOOL(0, "rebase-cousins", &rebase_cousins,
- 			 N_("keep original branch points of cousins")),
--		OPT_BOOL(0, "write-edit-todo", &write_edit_todo,
--			 N_("append the edit-todo message to the todo-list")),
- 		OPT_CMDMODE(0, "continue", &command, N_("continue rebase"),
- 				CONTINUE),
- 		OPT_CMDMODE(0, "abort", &command, N_("abort rebase"),
-@@ -49,6 +47,9 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
- 			N_("insert exec commands in todo list"), ADD_EXEC),
- 		OPT_CMDMODE(0, "append-todo-help", &command,
- 			    N_("insert the help in the todo list"), APPEND_TODO_HELP),
-+		OPT_CMDMODE(0, "edit-todo", &command,
-+			    N_("edit the todo list during an interactive rebase"),
-+			    EDIT_TODO),
- 		OPT_END()
- 	};
- 
-@@ -89,6 +90,8 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
- 	if (command == ADD_EXEC && argc == 2)
- 		return !!sequencer_add_exec_commands(argv[1]);
- 	if (command == APPEND_TODO_HELP && argc == 1)
--		return !!append_todo_help(write_edit_todo, keep_empty);
-+		return !!append_todo_help(0, keep_empty);
-+	if (command == EDIT_TODO && argc == 1)
-+		return !!edit_todo_list(flags);
- 	usage_with_options(builtin_rebase_helper_usage, options);
- }
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 94c23a7af..2defe607f 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -108,16 +108,7 @@ initiate_action () {
- 		     --continue
- 		;;
- 	edit-todo)
--		git stripspace --strip-comments <"$todo" >"$todo".new
--		mv -f "$todo".new "$todo"
--		collapse_todo_ids
--		git rebase--helper --append-todo-help --write-edit-todo
--
--		git_sequence_editor "$todo" ||
--			die "$(gettext "Could not execute editor")"
--		expand_todo_ids
--
--		exit
-+		exec git rebase--helper --edit-todo
- 		;;
- 	show-current-patch)
- 		exec git show REBASE_HEAD --
-diff --git a/sequencer.c b/sequencer.c
-index 1ffd990f7..1c1799c91 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -4386,6 +4386,37 @@ int append_todo_help(unsigned edit_todo, unsigned keep_empty)
- 	return ret;
- }
- 
-+int edit_todo_list(unsigned flags)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	const char *todo_file = rebase_path_todo();
-+	FILE *todo;
-+
-+	if (strbuf_read_file(&buf, todo_file, 0) < 0)
-+		return error_errno(_("could not read '%s'."), todo_file);
-+
-+	strbuf_stripspace(&buf, 1);
-+	todo = fopen_or_warn(todo_file, "w");
-+	if (!todo) {
-+		strbuf_release(&buf);
-+		return 1;
-+	}
-+
-+	strbuf_write(&buf, todo);
-+	fclose(todo);
-+	strbuf_release(&buf);
-+
-+	transform_todos(flags | TODO_LIST_SHORTEN_IDS);
-+	append_todo_help(1, 0);
-+
-+	if (launch_editor(todo_file, NULL, NULL))
-+		return 1;
-+
-+	transform_todos(flags & ~(TODO_LIST_SHORTEN_IDS));
-+
-+	return 0;
-+}
-+
- static int rewrite_file(const char *path, const char *buf, size_t len)
- {
- 	int rc = 0;
-diff --git a/sequencer.h b/sequencer.h
-index e14f6590e..35730b13e 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -81,6 +81,7 @@ int sequencer_add_exec_commands(const char *command);
- int transform_todos(unsigned flags);
- int check_todo_list(void);
- int append_todo_help(unsigned edit_todo, unsigned keep_empty);
-+int edit_todo_list(unsigned flags);
- int skip_unnecessary_picks(void);
- int rearrange_squash(void);
- 
+@@ -350,7 +350,7 @@ ifndef::git-format-patch[]
+ 	Warn if changes introduce conflict markers or whitespace errors.
+ 	What are considered whitespace errors is controlled by `core.whitespace`
+ 	configuration.  By default, trailing whitespaces (including
+-	lines that solely consist of whitespaces) and a space character
++	lines that consist solely of whitespaces) and a space character
+ 	that is immediately followed by a tab character inside the
+ 	initial indent of the line are considered whitespace errors.
+ 	Exits with non-zero status if problems are found. Not compatible
+@@ -364,7 +364,7 @@ ifndef::git-format-patch[]
+ 	this option is not given, and the configuration variable
+ 	`diff.wsErrorHighlight` is not set, only whitespace errors in
+ 	`new` lines are highlighted. The whitespace errors are colored
+-	whith `color.diff.whitespace`.
++	with `color.diff.whitespace`.
+
+ endif::git-format-patch[]
+
+rday
+
 -- 
-2.16.4
 
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                  http://crashcourse.ca/dokuwiki
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
