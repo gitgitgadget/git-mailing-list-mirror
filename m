@@ -2,199 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 270961F403
-	for <e@80x24.org>; Mon, 11 Jun 2018 15:59:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 02E371F403
+	for <e@80x24.org>; Mon, 11 Jun 2018 16:05:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752128AbeFKP7Z (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Jun 2018 11:59:25 -0400
-Received: from smtp-out-6.talktalk.net ([62.24.135.70]:8099 "EHLO
-        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751255AbeFKP7Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jun 2018 11:59:25 -0400
-Received: from [192.168.2.240] ([92.22.39.132])
-        by smtp.talktalk.net with SMTP
-        id SPE2fBXfDpXFjSPE3f2xrN; Mon, 11 Jun 2018 16:59:23 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1528732763;
-        bh=pK0e8touGagq7mHfDA7BdVqYSzqf5cfh0PfCjyIgaR0=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=VobMlukD0/Mu1HmlrRxJTP0MJSXhSEStRw+HhKMAEYVinFcYd29Npbw3WLrqqtC8c
-         SHIbjU2FNbzAI7+t8qWm1UM9qsQnIqRCAJSrxX+/Av4oWIhd7Qkf0rmh/dfEP2BOPV
-         d7xRCTa0oyXG/M+4l/qOL/kbq5XAK6kwareYq/fs=
-X-Originating-IP: [92.22.39.132]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=Ob228CbY c=1 sm=1 tr=0 a=AATg4WxWBR3MjRzlB3y0Ow==:117
- a=AATg4WxWBR3MjRzlB3y0Ow==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
- a=103lQiJv96_jc_RleG8A:9 a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 2/2] git-rebase: error out when incompatible options
- passed
-To:     Elijah Newren <newren@gmail.com>, phillip.wood@dunelm.org.uk
-Cc:     Git Mailing List <git@vger.kernel.org>
-References: <CABPp-BGxaroePB6aKWAkZeADLB7VE3y1CPy2RyNwpn=+C01g3A@mail.gmail.com>
- <20180607050654.19663-1-newren@gmail.com>
- <20180607050654.19663-2-newren@gmail.com>
- <cec770a8-28ee-d546-8c27-905d2fcdb0c8@talktalk.net>
- <CABPp-BG7sR6NvHf4=ZOwxRh-KKR8QEVwB=D5p9DE_h1oDgRvoA@mail.gmail.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <560d4128-e088-6028-9f39-5cfcb3e329b8@talktalk.net>
-Date:   Mon, 11 Jun 2018 16:59:20 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+        id S1752801AbeFKQFV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Jun 2018 12:05:21 -0400
+Received: from mout.kundenserver.de ([212.227.126.135]:47081 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752128AbeFKQFV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jun 2018 12:05:21 -0400
+Received: from [192.168.100.119] ([80.150.130.51]) by mrelayeu.kundenserver.de
+ (mreue007 [212.227.15.167]) with ESMTPSA (Nemesis) id
+ 0MUyXA-1flBAp37Yy-00Y6rF for <git@vger.kernel.org>; Mon, 11 Jun 2018 18:05:19
+ +0200
+From:   ch <cr@onlinehome.de>
+Subject: [BUG] git-rebase: reword squashes commits in case of merge-conflicts
+To:     git@vger.kernel.org
+Message-ID: <8e28202a-8646-53e8-8c22-389d61791c70@onlinehome.de>
+Date:   Mon, 11 Jun 2018 18:06:11 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.8.0
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BG7sR6NvHf4=ZOwxRh-KKR8QEVwB=D5p9DE_h1oDgRvoA@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfO2drJxWsKuE+X356Wim4MfefG/7hPxSgxaK2WDFVD58PneYteIFm/pIHWlulRorSltlI0SXaUfr2cZXKssb8dVslOK6NGTrJcSHEcVeBdx7VQeAHtA0
- u7iizUYHCGldRx8VqfgYWunlOZcd6f21kb07EDHNbMn5IpV8N0F2w7Sx+mNh3AVxDoisR+60FRlRPJhJj+twHR3mVLdD4Ty9zLVngg9b3LOOWKK6Cejlp7Rk
- zQGskVZSPe7W90+qMrnc3w==
+X-Provags-ID: V03:K1:l1xGqOpWNxvL6eGvb/afcP33x8fjD/ocwus0azkiU5SoWwaAlXf
+ JPeFOrMjpIhVCUApzylMPCIg6W+YKGVD9kLABAB+mRnsEXUoCLTL40HQuUumQ8Kg5sMj5Up
+ aCtQmdYtINrwvQ4dhXpgMfnr4lk5koMk4/c4QGQeCZVI2znkBJGyliO7e1iPZWI0sFrrMTS
+ 0M5c2SVnOZsT8gK/DaZFA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:IFOPjVVhJNc=:3X7T+8icJFJ6ZiKjXJA4jI
+ DQ7LkgRmeo8j2MDI0rnBzgOMasPpn4vwEPKnLY0UF9kngITjSYWMAfq8kTn4lNa2RcdTkREel
+ Ku94+RThkoPR9XYoJmSEmDoQlHoeH+4S7Vkc7qhoeDv/kt7lUH+EClvhgzkR6fA4EFIF11JaX
+ MegJYDJ9UullpZRmjr0DQgBcZEzMVRs7g5WjjypCMvSQZ5Ka2Los8lvA0UQ7zThrBX58tHd76
+ 0bHg5+SppoO46yh++yT3KHlUc1KCjmOFDhd2mzvPbLApMCwdFWPRhME0vi6Y7kTCmz+UoSaBM
+ xMI77QZH5jxPL0/YKCcSdcZT7tznms7aDkhL+YjuWeFgKqjm4M69cTPw6memvcVVCrjXegx3y
+ tsFVdx8+hciNPIdShp9LBoT8CvVEI8TaBx4PGrU2oXBJ9G97y2ZFoEDDaXGDimnQ4EFvAl+nX
+ tUSngk44HL5oAa3et9mjmSlF4J422sb9hS75PwqEkCGf9eSIMouoK9SfXc/OweMMEABYz7CHE
+ WFyzWe+jsyQPhgqYliWKbgK1XfYEANMvD5p3dFuoVS1cKXShKFVh2pdp77LgP3NNHegnTK8jT
+ G7SOU+Xx2S2V3q4UtyufNzPecrrE0+ADDo5wuSVksdTSZM9vCewbZlTQInLBYDoikNxc4ItW+
+ 5PCAQu5eqBzxKehSRNAiKme2pII1K8UR5K6MtH4AugYuaz5Mg/FOljyPJf7DEpqxpEFG5zYRl
+ dzfSEybMB4xr9NAG
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/06/18 16:19, Elijah Newren wrote:
-> Hi Phillip
-> 
-> On Sun, Jun 10, 2018 at 12:40 PM, Phillip Wood
-> <phillip.wood@talktalk.net> wrote:
-> 
->>>    Documentation/git-rebase.txt           | 15 +++++++++++++--
->>>    git-rebase.sh                          | 17 +++++++++++++++++
->>>    t/t3422-rebase-incompatible-options.sh | 10 +++++-----
->>>    3 files changed, 35 insertions(+), 7 deletions(-)
->>>
->>> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
->>> index 0e20a66e73..451252c173 100644
->>> --- a/Documentation/git-rebase.txt
->>> +++ b/Documentation/git-rebase.txt
->>> @@ -243,6 +243,10 @@ leave out at most one of A and B, in which case it
->>> defaults to HEAD.
->>>    --keep-empty::
->>>          Keep the commits that do not change anything from its
->>>          parents in the result.
->>> ++
->>> +This uses the `--interactive` machinery internally, and as such,
->>> +anything that is incompatible with --interactive is incompatible
->>> +with this option.
->>>      --allow-empty-message::
->>>          By default, rebasing commits with an empty message will fail.
->>> @@ -324,6 +328,8 @@ which makes little sense.
->>>          and after each change.  When fewer lines of surrounding
->>>          context exist they all must match.  By default no context is
->>>          ever ignored.
->>> +       Incompatible with the --merge and --interactive options, or
->>> +       anything that implies those options or their machinery.
->>
->>
->> struct replay_opts has an allow_empty_message member so I'm not sure that's
->> true.
-> 
-> I think you were confused by the way the patch broke up.  The jump to
-> line 328 means that this comment is about the -C option, not the
-> --allow-empty-message option.
+Hi all!
 
-Ah you're right, I missed the hunk header
+During a recent rebase operation on one of my repositories a number of commits
+unexpectedly ended up getting squashed into other commits. After some
+experiments it turned out that the 'reword' instruction seems to squash the
+referenced commit into the preceding commit if there's a merge-conflict.
 
-> However, I probably should add a comment next to the
-> --allow-empty-message option, to not the reverse is true, i.e. that
-> it's incompatible with am-based rebases.  (git-rebase--am.sh ignores
-> the allow_empty_message variable set in git-rebase.sh, unlike
-> git-rebase--interactive.sh and git-rebase--merge.sh)
+Here's a small reproduction recipe to illustrate the behavior:
 
-That sounds like a good idea
+   1. Create a small test repository using the following Bash script:
 
->>>    -f::
->>>    --force-rebase::
->>> @@ -355,13 +361,15 @@ default is `--no-fork-point`, otherwise the default
->>> is `--fork-point`.
->>>    --whitespace=<option>::
->>>          These flag are passed to the 'git apply' program
->>>          (see linkgit:git-apply[1]) that applies the patch.
->>> -       Incompatible with the --interactive option.
->>> +       Incompatible with the --merge and --interactive options, or
->>> +       anything that implies those options or their machinery.
->>
->>
->> I wonder if it is better just to list the incompatible options it might be a
->> bit long but it would be nicer for the user than them having to work out
->> which options imply --interactive.
-> 
-> That could work.  Would this be done at the end of the 'OPTIONS'
-> section of the manpage?  Should I create an 'INCOMPATIBLE OPTIONS'
-> section that follows the 'OPTIONS' section?
+----
+function add_file()
+{
+     echo "$1" > "$2"
+     git add "$2"
+     git commit -m "$3"
+}
 
-I think that would be the best way of doing it, maybe with a note in the 
-description of the am options to check in that section to see what they 
-can be safely combined with.
+git init .
 
->>>    --committer-date-is-author-date::
->>>    --ignore-date::
->>>          These flags are passed to 'git am' to easily change the dates
->>>          of the rebased commits (see linkgit:git-am[1]).
->>> -       Incompatible with the --interactive option.
->>> +       Incompatible with the --merge and --interactive options, or
->>> +       anything that implies those options or their machinery.
->>>      --signoff::
->>>          Add a Signed-off-by: trailer to all the rebased commits. Note
->>> @@ -400,6 +408,9 @@ The `--rebase-merges` mode is similar in spirit to
->>> `--preserve-merges`, but
->>>    in contrast to that option works well in interactive rebases: commits
->>> can be
->>>    reordered, inserted and dropped at will.
->>>    +
->>> +This uses the `--interactive` machinery internally, but it can be run
->>> +without an explicit `--interactive`.
->>> ++
->>
->> Without more context it's hard to judge but I'm not sure this adds anything
->> useful
-> 
-> Hmm, yeah.  I noted that --exec had similar wording, noted that
-> --preserve-merges had something along the same lines but as a warning,
-> and didn't see the similar wording for --rebase-merges -- I somehow
-> missed the paragraph right above where I added these lines.  Oops.
-> Anyway, I'll pull it out.
+add_file "test" "file-1" "master"
 
-If we can get a good description of which options are compatible with 
-what then hopefully we can remove the existing references to implicit 
-interactive and am, the user should only have to worry about which 
-options are compatible.
+git checkout -b stuff
 
->>>    It is currently only possible to recreate the merge commits using the
->>>    `recursive` merge strategy; Different merge strategies can be used only
->>> via
->>>    explicit `exec git merge -s <strategy> [...]` commands.
->>> diff --git a/git-rebase.sh b/git-rebase.sh
->>> index 40be59ecc4..f1dbecba18 100755
->>> --- a/git-rebase.sh
->>> +++ b/git-rebase.sh
->>> @@ -503,6 +503,23 @@ then
->>>          git_format_patch_opt="$git_format_patch_opt --progress"
->>>    fi
->>>    +if test -n "$git_am_opt"; then
->>> +       incompatible_opts=`echo "$git_am_opt" | sed -e 's/ -q//'`
->>
->>
->> I think the style guide recommends $() over ``
-> 
-> Will fix.
-> 
-> 
-> Thanks for taking a look!
+add_file "aaa" "file-2" "feature_a"
+add_file "bbb" "file-2" "fixup! feature_a"
+add_file "ccc" "file-2" "fixup! feature_a"
 
-Thanks for working on this, it should make things simpler for user's to 
-understand
+add_file "ddd" "file-2" "feature_b"
+add_file "eee" "file-2" "fixup! feature_b"
+add_file "fff" "file-2" "fixup! feature_b"
+----
 
-Best Wishes
+   2. Run
 
-Phillip
-> Elijah
-> 
+        $ git rebase --autosquash --interactive --onto master master stuff
 
+      to interactively rebase 'stuff' onto 'master'. This should generate the
+      following todo-stream:
+
+----
+pick ... feature_a
+fixup ... fixup! feature_a
+fixup <hash_1> fixup! feature_a
+pick <hash_2> feature_b
+fixup ... fixup! feature_b
+fixup ... fixup! feature_b
+----
+
+   3. Remove the fixup line right before the second pick (i.e. 'fixup <hash_1>')
+      in order to enforce a merge-conflict later when applying commit <hash_2>.
+
+   4. Replace the second pick instruction (i.e. 'pick <hash_2>') with a reword.
+
+   5. Launch the rebase operation. It should fail at the 'reword <hash_2>'
+      instruction due to a merge-conflict.
+
+   6. Resolve the conflict by taking the remote-side (i.e. 'ddd'), add the
+      change to the index with git-add and run
+
+        $ git rebase --continue
+
+      This should spawn the commit message editor and after saving and quitting
+      the rebase should finish cleanly.
+
+After the rebase the 'stuff' branch only has a single commit even though I'd
+expect there to be two according to the instructions that were passed to
+git-rebase. It works as expected if there's either no merge-conflict at the
+reword or if the conflicting commit is applied as 'pick'.
+
+I'm running git version 2.17.1.windows.2. I also tried native git version 2.7.4
+via WSL (running Ubuntu 16.04.4 LTS) and this version does not exhibit this
+behavior.
+
+- ch
