@@ -2,98 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97F411F403
-	for <e@80x24.org>; Tue, 12 Jun 2018 19:52:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A40601F403
+	for <e@80x24.org>; Tue, 12 Jun 2018 20:22:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754176AbeFLTw2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Jun 2018 15:52:28 -0400
-Received: from mail-wr0-f182.google.com ([209.85.128.182]:35193 "EHLO
-        mail-wr0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754090AbeFLTw1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jun 2018 15:52:27 -0400
-Received: by mail-wr0-f182.google.com with SMTP id l10-v6so231766wrn.2
-        for <git@vger.kernel.org>; Tue, 12 Jun 2018 12:52:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=hq75cCAHKapFCUx1nW6oIJfLKWX8AlVyqy44wdzowrQ=;
-        b=qF6QoEqKcVE9SSWbTYpbr/B7SCQOokxUHFSIroOnsZA03aUigzd1+JWDxycoF98uUd
-         a1kQnUzlxb5VPz5MghjKHYSnM7/R2eojl63K7j2vHGyY+6OewL/VLr9nLjL5dF5vmvmj
-         JLy+g8IZdmL0g6mel+UqaqWIir3aREz6V3iSx7me2p15rxLy3WoUPXmSBn6Dqki3hh/T
-         4MfrsFDNYMD011w+zq/NagtVIp0UVw5nQ+BPRrMoCcdx62PSCDUqs+evnYu5mtisf6wr
-         VVbaqVe6qW9I/SVfG7ajM0Bc3F9WiGiWavaQYXvqXbYjgelXQk5wNaO++k+ZrLo/AXvn
-         JmAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=hq75cCAHKapFCUx1nW6oIJfLKWX8AlVyqy44wdzowrQ=;
-        b=X3f25YIOZXs/sZN18m9fMrqweS4WpvvzO8DDnYW1gqA/1XyYmgSp28ZTKLe1Aj0jwg
-         Sl+h+gjXpfnLgXfys8BmXs6fTx559unlrAiTCLBM1N6JXBkT9onWXPkGZ2Eiam5J1qKn
-         VpMcFKoYjWP0X7bngP3aJLpWaFbFLyhOgWnzxHz81K6dJ55BTdgQqxhkgtXuXL2BnbBK
-         vG2lJPo5LE9G0BhUdGqTOEsShuUa5MTBSFcCzf9DzWRVdvGsq7O43yYPjcc7bTzPF9A0
-         xWxEfSQJmIxXAHHG6+rE859juyCbgQoB0pkwi255fcE9y8Ruwudv5+E8fjf5GCEG2zYX
-         yvJg==
-X-Gm-Message-State: APt69E2tx7WEo8I5IPw6pqxqI7YNsoiSyADu1N3HMcdGEb9qwNFb7vin
-        1OjbZ8mzADKyEG/IDGnC8Jw=
-X-Google-Smtp-Source: ADUXVKJRAQDmkzfDJQKU5zu1rOhv/N3mRVWZuQy/a1r3WPTrliMfN/08gcSWqzkvx+jWbtMc79FsnQ==
-X-Received: by 2002:adf:f344:: with SMTP id e4-v6mr1613177wrp.161.1528833146262;
-        Tue, 12 Jun 2018 12:52:26 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id b15-v6sm1880651wri.14.2018.06.12.12.52.25
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 12 Jun 2018 12:52:25 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Sam Kuper <sam.kuper@uclmail.net>
-Cc:     git@vger.kernel.org
-Subject: Re: `git merge --abort` does not run `git rerere clear`
-References: <CAD-JurLXh=rOC=bhjTa8jCpeDWkbDhCztSpjLuMEUGm1-QnAiw@mail.gmail.com>
-Date:   Tue, 12 Jun 2018 12:52:25 -0700
-In-Reply-To: <CAD-JurLXh=rOC=bhjTa8jCpeDWkbDhCztSpjLuMEUGm1-QnAiw@mail.gmail.com>
-        (Sam Kuper's message of "Tue, 12 Jun 2018 20:32:28 +0100")
-Message-ID: <xmqqr2lb9406.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S933483AbeFLUWT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Jun 2018 16:22:19 -0400
+Received: from siwi.pair.com ([209.68.5.199]:25839 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754325AbeFLUWR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jun 2018 16:22:17 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id EE2BC3F4129;
+        Tue, 12 Jun 2018 16:22:16 -0400 (EDT)
+Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 9E4EB3F40E6;
+        Tue, 12 Jun 2018 16:22:13 -0400 (EDT)
+From:   git@jeffhostetler.com
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, peff@peff.net,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: [PATCH v9] json_writer V9
+Date:   Tue, 12 Jun 2018 20:22:00 +0000
+Message-Id: <20180612202201.94733-1-git@jeffhostetler.com>
+X-Mailer: git-send-email 2.9.3
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sam Kuper <sam.kuper@uclmail.net> writes:
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-> `man git-rerere` says:
->
->> clear
->>
->> Reset the metadata used by rerere if a merge resolution is to be
->> aborted. Calling git am [--skip|--abort] or git rebase
->> [--skip|--abort] will automatically invoke this command.
->
-> It makes sense that `git am [--skip|--abort]` and `git rebase
-> [--skip|--abort]` would run `git rerere clear`.
->
-> However, if they run it, then shouldn't `git merge --abort` run it, too?
->
-> If not, then what is the reason why not, and might it be helpful for
-> this reason to be mentioned at some appropriate place in the
-> documentation?
+Here is V9 of my json-writer patches.  Please replace the existing V5..V8
+versions with this one.
 
-I do not think there was any reason, other than that those who added
-"git merge --abort" weren't as careful as they should have been ;-)
+This version has been rebased onto v2.18.0-rc1 rather than 2.17 because
+of changes to the test-tool setup.
 
-The command is a mere synonym to "git reset --merge"; I am not so
-confident that "git reset --merge" should also clear the current
-rerere state.  If (and this is a big if) "git reset --merge" should,
-probably the right place to do so would be remove_branch_state(),
-before the function removes merge_rr file.  Doing so might allow us
-to lose calls to rerere_clear() individual codepaths of various
-"abort" implementations make, but that would certainly require
-careful thinking to avoid unintended regressions.
+I've incorporated all of the suggestions on the V8 version, including Eric's
+suggestion to make the test tool read test data from stdin rather than using
+command line arguments.
 
+I also incorporated Eric's PERLJSON lazy prereq suggestion and squashed the
+perl unit test into the main commit.
+
+Jeff Hostetler (1):
+  json_writer: new routines to create JSON data
+
+ Makefile                    |   2 +
+ json-writer.c               | 414 ++++++++++++++++++++++++++++++++
+ json-writer.h               | 105 +++++++++
+ t/helper/test-json-writer.c | 564 ++++++++++++++++++++++++++++++++++++++++++++
+ t/helper/test-tool.c        |   1 +
+ t/helper/test-tool.h        |   1 +
+ t/t0019-json-writer.sh      | 331 ++++++++++++++++++++++++++
+ t/t0019/parse_json.perl     |  52 ++++
+ 8 files changed, 1470 insertions(+)
+ create mode 100644 json-writer.c
+ create mode 100644 json-writer.h
+ create mode 100644 t/helper/test-json-writer.c
+ create mode 100755 t/t0019-json-writer.sh
+ create mode 100644 t/t0019/parse_json.perl
+
+-- 
+2.9.3
 
