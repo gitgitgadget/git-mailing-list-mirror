@@ -2,110 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 94AF31F403
-	for <e@80x24.org>; Tue, 12 Jun 2018 15:00:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 259EF1F403
+	for <e@80x24.org>; Tue, 12 Jun 2018 15:46:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754361AbeFLPAn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Jun 2018 11:00:43 -0400
-Received: from mail-oi0-f47.google.com ([209.85.218.47]:32923 "EHLO
-        mail-oi0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754056AbeFLPAm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jun 2018 11:00:42 -0400
-Received: by mail-oi0-f47.google.com with SMTP id c6-v6so20261531oiy.0
-        for <git@vger.kernel.org>; Tue, 12 Jun 2018 08:00:42 -0700 (PDT)
+        id S1754319AbeFLPqw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Jun 2018 11:46:52 -0400
+Received: from mail-vk0-f66.google.com ([209.85.213.66]:34808 "EHLO
+        mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754056AbeFLPqv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jun 2018 11:46:51 -0400
+Received: by mail-vk0-f66.google.com with SMTP id q135-v6so14685671vkh.1
+        for <git@vger.kernel.org>; Tue, 12 Jun 2018 08:46:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=39PLkt5XtmRKF52dWe1B5nD+FnsrbiijzFT1/49uNVY=;
-        b=hrAXHKvyRPsh2pVuAG3Qts3aAF62JlZRXZA+KVRbtcqbGX2JYYURXhra1ymSWhuPld
-         3i9Da/bHVO3syc7KcpxaMVI0MSyiJCBlAQOoNn06/33SQU3O561CVJKV8ytVnFF5BR72
-         sEtXKRCzl081EBs1P5B5pwI5Vv7KmMin2/iB0rdCTBSauZsgHnRVI+s3ME3vlIFPIWvH
-         wqKJPPTSu5E5d9CcNgHeklQKQOuMrKvHR5ZblHY4X9ZcFnjQBRrsbm6lpc/IPm68Ekpm
-         v6oC42PYggXGlu9yvLBytx1+2Kb2TwgcqghdaTG2s/BDgiuJ9ZdXzWtoC8LefKSTtJVJ
-         NvIw==
+        bh=8T3XchEXaQSzTeq+LmOT08gGSbxUrl98y7H+/KIN3Tc=;
+        b=gBv53mVXcyP3Ndx3HpGu7Ur2LvIf1NudDOWQS1ZiCVvnedsTvlTW9uw2CUpdkNvmZt
+         J+B8UvdtPYrkQiJ+8n1s0DDBtfkA5r/E3ZR86d2UOb7HwVOr5zZx56zWKbN0Vz+FgWgN
+         iLOJZjy1Ew50d4cLgOc1WjhmQj1J7BAF+Jkp2CYCW6SwAs93fWrFCp9kNr0u0J24WcEm
+         xlFNLs5WaT+sc45fAiy/T7cqk5Xf8WC5I+m9nQc1Iy81I/sIuS/WDc/tqCITsKCREvaF
+         MI7ktqjVx8iUj0HygQkCfJ9ijQW8LrG0CIUqQ0GVVeU+/BYtQHQOgIgSqMZ1rThcLPdP
+         DQdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=39PLkt5XtmRKF52dWe1B5nD+FnsrbiijzFT1/49uNVY=;
-        b=sXlmc9jixgYtKCYaG9DNIKXiLW1OgQCu2NywZp+jjvi42WA+INap+xuxncFVZjh25z
-         Y5Ts2IpY5ccMtdC8kACRZAGYICNKEiXO49mVobjzJtGSSc8rKiguyxowmxrSr7ZBPvcK
-         nG7YFnVrJTYcG8kdHHhC5SbeRG8xT6pmlohMiEifQ+BiERC8q3yWQ1vkEk3nw1irslu6
-         lh7UQ09sDTJ/8HBTLDEdEVqAFOXhT6k551dPGK9S4b8BLry6n3BznZJmxV6MbBP/2B+Y
-         7T4CNKSxavwFtOsOT5S2FLXOsg+KXf+7BLIr9ObSx3Ugumkz+xXnP+a9aEfnrXH+dpFN
-         brgQ==
-X-Gm-Message-State: APt69E3MrSglKk1EFiCkhoxXFz/YfbzQBBBwO2Ixkmk9+Fm1o5t/eURO
-        462ErjkreZ2ZpYyp1BjnLwtbdmkl63EFsWEJQ+Q=
-X-Google-Smtp-Source: ADUXVKI3ZkvcjLxk6eTSdJBou57KdhAZLgY///pH7HiSjJ+XbQiMoyv/Xnwb3xtsgDCzPY+BGNjPunwKTSByEuxjBPU=
-X-Received: by 2002:aca:aa54:: with SMTP id t81-v6mr2262682oie.30.1528815641984;
- Tue, 12 Jun 2018 08:00:41 -0700 (PDT)
+        bh=8T3XchEXaQSzTeq+LmOT08gGSbxUrl98y7H+/KIN3Tc=;
+        b=FDIRgUj0ym56JkYkNBS9XnV+q7bt7jg7829bL8QZOBj3s1x3u2xrfsf17Jn3vB8RQa
+         W60g+OV/6aQUTBvC5gFQiW2PhVAtLsKSnvAh+HEd4p6o5ePAy5DaJ4YFd4YObCAO3pbb
+         JiL/ZYxZvtpoBEJYYcQqJy+j63M5g8R7SIlREF7gsBzBk5puDJ328j3eK3oqzlL0ZIVe
+         EG6GTKpZnFgzHCTQ0WAoXqSfjLC1lP62TKAwCtKpq6xiQnBEwRAJzUFTBsxgWxvMEQmd
+         j+X69TyUEXOUA/5ctccme/xSGporpLUUn0jm+ibAbSfpiiNUwGXnxiuSzkg+fMMsdjrz
+         Jd3A==
+X-Gm-Message-State: APt69E02/fEh0ITN6CKG1tQth3AS+AdVJEnPMM3nKGud5WxswGZ/bJfL
+        6FmeiB1u7YtkRUpZkdN/JgytN2DuK0m6/7G97eY=
+X-Google-Smtp-Source: ADUXVKKviMsaRcH4LupK6xLp0YpX+pv7N52puTJnKkkKW0yO0NOHPhMe9FxEhU+eG7N0nL8eO4SbUcEaKDXAbY/RbAM=
+X-Received: by 2002:a1f:e483:: with SMTP id b125-v6mr605322vkh.149.1528818410525;
+ Tue, 12 Jun 2018 08:46:50 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180607140338.32440-1-dstolee@microsoft.com> <20180607140338.32440-6-dstolee@microsoft.com>
-In-Reply-To: <20180607140338.32440-6-dstolee@microsoft.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 12 Jun 2018 17:00:14 +0200
-Message-ID: <CACsJy8ALMjiyjcEdFPnR7GTzBVpqVB72VQNkpUWrj9p4nm-OGg@mail.gmail.com>
-Subject: Re: [PATCH 05/23] midx: write header information to lockfile
-To:     Derrick Stolee <stolee@gmail.com>
+Received: by 2002:ab0:5f28:0:0:0:0:0 with HTTP; Tue, 12 Jun 2018 08:46:49
+ -0700 (PDT)
+In-Reply-To: <20180611135714.29378-2-alban.gruin@gmail.com>
+References: <20180611135714.29378-1-alban.gruin@gmail.com> <20180611135714.29378-2-alban.gruin@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 12 Jun 2018 08:46:49 -0700
+Message-ID: <CABPp-BHG41ePN1jRxADfb47FnXfKgJ++Jv=DUiTPwpUJUi=C=w@mail.gmail.com>
+Subject: Re: [GSoC][PATCH 1/1] rebase--interactive: rewrite the edit-todo
+ functionality in C
+To:     Alban Gruin <alban.gruin@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Stefan Beller <sbeller@google.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Martin Fick <mfick@codeaurora.org>
+        Christian Couder <christian.couder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 7, 2018 at 7:01 PM Derrick Stolee <stolee@gmail.com> wrote:
-> diff --git a/midx.c b/midx.c
-> index 616af66b13..3e55422a21 100644
-> --- a/midx.c
-> +++ b/midx.c
-> @@ -1,9 +1,62 @@
->  #include "git-compat-util.h"
->  #include "cache.h"
->  #include "dir.h"
-> +#include "csum-file.h"
-> +#include "lockfile.h"
->  #include "midx.h"
+Hi Alban,
+
+On Mon, Jun 11, 2018 at 6:57 AM, Alban Gruin <alban.gruin@gmail.com> wrote:
+> This rewrites the edit-todo functionality from shell to C.
 >
-> +#define MIDX_SIGNATURE 0x4d494458 /* "MIDX" */
-> +#define MIDX_VERSION 1
-> +#define MIDX_HASH_VERSION 1 /* SHA-1 */
-...
-> +static size_t write_midx_header(struct hashfile *f,
-> +                               unsigned char num_chunks,
-> +                               uint32_t num_packs)
-> +{
-> +       char byte_values[4];
-> +       hashwrite_be32(f, MIDX_SIGNATURE);
-> +       byte_values[0] = MIDX_VERSION;
-> +       byte_values[1] = MIDX_HASH_VERSION;
+> To achieve that, a new command mode, `edit-todo`, is added, and the
+> `write-edit-todo` flag is removed, as the shell script does not need to
+> write the edit todo help message to the todo list anymore.
+>
+> The shell version is then stripped in favour of a call to the helper.
 
-Quoting from "State of NewHash work, future directions, and discussion" [1]
+I looked over the patch and didn't see any problems (though I haven't
+worked with rebase--helper before, or the code for todo list editing),
+but when I went to apply the patch it failed telling me:
 
-* If you need to serialize an algorithm identifier into your data
-  format, use the format_id field of struct git_hash_algo.  It's
-  designed specifically for that purpose.
+Applying: rebase--interactive: rewrite the edit-todo functionality in C
+error: sha1 information is lacking or useless (builtin/rebase--helper.c).
+error: could not build fake ancestor
+Patch failed at 0001 rebase--interactive: rewrite the edit-todo
+functionality in C
+Use 'git am --show-current-patch' to see the failed patch
 
-[1] https://public-inbox.org/git/20180612024252.GA141166@aiede.svl.corp.google.com/T/#m5fdd09dcaf31266c45343fb6c0beaaa3e928bc60
+I tried each of master, next, and pu (as of today) to see if it might
+apply there.  On which commit is this patch based?  (Do you have other
+local commits that this was based on top of?)
 
-> +       byte_values[2] = num_chunks;
-> +       byte_values[3] = 0; /* unused */
-> +       hashwrite(f, byte_values, sizeof(byte_values));
-> +       hashwrite_be32(f, num_packs);
-> +
-> +       return MIDX_HEADER_SIZE;
-> +}
--- 
-Duy
+
+Elijah
