@@ -2,89 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B69A41F403
-	for <e@80x24.org>; Tue, 12 Jun 2018 21:36:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C97571F403
+	for <e@80x24.org>; Tue, 12 Jun 2018 21:49:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933999AbeFLVg1 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Jun 2018 17:36:27 -0400
-Received: from mail-yw0-f195.google.com ([209.85.161.195]:35283 "EHLO
-        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933696AbeFLVg0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jun 2018 17:36:26 -0400
-Received: by mail-yw0-f195.google.com with SMTP id v131-v6so171053ywg.2
-        for <git@vger.kernel.org>; Tue, 12 Jun 2018 14:36:26 -0700 (PDT)
+        id S933941AbeFLVtP (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Jun 2018 17:49:15 -0400
+Received: from mail-ot0-f178.google.com ([74.125.82.178]:36444 "EHLO
+        mail-ot0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933793AbeFLVtO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jun 2018 17:49:14 -0400
+Received: by mail-ot0-f178.google.com with SMTP id c15-v6so611258otl.3
+        for <git@vger.kernel.org>; Tue, 12 Jun 2018 14:49:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=OvUcGFLgiDS63t2OsWHP6/ZWcRVh9FuKCG8ImneKyMo=;
-        b=b3oht/D2mF1A12JhpnkGsW1JzzrZ65zO4IZ0B6aI1t8hmWh3eroSOuUIVX5iuldv8C
-         ipqq2M/diTIVU918EEfn16uDozcuVZVyVJ8zrox3VHPRrQhPuk7+a9eQ1coEvR6FzxUZ
-         r+wNpFU9t091m0reDReHu5OcvKCSPTuph5aCvwGh11svhVsL+zFGH/uy+iE106Vz9fu4
-         uHDrXCz0lCp0eRqOCVtVw388oV2jz+1k9gfAPpLQA/bBhEkHvNPER8GnuFMIxOanfw4P
-         0sRHzGGngFAyfRtkDbbCH7zWahZa4zcRYSNT8lF6R/nLsvmRrYLF32ugihJ8/evUJPt4
-         V6JQ==
+        d=diamand.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Q8vIbOdWVidMOLSnEsm4hWUMPKC1Du9gp9PC8Jewj4Q=;
+        b=XFm/nBnr94hBWsvi81K2hoMRkv6XtQfLAmZiQveFz41uevH4Hc/jYzpzOJyQH9gKnZ
+         xtM4HDjb+UrWMumFJYSSm4KBNAMHi3ETANZ3ndQPO7RCBi+71LmXp/Ye5F0C4ndmzzGs
+         zrwlX9EYWdLiOHsKxCHy2PXwd983Grax2FfUc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=OvUcGFLgiDS63t2OsWHP6/ZWcRVh9FuKCG8ImneKyMo=;
-        b=EpNhiEkDO4OM5h540i0aRFA9+0a3orqegJ+tDwzLf3uuXJ8wCn9zUfnO1Y4zUyHXvl
-         tJS+UqdN7Qc1GX0wIj1gy3PFris7b/vBox/ANOy03JpfUOEE/RTUJ0L0nuRSiIEo7QVo
-         s7KvVkK/rhGU801Ks1Lqf9Lx2I6RRipCcp88zSqVZdddYpmD9RTx3NftkrzKuYhRckzV
-         jJoWzBT0mX4Z2Z/J2Zv0r4xBUrv4ZETOja3dRp0JPosZyznhowWWYbOsOxgIDuRDNzLA
-         dOeBFqMKvnIPPQL7JMMU67MPimHfeuUTImmHO4q+ya3/OgbPPLn1TCPkFoIGUV7kJYiB
-         4HdA==
-X-Gm-Message-State: APt69E2FXs0Zk4n8UaI+yZ96JLlg7BbJGejBBoDdVNUVI+FP9cPgan95
-        dCcUpSFTHL8lyT8q8bA3a5UDa+sy14cgsD4/si8=
-X-Google-Smtp-Source: ADUXVKLdmnEbu2YXxjkL5J4QX9XL1qYRk5gwaKvUmSySsrGzw0QF9e0GDAVlgaYqw2ugOJ8PdN74nTxACkt+wgMZ/Ks=
-X-Received: by 2002:a81:6088:: with SMTP id u130-v6mr1117600ywb.418.1528839386157;
- Tue, 12 Jun 2018 14:36:26 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Q8vIbOdWVidMOLSnEsm4hWUMPKC1Du9gp9PC8Jewj4Q=;
+        b=ApGs3dDxXKBiQvrpA+ZuA/x197+RoGZ71QgaD4hbtf/QNf/HeYcVS2dGsy0E9Uh2J4
+         aAD+1PVP+vqme6YvUiZ4okPxado13J0dJzGDd1hZ4KpYf09EyN/jXhnFIWI0G+VO4jq6
+         8zbZVnhEk5nadugWpKxfGU4wq/CWACeZpctOeY1mXtyj4wQ171nWJupgaZYOkB2DSmpt
+         YT7JVu6f8HES//6V2oOK9GkzjfCuxybBBA5rDgLbiO+RqGeLgwPm8xm9484ttEZtCetD
+         4NbGpdwAnAAqo0GRSpclGUKoNZRktiJIeWQW4gqkK1j3l6enHUWyMKUvjEnCfKBs5OmW
+         D0ww==
+X-Gm-Message-State: APt69E1AW1W2wQGPlfYOHcMD7UKSNL0D6FaKSzFSjTXzb5PaAPwe7CmN
+        MnFzAJfKvsAPrO/SFZagjwxh8Tn1QcNZ8jcr0HlrXQ==
+X-Google-Smtp-Source: ADUXVKIvCXbn+330pKZAKEcfuSXzUmwFvAKX4L22h9piaKIB8S2Na7WsDbckJAPsaXB868inLqZpCwdamMsm3V+hc8I=
+X-Received: by 2002:a9d:5250:: with SMTP id q16-v6mr1358486otg.229.1528840154319;
+ Tue, 12 Jun 2018 14:49:14 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a25:3dc7:0:0:0:0:0 with HTTP; Tue, 12 Jun 2018 14:36:25
+Received: by 2002:a9d:2f8e:0:0:0:0:0 with HTTP; Tue, 12 Jun 2018 14:49:13
  -0700 (PDT)
-In-Reply-To: <20180612212540.200142-1-sbeller@google.com>
-References: <20180612212540.200142-1-sbeller@google.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 12 Jun 2018 17:36:25 -0400
-X-Google-Sender-Auth: Rb1MHYsbLCU1PbJLXPpg-J-ooRc
-Message-ID: <CAPig+cQM-DXc3sK_Eb7xaaTxNk=0yu9Q3oYtx7M4EinS04AYHA@mail.gmail.com>
-Subject: Re: [PATCH] t7400: encapsulate setup code in test_expect_success
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Git List <git@vger.kernel.org>
+In-Reply-To: <xmqq7en38z8o.fsf@gitster-ct.c.googlers.com>
+References: <20180608203248.16311-1-luke@diamand.org> <xmqqo9gg9bi3.fsf@gitster-ct.c.googlers.com>
+ <CAE5ih7_ZDzg9h8BEGDWyg_jBG1rj=_eW1Kg7JO7oKiF6Q2+37w@mail.gmail.com> <xmqq7en38z8o.fsf@gitster-ct.c.googlers.com>
+From:   Luke Diamand <luke@diamand.org>
+Date:   Tue, 12 Jun 2018 22:49:13 +0100
+Message-ID: <CAE5ih79NoTpbkU50tts2GgLJ7Wy9WyBUgJncm3KXPLxuy0P0hQ@mail.gmail.com>
+Subject: Re: [PATCHv2 0/6] git-p4: some small fixes updated
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Merland Romain <merlorom@yahoo.fr>,
+        Git Users <git@vger.kernel.org>,
+        Eric Scouten <eric@scouten.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Miguel Torroja <miguel.torroja@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Lex Spoon <lex@lexspoon.org>,
+        Vinicius Kursancew <viniciusalexandre@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 12, 2018 at 5:25 PM, Stefan Beller <sbeller@google.com> wrote:
-> When running t7400 in a shell you observe more output than expected:
->     ...
->     ok 10 - submodule add
->     [master (root-commit) d79ce16] one
->      Author: A U Thor <author@example.com>
->      1 file changed, 1 insertion(+)
->      create mode 100644 one.t
->     ok 11 - redirected submodule add does not show progress
->     ...
-> Fix the output by encapsulating the setup code in test_expect_success
+On 12 June 2018 at 22:35, Junio C Hamano <gitster@pobox.com> wrote:
+> Luke Diamand <luke@diamand.org> writes:
 >
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
-> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-> @@ -126,8 +126,10 @@ test_expect_success 'submodule add' '
-> -test_create_repo parent &&
-> -test_commit -C parent one
-> +test_expect_success 'setup parent and one repository for further tests' '
+>> On 12 June 2018 at 18:10, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Luke Diamand <luke@diamand.org> writes:
+>>>
+>>>> This is an updated version of the set of changes I posted recently,
+>>>> following comments on the list:
+>>>>
+>>>> disable automatic sync after git-p4 submit:
+>>>>     https://marc.info/?l=git&m=152818734814838&w=2
+>>>>
+>>>> better handling of being logged out by Perforce:
+>>>>    https://marc.info/?l=git&m=152818893815326&w=2
+>>>>
+>>>> adapt the block size automatically on git-p4 submit:
+>>>>    https://marc.info/?l=git&m=152819004315688&w=2
+>>>>
+>>>> - Spelling corrections (Eric)
+>>>> - Improved comments (Eric)
+>>>> - Exception class hierarchy fix (Merland)
+>>>> - test simplification (Eric)
+>>>>
+>>>
+>>> That reminds me of one thing.
+>>>
+>>> This 6-patch series depends on the rm/p4-submit-with-commit-option
+>>> that came without and still waiting for a sign-off by the original
+>>> author.  Also I do not think the original patch reached the public
+>>> list, so I'm attaching the patch to make sure people know which
+>>> patch I am talking about.
+>>>
+>>> Romain, can we get your sign-off on the patch you sent earlier?
+>>
+>> Wasn't it already sent in this message:
+>>
+>> https://marc.info/?l=git&m=152783923418317&w=2
+>>
+>> Luke
+>
+>
+> Thanks for a pointer.  Will replace and requeue.
 
-Nit: "for further tests" is implied for actions performed by a "setup"
-function, so a bit redundant to say so.
+Thanks. While on the subject of git-p4, I thought I should mention
+that I've been looking at getting git-p4 to work with Python3.
 
-> +       test_create_repo parent &&
-> +       test_commit -C parent one
-> +'
+I've got some low risk easy (mostly automated) changes which get it to
+the point where it compiles. After that I have to figure out how to
+fix the byte-vs-string unicode problem that Python3 brings. Having
+been playing around with it, I think it should be possible to make the
+same git-p4.py script work with 2.7, 3.6 and probably 2.6, although
+I'm still some way from making this last bit work.
+
+Luke
