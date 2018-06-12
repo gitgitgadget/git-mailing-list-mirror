@@ -2,178 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A1D1C1F403
-	for <e@80x24.org>; Tue, 12 Jun 2018 08:46:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7DD71F403
+	for <e@80x24.org>; Tue, 12 Jun 2018 08:51:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754287AbeFLIqU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Jun 2018 04:46:20 -0400
-Received: from mail-ua0-f176.google.com ([209.85.217.176]:42475 "EHLO
-        mail-ua0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754154AbeFLIqR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jun 2018 04:46:17 -0400
-Received: by mail-ua0-f176.google.com with SMTP id x18-v6so15433009uaj.9
-        for <git@vger.kernel.org>; Tue, 12 Jun 2018 01:46:17 -0700 (PDT)
+        id S933835AbeFLIvt (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Jun 2018 04:51:49 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:36999 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933487AbeFLIvb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jun 2018 04:51:31 -0400
+Received: by mail-wr0-f195.google.com with SMTP id d8-v6so23168717wro.4
+        for <git@vger.kernel.org>; Tue, 12 Jun 2018 01:51:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Kw0JinBlkqywJjMWEv8lf2z9hMbsmDuYj6nrlfs0wY8=;
-        b=BeZ1mdLsOt98jhIY4jKNXLYgPEgzHsThuqU2EpM9iH2yrCyfffnseigHwB6ozvKLKc
-         fA699VV4H8P5i8n5mk3e7Ht9ignkTjvt4rGaO4Qlhq4GOyjyktf1ZBxaN9eVCQWiloM6
-         +DewEVixe1MksCboc8NItHgU/+uB4gGQU0Sxm0oJEsVYKcyDHj2BNTxPb1FiJZHtEtso
-         QlPMFuXwN3AFOoMbZAfiHeezWG/xlkvUvoBaNDp5PmUgzCrgC+oVNZgpsjeCImoV3dDo
-         njZ9HsCZAjNFSDjMdH6JNjpah5q0a8wRgr8JCV38clLrT/E4CHaY7AUK+ZvIbg9esRAn
-         FqBQ==
+        d=edwardthomson-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=DU6iypZMssUW2L/SD+JFlxToJLYqusHvoJWBDseOnB0=;
+        b=Hb2PF8Wl0ace9AyQxw7hjO/tWpI8avqOy4F+x7aTaC9VDOYB/7MEe2h5XexrlrojBE
+         2EukVZYO875vKU9+p9QHOFrKOVtgbPneQGEESXIe0ddI3IYWGRWPy0HQ2bIUpGUEuCI+
+         SnoeB0bVrYbYyO2vt6YS4ubTU8AmzWIJcAfRSSyzqFcxTDIfy5FuBRmX7+L4LY6fFtFn
+         /bqffNLVXOsz+77fc+iAB7CbJ0uaNpuPbytd3nSyJytYpkNPUxwpyvxt4/ctgaHsUDVo
+         0AcQGroY8IIFhgPGLaImZfuVrfOsC3//7tfhYzRG5z31pP1ZGOx9Kx2uNGmoI4jDXnXD
+         r1Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Kw0JinBlkqywJjMWEv8lf2z9hMbsmDuYj6nrlfs0wY8=;
-        b=QdNmSe+EZaOjpDxbKO8lAC3KKIDmyNZyTXJjayFPqaG9BuS7bt0DUfbI2M9Oj5mEgf
-         PfWMhsresYA6ZfKkSbKN3cRckEUwOTFCZvbDbKer8C5q2AQPohpD8IoincvBEiW5BJFI
-         08ZA9mH0j4kjS99XN7k5/sm9oUfTWwf24Zcdc7/+kSHFKJUu2ly/Xeml8YEsAJ4+A8IF
-         0ROMRB3NgNguv8hYXtPLB9MIOZr7/LDoVjYMrf4k+nSIWyD4j+p8Rz90m2r0J/bIuPSl
-         3O2EoICWMK0VCr0hnZy5LJ0nw+73YU4xMz4m9G312nuHD7hZqUztdHrYMfft/NOUCYz5
-         3m/Q==
-X-Gm-Message-State: APt69E2vpg6M5efrv0AbKRjkFbyOMIwfTSWAN83SYLvfsN9TtEFKRi9C
-        61YZUomO6i/JfbVzVl9JWe6RoXgm8Ob6h2wEZLGpiw==
-X-Google-Smtp-Source: ADUXVKKlpSm3Mf4IpLAtyO/Wm6ZDJ8jHpHf1NO2lxU5XPxuKkLbQnNOmpyYcIAuFm1mKpYvMA4Ax1kYR2E7hpdImRVw=
-X-Received: by 2002:ab0:4c24:: with SMTP id l36-v6mr1699407uaf.27.1528793177039;
- Tue, 12 Jun 2018 01:46:17 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=DU6iypZMssUW2L/SD+JFlxToJLYqusHvoJWBDseOnB0=;
+        b=U7HTxXyKTM/tXVJLsrg0AkOGp3MehDykh+nVmpR7CwaxVehsmgYRCW7CUI+MuZ1+yx
+         BmfBo9dFYVPeddRukYSopNdwRrOba4XNrD8FMvXyQy1vDQb+s1dGk89fQ6GsVA+JsdAP
+         7cWIlEG8fvjcgK/vzLjL3DRK3GyxKS440DMv/cSdjPfKWxf2c+DH0cAQHLizPfXaIJY3
+         9tqBpX8uNyEPYqviBlmmO6ND5R9fvTVdUiTPbVZWPsaxHDsHQ4Fbp5gG3Qb2BLR8fH5V
+         W6L1DK3rur6sPjLWn1ZsPt63Ur5UR+nFY/9wkpxMAAPBGekOIxFaZ359KrIYuRJN6Ij4
+         NOzQ==
+X-Gm-Message-State: APt69E204RLXsfRPgNXRAaLPYjPI8JDoWEaxX9xDyLyKXdC+8+4y2LNV
+        skWVUR6N24sWRa99L+Bml+6MXeaMnQY=
+X-Google-Smtp-Source: ADUXVKIpMf70s+jxhRlroljS4UCT9DlckUCEhhLduq8zQQsltdgz1csAYk5cRqq5lR6abVrq92ufyA==
+X-Received: by 2002:adf:9383:: with SMTP id 3-v6mr1863253wrp.220.1528793489987;
+        Tue, 12 Jun 2018 01:51:29 -0700 (PDT)
+Received: from aaaa10152750 (global-5-182.nat-2.net.cam.ac.uk. [131.111.5.182])
+        by smtp.gmail.com with ESMTPSA id u15-v6sm1069251wma.37.2018.06.12.01.51.28
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 12 Jun 2018 01:51:29 -0700 (PDT)
+Date:   Tue, 12 Jun 2018 08:51:19 +0000
+From:   Edward Thomson <ethomson@edwardthomson.com>
+To:     Orgad Shaneh <orgads@gmail.com>
+Cc:     drizzd@gmx.net, git <git@vger.kernel.org>
+Subject: Re: [PATCH] checkout files in-place
+Message-ID: <20180612085119.GA5@aaaa10152750>
+References: <20180610194444.GA1913@Sonnenschein.localdomain>
+ <20180611203541.GA6@606faba9ba17>
+ <20180611205704.GA1399@Sonnenschein.localdomain>
+ <CAGHpTBJFwToEwnk4P17AJ+z-55Nzc04OBbTvsbFRrkXJpfXAkQ@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 2002:ab0:3105:0:0:0:0:0 with HTTP; Tue, 12 Jun 2018 01:46:16
- -0700 (PDT)
-In-Reply-To: <20180611182053.GA20665@aiede.svl.corp.google.com>
-References: <xmqqmuy2wz4j.fsf@gitster-ct.c.googlers.com> <20180417220219.30445-1-szeder.dev@gmail.com>
- <20180607054834.GB6567@aiede.svl.corp.google.com> <20180608211639.7611-1-szeder.dev@gmail.com>
- <20180611182053.GA20665@aiede.svl.corp.google.com>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Tue, 12 Jun 2018 10:46:16 +0200
-Message-ID: <CAM0VKj==u0DgnHF0j+OOtyWMCsuGApHW65CN9S4d5iUxb2bRUg@mail.gmail.com>
-Subject: Re: [PATCH] completion: correct zsh detection when run from
- git-completion.zsh (Re: [PATCH v2] completion: reduce overhead of clearing
- cached --options)
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Matthew Coleman <matt@1eanda.com>,
-        Stephon Harris <theonestep4@gmail.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Rick van Hattem <wolph@wol.ph>,
-        Dave Borowitz <dborowitz@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGHpTBJFwToEwnk4P17AJ+z-55Nzc04OBbTvsbFRrkXJpfXAkQ@mail.gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 11, 2018 at 8:20 PM, Jonathan Nieder <jrnieder@gmail.com> wrote=
-:
-> From: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
-> Subject: completion: correct zsh detection when run from git-completion.z=
-sh
->
-> v2.18.0-rc0~90^2 (completion: reduce overhead of clearing cached
-> --options, 2018-04-18) worked around a bug in bash's "set" builtin on
-> MacOS by using compgen instead.  It was careful to avoid breaking zsh
-> by guarding this workaround with
->
->         if [[ -n ${ZSH_VERSION-}} ]]
->
-> Alas, this interacts poorly with git-completion.zsh's bash emulation:
->
->         ZSH_VERSION=3D'' . "$script"
->
-> Correct it by instead using a new GIT_SOURCING_ZSH_COMPLETION shell
-> variable to detect whether git-completion.bash is being sourced from
-> git-completion.zsh.  This way, the zsh variant is used both when run
-> from zsh directly and when run via git-completion.zsh.
->
-> Reproduction recipe:
->
->  1. cd git/contrib/completion && cp git-completion.zsh _git
->  2. Put the following in a new ~/.zshrc file:
->
->         autoload -U compinit; compinit
->         autoload -U bashcompinit; bashcompinit
->         fpath=3D(~/src/git/contrib/completion $fpath)
->
->  3. Open zsh and "git <TAB>".
->
-> With this patch:
-> Triggers nice git-completion.bash based tab completion
->
-> Without:
->  contrib/completion/git-completion.bash:354: read-only variable: QISUFFIX
->  zsh:12: command not found: ___main
->  zsh:15: _default: function definition file not found
->  _dispatch:70: bad math expression: operand expected at `/usr/bin/g...'
->  Segmentation fault
->
-> Reported-by: Rick van Hattem <wolph@wol.ph>
-> Reported-by: Dave Borowitz <dborowitz@google.com>
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> ---
-> SZEDER G=C3=A1bor wrote:
->
->> Being in RC phase, I'm all for aiming for a minimal solution.
->> However, I don't think that the better fix would be erm.. any "less
->> minimal":
->
-> Thanks again. May we have your sign-off?
+On Tue, Jun 12, 2018 at 09:13:54AM +0300, Orgad Shaneh wrote:
+> Some of my colleagues use an ancient version of Source Insight, which also
+> locks files for write.
 
-Sure:
+If that application is locking files for writing (that is to say, it did
+not specify the `FILE_SHARE_WRITE` bit in the sharing modes during
+`CreateFile`) then this patch would not help.
 
-Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+Applications, generally speaking, should be locking files for write.
+It's the default in Win32 and .NET's file open APIs because few
+applications are prepared to detect and support a file changing out from
+underneath them in the middle of a read.
 
-Thank you for the commit message; had a family visit the last couple
-of days and could not get around to it.
+> It's less important than it was before those fixes, but it is still needed
+> for users of Qt Creator 4.6 (previous versions just avoided mmap, 4.7 uses
+> mmap only for system headers). Other tools on Windows might as well
+> misbehave.
 
+I don't understand what mmap'ing via `CreateFileMapping` has to do with
+this.  It takes an existing `HANDLE` that was opened with `CreateFile`,
+which is where the sharing mode was supplied.
 
->  contrib/completion/git-completion.bash | 5 ++++-
->  contrib/completion/git-completion.zsh  | 2 +-
->  2 files changed, 5 insertions(+), 2 deletions(-)
->
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/=
-git-completion.bash
-> index 12814e9bbf..f4a2e6774b 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -3223,7 +3223,10 @@ __gitk_main ()
->         __git_complete_revlist
->  }
->
-> -if [[ -n ${ZSH_VERSION-} ]]; then
-> +if [[ -n ${ZSH_VERSION-} ]] &&
-> +   # Don't define these functions when sourced from 'git-completion.zsh'=
-,
-> +   # it has its own implementations.
-> +   [[ -z ${GIT_SOURCING_ZSH_COMPLETION-} ]]; then
->         echo "WARNING: this script is deprecated, please see git-completi=
-on.zsh" 1>&2
->
->         autoload -U +X compinit && compinit
-> diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/g=
-it-completion.zsh
-> index 53cb0f934f..049d6b80f6 100644
-> --- a/contrib/completion/git-completion.zsh
-> +++ b/contrib/completion/git-completion.zsh
-> @@ -39,7 +39,7 @@ if [ -z "$script" ]; then
->                 test -f $e && script=3D"$e" && break
->         done
->  fi
-> -ZSH_VERSION=3D'' . "$script"
-> +GIT_SOURCING_ZSH_COMPLETION=3Dy . "$script"
->
->  __gitcomp ()
->  {
-> --
-> 2.18.0.rc1.242.g61856ae69a
->
+I would be surprised if there are other tools on Windows that have
+specified `FILE_SHARE_WRITE` but not `FILE_SHARE_DELETE`.  Generally
+speaking, if you don't care about another process changing a file
+underneath you then you should specify both.  If you do then you should
+specify neither.
+
+I'm not saying that git shouldn't work around a bug in QT Creator -
+that's not my call, though I would be loathe to support this
+configuration option in libgit2.  But I am saying that it seems like
+this patch doesn't have broad applicability beyond that particular tool.
+
+-ed
