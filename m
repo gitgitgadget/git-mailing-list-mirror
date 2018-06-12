@@ -2,114 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E738F1F403
-	for <e@80x24.org>; Tue, 12 Jun 2018 22:35:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1CFF21F403
+	for <e@80x24.org>; Tue, 12 Jun 2018 22:47:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934918AbeFLWfd (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Jun 2018 18:35:33 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:40008 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933988AbeFLWfc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jun 2018 18:35:32 -0400
-Received: by mail-it0-f67.google.com with SMTP id 188-v6so1399271ita.5
-        for <git@vger.kernel.org>; Tue, 12 Jun 2018 15:35:32 -0700 (PDT)
+        id S934511AbeFLWr0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Jun 2018 18:47:26 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:35947 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934368AbeFLWrZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jun 2018 18:47:25 -0400
+Received: by mail-pg0-f67.google.com with SMTP id m5-v6so269773pgd.3
+        for <git@vger.kernel.org>; Tue, 12 Jun 2018 15:47:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=BsBKOzl9X3Aklh/g5+H/4jNt5veLxUdeYf3Xtj9jyGc=;
-        b=mPszENoGbNxcSa4O+ADDIzGzZqxwYxpKAZOR6cquHOpNQvs2nzP4QmN6RX+OreRElP
-         Bq+VB70WR21s40hHdoYnGCh9rzJtLBLrBTpP0PBQiYiojWaCv+2IKmEEqyj5jMja6cN4
-         X+qPYs5k09suYitqoR1ZO7O+p/n+8C4xxpVgFHhbRhDEbiQJ1ZzqbJKMecZlU4RbHTNp
-         qqc9NrWMcWPzbZTwLY00Ss+uUN1/gOWrY6J8Lwa+eemnPrgu/L2sZiHFXsWEip3H27X5
-         pBnyqv6kyD59p2JPWcKTZbAeUgg9BiS1/EUrnWG+W0FrK6D+pY144dfCzyJEUZWe06VK
-         WV3g==
+        d=dynamicaims-com.20150623.gappssmtp.com; s=20150623;
+        h=to:subject:from:message-id:disposition-notification-to:date
+         :user-agent:mime-version:content-transfer-encoding:content-language;
+        bh=1uECYNW+ggZP+oeolWLm7gogjz5h4F4WVBnDGFoEyFM=;
+        b=f5t3NIC7hb31fZ893KawfDP5r8l5Qiqi0ZT0BgBX2PPZs19SsOHITAA9hDsrC4i5ZE
+         MUH6DTUWgpC6MIrXnWUGpuor9b/WsiEz+0OKHX42oHRkrgAZwpcRs7u0xu69EKjqEcCu
+         KZtl8LR+1sfiyneXTvXYzPRtcydF/giEi3PgpNjMqeyaawtJwVEZaOW2VOIfZiS1947S
+         2XT0fGf1aOVBGhGThg8987TeXcMGmKyohLI4gy3xEV3txDhkagyqsd1vWKmCIieOPrXt
+         3q23azhiNH/ZARiKVNMLMAxbCv0PGpy1gK2Ws6QW4wsr4LykbsYamiW2vKVJ0g5yIkZg
+         AAcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=BsBKOzl9X3Aklh/g5+H/4jNt5veLxUdeYf3Xtj9jyGc=;
-        b=i3vRqDRPOQsjgSBtB7+W/bD1MMc+H8Xf/9jMwjKad8mjgnGjzE802L3Q5tP5e+lahL
-         KqOFkUsxQpvmr6ptRozHIzw1MW3y1Cw+jFgW3Fp0ok20p/PjQ9HnFH92D2bVuAqtXVd1
-         PaLqGeRsMRCsgdvXWt6qpWtMTSo9cl1qRJBYUtbZm7kGGgeJmB0OmHrRBj60G7cCQ8/h
-         2xPwpIF3xTYEQtF+ofyW4rociSMilULGrNDpupSQjRUkhaATW7pZKQo2zNeBGsOb9nzN
-         Tdb12g3daUIaxHbLY5ml6pKRAs8xGssk1YNCmYQJC2tqk52qw6LhzkhD0h2u0LffaF4a
-         6NAw==
-X-Gm-Message-State: APt69E06IvSk1OVu7cd1w5YGD6rnmwxStoTJsOUxVXsmMYDJBT2wGd8h
-        o1+F+FA1IcpGW8WYlMHOgrT9bWIdZ9WmxDGmwdM=
-X-Google-Smtp-Source: ADUXVKIuEgQ69KLSTzDGg75KMgDbF+NXGS5r3lmBmNyqodZh8yfiNE+vuKd5y8lgWWTghV+Lw6Cp+Zy11krMQt2hAog=
-X-Received: by 2002:a24:3c42:: with SMTP id m63-v6mr2367605ita.138.1528842931851;
- Tue, 12 Jun 2018 15:35:31 -0700 (PDT)
+        h=x-gm-message-state:to:subject:from:message-id
+         :disposition-notification-to:date:user-agent:mime-version
+         :content-transfer-encoding:content-language;
+        bh=1uECYNW+ggZP+oeolWLm7gogjz5h4F4WVBnDGFoEyFM=;
+        b=YPlza9tmMN4rU3cFOoxK7E6plt+2KB1nOq5uAOMsL3C/4j9FS7nZhIbgH4NQQyNM1p
+         BOt1pL3JS2tZtK4hN+SWCdPahaKcJPxePmNwUzGdNOnnX+Ep3jYz9jkXXTS5RIOoXvkt
+         gTRw96wzpaShvT+98roiiayp4Xw80dXlelgKu/YSjHz+rNz+LP72faI/ek0NjUnx+9CB
+         mujmOKt1bc0QswCVe7GD4LsSyw0GfvHaDrvmgD6+bVtoGuQuz1ZAm4OQfFY2f0vKJkFX
+         gTm9VWA+G3I1vUDWCgSBcFOds7guLMhBRAhOtC+JCqegpKO3HSB4W8PnsoVed3XbtIKP
+         tvyw==
+X-Gm-Message-State: APt69E3MJieGuVHQ32X9IpjyLkMP0xWKmTq+DFR1KHoIQ9kASDQE1Sb8
+        4yDixkHg8cQnh2BodQYnjRb7oWDm
+X-Google-Smtp-Source: ADUXVKLm/qeuxfKjgRjdyiD7nAUbfKZAiJQ/zNrTKYlYSdhb9ClCj4Gsn8O2wqiGGSaK9QWL12W4Jg==
+X-Received: by 2002:a62:494f:: with SMTP id w76-v6mr2288722pfa.152.1528843644395;
+        Tue, 12 Jun 2018 15:47:24 -0700 (PDT)
+Received: from [192.168.0.7] ([103.6.157.159])
+        by smtp.gmail.com with ESMTPSA id x19-v6sm1601551pfi.5.2018.06.12.15.47.23
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 12 Jun 2018 15:47:23 -0700 (PDT)
+To:     git@vger.kernel.org
+Subject: Boat Owners List
+From:   Marlene Royle <marlener@dynamicaims.com>
+Message-ID: <89a8c4b5-6908-d86b-bebf-7a5e3e856d0f@dynamicaims.com>
+Date:   Tue, 12 Jun 2018 18:22:09 -0400
+User-Agent: Mozilla/5.0 (Windows NT 6.3; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-Received: by 2002:ad5:50cd:0:0:0:0:0 with HTTP; Tue, 12 Jun 2018 15:35:30
- -0700 (PDT)
-In-Reply-To: <xmqqr2lb9406.fsf@gitster-ct.c.googlers.com>
-References: <CAD-JurLXh=rOC=bhjTa8jCpeDWkbDhCztSpjLuMEUGm1-QnAiw@mail.gmail.com>
- <xmqqr2lb9406.fsf@gitster-ct.c.googlers.com>
-From:   Sam Kuper <sam.kuper@uclmail.net>
-Date:   Tue, 12 Jun 2018 23:35:30 +0100
-X-Google-Sender-Auth: TpGX1H3LBRRDS7FyelWBWGu-GlM
-Message-ID: <CAD-Jur+CSfUASSFoXZndEoKvWoc3CU9+V3KrngANskFmQgwNhw@mail.gmail.com>
-Subject: Re: `git merge --abort` does not run `git rerere clear`
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Antivirus: Avast (VPS 180612-4, 06/12/2018), Outbound message
+X-Antivirus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/06/2018, Junio C Hamano <gitster@pobox.com> wrote:
-> Sam Kuper <sam.kuper@uclmail.net> writes:
->> [...] It makes sense that `git am [--skip|--abort]` and `git rebase
->> [--skip|--abort]` would run `git rerere clear`.
->>
->> However, if they run it, then shouldn't `git merge --abort` run it, too?
->>
->> If not, then what is the reason why not [...]
->
-> I do not think there was any reason, other than that those who added
-> "git merge --abort" weren't as careful as they should have been ;-)
 
-Thanks, good to know.
+Hi,
 
-> The command is a mere synonym to "git reset --merge";
+Greeting of the day!
 
-Indeed it seems so. Thank you for pointing this out.
+Would you be interested in acquiring an email list of "Boat Owners" from USA?
 
-> I am not so
-> confident that "git reset --merge" should also clear the current
-> rerere state.  If (and this is a big if) "git reset --merge" should,
-> probably the right place to do so would be remove_branch_state(),
-> before the function removes merge_rr file.
+Our Databases:-        1.RV Owners List              2.Sail and Power boat Owners List
+                        3.Travelers List              4.Fishing Enthusiasts List
+                        5.Cruise Travelers List       6.Motorcycle Owners List
+                        7.Camping Enthusiasts List    8.Spa and Resort Visitors List
+                        9.Car Owners List             10.Outdoor Enthusiasts List and many more..,
 
-Unfortunately, I am still not familiar enough with the Git codebase to
-be able to express an informed opinion about this. Sorry :(
+We provide Data fields on each record contains: Name (First and Last), Address, City, State, Zip, County, Opt-in Email Address, Boat use, Boat length, Boat Propulsion, Boat Fuel, Boat Hull Material, Boat Make, Boat Hull Shape, Boat Size, Boat Year, Boat Transaction Date, Boat Transaction Type, Boat Validation Date and Registration date.
 
-> Doing so might allow us
-> to lose calls to rerere_clear() individual codepaths of various
-> "abort" implementations make,
+All the contacts are opt-in verified, complete permission based and can be used for unlimited multi-channel marketing.
 
-That, I think, was an example of a garden path sentence.[1] Took me
-more than one parse to understand it :)
+Please let me know your thoughts towards procuring the Boat Owners List.
 
-Anyhow, yes, I agree that this might be an opportunity to DRY the
-codebase in that regard. (And this would be a good thing, if so.)
+Waiting for your valuable and sincere reply.
 
-> but that would certainly require
-> careful thinking to avoid unintended regressions.
 
-I don't use `git reset --merge` often enough to have formed an opinion
-about whether there are any use-cases for it in which it would be
-inappropriate for it to run `git rerere clear`. Apologies again not to
-be able to be more helpful. I hope that you or others on the list will
-be able to consider this matter, and the question of how/where to best
-implement the change.
+Best Regards,
+Marlene Royle
+Research Analyst
 
-Thank you for your work maintaining Git!
-
-[1] https://en.wikipedia.org/wiki/Garden_path_sentence
