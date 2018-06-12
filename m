@@ -2,118 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 210481F403
-	for <e@80x24.org>; Tue, 12 Jun 2018 16:11:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 044D31F403
+	for <e@80x24.org>; Tue, 12 Jun 2018 16:20:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933744AbeFLQLt (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Jun 2018 12:11:49 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:43140 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933137AbeFLQLs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jun 2018 12:11:48 -0400
-Received: by mail-wr0-f193.google.com with SMTP id d2-v6so24682269wrm.10
-        for <git@vger.kernel.org>; Tue, 12 Jun 2018 09:11:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:openpgp:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=I/jYFW1XTXoKhcgvdqlk3PjE1qJ7wieyLSgcaZRjT6Q=;
-        b=mZ+3IAF8WpCECvzgl/WiAxM9lUmFNHdnNMqzgz1gmkM8nVabEYfhumexmznJL3ZjZJ
-         W12Ua8p2yXfTVXjFsy95wrDS7t/wr5+p1BWqIEOaZyIA5Mqku1C/u0ntt+X+bKljw/o2
-         XNavItO+ejRKAT0JoYqQsNvIotcj3Bn81ZsC1cQHycHKLxSnLtI2cUTB8ln2z2CdwuK5
-         n13GztJtd8Mx+8wGX+q8LwkNhT5U9zL+6ZclT7ywRgwT9Fc5Wv3EE5rJdtk2wwNea1pv
-         1nT2jDiZSz1aGNaYYA3blDNjic/GZlhOEcQbnVzDYy5sMWef9IsWIq73K9Ezqd20ZiHZ
-         d5xg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=I/jYFW1XTXoKhcgvdqlk3PjE1qJ7wieyLSgcaZRjT6Q=;
-        b=OBb5DQRZHzJZC5UAzalGqe5EDiWEPffoqfOt1yvfrehd3eGJEw42oMenzAxnTzTfzq
-         vCfRYn9UYna1mCQUvkePE2hD2aWsLZR1KhUmleSL9HUPuUxk6h60SVcsholoboZ2yZkp
-         No1mFL/bX+MYRvQd009OMZVQpX6BXLmrijaYgbuxf3B0t+kOKjkseNwbkXWuFB4exlzZ
-         /Woq5ClJJZxvHBSzCj2StBqOfP5rs06UISko/4sk5aVAbXJ5+Zx3N2OG4v4sZ42k3Z/5
-         AeXCMvTM1CMZD+/YW/iXpE1UqjeW357RoU/zCfHQWoTw0auHNl0/0szfonogpqlq0iEC
-         ktdQ==
-X-Gm-Message-State: APt69E26dWhpSElxPfhtTJXQ5NqPiOs6W+/cyrbz+b0rO0+HMADW3rPM
-        ZJoPQinOMLS6NKMo8NZrYFw=
-X-Google-Smtp-Source: ADUXVKICWpy1VvYGKjT4PCZDylWHUMy4FdoNJmkpPyzHiK41/9+ZQyMn0RWwM3aCbY0UUmTzezSBZA==
-X-Received: by 2002:a5d:45cb:: with SMTP id b11-v6mr841113wrs.106.1528819907488;
-        Tue, 12 Jun 2018 09:11:47 -0700 (PDT)
-Received: from [192.168.0.104] (AToulouse-658-1-25-147.w86-222.abo.wanadoo.fr. [86.222.24.147])
-        by smtp.gmail.com with ESMTPSA id t17-v6sm494764wrr.82.2018.06.12.09.11.45
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 12 Jun 2018 09:11:45 -0700 (PDT)
+        id S934016AbeFLQU5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Jun 2018 12:20:57 -0400
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:29312 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933666AbeFLQU4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jun 2018 12:20:56 -0400
+Received: from [192.168.2.240] ([92.22.39.132])
+        by smtp.talktalk.net with SMTP
+        id Sm2OfDklppXFjSm2Pf5Zfm; Tue, 12 Jun 2018 17:20:54 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1528820454;
+        bh=8Gk3jU/SMZ+UE5b+gyEsEJ68BV0IY8fNVvfTQVNzJ0I=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=H7c+C6F6jd2koKbqoCgzFTSCfFeTZfPGrW3f2RcRL+CRryV9kyqlLOyzMnmB/ohlW
+         S6KC1KJjqGHKvVqBiMQegIjeeOtOaCAv14+0kARSb1jCCl3ILTSUeI6TCEQL72QDCp
+         /SVsSEYMds/ufJ5q6sqlN/JYYen/u9Buny1RMbMg=
+X-Originating-IP: [92.22.39.132]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=Ob228CbY c=1 sm=1 tr=0 a=AATg4WxWBR3MjRzlB3y0Ow==:117
+ a=AATg4WxWBR3MjRzlB3y0Ow==:17 a=IkcTkHD0fZMA:10 a=nlLf84GAuinx8fP2qYgA:9
+ a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
 Subject: Re: [GSoC][PATCH 1/1] rebase--interactive: rewrite the edit-todo
  functionality in C
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
+To:     Alban Gruin <alban.gruin@gmail.com>, phillip.wood@dunelm.org.uk,
+        git@vger.kernel.org
+Cc:     Stefan Beller <sbeller@google.com>,
         Christian Couder <christian.couder@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
+        Elijah Newren <newren@gmail.com>
 References: <20180611135714.29378-1-alban.gruin@gmail.com>
  <20180611135714.29378-2-alban.gruin@gmail.com>
- <CABPp-BHG41ePN1jRxADfb47FnXfKgJ++Jv=DUiTPwpUJUi=C=w@mail.gmail.com>
-From:   Alban Gruin <alban.gruin@gmail.com>
-Openpgp: preference=signencrypt
-Message-ID: <599bb1fd-3a09-8c2d-d319-dbed95012895@gmail.com>
-Date:   Tue, 12 Jun 2018 18:11:45 +0200
+ <3bfd3470-4482-fe6a-2cd9-08311a0bbaac@talktalk.net>
+ <801da146-6905-5f7b-12c0-7239108b6207@gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <7b9134a2-8e23-e089-0fd3-0e67f384eba0@talktalk.net>
+Date:   Tue, 12 Jun 2018 17:20:50 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.8.0
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BHG41ePN1jRxADfb47FnXfKgJ++Jv=DUiTPwpUJUi=C=w@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr-FR
+In-Reply-To: <801da146-6905-5f7b-12c0-7239108b6207@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
 Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfAOPSKviZT5G1lHAxkUObCleAX7gZLtSZxzDxX4nkPXdWCuS421NCd0yW4ah3O8Cz6633bxBrhRQAvpN9JMcMRAuVOW40GNIiiaXi1O5/nWadsp8syH0
+ Mwzv5EN5O0buPh3DVyVyF/nlbf9JXRvx5Z4ZP9I7MkClNJJmYnReqV5s3ItKwDYAZ+umswxvc4u4ilcZOSZD/k/beNu5KEQFRuVsP5DaGZLS59xZ0VqziTwR
+ J3g2Q/rEKrSnDsj3WRUW+NoknpYBY/s4fRLwj5EqQkKUV7y3mUCErXIQvebv+57Ke0oHaTnZ8b84vrIInnJ4d+6zMbTaOscWhIusDQKTtdz3psoCkI0kH1sr
+ MU8tHXJIWQiTKdnpnEjkkSPkpsK7HA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
+Hi Alban
 
-Le 12/06/2018 à 17:46, Elijah Newren a écrit :
-> Hi Alban,
+On 12/06/18 13:33, Alban Gruin wrote:
+> Hi Phillip,
 > 
-> On Mon, Jun 11, 2018 at 6:57 AM, Alban Gruin <alban.gruin@gmail.com> wrote:
->> This rewrites the edit-todo functionality from shell to C.
+> Le 11/06/2018 à 17:32, Phillip Wood a écrit :
+>>> +    if (launch_editor(todo_file, NULL, NULL))
 >>
->> To achieve that, a new command mode, `edit-todo`, is added, and the
->> `write-edit-todo` flag is removed, as the shell script does not need to
->> write the edit todo help message to the todo list anymore.
+>> I'm not sure that this will respect GIT_SEQUENCE_EDITOR, it would be
+>> nice to have a launch_sequence_editor() function that shared as much
+>> code as possible with launch_editor()
 >>
->> The shell version is then stripped in favour of a call to the helper.
 > 
-> I looked over the patch and didn't see any problems (though I haven't
-> worked with rebase--helper before, or the code for todo list editing),
-> but when I went to apply the patch it failed telling me:
-> 
-> Applying: rebase--interactive: rewrite the edit-todo functionality in C
-> error: sha1 information is lacking or useless (builtin/rebase--helper.c).
-> error: could not build fake ancestor
-> Patch failed at 0001 rebase--interactive: rewrite the edit-todo
-> functionality in C
-> Use 'git am --show-current-patch' to see the failed patch
-> 
-> I tried each of master, next, and pu (as of today) to see if it might
-> apply there.  On which commit is this patch based?  (Do you have other
-> local commits that this was based on top of?)
-> 
-> 
-> Elijah
-> 
+> It could be done by making launch_editor() and launch_sequence_editor()
+> some kind of wrapper around a function like launch_specified_editor()
+> (or something like that), that would take the editor as a parameter, in
+> addition to the path, the buffer and environment variables.  It would be
+> also very trivial to implement your first point above on top of that.
 
-It can be applied on top of pu with my patch that rewrites
-append_todo_help() in C
-(https://public-inbox.org/git/20180607103012.22981-1-alban.gruin@gmail.com/)
+That sounds like a good way forward, launch_sequence_editor() could just 
+call launch_editor() if GIT_SEQUENCE_EDITOR and sequence.editor are not set.
 
-Cheers,
-Alban
+>>>    int append_todo_help(unsigned edit_todo, unsigned keep_empty);
+>>
+>> Can this declaration be removed now?
+> 
+> No, it’s still used in rebase--helper.c for now.
+
+Ah, sorry I missed that
+
+Best Wishes
+
+Phillip
+
+> 
+>>
+>>> +int edit_todo_list(unsigned flags);
+>>>    int skip_unnecessary_picks(void);
+>>>    int rearrange_squash(void);
+>>
+>> Best Wishes
+>>
+>> Phillip
+>>
+> 
+> Cheers,
+> Alban
+> 
 
