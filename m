@@ -2,132 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B381E1F403
-	for <e@80x24.org>; Tue, 12 Jun 2018 09:51:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F6391F403
+	for <e@80x24.org>; Tue, 12 Jun 2018 09:53:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933318AbeFLJvb (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Jun 2018 05:51:31 -0400
-Received: from mail-pg0-f45.google.com ([74.125.83.45]:34556 "EHLO
-        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932639AbeFLJva (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jun 2018 05:51:30 -0400
-Received: by mail-pg0-f45.google.com with SMTP id q4-v6so10146245pgr.1
-        for <git@vger.kernel.org>; Tue, 12 Jun 2018 02:51:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=h9oaNjvKA/TVyUjxkqEZFue5D8qXcZ3WF2cKiDvridI=;
-        b=Syc8yJY3vkyeSV49jBi2iwF7pfwNQd8KdVGCHLn81ks1dCgKlvyOBzKfXJfsFsXP3o
-         Qgi/ErmekAQg/Y9c0xtMhFfvt0QUP2zDZXSEzi31TvaFGc/PIodb8uQQ90U/J5YrwTI+
-         yOcgHgL98JGs2BsUmLHIFwodm6KnPAayPafoeUX8KWZll8TXBQLzHIskfnai6VlTa15T
-         DTC+2o32TEouI+piebAywbOEk/TycaQqM0XzUzY7Cbn80XTvBA1m9N4xpQufC7Roy3JZ
-         cMUlduJzTs4PZLUGSVJiFHBU4IJWxgP7NGrqlMnIK7QcTpQrEJUT2mOO+BZ/isgKGWWA
-         YYRA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=wol.ph; s=google;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=h9oaNjvKA/TVyUjxkqEZFue5D8qXcZ3WF2cKiDvridI=;
-        b=HF8WaXyuMpPrFJo3jqybxw66Pzkf+Ys1DTiBB2e8YGAspgrBGErJLXy4mExlTnWyvA
-         jzmciqxo7n4Nh7NMGDWeTk6myF00aev4cmlOo5KQXJJX98gvgSodQv7m01xa6sK5kdKa
-         rwWePi8k7Ve8hgspRpqgsLFsGgmhkRUuvAp+c=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=h9oaNjvKA/TVyUjxkqEZFue5D8qXcZ3WF2cKiDvridI=;
-        b=CK4gYU//Jsfdv9rHH8IM/V75O0oAJ1mME6xSAWgsG7XL+TYzr9z4wbekO26Fgpl7ew
-         AMdxu2els4SZ6LeRV18rzMNRCEbqmdhHYnaxv0SHkMSLainzHnC1yBZBDGyn+2uAqRVQ
-         gMSWAqfsTBvh80a2aYiIhC1ZufQOQ5tdwFXD9Ep6AQ991HZN10+YAGz0rG4si8ZMi12Q
-         +XS4C/OHn7rMtAamXgmow8uZQPws7Kqt0aIoTl9tpzP0A6GWG8ROS4chXbO83PAXYyTQ
-         gi3o42Fe+JJ5Kj/fZ0jcDPQs8dYMFuaoi12tHAz9JX5YBSNPRKUTDEjjETRg3EDBFQzi
-         0Z+w==
-X-Gm-Message-State: APt69E1NDzYOwuvDWlwpBfNrjgmo06LM58pl/OVHUNsCCuR/UqZccV14
-        Vi743V8kUQLD78sDoc4soeRVKM/HHEzbeFN3KBQ=
-X-Google-Smtp-Source: ADUXVKLrCoch049wVwj61FCUwmxwf8Pszch9IEv0cbvlx6tW70Q+y6zHnjO8JlLvyhtMYETie5mgqZMVYEOIGRp+cyw=
-X-Received: by 2002:a65:6147:: with SMTP id o7-v6mr2582740pgv.163.1528797089467;
- Tue, 12 Jun 2018 02:51:29 -0700 (PDT)
+        id S933110AbeFLJxo (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Jun 2018 05:53:44 -0400
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:46950 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753195AbeFLJxn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jun 2018 05:53:43 -0400
+Received: from [192.168.2.201] ([92.22.39.132])
+        by smtp.talktalk.net with SMTP
+        id SfzhfzNlLwhzSSfzhfj6ya; Tue, 12 Jun 2018 10:53:42 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1528797222;
+        bh=9quP1qRRA9PwT6aNWDHmPyk4zOzEmnudOB9NwV75+Rs=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=ntnQlthclpN37RmU0Uy3rJPgXW5LvfrIuP7HAnula5Q+eS8Qibd9/qnwEwynIuKcI
+         OJ+cUOmeKuwmuS3wWI0eRfqX2K9hBVt4B4SdLtBSmqaUnRjs/olFr9j1JwN4nDHmtW
+         nw1u4Q9MPatKv+c1ec6wUgMiZk3ehkpu9C75HD4A=
+X-Originating-IP: [92.22.39.132]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=e8Iot5h/ c=1 sm=1 tr=0 a=AATg4WxWBR3MjRzlB3y0Ow==:117
+ a=AATg4WxWBR3MjRzlB3y0Ow==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
+ a=FuBv-MbV3LvX8plPUI4A:9 a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] git-rebase.sh: handle keep-empty like all other options
+To:     Elijah Newren <newren@gmail.com>, phillip.wood@dunelm.org.uk
+Cc:     Git Mailing List <git@vger.kernel.org>
+References: <CABPp-BGxaroePB6aKWAkZeADLB7VE3y1CPy2RyNwpn=+C01g3A@mail.gmail.com>
+ <20180607050747.19726-1-newren@gmail.com>
+ <8f19c8c2-d050-2d51-756d-d78b9f2bd335@talktalk.net>
+ <CABPp-BF7POrGTRbVOZ-AGjRHKcpExMQcA4uSPvrRONbnG2CE8w@mail.gmail.com>
+ <7e3d71e6-ae97-f47b-382c-085f6a281792@talktalk.net>
+ <CABPp-BEuZDHDAxixrUUXyzbpBXoVfWhfdJR1g9eFN9MSAMjh_Q@mail.gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <c0e55982-0d75-0efe-4976-f48cb4bf5779@talktalk.net>
+Date:   Tue, 12 Jun 2018 10:53:41 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-Received: by 2002:a17:90a:8906:0:0:0:0 with HTTP; Tue, 12 Jun 2018 02:51:09
- -0700 (PDT)
-In-Reply-To: <20180611182053.GA20665@aiede.svl.corp.google.com>
-References: <xmqqmuy2wz4j.fsf@gitster-ct.c.googlers.com> <20180417220219.30445-1-szeder.dev@gmail.com>
- <20180607054834.GB6567@aiede.svl.corp.google.com> <20180608211639.7611-1-szeder.dev@gmail.com>
- <20180611182053.GA20665@aiede.svl.corp.google.com>
-From:   Rick van Hattem <wolph@wol.ph>
-Date:   Tue, 12 Jun 2018 11:51:09 +0200
-X-Google-Sender-Auth: 38cSgb-t9XxYWXxFuYj8OrtiKqk
-Message-ID: <CAJAwA=wQZ4b-wsy8yqURVK80hv9efGD7LZKCq89sVssBd5cgqA@mail.gmail.com>
-Subject: Re: [PATCH] completion: correct zsh detection when run from
- git-completion.zsh (Re: [PATCH v2] completion: reduce overhead of clearing
- cached --options)
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Matthew Coleman <matt@1eanda.com>,
-        Stephon Harris <theonestep4@gmail.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-        git@vger.kernel.org, Dave Borowitz <dborowitz@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CABPp-BEuZDHDAxixrUUXyzbpBXoVfWhfdJR1g9eFN9MSAMjh_Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfD1tAbiif0xTJshVm2jltvo4GmKZsbbGm9m6i07fxyfVk68bewsH88C4ugEQFbESRbV/U0XRzTMD1Ml8iLiO6N6buqarR5BewPB9zHEbySmJLS61KHh+
+ KPC138DJPB5MQs1teidXQkWEbzvLOj2mc4u0BHDmaKXxeFQ45yUcSv/FLkdov7xq7c1Y+LsFbjf3IW66bMgVamz5RrXXbH9rCdVbDoO91wDaLm29HPAVPLo5
+ ds0Oj4Q+jJqmkZrBVIiFZQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11 June 2018 at 20:20, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> SZEDER G=C3=A1bor wrote:
->
->> Being in RC phase, I'm all for aiming for a minimal solution.
->> However, I don't think that the better fix would be erm.. any "less
->> minimal":
->
-> Thanks again. May we have your sign-off?
->
->  contrib/completion/git-completion.bash | 5 ++++-
->  contrib/completion/git-completion.zsh  | 2 +-
->  2 files changed, 5 insertions(+), 2 deletions(-)
->
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/=
-git-completion.bash
-> index 12814e9bbf..f4a2e6774b 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -3223,7 +3223,10 @@ __gitk_main ()
->         __git_complete_revlist
->  }
->
-> -if [[ -n ${ZSH_VERSION-} ]]; then
-> +if [[ -n ${ZSH_VERSION-} ]] &&
-> +   # Don't define these functions when sourced from 'git-completion.zsh'=
-,
-> +   # it has its own implementations.
-> +   [[ -z ${GIT_SOURCING_ZSH_COMPLETION-} ]]; then
->         echo "WARNING: this script is deprecated, please see git-completi=
-on.zsh" 1>&2
->
->         autoload -U +X compinit && compinit
-> diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/g=
-it-completion.zsh
-> index 53cb0f934f..049d6b80f6 100644
-> --- a/contrib/completion/git-completion.zsh
-> +++ b/contrib/completion/git-completion.zsh
-> @@ -39,7 +39,7 @@ if [ -z "$script" ]; then
->                 test -f $e && script=3D"$e" && break
->         done
->  fi
-> -ZSH_VERSION=3D'' . "$script"
-> +GIT_SOURCING_ZSH_COMPLETION=3Dy . "$script"
->
->  __gitcomp ()
->  {
-> --
-> 2.18.0.rc1.242.g61856ae69a
+On 11/06/18 17:08, Elijah Newren wrote:
+> Hi Phillip,
+> 
+> On Mon, Jun 11, 2018 at 8:16 AM, Phillip Wood <phillip.wood@talktalk.net> wrote:
+>> On 11/06/18 15:42, Elijah Newren wrote:
+> 
+>>> However, we have a bigger problem with empty commits, in that there
+>>> are really three modes rather than two:
+>>>    * Automatically drop empty commits (default for am-based rebase)
+>>>    * Automatically keep empty commits (as done with --keep-empty)
+>>>    * Halt the rebase and tell the user how to specify if they want to
+>>> keep it (default for interactive rebases)
+>>>
+>>> Currently, only the first option is available to am-based rebases, and
+>>> only the second two options are available to interactive-based
+>>> rebases.
+>>
+>>
+>> I'm not sure that's the case, my understanding is that for an interactive
+>> rebase unless you give '--keep-empty' then any empty commits will be
+>> commented out in the todo list and therefore dropped unless they're
+>> uncommented when editing the list.
+> 
+> Ah, yes, you are right; I was implicitly thinking about cases where
+> the commit became empty rather than when the commit started
+> empty...and mis-read --keep-empty (which as I learned now is only for
+> started-empty cases).
+> 
+>> The third case happens when a commit
+>> becomes empty when it's rebased (i.e. the original commit is not empty), I'm
+>> not sure what the am backend does for this.
+> 
+> The am backend does not halt the rebase; it simply drops the commit
+> and says "No changes -- Patch already applied."
+> 
+> It has always seemed jarring and confusing to me that one rebase mode
+> stops and asks the user what to do and the other assumes.  I think
+> both should have the same default (and have options to pick the
+> alternate behavior).
+> 
+> I'm less certain what the default should be, though.
 
-The change looks good to me :)
+I'm not really sure either, on the one hand most of the time it is
+convenient for rebase just to skip over it, on the other if you have
+some important information in the commit message or a note then maybe
+you want rebase to stop so you can selvage that information.
+
+> 
+>> cherry-pick has
+>> '--keep-redundant-commits' for this case but that has never been added to
+>> rebase.
+
+On path forwards is to always stop, and implement
+--keep-redundant-commits for rebase. That would be very easy for
+interactive rebases as it shares the same code as cherry-pick. I've just
+had a quick look at builtin/am.c and I think it would be fairly
+straightforward to add some code to check if it's rebasing and stop if
+the patch is already applied.
+
+Best Wishes
+
+Phillip
+
+> Thanks for the pointer.
+> 
+
