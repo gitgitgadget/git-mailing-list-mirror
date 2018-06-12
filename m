@@ -2,162 +2,176 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 811F81F403
-	for <e@80x24.org>; Tue, 12 Jun 2018 18:58:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 961491F403
+	for <e@80x24.org>; Tue, 12 Jun 2018 19:09:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754081AbeFLS6l (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Jun 2018 14:58:41 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:37386 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754026AbeFLS6k (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jun 2018 14:58:40 -0400
-Received: by mail-wr0-f194.google.com with SMTP id d8-v6so36980wro.4
-        for <git@vger.kernel.org>; Tue, 12 Jun 2018 11:58:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=MBG5BKY6wDhpoWy7apxujT0XR8V9cce47wMh3qsbdM0=;
-        b=cmuwUN2KluiZIqW9Y43va0FCV0gIGyDPdEDGlyZ9PwzLUmdzmHI495JPsp+vbiaTgD
-         lb8iagTpuIqzUT9CdReVKnhDgrGCHma1iJmzMV9sZhZHXyg0kW+oYsSweAwkhv7x075K
-         EAzW2Ko6bbmEeXdJ7Ko/HrHBwqlLEKcoDfsYNg/btpWwwKHuTXpNZKWbPNsazBJLkjA0
-         dSIWDOm2S9mGlYNnmDh5mK4FQKqvSoGY5jwc/I11AR8FXvVDlGaCBUv7RTEr3vxw0eCo
-         8d7nAQC9MBFeoWDCIzBummqmj/gQyZ1zDSnj1juKRYoSjSjH6rYl0faj5GzgnE6vV6dD
-         VdWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=MBG5BKY6wDhpoWy7apxujT0XR8V9cce47wMh3qsbdM0=;
-        b=lfk3kb4vU9Nq3rDkKEgYuv7AvRWX+qoz+4QsbZsjRS81Gf1EJyURKpHhda3m1DpXi4
-         1wxz/nXWlyZPNVIe4xDh6s496bOMMbrWqiGxUqApyYDDCKMZYoJ5XhQxcjGoAgRd0GBT
-         3YGWT/tz+Qffy3PoCatE4ndXEGzfJl8D39c9ojFkMynYq0RVinpX1Yq3ImSD+fyMS66S
-         hggsuOTlXVQSBKMilNXIHbcqiHwDrIFcQN7OELRX+3HwzqN/KEmNCp6jRC5CF1LAdR0y
-         riw1rNvknZZJC5DFhxa6Pr9kF6XrAKzbA2hz4PDO21d/2zCTqolhnH+6lUNy/bEKFLLm
-         RLVg==
-X-Gm-Message-State: APt69E05uweRM2Kj//P6T8WDAO7BcDjUr9MR2oKrcqeIcnrRgmcRbhdz
-        rW31lNYC49G2Z4zWwBs9RdE=
-X-Google-Smtp-Source: ADUXVKILYTtpqJMDcVSEvB3HHWRXlnN9jDzF0ulH98Q8XUoLFZ7xdx3HJLc2wSY/65jPDrMUNthj+w==
-X-Received: by 2002:adf:8e30:: with SMTP id n45-v6mr1383255wrb.27.1528829918804;
-        Tue, 12 Jun 2018 11:58:38 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id v138-v6sm1709600wmd.47.2018.06.12.11.58.37
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 12 Jun 2018 11:58:37 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 20/20] abbrev: add a core.validateAbbrev setting
-References: <20180608224136.20220-1-avarab@gmail.com>
-        <20180608224136.20220-21-avarab@gmail.com>
-        <CAN0heSqo1WSVkYNiFAv4A7x8hG0wEx-iSz7ssLmYYVuen7b-LQ@mail.gmail.com>
-Date:   Tue, 12 Jun 2018 11:58:37 -0700
-In-Reply-To: <CAN0heSqo1WSVkYNiFAv4A7x8hG0wEx-iSz7ssLmYYVuen7b-LQ@mail.gmail.com>
-        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Sat, 9 Jun 2018 17:47:18
- +0200")
-Message-ID: <xmqqzhzz96hu.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S933795AbeFLTJW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Jun 2018 15:09:22 -0400
+Received: from mail134-31.atl141.mandrillapp.com ([198.2.134.31]:50585 "EHLO
+        mail134-31.atl141.mandrillapp.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S933414AbeFLTJS (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 12 Jun 2018 15:09:18 -0400
+X-Greylist: delayed 900 seconds by postgrey-1.27 at vger.kernel.org; Tue, 12 Jun 2018 15:09:18 EDT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=mandrill; d=nexedi.com;
+ h=From:Subject:To:Cc:Message-Id:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding; i=kirr@nexedi.com;
+ bh=TpVns2lc23y6dbmidM53qrAZwDcUXSFoBQliRcT0JUw=;
+ b=Dn1wwSgDz7XQv6tZHG/5Uc+uq/HdoM72RAKGsPZ7Z+CsC04b/eOSprhhXfB4nGceO97up004L0OF
+   hWjv4rBjWjg0sb7rQ+qambkEiO+cN+eR67CblgqIym03Jon29woPMnynIMKhiCINr8jAJ4WVODRs
+   Afx2YWAtkdNm41xg/xs=
+Received: from pmta03.mandrill.prod.atl01.rsglab.com (127.0.0.1) by mail134-31.atl141.mandrillapp.com id h40d5s1sau80 for <git@vger.kernel.org>; Tue, 12 Jun 2018 18:54:17 +0000 (envelope-from <bounce-md_31050260.5b2016d9.v1-895a8966288f4001a9d7029e2456f10f@mandrillapp.com>)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mandrillapp.com; 
+ i=@mandrillapp.com; q=dns/txt; s=mandrill; t=1528829657; h=From : 
+ Subject : To : Cc : Message-Id : References : In-Reply-To : Date : 
+ MIME-Version : Content-Type : Content-Transfer-Encoding : From : 
+ Subject : Date : X-Mandrill-User : List-Unsubscribe; 
+ bh=TpVns2lc23y6dbmidM53qrAZwDcUXSFoBQliRcT0JUw=; 
+ b=gZER+507x1p8IHN6nKb1sTcPg99Xwa9ZJqHe070+OZS+dRmOKJxN0STQ9TL+Sk53KtJuFS
+ qkF3WT9gl24VJoLpyHWbEooA5033ax89wOXq1TM/inU6Bp2q/fz+ImFv/SlicMXFpsGKvsvk
+ M2I+4Vfa4kTrUomVUgZawJNsjZhW4=
+From:   Kirill Smelkov <kirr@nexedi.com>
+Subject: Re: [PATCH v2] fetch-pack: don't try to fetch peel values with --all
+Received: from [87.98.221.171] by mandrillapp.com id 895a8966288f4001a9d7029e2456f10f; Tue, 12 Jun 2018 18:54:17 +0000
+To:     Jeff King <peff@peff.net>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Brandon Williams <bmwill@google.com>,
+        Takuto Ikuta <tikuta@chromium.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Git List <git@vger.kernel.org>
+Message-Id: <20180612185413.GA21856@deco.navytux.spb.ru>
+References: <20180610143231.7131-1-kirr@nexedi.com> <20180611042016.GA31642@sigill.intra.peff.net> <20180611044710.GB31642@sigill.intra.peff.net> <CAPig+cT73d0rYoSbt7oHVG4MYHVvjKidP0ogRwV+9F73jcjZEA@mail.gmail.com> <20180611055357.GA16430@sigill.intra.peff.net> <20180611094255.GA15563@deco.navytux.spb.ru> <20180612094849.GB26123@sigill.intra.peff.net>
+In-Reply-To: <20180612094849.GB26123@sigill.intra.peff.net>
+X-Report-Abuse: Please forward a copy of this message, including all headers, to abuse@mandrill.com
+X-Report-Abuse: You can also report abuse here: http://mandrillapp.com/contact/abuse?id=31050260.895a8966288f4001a9d7029e2456f10f
+X-Mandrill-User: md_31050260
+Date:   Tue, 12 Jun 2018 18:54:17 +0000
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin Ågren <martin.agren@gmail.com> writes:
+On Tue, Jun 12, 2018 at 05:48:49AM -0400, Jeff King wrote:
+> On Mon, Jun 11, 2018 at 09:43:02AM +0000, Kirill Smelkov wrote:
+> 
+> > > Looking deeper, we do not need these trees and blobs at all. The problem
+> > > is really just a tag that peels to an object that is not otherwise a ref
+> > > tip, regardless of its type.
+> > 
+> > Thanks for feedback and for coming up with the fix. Sure, I'm ok with
+> > moving the test into your patch. However, even if a test becomes
+> > different - narrowing down root of _current_ problem, I suggest to also
+> > keep explicitly testing tag-to-blob and tag-to-tree (and if we really
+> > also want tag-to-commit and tag-to-tag) behaviour. Reason is: if we skip
+> > those now, they can potentially break in the future.
+> 
+> Yeah, I have no problem testing these cases separately. There's no bug
+> with them now, but it is a slightly uncommon case. My suggestion would
+> be to submit a patch that goes on top of mine that covers these cases.
 
->> +This is especially useful in combination with the
->> +`core.validateAbbrev` setting, or to get more future-proof hashes to
->> +reference in the future in a repository whose number of objects is
->> +expected to grow.
->
-> Maybe s/validateAbbrev/validateAbbrev = false/?
+Ok, I will try to do it.
 
-Perhaps, but even with =true it would equally be useful, as the
-point of this setting is to future-proofing.
 
->> ++
->> +When printing abbreviated object names Git needs to look through the
->> +local object store. This is an `O(log N)` operation assuming all the
->> +objects are in a single pack file, but `X * O(log N)` given `X` pack
->> +files, which can get expensive on some larger repositories.
->
-> This might be very close to too much information.
+> > I would also suggest to fix upload-pack, as it is just not consistent to
+> > reject sending objects that were advertised, and so can strike again
+> > some way in the future. After all git.git's fetch-pack is not the only
+> > git client that should be possible to interact with git.git's
+> > upload-pack on remote side, right?
+> 
+> No, it's not the only client. At the same time, I am on the fence over
+> whether upload-pack's behavior is wrong or not. It depends what you take
+> a peeled advertisement line to mean. Does it mean: this object has been
+> advertised and clients should be able to fetch it? Or does it mean: by
+> the way, you may be interested to know the peeled value of this tag in
+> case you want to do tag-following?
+> 
+> So far I think it has only meant the latter. I could see an argument for
+> the former, but any client depending on that would never have worked,
+> AFAICT. We could _make_ it work, but how would a client know which
+> server version it's talking to (and therefore whether it is safe to make
+> the request?). I think you'd have to add a capability to negotiate.
 
-Not very close, but just too much information without crucial detail
-(i.e. log N times what constant???).  I'd drop it.
+I see. I don't know the details of the exchange, just it was surprising
+for outside observer that fetching what was advertised is rejected. For
+the reference there is no strong need for me for this to work anymore
+(please see below).
 
->> ++
->> +This setting changes that to `O(1)`, but with the trade-off that
->> +depending on the value of `core.abbrev` we may be printing abbreviated
->> +hashes that collide.
 
-It may not be technically wrong to say "This changes it to O(1)",
-but I think to most people it is more understandable to say "This
-changes it to zero" ;-)
+> > I'm not sure, but I would say that `fetch-pack --all` from an empty
+> > repository should not fail and should just give empty output as fetch
+> > does.
+> 
+> Yeah, that seems reasonable to me. The die() that catches this dates
+> back to 2005-era, and we later taught the "fetch" porcelain to handle
+> this. I don't _think_ anybody would be upset that the plumbing learned
+> to treat this as a noop. It's probably a one-liner change in
+> fetch_pack() to return early instead of dying.
 
-    Setting this variable to false makes Git not to validate the
-    abbreviation it produces uniquely identifies an object among the
-    current set of objects in the repository.  Depending on the
-    value of `core.abbrev`, we may be printing abbreviated hashes
-    that collide.  Note that setting this variable to true (or
-    leaving it unset) does not guarantee that an abbreviated hash
-    will never collide with future objects in the repository (you
-    need to set core.abbrevLength to a larger value for that).
+Ok, I will try to send related testcase, and it is indeed easy to find
+- the fix itself.
 
-would be sufficient to clarify, and also nuke the following
-overly-detailed paragraph.
 
->> ... Too see how likely this is, try running:
->> ++
->> +-----------------------------------------------------------------------------------------------------------
->> +git log --all --pretty=format:%h --abbrev=4 | perl -nE 'chomp; say length' | sort | uniq -c | sort -nr
->> +-----------------------------------------------------------------------------------------------------------
->> ++
->> +This shows how many commits were found at each abbreviation length. On
->> +linux.git in June 2018 this shows a bit more than 750,000 commits,
->> +with just 4 needing 11 characters to be fully abbreviated, and the
->> +default heuristic picks a length of 12.
->
-> These last few paragraphs seem like too much to me.
+> > For the reference all the cases presented here are real - they appear in
+> > our repositories on lab.nexedi.com for which I maintain the backup, and
+> > I've noticed them in the process of switching git-backup from using
+> > fetch to fetch-pack here:
+> > 
+> > https://lab.nexedi.com/kirr/git-backup/blob/0ab7bbb6/git-backup.go#L436
+> 
+> I applaud you using the porcelain for your scripts, but I suspect that
+> fetch-pack by itself is not at all well-used or well-tested these days
+> (certainly this --all bug has been around for almost 6 years and is not
+> very hard to trigger in practice).
 
-Yeah, it goes to too low level a detail, especially with the "try
-running" part.  I'd remove everything but "On linux.git in June ..."
-if I were writing it from the above.
+I see; thanks for the warning.
 
->> ++
->> +Even without `core.validateAbbrev=false` the results abbreviation
->> +already a bit of a probability game. They're guaranteed at the moment
->> +of generation, but as more objects are added, ambiguities may be
->> +introduced. Likewise, what's unambiguous for you may not be for
->> +somebody else you're communicating with, if they have their own clone.
->
-> This seems more useful.
 
-Yes, but still overly verbose; I think rolling it in the single
-paragraph description like I showed above would be sufficient.
+> If an extra connection isn't a problem, you might be better off with
+> "git ls-remote", and then picking through the results for refs of
+> interest, and then "git fetch-pack" to actually get the pack. That's how
+> git-fetch worked when it was a shell script (e.g., see c3a200120d, the
+> last shell version).
 
->> ++
->> +Therefore the default of `core.validateAbbrev=true` may not save you
->> +in practice if you're sharing the SHA-1 or noting it now to use after
->> +a `git fetch`. You may be better off setting `core.abbrev` to
->> +e.g. `+2` to add 2 extra characters to the SHA-1, and possibly combine
->> +that with `core.validateAbbrev=false` to get a reasonable trade-off
->> +between safety and performance.
->
-> Makes sense. As before, I'd suggest s/SHA-1/object ID/.
+Yes, this is what I ended up doing:
 
-Likewise.  If we were to keep it, then s/object ID/object name/.
+https://lab.nexedi.com/kirr/git-backup/commit/899103bf
+
+but for another reason - to avoid repeating for every fetched repository
+slow (in case of my "big" destination backup repository) quickfetch()
+checking in every spawned `git fetch`: git-backup can build index of
+objects we already have ourselves only once at startup, and then in
+fetch, after checking lsremote output, consult that index, and if we see
+we already have everything for an advertised reference - just avoid
+giving it to fetch-pack to process. It turns out for many pulled
+repositories there is usually no references changed at all and this way
+fetch-pack can be skipped completely:
+
+https://lab.nexedi.com/kirr/git-backup/commit/3efed898
+
+> It may also be sane to just use "git fetch", which I'd say is _fairly_
+> safe to script. Of course I have no problem if you want to fix all of
+> the corner cases in fetch-pack. Just giving you fair warning. :)
+
+Thanks again for the warning. I'm happy the switch to fetch plumbing
+happenned on my side, and so far it is working well. Like I said above I
+cannot use `git fetch` as is, because quickfetch() overhead for my case
+became dominant and very slow, taking ~ 30 seconds of the time just to
+check whether we have everything from one fetched repository, which, if
+there are 100x or 1000x of such, adds up to hours.
+
+If ls-remote has to be used anyway switching to plumbing seems natural.
+Let's see if I hit any more corner place or not - I will be keeping your
+warning in mind.
+
+Thanks again,
+Kirill
