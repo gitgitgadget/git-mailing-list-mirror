@@ -2,176 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 961491F403
-	for <e@80x24.org>; Tue, 12 Jun 2018 19:09:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F29891F403
+	for <e@80x24.org>; Tue, 12 Jun 2018 19:12:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933795AbeFLTJW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Jun 2018 15:09:22 -0400
-Received: from mail134-31.atl141.mandrillapp.com ([198.2.134.31]:50585 "EHLO
-        mail134-31.atl141.mandrillapp.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S933414AbeFLTJS (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 12 Jun 2018 15:09:18 -0400
-X-Greylist: delayed 900 seconds by postgrey-1.27 at vger.kernel.org; Tue, 12 Jun 2018 15:09:18 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=mandrill; d=nexedi.com;
- h=From:Subject:To:Cc:Message-Id:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding; i=kirr@nexedi.com;
- bh=TpVns2lc23y6dbmidM53qrAZwDcUXSFoBQliRcT0JUw=;
- b=Dn1wwSgDz7XQv6tZHG/5Uc+uq/HdoM72RAKGsPZ7Z+CsC04b/eOSprhhXfB4nGceO97up004L0OF
-   hWjv4rBjWjg0sb7rQ+qambkEiO+cN+eR67CblgqIym03Jon29woPMnynIMKhiCINr8jAJ4WVODRs
-   Afx2YWAtkdNm41xg/xs=
-Received: from pmta03.mandrill.prod.atl01.rsglab.com (127.0.0.1) by mail134-31.atl141.mandrillapp.com id h40d5s1sau80 for <git@vger.kernel.org>; Tue, 12 Jun 2018 18:54:17 +0000 (envelope-from <bounce-md_31050260.5b2016d9.v1-895a8966288f4001a9d7029e2456f10f@mandrillapp.com>)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mandrillapp.com; 
- i=@mandrillapp.com; q=dns/txt; s=mandrill; t=1528829657; h=From : 
- Subject : To : Cc : Message-Id : References : In-Reply-To : Date : 
- MIME-Version : Content-Type : Content-Transfer-Encoding : From : 
- Subject : Date : X-Mandrill-User : List-Unsubscribe; 
- bh=TpVns2lc23y6dbmidM53qrAZwDcUXSFoBQliRcT0JUw=; 
- b=gZER+507x1p8IHN6nKb1sTcPg99Xwa9ZJqHe070+OZS+dRmOKJxN0STQ9TL+Sk53KtJuFS
- qkF3WT9gl24VJoLpyHWbEooA5033ax89wOXq1TM/inU6Bp2q/fz+ImFv/SlicMXFpsGKvsvk
- M2I+4Vfa4kTrUomVUgZawJNsjZhW4=
-From:   Kirill Smelkov <kirr@nexedi.com>
-Subject: Re: [PATCH v2] fetch-pack: don't try to fetch peel values with --all
-Received: from [87.98.221.171] by mandrillapp.com id 895a8966288f4001a9d7029e2456f10f; Tue, 12 Jun 2018 18:54:17 +0000
-To:     Jeff King <peff@peff.net>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Brandon Williams <bmwill@google.com>,
-        Takuto Ikuta <tikuta@chromium.org>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Git List <git@vger.kernel.org>
-Message-Id: <20180612185413.GA21856@deco.navytux.spb.ru>
-References: <20180610143231.7131-1-kirr@nexedi.com> <20180611042016.GA31642@sigill.intra.peff.net> <20180611044710.GB31642@sigill.intra.peff.net> <CAPig+cT73d0rYoSbt7oHVG4MYHVvjKidP0ogRwV+9F73jcjZEA@mail.gmail.com> <20180611055357.GA16430@sigill.intra.peff.net> <20180611094255.GA15563@deco.navytux.spb.ru> <20180612094849.GB26123@sigill.intra.peff.net>
-In-Reply-To: <20180612094849.GB26123@sigill.intra.peff.net>
-X-Report-Abuse: Please forward a copy of this message, including all headers, to abuse@mandrill.com
-X-Report-Abuse: You can also report abuse here: http://mandrillapp.com/contact/abuse?id=31050260.895a8966288f4001a9d7029e2456f10f
-X-Mandrill-User: md_31050260
-Date:   Tue, 12 Jun 2018 18:54:17 +0000
+        id S933254AbeFLTMq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Jun 2018 15:12:46 -0400
+Received: from titan.plasma.xg8.de ([85.10.203.189]:41514 "EHLO
+        titan.PLASMA.Xg8.DE" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932731AbeFLTMp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jun 2018 15:12:45 -0400
+Received: from titan.PLASMA.Xg8.DE (localhost [127.0.0.1])
+        by titan.PLASMA.Xg8.DE (8.15.2/8.15.2) with ESMTPS id w5CJCVVf007441
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Tue, 12 Jun 2018 21:12:31 +0200
+Received: (from uucp@localhost)
+        by titan.PLASMA.Xg8.DE (8.15.2/8.15.2/Submit) with UUCP id w5CJCVY7007439;
+        Tue, 12 Jun 2018 21:12:31 +0200
+Received: from helen.PLASMA.Xg8.DE (localhost.localdomain [127.0.0.1])
+        by helen.PLASMA.Xg8.DE (8.15.2/8.15.2) with ESMTP id w5CJCJ1Q018095;
+        Tue, 12 Jun 2018 21:12:19 +0200
+Received: (from rtc@localhost)
+        by helen.PLASMA.Xg8.DE (8.15.2/8.15.2/Submit) id w5CJCJYv018092;
+        Tue, 12 Jun 2018 21:12:19 +0200
+Date:   Tue, 12 Jun 2018 21:12:19 +0200
+From:   Peter Backes <rtc@helen.PLASMA.Xg8.DE>
+To:     David Lang <david@lang.hm>
+Cc:     Philip Oakley <philipoakley@iee.org>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: GDPR compliance best practices?
+Message-ID: <20180612191219.GA17935@helen.PLASMA.Xg8.DE>
+References: <3EF5AC29192A4D179B6D8689ECB991CC@PhilipOakley>
+ <20180607223442.GA5322@helen.PLASMA.Xg8.DE>
+ <alpine.DEB.2.02.1806071535510.27871@nftneq.ynat.uz>
+ <20180607232128.GA5879@helen.PLASMA.Xg8.DE>
+ <alpine.DEB.2.02.1806071651310.27871@nftneq.ynat.uz>
+ <20180608061656.GA9383@helen.PLASMA.Xg8.DE>
+ <nycvar.QRO.7.76.6.1806080040060.4962@qynat-yncgbc>
+ <20180608115842.GA12013@helen.PLASMA.Xg8.DE>
+ <alpine.DEB.2.02.1806081148030.14286@nftneq.ynat.uz>
+ <alpine.DEB.2.02.1806121152530.10486@nftneq.ynat.uz>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.02.1806121152530.10486@nftneq.ynat.uz>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 12, 2018 at 05:48:49AM -0400, Jeff King wrote:
-> On Mon, Jun 11, 2018 at 09:43:02AM +0000, Kirill Smelkov wrote:
+On Tue, Jun 12, 2018 at 11:56:13AM -0700, David Lang wrote:
+> [quoting github]
 > 
-> > > Looking deeper, we do not need these trees and blobs at all. The problem
-> > > is really just a tag that peels to an object that is not otherwise a ref
-> > > tip, regardless of its type.
-> > 
-> > Thanks for feedback and for coming up with the fix. Sure, I'm ok with
-> > moving the test into your patch. However, even if a test becomes
-> > different - narrowing down root of _current_ problem, I suggest to also
-> > keep explicitly testing tag-to-blob and tag-to-tree (and if we really
-> > also want tag-to-commit and tag-to-tag) behaviour. Reason is: if we skip
-> > those now, they can potentially break in the future.
-> 
-> Yeah, I have no problem testing these cases separately. There's no bug
-> with them now, but it is a slightly uncommon case. My suggestion would
-> be to submit a patch that goes on top of mine that covers these cases.
+> It's important to remember that the Right to Erasure only applies to
+> personal data, not all data. It only applies to data a controller (GitHub,
+> for example) is processing _solely_ on the basis of consent.
 
-Ok, I will try to do it.
+This is very obviously wrong. See Art. 17 GDPR. Consent is only one of 
+the explicitly mentioned grounds for deletion (it is (1) lit b, but 
+there's also a and c to f).
 
+> And it only
+> applies when there's not another legal reason to keep the data -- for
+> instance, if the data is no longer necessary for the purpose for which it
+> was collected.
 
-> > I would also suggest to fix upload-pack, as it is just not consistent to
-> > reject sending objects that were advertised, and so can strike again
-> > some way in the future. After all git.git's fetch-pack is not the only
-> > git client that should be possible to interact with git.git's
-> > upload-pack on remote side, right?
-> 
-> No, it's not the only client. At the same time, I am on the fence over
-> whether upload-pack's behavior is wrong or not. It depends what you take
-> a peeled advertisement line to mean. Does it mean: this object has been
-> advertised and clients should be able to fetch it? Or does it mean: by
-> the way, you may be interested to know the peeled value of this tag in
-> case you want to do tag-following?
-> 
-> So far I think it has only meant the latter. I could see an argument for
-> the former, but any client depending on that would never have worked,
-> AFAICT. We could _make_ it work, but how would a client know which
-> server version it's talking to (and therefore whether it is safe to make
-> the request?). I think you'd have to add a capability to negotiate.
+This incorrect claim is completely inverting the logic of Art. 17.
 
-I see. I don't know the details of the exchange, just it was surprising
-for outside observer that fetching what was advertised is rejected. For
-the reference there is no strong need for me for this to work anymore
-(please see below).
+The logic is clarly that if ANY of lit (a) to (f) is satisfied, the 
+data must be deleted.
 
+It is not necessary for ALL of them to be satisfied.
 
-> > I'm not sure, but I would say that `fetch-pack --all` from an empty
-> > repository should not fail and should just give empty output as fetch
-> > does.
-> 
-> Yeah, that seems reasonable to me. The die() that catches this dates
-> back to 2005-era, and we later taught the "fetch" porcelain to handle
-> this. I don't _think_ anybody would be upset that the plumbing learned
-> to treat this as a noop. It's probably a one-liner change in
-> fetch_pack() to return early instead of dying.
+In particular, if the data is no longer necessary for the purpose for 
+which it was collected, then THAT ALONE is grounds for erasure ((1) 
+lit. a). It does not matter at all whether processing was consent-based 
+or whether such consent was withdrawn.
 
-Ok, I will try to send related testcase, and it is indeed easy to find
-- the fix itself.
+> We do not process Git commit history on the basis of consent. We have a
+> legitimate business purpose for collecting Git commit history: to maintain
+> the integrity of the Git commit record. It remains necessary for its purpose
+> for as long as a commit needs to be attributable to its committer.
 
+Right, but this merely justifies storing the data, not publishing it, 
+or keeping it published, as I already explained at length.
 
-> > For the reference all the cases presented here are real - they appear in
-> > our repositories on lab.nexedi.com for which I maintain the backup, and
-> > I've noticed them in the process of switching git-backup from using
-> > fetch to fetch-pack here:
-> > 
-> > https://lab.nexedi.com/kirr/git-backup/blob/0ab7bbb6/git-backup.go#L436
-> 
-> I applaud you using the porcelain for your scripts, but I suspect that
-> fetch-pack by itself is not at all well-used or well-tested these days
-> (certainly this --all bug has been around for almost 6 years and is not
-> very hard to trigger in practice).
+> At GitHub, as part of our Privacy By Design work, we offer ways for users to
+> set their own Git commit email data, so if an individual wants to remain
+> anonymous or pseudonymous, he or she can do so.
 
-I see; thanks for the warning.
+Not only is this contradicting fundamentally what they just said in the 
+previous sentence, it is not a justification for ignoring the right to 
+erasure either. It is exactly the purpose of the right to erasure to 
+get the data erased *after* the fact.
+
+> We also explain, in our
+> [Privacy
+> Statement](https://help.github.com/articles/github-privacy-statement), that
+> we are not able to delete personal data from the Git commit history once it
+> has been recorded.
+
+Privacy Statements are not a justification under GDPR for processing 
+data or ignoring the right to erasure.
+
+And oh yes they are able. Rewriting history is a possibility, though an 
+inconvenient one.
+
+I have pointed towards more convenient solutions.
+
+> I'll point out that not only did the Github lawyers need to sign off on this
+> stance, but the Microsoft lawyers would have looked at it as well as part of
+> their purchase of Github.
+
+So? If a thousand lawyers claim 1+1=3, it becomes a mathematical truth?
+
+Best wishes
+Peter
 
 
-> If an extra connection isn't a problem, you might be better off with
-> "git ls-remote", and then picking through the results for refs of
-> interest, and then "git fetch-pack" to actually get the pack. That's how
-> git-fetch worked when it was a shell script (e.g., see c3a200120d, the
-> last shell version).
-
-Yes, this is what I ended up doing:
-
-https://lab.nexedi.com/kirr/git-backup/commit/899103bf
-
-but for another reason - to avoid repeating for every fetched repository
-slow (in case of my "big" destination backup repository) quickfetch()
-checking in every spawned `git fetch`: git-backup can build index of
-objects we already have ourselves only once at startup, and then in
-fetch, after checking lsremote output, consult that index, and if we see
-we already have everything for an advertised reference - just avoid
-giving it to fetch-pack to process. It turns out for many pulled
-repositories there is usually no references changed at all and this way
-fetch-pack can be skipped completely:
-
-https://lab.nexedi.com/kirr/git-backup/commit/3efed898
-
-> It may also be sane to just use "git fetch", which I'd say is _fairly_
-> safe to script. Of course I have no problem if you want to fix all of
-> the corner cases in fetch-pack. Just giving you fair warning. :)
-
-Thanks again for the warning. I'm happy the switch to fetch plumbing
-happenned on my side, and so far it is working well. Like I said above I
-cannot use `git fetch` as is, because quickfetch() overhead for my case
-became dominant and very slow, taking ~ 30 seconds of the time just to
-check whether we have everything from one fetched repository, which, if
-there are 100x or 1000x of such, adds up to hours.
-
-If ls-remote has to be used anyway switching to plumbing seems natural.
-Let's see if I hit any more corner place or not - I will be keeping your
-warning in mind.
-
-Thanks again,
-Kirill
+-- 
+Peter Backes, rtc@helen.PLASMA.Xg8.DE
