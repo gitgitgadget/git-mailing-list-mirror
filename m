@@ -2,71 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C259F1F403
-	for <e@80x24.org>; Tue, 12 Jun 2018 19:16:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 771031F403
+	for <e@80x24.org>; Tue, 12 Jun 2018 19:32:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754328AbeFLTQV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Jun 2018 15:16:21 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:40156 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932483AbeFLTQU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jun 2018 15:16:20 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 8928E602FC; Tue, 12 Jun 2018 19:16:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1528830980;
-        bh=KXINKWlVDBhQE49fmWN0t/cP1R+AWc8zApy5oWJQ1ro=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=EIRwyfvjAZhSn+XXhi+P8PvwlTFryiDWXPpfXwecZK/Snmk24T1/98neK3wNBIpgd
-         fSPKgyxSEry+RTYjDOP9jtYfoaZcJDeWHneAAfwYFCC407rnZO6Z1wYAsZ6M8Quwk4
-         X4M5fKxmgsCqe5Spia3cYyeih6nV0bFZ4eFbQMd8=
-Received: from mfick-lnx.localnet (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: mfick@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2374D602BD;
-        Tue, 12 Jun 2018 19:16:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1528830980;
-        bh=KXINKWlVDBhQE49fmWN0t/cP1R+AWc8zApy5oWJQ1ro=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=EIRwyfvjAZhSn+XXhi+P8PvwlTFryiDWXPpfXwecZK/Snmk24T1/98neK3wNBIpgd
-         fSPKgyxSEry+RTYjDOP9jtYfoaZcJDeWHneAAfwYFCC407rnZO6Z1wYAsZ6M8Quwk4
-         X4M5fKxmgsCqe5Spia3cYyeih6nV0bFZ4eFbQMd8=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 2374D602BD
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=mfick@codeaurora.org
-From:   Martin Fick <mfick@codeaurora.org>
-To:     Peter Backes <rtc@helen.plasma.xg8.de>
-Cc:     David Lang <david@lang.hm>, Philip Oakley <philipoakley@iee.org>,
-        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: GDPR compliance best practices?
-Date:   Tue, 12 Jun 2018 13:16:17 -0600
-Message-ID: <5587534.o6tcmYBVvN@mfick-lnx>
-User-Agent: KMail/4.13.3 (Linux/3.13.0-144-generic; KDE/4.13.3; x86_64; ; )
-In-Reply-To: <20180612191219.GA17935@helen.PLASMA.Xg8.DE>
-References: <3EF5AC29192A4D179B6D8689ECB991CC@PhilipOakley> <alpine.DEB.2.02.1806121152530.10486@nftneq.ynat.uz> <20180612191219.GA17935@helen.PLASMA.Xg8.DE>
+        id S932660AbeFLTca (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Jun 2018 15:32:30 -0400
+Received: from mail-io0-f177.google.com ([209.85.223.177]:45779 "EHLO
+        mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754025AbeFLTc3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jun 2018 15:32:29 -0400
+Received: by mail-io0-f177.google.com with SMTP id l25-v6so717482ioh.12
+        for <git@vger.kernel.org>; Tue, 12 Jun 2018 12:32:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20161025;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=WR5cCicRAHZwzsyiwbDZFgVmXSWAjHKIwyGJqpBl2qY=;
+        b=KGwbQVYgW6VFYVpUtsPQRich96p3XQ/5zvVJbvflwmAxHIpnfNsI59dIPBMBETbRBe
+         TQfnH4tdW+qPSebo6Cl7uRNehqnHrxJeRzYkgmMUENZDHHaMnxfs+fkIXiVEkoKfbCuB
+         E+dKgy1DaxyuAfVCHmfa2dNZo2H9GXGG9geqdyV5PAdSQHIBL3Lt2+TTW3A8+j75oWKo
+         KJo11fndh50BgRf2lzCw+eNh2wU0TXrMLV6RkVYPfr3E5c1fNT3fEeMoFZRSydEDCFZQ
+         rXNCQVK6SJW7vH/sQSU79cY2fBfBsmC5cjLEKIgO4qK3n2T6sVOzGsZaJtO7p53KNGtq
+         zrzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=WR5cCicRAHZwzsyiwbDZFgVmXSWAjHKIwyGJqpBl2qY=;
+        b=AfFLUt9Ff5MoU0N/D8HEgMl1Q19gTWJAXRsu6SBRMHb+muPxfFy+3kR3DnRtn4+E6T
+         584bs9K1EbyJK0KaeydXnuao1w6rxu8fhowgqB6kmKoW92mJHdqMcECx+/VIqCImcmy3
+         rfyPH9qYPBFCFZpKHscOAddUsh0IgCsiz6VBcraJbrF69RoyeT+litdhDcKTu7cv2iXf
+         TzgWZXMUvL4eUG1ItnqoTCuEHzxwbI5UsVD8frUUzajQwTbLQ3F9xaIu1YFZcyCMiHoJ
+         9PkbSXW99+crO2qQqCLfQYCMg9Dczn+o+LLjubEQnba7zSBeO4ibM6WK/uzt/2BODLW7
+         iHtg==
+X-Gm-Message-State: APt69E2GNIMltt/ZKatOExMkNpCY2HCamgyHXvZVmlHef7/D74CRw4WR
+        BipVN8RSGGJbRdRrEr/RMmkoDFGuygcY4GSYNjCdkw==
+X-Google-Smtp-Source: ADUXVKKRWknh7sZibQMkTW+rP9Fbppl61gdy/sx5a6qPhqmBoPkqpSzG7JgXs6dowsqtSOgimuZUoxUgs2j3OQwHZR8=
+X-Received: by 2002:a6b:e89:: with SMTP id 131-v6mr1853527ioo.69.1528831949012;
+ Tue, 12 Jun 2018 12:32:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Received: by 2002:ad5:50cd:0:0:0:0:0 with HTTP; Tue, 12 Jun 2018 12:32:28
+ -0700 (PDT)
+From:   Sam Kuper <sam.kuper@uclmail.net>
+Date:   Tue, 12 Jun 2018 20:32:28 +0100
+X-Google-Sender-Auth: y8pK9r53O3AGfwlylgwbjpoEiZg
+Message-ID: <CAD-JurLXh=rOC=bhjTa8jCpeDWkbDhCztSpjLuMEUGm1-QnAiw@mail.gmail.com>
+Subject: `git merge --abort` does not run `git rerere clear`
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tuesday, June 12, 2018 09:12:19 PM Peter Backes wrote:
-> So? If a thousand lawyers claim 1+1=3, it becomes a
-> mathematical truth?
+`man git-rerere` says:
 
-No, but probably a legal "truth". :)
+> clear
+>
+> Reset the metadata used by rerere if a merge resolution is to be
+> aborted. Calling git am [--skip|--abort] or git rebase
+> [--skip|--abort] will automatically invoke this command.
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code 
-Aurora Forum, hosted by The Linux Foundation
+It makes sense that `git am [--skip|--abort]` and `git rebase
+[--skip|--abort]` would run `git rerere clear`.
 
+However, if they run it, then shouldn't `git merge --abort` run it, too?
+
+If not, then what is the reason why not, and might it be helpful for
+this reason to be mentioned at some appropriate place in the
+documentation?
+
+Thanks :)
