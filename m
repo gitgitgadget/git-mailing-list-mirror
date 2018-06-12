@@ -2,95 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1CFF21F403
-	for <e@80x24.org>; Tue, 12 Jun 2018 22:47:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2343E1F403
+	for <e@80x24.org>; Tue, 12 Jun 2018 23:58:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934511AbeFLWr0 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Jun 2018 18:47:26 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:35947 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934368AbeFLWrZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jun 2018 18:47:25 -0400
-Received: by mail-pg0-f67.google.com with SMTP id m5-v6so269773pgd.3
-        for <git@vger.kernel.org>; Tue, 12 Jun 2018 15:47:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dynamicaims-com.20150623.gappssmtp.com; s=20150623;
-        h=to:subject:from:message-id:disposition-notification-to:date
-         :user-agent:mime-version:content-transfer-encoding:content-language;
-        bh=1uECYNW+ggZP+oeolWLm7gogjz5h4F4WVBnDGFoEyFM=;
-        b=f5t3NIC7hb31fZ893KawfDP5r8l5Qiqi0ZT0BgBX2PPZs19SsOHITAA9hDsrC4i5ZE
-         MUH6DTUWgpC6MIrXnWUGpuor9b/WsiEz+0OKHX42oHRkrgAZwpcRs7u0xu69EKjqEcCu
-         KZtl8LR+1sfiyneXTvXYzPRtcydF/giEi3PgpNjMqeyaawtJwVEZaOW2VOIfZiS1947S
-         2XT0fGf1aOVBGhGThg8987TeXcMGmKyohLI4gy3xEV3txDhkagyqsd1vWKmCIieOPrXt
-         3q23azhiNH/ZARiKVNMLMAxbCv0PGpy1gK2Ws6QW4wsr4LykbsYamiW2vKVJ0g5yIkZg
-         AAcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:subject:from:message-id
-         :disposition-notification-to:date:user-agent:mime-version
-         :content-transfer-encoding:content-language;
-        bh=1uECYNW+ggZP+oeolWLm7gogjz5h4F4WVBnDGFoEyFM=;
-        b=YPlza9tmMN4rU3cFOoxK7E6plt+2KB1nOq5uAOMsL3C/4j9FS7nZhIbgH4NQQyNM1p
-         BOt1pL3JS2tZtK4hN+SWCdPahaKcJPxePmNwUzGdNOnnX+Ep3jYz9jkXXTS5RIOoXvkt
-         gTRw96wzpaShvT+98roiiayp4Xw80dXlelgKu/YSjHz+rNz+LP72faI/ek0NjUnx+9CB
-         mujmOKt1bc0QswCVe7GD4LsSyw0GfvHaDrvmgD6+bVtoGuQuz1ZAm4OQfFY2f0vKJkFX
-         gTm9VWA+G3I1vUDWCgSBcFOds7guLMhBRAhOtC+JCqegpKO3HSB4W8PnsoVed3XbtIKP
-         tvyw==
-X-Gm-Message-State: APt69E3MJieGuVHQ32X9IpjyLkMP0xWKmTq+DFR1KHoIQ9kASDQE1Sb8
-        4yDixkHg8cQnh2BodQYnjRb7oWDm
-X-Google-Smtp-Source: ADUXVKLm/qeuxfKjgRjdyiD7nAUbfKZAiJQ/zNrTKYlYSdhb9ClCj4Gsn8O2wqiGGSaK9QWL12W4Jg==
-X-Received: by 2002:a62:494f:: with SMTP id w76-v6mr2288722pfa.152.1528843644395;
-        Tue, 12 Jun 2018 15:47:24 -0700 (PDT)
-Received: from [192.168.0.7] ([103.6.157.159])
-        by smtp.gmail.com with ESMTPSA id x19-v6sm1601551pfi.5.2018.06.12.15.47.23
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 12 Jun 2018 15:47:23 -0700 (PDT)
-To:     git@vger.kernel.org
-Subject: Boat Owners List
-From:   Marlene Royle <marlener@dynamicaims.com>
-Message-ID: <89a8c4b5-6908-d86b-bebf-7a5e3e856d0f@dynamicaims.com>
-Date:   Tue, 12 Jun 2018 18:22:09 -0400
-User-Agent: Mozilla/5.0 (Windows NT 6.3; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Antivirus: Avast (VPS 180612-4, 06/12/2018), Outbound message
-X-Antivirus-Status: Clean
+        id S934794AbeFLX6D (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Jun 2018 19:58:03 -0400
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:59874 "EHLO
+        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S934625AbeFLX6C (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 12 Jun 2018 19:58:02 -0400
+Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w5CNhWFa020446;
+        Tue, 12 Jun 2018 16:57:59 -0700
+Authentication-Results: palantir.com;
+        spf=softfail smtp.mailfrom=newren@gmail.com
+Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
+        by mx0a-00153501.pphosted.com with ESMTP id 2jjpaa06bj-1;
+        Tue, 12 Jun 2018 16:57:58 -0700
+Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id CA4DD2230FC2;
+        Tue, 12 Jun 2018 16:57:58 -0700 (PDT)
+Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
+        by smtp.yojoe.local (Postfix) with ESMTP id C179F2CDE76;
+        Tue, 12 Jun 2018 16:57:58 -0700 (PDT)
+From:   Elijah Newren <newren@gmail.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: [PATCH] RelNotes 2.18: clarify where directory rename detection applies
+Date:   Tue, 12 Jun 2018 16:57:55 -0700
+Message-Id: <20180612235755.11309-1-newren@gmail.com>
+X-Mailer: git-send-email 2.18.0.rc0.3.gda9bce4c68
+X-Proofpoint-SPF-Result: softfail
+X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-06-12_14:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 suspectscore=3 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1805220000 definitions=main-1806120263
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Mention that this feature works with some commands (merge and cherry-pick,
+implying that it also works with commands that build on these like rebase
+-m and rebase -i).  Explicitly mentioning two commands hopefully implies
+that it may not always work with other commands (am, and rebase without
+flags that imply either -m or -i).
 
-Hi,
+Also, since the directory rename detection from this cycle was
+specifically added in merge-recursive and not diffcore-rename, remove the
+'in "diff" family" phrase from the note.  (Folks have requested in the
+past that `git diff` detect directory renames and somehow simplify its
+output, so it may be helpful to avoid implying that diff has any new
+capability here.)
 
-Greeting of the day!
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+After thinking for a while about my RFC at
+  https://public-inbox.org/git/CABPp-BF4gbwVRHA3D1vqXuSnh3aS9XVLqtEUEmfmLDKPccyxtA@mail.gmail.com/
+this commit seems like a simple fix.  We can discuss during the 2.19 and
+2.20 cycles what to do with rebase, if anything.
 
-Would you be interested in acquiring an email list of "Boat Owners" from USA?
-
-Our Databases:-        1.RV Owners List              2.Sail and Power boat Owners List
-                        3.Travelers List              4.Fishing Enthusiasts List
-                        5.Cruise Travelers List       6.Motorcycle Owners List
-                        7.Camping Enthusiasts List    8.Spa and Resort Visitors List
-                        9.Car Owners List             10.Outdoor Enthusiasts List and many more..,
-
-We provide Data fields on each record contains: Name (First and Last), Address, City, State, Zip, County, Opt-in Email Address, Boat use, Boat length, Boat Propulsion, Boat Fuel, Boat Hull Material, Boat Make, Boat Hull Shape, Boat Size, Boat Year, Boat Transaction Date, Boat Transaction Type, Boat Validation Date and Registration date.
-
-All the contacts are opt-in verified, complete permission based and can be used for unlimited multi-channel marketing.
-
-Please let me know your thoughts towards procuring the Boat Owners List.
-
-Waiting for your valuable and sincere reply.
+Also, if the above commit message feels incomplete without an explanation
+of why directory rename detection doesn't work with git-am, the following
+could be included:
 
 
-Best Regards,
-Marlene Royle
-Research Analyst
+More details about the git-am limitation for the curious:
+
+git-am tries to avoid a full three way merge, instead calling git-apply.
+That prevents us from detecting renames at all, which may defeat the
+directory rename detection.  There is a fallback, though; if the initial
+git-apply fails and the user has specified the -3 option, git-am will
+fall back to a three way merge.  However, git-am lacks the necessary
+information to do a "real" three way merge.  Instead, it has to use
+build_fake_ancestor() to get a merge base that is missing files whose
+rename may have been important to detect for directory rename detection
+to function.
+
+am-based rebases work by first generating a bunch of patches (which no
+longer record what the original commits were and thus don't have the
+necessary info from which we can find a real merge-base), and then
+calling `git am`.  This implies that am-based rebases will not always
+successfully detect directory renames either.  merged-based rebases
+(rebase -m) and cherry-pick-based rebases (rebase -i) are not affected
+by this shortcoming.
+
+ Documentation/RelNotes/2.18.0.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Documentation/RelNotes/2.18.0.txt b/Documentation/RelNotes/2.18.0.txt
+index ed80e5485b..449e49e0eb 100644
+--- a/Documentation/RelNotes/2.18.0.txt
++++ b/Documentation/RelNotes/2.18.0.txt
+@@ -6,7 +6,7 @@ Updates since v2.17
+ 
+ UI, Workflows & Features
+ 
+- * Rename detection logic in "diff" family that is used in "merge" has
++ * Rename detection logic that is used in "merge" and "cherry-pick" has
+    learned to guess when all of x/a, x/b and x/c have moved to z/a,
+    z/b and z/c, it is likely that x/d added in the meantime would also
+    want to move to z/d by taking the hint that the entire directory
+-- 
+2.18.0.rc0.3.gda9bce4c68
 
