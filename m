@@ -2,89 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2CBD01F403
-	for <e@80x24.org>; Tue, 12 Jun 2018 17:36:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D33EA1F403
+	for <e@80x24.org>; Tue, 12 Jun 2018 17:38:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754372AbeFLRgM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Jun 2018 13:36:12 -0400
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:37327 "EHLO
-        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754209AbeFLRgL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jun 2018 13:36:11 -0400
-Received: by mail-yw0-f194.google.com with SMTP id j134-v6so637444ywg.4
-        for <git@vger.kernel.org>; Tue, 12 Jun 2018 10:36:11 -0700 (PDT)
+        id S933378AbeFLRir (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Jun 2018 13:38:47 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:40245 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754374AbeFLRip (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jun 2018 13:38:45 -0400
+Received: by mail-wm0-f65.google.com with SMTP id n5-v6so466043wmc.5
+        for <git@vger.kernel.org>; Tue, 12 Jun 2018 10:38:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Bll/MVkcGT0HPr7YnDlAtMDVkrBpnCqYgxE3cyau9oI=;
-        b=h6nY0gwCLYX9svDCTo7EwMIvI0DXbsnnUqtY5Qz1Cb/z8JB5L3MqmMyCWoncWuTd9c
-         rMx+hwONzO9iez0I6kKywF4h/xsyW9YMrlpyHa/OFJ8TnF+sgucHhNu0sDRhag8QfuTE
-         gu/FZajXMBtb+fWfaXoAxONbGGNN/P9Q+w1p1itzv1xPWo6zfZzWonfBUwIoQzzl615G
-         nqSKaJthO2Lc1vzGykMgCwnQgeT3gUscXIkJcjJ54YMXx2l6JNTIlan4HxtCqpsHLF1c
-         vOhC7WyLC2htYhI1w7IynM6Duaa5sFQrnjigaBA2Krar/gSzpkzg8yN4LJ+RIw2obVok
-         fEvA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=dYwW3bFgTos6GHd1C4tF804k5jeFgZzoeznlB3Jm/Xw=;
+        b=T8Z0UQaW+amYugIH3GX8WzELdRExCoJky3T5XkK7ibL8jXFYx+HBF5XknPnDgFgke5
+         YZ51r0Cd8N0jj7DFbpKRwOdDLGzd/Fnei5lRyZlcTEycXsbs16Ie1vXA5sgH7sHPUgzX
+         pF6S8vU63rXvgNX3wsrZO8PTlrIif+hoOO0ZidGL8M0eiMCoqX12Dxeb8terF1CkgV4L
+         WYPZMPimmKdNO8GNwkaG+9lOH1GZoZvoK9EBrZLrPfCttoocUKqF/wRYbMLJe1HUbTbM
+         IdoHReIpeGNgi/vZ2a0VYw5Sk0TU3MYhdq6cwiV8jGM9+yZ4r0AhtyvKtofSYkDVnKbM
+         EL1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Bll/MVkcGT0HPr7YnDlAtMDVkrBpnCqYgxE3cyau9oI=;
-        b=SER4M0j41SQROcziQhWYvEh3wSM2Qx+W7HEXNmM8CnO1BgTaErsK13+ROe68jFikAt
-         T1LpXMSIaivVQuW9/ersH67nGMPTwOcCs9eMqCJ1ajDdlkHbdGZLLzEwSDgv+dFO2uft
-         uFgaFJTCxUFBcbPviuzJUfcFF2xVOK+JPtdEm/bn2zu4eZu2uTE9o3NYWlsKI3NkkNXb
-         2TxpPch66aRaMPad13qCFKX9oriOPFr3WHE1YIDZO6MKX0hDxkYe1cR8s1/T96hGRCGG
-         IaJSRD8JXbF+xwFtDUTT6sda+CIeC6btRMzTGWVjQd7BAjCt8GYNP+FSY7ANKNXjteCq
-         zQ5g==
-X-Gm-Message-State: APt69E2n0nUPRs2eBOEbNuuxkC6QfIAc9BnaiOxLJfh+AAlIa6U/ZNyZ
-        PkhtGcEBrv0rIGWrT6J6bvPgSfmOqPGhwdrC72uIgg==
-X-Google-Smtp-Source: ADUXVKIg5MsdY1YQ52h/P7H6j6luTp1aWsKqYh2eENxXLsT5YwHE4eRDqY7Xlk2Ml3tUGrAP1eUdLZnXbHAmkyNpp8M=
-X-Received: by 2002:a81:b283:: with SMTP id q125-v6mr658233ywh.414.1528824970406;
- Tue, 12 Jun 2018 10:36:10 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=dYwW3bFgTos6GHd1C4tF804k5jeFgZzoeznlB3Jm/Xw=;
+        b=KFSL1F0c7yglRKE7mTx6qXP/wYYbBhgCUdyG2Gr9KH3DJkeL2jlGO75Yo+SRx7KKA6
+         F4IiOEgvY31X1FXbDDGA/cFeLiRxnxuSWsQIubxXSDd5hiJY/FWOlOhpd8ITnYCe9ReZ
+         ya3X/dnGWZxkIzfnYHLeOTYYwSOUZz0itNIlf6KZC2eR3R747yzekKl4WlgtsRf7scS+
+         63VHJ/h7lb2oHq4/r75IyRxf4X0OYoqlk5B0DfuFkajAQg/zK6bKzEG8r1FczPLehmIy
+         Ebnf3NGHIRW35mmvccSXKTUmd0ZnZ2N6OTUeOSbhc64h5YNX29Pzw2/7hkx4q8CyGV+F
+         AJgA==
+X-Gm-Message-State: APt69E2YRSToRnvlPmFs7iBh5dWRNazQAi+2TH57VcgOsFUbBZACBnRv
+        Hsj1jVd5gqSl4uovERCYcUoRjASc
+X-Google-Smtp-Source: ADUXVKIovrhpgvFs8Md/P12OW5AMXEuIkH/3i9RUVXYUKzBIR5ODkN260q93D3Pgf1rJr6CtmONhfA==
+X-Received: by 2002:a1c:6943:: with SMTP id e64-v6mr987268wmc.14.1528825123965;
+        Tue, 12 Jun 2018 10:38:43 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id m10-v6sm932952wrq.56.2018.06.12.10.38.43
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 12 Jun 2018 10:38:43 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Masaya Suzuki <masayasuzuki@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] builtin/send-pack: populate the default configs
+References: <20180612172623.165420-1-masayasuzuki@google.com>
+Date:   Tue, 12 Jun 2018 10:38:42 -0700
+In-Reply-To: <20180612172623.165420-1-masayasuzuki@google.com> (Masaya
+        Suzuki's message of "Tue, 12 Jun 2018 10:26:23 -0700")
+Message-ID: <xmqqk1r3aorh.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <CACsJy8CNrQ-CKoJ+1NCR1rsO+v0ZNZ9CVAFsJpmcRWZY6HUtKw@mail.gmail.com>
- <20180609110414.GA5273@duynguyen.home>
-In-Reply-To: <20180609110414.GA5273@duynguyen.home>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 12 Jun 2018 10:35:59 -0700
-Message-ID: <CAGZ79kb3_0W7osWbU4tcvGvy0KVQJBpFD7q6njTjWJ7vOEmrtg@mail.gmail.com>
-Subject: Re: BUG: submodule code prints '(null)'
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     git <git@vger.kernel.org>, Heiko Voigt <hvoigt@hvoigt.net>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jun 9, 2018 at 4:04 AM Duy Nguyen <pclouds@gmail.com> wrote:
->
-> On Tue, Jun 05, 2018 at 05:31:41PM +0200, Duy Nguyen wrote:
-> > I do not know how to reproduce this (and didn't bother to look deeply
-> > into it after I found it was not a trivial fix) but one of my "git
-> > fetch" showed
-> >
-> > warning: Submodule in commit be2db96a6c506464525f588da59cade0cedddb5e
-> > at path: '(null)' collides with a submodule named the same. Skipping
-> > it.
->
-> The problem is default_name_or_path() can return NULL when a submodule
-> is not populated. The fix could simply be printing path instead of
-> name (because we are talking about path in the commit message), like
-> below.
->
-> But I don't really understand c68f837576 (implement fetching of moved
-> submodules - 2017-10-16), the commit that made this change, and not
-> sure if we should be reporting name here or path. Heiko?
+Masaya Suzuki <masayasuzuki@google.com> writes:
 
-That change is quite interesting as I did not understand it at first
-sight as well.
-See https://public-inbox.org/git/20171016135827.GC12756@book.hvoigt.net/
-and the follow ups, specifically
-https://public-inbox.org/git/20171019181109.27792-2-sbeller@google.com/
-that tries to clean up the code, but was ultimately dropped.
+> builtin/send-pack didn't call git_default_config, and because of this
+> git push --signed didn't respect the username and email in gitconfig in
+> the HTTP transport.
+>
+> Signed-off-by: Masaya Suzuki <masayasuzuki@google.com>
+> ---
+>  builtin/send-pack.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+
+Makes sense.  I wonder if this was deliberate (i.e. we had some
+reason not wanting to be affected by some _other_ configuration
+items and refraining from doing the default-config was the way to
+implement it), but I do not think of a reason offhand.
+
+Will queue.  Thanks.
+
+>
+> diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+> index 4923b1058..42fd8d1a3 100644
+> --- a/builtin/send-pack.c
+> +++ b/builtin/send-pack.c
+> @@ -121,7 +121,7 @@ static int send_pack_config(const char *k, const char *v, void *cb)
+>  			}
+>  		}
+>  	}
+> -	return 0;
+> +	return git_default_config(k, v, cb);
+>  }
+>  
+>  int cmd_send_pack(int argc, const char **argv, const char *prefix)
