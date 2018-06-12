@@ -2,128 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE5131F403
-	for <e@80x24.org>; Tue, 12 Jun 2018 09:48:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 666001F403
+	for <e@80x24.org>; Tue, 12 Jun 2018 09:48:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754301AbeFLJsh (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Jun 2018 05:48:37 -0400
-Received: from mail-vk0-f65.google.com ([209.85.213.65]:39382 "EHLO
-        mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754286AbeFLJsg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jun 2018 05:48:36 -0400
-Received: by mail-vk0-f65.google.com with SMTP id r83-v6so8706199vkf.6
-        for <git@vger.kernel.org>; Tue, 12 Jun 2018 02:48:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Qrh322jmxVzEO+tmaoGOMVVd9FzpXDqeS7izma9LYhg=;
-        b=Reddw2rVyLuKyA87Rc+s0pMhf7OTrN18IFNjxywI35y2JjcXXJW9ZuylWxmwlU4hfV
-         lGkJlZ994X3vEW0iFA5kBs+SRVeT8w3UY7DQviySHvPnRoi4iJlGMu5OaOtjPdPV0tBF
-         z8CnhCJsgkvWEcDTfpKPFIjfWFlOFhTlG0EKG0/1UvEUIOrUYnK2MrENa3iiXsBgL3CM
-         3K8kOxEt3xQw5Y1O+fZATjy6VGoITYQdvjXcMwRK1VRDW4W7O5KAQ1X428B+oRaZNUhv
-         Efp5GfS0SjNDL8532hWjTOQUeEpAIiOMpWCD5NCUnwv/CSUQ4gubs2fV86rHCuu/lsMB
-         ghMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Qrh322jmxVzEO+tmaoGOMVVd9FzpXDqeS7izma9LYhg=;
-        b=WcSaWvQUV3vYFtAefKlkVMRRjCJRRec6WMl1Dm0yJcoHiUG4Z+0W0xn0uGZpZeT6mt
-         s7RM9j3ceKFKgyH1d87mRFzy/KcuMjZsy4Xxeal7Bz5CfQoBwRb92oU7nRrCTeFAe0yx
-         RgQxfNKR3UbTvEMFEZ8X4nvTyNMEE6YbX6Mor/kHrmFvBFW7Wpm3p49IylS9vTSEi/DC
-         AbQWqZCZV2h2vx/b2YMKu89lX3SYeILzzQ46S1Uu0lw48rOgFf9VIZnokquTR3IqxyJs
-         jpsCIu58t6PKsT7PGVOvTrUnE5PxDja0I3pzXGa29bfmdHPNeCv3KKstDEuBvTgTQqnD
-         42oQ==
-X-Gm-Message-State: APt69E0uRAtL0lOSmlT1wt8JxMSOQ5Yt37rdD1szFZgbz6GBi4yDm3Hi
-        55XhDBLTYqZKyuIJ9Jgs8wNTxyMoo/+KZpx934U=
-X-Google-Smtp-Source: ADUXVKLvhkoJXuRTYp8IGFB5Fyy3e8XUo6T1GpzGpzkdkb9g/ZVhITXgA7CCTqfjhVYcSkt+EAy8sPG8QY5K+F/mCbg=
-X-Received: by 2002:a1f:4313:: with SMTP id q19-v6mr1586370vka.83.1528796916053;
- Tue, 12 Jun 2018 02:48:36 -0700 (PDT)
+        id S933110AbeFLJsw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Jun 2018 05:48:52 -0400
+Received: from cloud.peff.net ([104.130.231.41]:42248 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S932639AbeFLJsv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jun 2018 05:48:51 -0400
+Received: (qmail 26250 invoked by uid 109); 12 Jun 2018 09:48:51 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 12 Jun 2018 09:48:51 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 22228 invoked by uid 111); 12 Jun 2018 09:49:06 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 12 Jun 2018 05:49:06 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Jun 2018 05:48:49 -0400
+Date:   Tue, 12 Jun 2018 05:48:49 -0400
+From:   Jeff King <peff@peff.net>
+To:     Kirill Smelkov <kirr@nexedi.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Brandon Williams <bmwill@google.com>,
+        Takuto Ikuta <tikuta@chromium.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH v2] fetch-pack: don't try to fetch peel values with --all
+Message-ID: <20180612094849.GB26123@sigill.intra.peff.net>
+References: <20180610143231.7131-1-kirr@nexedi.com>
+ <20180611042016.GA31642@sigill.intra.peff.net>
+ <20180611044710.GB31642@sigill.intra.peff.net>
+ <CAPig+cT73d0rYoSbt7oHVG4MYHVvjKidP0ogRwV+9F73jcjZEA@mail.gmail.com>
+ <20180611055357.GA16430@sigill.intra.peff.net>
+ <20180611094255.GA15563@deco.navytux.spb.ru>
 MIME-Version: 1.0
-Received: by 2002:ab0:3105:0:0:0:0:0 with HTTP; Tue, 12 Jun 2018 02:48:35
- -0700 (PDT)
-In-Reply-To: <20180611182053.GA20665@aiede.svl.corp.google.com>
-References: <xmqqmuy2wz4j.fsf@gitster-ct.c.googlers.com> <20180417220219.30445-1-szeder.dev@gmail.com>
- <20180607054834.GB6567@aiede.svl.corp.google.com> <20180608211639.7611-1-szeder.dev@gmail.com>
- <20180611182053.GA20665@aiede.svl.corp.google.com>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Tue, 12 Jun 2018 11:48:35 +0200
-Message-ID: <CAM0VKjm7Nap_tH-0Nd_QxabEPDL=71sVifo8cqhjMkqZOERJTA@mail.gmail.com>
-Subject: Re: [PATCH] completion: correct zsh detection when run from
- git-completion.zsh (Re: [PATCH v2] completion: reduce overhead of clearing
- cached --options)
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Matthew Coleman <matt@1eanda.com>,
-        Stephon Harris <theonestep4@gmail.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Rick van Hattem <wolph@wol.ph>,
-        Dave Borowitz <dborowitz@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20180611094255.GA15563@deco.navytux.spb.ru>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 11, 2018 at 8:20 PM, Jonathan Nieder <jrnieder@gmail.com> wrote=
-:
-> From: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
-> Subject: completion: correct zsh detection when run from git-completion.z=
-sh
->
-> v2.18.0-rc0~90^2 (completion: reduce overhead of clearing cached
-> --options, 2018-04-18) worked around a bug in bash's "set" builtin on
-> MacOS by using compgen instead.  It was careful to avoid breaking zsh
-> by guarding this workaround with
->
->         if [[ -n ${ZSH_VERSION-}} ]]
->
-> Alas, this interacts poorly with git-completion.zsh's bash emulation:
->
->         ZSH_VERSION=3D'' . "$script"
->
-> Correct it by instead using a new GIT_SOURCING_ZSH_COMPLETION shell
-> variable to detect whether git-completion.bash is being sourced from
-> git-completion.zsh.  This way, the zsh variant is used both when run
-> from zsh directly and when run via git-completion.zsh.
->
-> Reproduction recipe:
->
->  1. cd git/contrib/completion && cp git-completion.zsh _git
->  2. Put the following in a new ~/.zshrc file:
->
->         autoload -U compinit; compinit
->         autoload -U bashcompinit; bashcompinit
->         fpath=3D(~/src/git/contrib/completion $fpath)
->
->  3. Open zsh and "git <TAB>".
->
-> With this patch:
-> Triggers nice git-completion.bash based tab completion
->
-> Without:
->  contrib/completion/git-completion.bash:354: read-only variable: QISUFFIX
->  zsh:12: command not found: ___main
->  zsh:15: _default: function definition file not found
->  _dispatch:70: bad math expression: operand expected at `/usr/bin/g...'
->  Segmentation fault
+On Mon, Jun 11, 2018 at 09:43:02AM +0000, Kirill Smelkov wrote:
 
-Btw, even if ZSH were not to segfault, the resulting shell would be
-next to useless.  The thing is that 'compgen -v foo' is supposed to
-list only variable names starting with 'foo', at least that's what it
-does under Bash.  In ZSH's Bash emulation, however, it lists _all_
-variable names, including such fundamental env vars like PATH, HOME,
-and IFS.  So when ZSH took the wrong if branch and run that
+> > Looking deeper, we do not need these trees and blobs at all. The problem
+> > is really just a tag that peels to an object that is not otherwise a ref
+> > tip, regardless of its type.
+> 
+> Thanks for feedback and for coming up with the fix. Sure, I'm ok with
+> moving the test into your patch. However, even if a test becomes
+> different - narrowing down root of _current_ problem, I suggest to also
+> keep explicitly testing tag-to-blob and tag-to-tree (and if we really
+> also want tag-to-commit and tag-to-tag) behaviour. Reason is: if we skip
+> those now, they can potentially break in the future.
 
-  unset $(compgen -v __gitcomp_builtin_)
+Yeah, I have no problem testing these cases separately. There's no bug
+with them now, but it is a slightly uncommon case. My suggestion would
+be to submit a patch that goes on top of mine that covers these cases.
 
-then it would unset PATH and everything else as well.
+> I would also suggest to fix upload-pack, as it is just not consistent to
+> reject sending objects that were advertised, and so can strike again
+> some way in the future. After all git.git's fetch-pack is not the only
+> git client that should be possible to interact with git.git's
+> upload-pack on remote side, right?
+
+No, it's not the only client. At the same time, I am on the fence over
+whether upload-pack's behavior is wrong or not. It depends what you take
+a peeled advertisement line to mean. Does it mean: this object has been
+advertised and clients should be able to fetch it? Or does it mean: by
+the way, you may be interested to know the peeled value of this tag in
+case you want to do tag-following?
+
+So far I think it has only meant the latter. I could see an argument for
+the former, but any client depending on that would never have worked,
+AFAICT. We could _make_ it work, but how would a client know which
+server version it's talking to (and therefore whether it is safe to make
+the request?). I think you'd have to add a capability to negotiate.
+
+> I'm not sure, but I would say that `fetch-pack --all` from an empty
+> repository should not fail and should just give empty output as fetch
+> does.
+
+Yeah, that seems reasonable to me. The die() that catches this dates
+back to 2005-era, and we later taught the "fetch" porcelain to handle
+this. I don't _think_ anybody would be upset that the plumbing learned
+to treat this as a noop. It's probably a one-liner change in
+fetch_pack() to return early instead of dying.
+
+> For the reference all the cases presented here are real - they appear in
+> our repositories on lab.nexedi.com for which I maintain the backup, and
+> I've noticed them in the process of switching git-backup from using
+> fetch to fetch-pack here:
+> 
+> https://lab.nexedi.com/kirr/git-backup/blob/0ab7bbb6/git-backup.go#L436
+
+I applaud you using the porcelain for your scripts, but I suspect that
+fetch-pack by itself is not at all well-used or well-tested these days
+(certainly this --all bug has been around for almost 6 years and is not
+very hard to trigger in practice).
+
+If an extra connection isn't a problem, you might be better off with
+"git ls-remote", and then picking through the results for refs of
+interest, and then "git fetch-pack" to actually get the pack. That's how
+git-fetch worked when it was a shell script (e.g., see c3a200120d, the
+last shell version).
+
+It may also be sane to just use "git fetch", which I'd say is _fairly_
+safe to script. Of course I have no problem if you want to fix all of
+the corner cases in fetch-pack. Just giving you fair warning. :)
+
+-Peff
