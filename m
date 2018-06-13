@@ -2,91 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 657C51F403
-	for <e@80x24.org>; Wed, 13 Jun 2018 06:59:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 23EF71F403
+	for <e@80x24.org>; Wed, 13 Jun 2018 07:39:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933822AbeFMG7c (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Jun 2018 02:59:32 -0400
-Received: from mail-vk0-f68.google.com ([209.85.213.68]:35280 "EHLO
-        mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933318AbeFMG7b (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jun 2018 02:59:31 -0400
-Received: by mail-vk0-f68.google.com with SMTP id o17-v6so893697vka.2
-        for <git@vger.kernel.org>; Tue, 12 Jun 2018 23:59:31 -0700 (PDT)
+        id S1754452AbeFMHja (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Jun 2018 03:39:30 -0400
+Received: from mail-ua0-f193.google.com ([209.85.217.193]:36800 "EHLO
+        mail-ua0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754467AbeFMHj3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jun 2018 03:39:29 -0400
+Received: by mail-ua0-f193.google.com with SMTP id c23-v6so1083441uan.3
+        for <git@vger.kernel.org>; Wed, 13 Jun 2018 00:39:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=soz1ZCeo2P13LxVdx8c5wQGEcyEgRBivwqGaM4i5AvU=;
-        b=aYpvk4HgRQdpqQN9c/ecnM4hj7NM4iH1+uckFAdcCasNkcWhmWPJN1yoJDFVOZw6ax
-         0o888XbKYckF1pBlgkOMYqt3qkvAAmk1grkMLQqwWp4deKdXpD+iNBJem7GXoeP4e0zZ
-         CeNH12daoFDNnbASLVsQ0OljeZI3w8GFyDH2rvD+byxytBEdg6wS9FVUdM8WbX0CgEKT
-         KHO82lW1HFqMyRQaRK0ZmJSpVYF7BWh071P78X8vyV/Wb8q4rGVVRa8ziq2U91ABZtHt
-         Ld21Dz7t7r/no86iZFiBy+0F7mqBXgrR7xYg9tCuU5DZEukz9KB/EvyDA7mGzn/XbDHX
-         pdkA==
+        bh=eP69fKj0BJc+fYDafIZYFkuDEnKZjpngj9Ci6i2Luuw=;
+        b=fFJG0t6mSB320V97B61IRLmxV4XX6OeO3w14kAAWRTtNIGvd05UQZewatRx7ot0vpV
+         +WP8W+JiuJQjTQBFsn1pCeI91kJ8oN99rO6SJeeaBy4UEIpMv88qDTfHqBpfPZOw0K2/
+         s4TiuJkMuHk3FsDJuAC2wO/um1lnOKBFFXVCaB2Te2eOgPmtLnp1DBGdMsKH2tgbyr76
+         hPyeiBddZwzS/IBREYDAy2c0wlN9H+h/iyQsG6mFMaKiSjGYPOB2Wc0tcyAyHWTKf4Dq
+         xIkPACoYbesEPqe4vU0f5HQNn/fp6aPA6nPWuuhzF+0zG5R5x4uUyc9elAcNwRb/Ymt2
+         /aVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=soz1ZCeo2P13LxVdx8c5wQGEcyEgRBivwqGaM4i5AvU=;
-        b=shqPp4jruCRW7qNa4aVmEj7ldQsPM3DdVpbSM6wOLAtP0w7I901zfTkqiVTgq4FLUY
-         DSabwnpyhPRkVdhvjTPSVa7TA0kwXxUgDE6ZROUcwJekFsJRuvxKlxBpTErSNExYaZ9d
-         4ahIKFsuEoWP7aj7Q+ewDO89C1xsdhm1A8vLs0AVIvu58Qo164eOC5l7FGBJnCB8SvLW
-         edYr/vC4Ns3kk7A38LnMJ4HwLSaJUqbr6WbRjQOLD2UG+3JsnTY60iHER/NP2SwxnPda
-         kVSt1iRjxvwzVhp3UaSEcMDjDMtK5A0qGpPsDeaL+tf5K8/ZTM4R3uav9TLnPUXR042A
-         a8QA==
-X-Gm-Message-State: APt69E3Y+BpG/2o+pDwRWkRnqNy5kQwYVGKFsRHiyFlnJrC24Wzgh/HK
-        uUS9HigyZTkaAiADz0k7o8h/fa3S2eKm//yrMpM=
-X-Google-Smtp-Source: ADUXVKIhunIstGKjaNemIV3EG+qUMNC7yg1c4yZ9e4j0647O1qO2M9IR20AqFBxxXiVMMVaqg2ZGQwTe8JAOc1uR4sM=
-X-Received: by 2002:a1f:3ec2:: with SMTP id l185-v6mr2194128vka.163.1528873170746;
- Tue, 12 Jun 2018 23:59:30 -0700 (PDT)
+        bh=eP69fKj0BJc+fYDafIZYFkuDEnKZjpngj9Ci6i2Luuw=;
+        b=FuFgmqmm356syxBt7U8yb8Ac/unCsm14cHk55RzJ2kFYExvEsX4Cue7Ms/jh6U1PVs
+         EykrVNy0CmnPeXGMpz31RteXzTq4oT9yQFZXlFZAxvqy0ej/38whBO41j2t7C12bIQPP
+         BMT9VkGgCUw2UTgacMs5SQ64TrNu1kkcsdK9P+pEjj7s8XXFruEpkBiPyj4Z97uiIdnN
+         8yT75KCUHPC0L6K9edPY2lGy9iQ1GSge0KI1SzpmyA5n5uj+HcNTNNd1WI7navk3SN8X
+         4lHl5oxIHsT7xmeuZeGY9WPGiyTL+m7ZmqaNMU0a0KLAisxx68CTgDYV5D3wDR+1EdFC
+         /Pmg==
+X-Gm-Message-State: APt69E2XNvzR5niY60LJm7TixHApWMdrUxOvhC0g5AosTW3McF/Q4AC6
+        4O6rVK+xbbh5/EHUZDTwBtFLwFu5CF70b6z/7fY=
+X-Google-Smtp-Source: ADUXVKJzF36cqHb0qtWaVp8+fz0KqNckCA1EG78ZKtgdqJISW3wY9ExnbOzm5LOJ9iI2J5uvS167Uq5ZccQYOAfDAps=
+X-Received: by 2002:a9f:3ac4:: with SMTP id q4-v6mr2531213uag.123.1528875568333;
+ Wed, 13 Jun 2018 00:39:28 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180607051958.759-1-tmz@pobox.com> <20180613031040.3109-1-tmz@pobox.com>
-In-Reply-To: <20180613031040.3109-1-tmz@pobox.com>
-From:   Luis Marsano <luis.marsano@gmail.com>
-Date:   Wed, 13 Jun 2018 02:59:17 -0400
-Message-ID: <CAHqJXRHZSGQF9cR8f4N5j8oSRCAoNzXnWLAsGO4witjmHU63ZA@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 0/4] contrib/credential/netrc Makefile & test improvements
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     git@vger.kernel.org, Ted Zlatanov <tzz@lifelogs.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <20180610194444.GA1913@Sonnenschein.localdomain>
+ <20180611203541.GA6@606faba9ba17> <20180611205704.GA1399@Sonnenschein.localdomain>
+ <CAGHpTBJFwToEwnk4P17AJ+z-55Nzc04OBbTvsbFRrkXJpfXAkQ@mail.gmail.com> <20180612085119.GA5@aaaa10152750>
+In-Reply-To: <20180612085119.GA5@aaaa10152750>
+From:   Orgad Shaneh <orgads@gmail.com>
+Date:   Wed, 13 Jun 2018 10:39:17 +0300
+Message-ID: <CAGHpTBJ9WiWdJw=SgxJpWqP9CucANatafx6iwCRCRY15wTBsVg@mail.gmail.com>
+Subject: Re: [PATCH] checkout files in-place
+To:     Edward Thomson <ethomson@edwardthomson.com>
+Cc:     =?UTF-8?B?5YWr56We5ZKM6bq7?= <drizzd@gmx.net>,
+        git <git@vger.kernel.org>, Nikolai Kosjar <nikolai.kosjar@qt.io>,
+        ivan.donchevskii@qt.io
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 12, 2018 at 11:10 PM Todd Zullinger <tmz@pobox.com> wrote:
+On Tue, Jun 12, 2018 at 11:51 AM Edward Thomson
+<ethomson@edwardthomson.com> wrote:
 >
-> This replaces my 2/2 "use in-tree Git.pm for tests" with
-> Luis's improved version.  It also adds Luis's fix to ensure
-> the proper exit status on test failures and a minor
-> whitespace cleanup.
+> On Tue, Jun 12, 2018 at 09:13:54AM +0300, Orgad Shaneh wrote:
+> > Some of my colleagues use an ancient version of Source Insight, which also
+> > locks files for write.
 >
-> Is it alright to forge your signoff Luis?
+> If that application is locking files for writing (that is to say, it did
+> not specify the `FILE_SHARE_WRITE` bit in the sharing modes during
+> `CreateFile`) then this patch would not help.
+>
+> Applications, generally speaking, should be locking files for write.
+> It's the default in Win32 and .NET's file open APIs because few
+> applications are prepared to detect and support a file changing out from
+> underneath them in the middle of a read.
 
-Thanks, that's fine.
-You should sign-off on those, too: you identified the problems, told
-me the solutions, tested them, and deserve the credit.
-Moreover, Documentation/SubmittingPatches encourages it.
+I agree.
 
-When the patches are ready, I think we'll need the primary author
-(Ted) to acknowledge before the maintainer (Junio) can approve.
+> > It's less important than it was before those fixes, but it is still needed
+> > for users of Qt Creator 4.6 (previous versions just avoided mmap, 4.7 uses
+> > mmap only for system headers). Other tools on Windows might as well
+> > misbehave.
+>
+> I don't understand what mmap'ing via `CreateFileMapping` has to do with
+> this.  It takes an existing `HANDLE` that was opened with `CreateFile`,
+> which is where the sharing mode was supplied.
 
-> Luis Marsano (2):
->   git-credential-netrc: use in-tree Git.pm for tests
->   git-credential-netrc: fix exit status when tests fail
->
-> Todd Zullinger (2):
->   git-credential-netrc: make "all" default target of Makefile
->   git-credential-netrc: minor whitespace cleanup in test script
->
->  contrib/credential/netrc/Makefile                  | 3 +++
->  contrib/credential/netrc/t-git-credential-netrc.sh | 9 +++++----
->  contrib/credential/netrc/test.pl                   | 5 +++--
->  3 files changed, 11 insertions(+), 6 deletions(-)
+I'm not completely sure. The file is opened using CreateFile[1] with
+FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE.
+Then this handle is passed to CreateFileMapping[2]. For a reason I don't
+understand, when mapping is used, the handle is never released (until
+the file is closed), but when it is not used, the file is being read, then the
+handle is released.
+
+Maybe Ivan or Nikolai can shed some light on this process.
+
+Anyway, with Qt Creator 4.7 this should be a non-issue, so I'm reluctant about
+this change here.
+
+> I would be surprised if there are other tools on Windows that have
+> specified `FILE_SHARE_WRITE` but not `FILE_SHARE_DELETE`.  Generally
+> speaking, if you don't care about another process changing a file
+> underneath you then you should specify both.  If you do then you should
+> specify neither.
+
+The problem is that even if you specify FILE_SHARE_WRITE and FILE_SHARE_DELETE,
+the file can be unlinked, but it cannot be created with the same name
+until its handle
+is closed, unless you rename it *before* unlinking.
+
+- Orgad
+
+[1] https://github.com/llvm-mirror/llvm/blob/371257e/lib/Support/Windows/Path.inc#L1045
+[2] https://github.com/llvm-mirror/llvm/blob/371257e/lib/Support/Windows/Path.inc#L836
