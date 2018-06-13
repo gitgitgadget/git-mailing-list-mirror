@@ -2,130 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 84C421F403
-	for <e@80x24.org>; Wed, 13 Jun 2018 11:34:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8FDD1F403
+	for <e@80x24.org>; Wed, 13 Jun 2018 12:29:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935500AbeFMLeA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Jun 2018 07:34:00 -0400
-Received: from mail187-21.suw11.mandrillapp.com ([198.2.187.21]:40477 "EHLO
-        mail187-21.suw11.mandrillapp.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S935492AbeFMLd5 (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 13 Jun 2018 07:33:57 -0400
-X-Greylist: delayed 900 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Jun 2018 07:33:57 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=mandrill; d=nexedi.com;
- h=From:Subject:To:Cc:Message-Id:In-Reply-To:References:Date:MIME-Version:Content-Type:Content-Transfer-Encoding; i=kirr@nexedi.com;
- bh=B73T0J9Ofl6qijovtILTdt29Op0uyiJ55svkiS8pu+U=;
- b=MR8piP2JFd8iZ1E1gC9CizVKSQcd2D3mf+hDn5QAeho0fTnB+ec4eK+SHPTOTj6EQsOUn4rBIEma
-   zckY79qxI8WKZhxwipm/WxYJ+8fU0Gd+A/7J0Ac//5Pex1Nweg4YNNvYWhmoLoM1dAk1p54j5fd2
-   ytG+IZsjwanTt7epwms=
-Received: from pmta01.mandrill.prod.suw01.rsglab.com (127.0.0.1) by mail187-21.suw11.mandrillapp.com id h440ia174i4t for <git@vger.kernel.org>; Wed, 13 Jun 2018 11:18:56 +0000 (envelope-from <bounce-md_31050260.5b20fda0.v1-0a9ac1e832f34b98b324c37bd93e30f1@mandrillapp.com>)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mandrillapp.com; 
- i=@mandrillapp.com; q=dns/txt; s=mandrill; t=1528888736; h=From : 
- Subject : To : Cc : Message-Id : In-Reply-To : References : Date : 
- MIME-Version : Content-Type : Content-Transfer-Encoding : From : 
- Subject : Date : X-Mandrill-User : List-Unsubscribe; 
- bh=B73T0J9Ofl6qijovtILTdt29Op0uyiJ55svkiS8pu+U=; 
- b=bXpmAwIN9ajSkCFOGaG3wUXz7QgdhPuC/6gA7yBe2UhBY/xyA0Hv0rcZoBbd4Unl57oiJZ
- 9S+Eyb8NgQ9eD3fYsnSlkVEwBwkjqkQtYWxxFSMwedUCnDaFIrAkYIiAojykTMj0OEpJ2Btd
- ygHeG9ljvZKFjSiQkzSUGZ5dLtm7s=
-From:   Kirill Smelkov <kirr@nexedi.com>
-Subject: [PATCH] fetch-pack: test explicitly that --all can fetch tag references pointing to non-commits
-Received: from [87.98.221.171] by mandrillapp.com id 0a9ac1e832f34b98b324c37bd93e30f1; Wed, 13 Jun 2018 11:18:56 +0000
-X-Mailer: git-send-email 2.18.0.rc1.253.gf85a566b11.dirty
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Brandon Williams <bmwill@google.com>,
-        Takuto Ikuta <tikuta@chromium.org>, Jeff King <peff@peff.net>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        <git@vger.kernel.org>, Kirill Smelkov <kirr@nexedi.com>
-Message-Id: <20180613111840.1427-1-kirr@nexedi.com>
-In-Reply-To: <20180612185413.GA21856@deco.navytux.spb.ru>
-References: <20180612185413.GA21856@deco.navytux.spb.ru>
-X-Report-Abuse: Please forward a copy of this message, including all headers, to abuse@mandrill.com
-X-Report-Abuse: You can also report abuse here: http://mandrillapp.com/contact/abuse?id=31050260.0a9ac1e832f34b98b324c37bd93e30f1
-X-Mandrill-User: md_31050260
-Date:   Wed, 13 Jun 2018 11:18:56 +0000
+        id S935346AbeFMM3K (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Jun 2018 08:29:10 -0400
+Received: from cpanel4.indieserve.net ([199.212.143.9]:33942 "EHLO
+        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935244AbeFMM3J (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jun 2018 08:29:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
+        Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=IMKrIM1UlcyBwKIfsQlpkZaorHhi3UtayWFTdIAMxF0=; b=R0Jp6HyUkcwPe/cvFswcFk2pZ
+        MgU4CPL4j05b5SorZjhZDJMqryZufB8gaMaRQ5TF+y8flPltLZgPz0QzMxv6srb96//JemOhA6J47
+        6ZmXm5VC4pq02sJuzkjKfNMPD1tdeJ2U86M2kc9NfnP7HOSwiVhLDcorz1LmVFS18BICE7h3bkCJ2
+        A6cO4cMLsuf+Ch6z0lF84oMGwqQ4n38u7bKUR0iDkOA99y9NDVoC+dC4IobZpZTCKHAVy/x1YQvpE
+        VzH+LqfnkKcFnYI1eXkv2mEoVj81gPyvaqHiUEEjXVRoc0sRzJj76Pf0AqZkWXnFjczX9LKwZmpov
+        ksZgVRP1A==;
+Received: from cpeac202e043973-cmac202e043970.cpe.net.cable.rogers.com ([174.112.22.87]:56120 helo=localhost.localdomain)
+        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1fT4te-00HJIY-I9; Wed, 13 Jun 2018 08:29:07 -0400
+Date:   Wed, 13 Jun 2018 08:26:34 -0400 (EDT)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Stefan Beller <sbeller@google.com>
+cc:     Derrick Stolee <stolee@gmail.com>, git <git@vger.kernel.org>
+Subject: Re: is there a canonical doc about how to deal with whitespace
+ issues?
+In-Reply-To: <CAGZ79kazegY-udjKfbkfw=ox82cfxhO5E3AEjLKkSt3LMY-DFw@mail.gmail.com>
+Message-ID: <alpine.LFD.2.21.1806130824110.12332@localhost.localdomain>
+References: <alpine.LFD.2.21.1806080914520.20892@localhost.localdomain> <b8801d73-71c4-15c8-4b29-8e4edb3faec9@gmail.com> <CAGZ79kazegY-udjKfbkfw=ox82cfxhO5E3AEjLKkSt3LMY-DFw@mail.gmail.com>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-OutGoing-Spam-Status: No, score=-0.2
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fetch-pack --all became broken with respect to unusual tags in
-5f0fc64513 (fetch-pack: eliminate spurious error messages, 2012-09-09),
-and was fixed only recently in e9502c0a7f (fetch-pack: don't try to fetch
-peel values with --all, 2018-06-11). However the test added in
-e9502c0a7f does not explicitly cover all funky cases.
+On Mon, 11 Jun 2018, Stefan Beller wrote:
 
-In order to be sure fetching funky tags will never break, let's
-explicitly test all relevant cases with 4 tag objects pointing to 1) a
-blob, 2) a tree, 3) a commit, and 4) another tag objects. The referenced
-tag objects themselves are referenced from under regular refs/tags/*
-namespace. Before e9502c0a7f `fetch-pack --all` was failing e.g. this way:
+> On Fri, Jun 8, 2018 at 10:15 AM Derrick Stolee <stolee@gmail.com> wrote:
+> >
+> > On 6/8/2018 9:18 AM, Robert P. J. Day wrote:
+> > >    for one of my courses, i wanted to write a section about the
+> > > various techniques for dealing with whitespace issues in git, so
+> > > i started
+>
+> What do you mean by white space issues?
+> That in itself is a complex topic:
 
-        .../git/t/trash directory.t5500-fetch-pack/fetchall$ git ls-remote ..
-        440858748ae905d48259d4fb67a12a7aa1520cf7        HEAD
-        ...
-        bc4e9e1fa80662b449805b1ac29fc9b1e4c49187        refs/tags/tag-to-blob                   # <-- NOTE
-        038f48ad0beaffbea71d186a05084b79e3870cbf        refs/tags/tag-to-blob^{}
-        520db1f5e1afeaa12b1a8d73ce82db72ca036ee1        refs/tags/tag-to-tree                   # <-- NOTE
-        7395c100223b7cd760f58ccfa0d3f3d2dd539bb6        refs/tags/tag-to-tree^{}
+  i know ... it's not even clear that just dealing with EOL
+standardization shouldn't be a topic all by itself.
 
-        .../git/t/trash directory.t5500-fetch-pack/fetchall$ git fetch-pack --all ..
-        fatal: A git upload-pack: not our ref 038f48ad0beaffbea71d186a05084b79e3870cbf
-        fatal: The remote end hung up unexpectedly
+> * There are 3 different modes to ignore white space changes:
+>   - trailing whitespaces,
+>   - conversion of tab to space and back
+>     These two are caught by the default in 'git diff --check'
+>   - any white space change
+>     This is interesting to ignore in git-blame[1], but sometimes
+>     it is actually interesting.
+>
+> [1] See also
+> https://commondatastorage.googleapis.com/chrome-infra-docs/flat/depot_tools/docs/html/git-hyper-blame.html
+>
+>
+>
+> > > making a list, things like:
+> > >
+> > >    - running "git diff --check"
+> > >    - "git commit --cleanup=" possibilities
+> > >    - config options like core.{eol,safecrlf,autocrlf}
+>
+> This sounds more like line ending or cross platform issues
+> than whitespaces (except .eol)
 
-Signed-off-by: Kirill Smelkov <kirr@nexedi.com>
----
- t/t5500-fetch-pack.sh | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+  i just started a quick-and-dirty wiki page as a reference to things
+that relate to whitespace:
 
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index f20bb59d22..b560d90c7b 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -528,6 +528,34 @@ test_expect_success 'test --all with tag to non-tip' '
- 	)
- '
- 
-+test_expect_success 'test --all wrt tag to non-commits' '
-+	blob=$(echo "hello blob" | git hash-object -t blob -w --stdin) &&
-+	git tag -a -m "tag -> blob" tag-to-blob $blob &&
-+ \
-+	tree=$(printf "100644 blob $blob\tfile" | git mktree) &&
-+	git tag -a -m "tag -> tree" tag-to-tree $tree &&
-+ \
-+	tree2=$(printf "100644 blob $blob\tfile2" | git mktree) &&
-+	commit=$(git commit-tree -m "hello commit" $tree) &&
-+	git tag -a -m "tag -> commit" tag-to-commit $commit &&
-+ \
-+	blob2=$(echo "hello blob2" | git hash-object -t blob -w --stdin) &&
-+	tag=$(printf "object $blob2\ntype blob\ntag tag-to-blob2\n\
-+tagger author A U Thor <author@example.com> 0 +0000\n\nhello tag" | git mktag) &&
-+	git tag -a -m "tag -> tag" tag-to-tag $tag &&
-+ \
-+	mkdir fetchall &&
-+	(
-+		cd fetchall &&
-+		git init &&
-+		git fetch-pack --all .. &&
-+		git cat-file blob $blob >/dev/null &&
-+		git cat-file tree $tree >/dev/null &&
-+		git cat-file commit $commit >/dev/null &&
-+		git cat-file tag $tag >/dev/null
-+	)
-+'
-+
- test_expect_success 'shallow fetch with tags does not break the repository' '
- 	mkdir repo1 &&
- 	(
+  http://crashcourse.ca/dokuwiki/doku.php?id=git_whitespace
+
+it's not even *remotely* close to comprehensive, i just wanted to
+start making a list. feel free to make other suggestions as i keep
+adding to that page.
+
+rday
+
 -- 
-2.18.0.rc1.253.gf85a566b11.dirty
+
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                  http://crashcourse.ca/dokuwiki
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
