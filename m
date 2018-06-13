@@ -2,70 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 28C2F1F403
-	for <e@80x24.org>; Wed, 13 Jun 2018 17:43:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D65941F403
+	for <e@80x24.org>; Wed, 13 Jun 2018 18:00:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935315AbeFMRnu (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Jun 2018 13:43:50 -0400
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:33516 "EHLO
-        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935163AbeFMRnt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jun 2018 13:43:49 -0400
-Received: by mail-yw0-f196.google.com with SMTP id u124-v6so1179047ywg.0
-        for <git@vger.kernel.org>; Wed, 13 Jun 2018 10:43:49 -0700 (PDT)
+        id S935006AbeFMSAX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Jun 2018 14:00:23 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:40226 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934964AbeFMSAW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jun 2018 14:00:22 -0400
+Received: by mail-wr0-f193.google.com with SMTP id l41-v6so3672574wre.7
+        for <git@vger.kernel.org>; Wed, 13 Jun 2018 11:00:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=DLkTKljrWwXs1CAYKX0+7VeaXxL1P+cDtEnA7KizT/Q=;
+        b=QxO/W6JutWwh+Kgu70Q9zghXAeITotW3Uj5LpbRUit5i5Cakb+QnyWXC4vrz5uc0tW
+         K/9tM2qTulqdMuQwvBegFi1+7R6/EDTDhGGMYBjBsBmeF6wSJrmOSXF4uwI1G3zX5l+n
+         HIqTTrhBvBvBZ7H2JE6Y4VRudQRP3lHBV08OFL4v2h5y9UBtePIty6c2mc6qZMCtWNlA
+         sMROE8ofc3xQOXGNubhQyK7v7juw4Yy8mbfHqEaB7BCbha7TYKSU0fyAKSVSy20zFRDT
+         smKS/Y3M0bgpSzFKJZbv17O0QaqOncNm5cbEkVZ62lLM9cx4ofpgiTbS7HtNcB121hkL
+         FlkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=oKisfqBmqvfhEmchE8X2Bc9WPsX/9xaWDPtfW0W0izU=;
-        b=JJ3tb896nP9Uro7o0tlEl1ZwibmwC9DtDHV9UWlwC7G0g7RfcjNyL7oiTHT4smYiwo
-         /vuQ2wu+wDrqw/BPMMBQ17AfVdrjtZSojY54grr22aoACkm/EntO1lWHv4XQPOI/IHvb
-         /uxzghY8pQ1XambJsNCrRerCWgLkYrBgdJTxUJ1oY7cWbfN91gqbkIeV2n2YaHst7JBs
-         Pzv8nLHry/RvxmikZlo7QyijNUyq8JYm48b963LbCv3R4xUhlBGF3Hkyg622E/pkc6fA
-         2ej/f/SWvroENlf4w3KJr3lR0mpi2EAtxoGogzKgLxiGsXAlBMpXn6I0YuA5uEwx98Uk
-         5oKQ==
-X-Gm-Message-State: APt69E1Fs1vsQStWaVHr8WpXwXaZuoWRzjollI9i5Fdxu9NqpfP88KMk
-        QGAjr6r+F2+UxJhqR0m9dXlBfNASnwFcyFO1Z5E=
-X-Google-Smtp-Source: ADUXVKLJ8NNyob9Wn0tMIrUsfvK/Ma4WyGKlq5seJIjCftPwIwHL6JcE15rC0XHI81Y8sx8FYLbK1+W0pQDgY/oMNUo=
-X-Received: by 2002:a0d:c105:: with SMTP id c5-v6mr2846393ywd.131.1528911828971;
- Wed, 13 Jun 2018 10:43:48 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=DLkTKljrWwXs1CAYKX0+7VeaXxL1P+cDtEnA7KizT/Q=;
+        b=V9C+JarpHimuvfoYXyP+UbCbwy2DC9lb+jm4ccbf6dWieRCtufN5ThaUSJaAtTRNbC
+         DkzCSRSesRx1bcgApYpBIi59lI/TZCAsgfZ7pLzqyBNdNZoM4UnAuOldHKuvdFGWBef2
+         vGvekCdwBbZZ1033iJkVLiHDgY1r/UpiBwRt8bV0kGBre3DXnSjHUIs96G1EAK+SQtuy
+         Uvaaisz6dx4si0ACm2VL33T/c5iwJiS8+4r4FEI3K1eVTHxPqoQzoNQofFYQ77c4NB26
+         SvzLF0DeIpr2xZMH02Y9+nkpmoa3lwCNU2cS4RhDku/s2v7hZuWsxO5mEl3Z4RNqwRmU
+         +HkA==
+X-Gm-Message-State: APt69E3zzhZGzV/Ecx+65YFbqKkTdH9PFZnR+/Tp6rGJvhBH5ND0gV91
+        PF9M4NsFPtnXvzmrjUJM4Bo=
+X-Google-Smtp-Source: ADUXVKK0eWXslicLYSb8RFzoIpIR/UREEDj9uPH54s182WVDWqxaD2MFarN/0xLxcXWh/6VsBtO95g==
+X-Received: by 2002:adf:dfc2:: with SMTP id q2-v6mr4869201wrn.113.1528912820830;
+        Wed, 13 Jun 2018 11:00:20 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id q17-v6sm3786185wrs.5.2018.06.13.11.00.20
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 13 Jun 2018 11:00:20 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH 0/3] submodules with no working tree shall unset core.worktree
+References: <20180612235825.12271-1-sbeller@google.com>
+Date:   Wed, 13 Jun 2018 11:00:19 -0700
+In-Reply-To: <20180612235825.12271-1-sbeller@google.com> (Stefan Beller's
+        message of "Tue, 12 Jun 2018 16:58:22 -0700")
+Message-ID: <xmqq7en27ej0.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20180607051958.759-1-tmz@pobox.com> <20180613031040.3109-3-tmz@pobox.com>
- <CAPig+cRcPD9vh1WMX7UkiD9R_A-DrybvOYwi3R8U2bskfOV_1w@mail.gmail.com> <20180613172111.GH3094@zaya.teonanacatl.net>
-In-Reply-To: <20180613172111.GH3094@zaya.teonanacatl.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 13 Jun 2018 13:43:37 -0400
-Message-ID: <CAPig+cQf1LadhKmyGoX8uYx5pAg5c3JPjxQp_=g9fibaXVAhzQ@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 2/4] git-credential-netrc: minor whitespace cleanup
- in test script
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Luis Marsano <luis.marsano@gmail.com>,
-        Ted Zlatanov <tzz@lifelogs.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 13, 2018 at 1:21 PM Todd Zullinger <tmz@pobox.com> wrote:
-> Eric Sunshine wrote:
-> > Since you're touching all the tests in this script anyhow, perhaps
-> > modernize them [...]
-> > (Not necessarily worth a re-roll.)
->
-> These tests were based on similar test_external tests which
-> use perl. like t0202 & t9700.  Both examples use the same
-> formatting (and use of 'set up').  Perhaps a later clean up
-> can adjust all three tests?
+Stefan Beller <sbeller@google.com> writes:
 
-Whichever course of action works for you and Junio is fine. In this
-case, it's such a minor bit of additional work to modernize the two
-tests in this script that it would make sense to do so in this patch
-if you happen to re-roll (and if you agree with me), but is itself
-probably not worth a re-roll (as mentioned above).
+> The first patch teaches checkout/reset (with --recurse-submodules) to unset
+> the core.worktree config when the new state of the superprojects working tree
+> doesn't contain the submodules working tree.
+
+Are there two cases of "doesn't contain working tree of a submodule"?
+
+The superproject's commit may not have a gitlink to a specific
+submodule in its tree (i.e. there is no way to even "submodule init"
+with such a commit in the superproject's history).  Or there may be
+a gitlink but the user chose not to check it out in the working
+tree.
+
+Do they need to be treated differently, or can they be treated the
+same way?
+
+Also, is the "submodule" feature supposed to play well with multiple
+worktree feature?  Let's imagine that you have two worktrees for a
+single superproject, and the branches of the superproject these two
+worktrees check out are different ones (which is the more sensible
+set-up than checking out the same branch twice).  Further imagine
+that the superproject started using a single submodule sometime in
+the past and keeps using it throughout its life since then.
+
+ 1. if both of these two branches have the submodule, and two
+    worktrees both are interested in having the submodule checked
+    out via "submodule init/update", where does core.worktree point
+    at?  Do we have two copies of the variable?
+
+ 2. what if one branch predates the use of the submodule in the
+    superproject while the other branch is newer and uses the
+    submodule?  Where does core.worktree point at?
+
+Thanks.
+
+> The last patch is teaching "git submodule deinit" to unset the core.worktree
+> setting as well. It turned out this one is tricky, as for that we also
+> have to set it in the counter part, such as "submodule update".
+>
+> Thanks,
+> Stefan
+>
+> Stefan Beller (3):
+>   submodule: unset core.worktree if no working tree is present
+>   submodule: ensure core.worktree is set after update
+>   submodule deinit: unset core.worktree
+>
+>  builtin/submodule--helper.c | 26 ++++++++++++++++++++++++++
+>  git-submodule.sh            |  5 +++++
+>  submodule.c                 | 14 ++++++++++++++
+>  submodule.h                 |  2 ++
+>  t/lib-submodule-update.sh   |  5 +++--
+>  t/t7400-submodule-basic.sh  |  5 +++++
+>  6 files changed, 55 insertions(+), 2 deletions(-)
