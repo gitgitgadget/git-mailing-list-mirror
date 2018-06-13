@@ -2,117 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 295D31F403
-	for <e@80x24.org>; Wed, 13 Jun 2018 18:36:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D8181F403
+	for <e@80x24.org>; Wed, 13 Jun 2018 18:38:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935335AbeFMSg2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Jun 2018 14:36:28 -0400
-Received: from mail179-28.suw41.mandrillapp.com ([198.2.179.28]:28080 "EHLO
-        mail179-28.suw41.mandrillapp.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S935219AbeFMSg1 (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 13 Jun 2018 14:36:27 -0400
-X-Greylist: delayed 900 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Jun 2018 14:36:27 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=mandrill; d=nexedi.com;
- h=From:Subject:To:Cc:Message-Id:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding; i=kirr@nexedi.com;
- bh=okmzpvosbBa3f12fC7LX+bhEUGdpx9fLpdjKSEdEvx8=;
- b=SsefsmUaxxKva01teMmAL7n5cpaYId+U8MUrwE0rq4qvtmQ3ncINHUlcKxxdTEuf59MwBXwj2qPa
-   ybTCfycPz3XE2DYBxiQEoY4yJNgIehthFlPXyziGEqspqpKXmZbkqmXSF5MIIlaC1fofP4+oUIRl
-   6VswyQygPK9y2ImY+sc=
-Received: from pmta04.mandrill.prod.suw01.rsglab.com (127.0.0.1) by mail179-28.suw41.mandrillapp.com id h45i2m22s280 for <git@vger.kernel.org>; Wed, 13 Jun 2018 18:21:26 +0000 (envelope-from <bounce-md_31050260.5b2160a6.v1-067bfdaf98374c88abe949d75dae849c@mandrillapp.com>)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mandrillapp.com; 
- i=@mandrillapp.com; q=dns/txt; s=mandrill; t=1528914086; h=From : 
- Subject : To : Cc : Message-Id : References : In-Reply-To : Date : 
- MIME-Version : Content-Type : Content-Transfer-Encoding : From : 
- Subject : Date : X-Mandrill-User : List-Unsubscribe; 
- bh=okmzpvosbBa3f12fC7LX+bhEUGdpx9fLpdjKSEdEvx8=; 
- b=P7uU/J3Kqzog1wTvmsgYmVzJGyZNRQcQ06JA4meCaEQXJGLyON9dNxAP0T9TeNXQ11BOlb
- fQKBXzBR6tvmURY7yIXF5BqqI6YBv8NQI9IZfVvLt6Hkg6DcVJVJQVoHohn8/kBMZ46+U62z
- 7yxg2udsmiWkP3SRRfGoG3KgFbh0s=
-From:   Kirill Smelkov <kirr@nexedi.com>
-Subject: Re: [PATCH] fetch-pack: demonstrate --all failure when remote is empty
-Received: from [87.98.221.171] by mandrillapp.com id 067bfdaf98374c88abe949d75dae849c; Wed, 13 Jun 2018 18:21:26 +0000
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Brandon Williams <bmwill@google.com>,
-        Takuto Ikuta <tikuta@chromium.org>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Git List <git@vger.kernel.org>
-Message-Id: <20180613182122.GA22854@deco.navytux.spb.ru>
-References: <20180610143231.7131-1-kirr@nexedi.com> <20180611042016.GA31642@sigill.intra.peff.net> <20180611044710.GB31642@sigill.intra.peff.net> <CAPig+cT73d0rYoSbt7oHVG4MYHVvjKidP0ogRwV+9F73jcjZEA@mail.gmail.com> <20180611055357.GA16430@sigill.intra.peff.net> <20180611094255.GA15563@deco.navytux.spb.ru> <20180612094849.GB26123@sigill.intra.peff.net> <20180612185413.GA21856@deco.navytux.spb.ru> <20180613125549.4mshuymvdpwh44qk@deco.navytux.spb.ru> <xmqqh8m67gpo.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqh8m67gpo.fsf@gitster-ct.c.googlers.com>
-X-Report-Abuse: Please forward a copy of this message, including all headers, to abuse@mandrill.com
-X-Report-Abuse: You can also report abuse here: http://mandrillapp.com/contact/abuse?id=31050260.067bfdaf98374c88abe949d75dae849c
-X-Mandrill-User: md_31050260
-Date:   Wed, 13 Jun 2018 18:21:26 +0000
+        id S935355AbeFMSiR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Jun 2018 14:38:17 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:45391 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935322AbeFMSiQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jun 2018 14:38:16 -0400
+Received: by mail-wr0-f193.google.com with SMTP id o12-v6so3768673wrm.12
+        for <git@vger.kernel.org>; Wed, 13 Jun 2018 11:38:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=K6jgLwPVwNBNuYuvQFwBa2mjJUL8/LVtpyyBcxV33zM=;
+        b=gjSTXHgHZJ0NOEq+9CJh1EsjX3ErIyUbW+r81FPJDHNUIfMf1tNd9tyX65XohUwXsU
+         13BwHGC+KN3rUSe3VnkU0ndEDPUWOqfM48I8LrVK5NNSwJPErH98C3UhZQzlRkcw51J+
+         bw6vnefWkdedrFd22QBLfqqpPf+bWi8LzjuEKIay4kWkcmiKvZEBbe6LINTLPfq0AZMj
+         cWIN8GnFh+6bMLK0RRjBmNczvX8H4nKXJPpH0FVdbF2I8mDItPgw9w298BPBVhnyli0N
+         7FZubp+F+lSd+d+ov3FBwZRTBAEIhO6332MKQ/RUJSGZQydcCdU3Ex428KJWWAv8Lkp9
+         kWZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=K6jgLwPVwNBNuYuvQFwBa2mjJUL8/LVtpyyBcxV33zM=;
+        b=eY3bZ09vc9sBcJ8+G5WaHVU7++lVoiFWFtAjPylGDi2kmZM2ZoVYVK8SziP7NsLbzv
+         RUeN/heIK8CfVved6/LTDhDK+QzQoa4B11z4QH6mGdK0k3jNGYRD3MpU8FjL2GGNJizx
+         hTnwOQMW2t+e8HdsF4RtWV1WSjrO5J3Z5/C6CltBDRgEUOJ6Ev2GHILQr7kqAs2YNg2+
+         6htL6XXeRM44o2lnlI83i9ru4UxDq5Lx1kvtW7RnRgg5tG5Fm0ElaKEWycyrKkiIFCTm
+         q57RqSqGK5brUkxA+XQp6jtJZofk+XoPDZMk8myWGiKdKPkUg9xvmvze42gJBFJq7SP4
+         C9+g==
+X-Gm-Message-State: APt69E2wwAmeOT3TPPP2dtDsGXKtsCTvvFwwslNMoY3UaNKfJDQ27Akp
+        2C3uaFDMhD0hIjcaIv+x0ew=
+X-Google-Smtp-Source: ADUXVKKATS97CyZi1d5Ucf/vDkIzbX9xqO+sT7vMSEVeqgF0LNha9S2egfTI523f8ScJGTq0SHDmfw==
+X-Received: by 2002:adf:b782:: with SMTP id s2-v6mr4851995wre.247.1528915095175;
+        Wed, 13 Jun 2018 11:38:15 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id a14-v6sm2150200wmb.44.2018.06.13.11.38.14
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 13 Jun 2018 11:38:14 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Jeremy Linton <lintonrjeremy@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v2] packfile: Correct zlib buffer handling
+References: <20180613142207.14385-1-lintonrjeremy@gmail.com>
+        <CAPig+cQ1s7QFjEFrOHMYZR8qja5yTjV5D3ksUXXqFL61YthA3g@mail.gmail.com>
+Date:   Wed, 13 Jun 2018 11:38:13 -0700
+In-Reply-To: <CAPig+cQ1s7QFjEFrOHMYZR8qja5yTjV5D3ksUXXqFL61YthA3g@mail.gmail.com>
+        (Eric Sunshine's message of "Wed, 13 Jun 2018 13:21:03 -0400")
+Message-ID: <xmqqtvq65y7e.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 13, 2018 at 10:13:07AM -0700, Junio C Hamano wrote:
-> Kirill Smelkov <kirr@nexedi.com> writes:
-> 
-> > ( Junio, please pick up the patch provided in the end )
-> >
-> > On Tue, Jun 12, 2018 at 06:54:17PM +0000, Kirill Smelkov wrote:
-> >> On Tue, Jun 12, 2018 at 05:48:49AM -0400, Jeff King wrote:
-> >> > On Mon, Jun 11, 2018 at 09:43:02AM +0000, Kirill Smelkov wrote:
-> > [...]
-> >
-> >> > > I'm not sure, but I would say that `fetch-pack --all` from an empty
-> >> > > repository should not fail and should just give empty output as fetch
-> >> > > does.
-> >> > 
-> >> > Yeah, that seems reasonable to me. The die() that catches this dates
-> >> > back to 2005-era, and we later taught the "fetch" porcelain to handle
-> >> > this. I don't _think_ anybody would be upset that the plumbing learned
-> >> > to treat this as a noop. It's probably a one-liner change in
-> >> > fetch_pack() to return early instead of dying.
-> 
-> I actually have a slight preference to the current "attempting to
-> fetch from a total emptiness is so rare that it is worth grabbing
-> attention of whoever does so" behaviour, to be honest.
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-I see.
+>> +       buffer[size] = 0; /* assure that the buffer is still terminated */
+>
+> I think we normally use '\0' for NUL on this project rather than simply 0.
+>
+> The comment is also effectively pure noise since it merely repeats
+> what the code already states clearly (especially when the code says
+> "buffer[size] = '\0';"), so dropping the comment altogether would be
+> reasonable.
 
-> Oh, wait, is this specific to "fetch-pack" and the behaviour of
-> end-user-facing "git fetch" is kept same as before?  If then, I'd be
-> somewhat sympathetic to the cause---it would be more convenient for
-> the calling Porcelain script if this turned into a silent noop (even
-> though it would probably make it harder to diagnose when such a
-> Porcelain is set up incorrectly e.g. pointing at an empty repository
-> that is not the one the Porcelain writer intended to fetch from).
+Actually, I'd prefer to have comment there, but not about "what this
+line does" (which is useless, as you pointed out) but about "why do
+we do this seemingly redundant clearing".
 
-Yes, it is only for fetch-pack, and behaviour of porcelain fetch is kept
-as it was before.
+Here is what I tentatively came up with.
 
-> > However with transport.c being there too, since I'm no longer using
-> > `fetch-pack --all`, now it is best for me to not delve into this story
-> > and just stop with attached patch.
-> 
-> If we do not plan to change the behaviour later ourselves, I do not
-> think it makes sense, nor it is fair to those future developers who
-> inherit this project, to declare that the established behaviour is
-> wrong with an 'expect-failure' test like this, to be honest.
+-- >8 --
+From: Jeremy Linton <lintonrjeremy@gmail.com>
+Date: Wed, 13 Jun 2018 09:22:07 -0500
+Subject: [PATCH] packfile: correct zlib buffer handling
 
-I see. Let's please cancel this patch then.
+The buffer being passed to zlib includes a NUL terminator that git
+needs to keep in place. unpack_compressed_entry() attempts to detect
+the case that the source buffer hasn't been fully consumed by
+checking to see if the destination buffer has been over consumed.
 
+This causes a problem, that more recent zlib patches have been
+poisoning the unconsumed portions of the buffer which overwrites
+the NUL byte, while correctly returning length and status.
 
-> > +test_expect_failure 'test --all wrt empty.git' '
-> > +	git init --bare empty.git &&
-> > +	(
-> > +		cd client &&
-> > +		git fetch-pack --all ../empty.git
-> > +	)
-> > +'
+Let's place the NUL at the end of the buffer after inflate returns
+to assure that it doesn't result in problems for git even if its
+been overwritten by zlib.
+
+Signed-off-by: Jeremy Linton <lintonrjeremy@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ packfile.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/packfile.c b/packfile.c
+index 4a5fe7ab18..d555699217 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -1422,6 +1422,9 @@ static void *unpack_compressed_entry(struct packed_git *p,
+ 		return NULL;
+ 	}
+ 
++	/* versions of zlib can clobber unconsumed portion of outbuf */
++	buffer[size] = '\0';
++
+ 	return buffer;
+ }
+ 
+-- 
+2.18.0-rc1-1-g6f333ff2fb
+
