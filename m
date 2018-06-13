@@ -2,96 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D9A91F403
-	for <e@80x24.org>; Wed, 13 Jun 2018 18:32:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 295D31F403
+	for <e@80x24.org>; Wed, 13 Jun 2018 18:36:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935428AbeFMScb (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Jun 2018 14:32:31 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:50246 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935400AbeFMScb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jun 2018 14:32:31 -0400
-Received: by mail-wm0-f68.google.com with SMTP id e16-v6so6386961wmd.0
-        for <git@vger.kernel.org>; Wed, 13 Jun 2018 11:32:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=ZrpC3rF0zU1c3RT965TBlpA1DPETmTGMmqjfdAeZhuw=;
-        b=P+LAxDth8WtTlVS9yy4QD86paV3ItoHGcBiyiWPxOTmEKT7ZIjgNYm5PsOuZbKczQR
-         SeNVKy8evVJu6AUTL4cQiXSb+ThhJ5V4KPgoQJKGgqL9E7+7TU2jOouwbAsPa6E9GhIK
-         aY7XI8JMi5QiZENxkyMuM/jOqXkzwmpe1mA3HoS2OHSB9h/iUDLv9oq92cawiOH/mqrE
-         MKcUNFC5EhcGrilFvkrylgB8GemtV4PppsoeezQ37dE1V/gOLz7CwqxDo/96VTvQ0H2m
-         jAK8nRBMKlSHexGLEE+JFvXUc2TFl3C3ObA+QB1cq1KAiBm4X+eoqwVceJHiIwZqCcJd
-         BWZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=ZrpC3rF0zU1c3RT965TBlpA1DPETmTGMmqjfdAeZhuw=;
-        b=RJ7IWUAwzMaYdBiqAW96TQm2O89FbAEHuzTJ+Dr9Qlcq6Ww8LooO4Lx2QW9YS7LaJ/
-         +x4uZHjBGu27u6ml92UgtvGsZHdCqvCJjwt39aKEdYoY8O7cCJiNeQqwrMpL8iYSvwqd
-         B/IZAXy+/Wmkwmq4Xd5bZPBWs/WL862IKWrJ8BeJa4+vgUvTd7iVsHoYcEgWPYVpgder
-         wKM2bgjQb1CbSy5ESVAq/HY7jIDyznQthyhdRG1gRGQzzkSdmU5oQ1ikr9PtDMNct9oX
-         b83EaFG75ts+5IeXvlg/4ipimm7j8mbYlTZBY4l5WUq9kxMkrMNhdlBdiEkZQT2XHmVL
-         NKyQ==
-X-Gm-Message-State: APt69E1n/UzQ5PDsgVpMHCZacrVt+P0wAjeKwLWWcPn+1wx1q0B4ysTR
-        CDUFxM8Xv9uxFGYyCv12xtCW8EUH
-X-Google-Smtp-Source: ADUXVKJFLdcRlf9XFVuCSFbCzP5aIBCr6svUtEzjiY+ydrUMFjQO98hmAVBFrn29cFzhlWhqKRG0NA==
-X-Received: by 2002:a1c:ae94:: with SMTP id x142-v6mr4076226wme.22.1528914749824;
-        Wed, 13 Jun 2018 11:32:29 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id a8-v6sm4840443wrc.18.2018.06.13.11.32.28
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 13 Jun 2018 11:32:28 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Jeremy Linton <lintonrjeremy@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v2] packfile: Correct zlib buffer handling
-References: <20180613142207.14385-1-lintonrjeremy@gmail.com>
-        <CAPig+cQ1s7QFjEFrOHMYZR8qja5yTjV5D3ksUXXqFL61YthA3g@mail.gmail.com>
-Date:   Wed, 13 Jun 2018 11:32:28 -0700
-In-Reply-To: <CAPig+cQ1s7QFjEFrOHMYZR8qja5yTjV5D3ksUXXqFL61YthA3g@mail.gmail.com>
-        (Eric Sunshine's message of "Wed, 13 Jun 2018 13:21:03 -0400")
-Message-ID: <xmqqy3fi5ygz.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S935335AbeFMSg2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Jun 2018 14:36:28 -0400
+Received: from mail179-28.suw41.mandrillapp.com ([198.2.179.28]:28080 "EHLO
+        mail179-28.suw41.mandrillapp.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S935219AbeFMSg1 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 13 Jun 2018 14:36:27 -0400
+X-Greylist: delayed 900 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Jun 2018 14:36:27 EDT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=mandrill; d=nexedi.com;
+ h=From:Subject:To:Cc:Message-Id:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding; i=kirr@nexedi.com;
+ bh=okmzpvosbBa3f12fC7LX+bhEUGdpx9fLpdjKSEdEvx8=;
+ b=SsefsmUaxxKva01teMmAL7n5cpaYId+U8MUrwE0rq4qvtmQ3ncINHUlcKxxdTEuf59MwBXwj2qPa
+   ybTCfycPz3XE2DYBxiQEoY4yJNgIehthFlPXyziGEqspqpKXmZbkqmXSF5MIIlaC1fofP4+oUIRl
+   6VswyQygPK9y2ImY+sc=
+Received: from pmta04.mandrill.prod.suw01.rsglab.com (127.0.0.1) by mail179-28.suw41.mandrillapp.com id h45i2m22s280 for <git@vger.kernel.org>; Wed, 13 Jun 2018 18:21:26 +0000 (envelope-from <bounce-md_31050260.5b2160a6.v1-067bfdaf98374c88abe949d75dae849c@mandrillapp.com>)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mandrillapp.com; 
+ i=@mandrillapp.com; q=dns/txt; s=mandrill; t=1528914086; h=From : 
+ Subject : To : Cc : Message-Id : References : In-Reply-To : Date : 
+ MIME-Version : Content-Type : Content-Transfer-Encoding : From : 
+ Subject : Date : X-Mandrill-User : List-Unsubscribe; 
+ bh=okmzpvosbBa3f12fC7LX+bhEUGdpx9fLpdjKSEdEvx8=; 
+ b=P7uU/J3Kqzog1wTvmsgYmVzJGyZNRQcQ06JA4meCaEQXJGLyON9dNxAP0T9TeNXQ11BOlb
+ fQKBXzBR6tvmURY7yIXF5BqqI6YBv8NQI9IZfVvLt6Hkg6DcVJVJQVoHohn8/kBMZ46+U62z
+ 7yxg2udsmiWkP3SRRfGoG3KgFbh0s=
+From:   Kirill Smelkov <kirr@nexedi.com>
+Subject: Re: [PATCH] fetch-pack: demonstrate --all failure when remote is empty
+Received: from [87.98.221.171] by mandrillapp.com id 067bfdaf98374c88abe949d75dae849c; Wed, 13 Jun 2018 18:21:26 +0000
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Brandon Williams <bmwill@google.com>,
+        Takuto Ikuta <tikuta@chromium.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Git List <git@vger.kernel.org>
+Message-Id: <20180613182122.GA22854@deco.navytux.spb.ru>
+References: <20180610143231.7131-1-kirr@nexedi.com> <20180611042016.GA31642@sigill.intra.peff.net> <20180611044710.GB31642@sigill.intra.peff.net> <CAPig+cT73d0rYoSbt7oHVG4MYHVvjKidP0ogRwV+9F73jcjZEA@mail.gmail.com> <20180611055357.GA16430@sigill.intra.peff.net> <20180611094255.GA15563@deco.navytux.spb.ru> <20180612094849.GB26123@sigill.intra.peff.net> <20180612185413.GA21856@deco.navytux.spb.ru> <20180613125549.4mshuymvdpwh44qk@deco.navytux.spb.ru> <xmqqh8m67gpo.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqh8m67gpo.fsf@gitster-ct.c.googlers.com>
+X-Report-Abuse: Please forward a copy of this message, including all headers, to abuse@mandrill.com
+X-Report-Abuse: You can also report abuse here: http://mandrillapp.com/contact/abuse?id=31050260.067bfdaf98374c88abe949d75dae849c
+X-Mandrill-User: md_31050260
+Date:   Wed, 13 Jun 2018 18:21:26 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+On Wed, Jun 13, 2018 at 10:13:07AM -0700, Junio C Hamano wrote:
+> Kirill Smelkov <kirr@nexedi.com> writes:
+> 
+> > ( Junio, please pick up the patch provided in the end )
+> >
+> > On Tue, Jun 12, 2018 at 06:54:17PM +0000, Kirill Smelkov wrote:
+> >> On Tue, Jun 12, 2018 at 05:48:49AM -0400, Jeff King wrote:
+> >> > On Mon, Jun 11, 2018 at 09:43:02AM +0000, Kirill Smelkov wrote:
+> > [...]
+> >
+> >> > > I'm not sure, but I would say that `fetch-pack --all` from an empty
+> >> > > repository should not fail and should just give empty output as fetch
+> >> > > does.
+> >> > 
+> >> > Yeah, that seems reasonable to me. The die() that catches this dates
+> >> > back to 2005-era, and we later taught the "fetch" porcelain to handle
+> >> > this. I don't _think_ anybody would be upset that the plumbing learned
+> >> > to treat this as a noop. It's probably a one-liner change in
+> >> > fetch_pack() to return early instead of dying.
+> 
+> I actually have a slight preference to the current "attempting to
+> fetch from a total emptiness is so rare that it is worth grabbing
+> attention of whoever does so" behaviour, to be honest.
 
-> A couple comments if you happen to re-roll...
->
-> On Wed, Jun 13, 2018 at 10:22 AM Jeremy Linton <lintonrjeremy@gmail.com> wrote:
->> The buffer being passed to zlib includes a null terminator that
->
-> On this project, the character mnemonic "NUL" is typically used, not
-> "null" or "NULL" (which is typically reserved for pointers), so:
-> s/null/NUL/g
+I see.
 
-Correct but I did not think it is a per-project preference; rather,
-"NUL is the name of the byte" is universal ;-)
+> Oh, wait, is this specific to "fetch-pack" and the behaviour of
+> end-user-facing "git fetch" is kept same as before?  If then, I'd be
+> somewhat sympathetic to the cause---it would be more convenient for
+> the calling Porcelain script if this turned into a silent noop (even
+> though it would probably make it harder to diagnose when such a
+> Porcelain is set up incorrectly e.g. pointing at an empty repository
+> that is not the one the Porcelain writer intended to fetch from).
 
->> diff --git a/packfile.c b/packfile.c
->> @@ -1433,6 +1433,8 @@ static void *unpack_compressed_entry(struct packed_git *p,
->> +       buffer[size] = 0; /* assure that the buffer is still terminated */
->
-> I think we normally use '\0' for NUL on this project rather than simply 0.
->
-> The comment is also effectively pure noise since it merely repeats
-> what the code already states clearly (especially when the code says
-> "buffer[size] = '\0';"), so dropping the comment altogether would be
-> reasonable.
+Yes, it is only for fetch-pack, and behaviour of porcelain fetch is kept
+as it was before.
 
-Both are sensible suggestions.  Thanks for making them.
+> > However with transport.c being there too, since I'm no longer using
+> > `fetch-pack --all`, now it is best for me to not delve into this story
+> > and just stop with attached patch.
+> 
+> If we do not plan to change the behaviour later ourselves, I do not
+> think it makes sense, nor it is fair to those future developers who
+> inherit this project, to declare that the established behaviour is
+> wrong with an 'expect-failure' test like this, to be honest.
 
+I see. Let's please cancel this patch then.
+
+
+> > +test_expect_failure 'test --all wrt empty.git' '
+> > +	git init --bare empty.git &&
+> > +	(
+> > +		cd client &&
+> > +		git fetch-pack --all ../empty.git
+> > +	)
+> > +'
