@@ -2,67 +2,207 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC1331F403
-	for <e@80x24.org>; Wed, 13 Jun 2018 18:40:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CAEB91F403
+	for <e@80x24.org>; Wed, 13 Jun 2018 18:52:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935043AbeFMSkt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Jun 2018 14:40:49 -0400
-Received: from mail-yb0-f193.google.com ([209.85.213.193]:39053 "EHLO
-        mail-yb0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934975AbeFMSks (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jun 2018 14:40:48 -0400
-Received: by mail-yb0-f193.google.com with SMTP id m137-v6so1282984ybm.6
-        for <git@vger.kernel.org>; Wed, 13 Jun 2018 11:40:48 -0700 (PDT)
+        id S935154AbeFMSwa (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Jun 2018 14:52:30 -0400
+Received: from mail-yw0-f195.google.com ([209.85.161.195]:36364 "EHLO
+        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935060AbeFMSwa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jun 2018 14:52:30 -0400
+Received: by mail-yw0-f195.google.com with SMTP id t198-v6so1246512ywc.3
+        for <git@vger.kernel.org>; Wed, 13 Jun 2018 11:52:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=p9W96gtMSjnXT0tC6kRcHoRjUaaL24UMF55blrTd8/M=;
+        b=r9bZSyeFrLj04/jZyEYTtfU0bYHuLJTqNit7hyKGG75/aqnOGNZ6uwGSGzXkhmt9QO
+         BQFuXzPNn20up60u46uDL7246K/2GbHaK6ER/e6IwJ63wuoSPRWwATl1c2np0fvtEVEF
+         WvWPXo5IHEdshH98hqMqLQ24YpGtQM4hFGce44A+gDqZhhrQSVX3HBQpt3irnqYtMOUQ
+         Qqn44FDdSDS6DtMaK6orpjjuBvGd980mCFXbklncyy4KdZycNzn1Whq8UFQK3fO9RJ6U
+         5d/78SIMKUbGjfvOL62BebOT4LHnvnw0T2a8R2qyCKupeFMqdxgCOtHvRCPMYSIewloh
+         R9gQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=4396+5476EFAshDcDyDazZfWa+Api1UFcbsAj6HPANA=;
-        b=Me3CRN0P1V7jyFfqTLc0z/PPeSud3ssjChu1hUFz5wKqoa9djAE6SsMik+hyT2iZT8
-         KkSg7BWn3fK17Wn+8/V13sUHieK4oF46i8fIaKL9xAItdXwIvCZD9Jn2e2lZZNYYuV+M
-         O9DRXxmySj8MhKYzLJLoO3/oa5coJcglV8qxDm5iMTuR0alRxnXipiJDhqwQqPQHGPJ9
-         O8iMYpEDv59iaOZRqHrsSkDOEDgdva9OzB4TiiRyJ2qxriIOqBpm7qfFOz5zT9WCjCkw
-         yt+qezxv0yUyirktw7B6lo5dB0ThlcF/mC7WsLFzYHCh9yrZBRAyeoZ8R/jwNRhn661I
-         lpVw==
-X-Gm-Message-State: APt69E1fHV8f3Wc17mMaT+BK8Lr30bfK8MFxrtm+kqzMNqRFo4X8jhJv
-        XgLBk6LX9iafir1mapus7RhXn//EmML3rYVnBIc=
-X-Google-Smtp-Source: ADUXVKJowg27hIEjRCEhucos7sro0mEXqJpc4Svxty1AUPFXHDnLIy5S6dSixZz6raHDJIdfMuY2mTH127Uk9EHptLI=
-X-Received: by 2002:a25:a268:: with SMTP id b95-v6mr3010258ybi.295.1528915247728;
- Wed, 13 Jun 2018 11:40:47 -0700 (PDT)
+        bh=p9W96gtMSjnXT0tC6kRcHoRjUaaL24UMF55blrTd8/M=;
+        b=DUBMDjRb4uChxg7ayL3mcjEutDlUp9mlvwvfKtfLQXMPMkwDSvDOQPU3Gf1AG8S+y2
+         WaJpn26NOJQ14atCQPGGs+6Y39mSluXCjNyVMh8UiNrU0DtuzJqTt2DPMHZCIoYfotr7
+         zD8pBz36IZRWSiCSRgl8h3CH7mMSST9suCs7MW/jm06C7n/YsiJGIcyQA/F+8/hLi3u8
+         SiJ+84rJTMK7dR9GnomCc1vqWX2VHu+sA0bkdnErq6PUirU4fROpvSHmRF8CsG4X8gqa
+         h9OlRszZ4uOI3X6hXl2lwB810M88bu1RUB+ulsBnF758BOsNvBUugG0bSN7RFslxYiDE
+         9KdA==
+X-Gm-Message-State: APt69E3xupSDglmOSFR+xn2TfTCwPqqzGdWXJgZROVH2s27YF+/yy2Kr
+        xXTrjfvCGPU3/h8+OvXhRhHJ7Gsa2OGa9AxI11aKqg==
+X-Google-Smtp-Source: ADUXVKJ6AJ0Pa3U2gtQ0ZBzUWT6HXj6F7FzzmwAlpy1BUFjAIX5J7E3bMpE/0zydP9NKhcTnMsW3HFK4Scn5ZkXITGE=
+X-Received: by 2002:a81:360a:: with SMTP id d10-v6mr3117251ywa.421.1528915948738;
+ Wed, 13 Jun 2018 11:52:28 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180613142207.14385-1-lintonrjeremy@gmail.com>
- <CAPig+cQ1s7QFjEFrOHMYZR8qja5yTjV5D3ksUXXqFL61YthA3g@mail.gmail.com> <xmqqy3fi5ygz.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqy3fi5ygz.fsf@gitster-ct.c.googlers.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 13 Jun 2018 14:40:36 -0400
-Message-ID: <CAPig+cR5kMissKxsA8-0kvZGPmzm=KiPcyhhH9kQBR8EN-GsLg@mail.gmail.com>
-Subject: Re: [PATCH v2] packfile: Correct zlib buffer handling
+References: <20180612235825.12271-1-sbeller@google.com> <xmqq7en27ej0.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq7en27ej0.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 13 Jun 2018 11:52:17 -0700
+Message-ID: <CAGZ79kbTuu9kXXag0aYvDr90D8LXYo2kWhshx=kr5QHk7Lv3AQ@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/3] submodules with no working tree shall unset core.worktree
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeremy Linton <lintonrjeremy@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>
+Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 13, 2018 at 2:32 PM Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
-> > On this project, the character mnemonic "NUL" is typically used, not
-> > "null" or "NULL" (which is typically reserved for pointers), so:
-> > s/null/NUL/g
+On Wed, Jun 13, 2018 at 11:00 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Correct but I did not think it is a per-project preference; rather,
-> "NUL is the name of the byte" is universal ;-)
+> Stefan Beller <sbeller@google.com> writes:
+>
+> > The first patch teaches checkout/reset (with --recurse-submodules) to unset
+> > the core.worktree config when the new state of the superprojects working tree
+> > doesn't contain the submodules working tree.
+>
+> Are there two cases of "doesn't contain working tree of a submodule"?
+>
+> The superproject's commit may not have a gitlink to a specific
+> submodule in its tree (i.e. there is no way to even "submodule init"
+> with such a commit in the superproject's history).
 
-Yes, the _mnemonic_ NUL is universal, but the character itself is
-sometimes named or described as the "null character". I was just being
-pedantic when "this project", by which I meant that we (on this
-project) prefer the mnemonic "NUL" over longhand "null character",
-whereas other projects may perhaps prefer "null character" or not
-care.
+... for example git.git before 2.13 did not have a gitlink for its
+sha1collision submodule ...
+
+>   Or there may be
+> a gitlink but the user chose not to check it out in the working
+> tree.
+
+This is when the submodule is not active or de-initialized or not initialized
+to begin with. However there is an empty directory as a place holder.
+As long as the empty place holder is there, we do not run into trouble.
+
+> Do they need to be treated differently, or can they be treated the
+> same way?
+
+I would think they are the same, as both cases do not have a working tree
+for the submodule.
+
+> Also, is the "submodule" feature supposed to play well with multiple
+> worktree feature?
+
+It is a long term goal to get this working.
+
+>  Let's imagine that you have two worktrees for a
+> single superproject, and the branches of the superproject these two
+> worktrees check out are different ones (which is the more sensible
+> set-up than checking out the same branch twice).
+
+(git-worktree even prevents you to checkout the same branch),
+sounds all very sensible up to here.
+
+
+> Further imagine
+> that the superproject started using a single submodule sometime in
+> the past and keeps using it throughout its life since then.
+>
+>  1. if both of these two branches have the submodule, and two
+>     worktrees both are interested in having the submodule checked
+>     out via "submodule init/update", where does core.worktree point
+>     at?  Do we have two copies of the variable?
+
+Currently in the real world (aka in origin/master), the submodules are
+completely duplicated, and do not know about the worktree feature
+themselves:
+
+    $ cd .git && find . |grep config |grep sha1co
+    ./modules/sha1collisiondetection/config
+    ./worktrees/git/modules/sha1collisiondetection/config
+
+(Yes I do have a worktree called "git".)
+
+So for the sake of this patch series this should be okay, as there
+is only ever one working tree for a submodule currently.
+
+The current state of affairs is really bad as the submodule is
+there twice with all objects and the rest.
+
+>  2. what if one branch predates the use of the submodule in the
+>     superproject while the other branch is newer and uses the
+>     submodule?  Where does core.worktree point at?
+
+As we have two copies of the repository, one of them points at the
+correct place, and the other would be unset.
+
+---
+
+In an ideal world we would want the submodules to use the worktree
+feature along-side the superproject, e.g. if the superproject has the
+two worktrees as above, the submodule would also get these.
+
+However I have not thought about this future too deeply, as there
+are a couple bumps along the road:
+
+Supposedly the submodules main (common) git dir would stay in the
+common git dir of the superproject at /modules/<name>.
+However where would we put the submodules non-main worktree
+git dirs? There are two places, as seen from the superprojects:
+
+  .git/modules/<submodule-name>/worktrees/<worktree-name>
+  .git/worktrees/<worktree-name>/modules/<submodule-name>
+
+As worktrees can be removed pretty easily ("git worktree prune"),
+I would not put the main parts of a submodule into a worktree part
+of the superproject (The user could be in a non-main worktree
+when they first ask for the submodule -- we have to make sure
+the main git dir goes into the superprojects main git dir under
+modules/).
+
+An advantage for
+   .git/worktrees/<worktree-name>/modules/<submodule-name>
+would be that the worktree of the submodule is coupled to the
+worktree of the superproject, i.e. if the user wipes the superprojects
+worktree, the submodules accompanying worktree is gone automatically.
+
+An advantage for
+  .git/modules/<submodule-name>/worktrees/<worktree-name>
+is to have any submodule related things in one place in
+  .git/modules/<submodule-name>
+
+Cleanup of the worktrees would be a bit harder as we'd have to
+remember to prune the worktrees for all submodules as well
+when the superproject removes one of its worktrees.
+
+It is relatively rare to delete the submodule git directory compared to
+removing a worktree, such that
+  .git/modules/<submodule-name>/worktrees/<worktree-name>
+sounds a bit more promising to me.
+
+However the worktree command needs to figure out the worktrees:
+    /path/to/super/worktree/submodule $ git worktree list
+
+This would look at its git dir, which is
+
+ .git/modules/<submodule-name>/worktrees/<specific-worktree>
+
+discover the common dir at
+
+ .git/modules/<submodule-name>
+
+and then proceed in listing worktrees by exploring worktrees/.
+If we had put it in the other form of
+   .git/worktrees/<worktree-name>/modules/<submodule-name>
+we'd discover the common git dir at
+  .git/modules/<submodule-name>
+and list it from there.
+
+However currently we use the existence of directories (both for
+submodules as well as worktrees) to infer some knowledge about
+the existence of submodules and worktrees, so we cannot just declare
+one version or the other to be the future, but we'd have to add some
+form of linking, I would think.
+
+Stefan
