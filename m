@@ -2,84 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1FD9A1F517
-	for <e@80x24.org>; Wed, 13 Jun 2018 17:21:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9C8EA1F517
+	for <e@80x24.org>; Wed, 13 Jun 2018 17:21:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935240AbeFMRVP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Jun 2018 13:21:15 -0400
-Received: from mail-yb0-f196.google.com ([209.85.213.196]:45259 "EHLO
-        mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934737AbeFMRVP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jun 2018 13:21:15 -0400
-Received: by mail-yb0-f196.google.com with SMTP id x6-v6so1185457ybl.12
-        for <git@vger.kernel.org>; Wed, 13 Jun 2018 10:21:14 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7ye2LGcIF0V5Kazj98ARm50+Kn4uDMAKQSH3jFakfhY=;
-        b=cXapPh7KuKI/zDNCvxNYI9ee31mFvplsN1jkqgT9lUSiprbnU48mYGBUNml9d25gh3
-         qIKXPBkPhC4okC2JEfMZM5xQ8rf1Oxxiim0Uc6u4M4X7Z67ItlhcSKHl/AB1lGHguDVi
-         Ack/9KAV1DItOGl4TQ+L43AWYR9EtkLx/7LVQkXC9Vpk9VbvFsCQBNCmjvG4Gzvuwneh
-         ZDXyiAThDgvpPncpI2kK1mv2RkfkIBDYQAU3oWvlWFP5m14DXgtGy0UhzDzJZV1TfsUc
-         MzJ3T5FIRjE8R2r4D9Qmlb4COuOmi6H8wLKz32BBQLBHJ3hV5m08PDmZLoqLrBSqbgyV
-         2VOg==
-X-Gm-Message-State: APt69E1SDadTA14E3XnJSMDQlnultJE0l0F6V9kJXsvakBejOl51q6DB
-        /D/p6+eC5YAN0HM3aJVGzqboRKlznPTWgRy44JQ=
-X-Google-Smtp-Source: ADUXVKIGNLzrjeCPYL8mMlaStfDcZ2Nk5iV1zCNXDaQHNakgPTD9djZEoLv2zD7NuqHdbyNDGDG3y7cxZo6R3uErBpY=
-X-Received: by 2002:a25:83c6:: with SMTP id v6-v6mr2886174ybm.263.1528910474316;
- Wed, 13 Jun 2018 10:21:14 -0700 (PDT)
-MIME-Version: 1.0
-References: <20180613142207.14385-1-lintonrjeremy@gmail.com>
-In-Reply-To: <20180613142207.14385-1-lintonrjeremy@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 13 Jun 2018 13:21:03 -0400
-Message-ID: <CAPig+cQ1s7QFjEFrOHMYZR8qja5yTjV5D3ksUXXqFL61YthA3g@mail.gmail.com>
-Subject: Re: [PATCH v2] packfile: Correct zlib buffer handling
-To:     Jeremy Linton <lintonrjeremy@gmail.com>
+        id S935265AbeFMRVR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Jun 2018 13:21:17 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58513 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934737AbeFMRVQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jun 2018 13:21:16 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C8B40E28F5;
+        Wed, 13 Jun 2018 13:21:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to; s=sasl; bh=sdXumw3lOEz+Z+N3/cqeugjzYzY=; b=RCtONoL
+        rvGqxm4iyUYm6a17QyF7Lz2wjtNyOIqhJ/90SyLGyh1ov6Zn+5QWsV/tKxQdj/v+
+        ArEpFEPnSOe8WpD8hIIPqAhJXowOATkeCT66BWL8O7R97Lkp1oVPNXqBWkWNKuCL
+        IgJvuQ1ekC9U/wu4RnEutb8q2fzgnixv2P4o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to; q=dns; s=sasl; b=Gmn/YPXJ/2IaYgXrpiLB32Wz6OWktja5Q
+        u5WzIC8+TGeHT3Mjei9X0VOsbacvAwMFK9/48FClvCb4OJL5URjiUsHTXAe5WSUY
+        5agEE7Ep0D2P2FRpkkjuNGoeucMgqLGbnQ1jce3/QVD/Uja5foBv+alRKTsdsdkq
+        IiOrUnD3b0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C126FE28F4;
+        Wed, 13 Jun 2018 13:21:13 -0400 (EDT)
+Received: from zaya.teonanacatl.net (unknown [98.111.125.125])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4E62EE28F3;
+        Wed, 13 Jun 2018 13:21:13 -0400 (EDT)
+Date:   Wed, 13 Jun 2018 13:21:11 -0400
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
 Cc:     Git List <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+        Luis Marsano <luis.marsano@gmail.com>,
+        Ted Zlatanov <tzz@lifelogs.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Subject: Re: [RFC PATCH v2 2/4] git-credential-netrc: minor whitespace
+ cleanup in test script
+Message-ID: <20180613172111.GH3094@zaya.teonanacatl.net>
+References: <20180607051958.759-1-tmz@pobox.com>
+ <20180613031040.3109-3-tmz@pobox.com>
+ <CAPig+cRcPD9vh1WMX7UkiD9R_A-DrybvOYwi3R8U2bskfOV_1w@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPig+cRcPD9vh1WMX7UkiD9R_A-DrybvOYwi3R8U2bskfOV_1w@mail.gmail.com>
+User-Agent: Mutt/1.9.5 (2018-04-13)
+X-Pobox-Relay-ID: 2C18D4AA-6F2E-11E8-A3CE-67830C78B957-09356542!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A couple comments if you happen to re-roll...
+Eric Sunshine wrote:
+> On Tue, Jun 12, 2018 at 11:10 PM, Todd Zullinger <tmz@pobox.com> wrote:
+>> Signed-off-by: Todd Zullinger <tmz@pobox.com>
+>> ---
+>> diff --git a/contrib/credential/netrc/t-git-credential-netrc.sh b/contrib/credential/netrc/t-git-credential-netrc.sh
+>> index 58191a62f8..c5661087fe 100755
+>> --- a/contrib/credential/netrc/t-git-credential-netrc.sh
+>> +++ b/contrib/credential/netrc/t-git-credential-netrc.sh
+>> @@ -17,15 +17,15 @@
+>>         # set up test repository
+>>
+>>         test_expect_success \
+>> -    'set up test repository' \
+>> -    'git config --add gpg.program test.git-config-gpg'
+>> +               'set up test repository' \
+>> +               'git config --add gpg.program test.git-config-gpg'
+> 
+> Since you're touching all the tests in this script anyhow, perhaps
+> modernize them so the title and opening quote of the test body are on
+> the same line as test_expect_success, and the closing body quote is on
+> a line of its own?
+> 
+>     test_expect_sucess 'setup test repository' '
+>         ...test body...
+>     '
+> 
+> I also changed "set up" to "setup" to follow existing practice.
+> 
+> (Not necessarily worth a re-roll.)
 
-On Wed, Jun 13, 2018 at 10:22 AM Jeremy Linton <lintonrjeremy@gmail.com> wrote:
-> The buffer being passed to zlib includes a null terminator that
+These tests were based on similar test_external tests which
+use perl. like t0202 & t9700.  Both examples use the same
+formatting (and use of 'set up').  Perhaps a later clean up
+can adjust all three tests?
 
-On this project, the character mnemonic "NUL" is typically used, not
-"null" or "NULL" (which is typically reserved for pointers), so:
-s/null/NUL/g
+-- 
+Todd
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+How can I tell that the past isn't a fiction designed to account for
+the discrepancy between my immediate physical sensation and my state
+of mind?
+    -- Douglas Adams
 
-> git needs to keep in place. unpack_compressed_entry() attempts to
-> detect the case that the source buffer hasn't been fully consumed
-> by checking to see if the destination buffer has been over consumed.
->
-> This causes a problem, that more recent zlib patches have been
-> poisoning the unconsumed portions of the buffer which overwrites
-> the null, while correctly returning length and status.
->
-> Let's replace the null at the end of the buffer to assure that
-> if its been overwritten by zlib it doesn't result in problems for
-> git.
->
-> Signed-off-by: Jeremy Linton <lintonrjeremy@gmail.com>
-> ---
-> diff --git a/packfile.c b/packfile.c
-> @@ -1433,6 +1433,8 @@ static void *unpack_compressed_entry(struct packed_git *p,
-> +       buffer[size] = 0; /* assure that the buffer is still terminated */
-
-I think we normally use '\0' for NUL on this project rather than simply 0.
-
-The comment is also effectively pure noise since it merely repeats
-what the code already states clearly (especially when the code says
-"buffer[size] = '\0';"), so dropping the comment altogether would be
-reasonable.
