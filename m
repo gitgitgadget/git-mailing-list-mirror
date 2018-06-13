@@ -7,187 +7,315 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A765F1F403
-	for <e@80x24.org>; Wed, 13 Jun 2018 23:05:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 76D851F403
+	for <e@80x24.org>; Wed, 13 Jun 2018 23:05:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935633AbeFMXFp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Jun 2018 19:05:45 -0400
-Received: from mail-vk0-f73.google.com ([209.85.213.73]:39546 "EHLO
-        mail-vk0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935070AbeFMXFm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jun 2018 19:05:42 -0400
-Received: by mail-vk0-f73.google.com with SMTP id j68-v6so1636382vkj.6
-        for <git@vger.kernel.org>; Wed, 13 Jun 2018 16:05:41 -0700 (PDT)
+        id S935725AbeFMXFs (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Jun 2018 19:05:48 -0400
+Received: from mail-yw0-f202.google.com ([209.85.161.202]:40431 "EHLO
+        mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935432AbeFMXFo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jun 2018 19:05:44 -0400
+Received: by mail-yw0-f202.google.com with SMTP id q6-v6so3266984ywa.7
+        for <git@vger.kernel.org>; Wed, 13 Jun 2018 16:05:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=HWWQsjefFSYGsTrWoleVt2QhlVB4L1ihQMsZx7XOcSQ=;
-        b=uuyr0BtvOTJMcDOz1tTrTbFA21TJIswuJ0+ET+PaxvC2ErASEWqbdBhKWpJCNxfs2p
-         wykObdvR1rizuA2a8hfTrxm2D8FVmZ6mNJF6Co5jbTTm+gsbmu85yP1biOBXKWGFa5dB
-         5fD4X5BeZo9xIGQxXm2Lcft30mimbnYltSJMWx03mSCT8J25YtQW8reLpyflLQ2YkqlV
-         q4Iqo1QeY6Iw3vWbGwFRnI9jzB50qNaC5Nz6zrx726CFRyC+ucKYj4FU+5oJYc8uHrpK
-         vChUVqWA1L5kluitnzrPHC9+mKQf0SpgF+jl/+kIaZlzuQObdM1tjq6AaiLKaYzJIegl
-         fVXw==
+        bh=429EES8culM7FgG3GU4OAc/WzuBb8LJdbuK3oYup5Rc=;
+        b=MYq3LSE9G2sTv+jpX07EfbBym4oR3uK8o687vvyEfKUOBV1EB+5HaJx9KnQZrbzao8
+         Na9e8IkVYZsLOexzNnXCmPnr45e3bmoQ4nz9bre7KbasLF925HHi+o0Kswvbdsa0CKQP
+         wb0NMmWBAMw2XdxZp3RXyZ1Pz5eXHS0BI2smI5iyAKE+jktgksM/hnIbPzMUERvLJQf8
+         FmDkp4mwRl8Ov9AYKaVHK1Mvswq1WIlFQj3177PwNz89GPXTpOwTT8iRD9k7RSPXskDc
+         SAaKcfEoo1zGTdPxe+to7eBzkHS2BkecSN2YvZSo2Mobd4axnX01VrkSFhe/yNkwoIxn
+         A8gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=HWWQsjefFSYGsTrWoleVt2QhlVB4L1ihQMsZx7XOcSQ=;
-        b=MpB+kqH4v3K7x7qFQJvjQ/GOhNnnUhJAIJsCjLNsZ1J6foXO+xBaVfu9aSJD7eTNXE
-         Spo4KoZ2McKSBi266H8KJXw9AL6cLYY88p5wH2HUWcrnwn858FiQgSmaVeXbvz2yx+Hb
-         tVG8U/BIcTRh9eEL5H4CSZy27j150tvIownm/EIwtRSCpdYZuImXdU09pJScKgyLWLKQ
-         xINN9FlzrDkCs9f4MlWYyFg2HxUU8iYtf8Ds14To+OyOX4lG9hOzTZSj5AKTKuGgxIgi
-         wmu/eRfLi594gfge/0ZUAnEMeNnOqCkB9JGKAuhLLAEv3jvZRv1VnuPSS/xHM69wFZCs
-         o+LQ==
-X-Gm-Message-State: APt69E0VVc9bhELo9zHPvK/ZAfmpowVDD/VANTafcyRABUp/JyuFBA0U
-        WdRSipCbS4LWf1/CFgVi/WA3W2aXbYGDFGE+D7JmIdDUY+kzSCSkkXG2+p3w56KvnN1QAT6F/8p
-        01dgSrBR8d11wbxnHwIVwWGzO3nqStZ27rbTPNkUNkALToxBG9p4UOGm7Leff
-X-Google-Smtp-Source: ADUXVKJdobcukBgodHrKv/y4b8u+GG63dKEPWaedFC54ZOnpahMLCXlChY9rQcIAbgBz6HVkU0HQMk7p8Dp6
+        bh=429EES8culM7FgG3GU4OAc/WzuBb8LJdbuK3oYup5Rc=;
+        b=Ghi3Gt3A5SSjuYkJti5HBn+OHdgkyIVa13xiPMoSaZIvf+EvSjWhCNNuBv6aaGx/K8
+         xRr82qfAR/zGFtChbGUQMTfXkF/AOpMGg7DjsXtH3DiS/K/0FRqZ0/eDhDEwcbPjLmai
+         7llI+n9jE1eH2d+xboLVXFNb8h93k+/C0ArQzC1MQirFFXpYsqZAaJqNSCdIqaqpXcZT
+         YfGao0ED+SVMBsWk4WFil1tGn+rzE8JuGa+Iy8BXkko/EPreJtHsLqkCyK5zd1vsvw05
+         TeJUOPOj9gEbmct1b4ZFpZDPieFZNxu67TsMHbe1Eih1gIakxMik2SbQddda2E/2YEFB
+         Or5w==
+X-Gm-Message-State: APt69E39WtAeU/KH7tmj1V0DIQ2ZU+LjxZ5/UvXFWXF7utl73h4l7l9j
+        U95l9dhSwGw42TjUENi7ejHKBVV769BZ8hpvaTvy1olI1kFkuI9DSqdDg1IjqGZGotkrcTQhhBh
+        tjREvKEG+/ss2x7fOwjHIRMlU1Zo9I6A8PHB4CqQeN3gaI0QLzsvNc8XrxbMq
+X-Google-Smtp-Source: ADUXVKJIfftkPJPaA7I4FqNmPhK5dSLxFsrTTIfvBYVcCQ9R6hAbkFQOH+mg8SRoU40neVlAPQ5+emXVGjQ6
 MIME-Version: 1.0
-X-Received: by 2002:ab0:2497:: with SMTP id i23-v6mr87189uan.48.1528931141089;
- Wed, 13 Jun 2018 16:05:41 -0700 (PDT)
-Date:   Wed, 13 Jun 2018 16:04:54 -0700
+X-Received: by 2002:a25:c594:: with SMTP id v142-v6mr47457ybe.9.1528931143628;
+ Wed, 13 Jun 2018 16:05:43 -0700 (PDT)
+Date:   Wed, 13 Jun 2018 16:04:55 -0700
 In-Reply-To: <20180613230522.55335-1-sbeller@google.com>
-Message-Id: <20180613230522.55335-4-sbeller@google.com>
+Message-Id: <20180613230522.55335-5-sbeller@google.com>
 References: <20180530004810.30076-1-sbeller@google.com> <20180613230522.55335-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.rc1.244.gcf134e6275-goog
-Subject: [PATCH v2 03/31] object: add repository argument to object_as_type
+Subject: [PATCH v2 04/31] blob: add repository argument to lookup_blob
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Add a repository argument to allow the callers of lookup_blob
+to be more specific about which repository to act on. This is a small
+mechanical change; it doesn't change the implementation to handle
+repositories other than the_repository yet.
+
+As with the previous commits, use a macro to catch callers passing a
+repository other than the_repository at compile time.
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- blob.c         | 2 +-
- builtin/fsck.c | 2 +-
- commit.c       | 4 ++--
- object.c       | 2 +-
- object.h       | 3 ++-
- refs.c         | 2 +-
- tag.c          | 2 +-
- tree.c         | 2 +-
- 8 files changed, 10 insertions(+), 9 deletions(-)
+ blob.c                   | 2 +-
+ blob.h                   | 3 ++-
+ builtin/fast-export.c    | 2 +-
+ builtin/fsck.c           | 3 ++-
+ builtin/index-pack.c     | 2 +-
+ builtin/merge-tree.c     | 3 ++-
+ builtin/unpack-objects.c | 2 +-
+ fsck.c                   | 2 +-
+ http-push.c              | 3 ++-
+ list-objects.c           | 2 +-
+ object.c                 | 4 ++--
+ reachable.c              | 2 +-
+ revision.c               | 4 ++--
+ tag.c                    | 2 +-
+ walker.c                 | 3 ++-
+ 15 files changed, 22 insertions(+), 17 deletions(-)
 
 diff --git a/blob.c b/blob.c
-index 75b737a761e..dada295698c 100644
+index dada295698c..17b9314f0a0 100644
 --- a/blob.c
 +++ b/blob.c
-@@ -11,7 +11,7 @@ struct blob *lookup_blob(const struct object_id *oid)
- 	if (!obj)
- 		return create_object(the_repository, oid->hash,
- 				     alloc_blob_node(the_repository));
--	return object_as_type(obj, OBJ_BLOB, 0);
-+	return object_as_type(the_repository, obj, OBJ_BLOB, 0);
- }
+@@ -5,7 +5,7 @@
  
- int parse_blob_buffer(struct blob *item, void *buffer, unsigned long size)
+ const char *blob_type = "blob";
+ 
+-struct blob *lookup_blob(const struct object_id *oid)
++struct blob *lookup_blob_the_repository(const struct object_id *oid)
+ {
+ 	struct object *obj = lookup_object(the_repository, oid->hash);
+ 	if (!obj)
+diff --git a/blob.h b/blob.h
+index 44606168310..08bc34487a0 100644
+--- a/blob.h
++++ b/blob.h
+@@ -9,7 +9,8 @@ struct blob {
+ 	struct object object;
+ };
+ 
+-struct blob *lookup_blob(const struct object_id *oid);
++#define lookup_blob(r, o) lookup_blob_##r(o)
++struct blob *lookup_blob_the_repository(const struct object_id *oid);
+ 
+ int parse_blob_buffer(struct blob *item, void *buffer, unsigned long size);
+ 
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index a34ab9768f4..23ca46e6008 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -237,7 +237,7 @@ static void export_blob(const struct object_id *oid)
+ 
+ 	if (anonymize) {
+ 		buf = anonymize_blob(&size);
+-		object = (struct object *)lookup_blob(oid);
++		object = (struct object *)lookup_blob(the_repository, oid);
+ 		eaten = 0;
+ 	} else {
+ 		buf = read_object_file(oid, &type, &size);
 diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 6b8c9074920..72d7a9cbd8c 100644
+index 72d7a9cbd8c..0c61249282a 100644
 --- a/builtin/fsck.c
 +++ b/builtin/fsck.c
-@@ -70,7 +70,7 @@ static const char *printable_type(struct object *obj)
- 		enum object_type type = oid_object_info(the_repository,
- 							&obj->oid, NULL);
- 		if (type > 0)
--			object_as_type(obj, type, 0);
-+			object_as_type(the_repository, obj, type, 0);
+@@ -808,7 +808,8 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+ 			mode = active_cache[i]->ce_mode;
+ 			if (S_ISGITLINK(mode))
+ 				continue;
+-			blob = lookup_blob(&active_cache[i]->oid);
++			blob = lookup_blob(the_repository,
++					   &active_cache[i]->oid);
+ 			if (!blob)
+ 				continue;
+ 			obj = &blob->object;
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 0dd10693597..51c5244a15a 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -832,7 +832,7 @@ static void sha1_object(const void *data, struct object_entry *obj_entry,
+ 	if (strict || do_fsck_object) {
+ 		read_lock();
+ 		if (type == OBJ_BLOB) {
+-			struct blob *blob = lookup_blob(oid);
++			struct blob *blob = lookup_blob(the_repository, oid);
+ 			if (blob)
+ 				blob->object.flags |= FLAG_CHECKED;
+ 			else
+diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
+index 8a8d5797520..f8023bae1e2 100644
+--- a/builtin/merge-tree.c
++++ b/builtin/merge-tree.c
+@@ -2,6 +2,7 @@
+ #include "tree-walk.h"
+ #include "xdiff-interface.h"
+ #include "object-store.h"
++#include "repository.h"
+ #include "blob.h"
+ #include "exec-cmd.h"
+ #include "merge-blobs.h"
+@@ -170,7 +171,7 @@ static struct merge_list *create_entry(unsigned stage, unsigned mode, const stru
+ 	res->stage = stage;
+ 	res->path = path;
+ 	res->mode = mode;
+-	res->blob = lookup_blob(oid);
++	res->blob = lookup_blob(the_repository, oid);
+ 	return res;
+ }
+ 
+diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+index 8e454c48649..dfea7790fde 100644
+--- a/builtin/unpack-objects.c
++++ b/builtin/unpack-objects.c
+@@ -254,7 +254,7 @@ static void write_object(unsigned nr, enum object_type type,
+ 		added_object(nr, type, buf, size);
+ 		free(buf);
+ 
+-		blob = lookup_blob(&obj_list[nr].oid);
++		blob = lookup_blob(the_repository, &obj_list[nr].oid);
+ 		if (blob)
+ 			blob->object.flags |= FLAG_WRITTEN;
+ 		else
+diff --git a/fsck.c b/fsck.c
+index f9476f56e93..2d372f2a3f3 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -367,7 +367,7 @@ static int fsck_walk_tree(struct tree *tree, void *data, struct fsck_options *op
+ 			result = options->walk(obj, OBJ_TREE, data, options);
+ 		}
+ 		else if (S_ISREG(entry.mode) || S_ISLNK(entry.mode)) {
+-			obj = (struct object *)lookup_blob(entry.oid);
++			obj = (struct object *)lookup_blob(the_repository, entry.oid);
+ 			if (name && obj)
+ 				put_object_name(options, obj, "%s%s", name,
+ 					entry.path);
+diff --git a/http-push.c b/http-push.c
+index 2615c823d60..8c9d285c914 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -1314,7 +1314,8 @@ static struct object_list **process_tree(struct tree *tree,
+ 			p = process_tree(lookup_tree(entry.oid), p);
+ 			break;
+ 		case OBJ_BLOB:
+-			p = process_blob(lookup_blob(entry.oid), p);
++			p = process_blob(lookup_blob(the_repository, entry.oid),
++					 p);
+ 			break;
+ 		default:
+ 			/* Subproject commit - not in this repository */
+diff --git a/list-objects.c b/list-objects.c
+index 7ae0eb8ebc7..56682c2a441 100644
+--- a/list-objects.c
++++ b/list-objects.c
+@@ -167,7 +167,7 @@ static void process_tree(struct rev_info *revs,
+ 					cb_data);
+ 		else
+ 			process_blob(revs,
+-				     lookup_blob(entry.oid),
++				     lookup_blob(the_repository, entry.oid),
+ 				     show, base, entry.path,
+ 				     cb_data, filter_fn, filter_data);
  	}
- 
- 	ret = type_name(obj->type);
-diff --git a/commit.c b/commit.c
-index 97b4ccde8f0..d76d64d4dfc 100644
---- a/commit.c
-+++ b/commit.c
-@@ -31,7 +31,7 @@ struct commit *lookup_commit_reference_gently(const struct object_id *oid,
- 
- 	if (!obj)
- 		return NULL;
--	return object_as_type(obj, OBJ_COMMIT, quiet);
-+	return object_as_type(the_repository, obj, OBJ_COMMIT, quiet);
- }
- 
- struct commit *lookup_commit_reference(const struct object_id *oid)
-@@ -57,7 +57,7 @@ struct commit *lookup_commit(const struct object_id *oid)
- 	if (!obj)
- 		return create_object(the_repository, oid->hash,
- 				     alloc_commit_node(the_repository));
--	return object_as_type(obj, OBJ_COMMIT, 0);
-+	return object_as_type(the_repository, obj, OBJ_COMMIT, 0);
- }
- 
- struct commit *lookup_commit_reference_by_name(const char *name)
 diff --git a/object.c b/object.c
-index 0ffcf619cef..b221ba714a7 100644
+index b221ba714a7..8d790ac920a 100644
 --- a/object.c
 +++ b/object.c
-@@ -158,7 +158,7 @@ void *create_object(struct repository *r, const unsigned char *sha1, void *o)
- 	return obj;
- }
+@@ -193,7 +193,7 @@ struct object *parse_object_buffer_the_repository(const struct object_id *oid, e
  
--void *object_as_type(struct object *obj, enum object_type type, int quiet)
-+void *object_as_type_the_repository(struct object *obj, enum object_type type, int quiet)
- {
- 	if (obj->type == type)
- 		return obj;
-diff --git a/object.h b/object.h
-index 7526ee151f5..5425d8e647c 100644
---- a/object.h
-+++ b/object.h
-@@ -115,7 +115,8 @@ struct object *lookup_object_the_repository(const unsigned char *sha1);
- 
- extern void *create_object(struct repository *r, const unsigned char *sha1, void *obj);
- 
--void *object_as_type(struct object *obj, enum object_type type, int quiet);
-+#define object_as_type(r, o, t, q) object_as_type_##r(o, t, q)
-+void *object_as_type_the_repository(struct object *obj, enum object_type type, int quiet);
- 
- /*
-  * Returns the object, having parsed it to find out what it is.
-diff --git a/refs.c b/refs.c
-index 23d53957deb..0304e2b866f 100644
---- a/refs.c
-+++ b/refs.c
-@@ -305,7 +305,7 @@ enum peel_status peel_object(const struct object_id *name, struct object_id *oid
- 
- 	if (o->type == OBJ_NONE) {
- 		int type = oid_object_info(the_repository, name, NULL);
--		if (type < 0 || !object_as_type(o, type, 0))
-+		if (type < 0 || !object_as_type(the_repository, o, type, 0))
- 			return PEEL_INVALID;
+ 	obj = NULL;
+ 	if (type == OBJ_BLOB) {
+-		struct blob *blob = lookup_blob(oid);
++		struct blob *blob = lookup_blob(the_repository, oid);
+ 		if (blob) {
+ 			if (parse_blob_buffer(blob, buffer, size))
+ 				return NULL;
+@@ -266,7 +266,7 @@ struct object *parse_object_the_repository(const struct object_id *oid)
+ 			error("sha1 mismatch %s", oid_to_hex(oid));
+ 			return NULL;
+ 		}
+-		parse_blob_buffer(lookup_blob(oid), NULL, 0);
++		parse_blob_buffer(lookup_blob(the_repository, oid), NULL, 0);
+ 		return lookup_object(the_repository, oid->hash);
  	}
  
+diff --git a/reachable.c b/reachable.c
+index 2ee55695595..cc25f012e5d 100644
+--- a/reachable.c
++++ b/reachable.c
+@@ -91,7 +91,7 @@ static void add_recent_object(const struct object_id *oid,
+ 		obj = (struct object *)lookup_tree(oid);
+ 		break;
+ 	case OBJ_BLOB:
+-		obj = (struct object *)lookup_blob(oid);
++		obj = (struct object *)lookup_blob(the_repository, oid);
+ 		break;
+ 	default:
+ 		die("unknown object type for %s: %s",
+diff --git a/revision.c b/revision.c
+index f051c6c5806..aeccbf5fe24 100644
+--- a/revision.c
++++ b/revision.c
+@@ -69,7 +69,7 @@ static void mark_tree_contents_uninteresting(struct tree *tree)
+ 			mark_tree_uninteresting(lookup_tree(entry.oid));
+ 			break;
+ 		case OBJ_BLOB:
+-			mark_blob_uninteresting(lookup_blob(entry.oid));
++			mark_blob_uninteresting(lookup_blob(the_repository, entry.oid));
+ 			break;
+ 		default:
+ 			/* Subproject commit - not in this repository */
+@@ -1338,7 +1338,7 @@ static void do_add_index_objects_to_pending(struct rev_info *revs,
+ 		if (S_ISGITLINK(ce->ce_mode))
+ 			continue;
+ 
+-		blob = lookup_blob(&ce->oid);
++		blob = lookup_blob(the_repository, &ce->oid);
+ 		if (!blob)
+ 			die("unable to add index blob to traversal");
+ 		add_pending_object_with_path(revs, &blob->object, "",
 diff --git a/tag.c b/tag.c
-index 1b95eb9f07f..a14a4f23037 100644
+index a14a4f23037..a31ae75e960 100644
 --- a/tag.c
 +++ b/tag.c
-@@ -98,7 +98,7 @@ struct tag *lookup_tag(const struct object_id *oid)
- 	if (!obj)
- 		return create_object(the_repository, oid->hash,
- 				     alloc_tag_node(the_repository));
--	return object_as_type(obj, OBJ_TAG, 0);
-+	return object_as_type(the_repository, obj, OBJ_TAG, 0);
- }
+@@ -154,7 +154,7 @@ int parse_tag_buffer(struct tag *item, const void *data, unsigned long size)
+ 	bufptr = nl + 1;
  
- static timestamp_t parse_tag_date(const char *buf, const char *tail)
-diff --git a/tree.c b/tree.c
-index 47ecc85f90a..bd74ed66e23 100644
---- a/tree.c
-+++ b/tree.c
-@@ -201,7 +201,7 @@ struct tree *lookup_tree(const struct object_id *oid)
- 	if (!obj)
- 		return create_object(the_repository, oid->hash,
- 				     alloc_tree_node(the_repository));
--	return object_as_type(obj, OBJ_TREE, 0);
-+	return object_as_type(the_repository, obj, OBJ_TREE, 0);
- }
- 
- int parse_tree_buffer(struct tree *item, void *buffer, unsigned long size)
+ 	if (!strcmp(type, blob_type)) {
+-		item->tagged = (struct object *)lookup_blob(&oid);
++		item->tagged = (struct object *)lookup_blob(the_repository, &oid);
+ 	} else if (!strcmp(type, tree_type)) {
+ 		item->tagged = (struct object *)lookup_tree(&oid);
+ 	} else if (!strcmp(type, commit_type)) {
+diff --git a/walker.c b/walker.c
+index 3678e344312..ea0c41f47a2 100644
+--- a/walker.c
++++ b/walker.c
+@@ -54,7 +54,8 @@ static int process_tree(struct walker *walker, struct tree *tree)
+ 				obj = &tree->object;
+ 		}
+ 		else {
+-			struct blob *blob = lookup_blob(entry.oid);
++			struct blob *blob = lookup_blob(the_repository,
++							entry.oid);
+ 			if (blob)
+ 				obj = &blob->object;
+ 		}
 -- 
 2.18.0.rc1.244.gcf134e6275-goog
 
