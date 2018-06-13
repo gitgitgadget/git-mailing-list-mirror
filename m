@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 224611F403
-	for <e@80x24.org>; Wed, 13 Jun 2018 23:06:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F3251F403
+	for <e@80x24.org>; Wed, 13 Jun 2018 23:06:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936018AbeFMXGg (ORCPT <rfc822;e@80x24.org>);
+        id S936022AbeFMXGi (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Jun 2018 19:06:38 -0400
+Received: from mail-yw0-f201.google.com ([209.85.161.201]:57262 "EHLO
+        mail-yw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935843AbeFMXGg (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 13 Jun 2018 19:06:36 -0400
-Received: from mail-ua0-f201.google.com ([209.85.217.201]:41050 "EHLO
-        mail-ua0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935843AbeFMXGe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jun 2018 19:06:34 -0400
-Received: by mail-ua0-f201.google.com with SMTP id j9-v6so1341805uan.8
-        for <git@vger.kernel.org>; Wed, 13 Jun 2018 16:06:33 -0700 (PDT)
+Received: by mail-yw0-f201.google.com with SMTP id l136-v6so3245585ywb.23
+        for <git@vger.kernel.org>; Wed, 13 Jun 2018 16:06:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=mmN26XHZkl5EyZrTBzadT33Dqvi6CmoPnj+0AFccpGI=;
-        b=DrTdhDf0d2+nfw2ZkwONwymNvgHj93jlkCceZtW0xdoSBg0PcK6DdZqCa6d1Tw634U
-         APzQw/+yWFzvvKcHp2Vn+FwdCjzoUFI2IPfSKNgViU9PY5u9DuJKzRj3ouckuZuMtGwB
-         TR0vn5QGdX+B6ruQL34nJJhMwZnibRtH4bmqVScNvnTGIoyaIwJek7sgp0HzdLygSWm8
-         mMvXMr3Q8sr27FP15c0Si7bLvdcklZ8uwwNOXWlGH9Knxn2p9of1ABCQA0yPLY2EAulQ
-         NZEOvLdsNl03WWQ5Z61oz/MGabn1vI6OGfE+mII6XPi7RpA+XpqEjtDmPrtIOdeIj1z3
-         L1ag==
+        bh=docOv1vGSK2dcgSsXJXsTYpRz14u+69e797GYwpnlHQ=;
+        b=Wac7rJf5Y88TpNDsq18EttCkE3zdf8GprtJf6FtZOKVPNeHHI/Bz/+GhhBs638xA35
+         jAEdCy0qBzRQWLmKNkpOJOLXcRH2+7cF8JNTwzfN0a//RmebTovUWqRBKvHL2GBiS8eL
+         iG7Fzy4Z1jEHh9kWHxpyO6AB9HyEYlZP+HbjTx82Qqz2mKfoB+yVJx5XM/w0tEeyiqhq
+         iEsJvJ0WV3uGM0L984YcYiApXeOUurardh4x3zz6IEq4MWST4aawaKuUlH1ntSNEHYmW
+         CQm+6WQGakeqJzA9lfUv47N7sade+brSdlaC4R4OUZp6fy4TJ2Qa5/Y8IujGf1AANo7e
+         NtqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=mmN26XHZkl5EyZrTBzadT33Dqvi6CmoPnj+0AFccpGI=;
-        b=IJV1zuzxafytfbSsqCpUyiKBJjzRETqTjmy/ojF/NPD5Jh9RKbvrZtLz4hA8K+owqN
-         TRKa4QjAO2su7pH6DQaG+TkYPrEjejvEsAgdL1RBOmRQpxR8T6SPReMKfwLy1UQHcTCf
-         LtdE/H3mue1YvkJAvr3HbcmldjYcvoJ7oKQESNGwzwgk1+2N8BmHSzp+qJdnzOqJGOev
-         XtK5nRi5wSfLzT2i4cJLQuq2mNTDfcpTclRjuPU8Hkn4BYhnDrjy97/gN1pmuCH0PLTU
-         /rKKyTIhsnqAQ6g6hJR54CFplyYqPhJvlaeipxU6YaIP2600AJ/GOgO8T0ckm4i0dqRh
-         +k0g==
-X-Gm-Message-State: APt69E35RYTr26g0VEVV+6b6CAFemnfEcX7kCurlucgQvtPBQy5K4yYR
-        KghJqlpYOrq9belSsYEVODgi3f+7MFrR24OGJm8g1kh4qyagiuwM+8uy/qVUdq+WWgrXJ8SG2Ct
-        rWSISVmMUM5HecD+0Tmk84tU/gTQms+aHztUGjQqJU0KVf+sQhoH18gX+m1HX
-X-Google-Smtp-Source: ADUXVKIqNYVe7kz4SKZizx/042ov2/ekbIcjL3yzDEvNOgjYXUb3J35Qig8WqLLMxyiF5w7vc0hOsnMyDQR8
+        bh=docOv1vGSK2dcgSsXJXsTYpRz14u+69e797GYwpnlHQ=;
+        b=lgSe2CXlKZnI0RckOWb/rvYA9/UClkRmP80KY8DQy/bxNJ2h09CCoHtip2+T4tueUp
+         12ksFU1SfAqFwYofcfX4CJgr3Jw3pU0+n9yP0wqVUHDoV4KPElqqQUKlUyXm+xiqp/it
+         ejHQcrlD/wrKl7js/aRBQK7e2xu3onqaE3ssQreDX48MZRLzCFcuP+FOjCx3MP9TmJb8
+         I2BJlveP+3iWTJNcBiVCyy2iXjyHz9ivFZvin5X5p44Q2Wtmfmtsjlr5bs9k2W/Mws49
+         oYldyTNpOXqZhx8NWfpbARMty4RdMypyV+2v/W8ckICnlxWorDBl1x5MR5w28L5X4b8a
+         TEGw==
+X-Gm-Message-State: APt69E1OSeAtoKx7VWc1VLVyWcTyjqSPaUW2n9g/QoJDDffTXewdwbm2
+        G4UxwPGT/wp3E9140VY4pVJcMMh+bFxPexizXc7P6czgdzOuqgMr/VZ5fUdMYYnZIRi3KWqOqiZ
+        XVnKudgJOBqGetcX7fH3+Il5p87oHa7CbrCTbaFThNNmtWZ//uICqz8BjITDF
+X-Google-Smtp-Source: ADUXVKJp1zUqT2rHgLXNiLWw2ZCmJOLFWejdANS6U2LYoZx85wcSQaY258LXw7mEulWKk4mnxqo8WcYPLz11
 MIME-Version: 1.0
-X-Received: by 2002:ab0:31d6:: with SMTP id e22-v6mr73534uan.19.1528931193279;
- Wed, 13 Jun 2018 16:06:33 -0700 (PDT)
-Date:   Wed, 13 Jun 2018 16:05:16 -0700
+X-Received: by 2002:a25:b206:: with SMTP id i6-v6mr44308ybj.69.1528931195638;
+ Wed, 13 Jun 2018 16:06:35 -0700 (PDT)
+Date:   Wed, 13 Jun 2018 16:05:17 -0700
 In-Reply-To: <20180613230522.55335-1-sbeller@google.com>
-Message-Id: <20180613230522.55335-26-sbeller@google.com>
+Message-Id: <20180613230522.55335-27-sbeller@google.com>
 References: <20180530004810.30076-1-sbeller@google.com> <20180613230522.55335-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.rc1.244.gcf134e6275-goog
-Subject: [PATCH v2 25/31] commit.c: allow set_commit_buffer to handle
+Subject: [PATCH v2 26/31] commit.c: allow get_cached_commit_buffer to handle
  arbitrary repositories
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
@@ -70,36 +70,36 @@ Signed-off-by: Stefan Beller <sbeller@google.com>
  2 files changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/commit.c b/commit.c
-index e9b22268997..44d1a38187a 100644
+index 44d1a38187a..7ee55f6b8f0 100644
 --- a/commit.c
 +++ b/commit.c
-@@ -262,10 +262,10 @@ void free_commit_buffer_slab(struct buffer_slab *bs)
- 	free(bs);
- }
- 
--void set_commit_buffer_the_repository(struct commit *commit, void *buffer, unsigned long size)
-+void set_commit_buffer(struct repository *r, struct commit *commit, void *buffer, unsigned long size)
- {
- 	struct commit_buffer *v = buffer_slab_at(
--		the_repository->parsed_objects->buffer_slab, commit);
-+		r->parsed_objects->buffer_slab, commit);
- 	v->buffer = buffer;
+@@ -270,10 +270,10 @@ void set_commit_buffer(struct repository *r, struct commit *commit, void *buffer
  	v->size = size;
  }
+ 
+-const void *get_cached_commit_buffer_the_repository(const struct commit *commit, unsigned long *sizep)
++const void *get_cached_commit_buffer(struct repository *r, const struct commit *commit, unsigned long *sizep)
+ {
+ 	struct commit_buffer *v = buffer_slab_peek(
+-		the_repository->parsed_objects->buffer_slab, commit);
++		r->parsed_objects->buffer_slab, commit);
+ 	if (!v) {
+ 		if (sizep)
+ 			*sizep = 0;
 diff --git a/commit.h b/commit.h
-index a417f99ad4f..3e883787855 100644
+index 3e883787855..c7bb01ffe4b 100644
 --- a/commit.h
 +++ b/commit.h
-@@ -87,8 +87,7 @@ void free_commit_buffer_slab(struct buffer_slab *bs);
-  * Associate an object buffer with the commit. The ownership of the
-  * memory is handed over to the commit, and must be free()-able.
+@@ -93,8 +93,7 @@ void set_commit_buffer(struct repository *r, struct commit *, void *buffer, unsi
+  * Get any cached object buffer associated with the commit. Returns NULL
+  * if none. The resulting memory should not be freed.
   */
--#define set_commit_buffer(r, c, b, s) set_commit_buffer_##r(c, b, s)
--void set_commit_buffer_the_repository(struct commit *, void *buffer, unsigned long size);
-+void set_commit_buffer(struct repository *r, struct commit *, void *buffer, unsigned long size);
+-#define get_cached_commit_buffer(r, c, s) get_cached_commit_buffer_##r(c, s)
+-const void *get_cached_commit_buffer_the_repository(const struct commit *, unsigned long *size);
++const void *get_cached_commit_buffer(struct repository *, const struct commit *, unsigned long *size);
  
  /*
-  * Get any cached object buffer associated with the commit. Returns NULL
+  * Get the commit's object contents, either from cache or by reading the object
 -- 
 2.18.0.rc1.244.gcf134e6275-goog
 
