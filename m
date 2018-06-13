@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C21761F403
-	for <e@80x24.org>; Wed, 13 Jun 2018 23:06:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F4501F403
+	for <e@80x24.org>; Wed, 13 Jun 2018 23:06:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935937AbeFMXGH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Jun 2018 19:06:07 -0400
-Received: from mail-ua0-f202.google.com ([209.85.217.202]:37932 "EHLO
-        mail-ua0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935933AbeFMXGG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jun 2018 19:06:06 -0400
-Received: by mail-ua0-f202.google.com with SMTP id f18-v6so1352135ual.5
-        for <git@vger.kernel.org>; Wed, 13 Jun 2018 16:06:05 -0700 (PDT)
+        id S935947AbeFMXGL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Jun 2018 19:06:11 -0400
+Received: from mail-oi0-f74.google.com ([209.85.218.74]:56664 "EHLO
+        mail-oi0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935864AbeFMXGI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jun 2018 19:06:08 -0400
+Received: by mail-oi0-f74.google.com with SMTP id z83-v6so2603704oiz.23
+        for <git@vger.kernel.org>; Wed, 13 Jun 2018 16:06:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=q53eTCT8kk21S4KqxfjB8eSi2rQYbvD7kFBIR3vKwkA=;
-        b=QQe20ZxeRroSlbFtEt7aKjLwhXm2C6P4yxMOI5kKFF4GqC6d2h32f67FojCN68+HV+
-         KchanYV82BughXVF1J62xq5DUotkjKhEPTdAMyvqgBmLHd7MJtsXNb3fXeTzTSbvmaeb
-         FI9UMI4Te9vlDaxJoBq5uXt+TIAzZFQEwgMIyORct9qq5vbxPT6FsmRK+qSq7zo4yJzC
-         phHo8aMBqeH1rlgWwTbFpewX7s5l7B4mIEF4O00Bc7Hv7zPVzKEIipguZrW3o265SFVZ
-         P3VLf+bGOPvg/nwvDkJ+GmQrVAqwSuFUftqO+jQSfYTu3ZuD6L+Q6t33gLWWsEBLaYrL
-         vM5Q==
+        bh=ueU57VmvuhOu3Zg87EWi4prGy7m3Rurl79iLlNHfZsc=;
+        b=MCtCNO0yxN28GxYQ4Gz93AVkSk3B5zTZ9JPdw2aj9Vk1yIv3NjjtfPmBq4wqGvoief
+         l71WoMCcw7ap+97RcHcywv1E0ZPqfyAQOVSEPIrHBb6fVGrIEXmpgKxkYhRceekc3e19
+         rPD1C9kckl/prI/hVUPxg3nEq0wAnlC8W3VeimfDFEuOZWT0roJZoYW8ZygefKr4QEY0
+         h9tq9RU8x81Nn00WpM8k+I1rZHFjYlkxYziCt4yrsKZPxG0sbucUmxG2WXd59k7YUdeO
+         hQGVpGS9dLdWJoHbB08bgQ3DHOWMV2/DNmdZodwkuIh9vLkqPPTqfK4hktAXN9IV6gwc
+         v/vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=q53eTCT8kk21S4KqxfjB8eSi2rQYbvD7kFBIR3vKwkA=;
-        b=HAQAHKS+I29YrRBbYGy0VLoRtumaUI4Es8TiQ4Rd0sHnlXUgBGuGV6+KtufoI+fzhl
-         SSUjYfVFcy/QT74F53jUHQicqG6o53SoII4hrDbl0e9BjPkgbo0s17z3ls8Ra5J62h7U
-         gYY1Wa6bFv/iX5XeBips2WdnPpqESPSJrUpS6r4hdu/R0XBl78jxlRB0UiY0eT3+/lSO
-         hVQ2sE+oYLnmkCAUraT/XG3FH3jsd0xfJw3MUpt/k8fj1T47j9eVsQO34olX6qXAWwde
-         cheH4HARWlztOEJ/uhiR4qnrzdNTorc66Jx1LDAaX4WgNy/O5flxiDXBIExQUk0B0WzE
-         F0Lg==
-X-Gm-Message-State: APt69E044Ji4rDZ1RAE0zNaW4x8DvfztzStWx5+3wshdizac+l52PsYc
-        gCVD6mLuX14rkVUDidJs6ExZiWyTmDypDejsSW3Xkbvf9QKk2wtJvWga3nd7apmAVCfu+hvGHCL
-        xX2vGXYQRWwaKOhofxAqQGgQoE1TH8tDW9407ZT/9C+y3xmQ7MWLjyMDa3iky
-X-Google-Smtp-Source: ADUXVKIdBmOYexNCV/ryIYtQMpLlTKys4zp7Kl3Jorc+wTdAuWcuw8b9PNOd+6D+QEtacxUjGxVse2OOPu+c
+        bh=ueU57VmvuhOu3Zg87EWi4prGy7m3Rurl79iLlNHfZsc=;
+        b=mioWCk1R4QuaQjOR08276SEI7rpOVmxQFIzeauO4dhqfMDftAcGqY0ns9+5dAy6U+L
+         3Nbs58OZv5Bvfe7x446t9oKFolMWITC56Qgwcz93eZGpWJYxhuEoY3TmjbojZDqWmbV0
+         V8YdwuGhkN0AHsyJHqCieAUzoi3ne7o1PyR9slAvFJKpquLtkoEDYfarqCDQp2DLDozu
+         8aErmgwqntWyL5uMKRoVmUo4V1E9rlk+p7GZX3iabgnas832CdnaNyDrCmlqV4Wjpf5F
+         xuQHutyhzwXeBis5U4vSL0CJtkkUpImpgrZ1aOAwbPmDqGcjZmNDcvwIgOSAqprrgaow
+         XRvA==
+X-Gm-Message-State: APt69E2dklv1tONmZWw6AsOLRa0+b2m1dYHSeOVmjaywzRsYFh4M5gTd
+        mU46ccQ1tlicDzuH6Y1MFgszFbw4JbNYLZgMvKYugQOO1ZU2VGhPIOMDyFB2NDChcUHhY1GgXKs
+        FLBjPcyv1FL4ssX5PCC6exK1ILTnVCKKXRE01D6HgSbEIdkULPfIH0immebk4
+X-Google-Smtp-Source: ADUXVKInPHYP47GVVLVjaxXbHZ1wOkB5p80se+TKZsktUxhH1HzvREUQHa5SkOzTbYiVQlBImr5n0Rol5ayQ
 MIME-Version: 1.0
-X-Received: by 2002:ab0:1b2b:: with SMTP id d43-v6mr81337uai.56.1528931165172;
- Wed, 13 Jun 2018 16:06:05 -0700 (PDT)
-Date:   Wed, 13 Jun 2018 16:05:04 -0700
+X-Received: by 2002:a9d:2b4c:: with SMTP id f12-v6mr98625otd.14.1528931167423;
+ Wed, 13 Jun 2018 16:06:07 -0700 (PDT)
+Date:   Wed, 13 Jun 2018 16:05:05 -0700
 In-Reply-To: <20180613230522.55335-1-sbeller@google.com>
-Message-Id: <20180613230522.55335-14-sbeller@google.com>
+Message-Id: <20180613230522.55335-15-sbeller@google.com>
 References: <20180530004810.30076-1-sbeller@google.com> <20180613230522.55335-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.rc1.244.gcf134e6275-goog
-Subject: [PATCH v2 13/31] tag: add repository argument to parse_tag_buffer
+Subject: [PATCH v2 14/31] tag: add repository argument to deref_tag
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
@@ -63,7 +63,7 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a repository argument to allow the callers of parse_tag_buffer
+Add a repository argument to allow the callers of deref_tag
 to be more specific about which repository to act on. This is a small
 mechanical change; it doesn't change the implementation to handle
 repositories other than the_repository yet.
@@ -74,102 +74,345 @@ repository other than the_repository at compile time.
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- builtin/replace.c | 2 +-
- log-tree.c        | 2 +-
- object.c          | 2 +-
- sha1-file.c       | 2 +-
- tag.c             | 4 ++--
- tag.h             | 3 ++-
- 6 files changed, 8 insertions(+), 7 deletions(-)
+ blame.c                 |  6 +++---
+ builtin/diff.c          |  2 +-
+ builtin/fmt-merge-msg.c |  3 ++-
+ builtin/grep.c          |  3 ++-
+ builtin/name-rev.c      |  3 ++-
+ commit.c                |  3 ++-
+ fetch-pack.c            |  9 ++++++---
+ http-backend.c          |  2 +-
+ http-push.c             |  2 +-
+ line-log.c              |  2 +-
+ merge-recursive.c       |  3 ++-
+ remote.c                |  6 ++++--
+ server-info.c           |  2 +-
+ sha1-name.c             | 11 +++++++----
+ shallow.c               |  4 +++-
+ tag.c                   |  2 +-
+ tag.h                   |  3 ++-
+ upload-pack.c           |  2 +-
+ 18 files changed, 42 insertions(+), 26 deletions(-)
 
-diff --git a/builtin/replace.c b/builtin/replace.c
-index 8c8cec4aae6..bff1c3df964 100644
---- a/builtin/replace.c
-+++ b/builtin/replace.c
-@@ -362,7 +362,7 @@ static void check_one_mergetag(struct commit *commit,
- 	tag = lookup_tag(the_repository, &tag_oid);
- 	if (!tag)
- 		die(_("bad mergetag in commit '%s'"), ref);
--	if (parse_tag_buffer(tag, extra->value, extra->len))
-+	if (parse_tag_buffer(the_repository, tag, extra->value, extra->len))
- 		die(_("malformed mergetag in commit '%s'"), ref);
+diff --git a/blame.c b/blame.c
+index 50808c0ff44..aad53c0f904 100644
+--- a/blame.c
++++ b/blame.c
+@@ -1674,7 +1674,7 @@ static struct commit *find_single_final(struct rev_info *revs,
+ 		struct object *obj = revs->pending.objects[i].item;
+ 		if (obj->flags & UNINTERESTING)
+ 			continue;
+-		obj = deref_tag(obj, NULL, 0);
++		obj = deref_tag(the_repository, obj, NULL, 0);
+ 		if (obj->type != OBJ_COMMIT)
+ 			die("Non commit %s?", revs->pending.objects[i].name);
+ 		if (found)
+@@ -1705,7 +1705,7 @@ static struct commit *dwim_reverse_initial(struct rev_info *revs,
  
- 	/* iterate over new parents */
-diff --git a/log-tree.c b/log-tree.c
-index 727758eb442..ac42ad42acc 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -511,7 +511,7 @@ static void show_one_mergetag(struct commit *commit,
- 		return; /* error message already given */
+ 	/* Is that sole rev a committish? */
+ 	obj = revs->pending.objects[0].item;
+-	obj = deref_tag(obj, NULL, 0);
++	obj = deref_tag(the_repository, obj, NULL, 0);
+ 	if (obj->type != OBJ_COMMIT)
+ 		return NULL;
  
- 	strbuf_init(&verify_message, 256);
--	if (parse_tag_buffer(tag, extra->value, extra->len))
-+	if (parse_tag_buffer(the_repository, tag, extra->value, extra->len))
- 		strbuf_addstr(&verify_message, "malformed mergetag\n");
- 	else if (is_common_merge(commit) &&
- 		 !oidcmp(&tag->tagged->oid,
-diff --git a/object.c b/object.c
-index 080e9b36eaf..c6779ee596f 100644
---- a/object.c
-+++ b/object.c
-@@ -225,7 +225,7 @@ struct object *parse_object_buffer_the_repository(const struct object_id *oid, e
- 	} else if (type == OBJ_TAG) {
- 		struct tag *tag = lookup_tag(the_repository, oid);
- 		if (tag) {
--			if (parse_tag_buffer(tag, buffer, size))
-+			if (parse_tag_buffer(the_repository, tag, buffer, size))
- 			       return NULL;
- 			obj = &tag->object;
+@@ -1741,7 +1741,7 @@ static struct commit *find_single_initial(struct rev_info *revs,
+ 		struct object *obj = revs->pending.objects[i].item;
+ 		if (!(obj->flags & UNINTERESTING))
+ 			continue;
+-		obj = deref_tag(obj, NULL, 0);
++		obj = deref_tag(the_repository, obj, NULL, 0);
+ 		if (obj->type != OBJ_COMMIT)
+ 			die("Non commit %s?", revs->pending.objects[i].name);
+ 		if (found)
+diff --git a/builtin/diff.c b/builtin/diff.c
+index 0b7d0d612dd..1dd7dd4a267 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -395,7 +395,7 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+ 		int flags = (obj->flags & UNINTERESTING);
+ 		if (!obj->parsed)
+ 			obj = parse_object(the_repository, &obj->oid);
+-		obj = deref_tag(obj, NULL, 0);
++		obj = deref_tag(the_repository, obj, NULL, 0);
+ 		if (!obj)
+ 			die(_("invalid object '%s' given."), name);
+ 		if (obj->type == OBJ_COMMIT)
+diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
+index 36318ef46e7..ff165c0fcd2 100644
+--- a/builtin/fmt-merge-msg.c
++++ b/builtin/fmt-merge-msg.c
+@@ -344,7 +344,8 @@ static void shortlog(const char *name,
+ 	const struct object_id *oid = &origin_data->oid;
+ 	int limit = opts->shortlog_len;
+ 
+-	branch = deref_tag(parse_object(the_repository, oid), oid_to_hex(oid),
++	branch = deref_tag(the_repository, parse_object(the_repository, oid),
++			   oid_to_hex(oid),
+ 			   GIT_SHA1_HEXSZ);
+ 	if (!branch || branch->type != OBJ_COMMIT)
+ 		return;
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 6e7bc76785a..c93c33cd28f 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -646,7 +646,8 @@ static int grep_objects(struct grep_opt *opt, const struct pathspec *pathspec,
+ 
+ 	for (i = 0; i < nr; i++) {
+ 		struct object *real_obj;
+-		real_obj = deref_tag(list->objects[i].item, NULL, 0);
++		real_obj = deref_tag(the_repository, list->objects[i].item,
++				     NULL, 0);
+ 
+ 		/* load the gitmodules file for this rev */
+ 		if (recurse_submodules) {
+diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+index f6eb419a029..f1cb45c2274 100644
+--- a/builtin/name-rev.c
++++ b/builtin/name-rev.c
+@@ -455,7 +455,8 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
+ 		commit = NULL;
+ 		object = parse_object(the_repository, &oid);
+ 		if (object) {
+-			struct object *peeled = deref_tag(object, *argv, 0);
++			struct object *peeled = deref_tag(the_repository,
++							  object, *argv, 0);
+ 			if (peeled && peeled->type == OBJ_COMMIT)
+ 				commit = (struct commit *)peeled;
  		}
-diff --git a/sha1-file.c b/sha1-file.c
-index 00b1b2b8660..3440b67639e 100644
---- a/sha1-file.c
-+++ b/sha1-file.c
-@@ -1788,7 +1788,7 @@ static void check_tag(const void *buf, size_t size)
+diff --git a/commit.c b/commit.c
+index ba06918ba41..ede31c46931 100644
+--- a/commit.c
++++ b/commit.c
+@@ -26,7 +26,8 @@ const char *commit_type = "commit";
+ struct commit *lookup_commit_reference_gently_the_repository(
+ 		const struct object_id *oid, int quiet)
  {
- 	struct tag t;
- 	memset(&t, 0, sizeof(t));
--	if (parse_tag_buffer(&t, buf, size))
-+	if (parse_tag_buffer(the_repository, &t, buf, size))
- 		die("corrupt tag");
- }
+-	struct object *obj = deref_tag(parse_object(the_repository, oid),
++	struct object *obj = deref_tag(the_repository,
++				       parse_object(the_repository, oid),
+ 				       NULL, 0);
  
+ 	if (!obj)
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 74ac2977e85..358d8421a8f 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -126,7 +126,8 @@ static void rev_list_push(struct commit *commit, int mark)
+ 
+ static int rev_list_insert_ref(const char *refname, const struct object_id *oid)
+ {
+-	struct object *o = deref_tag(parse_object(the_repository, oid),
++	struct object *o = deref_tag(the_repository,
++				     parse_object(the_repository, oid),
+ 				     refname, 0);
+ 
+ 	if (o && o->type == OBJ_COMMIT)
+@@ -144,7 +145,8 @@ static int rev_list_insert_ref_oid(const char *refname, const struct object_id *
+ static int clear_marks(const char *refname, const struct object_id *oid,
+ 		       int flag, void *cb_data)
+ {
+-	struct object *o = deref_tag(parse_object(the_repository, oid),
++	struct object *o = deref_tag(the_repository,
++				     parse_object(the_repository, oid),
+ 				     refname, 0);
+ 
+ 	if (o && o->type == OBJ_COMMIT)
+@@ -802,7 +804,8 @@ static int everything_local(struct fetch_pack_args *args,
+ 		 * Don't mark them common yet; the server has to be told so first.
+ 		 */
+ 		for (ref = *refs; ref; ref = ref->next) {
+-			struct object *o = deref_tag(lookup_object(the_repository,
++			struct object *o = deref_tag(the_repository,
++						     lookup_object(the_repository,
+ 						     ref->old_oid.hash),
+ 						     NULL, 0);
+ 
+diff --git a/http-backend.c b/http-backend.c
+index 50ba4d53d54..bd0442a805a 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -442,7 +442,7 @@ static int show_text_ref(const char *name, const struct object_id *oid,
+ 
+ 	strbuf_addf(buf, "%s\t%s\n", oid_to_hex(oid), name_nons);
+ 	if (o->type == OBJ_TAG) {
+-		o = deref_tag(o, name, 0);
++		o = deref_tag(the_repository, o, name, 0);
+ 		if (!o)
+ 			return 0;
+ 		strbuf_addf(buf, "%s\t%s^{}\n", oid_to_hex(&o->oid),
+diff --git a/http-push.c b/http-push.c
+index 94ae9671def..61cdd40822a 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -1477,7 +1477,7 @@ static void add_remote_info_ref(struct remote_ls_ctx *ls)
+ 		    oid_to_hex(&ref->old_oid), ls->dentry_name);
+ 
+ 	if (o->type == OBJ_TAG) {
+-		o = deref_tag(o, ls->dentry_name, 0);
++		o = deref_tag(the_repository, o, ls->dentry_name, 0);
+ 		if (o)
+ 			strbuf_addf(buf, "%s\t%s^{}\n",
+ 				    oid_to_hex(&o->oid), ls->dentry_name);
+diff --git a/line-log.c b/line-log.c
+index ecdce08c4be..34c4a93c5b2 100644
+--- a/line-log.c
++++ b/line-log.c
+@@ -479,7 +479,7 @@ static struct commit *check_single_commit(struct rev_info *revs)
+ 		struct object *obj = revs->pending.objects[i].item;
+ 		if (obj->flags & UNINTERESTING)
+ 			continue;
+-		obj = deref_tag(obj, NULL, 0);
++		obj = deref_tag(the_repository, obj, NULL, 0);
+ 		if (obj->type != OBJ_COMMIT)
+ 			die("Non commit %s?", revs->pending.objects[i].name);
+ 		if (commit)
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 1b06f25b38c..9013aabed9a 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -2184,7 +2184,8 @@ static struct commit *get_ref(const struct object_id *oid, const char *name)
+ {
+ 	struct object *object;
+ 
+-	object = deref_tag(parse_object(the_repository, oid), name,
++	object = deref_tag(the_repository, parse_object(the_repository, oid),
++			   name,
+ 			   strlen(name));
+ 	if (!object)
+ 		return NULL;
+diff --git a/remote.c b/remote.c
+index 2a6ff7d60c1..0bf5ce3e7ba 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1995,12 +1995,14 @@ int ref_newer(const struct object_id *new_oid, const struct object_id *old_oid)
+ 	 * Both new_commit and old_commit must be commit-ish and new_commit is descendant of
+ 	 * old_commit.  Otherwise we require --force.
+ 	 */
+-	o = deref_tag(parse_object(the_repository, old_oid), NULL, 0);
++	o = deref_tag(the_repository, parse_object(the_repository, old_oid),
++		      NULL, 0);
+ 	if (!o || o->type != OBJ_COMMIT)
+ 		return 0;
+ 	old_commit = (struct commit *) o;
+ 
+-	o = deref_tag(parse_object(the_repository, new_oid), NULL, 0);
++	o = deref_tag(the_repository, parse_object(the_repository, new_oid),
++		      NULL, 0);
+ 	if (!o || o->type != OBJ_COMMIT)
+ 		return 0;
+ 	new_commit = (struct commit *) o;
+diff --git a/server-info.c b/server-info.c
+index 368fb547f4b..e83797c3caf 100644
+--- a/server-info.c
++++ b/server-info.c
+@@ -64,7 +64,7 @@ static int add_info_ref(const char *path, const struct object_id *oid,
+ 		return -1;
+ 
+ 	if (o->type == OBJ_TAG) {
+-		o = deref_tag(o, path, 0);
++		o = deref_tag(the_repository, o, path, 0);
+ 		if (o)
+ 			if (fprintf(fp, "%s	%s^{}\n",
+ 				oid_to_hex(&o->oid), path) < 0)
+diff --git a/sha1-name.c b/sha1-name.c
+index 98b66c4896c..27cf9cd916e 100644
+--- a/sha1-name.c
++++ b/sha1-name.c
+@@ -239,7 +239,8 @@ static int disambiguate_committish_only(const struct object_id *oid, void *cb_da
+ 		return 0;
+ 
+ 	/* We need to do this the hard way... */
+-	obj = deref_tag(parse_object(the_repository, oid), NULL, 0);
++	obj = deref_tag(the_repository, parse_object(the_repository, oid),
++			NULL, 0);
+ 	if (obj && obj->type == OBJ_COMMIT)
+ 		return 1;
+ 	return 0;
+@@ -263,7 +264,8 @@ static int disambiguate_treeish_only(const struct object_id *oid, void *cb_data_
+ 		return 0;
+ 
+ 	/* We need to do this the hard way... */
+-	obj = deref_tag(parse_object(the_repository, oid), NULL, 0);
++	obj = deref_tag(the_repository, parse_object(the_repository, oid),
++			NULL, 0);
+ 	if (obj && (obj->type == OBJ_TREE || obj->type == OBJ_COMMIT))
+ 		return 1;
+ 	return 0;
+@@ -934,7 +936,7 @@ static int peel_onion(const char *name, int len, struct object_id *oid,
+ 	if (!o)
+ 		return -1;
+ 	if (!expected_type) {
+-		o = deref_tag(o, name, sp - name - 2);
++		o = deref_tag(the_repository, o, name, sp - name - 2);
+ 		if (!o || (!o->parsed && !parse_object(the_repository, &o->oid)))
+ 			return -1;
+ 		oidcpy(oid, &o->oid);
+@@ -1066,7 +1068,8 @@ static int handle_one_ref(const char *path, const struct object_id *oid,
+ 	if (!object)
+ 		return 0;
+ 	if (object->type == OBJ_TAG) {
+-		object = deref_tag(object, path, strlen(path));
++		object = deref_tag(the_repository, object, path,
++				   strlen(path));
+ 		if (!object)
+ 			return 0;
+ 	}
+diff --git a/shallow.c b/shallow.c
+index 60fe1fe1e58..c65cb17195e 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -96,7 +96,9 @@ struct commit_list *get_shallow_commits(struct object_array *heads, int depth,
+ 			if (i < heads->nr) {
+ 				int **depth_slot;
+ 				commit = (struct commit *)
+-					deref_tag(heads->objects[i++].item, NULL, 0);
++					deref_tag(the_repository,
++						  heads->objects[i++].item,
++						  NULL, 0);
+ 				if (!commit || commit->object.type != OBJ_COMMIT) {
+ 					commit = NULL;
+ 					continue;
 diff --git a/tag.c b/tag.c
-index 5b41fc71fad..4971fd4dfc9 100644
+index 4971fd4dfc9..fbb4659325b 100644
 --- a/tag.c
 +++ b/tag.c
-@@ -126,7 +126,7 @@ void release_tag_memory(struct tag *t)
- 	t->date = 0;
- }
- 
--int parse_tag_buffer(struct tag *item, const void *data, unsigned long size)
-+int parse_tag_buffer_the_repository(struct tag *item, const void *data, unsigned long size)
- {
- 	struct object_id oid;
- 	char type[20];
-@@ -203,7 +203,7 @@ int parse_tag(struct tag *item)
- 		return error("Object %s not a tag",
- 			     oid_to_hex(&item->object.oid));
- 	}
--	ret = parse_tag_buffer(item, data, size);
-+	ret = parse_tag_buffer(the_repository, item, data, size);
- 	free(data);
+@@ -64,7 +64,7 @@ int gpg_verify_tag(const struct object_id *oid, const char *name_to_report,
  	return ret;
  }
+ 
+-struct object *deref_tag(struct object *o, const char *warn, int warnlen)
++struct object *deref_tag_the_repository(struct object *o, const char *warn, int warnlen)
+ {
+ 	while (o && o->type == OBJ_TAG)
+ 		if (((struct tag *)o)->tagged)
 diff --git a/tag.h b/tag.h
-index 276c448cd55..149959c81ba 100644
+index 149959c81ba..45b0b08b1f6 100644
 --- a/tag.h
 +++ b/tag.h
-@@ -13,7 +13,8 @@ struct tag {
- };
- #define lookup_tag(r, o) lookup_tag_##r(o)
- extern struct tag *lookup_tag_the_repository(const struct object_id *oid);
--extern int parse_tag_buffer(struct tag *item, const void *data, unsigned long size);
-+#define parse_tag_buffer(r, i, d, s) parse_tag_buffer_##r(i, d, s)
-+extern int parse_tag_buffer_the_repository(struct tag *item, const void *data, unsigned long size);
+@@ -17,7 +17,8 @@ extern struct tag *lookup_tag_the_repository(const struct object_id *oid);
+ extern int parse_tag_buffer_the_repository(struct tag *item, const void *data, unsigned long size);
  extern int parse_tag(struct tag *item);
  extern void release_tag_memory(struct tag *t);
- extern struct object *deref_tag(struct object *, const char *, int);
+-extern struct object *deref_tag(struct object *, const char *, int);
++#define deref_tag(r, o, w, l) deref_tag_##r(o, w, l)
++extern struct object *deref_tag_the_repository(struct object *, const char *, int);
+ extern struct object *deref_tag_noverify(struct object *);
+ extern int gpg_verify_tag(const struct object_id *oid,
+ 		const char *name_to_report, unsigned flags);
+diff --git a/upload-pack.c b/upload-pack.c
+index 20e61180e48..1d7d6917f24 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -380,7 +380,7 @@ static int ok_to_give_up(void)
+ 
+ 		if (want->flags & COMMON_KNOWN)
+ 			continue;
+-		want = deref_tag(want, "a want line", 0);
++		want = deref_tag(the_repository, want, "a want line", 0);
+ 		if (!want || want->type != OBJ_COMMIT) {
+ 			/* no way to tell if this is reachable by
+ 			 * looking at the ancestry chain alone, so
 -- 
 2.18.0.rc1.244.gcf134e6275-goog
 
