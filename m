@@ -2,94 +2,211 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 349F31F403
-	for <e@80x24.org>; Wed, 13 Jun 2018 22:34:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 739491F403
+	for <e@80x24.org>; Wed, 13 Jun 2018 23:05:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935490AbeFMWei (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Jun 2018 18:34:38 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:53968 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935256AbeFMWeh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jun 2018 18:34:37 -0400
-Received: by mail-wm0-f66.google.com with SMTP id x6-v6so7266945wmc.3
-        for <git@vger.kernel.org>; Wed, 13 Jun 2018 15:34:36 -0700 (PDT)
+        id S935335AbeFMXFg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Jun 2018 19:05:36 -0400
+Received: from mail-ua0-f202.google.com ([209.85.217.202]:55342 "EHLO
+        mail-ua0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935070AbeFMXFf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jun 2018 19:05:35 -0400
+Received: by mail-ua0-f202.google.com with SMTP id n13-v6so1335209uaj.22
+        for <git@vger.kernel.org>; Wed, 13 Jun 2018 16:05:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=Hu4DDAH6QGTfgBYUUOuyKPVtw+ZjZhok99h1lUWxYt8=;
-        b=RvLsxOKHcIvyJeE8Ur9UWrrCp2spxIdw540qqlxK8845Kfi0+lqYi+kTt9IfGh39mr
-         MSsVeeIy60T7b5NWrB1f0dnNz44A0VM4aRUI4ZBO9A7auzfLdAWogxHBmVO3Gym7DD2p
-         yNwZgDX3Djue/M4uUk7kbb+gOjDECriRqe8RYNVxcP/IIeUs2/yYUqQVM5EkvXEKGavy
-         DaBg7LrkY3+zcIGIcfMldhzKIEj1CzPRrS2hxZuJXsj3qA1hX4ZTBdsFxdH9w/vL1q8K
-         Mjxz61ttqNdeBMAFJb3m0Y+KxXh+ZMmFBIA8Hj3vh5VP7wPDVL7xSLi121oygXH8V2AW
-         wMCw==
+        d=google.com; s=20161025;
+        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
+         :cc;
+        bh=G5Eazgn/qSv4UyoJOYsWmcP1WigtquJLeOO2JZmZPS8=;
+        b=itmSEEBlZu5El5tGTY1gJazzjLLxgXn3uGns+x6MTmm2EACa/lSW9v5CwedoUkm5Rh
+         KuMtNxcEBzJjjmO1u+L9J6ZNuiAsLEh7KnjAR/DgycZ0ahtaMUR8/HCzodCDAyyNa0n4
+         k5WKSkD+zBju3E3Zq6P5oboTG2tHPRoX2ch7gB/YTPJmSbVLeZSNDwcSVbSa5mlKdfvc
+         pOmxjgXVkXXcfQCuAkeAIzLsXuY6Xh9NPl9XEeyZ9cdnUOnl943kKKwIFhX3k25Hl7q3
+         nrd5boL19HVIgTMGAxHFHgJnPfVseZiUtCmeTXStnrdFwJSyT70jHGxEU78JiKTglVdB
+         ZGgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=Hu4DDAH6QGTfgBYUUOuyKPVtw+ZjZhok99h1lUWxYt8=;
-        b=OUjg+SwPgVKXsswjKpyNtw+rWt+PnMVq85TmVRuzZnRFutfZYJxEf0oSUnUFPlhFH+
-         vXXmoaR6Ne3pmROiJskRXK84obj802z+uLyjcJ/tplQNW+dBHVi2PK9zV1xPtmibdsvn
-         nSx32TLi8WoaTfUCCHLu3LFWo8yutJbXRU8WR4ifr2W0YVYWFNiyyFIrTo5tiA7j1v+b
-         Pr9plXBxE3k7GaEG2SyikHIb/OW3Yea4pfMdDvfXrwk0o8iatCDUOmJq/ucBiRKNlu9u
-         aMqW1aWWJ9PIL2eBxGeBO7ai5GF6w9o8mGT8KNA6UW8IawxolNYuJ4KbLgbE4+ssfRjD
-         q+Lg==
-X-Gm-Message-State: APt69E1A8kLwiR5q3cDMT6Mm3u/sxiYK7YlnSVOiz/an7CyqPwPLFx3Z
-        iJ6RcEMYC4Y2csk0ITh+xyI=
-X-Google-Smtp-Source: ADUXVKLa3w41LDT1aY93d1AW4sPyuecs1T4BTlF+xs5wAz/TPM5TQaaS1i15X0b04zGWl0bDmYCxQg==
-X-Received: by 2002:a1c:c342:: with SMTP id t63-v6mr20643wmf.123.1528929275754;
-        Wed, 13 Jun 2018 15:34:35 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id m65-v6sm4492286wmd.1.2018.06.13.15.34.34
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 13 Jun 2018 15:34:35 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, dstolee@microsoft.com, git@jeffhostetler.com,
-        peff@peff.net, johannes.schindelin@gmx.de, jrnieder@gmail.com,
-        Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 19/20] abbrev: support relative abbrev values
-References: <20180608224136.20220-1-avarab@gmail.com>
-        <20180608224136.20220-20-avarab@gmail.com>
-        <xmqqvaan95os.fsf@gitster-ct.c.googlers.com>
-        <871sdawcmh.fsf@evledraar.gmail.com>
-Date:   Wed, 13 Jun 2018 15:34:34 -0700
-In-Reply-To: <871sdawcmh.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Thu, 14 Jun 2018 00:22:14 +0200")
-Message-ID: <xmqqa7ry5n9h.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
+         :references:subject:from:to:cc;
+        bh=G5Eazgn/qSv4UyoJOYsWmcP1WigtquJLeOO2JZmZPS8=;
+        b=dltCKcTXEXp+ksdaEiFf2n14Dl0qHRN2YwM3PfOegsxhE8LyYIhO/h0ugx7wXfdTTS
+         sugSX5jCryAtyFyNeRZuJE/5aBkd6JgYh/4mlDLBPw1VCcczwkp12sM6Tsy3xhizqV8t
+         n4xxK0JjmN+bLvdGwgg5T7xPjgndNQUFqMQQRCI7eywHQKYf9mkIMLaQjappFzKh6WoK
+         55OQ+Mh4ai+KbIEsyRQS8bcjvcz87f0jU089wtLvMiSImHNXVIrkq7b8lA4D+6pMqLaT
+         FKoPGYjIsxyY1ynRM00tJB4U/3+G3hsp0pzqNp5urjdsh8yZqQX/fneVfRpB2AWft65v
+         c2/g==
+X-Gm-Message-State: APt69E03NdBLyk+GVz0qdHFxFjfzlkoDSYr3zL5jk9jN/EVsMi/dxtF6
+        vdKUk4AefFxYXXAoLLUCL3sdofUaRnXc0rRaRlTVoXDskVCw+wyBul2HyaJCo2OKkQ2l3sqsQpW
+        6+hjaxPpg/V+wWC6Cc1aZ/53FkHsMhNvR46EGqYSwXrJISpC3iSxszcP+tZqc
+X-Google-Smtp-Source: ADUXVKLJlmZddgXGJ5Y+VqZ7JHmDqjbECVDT0jCBbjtPy7SDfj4h1D01NyV2Q+HL39M2P9VAS+N7910gTBue
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+X-Received: by 2002:a1f:a9cb:: with SMTP id s194-v6mr76739vke.96.1528931134167;
+ Wed, 13 Jun 2018 16:05:34 -0700 (PDT)
+Date:   Wed, 13 Jun 2018 16:04:51 -0700
+In-Reply-To: <20180530004810.30076-1-sbeller@google.com>
+Message-Id: <20180613230522.55335-1-sbeller@google.com>
+References: <20180530004810.30076-1-sbeller@google.com>
+X-Mailer: git-send-email 2.18.0.rc1.244.gcf134e6275-goog
+Subject: [PATCH v2 00/31] object-store: lookup_commit
+From:   Stefan Beller <sbeller@google.com>
+To:     git@vger.kernel.org
+Cc:     Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+* removed mentions of cooci patches
+* added forward declaration of commit buffer slabs.
+* dropped 3 patches that add the repository to lookup_unkonwn_object,
+  parse_commit and parse_commit_gently, but were not converting those
+  functions. We'll convert these in the next series, as this series is
+  growing big already.
+* This series can be found as branch 'object-store-lookup-commit' on github,
+  it applies on top of nd/commit-util-to-slab merged with sb/object-store-grafts
 
-> E.g. here's a breakdown of my dotfiles repo:
->
->     $ git -c core.abbrev=4 log  --pretty=format:%h|perl -nE 'chomp;say length'|sort|uniq -c|sort -nr
->         784 4
->          59 5
->           7 6
->
-> I don't have a single commit that needs 7 characters, yet that's our
-> default. This is a sane trade-off for the kernel, but for something
-> that's just a toy or something you're playing around with something
-> shorter can make sense.
->
-> SHA-1s aren't just written down, but also e.g. remembered in wetware
-> short-term memory.
+v1, https://public-inbox.org/git/20180530004810.30076-1-sbeller@google.com/
 
-That's a fine example of what I called "supporting absurdly small
-absolute values like 4"; I still do not see why you want "negative
-relative values" from that example.
+This applies on the merge of nd/commit-util-to-slab and sb/object-store-grafts,
+and is available at http://github.com/stefanbeller/ as branch object-store-lookup-commit
+as the merge has some merge conflicts as well as syntactical conflicts (upload-pack.c
+and fetch-pack.c introduce new calls of functions that would want to take a repository struct
+in the object-store-grafts series)
+
+As layed out in https://public-inbox.org/git/20180517225154.9200-1-sbeller@google.com/
+this is getting close to finishing the set of object store series though the last
+unfinished part of this RFC hints at new work on the plate:
+* To give this series a nice polish, we'd want to convert parse_commit, too.
+  But that requires the conversion of the new commit graph. Maybe we need
+  to split this series into 2. 
+* Once this is in good shape we can talk about converting parts of the revision
+  walking code,
+* which then can be used by the submodule code as the end goal for the
+  object store series.
+
+Thanks,
+Stefan
+
+Stefan Beller (31):
+  object: add repository argument to lookup_object
+  object: add repository argument to parse_object_buffer
+  object: add repository argument to object_as_type
+  blob: add repository argument to lookup_blob
+  tree: add repository argument to lookup_tree
+  commit: add repository argument to lookup_commit_reference_gently
+  commit: add repository argument to lookup_commit_reference
+  commit: add repository argument to lookup_commit
+  commit: add repository argument to parse_commit_buffer
+  commit: add repository argument to set_commit_buffer
+  commit: add repository argument to get_cached_commit_buffer
+  tag: add repository argument to lookup_tag
+  tag: add repository argument to parse_tag_buffer
+  tag: add repository argument to deref_tag
+  object: allow object_as_type to handle arbitrary repositories
+  object: allow lookup_object to handle arbitrary repositories
+  blob: allow lookup_blob to handle arbitrary repositories
+  tree: allow lookup_tree to handle arbitrary repositories
+  commit: allow lookup_commit to handle arbitrary repositories
+  tag: allow lookup_tag to handle arbitrary repositories
+  tag: allow parse_tag_buffer to handle arbitrary repositories
+  commit.c: allow parse_commit_buffer to handle arbitrary repositories
+  commit-slabs: remove realloc counter outside of slab struct
+  commit.c: migrate the commit buffer to the parsed object store
+  commit.c: allow set_commit_buffer to handle arbitrary repositories
+  commit.c: allow get_cached_commit_buffer to handle arbitrary
+    repositories
+  object.c: allow parse_object_buffer to handle arbitrary repositories
+  object.c: allow parse_object to handle arbitrary repositories
+  tag.c: allow deref_tag to handle arbitrary repositories
+  commit.c: allow lookup_commit_reference_gently to handle arbitrary
+    repositories
+  commit.c: allow lookup_commit_reference to handle arbitrary
+    repositories
+
+ archive.c                |  2 +-
+ bisect.c                 |  2 +-
+ blame.c                  | 13 +++----
+ blob.c                   | 10 +++---
+ blob.h                   |  2 +-
+ branch.c                 |  2 +-
+ builtin/am.c             |  9 +++--
+ builtin/branch.c         |  7 ++--
+ builtin/checkout.c       |  6 ++--
+ builtin/clone.c          |  3 +-
+ builtin/commit-tree.c    |  4 ++-
+ builtin/describe.c       | 13 +++----
+ builtin/diff-tree.c      |  6 ++--
+ builtin/diff.c           |  5 +--
+ builtin/fast-export.c    | 12 ++++---
+ builtin/fetch.c          |  9 +++--
+ builtin/fmt-merge-msg.c  |  5 +--
+ builtin/fsck.c           | 16 +++++----
+ builtin/grep.c           |  3 +-
+ builtin/index-pack.c     |  5 +--
+ builtin/log.c            |  7 ++--
+ builtin/merge-base.c     |  7 ++--
+ builtin/merge-tree.c     |  3 +-
+ builtin/name-rev.c       |  6 ++--
+ builtin/notes.c          |  3 +-
+ builtin/pack-objects.c   |  2 +-
+ builtin/prune.c          |  2 +-
+ builtin/pull.c           | 15 +++++---
+ builtin/reflog.c         | 12 ++++---
+ builtin/replace.c        |  4 +--
+ builtin/reset.c          |  4 +--
+ builtin/rev-parse.c      |  6 ++--
+ builtin/show-branch.c    |  5 +--
+ builtin/tag.c            |  2 +-
+ builtin/unpack-objects.c |  7 ++--
+ builtin/verify-commit.c  |  4 ++-
+ bundle.c                 |  5 +--
+ cache-tree.c             |  3 +-
+ commit-graph.c           | 14 ++++----
+ commit-slab-impl.h       |  3 --
+ commit.c                 | 77 +++++++++++++++++++++++++---------------
+ commit.h                 | 18 ++++++----
+ fast-import.c            |  6 ++--
+ fetch-pack.c             | 25 +++++++------
+ fsck.c                   |  4 +--
+ http-backend.c           |  2 +-
+ http-push.c              | 10 +++---
+ line-log.c               |  2 +-
+ list-objects.c           |  4 +--
+ log-tree.c               |  6 ++--
+ merge-recursive.c        |  9 ++---
+ notes-cache.c            |  3 +-
+ notes-merge.c            |  5 +--
+ notes-utils.c            |  4 ++-
+ object.c                 | 59 ++++++++++++++++--------------
+ object.h                 | 13 ++++---
+ parse-options-cb.c       |  2 +-
+ pretty.c                 |  2 +-
+ reachable.c              |  8 ++---
+ ref-filter.c             |  9 +++--
+ refs.c                   |  2 +-
+ remote.c                 | 19 +++++-----
+ revision.c               | 12 +++----
+ sequencer.c              | 14 ++++----
+ server-info.c            |  2 +-
+ sha1-file.c              |  4 +--
+ sha1-name.c              | 23 ++++++------
+ shallow.c                | 30 ++++++++++------
+ submodule.c              | 10 +++---
+ tag.c                    | 27 +++++++-------
+ tag.h                    |  7 ++--
+ tree.c                   | 14 ++++----
+ tree.h                   |  2 +-
+ upload-pack.c            |  4 +--
+ walker.c                 |  9 +++--
+ wt-status.c              |  2 +-
+ 76 files changed, 400 insertions(+), 297 deletions(-)
+
+-- 
+2.18.0.rc1.244.gcf134e6275-goog
+
