@@ -6,57 +6,72 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 560191F403
-	for <e@80x24.org>; Wed, 13 Jun 2018 16:57:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 501391F403
+	for <e@80x24.org>; Wed, 13 Jun 2018 17:13:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934978AbeFMQ5o (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Jun 2018 12:57:44 -0400
-Received: from mail-wr0-f179.google.com ([209.85.128.179]:42379 "EHLO
-        mail-wr0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934747AbeFMQ5n (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jun 2018 12:57:43 -0400
-Received: by mail-wr0-f179.google.com with SMTP id w10-v6so3498667wrk.9
-        for <git@vger.kernel.org>; Wed, 13 Jun 2018 09:57:43 -0700 (PDT)
+        id S935000AbeFMRNL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Jun 2018 13:13:11 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:34742 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934817AbeFMRNK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jun 2018 13:13:10 -0400
+Received: by mail-wr0-f196.google.com with SMTP id a12-v6so3570083wro.1
+        for <git@vger.kernel.org>; Wed, 13 Jun 2018 10:13:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=NyVwinadW/i1c29cDNuMOIyawt+1m3/lT/vul3qE/+w=;
-        b=UHSDsP3+ccbJxxnBB+ReEQfY/OnjIuDWo9M5b7K7T/oYZbWtJunzcp+pdcvNhHlILp
-         o7JLO7MGin2HllEZbYc3+Co4YObV2N+pRmmFp221AnUop21QN23CH7503QKdrMkbmZvs
-         +ReAnoDTiAlDL0cpClz9jrjro4ukUfCoIhCBQ+CRUKdZ18PkrXLW+QMTLmSLb4KWO44M
-         mYYxrvs185TLsTxomRypHvcs6v8xwmks/7NIHlId3WAYuJuxFJAZlYJhWiahZxW+JGge
-         4fmQ8aKmwOCE6k0cn5y3H1CVjBeQ2ogSykmmScrEMtvUWcWzNyzzK/alPSlq7bV6Lng6
-         zZiA==
+        bh=gfi3iZnkWqrNYglEYGY5nclFxViaEOYFFrvGcNKpSTM=;
+        b=fZB8VUaO7iuTG6K0A15M1BCecyKep4z3bPXovjCQerjpTpxw5JsFlz3H1MNr4TQVJE
+         dyj44MZj8c/d9dyuqNAsrY9Jul5Vzgz93p6IRnw+SKNSNp5T8V3zqDOu29029gm8lakU
+         DZcKG8TxteM9uU8vLw8EO/q6q6aoh4uJ0wtFcM3BXJGiPx52hxWNuI2btcvxF2qVrprV
+         H0DqwJgKnU8WUgqLmRbOc5c2oK1S2Ocjr4VfChB3rqdkLnx/RTQKKInBppBOKdffLk3w
+         5pYGkv5oK9AyYfEe2lasBk+9QouRxOW+oQIIxFm4D3FFIHdQ2pd4osmlucYGklN5kYi+
+         7VaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=NyVwinadW/i1c29cDNuMOIyawt+1m3/lT/vul3qE/+w=;
-        b=L+ADGbRNs9mWJaQTYHUBMnIpv3/jBVsUo34O+L+mLIv/4VQW/KRt/7/Qw+7E4GANYs
-         qcQQOaA0OnchfSGtK7QrxzAGBYuXWzx8rE96SmHG/PDPf2gNExmNgP2eN2UZbBbm19nV
-         0QmOHdeKLSHU7Te+qalAH228wL+uGd81agRh4ffY8+FmN1ebciICF01190NsHBDkWlPj
-         ESxOkZN4ZB7I6AeurTNyRa0JoR71GTWLzjONFDf0CZSY8Lpkel1ak4CeHY1FmogZVOZr
-         Y0fUqneC7CXzfRh0Re1Gg6rxL7HfdMtqupMfCogRu18RwVKrvBWHpJJmgUWbtVHUfUMs
-         m6lw==
-X-Gm-Message-State: APt69E3fXBKzPYMxrAZlaGOG4viViOkYoWn/kcqmKAjniPXSCnvWjuKY
-        rhoS1KyAsdV+4qIkdPPNN24=
-X-Google-Smtp-Source: ADUXVKLmsyKFr3jj08XXQ/4QUfmwS+hM7+vrs5+a8xHpFZ43jtFT3bribcCMAOD2UoMEGoahDex2Fg==
-X-Received: by 2002:adf:b445:: with SMTP id v5-v6mr4682088wrd.67.1528909062098;
-        Wed, 13 Jun 2018 09:57:42 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id n71-v6sm5428163wmi.14.2018.06.13.09.57.41
+        bh=gfi3iZnkWqrNYglEYGY5nclFxViaEOYFFrvGcNKpSTM=;
+        b=Bhlk72ZHaaXkVfL8ND/RENCtE8nF2zJT0TffaCd6KGc1Vof+nnOy0/ra7WRD8bU0F5
+         wE5/R2MlsTTFr2CpuxiTkk5U32gSR/6teA+yqx0GkKGEOOTTKn2lOGzgNocmaQadRmsf
+         cB4GpYYRMBnBZgpFBNnfnlLmI7KCnYbkhRq4VSfWkWY6aE1B+vj22J5Crt0bXqa+FIMK
+         KFv4aIlu/IF/PgHaajKGcAhXcedP0adG1OZPKyLSIDDQ/bizPL/PxSau2SCF1tD0Cxz5
+         1f7BdmUa52kdWHmj/uTLb8fheDFeaOCY0mwyI/YF2gcJhnNu6+E0ToIPgUbOeQiphsP0
+         sZrw==
+X-Gm-Message-State: APt69E3QEXqZs8SX5J4kAASW5RhwD3o0zlIoTR6bo+B5ZK1TCw78kAQc
+        ktBUdu6EhI7cLh9KU79q33U=
+X-Google-Smtp-Source: ADUXVKJy2BGnjT+Oo9umXEYK+QVI5VYARhlzkGTJwVOaV11sJcbSZlEZKgdg+tR98k6J278OcqL5UA==
+X-Received: by 2002:adf:dd8c:: with SMTP id x12-v6mr5336518wrl.212.1528909988780;
+        Wed, 13 Jun 2018 10:13:08 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id u13-v6sm3797882wrr.70.2018.06.13.10.13.07
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 13 Jun 2018 09:57:41 -0700 (PDT)
+        Wed, 13 Jun 2018 10:13:07 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH] Use hyphenated "remote-tracking branch" (docs and comments)
-References: <alpine.LFD.2.21.1806070751020.10794@localhost.localdomain>
-Date:   Wed, 13 Jun 2018 09:57:40 -0700
-In-Reply-To: <alpine.LFD.2.21.1806070751020.10794@localhost.localdomain>
-        (Robert P. J. Day's message of "Thu, 7 Jun 2018 07:53:36 -0400 (EDT)")
-Message-ID: <xmqqlgbi7hff.fsf@gitster-ct.c.googlers.com>
+To:     Kirill Smelkov <kirr@nexedi.com>
+Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Brandon Williams <bmwill@google.com>,
+        Takuto Ikuta <tikuta@chromium.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] fetch-pack: demonstrate --all failure when remote is empty
+References: <20180610143231.7131-1-kirr@nexedi.com>
+        <20180611042016.GA31642@sigill.intra.peff.net>
+        <20180611044710.GB31642@sigill.intra.peff.net>
+        <CAPig+cT73d0rYoSbt7oHVG4MYHVvjKidP0ogRwV+9F73jcjZEA@mail.gmail.com>
+        <20180611055357.GA16430@sigill.intra.peff.net>
+        <20180611094255.GA15563@deco.navytux.spb.ru>
+        <20180612094849.GB26123@sigill.intra.peff.net>
+        <20180612185413.GA21856@deco.navytux.spb.ru>
+        <20180613125549.4mshuymvdpwh44qk@deco.navytux.spb.ru>
+Date:   Wed, 13 Jun 2018 10:13:07 -0700
+In-Reply-To: <20180613125549.4mshuymvdpwh44qk@deco.navytux.spb.ru> (Kirill
+        Smelkov's message of "Wed, 13 Jun 2018 12:55:53 +0000")
+Message-ID: <xmqqh8m67gpo.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -65,11 +80,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Robert P. J. Day" <rpjday@crashcourse.ca> writes:
+Kirill Smelkov <kirr@nexedi.com> writes:
 
-> Use the obvious consensus of hyphenated "remote-tracking branch", and
-> fix an obvious typo, all in documentation and comments.
+> ( Junio, please pick up the patch provided in the end )
 >
-> Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
+> On Tue, Jun 12, 2018 at 06:54:17PM +0000, Kirill Smelkov wrote:
+>> On Tue, Jun 12, 2018 at 05:48:49AM -0400, Jeff King wrote:
+>> > On Mon, Jun 11, 2018 at 09:43:02AM +0000, Kirill Smelkov wrote:
+> [...]
+>
+>> > > I'm not sure, but I would say that `fetch-pack --all` from an empty
+>> > > repository should not fail and should just give empty output as fetch
+>> > > does.
+>> > 
+>> > Yeah, that seems reasonable to me. The die() that catches this dates
+>> > back to 2005-era, and we later taught the "fetch" porcelain to handle
+>> > this. I don't _think_ anybody would be upset that the plumbing learned
+>> > to treat this as a noop. It's probably a one-liner change in
+>> > fetch_pack() to return early instead of dying.
 
-Thanks.
+I actually have a slight preference to the current "attempting to
+fetch from a total emptiness is so rare that it is worth grabbing
+attention of whoever does so" behaviour, to be honest.
+
+Oh, wait, is this specific to "fetch-pack" and the behaviour of
+end-user-facing "git fetch" is kept same as before?  If then, I'd be
+somewhat sympathetic to the cause---it would be more convenient for
+the calling Porcelain script if this turned into a silent noop (even
+though it would probably make it harder to diagnose when such a
+Porcelain is set up incorrectly e.g. pointing at an empty repository
+that is not the one the Porcelain writer intended to fetch from).
+
+> However with transport.c being there too, since I'm no longer using
+> `fetch-pack --all`, now it is best for me to not delve into this story
+> and just stop with attached patch.
+
+If we do not plan to change the behaviour later ourselves, I do not
+think it makes sense, nor it is fair to those future developers who
+inherit this project, to declare that the established behaviour is
+wrong with an 'expect-failure' test like this, to be honest.
+
+> +test_expect_failure 'test --all wrt empty.git' '
+> +	git init --bare empty.git &&
+> +	(
+> +		cd client &&
+> +		git fetch-pack --all ../empty.git
+> +	)
+> +'
+
