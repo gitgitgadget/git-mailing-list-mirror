@@ -2,72 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3915D1F403
-	for <e@80x24.org>; Wed, 13 Jun 2018 16:05:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FF7C1F403
+	for <e@80x24.org>; Wed, 13 Jun 2018 16:48:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935963AbeFMQFh (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Jun 2018 12:05:37 -0400
-Received: from mail-yb0-f170.google.com ([209.85.213.170]:40096 "EHLO
-        mail-yb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935524AbeFMQFf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jun 2018 12:05:35 -0400
-Received: by mail-yb0-f170.google.com with SMTP id v17-v6so1102306ybe.7
-        for <git@vger.kernel.org>; Wed, 13 Jun 2018 09:05:34 -0700 (PDT)
+        id S934859AbeFMQse (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Jun 2018 12:48:34 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:53657 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934747AbeFMQsd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jun 2018 12:48:33 -0400
+Received: by mail-wm0-f68.google.com with SMTP id x6-v6so5864575wmc.3
+        for <git@vger.kernel.org>; Wed, 13 Jun 2018 09:48:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=PMaaZXb4gD2V0LP3+i0/wRr5tBEVwakfIkTISdlV4kI=;
-        b=niwJMwJX5NRGN3gdAtHunousz4I+nUrZlR/IggXDquaJPISguBM1Vr5NR/SR/IXPH4
-         leRkG4v5HDoPsww+K8ssjxZE7TxPul8rpS6iosGdwyUObD6l20SwwZssftZbi7lUGEA5
-         9+WhNbHNwqsDowMLxW1lkUu7HS9DonYQHVer5Bp+MnAbaV3QCVQ2UTINQDJ6cNyYPqSw
-         qlKgdOZmgQTxPCiNkQI56LfPPdoZkpZTgKWl/OdX7MRiqq8psWB0Y47pjpw4LyqkJC+r
-         phSZIn+D+2WeRDJYYRH23QG2ijGtv8W4x5tumQTu6yDmcNeWg+AcZ3O5wHHR81RmD7sl
-         aL3g==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=2mqNEhZuOzMDQzr66Lpx6ZI+1eKzhNPBMcBVelfhBy0=;
+        b=t+sWrGk8UA3RY1xIL3Fft5c9t+AMwBK2qgbbxckeDEROS0gCZ/hZ/DDWtTl3GFIBy/
+         7QaDF0XjrK8Mvolc6fBYz/h/hVwsU+N1r/6Bqd4E+fR9M0kmdyaEz9e4slNdNEDmH795
+         TP48/iXNE/f5lMdsZr1sh8NQ7t/QKTu6/1GuVFJkL/BhOUWrRNfCqmrCkYtIk8+rMfLN
+         WdhqYNw7/mHerHDpSZPLQyIIgTPrpX3+CgmrkwrtvpzqBC5GmCjfMaD/D/jupIlf0rMf
+         BaWoCf+Otjits5h7oYS/eRQa0+rW4Ls3NZOSPvEG66kNqJYvzGh6Uu8jKiBUQ/PKnCjG
+         1vQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=PMaaZXb4gD2V0LP3+i0/wRr5tBEVwakfIkTISdlV4kI=;
-        b=PfYUyKV7aUorAt287v89UWLFEPXuZlIMGGmS0R05/JOVSHEGjJwxDWvbuWvqa4KAY4
-         RAaP58r+/t7LS1yTZFFJvhLzWCh79t5cm4ps6C2C/Mp5pjRyeQv+iR0PqtxBPdRvXmJr
-         EXbP/7jNO6fvgh6BsRvRwFiUk5WjFkK5c1jVZualxpOqFwkKunTQV4quuuxm3LsnbV1R
-         4FtECT6QLsOt34NBgTsWs2j9FhZKVgQrU/9qFdLcps5bxuU1Zn+RJlFLLH3lRFzczKOK
-         6e2hIX/z78dZwuCAF06uJri6eQOPLLuHKj9ad3B5F7KIDeXWNy2nqoQrGVUjdFPvYJlP
-         fDww==
-X-Gm-Message-State: APt69E2YQVtujlSLeKPvwh6mDpR4oXDqQPVgvmqwopTaQrKjDET7UF54
-        aERTSquab8kabfvvyISBRHFN2NN1qqtb3OxILeYE7w==
-X-Google-Smtp-Source: ADUXVKJvAqyhWFj54uHrQvgyewIfOrRNWfTTXQSzD+iwMW3KvE8oUtuodQPdoyQJ56LaT8hTo8ETyL63ZKm+nZx9QGY=
-X-Received: by 2002:a5b:307:: with SMTP id j7-v6mr2727454ybp.352.1528905933989;
- Wed, 13 Jun 2018 09:05:33 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=2mqNEhZuOzMDQzr66Lpx6ZI+1eKzhNPBMcBVelfhBy0=;
+        b=ilswqRv4FBMs3jnV2s8g5RLkm2sYWX1FsH6rw/st6+Wtz0TImjgmCPRuRdIGH/zj2u
+         yhhLeRa51VLqQoavJn+zAbeJJIiSUtfgKlte/WQglRY7ZDXZ4ZKm925MwYvMQhIWUrWB
+         /dRgSND+hB/zC3if10mpfvDGkOQcZn2xpayhIj3snUMg0en6uVp+zR5XonIzygNUYoPq
+         qNke5A53OAHJOKfKxRgURTroT2jeNyXCiaYN68lx0u5S0joKN/ZgSfeWG9v42y5lCMVa
+         cThuoAQivp5IRLluNOKm8gOEq34ClOdNKcRsVP8XhHZxwbyH9RZ3gvls38QGWXkYRNop
+         4xvQ==
+X-Gm-Message-State: APt69E0GTnFvgavbbnGC6SBdsuUp6LEXOniEY1dc3WzG5HSA0Z0q6Vzp
+        xLHNgDVYm7rbNzM9rM4gbVMTz+qM
+X-Google-Smtp-Source: ADUXVKIM5CHobgDJXfmXaFQlLXmPA3tLdSOvSlTYDBvnvU8q5EcuNDNUjgI9EuR70aC7ajRytcRn1g==
+X-Received: by 2002:a1c:448b:: with SMTP id r133-v6mr3809219wma.55.1528908512146;
+        Wed, 13 Jun 2018 09:48:32 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id b16-v6sm4479355wrm.15.2018.06.13.09.48.30
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 13 Jun 2018 09:48:31 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Luis Marsano <luis.marsano@gmail.com>,
+        Ted Zlatanov <tzz@lifelogs.com>
+Subject: Re: [PATCH] git-credential-netrc: remove use of "autodie"
+References: <CAHqJXRE8OKSKcck1APHAHccLZhox+tZi8nNu2RA74RErX8s3Pg@mail.gmail.com>
+        <20180613074810.5358-1-avarab@gmail.com>
+Date:   Wed, 13 Jun 2018 09:48:30 -0700
+In-Reply-To: <20180613074810.5358-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Wed, 13 Jun 2018 07:48:10 +0000")
+Message-ID: <xmqqpo0u7hup.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <xmqqbmcf90uf.fsf@gitster-ct.c.googlers.com> <CAGZ79kZn_i4=w2fUdCgOjqeEY1SnnP6kqmExZKC3-aKK45x88g@mail.gmail.com>
- <xmqqy3fi7k9i.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqy3fi7k9i.fsf@gitster-ct.c.googlers.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 13 Jun 2018 09:05:22 -0700
-Message-ID: <CAGZ79kYjJQ12gwRJMEN_-Ui2ABa=k76LkTeFNT=SsGbfL-NhTQ@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Jun 2018, #03; Tue, 12)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 13, 2018 at 8:56 AM Junio C Hamano <gitster@pobox.com> wrote:
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-> At this point, only clear fixes to regressions between v2.17.0..master
-> would be eligible for the final.  Is the one you are pointing at a
-> breakage during that timeframe?
+> Per my reading of the file this was the only thing autodie was doing
+> in this file (there was no other code it altered). So let's remove it,
+> both to fix the logic error and to get rid of the dependency.
+>
+> 1. <87efhfvxzu.fsf@evledraar.gmail.com>
+>    (https://public-inbox.org/git/87efhfvxzu.fsf@evledraar.gmail.com/)
+> 2. <CAHqJXRE8OKSKcck1APHAHccLZhox+tZi8nNu2RA74RErX8s3Pg@mail.gmail.com>
+>    (https://public-inbox.org/git/CAHqJXRE8OKSKcck1APHAHccLZhox+tZi8nNu2RA74RErX8s3Pg@mail.gmail.com/)
+>
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  contrib/credential/netrc/git-credential-netrc | 1 -
+>  1 file changed, 1 deletion(-)
 
-No, it was introduced in v2.15.0..v2.16.0.
+Even though this may not be all that release-critical, let's queue
+it so that we do not have to remember to dig it up later ;-)
 
-Thanks,
-Stefan
+Thank you very much to all of you involved in the thread.
+
+> diff --git a/contrib/credential/netrc/git-credential-netrc b/contrib/credential/netrc/git-credential-netrc
+> index 0b9a94102e..ebfc123ec6 100755
+> --- a/contrib/credential/netrc/git-credential-netrc
+> +++ b/contrib/credential/netrc/git-credential-netrc
+> @@ -2,7 +2,6 @@
+>  
+>  use strict;
+>  use warnings;
+> -use autodie;
+>  
+>  use Getopt::Long;
+>  use File::Basename;
