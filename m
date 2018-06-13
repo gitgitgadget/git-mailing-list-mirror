@@ -2,119 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 23EF71F403
-	for <e@80x24.org>; Wed, 13 Jun 2018 07:39:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E65F1F403
+	for <e@80x24.org>; Wed, 13 Jun 2018 07:48:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754452AbeFMHja (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Jun 2018 03:39:30 -0400
-Received: from mail-ua0-f193.google.com ([209.85.217.193]:36800 "EHLO
-        mail-ua0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754467AbeFMHj3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jun 2018 03:39:29 -0400
-Received: by mail-ua0-f193.google.com with SMTP id c23-v6so1083441uan.3
-        for <git@vger.kernel.org>; Wed, 13 Jun 2018 00:39:28 -0700 (PDT)
+        id S934669AbeFMHsW (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Jun 2018 03:48:22 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:42868 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934563AbeFMHsU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jun 2018 03:48:20 -0400
+Received: by mail-wr0-f193.google.com with SMTP id w10-v6so1614167wrk.9
+        for <git@vger.kernel.org>; Wed, 13 Jun 2018 00:48:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=eP69fKj0BJc+fYDafIZYFkuDEnKZjpngj9Ci6i2Luuw=;
-        b=fFJG0t6mSB320V97B61IRLmxV4XX6OeO3w14kAAWRTtNIGvd05UQZewatRx7ot0vpV
-         +WP8W+JiuJQjTQBFsn1pCeI91kJ8oN99rO6SJeeaBy4UEIpMv88qDTfHqBpfPZOw0K2/
-         s4TiuJkMuHk3FsDJuAC2wO/um1lnOKBFFXVCaB2Te2eOgPmtLnp1DBGdMsKH2tgbyr76
-         hPyeiBddZwzS/IBREYDAy2c0wlN9H+h/iyQsG6mFMaKiSjGYPOB2Wc0tcyAyHWTKf4Dq
-         xIkPACoYbesEPqe4vU0f5HQNn/fp6aPA6nPWuuhzF+0zG5R5x4uUyc9elAcNwRb/Ymt2
-         /aVQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=8gixl877lk7ClNdWeX9A9QgrM2wC91ZRPsfiNxk0Q7U=;
+        b=gtVoFpY7Sg6+sqvV1zHG/ldMD7Kw+SpW4Q2Q8d7hFQJkA5QtOGYmKA/skL6SjeoRyp
+         HSBJ7Z/9smehGFWap4b0KFWcJGSvVl7aeGBKtdw08/m7axFa/kdtf0mkvTshbrxP2B3s
+         w0fWRFY+kZRuLVDxv7ptchuluVU1MErvCP8/gyU24az8cGKqPxSIC+RTQgOHk/0wQCFd
+         I5uERfGoa0o5RrmVCehwEyEcGI47JKuRybvCsSl+xZrwausgMSCBQT77svRHU0VeZLDc
+         Jj+CtIUGXnXpbSWKN/WjAdHbvDKXdgfCZWiYs5lKSrGFH/k5b24GK64QSBeJqOmeaOR8
+         91Eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=eP69fKj0BJc+fYDafIZYFkuDEnKZjpngj9Ci6i2Luuw=;
-        b=FuFgmqmm356syxBt7U8yb8Ac/unCsm14cHk55RzJ2kFYExvEsX4Cue7Ms/jh6U1PVs
-         EykrVNy0CmnPeXGMpz31RteXzTq4oT9yQFZXlFZAxvqy0ej/38whBO41j2t7C12bIQPP
-         BMT9VkGgCUw2UTgacMs5SQ64TrNu1kkcsdK9P+pEjj7s8XXFruEpkBiPyj4Z97uiIdnN
-         8yT75KCUHPC0L6K9edPY2lGy9iQ1GSge0KI1SzpmyA5n5uj+HcNTNNd1WI7navk3SN8X
-         4lHl5oxIHsT7xmeuZeGY9WPGiyTL+m7ZmqaNMU0a0KLAisxx68CTgDYV5D3wDR+1EdFC
-         /Pmg==
-X-Gm-Message-State: APt69E2XNvzR5niY60LJm7TixHApWMdrUxOvhC0g5AosTW3McF/Q4AC6
-        4O6rVK+xbbh5/EHUZDTwBtFLwFu5CF70b6z/7fY=
-X-Google-Smtp-Source: ADUXVKJzF36cqHb0qtWaVp8+fz0KqNckCA1EG78ZKtgdqJISW3wY9ExnbOzm5LOJ9iI2J5uvS167Uq5ZccQYOAfDAps=
-X-Received: by 2002:a9f:3ac4:: with SMTP id q4-v6mr2531213uag.123.1528875568333;
- Wed, 13 Jun 2018 00:39:28 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=8gixl877lk7ClNdWeX9A9QgrM2wC91ZRPsfiNxk0Q7U=;
+        b=ciXcVPxc6jk1vn7nAQ6I/46AkJKNMVb2fNar9Ze7Sap+0PpWr9hJ7uiUOmc3/a8/bj
+         YkxHB1yk8jF4OFXYMnAlJZcb1zS1y8bbAnvmj0+QprFU7Dwp+oHs2lpUJG9BoFQPQi5t
+         IxolfbDqxenMgP3jZor6BZx5JWgqxYCE9wyBWXvDAg5d0pijzTHMN+RHqTts1Fe0Jfkx
+         u9AuV54LTaWol9osLYKk1LwV0hRgzNxZJuxJCEnFiGfpBQYkmNbhE46KUoRv4JHKbEOw
+         Bg7tSww0mSzaFW052SPPGhzBorWWfPg3URuujjzJD8eFs909PdsGkfYoiTknNXc49NrF
+         VleA==
+X-Gm-Message-State: APt69E1AMyFjgS28c+o3n0fbyYJ5RfoA+EWjfix8fl1pQudE6OYJl0lh
+        vi1pzSHKZOUL+26bHZHHewGpbhhr
+X-Google-Smtp-Source: ADUXVKJ7Sp2cXmwQdeGij8shMKXtiESr9sU8wovM6WrieoF9b2FKv2j4BTFD9WcLH0IipHgDR3546A==
+X-Received: by 2002:adf:9769:: with SMTP id r96-v6mr3339902wrb.57.1528876098660;
+        Wed, 13 Jun 2018 00:48:18 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id v68-v6sm3262147wmd.12.2018.06.13.00.48.17
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 13 Jun 2018 00:48:18 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Luis Marsano <luis.marsano@gmail.com>,
+        Ted Zlatanov <tzz@lifelogs.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] git-credential-netrc: remove use of "autodie"
+Date:   Wed, 13 Jun 2018 07:48:10 +0000
+Message-Id: <20180613074810.5358-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.17.0.290.gded63e768a
+In-Reply-To: <CAHqJXRE8OKSKcck1APHAHccLZhox+tZi8nNu2RA74RErX8s3Pg@mail.gmail.com>
+References: <CAHqJXRE8OKSKcck1APHAHccLZhox+tZi8nNu2RA74RErX8s3Pg@mail.gmail.com>
 MIME-Version: 1.0
-References: <20180610194444.GA1913@Sonnenschein.localdomain>
- <20180611203541.GA6@606faba9ba17> <20180611205704.GA1399@Sonnenschein.localdomain>
- <CAGHpTBJFwToEwnk4P17AJ+z-55Nzc04OBbTvsbFRrkXJpfXAkQ@mail.gmail.com> <20180612085119.GA5@aaaa10152750>
-In-Reply-To: <20180612085119.GA5@aaaa10152750>
-From:   Orgad Shaneh <orgads@gmail.com>
-Date:   Wed, 13 Jun 2018 10:39:17 +0300
-Message-ID: <CAGHpTBJ9WiWdJw=SgxJpWqP9CucANatafx6iwCRCRY15wTBsVg@mail.gmail.com>
-Subject: Re: [PATCH] checkout files in-place
-To:     Edward Thomson <ethomson@edwardthomson.com>
-Cc:     =?UTF-8?B?5YWr56We5ZKM6bq7?= <drizzd@gmx.net>,
-        git <git@vger.kernel.org>, Nikolai Kosjar <nikolai.kosjar@qt.io>,
-        ivan.donchevskii@qt.io
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 12, 2018 at 11:51 AM Edward Thomson
-<ethomson@edwardthomson.com> wrote:
->
-> On Tue, Jun 12, 2018 at 09:13:54AM +0300, Orgad Shaneh wrote:
-> > Some of my colleagues use an ancient version of Source Insight, which also
-> > locks files for write.
->
-> If that application is locking files for writing (that is to say, it did
-> not specify the `FILE_SHARE_WRITE` bit in the sharing modes during
-> `CreateFile`) then this patch would not help.
->
-> Applications, generally speaking, should be locking files for write.
-> It's the default in Win32 and .NET's file open APIs because few
-> applications are prepared to detect and support a file changing out from
-> underneath them in the middle of a read.
+The "autodie" module was added in Perl 5.10.1, but our INSTALL
+document says "version 5.8 or later is needed".
 
-I agree.
+As discussed in <87efhfvxzu.fsf@evledraar.gmail.com> this script is in
+contrib/, so we might not want to apply that policy, however in this
+case "autodie" was recently added as a "gratuitous safeguard" in
+786ef50a23 ("git-credential-netrc: accept gpg option",
+2018-05-12) (see
+<CAHqJXRE8OKSKcck1APHAHccLZhox+tZi8nNu2RA74RErX8s3Pg@mail.gmail.com>).
 
-> > It's less important than it was before those fixes, but it is still needed
-> > for users of Qt Creator 4.6 (previous versions just avoided mmap, 4.7 uses
-> > mmap only for system headers). Other tools on Windows might as well
-> > misbehave.
->
-> I don't understand what mmap'ing via `CreateFileMapping` has to do with
-> this.  It takes an existing `HANDLE` that was opened with `CreateFile`,
-> which is where the sharing mode was supplied.
+Looking at it more carefully the addition of "autodie" inadvertently
+introduced a logic error, since having it is equivalent to this patch:
 
-I'm not completely sure. The file is opened using CreateFile[1] with
-FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE.
-Then this handle is passed to CreateFileMapping[2]. For a reason I don't
-understand, when mapping is used, the handle is never released (until
-the file is closed), but when it is not used, the file is being read, then the
-handle is released.
+    @@ -245,10 +244,10 @@ sub load_netrc {
+     	if ($gpgmode) {
+     		my @cmd = ($options{'gpg'}, qw(--decrypt), $file);
+     		log_verbose("Using GPG to open $file: [@cmd]");
+    -		open $io, "-|", @cmd;
+    +		open $io, "-|", @cmd or die "@cmd: $!";
+     	} else {
+     		log_verbose("Opening $file...");
+    -		open $io, '<', $file;
+    +		open $io, '<', $file or die "$file: $!$!;
+     	}
 
-Maybe Ivan or Nikolai can shed some light on this process.
+     	# nothing to do if the open failed (we log the error later)
 
-Anyway, with Qt Creator 4.7 this should be a non-issue, so I'm reluctant about
-this change here.
+As shown in the context the intent of that code is not do die but to
+log the error later.
 
-> I would be surprised if there are other tools on Windows that have
-> specified `FILE_SHARE_WRITE` but not `FILE_SHARE_DELETE`.  Generally
-> speaking, if you don't care about another process changing a file
-> underneath you then you should specify both.  If you do then you should
-> specify neither.
+Per my reading of the file this was the only thing autodie was doing
+in this file (there was no other code it altered). So let's remove it,
+both to fix the logic error and to get rid of the dependency.
 
-The problem is that even if you specify FILE_SHARE_WRITE and FILE_SHARE_DELETE,
-the file can be unlinked, but it cannot be created with the same name
-until its handle
-is closed, unless you rename it *before* unlinking.
+1. <87efhfvxzu.fsf@evledraar.gmail.com>
+   (https://public-inbox.org/git/87efhfvxzu.fsf@evledraar.gmail.com/)
+2. <CAHqJXRE8OKSKcck1APHAHccLZhox+tZi8nNu2RA74RErX8s3Pg@mail.gmail.com>
+   (https://public-inbox.org/git/CAHqJXRE8OKSKcck1APHAHccLZhox+tZi8nNu2RA74RErX8s3Pg@mail.gmail.com/)
 
-- Orgad
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ contrib/credential/netrc/git-credential-netrc | 1 -
+ 1 file changed, 1 deletion(-)
 
-[1] https://github.com/llvm-mirror/llvm/blob/371257e/lib/Support/Windows/Path.inc#L1045
-[2] https://github.com/llvm-mirror/llvm/blob/371257e/lib/Support/Windows/Path.inc#L836
+diff --git a/contrib/credential/netrc/git-credential-netrc b/contrib/credential/netrc/git-credential-netrc
+index 0b9a94102e..ebfc123ec6 100755
+--- a/contrib/credential/netrc/git-credential-netrc
++++ b/contrib/credential/netrc/git-credential-netrc
+@@ -2,7 +2,6 @@
+ 
+ use strict;
+ use warnings;
+-use autodie;
+ 
+ use Getopt::Long;
+ use File::Basename;
+-- 
+2.17.0.290.gded63e768a
+
