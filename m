@@ -2,150 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 100431F403
-	for <e@80x24.org>; Wed, 13 Jun 2018 23:11:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 444DF1F403
+	for <e@80x24.org>; Wed, 13 Jun 2018 23:58:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935540AbeFMXLu (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Jun 2018 19:11:50 -0400
-Received: from cloud.peff.net ([104.130.231.41]:44012 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S935503AbeFMXLt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jun 2018 19:11:49 -0400
-Received: (qmail 9545 invoked by uid 109); 13 Jun 2018 23:11:49 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 13 Jun 2018 23:11:49 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7989 invoked by uid 111); 13 Jun 2018 23:12:04 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 13 Jun 2018 19:12:04 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Jun 2018 19:11:47 -0400
-Date:   Wed, 13 Jun 2018 19:11:47 -0400
-From:   Jeff King <peff@peff.net>
-To:     Kirill Smelkov <kirr@nexedi.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Brandon Williams <bmwill@google.com>,
-        Takuto Ikuta <tikuta@chromium.org>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
+        id S935789AbeFMX6Q (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Jun 2018 19:58:16 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:38852 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S935764AbeFMX6P (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 13 Jun 2018 19:58:15 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b0c3:20dd:704c:b59d])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4417960129;
+        Wed, 13 Jun 2018 23:58:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1528934293;
+        bh=EIPCCLOcO7V8OIwxWKP2bcSL3y1Vgu2byXOqz78GciM=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=tzHWHEsr8d3xlyQPI1gUHcB++vOnxNKPQifrymGAkFSVk8XbDi5bS8N5deKcIJxeJ
+         UFOc+VH+Zeop+EELGkCKBsRp5wH3LhK2ofU64UPK1ibRLCM6Q8Sr9XdytfFosuej9A
+         8K27UkAfGG9tyfOC6NYhnyEXfWjovDvQ/JjgScjJ5hg6TLHowW7vyfA8TbyHs9lEHl
+         /M3Cac3uXVW4Gh214Q/eOAqk0Jb5jKPg1TGrBanEllvXZbCZZQGShXTs55VgtZSGLd
+         ObjIbhnVf8HI6l1FYOMg+gVEvIjjcCGt//udRpYv4pJdMQVA+iPeQ8KHjutkXY+qW4
+         CYbESVJERtQVgsKRywx+JzoduUHdlJm2vKRo0kKy5a6ddZKI0jPKy+DVYeaV2KY25K
+         V039eOJtSqiIe9VHjy2fy88NWYF9Zs3mr6AxEgv1pNwQRqhBLZaQI1FViBHxMf1RBZ
+         9bxBpvIublf0AvJH5cpzztUH4ag4L3wXCEIqPOFBjOkTKJa7nWx
+Date:   Wed, 13 Jun 2018 23:58:08 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Gilles Van Assche <gilles.van.assche@noekeon.org>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] fetch-pack: test explicitly that --all can fetch tag
- references pointing to non-commits
-Message-ID: <20180613231147.GA21025@sigill.intra.peff.net>
-References: <20180612185413.GA21856@deco.navytux.spb.ru>
- <20180613111840.1427-1-kirr@nexedi.com>
- <xmqqbmce7fcm.fsf@gitster-ct.c.googlers.com>
- <20180613184301.GB22854@deco.navytux.spb.ru>
- <20180613210509.GA15574@sigill.intra.peff.net>
+        demerphq <demerphq@gmail.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Adam Langley <agl@google.com>, Keccak Team <keccak@noekeon.org>
+Subject: Re: Hash algorithm analysis
+Message-ID: <20180613235808.GM38834@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Gilles Van Assche <gilles.van.assche@noekeon.org>,
+        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        demerphq <demerphq@gmail.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Adam Langley <agl@google.com>, Keccak Team <keccak@noekeon.org>
+References: <20180609205628.GB38834@genre.crustytoothpaste.net>
+ <20180609224913.GC38834@genre.crustytoothpaste.net>
+ <20180611192942.GC20665@aiede.svl.corp.google.com>
+ <20180611223520.GF38834@genre.crustytoothpaste.net>
+ <8e3fa1dd-958c-c3d5-2d6e-d52a4b424982@noekeon.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="McpcKDxJRrEJVmOH"
 Content-Disposition: inline
-In-Reply-To: <20180613210509.GA15574@sigill.intra.peff.net>
+In-Reply-To: <8e3fa1dd-958c-c3d5-2d6e-d52a4b424982@noekeon.org>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.16.0-2-amd64)
+User-Agent: Mutt/1.10.0 (2018-05-17)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 13, 2018 at 05:05:09PM -0400, Jeff King wrote:
 
-> > In order to be sure fetching funky tags will never break, let's
-> > explicitly test all relevant cases with 4 tag objects pointing to 1) a
-> > blob, 2) a tree, 3) a commit, and 4) another tag objects. The referenced
-> > tag objects themselves are referenced from under regular refs/tags/*
-> > namespace. Before e9502c0a7f `fetch-pack --all` was failing e.g. this way:
-> > 
-> >         .../git/t/trash directory.t5500-fetch-pack/fetchall$ git ls-remote ..
-> >         44085874...        HEAD
-> >         ...
-> >         bc4e9e1f...        refs/tags/tag-to-blob
-> >         038f48ad...        refs/tags/tag-to-blob^{}	# peeled
-> >         520db1f5...        refs/tags/tag-to-tree
-> >         7395c100...        refs/tags/tag-to-tree^{}	# peeled
-> > 
-> >         .../git/t/trash directory.t5500-fetch-pack/fetchall$ git fetch-pack --all ..
-> >         fatal: A git upload-pack: not our ref 038f48ad...
-> >         fatal: The remote end hung up unexpectedly
-> 
-> TBH, I do not find this snippet all that compelling. We know that
-> e9502c0a7f already fixed the bug, and that it had nothing to do with
-> non-commits at all.
-> 
-> The primary reason to add these tests is that in general we do not cover
-> fetch-pack over tags to non-commits. And I think the reason to use
-> otherwise unreferenced objects is that it they are more likely to have
-> detectable symptoms if they tickle a bug.
-> 
-> So why don't we say that, instead of re-hashing output from the earlier
-> fix?
+--McpcKDxJRrEJVmOH
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Hmm, it looks like this already hit 'next', so it is too late to change
-the commit message (although 'next' will get rewound after the release,
-so we _could_ do it then).
+On Tue, Jun 12, 2018 at 06:21:21PM +0200, Gilles Van Assche wrote:
+> Hi,
+>=20
+> On 10/06/18 00:49, brian m. carlson wrote:
+> > I imported the optimized 64-bit implementation of KangarooTwelve. The
+> > AVX2 implementation was not considered for licensing reasons (it's
+> > partially generated from external code, which falls foul of the GPL's
+> > "preferred form for modifications" rule).
+>=20
+> Indeed part of the AVX2 code in the Keccak code package is an extension
+> of the implementation in OpenSSL (written by Andy Polyakov). The
+> assembly code is generated by a Perl script, and we extended it to fit
+> in the KCP's internal API.
+>=20
+> Would it solve this licensing problem if we remap our extensions to the
+> Perl script, which would then become "the source"?
 
-I also was going to suggest these style fixes, which could be applied on
-top (or squashed if we end up going that route). I actually wonder if
-the final tag one could just use two invocations of "git tag -m", but
-it's probably not worth spending too much time on polishing.
+The GPLv2 requires "the preferred form of the work for making
+modifications to it".  If that form is the Perl script, then yes, that
+would be sufficient.  If your code is dissimilar enough that editing it
+directly is better than editing the Perl script, then it might already
+meet the definition.
 
--- >8 --
-Subject: [PATCH] t5500: prettify non-commit tag tests
+I don't do assembly programming, so I don't know what forms one
+generally wants for editing assembly.  Apparently OpenSSL wants a Perl
+script, but that is, I understand, less common.  What would you use if
+you were going to improve it?
 
-We don't need to use backslash continuation, as the "&&"
-already provides continuation (and happily soaks up empty
-lines between commands).
+> On 12/06/18 00:35, brian m. carlson wrote:
+> > While I think K12 is an interesting algorithm, I'm not sure we're
+> > going to get as good of performance out of it as we might want due to
+> > the lack of implementations.
+>=20
+> Implementation availability is indeed important. The effort to transform
+> an implementation of SHAKE128 into one of K12 is limited due to the
+> reuse of their main components (round function, sponge construction). So
+> the availability of SHA-3/Keccak implementations can benefit that of K12
+> if there is sufficient interest. E.g., the SHA-3/Keccak instructions in
+> ARMv8.2 can speed up K12 as well.
 
-We can also expand the multi-line printf into a
-here-document, which lets us use line breaks more naturally
-(and avoids another continuation that required us to break
-the natural indentation).
+That's good to know.  I wasn't aware that ARM was providing Keccak
+instructions, but it's good to see that new chips are providing them.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- t/t5500-fetch-pack.sh | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+--McpcKDxJRrEJVmOH
+Content-Type: application/pgp-signature; name="signature.asc"
 
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index ea6570e819..3d33ab3875 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -533,19 +533,26 @@ test_expect_success 'test --all wrt tag to non-commits' '
- 	# are reachable only via created tag references.
- 	blob=$(echo "hello blob" | git hash-object -t blob -w --stdin) &&
- 	git tag -a -m "tag -> blob" tag-to-blob $blob &&
-- \
-+
- 	tree=$(printf "100644 blob $blob\tfile" | git mktree) &&
- 	git tag -a -m "tag -> tree" tag-to-tree $tree &&
-- \
-+
- 	tree2=$(printf "100644 blob $blob\tfile2" | git mktree) &&
- 	commit=$(git commit-tree -m "hello commit" $tree) &&
- 	git tag -a -m "tag -> commit" tag-to-commit $commit &&
-- \
-+
- 	blob2=$(echo "hello blob2" | git hash-object -t blob -w --stdin) &&
--	tag=$(printf "object $blob2\ntype blob\ntag tag-to-blob2\n\
--tagger author A U Thor <author@example.com> 0 +0000\n\nhello tag" | git mktag) &&
-+	tag=$(git mktag <<-EOF
-+		object $blob2
-+		type blob
-+		tag tag-to-blob2
-+		tagger author A U Thor <author@example.com> 0 +0000
-+
-+		hello tag
-+	EOF
-+	) &&
- 	git tag -a -m "tag -> tag" tag-to-tag $tag &&
-- \
-+
- 	# `fetch-pack --all` should succeed fetching all those objects.
- 	mkdir fetchall &&
- 	(
--- 
-2.18.0.rc2.519.gb87ed92113
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.8 (GNU/Linux)
 
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlshr5AACgkQv1NdgR9S
+9ouj6Q/8CY4h4YbCpBr+i5e1Bv2pJvmt+g+fpPd8tguscyWwWvEXcjACS1cNt2bp
+BwC0CkrHk6ka+anx1Vgcg4ltqh5OP33bVSAZpHcBcEHI7qc/lDXN2BbbJU4YuEYi
+uHRVafMgegRnIn3/BvDZHHH5uqETok3WN9KU8Fg7cHPRqcFYTFPqaONEGUCdJW5A
+sNTSHMwUIo83ar02uJzRi6vYZgzDO8soXT5hr4tjyYzidj22pD+iWvf9NsUAeE1y
+MV9XWVEhtcQ2QCUO2lJ5nYkffew3Zd3483oNjNAdfkU25C/2la596+bcSaKMQZEL
+TyxYA/jiyp5tS3fOLb6dB4HUpIt9JP+4DwJ3ijUbV4Eup36oUq0qTZCkO4YXdzad
+KrHJVf2C8VXFGbycd6uqtDv6tVCMlrlPc7rUASjXEnxA0fWu5Q+NNRqZNqtf4duT
+7n94j/l5DWyfcrw2B4OjrtG3l6hH8pZRc1aOiTXpjNkHwX4SyJLdvYZINPzUFWWg
+Z2zOAh0/fYF0rJXBMcBW+QV8KXwZ4bBCIH56cU5wdns6+fi+bdQsrYkaWRYCioKv
+ZfZhoa+QrHJiEDUpVFpnjBpRn9I2Un+hA/4tytiNyX667GYrtyjVSuw/Iiywmwlr
+p8ijL9u7Fga0dDaYL1FqAtdBp9W6Qr2fakjtR4pM1EDC2rICLPc=
+=JVnX
+-----END PGP SIGNATURE-----
+
+--McpcKDxJRrEJVmOH--
