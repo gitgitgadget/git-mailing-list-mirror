@@ -2,180 +2,161 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27D251F403
-	for <e@80x24.org>; Wed, 13 Jun 2018 22:18:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 23AE81F403
+	for <e@80x24.org>; Wed, 13 Jun 2018 22:22:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935733AbeFMWSD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Jun 2018 18:18:03 -0400
-Received: from mail-ve1eur01on0111.outbound.protection.outlook.com ([104.47.1.111]:37863
-        "EHLO EUR01-VE1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S935540AbeFMWSC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jun 2018 18:18:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Frontmatec.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nOe4uaD4XccP+JqY5w5nqxSikO1gDmkTHBpAz+6ndd4=;
- b=Ww75Csv8uyknZPaGQ86UK6SSwgVAT4J2pmF6R8mGWDqkLnahFCau1IZjqdVtN2AikzzKY/UlfW4ly54D5dscOD0ShdS3L3RBEeN4gy8kx07hlYCA5P7RLCmqVCqvlarGBTRbCmzSXFuXWrXU1O7ycWnwaOWCJI0BbSjulTu6WYg=
-Received: from DB6PR0101MB2344.eurprd01.prod.exchangelabs.com (10.169.220.142)
- by DB6PR0101MB2469.eurprd01.prod.exchangelabs.com (10.169.221.138) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.820.11; Wed, 13 Jun
- 2018 22:17:58 +0000
-Received: from DB6PR0101MB2344.eurprd01.prod.exchangelabs.com
- ([fe80::98a7:369a:60e2:c111]) by
- DB6PR0101MB2344.eurprd01.prod.exchangelabs.com
- ([fe80::98a7:369a:60e2:c111%6]) with mapi id 15.20.0863.016; Wed, 13 Jun 2018
- 22:17:58 +0000
-From:   "Antoine W. Campagna" <awe@frontmatec.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: fatal: could not reset submodule index
-Thread-Topic: fatal: could not reset submodule index
-Thread-Index: AdQDXhRDGoKkUkcaQy2EB6OED0HkCg==
-Date:   Wed, 13 Jun 2018 22:17:58 +0000
-Message-ID: <DB6PR0101MB2344147D4749598823B094F1D97E0@DB6PR0101MB2344.eurprd01.prod.exchangelabs.com>
-Accept-Language: fr-CA, en-US
-Content-Language: fr-FR
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [207.134.192.27]
-x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;DB6PR0101MB2469;7:TKbKfM/orHJQOT6X8zUsF7Hl0KCDWFdEyusSEWI3Dna0qQxpeE7Br2Njz4JQs472JYwnpLsSikE+4CTMuIMgp+Wk8XlqSzEdPOl3TrOSZ2c9rfvIfFft4YMeYZgJ5PLZ/FNZyeGdlm22u3XNE0SDVnz60XBrHQMG3MDinmG8QITIQaKdLhsu/2zBxZMSoBwljiHICMbjZkqukigP+sFBPuYf3FWSXL1y4HXr9tGP7D/uxinG/WtkpXNqA6HeO1Ty
-x-ms-exchange-antispam-srfa-diagnostics: SOS;
-X-MS-Office365-Filtering-Correlation-Id: c8a21b64-4494-45da-f41a-08d5d17b84fc
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(5600026)(711020)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7153060)(7193020);SRVR:DB6PR0101MB2469;
-x-ms-traffictypediagnostic: DB6PR0101MB2469:
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=awe@frontmatec.com; 
-x-microsoft-antispam-prvs: <DB6PR0101MB246913EEB6C1E693170B9285D97E0@DB6PR0101MB2469.eurprd01.prod.exchangelabs.com>
-x-exchange-antispam-report-test: UriScan:;
-x-ms-exchange-senderadcheck: 1
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(6040522)(2401047)(8121501046)(5005006)(3002001)(93006095)(93001095)(10201501046)(3231254)(944501410)(52105095)(149027)(150027)(6041310)(20161123558120)(20161123564045)(20161123560045)(20161123562045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(6072148)(201708071742011)(7699016);SRVR:DB6PR0101MB2469;BCL:0;PCL:0;RULEID:;SRVR:DB6PR0101MB2469;
-x-forefront-prvs: 07025866F6
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(39380400002)(396003)(366004)(346002)(376002)(39850400004)(199004)(189003)(59450400001)(6506007)(66066001)(5660300001)(6436002)(186003)(2900100001)(316002)(55016002)(2351001)(5640700003)(68736007)(5250100002)(3280700002)(486006)(476003)(7696005)(97736004)(7736002)(102836004)(26005)(6916009)(105586002)(106356001)(33656002)(99286004)(305945005)(3660700001)(81156014)(8936002)(81166006)(1730700003)(53936002)(14454004)(8676002)(6116002)(9686003)(3846002)(2906002)(74316002)(86362001)(2501003)(478600001)(25786009)(42262002)(554374003);DIR:OUT;SFP:1102;SCL:1;SRVR:DB6PR0101MB2469;H:DB6PR0101MB2344.eurprd01.prod.exchangelabs.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
-received-spf: None (protection.outlook.com: frontmatec.com does not designate
- permitted sender hosts)
-x-microsoft-antispam-message-info: GiD+zXCWx/ZDbG2Dqyto/xsESRPYzzObsZ3DjDzvN4zB8heGp3WuXbIjql8WIBM9om+rgCajyIUIMvQDUGLOudfH3zHPbrKeT51sdT2g3fCtvbd90YrMonzQ+UAhdx40vljIHn+ueMEGHleBASuEZ8TT68LhdIZrJcK90E9LV1eaY3qQxvaZ2P+DF7wWzz55
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        id S935448AbeFMWWT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Jun 2018 18:22:19 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:38591 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935060AbeFMWWS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jun 2018 18:22:18 -0400
+Received: by mail-wm0-f68.google.com with SMTP id 69-v6so8249171wmf.3
+        for <git@vger.kernel.org>; Wed, 13 Jun 2018 15:22:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=7Y/ooYOLuzkOye8uQXQM+ccOwqayY8dICN5hiczla8Y=;
+        b=Pso1pywj5pKgYQsdSVK2KuNMEyew0rY58xc036Rm6ohKqk3cgiFAfmwWbaXRMR3mOr
+         1QeWNVyHHdQbXa8cpN3sO1OT1pzMgqPToYtxfclbs0iiTts+DtO4ApQXfr2/b91+0It0
+         69wcnbwriqpORl+VF1Xl2j2Sfq7AMtvgeYRregu9mCW+64/C+XTmpaN6uLzMw5p27pJj
+         k3WTGSQkfX2v9cgbFVR/ay7BMCC+lCr2CcRww8jYLX7Hh3dnf+7zYOysbvn/LGfe9mhE
+         m6sVyKtBvj+I0ZCdvpqlRWUtrqEG9RlLr5oGEA09qRtbop4NgWDjthcEu2g2PJ9m8zrI
+         nbGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=7Y/ooYOLuzkOye8uQXQM+ccOwqayY8dICN5hiczla8Y=;
+        b=VIxZpu3Fx9OlgWUu+mTlGW2s2fb8R33EGPw/0lCgaTgnXX1hZNRPlkVhqFE8+7Ol/U
+         BTK+N8HjSsOQvuju/hPZCkmnioS3Dmp+tJ3JlR1yc98Eam0ZqNI2e9zqXIvv7yEWF+eu
+         X1etFU04r4eJRGcWz/5q4Abug//frY3vo0fBNV9oZ1oaHG/JkYRPUkAPo3FFZNf5bAqq
+         AYXFlxCulvyEo/sNarTPNE59QJ1uOQBnDkD4iMSz0NDRqmnZ4yJEf2lfWpcfH8TTVvPH
+         7CrEpHY9bofNmLb2jdnkGAgI5mV/e1NQCRq8+6ruH18PXsbTHkissvXcZ66Al80jZeAq
+         gy+g==
+X-Gm-Message-State: APt69E3GvGsobqrRoMBNgvXcL0JdUuyafpE65ssR/ia2sxJBQzoqONOS
+        pYsBKfWVplvLA2AUtRc3DtBKHhzU
+X-Google-Smtp-Source: ADUXVKJdVPauv4vS8Heb3xWDgvlpZ9giUOtZZmsPmgasGyhe0rw/bpgo4S5Qh9qbqqeNyZUb4CvJ6A==
+X-Received: by 2002:a50:80c2:: with SMTP id 60-v6mr6018edb.169.1528928537056;
+        Wed, 13 Jun 2018 15:22:17 -0700 (PDT)
+Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
+        by smtp.gmail.com with ESMTPSA id l9-v6sm2200089edb.17.2018.06.13.15.22.15
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 13 Jun 2018 15:22:15 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com, git@jeffhostetler.com,
+        peff@peff.net, johannes.schindelin@gmx.de, jrnieder@gmail.com,
+        Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 19/20] abbrev: support relative abbrev values
+References: <20180608224136.20220-1-avarab@gmail.com> <20180608224136.20220-20-avarab@gmail.com> <xmqqvaan95os.fsf@gitster-ct.c.googlers.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <xmqqvaan95os.fsf@gitster-ct.c.googlers.com>
+Date:   Thu, 14 Jun 2018 00:22:14 +0200
+Message-ID: <871sdawcmh.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-X-OriginatorOrg: Frontmatec.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c8a21b64-4494-45da-f41a-08d5d17b84fc
-X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Jun 2018 22:17:58.3134
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: bfbef180-ca7f-492d-bcde-824120bd7b33
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB6PR0101MB2469
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-I would like to add submodules to existing projects.
-Some branches would have the submodules and some branches would not.
-Since we often switch from one branch to another, I would like the submodul=
-es to update automatically so I activate the option submodule.recurse.
-But I am experiencing a problem if I do the following:
-  1. Clone repo, with master containing no submodules
-  2. Checkout a branch that contains submodules. It results in this error:
-	fatal: not a git repository: ../.git/modules/submodule
-	fatal: could not reset submodule index
-I think git is trying to update the submodule but the submodule has not yet=
- been initialized (runs "git submodule update" without "--init").
-Is there a way to ask git to initialize the submodule automatically ?
+On Tue, Jun 12 2018, Junio C Hamano wrote:
 
+> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+>
+>> Change the core.abbrev config variable and the corresponding --abbrev
+>> command-line option to support relative values such as +1 or -1.
+>>
+>> Before Linus's e6c587c733 ("abbrev: auto size the default
+>> abbreviation", 2016-09-30) git would default to abbreviating object
+>> names to 7-hexdigits, and only picking longer SHA-1s as needed if that
+>> was ambiguous.
+>>
+>> That change instead set the default length as a function of the
+>> estimated current count of objects:
+>>
+>>     Based on the expectation that we would see collision in a
+>>     repository with 2^(2N) objects when using object names shortened
+>>     to first N bits, use sufficient number of hexdigits to cover the
+>>     number of objects in the repository.  Each hexdigit (4-bits) we
+>>     add to the shortened name allows us to have four times (2-bits) as
+>>     many objects in the repository.
+>>
+>> By supporting relative values for core.abbrev we can allow users to
+>> consistently opt-in for either a higher or lower probability of
+>> collision, without needing to hardcode a given numeric value like
+>> "10", which would be overkill on some repositories, and far to small
+>> on others.
+>
+> Nicely explained and calculated ;-)
+>
+>>  test_expect_success 'describe core.abbrev=[-+]1 and --abbrev=[-+]1' '
+>> -	test_must_fail git -c core.abbrev=+1 describe | sed_g_tr_d_n >describe &&
+>> -	test_must_fail git -c core.abbrev=-1 describe | sed_g_tr_d_n >describe &&
+>> +	git -c core.abbrev=-1 describe | sed_g_tr_d_n >describe &&
+>> +	test_byte_count = 6 describe &&
+>> +
+>> +	git -c core.abbrev=+1 describe | sed_g_tr_d_n >describe &&
+>> +	test_byte_count = 8 describe &&
+>
+> Even though I see the point of supporting absurdly small absolute
+> values like 4, I do not quite see the point of supporting negative
+> relative values here.  What's the expected use case?
 
-Here is the full reproduction instructions:
+I'll add a better explanation for this to the commit message.
 
-# Create a repository
-mkdir main
-cd main
-git init
-touch main.txt
-git add main.txt
-git commit -a -m "Initial commit"
-cd ..
+Initially I did this for consistency, since it was easy to implement,
+and there's no reason to have that arbitrary limitation, but thinking
+about it again I think I'll use this for some of my projects.
 
-# Create a second repository
-mkdir sub
-cd sub
-git init
-touch sub.txt
-git add sub.txt
-git commit -a -m "Initial commit of repo sub"
-cd ..
+E.g. here's a breakdown of my dotfiles repo:
 
-# Add the second repository as submodule, on a separate branch
-cd main
-git branch with-submodule
-git checkout with-submodule
-git submodule add ../sub sub
-git commit -a -m "Add submodule"
+    $ git -c core.abbrev=4 log  --pretty=format:%h|perl -nE 'chomp;say length'|sort|uniq -c|sort -nr
+        784 4
+         59 5
+          7 6
 
-# Set main repo back to master branch (without the submodule)
-git checkout master
-cd ..
+I don't have a single commit that needs 7 characters, yet that's our
+default. This is a sane trade-off for the kernel, but for something
+that's just a toy or something you're playing around with something
+shorter can make sense.
 
-# Make a clone and checkout the branch
-git clone main clone1
-cd clone1
-git checkout with-submodule
-# Submodule is not automatically updated (sub folder is empty)
-git submodule update --init --recursive
-# Now the submodule content is there
-# But I want to automatically update submodules when checking out a branch
-cd ..
+SHA-1s aren't just written down, but also e.g. remembered in wetware
+short-term memory.
 
-# Trying again, adding --recursive during clone
-git clone --recursive main clone2
-cd clone2
-git checkout with-submodule
-# Submodule is still not automatically updated (sub folder is empty)
-git submodule update --init --recursive
-cd ..
+>>  	git log --abbrev=+1 --pretty=format:%h -1 | tr_d_n >log &&
+>> -	test_byte_count = 4 log &&
+>> +	test_byte_count = 8 log &&
+>
+> This, together with many many others in the rest of the patch, is
+> cute but confusing in that the diff shows change from 4 to 8 due to
+> the redefinition of what abbrev=+1 means.  I have a feeling that it
+> may not be worth doing it "right", but if we were doing it "right",
+> we would probably have done it in multiple steps:
+>
+>     - the earlier patches in this series that demonstrates
+>       --abbrev=+1 is --abbrev=1 and core.abbrev=+1 is an error.
+>
+>     - ensure --abbrev=+1 is rejected as syntax error just like
+>       core.abbrev=+1 was, without introducing relative values
+>
+>     - introduce relative value.
+>
+> That way, the last step (which corresponds to this patch) would show
+> change from "log --abbrev=+1" failing due to syntax error to showing
+> abbreviated value that is slightly longer than the default.
+>
+> But a I said, it may not be worth doing so.  "Is it worth supporting
+> negative relative length?" still stands, though.
 
-# Trying again, adding --recurse-submodules during checkout
-git clone --recursive main clone3
-cd clone3
-git checkout --recurse-submodules with-submodule
-# Fails with these error messages :
-#	fatal: not a git repository: ../.git/modules/sub
-#	fatal: could not reset submodule index
-# It seems like Git tries to update the submodule but without having initia=
-lized the submodule
-cd ..
-
-# Trying again with submodule.recurse
-git config --global submodule.recurse true
-git clone main clone4
-cd clone4
-git checkout with-submodule
-# Submodule is still not automatically updated (sub folder is empty)
-# It seems like submodule.recurse does not affect git clone
-
-# Trying again with both submodule.recurse and --recursive
-git config --global submodule.recurse true
-git clone --recursive main clone5
-cd clone5
-git checkout with-submodule
-# Fails with these error messages :
-#	fatal: not a git repository: ../.git/modules/sub
-#	fatal: could not reset submodule index
-# Same issue as with "git checkout --recurse-submodules"
-
-# I tested this in git-bash on Windows 10
-$ git --version
-	git version 2.17.1.windows.2
-# And in Ubuntu in WSL
-$ git --version
-	git version 2.17.1
-
+I'll see what I can do about this value churn.
