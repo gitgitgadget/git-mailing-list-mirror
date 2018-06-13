@@ -2,117 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE9EE1F403
-	for <e@80x24.org>; Wed, 13 Jun 2018 23:07:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 100431F403
+	for <e@80x24.org>; Wed, 13 Jun 2018 23:11:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936032AbeFMXHI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Jun 2018 19:07:08 -0400
-Received: from mail-oi0-f73.google.com ([209.85.218.73]:34950 "EHLO
-        mail-oi0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935976AbeFMXGY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jun 2018 19:06:24 -0400
-Received: by mail-oi0-f73.google.com with SMTP id t133-v6so2691097oih.2
-        for <git@vger.kernel.org>; Wed, 13 Jun 2018 16:06:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
-         :cc;
-        bh=GhAGyVG/VOMtAwKnUC7mT4/QfR+Lo3p70vJr3qLgSOQ=;
-        b=PR/Yj1gEddyI6LJIKElyttNocRaSDdhavYLmIUHWw2+kQrgxgWA7OoGP4H2HK0F6Oy
-         H9MoNr5ClpPKKvvuEQxwxsf91e6fI0azd3+v3NzROfXDMENkPKFiNkOIvYq1t6niGAkt
-         c6DtkyaO09Jg12ueJccoaMlFuNmcnVaScViuyerD6ZawhFA/zB/3pjghkDLvGhm7HB9F
-         4XMTDPcCooWeV4S3lRW7CVRo92yapkfaM7GE/yvSv8TVCelmEBxzm0KWOwuMmCd9o84r
-         gnrP7au5ojJbyW+buQbw9ngCSbS1TC7L+ZzMf25v/C4gxAYul0y7H5SXjXBFGroD1euH
-         sGRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
-         :references:subject:from:to:cc;
-        bh=GhAGyVG/VOMtAwKnUC7mT4/QfR+Lo3p70vJr3qLgSOQ=;
-        b=c9VXcewer97XTqDV+jWfy3+9CMQc3mib+aB4TZAYZHPbBl+uVEkv964h+gotdhqpVE
-         YAEy6iSNzo4dSLzY1xSVcfMNWznDVdOAWCy0VEygKf4iPAHL5G8Skyj57zDPimz7Lq5O
-         3cI7+i6aJa1URbIUtVOlNVvLKyXFsi+UH4JaEVaNd44Qb8qXLucYSEv0hq+W5hkvPB6p
-         5xLLQaxongyTdjC2HJfLtNcnCWurG3wMSdNu7VWnmS9bMoMj4RG295ykmpkaUdpwceIf
-         cHNxowGKpp5N1Qc33ZuUIfG09ylNNU1UlCJQieavNkrC/wndlA3cWN3dmdXkGhuZJp4E
-         lKJw==
-X-Gm-Message-State: APt69E22McXn0AKAEi961MANC/iVK7ObbEbPmoHPtr/sewDexEjamvCS
-        O71evJZ0Og4EIftsIOi3FhJx6CZRrTlodr5/pQUFGixAWpHbSMYKLTD0Mq/OpkScXQszOo+OgfD
-        mjddT5Bz8th8tUibmmT/pgogMaMLJV5VverjkaHWMAoLMePchPNrkZcNuxlr0
-X-Google-Smtp-Source: ADUXVKJEdn0TKXkWb0wiSUiFezlHFZuQMbakBQtZGOZX6U62lFBC6UY9hWcD5xs68uGT1zHvQFKr3Bo6YrVk
+        id S935540AbeFMXLu (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Jun 2018 19:11:50 -0400
+Received: from cloud.peff.net ([104.130.231.41]:44012 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S935503AbeFMXLt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jun 2018 19:11:49 -0400
+Received: (qmail 9545 invoked by uid 109); 13 Jun 2018 23:11:49 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 13 Jun 2018 23:11:49 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 7989 invoked by uid 111); 13 Jun 2018 23:12:04 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 13 Jun 2018 19:12:04 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Jun 2018 19:11:47 -0400
+Date:   Wed, 13 Jun 2018 19:11:47 -0400
+From:   Jeff King <peff@peff.net>
+To:     Kirill Smelkov <kirr@nexedi.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Brandon Williams <bmwill@google.com>,
+        Takuto Ikuta <tikuta@chromium.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] fetch-pack: test explicitly that --all can fetch tag
+ references pointing to non-commits
+Message-ID: <20180613231147.GA21025@sigill.intra.peff.net>
+References: <20180612185413.GA21856@deco.navytux.spb.ru>
+ <20180613111840.1427-1-kirr@nexedi.com>
+ <xmqqbmce7fcm.fsf@gitster-ct.c.googlers.com>
+ <20180613184301.GB22854@deco.navytux.spb.ru>
+ <20180613210509.GA15574@sigill.intra.peff.net>
 MIME-Version: 1.0
-X-Received: by 2002:aca:f5c5:: with SMTP id t188-v6mr69820oih.89.1528931184052;
- Wed, 13 Jun 2018 16:06:24 -0700 (PDT)
-Date:   Wed, 13 Jun 2018 16:05:12 -0700
-In-Reply-To: <20180613230522.55335-1-sbeller@google.com>
-Message-Id: <20180613230522.55335-22-sbeller@google.com>
-References: <20180530004810.30076-1-sbeller@google.com> <20180613230522.55335-1-sbeller@google.com>
-X-Mailer: git-send-email 2.18.0.rc1.244.gcf134e6275-goog
-Subject: [PATCH v2 21/31] tag: allow parse_tag_buffer to handle arbitrary repositories
-From:   Stefan Beller <sbeller@google.com>
-To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20180613210509.GA15574@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- tag.c | 10 +++++-----
- tag.h |  3 +--
- 2 files changed, 6 insertions(+), 7 deletions(-)
+On Wed, Jun 13, 2018 at 05:05:09PM -0400, Jeff King wrote:
 
-diff --git a/tag.c b/tag.c
-index 46b5882ee12..682e7793059 100644
---- a/tag.c
-+++ b/tag.c
-@@ -126,7 +126,7 @@ void release_tag_memory(struct tag *t)
- 	t->date = 0;
- }
- 
--int parse_tag_buffer_the_repository(struct tag *item, const void *data, unsigned long size)
-+int parse_tag_buffer(struct repository *r, struct tag *item, const void *data, unsigned long size)
- {
- 	struct object_id oid;
- 	char type[20];
-@@ -154,13 +154,13 @@ int parse_tag_buffer_the_repository(struct tag *item, const void *data, unsigned
- 	bufptr = nl + 1;
- 
- 	if (!strcmp(type, blob_type)) {
--		item->tagged = (struct object *)lookup_blob(the_repository, &oid);
-+		item->tagged = (struct object *)lookup_blob(r, &oid);
- 	} else if (!strcmp(type, tree_type)) {
--		item->tagged = (struct object *)lookup_tree(the_repository, &oid);
-+		item->tagged = (struct object *)lookup_tree(r, &oid);
- 	} else if (!strcmp(type, commit_type)) {
--		item->tagged = (struct object *)lookup_commit(the_repository, &oid);
-+		item->tagged = (struct object *)lookup_commit(r, &oid);
- 	} else if (!strcmp(type, tag_type)) {
--		item->tagged = (struct object *)lookup_tag(the_repository, &oid);
-+		item->tagged = (struct object *)lookup_tag(r, &oid);
- 	} else {
- 		error("Unknown type %s", type);
- 		item->tagged = NULL;
-diff --git a/tag.h b/tag.h
-index 6a160c91875..efd4c7da67c 100644
---- a/tag.h
-+++ b/tag.h
-@@ -12,8 +12,7 @@ struct tag {
- 	timestamp_t date;
- };
- extern struct tag *lookup_tag(struct repository *r, const struct object_id *oid);
--#define parse_tag_buffer(r, i, d, s) parse_tag_buffer_##r(i, d, s)
--extern int parse_tag_buffer_the_repository(struct tag *item, const void *data, unsigned long size);
-+extern int parse_tag_buffer(struct repository *r, struct tag *item, const void *data, unsigned long size);
- extern int parse_tag(struct tag *item);
- extern void release_tag_memory(struct tag *t);
- #define deref_tag(r, o, w, l) deref_tag_##r(o, w, l)
+> > In order to be sure fetching funky tags will never break, let's
+> > explicitly test all relevant cases with 4 tag objects pointing to 1) a
+> > blob, 2) a tree, 3) a commit, and 4) another tag objects. The referenced
+> > tag objects themselves are referenced from under regular refs/tags/*
+> > namespace. Before e9502c0a7f `fetch-pack --all` was failing e.g. this way:
+> > 
+> >         .../git/t/trash directory.t5500-fetch-pack/fetchall$ git ls-remote ..
+> >         44085874...        HEAD
+> >         ...
+> >         bc4e9e1f...        refs/tags/tag-to-blob
+> >         038f48ad...        refs/tags/tag-to-blob^{}	# peeled
+> >         520db1f5...        refs/tags/tag-to-tree
+> >         7395c100...        refs/tags/tag-to-tree^{}	# peeled
+> > 
+> >         .../git/t/trash directory.t5500-fetch-pack/fetchall$ git fetch-pack --all ..
+> >         fatal: A git upload-pack: not our ref 038f48ad...
+> >         fatal: The remote end hung up unexpectedly
+> 
+> TBH, I do not find this snippet all that compelling. We know that
+> e9502c0a7f already fixed the bug, and that it had nothing to do with
+> non-commits at all.
+> 
+> The primary reason to add these tests is that in general we do not cover
+> fetch-pack over tags to non-commits. And I think the reason to use
+> otherwise unreferenced objects is that it they are more likely to have
+> detectable symptoms if they tickle a bug.
+> 
+> So why don't we say that, instead of re-hashing output from the earlier
+> fix?
+
+Hmm, it looks like this already hit 'next', so it is too late to change
+the commit message (although 'next' will get rewound after the release,
+so we _could_ do it then).
+
+I also was going to suggest these style fixes, which could be applied on
+top (or squashed if we end up going that route). I actually wonder if
+the final tag one could just use two invocations of "git tag -m", but
+it's probably not worth spending too much time on polishing.
+
+-- >8 --
+Subject: [PATCH] t5500: prettify non-commit tag tests
+
+We don't need to use backslash continuation, as the "&&"
+already provides continuation (and happily soaks up empty
+lines between commands).
+
+We can also expand the multi-line printf into a
+here-document, which lets us use line breaks more naturally
+(and avoids another continuation that required us to break
+the natural indentation).
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/t5500-fetch-pack.sh | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
+
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index ea6570e819..3d33ab3875 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -533,19 +533,26 @@ test_expect_success 'test --all wrt tag to non-commits' '
+ 	# are reachable only via created tag references.
+ 	blob=$(echo "hello blob" | git hash-object -t blob -w --stdin) &&
+ 	git tag -a -m "tag -> blob" tag-to-blob $blob &&
+- \
++
+ 	tree=$(printf "100644 blob $blob\tfile" | git mktree) &&
+ 	git tag -a -m "tag -> tree" tag-to-tree $tree &&
+- \
++
+ 	tree2=$(printf "100644 blob $blob\tfile2" | git mktree) &&
+ 	commit=$(git commit-tree -m "hello commit" $tree) &&
+ 	git tag -a -m "tag -> commit" tag-to-commit $commit &&
+- \
++
+ 	blob2=$(echo "hello blob2" | git hash-object -t blob -w --stdin) &&
+-	tag=$(printf "object $blob2\ntype blob\ntag tag-to-blob2\n\
+-tagger author A U Thor <author@example.com> 0 +0000\n\nhello tag" | git mktag) &&
++	tag=$(git mktag <<-EOF
++		object $blob2
++		type blob
++		tag tag-to-blob2
++		tagger author A U Thor <author@example.com> 0 +0000
++
++		hello tag
++	EOF
++	) &&
+ 	git tag -a -m "tag -> tag" tag-to-tag $tag &&
+- \
++
+ 	# `fetch-pack --all` should succeed fetching all those objects.
+ 	mkdir fetchall &&
+ 	(
 -- 
-2.18.0.rc1.244.gcf134e6275-goog
+2.18.0.rc2.519.gb87ed92113
 
