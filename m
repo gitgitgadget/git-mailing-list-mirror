@@ -2,87 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD0B01F403
-	for <e@80x24.org>; Wed, 13 Jun 2018 21:13:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 14BA01F403
+	for <e@80x24.org>; Wed, 13 Jun 2018 21:39:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935864AbeFMVNF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Jun 2018 17:13:05 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43708 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1754517AbeFMVNE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jun 2018 17:13:04 -0400
-Received: (qmail 4820 invoked by uid 109); 13 Jun 2018 21:13:04 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 13 Jun 2018 21:13:04 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6388 invoked by uid 111); 13 Jun 2018 21:13:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 13 Jun 2018 17:13:19 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Jun 2018 17:13:02 -0400
-Date:   Wed, 13 Jun 2018 17:13:02 -0400
-From:   Jeff King <peff@peff.net>
-To:     Kirill Smelkov <kirr@nexedi.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Brandon Williams <bmwill@google.com>,
-        Takuto Ikuta <tikuta@chromium.org>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH v2] fetch-pack: don't try to fetch peel values with --all
-Message-ID: <20180613211302.GB15574@sigill.intra.peff.net>
-References: <20180610143231.7131-1-kirr@nexedi.com>
- <20180611042016.GA31642@sigill.intra.peff.net>
- <20180611044710.GB31642@sigill.intra.peff.net>
- <CAPig+cT73d0rYoSbt7oHVG4MYHVvjKidP0ogRwV+9F73jcjZEA@mail.gmail.com>
- <20180611055357.GA16430@sigill.intra.peff.net>
- <20180611094255.GA15563@deco.navytux.spb.ru>
- <20180612094849.GB26123@sigill.intra.peff.net>
- <20180612185413.GA21856@deco.navytux.spb.ru>
+        id S935789AbeFMVjb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Jun 2018 17:39:31 -0400
+Received: from mail-qt0-f202.google.com ([209.85.216.202]:43480 "EHLO
+        mail-qt0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935384AbeFMVja (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jun 2018 17:39:30 -0400
+Received: by mail-qt0-f202.google.com with SMTP id j2-v6so2964438qtn.10
+        for <git@vger.kernel.org>; Wed, 13 Jun 2018 14:39:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
+         :cc;
+        bh=VPaYCEYJ8xZxv82XqcU1atuW3me+ABUQrkEY6IiA+FY=;
+        b=mLhJ8TjjN/aB0xHT998+MCKK99UVxzFAirITh8MDbfoB5RJx3t4SYJDEW6bJYm+eQF
+         1eVkS/hbczcERscIpH4b5AN90xV4iA04ELVs1Hl4OSGVXGT6QiOm64WKRaXCkUDUnyGk
+         aqHRGwpXu62dBM9vm6lN9o4tfhuiqimK9Tk3sy8e2nzhtLB2u8pYW80Xq8JDe2VCgpO1
+         1btZbNIwHYBTkG+CraEpnCPb1nXAxzZ0tHXXhzA21gjl6cJALkYul0AlLsu1XJKw3qFR
+         +lO5wSkJWCc16isDWlQSDNP7chFmRS6fhEUam1dMnbfxH7zPRqCRvuDPnAgcl4JYuKLE
+         pyhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
+         :references:subject:from:to:cc;
+        bh=VPaYCEYJ8xZxv82XqcU1atuW3me+ABUQrkEY6IiA+FY=;
+        b=A+ZDS7Vea3Xs/1UV4z5eN/rZLKKG2TbQtd+FCBvHWk9wDbwRz6IN/oWxJanNIuoiJh
+         orJ1yAv3Z+qJVHMnpZOk/4WtIAc0mcjLgZzAaUfVaIZuaPS4dI5/ftTOO33eSkH0ZoWW
+         tqLMFOy9Uoxxh27tW0Cy1xRUCs3lSCdy2vnJVRBqwk0T/qCasVMrTpN8qqKDF+FquogX
+         p4zlZmy/iiMf2oiH2k79VDNbLtVVbIpWybU49YCpNy/KVS9mpxe0lmkPOchCyA3R73EA
+         xYho5LyVLqza3URXEuOWFRG0oz2orWqRrwsAxrQmzSRi+0iqGZnkXJ3FKP1VQH7Oc1P4
+         mxPw==
+X-Gm-Message-State: APt69E2pxAL43LUirNr4aTrrfXRy2WpTBqhgu7ctKryUpI/tMn6d5iTX
+        VgVM1A8WA7ym5end9vg+goIcpuRljccTKp53u4W0Eo3jAU3A8zTe8EJV7o8b8l5M/4xzSxJSOzR
+        y5lxiFBp/rQaf4LUd2ojFkMVEhxRM/MxAZuklwZdr9fngIq23nFpji3sjsA==
+X-Google-Smtp-Source: ADUXVKI2A0XKkW7vAVIrk7aJRVYrLUZpFrpagMdfn0/0zoNEB4URgyZdY2dTQEn0ozhdmGiDCgWWKHO6wtk=
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180612185413.GA21856@deco.navytux.spb.ru>
+X-Received: by 2002:a0c:d2a2:: with SMTP id q31-v6mr3348373qvh.45.1528925969336;
+ Wed, 13 Jun 2018 14:39:29 -0700 (PDT)
+Date:   Wed, 13 Jun 2018 14:39:17 -0700
+In-Reply-To: <20180605175144.4225-1-bmwill@google.com>
+Message-Id: <20180613213925.10560-1-bmwill@google.com>
+References: <20180605175144.4225-1-bmwill@google.com>
+X-Mailer: git-send-email 2.18.0.rc1.242.g61856ae69a-goog
+Subject: [PATCH v2 0/8] ref-in-want
+From:   Brandon Williams <bmwill@google.com>
+To:     git@vger.kernel.org
+Cc:     avarab@gmail.com, ramsay@ramsayjones.plus.com,
+        Brandon Williams <bmwill@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 12, 2018 at 06:54:17PM +0000, Kirill Smelkov wrote:
+Changes in v2:
+* issuing a want-ref line to a ref which doesn't exist is just ignored.
+* fixed some typos 
 
-> > If an extra connection isn't a problem, you might be better off with
-> > "git ls-remote", and then picking through the results for refs of
-> > interest, and then "git fetch-pack" to actually get the pack. That's how
-> > git-fetch worked when it was a shell script (e.g., see c3a200120d, the
-> > last shell version).
-> 
-> Yes, this is what I ended up doing:
-> 
-> https://lab.nexedi.com/kirr/git-backup/commit/899103bf
-> 
-> but for another reason - to avoid repeating for every fetched repository
-> slow (in case of my "big" destination backup repository) quickfetch()
-> checking in every spawned `git fetch`: git-backup can build index of
-> objects we already have ourselves only once at startup, and then in
-> fetch, after checking lsremote output, consult that index, and if we see
-> we already have everything for an advertised reference - just avoid
-> giving it to fetch-pack to process. It turns out for many pulled
-> repositories there is usually no references changed at all and this way
-> fetch-pack can be skipped completely:
-> 
-> https://lab.nexedi.com/kirr/git-backup/commit/3efed898
+Brandon Williams (8):
+  test-pkt-line: add unpack-sideband subcommand
+  upload-pack: implement ref-in-want
+  upload-pack: test negotiation with changing repository
+  fetch: refactor the population of peer ref OIDs
+  fetch: refactor fetch_refs into two functions
+  fetch: refactor to make function args narrower
+  fetch-pack: put shallow info in output parameter
+  fetch-pack: implement ref-in-want
 
-Thanks for sharing that, it's an interesting case. I'd hope that
-git-fetch is smart enough not to even bother with quickfetch() if there
-are no refs to update. But if we have even one change to fetch, then
-yeah, in the general case it makes sense to me that you could do better
-by amortizing the scan of local objects across many operations.
+ Documentation/config.txt                |   7 +
+ Documentation/technical/protocol-v2.txt |  29 ++-
+ builtin/clone.c                         |   4 +-
+ builtin/fetch.c                         | 126 +++++++-----
+ fetch-object.c                          |   2 +-
+ fetch-pack.c                            |  52 +++--
+ remote.c                                |   1 +
+ remote.h                                |   1 +
+ t/helper/test-pkt-line.c                |  37 ++++
+ t/lib-httpd.sh                          |   1 +
+ t/lib-httpd/apache.conf                 |   8 +
+ t/lib-httpd/one-time-sed.sh             |  16 ++
+ t/t5703-upload-pack-ref-in-want.sh      | 245 ++++++++++++++++++++++++
+ transport-helper.c                      |   6 +-
+ transport-internal.h                    |   9 +-
+ transport.c                             |  34 +++-
+ transport.h                             |   3 +-
+ upload-pack.c                           |  64 +++++++
+ 18 files changed, 568 insertions(+), 77 deletions(-)
+ create mode 100644 t/lib-httpd/one-time-sed.sh
+ create mode 100755 t/t5703-upload-pack-ref-in-want.sh
 
--Peff
+-- 
+2.18.0.rc1.242.g61856ae69a-goog
+
