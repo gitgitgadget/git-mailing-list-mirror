@@ -2,131 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E65F1F403
-	for <e@80x24.org>; Wed, 13 Jun 2018 07:48:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 84C421F403
+	for <e@80x24.org>; Wed, 13 Jun 2018 11:34:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934669AbeFMHsW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Jun 2018 03:48:22 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:42868 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934563AbeFMHsU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jun 2018 03:48:20 -0400
-Received: by mail-wr0-f193.google.com with SMTP id w10-v6so1614167wrk.9
-        for <git@vger.kernel.org>; Wed, 13 Jun 2018 00:48:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=8gixl877lk7ClNdWeX9A9QgrM2wC91ZRPsfiNxk0Q7U=;
-        b=gtVoFpY7Sg6+sqvV1zHG/ldMD7Kw+SpW4Q2Q8d7hFQJkA5QtOGYmKA/skL6SjeoRyp
-         HSBJ7Z/9smehGFWap4b0KFWcJGSvVl7aeGBKtdw08/m7axFa/kdtf0mkvTshbrxP2B3s
-         w0fWRFY+kZRuLVDxv7ptchuluVU1MErvCP8/gyU24az8cGKqPxSIC+RTQgOHk/0wQCFd
-         I5uERfGoa0o5RrmVCehwEyEcGI47JKuRybvCsSl+xZrwausgMSCBQT77svRHU0VeZLDc
-         Jj+CtIUGXnXpbSWKN/WjAdHbvDKXdgfCZWiYs5lKSrGFH/k5b24GK64QSBeJqOmeaOR8
-         91Eg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=8gixl877lk7ClNdWeX9A9QgrM2wC91ZRPsfiNxk0Q7U=;
-        b=ciXcVPxc6jk1vn7nAQ6I/46AkJKNMVb2fNar9Ze7Sap+0PpWr9hJ7uiUOmc3/a8/bj
-         YkxHB1yk8jF4OFXYMnAlJZcb1zS1y8bbAnvmj0+QprFU7Dwp+oHs2lpUJG9BoFQPQi5t
-         IxolfbDqxenMgP3jZor6BZx5JWgqxYCE9wyBWXvDAg5d0pijzTHMN+RHqTts1Fe0Jfkx
-         u9AuV54LTaWol9osLYKk1LwV0hRgzNxZJuxJCEnFiGfpBQYkmNbhE46KUoRv4JHKbEOw
-         Bg7tSww0mSzaFW052SPPGhzBorWWfPg3URuujjzJD8eFs909PdsGkfYoiTknNXc49NrF
-         VleA==
-X-Gm-Message-State: APt69E1AMyFjgS28c+o3n0fbyYJ5RfoA+EWjfix8fl1pQudE6OYJl0lh
-        vi1pzSHKZOUL+26bHZHHewGpbhhr
-X-Google-Smtp-Source: ADUXVKJ7Sp2cXmwQdeGij8shMKXtiESr9sU8wovM6WrieoF9b2FKv2j4BTFD9WcLH0IipHgDR3546A==
-X-Received: by 2002:adf:9769:: with SMTP id r96-v6mr3339902wrb.57.1528876098660;
-        Wed, 13 Jun 2018 00:48:18 -0700 (PDT)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id v68-v6sm3262147wmd.12.2018.06.13.00.48.17
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 13 Jun 2018 00:48:18 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Luis Marsano <luis.marsano@gmail.com>,
-        Ted Zlatanov <tzz@lifelogs.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH] git-credential-netrc: remove use of "autodie"
-Date:   Wed, 13 Jun 2018 07:48:10 +0000
-Message-Id: <20180613074810.5358-1-avarab@gmail.com>
-X-Mailer: git-send-email 2.17.0.290.gded63e768a
-In-Reply-To: <CAHqJXRE8OKSKcck1APHAHccLZhox+tZi8nNu2RA74RErX8s3Pg@mail.gmail.com>
-References: <CAHqJXRE8OKSKcck1APHAHccLZhox+tZi8nNu2RA74RErX8s3Pg@mail.gmail.com>
+        id S935500AbeFMLeA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Jun 2018 07:34:00 -0400
+Received: from mail187-21.suw11.mandrillapp.com ([198.2.187.21]:40477 "EHLO
+        mail187-21.suw11.mandrillapp.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S935492AbeFMLd5 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 13 Jun 2018 07:33:57 -0400
+X-Greylist: delayed 900 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Jun 2018 07:33:57 EDT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=mandrill; d=nexedi.com;
+ h=From:Subject:To:Cc:Message-Id:In-Reply-To:References:Date:MIME-Version:Content-Type:Content-Transfer-Encoding; i=kirr@nexedi.com;
+ bh=B73T0J9Ofl6qijovtILTdt29Op0uyiJ55svkiS8pu+U=;
+ b=MR8piP2JFd8iZ1E1gC9CizVKSQcd2D3mf+hDn5QAeho0fTnB+ec4eK+SHPTOTj6EQsOUn4rBIEma
+   zckY79qxI8WKZhxwipm/WxYJ+8fU0Gd+A/7J0Ac//5Pex1Nweg4YNNvYWhmoLoM1dAk1p54j5fd2
+   ytG+IZsjwanTt7epwms=
+Received: from pmta01.mandrill.prod.suw01.rsglab.com (127.0.0.1) by mail187-21.suw11.mandrillapp.com id h440ia174i4t for <git@vger.kernel.org>; Wed, 13 Jun 2018 11:18:56 +0000 (envelope-from <bounce-md_31050260.5b20fda0.v1-0a9ac1e832f34b98b324c37bd93e30f1@mandrillapp.com>)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mandrillapp.com; 
+ i=@mandrillapp.com; q=dns/txt; s=mandrill; t=1528888736; h=From : 
+ Subject : To : Cc : Message-Id : In-Reply-To : References : Date : 
+ MIME-Version : Content-Type : Content-Transfer-Encoding : From : 
+ Subject : Date : X-Mandrill-User : List-Unsubscribe; 
+ bh=B73T0J9Ofl6qijovtILTdt29Op0uyiJ55svkiS8pu+U=; 
+ b=bXpmAwIN9ajSkCFOGaG3wUXz7QgdhPuC/6gA7yBe2UhBY/xyA0Hv0rcZoBbd4Unl57oiJZ
+ 9S+Eyb8NgQ9eD3fYsnSlkVEwBwkjqkQtYWxxFSMwedUCnDaFIrAkYIiAojykTMj0OEpJ2Btd
+ ygHeG9ljvZKFjSiQkzSUGZ5dLtm7s=
+From:   Kirill Smelkov <kirr@nexedi.com>
+Subject: [PATCH] fetch-pack: test explicitly that --all can fetch tag references pointing to non-commits
+Received: from [87.98.221.171] by mandrillapp.com id 0a9ac1e832f34b98b324c37bd93e30f1; Wed, 13 Jun 2018 11:18:56 +0000
+X-Mailer: git-send-email 2.18.0.rc1.253.gf85a566b11.dirty
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Brandon Williams <bmwill@google.com>,
+        Takuto Ikuta <tikuta@chromium.org>, Jeff King <peff@peff.net>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        <git@vger.kernel.org>, Kirill Smelkov <kirr@nexedi.com>
+Message-Id: <20180613111840.1427-1-kirr@nexedi.com>
+In-Reply-To: <20180612185413.GA21856@deco.navytux.spb.ru>
+References: <20180612185413.GA21856@deco.navytux.spb.ru>
+X-Report-Abuse: Please forward a copy of this message, including all headers, to abuse@mandrill.com
+X-Report-Abuse: You can also report abuse here: http://mandrillapp.com/contact/abuse?id=31050260.0a9ac1e832f34b98b324c37bd93e30f1
+X-Mandrill-User: md_31050260
+Date:   Wed, 13 Jun 2018 11:18:56 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The "autodie" module was added in Perl 5.10.1, but our INSTALL
-document says "version 5.8 or later is needed".
+Fetch-pack --all became broken with respect to unusual tags in
+5f0fc64513 (fetch-pack: eliminate spurious error messages, 2012-09-09),
+and was fixed only recently in e9502c0a7f (fetch-pack: don't try to fetch
+peel values with --all, 2018-06-11). However the test added in
+e9502c0a7f does not explicitly cover all funky cases.
 
-As discussed in <87efhfvxzu.fsf@evledraar.gmail.com> this script is in
-contrib/, so we might not want to apply that policy, however in this
-case "autodie" was recently added as a "gratuitous safeguard" in
-786ef50a23 ("git-credential-netrc: accept gpg option",
-2018-05-12) (see
-<CAHqJXRE8OKSKcck1APHAHccLZhox+tZi8nNu2RA74RErX8s3Pg@mail.gmail.com>).
+In order to be sure fetching funky tags will never break, let's
+explicitly test all relevant cases with 4 tag objects pointing to 1) a
+blob, 2) a tree, 3) a commit, and 4) another tag objects. The referenced
+tag objects themselves are referenced from under regular refs/tags/*
+namespace. Before e9502c0a7f `fetch-pack --all` was failing e.g. this way:
 
-Looking at it more carefully the addition of "autodie" inadvertently
-introduced a logic error, since having it is equivalent to this patch:
+        .../git/t/trash directory.t5500-fetch-pack/fetchall$ git ls-remote ..
+        440858748ae905d48259d4fb67a12a7aa1520cf7        HEAD
+        ...
+        bc4e9e1fa80662b449805b1ac29fc9b1e4c49187        refs/tags/tag-to-blob                   # <-- NOTE
+        038f48ad0beaffbea71d186a05084b79e3870cbf        refs/tags/tag-to-blob^{}
+        520db1f5e1afeaa12b1a8d73ce82db72ca036ee1        refs/tags/tag-to-tree                   # <-- NOTE
+        7395c100223b7cd760f58ccfa0d3f3d2dd539bb6        refs/tags/tag-to-tree^{}
 
-    @@ -245,10 +244,10 @@ sub load_netrc {
-     	if ($gpgmode) {
-     		my @cmd = ($options{'gpg'}, qw(--decrypt), $file);
-     		log_verbose("Using GPG to open $file: [@cmd]");
-    -		open $io, "-|", @cmd;
-    +		open $io, "-|", @cmd or die "@cmd: $!";
-     	} else {
-     		log_verbose("Opening $file...");
-    -		open $io, '<', $file;
-    +		open $io, '<', $file or die "$file: $!$!;
-     	}
+        .../git/t/trash directory.t5500-fetch-pack/fetchall$ git fetch-pack --all ..
+        fatal: A git upload-pack: not our ref 038f48ad0beaffbea71d186a05084b79e3870cbf
+        fatal: The remote end hung up unexpectedly
 
-     	# nothing to do if the open failed (we log the error later)
-
-As shown in the context the intent of that code is not do die but to
-log the error later.
-
-Per my reading of the file this was the only thing autodie was doing
-in this file (there was no other code it altered). So let's remove it,
-both to fix the logic error and to get rid of the dependency.
-
-1. <87efhfvxzu.fsf@evledraar.gmail.com>
-   (https://public-inbox.org/git/87efhfvxzu.fsf@evledraar.gmail.com/)
-2. <CAHqJXRE8OKSKcck1APHAHccLZhox+tZi8nNu2RA74RErX8s3Pg@mail.gmail.com>
-   (https://public-inbox.org/git/CAHqJXRE8OKSKcck1APHAHccLZhox+tZi8nNu2RA74RErX8s3Pg@mail.gmail.com/)
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Signed-off-by: Kirill Smelkov <kirr@nexedi.com>
 ---
- contrib/credential/netrc/git-credential-netrc | 1 -
- 1 file changed, 1 deletion(-)
+ t/t5500-fetch-pack.sh | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/contrib/credential/netrc/git-credential-netrc b/contrib/credential/netrc/git-credential-netrc
-index 0b9a94102e..ebfc123ec6 100755
---- a/contrib/credential/netrc/git-credential-netrc
-+++ b/contrib/credential/netrc/git-credential-netrc
-@@ -2,7 +2,6 @@
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index f20bb59d22..b560d90c7b 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -528,6 +528,34 @@ test_expect_success 'test --all with tag to non-tip' '
+ 	)
+ '
  
- use strict;
- use warnings;
--use autodie;
- 
- use Getopt::Long;
- use File::Basename;
++test_expect_success 'test --all wrt tag to non-commits' '
++	blob=$(echo "hello blob" | git hash-object -t blob -w --stdin) &&
++	git tag -a -m "tag -> blob" tag-to-blob $blob &&
++ \
++	tree=$(printf "100644 blob $blob\tfile" | git mktree) &&
++	git tag -a -m "tag -> tree" tag-to-tree $tree &&
++ \
++	tree2=$(printf "100644 blob $blob\tfile2" | git mktree) &&
++	commit=$(git commit-tree -m "hello commit" $tree) &&
++	git tag -a -m "tag -> commit" tag-to-commit $commit &&
++ \
++	blob2=$(echo "hello blob2" | git hash-object -t blob -w --stdin) &&
++	tag=$(printf "object $blob2\ntype blob\ntag tag-to-blob2\n\
++tagger author A U Thor <author@example.com> 0 +0000\n\nhello tag" | git mktag) &&
++	git tag -a -m "tag -> tag" tag-to-tag $tag &&
++ \
++	mkdir fetchall &&
++	(
++		cd fetchall &&
++		git init &&
++		git fetch-pack --all .. &&
++		git cat-file blob $blob >/dev/null &&
++		git cat-file tree $tree >/dev/null &&
++		git cat-file commit $commit >/dev/null &&
++		git cat-file tag $tag >/dev/null
++	)
++'
++
+ test_expect_success 'shallow fetch with tags does not break the repository' '
+ 	mkdir repo1 &&
+ 	(
 -- 
-2.17.0.290.gded63e768a
-
+2.18.0.rc1.253.gf85a566b11.dirty
