@@ -6,57 +6,60 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D96781F403
-	for <e@80x24.org>; Wed, 13 Jun 2018 18:22:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D9A91F403
+	for <e@80x24.org>; Wed, 13 Jun 2018 18:32:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935302AbeFMSWC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Jun 2018 14:22:02 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:44877 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935256AbeFMSWA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jun 2018 14:22:00 -0400
-Received: by mail-wr0-f196.google.com with SMTP id x4-v6so3730233wro.11
-        for <git@vger.kernel.org>; Wed, 13 Jun 2018 11:22:00 -0700 (PDT)
+        id S935428AbeFMScb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Jun 2018 14:32:31 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:50246 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935400AbeFMScb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jun 2018 14:32:31 -0400
+Received: by mail-wm0-f68.google.com with SMTP id e16-v6so6386961wmd.0
+        for <git@vger.kernel.org>; Wed, 13 Jun 2018 11:32:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=Darrc5QenLbrxz5O1e5EuqZJFBDndEA7+tyU5zDVdQ0=;
-        b=YKxgmR48Du63k1o8eLO5jGWzkkivZXlgrUUGWI+2Ol/JNUUuGSlBv+chNaLVOyq0XD
-         TrkRGUqKuJZpwluPNpYRrSNj+88y59AgWHGRjBeNZoqrz3B10tYUtqjdDawxtxpZbYSc
-         9BZRXIFvLo6ae8le63c9x1mHZAxjhuvhn3NwjVSjiAXxDKuUX7D2V4L+VH98TU5FBXBE
-         XxY7/YwL1NuTQtyWG36CYyzt/tLOEsrZk53H/xkba+UnMGRxVckrk06MU9rLN0R6pk0a
-         0mD9KILTFdljy6lCGWMrHnJXF4JIs8vcHL/AkB6idwe1DJAGs4oA9c1FBMQuIwvBhOXo
-         R9mQ==
+        bh=ZrpC3rF0zU1c3RT965TBlpA1DPETmTGMmqjfdAeZhuw=;
+        b=P+LAxDth8WtTlVS9yy4QD86paV3ItoHGcBiyiWPxOTmEKT7ZIjgNYm5PsOuZbKczQR
+         SeNVKy8evVJu6AUTL4cQiXSb+ThhJ5V4KPgoQJKGgqL9E7+7TU2jOouwbAsPa6E9GhIK
+         aY7XI8JMi5QiZENxkyMuM/jOqXkzwmpe1mA3HoS2OHSB9h/iUDLv9oq92cawiOH/mqrE
+         MKcUNFC5EhcGrilFvkrylgB8GemtV4PppsoeezQ37dE1V/gOLz7CwqxDo/96VTvQ0H2m
+         jAK8nRBMKlSHexGLEE+JFvXUc2TFl3C3ObA+QB1cq1KAiBm4X+eoqwVceJHiIwZqCcJd
+         BWZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=Darrc5QenLbrxz5O1e5EuqZJFBDndEA7+tyU5zDVdQ0=;
-        b=pCDmOMABaKjvN4OSgAw97U9FQkP9tbvqJjGOCdN4DIk0BHvdlfmA+I1YRYzMlxymH9
-         B590ZLhERGSiEsjxFQaYlpemkarPoTbTSMUcKUHpLgW2zBQBCVhJcQOXESaXA9drT+n0
-         ZLARnwXVTupbWZasdSFP5OdGOlZjIpMeX4cGQ2uNP9f7A8whUGXgNc3fcl9ZzL7C2xuX
-         buT4EpFcr2HemOyLWxC03yUIT5l1+rD7vpIxXEdA6JBPQzP+GjioKt7abQLwlmZs+Qcn
-         UEFbqlXPExyToKmg8UVYBOgAYQuY5zSlBs4nNT4PB/J2qD8RHV+twoIUlrjy9XzDiKFY
-         dBvg==
-X-Gm-Message-State: APt69E3sFVr51m5uXrTeqFhhtbA0IGiej2pJmx4ykit7lOiE0Qji5DCI
-        1fnYr/KHtmFTR9/BK/ITeTg=
-X-Google-Smtp-Source: ADUXVKLYIXSRE3bgy5QqCDZc+RYFUiNF4Hze2kB5Z2+/O8aDdw4fzpsNX8f0Vo2m2woxR6sVKzW85Q==
-X-Received: by 2002:adf:ca03:: with SMTP id o3-v6mr5036568wrh.148.1528914119238;
-        Wed, 13 Jun 2018 11:21:59 -0700 (PDT)
+        bh=ZrpC3rF0zU1c3RT965TBlpA1DPETmTGMmqjfdAeZhuw=;
+        b=RJ7IWUAwzMaYdBiqAW96TQm2O89FbAEHuzTJ+Dr9Qlcq6Ww8LooO4Lx2QW9YS7LaJ/
+         +x4uZHjBGu27u6ml92UgtvGsZHdCqvCJjwt39aKEdYoY8O7cCJiNeQqwrMpL8iYSvwqd
+         B/IZAXy+/Wmkwmq4Xd5bZPBWs/WL862IKWrJ8BeJa4+vgUvTd7iVsHoYcEgWPYVpgder
+         wKM2bgjQb1CbSy5ESVAq/HY7jIDyznQthyhdRG1gRGQzzkSdmU5oQ1ikr9PtDMNct9oX
+         b83EaFG75ts+5IeXvlg/4ipimm7j8mbYlTZBY4l5WUq9kxMkrMNhdlBdiEkZQT2XHmVL
+         NKyQ==
+X-Gm-Message-State: APt69E1n/UzQ5PDsgVpMHCZacrVt+P0wAjeKwLWWcPn+1wx1q0B4ysTR
+        CDUFxM8Xv9uxFGYyCv12xtCW8EUH
+X-Google-Smtp-Source: ADUXVKJFLdcRlf9XFVuCSFbCzP5aIBCr6svUtEzjiY+ydrUMFjQO98hmAVBFrn29cFzhlWhqKRG0NA==
+X-Received: by 2002:a1c:ae94:: with SMTP id x142-v6mr4076226wme.22.1528914749824;
+        Wed, 13 Jun 2018 11:32:29 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id w15-v6sm5689242wro.52.2018.06.13.11.21.58
+        by smtp.gmail.com with ESMTPSA id a8-v6sm4840443wrc.18.2018.06.13.11.32.28
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 13 Jun 2018 11:21:58 -0700 (PDT)
+        Wed, 13 Jun 2018 11:32:28 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Meng-Sung Wu <mengsungwu@fortunewhite.org>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] doc: update the order of the syntax `git merge --continue`
-References: <20180613035702.15957-1-mengsungwu@fortunewhite.org>
-Date:   Wed, 13 Jun 2018 11:21:58 -0700
-In-Reply-To: <20180613035702.15957-1-mengsungwu@fortunewhite.org> (Meng-Sung
-        Wu's message of "Wed, 13 Jun 2018 11:57:02 +0800")
-Message-ID: <xmqq36xq7dix.fsf@gitster-ct.c.googlers.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Jeremy Linton <lintonrjeremy@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v2] packfile: Correct zlib buffer handling
+References: <20180613142207.14385-1-lintonrjeremy@gmail.com>
+        <CAPig+cQ1s7QFjEFrOHMYZR8qja5yTjV5D3ksUXXqFL61YthA3g@mail.gmail.com>
+Date:   Wed, 13 Jun 2018 11:32:28 -0700
+In-Reply-To: <CAPig+cQ1s7QFjEFrOHMYZR8qja5yTjV5D3ksUXXqFL61YthA3g@mail.gmail.com>
+        (Eric Sunshine's message of "Wed, 13 Jun 2018 13:21:03 -0400")
+Message-ID: <xmqqy3fi5ygz.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -65,30 +68,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Meng-Sung Wu <mengsungwu@fortunewhite.org> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> The syntax "git merge <message> HEAD <commit>" has been removed. The
-> order of the syntax should also be updated.
-> ---
->  Documentation/git-merge.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> A couple comments if you happen to re-roll...
+>
+> On Wed, Jun 13, 2018 at 10:22 AM Jeremy Linton <lintonrjeremy@gmail.com> wrote:
+>> The buffer being passed to zlib includes a null terminator that
+>
+> On this project, the character mnemonic "NUL" is typically used, not
+> "null" or "NULL" (which is typically reserved for pointers), so:
+> s/null/NUL/g
 
-An obviously good change.  Could you please sign-off your patch?
+Correct but I did not think it is a per-project preference; rather,
+"NUL is the name of the byte" is universal ;-)
 
-cf. https://git.github.io/htmldocs/SubmittingPatches.html#sign-off
+>> diff --git a/packfile.c b/packfile.c
+>> @@ -1433,6 +1433,8 @@ static void *unpack_compressed_entry(struct packed_git *p,
+>> +       buffer[size] = 0; /* assure that the buffer is still terminated */
+>
+> I think we normally use '\0' for NUL on this project rather than simply 0.
+>
+> The comment is also effectively pure noise since it merely repeats
+> what the code already states clearly (especially when the code says
+> "buffer[size] = '\0';"), so dropping the comment altogether would be
+> reasonable.
 
+Both are sensible suggestions.  Thanks for making them.
 
-
-> diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-> index d5dfd8430..6a5c00e2c 100644
-> --- a/Documentation/git-merge.txt
-> +++ b/Documentation/git-merge.txt
-> @@ -57,7 +57,7 @@ reconstruct the original (pre-merge) changes. Therefore:
->  discouraged: while possible, it may leave you in a state that is hard to
->  back out of in the case of a conflict.
->  
-> -The fourth syntax ("`git merge --continue`") can only be run after the
-> +The third syntax ("`git merge --continue`") can only be run after the
->  merge has resulted in conflicts.
->  
->  OPTIONS
