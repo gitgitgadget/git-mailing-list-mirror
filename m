@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 199F51F403
-	for <e@80x24.org>; Wed, 13 Jun 2018 23:06:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ECF671F403
+	for <e@80x24.org>; Wed, 13 Jun 2018 23:06:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935989AbeFMXG1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Jun 2018 19:06:27 -0400
-Received: from mail-ua0-f202.google.com ([209.85.217.202]:37840 "EHLO
-        mail-ua0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935864AbeFMXGM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jun 2018 19:06:12 -0400
-Received: by mail-ua0-f202.google.com with SMTP id z33-v6so1352568uah.4
-        for <git@vger.kernel.org>; Wed, 13 Jun 2018 16:06:12 -0700 (PDT)
+        id S936000AbeFMXG2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Jun 2018 19:06:28 -0400
+Received: from mail-vk0-f73.google.com ([209.85.213.73]:40284 "EHLO
+        mail-vk0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935843AbeFMXF4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jun 2018 19:05:56 -0400
+Received: by mail-vk0-f73.google.com with SMTP id y200-v6so1627004vky.7
+        for <git@vger.kernel.org>; Wed, 13 Jun 2018 16:05:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=ZnymeA6NGPNnMhhALzm/XcWXxuwiJd6wcnaNpFENWAk=;
-        b=QWANcdkbiWBI3i6tLQ0q+CoPtjffrf013JvJTaEBiFncnttn1TaO2QEoH0wIfwz+rf
-         hCGhESA0IY1LpEVwzHdWB1PMtZFslXVXWkt94CzqqYL2SPYp07byGSD8YTQjWtmj76/Y
-         hoj7lXoNAbRVKw2whVYCm+WUwJTw+wqcp13CW2dZcgA8rnWd31G4z8C6c7tRjdyjdtAF
-         RlAqy7Q8HStGRxCfHIUfUsvjhMEqg6WTtDl5Derax7vKX2jwCBEFL0DFPZ2pkcKqql+A
-         VmE6Aj1xbLoIIv67lUagXrnZyzVShXHpO/pBxh+BR0AV20iPRhel1QeG/TNEib4TV30l
-         8RVw==
+        bh=DDrfRPpIqQxjohg0EE9prfuLpAKH7d7G08BUkSnFezM=;
+        b=KxFTvLUUKh/FeYG6gNu50nJfJAfYILqsqCOTlB2ZB1GkO9CovlU3DkhDROcIkPJ6P0
+         Op5b31gtSO5uyF2Wh2J600kCxDj9Qh3vUHMgw1j8vg4jzlaTRTV4AvKTigxpaaRAWds1
+         VUPcPHakZHdX4RtgJmuUC5kEZRFXd/m4qI6PNd5BvZC07rCrD8jOTNHmH9uudju0wUVb
+         ZJzAhlCrxYP3YiQEIV4g6yJrGBhuqL8dgFBabXc5/gxynyhQ6ACsgjhq4KL1SgW0E/Q2
+         WEONx67Vln1848LbOGUOspY7JfDbuMMo/GHQYWOAC9WpqRhmyo++ahCmGXv/ca0CRB+r
+         4Kaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=ZnymeA6NGPNnMhhALzm/XcWXxuwiJd6wcnaNpFENWAk=;
-        b=pID1W+ZL5k0xn/HiqmDzbHAsTi40qfq0M8Chomg5Wnltj2HGY/wxvPhOZmO/CictqC
-         kwM8PbPWs1ICq19NraiMKQR/ccuyQC/jmNaMLo0VSWusH8O9MKBAazT2jqGFjyUJZh6f
-         QjVoguwR214uQo3PA1AiBw043XDMDD6zHej5fEqJESOH45bOE0DGiHni9OT2cX8eFcc/
-         Ur6/fxAnWVykMyFqoWZletCDm+ew9PhTInnl7RFL3yBVZx5DLk58vNNUbvsA8wNTdxPL
-         jGrj6UD/nmu+/nGhO+6P7Q1v1vserqtW7SPiwbhk/RhVzyts/FjcsR+tJV4u3Zv/IrME
-         rcjw==
-X-Gm-Message-State: APt69E1YDjnRwtfz9jze8R0wfGO972aRLtsfPynx7YG2vGpTIVV2WJht
-        YrA/mFI+AVt3b/zjap4tIIor+8aEY6PhhlI8ibdpf3F9FZ987x4tX5TcOi956k/ChkDjTdt2uxo
-        oVbzOAPqL9C91wzwULiz0aWU50nmTxHWgq6VjHXBijNye16ZTqydSVLnApA8G
-X-Google-Smtp-Source: ADUXVKICRnFqwftvljAMDY72QtLBzN0Fx6JRDs5I/YyGTNP2w9JmYxZFY3s5kfr8IJuYdFcdZI8Rgs5ONOwG
+        bh=DDrfRPpIqQxjohg0EE9prfuLpAKH7d7G08BUkSnFezM=;
+        b=f9rQ9//+CLIamu03ny/FXFGZ7BXcu6+DQIKwBf2rCNqkb2gjj2VT9Iw8DH9yI9pBQz
+         3nU1oLi1h4MjnDaC4EMMJ+4LP3KkY7DA+xk7G4BmgZ1QiRcOTeKqSXUMu7YzGPxwhZMo
+         wSR/muDZin7kjg0cD9r9hMS1Y20TZgIZDmmx/I+wVlct1ESTEwsurNntjXHuH5cMXeoj
+         QTMjyLwMKulwq2rDf66Vq+8YZ+pk58V1HD/99TnQ7Hpgw9CDOgvphufRTzZ6aFNrwDNP
+         O/qF9xMIsALpQ5ewdKVIQT3iJERD7FTvs/rBTDhY4cZGNPiExsoH8TJpS4bo+J8pGffh
+         AtLw==
+X-Gm-Message-State: APt69E0ItiPHkJlb3Als/FFriM9LRB02kKV98sYLi4Bn1i581ieQNeYl
+        Gn57pxQr7uTWYRH2Dggc/+5n1bPuTWqYpg/cSWN/HehUOSGXRLkK7OrkLtyuUlw5sF97kWjHp7w
+        EkU7c+gKJgV3bzDou3NHm+3lBKOFUrT1rvnSN6WRg+kkzmv6UToDfsiocu7oX
+X-Google-Smtp-Source: ADUXVKIDuCPO2lhLWwNnNKOTordlS5iHudkzV9rAGdpbdEo7clnRHqjj0MB86VppZ/3tA5trPDBZA47Qugdk
 MIME-Version: 1.0
-X-Received: by 2002:ab0:4929:: with SMTP id z38-v6mr77025uac.122.1528931172229;
- Wed, 13 Jun 2018 16:06:12 -0700 (PDT)
-Date:   Wed, 13 Jun 2018 16:05:07 -0700
+X-Received: by 2002:ab0:2146:: with SMTP id t6-v6mr91013ual.6.1528931155371;
+ Wed, 13 Jun 2018 16:05:55 -0700 (PDT)
+Date:   Wed, 13 Jun 2018 16:05:00 -0700
 In-Reply-To: <20180613230522.55335-1-sbeller@google.com>
-Message-Id: <20180613230522.55335-17-sbeller@google.com>
+Message-Id: <20180613230522.55335-10-sbeller@google.com>
 References: <20180530004810.30076-1-sbeller@google.com> <20180613230522.55335-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.rc1.244.gcf134e6275-goog
-Subject: [PATCH v2 16/31] object: allow lookup_object to handle arbitrary repositories
+Subject: [PATCH v2 09/31] commit: add repository argument to parse_commit_buffer
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
@@ -63,68 +63,84 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Add a repository argument to allow the callers of parse_commit_buffer
+to be more specific about which repository to act on. This is a small
+mechanical change; it doesn't change the implementation to handle
+repositories other than the_repository yet.
+
+As with the previous commits, use a macro to catch callers passing a
+repository other than the_repository at compile time.
+
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- object.c | 15 +++++++--------
- object.h |  3 +--
- 2 files changed, 8 insertions(+), 10 deletions(-)
+ commit.c    | 4 ++--
+ commit.h    | 3 ++-
+ object.c    | 2 +-
+ sha1-file.c | 2 +-
+ 4 files changed, 6 insertions(+), 5 deletions(-)
 
+diff --git a/commit.c b/commit.c
+index 5e3f18801a1..dda585025ed 100644
+--- a/commit.c
++++ b/commit.c
+@@ -334,7 +334,7 @@ const void *detach_commit_buffer(struct commit *commit, unsigned long *sizep)
+ 	return ret;
+ }
+ 
+-int parse_commit_buffer(struct commit *item, const void *buffer, unsigned long size)
++int parse_commit_buffer_the_repository(struct commit *item, const void *buffer, unsigned long size)
+ {
+ 	const char *tail = buffer;
+ 	const char *bufptr = buffer;
+@@ -416,7 +416,7 @@ int parse_commit_gently(struct commit *item, int quiet_on_missing)
+ 		return error("Object %s not a commit",
+ 			     oid_to_hex(&item->object.oid));
+ 	}
+-	ret = parse_commit_buffer(item, buffer, size);
++	ret = parse_commit_buffer(the_repository, item, buffer, size);
+ 	if (save_commit_buffer && !ret) {
+ 		set_commit_buffer(item, buffer, size);
+ 		return 0;
+diff --git a/commit.h b/commit.h
+index 431a7d97a24..05b9eccaf66 100644
+--- a/commit.h
++++ b/commit.h
+@@ -72,7 +72,8 @@ struct commit *lookup_commit_reference_by_name(const char *name);
+  */
+ struct commit *lookup_commit_or_die(const struct object_id *oid, const char *ref_name);
+ 
+-int parse_commit_buffer(struct commit *item, const void *buffer, unsigned long size);
++#define parse_commit_buffer(r, i, b, s) parse_commit_buffer_##r(i, b, s)
++int parse_commit_buffer_the_repository(struct commit *item, const void *buffer, unsigned long size);
+ int parse_commit_gently(struct commit *item, int quiet_on_missing);
+ static inline int parse_commit(struct commit *item)
+ {
 diff --git a/object.c b/object.c
-index 876ca4977e2..c1c1cbc1f53 100644
+index 4eca16f4adb..fe1f84f7c6c 100644
 --- a/object.c
 +++ b/object.c
-@@ -84,21 +84,20 @@ static void insert_obj_hash(struct object *obj, struct object **hash, unsigned i
-  * Look up the record for the given sha1 in the hash map stored in
-  * obj_hash.  Return NULL if it was not found.
-  */
--struct object *lookup_object_the_repository(const unsigned char *sha1)
-+struct object *lookup_object(struct repository *r, const unsigned char *sha1)
+@@ -214,7 +214,7 @@ struct object *parse_object_buffer_the_repository(const struct object_id *oid, e
+ 	} else if (type == OBJ_COMMIT) {
+ 		struct commit *commit = lookup_commit(the_repository, oid);
+ 		if (commit) {
+-			if (parse_commit_buffer(commit, buffer, size))
++			if (parse_commit_buffer(the_repository, commit, buffer, size))
+ 				return NULL;
+ 			if (!get_cached_commit_buffer(commit, NULL)) {
+ 				set_commit_buffer(commit, buffer, size);
+diff --git a/sha1-file.c b/sha1-file.c
+index f66059ed7dd..00b1b2b8660 100644
+--- a/sha1-file.c
++++ b/sha1-file.c
+@@ -1780,7 +1780,7 @@ static void check_commit(const void *buf, size_t size)
  {
- 	unsigned int i, first;
- 	struct object *obj;
- 
--	if (!the_repository->parsed_objects->obj_hash)
-+	if (!r->parsed_objects->obj_hash)
- 		return NULL;
- 
--	first = i = hash_obj(sha1,
--			     the_repository->parsed_objects->obj_hash_size);
--	while ((obj = the_repository->parsed_objects->obj_hash[i]) != NULL) {
-+	first = i = hash_obj(sha1, r->parsed_objects->obj_hash_size);
-+	while ((obj = r->parsed_objects->obj_hash[i]) != NULL) {
- 		if (!hashcmp(sha1, obj->oid.hash))
- 			break;
- 		i++;
--		if (i == the_repository->parsed_objects->obj_hash_size)
-+		if (i == r->parsed_objects->obj_hash_size)
- 			i = 0;
- 	}
- 	if (obj && i != first) {
-@@ -107,8 +106,8 @@ struct object *lookup_object_the_repository(const unsigned char *sha1)
- 		 * that we do not need to walk the hash table the next
- 		 * time we look for it.
- 		 */
--		SWAP(the_repository->parsed_objects->obj_hash[i],
--		     the_repository->parsed_objects->obj_hash[first]);
-+		SWAP(r->parsed_objects->obj_hash[i],
-+		     r->parsed_objects->obj_hash[first]);
- 	}
- 	return obj;
+ 	struct commit c;
+ 	memset(&c, 0, sizeof(c));
+-	if (parse_commit_buffer(&c, buf, size))
++	if (parse_commit_buffer(the_repository, &c, buf, size))
+ 		die("corrupt commit");
  }
-diff --git a/object.h b/object.h
-index bd25155480f..66e0b7b93dc 100644
---- a/object.h
-+++ b/object.h
-@@ -110,8 +110,7 @@ extern struct object *get_indexed_object(unsigned int);
-  * half-initialised objects, the caller is expected to initialize them
-  * by calling parse_object() on them.
-  */
--#define lookup_object(r, s) lookup_object_##r(s)
--struct object *lookup_object_the_repository(const unsigned char *sha1);
-+struct object *lookup_object(struct repository *r, const unsigned char *sha1);
- 
- extern void *create_object(struct repository *r, const unsigned char *sha1, void *obj);
  
 -- 
 2.18.0.rc1.244.gcf134e6275-goog
