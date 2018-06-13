@@ -7,80 +7,70 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7F1751F403
-	for <e@80x24.org>; Wed, 13 Jun 2018 19:30:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 911FC1F403
+	for <e@80x24.org>; Wed, 13 Jun 2018 20:55:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935432AbeFMTab (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Jun 2018 15:30:31 -0400
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:39446 "EHLO
-        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935365AbeFMTa1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jun 2018 15:30:27 -0400
-Received: by mail-yw0-f194.google.com with SMTP id 81-v6so1286247ywb.6
-        for <git@vger.kernel.org>; Wed, 13 Jun 2018 12:30:27 -0700 (PDT)
+        id S935667AbeFMUzY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Jun 2018 16:55:24 -0400
+Received: from mail-yw0-f196.google.com ([209.85.161.196]:45474 "EHLO
+        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935524AbeFMUzX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jun 2018 16:55:23 -0400
+Received: by mail-yw0-f196.google.com with SMTP id v190-v6so1365175ywa.12
+        for <git@vger.kernel.org>; Wed, 13 Jun 2018 13:55:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=P+Klkkd1ELKv5/KGf2XwtzloeJTOmY0+b1gu+Rgl3uU=;
-        b=ZZLJmVEL6EdSA/swqaWdGYtM1MC6WodJBIr2ZLQ56OQ6SRN2kki+0lZqEhk23KoMEo
-         sW2M34OkftKtildEyPuaBVZn9BfxWlqAWhdwy6N6tG5RXEKpFUJXt1QT0m73sGlQaaEh
-         ztKHf0rsP9wAsZ9O5MP+R/ceyZSmuRUpmORB3qkiKBtUcFlRp5kFI5f7b1yurqgSnJtF
-         tjyH+RWftOtoJowzEnBJMyXkdQlvPnrEYmMB9N9e+7k2QikvCQGRozNAJaL2vvTukARc
-         psiPo50DCXsGBcyedygZPjmbITJUV9nk/5S3X73Javt5t0x6E8+yS37xpf9WSThRUSZS
-         whfQ==
+        bh=zrloeNFLRMlVSZm9Y6RclXkvsS4/Q28GD3n6489KlZU=;
+        b=Omhed6qIsleA3hxxdAh/6eD7scGU/LsrR7yF55j2iyMS7aO+Dio03ta/x1M5Gj97s+
+         0vr3zrZ+uKJ3HalAslQkev19KwWiTd4s0yegMV4QxtTkTkbY2T98gZ7OEdoseFyEJuwo
+         enr50kTKAcOTHWV6thKpsUawyV26ewVTg5aJ34Mqj6+C9mITtQVIPnDP3BxVtCkAoHgg
+         7z6/3BQ1+9+pa++UXx4qrePWqafDmM0I45vjkO2xQSvZqa5tD7zSfwL/OMfKBZa/bUqg
+         CmJVMjZPi8/sVDfStNLC5yIIAZQuskD7U/mY3lhQIWLGnoOTizynFg4KcBoF4F8rkhvy
+         I3dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=P+Klkkd1ELKv5/KGf2XwtzloeJTOmY0+b1gu+Rgl3uU=;
-        b=fhUZnAxHAaEp9na8Ug7VPetZcrwICDg2VSw6siCv/6YUaBmKdHmtYyl4m4dKLlm+zX
-         Wzmc2Je8T2wGJccf1U2ecGFkwMm+EuKseLUxAXVzNHU3IdZ2fHJu6dosIQw2G98JIJaq
-         QllFLiAAgahgkDTV5bpWKFVAbhqLDlU5BfgpIVDeSYes9WTKjDQi3MzG8b6gU7WZhy0o
-         AkYnhumU2TPi9FOUW/7k0PSom/G1Yg1W8x1W8Zryic1s3s0tCPm17iTQjhhhFWrk3Pr4
-         5tR3dfuiG85/4qd9P/3sg8ToOFFDXQ7FBWSz3NQnWcWCEtwOTWo26AwuW9sxWNN2IZtI
-         WnLA==
-X-Gm-Message-State: APt69E2k8M6kqeLzhXRuLoYPvPmqMBGNZ1uTb/vxWF30DNkTxkVnwCZ/
-        dKM8HSPIviycziHjthZxsgjsvE38P/dSW9uj8k0rUA==
-X-Google-Smtp-Source: ADUXVKJOdWukB2iIXarUDdWZEvuviwq1n3QkZ9PxGMxrJvw9GAGkkSe683zeeGkXbsHonpriR4QYkSWQ325r0c5s66A=
-X-Received: by 2002:a0d:d304:: with SMTP id v4-v6mr3068665ywd.500.1528918226785;
- Wed, 13 Jun 2018 12:30:26 -0700 (PDT)
+        bh=zrloeNFLRMlVSZm9Y6RclXkvsS4/Q28GD3n6489KlZU=;
+        b=aN7joDNruO+0D+9XcWoxZm3G2ao5ITcRPMFvoyd5pGtDRImBURnvz2WQS1MNo33+48
+         1rO6BF2I4N5fFXT8eHSCUjMsSjwA/MTk6rWqYNvcB69RUJu5Oat+ZaaiT8lKXZf4Cgjg
+         yTA/YpwtvB2+lqoeaUnHNeJ/bYNh6q+1E4RosIC0/d7ffXsr/whkXlpK5uuOS3LAby1l
+         4wG9hlJ0NVPZY67hrwlPsoV21rwSjOU3ftOrwp50+8S0IbNjepyPRKOGrB1Vfa1c2/OI
+         zBxxR2DztpaDsyxbd1QKcx53Hm7vL9q+MIaaoW4S1h6t5zkS7HIOExu54ImPG68EGr4o
+         3cpw==
+X-Gm-Message-State: APt69E3yCtXuNCdFUX5MERV0SOYkJb1S03weZPrap6F4LOTyNbMN6g1C
+        N+B5T6I1On3mXUSb4BUFeH+qNL9AliazGNKmHE/50A==
+X-Google-Smtp-Source: ADUXVKIBNb02JJwPoiH5FWWAxy9N7L7ywOCJj3WxPsnMa62rIjxrhLSonYqRvg1olyT0B5/mQne1JYodCkN9bDRFEuQ=
+X-Received: by 2002:a81:4d43:: with SMTP id a64-v6mr3221785ywb.33.1528923322321;
+ Wed, 13 Jun 2018 13:55:22 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180530004810.30076-1-sbeller@google.com> <20180530004810.30076-4-sbeller@google.com>
- <CACsJy8C=YNRmawuR3SZDMpmkKHMp=kPJsDjffCrcONe+CDpJ_g@mail.gmail.com>
-In-Reply-To: <CACsJy8C=YNRmawuR3SZDMpmkKHMp=kPJsDjffCrcONe+CDpJ_g@mail.gmail.com>
+References: <20180530004810.30076-1-sbeller@google.com> <20180530004810.30076-29-sbeller@google.com>
+ <CACsJy8BQGqNDkoL0ykNdbgAx75MjPzW3Ki5+rbHxxJ8TNWDZcw@mail.gmail.com>
+In-Reply-To: <CACsJy8BQGqNDkoL0ykNdbgAx75MjPzW3Ki5+rbHxxJ8TNWDZcw@mail.gmail.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 13 Jun 2018 12:30:15 -0700
-Message-ID: <CAGZ79kY97np6ZJv1_CBx_ZqPF-AQJh2U8uW8sFxJZMAHnhPrpg@mail.gmail.com>
-Subject: Re: [PATCH 03/35] object: add repository argument to lookup_unknown_object
+Date:   Wed, 13 Jun 2018 13:55:11 -0700
+Message-ID: <CAGZ79kYxttQvoyg-QuMw3Wwm_j=MSw_ut2bY6vHHfDv4qgB7jA@mail.gmail.com>
+Subject: Re: [PATCH 28/35] commit.c: migrate the commit buffer to the parsed
+ object store
 To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 6, 2018 at 12:38 PM Duy Nguyen <pclouds@gmail.com> wrote:
+On Wed, Jun 6, 2018 at 12:32 PM Duy Nguyen <pclouds@gmail.com> wrote:
+> >  define_commit_slab(buffer_slab, struct commit_buffer);
 >
-> On Wed, May 30, 2018 at 2:47 AM, Stefan Beller <sbeller@google.com> wrote:
-> > diff --git a/object.c b/object.c
-> > index 4de4fa58d59..def3c71cac2 100644
-> > --- a/object.c
-> > +++ b/object.c
-> > @@ -177,7 +177,7 @@ void *object_as_type(struct object *obj, enum object_type type, int quiet)
-> >         }
-> >  }
-> >
-> > -struct object *lookup_unknown_object(const unsigned char *sha1)
-> > +struct object *lookup_unknown_object_the_repository(const unsigned char *sha1)
+> struct buffer_slab is defined locally here...
 >
-> I'm looking at your branch and this function (with the _the_repository
-> suffix) is still there. Did you forget to send a patch to convert this
-> function?
+...
+> > +struct buffer_slab *allocate_commit_buffer_slab(void);
+>
+> So you would need a forward declaration of struct buffer_slab in
+> commit.h before it's referenced here?
 
-This and parse_commit and parse_commit_gently have not been converted.
-
-I stopped with this series as soon as I hit the commit-graph code, which needs
-to be updated, too. I'll start redoing this series soon and will fix
-those conversions.
+Will do so in a resend; as well as in object.h
