@@ -2,159 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42CAA1F403
-	for <e@80x24.org>; Thu, 14 Jun 2018 18:19:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E61411F403
+	for <e@80x24.org>; Thu, 14 Jun 2018 18:27:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754780AbeFNSTd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Jun 2018 14:19:33 -0400
-Received: from mail-eopbgr10093.outbound.protection.outlook.com ([40.107.1.93]:20192
-        "EHLO EUR02-HE1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1754660AbeFNSTc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jun 2018 14:19:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Frontmatec.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=xFaNT/67PGYlFrXaS1DJ9WCRWJXxRe4s2tcWgMQMDRI=;
- b=FeYLloR9tBzLlgFK0TOUYwe0Jzk3jfxSiL6AG7LzbvEQ6YJR8GcGaW1LfWWVOgl+3Acg3aB61iGLOZZ73I+1isXEngWl7LN84PEhmsNkLVt9brD8hcS/2PtO+amw/FdzPVm+11WhT+Q4qjKqfTUNTtt71kDaWbgz3+0emgcVnQQ=
-Received: from DB6PR0101MB2344.eurprd01.prod.exchangelabs.com (10.169.220.142)
- by DB6PR0101MB2453.eurprd01.prod.exchangelabs.com (10.169.221.23) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.863.14; Thu, 14 Jun
- 2018 18:19:28 +0000
-Received: from DB6PR0101MB2344.eurprd01.prod.exchangelabs.com
- ([fe80::98a7:369a:60e2:c111]) by
- DB6PR0101MB2344.eurprd01.prod.exchangelabs.com
- ([fe80::98a7:369a:60e2:c111%6]) with mapi id 15.20.0863.016; Thu, 14 Jun 2018
- 18:19:28 +0000
-From:   "Antoine W. Campagna" <awe@frontmatec.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: fatal: could not reset submodule index
-Thread-Topic: fatal: could not reset submodule index
-Thread-Index: AdQDXhRDGoKkUkcaQy2EB6OED0HkCgAqeIaA
-Date:   Thu, 14 Jun 2018 18:19:27 +0000
-Message-ID: <DB6PR0101MB2344D682511891E4E9528598D97D0@DB6PR0101MB2344.eurprd01.prod.exchangelabs.com>
-Accept-Language: fr-CA, en-US
-Content-Language: fr-FR
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=awe@frontmatec.com; 
-x-originating-ip: [207.134.192.27]
-x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;DB6PR0101MB2453;7:7jh1j5neFITaKJwMbA1vg5oyNVR6/J0O4ZGAFvAE34evtN0Zq4Y72nJy/mFqDdlYpmpbJTpu6nQTlbsTtalxVb36aKyc5NBOJxH2zy0Gwjhf67j1QQ+BM00L+cjVOo9obkGlW+yFN7GhEGOwmWAk5ZalaCeiLo4ZHUAzL2pCTYdC4v/MhMq4cGcBYYxubpluPZb4idhsWFM33JyFN5dmn+ukCCNtY72hqeRu1jsW8ghLfYcLRve6GXMR32p1hb05
-x-ms-exchange-antispam-srfa-diagnostics: SOS;
-x-ms-office365-filtering-correlation-id: 4b9c9272-f8f9-4010-1352-08d5d2235db5
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(4534165)(4627221)(201703031133081)(201702281549075)(5600026)(711020)(2017052603328)(7153060)(7193020);SRVR:DB6PR0101MB2453;
-x-ms-traffictypediagnostic: DB6PR0101MB2453:
-x-microsoft-antispam-prvs: <DB6PR0101MB2453AB7FCB8BBF847DBDA05ED97D0@DB6PR0101MB2453.eurprd01.prod.exchangelabs.com>
-x-exchange-antispam-report-test: UriScan:;
-x-ms-exchange-senderadcheck: 1
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(6040522)(2401047)(8121501046)(5005006)(3002001)(10201501046)(3231254)(944501410)(52105095)(93006095)(93001095)(149027)(150027)(6041310)(20161123558120)(20161123564045)(20161123562045)(20161123560045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(6072148)(201708071742011)(7699016);SRVR:DB6PR0101MB2453;BCL:0;PCL:0;RULEID:;SRVR:DB6PR0101MB2453;
-x-forefront-prvs: 0703B549E4
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(346002)(366004)(396003)(39850400004)(376002)(39380400002)(189003)(199004)(99286004)(6916009)(229853002)(9686003)(2906002)(86362001)(316002)(55016002)(6436002)(5640700003)(476003)(68736007)(486006)(97736004)(2351001)(5660300001)(106356001)(105586002)(2501003)(14454004)(6116002)(3846002)(53546011)(102836004)(6246003)(478600001)(186003)(53936002)(26005)(33656002)(3660700001)(66066001)(3280700002)(74316002)(7736002)(2900100001)(305945005)(8936002)(6506007)(5250100002)(59450400001)(8676002)(25786009)(7696005)(1730700003)(81156014)(81166006)(42262002);DIR:OUT;SFP:1102;SCL:1;SRVR:DB6PR0101MB2453;H:DB6PR0101MB2344.eurprd01.prod.exchangelabs.com;FPR:;SPF:None;PTR:InfoNoRecords;MX:1;A:1;LANG:;
-received-spf: None (protection.outlook.com: frontmatec.com does not designate
- permitted sender hosts)
-x-microsoft-antispam-message-info: 5lP/btqOaTIm3uoinJMBdV6kpKNIrZHv4pWkRI/cd+0BPO/52/jNVTQRBabQlndpAM3Rd7gD26f3FknYiqLg05Y6UY6JlVfiVV2PB6eBtdPPUZFPCFci1LxQN7fAnTWsfULc7d5QNP5B4eYfsWTeLnQdeV6QqJZzmdr/4IIRMiCkJnTNtiVb8VzcfS9tq4tk
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        id S1754791AbeFNS1G (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Jun 2018 14:27:06 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:40415 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754660AbeFNS1G (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jun 2018 14:27:06 -0400
+Received: by mail-wm0-f68.google.com with SMTP id n5-v6so13705813wmc.5
+        for <git@vger.kernel.org>; Thu, 14 Jun 2018 11:27:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=Mbp2R1P6vJF7L1FxOB2cKdv9seA55olfsMt3afP8k3Q=;
+        b=DBJHXNwuRXZeNxq1tE8B7INIQBI/ZLOqY/RprgjHghrtUMZrVjVEgB7j0FxdaCx5VW
+         QDHuqhOIQK/OL4LXH2NnMsSR/uDH+3eQTjCOxN1AI7xatHDom9uKkwJgubt17zWXHI0q
+         I9K72cXmJcffpIylDtsgN4dTRPgbAI+pZkpZMtPFkWrf+Cp4OQg880VlKE8+iuFGVLWZ
+         ehbWVQKwGep1Ht1dsuTvZhLCuwzbp/QxTZTXBX/tyxMuO+aeJMukcmdDsDH44E2V8ZtS
+         7otjvjGhSkaWbm0mmJG9q/oKSpzjrs1NxiY758sJKpkO6W5ohnhj690pgL0cEg7v1EmA
+         b6+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Mbp2R1P6vJF7L1FxOB2cKdv9seA55olfsMt3afP8k3Q=;
+        b=cnpvKD70v2VVDmWb6rqZvzfc9J5des0FeyYq/eZ4BKbaO8Xo/sVKvjb4OJ+gRTGpSh
+         ObtNx4UPFGGR68vekeTsT29R2ivqtiedfGi42s7U0aJ4iygNJSKwpzBt3shAsPjGnD6S
+         7opmi6YsRy8DDujTx1n1jItFoPK+5W+S+avtXcBdkTI1P4SU5vtcUvmjxPFnSu9VG9WD
+         y2b+iVogBOxjY5WDTF2D16Wa2SK2DybRqsz1qXd3BeUuJyjDyi+R8bUNIqVAzLl9sbZ0
+         JeI3MbbYfEtzcI1p/HrphQ9EvTRB8vYKvKZD6dcooTqRskHZEJ5ZOLJgozWW2fjxqQyH
+         xEuQ==
+X-Gm-Message-State: APt69E2w+Td/Cp/KqosrC6yaj/DuLugtjSejirD4yxdtZRfIt0K4ya1I
+        Z8k2XNxVW5x8arYlAXoKKfAaH19A
+X-Google-Smtp-Source: ADUXVKK2NixPiYO7hE5TWCKAS/p/m7Tbnhswah8Eo1Q9DCHN/e5gtUfov+pT56+dm3nWm+FEWdt6fw==
+X-Received: by 2002:a1c:20c7:: with SMTP id g190-v6mr2910110wmg.2.1529000824663;
+        Thu, 14 Jun 2018 11:27:04 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id v138-v6sm9050480wmd.47.2018.06.14.11.27.03
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 14 Jun 2018 11:27:03 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [RFC PATCH 4/4] t/lib-httpd: sort log based on timestamp to avoid occasional failure
+References: <20180614123107.11608-1-szeder.dev@gmail.com>
+        <20180614123107.11608-5-szeder.dev@gmail.com>
+        <20180614175325.GA14935@sigill.intra.peff.net>
+Date:   Thu, 14 Jun 2018 11:27:03 -0700
+In-Reply-To: <20180614175325.GA14935@sigill.intra.peff.net> (Jeff King's
+        message of "Thu, 14 Jun 2018 13:53:26 -0400")
+Message-ID: <xmqqefh94420.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-X-OriginatorOrg: Frontmatec.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4b9c9272-f8f9-4010-1352-08d5d2235db5
-X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Jun 2018 18:19:27.9888
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: bfbef180-ca7f-492d-bcde-824120bd7b33
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB6PR0101MB2453
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 13, 2018 at 18:19, Antoine W. Campagna wrote:
-> Here is the full reproduction instructions:
+Jeff King <peff@peff.net> writes:
 
-Newlines got mangled, making my message hard to read. Sorry.
+>>     Another alternative is to simply accept that these tests are racy, and
+>>     that the resulting test failures are rare enough that it isn't worth
+>>     the complexity of the workaround, but adding a comment to the affected
+>>     tests warning about the raciness is sufficient.  (But I wrote this
+>>     when I first saw and tracked down this failure; since then I observed
+>>     it four more times... :)
+>
+> It's definitely bugged me. I'd be happy to see some solution. I've been
+> close to suggesting that reading apache logs is simply not robust, and
+> we should focus our tests on the git-visible state changes (e.g., seeing
+> successful requests, updated refs, etc).
 
-Here is the corrected reproduction instructions:
+Hmph, that certainly is "checking only the things that matter",
+which is desirable.
 
-# Create a repository
-mkdir main
-cd main
-git init
-touch main.txt
-git add main.txt
-git commit -a -m "Initial commit"
-cd ..
-
-# Create a second repository
-mkdir sub
-cd sub
-git init
-touch sub.txt
-git add sub.txt
-git commit -a -m "Initial commit of repo sub"
-cd ..
-
-# Add the second repository as submodule, on a separate branch
-cd main
-git branch with-submodule
-git checkout with-submodule
-git submodule add ../sub sub
-git commit -a -m "Add submodule"
-
-# Set main repo back to master branch (without the submodule)
-git checkout master
-cd ..
-
-# Make a clone and checkout the branch
-git clone main clone1
-cd clone1
-git checkout with-submodule
-# Submodule is not automatically updated (sub folder is empty)
-git submodule update --init --recursive
-# Now the submodule content is there
-# But I want to automatically update submodules when checking out a branch
-cd ..
-
-# Trying again, adding --recursive during clone
-git clone --recursive main clone2
-cd clone2
-git checkout with-submodule
-# Submodule is still not automatically updated (sub folder is empty)
-git submodule update --init --recursive
-cd ..
-
-# Trying again, adding --recurse-submodules during checkout
-git clone --recursive main clone3
-cd clone3
-git checkout --recurse-submodules with-submodule
-# Fails with these error messages :
-#	fatal: not a git repository: ../.git/modules/sub
-#	fatal: could not reset submodule index
-# It seems like Git tries to update the submodule but without having initia=
-lized the submodule cd ..
-
-# Trying again with submodule.recurse
-git config --global submodule.recurse true
-git clone main clone4 cd clone4
-git checkout with-submodule
-# Submodule is still not automatically updated (sub folder is empty)
-# It seems like submodule.recurse does not affect git clone
-
-# Trying again with both submodule.recurse and --recursive
-git config --global submodule.recurse true
-git clone --recursive main clone5 cd clone5
-git checkout with-submodule
-# Fails with these error messages :
-#	fatal: not a git repository: ../.git/modules/sub
-#	fatal: could not reset submodule index
-# Same issue as with "git checkout --recurse-submodules"
-
+> A side effect of that is that it would become a lot easier to support
+> other webservers in our test scripts (though that may still be a fool's
+> errand just due to the amount of custom config we seem to carry).
