@@ -2,75 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A8661F403
-	for <e@80x24.org>; Thu, 14 Jun 2018 21:32:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 99D171F403
+	for <e@80x24.org>; Thu, 14 Jun 2018 21:44:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755490AbeFNVb7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Jun 2018 17:31:59 -0400
-Received: from mail-yb0-f193.google.com ([209.85.213.193]:33833 "EHLO
-        mail-yb0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755348AbeFNVb6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jun 2018 17:31:58 -0400
-Received: by mail-yb0-f193.google.com with SMTP id n23-v6so2791237ybg.1
-        for <git@vger.kernel.org>; Thu, 14 Jun 2018 14:31:58 -0700 (PDT)
+        id S964820AbeFNVoO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Jun 2018 17:44:14 -0400
+Received: from mail-it0-f65.google.com ([209.85.214.65]:54384 "EHLO
+        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755392AbeFNVoN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jun 2018 17:44:13 -0400
+Received: by mail-it0-f65.google.com with SMTP id 76-v6so302635itx.4
+        for <git@vger.kernel.org>; Thu, 14 Jun 2018 14:44:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ACnQ9AfNmkPFmvfY1DnmZa+h80bScdwGLo2Mmt4gCi4=;
-        b=oOLx+gplSnRE8rjppd2DKVyKP9gbcwCQm6sECe3tvOSEy0dXIN8pCYV/LxHWtVTK2y
-         J7suCBjcxx8CPKghDVsLvLTrZ2S2gI9TYmGt8qlQ2898bPG3/LnZ6Zn8ddQeSY/2GK/a
-         zO9JT65A4M6fS0OiLc3gGWIUQ5ZnAs7e7QvM1TyNc5F4JRigz1yUnkrdxIt3tEHbu/ut
-         BML20/4/xcyx4WX6OdeAEqrF0RZxiuHG/5Veb2soww7K5h40tMt61JazQs3H4de2QDPd
-         kT9h5dfZ2NeJ0SMYX6wjZLEODM/TKyBzhKPf3J1RyLnn9ysf6YKINGFqivpBvZpPDFYa
-         x4Tg==
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=6lx/gFhCGwJDgzLHyhVl2sZZWgAhEgMzNybDmf54vCM=;
+        b=TW0oGK8t7fklzSXFUQJ/2BkGV0dlKwaFfqNk+OKS61X4/swI9JW+qskZtz2yzRowyq
+         AQYrdTILwCGnCGYL4cq6gXJi8X8DtKzbqVGO4UIR59aPfsCtkoWKNsXb0fW0hLC3ellM
+         u+hysNgMSZqsjFAYFfeGJLjT904itCBpVFkyfdMpYVYL2GZiDLPWXmAEP26t5b0y/lUl
+         TnCrcjDnzBNkZIYsWMjSzYMwJ0l52zl/WeaySbx7IMs0h3Wr7UFMsg9t2UDWXBJ0hCqh
+         ifRSNc2OWCOR/0Ep96UcJW0N+5xpoqE+pGWZqrYQTFa4EvaLiRf629IIv+1/2pzPpDsb
+         yKaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ACnQ9AfNmkPFmvfY1DnmZa+h80bScdwGLo2Mmt4gCi4=;
-        b=Fw4jZTxDhBXB9eirATiPGeaCwh7USnsuqf56X/vmo9EiFeykNI5rfi4o3ostKFh816
-         qCXfsDOM8gbTnOWH4N+fmVpaC0NBwtvrS1TQSpWJpTdxl2LNVNT4ay3/UQKzcu1Hhxuc
-         O9kq3U9mumVaK2Fxl1RsHh/UCdDo1ExV92q+SQ7C30z2nNx15hYZBBKQzo/5d+cpeLP9
-         noSD3DriYgq7AAcTCz+OGvuF7jBjqd3Sf6M/FGT2DQLrVc/aD39mWy84m/UX+dPtYNCM
-         DrU5/gl3SS7AD7Fgsw6LAoRmfxw/PIVlbjsC6fCH1o7fXwjcD7bggdOJr7i3Rz8HfdS0
-         HRKQ==
-X-Gm-Message-State: APt69E3h8Wy55eamLxdC+hI6omCFY9/DyEChvDc+Ej9FMGK+xt4R9JUw
-        xnoLQ99VnnuSrPbxj1aW1E+WCFIATCx/sDfmGRxFDA==
-X-Google-Smtp-Source: ADUXVKKBq4BS0OQe2gbLtEKgTjywVsrwNZ2Cz0jKOoFXnBtPRxX9hf96cWhsCOvY3bVsRj0KMh61ghU6Q7k1luccuxk=
-X-Received: by 2002:a25:b308:: with SMTP id l8-v6mr2345932ybj.515.1529011917579;
- Thu, 14 Jun 2018 14:31:57 -0700 (PDT)
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=6lx/gFhCGwJDgzLHyhVl2sZZWgAhEgMzNybDmf54vCM=;
+        b=TlwG+DcknDv/5TP4iiahDxIKimiVgUbeRXByp+To2cp32YlApSdt7/Du1i09488G0/
+         Eavg9QI2gDLG6se3lrTae+qc5r2wF6z/a7Qs6GCqxshlEVVqsiMEOEfmyHvlAtXA5BWm
+         KTIIv520RwIb7drUDB8ztQwSqjzSokZCA0hQSI27Fp8Uv/vtVaDRXIn56gHtnx1Q/+fK
+         uXqB8kokelYdq7/Yh2BqyXQWPUzzmepOQxvMh5xJp1dYI7IVNZZPDcbezqDevXBfdbcz
+         oPLPGPhBkjne5pc4ehRv/g+HW2Asj9RVYMaMojlmP/aXMQoVxMKItWnP+3nv/DCtFh/v
+         Jd5Q==
+X-Gm-Message-State: APt69E11jQ7bNPzWgpI4sh01Qdh6xzdyC1yJCo/d2WPgsK79OiYMHMpv
+        d86dVCtp5g6wqLhHYuh/KKo=
+X-Google-Smtp-Source: ADUXVKL067koW2xZJz4hSmEyy3MIaTa/rM284tvU4VqtPI5xuf9nk/9S1nVIfDuYO3AZ/BKbPUDDSw==
+X-Received: by 2002:a24:1ad7:: with SMTP id 206-v6mr3854021iti.148.1529012652437;
+        Thu, 14 Jun 2018 14:44:12 -0700 (PDT)
+Received: from flurp.local (user-12l2cs3.cable.mindspring.com. [69.81.51.131])
+        by smtp.gmail.com with ESMTPSA id u18-v6sm2183828iob.28.2018.06.14.14.44.11
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 14 Jun 2018 14:44:11 -0700 (PDT)
+Date:   Thu, 14 Jun 2018 17:44:05 -0400
+From:   Eric Sunshine <sunshine@sunshineco.com>
+To:     Juan Navarro <juan.navarro@gmx.es>
+Cc:     git@vger.kernel.org
+Subject: Re: (Bug report + fix) gitk "IgnCase" search doesn't ignore case
+Message-ID: <20180614214405.GA26783@flurp.local>
+References: <fc6b89c5-f0be-97c8-b0e1-247d9dd3e1f0@gmx.es>
 MIME-Version: 1.0
-References: <20180530004810.30076-1-sbeller@google.com> <20180613230522.55335-1-sbeller@google.com>
- <20180613230522.55335-6-sbeller@google.com> <fcb052e0-2308-31bd-aa90-d6d3327642c0@gmail.com>
- <709bd61c-70fc-a925-efba-58ab9be265c9@gmail.com>
-In-Reply-To: <709bd61c-70fc-a925-efba-58ab9be265c9@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 14 Jun 2018 14:31:46 -0700
-Message-ID: <CAGZ79kaQ-smyCz6WmzybgLoS_NFxw5d2q_oxeWVHYnJxEn=mAQ@mail.gmail.com>
-Subject: Re: [PATCH v2 05/31] tree: add repository argument to lookup_tree
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <fc6b89c5-f0be-97c8-b0e1-247d9dd3e1f0@gmx.es>
+User-Agent: Mutt/1.10.0 (2018-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 14, 2018 at 12:33 PM Derrick Stolee <stolee@gmail.com> wrote:
-> > The 'tree' member of 'struct commit' was renamed to 'maybe_tree'.
->
-> Resolving the merge was not very simple. I have a working merge
-> available on GitHub [1] as commit 99a899f7c12ef73840dbe79c71acb11034d707dd.
+On Thu, Jun 14, 2018 at 02:53:03PM +0200, Juan Navarro wrote:
+> Gitk "find commit" search function doesn't follow the "IgnCase" option that
+> is selectable with a combo selector on the right side of the window; it
+> should be searching in a case-insensitive way, but it doesn't.
+> 
+> Steps to reproduce:
+> [...]
+> 3. In the "Find commit" bar, select "changing lines matching"
+> 4. In the right side of the same bar, select "IgnCase"
+> [...]
+> 
+> Proposed solution is almost trivial: check if the "IgnCase" option is
+> enabled, and in that case add the flag "-i" to the git command. Now that we
+> are at it, it's probably correct to add that option to all search modes.
+> A diff is attached to this email, hoping that someone is able to apply it
+> (sorry I'm not familiarized with contributing with patch files, but the diff
+> is pretty small anyways).
 
-Thanks for pointing this out and resolving the merge.
-ds/generation-numbers seems to be cooking in next for longer already, so
-I might just rebase this series on top of that as well.
+Thanks for reporting this.
 
-Thanks for the heads up!
-Stefan
+A different way to interpret the situation is that the user-interface
+is being inconsistent. For instance, the "fields" pop-up next to the
+"exact/ignore-case/regexp" pop-up does not seem to make sense for
+search types other than "containing", so it probably ought to be
+disabled for anything other than "containing". By extension, one could
+argue that the "exact/ignore-case/regexp" pop-up also ought be
+disabled for non-"containing" searches. The fact that they are not
+disabled confuses people into thinking that they should be functional
+for all searches, not just for "containing" searches, even though such
+functionality was never implemented (and indeed, may be difficult to
+implement fully).
+
+Your proposed fix handles only the "ignore case" item; it does not
+implement "regexp" functionality, so it could be considered
+incomplete. A more complete fix would also disable the "regexp" item
+to avoid misleading users, and to head off future bug reports similar
+to this one saying that "regexp" doesn't work for non-"containing"
+searches. (Bonus points for also disabling the "fields" pop-up for
+non-"containing" searches when it's not applicable.)
+
+Below is your fix wrapped up as a proper patch and sent in-line rather
+than as an attachment. It's also slightly simplified by dropping the
+unnecessary extra variable. You'll need to sign-off on the patch if it
+is ever to be accepted. You can do so by adding it after my sign-off.
+If you don't feel like re-sending the patch with your sign-off, you
+can alternately reply to this email with a "Signed-off-by: Your Name
+<your@email>" line.
+
+Note, however, that the gitk project is, at best, deeply slumbering,
+so it's not clear when or even if patches will be incorporated.
+(Indeed, other recent gitk-related patches sent to the mailing list
+have not yet been picked up.)
+
+--- >8 ---
+From: Juan Navarro <juan.navarro@gmx.es>
+Subject: [PATCH] gitk: support "ignore case" for non-"containing" searches
+
+The "Exact/Ignore Case/Regexp" pop-up control only affects "containing"
+searches. Other types of searches ("touching paths", "adding/removing
+strings", "changing lines matching") ignore this option. Improve the
+user experience by also recognizing "ignore case" for non-"containing"
+searches.
+
+Note: This change only implements the "ignore case" option for these
+other search types; it does not add support for the "regexp" option
+(which still only affects "containing" searches). A more complete "fix"
+would improve the user experience even more by making the UI more
+consistent; namely, by disabling options which don't make sense or are
+not easily implemented for non-"containing" searches. In particular, the
+"regexp" pop-up item and the neighboring "fields" pop-up control ought
+perhaps be disabled when a non-"containing" search is selected.
+
+[es: wrote commit message; slightly simplified proposed "fix"]
+
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+---
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index a14d7a16b2..fbb75f7390 100755
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -4806,6 +4806,9 @@ proc do_file_hl {serial} {
+ 	# must be "containing:", i.e. we're searching commit info
+ 	return
+     }
++    if {$findtype eq [mc "IgnCase"]} {
++	set gdtargs [linsert $gdtargs 0 "-i"]
++    }
+     set cmd [concat | git diff-tree -r -s --stdin $gdtargs]
+     set filehighlight [open $cmd r+]
+     fconfigure $filehighlight -blocking 0
+-- 
+2.18.0.rc1.256.g331a1db143
