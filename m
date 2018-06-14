@@ -2,77 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E32091F403
-	for <e@80x24.org>; Thu, 14 Jun 2018 08:10:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE1B01F403
+	for <e@80x24.org>; Thu, 14 Jun 2018 09:53:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754609AbeFNIKC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Jun 2018 04:10:02 -0400
-Received: from mail-oi0-f45.google.com ([209.85.218.45]:46466 "EHLO
-        mail-oi0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752874AbeFNIKB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jun 2018 04:10:01 -0400
-Received: by mail-oi0-f45.google.com with SMTP id h79-v6so4843279oig.13
-        for <git@vger.kernel.org>; Thu, 14 Jun 2018 01:10:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=caya9s6AduDd6ab9b1HHu1oOxURxt12GmgycGy3gnCg=;
-        b=bcdPn6DW5eufv2pLBmkApe5anycuYfwBMVrisooQGOL3C3jyYSWxs/F0KXtcR6z6T0
-         vru2rx16xpvJAfmJmEhwS6JZcJ/memCD9fHaC/OCx6IHtAorrsXQjgfJdV1LoTcF5hZ0
-         x5wZmfxiGkRWBatUB+oWLQNaqq1cmcwau9lPaUmNXdgHd6TK+xE6tU1dqvcNMzssU0Vc
-         FVOJzbKYKaQ8Wx13+bwMySPidSagnU2PB/sLe+x7na2j6O5lGGSChr/x30pKnHJzWCyX
-         KEFBl4Az19Y0HYujbONd3tC5IFuueZlyiWQJxTFdyeby/J1Kst8vktGHEbqp5vKtDJKm
-         yS7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=caya9s6AduDd6ab9b1HHu1oOxURxt12GmgycGy3gnCg=;
-        b=DFVmVi7nGmTCTQ/QjuKsEFIN3hIkjXthmMayBf80i21RgQVfmHLbYkQkAwiNmbs/Lg
-         /Qz391zVJLxHVjtpGJXPaYXyYwhf10M/kF+HHvr+f9vsDnL0uqTvXrbwtc7uI2H8LtKE
-         BVGP5W3kyMu2vCixrQ4YPyfuf7WcmaCokaeTL72XHF71Z6XuK8lobvLeO4LsJsI80eKD
-         MwEMBchqA71WEcpOA3xtOMmAxToR9og1UdqHy6ueAdQs9xzgWUu1x3o9SwgvKCvwDJJ6
-         MFgI3/OsaRLMoAX5ssEJBFVIOXRjL3E0aL1Tzb5j4dwWy2pmh+58TUnlrPP5HImB+pcs
-         QYEQ==
-X-Gm-Message-State: APt69E2LDfLXSnnma+3oqYB7XvsZh9YCtd4lKK5cPxrYT7w4Hc7mCsNl
-        gkUzXvApQhkvjAe829XIieNPh1AwRcBVzNxNosFNTg==
-X-Google-Smtp-Source: ADUXVKJ4GyBJQOW0WoQsj7u0EaioFUTvWfQG6UaNSCfnzxLfZShug6vk/uP7tJ9mxqi5NIW1zmG+UiFJSuSCzQk/7Yk=
-X-Received: by 2002:aca:400b:: with SMTP id n11-v6mr786799oia.44.1528963800197;
- Thu, 14 Jun 2018 01:10:00 -0700 (PDT)
+        id S1754631AbeFNJxP (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Jun 2018 05:53:15 -0400
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:15710 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754709AbeFNJxN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jun 2018 05:53:13 -0400
+Received: from [192.168.2.201] ([92.22.47.8])
+        by smtp.talktalk.net with SMTP
+        id TOwIf6E64whzSTOwIfmbdB; Thu, 14 Jun 2018 10:53:11 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1528969991;
+        bh=i9bQr1/ln3O4rBwOKL74GFOF17I9+a/bRBXaCPUx6t8=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=VpDEh32cFW5606uqFxnJYKbnVMbUZZq/OtF9NF7ZKzIUDaNZ1jVNvVRKzgiF8YSzv
+         dGzAAZw04qZvYp/tBVmkwrfNT5ZbWxTJgpFuV8vmAP5m/G/yuCkN9ZrKJBrfAIPL/5
+         TKIcFtw0t6cvesUAhxYVu3vTQh4mxie/Wrqy5JFU=
+X-Originating-IP: [92.22.47.8]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=e8Iot5h/ c=1 sm=1 tr=0 a=E9mO5tQq/K2OXQL62Xt/1Q==:117
+ a=E9mO5tQq/K2OXQL62Xt/1Q==:17 a=IkcTkHD0fZMA:10 a=5rxgeBVgAAAA:8
+ a=nN7BH9HXAAAA:8 a=-KEEEuBjD9C8nwwiKnEA:9 a=QEXdDO2ut3YA:10
+ a=PwKx63F5tFurRwaNxrlG:22
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [GSoC][PATCH v2 0/2] rebase -i: rewrite the edit-todo
+ functionality in C
+To:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org
+Cc:     Stefan Beller <sbeller@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        phillip.wood@dunelm.org.uk, Elijah Newren <newren@gmail.com>
+References: <20180611135714.29378-1-alban.gruin@gmail.com>
+ <20180613152211.12580-1-alban.gruin@gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <6db916e7-0c02-785f-cbf9-3f80b6452755@talktalk.net>
+Date:   Thu, 14 Jun 2018 10:53:09 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-Received: by 2002:a4a:754f:0:0:0:0:0 with HTTP; Thu, 14 Jun 2018 01:09:39
- -0700 (PDT)
-From:   Christian Halstrick <christian.halstrick@gmail.com>
-Date:   Thu, 14 Jun 2018 10:09:39 +0200
-Message-ID: <CAENte7iUYcLX1ym1rdiYT2L8yLSWforf8kUvfHKLvhi_GhKQvg@mail.gmail.com>
-Subject: OAuth2 support in git?
-To:     Git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20180613152211.12580-1-alban.gruin@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfOg6j8F/cnJdxrCbLk/loK0HFFpnsTJQ03U5BIR6QDpbj2yDpdTW1aHZVjN+A6h0keEXe4Ck+P1s4iO1Hx5L9UEqATnB4WGL8FDT8APgpwmr3478RfaN
+ FZQmKPzcWQXxeb8PU+fU2HaaN9Qh7Xd7ddvSOWv1uC2NsWM9FEQHT6CeFumOfzy1nxavlLTGc0I/MgfS3nAMz+2MUJebQUDMH0OnySEp1E2+VtMxuDVCfjIb
+ JE7KTg4t6O/K48wYovheAzrHh9euv77wKNFdtzL+schXSQEwozOCUSLLsy/RNm6IgVgbydwAA1Dm1/kqeF2DV8pruREI6OFQjjLEE8QYQMXCasRxvcnpTIKq
+ a/nLj03wRe2Lp5ERsbwXQTXmcagZ+A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Can I use native git as client to contact a git server which does
-authentication with OAuth2 Client Credentials Grant [1]?
+Hi Alban
 
-Background: We are running gerrit based git servers [2] in a cloud
-environment. That environment supports OAuth2 authorization for the
-apps running in the cloud. The idea is that clients (e.g. jenkins
-jobs) talking git over http with such git servers should be able to
-use OAuth2 tokens to authenticate clone/fetch requests. We would have
-to adapt gerrit source code for token handling/validation but I am
-asking here about the client side.
+On 13/06/18 16:22, Alban Gruin wrote:
+> This patch rewrites the edit-todo functionality from shell to C. This is
+> part of the effort to rewrite interactive rebase in C.
+> 
+> Changes since v1:
+> 
+>  - Add a new function to launch the sequence editor, as advised by
+>    Phillip Wood[0]
 
-I know that other git server environments like github support that on
-client side by allowing tokens to be used as usernames in a BASIC
-authentication flow. We could do the same but I am asking whether
-there is also a way to transport tokens in a standard conform
-"Authorization: Bearer ..." Header field.
+That's great, I think these look fine now
 
-[1] https://tools.ietf.org/html/rfc6749#section-4.4
-[2] https://www.gerritcodereview.com/
+Best Wishes
+
+Phillip
+
+> [0] https://public-inbox.org/git/3bfd3470-4482-fe6a-2cd9-08311a0bbaac@talktalk.net/
+> 
+> Alban Gruin (2):
+>   editor: add a function to launch the sequence editor
+>   rebase--interactive: rewrite the edit-todo functionality in C
+> 
+>  builtin/rebase--helper.c   | 13 ++++++++-----
+>  cache.h                    |  1 +
+>  editor.c                   | 27 +++++++++++++++++++++++++--
+>  git-rebase--interactive.sh | 11 +----------
+>  sequencer.c                | 31 +++++++++++++++++++++++++++++++
+>  sequencer.h                |  1 +
+>  strbuf.h                   |  2 ++
+>  7 files changed, 69 insertions(+), 17 deletions(-)
+> 
+
