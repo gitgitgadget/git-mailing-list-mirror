@@ -2,86 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 461371F403
-	for <e@80x24.org>; Thu, 14 Jun 2018 19:36:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE10E1F403
+	for <e@80x24.org>; Thu, 14 Jun 2018 19:39:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755280AbeFNTgX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Jun 2018 15:36:23 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:55123 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755261AbeFNTgV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jun 2018 15:36:21 -0400
-Received: by mail-wm0-f68.google.com with SMTP id o13-v6so12350677wmf.4
-        for <git@vger.kernel.org>; Thu, 14 Jun 2018 12:36:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Thi9eioletaSMnWEg+/oMJmEvOsQTLF5tpZa3IF4A8o=;
-        b=Dw4JMmHN1A9ZYd4e0YLxrVYvR8Rhy1OVZXSghpJURaa4YXGDoDVTLwhI4k15AtnQ1+
-         9fIYKtAzr8HSCOU/344I0GTNeyFymDg6QaIw7FpjLY/QZoYX+xpcGsWxPJkZeN0OlLtt
-         6W/Q7Otj7683NEyTzaEFiuPOUNgTEN5eBtMxu5u41IMliwd6htleLxog6jj1Sh3SBYp7
-         ifNRNW+97Lpix/gKk1b3awqyafzoP7Q5thY4xIMZUbqrpDreYcjJSOlZ8puSMoVgZPG3
-         7TSQBSpxUR1WQWZp4jxQ7gzrmM9oa0vozevSsWngH4fmcJK5OJbfiWDPyBd6LZ0a4vGi
-         GbTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Thi9eioletaSMnWEg+/oMJmEvOsQTLF5tpZa3IF4A8o=;
-        b=rcyWVheWZecf71X7aWbUICLNh+RPSoESEZcROPO1sgekbxrUdXCNqvUsz27kCn5d6Z
-         KiwbQr6qj4N9e2MXLHAha0ITxpwPcKuqA9gHG7wqmY/c6CCXjVdPv3DC6Q06ED65hAgH
-         K8TP2/u1FD7vOchip+2YZ0ak+88oPEAR1kwpip5JL0yjwwJli3deGjMu7L2bM5AFvRcO
-         YA2IS58k0mJ5+dZd/J/CdW4pXJa823Ij04/BWQmXarDJFx923bmIR/NV73HSvrXFQfDd
-         XXjq7+mrcC3GF7HTtTHGU9SeZFctot26zFxerBIzjNzVPsna5IPuhUtsUh93iN26xdDd
-         SGyQ==
-X-Gm-Message-State: APt69E0rm3KzHh6mVZMjIiWD2vQQ09gx2Gbf1uBgE3a2tsqFz/z+GwIo
-        s/4sQB8CoHTrHEDh6aIfEoA=
-X-Google-Smtp-Source: ADUXVKLcPk/hPNZhuytFJRjhlW5zGr3zitmfIk/+451Bfxjy/iynA0lvkwThHBBMNTiPhD4c1NRVtQ==
-X-Received: by 2002:a1c:f513:: with SMTP id t19-v6mr3114148wmh.50.1529004980290;
-        Thu, 14 Jun 2018 12:36:20 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id u70-v6sm9099419wmd.3.2018.06.14.12.36.19
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 14 Jun 2018 12:36:19 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com
-Subject: Re: [PATCH v2 5/8] fetch-pack: make negotiation-related vars local
-References: <cover.1527894919.git.jonathantanmy@google.com>
-        <cover.1528317619.git.jonathantanmy@google.com>
-        <955d9f62d2c8400791501d71c72fea4ef2dc1cff.1528317619.git.jonathantanmy@google.com>
-Date:   Thu, 14 Jun 2018 12:36:19 -0700
-In-Reply-To: <955d9f62d2c8400791501d71c72fea4ef2dc1cff.1528317619.git.jonathantanmy@google.com>
-        (Jonathan Tan's message of "Wed, 6 Jun 2018 13:47:11 -0700")
-Message-ID: <xmqq36xp40uk.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1755392AbeFNTjq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Jun 2018 15:39:46 -0400
+Received: from cloud.peff.net ([104.130.231.41]:44906 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1755390AbeFNTjp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jun 2018 15:39:45 -0400
+Received: (qmail 28205 invoked by uid 109); 14 Jun 2018 19:39:46 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 14 Jun 2018 19:39:46 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14771 invoked by uid 111); 14 Jun 2018 19:40:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 14 Jun 2018 15:40:00 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Jun 2018 15:39:43 -0400
+Date:   Thu, 14 Jun 2018 15:39:43 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Bryan Turner <bturner@atlassian.com>,
+        Brandon Williams <bmwill@google.com>,
+        Ben Humphreys <behumphreys@atlassian.com>,
+        Git Users <git@vger.kernel.org>
+Subject: Re: [ANNOUNCE] Git v2.16.0-rc0
+Message-ID: <20180614193943.GA2226@sigill.intra.peff.net>
+References: <xmqqfu7ui2af.fsf@gitster.mtv.corp.google.com>
+ <CAGyf7-FQp4q2vvH1ponQvmVDTu0hiMSK1JKytQZ4O1i0MCnz7g@mail.gmail.com>
+ <20180103053516.GB87855@aiede.mtv.corp.google.com>
+ <20180608045028.GA17528@sigill.intra.peff.net>
+ <xmqqzi009deu.fsf@gitster-ct.c.googlers.com>
+ <20180614183018.GA1911@sigill.intra.peff.net>
+ <20180614185522.GA255581@aiede.svl.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20180614185522.GA255581@aiede.svl.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+On Thu, Jun 14, 2018 at 11:55:22AM -0700, Jonathan Nieder wrote:
 
-> -static struct prio_queue rev_list = { compare_commits_by_commit_date };
-> -static int non_common_revs, multi_ack, use_sideband;
-> +struct data {
-> +	struct prio_queue rev_list;
-> +	int non_common_revs;
-> +};
-> +
-> +static int multi_ack, use_sideband;
+> > No, my wrapper _isn't_ simple. It passes most options to openssh, but
+> > just doesn't understand the "-G" probing.  So if the default was
+> > openssh-like instead of "simple", then that would work fine without me
+> > setting anything, just like it did before.
+> >
+> > Which I thought was where the discussion ended up, but perhaps I'm
+> > misunderstanding.
+> 
+> Do you mean that it doesn't pass "-G" through, or that when using old
+> versions of openssh that doesn't support "-G" the probing fails?
 
-Aside from Brandon's comments, I think passing these throughout the
-callchain instead of having them as static-globals is a step in the
-right direction.  Could you, however, give the structure a bit more
-descriptive name, than simply "data"?  Anything the computer works
-on is "data", and there must be something more specific than that
-about this particular struct ;-)
+It just doesn't pass "-G" through.
 
+> If the former, then detecting the wrapper as something other than
+> "ssh" is intended behavior (though we might want to change what that
+> something is, as discussed in the previous thread).  If the latter,
+> then this is https://crbug.com/git/7 which I consider to be a bug.
+
+I certainly see the argument that "well, if it doesn't do '-G' then it's
+not _really_ openssh". My counter to that is that we don't actually
+_care_ about -G (and never did before recently). It's just a proxy for
+"do we understand -p", which my script does understand. My wrapper might
+eventually break if we depend on new options (like "-o SendEnv"), but
+the worst case there is generally no different before or after your
+patch: the command barfs.
+
+I say "generally" because of course you can come up with an example
+where my script quietly interprets "-o" as something else, but it seems
+like most uses there would cause an error.  And anyway, by making me set
+GIT_SSH_VARIANT all we've bought is plausible deniability that it's _my_
+fault for doing so when my script doesn't handle the new option
+gracefully. ;)
+
+But again, I'm just describing what makes sense to me. If you feel
+strongly about requiring the variant to be explicitly specified, I can
+certainly live with that.
+
+-Peff
