@@ -2,145 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7D4691F403
-	for <e@80x24.org>; Thu, 14 Jun 2018 18:55:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB2AB1F403
+	for <e@80x24.org>; Thu, 14 Jun 2018 19:08:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754862AbeFNSza (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Jun 2018 14:55:30 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:34514 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754799AbeFNSz3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jun 2018 14:55:29 -0400
-Received: by mail-pf0-f195.google.com with SMTP id a63-v6so3681805pfl.1
-        for <git@vger.kernel.org>; Thu, 14 Jun 2018 11:55:29 -0700 (PDT)
+        id S1754841AbeFNTIW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Jun 2018 15:08:22 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:45932 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754780AbeFNTIV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jun 2018 15:08:21 -0400
+Received: by mail-wr0-f193.google.com with SMTP id o12-v6so7515741wrm.12
+        for <git@vger.kernel.org>; Thu, 14 Jun 2018 12:08:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=JmqRqwB7saTS1SSN3nxs0fsMay5uV54ivxDMu8Ojeis=;
-        b=dW8+ScKnBLW11zqvuhenwLSYMi/aLKjCYlS2wXQe7GUk9hPcRl8u6MPQ8N3pFVAaX+
-         BXOMJlX+YOFYpLXge+erl8hyTuP0PkJrsjARSq+IBFh993Y3aO0NrGduXBPAMdnlXaGj
-         hL6YwnuJtnmI9WLIatT4VzIpBY7y4RE74PYWv/xVQRNMJ02K75HRRLO/roSOk/dMgF4Q
-         C/b3Rign57GKPbOj0geeXpZ1OD1rNgwqBH01Ous2e+qwKkverVc6xWc5yK/hwrCcxaeP
-         mNDtV6P5U7xSPUvlNinJ/1u1KXSZa9clFvj8TEIk9KI80DFeBEeSebS2+zmQlVz+Zvh+
-         TqCQ==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=regZSTV9lFbq1KTv5iKF0EWCHh1LG618G4hQFOd848I=;
+        b=Fnod5oF9spz6jE5Ij2/j+1EyMhR87/zZyQXDZcy935F1k6Mqf+kH4+oTDz5VXRMx9W
+         dlzFuS77pBldipnqkbXGfedoZ76NeC7GolbIS0PY2f6rF7d+0ouvJJtn3yNlmMUVHy8m
+         pQ834ll3ugZ0iCc1r9/+EG3i0Rqu81Lp3ep5lW9noFNrjDKwc4iUhKf7nU5ZKMWDqj13
+         T0wwKPN9VLDRcLxXpa3yDelo/zGtmz1fzKy0BRYcUbcRUOLnGKYvYaGAE3EuU2RKQXkm
+         etY8PuIDKUoIjikGjNCjq6E8O/8wxy4mkUss1mTZh9rPVkwBiecHov47QWkGd9CgoNeY
+         /pUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=JmqRqwB7saTS1SSN3nxs0fsMay5uV54ivxDMu8Ojeis=;
-        b=p+tYG94vOEdq7LIGbxSxcAlMg/bJ0H6EKV+5v7boJpEVTw5omQbu3zDBD9s7Efe6F7
-         nKbqAMDrfEG7luQvwr/Mb90hqiuhMAIIg3Zh4b6xRSZZ51iZe2N4Bna+gPiyNosiOCka
-         3Ks6X0NzXbr6fmAXXh/w5lDq4twIKWR0SuXKkIdy0OoO7FFWa6Loc6GbqTi1oD9OAMpn
-         L5MOSEGH7QiBguLpv6rfchi401ET9c3eHkRWYX3hOwuYiksOwmfghDZQ1Oh8ZmTSXz7X
-         sfC/Dh/7uPr0HWZ9GNZb6ayZT4yBdTZBk5tQYf9trHaKrxlk+/tnhqepvu595P7h+evf
-         RQxg==
-X-Gm-Message-State: APt69E34Kv+bU/7Py8icYm2SFxcR34hPledCzNZTT7ipUELr6DczU3yd
-        vkbKEtD5Vnolm6e23WTRgJs=
-X-Google-Smtp-Source: ADUXVKLqj7Bjdso5FHOobvEg+j9GOxG50YjK0hhl8FciIt3I6ZsqnKFv+1KfNq/ada0qWgBuzxbEVg==
-X-Received: by 2002:aa7:810c:: with SMTP id b12-v6mr10535937pfi.79.1529002528977;
-        Thu, 14 Jun 2018 11:55:28 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id h84-v6sm9410230pfd.69.2018.06.14.11.55.27
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=regZSTV9lFbq1KTv5iKF0EWCHh1LG618G4hQFOd848I=;
+        b=Z9RrZR2k4GKjei8cWJHgUN1x0Lffm1imDew1QAEeUhkydwF3cuFjD6JyUxreHi/PvA
+         mBF2h6z8XpYKlME3VOkf1yuvHL1gQa+KQhFCmRRvzO5JNEygoffOFHoipd6AvGrDxyal
+         djneCGVsbvjuYLoznlYk4DSM1e24TDCSL6d+Uxt6qid2zOjyLupstbw0Ofleo0dUQBB0
+         MWk/YSQvJprKAF7YEyK4rFiwHcmYwL0RDrX7NOffDStrN2HqX6WUDF7zCfcTftlsUEGs
+         LPPtwM9pwuJEVwNsZe5dQvtE3xZHEz/dt6x7kxI5hESh5Ia9aActMdkqfmm/qbiIhsAW
+         Oy6w==
+X-Gm-Message-State: APt69E3HvepcuhIKY1i8zCbPMJnV1I8rKJQkW/WuxMtY1cCWU6/fsGKJ
+        6yQlL0uXUg+w4eG6JW31ky0=
+X-Google-Smtp-Source: ADUXVKJEUovQN0K1UvLF6nxoh521cFsp0er3DISi2cyXZMz16TPTgQI07QGMh9j4e93qWuvkzlSPNw==
+X-Received: by 2002:adf:a581:: with SMTP id g1-v6mr3576975wrc.233.1529003299354;
+        Thu, 14 Jun 2018 12:08:19 -0700 (PDT)
+Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
+        by smtp.gmail.com with ESMTPSA id h77-v6sm9054692wmd.9.2018.06.14.12.08.17
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 14 Jun 2018 11:55:28 -0700 (PDT)
-Date:   Thu, 14 Jun 2018 11:55:22 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Bryan Turner <bturner@atlassian.com>,
-        Brandon Williams <bmwill@google.com>,
-        Ben Humphreys <behumphreys@atlassian.com>,
-        Git Users <git@vger.kernel.org>
-Subject: Re: [ANNOUNCE] Git v2.16.0-rc0
-Message-ID: <20180614185522.GA255581@aiede.svl.corp.google.com>
-References: <xmqqfu7ui2af.fsf@gitster.mtv.corp.google.com>
- <CAGyf7-FQp4q2vvH1ponQvmVDTu0hiMSK1JKytQZ4O1i0MCnz7g@mail.gmail.com>
- <20180103053516.GB87855@aiede.mtv.corp.google.com>
- <20180608045028.GA17528@sigill.intra.peff.net>
- <xmqqzi009deu.fsf@gitster-ct.c.googlers.com>
- <20180614183018.GA1911@sigill.intra.peff.net>
+        Thu, 14 Jun 2018 12:08:17 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com, git@jeffhostetler.com,
+        peff@peff.net, johannes.schindelin@gmx.de, jrnieder@gmail.com,
+        Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 19/20] abbrev: support relative abbrev values
+References: <20180608224136.20220-1-avarab@gmail.com>
+        <20180608224136.20220-20-avarab@gmail.com>
+        <xmqqvaan95os.fsf@gitster-ct.c.googlers.com>
+        <871sdawcmh.fsf@evledraar.gmail.com>
+        <xmqqa7ry5n9h.fsf@gitster-ct.c.googlers.com>
+        <87zhzxvmyv.fsf@evledraar.gmail.com>
+        <xmqq602l5pvs.fsf@gitster-ct.c.googlers.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <xmqq602l5pvs.fsf@gitster-ct.c.googlers.com>
+Date:   Thu, 14 Jun 2018 21:07:53 +0200
+Message-ID: <87y3fhuqye.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180614183018.GA1911@sigill.intra.peff.net>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-Sorry for the slow replies.  I was out of office earlier and am back
-now.
+On Thu, Jun 14 2018, Junio C Hamano wrote:
 
-Jeff King wrote:
-> On Tue, Jun 12, 2018 at 09:29:13AM -0700, Junio C Hamano wrote:
->> Jeff King <peff@peff.net> writes:
-
->>> To be honest, I could easily see an argument that I _should_ be setting
->>> GIT_SSH_VARIANT to explain what my wrapper is expecting, even though it
->>> happened to work before.
-
-Yes, I encourage anyone setting GIT_SSH to also set GIT_SSH_VARIANT.
-This way, there can be no confusion about what the setter intends.
-
-The autodetection is in the category of "necessary evil" that wouldn't
-exist if we were starting over.
-
-[...]
-> No, my wrapper _isn't_ simple. It passes most options to openssh, but
-> just doesn't understand the "-G" probing.  So if the default was
-> openssh-like instead of "simple", then that would work fine without me
-> setting anything, just like it did before.
+> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 >
-> Which I thought was where the discussion ended up, but perhaps I'm
-> misunderstanding.
-
-Do you mean that it doesn't pass "-G" through, or that when using old
-versions of openssh that doesn't support "-G" the probing fails?
-
-If the former, then detecting the wrapper as something other than
-"ssh" is intended behavior (though we might want to change what that
-something is, as discussed in the previous thread).  If the latter,
-then this is https://crbug.com/git/7 which I consider to be a bug.
-
-[...]
-> So I'm OK if we just leave it as-is. It's mostly that I dug into the
-> thread and was left with the impression that it was an unfinished
-> leftover that we meant to do.
-[...]
->> In any case, from where I sit, I am still waiting for this offer
->> by Jonathan
+>> On Wed, Jun 13 2018, Junio C Hamano wrote:
 >>
->>> It's good you caught this flaw in the detection.  Would something like
->>> the following make sense?  If so, I can resend with a commit message
->>> and tests tomorrow or the day after.
+>>> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+>>>
+>>>> E.g. here's a breakdown of my dotfiles repo:
+>>>>
+>>>>     $ git -c core.abbrev=4 log  --pretty=format:%h|perl -nE 'chomp;say length'|sort|uniq -c|sort -nr
+>>>>         784 4
+>>>>          59 5
+>>>>           7 6
+>>>>
+>>>> I don't have a single commit that needs 7 characters, yet that's our
+>>>> default. This is a sane trade-off for the kernel, but for something
+>>>> that's just a toy or something you're playing around with something
+>>>> shorter can make sense.
+>>>>
+>>>> SHA-1s aren't just written down, but also e.g. remembered in wetware
+>>>> short-term memory.
+>>>
+>>> That's a fine example of what I called "supporting absurdly small
+>>> absolute values like 4"; I still do not see why you want "negative
+>>> relative values" from that example.
 >>
->> to be followed up ;-)
+>> Because hardcoding -2 is very different than setting it to 5, because
+>> the -2 will scale to the size of the repository, but 5 is just 7-2 where
+>> 7 is our default value.
+>>
+>> So, in general if you want less future proof hashes by some
+>> probabilistic metric (whether you use core.validateAbbrev or not) you'd
+>> use -2 or -3, just like you might use +2 or +3 if you'd like to have
+>> more future-proof hashes (especially with core.validateAbbrev=true).
 >
-> Yes, that was the part that left the impression. :)
+> That still does not make much sense to me at all.
+>
+> I do agree that something shorter than the default 7 may be more
+> appropriate for our wetware short-term memory, and it would make
+> sense to grow the "riskier to collide than the default heuristics
+> but more memorable" variant as the project grows, _ONLY_ _IF_ our
+> wetware short-term memory scales with the project we happen to be
+> working on.  But our wetware does not scale with the project we work
+> on; at least mine does not.
 
-Thanks for the poke.
+Yes, it's a trade-off, but just because something is a trade-off doesn't
+make it useless.
 
-The patch [1] didn't leave me super happy, since it means there is yet
-another ssh variant for people to understand, in order to accomodate
-an old version of OpenSSH that is going to go away eventually.  In
-Debian, modern versions of git declare an incompatibility with old
-versions of OpenSSH in their package metadata to avoid this issue.
+Aside from the feature I'm proposing, the same thing applies to the
+short SHA-1 currently. My ~1k commit dotfiles has 7 characters, but
+linux.git has 12. Does that make printing the short SHA-1 at all useless
+and we should just fall back to 40 characters if it's say >= 12? No.
 
-In my defense, I said "If so" and no one seemed too enthusiastic about
-the patch making sense. ;-)
+12 is still better than 40, but if we could get away with it 10 would be
+better than 12. Right now the "get away with it" calculation is a
+hardcoded constant, this makes it configurable.
 
-I'll take another look and probably resend.
+The reason to make it configurable is because you may want more future
+proof *or* less future-proof SHA-1s depending on the use-case. Printing
+a longer SHA-1 has a cost, including but not limited to:
 
-Sincerely,
-Jonathan
-
-[1] https://public-inbox.org/git/20180103050730.GA87855@aiede.mtv.corp.google.com/
+ * Remembering it for a short time
+ * Seeing it on one screen and typing it into another computer manually
+ * `git log --oneline` output in a terminal where horizontal space is at
+   a premium
