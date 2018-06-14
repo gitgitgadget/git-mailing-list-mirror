@@ -7,62 +7,62 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 444DF1F403
-	for <e@80x24.org>; Wed, 13 Jun 2018 23:58:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 798211F403
+	for <e@80x24.org>; Thu, 14 Jun 2018 00:26:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935789AbeFMX6Q (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Jun 2018 19:58:16 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:38852 "EHLO
+        id S935843AbeFNAWN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Jun 2018 20:22:13 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:38862 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S935764AbeFMX6P (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 13 Jun 2018 19:58:15 -0400
+        by vger.kernel.org with ESMTP id S935725AbeFNAWM (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 13 Jun 2018 20:22:12 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b0c3:20dd:704c:b59d])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4417960129;
-        Wed, 13 Jun 2018 23:58:13 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id C2EDF60129;
+        Thu, 14 Jun 2018 00:22:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1528934293;
-        bh=EIPCCLOcO7V8OIwxWKP2bcSL3y1Vgu2byXOqz78GciM=;
+        s=default; t=1528935731;
+        bh=nuQnapyaFhL34ySPdVvd+9XgcgzlKpjJuQTJQNsHlzU=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=tzHWHEsr8d3xlyQPI1gUHcB++vOnxNKPQifrymGAkFSVk8XbDi5bS8N5deKcIJxeJ
-         UFOc+VH+Zeop+EELGkCKBsRp5wH3LhK2ofU64UPK1ibRLCM6Q8Sr9XdytfFosuej9A
-         8K27UkAfGG9tyfOC6NYhnyEXfWjovDvQ/JjgScjJ5hg6TLHowW7vyfA8TbyHs9lEHl
-         /M3Cac3uXVW4Gh214Q/eOAqk0Jb5jKPg1TGrBanEllvXZbCZZQGShXTs55VgtZSGLd
-         ObjIbhnVf8HI6l1FYOMg+gVEvIjjcCGt//udRpYv4pJdMQVA+iPeQ8KHjutkXY+qW4
-         CYbESVJERtQVgsKRywx+JzoduUHdlJm2vKRo0kKy5a6ddZKI0jPKy+DVYeaV2KY25K
-         V039eOJtSqiIe9VHjy2fy88NWYF9Zs3mr6AxEgv1pNwQRqhBLZaQI1FViBHxMf1RBZ
-         9bxBpvIublf0AvJH5cpzztUH4ag4L3wXCEIqPOFBjOkTKJa7nWx
-Date:   Wed, 13 Jun 2018 23:58:08 +0000
+        b=PjYhlnShssG4YEf20orYTWltm+oYj7mPyb1rKEsI8i5S8lKXmVu3B3LHLfvPY5LLM
+         tMPP5dmhwfQtAdwIAYiiU+n9m5SwdMkvs/I8eO11iDQoieHZSH/MnsaXkPJwZR1hzp
+         NktOPylVKAyJNBtZiaMu7g4nJMGhhAEZXVbspSDgZybgfHM50x421NAoLnPnYcfhBK
+         Pb0c/H/o7+e6eusWFbXKboD+vQFTVbUg+CzBL5Y9z1FM/76O5m/cyDP02P0gInHFcQ
+         720E3yFSsInCldTa6nvAbT1ULQdiypFNjtz0B0whsJroUSnDkQg0YnjLduECNdT4LA
+         obp2FJoONmyk1WntOFfszaqhDJ3PfuHy/HEbMV6lAzsI0o3a06on7STRo8YAepq+WQ
+         CeAUvsZibGj7D9H5I+2+BwEDIaE26U3px8N6ps+fTrkg0nbc2b92VLW7uCv7vYNGXH
+         WWj27XCHacdFJ/w6nmzLA/WjoJ6vGmU0B08NFjMNUe/LrtlxJB3
+Date:   Thu, 14 Jun 2018 00:22:06 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Gilles Van Assche <gilles.van.assche@noekeon.org>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        demerphq <demerphq@gmail.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Adam Langley <agl@google.com>, Keccak Team <keccak@noekeon.org>
-Subject: Re: Hash algorithm analysis
-Message-ID: <20180613235808.GM38834@genre.crustytoothpaste.net>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH 01/10] t: add tool to translate hash-related values
+Message-ID: <20180614002205.GN38834@genre.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Gilles Van Assche <gilles.van.assche@noekeon.org>,
-        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        demerphq <demerphq@gmail.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Adam Langley <agl@google.com>, Keccak Team <keccak@noekeon.org>
-References: <20180609205628.GB38834@genre.crustytoothpaste.net>
- <20180609224913.GC38834@genre.crustytoothpaste.net>
- <20180611192942.GC20665@aiede.svl.corp.google.com>
- <20180611223520.GF38834@genre.crustytoothpaste.net>
- <8e3fa1dd-958c-c3d5-2d6e-d52a4b424982@noekeon.org>
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+References: <20180604235229.279814-1-sandals@crustytoothpaste.net>
+ <20180604235229.279814-2-sandals@crustytoothpaste.net>
+ <20180611074743.GA24066@flurp.local>
+ <20180612010513.GH38834@genre.crustytoothpaste.net>
+ <CAPig+cSEpCTg+rYQYNQ5wUz3PL+51dr7bQdn-2cOWgg2ScdXNA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="McpcKDxJRrEJVmOH"
+        protocol="application/pgp-signature"; boundary="0u4QAjBqqw4+MLTw"
 Content-Disposition: inline
-In-Reply-To: <8e3fa1dd-958c-c3d5-2d6e-d52a4b424982@noekeon.org>
+In-Reply-To: <CAPig+cSEpCTg+rYQYNQ5wUz3PL+51dr7bQdn-2cOWgg2ScdXNA@mail.gmail.com>
 X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
  4.16.0-2-amd64)
 User-Agent: Mutt/1.10.0 (2018-05-17)
@@ -73,76 +73,122 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---McpcKDxJRrEJVmOH
+--0u4QAjBqqw4+MLTw
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jun 12, 2018 at 06:21:21PM +0200, Gilles Van Assche wrote:
-> Hi,
+On Tue, Jun 12, 2018 at 03:29:47AM -0400, Eric Sunshine wrote:
+> On Mon, Jun 11, 2018 at 9:05 PM, brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+> > test_oid would be fine.  One note is that this doesn't always produce
+> > OIDs; sometimes it will produce other values, but as long as you don't
+> > think that's too confusing, I'm fine with it.
 >=20
-> On 10/06/18 00:49, brian m. carlson wrote:
-> > I imported the optimized 64-bit implementation of KangarooTwelve. The
-> > AVX2 implementation was not considered for licensing reasons (it's
-> > partially generated from external code, which falls foul of the GPL's
-> > "preferred form for modifications" rule).
+> It was surprising to see it used for non-OID's (such as hash
+> characteristics), but not hard to deal with.
 >=20
-> Indeed part of the AVX2 code in the Keccak code package is an extension
-> of the implementation in OpenSSL (written by Andy Polyakov). The
-> assembly code is generated by a Perl script, and we extended it to fit
-> in the KCP's internal API.
+> One could also view this as a generic key/value cache (not specific to
+> OID's) with overriding super-key (the hash algorithm, in this case),
+> which would allow for more generic name than test_oid(), but we don't
+> have to go there presently.
+
+It is essentially that.  I'm happy with the test_oid name provided
+others are.  My only concern is that it would be confusing.
+
+I opted to use the same mechanism for hash characteristics because it
+seemed better than creating a lot of one-off functions that might have
+duplicative implementations.  But I'm open to arguments that having
+test_oid_rawsz, test_oid_hexsz, etc. is better.
+
+> > I agree perl would be expensive if it were invoked frequently, but
+> > excepting SHA1-prerequisite tests, this function is invoked 32 times in
+> > the entire testsuite.
+> >
+> > One of the reasons I chose perl was because we have a variety of cases
+> > where we'll need spaces in values, and those tend to be complex in
+> > shell.
 >=20
-> Would it solve this licensing problem if we remap our extensions to the
-> Perl script, which would then become "the source"?
-
-The GPLv2 requires "the preferred form of the work for making
-modifications to it".  If that form is the Perl script, then yes, that
-would be sufficient.  If your code is dissimilar enough that editing it
-directly is better than editing the Perl script, then it might already
-meet the definition.
-
-I don't do assembly programming, so I don't know what forms one
-generally wants for editing assembly.  Apparently OpenSSL wants a Perl
-script, but that is, I understand, less common.  What would you use if
-you were going to improve it?
-
-> On 12/06/18 00:35, brian m. carlson wrote:
-> > While I think K12 is an interesting algorithm, I'm not sure we're
-> > going to get as good of performance out of it as we might want due to
-> > the lack of implementations.
+> Can you give examples of cases in which values will contain spaces? It
+> wasn't obvious from this patch series that such a need would arise.
 >=20
-> Implementation availability is indeed important. The effort to transform
-> an implementation of SHAKE128 into one of K12 is limited due to the
-> reuse of their main components (round function, sponge construction). So
-> the availability of SHA-3/Keccak implementations can benefit that of K12
-> if there is sufficient interest. E.g., the SHA-3/Keccak instructions in
-> ARMv8.2 can speed up K12 as well.
+> Are these values totally free-form? If not, some character (such as
+> "_", "-", ".", etc.) could act as a stand-in for space. That shouldn't
+> be too hard to handle.
 
-That's good to know.  I wasn't aware that ARM was providing Keccak
-instructions, but it's good to see that new chips are providing them.
+t6030, which tests the bisect porcelain, is sensitive to the hash
+algorithm because hash values are used as a secondary sort for the
+closest commit.  Without totally gutting the test and redoing it, some
+solution to produce something resembling a sane commit message would be
+helpful.  We will also have cases where we need to provide strings to
+printf(1), such as in some of the pack tests.
+
+I have a minor modification to your code which handles that at the cost
+of restricting us to one hash-key-value tuple on a line, which I think
+is an acceptable tradeoff.
+
+> > Using shell variables like this does have the downside that we're
+> > restricted to only characters allowed in shell variables.  That was
+> > something I was trying to avoid, but it certainly isn't fatal.
+>=20
+> Is that just a general concern or do you have specific "weird" keys in mi=
+nd?
+
+I had originally thought of providing only the SHA-1 value instead of a
+named key, which would have necessitated allowing arbitrary inputs, but
+I ultimately decided that named keys were better.  I also tend to prefer
+dashes in inputs over underscores, since it's a bit easier to type, but
+that's really a secondary concern.
+
+I think the benefits of an implementation closer to your outweigh the
+downsides.
+
+> My original version of test_oid_cache() actually allowed for that by
+> caching _all_ information from the tables rather than only values
+> corresponding to $test_hash_algo. It looked like this:
+>=20
+> --- >8 ---
+> test_oid_cache () {
+>     while read tag rest
+>     do
+>         case $tag in \#*) continue ;; esac
+>=20
+>         for x in $rest
+>         do
+>             eval "test_oid_${tag}_${x%:*}=3D${x#*:}"
+>         done
+>     done
+> }
+> --- >8 ---
+>=20
+> The hash algorithm is incorporated into the cache variable name like
+> this: "test_oid_hexsz_sha256"
+
+Yeah, I basically reimplemented something similar to that based off your
+code.
 --=20
 brian m. carlson: Houston, Texas, US
 OpenPGP: https://keybase.io/bk2204
 
---McpcKDxJRrEJVmOH
+--0u4QAjBqqw4+MLTw
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.8 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlshr5AACgkQv1NdgR9S
-9ouj6Q/8CY4h4YbCpBr+i5e1Bv2pJvmt+g+fpPd8tguscyWwWvEXcjACS1cNt2bp
-BwC0CkrHk6ka+anx1Vgcg4ltqh5OP33bVSAZpHcBcEHI7qc/lDXN2BbbJU4YuEYi
-uHRVafMgegRnIn3/BvDZHHH5uqETok3WN9KU8Fg7cHPRqcFYTFPqaONEGUCdJW5A
-sNTSHMwUIo83ar02uJzRi6vYZgzDO8soXT5hr4tjyYzidj22pD+iWvf9NsUAeE1y
-MV9XWVEhtcQ2QCUO2lJ5nYkffew3Zd3483oNjNAdfkU25C/2la596+bcSaKMQZEL
-TyxYA/jiyp5tS3fOLb6dB4HUpIt9JP+4DwJ3ijUbV4Eup36oUq0qTZCkO4YXdzad
-KrHJVf2C8VXFGbycd6uqtDv6tVCMlrlPc7rUASjXEnxA0fWu5Q+NNRqZNqtf4duT
-7n94j/l5DWyfcrw2B4OjrtG3l6hH8pZRc1aOiTXpjNkHwX4SyJLdvYZINPzUFWWg
-Z2zOAh0/fYF0rJXBMcBW+QV8KXwZ4bBCIH56cU5wdns6+fi+bdQsrYkaWRYCioKv
-ZfZhoa+QrHJiEDUpVFpnjBpRn9I2Un+hA/4tytiNyX667GYrtyjVSuw/Iiywmwlr
-p8ijL9u7Fga0dDaYL1FqAtdBp9W6Qr2fakjtR4pM1EDC2rICLPc=
-=JVnX
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlshtS0ACgkQv1NdgR9S
+9os8Dg//f0WEJUy+OFTNa0Lnjv4D+qaBCiHf4AswWEnxeAR5JaPL1tGKYsF1pnNr
+YJM/+l4QVLBQ2rem9MfUG8qn6W1HzgKmd+/MPXUsvHtjWaTkhLNegtB346QBZtvy
+NkXJeuznUi5yj2r56tQpSMFONgkkRkp6SU5hNHwU6uonIvsRRcvJu4h+n2MlJ+n6
+nNp3vJDDy/PwVRUHxFlIwqRHefzeyqrNp1+sLS9GCva2yH4ZDR/9gdNV1k6DRFff
+GOO7K9X5KV1XWIkqM8YDcOVIXEFM2Wls1CWHjob6NA7jsPKwIZsLXq3FPx40hmxV
+H6IDyCo0vSFE3cghg/LdfBFClKDzNe+TOjoZ0Mtn/CdqevIOImfURRT5Y+qPu4la
+qnxl2pBAU36zEEegLcvWy1eZ/JD2HHWFobgA1Bai+nYbBQUX/n5hX9vhWhwlLElU
+evh50tyxg+MeNGw6qrJJR3RakGmHmRfE3txXtymPCuNRkuJynyz/Y7XUd4zM1447
++IhkC6LlW6HmCBiNEDPOfTxShbPPcRsk9KH9xWSxt6IRShBCIJwWJij1muKVCusj
+dp7EuYoYXVBVkSYoBD6g72MRLyqo1z5xTwqVloV2OkpiVl/kSUFyHr0gHxU1Zpiw
+v/KwYBMw7l4VqdV4fmzym2nHGYVeTSAZmsEcKOpBWRI7bI8JNIY=
+=K3sa
 -----END PGP SIGNATURE-----
 
---McpcKDxJRrEJVmOH--
+--0u4QAjBqqw4+MLTw--
