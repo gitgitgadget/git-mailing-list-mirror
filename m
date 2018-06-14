@@ -7,62 +7,62 @@ X-Spam-Status: No, score=-8.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B4AD1F403
-	for <e@80x24.org>; Thu, 14 Jun 2018 21:18:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 276731F403
+	for <e@80x24.org>; Thu, 14 Jun 2018 21:25:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755406AbeFNVSr (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Jun 2018 17:18:47 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:41649 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754749AbeFNVSq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jun 2018 17:18:46 -0400
-Received: by mail-pg0-f67.google.com with SMTP id l65-v6so3469506pgl.8
-        for <git@vger.kernel.org>; Thu, 14 Jun 2018 14:18:46 -0700 (PDT)
+        id S936098AbeFNVZF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Jun 2018 17:25:05 -0400
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:36122 "EHLO
+        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755429AbeFNVZB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jun 2018 17:25:01 -0400
+Received: by mail-pl0-f65.google.com with SMTP id a7-v6so4219541plp.3
+        for <git@vger.kernel.org>; Thu, 14 Jun 2018 14:25:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=y8O02HMmHKA3hE1VAJRLhAN41Q5fLyCOXvSVRssrQyA=;
-        b=TXV+jSrySKKl55+3lOxca+EaBc23BpmOhmjH7PsWZeBG9cH5tcKXjEF2nzqKhIBqlt
-         o6WjaA1v6hsdGNl5pqbP3/85irz2Ebssd1Lu2d2uBjOf1Mu1RR05ujFY6Qe8JxgemFVi
-         vMa90Wmkh7Ph+wVmaeW3/BU+Zgm1FyMyDL2mJJDcTr+lELYJWDFRpe54UsA5ej9G/CJF
-         pXxXtB07e4X7XEhyXeWv9kuiBoHTY+Gx4vD4WQSWJQLT/ABntAVzQYHPqaEOOK2IZUHx
-         lC5GCKn51zl2Xi2uAXu5e+b+TwvPyWHK/CYLc8Vb0iqosTaU6dalUFLx47T5WWHB8Zx9
-         Obng==
+        bh=IpAn2Sm3Z5AV34Oy5/lD9wkNw/HBmO/5KFf8lCVjNuA=;
+        b=LvfTrQIRQ39w8MUbo2aJlVG++uvt1FXTrJ4fhVXIaY+YTDt/F0FHdTWk23yUomDtzL
+         n6kuKYZFL8GlWUexBl4Sknlicz2x8Fm9LsN7UC8cYgQCjNOKArNUtzroBxYkCArPywFn
+         FG8DBacZx291IAfxVz+BTZL1AUBTYBZygvfdBz8Qn8ZJaRGbDhku+vQTuJCo+EJPMh1M
+         3rNmrU1lFRoc6Xw/A4vqjDOCTCXdaInzPfEgxUbF/qd6YaCMyLo96ugBE0AXIN4k+F55
+         KYlH29pi3C4V4hEh/jYXQ7cR8dtuPJsQ29dChNPhh0WCdyjRDuLzCTFTW806vMZ6Dpbi
+         LSjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=y8O02HMmHKA3hE1VAJRLhAN41Q5fLyCOXvSVRssrQyA=;
-        b=ORCh2N9yQ2P2KUfZMcwMUJYnhLKdjn+/960E2NNPdMdIk5c57uD5b1icydjf36S1Cs
-         EFI9E3wce/smidgYmuGR/TiX1moozp7cVvWvUs6IPVMtaOGwL2Uex6UYlOD8im0TshC4
-         P1hqYNXMCB/mZkSFxNeKln0xiY+VfAZ6QL095U0wgBdPgDW3beg0KwE33zXNidvZiu3+
-         dBTOoXPTI0A2MLv+7sKBGA8708X3r2uZcFUy2Hv/unntI2oIkHby0eDc7pziZKuusUvq
-         mL8UZBc/GAiiWEL71ZNAyyPNag8LbZEMW8JRyNWGojMSJy06ybH56C7UPzs2nekYQTl2
-         bMng==
-X-Gm-Message-State: APt69E2RzFR6yPektPk208BV6t8BLA/JoqjnBR/MiPVnoOXaryUIe9q3
-        u/52LAdMPwATkfP5ULG/ebEvFw==
-X-Google-Smtp-Source: ADUXVKJAjjvfAAN/zX9uKMHrD/9jpr7lVZg7CA3OMKnYGvcryb2vMrjQccRRFioCwnSLMvEfK1L8Hw==
-X-Received: by 2002:a63:b609:: with SMTP id j9-v6mr3722849pgf.335.1529011125322;
-        Thu, 14 Jun 2018 14:18:45 -0700 (PDT)
+        bh=IpAn2Sm3Z5AV34Oy5/lD9wkNw/HBmO/5KFf8lCVjNuA=;
+        b=KSwosn0v05oNJYmEcYcdmyNVsWSizGXGqlDIEEaayyGV4lsoWLM8gL/2szLCQuHlST
+         /RTpSWfRVUe5jSXfMeWxTUeWc0gP81X9fpj6Q8PV9C6SQlAV5B8peAZyKuqJBK29GNzA
+         eZV9BUZMZpb4JMoLA1sNXBI5tqlc8uIG2X3e2f82xCEKpXCoMkCKPghOC2mImZx2zz9V
+         ZKVxPmY+/jbjJ4sQpaIeifQKL4civx26ecwHL1AC9qdPCCizWOUYQ0wE/MN/mYQGxyQW
+         thU/B27RAZ6YAZqr+AKM4fUNQ+9nwgVIMw6v8xOIpJwxDC0rumKcp4p4Hfi99CVuGFoD
+         Y2hg==
+X-Gm-Message-State: APt69E3oywbr3/EfXdVWz89SmHju73ApfloX/QWF0/8fdl0nprncYVin
+        FE7C9UIJw0LQSlbYgqlalS0RCA==
+X-Google-Smtp-Source: ADUXVKJv4RM7+lnciFKMQqbZ2IFGmu5eGh+Q+MiU78KMp2J+Ri+8C/rhonSe6u2uLhZ6wwGZ4RU3uQ==
+X-Received: by 2002:a17:902:be0b:: with SMTP id r11-v6mr4966070pls.182.1529011500906;
+        Thu, 14 Jun 2018 14:25:00 -0700 (PDT)
 Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id p20-v6sm8794162pff.90.2018.06.14.14.18.43
+        by smtp.gmail.com with ESMTPSA id k15-v6sm8967770pfi.37.2018.06.14.14.24.58
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 14 Jun 2018 14:18:43 -0700 (PDT)
-Date:   Thu, 14 Jun 2018 14:18:42 -0700
+        Thu, 14 Jun 2018 14:24:58 -0700 (PDT)
+Date:   Thu, 14 Jun 2018 14:24:57 -0700
 From:   Brandon Williams <bmwill@google.com>
 To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com, ramsay@ramsayjones.plus.com
-Subject: Re: [PATCH v2 8/8] fetch-pack: implement ref-in-want
-Message-ID: <20180614211842.GA68349@google.com>
-References: <20180605175144.4225-1-bmwill@google.com>
- <20180613213925.10560-1-bmwill@google.com>
- <20180613213925.10560-9-bmwill@google.com>
- <CAGZ79kZGV7NeYGpt=BJTASZYva3pyY-2CxMmDMXXxuZeg4sfjQ@mail.gmail.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>, git <git@vger.kernel.org>
+Subject: Re: [PATCH 10/35] commit: add repository argument to lookup_commit
+Message-ID: <20180614212457.GB68349@google.com>
+References: <20180530004810.30076-1-sbeller@google.com>
+ <20180530004810.30076-11-sbeller@google.com>
+ <CACsJy8D2JbeWvBg9F69tAJgq1874=ROFBG-QKfCHeUMZwcY-VQ@mail.gmail.com>
+ <CAGZ79kapzeBc1KJFCS2Q4UsZDssaFpf6xamva68LAp+gQcTCCw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAGZ79kZGV7NeYGpt=BJTASZYva3pyY-2CxMmDMXXxuZeg4sfjQ@mail.gmail.com>
+In-Reply-To: <CAGZ79kapzeBc1KJFCS2Q4UsZDssaFpf6xamva68LAp+gQcTCCw@mail.gmail.com>
 User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -70,57 +70,46 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 06/14, Stefan Beller wrote:
-> On Wed, Jun 13, 2018 at 2:39 PM Brandon Williams <bmwill@google.com> wrote:
+> On Thu, Jun 14, 2018 at 9:22 AM Duy Nguyen <pclouds@gmail.com> wrote:
+> >
+> > On Wed, May 30, 2018 at 2:51 AM Stefan Beller <sbeller@google.com> wrote:
+> > > diff --git a/shallow.c b/shallow.c
+> > > index 9bb07a56dca..60fe1fe1e58 100644
+> > > --- a/shallow.c
+> > > +++ b/shallow.c
+> > > @@ -31,7 +31,7 @@ int register_shallow(struct repository *r, const struct object_id *oid)
+> > >  {
+> > >         struct commit_graft *graft =
+> > >                 xmalloc(sizeof(struct commit_graft));
+> > > -       struct commit *commit = lookup_commit(oid);
+> > > +       struct commit *commit = lookup_commit(the_repository, oid);
+> >
+> > This looks wrong. register_shallow() has struct repository argument
+> > 'r' and it should be used here instead.
 > 
-> > +static void receive_wanted_refs(struct packet_reader *reader, struct ref *refs)
-> > +{
-> ...
-> > +
-> > +               for (r = refs; r; r = r->next) {
-> > +                       if (!strcmp(end, r->name)) {
-> > +                               oidcpy(&r->old_oid, &oid);
-> > +                               break;
-> > +                       }
-> > +               }
+> Right.
 > 
-> The server is documented as MUST NOT send additional refs,
-> which is fine here, as we'd have no way of storing them anyway.
-> Do we want to issue a warning, though?
+> > If this is a mechanical conversion, I will also be happy that the
+> > switch from the_repo to r is done in a separate patch.
 > 
->     if (!r) /* never break'd */
->         warning ("server send unexpected line '%s'", reader.line);
+> This part of the code is not touched later in this series,
+> so I'll fix it if a reroll is needed.
 
-Depends, does this warning help out the end user or do you think it
-would confuse users to see this and still have their fetch succeed?
+Yeah maybe at some point when lookup_commit can understand arbitrary
+repositories we can change this from the_repository to r.  This patch is
+part of that mechanical change and has to be the_repository till
+lookup_commit has been fully converted.
 
 > 
-> 
-> 
-> > diff --git a/remote.c b/remote.c
-> > index abe80c139..c9d452ac0 100644
-> > --- a/remote.c
-> > +++ b/remote.c
-> > @@ -1735,6 +1735,7 @@ int get_fetch_map(const struct ref *remote_refs,
-> >                 if (refspec->exact_sha1) {
-> >                         ref_map = alloc_ref(name);
-> >                         get_oid_hex(name, &ref_map->old_oid);
-> > +                       ref_map->exact_sha1 = 1;
-> >                 } else {
-> >                         ref_map = get_remote_ref(remote_refs, name);
-> >                 }
-> > diff --git a/remote.h b/remote.h
-> > index 45ecc6cef..e5338e368 100644
-> > --- a/remote.h
-> > +++ b/remote.h
-> > @@ -73,6 +73,7 @@ struct ref {
-> >                 force:1,
-> >                 forced_update:1,
-> >                 expect_old_sha1:1,
-> > +               exact_sha1:1,
-> 
-> Can we rename that to exact_oid ?
-
-I'll fix this.
+> > FYI I noticed this because I'm in a quest to kill the_index by passing
+> > 'struct index_state *' throughout library code, and sometimes I pass
+> > 'struct repository *' instead when I see that code uses more things
+> > that just the index.  And I have started to replace the_repository in
+> > some places with a function argument.
+> >
+> > If some of my patches come first while you have not finished
+> > repository conversion (very likely), you and I will have to pay
+> > attention to this more often.
 
 -- 
 Brandon Williams
