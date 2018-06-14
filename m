@@ -2,114 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 276731F403
-	for <e@80x24.org>; Thu, 14 Jun 2018 21:25:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A8661F403
+	for <e@80x24.org>; Thu, 14 Jun 2018 21:32:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936098AbeFNVZF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Jun 2018 17:25:05 -0400
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:36122 "EHLO
-        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755429AbeFNVZB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jun 2018 17:25:01 -0400
-Received: by mail-pl0-f65.google.com with SMTP id a7-v6so4219541plp.3
-        for <git@vger.kernel.org>; Thu, 14 Jun 2018 14:25:01 -0700 (PDT)
+        id S1755490AbeFNVb7 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Jun 2018 17:31:59 -0400
+Received: from mail-yb0-f193.google.com ([209.85.213.193]:33833 "EHLO
+        mail-yb0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755348AbeFNVb6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jun 2018 17:31:58 -0400
+Received: by mail-yb0-f193.google.com with SMTP id n23-v6so2791237ybg.1
+        for <git@vger.kernel.org>; Thu, 14 Jun 2018 14:31:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=IpAn2Sm3Z5AV34Oy5/lD9wkNw/HBmO/5KFf8lCVjNuA=;
-        b=LvfTrQIRQ39w8MUbo2aJlVG++uvt1FXTrJ4fhVXIaY+YTDt/F0FHdTWk23yUomDtzL
-         n6kuKYZFL8GlWUexBl4Sknlicz2x8Fm9LsN7UC8cYgQCjNOKArNUtzroBxYkCArPywFn
-         FG8DBacZx291IAfxVz+BTZL1AUBTYBZygvfdBz8Qn8ZJaRGbDhku+vQTuJCo+EJPMh1M
-         3rNmrU1lFRoc6Xw/A4vqjDOCTCXdaInzPfEgxUbF/qd6YaCMyLo96ugBE0AXIN4k+F55
-         KYlH29pi3C4V4hEh/jYXQ7cR8dtuPJsQ29dChNPhh0WCdyjRDuLzCTFTW806vMZ6Dpbi
-         LSjw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ACnQ9AfNmkPFmvfY1DnmZa+h80bScdwGLo2Mmt4gCi4=;
+        b=oOLx+gplSnRE8rjppd2DKVyKP9gbcwCQm6sECe3tvOSEy0dXIN8pCYV/LxHWtVTK2y
+         J7suCBjcxx8CPKghDVsLvLTrZ2S2gI9TYmGt8qlQ2898bPG3/LnZ6Zn8ddQeSY/2GK/a
+         zO9JT65A4M6fS0OiLc3gGWIUQ5ZnAs7e7QvM1TyNc5F4JRigz1yUnkrdxIt3tEHbu/ut
+         BML20/4/xcyx4WX6OdeAEqrF0RZxiuHG/5Veb2soww7K5h40tMt61JazQs3H4de2QDPd
+         kT9h5dfZ2NeJ0SMYX6wjZLEODM/TKyBzhKPf3J1RyLnn9ysf6YKINGFqivpBvZpPDFYa
+         x4Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=IpAn2Sm3Z5AV34Oy5/lD9wkNw/HBmO/5KFf8lCVjNuA=;
-        b=KSwosn0v05oNJYmEcYcdmyNVsWSizGXGqlDIEEaayyGV4lsoWLM8gL/2szLCQuHlST
-         /RTpSWfRVUe5jSXfMeWxTUeWc0gP81X9fpj6Q8PV9C6SQlAV5B8peAZyKuqJBK29GNzA
-         eZV9BUZMZpb4JMoLA1sNXBI5tqlc8uIG2X3e2f82xCEKpXCoMkCKPghOC2mImZx2zz9V
-         ZKVxPmY+/jbjJ4sQpaIeifQKL4civx26ecwHL1AC9qdPCCizWOUYQ0wE/MN/mYQGxyQW
-         thU/B27RAZ6YAZqr+AKM4fUNQ+9nwgVIMw6v8xOIpJwxDC0rumKcp4p4Hfi99CVuGFoD
-         Y2hg==
-X-Gm-Message-State: APt69E3oywbr3/EfXdVWz89SmHju73ApfloX/QWF0/8fdl0nprncYVin
-        FE7C9UIJw0LQSlbYgqlalS0RCA==
-X-Google-Smtp-Source: ADUXVKJv4RM7+lnciFKMQqbZ2IFGmu5eGh+Q+MiU78KMp2J+Ri+8C/rhonSe6u2uLhZ6wwGZ4RU3uQ==
-X-Received: by 2002:a17:902:be0b:: with SMTP id r11-v6mr4966070pls.182.1529011500906;
-        Thu, 14 Jun 2018 14:25:00 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id k15-v6sm8967770pfi.37.2018.06.14.14.24.58
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 14 Jun 2018 14:24:58 -0700 (PDT)
-Date:   Thu, 14 Jun 2018 14:24:57 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>, git <git@vger.kernel.org>
-Subject: Re: [PATCH 10/35] commit: add repository argument to lookup_commit
-Message-ID: <20180614212457.GB68349@google.com>
-References: <20180530004810.30076-1-sbeller@google.com>
- <20180530004810.30076-11-sbeller@google.com>
- <CACsJy8D2JbeWvBg9F69tAJgq1874=ROFBG-QKfCHeUMZwcY-VQ@mail.gmail.com>
- <CAGZ79kapzeBc1KJFCS2Q4UsZDssaFpf6xamva68LAp+gQcTCCw@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ACnQ9AfNmkPFmvfY1DnmZa+h80bScdwGLo2Mmt4gCi4=;
+        b=Fw4jZTxDhBXB9eirATiPGeaCwh7USnsuqf56X/vmo9EiFeykNI5rfi4o3ostKFh816
+         qCXfsDOM8gbTnOWH4N+fmVpaC0NBwtvrS1TQSpWJpTdxl2LNVNT4ay3/UQKzcu1Hhxuc
+         O9kq3U9mumVaK2Fxl1RsHh/UCdDo1ExV92q+SQ7C30z2nNx15hYZBBKQzo/5d+cpeLP9
+         noSD3DriYgq7AAcTCz+OGvuF7jBjqd3Sf6M/FGT2DQLrVc/aD39mWy84m/UX+dPtYNCM
+         DrU5/gl3SS7AD7Fgsw6LAoRmfxw/PIVlbjsC6fCH1o7fXwjcD7bggdOJr7i3Rz8HfdS0
+         HRKQ==
+X-Gm-Message-State: APt69E3h8Wy55eamLxdC+hI6omCFY9/DyEChvDc+Ej9FMGK+xt4R9JUw
+        xnoLQ99VnnuSrPbxj1aW1E+WCFIATCx/sDfmGRxFDA==
+X-Google-Smtp-Source: ADUXVKKBq4BS0OQe2gbLtEKgTjywVsrwNZ2Cz0jKOoFXnBtPRxX9hf96cWhsCOvY3bVsRj0KMh61ghU6Q7k1luccuxk=
+X-Received: by 2002:a25:b308:: with SMTP id l8-v6mr2345932ybj.515.1529011917579;
+ Thu, 14 Jun 2018 14:31:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kapzeBc1KJFCS2Q4UsZDssaFpf6xamva68LAp+gQcTCCw@mail.gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+References: <20180530004810.30076-1-sbeller@google.com> <20180613230522.55335-1-sbeller@google.com>
+ <20180613230522.55335-6-sbeller@google.com> <fcb052e0-2308-31bd-aa90-d6d3327642c0@gmail.com>
+ <709bd61c-70fc-a925-efba-58ab9be265c9@gmail.com>
+In-Reply-To: <709bd61c-70fc-a925-efba-58ab9be265c9@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 14 Jun 2018 14:31:46 -0700
+Message-ID: <CAGZ79kaQ-smyCz6WmzybgLoS_NFxw5d2q_oxeWVHYnJxEn=mAQ@mail.gmail.com>
+Subject: Re: [PATCH v2 05/31] tree: add repository argument to lookup_tree
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/14, Stefan Beller wrote:
-> On Thu, Jun 14, 2018 at 9:22 AM Duy Nguyen <pclouds@gmail.com> wrote:
-> >
-> > On Wed, May 30, 2018 at 2:51 AM Stefan Beller <sbeller@google.com> wrote:
-> > > diff --git a/shallow.c b/shallow.c
-> > > index 9bb07a56dca..60fe1fe1e58 100644
-> > > --- a/shallow.c
-> > > +++ b/shallow.c
-> > > @@ -31,7 +31,7 @@ int register_shallow(struct repository *r, const struct object_id *oid)
-> > >  {
-> > >         struct commit_graft *graft =
-> > >                 xmalloc(sizeof(struct commit_graft));
-> > > -       struct commit *commit = lookup_commit(oid);
-> > > +       struct commit *commit = lookup_commit(the_repository, oid);
-> >
-> > This looks wrong. register_shallow() has struct repository argument
-> > 'r' and it should be used here instead.
-> 
-> Right.
-> 
-> > If this is a mechanical conversion, I will also be happy that the
-> > switch from the_repo to r is done in a separate patch.
-> 
-> This part of the code is not touched later in this series,
-> so I'll fix it if a reroll is needed.
+On Thu, Jun 14, 2018 at 12:33 PM Derrick Stolee <stolee@gmail.com> wrote:
+> > The 'tree' member of 'struct commit' was renamed to 'maybe_tree'.
+>
+> Resolving the merge was not very simple. I have a working merge
+> available on GitHub [1] as commit 99a899f7c12ef73840dbe79c71acb11034d707dd.
 
-Yeah maybe at some point when lookup_commit can understand arbitrary
-repositories we can change this from the_repository to r.  This patch is
-part of that mechanical change and has to be the_repository till
-lookup_commit has been fully converted.
+Thanks for pointing this out and resolving the merge.
+ds/generation-numbers seems to be cooking in next for longer already, so
+I might just rebase this series on top of that as well.
 
-> 
-> > FYI I noticed this because I'm in a quest to kill the_index by passing
-> > 'struct index_state *' throughout library code, and sometimes I pass
-> > 'struct repository *' instead when I see that code uses more things
-> > that just the index.  And I have started to replace the_repository in
-> > some places with a function argument.
-> >
-> > If some of my patches come first while you have not finished
-> > repository conversion (very likely), you and I will have to pay
-> > attention to this more often.
-
--- 
-Brandon Williams
+Thanks for the heads up!
+Stefan
