@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 90FE31F403
-	for <e@80x24.org>; Thu, 14 Jun 2018 22:54:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 584291F403
+	for <e@80x24.org>; Thu, 14 Jun 2018 22:54:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965058AbeFNWyi (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Jun 2018 18:54:38 -0400
-Received: from mail-vk0-f74.google.com ([209.85.213.74]:35314 "EHLO
-        mail-vk0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S964987AbeFNWyh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jun 2018 18:54:37 -0400
-Received: by mail-vk0-f74.google.com with SMTP id d134-v6so3001690vkf.2
-        for <git@vger.kernel.org>; Thu, 14 Jun 2018 15:54:37 -0700 (PDT)
+        id S965088AbeFNWyl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Jun 2018 18:54:41 -0400
+Received: from mail-yb0-f202.google.com ([209.85.213.202]:36138 "EHLO
+        mail-yb0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S964987AbeFNWyj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jun 2018 18:54:39 -0400
+Received: by mail-yb0-f202.google.com with SMTP id r2-v6so5660002ybg.3
+        for <git@vger.kernel.org>; Thu, 14 Jun 2018 15:54:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=ZC8B36TbjzHxxnnggcDvHJc+BQe27pz4CVvnZHuXSB8=;
-        b=AQ5bBzykZtFnwEYnGuwnhw9Pfy23LcddUsrht+gKhtVDNdNCk91wIjxjKw73R7+xHF
-         5hooWTF4HISiKWRs+NXm1Dyp/mpAMerd/h8t2Nn5XopETjZcjt7E/PPLCj6cGv1WeoTX
-         03set2Did2xYMdkAGa8zdPxAN/pNrVhpBoja0q6Us3f+QaNKqx72WqO0I2L0wJvUPGLX
-         hrxAWk2f5W8hdB8VqscXcFX+GwS68IWVu8Qw9dDhf/M7n91rXFjlLmjdGI21zhhHDJy0
-         spnzGxMqKj7GRhxsu3kUHdGTp4yGzVUa+U/sq/IJcgVAhFoYIopTYvc5gjS5+kqy891f
-         Andg==
+        bh=Wa4brdC2T6qPI+ilB5MxnWd6sY3qhFT66EkXLA+UGV8=;
+        b=i3vkJz7Km/gsakxq9UVMkPkxn6VhUXigxmsGwveLQILNOaf+KrPpiZc4LuRQLgLwA3
+         LjLL27MhiYsmca1xPpsYQ87bMoa4yqhRqSvuoKleniPtgzekTHetFI7lX6AjaRIVXO/G
+         9AVAJzoseDAS5mXb9qVEyp3KnTHw8ppQDLCPdKuIw7fl4F687spQd7DD+c3T1ZacTrqb
+         iraJ3dOb5K0x3xaU8QCz5g8miJQV1ka2QRpDw1KFezaWjkInbCediSyPepm09i7YJ5Ow
+         turuOYlb8bpiXeGw7544srYk4X2QGTNlB4rR4PFxoj0hGSNRJmri6bYiGI814hfNRpnw
+         b4CA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=ZC8B36TbjzHxxnnggcDvHJc+BQe27pz4CVvnZHuXSB8=;
-        b=JCxvp1r5Y/Z6awUWCb/HmTTZ8qU3ER956g4V9W4+Yq2c+wI3WeO1ck4G6uM1XIlxoo
-         OH3u+I6z/3BhGgC5bj4nF2EibgcbXl51Aw2aGegIcsRqGl6rvwEZkPF4DhOLUox/0vVm
-         kJkvVMNsiq3/y6+DazvqF9B+khWp1B4qI2/QtSfzZ4G+0+WVgHEmCQ75Wp9davpyzLwb
-         BxCk8WYWEMUOMfL0S88mSxK6/hh0WdkOTqmpU/J7nQUfN++cxyy0wpceIPP8LYqce+rW
-         XopabBRS08x4CkOr4Je8c+dwqYgL/rMg4yQ5dY7aybSQQV7nXfGSeoDdeKAkHRs22ApG
-         x4GA==
-X-Gm-Message-State: APt69E2g/pFAf6SyvIggkt0kNJO47m6UBbod8BwGIngwOFe5Ud7beRnB
-        9Hp1m23nglgSJW6oJsrFoYl9vj/2TgRDkkqCLdUO2MTtnDYX3cU4JMsESaMM/lUtoY+ZDgtUeRj
-        DzleS2JWb7/I08Qd2W6Y6Q62I9PM1V5suCfgRryd6fdUMeDgDWCGOeFwWKpQ4GQHqIW9+3k+4Ks
-        Rs
-X-Google-Smtp-Source: ADUXVKIXcxSZmTestQ2bF4L4UaKMDRbQuVJoB4fN1X+P4rdSpKAS3zhzJeuWqDz7yl7/nMN8dUrPwzjQ7nlIY9/e2kSB
+        bh=Wa4brdC2T6qPI+ilB5MxnWd6sY3qhFT66EkXLA+UGV8=;
+        b=B942RnRJ+Y6wM7oJj6WiUjF8bVa/y320wK/b6tkpjWJw/S9An6Q2Mgvo+599bFEGH9
+         R9Zbis1gSaQkAoxAOK8NPR4C23q+CeLWbfuwXre8jADx7xj9Nnw6OG+fSm/1Xr75f70U
+         N/2fA0NiQFZmY8waK6dttwdalpnLW5dO3YNHhXfT+AjFy/PDZ/M6e026xjBPKOGVmhTH
+         ob9ZpCY0mEIABvACj6N40A/gHERbSE/YCMm8KpnCwtItXicJZsOKF7XrcOLzBA40xfI9
+         Ft/K+t0/nbsYbPnPAi2iNgFcrXvSUOSEHWrYpLOai5IoMMb3r3q2e5W6VMAvMVKIYRgC
+         ugAQ==
+X-Gm-Message-State: APt69E3GlixwKYql4GWLXHFcoTaA1u9j9ntNRrNtAoXWl5iAfGLb0NCl
+        LZHyX7cgs4Hi746MlZ1bZmdfq4q/OdiUVnA7A78r3qFoU87dCysZhO9DeKWMJa3iW3KfnzhXj6K
+        DMsrdUGUG/XlPoZK+P8wpdFyBV5/d8CCAWT5fhTWnnQZzp0LTs6bTeAd6ojomvWTi7tL5/SzNup
+        5p
+X-Google-Smtp-Source: ADUXVKIpKNAqR+JoAF9cvLOLf6+8t1EEXYuud6n0sJj25x8HUgVg88+Nx9biRvkjiuVYuwkMj8brhS/z3kniER+aRYMD
 MIME-Version: 1.0
-X-Received: by 2002:ab0:51b1:: with SMTP id g46-v6mr1971362uaa.101.1529016876677;
- Thu, 14 Jun 2018 15:54:36 -0700 (PDT)
-Date:   Thu, 14 Jun 2018 15:54:23 -0700
+X-Received: by 2002:a81:b3c3:: with SMTP id r186-v6mr1272342ywh.63.1529016879175;
+ Thu, 14 Jun 2018 15:54:39 -0700 (PDT)
+Date:   Thu, 14 Jun 2018 15:54:24 -0700
 In-Reply-To: <cover.1529016350.git.jonathantanmy@google.com>
-Message-Id: <dca6619c551b8259aef0476146184996657a80e9.1529016350.git.jonathantanmy@google.com>
+Message-Id: <fdcd88ba460d1feddb40037ff5b935339a51368b.1529016350.git.jonathantanmy@google.com>
 References: <cover.1527894919.git.jonathantanmy@google.com> <cover.1529016350.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.17.0.582.gccdcbd54c4
-Subject: [PATCH v3 2/7] fetch-pack: clear marks before re-marking
+Subject: [PATCH v3 3/7] fetch-pack: directly end negotiation if ACK ready
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     bmwill@google.com, gitster@pobox.com,
@@ -64,57 +64,71 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If tag following is required when using a transport that does not
-support tag following, fetch_pack() will be invoked twice in the same
-process, necessitating a clearing of the object flags used by
-fetch_pack() sometime during the second invocation. This is currently
-done in find_common(), which means that the invocation of
-mark_complete_and_common_ref() in do_fetch_pack() is useless.
+When "ACK %s ready" is received, find_common() clears rev_list in an
+attempt to stop further "have" lines from being sent [1]. It is much
+more readable to explicitly break from the loop instead.
 
-(This cannot be reproduced with Git alone, because all transports that
-come with Git support tag following.)
+So explicitly break from the loop, and make the clearing of the rev_list
+happen unconditionally.
 
-Therefore, move this clearing from find_common() to its
-parent function do_fetch_pack(), right before it calls
-mark_complete_and_common_ref().
-
-This has been occurring since the commit that introduced the clearing of
-marks, 420e9af498 ("Fix tag following", 2008-03-19).
-
-The corresponding code for protocol v2 in do_fetch_pack_v2() does not
-have this problem, as the clearing of flags is done before any marking
-(whether by rev_list_insert_ref_oid() or
-mark_complete_and_common_ref()).
+[1] The rationale is further described in the originating commit
+f2cba9299b ("fetch-pack: Finish negotation if remote replies "ACK %s
+ready"", 2011-03-14).
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- fetch-pack.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fetch-pack.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/fetch-pack.c b/fetch-pack.c
-index 5c87bb8bb..2812499a5 100644
+index 2812499a5..60adfc073 100644
 --- a/fetch-pack.c
 +++ b/fetch-pack.c
-@@ -336,9 +336,6 @@ static int find_common(struct fetch_pack_args *args,
+@@ -517,10 +517,8 @@ static int find_common(struct fetch_pack_args *args,
+ 					mark_common(commit, 0, 1);
+ 					retval = 0;
+ 					got_continue = 1;
+-					if (ack == ACK_ready) {
+-						clear_prio_queue(&rev_list);
++					if (ack == ACK_ready)
+ 						got_ready = 1;
+-					}
+ 					break;
+ 					}
+ 				}
+@@ -530,6 +528,8 @@ static int find_common(struct fetch_pack_args *args,
+ 				print_verbose(args, _("giving up"));
+ 				break; /* give up */
+ 			}
++			if (got_ready)
++				break;
+ 		}
+ 	}
+ done:
+@@ -1096,6 +1096,7 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
+ 		die(_("git fetch-pack: fetch failed."));
  
- 	if (args->stateless_rpc && multi_ack == 1)
- 		die(_("--stateless-rpc requires multi_ack_detailed"));
--	if (marked)
--		for_each_ref(clear_marks, NULL);
--	marked = 1;
+  all_done:
++	clear_prio_queue(&rev_list);
+ 	return ref;
+ }
  
- 	for_each_ref(rev_list_insert_ref_oid, NULL);
- 	for_each_cached_alternate(insert_one_alternate_object);
-@@ -1070,6 +1067,9 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
- 	if (!server_supports("deepen-relative") && args->deepen_relative)
- 		die(_("Server does not support --deepen"));
+@@ -1300,7 +1301,6 @@ static int process_acks(struct packet_reader *reader, struct oidset *common)
+ 		}
  
-+	if (marked)
-+		for_each_ref(clear_marks, NULL);
-+	marked = 1;
- 	mark_complete_and_common_ref(args, &ref);
- 	filter_refs(args, &ref, sought, nr_sought);
- 	if (everything_local(args, &ref)) {
+ 		if (!strcmp(reader->line, "ready")) {
+-			clear_prio_queue(&rev_list);
+ 			received_ready = 1;
+ 			continue;
+ 		}
+@@ -1441,6 +1441,7 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 		}
+ 	}
+ 
++	clear_prio_queue(&rev_list);
+ 	oidset_clear(&common);
+ 	return ref;
+ }
 -- 
 2.17.0.582.gccdcbd54c4
 
