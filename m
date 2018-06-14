@@ -2,158 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 99D171F403
-	for <e@80x24.org>; Thu, 14 Jun 2018 21:44:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B6B6C1F403
+	for <e@80x24.org>; Thu, 14 Jun 2018 22:20:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964820AbeFNVoO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Jun 2018 17:44:14 -0400
-Received: from mail-it0-f65.google.com ([209.85.214.65]:54384 "EHLO
-        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755392AbeFNVoN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jun 2018 17:44:13 -0400
-Received: by mail-it0-f65.google.com with SMTP id 76-v6so302635itx.4
-        for <git@vger.kernel.org>; Thu, 14 Jun 2018 14:44:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=6lx/gFhCGwJDgzLHyhVl2sZZWgAhEgMzNybDmf54vCM=;
-        b=TW0oGK8t7fklzSXFUQJ/2BkGV0dlKwaFfqNk+OKS61X4/swI9JW+qskZtz2yzRowyq
-         AQYrdTILwCGnCGYL4cq6gXJi8X8DtKzbqVGO4UIR59aPfsCtkoWKNsXb0fW0hLC3ellM
-         u+hysNgMSZqsjFAYFfeGJLjT904itCBpVFkyfdMpYVYL2GZiDLPWXmAEP26t5b0y/lUl
-         TnCrcjDnzBNkZIYsWMjSzYMwJ0l52zl/WeaySbx7IMs0h3Wr7UFMsg9t2UDWXBJ0hCqh
-         ifRSNc2OWCOR/0Ep96UcJW0N+5xpoqE+pGWZqrYQTFa4EvaLiRf629IIv+1/2pzPpDsb
-         yKaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=6lx/gFhCGwJDgzLHyhVl2sZZWgAhEgMzNybDmf54vCM=;
-        b=TlwG+DcknDv/5TP4iiahDxIKimiVgUbeRXByp+To2cp32YlApSdt7/Du1i09488G0/
-         Eavg9QI2gDLG6se3lrTae+qc5r2wF6z/a7Qs6GCqxshlEVVqsiMEOEfmyHvlAtXA5BWm
-         KTIIv520RwIb7drUDB8ztQwSqjzSokZCA0hQSI27Fp8Uv/vtVaDRXIn56gHtnx1Q/+fK
-         uXqB8kokelYdq7/Yh2BqyXQWPUzzmepOQxvMh5xJp1dYI7IVNZZPDcbezqDevXBfdbcz
-         oPLPGPhBkjne5pc4ehRv/g+HW2Asj9RVYMaMojlmP/aXMQoVxMKItWnP+3nv/DCtFh/v
-         Jd5Q==
-X-Gm-Message-State: APt69E11jQ7bNPzWgpI4sh01Qdh6xzdyC1yJCo/d2WPgsK79OiYMHMpv
-        d86dVCtp5g6wqLhHYuh/KKo=
-X-Google-Smtp-Source: ADUXVKL067koW2xZJz4hSmEyy3MIaTa/rM284tvU4VqtPI5xuf9nk/9S1nVIfDuYO3AZ/BKbPUDDSw==
-X-Received: by 2002:a24:1ad7:: with SMTP id 206-v6mr3854021iti.148.1529012652437;
-        Thu, 14 Jun 2018 14:44:12 -0700 (PDT)
-Received: from flurp.local (user-12l2cs3.cable.mindspring.com. [69.81.51.131])
-        by smtp.gmail.com with ESMTPSA id u18-v6sm2183828iob.28.2018.06.14.14.44.11
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 14 Jun 2018 14:44:11 -0700 (PDT)
-Date:   Thu, 14 Jun 2018 17:44:05 -0400
-From:   Eric Sunshine <sunshine@sunshineco.com>
-To:     Juan Navarro <juan.navarro@gmx.es>
-Cc:     git@vger.kernel.org
-Subject: Re: (Bug report + fix) gitk "IgnCase" search doesn't ignore case
-Message-ID: <20180614214405.GA26783@flurp.local>
-References: <fc6b89c5-f0be-97c8-b0e1-247d9dd3e1f0@gmx.es>
+        id S964862AbeFNWUH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Jun 2018 18:20:07 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:39434 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S936073AbeFNWUG (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 14 Jun 2018 18:20:06 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b0c3:20dd:704c:b59d])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 678A46046C;
+        Thu, 14 Jun 2018 22:20:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1529014805;
+        bh=3Tov7de6F1vkBzFKMntsEGXygFld5+shDjqkmDpsPwA=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=eS3ltfWRX5FWRBu0dYAIu+Ip2Sm3vEQTWUjeu+6j3RQhmKoY3wNcmZxXWajGhx/Hc
+         3yZinlaw750Odln3tHTZtin5wEJx7lSrYFzj+TJ/b9syANBMny/VSVhDI7fIpu7XcL
+         ohLFHXzNsv9rVJQAesjy+rSsdCTaTg6kbnaB+gbTujUtQmB6CSt1t5IAuB85LcUvdd
+         +q5jtNWFlqIG+0/e0QkoyCF4uU63WqOZ/+PlDfaB7gEuFRbLcb4oIgSUFJnVqTOOvt
+         n1jlNudb5otdrgUJ0iqPiAKzF1QyDBEZZUYm8xk1C9nnBvcj6v18z4+ZSJXAvH1ixs
+         GQsWrBN6f0oxgIRgj27Ok5BdTbp4x9Je1ygp9PbhoLuEaTAGzbwTeRkiokwRsp3TSF
+         ui1Wh4DC3FdBHhbHlaMR7/zoKfqAoXm5tZG+xkMLsNdqElbq9Pq2YbVFiB9xUtPIWN
+         p9qCc/z+LpAREgBHukBGeDWR/Pjme/6hp4IyTM7Rb16xOxM9hGs
+Date:   Thu, 14 Jun 2018 22:20:00 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Jeff King <peff@peff.net>
+Cc:     Christian Halstrick <christian.halstrick@gmail.com>,
+        Git <git@vger.kernel.org>
+Subject: Re: OAuth2 support in git?
+Message-ID: <20180614222000.GA622873@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>,
+        Christian Halstrick <christian.halstrick@gmail.com>,
+        Git <git@vger.kernel.org>
+References: <CAENte7iUYcLX1ym1rdiYT2L8yLSWforf8kUvfHKLvhi_GhKQvg@mail.gmail.com>
+ <20180614101342.GO38834@genre.crustytoothpaste.net>
+ <20180614151507.GA6933@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="wRRV7LY7NUeQGEoC"
 Content-Disposition: inline
-In-Reply-To: <fc6b89c5-f0be-97c8-b0e1-247d9dd3e1f0@gmx.es>
+In-Reply-To: <20180614151507.GA6933@sigill.intra.peff.net>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.16.0-2-amd64)
 User-Agent: Mutt/1.10.0 (2018-05-17)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 14, 2018 at 02:53:03PM +0200, Juan Navarro wrote:
-> Gitk "find commit" search function doesn't follow the "IgnCase" option that
-> is selectable with a combo selector on the right side of the window; it
-> should be searching in a case-insensitive way, but it doesn't.
-> 
-> Steps to reproduce:
-> [...]
-> 3. In the "Find commit" bar, select "changing lines matching"
-> 4. In the right side of the same bar, select "IgnCase"
-> [...]
-> 
-> Proposed solution is almost trivial: check if the "IgnCase" option is
-> enabled, and in that case add the flag "-i" to the git command. Now that we
-> are at it, it's probably correct to add that option to all search modes.
-> A diff is attached to this email, hoping that someone is able to apply it
-> (sorry I'm not familiarized with contributing with patch files, but the diff
-> is pretty small anyways).
 
-Thanks for reporting this.
+--wRRV7LY7NUeQGEoC
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-A different way to interpret the situation is that the user-interface
-is being inconsistent. For instance, the "fields" pop-up next to the
-"exact/ignore-case/regexp" pop-up does not seem to make sense for
-search types other than "containing", so it probably ought to be
-disabled for anything other than "containing". By extension, one could
-argue that the "exact/ignore-case/regexp" pop-up also ought be
-disabled for non-"containing" searches. The fact that they are not
-disabled confuses people into thinking that they should be functional
-for all searches, not just for "containing" searches, even though such
-functionality was never implemented (and indeed, may be difficult to
-implement fully).
+On Thu, Jun 14, 2018 at 11:15:07AM -0400, Jeff King wrote:
+> On Thu, Jun 14, 2018 at 10:13:42AM +0000, brian m. carlson wrote:
+> > There isn't any support for Bearer authentication in Git.  For HTTP, we
+> > use libcurl, which doesn't provide this natively.  While it could in
+> > theory be added, it would require some reworking of the auth code.
+> >=20
+> > You are, of course, welcome to send a patch.
+>=20
+> If it's just a custom Authorization header, we should be able to support
+> it with existing curl versions without _too_ much effort.
 
-Your proposed fix handles only the "ignore case" item; it does not
-implement "regexp" functionality, so it could be considered
-incomplete. A more complete fix would also disable the "regexp" item
-to avoid misleading users, and to head off future bug reports similar
-to this one saying that "regexp" doesn't work for non-"containing"
-searches. (Bonus points for also disabling the "fields" pop-up for
-non-"containing" searches when it's not applicable.)
+It shouldn't be too difficult, but we have some fallback among various
+authentication types that would need reworking.
 
-Below is your fix wrapped up as a proper patch and sent in-line rather
-than as an attachment. It's also slightly simplified by dropping the
-unnecessary extra variable. You'll need to sign-off on the patch if it
-is ever to be accepted. You can do so by adding it after my sign-off.
-If you don't feel like re-sending the patch with your sign-off, you
-can alternately reply to this email with a "Signed-off-by: Your Name
-<your@email>" line.
+> I think there are probably two possible directions:
+>=20
+>  1. add a special "bearer" command line option, etc, as a string
+>=20
+>  2. add a boolean option to send the existing "password" field as a
+>     "bearer" header
+>=20
+> I suspect (2) would fit in with the existing code better, as the special
+> case would mostly be limited to the manner in which we feed the
+> credential to curl. And you could probably just set a config option for
+> "this url's auth will be oauth2", and use the existing mechanisms for
+> providing the password.
 
-Note, however, that the gitk project is, at best, deeply slumbering,
-so it's not clear when or even if patches will be incorporated.
-(Indeed, other recent gitk-related patches sent to the mailing list
-have not yet been picked up.)
+I agree option (2) would be better.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
---- >8 ---
-From: Juan Navarro <juan.navarro@gmx.es>
-Subject: [PATCH] gitk: support "ignore case" for non-"containing" searches
+--wRRV7LY7NUeQGEoC
+Content-Type: application/pgp-signature; name="signature.asc"
 
-The "Exact/Ignore Case/Regexp" pop-up control only affects "containing"
-searches. Other types of searches ("touching paths", "adding/removing
-strings", "changing lines matching") ignore this option. Improve the
-user experience by also recognizing "ignore case" for non-"containing"
-searches.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.8 (GNU/Linux)
 
-Note: This change only implements the "ignore case" option for these
-other search types; it does not add support for the "regexp" option
-(which still only affects "containing" searches). A more complete "fix"
-would improve the user experience even more by making the UI more
-consistent; namely, by disabling options which don't make sense or are
-not easily implemented for non-"containing" searches. In particular, the
-"regexp" pop-up item and the neighboring "fields" pop-up control ought
-perhaps be disabled when a non-"containing" search is selected.
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlsi6hAACgkQv1NdgR9S
+9osGVA/7BmpFRT2oHLCsFPaXaXlZzOB49x7d0gnttBmw/M6jRqZg6y6WuHvq40oM
+ikx0pCx7oz24zclpfXEFOH/2/CNg9YWPUQnbrHGHbHTXTowSAjZd5ureC1Sfy/ME
+MxpAjlOs2Wv26In+P1EL2jmx7PJ9vVO5UeJx7ppZAXUXCPDX2+qVkyyDR5a5Qq6X
+OBjl9KCdjRn9w8ouRLNl8mRNCJpCOzeHsBryqqls/bLq775vr6MDEIyl9Oyu7tym
+qE7gGYbH2ghqbnlWHBqLFJHJijAHrhOwgnu0UDv3Z4PxoXq4vt1N+X1C5IgeHArT
+1K6gqMkKytqPiOKsqg8bI+vptf3wUJy0cglc7cx/RS58nsRZpq/9nFoROHYDe0zT
+p6Y18LguKc1kuN4jhYHtS56+bGvP5s10p8x86gsjX57j8NUpUMRvOpbllZcEM/BT
+RVTyGO7+UgaSL9T90E4EocPgQfDhS/k2FW3u6UkOj3bL88YBZtPAyld4j0y75bJF
+1pR0Hnk942Cre+Z1IAqygC01YULk2y5t2N9K+MYQmM6AAVMxCc2QM06BqYz56vG8
+1VdMgoMtJNvbnoPZp5HTkd+2aLnkQ50eqtkdVia5VkdV5l2QgCc7pKYxRTm/LdVh
+lJlH0VQsZWcJwDFEISlQmjRrB7JwWowtT7yfchjngt0vRudFdIk=
+=zlhv
+-----END PGP SIGNATURE-----
 
-[es: wrote commit message; slightly simplified proposed "fix"]
-
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index a14d7a16b2..fbb75f7390 100755
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -4806,6 +4806,9 @@ proc do_file_hl {serial} {
- 	# must be "containing:", i.e. we're searching commit info
- 	return
-     }
-+    if {$findtype eq [mc "IgnCase"]} {
-+	set gdtargs [linsert $gdtargs 0 "-i"]
-+    }
-     set cmd [concat | git diff-tree -r -s --stdin $gdtargs]
-     set filehighlight [open $cmd r+]
-     fconfigure $filehighlight -blocking 0
--- 
-2.18.0.rc1.256.g331a1db143
+--wRRV7LY7NUeQGEoC--
