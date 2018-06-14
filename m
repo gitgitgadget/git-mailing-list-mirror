@@ -2,115 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 33B2C1F403
-	for <e@80x24.org>; Thu, 14 Jun 2018 17:39:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2D541F403
+	for <e@80x24.org>; Thu, 14 Jun 2018 17:44:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754763AbeFNRju (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Jun 2018 13:39:50 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:37359 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754616AbeFNRjt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jun 2018 13:39:49 -0400
-Received: by mail-pg0-f67.google.com with SMTP id r21-v6so3242629pgv.4
-        for <git@vger.kernel.org>; Thu, 14 Jun 2018 10:39:49 -0700 (PDT)
+        id S1754758AbeFNRoC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Jun 2018 13:44:02 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:43800 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754689AbeFNRoC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jun 2018 13:44:02 -0400
+Received: by mail-wr0-f193.google.com with SMTP id d2-v6so7292398wrm.10
+        for <git@vger.kernel.org>; Thu, 14 Jun 2018 10:44:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Ff208sDr4/KGwbxCEX3kkT4DxJqcPxOZTZ1vkX/yq5U=;
-        b=b0nkcFnV6VOElcabN2m77qO6C5scC8HjtTAPIuAW8d3QBTF0Yq9pZD1AymKQcRPalI
-         e6zmRyVIs80TPKImiWWPiJBnwAIzMfU7t2Pz4LTCyXmrJMmEE7WQoukpKaf6W42bRTwI
-         zcX2GPR+Gs4TeP9Bgk2BxoAdx1pC/BgAciC4Xs32YwDQtaPf5jUozbifqg94Djto4JW3
-         IERbOYZXbdfqJHYDyGtgxe7NpSQQbxHVwOChZ49uozMjWAE7R1/ZRk/sMFvu5ifA6KsS
-         BLPVEzaVyOWKAQrtGAWveXq5Vx4b7YmuVceKEFxoHVlpz3F1jfYVC0uUfEaTL1BUGjiu
-         NFNw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=UP/uuQiEkGrSGo4sp743E8XBB2cGOhvrr2NddVQ7DAw=;
+        b=JJPsGVFZMNDfNNbpmBpww3+/xEl3Il14TTN1hhBxSE/4UTuATHU4pqcV491u4H9KXm
+         y9E/R61XHnPyrlW/wfcbgntjqVbzmeiHqukPAJoG9EcQOyWOwoAN8kOh/4TjKP0BMHFY
+         8XKlqlDad6zK6kdS1N+1cicPD4MTzOcXrNQfErBCqXwb9DhAMK7YQa7tSRkQ3KKSdxR1
+         Y51otaj46rcavMGV0kb0eA+6/ST0zs3TrnWqhu2k+Tj7xMHjhhNZ4jm1JtXXpLIs2yK9
+         d9hfW0ib3SAlxAeaXrsP3UM1qlc48O96jmEO3AJFYmY6wvTs7lKpVYe1+WzSMdjVIcsb
+         fbYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Ff208sDr4/KGwbxCEX3kkT4DxJqcPxOZTZ1vkX/yq5U=;
-        b=WBPUeYMEKBZnuJjFO+lRSpRJiTzRp7hkViYxxHB/6OiI9R4FzUyBUYJkxsPq17M/lp
-         VDzLAVHO1sbzKBxlNErcKnAHohaiASJpmyhr/aIdS235kyqDw09Xzrxy3g4FYyiVBn3b
-         VUxiaymo53LyQbumDAUKcaMrB5MkvXIdZrLYsdhAarLbxzIvPmq62STV6MtWQEBRYWt+
-         3GMH3ITnZIluh4PSLidgTFhVz5BloPk8JPY8x7lEcirvia1lBE0UBdtI8D2uiiLJry4D
-         jHroBpDfyhgjNK2fWXPedd5bfhQpdDbW3enbgX0AugCeqVFTp3NfjKS3xKE7tohAsLFv
-         pLEg==
-X-Gm-Message-State: APt69E1uuq7c8PTqzqoKJlFWQBbBeQupRQXnYO+p4R5BzTU9CXWno9DV
-        ZGiVCdWKgCQjJYADAGJ7dRrUKQ==
-X-Google-Smtp-Source: ADUXVKI63IQ/kc99fyNuMtatLrir0wDG5s/x0EypAIwTYjjL+lhGHTDuRY9yqU/rHhzoBPEW6AMOuw==
-X-Received: by 2002:a63:8ec8:: with SMTP id k191-v6mr3107827pge.435.1528997988875;
-        Thu, 14 Jun 2018 10:39:48 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id m12-v6sm7179314pgp.88.2018.06.14.10.39.47
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=UP/uuQiEkGrSGo4sp743E8XBB2cGOhvrr2NddVQ7DAw=;
+        b=pZ1Ol+VSyF6PO8fe7Vc1Qh3Cj02Y955Ona6xVn75+ht2g/5akV+06ZyNMFtKzhnJPC
+         /NM8mZXTpyOOkn/aXegVS4o80tA32huRC1j0lxSyH3+wBMD/JdF/2uNSXv4+zLnbVcfr
+         gD+djZBTYgnHmSogAhcngqe40eiK58rS0DLxpMzbNVkcXyqNZmI6fEKCpKtlnym6HJgR
+         XIXou5arZhV1N83genvmw9EwdEJFb0TYSRtYEVRABgFVw/ZXLm0ruN2zZHmxhHgdF1Vu
+         TIOUmHE3UillhZQDBn4yg44acQzlanDrU6cHg5P1ol4MrVAspdGnZ7YMUXcUaBVsKhbt
+         81AA==
+X-Gm-Message-State: APt69E3gd3OUGZxtsvUagAd9N3sDjojbQCDCSCbQbLjN4iLfKxrPdcwd
+        nXQiVInAn44DQTQ0GkzzciQ=
+X-Google-Smtp-Source: ADUXVKK/SXH8tkWwXvgo0LAuWSaTlSrJxNc34ht3X7LrWUfDvFeN/ZkRBUeSRCzK27wMKbFpGGuC2A==
+X-Received: by 2002:adf:9dc9:: with SMTP id q9-v6mr3319397wre.12.1528998240583;
+        Thu, 14 Jun 2018 10:44:00 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 201-v6sm9502828wmm.18.2018.06.14.10.43.59
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 14 Jun 2018 10:39:47 -0700 (PDT)
-Date:   Thu, 14 Jun 2018 10:39:47 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com
-Subject: Re: [PATCH v2 8/8] negotiator/default: use better style in comments
-Message-ID: <20180614173947.GF220741@google.com>
-References: <cover.1527894919.git.jonathantanmy@google.com>
- <cover.1528317619.git.jonathantanmy@google.com>
- <aa0df5f449c2f5c1f2e6d6edf933aad5f58b2a5e.1528317619.git.jonathantanmy@google.com>
+        Thu, 14 Jun 2018 10:44:00 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        "Robert P . J . Day" <rpjday@crashcourse.ca>
+Subject: Re: [PATCH] t3200: clarify description of --set-upstream test
+References: <20180605112446.17016-1-szeder.dev@gmail.com>
+        <20180614140641.13752-1-kaartic.sivaraam@gmail.com>
+Date:   Thu, 14 Jun 2018 10:43:59 -0700
+In-Reply-To: <20180614140641.13752-1-kaartic.sivaraam@gmail.com> (Kaartic
+        Sivaraam's message of "Thu, 14 Jun 2018 19:36:41 +0530")
+Message-ID: <xmqqin6l461s.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aa0df5f449c2f5c1f2e6d6edf933aad5f58b2a5e.1528317619.git.jonathantanmy@google.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/06, Jonathan Tan wrote:
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
+
+> Support for the --set-upstream option was removed in 52668846ea
+> (builtin/branch: stop supporting the "--set-upstream" option,
+> 2017-08-17). The change did not completely remove the command
+> due to an issue noted in the commit's log message.
+>
+> So, a test was added to ensure that a command which uses the
+> '--set-upstream' option fails and doesn't silently act as an alias
+> for the '--set-upstream-to' option due to option parsing features.
+>
+> To avoid confusion, clarify that the option is an unsupported one
+> in the corresponding test description.
+>
+> Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 > ---
->  negotiator/default.c | 14 ++++++--------
->  1 file changed, 6 insertions(+), 8 deletions(-)
-> 
-> diff --git a/negotiator/default.c b/negotiator/default.c
-> index b8f45cf78..a9e52c943 100644
-> --- a/negotiator/default.c
-> +++ b/negotiator/default.c
-> @@ -46,11 +46,10 @@ static int clear_marks(const char *refname, const struct object_id *oid,
->  }
->  
->  /*
-> -   This function marks a rev and its ancestors as common.
-> -   In some cases, it is desirable to mark only the ancestors (for example
-> -   when only the server does not yet know that they are common).
-> -*/
-> -
-> + * This function marks a rev and its ancestors as common.
-> + * In some cases, it is desirable to mark only the ancestors (for example
-> + * when only the server does not yet know that they are common).
-> + */
->  static void mark_common(struct data *data, struct commit *commit,
->  		int ancestors_only, int dont_parse)
->  {
-> @@ -80,9 +79,8 @@ static void mark_common(struct data *data, struct commit *commit,
->  }
->  
->  /*
-> -  Get the next rev to send, ignoring the common.
-> -*/
-> -
-> + * Get the next rev to send, ignoring the common.
-> + */
->  static const struct object_id *get_rev(struct data *data)
->  {
->  	struct commit *commit = NULL;
-> -- 
-> 2.17.0.768.g1526ddbba1.dirty
-> 
+>  t/t3200-branch.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Don't have this be a separate patch, squash it into the previous patch.
+The above description is much clearer than what the test title after
+the patch gives its readers.
 
--- 
-Brandon Williams
+It is technically correct to call --set-upstream "unsupported", but
+the reason why we want to see it fail is not because it is
+unsupported, but because we actively interfere with the usual
+"unique prefix" logic parse-options API gives its users and make it
+not to trigger the longer-and-unique --set-upstream-to logic.
+
+> diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+> index 6c0b7ea4a..d14de82ba 100755
+> --- a/t/t3200-branch.sh
+> +++ b/t/t3200-branch.sh
+> @@ -884,7 +884,7 @@ test_expect_success 'test --unset-upstream on a particular branch' '
+>  	test_must_fail git config branch.my14.merge
+>  '
+>  
+> -test_expect_success '--set-upstream fails' '
+> +test_expect_success 'unsupported option --set-upstream fails' '
+
+In other words, I am wondering if s/unsupported/disabled/ makes it
+even more clear what is going on here.
+
+>      test_must_fail git branch --set-upstream origin/master
+>  '
+
