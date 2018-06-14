@@ -2,133 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 17C981F403
-	for <e@80x24.org>; Thu, 14 Jun 2018 17:29:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC0871F403
+	for <e@80x24.org>; Thu, 14 Jun 2018 17:31:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754841AbeFNR3U (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Jun 2018 13:29:20 -0400
-Received: from mail-pl0-f67.google.com ([209.85.160.67]:39260 "EHLO
-        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754644AbeFNR3U (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jun 2018 13:29:20 -0400
-Received: by mail-pl0-f67.google.com with SMTP id f1-v6so3908899plt.6
-        for <git@vger.kernel.org>; Thu, 14 Jun 2018 10:29:19 -0700 (PDT)
+        id S1754833AbeFNRbN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Jun 2018 13:31:13 -0400
+Received: from mail-qt0-f202.google.com ([209.85.216.202]:39992 "EHLO
+        mail-qt0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754819AbeFNRbL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jun 2018 13:31:11 -0400
+Received: by mail-qt0-f202.google.com with SMTP id o10-v6so5180195qtm.7
+        for <git@vger.kernel.org>; Thu, 14 Jun 2018 10:31:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=qLeK3yp33f0ffXWU588NKQLHT79fFD5IKjBycCF6TGA=;
-        b=exfOFY27oVlBTh833a40y6La3XarTLt/0n/WeyJb8yQep2diCa1I8hZV1ebCCm0tBy
-         Q/7DCxQorSMCERhZ78I9L8fL9DToLrmGzfl4Ym/I18uUnpHlbxU31omrMXJj+q/8qoTn
-         edGAPRIMY3pLdKIJzp/5TClsrpSeyT+RhL7yHEqEUbu7uFtChmyumMHfDl4D8JezzHmd
-         t+sLnKyZZeuukFydegBf4XkasR7FZCHnUVOd64Ziq8tabnZf/NbxX8Ck6nVxqGXBojn4
-         Fn8mObrlEQbJlq3zWnEo/D5W+ybo27d5kFm3deTtR8IKt97nfC5kqJYyjbxPVL4fMhol
-         YXaQ==
+        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
+         :cc;
+        bh=VAb8kq6VhMeBL0Unw2UkiI1wG2Ew5VV+JaHtW2HhCro=;
+        b=Bixm2gdQzYvxkgvBHY02Jpzk+13S4WuQv6DKnryKCQEv26qr6IEjZyVnLqfmE30Vdy
+         KeBaoFA+nEFtsdE4vdtw01XNE1101yzZr6g5qc/d/Uj0M19jLMcnjtedh2th+dYwue4Y
+         TI2+Kd6JuEP1n/LYKMoNmcLNjgVK8AVWQ8n/mJTSx5M7GVb0A13vnPc/7jpFH925mzQ9
+         1WvdY0JIh6na1gvfWQHJz60DonKYWr7BcXCdrNov0qUK3MDx3rZHZQDWXwahtWHaPHXv
+         kknqxW6Q6L9GuE6Yi8BXpQfCdlahBtGp2E3bZowKcBunRjCX+eqQIfxkp4Jd4TEbI0Or
+         s3zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=qLeK3yp33f0ffXWU588NKQLHT79fFD5IKjBycCF6TGA=;
-        b=nw/+eMmDXs7+TjDMz78QIJaojxV8lkbOHNCh9DxprbROHY8ofPNA3IWCvxLL7HTBZV
-         GC1sOzKBQrceXLkDQvzyWPLnIpIma5BwqzvFC5a6EaSdoOTqZ+TyG64VnE4OIYw+iRIR
-         76E/tbrl9Td9cU7rXdIfd3Sdz7sDyYoMJYdwUXwgLs1oVHRj8mKEppMDiENrVYpKUdJw
-         KBaOWBML0v5fLzllqEu2dyTc/Rt0EgbBmCYzETof0LpecemHzp1mxX2xxxau2XHf17bM
-         jRkd366LKja9Hd/uH7y7Ix+pmYaMu2A17+XRuUtgv7LCas/6st/QACQLs5piKSrobP56
-         q0+A==
-X-Gm-Message-State: APt69E3jHJiH3E7ukGkh4Mv/LABkpHNxNHIgACcv3wDhhGu/aIe9yKlq
-        z4hIGesAJyAFperLGtAxBntIBw==
-X-Google-Smtp-Source: ADUXVKKEuVnz/68FnK2bUXfiD9Vm3mMECF9emRUztwArcqgZrONgJqOOHVZzQ+FzmwYn4BtkADqqVg==
-X-Received: by 2002:a17:902:6847:: with SMTP id f7-v6mr3959409pln.173.1528997359434;
-        Thu, 14 Jun 2018 10:29:19 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id f6-v6sm11271988pfd.112.2018.06.14.10.29.18
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 14 Jun 2018 10:29:18 -0700 (PDT)
-Date:   Thu, 14 Jun 2018 10:29:17 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com
-Subject: Re: [PATCH v2 3/8] fetch-pack: directly end negotiation if ACK ready
-Message-ID: <20180614172917.GB220741@google.com>
-References: <cover.1527894919.git.jonathantanmy@google.com>
- <cover.1528317619.git.jonathantanmy@google.com>
- <fda04a33c38907388fd6d2166730928d78774c22.1528317619.git.jonathantanmy@google.com>
+        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
+         :references:subject:from:to:cc;
+        bh=VAb8kq6VhMeBL0Unw2UkiI1wG2Ew5VV+JaHtW2HhCro=;
+        b=bq5TuFv2VU/XtfzoU2BVffIVY+sjRUcqop9P8T9CZ05+t4VTIak57bpkoHyUu+yk2Q
+         KlhBMUk4gPmpmv5RWagUPoNK4fCegcExXE96YHJFSbgcfkQba4gtgbKa9l2OfN6z7qDW
+         dW69pqx99N0tYkrdBfEwdVy1AH8E4LYcXBORElQ6kKy3cagpFe/CE77PLfPgFlA8NJLj
+         JjATGp1ffFIkvh4W9x6B6xHGald8rY/xWhUENvthi9wuYBvvFA3J0QQWPitIk3pco4JW
+         ymoDpE2Jgy4qvMHd3MFM+qPFOpb8ad/nCT6czyCaZEoSvLYvuZUThVZCtQou3OAisuwr
+         wGBg==
+X-Gm-Message-State: APt69E3vfI7kcliHWx0XgTxeueVjGk9q88/oEKSOG8KLPxwo8v2qFdA9
+        pjOGSR0K807c9LzqfWTcdEbv4Xvg/x8Y
+X-Google-Smtp-Source: ADUXVKKz8cCYtiETkzwecmQt+u3p9oOsAgOXi75JV8+KA5ybY4Lu88pBJ9aSlc/WfWkEzNZQmmZf/DJ3TucI
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <fda04a33c38907388fd6d2166730928d78774c22.1528317619.git.jonathantanmy@google.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+X-Received: by 2002:ae9:ebd5:: with SMTP id b204-v6mr1754087qkg.54.1528997470781;
+ Thu, 14 Jun 2018 10:31:10 -0700 (PDT)
+Date:   Thu, 14 Jun 2018 10:31:07 -0700
+In-Reply-To: <CACsJy8Ab3HoVWSWOtCBRYcsnnHnpO-2oEfV60f=H15RuzwpWwQ@mail.gmail.com>
+Message-Id: <20180614173107.201885-1-sbeller@google.com>
+References: <CACsJy8Ab3HoVWSWOtCBRYcsnnHnpO-2oEfV60f=H15RuzwpWwQ@mail.gmail.com>
+X-Mailer: git-send-email 2.18.0.rc1.244.gcf134e6275-goog
+Subject: [PATCH] submodule: fix NULL correctness in renamed broken submodules
+From:   Stefan Beller <sbeller@google.com>
+To:     pclouds@gmail.com
+Cc:     git@vger.kernel.org, hvoigt@hvoigt.net, kaartic.sivaraam@gmail.com,
+        sbeller@google.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/06, Jonathan Tan wrote:
-> When "ACK %s ready" is received, find_common() clears rev_list in an
-> attempt to stop further "have" lines from being sent [1]. It is much
-> more readable to explicitly break from the loop instead, so do this.
-> 
-> This means that the memory in priority queue will be reclaimed only upon
-> program exit, similar to the cases in which "ACK %s ready" is not
+When fetching with recursing into submodules, the fetch logic inspects
+the superproject which submodules actually need to be fetched. This is
+tricky for submodules that were renamed in the fetched range of commits.
+This was implemented in c68f8375760 (implement fetching of moved
+submodules, 2017-10-16), and this patch fixes a mistake in the logic
+there.
 
-This seems fine for now though ideally we would remove the global
-priority queue and have it live on the stack somewhere in the call stack
-and it could be cleared unconditionally before returning.
+When the warning is printed, the `name` might be NULL as
+default_name_or_path can return NULL, so fix the warning to use the path
+as obtained from the diff machinery, as that is not NULL.
 
-> received. (A related problem occurs when do_fetch_pack() is invoked a
-> second time in the same process with a possibly non-empty priority
-> queue, but this will be solved in a subsequent patch in this patch set.)
-> 
-> [1] The rationale is further described in the originating commit
-> f2cba9299b ("fetch-pack: Finish negotation if remote replies "ACK %s
-> ready"", 2011-03-14).
-> 
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
->  fetch-pack.c | 7 +++----
->  1 file changed, 3 insertions(+), 4 deletions(-)
-> 
-> diff --git a/fetch-pack.c b/fetch-pack.c
-> index 2812499a5..09f5c83c4 100644
-> --- a/fetch-pack.c
-> +++ b/fetch-pack.c
-> @@ -517,10 +517,8 @@ static int find_common(struct fetch_pack_args *args,
->  					mark_common(commit, 0, 1);
->  					retval = 0;
->  					got_continue = 1;
-> -					if (ack == ACK_ready) {
-> -						clear_prio_queue(&rev_list);
-> +					if (ack == ACK_ready)
->  						got_ready = 1;
-> -					}
->  					break;
->  					}
->  				}
-> @@ -530,6 +528,8 @@ static int find_common(struct fetch_pack_args *args,
->  				print_verbose(args, _("giving up"));
->  				break; /* give up */
->  			}
-> +			if (got_ready)
-> +				break;
->  		}
->  	}
->  done:
-> @@ -1300,7 +1300,6 @@ static int process_acks(struct packet_reader *reader, struct oidset *common)
->  		}
->  
->  		if (!strcmp(reader->line, "ready")) {
-> -			clear_prio_queue(&rev_list);
->  			received_ready = 1;
->  			continue;
->  		}
-> -- 
-> 2.17.0.768.g1526ddbba1.dirty
-> 
+While at it, make sure we only attempt to load the submodule if a git
+directory of the submodule is found as default_name_or_path will return
+NULL in case the git directory cannot be found. Note that passing NULL
+to submodule_from_name is just a semantic error, as submodule_from_name
+accepts NULL as a value, but then the return value is not the submodule
+that was asked for, but some arbitrary other submodule. (Cf. 'config_from'
+in submodule-config.c: "If any parameter except the cache is a NULL
+pointer just return the first submodule. Can be used to check whether
+there are any submodules parsed.")
 
+Reported-by: Duy Nguyen <pclouds@gmail.com>
+Helped-by: Duy Nguyen <pclouds@gmail.com>
+Helped-by: Heiko Voigt <hvoigt@hvoigt.net>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ submodule.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/submodule.c b/submodule.c
+index 939d6870ecd..0998ea23458 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -740,12 +740,14 @@ static void collect_changed_submodules_cb(struct diff_queue_struct *q,
+ 		else {
+ 			name = default_name_or_path(p->two->path);
+ 			/* make sure name does not collide with existing one */
+-			submodule = submodule_from_name(the_repository, commit_oid, name);
++			if (name)
++				submodule = submodule_from_name(the_repository,
++								commit_oid, name);
+ 			if (submodule) {
+ 				warning("Submodule in commit %s at path: "
+ 					"'%s' collides with a submodule named "
+ 					"the same. Skipping it.",
+-					oid_to_hex(commit_oid), name);
++					oid_to_hex(commit_oid), p->two->path);
+ 				name = NULL;
+ 			}
+ 		}
 -- 
-Brandon Williams
+2.18.0.rc1.244.gcf134e6275-goog
+
