@@ -2,86 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2FCE41F403
-	for <e@80x24.org>; Thu, 14 Jun 2018 16:26:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E69D1F403
+	for <e@80x24.org>; Thu, 14 Jun 2018 16:39:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755254AbeFNQ03 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Jun 2018 12:26:29 -0400
-Received: from mail-ot0-f181.google.com ([74.125.82.181]:46074 "EHLO
-        mail-ot0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755071AbeFNQ02 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jun 2018 12:26:28 -0400
-Received: by mail-ot0-f181.google.com with SMTP id a5-v6so7750970otf.12
-        for <git@vger.kernel.org>; Thu, 14 Jun 2018 09:26:28 -0700 (PDT)
+        id S1755286AbeFNQjm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Jun 2018 12:39:42 -0400
+Received: from mail-vk0-f42.google.com ([209.85.213.42]:34607 "EHLO
+        mail-vk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755208AbeFNQjl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jun 2018 12:39:41 -0400
+Received: by mail-vk0-f42.google.com with SMTP id q135-v6so4058229vkh.1
+        for <git@vger.kernel.org>; Thu, 14 Jun 2018 09:39:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=gzhMmhM+Oq/vpLaEqSUDoq2QzZ4p0fWwGjEDaPhYbZ0=;
-        b=rzDnmjHe0hSya9XVbttYyHb2R3yWApaQVhE+dBL/C1lCJCr7ew+00mDflqawcPzTyt
-         tPU3E4DwYz2SqJGw1oeU0M/XAgEs06fGgG7Ge3J/ifLtWcX+054n5g02BqD64IQ8FLQ9
-         RnKbVIWwTDzxBop/k9sfXi5k7KXFAfWzQN7thDRTuqxsg05jq8p+k1uXWeXqxdBXWBRI
-         xwPcxvQiGeespI3srdAEK14ibf8ZJQQstNbhmUSOoQuUsxfv7JZkl9CPw01vNt/uaWk3
-         ASReC1rSZd0ctAl9RkUbyfkuMaWGdVnnmIVwYGG9ZaBFOIINw5q1mVSlQBLNbdlUyExC
-         93kQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=lbMPHz3P8d772osOXSLTA8vm78BuDanUibssXP1tI0I=;
+        b=Od1hi7xKhVbuaPLCDxaVW9RRK9UXHRlKXcXzKm2+fAVggJUOGMVGgllfgQxc//G2P7
+         VckwLWCS1l2AyOwp0DQoIp426UcMT2+g0Sipsxg883gV3VsCpEp+j/OLGDi99ax/2XIV
+         7PY2ar32/Hvcjzz16E+33LnXOH3UKURigCabARdb7K7zTQe8onv8FolHKB7+EcxfQG0X
+         rcbZiQWrfe9nhYwlx9lKAEqPlUC3AGw/tX0J6eGZ4iKpM9e9sC2PlicJ5uuViApVibnn
+         CtADawBwsJl5F8hH41KkpjpazEgzVXdBoAYH6pORv/RU/V/AeEzwV8ilaoBaKSlXHPes
+         T0+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=gzhMmhM+Oq/vpLaEqSUDoq2QzZ4p0fWwGjEDaPhYbZ0=;
-        b=Uxbf0Yzted8zHUbYvsvg68CDvlRSalgR+4RbiizxinQruzZq6a21/mWmj3yF2RiyLT
-         miOOBRkuG6GA04/5IFTJiGvSi5i4VUQXR+38E9ZVUb2atXCVsqDweQzqV3WXE4FpoiKW
-         t6iGMozy1A8RNO3+OOFH8BG2qHgD+04aONubxXw7SXg2Xj/ZYM4CNoEXQ7Gm3YXovgKG
-         fhI7TJxwvBHZLJb7Z0mI6NRwHRHhfdw83CxLhV5LnsOTBN66b02UUiHFHERo6/KFTX3Y
-         toiawbByXYNRno8GA8xwkoHfPHGHG5PWnMfqFg6QFDUMHz0+pjG43E1valdRHT0HRrto
-         ALkw==
-X-Gm-Message-State: APt69E2673AwuoM5LwAIMVR+Hm1ILozNfV8oAZns1KuaybivSwUE1FWZ
-        lwO8Utj6p3nyPNCTGbTCdERQSH0h2vGKtpe2gCk=
-X-Google-Smtp-Source: ADUXVKKfmf1kcL/dOdHOz1vMvNGt5bzDQ/97zprKDpQuUu2+QJYtvrZmKP9hrVAVgClOdRUlxxD6yjJmq1W3aT3dTow=
-X-Received: by 2002:a9d:16cb:: with SMTP id s11-v6mr1870552ots.304.1528993587730;
- Thu, 14 Jun 2018 09:26:27 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=lbMPHz3P8d772osOXSLTA8vm78BuDanUibssXP1tI0I=;
+        b=lbDnNFPWAdj67qh0Tn4yEoFmXODrvOGPBBhXnG0ds+6LkfbeRkxqvNcj+qCvQObsto
+         dksBcmNHnZmBk5abBHb77EkfSu3ovLS2my9A0jK0W0gEgyf8o5k4x5a9jeuY0YSQt9il
+         m/tnVCF7FpYxbrkUYNAmcNiIK1gDqKGJDpgLgXAJl4Xfrb5qeelGDNDuS/9eBELKX74J
+         SvJfu4bkzTxuyAo/00e85rPZAqgJbyuUbTqI+mXJNMFLsrhMgmbF4dbRFjueC/B3pEv1
+         zCVZUzFXu3pfOa4emiq/CQORYd48ZqegoAgi+CFlX5NcsENPQz5jyO6L6OHjHg5cO2Vk
+         Zr+A==
+X-Gm-Message-State: APt69E2bMcY1hfZs5QQX5CjUBVZwc7AKtwBIB+s2NM6aQMalbAx/QOH/
+        5ovSpnKiJSAAH4euDLayPrUAY/HSjCvKw4BLGUCiiQ==
+X-Google-Smtp-Source: ADUXVKLCTHnR2+ifOc79+PcbdM0hHdKvsk13gru5Bo/HtdVxHOhezGZ+cIIk5YD1IMnzX25T/BbECKopM1Tuk+UTKi8=
+X-Received: by 2002:a1f:4313:: with SMTP id q19-v6mr2027384vka.83.1528994380162;
+ Thu, 14 Jun 2018 09:39:40 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180530004810.30076-1-sbeller@google.com> <20180613230522.55335-1-sbeller@google.com>
-In-Reply-To: <20180613230522.55335-1-sbeller@google.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 14 Jun 2018 18:26:01 +0200
-Message-ID: <CACsJy8BvsfPoBZg69u8MvGQUxp3eQQu4=w-0FPmZ9EKQqA55Zw@mail.gmail.com>
-Subject: Re: [PATCH v2 00/31] object-store: lookup_commit
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Received: by 2002:ab0:3105:0:0:0:0:0 with HTTP; Thu, 14 Jun 2018 09:39:39
+ -0700 (PDT)
+In-Reply-To: <20180614123107.11608-5-szeder.dev@gmail.com>
+References: <20180614123107.11608-1-szeder.dev@gmail.com> <20180614123107.11608-5-szeder.dev@gmail.com>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Thu, 14 Jun 2018 18:39:39 +0200
+Message-ID: <CAM0VKjkfLiEoTOfkC=jXx5TVmbbVvHRDB6KEPinW6Gb98p0vgA@mail.gmail.com>
+Subject: Re: [RFC PATCH 4/4] t/lib-httpd: sort log based on timestamp to avoid
+ occasional failure
+To:     Git mailing list <git@vger.kernel.org>
+Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 14, 2018 at 1:08 AM Stefan Beller <sbeller@google.com> wrote:
->
-> * removed mentions of cooci patches
-> * added forward declaration of commit buffer slabs.
-> * dropped 3 patches that add the repository to lookup_unkonwn_object,
->   parse_commit and parse_commit_gently, but were not converting those
->   functions. We'll convert these in the next series, as this series is
->   growing big already.
-> * This series can be found as branch 'object-store-lookup-commit' on github,
->   it applies on top of nd/commit-util-to-slab merged with sb/object-store-grafts
->
-> v1, https://public-inbox.org/git/20180530004810.30076-1-sbeller@google.com/
->
-> This applies on the merge of nd/commit-util-to-slab and sb/object-store-grafts,
-> and is available at http://github.com/stefanbeller/ as branch object-store-lookup-commit
+On Thu, Jun 14, 2018 at 2:31 PM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> w=
+rote:
 
-I only looked at whole-series diff, not individual patches (sorry).
-Besides the one comment I made elsewhere, it looks good.
+> When a test sends a HTTP request, it can continue execution after
+> 'git-http-backend' fulfilled that request, but Apache writes the
+> corresponding access log entry only after 'git-http-backend' exited.
+> Some time inevitably passes between fulfilling the request and writing
+> the log entry, and, under unfavourable circumstances, enough time
+> might pass for the subsequent request to be sent and fulfilled, and
+> then Apache writes access log entries racily.
+>
+> This effect can be exacerbated by adding a bit of variable delay after
+> the request is fulfilled but before 'git-http-backend' exits, e.g.
+> like this:
+>
+>   diff --git a/http-backend.c b/http-backend.c
+>   index f3dc218b2..bbf4c125b 100644
+>   --- a/http-backend.c
+>   +++ b/http-backend.c
+>   @@ -709,5 +709,7 @@ int cmd_main(int argc, const char **argv)
+>                                            max_request_buffer);
+>
+>         cmd->imp(&hdr, cmd_arg);
+>   +     if (getpid() % 2)
+>   +             sleep(1);
+>         return 0;
+>    }
+>
+> This delay considerably increases the chances of log entries being
+> written out of order, and in turn makes t5561's last test fail almost
+> every time.  Alas, it doesn't seem to be enough to trigger a similar
+> failure in t5541 and t5551.
 
-You don't even need to reroll this series to address that one. A
-follow up patch whenever you feel like it is fine, or I'll get to it
-eventually (after the_index is gone, I plan to kill the_repository
-outside builtin/ too, for the same reason).
--- 
-Duy
+A bit of addendum here:
+
+There are basically two "kinds" of requests:
+
+  1. requests asking for regular files, e.g.:
+
+     GET  /smart/repo.git/HEAD HTTP/1.1 200
+     GET  /smart/repo.git/info/refs HTTP/1.1 200
+     GET  /smart/repo.git/objects/info/packs HTTP/1.1 200
+
+  2. requests asking for 'git-receive-pack' or 'git-upload-pack',
+     e.g.:
+
+     GET  /smart/repo.git/info/refs?service=3Dgit-receive-pack HTTP/1.1 200
+     POST /smart/repo.git/git-receive-pack HTTP/1.1 200 -
+
+This artificial variable delay shuffles only the access log entries
+written for the first kind of requests, but doesn't appear to have any
+effect on the order of log entries written for the second kind of
+requests.
+
+t5561 sends both kinds of requests, so this variable delay is
+sufficient to make the test fail most of the time.
+
+t5541 and t5551, however, send only requests of the second kind, so
+that's why this variable delay can't trigger a similar failure in
+these test scripts.
+
+I haven't investigated any further what else would be necessary to
+trigger a failure in t5541 and t5551.
