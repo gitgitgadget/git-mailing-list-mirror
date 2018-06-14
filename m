@@ -7,55 +7,57 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B767A1F403
-	for <e@80x24.org>; Thu, 14 Jun 2018 12:31:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EAFB51F403
+	for <e@80x24.org>; Thu, 14 Jun 2018 12:31:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755108AbeFNMbS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Jun 2018 08:31:18 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:34591 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755064AbeFNMbR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jun 2018 08:31:17 -0400
-Received: by mail-wr0-f196.google.com with SMTP id a12-v6so6263325wro.1
-        for <git@vger.kernel.org>; Thu, 14 Jun 2018 05:31:16 -0700 (PDT)
+        id S1755127AbeFNMbX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Jun 2018 08:31:23 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:35450 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755064AbeFNMbW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jun 2018 08:31:22 -0400
+Received: by mail-wm0-f67.google.com with SMTP id j15-v6so11740634wme.0
+        for <git@vger.kernel.org>; Thu, 14 Jun 2018 05:31:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=RCOhb2PWPnjh8plvwrf1328OMapONo5KID3r2h1CkNE=;
-        b=L1aVygJzKduv5Fb/BUdU+yuKxnKoYBJ7yOirx8gSAeNndYyVvhxZBr8w+V5/SmCU7X
-         w1HWQo8ScoL7eUnQ/667kmQwRybRrFzDOR2+R8XqT25ERaczI5F2g+j3s2C2ySXtpclQ
-         tnsrVS4tKSM1EQ+1Ksc9rvzt9yj1NxnRUUkrCsje7XVlO1ZCyyXvYH5MfceWAw5R824H
-         rg0xfghI5ZFXCmFDTZgIYaAxuhXbBkc+6PQYil/F7kq2mt99Ubo2wrlh+BSiu5eHl8Pl
-         vusuyWtDtDMIK5H2u7CWKtRqEWtcbTeLH7yrVNF8ECYeMTsIekR8kCBMXphXTorD7kEr
-         2Atg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=jBdjXoVXKTFMHXTF/LB74H3/9kjuIC5ETiI09wrUd8c=;
+        b=JVb2WLypBVznGIZhRYEIEQ4TmAYeiwMpinmVc13D/CU/8dL7EhWwSaofoP/zpHc5gV
+         PRbgovYd3AjMOprqf6rxedSNW44867EUax5iYL5O7dl1UT1jOQeGCXhbyxLhpZI/MJGk
+         dhu7WRDxdh8WK9pZQlGwhO9U1jcc9vD2agNiqEBGDs/LAXyW6Z0IGh4yCulHuymWz+2l
+         2V7m26Gvqn0DqoV6OD2D4exfuL9byEAD/+tVselgdAieyU/w6wygDdqtH6McfaBRZGsj
+         SXecB32sGWmaO73JxlexHDFhhK6CZn7bzWEyipZh2eZiOsUEKLQzYyP+7L+PPj4+u2QM
+         UL4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=RCOhb2PWPnjh8plvwrf1328OMapONo5KID3r2h1CkNE=;
-        b=h4zSV2QuQTPXZPm6TBYLYPO9R6CXWuscoFDykGO+cZtST9CF7bfGkma0KgP7ybJd/P
-         qC4nTo32cbsJpWFKwhjdSD+aSX+e0dpRjXjXqrsJoHP+Bj2iR0aA0eq80Cr3IRxWesrk
-         ubak/gJonALWZDDTOYORe0UScMBBRe+bXagUBuWi+6KvBeHUBsS9EyPZ0r17Zz5On3tq
-         qPewnQerSIjRjwbcaIJkvldqlJQww0LfLd74XEEhX4ynYb/72XpyhSeQfZEnjwRNnmgR
-         ipevF7Vqm7LGc8tjFkSnzi+0N19vXs+VWfK6ztKw+5/iqclh38KmJ2ap6EWbUEpX62tM
-         gw8A==
-X-Gm-Message-State: APt69E33V3F6iSn3rVXybTT+tAdIQO3enQg/qgCPoAmAube8D9MZJWig
-        m5e9UDUMfGe2AEpWH2BdsXQsXA==
-X-Google-Smtp-Source: ADUXVKLxKrkDo9pfD1EpCkcsDeDpXC67ZMuraPS9F5HP7zTqfl2TNRvj5ovWH2DcSqmtUjBwiYuf/Q==
-X-Received: by 2002:adf:c104:: with SMTP id r4-v6mr2193291wre.203.1528979475932;
-        Thu, 14 Jun 2018 05:31:15 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=jBdjXoVXKTFMHXTF/LB74H3/9kjuIC5ETiI09wrUd8c=;
+        b=dmsLHZ8BlgxMyB55pmYNqAdqWK2Q+AZ9IXgXnJsk7jp8A2S82GLpmrh+b0KU2Fs+2f
+         Tmu8MZ+tBPGsfnrfkbvp6ZKblestFAQ+1zBsSqJ6WA1uU0FZkvkhGWqJ19fJB55f7lTw
+         OTcBABNKJ+XINbMTFMBKCeZdxZVK6YosiF18q643/IzHyaYHJW8rB4/ezJKd5MjlViDU
+         cKk63e7DjdNJOQwCTTTDitza6jyGeNqf6LqSboCrtAqOOUqEWre01bAKeDORsRYg5O6L
+         L8yOtUHmsrEopcDy4sh+gkBLhVTXTB6M0mhYUj35WylSNC6z6Fb1eXiWS+wNTNmgOzjX
+         CTAw==
+X-Gm-Message-State: APt69E2ADEspcl4bZ56ru9KsNWybDZ48gOD96Oh74KPuv9eRglTpSPHB
+        yncoRL3/wiNruXb4BrvqazadRw==
+X-Google-Smtp-Source: ADUXVKIqbBUGc6pP8p82e4NkLJP6PvVre95y9yvAKFl6U3D3cfOap/sqdy3UUK8YOrOPzBXBvsE0Ng==
+X-Received: by 2002:a1c:878f:: with SMTP id j137-v6mr1830158wmd.97.1528979480853;
+        Thu, 14 Jun 2018 05:31:20 -0700 (PDT)
 Received: from localhost.localdomain (x4db06284.dyn.telefonica.de. [77.176.98.132])
-        by smtp.gmail.com with ESMTPSA id w67-v6sm6281497wmw.0.2018.06.14.05.31.14
+        by smtp.gmail.com with ESMTPSA id w67-v6sm6281497wmw.0.2018.06.14.05.31.20
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 14 Jun 2018 05:31:15 -0700 (PDT)
+        Thu, 14 Jun 2018 05:31:20 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [RFC PATCH 0/4] Fix occasional test failures in http tests
-Date:   Thu, 14 Jun 2018 14:31:03 +0200
-Message-Id: <20180614123107.11608-1-szeder.dev@gmail.com>
+Subject: [PATCH 1/4] t5541: avoid empty line when truncating access log
+Date:   Thu, 14 Jun 2018 14:31:04 +0200
+Message-Id: <20180614123107.11608-2-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc0.207.ga6211da864
+In-Reply-To: <20180614123107.11608-1-szeder.dev@gmail.com>
+References: <20180614123107.11608-1-szeder.dev@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -64,29 +66,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-'t5561-http-backend.sh' is prone to occasional failures; luckily it's
-not 'git-http-backend's fault, but the test script is a bit racy.  I
-won't go into the details here, patch 4/4's commit message discusses
-it at length.  4/4 also fixes this issue, but I'm not particularly
-happy with that fix, the note attached to that patch explains why,
-along with possible alternatives, hence the RFC.
+The second test of 't5541-http-push-smart.sh', 'no empty path
+components' truncates Apache's access log by running
 
-Even if we settle for a different fix, I think the first two patches
-are worthy cleanups on their own right.
+  echo >.../access.log
 
-SZEDER Gábor (4):
-  t5541: avoid empty line when truncating access log
-  t/lib-httpd: add the strip_access_log() helper function
-  t/lib-httpd: add minor and patch version to $HTTPD_VERSION
-  t/lib-httpd: sort log based on timestamp to avoid occasional failure
+which doesn't leave an empty file behind, like a proper truncation
+would, but a file with a lone newline in it.  Consequently, a later
+test checking the log's contents must consider this improper
+truncation and include an empty line in the expected content.
 
- t/lib-httpd.sh              | 24 ++++++++++++++++++++++--
- t/lib-httpd/apache.conf     |  5 +++++
- t/t5541-http-push-smart.sh  | 17 +++--------------
- t/t5551-http-fetch-smart.sh |  7 +------
- t/t5561-http-backend.sh     |  7 +------
- 5 files changed, 32 insertions(+), 28 deletions(-)
+There is no need for that newline at all, so drop the 'echo' from the
+truncation and adjust the expected content accordingly.
 
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+
+ t/t5541-http-push-smart.sh | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/t/t5541-http-push-smart.sh b/t/t5541-http-push-smart.sh
+index 21340e89c9..c961db814d 100755
+--- a/t/t5541-http-push-smart.sh
++++ b/t/t5541-http-push-smart.sh
+@@ -54,7 +54,7 @@ test_expect_success 'no empty path components' '
+ 	# service" test which reads the log too.
+ 	#
+ 	# We do this before the actual comparison to ensure the log is cleared.
+-	echo > "$HTTPD_ROOT_PATH"/access.log &&
++	>"$HTTPD_ROOT_PATH"/access.log &&
+ 
+ 	test_cmp exp act
+ '
+@@ -124,7 +124,6 @@ test_expect_success 'rejected update prints status' '
+ rm -f "$HTTPD_DOCUMENT_ROOT_PATH/test_repo.git/hooks/update"
+ 
+ cat >exp <<EOF
+-
+ GET  /smart/test_repo.git/info/refs?service=git-upload-pack HTTP/1.1 200
+ POST /smart/test_repo.git/git-upload-pack HTTP/1.1 200
+ GET  /smart/test_repo.git/info/refs?service=git-receive-pack HTTP/1.1 200
 -- 
 2.18.0.rc0.207.ga6211da864
 
