@@ -6,62 +6,63 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9920D1F403
-	for <e@80x24.org>; Thu, 14 Jun 2018 17:36:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E02491F403
+	for <e@80x24.org>; Thu, 14 Jun 2018 17:37:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754695AbeFNRgw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Jun 2018 13:36:52 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:41314 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754616AbeFNRgv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jun 2018 13:36:51 -0400
-Received: by mail-wr0-f194.google.com with SMTP id h10-v6so7272860wrq.8
-        for <git@vger.kernel.org>; Thu, 14 Jun 2018 10:36:51 -0700 (PDT)
+        id S1754725AbeFNRhU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Jun 2018 13:37:20 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:35386 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754616AbeFNRhT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jun 2018 13:37:19 -0400
+Received: by mail-wr0-f196.google.com with SMTP id l10-v6so7319824wrn.2
+        for <git@vger.kernel.org>; Thu, 14 Jun 2018 10:37:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=9Pjetj7TCP6KQpbR4qq6xLLh0CYpsoLfs6lbrG/PIs4=;
-        b=NynBftYaSrxAGLAuoWel/mojy2UoNQMM1VkPYQTktUrGZKXqpZx/KE5we1kzUWoXIv
-         ZGU8g+Ah/85IiRPsrR9hFf4j74NzZ2aJEoUlXHFyQ9eER+fXIgWt+KkXynHGhmhbkNZD
-         ZkyIEORZCjBUJVSZSFydSTsVn9sbVEczEQLMzQILBfv/jQhK2LG8347QKsXpcwau1G0v
-         dllJYWSTrYezdZ9KbTCTFB9o0icPkAEUxHZR5NYGrEeoNPMPNaqqZmcLDTyy9r6HAgsc
-         XPXIp6rT6EZ+xP4AhJ5JBmhZkx447hTZlXEuDOxhLJpyhHCSrfrnCa81dDE0ZCp54woZ
-         Ownw==
+        bh=OXZDoYIxNdM56Xk/afGOV/mzEEimC2kvc+WabUVHknM=;
+        b=Hzg5lGz1O8yFW7FxgtSitHRG9aC7ond/Vj5hj5Ue5iOP1uzGgyuNPlsSAbU44jIRou
+         M725yC3MEIYqT8+ehD0vvXDWEm+VrMIzqdESb20kGceddNnesS7PKd6Hi0An+evii7DM
+         AgQOfa/6kg4dXkllPQ1FKT260Z92LJ/8JzxP33S05awzWLLuV10+7MQNdkw3iPa/KH+o
+         P+DzkeArJjDS0ZwSNUSKbZeAICiyjSZ3lbFKZrsU7I3P2wQM4QK1TEIwzDc5aJhQPywy
+         Zszo9iuwaU0D5MpeVzuaEXUJ/LLtUiYbT0cBWm8VMa6NeSKgPkFJOCo1FQ8BZ20Xj7wY
+         Gsug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=9Pjetj7TCP6KQpbR4qq6xLLh0CYpsoLfs6lbrG/PIs4=;
-        b=mPzlq5GxB5MB8TEXPd5czSN9gJSJw3fYtley29gznRCQ4Z5ugRTt+uPg+bLYNpoa9K
-         IycE9i+iJEY80aG8z4oClPAwFWI+MsE9RXQf1MANKErMxsmgrkcikckD1oigCwnzI5/g
-         2LwSLiSwQ3A9dTX4qmk+b4xBKSDfqqrqnIE1c2FA1akcK6bZtQssWCEDBNcs01YoqSHY
-         +Kj3ASmEON0+w+eWFx4mZJd7lobPBM50h2NsdpN8DV+388rHNUxhhF9XfzmtmikD/m+3
-         M/Lx9STNpj/YlMkP7yy56MfGUFD+Aa1pTExPLWOGhaTnUCFLxlKTuY8BSsZaTln7J24G
-         fJOQ==
-X-Gm-Message-State: APt69E3QDguVVtnlfl1my0vtrr7EHXw7m0e9hJjCPhu6WMxM/9cMUn6+
-        MQGWQArCQ+uw5z4MEcAlU1g=
-X-Google-Smtp-Source: ADUXVKIFatbHjaE5Uma34eX3xvjJoVJI3KWzkYIO6irZWrZonDzGc81wHhafW3FyIK8J1y3qzb3kNg==
-X-Received: by 2002:adf:9a4c:: with SMTP id z70-v6mr3338322wrb.118.1528997810402;
-        Thu, 14 Jun 2018 10:36:50 -0700 (PDT)
+        bh=OXZDoYIxNdM56Xk/afGOV/mzEEimC2kvc+WabUVHknM=;
+        b=mVZh68dlqcyFAijSQvjBPFacyPgJLQSgX7jXRzeaiV3jDjjLDSjHExb6BxhtLcOBDH
+         yRHzhsjhEO5LT69MwrDjWZIQovr2mRLY4yJj04uqgQ+mUt2WL/YnuRqHXdFrwyU4wFv/
+         B3bX+C+b2A8i0MgFFDEu+3xUUzQfENNi3lpdL6bIp69f+IpMimTUzXjSProt4YIYWOhT
+         9PmjgkclDcf0ZWgZSH/w77qxhfgjEr/XGlUY4hfQ1aPMu4L6zQExGTNs0TCFMRhhSnKl
+         ZSq4kkOAde7AxTvxU8WmgR6tTJbB8wzuKWxZ5UNM85ITTkaMjJ4Pg+0Vg4VA+rxbRIc3
+         +JYA==
+X-Gm-Message-State: APt69E0JmY3nCwGtTGbC4aoi/izQBoArLkGJv2jBmPDlco63a4rcNeQp
+        o01L22Vpce9Qvn9IJfn36eo=
+X-Google-Smtp-Source: ADUXVKK1p3JREVO5rTGRXQCz+oFRX2/NYwLBmlHFbB2pqHdSuDRHRTzkkfu6GYxFoB+WWYPhYxgleg==
+X-Received: by 2002:adf:8361:: with SMTP id 88-v6mr3053359wrd.17.1528997838417;
+        Thu, 14 Jun 2018 10:37:18 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id l10-v6sm6873134wrm.29.2018.06.14.10.36.49
+        by smtp.gmail.com with ESMTPSA id i46-v6sm12519947wra.36.2018.06.14.10.37.17
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 14 Jun 2018 10:36:49 -0700 (PDT)
+        Thu, 14 Jun 2018 10:37:17 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Elijah Newren <newren@gmail.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 24/30] merge-recursive: Add computation of collisions due to dir rename & merging
-References: <20171110190550.27059-1-newren@gmail.com>
-        <20171110190550.27059-25-newren@gmail.com>
-        <7d1237c7-5a83-d766-7d93-5f0d59166067@web.de>
-Date:   Thu, 14 Jun 2018 10:36:48 -0700
-In-Reply-To: <7d1237c7-5a83-d766-7d93-5f0d59166067@web.de> (=?utf-8?Q?=22R?=
+Cc:     Stefan Beller <sbeller@google.com>, avarab@gmail.com,
+        git@vger.kernel.org
+Subject: Re: [PATCH 2/2] builtin/blame: highlight recently changed lines
+References: <CAGZ79kYjV6Wpzymx1phL7EC3BxdWr5gitCOdE6=fJFFnz4zYiA@mail.gmail.com>
+        <20180417213049.118995-1-sbeller@google.com>
+        <20180417213049.118995-2-sbeller@google.com>
+        <737e4f2e-9896-0119-2c43-655ac29fe018@web.de>
+Date:   Thu, 14 Jun 2018 10:37:17 -0700
+In-Reply-To: <737e4f2e-9896-0119-2c43-655ac29fe018@web.de> (=?utf-8?Q?=22R?=
  =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Sun, 10 Jun 2018 12:56:31 +0200")
-Message-ID: <xmqqr2l946dr.fsf@gitster-ct.c.googlers.com>
+        message of "Sat, 9 Jun 2018 13:26:53 +0200")
+Message-ID: <xmqqmuvx46cy.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -73,54 +74,29 @@ X-Mailing-List: git@vger.kernel.org
 
 René Scharfe <l.s.r@web.de> writes:
 
-> The value of PATH_MAX is platform-dependent, so it's easy to exceed when
-> doing cross-platform development.  It's also not a hard limit on most
-> operating systems, not even on Windows.  Further reading:
 >
->    https://insanecoding.blogspot.com/2007/11/pathmax-simply-isnt.html
->
-> So using a fixed buffer is not a good idea, and writing to it without
-> checking is dangerous.  Here's a fix:
+> This adds a minor memory leak; fix below.
 >
 > -- >8 --
-> Subject: [PATCH] merge-recursive: use xstrdup() instead of fixed buffer
->
-> Paths can be longer than PATH_MAX.  Avoid a buffer overrun in
-> check_dir_renamed() by using xstrdup() to make a private copy safely.
+> Subject: [PATCH] blame: release string_list after use in parse_color_fields()
 >
 > Signed-off-by: Rene Scharfe <l.s.r@web.de>
 > ---
 
-Thanks.  Makes sense.
+Thanks.  Will apply.
 
->  merge-recursive.c | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
+>  builtin/blame.c | 1 +
+>  1 file changed, 1 insertion(+)
 >
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> index ac27abbd4c..db708176c5 100644
-> --- a/merge-recursive.c
-> +++ b/merge-recursive.c
-> @@ -2211,18 +2211,18 @@ static struct hashmap *get_directory_renames(struct diff_queue_struct *pairs,
->  static struct dir_rename_entry *check_dir_renamed(const char *path,
->  						  struct hashmap *dir_renames)
->  {
-> -	char temp[PATH_MAX];
-> +	char *temp = xstrdup(path);
->  	char *end;
-> -	struct dir_rename_entry *entry;
-> +	struct dir_rename_entry *entry = NULL;;
+> diff --git a/builtin/blame.c b/builtin/blame.c
+> index 4202584f97..3295718841 100644
+> --- a/builtin/blame.c
+> +++ b/builtin/blame.c
+> @@ -411,6 +411,7 @@ static void parse_color_fields(const char *s)
+>  		die (_("must end with a color"));
 >  
-> -	strcpy(temp, path);
->  	while ((end = strrchr(temp, '/'))) {
->  		*end = '\0';
->  		entry = dir_rename_find_entry(dir_renames, temp);
->  		if (entry)
-> -			return entry;
-> +			break;
->  	}
-> -	return NULL;
-> +	free(temp);
-> +	return entry;
+>  	colorfield[colorfield_nr].hop = TIME_MAX;
+> +	string_list_clear(&l, 0);
 >  }
 >  
->  static void compute_collisions(struct hashmap *collisions,
+>  static void setup_default_color_by_age(void)
