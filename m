@@ -2,116 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 921171F403
-	for <e@80x24.org>; Thu, 14 Jun 2018 10:13:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B767A1F403
+	for <e@80x24.org>; Thu, 14 Jun 2018 12:31:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754978AbeFNKNw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Jun 2018 06:13:52 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:39126 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754927AbeFNKNv (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 14 Jun 2018 06:13:51 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b0c3:20dd:704c:b59d])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id EFB0C6046C;
-        Thu, 14 Jun 2018 10:13:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1528971229;
-        bh=Peua7IpD8gwcoCWUsI3rZiCNk6Pw7u4EFEJfsxd7//Y=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=lb9ewWFqZTrpR5LIZGtI/UiDUXauwn8c1seGKbFZ2s637TD3XJ+4NbScbKlwSKs5B
-         YmtvtrTu/dwUwnnQYqV+5D3nCy9P1wh5hmQ6AaGFJZfr55Bh7VP4QZFiu9F28GDTKM
-         vo+mq4hfY9QxZvx8y+9tFaqo3Zs30SJdzrbOiDw0n7oFOh/Swq0yQ84ho/LAYGn3tS
-         upGvqaBZ0rud/2moXyLHNxzFf4W/TS5y6lOmyESDZqjCEaOJ8yerZWOaeTjIAVfCo0
-         qRWqdBnBQVgbVM+19dotEuZaROdFzitdEr5SjOrAJNiGDq1jJ8KTdlOhdsDCFWDmhj
-         J3crK3hjDncwImshFxLQqLa3OKYMuo4FToeTz+dQGSeOLxRvLwpR5GkXFWbcZkyweM
-         cBaGW5QdKub2OjTT/Xn4zcZMMimK15yA9kFZPSqI3jYXt7Dt9+4PBa4fHoi4KqbkUt
-         J14rPeE9199RuHXXR7OKw7Z06zQ3r5uXjqU9IJDc+WOI5Q5vvXk
-Date:   Thu, 14 Jun 2018 10:13:42 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Christian Halstrick <christian.halstrick@gmail.com>
-Cc:     Git <git@vger.kernel.org>
-Subject: Re: OAuth2 support in git?
-Message-ID: <20180614101342.GO38834@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Christian Halstrick <christian.halstrick@gmail.com>,
-        Git <git@vger.kernel.org>
-References: <CAENte7iUYcLX1ym1rdiYT2L8yLSWforf8kUvfHKLvhi_GhKQvg@mail.gmail.com>
+        id S1755108AbeFNMbS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Jun 2018 08:31:18 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:34591 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755064AbeFNMbR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jun 2018 08:31:17 -0400
+Received: by mail-wr0-f196.google.com with SMTP id a12-v6so6263325wro.1
+        for <git@vger.kernel.org>; Thu, 14 Jun 2018 05:31:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=RCOhb2PWPnjh8plvwrf1328OMapONo5KID3r2h1CkNE=;
+        b=L1aVygJzKduv5Fb/BUdU+yuKxnKoYBJ7yOirx8gSAeNndYyVvhxZBr8w+V5/SmCU7X
+         w1HWQo8ScoL7eUnQ/667kmQwRybRrFzDOR2+R8XqT25ERaczI5F2g+j3s2C2ySXtpclQ
+         tnsrVS4tKSM1EQ+1Ksc9rvzt9yj1NxnRUUkrCsje7XVlO1ZCyyXvYH5MfceWAw5R824H
+         rg0xfghI5ZFXCmFDTZgIYaAxuhXbBkc+6PQYil/F7kq2mt99Ubo2wrlh+BSiu5eHl8Pl
+         vusuyWtDtDMIK5H2u7CWKtRqEWtcbTeLH7yrVNF8ECYeMTsIekR8kCBMXphXTorD7kEr
+         2Atg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=RCOhb2PWPnjh8plvwrf1328OMapONo5KID3r2h1CkNE=;
+        b=h4zSV2QuQTPXZPm6TBYLYPO9R6CXWuscoFDykGO+cZtST9CF7bfGkma0KgP7ybJd/P
+         qC4nTo32cbsJpWFKwhjdSD+aSX+e0dpRjXjXqrsJoHP+Bj2iR0aA0eq80Cr3IRxWesrk
+         ubak/gJonALWZDDTOYORe0UScMBBRe+bXagUBuWi+6KvBeHUBsS9EyPZ0r17Zz5On3tq
+         qPewnQerSIjRjwbcaIJkvldqlJQww0LfLd74XEEhX4ynYb/72XpyhSeQfZEnjwRNnmgR
+         ipevF7Vqm7LGc8tjFkSnzi+0N19vXs+VWfK6ztKw+5/iqclh38KmJ2ap6EWbUEpX62tM
+         gw8A==
+X-Gm-Message-State: APt69E33V3F6iSn3rVXybTT+tAdIQO3enQg/qgCPoAmAube8D9MZJWig
+        m5e9UDUMfGe2AEpWH2BdsXQsXA==
+X-Google-Smtp-Source: ADUXVKLxKrkDo9pfD1EpCkcsDeDpXC67ZMuraPS9F5HP7zTqfl2TNRvj5ovWH2DcSqmtUjBwiYuf/Q==
+X-Received: by 2002:adf:c104:: with SMTP id r4-v6mr2193291wre.203.1528979475932;
+        Thu, 14 Jun 2018 05:31:15 -0700 (PDT)
+Received: from localhost.localdomain (x4db06284.dyn.telefonica.de. [77.176.98.132])
+        by smtp.gmail.com with ESMTPSA id w67-v6sm6281497wmw.0.2018.06.14.05.31.14
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 14 Jun 2018 05:31:15 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [RFC PATCH 0/4] Fix occasional test failures in http tests
+Date:   Thu, 14 Jun 2018 14:31:03 +0200
+Message-Id: <20180614123107.11608-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.18.0.rc0.207.ga6211da864
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="SavPGzlo48F1Gxyz"
-Content-Disposition: inline
-In-Reply-To: <CAENte7iUYcLX1ym1rdiYT2L8yLSWforf8kUvfHKLvhi_GhKQvg@mail.gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.16.0-2-amd64)
-User-Agent: Mutt/1.10.0 (2018-05-17)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+'t5561-http-backend.sh' is prone to occasional failures; luckily it's
+not 'git-http-backend's fault, but the test script is a bit racy.  I
+won't go into the details here, patch 4/4's commit message discusses
+it at length.  4/4 also fixes this issue, but I'm not particularly
+happy with that fix, the note attached to that patch explains why,
+along with possible alternatives, hence the RFC.
 
---SavPGzlo48F1Gxyz
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Even if we settle for a different fix, I think the first two patches
+are worthy cleanups on their own right.
 
-On Thu, Jun 14, 2018 at 10:09:39AM +0200, Christian Halstrick wrote:
-> Can I use native git as client to contact a git server which does
-> authentication with OAuth2 Client Credentials Grant [1]?
->=20
-> Background: We are running gerrit based git servers [2] in a cloud
-> environment. That environment supports OAuth2 authorization for the
-> apps running in the cloud. The idea is that clients (e.g. jenkins
-> jobs) talking git over http with such git servers should be able to
-> use OAuth2 tokens to authenticate clone/fetch requests. We would have
-> to adapt gerrit source code for token handling/validation but I am
-> asking here about the client side.
->=20
-> I know that other git server environments like github support that on
-> client side by allowing tokens to be used as usernames in a BASIC
-> authentication flow. We could do the same but I am asking whether
-> there is also a way to transport tokens in a standard conform
-> "Authorization: Bearer ..." Header field.
+SZEDER Gábor (4):
+  t5541: avoid empty line when truncating access log
+  t/lib-httpd: add the strip_access_log() helper function
+  t/lib-httpd: add minor and patch version to $HTTPD_VERSION
+  t/lib-httpd: sort log based on timestamp to avoid occasional failure
 
-There isn't any support for Bearer authentication in Git.  For HTTP, we
-use libcurl, which doesn't provide this natively.  While it could in
-theory be added, it would require some reworking of the auth code.
+ t/lib-httpd.sh              | 24 ++++++++++++++++++++++--
+ t/lib-httpd/apache.conf     |  5 +++++
+ t/t5541-http-push-smart.sh  | 17 +++--------------
+ t/t5551-http-fetch-smart.sh |  7 +------
+ t/t5561-http-backend.sh     |  7 +------
+ 5 files changed, 32 insertions(+), 28 deletions(-)
 
-You are, of course, welcome to send a patch.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+-- 
+2.18.0.rc0.207.ga6211da864
 
---SavPGzlo48F1Gxyz
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.8 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlsiP9YACgkQv1NdgR9S
-9ouqEhAApPuPjWw6qgxbLDbuLWvIA4zHTOyJ5Vd28k9XfNxiv3kDB4UvUDfbdlv9
-alGR3b2Bda1TUpeNoTbgXRl7+WPQ8itPJgWGuvD78173NimblEU9M+KZF3Ph8di6
-9/QVbIYCoXBsOSRhBZ7sLhyXShMubOKTWz6usdRydEuFPEMYwHNxmc4IPgiL3s0l
-HzSHa/PSLy0oCIvG5Bx8W+qZob3fdM16t3a8ZQgSIFaHeyIegNgX6qQgYVsBZmDg
-IjxrOEZ/UYNjDX3wKmiWEf9/GYYpY1YYE1AZ1dHz1jrSXgQu7xWulEyTOd5S08/l
-N2gY/mOA6XyuY2AXGfQH7dXxyhn2LRe69yp1Gl9+Vkos4bENDeKpp7pt/yf5x1lO
-16mFh98mfTyzH/onAKUP/M7huRCh+QPFz9IKo0fbf+3Teq2rxrtEzVVLMI9VnJ7i
-I4FVH3hkK+SXGHRUAG5c2PNihcvTbaSWjP/xKVtjOKBnVeKQnIE8GGjMK7Ig0SFk
-HJu1qaW43xzjfMh6rJ+tIkUR6znhT12NAqSATr05jfRfKHl3+gYEERmQnGyYM3e7
-GIX0jdxws+SdgQPaQEzizO1lMmZ4ZNUeAcKNW+nfFJ/r8y4163o/XhLTdl5dUa59
-kQNFr2oYF3qiWbcWFtyAAViGjj1tVbawp+IdgYjmtjKpS0zmOw8=
-=ihQa
------END PGP SIGNATURE-----
-
---SavPGzlo48F1Gxyz--
