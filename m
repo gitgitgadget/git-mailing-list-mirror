@@ -6,118 +6,91 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 624FF1F403
-	for <e@80x24.org>; Thu, 14 Jun 2018 15:50:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 582CB1F403
+	for <e@80x24.org>; Thu, 14 Jun 2018 16:07:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755234AbeFNPuT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Jun 2018 11:50:19 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:33315 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755072AbeFNPuS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jun 2018 11:50:18 -0400
-Received: by mail-wr0-f196.google.com with SMTP id k16-v6so6974614wro.0
-        for <git@vger.kernel.org>; Thu, 14 Jun 2018 08:50:17 -0700 (PDT)
+        id S1755295AbeFNQHc (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Jun 2018 12:07:32 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:51160 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755069AbeFNQH3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jun 2018 12:07:29 -0400
+Received: by mail-wm0-f68.google.com with SMTP id e16-v6so11486650wmd.0
+        for <git@vger.kernel.org>; Thu, 14 Jun 2018 09:07:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=r0P9YkluP/TQFs8fg25zNThH41W14WGynoTLjHLp53A=;
-        b=vY2Nt5d7LqxOK8G7kRi2ii3Y0Ax6LAhYHbJ+GjKjIi67hAFLtH6c0p7LqPJtUHmtaK
-         +4pw3fJ2YEJW7wx1ntmpCZ6TOMvdht4jqHdxm/MEYtBQK8Iq2DfL3jh/JiLavAp+Dv3R
-         UNOFY3MWosEvrf93pbKk9j7W9/HpT249+KoxS+Qyo32HP5JCyATmlaDzK29/3heRfcGQ
-         a3K53yZEceN6hVmnyGPu8CV1BDLFn3/CFHpZPkLxYQ0HZc7Qona5OmUvQGFYA4lZFbKt
-         u6YqV29Wx5vaSY14v02Ca6OWz1O/bdsFz4CnP0miQtLMR6lLXQ8SAcQLJYpcWcXvPM7b
-         JZAg==
+         :user-agent:mime-version;
+        bh=HceV3XgryDFM2GnBCIrS0PgZJkcJGb9TcIZ5w9bm+88=;
+        b=Ht9NsbbzNsdXMc7MN0Vg4odgGPo6AV1y18eGVNvJumxHyqTV3W3fZg3pVulKd3z7m5
+         FkpETI240/RFw7PkUMWqU/nguHSLKkDbOJruJos9akH+iYnEndclLxYZPLJKs5aSaaJl
+         ILhZmhC0HUNct6Yp/qKEFGRHIn8LBTttD9zfiRhhHcXa5oJS3mO7febZUWtREjOpcVxa
+         65hNOtrui+6BH4Qoisbm2znKlCaChX1KGAFTIb8e6VDCThb+b6f6FLQOxIGZWPxU03wj
+         5huIqjQcec7q9tCYviEA7e7W0sr3O+eCYbZz1oUgVQmlrk3gNsYEh6czwxLLWK4aSw0I
+         Us8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=r0P9YkluP/TQFs8fg25zNThH41W14WGynoTLjHLp53A=;
-        b=CTjXDqMlRtwDWVJpfXspjFr6OAKfuGy62/yZ7qyvcfcI0AFGYHF7gL5iIlct/lrBJN
-         CHJq63XBVQaqiUdaGRQ77ELiQOxWyNxKmShx4ZcTNm+UFsP5RqWgRqRQRNbEPT1sgJ/9
-         vXLWdcW7Vl3TfJqC+ESbn5jJipSjsv3mTLdmAw+3XoM4WJvC6C83aKRpC78icUtAHkUZ
-         JsHNnpxvObfFQxcdcTObhsc5cDk3zeSwf5XfuyEb72JXB447fiIhcX85TcgaTMls4jo0
-         XEPT6btyQlzUUHD+0BbO6sk4TsI1ZLwMGBWDGbqaXPhPC/pOGZGo2OETbTBlru9NcVZK
-         tyBg==
-X-Gm-Message-State: APt69E0SpcFVRsP4qzFTthzxsm760I2UAbSiaSM/PHQqimns68zQXss5
-        j6BfD9lCRMvm6jX6DnexPgs=
-X-Google-Smtp-Source: ADUXVKJE3WU62QRV+Wayy9e24Myz6HSnJa3cmiqrilp/FUljpFClFJRtCxBuDpuwqDbKQI0CDvjwKA==
-X-Received: by 2002:adf:c358:: with SMTP id e24-v6mr2738928wrg.257.1528991416863;
-        Thu, 14 Jun 2018 08:50:16 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id g11-v6sm6291900wrr.46.2018.06.14.08.50.15
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=HceV3XgryDFM2GnBCIrS0PgZJkcJGb9TcIZ5w9bm+88=;
+        b=twd6mP9K3MaQtin7JAVjcBd9xFSoFPZLS8MEiDI8Q2Wa3YOwM4E6eo9vummWwzVWku
+         VOPEMqNBDXuKxImfyC5BbksOHvxtMElSgDJd+4lXC5AyS8BLOEeqoPNVNZ1h9y8rj33/
+         LHG0PvmT5z7VHUpYSs5EciHLgKz2SqQ/+qI4+hhc5pjsagGfq9ltS2dQweg9O1MtSAfA
+         JB/ymm9hfHgXCxLW3Cy3tPCmFomzaTuWh0UnJ68QTpisRnTB5b8+W2HPKblZheHBM4Y3
+         ymLKtM42ewXl1dkw9RgAJ0WroVObAu/hgVMsP+6vb+52UzKmZaJR/4U7HWVESc68YCNY
+         8waQ==
+X-Gm-Message-State: APt69E1woetANl9vOAISi7qtfyTHZqh421aVRUMMspOtrcUmp67Gof9H
+        DDn0LObwhvM5nSyEtez6MAo=
+X-Google-Smtp-Source: ADUXVKLM2j4YCVKoSErQT2OyMHpZYY+lB5g4WvInoA6I6P+JZrw/nqF7S0255VV+FUUpLjDax6NYRg==
+X-Received: by 2002:a1c:d650:: with SMTP id n77-v6mr2548573wmg.140.1528992447885;
+        Thu, 14 Jun 2018 09:07:27 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id d15-v6sm2066483wmb.0.2018.06.14.09.07.26
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 14 Jun 2018 08:50:16 -0700 (PDT)
+        Thu, 14 Jun 2018 09:07:26 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, dstolee@microsoft.com, git@jeffhostetler.com,
-        peff@peff.net, johannes.schindelin@gmx.de, jrnieder@gmail.com,
-        Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 19/20] abbrev: support relative abbrev values
-References: <20180608224136.20220-1-avarab@gmail.com>
-        <20180608224136.20220-20-avarab@gmail.com>
-        <xmqqvaan95os.fsf@gitster-ct.c.googlers.com>
-        <871sdawcmh.fsf@evledraar.gmail.com>
-        <xmqqa7ry5n9h.fsf@gitster-ct.c.googlers.com>
-        <87zhzxvmyv.fsf@evledraar.gmail.com>
-Date:   Thu, 14 Jun 2018 08:50:15 -0700
-In-Reply-To: <87zhzxvmyv.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Thu, 14 Jun 2018 09:36:24 +0200")
-Message-ID: <xmqq602l5pvs.fsf@gitster-ct.c.googlers.com>
+To:     Kirill Smelkov <kirr@nexedi.com>
+Cc:     Jeff King <peff@peff.net>, Jonathan Tan <jonathantanmy@google.com>,
+        Brandon Williams <bmwill@google.com>,
+        Takuto Ikuta <tikuta@chromium.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        <git@vger.kernel.org>
+Subject: Re: [PATCH] fetch-pack: test explicitly that --all can fetch tag references pointing to non-commits
+References: <20180612185413.GA21856@deco.navytux.spb.ru>
+        <20180613111840.1427-1-kirr@nexedi.com>
+        <xmqqbmce7fcm.fsf@gitster-ct.c.googlers.com>
+        <20180613184301.GB22854@deco.navytux.spb.ru>
+        <20180613210509.GA15574@sigill.intra.peff.net>
+        <20180613231147.GA21025@sigill.intra.peff.net>
+        <20180614052455.GA2861@deco.navytux.spb.ru>
+Date:   Thu, 14 Jun 2018 09:07:26 -0700
+In-Reply-To: <20180614052455.GA2861@deco.navytux.spb.ru> (Kirill Smelkov's
+        message of "Thu, 14 Jun 2018 05:25:02 +0000")
+Message-ID: <xmqqzhzx4aip.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+Kirill Smelkov <kirr@nexedi.com> writes:
 
-> On Wed, Jun 13 2018, Junio C Hamano wrote:
->
->> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
->>
->>> E.g. here's a breakdown of my dotfiles repo:
->>>
->>>     $ git -c core.abbrev=4 log  --pretty=format:%h|perl -nE 'chomp;say length'|sort|uniq -c|sort -nr
->>>         784 4
->>>          59 5
->>>           7 6
->>>
->>> I don't have a single commit that needs 7 characters, yet that's our
->>> default. This is a sane trade-off for the kernel, but for something
->>> that's just a toy or something you're playing around with something
->>> shorter can make sense.
->>>
->>> SHA-1s aren't just written down, but also e.g. remembered in wetware
->>> short-term memory.
->>
->> That's a fine example of what I called "supporting absurdly small
->> absolute values like 4"; I still do not see why you want "negative
->> relative values" from that example.
->
-> Because hardcoding -2 is very different than setting it to 5, because
-> the -2 will scale to the size of the repository, but 5 is just 7-2 where
-> 7 is our default value.
->
-> So, in general if you want less future proof hashes by some
-> probabilistic metric (whether you use core.validateAbbrev or not) you'd
-> use -2 or -3, just like you might use +2 or +3 if you'd like to have
-> more future-proof hashes (especially with core.validateAbbrev=true).
+> Jeff, thanks for corrections. I originally tried to look into invoking
+> "git tag" two times, but since git tag always creates a reference it
+> would not be semantically the same as having one referenced tag object
+> pointing to another tag object which does not have anything in refs/
+> pointing to it directly.
 
-That still does not make much sense to me at all.
+Well, then you could remove it after you are done, no?  I.e.
 
-I do agree that something shorter than the default 7 may be more
-appropriate for our wetware short-term memory, and it would make
-sense to grow the "riskier to collide than the default heuristics
-but more memorable" variant as the project grows, _ONLY_ _IF_ our
-wetware short-term memory scales with the project we happen to be
-working on.  But our wetware does not scale with the project we work
-on; at least mine does not.
+	git tag -a -m "tag to commit" tag-to-commit HEAD
+	git tag -a -m "tag to commit (1)" temp-tag HEAD~1
+	git tag -a -m "tag to tag" tag-to-tag temp-tag
+	git tag -d temp-tag
 
-So...
+would make the temp-tag object reachable only via refs/tags/tag-to-tag
+I think.
 
