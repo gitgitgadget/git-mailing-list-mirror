@@ -6,105 +6,70 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 61BB81F403
-	for <e@80x24.org>; Fri, 15 Jun 2018 03:44:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 07FB41F403
+	for <e@80x24.org>; Fri, 15 Jun 2018 04:20:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965416AbeFODop (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Jun 2018 23:44:45 -0400
-Received: from cloud.peff.net ([104.130.231.41]:45338 "HELO cloud.peff.net"
+        id S1755499AbeFOEUZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Jun 2018 00:20:25 -0400
+Received: from cloud.peff.net ([104.130.231.41]:45364 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S965160AbeFODoo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jun 2018 23:44:44 -0400
-Received: (qmail 18072 invoked by uid 109); 15 Jun 2018 03:44:46 -0000
+        id S1750890AbeFOEUZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Jun 2018 00:20:25 -0400
+Received: (qmail 19372 invoked by uid 109); 15 Jun 2018 04:20:26 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 15 Jun 2018 03:44:46 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 15 Jun 2018 04:20:26 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18232 invoked by uid 111); 15 Jun 2018 03:45:00 -0000
+Received: (qmail 18459 invoked by uid 111); 15 Jun 2018 04:20:41 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 14 Jun 2018 23:45:00 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 15 Jun 2018 00:20:41 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Jun 2018 23:44:43 -0400
-Date:   Thu, 14 Jun 2018 23:44:43 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 15 Jun 2018 00:20:23 -0400
+Date:   Fri, 15 Jun 2018 00:20:23 -0400
 From:   Jeff King <peff@peff.net>
-To:     Luat Nguyen <root@l4w.io>
-Cc:     git@vger.kernel.org
-Subject: [PATCH 4/3] ewah: adjust callers of ewah_read_mmap()
-Message-ID: <20180615034442.GA14422@sigill.intra.peff.net>
-References: <2067D731-C415-4D19-8CDA-90D7DC638397@l4w.io>
- <20180615032850.GA23241@sigill.intra.peff.net>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     git@vger.kernel.org, Mahmoud Al-Qudsi <mqudsi@neosmart.net>
+Subject: Re: [PATCH] Makefile: make NO_ICONV really mean "no iconv"
+Message-ID: <20180615042023.GA31294@sigill.intra.peff.net>
+References: <CACcTrKePbgyCbXneN5NZ+cS-tiDyYe_dkdwttXpP0CUeEicvHw@mail.gmail.com>
+ <20180615022503.34111-1-sunshine@sunshineco.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20180615032850.GA23241@sigill.intra.peff.net>
+In-Reply-To: <20180615022503.34111-1-sunshine@sunshineco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 14, 2018 at 11:28:50PM -0400, Jeff King wrote:
+On Thu, Jun 14, 2018 at 10:25:03PM -0400, Eric Sunshine wrote:
 
-> Yep. We also fail to check if we even have enough bytes to read the
-> buffer_size in the first place.
+> The Makefile tweak NO_ICONV is meant to allow Git to be built without
+> iconv in case iconv is not installed or is otherwise dysfunctional.
+> However, NO_ICONV's disabling of iconv is incomplete and can incorrectly
+> allow "-liconv" to slip into the linker flags when NEEDS_LIBICONV is
+> defined, which breaks the build when iconv is not installed.
 > 
-> Here are some patches. The first one fixes the problem you found. The
-> second one drops some dead code that has a related problem. And the
-> third just drops some dead code that I noticed in the same file. :)
+> On some platforms, iconv lives directly in libc, whereas, on others it
+> resides in libiconv. For the latter case, NEEDS_LIBICONV instructs the
+> Makefile to add "-liconv" to the linker flags. config.mak.uname
+> automatically defines NEEDS_LIBICONV for platforms which require it.
+> The adding of "-liconv" is done unconditionally, despite NO_ICONV.
 > 
->   [1/3]: ewah_read_mmap: bounds-check mmap reads
->   [2/3]: ewah: drop ewah_deserialize function
->   [3/3]: ewah: drop ewah_serialize_native function
+> Work around this problem by making NO_ICONV take precedence over
+> NEEDS_LIBICONV.
 
-Actually, we'd want this one on top. Arguably it could be squashed into
-patch 1.
+Nicely explained.
 
--- >8 --
-Subject: ewah: adjust callers of ewah_read_mmap()
+We have OLD_ICONV, too, which should probably do nothing if NO_ICONV is
+set. I think that works OK. We end up setting -DOLD_ICONV on the command
+line, but that's only consider inside "#ifndef NO_ICONV" within the
+code.
 
-The return value of ewah_read_mmap() is now an ssize_t,
-since we could (in theory) process up to 32GB of data. This
-would never happen in practice, but a corrupt or malicious
-.bitmap or index file could convince us to do so.
+> This patch is extra noisy due to the indentation change. Viewing it with
+> "git diff -w" helps. An alternative to re-indenting would have been to
+> "undefine NEEDS_LIBICONV", however, 'undefine' was added to GNU make in
+> 3.82 but MacOS is stuck on 3.81 (from 2006) so 'undefine' was avoided.
 
-Let's make sure that we don't stuff the value into an int,
-which would cause us to incorrectly move our pointer
-forward.  We'd always move too little, since negative values
-are used for reporting errors. So the worst case is just
-that we end up reporting a corrupt file, not an
-out-of-bounds read.
+Yeah, with "-w" it looks pretty obviously correct.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- dir.c         | 3 ++-
- pack-bitmap.c | 2 +-
- 2 files changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/dir.c b/dir.c
-index 61b513a078..d5185660f1 100644
---- a/dir.c
-+++ b/dir.c
-@@ -2725,7 +2725,8 @@ struct untracked_cache *read_untracked_extension(const void *data, unsigned long
- 	struct read_data rd;
- 	const unsigned char *next = data, *end = (const unsigned char *)data + sz;
- 	const char *ident;
--	int ident_len, len;
-+	int ident_len;
-+	ssize_t len;
- 	const char *exclude_per_dir;
- 
- 	if (sz <= 1 || end[-1] != '\0')
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 369bf69d75..2f27b10e35 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -125,7 +125,7 @@ static struct ewah_bitmap *read_bitmap_1(struct bitmap_index *index)
- {
- 	struct ewah_bitmap *b = ewah_pool_new();
- 
--	int bitmap_size = ewah_read_mmap(b,
-+	ssize_t bitmap_size = ewah_read_mmap(b,
- 		index->map + index->map_pos,
- 		index->map_size - index->map_pos);
- 
--- 
-2.18.0.rc2.534.g53d976aeb8
-
+-Peff
