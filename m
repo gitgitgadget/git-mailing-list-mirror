@@ -2,73 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 258A61F403
-	for <e@80x24.org>; Fri, 15 Jun 2018 07:26:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B017E1F403
+	for <e@80x24.org>; Fri, 15 Jun 2018 07:43:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755617AbeFOH0X (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Jun 2018 03:26:23 -0400
-Received: from cloud.peff.net ([104.130.231.41]:45520 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1755566AbeFOH0W (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Jun 2018 03:26:22 -0400
-Received: (qmail 28229 invoked by uid 109); 15 Jun 2018 07:26:21 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 15 Jun 2018 07:26:21 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19992 invoked by uid 111); 15 Jun 2018 07:26:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 15 Jun 2018 03:26:38 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 15 Jun 2018 03:26:20 -0400
-Date:   Fri, 15 Jun 2018 03:26:20 -0400
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Bryan Turner <bturner@atlassian.com>,
-        Brandon Williams <bmwill@google.com>,
-        Ben Humphreys <behumphreys@atlassian.com>,
-        Git Users <git@vger.kernel.org>
-Subject: Re: [ANNOUNCE] Git v2.16.0-rc0
-Message-ID: <20180615072620.GA841@sigill.intra.peff.net>
-References: <xmqqfu7ui2af.fsf@gitster.mtv.corp.google.com>
- <CAGyf7-FQp4q2vvH1ponQvmVDTu0hiMSK1JKytQZ4O1i0MCnz7g@mail.gmail.com>
- <20180103053516.GB87855@aiede.mtv.corp.google.com>
- <20180608045028.GA17528@sigill.intra.peff.net>
- <xmqqzi009deu.fsf@gitster-ct.c.googlers.com>
- <20180614183018.GA1911@sigill.intra.peff.net>
- <20180614185522.GA255581@aiede.svl.corp.google.com>
- <20180614193943.GA2226@sigill.intra.peff.net>
- <20180615042033.GB255581@aiede.svl.corp.google.com>
- <20180615051321.GA5840@sigill.intra.peff.net>
+        id S1755764AbeFOHnt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Jun 2018 03:43:49 -0400
+Received: from mail-yb0-f195.google.com ([209.85.213.195]:37599 "EHLO
+        mail-yb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755626AbeFOHns (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Jun 2018 03:43:48 -0400
+Received: by mail-yb0-f195.google.com with SMTP id h141-v6so3200453ybg.4
+        for <git@vger.kernel.org>; Fri, 15 Jun 2018 00:43:48 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=39Tr0rOneAvtdZX9W3vRqMcwxRa7rA9ZXY05tmhYppI=;
+        b=slg7rWBeSjcUdB9wgkGT7ohy/IsS/7O0DhjPXNRhuPTnH1kTGI/dqfIzucjXnyWTqs
+         kHcmFkR9TLgHMZsFHxyCjQ+JcFZQMwURrwE6LoZWCAmG2DUVHzdMICCrgVDAZm6Q3HjV
+         NP7ZRQ4rRr/k/zVB0UoKlPQ+8d3WxZm4pfZE+Rco8zTwAf5J1xKnZ0wp4lNoNrzybGZG
+         u1o1Qvt3JheeWbOgfLrX0XdOwns5Nk9S7IwaUq5MSHut0q4bFqQsM2YVUgM31Miq5gyZ
+         dubjjrOboz/T8oHtQxWICC+lqYBrIsrrCfEiY+TSsJEjO5n8AwPfHNOdgzU9qNCVvACb
+         7vtA==
+X-Gm-Message-State: APt69E1JXk2GvuNYQFwyw75iofZaLUZhTkcQ/k05UA38hbk5UdjZXNK2
+        6fQbckfq0lmQ76NCHXFGwqkD0ayyqzqLi8krca0=
+X-Google-Smtp-Source: ADUXVKLcYoavRzOfbD81IKs1uwMnUgPiNK58r6+sQ+V/mbUWe66VIqlTM5EZH7AruLt/E2TPOCOGJ3AoO6eAn4j5hIY=
+X-Received: by 2002:a25:1f02:: with SMTP id f2-v6mr269828ybf.76.1529048627903;
+ Fri, 15 Jun 2018 00:43:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180615051321.GA5840@sigill.intra.peff.net>
+References: <CACcTrKePbgyCbXneN5NZ+cS-tiDyYe_dkdwttXpP0CUeEicvHw@mail.gmail.com>
+ <20180615022503.34111-1-sunshine@sunshineco.com> <20180615065805.GA15146@ruderich.org>
+In-Reply-To: <20180615065805.GA15146@ruderich.org>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 15 Jun 2018 03:43:36 -0400
+Message-ID: <CAPig+cQL8rTg+GASp2tSng7PPPYkfeeV2SNyi0D+6-Ep7JKaGg@mail.gmail.com>
+Subject: Re: [PATCH] Makefile: make NO_ICONV really mean "no iconv"
+To:     simon@ruderich.org
+Cc:     Git List <git@vger.kernel.org>,
+        Mahmoud Al-Qudsi <mqudsi@neosmart.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 15, 2018 at 01:13:21AM -0400, Jeff King wrote:
+On Fri, Jun 15, 2018 at 2:58 AM Simon Ruderich <simon@ruderich.org> wrote:
+> On Thu, Jun 14, 2018 at 10:25:03PM -0400, Eric Sunshine wrote:
+> > This patch is extra noisy due to the indentation change. Viewing it with
+> > "git diff -w" helps. An alternative to re-indenting would have been to
+> > "undefine NEEDS_LIBICONV", however, 'undefine' was added to GNU make in
+> > 3.82 but MacOS is stuck on 3.81 (from 2006) so 'undefine' was avoided.
+>
+> Should we put the part about MacOS's make into the commit
+> message? Seems like relevant information for future readers.
 
-> > The trouble is that GIT_SSH_VARIANT=simple is too... simple.  You
-> > would like a variant that passes in [-p port] [-4] [-6] as well.  We
-> > didn't implement that because we didn't have the attention of any
-> > wrapper writer who wanted it; in absence of a potential user, we
-> > decided to wait for a user to propose the interface they want.  Now we
-> > can celebrate, since that day has come.
-> 
-> I'm not sure I'm celebrating. It seems like work for not much benefit.
-> I'd just as soon use VARIANT=ssh and deal with any fallouts if my script
-> does not behave exactly like openssh in all regards.
+No. The bit of commentary mentioning MacOS's very old 'make' was just
+talking about a possible alternate way of implementing the change.
+That alternative was not chosen, so talking about old 'make' in the
+commit message would be confusing for readers. More importantly,
+although that alternative would have made a less noisy patch, the
+actual result would have made the Makefile itself noisier and uglier,
+particularly for people just reading the Makefile in the future,
+people who did not read the patch. Specifically, these alternatives
+were considered:
 
-By the way, if this sounds like I'm crapping all over your ideas, I
-really don't mean to. What I'm trying to say is that I think your
-original patch may have hit a sweet spot between robustness and making
-a simple-enough interface for users to configure.
+    ifdef NO_ICONV
+        undefine NEEDS_LIBICONV
+    endif
+    ifdef NEEDS_LIBICONV
+        ...as before...
+    endif
 
--Peff
+and:
+
+    ifdef NO_ICONV
+        NEEDS_LIBICONV=
+    endif
+    ifeq ($(NEEDS_LIBICONV),)
+        ...as before...
+    endif
+
+Both of which are uglier for a future reader of Makefile than the
+end-result actually implemented by this patch:
+
+    ifndef NO_ICONV
+        ifdef NEEDS_LIBICONV
+            ...as before...
+        endif
+    endif
