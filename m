@@ -2,216 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD9DA1F403
-	for <e@80x24.org>; Fri, 15 Jun 2018 18:56:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6DDE61F403
+	for <e@80x24.org>; Fri, 15 Jun 2018 19:05:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756395AbeFOS4q (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Jun 2018 14:56:46 -0400
-Received: from mail-qk0-f195.google.com ([209.85.220.195]:35566 "EHLO
-        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756347AbeFOS4q (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Jun 2018 14:56:46 -0400
-Received: by mail-qk0-f195.google.com with SMTP id d130-v6so6201764qkc.2
-        for <git@vger.kernel.org>; Fri, 15 Jun 2018 11:56:45 -0700 (PDT)
+        id S936211AbeFOTFE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Jun 2018 15:05:04 -0400
+Received: from mail-vk0-f74.google.com ([209.85.213.74]:36747 "EHLO
+        mail-vk0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932360AbeFOTFD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Jun 2018 15:05:03 -0400
+Received: by mail-vk0-f74.google.com with SMTP id 2-v6so4064514vkc.3
+        for <git@vger.kernel.org>; Fri, 15 Jun 2018 12:05:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=ZTh3KPxIQXL+B9hwDrR+jzyoGZSI/Hp6aq/OhnL6f8U=;
-        b=VkshI5zX573cADJ1rrrcQ6pPHx5LgoKfNRNVS4OIE+VicnfKx6+G88qt03XAxKQFeD
-         hQd0Cayf6xHR9Z9PhyepU+NhBV2DqTLXEbgZ7+4jx7mwP4lGACXs1onHLot1cr0XmfWP
-         wp5KP7tAElbr1LFQcIW3p+J/Sct9TA7tCStDaJOmjX/6g6icm3HWcY4OH2fxupsMstbb
-         lDuPK5IgWxdZpRXPCiMi60SbF+VSWgj/pTLKCer5KtWFTPXhwLuUDAY7iutjaOkADybf
-         0ZrWjyO4d1nLewAfhNTxFVPxtG+hRXNta9UU5kIvZysPzKZL+f1xN3VG3PGTon0BLFBZ
-         hRFA==
+        d=google.com; s=20161025;
+        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
+         :cc;
+        bh=Va5ycrSqwxwyfhCQ8kxcF9sjdv+TjqtYo7+OUW6waaE=;
+        b=hCFD1aRdEcp+ovGLl6GMWhBOorPOj9NpvmfdEQfLOx2NztSLlwEYONLa3WMLTdAVse
+         yTuggTAbfqY/Ok3Pn3vSfoxh9/WzgpIUuf8jPYsmH5ebtV9iishXnnQm0TiusCcsHD04
+         kISXCruRG2jR+uJ5PJx5FR/zOYUlNBpgBvxgzdMPgn+Ggy+IZn8VutUDSlPQMLQqyapi
+         IQNlRry0iPurLVDlwn/VLES3Uf3cD23DTO2cPuKg+kXcJnAgazMUkwRyA22FcICqdCeL
+         14c3Q+SVHE+PWukEnQV98URaGRPHEb391gk0tTK1nXjWuy7DTDOHQcRFBMUGcSUm4vjT
+         pgZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=ZTh3KPxIQXL+B9hwDrR+jzyoGZSI/Hp6aq/OhnL6f8U=;
-        b=VOpfaS8cS7lG6xLWPNUvhGgD0MoU3zoGden3NoCWiYMJr5FPh0fQUNxeWhMdsWssBc
-         IDO0nVq7o6WXSYzTuAXYU2it+b7M6SmCI26qZ5SGxdahn/G6zIiM/ioiifV2Ujlc6oM8
-         dR+b7FJifC+hRb3s7IMjlAvS/lddwW2KOB/nc9msi4mKjw2Pt8T6jt1HNdAZotozP3j2
-         Kd6krm2aFcRtbccsVGuhTABbszFgnCVInKWFZI9mU1PsRbRVYiuC0PxhOspZUXjqRPkp
-         J+GuHqcRQfdUwg9cT2+RIIkWhnzShAD7VCoF3Ral4ddWhTbBLMWWjh6jZN28st8pzHMD
-         tSXg==
-X-Gm-Message-State: APt69E0B0N6y68W0W0clV9RBzn6yGbqbSDyeKgjuT+IR+QrCMY242epD
-        xhnd5TkOJpZJDuX3BzM+0W8+tMCj
-X-Google-Smtp-Source: ADUXVKJkVip8NwRtTBXBi3MjGOGOQiCgtCvXmcsQPQpNKFyf0JPaWfZzrYYv5QeRNyGou/cNlmhQ8A==
-X-Received: by 2002:a37:350a:: with SMTP id c10-v6mr2383011qka.388.1529089005173;
-        Fri, 15 Jun 2018 11:56:45 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:936:68f2:e294:88e9? ([2001:4898:8010:0:f26b:68f2:e294:88e9])
-        by smtp.gmail.com with ESMTPSA id m16-v6sm4983035qtn.92.2018.06.15.11.56.43
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 15 Jun 2018 11:56:44 -0700 (PDT)
-Subject: Re: [PATCH v2 0/7] Delete unused methods in EWAH bitmap
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "peff@peff.net" <peff@peff.net>,
-        "ramsay@ramsayjones.plus.com" <ramsay@ramsayjones.plus.com>
-References: <20180615143018.170686-1-dstolee@microsoft.com>
- <20180615182727.172075-1-dstolee@microsoft.com>
- <xmqq1sd7288z.fsf@gitster-ct.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <ee8a1b8f-d14e-218c-3bdf-82908fefbec0@gmail.com>
-Date:   Fri, 15 Jun 2018 14:56:43 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
+         :references:subject:from:to:cc;
+        bh=Va5ycrSqwxwyfhCQ8kxcF9sjdv+TjqtYo7+OUW6waaE=;
+        b=UKI3xMVVpS4hx5r6Rvic4bUjVUSWuTDV58MqUOyUxKDuM6N3OHR93iVSt8cH/4Bpkc
+         2H9oOFRlf9uyE1Z8PHCNqAc5EgkWr2B0XzvvzRxyC/MCJagi783s6SaATAesPCOFv1ML
+         kCT+92TmQg6ZsTGQgDPlVVYqrFzcgISFXM2m+aCKThndoPpfUSt7+Ole9VBz1dPAHeQ9
+         NbZEy7FPSfQYYcAHu1XnXA+oKRIRtqtZLMMXmuO58vvZgzPVz2Od8JMLH0yhaLsokGXx
+         QdB+xscNCNIFaEM0Lmp78UYBG8XdcgpSXdt2dT0CvCDT6omxohJKEfxJcDsuTDeNScoD
+         Q5lg==
+X-Gm-Message-State: APt69E0F8M9eLs3UxB3px4wiM2K0Za/mg8qx/HmdMVvdR929LTQitoZn
+        auLYSfXK04J+fY/S7UMN5Z+kmkJoj/2RGejbwUDN
+X-Google-Smtp-Source: ADUXVKKTa8+MgtaZNKn+MR9Y9we6i8m3ghQ3zYArgn2u+kY6WOTa9Bl68+NR1AQ2RPPNlqvuGaIhZVoCM3zYNNPw707/
 MIME-Version: 1.0
-In-Reply-To: <xmqq1sd7288z.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+X-Received: by 2002:a1f:1bca:: with SMTP id b193-v6mr1196049vkb.68.1529089502152;
+ Fri, 15 Jun 2018 12:05:02 -0700 (PDT)
+Date:   Fri, 15 Jun 2018 12:04:58 -0700
+In-Reply-To: <20180605175144.4225-1-bmwill@google.com>
+Message-Id: <20180615190458.147775-1-jonathantanmy@google.com>
+References: <20180605175144.4225-1-bmwill@google.com>
+X-Mailer: git-send-email 2.17.0.582.gccdcbd54c4
+Subject: Re: [PATCH 0/8] ref-in-want
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     bmwill@google.com
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/15/2018 2:51 PM, Junio C Hamano wrote:
-> Derrick Stolee <dstolee@microsoft.com> writes:
->
->> The EWAH bitmap code includes several logical operations that are
->> important for a general-purpose bitmap library. However, Git only
->> uses the XOR operation for storing deltas between reachability
->> bitmaps. This means that we can delete the following unused methods:
->>
->> * ewah_and()
->> * ewah_and_not()
->> * ewah_not()
->> * ewah_or()
->> * ewah_serialize()
->>
->> We can also delete the unused methods bitmap_clear() and
->> bitmap_each_bit().
->>
->> Derrick Stolee (7):
->>    ewah/bitmap.c: delete unused 'bitmap_clear()'
->>    ewah/bitmap.c: delete unused 'bitmap_each_bit()'
->>    ewah_bitmap: delete unused 'ewah_and()'
->>    ewah_bitmap: delete unused 'ewah_and_not()'
->>    ewah_bitmap: delete unused 'ewah_not()'
->>    ewah_bitmap: delete unused 'ewah_or()'
->>    ewah_io: delete unused 'ewah_serialize()'
->>
->>   ewah/bitmap.c      |  32 -------
->>   ewah/ewah_bitmap.c | 229 ---------------------------------------------
->>   ewah/ewah_io.c     |  10 --
->>   ewah/ewok.h        |  25 -----
->>   4 files changed, 296 deletions(-)
->>
->>
->> base-commit: fc54c1af3ec09bab8b8ea09768c2da4069b7f53e
-> Thanks.
->
-> ewah_clear() can become file-scope static, and
-> rlwit_discharge_empty() can be eliminated.  I do not know if either
-> is worth doing, though.
+(replying to the original since my e-mail is about design)
 
-With Peff's patches, this is true. When I applied your diff to my patch 
-alone we could not do that.
+> This version of ref-in-want is a bit more restrictive than what Jonathan
+> originally proposed (only full ref names are allowed instead of globs
+> and OIDs), but it is meant to accomplish the same goal (solve the issues
+> of refs changing during negotiation).
 
-If you want to create a commit with the below, I'm happy to add my 
-"Reviewed-by: Derrick Stolee <dstolee@microsoft.com>"
+One question remains: are we planning to expand this feature (e.g. to
+support patterns ending in *, or to support any pattern that can appear
+on the LHS of a refspec), and if yes, are we OK with having 2 or more
+versions of the service in the wild, each having different pattern
+support?
 
-Good team effort today!
+Supporting patterns would mean that we would possibly be able to
+eliminate the ls-refs step, thus saving at least a RTT. (Originally I
+thought that supporting patterns would also allow us to tolerate refs
+being removed during the fetch process, but I see that this is already
+handled by the server ignoring "want-ref <ref>" wherein <ref> doesn't
+exist on the server.)
 
->
->   ewah/ewah_bitmap.c | 20 ++++++++++++--------
->   ewah/ewah_rlw.c    |  8 --------
->   ewah/ewok.h        |  6 ------
->   ewah/ewok_rlw.h    |  1 -
->   4 files changed, 12 insertions(+), 23 deletions(-)
->
-> diff --git a/ewah/ewah_bitmap.c b/ewah/ewah_bitmap.c
-> index 017c677f98..d59b1afe3d 100644
-> --- a/ewah/ewah_bitmap.c
-> +++ b/ewah/ewah_bitmap.c
-> @@ -276,6 +276,18 @@ void ewah_each_bit(struct ewah_bitmap *self, void (*callback)(size_t, void*), vo
->   	}
->   }
->   
-> +/**
-> + * Clear all the bits in the bitmap. Does not free or resize
-> + * memory.
-> + */
-> +static void ewah_clear(struct ewah_bitmap *self)
-> +{
-> +	self->buffer_size = 1;
-> +	self->buffer[0] = 0;
-> +	self->bit_size = 0;
-> +	self->rlw = self->buffer;
-> +}
-> +
->   struct ewah_bitmap *ewah_new(void)
->   {
->   	struct ewah_bitmap *self;
-> @@ -288,14 +300,6 @@ struct ewah_bitmap *ewah_new(void)
->   	return self;
->   }
->   
-> -void ewah_clear(struct ewah_bitmap *self)
-> -{
-> -	self->buffer_size = 1;
-> -	self->buffer[0] = 0;
-> -	self->bit_size = 0;
-> -	self->rlw = self->buffer;
-> -}
-> -
->   void ewah_free(struct ewah_bitmap *self)
->   {
->   	if (!self)
-> diff --git a/ewah/ewah_rlw.c b/ewah/ewah_rlw.c
-> index b9643b7d0f..5093d43e2f 100644
-> --- a/ewah/ewah_rlw.c
-> +++ b/ewah/ewah_rlw.c
-> @@ -104,11 +104,3 @@ size_t rlwit_discharge(
->   
->   	return index;
->   }
-> -
-> -void rlwit_discharge_empty(struct rlw_iterator *it, struct ewah_bitmap *out)
-> -{
-> -	while (rlwit_word_size(it) > 0) {
-> -		ewah_add_empty_words(out, 0, rlwit_word_size(it));
-> -		rlwit_discard_first_words(it, rlwit_word_size(it));
-> -	}
-> -}
-> diff --git a/ewah/ewok.h b/ewah/ewok.h
-> index 0c504f28e2..84b2a29faa 100644
-> --- a/ewah/ewok.h
-> +++ b/ewah/ewok.h
-> @@ -72,12 +72,6 @@ void ewah_pool_free(struct ewah_bitmap *self);
->    */
->   struct ewah_bitmap *ewah_new(void);
->   
-> -/**
-> - * Clear all the bits in the bitmap. Does not free or resize
-> - * memory.
-> - */
-> -void ewah_clear(struct ewah_bitmap *self);
-> -
->   /**
->    * Free all the memory of the bitmap
->    */
-> diff --git a/ewah/ewok_rlw.h b/ewah/ewok_rlw.h
-> index bb3c6ff7e0..7cdfdd0c02 100644
-> --- a/ewah/ewok_rlw.h
-> +++ b/ewah/ewok_rlw.h
-> @@ -98,7 +98,6 @@ void rlwit_init(struct rlw_iterator *it, struct ewah_bitmap *bitmap);
->   void rlwit_discard_first_words(struct rlw_iterator *it, size_t x);
->   size_t rlwit_discharge(
->   	struct rlw_iterator *it, struct ewah_bitmap *out, size_t max, int negate);
-> -void rlwit_discharge_empty(struct rlw_iterator *it, struct ewah_bitmap *out);
->   
->   static inline size_t rlwit_word_size(struct rlw_iterator *it)
->   {
->
->
+However, after some in-office discussion, I see that eliminating the
+ls-refs step means that we lose some optimizations that can only be done
+when we see that we already have a sought remote ref. For example, in a
+repo like this:
 
+ A
+ |
+ O
+ |
+ O B C
+ |/ /
+ O O
+ |/
+ O
+
+in which we have rarely-updated branches that we still want to fetch
+(e.g. an annotated tag when we fetch refs/tags/* or a Gerrit
+refs/changes/* branch), having the ref advertisement first means that we
+can omit them from our "want" or "want-ref" list. But not having them
+means that we send "want-ref refs/tags/*" to the server, and during
+negotiation inform the server of our master branch (A), and since the
+server knows of a common ancestor of all our wants (A, B, C), it will
+terminate the negotiation and send the objects specific to branches B
+and C even though it didn't need to.
+
+So maybe we still need to keep the ls-refs step around, and thus, this
+design of only accepting exact refs is perhaps good enough for now.
