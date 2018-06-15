@@ -2,101 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 36B8D1F403
-	for <e@80x24.org>; Fri, 15 Jun 2018 04:31:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C15011F403
+	for <e@80x24.org>; Fri, 15 Jun 2018 04:43:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754173AbeFOEbP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Jun 2018 00:31:15 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56091 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751646AbeFOEbO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Jun 2018 00:31:14 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D5CFB83939;
-        Fri, 15 Jun 2018 00:31:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-        :cc:subject:message-id:mime-version:content-type; s=sasl; bh=sRT
-        kw+EBXIqO/flqNFuiSt8pwDU=; b=i3Gwro7SN7PbZQMElmUi6Eud1GUkdpvCgZu
-        xhYKxFuYEvuWl3J3Oi4WEICXoaP5HcaOCVjGuTsJ6l4AiSfVfKeRnYnUUNKDkU1V
-        LarkfqWvdVDmrbqnM+G1c5VsGiDxpb8lNDAFkoFR5w7+ykvcZW637HSZplayAgF5
-        Qnt6wIJ0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-        :subject:message-id:mime-version:content-type; q=dns; s=sasl; b=
-        RhoD1LHrA+rBYp0H+R1rkOhR+gLXyOyFQtT13fsL/6oKcWxTUMCwin660d3ilT2b
-        1xwzpTNIHU0+c9FXkPSTKCWZ2dTQgAH1h9L3VcAd52QmJefqTP4ceCkYsOUDENX+
-        tUbqGipo6AZtUQHd5hbksqyT/Ycaw9K8DMgAfCAWkz8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CE27B83938;
-        Fri, 15 Jun 2018 00:31:13 -0400 (EDT)
-Received: from zaya.teonanacatl.net (unknown [98.111.125.125])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 49F0583937;
-        Fri, 15 Jun 2018 00:31:13 -0400 (EDT)
-Date:   Fri, 15 Jun 2018 00:31:11 -0400
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: BUG: sequencer.c:795: root commit without message -- when rewording
- root commit
-Message-ID: <20180615043111.GS3094@zaya.teonanacatl.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.9.5 (2018-04-13)
-X-Pobox-Relay-ID: EF90448C-7054-11E8-BF98-67830C78B957-09356542!pb-smtp2.pobox.com
+        id S1753995AbeFOEnH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Jun 2018 00:43:07 -0400
+Received: from p3plsmtpa12-03.prod.phx3.secureserver.net ([68.178.252.232]:59233
+        "EHLO p3plsmtpa12-03.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751776AbeFOEnG (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 15 Jun 2018 00:43:06 -0400
+Received: from jessie.local ([212.149.203.197])
+        by :SMTPAUTH: with ESMTPSA
+        id TgZgfY1GOB1yFTgZkf3E8o; Thu, 14 Jun 2018 21:43:06 -0700
+From:   Max Kirillov <max@max630.net>
+To:     git@vger.kernel.org
+Cc:     Max Kirillov <max@max630.net>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] unpack-trees: do not fail reset because of unmerged skipped entry
+Date:   Fri, 15 Jun 2018 07:42:51 +0300
+Message-Id: <20180615044251.10597-1-max@max630.net>
+X-Mailer: git-send-email 2.17.0.1185.g782057d875
+X-CMAE-Envelope: MS4wfMzV/Si4+7kp6rHfQDh81jmSE9mKGIp9GeZQgDtPH9Sttaxscrsrg1lHRcmTUjLRLQThskJq7dRfQoNfItUon7LQhacppoqNW6cGeUdj1pwnBPdwBaLf
+ RdX+pwu4lhibFJ/spGxAjG9o+syHKcT/8DU0Q9+10BMfm5E7gQ931Up+cuFHnNaNxTaop+fsdQohJEfayfqGO8T34sUiMYQJ9MmKFeE8PDb3jp5UGXEh+MV1
+ hUWFi9DHRnWxhQ7Qv8kW0Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+After modify/delete merge conflict happens in a file skipped by sparse
+checkout, "git reset --merge", which implements the "--abort" actions, and
+"git reset --hard" fail with message "Entry * not uptodate. Cannot update
+sparse checkout." The reason is that the entry is verified in
+apply_sparse_checkout() for being up-to-date even when it has a conflict.
+Checking conflicted entry for being up-to-date is not performed in other
+cases. One obvious reason to not check it is that it is already modified
+by inserting conflict marks.
 
-I was splitting a repository tonight and ran 'rebase -i
---root' to reword the initial commit. Then git died with
-'BUG: sequencer.c:795: root commit without message.'
+Fix by not checking conflicted entries before performing reset.
+Also, add test case which verifies the issue is fixed.
 
-A simple test case to show the failure:
+Signed-off-by: Max Kirillov <max@max630.net>
+---
+I have tried to use sparse-checkout for merging and cherrypicking, to save on IO
+and disk space. It works, mostly, but there are issues here and there.
+This one was low hanging, and also pretty annoying.
 
--- >8 --
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 59c766540..bc5e228b8 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -971,6 +971,14 @@ test_expect_success 'rebase -i --root fixup root commit' '
- 	test 0 = $(git cat-file commit HEAD | grep -c ^parent\ )
- '
- 
-+test_expect_success 'rebase -i --root reword root commit' '
-+	test_when_finished "test_might_fail git rebase --abort" &&
-+	git checkout -b reword-root-branch master &&
-+	set_fake_editor &&
-+	FAKE_LINES="reword 1 2" FAKE_COMMIT_MESSAGE="A changed" git rebase -i --root &&
-+	git show HEAD^ | grep "A changed"
+ t/t3035-merge-sparse.sh | 46 +++++++++++++++++++++++++++++++++++++++++
+ unpack-trees.c          |  2 +-
+ 2 files changed, 47 insertions(+), 1 deletion(-)
+ create mode 100755 t/t3035-merge-sparse.sh
+
+diff --git a/t/t3035-merge-sparse.sh b/t/t3035-merge-sparse.sh
+new file mode 100755
+index 0000000000..c6b2b0b82a
+--- /dev/null
++++ b/t/t3035-merge-sparse.sh
+@@ -0,0 +1,46 @@
++#!/bin/sh
++
++test_description='merge with sparse files'
++
++. ./test-lib.sh
++
++# test_file $filename $content
++test_file () {
++	echo "$2" > "$1" &&
++	git add "$1"
++}
++
++# test_commit_this $message_and_tag
++test_commit_this () {
++	git commit -m "$1" &&
++	git tag "$1"
++}
++
++test_expect_success 'setup' '
++	test_file checked-out init &&
++	test_file modify_delete modify_delete_init &&
++	test_commit_this init &&
++	test_file modify_delete modify_delete_theirs &&
++	test_commit_this theirs &&
++	git reset --hard init &&
++	git rm modify_delete &&
++	test_commit_this ours &&
++	git config core.sparseCheckout true &&
++	echo "/checked-out" >.git/info/sparse-checkout &&
++	git reset --hard &&
++	! git merge theirs
 +'
 +
- test_expect_success C_LOCALE_OUTPUT 'rebase --edit-todo does not work on non-interactive rebase' '
- 	git reset --hard &&
- 	git checkout conflict-branch &&
--- >8 --
-
-Not surprisingly (among the commits which changed between
-2.17.1 and 2.18.0-rc2, at least), git bisect points to
-21d0764c82 ("rebase -i --root: let the sequencer handle even
-the initial part", 2018-05-04).  With luck, the fix will be
-obvious to trained eyes and can be added before 2.18.0. :)
-
-Thanks,
-
++test_expect_success 'reset --hard works after the conflict' '
++	git reset --hard
++'
++
++test_expect_success 'setup: conflict back' '
++	! git merge theirs
++'
++
++test_expect_success 'Merge abort works after the conflict' '
++	git merge --abort
++'
++
++test_done
+diff --git a/unpack-trees.c b/unpack-trees.c
+index e73745051e..65ae0721a6 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -468,7 +468,7 @@ static int apply_sparse_checkout(struct index_state *istate,
+ 		 * also stat info may have lost after merged_entry() so calling
+ 		 * verify_uptodate() again may fail
+ 		 */
+-		if (!(ce->ce_flags & CE_UPDATE) && verify_uptodate_sparse(ce, o))
++		if (!(ce->ce_flags & CE_UPDATE) && !(ce->ce_flags & CE_CONFLICTED) && verify_uptodate_sparse(ce, o))
+ 			return -1;
+ 		ce->ce_flags |= CE_WT_REMOVE;
+ 		ce->ce_flags &= ~CE_UPDATE;
 -- 
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-All decent people live beyond their incomes nowadays, and those who
-aren't respectable live beyond other peoples'.
-    -- Saki
+2.17.0.1185.g782057d875
 
