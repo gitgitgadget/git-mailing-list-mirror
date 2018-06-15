@@ -6,102 +6,86 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6EE2D1F403
-	for <e@80x24.org>; Fri, 15 Jun 2018 16:20:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 388661F403
+	for <e@80x24.org>; Fri, 15 Jun 2018 16:42:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965980AbeFOQUG (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Jun 2018 12:20:06 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35086 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S964836AbeFOQUF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Jun 2018 12:20:05 -0400
-Received: by mail-wm0-f67.google.com with SMTP id j15-v6so4884109wme.0
-        for <git@vger.kernel.org>; Fri, 15 Jun 2018 09:20:05 -0700 (PDT)
+        id S966306AbeFOQmH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Jun 2018 12:42:07 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:34573 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S966057AbeFOQlu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Jun 2018 12:41:50 -0400
+Received: by mail-wr0-f196.google.com with SMTP id a12-v6so10558332wro.1
+        for <git@vger.kernel.org>; Fri, 15 Jun 2018 09:41:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=cLo77K2m8VOctLo9gJm4F7Kk8ZAOHx6jMn7dgiUwP4Y=;
-        b=JcsS8xUq9d6ij0FW2+aJvGEtOYt+94pbd3HqMWQgUrnbPWK+z47fDkf+lkRmWJ+gFG
-         rRhNn72n4HMfvtV6KZnNMatZEF7IKsXl31Sz7iFIfh/bEWESnRUXwELQ7b/gsf/5ypo0
-         txhgf1RBGiiW3AwEB/U/aD7meaoITM9sbzkU4INBlemqQm8JgadNYccrt0y169rPeX3n
-         sDiOryft1QhFzRMYpz6A+2Vo4bpKPYdRZ6f+y6sXwNlGkrFCYPW9y2p7BipiZFflgNae
-         EGx6qwsSsgZnEHPAofkNgk06GsfYwF6gM1jDp5wAfv1rXv5R1pjsMQb/Nq+wEfnHnwQf
-         60xg==
+         :user-agent:mime-version;
+        bh=xe5M8ElLHvVZJk2f8XE3Uk+35VI6CHHTHuS6ki/KNVo=;
+        b=pfIucWB4akQUVKANplec4x8wIkfEEK+VsJiLa3WFWDey5MDqNCKNa1UU8RpB7GVeAD
+         V9FCWk39XqxLLhEBy9xivtJ5FQMxkOEWPxnd1JldjeducfHX4KAu+tIb29dHcfnp0Kwr
+         UD08FzBmuimqkVAYGE27E/itVEEtCkvIvgbZ+bY75pGkq8DAeCwdiiSY35SjA94exWZ4
+         bdkHWR0RmH5tzg3cMk8TmbOVxL5ezZU1xejeUIXHpqTy1+2wxKreuk3uFgAbrU579q5C
+         NT3a+kmm0ESw6Wvk2HxrsFerEgedMmAQcaiI9V6w3Z248kOifaVcYi2wKMiWF26x0EIr
+         CZ4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=cLo77K2m8VOctLo9gJm4F7Kk8ZAOHx6jMn7dgiUwP4Y=;
-        b=D0u7rqkjnIWXIgKumws0DTKGQHnZW5+W/GU1rMhaqmz8e7O8CJ8w6rmETqZ1Vsc1IX
-         K+puua8HlnODhGWHcYJL8uPnvl97iMrx/t94Zdk8vCRTWBowybdLRkgQYoHmmymgY08D
-         1HZkMUBVSlKvA4hB7sV6wy46dsPxjZGeuAmI0W90MfC2zdsFibhB6IGFzy2BPxA7fFzG
-         aGB8ePeIW9JwbzG1JIFJG19LnvYicfMhzP/MTP7pwlx/+k+bWoT8oXw0F24m4hSLVLvl
-         ZIhznqHiwvxe3R71pnYc0Fv9RExM/nsIeGMbEkqAambrjn9Yw+YyK0cSKacypfEl3jtP
-         b1RA==
-X-Gm-Message-State: APt69E1a6K48kZS4gc8HwS/YQNS3QFw5qNP870jmBNtiJSetIK8//akj
-        71DxtwCQ+GE7S32LE3tfPoqdCJuq
-X-Google-Smtp-Source: ADUXVKKjQGlxF8oe0Yn14mGtLsaQWMSSaKMApZMFJARJXiTaZTC/X3Ta98PNgJ9eNoR+9A1nL60Cow==
-X-Received: by 2002:a1c:454f:: with SMTP id s76-v6mr1731927wma.16.1529079604212;
-        Fri, 15 Jun 2018 09:20:04 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=xe5M8ElLHvVZJk2f8XE3Uk+35VI6CHHTHuS6ki/KNVo=;
+        b=DjVtMxLde/A9RSSTCKRfhBcX8szMAKPxoXREK91rz9Q6r04DTFqzAdGGNpDNyvqk6v
+         mZTz0yL/iuV95Flwyi6vU6NKZ8fB3dnVZBfPCPtMR6KdMu5SolzcOwwVxrT9a5IPd+Qu
+         i4Hhia3V/GyQ9ZMVByTegklHwuX21tosA0kGFbeDGIVAOcFa8AobTTas0EovGuwA4hrG
+         OIzgoQMk9HpjcUI2CDMhn3C9Uz4bbptTSfN5U+3fn7pURcR0QSkEajsaEIxqDorg5XD4
+         OSfFxd62gm87fSpciooVjFZzMBUzGtZus/LPJV+uIzw4mz13fpXDTnB8ker7sEkuvG64
+         YDDQ==
+X-Gm-Message-State: APt69E0Q6lEFh2PsoqiD3XYZOZaWWzAKXHB40BLZgzQT3jhXmXY7z89j
+        r9jPkuWQ3j1oddtvlECj/0w=
+X-Google-Smtp-Source: ADUXVKL6xWgu94FhcsROcnZFTGiTdePd2YxQMN4gDwng2Q2RcPGO6XTtQ7Y98ul3ZkQ+Pb0fvJGyOg==
+X-Received: by 2002:adf:a419:: with SMTP id d25-v6mr2266141wra.121.1529080908976;
+        Fri, 15 Jun 2018 09:41:48 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id w3-v6sm7742838wrr.88.2018.06.15.09.20.03
+        by smtp.gmail.com with ESMTPSA id w24-v6sm1545954wmc.15.2018.06.15.09.41.47
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 15 Jun 2018 09:20:03 -0700 (PDT)
+        Fri, 15 Jun 2018 09:41:47 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
 Cc:     Jeff King <peff@peff.net>, Luat Nguyen <root@l4w.io>,
         git@vger.kernel.org
-Subject: Re: [PATCH 1/3] ewah_read_mmap: bounds-check mmap reads
-References: <20180615032850.GA23241@sigill.intra.peff.net>
-        <20180615033112.GA20390@sigill.intra.peff.net>
-        <20180615091432.7155-1-szeder.dev@gmail.com>
-Date:   Fri, 15 Jun 2018 09:20:03 -0700
-In-Reply-To: <20180615091432.7155-1-szeder.dev@gmail.com> ("SZEDER
- =?utf-8?Q?G=C3=A1bor=22's?=
-        message of "Fri, 15 Jun 2018 11:14:32 +0200")
-Message-ID: <xmqq602k2f9o.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [PATCH 4/3] ewah: adjust callers of ewah_read_mmap()
+References: <2067D731-C415-4D19-8CDA-90D7DC638397@l4w.io>
+        <20180615032850.GA23241@sigill.intra.peff.net>
+        <20180615034442.GA14422@sigill.intra.peff.net>
+        <f6931351-df79-cb76-ee29-c57472a6a201@gmail.com>
+Date:   Fri, 15 Jun 2018 09:41:46 -0700
+In-Reply-To: <f6931351-df79-cb76-ee29-c57472a6a201@gmail.com> (Derrick
+        Stolee's message of "Fri, 15 Jun 2018 07:23:15 -0400")
+Message-ID: <xmqq1sd82e9h.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER Gábor <szeder.dev@gmail.com> writes:
+Derrick Stolee <stolee@gmail.com> writes:
 
->> +	bitmap=$(ls .git/objects/pack/*.bitmap) &&
+> On 6/14/2018 11:44 PM, Jeff King wrote:
+>> The return value of ewah_read_mmap() is now an ssize_t,
+>> since we could (in theory) process up to 32GB of data. This
+>> would never happen in practice, but a corrupt or malicious
+>> .bitmap or index file could convince us to do so.
 >
-> I think the 'ls' is unnecessary and this would do:
->
->   bitmap=.git/objects/pack/*.bitmap
+> Aside: Why a 32GB limit? Usually I see 32-bit issues limiting by 2
+> (signed) or 4 GB (unsigned). Is there something specifically in the
+> bitmap format that stops at this size?
 
-Yuck.
+The proposed log message for 1/3 has this bit
 
->> +	test_when_finished "rm -f $bitmap" &&
+  - check the size for integer overflow (this should be
+    impossible on 64-bit, as the size is given as a 32-bit
+    count of 8-byte words, but is possible on a 32-bit
+    system)
 
-OK, this will become "rm -f .git/objects/pack/*.bitmap" and then
-eval that implements when-finished would make it work OK.
-
->> +	head -c 512 <$bitmap >$bitmap.tmp &&
-
-The reading side would be OK but would the writing side also be
-alright?
-
-	makefile=Mak?file
-	head -n 4 <$makefile >$makefile.tmp
-	/bin/ls -t -1 | head -n 1
-        Mak?file.tmp
-
-Hmm...
-
->> +	mv $bitmap.tmp $bitmap &&
-
-Likewise...
-
-I said "yuck" because the original does not work if there happen to
-be more than (or for that matter, less than) one '.bitmap' file
-there.  But at least as long as there is one, it should work ;-)
+4 Giga 8-byte words makes 32 Giga bytes, I'd guess.
