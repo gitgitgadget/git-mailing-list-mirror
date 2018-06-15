@@ -2,99 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 28AEC1F517
-	for <e@80x24.org>; Fri, 15 Jun 2018 09:14:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7CE921F403
+	for <e@80x24.org>; Fri, 15 Jun 2018 10:32:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965441AbeFOJOl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Jun 2018 05:14:41 -0400
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:38524 "EHLO
-        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S936076AbeFOJOk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Jun 2018 05:14:40 -0400
-Received: by mail-wm0-f44.google.com with SMTP id 69-v6so2582866wmf.3
-        for <git@vger.kernel.org>; Fri, 15 Jun 2018 02:14:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=PgexEAdrjk7aFcdE2GNChn8d+U3bi96nnL4NphKGXBA=;
-        b=XFYNWNmDYtRWapm8hF23oBqfF5++nyR/FU0chlTYo9AH0HYFdYm4T0aFicmDL0QdUn
-         voau+6XcXoBmkGw7dKme5oZGYW8JgfKeJx3RnqcUJpMs9G+JO240TbY/SnAnav9i0aJa
-         FbvNSfW2E9d/bpK4aIyco9xeVgKe4gIMrMel9qqaVwJE/+i7KmfWS01UDiGFOHLZlFcU
-         9rjZYJhW5XBo9Lirs9wohS3qDwyPmeQ65Uy0xThxG37j8VnpVtUPgtg0IxbtTkZnFCDs
-         pzeo8lE0qimHs+6mmjABn5hHXhYVKU6wtxcZDO3RQramSsx1AWYbgh2WXRbxPVu7fbOB
-         U2Hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=PgexEAdrjk7aFcdE2GNChn8d+U3bi96nnL4NphKGXBA=;
-        b=BLYPRPHgBzYfJ24m+RXvzm4s8M2jaik1RM1nxvtR5RVwV8Z8PMlhpr6u1OF3dGdUra
-         pjVtO3U5M6W6aVovxG1K2/ZnUwV1LexTJnmAzKt6N2v4wVx4nSmBupf7w6Yw3Ar9oInG
-         R9cqGSY7gWEHXIy0XdncYO4WNz4WTS1BK4p/5DuUCFivOwBQw5x9x/P8L+9OQAzjxuyO
-         Suoi781UWSIsvZeoZ4kT/QEIBncHhjkoh15mlM+2AnE7XcYenWCa5hqJJBVQoKnd2P3t
-         h1vCOVKyOSf3njsP3XfEK6z6Tc6i95jerCgu5eUm0x3VxJJ6cj1fyMuWjhzkci+f7OP9
-         JF+Q==
-X-Gm-Message-State: APt69E0Sji5Qu5Nh4hSI6ZZZXg154fbdUV9wV5mgRmf2bBrF/LZ3Ugqp
-        nLPTYNPO41Mpla+WQooCrPY=
-X-Google-Smtp-Source: ADUXVKLeVvWi/VufMYmfWrvCz65rkbjdF0cs9m/7N7i8tqlS8riKKP/JCx3P+2XAlwH4c++pQ5Oawg==
-X-Received: by 2002:a1c:36e0:: with SMTP id y93-v6mr577677wmh.67.1529054078852;
-        Fri, 15 Jun 2018 02:14:38 -0700 (PDT)
-Received: from localhost.localdomain (x4db1df20.dyn.telefonica.de. [77.177.223.32])
-        by smtp.gmail.com with ESMTPSA id k17-v6sm1470653wmc.23.2018.06.15.02.14.37
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 15 Jun 2018 02:14:38 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Luat Nguyen <root@l4w.io>, git@vger.kernel.org
-Subject: Re: [PATCH 1/3] ewah_read_mmap: bounds-check mmap reads
-Date:   Fri, 15 Jun 2018 11:14:32 +0200
-Message-Id: <20180615091432.7155-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.18.0.rc0.207.ga6211da864
-In-Reply-To: <20180615033112.GA20390@sigill.intra.peff.net>
-References: <20180615032850.GA23241@sigill.intra.peff.net> <20180615033112.GA20390@sigill.intra.peff.net>
+        id S965651AbeFOKcu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Jun 2018 06:32:50 -0400
+Received: from ober.noekeon.org ([91.134.133.203]:58890 "EHLO ober.noekeon.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S965590AbeFOKct (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Jun 2018 06:32:49 -0400
+Received: from [127.0.0.1] (ober.noekeon.org [91.134.133.203])
+        by ober.noekeon.org (Postfix) with ESMTPSA id D024122381;
+        Fri, 15 Jun 2018 12:32:40 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=noekeon.org; s=mail;
+        t=1529058764; bh=LJmxiSvZkoa9b/hyLlwbpa7Wyas6AOSz+XbGyMQc7Gk=;
+        h=Subject:To:References:Cc:From:Date:In-Reply-To:From;
+        b=PijJqfvhcXltqHXui4LLP+SKx1goL2GaBFoWHNphH3VxxSvz9YSaKVrJdnPnHLThF
+         HQ7knY8/E66WSMoUtvBYIyECBP18hLWm15bOLmL2T7ssOouyUuCdqtJ4v2vzAwkO37
+         RVZUL5e8HznV3ywGtzbdfuMjLw6FfA/i4EH8loC8=
+Subject: Re: Hash algorithm analysis
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+References: <20180609205628.GB38834@genre.crustytoothpaste.net>
+ <20180609224913.GC38834@genre.crustytoothpaste.net>
+ <20180611192942.GC20665@aiede.svl.corp.google.com>
+ <20180611223520.GF38834@genre.crustytoothpaste.net>
+ <8e3fa1dd-958c-c3d5-2d6e-d52a4b424982@noekeon.org>
+ <20180613235808.GM38834@genre.crustytoothpaste.net>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        demerphq <demerphq@gmail.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Adam Langley <agl@google.com>, Keccak Team <keccak@noekeon.org>
+From:   Gilles Van Assche <gilles.van.assche@noekeon.org>
+Message-ID: <2a704205-81f1-324f-18f5-6137742ada09@noekeon.org>
+Date:   Fri, 15 Jun 2018 12:33:42 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180613235808.GM38834@genre.crustytoothpaste.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
-> index 423c0a475f..237ee6e5fc 100755
-> --- a/t/t5310-pack-bitmaps.sh
-> +++ b/t/t5310-pack-bitmaps.sh
-> @@ -331,4 +331,17 @@ test_expect_success 'pack reuse respects --incremental' '
->  	git show-index <empty.idx >actual &&
->  	test_cmp expect actual
->  '
-> +
-> +test_expect_success 'truncated bitmap fails gracefully' '
-> +	git repack -ad &&
-> +	git rev-list --use-bitmap-index --count --all >expect &&
-> +	bitmap=$(ls .git/objects/pack/*.bitmap) &&
+On 14/06/18 01:58, brian m. carlson wrote:
+>>> I imported the optimized 64-bit implementation of KangarooTwelve.
+>>> The AVX2 implementation was not considered for licensing reasons
+>>> (it's partially generated from external code, which falls foul of
+>>> the GPL's "preferred form for modifications" rule). 
+>>
+>> Indeed part of the AVX2 code in the Keccak code package is an
+>> extension of the implementation in OpenSSL (written by Andy
+>> Polyakov). The assembly code is generated by a Perl script, and we
+>> extended it to fit in the KCP's internal API.
+>>
+>> Would it solve this licensing problem if we remap our extensions to
+>> the Perl script, which would then become "the source"? 
+>
+> The GPLv2 requires "the preferred form of the work for making
+> modifications to it". If that form is the Perl script, then yes, that
+> would be sufficient. If your code is dissimilar enough that editing it
+> directly is better than editing the Perl script, then it might already
+> meet the definition.
+>
+> I don't do assembly programming, so I don't know what forms one
+> generally wants for editing assembly. Apparently OpenSSL wants a Perl
+> script, but that is, I understand, less common. What would you use if
+> you were going to improve it?
 
-I think the 'ls' is unnecessary and this would do:
+The Perl script would be more flexible in case one needs to improve the
+implementation. It allows one to use meaningful symbolic names for the
+registers. My colleague Ronny, who did the extension, worked directly
+with physical register names and considered the output of the Perl
+script as his source. But this extension could probably be done also at
+the level of the Perl script.
 
-  bitmap=.git/objects/pack/*.bitmap
+Kind regards,
+Gilles
 
-> +	test_when_finished "rm -f $bitmap" &&
-> +	head -c 512 <$bitmap >$bitmap.tmp &&
-> +	mv $bitmap.tmp $bitmap &&
-> +	git rev-list --use-bitmap-index --count --all >actual 2>stderr &&
-> +	test_cmp expect actual &&
-> +	test_i18ngrep corrupt stderr
-> +'
-> +
->  test_done
-> -- 
-> 2.18.0.rc2.534.g53d976aeb8
-> 
-> 
