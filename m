@@ -2,80 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 452F91F403
-	for <e@80x24.org>; Fri, 15 Jun 2018 19:47:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC2331F403
+	for <e@80x24.org>; Fri, 15 Jun 2018 19:48:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966231AbeFOTr0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Jun 2018 15:47:26 -0400
-Received: from mail-yb0-f182.google.com ([209.85.213.182]:41988 "EHLO
-        mail-yb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S966153AbeFOTrZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Jun 2018 15:47:25 -0400
-Received: by mail-yb0-f182.google.com with SMTP id d123-v6so3909692ybh.9
-        for <git@vger.kernel.org>; Fri, 15 Jun 2018 12:47:25 -0700 (PDT)
+        id S966392AbeFOTsz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Jun 2018 15:48:55 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:36443 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965768AbeFOTsy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Jun 2018 15:48:54 -0400
+Received: by mail-wm0-f67.google.com with SMTP id v131-v6so5737949wma.1
+        for <git@vger.kernel.org>; Fri, 15 Jun 2018 12:48:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=CKmsLjIeMyfAxw5sxcxDWtdAwM0iUlTN+thx1TwMMv8=;
-        b=mZxxfpiYxy8jZwa7+xlUCUxw03HccE0pM6gRzqnwbzEhQfnOTcevnrWsi/IAeVMavz
-         Z/LnAklcGqtG7twtxpRdCG69t6KPPest5RQ6FPVZI67gPLvQsDkav5vivsqNvnLeDWSc
-         FqIp2pgZZ3/hy4uoUnJOnloL6yR88Y8+13hzApFqts0Djv8eRcecSaG5wGADhPD1WqmV
-         1x0WJSY25mKucDQMe7j3EFugXjBCbDPsfg04es8y6F3+2s8mT70SwISGKT1WoUCFIEAF
-         lb6cMpFRegCZ2i15PW9y+F7XUeuZrEhVqeI0QjXz5tT7nsnMs357FBDvXWwdWEdFpznw
-         60YQ==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=skNDlXINCcxg0U+4CgrKD97B8F50buSxcPhgjmqCS50=;
+        b=s+Z0/NlGd6aLekw+R1lLS1snKun/8n3hxVJjBAVzhAfF/1A7uimXYQmTMD0I/Z6Mxg
+         Jl+yYH416OyBFD1YqZLNbF24lrcOcc2N5eE2K2Rx1nu/QH9ogiYgRwBPdEnKidbtMRmD
+         TZNy4m0qKRua4MJgonPt+FlXCKgmW8eQMNjIdchpGLGEwKGrNoSfQVvRRtdnjEdv44If
+         nfL2mnfVqXXDqY/qsdRj3FRNVf8oBBgAHUvESkrAYAREV21dAGQ4WowClt/fUDw896ck
+         bq7K8xoXbRuv0vH3eAZ2IjJH/r0CUQJCMX1fTkj+PNjFK+764cOte89jeduU75SdX2bf
+         9+hA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=CKmsLjIeMyfAxw5sxcxDWtdAwM0iUlTN+thx1TwMMv8=;
-        b=FBER733xz0HhnaKn3LyvVG0nx/pw6IAvlWzaSIqLXG6LmOTw+vlZlqDY/xKa7EDHyz
-         ta8ylyNnRnoseh3kSCeT3a1w+3XERq9vsvd2E2mClJ9SbZLmyaA9OrL3TA2t6vRVAidJ
-         u5XgP2wK5lP21D034LoqxzyLlA/wxpl7NE8e2FtO/VvLtqso2rpnnJEvbF79OWRD2nT+
-         A6felkTSBh81rLYl71h3uBsPnuBF57HqLFlPkW5cFlEGP+jhCCBzErEc/25T6G0Funys
-         Uh2HQ/csIBFBDc0us/C12LoKT/o/iOhFYUYdLDjSPqXXNMxnDN5BgMdO4oAUHji8x3KE
-         w4VA==
-X-Gm-Message-State: APt69E0YxbAXboXfpNAk4108Q3f0Q5M0C++sJHlKuZAiEUVDI1S5hTNM
-        mVRojedPh2xC+YMSdklcrENEHuGeCK2XdVjHyAQdZaEZ
-X-Google-Smtp-Source: ADUXVKIAG0TTUAiamUMm3fp9dnZTvIoJPbpLckJI92pwO23vCxZao71WbY6oopDx40cThCeYvx3WySMxE0cfLBV5tKY=
-X-Received: by 2002:a25:8481:: with SMTP id v1-v6mr1438448ybk.307.1529092044328;
- Fri, 15 Jun 2018 12:47:24 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=skNDlXINCcxg0U+4CgrKD97B8F50buSxcPhgjmqCS50=;
+        b=hGLnQU4DpW0X7htrBke+yuGCBC6TwcS7C05v+F4aPCU11xJXwJQG+5JbjiTXvAuTgN
+         zzYgPOHZyy5Nnm4vL4fKXUU90srRNOJOFvVwMdTXMVh8liPbbbiSda7cdErDADXrQSTi
+         HbEElZ/zaiAb5Cs0+pdZKy//F26my21gNs4YBRs1XkBWMOF7uanQcbto71gHhxsQw2Ng
+         C4IScSQNbSXpScSN3lKNoiBUWXwTZiCiGBFjn+gXZ4ob/t2jrSdIG6h/t4dkmXxnlWbG
+         yH/HC5DPvCcGrYzNiE4ZAz+CVotKXUMt99Q6dC9CWbQqAECtQO28nSgMGuNd+OaGfU95
+         Ftvw==
+X-Gm-Message-State: APt69E08ru/ZVaC1qCHKwnDIbk4FAMwboVj6Asr2spmI66if00B8YM12
+        yndLCK7EWd9yBxlCWEtfK6qIcxYn
+X-Google-Smtp-Source: ADUXVKL/0ju9lnPOAWkf4mIzppA/BWfSMNpL3376SzABAuiFp/uP/iVKHPDw2pqSNw1LLGN8HEOKGw==
+X-Received: by 2002:a1c:a54e:: with SMTP id o75-v6mr2245799wme.157.1529092133161;
+        Fri, 15 Jun 2018 12:48:53 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id q70-v6sm3075188wmd.45.2018.06.15.12.48.52
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 15 Jun 2018 12:48:52 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee <dstolee@microsoft.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        "peff\@peff.net" <peff@peff.net>,
+        "ramsay\@ramsayjones.plus.com" <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v2 0/7] Delete unused methods in EWAH bitmap
+References: <20180615143018.170686-1-dstolee@microsoft.com>
+        <20180615182727.172075-1-dstolee@microsoft.com>
+        <xmqq1sd7288z.fsf@gitster-ct.c.googlers.com>
+        <ee8a1b8f-d14e-218c-3bdf-82908fefbec0@gmail.com>
+Date:   Fri, 15 Jun 2018 12:48:52 -0700
+In-Reply-To: <ee8a1b8f-d14e-218c-3bdf-82908fefbec0@gmail.com> (Derrick
+        Stolee's message of "Fri, 15 Jun 2018 14:56:43 -0400")
+Message-ID: <xmqqo9gbzv8b.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <DB6PR0101MB2344D682511891E4E9528598D97D0@DB6PR0101MB2344.eurprd01.prod.exchangelabs.com>
-In-Reply-To: <DB6PR0101MB2344D682511891E4E9528598D97D0@DB6PR0101MB2344.eurprd01.prod.exchangelabs.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 15 Jun 2018 12:47:13 -0700
-Message-ID: <CAGZ79kYUyzJK7a+=bQMxi=YJ5LgkS_2eJA1dB325U71ks1jjGg@mail.gmail.com>
-Subject: Re: fatal: could not reset submodule index
-To:     awe@frontmatec.com
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> # Trying again with submodule.recurse
-> git config --global submodule.recurse true
-> git clone main clone4 cd clone4
-> git checkout with-submodule
-> # Submodule is still not automatically updated (sub folder is empty)
-> # It seems like submodule.recurse does not affect git clone
+Derrick Stolee <stolee@gmail.com> writes:
 
-That is true; submodule.recurse is not affecting git clone.
-This was a design decision once it was introduced, as the git clone
-might be too large. Maybe we need to revisit that decision and
-just clone the submodules if submodule.recurse is set.
+>> ewah_clear() can become file-scope static, and
+>> rlwit_discharge_empty() can be eliminated.  I do not know if either
+>> is worth doing, though.
+>
+> With Peff's patches, this is true. When I applied your diff to my
+> patch alone we could not do that.
 
-The problem that this bug report highlights, is the following:
-Each branch has its own .gitmodules file and they can be
-all different, however at clone time we only clone submodules
-from the currently active branch.
+Yeah, as I organized the patches on two topics in this order:
 
-So you could get your test case to pass with
-    git clone --branch with-submodule main clone5
+  jk/ewah-bounds-check (build on 'maint')
+    Peff's 1/3
+    Peff's 4/3
+
+  ds/ewah-cleanup (build on top of the above)
+    7 patches in this series
+    Peff's 2/3
+    Peff's 3/3
+
+at the end, these two changes become possible.  Again, I am not sure
+if these are worth doing, so I'll leave it out of these two series,
+at least for now.
+
+This is a tangent, but I too felt that roaring paper quite a
+pleasant read ;-)
