@@ -2,117 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0609F1F403
-	for <e@80x24.org>; Sat, 16 Jun 2018 19:26:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A43D81F403
+	for <e@80x24.org>; Sat, 16 Jun 2018 20:11:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933078AbeFPT0Y (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Jun 2018 15:26:24 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:46447 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933027AbeFPT0W (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Jun 2018 15:26:22 -0400
-Received: by mail-pf0-f194.google.com with SMTP id q1-v6so6344124pff.13
-        for <git@vger.kernel.org>; Sat, 16 Jun 2018 12:26:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=in-reply-to:references:content-transfer-encoding:mime-version:from
-         :to:cc:subject:message-id:date;
-        bh=8OsARHN2Xwd++3GNpI9Q4ATDq5TkkdyooA1ScTxhzgA=;
-        b=E/EtJp58TeD/HpJIy6L8eJN1vBhf7xExP084gOEMmvDzbuGj9Tnk/j2hUZVARVLLas
-         QuunTin4UCwEBsRe9RFnfOMApRNNIEZrGp+m5FGZS1BzKq4eb/532cLFCuvGZP1op/Nu
-         jGZytgmT1UNl4ySK8f9fgd50D86HTWvqN86YJnEfb2DE28uUxh4MLv91IFleeP5U5pT8
-         iu7BMZQ2017XthbNbvnhyJabEc1QEGaJaxbg7luYG1CNqphcfr2DMaFFPdRg4SSto3jX
-         EKvXOBiR2Tize7tIpMZl+5LT8XsqBiJws8OvRu67xpD3u9E2qABokoEKXZL1SmPuZNOs
-         6v3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:in-reply-to:references:content-transfer-encoding
-         :mime-version:from:to:cc:subject:message-id:date;
-        bh=8OsARHN2Xwd++3GNpI9Q4ATDq5TkkdyooA1ScTxhzgA=;
-        b=aNFbBrlOpNLGOiWL3ZmIwr+sz+vI/j/V+S5LAmQp/6aLi8IbqFXHX+DkU7BiUVIypn
-         5dckOseT8i39IDuzD+XdTWkKVXSPppUHj8765QHJe217QZDezi4+fE9pl2H/T4r/tCw/
-         9Hl4x5ar4NyT8lvtvKXoY8H0hcQnOBr6ZWtT8zu1oEAYw2kG28v9aPNhIC1egfXOzKbX
-         YfGjZ+MSeu12W2FO/U3lJ/XYFmSt8T1lNjOgE+EOu6C7Ic/qHDPULn7n2rJK/ZARZZTs
-         D4WJ9moWBLXgi1IZA6tCC7EjwaaJ4EKYCTG7RvoRSLADD84ySHMAdnfwaBKGUdngNGU9
-         3FRA==
-X-Gm-Message-State: APt69E1T/uPGBwM5SN3cpO5DgvRTQaUKuzSvST6OTinEJ8RKhXXIsAmu
-        XmSONsIOrPpooc9tWksAht/XvrVg
-X-Google-Smtp-Source: ADUXVKKOWnDqrGbu5kFcRh3lDZREeUQgIEDxEq9EmY9pbO5TN94XSiNOV99KiU9i5DOK/XHnwV8IQw==
-X-Received: by 2002:a63:4d14:: with SMTP id a20-v6mr6083482pgb.46.1529177181378;
-        Sat, 16 Jun 2018 12:26:21 -0700 (PDT)
-Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id l85-v6sm19306429pfk.79.2018.06.16.12.26.20
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 16 Jun 2018 12:26:20 -0700 (PDT)
-Content-Type: text/plain
-In-Reply-To: <pull.3.git.gitgitgadget@gmail.com>
+        id S932797AbeFPULq (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Jun 2018 16:11:46 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57786 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932554AbeFPULq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Jun 2018 16:11:46 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 65FB5E3323;
+        Sat, 16 Jun 2018 16:11:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to; s=sasl; bh=vbtiac+OeCiFoXU24KXv/lKT6UQ=; b=s5KxdLH
+        VLbhoc2Vh+tDYkowjH40B9g/szal0wuEMmXJWR0BSNhKebqmwm7rLuNNPxsvy6W6
+        MG3KmLy0HLWwgUOtCUSwyLtzS0BJ2ZEQt8p3i3OLexfLVofhMjYu51648HaosqXo
+        TdGB1bxkgmA+eRDmT/UE4YY2bo5AfRpoTmY8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to; q=dns; s=sasl; b=K8l9aFpvK3tFNEBUOh97hNzumQFFowGfj
+        CR0XdlrRmHk0g3iDBIwJiAHkcUlbDu2WbJmDRVOQO+Cv3Ygr2X4ox5N3I4f5ZIiR
+        Qt+H9NFjDybGLF8C8o0JmwU7QPsbUfAV2AGCTNEGRDHYfeKVT4D7Pr2TZZiJEQdq
+        /k9EEXTz/Y=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5D790E3322;
+        Sat, 16 Jun 2018 16:11:45 -0400 (EDT)
+Received: from zaya.teonanacatl.net (unknown [98.111.125.125])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E6875E3321;
+        Sat, 16 Jun 2018 16:11:44 -0400 (EDT)
+Date:   Sat, 16 Jun 2018 16:11:43 -0400
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] rebase --root: fix `reword` on a root commit
+Message-ID: <20180616201143.GH11827@zaya.teonanacatl.net>
 References: <pull.3.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-From:   Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH 2/2] rebase --root: fix amending root commit messages
-Message-ID: <6f492ded5c4b9ee82501433d5a5227bc3e546c31.1529177176.git.gitgitgadget@gmail.com>
-Date:   Sat, 16 Jun 2018 21:00:38 +0200
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.3.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.9.5 (2018-04-13)
+X-Pobox-Relay-ID: 7DD99480-71A1-11E8-84DB-67830C78B957-09356542!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Hi Johannes,
 
-The code path that triggered that "BUG" really does not want to run
-without an explicit commit message. In the case where we want to amend a
-commit message, we have an *implicit* commit message, though: the one of
-the commit to amend. Therefore, this code path should not even be
-entered.
+Johannes Schindelin via GitGitGadget wrote:
+> From: GitGitGadget <gitgitgadget@gmail.com>
+> 
+> Todd Zullinger reported this bug in
+> https://public-inbox.org/git/20180615043111.GS3094@zaya.teonanacatl.net/:
+> when calling git rebase --root and trying to reword the
+> root commit's message, a BUG is reported.
+>
+> This fixes that.
+> 
+> IMO the bug fix is trivial enough to qualify for inclusion into v2.18.0, still.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- sequencer.c                   | 2 +-
- t/t3404-rebase-interactive.sh | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+It does indeed fix the issue.  I agree it would be nice to
+see it in 2.18.0.  As a fix for a minor regression
+introduced in this cycle, that seems reasonable.
 
-diff --git a/sequencer.c=
- b/sequencer.c
-index cca968043..4034c0461 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -784,7 +784,7 @@ static int run_git_commit(const char =
-*defmsg, struct replay_opts *opts,
- 	struct child_process cmd =3D =
-CHILD_PROCESS_INIT;
- 	const char *value;
-=20
--	if (flags & =
-CREATE_ROOT_COMMIT) {
-+	if ((flags & CREATE_ROOT_COMMIT) && !(flags & =
-AMEND_MSG)) {
- 		struct strbuf msg =3D STRBUF_INIT, script =3D STRBUF_INIT;
- 		const char *author =3D is_rebase_i(opts) ?
- 			read_author_ident(&script=
-) : NULL;
-diff --git a/t/t3404-rebase-interactive.sh =
-b/t/t3404-rebase-interactive.sh
-index ca94c688d..e500d7c32 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -971,7 +971,7 @@ test_expect_success 'rebase -i --root fixup root =
-commit' '
- 	test 0 =3D $(git cat-file commit HEAD | grep -c ^parent\ )
- '
-=20
--test_expect_failure 'rebase -i --root reword root commit' '
-+test_expect_success 'rebase -i --root reword root commit' '
- 	test_when_finished "test_might_fail git rebase --abort" &&
- 	git checkout -b reword-root-branch master &&
- 	set_fake_editor &&
---=20
-2.17.0.windows.1
+> Johannes Schindelin (1):
+>   rebase --root: fix amending root commit messages
+> 
+> Todd Zullinger (1):
+>   rebase --root: demonstrate a bug while amending root commit messages
+> 
+>  sequencer.c                   | 2 +-
+>  t/t3404-rebase-interactive.sh | 9 +++++++++
+>  2 files changed, 10 insertions(+), 1 deletion(-)
+> 
+> 
+> base-commit: 68372c88794aba15f853542008cda39def768372
+
+-- 
+Todd
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+I don't mean to sound cold, or cruel, or vicious,
+but I am, so that's the way it comes out.
+    -- Bill Hicks
+
