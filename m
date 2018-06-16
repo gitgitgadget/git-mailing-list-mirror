@@ -7,182 +7,162 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB7981F403
-	for <e@80x24.org>; Sat, 16 Jun 2018 05:14:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D68781F403
+	for <e@80x24.org>; Sat, 16 Jun 2018 05:42:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753889AbeFPFOv (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Jun 2018 01:14:51 -0400
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:34221 "EHLO
-        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753736AbeFPFOu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Jun 2018 01:14:50 -0400
-Received: by mail-lf0-f68.google.com with SMTP id o9-v6so17489863lfk.1
-        for <git@vger.kernel.org>; Fri, 15 Jun 2018 22:14:49 -0700 (PDT)
+        id S1754919AbeFPFmE (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Jun 2018 01:42:04 -0400
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:39308 "EHLO
+        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754008AbeFPFmD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Jun 2018 01:42:03 -0400
+Received: by mail-lf0-f65.google.com with SMTP id t2-v6so11122948lfd.6
+        for <git@vger.kernel.org>; Fri, 15 Jun 2018 22:42:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=wCwS2me0GzOghLOp5XQO240iyKKPVZrt3Hp2yvqX9j4=;
-        b=GTgwvrBOyUqa2TD20tEtTdXWhfPzW73F95+B4wcL5lFdSiUig0DdToGcJdnwUS4GtY
-         cDqFVqmidPRendvGHTjm/HZVG6eutIZxkuRAv1nmFH09+XUj12xWBPYAtVh7+/B/crip
-         ne992DdO+ppJwnh5p3iy7rnzvPi8b+OmYFryp86csu/sWo2hkTjsazTa5qFCX1HBdP2w
-         YK89VNDrhfVdu2D1F06JJCPlvkBeM6RJk23gXrDTuTGhE2UnjpYiGL24O/3pyBrMw6Ye
-         1hpDSDrxUIpodg4LVsz7//l5exhYQWo9haBqk8TwcUXx0g1fpbyA6ZZ/uqPotQ3lGwI/
-         u/CQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=4ZEnVBc+wjx+Nyuuyn+MV+U/Te3ff5MEPOfgBV1z46c=;
+        b=eAeMV82s5FAdD3XKB+2jPOrMqpywzKWz1G5P3xlmQnfyTCdq0UeyC+BWBGOf37y7Zb
+         w1m4+dQAJBpJErQk+BfrpSaXM8uGVsgzSADN8TGIZt6dy56dJNMm4cpuxdi70ezNZBeM
+         LqGLH6RCtsZLA+zpinvDcxtxtmr9oLRQYBFFF+GQfNdwUsvjPoNaQ6ViDWu3KgaTe2tw
+         O8+zQr6pj8LhFZPnilZMNggS6h2d7x8cv7EdG2WONKfKJa7lnoAzmsHTmgTkTNnlV91G
+         Vn77gR0E/S8X24yp5IfPhGc2GHK3/ViWybNdXfzQgjMKEmjSnrHDQGitVzfjknHcOG2e
+         kIuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=wCwS2me0GzOghLOp5XQO240iyKKPVZrt3Hp2yvqX9j4=;
-        b=fTun9hVqXGl7QxgIgodS+QveBEYToxcUtQXyEYh9wbDcfskFDcU3c7ODsbAwmFP19a
-         YrnKva3f2OvKcubcr7XXXZuOC1ewG/9rpGmSt0sfnqcfY9/X1CUNS6kTsZSTrunDakup
-         DWRJjYCb8D+XLuXv7D/HaUZvNi80gEb1SU0HpaO5JZiWaWUPtePL0gyPXGoRFejWav+t
-         ENGfcLy1M/Y2B0ZJh1dcsjBmrMdo2L8GA7WiFhl/1F9XYUgEQVLF+TiXbG8p89KIitEy
-         t3/uNEycUT/xkRY5/UGHjuGa4RQtIs13OzvaeWBNy33uGJQZd2Xuatj0SKMW+7UNbZc7
-         EyUQ==
-X-Gm-Message-State: APt69E1+N9zID4Hn+K1vO6RmrMtuwat91GGkV+9SGX5LryQeFqI4ncw9
-        AT4kSc785qTMxADG4RZ1a/A=
-X-Google-Smtp-Source: ADUXVKK8t5Ica5Y6HnzGqbCI3JnEdO9Ux8hblr1fLa9ZSEF80im8szGLhJfhaa0DjSN447sBU20PHw==
-X-Received: by 2002:a2e:93c9:: with SMTP id p9-v6mr3071382ljh.117.1529126088722;
-        Fri, 15 Jun 2018 22:14:48 -0700 (PDT)
-Received: from duynguyen.home (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id x68-v6sm1772638lfb.25.2018.06.15.22.14.46
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=4ZEnVBc+wjx+Nyuuyn+MV+U/Te3ff5MEPOfgBV1z46c=;
+        b=mpNwuUoy6kGBuk33tJE0uikWI7mQcsgYbruzvzwLkBNHBe8g5vFkQmTs7tePe1K2ux
+         seikRLAVdd0nZ95jwHBHF2td0NK9kP8Ulua1LuK1Lrs4IeE5w2mf3rTpzUWS+mF7gHfp
+         UOC4pZA2G1zXYQvnOfxvEa08LM9BYek28K45hv5f6wycqy2hUZpYCQSqy/fR9cLt5bAf
+         Hlv1IN1SInM5YcoHVd9wMzalkRG81uHu0EjeAWyMgVtx1wLDI+mjEQi32wXyhIw94YwZ
+         I+V1v8J8RGV555ieLRG4vSj4Rp75NI53sbYJ0Z1PRRdjCX1VetIUocTCM9bxzC51okYW
+         TK6A==
+X-Gm-Message-State: APt69E3jFLUhadh+/FfdVhYoZ42h2ABSM8ck/pHdrxFPNq3IA/4/vRRp
+        ut+1hFLoFzkYmA6o0D1pzjmtRg==
+X-Google-Smtp-Source: ADUXVKLOOqQLplTgrEhV4Avaw81x9Ce6ZaLsJ1TnkT887CyPw67BBedAI1+a5NWXOhmWte9fa5Uc6w==
+X-Received: by 2002:a19:f71a:: with SMTP id z26-v6mr2618970lfe.137.1529127721111;
+        Fri, 15 Jun 2018 22:42:01 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id g5-v6sm1745194lje.21.2018.06.15.22.42.00
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 15 Jun 2018 22:14:47 -0700 (PDT)
-Date:   Sat, 16 Jun 2018 07:14:44 +0200
-From:   Duy Nguyen <pclouds@gmail.com>
-To:     Max Kirillov <max@max630.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] unpack-trees: do not fail reset because of unmerged
- skipped entry
-Message-ID: <20180616051444.GA29754@duynguyen.home>
-References: <20180615044251.10597-1-max@max630.net>
+        Fri, 15 Jun 2018 22:42:00 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH 00/15] Kill the_index part 1, expose it
+Date:   Sat, 16 Jun 2018 07:41:42 +0200
+Message-Id: <20180616054157.32433-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.18.0.rc0.333.g22e6ee6cdf
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180615044251.10597-1-max@max630.net>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 15, 2018 at 07:42:51AM +0300, Max Kirillov wrote:
-> After modify/delete merge conflict happens in a file skipped by sparse
-> checkout, "git reset --merge", which implements the "--abort" actions, and
-> "git reset --hard" fail with message "Entry * not uptodate. Cannot update
-> sparse checkout." The reason is that the entry is verified in
-> apply_sparse_checkout() for being up-to-date even when it has a conflict.
+This is the beginning of the end of the_index. The problem with
+the_index is it lets library code anywhere access it freely. This is
+not good because from high level you may not realize that the_index is
+being used while you don't want to touch index at all, or you want to
+use a different index instead.
 
-Conflicted entries should not be skipped by design. Even if you
-specify sparse patterns to ignore them, they must be checked out. When
-a conflicted entry appears in apply_sparse_checkout() something else
-is already wrong.
+This is a long series, 86 patches [1], so I'm going to split and
+submit it in 15-20 patches at a time. The first two parts are trivial
+though and could be safely fast tracked if needed.
 
-I think this is a better fix along that line. As you can see we
-already un-skip staged entries. But I think I forgot (or did not know)
-about CE_CONFLICTED. This change passes your new tests, but I didn't
-try to run the whole test suite to see if I broke anything else.
+This is the first part, which kills the use of index compat macros
+outside builtin/ and expose the_index in all library code. Later on we
+will ban the_index from one file each time until it's gone for good.
 
--- 8< --
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 3a85a02a77..eb544ee1b3 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1246,7 +1246,7 @@ static void mark_new_skip_worktree(struct exclude_list *el,
- 		if (select_flag && !(ce->ce_flags & select_flag))
- 			continue;
- 
--		if (!ce_stage(ce))
-+		if (!ce_stage(ce) && !(ce->ce_flags & CE_CONFLICTED))
- 			ce->ce_flags |= skip_wt_flag;
- 		else
- 			ce->ce_flags &= ~skip_wt_flag;
--- 8< --
+"struct index_state *" will be passed from builtin/ through the call
+chain to the function that needs it. In some cases, "struct
+repository *" will be passed instead when the whole operation spans
+more than just the index.  By the end, the_index becomes part of
+"index compat macros" and cannot be used outside builtin/
 
-> Checking conflicted entry for being up-to-date is not performed in other
-> cases. One obvious reason to not check it is that it is already modified
-> by inserting conflict marks.
-> 
-> Fix by not checking conflicted entries before performing reset.
-> Also, add test case which verifies the issue is fixed.
-> 
-> Signed-off-by: Max Kirillov <max@max630.net>
-> ---
-> I have tried to use sparse-checkout for merging and cherrypicking, to save on IO
-> and disk space. It works, mostly, but there are issues here and there.
-> This one was low hanging, and also pretty annoying.
-> 
->  t/t3035-merge-sparse.sh | 46 +++++++++++++++++++++++++++++++++++++++++
->  unpack-trees.c          |  2 +-
->  2 files changed, 47 insertions(+), 1 deletion(-)
->  create mode 100755 t/t3035-merge-sparse.sh
-> 
-> diff --git a/t/t3035-merge-sparse.sh b/t/t3035-merge-sparse.sh
-> new file mode 100755
-> index 0000000000..c6b2b0b82a
-> --- /dev/null
-> +++ b/t/t3035-merge-sparse.sh
-> @@ -0,0 +1,46 @@
-> +#!/bin/sh
-> +
-> +test_description='merge with sparse files'
-> +
-> +. ./test-lib.sh
-> +
-> +# test_file $filename $content
-> +test_file () {
-> +	echo "$2" > "$1" &&
-> +	git add "$1"
-> +}
-> +
-> +# test_commit_this $message_and_tag
-> +test_commit_this () {
-> +	git commit -m "$1" &&
-> +	git tag "$1"
-> +}
-> +
-> +test_expect_success 'setup' '
-> +	test_file checked-out init &&
-> +	test_file modify_delete modify_delete_init &&
-> +	test_commit_this init &&
-> +	test_file modify_delete modify_delete_theirs &&
-> +	test_commit_this theirs &&
-> +	git reset --hard init &&
-> +	git rm modify_delete &&
-> +	test_commit_this ours &&
-> +	git config core.sparseCheckout true &&
-> +	echo "/checked-out" >.git/info/sparse-checkout &&
-> +	git reset --hard &&
-> +	! git merge theirs
-> +'
-> +
-> +test_expect_success 'reset --hard works after the conflict' '
-> +	git reset --hard
-> +'
-> +
-> +test_expect_success 'setup: conflict back' '
-> +	! git merge theirs
-> +'
-> +
-> +test_expect_success 'Merge abort works after the conflict' '
-> +	git merge --abort
-> +'
-> +
-> +test_done
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index e73745051e..65ae0721a6 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -468,7 +468,7 @@ static int apply_sparse_checkout(struct index_state *istate,
->  		 * also stat info may have lost after merged_entry() so calling
->  		 * verify_uptodate() again may fail
->  		 */
-> -		if (!(ce->ce_flags & CE_UPDATE) && verify_uptodate_sparse(ce, o))
-> +		if (!(ce->ce_flags & CE_UPDATE) && !(ce->ce_flags & CE_CONFLICTED) && verify_uptodate_sparse(ce, o))
->  			return -1;
->  		ce->ce_flags |= CE_WT_REMOVE;
->  		ce->ce_flags &= ~CE_UPDATE;
-> -- 
-> 2.17.0.1185.g782057d875
-> 
+Part one is mechanical conversion with the help of coccinelle. The
+only real patches are the first and the last one.
+
+[1] https://gitlab.com/pclouds/git/commits/really-kill-the-index
+
+Nguyễn Thái Ngọc Duy (15):
+  contrib: add cocci script to replace index compat macros
+  apply.c: stop using index compat macros
+  blame.c: stop using index compat macros
+  check-racy.c: stop using index compat macros
+  diff-lib.c: stop using index compat macros
+  diff.c: stop using index compat macros
+  entry.c: stop using index compat macros
+  merge-recursive.c: stop using index compat macros
+  merge.c: stop using index compat macros
+  rerere.c: stop using index compat macros
+  revision.c: stop using index compat macros
+  sequencer.c: stop using index compat macros
+  sha1-name.c: stop using index compat macros
+  wt-status.c: stop using index compat macros
+  cache.h: flip NO_THE_INDEX_COMPATIBILITY_MACROS switch
+
+ apply.c                               |  34 ++---
+ attr.c                                |   1 -
+ blame.c                               |  19 +--
+ builtin/add.c                         |   1 +
+ builtin/am.c                          |   1 +
+ builtin/check-attr.c                  |   1 +
+ builtin/check-ignore.c                |   1 +
+ builtin/checkout-index.c              |   1 +
+ builtin/checkout.c                    |   1 +
+ builtin/clean.c                       |   1 +
+ builtin/commit.c                      |   1 +
+ builtin/describe.c                    |   1 +
+ builtin/diff-files.c                  |   1 +
+ builtin/diff-index.c                  |   1 +
+ builtin/diff-tree.c                   |   1 +
+ builtin/diff.c                        |   1 +
+ builtin/fsck.c                        |   1 +
+ builtin/ls-files.c                    |   1 -
+ builtin/merge-index.c                 |   1 +
+ builtin/merge-ours.c                  |   1 +
+ builtin/merge.c                       |   1 +
+ builtin/mv.c                          |   1 +
+ builtin/pull.c                        |   1 +
+ builtin/read-tree.c                   |   1 +
+ builtin/reset.c                       |   1 +
+ builtin/rev-parse.c                   |   1 +
+ builtin/rm.c                          |   1 +
+ builtin/submodule--helper.c           |   1 +
+ builtin/update-index.c                |   1 +
+ cache.h                               |   2 +-
+ check-racy.c                          |  10 +-
+ contrib/coccinelle/index-compat.cocci | 184 ++++++++++++++++++++++++++
+ convert.c                             |   1 -
+ diff-lib.c                            |   8 +-
+ diff.c                                |  12 +-
+ dir.c                                 |   1 -
+ entry.c                               |   3 +-
+ merge-recursive.c                     |  65 ++++-----
+ merge.c                               |  14 +-
+ name-hash.c                           |   1 -
+ pathspec.c                            |   1 -
+ read-cache.c                          |   1 -
+ rerere.c                              |  36 ++---
+ revision.c                            |  14 +-
+ sequencer.c                           |  32 ++---
+ sha1-name.c                           |  22 +--
+ submodule.c                           |   1 -
+ t/helper/test-dump-untracked-cache.c  |   1 +
+ t/helper/test-tool.h                  |   2 +
+ tree.c                                |   1 -
+ unpack-trees.c                        |   1 -
+ wt-status.c                           |  24 ++--
+ 52 files changed, 363 insertions(+), 154 deletions(-)
+ create mode 100644 contrib/coccinelle/index-compat.cocci
+
+-- 
+2.18.0.rc0.333.g22e6ee6cdf
+
