@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6FE6C1F403
-	for <e@80x24.org>; Sat, 16 Jun 2018 05:42:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E91641F403
+	for <e@80x24.org>; Sat, 16 Jun 2018 05:42:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932465AbeFPFm0 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Jun 2018 01:42:26 -0400
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:39322 "EHLO
-        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756832AbeFPFmN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Jun 2018 01:42:13 -0400
-Received: by mail-lf0-f68.google.com with SMTP id t2-v6so11123280lfd.6
-        for <git@vger.kernel.org>; Fri, 15 Jun 2018 22:42:12 -0700 (PDT)
+        id S932434AbeFPFmY (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Jun 2018 01:42:24 -0400
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:41569 "EHLO
+        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932188AbeFPFmP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Jun 2018 01:42:15 -0400
+Received: by mail-lf0-f67.google.com with SMTP id d24-v6so17512978lfa.8
+        for <git@vger.kernel.org>; Fri, 15 Jun 2018 22:42:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=03JsaTBqaASd3is+xghQEFe/OjAWyzvuNqCoR4cXbdU=;
-        b=kJSgnnMQoQDeDkM7HBH9Slij6pWHLWdwtljUuAArbb21VBvUlYbNiGj29D39e9Kyp7
-         wU4KXrik1jgWWsAPbbXvLSLxRVWv5DmcecLMZ0g5WsvDo9YnYGoO3EtRQRxLsVwuZoIy
-         bSaQA5XDNYMFnOh6F+INaQL5dTZinaPVN1p2nHcvfRFuUAzkI+QtiuOfvpD51bvJqKJF
-         fVyhNcXbnKbfma70yAmUvjLKt6W5FCgmk1mHRTjX5NJf/8DcMatI+6QMnK0FC9w8yyZ9
-         2zDSyJ8KKTiw/wkHHmbUjUjAA5LBsGkkWlP4isHCLAmwkOE4JwSVVhyH8XOiBizu0z79
-         TivQ==
+        bh=JFq8o5/dBq8stwR89bGuCvIusxbl9gRK+IBu+OH44bc=;
+        b=ROVeRrflUDuW23EgvLJ4cuX22L2zXiysUf2NNA9hMFwWIeV+wjbW6OouuF+gFigBQE
+         uuRmf1n4R0+peCWhawCUWRyMEtsPlgIkOjmyPvmv9rKEzFl475p9C7UtahYZaaEATbLd
+         s7jb5dFOkfhpfNTDGho020pOwZAPRPPt4/JNFzlonaL51jYrEm2AOy147o4Fjrees/Cs
+         2pXj7OBp63zGBQ0NWgOR6xUXyjoIhjrrEce6+hmE1c+F/VMae1VkNkOwqATUwtgpvJFb
+         GBMrZx4GSRvUuP6aP6TQz1CYeNvxqnyTFgMfgsF6D75yvJEOJZ2Ok8fYFaHas19qKecI
+         zAJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=03JsaTBqaASd3is+xghQEFe/OjAWyzvuNqCoR4cXbdU=;
-        b=JQ9POkHtQTvD2ESZl5MEmtD3tX7IUbDJZ3rQuX/viPoYM24buiwyi3aTwOWq2rrPYk
-         2ntBQdzwuKq2WA1h3cK5elqKBTESfsNoFR9HjSm2CtZrL1OALQ59Vfdxc8YRPJN9y7Gs
-         bGTSo9zmbt9gr7hKlpiNkh/J/llctFvev7ckKTf6KceZAzubyUtmrSwE7E+mFLjyRTI0
-         ZQ9QbuLFxjavRDx1gX5Nw9UGzrPDKHvwTtgGJ6Y1Ttn/rXkIPVAIn8c4B6hC2EZaQrJ4
-         2zO0dGgvabogXyiHw3VqBpWqpRchFFvnit0cJWqT8OXnv85IIwKVEPfAv5RidgFyjK7t
-         3dBA==
-X-Gm-Message-State: APt69E0H3RnzXktyUpZALysXPwZ5vZXYR3NvtAtf9H7Wr8onx07Sphhf
-        /XETbIgtFT2c5aBL3AJQ8fn/+w==
-X-Google-Smtp-Source: ADUXVKJL0x9HjnGFx5MuTPgnGAO28GAXoZHfQt7RZFZg3XHFyqej60bVgQLFEppmif5y2ESlaliyxQ==
-X-Received: by 2002:a2e:9516:: with SMTP id f22-v6mr2956656ljh.9.1529127731179;
-        Fri, 15 Jun 2018 22:42:11 -0700 (PDT)
+        bh=JFq8o5/dBq8stwR89bGuCvIusxbl9gRK+IBu+OH44bc=;
+        b=ZWEbBlz8Dof1ey6jHJph+V1lU//Dxwy7WMgOh9xqBZFWJTs/jDrpb4D6rrNsav6cyg
+         +f/D3f8TQnSHLcqoKXS6UB1InLaK3W+z7Zig7ZxdkiB2mQZH+RXqRzsTxeQxCRZS17WN
+         Uk7h6Ra9jdDaydW+IUtRuK0AUo89bWIVmR0MpcOSYyqglwjredtc7AMz8u5txuSYEnBN
+         O7egMTrk3fOAO4Ja+nS9qtqZrAXCCKvBtnCHcumKUQPPA558D9hIYO/QAytdoYKLbx5v
+         KfhpmWB/Wr3RVa9ztiBfug0WhXwfvbyv0zFm1Uk5KzX9eQ8DZacEnCxRX1Y2z4ojueT/
+         pk+g==
+X-Gm-Message-State: APt69E29A5ee5tV7IjAFC3eFL+AXAzbXY4DiUfretvqHIQVkY+FAJl3u
+        FPe8OSFjv4bQ53idT3XctFBqyQ==
+X-Google-Smtp-Source: ADUXVKISS+chcS4RktXnfPoQ5RXq0mwy0nqgF6YHoIM357mwj/1jpxqtxZwsgsoEuCAOLZ0dFSe3Og==
+X-Received: by 2002:a19:cf46:: with SMTP id f67-v6mr2681731lfg.101.1529127733475;
+        Fri, 15 Jun 2018 22:42:13 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id g5-v6sm1745194lje.21.2018.06.15.22.42.10
+        by smtp.gmail.com with ESMTPSA id g5-v6sm1745194lje.21.2018.06.15.22.42.12
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 15 Jun 2018 22:42:10 -0700 (PDT)
+        Fri, 15 Jun 2018 22:42:12 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 10/15] rerere.c: stop using index compat macros
-Date:   Sat, 16 Jun 2018 07:41:52 +0200
-Message-Id: <20180616054157.32433-11-pclouds@gmail.com>
+Subject: [PATCH 12/15] sequencer.c: stop using index compat macros
+Date:   Sat, 16 Jun 2018 07:41:54 +0200
+Message-Id: <20180616054157.32433-13-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc0.333.g22e6ee6cdf
 In-Reply-To: <20180616054157.32433-1-pclouds@gmail.com>
 References: <20180616054157.32433-1-pclouds@gmail.com>
@@ -70,128 +70,123 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- rerere.c | 36 ++++++++++++++++++------------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ sequencer.c | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/rerere.c b/rerere.c
-index e0862e2778..810e86d246 100644
---- a/rerere.c
-+++ b/rerere.c
-@@ -524,7 +524,7 @@ static int handle_file(const char *path, unsigned char *sha1, const char *output
-  */
- static int check_one_conflict(int i, int *type)
+diff --git a/sequencer.c b/sequencer.c
+index cca968043e..ed8af2a4cd 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -435,7 +435,7 @@ static struct tree *empty_tree(void)
+ 
+ static int error_dirty_index(struct replay_opts *opts)
  {
--	const struct cache_entry *e = active_cache[i];
-+	const struct cache_entry *e = the_index.cache[i];
+-	if (read_cache_unmerged())
++	if (read_index_unmerged(&the_index))
+ 		return error_resolve_conflict(_(action_name(opts)));
  
- 	if (!ce_stage(e)) {
- 		*type = RESOLVED;
-@@ -532,13 +532,13 @@ static int check_one_conflict(int i, int *type)
- 	}
+ 	error(_("your local changes would be overwritten by %s."),
+@@ -467,7 +467,7 @@ static int fast_forward_to(const struct object_id *to, const struct object_id *f
+ 	struct strbuf sb = STRBUF_INIT;
+ 	struct strbuf err = STRBUF_INIT;
  
- 	*type = PUNTED;
--	while (ce_stage(active_cache[i]) == 1)
-+	while (ce_stage(the_index.cache[i]) == 1)
- 		i++;
+-	read_cache();
++	read_index(&the_index);
+ 	if (checkout_fast_forward(from, to, 1))
+ 		return -1; /* the callee should have complained already */
  
- 	/* Only handle regular files with both stages #2 and #3 */
--	if (i + 1 < active_nr) {
--		const struct cache_entry *e2 = active_cache[i];
--		const struct cache_entry *e3 = active_cache[i + 1];
-+	if (i + 1 < the_index.cache_nr) {
-+		const struct cache_entry *e2 = the_index.cache[i];
-+		const struct cache_entry *e3 = the_index.cache[i + 1];
- 		if (ce_stage(e2) == 2 &&
- 		    ce_stage(e3) == 3 &&
- 		    ce_same_name(e, e3) &&
-@@ -548,7 +548,7 @@ static int check_one_conflict(int i, int *type)
- 	}
+@@ -500,12 +500,12 @@ void append_conflicts_hint(struct strbuf *msgbuf)
  
- 	/* Skip the entries with the same name */
--	while (i < active_nr && ce_same_name(e, active_cache[i]))
-+	while (i < the_index.cache_nr && ce_same_name(e, the_index.cache[i]))
- 		i++;
- 	return i;
- }
-@@ -567,12 +567,12 @@ static int check_one_conflict(int i, int *type)
- static int find_conflict(struct string_list *conflict)
- {
- 	int i;
--	if (read_cache() < 0)
-+	if (read_index(&the_index) < 0)
- 		return error("Could not read index");
- 
+ 	strbuf_addch(msgbuf, '\n');
+ 	strbuf_commented_addf(msgbuf, "Conflicts:\n");
 -	for (i = 0; i < active_nr;) {
+-		const struct cache_entry *ce = active_cache[i++];
 +	for (i = 0; i < the_index.cache_nr;) {
- 		int conflict_type;
--		const struct cache_entry *e = active_cache[i];
-+		const struct cache_entry *e = the_index.cache[i];
- 		i = check_one_conflict(i, &conflict_type);
- 		if (conflict_type == THREE_STAGED)
- 			string_list_insert(conflict, (const char *)e->name);
-@@ -600,12 +600,12 @@ int rerere_remaining(struct string_list *merge_rr)
- 	int i;
- 	if (setup_rerere(merge_rr, RERERE_READONLY))
- 		return 0;
--	if (read_cache() < 0)
-+	if (read_index(&the_index) < 0)
- 		return error("Could not read index");
- 
--	for (i = 0; i < active_nr;) {
-+	for (i = 0; i < the_index.cache_nr;) {
- 		int conflict_type;
--		const struct cache_entry *e = active_cache[i];
-+		const struct cache_entry *e = the_index.cache[i];
- 		i = check_one_conflict(i, &conflict_type);
- 		if (conflict_type == PUNTED)
- 			string_list_insert(merge_rr, (const char *)e->name);
-@@ -712,7 +712,7 @@ static void update_paths(struct string_list *update)
- 
- 	for (i = 0; i < update->nr; i++) {
- 		struct string_list_item *item = &update->items[i];
--		if (add_file_to_cache(item->string, 0))
-+		if (add_file_to_index(&the_index, item->string, 0))
- 			exit(128);
- 		fprintf(stderr, "Staged '%s' using previous resolution.\n",
- 			item->string);
-@@ -964,16 +964,16 @@ static int handle_cache(const char *path, unsigned char *sha1, const char *outpu
- 	 * Reproduce the conflicted merge in-core
- 	 */
- 	len = strlen(path);
--	pos = cache_name_pos(path, len);
-+	pos = index_name_pos(&the_index, path, len);
- 	if (0 <= pos)
++		const struct cache_entry *ce = the_index.cache[i++];
+ 		if (ce_stage(ce)) {
+ 			strbuf_commented_addf(msgbuf, "\t%s\n", ce->name);
+-			while (i < active_nr && !strcmp(ce->name,
+-							active_cache[i]->name))
++			while (i < the_index.cache_nr && !strcmp(ce->name,
++								 the_index.cache[i]->name))
+ 				i++;
+ 		}
+ 	}
+@@ -525,7 +525,7 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
+ 	if (hold_locked_index(&index_lock, LOCK_REPORT_ON_ERROR) < 0)
  		return -1;
- 	pos = -pos - 1;
  
--	while (pos < active_nr) {
-+	while (pos < the_index.cache_nr) {
- 		enum object_type type;
- 		unsigned long size;
+-	read_cache();
++	read_index(&the_index);
  
--		ce = active_cache[pos++];
-+		ce = the_index.cache[pos++];
- 		if (ce_namelen(ce) != len || memcmp(ce->name, path, len))
- 			break;
- 		i = ce_stage(ce) - 1;
-@@ -1102,7 +1102,7 @@ int rerere_forget(struct pathspec *pathspec)
- 	struct string_list conflict = STRING_LIST_INIT_DUP;
- 	struct string_list merge_rr = STRING_LIST_INIT_DUP;
+ 	init_merge_options(&o);
+ 	o.ancestor = base ? base_label : "(empty tree)";
+@@ -571,16 +571,16 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
  
--	if (read_cache() < 0)
-+	if (read_index(&the_index) < 0)
- 		return error("Could not read index");
+ static struct object_id *get_cache_tree_oid(void)
+ {
+-	if (!active_cache_tree)
+-		active_cache_tree = cache_tree();
++	if (!the_index.cache_tree)
++		the_index.cache_tree = cache_tree();
  
- 	fd = setup_rerere(&merge_rr, RERERE_NOAUTOUPDATE);
-@@ -1114,7 +1114,7 @@ int rerere_forget(struct pathspec *pathspec)
- 	 * recover the original conflicted state and then
- 	 * find the conflicted paths.
+-	if (!cache_tree_fully_valid(active_cache_tree))
++	if (!cache_tree_fully_valid(the_index.cache_tree))
+ 		if (cache_tree_update(&the_index, 0)) {
+ 			error(_("unable to update cache tree"));
+ 			return NULL;
+ 		}
+ 
+-	return &active_cache_tree->oid;
++	return &the_index.cache_tree->oid;
+ }
+ 
+ static int is_index_unchanged(void)
+@@ -1644,7 +1644,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+ 				       NULL, 0))
+ 			return error_dirty_index(opts);
+ 	}
+-	discard_cache();
++	discard_index(&the_index);
+ 
+ 	if (!commit->parents)
+ 		parent = NULL;
+@@ -2637,7 +2637,7 @@ static int do_exec(const char *command_line)
+ 					  child_env.argv);
+ 
+ 	/* force re-reading of the cache */
+-	if (discard_cache() < 0 || read_cache() < 0)
++	if (discard_index(&the_index) < 0 || read_index(&the_index) < 0)
+ 		return error(_("could not read index"));
+ 
+ 	dirty = require_clean_work_tree("rebase", NULL, 1, 1);
+@@ -2801,7 +2801,7 @@ static int do_reset(const char *name, int len, struct replay_opts *opts)
+ 	unpack_tree_opts.merge = 1;
+ 	unpack_tree_opts.update = 1;
+ 
+-	if (read_cache_unmerged()) {
++	if (read_index_unmerged(&the_index)) {
+ 		rollback_lock_file(&lock);
+ 		strbuf_release(&ref_name);
+ 		return error_resolve_conflict(_(action_name(opts)));
+@@ -2991,7 +2991,7 @@ static int do_merge(struct commit *commit, const char *arg, int arg_len,
+ 		commit_list_insert(j->item, &reversed);
+ 	free_commit_list(bases);
+ 
+-	read_cache();
++	read_index(&the_index);
+ 	init_merge_options(&o);
+ 	o.branch1 = "HEAD";
+ 	o.branch2 = ref_name.buf;
+@@ -3016,7 +3016,7 @@ static int do_merge(struct commit *commit, const char *arg, int arg_len,
  	 */
--	unmerge_cache(pathspec);
-+	unmerge_index(&the_index, pathspec);
- 	find_conflict(&conflict);
- 	for (i = 0; i < conflict.nr; i++) {
- 		struct string_list_item *it = &conflict.items[i];
+ 	ret = !ret;
+ 
+-	if (active_cache_changed &&
++	if (the_index.cache_changed &&
+ 	    write_locked_index(&the_index, &lock, COMMIT_LOCK)) {
+ 		ret = error(_("merge: Unable to write new index file"));
+ 		goto leave_merge;
 -- 
 2.18.0.rc0.333.g22e6ee6cdf
 
