@@ -7,58 +7,56 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B15B71F403
-	for <e@80x24.org>; Sat, 16 Jun 2018 20:26:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 577DD1F403
+	for <e@80x24.org>; Sat, 16 Jun 2018 20:33:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932874AbeFPU0k (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Jun 2018 16:26:40 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:38820 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932554AbeFPU0j (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Jun 2018 16:26:39 -0400
-Received: by mail-wr0-f194.google.com with SMTP id e18-v6so13007750wrs.5
-        for <git@vger.kernel.org>; Sat, 16 Jun 2018 13:26:39 -0700 (PDT)
+        id S932801AbeFPUdZ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Jun 2018 16:33:25 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:36177 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932554AbeFPUdY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Jun 2018 16:33:24 -0400
+Received: by mail-wm0-f65.google.com with SMTP id v131-v6so9143845wma.1
+        for <git@vger.kernel.org>; Sat, 16 Jun 2018 13:33:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=GiN7rU94Wr6yvq+GHkpucpDOm8zUg17t+ErdL5ueex0=;
-        b=nzBl8wXFKGVVMkYA4BX17SmutDDnPzuXqCmt/AB0Xpm5CRG589FqkxLShR8aPVW0sr
-         lSjzmZ5ee2FR4/iJjfa1w9mXcaOSXefEYF1KeHHqRvI7SIYx8ctimfbWBhHBrSOfNmvY
-         Gk8GI+lki4amA6BBRWwzNxhvB0P9J+q4sWj3qvGV2b0BuJoV11+yxmzI3O5lCKkC5j8M
-         sShThGNSlnc7GGJ70fxdALLME/XiIDxikqVHtzfBcOMcjUZNZFHoQ+u7U7BuYYIq2Hcx
-         HHjhhxLAUojD5C22HpXWjCHQQxilRN/9curInWXrirm0MqXFc6Y6Hwjo4IqiW2cRslPd
-         Kayg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=EYFEOlcOs1IRE/QQJj4p/RoNJuZAKRnjiiBX+n7qJIo=;
+        b=cxnMO8yS3FwwgiiwAt3IkHu4pNWwXFIeF/sbLn19m0g8HKH0RyB8pWM27gvozzFGLd
+         rV/7uVRG0cURBDj+8eSfzHuIMYwhK2+JBRCtCwWmRvf23Tgne1qEotEEb6S3narXGjR6
+         RB1/25FNMkuTWJTOE62hgWKcDCt9+/Zw3ytTvg8lCPmHHf3uLJWTMZAiWAM/rr+51wMg
+         nEs4fme12qMrWYhU4KDMui3jk1ngRU5xTqY6HhVrJNxCOS5q33ELZgz1okJLiOjXjZvB
+         AJqM+O5quaotcE9dMRKZvd0uoAuQ2cjWqq26UQ0PPNPGPxivOxZzOMqRB+GQaD0s4Pdc
+         SVOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=GiN7rU94Wr6yvq+GHkpucpDOm8zUg17t+ErdL5ueex0=;
-        b=Uv31sUbX7wF5ZPZwzFcZv+zCu2mEHwGIdMwThkOHrW0uXgkTSSUuLchRo+TZL9NVVq
-         BSaJijwM6njNBg75G5XOkOKfHpA7LqZwgwub2SCtNKkQslQC8auyAx6/gnFu4lQVHZEB
-         z3NW/DDl3ia1FbhG+IQb7W2WzofxxlkSX6b/h/cclFfPhAQBjQs/BXEPz1i1M0lYR8mc
-         01SNi7BlaayYdEBtTZJZzsSFIlzuobJgxz1QsMWp4RbFWCkHj1qy3+Y+HwwocUUFR0qk
-         xaleSkegJDRh21D1LZEdHuQhVtANS3Rav+x2VqbzB4PRAs8weHlCIOAEWCawKBpfc6P1
-         621Q==
-X-Gm-Message-State: APt69E2jk8+I+RvavZvnVo6xok3UCxg0ETtmhWgw0ZY6RoqhGWn3gMtt
-        YtF9Hg60b4iEBDnsNq7abDU=
-X-Google-Smtp-Source: ADUXVKLxfACDjWR5kdEWMZODN59EZWX7t7u2MouOu0FDERGpqWU3cWlUXNsSgoB/RcUjPKLRuCqMGQ==
-X-Received: by 2002:adf:8361:: with SMTP id 88-v6mr5364587wrd.17.1529180798461;
-        Sat, 16 Jun 2018 13:26:38 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=EYFEOlcOs1IRE/QQJj4p/RoNJuZAKRnjiiBX+n7qJIo=;
+        b=I41pTj9X0TlUKreuDogOyUSbQ/zSNomggDOMv1369Hzglu/ttyYyM94ljP46qn+tt0
+         v8OSJTIB/mQyPaWXlnJMQ2ZbXjbzrfcvikM6zC18FXItF5X0+6cywBwwab0tR3Qt+OkN
+         DUYpofRL7wGqw9KbbzVwAKzmHwT6nzVktsvMp+28CsoOljYWX8G1Ium7YOWMVrNNbedE
+         qjWjS1wJTkk80kd1m51ApvcP8JDgauLBvhsyMaNOcW+b9T6JZfVA9VPnPsl3t/Q7Mvwr
+         R/vb/bzN5TSe/cfwPpc6Rj3nx+x6el+36rw5J+42nzBx1nibXX7HrKJ48ENylJgtKWmm
+         DJsA==
+X-Gm-Message-State: APt69E1riw91XVm/ZD9kCMx09Y3tmV4RjBZ2zS3lCAJ0aiIjyCrl6N+z
+        K8BsnL1hcJGZahhfqoiTFWE=
+X-Google-Smtp-Source: ADUXVKLmJ5YD3E45aatMWV4ek5ExQBd8NrLMZ3YzjzTvkcNPqCEXHh+fv2DB4jVzlSAnWImW5G+nOg==
+X-Received: by 2002:a1c:124f:: with SMTP id 76-v6mr4717355wms.29.1529181203421;
+        Sat, 16 Jun 2018 13:33:23 -0700 (PDT)
 Received: from localhost.localdomain (x4db06e4b.dyn.telefonica.de. [77.176.110.75])
-        by smtp.gmail.com with ESMTPSA id a15-v6sm9774124wrs.26.2018.06.16.13.26.37
+        by smtp.gmail.com with ESMTPSA id o13-v6sm3899442wmc.33.2018.06.16.13.33.22
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 16 Jun 2018 13:26:37 -0700 (PDT)
+        Sat, 16 Jun 2018 13:33:22 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 2/3] submodule: ensure core.worktree is set after update
-Date:   Sat, 16 Jun 2018 22:26:28 +0200
-Message-Id: <20180616202628.9208-1-szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH] t7406-submodule-update: fix broken &&-chains
+Date:   Sat, 16 Jun 2018 22:33:19 +0200
+Message-Id: <20180616203319.9558-1-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc0.207.ga6211da864
-In-Reply-To: <20180612235825.12271-3-sbeller@google.com>
-References: <20180612235825.12271-1-sbeller@google.com> <20180612235825.12271-3-sbeller@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,76 +65,54 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> +static int connect_gitdir_workingtree(int argc, const char **argv, const char *prefix)
-> +{
-> +	struct strbuf sb = STRBUF_INIT;
-> +	const char *name, *path;
-> +	char *sm_gitdir;
-> +
-> +	if (argc != 3)
-> +		BUG("submodule--helper connect-gitdir-workingtree <name> <path>");
+Three tests in 't7406-submodule-update' contain broken &&-chains, but
+since they are all in subshells, chain-lint couldn't notice them.
 
-So this aborts when it's invoked with the wrong number of cmdline
-arguments.
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ t/t7406-submodule-update.sh | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-> +
-> +	name = argv[1];
-> +	path = argv[2];
-> +
-> +	strbuf_addf(&sb, "%s/modules/%s", get_git_dir(), name);
-> +	sm_gitdir = absolute_pathdup(sb.buf);
-> +
-> +	connect_work_tree_and_git_dir(path, sm_gitdir, 0);
-> +
-> +	strbuf_release(&sb);
-> +	free(sm_gitdir);
-> +
-> +	return 0;
-> +}
-> +
->  #define SUPPORT_SUPER_PREFIX (1<<0)
->  
->  struct cmd_struct {
+diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+index 6f083c4d68..9e0d31700e 100755
+--- a/t/t7406-submodule-update.sh
++++ b/t/t7406-submodule-update.sh
+@@ -65,7 +65,7 @@ test_expect_success 'setup a submodule tree' '
+ 	 git commit -m "none"
+ 	) &&
+ 	git clone . recursivesuper &&
+-	( cd recursivesuper
++	( cd recursivesuper &&
+ 	 git submodule add ../super super
+ 	)
+ '
+@@ -245,13 +245,13 @@ test_expect_success 'submodule update --remote should fetch upstream changes wit
+ 	(
+ 		cd super &&
+ 		git submodule update --remote --force submodule &&
+-		git -C submodule log -1 --oneline >actual
+-		git -C ../submodule log -1 --oneline master >expect
++		git -C submodule log -1 --oneline >actual &&
++		git -C ../submodule log -1 --oneline master >expect &&
+ 		test_cmp expect actual &&
+ 		git checkout -b test-branch &&
+ 		git submodule update --remote --force submodule &&
+-		git -C submodule log -1 --oneline >actual
+-		git -C ../submodule log -1 --oneline test-branch >expect
++		git -C submodule log -1 --oneline >actual &&
++		git -C ../submodule log -1 --oneline test-branch >expect &&
+ 		test_cmp expect actual &&
+ 		git checkout master &&
+ 		git branch -d test-branch &&
+@@ -891,7 +891,7 @@ test_expect_success 'submodule update properly revives a moved submodule' '
+ 	 rm -rf submodule2 &&
+ 	 mkdir -p "moved/sub module" &&
+ 	 git update-index --add --cacheinfo 160000 $H "moved/sub module" &&
+-	 git config -f .gitmodules submodule.submodule2.path "moved/sub module"
++	 git config -f .gitmodules submodule.submodule2.path "moved/sub module" &&
+ 	 git commit -am "post move" &&
+ 	 git submodule update &&
+ 	 git status | sed "s/$H2/XXX/" >actual &&
+-- 
+2.18.0.rc0.207.ga6211da864
 
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 78073cd87d1..6596a77c5ef 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -615,6 +615,11 @@ cmd_update()
->  			die "$(eval_gettext "Unable to find current \${remote_name}/\${branch} revision in submodule path '\$sm_path'")"
->  		fi
->  
-> +		if ! $(git config -f "$(git rev-parse --git-common-dir)/modules/$name/config" core.worktree) 2>/dev/null
-> +		then
-> +			git submodule--helper connect-gitdir-workingtree $name $sm_path
-
-The path to the submodule, $sm_path, may contain spaces, so it must
-be quoted.
-
-I'm sure you would have noticed this already, had you checked this
-'submodule--helper's exit code :)  In t7406 the test 'submodule update
-properly revives a moved submodule' does update a submodule with a
-space in its name, and thus executes 'submodule--helper' with one more
-argument than expected, causing it to abort, but since there is no
-error checking, 'git submodule update' continues anyway, and in the
-end the test tends to pass[1].
-
-I think it would be prudent to check the exit code of all
-'submodule--helper' executions.
-
-
-[1] I wrote "tends to", because e.g. on Travis CI the aborting
-    'submodule--helper' often dumps its core, and the extra 'core'
-    file shows up in the output of 'git status' and 'test_cmp' notices
-    it.
-
-
-> +		fi
-> +
->  		if test "$subsha1" != "$sha1" || test -n "$force"
->  		then
->  			subforce=$force
-> -- 
-> 2.18.0.rc1.244.gcf134e6275-goog
-> 
-> 
