@@ -6,53 +6,80 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 57F751F403
-	for <e@80x24.org>; Sun, 17 Jun 2018 03:25:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 756371F403
+	for <e@80x24.org>; Sun, 17 Jun 2018 03:36:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754638AbeFQDZz (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Jun 2018 23:25:55 -0400
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:46415 "EHLO
+        id S1754238AbeFQDg2 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Jun 2018 23:36:28 -0400
+Received: from mail-yw0-f194.google.com ([209.85.161.194]:37550 "EHLO
         mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754082AbeFQDZy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Jun 2018 23:25:54 -0400
-Received: by mail-yw0-f194.google.com with SMTP id v197-v6so4616268ywc.13
-        for <git@vger.kernel.org>; Sat, 16 Jun 2018 20:25:54 -0700 (PDT)
+        with ESMTP id S1754063AbeFQDg1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Jun 2018 23:36:27 -0400
+Received: by mail-yw0-f194.google.com with SMTP id j134-v6so4630311ywg.4
+        for <git@vger.kernel.org>; Sat, 16 Jun 2018 20:36:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=1Z/aD59SbnOmcEG3TUuIzUV12XySzNaPSHxifFioumk=;
-        b=aFn9qk4KVyYknsr19OvEXjoadlCuo+Iojdd+4f+ietcdmzXSO4Ho6qZmqGP9rmZzoB
-         uXzplr28mzgDN2XQ8ijqCpxhcEZhTR8l8bBWIWucVp7kbhHto59fJc+iD5M43OvV93NK
-         c9c1pi1kwZIyOB7xOwds8Adf9XFWYqI34V7Zo/O9HIobEFRdk78iQDiTi/D9yXe8DSBE
-         tsdhoNH/dfWe4xhB+ntaDqG2snyyUiiuROYzG1m9I+Zz6EXt4uKwoJLZNidM+miHgxuw
-         CL8k7Z4PPo9AAc4W92YghSdPVjU6BU96xdD3wUnb8hdie8SIUcEfGfFrG8DTdtHH6Nv3
-         e35g==
-X-Gm-Message-State: APt69E2crPenq0M+kPEB3T3fNc2Thag+1cTg8ORHFh2GXl4Ayg5hPoY5
-        RuASNhG9euzuwFJZWBel9tQPLDHE4dbeQ1XU5qU=
-X-Google-Smtp-Source: ADUXVKLQ18ek72KsHEkLDwViVvv0INCHRWNaLPx7GtPo0mKeAfY9DiJojlKjHrPHgcvZXKPlS3h3ksDVZ7O3K7E26kI=
-X-Received: by 2002:a81:3c0d:: with SMTP id j13-v6mr3631256ywa.16.1529205953903;
- Sat, 16 Jun 2018 20:25:53 -0700 (PDT)
+        bh=cO5nlTOxBF54zevUyMqCduYCrtz6eq+VmIqtIy6uvoE=;
+        b=X+syXzNLhjYBzEoAh/exbyJmwzGwZBgZ4AVaR9mC7KmDtNqZotgU/WxlrpkE7lKebA
+         mBeU5edgi9Is/BZGLT72FIQgmXN/cBQC+suwANZWcqAFWJYMGst0JcbDQHFaQvzbCq9x
+         SNEc7QyjKlHpRgurXoqZztm5i42119kjFLHB1WoN7Iq+Izqmybmnmy/iBj38NEpm+bl2
+         5FJthB3dYBlPGgNmcpexw26f4OlGbBXozy9ZDyaZeb+c7OL0rup32rAviaoS2siUsX5e
+         JQqNTR7r9tPxtDDtrCdzeUMnmQ+r8tf0LKHI6FU8H6MOZhgnGMbAxC/mbsb1O8a39PCo
+         Xk5g==
+X-Gm-Message-State: APt69E0zQXq4fJ3/6lsMY8ElGlJBQUSIa/Nc6g5KWHodsAJu2YW16YGF
+        amqxUhC+/zY4CRdVGMZdPAygxCINu57jxWH5vsA=
+X-Google-Smtp-Source: ADUXVKKfCI3s/WySvKH07N7YLACHbnqUhYjiSBzJwkL59WCcDH5JHi8JZSYKgokxCHoPwZK1JFO7lbsasXHCg0w6FGg=
+X-Received: by 2002:a81:4303:: with SMTP id q3-v6mr3689785ywa.98.1529206586685;
+ Sat, 16 Jun 2018 20:36:26 -0700 (PDT)
 MIME-Version: 1.0
-References: <0102016409c877f9-58c13d7c-4d25-43e2-8d64-c13d98b88ee7-000000@eu-west-1.amazonses.com>
-In-Reply-To: <0102016409c877f9-58c13d7c-4d25-43e2-8d64-c13d98b88ee7-000000@eu-west-1.amazonses.com>
+References: <8e28202a-8646-53e8-8c22-389d61791c70@onlinehome.de> <20180616160804.10914-1-newren@gmail.com>
+In-Reply-To: <20180616160804.10914-1-newren@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 16 Jun 2018 23:25:43 -0400
-Message-ID: <CAPig+cTJMNw9JhqCQtqqU+MV7rzfy_yEQ_WuNaBdo-VVZf-9LQ@mail.gmail.com>
-Subject: Re: [PATCH] doc: fix typos in documentation and release notes
-To:     tir.karthi@gmail.com
-Cc:     Git List <git@vger.kernel.org>
+Date:   Sat, 16 Jun 2018 23:36:16 -0400
+Message-ID: <CAPig+cRKxpNrTNSEgB66LBxcJk1b24ViR=T-fkqo07wxMFywpQ@mail.gmail.com>
+Subject: Re: [BUG] git-rebase: reword squashes commits in case of merge-conflicts
+To:     Elijah Newren <newren@gmail.com>
+Cc:     cr@onlinehome.de, Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jun 16, 2018 at 2:08 PM Xtreak <tir.karthi@gmail.com> wrote:
-> doc: fix typos in documentation and release notes
+On Sat, Jun 16, 2018 at 12:08 PM Elijah Newren <newren@gmail.com> wrote:
+> Subject: [PATCH] sequencer: do not squash 'reword' commits when we hit
+>  conflicts
+> [...]
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+> diff --git a/t/t3423-rebase-reword.sh b/t/t3423-rebase-reword.sh
+> @@ -0,0 +1,44 @@
+> +test_expect_success 'reword comes after a conflict preserves commit' '
 
-Thanks for the patch. All the fixes look "obviously correct".
+s/comes//
 
-Please sign-off[1] your patch so it can be included in the project.
+> +       git checkout stuff^0 &&
+> +
+> +       set_fake_editor &&
+> +       test_must_fail env FAKE_LINES="reword 2" \
+> +               git rebase -i -v master &&
 
-[1]: https://github.com/git/git/blob/v2.8.1/Documentation/SubmittingPatches#L234-L286
+If some command fails between here and "git rebase --continue" below,
+then the test will exit with an in-progress (dangling) rebase, which
+could confuse tests added later to this script. I wonder, therefore,
+if it would make sense to insert the following cleanup before "git
+rebase -i":
+
+    test_when_finished "reset_rebase" &&
+
+> +       git checkout --theirs file-2 &&
+> +       git add file-2 &&
+> +       FAKE_COMMIT_MESSAGE="feature_b_reworded" git rebase --continue &&
+> +
+> +       test "$(git log -1 --format=%B)" = "feature_b_reworded" &&
+> +       test $(git rev-list --count HEAD) = 2
+> +'
