@@ -6,70 +6,60 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE4281F403
-	for <e@80x24.org>; Sun, 17 Jun 2018 03:41:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 498841F403
+	for <e@80x24.org>; Sun, 17 Jun 2018 03:46:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754922AbeFQDlt (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Jun 2018 23:41:49 -0400
-Received: from mail-yb0-f196.google.com ([209.85.213.196]:38599 "EHLO
+        id S1754597AbeFQDqw (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Jun 2018 23:46:52 -0400
+Received: from mail-yb0-f196.google.com ([209.85.213.196]:43156 "EHLO
         mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754589AbeFQDlt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Jun 2018 23:41:49 -0400
-Received: by mail-yb0-f196.google.com with SMTP id q62-v6so4861988ybg.5
-        for <git@vger.kernel.org>; Sat, 16 Jun 2018 20:41:48 -0700 (PDT)
+        with ESMTP id S1754082AbeFQDqw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Jun 2018 23:46:52 -0400
+Received: by mail-yb0-f196.google.com with SMTP id w3-v6so4858912ybq.10
+        for <git@vger.kernel.org>; Sat, 16 Jun 2018 20:46:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=aU66sxMtxrU2qjb2b7O1sKifPvjSQp3ZKeQ3qX5VVV8=;
-        b=DB+gUGrW6yjlcTwxP2wOfoNyXtkWjd6DwU7s1V7HIxug/IULbXFSih6Rp7rzLTTXUi
-         E9qL27/iEWCkRi/JckyWb23emKWE7XvZhv5MDKLrWK6RChM3fzNXKTxquNLZZ0efS3IO
-         suivzmEEU2cfb1XhM8p2gedL+/U3rY9HhsUQkquS62TW5VonFmS/VNBH5VfVSC4o/1gu
-         oLUNRVva/MqnKAJ6zPymsFOX8EEXl9Sz5H6lQRpiYlmYqn273st7qFMHbWy7pnlPJcGd
-         PJtIY7oQ4XNEcpOMJBmU8KA/qZmr64BmobS1+WuYdA+LUM8JilhHjCXw1lix4ERtVYOk
-         W0nw==
-X-Gm-Message-State: APt69E3hNhyWSwkkm5lDv3Q0wSii23qOll2DIbJvS2Dmck+OBAXyH8aW
-        k6z/AcxHW65iWQRhM7dqU7VFGZ6muPJIqc1kPGw=
-X-Google-Smtp-Source: ADUXVKLH2DEACNVEiK0KRHh+e55b1xowr3iwlJRpRFDmNyFRtSFEmxmBVqc9P0JHvvYRC6k3NMisCddPlwuF9yRUBXU=
-X-Received: by 2002:a25:a268:: with SMTP id b95-v6mr3879403ybi.295.1529206908422;
- Sat, 16 Jun 2018 20:41:48 -0700 (PDT)
+        bh=GEFGXHjOOWkN25q6rVTf/1DMVLRKDTm/DtTSwuH1W2A=;
+        b=PD2UQ3W7Cw45n/9KdGh6GO5IJDg8IrtGUtbnxLj5P/nKtVfLyZykC95iqICa2+3tLh
+         K7QuR92RxqvQEqRn4dpFOqdFqNpf+/9WFvKmItntn9kUel0k15vLICUOljIeJaJNuIrd
+         9zeuzvLi3i9vu44Cq4t5vffNAos6iJmmd5xnFqPD274kucA+AOj2b9GScRP4WZT/K8KS
+         uz2Q1wD4GsHPEEtPAzvJKyhOllumA+EpgKFvbfwpPEx/Iny2LVxwWUIxitMID/OyQKXD
+         aBYo0bj3891ubM1oiRz0m83H7wwYVbpRqscmkno/mZKYgzIEOhgufQWfhza/UgEcNnSp
+         oPPw==
+X-Gm-Message-State: APt69E1RLj7zS7pRlrRvo5BswGAa+kpx2UdZHKRSQy5Sr8SRVOU327On
+        Cn6DHOUNdRpjuata7t1IfxNjuq+OIhAkJx3O0hE=
+X-Google-Smtp-Source: ADUXVKKxsD2sr/LbdjE7qjyD7hwtWbqsFJu06HPAT6eRzo8JbilZ3JTxMNnVaf/0k1vns96YuyGDiJZKFFPi8kzmLmc=
+X-Received: by 2002:a25:1f02:: with SMTP id f2-v6mr3933569ybf.76.1529207211606;
+ Sat, 16 Jun 2018 20:46:51 -0700 (PDT)
 MIME-Version: 1.0
-References: <CACcTrKePbgyCbXneN5NZ+cS-tiDyYe_dkdwttXpP0CUeEicvHw@mail.gmail.com>
- <CAP8UFD2SJF_gbP-mdXoAH0t_OmLjRbPuVK5vZZjgs2N9eJz5KQ@mail.gmail.com>
-In-Reply-To: <CAP8UFD2SJF_gbP-mdXoAH0t_OmLjRbPuVK5vZZjgs2N9eJz5KQ@mail.gmail.com>
+References: <0102016409c877f9-58c13d7c-4d25-43e2-8d64-c13d98b88ee7-000000@eu-west-1.amazonses.com>
+ <CAPig+cTJMNw9JhqCQtqqU+MV7rzfy_yEQ_WuNaBdo-VVZf-9LQ@mail.gmail.com> <CAAjsFLS8tz_123B453UP_mnjzH2_3osESMPFpC+y941F7x5eiA@mail.gmail.com>
+In-Reply-To: <CAAjsFLS8tz_123B453UP_mnjzH2_3osESMPFpC+y941F7x5eiA@mail.gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 16 Jun 2018 23:41:38 -0400
-Message-ID: <CAPig+cRR8=vbafsjL_pnoq6ssxBkkoVo0OMd_i8P_a8ze7eLHg@mail.gmail.com>
-Subject: Re: Is NO_ICONV misnamed or is it broken?
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Mahmoud Al-Qudsi <mqudsi@neosmart.net>,
-        Git List <git@vger.kernel.org>, ferdy@gentoo.org,
-        Joachim Schmitz <jojo@schmitz-digital.de>,
-        Junio C Hamano <gitster@pobox.com>
+Date:   Sat, 16 Jun 2018 23:46:40 -0400
+Message-ID: <CAPig+cR98YaygqfPXP0Nqy1Tb2h+rBNojt+hppS+AcPwgCwmog@mail.gmail.com>
+Subject: Re: [PATCH] doc: fix typos in documentation and release notes
+To:     tir.karthi@gmail.com
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jun 16, 2018 at 10:57 PM Christian Couder
-<christian.couder@gmail.com> wrote:
-> On Fri, Jun 15, 2018 at 12:47 AM, Mahmoud Al-Qudsi <mqudsi@neosmart.net> wrote:
-> > ~> make NO_ICONV=1
-> > # ommitted
-> >     LINK git-credential-store
-> > /usr/bin/ld: cannot find -liconv
-> I think 597c9cc540 (Flatten tools/ directory to make build procedure
-> simpler., 2005-09-07) which introduces NEEDS_LIBICONV is even older
-> than the commit that introduced NO_ICONV (see above), so you might
-> want to play with NEEDS_LIBICONV too and see if it works better for
-> you.
+On Sat, Jun 16, 2018 at 11:36 PM Karthikeyan <tir.karthi@gmail.com> wrote:
+> On Sun, Jun 17, 2018, 8:55 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> Please sign-off[1] your patch so it can be included in the project.
 >
-> I CC'ed the people involved in related commits. Maybe they can give
-> you a better answer. It might also help if you could tell us on which
-> OS/Platform and perhaps for which purpose you want to compile Git.
+> Thanks. I am a beginner using Gmail and I have used SubmitToGit for
+> this. Is it possible to do this using SubmitToGit or should I do git
+> commit --amend -s to sign off and make a force push to submit it
+> again from SubmitToGit as newer one?
 
-For completeness, for those reading this thread, a patch fixing this
-issue has already been sent[1] to the list.
+Amending the commit with sign-off and re-submit should work fine.
+Alternately, you can reply to this email thread with your sign off
+in-line, like this:
 
-[1]: https://public-inbox.org/git/20180615022503.34111-1-sunshine@sunshineco.com/
+Signed-off-by: Your Name <your@email>
