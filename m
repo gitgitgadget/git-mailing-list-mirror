@@ -2,64 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 498841F403
-	for <e@80x24.org>; Sun, 17 Jun 2018 03:46:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 160001F403
+	for <e@80x24.org>; Sun, 17 Jun 2018 04:36:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754597AbeFQDqw (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Jun 2018 23:46:52 -0400
-Received: from mail-yb0-f196.google.com ([209.85.213.196]:43156 "EHLO
-        mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754082AbeFQDqw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Jun 2018 23:46:52 -0400
-Received: by mail-yb0-f196.google.com with SMTP id w3-v6so4858912ybq.10
-        for <git@vger.kernel.org>; Sat, 16 Jun 2018 20:46:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=GEFGXHjOOWkN25q6rVTf/1DMVLRKDTm/DtTSwuH1W2A=;
-        b=PD2UQ3W7Cw45n/9KdGh6GO5IJDg8IrtGUtbnxLj5P/nKtVfLyZykC95iqICa2+3tLh
-         K7QuR92RxqvQEqRn4dpFOqdFqNpf+/9WFvKmItntn9kUel0k15vLICUOljIeJaJNuIrd
-         9zeuzvLi3i9vu44Cq4t5vffNAos6iJmmd5xnFqPD274kucA+AOj2b9GScRP4WZT/K8KS
-         uz2Q1wD4GsHPEEtPAzvJKyhOllumA+EpgKFvbfwpPEx/Iny2LVxwWUIxitMID/OyQKXD
-         aBYo0bj3891ubM1oiRz0m83H7wwYVbpRqscmkno/mZKYgzIEOhgufQWfhza/UgEcNnSp
-         oPPw==
-X-Gm-Message-State: APt69E1RLj7zS7pRlrRvo5BswGAa+kpx2UdZHKRSQy5Sr8SRVOU327On
-        Cn6DHOUNdRpjuata7t1IfxNjuq+OIhAkJx3O0hE=
-X-Google-Smtp-Source: ADUXVKKxsD2sr/LbdjE7qjyD7hwtWbqsFJu06HPAT6eRzo8JbilZ3JTxMNnVaf/0k1vns96YuyGDiJZKFFPi8kzmLmc=
-X-Received: by 2002:a25:1f02:: with SMTP id f2-v6mr3933569ybf.76.1529207211606;
- Sat, 16 Jun 2018 20:46:51 -0700 (PDT)
-MIME-Version: 1.0
+        id S1750988AbeFQEf5 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Jun 2018 00:35:57 -0400
+Received: from a7-11.smtp-out.eu-west-1.amazonses.com ([54.240.7.11]:35584
+        "EHLO a7-11.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750854AbeFQEf4 (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 17 Jun 2018 00:35:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1529210155;
+        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=7RN1cJo0E5eNfdUaJ1juUNY1mzqp6zIdqiohFQsXbKs=;
+        b=CIAh3VLZ4ZS91+WzPWdBzcFjX5p2i+8TQzXr1w8ZDMtfFtPpoZ/aaIimnvKWpt7L
+        jfdxc9PocmbOnzrL4Ko4zsX5RMgHW1ihtqmIPLEsIe4la7uVpL7yroHQ/JDvo5EDKXC
+        33Us2P5GVySsMRvWzmIN/oIn6aTvwVKJ9okJkyUo=
+From:   Xtreak <tir.karthi@gmail.com>
+To:     git@vger.kernel.org
+Message-ID: <010201640c072de4-d408b8ac-3a10-4c2f-9b65-34a9582c1839-000000@eu-west-1.amazonses.com>
+In-Reply-To: <0102016409c877f9-58c13d7c-4d25-43e2-8d64-c13d98b88ee7-000000@eu-west-1.amazonses.com>
 References: <0102016409c877f9-58c13d7c-4d25-43e2-8d64-c13d98b88ee7-000000@eu-west-1.amazonses.com>
- <CAPig+cTJMNw9JhqCQtqqU+MV7rzfy_yEQ_WuNaBdo-VVZf-9LQ@mail.gmail.com> <CAAjsFLS8tz_123B453UP_mnjzH2_3osESMPFpC+y941F7x5eiA@mail.gmail.com>
-In-Reply-To: <CAAjsFLS8tz_123B453UP_mnjzH2_3osESMPFpC+y941F7x5eiA@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 16 Jun 2018 23:46:40 -0400
-Message-ID: <CAPig+cR98YaygqfPXP0Nqy1Tb2h+rBNojt+hppS+AcPwgCwmog@mail.gmail.com>
-Subject: Re: [PATCH] doc: fix typos in documentation and release notes
-To:     tir.karthi@gmail.com
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Subject: [PATCH v2 signed off] doc: fix typos in documentation and release
+ notes
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Date:   Sun, 17 Jun 2018 04:35:54 +0000
+X-SES-Outgoing: 2018.06.17-54.240.7.11
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jun 16, 2018 at 11:36 PM Karthikeyan <tir.karthi@gmail.com> wrote:
-> On Sun, Jun 17, 2018, 8:55 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
->> Please sign-off[1] your patch so it can be included in the project.
->
-> Thanks. I am a beginner using Gmail and I have used SubmitToGit for
-> this. Is it possible to do this using SubmitToGit or should I do git
-> commit --amend -s to sign off and make a force push to submit it
-> again from SubmitToGit as newer one?
+Signed-off-by: Karthikeyan Singaravelan <tir.karthi@gmail.com>
+---
+ Documentation/RelNotes/1.7.11.7.txt | 2 +-
+ Documentation/RelNotes/2.17.0.txt   | 2 +-
+ Documentation/RelNotes/2.18.0.txt   | 2 +-
+ Documentation/diff-options.txt      | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-Amending the commit with sign-off and re-submit should work fine.
-Alternately, you can reply to this email thread with your sign off
-in-line, like this:
+diff --git a/Documentation/RelNotes/1.7.11.7.txt b/Documentation/RelNotes/1.7.11.7.txt
+index e7e79d999bd38..e743a2a8e46eb 100644
+--- a/Documentation/RelNotes/1.7.11.7.txt
++++ b/Documentation/RelNotes/1.7.11.7.txt
+@@ -25,7 +25,7 @@ Fixes since v1.7.11.6
+    references" nor "Reload" did not update what is shown as the
+    contents of it, when the user overwrote the tag with "git tag -f".
+ 
+- * "git for-each-ref" did not currectly support more than one --sort
++ * "git for-each-ref" did not correctly support more than one --sort
+    option.
+ 
+  * "git log .." errored out saying it is both rev range and a path
+diff --git a/Documentation/RelNotes/2.17.0.txt b/Documentation/RelNotes/2.17.0.txt
+index d6db0e19cf17b..c2cf891f71adf 100644
+--- a/Documentation/RelNotes/2.17.0.txt
++++ b/Documentation/RelNotes/2.17.0.txt
+@@ -342,7 +342,7 @@ Fixes since v2.16
+    validate the data and connected-ness of objects in the received
+    pack; the code to perform this check has been taught about the
+    narrow clone's convention that missing objects that are reachable
+-   from objects in a pack that came from a promissor remote is OK.
++   from objects in a pack that came from a promisor remote is OK.
+ 
+  * There was an unused file-scope static variable left in http.c when
+    building for versions of libCURL that is older than 7.19.4, which
+diff --git a/Documentation/RelNotes/2.18.0.txt b/Documentation/RelNotes/2.18.0.txt
+index 7c59bd92fbd99..1eb13ece53600 100644
+--- a/Documentation/RelNotes/2.18.0.txt
++++ b/Documentation/RelNotes/2.18.0.txt
+@@ -324,7 +324,7 @@ Fixes since v2.17
+    after giving an error message.
+    (merge 3bb0923f06 ps/contains-id-error-message later to maint).
+ 
+- * "diff-highlight" filter (in contrib/) learned to undertand "git log
++ * "diff-highlight" filter (in contrib/) learned to understand "git log
+    --graph" output better.
+    (merge 4551fbba14 jk/diff-highlight-graph-fix later to maint).
+ 
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index f466600972f86..bfa3808e49cc0 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -133,7 +133,7 @@ These parameters can also be set individually with `--stat-width=<width>`,
+ 	as file creations or deletions ("new" or "gone", optionally "+l"
+ 	if it's a symlink) and mode changes ("+x" or "-x" for adding
+ 	or removing executable bit respectively) in diffstat. The
+-	information is put betwen the filename part and the graph
++	information is put between the filename part and the graph
+ 	part. Implies `--stat`.
+ 
+ --numstat::
 
-Signed-off-by: Your Name <your@email>
+--
+https://github.com/git/git/pull/510
