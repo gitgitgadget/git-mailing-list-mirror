@@ -7,165 +7,119 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 235071F403
-	for <e@80x24.org>; Sun, 17 Jun 2018 05:37:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D99021F403
+	for <e@80x24.org>; Sun, 17 Jun 2018 05:59:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752392AbeFQFhM (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Jun 2018 01:37:12 -0400
-Received: from mail-oi0-f68.google.com ([209.85.218.68]:43425 "EHLO
-        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751736AbeFQFhL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Jun 2018 01:37:11 -0400
-Received: by mail-oi0-f68.google.com with SMTP id t133-v6so12168819oif.10
-        for <git@vger.kernel.org>; Sat, 16 Jun 2018 22:37:11 -0700 (PDT)
+        id S1753202AbeFQF7E (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Jun 2018 01:59:04 -0400
+Received: from mail-oi0-f67.google.com ([209.85.218.67]:37216 "EHLO
+        mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752640AbeFQF7E (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Jun 2018 01:59:04 -0400
+Received: by mail-oi0-f67.google.com with SMTP id l22-v6so12207260oib.4
+        for <git@vger.kernel.org>; Sat, 16 Jun 2018 22:59:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=VoC9X0yLSpjJjZ/tbGTzWj2Q8LG69P2a25wzRVD3cZE=;
-        b=CH01I8DdcV5lbCRQ1XsUWi3CZe5EnzpvsYrvqzRJvI/8cZmfnPqv7WzZN0qYIAMA4K
-         5J00TxTQ37YR2VRnOT6lxq4VI8vSokTJ6sfehbNObE0pepbCdX/SKr0L5sojDPzU5zSd
-         KgHVxlvA+oSxAjD/2rdL1Un1fWdtT76sy21ki+MCcOK1zLBbG6ziTqM9KWL1m6Nbb+Qs
-         V8zF2gxXRz0/GHsdAcpn8FcAP1z317dZU6889BORFmYqmND85TmmpHfMOkdSyvM3wTTr
-         mbbeyI5vJRo399RQTk2Kb8+6FErtwFlyra2NwcZ+AEFd6KRms1MBTR6e7PyjZU9KmSjp
-         Liag==
+        bh=43cwhoHgM7qLwUqpRv5Ze3Maw7RvtYpP4ex6/IcaxAU=;
+        b=KTHrUai2E8bvZFdu7pQwBdZMpoyiZQXOmUtxzjPKIgZ5SfHGlGh0gIk8O6Y38gRSTH
+         Gh/cUc/Qa2JfJOUZYcAaBGJipeMjlc47rmi3qt6g0pB6naPOsoJucjIak3s6xeBMU/jU
+         EhMJCLePpspnfMnihD367xh5/Q0LZ5rzsxYRfAvpuCSwJCL68m9ZW11kOrBA3pq4s8Vw
+         RrvWsxFIplk1EhFzBQQw8q8z/0WkceMcphHh3WeRbxAs/lYqaKxYsS+9vkGJxQkQZA7Y
+         LUenhfg8FQCUJ1AYseU4jf1jOVy2h48VGxvOMb4qc1AkhYFZmtrivyX7zntJBNJS0kKC
+         GVIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=VoC9X0yLSpjJjZ/tbGTzWj2Q8LG69P2a25wzRVD3cZE=;
-        b=NXcKD888sfTWMEfPLXZYDX3oBUW37QTFxAY6dXu/PaYeauT2Owg8K4gPL3gJeOXjpU
-         4Ox/cJmDgU9MgjvOC3SWUPVucnpz4vIP/r+IDiUAjDXMGFMFPPJxz/+KAA/Qu5/EviMU
-         vSKZcIdFSgRWxUZPLO2g9rd+qpHyYFdD5p2gn9NAu/Bz36DQeJSdVd9RVTK4HxaoBBGr
-         vjjmwXVHr0fS401H7I3L2MRH1WOHyg1QveRSnraEa9KsNyo5TN3/2LRnutCH0wWG8rmj
-         2RTwe7/iruooirEgwCVgkAtCzmqrAkAKril829d/fzesUhvvTR47TT2ykz9sbs1Y+ORz
-         Yk+A==
-X-Gm-Message-State: APt69E1NQlDdJcSO38Gpj07DfD3LffobMdF95QWytNqemISqLTm/Zi7z
-        OjuUrvL3S1B4342crY4jjJU=
-X-Google-Smtp-Source: ADUXVKLABBEFvp9qLy3DtAz3zbvtmYrxoQ3m5se+7M4uMGzHhN4xndCUp8thc7Ta9uNuD72iIHikGA==
-X-Received: by 2002:aca:d708:: with SMTP id o8-v6mr4104383oig.205.1529213830536;
-        Sat, 16 Jun 2018 22:37:10 -0700 (PDT)
+        bh=43cwhoHgM7qLwUqpRv5Ze3Maw7RvtYpP4ex6/IcaxAU=;
+        b=UuKuQGylaX32p2XFVR7osdb0syoUXN+qJuYzvzngLXtrscmWcPGLwKgEvM7BpIN7CH
+         Dooj933KR4sPeaIpmGf2F6mYIhZ190uDQQxm+qn4+Ao4YPq2uDa4WRg+MxO9YWxxn/dR
+         1ukFWWfO5VnsB5Y7w2Y5aAeZeEpIVXYXx0SoxW7R0dMS2Jm1ACM2JQIo+SDFwQ4B9xLX
+         okbdxRdxLiDN+1M+yLjp2C79nKewhASJ6ClQ9wEj3igzhy9tr8hkytE42mNqXx4LX0L1
+         /VjPk2HJzQ9wfGQtQvAzkF1SQ2sHxuH7ACjW8iLnhxhDHn95KuWbWMYuxwAz822XFUNG
+         2c/Q==
+X-Gm-Message-State: APt69E0JyseiR0xAz0fGmMuMfmp9AS2WhsGoyI0du0Jk+ed3abZjmzVT
+        uARaV8ksUDEZ+AMWHVCiMT+Ycg==
+X-Google-Smtp-Source: ADUXVKILGyrLn7nrt9QxNZw6a8vxeF6TVuS+nNOwQGO2LEiRv+9he2/4kWN38RXh8GRLtOAy0v6KfQ==
+X-Received: by 2002:aca:b782:: with SMTP id h124-v6mr4615773oif.7.1529215143226;
+        Sat, 16 Jun 2018 22:59:03 -0700 (PDT)
 Received: from tiger.attlocal.net ([2602:30a:2c28:20f0:7c1a:85e3:2ea9:5d7e])
-        by smtp.gmail.com with ESMTPSA id k133-v6sm5222244oia.36.2018.06.16.22.37.08
+        by smtp.gmail.com with ESMTPSA id h12-v6sm5366091oti.4.2018.06.16.22.59.02
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 16 Jun 2018 22:37:09 -0700 (PDT)
+        Sat, 16 Jun 2018 22:59:02 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     ch <cr@onlinehome.de>, johannes.schindelin@gmx.de,
-        git@vger.kernel.org, gitster@pobox.com,
+To:     git@vger.kernel.org, phillip.wood@dunelm.org.uk
+Cc:     johannes.schindelin@gmx.de, gitster@pobox.com,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v2] sequencer: do not squash 'reword' commits when we hit conflicts
-Date:   Sat, 16 Jun 2018 22:37:03 -0700
-Message-Id: <20180617053703.19856-1-newren@gmail.com>
-X-Mailer: git-send-email 2.18.0.rc2.1.g5453d3f70b.dirty
-In-Reply-To: <CAPig+cRKxpNrTNSEgB66LBxcJk1b24ViR=T-fkqo07wxMFywpQ@mail.gmail.com>
-References: <CAPig+cRKxpNrTNSEgB66LBxcJk1b24ViR=T-fkqo07wxMFywpQ@mail.gmail.com>
+Subject: [RFC PATCH v2 0/7] Document/fix/warn about rebase incompatibilities and inconsistences
+Date:   Sat, 16 Jun 2018 22:58:49 -0700
+Message-Id: <20180617055856.22838-1-newren@gmail.com>
+X-Mailer: git-send-email 2.18.0.rc1.7.gab8805c40a
+In-Reply-To: <20180607050654.19663-1-newren@gmail.com>
+References: <20180607050654.19663-1-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ever since commit 18633e1a22 ("rebase -i: use the rebase--helper builtin",
-2017-02-09), when a commit marked as 'reword' in an interactive rebase
-has conflicts and fails to apply, when the rebase is resumed that commit
-will be squashed into its parent with its commit message taken.
+git-rebase has lots of options that are mutually incompatible.  Even among
+aspects of its behavior that is common to all rebase types, it has a number
+of inconsistencies.  This series tries to document, fix, and/or warn users
+about many of these.
 
-The issue can be understood better by looking at commit 56dc3ab04b
-("sequencer (rebase -i): implement the 'edit' command", 2017-01-02), which
-introduced error_with_patch() for the edit command.  For the edit command,
-it needs to stop the rebase whether or not the patch applies cleanly.  If
-the patch does apply cleanly, then when it resumes it knows it needs to
-amend all changes into the previous commit.  If it does not apply cleanly,
-then the changes should not be amended.  Thus, it passes !res (success of
-applying the 'edit' commit) to error_with_patch() for the to_amend flag.
+I have a much higher than average expectation that folks will object
+to some of these patches.  I've tried to divide them up so that any parts
+we decide to drop or redo can be more easily excised.
 
-The problematic line of code actually came from commit 04efc8b57c
-("sequencer (rebase -i): implement the 'reword' command", 2017-01-02).
-Note that to get to this point in the code:
-  * !!res (i.e. patch application failed)
-  * item->command < TODO_SQUASH
-  * item->command != TODO_EDIT
-  * !is_fixup(item->command) [i.e. not squash or fixup]
-So that means this can only be a failed patch application that is either a
-pick, revert, or reword.  For any of those cases we want a new commit, so
-we should not set the to_amend flag.
+No branch-diff; because it's a significant re-work; instead I'll comment
+briefly on the individual patches...
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
-Differences since v1 (Thanks to Eric Sunshine for the suggestions):
-  * Add test_when_finished "reset_rebase" calls
-  * Remove unnecessary word from description of test
 
- sequencer.c              |  2 +-
- t/t3423-rebase-reword.sh | 48 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 49 insertions(+), 1 deletion(-)
- create mode 100755 t/t3423-rebase-reword.sh
+Elijah Newren (7):
+  git-rebase.txt: document incompatible options
 
-diff --git a/sequencer.c b/sequencer.c
-index cca968043e..9e6d1ee368 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -3217,7 +3217,7 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
- 			} else if (res && is_rebase_i(opts) && item->commit)
- 				return res | error_with_patch(item->commit,
- 					item->arg, item->arg_len, opts, res,
--					item->command == TODO_REWORD);
-+					0);
- 		} else if (item->command == TODO_EXEC) {
- 			char *end_of_arg = (char *)(item->arg + item->arg_len);
- 			int saved = *end_of_arg;
-diff --git a/t/t3423-rebase-reword.sh b/t/t3423-rebase-reword.sh
-new file mode 100755
-index 0000000000..6963750794
---- /dev/null
-+++ b/t/t3423-rebase-reword.sh
-@@ -0,0 +1,48 @@
-+#!/bin/sh
-+
-+test_description='git rebase interactive with rewording'
-+
-+. ./test-lib.sh
-+
-+. "$TEST_DIRECTORY"/lib-rebase.sh
-+
-+test_expect_success 'setup' '
-+	test_commit master file-1 test &&
-+
-+	git checkout -b stuff &&
-+
-+	test_commit feature_a file-2 aaa &&
-+	test_commit feature_b file-2 ddd
-+'
-+
-+test_expect_success 'reword without issues functions as intended' '
-+	test_when_finished "reset_rebase" &&
-+
-+	git checkout stuff^0 &&
-+
-+	set_fake_editor &&
-+	FAKE_LINES="pick 1 reword 2" FAKE_COMMIT_MESSAGE="feature_b_reworded" \
-+		git rebase -i -v master &&
-+
-+	test "$(git log -1 --format=%B)" = "feature_b_reworded" &&
-+	test $(git rev-list --count HEAD) = 3
-+'
-+
-+test_expect_success 'reword after a conflict preserves commit' '
-+	test_when_finished "reset_rebase" &&
-+
-+	git checkout stuff^0 &&
-+
-+	set_fake_editor &&
-+	test_must_fail env FAKE_LINES="reword 2" \
-+		git rebase -i -v master &&
-+
-+	git checkout --theirs file-2 &&
-+	git add file-2 &&
-+	FAKE_COMMIT_MESSAGE="feature_b_reworded" git rebase --continue &&
-+
-+	test "$(git log -1 --format=%B)" = "feature_b_reworded" &&
-+	test $(git rev-list --count HEAD) = 2
-+'
-+
-+test_done
+Both Dscho (on a related patch series) and Phillip suggested changing the
+documentation to avoid implementational details.  I instead made a separate
+section with sets of incompatible options...but it still mentions the
+different backends while doing so.  Does that seem alright?
+
+  git-rebase.sh: update help messages a bit
+
+Minor tweaks to `git rebase -h` output.
+
+  t3422: new testcases for checking when incompatible options passed
+
+The one unmodified patch from the first round.
+
+  git-rebase: error out when incompatible options passed
+
+Almost the same as the first round, except:
+  * Documentation pulled into a separate patch (patch 1)
+  * $() instead of ``
+
+  git-rebase.txt: document behavioral inconsistencies between modes
+
+Add another section to the documentation for aspects that ideally
+should be common between all modes but are handled differently.
+
+  git-rebase.txt: address confusion between --no-ff vs --force-rebase
+
+This came up on the list not that long ago; fix the documentation.
+
+  git-rebase: make --allow-empty-message the default
+
+Address the easiest of the inconsistencies, assuming the am-based backend
+has the correct default and the merge-based and interactive-based backends
+are the ones that need to change.
+
+ Documentation/git-rebase.txt           | 154 ++++++++++++++++++++-----
+ git-rebase.sh                          |  25 +++-
+ t/t3404-rebase-interactive.sh          |   7 +-
+ t/t3405-rebase-malformed.sh            |  11 +-
+ t/t3422-rebase-incompatible-options.sh |  69 +++++++++++
+ 5 files changed, 224 insertions(+), 42 deletions(-)
+ create mode 100755 t/t3422-rebase-incompatible-options.sh
+
 -- 
 2.18.0.rc2.1.g5453d3f70b.dirty
