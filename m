@@ -2,147 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C7CA41F403
-	for <e@80x24.org>; Sun, 17 Jun 2018 05:59:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C6E361F403
+	for <e@80x24.org>; Sun, 17 Jun 2018 07:03:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754206AbeFQF7R (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Jun 2018 01:59:17 -0400
-Received: from mail-oi0-f65.google.com ([209.85.218.65]:33369 "EHLO
-        mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754055AbeFQF7K (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Jun 2018 01:59:10 -0400
-Received: by mail-oi0-f65.google.com with SMTP id c6-v6so12198937oiy.0
-        for <git@vger.kernel.org>; Sat, 16 Jun 2018 22:59:10 -0700 (PDT)
+        id S932088AbeFQHDA (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Jun 2018 03:03:00 -0400
+Received: from mail-ua0-f193.google.com ([209.85.217.193]:37489 "EHLO
+        mail-ua0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932075AbeFQHDA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Jun 2018 03:03:00 -0400
+Received: by mail-ua0-f193.google.com with SMTP id l14-v6so5472340uao.4
+        for <git@vger.kernel.org>; Sun, 17 Jun 2018 00:02:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ZH/1xiMpMfJwkuCsOrgsLPHHKMJD34QC228loPMIdUQ=;
-        b=CxcCsX/MMEWOEEuHzscOBdi/+cqJu92bRZ2hmN/lMqxcJQynqEg/8EB7IkmvgvnrF7
-         w/wKOjmb+out+vMS+s6rXeCPIAE6ko6CZGhI5/+YgDCrZKj4Lh/p1VCZT6wS8ZQ99l0a
-         WRVfauEE9nM5L5OlrqSG3OT7TEKL/XfiJIDxoc/RUMS+rjOtttL3eXtVvQcLz5GT5cHW
-         4KF941NGUTkRh7YbxjjBuzt2ABizOnOvRWswOmpKmX5KhHanyk2NkI3T8cvKJ/9257NK
-         1sY4V/tTeL1I2F7lEyqsPYNA/TKZc3OmzctF6d6zaCsdp2LCnIcUTYUqIfj8iPunn2bC
-         F4tQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=65gqG8K8mSHGDbMtQ46q/6E07Naz7g813ABSPkichhg=;
+        b=SUhQEWvnkTNQVA6/6w3tE9H+4HRBFyhBZVgeZpqD2nFO/tEe+vkwUaKsUkav1aloGl
+         nkgglVYU6p04sNhc5x49Z/VSlU1fwzbPY5fAZe6SHQNWUMGKKrZQ+dFH8XkIkJSnuXzW
+         Ki2ZtrWz0QVPqojyYUTbRih89412Ujyf6RG3E6usQ/GrjiIZULwdu6sw732jghgooW8p
+         r3u9MdKT2Zwlwgs7RSYn0yoJhUDjemLF8kwwp1cI2/oAUpGTkHiQnKb4Ps22IZLow+gJ
+         YyaKX/ILXCIVS4lAJpxkv08695ZcI2V9AaPq/NRT0YQfMdg5aRg86ZzlubTWfj2pRTN0
+         L4XQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=ZH/1xiMpMfJwkuCsOrgsLPHHKMJD34QC228loPMIdUQ=;
-        b=LwFPr+LzPKYvVQ5iQCTP7JJhC1wNbnpZX4xW/YBiVQ8Mc/4c7W7Sgo79EgQD5d5d2w
-         /QmgpT7TAtoIwu+WHoUDg01oQKWLn4/7+p0lKaJDUEcgKzkOEqQgXvCVN35xVRmBZxYc
-         qDEXW6nZTVpTKMeG55NQA088483G0U+t/N81Np4lrP1JsIdXV2I8vCzEV+BFP03ERHhe
-         Nk9ZCrgInV4dzo1CmROqKerf05Xajd/keaBeT9dUFV/535CsKgToeVZdDy/rDz16mq5w
-         ik3TrnQYqOFmiqkWyAUckfFnxTrpYTMQDyXAWuSLkXbOG71JVs9Xfxi5tdnMDY64seqz
-         8vpA==
-X-Gm-Message-State: APt69E1Ml4iX/ZgoAkYVNpGTgmHMtrClqu1rzzhxzzHFelFo0uGfaxdZ
-        VB4cpeWxPSIUF1b5HDqfZF4khA==
-X-Google-Smtp-Source: ADUXVKI5cIs4nCroQfNmaoupTmCM6SttYQ7o7xbFL2DjGh0z7kj/VCHgFcpf5d1RhmnSpLv9G8h+7w==
-X-Received: by 2002:aca:fcc8:: with SMTP id a191-v6mr4662465oii.34.1529215149386;
-        Sat, 16 Jun 2018 22:59:09 -0700 (PDT)
-Received: from tiger.attlocal.net ([2602:30a:2c28:20f0:7c1a:85e3:2ea9:5d7e])
-        by smtp.gmail.com with ESMTPSA id h12-v6sm5366091oti.4.2018.06.16.22.59.08
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 16 Jun 2018 22:59:08 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=65gqG8K8mSHGDbMtQ46q/6E07Naz7g813ABSPkichhg=;
+        b=lbbxJnyDjLLAa0hwGoV15DdoZkc8RlYoP9L0sOAJVu982R9TNdMnqLRhoB3Xox2d7B
+         yYcbMEi2PKUTyeHh+2f4NZcAfiJWDkiuxpMafoycMWeqEbIvrKEFzvwBhv69kjeasTnx
+         YMLDxPMCokDMPoo+cyF+xnU8M6GobcJgR3i1Sv+aA+tF3YlGlq/BYSMtutZZOMgyLY7C
+         f8pghDpATjXApDeNluGvBNDQAP8qOaGHIvAAW/CNGtpXJYK4r2NZN4IOzEy8wNGtrAnH
+         dS/x2HfoUBdqh3YyR34AtRYzOveqCuKlwYKeyw2avV0ySzZ9gyXJY3/EFuATxZvOufjl
+         n/qg==
+X-Gm-Message-State: APt69E3d7/MP34IkvMhhkuMIDXfDMVMeAXWlCrC5Yv+YlaHyRMXnGAb1
+        3lK7y8WAicJjo2AYXsQOax+ReQTtxUxqtRoqnY4=
+X-Google-Smtp-Source: ADUXVKLXD07sloYtLSwqvHNKjyw+GGgrQgSxrWB8QTHb/XLSBsObpAbHOYqaYrbzTKaenSkayb1CrGOLn/QBGgLxrNY=
+X-Received: by 2002:a9f:3091:: with SMTP id j17-v6mr5057098uab.23.1529218979135;
+ Sun, 17 Jun 2018 00:02:59 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 2002:ab0:5f28:0:0:0:0:0 with HTTP; Sun, 17 Jun 2018 00:02:58
+ -0700 (PDT)
+In-Reply-To: <20180616054157.32433-1-pclouds@gmail.com>
+References: <20180616054157.32433-1-pclouds@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-To:     git@vger.kernel.org, phillip.wood@dunelm.org.uk
-Cc:     johannes.schindelin@gmx.de, gitster@pobox.com,
-        Elijah Newren <newren@gmail.com>
-Subject: [RFC PATCH v2 5/7] git-rebase.txt: document behavioral inconsistencies between modes
-Date:   Sat, 16 Jun 2018 22:58:54 -0700
-Message-Id: <20180617055856.22838-6-newren@gmail.com>
-X-Mailer: git-send-email 2.18.0.rc1.7.gab8805c40a
-In-Reply-To: <20180617055856.22838-1-newren@gmail.com>
-References: <20180607050654.19663-1-newren@gmail.com>
- <20180617055856.22838-1-newren@gmail.com>
+Date:   Sun, 17 Jun 2018 00:02:58 -0700
+Message-ID: <CABPp-BG1n4u78JScxrnUc1gecXFjKbwLWMxKKs+ZO17DdH3zvg@mail.gmail.com>
+Subject: Re: [PATCH 00/15] Kill the_index part 1, expose it
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There are a variety of aspects that are common to all rebases regardless
-of which backend is in use; however, the behavior for these different
-aspects varies in ways that could surprise users.  (In fact, it's not
-clear -- to me at least -- that these differences were even desirable or
-intentional.)  Document these differences.
+On Fri, Jun 15, 2018 at 10:41 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy
+<pclouds@gmail.com> wrote:
+> This is the beginning of the end of the_index. The problem with
+> the_index is it lets library code anywhere access it freely. This is
+> not good because from high level you may not realize that the_index is
+> being used while you don't want to touch index at all, or you want to
+> use a different index instead.
+>
+> This is a long series, 86 patches [1], so I'm going to split and
+> submit it in 15-20 patches at a time. The first two parts are trivial
+> though and could be safely fast tracked if needed.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- Documentation/git-rebase.txt | 57 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 57 insertions(+)
+You post this small little patch about unpack-trees.c, mentioning you
+don't know if it's even correct, and bait me into reviewing it and
+then spring on me that it's actually nearly 100 patches that need
+review...   Very sneaky.  ;-)
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index adccc15284..0dbfab06d0 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -555,6 +555,63 @@ Other incompatible flag pairs:
-  * --preserve-merges && --rebase-merges
-  * --rebase-merges && --strategy
- 
-+BEHAVIORAL INCONSISTENCIES
-+--------------------------
-+
-+  * --no-ff vs. --force-rebase
-+
-+    These options are actually identical, though their description
-+    leads people to believe they might not be.
-+
-+ * empty commits:
-+
-+    am-based rebase will drop any "empty" commits, whether the
-+    commit started empty (had no changes relative to its parent to
-+    start with) or ended empty (all changes were already applied
-+    upstream in other commits).
-+
-+    merge-based rebase does the same.
-+
-+    interactive-based rebase will by default drop commits that
-+    started empty and halt if it hits a commit that ended up empty.
-+    The --keep-empty option exists for interactive rebases to allow
-+    it to keep commits that started empty.
-+
-+  * empty commit messages:
-+
-+    am-based rebase will silently apply commits with empty commit
-+    messages.
-+
-+    merge-based and interactive-based rebases will by default halt
-+    on any such commits.  The --allow-empty-message option exists to
-+    allow interactive-based rebases to apply such commits without
-+    halting.
-+
-+  * directory rename detection:
-+
-+    merge-based and interactive-based rebases work fine with
-+    directory rename detection.  am-based rebases sometimes do not.
-+
-+    git-am tries to avoid a full three way merge, instead calling
-+    git-apply.  That prevents us from detecting renames at all,
-+    which may defeat the directory rename detection.  There is a
-+    fallback, though; if the initial git-apply fails and the user
-+    has specified the -3 option, git-am will fall back to a three
-+    way merge.  However, git-am lacks the necessary information to
-+    do a "real" three way merge.  Instead, it has to use
-+    build_fake_ancestor() to get a merge base that is missing files
-+    whose rename may have been important to detect for directory
-+    rename detection to function.
-+
-+    Since am-based rebases work by first generating a bunch of
-+    patches (which no longer record what the original commits were
-+    and thus don't have the necessary info from which we can find a
-+    real merge-base), and then calling git-am, this implies that
-+    am-based rebases will not always successfully detect directory
-+    renames either.  merged-based rebases (rebase -m) and
-+    cherry-pick-based rebases (rebase -i) are not affected by this
-+    shortcoming.
-+
- include::merge-strategies.txt[]
- 
- NOTES
--- 
-2.18.0.rc2.1.g5453d3f70b.dirty
+> This is the first part, which kills the use of index compat macros
+> outside builtin/ and expose the_index in all library code. Later on we
+> will ban the_index from one file each time until it's gone for good.
+>
+> "struct index_state *" will be passed from builtin/ through the call
+> chain to the function that needs it. In some cases, "struct
+> repository *" will be passed instead when the whole operation spans
+> more than just the index.  By the end, the_index becomes part of
+> "index compat macros" and cannot be used outside builtin/
+>
+> Part one is mechanical conversion with the help of coccinelle. The
+> only real patches are the first and the last one.
 
+Thanks for the nice division.  I read through all 15 patches, though I
+looked at the first and the last a bit closer.  I'm not familiar with
+coccinelle yet, but it at least looked relatively straightforward;
+would be good to have someone else double check that patch.  Other
+than that, the changes look good to me.
+
+Thanks for working on this!
