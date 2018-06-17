@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A3191F403
+	by dcvr.yhbt.net (Postfix) with ESMTP id 679131F403
 	for <e@80x24.org>; Sun, 17 Jun 2018 05:59:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753931AbeFQF7H (ORCPT <rfc822;e@80x24.org>);
+        id S1753965AbeFQF7H (ORCPT <rfc822;e@80x24.org>);
         Sun, 17 Jun 2018 01:59:07 -0400
-Received: from mail-oi0-f65.google.com ([209.85.218.65]:40522 "EHLO
-        mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753576AbeFQF7F (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Jun 2018 01:59:05 -0400
-Received: by mail-oi0-f65.google.com with SMTP id f79-v6so12189609oib.7
-        for <git@vger.kernel.org>; Sat, 16 Jun 2018 22:59:05 -0700 (PDT)
+Received: from mail-oi0-f66.google.com ([209.85.218.66]:37217 "EHLO
+        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753691AbeFQF7G (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Jun 2018 01:59:06 -0400
+Received: by mail-oi0-f66.google.com with SMTP id l22-v6so12207293oib.4
+        for <git@vger.kernel.org>; Sat, 16 Jun 2018 22:59:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=W1SwQ8Dh92vzTTrvR+p3AgwzcpUavTsACn/HSl3YuIE=;
-        b=dt//Tv/O8kM9Ktnx49LF53/QD/8aYI9KtB8ViBZPKAyyiUk+aa2vICG9jUpqM//609
-         E1P/W6cTLDEKK8mfu5+Zfz8cMNe/5RQVgIoMTYovL/bk24n1ehbyQydpxEcx78lbnPgI
-         nBipNMcuOnRtmhzWsxHiZa2+36q5IOzhbCiaotCGsAO8y2eD/GH2DCPWfF8WttfEZ59H
-         fRItOaK1zggVQAYQPZvIU7LPZ/A1dBKBiH1lGVfjoQPmQRScZUx/tqocV4AI5YooWeYa
-         oW4YQuYg5uA9nJ0MaTEmc+xZJlGm/hWc2+6n5gyDz7qUxwdrsgCY/Sch4B3sP9dtlEd7
-         nlww==
+        bh=HgBTT9gguC4iDl/55ulJx9JuzObpN50XxIfoTk0OamE=;
+        b=monKeI0uWLZD2sqx0afbLmql20SdeC6a8a9o7WdX6+1MPKTDbx1S0ixyrYNwe862ET
+         cG7ixxvWUQaOPSPTKaptFoFF3o7MpYMT8+AJmuzI7dC6T0oHt/iaIUn0LMpVb3NBvj4t
+         xmVB06IyblECJRnvgxjbWfNUhboZCyQzMfme7VfOmX/5zqBn/vBCpC3bvEbpfYGxwPTn
+         sy30HzmaRz3pARlEVxVdaXX5ZwYHe1mHG83/p7lNna3uNWCmbmpQii3AC7DbAdBBv2eM
+         /2rQP/7q+8awAyYL4boK/DkSfriNiA99cYMStz43b/bmY5I6n4J2d4zAU5mX1cGjSY+2
+         FuKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=W1SwQ8Dh92vzTTrvR+p3AgwzcpUavTsACn/HSl3YuIE=;
-        b=poGxgKeKeHUGkvNLjn5bHxvK/rpw2Kkfn30AYj+9UDzSkJpsZq0iW6LqWkTPTW2Y++
-         GZQV+PjhvUHOTpsL+7Nt3AQXBin/8EDyrUMUzbvQwjsa7l6hVSepXw4FjlIoSI1UJ2Kf
-         R//Z2E7BTuVtkcSc/CtvhkqrbUMnb7aK5b/QQEPnM8SbDvtB2AjmXSz63vFYKInCV90Z
-         hxfH4V5bvL7iYkzKQkBORIgVUy9Yz78BaFJf/c2NZsF8Dk9i6hINHCPLizdJ4xwKQgql
-         /xilS6+RSxuH21Q7zOmsqnunbR59UJtWoRtInmj+Ni+JN0RJF3V33byh2UH+7T6E+512
-         44BA==
-X-Gm-Message-State: APt69E0SJi3P4TArZ2bE3mEiW20tSJsWsGUicD3GSboewkpi683IX6kB
-        UOszItnHD5m71Ssb5QgCba5P1w==
-X-Google-Smtp-Source: ADUXVKK47mHqycxbkkjm9hA/qb/fyxDgsvTy2KUJSFHLpSIxhUWl66vqgs0VaA3Ja9/b/sWdu2414Q==
-X-Received: by 2002:aca:f06:: with SMTP id 6-v6mr4621287oip.183.1529215144448;
-        Sat, 16 Jun 2018 22:59:04 -0700 (PDT)
+        bh=HgBTT9gguC4iDl/55ulJx9JuzObpN50XxIfoTk0OamE=;
+        b=hLDBFd0T1k19vs1wKIh5xYWpH4cud00kLFHAppXfOCaJJ1UUnITrpPX0Vsj2icVN8T
+         5Kawp7GxnTatPvUe9ShedOzCiT15N6HdxnP4BdgmYMkgvdUzt6m1gbBMAU3gaKUwenfI
+         Chjhlg8KH62V4nKBG5W2aEgBmqU9dxYDvNJExZwoPZxigapIweGtS5caTFV3MWwT8e6o
+         itjXiP6aYQFo/tqlt3/aHSDe9jGXHMdas6GFGUnrqugpnCxWAiVUgNTWRvbMWvHNtBrB
+         Meg6Wgvdo+pGtxn7hszrjnywPX5hRkRABeQeyWFu8S9eyuSB0P47AIkW/n8dbcfhqN6Q
+         Cvvw==
+X-Gm-Message-State: APt69E1AUO0dOPwgb6PtaUPfwapFxLRZo0y/cDR1vGo+/DXOU3r496sv
+        IgL1RhSpwfKsRemcNzk9my26XA==
+X-Google-Smtp-Source: ADUXVKIqJ3YFOEMIBQvUsEdrrr0cNF8NbEjLpcq5HoI/oEjW6BAi21JdP/wJlO+QU/f1b7+/tqfZOw==
+X-Received: by 2002:aca:ab15:: with SMTP id u21-v6mr4549349oie.272.1529215145695;
+        Sat, 16 Jun 2018 22:59:05 -0700 (PDT)
 Received: from tiger.attlocal.net ([2602:30a:2c28:20f0:7c1a:85e3:2ea9:5d7e])
-        by smtp.gmail.com with ESMTPSA id h12-v6sm5366091oti.4.2018.06.16.22.59.03
+        by smtp.gmail.com with ESMTPSA id h12-v6sm5366091oti.4.2018.06.16.22.59.04
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 16 Jun 2018 22:59:03 -0700 (PDT)
+        Sat, 16 Jun 2018 22:59:05 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org, phillip.wood@dunelm.org.uk
 Cc:     johannes.schindelin@gmx.de, gitster@pobox.com,
         Elijah Newren <newren@gmail.com>
-Subject: [RFC PATCH v2 1/7] git-rebase.txt: document incompatible options
-Date:   Sat, 16 Jun 2018 22:58:50 -0700
-Message-Id: <20180617055856.22838-2-newren@gmail.com>
+Subject: [RFC PATCH v2 2/7] git-rebase.sh: update help messages a bit
+Date:   Sat, 16 Jun 2018 22:58:51 -0700
+Message-Id: <20180617055856.22838-3-newren@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc1.7.gab8805c40a
 In-Reply-To: <20180617055856.22838-1-newren@gmail.com>
 References: <20180607050654.19663-1-newren@gmail.com>
@@ -64,211 +64,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git rebase has many options that only work with one of its three backends.
-It also has a few other pairs of incompatible options.  Document these.
-
-Signed-off-by: Elijah Newren <newren@gmail.com>
+signoff is not specific to the am-backend.  Also, re-order a few options
+to make like things (e.g. strategy and strategy-option) be near each
+other.
 ---
- Documentation/git-rebase.txt | 84 ++++++++++++++++++++++++++++++++----
- 1 file changed, 76 insertions(+), 8 deletions(-)
+ git-rebase.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 0e20a66e73..adccc15284 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -243,11 +243,15 @@ leave out at most one of A and B, in which case it defaults to HEAD.
- --keep-empty::
- 	Keep the commits that do not change anything from its
- 	parents in the result.
-++
-+See also INCOMPATIBLE OPTIONS below.
- 
- --allow-empty-message::
- 	By default, rebasing commits with an empty message will fail.
- 	This option overrides that behavior, allowing commits with empty
- 	messages to be rebased.
-++
-+See also INCOMPATIBLE OPTIONS below.
- 
- --skip::
- 	Restart the rebasing process by skipping the current patch.
-@@ -271,6 +275,8 @@ branch on top of the <upstream> branch.  Because of this, when a merge
- conflict happens, the side reported as 'ours' is the so-far rebased
- series, starting with <upstream>, and 'theirs' is the working branch.  In
- other words, the sides are swapped.
-++
-+See also INCOMPATIBLE OPTIONS below.
- 
- -s <strategy>::
- --strategy=<strategy>::
-@@ -280,8 +286,10 @@ other words, the sides are swapped.
- +
- Because 'git rebase' replays each commit from the working branch
- on top of the <upstream> branch using the given strategy, using
--the 'ours' strategy simply discards all patches from the <branch>,
-+the 'ours' strategy simply empties all patches from the <branch>,
- which makes little sense.
-++
-+See also INCOMPATIBLE OPTIONS below.
- 
- -X <strategy-option>::
- --strategy-option=<strategy-option>::
-@@ -289,6 +297,8 @@ which makes little sense.
- 	This implies `--merge` and, if no strategy has been
- 	specified, `-s recursive`.  Note the reversal of 'ours' and
- 	'theirs' as noted above for the `-m` option.
-++
-+See also INCOMPATIBLE OPTIONS below.
- 
- -S[<keyid>]::
- --gpg-sign[=<keyid>]::
-@@ -324,6 +334,8 @@ which makes little sense.
- 	and after each change.  When fewer lines of surrounding
- 	context exist they all must match.  By default no context is
- 	ever ignored.
-++
-+See also INCOMPATIBLE OPTIONS below.
- 
- -f::
- --force-rebase::
-@@ -355,19 +367,22 @@ default is `--no-fork-point`, otherwise the default is `--fork-point`.
- --whitespace=<option>::
- 	These flag are passed to the 'git apply' program
- 	(see linkgit:git-apply[1]) that applies the patch.
--	Incompatible with the --interactive option.
-++
-+See also INCOMPATIBLE OPTIONS below.
- 
- --committer-date-is-author-date::
- --ignore-date::
- 	These flags are passed to 'git am' to easily change the dates
- 	of the rebased commits (see linkgit:git-am[1]).
--	Incompatible with the --interactive option.
-++
-+See also INCOMPATIBLE OPTIONS below.
- 
- --signoff::
- 	Add a Signed-off-by: trailer to all the rebased commits. Note
- 	that if `--interactive` is given then only commits marked to be
--	picked, edited or reworded will have the trailer added. Incompatible
--	with the `--preserve-merges` option.
-+	picked, edited or reworded will have the trailer added.
-++
-+See also INCOMPATIBLE OPTIONS below.
- 
- -i::
- --interactive::
-@@ -378,6 +393,8 @@ default is `--no-fork-point`, otherwise the default is `--fork-point`.
- The commit list format can be changed by setting the configuration option
- rebase.instructionFormat.  A customized instruction format will automatically
- have the long commit hash prepended to the format.
-++
-+See also INCOMPATIBLE OPTIONS below.
- 
- -r::
- --rebase-merges[=(rebase-cousins|no-rebase-cousins)]::
-@@ -404,7 +421,7 @@ It is currently only possible to recreate the merge commits using the
- `recursive` merge strategy; Different merge strategies can be used only via
- explicit `exec git merge -s <strategy> [...]` commands.
- +
--See also REBASING MERGES below.
-+See also REBASING MERGES and INCOMPATIBLE OPTIONS below.
- 
- -p::
- --preserve-merges::
-@@ -415,6 +432,8 @@ See also REBASING MERGES below.
- This uses the `--interactive` machinery internally, but combining it
- with the `--interactive` option explicitly is generally not a good
- idea unless you know what you are doing (see BUGS below).
-++
-+See also INCOMPATIBLE OPTIONS below.
- 
- -x <cmd>::
- --exec <cmd>::
-@@ -437,6 +456,8 @@ squash/fixup series.
- +
- This uses the `--interactive` machinery internally, but it can be run
- without an explicit `--interactive`.
-++
-+See also INCOMPATIBLE OPTIONS below.
- 
- --root::
- 	Rebase all commits reachable from <branch>, instead of
-@@ -447,6 +468,8 @@ without an explicit `--interactive`.
- 	When used together with both --onto and --preserve-merges,
- 	'all' root commits will be rewritten to have <newbase> as parent
- 	instead.
-++
-+See also INCOMPATIBLE OPTIONS below.
- 
- --autosquash::
- --no-autosquash::
-@@ -461,11 +484,11 @@ without an explicit `--interactive`.
- 	too.  The recommended way to create fixup/squash commits is by using
- 	the `--fixup`/`--squash` options of linkgit:git-commit[1].
- +
--This option is only valid when the `--interactive` option is used.
--+
- If the `--autosquash` option is enabled by default using the
- configuration variable `rebase.autoSquash`, this option can be
- used to override and disable this setting.
-++
-+See also INCOMPATIBLE OPTIONS below.
- 
- --autostash::
- --no-autostash::
-@@ -487,6 +510,51 @@ recreates the topic branch with fresh commits so it can be remerged
- successfully without needing to "revert the reversion" (see the
- link:howto/revert-a-faulty-merge.html[revert-a-faulty-merge How-To] for details).
- 
-+INCOMPATIBLE OPTIONS
-+--------------------
-+
-+git-rebase has many flags that are incompatible with each other,
-+predominantly due to the fact that it has three different underlying
-+implementations:
-+
-+ * one based on linkgit:git-am[1] (the default)
-+ * one based on linkgit:git-merge-recursive[1] (merge backend)
-+ * one based on linkgit:git-cherry-pick[1] (interactive backend)
-+
-+Flags only understood by the am backend:
-+
-+ * --committer-date-is-author-date
-+ * --ignore-date
-+ * --whitespace
-+ * --ignore-whitespace
-+ * -C
-+
-+Flags understood by both merge and interactive backends:
-+
-+ * --merge
-+ * --strategy
-+ * --strategy-option
-+ * --allow-empty-message
-+
-+Flags only understood by the interactive backend:
-+
-+ * --[no-]autosquash
-+ * --rebase-merges
-+ * --preserve-merges
-+ * --interactive
-+ * --exec
-+ * --keep-empty
-+ * --autosquash
-+ * --edit-todo
-+ * --root + --onto
-+
-+Other incompatible flag pairs:
-+
-+ * --preserve-merges && --interactive
-+ * --preserve-merges && --signoff
-+ * --preserve-merges && --rebase-merges
-+ * --rebase-merges && --strategy
-+
- include::merge-strategies.txt[]
- 
- NOTES
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 40be59ecc4..bf71b7fa20 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -20,23 +20,23 @@ onto=!             rebase onto given branch instead of upstream
+ r,rebase-merges?   try to rebase merges instead of skipping them
+ p,preserve-merges! try to recreate merges instead of ignoring them
+ s,strategy=!       use the given merge strategy
++X,strategy-option=! pass the argument through to the merge strategy
+ no-ff!             cherry-pick all commits, even if unchanged
++f,force-rebase!    cherry-pick all commits, even if unchanged
+ m,merge!           use merging strategies to rebase
+ i,interactive!     let the user edit the list of commits to rebase
+ x,exec=!           add exec lines after each commit of the editable list
+ k,keep-empty	   preserve empty commits during rebase
+ allow-empty-message allow rebasing commits with empty messages
+-f,force-rebase!    force rebase even if branch is up to date
+-X,strategy-option=! pass the argument through to the merge strategy
+ stat!              display a diffstat of what changed upstream
+ n,no-stat!         do not show diffstat of what changed upstream
+ verify             allow pre-rebase hook to run
+ rerere-autoupdate  allow rerere to update index with resolved conflicts
+ root!              rebase all reachable commits up to the root(s)
+ autosquash         move commits that begin with squash!/fixup! under -i
++signoff            add a Signed-off-by: line to each commit
+ committer-date-is-author-date! passed to 'git am'
+ ignore-date!       passed to 'git am'
+-signoff            passed to 'git am'
+ whitespace=!       passed to 'git apply'
+ ignore-whitespace! passed to 'git apply'
+ C=!                passed to 'git apply'
 -- 
 2.18.0.rc2.1.g5453d3f70b.dirty
 
