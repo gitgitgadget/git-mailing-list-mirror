@@ -2,128 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8ED301F403
-	for <e@80x24.org>; Sun, 17 Jun 2018 15:41:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 794C51F403
+	for <e@80x24.org>; Sun, 17 Jun 2018 16:38:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933906AbeFQPlf (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Jun 2018 11:41:35 -0400
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:57691 "EHLO
-        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933588AbeFQPle (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Jun 2018 11:41:34 -0400
-Received: from [192.168.2.240] ([92.22.19.223])
-        by smtp.talktalk.net with SMTP
-        id UZo4f2WbVoI6LUZo4fSzFd; Sun, 17 Jun 2018 16:41:33 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1529250093;
-        bh=ius8yaVJnaK9A+SsxTDzmG0fv7UNCXPo4XqLMfvooik=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=O8aBcBBr9DzZn9izxNV40wthhQCvw2KbqNEHNefx2TbitBqxp6+gDS7IQHe5aMmZo
-         LDmUmlWTSOdzjWycxAvGoOByQLsmAA2Qa6LRNPxkrgEp0ZxqrN8AN0PJx1L41FbNXJ
-         1gGb/kKsZsIOK5KHGSxSzxcxtlftrV78Q3cVaJiM=
-X-Originating-IP: [92.22.19.223]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=FOE1Odgs c=1 sm=1 tr=0 a=DH/r9e32v+C519lOzZJhbw==:117
- a=DH/r9e32v+C519lOzZJhbw==:17 a=IkcTkHD0fZMA:10 a=fv2YEWdnNQ5nw5PIKGUA:9
- a=3mBa6t2-JSs_OtDg:21 a=BbQFCknIr62CMReJ:21 a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [RFC PATCH v2 0/7] Document/fix/warn about rebase
- incompatibilities and inconsistences
-To:     Elijah Newren <newren@gmail.com>, git@vger.kernel.org,
-        phillip.wood@dunelm.org.uk
-Cc:     johannes.schindelin@gmx.de, gitster@pobox.com
-References: <20180607050654.19663-1-newren@gmail.com>
- <20180617055856.22838-1-newren@gmail.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <fa4118c9-5ff9-0fa7-7df4-98a3c483f95d@talktalk.net>
-Date:   Sun, 17 Jun 2018 16:41:32 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+        id S934046AbeFQQiH (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Jun 2018 12:38:07 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:37676 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933875AbeFQQiG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Jun 2018 12:38:06 -0400
+Received: by mail-pg0-f67.google.com with SMTP id r21-v6so6451812pgv.4
+        for <git@vger.kernel.org>; Sun, 17 Jun 2018 09:38:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=fx+2Oz44e1YMcKw1n9mYgTeGzorMCxGmNi5VhqQsh4M=;
+        b=B9ke4NMn4Cqh+n5gSRWeU0/Z9AKOrDnogRAVdkCAVe75BDi1aNhfevzBs9y/jpyvTJ
+         N2zNUlkFBbx4y63DB37Jq8BgZ/mZTKnfCccRd8UrppXmgK4ktHQlrWCVP9pyExRASQCb
+         Mg19JJ0+WHhvkoo4ZRUifsOJMkdvb+NzndRQsX9TZgMLkid8XfGVB23oM04bH2l9dv79
+         0B6QkuRMxqaLzWj1i2Ri9aRSkqisyoERiXgtLfiSkJy8DiZD7cwyOv7dH6WwN9vQSuQ2
+         MucBUPPOu8AQpAIc5Anc+jZd1EG/Q/Zs7wxs3v4kSEJr/YsoJ3Yiroz14doq6Ii77Ew2
+         uurw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=fx+2Oz44e1YMcKw1n9mYgTeGzorMCxGmNi5VhqQsh4M=;
+        b=Y7um3/HIA+trXgwVNvgbz/Sv9W4myuAO9zsApwkdAizWAxBZHBQShP1fdvubwH6df/
+         MEpH4GMaDePKmzkXI7KvUGXZx5I1w+W4aql2go/LLmQelt8oMzb6NdQGuDwCGOYMJ5R0
+         eBG0rgGlLTsGyYATnidNGjkiSvvFO+MmJKMpT5gRdqWq8MMSyo0wBvLcV8IVzPC5K+tT
+         15DbSWqI9sYkBOU56+1AQ3+UDHrPAxZaqP60EpC+gRnKJ8TXVsrcreUmZ4nPoLslyNT8
+         c2AX7AwxqnCPcR5eeAuAcLaHDvZjETZEf4niV9G8jx+0mop3E3DeqDzo0SfwM07ygiCd
+         wipQ==
+X-Gm-Message-State: APt69E3YmOMNjMTDyHxV9AvI0gjidPNmseR4D4r9DyfmUCm7qtqGJsxB
+        u1hOv+mnWB4uYZVl1MacZDGvrrijvqtpvLNd/2s=
+X-Google-Smtp-Source: ADUXVKLogMEipFNJcUb9IlIJpKIB43UXvHD/zOHiok4GiRvIhy5dJqitnJ/kVDdLuZF3Z2Bk0WiJq3C/CPrTuO9F36c=
+X-Received: by 2002:a62:d653:: with SMTP id r80-v6mr10272714pfg.54.1529253485453;
+ Sun, 17 Jun 2018 09:38:05 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20180617055856.22838-1-newren@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfL7ZoIyf/tlsa5tRAJ5RTXZAj9fOlU4e2d2XHLE96+9P5rXfKOX4wUrKkBgk4M9rPPKR3sMYlkNwmiukwJHQk3GJeriDp1WbTzfQSk8Ozii8agBTW/oB
- DaiyLk5jT0XyQ0gOvH5ZXYEeebxHHXCDW2J7sbVQ12gF3KCYbI5SXFlx8+TAg/2h3SF8ZidtA9Wpe49M0Ic9qS2SyTCrE9grif3gVCcArjlV3XoijTBdbK0Y
- dJxgoxnsV0ALi70nd0R2s85CURUcZO/IiE3s20MZlXbrZN0+4PW7KrWyzDXb4SC1BJIA5noNO4t+FVraRN5Yzw==
+Received: by 2002:a17:90a:2167:0:0:0:0 with HTTP; Sun, 17 Jun 2018 09:38:04
+ -0700 (PDT)
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Mon, 18 Jun 2018 00:38:04 +0800
+Message-ID: <CANYiYbGauBBodnuevKr_oOe3B-cLbtD+jjgFYi6k-gtYrrzZgw@mail.gmail.com>
+Subject: [GIT PULL] l10n updates for 2.18.0 round 3
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        =?UTF-8?Q?Christopher_D=C3=ADaz?= <christopher.diaz.riv@gmail.com>,
+        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
+        Marco Paolone <marcopaolone@gmail.com>,
+        Changwoo Ryu <cwryu@debian.org>,
+        Vasco Almeida <vascomalmeida@sapo.pt>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+        Jiang Xin <worldhello.net@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah
+The following changes since commit 68372c88794aba15f853542008cda39def768372=
+:
 
-On 17/06/18 06:58, Elijah Newren wrote:
-> git-rebase has lots of options that are mutually incompatible.  Even among
-> aspects of its behavior that is common to all rebase types, it has a number
-> of inconsistencies.  This series tries to document, fix, and/or warn users
-> about many of these.
-> 
-> I have a much higher than average expectation that folks will object
-> to some of these patches.  I've tried to divide them up so that any parts
-> we decide to drop or redo can be more easily excised.
-> 
-> No branch-diff; because it's a significant re-work; instead I'll comment
-> briefly on the individual patches...
+  Git 2.18-rc2 (2018-06-13 12:57:07 -0700)
 
-I found this series well structured and easy to follow. I've commented 
-on a couple of the patches, the others seemed fine to me. It's great to 
-see these inconsistencies being documented and some being eliminated.
+are available in the Git repository at:
 
-Best Wishes
+  git://github.com/git-l10n/git-po tags/l10n-2.18.0-rnd3
 
-Phillip
+for you to fetch changes up to fd8cb379022fc6f5c6d71d12d10c9388b9f5841c:
 
-> 
-> Elijah Newren (7):
->    git-rebase.txt: document incompatible options
-> 
-> Both Dscho (on a related patch series) and Phillip suggested changing the
-> documentation to avoid implementational details.  I instead made a separate
-> section with sets of incompatible options...but it still mentions the
-> different backends while doing so.  Does that seem alright?
-> 
->    git-rebase.sh: update help messages a bit
-> 
-> Minor tweaks to `git rebase -h` output.
-> 
->    t3422: new testcases for checking when incompatible options passed
-> 
-> The one unmodified patch from the first round.
-> 
->    git-rebase: error out when incompatible options passed
-> 
-> Almost the same as the first round, except:
->    * Documentation pulled into a separate patch (patch 1)
->    * $() instead of ``
-> 
->    git-rebase.txt: document behavioral inconsistencies between modes
-> 
-> Add another section to the documentation for aspects that ideally
-> should be common between all modes but are handled differently.
-> 
->    git-rebase.txt: address confusion between --no-ff vs --force-rebase
-> 
-> This came up on the list not that long ago; fix the documentation.
-> 
->    git-rebase: make --allow-empty-message the default
-> 
-> Address the easiest of the inconsistencies, assuming the am-based backend
-> has the correct default and the merge-based and interactive-based backends
-> are the ones that need to change.
-> 
->   Documentation/git-rebase.txt           | 154 ++++++++++++++++++++-----
->   git-rebase.sh                          |  25 +++-
->   t/t3404-rebase-interactive.sh          |   7 +-
->   t/t3405-rebase-malformed.sh            |  11 +-
->   t/t3422-rebase-incompatible-options.sh |  69 +++++++++++
->   5 files changed, 224 insertions(+), 42 deletions(-)
->   create mode 100755 t/t3422-rebase-incompatible-options.sh
-> 
+  l10n: zh_CN: for git v2.18.0 l10n round 1 to 3 (2018-06-18 00:31:45 +0800=
+)
 
+----------------------------------------------------------------
+l10n for Git 2.18.0 round 3
+
+----------------------------------------------------------------
+Alexander Shopov (2):
+      l10n: bg.po: Updated Bulgarian translation (3608t)
+      l10n: bg.po: Updated Bulgarian translation (3608t)
+
+Andre Hinrichs (1):
+      l10n: de.po: fix typos
+
+Christopher Diaz Riveros (3):
+      l10n: es.po: Spanish update for v2.18.0 round 1
+      l10n: es.po: Spanish update for v2.18.0 round 2
+      l10n: es.po: Spanish update for v2.18.0 round 3
+
+Jean-No=C3=ABl Avila (2):
+      l10n: fr.po v2.18 round 1
+      l10n: fr.po v2.18.0 round 3
+
+Jiang Xin (14):
+      Merge branch 'master' of https://github.com/ralfth/git-po-de into mai=
+nt
+      Merge remote-tracking branch 'git-po/maint'
+      l10n: git.pot: v2.18.0 round 1 (108 new, 14 removed)
+      Merge branch 'fr_2.18_round1' of git://github.com/jnavila/git
+      Merge branch 'master' of git://github.com/git-l10n/git-po
+      l10n: git.pot: v2.18.0 round 2 (144 new, 6 removed)
+      Merge branch 'master' of https://github.com/vnwildman/git
+      Merge branch 'master' of git://github.com/git-l10n/git-po
+      l10n: git.pot: v2.18.0 round 3 (1 new, 1 removed)
+      Merge branch 'fr_2.18_rnd3' of git://github.com/jnavila/git
+      Merge branch 'master' of git://github.com/alshopov/git-po
+      Merge branch 'master' of https://github.com/vnwildman/git
+      Merge branch 'master' of git://github.com/nafmo/git-l10n-sv
+      l10n: zh_CN: for git v2.18.0 l10n round 1 to 3
+
+Jordi Mas (1):
+      l10n: Update Catalan translation
+
+Peter Krefting (2):
+      l10n: sv.po: Update Swedish translation (3470t0f0u)
+      l10n: sv.po: Update Swedish translation (3608t0f0u)
+
+Ralf Thielow (1):
+      l10n: TEAMS: remove inactive de team members
+
+Tr=E1=BA=A7n Ng=E1=BB=8Dc Qu=C3=A2n (3):
+      l10n: vi(3470t): Updated Vietnamese translation for v2.18.0
+      l10n: vi.po(3608t): Update Vietnamese translation for v2.18.0 round2
+      l10n: vi.po(3608t): Update Vietnamese translation for v2.18.0 round 3
+
+ po/TEAMS    |    6 +-
+ po/bg.po    | 6067 +++++++++++++++++++++++++++++++++----------------------=
+--
+ po/ca.po    | 1777 ++++++++++-------
+ po/de.po    |    4 +-
+ po/es.po    | 6178 +++++++++++++++++++++++++++++++++++--------------------=
+----
+ po/fr.po    | 6135 ++++++++++++++++++++++++++++++++++---------------------=
+---
+ po/git.pot  | 5839 ++++++++++++++++++++++++++++++++-----------------------
+ po/sv.po    | 6033 +++++++++++++++++++++++++++++++++----------------------=
+--
+ po/vi.po    | 6061 +++++++++++++++++++++++++++++++++----------------------=
+--
+ po/zh_CN.po | 6022 +++++++++++++++++++++++++++++++++----------------------=
+--
+ 10 files changed, 26144 insertions(+), 17978 deletions(-)
