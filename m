@@ -6,43 +6,45 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 756371F403
-	for <e@80x24.org>; Sun, 17 Jun 2018 03:36:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE4281F403
+	for <e@80x24.org>; Sun, 17 Jun 2018 03:41:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754238AbeFQDg2 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Jun 2018 23:36:28 -0400
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:37550 "EHLO
-        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754063AbeFQDg1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Jun 2018 23:36:27 -0400
-Received: by mail-yw0-f194.google.com with SMTP id j134-v6so4630311ywg.4
-        for <git@vger.kernel.org>; Sat, 16 Jun 2018 20:36:27 -0700 (PDT)
+        id S1754922AbeFQDlt (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Jun 2018 23:41:49 -0400
+Received: from mail-yb0-f196.google.com ([209.85.213.196]:38599 "EHLO
+        mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754589AbeFQDlt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Jun 2018 23:41:49 -0400
+Received: by mail-yb0-f196.google.com with SMTP id q62-v6so4861988ybg.5
+        for <git@vger.kernel.org>; Sat, 16 Jun 2018 20:41:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=cO5nlTOxBF54zevUyMqCduYCrtz6eq+VmIqtIy6uvoE=;
-        b=X+syXzNLhjYBzEoAh/exbyJmwzGwZBgZ4AVaR9mC7KmDtNqZotgU/WxlrpkE7lKebA
-         mBeU5edgi9Is/BZGLT72FIQgmXN/cBQC+suwANZWcqAFWJYMGst0JcbDQHFaQvzbCq9x
-         SNEc7QyjKlHpRgurXoqZztm5i42119kjFLHB1WoN7Iq+Izqmybmnmy/iBj38NEpm+bl2
-         5FJthB3dYBlPGgNmcpexw26f4OlGbBXozy9ZDyaZeb+c7OL0rup32rAviaoS2siUsX5e
-         JQqNTR7r9tPxtDDtrCdzeUMnmQ+r8tf0LKHI6FU8H6MOZhgnGMbAxC/mbsb1O8a39PCo
-         Xk5g==
-X-Gm-Message-State: APt69E0zQXq4fJ3/6lsMY8ElGlJBQUSIa/Nc6g5KWHodsAJu2YW16YGF
-        amqxUhC+/zY4CRdVGMZdPAygxCINu57jxWH5vsA=
-X-Google-Smtp-Source: ADUXVKKfCI3s/WySvKH07N7YLACHbnqUhYjiSBzJwkL59WCcDH5JHi8JZSYKgokxCHoPwZK1JFO7lbsasXHCg0w6FGg=
-X-Received: by 2002:a81:4303:: with SMTP id q3-v6mr3689785ywa.98.1529206586685;
- Sat, 16 Jun 2018 20:36:26 -0700 (PDT)
+        bh=aU66sxMtxrU2qjb2b7O1sKifPvjSQp3ZKeQ3qX5VVV8=;
+        b=DB+gUGrW6yjlcTwxP2wOfoNyXtkWjd6DwU7s1V7HIxug/IULbXFSih6Rp7rzLTTXUi
+         E9qL27/iEWCkRi/JckyWb23emKWE7XvZhv5MDKLrWK6RChM3fzNXKTxquNLZZ0efS3IO
+         suivzmEEU2cfb1XhM8p2gedL+/U3rY9HhsUQkquS62TW5VonFmS/VNBH5VfVSC4o/1gu
+         oLUNRVva/MqnKAJ6zPymsFOX8EEXl9Sz5H6lQRpiYlmYqn273st7qFMHbWy7pnlPJcGd
+         PJtIY7oQ4XNEcpOMJBmU8KA/qZmr64BmobS1+WuYdA+LUM8JilhHjCXw1lix4ERtVYOk
+         W0nw==
+X-Gm-Message-State: APt69E3hNhyWSwkkm5lDv3Q0wSii23qOll2DIbJvS2Dmck+OBAXyH8aW
+        k6z/AcxHW65iWQRhM7dqU7VFGZ6muPJIqc1kPGw=
+X-Google-Smtp-Source: ADUXVKLH2DEACNVEiK0KRHh+e55b1xowr3iwlJRpRFDmNyFRtSFEmxmBVqc9P0JHvvYRC6k3NMisCddPlwuF9yRUBXU=
+X-Received: by 2002:a25:a268:: with SMTP id b95-v6mr3879403ybi.295.1529206908422;
+ Sat, 16 Jun 2018 20:41:48 -0700 (PDT)
 MIME-Version: 1.0
-References: <8e28202a-8646-53e8-8c22-389d61791c70@onlinehome.de> <20180616160804.10914-1-newren@gmail.com>
-In-Reply-To: <20180616160804.10914-1-newren@gmail.com>
+References: <CACcTrKePbgyCbXneN5NZ+cS-tiDyYe_dkdwttXpP0CUeEicvHw@mail.gmail.com>
+ <CAP8UFD2SJF_gbP-mdXoAH0t_OmLjRbPuVK5vZZjgs2N9eJz5KQ@mail.gmail.com>
+In-Reply-To: <CAP8UFD2SJF_gbP-mdXoAH0t_OmLjRbPuVK5vZZjgs2N9eJz5KQ@mail.gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 16 Jun 2018 23:36:16 -0400
-Message-ID: <CAPig+cRKxpNrTNSEgB66LBxcJk1b24ViR=T-fkqo07wxMFywpQ@mail.gmail.com>
-Subject: Re: [BUG] git-rebase: reword squashes commits in case of merge-conflicts
-To:     Elijah Newren <newren@gmail.com>
-Cc:     cr@onlinehome.de, Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Git List <git@vger.kernel.org>,
+Date:   Sat, 16 Jun 2018 23:41:38 -0400
+Message-ID: <CAPig+cRR8=vbafsjL_pnoq6ssxBkkoVo0OMd_i8P_a8ze7eLHg@mail.gmail.com>
+Subject: Re: Is NO_ICONV misnamed or is it broken?
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Mahmoud Al-Qudsi <mqudsi@neosmart.net>,
+        Git List <git@vger.kernel.org>, ferdy@gentoo.org,
+        Joachim Schmitz <jojo@schmitz-digital.de>,
         Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
@@ -50,36 +52,24 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jun 16, 2018 at 12:08 PM Elijah Newren <newren@gmail.com> wrote:
-> Subject: [PATCH] sequencer: do not squash 'reword' commits when we hit
->  conflicts
-> [...]
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
-> diff --git a/t/t3423-rebase-reword.sh b/t/t3423-rebase-reword.sh
-> @@ -0,0 +1,44 @@
-> +test_expect_success 'reword comes after a conflict preserves commit' '
+On Sat, Jun 16, 2018 at 10:57 PM Christian Couder
+<christian.couder@gmail.com> wrote:
+> On Fri, Jun 15, 2018 at 12:47 AM, Mahmoud Al-Qudsi <mqudsi@neosmart.net> wrote:
+> > ~> make NO_ICONV=1
+> > # ommitted
+> >     LINK git-credential-store
+> > /usr/bin/ld: cannot find -liconv
+> I think 597c9cc540 (Flatten tools/ directory to make build procedure
+> simpler., 2005-09-07) which introduces NEEDS_LIBICONV is even older
+> than the commit that introduced NO_ICONV (see above), so you might
+> want to play with NEEDS_LIBICONV too and see if it works better for
+> you.
+>
+> I CC'ed the people involved in related commits. Maybe they can give
+> you a better answer. It might also help if you could tell us on which
+> OS/Platform and perhaps for which purpose you want to compile Git.
 
-s/comes//
+For completeness, for those reading this thread, a patch fixing this
+issue has already been sent[1] to the list.
 
-> +       git checkout stuff^0 &&
-> +
-> +       set_fake_editor &&
-> +       test_must_fail env FAKE_LINES="reword 2" \
-> +               git rebase -i -v master &&
-
-If some command fails between here and "git rebase --continue" below,
-then the test will exit with an in-progress (dangling) rebase, which
-could confuse tests added later to this script. I wonder, therefore,
-if it would make sense to insert the following cleanup before "git
-rebase -i":
-
-    test_when_finished "reset_rebase" &&
-
-> +       git checkout --theirs file-2 &&
-> +       git add file-2 &&
-> +       FAKE_COMMIT_MESSAGE="feature_b_reworded" git rebase --continue &&
-> +
-> +       test "$(git log -1 --format=%B)" = "feature_b_reworded" &&
-> +       test $(git rev-list --count HEAD) = 2
-> +'
+[1]: https://public-inbox.org/git/20180615022503.34111-1-sunshine@sunshineco.com/
