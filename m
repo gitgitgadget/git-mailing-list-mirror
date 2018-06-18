@@ -2,196 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE33B1F403
-	for <e@80x24.org>; Mon, 18 Jun 2018 19:22:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D3E851F403
+	for <e@80x24.org>; Mon, 18 Jun 2018 19:23:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936265AbeFRTWk (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Jun 2018 15:22:40 -0400
-Received: from mail-yb0-f196.google.com ([209.85.213.196]:35323 "EHLO
-        mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S936232AbeFRTWj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jun 2018 15:22:39 -0400
-Received: by mail-yb0-f196.google.com with SMTP id a16-v6so3547279ybm.2
-        for <git@vger.kernel.org>; Mon, 18 Jun 2018 12:22:39 -0700 (PDT)
+        id S936092AbeFRTXQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Jun 2018 15:23:16 -0400
+Received: from mail-qt0-f196.google.com ([209.85.216.196]:42168 "EHLO
+        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935743AbeFRTXQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jun 2018 15:23:16 -0400
+Received: by mail-qt0-f196.google.com with SMTP id y31-v6so16208836qty.9
+        for <git@vger.kernel.org>; Mon, 18 Jun 2018 12:23:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=bVEFb0o0Cjiq93TjOKQye+HV0VSfJkyEyXbT3BgGLng=;
-        b=rK7K0ACNjOw33RwM5WKEwy6Lvztbmpfc6zaiiCZGMRttSHwDuPR3uOQwGXk+YKb0/2
-         oXV2jIZfaPmqrn4lAbDi7EGPUUaWGdeKKOPrTlDAQ2uwahyWaO9I7LiytPI+J+yBYli+
-         Et86ATt/t79DjvKhGtomKnIrQ3UtHpv9WmYW24O2A7mwLxB+KzcjdZRPtVKOUjP9Wluy
-         2YZOq7K4E4lW7A+G/SHalbN7VSr3QJ97uq433N4cr6dDCxMsypjcYkDlZLcdvKojrRBM
-         F6NSPbkwXiy3Gs8G3Nv1hH3EwLu9Xwti2+m7aJUk63WbGU0QvL8FemEzJRvBbdeM9FoU
-         rTRA==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=I/lb9bw90PQkPorVxXhwTXv4JaX2ZgFVdbRCP7pULdk=;
+        b=syj6T77e0B4b1AwzQVpYhWNyY/qkIJkseyWF8nzAo92ZEegwJNbiBg8Pn3WzVVOPlF
+         f0DwJk8jeD4iQjAbMp/IeOsLHWrBjxM1y06Tag1rzQvJ/dd+e5tcOWsSe4IWMUAvXGcV
+         VitNRiUJ5DVIzN4WtVorhxUKISKDHafkM6u27FKXmVzW1y9XrCmzIG5/8cXB65n+Z522
+         UPvKinPLbwGTEQ7SJSUo/uC1hEU1xxSNwYG1D1QWd1M4kWPXVL35J8y1bbXE6Ge6ShiY
+         7cOL/nfeByq2mpnr9LR+Kj+ucUYzWaPY7+U0Ogfj7kvEdptqGjh1d5ddvqwvSbHTnQ/u
+         zdwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=bVEFb0o0Cjiq93TjOKQye+HV0VSfJkyEyXbT3BgGLng=;
-        b=YMWALMcXSqj2/5N72SwrNkaO6iz7QdwVMQpabAA/UYDGPh8tzLO87rMDqjoHmd2j+U
-         UqmuYbyF2ZUiFfrXPA2mhKeKYin0iz0KnZV1spnPskK4ell0+s4a0xPW91/3VkdHd8ua
-         I1WBpHdqGs3LdPmxeASBN1A4jxZ3HPctYmDgMLyRFmXTms+lisrW305Juf1irZudLXh0
-         mKkKLwo2gkLGKSmrf+YdnKBi3U3JZGOtISIrJfWp8jjKZgOAsOcckpDF2mtV68ZAYAsL
-         eRQO6aJoeyDpUBbz2C6fdIyKqxmWSYLv2tENG6W8P5UpMxMu3ZHWt86+I7DFh+HOntmF
-         1zBg==
-X-Gm-Message-State: APt69E14e7uS8FlzUNdB8kT33h9tB6pv2YEyAHr73tbovURDXHytuIrA
-        TM/naWvpZAW+vFbpDu+ru4Js8LRG8xfD/zgKF0eGvQ==
-X-Google-Smtp-Source: ADUXVKIVHjbV+0yjAyEK9qmD39jszDhTG7nIO+Wpe+yRrHM97DLNFW420Hu5vEOFgdHB/qieLJTS2CmqGhJT8zA9kMU=
-X-Received: by 2002:a25:dcc4:: with SMTP id y187-v6mr4293530ybe.515.1529349758496;
- Mon, 18 Jun 2018 12:22:38 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=I/lb9bw90PQkPorVxXhwTXv4JaX2ZgFVdbRCP7pULdk=;
+        b=RcZGJTp3w/gLzbT6mAzx1i0N/tzXMet59OnJ7WmIQl3MfzzgPhmnh6l37LMElP5FkY
+         m0Yt7oBTtdHZX9NwQ7dOwZT26qU0liNTZDcJytBzdtD9wtsBakk8Vw18/eLFbg9pvfWd
+         tJl484/eem7zdk4bhR7k3Z8x/amrefGlFvwRpht/EnwlXd6XZmgD5LIb6CtyRPv5eenT
+         JZXX0BxmYsnPFJD7Rwl5AHy/VenLRnJaXzF6tNJVdp/bqNQf9cbeY3PWDKsA8NR85HH3
+         JJ7mk+FycR/WkqBkcFFg2sSQjPjW52Ha4FKD1PbzfJNx9RdLhrAG93wSGYJ6xfUBi5nu
+         GW0Q==
+X-Gm-Message-State: APt69E3K3dPbAB2lGmVisnQsZmz7URtBUHqCgXOmH05pJPNC2T4J4NIC
+        NrEE708+v9W/+8L/4smd6K6SKCQLHlA=
+X-Google-Smtp-Source: ADUXVKKLLZ9O6gNCgvdmL4U8IuvJT1dLHaxwerW2pWuEbKyB7XWkmmkUURr44FThwr3YzS+CX2amhg==
+X-Received: by 2002:ac8:6705:: with SMTP id e5-v6mr12189732qtp.79.1529349794983;
+        Mon, 18 Jun 2018 12:23:14 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:d807:51c7:6f48:91e4? ([2001:4898:8010:0:c13d:51c7:6f48:91e4])
+        by smtp.gmail.com with ESMTPSA id o64-v6sm13392508qko.74.2018.06.18.12.23.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 18 Jun 2018 12:23:14 -0700 (PDT)
+Subject: Re: [PATCH 03/23] midx: add midx builtin
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Martin Fick <mfick@codeaurora.org>
+References: <20180607140338.32440-1-dstolee@microsoft.com>
+ <20180607140338.32440-4-dstolee@microsoft.com>
+ <CACsJy8Ca4B_xjpuTU=sFS+fOEin5fFiSmH+Z7JKjoUA6ZMnv4A@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <b0484a3f-95ab-f0c1-0dc5-3c75c766ff6e@gmail.com>
+Date:   Mon, 18 Jun 2018 15:23:13 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-References: <cover.1528233146.git.jonathantanmy@google.com>
- <cover.1528234587.git.jonathantanmy@google.com> <c6910161aab1f383b5721bdc91969baad8c10a66.1528234587.git.jonathantanmy@google.com>
-In-Reply-To: <c6910161aab1f383b5721bdc91969baad8c10a66.1528234587.git.jonathantanmy@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 18 Jun 2018 12:22:27 -0700
-Message-ID: <CAGZ79kbB0Tv8wb_7j0=OdQqGU78KHp3JzuCeD01JTF4EHwOH0w@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] fetch: send "refs/tags/" prefix upon CLI refspecs
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git <git@vger.kernel.org>, Brandon Williams <bmwill@google.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CACsJy8Ca4B_xjpuTU=sFS+fOEin5fFiSmH+Z7JKjoUA6ZMnv4A@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 5, 2018 at 2:41 PM Jonathan Tan <jonathantanmy@google.com> wrote:
+On 6/7/2018 1:20 PM, Duy Nguyen wrote:
+> On Thu, Jun 7, 2018 at 4:03 PM, Derrick Stolee <stolee@gmail.com> wrote:
+>> diff --git a/Documentation/git-midx.txt b/Documentation/git-midx.txt
+>> new file mode 100644
+>> index 0000000000..2bd886f1a2
+>> --- /dev/null
+>> +++ b/Documentation/git-midx.txt
+>> @@ -0,0 +1,29 @@
+>> +git-midx(1)
+>> +============
+>> +
+>> +NAME
+>> +----
+>> +git-midx - Write and verify multi-pack-indexes (MIDX files).
+> No full stop. This head line is collected automatically with others
+> and its having a full stop while the rest does not looks strange/
 >
-> When performing tag following, in addition to using the server's
-> "include-tag" capability to send tag objects (and emulating it if the
-> server does not support that capability), "git fetch" relies upon the
-> presence of refs/tags/* entries in the initial ref advertisement to
-> locally create refs pointing to the aforementioned tag objects. When
-> using protocol v2, refs/tags/* entries in the initial ref advertisement
-> may be suppressed by a ref-prefix argument, leading to the tag object
-> being downloaded, but the ref not being created.
+>> diff --git a/builtin/midx.c b/builtin/midx.c
+>> new file mode 100644
+>> index 0000000000..59ea92178f
+>> --- /dev/null
+>> +++ b/builtin/midx.c
+>> @@ -0,0 +1,38 @@
+>> +#include "builtin.h"
+>> +#include "cache.h"
+>> +#include "config.h"
+>> +#include "git-compat-util.h"
+> You only need either cache.h or git-compat-util.h. If cache.h is here,
+> git-compat-util can be removed.
 >
-> Commit dcc73cf7ff ("fetch: generate ref-prefixes when using a configured
-> refspec", 2018-05-18) ensured that "refs/tags/" is always sent as a ref
-> prefix when "git fetch" is invoked with no refspecs, but not when "git
-> fetch" is invoked with refspecs. Extend that functionality to make it
-> work in both situations.
-
-okay. Thinking long term, we may want to introduce a capability that
-can filter the tag space, e.g. "want-refs-since <date> refs/tags/*"
-as a client directive as then the client only asks for new (newly
-created/appearing) tags instead of all tags.
-
-> This also necessitates a change another test which tested ref
-> advertisement filtering using tag refs -
-
-sounds plausible.
-
->  since tag refs are sent by
-> default now, the test has been switched to using branch refs instead.
-
-That mismatches what I would expect to read below.
-I would expect the client to always ask for refs/tags/* now and
-instead of the server just giving them.
-
-Oh, the problem is in that other test to restrict the refs/tags
-to *not* be sent?
-
-Maybe we can only ask for refs/tags/* if we do not have any
-"refs/tags/" on the CLI: if I invoke "git fetch refs/tags/v1"
-I would not get an advertisement for refs/tags/v2 but if I omit
-all tags from  the refspec, I'd get all its advertisements (v1+v2)
-
-
-
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
->  builtin/fetch.c        |  2 +-
->  t/t5702-protocol-v2.sh | 24 +++++++++++++++++++++---
->  2 files changed, 22 insertions(+), 4 deletions(-)
->
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index ea5b9669a..1f447f1e8 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -359,7 +359,7 @@ static struct ref *get_ref_map(struct transport *transport,
->                 refspec_ref_prefixes(&transport->remote->fetch, &ref_prefixes);
->
->         if (ref_prefixes.argc &&
-> -           (tags == TAGS_SET || (tags == TAGS_DEFAULT && !rs->nr))) {
-> +           (tags == TAGS_SET || tags == TAGS_DEFAULT)) {
-
-Oh, I see. This always asks for refs/tags/ whereas before we only
-asked for them if there were *no* refspec given. Maybe we can
-change this to
-
-    refspec_any_item_contains("refs/tags/")
-
-instead of always asking for the tags?
-(that function would need to be written; I guess for a short term bugfix
-this is good enough)
-
-How is the tag following documented (i.e. when is the user least
-surprised that we do not tag-follow all and unconditionally)?
-
-
->                 argv_array_push(&ref_prefixes, "refs/tags/");
->         }
->
-> diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-> index 261e82b0f..b31b6d8d3 100755
-> --- a/t/t5702-protocol-v2.sh
-> +++ b/t/t5702-protocol-v2.sh
-> @@ -204,6 +204,7 @@ test_expect_success 'ref advertisment is filtered during fetch using protocol v2
->         test_when_finished "rm -f log" &&
->
->         test_commit -C file_parent three &&
-> +       git -C file_parent branch unwanted-branch three &&
->
->         GIT_TRACE_PACKET="$(pwd)/log" git -C file_child -c protocol.version=2 \
->                 fetch origin master &&
-> @@ -212,9 +213,8 @@ test_expect_success 'ref advertisment is filtered during fetch using protocol v2
->         git -C file_parent log -1 --format=%s >expect &&
->         test_cmp expect actual &&
->
-> -       ! grep "refs/tags/one" log &&
-> -       ! grep "refs/tags/two" log &&
-> -       ! grep "refs/tags/three" log
-> +       grep "refs/heads/master" log &&
-> +       ! grep "refs/heads/unwanted-branch" log
->  '
-
-That makes sense so far.
+>> +#include "parse-options.h"
+>> +
+>> +static char const * const builtin_midx_usage[] ={
+>> +       N_("git midx [--object-dir <dir>]"),
+>> +       NULL
+>> +};
+>> +
+>> +static struct opts_midx {
+>> +       const char *object_dir;
+>> +} opts;
+>> +
+>> +int cmd_midx(int argc, const char **argv, const char *prefix)
+>> +{
+>> +       static struct option builtin_midx_options[] = {
+>> +               { OPTION_STRING, 0, "object-dir", &opts.object_dir,
+> For paths (including dir), OPTION_FILENAME may be a better option to
+> handle correctly when the command is run in a subdir. See df217ed643
+> (parse-opts: add OPT_FILENAME and transition builtins - 2009-05-23)
+> for more info.
+Thanks for the pointer!
 
 >
->  test_expect_success 'server-options are sent when fetching' '
-> @@ -406,6 +406,24 @@ test_expect_success 'fetch supports various ways of have lines' '
->                 $(git -C server rev-parse completely-unrelated)
->  '
+>> +                 N_("dir"),
+>> +                 N_("The object directory containing set of packfile and pack-index pairs.") },
+> Other help strings do not have full stop either (I only checked a
+> couple commands though)
 >
-> +test_expect_success 'fetch supports include-tag and tag following' '
-> +       rm -rf server client trace &&
+> Also, doesn't OPT_STRING() work here too (if you avoid OPTION_FILENAME
+> for some reason)?
+>
+>> +               OPT_END(),
+>> +       };
+>> +
+>> +       if (argc == 2 && !strcmp(argv[1], "-h"))
+>> +               usage_with_options(builtin_midx_usage, builtin_midx_options);
+>> +
+>> +       git_config(git_default_config, NULL);
+>> +
+>> +       argc = parse_options(argc, argv, prefix,
+>> +                            builtin_midx_options,
+>> +                            builtin_midx_usage, 0);
+>> +
+>> +       if (!opts.object_dir)
+>> +               opts.object_dir = get_object_directory();
+>> +
+>> +       return 0;
+>> +}
+>> diff --git a/git.c b/git.c
+>> index c2f48d53dd..400fadd677 100644
+>> --- a/git.c
+>> +++ b/git.c
+>> @@ -503,6 +503,7 @@ static struct cmd_struct commands[] = {
+>>          { "merge-recursive-theirs", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
+>>          { "merge-subtree", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
+>>          { "merge-tree", cmd_merge_tree, RUN_SETUP | NO_PARSEOPT },
+>> +       { "midx", cmd_midx, RUN_SETUP },
+> If it's a plumbing and can take an --object-dir, then I don't think
+> you should require it to run in a repo (with RUN_SETUP).
+> RUN_SETUP_GENTLY may be better. You could even leave it empty here and
+> only call setup_git_directory() only when --object-dir is not set.
 
-test_when_finished ;)
+I agree. Good point. This could be run to maintain an alternate without 
+any .git folder.
 
-> +       git init server &&
-> +
-> +       test_commit -C server to_fetch &&
-> +       git -C server tag -a annotated_tag -m message &&
-> +
-> +       git init client &&
-> +       GIT_TRACE_PACKET="$(pwd)/trace" git -C client -c protocol.version=2 \
-> +               fetch "$(pwd)/server" to_fetch:to_fetch &&
-> +
-> +       grep "fetch> ref-prefix to_fetch" trace &&
-> +       grep "fetch> ref-prefix refs/tags/" trace &&
-> +       grep "fetch> include-tag" trace &&
-> +
-> +       git -C client cat-file -e $(git -C client rev-parse annotated_tag)
-> +'
+>
+>>          { "mktag", cmd_mktag, RUN_SETUP | NO_PARSEOPT },
+>>          { "mktree", cmd_mktree, RUN_SETUP },
+>>          { "mv", cmd_mv, RUN_SETUP | NEED_WORK_TREE },
 
-Makes sense.
-
-Thanks,
-Stefan
