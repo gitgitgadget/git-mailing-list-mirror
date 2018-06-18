@@ -2,106 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27FC61F597
-	for <e@80x24.org>; Mon, 18 Jun 2018 16:41:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DED201F403
+	for <e@80x24.org>; Mon, 18 Jun 2018 16:47:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754637AbeFRQlq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Jun 2018 12:41:46 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51368 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754642AbeFRQlp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jun 2018 12:41:45 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BADBEF391F;
-        Mon, 18 Jun 2018 12:41:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-        :cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to; s=sasl; bh=pxw+sHjHZDPQlgmOPL9WOqIJILw=; b=mUqC/YC
-        3P47DDHDnOSMC4sQRR1tbv1wapNTvAeOeD5K157kFyH2Vh1emjG3POi2ZhE9B/gm
-        dEz9X9KG+i+5VPi46Rb8A+rQlWIV7lcRBfhg0K3bCRM5+TSnQOkbIuFG3jq3klIN
-        /WES8YnIJ7/B+9FB9P9C/Zgjj2dDTzvWW4C0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-        :subject:message-id:references:mime-version:content-type
-        :in-reply-to; q=dns; s=sasl; b=IJnSYWhDBK4FKQDsbOPjY+iEujnLpaXHH
-        bIhWy/KI+qjwmJP2z1KOWEV6t5riIJZABK+77LFOhqmJfsSiRsBpD+2jP8ypcgSv
-        r0+H8F1uz3dExvd0U+zuNm4dbTnSlyFkbLBu8r2GOF5n/17E8xl1NqjtlqA0YfRr
-        qzj0jvHmn4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B30CEF391D;
-        Mon, 18 Jun 2018 12:41:42 -0400 (EDT)
-Received: from zaya.teonanacatl.net (unknown [98.111.125.125])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 38FA2F391C;
-        Mon, 18 Jun 2018 12:41:42 -0400 (EDT)
-Date:   Mon, 18 Jun 2018 12:41:40 -0400
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/2] rebase --root: fix `reword` on a root commit
-Message-ID: <20180618164140.GN11827@zaya.teonanacatl.net>
-References: <pull.3.git.gitgitgadget@gmail.com>
- <20180616201143.GH11827@zaya.teonanacatl.net>
- <xmqqd0woxdz9.fsf@gitster-ct.c.googlers.com>
+        id S1755170AbeFRQrD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Jun 2018 12:47:03 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:40048 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754743AbeFRQrC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jun 2018 12:47:02 -0400
+Received: by mail-wm0-f66.google.com with SMTP id n5-v6so16827627wmc.5
+        for <git@vger.kernel.org>; Mon, 18 Jun 2018 09:47:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:openpgp:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=7qjx80kmfVEj1xMo3pxRtlUvdmcXlM8Bk8GIEC7rR8I=;
+        b=qcVf7iOZ2VKMX7VzgWqlvzyPQ6Ol4MG7uW/Kn4quLGyO3W5ACIYpThFFXTojEeFG8U
+         Aa3Zu1Czv55PjmOnWWc4e7+7SFm7xMjDUvwgqrGMGwrHdZM2MZrzdtK/SILxWQYBMokc
+         sJT2t6P5bnS6/PthVYiOGJilnGsaSfCJPg6gafgIfDZgwrAxWMSDbkKP9dHODkHAOD6U
+         +OYnYnHftby45msbrCJNSdbAn1Xt7WgKgO8Lg07lxGA5TVAMwhG+0ozUK2aV8jaJxImM
+         a54Ek1264eYbqjgkxYTMI9ntGvp3a6Gn5+17cic+yyEhHGz09uteBwQ5Di1E9eDxLU63
+         M/ow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
+         :date:user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=7qjx80kmfVEj1xMo3pxRtlUvdmcXlM8Bk8GIEC7rR8I=;
+        b=e/B9S9p8k8K/WTLGmdMH0UDQGgKhZdmuwZxiPSplvYci/Wfpl3lWPNRbDXRicnQAFp
+         6JkeCKeBjKaUgRkpWP4nyjV1TMnrC93GrPvO/WRtrvRnCY/mpK43Ob6IUUKl/5+Rmlgm
+         GODCXXC5TlsFA7TQ/FF8HmmGh94AM/MqihBAQYSkeOC6Qje2BZKdqPW9LPz5WxOOWTTQ
+         dnyjOHG8bb4znet0/w7rFuzDmfCLVXidEbVuEI2Qx8pG6jjbHg53g2L7xSBMqsK33kZR
+         XvLYGc0kaF8kjj/2kfvqFhHh0gRi9g81bhD+liCeH8oa5m6sSfvkayCJwSEewdZEe2ux
+         22xA==
+X-Gm-Message-State: APt69E2Ue9Hx0b0r5krdk6qoDWcDyDcs87WwyF3WFwTMlw4PtjPb02wT
+        amSNFkFDqMqAS7q3age5MO0=
+X-Google-Smtp-Source: ADUXVKJQxLpy36e6ilGCrpT0leHrKAa1KNUfD3HnjtUBx3EDCtozk6VdPkJALZ3TBVGNS/UH+AAD6w==
+X-Received: by 2002:a1c:6fce:: with SMTP id c75-v6mr8928295wmi.83.1529340421479;
+        Mon, 18 Jun 2018 09:47:01 -0700 (PDT)
+Received: from [192.168.0.104] (AToulouse-658-1-40-196.w86-221.abo.wanadoo.fr. [86.221.119.196])
+        by smtp.gmail.com with ESMTPSA id b8-v6sm16272256wrp.50.2018.06.18.09.46.59
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 18 Jun 2018 09:47:00 -0700 (PDT)
+Subject: Re: [GSoC][PATCH 1/3] sequencer: add a new function to silence a
+ command, except if it fails.
+To:     phillip.wood@dunelm.org.uk, git@vger.kernel.org
+Cc:     Stefan Beller <sbeller@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Elijah Newren <newren@gmail.com>
+References: <20180618131844.13408-1-alban.gruin@gmail.com>
+ <20180618131844.13408-2-alban.gruin@gmail.com>
+ <b23a9e30-58bf-afde-4d77-563e0b288e70@talktalk.net>
+From:   Alban Gruin <alban.gruin@gmail.com>
+Openpgp: preference=signencrypt
+Message-ID: <deae16f0-8852-4b98-dc14-705d8456f219@gmail.com>
+Date:   Mon, 18 Jun 2018 18:46:56 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqd0woxdz9.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.9.5 (2018-04-13)
-X-Pobox-Relay-ID: 7AE16034-7316-11E8-8861-67830C78B957-09356542!pb-smtp2.pobox.com
+In-Reply-To: <b23a9e30-58bf-afde-4d77-563e0b288e70@talktalk.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr-FR
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Phillip,
 
-Junio C Hamano wrote:
-> Todd Zullinger <tmz@pobox.com> writes:
+Le 18/06/2018 à 17:26, Phillip Wood a écrit :
+> Hi Alban
 > 
->> Hi Johannes,
->>
->> Johannes Schindelin via GitGitGadget wrote:
->>> From: GitGitGadget <gitgitgadget@gmail.com>
->>> 
->>> Todd Zullinger reported this bug in
->>> https://public-inbox.org/git/20180615043111.GS3094@zaya.teonanacatl.net/:
->>> when calling git rebase --root and trying to reword the
->>> root commit's message, a BUG is reported.
->>>
->>> This fixes that.
->>> 
->>> IMO the bug fix is trivial enough to qualify for inclusion into v2.18.0, still.
->>
->> It does indeed fix the issue.  I agree it would be nice to
->> see it in 2.18.0.  As a fix for a minor regression
->> introduced in this cycle, that seems reasonable.
+> On 18/06/18 14:18, Alban Gruin wrote:
+>> This adds a new function, run_command_silent_if_successful(), to
+>> redirect the stdout and stderr of a command to a strbuf, and then to run
+>> that command. This strbuf is printed only if the command fails. It is
+>> functionnaly similar to output() from git-rebase.sh.
 > 
-> Offhand it is not clear from the proposed log message where the
-> original breakage happened, but if this is to fix a regression
-> between v2.17.0 and v2.18.0, then let's have it.  As -rc2 slipped
-> for a few days, it is reasonable to delay the final by a couple of
-> days as well, if only to give the last minute fixes and translators
-> reasonable time to breathe.
+> s/functionnaly/functionally/
+> 
+> It's not quite the same though because the shell versions handles
+> --verbose where as here the caller has to put that check in every call
+> site. I wonder if it would simplify the callers if the C version did the
+> --verbose handling it's self.
+> 
 
-Perhaps replacing the first paragraph with this would make
-it clearer?
+That’s what I did first, but removed it because I thought it would be
+less confusing.  I’m fine with this solution, though.  Do you want me to
+do this instead?
 
-    Since 21d0764c82 ("rebase -i --root: let the sequencer handle even the
-    initial part", 2018-05-04), when splitting a repository, running `git
-    rebase -i --root` to reword the initial commit, Git dies with
+Cheers,
+Alban
 
-Alternately, a similar note could be added at the end.
-
-    This regression was recently introduced in 21d0764c82 ("rebase -i 
-    --root: let the sequencer handle even the initial part", 2018-05-04).
-
--- 
-Todd
