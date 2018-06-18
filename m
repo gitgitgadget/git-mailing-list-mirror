@@ -7,108 +7,87 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C35C41F403
-	for <e@80x24.org>; Mon, 18 Jun 2018 23:16:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A975F1F403
+	for <e@80x24.org>; Mon, 18 Jun 2018 23:17:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934667AbeFRXQq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Jun 2018 19:16:46 -0400
-Received: from mail-qk0-f201.google.com ([209.85.220.201]:44825 "EHLO
-        mail-qk0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755376AbeFRXQq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jun 2018 19:16:46 -0400
-Received: by mail-qk0-f201.google.com with SMTP id m65-v6so15737528qkh.11
-        for <git@vger.kernel.org>; Mon, 18 Jun 2018 16:16:45 -0700 (PDT)
+        id S935341AbeFRXRG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Jun 2018 19:17:06 -0400
+Received: from mail-yb0-f169.google.com ([209.85.213.169]:39860 "EHLO
+        mail-yb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934807AbeFRXRF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jun 2018 19:17:05 -0400
+Received: by mail-yb0-f169.google.com with SMTP id i2-v6so191545ybg.6
+        for <git@vger.kernel.org>; Mon, 18 Jun 2018 16:17:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=z2k1i5Ub7zrwLMGX1GcgmwHpffJGMHaGzgnbnW0W3lg=;
-        b=pp3TE+U81XWbff6V+alBYX+5mnywEQGBvk7v6X9RwRsMWZx0NKZ3d93Y0F5jQ3S/so
-         9ygMRThGzRJsZWyxrRUSMivcMabZXpp+HexwxxVvNDcilukYrNeCNTd1Ug+T3SRJZek7
-         XWH0sTdDQUS3/bfFrRo50ABF2HxvjnC49NJFOxcT+4Xt6VaT2xozPupjZ9SrpQPxFN2E
-         OFBanuw4CotnKgciNcJA617WxCwn27oJnglgU813f4WRNZmh7x7dOHP38KXnGlXXTNKm
-         B1I/eoGi6iHTpSAjwtgyCZ3yYTX1mIKryfxNMTpCV9iiJS6vgraX9nLdozGkLvYFrVrg
-         mTEw==
+        bh=oREpYy6u/US0RV2UZtHM2OyCN67SNucwIENlcXarSpc=;
+        b=Xdm8TmCOaLxFjhA2CMWmIJyRX4dCBr46TNwsQLW5JYV500Dq/R46ZJbkzrIZO1M10C
+         6TNZ1ODra1RJWESooS2H8kKSmEWTINqANls7iol8JJUvkfTyhoiNL7At9DyYSRDqCKi3
+         ncC+R4uywXEJ/s7rsH77Pam6k2wZgOcZg6DdjpoCmXNZ+oA6NFet68eoqlT4IdwixqM9
+         cij4wwKEbuMRCG6buP9ohG80kWYbKER4RDphnJ5QTVO9GsXQOS/CwAPw1ZdpM/m3dRn2
+         Hy+duB0396q4Ot/VHKzAmSi4sD+moPXccpOBZGhY/MIs4Jo+ZphnFg60d+EmCCUwD0Xg
+         7Vug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
-         :references:subject:from:to:cc;
-        bh=z2k1i5Ub7zrwLMGX1GcgmwHpffJGMHaGzgnbnW0W3lg=;
-        b=YhUc1vLLKQN8Yo9OJSaEi32qm68pRuQOZeUEXtxCALsQMQk8SdmlVR7JtjM3P8Pg/H
-         rLYX8OP0TCatsEF33o7MI9ua/VtFwDnl5NwNbq95rIo5oXyDMJzfgwagNqjcV1fNpKqd
-         +rDVuJOIRZPumJFMLdJ222QrVgFPcxbtrFd/bJh6TwGL0Mk+r6KFm+ogehq9GGm/64YM
-         vZuB4Co+nNz/yCn29yQ4YLGJFTYAFWU/4d/hW5X1LQdrYc7LpPip0Vsbq5PVrBzZOCCG
-         TVn5xEALehZsDMT1qqrf+2SMlgk8agbsURjUecWb3FdXUHRgKx8m/Fuulg38Dhwy6JxT
-         P21Q==
-X-Gm-Message-State: APt69E3COfSlWLpajKYALABCsDOkmjg3QiyWt4uB2FHLaECytjTU0Gw2
-        tnfEnl/KctZEPxKrLhzSOUmMcSRXmjClcPgPPw7d
-X-Google-Smtp-Source: ADUXVKIOZayCu10SfLP4//3kNJAUmGdQbmbCMjHZfbRNhhcxHvcgxNV6o2JtRJUiQnVgR9vi2TvnBnnVKeA9/DMgtWh2
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=oREpYy6u/US0RV2UZtHM2OyCN67SNucwIENlcXarSpc=;
+        b=am6kBKUueCSzH1ea2KDE1mymHQIdGZmLqgCJk1gdMpvGdrzWr5ncFPWewa8AYyfFx0
+         Ce95dXr5seaduup/mY/fnA9/RcwsF8lUjUj18IrS4mIRxMZl0wEGZ8i89/zRZplaRcZM
+         8zFyaaPH/IrQz5niOcUFEbtnVmnHpupCfKO9GGIQ1TlNB9MnmnRo84yD4ewPmrS9kAL7
+         ZLxLDyvlK13wAYH2ohwgVC8XnSDkwr1Oy2UZNNQzgMA03rvBzD7ttFlyBl/OOA0oqv+P
+         Nb6n8zQujQaBtt35PsUh5ShmdP0HrNJYFHsw7IdUPRmtXuiLcS6qJAm7ysgBdyLRyEqQ
+         cbkw==
+X-Gm-Message-State: APt69E3qoSQoLHWKVaTaTSx3skOM6DDPyec0BWOf1XQO+YVqrE0ZLJsA
+        eZO1gPPzOUO9z9af37jLM45Vz8ZNIeRxzL3tTHwitQ==
+X-Google-Smtp-Source: ADUXVKKwhQldhFsApD7wJN5MECKQkPn2nGer0Oiq2yYjP4khrFGdp3qDTkmUCSFAQxNGCSi9TpW8kRP+n93rNV9x6mg=
+X-Received: by 2002:a25:dcc4:: with SMTP id y187-v6mr4629231ybe.515.1529363824231;
+ Mon, 18 Jun 2018 16:17:04 -0700 (PDT)
 MIME-Version: 1.0
-X-Received: by 2002:a0c:d687:: with SMTP id k7-v6mr7709440qvi.22.1529363805167;
- Mon, 18 Jun 2018 16:16:45 -0700 (PDT)
-Date:   Mon, 18 Jun 2018 16:16:42 -0700
-In-Reply-To: <xmqqwouvwzsz.fsf@gitster-ct.c.googlers.com>
-Message-Id: <20180618231642.174650-1-jonathantanmy@google.com>
-References: <xmqqwouvwzsz.fsf@gitster-ct.c.googlers.com>
-X-Mailer: git-send-email 2.18.0.rc2.347.g0da03f3a46.dirty
-Subject: Re: [PATCH v2 2/2] fetch: send "refs/tags/" prefix upon CLI refspecs
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org, bmwill@google.com
+References: <xmqqsh5jwzp3.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqsh5jwzp3.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 18 Jun 2018 16:16:52 -0700
+Message-ID: <CAGZ79kYjHUGfgSx+Whih1sWF5U8NLUzXUzimLQfFzqFoc20eUA@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jun 2018, #05; Mon, 18)
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Jonathan Tan <jonathantanmy@google.com> writes:
-> 
-> >> Wouldn't that allow us not having to advertise the whole tags
-> >> namespace only to implement the tag following?
-> >
-> > Yes, it would, but as far as I can tell, it would add an extra burden on
-> > the server to walk all refs requested in the ls-refs call (in order to
-> > determine which tags to send back in the response). Also, this walk must
-> > be done before any negotiation (since this is a ls-refs call),...
-> 
-> My comment was that I doubt the "must be done" part of the above.
-> How would refs-in-want be responded where client-supplied "I want
-> 'master' branch---I am not asking for the exact object the first
-> server I contacted said where the 'master' is at" gets turned into
-> "So the final value of 'master' among these servers that are not
-> quite in sync is this" by the one that gives you the pack, not
-> necessarily the one that responds to ls-refs upon initial contact?
-> Can't we do something similar, i.e. let the client say "I want tags
-> that refer to new objects you are going to send me, I do not know
-> what they are offhand" and the server that actually gives you the
-> pack to say "here are the tags I ended up including"?  The
-> "include-tag" process to generate pack with extra objects (i.e. the
-> tags that point at packed objects) has to involve walking for
-> reachabliity anyway, so as long as the feature is supported,
-> somebody has to do the work, and if you want to cut down the
-> transfer cost of the refs/tags/* enumeration, it needs to happen on
-> the server end, no?
+Hi Jacob,
 
-Ah, I think I see. There are these possible worlds:
- (1) the current world
- (2) no ref-in-want, and upload-pack sends tag information as part of
-     its response to ls-refs
- (3) no ref-in-want, but upload-pack can send ref information right
-     before the packfile
- (4) ref-in-want, and upload-pack will send ref information right before
-     the packfile
+> * sb/diff-color-move-more (2018-05-21) 8 commits
+>   (merged to 'next' on 2018-05-24 at 45f3fb7975)
+>  + diff: color-moved white space handling options imply color-moved
+>  + diff.c: add --color-moved-ignore-space-delta option
+>  + diff.c: decouple white space treatment from move detection algorithm
+>  + diff.c: add a blocks mode for moved code detection
+>  + diff.c: adjust hash function signature to match hashmap expectation
+>  + diff.c: do not pass diff options as keydata to hashmap
+>  + xdiff/xdiffi.c: remove unneeded function declarations
+>  + xdiff/xdiff.h: remove unused flags
+>
+>  "git diff --color-moved" feature has further been tweaked.
+>
+>  Will kick back to 'pu'.
+>  cf. <CAGZ79kag9m02xtJKg05aPE4Grq2wBWSmUr3JdwfyHsMawR7m5Q@mail.gmail.com>
 
-I was only thinking about (2) and (4), but I think you are talking about
-(3). Yes, that would work, although I don't think it's worth the
-protocol churn to do (3) then (4), especially since we already have
-ref-in-want patches sent to the mailing list - but I should have
-discussed this option in my previous e-mails too.
+FYI: I have this series still cooking internally, but it is not ready again
+for prime time, as I still need to debug a corner case.
 
-> Or perhaps v2 fetch should implement the automated tag following
-> without using include-tag and instead as an extended feature of
-> ref-in-want.  I think that is merely giving a different name to the
-> same idea outlined above, though ;-)
+The code found at [1] is improved over this series here
+as the options for detecting moved code and its coloring
+are decoupled; having more tests.
 
-Instead of not using include-tag, I would define include-tag in
-the presence of want-refs to also include the refs, but I agree with
-this solution.
+I just had not enough time to resend this one.
+
+[1] https://github.com/stefanbeller/git/tree/color-moved-only
+
+Thanks,
+Stefan
