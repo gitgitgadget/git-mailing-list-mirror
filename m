@@ -7,68 +7,62 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D55051F403
-	for <e@80x24.org>; Mon, 18 Jun 2018 17:05:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 853031F403
+	for <e@80x24.org>; Mon, 18 Jun 2018 17:34:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933189AbeFRRFn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Jun 2018 13:05:43 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:46115 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752835AbeFRRFm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jun 2018 13:05:42 -0400
-Received: by mail-wr0-f196.google.com with SMTP id v13-v6so17590821wrp.13
-        for <git@vger.kernel.org>; Mon, 18 Jun 2018 10:05:41 -0700 (PDT)
+        id S935397AbeFRRel (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Jun 2018 13:34:41 -0400
+Received: from mail-wr0-f175.google.com ([209.85.128.175]:39071 "EHLO
+        mail-wr0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935319AbeFRRek (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jun 2018 13:34:40 -0400
+Received: by mail-wr0-f175.google.com with SMTP id w7-v6so17697164wrn.6
+        for <git@vger.kernel.org>; Mon, 18 Jun 2018 10:34:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:openpgp:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=XRELk0ztO8L3Br05aeGxsD7aTenUpdKKDKmfU1jqtB8=;
-        b=Tb6xzqUKn7VSRBwVX1WKfcuCYsqGugP9uNjTGO2POCYF2Uyg5ylIx9zGLeDkbk3bHn
-         fVHFgJQ1LCtUBQDMXEFI+PvutTTCxz6SgMovVX/iqjGOiZcEjtp0zsLDr+L7PKf2m2oG
-         6ydjlQlOGq8jQxPv4mO0VVPX59X6h3ITlnP3ngebqGF8o5VDeU/OL4mXtcJtvoskeWUz
-         i3u3JO3LuVe4dMzTpgdeAbuBfoqxX22m6cu2LF8fvRbf4JATaFeUAM+6TZrh5qjTB89o
-         SP+2YjUvevDnNGA73gBkMZcaWRh6sedmdcBOyy/Ydsa/f6rMvSjEzrZNCcpl+vVFi/N2
-         yJ1Q==
+        h=to:cc:from:subject:openpgp:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=R7FuSe40Q3nAF8sduk6/tGqTQN8muK21nn2MKsYtJ7I=;
+        b=KC5ZtdeytkJJePM4JM/8sj2HcA7FpCJHtBx2QS7mQoJi+YrkMdT/Q67ipzv0DUqJib
+         3+3+7//ib/oze4xy8tFq1X53PFSZ/1HNL+Zos/nj+aG6aBDcpxzkO7rys/IsCiygTEAM
+         jQWPo0eP/uLaxICmIVblys9lMPpTYZxKv17ob4XfYMaScS0F30pbyRdDFve0P6uQwvON
+         fD+HkUQRPotFi2dBdQ91LcpTcGig3w3NgdVduPQ+Dl+bsgc6rkd/7mxVRXKpQ4GYqFl5
+         G3EPLn7XRh6g0M44qAhf4hLFypZua8Y6s0LvHnvhUxNm1LWo0MemWhxMmJ5kNyhyxuZP
+         8ELA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=XRELk0ztO8L3Br05aeGxsD7aTenUpdKKDKmfU1jqtB8=;
-        b=g9LeWq/0zf6H54U2sYks7OgKYavA7p8Z4kXJoElicSX6Z2/GaV0Ju4aQk88oOxtMVI
-         kk8ldWx5hO+LThUhhg9llO2aIF+9frqAG5cift98O4oQErT8NhPG9gw71Z6rlrkA8tu5
-         Y3FhuU882ejtxL8Lmj+Mr44aiVq5dfLYiIVFtcHvmeIEO5alrsrGeCpuQzL/Th2ykyjh
-         BOdg+IADQoMTpgORhIFjwUnK+B2KKJf/sUwR5JmwL45mOBAZ1pIVZdjLVDpTv8MWAzEF
-         oYygKAsPK1hJ4uw3VJPVqnShV+59qUs7vYBfpbUgWTG9GfigII2C1RGcbDFC1BZqgzsl
-         dFeA==
-X-Gm-Message-State: APt69E14+GZK0VROHVx3r7dwfjXZSOv3qeuoo9TBR/Oki9IIbmxk5XSC
-        sfndCMdJ7PSN2QCXO9w9vmk=
-X-Google-Smtp-Source: ADUXVKJ+PIJCSPosYxYjyulIAgOero6GnjpZY8LZ1YwCXA0gs5dCNweIHIGZA5qj/ZR+PCVkdQFe4w==
-X-Received: by 2002:adf:ac69:: with SMTP id v96-v6mr10756646wrc.5.1529341541050;
-        Mon, 18 Jun 2018 10:05:41 -0700 (PDT)
+        h=x-gm-message-state:to:cc:from:subject:openpgp:message-id:date
+         :user-agent:mime-version:content-language:content-transfer-encoding;
+        bh=R7FuSe40Q3nAF8sduk6/tGqTQN8muK21nn2MKsYtJ7I=;
+        b=tSHJp5Ww57vAZcbKMDUUcD78S4Y6BrScs5+jMZs5qjCA2VJZ/u8S5t6g3tCZtAawuC
+         GW4KAja3txvYgXs5q44ii/qh2rYTv2fp+yCmHvxsdcmQm/KOzcc18ikFbfeCD0LvGMKY
+         WzF0NFSxtlZ6ZZBTenwFgqTMrrvmBWBvAk2Y4XnA63rVS3KtxPosSSb/GlNEPH8IBDij
+         kdfDGqIThL4urHxIDJinaYEsYiZ7oYeolqeqMDUUD4q50IkyxtjJCLtd2m0Fo+QrEZQV
+         cwodsLrZA6x6S7vTORg+euCM22H6XXaSXlEswPUEWf9vKISOOMexqM9II6J6FZuV/FWf
+         MmEg==
+X-Gm-Message-State: APt69E1M9yAHC+h3GQ7QS4yHnuPr4xFLFe0fMSbDltNS3jWptDh0NUwg
+        MlmdPWwqV5hdrR2y2KouWs8=
+X-Google-Smtp-Source: ADUXVKIYlGI7QEaVknCOlhouYkd9Xd7QtxBkcqOSm9KtYkYOz2TW1ohclOUsNR0nfaEaMOWk7mX6Bw==
+X-Received: by 2002:adf:c3c2:: with SMTP id d2-v6mr11223570wrg.68.1529343279534;
+        Mon, 18 Jun 2018 10:34:39 -0700 (PDT)
 Received: from [192.168.0.104] (AToulouse-658-1-40-196.w86-221.abo.wanadoo.fr. [86.221.119.196])
-        by smtp.gmail.com with ESMTPSA id e2-v6sm18651596wro.97.2018.06.18.10.05.39
+        by smtp.gmail.com with ESMTPSA id d90-v6sm10200071wmi.26.2018.06.18.10.34.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 18 Jun 2018 10:05:40 -0700 (PDT)
-Subject: Re: [GSoC][PATCH 1/3] sequencer: add a new function to silence a
- command, except if it fails.
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
-        Pratik Karki <predatoramigo@gmail.com>,
+        Mon, 18 Jun 2018 10:34:38 -0700 (PDT)
+To:     Git List <git@vger.kernel.org>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Elijah Newren <newren@gmail.com>
-References: <20180618131844.13408-1-alban.gruin@gmail.com>
- <20180618131844.13408-2-alban.gruin@gmail.com>
- <CAP8UFD1PirEpeVwR=Zr4NAccrt_zGxjZkbDrjXNbQRp49zcjtg@mail.gmail.com>
+        Pratik Karki <predatoramigo@gmail.com>,
+        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 From:   Alban Gruin <alban.gruin@gmail.com>
+Subject: [GSoC] GSoC with git, week 7
 Openpgp: preference=signencrypt
-Message-ID: <17075b2c-93d5-1956-01e5-8e2998327101@gmail.com>
-Date:   Mon, 18 Jun 2018 19:05:39 +0200
+Message-ID: <f7cd9f11-c239-15f0-87b8-b1503b1d54fc@gmail.com>
+Date:   Mon, 18 Jun 2018 19:34:37 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.8.0
 MIME-Version: 1.0
-In-Reply-To: <CAP8UFD1PirEpeVwR=Zr4NAccrt_zGxjZkbDrjXNbQRp49zcjtg@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: fr-FR
 Content-Transfer-Encoding: 8bit
@@ -77,37 +71,14 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Christian,
+Hi,
 
-Le 18/06/2018 à 18:26, Christian Couder a écrit :
-> Hi Alban,
-> 
-> On Mon, Jun 18, 2018 at 3:18 PM, Alban Gruin <alban.gruin@gmail.com> wrote:
->> This adds a new function, run_command_silent_if_successful(),
-> 
-> He re the function is called run_command_silent_if_successful()...
-> 
->> to
->> redirect the stdout and stderr of a command to a strbuf, and then to run
->> that command. This strbuf is printed only if the command fails. It is
->> functionnaly similar to output() from git-rebase.sh.
->>
->> run_git_commit() is then refactored to use of
->> run_command_silent_if_successful().
-> 
-> ...here also...
-> 
-> [...]
-> 
->> +static int run_command_silent_on_success(struct child_process *cmd)
-> 
-> ...but here it is called run_command_silent_on_success().
-> 
-> Thanks,
-> Christian.
-> 
+I published a new blog post here:
 
-Oops, my bad.  I will fix this in a reroll.
+  https://blog.pa1ch.fr/posts/2018/06/18/en/gsoc2018-week-7.html
+
+It’s shorter than the last one, but feel free to tell me what you think
+about it!  :)
 
 Cheers,
 Alban
