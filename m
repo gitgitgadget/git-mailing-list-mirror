@@ -2,545 +2,181 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21EA61F403
-	for <e@80x24.org>; Mon, 18 Jun 2018 18:54:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D1551F403
+	for <e@80x24.org>; Mon, 18 Jun 2018 19:02:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935791AbeFRSyB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Jun 2018 14:54:01 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:36870 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935752AbeFRSx7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jun 2018 14:53:59 -0400
-Received: by mail-pg0-f66.google.com with SMTP id r21-v6so7944553pgv.4
-        for <git@vger.kernel.org>; Mon, 18 Jun 2018 11:53:59 -0700 (PDT)
+        id S935997AbeFRTB7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Jun 2018 15:01:59 -0400
+Received: from mail-qt0-f196.google.com ([209.85.216.196]:35230 "EHLO
+        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935893AbeFRTBz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jun 2018 15:01:55 -0400
+Received: by mail-qt0-f196.google.com with SMTP id s9-v6so16146926qtg.2
+        for <git@vger.kernel.org>; Mon, 18 Jun 2018 12:01:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=r2t+Cm0EHfW7zWCFkPsfpUzsCVmUN1cekzd81O3o918=;
-        b=fNH7ghuPlV8FFG4g1xhmwUTa0sPKgVBhhU824S/hy5OGosV9AeOVNV8u2HjhL57mqI
-         wWRXMiOJl2mYkAlnj/AQW902o2Di3N+f0B3XckQtdD4NxIV4xckHhWem4x2wDa4UbLPu
-         Nb+c3ww22fyklmanHmYNEXnjM6clwaJ5lHIVK7/325URcKjabSYlMGIA0kMzDJEPvdQN
-         JmlYsXmWMi6TTCh+y04voVE9A7pA7ftmYYBIRXq5Ha4oKnKCSJTuB7wmoFrRTJazHNE0
-         hrS09HwzKLwYgdHmQ4h+MDFkHJrqhGbZbhpt67QXT/F38eZvSmvE8HQBBojnt2byb23b
-         EATw==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=niRawHrlhcriGvYAiEkR19EVXHYA07jsrIj5Fk470cU=;
+        b=tUDARLC24MTWlo/1NDPkYSja2ZbunLZ2f/1l+hm/6cqkrHfEYUyh0wrqx1+5wSUVbu
+         24gULex3ASvlOkHCxLK/t3Zk5oXnIrtDPrCMofc2F7K7Wi42NZfzRl8Q4woZQbjYpGKm
+         67feS/p/qBzlhEwgKVI1SLRN60V6Mb8JjyE8I5zk+XaEz36vgEKOLwbcV+Pu2HreRfRv
+         NAmNXXRt82bk8hQi1+ijmxTBFGrgwOAf2gfim+3uVFNEYa5/A4CaoYMGdDfLo8X8V+Ed
+         QWb6Cbvy3V1Q9N2/u1j6CGca5eBseCeqfx8aR3Z1jvE85nNv2QUFlsX6ZKRndyK7tSKQ
+         c0kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=r2t+Cm0EHfW7zWCFkPsfpUzsCVmUN1cekzd81O3o918=;
-        b=agQsxYOPkQYEWhOQx0/BMwbgOrbDTCmm4FyITFchIvYb7jE0FU+5lTSfIHBcPdWTxb
-         jDPhP1JjetP/1PEHOvMddA7LDo8UheriyC2j+5fgZybuJb84DNb6rdL2Kv6C9knDvjiy
-         jKoBF5T8gXPaddBMdAkdq6/Njoo8/QDvCjEwMAXcGcU0xtYvH32pun2uaIDDOmG2HuWs
-         C0SDd3Xh2oNu5SB6rwY4cPCgs90ZNWbdDHMZlKZZEY4ZoqYFrcgNJxLp23hQrb52yN/e
-         CJzuyu2a6US90Q6eq7wxIQ1JNduFLwCBGWFSFrCgGz6V98cyi9r+N0Xh/pGsEWHSJn9n
-         MGCw==
-X-Gm-Message-State: APt69E1MFyv85aqSwSULn9S61foBdJ5vHh9TxKtEeZolXaZrQAIroXwu
-        pIH3gYlArD/oe59ccGO8IT3OjA==
-X-Google-Smtp-Source: ADUXVKIx0cXq+kfF4mzSo7dRikO/3KOJ3KJybeo0cUSEavKJ8knI3DQ5+GlgfECPhp66vj4etWoYGQ==
-X-Received: by 2002:a63:a042:: with SMTP id u2-v6mr12331077pgn.413.1529348038971;
-        Mon, 18 Jun 2018 11:53:58 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id z19-v6sm22603604pfe.163.2018.06.18.11.53.57
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 18 Jun 2018 11:53:57 -0700 (PDT)
-Date:   Mon, 18 Jun 2018 11:53:56 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 15/15] cache.h: flip NO_THE_INDEX_COMPATIBILITY_MACROS
- switch
-Message-ID: <20180618185356.GD73085@google.com>
-References: <20180616054157.32433-1-pclouds@gmail.com>
- <20180616054157.32433-16-pclouds@gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=niRawHrlhcriGvYAiEkR19EVXHYA07jsrIj5Fk470cU=;
+        b=ddlNETWFTUwfM3120k0qbtpk3km+mdaqgB3EBlYSzVsWXRwGPEIv1oI2R2QeaBfsSk
+         6lioAVZYL46NJRmDGOilv/rJc5Zxdv6rgZBR89kTClVCZlK8nVFfveXswL/dNsQRaiv4
+         zk8MKnisPAAj8DARVT2AoR7sljaK2GZxJuv5l8GFabXsAtaOzy+jUHcJscJPPEw5st4A
+         cd45A0Bkr9m4yiVMtYcBOcr/9LCA+rpxV7A2MHfyOrckSIV41VSaZPxgiJnSK7kbPFdz
+         9FDqxQF4VZ/YwpJO+T/hnkTkQC9hOWRERTHQicLcvyW1E13DdQi1W36xAnuEvfevsvDt
+         aOpQ==
+X-Gm-Message-State: APt69E1UyHhxepLlMTmhoG9kTEBUsYs7HQoImV8KtuQ3GZ7WoosBw9RI
+        KixQxKqbOhUP6KXDDxdom/g=
+X-Google-Smtp-Source: ADUXVKLzS7IGkHV2VDZCYtSkTZ1xgAdbmW+ztIaU/SaLREf0Z1geYYN9BkORgHnCdhxNzS8RNVsbGw==
+X-Received: by 2002:ac8:2a46:: with SMTP id l6-v6mr12654665qtl.118.1529348514895;
+        Mon, 18 Jun 2018 12:01:54 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:486:96a1:3ab7:988c? ([2001:4898:8010:0:edbb:96a1:3ab7:988c])
+        by smtp.gmail.com with ESMTPSA id s39-v6sm12655478qts.42.2018.06.18.12.01.53
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 18 Jun 2018 12:01:54 -0700 (PDT)
+Subject: Re: [PATCH 02/23] midx: add midx format details to pack-format.txt
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>, Derrick Stolee <dstolee@microsoft.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Martin Fick <mfick@codeaurora.org>
+References: <20180607140338.32440-1-dstolee@microsoft.com>
+ <20180607140338.32440-3-dstolee@microsoft.com>
+ <CAGZ79kaDiXnAuRym3HHQPEZh9z0-sPL5V4Yur5-_RojsyLJsYA@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <a0dbd78c-507b-3005-c2eb-2fa82e7d29ec@gmail.com>
+Date:   Mon, 18 Jun 2018 15:01:53 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180616054157.32433-16-pclouds@gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+In-Reply-To: <CAGZ79kaDiXnAuRym3HHQPEZh9z0-sPL5V4Yur5-_RojsyLJsYA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/16, Nguyễn Thái Ngọc Duy wrote:
-> From now on, by default index compat macros are off because they could
-> hide the_index dependency. Only those in builtin can use it (and even
-> so should be avoided if possible).
+On 6/11/2018 3:19 PM, Stefan Beller wrote:
+> Hi Derrick,
+> On Thu, Jun 7, 2018 at 7:03 AM Derrick Stolee <stolee@gmail.com> wrote:
+>> The multi-pack-index (MIDX) feature generalizes the existing pack-
+>> index (IDX) feature by indexing objects across multiple pack-files.
+>>
+>> Describe the basic file format, using a 12-byte header followed by
+>> a lookup table for a list of "chunks" which will be described later.
+>> The file ends with a footer containing a checksum using the hash
+>> algorithm.
+>>
+>> The header allows later versions to create breaking changes by
+>> advancing the version number. We can also change the hash algorithm
+>> using a different version value.
+>>
+>> We will add the individual chunk format information as we introduce
+>> the code that writes that information.
+>>
+>> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+>> ---
+>>   Documentation/technical/pack-format.txt | 49 +++++++++++++++++++++++++
+>>   1 file changed, 49 insertions(+)
+>>
+>> diff --git a/Documentation/technical/pack-format.txt b/Documentation/technical/pack-format.txt
+>> index 70a99fd142..17666b4bfc 100644
+>> --- a/Documentation/technical/pack-format.txt
+>> +++ b/Documentation/technical/pack-format.txt
+>> @@ -252,3 +252,52 @@ Pack file entry: <+
+>>       corresponding packfile.
+>>
+>>       20-byte SHA-1-checksum of all of the above.
+>> +
+>> +== midx-*.midx files have the following format:
+>> +
+>> +The meta-index files refer to multiple pack-files and loose objects.
+> So is it meta or multi?
 
-This is awesome! Now there aren't any compat macros left in the lib code
-and the next set of patches has a good base to work from the eliminate
-the_index (which I assume based on other mails from you will become part
-of the new USE_THE_INDEX_COMPATIBILITY_MACROS macro once its eliminated
-from the lib code).
+Good catch. We were calling this the meta-index internally before 
+changing to "multi-pack-index" (helps to not change the acronym).
 
-> 
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  attr.c                               | 1 -
->  builtin/add.c                        | 1 +
->  builtin/am.c                         | 1 +
->  builtin/check-attr.c                 | 1 +
->  builtin/check-ignore.c               | 1 +
->  builtin/checkout-index.c             | 1 +
->  builtin/checkout.c                   | 1 +
->  builtin/clean.c                      | 1 +
->  builtin/commit.c                     | 1 +
->  builtin/describe.c                   | 1 +
->  builtin/diff-files.c                 | 1 +
->  builtin/diff-index.c                 | 1 +
->  builtin/diff-tree.c                  | 1 +
->  builtin/diff.c                       | 1 +
->  builtin/fsck.c                       | 1 +
->  builtin/ls-files.c                   | 1 -
->  builtin/merge-index.c                | 1 +
->  builtin/merge-ours.c                 | 1 +
->  builtin/merge.c                      | 1 +
->  builtin/mv.c                         | 1 +
->  builtin/pull.c                       | 1 +
->  builtin/read-tree.c                  | 1 +
->  builtin/reset.c                      | 1 +
->  builtin/rev-parse.c                  | 1 +
->  builtin/rm.c                         | 1 +
->  builtin/submodule--helper.c          | 1 +
->  builtin/update-index.c               | 1 +
->  cache.h                              | 2 +-
->  convert.c                            | 1 -
->  dir.c                                | 1 -
->  name-hash.c                          | 1 -
->  pathspec.c                           | 1 -
->  read-cache.c                         | 1 -
->  submodule.c                          | 1 -
->  t/helper/test-dump-untracked-cache.c | 1 +
->  t/helper/test-tool.h                 | 2 ++
->  tree.c                               | 1 -
->  unpack-trees.c                       | 1 -
->  38 files changed, 29 insertions(+), 11 deletions(-)
-> 
-> diff --git a/attr.c b/attr.c
-> index 067fb9e0c0..d16625661d 100644
-> --- a/attr.c
-> +++ b/attr.c
-> @@ -7,7 +7,6 @@
->   * an insanely large number of attributes.
->   */
->  
-> -#define NO_THE_INDEX_COMPATIBILITY_MACROS
->  #include "cache.h"
->  #include "config.h"
->  #include "exec-cmd.h"
-> diff --git a/builtin/add.c b/builtin/add.c
-> index 8a155dd41e..b93193c3fe 100644
-> --- a/builtin/add.c
-> +++ b/builtin/add.c
-> @@ -3,6 +3,7 @@
->   *
->   * Copyright (C) 2006 Linus Torvalds
->   */
-> +#define USE_THE_INDEX_COMPATIBILITY_MACROS
->  #include "cache.h"
->  #include "config.h"
->  #include "builtin.h"
-> diff --git a/builtin/am.c b/builtin/am.c
-> index 2fc2d1e82c..28af59d183 100644
-> --- a/builtin/am.c
-> +++ b/builtin/am.c
-> @@ -3,6 +3,7 @@
->   *
->   * Based on git-am.sh by Junio C Hamano.
->   */
-> +#define USE_THE_INDEX_COMPATIBILITY_MACROS
->  #include "cache.h"
->  #include "config.h"
->  #include "builtin.h"
-> diff --git a/builtin/check-attr.c b/builtin/check-attr.c
-> index 91444dc044..d9cebd5382 100644
-> --- a/builtin/check-attr.c
-> +++ b/builtin/check-attr.c
-> @@ -1,3 +1,4 @@
-> +#define USE_THE_INDEX_COMPATIBILITY_MACROS
->  #include "builtin.h"
->  #include "cache.h"
->  #include "config.h"
-> diff --git a/builtin/check-ignore.c b/builtin/check-ignore.c
-> index ec9a959e08..599097304b 100644
-> --- a/builtin/check-ignore.c
-> +++ b/builtin/check-ignore.c
-> @@ -1,3 +1,4 @@
-> +#define USE_THE_INDEX_COMPATIBILITY_MACROS
->  #include "builtin.h"
->  #include "cache.h"
->  #include "config.h"
-> diff --git a/builtin/checkout-index.c b/builtin/checkout-index.c
-> index a730f6a1aa..e38ad42dbf 100644
-> --- a/builtin/checkout-index.c
-> +++ b/builtin/checkout-index.c
-> @@ -4,6 +4,7 @@
->   * Copyright (C) 2005 Linus Torvalds
->   *
->   */
-> +#define USE_THE_INDEX_COMPATIBILITY_MACROS
->  #include "builtin.h"
->  #include "config.h"
->  #include "lockfile.h"
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> index 2e1d2376d2..2250611407 100644
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -1,3 +1,4 @@
-> +#define USE_THE_INDEX_COMPATIBILITY_MACROS
->  #include "builtin.h"
->  #include "config.h"
->  #include "checkout.h"
-> diff --git a/builtin/clean.c b/builtin/clean.c
-> index fad533a0a7..2258379ecc 100644
-> --- a/builtin/clean.c
-> +++ b/builtin/clean.c
-> @@ -6,6 +6,7 @@
->   * Based on git-clean.sh by Pavel Roskin
->   */
->  
-> +#define USE_THE_INDEX_COMPATIBILITY_MACROS
->  #include "builtin.h"
->  #include "cache.h"
->  #include "config.h"
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index a842fea666..98a5b4a8c8 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -5,6 +5,7 @@
->   * Based on git-commit.sh by Junio C Hamano and Linus Torvalds
->   */
->  
-> +#define USE_THE_INDEX_COMPATIBILITY_MACROS
->  #include "cache.h"
->  #include "config.h"
->  #include "lockfile.h"
-> diff --git a/builtin/describe.c b/builtin/describe.c
-> index cf1ae77d7c..4ca234972e 100644
-> --- a/builtin/describe.c
-> +++ b/builtin/describe.c
-> @@ -1,3 +1,4 @@
-> +#define USE_THE_INDEX_COMPATIBILITY_MACROS
->  #include "cache.h"
->  #include "config.h"
->  #include "lockfile.h"
-> diff --git a/builtin/diff-files.c b/builtin/diff-files.c
-> index e88493ffe5..af706b4fce 100644
-> --- a/builtin/diff-files.c
-> +++ b/builtin/diff-files.c
-> @@ -3,6 +3,7 @@
->   *
->   * Copyright (C) Linus Torvalds, 2005
->   */
-> +#define USE_THE_INDEX_COMPATIBILITY_MACROS
->  #include "cache.h"
->  #include "config.h"
->  #include "diff.h"
-> diff --git a/builtin/diff-index.c b/builtin/diff-index.c
-> index 522f4fdffd..c026ffb95e 100644
-> --- a/builtin/diff-index.c
-> +++ b/builtin/diff-index.c
-> @@ -1,3 +1,4 @@
-> +#define USE_THE_INDEX_COMPATIBILITY_MACROS
->  #include "cache.h"
->  #include "config.h"
->  #include "diff.h"
-> diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
-> index 473615117e..bd2264ed5c 100644
-> --- a/builtin/diff-tree.c
-> +++ b/builtin/diff-tree.c
-> @@ -1,3 +1,4 @@
-> +#define USE_THE_INDEX_COMPATIBILITY_MACROS
->  #include "cache.h"
->  #include "config.h"
->  #include "diff.h"
-> diff --git a/builtin/diff.c b/builtin/diff.c
-> index bfefff3a84..17d7d5c9f5 100644
-> --- a/builtin/diff.c
-> +++ b/builtin/diff.c
-> @@ -3,6 +3,7 @@
->   *
->   * Copyright (c) 2006 Junio C Hamano
->   */
-> +#define USE_THE_INDEX_COMPATIBILITY_MACROS
->  #include "cache.h"
->  #include "config.h"
->  #include "lockfile.h"
-> diff --git a/builtin/fsck.c b/builtin/fsck.c
-> index 3ad4f160f9..33cb71d269 100644
-> --- a/builtin/fsck.c
-> +++ b/builtin/fsck.c
-> @@ -1,3 +1,4 @@
-> +#define USE_THE_INDEX_COMPATIBILITY_MACROS
->  #include "builtin.h"
->  #include "cache.h"
->  #include "repository.h"
-> diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-> index 88bb2019ad..dbf5d13d91 100644
-> --- a/builtin/ls-files.c
-> +++ b/builtin/ls-files.c
-> @@ -5,7 +5,6 @@
->   *
->   * Copyright (C) Linus Torvalds, 2005
->   */
-> -#define NO_THE_INDEX_COMPATIBILITY_MACROS
->  #include "cache.h"
->  #include "repository.h"
->  #include "config.h"
-> diff --git a/builtin/merge-index.c b/builtin/merge-index.c
-> index c99443b095..38ea6ad6ca 100644
-> --- a/builtin/merge-index.c
-> +++ b/builtin/merge-index.c
-> @@ -1,3 +1,4 @@
-> +#define USE_THE_INDEX_COMPATIBILITY_MACROS
->  #include "builtin.h"
->  #include "run-command.h"
->  
-> diff --git a/builtin/merge-ours.c b/builtin/merge-ours.c
-> index c84c6e05e9..7c4a80ed3b 100644
-> --- a/builtin/merge-ours.c
-> +++ b/builtin/merge-ours.c
-> @@ -7,6 +7,7 @@
->   *
->   * Pretend we resolved the heads, but declare our tree trumps everybody else.
->   */
-> +#define USE_THE_INDEX_COMPATIBILITY_MACROS
->  #include "git-compat-util.h"
->  #include "builtin.h"
->  #include "diff.h"
-> diff --git a/builtin/merge.c b/builtin/merge.c
-> index b00d6f4821..1b540e2194 100644
-> --- a/builtin/merge.c
-> +++ b/builtin/merge.c
-> @@ -6,6 +6,7 @@
->   * Based on git-merge.sh by Junio C Hamano.
->   */
->  
-> +#define USE_THE_INDEX_COMPATIBILITY_MACROS
->  #include "cache.h"
->  #include "config.h"
->  #include "parse-options.h"
-> diff --git a/builtin/mv.c b/builtin/mv.c
-> index 80bb967a63..be15ba7044 100644
-> --- a/builtin/mv.c
-> +++ b/builtin/mv.c
-> @@ -3,6 +3,7 @@
->   *
->   * Copyright (C) 2006 Johannes Schindelin
->   */
-> +#define USE_THE_INDEX_COMPATIBILITY_MACROS
->  #include "builtin.h"
->  #include "config.h"
->  #include "pathspec.h"
-> diff --git a/builtin/pull.c b/builtin/pull.c
-> index 1f2ecf3a88..1c3657dee2 100644
-> --- a/builtin/pull.c
-> +++ b/builtin/pull.c
-> @@ -5,6 +5,7 @@
->   *
->   * Fetch one or more remote refs and merge it/them into the current HEAD.
->   */
-> +#define USE_THE_INDEX_COMPATIBILITY_MACROS
->  #include "cache.h"
->  #include "config.h"
->  #include "builtin.h"
-> diff --git a/builtin/read-tree.c b/builtin/read-tree.c
-> index ebc43eb805..ae6ca3a8c5 100644
-> --- a/builtin/read-tree.c
-> +++ b/builtin/read-tree.c
-> @@ -4,6 +4,7 @@
->   * Copyright (C) Linus Torvalds, 2005
->   */
->  
-> +#define USE_THE_INDEX_COMPATIBILITY_MACROS
->  #include "cache.h"
->  #include "config.h"
->  #include "lockfile.h"
-> diff --git a/builtin/reset.c b/builtin/reset.c
-> index a862c70fab..dd60eec9d6 100644
-> --- a/builtin/reset.c
-> +++ b/builtin/reset.c
-> @@ -7,6 +7,7 @@
->   *
->   * Copyright (c) 2005, 2006 Linus Torvalds and Junio C Hamano
->   */
-> +#define USE_THE_INDEX_COMPATIBILITY_MACROS
->  #include "builtin.h"
->  #include "config.h"
->  #include "lockfile.h"
-> diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-> index 4f49e96bfd..b5f8d6a83d 100644
-> --- a/builtin/rev-parse.c
-> +++ b/builtin/rev-parse.c
-> @@ -3,6 +3,7 @@
->   *
->   * Copyright (C) Linus Torvalds, 2005
->   */
-> +#define USE_THE_INDEX_COMPATIBILITY_MACROS
->  #include "cache.h"
->  #include "config.h"
->  #include "commit.h"
-> diff --git a/builtin/rm.c b/builtin/rm.c
-> index 65b448ef8e..e5b77e429d 100644
-> --- a/builtin/rm.c
-> +++ b/builtin/rm.c
-> @@ -3,6 +3,7 @@
->   *
->   * Copyright (C) Linus Torvalds 2006
->   */
-> +#define USE_THE_INDEX_COMPATIBILITY_MACROS
->  #include "builtin.h"
->  #include "config.h"
->  #include "lockfile.h"
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index bd250ca216..8abe15144b 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -1,3 +1,4 @@
-> +#define USE_THE_INDEX_COMPATIBILITY_MACROS
->  #include "builtin.h"
->  #include "repository.h"
->  #include "cache.h"
-> diff --git a/builtin/update-index.c b/builtin/update-index.c
-> index a8709a26ec..36e837248f 100644
-> --- a/builtin/update-index.c
-> +++ b/builtin/update-index.c
-> @@ -3,6 +3,7 @@
->   *
->   * Copyright (C) Linus Torvalds, 2005
->   */
-> +#define USE_THE_INDEX_COMPATIBILITY_MACROS
->  #include "cache.h"
->  #include "config.h"
->  #include "lockfile.h"
-> diff --git a/cache.h b/cache.h
-> index 89a107a7f7..b3a6d14a36 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -339,7 +339,7 @@ extern void remove_name_hash(struct index_state *istate, struct cache_entry *ce)
->  extern void free_name_hash(struct index_state *istate);
->  
->  
-> -#ifndef NO_THE_INDEX_COMPATIBILITY_MACROS
-> +#ifdef USE_THE_INDEX_COMPATIBILITY_MACROS
->  #define active_cache (the_index.cache)
->  #define active_nr (the_index.cache_nr)
->  #define active_alloc (the_index.cache_alloc)
-> diff --git a/convert.c b/convert.c
-> index 64d0d30e08..0895dc5994 100644
-> --- a/convert.c
-> +++ b/convert.c
-> @@ -1,4 +1,3 @@
-> -#define NO_THE_INDEX_COMPATIBILITY_MACROS
->  #include "cache.h"
->  #include "config.h"
->  #include "attr.h"
-> diff --git a/dir.c b/dir.c
-> index ccf8b4975e..473c47eb2f 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -7,7 +7,6 @@
->   * Copyright (C) Linus Torvalds, 2005-2006
->   *		 Junio Hamano, 2005-2006
->   */
-> -#define NO_THE_INDEX_COMPATIBILITY_MACROS
->  #include "cache.h"
->  #include "config.h"
->  #include "dir.h"
-> diff --git a/name-hash.c b/name-hash.c
-> index 163849831c..12eaa62980 100644
-> --- a/name-hash.c
-> +++ b/name-hash.c
-> @@ -5,7 +5,6 @@
->   *
->   * Copyright (C) 2008 Linus Torvalds
->   */
-> -#define NO_THE_INDEX_COMPATIBILITY_MACROS
->  #include "cache.h"
->  
->  struct dir_entry {
-> diff --git a/pathspec.c b/pathspec.c
-> index 27cd606786..6997707477 100644
-> --- a/pathspec.c
-> +++ b/pathspec.c
-> @@ -1,4 +1,3 @@
-> -#define NO_THE_INDEX_COMPATIBILITY_MACROS
->  #include "cache.h"
->  #include "config.h"
->  #include "dir.h"
-> diff --git a/read-cache.c b/read-cache.c
-> index 372588260e..2a84ad0797 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -3,7 +3,6 @@
->   *
->   * Copyright (C) Linus Torvalds, 2005
->   */
-> -#define NO_THE_INDEX_COMPATIBILITY_MACROS
->  #include "cache.h"
->  #include "config.h"
->  #include "tempfile.h"
-> diff --git a/submodule.c b/submodule.c
-> index 939d6870ec..c6ae29379d 100644
-> --- a/submodule.c
-> +++ b/submodule.c
-> @@ -1,4 +1,3 @@
-> -#define NO_THE_INDEX_COMPATIBILITY_MACROS
->  
->  #include "cache.h"
->  #include "repository.h"
-> diff --git a/t/helper/test-dump-untracked-cache.c b/t/helper/test-dump-untracked-cache.c
-> index bd92fb305a..56a5ce8abb 100644
-> --- a/t/helper/test-dump-untracked-cache.c
-> +++ b/t/helper/test-dump-untracked-cache.c
-> @@ -1,3 +1,4 @@
-> +#define USE_THE_INDEX_COMPATIBILITY_MACROS
->  #include "cache.h"
->  #include "dir.h"
->  
-> diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-> index 7116ddfb94..a7ff69e9f3 100644
-> --- a/t/helper/test-tool.h
-> +++ b/t/helper/test-tool.h
-> @@ -1,6 +1,8 @@
->  #ifndef __TEST_TOOL_H__
->  #define __TEST_TOOL_H__
->  
-> +#define USE_THE_INDEX_COMPATIBILITY_MACROS
-> +
->  int cmd__chmtime(int argc, const char **argv);
->  int cmd__config(int argc, const char **argv);
->  int cmd__ctype(int argc, const char **argv);
-> diff --git a/tree.c b/tree.c
-> index 244eb5e665..b5ed7bc22b 100644
-> --- a/tree.c
-> +++ b/tree.c
-> @@ -1,4 +1,3 @@
-> -#define NO_THE_INDEX_COMPATIBILITY_MACROS
->  #include "cache.h"
->  #include "cache-tree.h"
->  #include "tree.h"
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index 3a85a02a77..fd09e812a2 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -1,4 +1,3 @@
-> -#define NO_THE_INDEX_COMPATIBILITY_MACROS
->  #include "cache.h"
->  #include "argv-array.h"
->  #include "repository.h"
-> -- 
-> 2.18.0.rc0.333.g22e6ee6cdf
-> 
+>
+>> +In order to allow extensions that add extra data to the MIDX, we organize
+>> +the body into "chunks" and provide a lookup table at the beginning of the
+>> +body. The header includes certain length values, such as the number of packs,
+>> +the number of base MIDX files, hash lengths and types.
+>> +
+>> +All 4-byte numbers are in network order.
+>> +
+>> +HEADER:
+>> +
+>> +       4-byte signature:
+>> +           The signature is: {'M', 'I', 'D', 'X'}
+>> +
+>> +       1-byte version number:
+>> +           Git only writes or recognizes version 1
+>> +
+>> +       1-byte Object Id Version
+>> +           Git only writes or recognizes verion 1 (SHA-1)
+> s/verion/version/
+>
+>> +       1-byte number (C) of "chunks"
+>> +
+>> +       1-byte number (I) of base multi-pack-index files:
+>> +           This value is currently always zero.
+> Oh? Are meta-index and multi-index files different things?
 
--- 
-Brandon Williams
+Not intended to be different things, but this number is related to 
+making the feature incremental.
+
+>
+>> +       4-byte number (P) of pack files
+>> +
+>> +CHUNK LOOKUP:
+>> +
+>> +       (C + 1) * 12 bytes providing the chunk offsets:
+>> +           First 4 bytes describe chunk id. Value 0 is a terminating label.
+>> +           Other 8 bytes provide offset in current file for chunk to start.
+>> +           (Chunks are provided in file-order, so you can infer the length
+>> +           using the next chunk position if necessary.)
+> It is so nice to have the header also have 12 bytes, so it fits right into the
+> lookup table. So an alternative point of view:
+>
+>    If a chunk needs to store more than 8 bytes, we'll have an offset after
+>    the first 4 bytes that describe the chunk, otherwise you can store the 8 bytes
+>    of information directly after the 4 bytes.
+>     "MIDX" is a special chunk and must come first (does it?) and only once
+>    as it contains the version number.
+
+This sounds feasible, but unnecessarily complicated. I don't think any 
+other chunk will be this small.
+
+>> +       The remaining data in the body is described one chunk at a time, and
+>> +       these chunks may be given in any order. Chunks are required unless
+>> +       otherwise specified.
+>> +
+>> +CHUNK DATA:
+>> +
+>> +       (This section intentionally left incomplete.)
+>> +
+>> +TRAILER:
+>> +
+>> +       H-byte HASH-checksum of all of the above.
+> This means we have to rehash the whole file for updating its contents.
+> okay.
+
