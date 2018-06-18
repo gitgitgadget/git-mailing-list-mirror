@@ -2,83 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B821C1F403
-	for <e@80x24.org>; Mon, 18 Jun 2018 04:20:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B3701F403
+	for <e@80x24.org>; Mon, 18 Jun 2018 09:41:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752855AbeFREU5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Jun 2018 00:20:57 -0400
-Received: from cloud.peff.net ([104.130.231.41]:47264 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751579AbeFREU4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jun 2018 00:20:56 -0400
-Received: (qmail 4048 invoked by uid 109); 18 Jun 2018 04:20:57 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 18 Jun 2018 04:20:57 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2723 invoked by uid 111); 18 Jun 2018 04:21:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 18 Jun 2018 00:21:13 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Jun 2018 00:20:54 -0400
-Date:   Mon, 18 Jun 2018 00:20:54 -0400
-From:   Jeff King <peff@peff.net>
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>, simon@ruderich.org,
-        Git List <git@vger.kernel.org>,
-        Mahmoud Al-Qudsi <mqudsi@neosmart.net>
-Subject: Re: Doc/SubmittingPatches: re-phrashing a sentence about alternate
- solutions (was Re: [PATCH] Makefile: make NO_ICONV really mean "no iconv")
-Message-ID: <20180618042054.GB31125@sigill.intra.peff.net>
-References: <CACcTrKePbgyCbXneN5NZ+cS-tiDyYe_dkdwttXpP0CUeEicvHw@mail.gmail.com>
- <20180615022503.34111-1-sunshine@sunshineco.com>
- <20180615065805.GA15146@ruderich.org>
- <CAPig+cQL8rTg+GASp2tSng7PPPYkfeeV2SNyi0D+6-Ep7JKaGg@mail.gmail.com>
- <a079d636-e70d-f383-ae87-ab890a636441@gmail.com>
- <CAPig+cTMEfu=x2dhUww3x2uk9-ANAK6eepC3hOsx4FE+1jTgBA@mail.gmail.com>
- <1529259933.7225.2.camel@gmail.com>
+        id S935998AbeFRJls (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Jun 2018 05:41:48 -0400
+Received: from mail-io0-f172.google.com ([209.85.223.172]:38306 "EHLO
+        mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935924AbeFRJll (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jun 2018 05:41:41 -0400
+Received: by mail-io0-f172.google.com with SMTP id l19-v6so16247073ioj.5
+        for <git@vger.kernel.org>; Mon, 18 Jun 2018 02:41:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=UbFc0Ao7dkmaLy7ZhVArVJ6L7OZXGpJNVCBhaCpNwXY=;
+        b=CxncnoyRnYfTIIo905H0CGUIZ3SLPwdcAWny4DNDufsxFxNfcxWSQIBHS0o9anrEmj
+         vP6Vuh9JRpDWSTyNn1VTkugeH53Vs8heHuYjKS1NkRrJgvUerx9TbRQ1jeY6x51Ox34V
+         eXb+/T8U2k95nUnjS34LWrG5NI3y02FeEe5VSKTr1cfTjrdkOPvd3ziXGOqz3cnr5AFT
+         EIalFKM5UBcf8dK4xVEYl62rEJIjIiFRDaJE5GkRBdE6Dd32Ss2WeqK8Azveg+Wx/wsW
+         7Xa5Ox4/+rvL5mvyOV83D+Pxk0gDQ8HlMJKlhP7b9Lr7kFf3hgJAJcWmpDhf8VXw6CVn
+         /wWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=UbFc0Ao7dkmaLy7ZhVArVJ6L7OZXGpJNVCBhaCpNwXY=;
+        b=WrYC8Pk+viyEhNv+1d+akzzrw4yraNJAbbINfHX1/RrNQaGiUq3z1YBWrJPW6hqqJx
+         CovBMl2zIONYgEaEJxDhiBhXLJtlwDJPzWtT2Qa19PjD7Sn3pbcdmthWp0JEtScnup3L
+         7K3LSKR/DugN4pjxvwBF2W2XhMY0ubDsHPuYv48Y/cc4pqdTakCUvjV+r3xD1gy7ceDm
+         VW0l3BFcteMRMhQFFtRazxPEwzLz8MkFhBArSm7SC9f3MSkI8ZyWiXJcDHq8seYn4xMh
+         xT/txss83q2tXD4byVKqlxgpT+gE3kupGJ7+55fT1TUo9RwqO0t/Du53ud9NWFRIY6Mj
+         2E8g==
+X-Gm-Message-State: APt69E0a+2lSdVZ1H/faPNBWSLSq25n49bW2Y1vm/058mZJP/VAYad7R
+        1qXVtB38H/EGl8yzQNJWVjt4vcjcp7/mo/Aw/l6S09Gs
+X-Google-Smtp-Source: ADUXVKJ+kTveijU0gdPRriDZoeIg3O9aysye+Vi5Ka8S4rT/2AT/YLRYtuOQlXnBOfVqIzSwP3w4LmONaCmbM+THzgY=
+X-Received: by 2002:a6b:ac85:: with SMTP id v127-v6mr9312591ioe.53.1529314900413;
+ Mon, 18 Jun 2018 02:41:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1529259933.7225.2.camel@gmail.com>
+Received: by 2002:a4f:22d0:0:0:0:0:0 with HTTP; Mon, 18 Jun 2018 02:41:39
+ -0700 (PDT)
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 18 Jun 2018 11:41:39 +0200
+Message-ID: <CAP8UFD1iDZbEN+UUbVgFgjwpvVrwSTQ2f=D8UDcdPx_agcLZFg@mail.gmail.com>
+Subject: Draft of Git Rev News edition 40
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Philip Oakley <philipoakley@iee.org>,
+        Phillip Wood <phillip.wood@talktalk.net>,
+        =?UTF-8?B?T25kcmVqIE1vc27DocSNZWs=?= <omosnacek@gmail.com>,
+        Nicolas Pitre <nico@fluxnic.net>,
+        Adam Spiers <git@adamspiers.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jun 17, 2018 at 11:55:33PM +0530, Kaartic Sivaraam wrote:
+Hi,
 
-> On Sun, 2018-06-17 at 14:00 -0400, Eric Sunshine wrote:
-> > Whether or not to talk about alternate solutions in the commit message
-> > is a judgment call. Same for deciding what belongs in the commit
-> > message proper and what belongs in the "commentary" section of a
-> > patch. A patch author should strive to convey the problem succinctly
-> > in the commit message, to not overload the reader with unnecessary (or
-> > confusing) information, while, at the same time, not be sparing with
-> > information which is genuinely needed to understand the problem and
-> > solution.
-> > 
-> > Often, this can be done without talking about alternatives; often even
-> > without spelling out the solution in detail or at all since the
-> > solution may be "obvious", given a well-written problem description.
-> > Complex cases, or cases in which multiple solutions may be or seem
-> > valid, on the other hand, might warrant talking about those alternate
-> > solutions, so we probably don't want to drop that bullet point.
-> 
-> Well explained, thanks. (Thinking out loud, it might be even nice to
-> including the above paragraphs into Documentation/SubmittingPatches as
-> I find it to be more "humane" than the terse bullets. But I refrained
-> from doing so as the document is already a bit too-long ;-)
+A draft of a new Git Rev News edition is available here:
 
-Yes, the first paragraph especially. The _most_ important thing is
-writing well with consideration for your readers. All the other rules
-are really guidelines to help you remember how to do that. When in
-doubt follow the guidelines, but it's OK to break them if it serves the
-ultimate purpose.
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-40.md
 
-All IMHO, of course. :)
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
 
--Peff
+  https://github.com/git/git.github.io/issues/295
+
+You can also reply to this email.
+
+In general all kinds of contribution, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub, and
+so on, are very much appreciated.
+
+This month it would be nice to have a small summary, or maybe just a
+number of links, related to the security release on May 29th, and the
+same related to the GitHub acquisition by Microsoft. Thanks in
+advance!
+
+I tried to cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
+
+Jakub, Markus, Gabriel and me plan to publish this edition on
+Wednesday June 20th.
+
+Thanks,
+Christian.
