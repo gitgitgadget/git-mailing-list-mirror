@@ -2,103 +2,170 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D63A91F403
-	for <e@80x24.org>; Mon, 18 Jun 2018 15:14:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12D941F403
+	for <e@80x24.org>; Mon, 18 Jun 2018 15:26:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935451AbeFRPGh (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Jun 2018 11:06:37 -0400
-Received: from mail-oi0-f54.google.com ([209.85.218.54]:36749 "EHLO
-        mail-oi0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935425AbeFRPGf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jun 2018 11:06:35 -0400
-Received: by mail-oi0-f54.google.com with SMTP id 14-v6so15121178oie.3
-        for <git@vger.kernel.org>; Mon, 18 Jun 2018 08:06:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=hsaMEFcgsHxC7UpgwHkEnvM/E4k+qTFTJmE4mJuBewE=;
-        b=fcnnzBA4942OdWdQrZxBaGEzXSj1DRioeuRYEoENn+X8vxqSKNWhlnC1SSVnSGVLUj
-         E6Zg3x2l9k9pKCFKcnME4XrEyc+NhBI9NbbVvdkMV2bDapaQfDG7jpHiKUzPdzT8XWbA
-         +VVgIfYsQ5O9QSYQoG+jOZyRvCHJAogHzLGM30o70Jkw5OC7l/eMqU2HM9Zye/t1dCGD
-         YD4t58quFzmZQNlbGj6Tl7TuuOMJmnyAUyVgei4l426EEexEk0/gCr9+DYGJAFJDOdOC
-         4cIYlmD3RXdtfkai2VDtBeg99PJmRg6+dsWbCQNN7Ooz+L1HGAeVZgMiget/QBFmWQq0
-         p12g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=hsaMEFcgsHxC7UpgwHkEnvM/E4k+qTFTJmE4mJuBewE=;
-        b=mraGLPcwMUjHAv/z+LdDB0nb9vd2vwElgL2I7vkVhfJLsgXwoj7psru8+VWH1PcKno
-         I34goP8MpfhuCDSdhOrceNdHPgmu3uule0LxFzJbCg7ZcYlT3FZPIiX/MmPp0iwRXeXj
-         tEfFnjYP4cTXPzTcf+NOCe2w/zoHw4+ntnIgJwDSczSuZPUy4YD3zG2EcazV83TptX+6
-         WxoaiezLBN4TegoVUyWlZozBEsWOZ5FpOi+VhvSvqZszj82VmrJEWZ7s4LN5VwIr1PQ8
-         XHLzcUdDS3G8B9sZpDp6y+QAhJpRooMq5xlbBBLUOXKCkR07vnWh/k2LC6uLeOLZth9K
-         UwDw==
-X-Gm-Message-State: APt69E2ZbrxtwINFUA05Le6dhla/h9LYK239MngqQZfr7147BGr8IAfG
-        FJ3l4faMtAWPKks2n91bQjoqHMT5N9HmqGn5TzI=
-X-Google-Smtp-Source: ADUXVKJBmLy0ShrSRKcPIRETFpqKFxQkFJ+4a3eUp52eWeV02wZgFLT+/Ks8K16icD7H4PBUgX8o/H9Yiieg0rkkJ68=
-X-Received: by 2002:aca:fcc8:: with SMTP id a191-v6mr7636923oii.34.1529334394851;
- Mon, 18 Jun 2018 08:06:34 -0700 (PDT)
+        id S1754940AbeFRP0l (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Jun 2018 11:26:41 -0400
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:23108 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754481AbeFRP0l (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jun 2018 11:26:41 -0400
+Received: from [192.168.2.240] ([92.22.19.223])
+        by smtp.talktalk.net with SMTP
+        id Uw3BfSfA7VlGZUw3BfS6kf; Mon, 18 Jun 2018 16:26:39 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1529335599;
+        bh=JkI2D0gDPiHT0vK6hlLk3q4j3sJfllFp43/IekN70xI=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=A2HnYejtSNDpmfAgVuyA3KacmwWIoG7ES9Q98IRaBhuurAN/IJuAjepjQgG8JMXhi
+         Dvi/Cb4/gPrj7jEF4w3Ki3FQImUENqkiB9MthYvfJ1eEmSBbnenx4P2iB3l5z2znXy
+         cY/aSdYL7O60InIPxq7my7ixHRyIjmhiOrVIEvsU=
+X-Originating-IP: [92.22.19.223]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=JcuSU3CV c=1 sm=1 tr=0 a=DH/r9e32v+C519lOzZJhbw==:117
+ a=DH/r9e32v+C519lOzZJhbw==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=JEJBCbLQAcAHY0qy_rUA:9 a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [GSoC][PATCH 1/3] sequencer: add a new function to silence a
+ command, except if it fails.
+To:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org
+Cc:     Stefan Beller <sbeller@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        phillip.wood@dunelm.org.uk, Elijah Newren <newren@gmail.com>
+References: <20180618131844.13408-1-alban.gruin@gmail.com>
+ <20180618131844.13408-2-alban.gruin@gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <b23a9e30-58bf-afde-4d77-563e0b288e70@talktalk.net>
+Date:   Mon, 18 Jun 2018 16:26:34 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-References: <20180618111919.GA10085@book.hvoigt.net>
-In-Reply-To: <20180618111919.GA10085@book.hvoigt.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 18 Jun 2018 17:06:07 +0200
-Message-ID: <CACsJy8CJGditaq4CZfJctVAe9QCdapWQW=W--AumH-4RWWd=vA@mail.gmail.com>
-Subject: Re: Adding nested repository with slash adds files instead of gitlink
-To:     Heiko Voigt <hvoigt@hvoigt.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Brandon Williams <bmwill@google.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20180618131844.13408-2-alban.gruin@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfG+2Sr4QG5WvjVuOoNqy6dBy3yOhdzPHbxxrfw5uPrksk8pvhOioLPHiF5+7YJZvKeCArbkZd6b9Q4q2LtNPm0KOoPVSZEakaSQdKU2mo0kYypSEatTh
+ JXHW5+dd89E1d1nMrNhqcpUDypSnPmckBi+CKlke0qpRz3JVHckZF86SQOOjecatrd8BFHpFzIh08/uVqeai5hOfxBS9bWQPMYLNmSHo9ji1FtTkhbFpYUye
+ z/GLhXo0O4bNshyWyewOoSlWhBAsCRuzFw+DjdyHXhV+mUP2g6jZa9i60xUw1RecWrYJU2FUleCp7m0qfjSjWwbDbcxcrXV/AY5I/0EZe/Oyvh2Njdtvp1oa
+ GIdAwro2VZsAJ1k+YgJoS9KjzOONMwDsDQ0j+/duBhqS7djRY4QpPiPLqg+vmQqr0daUBqaP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 18, 2018 at 1:23 PM Heiko Voigt <hvoigt@hvoigt.net> wrote:
->
-> Hi,
->
-> I just discovered that when you have a slash at the end of a nested
-> repository, the files contained in the repository get added instead of
-> the gitlink.
->
-> I found this when I was adding a submodule and wanted to commit a small
-> change before that. You get the slash by using tab autocompletion.
->
-> Here is a recipe to reproduce:
->
-> mkdir test
-> cd test; git init
-> touch a; git add a; git commit -m a
-> mkdir ../test.git; (cd ../test.git; git init --bare)
-> git remote add origin ../test.git
-> git push origin master
-> git submodule add ../test.git submodule
-> git reset
-> git add submodule/
->
-> Now instead of just submodule gitlink there is an entry for submodule/a
-> in the index.
->
-> I just thought I put this out there. Will have a look if I find the time
-> to cook up a proper testcase and investigate.
+Hi Alban
 
-This sounds like the submodule specific code in pathspec.c, which has
-been replaced with something else in bw/pathspec-sans-the-index. If
-you have time, try a version without those changes (e.g. v2.13 or
-before) to see if it's a possible culprit.
+On 18/06/18 14:18, Alban Gruin wrote:
+> This adds a new function, run_command_silent_if_successful(), to
+> redirect the stdout and stderr of a command to a strbuf, and then to run
+> that command. This strbuf is printed only if the command fails. It is
+> functionnaly similar to output() from git-rebase.sh.
 
-> Cheers Heiko
+s/functionnaly/functionally/
+
+It's not quite the same though because the shell versions handles 
+--verbose where as here the caller has to put that check in every call 
+site. I wonder if it would simplify the callers if the C version did the 
+--verbose handling it's self.
 
 
+Best Wishes
 
--- 
-Duy
+Phillip
+> run_git_commit() is then refactored to use of
+> run_command_silent_if_successful().
+> 
+> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+> ---
+>   sequencer.c | 53 +++++++++++++++++++++++++++--------------------------
+>   1 file changed, 27 insertions(+), 26 deletions(-)
+> 
+> diff --git a/sequencer.c b/sequencer.c
+> index 7cc76332e..3437673d2 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -766,6 +766,25 @@ N_("you have staged changes in your working tree\n"
+>   #define VERIFY_MSG  (1<<4)
+>   #define CREATE_ROOT_COMMIT (1<<5)
+>   
+> +static int run_command_silent_on_success(struct child_process *cmd)
+> +{
+> +	struct strbuf buf = STRBUF_INIT;
+> +	int rc;
+> +
+> +	/* hide stderr on success */
+> +	cmd->stdout_to_stderr = 1;
+> +	rc = pipe_command(cmd,
+> +			  NULL, 0,
+> +			  /* stdout is already redirected */
+> +			  NULL, 0,
+> +			  &buf, 0);
+> +
+> +	if (rc)
+> +		fputs(buf.buf, stderr);
+> +	strbuf_release(&buf);
+> +	return rc;
+> +}
+> +
+>   /*
+>    * If we are cherry-pick, and if the merge did not result in
+>    * hand-editing, we will hit this commit and inherit the original
+> @@ -820,18 +839,11 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
+>   
+>   	cmd.git_cmd = 1;
+>   
+> -	if (is_rebase_i(opts)) {
+> -		if (!(flags & EDIT_MSG)) {
+> -			cmd.stdout_to_stderr = 1;
+> -			cmd.err = -1;
+> -		}
+> +	if (is_rebase_i(opts) && read_env_script(&cmd.env_array)) {
+> +		const char *gpg_opt = gpg_sign_opt_quoted(opts);
+>   
+> -		if (read_env_script(&cmd.env_array)) {
+> -			const char *gpg_opt = gpg_sign_opt_quoted(opts);
+> -
+> -			return error(_(staged_changes_advice),
+> -				     gpg_opt, gpg_opt);
+> -		}
+> +		return error(_(staged_changes_advice),
+> +			     gpg_opt, gpg_opt);
+>   	}
+>   
+>   	argv_array_push(&cmd.args, "commit");
+> @@ -861,21 +873,10 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
+>   	if (opts->allow_empty_message)
+>   		argv_array_push(&cmd.args, "--allow-empty-message");
+>   
+> -	if (cmd.err == -1) {
+> -		/* hide stderr on success */
+> -		struct strbuf buf = STRBUF_INIT;
+> -		int rc = pipe_command(&cmd,
+> -				      NULL, 0,
+> -				      /* stdout is already redirected */
+> -				      NULL, 0,
+> -				      &buf, 0);
+> -		if (rc)
+> -			fputs(buf.buf, stderr);
+> -		strbuf_release(&buf);
+> -		return rc;
+> -	}
+> -
+> -	return run_command(&cmd);
+> +	if (is_rebase_i(opts) && !(flags & EDIT_MSG))
+> +		return run_command_silent_on_success(&cmd);
+> +	else
+> +		return run_command(&cmd);
+>   }
+>   
+>   static int rest_is_empty(const struct strbuf *sb, int start)
+> 
+
