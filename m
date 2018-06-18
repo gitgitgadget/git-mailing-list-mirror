@@ -6,64 +6,60 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 498881F403
-	for <e@80x24.org>; Mon, 18 Jun 2018 16:09:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 25D281F403
+	for <e@80x24.org>; Mon, 18 Jun 2018 16:21:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755308AbeFRQJi (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Jun 2018 12:09:38 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:38424 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755249AbeFRQJh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jun 2018 12:09:37 -0400
-Received: by mail-wm0-f66.google.com with SMTP id 69-v6so16635607wmf.3
-        for <git@vger.kernel.org>; Mon, 18 Jun 2018 09:09:36 -0700 (PDT)
+        id S1755273AbeFRQVS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Jun 2018 12:21:18 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:38282 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755249AbeFRQVR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jun 2018 12:21:17 -0400
+Received: by mail-wr0-f193.google.com with SMTP id e18-v6so17493155wrs.5
+        for <git@vger.kernel.org>; Mon, 18 Jun 2018 09:21:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=xfkUsZ1P3JJ/lTaTD2ab7fZWhbXsYRTLEjj9gnUgzMg=;
-        b=rNdoi2JMxkA5LN+a5hEf8ykZCdYFeay5MKGQhaxYKgSvpanZvRhuQfjVHjQ3F0MT96
-         8Ud2rUu+Rpx3IQl457xnyUr4hpaPEyRgB7Pe2f4Lu3j5yeWOaIZGg2EbYw+fP4OB3tWa
-         RUwfuLuFV6cERZuBySprC7riZK8K/h+25AyX1H1CWnHfPb/bWmtT7d0nzlt6FuGFLuGE
-         RKdEdPFYdEFaSXd6Q4GopU/1Ve2xjXYbyyfrdWOfdu9JNoJXzi/9vDThd8HWD49fMeLO
-         EFoIQSmvYUBrD9hr0tFAKysenLR7vgOp3pfRjGL/7qtHJ867NO6GOLmNZWKbaeC23Z0d
-         epkA==
+        bh=mIfhVqcQVYV5SM8HG+Skn0/xQZENjHT6YJPg984xvpM=;
+        b=aALEzkhLcGeEtfA8Tl69Mu2sKQYOfOaNMr+djnkom+xohZXHhHlNdMUVyVso8WKXc3
+         rwjTn4CIdjnkox1XvOBflQzYNyTqIwfyxFDzjZ1sPrJ+VSiJkYcb5X2ClUJG/9aD4DVO
+         EkL/+PZ1iTcYBfU9GI9e37bNuK5FPLBeQuOvQM3tYDO8xKwrNzzFrZeCbEyQjxsboMLY
+         W3xFxqCmURiW2UDHYWyNN4mjzGNoMvhvsNpdI0owLFCjRbfCYPRd0ggZaxO01rWvb/by
+         6DGSXT1ZsUZe2PoyfKkLol6tfUt0oYHkFuEOYUTH5qpPZoXUvBihoBjvFt3RDh3foyy0
+         U5gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=xfkUsZ1P3JJ/lTaTD2ab7fZWhbXsYRTLEjj9gnUgzMg=;
-        b=TGtXzZzG/+7EEkq/UHEGaZ5PVP9E5cp6aVN4sALQJ7p7njgs8LOF75LottufnKokFz
-         Ez6G+TIA9Wx0BEVqbjfH57pn9q1XDnTeAxLynDjethLNf2pazJDhxE3tAP5RQohs59JD
-         tGHDAWaHCDPNxJ8rd85ZY9/nyePzK4oONU0P6BQ1m0HavASJJYP5/FdUPpTsQjdfmYLx
-         CU4beKF2B/GkwX0rmIZBt3KT7/ESMoiw0+otSXxlfvTdv23S9G+BjECVG9FvG6SmoKpi
-         cvIU+R4Ii6xkWzksM3WKFDEfToTa/+7u2EtEdlo24Fb3jEuTYv5m5kRDXsbkzAHL0DLQ
-         Efyw==
-X-Gm-Message-State: APt69E371+J1EZbTvmT7I8UoR95ir/6LpTJL7mxAur2vuWub0uIcf4s4
-        8sIWCTwUdP+FtWhiLdTAHjuL+59O
-X-Google-Smtp-Source: ADUXVKKm3oghvjJ54/Lj+IwDILWjjlsP0KIhXHCZQo96hOkBshmJ1tcoDq+20QLA+O/deyeZG6fwig==
-X-Received: by 2002:a1c:d7c3:: with SMTP id o186-v6mr8827866wmg.67.1529338175588;
-        Mon, 18 Jun 2018 09:09:35 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id m58-v6sm30238309wrf.61.2018.06.18.09.09.34
+        bh=mIfhVqcQVYV5SM8HG+Skn0/xQZENjHT6YJPg984xvpM=;
+        b=aQwulm7O4OpzUkM6pq/clTeyxM1Ss7SrnZBGsBVLsdep51FKI0J4lrg2gaduaSd4dU
+         aDO4IMlFDvtMbNhQ97ngKVf3d73Q57+zAg8uyYj8hR61RbFF3ug08j0BACPUdpHWL7OH
+         vPP/4ncWVhkgCH/FOuxeclpwMdwwBHX1Zy0GRMNzczz21RoblbMTxMqq82RymBgMUweP
+         9WAQIMHl9EShQcLBLTwOYMzfLoAcOb1j19Hn5nD8m8ZWkkZLOTuxI7cxq7TfV44vTzO8
+         wp+Qm1+OsJoOHDlEZ5TzZe6RDV8rwPCfgx/5/+UtWz0CMoDU3nPGEaDQVocvLt/jJuds
+         uFQA==
+X-Gm-Message-State: APt69E0XtQsnrziLGHA8XMF5JqcHFgNtdir4TMAmwrlxUQjIm64rGgh9
+        s415CU2K3t+W5a7J/GK/xpQ=
+X-Google-Smtp-Source: ADUXVKJZ4sJSuf4IgVBDUElWDwyzs7dEg4uBLgMu3D0kKepLNArwyiq05ZDTppRUJbjz/XC6D15+Qg==
+X-Received: by 2002:adf:8e30:: with SMTP id n45-v6mr10481434wrb.27.1529338875771;
+        Mon, 18 Jun 2018 09:21:15 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id n71-v6sm12083667wmi.14.2018.06.18.09.21.14
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 18 Jun 2018 09:09:34 -0700 (PDT)
+        Mon, 18 Jun 2018 09:21:14 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, simon@ruderich.org,
-        Git List <git@vger.kernel.org>,
-        Mahmoud Al-Qudsi <mqudsi@neosmart.net>
-Subject: Re: [PATCH] Makefile: make NO_ICONV really mean "no iconv"
-References: <CACcTrKePbgyCbXneN5NZ+cS-tiDyYe_dkdwttXpP0CUeEicvHw@mail.gmail.com>
-        <20180615022503.34111-1-sunshine@sunshineco.com>
-        <20180615065805.GA15146@ruderich.org>
-        <CAPig+cQL8rTg+GASp2tSng7PPPYkfeeV2SNyi0D+6-Ep7JKaGg@mail.gmail.com>
-        <a079d636-e70d-f383-ae87-ab890a636441@gmail.com>
-        <CAPig+cTMEfu=x2dhUww3x2uk9-ANAK6eepC3hOsx4FE+1jTgBA@mail.gmail.com>
-Date:   Mon, 18 Jun 2018 09:09:34 -0700
-In-Reply-To: <CAPig+cTMEfu=x2dhUww3x2uk9-ANAK6eepC3hOsx4FE+1jTgBA@mail.gmail.com>
-        (Eric Sunshine's message of "Sun, 17 Jun 2018 14:00:26 -0400")
-Message-ID: <xmqqk1qwxeip.fsf@gitster-ct.c.googlers.com>
+To:     Todd Zullinger <tmz@pobox.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/2] rebase --root: fix `reword` on a root commit
+References: <pull.3.git.gitgitgadget@gmail.com>
+        <20180616201143.GH11827@zaya.teonanacatl.net>
+Date:   Mon, 18 Jun 2018 09:21:14 -0700
+In-Reply-To: <20180616201143.GH11827@zaya.teonanacatl.net> (Todd Zullinger's
+        message of "Sat, 16 Jun 2018 16:11:43 -0400")
+Message-ID: <xmqqd0woxdz9.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -72,82 +68,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Todd Zullinger <tmz@pobox.com> writes:
 
-> On Sun, Jun 17, 2018 at 1:32 PM Kaartic Sivaraam
-> <kaartic.sivaraam@gmail.com> wrote:
->> On Friday 15 June 2018 01:13 PM, Eric Sunshine wrote:
->> > On Fri, Jun 15, 2018 at 2:58 AM Simon Ruderich <simon@ruderich.org> wrote:
->> >> Should we put the part about MacOS's make into the commit
->> >> message? Seems like relevant information for future readers.
->> >
->> > No. The bit of commentary mentioning MacOS's very old 'make' was just
->> > talking about a possible alternate way of implementing the change.
->> > That alternative was not chosen, so talking about old 'make' in the
->> > commit message would be confusing for readers.
->>
->> Interesting. Documentation/SubmittinPatches reads:
->>
->>     The body should provide a meaningful commit message, which:
->>     <snip>
->>     . alternate solutions considered but discarded, if any.
->>
->> The consensus has changed, maybe? In which case, should we remove that
->> statement from there?
+> Hi Johannes,
 >
-> Whether or not to talk about alternate solutions in the commit message
-> is a judgment call. Same for deciding what belongs in the commit
-> message proper and what belongs in the "commentary" section of a
-> patch. A patch author should strive to convey the problem succinctly
-> in the commit message, to not overload the reader with unnecessary (or
-> confusing) information, while, at the same time, not be sparing with
-> information which is genuinely needed to understand the problem and
-> solution.
+> Johannes Schindelin via GitGitGadget wrote:
+>> From: GitGitGadget <gitgitgadget@gmail.com>
+>> 
+>> Todd Zullinger reported this bug in
+>> https://public-inbox.org/git/20180615043111.GS3094@zaya.teonanacatl.net/:
+>> when calling git rebase --root and trying to reword the
+>> root commit's message, a BUG is reported.
+>>
+>> This fixes that.
+>> 
+>> IMO the bug fix is trivial enough to qualify for inclusion into v2.18.0, still.
 >
-> Often, this can be done without talking about alternatives; often even
-> without spelling out the solution in detail or at all since the
-> solution may be "obvious", given a well-written problem description.
-> Complex cases, or cases in which multiple solutions may be or seem
-> valid, on the other hand, might warrant talking about those alternate
-> solutions, so we probably don't want to drop that bullet point.
-> Perhaps, instead, it can be re-worded a bit to make it sound something
-> other than mandatory (but I can't think of a good way to phrase it;
-> maybe you can?).
+> It does indeed fix the issue.  I agree it would be nice to
+> see it in 2.18.0.  As a fix for a minor regression
+> introduced in this cycle, that seems reasonable.
 
-Yup, "if any" is a bad thing to say, as it does not set the bar for
-that "any" random garbage idea.  A phrase like "when appropriate" is
-a relatively safe but mostly useless cop-out, as these guidelines
-are written primarily for those who don't yet have proper yardsticks
-to gauge what is appropriate and what isn't.
+Offhand it is not clear from the proposed log message where the
+original breakage happened, but if this is to fix a regression
+between v2.17.0 and v2.18.0, then let's have it.  As -rc2 slipped
+for a few days, it is reasonable to delay the final by a couple of
+days as well, if only to give the last minute fixes and translators
+reasonable time to breathe.
 
-I think it maybe better to either drop it or make it a sample way to
-do the second point, i.e. if there are seemingly valid alternative
-which may entice readers, explaining why the alternative does not
-work well and the solution you chose works better *is* a good way to
-justify the way you chose in your change.  Off the top of my head,
-something like this?  I am not very happy with the text, though.
+Thanks.
 
 
- Documentation/SubmittingPatches | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index 2488544407..4294d0f068 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -125,10 +125,12 @@ The body should provide a meaningful commit message, which:
- . explains the problem the change tries to solve, i.e. what is wrong
-   with the current code without the change.
- 
--. justifies the way the change solves the problem, i.e. why the
--  result with the change is better.
-+. justifies the way the change solves the problem, i.e. why the result
-+  with the change is better (e.g. explaining the reason why an
-+  seemingly obvious alternative does not work but the solution in the
-+  patch does may be a good way to illustrate the nature of the problem
-+  and how your approach fits it better).
- 
--. alternate solutions considered but discarded, if any.
- 
- [[imperative-mood]]
- Describe your changes in imperative mood, e.g. "make xyzzy do frotz"
+>
+>> Johannes Schindelin (1):
+>>   rebase --root: fix amending root commit messages
+>> 
+>> Todd Zullinger (1):
+>>   rebase --root: demonstrate a bug while amending root commit messages
+>> 
+>>  sequencer.c                   | 2 +-
+>>  t/t3404-rebase-interactive.sh | 9 +++++++++
+>>  2 files changed, 10 insertions(+), 1 deletion(-)
+>> 
+>> 
+>> base-commit: 68372c88794aba15f853542008cda39def768372
