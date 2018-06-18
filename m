@@ -2,98 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 811C11F403
-	for <e@80x24.org>; Mon, 18 Jun 2018 19:25:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 342B01F403
+	for <e@80x24.org>; Mon, 18 Jun 2018 19:32:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935953AbeFRTZK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Jun 2018 15:25:10 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:36347 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935692AbeFRTZJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jun 2018 15:25:09 -0400
-Received: by mail-wm0-f65.google.com with SMTP id v131-v6so17695634wma.1
-        for <git@vger.kernel.org>; Mon, 18 Jun 2018 12:25:09 -0700 (PDT)
+        id S936773AbeFRTci (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Jun 2018 15:32:38 -0400
+Received: from mail-yw0-f194.google.com ([209.85.161.194]:39361 "EHLO
+        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S936020AbeFRTcf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jun 2018 15:32:35 -0400
+Received: by mail-yw0-f194.google.com with SMTP id 81-v6so6049722ywb.6
+        for <git@vger.kernel.org>; Mon, 18 Jun 2018 12:32:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=pDn+sS1BHqHi6rTPpJ7WR4BqeAAk2mmtWfxfo4w2QWo=;
-        b=W/5MVByCaplWIKOgubV3E3qk2ze1ROhZWyrs8l2pnNv6HtEOLoZbnpmjB7bBwjXqUW
-         qU4C58oSK6c8JnIl0pvx8gBZHMpvVbkK6RuMQFuDJvWd94HCG61Z6c7VsZK1uuzKgbXR
-         OYSebNMDEh+Tmg21qF3XPs1crq+84Mkj/vp2P8lPpLQvzhg6f7MKNSCD1oHAdDbqKpiQ
-         5RHi/MvQzxCmUVtj5fdY8UrPhmAwTipdhFBCyATscxbXjrtif5T1APp0QNHPtB5DLiWa
-         hpFqNmT67VLl7RiMfVt6X52yu/gL9zLREBoN4PsYUjk9OdnZtXBpYyZ3PWl14xcvSS5e
-         KAYw==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Gghpe0FJE9v9RuOBBFTMX4SSdhG5PaAe3410kaEMd+c=;
+        b=TtvB+GRYL1ktCLhGJbgy2EML1kV1ImMLtLIQhslx6WLQ28VU3oXT9QtEw8cC9ivT2y
+         jMvd6uyNOgi+l/cEm+TcNkA1v6nHglTwLiQC6CkDp6lOBs+Fpiu8pX80KrzAIPPSr6WK
+         sfqXYzBYnvJ50l8BjiAzYIpXjAfuX0KFr3DH1L9bxuFPjD7MTg5fFlNPposTGwJrqnlo
+         JHm1zgSA6BOuxTFCOgr0Npgz55moHxn/mwT6pd7Xmi0IhZbX78lfMjgrqz2rJ8iY+oo8
+         GykjCiwOBdmLqUA7RfGZGsAsa4HB41kpLwQJNDOtQ2DmriJibLZyFUIfmomaHKQ49Edq
+         faLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=pDn+sS1BHqHi6rTPpJ7WR4BqeAAk2mmtWfxfo4w2QWo=;
-        b=qS0EIdYGR0gHikeJ+6r9Z3YSgEZhAm2+Qi9hPpRe1yL2ypkqO/KT9vVI+q5FzQANTD
-         MMHZhPOxGHB1wQZbGIUoiAIf4QS2j8LFoxdE+LGPffU+iOiCysPnssOEjByvzUxJM2iF
-         7z4tFBsO5hLZGb4VUII8DS9+Oyb6WqronGre0JDtjDov3weysOFj93u33tpoY5bc2sxY
-         uWqwabzqCSqitiC3NfOYxtj5A++0JMTGR/+v83TgIFakDrqu08hqRkCvuRT1d2ko5jke
-         PLdLdXviUp84xTMtFbr5capYX0mOp7IENtxdOzLPUd5LgbolK+XHkcLlxGHXpfYu5OG8
-         ASdg==
-X-Gm-Message-State: APt69E3nB8FnQvCsIPYjtuDStWS1KqJcf+FHEmd5do7P6a1m2ua2GZPk
-        C9HwaK+kst6CHntNTskpd7U=
-X-Google-Smtp-Source: ADUXVKJ4kZOn4nJQgbizcsOjal6+70zAFm4M5tuThQAg/oovUoPij7+rIdQzyTm09qMb5Yoi5rJi0A==
-X-Received: by 2002:a1c:2d15:: with SMTP id t21-v6mr9206057wmt.42.1529349908032;
-        Mon, 18 Jun 2018 12:25:08 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id p10-v6sm7177460wmc.17.2018.06.18.12.25.07
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 18 Jun 2018 12:25:07 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/2] rebase --root: fix `reword` on a root commit
-References: <pull.3.git.gitgitgadget@gmail.com>
-        <20180616201143.GH11827@zaya.teonanacatl.net>
-        <xmqqd0woxdz9.fsf@gitster-ct.c.googlers.com>
-        <20180618164140.GN11827@zaya.teonanacatl.net>
-Date:   Mon, 18 Jun 2018 12:25:06 -0700
-In-Reply-To: <20180618164140.GN11827@zaya.teonanacatl.net> (Todd Zullinger's
-        message of "Mon, 18 Jun 2018 12:41:40 -0400")
-Message-ID: <xmqq8t7byk19.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Gghpe0FJE9v9RuOBBFTMX4SSdhG5PaAe3410kaEMd+c=;
+        b=ZTJ1Io3go8M6TozUbH65ROpiTpTdgOlGbyWDjsRVruWpzXCLGTX5v8GKy807gbxff3
+         qWqQWXqp3US6sDYectNNkq6ctAWZtCO5tBBYHs5sC/KaOVunrO+sokwjYexAzuGAZme0
+         Pl6s+38LuATA0Gv6wmzjL/ag+IwOrs2BJ24ErS3YhtBPU4jqlvsIk45x0ABFmEOv4Kkc
+         6hn+5nufZbAS+XsKuWPcQexMC/1kYmjRJ3UhsA8eI+CcU8Pl6e4uFMU/UrhQDOItF9kR
+         2KKGb9eIKzx+zitXMRbjJLDOXT9Jx80ZQZtd9C8aXg+afElna28LkRmBcKV0e4EVZ1Ro
+         XG8w==
+X-Gm-Message-State: APt69E0jKPbmQ1stu508nwyYJaODK/Zsd24xCGEp3iFgx08LkdXcth+G
+        ajcUbFCveJV2jb1nyEsgL6Yt+9O4eO8NjHg403wr/A==
+X-Google-Smtp-Source: ADUXVKJDmzXyoOhsZoGYa8JMQzpEM85MeHO489Wffe1Ubuu6PXFRvSV3yCcjP25dJLaXduRmIRl/nD4FlmTxAiDdrOs=
+X-Received: by 2002:a0d:d304:: with SMTP id v4-v6mr6684284ywd.500.1529350354376;
+ Mon, 18 Jun 2018 12:32:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <cover.1528233146.git.jonathantanmy@google.com>
+ <cover.1528234587.git.jonathantanmy@google.com> <2bc7df55a6451afbd35638b31a1551c648129b22.1528234587.git.jonathantanmy@google.com>
+ <CAGZ79kbVsV390C0p3dAs3Ddp=K7mLnzfBhFC2jS4oon3Uy_nvw@mail.gmail.com> <CAGf8dgLXi95ZUin+EWQ5Q9MfNT5Qxs82=F5w_ohDw9-cK7OfFg@mail.gmail.com>
+In-Reply-To: <CAGf8dgLXi95ZUin+EWQ5Q9MfNT5Qxs82=F5w_ohDw9-cK7OfFg@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 18 Jun 2018 12:32:23 -0700
+Message-ID: <CAGZ79kZ0Y6Xu=2ikuejfEAvrsKc7uzyFdhErUO9hydv3aQuBjw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] t5702: test fetch with multiple refspecs at a time
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git <git@vger.kernel.org>, Brandon Williams <bmwill@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Todd Zullinger <tmz@pobox.com> writes:
+On Mon, Jun 18, 2018 at 12:15 PM Jonathan Tan <jonathantanmy@google.com> wrote:
+>
+> On Mon, Jun 18, 2018 at 11:30 AM, Stefan Beller <sbeller@google.com> wrote:
+> >> +test_expect_success 'fetch supports various ways of have lines' '
+> >> +       rm -rf server client trace &&
+> >
+> > Can we move these deletions to test_when_finished of the previous(?) test
+> > as well as have them here in a test_when_finished line?
+>
+> I think that deleting them when necessary makes it more explicit, and
+> this also supports tests where a repository is set up and then used
+> over multiple tests (e.g. having separate "setup X" and "use X"
+> tests).
 
->> Offhand it is not clear from the proposed log message where the
->> original breakage happened, but if this is to fix a regression
->> between v2.17.0 and v2.18.0, then let's have it.  As -rc2 slipped
->> for a few days, it is reasonable to delay the final by a couple of
->> days as well, if only to give the last minute fixes and translators
->> reasonable time to breathe.
->
-> Perhaps replacing the first paragraph with this would make
-> it clearer?
->
->     Since 21d0764c82 ("rebase -i --root: let the sequencer handle even the
->     initial part", 2018-05-04), when splitting a repository, running `git
->     rebase -i --root` to reword the initial commit, Git dies with
->
-> Alternately, a similar note could be added at the end.
->
->     This regression was recently introduced in 21d0764c82 ("rebase -i 
->     --root: let the sequencer handle even the initial part", 2018-05-04).
+and it is necessary at the end of each test, so that we minimize
+the dependencies between tests. In an ideal world you could run
+any one test in the file alone and would still pass. :)
 
-These certainly are ways to require one less hop to the readers than
-the original ;-)  Having said that, I've already merged it down to
-'next' and want to have these in 'master' before final, so no need
-to further fix-up the log message anymore.
+>
+> > This test is precise and easy to understand; the patch is
+> > Reviewed-by: Stefan Beller <sbeller@google.com>
+> > (considering the test_when_finished comment as
+> > an optional nit)
+>
+> Thanks. Do you have any comments about the performance issue that
+> Brandon brought up?
 
-Thanks.
+Is that https://public-inbox.org/git/20180605212829.GG158365@google.com/ ?
+(otherwise I'd be missing the performance issue)
+
+For now I'd filter out tags only if a specific tag is requested
+(i.e. the user given refspec contains "refs/tags/" -> no tag following)
+and then later I'd try out a date(?) based capability that asks for
+new tags only.
+
+Note that you can create old tags by backdating them, so we'd have
+to ask the server for any update in its reflog for refs/tags...
