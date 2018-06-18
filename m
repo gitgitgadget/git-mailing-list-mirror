@@ -6,55 +6,54 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 842DF1F403
-	for <e@80x24.org>; Mon, 18 Jun 2018 23:43:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F8441F597
+	for <e@80x24.org>; Mon, 18 Jun 2018 23:43:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S937048AbeFRXnZ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Jun 2018 19:43:25 -0400
-Received: from mail-ot0-f196.google.com ([74.125.82.196]:42453 "EHLO
+        id S937060AbeFRXn3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Jun 2018 19:43:29 -0400
+Received: from mail-ot0-f196.google.com ([74.125.82.196]:41591 "EHLO
         mail-ot0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S937005AbeFRXnY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jun 2018 19:43:24 -0400
-Received: by mail-ot0-f196.google.com with SMTP id 92-v6so20529377otw.9
-        for <git@vger.kernel.org>; Mon, 18 Jun 2018 16:43:24 -0700 (PDT)
+        with ESMTP id S937005AbeFRXn1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jun 2018 19:43:27 -0400
+Received: by mail-ot0-f196.google.com with SMTP id d19-v6so20527433oti.8
+        for <git@vger.kernel.org>; Mon, 18 Jun 2018 16:43:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=WtQitJE7lPAfII7qVznbKKE9RCqyu2dPh9gaZSzykeI=;
-        b=Isf1AeKbaYBf7jACMPRLqzAHYc9mdUZpd3xcsN5dGL7sUsAp/1oSXEDoVSIeUOEFLb
-         YbiJdVjiKQp/8k/uZkYjX6vvQl/Q4Bd0QKa0JUkRi9W+FUJIJa3q7yYuNZaIYKvDl0r+
-         71S8dmcdieqpUQkkVjjTCIOh63lUX8Jcx5CNNDes2+Dl2/JZf5Vc4uRh6NWqy5pmBpxH
-         7BDIOPyVP8b/OGDaFY7ktcSzIBmLiBtfyNCO9gyqUbLCL4GcAKQXZps5yXzU+i90CfJG
-         +uOwnw1yAhqLMaCtxOwCsCgQWCQSUrKC10Rmy+bU+hQb/iPsHxMPOxERfoEMxOpg8Tox
-         ewBQ==
+        bh=2VfwsGRM8TRKo+qIHKBeAd53krkytiNc+gdRqvXTlLo=;
+        b=g+nC2aRCCS9eNCjsqahoBdwdBtf1KLWvGYCblOVPpoE/KXPsDECdVZtHk2NHTnJsnX
+         rFBbsCx4qQ15x1qOFFtAplmhgln/TxHf740lQz6X5qaT/wWaWGQOgthWu0KrCMKBadj/
+         GmR1FZ3XfOuGj0Wqdl5oZEqerZ8BDLGuvN3G+ilCMdBhZR6AWAWNf11zgw7Oef120Pg/
+         33qn7hVYr5vCFvzNTXSR5jShlEi0iZAO7OVl4T7Bpbh54K6zIVESm7JoTG01O9hmppFm
+         11soWV3ed74Y//3zJ0fLmemKB4huX6qB4wYYOU8zJNbHQ7UpZJKlcbl3Sps8O+z+UuoB
+         oBsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=WtQitJE7lPAfII7qVznbKKE9RCqyu2dPh9gaZSzykeI=;
-        b=nHwdDnnNne98RUTLbdAnU1abstk0t8pAlRbTlkTfvF3HfEJwgeMrwXfOJiTqluOnLT
-         QjmN48lRAgcrBL46ZvbkPsub1YGW/iQA0HIgLjInQpVqXt+noO2pHXsGvHkQQyoisPae
-         Qchy4u2RwBmHbB52hO2AEAKNY96j7RPIQ7pU3vCl0Yi02SfRZX/Rc8VC9Wjdrnk4vbCn
-         2iV90dj1gEzvUfp7KTlLBDXPP7T2c6vlTfq50apW4QIGnwz/WW8UyMFLmyXeri8dYRct
-         tWyVNdPf1e1c5SXXBSqYHL3OP81LA25yCz4K2pYOG7b0yQ0dNavturvmvKPtRDmeTDPA
-         qG4Q==
-X-Gm-Message-State: APt69E26sAztasrJOF8U6nEVIiP2aNTs4JQbqTf+ioxMwkpRx5XnE0nn
-        BqiUiloUa1fs/KIamZQxVB255y4c9Ck=
-X-Google-Smtp-Source: ADUXVKL6QCW0zCAAwxnshodrLj32CcYmmFcOjaLe3iM4IGM+G+9Mf6TcVE+m2izyeLaq2bPZMRX2hw==
-X-Received: by 2002:a9d:255d:: with SMTP id j29-v6mr8483365otd.280.1529365403103;
-        Mon, 18 Jun 2018 16:43:23 -0700 (PDT)
+        bh=2VfwsGRM8TRKo+qIHKBeAd53krkytiNc+gdRqvXTlLo=;
+        b=nxppcjKdXLuhoI6soR4I9FE/UQNIksCIeTku9ydpdfUr2b+ZWshkeCr+xHTVxedrG6
+         p2wX9/o3E1c/u9nz0kbCeITooMZCL/4KkoWxchFFadLsyvgzxtsupHvzaUosw5wcXpCT
+         QzFglx0khaGlPaaZkJ1eE/c18j5CSv+Xv3W9VIdU/LbbKlRmZnYZALUiT6TOKFpmamjE
+         3tTjuucxVPs7W5+BkWatUrH/C+uoncqvavw7KIOudP26N6K1ANvJgQcQIY7nUPnmdEd9
+         Xv/saHKMo6R7E7pBlU1NCwp87wyC7fYkeryjtJoNJlYOV1T4SyyJ2V2YfMGkEvjrij5E
+         AyDg==
+X-Gm-Message-State: APt69E2+vm+RJ6mhvJOTVNFIZTjV2Hd6zUHbuv9tuePZyWq3lOFIorWO
+        viNSLxEVcOXcQmRGvI3hc0YFlZiQIoo=
+X-Google-Smtp-Source: ADUXVKIDYCzsKTYGCYj3/ZzbmnVvzVCNB5vEnQZluvtXa8+OQY3BoX0MuPllaPxjl30t3NyeqfvcXg==
+X-Received: by 2002:a9d:6314:: with SMTP id q20-v6mr4174534otk.12.1529365405990;
+        Mon, 18 Jun 2018 16:43:25 -0700 (PDT)
 Received: from localhost ([107.217.158.181])
-        by smtp.gmail.com with ESMTPSA id w189-v6sm7369948oie.45.2018.06.18.16.43.21
+        by smtp.gmail.com with ESMTPSA id m17-v6sm7303752otk.1.2018.06.18.16.43.24
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 18 Jun 2018 16:43:22 -0700 (PDT)
-Date:   Mon, 18 Jun 2018 18:43:20 -0500
+        Mon, 18 Jun 2018 16:43:24 -0700 (PDT)
+Date:   Mon, 18 Jun 2018 18:43:23 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     avarab@gmail.com, peff@peff.net, gitster@pobox.com
-Subject: [PATCH 6/7] grep.c: add configuration variables to show matched
- option
-Message-ID: <4a36cd93c616b2a546c21c923d64f953a780e55d.1529365072.git.me@ttaylorr.com>
+Subject: [PATCH 7/7] contrib/git-jump/git-jump: jump to exact location
+Message-ID: <8819fcfbb1c443b37cbc719f1e4a0d61d6ed808d.1529365072.git.me@ttaylorr.com>
 References: <cover.1529365072.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -66,78 +65,68 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To support git-grep(1)'s new option, '--column', document and teach
-grep.c how to interpret relevant configuration options, similar to those
-associated with '--line-number'.
+Take advantage of 'git-grep(1)''s new option, '--column' in order to
+teach Peff's 'git-jump' script how to jump to the correct column for any
+given match.
+
+'git-grep(1)''s output is in the correct format for Vim's jump list, so
+no additional cleanup is necessary.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Documentation/config.txt   | 5 +++++
- Documentation/git-grep.txt | 3 +++
- grep.c                     | 6 ++++++
- 3 files changed, 14 insertions(+)
+ contrib/git-jump/README   | 12 ++++++++++--
+ contrib/git-jump/git-jump |  2 +-
+ 2 files changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 58fde4daea..e4cbed3078 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1183,6 +1183,8 @@ color.grep.<slot>::
- 	function name lines (when using `-p`)
- `lineNumber`;;
- 	line number prefix (when using `-n`)
-+`column`;;
-+	column number prefix (when using `--column`)
- `match`;;
- 	matching text (same as setting `matchContext` and `matchSelected`)
- `matchContext`;;
-@@ -1797,6 +1799,9 @@ gitweb.snapshot::
- grep.lineNumber::
- 	If set to true, enable `-n` option by default.
+diff --git a/contrib/git-jump/README b/contrib/git-jump/README
+index 4484bda410..2f618a7f97 100644
+--- a/contrib/git-jump/README
++++ b/contrib/git-jump/README
+@@ -25,6 +25,13 @@ git-jump will feed this to the editor:
+ foo.c:2: printf("hello word!\n");
+ -----------------------------------
  
-+grep.column::
-+	If set to true, enable the `--column` option by default.
++Or, when running 'git jump grep', column numbers will also be emitted,
++e.g. `git jump grep "hello"` would return:
 +
- grep.patternType::
- 	Set the default matching behavior. Using a value of 'basic', 'extended',
- 	'fixed', or 'perl' will enable the `--basic-regexp`, `--extended-regexp`,
-diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-index 31dc0392a6..0de3493b80 100644
---- a/Documentation/git-grep.txt
-+++ b/Documentation/git-grep.txt
-@@ -44,6 +44,9 @@ CONFIGURATION
- grep.lineNumber::
- 	If set to true, enable `-n` option by default.
- 
-+grep.column::
-+	If set to true, enable the `--column` option by default.
++-----------------------------------
++foo.c:2:9: printf("hello word!\n");
++-----------------------------------
 +
- grep.patternType::
- 	Set the default matching behavior. Using a value of 'basic', 'extended',
- 	'fixed', or 'perl' will enable the `--basic-regexp`, `--extended-regexp`,
-diff --git a/grep.c b/grep.c
-index 9f5b00a471..8ffa94c791 100644
---- a/grep.c
-+++ b/grep.c
-@@ -96,6 +96,10 @@ int grep_config(const char *var, const char *value, void *cb)
- 		opt->linenum = git_config_bool(var, value);
- 		return 0;
- 	}
-+	if (!strcmp(var, "grep.column")) {
-+		opt->columnnum = git_config_bool(var, value);
-+		return 0;
-+	}
+ Obviously this trivial case isn't that interesting; you could just open
+ `foo.c` yourself. But when you have many changes scattered across a
+ project, you can use the editor's support to "jump" from point to point.
+@@ -35,7 +42,8 @@ Git-jump can generate four types of interesting lists:
  
- 	if (!strcmp(var, "grep.fullname")) {
- 		opt->relative = !git_config_bool(var, value);
-@@ -112,6 +116,8 @@ int grep_config(const char *var, const char *value, void *cb)
- 		color = opt->color_function;
- 	else if (!strcmp(var, "color.grep.linenumber"))
- 		color = opt->color_lineno;
-+	else if (!strcmp(var, "color.grep.column"))
-+		color = opt->color_columnno;
- 	else if (!strcmp(var, "color.grep.matchcontext"))
- 		color = opt->color_match_context;
- 	else if (!strcmp(var, "color.grep.matchselected"))
+   2. The beginning of any merge conflict markers.
+ 
+-  3. Any grep matches.
++  3. Any grep matches, including the column of the first match on a
++     line.
+ 
+   4. Any whitespace errors detected by `git diff --check`.
+ 
+@@ -82,7 +90,7 @@ which does something similar to `git jump grep`. However, it is limited
+ to positioning the cursor to the correct line in only the first file,
+ leaving you to locate subsequent hits in that file or other files using
+ the editor or pager. By contrast, git-jump provides the editor with a
+-complete list of files and line numbers for each match.
++complete list of files, lines, and a column number for each match.
+ 
+ 
+ Limitations
+diff --git a/contrib/git-jump/git-jump b/contrib/git-jump/git-jump
+index 80ab0590bc..931b0fe3a9 100755
+--- a/contrib/git-jump/git-jump
++++ b/contrib/git-jump/git-jump
+@@ -52,7 +52,7 @@ mode_merge() {
+ # editor shows them to us in the status bar.
+ mode_grep() {
+ 	cmd=$(git config jump.grepCmd)
+-	test -n "$cmd" || cmd="git grep -n"
++	test -n "$cmd" || cmd="git grep -n --column"
+ 	$cmd "$@" |
+ 	perl -pe '
+ 	s/[ \t]+/ /g;
 -- 
 2.17.0.582.gccdcbd54c
-
