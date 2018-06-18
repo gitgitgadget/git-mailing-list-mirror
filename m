@@ -2,100 +2,171 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 342B01F403
-	for <e@80x24.org>; Mon, 18 Jun 2018 19:32:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 721481F403
+	for <e@80x24.org>; Mon, 18 Jun 2018 19:40:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936773AbeFRTci (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Jun 2018 15:32:38 -0400
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:39361 "EHLO
-        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S936020AbeFRTcf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jun 2018 15:32:35 -0400
-Received: by mail-yw0-f194.google.com with SMTP id 81-v6so6049722ywb.6
-        for <git@vger.kernel.org>; Mon, 18 Jun 2018 12:32:35 -0700 (PDT)
+        id S936283AbeFRTkr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Jun 2018 15:40:47 -0400
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:41043 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S936042AbeFRTkq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jun 2018 15:40:46 -0400
+Received: by mail-qt0-f195.google.com with SMTP id y20-v6so1253911qto.8
+        for <git@vger.kernel.org>; Mon, 18 Jun 2018 12:40:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Gghpe0FJE9v9RuOBBFTMX4SSdhG5PaAe3410kaEMd+c=;
-        b=TtvB+GRYL1ktCLhGJbgy2EML1kV1ImMLtLIQhslx6WLQ28VU3oXT9QtEw8cC9ivT2y
-         jMvd6uyNOgi+l/cEm+TcNkA1v6nHglTwLiQC6CkDp6lOBs+Fpiu8pX80KrzAIPPSr6WK
-         sfqXYzBYnvJ50l8BjiAzYIpXjAfuX0KFr3DH1L9bxuFPjD7MTg5fFlNPposTGwJrqnlo
-         JHm1zgSA6BOuxTFCOgr0Npgz55moHxn/mwT6pd7Xmi0IhZbX78lfMjgrqz2rJ8iY+oo8
-         GykjCiwOBdmLqUA7RfGZGsAsa4HB41kpLwQJNDOtQ2DmriJibLZyFUIfmomaHKQ49Edq
-         faLw==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=armc8XVMXBs9utRZp7NKD3/7MlKqi+rV6Ig5NUWgo1c=;
+        b=l4txPVIRjjveqcawNNoXddIi05VQFRXz/n2otTpxGIXg2lwyxuObWGW7H7VSpIRiPi
+         NlPYl5aj2YPIujUOYOiooN7EbL2vmqRUq+SXG5XlpvVKPcBezryTdPriDCMEWTKXt4m7
+         cUbwBgabP5NwpaLxzI0UqFWKSDeUioBTmMDDI/cPYDlMTvLTM6KrNwqcsu4/Em0789KU
+         2AFasKLL5AG+4HnqNCxl2/GDqF4pX4hNucx4/2xmhrlE9ug5oTI4DzBW56NUdyWaK/e8
+         9dv9m8dXPGkRO7SPbe8U97VzYeUwaCRyKeJCtk1+D5PIJ5GMe15p35fmvJ9VKknG2ci8
+         uygQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Gghpe0FJE9v9RuOBBFTMX4SSdhG5PaAe3410kaEMd+c=;
-        b=ZTJ1Io3go8M6TozUbH65ROpiTpTdgOlGbyWDjsRVruWpzXCLGTX5v8GKy807gbxff3
-         qWqQWXqp3US6sDYectNNkq6ctAWZtCO5tBBYHs5sC/KaOVunrO+sokwjYexAzuGAZme0
-         Pl6s+38LuATA0Gv6wmzjL/ag+IwOrs2BJ24ErS3YhtBPU4jqlvsIk45x0ABFmEOv4Kkc
-         6hn+5nufZbAS+XsKuWPcQexMC/1kYmjRJ3UhsA8eI+CcU8Pl6e4uFMU/UrhQDOItF9kR
-         2KKGb9eIKzx+zitXMRbjJLDOXT9Jx80ZQZtd9C8aXg+afElna28LkRmBcKV0e4EVZ1Ro
-         XG8w==
-X-Gm-Message-State: APt69E0jKPbmQ1stu508nwyYJaODK/Zsd24xCGEp3iFgx08LkdXcth+G
-        ajcUbFCveJV2jb1nyEsgL6Yt+9O4eO8NjHg403wr/A==
-X-Google-Smtp-Source: ADUXVKJDmzXyoOhsZoGYa8JMQzpEM85MeHO489Wffe1Ubuu6PXFRvSV3yCcjP25dJLaXduRmIRl/nD4FlmTxAiDdrOs=
-X-Received: by 2002:a0d:d304:: with SMTP id v4-v6mr6684284ywd.500.1529350354376;
- Mon, 18 Jun 2018 12:32:34 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=armc8XVMXBs9utRZp7NKD3/7MlKqi+rV6Ig5NUWgo1c=;
+        b=qSmqvDL0IPqvR8AA+2Uj6fdHaftvkKj0PfZTn7xvP2VDptXGdalTFU9g1g1KOzUiHv
+         7YEZli8l1BaGJyA8TIIstDGxAJCfs6r10SqP2cbVif+nIWXVqSDdO4hNLW/kM8EGCMjy
+         SiWidwwjTJ4TYZbmw1liwTtTDsB0Gsv8CUm9FCE1RdjkJMSObH4QxIBJ2FQFA+domGhN
+         tyU38CdNwCiCd4Z+C3JM5ue+SK0Ww6ud1EVhd1U8nlY4v77Y9ij0J6raKF3qB0669xI2
+         /b7lAYH0fh9E5cer6C5xeGP8JQqABSAFKd0RX/NK7XXAyV/LU06bOJQBOGnZgMbOvdma
+         lj8g==
+X-Gm-Message-State: APt69E0A6TXd/FtQraTB+d5tAmgXm+6IqnduAj/XzPjeTR4hFgtr7T1k
+        nOQCWiQt9Brdvtrib+uCbm8=
+X-Google-Smtp-Source: ADUXVKJqj/GXYHjzKEytlvWh3LTi9jcqJl7y+Ai7jkGf91Sblb7QH/s/htMFg/FtveZPR/0vzlL1aQ==
+X-Received: by 2002:ac8:16d6:: with SMTP id y22-v6mr12471296qtk.352.1529350845682;
+        Mon, 18 Jun 2018 12:40:45 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:d807:51c7:6f48:91e4? ([2001:4898:8010:0:c13d:51c7:6f48:91e4])
+        by smtp.gmail.com with ESMTPSA id p50-v6sm13171785qtf.48.2018.06.18.12.40.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 18 Jun 2018 12:40:45 -0700 (PDT)
+Subject: Re: [PATCH 03/23] midx: add midx builtin
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>, Derrick Stolee <dstolee@microsoft.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Martin Fick <mfick@codeaurora.org>
+References: <20180607140338.32440-1-dstolee@microsoft.com>
+ <20180607140338.32440-4-dstolee@microsoft.com>
+ <CAGZ79kaH7XzbtPZqVwGgP774GJNxF7ZsHqLzWEmb2NLSxG3Njg@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <160f10c8-3016-8466-22dd-14cbd1a2c2f6@gmail.com>
+Date:   Mon, 18 Jun 2018 15:40:44 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-References: <cover.1528233146.git.jonathantanmy@google.com>
- <cover.1528234587.git.jonathantanmy@google.com> <2bc7df55a6451afbd35638b31a1551c648129b22.1528234587.git.jonathantanmy@google.com>
- <CAGZ79kbVsV390C0p3dAs3Ddp=K7mLnzfBhFC2jS4oon3Uy_nvw@mail.gmail.com> <CAGf8dgLXi95ZUin+EWQ5Q9MfNT5Qxs82=F5w_ohDw9-cK7OfFg@mail.gmail.com>
-In-Reply-To: <CAGf8dgLXi95ZUin+EWQ5Q9MfNT5Qxs82=F5w_ohDw9-cK7OfFg@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 18 Jun 2018 12:32:23 -0700
-Message-ID: <CAGZ79kZ0Y6Xu=2ikuejfEAvrsKc7uzyFdhErUO9hydv3aQuBjw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] t5702: test fetch with multiple refspecs at a time
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git <git@vger.kernel.org>, Brandon Williams <bmwill@google.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAGZ79kaH7XzbtPZqVwGgP774GJNxF7ZsHqLzWEmb2NLSxG3Njg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 18, 2018 at 12:15 PM Jonathan Tan <jonathantanmy@google.com> wrote:
+On 6/11/2018 5:02 PM, Stefan Beller wrote:
+> Hi Derrick,
+> On Thu, Jun 7, 2018 at 7:03 AM Derrick Stolee <stolee@gmail.com> wrote:
+>> This new 'git midx' builtin will be the plumbing access for writing,
+>> reading, and checking multi-pack-index (MIDX) files. The initial
+>> implementation is a no-op.
+> Let's talk about the name for a second:
 >
-> On Mon, Jun 18, 2018 at 11:30 AM, Stefan Beller <sbeller@google.com> wrote:
-> >> +test_expect_success 'fetch supports various ways of have lines' '
-> >> +       rm -rf server client trace &&
-> >
-> > Can we move these deletions to test_when_finished of the previous(?) test
-> > as well as have them here in a test_when_finished line?
+> .idx files are written by git-index-pack or as part of
+> git-pack-objects (which just calls write_idx_file as part
+> of finish_tmp_packfile), and the name actually suggests
+> it writes the index files. I have a hard time understanding
+> what the git-midx command does[1].
 >
-> I think that deleting them when necessary makes it more explicit, and
-> this also supports tests where a repository is set up and then used
-> over multiple tests (e.g. having separate "setup X" and "use X"
-> tests).
+> With both commit graph as well as multi index we introduce
+> a command that is centered around that concept (similar to
+> git-remote or git-config that are centered around a concept,
+> that is closely resembled by a file), but for indexes for packs
+> it was integrated differently into Git. So I am not sure if I want
+> to suggest to integrate it into the packfile commands as that
+> doesn't really fit. But maybe we can have a name that is human
+> readable instead of the file suffix? Maybe
+>
+>    git multi-pack-index ?
+>
+> I suppose that eventually this command is not really used by
+> users as it will be used by other porcelain commands in the
+> background or even as part of repack/gc so I am not worried
+> about a long name, but I'd be more worried about understandability.
 
-and it is necessary at the end of each test, so that we minimize
-the dependencies between tests. In an ideal world you could run
-any one test in the file alone and would still pass. :)
+I'll use "git multi-pack-index" in v2. I'll keep "midx.c" in the root, 
+though, if that is OK.
+
+> [1] While these names are not perfect for the layman, it is okay?
+>    I am sure you are aware of https://git-man-page-generator.lokaltog.net/
+
+I was not, and enjoyed that quite a bit.
+
+Thanks,
+-Stolee
 
 >
-> > This test is precise and easy to understand; the patch is
-> > Reviewed-by: Stefan Beller <sbeller@google.com>
-> > (considering the test_when_finished comment as
-> > an optional nit)
 >
-> Thanks. Do you have any comments about the performance issue that
-> Brandon brought up?
+>> new file mode 100644
+>> index 0000000000..2bd886f1a2
+>> --- /dev/null
+>> +++ b/Documentation/git-midx.txt
+>> @@ -0,0 +1,29 @@
+>> +git-midx(1)
+>> +============
+>> +
+>> +NAME
+>> +----
+>> +git-midx - Write and verify multi-pack-indexes (MIDX files).
+> The reading is done as part of all other commands.
 
-Is that https://public-inbox.org/git/20180605212829.GG158365@google.com/ ?
-(otherwise I'd be missing the performance issue)
+I like to think the 'read' verb is a subset of "verify" because we are 
+checking for information about the MIDX, and mostly for tests or debugging.
 
-For now I'd filter out tags only if a specific tag is requested
-(i.e. the user given refspec contains "refs/tags/" -> no tag following)
-and then later I'd try out a date(?) based capability that asks for
-new tags only.
+>
+>> +
+>> +
+>> +SYNOPSIS
+>> +--------
+>> +[verse]
+>> +'git midx' [--object-dir <dir>]
+>> +
+>> +DESCRIPTION
+>> +-----------
+>> +Write or verify a MIDX file.
+>> +
+>> +OPTIONS
+>> +-------
+>> +
+>> +--object-dir <dir>::
+>> +       Use given directory for the location of Git objects. We check
+>> +       <dir>/packs/multi-pack-index for the current MIDX file, and
+>> +       <dir>/packs for the pack-files to index.
+>> +
+>> +
+> Maybe we could have a SEE ALSO section that points at
+> the explanation of multi index files?
+> (c.f. man git-submodule that has a  SEE ALSO
+> gitsubmodules(7), gitmodules(5) explaining concepts(7)
+> and the file(5))
+>
+> But as this is plumbing and users should not need to worry about it
+> this is optional, I would think.
 
-Note that you can create old tags by backdating them, so we'd have
-to ask the server for any update in its reflog for refs/tags...
+The design document is also in 'Documentation/technical' instead of just 
+'Documentation/'. Do we have a pattern of linking to the technical 
+documents?
+
+Thanks,
+-Stolee
