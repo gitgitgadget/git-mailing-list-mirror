@@ -3,218 +3,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C922C1F403
-	for <e@80x24.org>; Mon, 18 Jun 2018 16:09:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 498881F403
+	for <e@80x24.org>; Mon, 18 Jun 2018 16:09:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754237AbeFRQJJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Jun 2018 12:09:09 -0400
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:45241 "EHLO
-        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752765AbeFRQJI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jun 2018 12:09:08 -0400
-Received: from [192.168.2.240] ([92.22.19.223])
-        by smtp.talktalk.net with SMTP
-        id UwiIfSl6bVlGZUwiIfS8si; Mon, 18 Jun 2018 17:09:07 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1529338147;
-        bh=eDQdDr6551enEc0ixXpEQ8s9ws+MvR7R5W3A1hja42k=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=fXTtg14GdLVbiD2NuGhc8eaEoc+el/yfn5CSzllD6mMMRylfK73GIj/FPWvmmr9uU
-         GSG75RGon0A5UTIKwhd/dEKzapCztQ9OjRSAdNWJxyriZTcK1xO1FlBs/71sDrlxLo
-         nXLwI2AMhrTufAmTSrPUFy2btbPk8sY8qIyu5VM4=
-X-Originating-IP: [92.22.19.223]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=JcuSU3CV c=1 sm=1 tr=0 a=DH/r9e32v+C519lOzZJhbw==:117
- a=DH/r9e32v+C519lOzZJhbw==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
- a=yXi8ZgYoWqRF_78uBIsA:9 a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [GSoC][PATCH 3/3] rebase -i: rewrite checkout_onto() in C
-To:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        phillip.wood@dunelm.org.uk, Elijah Newren <newren@gmail.com>
-References: <20180618131844.13408-1-alban.gruin@gmail.com>
- <20180618131844.13408-4-alban.gruin@gmail.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <290d8b7c-3d82-e914-0399-e8dd5a6e1513@talktalk.net>
-Date:   Mon, 18 Jun 2018 17:09:03 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+        id S1755308AbeFRQJi (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Jun 2018 12:09:38 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:38424 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755249AbeFRQJh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jun 2018 12:09:37 -0400
+Received: by mail-wm0-f66.google.com with SMTP id 69-v6so16635607wmf.3
+        for <git@vger.kernel.org>; Mon, 18 Jun 2018 09:09:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=xfkUsZ1P3JJ/lTaTD2ab7fZWhbXsYRTLEjj9gnUgzMg=;
+        b=rNdoi2JMxkA5LN+a5hEf8ykZCdYFeay5MKGQhaxYKgSvpanZvRhuQfjVHjQ3F0MT96
+         8Ud2rUu+Rpx3IQl457xnyUr4hpaPEyRgB7Pe2f4Lu3j5yeWOaIZGg2EbYw+fP4OB3tWa
+         RUwfuLuFV6cERZuBySprC7riZK8K/h+25AyX1H1CWnHfPb/bWmtT7d0nzlt6FuGFLuGE
+         RKdEdPFYdEFaSXd6Q4GopU/1Ve2xjXYbyyfrdWOfdu9JNoJXzi/9vDThd8HWD49fMeLO
+         EFoIQSmvYUBrD9hr0tFAKysenLR7vgOp3pfRjGL/7qtHJ867NO6GOLmNZWKbaeC23Z0d
+         epkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=xfkUsZ1P3JJ/lTaTD2ab7fZWhbXsYRTLEjj9gnUgzMg=;
+        b=TGtXzZzG/+7EEkq/UHEGaZ5PVP9E5cp6aVN4sALQJ7p7njgs8LOF75LottufnKokFz
+         Ez6G+TIA9Wx0BEVqbjfH57pn9q1XDnTeAxLynDjethLNf2pazJDhxE3tAP5RQohs59JD
+         tGHDAWaHCDPNxJ8rd85ZY9/nyePzK4oONU0P6BQ1m0HavASJJYP5/FdUPpTsQjdfmYLx
+         CU4beKF2B/GkwX0rmIZBt3KT7/ESMoiw0+otSXxlfvTdv23S9G+BjECVG9FvG6SmoKpi
+         cvIU+R4Ii6xkWzksM3WKFDEfToTa/+7u2EtEdlo24Fb3jEuTYv5m5kRDXsbkzAHL0DLQ
+         Efyw==
+X-Gm-Message-State: APt69E371+J1EZbTvmT7I8UoR95ir/6LpTJL7mxAur2vuWub0uIcf4s4
+        8sIWCTwUdP+FtWhiLdTAHjuL+59O
+X-Google-Smtp-Source: ADUXVKKm3oghvjJ54/Lj+IwDILWjjlsP0KIhXHCZQo96hOkBshmJ1tcoDq+20QLA+O/deyeZG6fwig==
+X-Received: by 2002:a1c:d7c3:: with SMTP id o186-v6mr8827866wmg.67.1529338175588;
+        Mon, 18 Jun 2018 09:09:35 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id m58-v6sm30238309wrf.61.2018.06.18.09.09.34
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 18 Jun 2018 09:09:34 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, simon@ruderich.org,
+        Git List <git@vger.kernel.org>,
+        Mahmoud Al-Qudsi <mqudsi@neosmart.net>
+Subject: Re: [PATCH] Makefile: make NO_ICONV really mean "no iconv"
+References: <CACcTrKePbgyCbXneN5NZ+cS-tiDyYe_dkdwttXpP0CUeEicvHw@mail.gmail.com>
+        <20180615022503.34111-1-sunshine@sunshineco.com>
+        <20180615065805.GA15146@ruderich.org>
+        <CAPig+cQL8rTg+GASp2tSng7PPPYkfeeV2SNyi0D+6-Ep7JKaGg@mail.gmail.com>
+        <a079d636-e70d-f383-ae87-ab890a636441@gmail.com>
+        <CAPig+cTMEfu=x2dhUww3x2uk9-ANAK6eepC3hOsx4FE+1jTgBA@mail.gmail.com>
+Date:   Mon, 18 Jun 2018 09:09:34 -0700
+In-Reply-To: <CAPig+cTMEfu=x2dhUww3x2uk9-ANAK6eepC3hOsx4FE+1jTgBA@mail.gmail.com>
+        (Eric Sunshine's message of "Sun, 17 Jun 2018 14:00:26 -0400")
+Message-ID: <xmqqk1qwxeip.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20180618131844.13408-4-alban.gruin@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfFtYggvQ2h7R63A+I3a+bK4sXoDoRfDWccExhC20Wj3U21nHnrFhOu5057hAuGgTqpGu14D9lto6o49dWp6GTX+82aeenIR5388QAgonXge7WCQ7ZiHu
- NrCbIqubhwZG2lrgtEDrxC9W4pIOQygADqQ0Z+sZOV6QXXRNAYVHUs6LQ8Hl+f0HBQ6/PXcVK7XKzYbgX4M5l2Sx/o4LTUssXj11UW3hhc04mNRKmT2g79kf
- pon6TsyseDjk2YCGyCcUxOS75hoUjM3wCfls0blPfDpCBwwu2kVgLgHm0VSXcnCrJYd37jy/kgXWpHkcgmQxYWQY8MRN0jCqdXd+Kgg1LAssLD7nk1KHVan3
- sIXGgNs06Kiug0JYHVd261G7BeN76znoGZMbdy5TMNccjudsOR1KdogwwNQCf/KPblLTfXpj
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alban
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-On 18/06/18 14:18, Alban Gruin wrote:
-> This rewrites checkout_onto() from shell to C.
-> 
-> A new command (“checkout-onto”) is added to rebase--helper.c. The shell
-> version is then stripped.
-> 
-> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
-> ---
->   builtin/rebase--helper.c   |  7 ++++++-
->   git-rebase--interactive.sh | 25 ++++---------------------
->   sequencer.c                | 19 +++++++++++++++++++
->   sequencer.h                |  3 +++
->   4 files changed, 32 insertions(+), 22 deletions(-)
-> 
-> diff --git a/builtin/rebase--helper.c b/builtin/rebase--helper.c
-> index d677fb663..f9fffba96 100644
-> --- a/builtin/rebase--helper.c
-> +++ b/builtin/rebase--helper.c
-> @@ -17,7 +17,8 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
->   	enum {
->   		CONTINUE = 1, ABORT, MAKE_SCRIPT, SHORTEN_OIDS, EXPAND_OIDS,
->   		CHECK_TODO_LIST, SKIP_UNNECESSARY_PICKS, REARRANGE_SQUASH,
-> -		ADD_EXEC, APPEND_TODO_HELP, EDIT_TODO, SETUP_REFLOG
-> +		ADD_EXEC, APPEND_TODO_HELP, EDIT_TODO, SETUP_REFLOG,
-> +		CHECKOUT_ONTO
->   	} command = 0;
->   	struct option options[] = {
->   		OPT_BOOL(0, "ff", &opts.allow_ff, N_("allow fast-forward")),
-> @@ -53,6 +54,8 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
->   			    EDIT_TODO),
->   		OPT_CMDMODE(0, "setup-reflog", &command,
->   			    N_("setup the reflog action"), SETUP_REFLOG),
-> +		OPT_CMDMODE(0, "checkout-onto", &command,
-> +			    N_("checkout a commit"), CHECKOUT_ONTO),
->   		OPT_END()
->   	};
->   
-> @@ -98,5 +101,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
->   		return !!edit_todo_list(flags);
->   	if (command == SETUP_REFLOG && argc == 2)
->   		return !!setup_reflog_action(&opts, argv[1], verbose);
-> +	if (command == CHECKOUT_ONTO && argc == 4)
-> +		return !!checkout_onto(&opts, argv[1], argv[2], argv[3], verbose);
->   	usage_with_options(builtin_rebase_helper_usage, options);
->   }
-> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> index 048bbf041..0ae053291 100644
-> --- a/git-rebase--interactive.sh
-> +++ b/git-rebase--interactive.sh
-> @@ -28,17 +28,6 @@ case "$comment_char" in
->   	;;
->   esac
->   
-> -orig_reflog_action="$GIT_REFLOG_ACTION"
-> -
-> -comment_for_reflog () {
-> -	case "$orig_reflog_action" in
-> -	''|rebase*)
-> -		GIT_REFLOG_ACTION="rebase -i ($1)"
-> -		export GIT_REFLOG_ACTION
-> -		;;
-> -	esac
-> -}
-> -
->   die_abort () {
->   	apply_autostash
->   	rm -rf "$state_dir"
-> @@ -70,14 +59,6 @@ collapse_todo_ids() {
->   	git rebase--helper --shorten-ids
->   }
->   
-> -# Switch to the branch in $into and notify it in the reflog
-> -checkout_onto () {
-> -	comment_for_reflog start
-> -	GIT_REFLOG_ACTION="$GIT_REFLOG_ACTION: checkout $onto_name"
-> -	output git checkout $onto || die_abort "$(gettext "could not detach HEAD")"
-> -	git update-ref ORIG_HEAD $orig_head
-> -}
-> -
->   get_missing_commit_check_level () {
->   	check_level=$(git config --get rebase.missingCommitsCheck)
->   	check_level=${check_level:-ignore}
-> @@ -176,7 +157,8 @@ EOF
->   
->   	git rebase--helper --check-todo-list || {
->   		ret=$?
-> -		checkout_onto
-> +		git rebase--helper --checkout-onto "$onto_name" "$onto" \
-> +		    "$orig_head" ${verbose:+--verbose}
->   		exit $ret
->   	}
->   
-> @@ -186,7 +168,8 @@ EOF
->   	onto="$(git rebase--helper --skip-unnecessary-picks)" ||
->   	die "Could not skip unnecessary pick commands"
->   
-> -	checkout_onto
-> +	git rebase--helper --checkout-onto "$onto_name" "$onto" "$orig_head" \
-> +	    ${verbose:+--verbose}
->   	require_clean_work_tree "rebase"
->   	exec git rebase--helper ${force_rebase:+--no-ff} $allow_empty_message \
->   	     --continue
-> diff --git a/sequencer.c b/sequencer.c
-> index 4bfe29c7b..d149cbf92 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -3162,6 +3162,25 @@ int setup_reflog_action(struct replay_opts *opts, const char *commit,
->   	return 0;
->   }
->   
-> +int checkout_onto(struct replay_opts *opts,
-> +		  const char *onto_name, const char *onto,
-> +		  const char *orig_head, unsigned verbose)
-> +{
-> +	struct object_id oid;
-> +	const char *action = reflog_message(opts, "start", "checkout %s", onto_name);
-> +
-> +	if (get_oid(orig_head, &oid))
-> +		die(_("%s: not a valid OID"), orig_head);
+> On Sun, Jun 17, 2018 at 1:32 PM Kaartic Sivaraam
+> <kaartic.sivaraam@gmail.com> wrote:
+>> On Friday 15 June 2018 01:13 PM, Eric Sunshine wrote:
+>> > On Fri, Jun 15, 2018 at 2:58 AM Simon Ruderich <simon@ruderich.org> wrote:
+>> >> Should we put the part about MacOS's make into the commit
+>> >> message? Seems like relevant information for future readers.
+>> >
+>> > No. The bit of commentary mentioning MacOS's very old 'make' was just
+>> > talking about a possible alternate way of implementing the change.
+>> > That alternative was not chosen, so talking about old 'make' in the
+>> > commit message would be confusing for readers.
+>>
+>> Interesting. Documentation/SubmittinPatches reads:
+>>
+>>     The body should provide a meaningful commit message, which:
+>>     <snip>
+>>     . alternate solutions considered but discarded, if any.
+>>
+>> The consensus has changed, maybe? In which case, should we remove that
+>> statement from there?
+>
+> Whether or not to talk about alternate solutions in the commit message
+> is a judgment call. Same for deciding what belongs in the commit
+> message proper and what belongs in the "commentary" section of a
+> patch. A patch author should strive to convey the problem succinctly
+> in the commit message, to not overload the reader with unnecessary (or
+> confusing) information, while, at the same time, not be sparing with
+> information which is genuinely needed to understand the problem and
+> solution.
+>
+> Often, this can be done without talking about alternatives; often even
+> without spelling out the solution in detail or at all since the
+> solution may be "obvious", given a well-written problem description.
+> Complex cases, or cases in which multiple solutions may be or seem
+> valid, on the other hand, might warrant talking about those alternate
+> solutions, so we probably don't want to drop that bullet point.
+> Perhaps, instead, it can be re-worded a bit to make it sound something
+> other than mandatory (but I can't think of a good way to phrase it;
+> maybe you can?).
 
-If this code is going to live long-term in sequencer.c then it would be 
-better not to die, but return an error instead as it's part of libgit.
+Yup, "if any" is a bad thing to say, as it does not set the bar for
+that "any" random garbage idea.  A phrase like "when appropriate" is
+a relatively safe but mostly useless cop-out, as these guidelines
+are written primarily for those who don't yet have proper yardsticks
+to gauge what is appropriate and what isn't.
 
-Best Wishes
+I think it maybe better to either drop it or make it a sample way to
+do the second point, i.e. if there are seemingly valid alternative
+which may entice readers, explaining why the alternative does not
+work well and the solution you chose works better *is* a good way to
+justify the way you chose in your change.  Off the top of my head,
+something like this?  I am not very happy with the text, though.
 
-Phillip
 
-> +
-> +	if (checkout_base_commit(opts, onto, verbose, action)) {
-> +		apply_autostash(opts);
-> +		sequencer_remove_state(opts);
-> +		die(_("could not detach HEAD"));
-> +	}
-> +
-> +	return update_ref(NULL, "ORIG_HEAD", &oid, NULL, 0, UPDATE_REFS_MSG_ON_ERR);
-> +}
-> +
->   static const char rescheduled_advice[] =
->   N_("Could not execute the todo command\n"
->   "\n"
-> diff --git a/sequencer.h b/sequencer.h
-> index 55e4057d8..9899d90fc 100644
-> --- a/sequencer.h
-> +++ b/sequencer.h
-> @@ -102,6 +102,9 @@ void commit_post_rewrite(const struct commit *current_head,
->   
->   int setup_reflog_action(struct replay_opts *opts, const char *commit,
->   			int verbose);
-> +int checkout_onto(struct replay_opts *opts,
-> +		  const char *onto_name, const char *onto,
-> +		  const char *orig_head, unsigned verbose);
->   
->   #define SUMMARY_INITIAL_COMMIT   (1 << 0)
->   #define SUMMARY_SHOW_AUTHOR_DATE (1 << 1)
-> 
+ Documentation/SubmittingPatches | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index 2488544407..4294d0f068 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -125,10 +125,12 @@ The body should provide a meaningful commit message, which:
+ . explains the problem the change tries to solve, i.e. what is wrong
+   with the current code without the change.
+ 
+-. justifies the way the change solves the problem, i.e. why the
+-  result with the change is better.
++. justifies the way the change solves the problem, i.e. why the result
++  with the change is better (e.g. explaining the reason why an
++  seemingly obvious alternative does not work but the solution in the
++  patch does may be a good way to illustrate the nature of the problem
++  and how your approach fits it better).
+ 
+-. alternate solutions considered but discarded, if any.
+ 
+ [[imperative-mood]]
+ Describe your changes in imperative mood, e.g. "make xyzzy do frotz"
