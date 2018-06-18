@@ -2,181 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D1551F403
-	for <e@80x24.org>; Mon, 18 Jun 2018 19:02:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 976821F403
+	for <e@80x24.org>; Mon, 18 Jun 2018 19:15:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935997AbeFRTB7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Jun 2018 15:01:59 -0400
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:35230 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935893AbeFRTBz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jun 2018 15:01:55 -0400
-Received: by mail-qt0-f196.google.com with SMTP id s9-v6so16146926qtg.2
-        for <git@vger.kernel.org>; Mon, 18 Jun 2018 12:01:55 -0700 (PDT)
+        id S936186AbeFRTPs (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Jun 2018 15:15:48 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:37155 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935860AbeFRTPq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jun 2018 15:15:46 -0400
+Received: by mail-wr0-f193.google.com with SMTP id d8-v6so17998997wro.4
+        for <git@vger.kernel.org>; Mon, 18 Jun 2018 12:15:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=niRawHrlhcriGvYAiEkR19EVXHYA07jsrIj5Fk470cU=;
-        b=tUDARLC24MTWlo/1NDPkYSja2ZbunLZ2f/1l+hm/6cqkrHfEYUyh0wrqx1+5wSUVbu
-         24gULex3ASvlOkHCxLK/t3Zk5oXnIrtDPrCMofc2F7K7Wi42NZfzRl8Q4woZQbjYpGKm
-         67feS/p/qBzlhEwgKVI1SLRN60V6Mb8JjyE8I5zk+XaEz36vgEKOLwbcV+Pu2HreRfRv
-         NAmNXXRt82bk8hQi1+ijmxTBFGrgwOAf2gfim+3uVFNEYa5/A4CaoYMGdDfLo8X8V+Ed
-         QWb6Cbvy3V1Q9N2/u1j6CGca5eBseCeqfx8aR3Z1jvE85nNv2QUFlsX6ZKRndyK7tSKQ
-         c0kg==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=uJh198+CvZOQ15n/anRZCHYxosIgk0XuizS0YMB3m4g=;
+        b=OlQkuma+eDcUv9ERS3ZyArvg7KIGwIoI7wuFo2/KBqeiiaZVYgWR7RZbElel3sI7kP
+         pBlM+62DYKPhRqdPCqPRqFzAoQ8HecXFc62m8vS0v+hUgBEiaPnjEf1dnp7q+QKAQp+/
+         b4pNmqfy3dipDpK4qhs485DFHH7fOtgHR+DQyJZ67ev8Vd9SZABSO2Pltg2Lg3VKsdtR
+         HmjY2MXI/YXEuMfuEV6U9IUZOpbSMSiYPrVuRsv16XxblEN5pAXtz04d9vg/TUwcr7k0
+         Oa720Os3ArXEcYwjr2kMt/5ll0PJo4nkJwx9+LYhXODErTEFssKDU4YD/mqlWmhBj++5
+         H4pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=niRawHrlhcriGvYAiEkR19EVXHYA07jsrIj5Fk470cU=;
-        b=ddlNETWFTUwfM3120k0qbtpk3km+mdaqgB3EBlYSzVsWXRwGPEIv1oI2R2QeaBfsSk
-         6lioAVZYL46NJRmDGOilv/rJc5Zxdv6rgZBR89kTClVCZlK8nVFfveXswL/dNsQRaiv4
-         zk8MKnisPAAj8DARVT2AoR7sljaK2GZxJuv5l8GFabXsAtaOzy+jUHcJscJPPEw5st4A
-         cd45A0Bkr9m4yiVMtYcBOcr/9LCA+rpxV7A2MHfyOrckSIV41VSaZPxgiJnSK7kbPFdz
-         9FDqxQF4VZ/YwpJO+T/hnkTkQC9hOWRERTHQicLcvyW1E13DdQi1W36xAnuEvfevsvDt
-         aOpQ==
-X-Gm-Message-State: APt69E1UyHhxepLlMTmhoG9kTEBUsYs7HQoImV8KtuQ3GZ7WoosBw9RI
-        KixQxKqbOhUP6KXDDxdom/g=
-X-Google-Smtp-Source: ADUXVKLzS7IGkHV2VDZCYtSkTZ1xgAdbmW+ztIaU/SaLREf0Z1geYYN9BkORgHnCdhxNzS8RNVsbGw==
-X-Received: by 2002:ac8:2a46:: with SMTP id l6-v6mr12654665qtl.118.1529348514895;
-        Mon, 18 Jun 2018 12:01:54 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:486:96a1:3ab7:988c? ([2001:4898:8010:0:edbb:96a1:3ab7:988c])
-        by smtp.gmail.com with ESMTPSA id s39-v6sm12655478qts.42.2018.06.18.12.01.53
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 18 Jun 2018 12:01:54 -0700 (PDT)
-Subject: Re: [PATCH 02/23] midx: add midx format details to pack-format.txt
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>, Derrick Stolee <dstolee@microsoft.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Martin Fick <mfick@codeaurora.org>
-References: <20180607140338.32440-1-dstolee@microsoft.com>
- <20180607140338.32440-3-dstolee@microsoft.com>
- <CAGZ79kaDiXnAuRym3HHQPEZh9z0-sPL5V4Yur5-_RojsyLJsYA@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <a0dbd78c-507b-3005-c2eb-2fa82e7d29ec@gmail.com>
-Date:   Mon, 18 Jun 2018 15:01:53 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=uJh198+CvZOQ15n/anRZCHYxosIgk0XuizS0YMB3m4g=;
+        b=sPh3CxRVdnF4WsYvJoRzv6h9stXrPrsNC1m0R5QVAHf0MV/3INIchX6h4pmnG7khtX
+         pqadPQwcSiQZf+OYTx/SdBuhpFFiPDKHVS7DuweKvvyKKOuplYCPJTghoFDic7tnmu1i
+         lz1D+bZ9mbB/7qJ0K95fSLFLN1Y1iP8m+LKA84fj1xqWzUEKlFsgpjOStBfhvKPbT9GA
+         HC5UzrHXlZ9RrX5poWwHE8acVPOrs8WsnIPvKD6LdtrxqLrN2Qx5+52tP+KJa9DERGLl
+         FWpvSkk1sxsSRUHH8N0KjFsTmoh/gZ78CbaZITPcE4mDRl/5AP5tVrP9K2qork3h6BkN
+         teNA==
+X-Gm-Message-State: APt69E25s0iXOHT+Uo/6Klpv9l+u/REmpdihrn9zOPiZeJYqHoKrZCL1
+        iHiAJXvHQmN1mL0iLFYmQCaxjwA6LE461mNSU1lPJA==
+X-Google-Smtp-Source: ADUXVKIoLKKR8lBE2AJ2prbitJJGM2sMpx8/Rq4pDRHGJ3xd5iljEgFUJhguK/W2S3jsBZ7itImx9lPNOurm52Tjzcg=
+X-Received: by 2002:adf:858f:: with SMTP id 15-v6mr12225433wrt.31.1529349344683;
+ Mon, 18 Jun 2018 12:15:44 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kaDiXnAuRym3HHQPEZh9z0-sPL5V4Yur5-_RojsyLJsYA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Received: by 2002:a1c:e90d:0:0:0:0:0 with HTTP; Mon, 18 Jun 2018 12:15:43
+ -0700 (PDT)
+In-Reply-To: <CAGZ79kbVsV390C0p3dAs3Ddp=K7mLnzfBhFC2jS4oon3Uy_nvw@mail.gmail.com>
+References: <cover.1528233146.git.jonathantanmy@google.com>
+ <cover.1528234587.git.jonathantanmy@google.com> <2bc7df55a6451afbd35638b31a1551c648129b22.1528234587.git.jonathantanmy@google.com>
+ <CAGZ79kbVsV390C0p3dAs3Ddp=K7mLnzfBhFC2jS4oon3Uy_nvw@mail.gmail.com>
+From:   Jonathan Tan <jonathantanmy@google.com>
+Date:   Mon, 18 Jun 2018 12:15:43 -0700
+Message-ID: <CAGf8dgLXi95ZUin+EWQ5Q9MfNT5Qxs82=F5w_ohDw9-cK7OfFg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] t5702: test fetch with multiple refspecs at a time
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>, Brandon Williams <bmwill@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/11/2018 3:19 PM, Stefan Beller wrote:
-> Hi Derrick,
-> On Thu, Jun 7, 2018 at 7:03 AM Derrick Stolee <stolee@gmail.com> wrote:
->> The multi-pack-index (MIDX) feature generalizes the existing pack-
->> index (IDX) feature by indexing objects across multiple pack-files.
->>
->> Describe the basic file format, using a 12-byte header followed by
->> a lookup table for a list of "chunks" which will be described later.
->> The file ends with a footer containing a checksum using the hash
->> algorithm.
->>
->> The header allows later versions to create breaking changes by
->> advancing the version number. We can also change the hash algorithm
->> using a different version value.
->>
->> We will add the individual chunk format information as we introduce
->> the code that writes that information.
->>
->> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
->> ---
->>   Documentation/technical/pack-format.txt | 49 +++++++++++++++++++++++++
->>   1 file changed, 49 insertions(+)
->>
->> diff --git a/Documentation/technical/pack-format.txt b/Documentation/technical/pack-format.txt
->> index 70a99fd142..17666b4bfc 100644
->> --- a/Documentation/technical/pack-format.txt
->> +++ b/Documentation/technical/pack-format.txt
->> @@ -252,3 +252,52 @@ Pack file entry: <+
->>       corresponding packfile.
->>
->>       20-byte SHA-1-checksum of all of the above.
->> +
->> +== midx-*.midx files have the following format:
->> +
->> +The meta-index files refer to multiple pack-files and loose objects.
-> So is it meta or multi?
-
-Good catch. We were calling this the meta-index internally before 
-changing to "multi-pack-index" (helps to not change the acronym).
-
+On Mon, Jun 18, 2018 at 11:30 AM, Stefan Beller <sbeller@google.com> wrote:
+>> +test_expect_success 'fetch supports various ways of have lines' '
+>> +       rm -rf server client trace &&
 >
->> +In order to allow extensions that add extra data to the MIDX, we organize
->> +the body into "chunks" and provide a lookup table at the beginning of the
->> +body. The header includes certain length values, such as the number of packs,
->> +the number of base MIDX files, hash lengths and types.
->> +
->> +All 4-byte numbers are in network order.
->> +
->> +HEADER:
->> +
->> +       4-byte signature:
->> +           The signature is: {'M', 'I', 'D', 'X'}
->> +
->> +       1-byte version number:
->> +           Git only writes or recognizes version 1
->> +
->> +       1-byte Object Id Version
->> +           Git only writes or recognizes verion 1 (SHA-1)
-> s/verion/version/
->
->> +       1-byte number (C) of "chunks"
->> +
->> +       1-byte number (I) of base multi-pack-index files:
->> +           This value is currently always zero.
-> Oh? Are meta-index and multi-index files different things?
+> Can we move these deletions to test_when_finished of the previous(?) test
+> as well as have them here in a test_when_finished line?
 
-Not intended to be different things, but this number is related to 
-making the feature incremental.
+I think that deleting them when necessary makes it more explicit, and
+this also supports tests where a repository is set up and then used
+over multiple tests (e.g. having separate "setup X" and "use X"
+tests).
 
->
->> +       4-byte number (P) of pack files
->> +
->> +CHUNK LOOKUP:
->> +
->> +       (C + 1) * 12 bytes providing the chunk offsets:
->> +           First 4 bytes describe chunk id. Value 0 is a terminating label.
->> +           Other 8 bytes provide offset in current file for chunk to start.
->> +           (Chunks are provided in file-order, so you can infer the length
->> +           using the next chunk position if necessary.)
-> It is so nice to have the header also have 12 bytes, so it fits right into the
-> lookup table. So an alternative point of view:
->
->    If a chunk needs to store more than 8 bytes, we'll have an offset after
->    the first 4 bytes that describe the chunk, otherwise you can store the 8 bytes
->    of information directly after the 4 bytes.
->     "MIDX" is a special chunk and must come first (does it?) and only once
->    as it contains the version number.
+> This test is precise and easy to understand; the patch is
+> Reviewed-by: Stefan Beller <sbeller@google.com>
+> (considering the test_when_finished comment as
+> an optional nit)
 
-This sounds feasible, but unnecessarily complicated. I don't think any 
-other chunk will be this small.
-
->> +       The remaining data in the body is described one chunk at a time, and
->> +       these chunks may be given in any order. Chunks are required unless
->> +       otherwise specified.
->> +
->> +CHUNK DATA:
->> +
->> +       (This section intentionally left incomplete.)
->> +
->> +TRAILER:
->> +
->> +       H-byte HASH-checksum of all of the above.
-> This means we have to rehash the whole file for updating its contents.
-> okay.
-
+Thanks. Do you have any comments about the performance issue that
+Brandon brought up?
