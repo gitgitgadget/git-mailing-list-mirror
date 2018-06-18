@@ -2,144 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 076AF1F403
-	for <e@80x24.org>; Mon, 18 Jun 2018 22:01:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C8531F403
+	for <e@80x24.org>; Mon, 18 Jun 2018 22:19:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755386AbeFRWBX (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Jun 2018 18:01:23 -0400
-Received: from mail-yw0-f193.google.com ([209.85.161.193]:46440 "EHLO
-        mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755003AbeFRWBX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jun 2018 18:01:23 -0400
-Received: by mail-yw0-f193.google.com with SMTP id v197-v6so6183895ywc.13
-        for <git@vger.kernel.org>; Mon, 18 Jun 2018 15:01:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=H+xzy7dkcyFcUgMKjOZPpEJwcQhy4Ljsq/ZnLCAADto=;
-        b=KzxjzueRwOKeaUasOABw4zdaTmM/yJ084Ii4lE6pBBd9KEl+R2n0AZWCl8YaRzz4mM
-         5ZNXx5/n6ueB5aK5XTwi9BVO/QpCQXWk9wEQjhafcgVPW0scIVHxS6a2w4v738c5rE5e
-         gx5pbEYx+L5wnjHHmLa+o7J1d/UA6dLHNmBGaRBi6QpRzkDXQeqtyUVoFQA+r+DyngSU
-         +hPs3v7wN4VWVq2EqzgGklTd2pbBHFv+Ed4SsKDIf9YnJ226hGiXRHk+95p6og+rf7BK
-         ew5ffhSavjFJW3fDd3vq4h3ej0Y80GivSEN36S4neeVx9l3iVvsUPH3Z7eRfRW/o1Cc+
-         efFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=H+xzy7dkcyFcUgMKjOZPpEJwcQhy4Ljsq/ZnLCAADto=;
-        b=MBofOtkGqcmZ0flxGSGyGP42iQ7Rm2xKqHmmZ3akF6aNyIgId3fyzCXgZdqhkbjUI6
-         IajijrkiEwfu4X7Ntfn7tO5nkKX8F2aale3FJcU3/hVghMRi4vqpRXYB0XXYwpG5o9At
-         nOD6+jwlVV3FRoNe99omB9G4hx8U9VUnbFpqJqKBF+dHaHkoJpMO/2FBCO979Hwg05yR
-         w0LhjzlSQAhUf4wpH7bz4ciwIgkE94uXaP9psg0h+XHXtwoA39OWTSD4bzA8FERj/Q39
-         El2v0ntkvaT3UerYu18dIqVIyBSsfxcJNSw8jrudCACoVGZR+P7nC7vdGd6OTSfnt0/s
-         ZH1A==
-X-Gm-Message-State: APt69E0Urt+trGHgy78e+F2owVgVg0u6gM06a9RtV61YbKF0ux/Zeq3/
-        KzoT1vxkZLzCRbpCUyFYXiPSalWtYJ55ZzMd84an3g==
-X-Google-Smtp-Source: ADUXVKJPBziGrsIkO5PtJ1Dji7G7H2LpPZBCudieG7K+9FZ3jadwUhGPJYsQWcaHzsvGKlazrRJi3Uw+oR2hXDTkBrU=
-X-Received: by 2002:a81:e544:: with SMTP id c4-v6mr6799637ywm.345.1529359281968;
- Mon, 18 Jun 2018 15:01:21 -0700 (PDT)
+        id S935546AbeFRWTq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Jun 2018 18:19:46 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50977 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934807AbeFRWTp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jun 2018 18:19:45 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CE609FAF77;
+        Mon, 18 Jun 2018 18:19:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to; s=sasl; bh=gLS5qd65lez1vx2yvBMhe+8tdVM=; b=NYcixs7
+        CzRGHLxm9uELBS15SJ0sO3AxUR2d+Zl/AYmXs3PLZSwyuM70SovK16uRGT6WCt2I
+        e4NUEouKH6sUDzjjYHuJQOOQ6poXwpWZN0bvfenVmycaB2fD59peu6YyOEoS61cg
+        NRyu/mrzdl5jj/t5zmU6HisZiKeKR+fnbll4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to; q=dns; s=sasl; b=Q9BNiyKfgUuvpjtlLQCm2BCBBbaec0mrs
+        j/10qW+tMy80PDcmjC0p/vcv7Dw/TMYmfDuNXCoxSgJUATEtceP4xq4WWVXJzmWF
+        0oshAOcBr/ex+jWqun+0gPYmMucoFL+Iel7blcFTTbVwxRHn89XiC18ShYB6qlMr
+        P6yGSZEKBc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C7006FAF76;
+        Mon, 18 Jun 2018 18:19:44 -0400 (EDT)
+Received: from zaya.teonanacatl.net (unknown [98.111.125.125])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4366CFAF75;
+        Mon, 18 Jun 2018 18:19:44 -0400 (EDT)
+Date:   Mon, 18 Jun 2018 18:19:42 -0400
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Phillip Wood <phillip.wood@talktalk.net>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: [PATCH] t3404: check root commit in 'rebase -i --root reword root
+ commit'
+Message-ID: <20180618221942.GQ11827@zaya.teonanacatl.net>
+References: <pull.3.git.gitgitgadget@gmail.com>
+ <d59805a43ddaf4bbd4528a2b7afa9809eca9b86b.1529177176.git.gitgitgadget@gmail.com>
+ <484fe825-0726-a027-1187-de00df6406d5@talktalk.net>
+ <20180618164958.GO11827@zaya.teonanacatl.net>
+ <nycvar.QRO.7.76.6.1806182343421.77@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-References: <20180618131844.13408-1-alban.gruin@gmail.com> <20180618131844.13408-3-alban.gruin@gmail.com>
-In-Reply-To: <20180618131844.13408-3-alban.gruin@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 18 Jun 2018 15:01:11 -0700
-Message-ID: <CAGZ79kaLSCXSDHN8=L-FCBvQ9jRJqit6VFNK3VmHm9H07ThEsg@mail.gmail.com>
-Subject: Re: [GSoC][PATCH 2/3] rebase -i: rewrite setup_reflog_action() in C
-To:     Alban Gruin <alban.gruin@gmail.com>
-Cc:     git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1806182343421.77@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.9.5 (2018-04-13)
+X-Pobox-Relay-ID: B3EA58D4-7345-11E8-AF18-67830C78B957-09356542!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 18, 2018 at 6:19 AM Alban Gruin <alban.gruin@gmail.com> wrote:
+When testing a reworded root commit, ensure that the squash-onto commit
+which is created and amended is still the root commit.
+
+Suggested-by: Phillip Wood <phillip.wood@talktalk.net>
+Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Todd Zullinger <tmz@pobox.com>
+---
+Hi Johannes,
+
+Johannes Schindelin wrote:
+>On Mon, 18 Jun 2018, Todd Zullinger wrote:
+>> Phillip Wood wrote:
+>>> On 15/06/18 05:31, Johannes Schindelin via GitGitGadget wrote:
+>>>>
+>>>> From: Todd Zullinger <tmz@pobox.com>
+>>>>
+>>>> +test_expect_failure 'rebase -i --root reword root commit' '
+>>>> +  test_when_finished "test_might_fail git rebase --abort" &&
+>>>> +  git checkout -b reword-root-branch master &&
+>>>> +  set_fake_editor &&
+>>>> +  FAKE_LINES="reword 1 2" FAKE_COMMIT_MESSAGE="A changed" \
+>>>> +  git rebase -i --root &&
+>>>> +  git show HEAD^ | grep "A changed"
+>>>
+>>> I wonder if it should also check that HEAD^ is the root commit, to make
+>>> sure that the squash-onto commit that's created and then amended has
+>>> been squashed onto.
+>>
+>> Hmm, is that something which other tests don't cover or an
+>> issue that could affect 'rebase -i --root' with reword
+>> differently than other 'rebase -i' commands?
+>>
+>> I admit I'm not well-versed in the rebase -i tests and I
+>> focused only on creating a test which demonstrated the bug I
+>> noticed.
 >
-> This rewrites setup_reflog_action() from shell to C.
+> I think we should test this here, to make sure it is tested, and it should
+> be as easy as:
 >
-> A new command is added to rebase--helper.c, =E2=80=9Csetup-reflog=E2=80=
-=9D, as such as a
-> new flag, =E2=80=9Cverbose=E2=80=9D, to silence the output of the checkou=
-t operation
-> called by setup_reflog_action().
+>        test -z "$(git show -s --format=%p HEAD^)"
 >
-> The shell version is then stripped in favour of a call to the helper. As
-> $GIT_REFLOG_ACTION is not longer set at the first call of
-> checkout_onto(), a call to comment_for_reflog() is added at the
-> beginning of this function.
->
-> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
-> ---
->  builtin/rebase--helper.c   |  9 +++++++--
->  git-rebase--interactive.sh | 16 ++--------------
->  sequencer.c                | 31 +++++++++++++++++++++++++++++++
->  sequencer.h                |  3 +++
->  4 files changed, 43 insertions(+), 16 deletions(-)
->
-> diff --git a/builtin/rebase--helper.c b/builtin/rebase--helper.c
-> index d2990b210..d677fb663 100644
-> --- a/builtin/rebase--helper.c
-> +++ b/builtin/rebase--helper.c
-> @@ -12,12 +12,12 @@ static const char * const builtin_rebase_helper_usage=
-[] =3D {
->  int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
->  {
->         struct replay_opts opts =3D REPLAY_OPTS_INIT;
-> -       unsigned flags =3D 0, keep_empty =3D 0, rebase_merges =3D 0;
-> +       unsigned flags =3D 0, keep_empty =3D 0, rebase_merges =3D 0, verb=
-ose =3D 0;
->         int abbreviate_commands =3D 0, rebase_cousins =3D -1;
->         enum {
->                 CONTINUE =3D 1, ABORT, MAKE_SCRIPT, SHORTEN_OIDS, EXPAND_=
-OIDS,
->                 CHECK_TODO_LIST, SKIP_UNNECESSARY_PICKS, REARRANGE_SQUASH=
-,
-> -               ADD_EXEC, APPEND_TODO_HELP, EDIT_TODO
-> +               ADD_EXEC, APPEND_TODO_HELP, EDIT_TODO, SETUP_REFLOG
->         } command =3D 0;
->         struct option options[] =3D {
->                 OPT_BOOL(0, "ff", &opts.allow_ff, N_("allow fast-forward"=
-)),
-> @@ -27,6 +27,7 @@ int cmd_rebase__helper(int argc, const char **argv, con=
-st char *prefix)
->                 OPT_BOOL(0, "rebase-merges", &rebase_merges, N_("rebase m=
-erge commits")),
->                 OPT_BOOL(0, "rebase-cousins", &rebase_cousins,
->                          N_("keep original branch points of cousins")),
-> +               OPT_BOOL(0, "verbose", &verbose, N_("verbose")),
+> Hopefully you beat me to it, otherwise I will try to take care of this
+> tomorrow.
 
-verbose is quite a popular flag name, such that the option parsing
-dedicated it its own macro OPT__VERBOSE.
+With luck, this will save you a few minutes, assuming the
+commit message is reasonable (or can be improved with help
+from Phillip and others). :)
 
+Or Junio may just squash this onto js/rebase-i-root-fix.
 
-> +int setup_reflog_action(struct replay_opts *opts, const char *commit,
-> +                       int verbose)
-> +{
-> +       const char *action;
-> +
-> +       if (commit && *commit) {
+Thanks.
 
-While this is defensive programming (checking the pointer before dereferenc=
-ing
-it, the first condition (commit =3D=3D NULL) should never be false here,
-as the caller
-checks for argc =3D=3D 2 ? Maybe we could move the logic of the whole
-condition there
+ t/t3404-rebase-interactive.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-       if (command =3D=3D SETUP_REFLOG && argc =3D=3D 2 && *argv[1])
-               return !!setup_reflog_action(&opts, argv[1], verbose);
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index e500d7c320..352a52e59d 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -977,7 +977,8 @@ test_expect_success 'rebase -i --root reword root commit' '
+ 	set_fake_editor &&
+ 	FAKE_LINES="reword 1 2" FAKE_COMMIT_MESSAGE="A changed" \
+ 	git rebase -i --root &&
+-	git show HEAD^ | grep "A changed"
++	git show HEAD^ | grep "A changed" &&
++	test -z "$(git show -s --format=%p HEAD^)"
+ '
+ 
+ test_expect_success C_LOCALE_OUTPUT 'rebase --edit-todo does not work on non-interactive rebase' '
+-- 
+Todd
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Anyone who is capable of getting themselves made President should on
+no account be allowed to do the job.
+    -- Douglas Adams, "The Hitchhiker's Guide to the Galaxy"
 
-as then we could loose the outer conditional here.
