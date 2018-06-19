@@ -2,98 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2AE6D1F403
-	for <e@80x24.org>; Tue, 19 Jun 2018 16:20:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC0AA1F403
+	for <e@80x24.org>; Tue, 19 Jun 2018 16:21:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966597AbeFSQUz (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Jun 2018 12:20:55 -0400
-Received: from mail-ot0-f193.google.com ([74.125.82.193]:41353 "EHLO
-        mail-ot0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S966480AbeFSQUy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jun 2018 12:20:54 -0400
-Received: by mail-ot0-f193.google.com with SMTP id d19-v6so302724oti.8
-        for <git@vger.kernel.org>; Tue, 19 Jun 2018 09:20:54 -0700 (PDT)
+        id S966784AbeFSQVn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Jun 2018 12:21:43 -0400
+Received: from mail-wr0-f178.google.com ([209.85.128.178]:42163 "EHLO
+        mail-wr0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S966993AbeFSQVn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jun 2018 12:21:43 -0400
+Received: by mail-wr0-f178.google.com with SMTP id w10-v6so263039wrk.9
+        for <git@vger.kernel.org>; Tue, 19 Jun 2018 09:21:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=wbcUsr9PeYV5kvCZBib6lnZ5guG5lecBVaRKy4GCu4Y=;
-        b=M7ZAgu8jn0iPu0x3SH9rOtNEcoS8GycCRIBwhWC/QzpCVFz9b1V72XMOOQZgCaqrN7
-         8POHriTOXcwrMyVV7BM5JyZMMewHlA4sdyV471ZSXowGCvtrOhP+tz613wCuz5xzFJt/
-         dIS8tSUKcgw1StGCHhwL7Wk1AxDTKEgxGzwCB6yPYing35nc0raPIto40Z/0usuuHjK2
-         K4jKNz35KLijM/pZWFwvFxN5SQLNCKcwgb7TP7bVcSPKPv+ebYQHUW6xhhX16H/LOeH/
-         JePPUDwUjUfnuyBxZ04K7+Wiv7mqLU+iB/0YKk88r9wzd9tXQ76/HmuBY7uKVZx27c+W
-         MGqw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=1yYmzclksAijndCBpCuPpPDkLF9owU1jmAPy/P6593k=;
+        b=Yo/czT4PSrsxCqHAWzyvOy52RVAfVSvaRD+DEHwbxYw13MFfIBc2yVvPMBs//d3CO/
+         7btUWjOyB0vMJal4Ri2ZlpK+IM6OaJpF0dDDINaJtFzlY/SRK/GUnN9S2LFCTKFRX5+f
+         5PFi96sGMGe1Uau64NnKrqVbt4nrhDJcGANQ70q5RLtHF4TZRH5sD/BktSPYFwfCoJfZ
+         cFmMEEpAg6DCSBS0bXK8l6vid9EFFXIylDuX44a4LPFi/NSWyabzakdM9eeXmT3kuRkz
+         dAzVDi5OV55340hAGs1f1YNYXudFRUYsCq+85oUugwsQfodyFkDcOJTQR9eE2gC3ejQ4
+         ddng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=wbcUsr9PeYV5kvCZBib6lnZ5guG5lecBVaRKy4GCu4Y=;
-        b=Fz1HxJkkEP8vJMRbd15D9I89+qOHInklDeYZE6re0BQgQLCtmnJgHRJsGdlTR23xyw
-         dEyyvgJamSvfhRIrqIjy3zLJ3bHsmFW+P9P5vqySkF0Gr5x8zqIMKoqrFASYvGQhSGUo
-         rEuaMTl/Mbfo17Gk+GtSXyxbgl/ct3Q8Slp1ypm+p3SA8BhWIjadDnmsRPWfZGEs1s4M
-         wTkdI5fY8ShxnfCz0m9CSKeCtTwwckQNpC2RqgUokNgOU+kB2zxx/uvfisG/4rbtLFp3
-         VKk/nMCAK7uM9CipDm8t5+MxAqRgiYLOOjbdmyZ8iJqAo/yIoxWO/q0Aa1lBWXmQuSSG
-         /nKQ==
-X-Gm-Message-State: APt69E34JCWuX4YFERfocVNfiPS9iMHTkWJFzjFuRdyb+NnY/35ru9QT
-        iNbX6WXyJT3iMNDjyonlHSmrUDbCdSzlmLWU9KfNNQ==
-X-Google-Smtp-Source: ADUXVKKZnMkD13K80m8P0gJ6klKuj8nDG8/4uAnQ4EVFB+kDqicNV1vhNczry3cxKuiuzwMAPtH2a/XsnQLkdPrLBQ0=
-X-Received: by 2002:a9d:55a8:: with SMTP id m37-v6mr11440605oth.75.1529425253828;
- Tue, 19 Jun 2018 09:20:53 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=1yYmzclksAijndCBpCuPpPDkLF9owU1jmAPy/P6593k=;
+        b=sMcd82pD+fl/aIFWGRTc7mx5M15B1YJK6E3cey3Ue3rE8nl9EfZUkhIseRWaU2iFrS
+         iC2QYPf+bqeU4lyrfRcr+01LwYECF5PDrRXn3jEHExhy5npP/tJrmWoUGFtrotCzsgEu
+         8Z6Ab7oLDqF5yN3ycxgnuNv9gamNCVTZ9E4Pv6+TvXq8rbAC25lSyHxQLvBN+a924Ah/
+         nWAhIaD/dVUBWN1v4UH+EEKloRoxCNYwaWfycGtP2zflOo5Y7DR0YdqSCLqEjXV3Rxwg
+         qfz4WpbuNbahsbDq3gLM/F8P6LjanSKPpUeFkB9ryem5szetwR1YZSJuEVsy6yQh9kBM
+         n7HQ==
+X-Gm-Message-State: APt69E1B35xrQBSrBrb0GVJ/QPyAIi9ROEBfpOW2fPyrJzEb1bOxM+SS
+        VzXTNL2/qcI9EWByO4ceBwI=
+X-Google-Smtp-Source: ADUXVKIVz8dmEYHTwZgahewzccRiN0qXPLha1hTt03bTbk2BmX/NmRGOcQ56egvMpyGr/aklDUzC7A==
+X-Received: by 2002:adf:ad4c:: with SMTP id p70-v6mr13559537wrc.44.1529425301572;
+        Tue, 19 Jun 2018 09:21:41 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id g205-v6sm532916wmg.43.2018.06.19.09.21.40
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 19 Jun 2018 09:21:40 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Todd Zullinger <tmz@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@talktalk.net>, git@vger.kernel.org
+Subject: Re: [PATCH] t3404: check root commit in 'rebase -i --root reword root commit'
+References: <pull.3.git.gitgitgadget@gmail.com>
+        <d59805a43ddaf4bbd4528a2b7afa9809eca9b86b.1529177176.git.gitgitgadget@gmail.com>
+        <484fe825-0726-a027-1187-de00df6406d5@talktalk.net>
+        <20180618164958.GO11827@zaya.teonanacatl.net>
+        <nycvar.QRO.7.76.6.1806182343421.77@tvgsbejvaqbjf.bet>
+        <20180618221942.GQ11827@zaya.teonanacatl.net>
+Date:   Tue, 19 Jun 2018 09:21:40 -0700
+In-Reply-To: <20180618221942.GQ11827@zaya.teonanacatl.net> (Todd Zullinger's
+        message of "Mon, 18 Jun 2018 18:19:42 -0400")
+Message-ID: <xmqqa7rqwxuz.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20180618111919.GA10085@book.hvoigt.net> <CACsJy8CJGditaq4CZfJctVAe9QCdapWQW=W--AumH-4RWWd=vA@mail.gmail.com>
- <20180618181215.GB73085@google.com> <20180619103632.GC10085@book.hvoigt.net>
- <CACsJy8DQ-GGEDiV0iA2kTgNgHcT1sSX2Oqb7VZcjyK1nBOFv+A@mail.gmail.com> <20180619160956.GA21384@duynguyen.home>
-In-Reply-To: <20180619160956.GA21384@duynguyen.home>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 19 Jun 2018 18:20:27 +0200
-Message-ID: <CACsJy8CR=Oo8pEGK=5uSizQKi1Fg8eitbLO19LjqiR53uDC0hA@mail.gmail.com>
-Subject: Re: Adding nested repository with slash adds files instead of gitlink
-To:     Heiko Voigt <hvoigt@hvoigt.net>
-Cc:     Brandon Williams <bmwill@google.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 19, 2018 at 6:09 PM Duy Nguyen <pclouds@gmail.com> wrote:
-> On Tue, Jun 19, 2018 at 05:16:17PM +0200, Duy Nguyen wrote:
-> > No actually, we could do better. Let me see if I can come up with a
-> > patch or something...
->
-> OK. What we currently do is, when we search for potential untracked
-> paths for adding to the index, we unconditionally ignore anything
-> inside ".git". For example, if "foo" is a submodule, "git add ." will
-> visit "foo/.git" then ignore its content completely.
->
-> We could do something very similar: when we visit "foo", if "foo/.git"
-> exists, we ignore it as well. In other words, we extend from "ignore
-> anything inside a git repository" to "ignore anything inside any other
-> git worktree".
->
-> The following patch basically does that. If you specify "git add
-> foo/bar". It will still visit "foo" first, realize that it's a
-> submodule and drop it. At the end, it will not report foo/bar as an
-> untracked (i.e. add-able) entry, so you can't add it.
+Todd Zullinger <tmz@pobox.com> writes:
 
-Another note (which I added, then thought otherwise and dropped). I
-believe this approach also solves the problem that
-die_path_inside_submodule() tries to work around.
+> index e500d7c320..352a52e59d 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -977,7 +977,8 @@ test_expect_success 'rebase -i --root reword root commit' '
+>  	set_fake_editor &&
+>  	FAKE_LINES="reword 1 2" FAKE_COMMIT_MESSAGE="A changed" \
+>  	git rebase -i --root &&
+> -	git show HEAD^ | grep "A changed"
+> +	git show HEAD^ | grep "A changed" &&
+> +	test -z "$(git show -s --format=%p HEAD^)"
+>  '
 
-When you feed a path inside a submodule, read_directory() code does
-not realize it and walk through like it's part of the current worktree
-(wrong!). But if read_directory() does the right thing from the
-beginning, you don't need this trick. We don't even need this trick if
-a submodule is not real on worktree (no ".git" directory there) but
-registered in the index as a git link because the d/f check should
-catch that and complain loudly anyway when you add a new entry.
--- 
-Duy
+The additional test probably will pass when HEAD is a root commit by
+failing to refer to HEAD^, resulting an empty output from show.  The
+previous step would also give an error and won't emit anything that
+would match "A changed", so it probably is OK, though.
