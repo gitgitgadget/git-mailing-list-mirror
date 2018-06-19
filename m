@@ -2,87 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E4181F403
-	for <e@80x24.org>; Tue, 19 Jun 2018 18:09:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6EDE61F403
+	for <e@80x24.org>; Tue, 19 Jun 2018 18:18:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967000AbeFSSJa (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Jun 2018 14:09:30 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:53247 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S966738AbeFSSJ3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jun 2018 14:09:29 -0400
-Received: by mail-wm0-f68.google.com with SMTP id p126-v6so1864955wmb.2
-        for <git@vger.kernel.org>; Tue, 19 Jun 2018 11:09:29 -0700 (PDT)
+        id S967141AbeFSSSi (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Jun 2018 14:18:38 -0400
+Received: from mail-yw0-f193.google.com ([209.85.161.193]:36732 "EHLO
+        mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S966078AbeFSSSh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jun 2018 14:18:37 -0400
+Received: by mail-yw0-f193.google.com with SMTP id t198-v6so234019ywc.3
+        for <git@vger.kernel.org>; Tue, 19 Jun 2018 11:18:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=PA/ADTupfj4AAa95sn5ye5DfWou8VF9mUOEjUrRQFxY=;
-        b=joMmH8qKP/PWl9drZHYglYWgvKSkjEeiXm5kHyalmMRuSLEEw8kTwl7sQD9NOXlkxb
-         EfrXBJEyfcD684RxKJ74T/X1WifDZz6Auw3T+nRpZXCSdzz1Jo48/c6fKVwabH1YE/q1
-         n/RlTIiW6qcfO8kqNrDMTnnTt0XIoHG41THvtPPJtCZ0jLwEd6ojEak1EoBMsvexKm/R
-         z29JHlQ88nMqBmFjShKx8vbYcZIMISZEVah25xxQ3B8aYYD3YPj3V9mlkuTEPuSDBxAg
-         a/CpF9wEyq9EFP4tSQM1EjDn/8OEGbdZ2jtsOubX7YbtmKyD5M1mwZuradqIzs43XC6v
-         iuHA==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=GF2gr4snalkrkgSMbV0sIMaCbJBrcBQ/ODdegtl30hs=;
+        b=KVCtB/E/w2p+fv8pSrU+mBDybNbc+PW5EHNyZLHiyj7fFJASecCVrn3g4xok173BRy
+         iEIkc4NKPx0iQLgMqg+xD1Aqvss6Px4YIwpwLb6RJALgqlEWDNuUkU6FlgCIdwfOxeiE
+         HLrwVZ11aoIqKv1L2HZIwlJD3+02YYHwOG2bsF7Rc1wqPfoEWdTWmV0ifBwDKMd9WL60
+         pkbup5xA8UL+kXuoZkWkV3VyDNt3KP/akypbOX6krp8JRbdN68qzKHk0+w7d6gym0ZBU
+         PjFhqZbki2EEFc5e0rjoeQQOCZXphmGb0otZ2nK1Me3mgYBCpXSI6eDzhF80BiQ1bgG2
+         OkEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=PA/ADTupfj4AAa95sn5ye5DfWou8VF9mUOEjUrRQFxY=;
-        b=V24ya+HNs5aFVahQuZ0FGXkj5bKyXX92omfFDQ5UTUM80rixvJjr3PSdFT/5Jq+d6/
-         bND0cH1JkgMUjdnuar7VQzli8ecqwMSZ55oApWlPE4L/eSizwBIUbrTNbZvAhlGeYumH
-         ESaKHYrjogwokLP+5s24XphVZMOJXeIF3Ij4Ouy2Xeo8mOQasAlJG1orEbIE0s9VXHTq
-         q2JAImh0GIQVgBHF8EiIi3gsfuVO6GT2eDD44ORdUj3Gd47PsSOXyz4l0fajJPGn6Ke+
-         fQTLBH8Tc76pOFYaU27fvlUX6UuTkyivf6LhOc8RTqx410/IZQ0zwVyENRa399fHqEbL
-         Hf0A==
-X-Gm-Message-State: APt69E1ZhZezYnRsHs0/8Iq8Yediw4sNVxv2HB1PKI80GmlkX4zRUl+Y
-        t1yNdYwQ8JTy8ubQqxbXhVo=
-X-Google-Smtp-Source: ADUXVKIEBzJ7EVUNk21Oc3pY0a7/YKf92hcX1c61+HI3Qhx7GFwWPmUcT5A4393W8zUxlQI9Iy7eow==
-X-Received: by 2002:a1c:45db:: with SMTP id l88-v6mr11929473wmi.19.1529431768489;
-        Tue, 19 Jun 2018 11:09:28 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id h77-v6sm1060208wmd.9.2018.06.19.11.09.27
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 19 Jun 2018 11:09:27 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        avarab@gmail.com
-Subject: Re: [PATCH 0/7] grep.c: teach --column to 'git-grep(1)'
-References: <cover.1529365072.git.me@ttaylorr.com>
-        <20180619163506.GB22034@sigill.intra.peff.net>
-        <5282e3bb-bf7a-ab3a-98dc-d29ff1c37468@web.de>
-        <20180619174846.GA27820@sigill.intra.peff.net>
-        <xmqqo9g6vet5.fsf@gitster-ct.c.googlers.com>
-        <20180619180525.GA28203@sigill.intra.peff.net>
-Date:   Tue, 19 Jun 2018 11:09:27 -0700
-In-Reply-To: <20180619180525.GA28203@sigill.intra.peff.net> (Jeff King's
-        message of "Tue, 19 Jun 2018 14:05:25 -0400")
-Message-ID: <xmqqfu1iveaw.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=GF2gr4snalkrkgSMbV0sIMaCbJBrcBQ/ODdegtl30hs=;
+        b=bOXx3z25axFXUvDsHdjcdW5yIlEoTLM+7pY7tZI3bHfZCKT0+Dtoj3DIAkBXMKSTKe
+         rKCJTe5DQqFZQJOPNk6gu+cN0jRN4O0xuvNppMEA3CdvF7RGMkaffJ60LPiPFbTVtVrH
+         +YQxIy+4T82r/Wf+W+SphEHgilVGwcXmpSd48L8dJfwoy3eyHwYdA8XAz5NnUa76b6OS
+         Q1ApdpzTVoUy255dT1W06WW2RgVyvf1iRjIgUf9qad9/dFSJjYg7HfHpNTZcpTQ8nPAU
+         fr0ClOPyE+HzUhonzppzoYcePDWBa056vRxISXttUT92Ey9Q20TuLoO6m/PFXexa5pO+
+         CWEQ==
+X-Gm-Message-State: APt69E0Ms+hZfLMTKud2wesnurIJFS9/DVYknM466mzicqF716f7Bs2Q
+        gPUSZn2r6QfuX04F66S7eYgpAYw96CcXqsWFLEYmqg==
+X-Google-Smtp-Source: ADUXVKK6hotx7aD6wiS958gCi9EceEFUJs2qit9MZupuUQRk4QLQWEbZ4q4yR1iYHKYFAxLFaGpykAxdQuiApwG4Zc0=
+X-Received: by 2002:a81:e544:: with SMTP id c4-v6mr8489800ywm.345.1529432316071;
+ Tue, 19 Jun 2018 11:18:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <xmqqh8mj70w6.fsf@gitster-ct.c.googlers.com> <20180604150543.7304-1-xiaolong.ye@intel.com>
+In-Reply-To: <20180604150543.7304-1-xiaolong.ye@intel.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 19 Jun 2018 11:18:25 -0700
+Message-ID: <CAGZ79kakUs9A4jSXv6NtsAQtOcaHRPTZOA-X_t_hUHsh50p=+A@mail.gmail.com>
+Subject: Re: [PATCH] format-patch: clear UNINTERESTING flag before prepare_bases
+To:     Xiaolong Ye <xiaolong.ye@intel.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Eduardo Habkost <ehabkost@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> Even if it's a double-inversion? The reason we carry both `col` and
-> `icol` is that it allows:
+On Mon, Jun 4, 2018 at 8:09 AM Xiaolong Ye <xiaolong.ye@intel.com> wrote:
 >
->   git grep --not --not --not --not -e a
->
-> to still say "we found 'a' here". That's a dumb thing to ask for, but it
-> is true in the end that we show lines with "a" (and will colorize them
-> as such).
+> When users specify the commit range with 'Z..C' pattern for format-patch, all
+> the parents of Z (including Z) would be marked as UNINTERESTING which would
+> prevent revision walk in prepare_bases from getting the prerequisite commits,
+> thus `git format-patch --base <base_commit_sha> Z..C` won't be able to generate
+> the list of prerequisite patch ids. Clear UNINTERESTING flag with
+> clear_object_flags solves this issue.
 
-Yes.  I think the code is doing too much to cater to a dumb request
-;-)
-
+This makes sense;
+Reviewed-by: Stefan Beller <sbeller@google.com>
