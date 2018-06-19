@@ -2,85 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 43C201F403
-	for <e@80x24.org>; Tue, 19 Jun 2018 16:59:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 736B01F403
+	for <e@80x24.org>; Tue, 19 Jun 2018 17:02:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966700AbeFSQ7U (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Jun 2018 12:59:20 -0400
-Received: from mail-wr0-f178.google.com ([209.85.128.178]:36817 "EHLO
-        mail-wr0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S966768AbeFSQ7T (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jun 2018 12:59:19 -0400
-Received: by mail-wr0-f178.google.com with SMTP id f16-v6so399978wrm.3
-        for <git@vger.kernel.org>; Tue, 19 Jun 2018 09:59:18 -0700 (PDT)
+        id S966655AbeFSRCY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Jun 2018 13:02:24 -0400
+Received: from mail-oi0-f66.google.com ([209.85.218.66]:39651 "EHLO
+        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S966514AbeFSRCX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jun 2018 13:02:23 -0400
+Received: by mail-oi0-f66.google.com with SMTP id t22-v6so376189oih.6
+        for <git@vger.kernel.org>; Tue, 19 Jun 2018 10:02:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=HW/D/+KCso7Fcz0BdzJoA+e/dx010rCIPRPwVX8/2gc=;
-        b=Ri5BkuvzFSeBiU2F/1kU/bNqNxUbmweSPtF2AC1aU6DOCxBxbOid2J5nohB4qxFvVN
-         5vmiv29YAcaj1zdg/VZPP5qzXI0Y6AUekhHiNW5hjC2c/99asqxY9gpM9fe2NPKKFlh1
-         3kPXjb1cBCgPxIEDu/IphVxTcrxzuShxwOhjTF0HffFfhKkkUiorJw0+/jP+89y1we9m
-         bm5VqwvzaNJP/yIU13haBeqBQjT7Dw42aSP6JGT6PI37dJl2sGUkR/+TdxC5NDXU9h+f
-         4dpIq4BVDbrEEDoXR678gyOdc4n7qVDvRdG9tUPpiiCkkeiq59HFAWk5XlvO0lMCSQPv
-         pjSQ==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=from:date:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=wvLT2+B41db4FlpnSOFRbGEjbVm8o/i5TdEp1W9r2pw=;
+        b=QUXwHvda3WIbOWISaWgF5vlbyog3PUZy6H32YGUx/wskt2H6lkhfnAMzH1cvM+Kzqd
+         Ak6LIgqYn5aNJzSYVutb15E8hnGcMSDdMlUNELQ1nc7tftaN6ppot/6jqhMwrj/qFi7v
+         FYVo96F+dPUFMJnJtV6+Acj/H1X9CpwWpMQ26d7OAzgH3lpWN1rQeh6gsIP/q25dicU8
+         MCtKUyLvgnxEaInGK8lfxM3AA+6YN+eSPR4eWt9z7pQFhzTHH77wQ79OBN5xX7Ie00K8
+         gjnyjCCVOkSXtR4YOEZn571sTWN45et6UG7blXR4nOGDkEBWLs2X02j1XLrSrbxpOl75
+         rNWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=HW/D/+KCso7Fcz0BdzJoA+e/dx010rCIPRPwVX8/2gc=;
-        b=s0n9HcgxKUOW/OsDVcm90j3mzaGCqFHoI8x2Lbm45XU5o8kZxkkv1x1iD3Sbly7Kgl
-         A6jiWDqpuwsNdYAa3WG+Kpxq6kQYcnvRtnrAtGp2RL/8nyt2aCQaILYiCe8hh30rDwHG
-         jFOVo+hRh7cfsoZ4Pg03mpX7l04nCxlvN+iH3hXcMUXAWT2VsP8rUI4t55dUtbNWEPiG
-         b9eA08zziYRnFXC24lVvRx0/5TateS6yETrPaHmui4hODGFP+v6850cSHBpUsVCRYi60
-         4oAlMsGLczd650tUF4UKfuBVgAMjVmAJRvv+Y+CEE5mMwn4DWDkJJpR15yUol4+Benjg
-         jG4g==
-X-Gm-Message-State: APt69E3Uv8ttnb94mE/xVGR6oJD+x07ncACCqYoKiOwsTzV+qCHdL8mm
-        tPE3lQ2/v9pWZTwKJbQNLBQ=
-X-Google-Smtp-Source: ADUXVKJt/RAaYHtuMxd92QGE0Z0QrOAAlGY4nslZWLvXl2soYYKenOu2NRN3CqeFh8kOQtk1oAsB3A==
-X-Received: by 2002:adf:94e3:: with SMTP id 90-v6mr14380896wrr.110.1529427557775;
-        Tue, 19 Jun 2018 09:59:17 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id b190-v6sm790752wma.24.2018.06.19.09.59.16
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 19 Jun 2018 09:59:16 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>, ch <cr@onlinehome.de>
-Subject: Re: [PATCH v3] sequencer: do not squash 'reword' commits when we hit conflicts
-References: <nycvar.QRO.7.76.6.1806182326420.77@tvgsbejvaqbjf.bet>
-        <20180619124651.17425-1-phillip.wood@talktalk.net>
-        <CABPp-BHFuqh1KVPod+chZD=AKGVBd_apOt6F9oTaZ0ZA66G03Q@mail.gmail.com>
-Date:   Tue, 19 Jun 2018 09:59:15 -0700
-In-Reply-To: <CABPp-BHFuqh1KVPod+chZD=AKGVBd_apOt6F9oTaZ0ZA66G03Q@mail.gmail.com>
-        (Elijah Newren's message of "Tue, 19 Jun 2018 07:29:12 -0700")
-Message-ID: <xmqqsh5ivhjw.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=wvLT2+B41db4FlpnSOFRbGEjbVm8o/i5TdEp1W9r2pw=;
+        b=l8QQLJ08XTuLHAoYBiXks8XUuM+gD79QvKYQzwPFRx4DpUGzA6WfM6Dm8cQLqGaCme
+         Q9ksvePOVw7RhP1LZV9P4l5WboqMO41SpQoaEMD01+B4+rn0T+8qkSMvhdptMGwFM6Pm
+         FK+6IOOFSM5TKwdN/p9zayooPgxNl1/uSN6dWRxOM0l9nIc53pCs63QJ0tgL1phpEy7L
+         QcqTPYfh8LBSoyFUkJ9UYVf92oBz3lh49rLKzeEz5IygDJ9khsbueIHgYS0GiKY3vrF0
+         KIeOOrv3WZBvGzU4JTwn6Z0WWRVi758+EhIxU6ud522mDo4cC0jlWnRV1EQbxnnuFpLP
+         Dong==
+X-Gm-Message-State: APt69E3ibDVjfFNA80JdNn9UmFnmwKudsd2wWFqa/PgucPWpOszJYjkb
+        kPi13/csCPBK6Sue56tpfNxGiA==
+X-Google-Smtp-Source: ADUXVKIVw1mcsUDuzditvB9caWna/B5fptxb8k8lI2kFcs7PX85MZbc8FyoE4RIAqZyn14lishaqRA==
+X-Received: by 2002:aca:a646:: with SMTP id p67-v6mr9193797oie.149.1529427742755;
+        Tue, 19 Jun 2018 10:02:22 -0700 (PDT)
+Received: from localhost ([107.217.158.181])
+        by smtp.gmail.com with ESMTPSA id u15-v6sm102589oif.19.2018.06.19.10.02.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 19 Jun 2018 10:02:21 -0700 (PDT)
+From:   Taylor Blau <me@ttaylorr.com>
+X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
+Date:   Tue, 19 Jun 2018 12:02:19 -0500
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        avarab@gmail.com, peff@peff.net
+Subject: Re: [PATCH 0/7] grep.c: teach --column to 'git-grep(1)'
+Message-ID: <20180619170219.GA36718@syl.attlocal.net>
+References: <cover.1529365072.git.me@ttaylorr.com>
+ <xmqq1sd2wwpz.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq1sd2wwpz.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+On Tue, Jun 19, 2018 at 09:46:16AM -0700, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+>
+> > Attached is a ``fresh start'' of my series to teach 'git grep --column'.
+> > Since the last time I sent this, much has changed, notably the semantics
+> > for deciding which column is the first when given (1) extended
+> > expressions and (2) --invert.
+> > ...
+> > In the future, I'd like to revisit this, since any performance gains
+> > that we _do_ make in this area are moot when we rescan all lines in
+> > show_line() with --color.
+>
+> Sounds like a plan.  From a quick scan, it seems that this is
+> sufficiently different from the last round so I won't bother
+> rebuilding your "--only" series on top, and instead just drop those
+> two series from the older round and queue this as the new and
+> improved tb/grep-column topic.
 
-> [As an aside, I know there are multiple other outstanding emails for
-> me to respond to, unrelated to this patch.  I'll try to get some time
-> in the next day or two to respond.  Just responding to this one since
-> Junio mentioned picking it up for 2.18.]
+Thank you. I recommend dropping the second series
+(tb/grep-only-matching) entirely for now. I will rebase that on top of
+this so that you can apply it later in the future with ease.
 
-Thanks for a reminder.
+I don't expect the parts of this series that affect that one to change
+much, but I'll hold off on rebasing it in general until this series is
+stable, hopefully soon.
 
-I thought I said that I'll backburner/ignore the topic and expect
-something that can be picked up to be there when I come back after I
-cut 2.18 final, but I ended up coming back to read the topic anyway
-it seems ;-)
+> Thanks.
 
+Thanks,
+Taylor
