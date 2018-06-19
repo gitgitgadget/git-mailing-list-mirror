@@ -2,72 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E9EE1F403
-	for <e@80x24.org>; Tue, 19 Jun 2018 06:54:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A6961F403
+	for <e@80x24.org>; Tue, 19 Jun 2018 08:04:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S937261AbeFSGyK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Jun 2018 02:54:10 -0400
-Received: from mout.gmx.net ([212.227.15.18]:51097 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755803AbeFSGyJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jun 2018 02:54:09 -0400
-Received: from [192.168.0.129] ([37.201.195.106]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M4nt7-1gPU8t0akf-00z0xS; Tue, 19
- Jun 2018 08:54:02 +0200
-Date:   Tue, 19 Jun 2018 08:54:11 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Todd Zullinger <tmz@pobox.com>
-cc:     Phillip Wood <phillip.wood@talktalk.net>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] t3404: check root commit in 'rebase -i --root reword
- root commit'
-In-Reply-To: <20180618221942.GQ11827@zaya.teonanacatl.net>
-Message-ID: <nycvar.QRO.7.76.6.1806190853450.77@tvgsbejvaqbjf.bet>
-References: <pull.3.git.gitgitgadget@gmail.com> <d59805a43ddaf4bbd4528a2b7afa9809eca9b86b.1529177176.git.gitgitgadget@gmail.com> <484fe825-0726-a027-1187-de00df6406d5@talktalk.net> <20180618164958.GO11827@zaya.teonanacatl.net> <nycvar.QRO.7.76.6.1806182343421.77@tvgsbejvaqbjf.bet>
- <20180618221942.GQ11827@zaya.teonanacatl.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:6SjFxtIBHoSoWV8501A0QT04EoSm7tMA42DIb8FRymPjd3YPidu
- ZWpeJXKF0B04emC0QAbH77Y5GOU47XuXR5J9pBOZPdsl4So4s0yB7ZTFfND4qZViogA8ADD
- iPLk8jmyBvOcQN4PjgM+q2mOJ7c8F7HYkTQ4W4J4G2IfEdRMl/yUvNjMjcHJ6gUqFqax7SM
- ousamBojft9rPzErO4NfA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:dh9T4uO29RM=:2sPCi7y/4Esz/rbFJsnjGV
- o2oGsE+gkc1cl29/FvTeJHtPn/LmQgkGUEvaD6A5uNec+YDzsW7AioQhKpsHk9OT87fI9AeLN
- MrnP3juUb8MhnN811uj2h+oWqjROD3eqbncZ6ryp1RpjWorR7LD/1y87Mp9UQcsQFdjbmTcHB
- 5lPZ0a+n4wZDi/JExBLM8Lh13+pIz2RtjVcbe8ibRjIFmpYL7GVGiSnI2a/5nVUsuxo/rotfX
- xteB6u+zHQwBmmW/HC1vdeOUFGye8BYsWUAmxFdgtP1+YEf0gee1rq6NeCSoOcOviONooSxJr
- cv69x54HMRlspoRVvOBCvFUeFOxQ5Rs47KdIFkvani0hYKl+oKGhTUWi8NHqhEzJDTYO+x///
- SCXPsiDR2faCv3c3n0P99MfEeba0PXP+tVpuphVk0vyp2F+Gll/p3i7O4iz9TisFhzxxuoRAV
- /ndGDEe4lGNDRtUuujo4UvJa/xqHix0Pv/4l6OTlItidOm3EYMJLOiUBjljlqsTLwefCS1bfz
- J1h/R6PAe1lRItCRr+M5lSx/WhYNeqFuZfiZtzYpY+lvvD6cvebgy5Itn0LrCH72esCUnme4s
- pLw2B+c90qDounJONHEbAe+INgv7gJdoOT7EJ61q3h9AlW0de6FeNR656KJQtuwdYm0YFiWs1
- psvlb4Dr64KUNY3QdtBOt20XohddIrhmc3npKN30rcqYacgnLCZCk9MBqk1wBTv1EpoCL5NeH
- 3LvDTHgWzS8DJutBkGFfWHSBX5EUinnzvh8TcjidWPGBkXA1HbJ73jyxOpa+2VMwf40IoTWc1
- Rgdqgc0
+        id S937308AbeFSIE2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Jun 2018 04:04:28 -0400
+Received: from mail-wr0-f177.google.com ([209.85.128.177]:44363 "EHLO
+        mail-wr0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756428AbeFSIEU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jun 2018 04:04:20 -0400
+Received: by mail-wr0-f177.google.com with SMTP id x4-v6so19471232wro.11
+        for <git@vger.kernel.org>; Tue, 19 Jun 2018 01:04:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=YMeY6zhhXMTgdHGD2GISEKxcRS2hDQT0OFsM9hy2uE8=;
+        b=ewfVeUayrEx1KTL6tHvxnRWzxFMI37PktGoMT3UQYaUBEzW/HV4mBiXx7XOkwDlZd4
+         zezZW+y5Oes1+8tTYoqOlbTOomeFpUvfTDuFdh0ByvnJ7470cCQDPQMA1hfgzDIfU2Wj
+         vV+l2DwenYSo1Gj1EbJWXpz2iX23byLatTm1M=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=YMeY6zhhXMTgdHGD2GISEKxcRS2hDQT0OFsM9hy2uE8=;
+        b=R2nP9cyy5pTjKLcgfsYZzO6RgW/V0X6BzdLz4MtvwmWMWpAIk/u2EdPFLDn1FbUZhw
+         49Ek1wsAyiKdVsY7c/6mFjBQOfF2z3wN1QfXBdDgahkouw1yO6ZJzgTzNU15lyv/QzY7
+         hZSdmjfTnzpRLLwtUH29uZ9BXhu8hkWLL0Sdwb/M+4sk94YixrQk9slt/hohdLdqSU1K
+         AiYiBlAluL3K+DR/jPM+0FVvYetFbdy4EFN8QaOH5yxCY/tQzCS3VHDmgF2mtM+KKX8I
+         I0zqkTjzIomAjzST52ry1ml6/SWoHuv8Uka8IlaWL6fjl5/YUgLIAOFq5JjnY3BRHbs2
+         Dhuw==
+X-Gm-Message-State: APt69E0eoKJOFs5UrldVjDJeSZygGJYTjOZg1lTxzGF9L5jCoECRwoUw
+        Odwqa3VoZ0F1RVQV+A73TBMn8E6t
+X-Google-Smtp-Source: ADUXVKJCHebrlMSbEGGVUOoCDKl9Sd3C8+VStIZFIROKbFDaHPPhR4O948K/yA0xXprro58XBI5YyQ==
+X-Received: by 2002:adf:878c:: with SMTP id b12-v6mr13670119wrb.92.1529395458505;
+        Tue, 19 Jun 2018 01:04:18 -0700 (PDT)
+Received: from ethel.corp.roku (cpc92728-cmbg20-2-0-cust351.5-4.cable.virginm.net. [82.29.15.96])
+        by smtp.gmail.com with ESMTPSA id r2-v6sm12757215wmb.39.2018.06.19.01.04.17
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 19 Jun 2018 01:04:17 -0700 (PDT)
+From:   Luke Diamand <luke@diamand.org>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Romain Merland <merlorom@yahoo.fr>,
+        Miguel Torroja <miguel.torroja@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Lex Spoon <lex@lexspoon.org>,
+        Andrey Mazo <amazo@checkvideo.com>,
+        Luke Diamand <luke@diamand.org>
+Subject: [PATCH 0/6] git-p4: small step towards Python3 support
+Date:   Tue, 19 Jun 2018 09:04:05 +0100
+Message-Id: <20180619080411.6554-1-luke@diamand.org>
+X-Mailer: git-send-email 2.18.0.rc1.242.g61856ae69a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Todd,
+This patchset is a first small step towards Python3 support for
+git-p4.py.
 
-On Mon, 18 Jun 2018, Todd Zullinger wrote:
+These are all the nice easy changes which can almost be done
+automatically using 2to3.
 
-> When testing a reworded root commit, ensure that the squash-onto commit
-> which is created and amended is still the root commit.
-> 
-> Suggested-by: Phillip Wood <phillip.wood@talktalk.net>
-> Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> Signed-off-by: Todd Zullinger <tmz@pobox.com>
+After these changes, it compiles using Python3, but fails to run.
+That's because of the bytes vs string change in Python3. Fixing that is
+quite a bit harder (but not impossible).
 
-Trusting that this test passes: ACK!
+I have some further changes to address this, but they are quite a bit
+more invasive, and not actually working yet. It's based very loosely on the
+"polystr()" suggestion from Eric on this list.
 
-Ciao,
-Dscho
+It still works fine with Python2.7 and Python2.6.
+
+Luke Diamand (6):
+  git-p4: python3: replace <> with !=
+  git-p4: python3: replace dict.has_key(k) with "k in dict"
+  git-p4: python3: remove backticks
+  git-p4: python3: basestring workaround
+  git-p4: python3: use print() function
+  git-p4: python3: fix octal constants
+
+ git-p4.py | 348 ++++++++++++++++++++++++++++--------------------------
+ 1 file changed, 182 insertions(+), 166 deletions(-)
+
+-- 
+2.18.0.rc1.242.g61856ae69a
+
