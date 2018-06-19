@@ -2,82 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2AD0C1F403
-	for <e@80x24.org>; Tue, 19 Jun 2018 19:13:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B29DF1F597
+	for <e@80x24.org>; Tue, 19 Jun 2018 19:23:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1030331AbeFSTM7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Jun 2018 15:12:59 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55685 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S967138AbeFSTM6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jun 2018 15:12:58 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A6CB7ED4A9;
-        Tue, 19 Jun 2018 15:12:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-        :cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to; s=sasl; bh=owh32X5CUJGdYuYLfoCZTa1XlUc=; b=UAQPwTR
-        5qMwhTv2LPM7DJOXLnzkMedXXDNZX+WHdTekIIzEzaHZQT/1OcbnnhwV8vAHHgEH
-        YlQlud3pGlK7iPjJKjGB0iXlPe585NsT1q5drl2fOCdZqzzzCmgVu2CMjNGPuyQ2
-        c5H4fWM7tPAgaXu8qs/q0uEQfoWGTe/wzaQM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-        :subject:message-id:references:mime-version:content-type
-        :in-reply-to; q=dns; s=sasl; b=cziS3mXTytbRm12QFNcRDuZA1QgciIBtT
-        vlCe9p6hUsliBD9yGl+HV2MklSmoVROg4yyYjnKfSHvHAAU832NbDbnlaBao6lvG
-        i2o1mCWJayQ3M4uM63OdID9jNZ5c82ERyn8jOd5VQMkJk6nNqSdNt9UpaHJ0tnse
-        mc8g2y2New=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9D929ED4A8;
-        Tue, 19 Jun 2018 15:12:55 -0400 (EDT)
-Received: from zaya.teonanacatl.net (unknown [98.111.125.125])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2F235ED4A7;
-        Tue, 19 Jun 2018 15:12:55 -0400 (EDT)
-Date:   Tue, 19 Jun 2018 15:12:53 -0400
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@talktalk.net>, git@vger.kernel.org
-Subject: Re: [PATCH] t3404: check root commit in 'rebase -i --root reword
- root commit'
-Message-ID: <20180619191253.GR11827@zaya.teonanacatl.net>
-References: <pull.3.git.gitgitgadget@gmail.com>
- <d59805a43ddaf4bbd4528a2b7afa9809eca9b86b.1529177176.git.gitgitgadget@gmail.com>
- <484fe825-0726-a027-1187-de00df6406d5@talktalk.net>
- <20180618164958.GO11827@zaya.teonanacatl.net>
- <nycvar.QRO.7.76.6.1806182343421.77@tvgsbejvaqbjf.bet>
- <20180618221942.GQ11827@zaya.teonanacatl.net>
- <xmqqin6ewyv2.fsf@gitster-ct.c.googlers.com>
+        id S967196AbeFSTXe (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Jun 2018 15:23:34 -0400
+Received: from mail-ot0-f201.google.com ([74.125.82.201]:36670 "EHLO
+        mail-ot0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S966263AbeFSTXe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jun 2018 15:23:34 -0400
+Received: by mail-ot0-f201.google.com with SMTP id z25-v6so428371otk.3
+        for <git@vger.kernel.org>; Tue, 19 Jun 2018 12:23:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
+         :cc;
+        bh=DdM98LuccinOfV/LNetqtm+JBZztfby8uObQSV7esB8=;
+        b=ru336Jh0KKUvcDPcPgSoPdpHzWP2M0y8kaJ2eVdkyKjazKcN05suuy8ENh8vKMcB36
+         Ge+1r4w6j40VsjCCOo4dG1gdOzyC2RytdIlrlvS9T0SC/aaAt1OSzxwep8O5pSwS47jW
+         YqFh9S5LhFEGMe3nNSfej8xP/A5vjGAh8H2aXaEdpH7nGtzQMBTBVSPcb6r9je5NGNuF
+         8nUdie4oTwJumOjhK7ExW9QVgxsau/hp835gXW1CvpLIXkLAyZ2C6bkxlrBKrbxX5civ
+         7rV/kEzoIfsmqD8sQlpQQiRnZdUdZzQK9g4dxoaN9AkeoAX/ynVf0HXJdyNmqwGPy73k
+         r47Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
+         :references:subject:from:to:cc;
+        bh=DdM98LuccinOfV/LNetqtm+JBZztfby8uObQSV7esB8=;
+        b=IiivcH9JWQcFZAI3Ova5ebUUZTPjeDm5hr2pXlzsh9EXpxpaqeJP5deoxvQx3DghyF
+         R1Ba0Woaw2RCUL2S1QYxgcXlmmkyvzPXdGI2pqtaXlRowkGmv6ijNw9SZcXC+6ghWbJX
+         9fsPstjOlo9rBzcjyMcCKUGV5T/5k5SJinIXLtMilfwr6O+/dsJFm931vbT/1ji/B4vD
+         lS+8ESUbkESh3wWRRMwNqnGW0FzqXlh1d9T5I8yKhU6CX+gsVObl+cpm5lpwR4KVjtPT
+         g8n3No/TatosHfcved2hSR3chfbB8a9+d9t66vlKe7bVQnk0ZTTaE4mEy+xcaYDhEvt1
+         KuZA==
+X-Gm-Message-State: APt69E3i0K+iuSX+FUAssweD4FZTa/N1EzKTqhgdsroyutzYnwTtp0L/
+        yMvCGv2JZISmIX2ai2bNGeqQjtxsreDZTr2GJ/xh
+X-Google-Smtp-Source: ADUXVKJy5ibnnC5d/gI17TowH6NLgBFADqUwfO/6UezmGfg04QOU4UY4/4T0gZY4wn9Cp3Xqqp/33h7lvRIpdLmvqF1m
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqin6ewyv2.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.9.5 (2018-04-13)
-X-Pobox-Relay-ID: C532987C-73F4-11E8-9A7D-67830C78B957-09356542!pb-smtp2.pobox.com
+X-Received: by 2002:a9d:5b36:: with SMTP id x51-v6mr9137326oth.118.1529436213437;
+ Tue, 19 Jun 2018 12:23:33 -0700 (PDT)
+Date:   Tue, 19 Jun 2018 12:23:30 -0700
+In-Reply-To: <20180619173250.GA199585@google.com>
+Message-Id: <20180619192330.83971-1-jonathantanmy@google.com>
+References: <20180619173250.GA199585@google.com>
+X-Mailer: git-send-email 2.18.0.rc2.347.g0da03f3a46.dirty
+Subject: Re: [PATCH 0/8] ref-in-want
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     bmwill@google.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Todd Zullinger <tmz@pobox.com> writes:
->> Or Junio may just squash this onto js/rebase-i-root-fix.
+[snip]
+
+> > in which we have rarely-updated branches that we still want to fetch
+> > (e.g. an annotated tag when we fetch refs/tags/* or a Gerrit
+> > refs/changes/* branch), having the ref advertisement first means that we
+> > can omit them from our "want" or "want-ref" list. But not having them
+> > means that we send "want-ref refs/tags/*" to the server, and during
+> > negotiation inform the server of our master branch (A), and since the
+> > server knows of a common ancestor of all our wants (A, B, C), it will
+> > terminate the negotiation and send the objects specific to branches B
+> > and C even though it didn't need to.
+> > 
+> > So maybe we still need to keep the ls-refs step around, and thus, this
+> > design of only accepting exact refs is perhaps good enough for now.
 > 
-> Nah, not for a hotfix on the last couple of days before the final.
-> We'd need to build on top, not "squash".
+> I think that taking a smaller step first it probably better.  This is
+> something that we've done in the past with the shallow features and
+> later capabilities were added to add different ways to request shallow
+> fetches.
 
-Indeed.  I somehow missed that you'd merged and pushed the
-changes to master and next when I set this.  I was
-mistakenly thinking it was only on the js/rebase-i-root-fix
-integration branch.
+I think we're agreeing that the smaller step first is better.
 
-Thanks,
+> That being said, if we find that this feature doesn't work as-is and
+> needs the extra complexity of patterns from the start then they should
+> be added.
 
--- 
-Todd
+I agree (although I would be OK too if we decide to do the small
+exact-name step now and then the pattern step later guarded by a
+capability, as long as the project understood that multiple support
+levels would then exist in the wild).
+
+> But it doesn't seem like there's a concrete reason at the
+> moment.
+
+I agree. I thought I had a reason, but not after thinking through the
+ideas I explained in [1].
+
+[1] https://public-inbox.org/git/20180615190458.147775-1-jonathantanmy@google.com/
