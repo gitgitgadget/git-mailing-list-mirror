@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E61B81F403
-	for <e@80x24.org>; Tue, 19 Jun 2018 14:48:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 78D0C1F403
+	for <e@80x24.org>; Tue, 19 Jun 2018 14:52:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757149AbeFSOsf (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Jun 2018 10:48:35 -0400
-Received: from mail-oi0-f68.google.com ([209.85.218.68]:39894 "EHLO
-        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756726AbeFSOsf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jun 2018 10:48:35 -0400
-Received: by mail-oi0-f68.google.com with SMTP id t22-v6so18393062oih.6
-        for <git@vger.kernel.org>; Tue, 19 Jun 2018 07:48:34 -0700 (PDT)
+        id S1756864AbeFSOv6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Jun 2018 10:51:58 -0400
+Received: from mail-oi0-f65.google.com ([209.85.218.65]:39170 "EHLO
+        mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756467AbeFSOv5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jun 2018 10:51:57 -0400
+Received: by mail-oi0-f65.google.com with SMTP id t22-v6so18403791oih.6
+        for <git@vger.kernel.org>; Tue, 19 Jun 2018 07:51:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=+bBr7EOb1EbFULGxzckAA5oZNiYB97/AMsQOf5+sXsA=;
-        b=pDpf9v6HxC4r/jo7gguMU8JFC2O1r/M9rZw0fcTWynouAhpE48ODKYXS2cp8sFujQE
-         373FZAwD3CGGJLGIlHrUuh5MNqyqNJ5B/RDgZtJRL/HNGh9obSaYxygjGivq7BNAoq6g
-         g/Xf7V6kbe9Vo04bjyAKh4BhFZjIBKbQiz3RpgYKDjljw04Y53RS1iGa4SgXNGeBPsjQ
-         HycMIlOOhmUWEOj81/yVo3JS8Rw+rOmVEPWvHH/WubQHOnkKw/FmcxSKvvhOBqGC7+/9
-         RS2/XMxXh6cS5s7igRdiETNZ3aU/I9E6XJVkYOcLF6A4rXqAShNg+D2N6kXJhs+RL95c
-         K/Cw==
+        bh=PyGcEcQYiNvntvHsFLyIVQgJB55oOFhkUFenvHdBxEY=;
+        b=g4eubtXh4/4lwXY+mP8+iVjzd3W/yL+B7zYTynVVTDF42giCFpTOAxif+BPEoyWmsG
+         b5yeK3cBsKV+RO71QJmyj5KBNJ5s7WSgeUh99NN5SBfCRvwkbSn4rieGQk1sB6EZYRdM
+         WkCO2qpiXQ71UF240Xw5gmQjtcOba2b3EU3fl8kEsWJGNTdig/R6pFsLcesrPcsraIHq
+         q9b3lEXA8clgC9CoOAN8TOJ0KSrMMQFLli9AR71DeGaoi0zloGrDD1HXvT0dUdbK73Xh
+         XKOdr3KXAwuc/VB6Yl9bWVoFrznkfOSXPjuVm28mOzLGNmC6CTxoMuc86vWr3WABllzu
+         nQDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=+bBr7EOb1EbFULGxzckAA5oZNiYB97/AMsQOf5+sXsA=;
-        b=VIXerKcBNAfpJdBwbeldpMJ3VxoZ2IRGUvMCgkbix6zBlXjZmZDWTYuuYzKxwO4wuK
-         vXLF8iujnAbkEnq96D6kELO8Os5qKEB0sHDeuuLiiPx6AivEeMvBPDsRwjnH7tlW1knA
-         D8Srw9TQLAkbtnYTlolCon0u18ysQQGOvXmva0SjFEoAGtxpFD9KzGy7JqvfkfxVvX6P
-         3YTVwGB0slbhyPly+uX5VmgWvhnLd32EPrpgLsa/MSfBQaCLAUqLkm2t0qV/U6w/Mz75
-         DzbakW1mCpQOeh+gcA57KOU9lVnrdWXvb3lBZOrekr8YiuoUT8RqEP8ceuiRV+0Qv5bU
-         8j3Q==
-X-Gm-Message-State: APt69E3IH+RLAkcSP7JJBEWASwvRV05qJ+CtE1d/ubn1DCeMmpBrpqes
-        hCRvhwoTg0HZjOzpNLK2KXk02s9AYk1azcGbwEQ=
-X-Google-Smtp-Source: ADUXVKIcY7NlliWCgT2m5KzBGdRNMVDtDegMNoIqmoJi/iYJMh6P6KHUVHlW5AH4M5yBlzQjBv+ZtNFtcIe6gXlsYYA=
-X-Received: by 2002:aca:5144:: with SMTP id f65-v6mr10034785oib.32.1529419714420;
- Tue, 19 Jun 2018 07:48:34 -0700 (PDT)
+        bh=PyGcEcQYiNvntvHsFLyIVQgJB55oOFhkUFenvHdBxEY=;
+        b=t00IbXjyhl3cXUZTF2o/t09rzj7I26ke1T/20V9EfLyH5VXZio2m7Bi2KDyb8RrPI2
+         pKoAvFiOXUQNrsf37Hr2a1Nl77atSYkFZhQj5kM86HqDS5V2LEwjb2MRpk0MhhkuvXiP
+         1kExIKf0uk97R7clIWLoafe1d9G7pTJOWKmwfMD78O/PxpDWOOafRBg/vhBo4Ju8DyOH
+         MxK88cV1sbCLTdKlDs8ckjGm9wOOu3HU4AZLdbV4M55OUiNPvGXwp3VS7WUNq7ZUag89
+         RWXG8IWsszcd/duuKuxWgLUYi1Dxva8N9r4yssdXX0R9uGUlQKrixQ/6ZXvIr68uu2mR
+         vZ/w==
+X-Gm-Message-State: APt69E3QCsZVjrHzsN/wOxEH5S795psrErLxhUssWd/BO8FbtjwUmKxU
+        ELTnbOB43tHw6VNCh9sEZDuAJEi/vUuIzjkfXu8=
+X-Google-Smtp-Source: ADUXVKJT7KkJ0VydZ0urIFvpVyTmfxUEALkjOrbDIvqAhYO1ZqabIp0jlwJEBRcOM+2gm0ZM6zpWqjIhHXLhyKaeFJA=
+X-Received: by 2002:aca:fcc8:: with SMTP id a191-v6mr10144887oii.34.1529419916417;
+ Tue, 19 Jun 2018 07:51:56 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180616054157.32433-1-pclouds@gmail.com> <2c01d5ef-7b92-bf1f-75d0-147910feec08@gmail.com>
-In-Reply-To: <2c01d5ef-7b92-bf1f-75d0-147910feec08@gmail.com>
+References: <a7e0bcd5-5bef-097e-f032-d152d51515aa@gmail.com> <20180619114143.206568-1-dstolee@microsoft.com>
+In-Reply-To: <20180619114143.206568-1-dstolee@microsoft.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 19 Jun 2018 16:48:07 +0200
-Message-ID: <CACsJy8BLGJHZMqoGbx20B+b8qb8cry0DNRmzrjNyEgxqo13NBg@mail.gmail.com>
-Subject: Re: [PATCH 00/15] Kill the_index part 1, expose it
+Date:   Tue, 19 Jun 2018 16:51:29 +0200
+Message-ID: <CACsJy8AkUyU+yECMSoNUm=SSNn+zXN5QbWEvYjkcngp0PzJ9PA@mail.gmail.com>
+Subject: Re: [PATCH 01/15] contrib: add cocci script to replace index compat macros
 To:     Derrick Stolee <stolee@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
@@ -60,17 +60,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 19, 2018 at 1:48 PM Derrick Stolee <stolee@gmail.com> wrote:
-> Personally,
-> I find it difficult to base a patch off of multiple in-progress branches
-> and would rather work off of a "known good" point like the tip of master.
+On Tue, Jun 19, 2018 at 1:41 PM Derrick Stolee <stolee@gmail.com> wrote:
+>
+> Duy,
+>
+> Here is the patch that was generated by `make coccicheck`.
+>
+> Thanks,
+> -Stolee
+>
+> -->8--
+>
+> --- builtin/add.c
 
-You should always base your patches on 'master' (or even 'maint' if
-it's bug fixes that have a chance of entering 'maint'). We all we face
-conflicts at some point (mostly when we rebase after something gets
-merged to master; or things are merged on 'pu'). But git-rerere should
-keep conflict resolution easy (most of the time). I also expect Junio
-to kick and scream when patch series conflict badly on 'pu' and he
-will decide which one goes first and kick others out temporarily.
+Ah right. This is on purpose. I think I mentioned in the commit
+message that builtin/ is not touched. Do we run 'make coccicheck'
+automatically somewhere? If true, I need to move this script elsewhere
+because it's meant to run manually. You run it when you intend to do
+more manual fixups afterwards. For builtin/, I think I'll wait until
+'struct repository *' conversion is complete then maybe fix them one
+by one.
+
+> +++ /tmp/cocci-output-206193-4c91ec-add.c
+> @@ -38,13 +38,13 @@ static void chmod_pathspec(struct pathsp
+>  {
+>         int i;
+>
+> -       for (i = 0; i < active_nr; i++) {
+> -               struct cache_entry *ce = active_cache[i];
+> +       for (i = 0; i < the_index.cache_nr; i++) {
+> +               struct cache_entry *ce = the_index.cache[i];
+>
+>                 if (pathspec && !ce_path_match(&the_index, ce, pathspec, NULL))
+>                         continue;
+>
+> -               if (chmod_cache_entry(ce, flip) < 0)
+> +               if (chmod_index_entry(&the_index, ce, flip) < 0)
+>                         fprintf(stderr, "cannot chmod %cx '%s'\n", flip, ce->name);
+>         }
+>  }
 -- 
 Duy
