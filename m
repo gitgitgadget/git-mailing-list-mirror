@@ -2,133 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B6C41F403
-	for <e@80x24.org>; Tue, 19 Jun 2018 18:50:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 245671F403
+	for <e@80x24.org>; Tue, 19 Jun 2018 19:00:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1030585AbeFSSui (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Jun 2018 14:50:38 -0400
-Received: from mout.web.de ([212.227.17.12]:34379 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1030530AbeFSSuf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jun 2018 14:50:35 -0400
-Received: from [192.168.178.36] ([79.237.242.156]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M41Bm-1gMlbd1Fy6-00rZLw; Tue, 19
- Jun 2018 20:50:19 +0200
-Subject: Re: [PATCH 0/7] grep.c: teach --column to 'git-grep(1)'
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        avarab@gmail.com, gitster@pobox.com
-References: <cover.1529365072.git.me@ttaylorr.com>
- <20180619163506.GB22034@sigill.intra.peff.net>
- <5282e3bb-bf7a-ab3a-98dc-d29ff1c37468@web.de>
- <20180619174846.GA27820@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <6ab94453-84ef-e269-c320-e102b02d6f3b@web.de>
-Date:   Tue, 19 Jun 2018 20:50:16 +0200
+        id S1030410AbeFSTAY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Jun 2018 15:00:24 -0400
+Received: from mail-qt0-f169.google.com ([209.85.216.169]:41141 "EHLO
+        mail-qt0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1030283AbeFSTAX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jun 2018 15:00:23 -0400
+Received: by mail-qt0-f169.google.com with SMTP id y20-v6so749965qto.8
+        for <git@vger.kernel.org>; Tue, 19 Jun 2018 12:00:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=8QdUCl9REcdQ44ak6JWKPkI56hzel1C1qpZrDUki0/M=;
+        b=rs3bIXf/BUP2Cf5FpWlKEDaMgNB3xG0U5O4evJA/tkLLIi2v0Yfgp80dksG8IU+T4v
+         wgjutmM6691ZHY8g/97DOUhAVk70AnZFiGty30G6/KbhC+IfMTJWmbpacsndbWEnpIuv
+         8NqWyV6stziJejn1khBvGDi9zWyGgHjWaJZaKmSByK9ts397GIMcjxzP5TtS4o/45enx
+         cLlJrDWslTiZy+kI9FYw52FjOrrSSLUTOsZMYdrqC9NmXoznqVqWc/OL3+RUILuUBw1X
+         vB8LQrJNLQSdXkjS8VC7f2OT20ijtdaW5QWfcWEPRITsBDUGTl5wU1PyjGFufpQV3Atn
+         skRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=8QdUCl9REcdQ44ak6JWKPkI56hzel1C1qpZrDUki0/M=;
+        b=Kw9XQR+1msUT5m+ZP815/lhyiUVBrkE+L4ucN3QErQiFoawoRAJixpIc999n0zUzgK
+         J86Mq7Xvs3HXzzGiEryXx1chZ0V7O9TJQaapQIvgIfE3vlUR1zl46tYcsyzPdMClGxtS
+         rURN3QAzeaMbaLZ0CWjNtGaXsSkCPiLpz4dpgoPG4ocFR4vzcej2UnRC98jTQdhSVuM/
+         izFxGf11/gWEP16E8fheWv+oggw993wkYllxMTcEp3IDrnWdEbbqmkoZ0Y3KMmfWdGWH
+         BhDof7zN3bUxPHHXT5Fecybl2Fd4/amtjYfphaUqTrLNbvtP5zSSR9Zjin+3Tux3QlVE
+         01fA==
+X-Gm-Message-State: APt69E1zH/P7K0gvseUJvNzO1qT9vrlwSPR5JlfthNMIpHtpVakAqyWU
+        1dip3uuiABRZpmRq27kD5itiAja1
+X-Google-Smtp-Source: ADUXVKIeiVOGmYJ9ol7D/Z3AsTOTBayfai6z9kzjCL0rgoZYF2XJCW7y3fAFSHUXBlZgIiuUZvlJ2Q==
+X-Received: by 2002:a0c:e987:: with SMTP id z7-v6mr15504768qvn.202.1529434822092;
+        Tue, 19 Jun 2018 12:00:22 -0700 (PDT)
+Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id s12-v6sm347377qkl.65.2018.06.19.12.00.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 19 Jun 2018 12:00:21 -0700 (PDT)
+Subject: Re: [PATCH 00/15] Kill the_index part 1, expose it
+To:     Brandon Williams <bmwill@google.com>,
+        Duy Nguyen <pclouds@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+References: <20180616054157.32433-1-pclouds@gmail.com>
+ <CABPp-BG1n4u78JScxrnUc1gecXFjKbwLWMxKKs+ZO17DdH3zvg@mail.gmail.com>
+ <CACsJy8Bib-CFxUs5YBzcgo7LPDospdgSAn+-asCf-YrYnUxqXA@mail.gmail.com>
+ <20180618184111.GC73085@google.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <c030f0d3-9b24-9751-b600-50463b7721fb@gmail.com>
+Date:   Tue, 19 Jun 2018 15:00:20 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.8.0
 MIME-Version: 1.0
-In-Reply-To: <20180619174846.GA27820@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <20180618184111.GC73085@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:7Lc2WpzI6aeLAC4UNaZcETSwZmHr9uMjq2zsDHNID45nKMPs2Fx
- lfRzUtbNV+YT3N6YYmHk0Zizu5eZ4xKFFfT/7bKTzr3/+bKrlTo3WiHjOwb0XjPd+cx6DkW
- 5G+l62RJJSrNPgL5+Lb6hKFs2Ln/xFbpLuStpReBH/nAzxNeHO12xkOjMrzqRUnkD0DZDZi
- GnDcIYjBcresPun24+SFg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:wAW91IT/2bI=:qxcLEq8uFsr8yLW8176Y/H
- 06ScrQKmMbCGvjPAxQSWbmqQYzsxgYEu2quZ4k5GyE1R9crYGvZsvxvYiRPJ5IT1GTEuFJL12
- lhv8u3hg+RcdI5ragNH603jMVLGX9fEI/DqreG+MndbydMY304ZF1bOedyOWtjqRTwKePJ22K
- RDOtNARgnU2c68TYPcH7KYbzyMfprP6YZY0KgGhX2uqxByTIQh9IOfAycdwEOB/U2Nlr3UC+s
- 2aujZFhqNT98EltNerBQkXS5XEUWD4US3fOChQItfZVexfMaFyGY84XejFhswYu5IpVSn6lPx
- wpWMdriz0C310C14+KVrdhq/c1j8y4XRFupcKjnFFfYMrJ9rn3QqeHWbzmfFuL/maV7/g5aOa
- xeHI6nz+pq8Ub0oaSos6rmEMFkpIPSUpV/x+2CSxM0Bea/JYiHAK75LPcXoFgbkfQ/0432AgM
- hGcuS1UEGOXxO/dE8zBRmNA5TA51lnYbQVyZUrf/C3U2dW+e7oYF6GqfD62YoMEBE3n0YwkJs
- ARsf08lQZrJIHXdvmKzkKwbqWzY3djJmrBDWn2PoOcJNjH+lsRa4u8IATQvgdMn6z3GnlO5iA
- 6BWlK0aebUN5B98TiOyfhCBWB+hm18529OCi/EbCN2DT0qNM/VV2fu8VEmSQ/zw9JcHmbcBdx
- yxO/v9YxjF17yUZ7vbSmpet4MaQQdcRN2WQEPIC6AtbF/gu4IVKT+xOWECE2EN+HjofZwjh/T
- dC+a0u06Mu3Yve2n+9MbclyMSrW6RV10MFO7JhJBgzHHXGEqThyW4+hZyyp92+mB7lFMqWmcu
- F9c6P2e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 19.06.2018 um 19:48 schrieb Jeff King:
-> On Tue, Jun 19, 2018 at 07:33:39PM +0200, René Scharfe wrote:
-> 
->>> The key thing about this iteration is that it doesn't regress
->>> performance, because we always short-circuit where we used to. The other
->>> obvious route is to stop short-circuiting only when "--column" is in
->>> effect, which would have the same property (at the expense of a little
->>> extra code in match_expr_eval()).
+
+
+On 6/18/2018 2:41 PM, Brandon Williams wrote:
+> On 06/17, Duy Nguyen wrote:
+>> On Sun, Jun 17, 2018 at 9:02 AM Elijah Newren <newren@gmail.com> wrote:
+>>>
+>>> On Fri, Jun 15, 2018 at 10:41 PM, Nguyễn Thái Ngọc Duy
+>>> <pclouds@gmail.com> wrote:
+>>>> This is the beginning of the end of the_index. The problem with
+>>>> the_index is it lets library code anywhere access it freely. This is
+>>>> not good because from high level you may not realize that the_index is
+>>>> being used while you don't want to touch index at all, or you want to
+>>>> use a different index instead.
+>>>>
+>>>> This is a long series, 86 patches [1], so I'm going to split and
+>>>> submit it in 15-20 patches at a time. The first two parts are trivial
+>>>> though and could be safely fast tracked if needed.
+>>>
+>>> You post this small little patch about unpack-trees.c, mentioning you
+>>> don't know if it's even correct, and bait me into reviewing it and
+>>> then spring on me that it's actually nearly 100 patches that need
+>>> review...   Very sneaky.  ;-)
 >>
->> The performance impact of the exhaustive search for --color scales with
->> the number of shown lines, while it would scale with the total number of
->> lines for --column.  Coloring the results of highly selective patterns
->> is relatively cheap, short-circuiting them still helps significantly.
+>> To be fair, it's all Brandon's fault. If he didn't kick the_index out
+>> of dir.c, it would not conflict with one of my out-of-tree patches in
+>> unpack-trees.c, catch my attention and make me go down this rabbit
+>> hole :D
 > 
-> I thought that at first, too, but I think we'd still scale with the
-> number of shown lines. We're talking about short-circuiting OR, so by
-> definition we stop the short-circuit because we matched the first half
-> of the OR.
+> Haha well this is something I've wanted to do for over a year now, glad
+> you've decided to run with it :)
 > 
-> If you stop short-circuiting AND, then yes, you incur a penalty for
-> every line. But I don't think --column would need to do that.
-
-Good point.  So disabling that optimization for --column (or in even
-in general) shouldn't be a dramatic loss.
-
-> Although there are interesting cases around inversion. For example:
+> I guess I've gotten pretty good at getting people to go down rabbit
+> holes.  First Stefan with the object store refactoring and now you with
+> the index stuff.  All because I wanted git to be more object oriented
+> and have less global state ;)
 > 
->    git grep --not \( --not -e a --and --not -e b \)
-> 
-> is equivalent to:
-> 
->    git grep -e a --or -e b
-> 
-> Do people care if we actually hunt down the exact column where we
-> _didn't_ match "b" in the first case?  The two are equivalent, but I
-> have to wonder if somebody writing the first one really cares.
 
-I'd rather not guess the intentions of someone using such convoluted
-expressions. ;-)
-
-Negation causes the whole non-matching line to match, with --column
-reporting 1 or nothing in such a case, right?  Or I think doing the
-same when the operator is applied a second time is explainable.
-
->> Disabling that optimization for --column wouldn't be a regression since
->> it's a new option..  Picking a random result (based on the order of
->> evaluation) seems sloppy and is probably going to surprise users.
-> 
-> I don't see it as a random result; short-circuiting logic is well
-> understood and we follow the user's ordering.
-
-When ORing multiple expressions I don't pay attention to their order
-as that operator is commutative.  Having results depend on that
-order would at least surprise me.
-
-> I think the place where it's _most_ ugly is "--column --color", where we
-> may color the short-circuited value in the second pass.
-
-The double negative example you gave above has that discrepancy as
-well, but I think in that case it just highlights the different
-intentions (--color: highlight search terms, --column: show leftmost
-match).
-
->> We could add an optimizer pass to reduce the number of regular
->> expressions in certain cases if that is really too slow.  E.g. this:
-> 
-> Yes, we actually discussed this kind of transformation. I think it's way
-> out of scope for this patch series, though. If we do anything more, I
-> think it should be to disable short-circuiting when --column is in use.
-
-Yep.
-
-René
+Let me join the chorus of voices excited to see someone finally taking 
+the plunge to do this!  I'm very happy about seeing this taken through 
+to "the end of the_index."
