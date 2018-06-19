@@ -2,117 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E9041F403
-	for <e@80x24.org>; Tue, 19 Jun 2018 00:06:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C99A21F403
+	for <e@80x24.org>; Tue, 19 Jun 2018 01:07:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S937078AbeFSAG2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Jun 2018 20:06:28 -0400
-Received: from mail-qt0-f201.google.com ([209.85.216.201]:42851 "EHLO
-        mail-qt0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S937064AbeFSAGY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jun 2018 20:06:24 -0400
-Received: by mail-qt0-f201.google.com with SMTP id f8-v6so15378144qth.9
-        for <git@vger.kernel.org>; Mon, 18 Jun 2018 17:06:24 -0700 (PDT)
+        id S937194AbeFSBHV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Jun 2018 21:07:21 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:33438 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S937125AbeFSBHU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jun 2018 21:07:20 -0400
+Received: by mail-pg0-f65.google.com with SMTP id e11-v6so8349649pgq.0
+        for <git@vger.kernel.org>; Mon, 18 Jun 2018 18:07:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
-         :cc;
-        bh=kvJHgXAkQZ6DZ//WVK3ELqVYpDgQsMzhpaEy1bif2CE=;
-        b=BwYiBQICuBVBQeLfB4/CnQGkSxMGWAt05dsZ7tD/z+6hD4qqYwk1zYwq8z6xUEfnlM
-         buVMejc0jqkgnVIN6lH8Jlz/40paNANwRHv373QnlHvQ9jSVLztygaQTQnJu5W7xSJkG
-         4FKQS+GjkUrusuDtf30ZBXv8h+t0GkTUpq7gMVT40OsqBkfpEGpEPwcan6Y8CRf+EiWb
-         6YmUmV8zrKXKEpMwXWKPgdBlsMfmvCXTaAin8w7uKAlMwrw+IGCOeB1zDOfDbRixrw8/
-         HHgGOH9I7pkHLWadXJ+apyN9vwqf4UYWccgZ0qGE8igHj68XFWgtjTiBTUwmjg7vcELY
-         D9sA==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ZJseYP04KWsNphxs9N5JP2gkc63j9nqGdTUdOhzeADc=;
+        b=AUu6tRrnYr4CCCjBxZ70H9DNq4TBvHaSSMLybue3TWPsw9cx+oJB8WcnACKGuje6Mt
+         6HflmX2Fqbsw0Cs91oyqwXQSQl9oK2OYZL1XIEMB+20iE3vN2H+E2DCYT1KSKK6u4z37
+         PBXhnqlJUm3431ZfHPGD3+dDImTsPJxmZ5NIA/3d0RtF+WzQtzB8gdD5rKodPyzNBzMb
+         YKAOacQGys+4VNZ0f17pWslr3Bisnm2MwA/MyWZryC+27qgdJih6Qfg4WUJIfoJQnXfg
+         4UoXu7gntyrOzfkR8qI54h6nrYt6L1SCCYLtzon9OULy9bWZ2BG4Eg8DHmg3aKt0W7Rq
+         96hA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
-         :references:subject:from:to:cc;
-        bh=kvJHgXAkQZ6DZ//WVK3ELqVYpDgQsMzhpaEy1bif2CE=;
-        b=bKnPwv6qAn8RW0vDzFn1DdrqkYUJ3Ew2s/PKDlMMDo0b/UOnkvXmY58vXs81S3ELQ7
-         jarKRJzIZPiVLGKGugDuWhNNSc+8+sQpXbuWTkHsfA85om2KfzcL3TxSs65y1t8eJQUR
-         w1GoeriurM13vkp+XkM4ZcrdivT/dRFIb0n9KTHaK24HOLAAdTt3HeSMufIfzNtUdwqL
-         2rwVKH3d5eN95y0p6PH0c8v/AdDdQest9VmSCCnnbI3T1BsXuXfzsv4j5f6tR4KFTRNA
-         K4Nxgdy/Ca4XNNbwK4ELo69ysX4KzMvkj+lTFFvPv0JXateNhd5jcZGCXTuVVehQD8RS
-         85pA==
-X-Gm-Message-State: APt69E2em9U/PT4UQGIzpyEYaeLPRKrRme1Ex/ZNyx+PPA+l6ZNncOw6
-        vmJF7vXfKFpiC9xQLrk/i37/w5+ukXRT
-X-Google-Smtp-Source: ADUXVKLsVCEzyabjqVKt9fCqSL+rDW22L3fcJXsqT0VA6CQfgXmuPtTsCl3dd7RF0TfxOuv9QdyPufheOdBl
-MIME-Version: 1.0
-X-Received: by 2002:ac8:524e:: with SMTP id y14-v6mr8153418qtn.56.1529366784002;
- Mon, 18 Jun 2018 17:06:24 -0700 (PDT)
-Date:   Mon, 18 Jun 2018 17:06:08 -0700
-In-Reply-To: <20180619000608.147422-1-sbeller@google.com>
-Message-Id: <20180619000608.147422-4-sbeller@google.com>
-References: <20180612235825.12271-1-sbeller@google.com> <20180619000608.147422-1-sbeller@google.com>
-X-Mailer: git-send-email 2.18.0.rc1.244.gcf134e6275-goog
-Subject: [PATCH 3/3] submodule deinit: unset core.worktree
-From:   Stefan Beller <sbeller@google.com>
-To:     sbeller@google.com
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ZJseYP04KWsNphxs9N5JP2gkc63j9nqGdTUdOhzeADc=;
+        b=i0T5WZoRuo6+BjrBT7UoWKgZqB+WpCz4otD6/DBMbZqKnTP4y92Ax3pEUSIL0HQAEV
+         H5hiSTO6CvQ7xydJmloyM8pKN85+dvEiL/nBZ7VEQquQJ5yV4VNOlMpGKIdoAd2IiWOB
+         XDsf8mj5TzMShm33Z1S6iyoE7h26h+pT5qN8BLiBmXidFshaD5p4dwenaFKA+xWyEaGG
+         wQent2XWxC9Is8Fg5iyn4E6gEHSwu+pPbueQdH2qRjhsx8dwSxghZ/ETQIH3i9H5Aue1
+         paH15k0R3pKwipdC4qyU3QEqfWX40G2gpUZI7hRVjx4EsbO41u6CnByiYiNKMfHEOTvI
+         hezw==
+X-Gm-Message-State: APt69E2TkFCeM7CAqoTc5eNt4QuB9EyefoP14rIGw8Uzu5dK7k0Sx/3M
+        W6al5k22Lv0Q6hwLDDENrW/j9Jnx
+X-Google-Smtp-Source: ADUXVKKGwrTHOpO82R9jcnYjnHq9ETjyl10XC+PDkvNHs67pGQhGdDVzP4bzPvCLEIRXZJTTcTkT0Q==
+X-Received: by 2002:a65:4b46:: with SMTP id k6-v6mr13071515pgt.113.1529370439480;
+        Mon, 18 Jun 2018 18:07:19 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id j8-v6sm11202975pfe.84.2018.06.18.18.07.18
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 18 Jun 2018 18:07:18 -0700 (PDT)
+Date:   Mon, 18 Jun 2018 18:06:55 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Ian Jackson <ijackson@chiark.greenend.org.uk>
 Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: want <reason> option to git-rebase
+Message-ID: <20180619010655.GA173168@aiede.svl.corp.google.com>
+References: <23335.52730.475955.861241@chiark.greenend.org.uk>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <23335.52730.475955.861241@chiark.greenend.org.uk>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When a submodule is deinit'd, the working tree is gone, so the setting of
-core.worktree is bogus. Unset it.
+Hi,
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- builtin/submodule--helper.c | 2 ++
- t/lib-submodule-update.sh   | 2 +-
- t/t7400-submodule-basic.sh  | 5 +++++
- 3 files changed, 8 insertions(+), 1 deletion(-)
+Ian Jackson wrote[1]:
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index dffc55ed8ee..19480902681 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -980,6 +980,8 @@ static void deinit_submodule(const char *path, const char *prefix,
- 		if (!(flags & OPT_QUIET))
- 			printf(format, displaypath);
- 
-+		submodule_unset_core_worktree(sub);
-+
- 		strbuf_release(&sb_rm);
- 	}
- 
-diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
-index 12cd4e9233e..aa5ac03325a 100755
---- a/t/lib-submodule-update.sh
-+++ b/t/lib-submodule-update.sh
-@@ -235,7 +235,7 @@ reset_work_tree_to_interested () {
- 	then
- 		mkdir -p submodule_update/.git/modules/sub1/modules &&
- 		cp -r submodule_update_repo/.git/modules/sub1/modules/sub2 submodule_update/.git/modules/sub1/modules/sub2
--		GIT_WORK_TREE=. git -C submodule_update/.git/modules/sub1/modules/sub2 config --unset core.worktree
-+		# core.worktree is unset for sub2 as it is not checked out
- 	fi &&
- 	# indicate we are interested in the submodule:
- 	git -C submodule_update config submodule.sub1.url "bogus" &&
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 812db137b8d..48fd14fae6e 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -993,6 +993,11 @@ test_expect_success 'submodule deinit should remove the whole submodule section
- 	rmdir init
- '
- 
-+test_expect_success 'submodule deinit should unset core.worktree' '
-+	test_path_is_file .git/modules/example/config &&
-+	test_must_fail git config -f .git/modules/example/config core.worktree
-+'
-+
- test_expect_success 'submodule deinit from subdirectory' '
- 	git submodule update --init &&
- 	git config submodule.example.foo bar &&
--- 
-2.18.0.rc1.244.gcf134e6275-goog
+> git-rebase leaves entries like this in the reflog:
+>
+>   c15f4d5391 HEAD@{33}: rebase: checkout c15f4d5391ff07a718431aca68a73e672fe8870e
+>
+> It would be nice if there were an option to control this message.
+> Particularly, when another tool invokes git-rebase, the other tool may
+> specify an interesting --onto, and there is no way to record any
+> information about that --onto commit.
+>
+> git-rebase already has a -m option, so I suggest
+>   --reason=<reason>
+>
+> It doesn't matter much exactly how the provided string is used.
+> Any of the following would be good IMO:
+>   <reason>
+>   rebase start: <reason>
+>
+> I think:
+>   rebase: checkout c15f4d5391ff07a718431aca68a73e672fe8870e <reason>
+> would be rather cumbersome.
 
+From git(1):
+
+ GIT_REFLOG_ACTION
+	When a ref is updated, reflog entries are created to keep
+	track of the reason why the ref was updated (which is
+	typically the name of the high-level command that updated the
+	ref), in addition to the old and new values of the ref. A
+	scripted Porcelain command can use set_reflog_action helper
+	function in git-sh-setup to set its name to this variable when
+	it is invoked as the top level command by the end user, to be
+	recorded in the body of the reflog.
+
+"git rebase" sets this itself, so it doesn't solve your problem.
+
+Can you say more about what your tool does?  I'm wondering if it would
+make sense for it to use lower-level commands where GIT_REFLOG_ACTION
+applies, instead of the more user-facing git rebase.
+
+Thanks,
+Jonathan
+
+[1] https://bugs.debian.org/901805
