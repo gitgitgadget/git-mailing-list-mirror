@@ -2,94 +2,188 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AAE941F403
-	for <e@80x24.org>; Tue, 19 Jun 2018 23:38:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD3741F403
+	for <e@80x24.org>; Tue, 19 Jun 2018 23:49:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752915AbeFSXi3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Jun 2018 19:38:29 -0400
-Received: from mail-ua0-f201.google.com ([209.85.217.201]:37139 "EHLO
-        mail-ua0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752747AbeFSXiW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jun 2018 19:38:22 -0400
-Received: by mail-ua0-f201.google.com with SMTP id z33-v6so470607uah.4
-        for <git@vger.kernel.org>; Tue, 19 Jun 2018 16:38:21 -0700 (PDT)
+        id S1751337AbeFSXtH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Jun 2018 19:49:07 -0400
+Received: from mail-qt0-f196.google.com ([209.85.216.196]:35769 "EHLO
+        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751012AbeFSXtD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jun 2018 19:49:03 -0400
+Received: by mail-qt0-f196.google.com with SMTP id s9-v6so1482961qtg.2
+        for <git@vger.kernel.org>; Tue, 19 Jun 2018 16:49:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
-         :cc;
-        bh=p3nS0li4cya7dXse2TgqhbUZCasGEKxSTUWPzNd9V5w=;
-        b=PJcDHKgooVRyTKWvVGZCX6wUbQOqg47vBPf0sYk/fEmFoWkF4K0piYujJ1X/ns7NBq
-         cDwgif4H0eIGHWfiLzr+M1xKkhKf7z0Ovea/94qBWwCTf5wEf80f7B/eUdYm6PG9YDKn
-         pID2JiG0lsLVTsXQjpoV3qNJDBP9yrVHyduDpjnMZURh/3bYDKkuMB+JXF7ofV2rcayZ
-         0MQreO7qt2PUh9XgblW5Sly9g/xfKPQF9IVIVoMpgBFVweLnZYUBnY9Pfek7WX451E1j
-         zofV6Bt5xA87cwFsadI1OO99PJ2ZG4mzzNs0YRuEPnTX0ieHUPFXsibI//8hkU2tRhi/
-         BuPA==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=953jyTbmXnD8K/FAnQFExGspN2UwPXsEmkKGIUUSBQg=;
+        b=MqMy1dQNjEiPS+DGkzA59SLUJ5sOHWYzbHvIGqyAsxQVn6CvTPDPbQzXJ7bGzMFAJW
+         ndjFTNFML9LR4g90Dy5J0SnyLLsQMycs3lpc9SAx9tvg2IhC6YhG1HBRPXL1OvLTnKpj
+         THuzn378hr1xi1BHz3ry5m94i81Sl0aioaIXGSOqik0kcsdieBnKDV0ucVNghG82MLE/
+         Ifd/KusJcnIRItc+JVOSH19JOh4x7/Px/Qf3/xJghdW2lSxFRXoMP29eX+MdEVnz7Qix
+         RpfFVYdBWnabGL4aNkLwmSCxs9SMxhlybvdH7AY05X2U8XnZKcmFgN4CXxy/68m+nUGM
+         syyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
-         :references:subject:from:to:cc;
-        bh=p3nS0li4cya7dXse2TgqhbUZCasGEKxSTUWPzNd9V5w=;
-        b=kdqBn0/v8ZFYfN3baYbG7MRvwHjnhJ3PFxAyUMzF9RJlSXaOuOmep6Hq46/6heaRrq
-         T+OC4n/eJZO8lipo8+r5jBt4r1Ph7rfVnJ8EDYK5srDsuzKi2a1yilNvbKA6TWqRDmCS
-         S1gFKQ6Pys/HxfIWQIfHk1flefedsp3DhI5wj18OdhTmyiroM2MuqY4r0uuomc2+M2+C
-         mKgY0d7Hl9ZgrJjitbCjVmG7cANPOFqlxSvxNqX4RUkR/OKnQTAU5TSC5MJge/OUh3qv
-         z14l7iUmGwncCcCTR55qpjcLe9Ej3C+4q0pYH0XyMTiuAajW1FEyy9jgFc9rp1zcgonQ
-         6CIQ==
-X-Gm-Message-State: APt69E0ah2gtQS7CVPvQGFSyTonLd1wHjrVG4Y4+7w/GOauWNwivyYeK
-        HAf2GcVtCiyVd0tlDyN1E/Ev7dRlUy3DuD6iPJjF
-X-Google-Smtp-Source: ADUXVKILJAQUAMBbl0i0MaEL2BK1vc7ej7QIerrqX8PY739PdysVgbfK/uElPwt3/sy+w8Yyqb+4MtGywrxtVtQu/whU
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=953jyTbmXnD8K/FAnQFExGspN2UwPXsEmkKGIUUSBQg=;
+        b=nZTtI/Xcay/5djI0pgxxj+Jq2HlwXgXGURN9d5Xdl//KbobFo+2rhdN6dBHTjh8ipR
+         txPI90IA98tIcd6BrQt940uRWugTtY/7svPVbxDkSQlwxpUl6P5c1rpnOAZcYjjV5XLq
+         +RjpqUwJpPcvYN5Bt7w7ZqzgGEhj4DraA1gDiz9Nn+5mtEExW6TjtfEegjPk1o0gMgoW
+         rnFnypksSkgwcSJWazC6zjPBs42sJCnH1fnKCLd3uexd05jcu8lE4ysAI8PhYiM2Q9rr
+         lTOTVEWUk/NUDLX/Is/Rc4hH/k03/ptDKFh4wR9t759asO1MO90UT4kwW71g3ogEs3BB
+         4IQA==
+X-Gm-Message-State: APt69E3stkhXCqLyXaukjq6kfJWHhn15635o7hRDZxZXSTVXXTFpeRve
+        d2wNRm9+nGkJ59yKwlLFmzM=
+X-Google-Smtp-Source: ADUXVKL7KlHsJInXZmWV2QtpnTrBtVq8ocXtt5WoK9DIGhR6YpQjH/DJ9WF8YvoBItuwwTcjTl+ReA==
+X-Received: by 2002:a0c:8992:: with SMTP id 18-v6mr16406959qvr.61.1529452142734;
+        Tue, 19 Jun 2018 16:49:02 -0700 (PDT)
+Received: from [10.0.1.20] ([98.122.163.216])
+        by smtp.gmail.com with ESMTPSA id v88-v6sm856599qkl.57.2018.06.19.16.49.01
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 19 Jun 2018 16:49:02 -0700 (PDT)
+Subject: Re: [PATCH] ewah: delete unused 'rlwit_discharge_empty()'
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     GIT Mailing-list <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <7bfb528f-ef65-4de6-7d01-6ca91f0072e7@ramsayjones.plus.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <795ca948-1633-a1f7-1d7c-88ace8361445@gmail.com>
+Date:   Tue, 19 Jun 2018 19:49:00 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-X-Received: by 2002:a9f:3342:: with SMTP id a2-v6mr8518664uac.51.1529451501161;
- Tue, 19 Jun 2018 16:38:21 -0700 (PDT)
-Date:   Tue, 19 Jun 2018 16:38:17 -0700
-In-Reply-To: <20180619231644.GB232723@google.com>
-Message-Id: <20180619233817.140031-1-jonathantanmy@google.com>
-References: <20180619231644.GB232723@google.com>
-X-Mailer: git-send-email 2.18.0.rc2.347.g0da03f3a46.dirty
-Subject: Re: [PATCH 0/8] ref-in-want
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     bmwill@google.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <7bfb528f-ef65-4de6-7d01-6ca91f0072e7@ramsayjones.plus.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> On 06/15, Jonathan Tan wrote:
-> > 
-> > Supporting patterns would mean that we would possibly be able to
-> > eliminate the ls-refs step, thus saving at least a RTT. (Originally I
-> > thought that supporting patterns would also allow us to tolerate refs
-> > being removed during the fetch process, but I see that this is already
-> > handled by the server ignoring "want-ref <ref>" wherein <ref> doesn't
-> > exist on the server.)
-> 
-> What's your opinion on this?  Should we keep it how it is in v2 of the
-> series where the server ignores refs it doesn't know about or revert to
-> what v1 of the series did and have it be a hard error?
+On 6/19/2018 5:51 PM, Ramsay Jones wrote:
+> From: Junio C Hamano <gitster@pobox.com>
+>
+> Complete the removal of unused 'ewah bitmap' code by removing the now
+> unused 'rlwit_discharge_empty()' function. Also, the 'ewah_clear()'
+> function can now be made a file-scope static symbol.
+>
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
+>
+> Hi Junio,
+>
+> Can you please add this to the 'ds/ewah-cleanup' branch, before
+> we forget to do so! ;-)
+>
+> Thanks!
+>
+> ATB,
+> Ramsay Jones
 
-I think it should be like in v2 - the server should ignore "want-ref
-<ref>" lines for refs it doesn't know about. And, after more thought, I
-think that the client should die if "fetch <exact-ref-name>" was not
-fulfilled, and ignore if a ref in "fetch <ref-with-wildcard>" was not
-fulfilled.
 
-The advantage of doing that is that we make the protocol a bit more
-tolerant to adverse conditions (e.g. a rapidly changing repository or an
-eventually consistent load-balancing setup), while having little-to-no
-effect on regular conditions.
+Looks good to me! Thanks!
 
-The disadvantage is that there is now one additional place where a
-failure can silently occur, but I think that this is a minor
-disadvantage. A naive script using "git fetch", in my mind, would assume
-that refs/heads/exact exists if "fetch
-refs/heads/exact:refs/heads/exact" succeeds, but would not assume that
-refs/heads/wildcard-something exists if "fetch
-refs/heads/wildcard*:refs/heads/wildcard*" succeeds, which fits in
-nicely with the die/ignore behavior I outlined above.
+-Stolee
+
+
+>
+>   ewah/ewah_bitmap.c | 20 ++++++++++++--------
+>   ewah/ewah_rlw.c    |  8 --------
+>   ewah/ewok.h        |  6 ------
+>   ewah/ewok_rlw.h    |  1 -
+>   4 files changed, 12 insertions(+), 23 deletions(-)
+>
+> diff --git a/ewah/ewah_bitmap.c b/ewah/ewah_bitmap.c
+> index 017c677f9..d59b1afe3 100644
+> --- a/ewah/ewah_bitmap.c
+> +++ b/ewah/ewah_bitmap.c
+> @@ -276,6 +276,18 @@ void ewah_each_bit(struct ewah_bitmap *self, void (*callback)(size_t, void*), vo
+>   	}
+>   }
+>   
+> +/**
+> + * Clear all the bits in the bitmap. Does not free or resize
+> + * memory.
+> + */
+> +static void ewah_clear(struct ewah_bitmap *self)
+> +{
+> +	self->buffer_size = 1;
+> +	self->buffer[0] = 0;
+> +	self->bit_size = 0;
+> +	self->rlw = self->buffer;
+> +}
+> +
+>   struct ewah_bitmap *ewah_new(void)
+>   {
+>   	struct ewah_bitmap *self;
+> @@ -288,14 +300,6 @@ struct ewah_bitmap *ewah_new(void)
+>   	return self;
+>   }
+>   
+> -void ewah_clear(struct ewah_bitmap *self)
+> -{
+> -	self->buffer_size = 1;
+> -	self->buffer[0] = 0;
+> -	self->bit_size = 0;
+> -	self->rlw = self->buffer;
+> -}
+> -
+>   void ewah_free(struct ewah_bitmap *self)
+>   {
+>   	if (!self)
+> diff --git a/ewah/ewah_rlw.c b/ewah/ewah_rlw.c
+> index b9643b7d0..5093d43e2 100644
+> --- a/ewah/ewah_rlw.c
+> +++ b/ewah/ewah_rlw.c
+> @@ -104,11 +104,3 @@ size_t rlwit_discharge(
+>   
+>   	return index;
+>   }
+> -
+> -void rlwit_discharge_empty(struct rlw_iterator *it, struct ewah_bitmap *out)
+> -{
+> -	while (rlwit_word_size(it) > 0) {
+> -		ewah_add_empty_words(out, 0, rlwit_word_size(it));
+> -		rlwit_discard_first_words(it, rlwit_word_size(it));
+> -	}
+> -}
+> diff --git a/ewah/ewok.h b/ewah/ewok.h
+> index 0c504f28e..84b2a29fa 100644
+> --- a/ewah/ewok.h
+> +++ b/ewah/ewok.h
+> @@ -72,12 +72,6 @@ void ewah_pool_free(struct ewah_bitmap *self);
+>    */
+>   struct ewah_bitmap *ewah_new(void);
+>   
+> -/**
+> - * Clear all the bits in the bitmap. Does not free or resize
+> - * memory.
+> - */
+> -void ewah_clear(struct ewah_bitmap *self);
+> -
+>   /**
+>    * Free all the memory of the bitmap
+>    */
+> diff --git a/ewah/ewok_rlw.h b/ewah/ewok_rlw.h
+> index bb3c6ff7e..7cdfdd0c0 100644
+> --- a/ewah/ewok_rlw.h
+> +++ b/ewah/ewok_rlw.h
+> @@ -98,7 +98,6 @@ void rlwit_init(struct rlw_iterator *it, struct ewah_bitmap *bitmap);
+>   void rlwit_discard_first_words(struct rlw_iterator *it, size_t x);
+>   size_t rlwit_discharge(
+>   	struct rlw_iterator *it, struct ewah_bitmap *out, size_t max, int negate);
+> -void rlwit_discharge_empty(struct rlw_iterator *it, struct ewah_bitmap *out);
+>   
+>   static inline size_t rlwit_word_size(struct rlw_iterator *it)
+>   {
