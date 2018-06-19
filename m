@@ -2,80 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 25CE31F597
-	for <e@80x24.org>; Tue, 19 Jun 2018 18:05:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E286C1F403
+	for <e@80x24.org>; Tue, 19 Jun 2018 18:06:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966772AbeFSSF2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Jun 2018 14:05:28 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48728 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S966551AbeFSSF1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jun 2018 14:05:27 -0400
-Received: (qmail 2596 invoked by uid 109); 19 Jun 2018 18:05:27 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 19 Jun 2018 18:05:27 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15424 invoked by uid 111); 19 Jun 2018 18:05:44 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 19 Jun 2018 14:05:44 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Jun 2018 14:05:25 -0400
-Date:   Tue, 19 Jun 2018 14:05:25 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        avarab@gmail.com
-Subject: Re: [PATCH 0/7] grep.c: teach --column to 'git-grep(1)'
-Message-ID: <20180619180525.GA28203@sigill.intra.peff.net>
-References: <cover.1529365072.git.me@ttaylorr.com>
- <20180619163506.GB22034@sigill.intra.peff.net>
- <5282e3bb-bf7a-ab3a-98dc-d29ff1c37468@web.de>
- <20180619174846.GA27820@sigill.intra.peff.net>
- <xmqqo9g6vet5.fsf@gitster-ct.c.googlers.com>
+        id S1030246AbeFSSGK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Jun 2018 14:06:10 -0400
+Received: from mail-wm0-f43.google.com ([74.125.82.43]:54380 "EHLO
+        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1030228AbeFSSGJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jun 2018 14:06:09 -0400
+Received: by mail-wm0-f43.google.com with SMTP id o13-v6so1809921wmf.4
+        for <git@vger.kernel.org>; Tue, 19 Jun 2018 11:06:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=CHYjx2R7EuLYWWYNvEa5Gkz9b7lo1udRl2JLDcq+YSM=;
+        b=HNscPDt0hK00J0Pwmke4/TOrWoH9ULho7LrQg8FSW/vAEYfZ5/kNLrKviNIKOum8NU
+         5V0MalGkN+sNlxLqzKjUqPFwgGSqB8JBK7x26hvK0GefSOsuzydS8DxtrpLaAAY4/wK0
+         sqHWzc77ZzkNoNYoMI4Jg/TUosd2luSZFvAH5D5pOqQw+bLe1y0cwLulYIsjqVlzEMey
+         ZjZ38Fmyog3WKuUqg5Cc86Qjco0ixXLKGTltgqVPcv6O1EQpwr1irDUJoOEOWy3dtP9+
+         o4RXIugGdqmN9IQ9+Aps+8UtjC252mqm0r65LSbwS/EhrAdbgLtudCc9yj+bwn52+3+r
+         q8NQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=CHYjx2R7EuLYWWYNvEa5Gkz9b7lo1udRl2JLDcq+YSM=;
+        b=fQzl5vFt3rcSlP+jv2K8pHIfYl4L1hptHUug8eU+J08InRUZI5R2WTkiYRkNv6mubT
+         WKGBt4fPAkNUUXtsLSDzcBVt4U+VG+R5IUXcE2KqPeLqYJWoaX7fe97ppwa+JH/aKSqR
+         9Q34zJmrVXHI+a4AljabH29WxAWMa7A86MoLtC0HPrt/5KjLOqwW/RnchBGX8A2OKlzn
+         qnOkvo8/sNvtsATBCHC+S+yhEbHQ3fnV7xe5crw6eOx4hb51rT1a9Y6sCwS5AEW9/jD5
+         n2ykJ5uOCuIHD4m9sGOZtUmgESWR0fuyHHF9jJKwcDbD7g5L8Xw5QZyRZGc43seW6BdM
+         8kSA==
+X-Gm-Message-State: APt69E1Pgme7UTKbNFFLoiftNj/1Fp1n1DCxEXUyDvxScJfaUM+V/EGy
+        PGHnCr+6T06LjeYj5LxoISg=
+X-Google-Smtp-Source: ADUXVKKM8bYLisGhSdmpmHbaulXmGrZn4WUkAAPUmVgk5Q59nBmnyQCPaMJI0/m3Bkvd6J4MDXAEFA==
+X-Received: by 2002:a1c:d8:: with SMTP id 207-v6mr11579407wma.99.1529431567496;
+        Tue, 19 Jun 2018 11:06:07 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id n7-v6sm359493wrr.39.2018.06.19.11.06.06
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 19 Jun 2018 11:06:06 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     Git Mailing List <git@vger.kernel.org>, max@max630.net
+Subject: Re: t5562: gzip -k is not portable
+References: <5ee7a65d-63e1-aa6a-c3c1-663c092d0efe@web.de>
+Date:   Tue, 19 Jun 2018 11:06:06 -0700
+In-Reply-To: <5ee7a65d-63e1-aa6a-c3c1-663c092d0efe@web.de> ("Torsten
+        =?utf-8?Q?B=C3=B6gershausen=22's?= message of "Tue, 19 Jun 2018 19:25:15
+ +0200")
+Message-ID: <xmqqk1quvegh.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqo9g6vet5.fsf@gitster-ct.c.googlers.com>
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 19, 2018 at 10:58:30AM -0700, Junio C Hamano wrote:
+Torsten Bögershausen <tboegi@web.de> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Although there are interesting cases around inversion. For example:
-> >
-> >   git grep --not \( --not -e a --and --not -e b \)
-> >
-> > is equivalent to:
-> >
-> >   git grep -e a --or -e b
-> >
-> > Do people care if we actually hunt down the exact column where we
-> > _didn't_ match "b" in the first case?  The two are equivalent, but I
-> > have to wonder if somebody writing the first one really cares.
-> 
-> I may be misunderstanding the question, but I personally would feel
-> that "git grep --not <ANYTHING>" is OK to say "the entire line is at
-> fault that it did not satisify the criteria to match <ANYTHING>".
-> I.e., I'd be happy if --column marked the first column as the
-> beginning of the match, or --color painted the entire line in the
-> output of the former.
+> Hej Max,
+>
+> t5562 fails here under MacOS:
+> "gzip -k"  is not portable.
 
-Even if it's a double-inversion? The reason we carry both `col` and
-`icol` is that it allows:
+Sigh.  Perhaps -c would help.  Or do BSD implementations also lack -c?
 
-  git grep --not --not --not --not -e a
+ t/t5562-http-backend-content-length.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-to still say "we found 'a' here". That's a dumb thing to ask for, but it
-is true in the end that we show lines with "a" (and will colorize them
-as such).
-
--Peff
+diff --git a/t/t5562-http-backend-content-length.sh b/t/t5562-http-backend-content-length.sh
+index 8040d80e04..98b6543827 100755
+--- a/t/t5562-http-backend-content-length.sh
++++ b/t/t5562-http-backend-content-length.sh
+@@ -61,9 +61,9 @@ test_expect_success 'setup' '
+ '
+ 
+ test_expect_success GZIP 'setup, compression related' '
+-	gzip -k fetch_body &&
++	gzip -c fetch_body >fetch_body.gz &&
+ 	test_copy_bytes 10 <fetch_body.gz >fetch_body.gz.trunc &&
+-	gzip -k push_body &&
++	gzip -c push_body >push_body.gz &&
+ 	test_copy_bytes 10 <push_body.gz >push_body.gz.trunc
+ '
+ 
