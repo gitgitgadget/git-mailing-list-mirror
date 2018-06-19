@@ -2,86 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A348A1F403
-	for <e@80x24.org>; Tue, 19 Jun 2018 17:56:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EED3B1F403
+	for <e@80x24.org>; Tue, 19 Jun 2018 17:58:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1030362AbeFSR4I (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Jun 2018 13:56:08 -0400
-Received: from mout.web.de ([217.72.192.78]:38055 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1030228AbeFSR4H (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jun 2018 13:56:07 -0400
-Received: from [192.168.178.36] ([79.237.242.156]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MaJro-1fkfln2Nvk-00JveC; Tue, 19
- Jun 2018 19:50:55 +0200
+        id S966999AbeFSR6e (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Jun 2018 13:58:34 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:41670 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S966706AbeFSR6d (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jun 2018 13:58:33 -0400
+Received: by mail-wr0-f194.google.com with SMTP id h10-v6so546240wrq.8
+        for <git@vger.kernel.org>; Tue, 19 Jun 2018 10:58:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=4MTbVQLpOr8SbQFo5KJwpECxIyRWoiT03F40Pw+nT2Y=;
+        b=eLZTbxtaxyZlAYmqqYWqQmPRQzMtq0UK3NDdTwngvvJDxbKhdWRJ3DC0pM4hOiKqCM
+         RqHwuxqIHPdHQ/lVnvqymkRefyEC4aWNGHxBB24JFNHGvfpXqk5EJAqhDbP06K8rnnD8
+         R+TwguSTPD+aCClaXr/3eEdwAnyCYSlJoT/w9k0nlK01GvykhGSvto5wx9j9M7Boq6m9
+         25zbyAuPqIgiQUObVuZpv7BH8OCsFVbauuDuMDUVkGbBODYzTJBl4VelcAKQUJIMTBro
+         J4IvmG8V5hV4dJ9TLxaXbL0bIKWFslfkFvIPERqiba+vD1GcxDsnlBi5SNkGFWn0AgVP
+         u39w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=4MTbVQLpOr8SbQFo5KJwpECxIyRWoiT03F40Pw+nT2Y=;
+        b=aThtdB7VYe6IPlD20GnFTFir7ZwATVklATTiIyBx2kVuzYeRq6wxBoBskfHQvoPHxi
+         ZFZXemSkF8i9DfIMlAXpDs5b3RpUx0YFLqdrYF+gEj0/rra2iG6QWWL2zKudVSKlHtXw
+         BQYOvf0vCcGJxKQCl+lMAsY8U3i5Abc1xTFYqbecWj+I3tCs4MSH70FBS/Oa1Iy9gO3E
+         JAiw2Vma24CLz6tWpms4W7EeUiTg2IsFcL45gaZYMzxO3L2wEoITojkHUexiO0RlmO85
+         1FRoWu3N1/POeag+hrjIyRMkYIUb/Rv798kwragUY6hnr29aMaWG3M+dPhsBGbkufDt1
+         iJUA==
+X-Gm-Message-State: APt69E0R/IP2h4XbJtwPMiYvH9WGwvz04P58PLWkHyXB7mEgGBNL4bOK
+        5wV1j47QUz4X+0RxOLHymIg=
+X-Google-Smtp-Source: ADUXVKJ/0xv0GnM+LNd8h+S214yanylZXmr6htD4fSlQjcErOr0TIfQHxQet9aW1qv9u6Ai6ycy3RQ==
+X-Received: by 2002:adf:8747:: with SMTP id 7-v6mr13902782wrz.117.1529431111521;
+        Tue, 19 Jun 2018 10:58:31 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id w102-v6sm634284wrc.23.2018.06.19.10.58.30
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 19 Jun 2018 10:58:30 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        avarab@gmail.com
 Subject: Re: [PATCH 0/7] grep.c: teach --column to 'git-grep(1)'
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org, avarab@gmail.com,
-        gitster@pobox.com
 References: <cover.1529365072.git.me@ttaylorr.com>
- <20180619163506.GB22034@sigill.intra.peff.net>
- <5282e3bb-bf7a-ab3a-98dc-d29ff1c37468@web.de>
- <20180619174452.GA47272@syl.attlocal.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <838caafd-9172-3320-7d4c-b8e53eb3ea01@web.de>
-Date:   Tue, 19 Jun 2018 19:50:52 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+        <20180619163506.GB22034@sigill.intra.peff.net>
+        <5282e3bb-bf7a-ab3a-98dc-d29ff1c37468@web.de>
+        <20180619174846.GA27820@sigill.intra.peff.net>
+Date:   Tue, 19 Jun 2018 10:58:30 -0700
+In-Reply-To: <20180619174846.GA27820@sigill.intra.peff.net> (Jeff King's
+        message of "Tue, 19 Jun 2018 13:48:47 -0400")
+Message-ID: <xmqqo9g6vet5.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20180619174452.GA47272@syl.attlocal.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:Nw4FWEAIGcKLKaE+tDq356qSEXXIsNBYagUqDSG/N4OTzXNF5XN
- HUo7AyDWfE3AjOiRKcjM5U/JNFxN5qNE3Ue03gW1JzvZKatpAnx43jiHxfdjhG3BXGJaDNw
- zHm68DiPJASfXrvXay/FVN1uVJUL6KwvdnTnJX5s9FM70hKigldd8rhFJ4wLZ3YZ7oB3WAA
- BsQCR/OOe00edwyaMudkQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:VC9cGmFfp0U=:pkhtEmP6fJQX7tza/TP2x3
- 8H4dP7WSCbRcErwz9rwztnYwaUtzGdwHO6P9vBJ4RLAdJ+duKAQCT5/Yrfxnbm7h75NbXGnXb
- nWpict2CqnV/NGxG6/Vjs68t+Fq9dAszhF2ULsy1eNFqQDlHNWKZAYD7YCrSZRfzdN+izzKoR
- e53gXkk9kw49euUlWPE7Qe1E7u3UkKvZjQxfxSzk1MfQ7M214x0UoFOJm7W3Gdelzog/Iub6P
- 53DDssTrvVC9QlBWqKvArLUjtAeKCyMxXhN1zlKVBy975RTi3LHn4uWuaRkDipJkoLmfD9AYp
- IQD2siFByDYImkmb2OlIWQcrR0cu1FekNPDPGsTEuK1An3Sl+9HG18Hxb9WyFvJBMIzaOBTSe
- 9Ff82rORUkpa24HzmhW+lpbF8oQbI4MqEZ4As8E3FblNrcrN+8W3xKd+mmQnTMWukG+RcAOD7
- /zgMdWky4cJGSn5NwAhMq5EFiz8PS+7ygbNjeWRKDSsOPzHhqxq/E8rvxO0YUK/12TjBFC/XW
- 1V0VlSAxRbVaHu9cFhms3vcwHtolHnz5vhdVf+jua+sk0TAWpxlxXsD9urzDjfblnx+uGmGba
- skGodwRPso1nR4ZM14Gr6d2+GkipdCmABXB3+x2wMWcrQyOwBVKzpnPiDk9EJOTt4YBUG6jy3
- QYPs8/ucHv4LF9UK9r5qpsCSyIptAWMKvH/BA9//W4JcPui1ZHFVucH5NFHuGhToHhmIRTKcQ
- Ti9V/Zweb//q828S2Ovbw6FFmUSZzpdmwPTmUXtRaXo4FUsYSeMMxmYllPS4tgDQ8bk9ZYRFe
- ypHZ/Ke
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 19.06.2018 um 19:44 schrieb Taylor Blau:
-> On Tue, Jun 19, 2018 at 07:33:39PM +0200, René Scharfe wrote:
->> Am 19.06.2018 um 18:35 schrieb Jeff King:
->>> On Mon, Jun 18, 2018 at 06:43:01PM -0500, Taylor Blau wrote:
->> We could add an optimizer pass to reduce the number of regular
->> expressions in certain cases if that is really too slow.  E.g. this:
->>
->> 	$ git grep -e b -e a
->>
->> ... is equivalent to:
->>
->> 	$ git grep -e '\(b\)\|\(a\)'
->>
->> In that example the optimizer should use a single kwset instead of a
->> regex, but you get the idea, namely to leave the short-circuiting to the
->> regex engine or kwset, which probably do a good job of it.
-> 
-> I think that--while this pushes that decision to the appropriate level
-> of indirection--that it is out of scope for this series, and that the
-> above patch should do a sufficient job at not surprising users.
+Jeff King <peff@peff.net> writes:
 
-Definitely.  I'm not even convinced that performance problem is real --
-otherwise someone would have added such an optimization already, right?
-:)
+> Although there are interesting cases around inversion. For example:
+>
+>   git grep --not \( --not -e a --and --not -e b \)
+>
+> is equivalent to:
+>
+>   git grep -e a --or -e b
+>
+> Do people care if we actually hunt down the exact column where we
+> _didn't_ match "b" in the first case?  The two are equivalent, but I
+> have to wonder if somebody writing the first one really cares.
 
-René
+I may be misunderstanding the question, but I personally would feel
+that "git grep --not <ANYTHING>" is OK to say "the entire line is at
+fault that it did not satisify the criteria to match <ANYTHING>".
+I.e., I'd be happy if --column marked the first column as the
+beginning of the match, or --color painted the entire line in the
+output of the former.
+
+
