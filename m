@@ -2,92 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 07F651F403
-	for <e@80x24.org>; Tue, 19 Jun 2018 20:34:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E93C1F403
+	for <e@80x24.org>; Tue, 19 Jun 2018 20:37:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966747AbeFSUe4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Jun 2018 16:34:56 -0400
-Received: from mout.web.de ([217.72.192.78]:47747 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1757263AbeFSUez (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jun 2018 16:34:55 -0400
-Received: from [192.168.178.36] ([79.237.242.156]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MfqEy-1fsQV915DY-00NA89; Tue, 19
- Jun 2018 22:34:47 +0200
-Subject: Re: [PATCH 0/7] grep.c: teach --column to 'git-grep(1)'
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        avarab@gmail.com, gitster@pobox.com
-References: <cover.1529365072.git.me@ttaylorr.com>
- <20180619163506.GB22034@sigill.intra.peff.net>
- <5282e3bb-bf7a-ab3a-98dc-d29ff1c37468@web.de>
- <20180619174846.GA27820@sigill.intra.peff.net>
- <6ab94453-84ef-e269-c320-e102b02d6f3b@web.de>
- <20180619191156.GA21641@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <385b429e-5d57-91c0-054c-0f04c59538e3@web.de>
-Date:   Tue, 19 Jun 2018 22:34:44 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+        id S1757228AbeFSUhV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Jun 2018 16:37:21 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:36793 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757106AbeFSUhQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jun 2018 16:37:16 -0400
+Received: by mail-wm0-f67.google.com with SMTP id v131-v6so2828377wma.1
+        for <git@vger.kernel.org>; Tue, 19 Jun 2018 13:37:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=oz5/Uvc+unppJ5tvmLwVAFbOEwiV1eeOuukAHQsg0/A=;
+        b=mX4XxWelJrZrxXIAxm/RzhDj1wTalmEXBUSFCdTXpm+ST/jqj0eG5IBDymSXknCV2w
+         NPm0FNTdwLq364RNFdRB0n5MWFAnu+yvQFmvYj4SXkj0RxmIuNXIb9H4QBEhsS2m6Eot
+         +0FrBBvf/dkHzsAbotb6ckwM2RhyM4QLYRlKCpOuGvLTnLsMKANdRkplMctU65T2gmWm
+         ifw1etJoJEKc6cz3bPwhbJQwZyg47Ry0KoYiVl4aUEZtuKkD8hWbwG0+zbbb60ripzO/
+         uv5QAPQohjagWk/rMO9QhmP5gkBrxEajSQCtTRKWdhYdMEsrB4qIng8NvsZV1WdmPXb4
+         6Beg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=oz5/Uvc+unppJ5tvmLwVAFbOEwiV1eeOuukAHQsg0/A=;
+        b=MgMnC7VbPbtu2CtFshBc/VW8+pluzuypIWQXZ9PYglVhnQDDUbJRaPAD0j2TdmK57A
+         qbKp5n85j1DTymbQuHQXqHLEUSjP3fJ1Vp9hOlbgxnrqejYY2IGQwVVqQhhAhWsMcEvc
+         68ceiklzgMWvaRq9wdVF5H/yueRIWQ4YuXxVxFo3Iix2ii6CO9oAUxUAqAlhhJ601rlg
+         h6LDm976iK6pwvzgTTj4HDZ5ZRaeBpikJf4jlDC5Symdbk4DkKd8uT/lBJllLktQRBEb
+         r3tV3XXBedKzm9YFCpvtnnTmDXWTDvzMP/x1burZFDiwtdGbBvAc+RLdbNJcB6KKNILy
+         ZS0w==
+X-Gm-Message-State: APt69E3T7myfxByDDEgAQGvymHfHdtBpxmJAsxegRx+PNlAsP/VTcN1n
+        ohcGmIoVis1+8UNmEGbbrjA=
+X-Google-Smtp-Source: ADUXVKLmhPcDTKHJ3ARKKLDos8tObdtOZvmGhrMkyKH1kShiCkINb0YFWkAWkuX2SGCKP5rROUk+/Q==
+X-Received: by 2002:a1c:3ac6:: with SMTP id h189-v6mr14163366wma.64.1529440635165;
+        Tue, 19 Jun 2018 13:37:15 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id h12-v6sm10125787wmb.3.2018.06.19.13.37.14
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 19 Jun 2018 13:37:14 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, avarab@gmail.com, ramsay@ramsayjones.plus.com
+Subject: Re: [PATCH v2 2/8] upload-pack: implement ref-in-want
+References: <20180605175144.4225-1-bmwill@google.com>
+        <20180613213925.10560-1-bmwill@google.com>
+        <20180613213925.10560-3-bmwill@google.com>
+        <xmqq602jzriy.fsf@gitster-ct.c.googlers.com>
+        <20180619185033.GC199585@google.com>
+Date:   Tue, 19 Jun 2018 13:37:14 -0700
+In-Reply-To: <20180619185033.GC199585@google.com> (Brandon Williams's message
+        of "Tue, 19 Jun 2018 11:50:33 -0700")
+Message-ID: <xmqqbmc6v7gl.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20180619191156.GA21641@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:zaSf6YR8eKL1U1kOQ7LJuz8t9QL3kQifQVq64z9hgkX8g80xN58
- C4XRqiEW7SFeIr8itXLoXYJ3LSXw691iAucdyqCQHCmCTN0EV6itlRTPAKwHJ7SlJEAYXKN
- OQgRw0MKtv8wrYVQpRrQwdbj9uhp3kZOkC/MdOpWEzQ3jaCkiL+/2LWx6VyijyMUAdFsatv
- GlHX3t1N6ITzTPzvAuN7Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:S4+dCjpQwUQ=:ivxFM9MocTPwyN7SdLJFB+
- rLhVxFZkV7TiY1gzCz8XOHn9ldVXI8LxcyXnQ55gDrSTx+VOcBWdIqJOVuBlmg8ADbJsHfo8P
- u/r8g0S/AzK4d+TFEwvGuVcwDQA5V5TWjCfqTVOIRjm9vFM3inpglKxUiI5665ZlhsAfr73LE
- nSMeFmU096btxMkFNJRUi/0YfrG2aPmkoLxSljUpWeAqddebRBoaFaPHmlVGmv1dQ/PJddrS7
- N986+wAXOSpv1ByCFn5C3g5okHdvh+Zx1qbLur7wkJ4RXf5jp7us1CH90brMaKGR3vn0QGYgq
- x28QN94nRaN3SGcMw4LhYJPmglxqQzLJckDzknTobsTw52hjavBJSC/60NaueK9lO3UZwY2CU
- gq/yNQcvLKshLmZg+vR5AGkCJNGNMitOV9uxge3c3caOLFSo0cbaaXjr7evB85UujRhTAPoTk
- WNgS/nbvu6yF5YV2F3/cDz7E7NTMQeBy+GDePjkDPi/dDaKVSSpgoCX5DEQEUib2OLRveUR9l
- HslEvWQOm9xj4rJVBv26h+zHn/LwAamaWNqT0SoJLoHx++EAKVc8XSTg9F5fVsGQT3pcBInaj
- pMGg1jSqBHZXblmjpNwUNcVUOHTHiWCvpqyBTr1THz4PT8fwRgzHgIiR3Fm9XRwO2098E7TdG
- ivtbQ4oPiAYW8g4vxUgkzm44fTf+Ja7tr+tYtL0O3EMxilUKiOsKd4JDOTlx0ENH0FSYI4mKY
- WOOMm7M1dKYSMeQkHwefkiDd3XL8RpsEkzDavQAOTd7qbl1yOGhGEG46K0p4zHfa+L4kF911u
- VhEUck4
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 19.06.2018 um 21:11 schrieb Jeff King:
-> On Tue, Jun 19, 2018 at 08:50:16PM +0200, René Scharfe wrote:
-> 
->> Negation causes the whole non-matching line to match, with --column
->> reporting 1 or nothing in such a case, right?  Or I think doing the
->> same when the operator is applied a second time is explainable.
+Brandon Williams <bmwill@google.com> writes:
 
-(Not sure where that extra "Or" came from.)
+> I also think that we should keep this first implementation of
+> ref-in-want simple and *not* include patterns, even if that's what we
+> may want someday down the road.  Adding a new capability in the future
+> for support of such patterns would be relatively simple and easy.
 
-> Yes to your first question.
-> 
-> Regarding the final sentence, yes, I agree it's explainable. But I
-> thought that handling negation like this was one of the main complaints
-> of earlier iterations?
+I am all for many-small-steps over a single-giant-step approach.
 
-That's possible -- I didn't read the full thread, and I didn't argue
-for or against any specific behavior in this regard before AFAIR.
+>  The
+> reason why I don't think we should add pattern support just yet is due
+> to a request for "want-ref refs/tags/*" or a like request resulting in a
+> larger than expected packfile every time "fetch --tags" is run.  The
+> issue being that in a fetch request "refs/tags/*" is too broad of a
+> request and could be requesting 100s of tags when all we really wanted
+> was to get the one or two new tags which are present on the remote
+> (because we already have all the other tags present locally).
 
-So let's see what your example does:
+I do not quite get this.  Why does it have to result in a large
+packfile?  Doesn't the requester of refs/tags/* still show what it
+has via "have" exchange?
 
-   $ git grep --column --not \( --not -e foo --or --not -e bar \) trace.h
-   trace.h:13: *  #define foo(format, ...) bar(format, __VA_ARGS__)
-   $ git grep --column --not \( --not -e bar --or --not -e foo \) trace.h
-   trace.h:13: *  #define foo(format, ...) bar(format, __VA_ARGS__)
 
-Impressive.  That expression is confusing at first sight, but showing
-the first matching column anyway requires no further explanation.  I
-like it.
 
-René
