@@ -2,114 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B10611F403
-	for <e@80x24.org>; Tue, 19 Jun 2018 12:54:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 975AE1F403
+	for <e@80x24.org>; Tue, 19 Jun 2018 12:55:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966270AbeFSMyf (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Jun 2018 08:54:35 -0400
-Received: from mail-qk0-f196.google.com ([209.85.220.196]:41560 "EHLO
-        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S966251AbeFSMyb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jun 2018 08:54:31 -0400
-Received: by mail-qk0-f196.google.com with SMTP id w23-v6so11256743qkb.8
-        for <git@vger.kernel.org>; Tue, 19 Jun 2018 05:54:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=hS8/pE3qOXLEHrd2Rvoise8EiIcJK6YzafyN89HAYoM=;
-        b=k8PJ3Ozdeqe0tTHG3kVQvJ6MJejqOpb/0qGMokwuxZQfMyg/KerxaPgDqI2nSql0e+
-         j7Ss5Hmr1vDmxwNwzVoHTkjIYHlJbs+ysnJ36g+sTJFP2jfHrgot2J3yzC25q5wy+B38
-         ZBhDE2h8GLodiUAM6UYRMDIQtRZrAuB2xQS1Q01lVFJg6V1pHrZaWm887pb5ZXKYEJd+
-         lWrlZCFS9wfQYu5qUrqk+JEDVTnCr5x20Q/3uiF63gXVSCGVH0z3c60osUdc/6HBv6JP
-         rBE8IAGWMtoqzOfjE85E1lPjOcpU473lHvV4VEtNr2xEVjEaR/y08aQEYmEFEqFXnk8Y
-         DdyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=hS8/pE3qOXLEHrd2Rvoise8EiIcJK6YzafyN89HAYoM=;
-        b=Qup48vEYBawPfdJqVt6BqpPmRDwACmZ6ebwwAHLKh/HCx8qH+Beeky2L1/vMoVr2AU
-         g+/w4mmRR9kQH9b3OceqhFbeJyGgatMgqVG+K/BrHorjFjo1ALJ2jPmMk1gLwWFf+x3L
-         jpihtuucQlR2Hxc0YCoOtOxVjDipWIGfVoQQ2Bvk1nQDX8qpE5IQKSZtpoNo5euSCovN
-         H0IOZlHiH+Kn+ACFTC8/2kXHGtGEiC77PUkElNaw6jrl37TCrPzboZLcj41sz2RC4C9Q
-         wtysXl0y2vjLIIaCvjHc4usIOTIVzGs5nWfgKdzEruWSH35ZCP7kc3XU831L0eDTmwAk
-         CWog==
-X-Gm-Message-State: APt69E1Gscjxaa/pHBgwlM7YdLvC3rJP/OvbE7Mtyn3Sk3FvQkXtj0uZ
-        klOlhhdexWpBi6eAyDIyhn4=
-X-Google-Smtp-Source: ADUXVKJ3Aw2G/YRg+8yLX0N5B+7y2YxOfA/muEcfBtpl9qDoxP6ITWWwxFwIaX4QjqAsSi+SkpzipQ==
-X-Received: by 2002:ae9:c00f:: with SMTP id u15-v6mr13675686qkk.383.1529412870679;
-        Tue, 19 Jun 2018 05:54:30 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:d807:51c7:6f48:91e4? ([2001:4898:8010:0:c13d:51c7:6f48:91e4])
-        by smtp.gmail.com with ESMTPSA id l5-v6sm15038999qtl.58.2018.06.19.05.54.29
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 19 Jun 2018 05:54:29 -0700 (PDT)
-Subject: Re: [PATCH 05/23] midx: write header information to lockfile
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Martin Fick <mfick@codeaurora.org>
-References: <20180607140338.32440-1-dstolee@microsoft.com>
- <20180607140338.32440-6-dstolee@microsoft.com>
- <CACsJy8ALMjiyjcEdFPnR7GTzBVpqVB72VQNkpUWrj9p4nm-OGg@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <fa036efb-2164-ee0a-8cbb-4144487b6617@gmail.com>
-Date:   Tue, 19 Jun 2018 08:54:28 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+        id S937884AbeFSMzW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Jun 2018 08:55:22 -0400
+Received: from cpanel4.indieserve.net ([199.212.143.9]:40568 "EHLO
+        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S937858AbeFSMzS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jun 2018 08:55:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
+        To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=9eXoTyKqsUao7ngdltHZhYkovC0BIzhuTsQ55q+rakI=; b=Ljg9IpcLI+4Cf5gHJUV9mSL6q0
+        3f5cdstBZxpIJm8GqT/E5yOopAxj6HxU2XoC4EsWoMH6sJO14w4PZiToqbDP2PK1k6WruwmFKLNXD
+        A+V4rI1Pa0VdkllOTSd0oABqkqp0dvEPGgCVqEKHiOee2+UgKO8P7IsvD6n18wl/5iF0Am0BpQiUC
+        KSHB3B1Q5/3+KWcARzc5sboqlcOx9JoLTugAnePKKiLPdh2l+vYRH2LZaiwLJ/PfMVmWowV8tYPmz
+        rreGtP+h69PDkYt78FeKT3lsRB/0aTE5TBRBoMNrbHv7JLL7M6/3UFA4ty11OsVl6h2JbBEu9cVMT
+        wzXBv5Qg==;
+Received: from cpeac202e043973-cmac202e043970.cpe.net.cable.rogers.com ([174.112.22.87]:49696 helo=localhost.localdomain)
+        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1fVGAG-008XGY-4X
+        for git@vger.kernel.org; Tue, 19 Jun 2018 08:55:17 -0400
+Date:   Tue, 19 Jun 2018 08:55:14 -0400 (EDT)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Git Mailing list <git@vger.kernel.org>
+Subject: recommendations for practical git config settings for
+ /etc/gitconfig?
+Message-ID: <alpine.LFD.2.21.1806190845170.13482@localhost.localdomain>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-In-Reply-To: <CACsJy8ALMjiyjcEdFPnR7GTzBVpqVB72VQNkpUWrj9p4nm-OGg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII
+X-OutGoing-Spam-Status: No, score=-0.2
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/12/2018 11:00 AM, Duy Nguyen wrote:
-> On Thu, Jun 7, 2018 at 7:01 PM Derrick Stolee <stolee@gmail.com> wrote:
->> diff --git a/midx.c b/midx.c
->> index 616af66b13..3e55422a21 100644
->> --- a/midx.c
->> +++ b/midx.c
->> @@ -1,9 +1,62 @@
->>   #include "git-compat-util.h"
->>   #include "cache.h"
->>   #include "dir.h"
->> +#include "csum-file.h"
->> +#include "lockfile.h"
->>   #include "midx.h"
->>
->> +#define MIDX_SIGNATURE 0x4d494458 /* "MIDX" */
->> +#define MIDX_VERSION 1
->> +#define MIDX_HASH_VERSION 1 /* SHA-1 */
-> ...
->> +static size_t write_midx_header(struct hashfile *f,
->> +                               unsigned char num_chunks,
->> +                               uint32_t num_packs)
->> +{
->> +       char byte_values[4];
->> +       hashwrite_be32(f, MIDX_SIGNATURE);
->> +       byte_values[0] = MIDX_VERSION;
->> +       byte_values[1] = MIDX_HASH_VERSION;
-> Quoting from "State of NewHash work, future directions, and discussion" [1]
->
-> * If you need to serialize an algorithm identifier into your data
->    format, use the format_id field of struct git_hash_algo.  It's
->    designed specifically for that purpose.
->
-> [1] https://public-inbox.org/git/20180612024252.GA141166@aiede.svl.corp.google.com/T/#m5fdd09dcaf31266c45343fb6c0beaaa3e928bc60
 
-Thanks! I'll also use the_hash_algo->rawsz to infer the length of the 
-hash function.
+  updating some git course material, and i want to add to the config
+section at least a small number of example config settings that make
+practical sense to add to the system /etc/gitconfig file. that is,
+config settings that, even if i don't explain them fully, even novice
+git users will appreciate that such settings make sense to apply to
+*all* users on a system.
+
+  i imagine that would include any (corporate-mandated) settings
+related to networking authentication and protocols,
+filesystem-related settings and more, such as:
+
+  * core.protect{HFS,NTFS}
+  * whitespace/EOL settings
+  * proxy/ssh-related commands
+  * http.* settings
+  * some sendemail settings
+
+you get the idea. i don't have a ton of experience configuring git in
+an enterprise setting, so while there are a zillion config settings
+one *could* add to /etc/gitconfig, i'm interested in what experienced
+git admins can testify really make sense to set in a corporate
+environment. does that make sense?
+
+  open to thoughts ...
+
+rday
+
+-- 
+
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                  http://crashcourse.ca/dokuwiki
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
