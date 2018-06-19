@@ -2,62 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD2961F403
-	for <e@80x24.org>; Tue, 19 Jun 2018 10:36:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BAB071F403
+	for <e@80x24.org>; Tue, 19 Jun 2018 10:52:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S937364AbeFSKgI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Jun 2018 06:36:08 -0400
-Received: from smtprelay04.ispgateway.de ([80.67.18.16]:46886 "EHLO
-        smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757202AbeFSKgH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jun 2018 06:36:07 -0400
-Received: from [84.46.92.130] (helo=book.hvoigt.net)
-        by smtprelay04.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.90_1)
-        (envelope-from <hvoigt@hvoigt.net>)
-        id 1fVDzZ-0007Jc-2t; Tue, 19 Jun 2018 12:36:05 +0200
-Date:   Tue, 19 Jun 2018 12:36:32 +0200
-From:   Heiko Voigt <hvoigt@hvoigt.net>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: Adding nested repository with slash adds files instead of gitlink
-Message-ID: <20180619103632.GC10085@book.hvoigt.net>
-References: <20180618111919.GA10085@book.hvoigt.net>
- <CACsJy8CJGditaq4CZfJctVAe9QCdapWQW=W--AumH-4RWWd=vA@mail.gmail.com>
- <20180618181215.GB73085@google.com>
+        id S937581AbeFSKwz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Jun 2018 06:52:55 -0400
+Received: from chiark.greenend.org.uk ([212.13.197.229]:47833 "EHLO
+        chiark.greenend.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S936108AbeFSKwy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jun 2018 06:52:54 -0400
+X-Greylist: delayed 2018 seconds by postgrey-1.27 at vger.kernel.org; Tue, 19 Jun 2018 06:52:54 EDT
+Received: by chiark.greenend.org.uk (Debian Exim 4.84_2 #1) with local
+        (return-path ijackson@chiark.greenend.org.uk)
+        id 1fVDjH-0001Yf-LH; Tue, 19 Jun 2018 11:19:15 +0100
+From:   Ian Jackson <ijackson@chiark.greenend.org.uk>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180618181215.GB73085@google.com>
-User-Agent: Mutt/1.9.0 (2017-09-02)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+Content-Transfer-Encoding: 7bit
+Message-ID: <23336.55459.558413.723251@chiark.greenend.org.uk>
+Date:   Tue, 19 Jun 2018 11:19:15 +0100
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: want <reason> option to git-rebase
+In-Reply-To: <20180619010655.GA173168@aiede.svl.corp.google.com>
+References: <23335.52730.475955.861241@chiark.greenend.org.uk>
+        <20180619010655.GA173168@aiede.svl.corp.google.com>
+X-Mailer: VM 8.2.0b under 24.4.1 (i586-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 18, 2018 at 11:12:15AM -0700, Brandon Williams wrote:
-> On 06/18, Duy Nguyen wrote:
-> > This sounds like the submodule specific code in pathspec.c, which has
-> > been replaced with something else in bw/pathspec-sans-the-index. If
-> > you have time, try a version without those changes (e.g. v2.13 or
-> > before) to see if it's a possible culprit.
+Jonathan Nieder writes ("Re: want <reason> option to git-rebase"):
+> Ian Jackson wrote[1]:
+> > git-rebase leaves entries like this in the reflog:
+> >
+> >   c15f4d5391 HEAD@{33}: rebase: checkout c15f4d5391ff07a718431aca68a73e672fe8870e
+...
+>  GIT_REFLOG_ACTION
+> 	When a ref is updated, reflog entries are created to keep
+> 	track of the reason why the ref was updated (which is
+> 	typically the name of the high-level command that updated the
+> 	ref), in addition to the old and new values of the ref. A
+> 	scripted Porcelain command can use set_reflog_action helper
+> 	function in git-sh-setup to set its name to this variable when
+> 	it is invoked as the top level command by the end user, to be
+> 	recorded in the body of the reflog.
 > 
-> I just tested this with v2.13 and saw the same issue.  I don't actually
-> think this ever worked in the way you want it to Heiko.  Maybe git add
-> needs to be taught to be more intelligent when trying to add a submodule
-> which doesn't exist in the index.
+> "git rebase" sets this itself, so it doesn't solve your problem.
 
-That was also my guess, since my feeling is that this is a quite rare
-use case. Adding submodules alone is not a daily thing, let alone
-selecting different changes after 'git submodule add'.
+Hrm.
 
-I also think git could be more intelligent here.
+> Can you say more about what your tool does?  I'm wondering if it would
+> make sense for it to use lower-level commands where GIT_REFLOG_ACTION
+> applies, instead of the more user-facing git rebase.
 
-Cheers Heiko
+Sure.
+
+http://www.chiark.greenend.org.uk/ucgi/~ianmdlvl/git-manpage/dgit.git/git-debrebase.1
+
+See the description of git-rebase new-upstream.  It does a lot of
+complicated work, synthesising a new pair of commits using plumbing
+etc., and then does
+  git rebase --onto <thing it made> <user's previous base>
+
+If the user says git rebase --abort, everything should be undone.
+
+Another alternative solution would be to be able to make git reflog
+entries without actually updating any ref.
+
+Ian.
+
+-- 
+Ian Jackson <ijackson@chiark.greenend.org.uk>   These opinions are my own.
+
+If I emailed you from an address @fyvzl.net or @evade.org.uk, that is
+a private address which bypasses my fierce spamfilter.
