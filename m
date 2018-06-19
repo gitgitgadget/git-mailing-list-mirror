@@ -7,93 +7,99 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B58A1F403
-	for <e@80x24.org>; Tue, 19 Jun 2018 15:16:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 607071F403
+	for <e@80x24.org>; Tue, 19 Jun 2018 15:21:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S937538AbeFSPQp (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Jun 2018 11:16:45 -0400
-Received: from mail-ot0-f194.google.com ([74.125.82.194]:41347 "EHLO
-        mail-ot0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S966330AbeFSPQo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jun 2018 11:16:44 -0400
-Received: by mail-ot0-f194.google.com with SMTP id d19-v6so50347oti.8
-        for <git@vger.kernel.org>; Tue, 19 Jun 2018 08:16:44 -0700 (PDT)
+        id S966466AbeFSPVN (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Jun 2018 11:21:13 -0400
+Received: from mail-qk0-f195.google.com ([209.85.220.195]:44187 "EHLO
+        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965783AbeFSPVM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jun 2018 11:21:12 -0400
+Received: by mail-qk0-f195.google.com with SMTP id 185-v6so27122qkk.11
+        for <git@vger.kernel.org>; Tue, 19 Jun 2018 08:21:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Cd9dZc94SGbfUhMNAgC3+j79ybtJYfs1lDGPMVDNW0Y=;
-        b=vcx+riBtBxvqsd2l88HCQfRJR38V71ELNptBZKmkja0PAl/4yVO8n/38FCk23j5Wfz
-         q4GaqStqi1RnrMkwHsab14c8S1tbfqbvcSzF3mYkeqjlytdzr+dNLATCmPf3m1o2bwFZ
-         68PX/2SBrRKtrZORfxJfj7InAWhTMwLMq6veR80CjfIBXkvapnlsGOCNQ9FebYHGvi90
-         ppj0UqOakmp4Uaxbg3a8cyyZjXhe3xEpm/BZAxnRNse/n93cV29T1QzgT1mroSwonMLo
-         VfK6uIEuX3CEmULYbwvh+j2dw3rEJpukRG1l/aS+iVKSAmHvYvowgsblN4NNdrRjGJSf
-         6aQg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=jZp1Hjd+xzwdYHbhQF3BQN8antbeMSfQGICdComKzfk=;
+        b=Xz+7Lq3du5b/3/YwKGUUE40M8y4oUPx9GzJtEn+AGGjFrD4iAastjgGDpS3QeR4ZSb
+         jocJGc70qkvKZjx8Zhgbi6WnRsYEcoXyqSq6zazYJnVgFGC5Sw9Y9PCQW+A8X+0sbmpS
+         olNIt1Oy0rZQH9myq/rZzR+zt/FI8jYw3yKKJX9sSzrL/75D4teYgTO9kIIy1IBP6eHL
+         NJ28GbOl12j3C+3nYzqxEj1/5q+GJtXLXSvd/SY5gZu2MiFR3v9ImRQcIx46H2BRV2Mt
+         SBYyGNud5y/BaxeDeqYLgORTYt8TKWPvzxjS4f8hSVazQDuPCtz2K2qC+VeHZpK3xw2T
+         W0BQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Cd9dZc94SGbfUhMNAgC3+j79ybtJYfs1lDGPMVDNW0Y=;
-        b=FP/4f4s2MT7CF3XpP0aC5JL3MXbYl1V47UBmKjfc/4Fj4djkRyWv0lzR0TAJD3PLx/
-         4UgAJ80FUcjP1v112pCnce2kOk+CSmegqROeTIdUh0Hgj5bNSKJEOEh0SaeJb1M+DHvk
-         CW1H4ZSf0xJY4GcZqcQblgqqxvl/DNkGcVl3HdSbGKZu5SbIVswAI5bowp3rz3N+PdXD
-         Xg7wOK+HGZYXuqKNDI/ROo3NdJvOJlSHL9Zjq09YVSVjoFAdsE9mioMFUfhLnH2F4Ipr
-         VMLzVKyzSbFh62XwSXGzcTywJqJAoHm8PFu85yoxpiRcYgcfuvTw8UAgzHuJKZUCQ2/r
-         kcvg==
-X-Gm-Message-State: APt69E0Njx/GCzWMjnVcFQyha68xwTFXQaXqPbPpejNMi34VLzrelYkt
-        CgH2XmHK0kbE86DrsZdRIXq+rrohxNjMixpLK5I=
-X-Google-Smtp-Source: ADUXVKLNcIM/84PXAvvFn2Ip9JZVjcGhTUe/fb0YW8FotJewRxsa4Dbpiz5FjNKfqzBuqEaUqFZJEZw4zFiI6dnRum0=
-X-Received: by 2002:a9d:2c94:: with SMTP id p20-v6mr11460262otb.14.1529421404056;
- Tue, 19 Jun 2018 08:16:44 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=jZp1Hjd+xzwdYHbhQF3BQN8antbeMSfQGICdComKzfk=;
+        b=TgsJMC8Gb1dWWyrsGajSjnDijA/pdC0ytTNCEmvyFOqyIF+ZMDm4BhDeM421Lx3l72
+         ZM/vhRZQpa8YTFBPJycsT55C+T3nko0XjdFXkTXo9ISQqIcTVtRM8fSmSXdGXlhN8axe
+         xTmWKBQ3jOfDQDuzh6WqIc3qeET+UtGarYtZp2Ms7+kxHcOrAv6HSjOBn2JDvf3Pg6Pq
+         EUMS3AHF1Jg2C9wM3FJ4fLTtW5jQj4yLBQrIZOQNPBpq0yplDIf+xOw51S4278Tm6w1R
+         jv9ZlqsGmIlItFGYzOhgBJV1W4orHUf56S+nZUFKXrxUyW6y4npbDD4kaOMWC1GI2BKH
+         6kXA==
+X-Gm-Message-State: APt69E3hnM8cbQz7fLcYBfcJWrNHEbJ5V1gqJwyByII4eVkZHS3E/fQf
+        CIrEO34KPwSiB+3Er8xWi2Y=
+X-Google-Smtp-Source: ADUXVKICFPIb8+7ac8c3j4xqkIn+BQwMxj0a8x9RDd5R96fUCQHeq3pIwsWSepd9hDhQcxMaAG0Q8Q==
+X-Received: by 2002:a37:59c3:: with SMTP id n186-v6mr14187418qkb.132.1529421671359;
+        Tue, 19 Jun 2018 08:21:11 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:d807:51c7:6f48:91e4? ([2001:4898:8010:0:c13d:51c7:6f48:91e4])
+        by smtp.gmail.com with ESMTPSA id a8-v6sm11347030qtb.15.2018.06.19.08.21.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 19 Jun 2018 08:21:10 -0700 (PDT)
+Subject: Re: [PATCH 01/15] contrib: add cocci script to replace index compat
+ macros
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+References: <a7e0bcd5-5bef-097e-f032-d152d51515aa@gmail.com>
+ <20180619114143.206568-1-dstolee@microsoft.com>
+ <CACsJy8AkUyU+yECMSoNUm=SSNn+zXN5QbWEvYjkcngp0PzJ9PA@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <d5511564-ef51-7e6c-521d-b9ccc2af1773@gmail.com>
+Date:   Tue, 19 Jun 2018 11:21:09 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-References: <20180618111919.GA10085@book.hvoigt.net> <CACsJy8CJGditaq4CZfJctVAe9QCdapWQW=W--AumH-4RWWd=vA@mail.gmail.com>
- <20180618181215.GB73085@google.com> <20180619103632.GC10085@book.hvoigt.net>
-In-Reply-To: <20180619103632.GC10085@book.hvoigt.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 19 Jun 2018 17:16:17 +0200
-Message-ID: <CACsJy8DQ-GGEDiV0iA2kTgNgHcT1sSX2Oqb7VZcjyK1nBOFv+A@mail.gmail.com>
-Subject: Re: Adding nested repository with slash adds files instead of gitlink
-To:     Heiko Voigt <hvoigt@hvoigt.net>
-Cc:     Brandon Williams <bmwill@google.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CACsJy8AkUyU+yECMSoNUm=SSNn+zXN5QbWEvYjkcngp0PzJ9PA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 19, 2018 at 12:36 PM Heiko Voigt <hvoigt@hvoigt.net> wrote:
->
-> On Mon, Jun 18, 2018 at 11:12:15AM -0700, Brandon Williams wrote:
-> > On 06/18, Duy Nguyen wrote:
-> > > This sounds like the submodule specific code in pathspec.c, which has
-> > > been replaced with something else in bw/pathspec-sans-the-index. If
-> > > you have time, try a version without those changes (e.g. v2.13 or
-> > > before) to see if it's a possible culprit.
-> >
-> > I just tested this with v2.13 and saw the same issue.  I don't actually
-> > think this ever worked in the way you want it to Heiko.  Maybe git add
-> > needs to be taught to be more intelligent when trying to add a submodule
-> > which doesn't exist in the index.
->
-> That was also my guess, since my feeling is that this is a quite rare
-> use case. Adding submodules alone is not a daily thing, let alone
-> selecting different changes after 'git submodule add'.
->
-> I also think git could be more intelligent here.
+On 6/19/2018 10:51 AM, Duy Nguyen wrote:
+> On Tue, Jun 19, 2018 at 1:41 PM Derrick Stolee <stolee@gmail.com> wrote:
+>> Duy,
+>>
+>> Here is the patch that was generated by `make coccicheck`.
+>>
+>> Thanks,
+>> -Stolee
+>>
+>> -->8--
+>>
+>> --- builtin/add.c
+> Ah right. This is on purpose. I think I mentioned in the commit
+> message that builtin/ is not touched. Do we run 'make coccicheck'
+> automatically somewhere? If true, I need to move this script elsewhere
+> because it's meant to run manually. You run it when you intend to do
+> more manual fixups afterwards. For builtin/, I think I'll wait until
+> 'struct repository *' conversion is complete then maybe fix them one
+> by one.
 
-Ah.. the "submodule not registered in index" case. I think I remember
-this (because I remember complaining about it once or two times).
-Definitely agreed that git-add should do the right thing here.
+I don't think it is part of the CI runs, but some community members run 
+this themselves on 'next' and 'master'.
 
-Brandon already moved the submodule check outside pathspec code
-(wonderful!) so adding more checks based on worktree state should not
-be a big work. I think the only concern here is catching submodule
-locations so we don't check submodule at the same location multiple
-times.
+I'm CC'ing Szeder, as he has contributed a fix to my own Coccinelle 
+script [1].
 
-No actually, we could do better. Let me see if I can come up with a
-patch or something...
--- 
-Duy
+[1] 
+https://public-inbox.org/git/20180430093153.13040-1-szeder.dev@gmail.com/
+     [PATCH] coccinelle: avoid wrong transformation suggestions from 
+commit.cocci
