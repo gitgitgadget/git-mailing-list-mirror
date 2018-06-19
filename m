@@ -6,32 +6,35 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B9CEB1F403
-	for <e@80x24.org>; Tue, 19 Jun 2018 10:26:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD2961F403
+	for <e@80x24.org>; Tue, 19 Jun 2018 10:36:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757220AbeFSK0z (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Jun 2018 06:26:55 -0400
-Received: from smtprelay02.ispgateway.de ([80.67.18.14]:41533 "EHLO
-        smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757199AbeFSK0y (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jun 2018 06:26:54 -0400
+        id S937364AbeFSKgI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Jun 2018 06:36:08 -0400
+Received: from smtprelay04.ispgateway.de ([80.67.18.16]:46886 "EHLO
+        smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757202AbeFSKgH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jun 2018 06:36:07 -0400
 Received: from [84.46.92.130] (helo=book.hvoigt.net)
-        by smtprelay02.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        by smtprelay04.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
         (Exim 4.90_1)
         (envelope-from <hvoigt@hvoigt.net>)
-        id 1fVDqc-0002QQ-LA; Tue, 19 Jun 2018 12:26:50 +0200
-Date:   Tue, 19 Jun 2018 12:27:17 +0200
+        id 1fVDzZ-0007Jc-2t; Tue, 19 Jun 2018 12:36:05 +0200
+Date:   Tue, 19 Jun 2018 12:36:32 +0200
 From:   Heiko Voigt <hvoigt@hvoigt.net>
-To:     Kevin Daudt <me@ikke.info>
-Cc:     git@vger.kernel.org
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>
 Subject: Re: Adding nested repository with slash adds files instead of gitlink
-Message-ID: <20180619102717.GB10085@book.hvoigt.net>
+Message-ID: <20180619103632.GC10085@book.hvoigt.net>
 References: <20180618111919.GA10085@book.hvoigt.net>
- <20180618155544.GB6958@alpha>
+ <CACsJy8CJGditaq4CZfJctVAe9QCdapWQW=W--AumH-4RWWd=vA@mail.gmail.com>
+ <20180618181215.GB73085@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20180618155544.GB6958@alpha>
+In-Reply-To: <20180618181215.GB73085@google.com>
 User-Agent: Mutt/1.9.0 (2017-09-02)
 X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
@@ -39,34 +42,22 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-On Mon, Jun 18, 2018 at 05:55:44PM +0200, Kevin Daudt wrote:
-> On Mon, Jun 18, 2018 at 01:19:19PM +0200, Heiko Voigt wrote:
-> > I just discovered that when you have a slash at the end of a nested
-> > repository, the files contained in the repository get added instead of
-> > the gitlink.
-[...]
-> > 
-> > I just thought I put this out there. Will have a look if I find the time
-> > to cook up a proper testcase and investigate.
-> > 
-> > Cheers Heiko
+On Mon, Jun 18, 2018 at 11:12:15AM -0700, Brandon Williams wrote:
+> On 06/18, Duy Nguyen wrote:
+> > This sounds like the submodule specific code in pathspec.c, which has
+> > been replaced with something else in bw/pathspec-sans-the-index. If
+> > you have time, try a version without those changes (e.g. v2.13 or
+> > before) to see if it's a possible culprit.
 > 
-> This has been the case as far as I can remember, and is basically lore
-> in the #git irc channel).
-> 
-> This can also be reproduced by just cloning a repo inside another repo
-> and running `git add path/`.
+> I just tested this with v2.13 and saw the same issue.  I don't actually
+> think this ever worked in the way you want it to Heiko.  Maybe git add
+> needs to be taught to be more intelligent when trying to add a submodule
+> which doesn't exist in the index.
 
-Interesting and nobody complained to the mailinglist? IMO, there is no
-reason 'git add path' and 'git add path/' should behave differently or
-is there?
+That was also my guess, since my feeling is that this is a quite rare
+use case. Adding submodules alone is not a daily thing, let alone
+selecting different changes after 'git submodule add'.
 
-So it seems it is a very seldom operation (in my daily work it is at
-least) and people just accepted it as a quirk of git.
-
-If someone wants to look into changing this feel free, otherwise I will
-have a look, but I am not sure when yet.
+I also think git could be more intelligent here.
 
 Cheers Heiko
