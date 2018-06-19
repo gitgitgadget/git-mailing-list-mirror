@@ -2,142 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 47F6E1F403
-	for <e@80x24.org>; Tue, 19 Jun 2018 16:03:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA8011F403
+	for <e@80x24.org>; Tue, 19 Jun 2018 16:12:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966925AbeFSQD2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Jun 2018 12:03:28 -0400
-Received: from mail-it0-f68.google.com ([209.85.214.68]:32911 "EHLO
-        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S966582AbeFSQD1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jun 2018 12:03:27 -0400
-Received: by mail-it0-f68.google.com with SMTP id k17-v6so15122708ita.0
-        for <git@vger.kernel.org>; Tue, 19 Jun 2018 09:03:27 -0700 (PDT)
+        id S966930AbeFSQMa (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Jun 2018 12:12:30 -0400
+Received: from mail-oi0-f66.google.com ([209.85.218.66]:41758 "EHLO
+        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S967044AbeFSQMT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jun 2018 12:12:19 -0400
+Received: by mail-oi0-f66.google.com with SMTP id a141-v6so217508oii.8
+        for <git@vger.kernel.org>; Tue, 19 Jun 2018 09:12:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=mime-version:sender:from:date:message-id:subject:to:cc;
-        bh=1GoZaeTuLlc+WnisG83FhtGvwUnJ20pA8vnHbgLymSM=;
-        b=ebsTCb1XbBfd3O0qS/aHpoVzHVkG0V79wzT1wOWZaFxtIOlyZ+9Tqh/Re9mJOfcNfW
-         gy0HttTLrSb1tPJYNTp/RKhvdeIQMEm/vVIRGggN8uECAU+nvppEaV3ywt8R7z9ImqAf
-         n3+ovEiZrR6x1UA93GjPnkpSMttJxqXTQ9zupADp4YL5iDvbWhm8Wd4pTmyHvv/c5VjG
-         VA5h4KH4IO4+iB/JFc7OalFp+od+viSkooVqNrwXz+CpDe7mJ/nXgVhega/pjatR4WSC
-         6tD+lwZSGDsfpZRu7fxJnfGuCMkE2pvbfekXhhIhVBUuLWnv7I8rILIhXO2vWYudl9aw
-         Ki1w==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=iBx3AjO2mADeZzkF0MRfkpimI0yMv3Ve7jSxZd6Wdq0=;
+        b=eCE0KMyiwPmokq2ARjUt1y/EKzTDVJblnJ2FhJjss6MgN7ZlpxaY469NrWcAHYQ5vi
+         GgupW4QIupXhj7wMq8920yf8bQAGX1n6Lnc2lXRAxZjEMU2goCB+2iRFsPAvdCdrDWWk
+         nYlh4bmZi/DwfuNUp5APJ905OZC9ZQ7hMSTu4VvFM0b3C6rhkN9UdamBVl/ntYPtVEhZ
+         JCWUPHYGFuyFy+BbSt7gb8FkM8fk2DftgWvQFHBGjm4pKoM+ZQJMmBWsXATzUyP3rqIR
+         0wpf/9Nc3Omv4CqP8pjEVAo0sDTjQXTJBk8N6RB69As/wg49ZrsQyOV3GIneIKywG8X5
+         eqLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to:cc;
-        bh=1GoZaeTuLlc+WnisG83FhtGvwUnJ20pA8vnHbgLymSM=;
-        b=LNbvVQIxm94/88qfcs46olAIKEu52LEUUWFH8fjUXT9RLknX6d1GPfmhysQcAgVAUz
-         74Jwpcry18XxNa7pjcoX7hSX7jxw/3UD/kxlIZYFrlEbekzPoUvGUDoOUwMJNRqrc744
-         ZvS8MCn9n4Gb18BYBTshWlAIugrAxAhh/OE6v8ML6ORZb53UnBdIxjBBEyPGpNqRjsub
-         bGbHPIlOK7uKAnuPEn2O0JcXDeEDm0r8CxLtFdtcZ+Efuz1b3OBAfv7mEObPZyLdyJLY
-         y3KtEyHVBxT2IVblWxBACgl4A0hA4UnhWBbtymqyxosmnPwla5Reats5lg/zhhNAKiLL
-         UZjg==
-X-Gm-Message-State: APt69E3Pmw/nCFyLxl2CJ7JFQG/JU8zifacUp6HHwPI8Lan9T6AwzcW3
-        ZdjiI7vrc3fxGKgDoX37AKtZ/BQzcrZDWQUEwmF71Q==
-X-Google-Smtp-Source: ADUXVKJNIf4rlJGLFFOxJTe0EDlG7lTbAElhk1nOR1GHowLndgegE/30k+nm41hRe3BVcNSsmQ/fPo01bdTSAjzC+W8=
-X-Received: by 2002:a02:3941:: with SMTP id w1-v6mr14357887jae.132.1529424206817;
- Tue, 19 Jun 2018 09:03:26 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=iBx3AjO2mADeZzkF0MRfkpimI0yMv3Ve7jSxZd6Wdq0=;
+        b=ECd+avvK1pub2asL/DW25cB7uBtP5aM1sMDxtLBQyDmNzLSKltIychkvbBnB525FTq
+         0nNtR050WkD6FLq71FIqOPwtONiT4oOeFIM/0zOEY5A8gbBtAXOhgEbSSz1XaubSrBHX
+         J27coS9oH0wiTfU/XrAqfFlha7mE2Ze7UdeP+TakjXH2IWAPMjFLUghfj1z5L46zemir
+         /egWSiP6I9QscbqVlWV5FVQiys2g9ghsjhgWbGY38rG7nu9AKaXToVcLNKhZsULWnNYf
+         U2nikjNoq6TNmYPtsOf+MkVHi1iISXXgerbqzPS4ZZOytaf4jDBnMPjg6srW1807HIfj
+         PkTA==
+X-Gm-Message-State: APt69E39kqyVo6WV8lYA9YVvsF1aCuYBmmX/fqBkr86nhggdedKeGdDP
+        lRfQ9eMX8rhx9u51Gn4JdQQGWa+0FlPzXl1cETk=
+X-Google-Smtp-Source: ADUXVKIfxtJuAaMbDFFk2QoN3El1d45c8Us3L/jVhiU3UK3Sye702DbURB6zx6t06MVTWvrOJSsYfbwEEqXtPfcprL8=
+X-Received: by 2002:aca:fcc8:: with SMTP id a191-v6mr10323891oii.34.1529424739251;
+ Tue, 19 Jun 2018 09:12:19 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:ad5:50cd:0:0:0:0:0 with HTTP; Tue, 19 Jun 2018 09:03:25
- -0700 (PDT)
-From:   Sam Kuper <sam.kuper@uclmail.net>
-Date:   Tue, 19 Jun 2018 17:03:25 +0100
-X-Google-Sender-Auth: 67L-pfl7R16k6rj55C9lXFMGvYw
-Message-ID: <CAD-JurKx76FjVhk6QvmZ-BH=3RfmuA998KF+GRe8Kb+oB6pm8A@mail.gmail.com>
-Subject: Re: Branch switching with submodules where the submodule replaces a
- folder aborts unexpectedly
-To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>,
-        Thomas Braun <thomas.braun@virtuell-zuhause.de>
+References: <20180618111919.GA10085@book.hvoigt.net> <CACsJy8CJGditaq4CZfJctVAe9QCdapWQW=W--AumH-4RWWd=vA@mail.gmail.com>
+ <20180618181215.GB73085@google.com> <20180619103632.GC10085@book.hvoigt.net>
+ <CACsJy8DQ-GGEDiV0iA2kTgNgHcT1sSX2Oqb7VZcjyK1nBOFv+A@mail.gmail.com> <xmqqmuvqwz07.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqmuvqwz07.fsf@gitster-ct.c.googlers.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 19 Jun 2018 18:11:53 +0200
+Message-ID: <CACsJy8CVUzFDU+4xf+bZW63F=hX5EmAbW+LvqW737AGTLbUj7g@mail.gmail.com>
+Subject: Re: Adding nested repository with slash adds files instead of gitlink
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Heiko Voigt <hvoigt@hvoigt.net>,
+        Brandon Williams <bmwill@google.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12 Oct 2017 at 11:48 Thomas Braun wrote:
-> On 9 Oct 2017 at 23:59, Stefan Beller wrote:
->> On 9 Oct 2017 at 14:29, Thomas Braun wrote:
->>> I'm currently in the progress of pulling some subprojects in a git repository of mine into their
->>> own repositories and adding these subprojects back as submodules.
->>>
->>> While doing this I enountered a potential bug as checkout complains on branch switching that a
->>> file already exists. [...]
->>>
->>> `error: The following untracked working tree files would be overwritten by checkout:`
-
-I am currently attempting the same thing, and experiencing the same
-bug, using Git 2.17.1.
-
-
->> (And I presume you know about --recurse-submodules as a flag for git-checkout)
-
-The behaviour seems to be the same regardless of whether I use the
---recurse-submodules flag with git-checkout.
-
-
->> This is consistent with our tests, unfortunately. [...]
->>
->>> If I'm misusing git here I'm glad for any advice.
->>
->> You are not.
+On Tue, Jun 19, 2018 at 5:56 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Glad to know that.
-
-I was also glad to see this reassurance :)
-
-It might have been nice if the reassurance came at an earlier stage,
-however: at the CLI, rather than only after searching the mailing
-list. A user who does not think to do the latter might well labour
-under the misapprehension that they have done something wrong, rather
-than encountered a bug. Perhaps, if the bug is not going to be fixed
-terribly soon, a sentence or two could be added to the error message
-explaining the situation and advising the user of a workaround?
-
-Speaking of which, what is a good workaround in this case?
-
-`git checkout --force <branch>`?
-
-
->> Apart from this bug report, would you think that such filtering of
->> trees into submodules (and back again) might be an interesting feature
->> of Git or are these cases rare and special?
+> Duy Nguyen <pclouds@gmail.com> writes:
 >
-> For me not particularly. In my case it is a one time thing going from an embedded project folder to a submodule.
+> > On Tue, Jun 19, 2018 at 12:36 PM Heiko Voigt <hvoigt@hvoigt.net> wrote:
+> >>
+> >> On Mon, Jun 18, 2018 at 11:12:15AM -0700, Brandon Williams wrote:
+> >> > On 06/18, Duy Nguyen wrote:
+> >> > > This sounds like the submodule specific code in pathspec.c, which has
+> >> > > been replaced with something else in bw/pathspec-sans-the-index. If
+> >> > > you have time, try a version without those changes (e.g. v2.13 or
+> >> > > before) to see if it's a possible culprit.
+> >> >
+> >> > I just tested this with v2.13 and saw the same issue.  I don't actually
+> >> > think this ever worked in the way you want it to Heiko.  Maybe git add
+> >> > needs to be taught to be more intelligent when trying to add a submodule
+> >> > which doesn't exist in the index.
+> >>
+> >> That was also my guess, since my feeling is that this is a quite rare
+> >> use case. Adding submodules alone is not a daily thing, let alone
+> >> selecting different changes after 'git submodule add'.
+> >>
+> >> I also think git could be more intelligent here.
+> >
+> > Ah.. the "submodule not registered in index" case. I think I remember
+> > this (because I remember complaining about it once or two times).
+> > Definitely agreed that git-add should do the right thing here.
+>
+> I am not sure if this even needs to be implemented as "look for the
+> submodule in the index".  Even before submodule was added, we knew
+> that "git add foo/bar" should reject the request if we find foo is a
+> symbolic link, and we should do the same when foo/ is a directory
+> that is the top of a working tree under control of another
+> repository, no?
 
-The option to convert an existing directory into a submodule is
-something that I think developers like to have available. It seems
-intuitive: "Oh, I see now that what this directory holds is
-effectively a separate project. Let me check out a new branch, and
-replace the directory with a submodule on that branch. Assuming it
-goes well, then I will afterwards merge this new branch into master."
-
-Regardless, the bug has clearly been giving people headaches for
-several years (forgive me if you were already aware of these data
-points):
-
-- https://ryansechrest.com/2014/03/git-error-switching-branch-replacing-directory-submodule/
-
-- http://blog.dcycle.com/blog/105/gitsubmodulizing-and-gitflow/
-
-- https://stackoverflow.com/q/9299063
-
-- https://stackoverflow.com/a/48402543
-
-- https://stackoverflow.com/q/24091246
-
-- https://stackoverflow.com/q/29372450
-
-- https://github.com/supercollider/supercollider/issues/2001
-
-- https://github.com/supercollider/supercollider/issues/2221
-
-Thank you to Thomas for reporting this issue to the mailing list, and
-to Stefan for the helpful reply. Thanks as always to the Git
-maintainers, and good luck with fixing this bug :)
+Exactly. I started with the intention to do something related to the
+index only to slowly realize that it was not the right place. We
+traverse directories and stop looking inside a symlink, we can do the
+same if we realize it's a submodule.
+-- 
+Duy
