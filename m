@@ -2,209 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79CD01F403
-	for <e@80x24.org>; Tue, 19 Jun 2018 19:00:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57E8D1F403
+	for <e@80x24.org>; Tue, 19 Jun 2018 19:12:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1030425AbeFSTAx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Jun 2018 15:00:53 -0400
-Received: from mail1.bemta12.messagelabs.com ([216.82.251.6]:5716 "EHLO
-        mail1.bemta12.messagelabs.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1030283AbeFSTAv (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 19 Jun 2018 15:00:51 -0400
-Received: from [216.82.251.35] (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256 bits))
-        by server-6.bemta-12.messagelabs.com id 88/63-27145-3E2592B5; Tue, 19 Jun 2018 19:00:51 +0000
-X-Brightmail-Tracker: H4sIAAAAAAAAA1VSa0hTYRjet3M2T+Gpb3Nrb1IjV1GTdM2ILhR
-  J9COIIEXKNFlnedxG25SdGbM/CVGW2tVLaRfnLcE0TdaFUIkVlYoUqyhLSPNC0yIrwcLUzvGs
-  25+P53uf533e5/t4KULplUdSrMfNupyMXSefS75e4oOY94n61NW3azetz39RII1H27+1aHehF
-  JnNac707JdZW89dlWcF13mq73jluahwXT6aS5G4kYDSC3flwkWJ86SQd+kmKV5eIbg8OS7LR3
-  MoOTZC/UwbykcUpcIGOP1MLZQjcAI0jXcTAlbhROi91UWIkjiYHtALZRIvhydDJ6QCpnEyfH3
-  0Qy5gJd4Az8oqSQHPwRuhr799VoPwApjobJjFBNbAm8GKWQwYQ03rU0LEaggOTMtEvAQ+VXaF
-  NIshUFGAhPiAfVKoKThKikQMjJWUhJp3QtX0MZmQE/BS8H1IE/VdCJqHfSGjaBjubQgFSoPrV
-  06Fhlkg721vyHMvvAs+COm1UH+qnxSNHhPw5MVLUhywCLzX4sV6nRzqGjrDxNdb4ee3IelZtK
-  r8n4eW8y0E1kPTPYNYjoLigv6w8tm/U0BH2SDpRWQ9WsmxrkOsK8a4Jtbsslmsbgdjs8cYjXG
-  xDpbjGAtrZ8xc7IFMRwvid+OIRILuosdd2/xoISXVqWn9Wn2qcp45Mz3HynBWkyvbznJ+tIii
-  dEC3JfCcwsVaWE+Gzc4v2G8aqHCdiib4FVPSXBbj4GwWkepEW6ifvvOFBHXPX8SfJz4X8+fg8
-  9JCQkk6M51spIaeFFyx0GbNdv4x/b24AbQ4MoJGEolEGZ7Fuhw29//8CNJQSBdBFwku4Tan+8
-  /sET6WlI/lO7xCiOVm/lKRucg0qk26MXrZ8NK3u0P23UMRRX1J2s2GFmPWGN0TnCrNqQ3o81T
-  1wbpO03BDmnfPSe3DVmKy8cqXzToNnVEpi0j+GOj1t8sy0uPH7mwoz+kuu6jYZ57SqkzVrwfO
-  TPTkKrYSO6LOrzA3fZ1Z1txzvOLg/cAlpYNL+XjmHVk1X60jOStjjCZcHPMLwXBhbrMDAAA=
-X-Env-Sender: Edwin.Dyer@alliancedata.com
-X-Msg-Ref: server-5.tower-151.messagelabs.com!1529434850!105567872!1
-X-Originating-IP: [216.32.180.24]
-X-SYMC-ESS-Client-Auth: mailfrom-relay-check=pass
-X-StarScan-Received: 
-X-StarScan-Version: 9.9.15; banners=alliancedata.com,-,-
-X-VirusChecked: Checked
-Received: (qmail 82516 invoked from network); 19 Jun 2018 19:00:50 -0000
-Received: from mail-sn1nam02lp0024.outbound.protection.outlook.com (HELO NAM02-SN1-obe.outbound.protection.outlook.com) (216.32.180.24)
-  by server-5.tower-151.messagelabs.com with AES256-GCM-SHA384 encrypted SMTP; 19 Jun 2018 19:00:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=AllianceData.onmicrosoft.com; s=selector1-alliancedata-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=s4GHxB2yBj+wl1bYZcqvpVE1mWFILPGY0nl4lRWgB9I=;
- b=VM4nkWnBc7KqKxUQCGF1P4IdMdkttBiT6oYbSlL5ZOqxHrrQSOye3TIxNbsOkHyiYcq/6C/rgVG8D1BakeAJiCOEWxizFa1mbhvPgMOLm8B/9RLRyRCDe+0rO17rlziGShkk3CmSiZnBSOomMMUk7v2NX63PTbmie7qGZCnRM4U=
-Received: from CO2PR01MB2038.prod.exchangelabs.com (10.166.90.155) by
- CO2PR01MB1973.prod.exchangelabs.com (10.166.90.138) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.863.17; Tue, 19 Jun 2018 19:00:49 +0000
-Received: from CO2PR01MB2038.prod.exchangelabs.com
- ([fe80::d5cc:5436:e9dc:9c90]) by CO2PR01MB2038.prod.exchangelabs.com
- ([fe80::d5cc:5436:e9dc:9c90%2]) with mapi id 15.20.0863.016; Tue, 19 Jun 2018
- 19:00:49 +0000
-From:   "Dyer, Edwin" <Edwin.Dyer@alliancedata.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: security: potential out-of-bound read at ewah_io.c
- |ewah_read_mmap|
-Thread-Topic: security: potential out-of-bound read at ewah_io.c
- |ewah_read_mmap|
-Thread-Index: AQHUBD4gYibtaY4UMU6uaGYzKA7BzaRn9qFg
-Date:   Tue, 19 Jun 2018 19:00:48 +0000
-Message-ID: <CO2PR01MB20383AC645BE4FD6BF47C697F1700@CO2PR01MB2038.prod.exchangelabs.com>
-References: <2067D731-C415-4D19-8CDA-90D7DC638397@l4w.io>
-In-Reply-To: <2067D731-C415-4D19-8CDA-90D7DC638397@l4w.io>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [205.144.50.1]
-x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;CO2PR01MB1973;7:5EqoPsrrb5bqOX0RqMIjcpVXDhSEdCcCrp4+a6D96y+s8YAz+S/ls+STHocZVjGd0ZTQRR5m3w9YdnSfzulSqUmx2JFBcKu4uO8v9n4adaOrK0UmZhT8NPuTv9+0rDPPe9zLuwSJ14Z+VkbRSyDoUkjGXeuUSxtUj8QcWyuLcbtZm7F578RZXBiLrV3KtyB7DfH6aSA3wP713RHwAAAbeAbxxRLCu/jcmVLZ2CwF8hg2FbxDNqSZ2XAsLyXtO9DD
-x-ms-exchange-antispam-srfa-diagnostics: SOS;
-x-ms-office365-filtering-correlation-id: d6723ca4-ebd7-4d47-cd6b-08d5d616f8bb
-x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(4534165)(4627221)(201703031133081)(201702281549075)(5600026)(711020)(48565401081)(2017052603328)(7153060)(7193020);SRVR:CO2PR01MB1973;
-x-ms-traffictypediagnostic: CO2PR01MB1973:
-x-microsoft-antispam-prvs: <CO2PR01MB1973B3ED21AFC9B4C2C3792CF1700@CO2PR01MB1973.prod.exchangelabs.com>
-x-exchange-antispam-report-test: UriScan:(192374486261705)(9452136761055)(5213294742642);
-x-ms-exchange-senderadcheck: 1
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(3002001)(93006095)(93001095)(10201501046)(3231254)(944501410)(52105095)(6055026)(149027)(150027)(6041310)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123558120)(20161123564045)(20161123562045)(20161123560045)(6072148)(201708071742011)(7699016);SRVR:CO2PR01MB1973;BCL:0;PCL:0;RULEID:;SRVR:CO2PR01MB1973;
-x-forefront-prvs: 07083FF734
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(396003)(346002)(39380400002)(39860400002)(366004)(376002)(199004)(189003)(13464003)(7696005)(6916009)(3846002)(316002)(5660300001)(59450400001)(99286004)(6116002)(86362001)(186003)(68736007)(26005)(575784001)(66066001)(102836004)(53546011)(6506007)(2501003)(5250100002)(76176011)(2351001)(81156014)(15650500001)(106356001)(2900100001)(305945005)(3280700002)(105586002)(229853002)(3660700001)(2906002)(25786009)(97736004)(72206003)(7736002)(446003)(6436002)(55016002)(9686003)(74316002)(476003)(486006)(8936002)(5640700003)(8676002)(14454004)(6246003)(33656002)(478600001)(11346002)(53936002)(81166006)(1730700003)(505234006);DIR:OUT;SFP:1101;SCL:1;SRVR:CO2PR01MB1973;H:CO2PR01MB2038.prod.exchangelabs.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
-received-spf: None (protection.outlook.com: alliancedata.com does not
- designate permitted sender hosts)
-x-microsoft-antispam-message-info: J6WGkmx5f/mteDhHLb6cFCrsmYG4jdC3ueb95kM+aUYzn8VA6RYoUwcb4O653dUBWbSTLz+vZKM72+Uvh3FSvTotnNUhbBsXtN9TKToTb03Hd0e1g+crjvu95k4k9DoH7yIBExoi8+HqftmtjSR1TepDBwzxz2YONVPiJ2W5SUmAyalx5wZku0av3qc8e4IJQlVZo+TPhvjJywlholX/EG0ZF8JHzLsX+kT3xCu3DGiFIXLTmKElJHp9tSKHGXkoeY41MmADtd9kjHoNZhlX7BEhQwEKagPfZCgJXGdO4VxWwWUArXeLwX3Wf4I111g4a0kDusCACiqmFDeU8sKKCA==
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        id S1030296AbeFSTL7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Jun 2018 15:11:59 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48834 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S967134AbeFSTL6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jun 2018 15:11:58 -0400
+Received: (qmail 5111 invoked by uid 109); 19 Jun 2018 19:11:58 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 19 Jun 2018 19:11:58 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16446 invoked by uid 111); 19 Jun 2018 19:12:15 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 19 Jun 2018 15:12:15 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Jun 2018 15:11:56 -0400
+Date:   Tue, 19 Jun 2018 15:11:56 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        avarab@gmail.com, gitster@pobox.com
+Subject: Re: [PATCH 0/7] grep.c: teach --column to 'git-grep(1)'
+Message-ID: <20180619191156.GA21641@sigill.intra.peff.net>
+References: <cover.1529365072.git.me@ttaylorr.com>
+ <20180619163506.GB22034@sigill.intra.peff.net>
+ <5282e3bb-bf7a-ab3a-98dc-d29ff1c37468@web.de>
+ <20180619174846.GA27820@sigill.intra.peff.net>
+ <6ab94453-84ef-e269-c320-e102b02d6f3b@web.de>
 MIME-Version: 1.0
-X-OriginatorOrg: alliancedata.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d6723ca4-ebd7-4d47-cd6b-08d5d616f8bb
-X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Jun 2018 19:00:49.1203
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 7a24eae8-33b9-449a-83f5-361634c821ce
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO2PR01MB1973
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <6ab94453-84ef-e269-c320-e102b02d6f3b@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-R3JlZXRpbmdzLCBhbGw6CgpKdXN0IGN1cmlvdXMgaWYgdGhlcmUgd2FzIGFueSBhZGRpdGlvbmFs
-IGNvbW1lbnQgb24gdGhpcyBwb3RlbnRpYWwgT09CPyBJIG1heSBoYXZlIG1pc3NlZCBpdCBhbmQg
-aWYgc28sIGFwb2xvZ2llcyBmb3IgdGhlIGFzay4KCkNoZWVycywKCkVkCgoKLS0tLS1PcmlnaW5h
-bCBNZXNzYWdlLS0tLS0KRnJvbTogZ2l0LW93bmVyQHZnZXIua2VybmVsLm9yZyBbbWFpbHRvOmdp
-dC1vd25lckB2Z2VyLmtlcm5lbC5vcmddIE9uIEJlaGFsZiBPZiBMdWF0IE5ndXllbgpTZW50OiBU
-aHVyc2RheSwgSnVuZSAxNCwgMjAxOCA3OjAwIFBNClRvOiBnaXRAdmdlci5rZXJuZWwub3JnClN1
-YmplY3Q6IHNlY3VyaXR5OiBwb3RlbnRpYWwgb3V0LW9mLWJvdW5kIHJlYWQgYXQgZXdhaF9pby5j
-IHxld2FoX3JlYWRfbW1hcHwKCkhpIGZvbGtzLAoKUmVjZW50bHksIEnigJl2ZSBmb3VuZCBhIHNl
-Y3VyaXR5IGlzc3VlIHJlbGF0ZWQgdG8gb3V0LW9mLWJvdW5kIHJlYWQgYXQgZnVuY3Rpb24gbmFt
-ZWQgYGV3YWhfcmVhZF9tbWFwYAoKQXNzdW1lIHRoYXQsIGFuIGF0dGFja2VyIGNhbiBwdXQgbWFs
-aWNpb3VzIGAuL2dpdC9pbmRleGAgaW50byBhIHJlcG8gYnkgc29tZWhvdy4KClNpbmNlIHRoZXJl
-IGlzIGxhY2sgb2YgY2hlY2sgd2hldGhlciB0aGUgcmVtYWluaW5nIHNpemUgb2YgYHB0cmBpcyBl
-cXVhbCB0byBgYnVmZmVyX3NpemVgIG9yIG5vdC4KClNvIHRoZSBjb2RlIHJlYWRzIGV4Y2VlZCB0
-aGUgYnVmZmVyIG9mIGBwdHJgIGFuZCByZWFjaCB0byBoaWdoZXIgcGFnZS4gSW4gdGhpcyBjYXNl
-LCBpdCBpcyBgL2xpYi94ODZfNjQtbGludXgtZ251L2xkLTIuMjMuc29gLgoKTGVhZHMgdG8gaW5m
-b2xlYWsuIFlvdSBjYW4gZmluZCBtb3JlIGRldGFpbHMgYW5kIGFzYW4gY3Jhc2ggYmVsb3cuCgoK
-CiMgeHhkIC5naXQvaW5kZXgKMDAwMDAwMDA6IDQ0NDkgNTI0MyAwMDAwIDAwMDIgMDAwMCAwMDAw
-IDQ2NTMgNGQ0ZSAgRElSQy4uLi4uLi4uRlNNTgowMDAwMDAxMDogMDAwMCAwMDI0IDAwMDAgMDAw
-MSAxNTM4IDI0ODkgYzhmYyAzNjE2ICAuLi4kLi4uLi44JC4uLjYuCjAwMDAwMDIwOiAwMDAwIDAw
-MTQgMDAwMCAwMDAwIDAwMDAgMjAwMCA0MTQxICAgICAgIC4uLi4uLi4uLi4gLkFBCiAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgIF4gZXZpbCBzaXplIGhlcmUgPSAweDIwMDAKCgoq
-KioqKiBTTklQIENPREUgKioqKioKCmludCBld2FoX3JlYWRfbW1hcChzdHJ1Y3QgZXdhaF9iaXRt
-YXAgKnNlbGYsIGNvbnN0IHZvaWQgKm1hcCwgc2l6ZV90IGxlbikgeyDigKYgCglzZWxmLT5idWZm
-ZXJfc2l6ZSA9IHNlbGYtPmFsbG9jX3NpemUgPSBnZXRfYmUzMihwdHIpOwoJcHRyICs9IHNpemVv
-Zih1aW50MzJfdCk7CuKApiAKCW1lbWNweShzZWxmLT5idWZmZXIsIHB0ciwgc2VsZi0+YnVmZmVy
-X3NpemUgKiBzaXplb2YoZXdvcmRfdCkpOwoKClttZW1vcnkgbWFwXQoKICAgIDB4N2Y5OTBlY2Ez
-MDAwICAgICAweDdmOTkwZWNhNDAwMCByLS1wICAgICAxMDAwIDAgICAgICAvbWVkaWEvc2ZfRnV6
-ei92dWxuX3JlcG8vLmdpdC9pbmRleCA84oCUIHdoZXJlIGBwdHJgIGlzIHBsYWNlZAogICAgMHg3
-Zjk5MGVjYTQwMDAgICAgIDB4N2Y5OTBlY2E1MDAwIHItLXAgICAgIDEwMDAgMjUwMDAgIC9saWIv
-eDg2XzY0LWxpbnV4LWdudS9sZC0yLjIzLnNvIDzigJQgbWVtY3B5IHdpbGwgcmVhY2ggaGVyZQog
-ICAgMHg3Zjk5MGVjYTUwMDAgICAgIDB4N2Y5OTBlY2E2MDAwIHJ3LXAgICAgIDEwMDAgMjYwMDAg
-IC9saWIveDg2XzY0LWxpbnV4LWdudS9sZC0yLjIzLnNvIDzigJQgYW5kIGhlcmUgCgoKWyBBU0FO
-IGxvZyBdCgpyb290QGd1ZXN0Oi9tZWRpYS9zZl9TSEFSRS92dWxuX3JlcG8jIC9tZWRpYS9zZl9T
-SEFSRS9naXQtbWFzdGVyLWFzYW4vZ2l0IHN0YXR1cyA9PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQo9PTQzMjQ9PUVSUk9SOiBB
-ZGRyZXNzU2FuaXRpemVyOiB1bmtub3duLWNyYXNoIG9uIGFkZHJlc3MgMHg3ZjZmMjM1YjAwMDAg
-YXQgcGMgMHgwMDAwMDA0YmJhNzkgYnAgMHg3ZmZjNzVlNjg4NTAgc3AgMHg3ZmZjNzVlNjgwMDAg
-UkVBRCBvZiBzaXplIDY1NTM2IGF0IDB4N2Y2ZjIzNWIwMDAwIHRocmVhZCBUMAogICAgIzAgMHg0
-YmJhNzggaW4gX19hc2FuX21lbWNweSAvdG1wL2ZpbmFsL2xsdm0uc3JjL3Byb2plY3RzL2NvbXBp
-bGVyLXJ0L2xpYi9hc2FuL2FzYW5faW50ZXJjZXB0b3JzX21lbWludHJpbnNpY3MuY2M6MjM6Mwog
-ICAgIzEgMHg4YzkxMGUgaW4gZXdhaF9yZWFkX21tYXAgL21lZGlhL3NmX1NIQVJFL2dpdC1tYXN0
-ZXItYXNhbi9ld2FoL2V3YWhfaW8uYzoxNDQ6MgogICAgIzIgMHg4ZTI1MzQgaW4gcmVhZF9mc21v
-bml0b3JfZXh0ZW5zaW9uIC9tZWRpYS9zZl9TSEFSRS9naXQtbWFzdGVyLWFzYW4vZnNtb25pdG9y
-LmM6NDY6OAogICAgIzMgMHhhMDU4NjIgaW4gcmVhZF9pbmRleF9leHRlbnNpb24gL21lZGlhL3Nm
-X1NIQVJFL2dpdC1tYXN0ZXItYXNhbi9yZWFkLWNhY2hlLmM6MTYxNTozCiAgICAjNCAweGEwNDZm
-MyBpbiBkb19yZWFkX2luZGV4IC9tZWRpYS9zZl9TSEFSRS9naXQtbWFzdGVyLWFzYW4vcmVhZC1j
-YWNoZS5jOjE4NzI6NwogICAgIzUgMHhhMDMzMjUgaW4gcmVhZF9pbmRleF9mcm9tIC9tZWRpYS9z
-Zl9TSEFSRS9naXQtbWFzdGVyLWFzYW4vcmVhZC1jYWNoZS5jOjE5MTM6OAogICAgIzYgMHhhMDMy
-MzEgaW4gcmVhZF9pbmRleCAvbWVkaWEvc2ZfU0hBUkUvZ2l0LW1hc3Rlci1hc2FuL3JlYWQtY2Fj
-aGUuYzoxNjM0OjkKICAgICM3IDB4OWRlNWU4IGluIHJlYWRfaW5kZXhfcHJlbG9hZCAvbWVkaWEv
-c2ZfU0hBUkUvZ2l0LW1hc3Rlci1hc2FuL3ByZWxvYWQtaW5kZXguYzoxMTk6MTUKICAgICM4IDB4
-NTY2Y2M2IGluIGNtZF9zdGF0dXMgL21lZGlhL3NmX1NIQVJFL2dpdC1tYXN0ZXItYXNhbi9idWls
-dGluL2NvbW1pdC5jOjEzNTg6MgogICAgIzkgMHg0ZWRlOGMgaW4gcnVuX2J1aWx0aW4gL21lZGlh
-L3NmX1NIQVJFL2dpdC1tYXN0ZXItYXNhbi9naXQuYzo0MTc6MTEKICAgICMxMCAweDRlYTkzOSBp
-biBoYW5kbGVfYnVpbHRpbiAvbWVkaWEvc2ZfU0hBUkUvZ2l0LW1hc3Rlci1hc2FuL2dpdC5jOjYz
-Mjo4CiAgICAjMTEgMHg0ZWQ2NTUgaW4gcnVuX2FyZ3YgL21lZGlhL3NmX1NIQVJFL2dpdC1tYXN0
-ZXItYXNhbi9naXQuYzo2ODQ6NAogICAgIzEyIDB4NGVhMDM3IGluIGNtZF9tYWluIC9tZWRpYS9z
-Zl9TSEFSRS9naXQtbWFzdGVyLWFzYW4vZ2l0LmM6NzYxOjE5CiAgICAjMTMgMHg3NTljOGIgaW4g
-bWFpbiAvbWVkaWEvc2ZfU0hBUkUvZ2l0LW1hc3Rlci1hc2FuL2NvbW1vbi1tYWluLmM6NDU6OQog
-ICAgIzE0IDB4N2Y2ZjIyNDMzODJmIGluIF9fbGliY19zdGFydF9tYWluICgvbGliL3g4Nl82NC1s
-aW51eC1nbnUvbGliYy5zby42KzB4MjA4MmYpCiAgICAjMTUgMHg0MWMyNjggaW4gX3N0YXJ0ICgv
-bWVkaWEvc2ZfU0hBUkUvZ2l0LW1hc3Rlci1hc2FuL2dpdCsweDQxYzI2OCkKCkFkZHJlc3MgMHg3
-ZjZmMjM1YjAwMDAgaXMgYSB3aWxkIHBvaW50ZXIuClNVTU1BUlk6IEFkZHJlc3NTYW5pdGl6ZXI6
-IHVua25vd24tY3Jhc2ggL3RtcC9maW5hbC9sbHZtLnNyYy9wcm9qZWN0cy9jb21waWxlci1ydC9s
-aWIvYXNhbi9hc2FuX2ludGVyY2VwdG9yc19tZW1pbnRyaW5zaWNzLmNjOjIzOjMgaW4gX19hc2Fu
-X21lbWNweSBTaGFkb3cgYnl0ZXMgYXJvdW5kIHRoZSBidWdneSBhZGRyZXNzOgogIDB4MGZlZTY0
-NmFkZmIwOiAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMAog
-IDB4MGZlZTY0NmFkZmMwOiAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAw
-MCAwMCAwMAogIDB4MGZlZTY0NmFkZmQwOiAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAw
-MCAwMCAwMCAwMCAwMCAwMAogIDB4MGZlZTY0NmFkZmUwOiAwMCAwMCAwMCAwMCAwMCAwMCAwMCAw
-MCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMAogIDB4MGZlZTY0NmFkZmYwOiAwMCAwMCAwMCAwMCAw
-MCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCA9PjB4MGZlZTY0NmFlMDAwOltmZV1m
-ZSBmZSBmZSBmZSBmZSBmZSBmZSBmZSBmZSBmZSBmZSBmZSBmZSBmZSBmZQogIDB4MGZlZTY0NmFl
-MDEwOiBmZSBmZSBmZSBmZSBmZSBmZSBmZSBmZSBmZSBmZSBmZSBmZSBmZSBmZSBmZSBmZQogIDB4
-MGZlZTY0NmFlMDIwOiBmZSBmZSBmZSBmZSBmZSBmZSBmZSBmZSBmZSBmZSBmZSBmZSBmZSBmZSBm
-ZSBmZQogIDB4MGZlZTY0NmFlMDMwOiBmZSBmZSBmZSBmZSBmZSBmZSBmZSBmZSBmZSBmZSBmZSBm
-ZSBmZSBmZSBmZSBmZQogIDB4MGZlZTY0NmFlMDQwOiBmZSBmZSBmZSBmZSBmZSBmZSBmZSBmZSBm
-ZSBmZSBmZSBmZSBmZSBmZSBmZSBmZQogIDB4MGZlZTY0NmFlMDUwOiBmZSBmZSBmZSBmZSBmZSBm
-ZSBmZSBmZSBmZSBmZSBmZSBmZSBmZSBmZSBmZSBmZSBTaGFkb3cgYnl0ZSBsZWdlbmQgKG9uZSBz
-aGFkb3cgYnl0ZSByZXByZXNlbnRzIDggYXBwbGljYXRpb24gYnl0ZXMpOgogIEFkZHJlc3NhYmxl
-OiAgICAgICAgICAgMDAKICBQYXJ0aWFsbHkgYWRkcmVzc2FibGU6IDAxIDAyIDAzIDA0IDA1IDA2
-IDA3CiAgSGVhcCBsZWZ0IHJlZHpvbmU6ICAgICAgIGZhCiAgRnJlZWQgaGVhcCByZWdpb246ICAg
-ICAgIGZkCiAgU3RhY2sgbGVmdCByZWR6b25lOiAgICAgIGYxCiAgU3RhY2sgbWlkIHJlZHpvbmU6
-ICAgICAgIGYyCiAgU3RhY2sgcmlnaHQgcmVkem9uZTogICAgIGYzCiAgU3RhY2sgYWZ0ZXIgcmV0
-dXJuOiAgICAgIGY1CiAgU3RhY2sgdXNlIGFmdGVyIHNjb3BlOiAgIGY4CiAgR2xvYmFsIHJlZHpv
-bmU6ICAgICAgICAgIGY5CiAgR2xvYmFsIGluaXQgb3JkZXI6ICAgICAgIGY2CiAgUG9pc29uZWQg
-YnkgdXNlcjogICAgICAgIGY3CiAgQ29udGFpbmVyIG92ZXJmbG93OiAgICAgIGZjCiAgQXJyYXkg
-Y29va2llOiAgICAgICAgICAgIGFjCiAgSW50cmEgb2JqZWN0IHJlZHpvbmU6ICAgIGJiCiAgQVNh
-biBpbnRlcm5hbDogICAgICAgICAgIGZlCiAgTGVmdCBhbGxvY2EgcmVkem9uZTogICAgIGNhCiAg
-UmlnaHQgYWxsb2NhIHJlZHpvbmU6ICAgIGNiCj09NDMyND09QUJPUlRJTkcKcm9vdEBndWVzdDov
-bWVkaWEvc2ZfU0hBUkUvdnVsbl9yZXBvIwoKClJlZ2FyZHMsCkx1YXQgTmd1eWVuLgoKX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fXwpUaGUgaW5mb3JtYXRpb24gY29udGFpbmVkIGluIHRoaXMgZS1tYWlsIG1lc3NhZ2Ug
-YW5kIGFueSBhdHRhY2htZW50cyBtYXkgYmUgcHJpdmlsZWdlZCBhbmQgY29uZmlkZW50aWFsLiBJ
-ZiB0aGUgcmVhZGVyIG9mIHRoaXMgbWVzc2FnZSBpcyBub3QgdGhlIGludGVuZGVkIHJlY2lwaWVu
-dCBvciBhbiBhZ2VudCByZXNwb25zaWJsZSBmb3IgZGVsaXZlcmluZyBpdCB0byB0aGUgaW50ZW5k
-ZWQgcmVjaXBpZW50LCB5b3UgYXJlIGhlcmVieSBub3RpZmllZCB0aGF0IGFueSByZXZpZXcsIGRp
-c3NlbWluYXRpb24sIGRpc3RyaWJ1dGlvbiBvciBjb3B5aW5nIG9mIHRoaXMgY29tbXVuaWNhdGlv
-biBpcyBzdHJpY3RseSBwcm9oaWJpdGVkLiBJZiB5b3UgaGF2ZSByZWNlaXZlZCB0aGlzIGNvbW11
-bmljYXRpb24gaW4gZXJyb3IsIHBsZWFzZSBub3RpZnkgdGhlIHNlbmRlciBpbW1lZGlhdGVseSBi
-eSByZXBseWluZyB0byB0aGlzIGUtbWFpbCBhbmQgZGVsZXRlIHRoZSBtZXNzYWdlIGFuZCBhbnkg
-YXR0YWNobWVudHMgZnJvbSB5b3VyIGNvbXB1dGVyLgpfX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fCg==
+On Tue, Jun 19, 2018 at 08:50:16PM +0200, René Scharfe wrote:
 
+> Negation causes the whole non-matching line to match, with --column
+> reporting 1 or nothing in such a case, right?  Or I think doing the
+> same when the operator is applied a second time is explainable.
+
+Yes to your first question.
+
+Regarding the final sentence, yes, I agree it's explainable. But I
+thought that handling negation like this was one of the main complaints
+of earlier iterations?
+
+> When ORing multiple expressions I don't pay attention to their order
+> as that operator is commutative.  Having results depend on that
+> order would at least surprise me.
+
+OK. Let's just disable the short-circuit for --column then (i.e., what
+Taylor posted earlier). That's explainable, and I doubt the performance
+implications are going to be all that noticeable.
+
+-Peff
