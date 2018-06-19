@@ -2,74 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE3E91F403
-	for <e@80x24.org>; Tue, 19 Jun 2018 18:22:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B08E1F403
+	for <e@80x24.org>; Tue, 19 Jun 2018 18:31:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966825AbeFSSWx convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Tue, 19 Jun 2018 14:22:53 -0400
-Received: from mail-yw0-f176.google.com ([209.85.161.176]:38372 "EHLO
-        mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S966078AbeFSSWx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jun 2018 14:22:53 -0400
-Received: by mail-yw0-f176.google.com with SMTP id w13-v6so234671ywa.5
-        for <git@vger.kernel.org>; Tue, 19 Jun 2018 11:22:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=9ps2bW9j2WA4y/FJlu0SasbsfFtzU0XyqPQbajM3tWU=;
-        b=Pnhwjxy57tcHlKKh3kLPafow5NPjKP2Rg8o8NjwcR1IML5EZAG6QXNLsBDlWXcJboV
-         zTEs6r7dTnvGug+/E1RQFY4eS7IXrnJmG8gsjn//EwyynKdUYZlP9lroxkUAoqobTE3e
-         /IpkBLsUtTCtYWL8lAQdXv74MC1wUphSThpdrzmPNMt5u23y+GiJg/c8c2prqM5mXTec
-         YxMNr4HsrzaikCy9FyXvhGG8WFwj+ioKaWGafK4AngPQWMxW/elt6/Vgtfp3Ngl1fz1x
-         haLSRKq7ZF4Yre607AuXHBOrqQjZRSv66lW8Suf4bxgMoKIZZrSf6nmcx1bzdedkgENZ
-         weQg==
-X-Gm-Message-State: APt69E0IhYnC2u0XXzrAkLne+MOeUKpGCX6cavkIzggsrYELIvBylxRv
-        ucX+XHMK1nsSd08gGrL+esiTBM2WKKI9yOMqnP8=
-X-Google-Smtp-Source: ADUXVKIniQwRKmzl469i/O0tYuMnKwBxhreLwzOSKzO2Tu2tsaP//g1Fb25c7r/k2n8mG1Uzc8UKKhmJr90GhX70JGo=
-X-Received: by 2002:a81:4517:: with SMTP id s23-v6mr8759237ywa.74.1529432572304;
- Tue, 19 Jun 2018 11:22:52 -0700 (PDT)
+        id S967136AbeFSSbm (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Jun 2018 14:31:42 -0400
+Received: from bsmtp7.bon.at ([213.33.87.19]:46788 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S967097AbeFSSbl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jun 2018 14:31:41 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 419Gkz4Hxlz5tlK;
+        Tue, 19 Jun 2018 20:31:39 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 339E81CA9;
+        Tue, 19 Jun 2018 20:31:39 +0200 (CEST)
+Subject: Re: want <reason> option to git-rebase
+To:     Jonathan Nieder <jrnieder@gmail.com>,
+        Ian Jackson <ijackson@chiark.greenend.org.uk>
+Cc:     git@vger.kernel.org
+References: <23335.52730.475955.861241@chiark.greenend.org.uk>
+ <20180619010655.GA173168@aiede.svl.corp.google.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <c5fc1505-9847-25d8-02f3-c0e666afdd1d@kdbg.org>
+Date:   Tue, 19 Jun 2018 20:31:39 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-References: <5ee7a65d-63e1-aa6a-c3c1-663c092d0efe@web.de> <xmqqk1quvegh.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqk1quvegh.fsf@gitster-ct.c.googlers.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 19 Jun 2018 14:22:40 -0400
-Message-ID: <CAPig+cT2xkR=LbAJLCdeynGkiPysakbVna61cfrtgO3kKh85+g@mail.gmail.com>
-Subject: Re: t5562: gzip -k is not portable
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        Git List <git@vger.kernel.org>, Max Kirillov <max@max630.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+In-Reply-To: <20180619010655.GA173168@aiede.svl.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 19, 2018 at 2:06 PM Junio C Hamano <gitster@pobox.com> wrote:
-> Torsten Bögershausen <tboegi@web.de> writes:
-> > t5562 fails here under MacOS:
-> > "gzip -k"  is not portable.
+Am 19.06.2018 um 03:06 schrieb Jonathan Nieder:
+> Ian Jackson wrote[1]:
+>> git-rebase leaves entries like this in the reflog:
+>>
+>>    c15f4d5391 HEAD@{33}: rebase: checkout c15f4d5391ff07a718431aca68a73e672fe8870e
+>>
+>> It would be nice if there were an option to control this message.
+>> Particularly, when another tool invokes git-rebase, the other tool may
+>> specify an interesting --onto, and there is no way to record any
+>> information about that --onto commit.
+>>
+>> git-rebase already has a -m option, so I suggest
+>>    --reason=<reason>
+>>
+>> It doesn't matter much exactly how the provided string is used.
+>> Any of the following would be good IMO:
+>>    <reason>
+>>    rebase start: <reason>
+> 
+>  From git(1):
+> 
+>   GIT_REFLOG_ACTION
+> 	When a ref is updated, reflog entries are created to keep
+> 	track of the reason why the ref was updated (which is
+> 	typically the name of the high-level command that updated the
+> 	ref), in addition to the old and new values of the ref. A
+> 	scripted Porcelain command can use set_reflog_action helper
+> 	function in git-sh-setup to set its name to this variable when
+> 	it is invoked as the top level command by the end user, to be
+> 	recorded in the body of the reflog.
+> 
+> "git rebase" sets this itself, so it doesn't solve your problem.
 
-Very odd. Stock /usr/bin/gzip on my MacOS 10.12.6 _does_ recognize -k,
-and the test does pass.
+If it does so unconditionally, then that is a bug. If a script wants to 
+set GIT_REFLOG_ACTION, but finds that it is already set, then it must 
+not change the value. set_reflog_action in git-sh-setup does the right 
+thing.
 
-> Sigh.  Perhaps -c would help.  Or do BSD implementations also lack -c?
+So, if there is another script or application around git-rebase, then it 
+should just set GIT_REFLOG_ACTION (if it is not already set) and export 
+the environment variable to git-rebase.
 
-MacOS and BSD do support -c, so this solution would also work (and is
-"cleaner" the the other proposal).
-
-> diff --git a/t/t5562-http-backend-content-length.sh b/t/t5562-http-backend-content-length.sh
-> @@ -61,9 +61,9 @@ test_expect_success 'setup' '
->  test_expect_success GZIP 'setup, compression related' '
-> -       gzip -k fetch_body &&
-> +       gzip -c fetch_body >fetch_body.gz &&
->         test_copy_bytes 10 <fetch_body.gz >fetch_body.gz.trunc &&
-> -       gzip -k push_body &&
-> +       gzip -c push_body >push_body.gz &&
->         test_copy_bytes 10 <push_body.gz >push_body.gz.trunc
->  '
+-- Hannes
