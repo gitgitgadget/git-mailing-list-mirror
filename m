@@ -2,78 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 354921F403
-	for <e@80x24.org>; Tue, 19 Jun 2018 22:28:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A40D31F403
+	for <e@80x24.org>; Tue, 19 Jun 2018 22:29:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752725AbeFSW16 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Jun 2018 18:27:58 -0400
-Received: from mail-yw0-f202.google.com ([209.85.161.202]:33544 "EHLO
-        mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751579AbeFSW1z (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jun 2018 18:27:55 -0400
-Received: by mail-yw0-f202.google.com with SMTP id u207-v6so825815ywg.0
-        for <git@vger.kernel.org>; Tue, 19 Jun 2018 15:27:55 -0700 (PDT)
+        id S1753762AbeFSW3o (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Jun 2018 18:29:44 -0400
+Received: from mail-lf0-f44.google.com ([209.85.215.44]:34664 "EHLO
+        mail-lf0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753622AbeFSW3k (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jun 2018 18:29:40 -0400
+Received: by mail-lf0-f44.google.com with SMTP id e13-v6so1621006lfc.1
+        for <git@vger.kernel.org>; Tue, 19 Jun 2018 15:29:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=wEZaYyobY2Jg/Tf8hKyQTsuqZdqPwKMTsSqsETlqKr8=;
-        b=Zk7xAeIYsRylrWpB/HHDWcDIS6ButB4PKc6eSlbTIC85AZboOxhLOfatnZ0ERo+kS0
-         UFd9rDKBKyRpwHUYnXy17QSvYj8TYNe0uUUFMCGf3WDkLyTFctrMfyJjekZ/F6J2Qgec
-         qes6UKB6DV/w362P4xwDnwvgQyRD17JB8jvrNDaRp6YWDr/w0nCUHrJzYI5z58tu5Tw5
-         c+MWSyEoSXgghBM3MmsjEEZCW1SH1foqk53DqUljCFfadRCX4aJl4X3no6OMhn8FrDM8
-         aNMoRg7Xt5yGEhacP+tp4J/yJvXeiOO9ZGcrdL/Kp1Ko32XvuiMp6tYlvG6XbAAT9TcM
-         ZqEg==
+        bh=cOO2KPi3qBQ9iJ+P8qSp2/bc3+kUqpf7p4jYZ5dnzFg=;
+        b=LrkToHClqqE8w4ME4RRk1IHLjPZMxhtl8hdJyA3XnHfRVv5w0X4EiNQIqXCunufmWC
+         mQbrPQj43fAUOi7YMSr6hBmk2jFg4WJAWFDklrNk9AWugXcw7fIA/bYSmPxrfV+ZU2rU
+         SSY/6tDi3hwo1RyX4WtIsqvy/J0Fq3suxITBVQYnZpiyj6gAPTN3n88WDc+vx4GkjQVb
+         LNOgTBYS4oBD1gYoao1GUgFznS9MEJtfkaDxaNUYTIHMny10W7gBPhLLlGtUbe/8Tj3Z
+         r516Atr7oDH36yW+c5qTvnDoiXaTfvD/XX/8/uc+PusG5sQaycUHtN6PjNtvncY+tNlE
+         o0aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
-         :references:subject:from:to:cc;
-        bh=wEZaYyobY2Jg/Tf8hKyQTsuqZdqPwKMTsSqsETlqKr8=;
-        b=cu9rPyShV3gLSr733ujhJhFQq6+XA+gT70pNbGCA1BR5HDwOXB7RcJpsgJXr7oendu
-         na9Ny2uNoL8gGJxsDCKWF+ObSP/tFe/B1xlhOROFvM+yQK56mPV2v3Ip3Arc1IVuTQaZ
-         NvhggCQVE6Hx5o+PTsFp/kL2CAxwXfROjmjcWMtIysvtFZKcA5hgnMcZWhSHWxnmS8gb
-         clMmy6bQ0zl7ryCf7Vjs5J8fP1cijCuHoEQ1KizGcJwKj8kDo1ch4mAxq/j0/+P6y865
-         hxt7azEbg49NMfqQEuBpk9jb9LY33ZNJu2LpijRGlxxbkYP0xFCDDdcurKoknr4giJ/M
-         X0yA==
-X-Gm-Message-State: APt69E1jtsS+t1FzgKmwaoneST2/QBMA+z6aY63E8K3+CN3mNWchJV20
-        haqDb10ungUTI9DL/wVTQFuYUAx5em6U+mTQm3ZC
-X-Google-Smtp-Source: ADUXVKKvEW0Fw8+6dJWMLMkBC0sli8zfO5OeHEP65sqOo0OKgHDcxgE2XBUskaUKVrHcGF7OURz+3LHhRU9pvveBTkwQ
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=cOO2KPi3qBQ9iJ+P8qSp2/bc3+kUqpf7p4jYZ5dnzFg=;
+        b=C4ZWEtgkKZdQ6/tMBF22TQwzXZNFa4vhfxnyJwjYiCWxTpm73AO1JDdNayiuKc4DHp
+         S79YnRjQb0U0zIac8lP73KbsXM+Ga4IiF3MmVtLe0+HPHQ3+NjS2bd1hpd0IdEgQC4I5
+         yRwkqmqqB3u9A52WqrIs1H5GD3boqnpmrYVUbYIQWNCbe92Tg2lNNJpQmmJrMuoTsHWv
+         h1wuQq4e8D0tZKJtJVN8InUNPdOPkYRXSl9yRuNXaPjP3bvij1BmFBrL9psFOtpLs92d
+         DRun0EYFmjPU0Eshuno+sJ/yMa3kXVG1CNUo7nvy2rpW0IaX4YOFvOgT2THQ5RF8bIMl
+         dyRA==
+X-Gm-Message-State: APt69E27NNtcYqxb2R/h0YEStd6xkizMPWfbhVDjzQNIRmnbNcOCLsLU
+        eso/prvXyn6cTgFxULGQPcYDVb3/syss5WcJ0C4=
+X-Google-Smtp-Source: ADUXVKKMpbcjc8EQOCT2KODupkptYKGqxW5106E2u5TLyD1EP/yY16YiXQqly8v1GeTswD+Q/oBKVMaWcTRFo8k1hbw=
+X-Received: by 2002:a19:a68a:: with SMTP id p132-v6mr10897586lfe.89.1529447379247;
+ Tue, 19 Jun 2018 15:29:39 -0700 (PDT)
 MIME-Version: 1.0
-X-Received: by 2002:a5b:401:: with SMTP id m1-v6mr5055193ybp.39.1529447275067;
- Tue, 19 Jun 2018 15:27:55 -0700 (PDT)
-Date:   Tue, 19 Jun 2018 15:27:49 -0700
-In-Reply-To: <xmqqsh5jwzp3.fsf@gitster-ct.c.googlers.com>
-Message-Id: <20180619222749.124671-1-jonathantanmy@google.com>
-References: <xmqqsh5jwzp3.fsf@gitster-ct.c.googlers.com>
-X-Mailer: git-send-email 2.18.0.rc2.347.g0da03f3a46.dirty
-Subject: Re: What's cooking in git.git (Jun 2018, #05; Mon, 18)
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+References: <20180618111919.GA10085@book.hvoigt.net> <20180618155544.GB6958@alpha>
+ <20180619102717.GB10085@book.hvoigt.net>
+In-Reply-To: <20180619102717.GB10085@book.hvoigt.net>
+From:   =?UTF-8?Q?Rafael_Ascens=C3=A3o?= <rafa.almas@gmail.com>
+Date:   Tue, 19 Jun 2018 23:29:02 +0100
+Message-ID: <CACUQV5884fs2wp+R5a-99BbJGdEbujzu2iBny+PjPeL9JeOm8Q@mail.gmail.com>
+Subject: Re: Adding nested repository with slash adds files instead of gitlink
+To:     hvoigt@hvoigt.net
+Cc:     Kevin Daudt <me@ikke.info>, Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Here are the topics that have been cooking.  Commits prefixed with
-> '-' are only in 'pu' (proposed updates) while commits prefixed with
-> '+' are in 'next'.  The ones marked with '.' do not appear in any of
-> the integration branches, but I am still holding onto them.
+On Tue, Jun 19, 2018 at 11:28 AM Heiko Voigt <hvoigt@hvoigt.net> wrote:
+>
+> Interesting and nobody complained to the mailinglist?
+>
 
-Would it be possible to have my patches that make bitmap_git not global
-[1] in this list? Peff seems OK with it. Let me know if you'd like to
-see anything else.
-
-The original patch should contain an extra paragraph that I've provided
-here [2] in the commit message - let me know if you want a reroll with
-that extra paragraph included.
-
-[1] https://public-inbox.org/git/cover.1528397984.git.jonathantanmy@google.com/
-
-[2] https://public-inbox.org/git/20180611115046.d03f8093347dc6c0e9b116fc@google.com/
+For reference this was sometimes called "Fake Submodules" online.
