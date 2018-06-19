@@ -2,106 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E13981F403
-	for <e@80x24.org>; Tue, 19 Jun 2018 02:44:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA6391F403
+	for <e@80x24.org>; Tue, 19 Jun 2018 06:52:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S937081AbeFSCoY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Jun 2018 22:44:24 -0400
-Received: from mga17.intel.com ([192.55.52.151]:38006 "EHLO mga17.intel.com"
+        id S937276AbeFSGwX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Jun 2018 02:52:23 -0400
+Received: from mout.gmx.net ([212.227.17.20]:58997 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755482AbeFSCoY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jun 2018 22:44:24 -0400
-X-Amp-Result: UNKNOWN
-X-Amp-Original-Verdict: FILE UNKNOWN
-X-Amp-File-Uploaded: False
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 18 Jun 2018 19:44:23 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.51,241,1526367600"; 
-   d="scan'208";a="48107496"
-Received: from yexl-desktop.sh.intel.com (HELO localhost) ([10.239.159.124])
-  by fmsmga007.fm.intel.com with ESMTP; 18 Jun 2018 19:44:23 -0700
-Date:   Tue, 19 Jun 2018 10:40:54 +0800
-From:   Ye Xiaolong <xiaolong.ye@intel.com>
-To:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Cc:     Eduardo Habkost <ehabkost@redhat.com>
-Subject: Re: [PATCH] format-patch: clear UNINTERESTING flag before
- prepare_bases
-Message-ID: <20180619024054.GD17789@yexl-desktop>
-Mail-Followup-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Eduardo Habkost <ehabkost@redhat.com>
-References: <xmqqh8mj70w6.fsf@gitster-ct.c.googlers.com>
- <20180604150543.7304-1-xiaolong.ye@intel.com>
+        id S935759AbeFSGvz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jun 2018 02:51:55 -0400
+Received: from [192.168.0.129] ([37.201.195.106]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MVedf-1fi91d3lBn-00Ywn0; Tue, 19
+ Jun 2018 08:51:19 +0200
+Date:   Tue, 19 Jun 2018 08:51:27 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Stefan Beller <sbeller@google.com>
+cc:     Alban Gruin <alban.gruin@gmail.com>, git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [GSoC][PATCH 2/3] rebase -i: rewrite setup_reflog_action() in
+ C
+In-Reply-To: <CAGZ79kaLSCXSDHN8=L-FCBvQ9jRJqit6VFNK3VmHm9H07ThEsg@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1806190848320.77@tvgsbejvaqbjf.bet>
+References: <20180618131844.13408-1-alban.gruin@gmail.com> <20180618131844.13408-3-alban.gruin@gmail.com> <CAGZ79kaLSCXSDHN8=L-FCBvQ9jRJqit6VFNK3VmHm9H07ThEsg@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180604150543.7304-1-xiaolong.ye@intel.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:NKPZyDQBGNmTg9kzEYugvlcjvRuJEgx33rKxo4dj8HRRLs9PbsM
+ TAWlqhqnofvfCz0nV9lqh8ofe8Rfw6CIkM+O2xgqPxJcrwuU3Bc4D3yvr5vxcq1/tChNE39
+ hGvvO6lcCkBJ4zatOaIGicgUOoOYOmLUhfFw0hjlpOw2r2yLCPU1ywMJxqciac4Jq7itJTg
+ O5YBao17DHKj0qpqH1ODA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Vsl7TE+XuGg=:8oYVHKQWqZpRo1iYzBx5qx
+ yrH4eBZ59NvfAyC/jS/MVeEavrcdJkF8vUQrbR2kHcgHEiW0DrVwPnim5PPaLpmGK48y7n9Tg
+ XhXqkIBuDQXRn7cpxwsvhbNoqdZj7i7IWDbJvJ4eABnZ0htPIT6XfPxMzuCGHkJQVrMXyVi9h
+ Rqx/pFjauT5Aq390LZiFhdHkJ/mgsF2rDYn7G8TdEcc/TaxDtUddmYTmwW8TcK0uaUU0uDUtk
+ XGkRuQvoON6WPW1xAxyhs8sdtIOTa4cEabVBmA6SJSyxVUB27qRq7riiC3H7IL+UZfPFqEQwS
+ lkKH9rRpIwxk8IuDhAInlOLSRj7fA1EX3oQLEQExNuNEkxVbQfJ4sRsdWUdN86JPkD+Rx70xJ
+ E7FsiPJmKQUN6bu+Lxa33jmGSyIfjJS+VmfU5t0b7DKc6x3cWXU75Di5O8aZBKiyGOb/Izr/F
+ I5pbCc5z1/1kY+vRNRmfFKauYrdm+mOmIwxD8lFXm2P8KZ3luLt0gFJD7h3lqB8QnzyRXe+Xc
+ XuE+BGcUYS8Bji1ZTZsney3ahnMm11Ri0yZkgIrhJdkyYdu9uY2ou2Rs9pWjkdKiUg7FjXpMX
+ EvoT0MEEmWsCXaUFrBtuw3RMo2dWEWEXXU+2RmqxqUOj0TFs/jLdb6XhUm043M/0GfXwWJNyi
+ EeLNb+3H+3eJ5KtF7sIHDzEcp9ohq9klSM5Pzoo3GVZsChsq3XA/1PYyQA4+KfD4BubQatN1W
+ j9hWF1SJJe14JVdo0nPv1u4VVWszCuEG2y4dilaEuVHykY7FodVUgzXfNlBvIsCYmI+vCsgYT
+ WHwQOLf
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Junio
+Hi Stefan,
 
-Could you help review this patch?
+On Mon, 18 Jun 2018, Stefan Beller wrote:
 
-Thanks,
-Xiaolong
+> On Mon, Jun 18, 2018 at 6:19 AM Alban Gruin <alban.gruin@gmail.com> wrote:
+> >
+> > +int setup_reflog_action(struct replay_opts *opts, const char *commit,
+> > +                       int verbose)
+> > +{
+> > +       const char *action;
+> > +
+> > +       if (commit && *commit) {
+> 
+> While this is defensive programming (checking the pointer before dereferencing
+> it, the first condition (commit == NULL) should never be false here,
+> as the caller
+> checks for argc == 2 ?
 
-On 06/04, Xiaolong Ye wrote:
->When users specify the commit range with 'Z..C' pattern for format-patch, all
->the parents of Z (including Z) would be marked as UNINTERESTING which would
->prevent revision walk in prepare_bases from getting the prerequisite commits,
->thus `git format-patch --base <base_commit_sha> Z..C` won't be able to generate
->the list of prerequisite patch ids. Clear UNINTERESTING flag with
->clear_object_flags solves this issue.
->
->Reported-by: Eduardo Habkost <ehabkost@redhat.com>
->Signed-off-by: Xiaolong Ye <xiaolong.ye@intel.com>
->---
-> builtin/log.c           | 1 +
-> t/t4014-format-patch.sh | 6 ++++--
-> 2 files changed, 5 insertions(+), 2 deletions(-)
->
->diff --git a/builtin/log.c b/builtin/log.c
->index 4686f68594..01993de6fe 100644
->--- a/builtin/log.c
->+++ b/builtin/log.c
->@@ -1746,6 +1746,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
-> 	if (base_commit || base_auto) {
-> 		struct commit *base = get_base_commit(base_commit, list, nr);
-> 		reset_revision_walk();
->+		clear_object_flags(UNINTERESTING);
-> 		prepare_bases(&bases, base, list, nr);
-> 	}
-> 
->diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
->index 028d5507a6..53880da7bb 100755
->--- a/t/t4014-format-patch.sh
->+++ b/t/t4014-format-patch.sh
->@@ -1554,13 +1554,15 @@ test_expect_success 'format-patch -o overrides format.outputDirectory' '
-> 
-> test_expect_success 'format-patch --base' '
-> 	git checkout side &&
->-	git format-patch --stdout --base=HEAD~3 -1 | tail -n 7 >actual &&
->+	git format-patch --stdout --base=HEAD~3 -1 | tail -n 7 >actual1 &&
->+	git format-patch --stdout --base=HEAD~3 HEAD~.. | tail -n 7 >actual2 &&
-> 	echo >expected &&
-> 	echo "base-commit: $(git rev-parse HEAD~3)" >>expected &&
-> 	echo "prerequisite-patch-id: $(git show --patch HEAD~2 | git patch-id --stable | awk "{print \$1}")" >>expected &&
-> 	echo "prerequisite-patch-id: $(git show --patch HEAD~1 | git patch-id --stable | awk "{print \$1}")" >>expected &&
-> 	signature >> expected &&
->-	test_cmp expected actual
->+	test_cmp expected actual1 &&
->+	test_cmp expected actual2
-> '
-> 
-> test_expect_success 'format-patch --base errors out when base commit is in revision list' '
->-- 
->2.16.GIT
->
+But it is not marked as `static` (or is it?). So we should not rely on the
+caller to Do The Right Thing.
+
+Ciao,
+Dscho
