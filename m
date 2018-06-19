@@ -2,155 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12FF31F403
-	for <e@80x24.org>; Tue, 19 Jun 2018 21:51:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7BBB71F403
+	for <e@80x24.org>; Tue, 19 Jun 2018 22:07:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967138AbeFSVvZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Jun 2018 17:51:25 -0400
-Received: from avasout08.plus.net ([212.159.14.20]:48419 "EHLO
-        avasout08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755466AbeFSVvX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jun 2018 17:51:23 -0400
-Received: from [10.0.2.15] ([80.189.70.235])
-        by smtp with ESMTPA
-        id VOX2f51cOhRmOVOX3fW4mW; Tue, 19 Jun 2018 22:51:22 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=TMRrtWta c=1 sm=1 tr=0
- a=YX39wz5waiCDnkc2J8opfw==:117 a=YX39wz5waiCDnkc2J8opfw==:17
- a=IkcTkHD0fZMA:10 a=ybZZDoGAAAAA:8 a=EBOSESyhAAAA:8 a=O-cJoVu8a9UVi2Q7dz0A:9
- a=QEXdDO2ut3YA:10 a=0RhZnL1DYvcuLYC8JZ5M:22 a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     GIT Mailing-list <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Derrick Stolee <dstolee@microsoft.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH] ewah: delete unused 'rlwit_discharge_empty()'
-Message-ID: <7bfb528f-ef65-4de6-7d01-6ca91f0072e7@ramsayjones.plus.com>
-Date:   Tue, 19 Jun 2018 22:51:20 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+        id S936139AbeFSWHi (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Jun 2018 18:07:38 -0400
+Received: from mail-yb0-f196.google.com ([209.85.213.196]:45337 "EHLO
+        mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755490AbeFSWHe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jun 2018 18:07:34 -0400
+Received: by mail-yb0-f196.google.com with SMTP id x6-v6so488038ybl.12
+        for <git@vger.kernel.org>; Tue, 19 Jun 2018 15:07:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=FrJSn8/5pz+78CMNQhNPTfhKwtXndtN9/iqNLp/Zz7Y=;
+        b=Mb1DUkKkGo49x9b+NN270SKREgmGsiYWYWgleuBr4onDNcteSLdbz6in7Aj+AujjRO
+         PRUDKiCjfXMJb2JTP6r5SC/JSVM5BLLrTe5RD1yivSfpGjlZRKE9IznUdsKFyJPHoYjW
+         d2IS3eqwPmY3kq56jAJ6YRYu5dHtUU1A+dFirOrGMD+tUdavWwzkbobQIfGTuPy+6uJb
+         SNNHm7bOtMbPQv/rSmdLBLDQiZAggUmk/RENfWb3OTGwTHNo1MPq90rdIyps74NrTWo3
+         moMB6q2oAKTtzPsLWeofDsEo+90RB+siXSaPs4AXl6qMsUELJoHBVi2pKrKy88D8d0aD
+         TKNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=FrJSn8/5pz+78CMNQhNPTfhKwtXndtN9/iqNLp/Zz7Y=;
+        b=iHKdmY6QtHI95uEIiXlRIulLheC/2aw5jSmJKfhHV4okq8bhSW+SGCq0GlzKgQHcQm
+         Sx1/FBvlJCas3gEepuw77nTpme5u3fgCOSRt/S5+ax63Etfis+iavgoYZg5HQNo//gFO
+         eBI1ZPEQ2iJCzyOhjFX/z58z8L5xmQX3Ijr9pEbuauAcQR8dywAbfC/OLTXBA7JvFFND
+         GGlZMVK/YUh2MW3wD2Y63urjy58bTloGTl9PXJfg80UI5gjRiDvU2KPISElbM6/ktLMp
+         z93DMeUOVtMo/VYAMZqWEgqfgcHB9sdMLp1VHU1cGZOqyrX/n/z70PffPoxs+CMnV/wf
+         zMvg==
+X-Gm-Message-State: APt69E0ugaNeZc0i5XHePT9m9OIs6usltMNIN1lpTSChjXG2J+a3QyoT
+        h4Yjqx4FSRK2WnvVMByCJKe1SZFOUuohpqCgOxmcEPoElhY=
+X-Google-Smtp-Source: ADUXVKLuZadWLppsb+ShT6EhRy7NFkifV8vYXItCvjnNm6rp+i/UciDZfvBTp249keLZIg7bUyc/5Gn/B7LQHTutnks=
+X-Received: by 2002:a25:cc14:: with SMTP id l20-v6mr5777748ybf.334.1529446053642;
+ Tue, 19 Jun 2018 15:07:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfKuyThgzqOBi4YniuWfa8RWJkjXCr/VzYzAZnFwz9LM0DzcPD4Gp3FAaUQyBrOgWvgHj5qqk9OcuSypX5St5JQtPp1tdxRzfPw+TJD7j2BfcsQyCfWE5
- UO945kqRg5Xe41dm6bzXFHiCi/oMLGqXE4eNvTIywqPsv2gugpGZXZp6DAfoEsGi3yHE4onAEwyeKA==
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 19 Jun 2018 15:07:22 -0700
+Message-ID: <CAGZ79kZtEZA1rvgfSCS+m4dsrB86Cf-XiePWQmeU-kCNxP_NLQ@mail.gmail.com>
+Subject: The state of the object store series
+To:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Junio C Hamano <gitster@pobox.com>
+There is an ongoing effort to remove global state currently and switch over
+to pass around the relevant data structures; for most of it we end up passing
+around 'the_repository' as it contains everything there is.
 
-Complete the removal of unused 'ewah bitmap' code by removing the now
-unused 'rlwit_discharge_empty()' function. Also, the 'ewah_clear()'
-function can now be made a file-scope static symbol.
+Merged into master:
 
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
+fcb6df32546 Merge branch 'sb/oid-object-info'
+a2cec42213c Merge branch 'sb/object-store-replace'
+3a1ec60c43b Merge branch 'sb/packfiles-in-repository'
+cf0b1793ead Merge branch 'sb/object-store'
 
-Hi Junio,
+Currently cooking:
 
-Can you please add this to the 'ds/ewah-cleanup' branch, before
-we forget to do so! ;-)
+8c69a7d7e80 Merge branch 'sb/object-store-grafts' into pu
+42d32d07298 Merge branch 'sb/object-store-alloc' into jch
 
-Thanks!
+(both marked for "will merge to next" in the cooking report)
 
-ATB,
-Ramsay Jones
+Floating on the mailing list, not cooking yet:
 
- ewah/ewah_bitmap.c | 20 ++++++++++++--------
- ewah/ewah_rlw.c    |  8 --------
- ewah/ewok.h        |  6 ------
- ewah/ewok_rlw.h    |  1 -
- 4 files changed, 12 insertions(+), 23 deletions(-)
+"sb/object-store-lookup"
+https://public-inbox.org/git/20180613230522.55335-1-sbeller@google.com/
+  This clashes with other series in flight (Stolees get_tree series; see
+  https://public-inbox.org/git/709bd61c-70fc-a925-efba-58ab9be265c9@gmail.com/
+  I'll rebase this series on top of that series once the currently cooking
+  series stabilize)
 
-diff --git a/ewah/ewah_bitmap.c b/ewah/ewah_bitmap.c
-index 017c677f9..d59b1afe3 100644
---- a/ewah/ewah_bitmap.c
-+++ b/ewah/ewah_bitmap.c
-@@ -276,6 +276,18 @@ void ewah_each_bit(struct ewah_bitmap *self, void (*callback)(size_t, void*), vo
- 	}
- }
- 
-+/**
-+ * Clear all the bits in the bitmap. Does not free or resize
-+ * memory.
-+ */
-+static void ewah_clear(struct ewah_bitmap *self)
-+{
-+	self->buffer_size = 1;
-+	self->buffer[0] = 0;
-+	self->bit_size = 0;
-+	self->rlw = self->buffer;
-+}
-+
- struct ewah_bitmap *ewah_new(void)
- {
- 	struct ewah_bitmap *self;
-@@ -288,14 +300,6 @@ struct ewah_bitmap *ewah_new(void)
- 	return self;
- }
- 
--void ewah_clear(struct ewah_bitmap *self)
--{
--	self->buffer_size = 1;
--	self->buffer[0] = 0;
--	self->bit_size = 0;
--	self->rlw = self->buffer;
--}
--
- void ewah_free(struct ewah_bitmap *self)
- {
- 	if (!self)
-diff --git a/ewah/ewah_rlw.c b/ewah/ewah_rlw.c
-index b9643b7d0..5093d43e2 100644
---- a/ewah/ewah_rlw.c
-+++ b/ewah/ewah_rlw.c
-@@ -104,11 +104,3 @@ size_t rlwit_discharge(
- 
- 	return index;
- }
--
--void rlwit_discharge_empty(struct rlw_iterator *it, struct ewah_bitmap *out)
--{
--	while (rlwit_word_size(it) > 0) {
--		ewah_add_empty_words(out, 0, rlwit_word_size(it));
--		rlwit_discard_first_words(it, rlwit_word_size(it));
--	}
--}
-diff --git a/ewah/ewok.h b/ewah/ewok.h
-index 0c504f28e..84b2a29fa 100644
---- a/ewah/ewok.h
-+++ b/ewah/ewok.h
-@@ -72,12 +72,6 @@ void ewah_pool_free(struct ewah_bitmap *self);
-  */
- struct ewah_bitmap *ewah_new(void);
- 
--/**
-- * Clear all the bits in the bitmap. Does not free or resize
-- * memory.
-- */
--void ewah_clear(struct ewah_bitmap *self);
--
- /**
-  * Free all the memory of the bitmap
-  */
-diff --git a/ewah/ewok_rlw.h b/ewah/ewok_rlw.h
-index bb3c6ff7e..7cdfdd0c0 100644
---- a/ewah/ewok_rlw.h
-+++ b/ewah/ewok_rlw.h
-@@ -98,7 +98,6 @@ void rlwit_init(struct rlw_iterator *it, struct ewah_bitmap *bitmap);
- void rlwit_discard_first_words(struct rlw_iterator *it, size_t x);
- size_t rlwit_discharge(
- 	struct rlw_iterator *it, struct ewah_bitmap *out, size_t max, int negate);
--void rlwit_discharge_empty(struct rlw_iterator *it, struct ewah_bitmap *out);
- 
- static inline size_t rlwit_word_size(struct rlw_iterator *it)
- {
--- 
-2.17.0
+"nd/kill-the_index"
+https://public-inbox.org/git/20180616054157.32433-1-pclouds@gmail.com/
+  This converts the_index to pass around index pointers instead of
+the_repository;
+  it fits into the theme, but Duys end goal differs from mine; he is
+less submodule focused.
+
+Work that still needs to be done:
+
+"xx/object-store-commit-graph"
+  Convert the commit graph to have no global state, but be part of the
+  repository struct. I think this can go in parallel to
+"sb/object-store-lookup",
+  so I'll tackle that next. Thanks Stolee for looking ahead: There is only the
+  commit graph itself as well as whether it has been prepared as a global
+  variable. So this series will consist of passing around a repository struct
+  for all those higher level functions that do not pass around the commit graph
+  or parts of it.
+
+"xx/finish-object-stores"
+  This requires "xx/object-store-commit-graph" as well as
+"sb/object-store-lookup";
+  it will convert parse_commit[_gently] to take a repository argument and will
+  finish the actual object store part. This might be optional for the goal of
+  converting submodules, that I have in mind, but it sure is a nice finishing
+  touch.
+
+"xx/convert-revision-walking"
+  This series aims to convert get_merge_bases(), in_merge_bases() and all its
+  revision walking code to take a repository argument.
+
+"xx/submodule-dont-use-alternates"
+  Once "xx/convert-revision-walking" is in, convert the local
+find_first_merges(),
+  and convert all functions to drop function add_submodule_odb() and instead
+  operate on the submodule repository instead of the_repository with the
+  submodule objects added as an alternate.
+
+Thanks,
+Stefan
