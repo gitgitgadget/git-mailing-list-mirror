@@ -6,63 +6,58 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AFDBA1F403
-	for <e@80x24.org>; Tue, 19 Jun 2018 16:00:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED7D51F403
+	for <e@80x24.org>; Tue, 19 Jun 2018 16:03:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966907AbeFSQAH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Jun 2018 12:00:07 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:35644 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S966895AbeFSQAE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jun 2018 12:00:04 -0400
-Received: by mail-wm0-f66.google.com with SMTP id j15-v6so1462475wme.0
-        for <git@vger.kernel.org>; Tue, 19 Jun 2018 09:00:03 -0700 (PDT)
+        id S966803AbeFSQC7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Jun 2018 12:02:59 -0400
+Received: from mail-wr0-f173.google.com ([209.85.128.173]:34508 "EHLO
+        mail-wr0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S966267AbeFSQC5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jun 2018 12:02:57 -0400
+Received: by mail-wr0-f173.google.com with SMTP id a12-v6so231245wro.1
+        for <git@vger.kernel.org>; Tue, 19 Jun 2018 09:02:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=nLZlpwKs5zf/LRQ7yd3cpotxZeLbz+o0EFW9shzMAIQ=;
-        b=c5xpl/tWB1xbXYlhB6ZU46sE6/OFSfUQ8c3RG8STreit7NIjL3W3l08xSLGCzLUIeC
-         Yj823Da0M9+WcBmuUSYyYX6ZfkrBxPJlJq1vzTNio7mbiS0rWU4JJo+20MArUCz0iD9r
-         D2iawweDiU3+I/21OGT98KQ7lbSF4SrNAtjnzN0DJlmoD2xzcNegWnBFYqNCYyv0UFWz
-         A/pgGCZ4+casNFUA/QuzU6fapqNQ1OPeFZm5ocTJ3zGRykeQkkDFo2YEROpIFqrRrXje
-         8z/2+BBA2NU1Gnxp4BUAwpOGb6V5elY46Yt5e7+ATwnS66ekKywAMCZMXoO7WzGVqUff
-         cNOQ==
+        bh=nPvoArsVOsJhqi7MrzBvW7bgCch6bBVI7XWJASipJUs=;
+        b=hMkK49YrxD+oAjbic7LXRvb6h1nsGzyUmtHZ0Tj42ogd/uRYSTTYZvMie0g/S0W71W
+         OyZtYblRO12Cp5TZlp/Gd0j+eW765NRqLxzX8OiMHjPr+DObYcoSHBcQMMa2NDkz9/4S
+         0lAlJsChejQbnN+nXKCgzTUyVYBXHJ7A7185Q3palJSfIKsRwBiwnTFoXQwt86z4UzhJ
+         Id9Fo4W/cHFRjfrOzo5ctA8c84jpqg8xBEFPpZQIdWFFkMLJhjD/2OCZQB5SUPuN6BNE
+         CuCV78TLwoyhKXeQvqZilpImHODp5DpK2YYGNGHYM9iCsyGOzbjIGRnGQ/9dOKShRM6t
+         7Fhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=nLZlpwKs5zf/LRQ7yd3cpotxZeLbz+o0EFW9shzMAIQ=;
-        b=sFJCTeeROWA93MY1oOU/W6l4FBzP/pX1mAuG+yru73gWc/aF5XW94rkOkKCP9Z+GKf
-         63uKn123qGCXbEt+HfCJPI1x4Wq9zcCfTDCaVGVOfmbsBLiAmS78oMxX7Vf0CamnRj8M
-         G3mr+RtsNS2OyjkylnVST6ACgQeKaZ26RelP0lUIzZ4XO9hB666Q1DvIUbEGSocEdv4e
-         cmu4YbYIOhVpJXF5KxVjMlfw6cBjeXOr1iFMzne4fg2hkAMckmW73fS0k7lUSF6xXxn3
-         /L1tnXSuuZ4anjciSF8R++sWCMBxvi8R4zdkuII5arxF4KCEreBUluiMtY+qsT9d0taz
-         n8xg==
-X-Gm-Message-State: APt69E0YbKgeXvFJ7ZR37Ne41yEIyklRD/DSokQF4Waaz4lKwmCAAJs/
-        AdyXivOrDsykYMnxGaTzvXk2Q87z
-X-Google-Smtp-Source: ADUXVKJWtE52/l2I/MwuuPoCj/l0Izn7fyaeEblxexpFsWGEBSgT+TImbATfWszjHqo4kulDbbSaGg==
-X-Received: by 2002:a1c:8fd5:: with SMTP id r204-v6mr13254260wmd.77.1529424002601;
-        Tue, 19 Jun 2018 09:00:02 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id n11-v6sm58349wro.13.2018.06.19.09.00.01
+        bh=nPvoArsVOsJhqi7MrzBvW7bgCch6bBVI7XWJASipJUs=;
+        b=Yn1cBslmK1abeTwGxQJ+wkkg4OIq9s+RuqPwitLgZIoAev1BOsbWtH1ipKVOCfPg1D
+         hTxdAsWpYV3mvE3XafHcNFvtEJXCVLlRc2q+KJruaMwYL+hPHaORJbjmmwr58anpR209
+         A36bU4xtdNUYNrA7JI5cm+9wpXPzKm0TZwHzRTkwa0ymTj/XLlRths1zGQcFXjJKTm1g
+         Zd9CPlnXDXvnY/VQ/5TJrR2YxzfriO2k85ikaTWhqSX7/u9PPBumuPZG9b9KSbZLa2Ev
+         ICWVHFRnfc4SWNotOsXnzutcMuliA/BSjhcZfa/qtW1xGYb0SJy8xn+NqHEhZvqGe+3E
+         vwXw==
+X-Gm-Message-State: APt69E342ocJCwDSrhB4c/fVQJjBREfvELfElPl21hlu/wceVJksHr52
+        4+jj67p5k2kk2lmXhtrmAC4=
+X-Google-Smtp-Source: ADUXVKIcZ4ShR3a+OwOUWy5o7jv4aQ+tne/2Qa21oOqQEZ4bm14rhcb4lCb60b7yoRd+zD67EGxOrQ==
+X-Received: by 2002:adf:b89b:: with SMTP id i27-v6mr13747526wrf.163.1529424176163;
+        Tue, 19 Jun 2018 09:02:56 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id 72-v6sm61962wrb.22.2018.06.19.09.02.55
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 19 Jun 2018 09:00:01 -0700 (PDT)
+        Tue, 19 Jun 2018 09:02:55 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@talktalk.net>, git@vger.kernel.org
-Subject: Re: [PATCH] t3404: check root commit in 'rebase -i --root reword root commit'
-References: <pull.3.git.gitgitgadget@gmail.com>
-        <d59805a43ddaf4bbd4528a2b7afa9809eca9b86b.1529177176.git.gitgitgadget@gmail.com>
-        <484fe825-0726-a027-1187-de00df6406d5@talktalk.net>
-        <20180618164958.GO11827@zaya.teonanacatl.net>
-        <nycvar.QRO.7.76.6.1806182343421.77@tvgsbejvaqbjf.bet>
-        <20180618221942.GQ11827@zaya.teonanacatl.net>
-Date:   Tue, 19 Jun 2018 09:00:01 -0700
-In-Reply-To: <20180618221942.GQ11827@zaya.teonanacatl.net> (Todd Zullinger's
-        message of "Mon, 18 Jun 2018 18:19:42 -0400")
-Message-ID: <xmqqin6ewyv2.fsf@gitster-ct.c.googlers.com>
+To:     Xtreak <tir.karthi@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 signed off] doc: fix typos in documentation and release notes
+References: <0102016409c877f9-58c13d7c-4d25-43e2-8d64-c13d98b88ee7-000000@eu-west-1.amazonses.com>
+        <010201640c072de4-d408b8ac-3a10-4c2f-9b65-34a9582c1839-000000@eu-west-1.amazonses.com>
+Date:   Tue, 19 Jun 2018 09:02:54 -0700
+In-Reply-To: <010201640c072de4-d408b8ac-3a10-4c2f-9b65-34a9582c1839-000000@eu-west-1.amazonses.com>
+        (Xtreak's message of "Sun, 17 Jun 2018 04:35:54 +0000")
+Message-ID: <xmqqefh2wyq9.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -71,36 +66,71 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Todd Zullinger <tmz@pobox.com> writes:
+Xtreak <tir.karthi@gmail.com> writes:
 
-> With luck, this will save you a few minutes, assuming the
-> commit message is reasonable (or can be improved with help
-> from Phillip and others). :)
+> Signed-off-by: Karthikeyan Singaravelan <tir.karthi@gmail.com>
+> ---
+>  Documentation/RelNotes/1.7.11.7.txt | 2 +-
+>  Documentation/RelNotes/2.17.0.txt   | 2 +-
+>  Documentation/RelNotes/2.18.0.txt   | 2 +-
+>  Documentation/diff-options.txt      | 2 +-
+>  4 files changed, 4 insertions(+), 4 deletions(-)
 
-OK.
-
-> Or Junio may just squash this onto js/rebase-i-root-fix.
-
-Nah, not for a hotfix on the last couple of days before the final.
-We'd need to build on top, not "squash".
+Thanks, will apply.
 
 >
-> Thanks.
->
->  t/t3404-rebase-interactive.sh | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-> index e500d7c320..352a52e59d 100755
-> --- a/t/t3404-rebase-interactive.sh
-> +++ b/t/t3404-rebase-interactive.sh
-> @@ -977,7 +977,8 @@ test_expect_success 'rebase -i --root reword root commit' '
->  	set_fake_editor &&
->  	FAKE_LINES="reword 1 2" FAKE_COMMIT_MESSAGE="A changed" \
->  	git rebase -i --root &&
-> -	git show HEAD^ | grep "A changed"
-> +	git show HEAD^ | grep "A changed" &&
-> +	test -z "$(git show -s --format=%p HEAD^)"
->  '
+> diff --git a/Documentation/RelNotes/1.7.11.7.txt b/Documentation/RelNotes/1.7.11.7.txt
+> index e7e79d999bd38..e743a2a8e46eb 100644
+> --- a/Documentation/RelNotes/1.7.11.7.txt
+> +++ b/Documentation/RelNotes/1.7.11.7.txt
+> @@ -25,7 +25,7 @@ Fixes since v1.7.11.6
+>     references" nor "Reload" did not update what is shown as the
+>     contents of it, when the user overwrote the tag with "git tag -f".
 >  
->  test_expect_success C_LOCALE_OUTPUT 'rebase --edit-todo does not work on non-interactive rebase' '
+> - * "git for-each-ref" did not currectly support more than one --sort
+> + * "git for-each-ref" did not correctly support more than one --sort
+>     option.
+>  
+>   * "git log .." errored out saying it is both rev range and a path
+> diff --git a/Documentation/RelNotes/2.17.0.txt b/Documentation/RelNotes/2.17.0.txt
+> index d6db0e19cf17b..c2cf891f71adf 100644
+> --- a/Documentation/RelNotes/2.17.0.txt
+> +++ b/Documentation/RelNotes/2.17.0.txt
+> @@ -342,7 +342,7 @@ Fixes since v2.16
+>     validate the data and connected-ness of objects in the received
+>     pack; the code to perform this check has been taught about the
+>     narrow clone's convention that missing objects that are reachable
+> -   from objects in a pack that came from a promissor remote is OK.
+> +   from objects in a pack that came from a promisor remote is OK.
+>  
+>   * There was an unused file-scope static variable left in http.c when
+>     building for versions of libCURL that is older than 7.19.4, which
+> diff --git a/Documentation/RelNotes/2.18.0.txt b/Documentation/RelNotes/2.18.0.txt
+> index 7c59bd92fbd99..1eb13ece53600 100644
+> --- a/Documentation/RelNotes/2.18.0.txt
+> +++ b/Documentation/RelNotes/2.18.0.txt
+> @@ -324,7 +324,7 @@ Fixes since v2.17
+>     after giving an error message.
+>     (merge 3bb0923f06 ps/contains-id-error-message later to maint).
+>  
+> - * "diff-highlight" filter (in contrib/) learned to undertand "git log
+> + * "diff-highlight" filter (in contrib/) learned to understand "git log
+>     --graph" output better.
+>     (merge 4551fbba14 jk/diff-highlight-graph-fix later to maint).
+>  
+> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+> index f466600972f86..bfa3808e49cc0 100644
+> --- a/Documentation/diff-options.txt
+> +++ b/Documentation/diff-options.txt
+> @@ -133,7 +133,7 @@ These parameters can also be set individually with `--stat-width=<width>`,
+>  	as file creations or deletions ("new" or "gone", optionally "+l"
+>  	if it's a symlink) and mode changes ("+x" or "-x" for adding
+>  	or removing executable bit respectively) in diffstat. The
+> -	information is put betwen the filename part and the graph
+> +	information is put between the filename part and the graph
+>  	part. Implies `--stat`.
+>  
+>  --numstat::
+>
+> --
+> https://github.com/git/git/pull/510
