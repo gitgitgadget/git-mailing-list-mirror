@@ -2,68 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 57E8D1F403
-	for <e@80x24.org>; Tue, 19 Jun 2018 19:12:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2AD0C1F403
+	for <e@80x24.org>; Tue, 19 Jun 2018 19:13:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1030296AbeFSTL7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Jun 2018 15:11:59 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48834 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S967134AbeFSTL6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jun 2018 15:11:58 -0400
-Received: (qmail 5111 invoked by uid 109); 19 Jun 2018 19:11:58 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 19 Jun 2018 19:11:58 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16446 invoked by uid 111); 19 Jun 2018 19:12:15 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 19 Jun 2018 15:12:15 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Jun 2018 15:11:56 -0400
-Date:   Tue, 19 Jun 2018 15:11:56 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        avarab@gmail.com, gitster@pobox.com
-Subject: Re: [PATCH 0/7] grep.c: teach --column to 'git-grep(1)'
-Message-ID: <20180619191156.GA21641@sigill.intra.peff.net>
-References: <cover.1529365072.git.me@ttaylorr.com>
- <20180619163506.GB22034@sigill.intra.peff.net>
- <5282e3bb-bf7a-ab3a-98dc-d29ff1c37468@web.de>
- <20180619174846.GA27820@sigill.intra.peff.net>
- <6ab94453-84ef-e269-c320-e102b02d6f3b@web.de>
+        id S1030331AbeFSTM7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Jun 2018 15:12:59 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55685 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S967138AbeFSTM6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jun 2018 15:12:58 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A6CB7ED4A9;
+        Tue, 19 Jun 2018 15:12:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to; s=sasl; bh=owh32X5CUJGdYuYLfoCZTa1XlUc=; b=UAQPwTR
+        5qMwhTv2LPM7DJOXLnzkMedXXDNZX+WHdTekIIzEzaHZQT/1OcbnnhwV8vAHHgEH
+        YlQlud3pGlK7iPjJKjGB0iXlPe585NsT1q5drl2fOCdZqzzzCmgVu2CMjNGPuyQ2
+        c5H4fWM7tPAgaXu8qs/q0uEQfoWGTe/wzaQM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to; q=dns; s=sasl; b=cziS3mXTytbRm12QFNcRDuZA1QgciIBtT
+        vlCe9p6hUsliBD9yGl+HV2MklSmoVROg4yyYjnKfSHvHAAU832NbDbnlaBao6lvG
+        i2o1mCWJayQ3M4uM63OdID9jNZ5c82ERyn8jOd5VQMkJk6nNqSdNt9UpaHJ0tnse
+        mc8g2y2New=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9D929ED4A8;
+        Tue, 19 Jun 2018 15:12:55 -0400 (EDT)
+Received: from zaya.teonanacatl.net (unknown [98.111.125.125])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2F235ED4A7;
+        Tue, 19 Jun 2018 15:12:55 -0400 (EDT)
+Date:   Tue, 19 Jun 2018 15:12:53 -0400
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@talktalk.net>, git@vger.kernel.org
+Subject: Re: [PATCH] t3404: check root commit in 'rebase -i --root reword
+ root commit'
+Message-ID: <20180619191253.GR11827@zaya.teonanacatl.net>
+References: <pull.3.git.gitgitgadget@gmail.com>
+ <d59805a43ddaf4bbd4528a2b7afa9809eca9b86b.1529177176.git.gitgitgadget@gmail.com>
+ <484fe825-0726-a027-1187-de00df6406d5@talktalk.net>
+ <20180618164958.GO11827@zaya.teonanacatl.net>
+ <nycvar.QRO.7.76.6.1806182343421.77@tvgsbejvaqbjf.bet>
+ <20180618221942.GQ11827@zaya.teonanacatl.net>
+ <xmqqin6ewyv2.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <6ab94453-84ef-e269-c320-e102b02d6f3b@web.de>
+In-Reply-To: <xmqqin6ewyv2.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.9.5 (2018-04-13)
+X-Pobox-Relay-ID: C532987C-73F4-11E8-9A7D-67830C78B957-09356542!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 19, 2018 at 08:50:16PM +0200, René Scharfe wrote:
+Junio C Hamano wrote:
+> Todd Zullinger <tmz@pobox.com> writes:
+>> Or Junio may just squash this onto js/rebase-i-root-fix.
+> 
+> Nah, not for a hotfix on the last couple of days before the final.
+> We'd need to build on top, not "squash".
 
-> Negation causes the whole non-matching line to match, with --column
-> reporting 1 or nothing in such a case, right?  Or I think doing the
-> same when the operator is applied a second time is explainable.
+Indeed.  I somehow missed that you'd merged and pushed the
+changes to master and next when I set this.  I was
+mistakenly thinking it was only on the js/rebase-i-root-fix
+integration branch.
 
-Yes to your first question.
+Thanks,
 
-Regarding the final sentence, yes, I agree it's explainable. But I
-thought that handling negation like this was one of the main complaints
-of earlier iterations?
-
-> When ORing multiple expressions I don't pay attention to their order
-> as that operator is commutative.  Having results depend on that
-> order would at least surprise me.
-
-OK. Let's just disable the short-circuit for --column then (i.e., what
-Taylor posted earlier). That's explainable, and I doubt the performance
-implications are going to be all that noticeable.
-
--Peff
+-- 
+Todd
