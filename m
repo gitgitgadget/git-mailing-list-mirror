@@ -2,116 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 336561F403
-	for <e@80x24.org>; Wed, 20 Jun 2018 10:43:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8FA591F403
+	for <e@80x24.org>; Wed, 20 Jun 2018 11:03:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752827AbeFTKnx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Jun 2018 06:43:53 -0400
-Received: from chiark.greenend.org.uk ([212.13.197.229]:39850 "EHLO
-        chiark.greenend.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751753AbeFTKnw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jun 2018 06:43:52 -0400
-Received: by chiark.greenend.org.uk (Debian Exim 4.84_2 #1) with local
-        (return-path ijackson@chiark.greenend.org.uk)
-        id 1fVaac-00066e-Nh; Wed, 20 Jun 2018 11:43:50 +0100
-From:   Ian Jackson <ijackson@chiark.greenend.org.uk>
+        id S1754276AbeFTLDU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Jun 2018 07:03:20 -0400
+Received: from mout.gmx.net ([212.227.15.19]:44537 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754115AbeFTLDS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jun 2018 07:03:18 -0400
+Received: from [192.168.0.129] ([37.201.195.106]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lee2I-1fyppR2fsM-00qWFW; Wed, 20
+ Jun 2018 13:03:11 +0200
+Date:   Wed, 20 Jun 2018 13:03:21 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Todd Zullinger <tmz@pobox.com>,
+        Phillip Wood <phillip.wood@talktalk.net>, git@vger.kernel.org
+Subject: Re: [PATCH] t3404: check root commit in 'rebase -i --root reword
+ root commit'
+In-Reply-To: <xmqqin6ewyv2.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1806201301530.11870@tvgsbejvaqbjf.bet>
+References: <pull.3.git.gitgitgadget@gmail.com> <d59805a43ddaf4bbd4528a2b7afa9809eca9b86b.1529177176.git.gitgitgadget@gmail.com> <484fe825-0726-a027-1187-de00df6406d5@talktalk.net> <20180618164958.GO11827@zaya.teonanacatl.net> <nycvar.QRO.7.76.6.1806182343421.77@tvgsbejvaqbjf.bet>
+ <20180618221942.GQ11827@zaya.teonanacatl.net> <xmqqin6ewyv2.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Message-ID: <23338.12262.631847.860230@chiark.greenend.org.uk>
-Date:   Wed, 20 Jun 2018 11:43:50 +0100
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-Subject: Re: want <reason> option to git-rebase
-In-Reply-To: <20180620014940.GD122284@aiede.svl.corp.google.com>
-References: <23335.52730.475955.861241@chiark.greenend.org.uk>
-        <20180619010655.GA173168@aiede.svl.corp.google.com>
-        <c5fc1505-9847-25d8-02f3-c0e666afdd1d@kdbg.org>
-        <20180620014940.GD122284@aiede.svl.corp.google.com>
-X-Mailer: VM 8.2.0b under 24.4.1 (i586-pc-linux-gnu)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:1u5VpGy4dL9HfppYEsg/Ex04QixPgExYbK0Qp91eHNwMEPNH740
+ h/rzk8LJ0KpXk6StsFKu0a6MmairAHHFFKD0eY9FvEnvmX8ZdJNyrmX/NTWiftiDu7y0rov
+ bbprpTRz4E6m4V9Z2xewd6YBNEPJBvcbKw+Jhyjd3ZTPX3Goqa/r2ej5PfOhnAwpU7gI0Mp
+ EUmWd248JyCMSmP3FJf+A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:hYp60zcPhiA=:hRp4N6a7hFunUmLlNujnEo
+ c0hghY1rPNhzebaoIOt4YgFE9qb0d1k01ULuCIqJPTN8ERtE5v2fuqksN0tv3VybTfDM5FjQ2
+ 6z5IwTh/IfyYS8ts2qH5d1ET6Dw9oEEn3OQAQTweUbKsX19zBFMha0+VyUCVTfcetKU0CUwwI
+ Fr+aX8M7zCLVlzaWfTEfDTjSEbS1tve/KA5MWaxVWbhi5oEwMkeMwuJvH+OQjcO6DVWdqbjyv
+ WT/RrGZbTp+nkm8ZC9xRuA9nKHPJfU8Djj9AkChTVkzhLX/X23nSdc5f/GVLNE6X5ji8uLOAD
+ bnZgpPWGoLLocmNtV5/5XbQ9w7j/JRhODFJLe9B5Cm8WGTSVtIWHvU2a0BZbXwJjCvtF2V89w
+ 6chLAUGvnsFdVuqdIhauJo6P1wj7SLh1OJZOkZyBWljJOVL3sEdDdTcMQARnmONkLbyAnJ7Pr
+ GEXkuR8p8JPBg+c3aMqqwgnAZJXAewHgoEf940gHKDuYLm6fDryTUrWCr+U3oqWj7jXlN3wv7
+ YR5AOWrPAjODgKfrADILBKg7yJug8LzWtWTmnGrL/PUI0N74NSpADHHUQ8m1pD8Ilidj5meFA
+ amUr1P4nSBMJg1hrWdCIbgopM0KEhTmTwSUp6TfaJbtf7/BW8Xfw/8HrXldCUJU6c5B4MyUYE
+ YzBMD0hrwrOnFATbkIoalthnCUrmCoSqn5M84BywwzIobihGDVkCqUvMQq22/myw7Uiim9SBD
+ xCPgBy2HkkjEYI1oh66ZQRw86FIpwkCTCjW8OMC2XU29rz57hFxG30ikUfWRuhX0VoaS3xW7u
+ iO2xVGW
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder writes ("Re: want <reason> option to git-rebase"):
-> Oh, good catch.  "git rebase" already generally does the right thing
-> when GIT_REFLOG_ACTION is set (by only appending to it and never
-> replacing it).
+Hi Junio,
 
-Great.  I indeed did not know about this.
+On Tue, 19 Jun 2018, Junio C Hamano wrote:
 
-> Ian, does that work well for you?  If so, any ideas where it should go
-> in the documentation to be more discoverable for next time?
-
-Thanks for asking exactly the right question :-).
-
-I didn't make a record of exactly where I looked but I'm pretty sure I
-looked at the manpages for git-reflog and git-rebase.  I think I
-probably also looked at git-update-ref; I have read git-update-ref a
-number of times.
-
-Right now in Debian unstable I see that none of these places document
-this convention.
-
-I think git-reflog ought to mention it, so that it says where the
-information it provides comes from.
-
-It also ought to be mentioned in git-update-ref, because all callers
-of git-update-ref need to implement it !
-
-Indeed, because I didn't know about this convention, dgit and
-git-debrebase do not honour it.  At least in my case, if it had been
-in git-update-ref I would have implemented it myself and then I would
-obviously have thought of making use of it myself.
-
-
-Also, I have to say, the documentation for GIT_REFLOG_ACTION
-in git(1) is very obscure.  It sort of generally waffles around what
-it is for, but it does not say:
- * what does this variable contain
- * who can and should set it
- * who should consume it
- * what the rules are for modifying it
-
-I don't think simply adding a cross-reference to GIT_REFLOG_ACTION in
-git(1) would be sufficient, without also improving this part.
-
-
-The explanations provided by you and Johannes, here in these emails,
-are much much better:
-
-> >> "git rebase" sets this itself, so it doesn't solve your problem.
-> >
-> > If it does so unconditionally, then that is a bug. If a script
-> > wants to set GIT_REFLOG_ACTION, but finds that it is already set,
-> > then it must not change the value. set_reflog_action in
-> > git-sh-setup does the right thing.
-> >
-> > So, if there is another script or application around git-rebase, then it
-> > should just set GIT_REFLOG_ACTION (if it is not already set) and export the
-> > environment variable to git-rebase.
+> Todd Zullinger <tmz@pobox.com> writes:
 > 
-> Oh, good catch.  "git rebase" already generally does the right thing
-> when GIT_REFLOG_ACTION is set (by only appending to it and never
-> replacing it).
+> > With luck, this will save you a few minutes, assuming the
+> > commit message is reasonable (or can be improved with help
+> > from Phillip and others). :)
+> 
+> OK.
+> 
+> > Or Junio may just squash this onto js/rebase-i-root-fix.
+> 
+> Nah, not for a hotfix on the last couple of days before the final.
+> We'd need to build on top, not "squash".
 
-Maybe some of this prose, which explains things quite well, could be
-reworked into a form suitable for the git docs.  (Even though there
-seems to be disagreement about whether a subcommand may *append* to
-GIT_REFLOG_ACTION; which, ISTM, is a practice which ought to be
-encouraged rather than discouraged.)
+Right. Can we take this on top, at a leisurely pace? I mean: we verified
+that this works in the upcoming v2.18.0, and it would be nice to have that
+extra regression test safety in the future, but it is not crucial to
+include it in v2.18.0 itself.
 
-
-Regards,
-Ian.
-
--- 
-Ian Jackson <ijackson@chiark.greenend.org.uk>   These opinions are my own.
-
-If I emailed you from an address @fyvzl.net or @evade.org.uk, that is
-a private address which bypasses my fierce spamfilter.
+Ciao,
+Dscho
