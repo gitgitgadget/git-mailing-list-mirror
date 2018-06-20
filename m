@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D4F71F403
-	for <e@80x24.org>; Wed, 20 Jun 2018 21:33:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1FA531F403
+	for <e@80x24.org>; Wed, 20 Jun 2018 21:33:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933600AbeFTVdH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Jun 2018 17:33:07 -0400
-Received: from mail-io0-f201.google.com ([209.85.223.201]:45056 "EHLO
-        mail-io0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933438AbeFTVc7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jun 2018 17:32:59 -0400
-Received: by mail-io0-f201.google.com with SMTP id i18-v6so854167iog.12
-        for <git@vger.kernel.org>; Wed, 20 Jun 2018 14:32:58 -0700 (PDT)
+        id S933530AbeFTVcn (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Jun 2018 17:32:43 -0400
+Received: from mail-ua0-f201.google.com ([209.85.217.201]:33775 "EHLO
+        mail-ua0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933346AbeFTVcm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jun 2018 17:32:42 -0400
+Received: by mail-ua0-f201.google.com with SMTP id m5-v6so351675uan.0
+        for <git@vger.kernel.org>; Wed, 20 Jun 2018 14:32:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=Sm5ce8AJeZPbl9Xktxz2zuaOE8ivP6ZV682pz2kqnh8=;
-        b=o5A6GKrqsaYS3d/pt0Qv1cyCn95kE/t4xup81WwGa+iVo1iYV1/6ftBgCPH7q9WvIy
-         zKswPwiFxPw6iUxOPVnZCX3TK0oknfKoFX2ERXih2C6cR1AGqLXpbib4Bc4b2c0LILae
-         3zvzZooY58T2+yBese9XtTJSxaLSpfgs/gN5Z4H5rDRJFVWv+8DZbubK9mA3ew0B7hlc
-         a5MR5w9OMlEKKv0ClkNBb9nRgzXVD+aC/ZJPmejk1PB8Fq+JaJgJkrl4Vf7CmruH9+/z
-         B3lNhOQSKElm+4gjsKw6ZFFrV17bB8rhOY8EzZKIz3uoD/5KEFXLWlN+EmlUFIWfG9HZ
-         ZRqQ==
+        bh=5bY2CQRN64cBoHK9nZ26Eov6X7vYW/17KsglvGI7XLA=;
+        b=H4eIZmFi7ewQS9AOJQlVnHnSyb1ipynu2hptoZyZVN/62/HUBqNjqjs1pOBkkNC6dW
+         UzBnrCzEHpodk5zioz9q46X7+J4hzQZb56t+TqC3GgAgnqfPXF31FiDXUqvYDV9CPShS
+         eLfWiZQCaAH0vf6nCOjwIHpRHZEtK+bpKXTMaEsZYwPXOP9WM2rkwSHMQV+nA4bdlXoG
+         7NQ1Hndivm7iHY3jFDfgS+MHni33zATAG8106jRMne56UXO+5wTOMUi2lv4iyL0BCVXi
+         RIgZ4Q/Me40PMNst0BoyezAQ+vimhuT2iK1DkStr1gfNaL/OD9DJqBWUD1K+pokbuIms
+         hDNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=Sm5ce8AJeZPbl9Xktxz2zuaOE8ivP6ZV682pz2kqnh8=;
-        b=Cg0VpVWtvNF2qwLrQcGpbi2U/o1uyt4nDpKVj0y8CQQld3RYooi2AolIW680aEQR3p
-         mvRwxEGK7ywHqZhtWpD2R9rAz37ECcWRklIj7HfkL1HXexprSCrTYrA8FAarHc/1B844
-         ozTo3cQT4SJb5c1H3UfrxPaAswqH8ul4+HC9nQH46N4jyf/4rG6vTZoNNo0cxsrMNQ3z
-         rcjHIDZlt7zaMOQExHV7OQEpdbsllLf6vqgMNYLzopSdDKuro/kQGM1frLAolQicsH7+
-         rqPfsRjGf/CuN9Mx0gKNpirYYHbW9jpn9pIZXi99Kez8eH95m55vGGCSupk6+snvvboC
-         uMZw==
-X-Gm-Message-State: APt69E0FY9sK8eKsj5/JYYkE85BmkqS0pQfegAk1LNhcLYqXgHqksgGj
-        79BovQGR3Va3XQZxMz+ZeTPWHMNi9mnwVU1vyyL6yLDoQy+btPZdzz+crRgy8OHnOFCv22qhcsI
-        samneIuhq4o9GKcxWjHWQlWk8u7YRVAeMIneOrUO5Eo489QsX4iIeaN1RSA==
-X-Google-Smtp-Source: AAOMgpdYBcNTfzJFOtfafMErmL8lO+eE2vPbAjg5Hca0A1f9Y6PrlnUTmHXyjzvb9iG38/qTBFyMFvYGnls=
+        bh=5bY2CQRN64cBoHK9nZ26Eov6X7vYW/17KsglvGI7XLA=;
+        b=FeYMnmy/O3gvPfuXvsg27lrNHAQMayT9TSdjt9AZ/DQVO54tPz2Lj5XZT76xQK2md3
+         yd1/Z5H82OQooGXfFEtSzRQSqTuK/9RMmgHvkOat7ndgSZP1QMR1lYK6p5Ise+PMN/TX
+         c/qjJmmW5ixoPpZH2CEMtpl1ykvEzYWb+tcsjy5Z0yzh02mipnZah3aCJ+AjDmq3Vk/2
+         e2Q2INW1dL6zI1SE5eNlnhN9PcsjAShEXhuCITgM0oPzDrn748GuVOmO/BaUUx+ctfOe
+         QlewUfbd06Pv0OzUL4KpzYIVFqZeDihTC8AogJ9T5Xwzpd7F3S6pOF2bAgytgAbx4mo5
+         FP4Q==
+X-Gm-Message-State: APt69E3T8+AVTmK9Hk8oTetSOFYfzOjRKyoOEEnlfGaO9ERlbaqgWPI6
+        LO+z5z4C81Of/gqf5GE7LDKPI+h24ImJ2YNhG9GpzxCqln3Y80pOEOVtAKOKpY4nXjanHUZOV0x
+        2ohKmOVXdeWXUAXi5Cck7LrqEdBXyQt6jI2fwuKNQTsW2qV3+qfyN1/RxRQ==
+X-Google-Smtp-Source: ADUXVKIronl2d0EqklAHSAa4aETW9t3FtaLm5L9e9OYhDa1B0rTbhE25U59SswDv9LP/cWHTP9Id5wGMpoc=
 MIME-Version: 1.0
-X-Received: by 2002:a24:2545:: with SMTP id g66-v6mr1544032itg.19.1529530378197;
- Wed, 20 Jun 2018 14:32:58 -0700 (PDT)
-Date:   Wed, 20 Jun 2018 14:32:34 -0700
-In-Reply-To: <20180620213235.10952-1-bmwill@google.com>
-Message-Id: <20180620213235.10952-8-bmwill@google.com>
-References: <20180613213925.10560-1-bmwill@google.com> <20180620213235.10952-1-bmwill@google.com>
+X-Received: by 2002:a1f:b7d3:: with SMTP id h202-v6mr10044384vkf.75.1529530361405;
+ Wed, 20 Jun 2018 14:32:41 -0700 (PDT)
+Date:   Wed, 20 Jun 2018 14:32:27 -0700
+In-Reply-To: <20180613213925.10560-1-bmwill@google.com>
+Message-Id: <20180620213235.10952-1-bmwill@google.com>
+References: <20180613213925.10560-1-bmwill@google.com>
 X-Mailer: git-send-email 2.18.0.rc1.244.gcf134e6275-goog
-Subject: [PATCH v3 7/8] fetch-pack: put shallow info in output parameter
+Subject: [PATCH v3 0/8] ref-in-want
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     jonathantanmy@google.com, gitster@pobox.com, sbeller@google.com,
@@ -63,328 +63,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Expand the transport fetch method signature, by adding an output
-parameter, to allow transports to return information about the refs they
-have fetched.  Then communicate shallow status information through this
-mechanism instead of by modifying the input list of refs.
+Changes in v3:
+* Discussion seemed to settle on keeping the simplified version of
+  ref-in-want where the "want-ref" line only accepts full ref names.  If
+  we want to we can add patterns at a later time.
+* Reverted back to v1's behavior where requesting a ref that doesn't
+  exists is a hard error on the server.  I went back and forth many
+  times on what the right thing to do here is and decided that a hard
+  error works much cleaner for the time being.
+* Some typos.
 
-This does require clients to sometimes generate the ref map twice: once
-from the list of refs provided by the remote (as is currently done) and
-potentially once from the new list of refs that the fetch mechanism
-provides.
+Brandon Williams (8):
+  test-pkt-line: add unpack-sideband subcommand
+  upload-pack: implement ref-in-want
+  upload-pack: test negotiation with changing repository
+  fetch: refactor the population of peer ref OIDs
+  fetch: refactor fetch_refs into two functions
+  fetch: refactor to make function args narrower
+  fetch-pack: put shallow info in output parameter
+  fetch-pack: implement ref-in-want
 
-Signed-off-by: Brandon Williams <bmwill@google.com>
----
- builtin/clone.c      |  4 ++--
- builtin/fetch.c      | 28 ++++++++++++++++++++++++----
- fetch-object.c       |  2 +-
- fetch-pack.c         | 17 +++++++++--------
- transport-helper.c   |  6 ++++--
- transport-internal.h |  9 ++++++++-
- transport.c          | 34 ++++++++++++++++++++++++++++------
- transport.h          |  3 ++-
- 8 files changed, 78 insertions(+), 25 deletions(-)
+ Documentation/config.txt                |   7 +
+ Documentation/technical/protocol-v2.txt |  28 ++-
+ builtin/clone.c                         |   4 +-
+ builtin/fetch.c                         | 131 ++++++++-----
+ fetch-object.c                          |   2 +-
+ fetch-pack.c                            |  52 +++--
+ remote.c                                |   1 +
+ remote.h                                |   1 +
+ t/helper/test-pkt-line.c                |  33 ++++
+ t/lib-httpd.sh                          |   1 +
+ t/lib-httpd/apache.conf                 |   8 +
+ t/lib-httpd/one-time-sed.sh             |  16 ++
+ t/t5703-upload-pack-ref-in-want.sh      | 245 ++++++++++++++++++++++++
+ transport-helper.c                      |   6 +-
+ transport-internal.h                    |   9 +-
+ transport.c                             |  34 +++-
+ transport.h                             |   3 +-
+ upload-pack.c                           |  64 +++++++
+ 18 files changed, 568 insertions(+), 77 deletions(-)
+ create mode 100644 t/lib-httpd/one-time-sed.sh
+ create mode 100755 t/t5703-upload-pack-ref-in-want.sh
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 99e73dae8..8f86d99c5 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -1155,7 +1155,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 			}
- 
- 		if (!is_local && !complete_refs_before_fetch)
--			transport_fetch_refs(transport, mapped_refs);
-+			transport_fetch_refs(transport, mapped_refs, NULL);
- 
- 		remote_head = find_ref_by_name(refs, "HEAD");
- 		remote_head_points_at =
-@@ -1197,7 +1197,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	if (is_local)
- 		clone_local(path, git_dir);
- 	else if (refs && complete_refs_before_fetch)
--		transport_fetch_refs(transport, mapped_refs);
-+		transport_fetch_refs(transport, mapped_refs, NULL);
- 
- 	update_remote_refs(refs, mapped_refs, remote_head_points_at,
- 			   branch_top.buf, reflog_msg.buf, transport,
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index b600e1f10..8362a97a2 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -946,11 +946,13 @@ static int quickfetch(struct ref *ref_map)
- 	return check_connected(iterate_ref_map, &rm, &opt);
- }
- 
--static int fetch_refs(struct transport *transport, struct ref *ref_map)
-+static int fetch_refs(struct transport *transport, struct ref *ref_map,
-+		      struct ref **updated_remote_refs)
- {
- 	int ret = quickfetch(ref_map);
- 	if (ret)
--		ret = transport_fetch_refs(transport, ref_map);
-+		ret = transport_fetch_refs(transport, ref_map,
-+					   updated_remote_refs);
- 	if (ret)
- 		transport_unlock_pack(transport);
- 	return ret;
-@@ -1106,7 +1108,7 @@ static void backfill_tags(struct transport *transport, struct ref *ref_map)
- 	transport_set_option(transport, TRANS_OPT_FOLLOWTAGS, NULL);
- 	transport_set_option(transport, TRANS_OPT_DEPTH, "0");
- 	transport_set_option(transport, TRANS_OPT_DEEPEN_RELATIVE, NULL);
--	if (!fetch_refs(transport, ref_map))
-+	if (!fetch_refs(transport, ref_map, NULL))
- 		consume_refs(transport, ref_map);
- 
- 	if (gsecondary) {
-@@ -1122,6 +1124,7 @@ static int do_fetch(struct transport *transport,
- 	int autotags = (transport->remote->fetch_tags == 1);
- 	int retcode = 0;
- 	const struct ref *remote_refs;
-+	struct ref *updated_remote_refs = NULL;
- 	struct argv_array ref_prefixes = ARGV_ARRAY_INIT;
- 
- 	if (tags == TAGS_DEFAULT) {
-@@ -1172,7 +1175,24 @@ static int do_fetch(struct transport *transport,
- 				   transport->url);
- 		}
- 	}
--	if (fetch_refs(transport, ref_map) || consume_refs(transport, ref_map)) {
-+
-+	if (fetch_refs(transport, ref_map, &updated_remote_refs)) {
-+		free_refs(ref_map);
-+		retcode = 1;
-+		goto cleanup;
-+	}
-+	if (updated_remote_refs) {
-+		/*
-+		 * Regenerate ref_map using the updated remote refs.  This is
-+		 * to account for additional information which may be provided
-+		 * by the transport (e.g. shallow info).
-+		 */
-+		free_refs(ref_map);
-+		ref_map = get_ref_map(transport->remote, updated_remote_refs, rs,
-+				      tags, &autotags);
-+		free_refs(updated_remote_refs);
-+	}
-+	if (consume_refs(transport, ref_map)) {
- 		free_refs(ref_map);
- 		retcode = 1;
- 		goto cleanup;
-diff --git a/fetch-object.c b/fetch-object.c
-index 853624f81..48fe63dd6 100644
---- a/fetch-object.c
-+++ b/fetch-object.c
-@@ -19,7 +19,7 @@ static void fetch_refs(const char *remote_name, struct ref *ref)
- 
- 	transport_set_option(transport, TRANS_OPT_FROM_PROMISOR, "1");
- 	transport_set_option(transport, TRANS_OPT_NO_DEPENDENTS, "1");
--	transport_fetch_refs(transport, ref);
-+	transport_fetch_refs(transport, ref, NULL);
- 	fetch_if_missing = original_fetch_if_missing;
- }
- 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index a320ce987..f1709e816 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1470,12 +1470,13 @@ static int remove_duplicates_in_refs(struct ref **ref, int nr)
- }
- 
- static void update_shallow(struct fetch_pack_args *args,
--			   struct ref **sought, int nr_sought,
-+			   struct ref *refs,
- 			   struct shallow_info *si)
- {
- 	struct oid_array ref = OID_ARRAY_INIT;
- 	int *status;
--	int i;
-+	int i = 0;
-+	struct ref *r;
- 
- 	if (args->deepen && alternate_shallow_file) {
- 		if (*alternate_shallow_file == '\0') { /* --unshallow */
-@@ -1517,8 +1518,8 @@ static void update_shallow(struct fetch_pack_args *args,
- 	remove_nonexistent_theirs_shallow(si);
- 	if (!si->nr_ours && !si->nr_theirs)
- 		return;
--	for (i = 0; i < nr_sought; i++)
--		oid_array_append(&ref, &sought[i]->old_oid);
-+	for (r = refs; r; r = r->next)
-+		oid_array_append(&ref, &r->old_oid);
- 	si->ref = &ref;
- 
- 	if (args->update_shallow) {
-@@ -1552,12 +1553,12 @@ static void update_shallow(struct fetch_pack_args *args,
- 	 * remote is also shallow, check what ref is safe to update
- 	 * without updating .git/shallow
- 	 */
--	status = xcalloc(nr_sought, sizeof(*status));
-+	status = xcalloc(ref.nr, sizeof(*status));
- 	assign_shallow_commits_to_refs(si, NULL, status);
- 	if (si->nr_ours || si->nr_theirs) {
--		for (i = 0; i < nr_sought; i++)
-+		for (r = refs, i = 0; r; r = r->next, i++)
- 			if (status[i])
--				sought[i]->status = REF_STATUS_REJECT_SHALLOW;
-+				r->status = REF_STATUS_REJECT_SHALLOW;
- 	}
- 	free(status);
- 	oid_array_clear(&ref);
-@@ -1591,7 +1592,7 @@ struct ref *fetch_pack(struct fetch_pack_args *args,
- 		ref_cpy = do_fetch_pack(args, fd, ref, sought, nr_sought,
- 					&si, pack_lockfile);
- 	reprepare_packed_git(the_repository);
--	update_shallow(args, sought, nr_sought, &si);
-+	update_shallow(args, ref_cpy, &si);
- 	clear_shallow_info(&si);
- 	return ref_cpy;
- }
-diff --git a/transport-helper.c b/transport-helper.c
-index 1f8ff7e94..8b5abca29 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -651,14 +651,16 @@ static int connect_helper(struct transport *transport, const char *name,
- }
- 
- static int fetch(struct transport *transport,
--		 int nr_heads, struct ref **to_fetch)
-+		 int nr_heads, struct ref **to_fetch,
-+		 struct ref **fetched_refs)
- {
- 	struct helper_data *data = transport->data;
- 	int i, count;
- 
- 	if (process_connect(transport, 0)) {
- 		do_take_over(transport);
--		return transport->vtable->fetch(transport, nr_heads, to_fetch);
-+		return transport->vtable->fetch(transport, nr_heads, to_fetch,
-+						fetched_refs);
- 	}
- 
- 	count = 0;
-diff --git a/transport-internal.h b/transport-internal.h
-index 1cde6258a..eeb6c340e 100644
---- a/transport-internal.h
-+++ b/transport-internal.h
-@@ -36,11 +36,18 @@ struct transport_vtable {
- 	 * Fetch the objects for the given refs. Note that this gets
- 	 * an array, and should ignore the list structure.
- 	 *
-+	 * The transport *may* provide, in fetched_refs, the list of refs that
-+	 * it fetched.  If the transport knows anything about the fetched refs
-+	 * that the caller does not know (for example, shallow status), it
-+	 * should provide that list of refs and include that information in the
-+	 * list.
-+	 *
- 	 * If the transport did not get hashes for refs in
- 	 * get_refs_list(), it should set the old_sha1 fields in the
- 	 * provided refs now.
- 	 **/
--	int (*fetch)(struct transport *transport, int refs_nr, struct ref **refs);
-+	int (*fetch)(struct transport *transport, int refs_nr, struct ref **refs,
-+		     struct ref **fetched_refs);
- 
- 	/**
- 	 * Push the objects and refs. Send the necessary objects, and
-diff --git a/transport.c b/transport.c
-index a32da30de..39d8c2fa5 100644
---- a/transport.c
-+++ b/transport.c
-@@ -151,7 +151,8 @@ static struct ref *get_refs_from_bundle(struct transport *transport,
- }
- 
- static int fetch_refs_from_bundle(struct transport *transport,
--			       int nr_heads, struct ref **to_fetch)
-+			       int nr_heads, struct ref **to_fetch,
-+			       struct ref **fetched_refs)
- {
- 	struct bundle_transport_data *data = transport->data;
- 	return unbundle(&data->header, data->fd,
-@@ -287,7 +288,8 @@ static struct ref *get_refs_via_connect(struct transport *transport, int for_pus
- }
- 
- static int fetch_refs_via_pack(struct transport *transport,
--			       int nr_heads, struct ref **to_fetch)
-+			       int nr_heads, struct ref **to_fetch,
-+			       struct ref **fetched_refs)
- {
- 	int ret = 0;
- 	struct git_transport_data *data = transport->data;
-@@ -354,8 +356,12 @@ static int fetch_refs_via_pack(struct transport *transport,
- 	if (report_unmatched_refs(to_fetch, nr_heads))
- 		ret = -1;
- 
-+	if (fetched_refs)
-+		*fetched_refs = refs;
-+	else
-+		free_refs(refs);
-+
- 	free_refs(refs_tmp);
--	free_refs(refs);
- 	free(dest);
- 	return ret;
- }
-@@ -1215,19 +1221,31 @@ const struct ref *transport_get_remote_refs(struct transport *transport,
- 	return transport->remote_refs;
- }
- 
--int transport_fetch_refs(struct transport *transport, struct ref *refs)
-+int transport_fetch_refs(struct transport *transport, struct ref *refs,
-+			 struct ref **fetched_refs)
- {
- 	int rc;
- 	int nr_heads = 0, nr_alloc = 0, nr_refs = 0;
- 	struct ref **heads = NULL;
-+	struct ref *nop_head = NULL, **nop_tail = &nop_head;
- 	struct ref *rm;
- 
- 	for (rm = refs; rm; rm = rm->next) {
- 		nr_refs++;
- 		if (rm->peer_ref &&
- 		    !is_null_oid(&rm->old_oid) &&
--		    !oidcmp(&rm->peer_ref->old_oid, &rm->old_oid))
-+		    !oidcmp(&rm->peer_ref->old_oid, &rm->old_oid)) {
-+			/*
-+			 * These need to be reported as fetched, but we don't
-+			 * actually need to fetch them.
-+			 */
-+			if (fetched_refs) {
-+				struct ref *nop_ref = copy_ref(rm);
-+				*nop_tail = nop_ref;
-+				nop_tail = &nop_ref->next;
-+			}
- 			continue;
-+		}
- 		ALLOC_GROW(heads, nr_heads + 1, nr_alloc);
- 		heads[nr_heads++] = rm;
- 	}
-@@ -1245,7 +1263,11 @@ int transport_fetch_refs(struct transport *transport, struct ref *refs)
- 			heads[nr_heads++] = rm;
- 	}
- 
--	rc = transport->vtable->fetch(transport, nr_heads, heads);
-+	rc = transport->vtable->fetch(transport, nr_heads, heads, fetched_refs);
-+	if (fetched_refs && nop_head) {
-+		*nop_tail = *fetched_refs;
-+		*fetched_refs = nop_head;
-+	}
- 
- 	free(heads);
- 	return rc;
-diff --git a/transport.h b/transport.h
-index 7792b0858..3dff767a8 100644
---- a/transport.h
-+++ b/transport.h
-@@ -218,7 +218,8 @@ int transport_push(struct transport *connection,
- const struct ref *transport_get_remote_refs(struct transport *transport,
- 					    const struct argv_array *ref_prefixes);
- 
--int transport_fetch_refs(struct transport *transport, struct ref *refs);
-+int transport_fetch_refs(struct transport *transport, struct ref *refs,
-+			 struct ref **fetched_refs);
- void transport_unlock_pack(struct transport *transport);
- int transport_disconnect(struct transport *transport);
- char *transport_anonymize_url(const char *url);
 -- 
 2.18.0.rc1.244.gcf134e6275-goog
 
