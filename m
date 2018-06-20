@@ -6,54 +6,54 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B8A7A1F403
-	for <e@80x24.org>; Wed, 20 Jun 2018 20:05:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC3AB1F403
+	for <e@80x24.org>; Wed, 20 Jun 2018 20:05:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933070AbeFTUFy (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Jun 2018 16:05:54 -0400
-Received: from mail-ot0-f194.google.com ([74.125.82.194]:46344 "EHLO
-        mail-ot0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932958AbeFTUFx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jun 2018 16:05:53 -0400
-Received: by mail-ot0-f194.google.com with SMTP id v24-v6so900084otk.13
-        for <git@vger.kernel.org>; Wed, 20 Jun 2018 13:05:53 -0700 (PDT)
+        id S932998AbeFTUFv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Jun 2018 16:05:51 -0400
+Received: from mail-oi0-f68.google.com ([209.85.218.68]:36032 "EHLO
+        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932978AbeFTUFr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jun 2018 16:05:47 -0400
+Received: by mail-oi0-f68.google.com with SMTP id 14-v6so763117oie.3
+        for <git@vger.kernel.org>; Wed, 20 Jun 2018 13:05:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=2VfwsGRM8TRKo+qIHKBeAd53krkytiNc+gdRqvXTlLo=;
-        b=NbZ/ENUcDRM9eZVAxEUMKmITRBKabdP54OETiGbDlRv9AWzgV1dsxJnBuYGVXv1Kbc
-         eAm3sentzKKx5U1F6MguZRc1/PMNeMCmvC1TqCAxjx1O8q9KJ+5v7jg4hoWgae2ph6kd
-         MRdPD8ObamAgjxqYzxG+s+0MtkxUanI48uY4mlC86Xpu2lZSKI4MgqT3QdlHfTEb0p9H
-         nwEW5/Vf8dodIw7He8tZKmCplyR/93iMH8L8bBKhqsgAWGf2/MMzke8L/C4xo5rLqOnB
-         47bGx4OIy7rw8y+SeRtLmybNS2A4f68mZZyNA2kmHJsJk/jTZgV0U/ezC4U0KHX+vkyc
-         UUOw==
+        bh=nDot6NiRfxRnTMtOpD8zVMwcdD6vzBgF91VLY/tcAC4=;
+        b=gKsJ6QEfkAR2wWw4h8j3hEiFWK+bJRMyqblRDVYikNOEncwhccun0Qj3ZCj/kwFB9c
+         GId+O6LhXxwJz6fVfMOGc54VygtkaCrP+ETXzxS+dTdP8t6YG6KPB90lSS5RaAB4NFj4
+         FSS3SJdpy59CRarlkTSn+jhvYawvLNZrn3F4SJuiz8+fwSpriqC9Hi8A3bEbttE/B0y8
+         QXLC0F0ks+K43Obj3iYFbTOKunmzEn7cAT4G96MlRBxxVGx9mXhJNqf4poo1lejdDsuV
+         VZC3ugs52cJema6/KM+qJSMU49O0/ci4qwLCadPMvh3l1pwFx+yWBqKjFvuR4pkcV9Az
+         DlkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=2VfwsGRM8TRKo+qIHKBeAd53krkytiNc+gdRqvXTlLo=;
-        b=WUM5DGuQ/PxcjMWYpunLdtEfKHeGVPXbgJJhNdzszxkpkuYxQX+QaBwBYlcDpV5ViE
-         ZR5f/5c6xxYB+dYPe1AWswMEgiHNEjvfv3lf/T17eefKiARpo/xNQIaB/49YeBxolhZA
-         UXTVB7nQNW+96yKzoJkErbTQtetnI3AWJT5q7stCRTyG4L8yYscPofVGGtML12Fzaobm
-         FeagM8Q/bFawJSIB3S9VErLP+yomDhsvDpqXQunh70T2ySRDJwKUpBRv1cm05sJqX7bi
-         IfiBO3LYTwmRr+2ZuBTlwk9Ho46IkiQQvOt3jr+t4cq6i6BWBrtCPaGZ/tKtkAKQ75fR
-         rHlA==
-X-Gm-Message-State: APt69E2nRswuNYr2Fa9Pjgt68dpEaAlHOftdNN9FoBL5rTS1LJ/+23HM
-        /bBZcLt6l+B3lWbEkoCxz7t9oHOUWkA=
-X-Google-Smtp-Source: ADUXVKK4RulZ69JCdP2jRpNoL6rqzmXZx0B6BOz9VLzXiUekVxHx8JNlXmfdFS3gDEiTNfphEnrrZg==
-X-Received: by 2002:a9d:2b32:: with SMTP id o47-v6mr14826120otb.346.1529525152255;
-        Wed, 20 Jun 2018 13:05:52 -0700 (PDT)
+        bh=nDot6NiRfxRnTMtOpD8zVMwcdD6vzBgF91VLY/tcAC4=;
+        b=CnYlYxCODmw5pjLPoPR833L+ee55uS+raZFluhqJzyxxkljhJ0K4BbCepIxFX2Q5wE
+         Z0Vdo9HDIUQXwyFPXJDD6Ggu9gF3bfwX9SGJlXgcFtcZ9KBLV/UEdNjGdt9A4Mc8iuof
+         axM/hC+SwQvfpV8IVgyELnskW4Y9+Xxm72OlPB7ie/d1ALnal5D7380CkVJ56xmad4Yy
+         HFsj2qRpN2A/JntAJoafswt5fAI/Ti64uTQE7AKgV1MvQyraeyUz2tOcV5dbl5ZziN7B
+         aV0LjhPIG4yv4O95jmQBrnq6HryfLaHOHueukBQrsU8CK3rOm1XDFaYtAxXu2CpPVGsv
+         vzmA==
+X-Gm-Message-State: APt69E1A19+3fHFiVKZ5y7ldY+FttpmtDaoD6YesRNIjffwQUXl3a8ay
+        UGNx6H+bK1gdkOqQEBsmOwpTG+0655E=
+X-Google-Smtp-Source: ADUXVKKjFJw1mopfmuN8Hn8rT7nDISKu6DH9CBTx0USdUc4E7xqHZf7FihZ+7uv70K/QBs1a4quZ2A==
+X-Received: by 2002:aca:d886:: with SMTP id p128-v6mr13527635oig.180.1529525146708;
+        Wed, 20 Jun 2018 13:05:46 -0700 (PDT)
 Received: from localhost ([107.217.158.181])
-        by smtp.gmail.com with ESMTPSA id l7-v6sm1362727oii.29.2018.06.20.13.05.50
+        by smtp.gmail.com with ESMTPSA id a14-v6sm1371959oia.20.2018.06.20.13.05.45
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 20 Jun 2018 13:05:51 -0700 (PDT)
-Date:   Wed, 20 Jun 2018 15:05:49 -0500
+        Wed, 20 Jun 2018 13:05:45 -0700 (PDT)
+Date:   Wed, 20 Jun 2018 15:05:44 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     avarab@gmail.com, peff@peff.net, gitster@pobox.com
-Subject: [PATCH v2 7/7] contrib/git-jump/git-jump: jump to exact location
-Message-ID: <7e2cbeeccacd8462a4128830927dae15895c4e1b.1529524852.git.me@ttaylorr.com>
+Subject: [PATCH v2 5/7] builtin/grep.c: add '--column' option to 'git-grep(1)'
+Message-ID: <ed1c197cc2cdbcfe7fce14747b8601d1488f89a9.1529524852.git.me@ttaylorr.com>
 References: <cover.1529365072.git.me@ttaylorr.com>
  <cover.1529524852.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -66,68 +66,157 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Take advantage of 'git-grep(1)''s new option, '--column' in order to
-teach Peff's 'git-jump' script how to jump to the correct column for any
-given match.
+Teach 'git-grep(1)' a new option, '--column', to show the column
+number of the first match on a non-context line. This makes it possible
+to teach 'contrib/git-jump/git-jump' how to seek to the first matching
+position of a grep match in your editor, and allows similar additional
+scripting capabilities.
 
-'git-grep(1)''s output is in the correct format for Vim's jump list, so
-no additional cleanup is necessary.
+For example:
+
+  $ git grep -n --column foo | head -n3
+  .clang-format:51:14:# myFunction(foo, bar, baz);
+  .clang-format:64:7:# int foo();
+  .clang-format:75:8:# void foo()
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- contrib/git-jump/README   | 12 ++++++++++--
- contrib/git-jump/git-jump |  2 +-
- 2 files changed, 11 insertions(+), 3 deletions(-)
+ Documentation/git-grep.txt |  6 ++-
+ builtin/grep.c             |  1 +
+ t/t7810-grep.sh            | 84 ++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 90 insertions(+), 1 deletion(-)
 
-diff --git a/contrib/git-jump/README b/contrib/git-jump/README
-index 4484bda410..2f618a7f97 100644
---- a/contrib/git-jump/README
-+++ b/contrib/git-jump/README
-@@ -25,6 +25,13 @@ git-jump will feed this to the editor:
- foo.c:2: printf("hello word!\n");
- -----------------------------------
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index 312409a607..31dc0392a6 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -13,7 +13,7 @@ SYNOPSIS
+ 	   [-v | --invert-match] [-h|-H] [--full-name]
+ 	   [-E | --extended-regexp] [-G | --basic-regexp]
+ 	   [-P | --perl-regexp]
+-	   [-F | --fixed-strings] [-n | --line-number]
++	   [-F | --fixed-strings] [-n | --line-number] [--column]
+ 	   [-l | --files-with-matches] [-L | --files-without-match]
+ 	   [(-O | --open-files-in-pager) [<pager>]]
+ 	   [-z | --null]
+@@ -169,6 +169,10 @@ providing this option will cause it to die.
+ --line-number::
+ 	Prefix the line number to matching lines.
  
-+Or, when running 'git jump grep', column numbers will also be emitted,
-+e.g. `git jump grep "hello"` would return:
++--column::
++	Prefix the 1-indexed byte-offset of the first match from the start of the
++	matching line.
 +
-+-----------------------------------
-+foo.c:2:9: printf("hello word!\n");
-+-----------------------------------
+ -l::
+ --files-with-matches::
+ --name-only::
+diff --git a/builtin/grep.c b/builtin/grep.c
+index ee753a403e..61bcaf6e58 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -828,6 +828,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 			    GREP_PATTERN_TYPE_PCRE),
+ 		OPT_GROUP(""),
+ 		OPT_BOOL('n', "line-number", &opt.linenum, N_("show line numbers")),
++		OPT_BOOL(0, "column", &opt.columnnum, N_("show column number of first match")),
+ 		OPT_NEGBIT('h', NULL, &opt.pathname, N_("don't show filenames"), 1),
+ 		OPT_BIT('H', NULL, &opt.pathname, N_("show filenames"), 1),
+ 		OPT_NEGBIT(0, "full-name", &opt.relative,
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index 1797f632a3..bf0b572dab 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -99,6 +99,90 @@ do
+ 		test_cmp expected actual
+ 	'
+ 
++	test_expect_success "grep -w $L (with --column)" '
++		{
++			echo ${HC}file:5:foo mmap bar
++			echo ${HC}file:14:foo_mmap bar mmap
++			echo ${HC}file:5:foo mmap bar_mmap
++			echo ${HC}file:14:foo_mmap bar mmap baz
++		} >expected &&
++		git grep --column -w -e mmap $H >actual &&
++		test_cmp expected actual
++	'
 +
- Obviously this trivial case isn't that interesting; you could just open
- `foo.c` yourself. But when you have many changes scattered across a
- project, you can use the editor's support to "jump" from point to point.
-@@ -35,7 +42,8 @@ Git-jump can generate four types of interesting lists:
- 
-   2. The beginning of any merge conflict markers.
- 
--  3. Any grep matches.
-+  3. Any grep matches, including the column of the first match on a
-+     line.
- 
-   4. Any whitespace errors detected by `git diff --check`.
- 
-@@ -82,7 +90,7 @@ which does something similar to `git jump grep`. However, it is limited
- to positioning the cursor to the correct line in only the first file,
- leaving you to locate subsequent hits in that file or other files using
- the editor or pager. By contrast, git-jump provides the editor with a
--complete list of files and line numbers for each match.
-+complete list of files, lines, and a column number for each match.
- 
- 
- Limitations
-diff --git a/contrib/git-jump/git-jump b/contrib/git-jump/git-jump
-index 80ab0590bc..931b0fe3a9 100755
---- a/contrib/git-jump/git-jump
-+++ b/contrib/git-jump/git-jump
-@@ -52,7 +52,7 @@ mode_merge() {
- # editor shows them to us in the status bar.
- mode_grep() {
- 	cmd=$(git config jump.grepCmd)
--	test -n "$cmd" || cmd="git grep -n"
-+	test -n "$cmd" || cmd="git grep -n --column"
- 	$cmd "$@" |
- 	perl -pe '
- 	s/[ \t]+/ /g;
++	test_expect_success "grep -w $L (with --column, extended)" '
++		{
++			echo ${HC}file:14:foo_mmap bar mmap
++			echo ${HC}file:19:foo_mmap bar mmap baz
++		} >expected &&
++		git grep --column -w -e mmap$ --or -e baz $H >actual &&
++		test_cmp expected actual
++	'
++
++	test_expect_success "grep -w $L (with --column, --invert)" '
++		{
++			echo ${HC}file:1:foo mmap bar
++			echo ${HC}file:1:foo_mmap bar
++			echo ${HC}file:1:foo_mmap bar mmap
++			echo ${HC}file:1:foo mmap bar_mmap
++		} >expected &&
++		git grep --column --invert -w -e baz $H -- file >actual &&
++		test_cmp expected actual
++	'
++
++	test_expect_success "grep $L (with --column, --invert, extended)" '
++		{
++			echo ${HC}hello_world:6:HeLLo_world
++		} >expected &&
++		git grep --column --invert -e ll --or --not -e _ $H -- hello_world \
++			>actual &&
++		test_cmp expected actual
++	'
++
++	test_expect_success "grep $L (with --column, double-negation)" '
++		{
++			echo ${HC}file:1:foo_mmap bar mmap baz
++		} >expected &&
++		git grep --column --not \( --not -e foo --or --not -e baz \) $H -- file \
++			>actual &&
++		test_cmp expected actual
++	'
++
++	test_expect_success "grep -w $L (with --column, -C)" '
++		{
++			echo ${HC}file:5:foo mmap bar
++			echo ${HC}file-foo_mmap bar
++			echo ${HC}file:14:foo_mmap bar mmap
++			echo ${HC}file:5:foo mmap bar_mmap
++			echo ${HC}file:14:foo_mmap bar mmap baz
++		} >expected &&
++		git grep --column -w -C1 -e mmap $H >actual &&
++		test_cmp expected actual
++	'
++
++	test_expect_success "grep -w $L (with --line-number, --column)" '
++		{
++			echo ${HC}file:1:5:foo mmap bar
++			echo ${HC}file:3:14:foo_mmap bar mmap
++			echo ${HC}file:4:5:foo mmap bar_mmap
++			echo ${HC}file:5:14:foo_mmap bar mmap baz
++		} >expected &&
++		git grep -n --column -w -e mmap $H >actual &&
++		test_cmp expected actual
++	'
++
++	test_expect_success "grep -w $L (with non-extended patterns, --column)" '
++		{
++			echo ${HC}file:5:foo mmap bar
++			echo ${HC}file:10:foo_mmap bar
++			echo ${HC}file:10:foo_mmap bar mmap
++			echo ${HC}file:5:foo mmap bar_mmap
++			echo ${HC}file:10:foo_mmap bar mmap baz
++		} >expected &&
++		git grep --column -w -e bar -e mmap $H >actual &&
++		test_cmp expected actual
++	'
++
+ 	test_expect_success "grep -w $L" '
+ 		{
+ 			echo ${HC}file:1:foo mmap bar
 -- 
 2.17.0.582.gccdcbd54c
+
