@@ -2,81 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8FA591F403
-	for <e@80x24.org>; Wed, 20 Jun 2018 11:03:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2EFC01F403
+	for <e@80x24.org>; Wed, 20 Jun 2018 11:04:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754276AbeFTLDU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Jun 2018 07:03:20 -0400
-Received: from mout.gmx.net ([212.227.15.19]:44537 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754115AbeFTLDS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jun 2018 07:03:18 -0400
-Received: from [192.168.0.129] ([37.201.195.106]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lee2I-1fyppR2fsM-00qWFW; Wed, 20
- Jun 2018 13:03:11 +0200
-Date:   Wed, 20 Jun 2018 13:03:21 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Todd Zullinger <tmz@pobox.com>,
-        Phillip Wood <phillip.wood@talktalk.net>, git@vger.kernel.org
-Subject: Re: [PATCH] t3404: check root commit in 'rebase -i --root reword
- root commit'
-In-Reply-To: <xmqqin6ewyv2.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1806201301530.11870@tvgsbejvaqbjf.bet>
-References: <pull.3.git.gitgitgadget@gmail.com> <d59805a43ddaf4bbd4528a2b7afa9809eca9b86b.1529177176.git.gitgitgadget@gmail.com> <484fe825-0726-a027-1187-de00df6406d5@talktalk.net> <20180618164958.GO11827@zaya.teonanacatl.net> <nycvar.QRO.7.76.6.1806182343421.77@tvgsbejvaqbjf.bet>
- <20180618221942.GQ11827@zaya.teonanacatl.net> <xmqqin6ewyv2.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1753825AbeFTLEY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Jun 2018 07:04:24 -0400
+Received: from mail-io0-f182.google.com ([209.85.223.182]:38286 "EHLO
+        mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753266AbeFTLEX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jun 2018 07:04:23 -0400
+Received: by mail-io0-f182.google.com with SMTP id l19-v6so3068732ioj.5
+        for <git@vger.kernel.org>; Wed, 20 Jun 2018 04:04:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=eiDfrONjAz8OyvEmVuhBQWJRE6QqwjfKHyeJBJfKqBw=;
+        b=J5WgA+Xxjzc3cjWnBDlFCYgcjnrka/P9pz/Weu4UZ30Pob6nGsHmMP+EsDkEDdtX9D
+         2SA9rR+eBlZr6DoLRyHYaryFfmT2DmqNykQ7slX78mODfy8nOHij3x0wNKrAvNIW+Szc
+         rim0F4SetZdkYWO+qKGjcuzcWIqMCTgHmuQjXQ5HjgaOVJb3LmFJGtfxKWsmRjin2NFt
+         xoujO9IS3ACr0arFU5Q2yShIJpyLSA6yAkqNzhSLIFRosyIM3KaL3m+QJzEEuZhlGYgE
+         8zHWPCD1W5fcFMmspGSWcnFTrJX0KF/Tq0MvDd93lfstTU8/vAivBB2AKcLRhd1/uZgA
+         T+LQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=eiDfrONjAz8OyvEmVuhBQWJRE6QqwjfKHyeJBJfKqBw=;
+        b=ud5cu+gYFrf+jBp2QNRJm95I3aJMWfdPHA1Wl2P5z41G21YzNcd2CANhf2XSHkubnR
+         ny8kqxqqN1PSk3GllOJN4OeKtFih7I3B0xwCQjslWvfayzYYgAlHmpTu2mwd7lLQdU4G
+         rBex1dWl97dJVmTxj1cM60Cl0z1NRrCmjOsGvPgbunz1N83r6Z2b3JlhX3bFnWRtEFw0
+         f02nba1+2Ek/JFb6rbnLgEUNWIjOt2EDV2ZfIujyqyy410TPhPh1yleUwqzUwJN+n6z3
+         DE4n2Ay7qJiye3PTDraHszBHVMA9eht/ZCyIUL5hvop5t2O+qDGoWNqcbjw4o1BtsPC2
+         9hqw==
+X-Gm-Message-State: APt69E1FurpakoYKcNWmjznWXX7WL8AO3xAtN8nbqcqOR2NVrCrcpPaS
+        sNX/PlIAHIGsCIqLjwU1js7L7O6aFag2j5ME5RBXmt5W
+X-Google-Smtp-Source: ADUXVKIwCtG2HJRQX6aa6E5r3zeH5gme4yh+rnCOeFStLeXQX1wuONBjZzABvlwrSCnlJEmkz3hxWE3amaQ5MddnCOw=
+X-Received: by 2002:a6b:ac85:: with SMTP id v127-v6mr16341111ioe.53.1529492662108;
+ Wed, 20 Jun 2018 04:04:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:1u5VpGy4dL9HfppYEsg/Ex04QixPgExYbK0Qp91eHNwMEPNH740
- h/rzk8LJ0KpXk6StsFKu0a6MmairAHHFFKD0eY9FvEnvmX8ZdJNyrmX/NTWiftiDu7y0rov
- bbprpTRz4E6m4V9Z2xewd6YBNEPJBvcbKw+Jhyjd3ZTPX3Goqa/r2ej5PfOhnAwpU7gI0Mp
- EUmWd248JyCMSmP3FJf+A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:hYp60zcPhiA=:hRp4N6a7hFunUmLlNujnEo
- c0hghY1rPNhzebaoIOt4YgFE9qb0d1k01ULuCIqJPTN8ERtE5v2fuqksN0tv3VybTfDM5FjQ2
- 6z5IwTh/IfyYS8ts2qH5d1ET6Dw9oEEn3OQAQTweUbKsX19zBFMha0+VyUCVTfcetKU0CUwwI
- Fr+aX8M7zCLVlzaWfTEfDTjSEbS1tve/KA5MWaxVWbhi5oEwMkeMwuJvH+OQjcO6DVWdqbjyv
- WT/RrGZbTp+nkm8ZC9xRuA9nKHPJfU8Djj9AkChTVkzhLX/X23nSdc5f/GVLNE6X5ji8uLOAD
- bnZgpPWGoLLocmNtV5/5XbQ9w7j/JRhODFJLe9B5Cm8WGTSVtIWHvU2a0BZbXwJjCvtF2V89w
- 6chLAUGvnsFdVuqdIhauJo6P1wj7SLh1OJZOkZyBWljJOVL3sEdDdTcMQARnmONkLbyAnJ7Pr
- GEXkuR8p8JPBg+c3aMqqwgnAZJXAewHgoEf940gHKDuYLm6fDryTUrWCr+U3oqWj7jXlN3wv7
- YR5AOWrPAjODgKfrADILBKg7yJug8LzWtWTmnGrL/PUI0N74NSpADHHUQ8m1pD8Ilidj5meFA
- amUr1P4nSBMJg1hrWdCIbgopM0KEhTmTwSUp6TfaJbtf7/BW8Xfw/8HrXldCUJU6c5B4MyUYE
- YzBMD0hrwrOnFATbkIoalthnCUrmCoSqn5M84BywwzIobihGDVkCqUvMQq22/myw7Uiim9SBD
- xCPgBy2HkkjEYI1oh66ZQRw86FIpwkCTCjW8OMC2XU29rz57hFxG30ikUfWRuhX0VoaS3xW7u
- iO2xVGW
+Received: by 2002:a4f:22d0:0:0:0:0:0 with HTTP; Wed, 20 Jun 2018 04:04:21
+ -0700 (PDT)
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 20 Jun 2018 13:04:21 +0200
+Message-ID: <CAP8UFD3uxi4i+HCFqgmCZZ9dYAfk1tqCA1CmzdWgxQLzU4Ab0g@mail.gmail.com>
+Subject: [ANNOUNCE] Git Rev News edition 40
+To:     git <git@vger.kernel.org>
+Cc:     lwn@lwn.net, Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Philip Oakley <philipoakley@iee.org>,
+        Phillip Wood <phillip.wood@talktalk.net>,
+        =?UTF-8?B?T25kcmVqIE1vc27DocSNZWs=?= <omosnacek@gmail.com>,
+        Nicolas Pitre <nico@fluxnic.net>,
+        Adam Spiers <git@adamspiers.org>,
+        "Sytse 'Sid' Sijbrandij" <sytse@gitlab.com>,
+        Bryan Turner <bturner@atlassian.com>,
+        Ed Thomson <ethomson@edwardthomson.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi everyone,
 
-On Tue, 19 Jun 2018, Junio C Hamano wrote:
+The 40th edition of Git Rev News is now published:
 
-> Todd Zullinger <tmz@pobox.com> writes:
-> 
-> > With luck, this will save you a few minutes, assuming the
-> > commit message is reasonable (or can be improved with help
-> > from Phillip and others). :)
-> 
-> OK.
-> 
-> > Or Junio may just squash this onto js/rebase-i-root-fix.
-> 
-> Nah, not for a hotfix on the last couple of days before the final.
-> We'd need to build on top, not "squash".
+  https://git.github.io/rev_news/2018/06/20/edition-40/
 
-Right. Can we take this on top, at a leisurely pace? I mean: we verified
-that this works in the upcoming v2.18.0, and it would be nice to have that
-extra regression test safety in the future, but it is not crucial to
-include it in v2.18.0 itself.
+Thanks a lot to all the contributors: Adam Spiers, Bryan Turner and
+Nicolas Pitre!
 
-Ciao,
-Dscho
+Enjoy,
+Christian, Jakub, Markus and Gabriel.
