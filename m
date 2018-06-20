@@ -7,94 +7,86 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0623A1F403
-	for <e@80x24.org>; Wed, 20 Jun 2018 14:54:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 95BA91F403
+	for <e@80x24.org>; Wed, 20 Jun 2018 14:57:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753906AbeFTOyU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Jun 2018 10:54:20 -0400
-Received: from mail-oi0-f66.google.com ([209.85.218.66]:36952 "EHLO
-        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753202AbeFTOyT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jun 2018 10:54:19 -0400
-Received: by mail-oi0-f66.google.com with SMTP id l22-v6so3281479oib.4
-        for <git@vger.kernel.org>; Wed, 20 Jun 2018 07:54:18 -0700 (PDT)
+        id S1754023AbeFTO5x (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Jun 2018 10:57:53 -0400
+Received: from mail-oi0-f65.google.com ([209.85.218.65]:33103 "EHLO
+        mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752798AbeFTO5w (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jun 2018 10:57:52 -0400
+Received: by mail-oi0-f65.google.com with SMTP id c6-v6so3308287oiy.0
+        for <git@vger.kernel.org>; Wed, 20 Jun 2018 07:57:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=sDNSB7y2OA59HC6ydqfoeNg7KbK8hZUg2Z+aP0uqBYs=;
-        b=j29lgbIiYKNWO2TfP+sOjBmWA2nr5akKu01+KHS93Srh3Z5v8lSxiZBaur3wmgiBg5
-         Exwu51qErPbZ/jYUUDAQfdoHI5Xa0xJAcMfAV5zHxBWDz45J6ibGIzCjs0RIh7wVsjfR
-         2IppYrWreW9NGOBLeJpaZYU46yEimPx8VH/cYVUJTPs8dO+Juh1t/avs39Y4mLbZlILG
-         ORc3HqznWtv3TVcLe3lhoW5kDpJsJ4P1sTmQEfyqtC+GGYSXYdOA1BOybou1Yepx860r
-         TD10JT2yyIVyznEWxAMSsXr2A/nKhqoJFrChoUgd1Qx4/XtBzYCsHtbpsiRRpwr4v3O5
-         RZew==
+         :cc:content-transfer-encoding;
+        bh=ad7n0mpP+Z88KUSrX7OuqvpeX8FKIiyENihG+D8anlE=;
+        b=ENJcK0Kp1o+zZrnw5TDHsP+JLdcOa1cE8lBUqn8D0Hk725zHRaqAfV4EdVypUo99vT
+         Aw69JkfezSUj40xnMkv/NPpN0ab15Ws13xbIXxQNC+pE+TI8x2jBhXR1r1TNQWw860s4
+         QNwzax7xuOMYVVqRy7UzeK6AfhyZAIZeMetE9rtW9Gyn3845+l4rJWsWAxiV9TiZIpI5
+         NVqjjM6nxzCp0wYi8qYZawBH7ibNJ7GZyK7C67yFayDh/nEAlW7xV+iangviF+/DtZlo
+         dt5tZ1nizztYAPHyy/g4bY1DgTpuP5VRAe10PAJaHcfoxrAzRh13MblbXE/EfFy+eB/Q
+         8dOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=sDNSB7y2OA59HC6ydqfoeNg7KbK8hZUg2Z+aP0uqBYs=;
-        b=fKdqMh9DaXdStLw/o0e/LIBFyK8nlwtOhkzV6MvCSq6iRZr9RGyNMlVdq5HNWjPWVr
-         6V+Tp8tyCLGXCIDUYM7UTc9I8nHfILbljupIo058AXhUgpq3LMNFwy6mQw8TkQHkfBLI
-         b9Qyt7NdgO5em69/h/zdJiCibGsWqJIyQLIlzAMOOVJS5WN3N9kSaMU7QZMluolClBRv
-         +dCCMf2PDa8JRGdKSYe+ZqDO/C/cl62jB3Dg/QOhfEvUqtYiHZyvvoQ88pLQXxxj6VP+
-         /Hv7u48IP3+lTlofMDoBCwhHBuMW5ZDpJDk5ms8Rx+gBVsFXjTAHzV7ScmojIVSe5bhM
-         8FnQ==
-X-Gm-Message-State: APt69E2ukDXeYYRa8sRb22LAWIq1Yv+kvVQwhvK/nFnEBR4McnJcQwMm
-        wfFT18cMYXYSDjkdLb6hk7vL0mtG9CqLZPQQWyY=
-X-Google-Smtp-Source: ADUXVKIaIvNJQI9+vN8KvAuoZZ9DRynqnUeEfmXOSD2XbQPaOomSq+DrnNQcjrPyOynOXSy9pKUi/bA21AK7nw9m1Ak=
-X-Received: by 2002:aca:aa54:: with SMTP id t81-v6mr12398434oie.30.1529506458303;
- Wed, 20 Jun 2018 07:54:18 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ad7n0mpP+Z88KUSrX7OuqvpeX8FKIiyENihG+D8anlE=;
+        b=Q3R0XCVoaqQZfvj8XetZox7z7LuUPWRz5V3aGqG9/uMXf/EyGzD2IEjGve9f7hyrOj
+         kC2ylKthcvilIOu/WcLcLzC+CvKSx4DULIoBGW9zPa3kDOXPwF8/SrBYX2fbrS0P0BfR
+         AkfTyCWhQ/6hKT1o0rRvuTO/5PVM0uE9V26YCROtrvb0eFZ9FwwpkVdCDcxl5UUg19E8
+         v5iujLHl4G4JN6hs4XqiJS5J1uCz80zAOyTsT2UfPsyEeDyHInYP89UlG7N2KPm9cEvB
+         OOOG6Ztf23gS/kScQlCT8Yq8OaSEnRxRHpr/X1bdY/z96KbCp3SWgbZ3NZpJhA+13iJi
+         jOTQ==
+X-Gm-Message-State: APt69E3OxKVy04cOU8LSW3CJd2dV7Q8XOKKI8H5iD6DP6Q6HOWM3oBed
+        RsLMznS/wc9SaLdMh/piGIrWSsTEZNshIpqK3B0=
+X-Google-Smtp-Source: ADUXVKLppiyYSB4QHFLYvsRLDhqbzK7W41f3y6KmBtg+YT0qzdZ4QXyVDSdFlVvAH170Idk9OXG6NImA+MZLZpHmE0E=
+X-Received: by 2002:aca:5144:: with SMTP id f65-v6mr12580426oib.32.1529506672110;
+ Wed, 20 Jun 2018 07:57:52 -0700 (PDT)
 MIME-Version: 1.0
-References: <wesfwyupgrg.fsf@kanis.fr> <AANLkTimwy6GumHYSTo2je_hOUO80KEpx4_8z3iOoZyc0@mail.gmail.com>
- <87ocdhlgbl.fsf@kanis.fr> <AANLkTikt7LuhxHhOqPm2P-2hzXP54YThX5FRxF4yCFZu@mail.gmail.com>
- <AANLkTi=tf51FWkZZFw9cF=pcCyadgp7a9EXK=KQ6GSQS@mail.gmail.com>
- <87hbj74pve.fsf@kanis.fr> <AANLkTinyX9cABkEDy3HBZoDVNWos2djNBSaw2Hg_yzAO@mail.gmail.com>
- <wesy6cgm6wd.fsf_-_@kanis.fr>
-In-Reply-To: <wesy6cgm6wd.fsf_-_@kanis.fr>
+References: <20180618111919.GA10085@book.hvoigt.net> <20180618155544.GB6958@alpha>
+ <20180619102717.GB10085@book.hvoigt.net> <CACUQV5884fs2wp+R5a-99BbJGdEbujzu2iBny+PjPeL9JeOm8Q@mail.gmail.com>
+ <20180620043956.GC6958@alpha> <CACUQV5-ynAv0p9MCRt0Yv9E6x+UN5z4uuaPOt1GpsK6A6MF2wQ@mail.gmail.com>
+In-Reply-To: <CACUQV5-ynAv0p9MCRt0Yv9E6x+UN5z4uuaPOt1GpsK6A6MF2wQ@mail.gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 20 Jun 2018 16:53:51 +0200
-Message-ID: <CACsJy8AeFfi_k9vMm71BTTF-3GQMFPOTXMhfwqKWT-7RFVjoNw@mail.gmail.com>
-Subject: Re: Excessive mmap [was Git server eats all memory]
-To:     Ivan Kanis <expire-by-2010-08-14@kanis.fr>
-Cc:     Dmitry Potapov <dpotapov@gmail.com>,
-        Ivan Kanis <expire-by-2010-08-11@kanis.fr>,
-        Jared Hance <jaredhance@gmail.com>,
-        Avery Pennarun <apenwarr@gmail.com>,
-        Jakub Narebski <jnareb@gmail.com>,
+Date:   Wed, 20 Jun 2018 16:57:25 +0200
+Message-ID: <CACsJy8CW1=Ea984s8J0Y6y4B6qJKZMdsXVFRQc8YcuoQNfXEqw@mail.gmail.com>
+Subject: Re: Adding nested repository with slash adds files instead of gitlink
+To:     Rafael Ascensao <rafa.almas@gmail.com>
+Cc:     Kevin D <me@ikke.info>, Heiko Voigt <hvoigt@hvoigt.net>,
         Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 19, 2018 at 10:27 PM Ivan Kanis
-<expire-by-2010-08-14@kanis.fr> wrote:
+On Wed, Jun 20, 2018 at 1:55 PM Rafael Ascens=C3=A3o <rafa.almas@gmail.com>=
+ wrote:
 >
-> Dmitry Potapov <dpotapov@gmail.com> wrote:
->
-> > On Fri, Aug 06, 2010 at 07:23:17PM +0200, Ivan Kanis wrote:
-> >>
-> >> I expected the malloc to take 4G but was surprised it didn't. It seems
-> >> to be mmap taking all the memory. I am not familiar with that function,
-> >> it looks like it's mapping memory to a file... Is it reasonable to mmap
-> >> so much memory?
+> On Wed, Jun 20, 2018 at 5:39 AM Kevin Daudt <me@ikke.info> wrote:
 > >
-> > AFAIK, Git does not need to mmap the whole pack to memory, but it
-> > is more efficient to mmap the whole pack wherever possible, because
-> > it has a completely random access, so if you store only one sliding
-> > window, you will have to re-read it many times. Besides, mmap size
-> > does not mean that so much physical memory is used. Pages should
-> > be loaded when they are necessary, and if you have more than one
-> > client cloning the same repo, this memory should be shared by them.
+> > What this is about that when doing `git add path/` (with trailing /),
+> >
 >
-> I have clone identical repositories and the system starts to swap. I
-> think it shows that cloning two repository doesn't share mmap.
+> This is what I was referring to. If you search for 'Fake Submodules',
+> you'll see that some people were/are intentionally using this instead of
+> subtrees or submodules. Unfortunately the original article [1] seems to
+> be dead, but searching url in the mailing list archives leads to some
+> additional discussion on the subject [2,3].
 
-I doubt it (assuming you're on linux). If you suspect this, configure
-core.packedGitWindowSize to reduce the mmap size. There are lots of
-other things in a cloning process that do not share (is this client or
-server btw?) and things could add up.
---
+Abusing a long standing bug does not make it a feature. I'm not
+opposed to having a new option to keep that behavior, but it should
+not be the default. If you use it that way, you're on your own.
+
+> [1]:http://debuggable.com/posts/git-fake-submodules:4b563ee4-f3cc-4061-96=
+7e-0e48cbdd56cb
+> [2]:https://public-inbox.org/git/xmqqy47o6q71.fsf@gitster.mtv.corp.google=
+.com/
+> [3]:https://public-inbox.org/git/CAGZ79kZofg3jS+g0weTdco+PGo_p-_Hd-NScZ=
+=3Dq2UfB7tF2GPA@mail.gmail.com/
+--=20
 Duy
