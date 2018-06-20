@@ -7,89 +7,102 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB0EF1F403
-	for <e@80x24.org>; Wed, 20 Jun 2018 21:50:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1588A1F403
+	for <e@80x24.org>; Wed, 20 Jun 2018 22:33:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933383AbeFTVug (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Jun 2018 17:50:36 -0400
-Received: from mail-qk0-f201.google.com ([209.85.220.201]:41701 "EHLO
-        mail-qk0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933227AbeFTVuf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jun 2018 17:50:35 -0400
-Received: by mail-qk0-f201.google.com with SMTP id b195-v6so850730qkc.8
-        for <git@vger.kernel.org>; Wed, 20 Jun 2018 14:50:35 -0700 (PDT)
+        id S933734AbeFTWdA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Jun 2018 18:33:00 -0400
+Received: from mail-qk0-f202.google.com ([209.85.220.202]:33205 "EHLO
+        mail-qk0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933555AbeFTWc7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jun 2018 18:32:59 -0400
+Received: by mail-qk0-f202.google.com with SMTP id x186-v6so969848qkb.0
+        for <git@vger.kernel.org>; Wed, 20 Jun 2018 15:32:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
-         :cc;
-        bh=Sen9V+9CXHur3UzEaNgmw+mvyUYnO75ipdbz46TmH84=;
-        b=hZsXEhdrZOfp8ggiXOxQjNlSlMG4oj8jjH2vEGAlLHVE90AkmIUaGIjlIagfdjpHEa
-         5drd0bpemEJbuFDCyTv6IRZkOY1FfefSJ1vF3k64e51iiwBluGKPK4eNpWVrmk0yloVW
-         BsBCTXCs9/0K0tK7m14VJ7MOrlhN7+WoonueCmVBCCjc9QU6mUQ4RqwpuPIYjed6XdiG
-         TtHfFj6QstrbrsKuwa5p7KmLYHGoyyG/NsWBSoIvV+6BwkKw1NOOpL+9kdcOv0kKji6t
-         O7i11R4At9L2ybKzZq0BkbQuBZyrrfWP/Yqf6iHAJfSecLdJGg7fXUTvqVWMPKTSkOY4
-         WODw==
+        h=mime-version:date:message-id:subject:from:to:cc;
+        bh=H/MD9VqbukO0dSrjEgFGP/tx2QF/oRMUBjH3JIuntTE=;
+        b=ZRv0j6U9T+ell5dYDBFyTx3SPShw5oSjNpq4PZPhhNwYY1p1UQL89i+VZQM0aQ/bej
+         HROyY+kaJ7ORha/5T3rd543CmqiiYIgTAEKscjYKPut7v3K+nb2ptFHfNNcKE1mDKOzY
+         Evv5L32fgcxhV5qN4Leoa0YXc5EmBTOicFmc1JzVwlTkas63m/LycRD6RGvNaRDxfQWS
+         XOv1GyduBxaBhv2zOc7/tNnBp4WFS9nIKbjEeQgFrX6C6CbMw6TgqVXkX9oAEL9HD2Fd
+         PMfgmNOwRquYh3MoyF7TLhwJGshyfx4jt2QW4aEEV5RxOuhVl8BcVkXh0VndW0kDPnu8
+         Fuow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
-         :references:subject:from:to:cc;
-        bh=Sen9V+9CXHur3UzEaNgmw+mvyUYnO75ipdbz46TmH84=;
-        b=eK/EdEMror+iMibdzOcPu8lV3ePP1ZTcNIpgE1HEi121p0Ez0L7j9CyPSgJynNbzWN
-         HoHrfh1c48oIhT6SV/W+tZ5CZeAo6B4z/m1zHqX9Lb60R+adXJ8MN72KtkYma0uwUX+a
-         yYdMThB5t5zZAS8rAq7rC7yJ4BhEz94MsLoVb3oF7sfv0MNDSxlWxhBtjx5mpFF2eAwm
-         /4ySYUdwXGuyAkd3MxdBQmriwMBh++M5xo4t9sR7pl3cc2hv3gLR+v5k+llCJ+VT9mqa
-         VbALPwCyoedWtlnJmHluDClicvQ+2TTQbZ3h/VPJ+1hEmJbEVIGBKORULzRzLQ/zitat
-         vM7A==
-X-Gm-Message-State: APt69E2k19E6EuOdaoXBJOj14437ifQnKSQ+t3yHYtcbNJaxAW5ZCLoO
-        AN89e7D5irLWzVEB7+sANOaDvHWT+j8V3eqdowRUptLj5mDxHDuq51TbDUK7HuDGyFN9RfBeJAK
-        XEPR4lIuSX9kWAQagTGbqPVKINfxzx81qsBG92LW67GLXhsgb7UOa2cbRHw==
-X-Google-Smtp-Source: ADUXVKJDzrPHkWkwToEJ9Ie5YCaG/iTAKDqiVWbZbvfH5EjxpPAyT+zVppynSrMy1XcHAFmF2Qm8bNcNhKk=
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc;
+        bh=H/MD9VqbukO0dSrjEgFGP/tx2QF/oRMUBjH3JIuntTE=;
+        b=Vt+nkqThk8BurvbMtIuNWOqHfypKeJ0y0sVh6XzELfF3sRz1Eg7oRW3nFa4ynhY7EE
+         BXi7HNPvIfWNwu8Jz9L+mHPKe+A0mocm3oLUxg414qbZo8dr8aWb/OoSfvIBY7rO95tK
+         aJMRJw0xvIy7dIfb6KuQ+NK7SZ//bDkMk28hkoMbuK3bXwXSj5ZHw/WFw6zXImmbZb1L
+         Z2sMQRXQpeq7eiB0+4brgrOtvgB4aJdOBauwphP38P1hZM89VPGk2U/BbbHHZ2xCt2Fo
+         O+GStT7QTBPNmPaCabcWppTsrNqn5E/4h/ZRkf7VTrqyUYvsyL3XzSUxDc/x2o5ZoB5S
+         w30Q==
+X-Gm-Message-State: APt69E3MoUvq/JkySlohQhqhvxgNeS0GAvbSoYzN9uHIQlAJnGZpJx4F
+        H5UQF3Eko7F6yWFl9oYYGL/nkqi9RVUqNPG5xCAh0MDycphbhC34Y1aZ4b2u+osLmx3KBuLHEIe
+        NNjOeV0hDPy6qQHi5yfctvROyltnY5uZe2gy5bqLciHiXolNT3DJoLgvWnvCb
+X-Google-Smtp-Source: ADUXVKJJa3FGZMTmBeKZ0j3ZR4hJpfiDFVlepGk9zuJWn2S61KbqxDDmlzPhvT8SpFQfcJUHnYmwPqlpoaDC
 MIME-Version: 1.0
-X-Received: by 2002:a37:ab0e:: with SMTP id u14-v6mr12306152qke.46.1529531435240;
- Wed, 20 Jun 2018 14:50:35 -0700 (PDT)
-Date:   Wed, 20 Jun 2018 14:50:30 -0700
-In-Reply-To: <20180605202449.28810-1-bmwill@google.com>
-Message-Id: <20180620215030.21829-1-bmwill@google.com>
-References: <20180605202449.28810-1-bmwill@google.com>
-X-Mailer: git-send-email 2.18.0.rc1.244.gcf134e6275-goog
-Subject: [PATCH v2] docs: link to gitsubmodules
-From:   Brandon Williams <bmwill@google.com>
+X-Received: by 2002:a0c:93ca:: with SMTP id g10-v6mr12761029qvg.30.1529533978462;
+ Wed, 20 Jun 2018 15:32:58 -0700 (PDT)
+Date:   Wed, 20 Jun 2018 15:32:53 -0700
+Message-Id: <20180620223253.226092-1-sbeller@google.com>
+X-Mailer: git-send-email 2.18.0.rc2.346.g013aa6912e-goog
+Subject: [PATCH] submodule.c: report the submodule that an error occurs in
+From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
-Cc:     Brandon Williams <bmwill@google.com>
+Cc:     Stefan Beller <sbeller@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a link to gitsubmodules(7) under the `submodule.active` entry in
-git-config(1).
+When an error occurs in updating the working tree of a submodule in
+submodule_move_head, tell the user which submodule the error occurred in.
 
-Signed-off-by: Brandon Williams <bmwill@google.com>
+The call to read-tree contains a super-prefix, such that the read-tree
+will correctly report any path related issues, but some error messages
+do not contain a path, for example:
+
+  ~/gerrit$ git checkout --recurse-submodules origin/master
+  ~/gerrit$ fatal: failed to unpack tree object 07672f31880ba80300b38492df9d0acfcd6ee00a
+
+Give the hint which submodule has a problem.
+
+Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- Documentation/config.txt | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ submodule.c               | 2 +-
+ t/lib-submodule-update.sh | 3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index ab641bf5a..340eb1f3c 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -3327,12 +3327,13 @@ submodule.<name>.ignore::
- submodule.<name>.active::
- 	Boolean value indicating if the submodule is of interest to git
- 	commands.  This config option takes precedence over the
--	submodule.active config option.
-+	submodule.active config option. See linkgit:gitsubmodules[7] for
-+	details.
+diff --git a/submodule.c b/submodule.c
+index 939d6870ecd..ebd092a14fd 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1668,7 +1668,7 @@ int submodule_move_head(const char *path,
+ 	argv_array_push(&cp.args, new_head ? new_head : empty_tree_oid_hex());
  
- submodule.active::
- 	A repeated field which contains a pathspec used to match against a
- 	submodule's path to determine if the submodule is of interest to git
--	commands.
-+	commands. See linkgit:gitsubmodules[7] for details.
+ 	if (run_command(&cp)) {
+-		ret = -1;
++		ret = error(_("Submodule '%s' could not be updated."), path);
+ 		goto out;
+ 	}
  
- submodule.recurse::
- 	Specifies if commands recurse into submodules by default. This
+diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
+index 1f38a85371a..e27f5d8541d 100755
+--- a/t/lib-submodule-update.sh
++++ b/t/lib-submodule-update.sh
+@@ -781,7 +781,8 @@ test_submodule_recursing_with_args_common() {
+ 		(
+ 			cd submodule_update &&
+ 			git branch -t invalid_sub1 origin/invalid_sub1 &&
+-			test_must_fail $command invalid_sub1 &&
++			test_must_fail $command invalid_sub1 2>err &&
++			grep sub1 err &&
+ 			test_superproject_content origin/add_sub1 &&
+ 			test_submodule_content sub1 origin/add_sub1
+ 		)
 -- 
-2.18.0.rc1.244.gcf134e6275-goog
+2.18.0.rc2.346.g013aa6912e-goog
 
