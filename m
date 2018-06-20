@@ -2,153 +2,294 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 544611F403
-	for <e@80x24.org>; Wed, 20 Jun 2018 19:10:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 377711F403
+	for <e@80x24.org>; Wed, 20 Jun 2018 20:05:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754579AbeFTTK4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Jun 2018 15:10:56 -0400
-Received: from mail-yw0-f193.google.com ([209.85.161.193]:38369 "EHLO
-        mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753541AbeFTTKy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jun 2018 15:10:54 -0400
-Received: by mail-yw0-f193.google.com with SMTP id w13-v6so240366ywa.5
-        for <git@vger.kernel.org>; Wed, 20 Jun 2018 12:10:54 -0700 (PDT)
+        id S932863AbeFTUFg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Jun 2018 16:05:36 -0400
+Received: from mail-oi0-f68.google.com ([209.85.218.68]:43373 "EHLO
+        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932654AbeFTUFe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jun 2018 16:05:34 -0400
+Received: by mail-oi0-f68.google.com with SMTP id t133-v6so734601oif.10
+        for <git@vger.kernel.org>; Wed, 20 Jun 2018 13:05:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=l8Q4EFdXD0MXWcb4ytS40vXyZFKyFgfUrzfx5Bj6sEY=;
-        b=beqYVN09LK40V38r9uA8CAw9ZZ5lcA6fauNSqJS+uWc2wGw+6xlAg/tgmOagbaXieu
-         qluUnHi4UV7Fxt45b4689YC18eGOg/dIpvLiWJ2h8MSvazQj7cfApfRyqy2t2dcuZuv8
-         LAJKjNY8y7VXcc6RtNwx4RXh/PV3Cf4z9mB75ePSK9T1fRvYh3FwK0b0t8A4U2IKgKfn
-         s+D7+ns0kxls21wlYdfTmznPrSdT3mPCX8GMPFQGnzxqh9EaDpgua9WgSQRTlSW8yEnE
-         dZXcHebS7bBZKtMViVXlyw33QkNrIZ9/5n5seOLu69M/7L4csa+1MZcBuQ9inufBO0ng
-         ZKDw==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=I1Kcc6+RkpYU570pTxGQVyueyGF3X6y+PS5nF3IbNbU=;
+        b=qvX8Pfr0oldpjtRc3Cnh/P8qspddxqJNP0gPtq2bfWSNlsC4ZjGTD0D80LQNdJwuqV
+         cR4ZM3fitXNK+QfEaxrou28sV04Ndi26WrCn7QLSBRuaL9aScoiYlNPPngGTqF+8y8QG
+         ARAW2kF2uEwyBqfN3dAo5xDB+QtW5B6diG3TUIyeSuAbzWrsz23RgYHOFHqWiCJ7HWgQ
+         oWbA3Zd5sLMkPJOz7gjmiyHrM6mIJ6Ee2AQw4fm5ooBk0Ly46Q6TqLFps4PZpm7N4Mc4
+         IBXZ1JFdVltFSJhdhzYPOmFrfQfe1cep2CISpjgy7ddyNheq9vV7XKemn+GJXNxyD1r3
+         JZWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=l8Q4EFdXD0MXWcb4ytS40vXyZFKyFgfUrzfx5Bj6sEY=;
-        b=bovjZqaD0cj1cF0SwVsG2Vko4fxB9jJOkLNXXx7LgvZRO+VLlkO5c1ZMVKn1mmTP95
-         3yICEnsl1T5f9g/Azr/b2KMRr0XpQfnn2h/jTAsId8YTBS1ThyBMWpgtc345/fDuZAUD
-         iflXoa7O/i0Irx4VH5xxpPfn85tZByayAIgQaO+ll0SBivJFdUUtbv5zumWKhLe/AWwT
-         kjoPSruzcDqRDJOpWAEAQMve/QL351FrZnOJcljb+0d5eaduXgBQ+EGEPnNb3hcvWfBM
-         8YuXzuntv6i5GfLANQDizR167Z69Jrtu8EMzMd5lffQMe9q4ws7QhCjC7uYNC+Lwuu87
-         fkbg==
-X-Gm-Message-State: APt69E3QRq4jGH2xfrWlsrZg8sdW8+0gyYPpIT2fsvUwetG6Jshh8/Dr
-        NoVKu/iM3UaDHV7bxjEwCMQYtiIyI2jaU+4khVssYw==
-X-Google-Smtp-Source: ADUXVKIB5G2b7exppkPVyXmdGEpGI+eFP9VrDDx6WyyK0sRyLrN26+vbaeq75qzOp9M0liIFgTi4gZsBSPoJTFMxk4k=
-X-Received: by 2002:a81:3743:: with SMTP id e64-v6mr8906824ywa.340.1529521853852;
- Wed, 20 Jun 2018 12:10:53 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=I1Kcc6+RkpYU570pTxGQVyueyGF3X6y+PS5nF3IbNbU=;
+        b=VjaH3Sbt2Dg2mUpdOXwHkn8cNc/Zp2scH5d4i0itwC4PBnanv6MEUekc5yny8L9nAr
+         UluxpXTF0/zRm0txylz7Pohu57ElZQzQs3SoHan4W7R5GxXCwqi6eeNOTVOO1eFtQDNy
+         /XMNeArgkbJjWUPtSod8COY/KjobHuZBGJuZLQtVhSdjoD9w3XrUpnoKDqY4U1eya0CB
+         LOGxGnOdEJ0nUVUQZqDkdtoNr+D6ZEKTT424vFVLiYOMtpCvQbL9Z0Lvnx645jRYp+P+
+         QvShwunlSNUsrxFkEEo21U56GgCcjoGkxjfYXkYypwwc8vlIjtQHCoHCHtD9D/jXHW9M
+         YWOQ==
+X-Gm-Message-State: APt69E0s61Cz59tyRMRnGGFJObz6RrLGhqJI7iLsXlG+uvLM33mJdJ1r
+        5SoP8C+RjTkqndkuT5cmN9WwUwKQUcc=
+X-Google-Smtp-Source: ADUXVKIDXalOngqs6GVvs6xz/jb0A1wIkBT/da0YySCjaz78CcMefLuVU6cFKIrV1kRzTz84IhnSGQ==
+X-Received: by 2002:aca:d607:: with SMTP id n7-v6mr12926758oig.109.1529525133409;
+        Wed, 20 Jun 2018 13:05:33 -0700 (PDT)
+Received: from localhost ([107.217.158.181])
+        by smtp.gmail.com with ESMTPSA id v8-v6sm2412757oti.35.2018.06.20.13.05.31
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 20 Jun 2018 13:05:31 -0700 (PDT)
+Date:   Wed, 20 Jun 2018 15:05:30 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     avarab@gmail.com, peff@peff.net, gitster@pobox.com
+Subject: [PATCH v2 0/7] grep.c: teach --column to 'git-grep(1)'
+Message-ID: <cover.1529524852.git.me@ttaylorr.com>
+References: <cover.1529365072.git.me@ttaylorr.com>
 MIME-Version: 1.0
-References: <20180514105823.8378-1-ao2@ao2.it> <20180514105823.8378-2-ao2@ao2.it>
- <CAGZ79kag=1h506FGg72_F9Rmz4nqPN19kaywfTtD3WnNWnxD9w@mail.gmail.com> <20180620200634.13b47725cfd1e2dfb1cd482e@ao2.it>
-In-Reply-To: <20180620200634.13b47725cfd1e2dfb1cd482e@ao2.it>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 20 Jun 2018 12:10:42 -0700
-Message-ID: <CAGZ79kaMbGdJjooqWLiNOabmujhNKKKJQb_HrZ4YUMVMQ--KbA@mail.gmail.com>
-Subject: Re: [RFC PATCH 01/10] config: make config_from_gitmodules generally useful
-To:     Antonio Ospite <ao2@ao2.it>
-Cc:     git <git@vger.kernel.org>, Brandon Williams <bmwill@google.com>,
-        =?UTF-8?Q?Daniel_Gra=C3=B1a?= <dangra@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Richard Hartmann <richih.mailinglist@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1529365072.git.me@ttaylorr.com>
+User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Antonio!
+Hi,
 
-On Wed, Jun 20, 2018 at 11:06 AM Antonio Ospite <ao2@ao2.it> wrote:
-> I get that the _content_ of .gitmodules is not meant to be generic
-> config, but I still see some value in having a single point when its
-> _location_ is decided.
+Here is a re-roll of my series to add --column to 'git-grep(1)'. Since
+last time, not much has changed other than the following:
 
-I agree that a single point for the _location_ as well as the _order_
-(in case there will be multiple files; as of now we have the layering
-of .gitmodules overlayed by .git/config; IIRC I explained having
-an intermediate layer in our conversation to be useful; See one of the latest
-bug reports[1], where an intermediate layer outside a single branch would
-prove to be useful.) parsing are useful.
+  - Fix a typo where 'col', 'icol' were spelled as 'match', 'imatch'
+    [1].
 
-[1] https://public-inbox.org/git/DB6PR0101MB2344D682511891E4E9528598D97D0@DB6PR0101MB2344.eurprd01.prod.exchangelabs.com/
+  - Disable short-circuiting OR when --column is given [2].
 
-Sorry for not explaining my point of view well enough, let me try again:
+  - Disable early-return in match_line() when multiple patterns are
+    given and --column is, too [3].
 
-Historically we did not store any config in the repository itself.
-There are some exceptions, but these configurations are content related,
-i.e. .gitmodules or .gitattributes can tell you meta data about the
-content itself.
+  - Add some more tests in t7810.
 
-However other config was kept out: One could have a .gitconfig that
-pre-populates the .git/config file, right? That was intentionally avoided
-as there are many configurations that are easy to abuse security wise,
-e.g. setting core.pager = "rm -rf /"
+Thanks again for your kind and through review; hopefully this re-roll
+should be OK to queue as-is.
 
-And then submodules entered the big picture. Submodules need quite
-a lot of configuration, and hence the .gitmodules file was born. Initially
-IIRC there was only a very simple config like url store:
 
-  [submodule.<path>]
-    url = <url>
+Thanks,
+Taylor
 
-and that was it as it was just like the .gitignore and .gitattributes
-related to the content and transporting this configuration with the
-content itself seemed so natural.
+[1]: https://public-inbox.org/git/xmqqwouuvi0e.fsf@gitster-ct.c.googlers.com/
+[2]: https://public-inbox.org/git/20180619174452.GA47272@syl.attlocal.net/
+[3]: https://public-inbox.org/git/80b9a0b1-3849-7097-fe1a-dd80835d62ae@web.de/
 
-However then a lot of settings were invented for submodules and some
-made it into the .gitmodules file; only recently there was a discussion
-on list how these settings may or may not pose a security issue. It turns out
-we had a CVE (with sumodule names) and that got fixed but we really want
-to keep the .gitmodules file simple and ignore any additional things in there
-as they may pose security issues later.
+Taylor Blau (7):
+  Documentation/config.txt: camel-case lineNumber for consistency
+  grep.c: expose {,inverted} match column in match_line()
+  grep.[ch]: extend grep_opt to allow showing matched column
+  grep.c: display column number of first match
+  builtin/grep.c: add '--column' option to 'git-grep(1)'
+  grep.c: add configuration variables to show matched option
+  contrib/git-jump/git-jump: jump to exact location
 
-With that said, how would you write the code while keeping this in mind?
-If you look at builtin/submodule--helper.c and builtin/fetch.c, you'll see that
-they use
+ Documentation/config.txt   |   7 ++-
+ Documentation/git-grep.txt |   9 ++-
+ builtin/grep.c             |   1 +
+ contrib/git-jump/README    |  12 +++-
+ contrib/git-jump/git-jump  |   2 +-
+ grep.c                     | 126 ++++++++++++++++++++++++++++---------
+ grep.h                     |   2 +
+ t/t7810-grep.sh            |  84 +++++++++++++++++++++++++
+ 8 files changed, 210 insertions(+), 33 deletions(-)
 
-  config_from_gitmodules(their_parse_function);
-  git_config(their_parse_function);
+Inter-diff (since v1):
 
-and config_from_gitmodules is documented to not be expanded;
-the config_from_gitmodules is singled out to treat those settings
-that snuck in and are kept around as we don't want to break existing
-users. But we'd really not want to expand the use of that function
-again for its implications on security. Right now it is nailed down beautifully
-and it is easy to tell which commands actually look at config from
-the .gitmodules file (not to be confused with the submodule parsing,
-that is in submodule-config.{h, c}. That is actually about finding
-submodule specific name/path/url etc instead of the generic
-"submodule.fetchjobs" or "fetch.recursesubmodules".
+diff --git a/grep.c b/grep.c
+index 8ffa94c791..08d3df2855 100644
+--- a/grep.c
++++ b/grep.c
+@@ -1257,8 +1257,8 @@ static int match_one_pattern(struct grep_pat *p, char *bol, char *eol,
+ 	return hit;
+ }
 
-----
-So far about the background story. I would rather replicate the code in
-repo_read_gitmodules in the submodule-config.c as to mix those
-two lines (reading generic config vs. reading submodule specific config,
-like name/url/path). And to not mix them, I would not reuse that function
-but rather replicate (or have a static helper) in submodule helper,
-as then we cannot pass in an arbitrary config parsing callback to
-that, but are bound to the submodule helper code.
+-static int match_expr_eval(struct grep_expr *x, char *bol, char *eol,
+-			   enum grep_context ctx, ssize_t *col,
++static int match_expr_eval(struct grep_opt *opt, struct grep_expr *x, char *bol,
++			   char *eol, enum grep_context ctx, ssize_t *col,
+ 			   ssize_t *icol, int collect_hits)
+ {
+ 	int h = 0;
+@@ -1280,29 +1280,36 @@ static int match_expr_eval(struct grep_expr *x, char *bol, char *eol,
+ 		break;
+ 	case GREP_NODE_NOT:
+ 		/*
+-		 * Upon visiting a GREP_NODE_NOT, imatch and match become
+-		 * swapped.
++		 * Upon visiting a GREP_NODE_NOT, col and icol become swapped.
+ 		 */
+-		h = !match_expr_eval(x->u.unary, bol, eol, ctx, icol, col, 0);
++		h = !match_expr_eval(opt, x->u.unary, bol, eol, ctx, icol, col,
++				     0);
+ 		break;
+ 	case GREP_NODE_AND:
+-		if (!match_expr_eval(x->u.binary.left, bol, eol, ctx, col,
++		if (!match_expr_eval(opt, x->u.binary.left, bol, eol, ctx, col,
+ 				     icol, 0))
+ 			return 0;
+-		h = match_expr_eval(x->u.binary.right, bol, eol, ctx, col,
++		h = match_expr_eval(opt, x->u.binary.right, bol, eol, ctx, col,
+ 				    icol, 0);
+ 		break;
+ 	case GREP_NODE_OR:
+-		if (!collect_hits)
+-			return (match_expr_eval(x->u.binary.left, bol, eol, ctx,
+-						col, icol, 0) ||
+-				match_expr_eval(x->u.binary.right, bol, eol,
+-						ctx, col, icol, 0));
+-		h = match_expr_eval(x->u.binary.left, bol, eol, ctx, col,
++		if (!(collect_hits || opt->columnnum)) {
++			/*
++			 * Don't short-circuit OR when given --column (or
++			 * collecting hits) to ensure we don't skip a later
++			 * child that would produce an earlier match.
++			 */
++			return (match_expr_eval(opt, x->u.binary.left, bol, eol,
++						ctx, col, icol, 0) ||
++				match_expr_eval(opt, x->u.binary.right, bol,
++						eol, ctx, col, icol, 0));
++		}
++		h = match_expr_eval(opt, x->u.binary.left, bol, eol, ctx, col,
+ 				    icol, 0);
+-		x->u.binary.left->hit |= h;
+-		h |= match_expr_eval(x->u.binary.right, bol, eol, ctx, col,
+-				     icol, 1);
++		if (collect_hits)
++			x->u.binary.left->hit |= h;
++		h |= match_expr_eval(opt, x->u.binary.right, bol, eol, ctx, col,
++				     icol, collect_hits);
+ 		break;
+ 	default:
+ 		die("Unexpected node type (internal error) %d", x->node);
+@@ -1317,7 +1324,7 @@ static int match_expr(struct grep_opt *opt, char *bol, char *eol,
+ 		      ssize_t *icol, int collect_hits)
+ {
+ 	struct grep_expr *x = opt->pattern_expression;
+-	return match_expr_eval(x, bol, eol, ctx, col, icol, collect_hits);
++	return match_expr_eval(opt, x, bol, eol, ctx, col, icol, collect_hits);
+ }
 
-> > I think extending 'repo_read_gitmodules' makes sense, as that is
-> > used everywhere for the loading of submodule configuration.
->
-> I would follow Brandon's suggestion here and still use
-> 'config_from_gitmodules' from 'repo_read_gitmodules' to avoid code
-> duplication.
->
-> I will try to be clear in the comments and in commit message when
-> motivating the decision.
+ static int match_line(struct grep_opt *opt, char *bol, char *eol,
+@@ -1325,6 +1332,7 @@ static int match_line(struct grep_opt *opt, char *bol, char *eol,
+ 		      enum grep_context ctx, int collect_hits)
+ {
+ 	struct grep_pat *p;
++	int hit = 0;
 
-Rereading what Brandon said, I agree with this approach, sorry for writing
-out the story above in such lengthy detail.
+ 	if (opt->extended)
+ 		return match_expr(opt, bol, eol, ctx, col, icol,
+@@ -1334,11 +1342,21 @@ static int match_line(struct grep_opt *opt, char *bol, char *eol,
+ 	for (p = opt->pattern_list; p; p = p->next) {
+ 		regmatch_t tmp;
+ 		if (match_one_pattern(p, bol, eol, ctx, &tmp, 0)) {
+-			*col = tmp.rm_so;
+-			return 1;
++			hit |= 1;
++			if (!opt->columnnum) {
++				/*
++				 * Without --column, any single match on a line
++				 * is enough to know that it needs to be
++				 * printed. With --column, scan _all_ patterns
++				 * to find the earliest.
++				 */
++				break;
++			}
++			if (*col < 0 || tmp.rm_so < *col)
++				*col = tmp.rm_so;
+ 		}
+ 	}
+-	return 0;
++	return hit;
+ }
 
-Thanks for picking up this series again!
-Stefan
+ static int match_next_pattern(struct grep_pat *p, char *bol, char *eol,
+@@ -1387,7 +1405,7 @@ static int next_match(struct grep_opt *opt, char *bol, char *eol,
+ }
+
+ static void show_line(struct grep_opt *opt, char *bol, char *eol,
+-		      const char *name, unsigned lno, unsigned cno, char sign)
++		      const char *name, unsigned lno, ssize_t cno, char sign)
+ {
+ 	int rest = eol - bol;
+ 	const char *match_color, *line_color = NULL;
+@@ -1429,7 +1447,7 @@ static void show_line(struct grep_opt *opt, char *bol, char *eol,
+ 	 */
+ 	if (opt->columnnum && cno) {
+ 		char buf[32];
+-		xsnprintf(buf, sizeof(buf), "%d", cno);
++		xsnprintf(buf, sizeof(buf), "%zu", cno);
+ 		output_color(opt, buf, strlen(buf), opt->color_columnno);
+ 		output_sep(opt, sign);
+ 	}
+@@ -1871,8 +1889,11 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
+ 			cno = opt->invert ? icol : col;
+ 			if (cno < 0) {
+ 				/*
+-				 * A negative cno means that there was no match.
+-				 * Clamp to the beginning of the line.
++				 * A negative cno indicates that there was no
++				 * match on the line. We are thus inverted and
++				 * being asked to show all lines that _don't_
++				 * match a given expression. Therefore, set cno
++				 * to 0 to suggest the whole line matches.
+ 				 */
+ 				cno = 0;
+ 			}
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index daaf7b4c44..bf0b572dab 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -139,6 +139,15 @@ do
+ 		test_cmp expected actual
+ 	'
+
++	test_expect_success "grep $L (with --column, double-negation)" '
++		{
++			echo ${HC}file:1:foo_mmap bar mmap baz
++		} >expected &&
++		git grep --column --not \( --not -e foo --or --not -e baz \) $H -- file \
++			>actual &&
++		test_cmp expected actual
++	'
++
+ 	test_expect_success "grep -w $L (with --column, -C)" '
+ 		{
+ 			echo ${HC}file:5:foo mmap bar
+@@ -162,6 +171,18 @@ do
+ 		test_cmp expected actual
+ 	'
+
++	test_expect_success "grep -w $L (with non-extended patterns, --column)" '
++		{
++			echo ${HC}file:5:foo mmap bar
++			echo ${HC}file:10:foo_mmap bar
++			echo ${HC}file:10:foo_mmap bar mmap
++			echo ${HC}file:5:foo mmap bar_mmap
++			echo ${HC}file:10:foo_mmap bar mmap baz
++		} >expected &&
++		git grep --column -w -e bar -e mmap $H >actual &&
++		test_cmp expected actual
++	'
++
+ 	test_expect_success "grep -w $L" '
+ 		{
+ 			echo ${HC}file:1:foo mmap bar
+--
+2.17.0.582.gccdcbd54c
