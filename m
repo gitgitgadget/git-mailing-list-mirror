@@ -6,54 +6,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 13C071F403
-	for <e@80x24.org>; Wed, 20 Jun 2018 20:05:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A5CEF1F403
+	for <e@80x24.org>; Wed, 20 Jun 2018 20:05:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932993AbeFTUFs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Jun 2018 16:05:48 -0400
-Received: from mail-ot0-f196.google.com ([74.125.82.196]:46332 "EHLO
-        mail-ot0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932958AbeFTUFp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jun 2018 16:05:45 -0400
-Received: by mail-ot0-f196.google.com with SMTP id v24-v6so899545otk.13
-        for <git@vger.kernel.org>; Wed, 20 Jun 2018 13:05:45 -0700 (PDT)
+        id S933012AbeFTUFw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Jun 2018 16:05:52 -0400
+Received: from mail-ot0-f193.google.com ([74.125.82.193]:40814 "EHLO
+        mail-ot0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932958AbeFTUFu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jun 2018 16:05:50 -0400
+Received: by mail-ot0-f193.google.com with SMTP id w9-v6so918798otj.7
+        for <git@vger.kernel.org>; Wed, 20 Jun 2018 13:05:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=hFsj7z7vg26fFQ3vkd13ZtuMH97ZPF5pLfjkj4RwgD8=;
-        b=DkljHbmwKB1WE3XN84jHoL6qYbgMWF5MOj2EL2Hnbe2LC0dOleq42dm04bmImVrHFe
-         vwlnnQhjmRqIX7BKSHpG4Y3A3diukAvebXAIqTMFkUUF5Net5LBQswlHbF1iAUXU/hEX
-         f7akc3KFonh3cAb9epjxglmvBhSw+DQ6wFJZSHnbMYnD1gAEHzbeooFMrCLyTE7MSI7a
-         iOYWi6oBXiaU9cf93gTzljcqMyuO3GLOXKfOf4vu9PylfPB+/Pnf3nVsUx15GRKa6to0
-         ST6jbTUflGEOcMMNplmniX2g5qtkYjOwdWZRbmr3p/F5ucFDig1scw3yotjamRJpe5oG
-         Qlmg==
+        bh=7DEUT9VhLF6C5hwf7tHAu/EjyjuUzjMVK8E2gODrH2Q=;
+        b=tN9LLMUAYDw2WfSf8bqhtKsEI/eRxHCVHBqqjN8ovqre5vQmRZlhtQE7mOLjtZN/yT
+         vUNt1hf+CSd+z5ynl0Z1yCWPRhVMq+muRdEJdRteYWm4TbWkvAk4mvQWxMriHakYNK8T
+         MsyacrDcgbejb+dVW+VDWFIvySOPfpVJrgFs2VOU/SW2JATdK+rb4flmhEgit4qfj+TF
+         NLOhAmDm2VaMWT+SHGs9T93WWs9Qdg5niEFFDNOBLR78PmYKDj2GEcPHMXGuxT1ci+Si
+         VbnkYEq6FM0w53w9MXuGZ//OX6BmFJXxVLi7STLeiUqjMHdw2OYKGIvDyruCGI+okzik
+         Htpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=hFsj7z7vg26fFQ3vkd13ZtuMH97ZPF5pLfjkj4RwgD8=;
-        b=RmA0Y2y1a7Cw7RhOqiHtgTunVhLLCdEj8ykzkdWgs9mXiPrTjQDSvtAZJsPKCXs++v
-         SUmcxxI6KkVidDGebpavUJOQqwWNRjWC8tfIUUdTy1Puebyr6osrqlLKbaG49mbX3U6v
-         bMIFxKwz7I1T6WmUnqy96npb+PymhggYuJba+ajlTGDVQgusrdZT/laNcWDopEsYxl/S
-         dVHaRSR/Y5vgzEdy2XcNPS3nnyccADZrcQf9GmG5rKIbg/uBbtaaklngXJY1ndqNpL64
-         M9+ZKeKulfcgoj0hIefX4W1ZTRRWBYbawOFdzA/TMfPrufeMoEhG/Id++PhOSqkz9yg4
-         zTOA==
-X-Gm-Message-State: APt69E2MWvbNOKQJb9vBhStBVsCnXtoJuxYZyWfagLW4G4P5CBqoUjzL
-        Foet11EkHNVaLe8IUmmnWZ4Uiyw8DpE=
-X-Google-Smtp-Source: ADUXVKLVtg9KSDoxIxaWC+70YyGDGzq9sniu6qJLKxEZQ7fKjhUP3B6Ie3R5fm2sJAXvl0GjYRsCkg==
-X-Received: by 2002:a9d:2525:: with SMTP id k34-v6mr14829799otb.180.1529525144123;
-        Wed, 20 Jun 2018 13:05:44 -0700 (PDT)
+        bh=7DEUT9VhLF6C5hwf7tHAu/EjyjuUzjMVK8E2gODrH2Q=;
+        b=IAt8Fdd/OszCipiq+pshpOHvzU57vYE7y6ANpp/3/M0olaR1TMcTB/8LLf2o7Z5QST
+         R80LLwo0Rt7+56vS6M38WP208t1CHClfzElAmYpAjYCDMUJolVuZCBrc7tzBO4PQ0/Wk
+         srnOdizfpmpS/SPy7uzIyHMQlofffNoHW8z5K8tZSmUoScCuJk10fcV53sLQTue9qp6w
+         gQbKoGhRC1m2/WToq1RCOoCmnNJT+77I/69OlwJgoUZJjP0NhMXZ6ugy6eqeQqxwTmaq
+         rVyT/AKYL3UNX1ghGOqsEpXzwH1CuG5vmOhXN0Q69rhR873FO6To1VTeJ9oT14cDDLcc
+         IvUQ==
+X-Gm-Message-State: APt69E011PIL37Aht5qMi7F7oFKWPMijZFGX2iMtAjk4gfqxug1+Q73R
+        zo6FADUGZQ785AL0rBDVCaRtienFaFw=
+X-Google-Smtp-Source: ADUXVKI3P/aJ2W48kesWsepJsgH8eurgaWZOpkw4GOz8EyXokrOlIJc+ebJtfM/a6o/pyN4Q3C1PZg==
+X-Received: by 2002:a9d:1553:: with SMTP id z19-v6mr12983700otz.135.1529525149281;
+        Wed, 20 Jun 2018 13:05:49 -0700 (PDT)
 Received: from localhost ([107.217.158.181])
-        by smtp.gmail.com with ESMTPSA id t204-v6sm1759009oig.24.2018.06.20.13.05.42
+        by smtp.gmail.com with ESMTPSA id w39-v6sm2529692otd.13.2018.06.20.13.05.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 20 Jun 2018 13:05:43 -0700 (PDT)
-Date:   Wed, 20 Jun 2018 15:05:42 -0500
+        Wed, 20 Jun 2018 13:05:48 -0700 (PDT)
+Date:   Wed, 20 Jun 2018 15:05:47 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     avarab@gmail.com, peff@peff.net, gitster@pobox.com
-Subject: [PATCH v2 4/7] grep.c: display column number of first match
-Message-ID: <91014cf1993a9b43983c9e7d2e19fbe442f0d89d.1529524852.git.me@ttaylorr.com>
+Subject: [PATCH v2 6/7] grep.c: add configuration variables to show matched
+ option
+Message-ID: <13e39136f0e12aac72f300a3a088c0663b83ce8e.1529524852.git.me@ttaylorr.com>
 References: <cover.1529365072.git.me@ttaylorr.com>
  <cover.1529524852.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -66,101 +67,78 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To prepare for 'git grep' learning '--column', teach grep.c's
-show_line() how to show the column of the first match on non-context
-lines.
+To support git-grep(1)'s new option, '--column', document and teach
+grep.c how to interpret relevant configuration options, similar to those
+associated with '--line-number'.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- grep.c | 33 ++++++++++++++++++++++++++++-----
- 1 file changed, 28 insertions(+), 5 deletions(-)
+ Documentation/config.txt   | 5 +++++
+ Documentation/git-grep.txt | 3 +++
+ grep.c                     | 6 ++++++
+ 3 files changed, 14 insertions(+)
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 58fde4daea..e4cbed3078 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1183,6 +1183,8 @@ color.grep.<slot>::
+ 	function name lines (when using `-p`)
+ `lineNumber`;;
+ 	line number prefix (when using `-n`)
++`column`;;
++	column number prefix (when using `--column`)
+ `match`;;
+ 	matching text (same as setting `matchContext` and `matchSelected`)
+ `matchContext`;;
+@@ -1797,6 +1799,9 @@ gitweb.snapshot::
+ grep.lineNumber::
+ 	If set to true, enable `-n` option by default.
+ 
++grep.column::
++	If set to true, enable the `--column` option by default.
++
+ grep.patternType::
+ 	Set the default matching behavior. Using a value of 'basic', 'extended',
+ 	'fixed', or 'perl' will enable the `--basic-regexp`, `--extended-regexp`,
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index 31dc0392a6..0de3493b80 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -44,6 +44,9 @@ CONFIGURATION
+ grep.lineNumber::
+ 	If set to true, enable `-n` option by default.
+ 
++grep.column::
++	If set to true, enable the `--column` option by default.
++
+ grep.patternType::
+ 	Set the default matching behavior. Using a value of 'basic', 'extended',
+ 	'fixed', or 'perl' will enable the `--basic-regexp`, `--extended-regexp`,
 diff --git a/grep.c b/grep.c
-index d56d4a3a37..d353d5d976 100644
+index d353d5d976..08d3df2855 100644
 --- a/grep.c
 +++ b/grep.c
-@@ -1399,7 +1399,7 @@ static int next_match(struct grep_opt *opt, char *bol, char *eol,
- }
- 
- static void show_line(struct grep_opt *opt, char *bol, char *eol,
--		      const char *name, unsigned lno, char sign)
-+		      const char *name, unsigned lno, ssize_t cno, char sign)
- {
- 	int rest = eol - bol;
- 	const char *match_color, *line_color = NULL;
-@@ -1434,6 +1434,17 @@ static void show_line(struct grep_opt *opt, char *bol, char *eol,
- 		output_color(opt, buf, strlen(buf), opt->color_lineno);
- 		output_sep(opt, sign);
+@@ -96,6 +96,10 @@ int grep_config(const char *var, const char *value, void *cb)
+ 		opt->linenum = git_config_bool(var, value);
+ 		return 0;
  	}
-+	/*
-+	 * Treat 'cno' as the 1-indexed offset from the start of a non-context
-+	 * line to its first match. Otherwise, 'cno' is 0 indicating that we are
-+	 * being called with a context line.
-+	 */
-+	if (opt->columnnum && cno) {
-+		char buf[32];
-+		xsnprintf(buf, sizeof(buf), "%zu", cno);
-+		output_color(opt, buf, strlen(buf), opt->color_columnno);
-+		output_sep(opt, sign);
++	if (!strcmp(var, "grep.column")) {
++		opt->columnnum = git_config_bool(var, value);
++		return 0;
 +	}
- 	if (opt->color) {
- 		regmatch_t match;
- 		enum grep_context ctx = GREP_CONTEXT_BODY;
-@@ -1539,7 +1550,7 @@ static void show_funcname_line(struct grep_opt *opt, struct grep_source *gs,
- 			break;
  
- 		if (match_funcname(opt, gs, bol, eol)) {
--			show_line(opt, bol, eol, gs->name, lno, '=');
-+			show_line(opt, bol, eol, gs->name, lno, 0, '=');
- 			break;
- 		}
- 	}
-@@ -1604,7 +1615,7 @@ static void show_pre_context(struct grep_opt *opt, struct grep_source *gs,
- 
- 		while (*eol != '\n')
- 			eol++;
--		show_line(opt, bol, eol, gs->name, cur, sign);
-+		show_line(opt, bol, eol, gs->name, cur, 0, sign);
- 		bol = eol + 1;
- 		cur++;
- 	}
-@@ -1803,6 +1814,7 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
- 	while (left) {
- 		char *eol, ch;
- 		int hit;
-+		ssize_t cno;
- 		ssize_t col = -1, icol = -1;
- 
- 		/*
-@@ -1868,7 +1880,18 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
- 				show_pre_context(opt, gs, bol, eol, lno);
- 			else if (opt->funcname)
- 				show_funcname_line(opt, gs, bol, lno);
--			show_line(opt, bol, eol, gs->name, lno, ':');
-+			cno = opt->invert ? icol : col;
-+			if (cno < 0) {
-+				/*
-+				 * A negative cno indicates that there was no
-+				 * match on the line. We are thus inverted and
-+				 * being asked to show all lines that _don't_
-+				 * match a given expression. Therefore, set cno
-+				 * to 0 to suggest the whole line matches.
-+				 */
-+				cno = 0;
-+			}
-+			show_line(opt, bol, eol, gs->name, lno, cno + 1, ':');
- 			last_hit = lno;
- 			if (opt->funcbody)
- 				show_function = 1;
-@@ -1897,7 +1920,7 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
- 			/* If the last hit is within the post context,
- 			 * we need to show this line.
- 			 */
--			show_line(opt, bol, eol, gs->name, lno, '-');
-+			show_line(opt, bol, eol, gs->name, lno, col + 1, '-');
- 		}
- 
- 	next_line:
+ 	if (!strcmp(var, "grep.fullname")) {
+ 		opt->relative = !git_config_bool(var, value);
+@@ -112,6 +116,8 @@ int grep_config(const char *var, const char *value, void *cb)
+ 		color = opt->color_function;
+ 	else if (!strcmp(var, "color.grep.linenumber"))
+ 		color = opt->color_lineno;
++	else if (!strcmp(var, "color.grep.column"))
++		color = opt->color_columnno;
+ 	else if (!strcmp(var, "color.grep.matchcontext"))
+ 		color = opt->color_match_context;
+ 	else if (!strcmp(var, "color.grep.matchselected"))
 -- 
 2.17.0.582.gccdcbd54c
 
