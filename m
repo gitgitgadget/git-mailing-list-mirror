@@ -7,86 +7,115 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 95BA91F403
-	for <e@80x24.org>; Wed, 20 Jun 2018 14:57:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6D0161F403
+	for <e@80x24.org>; Wed, 20 Jun 2018 15:08:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754023AbeFTO5x (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Jun 2018 10:57:53 -0400
-Received: from mail-oi0-f65.google.com ([209.85.218.65]:33103 "EHLO
-        mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752798AbeFTO5w (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jun 2018 10:57:52 -0400
-Received: by mail-oi0-f65.google.com with SMTP id c6-v6so3308287oiy.0
-        for <git@vger.kernel.org>; Wed, 20 Jun 2018 07:57:52 -0700 (PDT)
+        id S1753896AbeFTPID (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Jun 2018 11:08:03 -0400
+Received: from mail-oi0-f68.google.com ([209.85.218.68]:45129 "EHLO
+        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752932AbeFTPIC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jun 2018 11:08:02 -0400
+Received: by mail-oi0-f68.google.com with SMTP id 188-v6so3295128oid.12
+        for <git@vger.kernel.org>; Wed, 20 Jun 2018 08:08:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ad7n0mpP+Z88KUSrX7OuqvpeX8FKIiyENihG+D8anlE=;
-        b=ENJcK0Kp1o+zZrnw5TDHsP+JLdcOa1cE8lBUqn8D0Hk725zHRaqAfV4EdVypUo99vT
-         Aw69JkfezSUj40xnMkv/NPpN0ab15Ws13xbIXxQNC+pE+TI8x2jBhXR1r1TNQWw860s4
-         QNwzax7xuOMYVVqRy7UzeK6AfhyZAIZeMetE9rtW9Gyn3845+l4rJWsWAxiV9TiZIpI5
-         NVqjjM6nxzCp0wYi8qYZawBH7ibNJ7GZyK7C67yFayDh/nEAlW7xV+iangviF+/DtZlo
-         dt5tZ1nizztYAPHyy/g4bY1DgTpuP5VRAe10PAJaHcfoxrAzRh13MblbXE/EfFy+eB/Q
-         8dOQ==
+         :cc;
+        bh=8CapSJqPDkSMQjP72lJ2ZRCVAL50BUSUqG3yf0fWzS8=;
+        b=KmT8uQlVbl0hM5hkvoD8j9s3TcRB4Hk765axvKTIxAxuKGPSRS5TWB4frhHSTVFyHE
+         LPoNDJEguiHxrM820ICUVFe+o3o3ggmTKeCIkWSoqFAVGXWRmMy/APi8o2tB3pCdazeR
+         TbgO+Kr2jRFOuntmZAFWoBrlDZqb1VCLRqfoH0lLapfouM+sAYjpfUEe3zr1R8lQcU9W
+         gTxIA6V86MUp7qNYJz1lgABxeS2z82s4fFfZ1K/Ld6/tW5dODaVR+PboQFOj6mRgdrS5
+         9cr+E/j2Myp3R4nagbyUXMGoydJ5cgY39LQm1G0AXCqUxLc6BXsSxLCL3BRxc8PdHuRJ
+         9ZzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ad7n0mpP+Z88KUSrX7OuqvpeX8FKIiyENihG+D8anlE=;
-        b=Q3R0XCVoaqQZfvj8XetZox7z7LuUPWRz5V3aGqG9/uMXf/EyGzD2IEjGve9f7hyrOj
-         kC2ylKthcvilIOu/WcLcLzC+CvKSx4DULIoBGW9zPa3kDOXPwF8/SrBYX2fbrS0P0BfR
-         AkfTyCWhQ/6hKT1o0rRvuTO/5PVM0uE9V26YCROtrvb0eFZ9FwwpkVdCDcxl5UUg19E8
-         v5iujLHl4G4JN6hs4XqiJS5J1uCz80zAOyTsT2UfPsyEeDyHInYP89UlG7N2KPm9cEvB
-         OOOG6Ztf23gS/kScQlCT8Yq8OaSEnRxRHpr/X1bdY/z96KbCp3SWgbZ3NZpJhA+13iJi
-         jOTQ==
-X-Gm-Message-State: APt69E3OxKVy04cOU8LSW3CJd2dV7Q8XOKKI8H5iD6DP6Q6HOWM3oBed
-        RsLMznS/wc9SaLdMh/piGIrWSsTEZNshIpqK3B0=
-X-Google-Smtp-Source: ADUXVKLppiyYSB4QHFLYvsRLDhqbzK7W41f3y6KmBtg+YT0qzdZ4QXyVDSdFlVvAH170Idk9OXG6NImA+MZLZpHmE0E=
-X-Received: by 2002:aca:5144:: with SMTP id f65-v6mr12580426oib.32.1529506672110;
- Wed, 20 Jun 2018 07:57:52 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=8CapSJqPDkSMQjP72lJ2ZRCVAL50BUSUqG3yf0fWzS8=;
+        b=cu70kTzBQdZEtwlxJWDllDi6MS5uQnQY/UGBKCMschMKk1WxZXlMfkC0c05MzcP7u/
+         iDvqQfJNCgbCpZ83iEANVYALKiQRNuuJ+0DNFiIrg6rKzcE3mh7N+cl7AAv6coeoQhqf
+         Th6mgkZVwqY4AAWZ5y991cnprjcBYXjaqVtevROAd/1fcGQUvZuYjoDavHxiS5in4Ba7
+         XeETFcVOnvCrA1oXEIrXtynMvu98fz4GU427jidLN7oAeAxpbKdNCtUX7PuoyAPvMZqr
+         seE8OmjEE0K4/9D6RLHxox1iw6ss+ggXKZgjs+9UwUbD3ZJSSaJpY747ruyZYSVIfZq4
+         w59A==
+X-Gm-Message-State: APt69E1r12NlmElpgX4JXz/lTkmk9V/GV4OOeflRyo7m3kQ69s3gTzTf
+        SxNCmvTNad3HXSyujNk8r0HxO91M8kFZ6M8eIIA=
+X-Google-Smtp-Source: ADUXVKIFCLCvM3HdLslyO0gXqk/gSy71G9zh7erOXeCPc5j1YztTjp0vTaFXsufivmhaV4hlMtDVm+ijeuepIONrH4M=
+X-Received: by 2002:aca:aa54:: with SMTP id t81-v6mr12433481oie.30.1529507281459;
+ Wed, 20 Jun 2018 08:08:01 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180618111919.GA10085@book.hvoigt.net> <20180618155544.GB6958@alpha>
- <20180619102717.GB10085@book.hvoigt.net> <CACUQV5884fs2wp+R5a-99BbJGdEbujzu2iBny+PjPeL9JeOm8Q@mail.gmail.com>
- <20180620043956.GC6958@alpha> <CACUQV5-ynAv0p9MCRt0Yv9E6x+UN5z4uuaPOt1GpsK6A6MF2wQ@mail.gmail.com>
-In-Reply-To: <CACUQV5-ynAv0p9MCRt0Yv9E6x+UN5z4uuaPOt1GpsK6A6MF2wQ@mail.gmail.com>
+References: <20180607140338.32440-1-dstolee@microsoft.com> <20180607140338.32440-7-dstolee@microsoft.com>
+ <CACsJy8DG1-YTSBSFkpM8BPcnKmvC-BjjK0W0+EckkdENPC7Ohg@mail.gmail.com> <2906e8e8-ca32-828f-e8d0-35b0dff7db81@gmail.com>
+In-Reply-To: <2906e8e8-ca32-828f-e8d0-35b0dff7db81@gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 20 Jun 2018 16:57:25 +0200
-Message-ID: <CACsJy8CW1=Ea984s8J0Y6y4B6qJKZMdsXVFRQc8YcuoQNfXEqw@mail.gmail.com>
-Subject: Re: Adding nested repository with slash adds files instead of gitlink
-To:     Rafael Ascensao <rafa.almas@gmail.com>
-Cc:     Kevin D <me@ikke.info>, Heiko Voigt <hvoigt@hvoigt.net>,
-        Git Mailing List <git@vger.kernel.org>
+Date:   Wed, 20 Jun 2018 17:07:34 +0200
+Message-ID: <CACsJy8B4HBrbuog-38o4YA2dKSQejhd4LOQn4+nswi=Wnod-iQ@mail.gmail.com>
+Subject: Re: [PATCH 06/23] midx: struct midxed_git and 'read' subcommand
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Martin Fick <mfick@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 20, 2018 at 1:55 PM Rafael Ascens=C3=A3o <rafa.almas@gmail.com>=
- wrote:
+On Wed, Jun 20, 2018 at 3:33 PM Derrick Stolee <stolee@gmail.com> wrote:
 >
-> On Wed, Jun 20, 2018 at 5:39 AM Kevin Daudt <me@ikke.info> wrote:
-> >
-> > What this is about that when doing `git add path/` (with trailing /),
-> >
+> On 6/7/2018 2:31 PM, Duy Nguyen wrote:
+> > On Thu, Jun 7, 2018 at 4:03 PM, Derrick Stolee <stolee@gmail.com> wrote:
+> >> diff --git a/Documentation/git-midx.txt b/Documentation/git-midx.txt
+> >> index dcaeb1a91b..919283fdd8 100644
+> >> --- a/Documentation/git-midx.txt
+> >> +++ b/Documentation/git-midx.txt
+> >> @@ -23,6 +23,11 @@ OPTIONS
+> >>          <dir>/packs/multi-pack-index for the current MIDX file, and
+> >>          <dir>/packs for the pack-files to index.
+> >>
+> >> +read::
+> >> +       When given as the verb, read the current MIDX file and output
+> >> +       basic information about its contents. Used for debugging
+> >> +       purposes only.
+> > On second thought. If you just need a temporary debugging interface,
+> > adding a program in t/helper may be a better option. In the end we
+> > might still need 'read' to dump a file out, but we should have some
+> > stable output format (and json might be a good choice).
 >
-> This is what I was referring to. If you search for 'Fake Submodules',
-> you'll see that some people were/are intentionally using this instead of
-> subtrees or submodules. Unfortunately the original article [1] seems to
-> be dead, but searching url in the mailing list archives leads to some
-> additional discussion on the subject [2,3].
+> My intention with this 'read' pattern in the MIDX (and commit-graph) is
+> two-fold:
+>
+> 1. We can test that we are writing the correct data in our test suite. A
+> test-tool builtin would suffice for this purpose.
+>
+> 2. We can help trouble-shoot users who may be having trouble with their
+> MIDX files. Having the subcommand in a plumbing command allows us to do
+> this in the shipped versions of Git.
+>
+> Maybe this second purpose isn't enough to justify the feature in Git and
+> we should move this to the test-tool, especially with the 'verify' mode
+> coming in a second series. Note that a 'verify' mode doesn't satisfy
+> item (1).
 
-Abusing a long standing bug does not make it a feature. I'm not
-opposed to having a new option to keep that behavior, but it should
-not be the default. If you use it that way, you're on your own.
+Yeah I think normally we just have some "fsck" thing to verify when
+things go bad. If you need more than that I think you just ask the
+user to send the .midx to you (with full understanding of potentially
+revealing confidential info and stuff). It'll be faster than
+instructing them to "run this command", "ok, run another command"....
+I thought of suggesting a command to dump the midx file in readable
+form (like json), but I think if fsck fails then chances of that
+command successfully dumping may be very low.
 
-> [1]:http://debuggable.com/posts/git-fake-submodules:4b563ee4-f3cc-4061-96=
-7e-0e48cbdd56cb
-> [2]:https://public-inbox.org/git/xmqqy47o6q71.fsf@gitster.mtv.corp.google=
-.com/
-> [3]:https://public-inbox.org/git/CAGZ79kZofg3jS+g0weTdco+PGo_p-_Hd-NScZ=
-=3Dq2UfB7tF2GPA@mail.gmail.com/
---=20
+Either way, if the command is meant for troubleshooting, I think it
+should be added at the end when the whole midx file is implemented and
+understood and we see what we need to troubleshoot. Adding small
+pieces of changes from patch to patch makes it really hard to see if
+it helps troubleshooting at all, it just helps the first purpose.
+-- 
 Duy
