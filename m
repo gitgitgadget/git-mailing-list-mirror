@@ -2,221 +2,169 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AC3AB1F403
-	for <e@80x24.org>; Wed, 20 Jun 2018 20:05:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 47A3C1F403
+	for <e@80x24.org>; Wed, 20 Jun 2018 20:17:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932998AbeFTUFv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Jun 2018 16:05:51 -0400
-Received: from mail-oi0-f68.google.com ([209.85.218.68]:36032 "EHLO
-        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932978AbeFTUFr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jun 2018 16:05:47 -0400
-Received: by mail-oi0-f68.google.com with SMTP id 14-v6so763117oie.3
-        for <git@vger.kernel.org>; Wed, 20 Jun 2018 13:05:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=nDot6NiRfxRnTMtOpD8zVMwcdD6vzBgF91VLY/tcAC4=;
-        b=gKsJ6QEfkAR2wWw4h8j3hEiFWK+bJRMyqblRDVYikNOEncwhccun0Qj3ZCj/kwFB9c
-         GId+O6LhXxwJz6fVfMOGc54VygtkaCrP+ETXzxS+dTdP8t6YG6KPB90lSS5RaAB4NFj4
-         FSS3SJdpy59CRarlkTSn+jhvYawvLNZrn3F4SJuiz8+fwSpriqC9Hi8A3bEbttE/B0y8
-         QXLC0F0ks+K43Obj3iYFbTOKunmzEn7cAT4G96MlRBxxVGx9mXhJNqf4poo1lejdDsuV
-         VZC3ugs52cJema6/KM+qJSMU49O0/ci4qwLCadPMvh3l1pwFx+yWBqKjFvuR4pkcV9Az
-         DlkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=nDot6NiRfxRnTMtOpD8zVMwcdD6vzBgF91VLY/tcAC4=;
-        b=CnYlYxCODmw5pjLPoPR833L+ee55uS+raZFluhqJzyxxkljhJ0K4BbCepIxFX2Q5wE
-         Z0Vdo9HDIUQXwyFPXJDD6Ggu9gF3bfwX9SGJlXgcFtcZ9KBLV/UEdNjGdt9A4Mc8iuof
-         axM/hC+SwQvfpV8IVgyELnskW4Y9+Xxm72OlPB7ie/d1ALnal5D7380CkVJ56xmad4Yy
-         HFsj2qRpN2A/JntAJoafswt5fAI/Ti64uTQE7AKgV1MvQyraeyUz2tOcV5dbl5ZziN7B
-         aV0LjhPIG4yv4O95jmQBrnq6HryfLaHOHueukBQrsU8CK3rOm1XDFaYtAxXu2CpPVGsv
-         vzmA==
-X-Gm-Message-State: APt69E1A19+3fHFiVKZ5y7ldY+FttpmtDaoD6YesRNIjffwQUXl3a8ay
-        UGNx6H+bK1gdkOqQEBsmOwpTG+0655E=
-X-Google-Smtp-Source: ADUXVKKjFJw1mopfmuN8Hn8rT7nDISKu6DH9CBTx0USdUc4E7xqHZf7FihZ+7uv70K/QBs1a4quZ2A==
-X-Received: by 2002:aca:d886:: with SMTP id p128-v6mr13527635oig.180.1529525146708;
-        Wed, 20 Jun 2018 13:05:46 -0700 (PDT)
-Received: from localhost ([107.217.158.181])
-        by smtp.gmail.com with ESMTPSA id a14-v6sm1371959oia.20.2018.06.20.13.05.45
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 20 Jun 2018 13:05:45 -0700 (PDT)
-Date:   Wed, 20 Jun 2018 15:05:44 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     avarab@gmail.com, peff@peff.net, gitster@pobox.com
-Subject: [PATCH v2 5/7] builtin/grep.c: add '--column' option to 'git-grep(1)'
-Message-ID: <ed1c197cc2cdbcfe7fce14747b8601d1488f89a9.1529524852.git.me@ttaylorr.com>
-References: <cover.1529365072.git.me@ttaylorr.com>
- <cover.1529524852.git.me@ttaylorr.com>
+        id S933149AbeFTUR2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Jun 2018 16:17:28 -0400
+Received: from mail-sn1nam01on0134.outbound.protection.outlook.com ([104.47.32.134]:9494
+        "EHLO NAM01-SN1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S932755AbeFTUR0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jun 2018 16:17:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rpRDCWSJezV1mepmLhf1JCm6merwd77sBgSn6K+YDRU=;
+ b=StL5NI1LNXtDmHtJqHERBuPYhEr39Cg949RDNEFatu6oqwwwuuY6660R67DIal4qwUWMIX5TuM7GVDv9ZQBiS5RuP6Nv+nOsx5hw4mU6pllUgs9vQHA/kXXdn2OPR6uvjYTo1oIWjOKIuDKya8qy6n1q89CLFi6vPd7nQGYX2/w=
+Received: from DM5PR21MB0780.namprd21.prod.outlook.com (10.173.173.7) by
+ DM5PR21MB0283.namprd21.prod.outlook.com (10.173.174.18) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.906.10; Wed, 20 Jun 2018 20:17:24 +0000
+Received: from DM5PR21MB0780.namprd21.prod.outlook.com
+ ([fe80::6ce5:a314:3fed:d0cd]) by DM5PR21MB0780.namprd21.prod.outlook.com
+ ([fe80::6ce5:a314:3fed:d0cd%6]) with mapi id 15.20.0906.010; Wed, 20 Jun 2018
+ 20:17:24 +0000
+From:   Jameson Miller <jamill@microsoft.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+CC:     "gitster@pobox.com" <gitster@pobox.com>,
+        "pclouds@gmail.com" <pclouds@gmail.com>,
+        "jonathantanmy@google.com" <jonathantanmy@google.com>,
+        "sbeller@google.com" <sbeller@google.com>,
+        "peartben@gmail.com" <peartben@gmail.com>,
+        "peff@peff.net" <peff@peff.net>,
+        Jameson Miller <jamill@microsoft.com>
+Subject: [PATCH v4 1/8] read-cache: teach refresh_cache_entry() to take istate
+Thread-Topic: [PATCH v4 1/8] read-cache: teach refresh_cache_entry() to take
+ istate
+Thread-Index: AQHUCNOz9erVOOExbkWNBiPG5r01UA==
+Date:   Wed, 20 Jun 2018 20:17:24 +0000
+Message-ID: <20180620201557.77155-2-jamill@microsoft.com>
+References: <20180417163400.3875-1-jamill@microsoft.com>
+ <20180620201557.77155-1-jamill@microsoft.com>
+In-Reply-To: <20180620201557.77155-1-jamill@microsoft.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [2001:4898:8010:1:1060:bd2c:4297:50e]
+x-clientproxiedby: BN6PR03CA0022.namprd03.prod.outlook.com
+ (2603:10b6:404:23::32) To DM5PR21MB0780.namprd21.prod.outlook.com
+ (2603:10b6:3:a5::7)
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;DM5PR21MB0283;7:nmZDU2R47p/vSDBM2ztnDXn1KHH9ujt9R2N8GXh/3j4Xcz2i+cQHD4Tt6ol8T+j8/+WHmRnVg9qu4XBvioTPcWYJKZmr1cJpoF//AYv/43x71FcqVs5BM3QRxjZIQw/g63HhBu4g0K814LkjTdOQOHWnYaQlMgOyDhfhU+xVqeyGDNQtJgtQfS7gfLwgMNl++xUBubiXz3imKipXJYnPZ+SwrnpmW3wHNnCRQPxntPY4nMISysm3d+D2Nlp435sy
+x-ms-office365-filtering-correlation-id: 8f473704-0018-4dc7-9ccb-08d5d6ead5f2
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(4534165)(4627221)(201703031133081)(201702281549075)(5600026)(711020)(48565401081)(2017052603328)(7193020);SRVR:DM5PR21MB0283;
+x-ms-traffictypediagnostic: DM5PR21MB0283:
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=jamill@microsoft.com; 
+x-microsoft-antispam-prvs: <DM5PR21MB0283B08FF16067050F08A4B5CE770@DM5PR21MB0283.namprd21.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171);
+x-ms-exchange-senderadcheck: 1
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(5005006)(8121501046)(93006095)(93001095)(3231254)(2018427008)(944501410)(52105095)(10201501046)(3002001)(6055026)(149027)(150027)(6041310)(20161123562045)(20161123558120)(20161123564045)(20161123560045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(6072148)(201708071742011)(7699016);SRVR:DM5PR21MB0283;BCL:0;PCL:0;RULEID:;SRVR:DM5PR21MB0283;
+x-forefront-prvs: 070912876F
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(39860400002)(376002)(39380400002)(346002)(396003)(366004)(189003)(199004)(102836004)(2906002)(186003)(3660700001)(476003)(11346002)(486006)(2616005)(446003)(36756003)(5660300001)(3280700002)(76176011)(6506007)(386003)(68736007)(6916009)(59450400001)(5250100002)(2351001)(2501003)(25786009)(52116002)(4326008)(39060400002)(8656006)(7736002)(6436002)(6486002)(6116002)(575784001)(305945005)(2900100001)(316002)(106356001)(105586002)(22452003)(10090500001)(81156014)(1730700003)(8676002)(81166006)(54906003)(53936002)(86612001)(10290500003)(478600001)(8936002)(97736004)(86362001)(99286004)(14454004)(46003)(5640700003)(107886003)(6512007)(1076002)(22906009);DIR:OUT;SFP:1102;SCL:1;SRVR:DM5PR21MB0283;H:DM5PR21MB0780.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None (protection.outlook.com: microsoft.com does not designate
+ permitted sender hosts)
+x-microsoft-antispam-message-info: QjOjvxqrElDxl/ckL9mJLHsIfUrKSC05vqIQRF7HCscFuXr3vkriIF3WWXepMfXNYSj2a5faQ45lvjZVkJpuhemyap7HGB8LyeVtvIKbXGwmxU/iZhWFgTWIYMeeIJDohhncU55IA6o0wDNTbvJ1p1cjc4XxzgUBSSTLEoL8MYp1JlkV/ccVo1fwBSuopaNU/9bgdfKlTWh7yKVxmtMvlVERGCX/spH5WW6DmW7xqrT0mn7AGBS57cPaMzFjSeviRTjIkZd6e22/Rw0+cPtAChRo4vFOpb4KPQMvN6wiHAhasmslw6CFr3o9juruPDTgcIeNLrhJ9KCxAEC8KXCwhg==
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1529524852.git.me@ttaylorr.com>
-User-Agent: Mutt/1.9.5 (2018-04-13)
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8f473704-0018-4dc7-9ccb-08d5d6ead5f2
+X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Jun 2018 20:17:24.7395
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR21MB0283
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach 'git-grep(1)' a new option, '--column', to show the column
-number of the first match on a non-context line. This makes it possible
-to teach 'contrib/git-jump/git-jump' how to seek to the first matching
-position of a grep match in your editor, and allows similar additional
-scripting capabilities.
+Refactor refresh_cache_entry() to work on a specific index, instead of
+implicitly using the_index. This is in preparation for making the
+make_cache_entry function apply to a specific index.
 
-For example:
-
-  $ git grep -n --column foo | head -n3
-  .clang-format:51:14:# myFunction(foo, bar, baz);
-  .clang-format:64:7:# int foo();
-  .clang-format:75:8:# void foo()
-
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
+Signed-off-by: Jameson Miller <jamill@microsoft.com>
 ---
- Documentation/git-grep.txt |  6 ++-
- builtin/grep.c             |  1 +
- t/t7810-grep.sh            | 84 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 90 insertions(+), 1 deletion(-)
+ cache.h           | 2 +-
+ merge-recursive.c | 2 +-
+ read-cache.c      | 9 +++++----
+ 3 files changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-index 312409a607..31dc0392a6 100644
---- a/Documentation/git-grep.txt
-+++ b/Documentation/git-grep.txt
-@@ -13,7 +13,7 @@ SYNOPSIS
- 	   [-v | --invert-match] [-h|-H] [--full-name]
- 	   [-E | --extended-regexp] [-G | --basic-regexp]
- 	   [-P | --perl-regexp]
--	   [-F | --fixed-strings] [-n | --line-number]
-+	   [-F | --fixed-strings] [-n | --line-number] [--column]
- 	   [-l | --files-with-matches] [-L | --files-without-match]
- 	   [(-O | --open-files-in-pager) [<pager>]]
- 	   [-z | --null]
-@@ -169,6 +169,10 @@ providing this option will cause it to die.
- --line-number::
- 	Prefix the line number to matching lines.
- 
-+--column::
-+	Prefix the 1-indexed byte-offset of the first match from the start of the
-+	matching line.
-+
- -l::
- --files-with-matches::
- --name-only::
-diff --git a/builtin/grep.c b/builtin/grep.c
-index ee753a403e..61bcaf6e58 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -828,6 +828,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 			    GREP_PATTERN_TYPE_PCRE),
- 		OPT_GROUP(""),
- 		OPT_BOOL('n', "line-number", &opt.linenum, N_("show line numbers")),
-+		OPT_BOOL(0, "column", &opt.columnnum, N_("show column number of first match")),
- 		OPT_NEGBIT('h', NULL, &opt.pathname, N_("don't show filenames"), 1),
- 		OPT_BIT('H', NULL, &opt.pathname, N_("show filenames"), 1),
- 		OPT_NEGBIT(0, "full-name", &opt.relative,
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index 1797f632a3..bf0b572dab 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -99,6 +99,90 @@ do
- 		test_cmp expected actual
- 	'
- 
-+	test_expect_success "grep -w $L (with --column)" '
-+		{
-+			echo ${HC}file:5:foo mmap bar
-+			echo ${HC}file:14:foo_mmap bar mmap
-+			echo ${HC}file:5:foo mmap bar_mmap
-+			echo ${HC}file:14:foo_mmap bar mmap baz
-+		} >expected &&
-+		git grep --column -w -e mmap $H >actual &&
-+		test_cmp expected actual
-+	'
-+
-+	test_expect_success "grep -w $L (with --column, extended)" '
-+		{
-+			echo ${HC}file:14:foo_mmap bar mmap
-+			echo ${HC}file:19:foo_mmap bar mmap baz
-+		} >expected &&
-+		git grep --column -w -e mmap$ --or -e baz $H >actual &&
-+		test_cmp expected actual
-+	'
-+
-+	test_expect_success "grep -w $L (with --column, --invert)" '
-+		{
-+			echo ${HC}file:1:foo mmap bar
-+			echo ${HC}file:1:foo_mmap bar
-+			echo ${HC}file:1:foo_mmap bar mmap
-+			echo ${HC}file:1:foo mmap bar_mmap
-+		} >expected &&
-+		git grep --column --invert -w -e baz $H -- file >actual &&
-+		test_cmp expected actual
-+	'
-+
-+	test_expect_success "grep $L (with --column, --invert, extended)" '
-+		{
-+			echo ${HC}hello_world:6:HeLLo_world
-+		} >expected &&
-+		git grep --column --invert -e ll --or --not -e _ $H -- hello_world \
-+			>actual &&
-+		test_cmp expected actual
-+	'
-+
-+	test_expect_success "grep $L (with --column, double-negation)" '
-+		{
-+			echo ${HC}file:1:foo_mmap bar mmap baz
-+		} >expected &&
-+		git grep --column --not \( --not -e foo --or --not -e baz \) $H -- file \
-+			>actual &&
-+		test_cmp expected actual
-+	'
-+
-+	test_expect_success "grep -w $L (with --column, -C)" '
-+		{
-+			echo ${HC}file:5:foo mmap bar
-+			echo ${HC}file-foo_mmap bar
-+			echo ${HC}file:14:foo_mmap bar mmap
-+			echo ${HC}file:5:foo mmap bar_mmap
-+			echo ${HC}file:14:foo_mmap bar mmap baz
-+		} >expected &&
-+		git grep --column -w -C1 -e mmap $H >actual &&
-+		test_cmp expected actual
-+	'
-+
-+	test_expect_success "grep -w $L (with --line-number, --column)" '
-+		{
-+			echo ${HC}file:1:5:foo mmap bar
-+			echo ${HC}file:3:14:foo_mmap bar mmap
-+			echo ${HC}file:4:5:foo mmap bar_mmap
-+			echo ${HC}file:5:14:foo_mmap bar mmap baz
-+		} >expected &&
-+		git grep -n --column -w -e mmap $H >actual &&
-+		test_cmp expected actual
-+	'
-+
-+	test_expect_success "grep -w $L (with non-extended patterns, --column)" '
-+		{
-+			echo ${HC}file:5:foo mmap bar
-+			echo ${HC}file:10:foo_mmap bar
-+			echo ${HC}file:10:foo_mmap bar mmap
-+			echo ${HC}file:5:foo mmap bar_mmap
-+			echo ${HC}file:10:foo_mmap bar mmap baz
-+		} >expected &&
-+		git grep --column -w -e bar -e mmap $H >actual &&
-+		test_cmp expected actual
-+	'
-+
- 	test_expect_success "grep -w $L" '
- 		{
- 			echo ${HC}file:1:foo mmap bar
--- 
-2.17.0.582.gccdcbd54c
+diff --git a/cache.h b/cache.h
+index 89a107a7f7..9538511d9f 100644
+--- a/cache.h
++++ b/cache.h
+@@ -751,7 +751,7 @@ extern void fill_stat_cache_info(struct cache_entry *ce=
+, struct stat *st);
+ #define REFRESH_IGNORE_SUBMODULES	0x0010	/* ignore submodules */
+ #define REFRESH_IN_PORCELAIN	0x0020	/* user friendly output, not "needs up=
+date" */
+ extern int refresh_index(struct index_state *, unsigned int flags, const s=
+truct pathspec *pathspec, char *seen, const char *header_msg);
+-extern struct cache_entry *refresh_cache_entry(struct cache_entry *, unsig=
+ned int);
++extern struct cache_entry *refresh_cache_entry(struct index_state *, struc=
+t cache_entry *, unsigned int);
+=20
+ /*
+  * Opportunistically update the index but do not complain if we can't.
+diff --git a/merge-recursive.c b/merge-recursive.c
+index f110e1c5ec..11a767cc72 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -323,7 +323,7 @@ static int add_cacheinfo(struct merge_options *o,
+ 	if (refresh) {
+ 		struct cache_entry *nce;
+=20
+-		nce =3D refresh_cache_entry(ce, CE_MATCH_REFRESH | CE_MATCH_IGNORE_MISSI=
+NG);
++		nce =3D refresh_cache_entry(&the_index, ce, CE_MATCH_REFRESH | CE_MATCH_=
+IGNORE_MISSING);
+ 		if (!nce)
+ 			return err(o, _("add_cacheinfo failed to refresh for path '%s'; merge a=
+borting."), path);
+ 		if (nce !=3D ce)
+diff --git a/read-cache.c b/read-cache.c
+index 372588260e..fa8366ecab 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -767,7 +767,7 @@ struct cache_entry *make_cache_entry(unsigned int mode,
+ 	ce->ce_namelen =3D len;
+ 	ce->ce_mode =3D create_ce_mode(mode);
+=20
+-	ret =3D refresh_cache_entry(ce, refresh_options);
++	ret =3D refresh_cache_entry(&the_index, ce, refresh_options);
+ 	if (ret !=3D ce)
+ 		free(ce);
+ 	return ret;
+@@ -1473,10 +1473,11 @@ int refresh_index(struct index_state *istate, unsig=
+ned int flags,
+ 	return has_errors;
+ }
+=20
+-struct cache_entry *refresh_cache_entry(struct cache_entry *ce,
+-					       unsigned int options)
++struct cache_entry *refresh_cache_entry(struct index_state *istate,
++					struct cache_entry *ce,
++					unsigned int options)
+ {
+-	return refresh_cache_ent(&the_index, ce, options, NULL, NULL);
++	return refresh_cache_ent(istate, ce, options, NULL, NULL);
+ }
+=20
+=20
+--=20
+2.14.3
 
