@@ -2,114 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F32071F403
-	for <e@80x24.org>; Wed, 20 Jun 2018 13:33:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0623A1F403
+	for <e@80x24.org>; Wed, 20 Jun 2018 14:54:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754065AbeFTNdx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Jun 2018 09:33:53 -0400
-Received: from mail-qt0-f169.google.com ([209.85.216.169]:41711 "EHLO
-        mail-qt0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753202AbeFTNdw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jun 2018 09:33:52 -0400
-Received: by mail-qt0-f169.google.com with SMTP id y20-v6so2890854qto.8
-        for <git@vger.kernel.org>; Wed, 20 Jun 2018 06:33:52 -0700 (PDT)
+        id S1753906AbeFTOyU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Jun 2018 10:54:20 -0400
+Received: from mail-oi0-f66.google.com ([209.85.218.66]:36952 "EHLO
+        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753202AbeFTOyT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jun 2018 10:54:19 -0400
+Received: by mail-oi0-f66.google.com with SMTP id l22-v6so3281479oib.4
+        for <git@vger.kernel.org>; Wed, 20 Jun 2018 07:54:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=GjMLPL2FlMAFcYlb6HJ6LU+2RDzAHJKGMZgdJYF83iU=;
-        b=g07yOMHQkps+tPM4nKjSyA1wtbUoiy+GPeoJi9GRTOz7XGXdQS3FUoqnC5Vli/UAVx
-         WxkciyEOtKG5Ph9huvesPeQhB2EOUbBK7n70BxiIIucmi1bnl707VHZMJo/9HVkmCMab
-         ToULAbJ3uRTyXexXzU4o1CzazmbdcnT/6CFeZ0f6VSLeTW85smwqPPL4IKBGYJHI46ku
-         7ZYaA2Etv+088uNAgsU1G1+S9rfqF00jV9bJrvQSurw37umobp/tpj59QrcGTQAqt8Y1
-         lria/+YCqyFOp4lbKvOnsMxDlIXaFrQvth0N8oYuWajV8xDp/DVjSmqEX3V0CnpWcuX1
-         c4QQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=sDNSB7y2OA59HC6ydqfoeNg7KbK8hZUg2Z+aP0uqBYs=;
+        b=j29lgbIiYKNWO2TfP+sOjBmWA2nr5akKu01+KHS93Srh3Z5v8lSxiZBaur3wmgiBg5
+         Exwu51qErPbZ/jYUUDAQfdoHI5Xa0xJAcMfAV5zHxBWDz45J6ibGIzCjs0RIh7wVsjfR
+         2IppYrWreW9NGOBLeJpaZYU46yEimPx8VH/cYVUJTPs8dO+Juh1t/avs39Y4mLbZlILG
+         ORc3HqznWtv3TVcLe3lhoW5kDpJsJ4P1sTmQEfyqtC+GGYSXYdOA1BOybou1Yepx860r
+         TD10JT2yyIVyznEWxAMSsXr2A/nKhqoJFrChoUgd1Qx4/XtBzYCsHtbpsiRRpwr4v3O5
+         RZew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=GjMLPL2FlMAFcYlb6HJ6LU+2RDzAHJKGMZgdJYF83iU=;
-        b=E3diI5gzxBMjoJTEXWCyt5AMu4dT4ImrkCV/69mtB3F/CHW8ej3I9OEiH86evWNwzC
-         18Y0Y8EZTIsaR5rlHNdO5zoX8MEHp3oA7DSpWwKKuVj1UhcOxM3Evj6SO7s/I1++NG5L
-         IeLzOSApH91XyIpnudGer2L7ugt/CXMalrlxGD5Oj1i5iEDK+mEm1x6ZFlc9e2xJ+3Ma
-         qRR6lJbniOst/RXZnTZwQYOrzNRt35wsdIvgt3BhXZtfmbQJzXGrhh569LaYrnjeuTtE
-         WVYWCA3mJhMH1VwRpldGV76D7O6jlj8I4mdQsnLjzrHLBWEpVC2FmRwofW2SL98moyBj
-         FwDA==
-X-Gm-Message-State: APt69E2uVHDHoUUCpJOdtLf86pcDZJGp81mZvHvQeCWERKDtm5SIrJ9o
-        7Te9WSOvnuvFbC0s9thginmEs6NRM7g=
-X-Google-Smtp-Source: ADUXVKIhCYoyAC5VwViQjasYjh7aUsNFxdDDpZdS8rxXwMok05C7gFu489xrbikbEp5WONHe93vc7w==
-X-Received: by 2002:a0c:c206:: with SMTP id l6-v6mr18303142qvh.17.1529501632081;
-        Wed, 20 Jun 2018 06:33:52 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:111c:d99:f232:cfaa? ([2001:4898:8010:0:fa51:d99:f232:cfaa])
-        by smtp.gmail.com with ESMTPSA id d200-v6sm1641508qkg.18.2018.06.20.06.33.51
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 20 Jun 2018 06:33:51 -0700 (PDT)
-Subject: Re: [PATCH 06/23] midx: struct midxed_git and 'read' subcommand
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Martin Fick <mfick@codeaurora.org>
-References: <20180607140338.32440-1-dstolee@microsoft.com>
- <20180607140338.32440-7-dstolee@microsoft.com>
- <CACsJy8DG1-YTSBSFkpM8BPcnKmvC-BjjK0W0+EckkdENPC7Ohg@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <2906e8e8-ca32-828f-e8d0-35b0dff7db81@gmail.com>
-Date:   Wed, 20 Jun 2018 09:33:50 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=sDNSB7y2OA59HC6ydqfoeNg7KbK8hZUg2Z+aP0uqBYs=;
+        b=fKdqMh9DaXdStLw/o0e/LIBFyK8nlwtOhkzV6MvCSq6iRZr9RGyNMlVdq5HNWjPWVr
+         6V+Tp8tyCLGXCIDUYM7UTc9I8nHfILbljupIo058AXhUgpq3LMNFwy6mQw8TkQHkfBLI
+         b9Qyt7NdgO5em69/h/zdJiCibGsWqJIyQLIlzAMOOVJS5WN3N9kSaMU7QZMluolClBRv
+         +dCCMf2PDa8JRGdKSYe+ZqDO/C/cl62jB3Dg/QOhfEvUqtYiHZyvvoQ88pLQXxxj6VP+
+         /Hv7u48IP3+lTlofMDoBCwhHBuMW5ZDpJDk5ms8Rx+gBVsFXjTAHzV7ScmojIVSe5bhM
+         8FnQ==
+X-Gm-Message-State: APt69E2ukDXeYYRa8sRb22LAWIq1Yv+kvVQwhvK/nFnEBR4McnJcQwMm
+        wfFT18cMYXYSDjkdLb6hk7vL0mtG9CqLZPQQWyY=
+X-Google-Smtp-Source: ADUXVKIaIvNJQI9+vN8KvAuoZZ9DRynqnUeEfmXOSD2XbQPaOomSq+DrnNQcjrPyOynOXSy9pKUi/bA21AK7nw9m1Ak=
+X-Received: by 2002:aca:aa54:: with SMTP id t81-v6mr12398434oie.30.1529506458303;
+ Wed, 20 Jun 2018 07:54:18 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CACsJy8DG1-YTSBSFkpM8BPcnKmvC-BjjK0W0+EckkdENPC7Ohg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+References: <wesfwyupgrg.fsf@kanis.fr> <AANLkTimwy6GumHYSTo2je_hOUO80KEpx4_8z3iOoZyc0@mail.gmail.com>
+ <87ocdhlgbl.fsf@kanis.fr> <AANLkTikt7LuhxHhOqPm2P-2hzXP54YThX5FRxF4yCFZu@mail.gmail.com>
+ <AANLkTi=tf51FWkZZFw9cF=pcCyadgp7a9EXK=KQ6GSQS@mail.gmail.com>
+ <87hbj74pve.fsf@kanis.fr> <AANLkTinyX9cABkEDy3HBZoDVNWos2djNBSaw2Hg_yzAO@mail.gmail.com>
+ <wesy6cgm6wd.fsf_-_@kanis.fr>
+In-Reply-To: <wesy6cgm6wd.fsf_-_@kanis.fr>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 20 Jun 2018 16:53:51 +0200
+Message-ID: <CACsJy8AeFfi_k9vMm71BTTF-3GQMFPOTXMhfwqKWT-7RFVjoNw@mail.gmail.com>
+Subject: Re: Excessive mmap [was Git server eats all memory]
+To:     Ivan Kanis <expire-by-2010-08-14@kanis.fr>
+Cc:     Dmitry Potapov <dpotapov@gmail.com>,
+        Ivan Kanis <expire-by-2010-08-11@kanis.fr>,
+        Jared Hance <jaredhance@gmail.com>,
+        Avery Pennarun <apenwarr@gmail.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/7/2018 2:31 PM, Duy Nguyen wrote:
-> On Thu, Jun 7, 2018 at 4:03 PM, Derrick Stolee <stolee@gmail.com> wrote:
->> diff --git a/Documentation/git-midx.txt b/Documentation/git-midx.txt
->> index dcaeb1a91b..919283fdd8 100644
->> --- a/Documentation/git-midx.txt
->> +++ b/Documentation/git-midx.txt
->> @@ -23,6 +23,11 @@ OPTIONS
->>          <dir>/packs/multi-pack-index for the current MIDX file, and
->>          <dir>/packs for the pack-files to index.
->>
->> +read::
->> +       When given as the verb, read the current MIDX file and output
->> +       basic information about its contents. Used for debugging
->> +       purposes only.
-> On second thought. If you just need a temporary debugging interface,
-> adding a program in t/helper may be a better option. In the end we
-> might still need 'read' to dump a file out, but we should have some
-> stable output format (and json might be a good choice).
+On Tue, Jun 19, 2018 at 10:27 PM Ivan Kanis
+<expire-by-2010-08-14@kanis.fr> wrote:
+>
+> Dmitry Potapov <dpotapov@gmail.com> wrote:
+>
+> > On Fri, Aug 06, 2010 at 07:23:17PM +0200, Ivan Kanis wrote:
+> >>
+> >> I expected the malloc to take 4G but was surprised it didn't. It seems
+> >> to be mmap taking all the memory. I am not familiar with that function,
+> >> it looks like it's mapping memory to a file... Is it reasonable to mmap
+> >> so much memory?
+> >
+> > AFAIK, Git does not need to mmap the whole pack to memory, but it
+> > is more efficient to mmap the whole pack wherever possible, because
+> > it has a completely random access, so if you store only one sliding
+> > window, you will have to re-read it many times. Besides, mmap size
+> > does not mean that so much physical memory is used. Pages should
+> > be loaded when they are necessary, and if you have more than one
+> > client cloning the same repo, this memory should be shared by them.
+>
+> I have clone identical repositories and the system starts to swap. I
+> think it shows that cloning two repository doesn't share mmap.
 
-My intention with this 'read' pattern in the MIDX (and commit-graph) is 
-two-fold:
-
-1. We can test that we are writing the correct data in our test suite. A 
-test-tool builtin would suffice for this purpose.
-
-2. We can help trouble-shoot users who may be having trouble with their 
-MIDX files. Having the subcommand in a plumbing command allows us to do 
-this in the shipped versions of Git.
-
-Maybe this second purpose isn't enough to justify the feature in Git and 
-we should move this to the test-tool, especially with the 'verify' mode 
-coming in a second series. Note that a 'verify' mode doesn't satisfy 
-item (1).
-
-Thanks,
--Stolee
+I doubt it (assuming you're on linux). If you suspect this, configure
+core.packedGitWindowSize to reduce the mmap size. There are lots of
+other things in a cloning process that do not share (is this client or
+server btw?) and things could add up.
+--
+Duy
