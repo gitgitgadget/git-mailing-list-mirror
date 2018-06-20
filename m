@@ -2,83 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 23BFB1F403
-	for <e@80x24.org>; Wed, 20 Jun 2018 15:41:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C43C41F403
+	for <e@80x24.org>; Wed, 20 Jun 2018 16:22:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754338AbeFTPll (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Jun 2018 11:41:41 -0400
-Received: from mout.web.de ([212.227.15.14]:39261 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754030AbeFTPlk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jun 2018 11:41:40 -0400
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LkPW7-1g2X9C2yNP-00cU0U; Wed, 20
- Jun 2018 17:41:25 +0200
-Date:   Wed, 20 Jun 2018 17:41:23 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Jeff King <peff@peff.net>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git List <git@vger.kernel.org>, Max Kirillov <max@max630.net>
-Subject: Re: t5562: gzip -k is not portable
-Message-ID: <20180620154123.GB19382@tor.lan>
-References: <5ee7a65d-63e1-aa6a-c3c1-663c092d0efe@web.de>
- <xmqqk1quvegh.fsf@gitster-ct.c.googlers.com>
- <CAPig+cT2xkR=LbAJLCdeynGkiPysakbVna61cfrtgO3kKh85+g@mail.gmail.com>
- <117d2657-067a-6fe6-3713-de7a5aa75a11@web.de>
- <20180619205310.GA30710@sigill.intra.peff.net>
- <20180620061306.GA7813@tor.lan>
- <20180620124006.GB7932@sigill.intra.peff.net>
+        id S1754563AbeFTQWS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Jun 2018 12:22:18 -0400
+Received: from mail-lf0-f53.google.com ([209.85.215.53]:38309 "EHLO
+        mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754480AbeFTQWR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jun 2018 12:22:17 -0400
+Received: by mail-lf0-f53.google.com with SMTP id i83-v6so206284lfh.5
+        for <git@vger.kernel.org>; Wed, 20 Jun 2018 09:22:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=U+ZcEBQyumH8d4uxfRh4XX/fqG+K3pd01iEh2GZanFA=;
+        b=QW1Yim9dbB7ZZ6zrr5VP1684BQArUbDnnnAi1vZ6DC2N5KIT2q2zoVVmX59LsW03M5
+         Ko1jbh7cqA+JlImDGFCwiVkeOywaSciHbPIvjIKwAfJPbrTAgzKr+SndkHTWP7QDQNBG
+         pa2JujPdM6qcvbcieUgPwigDaAKV9mOH5+GZEbTFCZwdDUdNDpIA4+OTM+QpnydyNk3z
+         DubNsz8+d0UDB8b5MaO833qdeDrvIdZfsSiLtoyVeiPrl3krnnqe/GvInaCfv7q9muzu
+         PW9yWX5eSl8mpoLbjZu9NjRb/8O4Htnyc7O4ub8K42Pq9/HvwU0AQo3pWpfXVe7RV9oH
+         kHBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=U+ZcEBQyumH8d4uxfRh4XX/fqG+K3pd01iEh2GZanFA=;
+        b=mckT4eyuSUUx2z7dA8z0sEiXXvRgOku6fZIRefAaKGhUjNNYAs2vni8r93oKgu5SV5
+         hWpsK825vjaE0S8MeMaGc/zWDEyx7WR5kpcDaHYyEbur8cjQ92BF9DNq7TBQ22RnaSmC
+         5h5TZ4aCT8o/8AuFAiTpyo5t49kJUeVVuuBMVAYIq/kziVwfi/BbBptyqHWQcYJ9VtwH
+         Vkg41JIAK1BFA+WAVja0nBu439W/QMt2afodCrMkJ0OObEzUYBHPKYbpNnbnqhc1L/qM
+         l7gFIHLd+7ssDx26AWAQa1gMYrcVCl3duDocF5YcPTBSL+XjjVU+BgSP6RZaH2ZI9mi1
+         hwLQ==
+X-Gm-Message-State: APt69E2hA7nBa8T830H7aHHnB5bi1qPbn8Ww9E28WTCbORubD0HR6eJx
+        e1cBp4Y0oUIeR29A3nd4Z5dTfBQQEKC+z4RQ6pQ=
+X-Google-Smtp-Source: ADUXVKIOGzexDFms8V8HMITzd/mhmoi261NEn9eijWfBcJUtRGZM8zb+ioGMWdJHePZvWsdi1geQgGvdMYd9WAttK40=
+X-Received: by 2002:a19:ce87:: with SMTP id e129-v6mr14107771lfg.57.1529511735866;
+ Wed, 20 Jun 2018 09:22:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180620124006.GB7932@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Provags-ID: V03:K1:OBrkQukzy0vSPiJUJBzFND6ym/uChMRlkPCiPWwNcvcDCxNHcn1
- MLAX8Tsq6JmnaRCcaTZVZEYDYa8G8qeShUAaWmgwl2XirdGeUhiRPXSzV+ybgZ2sundu1A5
- Ne7kDo4Kl3LMsHEHgmZcL1XfY8Vyl6q40Q8kSpa2Em/cV0jLINu/zMnWdOmzUNZkmFq4rCO
- fxUUXkkHv9vayIwMEcc2Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:qlXS7r6Ecco=:/KDizwDpkAxpBPLqIFTV82
- sz14PsOqBdRAuplzayUoE7+BWg7d4XPMaa3nQ4urKUfcCstWwbgzwIZz+19UnuuFj7SSkCTWU
- v9ZNybGsT3EHBfcYTlUEY9d0wLMZ72lmMvgUpLU9dPzsLRNMYaD0sEHIAAiSt6w2rBQFzGhOt
- LJVuDTm2TMjhE4pPivb4U8op7E5otq0ZcAtuyTxS3X796fnjekq3qeBARbvLR1jL72wQR3meg
- TD6psWEthSy9qWP3mo+80TIH+Y7Coi4YdEynHVGz7JcWk2PDso0vd30zhfiZUkxaLC8mzrS9v
- gIbnRh9dr5EDZ/z3fUbugM/YYg6OW3Y4IGJxHc7sDHrOq33JXQSXF09JrMwuGXwPaO2KrsToU
- 1FpUtocqRy7dF3ZwWDanUEVosGM13ZfWMmvdxShpXUhgSguVjkVJfe1613h6LrcHVSVwG36tL
- YOzSBa2hbPX2UInYlg64dpy8j3lj3nx/TxrW7cFSqw6wJEAmM6m2PMBaE+tnbxhFj1GN3F0Bj
- lnQ27b0hT0G1D7AnpU8shBHUsU2vDAuV+4gRcKp/Ru28D1dvDG8OZ8eILbp8hMMQfSz5Wlx7l
- wZI38s3F1kGO4nuEX3CDpvgkAeZv6xwBd/RuL7cZWbt/J3/BMdoeAEOH0acbFOJ9ZS1d5GOni
- PhWYanigK72OGNG+YMmUskjleFT62tDj6GykEKsmgY9/Ji34qVc9LRwKMJS0G9ija5dxjzvW/
- IsuB/K4sFIucJaKQYIqR/39uttFI8aFyUrvumkPlUNMXazQzkQTxCf0hXX8=
+References: <20180618111919.GA10085@book.hvoigt.net> <20180618155544.GB6958@alpha>
+ <20180619102717.GB10085@book.hvoigt.net> <CACUQV5884fs2wp+R5a-99BbJGdEbujzu2iBny+PjPeL9JeOm8Q@mail.gmail.com>
+ <20180620043956.GC6958@alpha> <CACUQV5-ynAv0p9MCRt0Yv9E6x+UN5z4uuaPOt1GpsK6A6MF2wQ@mail.gmail.com>
+ <CACsJy8CW1=Ea984s8J0Y6y4B6qJKZMdsXVFRQc8YcuoQNfXEqw@mail.gmail.com>
+In-Reply-To: <CACsJy8CW1=Ea984s8J0Y6y4B6qJKZMdsXVFRQc8YcuoQNfXEqw@mail.gmail.com>
+From:   =?UTF-8?Q?Rafael_Ascens=C3=A3o?= <rafa.almas@gmail.com>
+Date:   Wed, 20 Jun 2018 17:21:38 +0100
+Message-ID: <CACUQV5-BXQ3PLZ6aiZEqHS39yv4ZJbg_cKwMDCZvHBD6Op_g2A@mail.gmail.com>
+Subject: Re: Adding nested repository with slash adds files instead of gitlink
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     Kevin Daudt <me@ikke.info>, hvoigt@hvoigt.net,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 20, 2018 at 08:40:06AM -0400, Jeff King wrote:
-> On Wed, Jun 20, 2018 at 08:13:06AM +0200, Torsten Bögershausen wrote:
-> 
-> > Good eyes, thanks.
-> > The "-f -c" combo works:
-> > 
-> > -       gzip -k fetch_body &&
-> > +       gzip -f -c fetch_body >fetch_body.gz &&
-> >         test_copy_bytes 10 <fetch_body.gz >fetch_body.gz.trunc &&
-> > -       gzip -k push_body &&
-> > +       gzip -f -c push_body >push_body.gz &&
-> 
-> Do we still need "-f"?  With "-c" gzip is only writing to stdout, so we
-> should not need to force anything.
-> 
-> -Peff
+On Tue, Jun 19, 2018 at 11:28 AM Heiko Voigt <hvoigt@hvoigt.net> wrote:
+>
+> Interesting and nobody complained to the mailinglist?
+>
 
-You are rigth, -f is not needed.
+On Wed, Jun 20, 2018 at 3:57 PM Duy Nguyen <pclouds@gmail.com> wrote:
+>
+> Abusing a long standing bug does not make it a feature.
+>
 
-I was confusing stdout with terminal :-( 
-Most often stdout is the terminal, but not here of course.
+To make things clear, I wasn't defending if this should be considered a
+bug or a feature. Was just clarifying that this isn't a newly discovered
+thing and was reported/discussed in the past.
+
+--
+Cheers,
+Rafael
