@@ -6,60 +6,60 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B8971F516
-	for <e@80x24.org>; Thu, 21 Jun 2018 20:04:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1780F1F516
+	for <e@80x24.org>; Thu, 21 Jun 2018 20:29:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754162AbeFUUE5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Jun 2018 16:04:57 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:36818 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753906AbeFUUE4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jun 2018 16:04:56 -0400
-Received: by mail-wm0-f66.google.com with SMTP id v131-v6so8299351wma.1
-        for <git@vger.kernel.org>; Thu, 21 Jun 2018 13:04:55 -0700 (PDT)
+        id S932879AbeFUU3r (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Jun 2018 16:29:47 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:40487 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932670AbeFUU3q (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jun 2018 16:29:46 -0400
+Received: by mail-wr0-f195.google.com with SMTP id g18-v6so4468780wro.7
+        for <git@vger.kernel.org>; Thu, 21 Jun 2018 13:29:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=d8xC6bCXKUJ57BgSjtNZO32VxGZ3KHAzl1ue+XlnyAM=;
-        b=R9U85pEyhJZIIF9dN04maStlSPcpG6V7pSkrN7rmTy7USuFaqQSSuSJfIuAgMfuHlL
-         o3PdvzbklCXmMX+7Qx+SQF35kM6vcQ1p97hMht8S1LtS6TdXw4se+CqDWGYPHrU9UsTl
-         afeEI23n+UNy7JjLMeYgCn1nFMnt4uKLa1YfF88LcD2W9NvlXuwPsj11HK8yW3p8s8g4
-         iMuCwGr/UActdCW1ayT/VnfENbprBCS8G9iMSFFiG/NFcQH/N6EVynsRqzOFMaKB8pQ2
-         06kPL0SMlFjZkx6uO0Kg8LSe6y1x6ZHe7HRggu64fBmGWebJK98BckQ4fVRl6fK7ev7D
-         fH9g==
+        bh=vBmCoRZJP59kh6yvF3kbHrsiSE2HFT0g+nSftR4dTD4=;
+        b=hZCJQf/1q4pS1JGHu8qJ9LziriRDdTBMI9fY6Uc0KOeTOFnpj6Vo12OrFAfZpBtOhE
+         6FiCMDQUUPnt/4uh93yOUazLaNgKCXfyvKVvgKQcJkQdLmsocJsxa+Yd6ALE9PJmMrih
+         cgTi9QGDkcqy2b3FcuSwSnpwpxHh9eN50xkleED0slO+C4uQ3YvtJ7LSQujNr7ZeZM6U
+         K+FgpQX7J1oCmxp6oIASOjbScxGyFeMKknSTltZtyFqQu/j6mGAuMRGlRWS6mCWK7Ay8
+         imatIN3ZwSj3l1Ba9I5xzqWz4B1e/GRbR21KJBy72CqSIrI0NEeh2zluXKnqky6Njeww
+         X0PA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=d8xC6bCXKUJ57BgSjtNZO32VxGZ3KHAzl1ue+XlnyAM=;
-        b=gsLnzKCV3iffVNcgq7NU5QBy9ONN5AsuOujKgZQDa78XOvelBOtzxEaYYZz3J79Dhi
-         DrtrXrJDH80lCf2h7BAYgY2ZVCwlQimPmJY1K+G+4T5yNO2+F6sn1Jr0u+gzMFVJBjUR
-         hxGV+sHfBmd5LEa5B7UlQHYinBK+9spg74ncaCl8d7ex+kdrWQETJI0WN01mKQ1/V1LQ
-         kHj9SmmzXsI5xzyv2fH849LhisJDfinYeStuATHUy7MzwDCulh0I8kjKyTW8wVK6GnRd
-         nW0h0MFwHkCbE+49UoYtn3pFT9MjusvxaaHb/QDGfmdLxrxPzlJNoLXRnr9Ni6+NOsuC
-         Ke0A==
-X-Gm-Message-State: APt69E2khZ5i3kD24+l5FB39iZyN7R8iGiSz/DTUVHBN/aO+tpkRtNHE
-        KFk6y0bYMiwXYQBkLD9leiY=
-X-Google-Smtp-Source: ADUXVKKcV6gPmrVfVsYou0HHTnCytVhz14JaLtXeU0zYKimIzqtbmNT0yDOdrRvbEvrrXzyRueRfsg==
-X-Received: by 2002:a1c:903:: with SMTP id 3-v6mr6329181wmj.130.1529611494796;
-        Thu, 21 Jun 2018 13:04:54 -0700 (PDT)
+        bh=vBmCoRZJP59kh6yvF3kbHrsiSE2HFT0g+nSftR4dTD4=;
+        b=GKKjNXGzG7erRitKbfoERsfAWeOE58zvONsrqu+METKutnOzTAKPLKO4HKaQvW4ez7
+         P3/hK3GlnHV1g0YSSVx8zR5o3bKABNzgrR72RC6mqDIvIWPASSGm9CFhC7+dQ2yLYdNr
+         88UughrjIusI47mtxy3Dp8bnQc60RwHw/PG0cktl2Z9bpmmbqWOeicHoiiYGuB0TgU6K
+         oGiozNXXiRHeo4zP0JKpIIAed/sFg8qLw8gSPNNpOHWHEbWVtJLUZ6+J7FLW6a8wdogN
+         1hyRU3U2PrLkESXcxWVn0XvJBjCD4I/sD6LadrvhNv5dFRgVXun0zJdSQdEWoFrskVX5
+         v++A==
+X-Gm-Message-State: APt69E2KtcitGsaJtXKkGRNHO3mJjnVW8244mgmUFuJwVuG5EadHPJF9
+        KyycLihNfDenXAAHb0SAaabaQd0Y
+X-Google-Smtp-Source: ADUXVKLq1OvTymabGrP+V41Q5SFJSMh2oVwdJA+LVWGlbj7qiQU4NFeROvGqSl3Ga7GmJ+eximfvlA==
+X-Received: by 2002:adf:cd85:: with SMTP id q5-v6mr21948706wrj.275.1529612985333;
+        Thu, 21 Jun 2018 13:29:45 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 63-v6sm8271057wmv.48.2018.06.21.13.04.53
+        by smtp.gmail.com with ESMTPSA id x11-v6sm2929246wrl.80.2018.06.21.13.29.42
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 21 Jun 2018 13:04:54 -0700 (PDT)
+        Thu, 21 Jun 2018 13:29:43 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Elijah Newren <newren@gmail.com>
 Cc:     git@vger.kernel.org, phillip.wood@dunelm.org.uk,
         johannes.schindelin@gmx.de, sunshine@sunshineco.com
-Subject: Re: [PATCH v3 3/7] t3422: new testcases for checking when incompatible options passed
+Subject: Re: [PATCH v3 4/7] git-rebase: error out when incompatible options passed
 References: <20180617055856.22838-1-newren@gmail.com>
         <20180621150023.23533-1-newren@gmail.com>
-        <20180621150023.23533-4-newren@gmail.com>
-Date:   Thu, 21 Jun 2018 13:04:53 -0700
-In-Reply-To: <20180621150023.23533-4-newren@gmail.com> (Elijah Newren's
-        message of "Thu, 21 Jun 2018 08:00:19 -0700")
-Message-ID: <xmqqvaabsy6y.fsf@gitster-ct.c.googlers.com>
+        <20180621150023.23533-5-newren@gmail.com>
+Date:   Thu, 21 Jun 2018 13:29:42 -0700
+In-Reply-To: <20180621150023.23533-5-newren@gmail.com> (Elijah Newren's
+        message of "Thu, 21 Jun 2018 08:00:20 -0700")
+Message-ID: <xmqqr2kzsx1l.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,84 +70,32 @@ X-Mailing-List: git@vger.kernel.org
 
 Elijah Newren <newren@gmail.com> writes:
 
-> +	git checkout B &&
-> +	# This is indented with HT SP HT.
-> +	echo "	 	foo();" >>foo &&
+> +if test -n "$git_am_opt"; then
+> +	incompatible_opts=$(echo "$git_am_opt" | sed -e 's/ -q//')
 
-I often wonder, whenever I see a need for a comment like this, if
-saying the same thing in code to make it visible is cleaner and less
-error prone way to do so, i.e. e.g.
+This is probably just a taste-thing, but I'd probably prefer to see
+the "sed" filter out "-q" alone, and make an effort to leave future
+things like "-qx" alone, e.g.
 
-	echo "_ _foo();" | tr "_" "\011" >>foo &&
+    $(echo " $git_am_opt " | sed -e 's/ -q / /g' -e 's/^ \(.*\) $/\1/')
 
-> +# Rebase has lots of useful options like --whitepsace=fix, which are
-> +# actually all built in terms of flags to git-am.  Since neither
-> +# --merge nor --interactive (nor any options that imply those two) use
-> +# git-am, using them together will result in flags like --whitespace=fix
-> +# being ignored.  Make sure rebase warns the user and aborts instead.
-> +#
-> +
-> +test_run_rebase () {
-> +	opt=$1
-> +	shift
-> +	test_expect_failure "$opt incompatible with --merge" "
-> +		git checkout B^0 &&
-> +		test_must_fail git rebase $opt --merge A
-> +	"
-> +
-> +	test_expect_failure "$opt incompatible with --strategy=ours" "
-> +		git checkout B^0 &&
-> +		test_must_fail git rebase $opt --strategy=ours A
-> +	"
-> +
-> +	test_expect_failure "$opt incompatible with --strategy-option=ours" "
-> +		git checkout B^0 &&
-> +		test_must_fail git rebase $opt --strategy=ours A
-> +	"
-> +
-> +	test_expect_failure "$opt incompatible with --interactive" "
-> +		git checkout B^0 &&
-> +		test_must_fail git rebase $opt --interactive A
-> +	"
-> +
-> +	test_expect_failure "$opt incompatible with --exec" "
-> +		git checkout B^0 &&
-> +		test_must_fail git rebase $opt --exec 'true' A
-> +	"
-> +
-> +}
-> +
-> +test_run_rebase --whitespace=fix
-> +test_run_rebase --ignore-whitespace
-> +test_run_rebase --committer-date-is-author-date
-> +test_run_rebase -C4
+or something like that.
 
-I happen to be from old school and "rebase" primarily means
-"format-patch piped to am" in my mind, so from that point of view,
-"test_run_rebase --OPT" that says "--OPT which is a valid option for
-the primary operating mode of rebase does not work with the other
-exotic modes of the command" is not all that bad, but I do not think
-that worldview holds for many people in general.  Perhaps calling it
-something like "test_rebase_am_only" makes the intent clearer?
+> +	if test -n "$interactive_rebase"
+> +	then
+> +		if test -n "$incompatible_opts"
+> +		then
+> +			die "$(gettext "error: cannot combine interactive options (--interactive, --exec, --rebase-merges, --preserve-merges, --keep-empty, --root + --onto) with am options ($incompatible_opts)")"
+> +		fi
+> +	fi
+> +	if test -n "$do_merge"; then
+> +		if test -n "$incompatible_opts"
+> +		then
+> +			die "$(gettext "error: cannot combine merge options (--merge, --strategy, --strategy-option) with am options ($incompatible_opts)")"
+> +		fi
+> +	fi
+> +fi
 
-> +test_expect_success '--preserve-merges incompatible with --signoff' '
-> +	git checkout B^0 &&
-> +	test_must_fail git rebase --preserve-merges --signoff A
-> +'
-> +
-> +test_expect_failure '--preserve-merges incompatible with --rebase-merges' '
-> +	git checkout B^0 &&
-> +	test_must_fail git rebase --preserve-merges --rebase-merges A
-> +'
-> +
-> +test_expect_failure '--rebase-merges incompatible with --strategy' '
-> +	git checkout B^0 &&
-> +	test_must_fail git rebase --rebase-merges -s resolve A
-> +'
-> +
-> +test_expect_failure '--rebase-merges incompatible with --strategy-option' '
-> +	git checkout B^0 &&
-> +	test_must_fail git rebase --rebase-merges -Xignore-space-change A
-> +'
-> +
-> +test_done
+Not making --merge and --interactive incompatible as the proposed
+log message said makes this hunk at manageable complexity, I guess
+;-)
