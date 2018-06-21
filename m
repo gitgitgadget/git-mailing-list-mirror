@@ -2,112 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 03BBC1F516
-	for <e@80x24.org>; Thu, 21 Jun 2018 19:58:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CBAAE1F516
+	for <e@80x24.org>; Thu, 21 Jun 2018 20:03:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933039AbeFUT6S (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Jun 2018 15:58:18 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:39707 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932899AbeFUT6S (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jun 2018 15:58:18 -0400
-Received: by mail-wm0-f68.google.com with SMTP id p11-v6so8236547wmc.4
-        for <git@vger.kernel.org>; Thu, 21 Jun 2018 12:58:17 -0700 (PDT)
+        id S1754097AbeFUUDg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Jun 2018 16:03:36 -0400
+Received: from mail-qt0-f193.google.com ([209.85.216.193]:42292 "EHLO
+        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754067AbeFUUDg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jun 2018 16:03:36 -0400
+Received: by mail-qt0-f193.google.com with SMTP id y31-v6so4005402qty.9
+        for <git@vger.kernel.org>; Thu, 21 Jun 2018 13:03:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=E+JFGq+iLZZunGtCjl1oAkPB4nyYd2qcy7ffFBt9J2Y=;
-        b=JZdwfGQMZ6DoxiMd9bS4QpozJho8eW47OICBKuoqXA2iyqrUfyILIeLCz1KlZaWvOz
-         0IyGcG/G2JFvTdGCe1ax71jZSg8rMJ9cpjEV+A+xtoonHJ3uwCi9OfIETGmWIX70nQQ6
-         52Mi7UZrQt/8rNehiXSS8YnMrqed0HpU7qA4hqCT8VxdwL+KWSn19tfyf4wCWH/ZXQrq
-         dQcQqa80nS8KEoLMWgGGJsxGsUl56DX9ECUDSG8mkW2qOlzX97HLyfgnny0a5mAFtjjV
-         7nI8IoYcqWgroqx4+N6m9MSwmAcdCTW3RIosuQDxUm3K8eWZGgZStbqvEL5dDeSRg8vZ
-         zY5w==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=YLHf8SCBQr8egysjvN6H+8bSsubPqsnxbMzNGIfpKQQ=;
+        b=ihpe9ou9bz+/iWoBqSAMLwPW+eWSVjJojTHn/waEwirHxWxNHgp7IcxjMLJ9A58YSn
+         9bFaYj89RNzfkkjPbz52kDZz/ZEaDmhAMyReQ1d5vSTUlbdj3NVm0KqxI6ZZiwWBABZ0
+         oT7IvSLv7HxB/I7+encHmVStTv3upj2M1OiNK0CbnB+Z61yEzR8oMu/MHvhLTAPWjOIf
+         AX0gc7jnJv/D2brRnQYUNYPtCecBLvUe0qnCZjmnSjfblU1qSuysFTQThythKkk71j8C
+         6o1rjoizf2bBovn4g/0cYTzb9SMs5poCubVYh2+x6a1RX6Ae7gWsx5yUUqFOW/zsDCJ0
+         TOtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=E+JFGq+iLZZunGtCjl1oAkPB4nyYd2qcy7ffFBt9J2Y=;
-        b=T6W3gN+Z5RBWaXa38p3x1fHdKGU8T15C1nCFqeaLKVvOxR51PR7K6LmAXuvq+VFItc
-         yWFa5+0/d7delCjXknbu0wmFPibZUEnDu/vpPWpgROBs2SNNhKGj0K9970FCjUZzWN0A
-         SLJ7bWTTeKf3811uuOKF5Hm7Bi4w9xV/uH4i2eXoZWSTzF2D+3lMmb3PHX5xYGVKTpzR
-         L7rClfYGpo08J/2ljIe1R4sTxfh/4EyUnEzeFAbcnP5vGq1p188Kc71ukNMp3IzKYscL
-         CEAVgiSWhxJ6j/nbmd//ar20PA4bfHqXTkZSGURBiHRmuDFDnse6b29lvIKJ9lLUVSOG
-         vvDw==
-X-Gm-Message-State: APt69E2MEXu2tSLMueP39RnxUnXBtkGHv+2NPYBbqyqI0rv4qLlGBH04
-        Wt9IZIGZz5TstyJ8m4D3m9c=
-X-Google-Smtp-Source: ADUXVKIEPIp73U+ANPrnQ3nDnrqYDx6abCtgjsFIgRquk/9UVnPfFFyL2E4tDGnb02ahjBAG3mIvDw==
-X-Received: by 2002:a1c:3a91:: with SMTP id h139-v6mr6529303wma.94.1529611096733;
-        Thu, 21 Jun 2018 12:58:16 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id t13-v6sm9465759wro.62.2018.06.21.12.58.14
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 21 Jun 2018 12:58:14 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     git@vger.kernel.org, phillip.wood@dunelm.org.uk,
-        johannes.schindelin@gmx.de, sunshine@sunshineco.com
-Subject: Re: [PATCH v3 2/7] git-rebase.sh: update help messages a bit
-References: <20180617055856.22838-1-newren@gmail.com>
-        <20180621150023.23533-1-newren@gmail.com>
-        <20180621150023.23533-3-newren@gmail.com>
-Date:   Thu, 21 Jun 2018 12:58:13 -0700
-In-Reply-To: <20180621150023.23533-3-newren@gmail.com> (Elijah Newren's
-        message of "Thu, 21 Jun 2018 08:00:18 -0700")
-Message-ID: <xmqqzhznsyi2.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=YLHf8SCBQr8egysjvN6H+8bSsubPqsnxbMzNGIfpKQQ=;
+        b=MgPa5P2R9uR3aRJaKda3uctwmd56jW7NJjqMfoknCNtM5HGPmEXW3xN2GbFEialbOx
+         wT739IY3NUBBf2/zKsRW7LTFbw0HpQDvBDraKSHxt98FNnTw3FoUEu4hqKzNdWXZB0Ow
+         HisSZ+CsQfiPxBeydjeFaGRKh0RTlI4oVxH1FEjQHE/QJpQNB/K18u/pRIOMUtfs1Se+
+         tFOduMkrKQVrDV3d4Hy05fRMSsEk6j7x1yIfWW6DBGC08PEdge+YcD0t+F8LsIuzSLx4
+         hq76G49n1QFrzdorwWnVXNDycNwEZ7HaIrIGmIqYyWWFHXIV5RTioJbGsh6vGLN/i6yM
+         b1rg==
+X-Gm-Message-State: APt69E19A922VwU4ipKFwef4jrpwieL9ntXc/9sPxRNxOEPMb9+o6VR2
+        2tbSjgRZogHZoZrHWeU7d9E=
+X-Google-Smtp-Source: ADUXVKJkbOxsnU2wJKi2NlEhUkiBzShsE0RBEMU+O5g/trMl0v3Plnpb18GFxuTWMX1RyUNpn17NGw==
+X-Received: by 2002:ac8:683:: with SMTP id f3-v6mr25209881qth.104.1529611415306;
+        Thu, 21 Jun 2018 13:03:35 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:355a:cab3:6059:73ce? ([2001:4898:8010:0:1e90:cab3:6059:73ce])
+        by smtp.gmail.com with ESMTPSA id m2-v6sm2792353qtc.77.2018.06.21.13.03.33
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 21 Jun 2018 13:03:34 -0700 (PDT)
+Subject: Re: [PATCH 17/23] midx: read objects from multi-pack-index
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Martin Fick <mfick@codeaurora.org>
+References: <20180607140338.32440-1-dstolee@microsoft.com>
+ <20180607140338.32440-18-dstolee@microsoft.com>
+ <CACsJy8CqoKWgd=ekxozaKzRjrU3NN9KUxrspk_iP+zxBVcV5pA@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <b9d875e2-452d-6492-fd25-9d114af39a25@gmail.com>
+Date:   Thu, 21 Jun 2018 16:03:32 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <CACsJy8CqoKWgd=ekxozaKzRjrU3NN9KUxrspk_iP+zxBVcV5pA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
-
-> signoff is not specific to the am-backend.  Also, re-order a few options
-> to make like things (e.g. strategy and strategy-option) be near each
-> other.
-> ---
->  git-rebase.sh | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
-
-Missing sign-off, but otherwise looks good.
-
+On 6/9/2018 1:56 PM, Duy Nguyen wrote:
+> On Thu, Jun 7, 2018 at 6:55 PM Derrick Stolee <stolee@gmail.com> wrote:
+>> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+>> ---
+>>   midx.c         | 96 ++++++++++++++++++++++++++++++++++++++++++++++++--
+>>   midx.h         |  2 ++
+>>   object-store.h |  1 +
+>>   packfile.c     |  8 ++++-
+>>   4 files changed, 104 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/midx.c b/midx.c
+>> index 5e9290ca8f..6eca8f1b12 100644
+>> --- a/midx.c
+>> +++ b/midx.c
+>> @@ -3,6 +3,7 @@
+>>   #include "dir.h"
+>>   #include "csum-file.h"
+>>   #include "lockfile.h"
+>> +#include "sha1-lookup.h"
+>>   #include "object-store.h"
+>>   #include "packfile.h"
+>>   #include "midx.h"
+>> @@ -64,7 +65,7 @@ struct midxed_git *load_midxed_git(const char *object_dir)
+>>
+>>          m = xcalloc(1, sizeof(*m) + strlen(object_dir) + 1);
+>>          strcpy(m->object_dir, object_dir);
+>> -       m->data = midx_map;
+>> +       m->data = (const unsigned char*)midx_map;
+> Hmm? Why is this typecast only needed now? Or is it not really needed at all?
 >
-> diff --git a/git-rebase.sh b/git-rebase.sh
-> index 40be59ecc4..bf71b7fa20 100755
-> --- a/git-rebase.sh
-> +++ b/git-rebase.sh
-> @@ -20,23 +20,23 @@ onto=!             rebase onto given branch instead of upstream
->  r,rebase-merges?   try to rebase merges instead of skipping them
->  p,preserve-merges! try to recreate merges instead of ignoring them
->  s,strategy=!       use the given merge strategy
-> +X,strategy-option=! pass the argument through to the merge strategy
->  no-ff!             cherry-pick all commits, even if unchanged
-> +f,force-rebase!    cherry-pick all commits, even if unchanged
->  m,merge!           use merging strategies to rebase
->  i,interactive!     let the user edit the list of commits to rebase
->  x,exec=!           add exec lines after each commit of the editable list
->  k,keep-empty	   preserve empty commits during rebase
->  allow-empty-message allow rebasing commits with empty messages
-> -f,force-rebase!    force rebase even if branch is up to date
-> -X,strategy-option=! pass the argument through to the merge strategy
->  stat!              display a diffstat of what changed upstream
->  n,no-stat!         do not show diffstat of what changed upstream
->  verify             allow pre-rebase hook to run
->  rerere-autoupdate  allow rerere to update index with resolved conflicts
->  root!              rebase all reachable commits up to the root(s)
->  autosquash         move commits that begin with squash!/fixup! under -i
-> +signoff            add a Signed-off-by: line to each commit
->  committer-date-is-author-date! passed to 'git am'
->  ignore-date!       passed to 'git am'
-> -signoff            passed to 'git am'
->  whitespace=!       passed to 'git apply'
->  ignore-whitespace! passed to 'git apply'
->  C=!                passed to 'git apply'
+>>          m->signature = get_be32(m->data);
+>>          if (m->signature != MIDX_SIGNATURE) {
+>> @@ -145,7 +146,9 @@ struct midxed_git *load_midxed_git(const char *object_dir)
+>>
+>>          m->num_objects = ntohl(m->chunk_oid_fanout[255]);
+>>
+>> -       m->pack_names = xcalloc(m->num_packs, sizeof(const char *));
+>> +       m->packs = xcalloc(m->num_packs, sizeof(*m->packs));
+>> +
+>> +       ALLOC_ARRAY(m->pack_names, m->num_packs);
+> Please make this ALLOC_ARRAY change in the patch that adds
+> xcalloc(m->num_packs).
+>
+>>          for (i = 0; i < m->num_packs; i++) {
+>>                  if (i) {
+>>                          if (ntohl(m->chunk_pack_lookup[i]) <= ntohl(m->chunk_pack_lookup[i - 1])) {
+>> @@ -175,6 +178,95 @@ struct midxed_git *load_midxed_git(const char *object_dir)
+>>          exit(1);
+>>   }
+>>
+>> +static int prepare_midx_pack(struct midxed_git *m, uint32_t pack_int_id)
+>> +{
+>> +       struct strbuf pack_name = STRBUF_INIT;
+>> +
+>> +       if (pack_int_id >= m->num_packs)
+>> +               BUG("bad pack-int-id");
+>> +
+>> +       if (m->packs[pack_int_id])
+>> +               return 0;
+>> +
+>> +       strbuf_addstr(&pack_name, m->object_dir);
+>> +       strbuf_addstr(&pack_name, "/pack/");
+>> +       strbuf_addstr(&pack_name, m->pack_names[pack_int_id]);
+> Just use strbuf_addf()
+>
+>> +
+>> +       m->packs[pack_int_id] = add_packed_git(pack_name.buf, pack_name.len, 1);
+>> +       strbuf_release(&pack_name);
+>> +       return !m->packs[pack_int_id];
+> This is a weird return value convention. Normally we go zero/negative
+> or non-zero/zero for success/failure.
+
+We are inconsistent.
+
+* open_pack_index() returns non-zero on error. (This was my reference 
+point.)
+* bsearch_pack() and find_pack_entry() return non-zero when an entry is 
+found.
+
+Since the use is "if (error) die()", similar to open_pack_index(), I'll 
+keep the current behavior. To switch would require using 
+"!!m->packs[pack_int_id]" here and "if (!prepare_midx_pack()) die()" in 
+the consumer.
+
+Thanks,
+-Stolee
