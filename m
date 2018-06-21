@@ -2,148 +2,208 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B8FD31F516
-	for <e@80x24.org>; Thu, 21 Jun 2018 12:10:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF5BB1F516
+	for <e@80x24.org>; Thu, 21 Jun 2018 13:54:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933631AbeFUMKg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Jun 2018 08:10:36 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:42735 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933199AbeFUMKd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jun 2018 08:10:33 -0400
-Received: by mail-wr0-f196.google.com with SMTP id w10-v6so2933719wrk.9
-        for <git@vger.kernel.org>; Thu, 21 Jun 2018 05:10:33 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=ugsbBtltNSw8lzFqeBPCAmY3T/SGqJWCvYA0OvWKF38=;
-        b=fZoOmAPm4iXRaJxiRNmkc+Lw1KnNcA4+Db5iZ3giFjfyYDWfico+H/sEO05oA5ohtr
-         X5gUefgJ33JVaqrXEDeZgAaqFpKbNANhOo0T5FbgQUeptQMTx9CITb0WC7vQWc0wFUhh
-         hrt7ONaXRWmBUG4D0NTLF8gW5oNyAd1ItAKfBgsOrbUosRx/sHT86tV+ltmA5uC40Cks
-         vrfyTEbd2vAsp+6bv+/O/Lt5P7lagl9wGUSV+uVzi1GkC9YNKEEGyvfb2E1TxWwa4DJQ
-         hSfqKafrsgpUJvDAQ3inwoYkyxO1YPMipwmY9c38QggZiUBkoZ8OvRIFl2iAA6/1m00M
-         81pg==
-X-Gm-Message-State: APt69E1TvHQNdzNVwnfdUAiM/dFzut+LgZhLbFsITUx/yVo9dD6hUdtE
-        QyNwbUeT5zP5oFlA89ZkjIdW+vg1KjE+Cw==
-X-Google-Smtp-Source: ADUXVKLBmK3orJYNZEkn6MglgfUCw5p/AC26jEEOB0V1Lj6DyZqb0vD99hMbx+IVH0GJ03B1ClB9uA==
-X-Received: by 2002:adf:f391:: with SMTP id m17-v6mr20729122wro.279.1529583032217;
-        Thu, 21 Jun 2018 05:10:32 -0700 (PDT)
-Received: from skisela-redhat.brq.redhat.com (nat-pool-brq-t.redhat.com. [213.175.37.10])
-        by smtp.gmail.com with ESMTPSA id s13-v6sm4659856wrq.48.2018.06.21.05.10.31
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 21 Jun 2018 05:10:31 -0700 (PDT)
-From:   Sebastian Kisela <skisela@redhat.com>
-X-Google-Original-From: Sebastian Kisela <sebastian.kisela@gmail.com>
-To:     git@vger.kernel.org
-Cc:     nico@fluxnic.net, larsxschneider@gmail.com, lfleischer@lfos.de,
-        skisela@redhat.com
-Subject: [PATCH] Sanitize escape char sequences coming from server
-Date:   Thu, 21 Jun 2018 14:10:30 +0200
-Message-Id: <20180621121030.1721-1-sebastian.kisela@gmail.com>
-X-Mailer: git-send-email 2.14.4
+        id S932259AbeFUNym (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Jun 2018 09:54:42 -0400
+Received: from ao2.it ([92.243.12.208]:51835 "EHLO ao2.it"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751048AbeFUNyl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jun 2018 09:54:41 -0400
+Received: from localhost ([::1] helo=jcn.localdomain)
+        by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.84_2)
+        (envelope-from <ao2@ao2.it>)
+        id 1fW02I-0001o1-HA; Thu, 21 Jun 2018 15:54:06 +0200
+Date:   Thu, 21 Jun 2018 15:54:38 +0200
+From:   Antonio Ospite <ao2@ao2.it>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>, Brandon Williams <bmwill@google.com>,
+        Daniel =?ISO-8859-1?Q?Gra=F1a?= <dangra@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Richard Hartmann <richih.mailinglist@gmail.com>
+Subject: Re: [RFC PATCH 01/10] config: make config_from_gitmodules generally
+ useful
+Message-Id: <20180621155438.31b244a9d5d7b4723f85ba89@ao2.it>
+In-Reply-To: <CAGZ79kaMbGdJjooqWLiNOabmujhNKKKJQb_HrZ4YUMVMQ--KbA@mail.gmail.com>
+References: <20180514105823.8378-1-ao2@ao2.it>
+        <20180514105823.8378-2-ao2@ao2.it>
+        <CAGZ79kag=1h506FGg72_F9Rmz4nqPN19kaywfTtD3WnNWnxD9w@mail.gmail.com>
+        <20180620200634.13b47725cfd1e2dfb1cd482e@ao2.it>
+        <CAGZ79kaMbGdJjooqWLiNOabmujhNKKKJQb_HrZ4YUMVMQ--KbA@mail.gmail.com>
+X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+
+ ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Sebastian Kisela <skisela@redhat.com>
+On Wed, 20 Jun 2018 12:10:42 -0700
+Stefan Beller <sbeller@google.com> wrote:
 
-Fix volnurability against MITM attacks on client side
-by replacing non printable and non white space characters
-by "?".
+> Hi Antonio!
+>
+> On Wed, Jun 20, 2018 at 11:06 AM Antonio Ospite <ao2@ao2.it> wrote:
+> > I get that the _content_ of .gitmodules is not meant to be generic
+> > config, but I still see some value in having a single point when its
+> > _location_ is decided.
+> 
+> I agree that a single point for the _location_ as well as the _order_
+> (in case there will be multiple files; as of now we have the layering
+> of .gitmodules overlayed by .git/config; IIRC I explained having
+> an intermediate layer in our conversation to be useful; See one of the latest
+> bug reports[1], where an intermediate layer outside a single branch would
+> prove to be useful.) parsing are useful.
+> 
+> [1] https://public-inbox.org/git/DB6PR0101MB2344D682511891E4E9528598D97D0@DB6PR0101MB2344.eurprd01.prod.exchangelabs.com/
+> 
+> Sorry for not explaining my point of view well enough, let me try again:
+> 
+> Historically we did not store any config in the repository itself.
+> There are some exceptions, but these configurations are content related,
+> i.e. .gitmodules or .gitattributes can tell you meta data about the
+> content itself.
+> 
+> However other config was kept out: One could have a .gitconfig that
+> pre-populates the .git/config file, right? That was intentionally avoided
+> as there are many configurations that are easy to abuse security wise,
+> e.g. setting core.pager = "rm -rf /"
+> 
+> And then submodules entered the big picture. Submodules need quite
+> a lot of configuration, and hence the .gitmodules file was born. Initially
+> IIRC there was only a very simple config like url store:
+> 
+>   [submodule.<path>]
+>     url = <url>
+> 
+> and that was it as it was just like the .gitignore and .gitattributes
+> related to the content and transporting this configuration with the
+> content itself seemed so natural.
+> 
+> However then a lot of settings were invented for submodules and some
+> made it into the .gitmodules file; only recently there was a discussion
+> on list how these settings may or may not pose a security issue. It turns out
+> we had a CVE (with sumodule names) and that got fixed but we really want
+> to keep the .gitmodules file simple and ignore any additional things in there
+> as they may pose security issues later.
+> 
+> With that said, how would you write the code while keeping this in mind?
+> If you look at builtin/submodule--helper.c and builtin/fetch.c, you'll see that
+> they use
+> 
+>   config_from_gitmodules(their_parse_function);
+>   git_config(their_parse_function);
+> 
+> and config_from_gitmodules is documented to not be expanded;
+> the config_from_gitmodules is singled out to treat those settings
+> that snuck in and are kept around as we don't want to break existing
+> users. But we'd really not want to expand the use of that function
+> again for its implications on security. Right now it is nailed down beautifully
+> and it is easy to tell which commands actually look at config from
+> the .gitmodules file (not to be confused with the submodule parsing,
+> that is in submodule-config.{h, c}. That is actually about finding
+> submodule specific name/path/url etc instead of the generic
+> "submodule.fetchjobs" or "fetch.recursesubmodules".
+> 
+> ----
+> So far about the background story. I would rather replicate the code in
+> repo_read_gitmodules in the submodule-config.c as to mix those
+> two lines (reading generic config vs. reading submodule specific config,
+> like name/url/path). And to not mix them, I would not reuse that function
+> but rather replicate (or have a static helper) in submodule helper,
+> as then we cannot pass in an arbitrary config parsing callback to
+> that, but are bound to the submodule helper code.
+>
 
-Fixes: CVE-2018-1000021
-Signed-off-by: Sebastian Kisela <skisela@redhat.com>
----
- sideband.c              | 20 ++++++++++++++++++++
- t/t5401-update-hooks.sh | 23 +++++++++++++++++++++++
- 2 files changed, 43 insertions(+)
+OK, the fact I was overlooking was that the "config_fn_t" argument
+passed to config_from_gitmodules is what we are actually worried about,
+it's the config callback which could allow generic config in .gitmodules
+to sneak in. I still have some blind spots on git internals, sorry.
 
-diff --git a/sideband.c b/sideband.c
-index 325bf0e97..8c9d74ace 100644
---- a/sideband.c
-+++ b/sideband.c
-@@ -1,3 +1,4 @@
-+#include <wchar.h>
- #include "cache.h"
- #include "pkt-line.h"
- #include "sideband.h"
-@@ -18,6 +19,20 @@
- #define ANSI_SUFFIX "\033[K"
- #define DUMB_SUFFIX "        "
- 
-+int sanitize_server_message(struct strbuf *outbuf)
-+{
-+	wchar_t *wcstring = xmalloc(sizeof(wchar_t) * outbuf->len);
-+	int len = mbstowcs(wcstring, outbuf->buf, outbuf->len);
-+	if (len == -1)
-+		return 1;
-+	for(int i = 0; i <= len; i++)
-+		if(!isprint(wcstring[i]) && !isspace(wcstring[i]) )
-+			wcstring[i] = '?';
-+		if (wcstombs(outbuf->buf, wcstring, outbuf->len) == -1)
-+			return 1;
-+	return 0;
-+}
-+
- int recv_sideband(const char *me, int in_stream, int out)
- {
- 	const char *suffix;
-@@ -74,6 +89,9 @@ int recv_sideband(const char *me, int in_stream, int out)
- 				} else {
- 					strbuf_addch(&outbuf, *brk);
- 				}
-+
-+				if (sanitize_server_message(&outbuf))
-+					retval = SIDEBAND_REMOTE_ERROR;
- 				xwrite(2, outbuf.buf, outbuf.len);
- 				strbuf_reset(&outbuf);
- 
-@@ -97,6 +115,8 @@ int recv_sideband(const char *me, int in_stream, int out)
- 
- 	if (outbuf.len) {
- 		strbuf_addch(&outbuf, '\n');
-+		if (sanitize_server_message(&outbuf))
-+			retval = SIDEBAND_REMOTE_ERROR;
- 		xwrite(2, outbuf.buf, outbuf.len);
- 	}
- 	strbuf_release(&outbuf);
-diff --git a/t/t5401-update-hooks.sh b/t/t5401-update-hooks.sh
-index 7f278d8ce..cc1f6ca29 100755
---- a/t/t5401-update-hooks.sh
-+++ b/t/t5401-update-hooks.sh
-@@ -148,4 +148,27 @@ test_expect_success 'pre-receive hook that forgets to read its input' '
- 	git push ./victim.git "+refs/heads/*:refs/heads/*"
- '
- 
-+cat <<EOF >expect
-+remote: foo?[0;31mbar?[0m
-+To ./victim.git
-+ * [new branch]      victim_branch -> victim_branch
-+EOF
-+cat >victim.git/hooks/pre-receive <<'EOF'
-+#!/bin/sh
-+  printf "foo\033[0;31mbar\033[0m"
-+  exit 0
-+EOF
-+chmod u+x victim.git/hooks/pre-receive
-+test_expect_success 'pre-receive stderr contains ANSI colors' '
-+	rm -f victim.git/hooks/update victim.git/hooks/post-receive &&
-+
-+  git branch victim_branch master &&
-+	git push ./victim.git "+refs/heads/victim_branch:refs/heads/victim_branch"\
-+    >send.out 2>send.err &&
-+
-+  cat send.err > actual &&
-+
-+  test_cmp expect actual
-+'
-+
- test_done
+So, from Brandon's message I derive that using the gitmodules_cb from
+submodules-config.c as a callback would be safe, as that's what
+repo_read_gitmodules already uses anyways, and it only allows submodules
+configuration.
+
+However, what about avoiding exposing the dangerous interface altogether
+and adding ad-hoc helpers when needed?
+
+I mean:
+
+  0. Move config_from_gitmodules to submodule-config.c as per Bradon's
+     suggestion.
+
+  1. Add public helpers in submodule-config.[ch] to handle backwards
+     compatibility, like: fetch_config_from_gitmodules() and
+     update_clone_config_from_gitmodules() these would be used by fetch
+     and update-clone function and would not accept callbacks.
+
+     This would mean moving the callback functions
+     gitmodules_fetch_config() and gitmodules_update_clone_config() into
+     submodule-config.c and making them private. The helpers will call
+     config_from_gitmodules() with them.
+
+  2. Now that config_from_gitmodules it's not used in the open it can be
+     made private too, so it can only be used in submodule-config.c
+
+  3. Use config_from_gitmodules in repo_read_gitmodules as the
+     gitmodules_cb function should be safe to use as a config callback.
+
+  4. Add a new gitmodules_get_value() helper in submodule-config.c which
+     calls config_from_gitmodules with a "print" callback and use that
+     helper for "submodule--helper config",
+
+  5. At this point we shouldn't worry too much about the .gitmodules
+     content anymore, and we can possibly extend config_from_gitmodules
+     to read from other locations like HEAD:.gitmodules.
+
+This way the number of users of config_from_gitmodules remains strictly
+controlled and confined in submodule-config.c
+
+I know, we could end up adding more code with the helpers but that could
+be justified by the more protective approach: we would be using symbols
+scoping rules instead of comments to ensure something.
+
+If you think this may be worth a shot I can send a series which covers
+items from 0 to 3.
+
+Ciao,
+   Antonio
+
+P.S. Always relevant: https://youtu.be/8fnfeuoh4s8 (I swear it's not
+Rick Astley)
+
+> > > I think extending 'repo_read_gitmodules' makes sense, as that is
+> > > used everywhere for the loading of submodule configuration.
+> >
+> > I would follow Brandon's suggestion here and still use
+> > 'config_from_gitmodules' from 'repo_read_gitmodules' to avoid code
+> > duplication.
+> >
+> > I will try to be clear in the comments and in commit message when
+> > motivating the decision.
+> 
+> Rereading what Brandon said, I agree with this approach, sorry for writing
+> out the story above in such lengthy detail.
+> 
+> Thanks for picking up this series again!
+> Stefan
+
+
 -- 
-2.14.4
+Antonio Ospite
+https://ao2.it
+https://twitter.com/ao2it
 
+A: Because it messes up the order in which people normally read text.
+   See http://en.wikipedia.org/wiki/Posting_style
+Q: Why is top-posting such a bad thing?
