@@ -7,87 +7,167 @@ X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6AC0F1F516
-	for <e@80x24.org>; Thu, 21 Jun 2018 10:38:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F26F1F516
+	for <e@80x24.org>; Thu, 21 Jun 2018 10:57:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932883AbeFUKih (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Jun 2018 06:38:37 -0400
-Received: from mout.gmx.net ([212.227.17.22]:55209 "EHLO mout.gmx.net"
+        id S1754538AbeFUK53 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Jun 2018 06:57:29 -0400
+Received: from mout.gmx.net ([212.227.17.22]:51575 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932303AbeFUKig (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jun 2018 06:38:36 -0400
-Received: from [192.168.0.129] ([37.201.195.106]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MVZuV-1fhMSW0nFP-00YwFH; Thu, 21
- Jun 2018 12:38:31 +0200
-Date:   Thu, 21 Jun 2018 12:38:41 +0200 (DST)
+        id S1754501AbeFUK5Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jun 2018 06:57:25 -0400
+Received: from [192.168.0.129] ([37.201.195.106]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MSuYT-1ffgCp0K4T-00RmkJ; Thu, 21
+ Jun 2018 12:57:18 +0200
+Date:   Thu, 21 Jun 2018 12:57:28 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Alban Gruin <alban.gruin@gmail.com>
-cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        phillip.wood@dunelm.org.uk, Elijah Newren <newren@gmail.com>
-Subject: Re: [GSoC][PATCH v2 3/3] rebase -i: rewrite checkout_onto() in C
-In-Reply-To: <20180619154421.14999-4-alban.gruin@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1806211236350.11870@tvgsbejvaqbjf.bet>
-References: <20180618131844.13408-1-alban.gruin@gmail.com> <20180619154421.14999-1-alban.gruin@gmail.com> <20180619154421.14999-4-alban.gruin@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Alban Gruin <alban.gruin@gmail.com>
+Subject: Re: [RFC PATCH 3/3] git-rebase.sh: make git-rebase--interactive the
+ default
+In-Reply-To: <CABPp-BEnJ4q9WGi4BgikpLJ9Aty5-3MR4VozjBk7ie4rGMc-ng@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1806211242440.11870@tvgsbejvaqbjf.bet>
+References: <CABPp-BGxaroePB6aKWAkZeADLB7VE3y1CPy2RyNwpn=+C01g3A@mail.gmail.com> <20180607171344.23331-1-newren@gmail.com> <20180607171344.23331-4-newren@gmail.com> <nycvar.QRO.7.76.6.1806100006000.77@tvgsbejvaqbjf.bet> <CABPp-BHa+sxuFBa3EmSyio28ytF_ORn950Keh1P=L-VxXtOwMw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1806172337340.77@tvgsbejvaqbjf.bet> <CABPp-BEnJ4q9WGi4BgikpLJ9Aty5-3MR4VozjBk7ie4rGMc-ng@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Yf0dU43py07UZeagAeEvmGLxzoWiwULic9VDuZo9NKiQCdZE5pi
- acXCYs02kYfY0UoWhq3zI6rtO6HlbReysjeqS3nw2qda6EtAwNJw1ysEvTaKSwJML+aUfup
- OF0n4Gzd9UbfPba2cDdLk16pJcEyXnDfnk84HjIgjuw+iXy8cXoX7uGMU+pt2TzPQWJycv+
- eETjv2BXv2L1vrZQ5gqnw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:4+4IbGLEofo=:QsnBm6L2VIneYa184JYp/A
- d9vp0yXb5bnYavf2KZR80LrB3pt+3dSN47MxClH46V6MCDRlKTrsFzsydUErRCsBMkQ9BHc8i
- 6qHfGNte+vDxPW0gp1BXTq4efpW8VDkA3Qt0snlDPpD9pOFqXx8PFEBa4lDTfz7BoLNjKEccB
- /XqHQydHzaIcwbhnSDJuDry1A1otAmLb3agpseMbdT2nmUKZkH4rFV8C8hyKernqakISE6axx
- eFXTl0/UQlVOyTY6sJyjNJHJPqmbdibuh25HrfnLOAx3/RqHgCs9f3H56MnebG3qXw8QlZwe4
- Ip5ry7p7UySpeRWTU07UDen9iiym5vzJN/Iaj8Q8IGhV5LDzAvTM4845mtm71+o8mwZDT5UtJ
- 16+1OTA2mSD0GRtq1mwo2SqFL+ispUZmv8dt6Y1AoQRtxOLUovh4OmUjepg8p0RPwm25AphOm
- ujmS83+IrL0EIA8znucj+m9W8PjZeJKFNz/tBj3R54rLZnR+YafcxhqV0HyxSNDz01y90gsqg
- xtWNZSPvE7ZjWRoVScUKo1nvUlNxQ0hWi+cJNy2vLDl/NuxlImiHVqGMZbBeqo7e3K/rW8nEI
- Vh1YkobkTrhnGqvHKXU5wsf72MEE81glShZlu/B14vm1rxuU68fxI1R+ekit+YmP235t1ecI3
- +MHlAN1JqXCIlErEOPRVtfO7IKfqM+tytlhOjbBKONZYFKu8GeaWmTeqnT/Anmk62R0PoRWGb
- TJZDVXso/CymZjmS3vHdxRocVwJaJETYaDkdoEPN5pAMod4GZsRcuDKvm48LC9r1bk6E0hz6W
- 3rzLrjm
+X-Provags-ID: V03:K1:Gh7eD7/lwd3+DjQClQxoVrsOHghw9UaIPEU4k5b5+JvoaFcOu8T
+ qkPcdPalPprsJ1FNz2JmxwTxor2onytJWWX9WOTUCdyJceqcsDvg36IEf7SMgT4AWW45Q4f
+ 9T8Z5f28QxPJ0HUgiuvn//OV+zJvGRnuJBUbKmsW/vYuFXR2yEDv7fqxFJo0exfhsXl9AoG
+ 1IZQ7bLQiuuVFgKuUA6Uw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:3qNIoVkiXJA=:+icII8RHyOoIBTBG9Ghrh8
+ cvlnco4OZwDKDRhHa1Qwo7NqOQg8dUgxT8BnJ1AZwCgd9+YuTyDZmLdsWK7WKkJ53x/fdoBC3
+ DGy1GA70OxI4d8ENDaxgKN1ZlpQmzaTmdvlLXHK+O9L89fqWNecxYOBTn1zFDq9Kfq9P2XLbh
+ D02SC87aB6Z2zCOVj2hVPXtMTxMzOFqodPWnYCWE23DvROwAS+LktaWOMNcLEmYPDa2K1/OFY
+ mufn70t1ySTpm5KaWf35MaEh5vj3Ca+GpeSQ2bCt40J+u3gr6xof6wdGzPv645UnsR8HE8qzg
+ EynR0V4RQwt2N88r597N36kIFyO0UGp4oG64bSqBEYxXJ6aH1K/Rxh6dJnDqE42iYfjRm0HZ+
+ +2jsjh84wyC8+PVC62n1bkLQ/8sLfliNou+YwaPzy3Y9U78mwK9Pm+ag+YZEwEWq6kiXMY0o5
+ GOFbRcXihEWLzIMhbsndiggpMWa57VDEg2gcjC/Zt1gVYJHw4ThjQG7iwpYZqn81EiO+Dd5FE
+ R0OsDEdnZ7q5zbApgJx+iqQm23sUGmh3Df6ZQsQkfQSWHtioz53TuR/5ZFT6nhq1EVYT8yoE9
+ JoDKYWBALEDyF88RKMB8/sW3MZn3e4jrGBPCO5zEHmtb90rW+92XZgDJUGPUPWfCjiO87wZpR
+ pMEis2jap8TuAUV6yfTH/NiJ2Fp5jpXw9VPeQ0iEuNdX4kfk5D1OFa9Ey0mztQSafMPvAuoOO
+ 7iMugoJpLejxmSUOD3wQYQ8jpzwMWh6ym8Y3M+0VTWJXIyxnIZEPIgCTKT3ZYeVIrUZLf1l9C
+ F/jw/jL
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alban,
+Hi Elijah,
 
-On Tue, 19 Jun 2018, Alban Gruin wrote:
+On Wed, 20 Jun 2018, Elijah Newren wrote:
 
-> diff --git a/sequencer.c b/sequencer.c
-> index a7a73e3ef..9165bf96c 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -3161,6 +3161,25 @@ int checkout_base_commit(struct replay_opts *opts, const char *commit,
->  	return 0;
->  }
->  
-> +int checkout_onto(struct replay_opts *opts,
-> +		  const char *onto_name, const char *onto,
-> +		  const char *orig_head, unsigned verbose)
-> +{
-> +	struct object_id oid;
-> +	const char *action = reflog_message(opts, "start", "checkout %s", onto_name);
-> +
-> +	if (get_oid(orig_head, &oid))
-> +		return error(_("%s: not a valid OID"), orig_head);
-> +
-> +	if (run_git_checkout(opts, onto, verbose, action)) {
+> On Sun, Jun 17, 2018 at 2:44 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> 
+> > I was really referring to speed. But I have to admit that I do not have
+> > any current numbers.
+> >
+> > Another issue just hit me, though: rebase --am does not need to look at as
+> > many Git objects as rebase --merge or rebase -i. Therefore, GVFS users
+> > will still want to use --am wherever possible, to avoid "hydrating"
+> > many objects during their rebase.
+> 
+> What is it that makes rebase --am need fewer Git objects than rebase
+> --merge or rebase -i?
 
-Ah, so this is the reason for the split.
+Multiple things. The most obvious thing: --cherry-pick. When you call `git
+rebase --am`, it does not try to exclude the patches by looking at
+`rev-list --cherry-pick --right-only <upstream>..<head>`
 
-If you send a new iteration of this patch series, could you do me a favor
-and add a paragraph to the commit message of 2/3, saying something like
-this: "The function `run_git_checkout()` will be used on its own in the
-next commit, therefore the code is not folded into
-`checkout_base_commit()`? That way, I do not have to burden my working
-memory with this bit of information ;-)
+This really bit us in GVFS Git because we have several thousand developers
+working on the same code base, and you probably read the numbers elsewhere
+how many commits are introduced while a developer goes on so much as a
+week-long vacation.
 
-Thanks,
+Next, rename detection.
+
+I think that bit us even harder because it tries to look at all the files
+that have been changed in upstream in the meantime, which can be *a lot*.
+And if you know that moving files outside of your cozy little sparse
+checkout is unlikely (or moving from the outside into your checkout), then
+all this hydration is pretty wasteful. That's why we had to switch off
+rename detection in GVFS Git.
+
+> My guess at what objects are needed by each type:
+> 
+> At a high level, rebase --am for each commit will need to compare the
+> commit to its parent to generate a diff (which thus involves walking
+> over the objects in both the commit and its parent, though it should
+> be able to skip over subtrees that are equal), and then will need to
+> look at all the objects in the target commit on which it needs to
+> apply the patch (in order to properly fill the index for a starting
+> point, and used later when creating a new commit).
+
+No, in --am mode, it does not even need to look at all the objects in the
+target commits. Only those objects that correspond to the files that are
+touched by the diff.
+
+In a massive code base, such as Windows', this makes a huge difference.
+Even comparing the number of files touched by the patches that are to be
+rebased to the number of files that were touched in upstream since you
+rebased last is ridiculous. And a three-way merge needs to consider that
+latter set of files.
+
+> If the application of the diff fails, it falls back to a three-way
+> merge, though the three-way merge shouldn't need any additional objects.
+
+The three-way merge needs to reconcile the diff between branch point and
+your changes to the diff between branch point and upstream's changes. The
+latter can be a lot bigger than the former, in which case --am's
+complexity (O(former)) is much nicer than --merge's (O(former u latter)).
+
+> So, to summarize, rebase--am needs objects from the commit being
+> rebased, its parent, and the target commit onto which it is applying,
+> though it can short circuit some objects when the commit and its parent
+> have matching subtree(s).
+> 
+> rebase -i, if I understand correctly, does a three-way merge between
+> the commit, its parent, and the target commit.  Thus, we again walk
+> over objects in those three commits; I think unpack_trees() does not
+> take advantage of matching trees to avoid descending into subtrees,
+> but if so that's an optimization that we may be able to implement
+> (though it would require diving into unpack_trees() code, which is
+> never easy...).
+> 
+> (Side notes: (1) rebase --merge is basically the same as rebase -i
+> here; it's path to reaching the recursive merge machinery is a bit
+> different but the resulting arguments are the same; (2) a real merge
+> between branches would require more objects because it would have to
+> do some revision walking to find a merge base, and a real merge base
+> is likely to differ more than just the parent commit.  But finding
+> merge bases isn't relevant to rebase -m or rebase -i)
+> 
+> Is there something else I'm missing that fundamentally makes rebase -i
+> need more objects?
+> 
+> > As to speed: that might be harder. But then, the performance might already
+> > be good enough. I do not have numbers (nor the time to generate them) to
+> > back up my hunch that --am is substantially faster than --merge.
+> 
+> I too have a hunch that --am is faster than --merge, on big enough
+> repos or repos with enough renames.  I can partially back it up with
+> an indirect number: at [1], it was reported that cherry-picks could be
+> sped up by a factor of 20-30 on some repos with lots of renames.  I
+> believe there are other performance improvements possible too, for the
+> --merge or -i cases.
+> 
+> I'm also curious now whether your comment on hydrating objects might
+> uncover additional areas where performance improvements could be made
+> for non-am-based rebases of large-enough repos.
+> 
+> Elijah
+> 
+> [1] https://public-inbox.org/git/CABPp-BH4LLzeJjE5cvwWQJ8xTj3m9oC-41Tu8BM8c7R0gQTjWw@mail.gmail.com/
+> (see also Peter's last reply in that thread, and compare to his first
+> post)
+
+I am too unfamiliar with the rename detection to understand the details,
+but you are familiar with it, so I trust your judgement!
+
+Ciao,
 Dscho
