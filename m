@@ -6,60 +6,60 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC4461F516
-	for <e@80x24.org>; Thu, 21 Jun 2018 20:46:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 468E41F516
+	for <e@80x24.org>; Thu, 21 Jun 2018 20:52:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933146AbeFUUqI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Jun 2018 16:46:08 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:37849 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933018AbeFUUqI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jun 2018 16:46:08 -0400
-Received: by mail-wr0-f193.google.com with SMTP id k6-v6so4516231wrp.4
-        for <git@vger.kernel.org>; Thu, 21 Jun 2018 13:46:07 -0700 (PDT)
+        id S933511AbeFUUwL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Jun 2018 16:52:11 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:35366 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933499AbeFUUwK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jun 2018 16:52:10 -0400
+Received: by mail-wm0-f66.google.com with SMTP id j15-v6so8538811wme.0
+        for <git@vger.kernel.org>; Thu, 21 Jun 2018 13:52:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=yeuv0Imvnof6yMTpeiMUhTSLC83+x/lnwCSHt151DK4=;
-        b=m1zqFS8fFdEjoFG9H/TVEOLfNSB31pHzD8GC3fqwbNGjrIdc7B/OkGSDzoyUeAQ2M/
-         KRijKGuqz+G8sqXZ4q9BG/xTV2KybasVWPk5HiGFLcJDpktP0lQJ8wzK45KxC8CYyb6t
-         onXL+hhxOcYqP2fTzFKu4sz7R/3PRl9naKie90SmZjKoebtJ4hbE3mHOtfoD9NmAMUSH
-         tlysap5yozXgZjz3+fGIczAwBufcyXTwFmo82MfuP7WyJiTfoxU3/zwmGyw9doKAO7b1
-         dwTSAGtQPOaPRfwGcvt1HyILEcHFa5LFnKBe6dDfPRgAy98v7ijPLplMVFSbGgCFzmNR
-         u1Bw==
+        bh=w2ZOTv0L2kycC1oQIjGOSMLDUmF1msAtB7yKTXgCBMk=;
+        b=IT87emp1F5ve3+KBMnipbV5J7Jf225Bh6lHICflfAsxwpWjNpv6jM9VZ/3oRjU50es
+         co3l0qd8BWhlS2sMGuoUUlHptIQShSYYswj6rxpAYA3b1505oMsDDYzSpWz0ehcV2fMq
+         OA5kbQPmABUTSBW0JmFge5iKgAC6bbn+vuk8JarlQGKE++t26/kwumWjsW8LSTt3FexN
+         T4nc03/FYakDxdpAun1ErnynHwMPthM6SkLOAtVSdi592ToyJzSAKOHocAKAn4SU7hZ5
+         yV0rh8fJoEatwgmWtewlLvOGh9Om1DMu9xyy46vI8VcqQvwNRu0G08CD7n/Kq+Tefgsp
+         c+nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=yeuv0Imvnof6yMTpeiMUhTSLC83+x/lnwCSHt151DK4=;
-        b=V4kSdnuIvKcGaTXxlmcdOI3mbzJWc7ALUHnxPYV7GATpNH0+CcPp3nTIltJQi6FvxR
-         eLLY4l9bXqyl0LtyaUnXIRPiWw0dFA84YDhpi9WKYP0PWqI9pzFBACHe1llF4o82aKys
-         ASi0hdQiPkDqnr4sK5BvOY49Cl0nEZfmhEzFXpBCT2s8u116wqoEnjkXfR/D+Plco2tK
-         M7b2hIGk9ClHMBM3nX9TatV1SaiRflXl7h4X5LOEyN3sr23KKZ75JRIvXfMv3lV+vo0y
-         Um5x0EouZCI1uFsb/ee+Kqs+QQcqRDUTMX4QOreZc8OI6aZnZlBTRJ+CfMMftlH23h8A
-         DyUg==
-X-Gm-Message-State: APt69E06oFB2SuxkF7BgYDgLGsYaXz53gdKRC7DejP3NxJsGI5uCqJYH
-        Dn9M21VPY1B/hpTm2PSKBNLiNOhE
-X-Google-Smtp-Source: ADUXVKJLl/M/KghWyQ3Zw6yXvZiPP+g5MJ6rF4Rgn79OOMFWdwdqf+Jkm7ZbHeF9nqqDL5LdMP5DbQ==
-X-Received: by 2002:adf:fc05:: with SMTP id i5-v6mr22818523wrr.157.1529613966640;
-        Thu, 21 Jun 2018 13:46:06 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id q1-v6sm2971815wrm.96.2018.06.21.13.46.05
+        bh=w2ZOTv0L2kycC1oQIjGOSMLDUmF1msAtB7yKTXgCBMk=;
+        b=J9gwLhb9TaTOCXdSxwt84zveHHbqU1J8M0wAqPUCKD9mDJDHLch7Iiyfz6Akswhuj+
+         IiS9xYn8jOhakqXTWbw6CdmPNp47w6aOJmi/+6fwW09+C/g2sT8X3oA/Bv0gAwPwW7K/
+         9EGVznIKD/BWE/nQ9GCtxbPStATwjvzxJdKJ9Ns9hjUezA6YOcS0k/y+VZr/Oj/D2C1g
+         gHOgpZUODjq+4edkqtRagpgivtHWsr8tVVKMgb49VG6yTy4KoXL+WnAkoU0T0Bt9XlOO
+         CCjY/aeUbwDel0PqH1/3opJRl20vswsJWhOSvBQdYModVt8cbhvSDKWVMckQ6fOXAngG
+         GY7w==
+X-Gm-Message-State: APt69E20yaeQ7R4oXf0Rbu7FX3uhBgYCGaPpCEc/aVSjTFshqj9WVj8z
+        gL1Rt5E3Mp2TrSVV1eYfD+8=
+X-Google-Smtp-Source: ADUXVKLGGaCRIwo8OSsHXL9KTRUPDPzkpN/ZDtACjeIrZLEpE2sBKSxOBKqj0Bq2emVF0yC4VB553w==
+X-Received: by 2002:a1c:a54e:: with SMTP id o75-v6mr6502669wme.157.1529614328888;
+        Thu, 21 Jun 2018 13:52:08 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id r9-v6sm7002959wrs.63.2018.06.21.13.52.07
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 21 Jun 2018 13:46:05 -0700 (PDT)
+        Thu, 21 Jun 2018 13:52:07 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     git@vger.kernel.org, phillip.wood@dunelm.org.uk,
-        johannes.schindelin@gmx.de, sunshine@sunshineco.com
-Subject: Re: [PATCH v3 6/7] git-rebase.txt: address confusion between --no-ff vs --force-rebase
-References: <20180617055856.22838-1-newren@gmail.com>
-        <20180621150023.23533-1-newren@gmail.com>
-        <20180621150023.23533-7-newren@gmail.com>
-Date:   Thu, 21 Jun 2018 13:46:05 -0700
-In-Reply-To: <20180621150023.23533-7-newren@gmail.com> (Elijah Newren's
-        message of "Thu, 21 Jun 2018 08:00:22 -0700")
-Message-ID: <xmqqbmc3swaa.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        avarab@gmail.com
+Subject: Re: [PATCH v2 0/7] grep.c: teach --column to 'git-grep(1)'
+References: <cover.1529365072.git.me@ttaylorr.com>
+        <cover.1529524852.git.me@ttaylorr.com>
+        <20180621115302.GB15293@sigill.intra.peff.net>
+Date:   Thu, 21 Jun 2018 13:52:06 -0700
+In-Reply-To: <20180621115302.GB15293@sigill.intra.peff.net> (Jeff King's
+        message of "Thu, 21 Jun 2018 07:53:02 -0400")
+Message-ID: <xmqq7emrsw09.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,27 +68,19 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> rebase was taught the --force-rebase option in commit b2f82e05de ("Teach
-> rebase to rebase even if upstream is up to date", 2009-02-13).  This flag
-> worked for the am and merge backends, but wasn't a valid option for the
-> interactive backend.
-> ...
->  INCOMPATIBLE OPTIONS
->  --------------------
->  
-> @@ -559,11 +549,6 @@ Other incompatible flag pairs:
->  BEHAVIORAL INCONSISTENCIES
->  --------------------------
->  
-> -  * --no-ff vs. --force-rebase
-> -
-> -    These options are actually identical, though their description
-> -    leads people to believe they might not be.
+> I wasn't sure where we landed in the discussion on "how much crazy stuff
+> to support". But AFAIK, the code in this iteration handles every crazy
+> case already except this one. If we're going to care about OR, maybe we
+> should just cover all cases.
 
-Ah, I should have held off my review of 5/7 before reading this one.
-Perhaps we want to do this before the step 5/7 to reduce the churn?
+I think I was the only one who didn't like the tool knowing more
+boolean logic then the mere mortal user.  As long as the resulting
+behaviour appears logically consistent to more math minded people, I
+am actually OK if the outcome to overly complex input feels "too
+magical" ;-)
 
-
+And it appears that not short-circuiting AND will make the result
+better in that respect, so I am all for the suggestion above.
 
