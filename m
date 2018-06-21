@@ -6,27 +6,31 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 660791F516
-	for <e@80x24.org>; Thu, 21 Jun 2018 14:36:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8EC531F516
+	for <e@80x24.org>; Thu, 21 Jun 2018 14:36:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933204AbeFUOgI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Jun 2018 10:36:08 -0400
-Received: from mail.vm.ouaza.com ([212.83.178.2]:55241 "EHLO mail.vm.ouaza.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932960AbeFUOgH (ORCPT <rfc822;git@vger.kernel.org>);
+        id S933195AbeFUOgH (ORCPT <rfc822;e@80x24.org>);
         Thu, 21 Jun 2018 10:36:07 -0400
+Received: from mail.vm.ouaza.com ([212.83.178.2]:55240 "EHLO mail.vm.ouaza.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932892AbeFUOgH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jun 2018 10:36:07 -0400
+X-Greylist: delayed 484 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 Jun 2018 10:36:06 EDT
 Received: from x260-buxy.home.ouaza.com (133-218-190-109.isp.overthebox.ovh [109.190.218.133])
-        by mail.vm.ouaza.com (Postfix) with ESMTPSA id ED75F2094E;
-        Thu, 21 Jun 2018 16:27:01 +0200 (CEST)
+        by mail.vm.ouaza.com (Postfix) with ESMTPSA id 1828D20DB3;
+        Thu, 21 Jun 2018 16:27:12 +0200 (CEST)
 Received: by x260-buxy.home.ouaza.com (Postfix, from userid 1000)
-        id CB5C38A2BD8; Thu, 21 Jun 2018 16:27:59 +0200 (CEST)
+        id 0FB998A2BD8; Thu, 21 Jun 2018 16:28:10 +0200 (CEST)
 From:   =?UTF-8?q?Rapha=C3=ABl=20Hertzog?= <hertzog@debian.org>
 To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
-Subject: Two small l10n/i18n patches
-Date:   Thu, 21 Jun 2018 16:27:40 +0200
-Message-Id: <20180621142742.28575-1-hertzog@debian.org>
+Cc:     =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+        =?UTF-8?q?Rapha=C3=ABl=20Hertzog?= <hertzog@debian.org>
+Subject: [PATCH 1/2] l10n: fr: fix a message seen in git bisect
+Date:   Thu, 21 Jun 2018 16:27:41 +0200
+Message-Id: <20180621142742.28575-2-hertzog@debian.org>
 X-Mailer: git-send-email 2.18.0.rc2
+In-Reply-To: <20180621142742.28575-1-hertzog@debian.org>
+References: <20180621142742.28575-1-hertzog@debian.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -37,25 +41,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(I'm not subscribed, please keep me in CC)
+"cette" can be only be used before a word (like in "cette bouteille" for
+"this bottle"), but here "this" refers to the current step and we have
+to use "ceci" in French.
 
-Hello,
+Signed-off-by: Raphaël Hertzog <hertzog@debian.org>
+---
+ po/fr.po | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-I was reviewing the output of "git bisect" with my French locale
-and I saw a clear mistake in the French translation (fixed
-in the first commit) and I also noticed that the last message
-was still in English. After review of the code, it's not a missing
-translation, the problem comes down to two strings which
-are not marked for translation.
-
-So the second commit marks those strings for translation. But I haven't
-checked much further than that. The final string is used in many places
-in the test suite and I haven't checked if the locale is properly
-hardcoded in the test suite.
-
-In any case, "make test" is still working after those two commits.
-
-Thank you for considering my patches. I leave it tho the regular
-translators to add translations for the newly added strings.
-
+diff --git a/po/fr.po b/po/fr.po
+index 2bae75360..eb760686a 100644
+--- a/po/fr.po
++++ b/po/fr.po
+@@ -1062,8 +1062,8 @@ msgstr[1] "(à peu près %d étapes)"
+ #, c-format
+ msgid "Bisecting: %d revision left to test after this %s\n"
+ msgid_plural "Bisecting: %d revisions left to test after this %s\n"
+-msgstr[0] "Bissection : %d révision à tester après cette %s\n"
+-msgstr[1] "Bissection : %d révisions à tester après cette %s\n"
++msgstr[0] "Bissection : %d révision à tester après ceci %s\n"
++msgstr[1] "Bissection : %d révisions à tester après ceci %s\n"
+ 
+ #: blame.c:1756
+ msgid "--contents and --reverse do not blend well."
+-- 
+2.18.0.rc2
 
