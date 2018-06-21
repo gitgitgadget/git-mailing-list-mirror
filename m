@@ -7,37 +7,37 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19EE11F516
-	for <e@80x24.org>; Thu, 21 Jun 2018 15:00:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 457661F516
+	for <e@80x24.org>; Thu, 21 Jun 2018 15:00:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933294AbeFUPAt (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Jun 2018 11:00:49 -0400
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:46844 "EHLO
+        id S933288AbeFUPAs (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Jun 2018 11:00:48 -0400
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:42748 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S933257AbeFUPAq (ORCPT
+        by vger.kernel.org with ESMTP id S933285AbeFUPAq (ORCPT
         <rfc822;git@vger.kernel.org>); Thu, 21 Jun 2018 11:00:46 -0400
-Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w5LErUvD032038;
-        Thu, 21 Jun 2018 08:00:28 -0700
+Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w5LEqUKq017557;
+        Thu, 21 Jun 2018 08:00:27 -0700
 Authentication-Results: palantir.com;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2jn0dk0uxd-1;
-        Thu, 21 Jun 2018 08:00:26 -0700
+        by mx0a-00153501.pphosted.com with ESMTP id 2jmyevrwv3-1;
+        Thu, 21 Jun 2018 08:00:27 -0700
 Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 6A14F22FE3C1;
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 8EA3E22FE3C4;
         Thu, 21 Jun 2018 08:00:26 -0700 (PDT)
 Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
-        by smtp.yojoe.local (Postfix) with ESMTP id 527D32CDE76;
+        by smtp.yojoe.local (Postfix) with ESMTP id 82E442CDE86;
         Thu, 21 Jun 2018 08:00:26 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, phillip.wood@dunelm.org.uk,
         johannes.schindelin@gmx.de, sunshine@sunshineco.com,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v3 2/7] git-rebase.sh: update help messages a bit
-Date:   Thu, 21 Jun 2018 08:00:18 -0700
-Message-Id: <20180621150023.23533-3-newren@gmail.com>
+Subject: [PATCH v3 5/7] git-rebase.txt: document behavioral inconsistencies between modes
+Date:   Thu, 21 Jun 2018 08:00:21 -0700
+Message-Id: <20180621150023.23533-6-newren@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc2.99.g3b7a0dc564
 In-Reply-To: <20180621150023.23533-1-newren@gmail.com>
 References: <20180617055856.22838-1-newren@gmail.com>
@@ -47,53 +47,94 @@ X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-06-21_06:,,
  signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=48 phishscore=0 bulkscore=0 spamscore=0
+ malwarescore=0 suspectscore=43 phishscore=0 bulkscore=0 spamscore=0
  clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ mlxlogscore=653 adultscore=0 classifier=spam adjust=0 reason=mlx
  scancount=1 engine=8.0.1-1805220000 definitions=main-1806210165
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-signoff is not specific to the am-backend.  Also, re-order a few options
-to make like things (e.g. strategy and strategy-option) be near each
-other.
----
- git-rebase.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+There are a variety of aspects that are common to all rebases regardless
+of which backend is in use; however, the behavior for these different
+aspects varies in ways that could surprise users.  (In fact, it's not
+clear -- to me at least -- that these differences were even desirable or
+intentional.)  Document these differences.
 
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 40be59ecc4..bf71b7fa20 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -20,23 +20,23 @@ onto=!             rebase onto given branch instead of upstream
- r,rebase-merges?   try to rebase merges instead of skipping them
- p,preserve-merges! try to recreate merges instead of ignoring them
- s,strategy=!       use the given merge strategy
-+X,strategy-option=! pass the argument through to the merge strategy
- no-ff!             cherry-pick all commits, even if unchanged
-+f,force-rebase!    cherry-pick all commits, even if unchanged
- m,merge!           use merging strategies to rebase
- i,interactive!     let the user edit the list of commits to rebase
- x,exec=!           add exec lines after each commit of the editable list
- k,keep-empty	   preserve empty commits during rebase
- allow-empty-message allow rebasing commits with empty messages
--f,force-rebase!    force rebase even if branch is up to date
--X,strategy-option=! pass the argument through to the merge strategy
- stat!              display a diffstat of what changed upstream
- n,no-stat!         do not show diffstat of what changed upstream
- verify             allow pre-rebase hook to run
- rerere-autoupdate  allow rerere to update index with resolved conflicts
- root!              rebase all reachable commits up to the root(s)
- autosquash         move commits that begin with squash!/fixup! under -i
-+signoff            add a Signed-off-by: line to each commit
- committer-date-is-author-date! passed to 'git am'
- ignore-date!       passed to 'git am'
--signoff            passed to 'git am'
- whitespace=!       passed to 'git apply'
- ignore-whitespace! passed to 'git apply'
- C=!                passed to 'git apply'
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ Documentation/git-rebase.txt | 57 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 57 insertions(+)
+
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 7de6523931..340137e2cf 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -556,6 +556,63 @@ Other incompatible flag pairs:
+  * --rebase-merges and --strategy
+  * --rebase-merges and --strategy-option
+ 
++BEHAVIORAL INCONSISTENCIES
++--------------------------
++
++  * --no-ff vs. --force-rebase
++
++    These options are actually identical, though their description
++    leads people to believe they might not be.
++
++ * empty commits:
++
++    am-based rebase will drop any "empty" commits, whether the
++    commit started empty (had no changes relative to its parent to
++    start with) or ended empty (all changes were already applied
++    upstream in other commits).
++
++    merge-based rebase does the same.
++
++    interactive-based rebase will by default drop commits that
++    started empty and halt if it hits a commit that ended up empty.
++    The --keep-empty option exists for interactive rebases to allow
++    it to keep commits that started empty.
++
++  * empty commit messages:
++
++    am-based rebase will silently apply commits with empty commit
++    messages.
++
++    merge-based and interactive-based rebases will by default halt
++    on any such commits.  The --allow-empty-message option exists to
++    allow interactive-based rebases to apply such commits without
++    halting.
++
++  * directory rename detection:
++
++    merge-based and interactive-based rebases work fine with
++    directory rename detection.  am-based rebases sometimes do not.
++
++    git-am tries to avoid a full three way merge, instead calling
++    git-apply.  That prevents us from detecting renames at all,
++    which may defeat the directory rename detection.  There is a
++    fallback, though; if the initial git-apply fails and the user
++    has specified the -3 option, git-am will fall back to a three
++    way merge.  However, git-am lacks the necessary information to
++    do a "real" three way merge.  Instead, it has to use
++    build_fake_ancestor() to get a merge base that is missing files
++    whose rename may have been important to detect for directory
++    rename detection to function.
++
++    Since am-based rebases work by first generating a bunch of
++    patches (which no longer record what the original commits were
++    and thus don't have the necessary info from which we can find a
++    real merge-base), and then calling git-am, this implies that
++    am-based rebases will not always successfully detect directory
++    renames either.  merged-based rebases (rebase -m) and
++    cherry-pick-based rebases (rebase -i) are not affected by this
++    shortcoming.
++
+ include::merge-strategies.txt[]
+ 
+ NOTES
 -- 
 2.18.0.rc2.92.g133ed01dde
 
