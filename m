@@ -2,167 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C6F0F1F516
-	for <e@80x24.org>; Thu, 21 Jun 2018 15:01:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12D0F1F516
+	for <e@80x24.org>; Thu, 21 Jun 2018 15:21:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932898AbeFUPBC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Jun 2018 11:01:02 -0400
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:34945 "EHLO
-        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932981AbeFUPAo (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 21 Jun 2018 11:00:44 -0400
-Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w5LErVTo032046;
-        Thu, 21 Jun 2018 08:00:27 -0700
-Authentication-Results: palantir.com;
-        spf=softfail smtp.mailfrom=newren@gmail.com
-Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2jn0dk0uxf-1;
-        Thu, 21 Jun 2018 08:00:27 -0700
-Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id A1E8722FE3C5;
-        Thu, 21 Jun 2018 08:00:26 -0700 (PDT)
-Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
-        by smtp.yojoe.local (Postfix) with ESMTP id 8ECC82CDE76;
-        Thu, 21 Jun 2018 08:00:26 -0700 (PDT)
-From:   Elijah Newren <newren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, phillip.wood@dunelm.org.uk,
-        johannes.schindelin@gmx.de, sunshine@sunshineco.com,
-        Elijah Newren <newren@gmail.com>
-Subject: [PATCH v3 6/7] git-rebase.txt: address confusion between --no-ff vs --force-rebase
-Date:   Thu, 21 Jun 2018 08:00:22 -0700
-Message-Id: <20180621150023.23533-7-newren@gmail.com>
-X-Mailer: git-send-email 2.18.0.rc2.99.g3b7a0dc564
-In-Reply-To: <20180621150023.23533-1-newren@gmail.com>
-References: <20180617055856.22838-1-newren@gmail.com>
- <20180621150023.23533-1-newren@gmail.com>
-X-Proofpoint-SPF-Result: softfail
-X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-06-21_06:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=40 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1805220000 definitions=main-1806210165
+        id S933120AbeFUPVs (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Jun 2018 11:21:48 -0400
+Received: from mail.vm.ouaza.com ([212.83.178.2]:36557 "EHLO mail.vm.ouaza.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932848AbeFUPVr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jun 2018 11:21:47 -0400
+Received: from x260-buxy.home.ouaza.com (133-218-190-109.isp.overthebox.ovh [109.190.218.133])
+        by mail.vm.ouaza.com (Postfix) with ESMTPSA id 76DA02094E;
+        Thu, 21 Jun 2018 17:20:47 +0200 (CEST)
+Received: by x260-buxy.home.ouaza.com (Postfix, from userid 1000)
+        id 7FF7B8A2BD8; Thu, 21 Jun 2018 17:21:45 +0200 (CEST)
+Date:   Thu, 21 Jun 2018 17:21:45 +0200
+From:   Raphael Hertzog <hertzog@debian.org>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, jn.avila@free.fr
+Subject: Re: [PATCH 2/2] i18n: bisect: mark two supplementary strings for
+ translation
+Message-ID: <20180621152145.GA29912@home.ouaza.com>
+References: <20180621142742.28575-1-hertzog@debian.org>
+ <20180621142742.28575-3-hertzog@debian.org>
+ <CACsJy8DcXo3HURwZXbvGYjrJpfku+RXESP=ErLzYj3NhNabRTQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="EeQfGwPcQSOJBaQU"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACsJy8DcXo3HURwZXbvGYjrJpfku+RXESP=ErLzYj3NhNabRTQ@mail.gmail.com>
+User-Agent: Mutt/1.10.0 (2018-05-17)
+X-Virus-Scanned: clamav-milter 0.99.4 at mail
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-rebase was taught the --force-rebase option in commit b2f82e05de ("Teach
-rebase to rebase even if upstream is up to date", 2009-02-13).  This flag
-worked for the am and merge backends, but wasn't a valid option for the
-interactive backend.
 
-rebase was taught the --no-ff option for interactive rebases in commit
-b499549401cb ("Teach rebase the --no-ff option.", 2010-03-24), to do the
-exact same thing as --force-rebase does for non-interactive rebases.  This
-commit explicitly documented the fact that --force-rebase was incompatible
-with --interactive, though it made --no-ff a synonym for --force-rebase
-for non-interactive rebases.  The choice of a new option was based on the
-fact that "force rebase" didn't sound like an appropriate term for the
-interactive machinery.
+--EeQfGwPcQSOJBaQU
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
-In commit 6bb4e485cff8 ("rebase: align variable names", 2011-02-06), the
-separate parsing of command line options in the different rebase scripts
-was removed, and whether on accident or because the author noticed that
-these options did the same thing, the options became synonyms and both
-were accepted by all three rebase types.
+Hi,
 
-In commit 2d26d533a012 ("Documentation/git-rebase.txt: -f forces a rebase
-that would otherwise be a no-op", 2014-08-12), which reworded the
-description of the --force-rebase option, the (no-longer correct) sentence
-stating that --force-rebase was incompatible with --interactive was
-finally removed.
+On Thu, 21 Jun 2018, Duy Nguyen wrote:
+> Nice. There's another string in bisect_common() that should also be
+> translated: "revision walk setup failed". Maybe you can mark it too?
 
-Finally, as explained at
-https://public-inbox.org/git/98279912-0f52-969d-44a6-22242039387f@xiplink.com
+Sure. A new version of the second patch is attached.
 
-    In the original discussion around this option [1], at one point I
-    proposed teaching rebase--interactive to respect --force-rebase
-    instead of adding a new option [2].  Ultimately --no-ff was chosen as
-    the better user interface design [3], because an interactive rebase
-    can't be "forced" to run.
-
-We have accepted both --no-ff and --force-rebase as full synonyms for all
-three rebase types for over seven years.  Documenting them differently
-and in ways that suggest they might not be quite synonyms simply leads to
-confusion.  Adjust the documentation to match reality.
-
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- Documentation/git-rebase.txt | 35 ++++++++++-------------------------
- 1 file changed, 10 insertions(+), 25 deletions(-)
-
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 340137e2cf..1f422cd0a7 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -337,16 +337,18 @@ See also INCOMPATIBLE OPTIONS below.
- +
- See also INCOMPATIBLE OPTIONS below.
- 
---f::
-+--no-ff::
- --force-rebase::
--	Force a rebase even if the current branch is up to date and
--	the command without `--force` would return without doing anything.
-+-f::
-+	Individually replay all rebased commits instead of fast-forwarding
-+	over the unchanged ones.  This ensures that the entire history of
-+	the rebased branch is composed of new commits.
- +
--You may find this (or --no-ff with an interactive rebase) helpful after
--reverting a topic branch merge, as this option recreates the topic branch with
--fresh commits so it can be remerged successfully without needing to "revert
--the reversion" (see the
--link:howto/revert-a-faulty-merge.html[revert-a-faulty-merge How-To] for details).
-+You may find this helpful after reverting a topic branch merge, as this option
-+recreates the topic branch with fresh commits so it can be remerged
-+successfully without needing to "revert the reversion" (see the
-+link:howto/revert-a-faulty-merge.html[revert-a-faulty-merge How-To] for
-+details).
- 
- --fork-point::
- --no-fork-point::
-@@ -498,18 +500,6 @@ See also INCOMPATIBLE OPTIONS below.
- 	with care: the final stash application after a successful
- 	rebase might result in non-trivial conflicts.
- 
----no-ff::
--	With --interactive, cherry-pick all rebased commits instead of
--	fast-forwarding over the unchanged ones.  This ensures that the
--	entire history of the rebased branch is composed of new commits.
--+
--Without --interactive, this is a synonym for --force-rebase.
--+
--You may find this helpful after reverting a topic branch merge, as this option
--recreates the topic branch with fresh commits so it can be remerged
--successfully without needing to "revert the reversion" (see the
--link:howto/revert-a-faulty-merge.html[revert-a-faulty-merge How-To] for details).
--
- INCOMPATIBLE OPTIONS
- --------------------
- 
-@@ -559,11 +549,6 @@ Other incompatible flag pairs:
- BEHAVIORAL INCONSISTENCIES
- --------------------------
- 
--  * --no-ff vs. --force-rebase
--
--    These options are actually identical, though their description
--    leads people to believe they might not be.
--
-  * empty commits:
- 
-     am-based rebase will drop any "empty" commits, whether the
+Cheers,
 -- 
-2.18.0.rc2.92.g133ed01dde
+Raphaël Hertzog ◈ Debian Developer
 
+Support Debian LTS: https://www.freexian.com/services/debian-lts.html
+Learn to master Debian: https://debian-handbook.info/get/
+
+--EeQfGwPcQSOJBaQU
+Content-Type: text/x-diff; charset=utf-8
+Content-Disposition: attachment; filename="0002-i18n-bisect-mark-three-supplementary-strings-for-tra.patch"
+Content-Transfer-Encoding: 8bit
+
+From 9731f23b9e2f47bdb90e552264c9d030b4f40629 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Rapha=C3=ABl=20Hertzog?= <hertzog@debian.org>
+Date: Thu, 21 Jun 2018 16:06:48 +0200
+Subject: [PATCH 2/2] i18n: bisect: mark three supplementary strings for
+ translation
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+The whole bisect procedure is translated but the last message that the
+user will see in the process is not translated. Let's fix this.
+
+Also mark the "revision walk setup failed" error message for
+translation. It's already used in other files so will not generate
+any new string to translate.
+
+Signed-off-by: Raphaël Hertzog <hertzog@debian.org>
+---
+ bisect.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/bisect.c b/bisect.c
+index a579b5088..4943eb333 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -647,7 +647,7 @@ static void bisect_rev_setup(struct rev_info *revs, const char *prefix,
+ static void bisect_common(struct rev_info *revs)
+ {
+ 	if (prepare_revision_walk(revs))
+-		die("revision walk setup failed");
++		die(_("revision walk setup failed"));
+ 	if (revs->tree_objects)
+ 		mark_edges_uninteresting(revs, NULL);
+ }
+@@ -658,8 +658,8 @@ static void exit_if_skipped_commits(struct commit_list *tried,
+ 	if (!tried)
+ 		return;
+ 
+-	printf("There are only 'skip'ped commits left to test.\n"
+-	       "The first %s commit could be any of:\n", term_bad);
++	printf(_("There are only 'skip'ped commits left to test.\n"
++		 "The first %s commit could be any of:\n"), term_bad);
+ 
+ 	for ( ; tried; tried = tried->next)
+ 		printf("%s\n", oid_to_hex(&tried->item->object.oid));
+@@ -984,7 +984,7 @@ int bisect_next_all(const char *prefix, int no_checkout)
+ 
+ 	if (!oidcmp(bisect_rev, current_bad_oid)) {
+ 		exit_if_skipped_commits(tried, current_bad_oid);
+-		printf("%s is the first %s commit\n", oid_to_hex(bisect_rev),
++		printf(_("%s is the first %s commit\n"), oid_to_hex(bisect_rev),
+ 			term_bad);
+ 		show_diff_tree(prefix, revs.commits->item);
+ 		/* This means the bisection process succeeded. */
+-- 
+2.18.0.rc2
+
+
+--EeQfGwPcQSOJBaQU--
