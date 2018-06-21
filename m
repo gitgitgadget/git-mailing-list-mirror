@@ -7,48 +7,47 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 352421F516
-	for <e@80x24.org>; Thu, 21 Jun 2018 14:30:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 63EAB1F516
+	for <e@80x24.org>; Thu, 21 Jun 2018 14:30:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933013AbeFUOaw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Jun 2018 10:30:52 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:39017 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932756AbeFUOav (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jun 2018 10:30:51 -0400
-Received: by mail-wm0-f65.google.com with SMTP id p11-v6so6510209wmc.4
-        for <git@vger.kernel.org>; Thu, 21 Jun 2018 07:30:51 -0700 (PDT)
+        id S933122AbeFUOaz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Jun 2018 10:30:55 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:36850 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933120AbeFUOax (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jun 2018 10:30:53 -0400
+Received: by mail-wr0-f195.google.com with SMTP id f16-v6so3460770wrm.3
+        for <git@vger.kernel.org>; Thu, 21 Jun 2018 07:30:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=JZOM75GELlpqMw/cgvcB8IErsL5jjKUm1sLi+Wzugdg=;
-        b=qoEMuCFEF0/Il458P6H47EQIYHoZW7rTm23LYHsYhhxQUd5sXEQKFyJ8Pp8mSNQBh1
-         LwOcF3ogbh1NOAohnuRPov6ExOWPWB/QDq6rJZz5pBkv2IiXkDSPpapKqkDeOvGfBjNx
-         BIi+b+/BiPR7Ga2y5oIz5p2cvhOim6NJxptcShPKb+nJE+clJRKRGwhe/DaSbvhMxKw/
-         JJqR9MsI//e9hhhHO1P0CEATYhWu2YosEX1VNjV/lMq9g6/SX1bN46Vzr+3Yl6/X5sQt
-         Ns0mpcb339qQ+2Q5jG1mSe8jG/MGO5pUoaOfacIslhAS+s+T1sgrOhVTPmaHjfDKLBA4
-         HY1w==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=4EfTbNuxWPp0W5PIrCmCci8Xy/FD4Wv+Ts2OrZwNYw8=;
+        b=KR4mxk3Kn1HTj++95Am0nUs9eWNickUMXQZ7r/yTMZvugECXtjWztQ00IfYUCI+qd+
+         BrMfpMawig+ogkvufjY6mhleYW9tqPETKGUQ4jDiKDjR+64Ui5iUqsRN+Xf6ihhdvafE
+         jPQtPphLPGcAVfMTzs63YVH3ctClW+x2VK5A7S74jIMPJEZOKeMV3gWzvCf5zL3u2gq1
+         tD3PtXHHJGky6U8+w70yJhMjK7tGlQwutX1X5PDzHhYo7K4NhojxrrHOQ2O54eKjbJP1
+         sgb034QLXu7oYXChNEevvpmAyJomBJsej9ELClmd5InZafbvS70F0XMSYFzEZJgT8Wbb
+         wpWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=JZOM75GELlpqMw/cgvcB8IErsL5jjKUm1sLi+Wzugdg=;
-        b=raq/AV/93/TtzQYRdX5qNwaiQuTx8GyG7Tm39KBZPODoS5uIH5dUMrXPJTpuZpSTyM
-         ihdJK8BXA3fkHKaWEiEOhvPeayq8U4FFsXy1jbvBrKADqAsij1QLTcsMlDQMU+pTFMJO
-         wcyHsb56ktQmwsRH0fJwFU33iojMV2g3RUWkH45eZmCKVVRXbKeXGJaNRMZvdGZRpG+W
-         5sMmcvyl0GO16UQyP3BN3lG68oez3hp6L56Z/BcZM4XTgmhDxGZYjomQlsVAa88HjYbo
-         s/iDA+S/BQHFZLV1zYpIwNNhDTRSrt0++ywYHYqPk3fPJqVOwSpJD6zcGDRv0/+8JJ1F
-         9xgA==
-X-Gm-Message-State: APt69E0+tTeVSHlt2ufmq/qj0Gw3eRPnicVQFcUza4MWYj3YD3/sdCL6
-        Akj8DivcFRbD9SogwJ7Hv6E/74sD
-X-Google-Smtp-Source: ADUXVKJE9X+KDPn1nxokN85g+2yxKDvR738x17Eku2/v7d2SXGDWKy+QLIsfP+gd28AZfzR0JiVLRA==
-X-Received: by 2002:a1c:3046:: with SMTP id w67-v6mr5165410wmw.47.1529591450404;
-        Thu, 21 Jun 2018 07:30:50 -0700 (PDT)
+         :references;
+        bh=4EfTbNuxWPp0W5PIrCmCci8Xy/FD4Wv+Ts2OrZwNYw8=;
+        b=YJHvGTHpd8fcW5FJFnN1Y+iv54uQgS4Xo7NzNsLdmwgE6oYo0bW7z+tJb7DOFe3wO7
+         N/w3WrmE/V8p4M1Jh7DxrGQZAOfXehfwS+/kS6igQswYTqtZnCPf8LZZHyDaqHhjzgCC
+         0KGS0S+kVxSsBWaHEninGG0kx/sPsx23cbNK+SRuzII6yrKZB4HhPBgy3DXQGZBvYlU5
+         awY02l3BIub+INMZGnTwyLJ5XXrzsbt92vi/3b9jW2E0gOs2Md76V9iuohJXt25nbdSm
+         UMj/yORgA0MddPRhvOA5oaYeUIRyT/G98d2/6ArBrlZzIWev08RFT0LO3mGIRLJjbfOa
+         LUXQ==
+X-Gm-Message-State: APt69E3YomPw6x7wIi7XKq555/Lg7kKX7ZIXorwo94jXi8+YbBxvVqYi
+        lLSkwnet/RTTg/WKifpBw2Ans1+J
+X-Google-Smtp-Source: ADUXVKLzJX8wk1jQhymbuAAi5H1zom7YPzqHEqHRjVPh3/gIVApgqTsOgQJc3WY/cV4ZE/H4eUJD6Q==
+X-Received: by 2002:adf:9c12:: with SMTP id f18-v6mr22421075wrc.40.1529591452086;
+        Thu, 21 Jun 2018 07:30:52 -0700 (PDT)
 Received: from localhost.localdomain (AToulouse-658-1-38-233.w86-221.abo.wanadoo.fr. [86.221.117.233])
-        by smtp.googlemail.com with ESMTPSA id p17-v6sm1333591wrj.73.2018.06.21.07.30.48
+        by smtp.googlemail.com with ESMTPSA id p17-v6sm1333591wrj.73.2018.06.21.07.30.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 21 Jun 2018 07:30:49 -0700 (PDT)
+        Thu, 21 Jun 2018 07:30:51 -0700 (PDT)
 From:   Alban Gruin <alban.gruin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
@@ -57,49 +56,106 @@ Cc:     Stefan Beller <sbeller@google.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         phillip.wood@dunelm.org.uk, Elijah Newren <newren@gmail.com>,
         Alban Gruin <alban.gruin@gmail.com>
-Subject: [GSoC][PATCH v3 0/3] rebase -i: rewrite reflog operations in C
-Date:   Thu, 21 Jun 2018 16:17:29 +0200
-Message-Id: <20180621141732.19952-1-alban.gruin@gmail.com>
+Subject: [GSoC][PATCH v3 1/3] sequencer: add a new function to silence a command, except if it fails.
+Date:   Thu, 21 Jun 2018 16:17:30 +0200
+Message-Id: <20180621141732.19952-2-alban.gruin@gmail.com>
 X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20180619154421.14999-1-alban.gruin@gmail.com>
+In-Reply-To: <20180621141732.19952-1-alban.gruin@gmail.com>
 References: <20180619154421.14999-1-alban.gruin@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+ <20180621141732.19952-1-alban.gruin@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thes patch series rewrites the reflog operations from shell to C.  This
-is part of the effort to rewrite interactive rebase in C.
+This adds a new function, run_command_silent_on_success(), to
+redirect the stdout and stderr of a command to a strbuf, and then to run
+that command. This strbuf is printed only if the command fails. It is
+functionnaly similar to output() from git-rebase.sh.
 
-The first commit is dedicated to creating a function to silence a
-command, as the sequencer will do in several places with these patches.
+run_git_commit() is then refactored to use of
+run_command_silent_on_success().
 
-This branch is based on ag/rebase-i-rewrite-todo, and does not conflict
-with pu (as of 2018-06-21).
+Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+---
+ sequencer.c | 49 ++++++++++++++++++++++++-------------------------
+ 1 file changed, 24 insertions(+), 25 deletions(-)
 
-Changes since v2:
-
- - Removing the “verbose” parameter to run_command_silent_on_success()
-
- - Rewording some parts of the second commit
-
- - Changing the help for the “--verbose” flag
-
-Alban Gruin (3):
-  sequencer: add a new function to silence a command, except if it
-    fails.
-  rebase -i: rewrite setup_reflog_action() in C
-  rebase -i: rewrite checkout_onto() in C
-
- builtin/rebase--helper.c   | 14 +++++-
- git-rebase--interactive.sh | 39 ++-------------
- sequencer.c                | 98 ++++++++++++++++++++++++++++----------
- sequencer.h                |  6 +++
- 4 files changed, 96 insertions(+), 61 deletions(-)
-
+diff --git a/sequencer.c b/sequencer.c
+index 7cc76332e..51c8ab7ac 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -766,6 +766,24 @@ N_("you have staged changes in your working tree\n"
+ #define VERIFY_MSG  (1<<4)
+ #define CREATE_ROOT_COMMIT (1<<5)
+ 
++static int run_command_silent_on_success(struct child_process *cmd)
++{
++	struct strbuf buf = STRBUF_INIT;
++	int rc;
++
++	cmd->stdout_to_stderr = 1;
++	rc = pipe_command(cmd,
++			  NULL, 0,
++			  /* stdout is already redirected */
++			  NULL, 0,
++			  &buf, 0);
++
++	if (rc)
++		fputs(buf.buf, stderr);
++	strbuf_release(&buf);
++	return rc;
++}
++
+ /*
+  * If we are cherry-pick, and if the merge did not result in
+  * hand-editing, we will hit this commit and inherit the original
+@@ -820,18 +838,11 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
+ 
+ 	cmd.git_cmd = 1;
+ 
+-	if (is_rebase_i(opts)) {
+-		if (!(flags & EDIT_MSG)) {
+-			cmd.stdout_to_stderr = 1;
+-			cmd.err = -1;
+-		}
++	if (is_rebase_i(opts) && read_env_script(&cmd.env_array)) {
++		const char *gpg_opt = gpg_sign_opt_quoted(opts);
+ 
+-		if (read_env_script(&cmd.env_array)) {
+-			const char *gpg_opt = gpg_sign_opt_quoted(opts);
+-
+-			return error(_(staged_changes_advice),
+-				     gpg_opt, gpg_opt);
+-		}
++		return error(_(staged_changes_advice),
++			     gpg_opt, gpg_opt);
+ 	}
+ 
+ 	argv_array_push(&cmd.args, "commit");
+@@ -861,20 +872,8 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
+ 	if (opts->allow_empty_message)
+ 		argv_array_push(&cmd.args, "--allow-empty-message");
+ 
+-	if (cmd.err == -1) {
+-		/* hide stderr on success */
+-		struct strbuf buf = STRBUF_INIT;
+-		int rc = pipe_command(&cmd,
+-				      NULL, 0,
+-				      /* stdout is already redirected */
+-				      NULL, 0,
+-				      &buf, 0);
+-		if (rc)
+-			fputs(buf.buf, stderr);
+-		strbuf_release(&buf);
+-		return rc;
+-	}
+-
++	if (is_rebase_i(opts) && !(flags & EDIT_MSG))
++		return run_command_silent_on_success(&cmd);
+ 	return run_command(&cmd);
+ }
+ 
 -- 
 2.17.1
 
