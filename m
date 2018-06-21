@@ -7,39 +7,39 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF9341F516
-	for <e@80x24.org>; Thu, 21 Jun 2018 09:28:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A450B1F516
+	for <e@80x24.org>; Thu, 21 Jun 2018 09:37:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932792AbeFUJ2T (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Jun 2018 05:28:19 -0400
-Received: from forward106j.mail.yandex.net ([5.45.198.249]:59759 "EHLO
-        forward106j.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932534AbeFUJ2S (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 21 Jun 2018 05:28:18 -0400
-X-Greylist: delayed 440 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 Jun 2018 05:28:18 EDT
-Received: from mxback1j.mail.yandex.net (mxback1j.mail.yandex.net [IPv6:2a02:6b8:0:1619::10a])
-        by forward106j.mail.yandex.net (Yandex) with ESMTP id 0C6931801933
-        for <git@vger.kernel.org>; Thu, 21 Jun 2018 12:20:55 +0300 (MSK)
+        id S932723AbeFUJhC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Jun 2018 05:37:02 -0400
+Received: from forward101o.mail.yandex.net ([37.140.190.181]:39966 "EHLO
+        forward101o.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S932674AbeFUJhB (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 21 Jun 2018 05:37:01 -0400
+X-Greylist: delayed 458 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 Jun 2018 05:37:01 EDT
+Received: from mxback5g.mail.yandex.net (mxback5g.mail.yandex.net [IPv6:2a02:6b8:0:1472:2741:0:8b7:166])
+        by forward101o.mail.yandex.net (Yandex) with ESMTP id 71B5D1345758
+        for <git@vger.kernel.org>; Thu, 21 Jun 2018 12:29:22 +0300 (MSK)
 Received: from localhost (localhost [::1])
-        by mxback1j.mail.yandex.net (nwsmtp/Yandex) with ESMTP id lBJd249dYx-KsBCYJxw;
-        Thu, 21 Jun 2018 12:20:54 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1529572854;
-        bh=0ftn8MUBIyk2aig9iif6e2ladyEhNe3mzTvj+PubJLs=;
+        by mxback5g.mail.yandex.net (nwsmtp/Yandex) with ESMTP id 7pVmw9t60g-TFamfp8u;
+        Thu, 21 Jun 2018 12:29:15 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1529573355;
+        bh=NM2NycixveYPH5VEfhlX4aKqxYdQLVBDLSD9s3xU6OI=;
         h=From:To:Subject:Date:Message-Id;
-        b=irtgL0E4+zlVLZR0Xkrz1jtRqkFTGYEime/R22UznVhfP4lMXXHlFIM8AMi2Mp6XV
-         FprbhEfnj7Ihkpx56Ac4ukpqPl786TII2tB6jNhZDJOhyKoIrGzR8jpiLcIKgy8HHQ
-         /vdmZ+UdiJBbZT/4IGl9i3VC9Nyhf/DlnAMMBvZc=
-Authentication-Results: mxback1j.mail.yandex.net; dkim=pass header.i=@yandex.ru
+        b=oZQDXRnvHWh8E3RTjbQhL72UFNdCvEdMecTUZlzT1oDIZ6WhUk7SaKTbQ29CliQ0w
+         D20b6bFnyuyDJCC6qUDmjt7rybBr67x/cZOEk2CychvIXnvnDKV+kd14nJVERGiz3s
+         8RRRNmayMolW9DmX7AaxFp1p8w794qx2I6PN9TP4=
+Authentication-Results: mxback5g.mail.yandex.net; dkim=pass header.i=@yandex.ru
 Received: by web55j.yandex.ru with HTTP;
-        Thu, 21 Jun 2018 12:20:54 +0300
+        Thu, 21 Jun 2018 12:29:15 +0300
 From:   KES <kes-kes@yandex.ru>
 Envelope-From: kes-kes@yandex.com
 To:     git <git@vger.kernel.org>
-Subject: After merging and reset I am on unexpected commit
+Subject: After rebasing and reset I am on unexpected commit
 MIME-Version: 1.0
 X-Mailer: Yamail [ http://yandex.ru ] 5.0
-Date:   Thu, 21 Jun 2018 12:20:54 +0300
-Message-Id: <189781529572854@web55j.yandex.ru>
+Date:   Thu, 21 Jun 2018 12:29:15 +0300
+Message-Id: <242401529573355@web55j.yandex.ru>
 Content-Transfer-Encoding: 7bit
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -49,7 +49,8 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi.
 
-I am on my current branch. 
+
+I am on my current branch:
 
 $ git log --graph --decorate --pretty=oneline --abbrev-commit
 * 5b85d64 (HEAD -> SCTT_for_other_tables) Implement script to test CORS
@@ -61,11 +62,9 @@ $ git log --graph --decorate --pretty=oneline --abbrev-commit
 * 92837c1 Fix SQL quoting problem
 
 
-I want to pull new changes and apply mine on top of them
+Now I want to pull new changes and rebase my work on top of it:
 
-I do `git pull -v -r`
-
-kes@work ~/t $ git pull -v -r amazon SCTT_for_other_tables 
+$ git pull -v -r amazon SCTT_for_other_tables
 From amazon:/v1/repos/tucha
  * branch            SCTT_for_other_tables -> FETCH_HEAD
  = [up to date]      SCTT_for_other_tables -> amazon/SCTT_for_other_tables
@@ -99,9 +98,7 @@ Applying autostash resulted in conflicts.
 Your changes are safe in the stash.
 You can run "git stash pop" or "git stash drop" at any time.
 
-
-As you can see the rebasing is finished successfully except autostash is not applied
-
+As you can see the rebase finished successfully except applying autostash
 
 $ git log --graph --decorate --pretty=oneline --abbrev-commit
 *   a0d92dc (HEAD -> SCTT_for_other_tables, amazon/SCTT_for_other_tables) Merge branch 'SCTT_for_oth
@@ -113,16 +110,18 @@ $ git log --graph --decorate --pretty=oneline --abbrev-commit
 * 702fcdd (xtucha/SCTT_for_other_tables) Create SCTT for PartnershipAgreement
 * 7e4cac9 Create SCTT for Language
 * a0607d1 Fixed broken tests for 'Person'
+* 1d0a1b2 Create SCTT for DocumentFile
+* 92837c1 Fix SQL quoting problem
 
-1. Why I get merge when I ask to rebase?
+1. Why I got merge? I did not ask that. Thus I want to rewind back
 
-
-Because of merge I wanna to roll back that. Thus I reset my merge commit 
-kes@work ~/t $ git reset --hard HEAD^
+$ git reset --hard HEAD^
 HEAD is now at 0c1ac6c Create SCTT for ContractorTypeI18n
 
-2. Why I moved to 0c1ac6c Create SCTT for ContractorTypeI18n commit instead of 
-5b85d64 Implement script to test CORS?
+2. Why I am returned to 0c1ac6c Create SCTT for ContractorTypeI18n
+instead of: 5b85d64 Implement script to test CORS ?
+
+I expect to be in the state when I start my rebasing
 
 $ git log --graph --decorate --pretty=oneline --abbrev-commit
 * 0c1ac6c (HEAD -> SCTT_for_other_tables) Create SCTT for ContractorTypeI18n
@@ -131,12 +130,9 @@ $ git log --graph --decorate --pretty=oneline --abbrev-commit
 * 7e4cac9 Create SCTT for Language
 * a0607d1 Fixed broken tests for 'Person'
 * 1d0a1b2 Create SCTT for DocumentFile
+* 92837c1 Fix SQL quoting problem
 
 
-Because of this the commit:5b85d64 Implement script to test CORS 
-is lost
+Now 5b85d64 Implement script to test CORS is not any branch and with less attention will be lost
 
-It is not on any branch and with less attention it will be forgotten.
-
-
-Is this behavior expected? Maybe I do something wrong?
+What did I do wrong? is this behavior expected?
