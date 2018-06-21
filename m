@@ -2,138 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C8DA71F516
-	for <e@80x24.org>; Thu, 21 Jun 2018 15:54:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 594A31F516
+	for <e@80x24.org>; Thu, 21 Jun 2018 16:04:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933269AbeFUPyV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Jun 2018 11:54:21 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:45418 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933218AbeFUPyV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jun 2018 11:54:21 -0400
-Received: by mail-wr0-f193.google.com with SMTP id o12-v6so3715043wrm.12
-        for <git@vger.kernel.org>; Thu, 21 Jun 2018 08:54:20 -0700 (PDT)
+        id S933481AbeFUQEP (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Jun 2018 12:04:15 -0400
+Received: from mail-oi0-f48.google.com ([209.85.218.48]:46052 "EHLO
+        mail-oi0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933015AbeFUQEN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jun 2018 12:04:13 -0400
+Received: by mail-oi0-f48.google.com with SMTP id 188-v6so3391495oid.12
+        for <git@vger.kernel.org>; Thu, 21 Jun 2018 09:04:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=1A7r8qSRxDgK94ozNXcbt6ruD2GPJilo05pbWOCFDYg=;
-        b=gZMT1XiWn6PewNKfdRSMSp41b5Of2o0aZuP4uVF/pyeqGbUyK/ho6DGfmRcZUkjdzn
-         8sFy7ZO0H4CQtTWHNXWrfJ+Yn2KwbQa3TyMXn5617jf6YSLWk+LpN64PfzI2Vb7tNziO
-         3GADDdpj8oGUgrJt52SidroIgbrM8vv/hQgqTwbnaqbbadZuRWVDgJvUpB3IS1bYEsAC
-         lBtVORd0glS0xIvRRb0YVskB+bTcokqBgQZ3Jwi70Ez+TNkz+IUoLP602frV4kko5dIT
-         BEguTPeM3GikA+b66bjs+vQdB99TYothcjif51Fg38BJ+UFRkjY0LernRgRmMQaVCheP
-         EhPg==
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=y6UorX0koGt0oH9+sxGYF4oY6Ycd5q12JIHh1rob8Nw=;
+        b=B2yK8S/aU88yblKllvY0GD7XvAKR6eLhHYbvw1/2apP7Z0JSbAAORYQIGEjghDcnwz
+         ak23L6ljhN76/Q6LZqQTbH6OBmQQkxTLipO+IZg5A0XuSpwzuY22w/53T2gVoTBZvdwg
+         C3XibLlO3eB5b0hRQpTbBb1S415l/IiHS+kUhF8FS4wdTAWvod0X/xYtqMBPBILoAtPr
+         9fDafvG/j0awUMO+kCQvgTQ2X49TrKx9OtSO45WTJ/dPITW3cuHFxsA1fC10c9GB19Nk
+         RE4nTf8BOHpFoHIjoeVIDbmWuOOSDqwm5yTA+O0fk3PVoiFliPadJrL8qjNmSiMzN+/7
+         Rsdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=1A7r8qSRxDgK94ozNXcbt6ruD2GPJilo05pbWOCFDYg=;
-        b=pZe8Z5JeMvo2iXNAXtgl9Gc6eBb3DxY2fxDBXObJsMmxQlM8nBvtL7V0r0wonzuLNj
-         x7ZSj+1VLp94Oi4NGqh6mKsGgmmngPw5knmsYuVTFw0YjW04fIbX5LlIv5lCnCZCjpAC
-         61yzmh/XotIdidEliIU+Odogs+bA0tHw3izII64eIxdyOhYBWwQj0dWRjPrDPUhvKCpJ
-         Ei1ZplNljt8VSnnBS2GXusVS/YS2bmYuf6/7zQmkqpcf0r1J0sUNoT+V4WoBo4BvRBS3
-         VLVqJE0iWfYxeXOoMbuEpMFGigq88jOJen5D3Ylpuz3x6UuRpyfeXKKUaW8s2TqnrfBv
-         giIw==
-X-Gm-Message-State: APt69E3mUjzsYodxSoGHNjC+XSCieRtApM0MaZ3Ba+DLSf7K5XoiA4Gg
-        tzoAOEjDt7BkyKvmeelp9ZU=
-X-Google-Smtp-Source: ADUXVKJYWACpmdKvpePbee5k+Cu98uBfOcuK3bWdQPdjZz+1zNqqyjjrkXP38uS3ysW2iiZTxCddZg==
-X-Received: by 2002:adf:ff09:: with SMTP id k9-v6mr24210387wrr.15.1529596459466;
-        Thu, 21 Jun 2018 08:54:19 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id b124-v6sm8558419wmf.11.2018.06.21.08.54.18
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 21 Jun 2018 08:54:18 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] cherry-pick: do not error on non-merge commits when '-m 1' is specified
-References: <87efh0pdln.fsf@javad.com>
-Date:   Thu, 21 Jun 2018 08:54:17 -0700
-In-Reply-To: <87efh0pdln.fsf@javad.com> (Sergey Organov's message of "Fri, 25
-        May 2018 15:42:03 +0300")
-Message-ID: <xmqqsh5gt9sm.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=y6UorX0koGt0oH9+sxGYF4oY6Ycd5q12JIHh1rob8Nw=;
+        b=HtZuH/svnLxwxnmS6++20Ler6gXHcIxq9WeMXZrXagdbg5P0CTmPyNsxXmP/q2T7B+
+         6IKLZIzjklfRbqbDtKlyV8tKJLhcVIpv9wZsTxa4AR9bMGZY9z0QFm7OUcGIVyWuQbcf
+         RRXOXX4UJ7LLWmk2w1j4PNEwQP9D6feQDgtgvbIYYifVvhjy+WhQHpsCcEds2kbcldbn
+         FFzxWntrZJho9UYgXrfH0+nwkdh4ZhzPEgN8dDDN8z7jABnJASHoYM1ptSWc0b1kWMtd
+         ZhO0X8ZBrK1kqPXL2/hWfDfKe/s+gaZYwJVY1uVanl9Bs/nP6vogwFFtIc99SoR9x/Qk
+         uRDw==
+X-Gm-Message-State: APt69E36VM5rlM02Krkg1ewsaVXHgb4f3+LVsoc7JZbVSq7VPBcAojRU
+        qjVhEfeJiKzvxLlrbe1k13SiGDa3Mbuzs3Ih8sI=
+X-Google-Smtp-Source: ADUXVKI9r8RQy6Nnfzkeb1GJm4X5bbce4ckSCrrlS5lkNbYSgaIrTB7GAWCuDsKFYr0CtbYkOUNpOguNseboiGdf3QU=
+X-Received: by 2002:aca:d54e:: with SMTP id m75-v6mr13765368oig.160.1529597052042;
+ Thu, 21 Jun 2018 09:04:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 2002:a9d:4047:0:0:0:0:0 with HTTP; Thu, 21 Jun 2018 09:04:11
+ -0700 (PDT)
+From:   Jack Adrian Zappa <adrianh.bsc@gmail.com>
+Date:   Thu, 21 Jun 2018 12:04:11 -0400
+Message-ID: <CAKepmagD1VgRx+79rS9Swe8OL8SOwvRn6Yn-u_FCUy-OCUMeFQ@mail.gmail.com>
+Subject: Git not creating new directory when cloning
+To:     git-mailing-list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sergey Organov <sorganov@gmail.com> writes:
+Hi, I was trying to clone a repo into a non-existent directory. but it
+gave me a failure:
 
-> When cherry-picking multiple commits, it's impossible to have both
-> merge- and non-merge commits on the same command-line. Not specifying
-> '-m 1' results in cherry-pick refusing to handle merge commits, while
-> specifying '-m 1' fails on non-merge commits.
+$  git clone  https://github.com/jelera/vim-javascript-syntax.git
+~/.vim/bundle/vim-javascript-syntax
+fatal: destination path
+'/home/username/.vim/bundle/vim-javascript-syntax' already exists and
+is not an empty directory.
 
-Allowing "-m1" even when picking a single parent commit, because
-the 1-st parent is defined for such a commit, makes sense, espeially
-when running a cherry-pick on a range, exactly for the above reason.
-It is slightly less so when cherry-picking a single commit, but not
-by a large margin.
+(the command was taken from install procedure from
+https://github.com/jelera/vim-javascript-syntax)
 
-I think the original reasoning for requiring "-m $n" not present,
-especially because cherry-pick was originally for replaying only a
-single commit, was because it would lead somebody to propose that
-the command should behave as if -m1 is always given (and when trying
-to cherry-pick a merge relative to its second parent, give -m2 to
-override it), which in turn encourage the 'first-parent is special'
-world-view from the tool-side.  IOW, "The worldview to treat the
-first-parent chain specially is correct, because Git has many
-features to work with that worldview conveniently" was something we
-wanted to avoid; rather "Such and such workflows benefit from
-treating the first-parent chain specially, so let's add features to
-do so" was we wanted to do, and of course, back then cherry-pick
-that allows mixture of merges and single-parent commits to be
-picked, which would have made the need to do something like this
-patch does felt greater, did not exist.
+The directory "/home/username/.vim/bundle" already existed, but
+"'/home/username/.vim/bundle/vim-javascript-syntax" did not.  Upon
+creating the "vim-javascript-syntax" sub-directory, the clone command
+succeeded.  From what I read from the docs
+(https://git-scm.com/docs/git-clone):
 
-Now, it appears, at least to me, that the world pretty much accepted
-that the first-parent worldview is often very convenient and worth
-supporting by the tool, so the next logical step might be to set
-opts->mainline to 1 by default (and allow an explicit "-m $n" from
-the command line to override it).  But that should happen after this
-patch lands---it is logically a separate step, I would think.
-
-> This patch allows '-m 1' for non-merge commits. Besides, as mainline is
-> always the only parent for a non-merge commit, it made little sense to
-> disable it in the first place.
+> git clone [--template=3D<template_directory>]
+> [-l] [-s] [--no-hardlinks] [-q] [-n] [--bare] [--mirror]
+> [-o <name>] [-b <name>] [-u <upload-pack>] [--reference <repository>]
+> [--dissociate] [--separate-git-dir <git dir>]
+> [--depth <depth>] [--[no-]single-branch] [--no-tags]
+> [--recurse-submodules[=3D<pathspec>]] [--[no-]shallow-submodules]
+>  [--jobs <n>] [--] <repository> [<directory>]
+...
+> <directory>
 >
-> Signed-off-by: Sergey Organov <sorganov@gmail.com>
-> ---
->  sequencer.c | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
+> The name of a new directory to clone into. The "humanish" part of the sou=
+rce repository is used if no directory is explicitly given (repo for /path/=
+to/repo.git and foo for host.xz:foo/.git). Cloning into an existing directo=
+ry is only allowed if the directory is empty.
 
->
-> diff --git a/sequencer.c b/sequencer.c
-> index 1ce6326..2393bdf 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -1543,9 +1543,11 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
->  			return error(_("commit %s does not have parent %d"),
->  				oid_to_hex(&commit->object.oid), opts->mainline);
->  		parent = p->item;
-> -	} else if (0 < opts->mainline)
-> -		return error(_("mainline was specified but commit %s is not a merge."),
-> -			oid_to_hex(&commit->object.oid));
-> +	} else if (1 < opts->mainline)
-> +		/* Non-first parent explicitly specified as mainline for
-> +		 * non-merge commit */
+Which to me, implies that the directory doesn't have to exist prior to
+cloning.  So is this a bug or a misunderstanding?
 
-Style.
+Thanks,
 
-	/*
-	 * Our multi-line comments are to be
-	 * formatted like this.
-	 */
 
-> +		return error(_("commit %s does not have parent %d"),
-> +			     oid_to_hex(&commit->object.oid), opts->mainline);
->  	else
->  		parent = commit->parents->item;
+A
