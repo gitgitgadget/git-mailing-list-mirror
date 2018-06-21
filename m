@@ -6,30 +6,27 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0ECD21F516
-	for <e@80x24.org>; Thu, 21 Jun 2018 14:36:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 660791F516
+	for <e@80x24.org>; Thu, 21 Jun 2018 14:36:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933219AbeFUOgI (ORCPT <rfc822;e@80x24.org>);
+        id S933204AbeFUOgI (ORCPT <rfc822;e@80x24.org>);
         Thu, 21 Jun 2018 10:36:08 -0400
-Received: from mail.vm.ouaza.com ([212.83.178.2]:55242 "EHLO mail.vm.ouaza.com"
+Received: from mail.vm.ouaza.com ([212.83.178.2]:55241 "EHLO mail.vm.ouaza.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933002AbeFUOgH (ORCPT <rfc822;git@vger.kernel.org>);
+        id S932960AbeFUOgH (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 21 Jun 2018 10:36:07 -0400
 Received: from x260-buxy.home.ouaza.com (133-218-190-109.isp.overthebox.ovh [109.190.218.133])
-        by mail.vm.ouaza.com (Postfix) with ESMTPSA id DDF5020F3C;
-        Thu, 21 Jun 2018 16:27:15 +0200 (CEST)
+        by mail.vm.ouaza.com (Postfix) with ESMTPSA id ED75F2094E;
+        Thu, 21 Jun 2018 16:27:01 +0200 (CEST)
 Received: by x260-buxy.home.ouaza.com (Postfix, from userid 1000)
-        id D60E98A2BD8; Thu, 21 Jun 2018 16:28:13 +0200 (CEST)
+        id CB5C38A2BD8; Thu, 21 Jun 2018 16:27:59 +0200 (CEST)
 From:   =?UTF-8?q?Rapha=C3=ABl=20Hertzog?= <hertzog@debian.org>
 To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-        =?UTF-8?q?Rapha=C3=ABl=20Hertzog?= <hertzog@debian.org>
-Subject: [PATCH 2/2] i18n: bisect: mark two supplementary strings for translation
-Date:   Thu, 21 Jun 2018 16:27:42 +0200
-Message-Id: <20180621142742.28575-3-hertzog@debian.org>
+Cc:     =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+Subject: Two small l10n/i18n patches
+Date:   Thu, 21 Jun 2018 16:27:40 +0200
+Message-Id: <20180621142742.28575-1-hertzog@debian.org>
 X-Mailer: git-send-email 2.18.0.rc2
-In-Reply-To: <20180621142742.28575-1-hertzog@debian.org>
-References: <20180621142742.28575-1-hertzog@debian.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,38 +37,25 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The whole bisect procedure is translated but the last message
-that the user will see in the process is not translated. Let's fix this.
+(I'm not subscribed, please keep me in CC)
 
-Signed-off-by: Raphaël Hertzog <hertzog@debian.org>
----
- bisect.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Hello,
 
-diff --git a/bisect.c b/bisect.c
-index a579b5088..8edc7a7a6 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -658,8 +658,8 @@ static void exit_if_skipped_commits(struct commit_list *tried,
- 	if (!tried)
- 		return;
- 
--	printf("There are only 'skip'ped commits left to test.\n"
--	       "The first %s commit could be any of:\n", term_bad);
-+	printf(_("There are only 'skip'ped commits left to test.\n"
-+		 "The first %s commit could be any of:\n"), term_bad);
- 
- 	for ( ; tried; tried = tried->next)
- 		printf("%s\n", oid_to_hex(&tried->item->object.oid));
-@@ -984,7 +984,7 @@ int bisect_next_all(const char *prefix, int no_checkout)
- 
- 	if (!oidcmp(bisect_rev, current_bad_oid)) {
- 		exit_if_skipped_commits(tried, current_bad_oid);
--		printf("%s is the first %s commit\n", oid_to_hex(bisect_rev),
-+		printf(_("%s is the first %s commit\n"), oid_to_hex(bisect_rev),
- 			term_bad);
- 		show_diff_tree(prefix, revs.commits->item);
- 		/* This means the bisection process succeeded. */
--- 
-2.18.0.rc2
+I was reviewing the output of "git bisect" with my French locale
+and I saw a clear mistake in the French translation (fixed
+in the first commit) and I also noticed that the last message
+was still in English. After review of the code, it's not a missing
+translation, the problem comes down to two strings which
+are not marked for translation.
+
+So the second commit marks those strings for translation. But I haven't
+checked much further than that. The final string is used in many places
+in the test suite and I haven't checked if the locale is properly
+hardcoded in the test suite.
+
+In any case, "make test" is still working after those two commits.
+
+Thank you for considering my patches. I leave it tho the regular
+translators to add translations for the newly added strings.
+
 
