@@ -7,81 +7,65 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF6921F516
-	for <e@80x24.org>; Thu, 21 Jun 2018 21:34:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 976B51F516
+	for <e@80x24.org>; Thu, 21 Jun 2018 21:44:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933675AbeFUVeH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Jun 2018 17:34:07 -0400
-Received: from mail-yb0-f193.google.com ([209.85.213.193]:34268 "EHLO
-        mail-yb0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933477AbeFUVeG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jun 2018 17:34:06 -0400
-Received: by mail-yb0-f193.google.com with SMTP id n23-v6so1792220ybg.1
-        for <git@vger.kernel.org>; Thu, 21 Jun 2018 14:34:05 -0700 (PDT)
+        id S933417AbeFUVoE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Jun 2018 17:44:04 -0400
+Received: from mail-yw0-f195.google.com ([209.85.161.195]:39231 "EHLO
+        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933115AbeFUVoD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jun 2018 17:44:03 -0400
+Received: by mail-yw0-f195.google.com with SMTP id 81-v6so1699518ywb.6
+        for <git@vger.kernel.org>; Thu, 21 Jun 2018 14:44:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=stSyBbz18JffBIFfQidplQVGJdtc3iRIeZhhvZ/JAZE=;
-        b=fCeLxhivEQeoyLpul6f4tugJydI2f+JK6uPzAHj3GD5wKPKnp6EdwNfKmDCVp1RUHa
-         1q25+0jhYukoA27CFGt029omVwJ59otLzj/QffMUNMg0RrFNBU9TUpR92gKOl7GbWaVd
-         foDQkD3bJFcIlOjR5CgRDPYTIUM+/7ecN3DC8bMZpo+DLl+LR+E0r6XMAyHIaurVdiNJ
-         23pya+Om1rOkGcNzgwfSA4iup8sj1AtzOM9Xx3Qc7H4Vg1GC5ViWGsw0S4XW4RdsEhzD
-         gSe0Pro+gsqDsJBqflCOchJ3gvRsLS2MxTIYYY75XErjYpLiI6FqorB5GDAIRQYSdVpT
-         jYPg==
+        bh=VWQpaie0TibK6+1X6D5HwlWbiqof1ZRR0SuoNo1QVCg=;
+        b=LqPvWEUrhRuZJ9gYKPFLwlOy/25d8rbkIjCvXeInCFrMOBCAn+kM08onX89P6lvY3v
+         BzVWRQD7ZaZOt4QOovo9Z/hrvP3xhmqRpNFIhSNPFPGwcSYCWgB9B4koCwrNFSu74clQ
+         +mxcsvgbtOmRjhxBq7vxU7uy/EENe9iHO9bA2SZ3cbabV6AH6GcE76GsxGLNr1dYOhWn
+         RokErynWG/x+MiGZVH77/9/teT05ZF5aXlp4Maqemy4i6VedJPDlCm7FziYcG/4htSMJ
+         vbqx16t3Wa4JfYGhHkgYg0lHIzR/tgNxaI/IS6ciVivTvpf9jXE0WGDYQVvwQIzcmdFP
+         0juA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=stSyBbz18JffBIFfQidplQVGJdtc3iRIeZhhvZ/JAZE=;
-        b=VJAj2MbcYJ1HDGfgY3M8YJtjXNqfEKuVOJVlZWolWKpETr6GeDAo+2ZM/NSZcQW87R
-         GnoHHoL5n0gAOZzOb1HBpOiCFoP1sRXyvc+wqbJIJGRnaYjo6Uy2Zbyl9JzuLrii74ez
-         xD+1Ca5ju3fGsc6oLvlJV0OVsUWOdSke91mhJKOlsdH7wf94Sm1nxePaDo4C29EeAcED
-         6mpp+VV1Xtn4DyNhOYLmbdI7YFDQ9hDiTD4ISL9B+QRvjDJbOX864rd+96oZkTqlbSLU
-         c5bK8j5wX4h5qnJ29olYcUH/AIPz/COVhzKIR/rmu+6q2VQZ0g14Wtk00b29TFw+8Zjf
-         Q5jA==
-X-Gm-Message-State: APt69E1WnGqXUVWLDvM9u/KcB7yvb+z3n5aqZ3mFn26G0R46sPnp9PPI
-        k0R2WQABeU33UIutzD+K9nEYeOGtK2/oJG+o0AJi4Q==
-X-Google-Smtp-Source: ADUXVKLCpvS4je3XJ5NPervgOmgRnyyseKzCLgPUIcBgMcBzXXl4HHy5Ao61Dy7BLX/cIMnoUtwfQWnFnQ/myDPx5GQ=
-X-Received: by 2002:a25:dcc4:: with SMTP id y187-v6mr10664852ybe.515.1529616845102;
- Thu, 21 Jun 2018 14:34:05 -0700 (PDT)
+        bh=VWQpaie0TibK6+1X6D5HwlWbiqof1ZRR0SuoNo1QVCg=;
+        b=HsJddvszB3OwUm/9TLM7V4ZWCdkQKvR1mEmta8DBrZm9Q7fMcu/ZjylvyOzgVLloQq
+         cL9GTRrIWdoMcM5jGvYBUboWldGR/xTGruMWcwxCNilxj4+BeEa1+8q8l+iXBGRUE3Xe
+         QRrCUho9234vpGYsKqmQseSBraxFRYymjkRd9Muov2XbBrUVL1Vyf4Uafz4LggHMqdne
+         4nFz/vZ3DwYKilT8zwojnWI5JOQN6wkrDK6lP4zq/awlB3rWT7xmSl3mY+/XE/xuvH0p
+         veigVl477SM+jTQJsb5mCjiVgLGwwddDK8GwCc5HVDwJWSzmllMLE6I+Q3d6c14cnJcD
+         o4uQ==
+X-Gm-Message-State: APt69E2/adG12zA8Ay/xJgVlP3Bkuz2ZpTX7WPa8GTBLp0xa3SWyhslw
+        dtw5V9u9Oiv7rKuPbvBJsySh2BHLYUXZPjqkhqFldQ==
+X-Google-Smtp-Source: ADUXVKKZOl+zAMhPqRtt/ZdLi+bhWse+Dn5IhMGCUQYffQvBwBohKORxom+QwF4Mn78QY7UUmxiVtrqA6eK2ZFwZFTI=
+X-Received: by 2002:a0d:d304:: with SMTP id v4-v6mr13117842ywd.500.1529617442932;
+ Thu, 21 Jun 2018 14:44:02 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180417163400.3875-1-jamill@microsoft.com> <20180620201557.77155-1-jamill@microsoft.com>
- <20180620201557.77155-4-jamill@microsoft.com>
-In-Reply-To: <20180620201557.77155-4-jamill@microsoft.com>
+References: <cover.1529616356.git.jonathantanmy@google.com> <82c9edb9108f49468031bfd7c65a9eb8db2cb671.1529616356.git.jonathantanmy@google.com>
+In-Reply-To: <82c9edb9108f49468031bfd7c65a9eb8db2cb671.1529616356.git.jonathantanmy@google.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 21 Jun 2018 14:33:53 -0700
-Message-ID: <CAGZ79kbL5wjJvKj-=gtGgtMFCPs+zTwSAV-Aeo_2GNC_h=1nNA@mail.gmail.com>
-Subject: Re: [PATCH v4 3/8] mem-pool: only search head block for available space
-To:     Jameson Miller <jamill@microsoft.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Ben Peart <peartben@gmail.com>, Jeff King <peff@peff.net>
+Date:   Thu, 21 Jun 2018 14:43:52 -0700
+Message-ID: <CAGZ79kbC0e1ujAebTUexDXH4+cFOpek3a0VTrdRUfx6Z=cpBVw@mail.gmail.com>
+Subject: Re: [PATCH 2/5] commit-graph: add missing forward declaration
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 20, 2018 at 1:17 PM Jameson Miller <jamill@microsoft.com> wrote:
+Hi Jonathan,
+On Thu, Jun 21, 2018 at 2:29 PM Jonathan Tan <jonathantanmy@google.com> wrote:
 >
-> Instead of searching all memory blocks for available space to fulfill
-> a memory request, only search the head block. If the head block does
-> not have space, assume that previous block would most likely not be
-> able to fulfill request either. This could potentially lead to more
-> memory fragmentation, but also avoids searching memory blocks that
-> probably will not be able to fulfill request.
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 
-Do we have any numbers on performance or memory pressure here?
-(I would think benchmarking fast-import would suffice as that is where
-the mem pool originated)
-
-> This pattern will benefit consumers that are able to generate a good
-> estimate for how much memory will be needed, or if they are performing
-> fixed sized allocations, so that once a block is exhausted it will
-> never be able to fulfill a future request.
-
-Would this be a good candidate to contain parts of
-https://public-inbox.org/git/DM5PR21MB07803E8D2627676788659E63CE770@DM5PR21MB0780.namprd21.prod.outlook.com/
-?
+Both this and the previous patch look good to me;
+you seem to have better (stricter) checking for
+missing includes/forward declarations, am I missing
+a compile option? (I have DEVELOPER=1 in config.mak)
