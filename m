@@ -2,67 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1D991F516
-	for <e@80x24.org>; Thu, 21 Jun 2018 21:18:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 041B51F516
+	for <e@80x24.org>; Thu, 21 Jun 2018 21:22:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933432AbeFUVS1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Jun 2018 17:18:27 -0400
-Received: from mail-yb0-f194.google.com ([209.85.213.194]:35780 "EHLO
-        mail-yb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932753AbeFUVS0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jun 2018 17:18:26 -0400
-Received: by mail-yb0-f194.google.com with SMTP id a16-v6so1778108ybm.2
-        for <git@vger.kernel.org>; Thu, 21 Jun 2018 14:18:25 -0700 (PDT)
+        id S1754017AbeFUVWc (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Jun 2018 17:22:32 -0400
+Received: from mail-ua0-f194.google.com ([209.85.217.194]:43138 "EHLO
+        mail-ua0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933162AbeFUVWb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jun 2018 17:22:31 -0400
+Received: by mail-ua0-f194.google.com with SMTP id z16-v6so2964893uaz.10
+        for <git@vger.kernel.org>; Thu, 21 Jun 2018 14:22:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=I6NZj11LakmXOnunn439mBNUMsTY9yK6DVOd+O84SMI=;
+        b=m9ASeiC7e8gNp+pXzRAfFi1T/80LnCc2884sIkFXAjop1/A1zjUR816FLmVEx0cDRV
+         74Q/PhvtAWCY2Kuot2a8ABZGNwV/e+L5lPQ9A5HRR1RaTrXVnLtehD/FuP7bQ2vPeKp8
+         P1XVeXA7NtMi2pOay9LSLfKnr2pU/zDq2QmeYhxvDThCPMeEWMLKN/OxQqEYQyC7FyZh
+         OS78x0KBQm++SNRcRap9S0JldTzMSGmJr+E1vg0UA9ZsiwjP5b3H8aTyWgsEtzZx0q/+
+         I0fQB4uRq0qlP66oHXOfzMmh4hoR8WG/Ru0v3kJRwkOTZzljAQUsKRzx5BYoSABZkixp
+         ekDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=92d/5vVO3Higz9HyoJGVFPEYfj1Y+2gruW5zSxhSdk4=;
-        b=fVYPZTnpglUM8+d8XamTjX6nXXMaP0sddCvjV1dRVgnSjfFV1EI+QMBgGLBUp8FIkN
-         k2qSGlacj6KUSQZXD7Jb8hJwTiVXQbHM6mOGXfJ+voW/p/6EwI5fcveIUx2/7AH+0Q8E
-         Q9/5UXZCUqLmi9IZc778gjOaXjAI7lvNhvos0740S1BLltLO/ltHGv9k+PSiREeZPsvC
-         4Cgw1kAzbrsh+3YcKfo6BaKHa5r+ow4zlEE7eS3v5wZUxs65xhjFYOEBn+fWOn6Vy8I8
-         fdQS6N7F++w/M6Ab6mqJQVMcgc6zEfDeW4F4Z/ln64HDqCwIA4UIq1byYnCzLdQb2d9u
-         BBCw==
-X-Gm-Message-State: APt69E1JB0G8G0fQYnHbHMnuskC8azuE6LM4Ek1r1jvCV5iFFefnbCXQ
-        RnajapZ4aVLcycqCUrNopNjQ0COpBffsTPX6rM7noA==
-X-Google-Smtp-Source: ADUXVKIIHWua2d4ATQF4tFQPecxtTYJNJkXovhv85Ru9Z4Yw92DLqjQ+7dNgdHvTsKOKv/GrDxFkH3bHqNKqBESAWp4=
-X-Received: by 2002:a25:a224:: with SMTP id b33-v6mr937961ybi.295.1529615905279;
- Thu, 21 Jun 2018 14:18:25 -0700 (PDT)
+        bh=I6NZj11LakmXOnunn439mBNUMsTY9yK6DVOd+O84SMI=;
+        b=kKHOmBHCHlf3J0/yGmQYX9Sjnwcn7KyHpSfJYcSb9q2zQXgBL15rqVsKjks76PM76X
+         YsUYQ9jQTg5Yu44zLfPVP5+Jrib55l+Wa6y8bRisHfiCe/Ubf+qHuCq8SpsyBe2zBuKj
+         RSrQgWxbYd/Gv+HdBC9F2sk2PRWjA7X6XqDnaia7nrSblwSM5bOJgbpMWZBFwZFZN8Vy
+         mmLJCsJ7/VZUCcPglYaWAr9mayTY9kchbjHMoJxBDFyAclxuguTFWIC5ei56dexaE+6k
+         EFO7g0ElQWIRBLhLKoWmCevI+cOV5+vxmDFs1tSSqBT/58TEn405kgkxNJKFOpSz26/f
+         HNeg==
+X-Gm-Message-State: APt69E2Zy1mivAe+TruFPQOx8jcGxT3RTiTEobr7jkaBSkTwv6ulwB8n
+        k4uOpQN4Fr9VVPlApTlY+jqCKXzenwjLnZZHbZM=
+X-Google-Smtp-Source: ADUXVKJjq2rC0LNOlTj3bjsD8Puja4gQUeQa1Uhmwjnm095NzWu/Mdy4/WcEpFMnwBQ+XP8C3TMvCA3UaA+QECmJgm4=
+X-Received: by 2002:ab0:84b:: with SMTP id b11-v6mr17573448uaf.79.1529616150147;
+ Thu, 21 Jun 2018 14:22:30 -0700 (PDT)
 MIME-Version: 1.0
+Received: by 2002:ab0:5f28:0:0:0:0:0 with HTTP; Thu, 21 Jun 2018 14:22:29
+ -0700 (PDT)
+In-Reply-To: <xmqqbmc3swaa.fsf@gitster-ct.c.googlers.com>
 References: <20180617055856.22838-1-newren@gmail.com> <20180621150023.23533-1-newren@gmail.com>
- <20180621150023.23533-4-newren@gmail.com> <xmqqvaabsy6y.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqvaabsy6y.fsf@gitster-ct.c.googlers.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 21 Jun 2018 17:18:13 -0400
-Message-ID: <CAPig+cSVJk_mf8UeOoXysMZfP5c-MFBqa3H-w+Wns6_oZ8u5Ug@mail.gmail.com>
-Subject: Re: [PATCH v3 3/7] t3422: new testcases for checking when
- incompatible options passed
+ <20180621150023.23533-7-newren@gmail.com> <xmqqbmc3swaa.fsf@gitster-ct.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 21 Jun 2018 14:22:29 -0700
+Message-ID: <CABPp-BH0c-wgjjj7Rzy-KRzKDMc8PLK5GqrGrnCUjzpux4VGLg@mail.gmail.com>
+Subject: Re: [PATCH v3 6/7] git-rebase.txt: address confusion between --no-ff
+ vs --force-rebase
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren <newren@gmail.com>, Git List <git@vger.kernel.org>,
+Cc:     Git Mailing List <git@vger.kernel.org>,
         Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Eric Sunshine <sunshine@sunshineco.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 21, 2018 at 4:05 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Thu, Jun 21, 2018 at 1:46 PM, Junio C Hamano <gitster@pobox.com> wrote:
 > Elijah Newren <newren@gmail.com> writes:
-> > +     # This is indented with HT SP HT.
-> > +     echo "          foo();" >>foo &&
 >
-> I often wonder, whenever I see a need for a comment like this, if
-> saying the same thing in code to make it visible is cleaner and less
-> error prone way to do so, i.e. e.g.
+>> rebase was taught the --force-rebase option in commit b2f82e05de ("Teach
+>> rebase to rebase even if upstream is up to date", 2009-02-13).  This flag
+>> worked for the am and merge backends, but wasn't a valid option for the
+>> interactive backend.
+>> ...
+>>  INCOMPATIBLE OPTIONS
+>>  --------------------
+>>
+>> @@ -559,11 +549,6 @@ Other incompatible flag pairs:
+>>  BEHAVIORAL INCONSISTENCIES
+>>  --------------------------
+>>
+>> -  * --no-ff vs. --force-rebase
+>> -
+>> -    These options are actually identical, though their description
+>> -    leads people to believe they might not be.
 >
->         echo "_ _foo();" | tr "_" "\011" >>foo &&
+> Ah, I should have held off my review of 5/7 before reading this one.
+> Perhaps we want to do this before the step 5/7 to reduce the churn?
 
-Or use q_to_tab() from test-lib-functions.h:
-
-    echo "q qfoo();" | q_to_tab
+Sure, I can switch the order around.
