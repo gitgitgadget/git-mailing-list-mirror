@@ -2,128 +2,199 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 604071F516
-	for <e@80x24.org>; Thu, 21 Jun 2018 17:38:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 690AF1F516
+	for <e@80x24.org>; Thu, 21 Jun 2018 17:41:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932799AbeFURiz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Jun 2018 13:38:55 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:33641 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932695AbeFURiy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jun 2018 13:38:54 -0400
-Received: by mail-wr0-f196.google.com with SMTP id k16-v6so4068601wro.0
-        for <git@vger.kernel.org>; Thu, 21 Jun 2018 10:38:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=P6GzXSaPqhbx4EcYRL51RzRal0y2mdsCc7RVefEHegk=;
-        b=C8xJLJsJzobbdR1rloTukLkbUjeUAoQnNkzneU6gN8RVBP6MNgQM5OZCdQ0xjObZz1
-         4g3JHn+EkgaqXsXMBnWh65yPo7FVIG0bO/9x4DmG3whqhqes2D2nc7i50tF4XkSsHNj3
-         ffjB0h61KYeHC/xrcu7sYb+w9bGxMnxCo0hNdjzZs+E2Wd5TDjI+vajS/uaJG+WZeVZj
-         sQfhwejQ+SNl3ZCdx4HXPAr+zcOKuC3EACcpLm7ssuyRoRyBQ4YWhSCdnF1+aTUYFnAS
-         ysnI0hqAInJyxgU/aawYD5sBS7M+yeR3HKjokO1N+UwtY0W1Db00QNH9cgSaDe5DGUS/
-         tCVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=P6GzXSaPqhbx4EcYRL51RzRal0y2mdsCc7RVefEHegk=;
-        b=o3bwlwKR+TBxfXZLzvaJ/dgl2yMi58ew/xuO1qO1ewl/4+hhWB1aaccgTFxLhB3d5X
-         pokIAbUCEI4ShreYvVoGQIXoJ6UEp4UvCn1B70l0gt/1C3fsrD8cddp0reKMNIl3UBrn
-         6Ub3EPU+XtJVOmHF9nhl+v2+ZfdZxLZVjcGFyJu57+cw9wkk7oTbgL9JiBFgrSU563Jg
-         c/A+4wCk1BXeEcjXsMEV5DlIAPLPUTqoGt+48vm5XuHpHAgWKOAM0nPZ/Q6zpiFMyUa6
-         zV7cAvRYAXtYOlJlkonr1fDXI/+yKCxdTsdDo+UbgeyvZXQTimNWQFdLExI2UpE3UUTS
-         Bt4w==
-X-Gm-Message-State: APt69E3QX7GqCl4ZXyzP45YuQ8GjtYfEEgYYe5PpeYdEIECHdkBmwV6N
-        LP3l3hmnYlPnWiX/6loT2ps=
-X-Google-Smtp-Source: ADUXVKLWLd+MB7FlMtoqFofXzOaKM08i0Utc6c4945hkFiKyyrtg+X9hXqQ9ReLuJZcDAFeBbxtJbA==
-X-Received: by 2002:adf:ec02:: with SMTP id x2-v6mr20845630wrn.245.1529602733023;
-        Thu, 21 Jun 2018 10:38:53 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id z7-v6sm4885326wrl.77.2018.06.21.10.38.49
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 21 Jun 2018 10:38:49 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Martin Fick <mfick@codeaurora.org>
-Subject: Re: [PATCH 09/23] midx: write pack names in chunk
-References: <20180607140338.32440-1-dstolee@microsoft.com>
-        <20180607140338.32440-10-dstolee@microsoft.com>
-        <CACsJy8ARDLeWaWq1_npZq5ARCVgcETpS--YUVLqZkZA52E7Msw@mail.gmail.com>
-        <4082c785-9fb2-7b15-b646-3c658b54abbe@gmail.com>
-Date:   Thu, 21 Jun 2018 10:38:49 -0700
-In-Reply-To: <4082c785-9fb2-7b15-b646-3c658b54abbe@gmail.com> (Derrick
-        Stolee's message of "Thu, 21 Jun 2018 11:25:38 -0400")
-Message-ID: <xmqqfu1gt4ye.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S932829AbeFURlZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Jun 2018 13:41:25 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50884 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S932695AbeFURlY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jun 2018 13:41:24 -0400
+Received: (qmail 31694 invoked by uid 109); 21 Jun 2018 17:41:24 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 21 Jun 2018 17:41:24 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 8251 invoked by uid 111); 21 Jun 2018 17:41:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 21 Jun 2018 13:41:42 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Jun 2018 13:41:22 -0400
+Date:   Thu, 21 Jun 2018 13:41:22 -0400
+From:   Jeff King <peff@peff.net>
+To:     Sebastian Kisela <skisela@redhat.com>
+Cc:     git@vger.kernel.org, nico@fluxnic.net, larsxschneider@gmail.com,
+        lfleischer@lfos.de
+Subject: Re: [PATCH] Sanitize escape char sequences coming from server
+Message-ID: <20180621174122.GA30249@sigill.intra.peff.net>
+References: <20180621121030.1721-1-sebastian.kisela@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20180621121030.1721-1-sebastian.kisela@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+On Thu, Jun 21, 2018 at 02:10:30PM +0200, Sebastian Kisela wrote:
 
-> On 6/7/2018 2:26 PM, Duy Nguyen wrote:
->> On Thu, Jun 7, 2018 at 4:03 PM, Derrick Stolee <stolee@gmail.com> wrote:
->>> @@ -74,6 +80,31 @@ struct midxed_git *load_midxed_git(const char *object_dir)
->>>          m->num_chunks = *(m->data + 6);
->>>          m->num_packs = get_be32(m->data + 8);
->>>
->>> +       for (i = 0; i < m->num_chunks; i++) {
->>> +               uint32_t chunk_id = get_be32(m->data + 12 + MIDX_CHUNKLOOKUP_WIDTH * i);
->>> +               uint64_t chunk_offset = get_be64(m->data + 16 + MIDX_CHUNKLOOKUP_WIDTH * i);
->> Would be good to reduce magic numbers like 12 and 16, I think you have
->> some header length constants for those already.
->>
->>> +               switch (chunk_id) {
->>> +                       case MIDX_CHUNKID_PACKNAMES:
->>> +                               m->chunk_pack_names = m->data + chunk_offset;
->>> +                               break;
+> From: Sebastian Kisela <skisela@redhat.com>
+> 
+> Fix volnurability against MITM attacks on client side
+> by replacing non printable and non white space characters
+> by "?".
+> 
+> Fixes: CVE-2018-1000021
 
-(style: aren't these case arms indented one level too deep)?
+I'm not sure if this is a productive direction to pursue or not.
 
->>> +                       case 0:
->>> +                               die("terminating MIDX chunk id appears earlier than expected");
->> _()
->
-> This die() and others like it are not marked for translation on
-> purpose, as they should never be seen by an end-user.
+If you're worried about a malicious server (or MITM) sending you bad
+messages, you'd also need to worry about them sending you bad repository
+content, as we may print filenames to stderr or stdout (and occasionally
+file content, too, though typically only as part of a diff, which
+_usually_ goes through a pager).
 
-Should never be seen because it indicates a software bug, in which
-case this should be BUG() instead of die()?
+But it's unclear to me if this is worth worrying about or not.
+Ultimately it's a vulnerability in the terminal if untrusted output can
+do bad things.
 
-Or did we just find a file corruption on the filesystem?  If so,
-then the error is end-user facing and should tell the user something
-that hints what is going on in the language the user understands, I
-would guess.
+It's hard to make an evaluation of whether this plugs the vulnerability
+because we haven't really defined a threat model. What are we protecting
+against exactly?
 
->>> +                       default:
->>> +                               /*
->>> +                                * Do nothing on unrecognized chunks, allowing future
->>> +                                * extensions to add optional chunks.
->>> +                                */
->> I wrote about the chunk term reminding me of PNG format then deleted
->> it. But it may help to do similar to PNG here. The first letter can
->> let us know if the chunk is optional and can be safely ignored. E.g.
->> uppercase first letter cannot be ignored, lowercase go wild.
->
-> That's an interesting way to think about it. That way you could add a
-> new "required" chunk and earlier versions could die() realizing they
-> don't know how to parse that required chunk.
+As for the patch itself:
 
-That is how the index extension sections work and may be a good
-example to follow.
+> diff --git a/sideband.c b/sideband.c
+> index 325bf0e97..8c9d74ace 100644
+> --- a/sideband.c
+> +++ b/sideband.c
+> @@ -1,3 +1,4 @@
+> +#include <wchar.h>
+>  #include "cache.h"
+
+System includes should go into git-compat-util.h (because ordering is
+often important there).
+
+More importantly, though, does everybody have wchar.h?
+
+> @@ -18,6 +19,20 @@
+>  #define ANSI_SUFFIX "\033[K"
+>  #define DUMB_SUFFIX "        "
+>  
+> +int sanitize_server_message(struct strbuf *outbuf)
+> +{
+> +	wchar_t *wcstring = xmalloc(sizeof(wchar_t) * outbuf->len);
+
+This is a potential integer overflow that can lead to a buffer overflow
+(e.g., imagine a system where both wchar_t and size_t are 32-bits; a 1GB
+string will wrap around and we'll allocate a much smaller buffer than we
+expected).
+
+> +	int len = mbstowcs(wcstring, outbuf->buf, outbuf->len);
+
+I don't think mbstowcs() is always going to do the right thing there.
+We're looking at a string that was sent from the remote server. What
+encoding is it in? Using mbstowcs() is going to use whatever is in
+LC_CTYPE on the local machine.
+
+Also, the return type of mbstowcs is a size_t.
+
+> +	for(int i = 0; i <= len; i++)
+> +		if(!isprint(wcstring[i]) && !isspace(wcstring[i]) )
+> +			wcstring[i] = '?';
+> +		if (wcstombs(outbuf->buf, wcstring, outbuf->len) == -1)
+> +			return 1;
+
+Funny indentation. I think the second line is supposed to _not_ be in
+the loop, so this is just funny indentation and not wrong code.
+
+Using isprint() here probably doesn't do what you expect, because Git
+uses its own locale-agnostic ctype replacements. I didn't check, but I
+suspect any non-ascii characters will be marked as non-printable, making
+the whole wchar thing pointless.
+
+Your replacement allows existing spaces, which is good; many servers
+send carriage-returns as part of progress output (and recv_sideband
+detects these and makes sure the line remains prefixed with "remote:").
+
+> @@ -74,6 +89,9 @@ int recv_sideband(const char *me, int in_stream, int out)
+>  				} else {
+>  					strbuf_addch(&outbuf, *brk);
+>  				}
+> +
+> +				if (sanitize_server_message(&outbuf))
+> +					retval = SIDEBAND_REMOTE_ERROR;
+
+"outbuf" may contain partially-received lines at various points, meaning
+multi-byte characters could be cut off. I _think_ it's OK to look at it
+here, as we'd always be breaking on a "\r" or "\n" at this point.
+
+> @@ -97,6 +115,8 @@ int recv_sideband(const char *me, int in_stream, int out)
+>  
+>  	if (outbuf.len) {
+>  		strbuf_addch(&outbuf, '\n');
+> +		if (sanitize_server_message(&outbuf))
+> +			retval = SIDEBAND_REMOTE_ERROR;
+>  		xwrite(2, outbuf.buf, outbuf.len);
+>  	}
+
+Here I think we could get cut off. Since it's the end of input, showing
+the partial cutoff character is the best we can do. However, I think
+we'd cause mbstowcs() in your sanitize function to report failure,
+meaning we wouldn't show the remote message at all.
+
+> diff --git a/t/t5401-update-hooks.sh b/t/t5401-update-hooks.sh
+> index 7f278d8ce..cc1f6ca29 100755
+> --- a/t/t5401-update-hooks.sh
+> +++ b/t/t5401-update-hooks.sh
+> @@ -148,4 +148,27 @@ test_expect_success 'pre-receive hook that forgets to read its input' '
+>  	git push ./victim.git "+refs/heads/*:refs/heads/*"
+>  '
+>  
+> +cat <<EOF >expect
+> +remote: foo?[0;31mbar?[0m
+> +To ./victim.git
+> + * [new branch]      victim_branch -> victim_branch
+> +EOF
+
+I know some tests in this script are already guilty of this, but please
+avoid adding commands outside of a test_expect block. And use "<<-\EOF"
+to allow proper indentation of the here-doc, and inhibit interpolation
+when you don't need it.
+
+> +cat >victim.git/hooks/pre-receive <<'EOF'
+> +#!/bin/sh
+> +  printf "foo\033[0;31mbar\033[0m"
+> +  exit 0
+> +EOF
+> +chmod u+x victim.git/hooks/pre-receive
+
+This should use write_script, since the $SHELL_PATH may not be /bin/sh.
+See nearby tests.
+
+> +test_expect_success 'pre-receive stderr contains ANSI colors' '
+> +	rm -f victim.git/hooks/update victim.git/hooks/post-receive &&
+> +
+> +  git branch victim_branch master &&
+
+Funny non-tab indentation (here and elsewhere).
+
+> +	git push ./victim.git "+refs/heads/victim_branch:refs/heads/victim_branch"\
+> +    >send.out 2>send.err &&
+
+Style: include a space before the backslash continuation.
+
+However, this should be the same as "git push victim.git
++victim_branch", which eliminates the need for continuation.
+
+> +  cat send.err > actual &&
+
+Style: we avoid whitespace between redirection operations and filenames
+(so just ">actual").
+
+-Peff
