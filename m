@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D6E661F516
-	for <e@80x24.org>; Thu, 21 Jun 2018 21:29:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 74DF51F516
+	for <e@80x24.org>; Thu, 21 Jun 2018 21:29:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933837AbeFUV3h (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Jun 2018 17:29:37 -0400
-Received: from mail-yw0-f201.google.com ([209.85.161.201]:36533 "EHLO
-        mail-yw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933745AbeFUV3f (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jun 2018 17:29:35 -0400
-Received: by mail-yw0-f201.google.com with SMTP id 202-v6so2529228ywo.3
-        for <git@vger.kernel.org>; Thu, 21 Jun 2018 14:29:35 -0700 (PDT)
+        id S933843AbeFUV3j (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Jun 2018 17:29:39 -0400
+Received: from mail-io0-f202.google.com ([209.85.223.202]:49094 "EHLO
+        mail-io0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933745AbeFUV3i (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jun 2018 17:29:38 -0400
+Received: by mail-io0-f202.google.com with SMTP id t11-v6so3558140iog.15
+        for <git@vger.kernel.org>; Thu, 21 Jun 2018 14:29:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=PToBQ6jRlH0qksRCkvJcxSg1GCi6hsYYr9BKtMtEkM4=;
-        b=HjlQkp/7i3cRP5ppHLc5NMknA7ftKGqVPGQEhUALPxVl0Xmdd/8FpT2KAqnBnfqkcU
-         IxoxaVK6aFibwSkjnlCxUBqRwPQZO71yu+FhSZQz1mi/6/mSL31RhGtPKCjTBvTIQjvY
-         x5Tdd6Nr1ZCMYbAjaLe6Ha5ivGgMhGEdWD6Ti5jsLfbPGX3cMbr9JBOimPZEQfcfOy9K
-         vewid+in976nQGqYcpUi2w3NOM/hSR1NDa/ROpZLCn1XwzPbTF6g79reg8a5vwDY2Eyg
-         YdArNeifu5pZrnKd2vZSXd6O4ZytzOaajn1NZTebUQZxw3HUjSjG564hG+e8YXRImyWD
-         otxg==
+        bh=PUAq6gOcye1sq/KiY6xPoWR8+jPZW5zX/R9piNYWYvE=;
+        b=T4B4E7VlZkWfNXS2Rx0JJwK5F9NEaHChd0EGEqhX/ZNx+1PXZZHtfXulYtX21NfARq
+         jY8ijSfNRmka+WoIDQ0M4vGz9fdD5Sh9IsPcMDbGf9UMznfgeb05ZznH8nxToj7wHS7w
+         ih/w+F+gelipBRVFry+nkuYaiqTKw6QNmz1vLI9J/zo+gOlVJVoARCOfHHBVtGEWmBja
+         50CLFUbl/SWpdKyGL3rtnAy59tjnf/lQ1Ci7LA5V7B61eJ1//zknPwL3OFfqDx7Qi3On
+         SjAdGNHMm2cjVneal7A/nvt40Jzvs4q5GpZPy8Ux1Np8P1vv620P7JzhQbuw6dPWzUFb
+         v8Sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=PToBQ6jRlH0qksRCkvJcxSg1GCi6hsYYr9BKtMtEkM4=;
-        b=M0M0BaDj/qmq/60szkRLd9YtEYJLWZOo6DgpKr8rw9hlRfcjMpnzUvlLOoDfFE8llI
-         I9TXDIdlfxvQ8B7syj+Vx3HTWWRlW/9MFCHivxrZkf0IdbDi0EVmuG/6Pgi+VzSGghkR
-         ZsJ03DBI4tC0cI+Tp/+BkE68dWEDEtXh88VT0YiyWe7cv7gihcXwbRAFltWGjqcq28dF
-         eM8XEdwSRzKr9eU/IGPkORhnx1s7yB2+jPu5yHvnnTz5EI7ZyN8aHHNnoGA7Rmtz+kO7
-         Nc/b/qVevV/LnIdaj0FrcJ7dOQK+y/sslV58RIvwiTQRXZj3MDms1fWQHAIkgqV2GERI
-         x79A==
-X-Gm-Message-State: APt69E1kZ2ROHf3TjiP8F+jeVhhCEdll0pa1SLnwTlNxe3IAHOlka72v
-        dD7HLBqucasN0SrDrp+3eM5GjJ+vUEBgNXz50vpzmC4xpc6TTTUQzB/nI0+7P9GGjDr/kCiA76a
-        ngqj7/5mXzNcRNNZzXNvdFSBNmGvzs5qnmlVRsqBs0CDSPbKVjLyrut8vdmp1RAH9UxM6pw1Hyy
-        W7
-X-Google-Smtp-Source: ADUXVKLupDuCKIzrcAEQMbtR2UC86wmBPG2T9HXjXjir2+GEnmRo3mkUajpO4CQk6JIpywOTZYhPeXjeBcIeQoe5MBpN
+        bh=PUAq6gOcye1sq/KiY6xPoWR8+jPZW5zX/R9piNYWYvE=;
+        b=sKbBZ7eX1vGYE77+JJDzeIJhdbJBihnOVlKraHmmyf6ecRSjOt3Pyy6ZTykl7aAHsC
+         CgqP6oY8ri+CQZHQ/PRBSBN4ou0ypOaX5ZrR7xcV7orK5gj3fODALkk6qvVzmGp3W2gG
+         h+UWi/Xr6E+EiAK9J2EMv+b2RahCgCtshkev9cdkJIE4s1/YVtomNBfy5ORQR9yvrxEf
+         xL+C6XpgNY3gSJrpwm1+4m7ABlKRzUb7S88GvKrg35lS92lFfa9ZtlIT+z6cV7RY31/Q
+         /+X5J0T5NTE0Ud9jjCN0p17Nls427rVgxHBys4Ei213kLDLS+GOnw2rkQCXUST8riisQ
+         UKcQ==
+X-Gm-Message-State: APt69E0M6lRenlwzjQ1zn3YwdAQZivlar0wZcN6mhZ0cBFo4tnYEqjj7
+        HgCXBnOXH87MEI6yvauUB07+tAzrFLn4hGklvdjIZlieALm0rEW8fflnfGOgE8UUwsRbgBMiHC8
+        +OP/Xb/ssID51LFbvmbhvpEOD6Okq+kVJyw+TqPQLEO3F+jL+02lBg8nd2CEULJMCiUx450Yj8T
+        tH
+X-Google-Smtp-Source: ADUXVKJcupmine1im8OrkOeWkq3uKL6BZKlgoYlb/cpkQdpgYZ4H5VLdBTbfFBSgEKa8DX2boDOVnz5/iFYJOcXjxl8P
 MIME-Version: 1.0
-X-Received: by 2002:a25:b196:: with SMTP id h22-v6mr7587023ybj.27.1529616574481;
- Thu, 21 Jun 2018 14:29:34 -0700 (PDT)
-Date:   Thu, 21 Jun 2018 14:29:22 -0700
+X-Received: by 2002:a24:45d5:: with SMTP id c82-v6mr3333983itd.46.1529616576715;
+ Thu, 21 Jun 2018 14:29:36 -0700 (PDT)
+Date:   Thu, 21 Jun 2018 14:29:23 -0700
 In-Reply-To: <cover.1529616356.git.jonathantanmy@google.com>
-Message-Id: <82c9edb9108f49468031bfd7c65a9eb8db2cb671.1529616356.git.jonathantanmy@google.com>
+Message-Id: <10e98b79ecdc7aa8d6abc2d6870fca2692d1956f.1529616356.git.jonathantanmy@google.com>
 References: <cover.1529616356.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.18.0.rc2.347.g0da03f3a46.dirty
-Subject: [PATCH 2/5] commit-graph: add missing forward declaration
+Subject: [PATCH 3/5] commit-graph: add free_commit_graph
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>
@@ -65,22 +65,74 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- commit-graph.h | 2 ++
- 1 file changed, 2 insertions(+)
+ builtin/commit-graph.c |  2 ++
+ commit-graph.c         | 24 ++++++++++++++----------
+ commit-graph.h         |  2 ++
+ 3 files changed, 18 insertions(+), 10 deletions(-)
 
+diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+index 37420ae0fd..9c2d55221c 100644
+--- a/builtin/commit-graph.c
++++ b/builtin/commit-graph.c
+@@ -74,6 +74,8 @@ static int graph_read(int argc, const char **argv)
+ 		printf(" large_edges");
+ 	printf("\n");
+ 
++	free_commit_graph(graph);
++
+ 	return 0;
+ }
+ 
+diff --git a/commit-graph.c b/commit-graph.c
+index 4c6127088f..9f4e761229 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -216,16 +216,8 @@ static void prepare_commit_graph(void)
+ 
+ static void close_commit_graph(void)
+ {
+-	if (!commit_graph)
+-		return;
+-
+-	if (commit_graph->graph_fd >= 0) {
+-		munmap((void *)commit_graph->data, commit_graph->data_len);
+-		commit_graph->data = NULL;
+-		close(commit_graph->graph_fd);
+-	}
+-
+-	FREE_AND_NULL(commit_graph);
++	free_commit_graph(commit_graph);
++	commit_graph = NULL;
+ }
+ 
+ static int bsearch_graph(struct commit_graph *g, struct object_id *oid, uint32_t *pos)
+@@ -759,3 +751,15 @@ void write_commit_graph(const char *obj_dir,
+ 	oids.alloc = 0;
+ 	oids.nr = 0;
+ }
++
++void free_commit_graph(struct commit_graph *g)
++{
++	if (!g)
++		return;
++	if (g->graph_fd >= 0) {
++		munmap((void *)g->data, g->data_len);
++		g->data = NULL;
++		close(g->graph_fd);
++	}
++	free(g);
++}
 diff --git a/commit-graph.h b/commit-graph.h
-index 260a468e73..7004dfdca9 100644
+index 7004dfdca9..320ee9fd8a 100644
 --- a/commit-graph.h
 +++ b/commit-graph.h
-@@ -3,6 +3,8 @@
+@@ -47,4 +47,6 @@ void write_commit_graph(const char *obj_dir,
+ 			int nr_commits,
+ 			int append);
  
- #include "git-compat-util.h"
- 
-+struct commit;
++void free_commit_graph(struct commit_graph *);
 +
- char *get_commit_graph_filename(const char *obj_dir);
- 
- /*
+ #endif
 -- 
 2.18.0.rc2.347.g0da03f3a46.dirty
 
