@@ -3,106 +3,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE4D81F516
-	for <e@80x24.org>; Thu, 21 Jun 2018 20:41:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E76F1F516
+	for <e@80x24.org>; Thu, 21 Jun 2018 20:44:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933051AbeFUUlc (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Jun 2018 16:41:32 -0400
-Received: from mail-vk0-f68.google.com ([209.85.213.68]:44831 "EHLO
-        mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932721AbeFUUlc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jun 2018 16:41:32 -0400
-Received: by mail-vk0-f68.google.com with SMTP id x4-v6so2668120vkx.11
-        for <git@vger.kernel.org>; Thu, 21 Jun 2018 13:41:31 -0700 (PDT)
+        id S933361AbeFUUoN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Jun 2018 16:44:13 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:52864 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933274AbeFUUoM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jun 2018 16:44:12 -0400
+Received: by mail-wm0-f66.google.com with SMTP id p126-v6so7128572wmb.2
+        for <git@vger.kernel.org>; Thu, 21 Jun 2018 13:44:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=eFWpTr28yhi/wp9ihRjBZeQN/eQGqDcCU5Fh07VZbuw=;
-        b=L6+46sOQST5nGqDanyGX2gvJBgHCPtO0h4BG61vpKUi5nkYIlPdMf6mc6I8e72iT5b
-         P4NJ1vz2ISOG/6OrJ4DkpnlMxpxye6pTFWzS7bIZ5VOYKPTej1awMZFjTpV0MeJpRAB/
-         g5dQZVmNE3xWdLtiT+uskNCceiCz/8wFIO52ZLSqJWIlw8ma6US+A2cT4cHes0mI01+Y
-         hSsDH6i4kUkdWK46lCqY7OwJ62O4MHzpcNDHYjSUSNOhed0ILQ8LLOX3pW0+K3TA0yoC
-         C/CGVRg6Dft36cSrkWYrjrPy95ydeE7purrZWw6vtdGZvaqTibI8RhJOFRgCH2fraYIo
-         /Tyg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=7I+Q1Xl6xFX1yGcm0ujkJF/H0+Cin9K5TS+3CEq7h2w=;
+        b=saKWBAM5Ola7OSyiNugQXPDMoIr3xWM9S9Zkn5ZLzx2+h3lty4xZT7cW1rfGSPglO/
+         h3yaNVKhhGsmtGFarCKqXnNHHUZhReXwKcJfab5ujkhguWuHXk66jX94zo48MfOKhdu5
+         I8TAyZrJ5mJnJfjd90TDMoUMTtvw8vM5iS31ujY5ZHpA/3sq/5br28dZ1FcPzlnIV6OQ
+         MyPuJOaZg7vCP4U3A+N9WF6qebtjzt0MAYZDiBYxTz/BfQbB8F1lIM4Kyei8Is8jyyFw
+         QNIyaMrOrFXDocYm8vINYT9WPDIio3LA/mjxl0KyqDkvyPb7/1Jowb25w+upi88sFjoC
+         pPfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=eFWpTr28yhi/wp9ihRjBZeQN/eQGqDcCU5Fh07VZbuw=;
-        b=U9sB7ulwFhV20eP2eFVU6rfmDgag/b8w5Mh3crrMByytQbdDpIEmp4Rewf9DITpUqD
-         8zN63drxOxEUGR6pr0bDyJlS5o7Dew5hw7sdm82VpkJ7LjEaT3fhZfpWpiLJYVWGMcx/
-         SOpEDxHG8CzHe2D6WtsKqIe26/8jjcOSgy672F4PkJvgotfY8K0g165OkUjxjzeTN2Ye
-         rsgV0Ccj41Ha6YC4fGN9avl64V/vDVZixxSHRjUvn3zyUhf2r0dOLCRyKO4sHsu/R68E
-         2VvUwxXPA6HX+hsPK+bUprm+wS7ANtkRBXysZU7mxYsN4sN7s7Hu3v7jJrBdN9kbrmrQ
-         LskQ==
-X-Gm-Message-State: APt69E2P3JJTFwswUL1QeEkir/ML+4NUEbNb2JFt1bBaoWiLQVSA4TLf
-        xx1FMWIDLxw0bXXTuJFWoW00VBa4xpveVex+cDaXOA==
-X-Google-Smtp-Source: ADUXVKI7MBJ2J1WgEIi7LgKr/UfUGhFEqb+zGXSezgD5Ae5hEmKu6EzNq3K2uB5dRlTGmTd9jdOrW2AaDVwjdLOatRE=
-X-Received: by 2002:a1f:2c0d:: with SMTP id s13-v6mr15780830vks.106.1529613691376;
- Thu, 21 Jun 2018 13:41:31 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=7I+Q1Xl6xFX1yGcm0ujkJF/H0+Cin9K5TS+3CEq7h2w=;
+        b=feOf5sykVwnCp3uduVU+9c4JrLgDw/0F8PF/mCRQuc4FqV1qzcVGVTg0EcA58IMdD8
+         /nwb36sjBieWr3JbmH1959G2WjwAAOhjKbd3/rugYPp0/MHdBU3zqhJR4oZHs42dusXh
+         KnICsHWJn6dAwkGcXEU952B++RNqvF2BOnTnVGwcHAiH6hBmE1StvOMu/4I+IXXe6LFg
+         vp9iRbDDo1AGAkSqNUzG4K9yqlJ3AWJMg/Z8v6TIHp1XMcoXc8FLcb4zSSfkB6mF1+O/
+         kSFZ5dClgCINW4LmJ5cTxpVLQevVDY/mrUN/JpE5WEIzlFoXHpLH4SW+3+YZjJAEu5Jm
+         O2hA==
+X-Gm-Message-State: APt69E3DnH3/aLxvEbmm5AH+scjcI1VUf/dH7rQAujscD5gegDNz0WNm
+        m8r0mQYGHCwveSeU+4g6cdk=
+X-Google-Smtp-Source: ADUXVKKmQVzzJ1WK+StrmJt9DaDn0HLm8xWjSkkRmZa0u6ySPamRbOQ4cvihP6o0DXU1+aNwDbYnVA==
+X-Received: by 2002:a1c:f902:: with SMTP id x2-v6mr5959665wmh.116.1529613851232;
+        Thu, 21 Jun 2018 13:44:11 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id e13-v6sm8694227wrm.45.2018.06.21.13.44.10
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 21 Jun 2018 13:44:10 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     git@vger.kernel.org, phillip.wood@dunelm.org.uk,
+        johannes.schindelin@gmx.de, sunshine@sunshineco.com
+Subject: Re: [PATCH v3 5/7] git-rebase.txt: document behavioral inconsistencies between modes
+References: <20180617055856.22838-1-newren@gmail.com>
+        <20180621150023.23533-1-newren@gmail.com>
+        <20180621150023.23533-6-newren@gmail.com>
+Date:   Thu, 21 Jun 2018 13:44:10 -0700
+In-Reply-To: <20180621150023.23533-6-newren@gmail.com> (Elijah Newren's
+        message of "Thu, 21 Jun 2018 08:00:21 -0700")
+Message-ID: <xmqqfu1fswdh.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 2002:ab0:5f28:0:0:0:0:0 with HTTP; Thu, 21 Jun 2018 13:41:30
- -0700 (PDT)
-In-Reply-To: <xmqqr2kzsx1l.fsf@gitster-ct.c.googlers.com>
-References: <20180617055856.22838-1-newren@gmail.com> <20180621150023.23533-1-newren@gmail.com>
- <20180621150023.23533-5-newren@gmail.com> <xmqqr2kzsx1l.fsf@gitster-ct.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 21 Jun 2018 13:41:30 -0700
-Message-ID: <CABPp-BEbVhG_=DzfhNd+rA1mOyN0QLKNYOXRVx7Arj_LjjwLXg@mail.gmail.com>
-Subject: Re: [PATCH v3 4/7] git-rebase: error out when incompatible options passed
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 21, 2018 at 1:29 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Elijah Newren <newren@gmail.com> writes:
->
->> +if test -n "$git_am_opt"; then
->> +     incompatible_opts=$(echo "$git_am_opt" | sed -e 's/ -q//')
->
-> This is probably just a taste-thing, but I'd probably prefer to see
-> the "sed" filter out "-q" alone, and make an effort to leave future
-> things like "-qx" alone, e.g.
->
->     $(echo " $git_am_opt " | sed -e 's/ -q / /g' -e 's/^ \(.*\) $/\1/')
->
-> or something like that.
+Elijah Newren <newren@gmail.com> writes:
 
-Makes sense.
+> +BEHAVIORAL INCONSISTENCIES
+> +--------------------------
+> +
+> +  * --no-ff vs. --force-rebase
 
->> +     if test -n "$interactive_rebase"
->> +     then
->> +             if test -n "$incompatible_opts"
->> +             then
->> +                     die "$(gettext "error: cannot combine interactive options (--interactive, --exec, --rebase-merges, --preserve-merges, --keep-empty, --root + --onto) with am options ($incompatible_opts)")"
->> +             fi
->> +     fi
->> +     if test -n "$do_merge"; then
->> +             if test -n "$incompatible_opts"
->> +             then
->> +                     die "$(gettext "error: cannot combine merge options (--merge, --strategy, --strategy-option) with am options ($incompatible_opts)")"
->> +             fi
->> +     fi
->> +fi
->
-> Not making --merge and --interactive incompatible as the proposed
-> log message said makes this hunk at manageable complexity, I guess
-> ;-)
+Do we want to `--quote` these?
 
-Right, and since --interactive essentially handles --merge just fine
-and I'm planning to soon simplify anyway[1], at least once ag/rebase-p
-merges to master, I didn't want to make it any more complex.
+> +    These options are actually identical, though their description
+> +    leads people to believe they might not be.
 
-[1] https://public-inbox.org/git/20180607171344.23331-3-newren@gmail.com/
+Perhaps the same bandwidth can be spent on improving their
+description, instead of adding this paragraph?
+
+> + * empty commits:
+> +
+> +    am-based rebase will drop any "empty" commits, whether the
+> +    commit started empty (had no changes relative to its parent to
+> +    start with) or ended empty (all changes were already applied
+> +    upstream in other commits).
+> +
+> +    merge-based rebase does the same.
+> +
+> +    interactive-based rebase will by default drop commits that
+> +    started empty and halt if it hits a commit that ended up empty.
+
+I think the description is accurate.
+
+WRT a change that ends up being empty (as opposed to a change that
+is empty from the beginning), I'd think that the current behaviour
+is desireable one.  "am" based rebase is solely to transplant an
+existing history and want to stop much less than "interactive" one
+whose purpose is to polish a series before making it publishable,
+and asking for confirmation ("this has become empty--do you want to
+drop it?") is more appropriate from the workflow point of view; so
+it may deserve s/inconsistencies/differences/.
+
+> +    The --keep-empty option exists for interactive rebases to allow
+> +    it to keep commits that started empty.
+
+On the other hand, lack of --keep-empty on the "am" side is probably
+a bug that wants to be fixed.
+
+> +  * empty commit messages:
+> +
+> +    am-based rebase will silently apply commits with empty commit
+> +    messages.
+> +
+> +    merge-based and interactive-based rebases will by default halt
+> +    on any such commits.  The --allow-empty-message option exists to
+> +    allow interactive-based rebases to apply such commits without
+> +    halting.
+
+Ditto for desirable difference coming from workflow point of view.
+
+> +  * directory rename detection:
+> +
+> +    merge-based and interactive-based rebases work fine with
+> +    directory rename detection.  am-based rebases sometimes do not.
+
+I quite do not get what the big deal is with "directory rename"; it
+is merely a degree of magic heuristics employed while detecting file
+renames.  It is natural to expect that the less information you make
+available to the machinery, the less amount of heuristics gets
+exercised to make "magic" happen.  Is the internal implementation
+detail described below (omitted) all that interesting to general
+readers of "git rebase --help", I wonder?  I would understand it if
+this were under Documentation/technical/, though.
