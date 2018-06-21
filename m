@@ -2,114 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1DA881F516
-	for <e@80x24.org>; Thu, 21 Jun 2018 17:23:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 604071F516
+	for <e@80x24.org>; Thu, 21 Jun 2018 17:38:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751593AbeFURXm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Jun 2018 13:23:42 -0400
-Received: from mail-qk0-f194.google.com ([209.85.220.194]:36479 "EHLO
-        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932508AbeFURXl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jun 2018 13:23:41 -0400
-Received: by mail-qk0-f194.google.com with SMTP id a195-v6so2189411qkg.3
-        for <git@vger.kernel.org>; Thu, 21 Jun 2018 10:23:40 -0700 (PDT)
+        id S932799AbeFURiz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Jun 2018 13:38:55 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:33641 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932695AbeFURiy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jun 2018 13:38:54 -0400
+Received: by mail-wr0-f196.google.com with SMTP id k16-v6so4068601wro.0
+        for <git@vger.kernel.org>; Thu, 21 Jun 2018 10:38:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=G68hUyhErgphbctmu8wZvWCTK0X0q/cBP4CJeYcb4fQ=;
-        b=rs8u3zXlfWhYrEifkeRdzvahMrSblwhQXBthMNvkhauGii4MDLtL4ccJQA3o5o7jki
-         pahGKKP6UDI7wdHMg8TNFMYYsEDt6JrOqQe69AWb1YY5G5sHbCnWcN7sBRx7QYESpTfb
-         oQV78JZR7ueWS5+za3phAoaW8xvC4YCXPfynWsgyTLnki0NhM/nJIeCXGKNrwVPnnYFv
-         PDKOf/t2oOBl8okZ6wO4jbaWwMZraox8pqC8cbchn+5DyQWF7YjhrJ+J7a06JX+HJtry
-         pjm4jHXJpqTkKoZxVztOUutSLH3D6MlgkXoXM+8aqnZjgKGG4T8/0dYJl6JXOPmZp8qe
-         YrHQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=P6GzXSaPqhbx4EcYRL51RzRal0y2mdsCc7RVefEHegk=;
+        b=C8xJLJsJzobbdR1rloTukLkbUjeUAoQnNkzneU6gN8RVBP6MNgQM5OZCdQ0xjObZz1
+         4g3JHn+EkgaqXsXMBnWh65yPo7FVIG0bO/9x4DmG3whqhqes2D2nc7i50tF4XkSsHNj3
+         ffjB0h61KYeHC/xrcu7sYb+w9bGxMnxCo0hNdjzZs+E2Wd5TDjI+vajS/uaJG+WZeVZj
+         sQfhwejQ+SNl3ZCdx4HXPAr+zcOKuC3EACcpLm7ssuyRoRyBQ4YWhSCdnF1+aTUYFnAS
+         ysnI0hqAInJyxgU/aawYD5sBS7M+yeR3HKjokO1N+UwtY0W1Db00QNH9cgSaDe5DGUS/
+         tCVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=G68hUyhErgphbctmu8wZvWCTK0X0q/cBP4CJeYcb4fQ=;
-        b=rZK96cbekThTVpPyBJt5K++pi1an1S6pr9rr0438utmEsPmc1ag/4R4tI1RiYAFjv5
-         Wx2trN3lfugbx0RdVNsGY9FRpZutM5MNg0UVRTCq7L/qGVk1puKDPrR7nF/Ul3KCP1bD
-         xaN8gByLbkS7NsMNcUS7qGQ3qKltZOUEGePx1icWVn/mnRJlY9oCO13rKqnSK0NMVxMa
-         iRfFznPek8Ev6yDrztTnoBwrQ7QL7nQK4aIJyt3+f9E6epBWGEGKSCLIYsa2+rOXRecj
-         oJd0TYI1ElBGcLUzMSri6qXkD5WfwveeZF02jawECCm6r24xk9WgnU+8zl7Pr/R/Xktp
-         CATw==
-X-Gm-Message-State: APt69E1G8d+JK1maTfwHdznDv1VNDABNFrET8lGv5PWq0xWE9jfdvrhP
-        ziWKqfW/ehdQr64pk0flj2ZKhfXv
-X-Google-Smtp-Source: ADUXVKKlmeNGVLkddnggHKPe8sJaYK9h8N+3H5YhdQdXlR7iIlnHkh2bzTMEyoy7h1qYOku+7rZlFw==
-X-Received: by 2002:a37:670c:: with SMTP id b12-v6mr21819692qkc.108.1529601820314;
-        Thu, 21 Jun 2018 10:23:40 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:342c:51f1:bd43:3fe6? ([2001:4898:8010:0:1d62:51f1:bd43:3fe6])
-        by smtp.gmail.com with ESMTPSA id o66-v6sm4277900qki.93.2018.06.21.10.23.38
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 21 Jun 2018 10:23:39 -0700 (PDT)
-Subject: Re: [PATCH 10/23] midx: write a lookup into the pack names chunk
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=P6GzXSaPqhbx4EcYRL51RzRal0y2mdsCc7RVefEHegk=;
+        b=o3bwlwKR+TBxfXZLzvaJ/dgl2yMi58ew/xuO1qO1ewl/4+hhWB1aaccgTFxLhB3d5X
+         pokIAbUCEI4ShreYvVoGQIXoJ6UEp4UvCn1B70l0gt/1C3fsrD8cddp0reKMNIl3UBrn
+         6Ub3EPU+XtJVOmHF9nhl+v2+ZfdZxLZVjcGFyJu57+cw9wkk7oTbgL9JiBFgrSU563Jg
+         c/A+4wCk1BXeEcjXsMEV5DlIAPLPUTqoGt+48vm5XuHpHAgWKOAM0nPZ/Q6zpiFMyUa6
+         zV7cAvRYAXtYOlJlkonr1fDXI/+yKCxdTsdDo+UbgeyvZXQTimNWQFdLExI2UpE3UUTS
+         Bt4w==
+X-Gm-Message-State: APt69E3QX7GqCl4ZXyzP45YuQ8GjtYfEEgYYe5PpeYdEIECHdkBmwV6N
+        LP3l3hmnYlPnWiX/6loT2ps=
+X-Google-Smtp-Source: ADUXVKLWLd+MB7FlMtoqFofXzOaKM08i0Utc6c4945hkFiKyyrtg+X9hXqQ9ReLuJZcDAFeBbxtJbA==
+X-Received: by 2002:adf:ec02:: with SMTP id x2-v6mr20845630wrn.245.1529602733023;
+        Thu, 21 Jun 2018 10:38:53 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id z7-v6sm4885326wrl.77.2018.06.21.10.38.49
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 21 Jun 2018 10:38:49 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
         Stefan Beller <sbeller@google.com>,
         Derrick Stolee <dstolee@microsoft.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Martin Fick <mfick@codeaurora.org>
+Subject: Re: [PATCH 09/23] midx: write pack names in chunk
 References: <20180607140338.32440-1-dstolee@microsoft.com>
- <20180607140338.32440-11-dstolee@microsoft.com>
- <CACsJy8C0K_3-=S-sV+jfKdRoF0Ta8eafbOT_B1zOfWCftwz8Bw@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <72b3e833-0071-ee94-b91e-c558af4927a0@gmail.com>
-Date:   Thu, 21 Jun 2018 13:23:38 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+        <20180607140338.32440-10-dstolee@microsoft.com>
+        <CACsJy8ARDLeWaWq1_npZq5ARCVgcETpS--YUVLqZkZA52E7Msw@mail.gmail.com>
+        <4082c785-9fb2-7b15-b646-3c658b54abbe@gmail.com>
+Date:   Thu, 21 Jun 2018 10:38:49 -0700
+In-Reply-To: <4082c785-9fb2-7b15-b646-3c658b54abbe@gmail.com> (Derrick
+        Stolee's message of "Thu, 21 Jun 2018 11:25:38 -0400")
+Message-ID: <xmqqfu1gt4ye.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CACsJy8C0K_3-=S-sV+jfKdRoF0Ta8eafbOT_B1zOfWCftwz8Bw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Derrick Stolee <stolee@gmail.com> writes:
 
+> On 6/7/2018 2:26 PM, Duy Nguyen wrote:
+>> On Thu, Jun 7, 2018 at 4:03 PM, Derrick Stolee <stolee@gmail.com> wrote:
+>>> @@ -74,6 +80,31 @@ struct midxed_git *load_midxed_git(const char *object_dir)
+>>>          m->num_chunks = *(m->data + 6);
+>>>          m->num_packs = get_be32(m->data + 8);
+>>>
+>>> +       for (i = 0; i < m->num_chunks; i++) {
+>>> +               uint32_t chunk_id = get_be32(m->data + 12 + MIDX_CHUNKLOOKUP_WIDTH * i);
+>>> +               uint64_t chunk_offset = get_be64(m->data + 16 + MIDX_CHUNKLOOKUP_WIDTH * i);
+>> Would be good to reduce magic numbers like 12 and 16, I think you have
+>> some header length constants for those already.
+>>
+>>> +               switch (chunk_id) {
+>>> +                       case MIDX_CHUNKID_PACKNAMES:
+>>> +                               m->chunk_pack_names = m->data + chunk_offset;
+>>> +                               break;
 
-On 6/9/2018 12:43 PM, Duy Nguyen wrote:
-> On Thu, Jun 7, 2018 at 7:01 PM Derrick Stolee <stolee@gmail.com> wrote:
->> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
->> ---
->>   Documentation/technical/pack-format.txt |  5 +++
->>   builtin/midx.c                          |  7 ++++
->>   midx.c                                  | 56 +++++++++++++++++++++++--
->>   object-store.h                          |  2 +
->>   t/t5319-midx.sh                         | 11 +++--
->>   5 files changed, 75 insertions(+), 6 deletions(-)
->>
->> diff --git a/Documentation/technical/pack-format.txt b/Documentation/technical/pack-format.txt
->> index 2b37be7b33..29bf87283a 100644
->> --- a/Documentation/technical/pack-format.txt
->> +++ b/Documentation/technical/pack-format.txt
->> @@ -296,6 +296,11 @@ CHUNK LOOKUP:
->>
->>   CHUNK DATA:
->>
->> +       Packfile Name Lookup (ID: {'P', 'L', 'O', 'O'}) (P * 4 bytes)
->> +           P * 4 bytes storing the offset in the packfile name chunk for
->> +           the null-terminated string containing the filename for the
->> +           ith packfile.
->> +
-> Commit message is too light on this one. Why does this need to be
-> stored? Isn't the cost of rebuilding this in-core cheap?
+(style: aren't these case arms indented one level too deep)?
+
+>>> +                       case 0:
+>>> +                               die("terminating MIDX chunk id appears earlier than expected");
+>> _()
 >
-> Adding this chunk on disk in my opinion only adds more burden. Now you
-> have to verify that these offsets actually point to the right place.
-This is a very good point. I'll drop the chunk and just read the names 
-directly to construct the array of strings.
+> This die() and others like it are not marked for translation on
+> purpose, as they should never be seen by an end-user.
 
-Thanks,
--Stolee
+Should never be seen because it indicates a software bug, in which
+case this should be BUG() instead of die()?
+
+Or did we just find a file corruption on the filesystem?  If so,
+then the error is end-user facing and should tell the user something
+that hints what is going on in the language the user understands, I
+would guess.
+
+>>> +                       default:
+>>> +                               /*
+>>> +                                * Do nothing on unrecognized chunks, allowing future
+>>> +                                * extensions to add optional chunks.
+>>> +                                */
+>> I wrote about the chunk term reminding me of PNG format then deleted
+>> it. But it may help to do similar to PNG here. The first letter can
+>> let us know if the chunk is optional and can be safely ignored. E.g.
+>> uppercase first letter cannot be ignored, lowercase go wild.
+>
+> That's an interesting way to think about it. That way you could add a
+> new "required" chunk and earlier versions could die() realizing they
+> don't know how to parse that required chunk.
+
+That is how the index extension sections work and may be a good
+example to follow.
