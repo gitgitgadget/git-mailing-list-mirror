@@ -7,46 +7,47 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 85A9C1F516
-	for <e@80x24.org>; Thu, 21 Jun 2018 15:01:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C6F0F1F516
+	for <e@80x24.org>; Thu, 21 Jun 2018 15:01:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932802AbeFUPBD (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Jun 2018 11:01:03 -0400
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:58691 "EHLO
+        id S932898AbeFUPBC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Jun 2018 11:01:02 -0400
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:34945 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932948AbeFUPAo (ORCPT
+        by vger.kernel.org with ESMTP id S932981AbeFUPAo (ORCPT
         <rfc822;git@vger.kernel.org>); Thu, 21 Jun 2018 11:00:44 -0400
-Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w5LEqUDK017560;
-        Thu, 21 Jun 2018 08:00:26 -0700
+Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w5LErVTo032046;
+        Thu, 21 Jun 2018 08:00:27 -0700
 Authentication-Results: palantir.com;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2jmyevrwuy-1;
-        Thu, 21 Jun 2018 08:00:26 -0700
+        by mx0a-00153501.pphosted.com with ESMTP id 2jn0dk0uxf-1;
+        Thu, 21 Jun 2018 08:00:27 -0700
 Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 4024622FE3BF;
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id A1E8722FE3C5;
         Thu, 21 Jun 2018 08:00:26 -0700 (PDT)
 Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
-        by smtp.yojoe.local (Postfix) with ESMTP id 332BA2CDE76;
+        by smtp.yojoe.local (Postfix) with ESMTP id 8ECC82CDE76;
         Thu, 21 Jun 2018 08:00:26 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, phillip.wood@dunelm.org.uk,
         johannes.schindelin@gmx.de, sunshine@sunshineco.com,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v3 0/7] Document/fix/warn about rebase incompatibilities and inconsistencies
-Date:   Thu, 21 Jun 2018 08:00:16 -0700
-Message-Id: <20180621150023.23533-1-newren@gmail.com>
+Subject: [PATCH v3 6/7] git-rebase.txt: address confusion between --no-ff vs --force-rebase
+Date:   Thu, 21 Jun 2018 08:00:22 -0700
+Message-Id: <20180621150023.23533-7-newren@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc2.99.g3b7a0dc564
-In-Reply-To: <20180617055856.22838-1-newren@gmail.com>
+In-Reply-To: <20180621150023.23533-1-newren@gmail.com>
 References: <20180617055856.22838-1-newren@gmail.com>
+ <20180621150023.23533-1-newren@gmail.com>
 X-Proofpoint-SPF-Result: softfail
 X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-06-21_06:,,
  signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
+ malwarescore=0 suspectscore=40 phishscore=0 bulkscore=0 spamscore=0
  clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
  mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
  scancount=1 engine=8.0.1-1805220000 definitions=main-1806210165
@@ -55,178 +56,113 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git-rebase has lots of options that are mutually incompatible.  Even among
-aspects of its behavior that is common to all rebase types, it has a number
-of inconsistencies.  This series tries to document, fix, and/or warn users
-about many of these.
+rebase was taught the --force-rebase option in commit b2f82e05de ("Teach
+rebase to rebase even if upstream is up to date", 2009-02-13).  This flag
+worked for the am and merge backends, but wasn't a valid option for the
+interactive backend.
 
-I have left patch 7 in RFC state.  We probably need more opinions
-about it, and whether cherry-pick should also be changed to match.
+rebase was taught the --no-ff option for interactive rebases in commit
+b499549401cb ("Teach rebase the --no-ff option.", 2010-03-24), to do the
+exact same thing as --force-rebase does for non-interactive rebases.  This
+commit explicitly documented the fact that --force-rebase was incompatible
+with --interactive, though it made --no-ff a synonym for --force-rebase
+for non-interactive rebases.  The choice of a new option was based on the
+fact that "force rebase" didn't sound like an appropriate term for the
+interactive machinery.
 
-Changes since v2 (full branch-diff below):
-  - Slight changes to documentation wording
-  - Add incompatibilitiy of --rebase-merges and --strategy-option
-  - Add tests and code for incompatibilities involving either
-    --preserve-merges or --rebase-merges
-  - Slightly more detail in the commit message for making -m and -i behave
-    the same with empty commit messages as am-based rebases.
+In commit 6bb4e485cff8 ("rebase: align variable names", 2011-02-06), the
+separate parsing of command line options in the different rebase scripts
+was removed, and whether on accident or because the author noticed that
+these options did the same thing, the options became synonyms and both
+were accepted by all three rebase types.
 
-Many thanks to Phillip for reviewing the last series, and Eric who pointed
-out the wording improvements.
+In commit 2d26d533a012 ("Documentation/git-rebase.txt: -f forces a rebase
+that would otherwise be a no-op", 2014-08-12), which reworded the
+description of the --force-rebase option, the (no-longer correct) sentence
+stating that --force-rebase was incompatible with --interactive was
+finally removed.
 
-Elijah Newren (7):
-  git-rebase.txt: document incompatible options
-  git-rebase.sh: update help messages a bit
-  t3422: new testcases for checking when incompatible options passed
-  git-rebase: error out when incompatible options passed
-  git-rebase.txt: document behavioral inconsistencies between modes
-  git-rebase.txt: address confusion between --no-ff vs --force-rebase
-  git-rebase: make --allow-empty-message the default
+Finally, as explained at
+https://public-inbox.org/git/98279912-0f52-969d-44a6-22242039387f@xiplink.com
 
- Documentation/git-rebase.txt           | 155 ++++++++++++++++++++-----
- git-rebase.sh                          |  42 ++++++-
- t/t3404-rebase-interactive.sh          |   7 +-
- t/t3405-rebase-malformed.sh            |  11 +-
- t/t3422-rebase-incompatible-options.sh |  89 ++++++++++++++
- 5 files changed, 262 insertions(+), 42 deletions(-)
- create mode 100755 t/t3422-rebase-incompatible-options.sh
+    In the original discussion around this option [1], at one point I
+    proposed teaching rebase--interactive to respect --force-rebase
+    instead of adding a new option [2].  Ultimately --no-ff was chosen as
+    the better user interface design [3], because an interactive rebase
+    can't be "forced" to run.
 
- 1: d184d5bd3f !  1: 4cdf9130cc git-rebase.txt: document incompatible options
-    @@ -191,14 +191,15 @@
-     + * --keep-empty
-     + * --autosquash
-     + * --edit-todo
-    -+ * --root + --onto
-    ++ * --root when used in combination with --onto
-     +
-     +Other incompatible flag pairs:
-     +
-    -+ * --preserve-merges && --interactive
-    -+ * --preserve-merges && --signoff
-    -+ * --preserve-merges && --rebase-merges
-    -+ * --rebase-merges && --strategy
-    ++ * --preserve-merges and --interactive
-    ++ * --preserve-merges and --signoff
-    ++ * --preserve-merges and --rebase-merges
-    ++ * --rebase-merges and --strategy
-    ++ * --rebase-merges and --strategy-option
-     +
-      include::merge-strategies.txt[]
-      
- 2: 788df9fa43 =  2: e336f76c5e git-rebase.sh: update help messages a bit
- 3: d3d124795a !  3: 4ab38d8a5f t3422: new testcases for checking when incompatible options passed
-    @@ -83,4 +83,24 @@
-     +test_run_rebase --committer-date-is-author-date
-     +test_run_rebase -C4
-     +
-    ++test_expect_success '--preserve-merges incompatible with --signoff' '
-    ++	git checkout B^0 &&
-    ++	test_must_fail git rebase --preserve-merges --signoff A
-    ++'
-    ++
-    ++test_expect_failure '--preserve-merges incompatible with --rebase-merges' '
-    ++	git checkout B^0 &&
-    ++	test_must_fail git rebase --preserve-merges --rebase-merges A
-    ++'
-    ++
-    ++test_expect_failure '--rebase-merges incompatible with --strategy' '
-    ++	git checkout B^0 &&
-    ++	test_must_fail git rebase --rebase-merges -s resolve A
-    ++'
-    ++
-    ++test_expect_failure '--rebase-merges incompatible with --strategy-option' '
-    ++	git checkout B^0 &&
-    ++	test_must_fail git rebase --rebase-merges -Xignore-space-change A
-    ++'
-    ++
-     +test_done
- 4: 28d2dfd49a !  4: 5223954caf git-rebase: error out when incompatible options passed
-    @@ -56,6 +56,30 @@
-      if test -n "$signoff"
-      then
-      	test -n "$preserve_merges" &&
-    +@@
-    + 	force_rebase=t
-    + fi
-    + 
-    ++if test -n "$preserve_merges"
-    ++then
-    ++	# Note: incompatibility with --signoff handled in signoff block above
-    ++	# Note: incompatibility with --interactive is just a strong warning;
-    ++	#       git-rebase.txt caveats with "unless you know what you are doing"
-    ++	test -n "$rebase_merges" &&
-    ++		die "$(gettext "error: cannot combine '--preserve_merges' with '--rebase-merges'")"
-    ++fi
-    ++
-    ++if test -n "$rebase_merges"
-    ++then
-    ++	test -n "$strategy_opts" &&
-    ++		die "$(gettext "error: cannot combine '--rebase_merges' with '--strategy-option'")"
-    ++	test -n "$strategy" &&
-    ++		die "$(gettext "error: cannot combine '--rebase_merges' with '--strategy'")"
-    ++fi
-    ++
-    + if test -z "$rebase_root"
-    + then
-    + 	case "$#" in
-     
-     diff --git a/t/t3422-rebase-incompatible-options.sh b/t/t3422-rebase-incompatible-options.sh
-     --- a/t/t3422-rebase-incompatible-options.sh
-    @@ -93,3 +117,24 @@
-      		git checkout B^0 &&
-      		test_must_fail git rebase $opt --exec 'true' A
-      	"
-    +@@
-    + 	test_must_fail git rebase --preserve-merges --signoff A
-    + '
-    + 
-    +-test_expect_failure '--preserve-merges incompatible with --rebase-merges' '
-    ++test_expect_success '--preserve-merges incompatible with --rebase-merges' '
-    + 	git checkout B^0 &&
-    + 	test_must_fail git rebase --preserve-merges --rebase-merges A
-    + '
-    + 
-    +-test_expect_failure '--rebase-merges incompatible with --strategy' '
-    ++test_expect_success '--rebase-merges incompatible with --strategy' '
-    + 	git checkout B^0 &&
-    + 	test_must_fail git rebase --rebase-merges -s resolve A
-    + '
-    + 
-    +-test_expect_failure '--rebase-merges incompatible with --strategy-option' '
-    ++test_expect_success '--rebase-merges incompatible with --strategy-option' '
-    + 	git checkout B^0 &&
-    + 	test_must_fail git rebase --rebase-merges -Xignore-space-change A
-    + '
- 5: b2eec2cc5a !  5: 96f7ba98bc git-rebase.txt: document behavioral inconsistencies between modes
-    @@ -14,8 +14,8 @@
-     --- a/Documentation/git-rebase.txt
-     +++ b/Documentation/git-rebase.txt
-     @@
-    -  * --preserve-merges && --rebase-merges
-    -  * --rebase-merges && --strategy
-    +  * --rebase-merges and --strategy
-    +  * --rebase-merges and --strategy-option
-      
-     +BEHAVIORAL INCONSISTENCIES
-     +--------------------------
- 6: cea18d7e60 =  6: 7bb7b380ac git-rebase.txt: address confusion between --no-ff vs --force-rebase
- 7: ab8805c40a !  7: 3ed07548a6 git-rebase: make --allow-empty-message the default
-    @@ -2,9 +2,13 @@
-     
-         git-rebase: make --allow-empty-message the default
-     
-    -    am-based rebases already apply commits with an empty commit message
-    -    without requiring the user to specify an extra flag.  Make merge-based and
-    -    interactive-based rebases behave the same.
-    +    All rebase backends should behave the same with empty commit messages, but
-    +    currently do not.  am-based rebases already apply commits with an empty
-    +    commit message without stopping or requiring the user to specify an extra
-    +    flag.  Since am-based rebases are the default rebase type, and since it
-    +    appears no one has ever requested a --no-allow-empty-message flag to
-    +    change this behavior, make --allow-empty-message the default so that
-    +    merge-based and interactive-based rebases will behave the same.
-     
-         Signed-off-by: Elijah Newren <newren@gmail.com>
-     
+We have accepted both --no-ff and --force-rebase as full synonyms for all
+three rebase types for over seven years.  Documenting them differently
+and in ways that suggest they might not be quite synonyms simply leads to
+confusion.  Adjust the documentation to match reality.
+
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ Documentation/git-rebase.txt | 35 ++++++++++-------------------------
+ 1 file changed, 10 insertions(+), 25 deletions(-)
+
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 340137e2cf..1f422cd0a7 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -337,16 +337,18 @@ See also INCOMPATIBLE OPTIONS below.
+ +
+ See also INCOMPATIBLE OPTIONS below.
+ 
+--f::
++--no-ff::
+ --force-rebase::
+-	Force a rebase even if the current branch is up to date and
+-	the command without `--force` would return without doing anything.
++-f::
++	Individually replay all rebased commits instead of fast-forwarding
++	over the unchanged ones.  This ensures that the entire history of
++	the rebased branch is composed of new commits.
+ +
+-You may find this (or --no-ff with an interactive rebase) helpful after
+-reverting a topic branch merge, as this option recreates the topic branch with
+-fresh commits so it can be remerged successfully without needing to "revert
+-the reversion" (see the
+-link:howto/revert-a-faulty-merge.html[revert-a-faulty-merge How-To] for details).
++You may find this helpful after reverting a topic branch merge, as this option
++recreates the topic branch with fresh commits so it can be remerged
++successfully without needing to "revert the reversion" (see the
++link:howto/revert-a-faulty-merge.html[revert-a-faulty-merge How-To] for
++details).
+ 
+ --fork-point::
+ --no-fork-point::
+@@ -498,18 +500,6 @@ See also INCOMPATIBLE OPTIONS below.
+ 	with care: the final stash application after a successful
+ 	rebase might result in non-trivial conflicts.
+ 
+---no-ff::
+-	With --interactive, cherry-pick all rebased commits instead of
+-	fast-forwarding over the unchanged ones.  This ensures that the
+-	entire history of the rebased branch is composed of new commits.
+-+
+-Without --interactive, this is a synonym for --force-rebase.
+-+
+-You may find this helpful after reverting a topic branch merge, as this option
+-recreates the topic branch with fresh commits so it can be remerged
+-successfully without needing to "revert the reversion" (see the
+-link:howto/revert-a-faulty-merge.html[revert-a-faulty-merge How-To] for details).
+-
+ INCOMPATIBLE OPTIONS
+ --------------------
+ 
+@@ -559,11 +549,6 @@ Other incompatible flag pairs:
+ BEHAVIORAL INCONSISTENCIES
+ --------------------------
+ 
+-  * --no-ff vs. --force-rebase
+-
+-    These options are actually identical, though their description
+-    leads people to believe they might not be.
+-
+  * empty commits:
+ 
+     am-based rebase will drop any "empty" commits, whether the
 -- 
 2.18.0.rc2.92.g133ed01dde
+
