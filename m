@@ -7,94 +7,98 @@ X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C6FF1F516
-	for <e@80x24.org>; Thu, 21 Jun 2018 06:45:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 293B21F516
+	for <e@80x24.org>; Thu, 21 Jun 2018 07:03:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932411AbeFUGVo (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Jun 2018 02:21:44 -0400
-Received: from mout.gmx.net ([212.227.15.15]:54153 "EHLO mout.gmx.net"
+        id S1751159AbeFUHDL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Jun 2018 03:03:11 -0400
+Received: from mout.gmx.net ([212.227.17.21]:42969 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932241AbeFUGVn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jun 2018 02:21:43 -0400
-Received: from [192.168.0.129] ([37.201.195.106]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MJByE-1fT8sj40wU-002nyF; Thu, 21
- Jun 2018 08:21:24 +0200
-Date:   Thu, 21 Jun 2018 08:21:33 +0200 (DST)
+        id S1750983AbeFUHDK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jun 2018 03:03:10 -0400
+Received: from [192.168.0.129] ([37.201.195.106]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LtVLE-1gF5k40FyW-010rDo; Thu, 21
+ Jun 2018 09:02:56 +0200
+Date:   Thu, 21 Jun 2018 09:03:05 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Mike Frysinger <vapier@gentoo.org>
-cc:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] git-stash.txt: document show options
-In-Reply-To: <20180621005633.31440-1-vapier@gentoo.org>
-Message-ID: <nycvar.QRO.7.76.6.1806210817200.11870@tvgsbejvaqbjf.bet>
-References: <20180621005633.31440-1-vapier@gentoo.org>
+To:     Jeff King <peff@peff.net>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH 2/2] sequencer.c: plug mem leak in git_sequencer_config
+In-Reply-To: <20180604045122.GE14451@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1806210857520.11870@tvgsbejvaqbjf.bet>
+References: <20180601200146.114919-1-sbeller@google.com> <20180601200146.114919-2-sbeller@google.com> <xmqq8t7v6zpd.fsf@gitster-ct.c.googlers.com> <xmqqmuwb5i7k.fsf@gitster-ct.c.googlers.com> <20180604035637.GA15408@sigill.intra.peff.net>
+ <xmqqin6z5g8e.fsf@gitster-ct.c.googlers.com> <20180604045122.GE14451@sigill.intra.peff.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:jZGdxDvNXwtcdG4DuEhAuiEkLIsHcpy2zsXpOqps/xJOIKyMJ3k
- MRuy/tbkLyOjhJ1G6ovJ2Qs8DvUqdJ/LqljdYGGjIMnC8+SB0DdTwbRhHrhnc+9LoD/kgUR
- uXcPXz1AcnmfdVorVK2MoB/Z3xlQb9D7X+WLGkgreroxaIB3eIG5mqst4SSh1+s6kPFfS5d
- Axc1+yAJFPzr0oFwu4MLw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:QOFhHHvb0KM=:6PQ3f/E5i5OtK0Ajpf9ubs
- neomwG1v5vWy6f2EYrP9duSyp2qRbOD64k7jpczBl0UQv3BfyKEa0WEQhCJ4jcsu7e7stDauB
- hAdASmx9C/V7iKu5Jc4ePyKLv0E0dC6qxKdi5AaOqrai4FxasrFVEs+WNSX006jNZhbMSIjtb
- KsrHaaOdVnyAZ84LOJA/th5Je5zCrXEzQr8M2kt6chuCmAS2P1w8K9W3pv4aF7uJGP9DipHAC
- 2GdCRKv1g3SRtmxnNc7knZMjTms47Pyunu/MgZ4WGFGHHe5B8F3WEHXQhDsYdjLAzHkhzAyRE
- 4pMWMgzHSeV2MD8pC0o9TUOWFYvLPGkQQlG146VoPikdYFC+RsdirQfyVmRvgmPchWwtm30nt
- 79s7IVRXOffd8MKtkZAWn956EKy5G5/dmMSq6mhrLBNT4PX2eAJ8fXsDHqteXJ2EP8QimTBcG
- ql4E98DkB0w2MY/wNXknFI+nAtnm0/+bymmvabenv1HCpN2SeDBEe5QfBYqFdw0V9S0JzYbZ6
- RjNG5rV50IKmRJS7FjQp++YSZvVDr6WpWNkpvc72k52EZL859p6dMcOWHNhR3WFHHpLyXEcXr
- LCT2OVNbKvrRe3oqqii6jT7G0Jq41VY6HtohfZTr8T6gMNlcRWYcMAqKgvlWx22O4M+AIsV/g
- RrQYbh7p1oXOY2spfQwNWGT4CF/f0H+1MXErVWb1TorCWL+k3fPSZDKdkuzxZEY56p0IJgr1d
- xd58dxBOEHnHkDGPsNND1gnR5JDUHzlBbBiDc/PKL55r5WYO8fSXtmSWjiIX6/ZrXpssWM0Hw
- 9EMulQj
+X-Provags-ID: V03:K1:mBCiTrIWuosuHXc7RBcTeJqrLjiUgemRpaEkxe8GJmvZMQHy51Y
+ hiMI2a5VuQ8pAs2zlYlSNNb0lLJNVMJELT6/qLyzhchYHTP/rZhJYS8aLfaOqhA9ZB1M8zl
+ 4pqAmHmQc7vYA9sjeozObWEyRU3zxDyE41xI9Ffm7LxmaWDpZIO4hNTSbgd8X0hOpTgv3HA
+ +PxE+0DYc/J1hRbpxIIgg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:lP75oPAh0/s=:Q/eR8XwYPRRcXZck3Q4y8s
+ gyBsjaKwy+/ML9tCY61m1tym4k8sl6/AmWTUba5WxTYebE66ak2eUcZ6gmH4BbqCBjL3WA/3O
+ hVXm2Oqn3+6m813EU82uWPVLIu3yEA7TkeJlWBWUPrWLjpgmrNIstCa9t13IkF98GYQLM6Hle
+ 0TgRmJmtdKxoHsFvQRndvaw/cj2Ngjc5+O+2IZdbCTT9XON2qrudgNlZjE9WiLekAsQOge4xX
+ t07kHdOik28pQIDdVtVIwq8p1MTXLSzrIcxd0BGpE12g2L64WoU60PFTWb2nPp9pLSU4AqheT
+ 9llyvQTRQay6KZjwuKsdN5kJi7sqgpxXuV7e47pphVe1BrNq/0kRZF5EbL81Olv4vCfQChNHU
+ JI0VhRDuMSKMXG8ZqYQMGC9QKfrnGKcWst7NXB0Exa7WRhZ+gwWewTFMGTynQLBHM881Wrvz9
+ zcGRhDZpt7y/wEAN97zjhM00deRoeC4p0xLOeEXTyGjshA3RSSdXe6fD8/z7mTBVmT3QikDMx
+ ze26+rRYWpWgvqEO9FHh4QOpC25ib50J2KGsKfkUgTlMYOwH1bjHifMxuJIE0euY7JSepkM5g
+ rXVvKbblNU+KEg+0wHrsxYHwTB2v3GoGoZaXjnSbrXQOq97OXknX6R8G2PObMOEZEDCHX6V4Z
+ xdp3iCcW3WxKeVjT1uto7dsTIaBZfXZMPMgggOyy1VY1XSD7kQ0uOx6MTKhZaT/IM0TCVNKdW
+ ee2PCeY01Nd/5lJAnAopSYKpnXjWptcTUcXL5ygbXay1bitDM/oHtVOZniufi1bva83qHn0iN
+ C5cowks
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Mike,
+Hi Peff,
 
-there is a GSoC project going on to make `git stash` a builtin, and I
-think that this change makes sense and at the same time needs to be
-coordinated with Paul, who is performing that builtin work, so I Cc:ed him
-for visibility.
+On Mon, 4 Jun 2018, Jeff King wrote:
+
+> On Mon, Jun 04, 2018 at 01:26:57PM +0900, Junio C Hamano wrote:
+> 
+> > And at that point, maybe
+> > 
+> > 	char *some_var = xstrdup("default");
+> > 	git_config_string(&some_var, ...);
+> > 
+> > that takes "char **" and frees the current storage before assigning to
+> > it may be simpler than the two-variable approach.
+> 
+> That _is_ much nicer, but you cannot use xstrdup() as the initializer
+> for a global "static char *some_var", which is what the majority of the
+> config variables are. It's this "static initializer sometimes, run-time
+> heap sometimes" duality to the variables that makes handling it such a
+> pain.
+
+This makes me think of Michael's proposal to teach strbuf some sort of
+STRBUF_INIT_CONST("default") which would set the appropriate len and set
+alloc to 0.
+
+That way, we could turn those settings into strbufs that only allocate
+memory when/if needed.
+
+We would need to be careful to revisit all strbuf_*() functions to make
+sure that they test not only for enough space when growing the string, but
+also when reducing it (unless reducing to len 0, in which case we can
+reassign strbuf_slopbuf to the buf field).
+
+We also would need to revisit strbuf_*() to understand alloc < len to mean
+that we cannot realloc(), but have to malloc() && memcpy().
+
+As a bonus, the pattern used for
+
+[section]
+	var = 1
+	var = 2
+	var = 3
+
+would change from three times strdup() and two times free() to one time
+malloc().
 
 Ciao,
-Johannes
-
-On Wed, 20 Jun 2018, Mike Frysinger wrote:
-
-> Signed-off-by: Mike Frysinger <vapier@gentoo.org>
-> ---
->  Documentation/git-stash.txt | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-> index 7ef8c4791177..76e4ca788102 100644
-> --- a/Documentation/git-stash.txt
-> +++ b/Documentation/git-stash.txt
-> @@ -106,7 +106,7 @@ stash@{1}: On master: 9cc0589... Add git-stash
->  The command takes options applicable to the 'git log'
->  command to control what is shown and how. See linkgit:git-log[1].
->  
-> -show [<stash>]::
-> +show [<options>] [<stash>]::
->  
->  	Show the changes recorded in the stash entry as a diff between the
->  	stashed contents and the commit back when the stash entry was first
-> @@ -116,6 +116,9 @@ show [<stash>]::
->  	to view the second most recent entry in patch form).
->  	You can use stash.showStat and/or stash.showPatch config variables
->  	to change the default behavior.
-> ++
-> +The command takes options applicable to the 'git diff'
-> +command to control what is shown and how. See linkgit:git-diff[1].
->  
->  pop [--index] [-q|--quiet] [<stash>]::
->  
-> -- 
-> 2.17.1
-> 
-> 
+Dscho
