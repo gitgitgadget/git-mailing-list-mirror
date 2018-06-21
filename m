@@ -2,70 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 74C161F516
-	for <e@80x24.org>; Thu, 21 Jun 2018 08:39:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF9341F516
+	for <e@80x24.org>; Thu, 21 Jun 2018 09:28:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932534AbeFUIjX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Jun 2018 04:39:23 -0400
-Received: from mout.gmx.net ([212.227.17.22]:35193 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751691AbeFUIi7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jun 2018 04:38:59 -0400
-Received: from [192.168.0.129] ([37.201.195.106]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MRocn-1fc9TD1upt-00SsD0; Thu, 21
- Jun 2018 10:38:54 +0200
-Date:   Thu, 21 Jun 2018 10:39:04 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Alban Gruin <alban.gruin@gmail.com>
-cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        phillip.wood@dunelm.org.uk, Elijah Newren <newren@gmail.com>
-Subject: Re: [GSoC][PATCH v2 0/3] rebase -i: rewrite reflog operations in C
-In-Reply-To: <20180619154421.14999-1-alban.gruin@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1806211031070.11870@tvgsbejvaqbjf.bet>
-References: <20180618131844.13408-1-alban.gruin@gmail.com> <20180619154421.14999-1-alban.gruin@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S932792AbeFUJ2T (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Jun 2018 05:28:19 -0400
+Received: from forward106j.mail.yandex.net ([5.45.198.249]:59759 "EHLO
+        forward106j.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S932534AbeFUJ2S (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 21 Jun 2018 05:28:18 -0400
+X-Greylist: delayed 440 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 Jun 2018 05:28:18 EDT
+Received: from mxback1j.mail.yandex.net (mxback1j.mail.yandex.net [IPv6:2a02:6b8:0:1619::10a])
+        by forward106j.mail.yandex.net (Yandex) with ESMTP id 0C6931801933
+        for <git@vger.kernel.org>; Thu, 21 Jun 2018 12:20:55 +0300 (MSK)
+Received: from localhost (localhost [::1])
+        by mxback1j.mail.yandex.net (nwsmtp/Yandex) with ESMTP id lBJd249dYx-KsBCYJxw;
+        Thu, 21 Jun 2018 12:20:54 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1529572854;
+        bh=0ftn8MUBIyk2aig9iif6e2ladyEhNe3mzTvj+PubJLs=;
+        h=From:To:Subject:Date:Message-Id;
+        b=irtgL0E4+zlVLZR0Xkrz1jtRqkFTGYEime/R22UznVhfP4lMXXHlFIM8AMi2Mp6XV
+         FprbhEfnj7Ihkpx56Ac4ukpqPl786TII2tB6jNhZDJOhyKoIrGzR8jpiLcIKgy8HHQ
+         /vdmZ+UdiJBbZT/4IGl9i3VC9Nyhf/DlnAMMBvZc=
+Authentication-Results: mxback1j.mail.yandex.net; dkim=pass header.i=@yandex.ru
+Received: by web55j.yandex.ru with HTTP;
+        Thu, 21 Jun 2018 12:20:54 +0300
+From:   KES <kes-kes@yandex.ru>
+Envelope-From: kes-kes@yandex.com
+To:     git <git@vger.kernel.org>
+Subject: After merging and reset I am on unexpected commit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:4S5+JFUB/kN30Nc2FV/hJGUSqaqcM+gDRrhNdxVWQB/8pFnUSwA
- YprNjyHVptPihnffa5TmnDy5h1m2yzUgcLMemCJx8OjtI3gzDQIC8TyPc3j2xLj1WqnMx81
- nmvrZNLuBuivLr0V0acHnxMJIOoIbVvewACYhNbtW8ExzQZvZ4Hxtxk2vl9oC5b1sk6A8je
- VE79Pd3U+AaATYrIvuwWQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:gdgrf5zyhjg=:+RYQYOQAfKr8pfXUwPTxaH
- +f0rSCRVeBhYDMtYyFBTg8h3cI/61yaBEnag35s5+kgcbDAWw7XZTLmyBR2/gXLvVbz16/UVN
- 10y3Ku3C8e3tQNU8ev9HMUvpk3LG7O4rgM9Pbf28tIvX5h+Su8sXB14asFaTR8Hu0q9aWSuQm
- FOPb6xQDAHn62hBV5KI6jwqrSXYcyY0fgvSXRtBtHn2HDxM/Z+eHdRD4/AzAOKaJItSyagVt6
- vv/YEmAwe0Bvz/fiH9SWOrI7h4CcCMA6KstdoSuOF9AOs9MxvNnfDUIBpgzqzIIuEzEOHZ5xE
- jB2LJuuKrO80HV4wIQ2ZMyVtScYdAl1/9Wy8no/uxB1HWVK+WKFUU11uzLnHyqEXqFZbLeY9A
- /C8dqI3L5IfrS+RE/xX8/qUstEhbowNi5glBHPWcvw95buBVW02Ig6V268E1+jCjirkmTNSsX
- RkBuBs911c8lbK4KDodhyOOarIgdYC1UEgFYHDHaCsBf0XwIrSW12DWO3EOTojiuhFox/LqAH
- YYK3Zdx5gHhyO0mA467xugwdr5tOvVwt6naauxOb6KLvLt6pH8KkaOSsIa3uP3mbkOKORKP2B
- 8MT0W+QFAbtbievsJTrAZJ6OzUGM/blQ0cy7I4dVxdfdnpRwy19EF6U6mM6tdWFraa47xVq6l
- J46H3wNB9dLLcYzVHw/X+UxfSFkG/e7YidIuohGrfQFe75WPt42Ydxw4tFWlFenpgaHlfaflH
- SYBG/RxtZqRSlsaY4yDgiug+e+ZsF2xX0ySiEm8IZNyF0To7MWyIWrj2KchdhIfPJJR7HrBCE
- af0cahB
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date:   Thu, 21 Jun 2018 12:20:54 +0300
+Message-Id: <189781529572854@web55j.yandex.ru>
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alban,
+Hi.
 
-On Tue, 19 Jun 2018, Alban Gruin wrote:
+I am on my current branch. 
 
-> -- 
-> 2.16.4
+$ git log --graph --decorate --pretty=oneline --abbrev-commit
+* 5b85d64 (HEAD -> SCTT_for_other_tables) Implement script to test CORS
+* f45a919 Create SCTT for Contractor
+* 702fcdd (xtucha/SCTT_for_other_tables) Create SCTT for PartnershipAgreement
+* 7e4cac9 Create SCTT for Language
+* a0607d1 Fixed broken tests for 'Person'
+* 1d0a1b2 Create SCTT for DocumentFile
+* 92837c1 Fix SQL quoting problem
 
-You might want to update ;-)
 
-https://github.com/git-for-windows/git/wiki/FAQ#should-i-upgrade-to-a-newer-git-for-windows-version
+I want to pull new changes and apply mine on top of them
 
-Ciao,
-Johannes
+I do `git pull -v -r`
+
+kes@work ~/t $ git pull -v -r amazon SCTT_for_other_tables 
+From amazon:/v1/repos/tucha
+ * branch            SCTT_for_other_tables -> FETCH_HEAD
+ = [up to date]      SCTT_for_other_tables -> amazon/SCTT_for_other_tables
+Created autostash: 97ce867
+HEAD is now at 5b85d64 Implement script to test CORS
+Changes from 5b85d647ecd503cc03b26ed4e33bf8266bc8e96b to a0d92dc11ec11023f6d492497e043170d7128f56:
+ lib/MaitreD/Controller/ContractorTypeI18n.pm |  54 +---------------
+ public/maitre_d/api-v1.yaml                  | 158 ++++++++++++++++++++++++++++++++++++++++++++++-
+ t/MaitreD/contractor_type_i18n.t             | 117 +++++++++++++++++++++++++++++++++++
+ 3 files changed, 276 insertions(+), 53 deletions(-)
+ create mode 100644 t/MaitreD/contractor_type_i18n.t
+Note: checking out 'a0d92dc11ec11023f6d492497e043170d7128f56'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b <new-branch-name>
+
+HEAD is now at a0d92dc Merge branch 'SCTT_for_other_tables' of amazon:/v1/repos/tucha into SCTT_for_other_tables
+Rebasing (1/1)
+ lib/MaitreD/Controller/ContractorTypeI18n.pm |  54 +--------
+ public/maitre_d/api-v1.yaml                  | 158 ++++++++++++++++++++++++++-
+ t/MaitreD/contractor_type_i18n.t             | 117 ++++++++++++++++++++
+ 3 files changed, 276 insertions(+), 53 deletions(-)
+Successfully rebased and updated refs/heads/SCTT_for_other_tables.
+Applying autostash resulted in conflicts.
+Your changes are safe in the stash.
+You can run "git stash pop" or "git stash drop" at any time.
+
+
+As you can see the rebasing is finished successfully except autostash is not applied
+
+
+$ git log --graph --decorate --pretty=oneline --abbrev-commit
+*   a0d92dc (HEAD -> SCTT_for_other_tables, amazon/SCTT_for_other_tables) Merge branch 'SCTT_for_oth
+|\  
+| * 5b85d64 Implement script to test CORS
+* | 0c1ac6c Create SCTT for ContractorTypeI18n
+|/  
+* f45a919 Create SCTT for Contractor
+* 702fcdd (xtucha/SCTT_for_other_tables) Create SCTT for PartnershipAgreement
+* 7e4cac9 Create SCTT for Language
+* a0607d1 Fixed broken tests for 'Person'
+
+1. Why I get merge when I ask to rebase?
+
+
+Because of merge I wanna to roll back that. Thus I reset my merge commit 
+kes@work ~/t $ git reset --hard HEAD^
+HEAD is now at 0c1ac6c Create SCTT for ContractorTypeI18n
+
+2. Why I moved to 0c1ac6c Create SCTT for ContractorTypeI18n commit instead of 
+5b85d64 Implement script to test CORS?
+
+$ git log --graph --decorate --pretty=oneline --abbrev-commit
+* 0c1ac6c (HEAD -> SCTT_for_other_tables) Create SCTT for ContractorTypeI18n
+* f45a919 Create SCTT for Contractor
+* 702fcdd (xtucha/SCTT_for_other_tables) Create SCTT for PartnershipAgreement
+* 7e4cac9 Create SCTT for Language
+* a0607d1 Fixed broken tests for 'Person'
+* 1d0a1b2 Create SCTT for DocumentFile
+
+
+Because of this the commit:5b85d64 Implement script to test CORS 
+is lost
+
+It is not on any branch and with less attention it will be forgotten.
+
+
+Is this behavior expected? Maybe I do something wrong?
