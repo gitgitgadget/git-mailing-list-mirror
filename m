@@ -6,32 +6,32 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 74B5A1F516
-	for <e@80x24.org>; Fri, 22 Jun 2018 16:27:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 299191F516
+	for <e@80x24.org>; Fri, 22 Jun 2018 16:27:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934398AbeFVQ1r (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Jun 2018 12:27:47 -0400
-Received: from ao2.it ([92.243.12.208]:53098 "EHLO ao2.it"
+        id S934386AbeFVQ1h (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Jun 2018 12:27:37 -0400
+Received: from ao2.it ([92.243.12.208]:53082 "EHLO ao2.it"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S934377AbeFVQ1i (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jun 2018 12:27:38 -0400
+        id S934377AbeFVQ1f (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jun 2018 12:27:35 -0400
 Received: from localhost ([::1] helo=jcn)
         by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.84_2)
         (envelope-from <ao2@ao2.it>)
-        id 1fWOtn-0007Wg-Bt; Fri, 22 Jun 2018 18:26:59 +0200
+        id 1fWOtn-0007Wa-2l; Fri, 22 Jun 2018 18:26:59 +0200
 Received: from ao2 by jcn with local (Exim 4.91)
         (envelope-from <ao2@ao2.it>)
-        id 1fWOuK-00053P-HF; Fri, 22 Jun 2018 18:27:32 +0200
+        id 1fWOuK-00053J-6d; Fri, 22 Jun 2018 18:27:32 +0200
 From:   Antonio Ospite <ao2@ao2.it>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
         Antonio Ospite <ao2@ao2.it>
-Subject: [PATCH 7/7] submodule-config: cleanup backward compatibility helpers
-Date:   Fri, 22 Jun 2018 18:26:56 +0200
-Message-Id: <20180622162656.19338-8-ao2@ao2.it>
+Subject: [PATCH 4/7] submodule-config: make 'config_from_gitmodules' private
+Date:   Fri, 22 Jun 2018 18:26:53 +0200
+Message-Id: <20180622162656.19338-5-ao2@ao2.it>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20180622162656.19338-1-ao2@ao2.it>
 References: <20180622162656.19338-1-ao2@ao2.it>
@@ -41,81 +41,66 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Use one callback per configuration setting to handle the generic options
-which have to be supported for backward compatibility.
+Now that 'config_from_gitmodules' is not used in the open, it can be
+marked as private.
 
-This removes some duplication and some support code at the cost of
-parsing the .gitmodules file twice when calling the fetch command.
+Hopefully this will prevent its usage for retrieving arbitrary
+configuration form the '.gitmodules' file.
 
 Signed-off-by: Antonio Ospite <ao2@ao2.it>
 ---
- submodule-config.c | 39 +++++++++++++++------------------------
- 1 file changed, 15 insertions(+), 24 deletions(-)
+ submodule-config.c |  8 ++++----
+ submodule-config.h | 12 +++++-------
+ 2 files changed, 9 insertions(+), 11 deletions(-)
 
 diff --git a/submodule-config.c b/submodule-config.c
-index ce204fb53..0a5274891 100644
+index 46fb454ae..6a9f4b6d1 100644
 --- a/submodule-config.c
 +++ b/submodule-config.c
-@@ -681,36 +681,20 @@ void submodule_free(struct repository *r)
- 		submodule_cache_clear(r->submodule_cache);
+@@ -673,14 +673,14 @@ void submodule_free(struct repository *r)
  }
  
--struct fetch_config {
--	int *max_children;
--	int *recurse_submodules;
--};
+ /*
+- * Note: This function exists solely to maintain backward compatibility with
+- * 'fetch' and 'update_clone' storing configuration in '.gitmodules' and should
+- * NOT be used anywhere else.
++ * Note: This function is private for a reason, the '.gitmodules' file should
++ * not be used as as a mechanism to retrieve arbitrary configuration stored in
++ * the repository.
+  *
+  * Runs the provided config function on the '.gitmodules' file found in the
+  * working directory.
+  */
+-void config_from_gitmodules(config_fn_t fn, void *data)
++static void config_from_gitmodules(config_fn_t fn, void *data)
+ {
+ 	if (the_repository->worktree) {
+ 		char *file = repo_worktree_path(the_repository, GITMODULES_FILE);
+diff --git a/submodule-config.h b/submodule-config.h
+index b6f19d0d4..dc7278eea 100644
+--- a/submodule-config.h
++++ b/submodule-config.h
+@@ -57,15 +57,13 @@ void submodule_free(struct repository *r);
+ int check_submodule_name(const char *name);
+ 
+ /*
+- * Note: This function exists solely to maintain backward compatibility with
+- * 'fetch' and 'update_clone' storing configuration in '.gitmodules' and should
+- * NOT be used anywhere else.
++ * Note: these helper functions exist solely to maintain backward
++ * compatibility with 'fetch' and 'update_clone' storing configuration in
++ * '.gitmodules'.
+  *
+- * Runs the provided config function on the '.gitmodules' file found in the
+- * working directory.
++ * New helpers to retrieve arbitrary configuration from the '.gitmodules' file
++ * should NOT be added.
+  */
+-extern void config_from_gitmodules(config_fn_t fn, void *data);
 -
--static int gitmodules_fetch_config(const char *var, const char *value, void *cb)
-+static int gitmodules_recurse_submodules_config(const char *var,
-+						const char *value, void *cb)
- {
--	struct fetch_config *config = cb;
--	if (!strcmp(var, "submodule.fetchjobs")) {
--		*(config->max_children) = parse_submodule_fetchjobs(var, value);
--		return 0;
--	} else if (!strcmp(var, "fetch.recursesubmodules")) {
--		*(config ->recurse_submodules) = parse_fetch_recurse_submodules_arg(var, value);
-+	int *recurse_submodules = cb;
-+	if (!strcmp(var, "fetch.recursesubmodules")) {
-+		*recurse_submodules = parse_fetch_recurse_submodules_arg(var, value);
- 		return 0;
- 	}
+ extern void fetch_config_from_gitmodules(int *max_children, int *recurse_submodules);
+ extern void update_clone_config_from_gitmodules(int *max_jobs);
  
- 	return 0;
- }
- 
--void fetch_config_from_gitmodules(int *max_children, int *recurse_submodules)
--{
--	struct fetch_config config = {
--		.max_children = max_children,
--		.recurse_submodules = recurse_submodules
--	};
--	config_from_gitmodules(gitmodules_fetch_config, the_repository, &config);
--}
--
--static int gitmodules_update_clone_config(const char *var, const char *value,
--					  void *cb)
-+static int gitmodules_fetchobjs_config(const char *var, const char *value,
-+				       void *cb)
- {
- 	int *max_jobs = cb;
- 	if (!strcmp(var, "submodule.fetchjobs"))
-@@ -718,7 +702,14 @@ static int gitmodules_update_clone_config(const char *var, const char *value,
- 	return 0;
- }
- 
-+
-+void fetch_config_from_gitmodules(int *max_children, int *recurse_submodules)
-+{
-+	config_from_gitmodules(gitmodules_fetchobjs_config, the_repository, &max_children);
-+	config_from_gitmodules(gitmodules_recurse_submodules_config, the_repository, &recurse_submodules);
-+}
-+
- void update_clone_config_from_gitmodules(int *max_jobs)
- {
--	config_from_gitmodules(gitmodules_update_clone_config, the_repository, &max_jobs);
-+	config_from_gitmodules(gitmodules_fetchobjs_config, the_repository, &max_jobs);
- }
 -- 
 2.18.0
 
