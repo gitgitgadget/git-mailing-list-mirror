@@ -2,83 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,
+	DATE_IN_PAST_96_XX,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D2EC31F597
-	for <e@80x24.org>; Mon, 16 Jul 2018 10:35:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B1D231F597
+	for <e@80x24.org>; Mon, 16 Jul 2018 10:35:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728643AbeGPLCh (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jul 2018 07:02:37 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:39632 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728460AbeGPLCg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jul 2018 07:02:36 -0400
-Received: by mail-pf0-f173.google.com with SMTP id j8-v6so1438145pff.6
-        for <git@vger.kernel.org>; Mon, 16 Jul 2018 03:35:49 -0700 (PDT)
+        id S1728787AbeGPLCj (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jul 2018 07:02:39 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:34640 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728460AbeGPLCi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jul 2018 07:02:38 -0400
+Received: by mail-pf0-f193.google.com with SMTP id k19-v6so706677pfi.1
+        for <git@vger.kernel.org>; Mon, 16 Jul 2018 03:35:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=K+R6PsDDXQK3BOyQ4tc44DPGs49Py7na0+DG8GQGMtg=;
-        b=ER8RDzzRruPMi/YL8jvnfvmRffSNlHWZugYxHj6J1l0tbG1G1BTZraAmL0Ze+WAJof
-         xJE2ZpFFSDCQ893w7tE1hY2fNu6teGRaC/gt6UxLp8mKH8NYTW3MO9IfnSkBvVo5rXAN
-         nDfSTI3EYmhTdTdb+t1vykzSZwXN1Xf63JHXzFMAVBL/eE0u2H4PcnQiLYfVv0iBfHKK
-         reA4BfdJs5ppsJQbePtxS6igQr81E0BkklUQes/QNdLP44VTtbQKwokeDYNIM5O1iHZN
-         XLLBBgkSirVH/lJZ6V5/lLceWpnWh0cozVaw3JQQSdW4cOB7HrWw2hjpW9HH8zk8fth1
-         qgNg==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc:cc;
+        bh=5vcrjL1AzbmOck6gCTmNuw509CiBYlw8ZOR76UzdPao=;
+        b=V5ORkEl+mkxB5F/yHoJ6jz40xKHy1Jg33O1nSKOps6Y7AfSNdayq7EsOGtzPFTlH44
+         a+oo94turEWbHgEsOsYJ4afpA0hF6mSRSfaxKQ+HlePeSrYLViigPnMZDIaP6p1uXBWM
+         YQ2MmDNXsBi4eK0MJdD+aWloo9XWX5dcbraVPTgPuLZXtwNmmEJOoarONF20eXVVFLbd
+         2SU3Uw5mz60pIsPxMQioP95CI2OXjKgr7+uW0X9dpKmHOhfSnA0TVEHiCZ6+sqKnp9cU
+         PRHhItDlde0Ldh18XHWJyEtDraDivLk5RUjEKAunX6NsOSZwgBdgN3ybKvsfBUXZyANq
+         e15g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=K+R6PsDDXQK3BOyQ4tc44DPGs49Py7na0+DG8GQGMtg=;
-        b=aPYO8V7f+nSXllaYxJWnrSkr5/ThzNZiESbTv2OtpuLv9Se5pc3nPEYxwWopbpKRXg
-         57avvN234V5q553WviUim8jT6zZM7ovpNwy106QmhN+lw/j/3bcEm+Ehyi65O5tg9biE
-         PqJkctiX/TMEcpbsXwRFrAvpXRwuZou5IFWCJfJEX2TZPLQ7WODg+1U2ZXcM+qeHXp+O
-         w/217ypejyjAD2kNCMOFcwuKGVIUtv/iXo8YPiNvHe3qkPYj9BS6AX/u8XuypmfOeh0S
-         d90Y/I0GEwskU1ucHb28JNxCYVEw0rsdrq0AupX2ymFS5lfwFood/k8ViLBb3slp5m+Q
-         OYGw==
-X-Gm-Message-State: AOUpUlEgfE8/cZsW7HbQoaCpBkztQq1DFBHaYAZHyJ18gE0+8tbrXKUi
-        aqJaQx2VKEFotLf/BgjxtCgc+A==
-X-Google-Smtp-Source: AAOMgpcnG10o1azzAsbTHt0CWCuxjCWuyQ3Zp8Lt07fTuGN1Yfe5lj/BXdPq62QwX8a4o5RbwYq6Bw==
-X-Received: by 2002:a62:f587:: with SMTP id b7-v6mr17528406pfm.158.1531737349328;
-        Mon, 16 Jul 2018 03:35:49 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc:cc;
+        bh=5vcrjL1AzbmOck6gCTmNuw509CiBYlw8ZOR76UzdPao=;
+        b=JqQQxFeudE2x1wpbfXF2R789RNX0Gfn/zUOW5Kg4Gz4FjKbnc1Aj6MvFGD6zGuDMej
+         PEutwKFqPtsSRA1a7ou7+BmJNLKFn98m/UaF/rWBh0F6RVFR/zJizZJmwq7USQZoAJSU
+         nVC9ZFDZCIGKnHX1StTU5K/dsI3YzW+smdMzJo1iUcH3QqIvviPTAgq+QJiYvZh93UJl
+         e+Cwu2MRh7+kRm18dSH/40p15dboErbqRoxdmpKghp2LsjHseIalDgGlGCH5UClNfQSd
+         xs9tgMed0OivSpSTQ6epxLXZAlndQ3ZjxH0j2z/1auxl42i8xywcLfGH3Ru1KbJBklb+
+         vZcA==
+X-Gm-Message-State: AOUpUlHs3AmWal/UoKrDfg6+TcSJ4AxLEVqxEiqzAk9/UL8FW26QD4F3
+        dRYTGAxu9BidKAnFrAYPI/GUuA==
+X-Google-Smtp-Source: AAOMgpcFnEWDlTWJSZs9tBydbGd0Dctk1EqOyuDohaIAVALLE+EyamdyYYF1qb6NKcY/Wa5lRGcMLg==
+X-Received: by 2002:a65:5307:: with SMTP id m7-v6mr15403718pgq.431.1531737350694;
+        Mon, 16 Jul 2018 03:35:50 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.139.188])
-        by smtp.gmail.com with ESMTPSA id x25-v6sm17937358pgv.63.2018.07.16.03.35.48
+        by smtp.gmail.com with ESMTPSA id c131-v6sm50420128pga.69.2018.07.16.03.35.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 16 Jul 2018 03:35:48 -0700 (PDT)
-Message-Id: <pull.4.git.gitgitgadget@gmail.com>
+        Mon, 16 Jul 2018 03:35:49 -0700 (PDT)
+Message-Id: <3da0295aae92ef214781e0acb97ac2aaeabab7ae.1531737346.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.4.git.gitgitgadget@gmail.com>
+References: <pull.4.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 16 Jul 2018 10:35:46 +0000
-Subject: [PATCH 0/1] vcbuild/README: update to accommodate for missing common-cmds.h
+Date:   Fri, 22 Jun 2018 13:09:11 +0200
+Subject: [PATCH 1/1] vcbuild/README: update to accommodate for missing
+ common-cmds.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+
 In 60f487ac0ef (Remove common-cmds.h, 2018-05-10), we forgot to adjust
 this README when removing the common-cmds.h file.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-
-Johannes Schindelin (1):
-  vcbuild/README: update to accommodate for missing common-cmds.h
-
+---
  compat/vcbuild/README | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-
-base-commit: 53f9a3e157dbbc901a02ac2c73346d375e24978c
-Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-4%2Fdscho%2Fcommon-cmds-fallout-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-4/dscho/common-cmds-fallout-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/4
+diff --git a/compat/vcbuild/README b/compat/vcbuild/README
+index df8a6574c..60fd873fe 100644
+--- a/compat/vcbuild/README
++++ b/compat/vcbuild/README
+@@ -30,8 +30,8 @@ The Steps of Build Git with VS2008
+    the git operations.
+ 
+ 3. Inside Git's directory run the command:
+-       make common-cmds.h
+-   to generate the common-cmds.h file needed to compile git.
++       make command-list.h
++   to generate the command-list.h file needed to compile git.
+ 
+ 4. Then either build Git with the GNU Make Makefile in the Git projects
+    root
 -- 
 gitgitgadget
