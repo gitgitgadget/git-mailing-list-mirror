@@ -2,142 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E25E1F516
-	for <e@80x24.org>; Fri, 22 Jun 2018 09:25:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB9561F516
+	for <e@80x24.org>; Fri, 22 Jun 2018 11:59:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751352AbeFVJZC (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Jun 2018 05:25:02 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51796 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751258AbeFVJZB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jun 2018 05:25:01 -0400
-Received: (qmail 3924 invoked by uid 109); 22 Jun 2018 09:25:01 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 22 Jun 2018 09:25:01 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16702 invoked by uid 111); 22 Jun 2018 09:25:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 22 Jun 2018 05:25:19 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Jun 2018 05:24:59 -0400
-Date:   Fri, 22 Jun 2018 05:24:59 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: [PATCH v2 4/4] branch: make "-l" a synonym for "--list"
-Message-ID: <20180622092459.GD13573@sigill.intra.peff.net>
-References: <20180622092327.GA8361@sigill.intra.peff.net>
+        id S1751206AbeFVL7X (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Jun 2018 07:59:23 -0400
+Received: from mout.gmx.net ([212.227.15.18]:43823 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751005AbeFVL7W (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jun 2018 07:59:22 -0400
+Received: from localhost.localdomain ([65.55.188.218]) by mail.gmx.com
+ (mrgmx002 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 0Lck9X-1fwHcd1yVz-00k5ze; Fri, 22 Jun 2018 13:59:21 +0200
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.18.0
+Date:   Fri, 22 Jun 2018 11:59:13 +0000
+Message-Id: <20180622115913.14184-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.18.0.windows.1
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180622092327.GA8361@sigill.intra.peff.net>
+Fcc:    Sent
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:RIv+/FbAaFoqY37MtRXl5iOfcEbMlbDmz0xe1nIDuoQR4INGN6T
+ KcvJlZsBTa7MGOu0hdA+hMWB/Seaxib7pi1jzNGAOsFB3jLrWZ8xaFPnUfXqzwRFs3adaSB
+ +gzrRat3jSjjO/mI74vFCox/Ty+ClvU/V9dRmJ8UklEHXKUNkWuS4gBC50LIPwM75Y+A2So
+ p3afJifdLGF2hGLr/fl1g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:SXs946iiw0g=:MuXcbWsw5ATe88r5Y7z6Bz
+ +Nr2b6iyr3sYn569Eai0qRMeRGt8lFajeRY6nZtY05/FV+9QPPMweMZ3XpUhgfBn0w1H7I5o3
+ 82v2vWUH16eXm80+guxtX9Wz/bhJ01YVnpgp06UCD4Y/AIk8I3LUxk1+mYXkFmpsdVjQKtZd2
+ i7dERT69GpP4s0LjwHcC3r1zF1jEBIQYAN27cj7sZm7K/TEplX4IasClBOCwh09JzYCyS1CfA
+ s7S0tXI14gZvxWuEVUo8lf6m/WtCaBiwS3vm11kv1YZg8W4O9WtJj26RxPyPWU+JAdDNN9+UE
+ WS6LQaEsXofHe84H136yJKMP34F1mHheJX7a5w4EWuO5+vAhd4fH4QddmgnXUjqabWevNW3yv
+ belxp5OwWlj7AWhildjSu4Bjvs/J4GHce658tUKfA6vQ6WNC+el2/s3YjxHhEJrEB4Zlylvd+
+ Yjnga41kGzUTczYfpRKoMUA8Ip7hEzFew5jGjCt2eMb8d5yoyZ8keSOhY1oB4LQ5IYM1QlBvg
+ Y6kKCG9ChP3LDT9HU4jthvphzfiq7Um0dNsRZ7PUgjeYVkLVWiCWXhyNkLpkgMUwdZFcnkB0x
+ S+6I/a9OdTr5SD3U/q5P2N7SKLH+ORbBnbHBuM8wPQcmxeC87eIgg4YqnRZMvLSi4vxqz759Q
+ 12cnDr39f8QqxcQ3Sz3M87Zc8hPQJWdcmxXOgCUlNSsQinwMTLVNpnsjxCmfbJRMcb53NhPx+
+ PIyXgBNSpkE6rlLdcKdxbgDVYLqH0ls64Z43HgkYT993f0yM4Eq/Gyx0OWRmBM6wwAbATC5ZT
+ kppyh9Y
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The other "mode" options of git-branch have short-option
-aliases that are easy to type (e.g., "-d" and "-m"). Let's
-give "--list" the same treatment.
+Dear Git users,
 
-This also makes it consistent with the similar "git tag -l"
-option.
+It is my pleasure to announce that Git for Windows 2.18.0 is available from:
 
-We didn't do this originally because "--create-reflog" was
-squatting on the "-l" option. Now that we've deprecated that
-use for long enough, we can make the switch.
+	https://gitforwindows.org/
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-This one is mostly a squash of the remove/reincarnate steps from the
-previous iteration. I also noticed that my original forgot to update the
-documentation, which this patch does.
+Changes since Git for Windows v2.17.1(2) (May 29th 2018)
 
- Documentation/git-branch.txt |  3 +--
- builtin/branch.c             | 22 +---------------------
- 2 files changed, 2 insertions(+), 23 deletions(-)
+New Features
 
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index 1072ca0eb6..fc88e984e1 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -100,8 +100,6 @@ OPTIONS
- 	The negated form `--no-create-reflog` only overrides an earlier
- 	`--create-reflog`, but currently does not negate the setting of
- 	`core.logAllRefUpdates`.
--+
--The `-l` option is a deprecated synonym for `--create-reflog`.
- 
- -f::
- --force::
-@@ -156,6 +154,7 @@ This option is only applicable in non-verbose mode.
- --all::
- 	List both remote-tracking branches and local branches.
- 
-+-l::
- --list::
- 	List branches.  With optional `<pattern>...`, e.g. `git
- 	branch --list 'maint-*'`, list only the branches that match
-diff --git a/builtin/branch.c b/builtin/branch.c
-index ed4c093747..c1662e3db3 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -36,7 +36,6 @@ static const char * const builtin_branch_usage[] = {
- 
- static const char *head;
- static struct object_id head_oid;
--static int used_deprecated_reflog_option;
- 
- static int branch_use_color = -1;
- static char branch_colors[][COLOR_MAXLEN] = {
-@@ -574,14 +573,6 @@ static int edit_branch_description(const char *branch_name)
- 	return 0;
- }
- 
--static int deprecated_reflog_option_cb(const struct option *opt,
--				       const char *arg, int unset)
--{
--	used_deprecated_reflog_option = 1;
--	*(int *)opt->value = !unset;
--	return 0;
--}
--
- int cmd_branch(int argc, const char **argv, const char *prefix)
- {
- 	int delete = 0, rename = 0, copy = 0, force = 0, list = 0;
-@@ -623,14 +614,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		OPT_BIT('M', NULL, &rename, N_("move/rename a branch, even if target exists"), 2),
- 		OPT_BIT('c', "copy", &copy, N_("copy a branch and its reflog"), 1),
- 		OPT_BIT('C', NULL, &copy, N_("copy a branch, even if target exists"), 2),
--		OPT_BOOL(0, "list", &list, N_("list branch names")),
-+		OPT_BOOL('l', "list", &list, N_("list branch names")),
- 		OPT_BOOL(0, "create-reflog", &reflog, N_("create the branch's reflog")),
--		{
--			OPTION_CALLBACK, 'l', NULL, &reflog, NULL,
--			N_("deprecated synonym for --create-reflog"),
--			PARSE_OPT_NOARG | PARSE_OPT_HIDDEN,
--			deprecated_reflog_option_cb
--		},
- 		OPT_BOOL(0, "edit-description", &edit_description,
- 			 N_("edit the description for the branch")),
- 		OPT__FORCE(&force, N_("force creation, move/rename, deletion"), PARSE_OPT_NOCOMPLETE),
-@@ -703,11 +688,6 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 	if (list)
- 		setup_auto_pager("branch", 1);
- 
--	if (used_deprecated_reflog_option && !list) {
--		warning("the '-l' alias for '--create-reflog' is deprecated;");
--		warning("it will be removed in a future version of Git");
--	}
--
- 	if (delete) {
- 		if (!argc)
- 			die(_("branch name required"));
--- 
-2.18.0.539.gcf23d6d4f1
+  * Comes with Git v2.18.0.
+  * Comes with Git Credential Manager v1.16.2.
+
+Bug Fixes
+
+  * The diff filter for .pdf files was fixed.
+  * The start-ssh-agent.cmd script no longer overrides the HOME
+    variable.
+  * Fixes an issue where passing an argument with a trailing slash from
+    Git Bash to git.exe was dropping that trailing slash.
+  * The http.schannel.checkRevoke setting now really works.
+
+Filename | SHA-256
+-------- | -------
+Git-2.18.0-64-bit.exe | aa81c9f2a81fd07ba0582095474365821880fd787b1cbe03abaf71d9aa69d359
+Git-2.18.0-32-bit.exe | f4e910eb5182aefada20226a5a0a64b5b528ad1439c28a47c25252ee27f71af0
+PortableGit-2.18.0-64-bit.7z.exe | cd84a13b6c7aac0e924cb4db2476e2f4379aab4b8e60246992a6c5eebeac360c
+PortableGit-2.18.0-32-bit.7z.exe | 28e68a781a78009913fef3d6c1074a6c91b05e4010bfd9efaff7b8398c87e017
+MinGit-2.18.0-64-bit.zip | 1dfd05de1320d57f448ed08a07c0b9de2de8976c83840f553440689b5db6a1cf
+MinGit-2.18.0-32-bit.zip | c2f59c121d0f5aac31c959e5ba2878542b6cbca6604778566061d45585e70895
+MinGit-2.18.0-busybox-64-bit.zip | 1a34608fbb82f607924d21ac2737c189a250fd9c6f4255a939e55c7fc3b10a0d
+MinGit-2.18.0-busybox-32-bit.zip | 6a667b03bacbcd2627e4e9a29a222c1ccb01c340bc721352afd6427f3621945c
+Git-2.18.0-64-bit.tar.bz2 | 120b7501b5563212f1ecbcd8fadac257e510067e0297ff844bc3b18d90eefb96
+Git-2.18.0-32-bit.tar.bz2 | 3eab2705622b7fc5b49e4195e30fa92162ad4924072d01ca52abf0d7134d356c
+pdbs-for-git-64-bit-2.18.0.1.cd1a74fc9d-1.zip | 20fa4809b19a346e70d76066e98b76ca42f8364fb2997f3922abdb14d6321c56
+pdbs-for-git-32-bit-2.18.0.1.cd1a74fc9d-1.zip | b410397e237277e2ae1c22207190d11ee2f137e986baa15dfdb8dd92f0285120
+
+Ciao,
+Johannes
