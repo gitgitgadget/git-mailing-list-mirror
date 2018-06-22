@@ -2,505 +2,264 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E46731F516
-	for <e@80x24.org>; Fri, 22 Jun 2018 01:58:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E09471F516
+	for <e@80x24.org>; Fri, 22 Jun 2018 06:50:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934325AbeFVB6B (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Jun 2018 21:58:01 -0400
-Received: from mail-qk0-f201.google.com ([209.85.220.201]:33518 "EHLO
-        mail-qk0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934292AbeFVB54 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jun 2018 21:57:56 -0400
-Received: by mail-qk0-f201.google.com with SMTP id x186-v6so4363092qkb.0
-        for <git@vger.kernel.org>; Thu, 21 Jun 2018 18:57:56 -0700 (PDT)
+        id S1750987AbeFVGun (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Jun 2018 02:50:43 -0400
+Received: from mail-lf0-f42.google.com ([209.85.215.42]:40877 "EHLO
+        mail-lf0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750886AbeFVGum (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jun 2018 02:50:42 -0400
+Received: by mail-lf0-f42.google.com with SMTP id q11-v6so7607770lfc.7
+        for <git@vger.kernel.org>; Thu, 21 Jun 2018 23:50:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
-         :cc;
-        bh=BofUJnNXsuAPKzD1BvttadQtE3iwxPL0piDzbvtzqmo=;
-        b=I4ePCyR7AU79dO+8Axa+iu7zgQeDhOWGY1WVk+1ICel2L0qMeDoeljHnDdDdbzBa2k
-         jwG84QItyf6zQrW5b8gcvSC1pIMcHYDTAmwoTUingJiSddEw2eh8JOE2NWk7PLcIsiET
-         nBEGoElRzcHfGGxfDXV/F6psaLiNZXXspFli+JwszXX5VmV6OonogDr1qjij2lSp9JVY
-         sBoF2FmpTCXEZAOHaHN8Asc84Yk9tKM9zKUqiYfqEtqhzhT/cYEGQ+nDBOPw8ccXe47+
-         cl0e5gJ8wzuU9svA2mJ2kHzC0gR+aU4xmcT1SX13DIOUjxf9ZveD8BiPr3xLhpytqV6e
-         EJqA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=VIzLuRBvp1hqx1PsehD6AUpATAQdL+oAQyq9ITV0sQ4=;
+        b=Vw5z1W/G31vzh18+3zFnQAW2hJfp5J9EiKZ0F7+EPLBoAAJtDLkGPjwdKQHpUb2L8o
+         4zIlHrDeIpcBDntVFLr+rTlWjpVAxG+weFjhjvyCSBQ6YyCLMgCqn8AispXbM+5XqTBa
+         rWfcVWPPFS/k5nxUxqEfyKe4tCpF4ELnlFl2+PIoEzg5/Mt2c58Ivx2D2wnPV1fnY/0H
+         aZ7dEvhObaYQogfsQGXGrkjgm+xnakr9DKt6HWxeZ8JzLwghanXslyrSRu8WB+lqjoiC
+         od4jdU9iA9dLy6iiZswCiSpw/MPeISa5nwfSGfEVQow04+gIIRGAQP/UKwE9Auu6wuFW
+         ygHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
-         :references:subject:from:to:cc;
-        bh=BofUJnNXsuAPKzD1BvttadQtE3iwxPL0piDzbvtzqmo=;
-        b=gd8DEI74koqtTV0HHyDyn2ISEFlEMmVD+78d7eFDqXcfCLNK7ForkpjOt5CRpmYEQR
-         alUzUAWwavlSgEMDA2xb4CwYVmTDV4gfeEATk0upn+QUa6tLqDf6xkwrCJ9ItZAMZ+0i
-         042fHKNZ2P0DbKbHnm1jjhitH4iErM7tufQTgemnm68xMdAOtSv8GCHakUoLwDqSwUId
-         z31otXLDTDyhsKWtJJImbWzqooiQuNPqDhoN/6hIpirpo8NKOZDr1teckJ+pMysCQY+V
-         fyIYQZZYQY/F636q9vjSnKEWvN/9PoNof3PiMb/vqi/LWudFh1iI9snnZQSjZKBNvhWE
-         Rviw==
-X-Gm-Message-State: APt69E34dePRmlHBORJ1OBY4K22sQ90TmWQXzGHhLp76m7W8wZSunLWu
-        LFV7/ngiojVVLM9iTwKELMPthFJmP2dM
-X-Google-Smtp-Source: ADUXVKKCvdHGSEw2CZ5GsCY2omk4TWA/DMWryEaUVTkJdhms+901FNHMWvKmQ8FTJLnuwIiPYhDBG6fv24jc
+        h=x-gm-message-state:sender:from:to:subject:date:message-id
+         :mime-version:content-transfer-encoding;
+        bh=VIzLuRBvp1hqx1PsehD6AUpATAQdL+oAQyq9ITV0sQ4=;
+        b=elBpg+N39/fXIM2tSafruF1EpsXE834jZurqLECLH8akjw5QiMM5eFWtLk1/LjXHYW
+         XlPAbVqrwjBTo4cXDCHBTMCqNUBbbV8tuanVHApgaJ0NuFWjbzpTKsXO7ucv90+cJQrv
+         3wrIOYu4z3s7NHrWMUNHecyn9CuqSrcnIf3INssXy5yzgu00rlJQQQ71x0rOu2XsStc/
+         EfVsA7tHWeRyfCYXnvSMx4aJr4bkvhBkTPKF0Yf5G2uYb0Z7tdgnEVMEdV6ZJiD+m+xV
+         I4paubUAZhfk6d1ka4Kh9GSb4FSSFKOmDyAaOe8034Nx3a8q5YRn7PZzP9cLA99MIT8o
+         vSWQ==
+X-Gm-Message-State: APt69E335P+samzl4m2iRqbZ3BurY780g4yWBqSPMFHxQ/QdVFJ4YXeL
+        uubTM9ty/iLq6GFpEzJaPN5SkASU
+X-Google-Smtp-Source: ADUXVKKLy32lgAjjRuYi1ckPVqOLe1QIIwYXzJQATvAIM+YcH77ysP8BB5CnqzBP+suCALQTsRCr/w==
+X-Received: by 2002:a19:d744:: with SMTP id o65-v6mr252486lfg.124.1529650239903;
+        Thu, 21 Jun 2018 23:50:39 -0700 (PDT)
+Received: from uncleman.localhost.localhost (dyt4cht5bhf30mvk75vpt-4.rev.dnainternet.fi. [2001:14bb:430:2343:2131:2fe5:451b:cc59])
+        by smtp.gmail.com with ESMTPSA id n6-v6sm1184975ljh.77.2018.06.21.23.50.38
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 21 Jun 2018 23:50:39 -0700 (PDT)
+From:   =?UTF-8?q?Ville=20Skytt=C3=A4?= <ville.skytta@iki.fi>
+To:     git@vger.kernel.org
+Subject: [PATCH] Documentation: Spelling and grammar fixes
+Date:   Fri, 22 Jun 2018 09:50:37 +0300
+Message-Id: <20180622065037.27155-1-ville.skytta@iki.fi>
+X-Mailer: git-send-email 2.14.1
 MIME-Version: 1.0
-X-Received: by 2002:a0c:81e2:: with SMTP id 31-v6mr14996844qve.19.1529632676173;
- Thu, 21 Jun 2018 18:57:56 -0700 (PDT)
-Date:   Thu, 21 Jun 2018 18:57:25 -0700
-In-Reply-To: <20180622015725.219575-1-sbeller@google.com>
-Message-Id: <20180622015725.219575-9-sbeller@google.com>
-References: <20180622015725.219575-1-sbeller@google.com>
-X-Mailer: git-send-email 2.18.0.rc2.346.g013aa6912e-goog
-Subject: [PATCH v3 8/8] diff.c: add white space mode to move detection that
- allows indent changes
-From:   Stefan Beller <sbeller@google.com>
-To:     sbeller@google.com
-Cc:     git@vger.kernel.org, jacob.keller@gmail.com,
-        jonathantanmy@google.com, simon@ruderich.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The option of --color-moved has proven to be useful as observed on the
-mailing list. However when refactoring sometimes the indentation changes,
-for example when partitioning a functions into smaller helper functions
-the code usually mostly moved around except for a decrease in indentation.
-
-To just review the moved code ignoring the change in indentation, a mode
-to ignore spaces in the move detection as implemented in a previous patch
-would be enough.  However the whole move coloring as motivated in commit
-2e2d5ac (diff.c: color moved lines differently, 2017-06-30), brought
-up the notion of the reviewer being able to trust the move of a "block".
-
-As there are languages such as python, which depend on proper relative
-indentation for the control flow of the program, ignoring any white space
-change in a block would not uphold the promises of 2e2d5ac that allows
-reviewers to pay less attention to the inside of a block, as inside
-the reviewer wants to assume the same program flow.
-
-This new mode of white space ignorance will take this into account and will
-only allow the same white space changes per line in each block. This patch
-even allows only for the same change at the beginning of the lines.
-
-As this is a white space mode, it is made exclusive to other white space
-modes in the move detection.
-
-This patch brings some challenges, related to the detection of blocks.
-We need a white net the catch the possible moved lines, but then need to
-narrow down to check if the blocks are still in tact. Consider this
-example (ignoring block sizes):
-
- - A
- - B
- - C
- +    A
- +    B
- +    C
-
-At the beginning of a block when checking if there is a counterpart
-for A, we have to ignore all space changes. However at the following
-lines we have to check if the indent change stayed the same.
-
-Checking if the indentation change did stay the same, is done by computing
-the indentation change by the difference in line length, and then assume
-the change is only in the beginning of the longer line, the common tail
-is the same. That is why the test contains lines like:
-
- - <TAB> A
- ...
- + A <TAB>
- ...
-
-As the first line starting a block is caught using a compare function that
-ignores white spaces unlike the rest of the block, where the white space
-delta is taken into account for the comparison, we also have to think about
-the following situation:
-
- - A
- - B
- -   A
- -   B
- +    A
- +    B
- +      A
- +      B
-
-When checking if the first A (both in the + and - lines) is a start of
-a block, we have to check all 'A' and record all the white space deltas
-such that we can find the example above to be just one block that is
-indented.
-
-Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Ville Skyttä <ville.skytta@iki.fi>
 ---
- Documentation/diff-options.txt |   5 ++
- diff.c                         | 158 ++++++++++++++++++++++++++++++++-
- diff.h                         |   3 +
- t/t4015-diff-whitespace.sh     |  90 +++++++++++++++++++
- 4 files changed, 254 insertions(+), 2 deletions(-)
+ Documentation/SubmittingPatches                   | 4 ++--
+ Documentation/config.txt                          | 2 +-
+ Documentation/git-bisect-lk2009.txt               | 2 +-
+ Documentation/git-imap-send.txt                   | 4 ++--
+ Documentation/git-notes.txt                       | 2 +-
+ Documentation/git-status.txt                      | 2 +-
+ Documentation/git-svn.txt                         | 2 +-
+ Documentation/giteveryday.txt                     | 2 +-
+ Documentation/gitsubmodules.txt                   | 2 +-
+ Documentation/glossary-content.txt                | 2 +-
+ Documentation/technical/api-directory-listing.txt | 2 +-
+ Documentation/technical/api-gitattributes.txt     | 2 +-
+ Documentation/technical/commit-graph-format.txt   | 2 +-
+ 13 files changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index d174ed1dd0e..d9ff0bb8a58 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -307,6 +307,11 @@ ignore-space-change::
- ignore-all-space::
- 	Ignore whitespace when comparing lines. This ignores differences
- 	even if one line has whitespace where the other line has none.
-+allow-indentation-change::
-+	Initially ignore any white spaces in the move detection, then
-+	group the moved code blocks only into a block if the change in
-+	whitespace is the same per line. This is incompatible with the
-+	other modes.
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index 248854440..b44fd51f2 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -298,7 +298,7 @@ smaller project it is a good discipline to follow it.
  
- --word-diff[=<mode>]::
- 	Show a word diff, using the <mode> to delimit changed words.
-diff --git a/diff.c b/diff.c
-index 040b46545e5..9e357111864 100644
---- a/diff.c
-+++ b/diff.c
-@@ -302,12 +302,18 @@ static int parse_color_moved_ws(const char *arg)
- 			ret |= XDF_IGNORE_WHITESPACE_AT_EOL;
- 		else if (!strcmp(sb.buf, "ignore-all-space"))
- 			ret |= XDF_IGNORE_WHITESPACE;
-+		else if (!strcmp(sb.buf, "allow-indentation-change"))
-+			ret |= COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE;
- 		else
- 			error(_("ignoring unknown color-moved-ws mode '%s'"), sb.buf);
+ The sign-off is a simple line at the end of the explanation for
+ the patch, which certifies that you wrote it or otherwise have
+-the right to pass it on as a open-source patch.  The rules are
++the right to pass it on as an open-source patch.  The rules are
+ pretty simple: if you can certify the below D-C-O:
  
- 		strbuf_release(&sb);
- 	}
+ [[dco]]
+@@ -403,7 +403,7 @@ don't demand).  +git log -p {litdd} _$area_you_are_modifying_+ would
+ help you find out who they are.
  
-+	if ((ret & COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE) &&
-+	    (ret & XDF_WHITESPACE_FLAGS))
-+		die(_("color-moved-ws: allow-indentation-change cannot be combined with other white space modes"));
-+
- 	string_list_clear(&l, 0);
+ . You get comments and suggestions for improvements.  You may
+-  even get them in a "on top of your change" patch form.
++  even get them in an "on top of your change" patch form.
  
- 	return ret;
-@@ -737,7 +743,91 @@ struct moved_entry {
- 	struct hashmap_entry ent;
- 	const struct emitted_diff_symbol *es;
- 	struct moved_entry *next_line;
-+	struct ws_delta *wsd;
-+};
-+
-+/**
-+ * The struct ws_delta holds white space differences between moved lines, i.e.
-+ * between '+' and '-' lines that have been detected to be a move.
-+ * The string contains the difference in leading white spaces, before the
-+ * rest of the line is compared using the white space config for move
-+ * coloring. The current_longer indicates if the first string in the
-+ * comparision is longer than the second.
-+ */
-+struct ws_delta {
-+	char *string;
-+	int current_longer : 1;
- };
-+#define WS_DELTA_INIT { NULL, 0 }
-+
-+static int compute_ws_delta(const struct emitted_diff_symbol *a,
-+			     const struct emitted_diff_symbol *b,
-+			     struct ws_delta *out)
-+{
-+	const struct emitted_diff_symbol *longer =  a->len > b->len ? a : b;
-+	const struct emitted_diff_symbol *shorter = a->len > b->len ? b : a;
-+	int d = longer->len - shorter->len;
-+
-+	out->string = xmemdupz(longer->line, d);
-+	out->current_longer = (a == longer);
-+
-+	return !strncmp(longer->line + d, shorter->line, shorter->len);
-+}
-+
-+static int cmp_in_block_with_wsd(const struct diff_options *o,
-+				 const struct moved_entry *cur,
-+				 const struct moved_entry *match,
-+				 struct moved_entry *pmb,
-+				 int n)
-+{
-+	struct emitted_diff_symbol *l = &o->emitted_symbols->buf[n];
-+	int al = cur->es->len, cl = l->len;
-+	const char *a = cur->es->line,
-+		   *b = match->es->line,
-+		   *c = l->line;
-+
-+	int wslen;
-+
-+	/*
-+	 * We need to check if 'cur' is equal to 'match'.
-+	 * As those are from the same (+/-) side, we do not need to adjust for
-+	 * indent changes. However these were found using fuzzy matching
-+	 * so we do have to check if they are equal.
-+	 */
-+	if (strcmp(a, b))
-+		return 1;
-+
-+	if (!pmb->wsd)
-+		/*
-+		 * No white space delta was carried forward? This can happen
-+		 * when we exit early in this function and do not carry
-+		 * forward ws.
-+		 */
-+		return 1;
-+
-+	/*
-+	 * The indent changes of the block are known and carried forward in
-+	 * pmb->wsd; however we need to check if the indent changes of the
-+	 * current line are still the same as before.
-+	 *
-+	 * To do so we need to compare 'l' to 'cur', adjusting the
-+	 * one of them for the white spaces, depending which was longer.
-+	 */
-+
-+	wslen = strlen(pmb->wsd->string);
-+	if (pmb->wsd->current_longer) {
-+		c += wslen;
-+		cl -= wslen;
-+	} else {
-+		a += wslen;
-+		al -= wslen;
-+	}
-+
-+	if (strcmp(a, c))
-+		return 1;
-+
-+	return 0;
-+}
+ . Polish, refine, and re-send to the list and the people who
+   spend their time to improve your patch.  Go back to step (2).
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index ab641bf5a..98ffbd208 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -354,7 +354,7 @@ advice.*::
+ 		Advice on what to do when you've accidentally added one
+ 		git repo inside of another.
+ 	ignoredHook::
+-		Advice shown if an hook is ignored because the hook is not
++		Advice shown if a hook is ignored because the hook is not
+ 		set as executable.
+ 	waitingForEditor::
+ 		Print a message to the terminal whenever Git is waiting for
+diff --git a/Documentation/git-bisect-lk2009.txt b/Documentation/git-bisect-lk2009.txt
+index 78479b003..0f9ef2f25 100644
+--- a/Documentation/git-bisect-lk2009.txt
++++ b/Documentation/git-bisect-lk2009.txt
+@@ -1103,7 +1103,7 @@ _____________
+ Combining test suites, git bisect and other systems together
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  
- static int moved_entry_cmp(const void *hashmap_cmp_fn_data,
- 			   const void *entry,
-@@ -750,6 +840,16 @@ static int moved_entry_cmp(const void *hashmap_cmp_fn_data,
- 	unsigned flags = diffopt->color_moved_ws_handling
- 			 & XDF_WHITESPACE_FLAGS;
+-We have seen that test suites an git bisect are very powerful when
++We have seen that test suites and git bisect are very powerful when
+ used together. It can be even more powerful if you can combine them
+ with other systems.
  
-+	if (diffopt->color_moved_ws_handling &
-+	    COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE)
-+		/*
-+		 * As there is not specific white space config given,
-+		 * we'd need to check for a new block, so ignore all
-+		 * white space. The setup of the white space
-+		 * configuration for the next block is done else where
-+		 */
-+		flags |= XDF_IGNORE_WHITESPACE;
-+
- 	return !xdiff_compare_lines(a->es->line, a->es->len,
- 				    b->es->line, b->es->len,
- 				    flags);
-@@ -765,6 +865,7 @@ static struct moved_entry *prepare_entry(struct diff_options *o,
- 	ret->ent.hash = xdiff_hash_string(l->line, l->len, flags);
- 	ret->es = l;
- 	ret->next_line = NULL;
-+	ret->wsd = NULL;
+diff --git a/Documentation/git-imap-send.txt b/Documentation/git-imap-send.txt
+index 032613c42..7b157441e 100644
+--- a/Documentation/git-imap-send.txt
++++ b/Documentation/git-imap-send.txt
+@@ -68,8 +68,8 @@ imap.tunnel::
+ 	to the server. Required when imap.host is not set.
  
- 	return ret;
- }
-@@ -820,6 +921,37 @@ static void pmb_advance_or_null(struct diff_options *o,
- 	}
- }
+ imap.host::
+-	A URL identifying the server. Use a `imap://` prefix for non-secure
+-	connections and a `imaps://` prefix for secure connections.
++	A URL identifying the server. Use an `imap://` prefix for non-secure
++	connections and an `imaps://` prefix for secure connections.
+ 	Ignored when imap.tunnel is set, but required otherwise.
  
-+static void pmb_advance_or_null_multi_match(struct diff_options *o,
-+					    struct moved_entry *match,
-+					    struct hashmap *hm,
-+					    struct moved_entry **pmb,
-+					    int pmb_nr, int n)
-+{
-+	int i;
-+	char *got_match = xcalloc(1, pmb_nr);
-+
-+	for (; match; match = hashmap_get_next(hm, match)) {
-+		for (i = 0; i < pmb_nr; i++) {
-+			struct moved_entry *prev = pmb[i];
-+			struct moved_entry *cur = (prev && prev->next_line) ?
-+					prev->next_line : NULL;
-+			if (!cur)
-+				continue;
-+			if (!cmp_in_block_with_wsd(o, cur, match, pmb[i], n))
-+				got_match[i] |= 1;
-+		}
-+	}
-+
-+	for (i = 0; i <pmb_nr; i++) {
-+		if (got_match[i]) {
-+			/* Carry the white space delta forward */
-+			pmb[i]->next_line->wsd = pmb[i]->wsd;
-+			pmb[i] = pmb[i]->next_line;
-+		} else
-+			pmb[i] = NULL;
-+	}
-+}
-+
- static int shrink_potential_moved_blocks(struct moved_entry **pmb,
- 					 int pmb_nr)
- {
-@@ -837,6 +969,10 @@ static int shrink_potential_moved_blocks(struct moved_entry **pmb,
+ imap.user::
+diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
+index e8dec1b3c..df2b64dbb 100644
+--- a/Documentation/git-notes.txt
++++ b/Documentation/git-notes.txt
+@@ -199,7 +199,7 @@ OPTIONS
+ 	.git/NOTES_MERGE_REF symref is updated to the resulting commit.
  
- 		if (lp < pmb_nr && rp > -1 && lp < rp) {
- 			pmb[lp] = pmb[rp];
-+			if (pmb[rp]->wsd) {
-+				free(pmb[rp]->wsd->string);
-+				FREE_AND_NULL(pmb[rp]->wsd);
-+			}
- 			pmb[rp] = NULL;
- 			rp--;
- 			lp++;
-@@ -924,7 +1060,11 @@ static void mark_color_as_moved(struct diff_options *o,
- 		if (o->color_moved == COLOR_MOVED_PLAIN)
- 			continue;
+ --abort::
+-	Abort/reset a in-progress 'git notes merge', i.e. a notes merge
++	Abort/reset an in-progress 'git notes merge', i.e. a notes merge
+ 	with conflicts. This simply removes all files related to the
+ 	notes merge.
  
--		pmb_advance_or_null(o, match, hm, pmb, pmb_nr);
-+		if (o->color_moved_ws_handling &
-+		    COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE)
-+			pmb_advance_or_null_multi_match(o, match, hm, pmb, pmb_nr, n);
-+		else
-+			pmb_advance_or_null(o, match, hm, pmb, pmb_nr);
+diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
+index c4467ffb9..d9f422d56 100644
+--- a/Documentation/git-status.txt
++++ b/Documentation/git-status.txt
+@@ -106,7 +106,7 @@ It is optional: it defaults to 'traditional'.
+ The possible options are:
+ +
+ 	- 'traditional' - Shows ignored files and directories, unless
+-			  --untracked-files=all is specifed, in which case
++			  --untracked-files=all is specified, in which case
+ 			  individual files in ignored directories are
+ 			  displayed.
+ 	- 'no'	        - Show no ignored files.
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index 7ea24fc94..b99029520 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -452,7 +452,7 @@ Any other arguments are passed directly to 'git log'
  
- 		pmb_nr = shrink_potential_moved_blocks(pmb, pmb_nr);
+ 'commit-diff'::
+ 	Commits the diff of two tree-ish arguments from the
+-	command-line.  This command does not rely on being inside an `git svn
++	command-line.  This command does not rely on being inside a `git svn
+ 	init`-ed repository.  This command takes three arguments, (a) the
+ 	original tree to diff against, (b) the new tree result, (c) the
+ 	URL of the target Subversion repository.  The final argument
+diff --git a/Documentation/giteveryday.txt b/Documentation/giteveryday.txt
+index 10c8ff93c..9f2528fc8 100644
+--- a/Documentation/giteveryday.txt
++++ b/Documentation/giteveryday.txt
+@@ -244,7 +244,7 @@ commands in addition to the ones needed by participants.
  
-@@ -935,7 +1075,17 @@ static void mark_color_as_moved(struct diff_options *o,
- 			 */
- 			for (; match; match = hashmap_get_next(hm, match)) {
- 				ALLOC_GROW(pmb, pmb_nr + 1, pmb_alloc);
--				pmb[pmb_nr++] = match;
-+				if (o->color_moved_ws_handling &
-+				    COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE) {
-+					struct ws_delta *wsd = xmalloc(sizeof(*match->wsd));
-+					if (compute_ws_delta(l, match->es, wsd)) {
-+						match->wsd = wsd;
-+						pmb[pmb_nr++] = match;
-+					} else
-+						free(wsd);
-+				} else {
-+					pmb[pmb_nr++] = match;
-+				}
- 			}
+ This section can also be used by those who respond to `git
+ request-pull` or pull-request on GitHub (www.github.com) to
+-integrate the work of others into their history. An sub-area
++integrate the work of others into their history. A sub-area
+ lieutenant for a repository will act both as a participant and
+ as an integrator.
  
- 			flipped_block = (flipped_block + 1) % 2;
-@@ -5590,6 +5740,10 @@ static void diff_flush_patch_all_file_pairs(struct diff_options *o)
- 		if (o->color_moved) {
- 			struct hashmap add_lines, del_lines;
+diff --git a/Documentation/gitsubmodules.txt b/Documentation/gitsubmodules.txt
+index 3b9faabdb..504c5f1a8 100644
+--- a/Documentation/gitsubmodules.txt
++++ b/Documentation/gitsubmodules.txt
+@@ -194,7 +194,7 @@ In the above config only the submodule 'bar' and 'baz' are active,
  
-+			if (o->color_moved_ws_handling &
-+			    COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE)
-+				o->color_moved_ws_handling |= XDF_IGNORE_WHITESPACE;
-+
- 			hashmap_init(&del_lines, moved_entry_cmp, o, 0);
- 			hashmap_init(&add_lines, moved_entry_cmp, o, 0);
+ Note that (c) is a historical artefact and will be ignored if the
+ (a) and (b) specify that the submodule is not active. In other words,
+-if we have an `submodule.<name>.active` set to `false` or if the
++if we have a `submodule.<name>.active` set to `false` or if the
+ submodule's path is excluded in the pathspec in `submodule.active`, the
+ url doesn't matter whether it is present or not. This is illustrated in
+ the example that follows.
+diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
+index 6c2d23dc4..0d2aa48c6 100644
+--- a/Documentation/glossary-content.txt
++++ b/Documentation/glossary-content.txt
+@@ -334,7 +334,7 @@ The optional colon that terminates the "magic signature" can be
+ omitted if the pattern begins with a character that does not belong to
+ "magic signature" symbol set and is not a colon.
+ +
+-In the long form, the leading colon `:` is followed by a open
++In the long form, the leading colon `:` is followed by an open
+ parenthesis `(`, a comma-separated list of zero or more "magic words",
+ and a close parentheses `)`, and the remainder is the pattern to match
+ against the path.
+diff --git a/Documentation/technical/api-directory-listing.txt b/Documentation/technical/api-directory-listing.txt
+index 4f44ca24f..5abb8e8b1 100644
+--- a/Documentation/technical/api-directory-listing.txt
++++ b/Documentation/technical/api-directory-listing.txt
+@@ -54,7 +54,7 @@ The notable options are:
+ 	this case, the contents are returned as individual entries.
+ +
+ If this is set, files and directories that explicitly match an ignore
+-pattern are reported. Implicity ignored directories (directories that
++pattern are reported. Implicitly ignored directories (directories that
+ do not match an ignore pattern, but whose contents are all ignored)
+ are not reported, instead all of the contents are reported.
  
-diff --git a/diff.h b/diff.h
-index 94d4adfe0f3..a14895bb824 100644
---- a/diff.h
-+++ b/diff.h
-@@ -214,6 +214,9 @@ struct diff_options {
- 	} color_moved;
- 	#define COLOR_MOVED_DEFAULT COLOR_MOVED_ZEBRA
- 	#define COLOR_MOVED_MIN_ALNUM_COUNT 20
-+
-+	/* XDF_WHITESPACE_FLAGS regarding block detection are set at 2, 3, 4 */
-+	#define COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE (1<<5)
- 	int color_moved_ws_handling;
- };
+diff --git a/Documentation/technical/api-gitattributes.txt b/Documentation/technical/api-gitattributes.txt
+index e7cbb7c13..45f0df600 100644
+--- a/Documentation/technical/api-gitattributes.txt
++++ b/Documentation/technical/api-gitattributes.txt
+@@ -146,7 +146,7 @@ To get the values of all attributes associated with a file:
  
-diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
-index aad0870c8a1..13b20be591e 100755
---- a/t/t4015-diff-whitespace.sh
-+++ b/t/t4015-diff-whitespace.sh
-@@ -1827,4 +1827,94 @@ test_expect_success 'only move detection ignores white spaces' '
- 	test_cmp expected actual
- '
+ * Iterate over the `attr_check.items[]` array to examine
+   the attribute names and values.  The name of the attribute
+-  described by a  `attr_check.items[]` object can be retrieved via
++  described by an `attr_check.items[]` object can be retrieved via
+   `git_attr_name(check->items[i].attr)`.  (Please note that no items
+   will be returned for unset attributes, so `ATTR_UNSET()` will return
+   false for all returned `attr_check.items[]` objects.)
+diff --git a/Documentation/technical/commit-graph-format.txt b/Documentation/technical/commit-graph-format.txt
+index ad6af8105..2c965d594 100644
+--- a/Documentation/technical/commit-graph-format.txt
++++ b/Documentation/technical/commit-graph-format.txt
+@@ -18,7 +18,7 @@ metadata, including:
+   the graph file.
  
-+test_expect_success 'compare whitespace delta across moved blocks' '
-+
-+	git reset --hard &&
-+	q_to_tab <<-\EOF >text.txt &&
-+	QIndented
-+	QText across
-+	Qsome lines
-+	QBut! <- this stands out
-+	QAdjusting with
-+	QQdifferent starting
-+	Qwhite spaces
-+	QAnother outlier
-+	QQQIndented
-+	QQQText across
-+	QQQfive lines
-+	QQQthat has similar lines
-+	QQQto previous blocks, but with different indent
-+	QQQYetQAnotherQoutlierQ
-+	EOF
-+
-+	git add text.txt &&
-+	git commit -m "add text.txt" &&
-+
-+	q_to_tab <<-\EOF >text.txt &&
-+	QQIndented
-+	QQText across
-+	QQsome lines
-+	QQQBut! <- this stands out
-+	Adjusting with
-+	Qdifferent starting
-+	white spaces
-+	AnotherQoutlier
-+	QQIndented
-+	QQText across
-+	QQfive lines
-+	QQthat has similar lines
-+	QQto previous blocks, but with different indent
-+	QQYetQAnotherQoutlier
-+	EOF
-+
-+	git diff --color --color-moved --color-moved-ws=allow-indentation-change |
-+		grep -v "index" |
-+		test_decode_color >actual &&
-+
-+	q_to_tab <<-\EOF >expected &&
-+		<BOLD>diff --git a/text.txt b/text.txt<RESET>
-+		<BOLD>--- a/text.txt<RESET>
-+		<BOLD>+++ b/text.txt<RESET>
-+		<CYAN>@@ -1,14 +1,14 @@<RESET>
-+		<BOLD;MAGENTA>-QIndented<RESET>
-+		<BOLD;MAGENTA>-QText across<RESET>
-+		<BOLD;MAGENTA>-Qsome lines<RESET>
-+		<RED>-QBut! <- this stands out<RESET>
-+		<BOLD;MAGENTA>-QAdjusting with<RESET>
-+		<BOLD;MAGENTA>-QQdifferent starting<RESET>
-+		<BOLD;MAGENTA>-Qwhite spaces<RESET>
-+		<RED>-QAnother outlier<RESET>
-+		<BOLD;MAGENTA>-QQQIndented<RESET>
-+		<BOLD;MAGENTA>-QQQText across<RESET>
-+		<BOLD;MAGENTA>-QQQfive lines<RESET>
-+		<BOLD;MAGENTA>-QQQthat has similar lines<RESET>
-+		<BOLD;MAGENTA>-QQQto previous blocks, but with different indent<RESET>
-+		<RED>-QQQYetQAnotherQoutlierQ<RESET>
-+		<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>Indented<RESET>
-+		<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>Text across<RESET>
-+		<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>some lines<RESET>
-+		<GREEN>+<RESET>QQQ<GREEN>But! <- this stands out<RESET>
-+		<BOLD;CYAN>+<RESET><BOLD;CYAN>Adjusting with<RESET>
-+		<BOLD;CYAN>+<RESET>Q<BOLD;CYAN>different starting<RESET>
-+		<BOLD;CYAN>+<RESET><BOLD;CYAN>white spaces<RESET>
-+		<GREEN>+<RESET><GREEN>AnotherQoutlier<RESET>
-+		<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>Indented<RESET>
-+		<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>Text across<RESET>
-+		<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>five lines<RESET>
-+		<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>that has similar lines<RESET>
-+		<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>to previous blocks, but with different indent<RESET>
-+		<GREEN>+<RESET>QQ<GREEN>YetQAnotherQoutlier<RESET>
-+	EOF
-+
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'compare whitespace delta incompatible with other space options' '
-+	test_must_fail git diff \
-+		--color-moved-ws=allow-indentation-change,ignore-all-space \
-+		2>err &&
-+	grep allow-indentation-change err
-+'
-+
-+
- test_done
+ These positional references are stored as unsigned 32-bit integers
+-corresponding to the array position withing the list of commit OIDs. We
++corresponding to the array position within the list of commit OIDs. We
+ use the most-significant bit for special purposes, so we can store at most
+ (1 << 31) - 1 (around 2 billion) commits.
+ 
 -- 
-2.18.0.rc2.346.g013aa6912e-goog
+2.14.1
 
