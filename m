@@ -2,78 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 316291F516
-	for <e@80x24.org>; Fri, 22 Jun 2018 20:31:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3962E1F516
+	for <e@80x24.org>; Fri, 22 Jun 2018 20:45:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754269AbeFVUbn (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Jun 2018 16:31:43 -0400
-Received: from ao2.it ([92.243.12.208]:53391 "EHLO ao2.it"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754101AbeFVUbm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jun 2018 16:31:42 -0400
-Received: from localhost ([::1] helo=jcn.localdomain)
-        by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.84_2)
-        (envelope-from <ao2@ao2.it>)
-        id 1fWSi1-0003S6-RW; Fri, 22 Jun 2018 22:31:06 +0200
-Date:   Fri, 22 Jun 2018 22:31:39 +0200
-From:   Antonio Ospite <ao2@ao2.it>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/7] Restrict the usage of config_from_gitmodules()
-Message-Id: <20180622223139.5fae4cc7d3c33128e28e81d3@ao2.it>
-In-Reply-To: <20180622171310.GE244185@google.com>
-References: <20180622162656.19338-1-ao2@ao2.it>
-        <20180622171310.GE244185@google.com>
-X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
-X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+
- ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+        id S1754245AbeFVUpu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Jun 2018 16:45:50 -0400
+Received: from smtprelay07.ispgateway.de ([134.119.228.97]:29230 "EHLO
+        smtprelay07.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754178AbeFVUpt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jun 2018 16:45:49 -0400
+Received: from [91.113.179.170] (helo=[192.168.92.26])
+        by smtprelay07.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
+        (Exim 4.90_1)
+        (envelope-from <marc.strapetz@syntevo.com>)
+        id 1fWSwE-0007f6-I5; Fri, 22 Jun 2018 22:45:46 +0200
+Subject: Re: Unexpected ignorecase=false behavior on Windows
+References: <c5abdd45-a919-96f6-8560-5fd943069f5e@syntevo.com>
+ <1c7e338e-157b-fd2f-5eb1-01373f627acd@kdbg.org>
+From:   Marc Strapetz <marc.strapetz@syntevo.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     git@vger.kernel.org
+Message-ID: <2cf2d884-de1a-7b9b-5aca-1f396ad205a2@syntevo.com>
+Date:   Fri, 22 Jun 2018 22:45:46 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
+MIME-Version: 1.0
+In-Reply-To: <1c7e338e-157b-fd2f-5eb1-01373f627acd@kdbg.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
+X-Df-Sender: bWFyYy5zdHJhcGV0ekBzeW50ZXZvLmNvbQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 22 Jun 2018 10:13:10 -0700
-Brandon Williams <bmwill@google.com> wrote:
+On 22.06.2018 19:36, Johannes Sixt wrote:
+> Am 22.06.2018 um 14:04 schrieb Marc Strapetz:
+>> On Windows, when creating following repository:
+>>
+>> $ git init
+>> $ echo "1" > file.txt
+>> $ git add .
+>> $ git commit -m "initial import"
+>> $ ren file.txt File.txt
+>> $ git config core.ignorecase false
+> 
+> This is a user error. core.ignorecase is *not* an instruction as in 
+> "hey, Git, do not ignore the case of file names". It is better regarded 
+> as an internal value, with which Git remembers how it should treat the 
+> names of files that it receives when it traverses the directories on the 
+> disk.
+> 
+> Git could probe the file system capabilities each time it runs. But that 
+> would be wasteful. Hence, this probe happens only once when the 
+> repository is initialized, and the result is recorded in this 
+> configuration value. You should not change it.
 
-[...] 
-> Thanks for working on this.  I think its a good approach and the end
-> result makes it much harder for arbitrary config to sneak back in to the
-> .gitmodules file.  And after this series it looks like you should be in
-> a good place to read the .gitmodules file from other places (not just in
-> the worktree).
->
+Sorry, it looks like my example was misleading. I'm actually questioning 
+current behavior in case of Windows repositories with core.ignorecase 
+initialized to false, like in following setup:
 
-:)
+$ git init
+$ git config core.ignorecase false
 
-> As you've mentioned here I also agree we could do without the last patch
-> but I'll leave that up to you.  Other than a couple typos I found I
-> think this series looks good!  Thanks again for revisiting this.
->
+The repository is now set up to be case-sensitive on Windows. From this 
+point on, core.ignorecase won't change anymore and the repository will 
+be filled:
 
-Thanks for the review.
+$ echo "1" > file.txt
+$ git add .
+$ git commit -m "initial import"
+$ ren file.txt File.txt
 
-I understand your compromise solution for patch 7, but I'd say let's
-keep it simple and just drop patch 7 for now.
+Still, status results are:
 
-I am going to wait a couple of days and then send a v2.
+$ git status --porcelain
+?? File.txt
 
-Ciao,
-   Antonio
+With the same setup sequence on Unix, it's:
 
--- 
-Antonio Ospite
-https://ao2.it
-https://twitter.com/ao2it
+$ git status --porcelain
+   D file.txt
+?? File.txt
 
-A: Because it messes up the order in which people normally read text.
-   See http://en.wikipedia.org/wiki/Posting_style
-Q: Why is top-posting such a bad thing?
+Is this difference, which is depending on the platform, intended? Why 
+not report missing file.txt as well?
+
+The drawback of the current behavior is that a subsequent "git add ." 
+will result in two file names in the .git/index which are only differing 
+in case. This will break the repository on Windows, because only one of 
+both files can be checked out in the working tree. Also, it makes 
+case-only renames harder to be performed.
+
+-Marc
