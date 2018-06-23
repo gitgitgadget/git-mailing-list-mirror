@@ -2,212 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E8DC31F516
-	for <e@80x24.org>; Fri, 22 Jun 2018 23:01:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F24A1F516
+	for <e@80x24.org>; Sat, 23 Jun 2018 02:42:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754559AbeFVXBY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Jun 2018 19:01:24 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:35074 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754482AbeFVXBW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jun 2018 19:01:22 -0400
-Received: by mail-pf0-f196.google.com with SMTP id c22-v6so3856394pfi.2
-        for <git@vger.kernel.org>; Fri, 22 Jun 2018 16:01:22 -0700 (PDT)
+        id S934741AbeFWCmw (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Jun 2018 22:42:52 -0400
+Received: from mail-wr0-f169.google.com ([209.85.128.169]:38557 "EHLO
+        mail-wr0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934625AbeFWCmv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jun 2018 22:42:51 -0400
+Received: by mail-wr0-f169.google.com with SMTP id e18-v6so8354539wrs.5
+        for <git@vger.kernel.org>; Fri, 22 Jun 2018 19:42:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=JB/yQFfa9AQnN2S4EfDQgn/6EWehgfgzojWULIokLWw=;
-        b=b6xu0/syPBZk1X3UA3egxz5o2ghhkAcFBzqqgeQxhtrlPyCt1dJc/3HrNyyNukC7kL
-         VWQE57PZUXKkcWSFFGwD95CcYmYXaGu0Mmgd4EeliFzsllnuPT4BF9gFRnxk4oltVM4r
-         F9/yDO3FjkcFlY7mAXFvW4vTTuO+u/tQ5xAJAnd9mknrbq0Es0iU44awpTN4Pbu5ADJA
-         jI0HoqxloUoqXM9esU4rsO+DV+nuPp/bESngZ1do+HjbZDTTQHm+mwoYbhxfU+/mjIk6
-         k/SUKYKpw7bKUukttTY7yDZrGsRvfdB1LYvwLlBEt+JWr9rWeg67sW8gzhUmKPxOzhnz
-         ncyQ==
+        d=umich.edu; s=google-2016-06-03;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=OtmEb32+7pOtw50e6snu2BY16TegoqQ0eaQVPvUTMpA=;
+        b=M+XmB2LXS6Fh9ShjEB7KwHVH9LolEyWJ0v5cE7nBnABx1QeHslm8yTh26iyKfIOWTZ
+         54hrFrQQTQTJOV+G2nt9wQaWmvZQwwVg8zeunmy9bdt7js1e+AtXJc9SeYsBKGZvL6eZ
+         VqcfEeDPbFXKaFAOe7xBMSzAbwjtUMGtkkTClZfBhtGDtMehGgo3HdP92WeHHv3Keam8
+         JaZZMHyUQIRKZStcEQL06J+uHFcfBqJirf+jLFdSW2eKXSGV2BvpDa6VnpNHuR8qP5p7
+         cXKYrpDZLI76DQBiDxEPP+uKFtkPW6ySPTDkscwIPhYACW8Q1NedtdxmSYN8rEhGoPaq
+         gKug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=JB/yQFfa9AQnN2S4EfDQgn/6EWehgfgzojWULIokLWw=;
-        b=Pl8XKYGUhEXI3ImL3N01X61e4HS3UVsgl9I6+rRPs00R5HP+nODmgHpn5JUsn3LfbK
-         JptuQVk4jkco9YQFk6joUJZCuhV4qV2C696U2QSmkia1YdLDwGji5M4pP5hD3rijnjy/
-         IoqgujT/uWmBb7d+uDVP+POilIiaIozAmGq/AN59mkZGwU+BycPbBddcNygc0gcUeEpb
-         drz4GUirL8pTW6SEltZxynnuj7xol9qHzHjY3LON5W+rwU9EwasMcQh3pIns0uiRxQpW
-         qO7fufpYnCfT1RyoDMKdChTtcQp+c+x43AZ7DEBx+RdwovI3I6i3DmFXLaBOC8jgFqYO
-         1iOA==
-X-Gm-Message-State: APt69E1h96S/CGF86DaHYTExaKDRc702Q6GD1hFASewinw/KAdiFJJN6
-        +35jhcnCjIPjF6d972uFxgQ=
-X-Google-Smtp-Source: ADUXVKJ4SgBKJJ2ZlVRPi3uf/Da61vB1MyJZ25SrCWU1uC18YVsWcsNh6tBKghVV6CYP6Rmq/vdIXw==
-X-Received: by 2002:a62:6f86:: with SMTP id k128-v6mr3595578pfc.150.1529708482117;
-        Fri, 22 Jun 2018 16:01:22 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id b74-v6sm19817492pfl.138.2018.06.22.16.01.21
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 22 Jun 2018 16:01:21 -0700 (PDT)
-Date:   Fri, 22 Jun 2018 16:01:19 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, jonathantanmy@google.com, gitster@pobox.com,
-        sbeller@google.com
-Subject: Re: [PATCH v3 8/8] fetch-pack: implement ref-in-want
-Message-ID: <20180622230119.GL12013@aiede.svl.corp.google.com>
-References: <20180613213925.10560-1-bmwill@google.com>
- <20180620213235.10952-1-bmwill@google.com>
- <20180620213235.10952-9-bmwill@google.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=OtmEb32+7pOtw50e6snu2BY16TegoqQ0eaQVPvUTMpA=;
+        b=tAKqs5t6gQf5d15Q4v28i1sroEqcS+hxEf2eYO9Qi1u3Pf1afrSYxVAaQrDzIsomiz
+         fiRuxJ7QRCkd4b7DQlq6yO1ZyTdbHCI6UR2utxq2kBsd+GEAMOiw3lLU8WGltWM8uEcI
+         EHcL7IbzEGZZGrIinoj8BPwg786QBfeHIybt2kfLiyXmztjmYgWBJCKASgb7OQRnjmM0
+         aj/bPpjAwgc1wu8el7rbizS5n1oJCQj4uT1qKouDPuQvAOs8VDP8NGg4XNCmTdSi06Jb
+         l4cQm0v38kz58lyfo1inst6P4+tBl6AI9nUEewYC+H5ZFaHW8TaRGWotUN0A6Vf85YGr
+         hCfA==
+X-Gm-Message-State: APt69E3WHHKGB+R7hncbNw3zjzZ4gxh7GQqi8RZmnEyBjl23yKO/dqcG
+        npVHK1N1p6x15pkmpZA3a/jjCA+DjEoDLA5SazOoh+ry
+X-Google-Smtp-Source: AAOMgpfJ9z2IGPfKqF6bnevm9ueaDqfmbprK4yELNatuQyxpBSy15crLkfD0EG3cMPMLReyY2S5IF8S1SoyinD7GZhY=
+X-Received: by 2002:adf:de82:: with SMTP id w2-v6mr3657123wrl.88.1529721769983;
+ Fri, 22 Jun 2018 19:42:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180620213235.10952-9-bmwill@google.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+From:   Anthony Sottile <asottile@umich.edu>
+Date:   Fri, 22 Jun 2018 19:42:38 -0700
+Message-ID: <CA+dzEB=RNqpduF+hx-y6HMeQYpSKJrBqx_pSu_MS3yDa7JHsww@mail.gmail.com>
+Subject: ^D to credentials prompt results in "fatal: ... Success"
+To:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+A bit of an amusing edge case.
 
-Brandon Williams wrote:
+I'm not exactly sure the correct approach to fix this but here's my
+reproduction, triage, and a few potential options I see.
 
-> Implement ref-in-want on the client side so that when a server supports
-> the "ref-in-want" feature, a client will send "want-ref" lines for each
-> reference the client wants to fetch.
->
-> Signed-off-by: Brandon Williams <bmwill@google.com>
-> ---
->  fetch-pack.c                       | 35 +++++++++++++++++++++++++++---
->  remote.c                           |  1 +
->  remote.h                           |  1 +
->  t/t5703-upload-pack-ref-in-want.sh |  4 ++--
->  4 files changed, 36 insertions(+), 5 deletions(-)
+Note that after the username prompt, I pressed ^D
 
-This commit message doesn't tell me what ref-in-want is or is for.  Could
-it include
+$./prefix/bin/git --version
+git version 2.18.0
+$ PATH=$PWD/prefix/bin:$PATH git clone
+https://github.com/asottile/this-does-not-exist-i-promise
+Cloning into 'this-does-not-exist-i-promise'...
+Username for 'https://github.com': fatal: could not read Username for
+'https://github.com': Success
 
- A. a pointer to Documentation/technical/protocol-v2.txt, or
- B. an example illustrating the effect e.g. using GIT_TRACE_PACKET
+Looking at `prompt.c`, it's hitting this bit of code:
 
-or both?
+        if (git_env_bool("GIT_TERMINAL_PROMPT", 1)) {
+            r = git_terminal_prompt(prompt, flags & PROMPT_ECHO);
+            err = strerror(errno);
+        } else {
+            err = "terminal prompts disabled";
 
-[...]
-> --- a/fetch-pack.c
-> +++ b/fetch-pack.c
-> @@ -1102,9 +1102,10 @@ static void add_shallow_requests(struct strbuf *req_buf,
->  
->  static void add_wants(const struct ref *wants, struct strbuf *req_buf)
->  {
-> +	int use_ref_in_want = server_supports_feature("fetch", "ref-in-want", 0);
-> +
->  	for ( ; wants ; wants = wants->next) {
+        }
+        if (!r) {
+            /* prompts already contain ": " at the end */
+            die("could not read %s%s", prompt, err);
+        }
 
-Not about this patch: it's kind of confusing that the iterator is called
-'wants' even though it points into the middle of the list.  I would even
-be tempted to do
+From `git_terminal_prompt` (compat/terminal.c):
 
-	const struct ref *want;
-	for (want = wants; want; want = want->next) {
+    r = strbuf_getline_lf(&buf, input_fh);
+    if (!echo) {
+        putc('\n', output_fh);
+        fflush(output_fh);
+    }
 
-It wouldn't make sense to do in this patch, though.
+    restore_term();
+    fclose(input_fh);
+    fclose(output_fh);
 
-[...]
-> @@ -1122,8 +1123,10 @@ static void add_wants(const struct ref *wants, struct strbuf *req_buf)
->  			continue;
->  		}
->  
-> -		remote_hex = oid_to_hex(remote);
-> -		packet_buf_write(req_buf, "want %s\n", remote_hex);
-> +		if (!use_ref_in_want || wants->exact_oid)
-> +			packet_buf_write(req_buf, "want %s\n", oid_to_hex(remote));
-> +		else
-> +			packet_buf_write(req_buf, "want-ref %s\n", wants->name);
+    if (r == EOF)
+        return NULL;
+    return buf.buf;
 
-Very neat.
 
-[...]
-> @@ -1334,6 +1337,29 @@ static void receive_shallow_info(struct fetch_pack_args *args,
->  	args->deepen = 1;
->  }
->  
-> +static void receive_wanted_refs(struct packet_reader *reader, struct ref *refs)
-> +{
-> +	process_section_header(reader, "wanted-refs", 0);
-> +	while (packet_reader_read(reader) == PACKET_READ_NORMAL) {
-> +		struct object_id oid;
-> +		const char *end;
-> +		struct ref *r = NULL;
-> +
-> +		if (parse_oid_hex(reader->line, &oid, &end) || *end++ != ' ')
-> +			die("expected wanted-ref, got '%s'", reader->line);
-> +
-> +		for (r = refs; r; r = r->next) {
-> +			if (!strcmp(end, r->name)) {
-> +				oidcpy(&r->old_oid, &oid);
-> +				break;
-> +			}
+in the `EOF` case, this is returning `NULL`, but `errno = 0` at this
+point causing the error string to be "Success"
 
-Stefan mentioned that the spec says
+I see a couple of options here:
 
-        * The server MUST NOT send any refs which were not requested
-          using 'want-ref' lines.
+1. special case EOF in `git_terminal_prompt` / `git_prompt` and
+produce an error message such as:
 
-Can client enforce that?  If not, can the spec say SHOULD NOT for the
-server and add a MUST describing appropriate client behavior?
+fatal: could not read Username for 'https://github.com': EOF
 
-> +		}
-> +	}
-> +
-> +	if (reader->status != PACKET_READ_DELIM)
+(I tried returing `EOF` directly from `git_terminal_prompt` and was
+able to get this messaging to work, however `r == EOF` is a
+pointer-int comparison so this approach didn't really seem like a good
+idea -- changing the signature of `git_terminal_prompt` to set a
+special flag for EOF is another option, but seems a lot of work for a
+case that probably doesn't happen all too often)
 
-The spec says
+I also couldn't find an appropriate errno to set in the EOF case either
 
-        * This section is only included if the client has requested a
-          ref using a 'want-ref' line and if a packfile section is also
-          included in the response.
+2. treat EOF less specially
 
-What should happen if the client already has all the relevant objects
-(or in other words if there is no packfile to send in the packfile
-section)?  Is the idea that the client should already have known that
-based on the ref advertisement?  What if ref values change to put us
-in that state between the ls-refs and fetch steps?
+The function this is replacing, `getpass` simply returns an empty
+string on `EOF`.  This patch would implement that:
 
-[...]
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -1735,6 +1735,7 @@ int get_fetch_map(const struct ref *remote_refs,
->  		if (refspec->exact_sha1) {
->  			ref_map = alloc_ref(name);
->  			get_oid_hex(name, &ref_map->old_oid);
-> +			ref_map->exact_oid = 1;
+diff --git a/compat/terminal.c b/compat/terminal.c
+index fa13ee672..8bd08108e 100644
+--- a/compat/terminal.c
++++ b/compat/terminal.c
+@@ -122,7 +122,7 @@ char *git_terminal_prompt(const char *prompt, int echo)
+        fputs(prompt, output_fh);
+        fflush(output_fh);
 
-Sensible.  The alternative would be that we check whether the
-refname is oid-shaped at want-ref generation time, which would be
-unnecessarily complicated.
+-       r = strbuf_getline_lf(&buf, input_fh);
++       strbuf_getline_lf(&buf, input_fh);
+        if (!echo) {
+                putc('\n', output_fh);
+                fflush(output_fh);
+@@ -132,8 +132,6 @@ char *git_terminal_prompt(const char *prompt, int echo)
+        fclose(input_fh);
+        fclose(output_fh);
 
-[...]
-> --- a/remote.h
-> +++ b/remote.h
-> @@ -73,6 +73,7 @@ struct ref {
+-       if (r == EOF)
+-               return NULL;
+        return buf.buf;
+ }
 
-Not about this patch: why is this in remote.h instead of ref.h?
 
->  		force:1,
->  		forced_update:1,
->  		expect_old_sha1:1,
-> +		exact_oid:1,
->  		deletion:1;
+however then the output is a bit strange for ^D (note I pressed ^D twice):
 
-Looks good, and we have room for plenty more bits there.
+$ PATH=$PWD/prefix/bin:$PATH git clone
+https://github.com/asottile/this-does-not-exist-i-promise
+Cloning into 'this-does-not-exist-i-promise'...
+Username for 'https://github.com': Password for 'https://github.com':
+remote: Repository not found.
+fatal: Authentication failed for
+'https://github.com/asottile/this-does-not-exist-i-promise/'
 
-[...]
-> +++ b/t/t5703-upload-pack-ref-in-want.sh
-
-Nice.
-
-Thanks for a pleasant read.
-
-Sincerely,
-Jonathan
+Anthony
