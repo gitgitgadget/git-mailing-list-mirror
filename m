@@ -2,193 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 169C81F516
-	for <e@80x24.org>; Sat, 23 Jun 2018 16:52:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B2B6E1F516
+	for <e@80x24.org>; Sat, 23 Jun 2018 21:45:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751783AbeFWQwr (ORCPT <rfc822;e@80x24.org>);
-        Sat, 23 Jun 2018 12:52:47 -0400
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:34166 "EHLO
-        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751727AbeFWQwq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Jun 2018 12:52:46 -0400
-Received: by mail-wm0-f43.google.com with SMTP id l15-v6so8747689wmc.1
-        for <git@vger.kernel.org>; Sat, 23 Jun 2018 09:52:45 -0700 (PDT)
+        id S1751482AbeFWVpV (ORCPT <rfc822;e@80x24.org>);
+        Sat, 23 Jun 2018 17:45:21 -0400
+Received: from mail-oi0-f50.google.com ([209.85.218.50]:34319 "EHLO
+        mail-oi0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751345AbeFWVpU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Jun 2018 17:45:20 -0400
+Received: by mail-oi0-f50.google.com with SMTP id i205-v6so9206931oib.1
+        for <git@vger.kernel.org>; Sat, 23 Jun 2018 14:45:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=yAWfm6bjMBy2Ykr9dBXX8fbLLp2gB4z2g36ulol70UY=;
-        b=rks09j1he/p73hcMvRCGNugu4cDkohYyjgKzqrd8J+KDleOaOZfvembfkDqJNRGamO
-         gsmMMNlXeIToAsrWSejCOaE3XIDz5ws3xH2/+q2aKBN9SKmLlRD7CCte3L+O5ghucr0B
-         IkthvLBFKnatCkUwcNF5YAjLj7WcN1X+DaTv8DF7rnJMNZTeKUb+wAwgsRyXhfiO3m6p
-         uKaBpuRB04Is5qGqA3nDCpQM3vgOQsQK0KYx727MZ2hQ67uatomYq47q17oLabRhrP80
-         7ZTB5nIk6kG/gHfrAZxdkqJftNb0h3H5hU7Yqtv9D3jEaFBImN0ebaIaY7rQ3R07MbNQ
-         7W7A==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=fl7LEKUAxaVF9H0UD1krL7Syz+C1WPduStm+YQ7GNDc=;
+        b=dMkxaOg5PXMyTg1gSoueZJV5Uu0HyedqmdkuL+hQ8R62uLDd0eYZGOEV/5i+YnjR44
+         2TM0x8rNKxFJ32+unWwKHG0efs/tkXH1QvsfitAPjeXMGbNuq2YA7PgeoP5o6ixxc/5A
+         USlKnQLW1DG6OHF/Fv0qJrDIEbHpWH8FEjBp7qO69iHobR7d7v72fwEJtDJBYe6D5syt
+         mhQDFHBiKDp8YVSWFe40CUWwBEpnRy04OsVSNZadIe/j4VDE4t9YHLJ/DEIeb/c5JE81
+         KWCanyeJmXV9XnwDOBpPeboAvmMS8R0hmjSb70tn4GC/o7DwMQEnmSnE8S9QWeqebXy4
+         +0SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=yAWfm6bjMBy2Ykr9dBXX8fbLLp2gB4z2g36ulol70UY=;
-        b=UNjA/OceQHP6Ln3pKaAyesJ1e86OM1w1w4L72cFJC2i53jyEYnHuP/RPx3q+ylac8m
-         Z5VwK1/dpp4XwnEMi5xPqDme1k7Qx6SujhT/Q1/graa2pxTKg4diskUpURndC9QCVr6q
-         0xsKK/70g/9RHTxuW8ng7NxrUnzeYCrO7V8mUHq+DCPQ71BeiqqiVDG3EUdHtHurDwxN
-         lRcE2hhCVBDymFJMdLk+7rb3+jzer38YTkl45xsZIWYVD8iWGiSgDZW4zsvb+PDMYNYf
-         y8g2M33T9bMiEuefEumG1kRdpxM9Aiyu9Fdmub72uX7PHbx5r8mZOsHcjm60UfebXqaI
-         EJAA==
-X-Gm-Message-State: APt69E3O8Q8SE11mwLOmHp23ED9EZRo3C7VsV0hfD7qQR+WM4UeKooV0
-        rEQPAnWoVcSLfa0mEFNDnVY=
-X-Google-Smtp-Source: ADUXVKJ76SSJ3qk3+BQOnn539PzJrMf7edzL2DIFOQz+3KUOe8KnVe5znHCTUCPCDrL7nWq+kO0CjQ==
-X-Received: by 2002:a1c:3c4:: with SMTP id 187-v6mr4505106wmd.96.1529772764738;
-        Sat, 23 Jun 2018 09:52:44 -0700 (PDT)
-Received: from localhost.localdomain (x4db055f1.dyn.telefonica.de. [77.176.85.241])
-        by smtp.gmail.com with ESMTPSA id j131-v6sm9712426wmg.24.2018.06.23.09.52.43
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 23 Jun 2018 09:52:43 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, jacob.keller@gmail.com,
-        jonathantanmy@google.com, simon@ruderich.org
-Subject: Re: [PATCH v3 8/8] diff.c: add white space mode to move detection that allows indent changes
-Date:   Sat, 23 Jun 2018 18:52:33 +0200
-Message-Id: <20180623165233.23653-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.18.0.171.g58aaabc06c
-In-Reply-To: <20180622015725.219575-9-sbeller@google.com>
-References: <20180622015725.219575-1-sbeller@google.com> <20180622015725.219575-9-sbeller@google.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=fl7LEKUAxaVF9H0UD1krL7Syz+C1WPduStm+YQ7GNDc=;
+        b=Bli+5xd9kQKyPabWNYkUWIcAK5XoRWPu1/tlE+s/WG5R/LJcs/kjhfI2lQL/rxforD
+         FBgMj3E+6HrqgOFqUX+8W8vjK3PA4B5vrbXVMB2cW7k1D4qNQ6nzqrxe0ni+DGlTJLTW
+         /ufglIadKTGRhQWSsB6L8CFk9q8fOK4Duzi0OMrtVNDLuvuJNYQ7Xb77SazvT0XGxeKp
+         ltp8bAeAjAWry/wYxBl0My38LJwjSuvtigsZjJ59n0AIwPC4yTw2IkfSUPTKMAUhGrU5
+         K3Sxs0E1f6QbYziK204Bh6rr2weqlNfo/o2MMva8T4Bp0euO/J+Y6AUGO0gkp6DpNRgb
+         +mVA==
+X-Gm-Message-State: APt69E3FlBSj8UYjGOBCAIhFEawcBuCb0sku1c1MkljZrexP1/OexNp5
+        4VdA1R+HfyfEG4ARSeHGgaTTjhe61brf5onVm1U=
+X-Google-Smtp-Source: ADUXVKLGXAFJYH5W1nfHMOXoyUPqdmRjvXKrRotjrS3XXxQmjnLUhbvi1ilaCPB5adjzFzeTMMTA5qv8xpxD6C95KZE=
+X-Received: by 2002:aca:b504:: with SMTP id e4-v6mr3584634oif.93.1529790319823;
+ Sat, 23 Jun 2018 14:45:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a4a:4c02:0:0:0:0:0 with HTTP; Sat, 23 Jun 2018 14:45:19
+ -0700 (PDT)
+In-Reply-To: <CAM-tV-9gAGBLsEh3=aa-bHT2DmJb=dfahq+kUW+0GLoc7eFq0w@mail.gmail.com>
+References: <CAM-tV-_Easz+HA0GX0YkY4FZ2LithQy0+omq64D-OoHKkRe55A@mail.gmail.com>
+ <573B6BF5.1090004@kdbg.org> <20160517194533.GA11289@sigill.intra.peff.net>
+ <20160517195136.GB11289@sigill.intra.peff.net> <20160517195541.GC11289@sigill.intra.peff.net>
+ <CAM-tV-9gAGBLsEh3=aa-bHT2DmJb=dfahq+kUW+0GLoc7eFq0w@mail.gmail.com>
+From:   Noam Postavsky <npostavs@users.sourceforge.net>
+Date:   Sat, 23 Jun 2018 17:45:19 -0400
+X-Google-Sender-Auth: _9JIl2aah2kbgcxbDTcqlI_NOtQ
+Message-ID: <CAM-tV--dHGJbxfWGKrRde+Q2-cnmCXNshQtX4PN7jnMWER_+bg@mail.gmail.com>
+Subject: Re: [BUG] A part of an edge from an octopus merge gets colored, even
+ with --color=never
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Hemmo Nieminen <hemmo.nieminen@iki.fi>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000984dcd056f56101d"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> diff --git a/diff.c b/diff.c
-> index 040b46545e5..9e357111864 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -302,12 +302,18 @@ static int parse_color_moved_ws(const char *arg)
->  			ret |= XDF_IGNORE_WHITESPACE_AT_EOL;
->  		else if (!strcmp(sb.buf, "ignore-all-space"))
->  			ret |= XDF_IGNORE_WHITESPACE;
-> +		else if (!strcmp(sb.buf, "allow-indentation-change"))
-> +			ret |= COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE;
->  		else
->  			error(_("ignoring unknown color-moved-ws mode '%s'"), sb.buf);
->  
->  		strbuf_release(&sb);
->  	}
->  
-> +	if ((ret & COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE) &&
-> +	    (ret & XDF_WHITESPACE_FLAGS))
-> +		die(_("color-moved-ws: allow-indentation-change cannot be combined with other white space modes"));
+--000000000000984dcd056f56101d
+Content-Type: text/plain; charset="UTF-8"
 
-Note that this is a translated error message.
+Archive link to previous discussion:
+https://marc.info/?l=git&m=146331754420554&w=2
 
-> diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
-> index aad0870c8a1..13b20be591e 100755
-> --- a/t/t4015-diff-whitespace.sh
-> +++ b/t/t4015-diff-whitespace.sh
-> @@ -1827,4 +1827,94 @@ test_expect_success 'only move detection ignores white spaces' '
->  	test_cmp expected actual
->  '
->  
-> +test_expect_success 'compare whitespace delta across moved blocks' '
-> +
-> +	git reset --hard &&
-> +	q_to_tab <<-\EOF >text.txt &&
-> +	QIndented
-> +	QText across
-> +	Qsome lines
-> +	QBut! <- this stands out
-> +	QAdjusting with
-> +	QQdifferent starting
-> +	Qwhite spaces
-> +	QAnother outlier
-> +	QQQIndented
-> +	QQQText across
-> +	QQQfive lines
-> +	QQQthat has similar lines
-> +	QQQto previous blocks, but with different indent
-> +	QQQYetQAnotherQoutlierQ
-> +	EOF
-> +
-> +	git add text.txt &&
-> +	git commit -m "add text.txt" &&
-> +
-> +	q_to_tab <<-\EOF >text.txt &&
-> +	QQIndented
-> +	QQText across
-> +	QQsome lines
-> +	QQQBut! <- this stands out
-> +	Adjusting with
-> +	Qdifferent starting
-> +	white spaces
-> +	AnotherQoutlier
-> +	QQIndented
-> +	QQText across
-> +	QQfive lines
-> +	QQthat has similar lines
-> +	QQto previous blocks, but with different indent
-> +	QQYetQAnotherQoutlier
-> +	EOF
-> +
-> +	git diff --color --color-moved --color-moved-ws=allow-indentation-change |
-> +		grep -v "index" |
-> +		test_decode_color >actual &&
+On 20 May 2016 at 18:12, Noam Postavsky <npostavs@users.sourceforge.net> wrote:
 
-Please use an intermediate file for the output of 'git diff', because
-running it upstream of a pipe hides its exit code.
+> Looking at the coloured output, for some octopus merges where the
+> first parent edge immediately merges into the next column to the left,
+> col_num should be decremented by 1 (otherwise the colour of the "-."
+> doesn't match the rest of that edge).
+>
+> | | *-.
+> | | |\ \
+> | |/ / /
+>
+> For the other case where the first parent edge stays straight, the
+> current col_num computation is correct.
+>
+> | *-.
+> | |\ \
+> | | | *
+>
+> I'm not sure how to distinguish these cases in the code though. Is it
+> enough to just compare against graph->num_new_columns?
 
-> +
-> +	q_to_tab <<-\EOF >expected &&
-> +		<BOLD>diff --git a/text.txt b/text.txt<RESET>
-> +		<BOLD>--- a/text.txt<RESET>
-> +		<BOLD>+++ b/text.txt<RESET>
-> +		<CYAN>@@ -1,14 +1,14 @@<RESET>
-> +		<BOLD;MAGENTA>-QIndented<RESET>
-> +		<BOLD;MAGENTA>-QText across<RESET>
-> +		<BOLD;MAGENTA>-Qsome lines<RESET>
-> +		<RED>-QBut! <- this stands out<RESET>
-> +		<BOLD;MAGENTA>-QAdjusting with<RESET>
-> +		<BOLD;MAGENTA>-QQdifferent starting<RESET>
-> +		<BOLD;MAGENTA>-Qwhite spaces<RESET>
-> +		<RED>-QAnother outlier<RESET>
-> +		<BOLD;MAGENTA>-QQQIndented<RESET>
-> +		<BOLD;MAGENTA>-QQQText across<RESET>
-> +		<BOLD;MAGENTA>-QQQfive lines<RESET>
-> +		<BOLD;MAGENTA>-QQQthat has similar lines<RESET>
-> +		<BOLD;MAGENTA>-QQQto previous blocks, but with different indent<RESET>
-> +		<RED>-QQQYetQAnotherQoutlierQ<RESET>
-> +		<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>Indented<RESET>
-> +		<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>Text across<RESET>
-> +		<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>some lines<RESET>
-> +		<GREEN>+<RESET>QQQ<GREEN>But! <- this stands out<RESET>
-> +		<BOLD;CYAN>+<RESET><BOLD;CYAN>Adjusting with<RESET>
-> +		<BOLD;CYAN>+<RESET>Q<BOLD;CYAN>different starting<RESET>
-> +		<BOLD;CYAN>+<RESET><BOLD;CYAN>white spaces<RESET>
-> +		<GREEN>+<RESET><GREEN>AnotherQoutlier<RESET>
-> +		<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>Indented<RESET>
-> +		<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>Text across<RESET>
-> +		<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>five lines<RESET>
-> +		<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>that has similar lines<RESET>
-> +		<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>to previous blocks, but with different indent<RESET>
-> +		<GREEN>+<RESET>QQ<GREEN>YetQAnotherQoutlier<RESET>
-> +	EOF
-> +
-> +	test_cmp expected actual
-> +'
-> +
-> +test_expect_success 'compare whitespace delta incompatible with other space options' '
-> +	test_must_fail git diff \
-> +		--color-moved-ws=allow-indentation-change,ignore-all-space \
-> +		2>err &&
-> +	grep allow-indentation-change err
+I was recently reminded of this, here's a patch which does that.
 
-A translated error message should be checked with 'test_i18ngrep'.
+--000000000000984dcd056f56101d
+Content-Type: text/x-diff; charset="US-ASCII"; 
+	name="v1-0001-log-Fix-coloring-of-certain-octupus-merge-shapes.patch"
+Content-Disposition: attachment; 
+	filename="v1-0001-log-Fix-coloring-of-certain-octupus-merge-shapes.patch"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_jirxk38q0
 
+RnJvbSBkMGM0ZjE5ZmYxNjJlNjNkNWQyM2Q0NTZkMGZjNGZlOWEzMjAyOWVlIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBOb2FtIFBvc3RhdnNreSA8bnBvc3RhdnNAdXNlcnMuc291cmNl
+Zm9yZ2UubmV0PgpEYXRlOiBTYXQsIDIzIEp1biAyMDE4IDE2OjU2OjQzIC0wNDAwClN1YmplY3Q6
+IFtQQVRDSCB2MV0gbG9nOiBGaXggY29sb3Jpbmcgb2YgY2VydGFpbiBvY3R1cHVzIG1lcmdlIHNo
+YXBlcwoKRm9yIG9jdG9wdXMgbWVyZ2VzIHdoZXJlIHRoZSBmaXJzdCBwYXJlbnQgZWRnZSBpbW1l
+ZGlhdGVseSBtZXJnZXMgaW50bwp0aGUgbmV4dCBjb2x1bW4gdG8gdGhlIGxlZnQ6Cgp8IHwgKi0u
+CnwgfCB8XCBcCnwgfC8gLyAvCgp0aGVuIHRoZSBudW1iZXIgb2YgY29sdW1ucyBzaG91bGQgYmUg
+b25lIGxlc3MgdGhhbiB0aGUgdXN1YWwgY2FzZToKCnwgKi0uCnwgfFwgXAp8IHwgfCAqCgpTaWdu
+ZWQtb2ZmLWJ5OiBOb2FtIFBvc3RhdnNreSA8bnBvc3RhdnNAdXNlcnMuc291cmNlZm9yZ2UubmV0
+PgotLS0KIGdyYXBoLmMgfCAxMiArKysrKysrKy0tLS0KIDEgZmlsZSBjaGFuZ2VkLCA4IGluc2Vy
+dGlvbnMoKyksIDQgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvZ3JhcGguYyBiL2dyYXBoLmMK
+aW5kZXggZTFmNmQzYmRkLi5jOTE5Yzg2ZTggMTAwNjQ0Ci0tLSBhL2dyYXBoLmMKKysrIGIvZ3Jh
+cGguYwpAQCAtODU2LDEyICs4NTYsMTYgQEAgc3RhdGljIGludCBncmFwaF9kcmF3X29jdG9wdXNf
+bWVyZ2Uoc3RydWN0IGdpdF9ncmFwaCAqZ3JhcGgsCiAJaW50IGNvbF9udW0sIGk7CiAJaW50IG51
+bV9kYXNoZXMgPQogCQkoKGdyYXBoLT5udW1fcGFyZW50cyAtIGRhc2hsZXNzX2NvbW1pdHMpICog
+MikgLSAxOwotCWZvciAoaSA9IDA7IGkgPCBudW1fZGFzaGVzOyBpKyspIHsKLQkJY29sX251bSA9
+IChpIC8gMikgKyBkYXNobGVzc19jb21taXRzICsgZ3JhcGgtPmNvbW1pdF9pbmRleDsKKwlpbnQg
+Zmlyc3RfY29sID0gZGFzaGxlc3NfY29tbWl0cyArIGdyYXBoLT5jb21taXRfaW5kZXg7CisJaW50
+IGxhc3RfY29sID0gZmlyc3RfY29sICsgKG51bV9kYXNoZXMgLyAyKTsKKwlpZiAobGFzdF9jb2wg
+Pj0gZ3JhcGgtPm51bV9uZXdfY29sdW1ucykgeworCQlmaXJzdF9jb2wtLTsKKwkJbGFzdF9jb2wt
+LTsKKwl9CisJZm9yIChpID0gMCwgY29sX251bSA9IGZpcnN0X2NvbDsgaSA8IG51bV9kYXNoZXM7
+IGkrKywgY29sX251bSsrKSB7CiAJCXN0cmJ1Zl93cml0ZV9jb2x1bW4oc2IsICZncmFwaC0+bmV3
+X2NvbHVtbnNbY29sX251bV0sICctJyk7CiAJfQotCWNvbF9udW0gPSAoaSAvIDIpICsgZGFzaGxl
+c3NfY29tbWl0cyArIGdyYXBoLT5jb21taXRfaW5kZXg7Ci0Jc3RyYnVmX3dyaXRlX2NvbHVtbihz
+YiwgJmdyYXBoLT5uZXdfY29sdW1uc1tjb2xfbnVtXSwgJy4nKTsKKwlzdHJidWZfd3JpdGVfY29s
+dW1uKHNiLCAmZ3JhcGgtPm5ld19jb2x1bW5zW2xhc3RfY29sXSwgJy4nKTsKIAlyZXR1cm4gbnVt
+X2Rhc2hlcyArIDE7CiB9CiAKLS0gCjIuMTEuMAoK
+--000000000000984dcd056f56101d--
