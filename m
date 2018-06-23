@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EFB2A1F516
-	for <e@80x24.org>; Sat, 23 Jun 2018 12:19:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1EF421F516
+	for <e@80x24.org>; Sat, 23 Jun 2018 12:19:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751929AbeFWMT1 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 23 Jun 2018 08:19:27 -0400
-Received: from mail-wr0-f176.google.com ([209.85.128.176]:40145 "EHLO
-        mail-wr0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751707AbeFWMTG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Jun 2018 08:19:06 -0400
-Received: by mail-wr0-f176.google.com with SMTP id g18-v6so9121723wro.7
-        for <git@vger.kernel.org>; Sat, 23 Jun 2018 05:19:06 -0700 (PDT)
+        id S1752165AbeFWMT0 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 23 Jun 2018 08:19:26 -0400
+Received: from mail-wm0-f43.google.com ([74.125.82.43]:37611 "EHLO
+        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751910AbeFWMTN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Jun 2018 08:19:13 -0400
+Received: by mail-wm0-f43.google.com with SMTP id r125-v6so5297713wmg.2
+        for <git@vger.kernel.org>; Sat, 23 Jun 2018 05:19:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=TYxOA+nbWkxTat8/q7A1B/XSs+t4ZJnOcZyvfqdFAao=;
-        b=Bcja3TQtarVluXypAVzGzjcBroZX3bOjEbWPfV6w4a0nBOyp7DPwAJKaZ23/d6komU
-         IwRyuJVzxswm4vXvkvCwchrNpcHkDLo3RuOIElN6Tx3Zg98tYu1MN26guZxMdHyhBV6i
-         3/A4aHgPT8ce0HxRi23eZOrTV6iIvzJhQqshJ4oNqnRi/DBisBRxwfePHKmasvbo865B
-         98CG3tWYSVKX9IYBrd57jeROdflu3znIEVqk4rNKw3J1CSUc/EmI4GL+uyIjir88QkDK
-         SZfOA28IAgdr4TwekfzEbpGWcM9h8BffwNrNBX9JLfwqOImOYXKjKUztLKf3jGGapp3U
-         zSiQ==
+        bh=FPi7MLMj4HPMpBBgdBSUSlOk4/PkMUttn/zmFOA/UAQ=;
+        b=OmR+FW0EsM3gAUzBo/Uf1q/YNO4Z8fa3+EresUUutzTlmI+7a3Zhh7mGkyOxxQO+OK
+         wkOcD4pf6ScRRC5Na5ivLAKVLXddtMc4I0XuYbp4rd3a414ypYHfvSJMps+A+xQBSR+p
+         A9S+HFogSM/plaUXQjrqoPF8dOLfXtgqUa8k9dzZAXP55C0A5XIu2of2Fw6Ot7OS71er
+         /HxnozIJa/PUhsBVk5RBEg6Lbyi5qvlFomVcUhn/bPEw9cfUygDxgS/YkedrrXHcbpau
+         pa/vEyggf30h/NrHIC1/3UFl2raL6N5njgo8ZgMeatLfr36QbHaHGc0ZFttQR0tDATLh
+         XQaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=TYxOA+nbWkxTat8/q7A1B/XSs+t4ZJnOcZyvfqdFAao=;
-        b=tS86sH/7gKHXdnXmedS5FWg8DoUIfcZpuI/d+DY5VrcGcbS1Vjc3B4dlyNnGTPsYs8
-         YLE8UBv8aVn700Y2a6PuBP/pLZdufZa6RHWXyuqyO8eTbkqMZSLjeUD2mmSG58Luaakh
-         u1L68/x/YeRFhKJWk856G4N2gnBj2z8b29OUUtgDoHZKLndMjjz2dgnU0utrFYEBZ6mE
-         TtZBV8jYtCqRY/9BbV9r6dtxIC1l62Cp43YtVaQgLLfeDUTM9ybFKtqCBh8uvJYFSfnb
-         YY8U9WlVDTYDHQbljYJ5dmiz6fH9VekBvCJo4F9FiQCyz9oNXqRX1YT80zFj2kLAIRYB
-         udSQ==
-X-Gm-Message-State: APt69E1eUcxNTKrn0B0LxDwcyzKCdVgmE4hX52Xlhh1KN8vTjYs7uKa5
-        Z7jbOKj/ixwrf5a7kkSvz+TNvRct
-X-Google-Smtp-Source: AAOMgpfnk1TNdPNHCPjkZ19ELMa7M8W1N761hPColVDeBkoOy619sypU1a0/7/iAcnIiYdYfxTnMPQ==
-X-Received: by 2002:adf:9c12:: with SMTP id f18-v6mr4716051wrc.40.1529756345334;
-        Sat, 23 Jun 2018 05:19:05 -0700 (PDT)
+        bh=FPi7MLMj4HPMpBBgdBSUSlOk4/PkMUttn/zmFOA/UAQ=;
+        b=sA4dv3olrPLZtoExefF7qlxPPKcCKs0quumU6HG/dpWpVIjjedeOkOd9g91THd/GNM
+         BMsaiHT4f/7d7KmoMJ4Rz/bx5qumd+Y+PrH0ZQ53xk0TU12QoeatPwDuHJ2rtYBp2CE7
+         Y7Ly6bqZpujmLKtRrJf5G+vRcHyG5jJplSYpIWCHI9NpSGSd3E+x4VM07KCdbVP2xLN9
+         TygGbg6kgiGXw7ohl3vf6BAUs1r3GtXXSHkowWlk1pHUj2rwXlGsif7rTZBeM5pF2TlO
+         af0LYoupM/qFO90JPUtipVzuurEUZ+VmMNK3ewCkulmhLyIWVmRybo9J9KzMLxhilLKt
+         w3cw==
+X-Gm-Message-State: APt69E099vI6LVBqo73cc2dMiuswo12we00+n7G43BxfA97HxStK7nyq
+        JMoASjNsRNyeOHBWRzIIDN2PCaCN
+X-Google-Smtp-Source: ADUXVKL0DhgTVRhE94p6kuPnLtFb4MwGuSpzcmwEXZH14KMEKJdSw+hsd6S9zs9dJCtBNEzT+R/Nyw==
+X-Received: by 2002:a1c:a8a:: with SMTP id 132-v6mr4642587wmk.44.1529756352079;
+        Sat, 23 Jun 2018 05:19:12 -0700 (PDT)
 Received: from localhost.localdomain (89-95-107-230.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id q14-v6sm5527731wmd.20.2018.06.23.05.19.04
+        by smtp.gmail.com with ESMTPSA id q14-v6sm5527731wmd.20.2018.06.23.05.19.10
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 23 Jun 2018 05:19:04 -0700 (PDT)
+        Sat, 23 Jun 2018 05:19:11 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v1 03/11] remote-odb: implement remote_odb_get_direct()
-Date:   Sat, 23 Jun 2018 14:18:40 +0200
-Message-Id: <20180623121846.19750-4-chriscool@tuxfamily.org>
+Subject: [PATCH v1 08/11] t0410: test fetching from many promisor remotes
+Date:   Sat, 23 Jun 2018 14:18:45 +0200
+Message-Id: <20180623121846.19750-9-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.17.0.762.g886f54ea46
 In-Reply-To: <20180623121846.19750-1-chriscool@tuxfamily.org>
 References: <20180623121846.19750-1-chriscool@tuxfamily.org>
@@ -71,94 +71,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is implemented only in the promisor remote mode
-for now by calling fetch_object().
-
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- odb-helper.c | 14 ++++++++++++++
- odb-helper.h |  3 ++-
- remote-odb.c | 17 +++++++++++++++++
- remote-odb.h |  1 +
- 4 files changed, 34 insertions(+), 1 deletion(-)
+ t/t0410-partial-clone.sh | 24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
 
-diff --git a/odb-helper.c b/odb-helper.c
-index b4d403ffa9..99b5a345e8 100644
---- a/odb-helper.c
-+++ b/odb-helper.c
-@@ -4,6 +4,7 @@
- #include "odb-helper.h"
- #include "run-command.h"
- #include "sha1-lookup.h"
-+#include "fetch-object.h"
+diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
+index 6af4712da8..4a7a662512 100755
+--- a/t/t0410-partial-clone.sh
++++ b/t/t0410-partial-clone.sh
+@@ -162,8 +162,30 @@ test_expect_success 'fetching of missing objects' '
+ 	git verify-pack --verbose "$IDX" | grep "$HASH"
+ '
  
- struct odb_helper *odb_helper_new(const char *name, int namelen)
- {
-@@ -14,3 +15,16 @@ struct odb_helper *odb_helper_new(const char *name, int namelen)
- 
- 	return o;
- }
++test_expect_success 'fetching of missing objects from another odb remote' '
++	git clone "file://$(pwd)/server" server2 &&
++	test_commit -C server2 bar &&
++	git -C server2 repack -a -d --write-bitmap-index &&
++	HASH2=$(git -C server2 rev-parse bar) &&
 +
-+int odb_helper_get_direct(struct odb_helper *o,
-+			  const unsigned char *sha1)
-+{
-+	int res;
-+	uint64_t start = getnanotime();
++	git -C repo remote add server2 "file://$(pwd)/server2" &&
++	git -C repo config odb.magic2.promisorRemote server2 &&
++	git -C repo cat-file -p "$HASH2" &&
 +
-+	res = fetch_object(o->remote, sha1);
++	git -C repo fetch server2 &&
++	rm -rf repo/.git/objects/* &&
++	git -C repo cat-file -p "$HASH2" &&
 +
-+	trace_performance_since(start, "odb_helper_get_direct");
++	# Ensure that the .promisor file is written, and check that its
++	# associated packfile contains the object
++	ls repo/.git/objects/pack/pack-*.promisor >promisorlist &&
++	test_line_count = 1 promisorlist &&
++	IDX=$(cat promisorlist | sed "s/promisor$/idx/") &&
++	git verify-pack --verbose "$IDX" | grep "$HASH2"
++'
 +
-+	return res;
-+}
-diff --git a/odb-helper.h b/odb-helper.h
-index 4b792a3896..4c52e81ce8 100644
---- a/odb-helper.h
-+++ b/odb-helper.h
-@@ -15,5 +15,6 @@ struct odb_helper {
- };
- 
- extern struct odb_helper *odb_helper_new(const char *name, int namelen);
--
-+extern int odb_helper_get_direct(struct odb_helper *o,
-+				 const unsigned char *sha1);
- #endif /* ODB_HELPER_H */
-diff --git a/remote-odb.c b/remote-odb.c
-index 1dc165eaf6..a34537c05c 100644
---- a/remote-odb.c
-+++ b/remote-odb.c
-@@ -70,3 +70,20 @@ int has_remote_odb(void)
- {
- 	return !!find_odb_helper(NULL);
- }
-+
-+int remote_odb_get_direct(const unsigned char *sha1)
-+{
-+	struct odb_helper *o;
-+
-+	trace_printf("trace: remote_odb_get_direct: %s", sha1_to_hex(sha1));
-+
-+	remote_odb_init();
-+
-+	for (o = helpers; o; o = o->next) {
-+		if (odb_helper_get_direct(o, sha1) < 0)
-+			continue;
-+		return 0;
-+	}
-+
-+	return -1;
-+}
-diff --git a/remote-odb.h b/remote-odb.h
-index 4c7b13695f..c5384c922d 100644
---- a/remote-odb.h
-+++ b/remote-odb.h
-@@ -3,5 +3,6 @@
- 
- extern struct odb_helper *find_odb_helper(const char *remote);
- extern int has_remote_odb(void);
-+extern int remote_odb_get_direct(const unsigned char *sha1);
- 
- #endif /* REMOTE_ODB_H */
+ test_expect_success 'rev-list stops traversal at missing and promised commit' '
+-	rm -rf repo &&
++	rm -rf repo server server2 &&
+ 	test_create_repo repo &&
+ 	test_commit -C repo foo &&
+ 	test_commit -C repo bar &&
 -- 
 2.17.0.762.g886f54ea46
 
