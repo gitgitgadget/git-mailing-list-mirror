@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 58FE41F597
-	for <e@80x24.org>; Sat, 23 Jun 2018 12:19:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A6DDA1F62E
+	for <e@80x24.org>; Sat, 23 Jun 2018 12:19:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752143AbeFWMTI (ORCPT <rfc822;e@80x24.org>);
+        id S1752144AbeFWMTL (ORCPT <rfc822;e@80x24.org>);
+        Sat, 23 Jun 2018 08:19:11 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:38756 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752017AbeFWMTI (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 23 Jun 2018 08:19:08 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:46136 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752052AbeFWMTF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Jun 2018 08:19:05 -0400
-Received: by mail-wr0-f195.google.com with SMTP id l14-v6so4060206wrq.13
-        for <git@vger.kernel.org>; Sat, 23 Jun 2018 05:19:05 -0700 (PDT)
+Received: by mail-wr0-f196.google.com with SMTP id e18-v6so9140585wrs.5
+        for <git@vger.kernel.org>; Sat, 23 Jun 2018 05:19:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=E2cR17pd/sr3kpqaCYuqh9NbOwMVlqNLX6uu+CFXoIE=;
-        b=U8mvfSjUI7t9MYnnG9JyZYuWOAPuutOfYJ4Y56o3z0XHhaFG+R4buuY9kviUSpI+N4
-         sUZOQaSQQTYXu100fGay50f0Dcjjs7IkWOkNLe8l8J1QsHqZZkzfXxfYsQSAxIO8VK3M
-         T4X12b+WWfORgnmP3Fx9vIZ+Dil5GO/cyYXlknViTdIwn3zfQVrpvxtWj87+u11uz1PT
-         yy51sHgGR2Mi3Dk+sj0te0xN7loSgPR483L/y03P0hXmuisghzKWmjSgDn8IlFxBkSHf
-         4EDX7R2B8lCpCGtadsjxpOhJGf6pLKqri5wFtar4FMFxYYvMiKsraAynWHwxZnpSXHsj
-         4sqw==
+        bh=kraeBmxvbmV8ENyrM4PmTB3yh5VlvqbhF08+/QyMfAw=;
+        b=ZeTHumd+7D7fmFHIQnxsWJXyzhSB+hEjanJH5kiGRq9gUFI09naevoqPdbDq1/lMle
+         RLczPrI1sdKDK6VE7eo1vB96upPBdBA4sLnMUqr0hCNCf/6hOoAnnGpBG5FVDH54IhU2
+         OcV7tJIMmtcTmZxIYsmt3THwe0qYS9kpagcFes7gtwNFpf2MB3O1YbQqW8Zk6KPmVzkm
+         wEbYa9s6gTw72lYE7JLQeM62HSfAW2c/BehBu7SjC2hDEcNvk+5KBuTNz1NOQoUdx9yL
+         D0Awj9ymmtFUuZCZ02V8MOnlrHJ5S1OFCxhxZDZLPaVO8KtSdq0Km7x2zI989syrwEKq
+         ZJXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=E2cR17pd/sr3kpqaCYuqh9NbOwMVlqNLX6uu+CFXoIE=;
-        b=JvAyNgy1cW6JghSPiUMLqa6382mFf+6pxcAciva3YOfwBzkQOTZOtap6CyFbxY/o3H
-         EukS9+V1xBO5KeuqG4hVGcSnRXc5i4ThRjSeIHfhx0jegvUhP+uiqafjpdz0VkETgTcN
-         IY6Eo1yv1ZgKL7WTuvQV5s/RY7fKBqt1ki19JVpfKMd+nGX/38ZgwaUZh/nZVvzxxLiL
-         bIFZvu/VjnUEDAp7K5vxl3bcidmfEMgOI15KXUQyg0sRwMRGFk1o5kjKEcF32L0m62R0
-         YwzqCeMlR1xMs4mtj9hF+v8MjD69PytyL+9LujAhI+tk4R1CXHdNWgX72r7C2vcvYxsV
-         tiKA==
-X-Gm-Message-State: APt69E0mcRE37vv8qrUQDeQtTlcYqlBxpSpy0ztMlzgYSKMcqGTNt+Ar
-        u8N2SvIwWXVgYV1d0uZxXDtQGF06
-X-Google-Smtp-Source: AAOMgpe2lkSSolEMWj+xNx63N3G+iWb+7cfapCZBbKIryvd6XkB6ZtNg61ZesKy9yraC08eZfInOVw==
-X-Received: by 2002:adf:93c6:: with SMTP id 64-v6mr4537512wrp.119.1529756343884;
-        Sat, 23 Jun 2018 05:19:03 -0700 (PDT)
+        bh=kraeBmxvbmV8ENyrM4PmTB3yh5VlvqbhF08+/QyMfAw=;
+        b=SLssJUJQfp85AlywkmC0yMxXaL951trZ81YPGiMTLt5EVHZPaFmZol5uLcUzWVVbgG
+         juQqNENeK0z+kfAInhlxlBnQfB/sgbGEUxCfTOMfGmtKKRVzH54oIX4Q/Jinh7uBcEFW
+         WPaObtQYQLS87gXMk/TUKKhDeVvXxNnSno06Oypb64q5ZXNseZI/eImd9jHMVJ1RYTCB
+         Ri3e8Y9wgTs2Zfvh5F6d4sdQ4MDvxAHNv+vyIZDFMkyMbTVMyMZzRJJqp4y8qsqndNQe
+         h+NUdU6ykVnWknsYc781Clz/B+hN8AqdPinXn/llyVXRiMTl6fNWdiDmfhm6pb2IzReW
+         s+/Q==
+X-Gm-Message-State: APt69E2M4QEsjfkw40meEZwM1P2twwSfr9PWX+V7i9QywH0q/5axcMOI
+        jMQOrHL46dCbDHxsDPNtej090TgC
+X-Google-Smtp-Source: AAOMgpeNTiK1Y9RrTNPO3XPeY4juAAoNDWdnYtT6whpL0Z9nqVEfEj7Wp1tysitonXymv4ri3oXhpg==
+X-Received: by 2002:adf:e48e:: with SMTP id i14-v6mr4987786wrm.8.1529756346679;
+        Sat, 23 Jun 2018 05:19:06 -0700 (PDT)
 Received: from localhost.localdomain (89-95-107-230.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id q14-v6sm5527731wmd.20.2018.06.23.05.19.02
+        by smtp.gmail.com with ESMTPSA id q14-v6sm5527731wmd.20.2018.06.23.05.19.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 23 Jun 2018 05:19:03 -0700 (PDT)
+        Sat, 23 Jun 2018 05:19:06 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v1 02/11] Add initial remote odb support
-Date:   Sat, 23 Jun 2018 14:18:39 +0200
-Message-Id: <20180623121846.19750-3-chriscool@tuxfamily.org>
+Subject: [PATCH v1 04/11] remote-odb: implement remote_odb_get_many_direct()
+Date:   Sat, 23 Jun 2018 14:18:41 +0200
+Message-Id: <20180623121846.19750-5-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.17.0.762.g886f54ea46
 In-Reply-To: <20180623121846.19750-1-chriscool@tuxfamily.org>
 References: <20180623121846.19750-1-chriscool@tuxfamily.org>
@@ -71,188 +71,88 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The remote-odb.{c,h} files will contain the functions
-that are called by the rest of Git mostly from
-"sha1-file.c" to access the objects managed by the
-remote odbs.
+This function will be used to get many objects from a promisor
+remote.
 
-The odb-helper.{c,h} files will contain the functions to
-actually implement communication with either the internal
-functions or the external scripts or processes that will
-manage and provide remote git objects.
-
-For now only infrastructure to create helpers from the
-config and to check if there are remote odbs and odb
-helpers is implemented.
-
-We expect that there will not be a lot of helpers, so it
-is ok to use a simple linked list to manage them.
-
-Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Makefile     |  2 ++
- odb-helper.c | 16 ++++++++++++
- odb-helper.h | 19 ++++++++++++++
- remote-odb.c | 72 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- remote-odb.h |  7 +++++
- 5 files changed, 116 insertions(+)
- create mode 100644 odb-helper.c
- create mode 100644 odb-helper.h
- create mode 100644 remote-odb.c
- create mode 100644 remote-odb.h
+ odb-helper.c | 15 +++++++++++++++
+ odb-helper.h |  3 +++
+ remote-odb.c | 17 +++++++++++++++++
+ remote-odb.h |  1 +
+ 4 files changed, 36 insertions(+)
 
-diff --git a/Makefile b/Makefile
-index e4b503d259..8465e3ccd4 100644
---- a/Makefile
-+++ b/Makefile
-@@ -896,6 +896,8 @@ LIB_OBJS += notes-cache.o
- LIB_OBJS += notes-merge.o
- LIB_OBJS += notes-utils.o
- LIB_OBJS += object.o
-+LIB_OBJS += odb-helper.o
-+LIB_OBJS += remote-odb.o
- LIB_OBJS += oidmap.o
- LIB_OBJS += oidset.o
- LIB_OBJS += packfile.o
 diff --git a/odb-helper.c b/odb-helper.c
-new file mode 100644
-index 0000000000..b4d403ffa9
---- /dev/null
+index 99b5a345e8..246ebf8f7a 100644
+--- a/odb-helper.c
 +++ b/odb-helper.c
-@@ -0,0 +1,16 @@
-+#include "cache.h"
-+#include "object.h"
-+#include "argv-array.h"
-+#include "odb-helper.h"
-+#include "run-command.h"
-+#include "sha1-lookup.h"
+@@ -28,3 +28,18 @@ int odb_helper_get_direct(struct odb_helper *o,
+ 
+ 	return res;
+ }
 +
-+struct odb_helper *odb_helper_new(const char *name, int namelen)
++int odb_helper_get_many_direct(struct odb_helper *o,
++			       const struct oid_array *to_get)
 +{
-+	struct odb_helper *o;
++	int res;
++	uint64_t start;
 +
-+	o = xcalloc(1, sizeof(*o));
-+	o->name = xmemdupz(name, namelen);
++	start = getnanotime();
 +
-+	return o;
++	res = fetch_objects(o->remote, to_get);
++
++	trace_performance_since(start, "odb_helper_get_many_direct");
++
++	return res;
 +}
 diff --git a/odb-helper.h b/odb-helper.h
-new file mode 100644
-index 0000000000..4b792a3896
---- /dev/null
+index 4c52e81ce8..154ce4c7e4 100644
+--- a/odb-helper.h
 +++ b/odb-helper.h
-@@ -0,0 +1,19 @@
-+#ifndef ODB_HELPER_H
-+#define ODB_HELPER_H
+@@ -17,4 +17,7 @@ struct odb_helper {
+ extern struct odb_helper *odb_helper_new(const char *name, int namelen);
+ extern int odb_helper_get_direct(struct odb_helper *o,
+ 				 const unsigned char *sha1);
++extern int odb_helper_get_many_direct(struct odb_helper *o,
++				      const struct oid_array *to_get);
 +
-+/*
-+ * An odb helper is a way to access a remote odb.
-+ *
-+ * Information in its fields comes from the config file [odb "NAME"]
-+ * entries.
-+ */
-+struct odb_helper {
-+	const char *name;                 /* odb.<NAME>.* */
-+	const char *remote;               /* odb.<NAME>.promisorRemote */
-+
-+	struct odb_helper *next;
-+};
-+
-+extern struct odb_helper *odb_helper_new(const char *name, int namelen);
-+
-+#endif /* ODB_HELPER_H */
+ #endif /* ODB_HELPER_H */
 diff --git a/remote-odb.c b/remote-odb.c
-new file mode 100644
-index 0000000000..1dc165eaf6
---- /dev/null
+index a34537c05c..cc7059b23a 100644
+--- a/remote-odb.c
 +++ b/remote-odb.c
-@@ -0,0 +1,72 @@
-+#include "cache.h"
-+#include "remote-odb.h"
-+#include "odb-helper.h"
-+#include "config.h"
+@@ -87,3 +87,20 @@ int remote_odb_get_direct(const unsigned char *sha1)
+ 
+ 	return -1;
+ }
 +
-+static struct odb_helper *helpers;
-+static struct odb_helper **helpers_tail = &helpers;
-+
-+static struct odb_helper *find_or_create_helper(const char *name, int len)
++int remote_odb_get_many_direct(const struct oid_array *to_get)
 +{
 +	struct odb_helper *o;
 +
-+	for (o = helpers; o; o = o->next)
-+		if (!strncmp(o->name, name, len) && !o->name[len])
-+			return o;
-+
-+	o = odb_helper_new(name, len);
-+	*helpers_tail = o;
-+	helpers_tail = &o->next;
-+
-+	return o;
-+}
-+
-+static int remote_odb_config(const char *var, const char *value, void *data)
-+{
-+	struct odb_helper *o;
-+	const char *name;
-+	int namelen;
-+	const char *subkey;
-+
-+	if (parse_config_key(var, "odb", &name, &namelen, &subkey) < 0)
-+		return 0;
-+
-+	o = find_or_create_helper(name, namelen);
-+
-+	if (!strcmp(subkey, "promisorremote"))
-+		return git_config_string(&o->remote, var, value);
-+
-+	return 0;
-+}
-+
-+static void remote_odb_init(void)
-+{
-+	static int initialized;
-+
-+	if (initialized)
-+		return;
-+	initialized = 1;
-+
-+	git_config(remote_odb_config, NULL);
-+}
-+
-+struct odb_helper *find_odb_helper(const char *remote)
-+{
-+	struct odb_helper *o;
++	trace_printf("trace: remote_odb_get_many_direct: nr: %d", to_get->nr);
 +
 +	remote_odb_init();
 +
-+	if (!remote)
-+		return helpers;
++	for (o = helpers; o; o = o->next) {
++		if (odb_helper_get_many_direct(o, to_get) < 0)
++			continue;
++		return 0;
++	}
 +
-+	for (o = helpers; o; o = o->next)
-+		if (!strcmp(o->remote, remote))
-+			return o;
-+
-+	return NULL;
-+}
-+
-+int has_remote_odb(void)
-+{
-+	return !!find_odb_helper(NULL);
++	return -1;
 +}
 diff --git a/remote-odb.h b/remote-odb.h
-new file mode 100644
-index 0000000000..4c7b13695f
---- /dev/null
+index c5384c922d..e10a8bf855 100644
+--- a/remote-odb.h
 +++ b/remote-odb.h
-@@ -0,0 +1,7 @@
-+#ifndef REMOTE_ODB_H
-+#define REMOTE_ODB_H
-+
-+extern struct odb_helper *find_odb_helper(const char *remote);
-+extern int has_remote_odb(void);
-+
-+#endif /* REMOTE_ODB_H */
+@@ -4,5 +4,6 @@
+ extern struct odb_helper *find_odb_helper(const char *remote);
+ extern int has_remote_odb(void);
+ extern int remote_odb_get_direct(const unsigned char *sha1);
++extern int remote_odb_get_many_direct(const struct oid_array *to_get);
+ 
+ #endif /* REMOTE_ODB_H */
 -- 
 2.17.0.762.g886f54ea46
 
