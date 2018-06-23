@@ -2,160 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F24A1F516
-	for <e@80x24.org>; Sat, 23 Jun 2018 02:42:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 370581F516
+	for <e@80x24.org>; Sat, 23 Jun 2018 04:36:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934741AbeFWCmw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Jun 2018 22:42:52 -0400
-Received: from mail-wr0-f169.google.com ([209.85.128.169]:38557 "EHLO
-        mail-wr0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934625AbeFWCmv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jun 2018 22:42:51 -0400
-Received: by mail-wr0-f169.google.com with SMTP id e18-v6so8354539wrs.5
-        for <git@vger.kernel.org>; Fri, 22 Jun 2018 19:42:50 -0700 (PDT)
+        id S1751366AbeFWEgy (ORCPT <rfc822;e@80x24.org>);
+        Sat, 23 Jun 2018 00:36:54 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:46998 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751282AbeFWEgx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Jun 2018 00:36:53 -0400
+Received: by mail-pf0-f194.google.com with SMTP id q1-v6so4081290pff.13
+        for <git@vger.kernel.org>; Fri, 22 Jun 2018 21:36:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=umich.edu; s=google-2016-06-03;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=OtmEb32+7pOtw50e6snu2BY16TegoqQ0eaQVPvUTMpA=;
-        b=M+XmB2LXS6Fh9ShjEB7KwHVH9LolEyWJ0v5cE7nBnABx1QeHslm8yTh26iyKfIOWTZ
-         54hrFrQQTQTJOV+G2nt9wQaWmvZQwwVg8zeunmy9bdt7js1e+AtXJc9SeYsBKGZvL6eZ
-         VqcfEeDPbFXKaFAOe7xBMSzAbwjtUMGtkkTClZfBhtGDtMehGgo3HdP92WeHHv3Keam8
-         JaZZMHyUQIRKZStcEQL06J+uHFcfBqJirf+jLFdSW2eKXSGV2BvpDa6VnpNHuR8qP5p7
-         cXKYrpDZLI76DQBiDxEPP+uKFtkPW6ySPTDkscwIPhYACW8Q1NedtdxmSYN8rEhGoPaq
-         gKug==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=mV1SjnK/hhImp9QXb87YOHzGKpyVTTw66DWfqV7HvCE=;
+        b=pjAxkwYIW0dkvYZRLmQ3Bg7WeU0wcz5MeEaJa7e226lAfO0x5iNRE2HdvhSDTytx0G
+         j9fXYZk4IpeFAuWspQwgHXk4ArS7V2mwKzvrUKPolUOy5vopu7Zit8LLoJzG6R4HIJC/
+         zTurg7laSpDRfh02IF37inGKhIr8X58SUQD8XIAgDMVote8uAYpiejfgVz0HB5Su5iLA
+         Hlol2cOEyKnF61dABeINUZYmQLrLh23qZC9+Rhfw3gwGnXc28cOL398mvGVCG7uQNl2/
+         iGAfFtgN5bUR2xR9TBmNU2x5hqwIyWFfAYDH/HCD8c9khouOdHOXks68H9GMcg4FB3sr
+         2YHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=OtmEb32+7pOtw50e6snu2BY16TegoqQ0eaQVPvUTMpA=;
-        b=tAKqs5t6gQf5d15Q4v28i1sroEqcS+hxEf2eYO9Qi1u3Pf1afrSYxVAaQrDzIsomiz
-         fiRuxJ7QRCkd4b7DQlq6yO1ZyTdbHCI6UR2utxq2kBsd+GEAMOiw3lLU8WGltWM8uEcI
-         EHcL7IbzEGZZGrIinoj8BPwg786QBfeHIybt2kfLiyXmztjmYgWBJCKASgb7OQRnjmM0
-         aj/bPpjAwgc1wu8el7rbizS5n1oJCQj4uT1qKouDPuQvAOs8VDP8NGg4XNCmTdSi06Jb
-         l4cQm0v38kz58lyfo1inst6P4+tBl6AI9nUEewYC+H5ZFaHW8TaRGWotUN0A6Vf85YGr
-         hCfA==
-X-Gm-Message-State: APt69E3WHHKGB+R7hncbNw3zjzZ4gxh7GQqi8RZmnEyBjl23yKO/dqcG
-        npVHK1N1p6x15pkmpZA3a/jjCA+DjEoDLA5SazOoh+ry
-X-Google-Smtp-Source: AAOMgpfJ9z2IGPfKqF6bnevm9ueaDqfmbprK4yELNatuQyxpBSy15crLkfD0EG3cMPMLReyY2S5IF8S1SoyinD7GZhY=
-X-Received: by 2002:adf:de82:: with SMTP id w2-v6mr3657123wrl.88.1529721769983;
- Fri, 22 Jun 2018 19:42:49 -0700 (PDT)
-MIME-Version: 1.0
-From:   Anthony Sottile <asottile@umich.edu>
-Date:   Fri, 22 Jun 2018 19:42:38 -0700
-Message-ID: <CA+dzEB=RNqpduF+hx-y6HMeQYpSKJrBqx_pSu_MS3yDa7JHsww@mail.gmail.com>
-Subject: ^D to credentials prompt results in "fatal: ... Success"
-To:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=mV1SjnK/hhImp9QXb87YOHzGKpyVTTw66DWfqV7HvCE=;
+        b=O45gx3VtJIVjr0eBPgRFT8uSZHuYdQKw+mknlrjQl0tmDX6i5TnPROaTb0bMisCm8X
+         mm44mkXi9js9903qEvXMYygCo98TnNJxWfhR9Qq3Ng6v4TC5KePDEHGwemBTcB2yKBc2
+         eDqGhb5wQ8Xq4KXLO2Tg5f1GqI40DhfRxibO4VnHVABqS05ffVpLxT8PU/xBH5vUP65z
+         Bcu8nZmrFws2GTfBVTo1p7FqiOwqlgXp639OXJc7zzpiXjMX7k6s+11Z3rsM5yIFc0d/
+         /aYn4rLrl7qQGB/u1Xezqf8gyK5D56eBzD0ovc5N5KDLd6PrEN/GdZVQruCtFZK2ZCpm
+         xthg==
+X-Gm-Message-State: APt69E0FB/pQXPF5xh7rvXEpAjxy/gpVcBVqDSgqEEVlOqhlKf3nvqHU
+        Hgi11zNVizWeIW04EkTzSzs=
+X-Google-Smtp-Source: ADUXVKKWNtDlJWKM9zvMjYzLvGxUc8RHNJ9kGR+Uq6fxBUsoXWuCgr3HznGl0ZbAOwHV9lf/0rDBjg==
+X-Received: by 2002:a63:9543:: with SMTP id t3-v6mr3577910pgn.77.1529728613058;
+        Fri, 22 Jun 2018 21:36:53 -0700 (PDT)
+Received: from gr.lan (S01069050ca9bcfa3.vn.shawcable.net. [24.87.149.132])
+        by smtp.gmail.com with ESMTPSA id 76-v6sm21084761pfr.172.2018.06.22.21.36.50
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 22 Jun 2018 21:36:51 -0700 (PDT)
+From:   Michael Barabanov <michael.barabanov@gmail.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, ijc@hellion.org.uk,
+        Michael Barabanov <michael.barabanov@gmail.com>
+Subject: [PATCH] filter-branch: skip commits present on --state-branch
+Date:   Fri, 22 Jun 2018 21:36:39 -0700
+Message-Id: <20180623043639.7727-1-michael.barabanov@gmail.com>
+X-Mailer: git-send-email 2.17.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A bit of an amusing edge case.
+The commits in state:filter.map have already been processed, so don't
+filter them again. This makes incremental git filter-branch much faster.
 
-I'm not exactly sure the correct approach to fix this but here's my
-reproduction, triage, and a few potential options I see.
+Also add tests for --state-branch option.
 
-Note that after the username prompt, I pressed ^D
+Signed-off-by: Michael Barabanov <michael.barabanov@gmail.com>
+---
+ git-filter-branch.sh     |  3 +++
+ t/t7003-filter-branch.sh | 15 +++++++++++++++
+ 2 files changed, 18 insertions(+)
 
-$./prefix/bin/git --version
-git version 2.18.0
-$ PATH=$PWD/prefix/bin:$PATH git clone
-https://github.com/asottile/this-does-not-exist-i-promise
-Cloning into 'this-does-not-exist-i-promise'...
-Username for 'https://github.com': fatal: could not read Username for
-'https://github.com': Success
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index ccceaf19a..2df7ed107 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -372,6 +372,9 @@ while read commit parents; do
+ 	git_filter_branch__commit_count=$(($git_filter_branch__commit_count+1))
+ 
+ 	report_progress
++	if test -r "$workdir/../map/$commit"; then
++		continue
++	fi
+ 
+ 	case "$filter_subdir" in
+ 	"")
+diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+index ec4b160dd..e23de7d0b 100755
+--- a/t/t7003-filter-branch.sh
++++ b/t/t7003-filter-branch.sh
+@@ -107,6 +107,21 @@ test_expect_success 'test that the directory was renamed' '
+ 	test dir/D = "$(cat diroh/D.t)"
+ '
+ 
++V=$(git rev-parse HEAD)
++
++test_expect_success 'populate --state-branch' '
++	git filter-branch --state-branch state -f --tree-filter "touch file || :" HEAD
++'
++
++W=$(git rev-parse HEAD)
++
++test_expect_success 'using --state-branch to skip already rewritten commits' '
++	test_when_finished git reset --hard $V &&
++	git reset --hard $V &&
++	git filter-branch --state-branch state -f --tree-filter "touch file || :" HEAD &&
++	test_cmp_rev $W HEAD
++'
++
+ git tag oldD HEAD~4
+ test_expect_success 'rewrite one branch, keeping a side branch' '
+ 	git branch modD oldD &&
+-- 
+2.17.1
 
-Looking at `prompt.c`, it's hitting this bit of code:
-
-        if (git_env_bool("GIT_TERMINAL_PROMPT", 1)) {
-            r = git_terminal_prompt(prompt, flags & PROMPT_ECHO);
-            err = strerror(errno);
-        } else {
-            err = "terminal prompts disabled";
-
-        }
-        if (!r) {
-            /* prompts already contain ": " at the end */
-            die("could not read %s%s", prompt, err);
-        }
-
-From `git_terminal_prompt` (compat/terminal.c):
-
-    r = strbuf_getline_lf(&buf, input_fh);
-    if (!echo) {
-        putc('\n', output_fh);
-        fflush(output_fh);
-    }
-
-    restore_term();
-    fclose(input_fh);
-    fclose(output_fh);
-
-    if (r == EOF)
-        return NULL;
-    return buf.buf;
-
-
-in the `EOF` case, this is returning `NULL`, but `errno = 0` at this
-point causing the error string to be "Success"
-
-I see a couple of options here:
-
-1. special case EOF in `git_terminal_prompt` / `git_prompt` and
-produce an error message such as:
-
-fatal: could not read Username for 'https://github.com': EOF
-
-(I tried returing `EOF` directly from `git_terminal_prompt` and was
-able to get this messaging to work, however `r == EOF` is a
-pointer-int comparison so this approach didn't really seem like a good
-idea -- changing the signature of `git_terminal_prompt` to set a
-special flag for EOF is another option, but seems a lot of work for a
-case that probably doesn't happen all too often)
-
-I also couldn't find an appropriate errno to set in the EOF case either
-
-2. treat EOF less specially
-
-The function this is replacing, `getpass` simply returns an empty
-string on `EOF`.  This patch would implement that:
-
-diff --git a/compat/terminal.c b/compat/terminal.c
-index fa13ee672..8bd08108e 100644
---- a/compat/terminal.c
-+++ b/compat/terminal.c
-@@ -122,7 +122,7 @@ char *git_terminal_prompt(const char *prompt, int echo)
-        fputs(prompt, output_fh);
-        fflush(output_fh);
-
--       r = strbuf_getline_lf(&buf, input_fh);
-+       strbuf_getline_lf(&buf, input_fh);
-        if (!echo) {
-                putc('\n', output_fh);
-                fflush(output_fh);
-@@ -132,8 +132,6 @@ char *git_terminal_prompt(const char *prompt, int echo)
-        fclose(input_fh);
-        fclose(output_fh);
-
--       if (r == EOF)
--               return NULL;
-        return buf.buf;
- }
-
-
-however then the output is a bit strange for ^D (note I pressed ^D twice):
-
-$ PATH=$PWD/prefix/bin:$PATH git clone
-https://github.com/asottile/this-does-not-exist-i-promise
-Cloning into 'this-does-not-exist-i-promise'...
-Username for 'https://github.com': Password for 'https://github.com':
-remote: Repository not found.
-fatal: Authentication failed for
-'https://github.com/asottile/this-does-not-exist-i-promise/'
-
-Anthony
