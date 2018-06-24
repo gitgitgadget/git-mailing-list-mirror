@@ -2,120 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2EAA81F516
-	for <e@80x24.org>; Sun, 24 Jun 2018 13:47:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CDA131F516
+	for <e@80x24.org>; Sun, 24 Jun 2018 14:42:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752051AbeFXNrt (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Jun 2018 09:47:49 -0400
-Received: from mout.web.de ([217.72.192.78]:54569 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752044AbeFXNrr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Jun 2018 09:47:47 -0400
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M0ymZ-1gJhgF2mwJ-00v9pD; Sun, 24
- Jun 2018 15:47:44 +0200
-Date:   Sun, 24 Jun 2018 15:47:43 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Marc Strapetz <marc.strapetz@syntevo.com>
-Cc:     git@vger.kernel.org, sunshine@sunshineco.com
-Subject: Re: [PATCH v2] Documentation: declare "core.ignorecase" as internal
- variable
-Message-ID: <20180624134743.GA31295@tor.lan>
-References: <7f6b2a42-334d-9443-7b89-625069931ca7@syntevo.com>
- <aa841316-5fc0-b69b-a3d0-15911b0776f4@syntevo.com>
+        id S1751989AbeFXOm4 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Jun 2018 10:42:56 -0400
+Received: from mail-wr0-f179.google.com ([209.85.128.179]:45320 "EHLO
+        mail-wr0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751961AbeFXOm4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Jun 2018 10:42:56 -0400
+Received: by mail-wr0-f179.google.com with SMTP id s7-v6so1830713wro.12
+        for <git@vger.kernel.org>; Sun, 24 Jun 2018 07:42:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=2XJjlrDF2vVhG/4BmIBCEsFN0V9DKkT1mVN5zD3TM4E=;
+        b=NzSd5LuPi+/ZkobDq9tbc3Z4jH/lHmPlVSup2SqAlKGLV2E6lfk8lo2R5UQ9sqyjYh
+         y0+EyltXuo+OHPHM8USxxDnuUeSywkzV0+m7fOwoU1WRTEDHcDXzsygohbGjQVJtcN15
+         gf/qIdnf/79cpSYnJTdbSTU4c3AbHGpvEOW+ebXXMu/TBictckpoWMzn4bZ5jg8jfoVa
+         9WYsM3Lb+piWaGB+n2nDcNGws3a2YFlqN/cXLaP89kJCn8ZFD0EJwP3pGn9dicrlTSBl
+         oqHbRv5Y9fqLmudr9x6hfnbNI5j1l8/84J3U7Aefl9doa/PgzxUcBPii6PXtRGiPVlDB
+         VFew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=2XJjlrDF2vVhG/4BmIBCEsFN0V9DKkT1mVN5zD3TM4E=;
+        b=Dv+8/isKT1o93cVV3hxCtZhc6uM3UVP9mPFgrVxJaSob1q4xl8VIQAMFx9UspAQJYw
+         vz7E89vvUcr3pTmn4wSJYdjhv2+U0FuXxXiwsZtMKva6o5XgzATR573kQ5GZI5is9HNo
+         yZ4wSjR6rns5fqrTag7QMGKjYvvzM797jOErfCjGiM0T5BQug5ZshVHE/ytZcIYy/k9W
+         FhLwyHTapNvbuzJzYJ/dZymVqB+XWoHJM8VcrNLZm6IHJVz3d97657e8hoQQywMJNSiI
+         yT7YkNcIQwTI15Z9gg8WNdHKGquUcxsGGx67OcRqXSDNj+fYwl+LFY9Y1DTYgh68ixQM
+         YCDw==
+X-Gm-Message-State: APt69E3+BH8MVosDPyy896EbfMmfVHCrtFN8vI9jSo3WKAvrB54P0YOq
+        +ZWSCpKN2dMdwHdxSOv0IoR4ZwjOhM9Dl1t1oW4=
+X-Google-Smtp-Source: AAOMgpexWldJZyaC6Hqg+AJNTO2q9mh9hiVJCj6rcANVbV4x/54EzD9Y2wL2wkAjR3x9GF8bGTQiLSaOyQ0euhAZT1A=
+X-Received: by 2002:adf:ba8f:: with SMTP id p15-v6mr7827152wrg.139.1529851374839;
+ Sun, 24 Jun 2018 07:42:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aa841316-5fc0-b69b-a3d0-15911b0776f4@syntevo.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Provags-ID: V03:K1:2nP83JFDj7HT+jE3tR8B/dgJtQ4n0sL5ng8tC5e3v5UvH1FLncE
- okO78fXLqo3rKq++dEIHceNZxzIR57xxOfzuXaO+sfzlq+8UoQ9fai32pB66j8RSWmjUPzI
- i4tqoxd9sjwG87j6uMv/m8d7xqb6qtP5NVaZYUD21gHm25y6U0h9jHy65z7g/WXbj/+4nIU
- Da/qTMfx7Xw0+RMb4NQBA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:3Pr8dbhrBmw=:rBQ4dHklYPkv+JI8//KOUl
- ao+DZhCTzDjnWWN65bwPk+L4Y650aGPOadICvQ7Bnk+Ri/2NI35iGJGU93odCUxB6JQRvalsf
- 4PSCO/u0ST8bDZTIbdTjhpV0IW3oItlfs/y5Ye+bLZLARfMdAdIzOBJp9UkunS80zqibAAHEz
- WKI3tRH5W7hvq7VJSuCBcsw2aaDgEMxD/JIDgl4PEk3HFDIjhtEml7B7WruUJy+/arv2o0y17
- RIm9nt6agplSvImqb0qirV6g4GviMsWNqYvO9ti3hg5zY4AbQPKHaD9RR+bPZVdkRbn9YpXsn
- VNqaUleNpyQZ+u5NOueubUVaVsAV/xyWh099t6kWQyLv3Pp7/OmT3S3AdqN2YvyQ21XrwJst9
- u2GdPw2c6msXyCvnfG65wXPqXfRtqHqKcxVe+WHjQJI5GHzOKTs6YH/Th1i19KjiX2rM9zoBA
- Ot70wXbWcpUd9K8e2Z7UTjFGZ/bay1Cne2LWoTfNpmHKVrMy0i/F/wqb5nyi6xprTk6PL6Zym
- +PebRXrqVLr/0pjP1R278fZTHbJBi8XVLeaL1h7HbP5gQEjSHSGh/7loXzHHXUMlWcjb56RWh
- IjuC8Xp9fuueQ9UckVk2QeRw+SKchflYors9BTqHFZLTvTAkMxhWIK1j5P1snygJUwETOzE+J
- +YJOsrUc2vf1Xt6QzX0B2QJCeTUiLwtECzXTiSst6GFemM+/5Kr88U0YeyAnRYoiOY9py12iG
- xuUTlMHAU4ALk0fxvwg2ydS5A2T5kz9vyw5swRNBAeP1jxXvwEd0BbFMmIQ=
+References: <CAL78Jw0mQWxO4xkzFBoG0Oe4wjomUGj=dP5ufdUrE5Ku0GGEtg@mail.gmail.com>
+ <6d5d2536-0f69-544d-23c7-351e8618ba94@gmail.com>
+In-Reply-To: <6d5d2536-0f69-544d-23c7-351e8618ba94@gmail.com>
+From:   Daniel Penkin <dpenkin@gmail.com>
+Date:   Mon, 25 Jun 2018 00:42:43 +1000
+Message-ID: <CAL78Jw2v9sRznn0dfX+KMAT5TvsDCJ529-d1SahAKo0rmkfrxg@mail.gmail.com>
+Subject: Re: Incorrect unified diff when run with "--find-copies-harder"
+To:     rybak.a.v@gmail.com
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jun 24, 2018 at 12:44:26PM +0200, Marc Strapetz wrote:
-> The current description of "core.ignoreCase" reads like an option which
-> is intended to be changed by the user while it's actually expected to
-> be set by Git on initialization only. This is especially important for
-> Git for Windows, as noted by Bryan Turner [1]:
-> 
->     Git on Windows is not designed to run with anything other than
->     core.ignoreCase=true, and attempting to do so will cause
->     unexpected behavior. In other words, it's not a behavior toggle so
->     user's can request the functionality to work one way or the other;
->     it's an implementation detail that `git init` and `git clone` set
->     when a repository is created purely so they don't have to probe
->     the file system each time you run a `git` command.
+Hi Andrei,
 
-This is a nice explanation, thanaks for that,
-Some users of Mac OS or SAMBA will see core.ignoreCase=true, and are not
-supposed to change it.
+Thanks for the prompt reply.
 
-The same explanation (Git for Windows)
-is alse valid for HFS+ and APFS under Mac OS and VFAT under all OS.
-(or even an ext4 file system under Linux exported to Mac OS using SAMBA)
+I'm sorry for the false alarm, I should've investigated this more
+thoroughly before submitting a bug.
+Now I see I get that context hint in many diffs, I was confused by
+many simple file diffs I was working with recently which didn't have
+it.
 
-May be something like this?
+Thank you for your time and help.
 
-     Git on a case insensitve file system (Windows, Mac OS, VFAT, SAMBA)
-     is not designed to run with anything other than
-     core.ignoreCase=true, and attempting to do so will cause
-     unexpected behavior. In other words, it's not a behavior toggle so
-    .....
+Kind regards,
+Daniil Penkin
 
-
-
-> 
-> [1] https://marc.info/?l=git&m=152972992729761&w=2
-> 
-> Signed-off-by: Marc Strapetz <marc.strapetz@syntevo.com>
-> ---
->  Documentation/config.txt | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index ab641bf5a..c25693828 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -390,7 +390,7 @@ core.hideDotFiles::
->  	default mode is 'dotGitOnly'.
-> 
->  core.ignoreCase::
-> -	If true, this option enables various workarounds to enable
-> +	Internal variable which enables various workarounds to enable
->  	Git to work better on filesystems that are not case sensitive,
->  	like FAT. For example, if a directory listing finds
->  	"makefile" when Git expects "Makefile", Git will assume
-> @@ -399,7 +399,7 @@ core.ignoreCase::
->  +
->  The default is false, except linkgit:git-clone[1] or linkgit:git-init[1]
->  will probe and set core.ignoreCase true if appropriate when the repository
-> -is created.
-> +is created. Modifying this value afterwards may result in unexpected
-> behavior.
-> 
->  core.precomposeUnicode::
->  	This option is only used by Mac OS implementation of Git.
-> -- 
-> 2.17.0.rc0.3.gb1b5a51b2
+=D0=B2=D1=81, 24 =D0=B8=D1=8E=D0=BD. 2018 =D0=B3. =D0=B2 23:33, Andrei Ryba=
+k <rybak.a.v@gmail.com>:
+>
+> On 2018-06-24 12:36, Daniel Penkin wrote:
+> > Hello,
+> >
+>
+> Hi,
+>
+> > I believe I found a bug in how Git represents a diff when invoked with
+> > "--find-copies-harder" parameter.
+> > Specifically, the unified diff header of a hunk contains an extra
+> > piece of text which appears to be a line from the context (i.e.
+> > unchanged line), something like this:
+> >
+> >     > git diff --find-copies-harder d00ca3f 20fb313
+> >     diff --git a/test.txt b/copy.txt
+> >     similarity index 81%
+> >     copy from test.txt
+> >     copy to copy.txt
+> >     index 734156d..43a3f9d 100644
+> >     --- a/test.txt
+> >     +++ b/copy.txt
+> >     @@ -2,6 +2,7 @@ line 1
+> >      line 2
+> >      line 3
+> >      line 4
+> >     +added line
+> >      line 5
+> >      line 6
+> >      line 7
+> >
+> > Note "line 1" after the standard unified diff header.
+> >
+>
+> This text after @@ is usually a function name in a programming language o=
+r
+> some other relevant part of hunk context, to help user navigate the diff =
+more
+> easily.  What you are getting is the default version of it, as it is just
+> comparing txt files.  You can read more about it in the documentation of
+> gitattributes:
+>
+> https://git-scm.com/docs/gitattributes#_defining_a_custom_hunk_header
+>
+> > I prepared a sample repository with a minimal file I can reproduce
+> > this problem with:
+> > https://bitbucket.org/dpenkin/find-copies-harder-bug
+> >
+> > I'm running Git 2.18.0 on a macOS, but I also tried with Git 2.15.0
+> > and 2.8.6 running on Alpine Linux and was able to reproduce the same
+> > problem.
+> >
+> > Please advise whether this is expected output or is indeed a bug.
+> >
+>
+> This is expected output.
+>
+> > Thank you.
+> >
+> > Kind regards,
+> > Daniil Penkin
+> >
+>
+> --
+> Best regards, Andrei R.
