@@ -6,31 +6,36 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A68E01F516
-	for <e@80x24.org>; Sun, 24 Jun 2018 10:05:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 43B781F516
+	for <e@80x24.org>; Sun, 24 Jun 2018 10:07:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752026AbeFXKFW (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Jun 2018 06:05:22 -0400
-Received: from smtprelay01.ispgateway.de ([80.67.18.13]:26712 "EHLO
-        smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751853AbeFXKFW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Jun 2018 06:05:22 -0400
+        id S1752034AbeFXKHn (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Jun 2018 06:07:43 -0400
+Received: from smtprelay07.ispgateway.de ([134.119.228.97]:22411 "EHLO
+        smtprelay07.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751853AbeFXKHm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Jun 2018 06:07:42 -0400
 Received: from [91.113.179.170] (helo=[192.168.92.26])
-        by smtprelay01.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
+        by smtprelay07.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
         (Exim 4.90_1)
         (envelope-from <marc.strapetz@syntevo.com>)
-        id 1fX1tX-0002tj-Ek
-        for git@vger.kernel.org; Sun, 24 Jun 2018 12:05:19 +0200
+        id 1fX1ve-0006Tv-Hx; Sun, 24 Jun 2018 12:07:30 +0200
+Subject: Re: Unexpected ignorecase=false behavior on Windows
+To:     Bryan Turner <bturner@atlassian.com>
+Cc:     j6t@kdbg.org, Git Users <git@vger.kernel.org>
+References: <c5abdd45-a919-96f6-8560-5fd943069f5e@syntevo.com>
+ <1c7e338e-157b-fd2f-5eb1-01373f627acd@kdbg.org>
+ <2cf2d884-de1a-7b9b-5aca-1f396ad205a2@syntevo.com>
+ <CAGyf7-GvcN8EhMgtaZcDJNYNdfLwVH8HVBDmZqJU40nze0NSEA@mail.gmail.com>
 From:   Marc Strapetz <marc.strapetz@syntevo.com>
-Subject: [PATCH] Documentation: declare "core.ignorecase" as internal variable
-To:     git@vger.kernel.org
-Message-ID: <7f6b2a42-334d-9443-7b89-625069931ca7@syntevo.com>
-Date:   Sun, 24 Jun 2018 12:05:21 +0200
+Message-ID: <c9a9167c-8528-c85a-e7aa-9197ab92e685@syntevo.com>
+Date:   Sun, 24 Jun 2018 12:07:32 +0200
 User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.8.0
 MIME-Version: 1.0
+In-Reply-To: <CAGyf7-GvcN8EhMgtaZcDJNYNdfLwVH8HVBDmZqJU40nze0NSEA@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: de-DE
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 X-Df-Sender: bWFyYy5zdHJhcGV0ekBzeW50ZXZvLmNvbQ==
 Sender: git-owner@vger.kernel.org
@@ -38,40 +43,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The current description of "core.ignorecase" reads like an option which
-is intended to be changed by the user while it's actually expected to
-be set by Git only [1].
+On 22.06.2018 22:58, Bryan Turner wrote:
+> On Fri, Jun 22, 2018 at 1:45 PM Marc Strapetz <marc.strapetz@syntevo.com> wrote:
+>>
+>> On 22.06.2018 19:36, Johannes Sixt wrote:
+>>> Am 22.06.2018 um 14:04 schrieb Marc Strapetz:
+>>>> On Windows, when creating following repository:
+>>>>
+>>>> $ git init
+>>>> $ echo "1" > file.txt
+>>>> $ git add .
+>>>> $ git commit -m "initial import"
+>>>> $ ren file.txt File.txt
+>>>> $ git config core.ignorecase false
+>>>
+>>> This is a user error. core.ignorecase is *not* an instruction as in
+>>> "hey, Git, do not ignore the case of file names". It is better regarded
+>>> as an internal value, with which Git remembers how it should treat the
+>>> names of files that it receives when it traverses the directories on the
+>>> disk.
+>>>
+>>> Git could probe the file system capabilities each time it runs. But that
+>>> would be wasteful. Hence, this probe happens only once when the
+>>> repository is initialized, and the result is recorded in this
+>>> configuration value. You should not change it.
+>>
+>> Sorry, it looks like my example was misleading. I'm actually questioning
+>> current behavior in case of Windows repositories with core.ignorecase
+>> initialized to false, like in following setup:
+>>
+>> $ git init
+>> $ git config core.ignorecase false
+>>
+>> The repository is now set up to be case-sensitive on Windows. From this
+>> point on, core.ignorecase won't change anymore and the repository will
+>> be filled:
+> 
+> I don't think Hannes's point was _when_ you changed it; it was that
+> you changed it _at all_.
+> 
+> Git on Windows is not designed to run with anything other than
+> core.ignoreCase=true, and attempting to do so will cause unexpected
+> behavior. In other words, it's not a behavior toggle so user's can
+> request the functionality to work one way or the other; it's an
+> implementation detail that `git init` and `git clone` set when a
+> repository is created purely so they don't have to probe the file
+> system each time you run a `git` command.
+> 
+> NTFS is case-preserving-but-case-insensitive by default[1]. So long as
+> that's the case, the only mode for running Git on Windows is
+> core.ignoreCase=true.
+> 
+> Hopefully this clarifies things!
 
-[1] https://marc.info/?l=git&m=152972992729761&w=2
+Thanks, it does. In this case, I'd suggest to make this clear in the 
+documentation, too. I've just sent a patch.
 
-Signed-off-by: Marc Strapetz <marc.strapetz@syntevo.com>
----
-  Documentation/config.txt | 4 ++--
-  1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index ab641bf5a..c25693828 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -390,7 +390,7 @@ core.hideDotFiles::
-  	default mode is 'dotGitOnly'.
-
-  core.ignoreCase::
--	If true, this option enables various workarounds to enable
-+	Internal variable which enables various workarounds to enable
-  	Git to work better on filesystems that are not case sensitive,
-  	like FAT. For example, if a directory listing finds
-  	"makefile" when Git expects "Makefile", Git will assume
-@@ -399,7 +399,7 @@ core.ignoreCase::
-  +
-  The default is false, except linkgit:git-clone[1] or linkgit:git-init[1]
-  will probe and set core.ignoreCase true if appropriate when the repository
--is created.
-+is created. Modifying this value afterwards may result in unexpected 
-behavior.
-
-  core.precomposeUnicode::
-  	This option is only used by Mac OS implementation of Git.
--- 
-2.17.0.rc0.3.gb1b5a51b2
-
+-Marc
