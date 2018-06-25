@@ -2,121 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA01C1F516
-	for <e@80x24.org>; Mon, 25 Jun 2018 21:15:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 424F81F516
+	for <e@80x24.org>; Mon, 25 Jun 2018 21:25:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752394AbeFYVPF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Jun 2018 17:15:05 -0400
-Received: from mout.gmx.net ([212.227.15.15]:50167 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752161AbeFYVPE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jun 2018 17:15:04 -0400
-Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M8eAd-1gKHUq3uKp-00wH77; Mon, 25
- Jun 2018 23:14:56 +0200
-Date:   Mon, 25 Jun 2018 23:14:57 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Alban Gruin <alban.gruin@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        phillip.wood@dunelm.org.uk, Elijah Newren <newren@gmail.com>
-Subject: Re: [GSoC][PATCH v3 2/3] rebase -i: rewrite setup_reflog_action()
- in C
-In-Reply-To: <4dfaa8d4-09d0-1156-43a4-687c3389e039@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1806252313140.11870@tvgsbejvaqbjf.bet>
-References: <20180619154421.14999-1-alban.gruin@gmail.com> <20180621141732.19952-3-alban.gruin@gmail.com> <xmqq4lhurdl7.fsf@gitster-ct.c.googlers.com> <7094810.i0lmrLi0k7@andromeda> <xmqqr2kuq3qg.fsf@gitster-ct.c.googlers.com>
- <4dfaa8d4-09d0-1156-43a4-687c3389e039@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752320AbeFYVZ4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Jun 2018 17:25:56 -0400
+Received: from mail-oi0-f68.google.com ([209.85.218.68]:42463 "EHLO
+        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751749AbeFYVZz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jun 2018 17:25:55 -0400
+Received: by mail-oi0-f68.google.com with SMTP id n84-v6so6320258oib.9
+        for <git@vger.kernel.org>; Mon, 25 Jun 2018 14:25:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=P+QPAv5EP5LQcujbMGI7gBBtBEOIyE+ntqa24Jc8dW4=;
+        b=gKVP273atC0b9A0NBNmyZHitKlnLRrfQ6yFsdD85Dj7M1k1LbHgv/PtEp2jwi9D4V5
+         OR2RMJqXEv5M36q/SOl8aSrRLEpwDkWcUbNehEt3/mrCKtR/QxoBHZ6NcHtUIZny2jkl
+         7dxLCHsafi2DKjsrFnSg/G1QdCV57GhifLMsuSWGHkC/gTedIzcTMyCMa33kD3MwhxR5
+         xmD2N5jfC7YhwWK1eZPHZUZxR1oXnYJNIty4wQk7EIZrugAzW2sK/uMHB/2dhqPWWoCD
+         GVJ1Gnn9J0JRE5o7+XrhZOY6h3QnuZnRy8ywDH+tKp1FTjYgInCzvjbXW/W+w2RzTyHe
+         WX2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=P+QPAv5EP5LQcujbMGI7gBBtBEOIyE+ntqa24Jc8dW4=;
+        b=EHwt7iUds/diXZjJj/3XhvFKHlHerYzGxy9FHYy/yEvZOJV3vtTvojTsb8r9cVI6nW
+         Hxg4pc490OLqOZtUhkm8yl20KDFNlo2TyCU3YG5YhNNbBk1maB363VIB+byk4mIf96bb
+         hVfarg4I7jlNWZ/Q30Eye9HlnlnEtdUgmphRH8vJpxCCP0cNI8FujJ+MW2jS00kmEAWf
+         y5TRasPMkf9NrVZT7VAY0DLpVj2bjJ49NPxuWTUJneq6QjbeYKTq1vm0Pj9eyMaFyTbS
+         G01xKt3416kjzTF1HZZ5a4kVRyuZYJjeUuERQlzwys9YNRbrxvgyJG93x0LWvzPEXcVW
+         Q0OA==
+X-Gm-Message-State: APt69E0mIKs41gzaA+IY6o4Diz4Oscsr/Q186jjo5C7aEznJ6amfu9rL
+        d1e6b+J8jh+SSlh83/siEHQdZGJOCHg=
+X-Google-Smtp-Source: ADUXVKJMiOzjFzRkrx5rC/L9PycZ5a5m8kbecb4yvJnUfZqEoXFb16BgpQdleDxHZXtBqXnJVM/z1A==
+X-Received: by 2002:aca:8d3:: with SMTP id 202-v6mr8306143oii.249.1529961954407;
+        Mon, 25 Jun 2018 14:25:54 -0700 (PDT)
+Received: from localhost ([107.217.158.181])
+        by smtp.gmail.com with ESMTPSA id p128-v6sm7983497oia.31.2018.06.25.14.25.52
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 25 Jun 2018 14:25:52 -0700 (PDT)
+Date:   Mon, 25 Jun 2018 16:25:51 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     avarab@gmail.com, peff@peff.net, gitster@pobox.com
+Subject: [PATCH 0/2] grep.c: teach --only-matching to 'git-grep(1)'
+Message-ID: <cover.1529961706.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1290903297-1529961298=:11870"
-X-Provags-ID: V03:K1:Lj8DkpfoZ7q2EPAkG5LQQ48L7DUOfbpljAjPYibgyi0WIlCsdFd
- /Rrzd/pd0M43Sf+g7jCtJoEDznn3oqtW8hJ8+iKRrBYILFmdFjKEq9g9tJ5UjdPyN8tgIYf
- 5MFZjf2ddUR+Vd4AoQDNt6Hxj6Le46MV4QlZy23OIqDt7q78ndngIoGyaE6GHva4L3mrCxB
- 3ldM+NTIMKkhU3RI4KrUg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:6gMmpZZYHkg=:1/itFqb2cujmn6wV10ooQd
- JA0JYiQj4S9Q72o+PfwOBA1j3ORryyYDLTcHkR+JOFs8RPaTF1E8apDr+bzz283yslS/XimFO
- fIftDEc2XKg8bCz53C7d9lIaFUGd1+LZHRJj8bK3FdofyTdyGsei840GzNp/jf+MyswEreC8f
- 1Ux2JRrZFoKvE/NEvt8sPvwhd8CiEVnusL4es5dGLmLdKWEBXDZn8spHRhAPUU1y7ICVzPeQ7
- jVljUZGjivPktrasz/mNKFSzSQG6dSimNwNMpvXQH5vRHd8vrbsuKyjvJ0JW1395XY24mriTM
- vGjhKt+3Bv5bLjBCdaT6DBrM3Hvy9QV1NuvqQS4hRiNJR4p2ju2ybnxGq2AkoSEjnYztxvpnG
- 2vQcZObXUpezKbmK96LQuSeGjzeon3+6tzRM/HE4E9ngZSbUAdyOU42uQGbHXkF485Y5IZfIR
- QOFgWhXR/U841RGfuqeiUUEy+Cu4WwpsNSsrHTjLtxpw+6dPNz9AGgxBoxGfOR/5Ztdb5aDrR
- H4ndRpJRtfhcSAjhr3MLw2/biwF4XW9gVuy6b1JtW+dOSfk/CSXP+VyU3T7g2hznfILoFZBIy
- cev478TYfaNC5Mm0o6MOmdzqFrQYWE1ElXjKQbVfYbbukL4pdtWNOCzeTRKfekDqGjnU75luk
- Tlq98syCCk8UHOdsuXmJye5tHepAZlSpg7h35wKJAL9j8stYbYIfwBNIS4BNmUJ74MHCJJsTm
- IQbcGX4+f0ccBvYDHNAAux9SQQzImPxIQTfjbx6hhrQCtb9p/Z/RakyDZp7LfQdrROxLb7rSW
- pLUdOsf
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-1290903297-1529961298=:11870
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-
 Hi,
 
-On Mon, 25 Jun 2018, Alban Gruin wrote:
+Attached is a resurrection of my previous topic [1] to add
+'--only-matching' (in the style of GNU grep) to 'git grep'.
 
-> Le 25/06/2018 =C3=A0 17:34, Junio C Hamano a =C3=A9crit=C2=A0:
-> > Alban Gruin <alban.gruin@gmail.com> writes:
-> >=20
-> >> Le 22/06/2018 =C3=A0 18:27, Junio C Hamano a =C3=A9crit :
-> >>> Alban Gruin <alban.gruin@gmail.com> writes:
-> >>>> This rewrites (the misnamed) setup_reflog_action() from shell to C. =
-The
-> >>>> new version is called checkout_base_commit().
-> >>>
-> >>> ;-) on the "misnamed" part.  Indeed, setting up the comment for the
-> >>> reflog entry is secondary to what this function wants to do, which
-> >>> is to check out the branch to be rebased.
-> >>>
-> >>> I do not think "base_commit" is a good name, either, though.  When I
-> >>> hear 'base' in the context of 'rebase', I would imagine that the
-> >>> speaker is talking about the bottom of the range of the commits to
-> >>> be rebased (i.e. "rebase --onto ONTO BASE BRANCH", which replays
-> >>> commits BASE..BRANCH on top of ONTO and then points BRANCH at the
-> >>> result), not the top of the range or the branch these commits are
-> >>> taken from.
-> >>>
-> >>
-> >> Perhaps should I name this function checkout_onto(), and rename=20
-> >> checkout_onto() to "detach_onto()"?  And I would reorder those two com=
-mits in=20
-> >> the series, as this would be very confusing.
-> >=20
-> > I may be misunderstanding what is happening in the function, but I
-> > think it is checking out neither the onto or the base commit.  The
-> > function instead is about checking out the branch to be rebased
-> > before anything else happens when the optional <branch> argument is
-> > given (and when the optional argument is not given, then we rebase
-> > the current branch so there is no need to check it out upfront), no?
-> >=20
-> >=20
->=20
-> Yes, you=E2=80=99re right.
->=20
-> Now I really don=E2=80=99t know how to call this function.
-> checkout_top_of_range(), perhaps?
+The changes are described in detail in each of the attached patches.
 
-Pratik refactored some code from sequencer.c into checkout.c/checkout.h
-today to do exactly that. It is not polished yet, but probably will be
-tomorrow. It provides a function `int detach_head_to(struct object_oid
-*oid, const char *action, const char *reflog_message)`. Maybe use that
-directly, once the commit is available?
+Similar to the series to add --column to 'git grep', I have restarted
+this thread in order to not clutter the old one. I rewrote the patches
+from scratch today, and have based them on tb/grep-colno, on top of
+which they should apply cleanly.
 
-Ciao,
-Dscho
---8323328-1290903297-1529961298=:11870--
+Thanks in advance for your kind review :-).
+
+
+Thanks,
+Taylor
+
+[1]: https://public-inbox.org/git/cover.1525492696.git.me@ttaylorr.com/
+
+Taylor Blau (2):
+  grep.c: extract show_line_header()
+  grep.c: teach 'git grep --only-matching'
+
+ builtin/grep.c  |  6 ++++
+ grep.c          | 90 +++++++++++++++++++++++++++++++------------------
+ grep.h          |  1 +
+ t/t7810-grep.sh | 15 +++++++++
+ 4 files changed, 79 insertions(+), 33 deletions(-)
+
+--
+2.18.0
