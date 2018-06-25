@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 092691F516
-	for <e@80x24.org>; Mon, 25 Jun 2018 18:53:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F23101F516
+	for <e@80x24.org>; Mon, 25 Jun 2018 18:53:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964988AbeFYSxi (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Jun 2018 14:53:38 -0400
-Received: from mail-it0-f74.google.com ([209.85.214.74]:36654 "EHLO
-        mail-it0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S964861AbeFYSxh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jun 2018 14:53:37 -0400
-Received: by mail-it0-f74.google.com with SMTP id d70-v6so8740261itd.1
-        for <git@vger.kernel.org>; Mon, 25 Jun 2018 11:53:37 -0700 (PDT)
+        id S965012AbeFYSxl (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Jun 2018 14:53:41 -0400
+Received: from mail-yw0-f202.google.com ([209.85.161.202]:51851 "EHLO
+        mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S964861AbeFYSxj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jun 2018 14:53:39 -0400
+Received: by mail-yw0-f202.google.com with SMTP id q66-v6so10856149ywc.18
+        for <git@vger.kernel.org>; Mon, 25 Jun 2018 11:53:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=SgwCf8MLD5CgT6j3EVh3MxyxirIQkzYNvoE7xvlhD1w=;
-        b=Ae7baBptKea3vbaadQGXYyx9rMNkcq39UvlFyAN2W77a3eQf+AHNkN26CEBNSZjXW3
-         hpU1Uf8V6LH1M0YEbhg8s2fgbb2e9okfwKdXxCQ6bv8O9lf+4KFx0u3l63vc+3TPj6/L
-         xLTXLYtFurmBDUX4eGZKqihemeVVRUFrhvUijghzIEdQMVNSUA4KyZunWfdnCUGrzvoC
-         CR8HeHF+DOjQdDE+EB4vF/S+3J/RqGQy31BOSyI2TIU8bdWk2Npl+G0o0yF2VUaqnRzs
-         kZIrKuGQi8+Io8C/BQmaBCYdrhALsi8nVJwZ4nkXw0TXMtN+dtEoO4yClSutbzdv5iwW
-         CgNw==
+        bh=YxPHppMxmdEG9nGmLsfoDlKYX/fd24foZCD78c5CFB8=;
+        b=Q4l/jTBIOg7VsMW3WmSH0ylfxVUkkeZdtc9sqXprFHQwZZgmXnIaVcovaEq1pMDrBn
+         6+2yjBr1kLiIOEHhRw6Ru4bdlyHBvBXLHzu1uzgeVoPV1bTWcy2Ekh4I5v/1OMuJMWUm
+         JBRR/ChJkC0OCmfnd1l1ef8FPh9Jh3iSa9xjprV+S43Gk9HOulOVK2FmgFdWPu2cbnMb
+         WaPcAIUF1g4CfTXH7kWTeRBCu/2FyZXZ9VJIBkr8Fw9Tk84nnws9YZ2RiAgcMgofm7Ly
+         hUt/fv++0mEtiT36m6E57DmciJtTYqdfetid3tdonWKiy2S8UQtpl0BiqV2X92EyDxzI
+         /CKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=SgwCf8MLD5CgT6j3EVh3MxyxirIQkzYNvoE7xvlhD1w=;
-        b=bPp1VVc1Amq5VoCP1izpBfx1zUeUEUWS4997shwWnMy/4SIMbmp1wy8Fv0YqUtf05x
-         2YTaGvq6DuVQnHipOmJeTFxkwRs/n8GbdMf5D2Ju0WSnzuzu9kw6t0gwtYt4fObVWJE/
-         XkUrT2uRFO7gFfnsUap05hFSmyevuszo6wjzUvqIW8kVpUwKWQxf0VMPVIiaoxmM9jv6
-         YvGHHUWII+KnedRretKmM4D9fe9s0gw8TML2sVcYFJw8DAuEcnVYVVieoS5Pzf9V18+N
-         stpYTgKu64Sg0mzWoFnVN0fZoPaDuYH1+7x6JQJZUkq34XJcVCYYjlHjd8zDSMNw2YnC
-         s/2w==
-X-Gm-Message-State: APt69E0mRUcHE4iZk3T5JaL/kIh0cf9psOlv5vbLPQm5HEd/gYmPRF1r
-        x8zwFxWfCRKQe9Ih0dmUIJnjS1aqhT8VXEJ3j+guwp0mIOa8B4YgcxJ24fTYNUrYvCMCvipQ9OK
-        ikAZd7fZcvLSKoG2x8FvFcR4P1mlEi8Xv0ZON+5GkmXc2IIHw05C5jpTSDw==
-X-Google-Smtp-Source: AAOMgpfHpt7mtqTnwrBLgn9Hy76Y+sobrSONxx0kceugjCEQuG64fkmWEmEi1zrl+IhnsQcu2Lfh3H2zHtE=
+        bh=YxPHppMxmdEG9nGmLsfoDlKYX/fd24foZCD78c5CFB8=;
+        b=HaoLCmJtyH49Hyzthd5FdvsjuWwEYR8KzUQ3DHBppKXpEQUwZihd4d/lozhWljV6iG
+         bDKi1e95oDCRZxH6ofQPnzDbXdffL4FimcHh8T6tI6BP9U11ti9IJHY3k4nR8lrSplqO
+         jwrwsOI6wtbE2JLLYYTlZ0LiAoChWG+ALUQjxqXx9dgg9jsWcCGTvNUGQP4YuhZCKqnU
+         /yQVFTRvB+6/qYI54dz3Q2FL3s1XV2zGxYmLhCl9kQ7GmNfrqpkpD4CizSx7tV45g3gN
+         XxV4/fV4dlsmWVaZ2VgYNVShvXd/bQIQ6m0tzhl+lT9Z0vlTiCjWwyEDIHnTS/EH9nGR
+         1aOw==
+X-Gm-Message-State: APt69E0dtP8eDzVAbiXTjDb5zgR0Ly3wfyL1EWTfxKAmoH2pE80RbV30
+        MVKo/6k+fnC8WsjDYXmvujFp3XKBn+0wYF0YQDDLmQggeemChoLJaWCEKzAXDWZBKniN0VMpYU7
+        Cf20xBihrytQnQsbUBB2Vue67vqHtPkATW3xU5iZNbl2iTTqigFrhsPaX8g==
+X-Google-Smtp-Source: AAOMgpdDuDHW4zNITZsjyNIngpejuiGT0EMgzRu+qMvQ1I69JP1iRISAos3mzngzi4JFwOdkOJe6VesOieA=
 MIME-Version: 1.0
-X-Received: by 2002:a24:7a05:: with SMTP id a5-v6mr873471itc.19.1529952817005;
- Mon, 25 Jun 2018 11:53:37 -0700 (PDT)
-Date:   Mon, 25 Jun 2018 11:53:24 -0700
-In-Reply-To: <20180620213235.10952-1-bmwill@google.com>
-Message-Id: <20180625185332.164142-1-bmwill@google.com>
-References: <20180620213235.10952-1-bmwill@google.com>
+X-Received: by 2002:a81:3489:: with SMTP id b131-v6mr934401ywa.155.1529952819247;
+ Mon, 25 Jun 2018 11:53:39 -0700 (PDT)
+Date:   Mon, 25 Jun 2018 11:53:25 -0700
+In-Reply-To: <20180625185332.164142-1-bmwill@google.com>
+Message-Id: <20180625185332.164142-2-bmwill@google.com>
+References: <20180620213235.10952-1-bmwill@google.com> <20180625185332.164142-1-bmwill@google.com>
 X-Mailer: git-send-email 2.18.0.rc2.346.g013aa6912e-goog
-Subject: [PATCH v4 0/8] ref-in-want
+Subject: [PATCH v4 1/8] test-pkt-line: add unpack-sideband subcommand
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     jonathantanmy@google.com, gitster@pobox.com, sbeller@google.com,
@@ -63,42 +63,69 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Changes in v4 are fairly minor.  There are a few documentation changes,
-commit message updates, as well as a few small style tweaks based on
-reviewer comments.
+Add an 'unpack-sideband' subcommand to the test-pkt-line helper to
+enable unpacking packet line data sent multiplexed using a sideband.
 
-Brandon Williams (8):
-  test-pkt-line: add unpack-sideband subcommand
-  upload-pack: implement ref-in-want
-  upload-pack: test negotiation with changing repository
-  fetch: refactor the population of peer ref OIDs
-  fetch: refactor fetch_refs into two functions
-  fetch: refactor to make function args narrower
-  fetch-pack: put shallow info in output parameter
-  fetch-pack: implement ref-in-want
+Signed-off-by: Brandon Williams <bmwill@google.com>
+---
+ t/helper/test-pkt-line.c | 33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
 
- Documentation/config.txt                |   7 +
- Documentation/technical/protocol-v2.txt |  28 ++-
- builtin/clone.c                         |   4 +-
- builtin/fetch.c                         | 135 ++++++++-----
- fetch-object.c                          |   2 +-
- fetch-pack.c                            |  50 ++++-
- remote.c                                |   1 +
- remote.h                                |   1 +
- t/helper/test-pkt-line.c                |  33 ++++
- t/lib-httpd.sh                          |   1 +
- t/lib-httpd/apache.conf                 |   8 +
- t/lib-httpd/one-time-sed.sh             |  16 ++
- t/t5703-upload-pack-ref-in-want.sh      | 245 ++++++++++++++++++++++++
- transport-helper.c                      |   6 +-
- transport-internal.h                    |   9 +-
- transport.c                             |  34 +++-
- transport.h                             |   3 +-
- upload-pack.c                           |  66 +++++++
- 18 files changed, 574 insertions(+), 75 deletions(-)
- create mode 100644 t/lib-httpd/one-time-sed.sh
- create mode 100755 t/t5703-upload-pack-ref-in-want.sh
-
+diff --git a/t/helper/test-pkt-line.c b/t/helper/test-pkt-line.c
+index 0f19e53c7..30775f986 100644
+--- a/t/helper/test-pkt-line.c
++++ b/t/helper/test-pkt-line.c
+@@ -1,3 +1,4 @@
++#include "cache.h"
+ #include "pkt-line.h"
+ 
+ static void pack_line(const char *line)
+@@ -48,6 +49,36 @@ static void unpack(void)
+ 	}
+ }
+ 
++static void unpack_sideband(void)
++{
++	struct packet_reader reader;
++	packet_reader_init(&reader, 0, NULL, 0,
++			   PACKET_READ_GENTLE_ON_EOF |
++			   PACKET_READ_CHOMP_NEWLINE);
++
++	while (packet_reader_read(&reader) != PACKET_READ_EOF) {
++		int band;
++		int fd;
++
++		switch (reader.status) {
++		case PACKET_READ_EOF:
++			break;
++		case PACKET_READ_NORMAL:
++			band = reader.line[0] & 0xff;
++			if (band < 1 || band > 2)
++				die("unexpected side band %d", band);
++			fd = band;
++
++			write_or_die(fd, reader.line + 1, reader.pktlen - 1);
++			break;
++		case PACKET_READ_FLUSH:
++			return;
++		case PACKET_READ_DELIM:
++			break;
++		}
++	}
++}
++
+ int cmd_main(int argc, const char **argv)
+ {
+ 	if (argc < 2)
+@@ -57,6 +88,8 @@ int cmd_main(int argc, const char **argv)
+ 		pack(argc - 2, argv + 2);
+ 	else if (!strcmp(argv[1], "unpack"))
+ 		unpack();
++	else if (!strcmp(argv[1], "unpack-sideband"))
++		unpack_sideband();
+ 	else
+ 		die("invalid argument '%s'", argv[1]);
+ 
 -- 
 2.18.0.rc2.346.g013aa6912e-goog
 
