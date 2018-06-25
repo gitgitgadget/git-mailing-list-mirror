@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4251A1F516
-	for <e@80x24.org>; Mon, 25 Jun 2018 18:54:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E689B1F516
+	for <e@80x24.org>; Mon, 25 Jun 2018 18:54:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965066AbeFYSyB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Jun 2018 14:54:01 -0400
-Received: from mail-qt0-f201.google.com ([209.85.216.201]:51531 "EHLO
-        mail-qt0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965046AbeFYSx4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jun 2018 14:53:56 -0400
-Received: by mail-qt0-f201.google.com with SMTP id k8-v6so1181788qtj.18
-        for <git@vger.kernel.org>; Mon, 25 Jun 2018 11:53:55 -0700 (PDT)
+        id S965020AbeFYSxr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Jun 2018 14:53:47 -0400
+Received: from mail-qt0-f202.google.com ([209.85.216.202]:51529 "EHLO
+        mail-qt0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S964861AbeFYSxo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jun 2018 14:53:44 -0400
+Received: by mail-qt0-f202.google.com with SMTP id k8-v6so1181280qtj.18
+        for <git@vger.kernel.org>; Mon, 25 Jun 2018 11:53:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=NQqKiskxr+IdjLPJH3dqwGXNtCOEV5qf7DFU8wNXrKg=;
-        b=qyC6Hdbov9C3CVYVd/IypghexZS+KX29ukVM3fMQNcK+aNhrCQCtM0Il7142jl+tGA
-         eRtzGm4HzgJdbUpNhLZpz4tFU2Qj8m7BHa9jNjEvcMgGIJHy0sf5ERwabTllFLXjTNI+
-         E+iU24ne/jr2A5cAo/QDwvymMpMuCCW5pKrZbYBVPPJCZYNKKDssHxPQc6fJrM4J769Q
-         LG8QIsX2uEmhV/NT82/gCVzrwLhh/HRT6NcqSFuDZZAZBs4s/Rbyp0VzNj0RxGnWFikW
-         VLzxcULdb9xl5Uxpb9u6/Uby/Paz5HdrCgMd9ZyLcmN8rPJ2/kbKvrF4Ki7CD5+uCE73
-         dcqw==
+        bh=GSM5gK+chLbnh3hGWz72Rz1AQzgw3lVpev2hfNCT4pY=;
+        b=IIJe6fofFCyiUWQriqYcAADFSfaEwvTh3XEaeTZwpJdCC1LkimUgs01jOpC+tjnaaE
+         4ERoOtL5UV+gPKXLPPnpwz6r/gOP3E2BXm2ZRy3CdoKNvgXkdaDfoT+waFpEI04cOa38
+         V+GK8ksT111bf/VNY4OUfnthoTSHf66RG/2jwhUXUuM18YRKN6RQmZnOL+zSQERNc5Iw
+         lec0BTTogb5mUYLUnmfWwqx9VI6YzSPfj6zD2kVMRK4BYwW3E1zGvoXdAxg8LpKBVdva
+         VooIm1ubxI1yk9d9kIxiKSl4gpXUOFHKeM2OitI2swhMt+V10nlkvG1TnbyZKrtiC9Uk
+         hNxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=NQqKiskxr+IdjLPJH3dqwGXNtCOEV5qf7DFU8wNXrKg=;
-        b=qB+vasYiNhmfdS8X3LBvjSKZ4YOA7MgjVLmpYKK5euwjCRMlF79AQUvfGhh+zx43BZ
-         E3z0zJ8p4V+EiQpTMvOT3fWXVaapI8dtVR/FlqWj/i/yOZT9r7hqJOjwIocDA4kkOhiP
-         V+ftvtV9bmzOBaScMYLlmoxbXdwyWWLdfbwAO6X54ZmSZ2kev3cAjfClLh4hsqY1pCIU
-         y75mkcLomI+aj9IWguuhbK0DIxVdUojAnvyIuDTUS35wRU4yKg9vfvekxaDlq0V5GKD/
-         gz4fmf0F/PpnTbvqtGu0ovjE8xI1oLQ9UiQB0QAimS06wu3yIySwUBHW9GCHwoI4J5wy
-         yAzQ==
-X-Gm-Message-State: APt69E27qG2YrkNzTrBXPTksQ2KfUIuFd+77uErADbOmsfAo8I1nt8K4
-        Zf+O6jZCLnpvPodkBq7LI03y3B7yIu0gfzRLu6kNgVbvCBrz+LFC2hLrydt3Rm6AvsXFxXhe2Aa
-        WMzGmg+nB9498BWBSFdznQ+2HHP0q46CHA+RvbNkEuMChuUuEjnTMiYQXGw==
-X-Google-Smtp-Source: AAOMgped9aKJduoyHvCbIC4jKwiaz0i8AwpquErhibVYWIloNl1ppv6teh8a0vuoKC9j50F5Z1pjTLV1hbg=
+        bh=GSM5gK+chLbnh3hGWz72Rz1AQzgw3lVpev2hfNCT4pY=;
+        b=ZmI14F+nCfJ24n8g/1VVDjHYFvfi++T3/npzuL+wwqlFUbsbQk8gaerzbBSJ2WORry
+         B8dpPZzqKpJYK+XK25956yzev3Ungi/XWGQDhPKNAYfi/kB45drwEmwwCKwpyA4jBGy4
+         KNjPnUT2gzZYKBXVbG2gnny6WgdH8WQDfDk8WZ37Mi7V2GYVbXppZf0g/rEpz7yRNciu
+         RbLBl0W+V71CQ/TXcNEV3qvPkyb6qcqQ+M/4gP6+ytgU/lA47DNBpjCp3h/1eGKPlzr4
+         4XTNeSlpj0L0hX9UamVfwmTzJRHgfPEVurwuJKNIeCTVx6saPMr+UaNvxTj0gbJ2PFzU
+         y97g==
+X-Gm-Message-State: APt69E22xkoQbImISmlkdFifFYiANX4oGdUu6N+83gLQ3pZesdasIBqI
+        kNLnFFTo9rDXR1nCLQxQmwMYgGVfnYxraI+Bcpx+f1ueHXgbavDTIeGHz1j1ZtIGZOW6ebRP6xm
+        0AGB83BKcNFAFuOebELfXtaEJZjgCHLQGPju/FUU0oul2epO3zQzC42g6Wg==
+X-Google-Smtp-Source: AAOMgpfLFvV6XIgEIIQhmVBQt/9qN+VF6FKjcmKVZtCARWGZdVj2DulbwYFW+FMgLxW2VV9fNhpGKqp4Rqg=
 MIME-Version: 1.0
-X-Received: by 2002:a0c:cdcc:: with SMTP id a12-v6mr7220390qvn.44.1529952835305;
- Mon, 25 Jun 2018 11:53:55 -0700 (PDT)
-Date:   Mon, 25 Jun 2018 11:53:32 -0700
+X-Received: by 2002:a0c:c245:: with SMTP id w5-v6mr7560963qvh.33.1529952823898;
+ Mon, 25 Jun 2018 11:53:43 -0700 (PDT)
+Date:   Mon, 25 Jun 2018 11:53:27 -0700
 In-Reply-To: <20180625185332.164142-1-bmwill@google.com>
-Message-Id: <20180625185332.164142-9-bmwill@google.com>
+Message-Id: <20180625185332.164142-4-bmwill@google.com>
 References: <20180620213235.10952-1-bmwill@google.com> <20180625185332.164142-1-bmwill@google.com>
 X-Mailer: git-send-email 2.18.0.rc2.346.g013aa6912e-goog
-Subject: [PATCH v4 8/8] fetch-pack: implement ref-in-want
+Subject: [PATCH v4 3/8] upload-pack: test negotiation with changing repository
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     jonathantanmy@google.com, gitster@pobox.com, sbeller@google.com,
@@ -63,144 +63,190 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Implement ref-in-want on the client side so that when a server supports
-the "ref-in-want" feature, a client will send "want-ref" lines for each
-reference the client wants to fetch.  This feature allows clients to
-tolerate inconsistencies that exist when a remote repository's refs
-change during the course of negotiation.
+Add tests to check the behavior of fetching from a repository which
+changes between rounds of negotiation (for example, when different
+servers in a load-balancing agreement participate in the same stateless
+RPC negotiation). This forms a baseline of comparison to the ref-in-want
+functionality (which will be introduced to the client in subsequent
+commits), and ensures that subsequent commits do not change existing
+behavior.
 
-This allows a client to request to request a particular ref without
-specifying the OID of the ref.  This means that instead of hitting an
-error when a ref no longer points at the OID it did at the beginning of
-negotiation, negotiation can continue and the value of that ref will be
-sent at the termination of negotiation, just before a packfile is sent.
-
-More information on the ref-in-want feature can be found in
-Documentation/technical/protocol-v2.txt.
+As part of this effort, a mechanism to substitute strings in a single
+HTTP response is added.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- fetch-pack.c                       | 35 +++++++++++++++++++++++++++---
- remote.c                           |  1 +
- remote.h                           |  1 +
- t/t5703-upload-pack-ref-in-want.sh |  4 ++--
- 4 files changed, 36 insertions(+), 5 deletions(-)
+ t/lib-httpd.sh                     |  1 +
+ t/lib-httpd/apache.conf            |  8 +++
+ t/lib-httpd/one-time-sed.sh        | 16 ++++++
+ t/t5703-upload-pack-ref-in-want.sh | 92 ++++++++++++++++++++++++++++++
+ 4 files changed, 117 insertions(+)
+ create mode 100644 t/lib-httpd/one-time-sed.sh
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 73890b894..3a18f5bcd 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1102,9 +1102,10 @@ static void add_shallow_requests(struct strbuf *req_buf,
+diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
+index 435a37465..84f8efdd4 100644
+--- a/t/lib-httpd.sh
++++ b/t/lib-httpd.sh
+@@ -132,6 +132,7 @@ prepare_httpd() {
+ 	cp "$TEST_PATH"/passwd "$HTTPD_ROOT_PATH"
+ 	install_script broken-smart-http.sh
+ 	install_script error.sh
++	install_script one-time-sed.sh
  
- static void add_wants(const struct ref *wants, struct strbuf *req_buf)
- {
-+	int use_ref_in_want = server_supports_feature("fetch", "ref-in-want", 0);
+ 	ln -s "$LIB_HTTPD_MODULE_PATH" "$HTTPD_ROOT_PATH/modules"
+ 
+diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
+index 724d9ae46..fe68d37bb 100644
+--- a/t/lib-httpd/apache.conf
++++ b/t/lib-httpd/apache.conf
+@@ -111,9 +111,14 @@ Alias /auth/dumb/ www/auth/dumb/
+ 	SetEnv GIT_EXEC_PATH ${GIT_EXEC_PATH}
+ 	SetEnv GIT_HTTP_EXPORT_ALL
+ </LocationMatch>
++<LocationMatch /one_time_sed/>
++	SetEnv GIT_EXEC_PATH ${GIT_EXEC_PATH}
++	SetEnv GIT_HTTP_EXPORT_ALL
++</LocationMatch>
+ ScriptAliasMatch /smart_*[^/]*/(.*) ${GIT_EXEC_PATH}/git-http-backend/$1
+ ScriptAlias /broken_smart/ broken-smart-http.sh/
+ ScriptAlias /error/ error.sh/
++ScriptAliasMatch /one_time_sed/(.*) one-time-sed.sh/$1
+ <Directory ${GIT_EXEC_PATH}>
+ 	Options FollowSymlinks
+ </Directory>
+@@ -123,6 +128,9 @@ ScriptAlias /error/ error.sh/
+ <Files error.sh>
+   Options ExecCGI
+ </Files>
++<Files one-time-sed.sh>
++	Options ExecCGI
++</Files>
+ <Files ${GIT_EXEC_PATH}/git-http-backend>
+ 	Options ExecCGI
+ </Files>
+diff --git a/t/lib-httpd/one-time-sed.sh b/t/lib-httpd/one-time-sed.sh
+new file mode 100644
+index 000000000..a9c4aa5f4
+--- /dev/null
++++ b/t/lib-httpd/one-time-sed.sh
+@@ -0,0 +1,16 @@
++#!/bin/sh
 +
- 	for ( ; wants ; wants = wants->next) {
- 		const struct object_id *remote = &wants->old_oid;
--		const char *remote_hex;
- 		struct object *o;
- 
- 		/*
-@@ -1122,8 +1123,10 @@ static void add_wants(const struct ref *wants, struct strbuf *req_buf)
- 			continue;
- 		}
- 
--		remote_hex = oid_to_hex(remote);
--		packet_buf_write(req_buf, "want %s\n", remote_hex);
-+		if (!use_ref_in_want || wants->exact_oid)
-+			packet_buf_write(req_buf, "want %s\n", oid_to_hex(remote));
-+		else
-+			packet_buf_write(req_buf, "want-ref %s\n", wants->name);
- 	}
- }
- 
-@@ -1334,6 +1337,29 @@ static void receive_shallow_info(struct fetch_pack_args *args,
- 	args->deepen = 1;
- }
- 
-+static void receive_wanted_refs(struct packet_reader *reader, struct ref *refs)
-+{
-+	process_section_header(reader, "wanted-refs", 0);
-+	while (packet_reader_read(reader) == PACKET_READ_NORMAL) {
-+		struct object_id oid;
-+		const char *end;
-+		struct ref *r = NULL;
++if [ -e one-time-sed ]; then
++	"$GIT_EXEC_PATH/git-http-backend" >out
 +
-+		if (parse_oid_hex(reader->line, &oid, &end) || *end++ != ' ')
-+			die("expected wanted-ref, got '%s'", reader->line);
++	sed "$(cat one-time-sed)" <out >out_modified
 +
-+		for (r = refs; r; r = r->next) {
-+			if (!strcmp(end, r->name)) {
-+				oidcpy(&r->old_oid, &oid);
-+				break;
-+			}
-+		}
-+	}
-+
-+	if (reader->status != PACKET_READ_DELIM)
-+		die("error processing wanted refs: %d", reader->status);
-+}
-+
- enum fetch_state {
- 	FETCH_CHECK_LOCAL = 0,
- 	FETCH_SEND_REQUEST,
-@@ -1408,6 +1434,9 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
- 			if (process_section_header(&reader, "shallow-info", 1))
- 				receive_shallow_info(args, &reader);
- 
-+			if (process_section_header(&reader, "wanted-refs", 1))
-+				receive_wanted_refs(&reader, ref);
-+
- 			/* get the pack */
- 			process_section_header(&reader, "packfile", 0);
- 			if (get_pack(args, fd, pack_lockfile))
-diff --git a/remote.c b/remote.c
-index abe80c139..2c2376fff 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1735,6 +1735,7 @@ int get_fetch_map(const struct ref *remote_refs,
- 		if (refspec->exact_sha1) {
- 			ref_map = alloc_ref(name);
- 			get_oid_hex(name, &ref_map->old_oid);
-+			ref_map->exact_oid = 1;
- 		} else {
- 			ref_map = get_remote_ref(remote_refs, name);
- 		}
-diff --git a/remote.h b/remote.h
-index 45ecc6cef..976292152 100644
---- a/remote.h
-+++ b/remote.h
-@@ -73,6 +73,7 @@ struct ref {
- 		force:1,
- 		forced_update:1,
- 		expect_old_sha1:1,
-+		exact_oid:1,
- 		deletion:1;
- 
- 	enum {
++	if diff out out_modified >/dev/null; then
++		cat out
++	else
++		cat out_modified
++		rm one-time-sed
++	fi
++else
++	"$GIT_EXEC_PATH/git-http-backend"
++fi
 diff --git a/t/t5703-upload-pack-ref-in-want.sh b/t/t5703-upload-pack-ref-in-want.sh
-index 979ab6d03..b94a51380 100755
+index 0ef182970..979ab6d03 100755
 --- a/t/t5703-upload-pack-ref-in-want.sh
 +++ b/t/t5703-upload-pack-ref-in-want.sh
-@@ -204,7 +204,7 @@ test_expect_success 'server is initially ahead - no ref in want' '
- 	grep "ERR upload-pack: not our ref" err
+@@ -150,4 +150,96 @@ test_expect_success 'want-ref with ref we already have commit for' '
+ 	check_output
  '
  
--test_expect_failure 'server is initially ahead - ref in want' '
-+test_expect_success 'server is initially ahead - ref in want' '
- 	git -C "$REPO" config uploadpack.allowRefInWant true &&
- 	rm -rf local &&
- 	cp -r "$LOCAL_PRISTINE" local &&
-@@ -228,7 +228,7 @@ test_expect_success 'server is initially behind - no ref in want' '
- 	test_cmp expected actual
- '
- 
--test_expect_failure 'server is initially behind - ref in want' '
-+test_expect_success 'server is initially behind - ref in want' '
- 	git -C "$REPO" config uploadpack.allowRefInWant true &&
- 	rm -rf local &&
- 	cp -r "$LOCAL_PRISTINE" local &&
++. "$TEST_DIRECTORY"/lib-httpd.sh
++start_httpd
++
++REPO="$HTTPD_DOCUMENT_ROOT_PATH/repo"
++LOCAL_PRISTINE="$(pwd)/local_pristine"
++
++test_expect_success 'setup repos for change-while-negotiating test' '
++	(
++		git init "$REPO" &&
++		cd "$REPO" &&
++		>.git/git-daemon-export-ok &&
++		test_commit m1 &&
++		git tag -d m1 &&
++
++		# Local repo with many commits (so that negotiation will take
++		# more than 1 request/response pair)
++		git clone "http://127.0.0.1:$LIB_HTTPD_PORT/smart/repo" "$LOCAL_PRISTINE" &&
++		cd "$LOCAL_PRISTINE" &&
++		git checkout -b side &&
++		for i in $(seq 1 33); do test_commit s$i; done &&
++
++		# Add novel commits to upstream
++		git checkout master &&
++		cd "$REPO" &&
++		test_commit m2 &&
++		test_commit m3 &&
++		git tag -d m2 m3
++	) &&
++	git -C "$LOCAL_PRISTINE" remote set-url origin "http://127.0.0.1:$LIB_HTTPD_PORT/one_time_sed/repo" &&
++	git -C "$LOCAL_PRISTINE" config protocol.version 2
++'
++
++inconsistency() {
++	# Simulate that the server initially reports $2 as the ref
++	# corresponding to $1, and after that, $1 as the ref corresponding to
++	# $1. This corresponds to the real-life situation where the server's
++	# repository appears to change during negotiation, for example, when
++	# different servers in a load-balancing arrangement serve (stateless)
++	# RPCs during a single negotiation.
++	printf "s/%s/%s/" \
++	       $(git -C "$REPO" rev-parse $1 | tr -d "\n") \
++	       $(git -C "$REPO" rev-parse $2 | tr -d "\n") \
++	       >"$HTTPD_ROOT_PATH/one-time-sed"
++}
++
++test_expect_success 'server is initially ahead - no ref in want' '
++	git -C "$REPO" config uploadpack.allowRefInWant false &&
++	rm -rf local &&
++	cp -r "$LOCAL_PRISTINE" local &&
++	inconsistency master 1234567890123456789012345678901234567890 &&
++	test_must_fail git -C local fetch 2>err &&
++	grep "ERR upload-pack: not our ref" err
++'
++
++test_expect_failure 'server is initially ahead - ref in want' '
++	git -C "$REPO" config uploadpack.allowRefInWant true &&
++	rm -rf local &&
++	cp -r "$LOCAL_PRISTINE" local &&
++	inconsistency master 1234567890123456789012345678901234567890 &&
++	git -C local fetch &&
++
++	git -C "$REPO" rev-parse --verify master >expected &&
++	git -C local rev-parse --verify refs/remotes/origin/master >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'server is initially behind - no ref in want' '
++	git -C "$REPO" config uploadpack.allowRefInWant false &&
++	rm -rf local &&
++	cp -r "$LOCAL_PRISTINE" local &&
++	inconsistency master "master^" &&
++	git -C local fetch &&
++
++	git -C "$REPO" rev-parse --verify "master^" >expected &&
++	git -C local rev-parse --verify refs/remotes/origin/master >actual &&
++	test_cmp expected actual
++'
++
++test_expect_failure 'server is initially behind - ref in want' '
++	git -C "$REPO" config uploadpack.allowRefInWant true &&
++	rm -rf local &&
++	cp -r "$LOCAL_PRISTINE" local &&
++	inconsistency master "master^" &&
++	git -C local fetch &&
++
++	git -C "$REPO" rev-parse --verify "master" >expected &&
++	git -C local rev-parse --verify refs/remotes/origin/master >actual &&
++	test_cmp expected actual
++'
++
++stop_httpd
++
+ test_done
 -- 
 2.18.0.rc2.346.g013aa6912e-goog
 
