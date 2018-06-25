@@ -2,97 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2539B1F516
-	for <e@80x24.org>; Mon, 25 Jun 2018 23:03:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 726A81F516
+	for <e@80x24.org>; Mon, 25 Jun 2018 23:52:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934347AbeFYXDQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Jun 2018 19:03:16 -0400
-Received: from mail-yw0-f201.google.com ([209.85.161.201]:47017 "EHLO
-        mail-yw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933257AbeFYXDN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jun 2018 19:03:13 -0400
-Received: by mail-yw0-f201.google.com with SMTP id v80-v6so12116831ywc.13
-        for <git@vger.kernel.org>; Mon, 25 Jun 2018 16:03:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
-         :cc;
-        bh=Hcq9sGFq5Oir3NSuaOOpVfuxk3yInSPvWq9HlYm0phU=;
-        b=pEagv4pEjp3eq7jjpBnw/tOGTOz97LZDrZqPzUtcESkmIZXTKhJFDg87UPzvipmeYO
-         DhcBxk0UfvnUeGhiAuXLNGAouHHki8x0+8ykg2YXhtVZmsJg2i2AQ764kxw1EZWTnxk7
-         sdhFUw/Qlxfx/f2hQ1sfGHeJkMfWPkTWvorNMDai+77ZFYv4CGBS4ruV5vD+pW6kHHXe
-         FNL3c9S5Vu0hvItyTAMDPGYsrRZy7dZobPU3oFzcJ6gGjObHsoZk9qYack/TceCOIi0T
-         MhDSFw2hF7VhXH2ND/j+uI5+kAsH8g/Me0Kj1hFRxNK9LDw7BvwEomVmIIH5s+m8kD4/
-         ITlQ==
+        id S933521AbeFYXwq convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 25 Jun 2018 19:52:46 -0400
+Received: from mail-yb0-f178.google.com ([209.85.213.178]:35722 "EHLO
+        mail-yb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932073AbeFYXwp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jun 2018 19:52:45 -0400
+Received: by mail-yb0-f178.google.com with SMTP id x15-v6so2603033ybm.2
+        for <git@vger.kernel.org>; Mon, 25 Jun 2018 16:52:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
-         :references:subject:from:to:cc;
-        bh=Hcq9sGFq5Oir3NSuaOOpVfuxk3yInSPvWq9HlYm0phU=;
-        b=D9gtlwPlWq4RPyUHiSLMArKdyJnkYNdblllrmzwWd8sjFBFidiDd90uydA6lOHpPGy
-         z2QN6FLsxgQhGWL6ENMMn7PVPwpqC2XYMJ/GhPjJFIgCpW8iwThbQvkyzcIlAiAWtvIS
-         mEOfpuZgdEJLujD26SaH6+yhFSoYuo+2LowhKcGV5kRnINeJ1Ahfw5pTcS2NS0k/V0Xp
-         EhAtjyp9vNylcH1xteM7InnpsPFFx687n7FqyDbhuUWGrxBxTAU/i1TAFujH19afYVlT
-         rK3HhWVGvE8KVo9WW4n5ZrVphVNbwkkTiZssPvUsLL1CEfYXZ+TuODWRf0ttI8ntPozX
-         128g==
-X-Gm-Message-State: APt69E1Ko5iiuysD5wnpiN+6CImrr7cQGaxGh4M+9wtdo1qWfsLmo/Sf
-        jLkQa/lMlo5S4DoFi6nCXpuEbvu3uySJGXzxWjEU
-X-Google-Smtp-Source: ADUXVKIa6wbXu+Xao46Oo0kFpIQUt2xOo+xoefKADc+8Tdr6XJuNhqEbNuNI3FgONQbGy7p3zJhwhTmw3FthwuZFib09
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=qEPD5hcwP2QGkSiD2YSvlbmSOWEl542y9YGidF+W3g4=;
+        b=oWtSY56oWfZTcv+KxOG7mJFHvE799SlZOx0nSerhYCSh4rVVRAs7nkJ8e8d3F5B98K
+         HdFgCpZKSHQeILRz1pyueIxRtjZKZdB2PLs3zDsw7aETSkt9VOUnS/O8barLzaARLgaX
+         eh6xGaW9h8r+IHOAH7jo2FC5X08T1MWk7TIYtuG/snppIqU9jeLm3JNG0wdLnt32l41U
+         dn7T9FsVNxTEqadXbJXA1A5ybxcFb4jjGzSzMxDm32vx39ETkT887lTdN/s8Xedf9Qf4
+         ZYprncXMReoKjDuSeFcGMsoPCivhXxutilMZ8McJx1xTvXsCcToyhslZlGlBR33RCdzw
+         ZvdQ==
+X-Gm-Message-State: APt69E0EX0okMzuPWUPJsmWFBso6ud6rXa6LG1o1Y9QPKNr7W6SunVeN
+        1qunnXw7Eraw9BAUBavYc2ScddyvLfCTlffRk7I=
+X-Google-Smtp-Source: ADUXVKJgMKPfBBX1V+kj0F8nAhdnA4MRFSXbTltD8wUVZNIup9UsHTaTb8KuUYW6aIcWhWyyoQzw0SOBaubJK+AXl+M=
+X-Received: by 2002:a25:c04b:: with SMTP id c72-v6mr7295109ybf.12.1529970764894;
+ Mon, 25 Jun 2018 16:52:44 -0700 (PDT)
 MIME-Version: 1.0
-X-Received: by 2002:a81:7305:: with SMTP id o5-v6mr4343885ywc.118.1529967792989;
- Mon, 25 Jun 2018 16:03:12 -0700 (PDT)
-Date:   Mon, 25 Jun 2018 16:03:10 -0700
-In-Reply-To: <20180625185332.164142-1-bmwill@google.com>
-Message-Id: <20180625230310.210182-1-jonathantanmy@google.com>
-References: <20180625185332.164142-1-bmwill@google.com>
-X-Mailer: git-send-email 2.18.0.rc2.347.g0da03f3a46.dirty
-Subject: Re: [PATCH v4 0/8] ref-in-want
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     bmwill@google.com
-Cc:     git@vger.kernel.org, jonathantanmy@google.com, gitster@pobox.com,
-        sbeller@google.com, jrnieder@gmail.com
+References: <20180607140338.32440-1-dstolee@microsoft.com> <20180625143434.89044-1-dstolee@microsoft.com>
+ <20180625143434.89044-12-dstolee@microsoft.com>
+In-Reply-To: <20180625143434.89044-12-dstolee@microsoft.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 25 Jun 2018 19:52:32 -0400
+Message-ID: <CAPig+cRWwTAFRJOwQOi4USk5UZke=2sz_JVDh3+XRKCcBGD5ow@mail.gmail.com>
+Subject: Re: [PATCH v2 11/24] midx: read pack names into array
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Changes in v4 are fairly minor.  There are a few documentation changes,
-> commit message updates, as well as a few small style tweaks based on
-> reviewer comments.
+On Mon, Jun 25, 2018 at 10:35 AM Derrick Stolee <stolee@gmail.com> wrote:
+> diff --git a/midx.c b/midx.c
+> @@ -210,6 +227,20 @@ static void sort_packs_by_name(char **pack_names, uint32_t nr_packs, uint32_t *p
+> +static size_t write_midx_pack_lookup(struct hashfile *f,
+> +                                    char **pack_names,
+> +                                    uint32_t nr_packs)
+> +{
+> +       uint32_t i, cur_len = 0;
+> +
+> +       for (i = 0; i < nr_packs; i++) {
+> +               hashwrite_be32(f, cur_len);
+> +               cur_len += strlen(pack_names[i]) + 1;
+> +       }
+> +
+> +       return sizeof(uint32_t) * (size_t)nr_packs;
+> +}
 
-Patches 4 and 7, which I have commented on previously, look good.
+This static function is never used, thus breaks the build with DEVELOPER=1:
 
-As for patch 2, it still has a missing period in the documentation that
-I remarked upon in [1], but I'm not too worried about that. Having said
-that, Jonathan Nieder suggested [2]:
-
-> Stefan mentioned that the spec says
-> 
->         * The server MUST NOT send any refs which were not requested
->           using 'want-ref' lines.
-> 
-> Can client enforce that?  If not, can the spec say SHOULD NOT for the
-> server and add a MUST describing appropriate client behavior?
-
-I noticed that you did use "SHOULD NOT" instead of "MUST NOT" - in this
-case, you should probably also follow the second part about appropriate
-client behavior - it's probably best to document and implement that we
-ignore all unwanted refs. But considering this situation, though, I
-think it's better to just put "MUST NOT" and have the client enforce
-this.
-
-One more thing - I think that the fetch part needs to be tested more. In
-particular, test cases similar to that of the upload-pack tests
-(multiple ref names, ref name + exact SHA-1), and in addition, handling
-of wildcards (for example, a wildcard that expands to nothing and a
-wildcard that expands to 2 refs).
-
-[1] https://public-inbox.org/git/20180625174056.53053-1-jonathantanmy@google.com/
-
-[2] https://public-inbox.org/git/20180622230119.GL12013@aiede.svl.corp.google.com/
+    midx.c:567:15: error: ‘write_midx_pack_lookup’ defined but not used
+        [-Werror=unused-function]
+    cc1: all warnings being treated as errors
