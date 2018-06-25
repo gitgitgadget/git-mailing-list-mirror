@@ -7,191 +7,114 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 931171F516
-	for <e@80x24.org>; Mon, 25 Jun 2018 14:36:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 92F371F516
+	for <e@80x24.org>; Mon, 25 Jun 2018 14:49:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934538AbeFYOgC (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Jun 2018 10:36:02 -0400
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:41901 "EHLO
-        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934437AbeFYOfD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jun 2018 10:35:03 -0400
-Received: by mail-qk0-f193.google.com with SMTP id d22-v6so1931193qkc.8
-        for <git@vger.kernel.org>; Mon, 25 Jun 2018 07:35:02 -0700 (PDT)
+        id S934461AbeFYOs7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Jun 2018 10:48:59 -0400
+Received: from mail-qt0-f177.google.com ([209.85.216.177]:46847 "EHLO
+        mail-qt0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934325AbeFYOs6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jun 2018 10:48:58 -0400
+Received: by mail-qt0-f177.google.com with SMTP id h5-v6so12129904qtm.13
+        for <git@vger.kernel.org>; Mon, 25 Jun 2018 07:48:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Jf3CP3LbaHCsR4PJ3kPVCbahRo/5azMJQmW+fr8qQfM=;
-        b=pPhaf57pXQPQX23xqsEwNHVZf7sFkhMmPHyW9cmHNmmBtVGNnKqJkXc2W2svEhO6j4
-         20Dh0GTZseQBk25UNaHGoehpXhr5tcO222bEoZf0C6sFTdVb37yrvcjsA/5C3sl+5Bfy
-         KpiZBDRi79o8xw94lnx34Zqk5BOL38TwDBNhP+GYXbs2me3P7TV76PN6Sd9TvmeBayUa
-         qmdgULJRxOgekFOI94xCUxll1iwycqIYBD3B89FhNkHq/xGhhqu//n5Wra1DF1y2ua0c
-         Fx0tBTqLRXY0RgUnQQxYwof9T0uP66JEIiXBPe+ad4RkE44tif4+0KMmAZ3maSH08RWb
-         E6AQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=0fvdtyPHZhBZWC7UyRdU67fAWdyb6XToj1glfmYODzA=;
+        b=SelC2NynxRwKr5emq/MUe28cT3bnZmSdFmolCC3zxFrVjCa8PBDKtvyNgYi8BnGuIr
+         Lo5gyUC/yFzIS4gcsMOsGA6ewnu1pC9Dc9GBcjoQQ5HKP1pzjv8ZJ8lyUYQOWtYmSjfh
+         9fA+hIs11qyM/8eNIPEe8BNx6vHCU5FzqB/9es+Hda4Q7HqYIuk5divrFT6B3amSUl/m
+         PaPoc5JAeZ5ji4YM604wn78PLUWnJ9WpIfWe+obBkxSy9YfZwklMjzhbXFCkhbX6QApL
+         6qIEIFgOAFO48VnK7gdoVeAKzXgJSXsftJhQ4hSslcSZX3kUhmRbCztr9enQqMT5NeQC
+         bz/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=Jf3CP3LbaHCsR4PJ3kPVCbahRo/5azMJQmW+fr8qQfM=;
-        b=UQOU5Yl91grvaE7m2yM95mheJoi4hin49mOs6jdO+yPMJGOcw4efCWwXX8kEKyKtbG
-         O2Bfu3UFCcZjYmmicKrKFW5NS9GOe7e7MMiQdLMLKbjSqsRE98WOIIhBcRIvmGc9lcR8
-         TIqntmfNgY8XsgabsJxA0a57t+lfVZkyBThFgrTd7O0F7O4vlKpu7uCoe1x6EIw/Kf+0
-         WMSxXDjlRddnlCaqlJn96yk9X13lso5LQNEPNHyEW1IIVVkaNrZthlcvKe9LqrLx/Cj7
-         InqeOeVsMffIux0TrHkVs2a8xh+k91eEAEYy5EzcAG8gNDmHpD/8f//P81gFut/2pj9Y
-         457g==
-X-Gm-Message-State: APt69E30CZHyIm/zlR5dmfy6F4WKZN0Mx20lXaiXPoQFD6tGq/egPxhV
-        K/JKvALXJDbAgJ8X+FRH2Lc1be7j
-X-Google-Smtp-Source: ADUXVKL3/ybcydo4NlcsHHl/sqAf2oI52smSTQU1RPQ7XG0UA8iP9+sXdRvcJZafbz0Dix+OT99uCw==
-X-Received: by 2002:a37:1328:: with SMTP id d40-v6mr10624724qkh.198.1529937302208;
-        Mon, 25 Jun 2018 07:35:02 -0700 (PDT)
-Received: from stolee-linux-2.corp.microsoft.com ([2001:4898:8010:0:eb4a:5dff:fe0f:730f])
-        by smtp.gmail.com with ESMTPSA id w46-v6sm12821713qtw.55.2018.06.25.07.35.00
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=0fvdtyPHZhBZWC7UyRdU67fAWdyb6XToj1glfmYODzA=;
+        b=e3w3T7iz38uBwddmO4vBLJAXiDPACLFkQ/xknqyWOFlDK1jlyvVZt6PpAwtKgvhxSC
+         XHlsHQW8tuXYDz+JIzjteEW2PEzf7W2O4z2YkIJE2skzuGLXJ9OwIk4zDQpAIXhn39Zb
+         NdR322UFxX7/SI47uxnzuCQ0eZjQTSknX1wQ0hC6pxwQPL8iU3+EeONYwYE34esseBMZ
+         eyG8Pn+mJzxIgkHMIwT0qThd+9BjS1KwOQzmY4C7/36IAxxcpDc7ggs+hogj1bAL1Tbv
+         yKfbPhq9QAenn43Urf/odlgVw5VlCLkWRFgIEsbm5KkA0F0b8gKlHGPzhf4ys5iKlt+/
+         TnbA==
+X-Gm-Message-State: APt69E1+xyGBSveqbYehkKj2Eg4XyIKdMcYglI2lXY+SpkK9za/fjaKS
+        eqX4TDJ/W3IPqD8O4tmpclQ=
+X-Google-Smtp-Source: AAOMgpdH7DVj5I0pUjpEzS0aP/h6eEUzaSaa1RanPtPi6K0hEXU6Bq192KG86o9/aOu+GWR8Kl+z0A==
+X-Received: by 2002:a0c:b52c:: with SMTP id d44-v6mr11288176qve.34.1529938137333;
+        Mon, 25 Jun 2018 07:48:57 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:b18f:cf0a:3d2:5cc2? ([2001:4898:8010:0:9ac5:cf0a:3d2:5cc2])
+        by smtp.gmail.com with ESMTPSA id o5-v6sm10228134qtm.60.2018.06.25.07.48.55
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 25 Jun 2018 07:35:01 -0700 (PDT)
-From:   Derrick Stolee <stolee@gmail.com>
-X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
-To:     git@vger.kernel.org
-Cc:     sbeller@google.com, pclouds@gmail.com, avarab@gmail.com,
+        Mon, 25 Jun 2018 07:48:56 -0700 (PDT)
+Subject: Re: [PATCH v6 20/21] gc: automatically write commit-graph files
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v2 07/24] multi-pack-index: expand test data
-Date:   Mon, 25 Jun 2018 10:34:17 -0400
-Message-Id: <20180625143434.89044-8-dstolee@microsoft.com>
-X-Mailer: git-send-email 2.18.0.24.g1b579a2ee9
-In-Reply-To: <20180625143434.89044-1-dstolee@microsoft.com>
-References: <20180607140338.32440-1-dstolee@microsoft.com>
- <20180625143434.89044-1-dstolee@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "avarab@gmail.com" <avarab@gmail.com>,
+        "sbeller@google.com" <sbeller@google.com>,
+        "jnareb@gmail.com" <jnareb@gmail.com>,
+        "marten.agren@gmail.com" <marten.agren@gmail.com>,
+        "gitster@pobox.com" <gitster@pobox.com>
+References: <20180606113611.87822-1-dstolee@microsoft.com>
+ <20180608135548.216405-1-dstolee@microsoft.com>
+ <20180608135548.216405-21-dstolee@microsoft.com>
+ <20180608222414.11306-1-szeder.dev@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <abe65bdb-92b1-2932-3d15-3ddfae7e75c3@gmail.com>
+Date:   Mon, 25 Jun 2018 10:48:55 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
+MIME-Version: 1.0
+In-Reply-To: <20180608222414.11306-1-szeder.dev@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As we build the multi-pack-index file format, we want to test the format
-on real repoasitories. Add tests to t5319-multi-pack-index.sh that
-create repository data including multiple packfiles with both version 1
-and version 2 formats.
+On 6/8/2018 6:24 PM, SZEDER Gábor wrote:
+>> The commit-graph file is a very helpful feature for speeding up git
+>> operations. In order to make it more useful, make it possible to
+>> write the commit-graph file during standard garbage collection
+>> operations.
+>>
+>> Add a 'gc.commitGraph' config setting that triggers writing a
+>> commit-graph file after any non-trivial 'git gc' command. Defaults to
+>> false while the commit-graph feature matures. We specifically do not
+>> want to have this on by default until the commit-graph feature is fully
+>> integrated with history-modifying features like shallow clones.
+> So I played around with an earlier version of this patch series a
+> while ago... and as I looked into my gitconfig today I was surprised
+> to have both 'core.commitGraph' and 'gc.commitGraph' config variables
+> set.  When I looked into it I came across this email from Ævar:
+>
+>    https://public-inbox.org/git/87fu3peni2.fsf@evledraar.gmail.com/
+>
+>    > Other than the question if 'gc.commitGraph' and 'core.commitGraph'
+>    > should be independent config variables, and the exact wording of the
+>    > git-gc docs, it looks good to me.
+>
+>    Sans doc errors you pointed out in other places (you need to set
+>    core.commitGraph so it's read at all), I think it's very useful to have
+>    these split up. It's simliar to pack.useBitmaps & pack.writeBitmaps.
+>
+> I think the comparison with pack bitmaps makes a lot of sense and I
+> have to say that I really like those 'useBitmaps' and 'writeBitmaps'
+> variable names, because it's clear right away which one is which,
+> without consulting the documentation.  I think having 'useCommitGraph'
+> and 'writeCommitGraph' variables would be a lot better than the same
+> variable name in two different sections, and I'm sure that then I
+> wouldn't have been caught off guard.
 
-The current 'git multi-pack-index write' command will always write the
-same file with no "real" data. This will be expanded in future commits,
-along with the test expectations.
+Sorry for the late reply. Maybe 'gc.writeCommitGraph' makes it clear 
+that the setting enables writing the commit-graph during  a 'git gc'. Is 
+that more clear?
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- t/t5319-multi-pack-index.sh | 99 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 99 insertions(+)
-
-diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-index 0372704c96..d533fd0dbc 100755
---- a/t/t5319-multi-pack-index.sh
-+++ b/t/t5319-multi-pack-index.sh
-@@ -13,9 +13,108 @@ midx_read_expect() {
- }
- 
- test_expect_success 'write midx with no packs' '
-+	test_when_finished rm pack/multi-pack-index &&
- 	git multi-pack-index --object-dir=. write &&
- 	test_path_is_file pack/multi-pack-index &&
- 	midx_read_expect
- '
- 
-+test_expect_success 'create objects' '
-+	for i in `test_seq 1 5`
-+	do
-+		iii=$(printf '%03i' $i)
-+		test-tool genrandom "bar" 200 > wide_delta_$iii &&
-+		test-tool genrandom "baz $iii" 50 >> wide_delta_$iii &&
-+		test-tool genrandom "foo"$i 100 > deep_delta_$iii &&
-+		test-tool genrandom "foo"$(expr $i + 1) 100 >> deep_delta_$iii &&
-+		test-tool genrandom "foo"$(expr $i + 2) 100 >> deep_delta_$iii &&
-+		echo $iii >file_$iii &&
-+		test-tool genrandom "$iii" 8192 >>file_$iii &&
-+		git update-index --add file_$iii deep_delta_$iii wide_delta_$iii &&
-+		i=$(expr $i + 1) || return 1
-+	done &&
-+	{ echo 101 && test-tool genrandom 100 8192; } >file_101 &&
-+	git update-index --add file_101 &&
-+	tree=$(git write-tree) &&
-+	commit=$(git commit-tree $tree </dev/null) && {
-+	echo $tree &&
-+	git ls-tree $tree | sed -e "s/.* \\([0-9a-f]*\\)	.*/\\1/"
-+	} >obj-list &&
-+	git update-ref HEAD $commit
-+'
-+
-+test_expect_success 'write midx with one v1 pack' '
-+	pack=$(git pack-objects --index-version=1 pack/test <obj-list) &&
-+	test_when_finished rm pack/test-$pack.pack pack/test-$pack.idx pack/multi-pack-index &&
-+	git multi-pack-index --object-dir=. write &&
-+	midx_read_expect
-+'
-+
-+test_expect_success 'write midx with one v2 pack' '
-+	git pack-objects --index-version=2,0x40 pack/test <obj-list &&
-+	git multi-pack-index --object-dir=. write &&
-+	midx_read_expect
-+'
-+
-+test_expect_success 'Add more objects' '
-+	for i in `test_seq 6 5`
-+	do
-+		iii=$(printf '%03i' $i)
-+		test-tool genrandom "bar" 200 > wide_delta_$iii &&
-+		test-tool genrandom "baz $iii" 50 >> wide_delta_$iii &&
-+		test-tool genrandom "foo"$i 100 > deep_delta_$iii &&
-+		test-tool genrandom "foo"$(expr $i + 1) 100 >> deep_delta_$iii &&
-+		test-tool genrandom "foo"$(expr $i + 2) 100 >> deep_delta_$iii &&
-+		echo $iii >file_$iii &&
-+		test-tool genrandom "$iii" 8192 >>file_$iii &&
-+		git update-index --add file_$iii deep_delta_$iii wide_delta_$iii &&
-+		i=$(expr $i + 1) || return 1
-+	done &&
-+	{ echo 101 && test-tool genrandom 100 8192; } >file_101 &&
-+	git update-index --add file_101 &&
-+	tree=$(git write-tree) &&
-+	commit=$(git commit-tree $tree -p HEAD</dev/null) && {
-+	echo $tree &&
-+	git ls-tree $tree | sed -e "s/.* \\([0-9a-f]*\\)	.*/\\1/"
-+	} >obj-list2 &&
-+	git update-ref HEAD $commit
-+'
-+
-+test_expect_success 'write midx with two packs' '
-+	git pack-objects --index-version=1 pack/test-2 <obj-list2 &&
-+	git multi-pack-index --object-dir=. write &&
-+	midx_read_expect
-+'
-+
-+test_expect_success 'Add more packs' '
-+	for j in `test_seq 1 10`
-+	do
-+		iii=$(printf '%03i' $i)
-+		test-tool genrandom "bar" 200 > wide_delta_$iii &&
-+		test-tool genrandom "baz $iii" 50 >> wide_delta_$iii &&
-+		test-tool genrandom "foo"$i 100 > deep_delta_$iii &&
-+		test-tool genrandom "foo"$(expr $i + 1) 100 >> deep_delta_$iii &&
-+		test-tool genrandom "foo"$(expr $i + 2) 100 >> deep_delta_$iii &&
-+		echo $iii >file_$iii &&
-+		test-tool genrandom "$iii" 8192 >>file_$iii &&
-+		git update-index --add file_$iii deep_delta_$iii wide_delta_$iii &&
-+		{ echo 101 && test-tool genrandom 100 8192; } >file_101 &&
-+		git update-index --add file_101 &&
-+		tree=$(git write-tree) &&
-+		commit=$(git commit-tree $tree -p HEAD</dev/null) && {
-+		echo $tree &&
-+		git ls-tree $tree | sed -e "s/.* \\([0-9a-f]*\\)	.*/\\1/"
-+		} >obj-list &&
-+		git update-ref HEAD $commit &&
-+		git pack-objects --index-version=2 test-pack <obj-list &&
-+		i=$(expr $i + 1) || return 1 &&
-+		j=$(expr $j + 1) || return 1
-+	done
-+'
-+
-+test_expect_success 'write midx with twelve packs' '
-+	git multi-pack-index --object-dir=. write &&
-+	midx_read_expect
-+'
-+
- test_done
--- 
-2.18.0.24.g1b579a2ee9
-
+Thanks,
+-Stolee
