@@ -2,101 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 015F01F516
-	for <e@80x24.org>; Mon, 25 Jun 2018 17:33:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B65A21F516
+	for <e@80x24.org>; Mon, 25 Jun 2018 17:38:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934693AbeFYRdz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Jun 2018 13:33:55 -0400
-Received: from mail-wr0-f178.google.com ([209.85.128.178]:42937 "EHLO
-        mail-wr0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934051AbeFYRdy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jun 2018 13:33:54 -0400
-Received: by mail-wr0-f178.google.com with SMTP id w10-v6so14510839wrk.9
-        for <git@vger.kernel.org>; Mon, 25 Jun 2018 10:33:53 -0700 (PDT)
+        id S1755497AbeFYRiW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Jun 2018 13:38:22 -0400
+Received: from mail-it0-f41.google.com ([209.85.214.41]:55721 "EHLO
+        mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755365AbeFYRiV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jun 2018 13:38:21 -0400
+Received: by mail-it0-f41.google.com with SMTP id 16-v6so13629353itl.5
+        for <git@vger.kernel.org>; Mon, 25 Jun 2018 10:38:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=6PBb2KLo18t9GgUk6MpKBU3skdqsf/fNMpSPVwCjaCg=;
-        b=ZhU21SSZzz7BRj8QvEdKMJP8UNe+25yLtto4jbXCDxOB8F/oSkD4NKaf5WUSXBuhTX
-         /qauEgNKJEmYwzEca2F1Ko5RrvgKxIWjJn4I6kLc7qui7S+OR6Vh0QgMp9M4pzNyzJun
-         LKpTyTM1qKNzxMinIdM92QG+0iYVGFB8oTCx65jg6yazH/WJTenr+4Y04wAYtBuC5FP6
-         EiL0aj9xvDKrGx+C6ngDgcY+JbVvbQKlRXaiwnAS9lX3FEJiam+zt0iP9qS59IEZQR3+
-         k6EWE5Coe96FMF/Xhwpuav/yNOgcHmUTXN7yEe5GAEcxVnHncaED+Mam9KQHHlAS4SV9
-         ALOw==
+        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ebIpZr+5URZ4qHPJReryOnIjF+qOvh9fQb1hz2N6SOc=;
+        b=DN33QWEEhJHkWbAYarqi+2mfX1zaOaFhTx3VtJVAcuPN979Fjcxb2izfPB8hS0Foey
+         9lefIK2T0kily1eWQ896QbXMqQWe2TUjt0Fsf7QkRrfYSZCvAydAmFo7umqs1u0Ln+Ef
+         2kJapbS7ly/xHUUhoGFMxU/0i/tucMUV5BpAEFzUCAuYb6bQQ6h8ts2naxBXsJSTQL5B
+         SMc8y93secvfta0VpLQTFvxhB18OTrvtQKdfHLlOAQXctEidOX2CqYMXtljtIC4+GeQz
+         rCxUJEC5/gShRrNnwVRZvVucDkekVt4bh6yDw2gylkEdlonuOeYxGGi8rZhx2BWOmIPa
+         UnfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=6PBb2KLo18t9GgUk6MpKBU3skdqsf/fNMpSPVwCjaCg=;
-        b=HlbShc30fah0KhHTBLtwtmFGK+t1rP/ju67qqiDDnzWQQVkeJNqSqeqOIjkCyehhoO
-         hyLczRpyn+wSpu1kgdhyEelJtzRnqVAjMOCCVUOC4lG91W0G7BIgh31pgelVcTvMJMlI
-         0XDBNkC7OsATrPd9pbEMWRsBPLD3OEuJ59ttqJX81U1KR4LP3MAkqXeoimGTQKL9YvDn
-         vLNAhsZTiqqJgAbCAnD52TXVfC6611VZdDYOKY7WO40fiBzOF3o6Bng6iHmWGGrMdrU0
-         BO5uWQuKPcs6a2y07S4QMowEjNtShgoNoHJ9CMuS4kpjB5I5p6v4m6PbAVXafLMRPmm0
-         xPpA==
-X-Gm-Message-State: APt69E3m7OIs5/zwI0vUn0F95mgZu61XDoqrp2xQt2aZ5EDbaY9zr/k8
-        Jc9cJ5D17MPvo2n4LdqzOUpd0cG/
-X-Google-Smtp-Source: AAOMgpcWn8T8pe62Dp4NXk6WLQqJ3zCPfoRDuzdBwWY1CLdBGT7c29O3tf92nImXvsPIlPZzyYlLLQ==
-X-Received: by 2002:adf:a6ec:: with SMTP id t99-v6mr10854656wrc.51.1529948032724;
-        Mon, 25 Jun 2018 10:33:52 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id r2-v6sm14890865wrq.55.2018.06.25.10.33.51
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 25 Jun 2018 10:33:51 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Tiago Botelho <tiagonbotelho@gmail.com>
-Cc:     git@vger.kernel.org, christian.couder@gmail.com,
-        johannes.schindelin@gmx.de, haraldnordgren@gmail.com,
-        Tiago Botelho <tiagonbotelho@hotmail.com>
-Subject: Re: [RFC PATCH v5] Implement --first-parent for git rev-list --bisect
-References: <20180622123945.68852-1-tiagonbotelho@hotmail.com>
-Date:   Mon, 25 Jun 2018 10:33:51 -0700
-In-Reply-To: <20180622123945.68852-1-tiagonbotelho@hotmail.com> (Tiago
-        Botelho's message of "Fri, 22 Jun 2018 13:39:45 +0100")
-Message-ID: <xmqq4lhqpy80.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ebIpZr+5URZ4qHPJReryOnIjF+qOvh9fQb1hz2N6SOc=;
+        b=CH+W2d3xZoJ0OI4dY+t+uaSW8I0hec1ElyBqBzTaJ/yRcPMuRESzXMeJBSLYdKe2wC
+         syfnC8VpMv1VrXMXirUgZIo9Ya4jnztrHauwIXmucxzSaVa1z5MWMKyIiWGbMPwJq7VZ
+         O3Xh6EWhUxLwYIvjm6I4BytWoKEZeVUYfmKnA64kXVUbyRnrUJ/8X23k2T7ZVz4zWun4
+         TgPfy3w9epsGA2OziAP4V1K8kKM34A6GIcXR1WySt+vee2wPgUpAv3gsUkekHtRUS40u
+         s7SzEKNSlea8aGu4zZHH58TCVqnmATt5DwpPfQi4UBnx4plcpDx4zwDvHTgVAj4irgCw
+         30+g==
+X-Gm-Message-State: APt69E2MO01apTQQNoCYF1C3L0ZJ3zuabb7M+NvCEQETdVBd9fAW6X2n
+        9IVfk7cW0hfz8OKnIW1Bd1zH+4QcKoBr+S9tVbbobQ==
+X-Google-Smtp-Source: ADUXVKLdAJivBQbG5mw0afF0U5lZ0hXZhVc3I6//JjBAvIHfTniNGOKN1e/HcFtErVvv3KRQYffroGkzTW3uV1MHEQU=
+X-Received: by 2002:a02:946b:: with SMTP id a98-v6mr10361569jai.18.1529948300858;
+ Mon, 25 Jun 2018 10:38:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <c5abdd45-a919-96f6-8560-5fd943069f5e@syntevo.com>
+ <1c7e338e-157b-fd2f-5eb1-01373f627acd@kdbg.org> <2cf2d884-de1a-7b9b-5aca-1f396ad205a2@syntevo.com>
+ <CAGyf7-GvcN8EhMgtaZcDJNYNdfLwVH8HVBDmZqJU40nze0NSEA@mail.gmail.com> <xmqqfu1aq0ya.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqfu1aq0ya.fsf@gitster-ct.c.googlers.com>
+From:   Bryan Turner <bturner@atlassian.com>
+Date:   Mon, 25 Jun 2018 10:38:07 -0700
+Message-ID: <CAGyf7-GeE8jRGPkME9rHKPtHEQ6P1+ebpMMWAtMh01uO3bfy8w@mail.gmail.com>
+Subject: Re: Unexpected ignorecase=false behavior on Windows
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Marc Strapetz <marc.strapetz@syntevo.com>, j6t@kdbg.org,
+        Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Tiago Botelho <tiagonbotelho@gmail.com> writes:
+On Mon, Jun 25, 2018 at 9:34 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Bryan Turner <bturner@atlassian.com> writes:
+>
+> > Git on Windows is not designed to run with anything other than
+> > core.ignoreCase=true, and attempting to do so will cause unexpected
+> > behavior.
+>
+> Even though I fully agree with your conclusion that the document
+> must make it crystal clear that core.ignoreCase must be set to
+> reflect the reality, I found the above statement misleading and do
+> not want it to be used as the basis of a documentation update.  But
+> it is possible that I am misunderstanding the current state of
+> affairs.
+>
+> Is the case insensitivity that deeply ingrained in the Git for
+> Windows code?
+>
+> IOW, even if the code used to build Git for Windows were executed on
+> a case sensitive filesystem, is there a case-smashing code on _our_
+> side that kicks in to cause unexpected behaviour, _even_ when
+> core.ignorecase is set to false to match (hypothetical) reality?
+>
+> To put it yet another way, if a case sensitive filesystem were
+> available, wouldn't running "git init" from Git for Windows in a
+> directory on such a filesytem set core.ignoreCase to false in the
+> resulting repository and from then on wouldn't everything work fine?
+>
+> If my suspicion (i.e. the code for Git for Windows is perfectly
+> fine---it is just the users are not running with case sensitive
+> filesystems and flipping core.ignoreCase to true does not make case
+> incapable filesystems suddenly capable) is correct, then it is not
+> "Git on Windows is not designed to run" from two angles.  (1) it is
+> not just Git for Windows---Git running on UNIX that mounts VFAT, or
+> Git running on macOS with default HFS+, would exhibit the same
+> symptom, and (2) it is not "Git is not designed to run"---it is
+> core.ignoreCase that is not designed to be a way to make case
+> incapable filesystems suddenly capable of distinguishing cases in
+> filesystems.
 
-> +test_expect_success "--bisect-all --first-parent" '
-> +cat >expect1 <<EOF &&
-> +$(git rev-parse CC) (dist=2)
-> +$(git rev-parse EX) (dist=1)
-> +$(git rev-parse D) (dist=1)
-> +$(git rev-parse FX) (dist=0)
-> +EOF
-> +
-> +cat >expect2 <<EOF &&
-> +$(git rev-parse CC) (dist=2)
-> +$(git rev-parse D) (dist=1)
-> +$(git rev-parse EX) (dist=1)
-> +$(git rev-parse FX) (dist=0)
-> +EOF
-> +
-> +git rev-list --bisect-all --first-parent FX ^A >actual &&
-> +  ( test_cmp expect1 actual || test_cmp expect2 actual )
-> +'
+Apologies for the unclear word choice. Given Git was designed first to
+work with case-sensitive filesystems, certainly the obvious (and
+correct) conclusion is that Git itself is fine in a case-sensitive
+environment. It wasn't my intention to suggest otherwise.
 
-I hate to say this, but the above looks like a typical
-unmaintainable mess.
+Note that my word choice was not "Git _for_ Windows", however; it was
+"Git _on_ Windows". (This still doesn't change the correctness of your
+clarification, let me be quick to add. I'm only pointing it out
+because it's relevant to what I intended the comment to say.) On
+Windows, the default filesystem is NTFS, and NTFS is not case
+sensitive. Hence, Git on Windows (by which I'm implying Git on NTFS),
+is not designed to run with anything other than core.ignoreCase=true,
+because that setting aligns Git's expectations with how the underlying
+filesystem actually works. In other words, Git on a case-insensitive
+filesystem (APFS, HFS+, FAT32, exFAT, vFAT, NTFS, etc.) is not
+designed to be run with anything other than core.ignoreCase=true.
 
-What happens when you or somebody else later needs to update the
-graph to be tested to add one more commit (or even more)?  Would it
-be enough to add another "rev-parse" plus "dist=X" line in both
-expects?  Or do we see a trap for combinatorial explosion that
-requires us to add new expect$N?
+Bryan
 
-
-
-
+>
+> Thanks.
