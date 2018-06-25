@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BEFA41F516
-	for <e@80x24.org>; Mon, 25 Jun 2018 14:35:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9DC461F516
+	for <e@80x24.org>; Mon, 25 Jun 2018 14:35:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934434AbeFYOe6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Jun 2018 10:34:58 -0400
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:45447 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934426AbeFYOe4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jun 2018 10:34:56 -0400
-Received: by mail-qt0-f194.google.com with SMTP id i18-v6so12083581qtp.12
-        for <git@vger.kernel.org>; Mon, 25 Jun 2018 07:34:55 -0700 (PDT)
+        id S934450AbeFYOfG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Jun 2018 10:35:06 -0400
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:44919 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934420AbeFYOey (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jun 2018 10:34:54 -0400
+Received: by mail-qk0-f196.google.com with SMTP id 185-v6so7589207qkk.11
+        for <git@vger.kernel.org>; Mon, 25 Jun 2018 07:34:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=NStlFOJS8nL1zXynDZeiYU5EqLvivNEOpVXeL1TDLQc=;
-        b=aHOGzeYl33+neLMdZL4bIh/BtxXsp6OMbOIYwCxjL6pmbUTWjbcZwrqZbVLuPCrtCO
-         FkcQOOw5RF53PlaspO2+6/YnsHhvB9O0nRHMW5QzfPf8RtIj63sZx6f1plyDn39PwvOv
-         AWhptWGXTrWcbAvnhDASTDmXvxr3PV9SCxOZu+ok61fnCLiBNh4jTL47rYUi5IF7Hmr7
-         eXeN1Tww9uIIR8fKkmulTs0G8Mca867F6swdzYjdgMCynTHupG+lSUaiQZgI24/DiBYn
-         a4rKAkyF4V+ggW/U9s6vZu6ZL+gDUBiO8UZNjsmDpLDTW6vNVT/PcaoPmjdEx7v2UhJA
-         gmDg==
+        bh=3dpSAKo43xmwcpCevwgzh5p5tfFE5JQX/5YBTRNWTOo=;
+        b=pZSJrA+AJAL6YmRd4qSOmjh+I89n0AInYuDeR6sMVUmcPN3/L/fBTzJhsPFgwQXrSO
+         A7ZAEZKyVeKqAhCBH2Blc080TwYIpngBav0BFam0FVJ7iB7BZItnwKTrpI2JvuOgIG3M
+         pR2kVlnK3kAkru2Jon5ijIigPu/asX+rO//tlbmkiErnmyfX2BleV+2HNJbvVKCIBO3D
+         6B5j4NzHAcxuK0+JRoUpH7EL60Fzloo/r+9AWlGilTIS03xWJYKirpjegzs2zl1EDoa3
+         q2BojSx8TfCNihaK7WkrvE+lWUxa2iYC5toD0tahgXSnCy7jh4lzF5o07zeamlLurNac
+         Mefg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=NStlFOJS8nL1zXynDZeiYU5EqLvivNEOpVXeL1TDLQc=;
-        b=IrW7YKQYbqu5uTbnSROA+I0zpE5V4DT8WAI9XP+ikMe5Jy9RCFX7ZAU3QMpdhxvkyX
-         ttGHhGq2ooaxXw9MJLSDshoM1udSFW6hUaAIt1LfVNqdUdZUrvH3huIOaDdN7DYihcKI
-         peD5ILk1I80blsZtOJ2b1Z82cbKFjp9Ao1XDcALLs5vsCuGM8468MOH7zpWBW4FpZDYJ
-         fGfZjUF5Txut9m09QaKgL9PF81NZ4P+ywyCQAOvTgrgXkHnKjXbu7AoFT9s/C0Gahr7x
-         hxbvWC7b6TsrSoQRYNlMvjwcE3vWdYXmKYEiTrNd72EZfcfdpyoD4sQiEqrpZYtEElYa
-         NvEQ==
-X-Gm-Message-State: APt69E39wpay6u+f8KyW/sAWfuIk3me+fb7k8I3pJ0uO4Qac986xlKtq
-        PDeNmcqLDCvqRmcUulO10qug8Wn9
-X-Google-Smtp-Source: AAOMgpfKdSweARV1+sr6PmXxVogNq51R9b3tw8zqKFobtPESzQWg1wxL3Z4IhdZ8MZ8/YWIx5pr8zQ==
-X-Received: by 2002:ac8:107:: with SMTP id e7-v6mr2747041qtg.119.1529937295332;
-        Mon, 25 Jun 2018 07:34:55 -0700 (PDT)
+        bh=3dpSAKo43xmwcpCevwgzh5p5tfFE5JQX/5YBTRNWTOo=;
+        b=jk3LoAMqlKaHQaN0nIvTmNZEIPHlDXDJUpEDd6pyeOKtWryR+OZWKk1lNrZSDFMVpf
+         p81w9SM1FenKElDbNQvSiPCAr10NDtD2mfmdUF5C7Q2KFzoJaS68mvuLoSo3HYf7N5PB
+         v0nrNO2Bt3CxVuDKZ2CHSCJ+iHrjwDms5Xxl+UCAQ3o73n5nhb04qhh+OUZd/qEDirHz
+         e8fWWau4PUUSEOGXaY3GgwX+EHnAcpI5dZTD+zbcl/6DvovdkSZKUZcnBhbphI3R7YjH
+         mG2eqLbp4oFzNN9KML6SamRHU/+ndmWBRL1jmKUNO0bAaG+M/AfKlABY9ROt/w6IsfU8
+         feTA==
+X-Gm-Message-State: APt69E0bRaDSto89skTEWXMp8eR3WAIgbH3qpf8ZJ4e0T2Znr538Zdq/
+        7XyW29YvxVsLoS5X1EI6G5OqtATm
+X-Google-Smtp-Source: AAOMgpcHfKjWdGEbRrOEPXAwFfuFWBOkRVtn91oARTrErof0YY9V8Avfodyw66dtT5fBC0K17Ik2tg==
+X-Received: by 2002:ae9:dd06:: with SMTP id r6-v6mr10617541qkf.417.1529937293466;
+        Mon, 25 Jun 2018 07:34:53 -0700 (PDT)
 Received: from stolee-linux-2.corp.microsoft.com ([2001:4898:8010:0:eb4a:5dff:fe0f:730f])
-        by smtp.gmail.com with ESMTPSA id w46-v6sm12821713qtw.55.2018.06.25.07.34.54
+        by smtp.gmail.com with ESMTPSA id w46-v6sm12821713qtw.55.2018.06.25.07.34.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 25 Jun 2018 07:34:54 -0700 (PDT)
+        Mon, 25 Jun 2018 07:34:52 -0700 (PDT)
 From:   Derrick Stolee <stolee@gmail.com>
 X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, pclouds@gmail.com, avarab@gmail.com,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v2 04/24] multi-pack-index: add 'write' verb
-Date:   Mon, 25 Jun 2018 10:34:14 -0400
-Message-Id: <20180625143434.89044-5-dstolee@microsoft.com>
+Subject: [PATCH v2 03/24] multi-pack-index: add builtin
+Date:   Mon, 25 Jun 2018 10:34:13 -0400
+Message-Id: <20180625143434.89044-4-dstolee@microsoft.com>
 X-Mailer: git-send-email 2.18.0.24.g1b579a2ee9
 In-Reply-To: <20180625143434.89044-1-dstolee@microsoft.com>
 References: <20180607140338.32440-1-dstolee@microsoft.com>
@@ -65,146 +65,172 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In anticipation of writing multi-pack-indexes, add a
-'git multi-pack-index write' subcommand and send the options to a
-write_midx_file() method. Also create a basic test file that tests
-the 'write' subcommand.
+This new 'git multi-pack-index' builtin will be the plumbing access
+for writing, reading, and checking multi-pack-index files. The
+initial implementation is a no-op.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/git-multi-pack-index.txt | 22 +++++++++++++++++++++-
+ .gitignore                             |  3 +-
+ Documentation/git-multi-pack-index.txt | 36 ++++++++++++++++++++++++
  Makefile                               |  1 +
- builtin/multi-pack-index.c             | 10 +++++++++-
- midx.c                                 |  7 +++++++
- midx.h                                 |  6 ++++++
- t/t5319-multi-pack-index.sh            | 10 ++++++++++
- 6 files changed, 54 insertions(+), 2 deletions(-)
- create mode 100644 midx.c
- create mode 100644 midx.h
- create mode 100755 t/t5319-multi-pack-index.sh
+ builtin.h                              |  1 +
+ builtin/multi-pack-index.c             | 38 ++++++++++++++++++++++++++
+ command-list.txt                       |  1 +
+ git.c                                  |  1 +
+ 7 files changed, 80 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/git-multi-pack-index.txt
+ create mode 100644 builtin/multi-pack-index.c
 
+diff --git a/.gitignore b/.gitignore
+index 388cc4beee..25633bc515 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -99,8 +99,9 @@
+ /git-mergetool--lib
+ /git-mktag
+ /git-mktree
+-/git-name-rev
++/git-multi-pack-index
+ /git-mv
++/git-name-rev
+ /git-notes
+ /git-p4
+ /git-pack-redundant
 diff --git a/Documentation/git-multi-pack-index.txt b/Documentation/git-multi-pack-index.txt
-index 9877f9c441..c4dc92ddd9 100644
---- a/Documentation/git-multi-pack-index.txt
+new file mode 100644
+index 0000000000..9877f9c441
+--- /dev/null
 +++ b/Documentation/git-multi-pack-index.txt
-@@ -9,7 +9,7 @@ git-multi-pack-index - Write and verify multi-pack-indexes
- SYNOPSIS
- --------
- [verse]
--'git multi-pack-index' [--object-dir <dir>]
-+'git multi-pack-index' [--object-dir <dir>] <verb>
- 
- DESCRIPTION
- -----------
-@@ -23,6 +23,26 @@ OPTIONS
- 	<dir>/packs/multi-pack-index for the current MIDX file, and
- 	<dir>/packs for the pack-files to index.
- 
-+write::
-+	When given as the verb, write a new MIDX file to
-+	<dir>/packs/multi-pack-index.
+@@ -0,0 +1,36 @@
++git-multi-pack-index(1)
++======================
++
++NAME
++----
++git-multi-pack-index - Write and verify multi-pack-indexes
 +
 +
-+EXAMPLES
++SYNOPSIS
 +--------
++[verse]
++'git multi-pack-index' [--object-dir <dir>]
 +
-+* Write a MIDX file for the packfiles in the current .git folder.
-++
-+-----------------------------------------------
-+$ git multi-pack-index write
-+-----------------------------------------------
++DESCRIPTION
++-----------
++Write or verify a multi-pack-index (MIDX) file.
 +
-+* Write a MIDX file for the packfiles in an alternate.
-++
-+-----------------------------------------------
-+$ git multi-pack-index --object-dir <alt> write
-+-----------------------------------------------
++OPTIONS
++-------
 +
- 
- SEE ALSO
- --------
++--object-dir <dir>::
++	Use given directory for the location of Git objects. We check
++	<dir>/packs/multi-pack-index for the current MIDX file, and
++	<dir>/packs for the pack-files to index.
++
++
++SEE ALSO
++--------
++See link:technical/multi-pack-index.html[The Multi-Pack-Index Design
++Document] and link:technical/pack-format.html[The Multi-Pack-Index
++Format] for more information on the multi-pack-index feature.
++
++
++GIT
++---
++Part of the linkgit:git[1] suite
 diff --git a/Makefile b/Makefile
-index 54610875ec..f5636c711d 100644
+index e4b503d259..54610875ec 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -890,6 +890,7 @@ LIB_OBJS += merge.o
- LIB_OBJS += merge-blobs.o
- LIB_OBJS += merge-recursive.o
- LIB_OBJS += mergesort.o
-+LIB_OBJS += midx.o
- LIB_OBJS += name-hash.o
- LIB_OBJS += notes.o
- LIB_OBJS += notes-cache.o
+@@ -1047,6 +1047,7 @@ BUILTIN_OBJS += builtin/merge-recursive.o
+ BUILTIN_OBJS += builtin/merge-tree.o
+ BUILTIN_OBJS += builtin/mktag.o
+ BUILTIN_OBJS += builtin/mktree.o
++BUILTIN_OBJS += builtin/multi-pack-index.o
+ BUILTIN_OBJS += builtin/mv.o
+ BUILTIN_OBJS += builtin/name-rev.o
+ BUILTIN_OBJS += builtin/notes.o
+diff --git a/builtin.h b/builtin.h
+index 4e0f64723e..70997d7ace 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -191,6 +191,7 @@ extern int cmd_merge_recursive(int argc, const char **argv, const char *prefix);
+ extern int cmd_merge_tree(int argc, const char **argv, const char *prefix);
+ extern int cmd_mktag(int argc, const char **argv, const char *prefix);
+ extern int cmd_mktree(int argc, const char **argv, const char *prefix);
++extern int cmd_multi_pack_index(int argc, const char **argv, const char *prefix);
+ extern int cmd_mv(int argc, const char **argv, const char *prefix);
+ extern int cmd_name_rev(int argc, const char **argv, const char *prefix);
+ extern int cmd_notes(int argc, const char **argv, const char *prefix);
 diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
-index f101873525..c8f1f19d1f 100644
---- a/builtin/multi-pack-index.c
+new file mode 100644
+index 0000000000..f101873525
+--- /dev/null
 +++ b/builtin/multi-pack-index.c
-@@ -2,9 +2,10 @@
- #include "cache.h"
- #include "config.h"
- #include "parse-options.h"
-+#include "midx.h"
- 
- static char const * const builtin_multi_pack_index_usage[] ={
--	N_("git multi-pack-index [--object-dir <dir>]"),
-+	N_("git multi-pack-index [--object-dir <dir>] [write]"),
- 	NULL
- };
- 
-@@ -34,5 +35,12 @@ int cmd_multi_pack_index(int argc, const char **argv,
- 	if (!opts.object_dir)
- 		opts.object_dir = get_object_directory();
- 
-+	if (argc == 0)
+@@ -0,0 +1,38 @@
++#include "builtin.h"
++#include "cache.h"
++#include "config.h"
++#include "parse-options.h"
++
++static char const * const builtin_multi_pack_index_usage[] ={
++	N_("git multi-pack-index [--object-dir <dir>]"),
++	NULL
++};
++
++static struct opts_multi_pack_index {
++	const char *object_dir;
++} opts;
++
++int cmd_multi_pack_index(int argc, const char **argv,
++			 const char *prefix)
++{
++	static struct option builtin_multi_pack_index_options[] = {
++		OPT_FILENAME(0, "object-dir", &opts.object_dir,
++		  N_("The object directory containing set of packfile and pack-index pairs")),
++		OPT_END(),
++	};
++
++	if (argc == 2 && !strcmp(argv[1], "-h"))
 +		usage_with_options(builtin_multi_pack_index_usage,
 +				   builtin_multi_pack_index_options);
 +
-+	if (!strcmp(argv[0], "write"))
-+		return write_midx_file(opts.object_dir);
++	git_config(git_default_config, NULL);
 +
- 	return 0;
- }
-diff --git a/midx.c b/midx.c
-new file mode 100644
-index 0000000000..32468db1a2
---- /dev/null
-+++ b/midx.c
-@@ -0,0 +1,7 @@
-+#include "cache.h"
-+#include "midx.h"
++	argc = parse_options(argc, argv, prefix,
++			     builtin_multi_pack_index_options,
++			     builtin_multi_pack_index_usage, 0);
 +
-+int write_midx_file(const char *object_dir)
-+{
++	if (!opts.object_dir)
++		opts.object_dir = get_object_directory();
++
 +	return 0;
 +}
-diff --git a/midx.h b/midx.h
-new file mode 100644
-index 0000000000..dbdbe9f873
---- /dev/null
-+++ b/midx.h
-@@ -0,0 +1,6 @@
-+#ifndef __MIDX_H__
-+#define __MIDX_H__
-+
-+int write_midx_file(const char *object_dir);
-+
-+#endif
-diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-new file mode 100755
-index 0000000000..ec3ddbe79c
---- /dev/null
-+++ b/t/t5319-multi-pack-index.sh
-@@ -0,0 +1,10 @@
-+#!/bin/sh
-+
-+test_description='multi-pack-indexes'
-+. ./test-lib.sh
-+
-+test_expect_success 'write midx with no packs' '
-+	git multi-pack-index --object-dir=. write
-+'
-+
-+test_done
+diff --git a/command-list.txt b/command-list.txt
+index e1c26c1bb7..61071f8fa2 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -123,6 +123,7 @@ git-merge-index                         plumbingmanipulators
+ git-merge-one-file                      purehelpers
+ git-mergetool                           ancillarymanipulators           complete
+ git-merge-tree                          ancillaryinterrogators
++git-multi-pack-index                    plumbingmanipulators
+ git-mktag                               plumbingmanipulators
+ git-mktree                              plumbingmanipulators
+ git-mv                                  mainporcelain           worktree
+diff --git a/git.c b/git.c
+index c2f48d53dd..a7509fa5f7 100644
+--- a/git.c
++++ b/git.c
+@@ -505,6 +505,7 @@ static struct cmd_struct commands[] = {
+ 	{ "merge-tree", cmd_merge_tree, RUN_SETUP | NO_PARSEOPT },
+ 	{ "mktag", cmd_mktag, RUN_SETUP | NO_PARSEOPT },
+ 	{ "mktree", cmd_mktree, RUN_SETUP },
++	{ "multi-pack-index", cmd_multi_pack_index, RUN_SETUP_GENTLY },
+ 	{ "mv", cmd_mv, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "name-rev", cmd_name_rev, RUN_SETUP },
+ 	{ "notes", cmd_notes, RUN_SETUP },
 -- 
 2.18.0.24.g1b579a2ee9
 
