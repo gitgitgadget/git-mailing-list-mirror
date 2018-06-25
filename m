@@ -2,84 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-8.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C0A51F597
-	for <e@80x24.org>; Mon, 25 Jun 2018 18:06:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC6F01F516
+	for <e@80x24.org>; Mon, 25 Jun 2018 18:08:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934948AbeFYSGs (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Jun 2018 14:06:48 -0400
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:54736 "EHLO
-        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934943AbeFYSGr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jun 2018 14:06:47 -0400
-Received: by mail-wm0-f44.google.com with SMTP id i139-v6so3322358wmf.4
-        for <git@vger.kernel.org>; Mon, 25 Jun 2018 11:06:46 -0700 (PDT)
+        id S934833AbeFYSIx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Jun 2018 14:08:53 -0400
+Received: from mail-pl0-f66.google.com ([209.85.160.66]:45318 "EHLO
+        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934731AbeFYSIw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jun 2018 14:08:52 -0400
+Received: by mail-pl0-f66.google.com with SMTP id o18-v6so6497537pll.12
+        for <git@vger.kernel.org>; Mon, 25 Jun 2018 11:08:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=X0Fy39ZwYXY9BlTCRUyiFSajMeADgZkyztgyKZlzuBk=;
-        b=IYYqU6KB1nLbzlffPi99FQ1iQKg5LFX8GbEKmD4i1E84LVki/OyUVZ2CmkIgqEyZg0
-         cWKwGjWYJA5h90mG7ArrTksl2VczufKfe/gAWHpvjDswxN4a53hL/ixv2+aE2Xw/07hg
-         OiAO0786/+A2DWA2CLHUuWzLf+leQc2WMsDwraCPEUF/WDrCdCo6np6/pk+R9sq+yVAi
-         AoCtNBOmyriw6mGFHn0/DR+TrcSEHZapnn09C2fp9dsq3AhvN8OGzz/KkTWOWC8wVw0S
-         GlNOyfBwNgcVIXyAqpMImC+zatTGW2Fix07RV5xoUcPXAmjr6ylktSaQnUMnjFGAu88n
-         wNuA==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=AuAcm3gQeEuDW061nLDe8kjrI3NOi7rlBEstFUVI7v0=;
+        b=AQrOHkW7MMH4t95r3+rz5RfvyCdzwwiW/Z3m9MaQkBuU5ksec//27zRy9H4vMgaivG
+         wNgps9prAe3VSm1PqTuz6jSJjAXHdW3YFKOy++NUdJM4PpwsVIU2lWf13yx4b+p9Cxa1
+         M+XgnoavWYO5ZZ9bW4RhkreoRdm3N7qx6muB48sn8WpNiQlWzjOR6qZTgvY9PYBJ0DVG
+         OyW/2jinVzq/4Viq6NyTPnHlkjJcevBW26t633wUE7CIynZ3gSJOxmikGKe0VOpDunQH
+         RfeDEm5Rpp5d2RjkwC+JrYgecIbbWnOagjmczgXHPfDSq7dtSthC5t+8KSykX7NgthuQ
+         R03A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=X0Fy39ZwYXY9BlTCRUyiFSajMeADgZkyztgyKZlzuBk=;
-        b=Hf+sDjDwVpyl369v4oXOTiYuqAmPvXGJ3NMH6EJXW8gNg5Titi85d/tyDRj4Wicrer
-         ycQSVGmKwwouSCgdikj0T4vjmX3RX6fRZAZVvtTT/BifZrF2Wm6PG1B14qgXMXgoT9h/
-         WP//SPNIGkEXtMBUFwReIobMJ4tAuh32qd7gnUOwxjiYfDiXSpXgA82003FIWex4dcPD
-         FIXUvd8Vf+lw7ho5aaD0DkD/oujvjAKVr9XBR/TNH9XBxMws+KD/Gqe0awOIbh3RA+zD
-         SZtVz3Wcf3scdCA+YaRx/Nor7lVz3Htc5KytpeZSWfFx16RDNgDyatcUReXObaYz8xzV
-         Hngg==
-X-Gm-Message-State: APt69E3H8GgEaySmhiRlG6DY31oIyNK0MOR85bQrJ4LRKr6fGijRrjD1
-        VnkJZaYzDOvn7JTqoVJOgEI=
-X-Google-Smtp-Source: AAOMgpfyjLzVJI9KiF711kyABPllifv0PP3Q5wZTD0SQoF9naLp13UT2brJIQMpbb0snqsPwveLgDA==
-X-Received: by 2002:a1c:dac2:: with SMTP id r185-v6mr1747637wmg.31.1529950005694;
-        Mon, 25 Jun 2018 11:06:45 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id y8-v6sm19278346wrq.35.2018.06.25.11.06.44
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=AuAcm3gQeEuDW061nLDe8kjrI3NOi7rlBEstFUVI7v0=;
+        b=bT9z33I2nz05XNf1zkE9H4n1x0+oRSeLQlLTggpCdOoqkHk2WYxqBZ7AfvqY1btE4I
+         pqIcHTdwX0vdv4hk7Li3A+i5YA2ZisnOMwQHKXU43IBXXQGaEvkQc8P9WrBUmgnK6XFJ
+         RJtxOCQw7UQbckOQ63xZu8izRo6KK3XWvDbrWo0Rx9p1tLuwJi2+zyDzfnVLD9anf+pP
+         wfaSsUNTkjbBqEVAZKrX50Myc2tjmqGlCh1cGJgZXcv07FmNqqTiRFADgVixaQ32TAC9
+         glHmOXAtPUOByIdUqfFdaMIZjmcL3BDdoJFR5M28SDJRFKpRCJ5bjiF+PeH7NmBMY2mz
+         Onlg==
+X-Gm-Message-State: APt69E3pXulaKFkhGdfi8+GNhLjCNWamy/qTu/ZEh3AJ3HjbX0/falkU
+        Hjz3HHYU7MYQo5ys3qskPfJcpw==
+X-Google-Smtp-Source: ADUXVKKqTLYkcpatHUXDRxaeCy38SLznUkRPxg+96cvqBe3LtdpLt3tQ1tLSXNYd7SDP76mNEKrOhQ==
+X-Received: by 2002:a17:902:42e4:: with SMTP id h91-v6mr13445927pld.27.1529950131895;
+        Mon, 25 Jun 2018 11:08:51 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id j3-v6sm19809080pgp.47.2018.06.25.11.08.49
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 25 Jun 2018 11:06:44 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v1 2/8] Add initial odb remote support
-References: <20180513103232.17514-1-chriscool@tuxfamily.org>
-        <20180513103232.17514-3-chriscool@tuxfamily.org>
-        <xmqqh8n9ae17.fsf@gitster-ct.c.googlers.com>
-        <CAP8UFD3kMQxiViL4sUPMjmJHxVkobmTdpJ+=G827hVhPwaxarg@mail.gmail.com>
-Date:   Mon, 25 Jun 2018 11:06:44 -0700
-In-Reply-To: <CAP8UFD3kMQxiViL4sUPMjmJHxVkobmTdpJ+=G827hVhPwaxarg@mail.gmail.com>
-        (Christian Couder's message of "Sat, 23 Jun 2018 14:15:09 +0200")
-Message-ID: <xmqqzhzioi4r.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Mon, 25 Jun 2018 11:08:50 -0700 (PDT)
+Date:   Mon, 25 Jun 2018 11:08:49 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org, jonathantanmy@google.com, gitster@pobox.com,
+        sbeller@google.com
+Subject: Re: [PATCH v3 8/8] fetch-pack: implement ref-in-want
+Message-ID: <20180625180849.GA19910@google.com>
+References: <20180613213925.10560-1-bmwill@google.com>
+ <20180620213235.10952-1-bmwill@google.com>
+ <20180620213235.10952-9-bmwill@google.com>
+ <20180622230119.GL12013@aiede.svl.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180622230119.GL12013@aiede.svl.corp.google.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+On 06/22, Jonathan Nieder wrote:
+> Hi,
+> 
+> Brandon Williams wrote:
+> 
+> > Implement ref-in-want on the client side so that when a server supports
+> > the "ref-in-want" feature, a client will send "want-ref" lines for each
+> > reference the client wants to fetch.
+> >
+> > Signed-off-by: Brandon Williams <bmwill@google.com>
+> > ---
+> >  fetch-pack.c                       | 35 +++++++++++++++++++++++++++---
+> >  remote.c                           |  1 +
+> >  remote.h                           |  1 +
+> >  t/t5703-upload-pack-ref-in-want.sh |  4 ++--
+> >  4 files changed, 36 insertions(+), 5 deletions(-)
+> 
+> This commit message doesn't tell me what ref-in-want is or is for.  Could
+> it include
+> 
+>  A. a pointer to Documentation/technical/protocol-v2.txt, or
+>  B. an example illustrating the effect e.g. using GIT_TRACE_PACKET
+> 
+> or both?
 
-> For each promisor remote I think it makes no sense to have more than
-> one remote odb pointing to it. So I am not sure what to do here.
+Yeah I can imporve the message here.
 
-If it makes no sense, then detecting and erroring out would be a
-sensible thing to do, no?
+> > +
+> > +		for (r = refs; r; r = r->next) {
+> > +			if (!strcmp(end, r->name)) {
+> > +				oidcpy(&r->old_oid, &oid);
+> > +				break;
+> > +			}
+> 
+> Stefan mentioned that the spec says
+> 
+>         * The server MUST NOT send any refs which were not requested
+>           using 'want-ref' lines.
+> 
+> Can client enforce that?  If not, can the spec say SHOULD NOT for the
+> server and add a MUST describing appropriate client behavior?
+
+Yeah I can update the docs in an earlier patch.
+
+> 
+> > +		}
+> > +	}
+> > +
+> > +	if (reader->status != PACKET_READ_DELIM)
+> 
+> The spec says
+> 
+>         * This section is only included if the client has requested a
+>           ref using a 'want-ref' line and if a packfile section is also
+>           included in the response.
+> 
+> What should happen if the client already has all the relevant objects
+> (or in other words if there is no packfile to send in the packfile
+> section)?  Is the idea that the client should already have known that
+> based on the ref advertisement?  What if ref values change to put us
+> in that state between the ls-refs and fetch steps?
+
+I believe the current functionality is that if all wants are already
+satisfied by all haves then an empty packfile is sent, so that would
+fall under that case.
+
+
+-- 
+Brandon Williams
