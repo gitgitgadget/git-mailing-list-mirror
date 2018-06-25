@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E6BD91F516
-	for <e@80x24.org>; Mon, 25 Jun 2018 16:47:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B1D01F516
+	for <e@80x24.org>; Mon, 25 Jun 2018 16:47:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933615AbeFYQrE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Jun 2018 12:47:04 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:54794 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933192AbeFYQqx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jun 2018 12:46:53 -0400
-Received: by mail-wm0-f66.google.com with SMTP id i139-v6so3076245wmf.4
-        for <git@vger.kernel.org>; Mon, 25 Jun 2018 09:46:52 -0700 (PDT)
+        id S933630AbeFYQrH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Jun 2018 12:47:07 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:51737 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933140AbeFYQqw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jun 2018 12:46:52 -0400
+Received: by mail-wm0-f65.google.com with SMTP id w137-v6so4723511wmw.1
+        for <git@vger.kernel.org>; Mon, 25 Jun 2018 09:46:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=0wjXEsX95vhzVPt5PUVmrkW4ocbtOrvUuXIvn8IJxVY=;
-        b=QR9cvdygl6000qdiS0gy8cNbv1Gsa7YDdinWMKfjLqRGuhrjg4mnRNgGR13bJoFJZL
-         tkOMu5M5f0tKPlq9ke2wPu7jFrI0WKL1+KsoEz4zLLQQA8gJNQRb0SjAF9lh0d/3lDbp
-         Mu6WQBoUri1PKoKzJNKbCpMSkCWkMaL00x+f/MdMbW+3SC/Q7wAP7/dqpQhdXkmRT4Wm
-         yl3T2LFmoDKNvzOsURueSwZl+PEb6thfFQsEXKSdj4QNfclx9ARHbErpW7v8E3R7iDYL
-         vDtLx3cqtI60meQmmp27GT7+DTMOcfQ9PnzHJc59qik+9wTZdMv/r0RHgH+LtXduXILD
-         6sZA==
+        bh=wzbEnHTCc81Bjcdr/1HqBqsOozVKIh9UAtwYrD0blDg=;
+        b=OZSOwBT4E6cTUKJQDQ4b/rWlAhxOtwO2qXuJ/A9ACPKcwdbjzyX2Xt5tkA264om8I4
+         hZoqb3njSS9rBuWlWm3OyiJxVrwh2j9UMIS9EFvMQGUTzoeb7lqYXigkKpEt+9SiNQvU
+         x7bcPRqYi0JoVwJttPxVLhRZP3aRKg4VDR55gjOX53vO94giG3zT0GXmBMunpojg7i25
+         mOu0ib6oVClWShU+qrKMe4DsnfTSKO3mSANsWIhcwSwby8jWlleOnZDBm1tB1pqubt3f
+         hVs1dpALP799OST0IW7rpiApAaNKRN9wfJI6BTCnTj3hqFDhyzmp0iOwqmH/T4UMUNxV
+         Eoiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=0wjXEsX95vhzVPt5PUVmrkW4ocbtOrvUuXIvn8IJxVY=;
-        b=CkS6J2mRkbhvwSjRuTUZK0/ALHMKisDYy3dEjBlqpaWDREN2wsb0cyaTPTgLY6wZlj
-         imFuDX/s5GLOBOJZDtEKwnNxQGM6rK0A0zNqWNjsSwptyk1e2ik/GexXvpj+WQJcl1ib
-         R9kETPFhAvi4YtGRRHpv7kxpH7hDTkM8qTtOGPIKWQW+3cTfLQFIAfY+Jf7JRjxOEkxm
-         ReKLqKzmaa9d5q+k8++CJwOjC5nDPrhxBneQUh8G4YUqgvRgnRSLRArx0fAliyu9XQFF
-         +FFhfjU2S65+Yl5v7Pwx6w70KqV8Yb+xAIWZUo2Rlv6x2U+kz+8WOGYmeUZYmlvkFBJW
-         nH/Q==
-X-Gm-Message-State: APt69E2YOkAVxjPKqUsoXp6SE1vhjBhqSiXtTVAgMafGiU6OwHiAqdtZ
-        zclt/QE+FN1NMcrSOmWCh2laVGr9
-X-Google-Smtp-Source: ADUXVKIYIK5jzidmB6/AVsS1fjxeaj6iMarx1FDMjpeIWdRZ5LfVWp0e6bMbMHr3M1XXunR0put3lw==
-X-Received: by 2002:a1c:850c:: with SMTP id h12-v6mr1581095wmd.116.1529945212019;
-        Mon, 25 Jun 2018 09:46:52 -0700 (PDT)
+        bh=wzbEnHTCc81Bjcdr/1HqBqsOozVKIh9UAtwYrD0blDg=;
+        b=IEAW0p0lAvt+BHX9vHuyS8XPo9KCaSI7guXs5m+tgZzU4wnS2Nyk5qo11sHpG2KhIm
+         mRlDkOJiqWwjSPIs63D3xv6owmyj05OidgdHsUL/vJ2EX/d2NbUn/FYcSMLhFpwjjC5j
+         ZhwOkJEJBN34zcdsnq4l4u9c0ruEpdiMIWuFOxi0x/cEffpD5NCMMM7IW2Am/CiHrE4d
+         Aafptw6LhXkJRBMWR01+gI0Xbih4OXhgWfyCJJsfGGZ6gjphHOSL5ZnKOJaYS2A1TASD
+         mse8MMe5EYCzkFG4Q0dw5lcz/mfk0aDybWD9RnGnUV9S0W6TEnfXpNKqrWVvME4App9T
+         BtiQ==
+X-Gm-Message-State: APt69E1OdRtyc94IGHfG7epxbvviT1aQJUvz/cv3Q0phgWH3WDNEfwqG
+        QlOJlOdXZuSTWKKKfqWhnUt5EG+L
+X-Google-Smtp-Source: AAOMgpfsxeWcQrlq4WgyCSnblbpyfBiLkCMWwBhPYiHkbJgmqWG20XYyB630L5sO/z4nGQVSeZcU9g==
+X-Received: by 2002:a1c:b1d7:: with SMTP id a206-v6mr1655179wmf.61.1529945210707;
+        Mon, 25 Jun 2018 09:46:50 -0700 (PDT)
 Received: from sebi-laptop.tendawifi.com (5-13-160-71.residential.rdsnet.ro. [5.13.160.71])
-        by smtp.gmail.com with ESMTPSA id v10-v6sm26419997wrn.97.2018.06.25.09.46.50
+        by smtp.gmail.com with ESMTPSA id v10-v6sm26419997wrn.97.2018.06.25.09.46.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 25 Jun 2018 09:46:51 -0700 (PDT)
+        Mon, 25 Jun 2018 09:46:49 -0700 (PDT)
 From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Johannes.Schindelin@gmx.de, joel@teichroeb.net, gitster@pobox.com
-Subject: [PATCH v6 5/6] stash: update `git stash show` documentation
-Date:   Mon, 25 Jun 2018 19:46:38 +0300
-Message-Id: <dcd10e941418cbf4bbc50719f1f567f4025fe123.1529943789.git.ungureanupaulsebastian@gmail.com>
+Subject: [PATCH v6 4/6] stash: refactor `show_stash()` to use the diff API
+Date:   Mon, 25 Jun 2018 19:46:37 +0300
+Message-Id: <a3b02c25de08579df65ecb1de62a7b8f0434077e.1529943789.git.ungureanupaulsebastian@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc2.13.g506fc12fb
 In-Reply-To: <cover.1529943789.git.ungureanupaulsebastian@gmail.com>
 References: <cover.1529943789.git.ungureanupaulsebastian@gmail.com>
@@ -62,30 +62,131 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add in documentation about the change of behavior regarding
-the `--quiet` option, which was introduced in the last commit.
-(the `--quiet` option does not exit anymore with erorr if it
-is given an empty stash as argument)
+Currently, `show_stash()` uses `cmd_diff()` to generate
+the output. After this commit, the output will be generated
+using the internal API.
+
+Before this commit, `git stash show --quiet` would act like
+`git diff` and error out if the stash is not empty. Now, the
+`--quiet` option does not error out given an empty stash.
 
 Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 ---
- Documentation/git-stash.txt | 3 +++
- 1 file changed, 3 insertions(+)
+ builtin/stash--helper.c | 72 +++++++++++++++++++++++++----------------
+ 1 file changed, 45 insertions(+), 27 deletions(-)
 
-diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-index e31ea7d30..d60ebdb96 100644
---- a/Documentation/git-stash.txt
-+++ b/Documentation/git-stash.txt
-@@ -117,6 +117,9 @@ show [<options>] [<stash>]::
- 	You can use stash.showStat and/or stash.showPatch config variables
- 	to change the default behavior.
+diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
+index 4f49fd04b..4589e12d6 100644
+--- a/builtin/stash--helper.c
++++ b/builtin/stash--helper.c
+@@ -10,6 +10,8 @@
+ #include "run-command.h"
+ #include "dir.h"
+ #include "rerere.h"
++#include "revision.h"
++#include "log-tree.h"
  
-+	It accepts any option known to `git diff`, but acts different on
-+	`--quiet` option and exit with zero regardless of differences.
+ static const char * const git_stash_helper_usage[] = {
+ 	N_("git stash--helper list [<options>]"),
+@@ -650,55 +652,71 @@ static int git_stash_config(const char *var, const char *value, void *cb)
+ 
+ static int show_stash(int argc, const char **argv, const char *prefix)
+ {
+-	int i, ret = 0;
+-	struct argv_array args = ARGV_ARRAY_INIT;
+-	struct argv_array args_refs = ARGV_ARRAY_INIT;
++	int i;
++	int flags = 0;
+ 	struct stash_info info;
++	struct rev_info rev;
++	struct argv_array stash_args = ARGV_ARRAY_INIT;
+ 	struct option options[] = {
+ 		OPT_END()
+ 	};
+ 
+-	argc = parse_options(argc, argv, prefix, options,
+-			     git_stash_helper_show_usage,
+-			     PARSE_OPT_KEEP_UNKNOWN);
++	init_diff_ui_defaults();
++	git_config(git_diff_ui_config, NULL);
+ 
+-	argv_array_push(&args, "diff");
++	init_revisions(&rev, prefix);
+ 
+-	/* Push args which are not options into args_refs. */
+-	for (i = 0; i < argc; ++i) {
+-		if (argv[i][0] == '-')
+-			argv_array_push(&args, argv[i]);
++	/* Push args which are not options into stash_args. */
++	for (i = 1; i < argc; ++i) {
++		if (argv[i][0] != '-')
++			argv_array_push(&stash_args, argv[i]);
+ 		else
+-			argv_array_push(&args_refs, argv[i]);
+-	}
+-
+-	if (get_stash_info(&info, args_refs.argc, args_refs.argv)) {
+-		argv_array_clear(&args);
+-		argv_array_clear(&args_refs);
+-		return -1;
++			flags++;
+ 	}
+ 
+ 	/*
+ 	 * The config settings are applied only if there are not passed
+ 	 * any flags.
+ 	 */
+-	if (args.argc == 1) {
++	if (!flags) {
+ 		git_config(git_stash_config, NULL);
+ 		if (show_stat)
+-			argv_array_push(&args, "--stat");
++			rev.diffopt.output_format |= DIFF_FORMAT_DIFFSTAT;
++		if (show_patch) {
++			rev.diffopt.output_format = ~DIFF_FORMAT_NO_OUTPUT;
++			rev.diffopt.output_format |= DIFF_FORMAT_PATCH;
++		}
++	}
+ 
+-		if (show_patch)
+-			argv_array_push(&args, "-p");
++	if (get_stash_info(&info, stash_args.argc, stash_args.argv)) {
++		argv_array_clear(&stash_args);
++		return -1;
+ 	}
+ 
+-	argv_array_pushl(&args, oid_to_hex(&info.b_commit),
+-			 oid_to_hex(&info.w_commit), NULL);
++	argc = setup_revisions(argc, argv, &rev, NULL);
++	if (!rev.diffopt.output_format)
++		rev.diffopt.output_format = DIFF_FORMAT_PATCH;
++	diff_setup_done(&rev.diffopt);
++	rev.diffopt.flags.recursive = 1;
++	setup_diff_pager(&rev.diffopt);
+ 
+-	ret = cmd_diff(args.argc, args.argv, prefix);
++	/*
++	 * We can return early if there was any option not recognised by
++	 * `diff_opt_parse()`, besides the word `stash`.
++	 */
++	if (argc > 1) {
++		free_stash_info(&info);
++		argv_array_clear(&stash_args);
++		usage_with_options(git_stash_helper_show_usage, options);
++	}
 +
- pop [--index] [-q|--quiet] [<stash>]::
++	/* Do the diff thing. */
++	diff_tree_oid(&info.b_commit, &info.w_commit, "", &rev.diffopt);
++	log_tree_diff_flush(&rev);
  
- 	Remove a single stashed state from the stash list and apply it
+ 	free_stash_info(&info);
+-	argv_array_clear(&args);
+-	return ret;
++	argv_array_clear(&stash_args);
++	return 0;
+ }
+ 
+ int cmd_stash__helper(int argc, const char **argv, const char *prefix)
 -- 
 2.18.0.rc2.13.g506fc12fb
 
