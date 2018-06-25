@@ -2,104 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7CFC61F516
-	for <e@80x24.org>; Mon, 25 Jun 2018 20:27:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 475851F516
+	for <e@80x24.org>; Mon, 25 Jun 2018 20:58:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755710AbeFYU1j (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Jun 2018 16:27:39 -0400
-Received: from dmz-mailsec-scanner-1.mit.edu ([18.9.25.12]:45556 "EHLO
-        dmz-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751949AbeFYU1i (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 25 Jun 2018 16:27:38 -0400
-X-AuditID: 1209190c-b5fff70000000b9f-40-5b3150390d2e
-Received: from mailhub-auth-1.mit.edu ( [18.9.21.35])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by dmz-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 30.29.02975.930513B5; Mon, 25 Jun 2018 16:27:37 -0400 (EDT)
-Received: from outgoing.mit.edu (OUTGOING-AUTH-1.MIT.EDU [18.9.28.11])
-        by mailhub-auth-1.mit.edu (8.13.8/8.9.2) with ESMTP id w5PKRaOk020953
-        for <git@vger.kernel.org>; Mon, 25 Jun 2018 16:27:37 -0400
-Received: from darkmatter.mit.edu (DARKMATTER.MIT.EDU [18.18.248.31])
-        (authenticated bits=0)
-        (User authenticated as smtp/darkmatter.mit.edu@ATHENA.MIT.EDU)
-        by outgoing.mit.edu (8.13.8/8.12.4) with ESMTP id w5PKRY1R003007
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-        for <git@vger.kernel.org>; Mon, 25 Jun 2018 16:27:35 -0400
-Received: by darkmatter.mit.edu (Postfix, from userid 115)
-        id 7C045354B50; Mon, 25 Jun 2018 16:27:34 -0400 (EDT)
-Received: from [192.168.1.34] (209-6-198-183.s4021.c3-0.smr-cbr2.sbo-smr.ma.cable.rcncustomer.com [209.6.198.183])
-        by darkmatter.mit.edu (Postfix) with ESMTPSA id 0A025354B4D;
-        Mon, 25 Jun 2018 16:27:34 -0400 (EDT)
-Subject: Re: [PATCH] Makefile: tweak sed invocation
-To:     Eric Sunshine <sunshine@sunshineco.us>
-Cc:     Git List <git@vger.kernel.org>, Dan Jacques <dnj@google.com>
-References: <1529954005-18189-1-git-send-email-asedeno@mit.edu>
- <CAPig+cQxAxFUFE8j2O7iaZoAby9ioNd6Wf1OVAr5qU7kTrQOyQ@mail.gmail.com>
-From:   =?UTF-8?Q?Alejandro_R=2e_Sede=c3=b1o?= <asedeno@mit.edu>
-Message-ID: <2b532078-dcf6-f38a-bda8-8fb1ace8306c@mit.edu>
-Date:   Mon, 25 Jun 2018 16:27:34 -0400
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        id S965026AbeFYU6E (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Jun 2018 16:58:04 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:36063 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S964876AbeFYU6D (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jun 2018 16:58:03 -0400
+Received: by mail-wr0-f196.google.com with SMTP id f16-v6so15034271wrm.3
+        for <git@vger.kernel.org>; Mon, 25 Jun 2018 13:58:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=+Z0kT8lAl9Xt6hQHA3zm1/DoMIYU3OtR22EbDpVtziU=;
+        b=pmDJy9SCgaV4U1Bf57vnxS3Zxe2sDjI5A7OMbbvM700GQesbLXee61pgwh8QJY+iMy
+         ixNaY7dWxkPQuJgxZ/5EzR5EJs48LLWZ9ksZqHKYYais6LgBVf7EhajQizEvrKF1c4oe
+         HJRKzOyZnTfIVdyWxMmHP0dqZL0wnhBo+shlbI3I71AeteQJBYW9ovirVsNv0UmI0206
+         Jo9Xibtu43s+pxnbxQIio/BR04DIlvhdh6wHOgaqvrq/gU7rFflSivY6/2JkM+BtN/vQ
+         UfxBTfsODefBDZpiq9IW4praMJdzKjwEM1ZY39asq9UPT9SwfLnjEh3OhFZws+Jty6De
+         V8sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=+Z0kT8lAl9Xt6hQHA3zm1/DoMIYU3OtR22EbDpVtziU=;
+        b=j+tp/rQoP2Tz6wKHc7yRGCfYUfiQgws9cjHWNgEY9yJoFAi/qKEaM/On9SiNlCPwB7
+         WwHhMi01LHmjhecS5ArxRIEVqBEiAAJqgN0V/fBXfd1Cmi60dPj40fg6LnXvHW4PzgDk
+         vMX36i7SExjO+m12EnC1Cj7KLqO0F6eVjHasTpey9EhyDKv3q8RdYaOAdsb/X6Ob3I30
+         C4xzAPN4DQpTyeI3BDaZXsTSil/lXhLKVvZxt07MzfctFYi7w7De2tgsz0YGAZ0MBGXS
+         h2BNNOcQoURUdwpGvRkPCfjI3IJKpQKju2XuOQSx3LjSt965sqTSsyHWIC9lWVW1IfPN
+         /D9A==
+X-Gm-Message-State: APt69E1D0vHEH2eW9RiigFpI15mu7oYg6kjM5JsY4qn9c8/ieH99ff/L
+        DNY2PuVks6ZbNgrSjhlyk5Y=
+X-Google-Smtp-Source: AAOMgpeFBzjCzY98FkNqB6Kv9L/ijFP8pMhgCP/G2+pfk1vNoJuXflaKHYRSm+JiiGksWGysNqyyiw==
+X-Received: by 2002:adf:8062:: with SMTP id 89-v6mr7461298wrk.221.1529960282402;
+        Mon, 25 Jun 2018 13:58:02 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id h3-v6sm2050330wro.87.2018.06.25.13.57.59
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 25 Jun 2018 13:58:00 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <dstolee@microsoft.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH 4/5] commit-graph: store graph in struct object_store
+References: <cover.1529616356.git.jonathantanmy@google.com>
+        <3410494e3505a7b1b895869c3702dbba0f0cf5a6.1529616356.git.jonathantanmy@google.com>
+Date:   Mon, 25 Jun 2018 13:57:59 -0700
+In-Reply-To: <3410494e3505a7b1b895869c3702dbba0f0cf5a6.1529616356.git.jonathantanmy@google.com>
+        (Jonathan Tan's message of "Thu, 21 Jun 2018 14:29:24 -0700")
+Message-ID: <xmqqwoummvmw.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAPig+cQxAxFUFE8j2O7iaZoAby9ioNd6Wf1OVAr5qU7kTrQOyQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprCKsWRmVeSWpSXmKPExsUixCmqrGsZYBht8HeTsUXXlW4mB0aPz5vk
-        AhijuGxSUnMyy1KL9O0SuDLeNc1nLHjDVdF9YjFrA+Nv9i5GTg4JAROJTR+OMnUxcnEICSxm
-        kti37zczhHOaUaLz42xWCOcNk8TMX7tZQFqEBIokHl7oZoNI3GSU2DtrJjNIQljAWGL9/wNg
-        toiAlsSE5T1sIDazgIPE6jln2SEa2hglHjesZwJJsAnYScxbcgvM5hWwkrj/6jPYUSwCqhJr
-        TzxgBLFFBaIkvu7oYoaoEZQ4OfMJ2BWcAoESn2eshlpgJjFv80NmCFtc4taT+UwQtrxE89bZ
-        zBMYhWchaZ+FpGUWkpZZSFoWMLKsYpRNya3SzU3MzClOTdYtTk7My0st0jXUy80s0UtNKd3E
-        CA58SZ4djGfeeB1iFOBgVOLhXfHSIFqINbGsuDL3EKMkB5OSKG8as2G0EF9SfkplRmJxRnxR
-        aU5q8SFGCQ5mJRFeu/1A5bwpiZVVqUX5MClpDhYlcd7sRYzRQgLpiSWp2ampBalFMFkZDg4l
-        Cd79fkBDBYtS01Mr0jJzShDSTBycIMN5gIZb+QPV8BYXJOYWZ6ZD5E8xKkqJ8y4HaRYASWSU
-        5sH1ghOT0A/5V4ziQK8I834GqeIBJjW47ldAg5mABpc9Brm6uCQRISXVwCgk4tYS5z759YQv
-        n5nXXuPx/3765VENs4A1zKJvLh5VzLhuwa1efWHFjQf8hy5H6CsFcs4IecV8Z337bo7cgpO2
-        Dv4bnYK9j15+4mHifzHjzt2auaeXXq2SFJ695sb3T8sNH06Q2fzIhUOoqdB2QuEZj5Uz+f8n
-        p29wWXpDQLX8atHfDws3iX5WYinOSDTUYi4qTgQAJIL07ScDAAA=
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2018-06-25 16:15, Eric Sunshine wrote:
-> On Mon, Jun 25, 2018 at 3:18 PM Alejandro R. Sedeño <asedeno@mit.edu> wrote:
->> With GNU sed, the r command doesn't care if a space separates it and
->> the filename it reads from.
->>
->> With SunOS sed, the space is required.
-> 
-> MacOS and the various BSD's ship with BSD 'sed', not GNU 'sed', so it
-> seemed prudent to check this change against them as well, which I did,
-> and can report that it does not cause any regression on those
-> platforms.
-> 
-> Therefore, the patch looks good. Thanks.
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-Thanks for checking on that, Eric. I tested MacOS locally before 
-submitting as well. From a quick skim of the POSIX sed page, the space 
-is expected, so this should be portable.
+> Instead of storing commit graphs in static variables, store them in
+> struct object_store. There are no changes to the signatures of existing
+> functions - they all still only support the_repository, and support for
+> other instances of struct repository will be added in a subsequent
+> commit.
+>
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+>  commit-graph.c | 34 ++++++++++++++++++----------------
+>  object-store.h |  3 +++
+>  object.c       |  5 +++++
+>  3 files changed, 26 insertions(+), 16 deletions(-)
+> ...
+> @@ -293,7 +290,9 @@ int parse_commit_in_graph(struct commit *item)
+>  		return 1;
+>  
+>  	prepare_commit_graph();
+> -	if (commit_graph) {
+> +	if (the_repository->objects->commit_graph) {
+> +		struct commit_graph *commit_graph =
+> +			the_repository->objects->commit_graph;
+>  		uint32_t pos;
+>  		int found;
+>  		if (item->graph_pos != COMMIT_NOT_FROM_GRAPH) {
+> @@ -329,7 +328,8 @@ struct tree *get_commit_tree_in_graph(const struct commit *c)
+>  	if (c->graph_pos == COMMIT_NOT_FROM_GRAPH)
+>  		BUG("get_commit_tree_in_graph called from non-commit-graph commit");
+>  
+> -	return load_tree_for_commit(commit_graph, (struct commit *)c);
+> +	return load_tree_for_commit(the_repository->objects->commit_graph,
+> +				    (struct commit *)c);
+>  }
 
-http://pubs.opengroup.org/onlinepubs/9699919799/utilities/sed.html
+I was looking at semantic merge conflicts between this and your
+e2838d85 ("commit-graph: always load commit-graph information",
+2018-05-01), the latter of which I planned to merge to 'master' as a
+part of the first batch in this cycle, and noticed that there are
+two very similar functions, without enough document the callers
+would not know which one is the correct one to call.  Needless to
+say, such a code duplication would mean the work required for
+resolving semantic conflict doubles needlessly X-<.
 
--Alejandro
 
-> 
->> Signed-off-by: Alejandro R. Sedeño <asedeno@mit.edu>
->> ---
->> diff --git a/Makefile b/Makefile
->> @@ -2109,7 +2109,7 @@ $(SCRIPT_PERL_GEN): % : %.perl GIT-PERL-DEFINES GIT-PERL-HEADER GIT-VERSION-FILE
->>          $(QUIET_GEN)$(RM) $@ $@+ && \
->>          sed -e '1{' \
->>              -e '        s|#!.*perl|#!$(PERL_PATH_SQ)|' \
->> -           -e '        rGIT-PERL-HEADER' \
->> +           -e '        r GIT-PERL-HEADER' \
->>              -e '        G' \
->>              -e '}' \
->>              -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
+int parse_commit_in_graph(struct commit *item)
+{
+	uint32_t pos;
 
+	if (!core_commit_graph)
+		return 0;
+	if (item->object.parsed)
+		return 1;
+	prepare_commit_graph();
+	if (commit_graph && find_commit_in_graph(item, commit_graph, &pos))
+		return fill_commit_in_graph(item, commit_graph, pos);
+	return 0;
+}
+
+void load_commit_graph_info(struct commit *item)
+{
+	uint32_t pos;
+	if (!core_commit_graph)
+		return;
+	prepare_commit_graph();
+	if (commit_graph && find_commit_in_graph(item, commit_graph, &pos))
+		fill_commit_graph_info(item, commit_graph, pos);
+}
