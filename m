@@ -2,146 +2,313 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 38A481F516
-	for <e@80x24.org>; Mon, 25 Jun 2018 19:20:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC47C1F516
+	for <e@80x24.org>; Mon, 25 Jun 2018 19:38:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934946AbeFYTUB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Jun 2018 15:20:01 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:37041 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933030AbeFYTUA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jun 2018 15:20:00 -0400
-Received: by mail-wm0-f67.google.com with SMTP id r125-v6so11183947wmg.2
-        for <git@vger.kernel.org>; Mon, 25 Jun 2018 12:19:59 -0700 (PDT)
+        id S934967AbeFYTh6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Jun 2018 15:37:58 -0400
+Received: from mail-yw0-f202.google.com ([209.85.161.202]:45273 "EHLO
+        mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934911AbeFYTh5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jun 2018 15:37:57 -0400
+Received: by mail-yw0-f202.google.com with SMTP id z64-v6so10977079ywd.12
+        for <git@vger.kernel.org>; Mon, 25 Jun 2018 12:37:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=+sKFCUoPfsYAwxjlN8a35pyBrQJGHvbfb0vj05eqT/8=;
-        b=gny0qs3DZNR1Ap0ZZ73BZ5snh4TP2zAZez4EBjpbcSoicLbEOmumba1tCur0lOaKXE
-         ncwCFFUsBQkBZOpK2O85bru+Ob7LNRmSu22F4ji6pv0tXD1yHZcTuc0NRq2mxeYAEu5M
-         VYxTH17YXWn6K4ASVja/mhj3o6F45Jz5ve9wAQDqhdbwv4tvwF+zmR0PRn7zG0IHIXPk
-         rk2AhlrYRVzQyxYkaWWkqJILIm8LKVnGRcu7QAtnY+uPnBmqTigoZbu1dp0M3WDr2bFN
-         GEzQcO68mNCzM4tp7PWNyBDGj0k868ZCZy4a6lpMApOI9wK2qofUVmWdeG7S1pLE4N98
-         LEig==
+        d=google.com; s=20161025;
+        h=mime-version:date:message-id:subject:from:to:cc;
+        bh=fsROjAoz/mYAJ2cmy/+0ZdPdnsOXzrdycIvH1x571ts=;
+        b=aGGrjdYxF7T7JYUd8aLgOCtZ58IHSwxADpW6VGbcdQaDzlAKBrNlR/3VP1WuDdTrrt
+         ilOvIaq41Kxq6VqwoBSUSUmq0aHM4j9N6xeM/+IjBa35vyT84Jpi1OrtZfNl3GL+NlA/
+         kmOgjBYSiBmJxthlUK1zC2JE7gOfwWFwtPSTn8+iyRxTZcOekNJRIOw3S8lYuGscE817
+         gt6PTWe4QCU/Vt73K4y1tHN/D4CuulfM6+53ov3vQwMwEWCA9HRC8h6pIW2Vw1hpU72Z
+         SUMP25dO8C0hQiWW1wsOBf4nm6lq9A08MyOCFL0NivYNQ8Ldv0yicYuGs0KlNn/kOvGP
+         mOkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=+sKFCUoPfsYAwxjlN8a35pyBrQJGHvbfb0vj05eqT/8=;
-        b=SZYQZVKWka4IUUA+f+2hlbgi6Tp9RouyRvydKMAOO5YeCwjHX3/qTAUoYdfS7S2G69
-         3PxTcLORUFZUtqxOLMJPBAv3dbbTAHRkZqzusb0E9eZrUx4Sa+cTXwtGe3yP/l/39l58
-         NxQ73noOA9HFBCpnUvixg0HaqEd7MbxVbRzY8qYy4rv9wZhlem+vL3W9l9Ag/Wq3aIPa
-         d7DzZ+YInS4cNG8af4eeVuM+LSbGowsKgrYq/NCzBzVWUjzq238IxU4iOAvMqceEAqIs
-         0CNSWQtVboUaPkv6HoTtf6xtZtx2pmBCMGdWgJpIwI4/AIc8OuLpUynX3YfsecRR4iy/
-         gerg==
-X-Gm-Message-State: APt69E2+NU496BVu2Ml4G8ZG3ps8nKeDJP1Hu58B+Gqb1UYx3W/JNE1L
-        t+ms4qCzEjcERO26wNG9QrA=
-X-Google-Smtp-Source: AAOMgpeMpuzJ8OUUhtXGYJ3yyDLFOO3OWlOduBW70V/3r6aN4Hdpgp7r0YZn4/14XFEj9uDu9Xx1lg==
-X-Received: by 2002:a1c:5d0e:: with SMTP id r14-v6mr1866536wmb.152.1529954398904;
-        Mon, 25 Jun 2018 12:19:58 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id g4-v6sm13061079wrq.32.2018.06.25.12.19.58
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 25 Jun 2018 12:19:58 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, pclouds@gmail.com,
-        avarab@gmail.com, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2 05/24] midx: write header information to lockfile
-References: <20180607140338.32440-1-dstolee@microsoft.com>
-        <20180625143434.89044-1-dstolee@microsoft.com>
-        <20180625143434.89044-6-dstolee@microsoft.com>
-Date:   Mon, 25 Jun 2018 12:19:57 -0700
-In-Reply-To: <20180625143434.89044-6-dstolee@microsoft.com> (Derrick Stolee's
-        message of "Mon, 25 Jun 2018 10:34:15 -0400")
-Message-ID: <xmqqmuvioeqq.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc;
+        bh=fsROjAoz/mYAJ2cmy/+0ZdPdnsOXzrdycIvH1x571ts=;
+        b=IoeG/TGL0LfyclY98AFzJx+sn9Js+7VGfz+qZmwofl+eRENzhTSLdbn9ukzTHAgrMg
+         Sg168GRmhgD7FTOAKj4A4xPAtvMmz3yrktJowAvfIR04YaMjEkhmu50o/A9wNEyNT9ci
+         O3BU+Zw2jLs9mXPiVxH30hB3BLMVVDqe7DQitZiDFqgw+WCaItSWAgBUZt3ZpkZJDUVU
+         4MLSMVd2edLcK8Ey7/NFiI0Kbh7Dj/ScAwEQId86JKYJsKNyliV9ZwMQgULg/h7scE1B
+         nS58gWG/gIt+K3jgAxSQyh1UJdHO7tc+sWehsCnBu+2dyDa2537cMKvuSy3iauG46+y7
+         U3dA==
+X-Gm-Message-State: APt69E02EkO/LcXVI0c6oJnlhF/Vk6Yt/kcmsTFuSMR3CKoBYxb4Jt1d
+        O14AQwyf9rzhVwNQ9C5NK0sCYSnrNnRfTfNLhNI5FxOrcHmGL8RV05cs4LuCFyjEaqspJat2E52
+        PjO3gBuhI5wLufAYitj5DzAFbCvBw729bWGevlvON00wD3PqoThi2DSIHb+0x1Q/Z12qcp1ruPI
+        62
+X-Google-Smtp-Source: ADUXVKISJXqwUNYj+rWJe/C3e9hZbWhb019/S9dRKiq0dCShF/+ylyRWfsLKnIwmdwSWO58Wq86aR2q4Gcg64v4Tm+Wz
 MIME-Version: 1.0
-Content-Type: text/plain
+X-Received: by 2002:a81:760e:: with SMTP id r14-v6mr3678817ywc.94.1529955476458;
+ Mon, 25 Jun 2018 12:37:56 -0700 (PDT)
+Date:   Mon, 25 Jun 2018 12:37:52 -0700
+Message-Id: <20180625193752.255319-1-jonathantanmy@google.com>
+X-Mailer: git-send-email 2.18.0.rc2.347.g0da03f3a46.dirty
+Subject: [PATCH] fetch-pack: support negotiation tip whitelist
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+During negotiation, fetch-pack eventually reports as "have" lines all
+commits reachable from all refs. Allow the user to restrict the commits
+sent in this way by providing a whitelist of tips; only the tips
+themselves and their ancestors will be sent.
 
-> +#define MIDX_SIGNATURE 0x4d494458 /* "MIDX" */
-> +#define MIDX_VERSION 1
-> +#define MIDX_HASH_VERSION 1
-> +#define MIDX_HEADER_SIZE 12
-> +
-> +static char *get_midx_filename(const char *object_dir)
-> +{
-> +	return xstrfmt("%s/pack/multi-pack-index", object_dir);
-> +}
-> +
-> +static size_t write_midx_header(struct hashfile *f,
-> +				unsigned char num_chunks,
-> +				uint32_t num_packs)
-> +{
-> +	unsigned char byte_values[4];
-> +	hashwrite_be32(f, MIDX_SIGNATURE);
+This feature is only supported for protocols that support connect or
+stateless-connect (such as HTTP with protocol v2).
 
-WARNING: Missing a blank line after declarations
-#48: FILE: midx.c:21:
-+       unsigned char byte_values[4];
-+       hashwrite_be32(f, MIDX_SIGNATURE);
+This will speed up negotiation when the repository has multiple
+relatively independent branches (for example, when a repository
+interacts with multiple repositories, such as with linux-next [1] and
+torvalds/linux [2]), and the user knows which local branch is likely to
+have commits in common with the upstream branch they are fetching.
 
-> +	byte_values[0] = MIDX_VERSION;
-> +	byte_values[1] = MIDX_HASH_VERSION;
-> +	byte_values[2] = num_chunks;
-> +	byte_values[3] = 0; /* unused */
-> +	hashwrite(f, byte_values, sizeof(byte_values));
-> +	hashwrite_be32(f, num_packs);
-> +
-> +	return MIDX_HEADER_SIZE;
-> +}
-> +
->  int write_midx_file(const char *object_dir)
->  {
-> +	unsigned char num_chunks = 0;
-> +	char *midx_name;
-> +	struct hashfile *f;
-> +	struct lock_file lk;
-> +
-> +	midx_name = get_midx_filename(object_dir);
-> +	if (safe_create_leading_directories(midx_name)) {
-> +		UNLEAK(midx_name);
-> +		die_errno(_("unable to create leading directories of %s"),
-> +			  midx_name);
-> +	}
-> +
-> +	hold_lock_file_for_update(&lk, midx_name, LOCK_DIE_ON_ERROR);
-> +	f = hashfd(lk.tempfile->fd, lk.tempfile->filename.buf);
-> +	FREE_AND_NULL(midx_name);
+[1] https://kernel.googlesource.com/pub/scm/linux/kernel/git/next/linux-next/
+[2] https://kernel.googlesource.com/pub/scm/linux/kernel/git/torvalds/linux/
 
-I am not sure why people prefer FREE_AND_NULL over free() for things
-like this.  It is on stack; it's not like this is a static variable
-visible after this function returns or anything like that.
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+This is based on jt/fetch-pack-negotiator, but if that branch is
+undesirable for whatever reason, I can port this to master.
+---
+ builtin/fetch.c    | 21 ++++++++++++++++++
+ fetch-pack.c       | 19 ++++++++++++++--
+ fetch-pack.h       |  7 ++++++
+ t/t5510-fetch.sh   | 55 ++++++++++++++++++++++++++++++++++++++++++++++
+ transport-helper.c |  3 +++
+ transport.c        |  1 +
+ transport.h        | 10 +++++++++
+ 7 files changed, 114 insertions(+), 2 deletions(-)
 
-> +	write_midx_header(f, num_chunks, 0);
-> +
-> +	finalize_hashfile(f, NULL, CSUM_FSYNC | CSUM_HASH_IN_STREAM);
-> +	commit_lock_file(&lk);
-> +
->  	return 0;
->  }
-> diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-> index ec3ddbe79c..8622a7cdce 100755
-> --- a/t/t5319-multi-pack-index.sh
-> +++ b/t/t5319-multi-pack-index.sh
-> @@ -4,7 +4,8 @@ test_description='multi-pack-indexes'
->  . ./test-lib.sh
->  
->  test_expect_success 'write midx with no packs' '
-> -	git multi-pack-index --object-dir=. write
-> +	git multi-pack-index --object-dir=. write &&
-> +	test_path_is_file pack/multi-pack-index
->  '
->  
->  test_done
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index ea5b9669a..12daec0f3 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -63,6 +63,7 @@ static int shown_url = 0;
+ static struct refspec refmap = REFSPEC_INIT_FETCH;
+ static struct list_objects_filter_options filter_options;
+ static struct string_list server_options = STRING_LIST_INIT_DUP;
++static struct string_list negotiation_tip = STRING_LIST_INIT_NODUP;
+ 
+ static int git_fetch_config(const char *k, const char *v, void *cb)
+ {
+@@ -174,6 +175,8 @@ static struct option builtin_fetch_options[] = {
+ 			TRANSPORT_FAMILY_IPV4),
+ 	OPT_SET_INT('6', "ipv6", &family, N_("use IPv6 addresses only"),
+ 			TRANSPORT_FAMILY_IPV6),
++	OPT_STRING_LIST(0, "negotiation-tip", &negotiation_tip, N_("revision"),
++			N_("report that we have only objects reachable from this object")),
+ 	OPT_PARSE_LIST_OBJECTS_FILTER(&filter_options),
+ 	OPT_END()
+ };
+@@ -1075,6 +1078,24 @@ static struct transport *prepare_transport(struct remote *remote, int deepen)
+ 			   filter_options.filter_spec);
+ 		set_option(transport, TRANS_OPT_FROM_PROMISOR, "1");
+ 	}
++	if (negotiation_tip.nr) {
++		struct oid_array *oids;
++		if (transport->smart_options) {
++			int i;
++			oids = xcalloc(1, sizeof(*oids));
++			for (i = 0; i < negotiation_tip.nr; i++) {
++				struct object_id oid;
++				if (get_oid(negotiation_tip.items[i].string,
++					    &oid))
++					die("%s is not a valid object",
++					    negotiation_tip.items[i].string);
++				oid_array_append(oids, &oid);
++			}
++			transport->smart_options->negotiation_tips = oids;
++		} else {
++			warning("Ignoring --negotiation-tip because the protocol does not support it.");
++		}
++	}
+ 	return transport;
+ }
+ 
+diff --git a/fetch-pack.c b/fetch-pack.c
+index ba12085c4..c66bd49bd 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -213,6 +213,21 @@ static int next_flush(int stateless_rpc, int count)
+ 	return count;
+ }
+ 
++static void mark_tips(struct fetch_negotiator *negotiator,
++		      const struct oid_array *negotiation_tips)
++{
++	int i;
++	if (!negotiation_tips) {
++		for_each_ref(rev_list_insert_ref_oid, negotiator);
++		return;
++	}
++
++	for (i = 0; i < negotiation_tips->nr; i++)
++		rev_list_insert_ref(negotiator, NULL,
++				    &negotiation_tips->oid[i]);
++	return;
++}
++
+ static int find_common(struct fetch_negotiator *negotiator,
+ 		       struct fetch_pack_args *args,
+ 		       int fd[2], struct object_id *result_oid,
+@@ -230,7 +245,7 @@ static int find_common(struct fetch_negotiator *negotiator,
+ 	if (args->stateless_rpc && multi_ack == 1)
+ 		die(_("--stateless-rpc requires multi_ack_detailed"));
+ 
+-	for_each_ref(rev_list_insert_ref_oid, negotiator);
++	mark_tips(negotiator, args->negotiation_tips);
+ 	for_each_cached_alternate(negotiator, insert_one_alternate_object);
+ 
+ 	fetching = 0;
+@@ -1295,7 +1310,7 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 			else
+ 				state = FETCH_SEND_REQUEST;
+ 
+-			for_each_ref(rev_list_insert_ref_oid, &negotiator);
++			mark_tips(&negotiator, args->negotiation_tips);
+ 			for_each_cached_alternate(&negotiator,
+ 						  insert_one_alternate_object);
+ 			break;
+diff --git a/fetch-pack.h b/fetch-pack.h
+index bb45a366a..1859ee927 100644
+--- a/fetch-pack.h
++++ b/fetch-pack.h
+@@ -16,6 +16,13 @@ struct fetch_pack_args {
+ 	const struct string_list *deepen_not;
+ 	struct list_objects_filter_options filter_options;
+ 	const struct string_list *server_options;
++
++	/*
++	 * If not NULL, during packfile negotiation, fetch-pack will send "have"
++	 * lines only with these tips and their ancestors.
++	 */
++	const struct oid_array *negotiation_tips;
++
+ 	unsigned deepen_relative:1;
+ 	unsigned quiet:1;
+ 	unsigned keep_pack:1;
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index e402aee6a..ea1b5e53c 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -865,4 +865,59 @@ test_expect_success C_LOCALE_OUTPUT 'fetch compact output' '
+ 	test_cmp expect actual
+ '
+ 
++negotiator_tip () {
++	SERVER="$1"
++	URL="$2"
++	USE_PROTOCOL_V2="$3"
++
++	rm -rf "$SERVER" client &&
++	git init "$SERVER" &&
++	test_commit -C "$SERVER" alpha_1 &&
++	test_commit -C "$SERVER" alpha_2 &&
++	git -C "$SERVER" checkout --orphan beta &&
++	test_commit -C "$SERVER" beta_1 &&
++	test_commit -C "$SERVER" beta_2 &&
++
++	git clone "$URL" client &&
++
++	if [ "$USE_PROTOCOL_V2" -eq 1 ]
++	then
++		git -C "$SERVER" config protocol.version 2
++		git -C client config protocol.version 2
++	fi &&
++
++	test_commit -C "$SERVER" beta_s &&
++	git -C "$SERVER" checkout master &&
++	test_commit -C "$SERVER" alpha_s &&
++	git -C "$SERVER" tag -d alpha_1 alpha_2 beta_1 beta_2 &&
++
++	GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch \
++		--negotiation-tip=alpha_1 --negotiation-tip=beta_1 \
++		origin alpha_s beta_s &&
++
++	# Ensure that {alpha,beta}_1 are sent as "have", but not {alpha_beta}_2
++	ALPHA_1=$(git -C client rev-parse alpha_1) &&
++	grep "fetch> have $ALPHA_1" trace &&
++	BETA_1=$(git -C client rev-parse beta_1) &&
++	grep "fetch> have $BETA_1" trace &&
++	ALPHA_2=$(git -C client rev-parse alpha_2) &&
++	! grep "fetch> have $ALPHA_2" trace &&
++	BETA_2=$(git -C client rev-parse beta_2) &&
++	! grep "fetch> have $BETA_2" trace
++}
++
++test_expect_success '--negotiator-tip limits "have" lines sent' '
++	negotiator_tip server server 0
++'
++
++. "$TEST_DIRECTORY"/lib-httpd.sh
++start_httpd
++
++test_expect_success 'fetch with --filter=blob:limit=0 and HTTP' '
++	negotiator_tip "$HTTPD_DOCUMENT_ROOT_PATH/server" \
++		"$HTTPD_URL/smart/server" 1
++'
++
++stop_httpd
++
+ test_done
+diff --git a/transport-helper.c b/transport-helper.c
+index 1f8ff7e94..ad8f7c772 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -684,6 +684,9 @@ static int fetch(struct transport *transport,
+ 			transport, "filter",
+ 			data->transport_options.filter_options.filter_spec);
+ 
++	if (data->transport_options.negotiation_tips)
++		warning("Ignoring --negotiation-tip because the protocol does not support it.");
++
+ 	if (data->fetch)
+ 		return fetch_with_fetch(transport, nr_heads, to_fetch);
+ 
+diff --git a/transport.c b/transport.c
+index a32da30de..9f10f8ad9 100644
+--- a/transport.c
++++ b/transport.c
+@@ -318,6 +318,7 @@ static int fetch_refs_via_pack(struct transport *transport,
+ 	args.filter_options = data->options.filter_options;
+ 	args.stateless_rpc = transport->stateless_rpc;
+ 	args.server_options = transport->server_options;
++	args.negotiation_tips = data->options.negotiation_tips;
+ 
+ 	if (!data->got_remote_heads)
+ 		refs_tmp = get_refs_via_connect(transport, 0, NULL);
+diff --git a/transport.h b/transport.h
+index 7792b0858..d31be5be6 100644
+--- a/transport.h
++++ b/transport.h
+@@ -25,6 +25,16 @@ struct git_transport_options {
+ 	const char *receivepack;
+ 	struct push_cas_option *cas;
+ 	struct list_objects_filter_options filter_options;
++
++	/*
++	 * This is only used during fetch. See the documentation of
++	 * negotiation_tips in struct fetch_pack_args.
++	 *
++	 * This field is only supported by transports that support connect or
++	 * stateless_connect. Set this field directly instead of using
++	 * transport_set_option().
++	 */
++	struct oid_array *negotiation_tips;
+ };
+ 
+ enum transport_family {
+-- 
+2.18.0.rc2.347.g0da03f3a46.dirty
+
