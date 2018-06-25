@@ -2,135 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 475851F516
-	for <e@80x24.org>; Mon, 25 Jun 2018 20:58:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA01C1F516
+	for <e@80x24.org>; Mon, 25 Jun 2018 21:15:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965026AbeFYU6E (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Jun 2018 16:58:04 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:36063 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S964876AbeFYU6D (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jun 2018 16:58:03 -0400
-Received: by mail-wr0-f196.google.com with SMTP id f16-v6so15034271wrm.3
-        for <git@vger.kernel.org>; Mon, 25 Jun 2018 13:58:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=+Z0kT8lAl9Xt6hQHA3zm1/DoMIYU3OtR22EbDpVtziU=;
-        b=pmDJy9SCgaV4U1Bf57vnxS3Zxe2sDjI5A7OMbbvM700GQesbLXee61pgwh8QJY+iMy
-         ixNaY7dWxkPQuJgxZ/5EzR5EJs48LLWZ9ksZqHKYYais6LgBVf7EhajQizEvrKF1c4oe
-         HJRKzOyZnTfIVdyWxMmHP0dqZL0wnhBo+shlbI3I71AeteQJBYW9ovirVsNv0UmI0206
-         Jo9Xibtu43s+pxnbxQIio/BR04DIlvhdh6wHOgaqvrq/gU7rFflSivY6/2JkM+BtN/vQ
-         UfxBTfsODefBDZpiq9IW4praMJdzKjwEM1ZY39asq9UPT9SwfLnjEh3OhFZws+Jty6De
-         V8sw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=+Z0kT8lAl9Xt6hQHA3zm1/DoMIYU3OtR22EbDpVtziU=;
-        b=j+tp/rQoP2Tz6wKHc7yRGCfYUfiQgws9cjHWNgEY9yJoFAi/qKEaM/On9SiNlCPwB7
-         WwHhMi01LHmjhecS5ArxRIEVqBEiAAJqgN0V/fBXfd1Cmi60dPj40fg6LnXvHW4PzgDk
-         vMX36i7SExjO+m12EnC1Cj7KLqO0F6eVjHasTpey9EhyDKv3q8RdYaOAdsb/X6Ob3I30
-         C4xzAPN4DQpTyeI3BDaZXsTSil/lXhLKVvZxt07MzfctFYi7w7De2tgsz0YGAZ0MBGXS
-         h2BNNOcQoURUdwpGvRkPCfjI3IJKpQKju2XuOQSx3LjSt965sqTSsyHWIC9lWVW1IfPN
-         /D9A==
-X-Gm-Message-State: APt69E1D0vHEH2eW9RiigFpI15mu7oYg6kjM5JsY4qn9c8/ieH99ff/L
-        DNY2PuVks6ZbNgrSjhlyk5Y=
-X-Google-Smtp-Source: AAOMgpeFBzjCzY98FkNqB6Kv9L/ijFP8pMhgCP/G2+pfk1vNoJuXflaKHYRSm+JiiGksWGysNqyyiw==
-X-Received: by 2002:adf:8062:: with SMTP id 89-v6mr7461298wrk.221.1529960282402;
-        Mon, 25 Jun 2018 13:58:02 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id h3-v6sm2050330wro.87.2018.06.25.13.57.59
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 25 Jun 2018 13:58:00 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH 4/5] commit-graph: store graph in struct object_store
-References: <cover.1529616356.git.jonathantanmy@google.com>
-        <3410494e3505a7b1b895869c3702dbba0f0cf5a6.1529616356.git.jonathantanmy@google.com>
-Date:   Mon, 25 Jun 2018 13:57:59 -0700
-In-Reply-To: <3410494e3505a7b1b895869c3702dbba0f0cf5a6.1529616356.git.jonathantanmy@google.com>
-        (Jonathan Tan's message of "Thu, 21 Jun 2018 14:29:24 -0700")
-Message-ID: <xmqqwoummvmw.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1752394AbeFYVPF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Jun 2018 17:15:05 -0400
+Received: from mout.gmx.net ([212.227.15.15]:50167 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752161AbeFYVPE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jun 2018 17:15:04 -0400
+Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M8eAd-1gKHUq3uKp-00wH77; Mon, 25
+ Jun 2018 23:14:56 +0200
+Date:   Mon, 25 Jun 2018 23:14:57 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Alban Gruin <alban.gruin@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Stefan Beller <sbeller@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        phillip.wood@dunelm.org.uk, Elijah Newren <newren@gmail.com>
+Subject: Re: [GSoC][PATCH v3 2/3] rebase -i: rewrite setup_reflog_action()
+ in C
+In-Reply-To: <4dfaa8d4-09d0-1156-43a4-687c3389e039@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1806252313140.11870@tvgsbejvaqbjf.bet>
+References: <20180619154421.14999-1-alban.gruin@gmail.com> <20180621141732.19952-3-alban.gruin@gmail.com> <xmqq4lhurdl7.fsf@gitster-ct.c.googlers.com> <7094810.i0lmrLi0k7@andromeda> <xmqqr2kuq3qg.fsf@gitster-ct.c.googlers.com>
+ <4dfaa8d4-09d0-1156-43a4-687c3389e039@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/mixed; boundary="8323328-1290903297-1529961298=:11870"
+X-Provags-ID: V03:K1:Lj8DkpfoZ7q2EPAkG5LQQ48L7DUOfbpljAjPYibgyi0WIlCsdFd
+ /Rrzd/pd0M43Sf+g7jCtJoEDznn3oqtW8hJ8+iKRrBYILFmdFjKEq9g9tJ5UjdPyN8tgIYf
+ 5MFZjf2ddUR+Vd4AoQDNt6Hxj6Le46MV4QlZy23OIqDt7q78ndngIoGyaE6GHva4L3mrCxB
+ 3ldM+NTIMKkhU3RI4KrUg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:6gMmpZZYHkg=:1/itFqb2cujmn6wV10ooQd
+ JA0JYiQj4S9Q72o+PfwOBA1j3ORryyYDLTcHkR+JOFs8RPaTF1E8apDr+bzz283yslS/XimFO
+ fIftDEc2XKg8bCz53C7d9lIaFUGd1+LZHRJj8bK3FdofyTdyGsei840GzNp/jf+MyswEreC8f
+ 1Ux2JRrZFoKvE/NEvt8sPvwhd8CiEVnusL4es5dGLmLdKWEBXDZn8spHRhAPUU1y7ICVzPeQ7
+ jVljUZGjivPktrasz/mNKFSzSQG6dSimNwNMpvXQH5vRHd8vrbsuKyjvJ0JW1395XY24mriTM
+ vGjhKt+3Bv5bLjBCdaT6DBrM3Hvy9QV1NuvqQS4hRiNJR4p2ju2ybnxGq2AkoSEjnYztxvpnG
+ 2vQcZObXUpezKbmK96LQuSeGjzeon3+6tzRM/HE4E9ngZSbUAdyOU42uQGbHXkF485Y5IZfIR
+ QOFgWhXR/U841RGfuqeiUUEy+Cu4WwpsNSsrHTjLtxpw+6dPNz9AGgxBoxGfOR/5Ztdb5aDrR
+ H4ndRpJRtfhcSAjhr3MLw2/biwF4XW9gVuy6b1JtW+dOSfk/CSXP+VyU3T7g2hznfILoFZBIy
+ cev478TYfaNC5Mm0o6MOmdzqFrQYWE1ElXjKQbVfYbbukL4pdtWNOCzeTRKfekDqGjnU75luk
+ Tlq98syCCk8UHOdsuXmJye5tHepAZlSpg7h35wKJAL9j8stYbYIfwBNIS4BNmUJ74MHCJJsTm
+ IQbcGX4+f0ccBvYDHNAAux9SQQzImPxIQTfjbx6hhrQCtb9p/Z/RakyDZp7LfQdrROxLb7rSW
+ pLUdOsf
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> Instead of storing commit graphs in static variables, store them in
-> struct object_store. There are no changes to the signatures of existing
-> functions - they all still only support the_repository, and support for
-> other instances of struct repository will be added in a subsequent
-> commit.
->
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
->  commit-graph.c | 34 ++++++++++++++++++----------------
->  object-store.h |  3 +++
->  object.c       |  5 +++++
->  3 files changed, 26 insertions(+), 16 deletions(-)
-> ...
-> @@ -293,7 +290,9 @@ int parse_commit_in_graph(struct commit *item)
->  		return 1;
->  
->  	prepare_commit_graph();
-> -	if (commit_graph) {
-> +	if (the_repository->objects->commit_graph) {
-> +		struct commit_graph *commit_graph =
-> +			the_repository->objects->commit_graph;
->  		uint32_t pos;
->  		int found;
->  		if (item->graph_pos != COMMIT_NOT_FROM_GRAPH) {
-> @@ -329,7 +328,8 @@ struct tree *get_commit_tree_in_graph(const struct commit *c)
->  	if (c->graph_pos == COMMIT_NOT_FROM_GRAPH)
->  		BUG("get_commit_tree_in_graph called from non-commit-graph commit");
->  
-> -	return load_tree_for_commit(commit_graph, (struct commit *)c);
-> +	return load_tree_for_commit(the_repository->objects->commit_graph,
-> +				    (struct commit *)c);
->  }
+--8323328-1290903297-1529961298=:11870
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-I was looking at semantic merge conflicts between this and your
-e2838d85 ("commit-graph: always load commit-graph information",
-2018-05-01), the latter of which I planned to merge to 'master' as a
-part of the first batch in this cycle, and noticed that there are
-two very similar functions, without enough document the callers
-would not know which one is the correct one to call.  Needless to
-say, such a code duplication would mean the work required for
-resolving semantic conflict doubles needlessly X-<.
+Hi,
 
+On Mon, 25 Jun 2018, Alban Gruin wrote:
 
-int parse_commit_in_graph(struct commit *item)
-{
-	uint32_t pos;
+> Le 25/06/2018 =C3=A0 17:34, Junio C Hamano a =C3=A9crit=C2=A0:
+> > Alban Gruin <alban.gruin@gmail.com> writes:
+> >=20
+> >> Le 22/06/2018 =C3=A0 18:27, Junio C Hamano a =C3=A9crit :
+> >>> Alban Gruin <alban.gruin@gmail.com> writes:
+> >>>> This rewrites (the misnamed) setup_reflog_action() from shell to C. =
+The
+> >>>> new version is called checkout_base_commit().
+> >>>
+> >>> ;-) on the "misnamed" part.  Indeed, setting up the comment for the
+> >>> reflog entry is secondary to what this function wants to do, which
+> >>> is to check out the branch to be rebased.
+> >>>
+> >>> I do not think "base_commit" is a good name, either, though.  When I
+> >>> hear 'base' in the context of 'rebase', I would imagine that the
+> >>> speaker is talking about the bottom of the range of the commits to
+> >>> be rebased (i.e. "rebase --onto ONTO BASE BRANCH", which replays
+> >>> commits BASE..BRANCH on top of ONTO and then points BRANCH at the
+> >>> result), not the top of the range or the branch these commits are
+> >>> taken from.
+> >>>
+> >>
+> >> Perhaps should I name this function checkout_onto(), and rename=20
+> >> checkout_onto() to "detach_onto()"?  And I would reorder those two com=
+mits in=20
+> >> the series, as this would be very confusing.
+> >=20
+> > I may be misunderstanding what is happening in the function, but I
+> > think it is checking out neither the onto or the base commit.  The
+> > function instead is about checking out the branch to be rebased
+> > before anything else happens when the optional <branch> argument is
+> > given (and when the optional argument is not given, then we rebase
+> > the current branch so there is no need to check it out upfront), no?
+> >=20
+> >=20
+>=20
+> Yes, you=E2=80=99re right.
+>=20
+> Now I really don=E2=80=99t know how to call this function.
+> checkout_top_of_range(), perhaps?
 
-	if (!core_commit_graph)
-		return 0;
-	if (item->object.parsed)
-		return 1;
-	prepare_commit_graph();
-	if (commit_graph && find_commit_in_graph(item, commit_graph, &pos))
-		return fill_commit_in_graph(item, commit_graph, pos);
-	return 0;
-}
+Pratik refactored some code from sequencer.c into checkout.c/checkout.h
+today to do exactly that. It is not polished yet, but probably will be
+tomorrow. It provides a function `int detach_head_to(struct object_oid
+*oid, const char *action, const char *reflog_message)`. Maybe use that
+directly, once the commit is available?
 
-void load_commit_graph_info(struct commit *item)
-{
-	uint32_t pos;
-	if (!core_commit_graph)
-		return;
-	prepare_commit_graph();
-	if (commit_graph && find_commit_in_graph(item, commit_graph, &pos))
-		fill_commit_graph_info(item, commit_graph, pos);
-}
+Ciao,
+Dscho
+--8323328-1290903297-1529961298=:11870--
