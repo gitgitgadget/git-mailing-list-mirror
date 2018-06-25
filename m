@@ -7,74 +7,83 @@ X-Spam-Status: No, score=-8.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C4B01F516
-	for <e@80x24.org>; Mon, 25 Jun 2018 18:22:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 714B61F516
+	for <e@80x24.org>; Mon, 25 Jun 2018 18:24:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964911AbeFYSWf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Jun 2018 14:22:35 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:36680 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S964880AbeFYSWe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jun 2018 14:22:34 -0400
-Received: by mail-pf0-f193.google.com with SMTP id u16-v6so3060198pfh.3
-        for <git@vger.kernel.org>; Mon, 25 Jun 2018 11:22:34 -0700 (PDT)
+        id S964880AbeFYSYi (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Jun 2018 14:24:38 -0400
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:44325 "EHLO
+        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S964849AbeFYSYh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jun 2018 14:24:37 -0400
+Received: by mail-pl0-f65.google.com with SMTP id m16-v6so2446885pls.11
+        for <git@vger.kernel.org>; Mon, 25 Jun 2018 11:24:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=X2VfwomBB4clXRHn7PQVBRoZ2/yzty+Hfg5i3B1m4Gs=;
-        b=MjIHVJpl/swE6KnzhgYLHfVltyk9fi7GEhJeozDkGeCTU8A/pwZPuztcxenEhOAzLK
-         hhBYI5GmtRpTk/yAcsN0laLxvLkmTrEDQBs5LjvcgcI0Roc2DMZFn+dL4D5AeJD0rQYh
-         Tm9kadT63gHz1V4OunfA4Zv+yLtuNLx1M/h0zpPxA3RYWA57X39kWiwKLm2I+9wG9f2p
-         fPTdN32LPzQVDUR3A7/g5s7KFKPafCWKVDPYpjuQn5Jy6tOa0+XrNHQjzFwFBObDtcaq
-         6x2HQ+LmzFpA314+Vo43Mn8VTBDI+oMq7Q6q/KqMxWwoPznItRVVL50Dbp7Yv+ll9mX7
-         ihtQ==
+        bh=OnNRsiMopEa07EGpfefqQAM7HwY7KOQoj/bwRw4rB7I=;
+        b=IPwncZyYXckQRfO43Q8Yne90sBd2OgB7BCbHCsaiXt35DFMN/SKYl+AfYtBAuZ7j43
+         91tno087a0K6jmpmuUsYOvm75KdzBilxRmBc2BngO8FTD2OK64nMKB5ry1r+VDxfATkf
+         twJdw9gO82bNwJO+PLVpLKZ4S2YLoJPYFTzxbnWy9A5WFN/KZgETZH1Kn8m8hGG0gO+I
+         isv9vTlFbzvdXUB+nCnSpaXj/UrffiaF/C1b1KdR9CZ9CJffbrGmsBQRm/o6A4zNnqni
+         1Vl8904VzhRwsCXPDZEsq/h+Hd3D/bIr3Xx4ZXa8ASXEM4Q3iauGC4UFgZETNT8bJhn4
+         UCCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=X2VfwomBB4clXRHn7PQVBRoZ2/yzty+Hfg5i3B1m4Gs=;
-        b=NA27TLH1tET2x1XfGY8cGzKW6Fh4O6uP9PbEVAih50lR6wp+N0Ul3MGraZCTuOa/Ut
-         T0zlR9S2e3cH6sMj21YpFe1tl3v1y6YDPJ6rJT2+QHggnqEoiycOgRPK03ozipje5jf1
-         XB09Hwf/Ud51UK/94IGPwKIoz6po0SiHsb0rQ9I3ebMbudjpdw/YHeqSF/vwSJX+m94x
-         cGVcrO5gTuO+9VdychJi+JiXEPl7ZuGZvMVo2gnNxOB1fz8ypkTBVlbqoRrV13Hz46wC
-         vFV1hovfeR/hvRXc1R2fG8DyA+o8MAcP98zpwqjsiZNc/L9uK9u8JHTkXM99ATESoaFB
-         v4HQ==
-X-Gm-Message-State: APt69E3yrq9gyVjQV4Q74ruCACnd8RydbBzbsHmDpdjarWAGQgYpj7KI
-        Z1gWkiG0f7XmIjMgR98Xzp+uPPnMx3Y=
-X-Google-Smtp-Source: ADUXVKLt4gSHe867OOFektxLVW4P+bzXILJbALm189ahaDDXDY+ijdFn6cc75m3ePIatskb/g6SGyw==
-X-Received: by 2002:a65:602c:: with SMTP id p12-v6mr11602097pgu.209.1529950953915;
-        Mon, 25 Jun 2018 11:22:33 -0700 (PDT)
+        bh=OnNRsiMopEa07EGpfefqQAM7HwY7KOQoj/bwRw4rB7I=;
+        b=UFHEeeFQE245yaYr1PvOSEoBoU3ZDfZJVA7jFF9r94aht9xcXEG7ko6cRPXvaGk+6f
+         6DcuDKlgl4FgVgRIC3F7JCvR82kw+/j2jMqXopMutKmcRIPNgV7YQBxMR3wVbmt1WmoO
+         zq8JCUoTAyaFVQwLZetsFhXSeKx784tmyzQPfDIx0E/Mi7LgiWcIyiAkJvKyP8ldu8p1
+         e6ZgD2AKAR2yAATaJ9hNhvj9IDrt/OldKtoupkStxLyBFrmMNsJ55SqTyOew6H/U/GP8
+         hTOOW7530e6opqBNbKUNZnSo7Uk8WnOy8uWdM08FQPUcNqaWcOVX4Tk1qr5iUcsU9USt
+         qjJw==
+X-Gm-Message-State: APt69E3Xti7GEAYQyCGJcQ/pb+X+KeMSEQzCO7ggENC9d/gZ85ua7av8
+        gKwADrVvE3gSOMcL2d4Qlt6hTQ==
+X-Google-Smtp-Source: ADUXVKI1OzdLWH9GpluJtqS2S4Jp1xwpKa4mmF34BPJPt2H2L1jbaL5u6RdWTA6EwFPGUNIkEMqVUQ==
+X-Received: by 2002:a17:902:a24:: with SMTP id 33-v6mr13513989plo.88.1529951077039;
+        Mon, 25 Jun 2018 11:24:37 -0700 (PDT)
 Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id q207-v6sm24405939pgq.11.2018.06.25.11.22.32
+        by smtp.gmail.com with ESMTPSA id 90-v6sm3776082pfr.75.2018.06.25.11.24.35
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 25 Jun 2018 11:22:32 -0700 (PDT)
-Date:   Mon, 25 Jun 2018 11:22:31 -0700
+        Mon, 25 Jun 2018 11:24:35 -0700 (PDT)
+Date:   Mon, 25 Jun 2018 11:24:34 -0700
 From:   Brandon Williams <bmwill@google.com>
 To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com
-Subject: Re: [PATCH 0/2] Object store refactoring: make bitmap_git not global
-Message-ID: <20180625182231.GD19910@google.com>
-References: <cover.1528397984.git.jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH v3 0/7] Refactor fetch negotiation into its own API
+Message-ID: <20180625182434.GE19910@google.com>
+References: <cover.1527894919.git.jonathantanmy@google.com>
+ <cover.1529016350.git.jonathantanmy@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cover.1528397984.git.jonathantanmy@google.com>
+In-Reply-To: <cover.1529016350.git.jonathantanmy@google.com>
 User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/07, Jonathan Tan wrote:
-> This is a continuation of the object store refactoring effort.
+On 06/14, Jonathan Tan wrote:
+> Thanks, Brandon and Junio, for your comments.
 > 
-> We cannot truly free an object store without ensuring that any generated
-> bitmaps are first freed, so here are patches to drastically reduce the
-> lifetime of any bitmaps generated. As a bonus, the API is also improved,
-> and global state reduced.
+> Updates since v2:
+>  - nothing new in patches 1 and 2
+>  - patch 3: now clear priority queue unconditionally once we are done
+>    with it (as requested by Brandon in a comment for a later patch)
+>  - patch 4: updated commit message to not mention everything_local() (as
+>    pointed out by Brandon), updated test to not rely on the fact that
+>    fetch-pack uses prefix matching (thanks, Junio, for the observation)
+>  - patch 5: used a more descriptive name ("struct negotiation_state")
+>    for the struct, instead of "struct data"
+>  - squashed patch 8 into patch 7; this means that the comments are not
+>    moved verbatim, but for the reviewer, verbatim-ness of comments is
+>    probably not that important anyway
 
-I've reviewed this series and haven't found any issues.
+Thanks this series looks good now.
 
 Reviewed-by: Brandon Williams <bmwill@google.com>
 
