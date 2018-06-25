@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B80E1F516
-	for <e@80x24.org>; Mon, 25 Jun 2018 16:42:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E2B51F516
+	for <e@80x24.org>; Mon, 25 Jun 2018 16:42:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754909AbeFYQmp (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Jun 2018 12:42:45 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:39343 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754385AbeFYQmo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jun 2018 12:42:44 -0400
-Received: by mail-wr0-f196.google.com with SMTP id b8-v6so8927783wro.6
-        for <git@vger.kernel.org>; Mon, 25 Jun 2018 09:42:44 -0700 (PDT)
+        id S933471AbeFYQms (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Jun 2018 12:42:48 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:51312 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754423AbeFYQmq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jun 2018 12:42:46 -0400
+Received: by mail-wm0-f68.google.com with SMTP id w137-v6so4711118wmw.1
+        for <git@vger.kernel.org>; Mon, 25 Jun 2018 09:42:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=kZKFfoQLGOv5Y8I0ZrD1LiGPMnEgQRGoBnuuFfjKwt0=;
-        b=fgKVKOJuwdOVelj8i3MGUszAZp/7OLkQdh1n4cDm46euEk9WoNJp5SjAq8sRMeTSUc
-         QdnTTtwiDTPDnDRqE3qcsiSdKM6oKE7RxaU0I7dScmaBConHULjiRd/Z8RSKljouCQ4s
-         PBwOcfjFlZl1cTy7/XiosOecADZ4NupliYTAvEMz2OXbQYPTr6SymghC/qLeGBYkkDxp
-         5dT/FuCy337D+v3iZ18iR/YIXRZFA5h3MlIQnqIjK+frNaZ+4tiomAKw+7OwsQ6FLv9z
-         r2ZXkD745j21HqKXvSIBivI3nq0KvSGrTOSEFisVIopyhlgu4hAK2aO7xT06nybdtt9J
-         fBXw==
+        bh=Skoa8iJZjfyRMLkSDXPJMa0PEPnT03CT1cO4QXJXV6g=;
+        b=YgHx5aGv6b3xA4VjewQGB07Umu0mHBovAmlxvZrPwOdXgo/5Zc+1nZ9ho4m1ksvQpY
+         gdz5vlyUdCPc0qLmNQj850yob27Wl0xbehOzaX+wbzTS2fH88GKXaxV7jzSH8ed8G46e
+         FbcEmmpe8E1D1EsOcBLyv9tm+80qetjOeZvRBjkzfyFFnrrhAJDFTg9nKqfBnaZPJQA3
+         idYNKhHfnXsFd6EhUckhrSCsY7NUXntYVVhF10K4wXzBAXWs9zr0HYs8M4C4DPiLsBLm
+         0JB3Phq1lCAUyvlT+t6BOeIxBSHgtwhQ4LFkGOOsJ1qLR6Z+Fhf5guEDKGsoeYKUE5nq
+         P8VA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=kZKFfoQLGOv5Y8I0ZrD1LiGPMnEgQRGoBnuuFfjKwt0=;
-        b=T1YuipfUxjhjn7OE7OqSkCJlSl+iyB2kLGtOQIwX10xpK+CLBprgkdRsmmPxgb/4nS
-         qAx+QW05p7tNVJenL+ma0jnf1qA3WeIrJ3Mu9sRuP1p86nxzUnBlvCGcQpo6/8a65BAj
-         vOYGcWKDmwZwlL4vESpFjFbfaCdjyDuhQ6kgXdOkr4RXtFcrKbbG7ifALBLqqeo/EE9o
-         dozcB5jfE8gvGi2d/hwtmqNBpMTrKLFHP/SNK4S55nYGIAByGwSN+IynfZUYUz/g0+Vo
-         aHKB/jLeyI6GEyZShfRJbk2LdGurcis+pJ/datvUuFnY1yU4FHS6sdxE6BcmULvXidfa
-         hFVg==
-X-Gm-Message-State: APt69E0hSFa4GT2VirhRf8LgQ4YBTePopW2Q+roTmeIkDwqQqhcwEgUF
-        67/1BTD2bj6TPz1BAtYhTOoint5G
-X-Google-Smtp-Source: ADUXVKICDBw2vg7GN4HC3ocvBKGCDyilFjq1potJnpp+UtYf5UySdMkx/HbubcFzwb3M34lO8Oagvg==
-X-Received: by 2002:adf:b05c:: with SMTP id g28-v6mr10658315wra.128.1529944963400;
-        Mon, 25 Jun 2018 09:42:43 -0700 (PDT)
+        bh=Skoa8iJZjfyRMLkSDXPJMa0PEPnT03CT1cO4QXJXV6g=;
+        b=o7mc0FG35fqVNekvNYju44dSULmIx2jdsFPOrfW0eaRMsUeRJT6DgAHMQoOLstpcUw
+         TNtyQbVk7cvX+SqnqJbXzhenfyr0fjY6/pRLLph+x0IuQyGjkYyUSp7QanEqOBiytSWa
+         5wEI66H2ygtCOP4U4Uzdxf279vswyYnPhqz8lY83QGnwXlO1pz+O/chJ1DaLm627lgPM
+         yi3QDyKipFpBD8ybLf4+jHkRmFTJA10L3UhbDUjlCaiQBsEc5c6Gkf0wJzdrRqaDswF/
+         bKPEYYb4x5ea/DwEQ5NPlywvG7twhhkIYZj/mCS0KEVhAVKmGHsU0veEFSxdqHzu94Tg
+         FGIg==
+X-Gm-Message-State: APt69E359nLHt9LeWyv+K7jEIUFamuXjcHpR2mL939vjG1e/+VUlqTa7
+        24q+ZetZbkfqQyGSZuaHr1NL9yeZ
+X-Google-Smtp-Source: AAOMgpc9m+YOUlFj6mFCLnW5f1OG8Oq5WYrCyldiUgJcm6ivLPGlLnzHGqhWaDv2w3gd5IrJUbxnkg==
+X-Received: by 2002:a1c:150d:: with SMTP id 13-v6mr1700573wmv.100.1529944964822;
+        Mon, 25 Jun 2018 09:42:44 -0700 (PDT)
 Received: from sebi-laptop.tendawifi.com (5-13-160-71.residential.rdsnet.ro. [5.13.160.71])
-        by smtp.gmail.com with ESMTPSA id d14-v6sm2912904wro.24.2018.06.25.09.42.42
+        by smtp.gmail.com with ESMTPSA id d14-v6sm2912904wro.24.2018.06.25.09.42.43
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 25 Jun 2018 09:42:42 -0700 (PDT)
+        Mon, 25 Jun 2018 09:42:43 -0700 (PDT)
 From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Johannes.Schindelin@gmx.de, joel@teichroeb.net, gitster@pobox.com
-Subject: [PATCH v6 1/4] sha1-name.c: added 'get_oidf', which acts like 'get_oid'
-Date:   Mon, 25 Jun 2018 19:42:24 +0300
-Message-Id: <4c1f71b067ac235c3003d58e1f3dfb07866be129.1529943789.git.ungureanupaulsebastian@gmail.com>
+Subject: [PATCH v6 2/4] stash: improve option parsing test coverage
+Date:   Mon, 25 Jun 2018 19:42:25 +0300
+Message-Id: <16a4ed177d885ab0db270201ba52f07ed2234ea1.1529943789.git.ungureanupaulsebastian@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc2.13.g506fc12fb
 In-Reply-To: <cover.1529943789.git.ungureanupaulsebastian@gmail.com>
 References: <cover.1529943789.git.ungureanupaulsebastian@gmail.com>
@@ -62,59 +62,71 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Compared to 'get_oid', 'get_oidf' has as parameters a
-printf format string and the additional arguments. This
-will help simplify the code in subsequent commits.
+From: Joel Teichroeb <joel@teichroeb.net>
 
-Original-idea-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+In preparation for converting the stash command incrementally to
+a builtin command, this patch improves test coverage of the option
+parsing. Both for having too many parameters, or too few.
+
+Signed-off-by: Joel Teichroeb <joel@teichroeb.net>
 Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 ---
- cache.h     |  1 +
- sha1-name.c | 19 +++++++++++++++++++
- 2 files changed, 20 insertions(+)
+ t/t3903-stash.sh | 35 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
 
-diff --git a/cache.h b/cache.h
-index 89a107a7f..9252a4546 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1321,6 +1321,7 @@ struct object_context {
- 	GET_OID_BLOB)
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index 1f871d3cc..af7586d43 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -444,6 +444,36 @@ test_expect_failure 'stash file to directory' '
+ 	test foo = "$(cat file/file)"
+ '
  
- extern int get_oid(const char *str, struct object_id *oid);
-+extern int get_oidf(struct object_id *oid, const char *fmt, ...);
- extern int get_oid_commit(const char *str, struct object_id *oid);
- extern int get_oid_committish(const char *str, struct object_id *oid);
- extern int get_oid_tree(const char *str, struct object_id *oid);
-diff --git a/sha1-name.c b/sha1-name.c
-index 60d9ef3c7..80ee8f742 100644
---- a/sha1-name.c
-+++ b/sha1-name.c
-@@ -1466,6 +1466,25 @@ int get_oid(const char *name, struct object_id *oid)
- 	return get_oid_with_context(name, 0, oid, &unused);
- }
++test_expect_success 'giving too many ref arguments does not modify files' '
++	git stash clear &&
++	test_when_finished "git reset --hard HEAD" &&
++	echo foo >file2 &&
++	git stash &&
++	echo bar >file2 &&
++	git stash &&
++	test-tool chmtime =123456789 file2 &&
++	for type in apply pop "branch stash-branch"
++	do
++		test_must_fail git stash $type stash@{0} stash@{1} 2>err &&
++		test_i18ngrep "Too many revisions" err &&
++		test 123456789 = $(test-tool chmtime -g file2) || return 1
++	done
++'
++
++test_expect_success 'drop: too many arguments errors out (does nothing)' '
++	git stash list >expect &&
++	test_must_fail git stash drop stash@{0} stash@{1} 2>err &&
++	test_i18ngrep "Too many revisions" err &&
++	git stash list >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'show: too many arguments errors out (does nothing)' '
++	test_must_fail git stash show stash@{0} stash@{1} 2>err 1>out &&
++	test_i18ngrep "Too many revisions" err &&
++	test_must_be_empty out
++'
++
+ test_expect_success 'stash create - no changes' '
+ 	git stash clear &&
+ 	test_when_finished "git reset --hard HEAD" &&
+@@ -479,6 +509,11 @@ test_expect_success 'stash branch - stashes on stack, stash-like argument' '
+ 	test $(git ls-files --modified | wc -l) -eq 1
+ '
  
-+/*
-+ * This returns a non-zero value if the string (built using printf
-+ * format and the given arguments) is not a valid object.
-+ */
-+int get_oidf(struct object_id *oid, const char *fmt, ...)
-+{
-+	va_list ap;
-+	int ret;
-+	struct strbuf sb = STRBUF_INIT;
++test_expect_success 'stash branch complains with no arguments' '
++	test_must_fail git stash branch 2>err &&
++	test_i18ngrep "No branch name specified" err
++'
 +
-+	va_start(ap, fmt);
-+	strbuf_vaddf(&sb, fmt, ap);
-+	va_end(ap);
-+
-+	ret = get_oid(sb.buf, oid);
-+	strbuf_release(&sb);
-+
-+	return ret;
-+}
- 
- /*
-  * Many callers know that the user meant to name a commit-ish by
+ test_expect_success 'stash show format defaults to --stat' '
+ 	git stash clear &&
+ 	test_when_finished "git reset --hard HEAD" &&
 -- 
 2.18.0.rc2.13.g506fc12fb
 
