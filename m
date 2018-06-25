@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 470C91F516
-	for <e@80x24.org>; Mon, 25 Jun 2018 22:28:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF0BA1F516
+	for <e@80x24.org>; Mon, 25 Jun 2018 22:36:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754435AbeFYW2D (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Jun 2018 18:28:03 -0400
-Received: from mail-qt0-f201.google.com ([209.85.216.201]:33251 "EHLO
-        mail-qt0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752998AbeFYW2C (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jun 2018 18:28:02 -0400
-Received: by mail-qt0-f201.google.com with SMTP id o68-v6so14512541qte.0
-        for <git@vger.kernel.org>; Mon, 25 Jun 2018 15:28:02 -0700 (PDT)
+        id S1754336AbeFYWgo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Jun 2018 18:36:44 -0400
+Received: from mail-yb0-f201.google.com ([209.85.213.201]:55379 "EHLO
+        mail-yb0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932198AbeFYWgn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jun 2018 18:36:43 -0400
+Received: by mail-yb0-f201.google.com with SMTP id y16-v6so1999183ybk.22
+        for <git@vger.kernel.org>; Mon, 25 Jun 2018 15:36:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=p+i8GF4uRyWlwoYv1ULGVonsPe+Ait4UKyYAUAFBFPI=;
-        b=XHqNbFzHNRUvNJGjeqXsizBTHFUIrOPDF4RsdDmh6HGnxe0IXXZ+evRkPHj2Qqhhh5
-         rU6uNdsc4/nwn+ZhdUmnp8KAvVPlgPUH0BCwppH7wpsX6a8oX77ynZ+SUTQ8RSNioVMk
-         oHOceHM17grwfGJ5N5dsKGq5CeqQ1JXDoQqzhKiiudnBuPZPVxKmDSXFmsnBAVyXJ5ot
-         EDWYxy4lVYJe6QP4JZ0ZfKqbYy0/2e7ZyTHGJPuWPLQ8iWrIqcUuHTWbaOMHXqPrfG7H
-         EDYqRgmM+3eofNxW0AVTqhzkCd5pN+Uveg/su+i9uc3gGlCthVxe1A4NZei/d8Ur7l29
-         zpDw==
+        bh=3S/nLkM+e3sZ58ZRqhO5bXe9SRiOevGOccOyV8nGUqw=;
+        b=DOlvj1DHVX8nS2Z0WFnVl63Ddb9aOus31ab2wJJGoDS1tl1DVuXf6gh44pkyOJA3ch
+         5t0oBONUZtIpSx+Q3oJ6UtsC1/qTwx+yJrrf5sIwS6+Zdwl6LIGsGafOjk6a5dr1T4QH
+         EOyh6CgCeZaazP4xutUJZ3s74FKwzVLyzWSEDP8/WPW/aQJiDSyghPZJt9+SBkE2ejox
+         WoUECYm0ufucFobiByJB/qUlgLFSheYKhnpU42Vp0dV/kLiBFmXI8MZy8pWIlA9UzWi6
+         Pmn2MGbX/XvgNi4F3KoQRFkzthaeTLJ+rvFhgSMv4MF4uYYnN16kIas0KMgUSWub7OeH
+         UBjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=p+i8GF4uRyWlwoYv1ULGVonsPe+Ait4UKyYAUAFBFPI=;
-        b=A9SfAJqfvEMc/4NFLyl0bINkmrWI5m1NF0BPCuoPYxEXE5zyzTq4zuCbrf9lcBgRfP
-         fJf/Rj2mzp+9M8kLCJ559qskKHsruYm6ydt9Yh90fJzFdWJJkjGOgZezO26y2Lr8NlfD
-         +I0L3HS9LRxWSR7IOJdKu6QGPRgJx8kLtRxD6qZ4U/9/o5szcR/oucdahZDtVjOuG6jF
-         202lchpaV35EhuQE7Sdi4pUEUGKVQtPOC3yC4z22eVK29Qy32JfrtBvaIlo2OYnlYWcZ
-         f7QDj8wiSNGghPTx2UYfvJkBaIu2EU/upgq0fBB9n56mHxpCu+QwaAOpA2QnM6W2GK0A
-         /wxA==
-X-Gm-Message-State: APt69E3BR87wpWEpA859HyA2CCuR4hcXS1JNZaH8klf8VryG8wvxw9w0
-        phBAwHOYJ1R6Kv4Xq1Fmvk4Zx8RH+p3V3Fm8XUzn
-X-Google-Smtp-Source: AAOMgpcPpppm0Rf05Xz+wnV+gYjCrKrPo3JfeQIrPlA1x7VlAlT6EP4l199ec6pABQ5eiY+QVth/QLqLwewRXSAhtos0
+        bh=3S/nLkM+e3sZ58ZRqhO5bXe9SRiOevGOccOyV8nGUqw=;
+        b=r+m5BjJ3MNN8LkRf9U2motjSnd4M69jXZ/e2Me9wmnPf0FwDn81qmVf8l5f3HaNBxI
+         8NS8cXApwkTMAAWOApYfS8X0wS9E5elicEUQrUWIyu1X14wlrPgSRS9MAkBeG1PGC4XP
+         i3JpRvREF5g2JoN5ks1DFxMaN/FUPd1t+sANfbqzmB3eVvi8j92JizsJSl5I4oyNq8nE
+         TzDbpfZJ/gtHYUQ/xsYAQeuzxIS4Er+SoYKoriFstNr6IO5JwSXIH3dhzL5OMXR9Z5NK
+         T5gIiTyWhhmSAR/50NEWugz8seBDW/dKPJvX+Yvnzbkq+h5itv3DHuFlrCXQnXIW3ALY
+         QKSA==
+X-Gm-Message-State: APt69E2cX8W7pX8hnJ8D9Qb4cwrcFY3JOvvhjnqCMFkyvACMshpSJZO9
+        3pQOyvyNU2AZl1APgZ4qI6YbRppA5/ACS8WfTDsn
+X-Google-Smtp-Source: ADUXVKJD4gjVZWcnodl6fg85TMD2i4qXHJcpN7rnv1+STelrLAk89dbnFbWyBcoUUFZMnho/C70PXITXndjihQOt/sCK
 MIME-Version: 1.0
-X-Received: by 2002:a0c:f6c5:: with SMTP id d5-v6mr7807334qvo.54.1529965681629;
- Mon, 25 Jun 2018 15:28:01 -0700 (PDT)
-Date:   Mon, 25 Jun 2018 15:27:58 -0700
-In-Reply-To: <20180625185332.164142-4-bmwill@google.com>
-Message-Id: <20180625222758.202196-1-jonathantanmy@google.com>
-References: <20180625185332.164142-4-bmwill@google.com>
+X-Received: by 2002:a25:ae25:: with SMTP id a37-v6mr3879782ybj.41.1529966202704;
+ Mon, 25 Jun 2018 15:36:42 -0700 (PDT)
+Date:   Mon, 25 Jun 2018 15:36:39 -0700
+In-Reply-To: <20180625185332.164142-7-bmwill@google.com>
+Message-Id: <20180625223639.203642-1-jonathantanmy@google.com>
+References: <20180625185332.164142-7-bmwill@google.com>
 X-Mailer: git-send-email 2.18.0.rc2.347.g0da03f3a46.dirty
-Subject: Re: [PATCH v4 3/8] upload-pack: test negotiation with changing repository
+Subject: Re: [PATCH v4 6/8] fetch: refactor to make function args narrower
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     bmwill@google.com
 Cc:     git@vger.kernel.org, jonathantanmy@google.com, gitster@pobox.com,
@@ -62,51 +62,16 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> --- /dev/null
-> +++ b/t/lib-httpd/one-time-sed.sh
-> @@ -0,0 +1,16 @@
-> +#!/bin/sh
-> +
-> +if [ -e one-time-sed ]; then
-> +	"$GIT_EXEC_PATH/git-http-backend" >out
-> +
-> +	sed "$(cat one-time-sed)" <out >out_modified
-> +
-> +	if diff out out_modified >/dev/null; then
-> +		cat out
-> +	else
-> +		cat out_modified
-> +		rm one-time-sed
-> +	fi
-> +else
-> +	"$GIT_EXEC_PATH/git-http-backend"
-> +fi
+> Refactor find_non_local_tags and get_ref_map to only take the
+> information they need instead of the entire transport struct. Besides
+> improving code clarity, this also improves their flexibility, allowing
+> for a different set of refs to be used instead of relying on the ones
+> stored in the transport struct.
 
-Add an explanatory comment somewhere (maybe, at the beginning),
-something like:
+I see that due to the narrowing of get_ref_map() to take the refs (and
+the remote) instead of the whole transport, the computation of the refs
+(including computation of the ref prefixes) is also moved from
+get_ref_map() to its caller, do_fetch(). As in a previous patch,
+get_ref_map() is only used once, so this movement is safe.
 
-  If "one-time-sed" exists in $HTTPD_ROOT_PATH, run sed on the HTTP
-  response, using the contents of "one-time-sed" as the sed command to
-  be run. If the response was modified as a result, delete
-  "one-time-sed" so that subsequent HTTP responses are no longer
-  modified.
-
-  This can be used to simulate the effects of the repository changing in
-  between HTTP request-response pairs.
-
-> +test_expect_failure 'server is initially ahead - ref in want' '
-
-[snip]
-
-> +test_expect_failure 'server is initially behind - ref in want' '
-
-[snip]
-
-These are test_expect_failure, I assume because the fetch part has not
-been implemented yet. Can this be moved to the end of the patch set,
-once the fetch part has been implemented?
-
-There's also the case of when the server initially has a ref but later
-does not - can this be tested here too? The server part is already
-covered by the upload-pack test in which we craft a request with a
-non-existent ref, but it would be good to test the client part too.
+Reviewed-by: Jonathan Tan <jonathantanmy@google.com>
