@@ -7,37 +7,37 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 294D61F516
-	for <e@80x24.org>; Mon, 25 Jun 2018 16:14:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 74D641F516
+	for <e@80x24.org>; Mon, 25 Jun 2018 16:15:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755015AbeFYQOx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Jun 2018 12:14:53 -0400
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:53474 "EHLO
+        id S1754627AbeFYQOw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Jun 2018 12:14:52 -0400
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:53476 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752268AbeFYQNX (ORCPT
+        by vger.kernel.org with ESMTP id S1752306AbeFYQNX (ORCPT
         <rfc822;git@vger.kernel.org>); Mon, 25 Jun 2018 12:13:23 -0400
 Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w5PG9dVh000973;
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w5PG9dVi000973;
         Mon, 25 Jun 2018 09:13:11 -0700
 Authentication-Results: palantir.com;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2jt01ttdq8-1;
-        Mon, 25 Jun 2018 09:13:10 -0700
-Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 3A480226E7F9;
+        by mx0a-00153501.pphosted.com with ESMTP id 2jt01ttdqa-1;
+        Mon, 25 Jun 2018 09:13:11 -0700
+Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 7E3ED226FB3D;
         Mon, 25 Jun 2018 09:13:10 -0700 (PDT)
 Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
-        by smtp.yojoe.local (Postfix) with ESMTP id 197DC2CDEED;
+        by smtp.yojoe.local (Postfix) with ESMTP id 7596A2CDE86;
         Mon, 25 Jun 2018 09:13:10 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, phillip.wood@dunelm.org.uk,
         johannes.schindelin@gmx.de, sunshine@sunshineco.com,
         szeder.dev@gmail.com, Elijah Newren <newren@gmail.com>
-Subject: [PATCH v4 1/9] git-rebase.txt: document incompatible options
-Date:   Mon, 25 Jun 2018 09:12:52 -0700
-Message-Id: <20180625161300.26060-2-newren@gmail.com>
+Subject: [PATCH v4 6/9] directory-rename-detection.txt: technical docs on abilities and limitations
+Date:   Mon, 25 Jun 2018 09:12:57 -0700
+Message-Id: <20180625161300.26060-7-newren@gmail.com>
 X-Mailer: git-send-email 2.18.0.9.g431b2c36d5
 In-Reply-To: <20180625161300.26060-1-newren@gmail.com>
 References: <20180621150023.23533-1-newren@gmail.com>
@@ -47,7 +47,7 @@ X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-06-25_08:,,
  signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=43 phishscore=0 bulkscore=0 spamscore=0
+ malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
  clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
  mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
  scancount=1 engine=8.0.1-1806210000 definitions=main-1806250187
@@ -56,212 +56,110 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git rebase has many options that only work with one of its three backends.
-It also has a few other pairs of incompatible options.  Document these.
-
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/git-rebase.txt | 85 ++++++++++++++++++++++++++++++++----
- 1 file changed, 77 insertions(+), 8 deletions(-)
+ .../technical/directory-rename-detection.txt  | 92 +++++++++++++++++++
+ 1 file changed, 92 insertions(+)
+ create mode 100644 Documentation/technical/directory-rename-detection.txt
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 0e20a66e73..b2d95e3fb9 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -243,11 +243,15 @@ leave out at most one of A and B, in which case it defaults to HEAD.
- --keep-empty::
- 	Keep the commits that do not change anything from its
- 	parents in the result.
-++
-+See also INCOMPATIBLE OPTIONS below.
- 
- --allow-empty-message::
- 	By default, rebasing commits with an empty message will fail.
- 	This option overrides that behavior, allowing commits with empty
- 	messages to be rebased.
-++
-+See also INCOMPATIBLE OPTIONS below.
- 
- --skip::
- 	Restart the rebasing process by skipping the current patch.
-@@ -271,6 +275,8 @@ branch on top of the <upstream> branch.  Because of this, when a merge
- conflict happens, the side reported as 'ours' is the so-far rebased
- series, starting with <upstream>, and 'theirs' is the working branch.  In
- other words, the sides are swapped.
-++
-+See also INCOMPATIBLE OPTIONS below.
- 
- -s <strategy>::
- --strategy=<strategy>::
-@@ -280,8 +286,10 @@ other words, the sides are swapped.
- +
- Because 'git rebase' replays each commit from the working branch
- on top of the <upstream> branch using the given strategy, using
--the 'ours' strategy simply discards all patches from the <branch>,
-+the 'ours' strategy simply empties all patches from the <branch>,
- which makes little sense.
-++
-+See also INCOMPATIBLE OPTIONS below.
- 
- -X <strategy-option>::
- --strategy-option=<strategy-option>::
-@@ -289,6 +297,8 @@ which makes little sense.
- 	This implies `--merge` and, if no strategy has been
- 	specified, `-s recursive`.  Note the reversal of 'ours' and
- 	'theirs' as noted above for the `-m` option.
-++
-+See also INCOMPATIBLE OPTIONS below.
- 
- -S[<keyid>]::
- --gpg-sign[=<keyid>]::
-@@ -324,6 +334,8 @@ which makes little sense.
- 	and after each change.  When fewer lines of surrounding
- 	context exist they all must match.  By default no context is
- 	ever ignored.
-++
-+See also INCOMPATIBLE OPTIONS below.
- 
- -f::
- --force-rebase::
-@@ -355,19 +367,22 @@ default is `--no-fork-point`, otherwise the default is `--fork-point`.
- --whitespace=<option>::
- 	These flag are passed to the 'git apply' program
- 	(see linkgit:git-apply[1]) that applies the patch.
--	Incompatible with the --interactive option.
-++
-+See also INCOMPATIBLE OPTIONS below.
- 
- --committer-date-is-author-date::
- --ignore-date::
- 	These flags are passed to 'git am' to easily change the dates
- 	of the rebased commits (see linkgit:git-am[1]).
--	Incompatible with the --interactive option.
-++
-+See also INCOMPATIBLE OPTIONS below.
- 
- --signoff::
- 	Add a Signed-off-by: trailer to all the rebased commits. Note
- 	that if `--interactive` is given then only commits marked to be
--	picked, edited or reworded will have the trailer added. Incompatible
--	with the `--preserve-merges` option.
-+	picked, edited or reworded will have the trailer added.
-++
-+See also INCOMPATIBLE OPTIONS below.
- 
- -i::
- --interactive::
-@@ -378,6 +393,8 @@ default is `--no-fork-point`, otherwise the default is `--fork-point`.
- The commit list format can be changed by setting the configuration option
- rebase.instructionFormat.  A customized instruction format will automatically
- have the long commit hash prepended to the format.
-++
-+See also INCOMPATIBLE OPTIONS below.
- 
- -r::
- --rebase-merges[=(rebase-cousins|no-rebase-cousins)]::
-@@ -404,7 +421,7 @@ It is currently only possible to recreate the merge commits using the
- `recursive` merge strategy; Different merge strategies can be used only via
- explicit `exec git merge -s <strategy> [...]` commands.
- +
--See also REBASING MERGES below.
-+See also REBASING MERGES and INCOMPATIBLE OPTIONS below.
- 
- -p::
- --preserve-merges::
-@@ -415,6 +432,8 @@ See also REBASING MERGES below.
- This uses the `--interactive` machinery internally, but combining it
- with the `--interactive` option explicitly is generally not a good
- idea unless you know what you are doing (see BUGS below).
-++
-+See also INCOMPATIBLE OPTIONS below.
- 
- -x <cmd>::
- --exec <cmd>::
-@@ -437,6 +456,8 @@ squash/fixup series.
- +
- This uses the `--interactive` machinery internally, but it can be run
- without an explicit `--interactive`.
-++
-+See also INCOMPATIBLE OPTIONS below.
- 
- --root::
- 	Rebase all commits reachable from <branch>, instead of
-@@ -447,6 +468,8 @@ without an explicit `--interactive`.
- 	When used together with both --onto and --preserve-merges,
- 	'all' root commits will be rewritten to have <newbase> as parent
- 	instead.
-++
-+See also INCOMPATIBLE OPTIONS below.
- 
- --autosquash::
- --no-autosquash::
-@@ -461,11 +484,11 @@ without an explicit `--interactive`.
- 	too.  The recommended way to create fixup/squash commits is by using
- 	the `--fixup`/`--squash` options of linkgit:git-commit[1].
- +
--This option is only valid when the `--interactive` option is used.
--+
- If the `--autosquash` option is enabled by default using the
- configuration variable `rebase.autoSquash`, this option can be
- used to override and disable this setting.
-++
-+See also INCOMPATIBLE OPTIONS below.
- 
- --autostash::
- --no-autostash::
-@@ -487,6 +510,52 @@ recreates the topic branch with fresh commits so it can be remerged
- successfully without needing to "revert the reversion" (see the
- link:howto/revert-a-faulty-merge.html[revert-a-faulty-merge How-To] for details).
- 
-+INCOMPATIBLE OPTIONS
-+--------------------
+diff --git a/Documentation/technical/directory-rename-detection.txt b/Documentation/technical/directory-rename-detection.txt
+new file mode 100644
+index 0000000000..6e22920a39
+--- /dev/null
++++ b/Documentation/technical/directory-rename-detection.txt
+@@ -0,0 +1,92 @@
++Directory rename detection
++==========================
 +
-+git-rebase has many flags that are incompatible with each other,
-+predominantly due to the fact that it has three different underlying
-+implementations:
++Rename detection logic in diffcore-rename that checks for renames of
++individual files is aggregated and analyzed in merge-recursive for cases
++where combinations of renames indicate that a full directory has been
++renamed.
 +
-+ * one based on linkgit:git-am[1] (the default)
-+ * one based on git-merge-recursive (merge backend)
-+ * one based on linkgit:git-cherry-pick[1] (interactive backend)
++Scope of abilities
++------------------
 +
-+Flags only understood by the am backend:
++It is perhaps easiest to start with an example:
 +
-+ * --committer-date-is-author-date
-+ * --ignore-date
-+ * --whitespace
-+ * --ignore-whitespace
-+ * -C
++  * When all of x/a, x/b and x/c have moved to z/a, z/b and z/c, it is
++    likely that x/d added in the meantime would also want to move to z/d by
++    taking the hint that the entire directory 'x' moved to 'z'.
 +
-+Flags understood by both merge and interactive backends:
++More interesting possibilities exist, though, such as:
 +
-+ * --merge
-+ * --strategy
-+ * --strategy-option
-+ * --allow-empty-message
++  * one side of history renames x -> z, and the other renames some file to
++    x/e, causing the need for the merge to do a transitive rename.
 +
-+Flags only understood by the interactive backend:
++  * one side of history renames x -> z, but also renames all files within
++    x.  For example, x/a -> z/alpha, x/b -> z/bravo, etc.
 +
-+ * --[no-]autosquash
-+ * --rebase-merges
-+ * --preserve-merges
-+ * --interactive
-+ * --exec
-+ * --keep-empty
-+ * --autosquash
-+ * --edit-todo
-+ * --root when used in combination with --onto
++  * both 'x' and 'y' being merged into a single directory 'z', with a
++    directory rename being detected for both x->z and y->z.
 +
-+Other incompatible flag pairs:
++  * not all files in a directory being renamed to the same location;
++    i.e. perhaps most the files in 'x' are now found under 'z', but a few
++    are found under 'w'.
 +
-+ * --preserve-merges and --interactive
-+ * --preserve-merges and --signoff
-+ * --preserve-merges and --rebase-merges
-+ * --rebase-merges and --strategy
-+ * --rebase-merges and --strategy-option
++  * a directory being renamed, which also contained a subdirectory that was
++    renamed to some entirely different location.  (And perhaps the inner
++    directory itself contained inner directories that were renamed to yet
++    other locations).
 +
- include::merge-strategies.txt[]
- 
- NOTES
++  * combinations of the above; see t/t6043-merge-rename-directories.sh for
++    various interesting cases.
++
++Limitations -- applicability of directory renames
++-------------------------------------------------
++
++In order to prevent edge and corner cases resulting in either conflicts
++that cannot be represented in the index or which might be too complex for
++users to try to understand and resolve, a couple basic rules limit when
++directory rename detection applies:
++
++  1) If a given directory still exists on both sides of a merge, we do
++     not consider it to have been renamed.
++
++  2) If a subset of to-be-renamed files have a file or directory in the
++     way (or would be in the way of each other), "turn off" the directory
++     rename for those specific sub-paths and report the conflict to the
++     user.
++
++  3) If the other side of history did a directory rename to a path that
++     your side of history renamed away, then ignore that particular
++     rename from the other side of history for any implicit directory
++     renames (but warn the user).
++
++Limitations -- detailed rules and testcases
++-------------------------------------------
++
++t/t6043-merge-rename-directories.sh contains extensive tests and commentary
++which generate and explore the rules listed above.  It also lists a few
++additional rules:
++
++  a) If renames split a directory into two or more others, the directory
++     with the most renames, "wins".
++
++  b) Avoid directory-rename-detection for a path, if that path is the
++     source of a rename on either side of a merge.
++
++  c) Only apply implicit directory renames to directories if the other side
++     of history is the one doing the renaming.
++
++Limitations -- support in different commands
++--------------------------------------------
++
++Directory rename detection is supported by 'merge' and 'cherry-pick'.
++Other git commands which users might be surprised to see limited or no
++directory rename detection support in:
++
++  * diff
++
++    Folks have requested in the past that `git diff` detect directory
++    renames and somehow simplify its output.  It is not clear whether this
++    would be desirable or how the output should be simplified, so this was
++    simply not implemented.  Further, to implement this, directory rename
++    detection logic would need to move from merge-recursive to
++    diffcore-rename.
 -- 
 2.18.0.9.g678597d97e
 
