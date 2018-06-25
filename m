@@ -2,156 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 37A891F516
-	for <e@80x24.org>; Mon, 25 Jun 2018 19:16:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 669C61F516
+	for <e@80x24.org>; Mon, 25 Jun 2018 19:18:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934912AbeFYTQB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Jun 2018 15:16:01 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:36102 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933030AbeFYTP6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jun 2018 15:15:58 -0400
-Received: by mail-wr0-f193.google.com with SMTP id f16-v6so14789658wrm.3
-        for <git@vger.kernel.org>; Mon, 25 Jun 2018 12:15:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=x129DJx/900g6kvgJ6LgSp4wUitI8SSLDev7oar/jiU=;
-        b=jV+j9ieTI+vXVK5F0j7E7RKx7LDbBXdq/bCaMvvyz3BU4tXCFM3As0mVAo2SCUmgBF
-         GRMMCW28UBBvBgUY7/qoGSqI4Lb3CeYPXPXfNcPZDjd3diNb2RUdg3+J/79F0ORn6kEC
-         mtvq7JGzKn0S1GtAIjHH3sWiYTfkohtmoMjHvKx/5V0NoFEPI8IWkxBUUjbIAZ+LdJVA
-         lCTdbU/TXUYQr3tEUF6IxaVXZfl+tDWu302EecpYS3h52WYaXtLBnbqq6lbuswP2nMB9
-         u7j7LYXjZzYf2Z+1uSsjDe4O9T5gExQ3oXgFr/2/xbMUFkmtzhse4molXDJqk1//u6VO
-         Ljvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=x129DJx/900g6kvgJ6LgSp4wUitI8SSLDev7oar/jiU=;
-        b=qWy37rCqf0iEvotQ0JS0dRwLxa3qksf4umnXU9ECBa2l709BIS/MC9LDCfHR0XP0SD
-         EL+vDzqzGOWxekWwTwbPkgQKFFp2HoRdugKw7tPa4LXk5L7lG68cvv1SvG2Vh1VT+xmq
-         ks6RNcUGyos2ltp0B3I9HDVUoyYToznr6p3t1r0PX7tRDo//WUwSGHBUkqy4jaDXtTnR
-         Tso2Jigg3PhaQ3Hcv4uik8GUC/WFl0D25w+VaiLs6xhzHJtPmwjkZijQDCxt7eQ0aZAg
-         etp80lCfMF+GB2W3Vn5W7kSqzvG7duTdT7xC41xph0WZNtEMlncYMFsdQ5IHRAIv9K9G
-         aNAQ==
-X-Gm-Message-State: APt69E1UvMjBTPTtCzFeawPw6MEvG3DeCMmRSmVf8Gajfa9NFi5aELBo
-        tZHnVD97gyjtnfriprIkUI0=
-X-Google-Smtp-Source: ADUXVKJ5c0lg/nFS4/eepqvbiNc5mqOlYy0xddgcIa8LvmJWlRxJKtL3EJ5s/hPpTPtvgAYOaO5TTg==
-X-Received: by 2002:adf:86e9:: with SMTP id 38-v6mr12142184wry.232.1529954156140;
-        Mon, 25 Jun 2018 12:15:56 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id w67-v6sm3486wmw.0.2018.06.25.12.15.55
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 25 Jun 2018 12:15:55 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, pclouds@gmail.com,
-        avarab@gmail.com, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2 03/24] multi-pack-index: add builtin
-References: <20180607140338.32440-1-dstolee@microsoft.com>
-        <20180625143434.89044-1-dstolee@microsoft.com>
-        <20180625143434.89044-4-dstolee@microsoft.com>
-Date:   Mon, 25 Jun 2018 12:15:54 -0700
-In-Reply-To: <20180625143434.89044-4-dstolee@microsoft.com> (Derrick Stolee's
-        message of "Mon, 25 Jun 2018 10:34:13 -0400")
-Message-ID: <xmqqr2kuoexh.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1755635AbeFYTSp (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Jun 2018 15:18:45 -0400
+Received: from dmz-mailsec-scanner-4.mit.edu ([18.9.25.15]:44762 "EHLO
+        dmz-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753182AbeFYTSo (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 25 Jun 2018 15:18:44 -0400
+X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Mon, 25 Jun 2018 15:18:44 EDT
+X-AuditID: 1209190f-a99ff70000000b3b-f6-5b313ee71d4a
+Received: from mailhub-auth-1.mit.edu ( [18.9.21.35])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by dmz-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id E2.02.02875.7EE313B5; Mon, 25 Jun 2018 15:13:43 -0400 (EDT)
+Received: from outgoing.mit.edu (OUTGOING-AUTH-1.MIT.EDU [18.9.28.11])
+        by mailhub-auth-1.mit.edu (8.13.8/8.9.2) with ESMTP id w5PJDfD1011176;
+        Mon, 25 Jun 2018 15:13:41 -0400
+Received: from darkmatter.mit.edu (DARKMATTER.MIT.EDU [18.18.248.31])
+        (authenticated bits=0)
+        (User authenticated as smtp/darkmatter.mit.edu@ATHENA.MIT.EDU)
+        by outgoing.mit.edu (8.13.8/8.12.4) with ESMTP id w5PJDc6X012984
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+        Mon, 25 Jun 2018 15:13:40 -0400
+Received: by darkmatter.mit.edu (Postfix, from userid 32861)
+        id AEEF4354B44; Mon, 25 Jun 2018 15:13:38 -0400 (EDT)
+From:   =?UTF-8?q?Alejandro=20R=2E=20Sede=C3=B1o?= <asedeno@mit.edu>
+To:     git@vger.kernel.org
+Cc:     Dan Jacques <dnj@google.com>,
+        =?UTF-8?q?Alejandro=20R=2E=20Sede=C3=B1o?= <asedeno@mit.edu>
+Subject: [PATCH] Makefile: tweak sed invocation
+Date:   Mon, 25 Jun 2018 15:13:25 -0400
+Message-Id: <1529954005-18189-1-git-send-email-asedeno@mit.edu>
+X-Mailer: git-send-email 2.1.4
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrIIsWRmVeSWpSXmKPExsUixCmqrPvczjDa4MwFKYsrizYwWcx/vJ3N
+        outKN5MDs8fOWXfZPRZsKvX4vEkugDmKyyYlNSezLLVI3y6BK2PJhfeMBTdYK478mMzcwLiO
+        pYuRk0NCwESi8/APIJuLQ0hgMZPE/aYP7CAJIYGNjBI3rhVBJC4xSfTsvgJUxQHklEhs2ygA
+        YrIJOEkcvKQEUi4iIC7x9vhMdpAws0C6xMeN6SBhYQF9iYmtt9i6GNk5WARUJY67gER5Bewl
+        9k/bwwZxgJzE+eM/mSHighInZz5hgRiiLrF+nhBImFlAXqJ562zmCYz8s5BUzUKomoWkagEj
+        8ypG2ZTcKt3cxMyc4tRk3eLkxLy81CJdE73czBK91JTSTYzgkJTk38E4p8H7EKMAB6MSD++K
+        lwbRQqyJZcWVuYcYJTmYlER505gNo4X4kvJTKjMSizPii0pzUosPMUpwMCuJ8NrtByrnTUms
+        rEotyodJSXOwKInzZi9ijBYSSE8sSc1OTS1ILYLJynBwKEnwnrUFGipYlJqeWpGWmVOCkGbi
+        4AQZzgM0PAikhre4IDG3ODMdIn+KUVFKnJcJGPVCAiCJjNI8uF5wyhD6If+KURzoFWHeDSDt
+        PMB0A9f9CmgwE9DgsscgVxeXJCKkpBoYLTuCr1gamqspvuJgC/rUu+GLN5P2Me3kCj32tCad
+        WeHhen/99yZ+Lp/1s4v376Tbf8tcWnZKfC245LBXZI276DX77QqbvK4mfuXc+zXN6Z34umCJ
+        mbdurjWZ+P66aAaL9fXePW0HJVmv1X5vn5zlLh5g43V7auSsq9/ke8/nF93J33hKtPKLEktx
+        RqKhFnNRcSIACRQke/QCAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+With GNU sed, the r command doesn't care if a space separates it and
+the filename it reads from.
 
-> This new 'git multi-pack-index' builtin will be the plumbing access
-> for writing, reading, and checking multi-pack-index files. The
-> initial implementation is a no-op.
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  .gitignore                             |  3 +-
->  Documentation/git-multi-pack-index.txt | 36 ++++++++++++++++++++++++
->  Makefile                               |  1 +
->  builtin.h                              |  1 +
->  builtin/multi-pack-index.c             | 38 ++++++++++++++++++++++++++
->  command-list.txt                       |  1 +
->  git.c                                  |  1 +
->  7 files changed, 80 insertions(+), 1 deletion(-)
->  create mode 100644 Documentation/git-multi-pack-index.txt
->  create mode 100644 builtin/multi-pack-index.c
->
-> diff --git a/.gitignore b/.gitignore
-> index 388cc4beee..25633bc515 100644
-> --- a/.gitignore
-> +++ b/.gitignore
-> @@ -99,8 +99,9 @@
->  /git-mergetool--lib
->  /git-mktag
->  /git-mktree
-> -/git-name-rev
-> +/git-multi-pack-index
->  /git-mv
-> +/git-name-rev
+With SunOS sed, the space is required.
 
-Nice attention to the detail (even though the patch as an
-incremental change gets distracting, the result is better
-and future changes to the file will read cleaner).
+Signed-off-by: Alejandro R. Sedeño <asedeno@mit.edu>
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> diff --git a/Documentation/git-multi-pack-index.txt b/Documentation/git-multi-pack-index.txt
-> new file mode 100644
-> index 0000000000..9877f9c441
-> --- /dev/null
-> +++ b/Documentation/git-multi-pack-index.txt
-> @@ -0,0 +1,36 @@
-> +git-multi-pack-index(1)
-> +======================
-> +
-> +NAME
-> +----
-> +git-multi-pack-index - Write and verify multi-pack-indexes
-> +
-> +
-> +SYNOPSIS
-> +--------
-> +[verse]
-> +'git multi-pack-index' [--object-dir <dir>]
-> +
-> +DESCRIPTION
-> +-----------
-> +Write or verify a multi-pack-index (MIDX) file.
-> +
-> +OPTIONS
-> +-------
-> +
-> +--object-dir <dir>::
-> +	Use given directory for the location of Git objects. We check
-> +	<dir>/packs/multi-pack-index for the current MIDX file, and
-> +	<dir>/packs for the pack-files to index.
-
-Do we want to `quote` these constant strings?
-
-> diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
-> new file mode 100644
-> index 0000000000..f101873525
-> --- /dev/null
-> +++ b/builtin/multi-pack-index.c
-> @@ -0,0 +1,38 @@
-> +#include "builtin.h"
-> +#include "cache.h"
-> +#include "config.h"
-> +#include "parse-options.h"
-> +
-> +static char const * const builtin_multi_pack_index_usage[] ={
-
-ERROR: spaces required around that '=' (ctx:WxV)
-#112: FILE: builtin/multi-pack-index.c:6:
-+static char const * const builtin_multi_pack_index_usage[] ={
-                                                            ^
+diff --git a/Makefile b/Makefile
+index e4b503d..5bac181 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2109,7 +2109,7 @@ $(SCRIPT_PERL_GEN): % : %.perl GIT-PERL-DEFINES GIT-PERL-HEADER GIT-VERSION-FILE
+ 	$(QUIET_GEN)$(RM) $@ $@+ && \
+ 	sed -e '1{' \
+ 	    -e '	s|#!.*perl|#!$(PERL_PATH_SQ)|' \
+-	    -e '	rGIT-PERL-HEADER' \
++	    -e '	r GIT-PERL-HEADER' \
+ 	    -e '	G' \
+ 	    -e '}' \
+ 	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
+-- 
+2.1.4
 
