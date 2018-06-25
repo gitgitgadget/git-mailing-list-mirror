@@ -2,163 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F38901F516
-	for <e@80x24.org>; Mon, 25 Jun 2018 16:23:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E4511F516
+	for <e@80x24.org>; Mon, 25 Jun 2018 16:34:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752683AbeFYQXM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Jun 2018 12:23:12 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53868 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752327AbeFYQXL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jun 2018 12:23:11 -0400
-Received: (qmail 14981 invoked by uid 109); 25 Jun 2018 16:23:12 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 25 Jun 2018 16:23:12 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18762 invoked by uid 111); 25 Jun 2018 16:23:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 25 Jun 2018 12:23:30 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Jun 2018 12:23:09 -0400
-Date:   Mon, 25 Jun 2018 12:23:09 -0400
-From:   Jeff King <peff@peff.net>
-To:     Noam Postavsky <npostavs@users.sourceforge.net>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Hemmo Nieminen <hemmo.nieminen@iki.fi>, git@vger.kernel.org
-Subject: Re: [BUG] A part of an edge from an octopus merge gets colored, even
- with --color=never
-Message-ID: <20180625162308.GA13719@sigill.intra.peff.net>
-References: <CAM-tV-_Easz+HA0GX0YkY4FZ2LithQy0+omq64D-OoHKkRe55A@mail.gmail.com>
- <573B6BF5.1090004@kdbg.org>
- <20160517194533.GA11289@sigill.intra.peff.net>
- <20160517195136.GB11289@sigill.intra.peff.net>
- <20160517195541.GC11289@sigill.intra.peff.net>
- <CAM-tV-9gAGBLsEh3=aa-bHT2DmJb=dfahq+kUW+0GLoc7eFq0w@mail.gmail.com>
- <CAM-tV--dHGJbxfWGKrRde+Q2-cnmCXNshQtX4PN7jnMWER_+bg@mail.gmail.com>
+        id S932758AbeFYQe5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Jun 2018 12:34:57 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:45808 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752582AbeFYQe4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jun 2018 12:34:56 -0400
+Received: by mail-wr0-f194.google.com with SMTP id o9-v6so105992wrs.12
+        for <git@vger.kernel.org>; Mon, 25 Jun 2018 09:34:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=ztleENeEHblhlyURblysPomkoi3U3/rg/B9I2LzokKk=;
+        b=SrbDiO4v8pfG0fEFzJPDTB9T9j6zbUvUTe/XZNCVkt3u0Tpgegmv5wGwhQxjFqegzu
+         Cj/mjZH6xjknBefJxxQUTD4iuo7bIrxY+lV2S5s8XTOqThkPuen/P9MbwraGqrmy8h5H
+         arxVdMoFTVccDPhzJSJaEyPnbND0JURPs/IdIVdyky2WpDDJanMx7tA459KefwcRMCfb
+         fzYicsYcCelamYbujPTgNgzWiouPY6ZOVa97L9ezrEsuxkJXpMKT5tVBEvzdXq0nUgHe
+         Nwelz0xvJPjDQe8TB61a/dqtMngDvKUH3tR1ka1sTIaFjtcLEL8WMH1nA9+xXUUsPY8u
+         pz7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=ztleENeEHblhlyURblysPomkoi3U3/rg/B9I2LzokKk=;
+        b=bmeTo7Mdg+qViiUW4fVMSC8JoIEdt2Z/6n0t0uctsbimINSA5mt1NMElPc4Paj00Q5
+         6mfUrCo47qHGetkUAD4ulECNeEgVAgGOic291IMEwluaJkngDqqtmc7rJHCwAsc1AnAf
+         sKThE42WuGenMJzt7kF4l0uifbbh3eeeK7EcMLtiM9cVPC30E27ROc4qxEjFYTR+nawZ
+         vpqjMMZkzGcEOLe4qfA27PzC++h/EsJLiUJdqkZKP/5KClgdjuDukCgrHTxei6dEprix
+         b/rM9xbliWq1twZ9e9MV9dKs751gG9cT2ents+NkykHqhpLw1TO/TljYv3NzHnaff1ip
+         iXUQ==
+X-Gm-Message-State: APt69E3IgYo2R0ipzV9Hb1tfUjFjZPwk2efg0C1AGM0rRcikxcX3yi/L
+        zqUHiZhRa4s+uIlycvk07lHk9QgS
+X-Google-Smtp-Source: AAOMgpcqOeOv+1kQZJ8lJ2TgcA4MpfrJUfG6J65iL8chGHUnA2OiB/R3DHD3j4p30D5HAYkTQ3gQag==
+X-Received: by 2002:adf:8dad:: with SMTP id o42-v6mr4934054wrb.274.1529944494710;
+        Mon, 25 Jun 2018 09:34:54 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id w126-v6sm9428638wmw.29.2018.06.25.09.34.53
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 25 Jun 2018 09:34:53 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Bryan Turner <bturner@atlassian.com>
+Cc:     marc.strapetz@syntevo.com, j6t@kdbg.org,
+        Git Users <git@vger.kernel.org>
+Subject: Re: Unexpected ignorecase=false behavior on Windows
+References: <c5abdd45-a919-96f6-8560-5fd943069f5e@syntevo.com>
+        <1c7e338e-157b-fd2f-5eb1-01373f627acd@kdbg.org>
+        <2cf2d884-de1a-7b9b-5aca-1f396ad205a2@syntevo.com>
+        <CAGyf7-GvcN8EhMgtaZcDJNYNdfLwVH8HVBDmZqJU40nze0NSEA@mail.gmail.com>
+Date:   Mon, 25 Jun 2018 09:34:53 -0700
+In-Reply-To: <CAGyf7-GvcN8EhMgtaZcDJNYNdfLwVH8HVBDmZqJU40nze0NSEA@mail.gmail.com>
+        (Bryan Turner's message of "Fri, 22 Jun 2018 13:58:57 -0700")
+Message-ID: <xmqqfu1aq0ya.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAM-tV--dHGJbxfWGKrRde+Q2-cnmCXNshQtX4PN7jnMWER_+bg@mail.gmail.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jun 23, 2018 at 05:45:19PM -0400, Noam Postavsky wrote:
+Bryan Turner <bturner@atlassian.com> writes:
 
-> On 20 May 2016 at 18:12, Noam Postavsky <npostavs@users.sourceforge.net> wrote:
+> Git on Windows is not designed to run with anything other than
+> core.ignoreCase=true, and attempting to do so will cause unexpected
+> behavior.
 
-My, this is a blast from the past. :)
+Even though I fully agree with your conclusion that the document
+must make it crystal clear that core.ignoreCase must be set to
+reflect the reality, I found the above statement misleading and do
+not want it to be used as the basis of a documentation update.  But
+it is possible that I am misunderstanding the current state of
+affairs.
 
-> Subject: [PATCH v1] log: Fix coloring of certain octupus merge shapes
-> 
-> For octopus merges where the first parent edge immediately merges into
-> the next column to the left:
-> 
-> | | *-.
-> | | |\ \
-> | |/ / /
-> 
-> then the number of columns should be one less than the usual case:
-> 
-> | *-.
-> | |\ \
-> | | | *
+Is the case insensitivity that deeply ingrained in the Git for
+Windows code?
 
-These diagrams confused me for a minute, because I see two differences:
+IOW, even if the code used to build Git for Windows were executed on
+a case sensitive filesystem, is there a case-smashing code on _our_
+side that kicks in to cause unexpected behaviour, _even_ when
+core.ignorecase is set to false to match (hypothetical) reality?
 
-  1. The first one has an extra apparently unrelated parallel branch on
-     the far left.
+To put it yet another way, if a case sensitive filesystem were
+available, wouldn't running "git init" from Git for Windows in a
+directory on such a filesytem set core.ignoreCase to false in the
+resulting repository and from then on wouldn't everything work fine?
 
-  2. The first has the first-parent of the "*" merge commit immediately
-     join the branch.
+If my suspicion (i.e. the code for Git for Windows is perfectly
+fine---it is just the users are not running with case sensitive
+filesystems and flipping core.ignoreCase to true does not make case
+incapable filesystems suddenly capable) is correct, then it is not
+"Git on Windows is not designed to run" from two angles.  (1) it is
+not just Git for Windows---Git running on UNIX that mounts VFAT, or
+Git running on macOS with default HFS+, would exhibit the same
+symptom, and (2) it is not "Git is not designed to run"---it is
+core.ignoreCase that is not designed to be a way to make case
+incapable filesystems suddenly capable of distinguishing cases in
+filesystems.
 
-But if I understand correctly, we only care about the second property.
-So would it be accurate to show them as:
-
-  | *-.
-  | |\ \
-  |/ / /
-
-  | *-.
-  | |\ \
-  | | | *
-
-?
-
-I think that makes it easier to compare them.
-
-I don't remember much about our prior discussion, so let me try to talk
-myself through the patch itself:
-
-> diff --git a/graph.c b/graph.c
-> index e1f6d3bdd..c919c86e8 100644
-> --- a/graph.c
-> +++ b/graph.c
-> @@ -856,12 +856,16 @@ static int graph_draw_octopus_merge(struct git_graph *graph,
->  	int col_num, i;
->  	int num_dashes =
->  		((graph->num_parents - dashless_commits) * 2) - 1;
-> -	for (i = 0; i < num_dashes; i++) {
-> -		col_num = (i / 2) + dashless_commits + graph->commit_index;
-
-OK, so the old code emitted num_dashes, and every pair was done with the
-same column. Our highest iteration of this loop would use the column at
-(num_dashes-1) / 2. We know that num_dashes is always odd, so:
-
- num_dashes = 1 puts our last column at 0
- num_dashes = 3 puts our last column at 1
-
-And so on. So far so good.
-
-> +	int first_col = dashless_commits + graph->commit_index;
-
-This corresponds to the i=0 case, makes sense.
-
-> +	int last_col = first_col + (num_dashes / 2);
-
-But here our last_col misses the "-1". I don't think it matters because
-we know num_dashes is always odd, and therefore due to integer
-truncation (num_dashes-1)/2 == (num_dashes/2).
-
-> +	if (last_col >= graph->num_new_columns) {
-> +		first_col--;
-> +		last_col--;
-> +	}
-
-The shifting of last_col I expect as part of the fix. I was surprised by
-shifting first_col, though. Wouldn't it always start at 0 (offset by the
-previous commits)? It definitely seems to be necessary, but I'm not sure
-I understand why.
-
-> +	for (i = 0, col_num = first_col; i < num_dashes; i++, col_num++) {
->  		strbuf_write_column(sb, &graph->new_columns[col_num], '-');
->  	}
-> -	col_num = (i / 2) + dashless_commits + graph->commit_index;
-> -	strbuf_write_column(sb, &graph->new_columns[col_num], '.');
-> +	strbuf_write_column(sb, &graph->new_columns[last_col], '.');
-
-In this new loop we count up our dashes and our columns. But now we have
-1-to-1 correspondence as we increment! I don't think that can be right.
-And indeed, if I take your original problem report and add an extra "d"
-branch and make the octopus "a b d", then the problem comes back. You
-don't notice with a 3-parent merge because 
-
-We need to increment col_num only half as much as num_dashes. Should we
-be doing:
-
-  for (col_num = first_col; col_num < last_col; col_num++) {
-	  strbuf_write_column(sb, &graph->new_columns[col_num], '-');
-	  strbuf_write_column(sb, &graph->new_columns[col_num], '-');
-  }
-  strbuf_write_column(sb, &graph->new_columns[last_col], '-');
-  strbuf_write_column(sb, &graph->new_columns[last_col], '.');
-
-I.e., write "--" for each interior column, and then "-." for the last
-one?
-
--Peff
+Thanks.
