@@ -2,144 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CDA131F516
-	for <e@80x24.org>; Sun, 24 Jun 2018 14:42:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF9AB1F516
+	for <e@80x24.org>; Mon, 25 Jun 2018 13:44:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751989AbeFXOm4 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Jun 2018 10:42:56 -0400
-Received: from mail-wr0-f179.google.com ([209.85.128.179]:45320 "EHLO
-        mail-wr0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751961AbeFXOm4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Jun 2018 10:42:56 -0400
-Received: by mail-wr0-f179.google.com with SMTP id s7-v6so1830713wro.12
-        for <git@vger.kernel.org>; Sun, 24 Jun 2018 07:42:55 -0700 (PDT)
+        id S1755533AbeFYNop (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Jun 2018 09:44:45 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:35231 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755345AbeFYNoo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jun 2018 09:44:44 -0400
+Received: by mail-wr0-f194.google.com with SMTP id c13-v6so3801376wrq.2
+        for <git@vger.kernel.org>; Mon, 25 Jun 2018 06:44:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=2XJjlrDF2vVhG/4BmIBCEsFN0V9DKkT1mVN5zD3TM4E=;
-        b=NzSd5LuPi+/ZkobDq9tbc3Z4jH/lHmPlVSup2SqAlKGLV2E6lfk8lo2R5UQ9sqyjYh
-         y0+EyltXuo+OHPHM8USxxDnuUeSywkzV0+m7fOwoU1WRTEDHcDXzsygohbGjQVJtcN15
-         gf/qIdnf/79cpSYnJTdbSTU4c3AbHGpvEOW+ebXXMu/TBictckpoWMzn4bZ5jg8jfoVa
-         9WYsM3Lb+piWaGB+n2nDcNGws3a2YFlqN/cXLaP89kJCn8ZFD0EJwP3pGn9dicrlTSBl
-         oqHbRv5Y9fqLmudr9x6hfnbNI5j1l8/84J3U7Aefl9doa/PgzxUcBPii6PXtRGiPVlDB
-         VFew==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=6+Qn+7PYQAGaSVAE+j747RwM3QLbgjL5FUZaa46h9W0=;
+        b=tgsfJHutt0aYpLazU7Mii1LDApHW+dgfj0S6Oj7+KQ24t2uMGnXCh8KNKJIwCWhmAV
+         YqY8klyxwG4TreeKSihF16TMTzqfb07erxeYFG3es6LEq/SJy1wgXDl9+GKcZ7WY4TRd
+         EoMotuw1RYt27RO1TTvsiQZ+jg+KgPhXikZ/nwc2ItFpFU3CqN/a8FmTegr+ZMoyQpQb
+         WSgrYq9l+87frBkNJD2+3sR1ba/oPI0U4Io9G0k39nljt3opHqdFN2rWT0e8lhbidwgd
+         Ktif7/McVSRgsazTAEWdxDVjD5ihFGXXpG3PmrIy7A09u2hoSGqd8PzahP0o+/a1MbNw
+         2hsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=2XJjlrDF2vVhG/4BmIBCEsFN0V9DKkT1mVN5zD3TM4E=;
-        b=Dv+8/isKT1o93cVV3hxCtZhc6uM3UVP9mPFgrVxJaSob1q4xl8VIQAMFx9UspAQJYw
-         vz7E89vvUcr3pTmn4wSJYdjhv2+U0FuXxXiwsZtMKva6o5XgzATR573kQ5GZI5is9HNo
-         yZ4wSjR6rns5fqrTag7QMGKjYvvzM797jOErfCjGiM0T5BQug5ZshVHE/ytZcIYy/k9W
-         FhLwyHTapNvbuzJzYJ/dZymVqB+XWoHJM8VcrNLZm6IHJVz3d97657e8hoQQywMJNSiI
-         yT7YkNcIQwTI15Z9gg8WNdHKGquUcxsGGx67OcRqXSDNj+fYwl+LFY9Y1DTYgh68ixQM
-         YCDw==
-X-Gm-Message-State: APt69E3+BH8MVosDPyy896EbfMmfVHCrtFN8vI9jSo3WKAvrB54P0YOq
-        +ZWSCpKN2dMdwHdxSOv0IoR4ZwjOhM9Dl1t1oW4=
-X-Google-Smtp-Source: AAOMgpexWldJZyaC6Hqg+AJNTO2q9mh9hiVJCj6rcANVbV4x/54EzD9Y2wL2wkAjR3x9GF8bGTQiLSaOyQ0euhAZT1A=
-X-Received: by 2002:adf:ba8f:: with SMTP id p15-v6mr7827152wrg.139.1529851374839;
- Sun, 24 Jun 2018 07:42:54 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=6+Qn+7PYQAGaSVAE+j747RwM3QLbgjL5FUZaa46h9W0=;
+        b=qNQ1jWUEZCJLFBzCeaDYwTfehudfS383H9fNR2dUG6/hYv7Q/rCne8GVkR3cwI3WdI
+         YiELQh5YaxDf/BC6y0iJ10IBwjvFkkujnrYLKTF78G9mn38uX6g5gYno2bJD49U2gUms
+         SrL0Nvqod5o9sdw1WgOexBYcZ+c8ULjLCK6z+qAa8R95ctKdt6n/2rTUuvhiLNXp6qnG
+         5Z76pNSfLVggIQ4G0VO0iDiMGlHQKfSyRgpVXEZ/C0JOBXIpebFY04Lc69HDaMNtpq/s
+         0f1DY6ltR2qFKdn9vVPGAMc57iPNo9GxLKbjbNW5x9o6MISGlnawfzePU1e6YzRy5Lin
+         BR3g==
+X-Gm-Message-State: APt69E1qxHPANOdFVcL7YpGuCjT5Qqr9/9hFLpC0586NZ0ZWO5IdkYmP
+        bQfaq5qzkHxBrIszJC6CQKTcjw5U
+X-Google-Smtp-Source: ADUXVKLdbYrk+acca/rxCPXyWoO//H0QOEV6SMT9TL7SfaubbAtE2yY4yVpDEIpR0UWaDozWHnAqzg==
+X-Received: by 2002:adf:ec89:: with SMTP id z9-v6mr10875916wrn.160.1529934283446;
+        Mon, 25 Jun 2018 06:44:43 -0700 (PDT)
+Received: from localhost.localdomain (AToulouse-658-1-38-233.w86-221.abo.wanadoo.fr. [86.221.117.233])
+        by smtp.googlemail.com with ESMTPSA id 13-v6sm11020369wmi.2.2018.06.25.06.44.41
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 25 Jun 2018 06:44:42 -0700 (PDT)
+From:   Alban Gruin <alban.gruin@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Stefan Beller <sbeller@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        phillip.wood@dunelm.org.uk, Elijah Newren <newren@gmail.com>,
+        Alban Gruin <alban.gruin@gmail.com>
+Subject: [GSoC][PATCH v4 0/3] rebase -i: rewrite reflog operations in C
+Date:   Mon, 25 Jun 2018 15:44:16 +0200
+Message-Id: <20180625134419.18435-1-alban.gruin@gmail.com>
+X-Mailer: git-send-email 2.18.0
+In-Reply-To: <20180621141732.19952-1-alban.gruin@gmail.com>
+References: <20180621141732.19952-1-alban.gruin@gmail.com>
 MIME-Version: 1.0
-References: <CAL78Jw0mQWxO4xkzFBoG0Oe4wjomUGj=dP5ufdUrE5Ku0GGEtg@mail.gmail.com>
- <6d5d2536-0f69-544d-23c7-351e8618ba94@gmail.com>
-In-Reply-To: <6d5d2536-0f69-544d-23c7-351e8618ba94@gmail.com>
-From:   Daniel Penkin <dpenkin@gmail.com>
-Date:   Mon, 25 Jun 2018 00:42:43 +1000
-Message-ID: <CAL78Jw2v9sRznn0dfX+KMAT5TvsDCJ529-d1SahAKo0rmkfrxg@mail.gmail.com>
-Subject: Re: Incorrect unified diff when run with "--find-copies-harder"
-To:     rybak.a.v@gmail.com
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Andrei,
+This patch series rewrites the reflog operations from shell to C.  This
+is part of the effort to rewrite interactive rebase in C.
 
-Thanks for the prompt reply.
+The first commit is dedicated to creating a function to silence a
+command, as the sequencer will do in several places with these patches.
 
-I'm sorry for the false alarm, I should've investigated this more
-thoroughly before submitting a bug.
-Now I see I get that context hint in many diffs, I was confused by
-many simple file diffs I was working with recently which didn't have
-it.
+This branch is based on ag/rebase-i-rewrite-todo, and does not conflict
+with pu (as of 2018-06-25).
 
-Thank you for your time and help.
+Changes since v3:
 
-Kind regards,
-Daniil Penkin
+ - Removing a comment from run_command_silent_on_success()
 
-=D0=B2=D1=81, 24 =D0=B8=D1=8E=D0=BD. 2018 =D0=B3. =D0=B2 23:33, Andrei Ryba=
-k <rybak.a.v@gmail.com>:
->
-> On 2018-06-24 12:36, Daniel Penkin wrote:
-> > Hello,
-> >
->
-> Hi,
->
-> > I believe I found a bug in how Git represents a diff when invoked with
-> > "--find-copies-harder" parameter.
-> > Specifically, the unified diff header of a hunk contains an extra
-> > piece of text which appears to be a line from the context (i.e.
-> > unchanged line), something like this:
-> >
-> >     > git diff --find-copies-harder d00ca3f 20fb313
-> >     diff --git a/test.txt b/copy.txt
-> >     similarity index 81%
-> >     copy from test.txt
-> >     copy to copy.txt
-> >     index 734156d..43a3f9d 100644
-> >     --- a/test.txt
-> >     +++ b/copy.txt
-> >     @@ -2,6 +2,7 @@ line 1
-> >      line 2
-> >      line 3
-> >      line 4
-> >     +added line
-> >      line 5
-> >      line 6
-> >      line 7
-> >
-> > Note "line 1" after the standard unified diff header.
-> >
->
-> This text after @@ is usually a function name in a programming language o=
-r
-> some other relevant part of hunk context, to help user navigate the diff =
-more
-> easily.  What you are getting is the default version of it, as it is just
-> comparing txt files.  You can read more about it in the documentation of
-> gitattributes:
->
-> https://git-scm.com/docs/gitattributes#_defining_a_custom_hunk_header
->
-> > I prepared a sample repository with a minimal file I can reproduce
-> > this problem with:
-> > https://bitbucket.org/dpenkin/find-copies-harder-bug
-> >
-> > I'm running Git 2.18.0 on a macOS, but I also tried with Git 2.15.0
-> > and 2.8.6 running on Alpine Linux and was able to reproduce the same
-> > problem.
-> >
-> > Please advise whether this is expected output or is indeed a bug.
-> >
->
-> This is expected output.
->
-> > Thank you.
-> >
-> > Kind regards,
-> > Daniil Penkin
-> >
->
-> --
-> Best regards, Andrei R.
+ - Changing the order of setup_reflog_action() and checkout_onto()
+   rewrites in the series
+
+ - Renaming checkout_onto() to detach_onto()
+
+ - Renaming checkout_base_commit() (rewrite of setup_reflog_action()) to
+   checkout_onto()
+
+ - Using the `else` keyword to call run_command_silent_on_success() or
+   run_command() in run_git_commit() and run_git_checkout().
+
+Alban Gruin (3):
+  sequencer: extract a function to silence a command, except if it fails
+  rebase -i: rewrite checkout_onto() in C
+  rebase -i: rewrite setup_reflog_action() in C
+
+ builtin/rebase--helper.c   |  13 ++++-
+ git-rebase--interactive.sh |  28 ++--------
+ sequencer.c                | 101 +++++++++++++++++++++++++++----------
+ sequencer.h                |   6 +++
+ 4 files changed, 97 insertions(+), 51 deletions(-)
+
+-- 
+2.18.0
+
