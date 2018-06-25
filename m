@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 80A5C1F516
-	for <e@80x24.org>; Mon, 25 Jun 2018 16:42:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EBBB51F516
+	for <e@80x24.org>; Mon, 25 Jun 2018 16:43:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933764AbeFYQmz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Jun 2018 12:42:55 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:51318 "EHLO
+        id S933860AbeFYQnk (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Jun 2018 12:43:40 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:54464 "EHLO
         mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754385AbeFYQmt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jun 2018 12:42:49 -0400
-Received: by mail-wm0-f66.google.com with SMTP id w137-v6so4711306wmw.1
-        for <git@vger.kernel.org>; Mon, 25 Jun 2018 09:42:48 -0700 (PDT)
+        with ESMTP id S1754979AbeFYQnh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jun 2018 12:43:37 -0400
+Received: by mail-wm0-f66.google.com with SMTP id i139-v6so3066434wmf.4
+        for <git@vger.kernel.org>; Mon, 25 Jun 2018 09:43:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=d52H1jQKJsfig3b89FXCk6n9K7WZTOifG/zoaTWrSj4=;
-        b=CDBYddqv4JmMV1XPXVu+bgzzdcu6CZJW/gm9ZPrCndnxC3qdJUxEc05131EYCwwrYK
-         VUdkPiBdNxTR3vCLUSp5U3PW+MwI21riJPDgZrlwbLW5O+qXtYG9LsDjZqrQc4AGKLX+
-         u7676m9ApPfuiCcJ3tYXcYJeBM6srJCk/XQJ3gHo06V/oCao/O8vzfQMdaNzOnf7pgNT
-         ywAOrQvahZLUjzMECy5Se/UwizFhloSBzBUCyNIXDxTidV71PIW8Kj7tOuh44Nk0ILJI
-         deKW710Jd8kihrcgNZ3sVPLupE9skSJsD1KHDqs8yoUVsL5B4EOpHsVNo24jgl3Mx873
-         Z4wg==
+        bh=EECa6Wc+0CtDQdTp9nJVfpXPJT1vPfXdQBy5YoIfDOU=;
+        b=YC2LKqdQa3YMdeeUTHHkwZPLXbpmpbEcxoaMXBSNdROpENOiWKTVeJGbE2SM1CQeA0
+         TDsxBKs5yorkw13WHwcBTlHdi6KfOW5Hh1rfy+/9DZY6xGRvTfqPL5pDQ4Q2zDnis0xv
+         FvgPYs3dH3J8ebZzldfgUsRY8jnNM+CwE98GNCV+9ljHwyYbqO6Khfl4Ug33HlVuk2Oq
+         XWjFccac6QxumA3EAkZhi/rDZ8kl5o9UNQe7Dlwrwh+C9pzNJ2j7Bz+x25rSVbAW69Mm
+         ua54iKpelQM9W+k3ksN7u0TpvTGWbpKyB7PCvU8CVkmXyJPZOgsIxLxj9sgiL9n1c+0/
+         nFxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=d52H1jQKJsfig3b89FXCk6n9K7WZTOifG/zoaTWrSj4=;
-        b=hH6XNnpBVVfZ+iODCQJ5QiuT3YShHofMmhfRxJ3Bbn8wrBK2fAPIzadJmzKHbZAnaS
-         hpoL8qNyTI9vONf2qwp1OUd5o7qwiTpdDvvaEm0Y1esSWu9tj7IKBb4PakIQa8i7VnTq
-         0PM/1SEpJcp72OAGgQURvq1hrK/4GbTSNfmok8XFG6xZeTOLSKdIrBd1xCOorhKzQDuK
-         36pKPpGoE10Pd3Ijw5H7sC4NAEM+I2ZO41RvlLBN42XwYh9ySX3sdvQthtT6KeOLGbrY
-         IA6o0V/6zM1yjhEz43VbNsH2g8wH0UTodYjSGc8P0wdlMwrr2sKDkeS1zdTUynYJjOQO
-         KxgQ==
-X-Gm-Message-State: APt69E3nrZQ7hcdKyR2/kUNQ3GIOdEKH4A4XgjTZnAE2FJHe4ztTEJI2
-        yER90so9/G8vz3nr1AFo4ibgiVI1
-X-Google-Smtp-Source: AAOMgpeto27sNGNbn7JnbvHaJJQYwYw1/ZEH5Nm5PRUSX2fsMtVRZMKyX3aPSPZ+mIM3GGXtAPO0lA==
-X-Received: by 2002:a1c:130c:: with SMTP id 12-v6mr1521692wmt.127.1529944967735;
-        Mon, 25 Jun 2018 09:42:47 -0700 (PDT)
+        bh=EECa6Wc+0CtDQdTp9nJVfpXPJT1vPfXdQBy5YoIfDOU=;
+        b=M07QPfjwtwqpC7CXb8uKjVB+kHYTgN3lALI458rHByTXM2SWVIdRVxJAlt2rmh2nVy
+         EJj48pTQWR4SPksLjtrgQohLTReTEBDc0qr7Oaqfq5GZ2u6HCYd+q3JWNj7waEmwR3Zy
+         TSRE2fMNmEhk9EGgPYL6Jf4517Ptaj7JlVWnlg8V11rr/YARI3m4YFXHvbG2mxqcc3pt
+         Qw64SvSLXcl+dua/ZcMu7+At480d2JVh1it8uaDzPbL4NFtbqD0B2r2c4VBQo3WUsfGJ
+         k0pMGg1UQh/zcmvtI+6KCV0D2E5EipaK04KBPK3256CoQ/ZMMYE/Yy/8KnoZ4wOPAber
+         6Aiw==
+X-Gm-Message-State: APt69E3lg/v+O0Ja2MBXvl/7zL39F41+ZnB7Ce1pfILaRXcHJ1xN2xbC
+        +UEPvKJxjga1W4JcQ+uNvbUaww8/
+X-Google-Smtp-Source: AAOMgpdC39XCE5D6QgDXZhMGuS0kWg/o4Neo+I7fPSrPnUJjqZOz+Q54accgvPZ+rbpjRDYTXAAWuw==
+X-Received: by 2002:a1c:e8c:: with SMTP id 134-v6mr1649722wmo.51.1529945015640;
+        Mon, 25 Jun 2018 09:43:35 -0700 (PDT)
 Received: from sebi-laptop.tendawifi.com (5-13-160-71.residential.rdsnet.ro. [5.13.160.71])
-        by smtp.gmail.com with ESMTPSA id d14-v6sm2912904wro.24.2018.06.25.09.42.46
+        by smtp.gmail.com with ESMTPSA id b124-v6sm14287200wmf.11.2018.06.25.09.43.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 25 Jun 2018 09:42:46 -0700 (PDT)
+        Mon, 25 Jun 2018 09:43:34 -0700 (PDT)
 From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Johannes.Schindelin@gmx.de, joel@teichroeb.net, gitster@pobox.com
-Subject: [PATCH v6 4/4] stash: renamed test cases to be more descriptive
-Date:   Mon, 25 Jun 2018 19:42:27 +0300
-Message-Id: <0f49fc90bee5e6a297c49224f1451a7aee4c8635.1529943789.git.ungureanupaulsebastian@gmail.com>
+Subject: [PATCH v6 2/4] stash: convert drop and clear to builtin
+Date:   Mon, 25 Jun 2018 19:43:24 +0300
+Message-Id: <5373f422a82da2357828b8cc4a2b84fb2bedd780.1529943789.git.ungureanupaulsebastian@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc2.13.g506fc12fb
 In-Reply-To: <cover.1529943789.git.ungureanupaulsebastian@gmail.com>
 References: <cover.1529943789.git.ungureanupaulsebastian@gmail.com>
@@ -62,81 +62,198 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Renamed some test cases' labels to be more descriptive and under 80
-characters per line.
+From: Joel Teichroeb <joel@teichroeb.net>
 
+Add the drop and clear commands to the builtin helper. These two
+are each simple, but are being added together as they are quite
+related.
+
+We have to unfortunately keep the drop and clear functions in the
+shell script as functions are called with parameters internally
+that are not valid when the commands are called externally. Once
+pop is converted they can both be removed.
+
+Signed-off-by: Joel Teichroeb <joel@teichroeb.net>
 Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 ---
- t/t3903-stash.sh | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ builtin/stash--helper.c | 112 ++++++++++++++++++++++++++++++++++++++++
+ git-stash.sh            |   4 +-
+ 2 files changed, 114 insertions(+), 2 deletions(-)
 
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index de6cab1fe..8d002a7f2 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -604,7 +604,7 @@ test_expect_success 'stash show -p - no stashes on stack, stash-like argument' '
- 	test_cmp expected actual
- '
+diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
+index 1c4387b10..84a537f39 100644
+--- a/builtin/stash--helper.c
++++ b/builtin/stash--helper.c
+@@ -12,7 +12,14 @@
+ #include "rerere.h"
  
--test_expect_success 'stash drop - fail early if specified stash is not a stash reference' '
-+test_expect_success 'drop: fail early if specified stash is not a stash ref' '
- 	git stash clear &&
- 	test_when_finished "git reset --hard HEAD && git stash clear" &&
- 	git reset --hard &&
-@@ -618,7 +618,7 @@ test_expect_success 'stash drop - fail early if specified stash is not a stash r
- 	git reset --hard HEAD
- '
+ static const char * const git_stash_helper_usage[] = {
++	N_("git stash--helper drop [-q|--quiet] [<stash>]"),
+ 	N_("git stash--helper apply [--index] [-q|--quiet] [<stash>]"),
++	N_("git stash--helper clear"),
++	NULL
++};
++
++static const char * const git_stash_helper_drop_usage[] = {
++	N_("git stash--helper drop [-q|--quiet] [<stash>]"),
+ 	NULL
+ };
  
--test_expect_success 'stash pop - fail early if specified stash is not a stash reference' '
-+test_expect_success 'pop: fail early if specified stash is not a stash ref' '
- 	git stash clear &&
- 	test_when_finished "git reset --hard HEAD && git stash clear" &&
- 	git reset --hard &&
-@@ -682,7 +682,7 @@ test_expect_success 'invalid ref of the form "n", n >= N' '
- 	git stash drop
- '
+@@ -21,6 +28,11 @@ static const char * const git_stash_helper_apply_usage[] = {
+ 	NULL
+ };
  
--test_expect_success 'stash branch should not drop the stash if the branch exists' '
-+test_expect_success 'branch: should not drop the stash if the branch exists' '
- 	git stash clear &&
- 	echo foo >file &&
- 	git add file &&
-@@ -693,7 +693,7 @@ test_expect_success 'stash branch should not drop the stash if the branch exists
- 	git rev-parse stash@{0} --
- '
++static const char * const git_stash_helper_clear_usage[] = {
++	N_("git stash--helper clear"),
++	NULL
++};
++
+ static const char *ref_stash = "refs/stash";
+ static int quiet;
+ static struct strbuf stash_index_path = STRBUF_INIT;
+@@ -139,6 +151,31 @@ static int get_stash_info(struct stash_info *info, int argc, const char **argv)
+ 	return 0;
+ }
  
--test_expect_success 'stash branch should not drop the stash if the apply fails' '
-+test_expect_success 'branch: should not drop the stash if the apply fails' '
- 	git stash clear &&
- 	git reset HEAD~1 --hard &&
- 	echo foo >file &&
-@@ -707,7 +707,7 @@ test_expect_success 'stash branch should not drop the stash if the apply fails'
- 	git rev-parse stash@{0} --
- '
++static int do_clear_stash(void)
++{
++	struct object_id obj;
++	if (get_oid(ref_stash, &obj))
++		return 0;
++
++	return delete_ref(NULL, ref_stash, &obj, 0);
++}
++
++static int clear_stash(int argc, const char **argv, const char *prefix)
++{
++	struct option options[] = {
++		OPT_END()
++	};
++
++	argc = parse_options(argc, argv, prefix, options,
++			     git_stash_helper_clear_usage,
++			     PARSE_OPT_STOP_AT_NON_OPTION);
++
++	if (argc != 0)
++		return error(_("git stash--helper clear with parameters is unimplemented"));
++
++	return do_clear_stash();
++}
++
+ static int reset_tree(struct object_id *i_tree, int update, int reset)
+ {
+ 	struct unpack_trees_options opts;
+@@ -414,6 +451,77 @@ static int apply_stash(int argc, const char **argv, const char *prefix)
+ 	return ret;
+ }
  
--test_expect_success 'stash apply shows status same as git status (relative to current directory)' '
-+test_expect_success 'apply: shows same status as git status (relative to ./)' '
- 	git stash clear &&
- 	echo 1 >subdir/subfile1 &&
- 	echo 2 >subdir/subfile2 &&
-@@ -1048,7 +1048,7 @@ test_expect_success 'stash push -p with pathspec shows no changes only once' '
- 	test_i18ncmp expect actual
- '
++static int do_drop_stash(const char *prefix, struct stash_info *info)
++{
++	struct argv_array args = ARGV_ARRAY_INIT;
++	struct child_process cp = CHILD_PROCESS_INIT;
++	int ret;
++
++	/*
++	 * reflog does not provide a simple function for deleting refs. One will
++	 * need to be added to avoid implementing too much reflog code here
++	 */
++	argv_array_pushl(&args, "reflog", "delete", "--updateref", "--rewrite",
++			 NULL);
++	argv_array_push(&args, info->revision.buf);
++	ret = cmd_reflog(args.argc, args.argv, prefix);
++	if (!ret) {
++		if (!quiet)
++			printf(_("Dropped %s (%s)\n"), info->revision.buf,
++			       oid_to_hex(&info->w_commit));
++	} else {
++		return error(_("%s: Could not drop stash entry"), info->revision.buf);
++	}
++
++	/*
++	 * This could easily be replaced by get_oid, but currently it will throw a
++	 * fatal error when a reflog is empty, which we can not recover from
++	 */
++	cp.git_cmd = 1;
++	/* Even though --quiet is specified, rev-parse still outputs the hash */
++	cp.no_stdout = 1;
++	argv_array_pushl(&cp.args, "rev-parse", "--verify", "--quiet", NULL);
++	argv_array_pushf(&cp.args, "%s@{0}", ref_stash);
++	ret = run_command(&cp);
++
++	/* do_clear_stash if we just dropped the last stash entry */
++	if (ret)
++		do_clear_stash();
++
++	return 0;
++}
++
++static void assert_stash_ref(struct stash_info *info)
++{
++	if (!info->is_stash_ref) {
++		free_stash_info(info);
++		error(_("'%s' is not a stash reference"), info->revision.buf);
++		exit(128);
++	}
++}
++
++static int drop_stash(int argc, const char **argv, const char *prefix)
++{
++	struct stash_info info;
++	int ret;
++	struct option options[] = {
++		OPT__QUIET(&quiet, N_("be quiet, only report errors")),
++		OPT_END()
++	};
++
++	argc = parse_options(argc, argv, prefix, options,
++			     git_stash_helper_drop_usage, 0);
++
++	if (get_stash_info(&info, argc, argv))
++		return -1;
++
++	assert_stash_ref(&info);
++
++	ret = do_drop_stash(prefix, &info);
++	free_stash_info(&info);
++	return ret;
++}
++
+ int cmd_stash__helper(int argc, const char **argv, const char *prefix)
+ {
+ 	pid_t pid = getpid();
+@@ -436,6 +544,10 @@ int cmd_stash__helper(int argc, const char **argv, const char *prefix)
+ 		usage_with_options(git_stash_helper_usage, options);
+ 	if (!strcmp(argv[0], "apply"))
+ 		return !!apply_stash(argc, argv, prefix);
++	else if (!strcmp(argv[0], "clear"))
++		return !!clear_stash(argc, argv, prefix);
++	else if (!strcmp(argv[0], "drop"))
++		return !!drop_stash(argc, argv, prefix);
  
--test_expect_success 'stash push with pathspec shows no changes when there are none' '
-+test_expect_success 'push: <pathspec> shows no changes when there are none' '
- 	>foo &&
- 	git add foo &&
- 	git commit -m "tmp" &&
-@@ -1058,7 +1058,7 @@ test_expect_success 'stash push with pathspec shows no changes when there are no
- 	test_i18ncmp expect actual
- '
- 
--test_expect_success 'stash push with pathspec not in the repository errors out' '
-+test_expect_success 'push: <pathspec> not in the repository errors out' '
- 	>untracked &&
- 	test_must_fail git stash push untracked &&
- 	test_path_is_file untracked
+ 	usage_msg_opt(xstrfmt(_("unknown subcommand: %s"), argv[0]),
+ 		      git_stash_helper_usage, options);
+diff --git a/git-stash.sh b/git-stash.sh
+index 809b1c2d1..a99d5dc9e 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -653,7 +653,7 @@ apply)
+ 	;;
+ clear)
+ 	shift
+-	clear_stash "$@"
++	git stash--helper clear "$@"
+ 	;;
+ create)
+ 	shift
+@@ -665,7 +665,7 @@ store)
+ 	;;
+ drop)
+ 	shift
+-	drop_stash "$@"
++	git stash--helper drop "$@"
+ 	;;
+ pop)
+ 	shift
 -- 
 2.18.0.rc2.13.g506fc12fb
 
