@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E92031F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 22:08:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8DA781F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 22:09:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752358AbeFZWIW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 18:08:22 -0400
-Received: from mout.gmx.net ([212.227.17.22]:34903 "EHLO mout.gmx.net"
+        id S933308AbeFZWJt (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 18:09:49 -0400
+Received: from mout.gmx.net ([212.227.15.15]:59175 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751241AbeFZWIW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 18:08:22 -0400
-Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M3i8r-1gOwG82TYX-00rFqv; Wed, 27
- Jun 2018 00:08:17 +0200
-Date:   Wed, 27 Jun 2018 00:08:17 +0200 (DST)
+        id S932107AbeFZWJs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 18:09:48 -0400
+Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0McmS9-1fpsXu2iNF-00Hwn6; Wed, 27
+ Jun 2018 00:09:43 +0200
+Date:   Wed, 27 Jun 2018 00:09:42 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 cc:     git@vger.kernel.org, joel@teichroeb.net, gitster@pobox.com
-Subject: Re: [PATCH v6 3/4] stash: update test cases conform to coding
- guidelines
-In-Reply-To: <2fe77c0946231dd9235d88922e4d56dd7f5c66c7.1529943789.git.ungureanupaulsebastian@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1806270003150.21419@tvgsbejvaqbjf.bet>
-References: <cover.1529943789.git.ungureanupaulsebastian@gmail.com> <2fe77c0946231dd9235d88922e4d56dd7f5c66c7.1529943789.git.ungureanupaulsebastian@gmail.com>
+Subject: Re: [PATCH v6 4/4] stash: renamed test cases to be more
+ descriptive
+In-Reply-To: <0f49fc90bee5e6a297c49224f1451a7aee4c8635.1529943789.git.ungureanupaulsebastian@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1806270008440.21419@tvgsbejvaqbjf.bet>
+References: <cover.1529943789.git.ungureanupaulsebastian@gmail.com> <0f49fc90bee5e6a297c49224f1451a7aee4c8635.1529943789.git.ungureanupaulsebastian@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:PkxTMElL9WOPEnDqKp1KyjBFhQuSsTrW12OCfJtDfA3qaLVKToP
- GZfLukXZDfQhDYx3oYC4r7tMQxbyF+ztbk2dtttIy2ps2QqKM+Y3vGzmt9l4bGvM0lDGvP3
- UBi4JVr6bZUO2WxjoWG7AT7QzC2ROQTzdGdznuKcF9CBpesXnv/wZXv9QSPcWhwN1HcmDvT
- qh6YlSc0at3Tr9UNV6W8w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Ajw+iJd9Qvo=:vGoH4TfosIIvYl8p6Np16E
- mkh2DzCTLDn1e+7IiyB5ZzwPpl4VuoO1HDk8Bvd0ewPKAnujIJjKIQUT7AKVJkWl5WpaBuvUr
- MAcj28KKLPWQcjSwkTELuQsie+cW20Rh/vZSgywLnO65vXkqvytmlG73CvADZgGHJw/glQl1w
- xgi5upkyE4qQCSDk14ntvbViOfkVdp6O0JAmeOltTPTmeLYO6/WD54cW6rwdsCacHKziuJscZ
- GPjvGrJVYiTqGg3obqEhhmcNbRuxde1SKYM94Z6kQqrg/2L+rQ/iqxTzf9xSrorgL+ToU+eCL
- L44FWmyKQ0TMO0tOhUNCFFq/qAAI0+uVofyowQpBnU/7TEHhJ0MNSDvnFHOR2EU805EmJAt8L
- E1jHjBmIIa/2mq8Ck7I1xxCGTmPEDoSfdX/v2iAPAiKsDz5MrWhDnnJiMYpxwR/VHHy9wTyVQ
- HjeTDXWV6gUDF0MtF+djG5qWUvY5F24LVSWjvyTkHXrOjy1go/fPvhMf1CuMLZeN4cnsnhVAt
- 8gpY7W5ivp8zqXU/iHCYsZMshokzGFmpNSGMSExEc/1GlfUsPO8z0WrxMV3z9b0JOHPtK9yNG
- 9wdM57VLEpginJM1+qvQanzvfrqdK1bbOfLSnFoli1tZMODkFKrjNxPNDokIRfOwnQvVr4YZA
- ZgI3ayqisRszKPcXW1M9dEsakts9k4PUvVcqegyGtTONZYxywGv6E+QP/bONwFbIuuO6deCM2
- wJUO8onMz/ljT/dwIMfysRBiKLyU8jGG+hkqMN/LZG8jDzdGBgDlcY5s4j7cAA77Et3PcNe9t
- sNx5EBb
+X-Provags-ID: V03:K1:Tk1DTIRByAQbsTxbIc22ONM4OlVWECNSghRD3WJQXJcu0fIVtNe
+ oSdZuBfEQ5nUoztpfN7UoE3g1f9pI7fyObpASZ2/uD+inXd0uw/06oWdZ/GxKdYy/vUV1QG
+ vhb4CNKF4ohs2S6zCL2bvli4jxXoTmbrjsJcGBmELMdvdoq+Gvfrm6nCn0Pd/PEqU5HQrVY
+ +H++f2bxgfUzJgKhr3GJg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:lgMH7PstKuE=:9wHuac3MJfvvITCtWfUuE5
+ UyMV3P3/gG02gX3xCtrm7Pa0nlwPh6IdOwn7JIIZm9vH1f7dps1xx5EAzV65PWFrNgxtttEsA
+ xKUZVzoLZGzE0Yugg6+sK35KivUg9nquJZ29trkrA8jsKKuNPGTOjSzaJC66H0bQnPMlYnNZ5
+ sum7aOkAsVrqDOc8F7mnemDAApd4l4WW+6qX+bHGnukSk//5FWD8AMD2c5SfR5Z5xmjqygHdE
+ gCiYP1SOLePK/IAUVUQecPPBgrFEKuoNsDU0i8OvFvSB2PuUq9zDNuikGVj3hbb3xtxdbd2pW
+ cXnjyrnWQd5OKOZZt4V/eG1uAMuUya/WszQxZSdyrI+MERdjEYEe+xhj9x1QY8j10+/nThgf8
+ 938zNNc5O8Z3zlE2OxQlVjHJilQH+57tOsOqdVai4ls6W7kLmAalvVItjF0s6Iw7xIvFMAziP
+ xsCKtxrivCMDnxUvTm6J+7ebAHtEUTTSJHbLMvuvjYQKVO+PePxc1eXwjDEH3S15BZZp63RcS
+ Rxa+Jg9NTkoIR/FyPY4edPHpVqHyAAxN3Gm3j8hU7u+J3eky7WhGcb3ihsr3tvUHZXLlWiycb
+ RkjSSb4sEAnuM75NiMr3FEdxLFxwW480rAllCfIRYC7U+ncRX5G1miViPsHmjpRW8PV8wbMbK
+ YF7e7WilKlTWhzVHiw/FIRO5BCF5AqsjTJ1QAAJKClw299W6YnInKzzCXstcSdNxk6d90k0h5
+ L5eB13RLbYDQRGbXqfaSzMNLsOy9g2WLeGmmmy5/JtibZ2dZ6B+lybkU1+tjg0ld4WcnOWP6H
+ gFHeoOL
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -58,19 +58,14 @@ Hi Paul,
 
 On Mon, 25 Jun 2018, Paul-Sebastian Ungureanu wrote:
 
-> Removed whitespaces after redirection operators.
+> Renamed some test cases' labels to be more descriptive and under 80
+> characters per line.
+> 
+> Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 
-That is accurate a description of what the patch does. Let's add the why
-(and change the tense to present tense, as is the custom in our commit
-messages):
+As I suggested this kind of change, I am obviously happy with this patch.
 
-	This adjusts t3903-stash.sh to conform with our coding conventions
-	better, by removing whitespace between redirection operators and
-	their file names.
+Apart from minor suggestions, I think this patch series is good to go.
 
-The patch does two more things, though: it breaks at least one long line,
-and it renames at least two non-descriptive files to the much better name
-`expected`. Maybe you want to mention that in the commit message, to?
-
-Thanks,
+Thank you!
 Dscho
