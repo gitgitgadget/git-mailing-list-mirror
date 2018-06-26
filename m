@@ -2,95 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 594251F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 16:46:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3A23B1F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 16:51:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752177AbeFZQqC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 12:46:02 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:43558 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751924AbeFZQqB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 12:46:01 -0400
-Received: by mail-wr0-f196.google.com with SMTP id c5-v6so6780905wrs.10
-        for <git@vger.kernel.org>; Tue, 26 Jun 2018 09:46:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=MXLbn5s6o0jHFn93KGbfEU5UFjc9+fKM4lAwC60tOEs=;
-        b=jfR7km1M/gWej566r+as72k9tCHfXwcOS7bwZqhnJVUwRsq+R4wORHYYsScCBOpyTK
-         O9Nzw5kzLmQ9ISJnXjt2zo72Mbk7XmRHLCg1fRd+QoRnyac3ZewYF+PALmJaCv7SqQ0g
-         Yz+fskI1HW9JIu8dmEVYmOpn1MyrBut8xhsQRstconUNnudXhM1MQQ+v+A2xD9qhKf7h
-         MWSo/eHA/zQ6jJnCkCPKsxLa1A/Y3WfZSwiTkT9EBBbVRVY1r6+1lhQ8g/X7Fu5kKIsm
-         McJOriMgsYz6fcbsEm1w3F/ihf4JuHM8aFHYbpFbNi4K9we4YkGmTu0tfOHmhsgsHtPR
-         gK6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=MXLbn5s6o0jHFn93KGbfEU5UFjc9+fKM4lAwC60tOEs=;
-        b=VxxqiKkHbSP+CwPhOZW/V+lDM9SmpNy9IHmjMv71yciazUalkrh0smB407Wfp23U2t
-         4mfT4XVSoCePjqqLfS59M+82d/N8KBvebm/qYbW6EPlT6h38Qq/9UqEvJUEuIWxcZx1o
-         2VVVcPdAb8myYq4KPNRaEFh4xebQpNs/OIiaK7v3soYDb9DjXHCZ+QeRqOHpGdi6EnBp
-         oP9EJfBPOV0Z8Xf6MrU9u7lbCVoFLyrpQXtoMvguFHRGr3HOJBNjxoH3T2/SW8dsvjjx
-         wkotqF/vQrN4l1NvEjaegfrumBZy/UxkM/h53+647GzOQXrTJkLSdZK5XXfzt2vk/BXj
-         R8Ug==
-X-Gm-Message-State: APt69E04dWY7w+QQFQwHOgrRA8uj9J2kHi58lJ3b+oDqdcFHC7CBuUu6
-        BKSuc/qVctG+RPhSEtRqd2U=
-X-Google-Smtp-Source: AAOMgpeJyDxM+SsumBu6YHiux41mBkjMpSy1c03N04ABvDnMjhBWg6r5N61699Lxj54MNdNr02r2qQ==
-X-Received: by 2002:adf:8806:: with SMTP id d6-v6mr2087064wrd.41.1530031560020;
-        Tue, 26 Jun 2018 09:46:00 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id g125-v6sm2656498wmf.16.2018.06.26.09.45.58
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 26 Jun 2018 09:45:58 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org, avarab@gmail.com
-Subject: Re: [PATCH v3 0/7] grep.c: teach --column to 'git-grep(1)'
-References: <cover.1529365072.git.me@ttaylorr.com>
-        <cover.1529682173.git.me@ttaylorr.com>
-        <20180625184350.GA26688@sigill.intra.peff.net>
-        <20180625184729.GA12140@syl.local>
-Date:   Tue, 26 Jun 2018 09:45:58 -0700
-In-Reply-To: <20180625184729.GA12140@syl.local> (Taylor Blau's message of
-        "Mon, 25 Jun 2018 13:47:29 -0500")
-Message-ID: <xmqqa7rhmr7d.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1752581AbeFZQvw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 12:51:52 -0400
+Received: from cpanel4.indieserve.net ([199.212.143.9]:49538 "EHLO
+        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752093AbeFZQvv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 12:51:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
+        Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=3E04ZfBVRvTIkJX/JQ1TbjymB54A2f1N5LQetHaWeUQ=; b=d4cywJK72AmExfLPXsbgNrLiy
+        UFz/LeVqh8bxHBCPMLop2041BM849wmwgjx7YuNzthcU1ZORYiV/7eAOoQHipSr79PFeoNXPYEB8U
+        Uz7On0rokQ/UNOBHcb5qZ0/PI/9XH8QkCXRCTKmwvcngsPAjdwXQu7uWN4gLrpg3wTFETlH+7sqXE
+        bNPaUvHuiAzzwbffXKVXFSgXY6IfVCJTI8BBpUSxF0BkLI2Q6M2lhkYr6jXZK56QPLkLTvxYn/5Ra
+        b5fMpN2jC3CGLZayZFd16yrV7iZM5ZjIhbKAQCk+xlrbQlW0CSknG5LW/w7R8YxzIciTujDv/j1Ib
+        mn1TOdydg==;
+Received: from cpef81d0f814063-cmf81d0f814060.cpe.net.cable.rogers.com ([174.114.57.56]:47728 helo=localhost.localdomain)
+        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1fXrC0-000ftS-HK; Tue, 26 Jun 2018 12:51:50 -0400
+Date:   Tue, 26 Jun 2018 12:51:45 -0400 (EDT)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Jeff King <peff@peff.net>
+cc:     Git Mailing list <git@vger.kernel.org>
+Subject: Re: curious about wording in "man git-config", ENVIRONMENT
+In-Reply-To: <20180626124316.GA15419@sigill.intra.peff.net>
+Message-ID: <alpine.LFD.2.21.1806261250280.6102@localhost.localdomain>
+References: <alpine.LFD.2.21.1806260608270.6007@localhost.localdomain> <20180626124316.GA15419@sigill.intra.peff.net>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-OutGoing-Spam-Status: No, score=-0.2
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+On Tue, 26 Jun 2018, Jeff King wrote:
 
-> On Mon, Jun 25, 2018 at 02:43:50PM -0400, Jeff King wrote:
->> On Fri, Jun 22, 2018 at 10:49:26AM -0500, Taylor Blau wrote:
->> > Since the last time, only a couple of things have changed at Peff's
->> > suggestions in [1]. The changes are summarized here, and an inter-diff
->> > is available below:
->> >
->> >   - Change "%zu" to PRIuMAX (and an appropriate cast into uintmax_t). I
->> >     plan to send a follow-up patch to convert this back to "%zu" to see
->> >     how people feel about it, but I wanted to keep that out of the
->> >     present series in order to not hold things up.
->> ...
->> Jinxes aside, this interdiff looks good to me.
+> On Tue, Jun 26, 2018 at 06:18:26AM -0400, Robert P. J. Day wrote:
 >
-> Thanks; I hope that I haven't jinxed anything :-).
+> >
+> >   ENVIRONMENT
+> >     GIT_CONFIG
+> >       Take the configuration from the given file instead of
+> >       .git/config. Using the "--global" option forces this to
+> >       ~/.gitconfig. Using the "--system" option forces this to
+> >       $(prefix)/etc/gitconfig.
+> >
+> >   is the phrase "forces this to" really what you want to use here?
+> > maybe i misunderstand what this option does, doesn't it simply mean
+> > that it will use a different (specified) file from the default,
+> > depending on the context (local, global, system)?
+> >
+> >   it just seems weird to say that the option "forces" the use of what
+> > are clearly the default files. thoughts?
 >
-> I'm going to avoid sending the PRIuMAX -> "%zu" patch, since dscho
-> points out that it's not available on Windows [1].
+> I agree it's weird. I think it's trying to mean "behaves as if it
+> was set to", but with the additional notion that the command-line
+> argument would take precedence over the environment (which is our
+> usual rule). But then we should just say those things explicitly.
+>
+> Just looking at mentions of GIT_CONFIG in that manpage and knowing
+> the history, I think:
 
-OK, so what I queued on 'pu' seems to be ready to advance, which is
-good.  Keeping topics in flight on 'pu', unable to convince myself
-that they are ready to advance to 'next', makes me feel uneasy and
-unhappy, and having to worry about one less such topic is a good
-news ;-)
+  ... snip ...
 
+i'm just going to admit that i don't quite have the background to know
+how to submit a patch to tidy things up based on Jeff's analysis, so
+I'm going to leave this to someone higher up the food chain.
+
+rday
+
+-- 
+
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                  http://crashcourse.ca/dokuwiki
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
