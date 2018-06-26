@@ -1,134 +1,79 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
-X-Spam-Level: 
+X-Spam-Level: **
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=2.8 required=3.0 tests=BAYES_50,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIM_INVALID,UNWANTED_LANGUAGE_BODY shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 296131F597
-	for <e@80x24.org>; Tue, 26 Jun 2018 22:44:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9A3B71F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 23:36:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754723AbeFZWok (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 18:44:40 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:46453 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754681AbeFZWoj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 18:44:39 -0400
-Received: by mail-wr0-f194.google.com with SMTP id t6-v6so41466wrq.13
-        for <git@vger.kernel.org>; Tue, 26 Jun 2018 15:44:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=6+VkYTxlKnDT4m/pclSNTbUjr9kITxfuKLKsKDPtgfs=;
-        b=h7QvqPWVrtKObxn4Of60lcult41yvnH6kB6Xg9ps/EPHv1joV4eHDee5ZwVi2SiX4Y
-         qucs6VeZh7tFBWVOmbGmA+LB29ipSc5NpYYuzLFG/bQ7toNvqagFzshdGLGfrYLSrNYg
-         fN/HN+4PQf1LSmKSiNaqtwFuwqinGphrTLWqvIbGGkAzDuii9OeGQp5UMudKLvo/nmD2
-         /4ffPam1sllx+Yua/o/Sd+u2pj3d4zmvEAFBMuVrKCZ/+w1Uh7qJShQEDR68OASQOp8B
-         y4paGaqDwGdGC1Dvf8T4UJxA+JFszCUPYijOd+fzMdr5tAXU11W3iE9ziD/CDhj3Z3UJ
-         NYbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=6+VkYTxlKnDT4m/pclSNTbUjr9kITxfuKLKsKDPtgfs=;
-        b=g3oOLrE4FqX7sbBXkk03Fc2VJwgN+6feCyaKo9gzg5r657J5mXzJTeYdlwjgLfPp9b
-         FKyj/i5u4SEGYCenVikesbSCJHvbsWDORcFpmZrCYwt5W00bwa9dpd7PRY3Yc9/e7h4e
-         JErfsbkAU4gTCfQTqj8Sfhcv54IPegh5GJG6sbYKkTHGsIcLU6Zj1GJK31Exp8YMifAL
-         G9XvlTZGw2I5bqoacZszaypAO1OsuLxljhoBvtWvUlIFZjSZg64XbTA3IzwY7oITwomA
-         /KSX9D4peurhn8OusVs8kv3Hojg1BD62Z8bV2pXQ1JirJPjWC/pXidzdsySwWDki0AzX
-         ZiXA==
-X-Gm-Message-State: APt69E09I+pBNzJZKcmVm75UqJSr/PNW41HNKoEhzaf2d++3+9YGZa92
-        VknBRzp+1Eh2u43aIW9khRY=
-X-Google-Smtp-Source: AAOMgpdI10hUdkoL6BvdmoRKLplmBP+S+Lc6mpLuGgXPPA3RqbaE60KFKvGRhNUw5kt9jbkQSnaVQg==
-X-Received: by 2002:adf:b219:: with SMTP id u25-v6mr2966531wra.1.1530053077660;
-        Tue, 26 Jun 2018 15:44:37 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id s124-v6sm3544318wmf.47.2018.06.26.15.44.36
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 26 Jun 2018 15:44:36 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ian Campbell <ijc@hellion.org.uk>
-Cc:     Michael Barabanov <michael.barabanov@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2] filter-branch: skip commits present on --state-branch
-References: <20180623043639.7727-1-michael.barabanov@gmail.com>
-        <20180626040733.30757-1-michael.barabanov@gmail.com>
-        <1530039484.9819.8.camel@hellion.org.uk>
-Date:   Tue, 26 Jun 2018 15:44:36 -0700
-In-Reply-To: <1530039484.9819.8.camel@hellion.org.uk> (Ian Campbell's message
-        of "Tue, 26 Jun 2018 19:58:04 +0100")
-Message-ID: <xmqq1scti2wb.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        id S1752242AbeFZXg5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 19:36:57 -0400
+Received: from de15.mihosting.net ([46.4.80.233]:34784 "EHLO
+        de15.mihosting.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751486AbeFZXg4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 19:36:56 -0400
+X-Greylist: delayed 3079 seconds by postgrey-1.27 at vger.kernel.org; Tue, 26 Jun 2018 19:36:56 EDT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=gonaturalcaribe.com; s=default; h=Content-transfer-encoding:Content-type:
+        Date:Subject:Reply-To:To:From:Mime-Version:Message-Id:Sender:Cc:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=sTrqS4Aa1jztlEHysoYhPBVxofgSXe6p6j67A5wLHgg=; b=REtfuTQ5h3B/N7MuGhkTw6Blb0
+        D0X5Z0AgbWtBQpFHQUg6xaA+8jURycTpPRPiqG98lhpAnes9tkLH1dlmQno8HFNWWSe+b/OfdCrpi
+        mLJ2QjLdlzmgAI2IGVNCEiwYnyGtebGT8BJdZ1k0R67xMi5HUG0IUOkZc/TCrKm6iIG5x78KJXPIK
+        UAjsy6GHPQym6ndMimkw0yB5t1ISL5iUcAB6Ruol3aJ3duaTnCePiyBiWNxXgQripMeA4dFuL8UJk
+        BGcGYeLL/1PT9UOOjI8lkcO17uAXjktTmrIwzCKp7ZCfpqQzt+z+ySuhWgRMWEaeI3axdweLHFT/q
+        Twh0qVpA==;
+Received: from [77.234.45.168] (port=15506 helo=[100.120.224.39])
+        by de15.mihosting.net with esmtpsa (TLSv1:DHE-RSA-AES256-SHA:256)
+        (Exim 4.91)
+        (envelope-from <support46@gonaturalcaribe.com>)
+        id 1fXwiO-002bWS-95
+        for git@vger.kernel.org; Tue, 26 Jun 2018 22:45:36 +0000
+Message-Id: <TC54DHAE-V58S-RG4U-MM2R-U5TCT35OSUIO@gonaturalcaribe.com>
+Mime-Version: 1.0
+From:   Post Mailer <support46@gonaturalcaribe.com>
+To:     "git" <git@vger.kernel.org>
+Reply-To: mdcoke@europe.com
+Subject: Sie da....
+Date:   Wed, 27 Jun 2018 00:45:30 +0200
+X-Bounce-Tracking-Info: <Z2l0CQkJZ2l0QHZnZXIua2VybmVsLm9yZwlTaWUgZGEuLi4uCTg2CQk2MzkJYm91bmNlCW5vCW5v>
+Content-type: text/plain; charset=iso-8859-1; format=flowed
+Content-transfer-encoding: quoted-printable
+X-Antivirus: Avast (VPS 180626-6, 06/26/2018), Outbound message
+X-Antivirus-Status: Clean
+X-mihostingnet-MailScanner-Information: Please contact the ISP for more information
+X-mihostingnet-MailScanner-ID: 1fXwiO-002bWS-95
+X-mihostingnet-MailScanner: Found to be clean
+X-mihostingnet-MailScanner-SpamCheck: 
+X-mihostingnet-MailScanner-From: support46@gonaturalcaribe.com
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - de15.mihosting.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - gonaturalcaribe.com
+X-Get-Message-Sender-Via: de15.mihosting.net: authenticated_id: support46@gonaturalcaribe.com
+X-Authenticated-Sender: de15.mihosting.net: support46@gonaturalcaribe.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ian Campbell <ijc@hellion.org.uk> writes:
+Sie haben 5, OOO, OOO.OO EUR in das laufende Spendenprogramm der FIFA Fussb=
+all Weltmeisterschaft Russland 2018 gespendet. Bitte antworten Sie zur=FCck=
+ f=FCr Anspr=FCche.
 
-> On Mon, 2018-06-25 at 21:07 -0700, Michael Barabanov wrote:
->> The commits in state:filter.map have already been processed, so don't
->> filter them again. This makes incremental git filter-branch much
->> faster.
->> 
->> Also add tests for --state-branch option.
->> 
->> Signed-off-by: Michael Barabanov <michael.barabanov@gmail.com>
->
-> Acked-by: Ian Campbell <ijc@hellion.org.uk>
 
-Thanks.
 
->
->> ---
->>  git-filter-branch.sh     |  1 +
->>  t/t7003-filter-branch.sh | 15 +++++++++++++++
->>  2 files changed, 16 insertions(+)
->> 
->> diff --git a/git-filter-branch.sh b/git-filter-branch.sh
->> index ccceaf19a..5c5afa2b9 100755
->> --- a/git-filter-branch.sh
->> +++ b/git-filter-branch.sh
->> @@ -372,6 +372,7 @@ while read commit parents; do
->>  	git_filter_branch__commit_count=$(($git_filter_branch__commi
->> t_count+1))
->>  
->>  	report_progress
->> +	test -f "$workdir"/../map/$commit && continue
->>  
->>  	case "$filter_subdir" in
->>  	"")
->> diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
->> index ec4b160dd..e23de7d0b 100755
->> --- a/t/t7003-filter-branch.sh
->> +++ b/t/t7003-filter-branch.sh
->> @@ -107,6 +107,21 @@ test_expect_success 'test that the directory was
->> renamed' '
->>  	test dir/D = "$(cat diroh/D.t)"
->>  '
->>  
->> +V=$(git rev-parse HEAD)
->> +
->> +test_expect_success 'populate --state-branch' '
->> +	git filter-branch --state-branch state -f --tree-filter
->> "touch file || :" HEAD
->> +'
->> +
->> +W=$(git rev-parse HEAD)
->> +
->> +test_expect_success 'using --state-branch to skip already rewritten
->> commits' '
->> +	test_when_finished git reset --hard $V &&
->> +	git reset --hard $V &&
->> +	git filter-branch --state-branch state -f --tree-filter
->> "touch file || :" HEAD &&
->> +	test_cmp_rev $W HEAD
->> +'
->> +
->>  git tag oldD HEAD~4
->>  test_expect_success 'rewrite one branch, keeping a side branch' '
->>  	git branch modD oldD &&
+---
+This email has been checked for viruses by Avast antivirus software.
+https://www.avast.com/antivirus
+
