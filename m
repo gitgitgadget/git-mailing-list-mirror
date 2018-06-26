@@ -2,219 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E777D1F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 22:31:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 296131F597
+	for <e@80x24.org>; Tue, 26 Jun 2018 22:44:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933675AbeFZWbl (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 18:31:41 -0400
-Received: from mout.gmx.net ([212.227.17.21]:57903 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933266AbeFZWbj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 18:31:39 -0400
-Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MbrR4-1fq9ZX2AoI-00JMWp; Wed, 27
- Jun 2018 00:31:37 +0200
-Date:   Wed, 27 Jun 2018 00:31:37 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH v6 4/4] stash: convert pop to builtin
-In-Reply-To: <5d5b05caecc01d8f252ef5f8495549663815ed63.1529943789.git.ungureanupaulsebastian@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1806270029450.21419@tvgsbejvaqbjf.bet>
-References: <cover.1529943789.git.ungureanupaulsebastian@gmail.com> <5d5b05caecc01d8f252ef5f8495549663815ed63.1529943789.git.ungureanupaulsebastian@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1754723AbeFZWok (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 18:44:40 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:46453 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754681AbeFZWoj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 18:44:39 -0400
+Received: by mail-wr0-f194.google.com with SMTP id t6-v6so41466wrq.13
+        for <git@vger.kernel.org>; Tue, 26 Jun 2018 15:44:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=6+VkYTxlKnDT4m/pclSNTbUjr9kITxfuKLKsKDPtgfs=;
+        b=h7QvqPWVrtKObxn4Of60lcult41yvnH6kB6Xg9ps/EPHv1joV4eHDee5ZwVi2SiX4Y
+         qucs6VeZh7tFBWVOmbGmA+LB29ipSc5NpYYuzLFG/bQ7toNvqagFzshdGLGfrYLSrNYg
+         fN/HN+4PQf1LSmKSiNaqtwFuwqinGphrTLWqvIbGGkAzDuii9OeGQp5UMudKLvo/nmD2
+         /4ffPam1sllx+Yua/o/Sd+u2pj3d4zmvEAFBMuVrKCZ/+w1Uh7qJShQEDR68OASQOp8B
+         y4paGaqDwGdGC1Dvf8T4UJxA+JFszCUPYijOd+fzMdr5tAXU11W3iE9ziD/CDhj3Z3UJ
+         NYbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=6+VkYTxlKnDT4m/pclSNTbUjr9kITxfuKLKsKDPtgfs=;
+        b=g3oOLrE4FqX7sbBXkk03Fc2VJwgN+6feCyaKo9gzg5r657J5mXzJTeYdlwjgLfPp9b
+         FKyj/i5u4SEGYCenVikesbSCJHvbsWDORcFpmZrCYwt5W00bwa9dpd7PRY3Yc9/e7h4e
+         JErfsbkAU4gTCfQTqj8Sfhcv54IPegh5GJG6sbYKkTHGsIcLU6Zj1GJK31Exp8YMifAL
+         G9XvlTZGw2I5bqoacZszaypAO1OsuLxljhoBvtWvUlIFZjSZg64XbTA3IzwY7oITwomA
+         /KSX9D4peurhn8OusVs8kv3Hojg1BD62Z8bV2pXQ1JirJPjWC/pXidzdsySwWDki0AzX
+         ZiXA==
+X-Gm-Message-State: APt69E09I+pBNzJZKcmVm75UqJSr/PNW41HNKoEhzaf2d++3+9YGZa92
+        VknBRzp+1Eh2u43aIW9khRY=
+X-Google-Smtp-Source: AAOMgpdI10hUdkoL6BvdmoRKLplmBP+S+Lc6mpLuGgXPPA3RqbaE60KFKvGRhNUw5kt9jbkQSnaVQg==
+X-Received: by 2002:adf:b219:: with SMTP id u25-v6mr2966531wra.1.1530053077660;
+        Tue, 26 Jun 2018 15:44:37 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id s124-v6sm3544318wmf.47.2018.06.26.15.44.36
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 26 Jun 2018 15:44:36 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ian Campbell <ijc@hellion.org.uk>
+Cc:     Michael Barabanov <michael.barabanov@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v2] filter-branch: skip commits present on --state-branch
+References: <20180623043639.7727-1-michael.barabanov@gmail.com>
+        <20180626040733.30757-1-michael.barabanov@gmail.com>
+        <1530039484.9819.8.camel@hellion.org.uk>
+Date:   Tue, 26 Jun 2018 15:44:36 -0700
+In-Reply-To: <1530039484.9819.8.camel@hellion.org.uk> (Ian Campbell's message
+        of "Tue, 26 Jun 2018 19:58:04 +0100")
+Message-ID: <xmqq1scti2wb.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Aq3C2OmvtmBW4KWrG3ky3LqwF/NcDHj8GxviEJWCRjNaWwNEd9S
- 3hih+Rb2e95OQSPQU81iT8ZZjlJnbkyPitOigbskZanZPZN1+ZdrLhKE4ClRAzpQS4Oc9OH
- WUBpLoTiKNqKqz2fb27ZYMGeYCXYGgJx8g5lwvly6xeaqkyPRSjUJ3PGBMmRyDma6vv5ubj
- KIj34f9b2JEmItsiJUQjg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:CpDaPrUCOOM=:tMgqoaCS5h8b6XKqz1TiBz
- F6AZLgxPcniQN6kvfykieT/SV/kGSf/1Aim2SO8NCmq5nNk9ytw5GtO67yHmVeC+beiKY6jS/
- j5ZGWl7q50HMKryYLoz9dkpTldGj2nGqFCCnxsg7Dj+ICwDgE/wSq0KowMkdG8LwEPjnpczir
- YZ0LSsoOHgn2qlO+/nLIRhsfxDgr/RtnhvwpdMs5wbuhwVpp+52nzo1NWTCGGKKEeqaijDytH
- e8cOfmtPdbqufuqcCIgqEfQTy8nhqSvFrs51VpwCgG8+hQLwrsVUUG+6msmMEO2I6ZQ5+DeWd
- ZSApqQrmfhICK9CXSn2u+y0fM7THCzTXPWg+kj2PfPhr3ClaHfbJXmXvx+cLfxL1zzWFm4286
- MHnVVHmRODxMP7AUhj3myjUqDAMiZsdprYNBGkVmmws8gZmTCNfQxMmz2Yf0qFFnbN3uQ747q
- beOKDZ4d2kSyoZJnyS3+eY2fy5jsghIOqX0dKKxJKwmkZKKhyMa3s1Ujqyzmuo4fcqibFWotz
- 0WECVSfWALsJ2ghTG8/mV6lMKP0DhC0BKCSFkicCh5x4usflvCtxeCjqwlbozhHaTdrWRQlgY
- +GJ70sX/3bm3IM8sTCzeolBK3LhJpwpuhIXGu2rgkPWMW3QDf6W3p/3qLvoXNTjTx4XjW9Gpc
- Wl7xgqsgFNvSeSsw7vRy9mkz7OVvyLw+SHiw83pMI5mCfWjDyHdOfBUmpTTPokbVazwl6DORM
- 1VdlCr0TAh8EEXfXTp4/WIhUZcYwO4tVz7+4yDfxYx0T5exU89Mp7x02wvv11Pso032xIM/Q/
- Ac1np4/
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Paul,
+Ian Campbell <ijc@hellion.org.uk> writes:
 
-I think I had revewied these 4 patches before, and I'd wager a bet that
-you addressed all of my suggestions, if any.
+> On Mon, 2018-06-25 at 21:07 -0700, Michael Barabanov wrote:
+>> The commits in state:filter.map have already been processed, so don't
+>> filter them again. This makes incremental git filter-branch much
+>> faster.
+>> 
+>> Also add tests for --state-branch option.
+>> 
+>> Signed-off-by: Michael Barabanov <michael.barabanov@gmail.com>
+>
+> Acked-by: Ian Campbell <ijc@hellion.org.uk>
 
-I had a look over patches 2-4, and want to take a little bit more time
-tomorrow to pour over patch 1 (which is a little larger, as it lays a lot
-of ground work), to make sure that I cannot find anything else to improve.
+Thanks.
 
-Well done so far!
-Dscho
-
-
-On Mon, 25 Jun 2018, Paul-Sebastian Ungureanu wrote:
-
-> From: Joel Teichroeb <joel@teichroeb.net>
-> 
-> Add stash pop to the helper and delete the pop_stash, drop_stash,
-> assert_stash_ref functions from the shell script now that they
-> are no longer needed.
-> 
-> Signed-off-by: Joel Teichroeb <joel@teichroeb.net>
-> Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-> ---
->  builtin/stash--helper.c | 36 ++++++++++++++++++++++++++++++-
->  git-stash.sh            | 47 ++---------------------------------------
->  2 files changed, 37 insertions(+), 46 deletions(-)
-> 
-> diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
-> index fbf78249c..a38d6ae8a 100644
-> --- a/builtin/stash--helper.c
-> +++ b/builtin/stash--helper.c
-> @@ -13,7 +13,7 @@
->  
->  static const char * const git_stash_helper_usage[] = {
->  	N_("git stash--helper drop [-q|--quiet] [<stash>]"),
-> -	N_("git stash--helper apply [--index] [-q|--quiet] [<stash>]"),
-> +	N_("git stash--helper ( pop | apply ) [--index] [-q|--quiet] [<stash>]"),
->  	N_("git stash--helper branch <branchname> [<stash>]"),
->  	N_("git stash--helper clear"),
->  	NULL
-> @@ -24,6 +24,11 @@ static const char * const git_stash_helper_drop_usage[] = {
->  	NULL
->  };
->  
-> +static const char * const git_stash_helper_pop_usage[] = {
-> +	N_("git stash--helper pop [--index] [-q|--quiet] [<stash>]"),
-> +	NULL
-> +};
-> +
->  static const char * const git_stash_helper_apply_usage[] = {
->  	N_("git stash--helper apply [--index] [-q|--quiet] [<stash>]"),
->  	NULL
-> @@ -528,6 +533,33 @@ static int drop_stash(int argc, const char **argv, const char *prefix)
->  	return ret;
->  }
->  
-> +static int pop_stash(int argc, const char **argv, const char *prefix)
-> +{
-> +	int index = 0, ret;
-> +	struct stash_info info;
-> +	struct option options[] = {
-> +		OPT__QUIET(&quiet, N_("be quiet, only report errors")),
-> +		OPT_BOOL(0, "index", &index,
-> +			N_("attempt to recreate the index")),
-> +		OPT_END()
-> +	};
-> +
-> +	argc = parse_options(argc, argv, prefix, options,
-> +			     git_stash_helper_pop_usage, 0);
-> +
-> +	if (get_stash_info(&info, argc, argv))
-> +		return -1;
-> +
-> +	assert_stash_ref(&info);
-> +	if ((ret = do_apply_stash(prefix, &info, index)))
-> +		printf_ln(_("The stash entry is kept in case you need it again."));
-> +	else
-> +		ret = do_drop_stash(prefix, &info);
-> +
-> +	free_stash_info(&info);
-> +	return ret;
-> +}
-> +
->  static int branch_stash(int argc, const char **argv, const char *prefix)
->  {
->  	const char *branch = NULL;
-> @@ -589,6 +621,8 @@ int cmd_stash__helper(int argc, const char **argv, const char *prefix)
->  		return !!clear_stash(argc, argv, prefix);
->  	else if (!strcmp(argv[0], "drop"))
->  		return !!drop_stash(argc, argv, prefix);
-> +	else if (!strcmp(argv[0], "pop"))
-> +		return !!pop_stash(argc, argv, prefix);
->  	else if (!strcmp(argv[0], "branch"))
->  		return !!branch_stash(argc, argv, prefix);
->  
-> diff --git a/git-stash.sh b/git-stash.sh
-> index 29d9f4425..8f2640fe9 100755
-> --- a/git-stash.sh
-> +++ b/git-stash.sh
-> @@ -554,50 +554,6 @@ assert_stash_like() {
->  	}
->  }
->  
-> -is_stash_ref() {
-> -	is_stash_like "$@" && test -n "$IS_STASH_REF"
-> -}
-> -
-> -assert_stash_ref() {
-> -	is_stash_ref "$@" || {
-> -		args="$*"
-> -		die "$(eval_gettext "'\$args' is not a stash reference")"
-> -	}
-> -}
-> -
-> -apply_stash () {
-> -	cd "$START_DIR"
-> -	git stash--helper apply "$@"
-> -	res=$?
-> -	cd_to_toplevel
-> -	return $res
-> -}
-> -
-> -pop_stash() {
-> -	assert_stash_ref "$@"
-> -
-> -	if apply_stash "$@"
-> -	then
-> -		drop_stash "$@"
-> -	else
-> -		status=$?
-> -		say "$(gettext "The stash entry is kept in case you need it again.")"
-> -		exit $status
-> -	fi
-> -}
-> -
-> -drop_stash () {
-> -	assert_stash_ref "$@"
-> -
-> -	git reflog delete --updateref --rewrite "${REV}" &&
-> -		say "$(eval_gettext "Dropped \${REV} (\$s)")" ||
-> -		die "$(eval_gettext "\${REV}: Could not drop stash entry")"
-> -
-> -	# clear_stash if we just dropped the last stash entry
-> -	git rev-parse --verify --quiet "$ref_stash@{0}" >/dev/null ||
-> -	clear_stash
-> -}
-> -
->  test "$1" = "-p" && set "push" "$@"
->  
->  PARSE_CACHE='--not-parsed'
-> @@ -655,7 +611,8 @@ drop)
->  	;;
->  pop)
->  	shift
-> -	pop_stash "$@"
-> +	cd "$START_DIR"
-> +	git stash--helper pop "$@"
->  	;;
->  branch)
->  	shift
-> -- 
-> 2.18.0.rc2.13.g506fc12fb
-> 
-> 
+>
+>> ---
+>>  git-filter-branch.sh     |  1 +
+>>  t/t7003-filter-branch.sh | 15 +++++++++++++++
+>>  2 files changed, 16 insertions(+)
+>> 
+>> diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+>> index ccceaf19a..5c5afa2b9 100755
+>> --- a/git-filter-branch.sh
+>> +++ b/git-filter-branch.sh
+>> @@ -372,6 +372,7 @@ while read commit parents; do
+>>  	git_filter_branch__commit_count=$(($git_filter_branch__commi
+>> t_count+1))
+>>  
+>>  	report_progress
+>> +	test -f "$workdir"/../map/$commit && continue
+>>  
+>>  	case "$filter_subdir" in
+>>  	"")
+>> diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+>> index ec4b160dd..e23de7d0b 100755
+>> --- a/t/t7003-filter-branch.sh
+>> +++ b/t/t7003-filter-branch.sh
+>> @@ -107,6 +107,21 @@ test_expect_success 'test that the directory was
+>> renamed' '
+>>  	test dir/D = "$(cat diroh/D.t)"
+>>  '
+>>  
+>> +V=$(git rev-parse HEAD)
+>> +
+>> +test_expect_success 'populate --state-branch' '
+>> +	git filter-branch --state-branch state -f --tree-filter
+>> "touch file || :" HEAD
+>> +'
+>> +
+>> +W=$(git rev-parse HEAD)
+>> +
+>> +test_expect_success 'using --state-branch to skip already rewritten
+>> commits' '
+>> +	test_when_finished git reset --hard $V &&
+>> +	git reset --hard $V &&
+>> +	git filter-branch --state-branch state -f --tree-filter
+>> "touch file || :" HEAD &&
+>> +	test_cmp_rev $W HEAD
+>> +'
+>> +
+>>  git tag oldD HEAD~4
+>>  test_expect_success 'rewrite one branch, keeping a side branch' '
+>>  	git branch modD oldD &&
