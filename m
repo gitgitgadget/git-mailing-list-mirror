@@ -6,32 +6,32 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 433191F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 10:47:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 209291F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 10:47:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934599AbeFZKrc (ORCPT <rfc822;e@80x24.org>);
+        id S934554AbeFZKrc (ORCPT <rfc822;e@80x24.org>);
         Tue, 26 Jun 2018 06:47:32 -0400
-Received: from ao2.it ([92.243.12.208]:57533 "EHLO ao2.it"
+Received: from ao2.it ([92.243.12.208]:57528 "EHLO ao2.it"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S934410AbeFZKr3 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S934379AbeFZKr3 (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 26 Jun 2018 06:47:29 -0400
 Received: from localhost ([::1] helo=jcn)
         by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.84_2)
         (envelope-from <ao2@ao2.it>)
-        id 1fXlUm-0002X4-SD; Tue, 26 Jun 2018 12:46:49 +0200
+        id 1fXlUm-0002X1-Md; Tue, 26 Jun 2018 12:46:48 +0200
 Received: from ao2 by jcn with local (Exim 4.91)
         (envelope-from <ao2@ao2.it>)
-        id 1fXlVO-0002a1-Gx; Tue, 26 Jun 2018 12:47:26 +0200
+        id 1fXlVO-0002Zv-5G; Tue, 26 Jun 2018 12:47:26 +0200
 From:   Antonio Ospite <ao2@ao2.it>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
         Antonio Ospite <ao2@ao2.it>
-Subject: [PATCH v2 5/6] submodule-config: pass repository as argument to config_from_gitmodules
-Date:   Tue, 26 Jun 2018 12:47:09 +0200
-Message-Id: <20180626104710.9859-6-ao2@ao2.it>
+Subject: [PATCH v2 2/6] submodule-config: add helper function to get 'fetch' config from .gitmodules
+Date:   Tue, 26 Jun 2018 12:47:06 +0200
+Message-Id: <20180626104710.9859-3-ao2@ao2.it>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20180626104710.9859-1-ao2@ao2.it>
 References: <20180626104710.9859-1-ao2@ao2.it>
@@ -41,50 +41,102 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Generlize config_from_gitmodules to accept a repository as an argument.
+Add a helper function to make it clearer that retrieving 'fetch'
+configuration from the .gitmodules file is a special case supported
+solely for backward compatibility purposes.
 
-This is in preparation to reuse the function in repo_read_gitmodules in
-order to have a single point where the '.gitmodules' file is accessed.
+This change removes one direct use of 'config_from_gitmodules' in code
+not strictly related to submodules, in the effort to communicate better
+that .gitmodules is not to be used as a mechanism to store arbitrary
+configuration in the repository that any command can retrieve.
 
 Signed-off-by: Antonio Ospite <ao2@ao2.it>
 ---
- submodule-config.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ builtin/fetch.c    | 15 +--------------
+ submodule-config.c | 28 ++++++++++++++++++++++++++++
+ submodule-config.h |  2 ++
+ 3 files changed, 31 insertions(+), 14 deletions(-)
 
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index ea5b9669a..92a5d235d 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -93,19 +93,6 @@ static int git_fetch_config(const char *k, const char *v, void *cb)
+ 	return git_default_config(k, v, cb);
+ }
+ 
+-static int gitmodules_fetch_config(const char *var, const char *value, void *cb)
+-{
+-	if (!strcmp(var, "submodule.fetchjobs")) {
+-		max_children = parse_submodule_fetchjobs(var, value);
+-		return 0;
+-	} else if (!strcmp(var, "fetch.recursesubmodules")) {
+-		recurse_submodules = parse_fetch_recurse_submodules_arg(var, value);
+-		return 0;
+-	}
+-
+-	return 0;
+-}
+-
+ static int parse_refmap_arg(const struct option *opt, const char *arg, int unset)
+ {
+ 	/*
+@@ -1433,7 +1420,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 	for (i = 1; i < argc; i++)
+ 		strbuf_addf(&default_rla, " %s", argv[i]);
+ 
+-	config_from_gitmodules(gitmodules_fetch_config, NULL);
++	fetch_config_from_gitmodules(&max_children, &recurse_submodules);
+ 	git_config(git_fetch_config, NULL);
+ 
+ 	argc = parse_options(argc, argv, prefix,
 diff --git a/submodule-config.c b/submodule-config.c
-index cd1f1e06a..602c46af2 100644
+index b431555db..f44d6a777 100644
 --- a/submodule-config.c
 +++ b/submodule-config.c
-@@ -680,10 +680,10 @@ void submodule_free(struct repository *r)
-  * Runs the provided config function on the '.gitmodules' file found in the
-  * working directory.
-  */
--static void config_from_gitmodules(config_fn_t fn, void *data)
-+static void config_from_gitmodules(config_fn_t fn, struct repository *repo, void *data)
- {
--	if (the_repository->worktree) {
--		char *file = repo_worktree_path(the_repository, GITMODULES_FILE);
-+	if (repo->worktree) {
-+		char *file = repo_worktree_path(repo, GITMODULES_FILE);
- 		git_config_from_file(fn, file, data);
+@@ -688,3 +688,31 @@ void config_from_gitmodules(config_fn_t fn, void *data)
  		free(file);
  	}
-@@ -714,7 +714,7 @@ void fetch_config_from_gitmodules(int *max_children, int *recurse_submodules)
- 		.max_children = max_children,
- 		.recurse_submodules = recurse_submodules
- 	};
--	config_from_gitmodules(gitmodules_fetch_config, &config);
-+	config_from_gitmodules(gitmodules_fetch_config, the_repository, &config);
  }
++
++struct fetch_config {
++	int *max_children;
++	int *recurse_submodules;
++};
++
++static int gitmodules_fetch_config(const char *var, const char *value, void *cb)
++{
++	struct fetch_config *config = cb;
++	if (!strcmp(var, "submodule.fetchjobs")) {
++		*(config->max_children) = parse_submodule_fetchjobs(var, value);
++		return 0;
++	} else if (!strcmp(var, "fetch.recursesubmodules")) {
++		*(config->recurse_submodules) = parse_fetch_recurse_submodules_arg(var, value);
++		return 0;
++	}
++
++	return 0;
++}
++
++void fetch_config_from_gitmodules(int *max_children, int *recurse_submodules)
++{
++	struct fetch_config config = {
++		.max_children = max_children,
++		.recurse_submodules = recurse_submodules
++	};
++	config_from_gitmodules(gitmodules_fetch_config, &config);
++}
+diff --git a/submodule-config.h b/submodule-config.h
+index 5148801f4..cff297a75 100644
+--- a/submodule-config.h
++++ b/submodule-config.h
+@@ -66,4 +66,6 @@ int check_submodule_name(const char *name);
+  */
+ extern void config_from_gitmodules(config_fn_t fn, void *data);
  
- static int gitmodules_update_clone_config(const char *var, const char *value,
-@@ -728,5 +728,5 @@ static int gitmodules_update_clone_config(const char *var, const char *value,
- 
- void update_clone_config_from_gitmodules(int *max_jobs)
- {
--	config_from_gitmodules(gitmodules_update_clone_config, &max_jobs);
-+	config_from_gitmodules(gitmodules_update_clone_config, the_repository, &max_jobs);
- }
++extern void fetch_config_from_gitmodules(int *max_children, int *recurse_submodules);
++
+ #endif /* SUBMODULE_CONFIG_H */
 -- 
 2.18.0
 
