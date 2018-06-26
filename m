@@ -2,105 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F2F31F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 10:47:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C1D01F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 11:07:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934655AbeFZKrp (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 06:47:45 -0400
-Received: from ao2.it ([92.243.12.208]:57553 "EHLO ao2.it"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S934518AbeFZKrc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 06:47:32 -0400
-Received: from localhost ([::1] helo=jcn)
-        by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.84_2)
-        (envelope-from <ao2@ao2.it>)
-        id 1fXlUm-0002X5-Ty; Tue, 26 Jun 2018 12:46:49 +0200
-Received: from ao2 by jcn with local (Exim 4.91)
-        (envelope-from <ao2@ao2.it>)
-        id 1fXlVO-0002Zz-DQ; Tue, 26 Jun 2018 12:47:26 +0200
-From:   Antonio Ospite <ao2@ao2.it>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-        Antonio Ospite <ao2@ao2.it>
-Subject: [PATCH v2 4/6] submodule-config: make 'config_from_gitmodules' private
-Date:   Tue, 26 Jun 2018 12:47:08 +0200
-Message-Id: <20180626104710.9859-5-ao2@ao2.it>
-X-Mailer: git-send-email 2.18.0
-In-Reply-To: <20180626104710.9859-1-ao2@ao2.it>
-References: <20180626104710.9859-1-ao2@ao2.it>
-X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+ ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
+        id S934482AbeFZLHx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 07:07:53 -0400
+Received: from mail-qt0-f171.google.com ([209.85.216.171]:41332 "EHLO
+        mail-qt0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934074AbeFZLHu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 07:07:50 -0400
+Received: by mail-qt0-f171.google.com with SMTP id y20-v6so14696212qto.8
+        for <git@vger.kernel.org>; Tue, 26 Jun 2018 04:07:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=9zfOXEEVVuYmn3ApvhK5g/Jiz445wJ9H35fE7lEUE44=;
+        b=Q1i73thdhq7k9q+QbG03mllANw3wjeIWceVRO5Rxqt880Vb6wh7IUxgAZaS8sAny1g
+         vQUQbnM+E4xk+kVpBWUzZDpz6Qdu/lMwD/HgGkNiJQa58IXOzGBP7pHwrBKg8Puf6ZJ3
+         2ASpODZIl4Ft4YUWAeADG91tLpzlyR4ZwTTTB3zUQf1yr5gSbAcl64EbrowP/EqZY7zG
+         WuMn0Vv2+XuBJ00tajnlIqIaKDcEERTHmHOpB4VBwdYMej9Ix8oEXsuMW+57BWbRQFex
+         VpJkW2UEy4E9/lkn9kNr7oSTjU2dgreATXjFqFjoUMHZVIFOR6wFRlerP38BRn4vq8Y5
+         yu7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=9zfOXEEVVuYmn3ApvhK5g/Jiz445wJ9H35fE7lEUE44=;
+        b=GZcIg4Rne+ulYWuzXZrwOQkAuovNaVwOCM4etD5M8bXWiutNCNQLv3eHMVqgDYiVOv
+         lCzWvaW74bXaQKYPw/jGRbmG9EWCMTZFET8lqZ235jpKLo7YQabZCl0YtFk0I4CVhKKS
+         jANBm8JA7rGp4+yTzXha1JCYNu5ZngRduAJw5zCWHXGMC8Z6SW7hI8dRdrEvQ4yRWf/f
+         WAVQsKWd0wnudltKsSAKzPfBabfIPq0eWi4D7fZnCMEHt/VmOc9J4zNUyy3/xSAN/n7l
+         A+dnTNNsCRvycLTVWi4zL0EGH46IDSZ3G89Qp/FA8Mbm3slFnn4xXTHoFwQglHhI4Jml
+         TBYw==
+X-Gm-Message-State: APt69E0+ifaXtMJ3D8S56cYR7l8B2l7Qj6AmrB/yam60+02OwxJrHFS2
+        q9OE2aU6SspfSu0oUTjyg2nhlmwJ/Sg5TgmGswY=
+X-Google-Smtp-Source: AAOMgpenrCrjYhoyWkiNgC29Iy11wasy1u9P+hD8vK/qV2OebLbcwmpX/kxn/Dxuu4KHqI34CzbwVT/hV84H/jxJT9k=
+X-Received: by 2002:a0c:881c:: with SMTP id 28-v6mr842486qvl.109.1530011269748;
+ Tue, 26 Jun 2018 04:07:49 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 2002:ac8:c4e:0:0:0:0:0 with HTTP; Tue, 26 Jun 2018 04:07:29 -0700 (PDT)
+In-Reply-To: <xmqqin66mql6.fsf@gitster-ct.c.googlers.com>
+References: <xmqqin66mql6.fsf@gitster-ct.c.googlers.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Tue, 26 Jun 2018 13:07:29 +0200
+Message-ID: <CACBZZX4yG5h5kk4NFQz_NzAweMa+Nh3H-39OHtcH4XWsA6FGpg@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jun 2018, #06; Mon, 25)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Now that 'config_from_gitmodules' is not used in the open, it can be
-marked as private.
+On Tue, Jun 26, 2018 at 12:47 AM, Junio C Hamano <gitster@pobox.com> wrote:
 
-Hopefully this will prevent its usage for retrieving arbitrary
-configuration form the '.gitmodules' file.
+Happy 2.18.0 everyone!
 
-Signed-off-by: Antonio Ospite <ao2@ao2.it>
----
- submodule-config.c |  8 ++++----
- submodule-config.h | 12 +++++-------
- 2 files changed, 9 insertions(+), 11 deletions(-)
+> * ab/fetch-tags-noclobber (2018-05-16) 9 commits
+>  - fixup! push tests: assert re-pushing annotated tags
+>  - fetch: stop clobbering existing tags without --force
+>  - fetch tests: add a test clobbering tag behavior
+>  - fetch tests: correct a comment "remove it" -> "remove them"
+>  - push doc: correct lies about how push refspecs work
+>  - push tests: assert re-pushing annotated tags
+>  - push tests: add more testing for forced tag pushing
+>  - push tests: fix logic error in "push" test assertion
+>  - push tests: remove redundant 'git push' invocation
+>
+>  Expecting a reboot of the discussion to take it to some conclusion
+>  and then a reroll.
+>  cf. <f3b891c3-381f-de42-51d8-24fdfbca91d2@gmail.com>
+>  cf. <xmqq603yn50l.fsf@gitster-ct.c.googlers.com>
+>  cf. <xmqqzi1alodz.fsf@gitster-ct.c.googlers.com>
+>  cf. <xmqqvabylnbi.fsf@gitster-ct.c.googlers.com>
 
-diff --git a/submodule-config.c b/submodule-config.c
-index 9a2b13d8b..cd1f1e06a 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -673,14 +673,14 @@ void submodule_free(struct repository *r)
- }
- 
- /*
-- * Note: This function exists solely to maintain backward compatibility with
-- * 'fetch' and 'update_clone' storing configuration in '.gitmodules' and should
-- * NOT be used anywhere else.
-+ * Note: This function is private for a reason, the '.gitmodules' file should
-+ * not be used as as a mechanism to retrieve arbitrary configuration stored in
-+ * the repository.
-  *
-  * Runs the provided config function on the '.gitmodules' file found in the
-  * working directory.
-  */
--void config_from_gitmodules(config_fn_t fn, void *data)
-+static void config_from_gitmodules(config_fn_t fn, void *data)
- {
- 	if (the_repository->worktree) {
- 		char *file = repo_worktree_path(the_repository, GITMODULES_FILE);
-diff --git a/submodule-config.h b/submodule-config.h
-index b6f19d0d4..dc7278eea 100644
---- a/submodule-config.h
-+++ b/submodule-config.h
-@@ -57,15 +57,13 @@ void submodule_free(struct repository *r);
- int check_submodule_name(const char *name);
- 
- /*
-- * Note: This function exists solely to maintain backward compatibility with
-- * 'fetch' and 'update_clone' storing configuration in '.gitmodules' and should
-- * NOT be used anywhere else.
-+ * Note: these helper functions exist solely to maintain backward
-+ * compatibility with 'fetch' and 'update_clone' storing configuration in
-+ * '.gitmodules'.
-  *
-- * Runs the provided config function on the '.gitmodules' file found in the
-- * working directory.
-+ * New helpers to retrieve arbitrary configuration from the '.gitmodules' file
-+ * should NOT be added.
-  */
--extern void config_from_gitmodules(config_fn_t fn, void *data);
--
- extern void fetch_config_from_gitmodules(int *max_children, int *recurse_submodules);
- extern void update_clone_config_from_gitmodules(int *max_jobs);
- 
--- 
-2.18.0
+I'm on vacation these days and won't submit a re-roll of this for 2-3
+weeks, so I think it's best to eject it. I have a WIP re-roll of this.
 
+> * ab/checkout-default-remote (2018-06-11) 8 commits
+>  - checkout & worktree: introduce checkout.defaultRemote
+>  - checkout: add advice for ambiguous "checkout <branch>"
+>  - builtin/checkout.c: use "ret" variable for return
+>  - checkout: pass the "num_matches" up to callers
+>  - checkout.c: change "unique" member to "num_matches"
+>  - checkout.c: introduce an *_INIT macro
+>  - checkout.h: wrap the arguments to unique_tracking_name()
+>  - checkout tests: index should be clean after dwim checkout
+
+It would be nice to have this merged down. The only nit of the last
+version was SZEDER's suggestion of using a test helper in
+<20180605154501.13502-1-szeder.dev@gmail.com>.
+
+I agree, but as noted I won't be able to re-roll this for some time,
+and it would be nice to have it in next or master by then, I can then
+submit a tiny series on top to fix that "use a test helper" issue,
+which is something that can be improved in both the patch I'm
+submitting & in several existing places in the test suite, so I think
+it makes sense to address that as a subsequent cleanup series
+unrelated to this new feature.
