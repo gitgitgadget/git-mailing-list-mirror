@@ -2,79 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 782E71F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 12:57:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A3751F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 13:25:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965234AbeFZM54 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 08:57:56 -0400
-Received: from mout.gmx.net ([212.227.17.20]:58549 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S965117AbeFZM5n (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 08:57:43 -0400
-Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MQRZw-1fjvY60nVc-00Thff; Tue, 26
- Jun 2018 14:57:38 +0200
-Date:   Tue, 26 Jun 2018 14:57:37 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Alban Gruin <alban.gruin@gmail.com>
-cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        phillip.wood@dunelm.org.uk
-Subject: Re: [GSoC][PATCH 1/1] sequencer: print an error message if
- append_todo_help() fails
-In-Reply-To: <20180626100429.10169-2-alban.gruin@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1806261455510.21419@tvgsbejvaqbjf.bet>
-References: <20180626100429.10169-1-alban.gruin@gmail.com> <20180626100429.10169-2-alban.gruin@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S965434AbeFZNZm (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 09:25:42 -0400
+Received: from mail-lj1-f174.google.com ([209.85.208.174]:46353 "EHLO
+        mail-lj1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965374AbeFZNZl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 09:25:41 -0400
+Received: by mail-lj1-f174.google.com with SMTP id u6-v6so5609390lju.13
+        for <git@vger.kernel.org>; Tue, 26 Jun 2018 06:25:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=U9ho6uUApxIM/RUt53NJm+AuZOFSEmqKTM8L4lRSTww=;
+        b=GjMuRDOPjKUDhwL3X63rnZSLB3pXG0Oo0LqA4l6nnHP5upG6hxr6uCXAyLGV0QoZcZ
+         Z/JpxpaCE1pA1mXI+stc7Q8zS8w1uh8qf+kiJuog7fiHG2FeSxhosFZar2ozTOgdIg2u
+         +MmcNdpSHLoktes18AaJRj9OZ/DmHchP+/xRs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=U9ho6uUApxIM/RUt53NJm+AuZOFSEmqKTM8L4lRSTww=;
+        b=s85X76wWZDO08PX2QMnIqXuhT5jxAQ0BM9FpsRh1mkeCL5jtPfvaEnqibuf1E1Ic2b
+         MovPpLf4dXcMl+XQZF1n6Nrx9VFCGL/2S7pX8yWCDBGpWGAomPF8wGleC9tFvIHfDJGX
+         k868KccJJAtXfcNTIHWIr/CyhO/E85rtXTTN7yj59rfJ7/SwdSTwrldIp26L97KMCOiF
+         eFxOheGwefVfeDL2vfOo/D7ki5ZGSxyzYRJmCaeYBTny2y73yoKog3kgTSCtPKw+/Ynf
+         3oQ/tRhDrlt+NeMbrQ+YaJIvPb940+XCm/UEXSB6ZaEKoFOMgADJCGUDgi8Fox1mJuYn
+         aoEQ==
+X-Gm-Message-State: APt69E1DpftWfJGtacr1XpamavPPbg/MiW8dWvpHPTmTLKPUWFHokdua
+        nw2CxgWTQ/hPTMV6srdRt28mfKgIc0Ly/4ZUHerChacT
+X-Google-Smtp-Source: AAOMgpfI+OCBZng/Mv12CXxJl2pCIpPgWTabeTq9Ua9QxvuW+lOEE1gxpq09X1BLDizKDnihvX5MJVUXBvrC6phe7Qs=
+X-Received: by 2002:a2e:94d7:: with SMTP id r23-v6mr1240843ljh.102.1530019539617;
+ Tue, 26 Jun 2018 06:25:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:l1EL86HRKNKFZX7ZFxgqiaWh500pXyKtGFuXAE3JZoUkSugug40
- 9OfGfFSBN4H5upUm+kyuRwt8F9PJOjqHlZDT49F9VXA+dcahqL0sM46Rq65L1ia11udjI97
- gKrYMKFloJWQL+BcVrTgmVdzcxPemcYooVGQpSU0gQBDAj4KQzRa3hFVuhi2/4j+HQyYeb+
- sxf/xm0FIr8DuFiF0NdSw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:zUiE9/10dmg=:LyXHl4t+hEwm4uHErgvlLt
- /DvWrJKTDjfEKrqK9GeXsjHmQHj+Ibbc50e4TLV30HMu1JIFNNn+mWgDkH418nLjcMv1/n4ZA
- xoqgrqn6azaVJLnqfyJnA2UuA14GAcJB7y2tMv7MKgxDc4QL/F66/d1vWEWGl8zpYLu0+g/Cz
- eQUrw5BjmINp+kRc1RbuDhji+RD4z7W/eh0Q/03TDAAiYGsLcbxcoqKRxkH1fCJ7o0pWcZpny
- sUqt/dlaKI2OssEEzxgbBDXcGyXB+TBnWvHCuIN4FSy1YoPBERd5otrmcijvN5yC4p1i9Lkwz
- oolHU5k7JqKZ6s2RPvRirjMG36Df8lGGzwBEImvcWn7ESTCRfeP/EKy+VQTEQyaNEMuMnhJaf
- fn9gkMayqfcOPswvcgsiUbLpeNS1s2WBh6wOj/o/Bdw9dxlGEmDCUGKTiytV4kS7UwtWdOCyj
- KVtDpvyUxscMwcb02cceqH9sx8mTeaiQwz9TAQs9uLIeo3olplurN4gNDYzb3UZkmaLh2r8YA
- 9mCBVJUYX6ax5yZmyCYLyKvyHvvPT4bfJWVR4FnrwBE5UcPxij2iiW+II0HOZv94IVWKHqXbB
- t4kU+Fuk6TEt18mTbj6F9u5rqQYdniWvl1he5aCAfYeuRzKgQ5L4M1NscCyU7xEFewq2zS5kV
- PDq9hcGzriTLLEDSJsyZT43nWLGlUSECedEeao7hPQ0q2te5hAcUbKvXxXdZRYE6Bsy2gzwRQ
- aM/g4Vs8KRBQY1IRr669VH5ou5GpKmfEg0oK8nMa42/dvJWht+DYUeglLL17x/WhNZ3OlW8qp
- f4eS3+b
+From:   Nicolas Dechesne <nicolas.dechesne@linaro.org>
+Date:   Tue, 26 Jun 2018 15:25:28 +0200
+Message-ID: <CAP71WjzHffLRCDbjvF7qpexjXDMFcJkaPpEn=AtbSMCJd6QkBQ@mail.gmail.com>
+Subject: git rerere and diff3
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alban,
+hi there,
 
-On Tue, 26 Jun 2018, Alban Gruin wrote:
+i have noticed that merge.conflictstyle has an impact on the rerere
+resolution. looking briefly at the source code, it seems that git
+tries to discard the common ancestor diff3 bits, but what I am seeing
+is that if i do the following then it fails:
 
-> This adds an error when append_todo_help() fails to write its message to
-> the todo file.
-> 
-> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+1. from a clean rr-cache state, with merge.conflictsytle=diff3, git
+merge <branch with conflict>, resolve the conflicts, then commit
+2. undo the previous merge, remove merge.conflictstyle=diff3 (disable
+diff3) and merge the *same* branch, then rerere won't fix the
+conflicts
 
-ACK.
+Is that the expected behavior? I am not familiar with git code, but
+browsing rerere.c makes me think that it should have worked..
 
-We *may* want to fold that into the commit that adds `append_todo_help()`.
-And, as I mentioned previously, I would love for that function to be used
-as an excuse to introduce the long-overdue `interactive-rebase.c`
-(`sequencer.c` is supposed to be the backend for cherry-pick and revert
-and interactive rebase, but not a catch-all for *all* of those things, it
-is already way too long to be readable, and I take blame for a large part
-of that.)
+Of course, if I merge the same branch without modifying
+merge.conflictstyle, then the merge conflicts are properly resolved by
+rerere.
 
-Ciao,
-Dscho
+thanks!
