@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7DF881F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 21:45:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7BDF11F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 21:47:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752213AbeFZVpY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 17:45:24 -0400
-Received: from mout.gmx.net ([212.227.17.22]:60989 "EHLO mout.gmx.net"
+        id S1752926AbeFZVr2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 17:47:28 -0400
+Received: from mout.gmx.net ([212.227.17.20]:51497 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751597AbeFZVpX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 17:45:23 -0400
-Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MRCCJ-1fjnZy3eet-00UdIw; Tue, 26
- Jun 2018 23:45:18 +0200
-Date:   Tue, 26 Jun 2018 23:45:17 +0200 (DST)
+        id S1751616AbeFZVr1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 17:47:27 -0400
+Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LtDpH-1gHlJq0mD5-012pl8; Tue, 26
+ Jun 2018 23:47:21 +0200
+Date:   Tue, 26 Jun 2018 23:47:20 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Alban Gruin <alban.gruin@gmail.com>
@@ -27,31 +27,31 @@ cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
         Christian Couder <christian.couder@gmail.com>,
         Pratik Karki <predatoramigo@gmail.com>,
         phillip.wood@dunelm.org.uk
-Subject: Re: [GSoC][PATCH v3 0/2] rebase -i: rewrite the edit-todo functionality
- in C
-In-Reply-To: <20180626162143.31608-1-alban.gruin@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1806262344560.21419@tvgsbejvaqbjf.bet>
-References: <20180613152211.12580-1-alban.gruin@gmail.com> <20180626162143.31608-1-alban.gruin@gmail.com>
+Subject: Re: [GSoC][PATCH v3 2/2] rebase-interactive: rewrite the edit-todo
+ functionality in C
+In-Reply-To: <20180626162143.31608-3-alban.gruin@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1806262346540.21419@tvgsbejvaqbjf.bet>
+References: <20180613152211.12580-1-alban.gruin@gmail.com> <20180626162143.31608-1-alban.gruin@gmail.com> <20180626162143.31608-3-alban.gruin@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:TJhKlcIL0dg1oNrHjI01VIDrmhSHrS9rfUvovX/+xh4rNPXDpk1
- Rr6K+BYbH+8TiOBNQ24H+C46xbj3FT2PRfujH8/mxQ4GhvWfbwjKZGAxYqVKnzgEYLm6dLA
- SH8egWuPUn5jSKYXdWnyaxyeXIFIORiaNAScGWpEeK/MOa7R0C+3AkPe/+TMtqDcEqeQmca
- hQ4OYsI13pTjCi1f6tgLA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:hiumqQJRoPE=:55uFI5MYqyDkvXSFTQmEr8
- FH0sYNP8B0ux3FL3ANuedlfLjgiF9I9C0Wzgbw0U9pAKPUFhfs2ahvtWnuX8+7lp/gI9bKBqb
- 2jV9KSmzkYjzH1v9D+e1XQJis8XZ3iz+C15AIen9I1V5A1zMfRl4hfIbXbCYCnMUdZe3G/Km4
- ORe8XJe6U2NGNpXlsPnkazVSfqAxPfYSrn5ACmRbeGJ/xcGhoGh185V+DUysOKxcWfaEtF2bY
- wfWw8SuNChqvvof1KlhcysV3cppeI3nJTXWW9ka7WhOEDKG1hetcCvyV9jH865lWydw875r1Q
- 79t3WB/mOPgLW8O1+DhrC2NhuWuEfwymaz75UmajCUifmwzdTz/rO+6YIsO+3YY2aytQXR5js
- NNdwfwYPfd5I8MRCeXm8G9k1XQnGvyqfOH9R7KDAtKjKJrQDXks9t+y4PPOuIvfZgB0dq5UJT
- ExZU6dBzvatofcyN8J2o3lPAjYqWAduoqzKHaxsbFu3u742TImaPWgCCmWNX1BitMXdUeciGT
- rtw1nQiQu7eLqhWVo8MO6Hy2B44jqnsJXmMc3ZzcvtmtUg60SsZ/FDBzMTu5TKeccs0YXzbnZ
- mCr/p8ry5N40D1D+3xMXqdNxV6ih0Qc18IwKqhQb6s8/BxlHKf+1+zd6hvLuL6lhmOisbHGVw
- tQhd8//TyYLMC+2AozOuMkNZpR6+X0i+YGlg10Gv3a/flfda6YgBqPxgbtYhtwWKlLkMYsA/Z
- kQuckNYkAlf9VkmAEB66xIhIKPhfYgmzUBfx1voZf0o3+5wEgmF1Quv1+vhv8+1QtDGQDnJ2Z
- omfsQ6i
+X-Provags-ID: V03:K1:NktzEGAZldrXHexRYLfZl1IBvByO1imGTDfrc7pYVR80O7KGOup
+ pSWQVK7xUFnOCKc+bQYvKKbNpBt0By4RG72mmU1hNUl8Xok7QT522q5a3qaCU9bgCSdqRSt
+ ZjRRreHfdgq0EEneJAd6r8SZFucd8r76vA4b+1DLehW0YhFOwwPGALTylYPJxJqxJUri8dw
+ x+1aJpxAxyg7eEbs/NRKw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:HMty8mgXYY4=:xlrWTjqGIGg9bU1OcvdA0i
+ 1+iHAdj8MclOM6cLMvysNZ7Z6PMBdfWoxKV17aIofikKxiVg2zIw2HNmLaBCos8Fu4+vWiX5J
+ hio/LjT1+5jM/bhK5KkrFzIwHEPp5e6sptX+Q0JHuL0c3C/fYCSjupjMlRYXEWMZkeIDewrZc
+ Ocn5Pt0VMVqmxvvgSy7brg+RmuouIQRDghL/nuT8oAYq3laK7ewoWZLTY2FpgX04qsxuWZWk3
+ eayyu8soEtd61h25Y4Wt9bDaM78hNEWFC1El712nRauY34hy7pR8VQYvT6t4+j9MUM+htedDU
+ UInYXiAINuEzdsnY6YqeFFNwGOejTkDRGsyp+R6v26gXesHdLN9YJ+qANCeBuexn/DmyAEkuN
+ iOWgDVB1Fbfu8wo4k1ojImJP8jyOjUbCOkqiwbnmjS71qR3flWBV02/r69kOr+5F5oah7qO4M
+ MLZ5BxxpBBmb69ItLeqJyKxQvJhRKlmhXRcptHOICe3GkfMtVQqPLyfh2eHO4w04LI2h/tP24
+ uzA3TQyJF74bBil+nDZrC5bNrfcUlOtaxOT5wycTZr3gM2bFKBS0P+CgAcui7sOQ2N/7h6IN/
+ xYg6wCUSF+NnUXF18xJu8oVPfw0lhVi+SaAPi6J8kBooOo5BfOuXaLtyPPQ5AOkPaYnhHdPb+
+ TKyv53EKKjLn/sUKxCSovSTKGxSEPooQhB1zvF4iMQ8KKVsG+TEO2JhvAL9lZSwdZaswqSjLk
+ dGapBhr3GDbwUPkTBtdHuR05h7QJIv+hTBTJOXXN9HIDuNewAM9Uof9OgW0UX5bcgs6QHvsaM
+ ORxV/Au
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -61,17 +61,15 @@ Hi Alban,
 
 On Tue, 26 Jun 2018, Alban Gruin wrote:
 
-> This patch rewrites the edit-todo functionality from shell to C. This is
-> part of the effort to rewrite interactive rebase in C.
+> This rewrites the edit-todo functionality from shell to C.
 > 
-> This patch is based on the fourth iteration of my series rewriting
-> append_todo_help() in C.
+> To achieve that, a new command mode, `edit-todo`, is added, and the
+> `write-edit-todo` flag is removed, as the shell script does not need to
+> write the edit todo help message to the todo list anymore.
 > 
-> Changes since v2:
+> The shell version is then stripped in favour of a call to the helper.
 > 
->  - Moving edit_todo() from sequencer.c to interactive-rebase.c.
+> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
 
-Excellent.
-
-Thank you,
+Both patches are ACKed by me,
 Dscho
