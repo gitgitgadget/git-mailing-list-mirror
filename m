@@ -2,86 +2,161 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C5081F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 10:18:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D2A11F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 10:47:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934080AbeFZKSa (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 06:18:30 -0400
-Received: from cpanel4.indieserve.net ([199.212.143.9]:60256 "EHLO
-        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933785AbeFZKS3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 06:18:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
-        To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=zcTuq2TzZ2LP6zx4XDgY4+l3Rtj4/yH97R0g1wo/Qe0=; b=Zg0T57drwzjPXJeJCUf2jyxR2E
-        yMKjP8yeKheLhBonwxVi2N/xH0RDo1mTbta2MGbNKwJrZAabovka8atgfD+6uR7hLNEMcTN6DgcHw
-        52vLUAR/MZGdQbwliV3tDH/6DhbSqbHQifFVOsjoDWy25ghRGz3ssHGTUUDdERjrpJFNo4nd5yKcG
-        ASiOBKKHZvMlR/0eRrW8fsHG8pU2ZbWlnY8W0bsR3nG7Zp9kZ8/4/3NxtVI6Z+oyZy3Wk8bFHdvjY
-        pK3ERaHcwAsISCH45Z7E4TR2hgLvdbtn5qJxHjoMNvW1A4C7f/acaZ5PPZDqRNdR1NFkGhcmS41R3
-        sGv5Y5uQ==;
-Received: from cpeac202e043973-cmac202e043970.cpe.net.cable.rogers.com ([174.112.22.87]:52684 helo=localhost.localdomain)
-        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1fXl3L-00GSeJ-31
-        for git@vger.kernel.org; Tue, 26 Jun 2018 06:18:28 -0400
-Date:   Tue, 26 Jun 2018 06:18:26 -0400 (EDT)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Git Mailing list <git@vger.kernel.org>
-Subject: curious about wording in "man git-config", ENVIRONMENT
-Message-ID: <alpine.LFD.2.21.1806260608270.6007@localhost.localdomain>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-OutGoing-Spam-Status: No, score=-0.2
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+        id S934507AbeFZKra (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 06:47:30 -0400
+Received: from ao2.it ([92.243.12.208]:57527 "EHLO ao2.it"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S934343AbeFZKr3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 06:47:29 -0400
+Received: from localhost ([::1] helo=jcn)
+        by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.84_2)
+        (envelope-from <ao2@ao2.it>)
+        id 1fXlUm-0002X0-JG; Tue, 26 Jun 2018 12:46:48 +0200
+Received: from ao2 by jcn with local (Exim 4.91)
+        (envelope-from <ao2@ao2.it>)
+        id 1fXlVO-0002Zt-1r; Tue, 26 Jun 2018 12:47:26 +0200
+From:   Antonio Ospite <ao2@ao2.it>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
+        Antonio Ospite <ao2@ao2.it>
+Subject: [PATCH v2 1/6] config: move config_from_gitmodules to submodule-config.c
+Date:   Tue, 26 Jun 2018 12:47:05 +0200
+Message-Id: <20180626104710.9859-2-ao2@ao2.it>
+X-Mailer: git-send-email 2.18.0
+In-Reply-To: <20180626104710.9859-1-ao2@ao2.it>
+References: <20180626104710.9859-1-ao2@ao2.it>
+X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+ ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The .gitmodules file is not meant as a place to store arbitrary
+configuration to distribute with the repository.
 
-  ENVIRONMENT
-    GIT_CONFIG
-      Take the configuration from the given file instead of
-      .git/config. Using the "--global" option forces this to
-      ~/.gitconfig. Using the "--system" option forces this to
-      $(prefix)/etc/gitconfig.
+Move config_from_gitmodules() out of config.c and into
+submodule-config.c to make it even clearer that it is not a mechanism to
+retrieve arbitrary configuration from the .gitmodules file.
 
-  is the phrase "forces this to" really what you want to use here?
-maybe i misunderstand what this option does, doesn't it simply mean
-that it will use a different (specified) file from the default,
-depending on the context (local, global, system)?
+Signed-off-by: Antonio Ospite <ao2@ao2.it>
+---
+ config.c           | 17 -----------------
+ config.h           | 10 ----------
+ submodule-config.c | 17 +++++++++++++++++
+ submodule-config.h | 11 +++++++++++
+ 4 files changed, 28 insertions(+), 27 deletions(-)
 
-  it just seems weird to say that the option "forces" the use of what
-are clearly the default files. thoughts?
-
-rday
-
+diff --git a/config.c b/config.c
+index a0a6ae198..fa78b1ff9 100644
+--- a/config.c
++++ b/config.c
+@@ -2172,23 +2172,6 @@ int git_config_get_pathname(const char *key, const char **dest)
+ 	return repo_config_get_pathname(the_repository, key, dest);
+ }
+ 
+-/*
+- * Note: This function exists solely to maintain backward compatibility with
+- * 'fetch' and 'update_clone' storing configuration in '.gitmodules' and should
+- * NOT be used anywhere else.
+- *
+- * Runs the provided config function on the '.gitmodules' file found in the
+- * working directory.
+- */
+-void config_from_gitmodules(config_fn_t fn, void *data)
+-{
+-	if (the_repository->worktree) {
+-		char *file = repo_worktree_path(the_repository, GITMODULES_FILE);
+-		git_config_from_file(fn, file, data);
+-		free(file);
+-	}
+-}
+-
+ int git_config_get_expiry(const char *key, const char **output)
+ {
+ 	int ret = git_config_get_string_const(key, output);
+diff --git a/config.h b/config.h
+index 626d4654b..b95bb7649 100644
+--- a/config.h
++++ b/config.h
+@@ -215,16 +215,6 @@ extern int repo_config_get_maybe_bool(struct repository *repo,
+ extern int repo_config_get_pathname(struct repository *repo,
+ 				    const char *key, const char **dest);
+ 
+-/*
+- * Note: This function exists solely to maintain backward compatibility with
+- * 'fetch' and 'update_clone' storing configuration in '.gitmodules' and should
+- * NOT be used anywhere else.
+- *
+- * Runs the provided config function on the '.gitmodules' file found in the
+- * working directory.
+- */
+-extern void config_from_gitmodules(config_fn_t fn, void *data);
+-
+ extern int git_config_get_value(const char *key, const char **value);
+ extern const struct string_list *git_config_get_value_multi(const char *key);
+ extern void git_config_clear(void);
+diff --git a/submodule-config.c b/submodule-config.c
+index 388ef1f89..b431555db 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -671,3 +671,20 @@ void submodule_free(struct repository *r)
+ 	if (r->submodule_cache)
+ 		submodule_cache_clear(r->submodule_cache);
+ }
++
++/*
++ * Note: This function exists solely to maintain backward compatibility with
++ * 'fetch' and 'update_clone' storing configuration in '.gitmodules' and should
++ * NOT be used anywhere else.
++ *
++ * Runs the provided config function on the '.gitmodules' file found in the
++ * working directory.
++ */
++void config_from_gitmodules(config_fn_t fn, void *data)
++{
++	if (the_repository->worktree) {
++		char *file = repo_worktree_path(the_repository, GITMODULES_FILE);
++		git_config_from_file(fn, file, data);
++		free(file);
++	}
++}
+diff --git a/submodule-config.h b/submodule-config.h
+index ca1f94e2d..5148801f4 100644
+--- a/submodule-config.h
++++ b/submodule-config.h
+@@ -2,6 +2,7 @@
+ #define SUBMODULE_CONFIG_CACHE_H
+ 
+ #include "cache.h"
++#include "config.h"
+ #include "hashmap.h"
+ #include "submodule.h"
+ #include "strbuf.h"
+@@ -55,4 +56,14 @@ void submodule_free(struct repository *r);
+  */
+ int check_submodule_name(const char *name);
+ 
++/*
++ * Note: This function exists solely to maintain backward compatibility with
++ * 'fetch' and 'update_clone' storing configuration in '.gitmodules' and should
++ * NOT be used anywhere else.
++ *
++ * Runs the provided config function on the '.gitmodules' file found in the
++ * working directory.
++ */
++extern void config_from_gitmodules(config_fn_t fn, void *data);
++
+ #endif /* SUBMODULE_CONFIG_H */
 -- 
+2.18.0
 
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                  http://crashcourse.ca/dokuwiki
-
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
