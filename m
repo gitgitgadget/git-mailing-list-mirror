@@ -6,47 +6,47 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 169FE1F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 07:31:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A3E911F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 07:31:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752732AbeFZHbO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 03:31:14 -0400
-Received: from mail-io0-f195.google.com ([209.85.223.195]:43929 "EHLO
-        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932105AbeFZHbI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 03:31:08 -0400
-Received: by mail-io0-f195.google.com with SMTP id i23-v6so12102899iog.10
-        for <git@vger.kernel.org>; Tue, 26 Jun 2018 00:31:08 -0700 (PDT)
+        id S932105AbeFZHbT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 03:31:19 -0400
+Received: from mail-it0-f67.google.com ([209.85.214.67]:55537 "EHLO
+        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752733AbeFZHbP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 03:31:15 -0400
+Received: by mail-it0-f67.google.com with SMTP id 16-v6so813441itl.5
+        for <git@vger.kernel.org>; Tue, 26 Jun 2018 00:31:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=GW1KM/Mv96Cjbtro4rU8/wSszWghiqgUD/R4D2vavEA=;
-        b=lWnk0rFwKa2N7oJV8G61FRcUFtUQNEvvvqmU44HJa+UbjPPDKdg9j93VGC6+7OraCI
-         Af1VJ6iEZHYIhMyEOyJj7YWOCZqjqXq4tYHNIGE5sz896qfE3vEpvH0WrC/NbINdTEVv
-         gY1JozGP12cVpFdRObkrUpwtfw71zs6u/4+S/YCPlx2Pd8RfVfDP2rXMPh18sA3YaP6N
-         MjV2dNUVq1jETirlQhEDFfxzxdObrrRrSneBUBXd2ADmQ4qZB7YJuWxVXCwrmn1ayIXH
-         Cn1MakmAbVVha8vEpNKoJa8aOi7AUV/hNd2QWMNJaj+tSSnSv3jjqjXjEJ5c5U2ZU08u
-         VHLA==
+        bh=szg7X3eKeM1ett6sssW9dc5OUdHgQqQWKlWW+dUipqc=;
+        b=kh/g9V4vK0iEfr1NCn1C9+wI1VCICcVljKan0xSesPlKWcAYefR2AZdWgsYt6JSeDS
+         tMh8TSqMwxH712VAZ/bFjmpR1gWFj9giMo2ULlBUcfLqIkfUM0TsrGCm/LMC24V6wxe0
+         Uw4tFB/Tp+GKGhqmGmaBNuWeRETULcD/UM27Pigzv8IKAxLMYBR11SkMdZ5j416/G2Hr
+         Wwd5NwP1AJ4uoKq88fjrCQ0eh+9C8Egq/2iq+OrAJWtbppogJ/icVeSkmzSSuVWvyfn2
+         uAAW4K/zRE0Ajvd0RSVJVM69a9o1a4YDJ0P0X6v4h1/nfduGHrKmlsMAqAz8VyeHcMu5
+         gjAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
          :in-reply-to:references;
-        bh=GW1KM/Mv96Cjbtro4rU8/wSszWghiqgUD/R4D2vavEA=;
-        b=U+sGBE2aR/5FLOLLgj06jrj/dP0lyPCrMqtfWKWjLFeDxQj5ZQ4428mQWnbOWyHYje
-         nGxkyl+IhX75KaoRofiO1hYBgHyIFRY9do8W72XadXRohtPNZrDxOikPuuFVgzdRB+PF
-         ya9gsbuNGa9sj0tKeRyAnJSb1yMq1ERQGm8f//nlXQusmH14Ta+JSjog85KBBy7elE4/
-         +f6dQLZX4k2S/Z8LmOxdqcuOnvwUtjJBdaCM21osj20nqzlD8j1crlR4EGqAFPMF6NsS
-         sb6b1D/jetFWBISc8RfyNKkaFmoSoqSu0XGwgoKmvpDkf1JQPcuE7zPRc5gOpgJVSK6o
-         euow==
-X-Gm-Message-State: APt69E0puldhbTwDOJ9lJWea/GSVkdjtMzc0ROC478pjz25DLBzu55Xc
-        kZ7QUfsAYw1Kv7P3B4M7TzPNuw==
-X-Google-Smtp-Source: AAOMgpfYDA9rTf/zi8oZ7J/Y0LAXagaLK+cRbGeQFI4ImmM3+bcLLBFU3Ot8AkIxprBTe0r3x3mY5w==
-X-Received: by 2002:a6b:821e:: with SMTP id e30-v6mr317013iod.110.1529998267442;
-        Tue, 26 Jun 2018 00:31:07 -0700 (PDT)
+        bh=szg7X3eKeM1ett6sssW9dc5OUdHgQqQWKlWW+dUipqc=;
+        b=HSJX/up0lltBw8XSl10TqY68dxLWVPO7BG5g6/5PxE7JpPseNswLoUJ2vGqNfL+dfz
+         6FqLtT4yOV6A1TlNHClSqP8Q3bkxld87sz+pkotpiIe/RiClaHOorPmzLbWKvAagCns2
+         I1nCR5tzaphg0UKGKNjPlvGjrwbKmgc3pXd7C1pfqAJXVI6GXiHult82WDsxK6NfnbN2
+         xG0tK/k3WAV1kMrYjNlCe6XiHpDe5iV/kiSXff5GuIaSfkju3WRXwsrpRUqk8PoLa42T
+         DGc7X3wJZ5JmO782YPC1nQJ31t0Aud/0uRwxiPD9BJEemxXt6hp3BKvXKP5bG1BnxCho
+         F+xw==
+X-Gm-Message-State: APt69E1bO9X6HH9qJzBrUyknJgskZMJfaFwD0D+T0bTYIYzIOvcd56tj
+        DfcoxrG7bS+2GgiX3TSNW+mHjA==
+X-Google-Smtp-Source: ADUXVKJrWEiQbMCnv/PjscQ7xwk0PbMCqoKf+5f3E4LwjDM1njZEjHFcmX3XGfyaBEe2ogaSYOHIdw==
+X-Received: by 2002:a24:546:: with SMTP id 67-v6mr500345itl.21.1529998274089;
+        Tue, 26 Jun 2018 00:31:14 -0700 (PDT)
 Received: from localhost.localdomain (user-12l2cs3.cable.mindspring.com. [69.81.51.131])
-        by smtp.gmail.com with ESMTPSA id k20-v6sm471361iok.9.2018.06.26.00.31.06
+        by smtp.gmail.com with ESMTPSA id k20-v6sm471361iok.9.2018.06.26.00.31.12
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Tue, 26 Jun 2018 00:31:07 -0700 (PDT)
+        Tue, 26 Jun 2018 00:31:13 -0700 (PDT)
 From:   Eric Sunshine <sunshine@sunshineco.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
@@ -55,9 +55,9 @@ Cc:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
         Elijah Newren <newren@gmail.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 18/29] t0000-t0999: fix broken &&-chains in subshells
-Date:   Tue, 26 Jun 2018 03:29:50 -0400
-Message-Id: <20180626073001.6555-19-sunshine@sunshineco.com>
+Subject: [PATCH 24/29] t5000-t5999: fix broken &&-chains in subshells
+Date:   Tue, 26 Jun 2018 03:29:56 -0400
+Message-Id: <20180626073001.6555-25-sunshine@sunshineco.com>
 X-Mailer: git-send-email 2.18.0.419.gfe4b301394
 In-Reply-To: <20180626073001.6555-1-sunshine@sunshineco.com>
 References: <20180626073001.6555-1-sunshine@sunshineco.com>
@@ -68,102 +68,306 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- t/t0000-basic.sh      |  2 +-
- t/t0003-attributes.sh | 24 ++++++++++++------------
- t/t0021-conversion.sh |  4 ++--
- 3 files changed, 15 insertions(+), 15 deletions(-)
+ t/t5300-pack-object.sh         |  2 +-
+ t/t5302-pack-index.sh          |  2 +-
+ t/t5401-update-hooks.sh        |  4 ++--
+ t/t5406-remote-rejects.sh      |  2 +-
+ t/t5500-fetch-pack.sh          |  2 +-
+ t/t5505-remote.sh              |  2 +-
+ t/t5512-ls-remote.sh           |  4 ++--
+ t/t5516-fetch-push.sh          | 10 +++++-----
+ t/t5517-push-mirror.sh         | 10 +++++-----
+ t/t5526-fetch-submodules.sh    |  2 +-
+ t/t5531-deep-submodule-push.sh |  2 +-
+ t/t5543-atomic-push.sh         |  2 +-
+ t/t5601-clone.sh               |  2 +-
+ t/t5605-clone-local.sh         |  2 +-
+ t/t5801-remote-helpers.sh      |  2 +-
+ 15 files changed, 25 insertions(+), 25 deletions(-)
 
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index af61d083b4..34859fe4a5 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -1081,7 +1081,7 @@ test_expect_success 'very long name in the index handled sanely' '
- 	(
- 		git ls-files -s path4 |
- 		sed -e "s/	.*/	/" |
--		tr -d "\012"
-+		tr -d "\012" &&
- 		echo "$a"
- 	) | git update-index --index-info &&
- 	len=$(git ls-files "a*" | wc -c) &&
-diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
-index f19ae4f8cc..5c37c2e1f8 100755
---- a/t/t0003-attributes.sh
-+++ b/t/t0003-attributes.sh
-@@ -34,15 +34,15 @@ test_expect_success 'open-quoted pathname' '
+diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
+index 2336d09dcc..6c620cd540 100755
+--- a/t/t5300-pack-object.sh
++++ b/t/t5300-pack-object.sh
+@@ -191,7 +191,7 @@ test_expect_success 'survive missing objects/pack directory' '
+ 		mkdir missing-pack &&
+ 		cd missing-pack &&
+ 		git init &&
+-		GOP=.git/objects/pack
++		GOP=.git/objects/pack &&
+ 		rm -fr $GOP &&
+ 		git index-pack --stdin --keep=test <../test-3-${packname_3}.pack &&
+ 		test -f $GOP/pack-${packname_3}.pack &&
+diff --git a/t/t5302-pack-index.sh b/t/t5302-pack-index.sh
+index bb9b8bb309..91d51b35f9 100755
+--- a/t/t5302-pack-index.sh
++++ b/t/t5302-pack-index.sh
+@@ -237,7 +237,7 @@ test_expect_success 'running index-pack in the object store' '
+     rm -f .git/objects/pack/* &&
+     cp test-1-${pack1}.pack .git/objects/pack/pack-${pack1}.pack &&
+     (
+-	cd .git/objects/pack
++	cd .git/objects/pack &&
+ 	git index-pack pack-${pack1}.pack
+     ) &&
+     test -f .git/objects/pack/pack-${pack1}.idx
+diff --git a/t/t5401-update-hooks.sh b/t/t5401-update-hooks.sh
+index 7f278d8ce9..b5f886a0e2 100755
+--- a/t/t5401-update-hooks.sh
++++ b/t/t5401-update-hooks.sh
+@@ -82,13 +82,13 @@ test_expect_success 'hooks ran' '
+ '
+ 
+ test_expect_success 'pre-receive hook input' '
+-	(echo $commit0 $commit1 refs/heads/master;
++	(echo $commit0 $commit1 refs/heads/master &&
+ 	 echo $commit1 $commit0 refs/heads/tofail
+ 	) | test_cmp - victim.git/pre-receive.stdin
+ '
+ 
+ test_expect_success 'update hook arguments' '
+-	(echo refs/heads/master $commit0 $commit1;
++	(echo refs/heads/master $commit0 $commit1 &&
+ 	 echo refs/heads/tofail $commit1 $commit0
+ 	) | test_cmp - victim.git/update.args
+ '
+diff --git a/t/t5406-remote-rejects.sh b/t/t5406-remote-rejects.sh
+index 59e80a5ea2..350d2e6ea5 100755
+--- a/t/t5406-remote-rejects.sh
++++ b/t/t5406-remote-rejects.sh
+@@ -6,7 +6,7 @@ test_description='remote push rejects are reported by client'
+ 
  test_expect_success 'setup' '
- 	mkdir -p a/b/d a/c b &&
+ 	mkdir .git/hooks &&
+-	(echo "#!/bin/sh" ; echo "exit 1") >.git/hooks/update &&
++	(echo "#!/bin/sh" && echo "exit 1") >.git/hooks/update &&
+ 	chmod +x .git/hooks/update &&
+ 	echo 1 >file &&
+ 	git add file &&
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index 8390c0a2d2..c394779f65 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -259,7 +259,7 @@ test_expect_success 'clone shallow object count' '
+ test_expect_success 'pull in shallow repo with missing merge base' '
  	(
--		echo "[attr]notest !test"
--		echo "\" d \"	test=d"
--		echo " e	test=e"
--		echo " e\"	test=e"
--		echo "f	test=f"
--		echo "a/i test=a/i"
--		echo "onoff test -test"
--		echo "offon -test test"
--		echo "no notest"
-+		echo "[attr]notest !test" &&
-+		echo "\" d \"	test=d" &&
-+		echo " e	test=e" &&
-+		echo " e\"	test=e" &&
-+		echo "f	test=f" &&
-+		echo "a/i test=a/i" &&
-+		echo "onoff test -test" &&
-+		echo "offon -test test" &&
-+		echo "no notest" &&
- 		echo "A/e/F test=A/e/F"
- 	) >.gitattributes &&
+ 		cd shallow &&
+-		git fetch --depth 4 .. A
++		git fetch --depth 4 .. A &&
+ 		test_must_fail git merge --allow-unrelated-histories FETCH_HEAD
+ 	)
+ '
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index 3552b51b4c..11e14a1e0f 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -844,7 +844,7 @@ test_expect_success 'migrate a remote from named file in $GIT_DIR/branches (2)'
+ 		git remote rename origin origin &&
+ 		test_path_is_missing .git/branches/origin &&
+ 		test "$(git config remote.origin.url)" = "quux" &&
+-		test "$(git config remote.origin.fetch)" = "refs/heads/foom:refs/heads/origin"
++		test "$(git config remote.origin.fetch)" = "refs/heads/foom:refs/heads/origin" &&
+ 		test "$(git config remote.origin.push)" = "HEAD:refs/heads/foom"
+ 	)
+ '
+diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
+index 6a949484d0..ea020040e8 100755
+--- a/t/t5512-ls-remote.sh
++++ b/t/t5512-ls-remote.sh
+@@ -15,7 +15,7 @@ test_expect_success setup '
+ 	git tag mark1.10 &&
+ 	git show-ref --tags -d | sed -e "s/ /	/" >expected.tag &&
  	(
-@@ -51,7 +51,7 @@ test_expect_success 'setup' '
- 	) >a/.gitattributes &&
+-		echo "$(git rev-parse HEAD)	HEAD"
++		echo "$(git rev-parse HEAD)	HEAD" &&
+ 		git show-ref -d	| sed -e "s/ /	/"
+ 	) >expected.all &&
+ 
+@@ -105,7 +105,7 @@ test_expect_success 'use branch.<name>.remote if possible' '
+ 	git clone . other.git &&
  	(
- 		echo "h test=a/b/h" &&
--		echo "d/* test=a/b/d/*"
-+		echo "d/* test=a/b/d/*" &&
- 		echo "d/yes notest"
- 	) >a/b/.gitattributes &&
+ 		cd other.git &&
+-		echo "$(git rev-parse HEAD)	HEAD"
++		echo "$(git rev-parse HEAD)	HEAD" &&
+ 		git show-ref	| sed -e "s/ /	/"
+ 	) >exp &&
+ 
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index a5077d8b7c..bd8f23e430 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -923,7 +923,7 @@ test_expect_success 'push into aliased refs (consistent)' '
  	(
-@@ -287,7 +287,7 @@ test_expect_success 'bare repository: check that .gitattribute is ignored' '
- 	(
- 		cd bare.git &&
- 		(
--			echo "f	test=f"
-+			echo "f	test=f" &&
- 			echo "a/i test=a/i"
- 		) >.gitattributes &&
- 		attr_check f unspecified &&
-@@ -312,7 +312,7 @@ test_expect_success 'bare repository: test info/attributes' '
- 	(
- 		cd bare.git &&
- 		(
--			echo "f	test=f"
-+			echo "f	test=f" &&
- 			echo "a/i test=a/i"
- 		) >info/attributes &&
- 		attr_check f f &&
-diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index 9479a4aaab..6a213608cc 100755
---- a/t/t0021-conversion.sh
-+++ b/t/t0021-conversion.sh
-@@ -785,7 +785,7 @@ test_expect_success PERL 'missing file in delayed checkout' '
- 		cd repo &&
- 		git init &&
- 		echo "*.a filter=bug" >.gitattributes &&
--		cp "$TEST_ROOT/test.o" missing-delay.a
-+		cp "$TEST_ROOT/test.o" missing-delay.a &&
- 		git add . &&
- 		git commit -m "test commit"
+ 		cd child1 &&
+ 		git branch foo &&
+-		git symbolic-ref refs/heads/bar refs/heads/foo
++		git symbolic-ref refs/heads/bar refs/heads/foo &&
+ 		git config receive.denyCurrentBranch false
  	) &&
-@@ -807,7 +807,7 @@ test_expect_success PERL 'invalid file in delayed checkout' '
- 		git init &&
- 		echo "*.a filter=bug" >.gitattributes &&
- 		cp "$TEST_ROOT/test.o" invalid-delay.a &&
--		cp "$TEST_ROOT/test.o" unfiltered
-+		cp "$TEST_ROOT/test.o" unfiltered &&
- 		git add . &&
- 		git commit -m "test commit"
+ 	(
+@@ -945,7 +945,7 @@ test_expect_success 'push into aliased refs (inconsistent)' '
+ 	(
+ 		cd child1 &&
+ 		git branch foo &&
+-		git symbolic-ref refs/heads/bar refs/heads/foo
++		git symbolic-ref refs/heads/bar refs/heads/foo &&
+ 		git config receive.denyCurrentBranch false
  	) &&
+ 	(
+@@ -1011,7 +1011,7 @@ test_expect_success 'push --porcelain rejected' '
+ 	mk_empty testrepo &&
+ 	git push testrepo refs/heads/master:refs/remotes/origin/master &&
+ 	(cd testrepo &&
+-		git reset --hard origin/master^
++		git reset --hard origin/master^ &&
+ 		git config receive.denyCurrentBranch true) &&
+ 
+ 	echo >.git/foo  "To testrepo"  &&
+@@ -1025,7 +1025,7 @@ test_expect_success 'push --porcelain --dry-run rejected' '
+ 	mk_empty testrepo &&
+ 	git push testrepo refs/heads/master:refs/remotes/origin/master &&
+ 	(cd testrepo &&
+-		git reset --hard origin/master
++		git reset --hard origin/master &&
+ 		git config receive.denyCurrentBranch true) &&
+ 
+ 	echo >.git/foo  "To testrepo"  &&
+@@ -1333,7 +1333,7 @@ test_expect_success 'push --follow-tag only pushes relevant tags' '
+ 		git commit --allow-empty -m "future commit" &&
+ 		git tag -m "future" future &&
+ 		git checkout master &&
+-		git for-each-ref refs/heads/master refs/tags/tag >../expect
++		git for-each-ref refs/heads/master refs/tags/tag >../expect &&
+ 		git push --follow-tag ../dst master
+ 	) &&
+ 	(
+diff --git a/t/t5517-push-mirror.sh b/t/t5517-push-mirror.sh
+index 02f160aae0..c05a661400 100755
+--- a/t/t5517-push-mirror.sh
++++ b/t/t5517-push-mirror.sh
+@@ -71,7 +71,7 @@ test_expect_success 'push mirror force updates existing branches' '
+ 		git push --mirror up &&
+ 		echo two >foo && git add foo && git commit -m two &&
+ 		git push --mirror up &&
+-		git reset --hard HEAD^
++		git reset --hard HEAD^ &&
+ 		git push --mirror up
+ 	) &&
+ 	master_master=$(cd master && git show-ref -s --verify refs/heads/master) &&
+@@ -88,7 +88,7 @@ test_expect_success 'push mirror removes branches' '
+ 		echo one >foo && git add foo && git commit -m one &&
+ 		git branch remove master &&
+ 		git push --mirror up &&
+-		git branch -D remove
++		git branch -D remove &&
+ 		git push --mirror up
+ 	) &&
+ 	(
+@@ -170,7 +170,7 @@ test_expect_success 'push mirror force updates existing tags' '
+ 		echo two >foo && git add foo && git commit -m two &&
+ 		git tag -f tmaster master &&
+ 		git push --mirror up &&
+-		git reset --hard HEAD^
++		git reset --hard HEAD^ &&
+ 		git tag -f tmaster master &&
+ 		git push --mirror up
+ 	) &&
+@@ -188,7 +188,7 @@ test_expect_success 'push mirror removes tags' '
+ 		echo one >foo && git add foo && git commit -m one &&
+ 		git tag -f tremove master &&
+ 		git push --mirror up &&
+-		git tag -d tremove
++		git tag -d tremove &&
+ 		git push --mirror up
+ 	) &&
+ 	(
+@@ -235,7 +235,7 @@ test_expect_success 'remote.foo.mirror adds and removes branches' '
+ 		git branch keep master &&
+ 		git branch remove master &&
+ 		git push up &&
+-		git branch -D remove
++		git branch -D remove &&
+ 		git push up
+ 	) &&
+ 	(
+diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
+index 9cc4b569c0..143638c8cd 100755
+--- a/t/t5526-fetch-submodules.sh
++++ b/t/t5526-fetch-submodules.sh
+@@ -379,7 +379,7 @@ test_expect_success "'--recurse-submodules=on-demand' recurses as deep as necess
+ 			git config -f .gitmodules submodule.subdir/deepsubmodule.fetchRecursive false
+ 		) &&
+ 		git fetch --recurse-submodules=on-demand >../actual.out 2>../actual.err &&
+-		git config --unset fetch.recurseSubmodules
++		git config --unset fetch.recurseSubmodules &&
+ 		(
+ 			cd submodule &&
+ 			git config --unset -f .gitmodules submodule.subdir/deepsubmodule.fetchRecursive
+diff --git a/t/t5531-deep-submodule-push.sh b/t/t5531-deep-submodule-push.sh
+index 39cb2c1c34..e2c37fd978 100755
+--- a/t/t5531-deep-submodule-push.sh
++++ b/t/t5531-deep-submodule-push.sh
+@@ -354,7 +354,7 @@ test_expect_success 'push succeeds if submodule has no remote and is on the firs
+ 	git clone a a1 &&
+ 	(
+ 		cd a1 &&
+-		git init b
++		git init b &&
+ 		(
+ 			cd b &&
+ 			>junk &&
+diff --git a/t/t5543-atomic-push.sh b/t/t5543-atomic-push.sh
+index 3480b33007..7079bcf9a0 100755
+--- a/t/t5543-atomic-push.sh
++++ b/t/t5543-atomic-push.sh
+@@ -178,7 +178,7 @@ test_expect_success 'atomic push obeys update hook preventing a branch to be pus
+ test_expect_success 'atomic push is not advertised if configured' '
+ 	mk_repo_pair &&
+ 	(
+-		cd upstream
++		cd upstream &&
+ 		git config receive.advertiseatomic 0
+ 	) &&
+ 	(
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 0b62037744..ddaa96ac4f 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -618,7 +618,7 @@ hex2oct () {
+ test_expect_success 'clone on case-insensitive fs' '
+ 	git init icasefs &&
+ 	(
+-		cd icasefs
++		cd icasefs &&
+ 		o=$(git hash-object -w --stdin </dev/null | hex2oct) &&
+ 		t=$(printf "100644 X\0${o}100644 x\0${o}" |
+ 			git hash-object -w -t tree --stdin) &&
+diff --git a/t/t5605-clone-local.sh b/t/t5605-clone-local.sh
+index 3c087e907c..af23419ebf 100755
+--- a/t/t5605-clone-local.sh
++++ b/t/t5605-clone-local.sh
+@@ -94,7 +94,7 @@ test_expect_success 'clone empty repository' '
+ 	 git config receive.denyCurrentBranch warn) &&
+ 	git clone empty empty-clone &&
+ 	test_tick &&
+-	(cd empty-clone
++	(cd empty-clone &&
+ 	 echo "content" >> foo &&
+ 	 git add foo &&
+ 	 git commit -m "Initial commit" &&
+diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
+index 362b1581e0..ee5757966f 100755
+--- a/t/t5801-remote-helpers.sh
++++ b/t/t5801-remote-helpers.sh
+@@ -96,7 +96,7 @@ test_expect_success 'push new branch with old:new refspec' '
+ 
+ test_expect_success 'push new branch with HEAD:new refspec' '
+ 	(cd local &&
+-	 git checkout new-name
++	 git checkout new-name &&
+ 	 git push origin HEAD:new-refspec-2
+ 	) &&
+ 	compare_refs local HEAD server refs/heads/new-refspec-2
 -- 
 2.18.0.419.gfe4b301394
 
