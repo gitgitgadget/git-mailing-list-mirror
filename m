@@ -2,105 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E68961F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 22:24:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4D641F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 22:31:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932918AbeFZWYA (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 18:24:00 -0400
-Received: from mout.gmx.net ([212.227.15.18]:33009 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932434AbeFZWX6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 18:23:58 -0400
-Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Mgt3g-1flBtp2YzI-00M5X7; Wed, 27
- Jun 2018 00:23:53 +0200
-Date:   Wed, 27 Jun 2018 00:23:53 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-cc:     git@vger.kernel.org, joel@teichroeb.net, gitster@pobox.com
-Subject: Re: [PATCH v6 3/4] stash: convert branch to builtin
-In-Reply-To: <ac0a24da8a583a137176d1d215df65bb1a3ada0e.1529943789.git.ungureanupaulsebastian@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1806270018580.21419@tvgsbejvaqbjf.bet>
-References: <cover.1529943789.git.ungureanupaulsebastian@gmail.com> <ac0a24da8a583a137176d1d215df65bb1a3ada0e.1529943789.git.ungureanupaulsebastian@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S933907AbeFZWbR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 18:31:17 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:40300 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933596AbeFZWbP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 18:31:15 -0400
+Received: by mail-wr0-f195.google.com with SMTP id g18-v6so30970wro.7
+        for <git@vger.kernel.org>; Tue, 26 Jun 2018 15:31:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=PJH4A08vYEgF6GFYPj04ln/+N8MnVEEQHTyEEzoTCJI=;
+        b=OnF2mtjdmZohl+nOEd0mUHVVmqGBG6WmFrmkdGp8OAvqqozlrkiCcX7O0ZPcEk1QYq
+         xN5/hPqQi9wIGnaB/AO7BJeoVbFXFPxsAYO8B489bZ6AG+dAqc4MxGq1FY3wbdOo8hEv
+         j7mFkeC1hQBdfc+rwcPLnFaylHwmcJJFEYaOoywXTksDZGvjWTNDAhYTXYlPA1l5j3p3
+         bRjGxIvYDBGd1BEPdebCQDebpWu5levCr0Z30iaOgPjQSPVM7nnQ75o2QIg2ZhlU+4rl
+         f6uPa50suhHdKyU0aYGxegGWONylnyvked078tB+bKboFzyxq8Vf0Gt7AFMRsutdVQJv
+         rZIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=PJH4A08vYEgF6GFYPj04ln/+N8MnVEEQHTyEEzoTCJI=;
+        b=taYijAwXCKmedcvZ8YKH3BCH2cLIR162EWM/AaBKhLY3xBIp2xctUEkaN2aYISrtXI
+         3zrBFp/uxPw7LtCDXTaGKXh9u+ccIdZhfHrnjat8H7EBv3/Qh6YTsvzTOAVKWtC5TjGd
+         HrF5MgM2JvA87YA4D2Dg1MlO+ywIdQdyt6ASAZYcDEMIaMeouu5IGqrUxyGDD9s+slZ3
+         7QJqdyopRVrJHgGDExDzgWmfqBFex4UGHJDRLxqS3Hq38Uq9sX0sXoGjfi0P7izJzo9C
+         KGr0Bu9CmJHG78ljBmLBezsoFEaEqVRSy1KsN+Gm11fo5lLfg4LHg6htrr78CrZ+ACYF
+         PtZw==
+X-Gm-Message-State: APt69E2qVPdR1RNGg2UDs+yRqqlXEMffIwLSNtrhHy9JB7Mpfh9Ip+2J
+        D2AEGdRvB3bpxh9kqLSEoeA=
+X-Google-Smtp-Source: AAOMgpf0Uyc9kVBqjV2TgYBba1xfVN1gEAfLsnSQ5/gQLUBOQ5gV/uKayrUVSL5/obc0WtkG/LS4vg==
+X-Received: by 2002:adf:b310:: with SMTP id j16-v6mr2818714wrd.207.1530052273299;
+        Tue, 26 Jun 2018 15:31:13 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id w126-v6sm3494584wmw.29.2018.06.26.15.31.12
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 26 Jun 2018 15:31:12 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
+        Stefan Beller <sbeller@google.com>,
+        Elijah Newren <newren@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH 00/29] t: detect and fix broken &&-chains in subshells
+References: <20180626073001.6555-1-sunshine@sunshineco.com>
+        <xmqqo9fxjq39.fsf@gitster-ct.c.googlers.com>
+        <CAPig+cSW6jP3FtYpwf5bB4SM=qw6A3K9H3JPranJ_KMqH-AwZw@mail.gmail.com>
+Date:   Tue, 26 Jun 2018 15:31:11 -0700
+In-Reply-To: <CAPig+cSW6jP3FtYpwf5bB4SM=qw6A3K9H3JPranJ_KMqH-AwZw@mail.gmail.com>
+        (Eric Sunshine's message of "Tue, 26 Jun 2018 17:25:34 -0400")
+Message-ID: <xmqq6025i3io.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:l3G8TdWFiAxa4wR6MGOC06QAfO2etw5TUyrNq5Kgy78u+Snh6g6
- amx+Z9muF2Z6n6rtEvYfS2MYx+9gLoBlWnFhSzWYGYO6x91sHIboNVxfiEGQu/6yHyX/CE/
- qQaUN4AveuJP3boW78F9miPDZECLSPQ1mSkxvCDMBDVdJ3BkU+bO+b8h3385ofRqUUCsWou
- DZ7lZ4IpMu1CHs4p0n95A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:tl4GO73t7lo=:z0zdUrT5lZGQSmr8hCp8id
- YRJqFYr3UxtLd/IEMGHGF65RWmeTCPqovXpVCjeCdPd3Vpo6nwQu5JRmaTLrIytXpPeCQNr4Y
- Z6ox3buAj7hfvmIk1oSmrnVATGy/yrOjPfzjUufY8udoF7/psRQaYv90hqJL56oN46BSQ6U2E
- cBlL+Fy52rjMEZBrMQUB6nTkSD77sgebpOELwwJyE9eqEmUZscIO9swOj7zv3sJ0SEcJ92eWe
- GLYKKAkUgQ2sDnIVJ/RATNlURw64hQ0NtNPTixhkgE/0AtlQu8dYlLbixmf3rI7tOfJbHVi7y
- NxEMbTfbBJtQqLLAnA9KkNYLNM+g64f1PZ9d3xNlE2s78iNOJ9ns0yglpX6ecNbPxgA8tCXGb
- r2B/mzKS+Mw9QZID2d9enA4M0O05vQCm9u6zrmik4kT+blbqk+xhwqbocBR3kWs1K7sUEhXHQ
- vKbw6q6YNeBFpPoVF9893isdW6uHVtsHEqALmQcz8tW+PjHuY7nTfDXLmXPfTO+kZllKcI0hG
- hAP7HtsQvXF2gvvXkh4XhXCyKBLHK+fghHc+fP5vSkqlHHMCtYugZzGhbjZz9VjPcovA7e48a
- v4NU/DRxbCioqD7exuuqQPseJdMd4CmF8gsz5zwv+HSmobe39+mOj/1bD+rdXJ0j2yT6e248+
- rraUUmrN0uwvoGEsb8XqkkUC9JNq2jX7j2Yznql6onBJK7f9lbIWA/+NVdi66YXkt9LFZgBVJ
- WfaeOCHiuFH2zcqe/RFM0sv/4GomS81kBrLuAdCftJiiXe8ihqsSS5QMwLVTtEFXJSWFt3vc7
- uijmcxY
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Paul,
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-On Mon, 25 Jun 2018, Paul-Sebastian Ungureanu wrote:
+> On Tue, Jun 26, 2018 at 3:38 PM Junio C Hamano <gitster@pobox.com> wrote:
+>> I first looked at 29/29 and got heavily inclined to reject that
+>> step, and then continued reading from 1/29 to around 15/29.
+>>
+>> I like these earlier changes that fix existing breakage, of course.
+>> I also like many of the changes that simplify and/or modernise the
+>> test scripts very much, but they are unusable as-is as long as their
+>> justification is "chain-lint will start barfing on these constructs".
+>
+> Sorry, I'm having difficulty understanding.
+>
+> Are you saying that you don't want patches which exist merely to
+> pacify --chain-lint? (For instance, 2/29 "t0001: use "{...}" block
+> around "||" expression rather than subshell".)
 
-> diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
-> index 84a537f39..fbf78249c 100644
-> --- a/builtin/stash--helper.c
-> +++ b/builtin/stash--helper.c
-> @@ -522,6 +528,41 @@ static int drop_stash(int argc, const char **argv, const char *prefix)
->  	return ret;
->  }
->  
-> +static int branch_stash(int argc, const char **argv, const char *prefix)
-> +{
-> +	const char *branch = NULL;
-> +	int ret;
-> +	struct argv_array args = ARGV_ARRAY_INIT;
-> +	struct stash_info info;
-> +	struct option options[] = {
-> +		OPT_END()
-> +	};
-> +
-> +	argc = parse_options(argc, argv, prefix, options,
-> +			     git_stash_helper_branch_usage, 0);
-> +
-> +	if (argc == 0)
-> +		return error(_("No branch name specified"));
-> +
-> +	branch = argv[0];
-> +
-> +	if (get_stash_info(&info, argc - 1, argv + 1))
-> +		return -1;
-> +
-> +	argv_array_pushl(&args, "checkout", "-b", NULL);
-> +	argv_array_push(&args, branch);
-> +	argv_array_push(&args, oid_to_hex(&info.b_commit));
+Yes.
 
-Why not combine these? _pushl() takes a NULL-terminated list:
+> Or are you saying that you don't like how the commit messages are
+> worded, and that they should instead emphasize that the change is good
+> for its own sake, without mentioning --chain-lint?
 
-	argv_array_pushl(&args, "checkout", "-b", branch,
-			 oid_to_hex(&info.b_commit), NULL);
+Yes, too.
 
-> +	ret = cmd_checkout(args.argc, args.argv, prefix);
+For example, 03/29 is a good clean-up, and its value is not
+diminished even if we reject the subprocess munging --chain-lint in
+29/29.
 
-I guess it is okay to run that, but the cmd_() functions are not *really*
-meant to be called this way... Personally, I would be more comfortable
-with a `run_command()` here, i.e. with a spawned process, until the time
-when checkout.c/checkout.h have learned enough API for a direct call.
-
-Ciao,
-Dscho
+As opposed to 02/29 which mostly is about appeasing the "shell
+parser" in 29/29 (or you could justify it saying "one less fork and
+process" if that gives us a measurable benefit).
