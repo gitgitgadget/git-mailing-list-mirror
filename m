@@ -3,91 +3,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 93E161F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 10:05:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C5081F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 10:18:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933715AbeFZKF4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 06:05:56 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:55889 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932963AbeFZKFy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 06:05:54 -0400
-Received: by mail-wm0-f66.google.com with SMTP id v16-v6so1198022wmv.5
-        for <git@vger.kernel.org>; Tue, 26 Jun 2018 03:05:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=7ltXQwE4zgMm9gp8loSGR+rRhI/tVe9CEcSf+nO7VzQ=;
-        b=dBoJHrpPWGCz73H7lehU4/277peaM8BFMdaFEZSot435Ql9ggt7YVoom63brOTIPoW
-         /6QfyDcuG0o49G4+e+ave29hsBu1RqAiLw96YyapwvB7pZMjgL1l5fDWXCcp6ePHVabL
-         CV5j+2L/2gmVtOHZqBNUPxoL6kmEqGmBp1ffd6qXS6ros/QiqGguYPNSX3+lsbrwGhxy
-         BQtdqJ9TS2RbIX6N4zHphU+ZmXTQWW5kzNtr1V20sIbp4Fj1NKs9bLWknCZHG60QVR5W
-         k3CX9GGZELcEu5UZzX1CBntC1SlRlAekJCz7128Sz1RGZs7FFryqkGDWBrBr5Plry8rI
-         suzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=7ltXQwE4zgMm9gp8loSGR+rRhI/tVe9CEcSf+nO7VzQ=;
-        b=cf0Hw8sZVBoisLuzgn6Kal3GGyqsSo3kcTtV0RgYAeToJAlWVheuLkKjtiVn4fUI32
-         3HjiNkcFeLEMmpQI21KkV628rRc41LAqyaGLVqagB7uI04JCFOrx/dPw7KatXvEUftd4
-         lb6o+gc+CAvbuZp+PfwccUEvAWnKta49fFl5tXbMC+76Waa7YWty8sGeApWu8GyPUilQ
-         nSIz/wzfeTPyB6kFjjBA9M9Uv601WaU1ERmgzhYsPLl3FrDtSAgeM4keFQ+f4M64ecLL
-         1A51AXlm7wbC/PZLowXRnBdyoZIM/fWwm1xgX4+yjTyVQlWXdrKadavZc+f020X/QVWG
-         HcUg==
-X-Gm-Message-State: APt69E1vz8QGD2C7AlCcCInH3GWSVwIdCLxMvss/51u2oJAEeh/9rU22
-        UglLL8XwynL3wDvxTUe1Gzb+dZ7M
-X-Google-Smtp-Source: AAOMgpdOTcSEw2lCXS7JIWYO4fXrVP26hvuqtOfZxNhMovHP1BaB+rV/KlBWK5ImXpVSxGKp/XqLPw==
-X-Received: by 2002:a1c:2dd5:: with SMTP id t204-v6mr1101504wmt.94.1530007552625;
-        Tue, 26 Jun 2018 03:05:52 -0700 (PDT)
-Received: from localhost.localdomain (AToulouse-658-1-38-233.w86-221.abo.wanadoo.fr. [86.221.117.233])
-        by smtp.googlemail.com with ESMTPSA id y8-v6sm1855050wrq.35.2018.06.26.03.05.51
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 26 Jun 2018 03:05:51 -0700 (PDT)
-From:   Alban Gruin <alban.gruin@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        phillip.wood@dunelm.org.uk, Alban Gruin <alban.gruin@gmail.com>
-Subject: [GSoC][PATCH 1/1] sequencer: print an error message if append_todo_help() fails
-Date:   Tue, 26 Jun 2018 12:04:29 +0200
-Message-Id: <20180626100429.10169-2-alban.gruin@gmail.com>
-X-Mailer: git-send-email 2.18.0
-In-Reply-To: <20180626100429.10169-1-alban.gruin@gmail.com>
-References: <20180626100429.10169-1-alban.gruin@gmail.com>
+        id S934080AbeFZKSa (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 06:18:30 -0400
+Received: from cpanel4.indieserve.net ([199.212.143.9]:60256 "EHLO
+        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933785AbeFZKS3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 06:18:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
+        To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=zcTuq2TzZ2LP6zx4XDgY4+l3Rtj4/yH97R0g1wo/Qe0=; b=Zg0T57drwzjPXJeJCUf2jyxR2E
+        yMKjP8yeKheLhBonwxVi2N/xH0RDo1mTbta2MGbNKwJrZAabovka8atgfD+6uR7hLNEMcTN6DgcHw
+        52vLUAR/MZGdQbwliV3tDH/6DhbSqbHQifFVOsjoDWy25ghRGz3ssHGTUUDdERjrpJFNo4nd5yKcG
+        ASiOBKKHZvMlR/0eRrW8fsHG8pU2ZbWlnY8W0bsR3nG7Zp9kZ8/4/3NxtVI6Z+oyZy3Wk8bFHdvjY
+        pK3ERaHcwAsISCH45Z7E4TR2hgLvdbtn5qJxHjoMNvW1A4C7f/acaZ5PPZDqRNdR1NFkGhcmS41R3
+        sGv5Y5uQ==;
+Received: from cpeac202e043973-cmac202e043970.cpe.net.cable.rogers.com ([174.112.22.87]:52684 helo=localhost.localdomain)
+        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1fXl3L-00GSeJ-31
+        for git@vger.kernel.org; Tue, 26 Jun 2018 06:18:28 -0400
+Date:   Tue, 26 Jun 2018 06:18:26 -0400 (EDT)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Git Mailing list <git@vger.kernel.org>
+Subject: curious about wording in "man git-config", ENVIRONMENT
+Message-ID: <alpine.LFD.2.21.1806260608270.6007@localhost.localdomain>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-OutGoing-Spam-Status: No, score=-0.2
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This adds an error when append_todo_help() fails to write its message to
-the todo file.
 
-Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
----
- sequencer.c | 3 +++
- 1 file changed, 3 insertions(+)
+  ENVIRONMENT
+    GIT_CONFIG
+      Take the configuration from the given file instead of
+      .git/config. Using the "--global" option forces this to
+      ~/.gitconfig. Using the "--system" option forces this to
+      $(prefix)/etc/gitconfig.
 
-diff --git a/sequencer.c b/sequencer.c
-index 7cc76332e..7c4bdbb99 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -4380,6 +4380,9 @@ int append_todo_help(unsigned edit_todo, unsigned keep_empty)
- 	}
- 
- 	ret = fputs(buf.buf, todo);
-+	if (ret)
-+		error_errno(_("Could not append help text to '%s'"), rebase_path_todo());
-+
- 	fclose(todo);
- 	strbuf_release(&buf);
- 
+  is the phrase "forces this to" really what you want to use here?
+maybe i misunderstand what this option does, doesn't it simply mean
+that it will use a different (specified) file from the default,
+depending on the context (local, global, system)?
+
+  it just seems weird to say that the option "forces" the use of what
+are clearly the default files. thoughts?
+
+rday
+
 -- 
-2.18.0
 
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                  http://crashcourse.ca/dokuwiki
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
