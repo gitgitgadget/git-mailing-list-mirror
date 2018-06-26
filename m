@@ -6,57 +6,57 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 946DB1F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 18:59:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D16001F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 19:05:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752003AbeFZS7a (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 14:59:30 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:54445 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751101AbeFZS73 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 14:59:29 -0400
-Received: by mail-wm0-f66.google.com with SMTP id i139-v6so3093654wmf.4
-        for <git@vger.kernel.org>; Tue, 26 Jun 2018 11:59:29 -0700 (PDT)
+        id S1751558AbeFZTFE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 15:05:04 -0400
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:55914 "EHLO
+        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751154AbeFZTFD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 15:05:03 -0400
+Received: by mail-wm0-f54.google.com with SMTP id v16-v6so3137649wmv.5
+        for <git@vger.kernel.org>; Tue, 26 Jun 2018 12:05:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=hm0sE9O9gioctTMSLKPG415RVy57W6yEQRX4dGykkHQ=;
-        b=eut5isICgyjLw7V8Q5vE62kR6o/aN5P3ZnH0tazHk7/O0DmfPn72wzqbS8PRyGTlxM
-         wTm2+XpARGEJ+JWfUKH0ypdrTNhkubuW9iSPcj4XG8JXJ11gystqiueFoZWVfqfpP/JR
-         qw+oEdV8y9wqPHLl2/z246frdgi9fqHZz46JdIyOoNTGkl8CC+Z45FWIs7jLg8R6henN
-         jAO09mRpdg+W8+lc/pjyE7plodYdEODjzBTXIyVzqn02/MZiL1W0bFla5kCErDQclOvh
-         7ENNrS964zlvtw/I4kPxb4pqOkwhIcMmdmzwbtcInpGOWM8d2jmE/e96Eikfd77DzLCb
-         6TrQ==
+        bh=DqTDd6+9j6AYvI9rFgQUsS+whLUIYRH1LnebVj2qKgM=;
+        b=nBvQOgEENYdDDG9984TXT28EKHH9glsLcTzWE+mVppF8XsNdngLpPGplJ9V36eXs4N
+         XlE0KtiTIiKETx9W2DlYYMjqVq6+gTFOpexQvVQPlXT+jsLrFmoxoYJsTIETawTU8fhA
+         pQhKPS0HzBWJ7kkVpNmvCmZhB4c2PVB7Cw0FvSqGBmXffsjoCq0ZOnhxUnnA6Cq0qPG+
+         vdbuMO7ectuA1BFR4xSavHPSwgaQv/hxi+D5NwqPFc9QoSSuErXkpCsQiOS2i3IjvS/e
+         iONwERnpedWm+k3v19P8/VPhpaV4e+YGI7WW5v949qKryYBHKWjWqlXfjQXYiMkb79HV
+         99DQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=hm0sE9O9gioctTMSLKPG415RVy57W6yEQRX4dGykkHQ=;
-        b=rXBeiq6nFp/WPc9V8WgdpqlZcyTA3mIJirYQg86LVjGjb0BGNtEfy77xOVQrHfG4t0
-         6xcrJdrTKRDPP6IGJVr2RFvQ4n/gWQsPKMJTVuGHad3L4ZDAyp5be9bK6ZpKx88Wavyf
-         nukNs7MBj+nX2/TOl4Y8j+mB/esmgXIA6D2oOM26CwoNh78S5U3yHnp9+iazc/aDKutg
-         E3YioJHKcrhpvpukkWaIDKXPBEORgYx/1WkheidPagy915azaUwuCxDdBTMKiSMsWiJb
-         gn17BYj1o40BYMkBD+IuSy058sYAElS1OajqElMF7JrmEj0/CEhXRE/3GEcryBpK38Q0
-         9KhQ==
-X-Gm-Message-State: APt69E0wpwB7xDm8E3M98Y4ZRnyhR/rRZAPZjz/uN3Bxd7rZYOeEfBtA
-        s8+IgPjohyEFNqkWlV0S+LA=
-X-Google-Smtp-Source: AAOMgpcUhf8l9aQzAXd2v3zOcNbajR9jXlaQ+ywLBrrnqLd25wsi2iYmjx6v0F4HiAmY8eV4IU0ktw==
-X-Received: by 2002:a1c:e846:: with SMTP id f67-v6mr2553223wmh.63.1530039568313;
-        Tue, 26 Jun 2018 11:59:28 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id t10-v6sm2006494wrq.74.2018.06.26.11.59.27
+        bh=DqTDd6+9j6AYvI9rFgQUsS+whLUIYRH1LnebVj2qKgM=;
+        b=TsrMqCiUPr0vLP8gr0ALdBj85EU3idzaVvAZzGgomJDllNU3X+ec7l7Aj9Dn9JUAqh
+         oUQX1uxfm9hphxZLCFQ+FY9XNcHJeCXb9218xEK6cC3p45JC3cV/oxS5Op+lYb88EkNc
+         wEA8ezhblYYjFBGkmRHn8xas1jpcpRBN5+uWlUOujceLscA7yTZT73Xo6FBM2xk0gMMs
+         nldKxJqpmm7XCHINgUB9mq3w0pJcgTsmlaiqoTpTJCfTzSUTjz9wuxH1wR/bMMNISrZU
+         w9G4Pp12A+h9dzbs3ILLzPyi6GrBt13PNVuO+8N4UTmMWW81KSQEIFKXS47DdmYGVmwY
+         VjcQ==
+X-Gm-Message-State: APt69E36yaTReeqtLfxaaJvlgBQgoPksVYCVtiZQhtwUyfdijcogHcKe
+        jrUBEIFCXLLid9EhSKz9MOk=
+X-Google-Smtp-Source: AAOMgpcy3pjOiEUSjfU1aUtP5Taz2U8+AdYrE02qhz01UNZdAbJvV6Padpf15WURJvieOxrWkhIvNg==
+X-Received: by 2002:a1c:ac89:: with SMTP id v131-v6mr2416807wme.121.1530039902528;
+        Tue, 26 Jun 2018 12:05:02 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id n18-v6sm5287116wrj.58.2018.06.26.12.05.01
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 26 Jun 2018 11:59:27 -0700 (PDT)
+        Tue, 26 Jun 2018 12:05:01 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
+To:     Nicolas Dechesne <nicolas.dechesne@linaro.org>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] fetch-pack: support negotiation tip whitelist
-References: <20180625193752.255319-1-jonathantanmy@google.com>
-Date:   Tue, 26 Jun 2018 11:59:27 -0700
-In-Reply-To: <20180625193752.255319-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Mon, 25 Jun 2018 12:37:52 -0700")
-Message-ID: <xmqq6025l6gg.fsf@gitster-ct.c.googlers.com>
+Subject: Re: git rerere and diff3
+References: <CAP71WjzHffLRCDbjvF7qpexjXDMFcJkaPpEn=AtbSMCJd6QkBQ@mail.gmail.com>
+Date:   Tue, 26 Jun 2018 12:05:01 -0700
+In-Reply-To: <CAP71WjzHffLRCDbjvF7qpexjXDMFcJkaPpEn=AtbSMCJd6QkBQ@mail.gmail.com>
+        (Nicolas Dechesne's message of "Tue, 26 Jun 2018 15:25:28 +0200")
+Message-ID: <xmqq1sctl676.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -65,52 +65,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Nicolas Dechesne <nicolas.dechesne@linaro.org> writes:
 
-> During negotiation, fetch-pack eventually reports as "have" lines all
-> commits reachable from all refs. Allow the user to restrict the commits
-> sent in this way by providing a whitelist of tips; only the tips
-> themselves and their ancestors will be sent.
+> i have noticed that merge.conflictstyle has an impact on the rerere
+> resolution. looking briefly at the source code, it seems that git
+> tries to discard the common ancestor diff3 bits, but what I am seeing
+> is that if i do the following then it fails:
 >
-> This feature is only supported for protocols that support connect or
-> stateless-connect (such as HTTP with protocol v2).
->
-> This will speed up negotiation when the repository has multiple
-> relatively independent branches (for example, when a repository
-> interacts with multiple repositories, such as with linux-next [1] and
-> torvalds/linux [2]), and the user knows which local branch is likely to
-> have commits in common with the upstream branch they are fetching.
->
-> [1] https://kernel.googlesource.com/pub/scm/linux/kernel/git/next/linux-next/
-> [2] https://kernel.googlesource.com/pub/scm/linux/kernel/git/torvalds/linux/
->
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
-> This is based on jt/fetch-pack-negotiator, but if that branch is
-> undesirable for whatever reason, I can port this to master.
-> ---
->  builtin/fetch.c    | 21 ++++++++++++++++++
->  fetch-pack.c       | 19 ++++++++++++++--
->  fetch-pack.h       |  7 ++++++
->  t/t5510-fetch.sh   | 55 ++++++++++++++++++++++++++++++++++++++++++++++
->  transport-helper.c |  3 +++
->  transport.c        |  1 +
->  transport.h        | 10 +++++++++
->  7 files changed, 114 insertions(+), 2 deletions(-)
+> 1. from a clean rr-cache state, with merge.conflictsytle=diff3, git
+> merge <branch with conflict>, resolve the conflicts, then commit
+> 2. undo the previous merge, remove merge.conflictstyle=diff3 (disable
+> diff3) and merge the *same* branch, then rerere won't fix the
+> conflicts
 
-What's the plan to expose this "feature" to end-users?  There is no
-end-user facing documentation added by this patch, and in-code
-comments only talk about what (mechanical) effect the option has,
-but not when a user may want to use the feature, or how the user
-would best decide the set of commits to pass to this new option.
+It is possible that the conflict left when making the same merge are
+actually different when using these two conflict styles.  IOW, if
+the merge produces
 
-Would something like this
+	<<<
+	side A
+	|||
+	common
+	===
+	side B
+	>>>
 
-    git fetch $(git for-each-ref \
-	--format=--nego-tip="%(objectname)" \
-	refs/remotes/linux-next/) \
-	linux-next
+when diff3 style is chosen, but if the same merge results in
 
-be an expected typical way to pull from one remote, exposing only
-the tips of refs we got from that remote and not the ones we
-obtained from other places?
+	<<<
+	side A'
+	===
+	side B'
+	>>>
+
+where side A' is not identical to side A (or B' and B are not
+identical), then we will fail to find the previously recorded
+resolution.
+
