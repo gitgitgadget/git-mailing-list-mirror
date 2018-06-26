@@ -2,96 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC8E21F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 12:43:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 782E71F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 12:57:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935173AbeFZMnS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 08:43:18 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55278 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S932438AbeFZMnS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 08:43:18 -0400
-Received: (qmail 8223 invoked by uid 109); 26 Jun 2018 12:43:18 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 26 Jun 2018 12:43:18 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29135 invoked by uid 111); 26 Jun 2018 12:43:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 26 Jun 2018 08:43:38 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 26 Jun 2018 08:43:16 -0400
-Date:   Tue, 26 Jun 2018 08:43:16 -0400
-From:   Jeff King <peff@peff.net>
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: curious about wording in "man git-config", ENVIRONMENT
-Message-ID: <20180626124316.GA15419@sigill.intra.peff.net>
-References: <alpine.LFD.2.21.1806260608270.6007@localhost.localdomain>
+        id S965234AbeFZM54 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 08:57:56 -0400
+Received: from mout.gmx.net ([212.227.17.20]:58549 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S965117AbeFZM5n (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 08:57:43 -0400
+Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MQRZw-1fjvY60nVc-00Thff; Tue, 26
+ Jun 2018 14:57:38 +0200
+Date:   Tue, 26 Jun 2018 14:57:37 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Alban Gruin <alban.gruin@gmail.com>
+cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        phillip.wood@dunelm.org.uk
+Subject: Re: [GSoC][PATCH 1/1] sequencer: print an error message if
+ append_todo_help() fails
+In-Reply-To: <20180626100429.10169-2-alban.gruin@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1806261455510.21419@tvgsbejvaqbjf.bet>
+References: <20180626100429.10169-1-alban.gruin@gmail.com> <20180626100429.10169-2-alban.gruin@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.21.1806260608270.6007@localhost.localdomain>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:l1EL86HRKNKFZX7ZFxgqiaWh500pXyKtGFuXAE3JZoUkSugug40
+ 9OfGfFSBN4H5upUm+kyuRwt8F9PJOjqHlZDT49F9VXA+dcahqL0sM46Rq65L1ia11udjI97
+ gKrYMKFloJWQL+BcVrTgmVdzcxPemcYooVGQpSU0gQBDAj4KQzRa3hFVuhi2/4j+HQyYeb+
+ sxf/xm0FIr8DuFiF0NdSw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:zUiE9/10dmg=:LyXHl4t+hEwm4uHErgvlLt
+ /DvWrJKTDjfEKrqK9GeXsjHmQHj+Ibbc50e4TLV30HMu1JIFNNn+mWgDkH418nLjcMv1/n4ZA
+ xoqgrqn6azaVJLnqfyJnA2UuA14GAcJB7y2tMv7MKgxDc4QL/F66/d1vWEWGl8zpYLu0+g/Cz
+ eQUrw5BjmINp+kRc1RbuDhji+RD4z7W/eh0Q/03TDAAiYGsLcbxcoqKRxkH1fCJ7o0pWcZpny
+ sUqt/dlaKI2OssEEzxgbBDXcGyXB+TBnWvHCuIN4FSy1YoPBERd5otrmcijvN5yC4p1i9Lkwz
+ oolHU5k7JqKZ6s2RPvRirjMG36Df8lGGzwBEImvcWn7ESTCRfeP/EKy+VQTEQyaNEMuMnhJaf
+ fn9gkMayqfcOPswvcgsiUbLpeNS1s2WBh6wOj/o/Bdw9dxlGEmDCUGKTiytV4kS7UwtWdOCyj
+ KVtDpvyUxscMwcb02cceqH9sx8mTeaiQwz9TAQs9uLIeo3olplurN4gNDYzb3UZkmaLh2r8YA
+ 9mCBVJUYX6ax5yZmyCYLyKvyHvvPT4bfJWVR4FnrwBE5UcPxij2iiW+II0HOZv94IVWKHqXbB
+ t4kU+Fuk6TEt18mTbj6F9u5rqQYdniWvl1he5aCAfYeuRzKgQ5L4M1NscCyU7xEFewq2zS5kV
+ PDq9hcGzriTLLEDSJsyZT43nWLGlUSECedEeao7hPQ0q2te5hAcUbKvXxXdZRYE6Bsy2gzwRQ
+ aM/g4Vs8KRBQY1IRr669VH5ou5GpKmfEg0oK8nMa42/dvJWht+DYUeglLL17x/WhNZ3OlW8qp
+ f4eS3+b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 26, 2018 at 06:18:26AM -0400, Robert P. J. Day wrote:
+Hi Alban,
 
+On Tue, 26 Jun 2018, Alban Gruin wrote:
+
+> This adds an error when append_todo_help() fails to write its message to
+> the todo file.
 > 
->   ENVIRONMENT
->     GIT_CONFIG
->       Take the configuration from the given file instead of
->       .git/config. Using the "--global" option forces this to
->       ~/.gitconfig. Using the "--system" option forces this to
->       $(prefix)/etc/gitconfig.
-> 
->   is the phrase "forces this to" really what you want to use here?
-> maybe i misunderstand what this option does, doesn't it simply mean
-> that it will use a different (specified) file from the default,
-> depending on the context (local, global, system)?
-> 
->   it just seems weird to say that the option "forces" the use of what
-> are clearly the default files. thoughts?
+> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
 
-I agree it's weird. I think it's trying to mean "behaves as if it was
-set to", but with the additional notion that the command-line argument
-would take precedence over the environment (which is our usual rule).
-But then we should just say those things explicitly.
+ACK.
 
-Just looking at mentions of GIT_CONFIG in that manpage and knowing the
-history, I think:
+We *may* want to fold that into the commit that adds `append_todo_help()`.
+And, as I mentioned previously, I would love for that function to be used
+as an excuse to introduce the long-overdue `interactive-rebase.c`
+(`sequencer.c` is supposed to be the backend for cherry-pick and revert
+and interactive rebase, but not a catch-all for *all* of those things, it
+is already way too long to be readable, and I take blame for a large part
+of that.)
 
- - the environment section should say something like:
-
-     GIT_CONFIG
-       If set and no other specific-file options are given, behaves as
-       if `--file=$GIT_CONFIG` was provided on the command-line.
-
- - possibly the manpage should mention that GIT_CONFIG is historical and
-   should not be used in new code (we could also consider an actual
-   deprecation period and removal of the feature, though aside from
-   documentation confusion I do not think it is hurting anyone)
-
- - the description of --file should not mention it at all. Instead it
-   should reference the "FILES" section which describes the whole lookup
-   sequence
-
- - mention of GIT_CONFIG should be dropped from the FILES section. We
-   don't want to point people towards using it. And if they come across
-   it in the wild, they can find it in the ENVIRONMENT section.
-
- - references to "--global" should stop mentioning ~/.gitconfig,
-   since in a post-XDG world it could be elsewhere (they're better to
-   refer to the "--global" description or the FILES section)
-
- - references to "--system" should stop mentioning $(prefix)/etc/gitconfig,
-   since it can be configured separately from the prefix (and in most
-   packaged builds which set prefix=/usr, $(sysconfdir) is not
-   $(prefix)/etc).
-
--Peff
+Ciao,
+Dscho
