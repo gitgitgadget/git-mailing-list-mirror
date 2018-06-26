@@ -2,151 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 82B041F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 18:17:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C67661F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 18:27:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933274AbeFZSRO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 14:17:14 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:36819 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752508AbeFZSRD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 14:17:03 -0400
-Received: by mail-wm0-f68.google.com with SMTP id u18-v6so2839097wmc.1
-        for <git@vger.kernel.org>; Tue, 26 Jun 2018 11:17:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=wmq1hqpw3rPRx31dr/yoPLrVf20GfqkfUVWFh0zo9pc=;
-        b=muRSKx9E0RNtRK8vKUs2iO6/uAgac/KJFgSlCrbxlWZgWgMaFe204Rm+DBbwtv4iZN
-         tvi9z0hi077fMOeq3e9D2YYH6uVZL+v7OSPweMGPhIrJYsaGfF/c/e5MgP1c5vSi9cRe
-         oKWjJDyrMykDW8IJ2nE5khNb1JRDZIV9TG5+MjuhZ00Ua9yhkUY67k2JnrWYBBU+Rf6o
-         2607p7ln+h0eo3BuTfuORhIV0wXo0JQQCdTi68iNOkNZWxBtdlHd+OnSInmrGNxshfP3
-         zWBcoFhRxOdPEDw8RSWldK2v91s+i+zbi15meRTlMQ32qoavh+ZyQwrhpNdAhg4mHWlV
-         Ncag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=wmq1hqpw3rPRx31dr/yoPLrVf20GfqkfUVWFh0zo9pc=;
-        b=EoiIHkbnjlzxGkd7fkfsxmM1tvO4PsjaEx8roTn7rIeVI/3flMRnWghOP7uJO3KOXf
-         bsbajoJQ+t3eQJc16gdpHWxe8h8cLbfk2GwNkk5MKuMclCGNnCaors74pO42JcOJLkRv
-         RCm/Or1E6Wf+6ct7gDe5uF9zH3pVC1t0moiEpjNPZkztLDdGdUwcLP9cH0rP567nDEeB
-         9JMyPg1VBYTQM0zhuGLwzwFZ7dR3Z7M5DRmxeDvvZNNS9yPeFtz0azgn0yngyPnUTbfY
-         joYXVPjZzO5ynbCJLHLO2yo8xk1wsibdb+3Sy1EUu7wANnseCbvIverhRb2/eIz47p26
-         L38Q==
-X-Gm-Message-State: APt69E2EFONsXeMd+P50T1gOClBWnJRKhQoea9/C1xArU8f/HDPUKUIm
-        3x9xLlnVk1tZzSYiixxu6ps=
-X-Google-Smtp-Source: AAOMgpcZdafnRtoVjiOMLGJLQdD+sgfFBHs/c9wxGCSOpteIv6OxVyiNlcLZs358ac0z92v/fl7mnA==
-X-Received: by 2002:a1c:d681:: with SMTP id n123-v6mr2374380wmg.158.1530037022378;
-        Tue, 26 Jun 2018 11:17:02 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id p5-v6sm2878356wre.83.2018.06.26.11.17.00
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 26 Jun 2018 11:17:01 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     git@vger.kernel.org, phillip.wood@dunelm.org.uk,
-        johannes.schindelin@gmx.de, sunshine@sunshineco.com,
-        szeder.dev@gmail.com
-Subject: Re: [PATCH v4 3/9] t3422: new testcases for checking when incompatible options passed
-References: <20180621150023.23533-1-newren@gmail.com>
-        <20180625161300.26060-1-newren@gmail.com>
-        <20180625161300.26060-4-newren@gmail.com>
-Date:   Tue, 26 Jun 2018 11:17:00 -0700
-In-Reply-To: <20180625161300.26060-4-newren@gmail.com> (Elijah Newren's
-        message of "Mon, 25 Jun 2018 09:12:54 -0700")
-Message-ID: <xmqqk1qll8f7.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1752206AbeFZS1m (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 14:27:42 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55722 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751155AbeFZS1m (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 14:27:42 -0400
+Received: (qmail 29283 invoked by uid 109); 26 Jun 2018 18:27:41 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 26 Jun 2018 18:27:41 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 32196 invoked by uid 111); 26 Jun 2018 18:28:01 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 26 Jun 2018 14:28:01 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 26 Jun 2018 14:27:40 -0400
+Date:   Tue, 26 Jun 2018 14:27:40 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [BUG] url schemes should be case-insensitive
+Message-ID: <20180626182739.GA28358@sigill.intra.peff.net>
+References: <20180624085622.GA28575@sigill.intra.peff.net>
+ <xmqqvaa6ohiw.fsf@gitster-ct.c.googlers.com>
+ <20180626122143.GA14052@sigill.intra.peff.net>
+ <xmqq1sctmq3d.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq1sctmq3d.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+On Tue, Jun 26, 2018 at 10:09:58AM -0700, Junio C Hamano wrote:
 
-> +# Rebase has lots of useful options like --whitepsace=fix, which are
-> +# actually all built in terms of flags to git-am.  Since neither
-> +# --merge nor --interactive (nor any options that imply those two) use
-> +# git-am, using them together will result in flags like --whitespace=fix
-> +# being ignored.  Make sure rebase warns the user and aborts instead.
-> +#
-> +
-> +test_rebase_am_only () {
-> +	opt=$1
-> +	shift
-> +	test_expect_failure "$opt incompatible with --merge" "
-> +		git checkout B^0 &&
-> +		test_must_fail git rebase $opt --merge A
-> +	"
-> +
-> +	test_expect_failure "$opt incompatible with --strategy=ours" "
-> +		git checkout B^0 &&
-> +		test_must_fail git rebase $opt --strategy=ours A
-> +	"
-> +
-> +	test_expect_failure "$opt incompatible with --strategy-option=ours" "
-> +		git checkout B^0 &&
-> +		test_must_fail git rebase $opt --strategy=ours A
+> > It may also interact in a funny way with our allowed-protocol code, if
+> > "SSH" gets a pass as "ssh" under the default config, but actually runs
+> > the otherwise-disallowed git-remote-SSH (though one would _hope_ if you
+> > have such a git-remote-SSH that it behaves just like an ssh remote).
+> 
+> True.  I did not offhand recall how protocol whitelist matches the
+> protocol name with config, but transport.c::get_protocol_config()
+> seems to say that the <name> part of "protocol.<name>.allow" is case
+> sensitive, and we match known-safe (and known-unsafe "ext::")
+> protocols with strcmp() not strcasecmp().  We need to figure out the
+> implications of allowing SSH:// not to error out but pretending as
+> if it were ssh:// on those who have protocol.ssh.allow defined.
 
-This line is broken and it is carried over to later patches.  It
-needs to be -Xours (or --strategy-option=ours, if we really want ot
-be verbose).
+That function is actually a little tricky, because we feed it mostly
+from string literals (so we end up in the ssh code path, and then feed
+it "ssh"). But I think for remote-helpers we feed it literally from the
+URL we got fed.
 
-> +	"
-> +
-> +	test_expect_failure "$opt incompatible with --interactive" "
-> +		git checkout B^0 &&
-> +		test_must_fail git rebase $opt --interactive A
-> +	"
-> +
-> +	test_expect_failure "$opt incompatible with --exec" "
-> +		git checkout B^0 &&
-> +		test_must_fail git rebase $opt --exec 'true' A
-> +	"
-> +
-> +}
+So yeah, we would not want to allow EXT::"rm -rf /" to slip past the
+known-unsafe match. Any normalization should happen before then
+(probably right in transport_helper_init).
 
-> +
-> +test_rebase_am_only --whitespace=fix
-> +test_rebase_am_only --ignore-whitespace
-> +test_rebase_am_only --committer-date-is-author-date
-> +test_rebase_am_only -C4
+Come to think of it, that's already sort-of an issue now. If you have a
+case-insensitive filesystem, then EXT:: is going to pass this check, but
+still run git-remote-ext. We're saved there somewhat by the fact that
+the default is to reject unknown helpers in submodules (otherwise, we'd
+have that horrible submodule bug all over again).
 
-I was hesitant to hardcode what I perceive as limitations of non-am
-rebase implementations with a test like this, but once somebody
-fixes "rebase -i" for example to be capable of --whitespace=fix for
-example, then we can just drop one line from the above four (and
-write other tests for "rebase -i --whitespace=fix").  The
-test_rebase_am_only is to help us make sure what is (still) not
-supported by non-am rebases gets diagnosed as an error.
+That goes beyond just cases, too. On HFS+ I wonder if I could ask for
+"\u{0200}ext::" and run git-remote-ext.
 
-So my worry is totally unfounded, which is good.
+> > I think it doesn't help much if the user does not know what a remote
+> > helper is, or why Git is looking for one.
+> 
+> True.  
+> 
+> 	$ git clone SSH://example.com/repo.git
+> 	fatal: unable to handle URL that begins with SSH://
+> 
+> would be clear enough, perhaps?  At least this line of change is a
+> small first step that would improve the situation without potential
+> to break anybody who has been abusing the case sensitivity loophole.
 
-> +test_expect_success '--preserve-merges incompatible with --signoff' '
-> +	git checkout B^0 &&
-> +	test_must_fail git rebase --preserve-merges --signoff A
-> +'
-> +
-> +test_expect_failure '--preserve-merges incompatible with --rebase-merges' '
-> +	git checkout B^0 &&
-> +	test_must_fail git rebase --preserve-merges --rebase-merges A
-> +'
-> +
-> +test_expect_failure '--rebase-merges incompatible with --strategy' '
-> +	git checkout B^0 &&
-> +	test_must_fail git rebase --rebase-merges -s resolve A
-> +'
-> +
-> +test_expect_failure '--rebase-merges incompatible with --strategy-option' '
-> +	git checkout B^0 &&
-> +	test_must_fail git rebase --rebase-merges -Xignore-space-change A
-> +'
-> +
-> +test_done
+Yeah, certainly the advice is orthogonal to any behavior changes. The
+original report complained of:
+
+  $ git clone SSH://...
+  fatal: 'remote-SSH' is not a git command. See 'git --help'.
+
+but since 6b02de3b9d in 2010 we say:
+
+  fatal: Unable to find remote helper for 'SSH'
+
+So I actually wonder if there is something else going on. I find it hard
+to believe the OP is using something older than Git v1.7.0. They did
+appear to be on Windows, though. Is it possible our ENOENT detection
+from start_command() is not accurate on Windows?
+
+-Peff
