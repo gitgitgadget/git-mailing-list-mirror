@@ -2,105 +2,219 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4D641F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 22:31:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E777D1F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 22:31:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933907AbeFZWbR (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 18:31:17 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:40300 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933596AbeFZWbP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 18:31:15 -0400
-Received: by mail-wr0-f195.google.com with SMTP id g18-v6so30970wro.7
-        for <git@vger.kernel.org>; Tue, 26 Jun 2018 15:31:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=PJH4A08vYEgF6GFYPj04ln/+N8MnVEEQHTyEEzoTCJI=;
-        b=OnF2mtjdmZohl+nOEd0mUHVVmqGBG6WmFrmkdGp8OAvqqozlrkiCcX7O0ZPcEk1QYq
-         xN5/hPqQi9wIGnaB/AO7BJeoVbFXFPxsAYO8B489bZ6AG+dAqc4MxGq1FY3wbdOo8hEv
-         j7mFkeC1hQBdfc+rwcPLnFaylHwmcJJFEYaOoywXTksDZGvjWTNDAhYTXYlPA1l5j3p3
-         bRjGxIvYDBGd1BEPdebCQDebpWu5levCr0Z30iaOgPjQSPVM7nnQ75o2QIg2ZhlU+4rl
-         f6uPa50suhHdKyU0aYGxegGWONylnyvked078tB+bKboFzyxq8Vf0Gt7AFMRsutdVQJv
-         rZIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=PJH4A08vYEgF6GFYPj04ln/+N8MnVEEQHTyEEzoTCJI=;
-        b=taYijAwXCKmedcvZ8YKH3BCH2cLIR162EWM/AaBKhLY3xBIp2xctUEkaN2aYISrtXI
-         3zrBFp/uxPw7LtCDXTaGKXh9u+ccIdZhfHrnjat8H7EBv3/Qh6YTsvzTOAVKWtC5TjGd
-         HrF5MgM2JvA87YA4D2Dg1MlO+ywIdQdyt6ASAZYcDEMIaMeouu5IGqrUxyGDD9s+slZ3
-         7QJqdyopRVrJHgGDExDzgWmfqBFex4UGHJDRLxqS3Hq38Uq9sX0sXoGjfi0P7izJzo9C
-         KGr0Bu9CmJHG78ljBmLBezsoFEaEqVRSy1KsN+Gm11fo5lLfg4LHg6htrr78CrZ+ACYF
-         PtZw==
-X-Gm-Message-State: APt69E2qVPdR1RNGg2UDs+yRqqlXEMffIwLSNtrhHy9JB7Mpfh9Ip+2J
-        D2AEGdRvB3bpxh9kqLSEoeA=
-X-Google-Smtp-Source: AAOMgpf0Uyc9kVBqjV2TgYBba1xfVN1gEAfLsnSQ5/gQLUBOQ5gV/uKayrUVSL5/obc0WtkG/LS4vg==
-X-Received: by 2002:adf:b310:: with SMTP id j16-v6mr2818714wrd.207.1530052273299;
-        Tue, 26 Jun 2018 15:31:13 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id w126-v6sm3494584wmw.29.2018.06.26.15.31.12
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 26 Jun 2018 15:31:12 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
-        Stefan Beller <sbeller@google.com>,
-        Elijah Newren <newren@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH 00/29] t: detect and fix broken &&-chains in subshells
-References: <20180626073001.6555-1-sunshine@sunshineco.com>
-        <xmqqo9fxjq39.fsf@gitster-ct.c.googlers.com>
-        <CAPig+cSW6jP3FtYpwf5bB4SM=qw6A3K9H3JPranJ_KMqH-AwZw@mail.gmail.com>
-Date:   Tue, 26 Jun 2018 15:31:11 -0700
-In-Reply-To: <CAPig+cSW6jP3FtYpwf5bB4SM=qw6A3K9H3JPranJ_KMqH-AwZw@mail.gmail.com>
-        (Eric Sunshine's message of "Tue, 26 Jun 2018 17:25:34 -0400")
-Message-ID: <xmqq6025i3io.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S933675AbeFZWbl (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 18:31:41 -0400
+Received: from mout.gmx.net ([212.227.17.21]:57903 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S933266AbeFZWbj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 18:31:39 -0400
+Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MbrR4-1fq9ZX2AoI-00JMWp; Wed, 27
+ Jun 2018 00:31:37 +0200
+Date:   Wed, 27 Jun 2018 00:31:37 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH v6 4/4] stash: convert pop to builtin
+In-Reply-To: <5d5b05caecc01d8f252ef5f8495549663815ed63.1529943789.git.ungureanupaulsebastian@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1806270029450.21419@tvgsbejvaqbjf.bet>
+References: <cover.1529943789.git.ungureanupaulsebastian@gmail.com> <5d5b05caecc01d8f252ef5f8495549663815ed63.1529943789.git.ungureanupaulsebastian@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Aq3C2OmvtmBW4KWrG3ky3LqwF/NcDHj8GxviEJWCRjNaWwNEd9S
+ 3hih+Rb2e95OQSPQU81iT8ZZjlJnbkyPitOigbskZanZPZN1+ZdrLhKE4ClRAzpQS4Oc9OH
+ WUBpLoTiKNqKqz2fb27ZYMGeYCXYGgJx8g5lwvly6xeaqkyPRSjUJ3PGBMmRyDma6vv5ubj
+ KIj34f9b2JEmItsiJUQjg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:CpDaPrUCOOM=:tMgqoaCS5h8b6XKqz1TiBz
+ F6AZLgxPcniQN6kvfykieT/SV/kGSf/1Aim2SO8NCmq5nNk9ytw5GtO67yHmVeC+beiKY6jS/
+ j5ZGWl7q50HMKryYLoz9dkpTldGj2nGqFCCnxsg7Dj+ICwDgE/wSq0KowMkdG8LwEPjnpczir
+ YZ0LSsoOHgn2qlO+/nLIRhsfxDgr/RtnhvwpdMs5wbuhwVpp+52nzo1NWTCGGKKEeqaijDytH
+ e8cOfmtPdbqufuqcCIgqEfQTy8nhqSvFrs51VpwCgG8+hQLwrsVUUG+6msmMEO2I6ZQ5+DeWd
+ ZSApqQrmfhICK9CXSn2u+y0fM7THCzTXPWg+kj2PfPhr3ClaHfbJXmXvx+cLfxL1zzWFm4286
+ MHnVVHmRODxMP7AUhj3myjUqDAMiZsdprYNBGkVmmws8gZmTCNfQxMmz2Yf0qFFnbN3uQ747q
+ beOKDZ4d2kSyoZJnyS3+eY2fy5jsghIOqX0dKKxJKwmkZKKhyMa3s1Ujqyzmuo4fcqibFWotz
+ 0WECVSfWALsJ2ghTG8/mV6lMKP0DhC0BKCSFkicCh5x4usflvCtxeCjqwlbozhHaTdrWRQlgY
+ +GJ70sX/3bm3IM8sTCzeolBK3LhJpwpuhIXGu2rgkPWMW3QDf6W3p/3qLvoXNTjTx4XjW9Gpc
+ Wl7xgqsgFNvSeSsw7vRy9mkz7OVvyLw+SHiw83pMI5mCfWjDyHdOfBUmpTTPokbVazwl6DORM
+ 1VdlCr0TAh8EEXfXTp4/WIhUZcYwO4tVz7+4yDfxYx0T5exU89Mp7x02wvv11Pso032xIM/Q/
+ Ac1np4/
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Hi Paul,
 
-> On Tue, Jun 26, 2018 at 3:38 PM Junio C Hamano <gitster@pobox.com> wrote:
->> I first looked at 29/29 and got heavily inclined to reject that
->> step, and then continued reading from 1/29 to around 15/29.
->>
->> I like these earlier changes that fix existing breakage, of course.
->> I also like many of the changes that simplify and/or modernise the
->> test scripts very much, but they are unusable as-is as long as their
->> justification is "chain-lint will start barfing on these constructs".
->
-> Sorry, I'm having difficulty understanding.
->
-> Are you saying that you don't want patches which exist merely to
-> pacify --chain-lint? (For instance, 2/29 "t0001: use "{...}" block
-> around "||" expression rather than subshell".)
+I think I had revewied these 4 patches before, and I'd wager a bet that
+you addressed all of my suggestions, if any.
 
-Yes.
+I had a look over patches 2-4, and want to take a little bit more time
+tomorrow to pour over patch 1 (which is a little larger, as it lays a lot
+of ground work), to make sure that I cannot find anything else to improve.
 
-> Or are you saying that you don't like how the commit messages are
-> worded, and that they should instead emphasize that the change is good
-> for its own sake, without mentioning --chain-lint?
+Well done so far!
+Dscho
 
-Yes, too.
 
-For example, 03/29 is a good clean-up, and its value is not
-diminished even if we reject the subprocess munging --chain-lint in
-29/29.
+On Mon, 25 Jun 2018, Paul-Sebastian Ungureanu wrote:
 
-As opposed to 02/29 which mostly is about appeasing the "shell
-parser" in 29/29 (or you could justify it saying "one less fork and
-process" if that gives us a measurable benefit).
+> From: Joel Teichroeb <joel@teichroeb.net>
+> 
+> Add stash pop to the helper and delete the pop_stash, drop_stash,
+> assert_stash_ref functions from the shell script now that they
+> are no longer needed.
+> 
+> Signed-off-by: Joel Teichroeb <joel@teichroeb.net>
+> Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+> ---
+>  builtin/stash--helper.c | 36 ++++++++++++++++++++++++++++++-
+>  git-stash.sh            | 47 ++---------------------------------------
+>  2 files changed, 37 insertions(+), 46 deletions(-)
+> 
+> diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
+> index fbf78249c..a38d6ae8a 100644
+> --- a/builtin/stash--helper.c
+> +++ b/builtin/stash--helper.c
+> @@ -13,7 +13,7 @@
+>  
+>  static const char * const git_stash_helper_usage[] = {
+>  	N_("git stash--helper drop [-q|--quiet] [<stash>]"),
+> -	N_("git stash--helper apply [--index] [-q|--quiet] [<stash>]"),
+> +	N_("git stash--helper ( pop | apply ) [--index] [-q|--quiet] [<stash>]"),
+>  	N_("git stash--helper branch <branchname> [<stash>]"),
+>  	N_("git stash--helper clear"),
+>  	NULL
+> @@ -24,6 +24,11 @@ static const char * const git_stash_helper_drop_usage[] = {
+>  	NULL
+>  };
+>  
+> +static const char * const git_stash_helper_pop_usage[] = {
+> +	N_("git stash--helper pop [--index] [-q|--quiet] [<stash>]"),
+> +	NULL
+> +};
+> +
+>  static const char * const git_stash_helper_apply_usage[] = {
+>  	N_("git stash--helper apply [--index] [-q|--quiet] [<stash>]"),
+>  	NULL
+> @@ -528,6 +533,33 @@ static int drop_stash(int argc, const char **argv, const char *prefix)
+>  	return ret;
+>  }
+>  
+> +static int pop_stash(int argc, const char **argv, const char *prefix)
+> +{
+> +	int index = 0, ret;
+> +	struct stash_info info;
+> +	struct option options[] = {
+> +		OPT__QUIET(&quiet, N_("be quiet, only report errors")),
+> +		OPT_BOOL(0, "index", &index,
+> +			N_("attempt to recreate the index")),
+> +		OPT_END()
+> +	};
+> +
+> +	argc = parse_options(argc, argv, prefix, options,
+> +			     git_stash_helper_pop_usage, 0);
+> +
+> +	if (get_stash_info(&info, argc, argv))
+> +		return -1;
+> +
+> +	assert_stash_ref(&info);
+> +	if ((ret = do_apply_stash(prefix, &info, index)))
+> +		printf_ln(_("The stash entry is kept in case you need it again."));
+> +	else
+> +		ret = do_drop_stash(prefix, &info);
+> +
+> +	free_stash_info(&info);
+> +	return ret;
+> +}
+> +
+>  static int branch_stash(int argc, const char **argv, const char *prefix)
+>  {
+>  	const char *branch = NULL;
+> @@ -589,6 +621,8 @@ int cmd_stash__helper(int argc, const char **argv, const char *prefix)
+>  		return !!clear_stash(argc, argv, prefix);
+>  	else if (!strcmp(argv[0], "drop"))
+>  		return !!drop_stash(argc, argv, prefix);
+> +	else if (!strcmp(argv[0], "pop"))
+> +		return !!pop_stash(argc, argv, prefix);
+>  	else if (!strcmp(argv[0], "branch"))
+>  		return !!branch_stash(argc, argv, prefix);
+>  
+> diff --git a/git-stash.sh b/git-stash.sh
+> index 29d9f4425..8f2640fe9 100755
+> --- a/git-stash.sh
+> +++ b/git-stash.sh
+> @@ -554,50 +554,6 @@ assert_stash_like() {
+>  	}
+>  }
+>  
+> -is_stash_ref() {
+> -	is_stash_like "$@" && test -n "$IS_STASH_REF"
+> -}
+> -
+> -assert_stash_ref() {
+> -	is_stash_ref "$@" || {
+> -		args="$*"
+> -		die "$(eval_gettext "'\$args' is not a stash reference")"
+> -	}
+> -}
+> -
+> -apply_stash () {
+> -	cd "$START_DIR"
+> -	git stash--helper apply "$@"
+> -	res=$?
+> -	cd_to_toplevel
+> -	return $res
+> -}
+> -
+> -pop_stash() {
+> -	assert_stash_ref "$@"
+> -
+> -	if apply_stash "$@"
+> -	then
+> -		drop_stash "$@"
+> -	else
+> -		status=$?
+> -		say "$(gettext "The stash entry is kept in case you need it again.")"
+> -		exit $status
+> -	fi
+> -}
+> -
+> -drop_stash () {
+> -	assert_stash_ref "$@"
+> -
+> -	git reflog delete --updateref --rewrite "${REV}" &&
+> -		say "$(eval_gettext "Dropped \${REV} (\$s)")" ||
+> -		die "$(eval_gettext "\${REV}: Could not drop stash entry")"
+> -
+> -	# clear_stash if we just dropped the last stash entry
+> -	git rev-parse --verify --quiet "$ref_stash@{0}" >/dev/null ||
+> -	clear_stash
+> -}
+> -
+>  test "$1" = "-p" && set "push" "$@"
+>  
+>  PARSE_CACHE='--not-parsed'
+> @@ -655,7 +611,8 @@ drop)
+>  	;;
+>  pop)
+>  	shift
+> -	pop_stash "$@"
+> +	cd "$START_DIR"
+> +	git stash--helper pop "$@"
+>  	;;
+>  branch)
+>  	shift
+> -- 
+> 2.18.0.rc2.13.g506fc12fb
+> 
+> 
