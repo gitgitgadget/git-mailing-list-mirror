@@ -2,79 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 51C9D1F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 21:42:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 38D421F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 21:42:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752113AbeFZVmg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 17:42:36 -0400
-Received: from mail-wr0-f177.google.com ([209.85.128.177]:35444 "EHLO
-        mail-wr0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751616AbeFZVmf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 17:42:35 -0400
-Received: by mail-wr0-f177.google.com with SMTP id c13-v6so8706015wrq.2
-        for <git@vger.kernel.org>; Tue, 26 Jun 2018 14:42:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=MjS9kc2TztTjZ/V6mmdUrsbFVHBqX/JbWm9nGqbOPk0=;
-        b=Pno0PP0JJQXVYx8hfhq+dASeIEk0BL5lQXvAB4OyGpTbMULNOSPaf0+SW1kbQW1mZq
-         6QsCd+WkVFTv0K85HSgKBP1gitJvo6xXxvey7SOpLFe4CPojaa9t9p+XPZra7GyELaE4
-         tm1+s3xH/4Lp1Rn0guVn8PkNMLEPvwajGwm9Rp9IrM0ZAaNOb1FJNo0Vov3sCQHFop7B
-         2Dxxu81Bswx9DxtcKwyqY2l4mWJju41fNJ14s9BmdE6eG32bXA7CFD520+gMFAGivLm9
-         I3U4jUDCAuu7s9RBP6liV4AqiyNoQK8x1XZ2DDKGbkBt0L9/AILi82kkkCXWRq9/ENVA
-         MmRQ==
+        id S1752299AbeFZVmr (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 17:42:47 -0400
+Received: from mail-yw0-f195.google.com ([209.85.161.195]:34624 "EHLO
+        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751616AbeFZVmq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 17:42:46 -0400
+Received: by mail-yw0-f195.google.com with SMTP id n187-v6so3166335ywd.1
+        for <git@vger.kernel.org>; Tue, 26 Jun 2018 14:42:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=MjS9kc2TztTjZ/V6mmdUrsbFVHBqX/JbWm9nGqbOPk0=;
-        b=rK9S1WVUzKJcmbSNoOjxmI/LEH+U/AI59aprHyu6VOCQ23WV3hTFtCEkJiS0pPd7vO
-         u6dIjIFxeiIab8K94DdF1ulUgWkO4r6Bp5DAn4dJdw6/hbjG/7bfwrtbbOxA9vZa9xXM
-         z+/YCAECXvyMqefnQjjDETrO/VgctkK7+tAPyhCAnuwkGqrn7i61/VKfBes+AkjsKc+3
-         A5RuDOFXll023rJlCRpye6MeQEv0Iie3pZfRy6a+RWzfqIYLSwM+k6frN5UV3zr/mJqD
-         cYShO7O1TOkjAGhsBteBSvUAXIS68LHLwWV6p+CmAYWpxR4LKonvNtoJhE4uWsD37hgf
-         YJow==
-X-Gm-Message-State: APt69E335zetNaTnMV2ldxxNl/PO3UDH34dC8TJNodKvqs4Dam/xGoqq
-        LOz6Fsr7cZijcVGIthXUVM8=
-X-Google-Smtp-Source: AAOMgpdxTY7g/om9V7rbj7xZT8mnorO+O8uaFaqinV2JgnX7KJUsGra3ga+Jg5OSGgo54/Ic4A5veQ==
-X-Received: by 2002:adf:f98a:: with SMTP id f10-v6mr2825245wrr.105.1530049354204;
-        Tue, 26 Jun 2018 14:42:34 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id j10-v6sm3590179wrr.47.2018.06.26.14.42.33
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 26 Jun 2018 14:42:33 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, jonathantanmy@google.com, sbeller@google.com,
-        jrnieder@gmail.com
-Subject: Re: [PATCH v5 7/8] fetch-pack: put shallow info in output parameter
-References: <20180625185332.164142-1-bmwill@google.com>
-        <20180626205438.110764-1-bmwill@google.com>
-        <20180626205438.110764-8-bmwill@google.com>
-Date:   Tue, 26 Jun 2018 14:42:33 -0700
-In-Reply-To: <20180626205438.110764-8-bmwill@google.com> (Brandon Williams's
-        message of "Tue, 26 Jun 2018 13:54:37 -0700")
-Message-ID: <xmqqfu19i5rq.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=NshcWC8+5Gbvd6AUMhfRCHSz5NX8Z3van6r4zTJ2HZU=;
+        b=bztsuVOgQ6Wk3e9AQTPrk4k23Cbx+GX90zip1IdTdU+SabY15Qjns2bOKSuAaJsE8/
+         ASZdSF1cQLWy3AeYhDUnmCdSenkyewc4+Ousb0pjLigLHuAyoyp3PvuhH80Im6l3Rhlu
+         J7hX8Rj6422YMFWkDX6RKdhUnIqqxcGPlugV3JReZdX51i0KmLu3Fb2h48ZtOw0h1CHU
+         LXnz/Ea0npNm3WWb2Z9Bm1ehwDo5TwtRBdHISMiP3I8RJwO5IhWrkoi+cvAZ7cBvmsFh
+         +0eYDaWZ39yD331D4gjqW4zi1ln+SY17LYzth9AaLrJPI4CUYekTvdqBMRnxZrJzE5Ba
+         lukw==
+X-Gm-Message-State: APt69E3fPNN/AuDv0zMsoWPQrx384mwtjTo3ojPM5TD16YXkQKrbS1az
+        pKM8LqjWVMk4sbvURsSAqsejl/HFwHZbfKXh8ak=
+X-Google-Smtp-Source: AAOMgpeqiFY6EBaQYK/DsaFBwalsZH0H9Rg1p1Og8wi34ZlbPJvCBzmRYUWala3HMPha4Co4k2z0b8TxQRmK8jx442k=
+X-Received: by 2002:a81:7b42:: with SMTP id w63-v6mr1678589ywc.70.1530049366305;
+ Tue, 26 Jun 2018 14:42:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20180626073001.6555-1-sunshine@sunshineco.com>
+ <20180626073001.6555-30-sunshine@sunshineco.com> <xmqqwouljr5e.fsf@gitster-ct.c.googlers.com>
+ <CAPig+cSLyie8mr+u8Thv9cJ0J12nCA+RU6Mg3S5F8U68q1+nzQ@mail.gmail.com>
+ <20180626201708.GA2341@sigill.intra.peff.net> <20180626202244.GB2341@sigill.intra.peff.net>
+ <CABPp-BGP2OFYgP5Xm0PMj_NPH2f_UmtMpoHYzcgo544V0e-_Zg@mail.gmail.com>
+In-Reply-To: <CABPp-BGP2OFYgP5Xm0PMj_NPH2f_UmtMpoHYzcgo544V0e-_Zg@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 26 Jun 2018 17:42:35 -0400
+Message-ID: <CAPig+cTc2XVX18ocv6ALOSA2CwM8aQLWW+mRWL6Pj1Wu_QHDHw@mail.gmail.com>
+Subject: Re: [PATCH 29/29] t/test-lib: teach --chain-lint to detect broken
+ &&-chains in subshells
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Git List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
+On Tue, Jun 26, 2018 at 5:33 PM Elijah Newren <newren@gmail.com> wrote:
+> On Tue, Jun 26, 2018 at 1:22 PM, Jeff King <peff@peff.net> wrote:
+> > Another option is to not enable this slightly-more-dangerous linting by
+> > default. But that would probably rob it of its usefulness, since it
+> > would just fall to some brave soul to later crank up the linting and fix
+> > everybody else's mistakes.
+>
+> This may be a dumb question, but why can't we run under errexit?  If
+> we could do that, we wouldn't need the &&-chaining, and bash would
+> parse the shell for us and exit whenever one command failed.  (Is the
+> reason for this documented somewhere?  I couldn't find it...)
 
-> Expand the transport fetch method signature, by adding an output
-> parameter, to allow transports to return information about the refs they
-> have fetched.  Then communicate shallow status information through this
-> mechanism instead of by modifying the input list of refs.
+I'm not sure if it's documented anywhere, but it has been discussed.
+In particular, see [1], especially [2], and [3]. Peff summed up by
+saying:
 
-Makes sense.  Would this mechanism also allow us to be more explicit
-about the "tag following"?
+    So I dunno. I think "set -e" is kind of a dangerous lure. It works
+    so well _most_ of the time that you start to rely on it, but it
+    really does have some funny corner cases (even on modern shells,
+    and for all I know, the behavior above is mandated by POSIX).
 
+[1]: https://public-inbox.org/git/xmqq384zha6s.fsf@gitster.dls.corp.google.com/
+[2]: https://public-inbox.org/git/20150320172406.GA15172@peff.net/
+[3]: https://public-inbox.org/git/xmqqoannfu84.fsf@gitster.dls.corp.google.com/
