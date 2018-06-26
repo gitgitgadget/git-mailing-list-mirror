@@ -2,119 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F1E21F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 09:21:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19E5C1F597
+	for <e@80x24.org>; Tue, 26 Jun 2018 09:28:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933428AbeFZJVc (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 05:21:32 -0400
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:42589 "EHLO
-        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933189AbeFZJVa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 05:21:30 -0400
-Received: by mail-yw0-f194.google.com with SMTP id i143-v6so4350299ywc.9
-        for <git@vger.kernel.org>; Tue, 26 Jun 2018 02:21:30 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=FxLgarfGT5fIvM2naIFkehb5cT5o82FURbKU3H1v8TM=;
-        b=N8xGTWdVn97E5aEJ0dnjyi80xJ/6z1v9hH3XKs9RD4J63tZ3WlldlI/25EpjHXYuv/
-         ciMtpt0wSMYmDevJlnuE0SZ1GZD5OutK1bPyNDNrTlHHW9QOrwDuFstl/Tjj/oi8pSp2
-         QQNxEwkk8P5fJn3OQK1sW6+tsg/F+i8Eiea/FtuhNsxOWEKZtH7P0DG1G6xcmhe3s4uh
-         tuwkcX5TDt8v6gnYdDy0/SuPVlzj+07roPBd6/zCuaBivLk0iVae38sZsiKY1q94hT5D
-         RzzslCMKoe0E3rrlQGG4nxe1tZrH5HYzi/v3OcuesW3URrDdrglUCGHwFrr/HpFOPEa0
-         ECnQ==
-X-Gm-Message-State: APt69E1MVRANc4a1IbIqenuB29G46rxJXcHq86ulf4UCy2qfd0B0SSdk
-        e3IR4XSrpg9UF4IgHb1ZAMId/EfydSPl/TpWnrs=
-X-Google-Smtp-Source: AAOMgpeX7Y12NA6q/mXKH52YPomc3bY1C6Wn/3QlCXqXTFzTFv8ziV8u7wvxq2tR2uD6DkH/qlfmvtxxE089q0C6j4s=
-X-Received: by 2002:a81:451a:: with SMTP id s26-v6mr296277ywa.74.1530004890301;
- Tue, 26 Jun 2018 02:21:30 -0700 (PDT)
+        id S932965AbeFZJ2q (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 05:28:46 -0400
+Received: from mout.gmx.net ([212.227.15.18]:33527 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S934063AbeFZJ2Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 05:28:16 -0400
+Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MSdz2-1fhkAC2Ljw-00Rbmh; Tue, 26
+ Jun 2018 11:28:12 +0200
+Date:   Tue, 26 Jun 2018 11:28:11 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>,
+        Alban Gruin <alban.gruin@gmail.com>
+cc:     git@vger.kernel.org
+Subject: ag/rebase-i-append-todo-help, was Re: What's cooking in git.git (Jun
+ 2018, #06; Mon, 25)
+In-Reply-To: <xmqqin66mql6.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1806261125330.21419@tvgsbejvaqbjf.bet>
+References: <xmqqin66mql6.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20180626073001.6555-1-sunshine@sunshineco.com>
- <20180626073001.6555-18-sunshine@sunshineco.com> <CABPp-BFmfN6=E+3BAKt-NH5hmU-368shgDnrnkrnMRvKnx07BQ@mail.gmail.com>
-In-Reply-To: <CABPp-BFmfN6=E+3BAKt-NH5hmU-368shgDnrnkrnMRvKnx07BQ@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 26 Jun 2018 05:21:17 -0400
-Message-ID: <CAPig+cRTG625H3CF1Zw30vQt2W8uKf1xLxVaQni2YbJ=xAif2g@mail.gmail.com>
-Subject: Re: [PATCH 17/29] t: use test_must_fail() instead of checking exit
- code manually
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:HFO/4dMNp26T3TqnJUns73pPPB6saxHEEB1D4YUxZbFlJKwavOi
+ ++/J9nCU6M4qXOrTcBn/SS/gKTLqKlH5wPexNDYGJ9S4nSSrNqDQTwjB7rGrKuF3oUHcjUP
+ g7CJaaisml9iQkMWWN7TFp6IROsFJFIguW2PXwgakyogX5L1AYzLru/NFR+HoXkuByoI2xv
+ vyaZN3cJhaw8R13KV/5Ww==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:cQS3eiUph7k=:sJsCus/FUnSx/becn017bN
+ 4s36XMED3a5S+xDflQzIiYCUcGlnFT2LFJlO6uHT4g9aa4P9ihD+7sLaHs3iZ+QfrXCCJCtxj
+ x8FG4eJn80+C+Oq5EmRFXzr4Zoh+z2xf+GHBwsu1wNIldQ17N/zoRL0Zwdf4MWR0SwmkWRaXo
+ xw06+SjM/emU2LmE1noDGkewhDoLmT2cpRscFytxpddteKucBshH0OD2Ioh+57/blfxg2xyEL
+ KocLFRYV9aA1eifX/KAYOYEBlmu6/0cmHv5kXbuqMSutHyOtdpig7wSLmUz1KbSXeT2As882g
+ +ECihNn6zOUvJDtB1teRn/C7zQ+dGLRpoC4Wudc1m333ZvklSm3RSSW0G+yg3xzpa4f0Dw1Is
+ Kd1E7FgV5fy9sLNn+BxAukClqjgf4GHY8GCu1v4uOnhuuw47Q66CqSYY+tjtM96g7gXdT9CsC
+ cTFTKkxphZ/mq2PumlAPqXqTB4xKpWAepEZG9ZlljgGqkiOHnMAKr1hZcVRmrdr4r6t98/Fch
+ +HIXp8n7NOisxKLXywBPdPsEwWYEsVinMUrtrjxt2atgF/2ITzubnthhQnj4A3eIyi6lQjD4G
+ AcS9uDs/S/wGSo1DjuUcky8KwwN6W51izdnptfFNvCuPTMuuhpHTJzLPuZzIsfLTuiy9pZFKJ
+ U3HAescYgzEEKI4+r0LjRuJ11OCSYKC5ag5f77/t4vb0Xqu3yvX0pOEjVWi5hJRTdn6zF3KKN
+ Zz6CUVimLGj6Fe0srGtmwfYP6gFNkp/vUAlBI1/Oak5jAXX1m/XF2XSoy23JWq0uVy7InKhNc
+ 9+d04Vy
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 26, 2018 at 4:58 AM Elijah Newren <newren@gmail.com> wrote:
-> On Tue, Jun 26, 2018 at 12:29 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > [...] Therefore,
-> > replace the manual exit code management with test_must_fail() and a
-> > normal &&-chain.
-> >
-> > Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
-> > ---
-> > diff --git a/t/t5405-send-pack-rewind.sh b/t/t5405-send-pack-rewind.sh
-> > @@ -25,8 +25,7 @@ test_expect_success 'non forced push should die not segfault' '> > -               git push .. master:master
-> > -               test $? = 1
-> > +               test_must_fail git push .. master:master
->
-> test_must_fail or test_expect_code 1?
+Hi Junio & Alban,
 
-A legitimate question, and the answer is that it's a judgment call
-based upon the spirit of the test.
+On Mon, 25 Jun 2018, Junio C Hamano wrote:
 
-Although test_expect_code() would make for a faithful literal
-conversion, I don't think it agrees with the spirit of this test,
-which wants to verify that the command correctly exits with an error
-(in the general sense), as opposed to outright crashing (which it did
-at one time). test_must_fail() is tailor-made for this use case.
+> * ag/rebase-i-append-todo-help (2018-06-14) 2 commits
+>  - rebase--interactive: rewrite append_todo_help() in C
+>  - Merge branch 'ag/rebase-p' into ag/rebase-i-append-todo-help
+>  (this branch is used by ag/rebase-i-rewrite-todo.)
+> 
+>  Stepwise rewriting of the machinery of "rebase -i" into C continues.
 
-Contrast this with patch 09/29 "t7810: use test_expect_code() instead
-of hand-rolled comparison". Different exit codes from git-grep have
-genuine different meanings, and that test is checking for a very
-specific exit code, for which test_expect_code() is tailor-made.
+I just reviewed this on GitHub (which gives me an interactive way to look
+around outside of the diff context) and I think there are two things left
+to do (which I mentioned to Alban on IRC):
 
-> > diff --git a/t/t9814-git-p4-rename.sh b/t/t9814-git-p4-rename.sh
-> > @@ -12,20 +12,8 @@ test_expect_success 'start p4d' '
-> >  test_expect_success 'p4 help unknown returns 1' '
-> >         (
-> >                 cd "$cli" &&
-> > -               (
-> > -                       p4 help client >errs 2>&1
-> > -                       echo $? >retval
-> > -               )
-> > -               echo 0 >expected &&
-> > -               test_cmp expected retval &&
-> > -               rm retval &&
-> > -               (
-> > -                       p4 help nosuchcommand >errs 2>&1
-> > -                       echo $? >retval
-> > -               )
-> > -               echo 1 >expected &&
-> > -               test_cmp expected retval &&
-> > -               rm retval
-> > +               p4 help client &&
-> > +               test_must_fail p4 help nosuchcommand
->
-> same question?
+- `msg = _(...)` should be `msg = N_(...)` instead, with the corresponding
+  `_(msg)` later on, and
 
-Same answer. Not shown in this patch, but just above the context lines
-you will find this comment in the file:
+- to avoid cluttering sequencer.c, and to pave the way for future `rebase
+  -i`-specific code, the `append_todo_help()` function should go into a
+  new file called `interactive-rebase.c`.
 
-    # We rely on this behavior to detect for p4 move availability.
-
-which means that the test is really interested in being able to
-reliably detect if a sub-command is or is not available. So, despite
-the (somewhat) misleading test title, this test doesn't care about the
-exact error code but rather cares only that "p4 help nosuchcommand"
-errors out, period. Hence, test_must_fail() again agrees with the
-spirit of the test.
+Ciao,
+Dscho
