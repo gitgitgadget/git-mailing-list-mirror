@@ -2,126 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CAA2E1F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 18:02:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2418A1F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 18:06:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751977AbeFZSCO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 14:02:14 -0400
-Received: from mail-it0-f65.google.com ([209.85.214.65]:55780 "EHLO
-        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751549AbeFZSCM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 14:02:12 -0400
-Received: by mail-it0-f65.google.com with SMTP id 16-v6so3646982itl.5
-        for <git@vger.kernel.org>; Tue, 26 Jun 2018 11:02:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dana-is.20150623.gappssmtp.com; s=20150623;
-        h=from:content-transfer-encoding:mime-version:subject:message-id:date
-         :to;
-        bh=uYPaCoJiMNlNn9Lxh3i8jg4L3IE5Z/qU3il+3ojarwE=;
-        b=XTPc49+kP+CKCYvBp1oxxPlDVDFJdyz0QsjlwEE3EKZf+x0w53yNVKo+WIT4SK4PSk
-         na8ZkHmKQgmFZbtLKZXZOqobdYusI3dzWTE8rTL8T78Q1xuWh45JoIitznlps43Los2m
-         0oNLrQYlkVvrc6eq5+e7uUqnmPmxf0FzGd4wM/FtZ/v3fDyfOEPNQi0M9skdmlsSgeQ/
-         8WQOfFhatYEHidN/sphYDtF3Yk/naQ0Nf17jDr+4lE56jLaFEVAAQyTJraOzINpEnckO
-         jN0gM8uapBvme6QEwgpoeueXLiyAEAeVt3wof+0btlz7ADg59xEnSjuFqnHxdLkTikw5
-         HtBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version
-         :subject:message-id:date:to;
-        bh=uYPaCoJiMNlNn9Lxh3i8jg4L3IE5Z/qU3il+3ojarwE=;
-        b=DIJY0GULR393hiZHMeZcvPKHUJ4ynF6ktIn/3xSm3yxhgljbxMoi3HwQvAcQRDkrn2
-         APbOlPRk8rWo1d6i/KdSg5TBk/luRlWNXKa+LRd+LikzWVGvkXMDo1sDaB8oNLy5tQDo
-         r7YWBYfx82bETA8IqlODTmQVZNBuf5nYejBB4oVz06158yxxUdqzEhARiMSbTLPf2JC1
-         TLxtvDlIwt3aR7A7+N5FDO1L/MEUuVgi+rb7kA+QWjFgLjSq8w8+HlJ53DUUI1cO4jro
-         hyGr2z8VtEm9pXp6NcI39OavkkM5UM6h0+dYj+LSjfIKD4q/s3Dy1dUsY7rGv3iPy1lK
-         +Ydw==
-X-Gm-Message-State: APt69E2eSIG8W/anH3xyIuL+bKR6Hp/DPdVvtSZ2RthSV2zrSTRZjgKr
-        SHRhLa5jkx+nvA8n+IacYW3uypjxK4A=
-X-Google-Smtp-Source: AAOMgpduFkeZm/kiffYfbpGl9yyH1kcYaC9VI/h4l9zYfjhh88UKEzQyr/tPCDwa9l3vKD1GAm6i1w==
-X-Received: by 2002:a02:982:: with SMTP id 2-v6mr2139714jam.79.1530036131394;
-        Tue, 26 Jun 2018 11:02:11 -0700 (PDT)
-Received: from proserpina.cipafilter.local ([216.24.127.7])
-        by smtp.gmail.com with ESMTPSA id g81-v6sm1005878iof.13.2018.06.26.11.02.10
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 26 Jun 2018 11:02:10 -0700 (PDT)
-From:   dana <dana@dana.is>
-Content-Type: text/plain;
-        charset=us-ascii
+        id S1751948AbeFZSF7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 14:05:59 -0400
+Received: from bsmtp7.bon.at ([213.33.87.19]:51873 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751127AbeFZSF6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 14:05:58 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 41FYr41f7Xz5tl9;
+        Tue, 26 Jun 2018 20:05:56 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id DD1D91CBC;
+        Tue, 26 Jun 2018 20:05:55 +0200 (CEST)
+Subject: Re: [PATCH 17/29] t: use test_must_fail() instead of checking exit
+ code manually
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Elijah Newren <newren@gmail.com>, Git List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder@ira.uka.de>,
+        Stefan Beller <sbeller@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+References: <20180626073001.6555-1-sunshine@sunshineco.com>
+ <20180626073001.6555-18-sunshine@sunshineco.com>
+ <CABPp-BFmfN6=E+3BAKt-NH5hmU-368shgDnrnkrnMRvKnx07BQ@mail.gmail.com>
+ <CAPig+cRTG625H3CF1Zw30vQt2W8uKf1xLxVaQni2YbJ=xAif2g@mail.gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <29d090a2-bbe4-0d87-6dda-037ae675d4a3@kdbg.org>
+Date:   Tue, 26 Jun 2018 20:05:55 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
+MIME-Version: 1.0
+In-Reply-To: <CAPig+cRTG625H3CF1Zw30vQt2W8uKf1xLxVaQni2YbJ=xAif2g@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 11.3 \(3445.6.18\))
-Subject: [PATCH] rebase -i: Fix white space in comments
-Message-Id: <614F0C12-7173-48BD-9212-71AD6FBBDAA7@dana.is>
-Date:   Tue, 26 Jun 2018 13:02:10 -0500
-To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3445.6.18)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a trivial white-space issue introduced by commit d48f97aa8
-("rebase: reindent function git_rebase__interactive", 2018-03-23). This
-affected the instructional comments displayed in the editor during an
-interactive rebase.
+Am 26.06.2018 um 11:21 schrieb Eric Sunshine:
+> On Tue, Jun 26, 2018 at 4:58 AM Elijah Newren <newren@gmail.com> wrote:
+>> On Tue, Jun 26, 2018 at 12:29 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>>> +               p4 help client &&
+>>> +               test_must_fail p4 help nosuchcommand
+>>
+>> same question?
+> 
+> Same answer. Not shown in this patch, but just above the context lines
+> you will find this comment in the file:
+> 
+>      # We rely on this behavior to detect for p4 move availability.
+> 
+> which means that the test is really interested in being able to
+> reliably detect if a sub-command is or is not available. So, despite
+> the (somewhat) misleading test title, this test doesn't care about the
+> exact error code but rather cares only that "p4 help nosuchcommand"
+> errors out, period. Hence, test_must_fail() again agrees with the
+> spirit of the test.
 
-Signed-off-by: dana <dana@dana.is>
----
+test_must_fail ensures that only "proper" failures are diagnosed as 
+expected; failures due to signals such as SEGV are not expected failures.
 
-Sorry if i've done any of this wrong; i've never used this work-flow
-before. In any case, if it's not immediately obvious, this is the issue
-i mean to fix:
+In the test suite we expect all programs that are not our "git" to work 
+correctly; in particular, that they do not crash on anything that we ask 
+them to operate on. Under this assumption, the protection given by 
+test_must_fail is not needed.
 
-BEFORE (2.17.1):
+Hence, these lines should actually be
 
-# If you remove a line here THAT COMMIT WILL BE LOST.
-#
-# However, if you remove everything, the rebase will be aborted.
-#
-# Note that empty commits are commented out
+		p4 help client &&
+		! p4 help nosuchcommand
 
-AFTER (2.18.0):
-
-# If you remove a line here THAT COMMIT WILL BE LOST.
-#
-#	However, if you remove everything, the rebase will be aborted.
-#
-#	
-# Note that empty commits are commented out
-
-The 2.18.0 version is particularly irritating because many editors
-highlight the trailing tab in the penultimate line as a white-space
-error.
-
-Aside: It's not a new thing, but i've always felt like that last line
-should end in a full stop. Maybe i'll send a patch for that too.
-
-Cheers,
-dana
-
- git-rebase--interactive.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 299ded213..a31af6d4c 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -222,9 +222,9 @@ $comment_char $(eval_ngettext \
- EOF
- 	append_todo_help
- 	gettext "
--	However, if you remove everything, the rebase will be aborted.
-+However, if you remove everything, the rebase will be aborted.
- 
--	" | git stripspace --comment-lines >>"$todo"
-+" | git stripspace --comment-lines >>"$todo"
- 
- 	if test -z "$keep_empty"
- 	then
--- 
-2.18.0
-
+-- Hannes
