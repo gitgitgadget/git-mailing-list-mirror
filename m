@@ -2,105 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 076951F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 22:17:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 681E41F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 22:20:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932965AbeFZWR5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 18:17:57 -0400
-Received: from mout.gmx.net ([212.227.15.18]:37417 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932883AbeFZWR4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 18:17:56 -0400
-Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M0y47-1gRgSf31ah-00v8du; Wed, 27
- Jun 2018 00:17:50 +0200
-Date:   Wed, 27 Jun 2018 00:17:51 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-cc:     git@vger.kernel.org, joel@teichroeb.net, gitster@pobox.com
-Subject: Re: [PATCH v6 2/4] stash: convert drop and clear to builtin
-In-Reply-To: <5373f422a82da2357828b8cc4a2b84fb2bedd780.1529943789.git.ungureanupaulsebastian@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1806270015060.21419@tvgsbejvaqbjf.bet>
-References: <cover.1529943789.git.ungureanupaulsebastian@gmail.com> <5373f422a82da2357828b8cc4a2b84fb2bedd780.1529943789.git.ungureanupaulsebastian@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1754659AbeFZWUg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 18:20:36 -0400
+Received: from mail-wr0-f172.google.com ([209.85.128.172]:37779 "EHLO
+        mail-wr0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752106AbeFZWUf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 18:20:35 -0400
+Received: by mail-wr0-f172.google.com with SMTP id k6-v6so17253wrp.4
+        for <git@vger.kernel.org>; Tue, 26 Jun 2018 15:20:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=zzZKT9l+ogZdSOsBf27t2xmEdKPEutq4GtnaI5I+Epk=;
+        b=CJXJJ/P7ZbXv4tiQPCNUMnmIQ9sTG91YOAXGCjBYnlyrTfVNZ9s5IpKo1mf65fvQvT
+         bhLY2/YLpqrYGXoCWwfHSKdkrmkOMC1cku4KiF5FBj2FOMPZUzJf8C9YsmsYibzao/+f
+         g/XPINvVWVepSoPnLJmbmcrYssREle6NKrQ3FYHlFVF510caq1UQqcTlBNfReZg8Piy8
+         adP9wI2wa9erUZEgYglwL1yOiqe0taJbCQlOcVGvsydmThRQ9gmx8CVujAxRFE/Ms76e
+         6xTRQVZGQMeLBMtS2Y73gImFMU/tB8jUiyU5SOjkucS+jSIPDhaaad5sTb8luFgoqUb/
+         zPxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=zzZKT9l+ogZdSOsBf27t2xmEdKPEutq4GtnaI5I+Epk=;
+        b=lAoXTH3EJU4ApgLhGmDhMc4+8NTupJ6f0WdtgRYynHALaqle7vcQVypd90qXsF3o5/
+         741w6xnij2TaamsL44ZckuYjeEQtrMAA6mgbt4OIOGUnNDbvNbZpm/EeDGV8SNe/X3A8
+         XQBCn8SdmCkVoH2jdtqMo5O/CtEtgVpXv7k54Vx0pKvCDoi5JvW/S7hNnA81kn+oEa1i
+         gvgtLXJg0nXYqdnb5lXPlyl0vkNx3mtE2tvXQ+hvnVwlC5cQLZB6U1tKSmxaEy+iBr2K
+         0tGXt+m464GiqPLPrEqzghpPjyx1MkTdyS25oDLoCk0Ve1Qfhd73ji8bbxUivxWCua0J
+         x9kQ==
+X-Gm-Message-State: APt69E1i+GbqQx9NtPQfAC7z7DDtEn0sNx+5lHsyf1wWtw8nxd8N1Clc
+        Qhm1CrWGTz6rhnk6mepVEfI=
+X-Google-Smtp-Source: AAOMgpetNDSriNvowzhF65C0dj0+ouyYOl1ILQz1TWMjHzphuhR2gjUSW5gV5usm97je7JLqkLQKLQ==
+X-Received: by 2002:adf:c3cd:: with SMTP id d13-v6mr2941119wrg.68.1530051634006;
+        Tue, 26 Jun 2018 15:20:34 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id q17-v6sm3112714wrs.5.2018.06.26.15.20.32
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 26 Jun 2018 15:20:33 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Tiago Botelho <tiagonbotelho@gmail.com>,
+        git <git@vger.kernel.org>,
+        Harald Nordgren <haraldnordgren@gmail.com>,
+        Tiago Botelho <tiagonbotelho@hotmail.com>
+Subject: Re: [RFC PATCH v5] Implement --first-parent for git rev-list --bisect
+References: <20180622123945.68852-1-tiagonbotelho@hotmail.com>
+        <xmqq4lhqpy80.fsf@gitster-ct.c.googlers.com>
+        <CAP8UFD3oEjW75qsk4d_wqo2V8PmzMvZLshutw20CD7AU4b4ocg@mail.gmail.com>
+        <nycvar.QRO.7.76.6.1806261540340.21419@tvgsbejvaqbjf.bet>
+        <CAP8UFD1TeC4czp_8HCRw5CtjGO78A8gRezw_xspnm4MXuhQswg@mail.gmail.com>
+Date:   Tue, 26 Jun 2018 15:20:32 -0700
+In-Reply-To: <CAP8UFD1TeC4czp_8HCRw5CtjGO78A8gRezw_xspnm4MXuhQswg@mail.gmail.com>
+        (Christian Couder's message of "Tue, 26 Jun 2018 17:41:44 +0200")
+Message-ID: <xmqqa7rhi40f.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:tVwPUX8i9jDIe2Lo9s3kG/SITnN/Zl5eEdcfj6/iVAZpjYfMWQW
- v0L+eO0wvb4aIEmiPTKBNj0r3I9zAhzd+BocPFvDR9PILRlWRVt3QwZDH5vpKQvn/NgJhil
- N8Co4ES5bRFw6/Vj9zXngQKj6g3Mphk/Uwb/CdT2ZaSXFO6ZX8l5kNEu/XDxtWastIJftIq
- 8RorXbEsxKO0dYoTmAsOA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:5ZkRgoRCa+Q=:6tqRc/ajesGDqY6sIKJ+S0
- +XVR9Y+zyUqI+IuoCV08fMuOOmeRjXpJSHOWwPtruPaVtubk7iU+vqmKK4/OdEccLAtuAGDTk
- nHnIO/GQWchluyho0dZZF8j02qOdrO0AN6KYBpChD35meheJfW//1SWE4h3B20iTkineuTMeR
- Bk8Ju1e3YYmj5XDY2x1TfPBv8rFl1fIFAEdb/UcUJQ/YwQGAb1fawCLGI3YCJJXn9aRITG6Jr
- k7QW6RjKElkjwrCmvfkEjP1e7McZn/hqjDn/J53m+SqDHBRqW1YdKJGlR3Z9NRKQvTOorD9k8
- NYRYg+/lcLhas/xydrpI/kwqS9hkRo7vLOQ7lzskYd6XxEnP4Pk3XtRebCq7iB4BlhI7tLjkN
- D9vxrZsuROJvuza+0GVBI9aqboupUi5w02mLiTmRP5ZJIEIVTCyqvo1ONzb0HaIkUTsGnpGT6
- NSD1fZ7OdNffSNHPfTTmv70YcNhzje1zbXW93dLFy5KSTImd+xHRMoNM1xb4DiKps4U/83mHq
- CdfF0D4HiOHJrWGuXnvzy+YBth1IlYKknhOJllmrfYpvJVcImr1yQuuvpdQtH4HyfdaNTbQgS
- R4fJfZcv48n3RYGJQUjIcYBYuDUJCfc852MQwCu2MtEqHujhQfNG1UtbKc5x/rkGtnYBmEjK/
- wO97ssFb8PWBuEr7l0eH5dtYppgPoM9W09eK0MgY1QKQhNX3V1e/Dcwu1hGNjkUnKdYfbeRYy
- TvBQESaLZYAIdXs2SGWs74IQPrj0U1tPgGbQrxfyN+uHSzjAgUr3hiuiNUUHEicGg1Yj7G/Oq
- S0CzRjB
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Paul,
+Christian Couder <christian.couder@gmail.com> writes:
 
-On Mon, 25 Jun 2018, Paul-Sebastian Ungureanu wrote:
+> Obviousness is often not the same for everybody.
 
-> diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
-> index 1c4387b10..84a537f39 100644
-> --- a/builtin/stash--helper.c
-> +++ b/builtin/stash--helper.c
-> @@ -414,6 +451,77 @@ static int apply_stash(int argc, const char **argv, const char *prefix)
->  	return ret;
->  }
->  
-> +static int do_drop_stash(const char *prefix, struct stash_info *info)
-> +{
-> +	struct argv_array args = ARGV_ARRAY_INIT;
-> +	struct child_process cp = CHILD_PROCESS_INIT;
-> +	int ret;
-> +
-> +	/*
-> +	 * reflog does not provide a simple function for deleting refs. One will
-> +	 * need to be added to avoid implementing too much reflog code here
-> +	 */
-> +	argv_array_pushl(&args, "reflog", "delete", "--updateref", "--rewrite",
-> +			 NULL);
-> +	argv_array_push(&args, info->revision.buf);
-> +	ret = cmd_reflog(args.argc, args.argv, prefix);
-> +	if (!ret) {
-> +		if (!quiet)
-> +			printf(_("Dropped %s (%s)\n"), info->revision.buf,
-> +			       oid_to_hex(&info->w_commit));
-> +	} else {
-> +		return error(_("%s: Could not drop stash entry"), info->revision.buf);
-> +	}
-> +
-> +	/*
-> +	 * This could easily be replaced by get_oid, but currently it will throw a
-> +	 * fatal error when a reflog is empty, which we can not recover from
-> +	 */
-> +	cp.git_cmd = 1;
-> +	/* Even though --quiet is specified, rev-parse still outputs the hash */
-> +	cp.no_stdout = 1;
-> +	argv_array_pushl(&cp.args, "rev-parse", "--verify", "--quiet", NULL);
-> +	argv_array_pushf(&cp.args, "%s@{0}", ref_stash);
-> +	ret = run_command(&cp);
+... which you just learned---what you thought obvious turns out to
+be not so obvious after all, so you adjust to help your readers.
 
-I thought you had introduced `get_oidf()` specifically so you could avoid
-the `rev-parse` call... `get_oidf(&dummy_oid, "%s@{0}", ref_stash)` should
-do this, right?
+>> In this particular case it even feels as if this test is not even testing
+>> what it should test at all:
+>>
+>> - it should verify that all of the commits in the first parent lineage are
+>>   part of the list
+>
+> It does that.
+>
+>> - it should verify that none of the other commits are in the list
+>
+> It does that too.
 
-Ciao,
-Dscho
+But the point is it does a lot more by insisting exact output.  For
+example, the version I reviewed had a two "expected output", and
+said that the actual output must match either one of them.  I guess
+it was because there were two entries with the same distance and we
+cannot rely on which order they appear in the result?  If a test
+history gained another entry with the same distance, then would we
+need 6 possible expected output because we cannot rely on the order
+in which these three come out?
+
+That was the only thing I was complaining about.  Dscho gave me too
+much credit and read a lot more good things than what I actually
+meant to say ;-).
+
+>> And that is really all there is to test.
+
+Another is that "rev-list --bisect-all" promises that the entries
+are ordered by the distance value.  So taking the above three
+points, perhaps
+
+	cat >expect <<EOF &&
+	... as written in one of the expect list in Tiago's patch
+	EOF
+
+	# Make sure we have the same entries, nothing more, nothing less
+	git rev-list --bisect-all $other_args >actual &&
+	sort actual >actual.sorted &&
+	sort expect >expect.sorted &&
+	test_cmp expect.sorted actual.sorted
+
+	# Make sure the entries are sorted in the dist order
+	sed -e 's/.*(dist=\([1-9]*[0-9]\)).*/\1/' actual >actual.dists &&
+	sort actual.dists >actual.dists.sorted &&
+	test_cmp actual.dists.sorted actual.dists
+
+is what I would have expected.
