@@ -6,47 +6,47 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3A5E1F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 07:33:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 25DD91F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 07:33:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932443AbeFZHdF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 03:33:05 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:45778 "EHLO
-        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752706AbeFZHbB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 03:31:01 -0400
-Received: by mail-io0-f196.google.com with SMTP id l25-v6so14978714ioh.12
-        for <git@vger.kernel.org>; Tue, 26 Jun 2018 00:31:01 -0700 (PDT)
+        id S932089AbeFZHdT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 03:33:19 -0400
+Received: from mail-io0-f193.google.com ([209.85.223.193]:45767 "EHLO
+        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752680AbeFZHa4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 03:30:56 -0400
+Received: by mail-io0-f193.google.com with SMTP id l25-v6so14978449ioh.12
+        for <git@vger.kernel.org>; Tue, 26 Jun 2018 00:30:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=5K79rZg56VEXZEOmQRHi0+QbwdDqdCEB0JH27wID0R8=;
-        b=cX4vLtLBKy382fI30nxqkXu3lxfziwI4Br++GR3cxdiJVBI98E+0eE6yMb++yYeNNf
-         JzzEHOGls+9MWrWlxti39R/NBVLTP+Dlf10Edm3PYK3iYnMu3JxMbqY/2YxtRXAv0Okz
-         s6ASDytHnzDpfXfN9E9N3jXnYkjku9fKWj92L67NtdikmJ8xfRDK2DmYR9VaArudrTq8
-         1Hv79XEL+U7uzq4HSen62QXRnIoa2exxH07WzvozLPPr+G7J5TsYpCUXne94mNEpYagb
-         G9Tw0PxYGwEt+qlFiyHZmU9ZLCz0IFZ1y9Csuph+PPp95jmKJfyntCTs+j/KGosueqC3
-         9uQA==
+        bh=usdiu4ro08bKh7zfILzn2NKyNq0IsmXFKpxc6VoJg+8=;
+        b=K5uIyw5Y+/cglWeS76a0mLcigpiNuVvfMoVOHcwmKi9ChdIytWRDVIH5DIPLgHELG5
+         f80LHmUBuf8SmXK5+z/TQwzq5gu+oTux3AmRWwfWYegirNNBpJ6eHuZNVWLdUjn7eC+/
+         vN5zY1+KIssolTAgfKL4MygtjUSFaWgzTc1goCSJM8d8vgrlrmXgi6vM4tyGh5JXUWso
+         6MlMhdvL0DOt6LmR1c96JiZPe9sSPUKWrH8oSHWjXScbT+aN0EH8tdZHN8mKzcff/nKQ
+         ffTf1ZBqqfGK8Zp4NogcYKZXQkoJF6aI9t2z2VVtWS4bMuJnpWfLxi4FgGPvzypeN/Mu
+         FAiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
          :in-reply-to:references;
-        bh=5K79rZg56VEXZEOmQRHi0+QbwdDqdCEB0JH27wID0R8=;
-        b=iEsgesiewquPFBbG900PwPsOq6j73nhi0A9iI1FrR3oHFgi83gI8kvcnwJYWsUIKoN
-         JrR1UJZoBI+W0axInv9g4ZPbrKyjqwsL9jtTcMktChp3ovXocCSkHOJM0Da8LVf51lUX
-         0IxwGAxy99hBwh1pdBg3mHcsc8VaBiNvvaGE56PGhKlg8lNoV7DX5hOutLlRbF6qd+R6
-         aU08V+f0byvaRWYYVqVTRXxSAWB4NFMLEe6raSQtyif+HiVxBufWm13ToJIelpA4w1Oi
-         aZeQUGBhdz5j0z22Qyp6hLkoi6NG5t5hmLdM9D4VRxAcbmqebt8PJnr1rAMMPj3L+4Nd
-         JUPw==
-X-Gm-Message-State: APt69E1J7LrXVb7glgmNZYKE7lKzM6GvpwT2I5FbR3PzVCvgaCZMcaCa
-        Xu6ZkmDqiRAECZsRlUuh2zy6Zw==
-X-Google-Smtp-Source: AAOMgpdP+DX74vZk00ns+/sUkjshy49LBSOq6UvVoHUZKC6aFu0iGFhnNy530/P7OkAXcVegYlvsWQ==
-X-Received: by 2002:a6b:6315:: with SMTP id p21-v6mr308529iog.72.1529998260877;
-        Tue, 26 Jun 2018 00:31:00 -0700 (PDT)
+        bh=usdiu4ro08bKh7zfILzn2NKyNq0IsmXFKpxc6VoJg+8=;
+        b=WfsebfP7z7b4GXKsFvEzcOxmNGO89XEFwRHhSktpgt8Kon8riRBqFqA/e8tk2AIMZz
+         YAzgqZg9ILAKU8eOXVMuiPHGP6DnvsN888oPXgWgHVhMqwFoVKltO9mE83Xbl2/doK0v
+         w30x6ztuSLu1tpZ608R9DDZEDvCSE3Z1XxPMU/J+ARwV6zdA3Cfw8bynfHWzwG86ESUr
+         qUiEgL6BPWIwrJSOUh1FN7aLHidc/BLiybeltDnHyMe4lTcxK/FNzNXzpW03mpau+E5f
+         a7Dh6L2l9i8yIvx/lyNetxe2+Ai794DXDR/RzTKVuF9NHz7ulMGqKxqpAdjMsZfR+hry
+         OeMQ==
+X-Gm-Message-State: APt69E3HmKu9mNxkg+6s+b3iyPCrtWfPWcx2c4w4DzE+CyS1B/mScf9d
+        JD4P3e4y+nmLwWN0XZFe8MpxNA==
+X-Google-Smtp-Source: AAOMgpcBb+jJgeJar05EBbRysYfuuHs7kWhoYvlgLHMGO6YabtFN6ME2/1uREBfYy21GyLxGa1woFQ==
+X-Received: by 2002:a6b:cf05:: with SMTP id o5-v6mr283882ioa.230.1529998255204;
+        Tue, 26 Jun 2018 00:30:55 -0700 (PDT)
 Received: from localhost.localdomain (user-12l2cs3.cable.mindspring.com. [69.81.51.131])
-        by smtp.gmail.com with ESMTPSA id k20-v6sm471361iok.9.2018.06.26.00.31.00
+        by smtp.gmail.com with ESMTPSA id k20-v6sm471361iok.9.2018.06.26.00.30.54
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Tue, 26 Jun 2018 00:31:00 -0700 (PDT)
+        Tue, 26 Jun 2018 00:30:54 -0700 (PDT)
 From:   Eric Sunshine <sunshine@sunshineco.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
@@ -55,9 +55,9 @@ Cc:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
         Elijah Newren <newren@gmail.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 11/29] t9104: use "{...}" block around "||" expression rather than subshell
-Date:   Tue, 26 Jun 2018 03:29:43 -0400
-Message-Id: <20180626073001.6555-12-sunshine@sunshineco.com>
+Subject: [PATCH 06/29] t6036: fix broken "merge fails but has appropriate contents" tests
+Date:   Tue, 26 Jun 2018 03:29:38 -0400
+Message-Id: <20180626073001.6555-7-sunshine@sunshineco.com>
 X-Mailer: git-send-email 2.18.0.419.gfe4b301394
 In-Reply-To: <20180626073001.6555-1-sunshine@sunshineco.com>
 References: <20180626073001.6555-1-sunshine@sunshineco.com>
@@ -66,43 +66,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This test uses "(... || svn ...)" as a shorthand for an if-then-else
-statement. The subshell prevents it from breaking the top-level
-&&-chain.
-
-However, an upcoming change will teach --chain-lint to check the
-&&-chain inside subshells. Although it takes special care to allow
-"||" inside subshells, it only recognizes "(... || git ...)" and
-"(... || test*), so the "||" in this test will trip up --chain-lint.
-
-A test later in this same script employs the same "... || svn ..."
-construct, however, it wraps it in a "{...}" block instead of a
-subshell. Therefore, rather than adding "(... || svn ...)" as a yet
-another --chain-lint special case, follow suit and make this test use
-"{...}", as well.
+These tests reference non-existent object "c" when they really mean to
+be referencing "C", however, this error went unnoticed due to a broken
+&&-chain later in the test. Fix these errors, as well as the broken
+&&-chains behind which they hid.
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- t/t9104-git-svn-follow-parent.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t6036-recursive-corner-cases.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/t/t9104-git-svn-follow-parent.sh b/t/t9104-git-svn-follow-parent.sh
-index 5e0ad19177..f9aa734d4e 100755
---- a/t/t9104-git-svn-follow-parent.sh
-+++ b/t/t9104-git-svn-follow-parent.sh
-@@ -53,10 +53,10 @@ test_expect_success 'init and fetch from one svn-remote' '
-         '
+diff --git a/t/t6036-recursive-corner-cases.sh b/t/t6036-recursive-corner-cases.sh
+index b5621303d6..b32ff8e1db 100755
+--- a/t/t6036-recursive-corner-cases.sh
++++ b/t/t6036-recursive-corner-cases.sh
+@@ -506,10 +506,10 @@ test_expect_success 'merge of D & E2 fails but has appropriate contents' '
+ 		test_line_count = 2 out &&
  
- test_expect_success 'follow deleted parent' '
--        (svn_cmd cp -m "resurrecting trunk as junk" \
-+	{ svn_cmd cp -m "resurrecting trunk as junk" \
-                "$svnrepo"/trunk@2 "$svnrepo"/junk ||
-          svn cp -m "resurrecting trunk as junk" \
--               -r2 "$svnrepo"/trunk "$svnrepo"/junk) &&
-+		-r2 "$svnrepo"/trunk "$svnrepo"/junk; } &&
-         git config --add svn-remote.svn.fetch \
-           junk:refs/remotes/svn/junk &&
-         git svn fetch -i svn/thunk &&
+ 		git rev-parse >expect    \
+-			B:a   E2:a/file  c:a/file   A:ignore-me &&
++			B:a   E2:a/file  C:a/file   A:ignore-me &&
+ 		git rev-parse   >actual   \
+ 			:2:a  :3:a/file  :1:a/file  :0:ignore-me &&
+-		test_cmp expect actual
++		test_cmp expect actual &&
+ 
+ 		test_path_is_file a~HEAD
+ 	)
+@@ -533,10 +533,10 @@ test_expect_success 'merge of E2 & D fails but has appropriate contents' '
+ 		test_line_count = 2 out &&
+ 
+ 		git rev-parse >expect    \
+-			B:a   E2:a/file  c:a/file   A:ignore-me &&
++			B:a   E2:a/file  C:a/file   A:ignore-me &&
+ 		git rev-parse   >actual   \
+ 			:3:a  :2:a/file  :1:a/file  :0:ignore-me &&
+-		test_cmp expect actual
++		test_cmp expect actual &&
+ 
+ 		test_path_is_file a~D^0
+ 	)
 -- 
 2.18.0.419.gfe4b301394
 
