@@ -6,47 +6,47 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 204D21F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 07:32:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4EE9D1F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 07:32:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752624AbeFZHcX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 03:32:23 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:46934 "EHLO
-        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752717AbeFZHbN (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1752530AbeFZHcW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 03:32:22 -0400
+Received: from mail-it0-f65.google.com ([209.85.214.65]:37522 "EHLO
+        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752724AbeFZHbN (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 26 Jun 2018 03:31:13 -0400
-Received: by mail-io0-f193.google.com with SMTP id u23-v6so11298466ioc.13
-        for <git@vger.kernel.org>; Tue, 26 Jun 2018 00:31:12 -0700 (PDT)
+Received: by mail-it0-f65.google.com with SMTP id j129-v6so870669ita.2
+        for <git@vger.kernel.org>; Tue, 26 Jun 2018 00:31:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=dDw5UhDUyIxKliSSfhW+oVmgrgOFN17vTuv8zWHA+K4=;
-        b=dm/wvwyprVyr8xl1jK12VCMwtHiDUXa13RwiTp7eg3QFJU88RW4zAVmrD8to4YrxE0
-         G25c1vt7t8Xtg0SzwueDHlPYMjCHSigOC+ypV7Pj6lBPC3RZYhdbpIvFMOerB1gQfpJY
-         wF/7heakmJq90jA7k1x4UDDhUjbQ+AtOsMA4vs7RZHPhoO7ole21ntNFpUkJ44NBimGK
-         +fbmT8aE6MdNMg05QqUBfIGcAjT9Xx9eI+XIDi2o/bEsoZfXGZ4tbd8oJ5t9V2Lufjdi
-         5YynBXV7wtedP7usS1AbY4JP8jx8aZ7ZVfg67xullh+ini93EOJV7ra5ayTyiSNqGpG2
-         +law==
+        bh=PT/RG22cmzM5UWpC87ncAiWAPyrxkx+SHqVucNvS110=;
+        b=T8qeocrWAXqAvdrFdrfRcQ9NV5LL6LCd9+oo6pTzBlXHrtvN14aToOoqFUtNjBuDSM
+         SblCMckWRV68jyIj4QCIbXTL9KpoTsurDmBHlTGMRi04HkC6Rifw57IxjSSNG6Aif+n2
+         NqLTVY5/eOkofwIMqYuLd4l7md+Em2JB7fXsLziDTghHMbzBxxY3SvJjlezZmMN1l/ei
+         EIa8adZeCfXahDtYJEEa1xGNlnE9zDovayhPjbz3QaGJ3tm7CU0EBy9DHVGuyu2kxQCs
+         Ax7V9UZ8eh2VKrkgb9lcqYG6ELC6GDK5+FMmkQECtZqCkpyU8g01Rmcdmcav661aOizL
+         cTbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
          :in-reply-to:references;
-        bh=dDw5UhDUyIxKliSSfhW+oVmgrgOFN17vTuv8zWHA+K4=;
-        b=WqgbWKWgff4/159lwIii5QhSYE1xh3fINAQzD+B3jtqJyYsPYgDGAH9XO6zf1mvIW0
-         903wwOCP3lgxtRaEphsf2pxc7cx1j5cqFd2ZkXuuVFNUK3uQ2i6qiG1bE5PLY+1uOswB
-         b2kD62A+jvIPNDMdNy7EMWBPFW52x7GvwI6W1AFKJvyjMJENSE1r+tOzhG6RPu+HdJOI
-         MCYOFtk7mYRlFw/AytmfQwqj39hkQp6cLsdzl1jnuO4YGRejricAvNZtmY9IM8kHrlIe
-         rHlwpo7cpS0iyeYMEGIykoYCdKkTyBT/Sc6wQu71erqOas78OGxQjQ/DYF3isZ7p3yEI
-         0ZEQ==
-X-Gm-Message-State: APt69E1GKweazYSGM1+e5oqxhF3D0pJuDclYJ00vNVtd3Lh8I51PLYrv
-        fokkp6lhysQcmBkvMQzPoMYUTw==
-X-Google-Smtp-Source: AAOMgpevD9Lrj9Yqmq0orOcnsrV7iKAUupdyknggWbkolp/NHapAwv9VKvRT4xrpHh4p91GpVpZD5A==
-X-Received: by 2002:a6b:a282:: with SMTP id l124-v6mr299282ioe.256.1529998271951;
-        Tue, 26 Jun 2018 00:31:11 -0700 (PDT)
+        bh=PT/RG22cmzM5UWpC87ncAiWAPyrxkx+SHqVucNvS110=;
+        b=jIJmvIHuo6ZDAJGt7nCvu+WEj9gbxaNkXTFquZXsIy296o5VTJpuaklh1VYSr5ialn
+         dgKq2c9uYwVHVltsCbyDqru13Eb/t5ssdGuVr9pipLis+IqzStGIlYvcuiEnVykEBfDO
+         xqUeZ3WGbYwGIn1VrMdEjswoRYjdR6/nI7/eUyzNL7dLf2XoxH7qdNX15CyZZipkeOdt
+         iqw+4t47uFdBXrNsYmzGsSqlnscjul9hI3Q0dkrSKRGkMDQ/MSkK9byt5jRLd8+1Xw4M
+         WX7wlIM6hn1fLnP2SBFGwjuizfafjnROd8u50DnteJwsWv9cgkorZutM5G9+tjJ5m5Ck
+         NYkg==
+X-Gm-Message-State: APt69E14H9Y/5IClnl7kW2CC4QbdHXXL0VTE4l01/M10XGNJNlrV2TKV
+        vE63rvQhN+Vu0FNS/Wy3tC5c/g==
+X-Google-Smtp-Source: AAOMgpde3jp8skHJe3uq3e+nobU2OuorKcXUbY9Jw/iX1mZ/8mtCiiHlQ6CAhobABWx1F+T9xJtmCw==
+X-Received: by 2002:a24:50d1:: with SMTP id m200-v6mr510905itb.11.1529998272942;
+        Tue, 26 Jun 2018 00:31:12 -0700 (PDT)
 Received: from localhost.localdomain (user-12l2cs3.cable.mindspring.com. [69.81.51.131])
-        by smtp.gmail.com with ESMTPSA id k20-v6sm471361iok.9.2018.06.26.00.31.10
+        by smtp.gmail.com with ESMTPSA id k20-v6sm471361iok.9.2018.06.26.00.31.11
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Tue, 26 Jun 2018 00:31:11 -0700 (PDT)
+        Tue, 26 Jun 2018 00:31:12 -0700 (PDT)
 From:   Eric Sunshine <sunshine@sunshineco.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
@@ -55,9 +55,9 @@ Cc:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
         Elijah Newren <newren@gmail.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 22/29] t3030: fix broken &&-chains in subshells
-Date:   Tue, 26 Jun 2018 03:29:54 -0400
-Message-Id: <20180626073001.6555-23-sunshine@sunshineco.com>
+Subject: [PATCH 23/29] t4000-t4999: fix broken &&-chains in subshells
+Date:   Tue, 26 Jun 2018 03:29:55 -0400
+Message-Id: <20180626073001.6555-24-sunshine@sunshineco.com>
 X-Mailer: git-send-email 2.18.0.419.gfe4b301394
 In-Reply-To: <20180626073001.6555-1-sunshine@sunshineco.com>
 References: <20180626073001.6555-1-sunshine@sunshineco.com>
@@ -68,533 +68,102 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- t/t3030-merge-recursive.sh | 340 ++++++++++++++++++-------------------
- 1 file changed, 170 insertions(+), 170 deletions(-)
+ t/t4001-diff-rename.sh                       | 2 +-
+ t/t4025-hunk-header.sh                       | 8 ++++----
+ t/t4041-diff-submodule-option.sh             | 4 ++--
+ t/t4060-diff-submodule-option-diff-format.sh | 2 +-
+ t/t4121-apply-diffs.sh                       | 2 +-
+ 5 files changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/t/t3030-merge-recursive.sh b/t/t3030-merge-recursive.sh
-index 3563e77b37..ff641b348a 100755
---- a/t/t3030-merge-recursive.sh
-+++ b/t/t3030-merge-recursive.sh
-@@ -36,15 +36,15 @@ test_expect_success 'setup 1' '
+diff --git a/t/t4001-diff-rename.sh b/t/t4001-diff-rename.sh
+index bf4030371a..c16486a9d4 100755
+--- a/t/t4001-diff-rename.sh
++++ b/t/t4001-diff-rename.sh
+@@ -180,7 +180,7 @@ test_expect_success 'setup for many rename source candidates' '
+ 	git add "path??" &&
  	test_tick &&
- 	git commit -m "master modifies a and d/e" &&
- 	c1=$(git rev-parse --verify HEAD) &&
--	( git ls-tree -r HEAD ; git ls-files -s ) >actual &&
-+	( git ls-tree -r HEAD && git ls-files -s ) >actual &&
- 	(
--		echo "100644 blob $o1	a"
--		echo "100644 blob $o0	b"
--		echo "100644 blob $o0	c"
--		echo "100644 blob $o1	d/e"
--		echo "100644 $o1 0	a"
--		echo "100644 $o0 0	b"
--		echo "100644 $o0 0	c"
-+		echo "100644 blob $o1	a" &&
-+		echo "100644 blob $o0	b" &&
-+		echo "100644 blob $o0	c" &&
-+		echo "100644 blob $o1	d/e" &&
-+		echo "100644 $o1 0	a" &&
-+		echo "100644 $o0 0	b" &&
-+		echo "100644 $o0 0	c" &&
- 		echo "100644 $o1 0	d/e"
- 	) >expected &&
- 	test_cmp expected actual
-@@ -54,15 +54,15 @@ test_expect_success 'setup 2' '
+ 	git commit -m "hundred" &&
+-	(cat path1; echo new) >new-path &&
++	(cat path1 && echo new) >new-path &&
+ 	echo old >>path1 &&
+ 	git add new-path path1 &&
+ 	git diff -l 4 -C -C --cached --name-status >actual 2>actual.err &&
+diff --git a/t/t4025-hunk-header.sh b/t/t4025-hunk-header.sh
+index 7a3dbc1ea2..fa44e78869 100755
+--- a/t/t4025-hunk-header.sh
++++ b/t/t4025-hunk-header.sh
+@@ -12,12 +12,12 @@ NS="$N$N$N$N$N$N$N$N$N$N$N$N$N"
+ test_expect_success setup '
  
- 	rm -rf [abcd] &&
- 	git checkout side &&
--	( git ls-tree -r HEAD ; git ls-files -s ) >actual &&
-+	( git ls-tree -r HEAD && git ls-files -s ) >actual &&
  	(
--		echo "100644 blob $o0	a"
--		echo "100644 blob $o0	b"
--		echo "100644 blob $o0	c"
--		echo "100644 blob $o0	d/e"
--		echo "100644 $o0 0	a"
--		echo "100644 $o0 0	b"
--		echo "100644 $o0 0	c"
-+		echo "100644 blob $o0	a" &&
-+		echo "100644 blob $o0	b" &&
-+		echo "100644 blob $o0	c" &&
-+		echo "100644 blob $o0	d/e" &&
-+		echo "100644 $o0 0	a" &&
-+		echo "100644 $o0 0	b" &&
-+		echo "100644 $o0 0	c" &&
- 		echo "100644 $o0 0	d/e"
- 	) >expected &&
- 	test_cmp expected actual &&
-@@ -75,15 +75,15 @@ test_expect_success 'setup 2' '
- 	test_tick &&
- 	git commit -m "side modifies a" &&
- 	c2=$(git rev-parse --verify HEAD) &&
--	( git ls-tree -r HEAD ; git ls-files -s ) >actual &&
-+	( git ls-tree -r HEAD && git ls-files -s ) >actual &&
- 	(
--		echo "100644 blob $o2	a"
--		echo "100644 blob $o0	b"
--		echo "100644 blob $o0	c"
--		echo "100644 blob $o0	d/e"
--		echo "100644 $o2 0	a"
--		echo "100644 $o0 0	b"
--		echo "100644 $o0 0	c"
-+		echo "100644 blob $o2	a" &&
-+		echo "100644 blob $o0	b" &&
-+		echo "100644 blob $o0	c" &&
-+		echo "100644 blob $o0	d/e" &&
-+		echo "100644 $o2 0	a" &&
-+		echo "100644 $o0 0	b" &&
-+		echo "100644 $o0 0	c" &&
- 		echo "100644 $o0 0	d/e"
- 	) >expected &&
- 	test_cmp expected actual
-@@ -93,15 +93,15 @@ test_expect_success 'setup 3' '
+-		echo "A $NS"
++		echo "A $NS" &&
+ 		for c in B C D E F G H I J K
+ 		do
+ 			echo "  $c"
+-		done
+-		echo "L  $NS"
++		done &&
++		echo "L  $NS" &&
+ 		for c in M N O P Q R S T U V
+ 		do
+ 			echo "  $c"
+@@ -34,7 +34,7 @@ test_expect_success 'hunk header truncation with an overly long line' '
  
- 	rm -rf [abcd] &&
- 	git checkout df-1 &&
--	( git ls-tree -r HEAD ; git ls-files -s ) >actual &&
-+	( git ls-tree -r HEAD && git ls-files -s ) >actual &&
+ 	git diff | sed -n -e "s/^.*@@//p" >actual &&
  	(
--		echo "100644 blob $o0	a"
--		echo "100644 blob $o0	b"
--		echo "100644 blob $o0	c"
--		echo "100644 blob $o0	d/e"
--		echo "100644 $o0 0	a"
--		echo "100644 $o0 0	b"
--		echo "100644 $o0 0	c"
-+		echo "100644 blob $o0	a" &&
-+		echo "100644 blob $o0	b" &&
-+		echo "100644 blob $o0	c" &&
-+		echo "100644 blob $o0	d/e" &&
-+		echo "100644 $o0 0	a" &&
-+		echo "100644 $o0 0	b" &&
-+		echo "100644 $o0 0	c" &&
- 		echo "100644 $o0 0	d/e"
+-		echo " A $N$N$N$N$N$N$N$N$N2"
++		echo " A $N$N$N$N$N$N$N$N$N2" &&
+ 		echo " L  $N$N$N$N$N$N$N$N$N1"
  	) >expected &&
- 	test_cmp expected actual &&
-@@ -112,15 +112,15 @@ test_expect_success 'setup 3' '
- 	test_tick &&
- 	git commit -m "df-1 makes b/c" &&
- 	c3=$(git rev-parse --verify HEAD) &&
--	( git ls-tree -r HEAD ; git ls-files -s ) >actual &&
-+	( git ls-tree -r HEAD && git ls-files -s ) >actual &&
- 	(
--		echo "100644 blob $o0	a"
--		echo "100644 blob $o3	b/c"
--		echo "100644 blob $o0	c"
--		echo "100644 blob $o0	d/e"
--		echo "100644 $o0 0	a"
--		echo "100644 $o3 0	b/c"
--		echo "100644 $o0 0	c"
-+		echo "100644 blob $o0	a" &&
-+		echo "100644 blob $o3	b/c" &&
-+		echo "100644 blob $o0	c" &&
-+		echo "100644 blob $o0	d/e" &&
-+		echo "100644 $o0 0	a" &&
-+		echo "100644 $o3 0	b/c" &&
-+		echo "100644 $o0 0	c" &&
- 		echo "100644 $o0 0	d/e"
- 	) >expected &&
- 	test_cmp expected actual
-@@ -130,15 +130,15 @@ test_expect_success 'setup 4' '
+ 	test_cmp actual expected
+diff --git a/t/t4041-diff-submodule-option.sh b/t/t4041-diff-submodule-option.sh
+index 058ee0829d..4e3499ef84 100755
+--- a/t/t4041-diff-submodule-option.sh
++++ b/t/t4041-diff-submodule-option.sh
+@@ -498,7 +498,7 @@ test_expect_success 'given commit --submodule=short' '
+ test_expect_success 'setup .git file for sm2' '
+ 	(cd sm2 &&
+ 	 REAL="$(pwd)/../.real" &&
+-	 mv .git "$REAL"
++	 mv .git "$REAL" &&
+ 	 echo "gitdir: $REAL" >.git)
+ '
  
- 	rm -rf [abcd] &&
- 	git checkout df-2 &&
--	( git ls-tree -r HEAD ; git ls-files -s ) >actual &&
-+	( git ls-tree -r HEAD && git ls-files -s ) >actual &&
- 	(
--		echo "100644 blob $o0	a"
--		echo "100644 blob $o0	b"
--		echo "100644 blob $o0	c"
--		echo "100644 blob $o0	d/e"
--		echo "100644 $o0 0	a"
--		echo "100644 $o0 0	b"
--		echo "100644 $o0 0	c"
-+		echo "100644 blob $o0	a" &&
-+		echo "100644 blob $o0	b" &&
-+		echo "100644 blob $o0	c" &&
-+		echo "100644 blob $o0	d/e" &&
-+		echo "100644 $o0 0	a" &&
-+		echo "100644 $o0 0	b" &&
-+		echo "100644 $o0 0	c" &&
- 		echo "100644 $o0 0	d/e"
- 	) >expected &&
- 	test_cmp expected actual &&
-@@ -149,15 +149,15 @@ test_expect_success 'setup 4' '
- 	test_tick &&
- 	git commit -m "df-2 makes a/c" &&
- 	c4=$(git rev-parse --verify HEAD) &&
--	( git ls-tree -r HEAD ; git ls-files -s ) >actual &&
-+	( git ls-tree -r HEAD && git ls-files -s ) >actual &&
- 	(
--		echo "100644 blob $o4	a/c"
--		echo "100644 blob $o0	b"
--		echo "100644 blob $o0	c"
--		echo "100644 blob $o0	d/e"
--		echo "100644 $o4 0	a/c"
--		echo "100644 $o0 0	b"
--		echo "100644 $o0 0	c"
-+		echo "100644 blob $o4	a/c" &&
-+		echo "100644 blob $o0	b" &&
-+		echo "100644 blob $o0	c" &&
-+		echo "100644 blob $o0	d/e" &&
-+		echo "100644 $o4 0	a/c" &&
-+		echo "100644 $o0 0	b" &&
-+		echo "100644 $o0 0	c" &&
- 		echo "100644 $o0 0	d/e"
- 	) >expected &&
- 	test_cmp expected actual
-@@ -167,15 +167,15 @@ test_expect_success 'setup 5' '
+@@ -527,7 +527,7 @@ test_expect_success 'diff --submodule with objects referenced by alternates' '
+ 		git commit -m "sub a"
+ 	) &&
+ 	(cd sub_alt &&
+-		sha1_before=$(git rev-parse --short HEAD)
++		sha1_before=$(git rev-parse --short HEAD) &&
+ 		echo b >b &&
+ 		git add b &&
+ 		git commit -m b &&
+diff --git a/t/t4060-diff-submodule-option-diff-format.sh b/t/t4060-diff-submodule-option-diff-format.sh
+index 4b168d0ed7..0eba4620f0 100755
+--- a/t/t4060-diff-submodule-option-diff-format.sh
++++ b/t/t4060-diff-submodule-option-diff-format.sh
+@@ -721,7 +721,7 @@ test_expect_success 'given commit' '
+ test_expect_success 'setup .git file for sm2' '
+ 	(cd sm2 &&
+ 	 REAL="$(pwd)/../.real" &&
+-	 mv .git "$REAL"
++	 mv .git "$REAL" &&
+ 	 echo "gitdir: $REAL" >.git)
+ '
  
- 	rm -rf [abcd] &&
- 	git checkout remove &&
--	( git ls-tree -r HEAD ; git ls-files -s ) >actual &&
-+	( git ls-tree -r HEAD && git ls-files -s ) >actual &&
- 	(
--		echo "100644 blob $o0	a"
--		echo "100644 blob $o0	b"
--		echo "100644 blob $o0	c"
--		echo "100644 blob $o0	d/e"
--		echo "100644 $o0 0	a"
--		echo "100644 $o0 0	b"
--		echo "100644 $o0 0	c"
-+		echo "100644 blob $o0	a" &&
-+		echo "100644 blob $o0	b" &&
-+		echo "100644 blob $o0	c" &&
-+		echo "100644 blob $o0	d/e" &&
-+		echo "100644 $o0 0	a" &&
-+		echo "100644 $o0 0	b" &&
-+		echo "100644 $o0 0	c" &&
- 		echo "100644 $o0 0	d/e"
- 	) >expected &&
- 	test_cmp expected actual &&
-@@ -190,13 +190,13 @@ test_expect_success 'setup 5' '
- 	test_tick &&
- 	git commit -m "remove removes b and modifies a" &&
- 	c5=$(git rev-parse --verify HEAD) &&
--	( git ls-tree -r HEAD ; git ls-files -s ) >actual &&
-+	( git ls-tree -r HEAD && git ls-files -s ) >actual &&
- 	(
--		echo "100644 blob $o5	a"
--		echo "100644 blob $o0	c"
--		echo "100644 blob $o0	d/e"
--		echo "100644 $o5 0	a"
--		echo "100644 $o0 0	c"
-+		echo "100644 blob $o5	a" &&
-+		echo "100644 blob $o0	c" &&
-+		echo "100644 blob $o0	d/e" &&
-+		echo "100644 $o5 0	a" &&
-+		echo "100644 $o0 0	c" &&
- 		echo "100644 $o0 0	d/e"
- 	) >expected &&
- 	test_cmp expected actual
-@@ -207,15 +207,15 @@ test_expect_success 'setup 6' '
+diff --git a/t/t4121-apply-diffs.sh b/t/t4121-apply-diffs.sh
+index aff551a1d7..66368effd5 100755
+--- a/t/t4121-apply-diffs.sh
++++ b/t/t4121-apply-diffs.sh
+@@ -27,6 +27,6 @@ test_expect_success 'setup' \
  
- 	rm -rf [abcd] &&
- 	git checkout df-3 &&
--	( git ls-tree -r HEAD ; git ls-files -s ) >actual &&
-+	( git ls-tree -r HEAD && git ls-files -s ) >actual &&
- 	(
--		echo "100644 blob $o0	a"
--		echo "100644 blob $o0	b"
--		echo "100644 blob $o0	c"
--		echo "100644 blob $o0	d/e"
--		echo "100644 $o0 0	a"
--		echo "100644 $o0 0	b"
--		echo "100644 $o0 0	c"
-+		echo "100644 blob $o0	a" &&
-+		echo "100644 blob $o0	b" &&
-+		echo "100644 blob $o0	c" &&
-+		echo "100644 blob $o0	d/e" &&
-+		echo "100644 $o0 0	a" &&
-+		echo "100644 $o0 0	b" &&
-+		echo "100644 $o0 0	c" &&
- 		echo "100644 $o0 0	d/e"
- 	) >expected &&
- 	test_cmp expected actual &&
-@@ -226,15 +226,15 @@ test_expect_success 'setup 6' '
- 	test_tick &&
- 	git commit -m "df-3 makes d" &&
- 	c6=$(git rev-parse --verify HEAD) &&
--	( git ls-tree -r HEAD ; git ls-files -s ) >actual &&
-+	( git ls-tree -r HEAD && git ls-files -s ) >actual &&
- 	(
--		echo "100644 blob $o0	a"
--		echo "100644 blob $o0	b"
--		echo "100644 blob $o0	c"
--		echo "100644 blob $o6	d"
--		echo "100644 $o0 0	a"
--		echo "100644 $o0 0	b"
--		echo "100644 $o0 0	c"
-+		echo "100644 blob $o0	a" &&
-+		echo "100644 blob $o0	b" &&
-+		echo "100644 blob $o0	c" &&
-+		echo "100644 blob $o6	d" &&
-+		echo "100644 $o0 0	a" &&
-+		echo "100644 $o0 0	b" &&
-+		echo "100644 $o0 0	c" &&
- 		echo "100644 $o6 0	d"
- 	) >expected &&
- 	test_cmp expected actual
-@@ -286,11 +286,11 @@ test_expect_success 'merge-recursive result' '
+ test_expect_success \
+ 	'check if contextually independent diffs for the same file apply' \
+-	'( git diff test~2 test~1; git diff test~1 test~0 )| git apply'
++	'( git diff test~2 test~1 && git diff test~1 test~0 )| git apply'
  
- 	git ls-files -s >actual &&
- 	(
--		echo "100644 $o0 1	a"
--		echo "100644 $o2 2	a"
--		echo "100644 $o1 3	a"
--		echo "100644 $o0 0	b"
--		echo "100644 $o0 0	c"
-+		echo "100644 $o0 1	a" &&
-+		echo "100644 $o2 2	a" &&
-+		echo "100644 $o1 3	a" &&
-+		echo "100644 $o0 0	b" &&
-+		echo "100644 $o0 0	c" &&
- 		echo "100644 $o1 0	d/e"
- 	) >expected &&
- 	test_cmp expected actual
-@@ -325,10 +325,10 @@ test_expect_success 'merge-recursive remove conflict' '
- 
- 	git ls-files -s >actual &&
- 	(
--		echo "100644 $o0 1	a"
--		echo "100644 $o1 2	a"
--		echo "100644 $o5 3	a"
--		echo "100644 $o0 0	c"
-+		echo "100644 $o0 1	a" &&
-+		echo "100644 $o1 2	a" &&
-+		echo "100644 $o5 3	a" &&
-+		echo "100644 $o0 0	c" &&
- 		echo "100644 $o1 0	d/e"
- 	) >expected &&
- 	test_cmp expected actual
-@@ -347,9 +347,9 @@ test_expect_success 'merge-recursive result' '
- 
- 	git ls-files -s >actual &&
- 	(
--		echo "100644 $o1 0	a"
--		echo "100644 $o3 0	b/c"
--		echo "100644 $o0 0	c"
-+		echo "100644 $o1 0	a" &&
-+		echo "100644 $o3 0	b/c" &&
-+		echo "100644 $o0 0	c" &&
- 		echo "100644 $o1 0	d/e"
- 	) >expected &&
- 	test_cmp expected actual
-@@ -369,11 +369,11 @@ test_expect_success 'merge-recursive d/f conflict result' '
- 
- 	git ls-files -s >actual &&
- 	(
--		echo "100644 $o0 1	a"
--		echo "100644 $o1 2	a"
--		echo "100644 $o4 0	a/c"
--		echo "100644 $o0 0	b"
--		echo "100644 $o0 0	c"
-+		echo "100644 $o0 1	a" &&
-+		echo "100644 $o1 2	a" &&
-+		echo "100644 $o4 0	a/c" &&
-+		echo "100644 $o0 0	b" &&
-+		echo "100644 $o0 0	c" &&
- 		echo "100644 $o1 0	d/e"
- 	) >expected &&
- 	test_cmp expected actual
-@@ -393,11 +393,11 @@ test_expect_success 'merge-recursive d/f conflict result the other way' '
- 
- 	git ls-files -s >actual &&
- 	(
--		echo "100644 $o0 1	a"
--		echo "100644 $o1 3	a"
--		echo "100644 $o4 0	a/c"
--		echo "100644 $o0 0	b"
--		echo "100644 $o0 0	c"
-+		echo "100644 $o0 1	a" &&
-+		echo "100644 $o1 3	a" &&
-+		echo "100644 $o4 0	a/c" &&
-+		echo "100644 $o0 0	b" &&
-+		echo "100644 $o0 0	c" &&
- 		echo "100644 $o1 0	d/e"
- 	) >expected &&
- 	test_cmp expected actual
-@@ -417,11 +417,11 @@ test_expect_success 'merge-recursive d/f conflict result' '
- 
- 	git ls-files -s >actual &&
- 	(
--		echo "100644 $o1 0	a"
--		echo "100644 $o0 0	b"
--		echo "100644 $o0 0	c"
--		echo "100644 $o6 3	d"
--		echo "100644 $o0 1	d/e"
-+		echo "100644 $o1 0	a" &&
-+		echo "100644 $o0 0	b" &&
-+		echo "100644 $o0 0	c" &&
-+		echo "100644 $o6 3	d" &&
-+		echo "100644 $o0 1	d/e" &&
- 		echo "100644 $o1 2	d/e"
- 	) >expected &&
- 	test_cmp expected actual
-@@ -441,11 +441,11 @@ test_expect_success 'merge-recursive d/f conflict result' '
- 
- 	git ls-files -s >actual &&
- 	(
--		echo "100644 $o1 0	a"
--		echo "100644 $o0 0	b"
--		echo "100644 $o0 0	c"
--		echo "100644 $o6 2	d"
--		echo "100644 $o0 1	d/e"
-+		echo "100644 $o1 0	a" &&
-+		echo "100644 $o0 0	b" &&
-+		echo "100644 $o0 0	c" &&
-+		echo "100644 $o6 2	d" &&
-+		echo "100644 $o0 1	d/e" &&
- 		echo "100644 $o1 3	d/e"
- 	) >expected &&
- 	test_cmp expected actual
-@@ -465,13 +465,13 @@ test_expect_success 'reset and bind merge' '
- 	git read-tree --prefix=M/ master &&
- 	git ls-files -s >actual &&
- 	(
--		echo "100644 $o1 0	M/a"
--		echo "100644 $o0 0	M/b"
--		echo "100644 $o0 0	M/c"
--		echo "100644 $o1 0	M/d/e"
--		echo "100644 $o1 0	a"
--		echo "100644 $o0 0	b"
--		echo "100644 $o0 0	c"
-+		echo "100644 $o1 0	M/a" &&
-+		echo "100644 $o0 0	M/b" &&
-+		echo "100644 $o0 0	M/c" &&
-+		echo "100644 $o1 0	M/d/e" &&
-+		echo "100644 $o1 0	a" &&
-+		echo "100644 $o0 0	b" &&
-+		echo "100644 $o0 0	c" &&
- 		echo "100644 $o1 0	d/e"
- 	) >expected &&
- 	test_cmp expected actual &&
-@@ -479,17 +479,17 @@ test_expect_success 'reset and bind merge' '
- 	git read-tree --prefix=a1/ master &&
- 	git ls-files -s >actual &&
- 	(
--		echo "100644 $o1 0	M/a"
--		echo "100644 $o0 0	M/b"
--		echo "100644 $o0 0	M/c"
--		echo "100644 $o1 0	M/d/e"
--		echo "100644 $o1 0	a"
--		echo "100644 $o1 0	a1/a"
--		echo "100644 $o0 0	a1/b"
--		echo "100644 $o0 0	a1/c"
--		echo "100644 $o1 0	a1/d/e"
--		echo "100644 $o0 0	b"
--		echo "100644 $o0 0	c"
-+		echo "100644 $o1 0	M/a" &&
-+		echo "100644 $o0 0	M/b" &&
-+		echo "100644 $o0 0	M/c" &&
-+		echo "100644 $o1 0	M/d/e" &&
-+		echo "100644 $o1 0	a" &&
-+		echo "100644 $o1 0	a1/a" &&
-+		echo "100644 $o0 0	a1/b" &&
-+		echo "100644 $o0 0	a1/c" &&
-+		echo "100644 $o1 0	a1/d/e" &&
-+		echo "100644 $o0 0	b" &&
-+		echo "100644 $o0 0	c" &&
- 		echo "100644 $o1 0	d/e"
- 	) >expected &&
- 	test_cmp expected actual &&
-@@ -497,21 +497,21 @@ test_expect_success 'reset and bind merge' '
- 	git read-tree --prefix=z/ master &&
- 	git ls-files -s >actual &&
- 	(
--		echo "100644 $o1 0	M/a"
--		echo "100644 $o0 0	M/b"
--		echo "100644 $o0 0	M/c"
--		echo "100644 $o1 0	M/d/e"
--		echo "100644 $o1 0	a"
--		echo "100644 $o1 0	a1/a"
--		echo "100644 $o0 0	a1/b"
--		echo "100644 $o0 0	a1/c"
--		echo "100644 $o1 0	a1/d/e"
--		echo "100644 $o0 0	b"
--		echo "100644 $o0 0	c"
--		echo "100644 $o1 0	d/e"
--		echo "100644 $o1 0	z/a"
--		echo "100644 $o0 0	z/b"
--		echo "100644 $o0 0	z/c"
-+		echo "100644 $o1 0	M/a" &&
-+		echo "100644 $o0 0	M/b" &&
-+		echo "100644 $o0 0	M/c" &&
-+		echo "100644 $o1 0	M/d/e" &&
-+		echo "100644 $o1 0	a" &&
-+		echo "100644 $o1 0	a1/a" &&
-+		echo "100644 $o0 0	a1/b" &&
-+		echo "100644 $o0 0	a1/c" &&
-+		echo "100644 $o1 0	a1/d/e" &&
-+		echo "100644 $o0 0	b" &&
-+		echo "100644 $o0 0	c" &&
-+		echo "100644 $o1 0	d/e" &&
-+		echo "100644 $o1 0	z/a" &&
-+		echo "100644 $o0 0	z/b" &&
-+		echo "100644 $o0 0	z/c" &&
- 		echo "100644 $o1 0	z/d/e"
- 	) >expected &&
- 	test_cmp expected actual
-@@ -589,8 +589,8 @@ test_expect_success 'merge-recursive simple w/submodule result' '
- 
- 	git ls-files -s >actual &&
- 	(
--		echo "100644 $o5 0	a"
--		echo "100644 $o0 0	c"
-+		echo "100644 $o5 0	a" &&
-+		echo "100644 $o0 0	c" &&
- 		echo "160000 $c1 0	d"
- 	) >expected &&
- 	test_cmp expected actual
-@@ -601,13 +601,13 @@ test_expect_success 'merge-recursive copy vs. rename' '
- 	git merge rename &&
- 	( git ls-tree -r HEAD && git ls-files -s ) >actual &&
- 	(
--		echo "100644 blob $o0	b"
--		echo "100644 blob $o0	c"
--		echo "100644 blob $o0	d/e"
--		echo "100644 blob $o0	e"
--		echo "100644 $o0 0	b"
--		echo "100644 $o0 0	c"
--		echo "100644 $o0 0	d/e"
-+		echo "100644 blob $o0	b" &&
-+		echo "100644 blob $o0	c" &&
-+		echo "100644 blob $o0	d/e" &&
-+		echo "100644 blob $o0	e" &&
-+		echo "100644 $o0 0	b" &&
-+		echo "100644 $o0 0	c" &&
-+		echo "100644 $o0 0	d/e" &&
- 		echo "100644 $o0 0	e"
- 	) >expected &&
- 	test_cmp expected actual
-@@ -617,17 +617,17 @@ test_expect_failure 'merge-recursive rename vs. rename/symlink' '
- 
- 	git checkout -f rename &&
- 	git merge rename-ln &&
--	( git ls-tree -r HEAD ; git ls-files -s ) >actual &&
-+	( git ls-tree -r HEAD && git ls-files -s ) >actual &&
- 	(
--		echo "120000 blob $oln	a"
--		echo "100644 blob $o0	b"
--		echo "100644 blob $o0	c"
--		echo "100644 blob $o0	d/e"
--		echo "100644 blob $o0	e"
--		echo "120000 $oln 0	a"
--		echo "100644 $o0 0	b"
--		echo "100644 $o0 0	c"
--		echo "100644 $o0 0	d/e"
-+		echo "120000 blob $oln	a" &&
-+		echo "100644 blob $o0	b" &&
-+		echo "100644 blob $o0	c" &&
-+		echo "100644 blob $o0	d/e" &&
-+		echo "100644 blob $o0	e" &&
-+		echo "120000 $oln 0	a" &&
-+		echo "100644 $o0 0	b" &&
-+		echo "100644 $o0 0	c" &&
-+		echo "100644 $o0 0	d/e" &&
- 		echo "100644 $o0 0	e"
- 	) >expected &&
- 	test_cmp expected actual
+ test_done
 -- 
 2.18.0.419.gfe4b301394
 
