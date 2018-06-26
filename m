@@ -6,58 +6,60 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D96B81F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 16:40:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 594251F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 16:46:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752275AbeFZQkd (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 12:40:33 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:39307 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752164AbeFZQkd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 12:40:33 -0400
-Received: by mail-wm0-f66.google.com with SMTP id p11-v6so2526453wmc.4
-        for <git@vger.kernel.org>; Tue, 26 Jun 2018 09:40:32 -0700 (PDT)
+        id S1752177AbeFZQqC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 12:46:02 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:43558 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751924AbeFZQqB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 12:46:01 -0400
+Received: by mail-wr0-f196.google.com with SMTP id c5-v6so6780905wrs.10
+        for <git@vger.kernel.org>; Tue, 26 Jun 2018 09:46:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=FW3ZGLCZuVPQebp/n62PzsERwGEvih+vHwcbdVHgxwE=;
-        b=JQHLMVPbKJxGqSUsiVkGMUD3RK0SUfc5rhcN+wgcZ7P0hvRflqFVsCAr8+kOGxuUUl
-         CUkxfc9BOnLPIIdmwxXZAV6h9pGMZmdtRNYoiiEDaZm0CRMMdymCgR8DgUWTVhUUDzZv
-         8Mr21vo1Cl0uFjAL2qwn1o2e5Tj+Y5UuEPPGO4l6eHcZhPdyp44n4A7lfhLTON8wl1KR
-         SnQSuOyNvnqR75Vp4uYXhBS0kYCvu57gtHMARzFq+xrTbOoPFhpyg98iY6eJa97RiEPa
-         vP7E+NRDtTErkO7NlXSuZ/Sw4USsqZ/4+XGfD+RM0W8TFKnu013MzHcPqAaCMmK8DyGF
-         YH1w==
+        bh=MXLbn5s6o0jHFn93KGbfEU5UFjc9+fKM4lAwC60tOEs=;
+        b=jfR7km1M/gWej566r+as72k9tCHfXwcOS7bwZqhnJVUwRsq+R4wORHYYsScCBOpyTK
+         O9Nzw5kzLmQ9ISJnXjt2zo72Mbk7XmRHLCg1fRd+QoRnyac3ZewYF+PALmJaCv7SqQ0g
+         Yz+fskI1HW9JIu8dmEVYmOpn1MyrBut8xhsQRstconUNnudXhM1MQQ+v+A2xD9qhKf7h
+         MWSo/eHA/zQ6jJnCkCPKsxLa1A/Y3WfZSwiTkT9EBBbVRVY1r6+1lhQ8g/X7Fu5kKIsm
+         McJOriMgsYz6fcbsEm1w3F/ihf4JuHM8aFHYbpFbNi4K9we4YkGmTu0tfOHmhsgsHtPR
+         gK6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=FW3ZGLCZuVPQebp/n62PzsERwGEvih+vHwcbdVHgxwE=;
-        b=k5iBobzoKsshC2yhOYpygnY972YwxaGODwkwXr/srbpNcrXCsmJRUKgB3Rmaizhbp9
-         iwOPyarA6fJe9nH1kDn653sDEutPjNZRsaIgu7F9s0eQA9QcAnBbuLunzi5vrjS15HAq
-         eqUxllbXefBLb5Z4nmsFsgzoDEGJyjy8mG7h44zCVm/jBi+JAvQ7hyOTWbFdBlfEr7bQ
-         4KYp4IFfJcImB2XizSI7OkOqWvSIzjZbnU53blWHZhCf9qvurbgzHtZFKEzdcYzDLhvG
-         tFgFSHEX+e4XD4OH3aX+0a9HQxWPoElasyRnodguf1U/I+RXrfucB8mfwla35tHT51yD
-         CFpQ==
-X-Gm-Message-State: APt69E2kX1B3+XNWjHp8gFBLuWrtXIN6qVryCT5n4coUrkqYQivfClFT
-        sTx3TucxN6JiQuKg0q6bqzA=
-X-Google-Smtp-Source: AAOMgpch/BigrDP0L75U5A3d0MxX1XHp+YSgvnrCnOETZmf9VJicqDaVmtfWBkcvsepWf/3h0NXi/Q==
-X-Received: by 2002:a1c:d287:: with SMTP id j129-v6mr2119639wmg.106.1530031231371;
-        Tue, 26 Jun 2018 09:40:31 -0700 (PDT)
+        bh=MXLbn5s6o0jHFn93KGbfEU5UFjc9+fKM4lAwC60tOEs=;
+        b=VxxqiKkHbSP+CwPhOZW/V+lDM9SmpNy9IHmjMv71yciazUalkrh0smB407Wfp23U2t
+         4mfT4XVSoCePjqqLfS59M+82d/N8KBvebm/qYbW6EPlT6h38Qq/9UqEvJUEuIWxcZx1o
+         2VVVcPdAb8myYq4KPNRaEFh4xebQpNs/OIiaK7v3soYDb9DjXHCZ+QeRqOHpGdi6EnBp
+         oP9EJfBPOV0Z8Xf6MrU9u7lbCVoFLyrpQXtoMvguFHRGr3HOJBNjxoH3T2/SW8dsvjjx
+         wkotqF/vQrN4l1NvEjaegfrumBZy/UxkM/h53+647GzOQXrTJkLSdZK5XXfzt2vk/BXj
+         R8Ug==
+X-Gm-Message-State: APt69E04dWY7w+QQFQwHOgrRA8uj9J2kHi58lJ3b+oDqdcFHC7CBuUu6
+        BKSuc/qVctG+RPhSEtRqd2U=
+X-Google-Smtp-Source: AAOMgpeJyDxM+SsumBu6YHiux41mBkjMpSy1c03N04ABvDnMjhBWg6r5N61699Lxj54MNdNr02r2qQ==
+X-Received: by 2002:adf:8806:: with SMTP id d6-v6mr2087064wrd.41.1530031560020;
+        Tue, 26 Jun 2018 09:46:00 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id v15-v6sm1626939wmc.16.2018.06.26.09.40.30
+        by smtp.gmail.com with ESMTPSA id g125-v6sm2656498wmf.16.2018.06.26.09.45.58
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 26 Jun 2018 09:40:30 -0700 (PDT)
+        Tue, 26 Jun 2018 09:45:58 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     dstolee@microsoft.com, git@vger.kernel.org
-Subject: Re: [PATCH 4/5] commit-graph: store graph in struct object_store
-References: <xmqqwoummvmw.fsf@gitster-ct.c.googlers.com>
-        <20180625220915.198932-1-jonathantanmy@google.com>
-Date:   Tue, 26 Jun 2018 09:40:29 -0700
-In-Reply-To: <20180625220915.198932-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Mon, 25 Jun 2018 15:09:15 -0700")
-Message-ID: <xmqqefgtmrgi.fsf@gitster-ct.c.googlers.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org, avarab@gmail.com
+Subject: Re: [PATCH v3 0/7] grep.c: teach --column to 'git-grep(1)'
+References: <cover.1529365072.git.me@ttaylorr.com>
+        <cover.1529682173.git.me@ttaylorr.com>
+        <20180625184350.GA26688@sigill.intra.peff.net>
+        <20180625184729.GA12140@syl.local>
+Date:   Tue, 26 Jun 2018 09:45:58 -0700
+In-Reply-To: <20180625184729.GA12140@syl.local> (Taylor Blau's message of
+        "Mon, 25 Jun 2018 13:47:29 -0500")
+Message-ID: <xmqqa7rhmr7d.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,14 +68,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Taylor Blau <me@ttaylorr.com> writes:
 
-> As for whether both these functions are necessary in the first place, I
-> think they are.
+> On Mon, Jun 25, 2018 at 02:43:50PM -0400, Jeff King wrote:
+>> On Fri, Jun 22, 2018 at 10:49:26AM -0500, Taylor Blau wrote:
+>> > Since the last time, only a couple of things have changed at Peff's
+>> > suggestions in [1]. The changes are summarized here, and an inter-diff
+>> > is available below:
+>> >
+>> >   - Change "%zu" to PRIuMAX (and an appropriate cast into uintmax_t). I
+>> >     plan to send a follow-up patch to convert this back to "%zu" to see
+>> >     how people feel about it, but I wanted to keep that out of the
+>> >     present series in order to not hold things up.
+>> ...
+>> Jinxes aside, this interdiff looks good to me.
+>
+> Thanks; I hope that I haven't jinxed anything :-).
+>
+> I'm going to avoid sending the PRIuMAX -> "%zu" patch, since dscho
+> points out that it's not available on Windows [1].
 
-I do not mind their existence.  
-
-I was wondering if they can share more implementation; such a design
-would need s/the_commit_graph/the_repo->objstore->commit_graph/ only
-once as a side effect.
+OK, so what I queued on 'pu' seems to be ready to advance, which is
+good.  Keeping topics in flight on 'pu', unable to convince myself
+that they are ready to advance to 'next', makes me feel uneasy and
+unhappy, and having to worry about one less such topic is a good
+news ;-)
 
