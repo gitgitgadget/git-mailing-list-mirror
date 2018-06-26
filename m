@@ -6,59 +6,63 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A88D31F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 17:10:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27F7B1F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 17:35:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753200AbeFZRKD (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 13:10:03 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:52995 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753199AbeFZRKA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 13:10:00 -0400
-Received: by mail-wm0-f67.google.com with SMTP id p126-v6so2825874wmb.2
-        for <git@vger.kernel.org>; Tue, 26 Jun 2018 10:10:00 -0700 (PDT)
+        id S933909AbeFZRfG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 13:35:06 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:54225 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933906AbeFZRfF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 13:35:05 -0400
+Received: by mail-wm0-f66.google.com with SMTP id x6-v6so2860871wmc.3
+        for <git@vger.kernel.org>; Tue, 26 Jun 2018 10:35:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=8bO+5HmJnE5qqczsep8VJUsZoISqy8UOT6bOaxt5frQ=;
-        b=nS3z2NPA1Pg4EIQvA8gb9Rkkfn1JKvjMKugVUqZlK6QSEoGvS2ziqny+bhm9OSV8I1
-         tItqmD73wSN5+0qyk0pzm/3lHkK692Ov40CgU6WvwBB16IwGGYJSNcBP96rIB0/eEjdt
-         Tv+NvrAhrfv7nuolY8AjDlP+N7LoPsm57BzeC+Dr9Am7WwOHqUvY5pMWBntYgStT0SFn
-         IFRPVpLPuw+LdihTCeECWUihbHWikYG06zNpZ2pjpfiBzrmGKFYvSm/tWCLwLsJHWl2M
-         MVJFVlubH5fi0cniDEv2ToXlR+s27zoM5cRKnBY0nYXQYXDK1eWzHvvnYLhaTc1dKqTw
-         cB0w==
+        bh=xbtCD3iYTPLJIPP6CA/qierWXQ3k/9T99rDNkNCxv5E=;
+        b=BLV2o6+PxxN3OK1KVVOPutg9sSACcGRyVdT11Ss+nazNxRglZMWqBQQAizd6Kzelyu
+         uMb2/8UC6mxrpypTvN+HyeqAfpQmtZdeHJKYu/hrp4S3xyWrTQtHwKzZVzRzyLbuZfvz
+         If9Aan03+wJzaD2IfjA/z0DO2bllCk+XGyUWtctGG+8hZe8yCuOEu68nofK+x/tbvxzm
+         qUTHMErQNLUqqNZvF7WlGSQmTR0302Kbg5w1vFzcaL9iTteR42OJhqgF0dnEwjN8rmRJ
+         gjDdLueVYxAclAjJ4nQ8MPy9JB+Ff97/3d5te/G+JgkzubVrxYa40vHjGkmLTeiRTkjc
+         g+wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=8bO+5HmJnE5qqczsep8VJUsZoISqy8UOT6bOaxt5frQ=;
-        b=Cy3qB1z7gP/KsMj4EkgYq5u17ZMV04z+hzpJ0VG66hLHN6842mJcwxCswQ5udtlkjx
-         ia2WmVdeF7uN4nOTV8b7ERRt7bRaAFZ7MrqocefSKbvsByz6XlUOMsY045B9EhbcEBvy
-         xxpw1lyoo7yb0JSEvw+sCF0IZKzkuaz/O/QvECEIhU/esxnWCftHMHYXENruROH8xn3y
-         XUNeYPRbISVVDkrvwPr4rV9f88a2XzxmR8RjhT0CSKvCxaFDDb26ndd+r4Jgdq+Bw0oQ
-         1c46hgZB8k0bRz+8A7/xQgBST+417zXMqr8eVOMMaY294moShAPG6o6yxrNFdlB5VS4b
-         vD0g==
-X-Gm-Message-State: APt69E1ZhShTWZ2HXdsSiWvcOskL154LTqOlYB67uY9nNX9goyKgp4I4
-        DX88ReoA4+Av53Q+4U6E+A8=
-X-Google-Smtp-Source: AAOMgpeQQLMHBn2s6TOkT4m1+NqgxHdILITYSaWjKjQlkgCcrEESc2uMqkS7QKT+sZ0QnodxCMPqUg==
-X-Received: by 2002:a1c:29c5:: with SMTP id p188-v6mr2235382wmp.45.1530032999295;
-        Tue, 26 Jun 2018 10:09:59 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id o12-v6sm2244035wrn.4.2018.06.26.10.09.58
+        bh=xbtCD3iYTPLJIPP6CA/qierWXQ3k/9T99rDNkNCxv5E=;
+        b=XIViC8bQRmk57HbCmpIpqo+bVapJZjgHFbvzjkn87vHMklr/IVsnWXb28ZvwDGijRG
+         LxRbAcpyZICDM7rJx5lNIvRdtzwWzJAxuak9nD+EZibUjibt5lTuncZUdjHY0UkVfM3s
+         X6ZBAdDGIcojN0gpKJGIZAO9QIEYS9I188nd4/mImuV92OX0BelK+Mo7AaneLPh0Qs8A
+         SnvtoCBmf+r506topvx0z3+wmy/8m20lq/Vw4MsUH2B9/nQm3R5UknstcfplcV7JDAwJ
+         Dc0HIvpIao9j3EmLndY5RRir+NawvNC2KXY5K3pBva+l8C03+qKT2gZCxDugRRvjiTbW
+         Kh3g==
+X-Gm-Message-State: APt69E2rnTkBLlr3d8Hcl1Px3SeDUZCLN1Ois9yxOrO8nZy+cF73kHgO
+        YSqlz/9SZF0CwxWhBnvzgdc=
+X-Google-Smtp-Source: AAOMgpeQu81rXZys8L/zmYrxUcWvxnP6nFwMif4uHua1mU6DYK0Awx/TNb0+mxi066nFZjoUAcGFmA==
+X-Received: by 2002:a1c:7fc1:: with SMTP id a184-v6mr1830374wmd.161.1530034503386;
+        Tue, 26 Jun 2018 10:35:03 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id v14-v6sm2297582wro.33.2018.06.26.10.35.00
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 26 Jun 2018 10:09:58 -0700 (PDT)
+        Tue, 26 Jun 2018 10:35:01 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [BUG] url schemes should be case-insensitive
-References: <20180624085622.GA28575@sigill.intra.peff.net>
-        <xmqqvaa6ohiw.fsf@gitster-ct.c.googlers.com>
-        <20180626122143.GA14052@sigill.intra.peff.net>
-Date:   Tue, 26 Jun 2018 10:09:58 -0700
-In-Reply-To: <20180626122143.GA14052@sigill.intra.peff.net> (Jeff King's
-        message of "Tue, 26 Jun 2018 08:21:43 -0400")
-Message-ID: <xmqq1sctmq3d.fsf@gitster-ct.c.googlers.com>
+To:     Alban Gruin <alban.gruin@gmail.com>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        phillip.wood@dunelm.org.uk, Elijah Newren <newren@gmail.com>
+Subject: Re: [GSoC][PATCH v4 2/3] rebase -i: rewrite checkout_onto() in C
+References: <20180621141732.19952-1-alban.gruin@gmail.com>
+        <20180625134419.18435-1-alban.gruin@gmail.com>
+        <20180625134419.18435-3-alban.gruin@gmail.com>
+Date:   Tue, 26 Jun 2018 10:35:00 -0700
+In-Reply-To: <20180625134419.18435-3-alban.gruin@gmail.com> (Alban Gruin's
+        message of "Mon, 25 Jun 2018 15:44:18 +0200")
+Message-ID: <xmqqsh59lad7.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,68 +71,124 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Alban Gruin <alban.gruin@gmail.com> writes:
 
->> > We seem to match url schemes case-sensitively:
->> >
->> >   $ git clone SSH://example.com/repo.git
->> >   Cloning into 'repo'...
->> >   fatal: Unable to find remote helper for 'SSH'
->> >
->> > whereas rfc3986 is clear that the scheme portion is case-insensitive.
->> > We probably ought to match at least our internal ones with strcasecmp.
->> 
->> That may break if somebody at DevToolGroup@$BIGCOMPANY got cute and
->> named their custom remote helper SSH:// that builds on top of the
->> normal ssh:// protocol with something extra and gave it to their
->> developers (and they named the http counterpart that has the same
->> extra HTTP://, of course).
->
-> True, though I am on the fence whether that is a property worth
-> maintaining. AFAIK it was not planned and is just a "this is how it
-> happened to work" case that is (IMHO) doing the wrong thing.
+> This rewrites checkout_onto() from shell to C. The new version is called
+> detach_onto(), given its role.
 
-FWIW, I fully agree with the assessment; sorry for not saying that
-together with the devil's advocate comment to save a round-tip.
+The name, given its role, may be good, but is the implementtaion
+robust enough to fulfill the promise its name gives?
 
-> It may also interact in a funny way with our allowed-protocol code, if
-> "SSH" gets a pass as "ssh" under the default config, but actually runs
-> the otherwise-disallowed git-remote-SSH (though one would _hope_ if you
-> have such a git-remote-SSH that it behaves just like an ssh remote).
+>  	git rebase--helper --check-todo-list || {
+>  		ret=$?
+> -		checkout_onto
+> +		git rebase--helper --detach-onto "$onto_name" "$onto" \
+> +		    "$orig_head" ${verbose:+--verbose}
 
-True.  I did not offhand recall how protocol whitelist matches the
-protocol name with config, but transport.c::get_protocol_config()
-seems to say that the <name> part of "protocol.<name>.allow" is case
-sensitive, and we match known-safe (and known-unsafe "ext::")
-protocols with strcmp() not strcasecmp().  We need to figure out the
-implications of allowing SSH:// not to error out but pretending as
-if it were ssh:// on those who have protocol.ssh.allow defined.
+Here, $onto_name is what the end-user gave us (e.g. it is
+"master..." in "git rebase --onto=master... base"), while $onto is a
+40-hex object name of the commit.  $orig_head is also a 40-hex
+object name.
 
->> > We could probably also give an advise() message in the above output,
->> > suggesting that the problem is likely one of:
->> >
->> >   1. They misspelled the scheme.
->> >
->> >   2. They need to install the appropriate helper.
->> >
->> > This may be a good topic for somebody looking for low-hanging fruit to
->> > get involved in development (I'd maybe call it a #leftoverbits, but
->> > since I didn't start on it, I'm not sure if it counts as "left over" ;)).
->> [..]
->> It may probably be a good idea to do an advice, but I'd think
->> "Untable to find remote helper for 'SSH'" may be clear enough.  If
->> anything, perhaps saying "remote helper for 'SSH' protocol" would
->> make it even clear?  I dunno.
->
-> I think it doesn't help much if the user does not know what a remote
-> helper is, or why Git is looking for one.
+And this call shows how the above shell scriptlet calls into the
+detach_onto() thing ...
 
-True.  
+> +	if (command == DETACH_ONTO && argc == 4)
+> +		return !!detach_onto(&opts, argv[1], argv[2], argv[3], verbose);
 
-	$ git clone SSH://example.com/repo.git
-	fatal: unable to handle URL that begins with SSH://
+... which is defined like so:
 
-would be clear enough, perhaps?  At least this line of change is a
-small first step that would improve the situation without potential
-to break anybody who has been abusing the case sensitivity loophole.
+> +int detach_onto(struct replay_opts *opts,
+> +		const char *onto_name, const char *onto,
+> +		const char *orig_head, unsigned verbose)
+> +{
+> +	struct object_id oid;
+> +	const char *action = reflog_message(opts, "start", "checkout %s", onto_name);
+> +
+> +	if (get_oid(orig_head, &oid))
+> +		return error(_("%s: not a valid OID"), orig_head);
 
+Which means that this can be more strict to use get_oid_hex() to
+catch possible mistakes in the caller.
+
+> +	if (run_git_checkout(opts, onto, verbose, action)) {
+
+And this could be a bit problematic, as we can see below how the
+"checkout" thing does not guarantee "detaching" at all ...
+
+> +		apply_autostash(opts);
+> +		sequencer_remove_state(opts);
+> +		return error(_("could not detach HEAD"));
+> +	}
+> +
+> +	return update_ref(NULL, "ORIG_HEAD", &oid, NULL, 0, UPDATE_REFS_MSG_ON_ERR);
+> +}
+> +
+
+... which can be seen here ...
+
+> +static int run_git_checkout(struct replay_opts *opts, const char *commit,
+> +				int verbose, const char *action)
+> +{
+> +	struct child_process cmd = CHILD_PROCESS_INIT;
+> +
+> +	cmd.git_cmd = 1;
+> +
+> +	argv_array_push(&cmd.args, "checkout");
+> +	argv_array_push(&cmd.args, commit);
+> +	argv_array_pushf(&cmd.env_array, GIT_REFLOG_ACTION "=%s", action);
+> +
+> +	if (verbose)
+> +		return run_command(&cmd);
+> +	else
+> +		return run_command_silent_on_success(&cmd);
+> +}
+
+This drives the external command "git checkout" with _any_ string
+the caller passes in "commit".  If the variable happens to have
+'master', for example, it would be "git checkout master" and if you
+have a branch with that name, it will not detach but check out the
+branch to build on it.  It is a caller's responsibility to give a
+suitable "commit" if it wants to use this helper to detach.
+
+So perhaps the caller of this function in detach_onto() should pass
+"%s^0" or even do something like
+
+	struct object_id onto_oid;
+	char onto_hex[GIT_MAX_HEXSZ + 1];
+
+	if (get_oid(onto, &onto_oid) || oid_to_hex_r(onto_hex, &onto_oid))
+		return error(...);
+	if (run_git_checkout(opts, onto_hex, verbose, action)) {
+		...
+
+to ensure that it keeps the promise its name gives.
+
+I can hear "Oh, but it is a bug in the caller to give anything that
+won't result in detaching in 'onto'" but that is not a valid excuse,
+given that this _public_ function is called "detach_onto".  Making
+sure detachment happens is its responsibility, not its callers'.
+
+Or we could do a cop-out alternative of commenting the function in *.h
+file to say "onto must be given as 40-hex", with a code to make sure
+the caller really gave us a 40-hex and not a branch name.  That is a
+less ideal but probably acceptable alternative.
+
+>  static const char rescheduled_advice[] =
+>  N_("Could not execute the todo command\n"
+>  "\n"
+> diff --git a/sequencer.h b/sequencer.h
+> index 35730b13e..9f0ac5e75 100644
+> --- a/sequencer.h
+> +++ b/sequencer.h
+> @@ -100,6 +100,10 @@ int update_head_with_reflog(const struct commit *old_head,
+>  void commit_post_rewrite(const struct commit *current_head,
+>  			 const struct object_id *new_head);
+>  
+> +int detach_onto(struct replay_opts *opts,
+> +		const char *onto_name, const char *onto,
+> +		const char *orig_head, unsigned verbose);
+> +
+>  #define SUMMARY_INITIAL_COMMIT   (1 << 0)
+>  #define SUMMARY_SHOW_AUTHOR_DATE (1 << 1)
+>  void print_commit_summary(const char *prefix, const struct object_id *oid,
