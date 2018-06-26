@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ED02D1F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 20:54:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 36C521F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 20:55:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934010AbeFZUy5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 16:54:57 -0400
-Received: from mail-qt0-f201.google.com ([209.85.216.201]:51347 "EHLO
-        mail-qt0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933482AbeFZUyy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 16:54:54 -0400
-Received: by mail-qt0-f201.google.com with SMTP id k8-v6so4868526qtj.18
-        for <git@vger.kernel.org>; Tue, 26 Jun 2018 13:54:54 -0700 (PDT)
+        id S934039AbeFZUy7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 16:54:59 -0400
+Received: from mail-it0-f74.google.com ([209.85.214.74]:36780 "EHLO
+        mail-it0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933810AbeFZUyw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 16:54:52 -0400
+Received: by mail-it0-f74.google.com with SMTP id d70-v6so2278228itd.1
+        for <git@vger.kernel.org>; Tue, 26 Jun 2018 13:54:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=wC4rTD4iOF1+fjTkPMOV0bq5OW3d9E1xtAc7ciKHXSU=;
-        b=IqlZFMOURgqP5XyloxT//foCgVkYT0+m7fDIxl6QjmsyNivDmu2TGEVaGGSxQTOzBg
-         c21TRUpJxH775hHWpTjQ+8kHleQCEIKJUu+GQShYCzw6BHjfDpWrxFPGuy3AL0WbXSfc
-         rDymTOXJute024/GKrEbfoHaz8xtB7FIqr0XIzQSg9yas6/tDm0G0Da4jKrpSM9yIi2a
-         ZpjOyKbZ3E+4ZkG5acO4qsX0/7ExJIo/pttkJ0cLgZIFbcu9rz2i0qX6HsUxlusgmVrV
-         rNUT79fYxnHFsozRjOKgLzZEPE8Y3Frxg4PvDCjS7ya0jkWSBaoC1itnlv+s2L3qo8/6
-         QIzg==
+        bh=rLOxeAejN/gP1LVKYA9UGMsw/ue5K5yR3AKLI/xRcIU=;
+        b=UCux5ri2ycS27unOH2mMccGwn6gmXxO7sKSVU+mnkt92mXbMBAa4hOHgjn9MvPsp6X
+         uB963nPLOEqEo0+rZwz1R1BvrXgu+37wiYAjza7/J+16ZG/eUat2sixPxw66oEUZZghC
+         5FEyY4RtXi7vsP+EXoubJmn6MU9P1yf3Kn12Eu7hcShH0RE9YnuBkK967R3lnffC9MDT
+         HrUdJBvp1OglWgf7hKlubSAp7zxctxdM/oeYmgBdXNFwT+S2pAk5g1KRkTS0xl++fSkr
+         faNCuR7WCA6N9iexdhL3b6j/wzFPp8nounaXEsfBJDzTvtN+8WgH8HKbMnWVCflV/4mk
+         SuUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=wC4rTD4iOF1+fjTkPMOV0bq5OW3d9E1xtAc7ciKHXSU=;
-        b=sYT7mAI1xnyKHJvuokQrP7T3MI58oCET3W2cUOlLxe7W61/1rKgCVWkkMyZIIujiYz
-         htmGFVjGWBRXm4xnAH7FHn9rONf/QkFM4ARZxvTMR8cg3lOdDOV1+jncbXNZ8oBhBgZ4
-         /wlNpJcvyvmEcdERLgowjNsjmFJby0pP46y2Oj+Yj3pAl4VQHNvNJMr5pRv5lyEH6H8n
-         TpPXtofisbHlWfqXINM2sD7rTt+6Sw+ougMo1Qvpjrug90MNYL3ZuW/irq6//FefRZj5
-         wInEj7crH2xHCvLVl+gt1pdAqQUAWcL+ZvGiXRDUedzHWsmOOq2gUwsSDZZHFm9Pd2eU
-         Op7Q==
-X-Gm-Message-State: APt69E0SBGDUxo9wFD5Se98n1YjKGqVFdChmGEcfXGS/cmRiprdUxQqm
-        iIWx2NMj+5KZUzM84x8n7Es2/rHi03fvNySFedP+FHMDXBFR0uPmsee3v/twNZrYTz+ANDrV3kD
-        uFGnJsNaEci41Y73xFdxCrqqUPlA+6oALYpCAAV0rqPrticBU9XWbNCm56w==
-X-Google-Smtp-Source: AAOMgpcwRhl4T7IHT9w/QkxKj89wTwUlI3UvjNrvFBGI8R0dLIbY76PvJSRpkl+3eyCUaE/hpzSDvICY1gg=
+        bh=rLOxeAejN/gP1LVKYA9UGMsw/ue5K5yR3AKLI/xRcIU=;
+        b=pE97bO+iuMwJYsiSqgNKBKUOlbZ1gVcsGB7EJ5xb1/RYh9n+/+NU1vAp4GQy02zpWJ
+         IQNNJ/5MzAqUisSXTGsMJJ61xFe3X/1DBsAnumvddfDXp9Hg6UWFt3S/HE0Gy6WySkU0
+         Px5bIaew/V8eRSfArAncCzcldmC8tCkoBOByyxZDkeDe1aJImr2DnFB2O5dewPNaLWGW
+         IQT9u06ufOeoS7k7ID5137Rowg6okVE1jzH7juwd4Pd6Nh/vAlgOQWB48vEYFRngew9g
+         qlhrT/e62vVR6xHY02Vql68t5CjG13qLz30v+Pv2oVEuvcEQkUCNexcKJAJyqJeqPurm
+         ljhw==
+X-Gm-Message-State: APt69E3DQu1WTPw5rnwoklBEAsEuto/f6fqCaB6PvMwtTrvczbyRPpkC
+        tvIYBM/PFjmOLx9Y2XpRTS4awb7cV8g8QsrwSTiimq1LJD4bbaf3CyUGOdF1gKDXIuJ5LvwC3k8
+        hjtgfdZV+kKqFaZk0hkXgITRgwPrFd6slWSogJkINeDCyYGI/Bh6NVuqRkg==
+X-Google-Smtp-Source: ADUXVKKCP66qYgQrM0UJif4a7Dw4SYTbL/6hcOyMrjPi2eib/aMM3MhCCNnmNg/uliNW61ukDn9gPSsUA7c=
 MIME-Version: 1.0
-X-Received: by 2002:a0c:f751:: with SMTP id e17-v6mr1715374qvo.29.1530046493796;
- Tue, 26 Jun 2018 13:54:53 -0700 (PDT)
-Date:   Tue, 26 Jun 2018 13:54:35 -0700
+X-Received: by 2002:a24:d587:: with SMTP id a129-v6mr1329436itg.3.1530046491568;
+ Tue, 26 Jun 2018 13:54:51 -0700 (PDT)
+Date:   Tue, 26 Jun 2018 13:54:34 -0700
 In-Reply-To: <20180626205438.110764-1-bmwill@google.com>
-Message-Id: <20180626205438.110764-6-bmwill@google.com>
+Message-Id: <20180626205438.110764-5-bmwill@google.com>
 References: <20180625185332.164142-1-bmwill@google.com> <20180626205438.110764-1-bmwill@google.com>
 X-Mailer: git-send-email 2.18.0.rc2.346.g013aa6912e-goog
-Subject: [PATCH v5 5/8] fetch: refactor fetch_refs into two functions
+Subject: [PATCH v5 4/8] fetch: refactor the population of peer ref OIDs
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     jonathantanmy@google.com, gitster@pobox.com, sbeller@google.com,
@@ -63,64 +63,94 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Refactor the fetch_refs function into a function that does the fetching
-of refs and another function that stores them.  This is in preparation
-for allowing additional processing of the fetched refs before updating
-the local ref store.
+Populate peer ref OIDs in get_ref_map instead of do_fetch. Besides
+tightening scopes of variables in the code, this also prepares for
+get_ref_map being able to be called multiple times within do_fetch.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/fetch.c | 23 ++++++++++++++++++-----
- 1 file changed, 18 insertions(+), 5 deletions(-)
+ builtin/fetch.c | 36 ++++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
 diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 545635448..2fabfed0e 100644
+index ea5b9669a..545635448 100644
 --- a/builtin/fetch.c
 +++ b/builtin/fetch.c
-@@ -968,9 +968,21 @@ static int fetch_refs(struct transport *transport, struct ref *ref_map)
- 	if (ret)
- 		ret = transport_fetch_refs(transport, ref_map);
- 	if (!ret)
--		ret |= store_updated_refs(transport->url,
--				transport->remote->name,
--				ref_map);
-+		/*
-+		 * Keep the new pack's ".keep" file around to allow the caller
-+		 * time to update refs to reference the new objects.
-+		 */
-+		return 0;
-+	transport_unlock_pack(transport);
-+	return ret;
-+}
-+
-+/* Update local refs based on the ref values fetched from a remote */
-+static int consume_refs(struct transport *transport, struct ref *ref_map)
-+{
-+	int ret = store_updated_refs(transport->url,
-+				     transport->remote->name,
-+				     ref_map);
- 	transport_unlock_pack(transport);
- 	return ret;
- }
-@@ -1116,7 +1128,8 @@ static void backfill_tags(struct transport *transport, struct ref *ref_map)
- 	transport_set_option(transport, TRANS_OPT_FOLLOWTAGS, NULL);
- 	transport_set_option(transport, TRANS_OPT_DEPTH, "0");
- 	transport_set_option(transport, TRANS_OPT_DEEPEN_RELATIVE, NULL);
--	fetch_refs(transport, ref_map);
-+	if (!fetch_refs(transport, ref_map))
-+		consume_refs(transport, ref_map);
+@@ -351,6 +351,7 @@ static struct ref *get_ref_map(struct transport *transport,
+ 	/* opportunistically-updated references: */
+ 	struct ref *orefs = NULL, **oref_tail = &orefs;
  
- 	if (gsecondary) {
- 		transport_disconnect(gsecondary);
-@@ -1165,7 +1178,7 @@ static int do_fetch(struct transport *transport,
- 				   transport->url);
- 		}
++	struct string_list existing_refs = STRING_LIST_INIT_DUP;
+ 	const struct ref *remote_refs;
+ 
+ 	if (rs->nr)
+@@ -458,7 +459,23 @@ static struct ref *get_ref_map(struct transport *transport,
+ 		tail = &rm->next;
  	}
--	if (fetch_refs(transport, ref_map)) {
-+	if (fetch_refs(transport, ref_map) || consume_refs(transport, ref_map)) {
- 		free_refs(ref_map);
- 		retcode = 1;
- 		goto cleanup;
+ 
+-	return ref_remove_duplicates(ref_map);
++	ref_map = ref_remove_duplicates(ref_map);
++
++	for_each_ref(add_existing, &existing_refs);
++	for (rm = ref_map; rm; rm = rm->next) {
++		if (rm->peer_ref) {
++			struct string_list_item *peer_item =
++				string_list_lookup(&existing_refs,
++						   rm->peer_ref->name);
++			if (peer_item) {
++				struct object_id *old_oid = peer_item->util;
++				oidcpy(&rm->peer_ref->old_oid, old_oid);
++			}
++		}
++	}
++	string_list_clear(&existing_refs, 1);
++
++	return ref_map;
+ }
+ 
+ #define STORE_REF_ERROR_OTHER 1
+@@ -1110,14 +1127,10 @@ static void backfill_tags(struct transport *transport, struct ref *ref_map)
+ static int do_fetch(struct transport *transport,
+ 		    struct refspec *rs)
+ {
+-	struct string_list existing_refs = STRING_LIST_INIT_DUP;
+ 	struct ref *ref_map;
+-	struct ref *rm;
+ 	int autotags = (transport->remote->fetch_tags == 1);
+ 	int retcode = 0;
+ 
+-	for_each_ref(add_existing, &existing_refs);
+-
+ 	if (tags == TAGS_DEFAULT) {
+ 		if (transport->remote->fetch_tags == 2)
+ 			tags = TAGS_SET;
+@@ -1136,18 +1149,6 @@ static int do_fetch(struct transport *transport,
+ 	if (!update_head_ok)
+ 		check_not_current_branch(ref_map);
+ 
+-	for (rm = ref_map; rm; rm = rm->next) {
+-		if (rm->peer_ref) {
+-			struct string_list_item *peer_item =
+-				string_list_lookup(&existing_refs,
+-						   rm->peer_ref->name);
+-			if (peer_item) {
+-				struct object_id *old_oid = peer_item->util;
+-				oidcpy(&rm->peer_ref->old_oid, old_oid);
+-			}
+-		}
+-	}
+-
+ 	if (tags == TAGS_DEFAULT && autotags)
+ 		transport_set_option(transport, TRANS_OPT_FOLLOWTAGS, "1");
+ 	if (prune) {
+@@ -1183,7 +1184,6 @@ static int do_fetch(struct transport *transport,
+ 	}
+ 
+  cleanup:
+-	string_list_clear(&existing_refs, 1);
+ 	return retcode;
+ }
+ 
 -- 
 2.18.0.rc2.346.g013aa6912e-goog
 
