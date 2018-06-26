@@ -7,46 +7,47 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 539701F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 10:05:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 93E161F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 10:05:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933294AbeFZKFx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 06:05:53 -0400
-Received: from mail-wr0-f172.google.com ([209.85.128.172]:34861 "EHLO
-        mail-wr0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932963AbeFZKFw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 06:05:52 -0400
-Received: by mail-wr0-f172.google.com with SMTP id c13-v6so6657450wrq.2
-        for <git@vger.kernel.org>; Tue, 26 Jun 2018 03:05:51 -0700 (PDT)
+        id S933715AbeFZKF4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 06:05:56 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:55889 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932963AbeFZKFy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 06:05:54 -0400
+Received: by mail-wm0-f66.google.com with SMTP id v16-v6so1198022wmv.5
+        for <git@vger.kernel.org>; Tue, 26 Jun 2018 03:05:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=0CkCxL5Noker3Vs/XmdRMvLNrJCFm4a2grThOUT0zCo=;
-        b=oeRKXq3eV9TzcYrjZdB222SHhO2wbqrvtHeC28KOa2xkLkIMF+S0b7wpGt1EDZI1Zz
-         OaGGPDzybyGLd+MR1lMnRj2p3X1kU5obQZmP4bDYYB+S0CCEKKRRZFBwjgbaXQlA+hv8
-         Pzz2jXxq6mSP7kuZWC8KEkDJDjS5/luQZH6jHrBHiSVbPyy+wNgYoQWAEdnZ/N8VPrmZ
-         ql1ChQQNKKkiKTC4UttCpmgSSfu5iebKZ5fRwL6rHnthHZ5jbKQorUDYcvkesjaY7OKr
-         ZvthBYjES/Nu3PD00pscd/mMMMvwEYe52oRzPwR3E1z9PubzDeCV4Nm0IqvuHtQllKz6
-         NQ2A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=7ltXQwE4zgMm9gp8loSGR+rRhI/tVe9CEcSf+nO7VzQ=;
+        b=dBoJHrpPWGCz73H7lehU4/277peaM8BFMdaFEZSot435Ql9ggt7YVoom63brOTIPoW
+         /6QfyDcuG0o49G4+e+ave29hsBu1RqAiLw96YyapwvB7pZMjgL1l5fDWXCcp6ePHVabL
+         CV5j+2L/2gmVtOHZqBNUPxoL6kmEqGmBp1ffd6qXS6ros/QiqGguYPNSX3+lsbrwGhxy
+         BQtdqJ9TS2RbIX6N4zHphU+ZmXTQWW5kzNtr1V20sIbp4Fj1NKs9bLWknCZHG60QVR5W
+         k3CX9GGZELcEu5UZzX1CBntC1SlRlAekJCz7128Sz1RGZs7FFryqkGDWBrBr5Plry8rI
+         suzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=0CkCxL5Noker3Vs/XmdRMvLNrJCFm4a2grThOUT0zCo=;
-        b=j4fuyReNM2PnYt79cXmtlRMLM7Q/+PR94qaTXbobp68ZjoJGdZviyNfW/ju500cYh0
-         netT0nRIT1nwPGoy/mSRl+Z3Tpo0SDDHlG0H5NjZgtvn7nfUh0McBQwHLrh2YeGRxlXm
-         V/Ur2stj6CQ9u6xZmzpIjIi/5dSDO5wy4IDErOikpCXoLYXZvtjQpGhKe5SNZISsehJI
-         JmF5VoiZfEiAwaMx7Th+j56pAJpjpwfKcyCaPYGzvWhyqLBX2NIYcixnQJtWwNoSnrUK
-         KHb600x47ftJANrj9gb/e8h5ELx0zGJ9e4meE+8/+bdwz+vDhYzRXZm2Q/F5iKT0iV7G
-         MQeQ==
-X-Gm-Message-State: APt69E1i1RhJIi6y7WogQ9R8cfdw3WoHO4rSoR2vDE9oo0vpP8dKj8WW
-        mYcZnonvsPkylj4GAUS1mlcUyiYG
-X-Google-Smtp-Source: AAOMgpdFUUBbraWnSGA5V+hqEXYEDVUDS7jCl1jqCKzs91mziva0l0d2TKGfh0USsBYPfuUTJmZHxA==
-X-Received: by 2002:adf:e790:: with SMTP id n16-v6mr902587wrm.136.1530007550971;
-        Tue, 26 Jun 2018 03:05:50 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=7ltXQwE4zgMm9gp8loSGR+rRhI/tVe9CEcSf+nO7VzQ=;
+        b=cf0Hw8sZVBoisLuzgn6Kal3GGyqsSo3kcTtV0RgYAeToJAlWVheuLkKjtiVn4fUI32
+         3HjiNkcFeLEMmpQI21KkV628rRc41LAqyaGLVqagB7uI04JCFOrx/dPw7KatXvEUftd4
+         lb6o+gc+CAvbuZp+PfwccUEvAWnKta49fFl5tXbMC+76Waa7YWty8sGeApWu8GyPUilQ
+         nSIz/wzfeTPyB6kFjjBA9M9Uv601WaU1ERmgzhYsPLl3FrDtSAgeM4keFQ+f4M64ecLL
+         1A51AXlm7wbC/PZLowXRnBdyoZIM/fWwm1xgX4+yjTyVQlWXdrKadavZc+f020X/QVWG
+         HcUg==
+X-Gm-Message-State: APt69E1vz8QGD2C7AlCcCInH3GWSVwIdCLxMvss/51u2oJAEeh/9rU22
+        UglLL8XwynL3wDvxTUe1Gzb+dZ7M
+X-Google-Smtp-Source: AAOMgpdOTcSEw2lCXS7JIWYO4fXrVP26hvuqtOfZxNhMovHP1BaB+rV/KlBWK5ImXpVSxGKp/XqLPw==
+X-Received: by 2002:a1c:2dd5:: with SMTP id t204-v6mr1101504wmt.94.1530007552625;
+        Tue, 26 Jun 2018 03:05:52 -0700 (PDT)
 Received: from localhost.localdomain (AToulouse-658-1-38-233.w86-221.abo.wanadoo.fr. [86.221.117.233])
-        by smtp.googlemail.com with ESMTPSA id y8-v6sm1855050wrq.35.2018.06.26.03.05.49
+        by smtp.googlemail.com with ESMTPSA id y8-v6sm1855050wrq.35.2018.06.26.03.05.51
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 26 Jun 2018 03:05:49 -0700 (PDT)
+        Tue, 26 Jun 2018 03:05:51 -0700 (PDT)
 From:   Alban Gruin <alban.gruin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
@@ -54,27 +55,39 @@ Cc:     Stefan Beller <sbeller@google.com>,
         Pratik Karki <predatoramigo@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         phillip.wood@dunelm.org.uk, Alban Gruin <alban.gruin@gmail.com>
-Subject: [GSoC][PATCH 0/1] sequencer: print an error message if append_todo_help() fails
-Date:   Tue, 26 Jun 2018 12:04:28 +0200
-Message-Id: <20180626100429.10169-1-alban.gruin@gmail.com>
+Subject: [GSoC][PATCH 1/1] sequencer: print an error message if append_todo_help() fails
+Date:   Tue, 26 Jun 2018 12:04:29 +0200
+Message-Id: <20180626100429.10169-2-alban.gruin@gmail.com>
 X-Mailer: git-send-email 2.18.0
+In-Reply-To: <20180626100429.10169-1-alban.gruin@gmail.com>
+References: <20180626100429.10169-1-alban.gruin@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, append_todo_help() does not warn the user if an error occurs
-when trying to write to the todo file.  This patch addresses this
-problem.
+This adds an error when append_todo_help() fails to write its message to
+the todo file.
 
-This patch is based on ag/rebase-i-append-todo-help.
-
-Alban Gruin (1):
-  sequencer: print an error message if append_todo_help() fails
-
+Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+---
  sequencer.c | 3 +++
  1 file changed, 3 insertions(+)
 
+diff --git a/sequencer.c b/sequencer.c
+index 7cc76332e..7c4bdbb99 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -4380,6 +4380,9 @@ int append_todo_help(unsigned edit_todo, unsigned keep_empty)
+ 	}
+ 
+ 	ret = fputs(buf.buf, todo);
++	if (ret)
++		error_errno(_("Could not append help text to '%s'"), rebase_path_todo());
++
+ 	fclose(todo);
+ 	strbuf_release(&buf);
+ 
 -- 
 2.18.0
 
