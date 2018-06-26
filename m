@@ -2,80 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19E5C1F597
-	for <e@80x24.org>; Tue, 26 Jun 2018 09:28:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3CCF81F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 09:32:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932965AbeFZJ2q (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 05:28:46 -0400
-Received: from mout.gmx.net ([212.227.15.18]:33527 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S934063AbeFZJ2Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 05:28:16 -0400
-Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MSdz2-1fhkAC2Ljw-00Rbmh; Tue, 26
- Jun 2018 11:28:12 +0200
-Date:   Tue, 26 Jun 2018 11:28:11 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>,
-        Alban Gruin <alban.gruin@gmail.com>
-cc:     git@vger.kernel.org
-Subject: ag/rebase-i-append-todo-help, was Re: What's cooking in git.git (Jun
- 2018, #06; Mon, 25)
-In-Reply-To: <xmqqin66mql6.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1806261125330.21419@tvgsbejvaqbjf.bet>
-References: <xmqqin66mql6.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S933829AbeFZJb5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 05:31:57 -0400
+Received: from mail-yb0-f194.google.com ([209.85.213.194]:39256 "EHLO
+        mail-yb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932558AbeFZJbz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 05:31:55 -0400
+Received: by mail-yb0-f194.google.com with SMTP id k127-v6so1230457ybk.6
+        for <git@vger.kernel.org>; Tue, 26 Jun 2018 02:31:55 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=a0UscnsneoE1N6KNfPp8gbiP7b32GAOgFrtsY0zSXRw=;
+        b=U5p1czFqj9hMD8HXmAJLdC330zX2e3OUX65hbfhXxpYxPz9bGlAqyT1wHz8t3o9yLR
+         S8qy56PPnklYqlv3wAEg7r+e2ldDFpRykNwd3H/JZY601dbCmwDKoDWrOkjlvuMAzJE+
+         1LBatVljFkUkk9hYlNb0YvUg81D7cNybvF/GfYxFeP8kCl+Rym5UTPwjeUfv5EKI3P+v
+         0wn8D0Glt3uJAd0dMKM2yr4JJiD4iEVlGUBw9j60RlwUCkcOayUi70VlI4JMPHWQlZzn
+         5GGydAaIXW5rr6/q9Sp1niaA2/KvxaOYweOD0jnRqOn2kioLcbTwJ9mae23D6/qfPC4G
+         Si7Q==
+X-Gm-Message-State: APt69E2xwa4ivcP0YF5QLeX+ZEjLCl70cle/rBYLsCHHEhg/23noRB00
+        1Uuxh6jWJP3wzlrFvcOAYuggt6j3cAqXgHnsE/vX9A==
+X-Google-Smtp-Source: ADUXVKKAoAiQhngA46EZzYOcv/v+Q+NrDdb9nwEgp7GsBYocKXkHEgt1nf/RxH4Ziim4DsbhTNCQgCZRz3iV3uUlBxk=
+X-Received: by 2002:a25:ac5b:: with SMTP id r27-v6mr302813ybd.497.1530005514869;
+ Tue, 26 Jun 2018 02:31:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:HFO/4dMNp26T3TqnJUns73pPPB6saxHEEB1D4YUxZbFlJKwavOi
- ++/J9nCU6M4qXOrTcBn/SS/gKTLqKlH5wPexNDYGJ9S4nSSrNqDQTwjB7rGrKuF3oUHcjUP
- g7CJaaisml9iQkMWWN7TFp6IROsFJFIguW2PXwgakyogX5L1AYzLru/NFR+HoXkuByoI2xv
- vyaZN3cJhaw8R13KV/5Ww==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:cQS3eiUph7k=:sJsCus/FUnSx/becn017bN
- 4s36XMED3a5S+xDflQzIiYCUcGlnFT2LFJlO6uHT4g9aa4P9ihD+7sLaHs3iZ+QfrXCCJCtxj
- x8FG4eJn80+C+Oq5EmRFXzr4Zoh+z2xf+GHBwsu1wNIldQ17N/zoRL0Zwdf4MWR0SwmkWRaXo
- xw06+SjM/emU2LmE1noDGkewhDoLmT2cpRscFytxpddteKucBshH0OD2Ioh+57/blfxg2xyEL
- KocLFRYV9aA1eifX/KAYOYEBlmu6/0cmHv5kXbuqMSutHyOtdpig7wSLmUz1KbSXeT2As882g
- +ECihNn6zOUvJDtB1teRn/C7zQ+dGLRpoC4Wudc1m333ZvklSm3RSSW0G+yg3xzpa4f0Dw1Is
- Kd1E7FgV5fy9sLNn+BxAukClqjgf4GHY8GCu1v4uOnhuuw47Q66CqSYY+tjtM96g7gXdT9CsC
- cTFTKkxphZ/mq2PumlAPqXqTB4xKpWAepEZG9ZlljgGqkiOHnMAKr1hZcVRmrdr4r6t98/Fch
- +HIXp8n7NOisxKLXywBPdPsEwWYEsVinMUrtrjxt2atgF/2ITzubnthhQnj4A3eIyi6lQjD4G
- AcS9uDs/S/wGSo1DjuUcky8KwwN6W51izdnptfFNvCuPTMuuhpHTJzLPuZzIsfLTuiy9pZFKJ
- U3HAescYgzEEKI4+r0LjRuJ11OCSYKC5ag5f77/t4vb0Xqu3yvX0pOEjVWi5hJRTdn6zF3KKN
- Zz6CUVimLGj6Fe0srGtmwfYP6gFNkp/vUAlBI1/Oak5jAXX1m/XF2XSoy23JWq0uVy7InKhNc
- 9+d04Vy
+References: <20180626073001.6555-1-sunshine@sunshineco.com> <CABPp-BEz=mLHsg1NizJUKxOKM=dKFSAVec=x0mcs=4cJ73k_+Q@mail.gmail.com>
+In-Reply-To: <CABPp-BEz=mLHsg1NizJUKxOKM=dKFSAVec=x0mcs=4cJ73k_+Q@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 26 Jun 2018 05:31:42 -0400
+Message-ID: <CAPig+cRBN5-80HOvajG8WXqZUHmOX5SCrO93T9G4ePzgbGftZA@mail.gmail.com>
+Subject: Re: [PATCH 00/29] t: detect and fix broken &&-chains in subshells
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
+        Stefan Beller <sbeller@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio & Alban,
+On Tue, Jun 26, 2018 at 5:20 AM Elijah Newren <newren@gmail.com> wrote:
+> On Tue, Jun 26, 2018 at 12:29 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> > Aside from identifying a rather significant number of &&-chain breaks,
+> > repairing those broken chains uncovered genuine bugs in several tests
+> > which were hidden by missing &&-chain links. Those bugs are also fixed
+> > by this series. I would appreciate if the following people would
+> > double-check my fixes:
+> >
+> > Stefan Bellar - 8/29 "t7400" and (especially) 13/29 "lib-submodule-update"
+> > Jonathan Tan - 10/29 "t9001"
+> > Elijah Newren - 6/29 "t6036"
+>
+> Commented on the patch in question; 6/29 looks good.
+>
+> I also looked over the rest of the series.  Apart from the ones you
+> specifically called out as needing review by others besides me, and
+> the final patch which makes me feel like a sed neophyte, all but one
+> patch looked good to me.  I just have a small question for that
+> remaining patch, which I posted there.
 
-On Mon, 25 Jun 2018, Junio C Hamano wrote:
+I guess you refer to your question[1] about whether test_must_fail()
+is the correct choice over test_expect_code(). I just responded[2]
+with a hopefully satisfactory answer.
 
-> * ag/rebase-i-append-todo-help (2018-06-14) 2 commits
->  - rebase--interactive: rewrite append_todo_help() in C
->  - Merge branch 'ag/rebase-p' into ag/rebase-i-append-todo-help
->  (this branch is used by ag/rebase-i-rewrite-todo.)
-> 
->  Stepwise rewriting of the machinery of "rebase -i" into C continues.
-
-I just reviewed this on GitHub (which gives me an interactive way to look
-around outside of the diff context) and I think there are two things left
-to do (which I mentioned to Alban on IRC):
-
-- `msg = _(...)` should be `msg = N_(...)` instead, with the corresponding
-  `_(msg)` later on, and
-
-- to avoid cluttering sequencer.c, and to pave the way for future `rebase
-  -i`-specific code, the `append_todo_help()` function should go into a
-  new file called `interactive-rebase.c`.
-
-Ciao,
-Dscho
+[1]: https://public-inbox.org/git/CABPp-BFmfN6=E+3BAKt-NH5hmU-368shgDnrnkrnMRvKnx07BQ@mail.gmail.com/
+[2]: https://public-inbox.org/git/CAPig+cRTG625H3CF1Zw30vQt2W8uKf1xLxVaQni2YbJ=xAif2g@mail.gmail.com/
