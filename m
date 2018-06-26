@@ -2,118 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D3F871F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 21:52:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A7A421F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 21:54:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754128AbeFZVw2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 17:52:28 -0400
-Received: from mout.gmx.net ([212.227.17.22]:57935 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752113AbeFZVw1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 17:52:27 -0400
-Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MFAaV-1fMcHo27bv-00GEcw; Tue, 26
- Jun 2018 23:52:19 +0200
-Date:   Tue, 26 Jun 2018 23:52:18 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org,
-        Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        phillip.wood@dunelm.org.uk
-Subject: Re: [GSoC][PATCH 1/1] sequencer: print an error message if
- append_todo_help() fails
-In-Reply-To: <xmqqk1qljpe0.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1806262348340.21419@tvgsbejvaqbjf.bet>
-References: <20180626100429.10169-1-alban.gruin@gmail.com> <20180626100429.10169-2-alban.gruin@gmail.com> <nycvar.QRO.7.76.6.1806261455510.21419@tvgsbejvaqbjf.bet> <xmqqk1qljpe0.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:d4eJiJm+t8MF4+KiRIx4jhEvE1wUVDzbADr3M0pxiH3qkyY898M
- ieFWuw1HwrFrk9v+Hra3J4+LHBdF0DQnak4KSftJ6PfgALp+0AHJEIfqvr0gxeIbEy7Hdsb
- rnfv3e/W2+q1bp47s4YAFpqQQJHS3o8ktJ6uz/cI5voShjF1XwMtG8Rj+TtA5jZzI9R/1z8
- lguTLW0f1+iVkTAZ6XlYg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:pyqBrEcYWkE=:aIBS6xZCS/aJwV6yDI1H6G
- DQe4WglOsVVroNGv3VCDrOvFA0Zhaezktbcl1loDiRVN3sBn89WyM2n9ff0bQJ0I5prjEqvSs
- RA9DqqlMFUaiyGoMvfKcNfwS/9sRh9m/xrW+B7R7+f8WCv/T5ecrzgfUQFxhhOQnakPaZCoBj
- ZB98gASSpPp858ql1pbgV9IekfJ9bOuL9XOwiCif10Nuf7ifWn7NRMHCUlnbfxcucSdFWQcaw
- S5VwHzhLR/1ULBkUIJCuCONFtvWRJG3NKoNpLqbRTgdGmtgDnPgIhrE1XjU0spUiQWmOViDal
- V6/OXMdG2IrxwiNRomxy10BidYY0FN8iBGFO/pdsDBZ9iJoQJWpPxMxn9CkmKhQFeLWMTqkqe
- eg2nHwKjpcX4ukWVLsPYKSR9vtoKr/yUdtZbAi/BoByPbY5rB0/+XG9hwZktjDjJmQThrHoUz
- yYvSrRBptiElcrdVP/BX95A5Prucm/AOxzKsj8DQud1eqBwzoK/xhMA+PL9PreuGTfRTVJZ/n
- wr+9OVGZ9hAHgXznt81Qws00xl+U/hFZwwslZX8KpfOCLgVf6q+rxxXWxcqWc4z1U9x1UVRtL
- tgw/uxlOz6dKUs0nOpVXDhfFQ+ZUntc/Zde3ku1yqQeLrmj/RGS7o82t8kzxyzAsArwWNY8Hg
- 5PMAAu8/he9s6h1hdwbOBxcf8GJjXn2RMXyATpZKb0BzUPu2x6RjJF9tpVHSNPSh2VCyFVxje
- T3u9aDlE/pkUSG0rApPf7aowOWU0nL1g3Kk1kdAnGNfgljUKmLHjnlB5gONya/HsVAPVBNPQa
- O4oFn06
+        id S1752633AbeFZVyP (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 17:54:15 -0400
+Received: from mail-io0-f195.google.com ([209.85.223.195]:40066 "EHLO
+        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752213AbeFZVyP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 17:54:15 -0400
+Received: by mail-io0-f195.google.com with SMTP id t135-v6so3639654iof.7
+        for <git@vger.kernel.org>; Tue, 26 Jun 2018 14:54:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dana-is.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=xOtFMMD8qEfSIxNT0z4+IFOnf4hicD5gtbQr6beQ6iU=;
+        b=GXHOGLQNm45rhk30RbsGeheazbLyPCU7p9QvD/3T/MBJAdX9mfsKe7sHkyrTpNakRF
+         e+VFcI4qcqHgotnb+pgpZ7vfN0Z4BD7rNsW2cit9ii3d7fkfZLKsBXeVZOsKiUcuOFxB
+         8TsTvRCLJG4Dy9+4UfLhAqhvEaIXYyBOYxuwPtbZWwQ6XVgYhepcNel2jAob+Gvl6kEe
+         OAjQaoB7gPgQTV5HRxKzV2Hg/nLwxpX3JbLuH9PEQEJcVfKEphrDbrdzyFwEg01E4MhW
+         cvq/5gBtSswDEQgMjD6S6wR7lV3f9uxg7uOicN0Irzb4T+GdAG7tYVt6zvSPjWECfRcv
+         xSpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=xOtFMMD8qEfSIxNT0z4+IFOnf4hicD5gtbQr6beQ6iU=;
+        b=k1lFHgC1mxSSywZCrRQF+3xyr7gr+LSHih8cCofB4VnZ4/3q9bwC/+MCqkrEJIdY0A
+         dmhjJPoUPErNqBcTs5l0sFq/YXb9192cp8auSTWxBtbSotnf0EwJgmDBFN5FgLdt+Jwb
+         jDTmeQtWl8Q4jx/sllynhE0D45qsyKdtAMYW0cX1mFJUOMG+nMp6YtS3yqIgeDW3jkuH
+         aFUrHBekr0fpfGUjVI4QpdYXvcnAFEuX20txrdQTAUtUFByEckJdi6EeSJrlmx7QqnIi
+         VHYY8zlhpA0Fidc+CgO8viPVr1Bo/ZwAWhkIjtZCNP9C32rE2NPoEZwr0f+g5cloXgLY
+         tyQw==
+X-Gm-Message-State: APt69E1yL96oKd4SWie4+93+t5O77lCrCstJJPeo+x2pjq7jDFLWGbcH
+        MnhHpyaoF9uHgGHNAf14w150hQ==
+X-Google-Smtp-Source: AAOMgpfphJukiGX5jJN0cvkXMLPRBZExvuHgdCumt44XO++nPz6qBSQTMYXA3mZp8s6Q+wnu3ODGog==
+X-Received: by 2002:a6b:f608:: with SMTP id n8-v6mr2773705ioh.162.1530050054425;
+        Tue, 26 Jun 2018 14:54:14 -0700 (PDT)
+Received: from proserpina.cipafilter.local ([216.24.127.7])
+        by smtp.gmail.com with ESMTPSA id x8-v6sm1425401ith.17.2018.06.26.14.54.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 26 Jun 2018 14:54:14 -0700 (PDT)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 11.3 \(3445.6.18\))
+Subject: Re: [PATCH] rebase -i: Fix white space in comments
+From:   dana <dana@dana.is>
+In-Reply-To: <nycvar.QRO.7.76.6.1806262343410.21419@tvgsbejvaqbjf.bet>
+Date:   Tue, 26 Jun 2018 16:54:12 -0500
+Cc:     git@vger.kernel.org, Wink Saville <wink@saville.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <D5941A31-B9B3-4EB1-9D55-D5E86A541D2C@dana.is>
+References: <614F0C12-7173-48BD-9212-71AD6FBBDAA7@dana.is>
+ <nycvar.QRO.7.76.6.1806262329390.21419@tvgsbejvaqbjf.bet>
+ <nycvar.QRO.7.76.6.1806262331340.21419@tvgsbejvaqbjf.bet>
+ <nycvar.QRO.7.76.6.1806262343410.21419@tvgsbejvaqbjf.bet>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-Mailer: Apple Mail (2.3445.6.18)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On 26 Jun 2018, at 16:44, Johannes Schindelin =
+<Johannes.Schindelin@gmx.de> wrote:
+>There is of course one other way to fix this, and that is by rewriting
+>this in C.
+>
+>Which Alban has done here ;-)
+>
+=
+>http://public-inbox.org/git/20180626161643.31152-3-alban.gruin@gmail.com
 
-On Tue, 26 Jun 2018, Junio C Hamano wrote:
+Oh, i'm sorry, i didn't see that. That change does appear to solve the
+same problem, so i'm happy to defer to it.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > On Tue, 26 Jun 2018, Alban Gruin wrote:
-> >
-> >> This adds an error when append_todo_help() fails to write its message to
-> >> the todo file.
-> >> 
-> >> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
-> >
-> > ACK.
-> >
-> > We *may* want to fold that into the commit that adds `append_todo_help()`.
-> 
-> Absolutely.  This looks more like an "oops, I made a mess and here
-> is a fix on top", and even worse, it does not make an effort to help
-> readers where the mess was made (iow, which commit it goes on to
-> of); it is better to be squashed in.
-> 
-> I do not know offhand who Alban's mentors are, but one thing I think
-> is a good thing for them to teach is how to better organize the
-> changes with readers in mind.  The author of a patch series knows
-> his or her patches and how they relate to each other a lot better
-> than the readers of patches, who are reading not just his or her
-> patches but the ones from a lot wider set of contributors.  Even
-> though append-todo-help and edit-todo may have been developed as
-> separate steps in author's mind, it is criminal to send them as if
-> they are completely separate topics that can independently applied,
-> especially when one depends on the other.  It is a lot more helpful
-> to the readers if they were sent as a larger single series, because
-> doing so _will_ tell the readers which order the dependency goes.
+Thanks for looking!
 
-Chris & Stefan are Alban's mentors, and I spend quite a bit of my time on
-IRC, ready to help Alban when he has questions. Chris & Stephan mainly act
-as first-line reviewers.
+dana
 
-> > And, as I mentioned previously, I would love for that function to be
-> > used as an excuse to introduce the long-overdue `interactive-rebase.c`
-> 
-> I am not sure if I like this direction.
-
-Blame me, not Alban. I am pretty familiar with sequencer.c, and I know
-that it is way too large.
-
-> As newbies are often very bad at coming up with APIs and naming global
-> functions, keeping everything as "static" inside a single sequencer.c
-> tends to avoid contaminating the global namespace.
-
-Then I just need to make sure to suggest good names that are safe for the
-global namespace, don't I?
-
-Seeing as sequencer.c is so long already, it is own little mega namespace
-anyway, so we already have to be very careful *within* sequencer.c.
-
-Ciao,
-Dscho
