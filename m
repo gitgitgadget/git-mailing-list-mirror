@@ -6,47 +6,47 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 288F61F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 07:31:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 33DEC1F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 07:31:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932134AbeFZHbV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 03:31:21 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:52195 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752716AbeFZHbT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 03:31:19 -0400
-Received: by mail-it0-f67.google.com with SMTP id 128-v6so829676itf.1
-        for <git@vger.kernel.org>; Tue, 26 Jun 2018 00:31:19 -0700 (PDT)
+        id S932164AbeFZHbZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 03:31:25 -0400
+Received: from mail-it0-f68.google.com ([209.85.214.68]:33413 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932135AbeFZHbW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 03:31:22 -0400
+Received: by mail-it0-f68.google.com with SMTP id k17-v6so14531300ita.0
+        for <git@vger.kernel.org>; Tue, 26 Jun 2018 00:31:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=zNyrIeTMQYNBFqRTwC5T3qgUstMcLbUswMX0byC5eVE=;
-        b=kI+VcceKPWdTstq6FiyZ6N8I8ErHW/hPTcflF50WJ9MX8LxiD3fZ3EPulb8X7JNOTp
-         YDSoxR2nHarUqreaZmCoA3sqkf5lINREsK3059LkXwBFZmjVAOHoiOUDij/M/ab/hxn/
-         2rMJMZKRsurv4060BTEHAu6eh7TQ/+p2ZMmfTWLB1J0mlTOLQrsxT9N++AjLBK3X3agI
-         6eg92EToUCkR7ZQEnPMnHvw1Y33X0FpbQR9wyQJbv/oOJa6ZswO8H23HVNy6mD+mlrz+
-         giYCK3PldDwF+Bxk3QLLfe+NccqR8kFbRtueGD5SuImkxG1VHpyiPCy6KZVIIT7zAADf
-         eSfA==
+        bh=4iwr04s1Xy+LwzThoXcLKcKuAMJ1sGdujpx8RgbpqHM=;
+        b=OouDI4s8HUkOQ9TeQ1PPlTEW4nr7eyQ7jk3rjZKVooSUuf3elFN2dXOvVfm9wd01/E
+         XY8l+Ssp3qqMUL/BSloIXX+BdqrGSJ+RPZbo4gIA2+MmY3G4eifNcyrha6E3zbb3DZbm
+         dqlv6sbOo9DbAZ4FDWugNMSYfoo8KZl5BoO0a0x7arh1uHdyIwSKpxDeOZzrxOtHQ8Ni
+         BacNJOkigDMRK6gykGMFGFhUiNCg8Qu//95AeaWTfft6qr545OxbbcoSrDhTQ53XzXNf
+         JleBmmqSMhix+3t6CnTnI74mpdTnE6DR7INr7VDfRFitWbxyz3SRNGshd10MZkRRxeKN
+         jh6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
          :in-reply-to:references;
-        bh=zNyrIeTMQYNBFqRTwC5T3qgUstMcLbUswMX0byC5eVE=;
-        b=b7ZMKlu2gVFK190+8KNO/gOr3QClqumgibTmCeAdbfNO1WM6p7mi8j1yaabHDBzVKl
-         0vj/vKKR46+E0Lvv0rPYHHBQjMinY9Agh7zg816Ylxmpojfuc1RlrQCa1kBx4hIxZz3Z
-         LnWgFQV93Pkq0lWAHUrkOgQvKyNxgFHsi/5EH582qgzdaCaVcUm1idAjRnZ+uXAhBK/8
-         luaGz2ZmRa5jJjpmzo/W2nmF4IFADXKk10/P8PVUk16UGrLutJdtq9NUcFx/5N3pxS7Y
-         ICkVSua678i+ylqkW+UP/Rs3A4OZJmBt2mDBDYa0URe5e9DB5GgPqGlOj61oxuudsUR2
-         V6jQ==
-X-Gm-Message-State: APt69E3OW4DLqRWJj15o01d1hIeF97H8s1uF+nauRVUgLvGHzoLnlHTY
-        A8y6pdyHp88O59KDe/mCOrIvtQ==
-X-Google-Smtp-Source: AAOMgpdVx+4KikIQcgWCX3EltsHcdUKEzWvZ1gAsC0+kqT4vSZJQiEhi8h76tTpH//R2nfj3qnc4iw==
-X-Received: by 2002:a24:c054:: with SMTP id u81-v6mr514878itf.94.1529998278423;
-        Tue, 26 Jun 2018 00:31:18 -0700 (PDT)
+        bh=4iwr04s1Xy+LwzThoXcLKcKuAMJ1sGdujpx8RgbpqHM=;
+        b=pBH2dw15gzkz7z+KihHGIolFGx9rBAYy/uTCGdVb8zZAhwaKESvbYxHQi3OlcPJOYk
+         VdSrF/8QHe230c1NrjQBoFX9IfNcJTYLx20LNcHO4xhBrTgQAYebUWU2oCHv9v08V31e
+         6TiAbOAEAAChbTx0v7k3eUivSdg4rvTXI6cKx/91yaF1Gmp/f8cn5TWlaAsfQy3ZSmIf
+         iF0c/R08es3nj32Z961xHuBWAqHsZZWuRVzK7XTnFhVyPgI69O4GbXZC5KxXaqzPT9qa
+         a5pGXctvsy9TPSJe98brlcZIspeTe8QynQia8kLZuVa7wCZrn2wfYvVwCNqDFtKZcTa0
+         xg1Q==
+X-Gm-Message-State: APt69E1hL8r0dALlXscTZIIjOIDHehnQ4jfZNAXqXmK1YaBfOcoIN5aB
+        5oqUqcQwRghj73DothoOYR99GA==
+X-Google-Smtp-Source: AAOMgpdp7SXrM7hp8StHiEd9W1vPpJehYCQ9LZQopZdwSpJvtCMWq7B63lMVAneEzbSvIF9V77FMvg==
+X-Received: by 2002:a02:9914:: with SMTP id r20-v6mr288761jaj.144.1529998279583;
+        Tue, 26 Jun 2018 00:31:19 -0700 (PDT)
 Received: from localhost.localdomain (user-12l2cs3.cable.mindspring.com. [69.81.51.131])
-        by smtp.gmail.com with ESMTPSA id k20-v6sm471361iok.9.2018.06.26.00.31.17
+        by smtp.gmail.com with ESMTPSA id k20-v6sm471361iok.9.2018.06.26.00.31.18
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Tue, 26 Jun 2018 00:31:17 -0700 (PDT)
+        Tue, 26 Jun 2018 00:31:19 -0700 (PDT)
 From:   Eric Sunshine <sunshine@sunshineco.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
@@ -55,9 +55,9 @@ Cc:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
         Elijah Newren <newren@gmail.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 28/29] t9119: fix broken &&-chains in subshells
-Date:   Tue, 26 Jun 2018 03:30:00 -0400
-Message-Id: <20180626073001.6555-29-sunshine@sunshineco.com>
+Subject: [PATCH 29/29] t/test-lib: teach --chain-lint to detect broken &&-chains in subshells
+Date:   Tue, 26 Jun 2018 03:30:01 -0400
+Message-Id: <20180626073001.6555-30-sunshine@sunshineco.com>
 X-Mailer: git-send-email 2.18.0.419.gfe4b301394
 In-Reply-To: <20180626073001.6555-1-sunshine@sunshineco.com>
 References: <20180626073001.6555-1-sunshine@sunshineco.com>
@@ -66,360 +66,329 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The --chain-lint option detects broken &&-chains by forcing the test to
+exit early (as the very first step) with a sentinel value. If that
+sentinel is the test's overall exit code, then the &&-chain is intact;
+if not, then the chain is broken. Unfortunately, this detection does not
+extend to &&-chains within subshells even when the subshell itself is
+properly linked into the outer &&-chain.
+
+Address this shortcoming by eliminating the subshell during the
+"linting" phase and incorporating its body directly into the surrounding
+&&-chain. To keep this transformation cheap, no attempt is made at
+properly parsing shell code. Instead, the manipulations are purely
+textual. For example:
+
+    statement1 &&
+    (
+        statement2 &&
+        statement3
+    ) &&
+    statement4
+
+is transformed to:
+
+    statement1 &&
+        statement2 &&
+        statement3 &&
+    statement4
+
+Notice how "statement3" gains the "&&" which dwelt originally on the
+closing ") &&" line. Since this manipulation is purely textual (in fact,
+line-by-line), special care is taken to ensure that the "&&" is moved to
+the final _statement_ before the closing ")", not necessarily the final
+_line_ of text within the subshell. For example, with a here-doc, the
+"&&" needs to be added to the opening "<<EOF" line, not to the "EOF"
+line which closes it.
+
+In addition to modern subshell formatting shown above, old-style
+formatting is also recognized:
+
+    statement1 &&
+    (statement2 &&
+     statement3) &&
+    statement4
+
+Heuristics are employed to properly identify the extent of a subshell
+formatted in the old-style since a number of legitimate constructs may
+superficially appear to close the subshell even though they don't. For
+instance, the ")" in "x=$(command) &&" and "case $x in *)" is specially
+recognized to avoid being falsely considered the end of a subshell.
+
+Due to the complexities of line-by-line detection (and limitations of
+the tool, 'sed'), only subshells one level deep are handled, as well as
+one-liner subshells one level below that. Subshells deeper than that or
+multi-line subshells at level two are passed through as-is, thus
+&&-chains in their bodies are not checked.
+
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- t/t9119-git-svn-info.sh | 120 ++++++++++++++++++++--------------------
- 1 file changed, 60 insertions(+), 60 deletions(-)
+ t/test-lib.sh | 245 +++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 244 insertions(+), 1 deletion(-)
 
-diff --git a/t/t9119-git-svn-info.sh b/t/t9119-git-svn-info.sh
-index 88241baee3..8201c3e808 100755
---- a/t/t9119-git-svn-info.sh
-+++ b/t/t9119-git-svn-info.sh
-@@ -22,8 +22,8 @@ esac
- # same value as "svn info" (i.e. the commit timestamp that touched the
- # path most recently); do not expect that field to match.
- test_cmp_info () {
--	sed -e '/^Text Last Updated:/d' "$1" >tmp.expect
--	sed -e '/^Text Last Updated:/d' "$2" >tmp.actual
-+	sed -e '/^Text Last Updated:/d' "$1" >tmp.expect &&
-+	sed -e '/^Text Last Updated:/d' "$2" >tmp.actual &&
- 	test_cmp tmp.expect tmp.actual &&
- 	rm -f tmp.expect tmp.actual
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 28315706be..ade5066fff 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -664,6 +664,248 @@ test_eval_ () {
+ 	return $test_eval_ret_
  }
-@@ -59,24 +59,24 @@ test_expect_success 'setup repository and import' '
- 	'
  
- test_expect_success 'info' "
--	(cd svnwc; svn info) > expected.info &&
--	(cd gitwc; git svn info) > actual.info &&
-+	(cd svnwc && svn info) > expected.info &&
-+	(cd gitwc && git svn info) > actual.info &&
- 	test_cmp_info expected.info actual.info
- 	"
- 
- test_expect_success 'info --url' '
--	test "$(cd gitwc; git svn info --url)" = "$quoted_svnrepo"
-+	test "$(cd gitwc && git svn info --url)" = "$quoted_svnrepo"
- 	'
- 
- test_expect_success 'info .' "
--	(cd svnwc; svn info .) > expected.info-dot &&
--	(cd gitwc; git svn info .) > actual.info-dot &&
-+	(cd svnwc && svn info .) > expected.info-dot &&
-+	(cd gitwc && git svn info .) > actual.info-dot &&
- 	test_cmp_info expected.info-dot actual.info-dot
- 	"
- 
- test_expect_success 'info $(pwd)' '
--	(cd svnwc; svn info "$(pwd)") >expected.info-pwd &&
--	(cd gitwc; git svn info "$(pwd)") >actual.info-pwd &&
-+	(cd svnwc && svn info "$(pwd)") >expected.info-pwd &&
-+	(cd gitwc && git svn info "$(pwd)") >actual.info-pwd &&
- 	grep -v ^Path: <expected.info-pwd >expected.info-np &&
- 	grep -v ^Path: <actual.info-pwd >actual.info-np &&
- 	test_cmp_info expected.info-np actual.info-np &&
-@@ -85,8 +85,8 @@ test_expect_success 'info $(pwd)' '
- 	'
- 
- test_expect_success 'info $(pwd)/../___wc' '
--	(cd svnwc; svn info "$(pwd)/../svnwc") >expected.info-pwd &&
--	(cd gitwc; git svn info "$(pwd)/../gitwc") >actual.info-pwd &&
-+	(cd svnwc && svn info "$(pwd)/../svnwc") >expected.info-pwd &&
-+	(cd gitwc && git svn info "$(pwd)/../gitwc") >actual.info-pwd &&
- 	grep -v ^Path: <expected.info-pwd >expected.info-np &&
- 	grep -v ^Path: <actual.info-pwd >actual.info-np &&
- 	test_cmp_info expected.info-np actual.info-np &&
-@@ -95,8 +95,8 @@ test_expect_success 'info $(pwd)/../___wc' '
- 	'
- 
- test_expect_success 'info $(pwd)/../___wc//file' '
--	(cd svnwc; svn info "$(pwd)/../svnwc//file") >expected.info-pwd &&
--	(cd gitwc; git svn info "$(pwd)/../gitwc//file") >actual.info-pwd &&
-+	(cd svnwc && svn info "$(pwd)/../svnwc//file") >expected.info-pwd &&
-+	(cd gitwc && git svn info "$(pwd)/../gitwc//file") >actual.info-pwd &&
- 	grep -v ^Path: <expected.info-pwd >expected.info-np &&
- 	grep -v ^Path: <actual.info-pwd >actual.info-np &&
- 	test_cmp_info expected.info-np actual.info-np &&
-@@ -105,56 +105,56 @@ test_expect_success 'info $(pwd)/../___wc//file' '
- 	'
- 
- test_expect_success 'info --url .' '
--	test "$(cd gitwc; git svn info --url .)" = "$quoted_svnrepo"
-+	test "$(cd gitwc && git svn info --url .)" = "$quoted_svnrepo"
- 	'
- 
- test_expect_success 'info file' "
--	(cd svnwc; svn info file) > expected.info-file &&
--	(cd gitwc; git svn info file) > actual.info-file &&
-+	(cd svnwc && svn info file) > expected.info-file &&
-+	(cd gitwc && git svn info file) > actual.info-file &&
- 	test_cmp_info expected.info-file actual.info-file
- 	"
- 
- test_expect_success 'info --url file' '
--	test "$(cd gitwc; git svn info --url file)" = "$quoted_svnrepo/file"
-+	test "$(cd gitwc && git svn info --url file)" = "$quoted_svnrepo/file"
- 	'
- 
- test_expect_success 'info directory' "
--	(cd svnwc; svn info directory) > expected.info-directory &&
--	(cd gitwc; git svn info directory) > actual.info-directory &&
-+	(cd svnwc && svn info directory) > expected.info-directory &&
-+	(cd gitwc && git svn info directory) > actual.info-directory &&
- 	test_cmp_info expected.info-directory actual.info-directory
- 	"
- 
- test_expect_success 'info inside directory' "
--	(cd svnwc/directory; svn info) > expected.info-inside-directory &&
--	(cd gitwc/directory; git svn info) > actual.info-inside-directory &&
-+	(cd svnwc/directory && svn info) > expected.info-inside-directory &&
-+	(cd gitwc/directory && git svn info) > actual.info-inside-directory &&
- 	test_cmp_info expected.info-inside-directory actual.info-inside-directory
- 	"
- 
- test_expect_success 'info --url directory' '
--	test "$(cd gitwc; git svn info --url directory)" = "$quoted_svnrepo/directory"
-+	test "$(cd gitwc && git svn info --url directory)" = "$quoted_svnrepo/directory"
- 	'
- 
- test_expect_success 'info symlink-file' "
--	(cd svnwc; svn info symlink-file) > expected.info-symlink-file &&
--	(cd gitwc; git svn info symlink-file) > actual.info-symlink-file &&
-+	(cd svnwc && svn info symlink-file) > expected.info-symlink-file &&
-+	(cd gitwc && git svn info symlink-file) > actual.info-symlink-file &&
- 	test_cmp_info expected.info-symlink-file actual.info-symlink-file
- 	"
- 
- test_expect_success 'info --url symlink-file' '
--	test "$(cd gitwc; git svn info --url symlink-file)" \
-+	test "$(cd gitwc && git svn info --url symlink-file)" \
- 	     = "$quoted_svnrepo/symlink-file"
- 	'
- 
- test_expect_success 'info symlink-directory' "
--	(cd svnwc; svn info symlink-directory) \
-+	(cd svnwc && svn info symlink-directory) \
- 		> expected.info-symlink-directory &&
--	(cd gitwc; git svn info symlink-directory) \
-+	(cd gitwc && git svn info symlink-directory) \
- 		> actual.info-symlink-directory &&
- 	test_cmp_info expected.info-symlink-directory actual.info-symlink-directory
- 	"
- 
- test_expect_success 'info --url symlink-directory' '
--	test "$(cd gitwc; git svn info --url symlink-directory)" \
-+	test "$(cd gitwc && git svn info --url symlink-directory)" \
- 	     = "$quoted_svnrepo/symlink-directory"
- 	'
- 
-@@ -169,13 +169,13 @@ test_expect_success 'info added-file' "
- 		cd svnwc &&
- 		svn_cmd add added-file > /dev/null
- 	) &&
--	(cd svnwc; svn info added-file) > expected.info-added-file &&
--	(cd gitwc; git svn info added-file) > actual.info-added-file &&
-+	(cd svnwc && svn info added-file) > expected.info-added-file &&
-+	(cd gitwc && git svn info added-file) > actual.info-added-file &&
- 	test_cmp_info expected.info-added-file actual.info-added-file
- 	"
- 
- test_expect_success 'info --url added-file' '
--	test "$(cd gitwc; git svn info --url added-file)" \
-+	test "$(cd gitwc && git svn info --url added-file)" \
- 	     = "$quoted_svnrepo/added-file"
- 	'
- 
-@@ -190,15 +190,15 @@ test_expect_success 'info added-directory' "
- 		cd gitwc &&
- 		git add added-directory
- 	) &&
--	(cd svnwc; svn info added-directory) \
-+	(cd svnwc && svn info added-directory) \
- 		> expected.info-added-directory &&
--	(cd gitwc; git svn info added-directory) \
-+	(cd gitwc && git svn info added-directory) \
- 		> actual.info-added-directory &&
- 	test_cmp_info expected.info-added-directory actual.info-added-directory
- 	"
- 
- test_expect_success 'info --url added-directory' '
--	test "$(cd gitwc; git svn info --url added-directory)" \
-+	test "$(cd gitwc && git svn info --url added-directory)" \
- 	     = "$quoted_svnrepo/added-directory"
- 	'
- 
-@@ -213,16 +213,16 @@ test_expect_success 'info added-symlink-file' "
- 		ln -s added-file added-symlink-file &&
- 		svn_cmd add added-symlink-file > /dev/null
- 	) &&
--	(cd svnwc; svn info added-symlink-file) \
-+	(cd svnwc && svn info added-symlink-file) \
- 		> expected.info-added-symlink-file &&
--	(cd gitwc; git svn info added-symlink-file) \
-+	(cd gitwc && git svn info added-symlink-file) \
- 		> actual.info-added-symlink-file &&
- 	test_cmp_info expected.info-added-symlink-file \
- 		actual.info-added-symlink-file
- 	"
- 
- test_expect_success 'info --url added-symlink-file' '
--	test "$(cd gitwc; git svn info --url added-symlink-file)" \
-+	test "$(cd gitwc && git svn info --url added-symlink-file)" \
- 	     = "$quoted_svnrepo/added-symlink-file"
- 	'
- 
-@@ -237,16 +237,16 @@ test_expect_success 'info added-symlink-directory' "
- 		ln -s added-directory added-symlink-directory &&
- 		svn_cmd add added-symlink-directory > /dev/null
- 	) &&
--	(cd svnwc; svn info added-symlink-directory) \
-+	(cd svnwc && svn info added-symlink-directory) \
- 		> expected.info-added-symlink-directory &&
--	(cd gitwc; git svn info added-symlink-directory) \
-+	(cd gitwc && git svn info added-symlink-directory) \
- 		> actual.info-added-symlink-directory &&
- 	test_cmp_info expected.info-added-symlink-directory \
- 		actual.info-added-symlink-directory
- 	"
- 
- test_expect_success 'info --url added-symlink-directory' '
--	test "$(cd gitwc; git svn info --url added-symlink-directory)" \
-+	test "$(cd gitwc && git svn info --url added-symlink-directory)" \
- 	     = "$quoted_svnrepo/added-symlink-directory"
- 	'
- 
-@@ -259,13 +259,13 @@ test_expect_success 'info deleted-file' "
- 		cd svnwc &&
- 		svn_cmd rm --force file > /dev/null
- 	) &&
--	(cd svnwc; svn info file) >expected.info-deleted-file &&
--	(cd gitwc; git svn info file) >actual.info-deleted-file &&
-+	(cd svnwc && svn info file) >expected.info-deleted-file &&
-+	(cd gitwc && git svn info file) >actual.info-deleted-file &&
- 	test_cmp_info expected.info-deleted-file actual.info-deleted-file
- 	"
- 
- test_expect_success 'info --url file (deleted)' '
--	test "$(cd gitwc; git svn info --url file)" \
-+	test "$(cd gitwc && git svn info --url file)" \
- 	     = "$quoted_svnrepo/file"
- 	'
- 
-@@ -278,13 +278,13 @@ test_expect_success 'info deleted-directory' "
- 		cd svnwc &&
- 		svn_cmd rm --force directory > /dev/null
- 	) &&
--	(cd svnwc; svn info directory) >expected.info-deleted-directory &&
--	(cd gitwc; git svn info directory) >actual.info-deleted-directory &&
-+	(cd svnwc && svn info directory) >expected.info-deleted-directory &&
-+	(cd gitwc && git svn info directory) >actual.info-deleted-directory &&
- 	test_cmp_info expected.info-deleted-directory actual.info-deleted-directory
- 	"
- 
- test_expect_success 'info --url directory (deleted)' '
--	test "$(cd gitwc; git svn info --url directory)" \
-+	test "$(cd gitwc && git svn info --url directory)" \
- 	     = "$quoted_svnrepo/directory"
- 	'
- 
-@@ -297,13 +297,13 @@ test_expect_success 'info deleted-symlink-file' "
- 		cd svnwc &&
- 		svn_cmd rm --force symlink-file > /dev/null
- 	) &&
--	(cd svnwc; svn info symlink-file) >expected.info-deleted-symlink-file &&
--	(cd gitwc; git svn info symlink-file) >actual.info-deleted-symlink-file &&
-+	(cd svnwc && svn info symlink-file) >expected.info-deleted-symlink-file &&
-+	(cd gitwc && git svn info symlink-file) >actual.info-deleted-symlink-file &&
- 	test_cmp_info expected.info-deleted-symlink-file actual.info-deleted-symlink-file
- 	"
- 
- test_expect_success 'info --url symlink-file (deleted)' '
--	test "$(cd gitwc; git svn info --url symlink-file)" \
-+	test "$(cd gitwc && git svn info --url symlink-file)" \
- 	     = "$quoted_svnrepo/symlink-file"
- 	'
- 
-@@ -316,13 +316,13 @@ test_expect_success 'info deleted-symlink-directory' "
- 		cd svnwc &&
- 		svn_cmd rm --force symlink-directory > /dev/null
- 	) &&
--	(cd svnwc; svn info symlink-directory) >expected.info-deleted-symlink-directory &&
--	(cd gitwc; git svn info symlink-directory) >actual.info-deleted-symlink-directory &&
-+	(cd svnwc && svn info symlink-directory) >expected.info-deleted-symlink-directory &&
-+	(cd gitwc && git svn info symlink-directory) >actual.info-deleted-symlink-directory &&
- 	test_cmp_info expected.info-deleted-symlink-directory actual.info-deleted-symlink-directory
- 	"
- 
- test_expect_success 'info --url symlink-directory (deleted)' '
--	test "$(cd gitwc; git svn info --url symlink-directory)" \
-+	test "$(cd gitwc && git svn info --url symlink-directory)" \
- 	     = "$quoted_svnrepo/symlink-directory"
- 	'
- 
-@@ -331,27 +331,27 @@ test_expect_success 'info --url symlink-directory (deleted)' '
- 
- test_expect_success 'info unknown-file' "
- 	echo two > gitwc/unknown-file &&
--	(cd gitwc; test_must_fail git svn info unknown-file) \
-+	(cd gitwc && test_must_fail git svn info unknown-file) \
- 		 2> actual.info-unknown-file &&
- 	grep unknown-file actual.info-unknown-file
- 	"
- 
- test_expect_success 'info --url unknown-file' '
- 	echo two > gitwc/unknown-file &&
--	(cd gitwc; test_must_fail git svn info --url unknown-file) \
-+	(cd gitwc && test_must_fail git svn info --url unknown-file) \
- 		 2> actual.info-url-unknown-file &&
- 	grep unknown-file actual.info-url-unknown-file
- 	'
- 
- test_expect_success 'info unknown-directory' "
- 	mkdir gitwc/unknown-directory svnwc/unknown-directory &&
--	(cd gitwc; test_must_fail git svn info unknown-directory) \
-+	(cd gitwc && test_must_fail git svn info unknown-directory) \
- 		 2> actual.info-unknown-directory &&
- 	grep unknown-directory actual.info-unknown-directory
- 	"
- 
- test_expect_success 'info --url unknown-directory' '
--	(cd gitwc; test_must_fail git svn info --url unknown-directory) \
-+	(cd gitwc && test_must_fail git svn info --url unknown-directory) \
- 		 2> actual.info-url-unknown-directory &&
- 	grep unknown-directory actual.info-url-unknown-directory
- 	'
-@@ -361,13 +361,13 @@ test_expect_success 'info unknown-symlink-file' "
- 		cd gitwc &&
- 		ln -s unknown-file unknown-symlink-file
- 	) &&
--	(cd gitwc; test_must_fail git svn info unknown-symlink-file) \
-+	(cd gitwc && test_must_fail git svn info unknown-symlink-file) \
- 		 2> actual.info-unknown-symlink-file &&
- 	grep unknown-symlink-file actual.info-unknown-symlink-file
- 	"
- 
- test_expect_success 'info --url unknown-symlink-file' '
--	(cd gitwc; test_must_fail git svn info --url unknown-symlink-file) \
-+	(cd gitwc && test_must_fail git svn info --url unknown-symlink-file) \
- 		 2> actual.info-url-unknown-symlink-file &&
- 	grep unknown-symlink-file actual.info-url-unknown-symlink-file
- 	'
-@@ -377,13 +377,13 @@ test_expect_success 'info unknown-symlink-directory' "
- 		cd gitwc &&
- 		ln -s unknown-directory unknown-symlink-directory
- 	) &&
--	(cd gitwc; test_must_fail git svn info unknown-symlink-directory) \
-+	(cd gitwc && test_must_fail git svn info unknown-symlink-directory) \
- 		 2> actual.info-unknown-symlink-directory &&
- 	grep unknown-symlink-directory actual.info-unknown-symlink-directory
- 	"
- 
- test_expect_success 'info --url unknown-symlink-directory' '
--	(cd gitwc; test_must_fail git svn info --url unknown-symlink-directory) \
-+	(cd gitwc && test_must_fail git svn info --url unknown-symlink-directory) \
- 		 2> actual.info-url-unknown-symlink-directory &&
- 	grep unknown-symlink-directory actual.info-url-unknown-symlink-directory
- 	'
++test_subshell_sed_='
++# incomplete line -- slurp up next line
++/[^\\]\\$/ {
++      N
++      s/\\\n//
++}
++
++# here-doc -- swallow it to avoid false hits within its body (but keep the
++# command to which it was attached)
++/<<[ 	]*[-\\]*EOF[ 	]*&&[ 	]*$/ {
++	s/<<[ 	]*[-\\]*EOF//
++	h
++	:hereslurp
++	N
++	s/.*\n//
++	/^[ 	]*EOF[ 	]*$/!bhereslurp
++	x
++	}
++
++# one-liner "(... || git ...)" or "(... || test ...)" -- short-hand for
++# "if ... then : else ...", so leave untouched; contrast with "(... || true)"
++# which ought to be replaced with "test_might_fail ..." to avoid breaking
++# &&-chain
++/^[ 	]*(..*||[ 	]*git[ 	]..*)[ 	]*&&[ 	]*$/b
++/^[ 	]*(..*||[ 	]*git[ 	]..*)[ 	]*$/b
++/^[ 	]*(..*||[ 	]*test..*)[ 	]*&&[ 	]*$/b
++/^[ 	]*(..*||[ 	]*test..*)[ 	]*$/b
++
++# one-liner "(... &) &&" backgrounder -- needs to remain in subshell to avoid
++# becoming syntactically invalid "... & &&"
++/^[ 	]*(..*&[ 	]*)[ 	]*&&[ 	]*$/b
++
++# one-liner "(...) &&" -- strip "(" and ")"
++/^[ 	]*(..*)[ 	]*&&[ 	]*$/ {
++	s/(//
++	s/)[ 	]*&&[ 	]*$/ \&\&/
++	b
++}
++
++# same as above but without trailing "&&"
++/^[ 	]*(..*)[ 	]*$/ {
++	s/(//
++	s/)[ 	]*$//
++	b
++}
++
++# one-liner "(...) >x" (or "2>x" or "<x" or "|x" or "&" -- strip "(" and ")"
++/^[ 	]*(..*)[ 	]*[0-9]*[<>|&]/ {
++	s/(//
++	s/)[ 	]*\([0-9]*[<>|&]\)/\1/
++	b
++}
++
++# multi-line "(..." -- strip "(" and pass-thru enclosed lines until ")"
++/^[ 	]*(/ {
++	# strip "(" and stash for later printing
++	s/(//
++	h
++
++	:discard
++	N
++	s/.*\n//
++
++	# loop: slurp enclosed lines
++	:slurp
++	# end-of-file
++	$beof
++	# incomplete line
++	/[^\\]\\$/bincomplete
++	# here-doc
++	/<<[ 	]*[-\\]*EOF/bheredoc
++	# comment or empty line -- discard since closing ") &&" will need to
++	# add "&&" to final non-comment, non-empty subshell line
++	/^[ 	]*#/bdiscard
++	/^[ 	]*$/bdiscard
++	# one-liner "case ... esac"
++	/^[ 	]*case[ 	]*..*esac/bpassthru
++	# multi-line "case ... esac"
++	/^[ 	]*case[ 	]..*[ 	]in/bcase
++	# nested one-liner "(...) &&"
++	/^[ 	]*(.*)[ 	]*&&[ 	]*$/boneline
++	# nested one-liner "(...)"
++	/^[ 	]*(.*)[ 	]*$/boneline
++	# nested one-liner "(...) >x" (or "2>x" or "<x" or "|x")
++	/^[ 	]*(.*)[ 	]*[0-9]*[<>|]/bonelineredir
++	# nested multi-line "(...\n...)"
++	/^[ 	]*(/bnest
++	# closing ") &&" on own line
++	/^[ 	]*)[ 	]*&&[ 	]*$/bcloseamp
++	# closing ")" on own line
++	/^[ 	]*)[ 	]*$/bclose
++	# closing ") >x" (or "2>x" or "<x" or "|x") on own line
++	/^[ 	]*)[ 	]*[0-9]*[<>|]/bcloseredir
++	# "$((...))" -- not closing ")"
++	/\$(([^)][^)]*))[^)]*$/bpassthru
++	# "$(...)" -- not closing ")"
++	/\$([^)][^)]*)[^)]*$/bpassthru
++	# "=(...)" -- Bash array assignment; not closing ")"
++	/=(/bpassthru
++	# closing "...) &&"
++	/)[ 	]*&&[ 	]*$/bcloseampx
++	# closing "...)"
++	/)[ 	]*$/bclosex
++	# closing "...) >x" (or "2>x" or "<x" or "|x")
++	/)[ 	]*[<>|]/bcloseredirx
++	:passthru
++	# retrieve and print previous line
++	x
++	n
++	bslurp
++
++	# end-of-file -- must be closing "...)" line or empty line; if empty,
++	# strip ")" from previous line, else strip ")" from this line
++	:eof
++	/^[ 	]*$/bempty
++	x
++	p
++	:empty
++	x
++	/)[ 	]*[<>|]/s/[<>|]..*$//
++	s/)[ 	]*$//
++	b
++
++	# found "...\" -- slurp up next line
++	:incomplete
++	N
++	s/\\\n//
++	bslurp
++
++	# found here-doc inside subshell: when a subshell ends, we append
++	# "&&" to the final subshell line to chain it with lines outside the
++	# subshell, however, we cannot append "&&" to the ending EOF of a
++	# here-doc since "&&" belongs on the "<<EOF" opening line, so just
++	# discard the here-doc altogether (but keep the command to which it
++	# was attached)
++	:heredoc
++	s/<<[ 	]*[-\\]*EOF//
++	x
++	p
++	:hereslurpsub
++	N
++	s/.*\n//
++	/^[ 	]*EOF[ 	]*$/bdiscard
++	bhereslurpsub
++
++	# found "case ... in" -- pass-thru untouched to avoid "...)" arms
++	# being misidentified as subshell closing ")"
++	:case
++	x
++	p
++	x
++	:caseslurp
++	n
++	/^[ 	]*esac/besac
++	bcaseslurp
++	:esac
++	x
++	bdiscard
++
++	# found one-liner "(...) &&" or "(...)" -- strip "(" and ")"
++	:oneline
++	s/(//
++	s/)[ 	]*\(&&\)*[ 	]*$/ \1/
++	bpassthru
++
++	# found one-liner "(...) >x" (or "2>x" or "<x" or "|x") -- strip
++	# "(" and ")"
++	:onelineredir
++	s/(//
++	s/)[ 	]*\([0-9]*[<>|]\)/\1/
++	bpassthru
++
++	# found nested multi-line "(...\n...)" -- pass-thru untouched
++	:nest
++	x
++	p
++	x
++	:nslurp
++	n
++	# closing ")" on own line -- stop nested slurp
++	/^[ 	]*)/bnclose
++	# "$((...))" -- not closing ")"
++	/\$(([^)][^)]*))[^)]*$/bnslurp
++	# "$(...)" -- not closing ")"
++	/\$([^)][^)]*)[^)]*$/bnslurp
++	# closing "...)" -- stop nested slurp
++	/)/bnclose
++	bnslurp
++	:nclose
++	# stash ")" (or ") &&", etc.) line for later printing and drop
++	# leftover gunk from hold area
++	x
++	bdiscard
++
++	# found ") &&" -- drop ") &&" and add "&&" to final subshell line
++	:closeamp
++	x
++	s/$/ \&\&/
++	b
++
++	# found ")" -- drop it and print final subshell line
++	:close
++	x
++	b
++
++	# found ") >x" (or "2>x" or "<x" or "|x" or "|") -- replace ")" with
++	# ":" to keep ")|\n" syntactically valid, and add "&&" to final
++	# subshell line
++	:closeredir
++	x
++	s/$/ \&\&/
++	p
++	x
++	s/)/:/
++	b
++
++	# found "...) &&" -- drop ")" but keep "..."
++	:closeampx
++	x
++	p
++	x
++	s/)[ 	]*&&[ 	]*$/ \&\&/
++	b
++
++	# found "...)" -- drop ")" but keep "..."
++	:closex
++	x
++	p
++	x
++	s/)[ 	]*$//
++	b
++
++	# found "...) >x" (or "2>x" or "<x" or "|x") -- drop ")" but keep "..."
++	:closeredirx
++	x
++	p
++	x
++	s/)[ 	]*\([<>|]\)/ \&\& : \1/
++	b
++}
++'
++
+ test_run_ () {
+ 	test_cleanup=:
+ 	expecting_failure=$2
+@@ -675,7 +917,8 @@ test_run_ () {
+ 		trace=
+ 		# 117 is magic because it is unlikely to match the exit
+ 		# code of other programs
+-		if test "OK-117" != "$(test_eval_ "(exit 117) && $1${LF}${LF}echo OK-\$?" 3>&1)"
++		test_linter=$(printf '%s\n' "$1" | sed -e "$test_subshell_sed_")
++		if test "OK-117" != "$(test_eval_ "(exit 117) && ${test_linter}${LF}${LF}echo OK-\$?" 3>&1)"
+ 		then
+ 			error "bug in the test script: broken &&-chain or run-away HERE-DOC: $1"
+ 		fi
 -- 
 2.18.0.419.gfe4b301394
 
