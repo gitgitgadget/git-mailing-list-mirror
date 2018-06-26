@@ -6,47 +6,47 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3E911F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 07:31:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 288F61F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 07:31:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932105AbeFZHbT (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 03:31:19 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:55537 "EHLO
+        id S932134AbeFZHbV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 03:31:21 -0400
+Received: from mail-it0-f67.google.com ([209.85.214.67]:52195 "EHLO
         mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752733AbeFZHbP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 03:31:15 -0400
-Received: by mail-it0-f67.google.com with SMTP id 16-v6so813441itl.5
-        for <git@vger.kernel.org>; Tue, 26 Jun 2018 00:31:14 -0700 (PDT)
+        with ESMTP id S1752716AbeFZHbT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 03:31:19 -0400
+Received: by mail-it0-f67.google.com with SMTP id 128-v6so829676itf.1
+        for <git@vger.kernel.org>; Tue, 26 Jun 2018 00:31:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=szg7X3eKeM1ett6sssW9dc5OUdHgQqQWKlWW+dUipqc=;
-        b=kh/g9V4vK0iEfr1NCn1C9+wI1VCICcVljKan0xSesPlKWcAYefR2AZdWgsYt6JSeDS
-         tMh8TSqMwxH712VAZ/bFjmpR1gWFj9giMo2ULlBUcfLqIkfUM0TsrGCm/LMC24V6wxe0
-         Uw4tFB/Tp+GKGhqmGmaBNuWeRETULcD/UM27Pigzv8IKAxLMYBR11SkMdZ5j416/G2Hr
-         Wwd5NwP1AJ4uoKq88fjrCQ0eh+9C8Egq/2iq+OrAJWtbppogJ/icVeSkmzSSuVWvyfn2
-         uAAW4K/zRE0Ajvd0RSVJVM69a9o1a4YDJ0P0X6v4h1/nfduGHrKmlsMAqAz8VyeHcMu5
-         gjAg==
+        bh=zNyrIeTMQYNBFqRTwC5T3qgUstMcLbUswMX0byC5eVE=;
+        b=kI+VcceKPWdTstq6FiyZ6N8I8ErHW/hPTcflF50WJ9MX8LxiD3fZ3EPulb8X7JNOTp
+         YDSoxR2nHarUqreaZmCoA3sqkf5lINREsK3059LkXwBFZmjVAOHoiOUDij/M/ab/hxn/
+         2rMJMZKRsurv4060BTEHAu6eh7TQ/+p2ZMmfTWLB1J0mlTOLQrsxT9N++AjLBK3X3agI
+         6eg92EToUCkR7ZQEnPMnHvw1Y33X0FpbQR9wyQJbv/oOJa6ZswO8H23HVNy6mD+mlrz+
+         giYCK3PldDwF+Bxk3QLLfe+NccqR8kFbRtueGD5SuImkxG1VHpyiPCy6KZVIIT7zAADf
+         eSfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
          :in-reply-to:references;
-        bh=szg7X3eKeM1ett6sssW9dc5OUdHgQqQWKlWW+dUipqc=;
-        b=HSJX/up0lltBw8XSl10TqY68dxLWVPO7BG5g6/5PxE7JpPseNswLoUJ2vGqNfL+dfz
-         6FqLtT4yOV6A1TlNHClSqP8Q3bkxld87sz+pkotpiIe/RiClaHOorPmzLbWKvAagCns2
-         I1nCR5tzaphg0UKGKNjPlvGjrwbKmgc3pXd7C1pfqAJXVI6GXiHult82WDsxK6NfnbN2
-         xG0tK/k3WAV1kMrYjNlCe6XiHpDe5iV/kiSXff5GuIaSfkju3WRXwsrpRUqk8PoLa42T
-         DGc7X3wJZ5JmO782YPC1nQJ31t0Aud/0uRwxiPD9BJEemxXt6hp3BKvXKP5bG1BnxCho
-         F+xw==
-X-Gm-Message-State: APt69E1bO9X6HH9qJzBrUyknJgskZMJfaFwD0D+T0bTYIYzIOvcd56tj
-        DfcoxrG7bS+2GgiX3TSNW+mHjA==
-X-Google-Smtp-Source: ADUXVKJrWEiQbMCnv/PjscQ7xwk0PbMCqoKf+5f3E4LwjDM1njZEjHFcmX3XGfyaBEe2ogaSYOHIdw==
-X-Received: by 2002:a24:546:: with SMTP id 67-v6mr500345itl.21.1529998274089;
-        Tue, 26 Jun 2018 00:31:14 -0700 (PDT)
+        bh=zNyrIeTMQYNBFqRTwC5T3qgUstMcLbUswMX0byC5eVE=;
+        b=b7ZMKlu2gVFK190+8KNO/gOr3QClqumgibTmCeAdbfNO1WM6p7mi8j1yaabHDBzVKl
+         0vj/vKKR46+E0Lvv0rPYHHBQjMinY9Agh7zg816Ylxmpojfuc1RlrQCa1kBx4hIxZz3Z
+         LnWgFQV93Pkq0lWAHUrkOgQvKyNxgFHsi/5EH582qgzdaCaVcUm1idAjRnZ+uXAhBK/8
+         luaGz2ZmRa5jJjpmzo/W2nmF4IFADXKk10/P8PVUk16UGrLutJdtq9NUcFx/5N3pxS7Y
+         ICkVSua678i+ylqkW+UP/Rs3A4OZJmBt2mDBDYa0URe5e9DB5GgPqGlOj61oxuudsUR2
+         V6jQ==
+X-Gm-Message-State: APt69E3OW4DLqRWJj15o01d1hIeF97H8s1uF+nauRVUgLvGHzoLnlHTY
+        A8y6pdyHp88O59KDe/mCOrIvtQ==
+X-Google-Smtp-Source: AAOMgpdVx+4KikIQcgWCX3EltsHcdUKEzWvZ1gAsC0+kqT4vSZJQiEhi8h76tTpH//R2nfj3qnc4iw==
+X-Received: by 2002:a24:c054:: with SMTP id u81-v6mr514878itf.94.1529998278423;
+        Tue, 26 Jun 2018 00:31:18 -0700 (PDT)
 Received: from localhost.localdomain (user-12l2cs3.cable.mindspring.com. [69.81.51.131])
-        by smtp.gmail.com with ESMTPSA id k20-v6sm471361iok.9.2018.06.26.00.31.12
+        by smtp.gmail.com with ESMTPSA id k20-v6sm471361iok.9.2018.06.26.00.31.17
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Tue, 26 Jun 2018 00:31:13 -0700 (PDT)
+        Tue, 26 Jun 2018 00:31:17 -0700 (PDT)
 From:   Eric Sunshine <sunshine@sunshineco.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
@@ -55,9 +55,9 @@ Cc:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
         Elijah Newren <newren@gmail.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 24/29] t5000-t5999: fix broken &&-chains in subshells
-Date:   Tue, 26 Jun 2018 03:29:56 -0400
-Message-Id: <20180626073001.6555-25-sunshine@sunshineco.com>
+Subject: [PATCH 28/29] t9119: fix broken &&-chains in subshells
+Date:   Tue, 26 Jun 2018 03:30:00 -0400
+Message-Id: <20180626073001.6555-29-sunshine@sunshineco.com>
 X-Mailer: git-send-email 2.18.0.419.gfe4b301394
 In-Reply-To: <20180626073001.6555-1-sunshine@sunshineco.com>
 References: <20180626073001.6555-1-sunshine@sunshineco.com>
@@ -68,306 +68,358 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- t/t5300-pack-object.sh         |  2 +-
- t/t5302-pack-index.sh          |  2 +-
- t/t5401-update-hooks.sh        |  4 ++--
- t/t5406-remote-rejects.sh      |  2 +-
- t/t5500-fetch-pack.sh          |  2 +-
- t/t5505-remote.sh              |  2 +-
- t/t5512-ls-remote.sh           |  4 ++--
- t/t5516-fetch-push.sh          | 10 +++++-----
- t/t5517-push-mirror.sh         | 10 +++++-----
- t/t5526-fetch-submodules.sh    |  2 +-
- t/t5531-deep-submodule-push.sh |  2 +-
- t/t5543-atomic-push.sh         |  2 +-
- t/t5601-clone.sh               |  2 +-
- t/t5605-clone-local.sh         |  2 +-
- t/t5801-remote-helpers.sh      |  2 +-
- 15 files changed, 25 insertions(+), 25 deletions(-)
+ t/t9119-git-svn-info.sh | 120 ++++++++++++++++++++--------------------
+ 1 file changed, 60 insertions(+), 60 deletions(-)
 
-diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index 2336d09dcc..6c620cd540 100755
---- a/t/t5300-pack-object.sh
-+++ b/t/t5300-pack-object.sh
-@@ -191,7 +191,7 @@ test_expect_success 'survive missing objects/pack directory' '
- 		mkdir missing-pack &&
- 		cd missing-pack &&
- 		git init &&
--		GOP=.git/objects/pack
-+		GOP=.git/objects/pack &&
- 		rm -fr $GOP &&
- 		git index-pack --stdin --keep=test <../test-3-${packname_3}.pack &&
- 		test -f $GOP/pack-${packname_3}.pack &&
-diff --git a/t/t5302-pack-index.sh b/t/t5302-pack-index.sh
-index bb9b8bb309..91d51b35f9 100755
---- a/t/t5302-pack-index.sh
-+++ b/t/t5302-pack-index.sh
-@@ -237,7 +237,7 @@ test_expect_success 'running index-pack in the object store' '
-     rm -f .git/objects/pack/* &&
-     cp test-1-${pack1}.pack .git/objects/pack/pack-${pack1}.pack &&
-     (
--	cd .git/objects/pack
-+	cd .git/objects/pack &&
- 	git index-pack pack-${pack1}.pack
-     ) &&
-     test -f .git/objects/pack/pack-${pack1}.idx
-diff --git a/t/t5401-update-hooks.sh b/t/t5401-update-hooks.sh
-index 7f278d8ce9..b5f886a0e2 100755
---- a/t/t5401-update-hooks.sh
-+++ b/t/t5401-update-hooks.sh
-@@ -82,13 +82,13 @@ test_expect_success 'hooks ran' '
- '
+diff --git a/t/t9119-git-svn-info.sh b/t/t9119-git-svn-info.sh
+index 88241baee3..8201c3e808 100755
+--- a/t/t9119-git-svn-info.sh
++++ b/t/t9119-git-svn-info.sh
+@@ -22,8 +22,8 @@ esac
+ # same value as "svn info" (i.e. the commit timestamp that touched the
+ # path most recently); do not expect that field to match.
+ test_cmp_info () {
+-	sed -e '/^Text Last Updated:/d' "$1" >tmp.expect
+-	sed -e '/^Text Last Updated:/d' "$2" >tmp.actual
++	sed -e '/^Text Last Updated:/d' "$1" >tmp.expect &&
++	sed -e '/^Text Last Updated:/d' "$2" >tmp.actual &&
+ 	test_cmp tmp.expect tmp.actual &&
+ 	rm -f tmp.expect tmp.actual
+ }
+@@ -59,24 +59,24 @@ test_expect_success 'setup repository and import' '
+ 	'
  
- test_expect_success 'pre-receive hook input' '
--	(echo $commit0 $commit1 refs/heads/master;
-+	(echo $commit0 $commit1 refs/heads/master &&
- 	 echo $commit1 $commit0 refs/heads/tofail
- 	) | test_cmp - victim.git/pre-receive.stdin
- '
+ test_expect_success 'info' "
+-	(cd svnwc; svn info) > expected.info &&
+-	(cd gitwc; git svn info) > actual.info &&
++	(cd svnwc && svn info) > expected.info &&
++	(cd gitwc && git svn info) > actual.info &&
+ 	test_cmp_info expected.info actual.info
+ 	"
  
- test_expect_success 'update hook arguments' '
--	(echo refs/heads/master $commit0 $commit1;
-+	(echo refs/heads/master $commit0 $commit1 &&
- 	 echo refs/heads/tofail $commit1 $commit0
- 	) | test_cmp - victim.git/update.args
- '
-diff --git a/t/t5406-remote-rejects.sh b/t/t5406-remote-rejects.sh
-index 59e80a5ea2..350d2e6ea5 100755
---- a/t/t5406-remote-rejects.sh
-+++ b/t/t5406-remote-rejects.sh
-@@ -6,7 +6,7 @@ test_description='remote push rejects are reported by client'
+ test_expect_success 'info --url' '
+-	test "$(cd gitwc; git svn info --url)" = "$quoted_svnrepo"
++	test "$(cd gitwc && git svn info --url)" = "$quoted_svnrepo"
+ 	'
  
- test_expect_success 'setup' '
- 	mkdir .git/hooks &&
--	(echo "#!/bin/sh" ; echo "exit 1") >.git/hooks/update &&
-+	(echo "#!/bin/sh" && echo "exit 1") >.git/hooks/update &&
- 	chmod +x .git/hooks/update &&
- 	echo 1 >file &&
- 	git add file &&
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index 8390c0a2d2..c394779f65 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -259,7 +259,7 @@ test_expect_success 'clone shallow object count' '
- test_expect_success 'pull in shallow repo with missing merge base' '
- 	(
- 		cd shallow &&
--		git fetch --depth 4 .. A
-+		git fetch --depth 4 .. A &&
- 		test_must_fail git merge --allow-unrelated-histories FETCH_HEAD
- 	)
- '
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index 3552b51b4c..11e14a1e0f 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -844,7 +844,7 @@ test_expect_success 'migrate a remote from named file in $GIT_DIR/branches (2)'
- 		git remote rename origin origin &&
- 		test_path_is_missing .git/branches/origin &&
- 		test "$(git config remote.origin.url)" = "quux" &&
--		test "$(git config remote.origin.fetch)" = "refs/heads/foom:refs/heads/origin"
-+		test "$(git config remote.origin.fetch)" = "refs/heads/foom:refs/heads/origin" &&
- 		test "$(git config remote.origin.push)" = "HEAD:refs/heads/foom"
- 	)
- '
-diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
-index 6a949484d0..ea020040e8 100755
---- a/t/t5512-ls-remote.sh
-+++ b/t/t5512-ls-remote.sh
-@@ -15,7 +15,7 @@ test_expect_success setup '
- 	git tag mark1.10 &&
- 	git show-ref --tags -d | sed -e "s/ /	/" >expected.tag &&
- 	(
--		echo "$(git rev-parse HEAD)	HEAD"
-+		echo "$(git rev-parse HEAD)	HEAD" &&
- 		git show-ref -d	| sed -e "s/ /	/"
- 	) >expected.all &&
+ test_expect_success 'info .' "
+-	(cd svnwc; svn info .) > expected.info-dot &&
+-	(cd gitwc; git svn info .) > actual.info-dot &&
++	(cd svnwc && svn info .) > expected.info-dot &&
++	(cd gitwc && git svn info .) > actual.info-dot &&
+ 	test_cmp_info expected.info-dot actual.info-dot
+ 	"
  
-@@ -105,7 +105,7 @@ test_expect_success 'use branch.<name>.remote if possible' '
- 	git clone . other.git &&
- 	(
- 		cd other.git &&
--		echo "$(git rev-parse HEAD)	HEAD"
-+		echo "$(git rev-parse HEAD)	HEAD" &&
- 		git show-ref	| sed -e "s/ /	/"
- 	) >exp &&
+ test_expect_success 'info $(pwd)' '
+-	(cd svnwc; svn info "$(pwd)") >expected.info-pwd &&
+-	(cd gitwc; git svn info "$(pwd)") >actual.info-pwd &&
++	(cd svnwc && svn info "$(pwd)") >expected.info-pwd &&
++	(cd gitwc && git svn info "$(pwd)") >actual.info-pwd &&
+ 	grep -v ^Path: <expected.info-pwd >expected.info-np &&
+ 	grep -v ^Path: <actual.info-pwd >actual.info-np &&
+ 	test_cmp_info expected.info-np actual.info-np &&
+@@ -85,8 +85,8 @@ test_expect_success 'info $(pwd)' '
+ 	'
  
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index a5077d8b7c..bd8f23e430 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -923,7 +923,7 @@ test_expect_success 'push into aliased refs (consistent)' '
- 	(
- 		cd child1 &&
- 		git branch foo &&
--		git symbolic-ref refs/heads/bar refs/heads/foo
-+		git symbolic-ref refs/heads/bar refs/heads/foo &&
- 		git config receive.denyCurrentBranch false
- 	) &&
- 	(
-@@ -945,7 +945,7 @@ test_expect_success 'push into aliased refs (inconsistent)' '
- 	(
- 		cd child1 &&
- 		git branch foo &&
--		git symbolic-ref refs/heads/bar refs/heads/foo
-+		git symbolic-ref refs/heads/bar refs/heads/foo &&
- 		git config receive.denyCurrentBranch false
- 	) &&
- 	(
-@@ -1011,7 +1011,7 @@ test_expect_success 'push --porcelain rejected' '
- 	mk_empty testrepo &&
- 	git push testrepo refs/heads/master:refs/remotes/origin/master &&
- 	(cd testrepo &&
--		git reset --hard origin/master^
-+		git reset --hard origin/master^ &&
- 		git config receive.denyCurrentBranch true) &&
+ test_expect_success 'info $(pwd)/../___wc' '
+-	(cd svnwc; svn info "$(pwd)/../svnwc") >expected.info-pwd &&
+-	(cd gitwc; git svn info "$(pwd)/../gitwc") >actual.info-pwd &&
++	(cd svnwc && svn info "$(pwd)/../svnwc") >expected.info-pwd &&
++	(cd gitwc && git svn info "$(pwd)/../gitwc") >actual.info-pwd &&
+ 	grep -v ^Path: <expected.info-pwd >expected.info-np &&
+ 	grep -v ^Path: <actual.info-pwd >actual.info-np &&
+ 	test_cmp_info expected.info-np actual.info-np &&
+@@ -95,8 +95,8 @@ test_expect_success 'info $(pwd)/../___wc' '
+ 	'
  
- 	echo >.git/foo  "To testrepo"  &&
-@@ -1025,7 +1025,7 @@ test_expect_success 'push --porcelain --dry-run rejected' '
- 	mk_empty testrepo &&
- 	git push testrepo refs/heads/master:refs/remotes/origin/master &&
- 	(cd testrepo &&
--		git reset --hard origin/master
-+		git reset --hard origin/master &&
- 		git config receive.denyCurrentBranch true) &&
+ test_expect_success 'info $(pwd)/../___wc//file' '
+-	(cd svnwc; svn info "$(pwd)/../svnwc//file") >expected.info-pwd &&
+-	(cd gitwc; git svn info "$(pwd)/../gitwc//file") >actual.info-pwd &&
++	(cd svnwc && svn info "$(pwd)/../svnwc//file") >expected.info-pwd &&
++	(cd gitwc && git svn info "$(pwd)/../gitwc//file") >actual.info-pwd &&
+ 	grep -v ^Path: <expected.info-pwd >expected.info-np &&
+ 	grep -v ^Path: <actual.info-pwd >actual.info-np &&
+ 	test_cmp_info expected.info-np actual.info-np &&
+@@ -105,56 +105,56 @@ test_expect_success 'info $(pwd)/../___wc//file' '
+ 	'
  
- 	echo >.git/foo  "To testrepo"  &&
-@@ -1333,7 +1333,7 @@ test_expect_success 'push --follow-tag only pushes relevant tags' '
- 		git commit --allow-empty -m "future commit" &&
- 		git tag -m "future" future &&
- 		git checkout master &&
--		git for-each-ref refs/heads/master refs/tags/tag >../expect
-+		git for-each-ref refs/heads/master refs/tags/tag >../expect &&
- 		git push --follow-tag ../dst master
- 	) &&
- 	(
-diff --git a/t/t5517-push-mirror.sh b/t/t5517-push-mirror.sh
-index 02f160aae0..c05a661400 100755
---- a/t/t5517-push-mirror.sh
-+++ b/t/t5517-push-mirror.sh
-@@ -71,7 +71,7 @@ test_expect_success 'push mirror force updates existing branches' '
- 		git push --mirror up &&
- 		echo two >foo && git add foo && git commit -m two &&
- 		git push --mirror up &&
--		git reset --hard HEAD^
-+		git reset --hard HEAD^ &&
- 		git push --mirror up
- 	) &&
- 	master_master=$(cd master && git show-ref -s --verify refs/heads/master) &&
-@@ -88,7 +88,7 @@ test_expect_success 'push mirror removes branches' '
- 		echo one >foo && git add foo && git commit -m one &&
- 		git branch remove master &&
- 		git push --mirror up &&
--		git branch -D remove
-+		git branch -D remove &&
- 		git push --mirror up
- 	) &&
- 	(
-@@ -170,7 +170,7 @@ test_expect_success 'push mirror force updates existing tags' '
- 		echo two >foo && git add foo && git commit -m two &&
- 		git tag -f tmaster master &&
- 		git push --mirror up &&
--		git reset --hard HEAD^
-+		git reset --hard HEAD^ &&
- 		git tag -f tmaster master &&
- 		git push --mirror up
- 	) &&
-@@ -188,7 +188,7 @@ test_expect_success 'push mirror removes tags' '
- 		echo one >foo && git add foo && git commit -m one &&
- 		git tag -f tremove master &&
- 		git push --mirror up &&
--		git tag -d tremove
-+		git tag -d tremove &&
- 		git push --mirror up
- 	) &&
- 	(
-@@ -235,7 +235,7 @@ test_expect_success 'remote.foo.mirror adds and removes branches' '
- 		git branch keep master &&
- 		git branch remove master &&
- 		git push up &&
--		git branch -D remove
-+		git branch -D remove &&
- 		git push up
- 	) &&
- 	(
-diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-index 9cc4b569c0..143638c8cd 100755
---- a/t/t5526-fetch-submodules.sh
-+++ b/t/t5526-fetch-submodules.sh
-@@ -379,7 +379,7 @@ test_expect_success "'--recurse-submodules=on-demand' recurses as deep as necess
- 			git config -f .gitmodules submodule.subdir/deepsubmodule.fetchRecursive false
- 		) &&
- 		git fetch --recurse-submodules=on-demand >../actual.out 2>../actual.err &&
--		git config --unset fetch.recurseSubmodules
-+		git config --unset fetch.recurseSubmodules &&
- 		(
- 			cd submodule &&
- 			git config --unset -f .gitmodules submodule.subdir/deepsubmodule.fetchRecursive
-diff --git a/t/t5531-deep-submodule-push.sh b/t/t5531-deep-submodule-push.sh
-index 39cb2c1c34..e2c37fd978 100755
---- a/t/t5531-deep-submodule-push.sh
-+++ b/t/t5531-deep-submodule-push.sh
-@@ -354,7 +354,7 @@ test_expect_success 'push succeeds if submodule has no remote and is on the firs
- 	git clone a a1 &&
- 	(
- 		cd a1 &&
--		git init b
-+		git init b &&
- 		(
- 			cd b &&
- 			>junk &&
-diff --git a/t/t5543-atomic-push.sh b/t/t5543-atomic-push.sh
-index 3480b33007..7079bcf9a0 100755
---- a/t/t5543-atomic-push.sh
-+++ b/t/t5543-atomic-push.sh
-@@ -178,7 +178,7 @@ test_expect_success 'atomic push obeys update hook preventing a branch to be pus
- test_expect_success 'atomic push is not advertised if configured' '
- 	mk_repo_pair &&
- 	(
--		cd upstream
-+		cd upstream &&
- 		git config receive.advertiseatomic 0
- 	) &&
- 	(
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 0b62037744..ddaa96ac4f 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -618,7 +618,7 @@ hex2oct () {
- test_expect_success 'clone on case-insensitive fs' '
- 	git init icasefs &&
- 	(
--		cd icasefs
-+		cd icasefs &&
- 		o=$(git hash-object -w --stdin </dev/null | hex2oct) &&
- 		t=$(printf "100644 X\0${o}100644 x\0${o}" |
- 			git hash-object -w -t tree --stdin) &&
-diff --git a/t/t5605-clone-local.sh b/t/t5605-clone-local.sh
-index 3c087e907c..af23419ebf 100755
---- a/t/t5605-clone-local.sh
-+++ b/t/t5605-clone-local.sh
-@@ -94,7 +94,7 @@ test_expect_success 'clone empty repository' '
- 	 git config receive.denyCurrentBranch warn) &&
- 	git clone empty empty-clone &&
- 	test_tick &&
--	(cd empty-clone
-+	(cd empty-clone &&
- 	 echo "content" >> foo &&
- 	 git add foo &&
- 	 git commit -m "Initial commit" &&
-diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
-index 362b1581e0..ee5757966f 100755
---- a/t/t5801-remote-helpers.sh
-+++ b/t/t5801-remote-helpers.sh
-@@ -96,7 +96,7 @@ test_expect_success 'push new branch with old:new refspec' '
+ test_expect_success 'info --url .' '
+-	test "$(cd gitwc; git svn info --url .)" = "$quoted_svnrepo"
++	test "$(cd gitwc && git svn info --url .)" = "$quoted_svnrepo"
+ 	'
  
- test_expect_success 'push new branch with HEAD:new refspec' '
- 	(cd local &&
--	 git checkout new-name
-+	 git checkout new-name &&
- 	 git push origin HEAD:new-refspec-2
+ test_expect_success 'info file' "
+-	(cd svnwc; svn info file) > expected.info-file &&
+-	(cd gitwc; git svn info file) > actual.info-file &&
++	(cd svnwc && svn info file) > expected.info-file &&
++	(cd gitwc && git svn info file) > actual.info-file &&
+ 	test_cmp_info expected.info-file actual.info-file
+ 	"
+ 
+ test_expect_success 'info --url file' '
+-	test "$(cd gitwc; git svn info --url file)" = "$quoted_svnrepo/file"
++	test "$(cd gitwc && git svn info --url file)" = "$quoted_svnrepo/file"
+ 	'
+ 
+ test_expect_success 'info directory' "
+-	(cd svnwc; svn info directory) > expected.info-directory &&
+-	(cd gitwc; git svn info directory) > actual.info-directory &&
++	(cd svnwc && svn info directory) > expected.info-directory &&
++	(cd gitwc && git svn info directory) > actual.info-directory &&
+ 	test_cmp_info expected.info-directory actual.info-directory
+ 	"
+ 
+ test_expect_success 'info inside directory' "
+-	(cd svnwc/directory; svn info) > expected.info-inside-directory &&
+-	(cd gitwc/directory; git svn info) > actual.info-inside-directory &&
++	(cd svnwc/directory && svn info) > expected.info-inside-directory &&
++	(cd gitwc/directory && git svn info) > actual.info-inside-directory &&
+ 	test_cmp_info expected.info-inside-directory actual.info-inside-directory
+ 	"
+ 
+ test_expect_success 'info --url directory' '
+-	test "$(cd gitwc; git svn info --url directory)" = "$quoted_svnrepo/directory"
++	test "$(cd gitwc && git svn info --url directory)" = "$quoted_svnrepo/directory"
+ 	'
+ 
+ test_expect_success 'info symlink-file' "
+-	(cd svnwc; svn info symlink-file) > expected.info-symlink-file &&
+-	(cd gitwc; git svn info symlink-file) > actual.info-symlink-file &&
++	(cd svnwc && svn info symlink-file) > expected.info-symlink-file &&
++	(cd gitwc && git svn info symlink-file) > actual.info-symlink-file &&
+ 	test_cmp_info expected.info-symlink-file actual.info-symlink-file
+ 	"
+ 
+ test_expect_success 'info --url symlink-file' '
+-	test "$(cd gitwc; git svn info --url symlink-file)" \
++	test "$(cd gitwc && git svn info --url symlink-file)" \
+ 	     = "$quoted_svnrepo/symlink-file"
+ 	'
+ 
+ test_expect_success 'info symlink-directory' "
+-	(cd svnwc; svn info symlink-directory) \
++	(cd svnwc && svn info symlink-directory) \
+ 		> expected.info-symlink-directory &&
+-	(cd gitwc; git svn info symlink-directory) \
++	(cd gitwc && git svn info symlink-directory) \
+ 		> actual.info-symlink-directory &&
+ 	test_cmp_info expected.info-symlink-directory actual.info-symlink-directory
+ 	"
+ 
+ test_expect_success 'info --url symlink-directory' '
+-	test "$(cd gitwc; git svn info --url symlink-directory)" \
++	test "$(cd gitwc && git svn info --url symlink-directory)" \
+ 	     = "$quoted_svnrepo/symlink-directory"
+ 	'
+ 
+@@ -169,13 +169,13 @@ test_expect_success 'info added-file' "
+ 		cd svnwc &&
+ 		svn_cmd add added-file > /dev/null
  	) &&
- 	compare_refs local HEAD server refs/heads/new-refspec-2
+-	(cd svnwc; svn info added-file) > expected.info-added-file &&
+-	(cd gitwc; git svn info added-file) > actual.info-added-file &&
++	(cd svnwc && svn info added-file) > expected.info-added-file &&
++	(cd gitwc && git svn info added-file) > actual.info-added-file &&
+ 	test_cmp_info expected.info-added-file actual.info-added-file
+ 	"
+ 
+ test_expect_success 'info --url added-file' '
+-	test "$(cd gitwc; git svn info --url added-file)" \
++	test "$(cd gitwc && git svn info --url added-file)" \
+ 	     = "$quoted_svnrepo/added-file"
+ 	'
+ 
+@@ -190,15 +190,15 @@ test_expect_success 'info added-directory' "
+ 		cd gitwc &&
+ 		git add added-directory
+ 	) &&
+-	(cd svnwc; svn info added-directory) \
++	(cd svnwc && svn info added-directory) \
+ 		> expected.info-added-directory &&
+-	(cd gitwc; git svn info added-directory) \
++	(cd gitwc && git svn info added-directory) \
+ 		> actual.info-added-directory &&
+ 	test_cmp_info expected.info-added-directory actual.info-added-directory
+ 	"
+ 
+ test_expect_success 'info --url added-directory' '
+-	test "$(cd gitwc; git svn info --url added-directory)" \
++	test "$(cd gitwc && git svn info --url added-directory)" \
+ 	     = "$quoted_svnrepo/added-directory"
+ 	'
+ 
+@@ -213,16 +213,16 @@ test_expect_success 'info added-symlink-file' "
+ 		ln -s added-file added-symlink-file &&
+ 		svn_cmd add added-symlink-file > /dev/null
+ 	) &&
+-	(cd svnwc; svn info added-symlink-file) \
++	(cd svnwc && svn info added-symlink-file) \
+ 		> expected.info-added-symlink-file &&
+-	(cd gitwc; git svn info added-symlink-file) \
++	(cd gitwc && git svn info added-symlink-file) \
+ 		> actual.info-added-symlink-file &&
+ 	test_cmp_info expected.info-added-symlink-file \
+ 		actual.info-added-symlink-file
+ 	"
+ 
+ test_expect_success 'info --url added-symlink-file' '
+-	test "$(cd gitwc; git svn info --url added-symlink-file)" \
++	test "$(cd gitwc && git svn info --url added-symlink-file)" \
+ 	     = "$quoted_svnrepo/added-symlink-file"
+ 	'
+ 
+@@ -237,16 +237,16 @@ test_expect_success 'info added-symlink-directory' "
+ 		ln -s added-directory added-symlink-directory &&
+ 		svn_cmd add added-symlink-directory > /dev/null
+ 	) &&
+-	(cd svnwc; svn info added-symlink-directory) \
++	(cd svnwc && svn info added-symlink-directory) \
+ 		> expected.info-added-symlink-directory &&
+-	(cd gitwc; git svn info added-symlink-directory) \
++	(cd gitwc && git svn info added-symlink-directory) \
+ 		> actual.info-added-symlink-directory &&
+ 	test_cmp_info expected.info-added-symlink-directory \
+ 		actual.info-added-symlink-directory
+ 	"
+ 
+ test_expect_success 'info --url added-symlink-directory' '
+-	test "$(cd gitwc; git svn info --url added-symlink-directory)" \
++	test "$(cd gitwc && git svn info --url added-symlink-directory)" \
+ 	     = "$quoted_svnrepo/added-symlink-directory"
+ 	'
+ 
+@@ -259,13 +259,13 @@ test_expect_success 'info deleted-file' "
+ 		cd svnwc &&
+ 		svn_cmd rm --force file > /dev/null
+ 	) &&
+-	(cd svnwc; svn info file) >expected.info-deleted-file &&
+-	(cd gitwc; git svn info file) >actual.info-deleted-file &&
++	(cd svnwc && svn info file) >expected.info-deleted-file &&
++	(cd gitwc && git svn info file) >actual.info-deleted-file &&
+ 	test_cmp_info expected.info-deleted-file actual.info-deleted-file
+ 	"
+ 
+ test_expect_success 'info --url file (deleted)' '
+-	test "$(cd gitwc; git svn info --url file)" \
++	test "$(cd gitwc && git svn info --url file)" \
+ 	     = "$quoted_svnrepo/file"
+ 	'
+ 
+@@ -278,13 +278,13 @@ test_expect_success 'info deleted-directory' "
+ 		cd svnwc &&
+ 		svn_cmd rm --force directory > /dev/null
+ 	) &&
+-	(cd svnwc; svn info directory) >expected.info-deleted-directory &&
+-	(cd gitwc; git svn info directory) >actual.info-deleted-directory &&
++	(cd svnwc && svn info directory) >expected.info-deleted-directory &&
++	(cd gitwc && git svn info directory) >actual.info-deleted-directory &&
+ 	test_cmp_info expected.info-deleted-directory actual.info-deleted-directory
+ 	"
+ 
+ test_expect_success 'info --url directory (deleted)' '
+-	test "$(cd gitwc; git svn info --url directory)" \
++	test "$(cd gitwc && git svn info --url directory)" \
+ 	     = "$quoted_svnrepo/directory"
+ 	'
+ 
+@@ -297,13 +297,13 @@ test_expect_success 'info deleted-symlink-file' "
+ 		cd svnwc &&
+ 		svn_cmd rm --force symlink-file > /dev/null
+ 	) &&
+-	(cd svnwc; svn info symlink-file) >expected.info-deleted-symlink-file &&
+-	(cd gitwc; git svn info symlink-file) >actual.info-deleted-symlink-file &&
++	(cd svnwc && svn info symlink-file) >expected.info-deleted-symlink-file &&
++	(cd gitwc && git svn info symlink-file) >actual.info-deleted-symlink-file &&
+ 	test_cmp_info expected.info-deleted-symlink-file actual.info-deleted-symlink-file
+ 	"
+ 
+ test_expect_success 'info --url symlink-file (deleted)' '
+-	test "$(cd gitwc; git svn info --url symlink-file)" \
++	test "$(cd gitwc && git svn info --url symlink-file)" \
+ 	     = "$quoted_svnrepo/symlink-file"
+ 	'
+ 
+@@ -316,13 +316,13 @@ test_expect_success 'info deleted-symlink-directory' "
+ 		cd svnwc &&
+ 		svn_cmd rm --force symlink-directory > /dev/null
+ 	) &&
+-	(cd svnwc; svn info symlink-directory) >expected.info-deleted-symlink-directory &&
+-	(cd gitwc; git svn info symlink-directory) >actual.info-deleted-symlink-directory &&
++	(cd svnwc && svn info symlink-directory) >expected.info-deleted-symlink-directory &&
++	(cd gitwc && git svn info symlink-directory) >actual.info-deleted-symlink-directory &&
+ 	test_cmp_info expected.info-deleted-symlink-directory actual.info-deleted-symlink-directory
+ 	"
+ 
+ test_expect_success 'info --url symlink-directory (deleted)' '
+-	test "$(cd gitwc; git svn info --url symlink-directory)" \
++	test "$(cd gitwc && git svn info --url symlink-directory)" \
+ 	     = "$quoted_svnrepo/symlink-directory"
+ 	'
+ 
+@@ -331,27 +331,27 @@ test_expect_success 'info --url symlink-directory (deleted)' '
+ 
+ test_expect_success 'info unknown-file' "
+ 	echo two > gitwc/unknown-file &&
+-	(cd gitwc; test_must_fail git svn info unknown-file) \
++	(cd gitwc && test_must_fail git svn info unknown-file) \
+ 		 2> actual.info-unknown-file &&
+ 	grep unknown-file actual.info-unknown-file
+ 	"
+ 
+ test_expect_success 'info --url unknown-file' '
+ 	echo two > gitwc/unknown-file &&
+-	(cd gitwc; test_must_fail git svn info --url unknown-file) \
++	(cd gitwc && test_must_fail git svn info --url unknown-file) \
+ 		 2> actual.info-url-unknown-file &&
+ 	grep unknown-file actual.info-url-unknown-file
+ 	'
+ 
+ test_expect_success 'info unknown-directory' "
+ 	mkdir gitwc/unknown-directory svnwc/unknown-directory &&
+-	(cd gitwc; test_must_fail git svn info unknown-directory) \
++	(cd gitwc && test_must_fail git svn info unknown-directory) \
+ 		 2> actual.info-unknown-directory &&
+ 	grep unknown-directory actual.info-unknown-directory
+ 	"
+ 
+ test_expect_success 'info --url unknown-directory' '
+-	(cd gitwc; test_must_fail git svn info --url unknown-directory) \
++	(cd gitwc && test_must_fail git svn info --url unknown-directory) \
+ 		 2> actual.info-url-unknown-directory &&
+ 	grep unknown-directory actual.info-url-unknown-directory
+ 	'
+@@ -361,13 +361,13 @@ test_expect_success 'info unknown-symlink-file' "
+ 		cd gitwc &&
+ 		ln -s unknown-file unknown-symlink-file
+ 	) &&
+-	(cd gitwc; test_must_fail git svn info unknown-symlink-file) \
++	(cd gitwc && test_must_fail git svn info unknown-symlink-file) \
+ 		 2> actual.info-unknown-symlink-file &&
+ 	grep unknown-symlink-file actual.info-unknown-symlink-file
+ 	"
+ 
+ test_expect_success 'info --url unknown-symlink-file' '
+-	(cd gitwc; test_must_fail git svn info --url unknown-symlink-file) \
++	(cd gitwc && test_must_fail git svn info --url unknown-symlink-file) \
+ 		 2> actual.info-url-unknown-symlink-file &&
+ 	grep unknown-symlink-file actual.info-url-unknown-symlink-file
+ 	'
+@@ -377,13 +377,13 @@ test_expect_success 'info unknown-symlink-directory' "
+ 		cd gitwc &&
+ 		ln -s unknown-directory unknown-symlink-directory
+ 	) &&
+-	(cd gitwc; test_must_fail git svn info unknown-symlink-directory) \
++	(cd gitwc && test_must_fail git svn info unknown-symlink-directory) \
+ 		 2> actual.info-unknown-symlink-directory &&
+ 	grep unknown-symlink-directory actual.info-unknown-symlink-directory
+ 	"
+ 
+ test_expect_success 'info --url unknown-symlink-directory' '
+-	(cd gitwc; test_must_fail git svn info --url unknown-symlink-directory) \
++	(cd gitwc && test_must_fail git svn info --url unknown-symlink-directory) \
+ 		 2> actual.info-url-unknown-symlink-directory &&
+ 	grep unknown-symlink-directory actual.info-url-unknown-symlink-directory
+ 	'
 -- 
 2.18.0.419.gfe4b301394
 
