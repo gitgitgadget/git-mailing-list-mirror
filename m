@@ -2,86 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76D181F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 17:08:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A88D31F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 17:10:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752976AbeFZRIA (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 13:08:00 -0400
-Received: from mail-yw0-f202.google.com ([209.85.161.202]:56951 "EHLO
-        mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752608AbeFZRH7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 13:07:59 -0400
-Received: by mail-yw0-f202.google.com with SMTP id l136-v6so13364766ywb.23
-        for <git@vger.kernel.org>; Tue, 26 Jun 2018 10:07:59 -0700 (PDT)
+        id S1753200AbeFZRKD (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 13:10:03 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:52995 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753199AbeFZRKA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 13:10:00 -0400
+Received: by mail-wm0-f67.google.com with SMTP id p126-v6so2825874wmb.2
+        for <git@vger.kernel.org>; Tue, 26 Jun 2018 10:10:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
-         :cc;
-        bh=4bdcAJV1W08ExVhUuRakozJW5Uiukky9yk6Cu3bIXBA=;
-        b=efn4PsjwsH9P0fLM8Mp6l/T7wsVlctdK2owpP7IZPt6qa2bwY20jz3edou7swW4NuD
-         rDgMEUtq5j+pr3DGPMvBD1b/p82zlO6IKreZAcvGVvqMSj3UAmv0SPKQp5ZOBCD/agU6
-         7d6DT6DezJAFlih1GPxP9xKIj0WDQb1F287bgzWaqXKDn1LHqxkE8paFvUMdcdKiUKPp
-         feEAu0QQBLFbaKcwxmX2+JmCRtL5KCuiO3mG86N3cGnThnGfnGr0dipczqD7sPbU7oyd
-         aTzO+CT3Xle6DAQshINtCHni4byeaZACZ5/N21ooY2u8dLNjsYWf/tNdSsyxmvf8Lqfc
-         +s4w==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=8bO+5HmJnE5qqczsep8VJUsZoISqy8UOT6bOaxt5frQ=;
+        b=nS3z2NPA1Pg4EIQvA8gb9Rkkfn1JKvjMKugVUqZlK6QSEoGvS2ziqny+bhm9OSV8I1
+         tItqmD73wSN5+0qyk0pzm/3lHkK692Ov40CgU6WvwBB16IwGGYJSNcBP96rIB0/eEjdt
+         Tv+NvrAhrfv7nuolY8AjDlP+N7LoPsm57BzeC+Dr9Am7WwOHqUvY5pMWBntYgStT0SFn
+         IFRPVpLPuw+LdihTCeECWUihbHWikYG06zNpZ2pjpfiBzrmGKFYvSm/tWCLwLsJHWl2M
+         MVJFVlubH5fi0cniDEv2ToXlR+s27zoM5cRKnBY0nYXQYXDK1eWzHvvnYLhaTc1dKqTw
+         cB0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
-         :references:subject:from:to:cc;
-        bh=4bdcAJV1W08ExVhUuRakozJW5Uiukky9yk6Cu3bIXBA=;
-        b=qigU3te+qY1hryJBpkkIciaHYw7m7clYVsFlUQOa1nqp14cXKoYUyJ/b2hAcEI2BWE
-         1ZPZry8qjcTMwlT/0o0citBGRT9ZWGkpdyA/S6f8vG7OCzWUQ7Z7Bn0xW+yZnpvw7H9K
-         f6QTJ4QFk0A78VmpRj5OB9PO4463xirprNZ4TQ7hDXfdpZCIfQyyYva29w9BMqK3b2em
-         vPxdKyRt+X7B9I5BFo08HGCrh3JurZVOJMe+XE1u891HUMLAVcyP1fowPeBUUnkDDwDf
-         yWUOAQZ1kNvhzkA5gfaXcTi212vktQwCmsaICISI8qR/gQgRDsW6gS8wVn71ufRcww/V
-         f0aw==
-X-Gm-Message-State: APt69E1HQVQdc5AaXb15PP1TgGCaLNWlEOXQWOC9jLuXikLRFRGH7U8j
-        KRVkgIAkrmZjqCmhtg8lcAGqhC+gz35ydocqSQeF
-X-Google-Smtp-Source: ADUXVKJLmeaN5SNN1Ge+9ADFOBQvDfpaFtdPw0Kh2H0cJ4mDw5avWOJ4jBLTPuiKEZOOUXxNgcVG2miIOP/VyvDIZi8r
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=8bO+5HmJnE5qqczsep8VJUsZoISqy8UOT6bOaxt5frQ=;
+        b=Cy3qB1z7gP/KsMj4EkgYq5u17ZMV04z+hzpJ0VG66hLHN6842mJcwxCswQ5udtlkjx
+         ia2WmVdeF7uN4nOTV8b7ERRt7bRaAFZ7MrqocefSKbvsByz6XlUOMsY045B9EhbcEBvy
+         xxpw1lyoo7yb0JSEvw+sCF0IZKzkuaz/O/QvECEIhU/esxnWCftHMHYXENruROH8xn3y
+         XUNeYPRbISVVDkrvwPr4rV9f88a2XzxmR8RjhT0CSKvCxaFDDb26ndd+r4Jgdq+Bw0oQ
+         1c46hgZB8k0bRz+8A7/xQgBST+417zXMqr8eVOMMaY294moShAPG6o6yxrNFdlB5VS4b
+         vD0g==
+X-Gm-Message-State: APt69E1ZhShTWZ2HXdsSiWvcOskL154LTqOlYB67uY9nNX9goyKgp4I4
+        DX88ReoA4+Av53Q+4U6E+A8=
+X-Google-Smtp-Source: AAOMgpeQQLMHBn2s6TOkT4m1+NqgxHdILITYSaWjKjQlkgCcrEESc2uMqkS7QKT+sZ0QnodxCMPqUg==
+X-Received: by 2002:a1c:29c5:: with SMTP id p188-v6mr2235382wmp.45.1530032999295;
+        Tue, 26 Jun 2018 10:09:59 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id o12-v6sm2244035wrn.4.2018.06.26.10.09.58
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 26 Jun 2018 10:09:58 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [BUG] url schemes should be case-insensitive
+References: <20180624085622.GA28575@sigill.intra.peff.net>
+        <xmqqvaa6ohiw.fsf@gitster-ct.c.googlers.com>
+        <20180626122143.GA14052@sigill.intra.peff.net>
+Date:   Tue, 26 Jun 2018 10:09:58 -0700
+In-Reply-To: <20180626122143.GA14052@sigill.intra.peff.net> (Jeff King's
+        message of "Tue, 26 Jun 2018 08:21:43 -0400")
+Message-ID: <xmqq1sctmq3d.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-X-Received: by 2002:a81:4cce:: with SMTP id z197-v6mr636974ywa.141.1530032878787;
- Tue, 26 Jun 2018 10:07:58 -0700 (PDT)
-Date:   Tue, 26 Jun 2018 10:07:55 -0700
-In-Reply-To: <20180626073001.6555-11-sunshine@sunshineco.com>
-Message-Id: <20180626170755.134929-1-jonathantanmy@google.com>
-References: <20180626073001.6555-11-sunshine@sunshineco.com>
-X-Mailer: git-send-email 2.18.0.rc2.347.g0da03f3a46.dirty
-Subject: Re: [PATCH 10/29] t9001: fix broken "invoke hook" test
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     sunshine@sunshineco.com
-Cc:     git@vger.kernel.org, peff@peff.net, jrnieder@gmail.com,
-        szeder@ira.uka.de, sbeller@google.com, newren@gmail.com,
-        jonathantanmy@google.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-> index e80eacbb1b..776769fe0d 100755
-> --- a/t/t9001-send-email.sh
-> +++ b/t/t9001-send-email.sh
-> @@ -1966,11 +1966,11 @@ test_expect_success $PREREQ 'invoke hook' '
->  
->  		# Verify error message when a patch is rejected by the hook
->  		sed -e "s/add master/x/" ../0001-add-master.patch >../another.patch &&
-> -		git send-email \
-> +		test_must_fail git send-email \
->  			--from="Example <nobody@example.com>" \
->  			--to=nobody@example.com \
->  			--smtp-server="$(pwd)/../fake.sendmail" \
-> -			../another.patch 2>err
-> +			../another.patch 2>err &&
->  		test_i18ngrep "rejected by sendemail-validate hook" err
+Jeff King <peff@peff.net> writes:
 
-Thanks for catching this. Indeed, "git send-email" is supposed to fail
-because the validate hook greps for the string "add master", which does
-not exist in the e-mail to be sent. (Above this is a test that shows
-that the same validate hook succeeds if the e-mail contains "add
-master".) This looks correct to me.
+>> > We seem to match url schemes case-sensitively:
+>> >
+>> >   $ git clone SSH://example.com/repo.git
+>> >   Cloning into 'repo'...
+>> >   fatal: Unable to find remote helper for 'SSH'
+>> >
+>> > whereas rfc3986 is clear that the scheme portion is case-insensitive.
+>> > We probably ought to match at least our internal ones with strcasecmp.
+>> 
+>> That may break if somebody at DevToolGroup@$BIGCOMPANY got cute and
+>> named their custom remote helper SSH:// that builds on top of the
+>> normal ssh:// protocol with something extra and gave it to their
+>> developers (and they named the http counterpart that has the same
+>> extra HTTP://, of course).
+>
+> True, though I am on the fence whether that is a property worth
+> maintaining. AFAIK it was not planned and is just a "this is how it
+> happened to work" case that is (IMHO) doing the wrong thing.
+
+FWIW, I fully agree with the assessment; sorry for not saying that
+together with the devil's advocate comment to save a round-tip.
+
+> It may also interact in a funny way with our allowed-protocol code, if
+> "SSH" gets a pass as "ssh" under the default config, but actually runs
+> the otherwise-disallowed git-remote-SSH (though one would _hope_ if you
+> have such a git-remote-SSH that it behaves just like an ssh remote).
+
+True.  I did not offhand recall how protocol whitelist matches the
+protocol name with config, but transport.c::get_protocol_config()
+seems to say that the <name> part of "protocol.<name>.allow" is case
+sensitive, and we match known-safe (and known-unsafe "ext::")
+protocols with strcmp() not strcasecmp().  We need to figure out the
+implications of allowing SSH:// not to error out but pretending as
+if it were ssh:// on those who have protocol.ssh.allow defined.
+
+>> > We could probably also give an advise() message in the above output,
+>> > suggesting that the problem is likely one of:
+>> >
+>> >   1. They misspelled the scheme.
+>> >
+>> >   2. They need to install the appropriate helper.
+>> >
+>> > This may be a good topic for somebody looking for low-hanging fruit to
+>> > get involved in development (I'd maybe call it a #leftoverbits, but
+>> > since I didn't start on it, I'm not sure if it counts as "left over" ;)).
+>> [..]
+>> It may probably be a good idea to do an advice, but I'd think
+>> "Untable to find remote helper for 'SSH'" may be clear enough.  If
+>> anything, perhaps saying "remote helper for 'SSH' protocol" would
+>> make it even clear?  I dunno.
+>
+> I think it doesn't help much if the user does not know what a remote
+> helper is, or why Git is looking for one.
+
+True.  
+
+	$ git clone SSH://example.com/repo.git
+	fatal: unable to handle URL that begins with SSH://
+
+would be clear enough, perhaps?  At least this line of change is a
+small first step that would improve the situation without potential
+to break anybody who has been abusing the case sensitivity loophole.
+
