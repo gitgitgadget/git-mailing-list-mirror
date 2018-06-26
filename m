@@ -6,47 +6,47 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B7451F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 07:31:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E23F1F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 07:31:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752712AbeFZHbC (ORCPT <rfc822;e@80x24.org>);
+        id S932074AbeFZHbE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 03:31:04 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:38400 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752716AbeFZHbC (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 26 Jun 2018 03:31:02 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:40650 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752697AbeFZHa7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 03:30:59 -0400
-Received: by mail-it0-f67.google.com with SMTP id 188-v6so856566ita.5
-        for <git@vger.kernel.org>; Tue, 26 Jun 2018 00:30:59 -0700 (PDT)
+Received: by mail-it0-f66.google.com with SMTP id v83-v6so862010itc.3
+        for <git@vger.kernel.org>; Tue, 26 Jun 2018 00:31:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=VZ70KeSHs8KwzWP2lIgGq01njn/edrEs2ezZFZj2o6Q=;
-        b=WnYMzFYmeFtMCw2oxDa6ySy/cxtrq9PHjJhN/IKyXbMd/wgMmCj+LNzLKCdJXs0M3X
-         Qq3zmqNd3lQhWxENZLUHFo4BuVrSWduyXBSXQC6JWsI0MYB7YkocHCzbzv+WLZnAJ94T
-         2alYsVuNYu9pupnfnb4PJsh1njd1X9cCYsICj1KJMMiO1QP8UrcyhMlNLWQXZZQjEbVi
-         w4GqVDM8+2qLZ7DR2baKAcmyBcfyP/Ry/5bSyfQ9apLqK5AV28Lrm4Bio6Y61PTpa4AB
-         NVCFp3e5t5es8tgYt9348/MahwIH2gihBxB+fd+jTR939mcLACw6P5+MKv38q2LZyRUc
-         owAA==
+        bh=c41Z116KSDeQVjrbZlaK0kNrHcLLP5MHcZ4BtmYcLiM=;
+        b=Tkh/7EYv408EvhXD/Y09zm8F6FZVhbW/O4VSbVfYcazoGroW4MzKcftjX3KVrcsuKy
+         k1+isBDGeuHGKNexHOW1/v6X2BLlGAUq+DPuHzpG4M1QMI21+WyF3z9KXWMUC1Oc71QZ
+         XbwrfOaJYctzOfkiAQUC3aUR/NSamDNmO31JqI8HFSLL0p062Dl4rRcBELptXqeUzAoi
+         SQ3d+dbHEBxpC15LBf/HPN/dkoVxnEsTe9onnekHf2YKv04r7DAEtrZfQEsTxcRMqolR
+         eqpIwcF4WS/gcQrlPkRCLduKQdNO78FUVNfJHBkR8bIcJ0UJUWODHRg2N7iGeo66UZSR
+         E+Ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
          :in-reply-to:references;
-        bh=VZ70KeSHs8KwzWP2lIgGq01njn/edrEs2ezZFZj2o6Q=;
-        b=Bt2i+3vFPNSNWy60HSIa8vd2Q8tkUGD7LDIh6NJMiHjwLZsHZLjHwxhT5pZGhAiQmC
-         2JUNVR9S6GQcmrP0ftU/7jHeuQbmD2FENt9nfp4K6MxuwKnSrMjtSD6l8nwfTjniCI5x
-         A+NT5kXHuA9AJf2Iv+L62piDvpNRSuMLXx2kwc2yMdTs4QJJM6mqsspPiyrE8ljLgGZI
-         SzQSqhS+Conej3JVBn8rTG/RRutHXxKmpmKzILdw1SEU1jD8arQxMaiYAanuSCvv/NbF
-         pke0pdbGboCc924X4roFCbM4aR1lwKHU3nqwi+OrjLVV8jko1MhK/GvkDpBViHisv/Yh
-         vXBg==
-X-Gm-Message-State: APt69E2zx9dd6EUY4bo1iTP09mcDN6CEyO9VHQzWBDfNbevCXbMcZ9v+
-        Ij3MigurO+ssiqVbeTrO4fMINg==
-X-Google-Smtp-Source: AAOMgpcClfoals1eCOrbQNudhzH8USZUfI9g03JrZ63MixKP0od2gCSYEZ0SEIDB7D/DY88gdfGs+Q==
-X-Received: by 2002:a24:fc83:: with SMTP id b125-v6mr518755ith.13.1529998258596;
-        Tue, 26 Jun 2018 00:30:58 -0700 (PDT)
+        bh=c41Z116KSDeQVjrbZlaK0kNrHcLLP5MHcZ4BtmYcLiM=;
+        b=VpSevSb7CqTS8upZOv0QKZjryHdw4rmGf+7uVpSt7+90ASAV45Zb2q96FvW+omeoQR
+         +cIx1pmFHYNecUm5JmYDXA43i8iaA2xxJwuPtGs+QBLGjU5b9JdBpXuojAvqZDc9gCf+
+         jbGhWYVyoG6WtVpoZudsEQ6BK2/8gdsofFo2BmUdz3jUBYssEtL6AWB6FUsX69X12nmj
+         Ip5bLDtvxnKbYtnKJbs6HABTX9QJvtIQMhIXvZO0DuszVUtVta1W2wLwk/B7EIuCT5BN
+         QSktR7tdNicuD0ThCMPBUhygxSWL/o1N9hVjMZL4ByXuHy8E08wi28VQ+gFS09O2ADMc
+         U8mA==
+X-Gm-Message-State: APt69E2AqFIay/PmeowAZrCOfvKwJBEoMXyRhoEOjVJi9JIdXAywyyOS
+        8tfBD8WFxjIhVyOSst5n7YUq/g==
+X-Google-Smtp-Source: ADUXVKKX3Dah7Up3HbJn5var6fi/zdMP/gSbBl9+UU54fgAdKoQwFyEd7M8Qy1/UqNrB3Z3DwaJtfA==
+X-Received: by 2002:a24:243:: with SMTP id 64-v6mr513502itu.20.1529998261811;
+        Tue, 26 Jun 2018 00:31:01 -0700 (PDT)
 Received: from localhost.localdomain (user-12l2cs3.cable.mindspring.com. [69.81.51.131])
-        by smtp.gmail.com with ESMTPSA id k20-v6sm471361iok.9.2018.06.26.00.30.57
+        by smtp.gmail.com with ESMTPSA id k20-v6sm471361iok.9.2018.06.26.00.31.00
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Tue, 26 Jun 2018 00:30:58 -0700 (PDT)
+        Tue, 26 Jun 2018 00:31:01 -0700 (PDT)
 From:   Eric Sunshine <sunshine@sunshineco.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
@@ -55,9 +55,9 @@ Cc:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
         Elijah Newren <newren@gmail.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 09/29] t7810: use test_expect_code() instead of hand-rolled comparison
-Date:   Tue, 26 Jun 2018 03:29:41 -0400
-Message-Id: <20180626073001.6555-10-sunshine@sunshineco.com>
+Subject: [PATCH 12/29] t9401: drop unnecessary nested subshell
+Date:   Tue, 26 Jun 2018 03:29:44 -0400
+Message-Id: <20180626073001.6555-13-sunshine@sunshineco.com>
 X-Mailer: git-send-email 2.18.0.419.gfe4b301394
 In-Reply-To: <20180626073001.6555-1-sunshine@sunshineco.com>
 References: <20180626073001.6555-1-sunshine@sunshineco.com>
@@ -66,36 +66,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This test manually checks the exit code of git-grep for a particular
-value. In doing so, it breaks the &&-chain. An upcoming change will
-teach --chain-lint to check the &&-chain inside subshells, so this
-manual exit code handling will run afoul of the &&-chain check.
-Therefore, replace the manual handling with test_expect_code() and a
-normal &&-chain.
+This test employs an unnecessary nested subshell:
+
+    (cd foo &&
+     statement1 &&
+     (cd bar &&
+      statement2))
+
+An upcoming change will teach --chain-lint to check the &&-chain in
+subshells. The check works by performing textual transformations on the
+test to link the subshell body directly into the parent's &&-chain. It
+employs heuristics to identify the extent of a subshell, however,
+closing two subshells on a single line like this will fool it.
+
+Rather than extending the heuristics even further for this one-off case,
+just drop the pointless nested subshell.
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- t/t7810-grep.sh | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ t/t9401-git-cvsserver-crlf.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index 1797f632a3..fecee602c1 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -845,10 +845,9 @@ test_expect_success 'grep from a subdirectory to search wider area (1)' '
- test_expect_success 'grep from a subdirectory to search wider area (2)' '
- 	mkdir -p s &&
- 	(
--		cd s || exit 1
--		( git grep xxyyzz .. >out ; echo $? >status )
--		! test -s out &&
--		test 1 = $(cat status)
-+		cd s &&
-+		test_expect_code 1 git grep xxyyzz .. >out &&
-+		! test -s out
- 	)
+diff --git a/t/t9401-git-cvsserver-crlf.sh b/t/t9401-git-cvsserver-crlf.sh
+index 84787eee9a..8b8d7ac34a 100755
+--- a/t/t9401-git-cvsserver-crlf.sh
++++ b/t/t9401-git-cvsserver-crlf.sh
+@@ -288,9 +288,9 @@ test_expect_success 'add bin (guess)' '
+ test_expect_success 'remove files (guess)' '
+     (cd cvswork &&
+     GIT_CONFIG="$git_config" cvs -Q rm -f subdir/file.h &&
+-    (cd subdir &&
++    cd subdir &&
+     GIT_CONFIG="$git_config" cvs -Q rm -f withCr.bin
+-    )) &&
++    ) &&
+     marked_as cvswork/subdir withCr.bin -kb &&
+     marked_as cvswork/subdir file.h ""
  '
- 
 -- 
 2.18.0.419.gfe4b301394
 
