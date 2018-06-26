@@ -2,76 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 622211F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 20:57:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B81D11F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 20:59:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752828AbeFZU5n (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 16:57:43 -0400
-Received: from ao2.it ([92.243.12.208]:58287 "EHLO ao2.it"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752548AbeFZU5m (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 16:57:42 -0400
-Received: from localhost ([::1] helo=jcn.localdomain)
-        by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.84_2)
-        (envelope-from <ao2@ao2.it>)
-        id 1fXv1K-0002ce-9Q; Tue, 26 Jun 2018 22:57:02 +0200
-Date:   Tue, 26 Jun 2018 22:57:39 +0200
-From:   Antonio Ospite <ao2@ao2.it>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
+        id S1753065AbeFZU7n (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 16:59:43 -0400
+Received: from mail-yb0-f196.google.com ([209.85.213.196]:42990 "EHLO
+        mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753040AbeFZU7n (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 16:59:43 -0400
+Received: by mail-yb0-f196.google.com with SMTP id i3-v6so3991566ybl.9
+        for <git@vger.kernel.org>; Tue, 26 Jun 2018 13:59:42 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=GAAze66hw+GteCoDi8vB/EQ6uMr+tcGjG7SeSb2avtM=;
+        b=biZlLnG4WAzL7oLFhyW3kC1E0hNJWI+BLx7CTMRTj1mjZJTpiOOJvvdFTQCNal4f2s
+         yWBPUUp/ftxZbFvGVic99Fazt1ijmAqmAiRiwraJw1XoKjQic/Y0yy+iEbKeRsKxeByr
+         C02FtJ1Rk2EadMq9B6kub067X5Hcn6jR2vmvP16SnxGltHTX7wNFV6sQ94JNA3u717Ic
+         VYbXRWPAEhwpPHM609dT0SG8UBuxp5QW2RD2edW0CecehV1tKK+qGT4UzAz5LZvSxqXb
+         /QuM5jZloEea4UxPFuQiC92ubIz0GXc0p9ms/90jNXNzAFZevxLvsO0lx9taHt9fApAf
+         iOBw==
+X-Gm-Message-State: APt69E1er9Y0EBAimJ0uPzVC9JHGh+vHUAusXhaIwfCK49Zmpn+odGRr
+        Yk6ZHsRYvnv6XPeFIn8vErzOlpR4ITMBsJUhg4w=
+X-Google-Smtp-Source: ADUXVKIBQH9A+Qyzvw0Ry91IhsiBqo3tLi2biEX9PZ4mhQlz/ss1v8iq+fHiiX50Nqij+BKZWzuPPEy3cY4r84SOm1Y=
+X-Received: by 2002:a25:c04b:: with SMTP id c72-v6mr1688376ybf.12.1530046781115;
+ Tue, 26 Jun 2018 13:59:41 -0700 (PDT)
+MIME-Version: 1.0
+References: <20180626073001.6555-1-sunshine@sunshineco.com>
+ <20180626073001.6555-30-sunshine@sunshineco.com> <xmqqwouljr5e.fsf@gitster-ct.c.googlers.com>
+ <CAPig+cSLyie8mr+u8Thv9cJ0J12nCA+RU6Mg3S5F8U68q1+nzQ@mail.gmail.com>
+ <20180626201708.GA2341@sigill.intra.peff.net> <20180626202244.GB2341@sigill.intra.peff.net>
+In-Reply-To: <20180626202244.GB2341@sigill.intra.peff.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 26 Jun 2018 16:59:30 -0400
+Message-ID: <CAPig+cR1Jxdo_YGSCQRyFD4AMq2wrBzpESHhHkjTEnVG1mMRbQ@mail.gmail.com>
+Subject: Re: [PATCH 29/29] t/test-lib: teach --chain-lint to detect broken
+ &&-chains in subshells
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
         Jonathan Nieder <jrnieder@gmail.com>,
-        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 5/6] submodule-config: pass repository as argument to
- config_from_gitmodules
-Message-Id: <20180626225739.eb839a246db6037ff8996782@ao2.it>
-In-Reply-To: <xmqq7emljod6.fsf@gitster-ct.c.googlers.com>
-References: <20180626104710.9859-1-ao2@ao2.it>
-        <20180626104710.9859-6-ao2@ao2.it>
-        <xmqq7emljod6.fsf@gitster-ct.c.googlers.com>
-X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
-X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+
- ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        Stefan Beller <sbeller@google.com>,
+        Elijah Newren <newren@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 26 Jun 2018 13:15:33 -0700
-Junio C Hamano <gitster@pobox.com> wrote:
+On Tue, Jun 26, 2018 at 4:22 PM Jeff King <peff@peff.net> wrote:
+> So obviously that means "I don't think there's a good solution with this
+> approach".
+>
+> That whole final patch simultaneously impresses and nauseates me. Your
+> commit message says "no attempt is made at properly parsing shell code",
+> but we come pretty darn close. I almost wonder if we'd be better off
+> just parsing some heuristic subset and making sure (via review or
+> linting) that our tests conform.
 
-> Antonio Ospite <ao2@ao2.it> writes:
-> 
-> > Generlize config_from_gitmodules to accept a repository as an argument.
-> 
-> generalize???
-> 
+I'm not sure I agree with "come pretty darn close", but your idea is
+an interesting one. It would sidestep the concern with "rm -fr" and
+friends (though it will probably still nauseate you). Let me cogitate
+about it a bit...
 
-Of course I was going to miss a typo in the first word of the commit
-message :|
+> Another option is to not enable this slightly-more-dangerous linting by
+> default. But that would probably rob it of its usefulness, since it
+> would just fall to some brave soul to later crank up the linting and fix
+> everybody else's mistakes.
 
-If this is the only change, I'd ask you to amend it when applying the
-patch, if it's not too much trouble.
-
-If instead I have to add also the comments about the new public
-functions in submodule-config.c, as you asked for patch 2/6, I can send
-a v3 and fix the typo there.
-
-Thanks,
-   Antonio
-
--- 
-Antonio Ospite
-https://ao2.it
-https://twitter.com/ao2it
-
-A: Because it messes up the order in which people normally read text.
-   See http://en.wikipedia.org/wiki/Posting_style
-Q: Why is top-posting such a bad thing?
+I considered that, as well, and came to the same conclusion.
