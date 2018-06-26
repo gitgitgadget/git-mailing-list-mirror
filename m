@@ -2,71 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 998581F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 20:22:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 315421F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 20:24:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932221AbeFZUWr (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 16:22:47 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55954 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1754751AbeFZUWr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 16:22:47 -0400
-Received: (qmail 3682 invoked by uid 109); 26 Jun 2018 20:22:47 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 26 Jun 2018 20:22:47 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1312 invoked by uid 111); 26 Jun 2018 20:23:06 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 26 Jun 2018 16:23:06 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 26 Jun 2018 16:22:45 -0400
-Date:   Tue, 26 Jun 2018 16:22:45 -0400
-From:   Jeff King <peff@peff.net>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        id S933741AbeFZUYv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 16:24:51 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:45734 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933552AbeFZUYu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 16:24:50 -0400
+Received: by mail-wr0-f193.google.com with SMTP id u7-v6so3215453wrn.12
+        for <git@vger.kernel.org>; Tue, 26 Jun 2018 13:24:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=6uJ9eUj6mhyBCXbdm6hgymjqrHyxVvnMgeAd1KzT9Q0=;
+        b=ZIKH75rgOsD8y6zDhsqHAvvYJ7MTRDW/PbnCJ02EK9mrD3hhU0KWrmZN1BzGEcfz1Q
+         QdoFpInjl7IBMDa/zlv8fNlwegN5pscxq2isnmFkRwo6pWQ39QSwzZE0d938VbQGZbAr
+         cMF0mIQ5Ivqw/Lw/7khiGv9zvJdQuMb1ra6nn+ZuM4/Ifalcbk0MfeIucKZq+oo+GVvw
+         JzLKvHyVmmS4uFzgm8b8mK9niUDe6RRin7MDfxz6etKYNqGU29gvl5QVPiB6gBU6a+Gc
+         obJxl2RUz6ZdraNu32N/NUbgnfmSMhqD4UAJ32l00SrbDtME/OXOKMKHL1mozFVVTQfL
+         2DCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=6uJ9eUj6mhyBCXbdm6hgymjqrHyxVvnMgeAd1KzT9Q0=;
+        b=G4vcI0yRlzU2XnVSXsymi9WcZYjfq/3U5C+c7jGbQSpsfRccegHwA7H/iHVIo6AXN1
+         uepnLr1FAH7Bkv+KnCZ4Zofsp8oYnKJX4ktsoX5XAc3WjhQ9XDCp3ZLxkzip9SvU/AF1
+         GC6lVCxoRSLmRKfdWBBmSLRKBeDYYmJemWWmbXJ21cHIXyvgwxhjTBlmr0u1CdMW8JZx
+         zxEZVeqMrb8tspm6xNWQQBoEIncMk+w5w0K+8Ud+gdbkPLCmz8bS/2DmVLPzcWy4isy9
+         caTsKKaIw3oGUnFQQjRNopRFw7dmupEtlTPQeU/BXdSyRh0bruMQ/oHHvVp0NozOY+Lz
+         8dGQ==
+X-Gm-Message-State: APt69E0rdiiFCjxc1KVxfVjKBXDxSeAztr6QHTLvi4tsrSv+2UbHlYhK
+        Ej6O0WDNaE8efIFE5SukyXI=
+X-Google-Smtp-Source: AAOMgpdtIQ64+rHYlXGP8fX5lgIJIX5hME01tkyUUJiFJOiXmPZuPZLrrxFpEVXCg1ADhTzOXY5IdA==
+X-Received: by 2002:adf:992d:: with SMTP id x42-v6mr2672696wrb.81.1530044688851;
+        Tue, 26 Jun 2018 13:24:48 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id q17-v6sm3000569wrr.7.2018.06.26.13.24.47
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 26 Jun 2018 13:24:48 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Antonio Ospite <ao2@ao2.it>, git@vger.kernel.org,
         Jonathan Nieder <jrnieder@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Elijah Newren <newren@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH 29/29] t/test-lib: teach --chain-lint to detect broken
- &&-chains in subshells
-Message-ID: <20180626202244.GB2341@sigill.intra.peff.net>
-References: <20180626073001.6555-1-sunshine@sunshineco.com>
- <20180626073001.6555-30-sunshine@sunshineco.com>
- <xmqqwouljr5e.fsf@gitster-ct.c.googlers.com>
- <CAPig+cSLyie8mr+u8Thv9cJ0J12nCA+RU6Mg3S5F8U68q1+nzQ@mail.gmail.com>
- <20180626201708.GA2341@sigill.intra.peff.net>
+        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 0/6] Restrict the usage of config_from_gitmodules to submodule-config
+References: <20180626104710.9859-1-ao2@ao2.it>
+        <20180626170529.GF19910@google.com>
+Date:   Tue, 26 Jun 2018 13:24:47 -0700
+In-Reply-To: <20180626170529.GF19910@google.com> (Brandon Williams's message
+        of "Tue, 26 Jun 2018 10:05:29 -0700")
+Message-ID: <xmqq36x9jnxs.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180626201708.GA2341@sigill.intra.peff.net>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 26, 2018 at 04:17:08PM -0400, Jeff King wrote:
+Brandon Williams <bmwill@google.com> writes:
 
-> I'm not sure if there's a good solution, though. Even if you retained
-> the subshells and instead did a chain-lint inside each subshell, like
-> this:
+>> Changes since v1:
+>>   * Remove an extra space before an arrow operator in patch 2
+>>   * Fix a typo in the commit message of patch 3: s/fetchobjs/fetchjobs
+>>   * Add a note in the commit message of patch 6 about checking the
+>>     worktree before loading .gitmodules
+>>   * Drop patch 7, it was meant as a cleanup but resulted in parsing the
+>>     .gitmodules file twice
+>
+> Thanks for making these changes, this version looks good to me!
 
-So obviously that means "I don't think there's a good solution with this
-approach".
-
-That whole final patch simultaneously impresses and nauseates me. Your
-commit message says "no attempt is made at properly parsing shell code",
-but we come pretty darn close. I almost wonder if we'd be better off
-just parsing some heuristic subset and making sure (via review or
-linting) that our tests conform.
-
-Another option is to not enable this slightly-more-dangerous linting by
-default. But that would probably rob it of its usefulness, since it
-would just fall to some brave soul to later crank up the linting and fix
-everybody else's mistakes.
-
--Peff
+Yup, thanks, both.
