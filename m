@@ -2,106 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-8.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A23B1F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 16:51:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9DA591F516
+	for <e@80x24.org>; Tue, 26 Jun 2018 17:05:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752581AbeFZQvw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 12:51:52 -0400
-Received: from cpanel4.indieserve.net ([199.212.143.9]:49538 "EHLO
-        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752093AbeFZQvv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 12:51:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
-        Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=3E04ZfBVRvTIkJX/JQ1TbjymB54A2f1N5LQetHaWeUQ=; b=d4cywJK72AmExfLPXsbgNrLiy
-        UFz/LeVqh8bxHBCPMLop2041BM849wmwgjx7YuNzthcU1ZORYiV/7eAOoQHipSr79PFeoNXPYEB8U
-        Uz7On0rokQ/UNOBHcb5qZ0/PI/9XH8QkCXRCTKmwvcngsPAjdwXQu7uWN4gLrpg3wTFETlH+7sqXE
-        bNPaUvHuiAzzwbffXKVXFSgXY6IfVCJTI8BBpUSxF0BkLI2Q6M2lhkYr6jXZK56QPLkLTvxYn/5Ra
-        b5fMpN2jC3CGLZayZFd16yrV7iZM5ZjIhbKAQCk+xlrbQlW0CSknG5LW/w7R8YxzIciTujDv/j1Ib
-        mn1TOdydg==;
-Received: from cpef81d0f814063-cmf81d0f814060.cpe.net.cable.rogers.com ([174.114.57.56]:47728 helo=localhost.localdomain)
-        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1fXrC0-000ftS-HK; Tue, 26 Jun 2018 12:51:50 -0400
-Date:   Tue, 26 Jun 2018 12:51:45 -0400 (EDT)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Jeff King <peff@peff.net>
-cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: curious about wording in "man git-config", ENVIRONMENT
-In-Reply-To: <20180626124316.GA15419@sigill.intra.peff.net>
-Message-ID: <alpine.LFD.2.21.1806261250280.6102@localhost.localdomain>
-References: <alpine.LFD.2.21.1806260608270.6007@localhost.localdomain> <20180626124316.GA15419@sigill.intra.peff.net>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1753051AbeFZRFh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 13:05:37 -0400
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:36644 "EHLO
+        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753024AbeFZRFc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 13:05:32 -0400
+Received: by mail-pl0-f65.google.com with SMTP id a7-v6so8838229plp.3
+        for <git@vger.kernel.org>; Tue, 26 Jun 2018 10:05:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=5NBEvbNJ+Cz1lyOnzAsmss5iERQwdBj8BE6C+eYBufA=;
+        b=CMhxDwp/EDIRhGF3WdBqV7zSy7pt+wIkv79wLaf6OrzBlMYGLwpBk9ncFonkfMwBMg
+         n4zqekp3HgBXi3xkY/s0FI+7jHYX6LTqJp4azWLsy3nVZK7gD4JtumaBTtk7ogBjlvol
+         afrOvmzcdWebLz7ka+YCvDtBj3076B7b1QgIhXd8ZiVP2VV6e1KKeT4QxeImiKQdlm02
+         H/6LDQQYafutNpIi8RjEwoQZ8+X8lplv/qUZc0AfNRlLtkfT8anETLwxmlXxU08GU8oM
+         6xYkF+tvNW6RD5guhxKuKiJ61UKM8pL2j61kYF4fq5QbCY7ynY9PN68kkVcoihF8GnTH
+         0fzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=5NBEvbNJ+Cz1lyOnzAsmss5iERQwdBj8BE6C+eYBufA=;
+        b=eSAKl5fvbyxbm3XnbiHf43y6dqK3Xhb9iHxzOLW1SdCZf3fPFBJrEF5BJ3QVz2ItvC
+         sihCShPMwU61CMKxGyQG2hKCRhl6V1uSYITguNq24zoiJLiic1KFkdRPCzrGzKsg2Pf8
+         KeRbx7ySRBVpsFxGgyRYqTV6Qu0qvEzm2jbnVvz6mjfY1bX4Da1r5WQaqP5bx8Ga3whf
+         +EWNWL8tTevcRw4KYC1zXFTfwdpEK6ogEomuOf+Ll4cNOvXJLHMgQfwtaIOb0dDER2+B
+         bo90CCzoMAFuGg7EA+WVp4CH7M+A4xpuX03FTfLAKWi7XUgXemURhQ0CY0nsWjAE36xP
+         ZbcA==
+X-Gm-Message-State: APt69E3nKpD6cFEtUy/eM8V6FF9huYDSAYe55GXfGk71LKo/2yAvNr+S
+        IsrOgnn6I9ziM5CSttXBEeh9WLv70z8=
+X-Google-Smtp-Source: ADUXVKJ1ItlLEfAESfp0Pj5GYwhLse10G01oU5AK63pA5Qvj4YT221tiXfYgU+liOlg5JtCpy9eW0A==
+X-Received: by 2002:a17:902:9a06:: with SMTP id v6-v6mr2483127plp.21.1530032731738;
+        Tue, 26 Jun 2018 10:05:31 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id h24-v6sm4241449pfd.69.2018.06.26.10.05.30
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 26 Jun 2018 10:05:30 -0700 (PDT)
+Date:   Tue, 26 Jun 2018 10:05:29 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Antonio Ospite <ao2@ao2.it>
+Cc:     gitster@pobox.com, git@vger.kernel.org,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 0/6] Restrict the usage of config_from_gitmodules to
+ submodule-config
+Message-ID: <20180626170529.GF19910@google.com>
+References: <20180626104710.9859-1-ao2@ao2.it>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-OutGoing-Spam-Status: No, score=-0.2
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180626104710.9859-1-ao2@ao2.it>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 26 Jun 2018, Jeff King wrote:
+On 06/26, Antonio Ospite wrote:
+> Hi,
+> 
+> this is version 2 of the series from
+> https://public-inbox.org/git/20180622162656.19338-1-ao2@ao2.it/
+> 
+> The .gitmodules file is not meant for arbitrary configuration, it should
+> be used only for submodules properties.
+> 
+> Plus, arbitrary git configuration should not be distributed with the
+> repository, and .gitmodules might be a possible "vector" for that.
+> 
+> The series tries to alleviate both these issues by moving the
+> 'config_from_gitmodules' function from config.[ch] to submodule-config.c
+> and making it private.
+> 
+> This should discourage future code from using the function with
+> arbitrary config callbacks which might turn .gitmodules into a mechanism
+> to load arbitrary configuration stored in the repository.
+> 
+> Backward compatibility exceptions to the rules above are handled by
+> ad-hoc helpers.
+> 
+> Finally (in patch 6) some duplication is removed by using
+> 'config_from_gitmodules' to load the submodules configuration in
+> 'repo_read_gitmodules'.
+> 
+> Changes since v1:
+>   * Remove an extra space before an arrow operator in patch 2
+>   * Fix a typo in the commit message of patch 3: s/fetchobjs/fetchjobs
+>   * Add a note in the commit message of patch 6 about checking the
+>     worktree before loading .gitmodules
+>   * Drop patch 7, it was meant as a cleanup but resulted in parsing the
+>     .gitmodules file twice
 
-> On Tue, Jun 26, 2018 at 06:18:26AM -0400, Robert P. J. Day wrote:
->
-> >
-> >   ENVIRONMENT
-> >     GIT_CONFIG
-> >       Take the configuration from the given file instead of
-> >       .git/config. Using the "--global" option forces this to
-> >       ~/.gitconfig. Using the "--system" option forces this to
-> >       $(prefix)/etc/gitconfig.
-> >
-> >   is the phrase "forces this to" really what you want to use here?
-> > maybe i misunderstand what this option does, doesn't it simply mean
-> > that it will use a different (specified) file from the default,
-> > depending on the context (local, global, system)?
-> >
-> >   it just seems weird to say that the option "forces" the use of what
-> > are clearly the default files. thoughts?
->
-> I agree it's weird. I think it's trying to mean "behaves as if it
-> was set to", but with the additional notion that the command-line
-> argument would take precedence over the environment (which is our
-> usual rule). But then we should just say those things explicitly.
->
-> Just looking at mentions of GIT_CONFIG in that manpage and knowing
-> the history, I think:
-
-  ... snip ...
-
-i'm just going to admit that i don't quite have the background to know
-how to submit a patch to tidy things up based on Jeff's analysis, so
-I'm going to leave this to someone higher up the food chain.
-
-rday
+Thanks for making these changes, this version looks good to me!
 
 -- 
-
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                  http://crashcourse.ca/dokuwiki
-
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
+Brandon Williams
