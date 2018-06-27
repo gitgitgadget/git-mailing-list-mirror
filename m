@@ -7,147 +7,259 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C1CF1F516
-	for <e@80x24.org>; Wed, 27 Jun 2018 13:25:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A1AE1F516
+	for <e@80x24.org>; Wed, 27 Jun 2018 13:25:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965409AbeF0NZP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Jun 2018 09:25:15 -0400
-Received: from mail-qt0-f193.google.com ([209.85.216.193]:36438 "EHLO
-        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965398AbeF0NZN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jun 2018 09:25:13 -0400
-Received: by mail-qt0-f193.google.com with SMTP id o9-v6so1584579qtp.3
-        for <git@vger.kernel.org>; Wed, 27 Jun 2018 06:25:12 -0700 (PDT)
+        id S965415AbeF0NZT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Jun 2018 09:25:19 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:43783 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965111AbeF0NZL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jun 2018 09:25:11 -0400
+Received: by mail-qt0-f194.google.com with SMTP id c8-v6so1565903qtp.10
+        for <git@vger.kernel.org>; Wed, 27 Jun 2018 06:25:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=AwziY/RFDVjLtrCsKZqq7wicq+lalmI5zPFBV3W9jC0=;
-        b=dMGU7qlnzSsQJZvrUSfKhNsru+sibEa8fTx8EYV4zRCZ8NTw0SMI5fUIShjqxcIeMP
-         8liq2oyix5u+fw/3fh5SRXj/3CLIsa9yZQpFJnpMWIbnzElFeoyH09sO3LeVz7RvvceO
-         CR3NzEQysP8iRcjWb7BDRmrWNrbxEOw/p4Vfl1ns4k9DwR6xsUo9X93ejyPl7AGtWJXk
-         osXTwQlVHZ+AUFd48IzAiXrNQ/DdRR00xVlLtxGWKmPSGYkDEkFl0AxaExS5LcqwjUCg
-         vYsuX2cXalaWianwxr7FyfCkWpL2BlE76OXsF8Jr3O/nnbawF6qd9YXZw+1Ilz9O40Zp
-         zChg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=VJz9pdw9WgHYsEDhufHDnxIWmsN8wRq5zgEmoBuh6Z4=;
+        b=VeWhgFSgGUHhgRiLEFFgWWunrSVRcyU75RC6i5zf98B6IKQoPkPIOCVlI7PTjzPc7r
+         TV1aZgJQfQbEvghvObm/DyHjZpWYWPlwbu+3oCOLM0DTnqKjEk8FFlks90rgM1wXFuab
+         a5+MO7bj413jr2Au3LVEFwnKGZGC96O8Fu/qyjz1v++xEu+LcL7f2s+sdG/sW0Cfrv9G
+         9zsDoD3YOJpECjWyAt1YabNJ+gyDXANkQUZybAVEzIHp0IGxrLTnuQAFxP/OqSarKLyN
+         uY93lJLWKK9M/K/2tdQOoDtYOIpOOG3F75cfPwA0p3qtd4YhiUA443i1Or/1s7f8zVPQ
+         hqVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=AwziY/RFDVjLtrCsKZqq7wicq+lalmI5zPFBV3W9jC0=;
-        b=o7ZLHh62k6QM88ggDGjkgT/n7/qmUYIM+nIrGu6cKKXGUYUDBPjqGm3zwlWg+mdvKH
-         ohGYxXNO8D3QDI3T2FLIj7xGjqdZsG6XcTu/HaXe0Q+PsVR2aJ/Cv7a6uhPGh/scN+gv
-         POllAkIhULq5brs9KVVyqtjeAt2NiUAew9SEv116mTs8wzWZ+i8ePhCXKHKFtlZ1jeQy
-         4Qlh6mbkOqppt+p/K+o9rew5U6xRQzfKLoU3AS8vXQ+NV1rP3tOBXu/gnq8HkNPkuJnE
-         c39K4qUYkZqKtdV6X3Q2O+ZuPhTmJ5A2JZM+qk95/+ahicNpliYTLjWt1Oc25Y5EAh28
-         kJWw==
-X-Gm-Message-State: APt69E0DjleKu2lQnBTxlX96lBpnRMvclF+5izAd3OLDfr8mmSwIBpsZ
-        mQ8l//jOikrDuZ6YzJgxdVnP8p6gFY0=
-X-Google-Smtp-Source: AAOMgpfxFB/VoRSL2q9OaUbquRR1lw+IjVatu97oro5y8Xe6nJEEPEMe9zbVs3zyDcCtpBRPsod5Xw==
-X-Received: by 2002:ac8:16bb:: with SMTP id r56-v6mr5348156qtj.23.1530105912128;
-        Wed, 27 Jun 2018 06:25:12 -0700 (PDT)
+         :references;
+        bh=VJz9pdw9WgHYsEDhufHDnxIWmsN8wRq5zgEmoBuh6Z4=;
+        b=VeNV5m1p4hj/1nL3+ZXW1Gg95tHjWoEXHwAbQCvkOwC2wuViAeJr2+I2df7PVFiivJ
+         AiG6dm+jiW+09Gt7UH4khGhNz4USPCjltjDrfcdHA5fZQLRPSaat6xvPEag/jagQE/u8
+         GSmcibD3n2VirDwLToNfFteBFpman0/PEdDainlCWYxihpHiuOESOcACvUyu2VeN2KgX
+         i7tgwWUykzGpf8mFZXTVFPBw0UfG6lrglPHSFzErc7FRYUFgJ7upLlAttEmz4nLLgb0y
+         M1rBN5wx8+lBFfKECGRcMeXcO5sH538KnPpRb1KSmce0zbT9wv5aN5dSiDvM16kerYaE
+         zl6g==
+X-Gm-Message-State: APt69E37m74Swn8DuzjSxwJRPYs9BoFYoWb2lv9hsJ9cPTaxDwkZNr7a
+        wBEvKNFfHq/Zui2okhBPPC2qAgCWmH0=
+X-Google-Smtp-Source: AAOMgpfymg0pK8h/ZuWT1RYOG7pznekOPrD1gMqfCSFet7UkTtCk+waPRPkFWuEzMr4KUlrHNR8f9w==
+X-Received: by 2002:a0c:d0eb:: with SMTP id b40-v6mr5290589qvh.236.1530105910153;
+        Wed, 27 Jun 2018 06:25:10 -0700 (PDT)
 Received: from stolee-linux-2.corp.microsoft.com ([2001:4898:8010:0:eb4a:5dff:fe0f:730f])
-        by smtp.gmail.com with ESMTPSA id 15-v6sm3761019qtv.56.2018.06.27.06.25.11
+        by smtp.gmail.com with ESMTPSA id 15-v6sm3761019qtv.56.2018.06.27.06.25.09
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 27 Jun 2018 06:25:11 -0700 (PDT)
+        Wed, 27 Jun 2018 06:25:09 -0700 (PDT)
 From:   Derrick Stolee <stolee@gmail.com>
 X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, avarab@gmail.com, sbeller@google.com,
         jnareb@gmail.com, marten.agren@gmail.com,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v7 08/22] commit-graph: verify catches corrupt signature
-Date:   Wed, 27 Jun 2018 09:24:33 -0400
-Message-Id: <20180627132447.142473-9-dstolee@microsoft.com>
+Subject: [PATCH v7 07/22] commit-graph: add 'verify' subcommand
+Date:   Wed, 27 Jun 2018 09:24:32 -0400
+Message-Id: <20180627132447.142473-8-dstolee@microsoft.com>
 X-Mailer: git-send-email 2.18.0.24.g1b579a2ee9
 In-Reply-To: <20180627132447.142473-1-dstolee@microsoft.com>
 References: <20180608135548.216405-1-dstolee@microsoft.com>
  <20180627132447.142473-1-dstolee@microsoft.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is the first of several commits that add a test to check that
-'git commit-graph verify' catches corruption in the commit-graph
-file. The first test checks that the command catches an error in
-the file signature. This is a check that exists in the existing
-commit-graph reading code.
+If the commit-graph file becomes corrupt, we need a way to verify
+that its contents match the object database. In the manner of
+'git fsck' we will implement a 'git commit-graph verify' subcommand
+to report all issues with the file.
 
-Add a helper method 'corrupt_graph_and_verify' to the test script
-t5318-commit-graph.sh. This helper corrupts the commit-graph file
-at a certain location, runs 'git commit-graph verify', and reports
-the output to the 'err' file. This data is filtered to remove the
-lines added by 'test_must_fail' when the test is run verbosely.
-Then, the output is checked to contain a specific error message.
+Add the 'verify' subcommand to the 'commit-graph' builtin and its
+documentation. The subcommand is currently a no-op except for
+loading the commit-graph into memory, which may trigger run-time
+errors that would be caught by normal use. Add a simple test that
+ensures the command returns a zero error code.
 
-Most messages from 'git commit-graph verify' will not be marked
-for translation. There will be one exception: the message that
-reports an invalid checksum will be marked for translation, as that
-is the only message that is intended for a typical user.
+If no commit-graph file exists, this is an acceptable state. Do
+not report any errors.
 
-Helped-by: Szeder Gábor <szeder.dev@gmail.com>
+Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- t/t5318-commit-graph.sh | 43 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 43 insertions(+)
+ Documentation/git-commit-graph.txt |  6 +++++
+ builtin/commit-graph.c             | 39 ++++++++++++++++++++++++++++++
+ commit-graph.c                     | 23 ++++++++++++++++++
+ commit-graph.h                     |  3 +++
+ t/t5318-commit-graph.sh            | 10 ++++++++
+ 5 files changed, 81 insertions(+)
 
+diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
+index 4c97b555cc..a222cfab08 100644
+--- a/Documentation/git-commit-graph.txt
++++ b/Documentation/git-commit-graph.txt
+@@ -10,6 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git commit-graph read' [--object-dir <dir>]
++'git commit-graph verify' [--object-dir <dir>]
+ 'git commit-graph write' <options> [--object-dir <dir>]
+ 
+ 
+@@ -52,6 +53,11 @@ existing commit-graph file.
+ Read a graph file given by the commit-graph file and output basic
+ details about the graph file. Used for debugging purposes.
+ 
++'verify'::
++
++Read the commit-graph file and verify its contents against the object
++database. Used to check for corrupted data.
++
+ 
+ EXAMPLES
+ --------
+diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+index f0875b8bf3..9d108f43a9 100644
+--- a/builtin/commit-graph.c
++++ b/builtin/commit-graph.c
+@@ -3,15 +3,22 @@
+ #include "dir.h"
+ #include "lockfile.h"
+ #include "parse-options.h"
++#include "repository.h"
+ #include "commit-graph.h"
+ 
+ static char const * const builtin_commit_graph_usage[] = {
+ 	N_("git commit-graph [--object-dir <objdir>]"),
+ 	N_("git commit-graph read [--object-dir <objdir>]"),
++	N_("git commit-graph verify [--object-dir <objdir>]"),
+ 	N_("git commit-graph write [--object-dir <objdir>] [--append] [--stdin-packs|--stdin-commits]"),
+ 	NULL
+ };
+ 
++static const char * const builtin_commit_graph_verify_usage[] = {
++	N_("git commit-graph verify [--object-dir <objdir>]"),
++	NULL
++};
++
+ static const char * const builtin_commit_graph_read_usage[] = {
+ 	N_("git commit-graph read [--object-dir <objdir>]"),
+ 	NULL
+@@ -29,6 +36,36 @@ static struct opts_commit_graph {
+ 	int append;
+ } opts;
+ 
++
++static int graph_verify(int argc, const char **argv)
++{
++	struct commit_graph *graph = NULL;
++	char *graph_name;
++
++	static struct option builtin_commit_graph_verify_options[] = {
++		OPT_STRING(0, "object-dir", &opts.obj_dir,
++			   N_("dir"),
++			   N_("The object directory to store the graph")),
++		OPT_END(),
++	};
++
++	argc = parse_options(argc, argv, NULL,
++			     builtin_commit_graph_verify_options,
++			     builtin_commit_graph_verify_usage, 0);
++
++	if (!opts.obj_dir)
++		opts.obj_dir = get_object_directory();
++
++	graph_name = get_commit_graph_filename(opts.obj_dir);
++	graph = load_commit_graph_one(graph_name);
++	FREE_AND_NULL(graph_name);
++
++	if (!graph)
++		return 0;
++
++	return verify_commit_graph(the_repository, graph);
++}
++
+ static int graph_read(int argc, const char **argv)
+ {
+ 	struct commit_graph *graph = NULL;
+@@ -165,6 +202,8 @@ int cmd_commit_graph(int argc, const char **argv, const char *prefix)
+ 	if (argc > 0) {
+ 		if (!strcmp(argv[0], "read"))
+ 			return graph_read(argc, argv);
++		if (!strcmp(argv[0], "verify"))
++			return graph_verify(argc, argv);
+ 		if (!strcmp(argv[0], "write"))
+ 			return graph_write(argc, argv);
+ 	}
+diff --git a/commit-graph.c b/commit-graph.c
+index 9e228d3bb5..22ef696e18 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -827,3 +827,26 @@ void write_commit_graph(const char *obj_dir,
+ 	oids.alloc = 0;
+ 	oids.nr = 0;
+ }
++
++static int verify_commit_graph_error;
++
++static void graph_report(const char *fmt, ...)
++{
++	va_list ap;
++	verify_commit_graph_error = 1;
++
++	va_start(ap, fmt);
++	vfprintf(stderr, fmt, ap);
++	fprintf(stderr, "\n");
++	va_end(ap);
++}
++
++int verify_commit_graph(struct repository *r, struct commit_graph *g)
++{
++	if (!g) {
++		graph_report("no commit-graph file loaded");
++		return 1;
++	}
++
++	return verify_commit_graph_error;
++}
+diff --git a/commit-graph.h b/commit-graph.h
+index 96cccb10f3..4359812fb4 100644
+--- a/commit-graph.h
++++ b/commit-graph.h
+@@ -2,6 +2,7 @@
+ #define COMMIT_GRAPH_H
+ 
+ #include "git-compat-util.h"
++#include "repository.h"
+ 
+ char *get_commit_graph_filename(const char *obj_dir);
+ 
+@@ -53,4 +54,6 @@ void write_commit_graph(const char *obj_dir,
+ 			int nr_commits,
+ 			int append);
+ 
++int verify_commit_graph(struct repository *r, struct commit_graph *g);
++
+ #endif
 diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index 0830ef9fdd..c0c1ff09b9 100755
+index 59d0be2877..0830ef9fdd 100755
 --- a/t/t5318-commit-graph.sh
 +++ b/t/t5318-commit-graph.sh
-@@ -235,9 +235,52 @@ test_expect_success 'perform fast-forward merge in full repo' '
+@@ -11,6 +11,11 @@ test_expect_success 'setup full repo' '
+ 	objdir=".git/objects"
+ '
+ 
++test_expect_success 'verify graph with no graph file' '
++	cd "$TRASH_DIRECTORY/full" &&
++	git commit-graph verify
++'
++
+ test_expect_success 'write graph with no packs' '
+ 	cd "$TRASH_DIRECTORY/full" &&
+ 	git commit-graph write --object-dir . &&
+@@ -230,4 +235,9 @@ test_expect_success 'perform fast-forward merge in full repo' '
  	test_cmp expect output
  '
  
-+# the verify tests below expect the commit-graph to contain
-+# exactly the commits reachable from the commits/8 branch.
-+# If the file changes the set of commits in the list, then the
-+# offsets into the binary file will result in different edits
-+# and the tests will likely break.
-+
- test_expect_success 'git commit-graph verify' '
- 	cd "$TRASH_DIRECTORY/full" &&
-+	git rev-parse commits/8 | git commit-graph write --stdin-commits &&
- 	git commit-graph verify >output
- '
- 
-+GRAPH_BYTE_VERSION=4
-+GRAPH_BYTE_HASH=5
-+
-+# usage: corrupt_graph_and_verify <position> <data> <string>
-+# Manipulates the commit-graph file at the position
-+# by inserting the data, then runs 'git commit-graph verify'
-+# and places the output in the file 'err'. Test 'err' for
-+# the given string.
-+corrupt_graph_and_verify() {
-+	pos=$1
-+	data="${2:-\0}"
-+	grepstr=$3
++test_expect_success 'git commit-graph verify' '
 +	cd "$TRASH_DIRECTORY/full" &&
-+	test_when_finished mv commit-graph-backup $objdir/info/commit-graph &&
-+	cp $objdir/info/commit-graph commit-graph-backup &&
-+	printf "$data" | dd of="$objdir/info/commit-graph" bs=1 seek="$pos" conv=notrunc &&
-+	test_must_fail git commit-graph verify 2>test_err &&
-+	grep -v "^+" test_err >err
-+	test_i18ngrep "$grepstr" err
-+}
-+
-+test_expect_success 'detect bad signature' '
-+	corrupt_graph_and_verify 0 "\0" \
-+		"graph signature"
-+'
-+
-+test_expect_success 'detect bad version' '
-+	corrupt_graph_and_verify $GRAPH_BYTE_VERSION "\02" \
-+		"graph version"
-+'
-+
-+test_expect_success 'detect bad hash version' '
-+	corrupt_graph_and_verify $GRAPH_BYTE_HASH "\02" \
-+		"hash version"
++	git commit-graph verify >output
 +'
 +
  test_done
