@@ -2,94 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 880211F516
-	for <e@80x24.org>; Wed, 27 Jun 2018 07:46:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 36BAE1F516
+	for <e@80x24.org>; Wed, 27 Jun 2018 07:49:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932918AbeF0HqI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Jun 2018 03:46:08 -0400
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:39088 "EHLO
-        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932911AbeF0HqG (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 27 Jun 2018 03:46:06 -0400
-Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w5R7gRNb007077;
-        Wed, 27 Jun 2018 00:46:03 -0700
-Authentication-Results: palantir.com;
-        spf=softfail smtp.mailfrom=newren@gmail.com
-Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2ju94mtha9-1;
-        Wed, 27 Jun 2018 00:46:02 -0700
-Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id E446D228A02B;
-        Wed, 27 Jun 2018 00:46:02 -0700 (PDT)
-Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
-        by smtp.yojoe.local (Postfix) with ESMTP id DAADF2CDE65;
-        Wed, 27 Jun 2018 00:46:02 -0700 (PDT)
+        id S1752683AbeF0HtY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Jun 2018 03:49:24 -0400
+Received: from mail-ua0-f195.google.com ([209.85.217.195]:43579 "EHLO
+        mail-ua0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752054AbeF0HtX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jun 2018 03:49:23 -0400
+Received: by mail-ua0-f195.google.com with SMTP id z16-v6so664103uaz.10
+        for <git@vger.kernel.org>; Wed, 27 Jun 2018 00:49:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=KxHjzKmYUIoRSQSG0sXugcGyXDlvWCcE+9rBTtUdAfE=;
+        b=ndW1FnwEx0UPLxNCtBDvbLp0kH70Lr87KHKY4NYKIFcQrWsk29HRrZ+1oqU+fkVPMW
+         cyheifrfjzh/gWWwECksJkezz73th9/uzgbJmuBIQq3V22hPV3lJPuG3zLlujlsN100Z
+         8tkKw1yVPMqmfl9ma8Rj2kggelE5JaBIPjm/x+kpCz1MkxRN66jrtz3SQMFGth6WpH06
+         SAGR/oVgmppbT4V1i2GsXsaUsez64acc0I0ENvgzUtWv8NJQqsd0sc77eJAjnS9+NV3s
+         +ngQ8C02sJgOk/PvKfMZ08yR0Qb8dEguFkd4HMeYv3b4Ge7t2+OhSMoRQB1vY6gM9JW6
+         /MgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=KxHjzKmYUIoRSQSG0sXugcGyXDlvWCcE+9rBTtUdAfE=;
+        b=n4Vb4aS3rbPn/TlkaRP/THRvR9A/Gj2CoX2OH65lPPnyGpP2H2LMewUCDtc9NvySdi
+         IkpLc3UnLpyrb1Zxp6/rEst6kDpylAP/6r6+3CJDWuqKCNR0x2ln3X3gQHXO+drEGq6N
+         4GvZa5hAEpdYegP5puzgnjEw39/hwY2b+dBuiZiwpe+R4FavNxAvRNbdxCKstejK+e+J
+         J58JeO1VFFJ9N37j/ZK21Tg9WC61CbQiU07IwxlH9SDwtwPX+5LqTtXUXWAo+ZP4UVrf
+         bijsLkXC2AM5OKpndzgn1RjQnNLm9DuEReosn4EhiHd7pDiEhKmTmk6FmgFYTeDaXnOW
+         t9tQ==
+X-Gm-Message-State: APt69E2bOTxTi3lEK5EKzdBwXhrEJnSnBrhs5x0GO55CHtqpxpcc2X9U
+        SJERVolsYlWQF69/1gqzDR50Jqxkm+HdR+3HAEE=
+X-Google-Smtp-Source: AAOMgpcapsw70ynejm33j6+yiSLRm1O0yvylPk0Kbl2i2364naFqI2wO7/hUT4774v0OsqMxCDJpNDJ1p8MSMtDm8dg=
+X-Received: by 2002:ab0:15ad:: with SMTP id i42-v6mr3005286uae.199.1530085762623;
+ Wed, 27 Jun 2018 00:49:22 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 2002:ab0:2310:0:0:0:0:0 with HTTP; Wed, 27 Jun 2018 00:49:22
+ -0700 (PDT)
+In-Reply-To: <CAPig+cTwwuqPgF2NtGRgpcdjFqJK22+FFDV2c-20oQXFLEPaWQ@mail.gmail.com>
+References: <20180607050845.19779-1-newren@gmail.com> <20180627073623.31725-1-newren@gmail.com>
+ <20180627073623.31725-2-newren@gmail.com> <CAPig+cTwwuqPgF2NtGRgpcdjFqJK22+FFDV2c-20oQXFLEPaWQ@mail.gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: [PATCH v2] git-rebase--merge: modernize "git-$cmd" to "git $cmd"
-Date:   Wed, 27 Jun 2018 00:46:00 -0700
-Message-Id: <20180627074600.32149-1-newren@gmail.com>
-X-Mailer: git-send-email 2.18.0.9.g431b2c36d5
-In-Reply-To: <20180607050615.19598-1-newren@gmail.com>
-References: <20180607050615.19598-1-newren@gmail.com>
-X-Proofpoint-SPF-Result: softfail
-X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-06-27_02:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=634 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1806210000 definitions=main-1806270091
+Date:   Wed, 27 Jun 2018 00:49:22 -0700
+Message-ID: <CABPp-BFkjF5z6axqW-v=zPq9U9sOQGpUKK+WvLknkkGzX-F4rA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] t3418: add testcase showing problems with rebase
+ -i and strategy options
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
+On Wed, Jun 27, 2018 at 12:45 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Wed, Jun 27, 2018 at 3:36 AM Elijah Newren <newren@gmail.com> wrote:
+>> We are not passing the same args to merge strategies when we are doing an
+>> --interactive rebase as we do with a --merge rebase.  The merge strategy
+>> should not need to be aware of which type of rebase is in effect.  Add a
+>> testcase which checks for the appropriate args.
+>>
+>> Signed-off-by: Elijah Newren <newren@gmail.com>
+>> ---
+>> diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
+>> @@ -74,6 +74,38 @@ test_expect_success 'rebase --continue remembers merge strategy and options' '
+>> +test_expect_failure 'rebase -i --continue handles merge strategy and options' '
+>> +       rm -fr .git/rebase-* &&
+>> +       git reset --hard commit-new-file-F2-on-topic-branch &&
+>> +       test_commit "commit-new-file-F3-on-topic-branch-for-dash-i" F3 32 &&
+>> +       test_when_finished "rm -fr test-bin funny.was.run funny.args" &&
+>> +       mkdir test-bin &&
+>> +       cat >test-bin/git-merge-funny <<-EOF &&
+>> +       #!$SHELL_PATH
+>> +       echo "\$@" >>funny.args
+>> +       case "\$1" in --opt) ;; *) exit 2 ;; esac
+>> +       case "\$2" in --foo) ;; *) exit 2 ;; esac
+>> +       case "\$4" in --) ;; *) exit 2 ;; esac
+>> +       shift 2 &&
+>> +       >funny.was.run &&
+>> +       exec git merge-recursive "\$@"
+>> +       EOF
+>> +       chmod +x test-bin/git-merge-funny &&
+>> +       (
+>> +               PATH=./test-bin:$PATH
+>
+> Broken &&-chain (in subshell).
+>
+>> +               test_must_fail git rebase -i -s funny -Xopt -Xfoo master topic
+>> +       ) &&
+>> +       test -f funny.was.run &&
+>> +       rm funny.was.run &&
+>> +       echo "Resolved" >F2 &&
+>> +       git add F2 &&
+>> +       (
+>> +               PATH=./test-bin:$PATH
+>
+> Ditto.
+>
 
-Changes since v1:
-  - Fixed up commit message (move below comment to below diffstat as
-    originally intended)
+I'm just trying to prove how important your other patch series is.  ;-)
 
-Long term I just want to make git-rebase--merge go away, so this patch
-will eventually be obsoleted.  But since I'm waiting for multiple
-topics to merge down before re-submitting that series, and since that
-series has some open questions as well, I figure it's worth
-(re-)submitting this simple fix in the mean time.
-
- git-rebase--merge.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/git-rebase--merge.sh b/git-rebase--merge.sh
-index cf4c042214..aa2f2f0872 100644
---- a/git-rebase--merge.sh
-+++ b/git-rebase--merge.sh
-@@ -71,7 +71,7 @@ call_merge () {
- 	test -z "$strategy" && strategy=recursive
- 	# If cmt doesn't have a parent, don't include it as a base
- 	base=$(git rev-parse --verify --quiet $cmt^)
--	eval 'git-merge-$strategy' $strategy_opts $base ' -- "$hd" "$cmt"'
-+	eval 'git merge-$strategy' $strategy_opts $base ' -- "$hd" "$cmt"'
- 	rv=$?
- 	case "$rv" in
- 	0)
-@@ -88,7 +88,7 @@ call_merge () {
- 		;;
- 	*)
- 		die "Unknown exit code ($rv) from command:" \
--			"git-merge-$strategy $cmt^ -- HEAD $cmt"
-+			"git merge-$strategy $cmt^ -- HEAD $cmt"
- 		;;
- 	esac
- }
--- 
-2.18.0.9.g431b2c36d5
+Doh, sorry for the mistake.  Again.  I'll fix it up.
