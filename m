@@ -7,37 +7,37 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D0FC1F516
-	for <e@80x24.org>; Wed, 27 Jun 2018 07:23:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66F4D1F516
+	for <e@80x24.org>; Wed, 27 Jun 2018 07:23:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932777AbeF0HXy (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Jun 2018 03:23:54 -0400
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:36894 "EHLO
+        id S932761AbeF0HXx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Jun 2018 03:23:53 -0400
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:36896 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932509AbeF0HXi (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 27 Jun 2018 03:23:38 -0400
+        by vger.kernel.org with ESMTP id S932537AbeF0HXj (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 27 Jun 2018 03:23:39 -0400
 Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w5R7N5gc023661;
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w5R7N2cm023642;
         Wed, 27 Jun 2018 00:23:22 -0700
 Authentication-Results: palantir.com;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2ju94mtgp4-1;
-        Wed, 27 Jun 2018 00:23:21 -0700
-Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id C7B9E22FD1A3;
+        by mx0a-00153501.pphosted.com with ESMTP id 2ju94mtgp6-1;
+        Wed, 27 Jun 2018 00:23:22 -0700
+Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id DDF2E22FD1A8;
         Wed, 27 Jun 2018 00:23:21 -0700 (PDT)
 Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
-        by smtp.yojoe.local (Postfix) with ESMTP id BC5BE2CDE65;
+        by smtp.yojoe.local (Postfix) with ESMTP id D28FF2CDE86;
         Wed, 27 Jun 2018 00:23:21 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, phillip.wood@dunelm.org.uk,
         johannes.schindelin@gmx.de, sunshine@sunshineco.com,
         szeder.dev@gmail.com, Elijah Newren <newren@gmail.com>
-Subject: [PATCH v5 6/9] directory-rename-detection.txt: technical docs on abilities and limitations
-Date:   Wed, 27 Jun 2018 00:23:16 -0700
-Message-Id: <20180627072319.31356-7-newren@gmail.com>
+Subject: [PATCH v5 8/9] t3401: add directory rename testcases for rebase and am
+Date:   Wed, 27 Jun 2018 00:23:18 -0700
+Message-Id: <20180627072319.31356-9-newren@gmail.com>
 X-Mailer: git-send-email 2.18.0.9.g431b2c36d5
 In-Reply-To: <20180627072319.31356-1-newren@gmail.com>
 References: <20180625161300.26060-1-newren@gmail.com>
@@ -56,110 +56,134 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Add a simple directory rename testcase, in conjunction with each of the
+types of rebases:
+  git-rebase--interactive
+  git-rebase--am
+  git-rebase--merge
+and also use the same testcase for
+  git am --3way
+
+This demonstrates a difference in behavior between the different rebase
+backends in regards to directory rename detection.
+
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- .../technical/directory-rename-detection.txt  | 92 +++++++++++++++++++
- 1 file changed, 92 insertions(+)
- create mode 100644 Documentation/technical/directory-rename-detection.txt
+ t/t3401-rebase-and-am-rename.sh | 105 ++++++++++++++++++++++++++++++++
+ 1 file changed, 105 insertions(+)
+ create mode 100755 t/t3401-rebase-and-am-rename.sh
 
-diff --git a/Documentation/technical/directory-rename-detection.txt b/Documentation/technical/directory-rename-detection.txt
-new file mode 100644
-index 0000000000..6e22920a39
+diff --git a/t/t3401-rebase-and-am-rename.sh b/t/t3401-rebase-and-am-rename.sh
+new file mode 100755
+index 0000000000..8f832957fc
 --- /dev/null
-+++ b/Documentation/technical/directory-rename-detection.txt
-@@ -0,0 +1,92 @@
-+Directory rename detection
-+==========================
++++ b/t/t3401-rebase-and-am-rename.sh
+@@ -0,0 +1,105 @@
++#!/bin/sh
 +
-+Rename detection logic in diffcore-rename that checks for renames of
-+individual files is aggregated and analyzed in merge-recursive for cases
-+where combinations of renames indicate that a full directory has been
-+renamed.
++test_description='git rebase + directory rename tests'
 +
-+Scope of abilities
-+------------------
++. ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-rebase.sh
 +
-+It is perhaps easiest to start with an example:
++test_expect_success 'setup testcase' '
++	test_create_repo dir-rename &&
++	(
++		cd dir-rename &&
 +
-+  * When all of x/a, x/b and x/c have moved to z/a, z/b and z/c, it is
-+    likely that x/d added in the meantime would also want to move to z/d by
-+    taking the hint that the entire directory 'x' moved to 'z'.
++		mkdir x &&
++		test_seq  1 10 >x/a &&
++		test_seq 11 20 >x/b &&
++		test_seq 21 30 >x/c &&
++		test_write_lines a b c d e f g h i >l &&
++		git add x l &&
++		git commit -m "Initial" &&
 +
-+More interesting possibilities exist, though, such as:
++		git branch O &&
++		git branch A &&
++		git branch B &&
 +
-+  * one side of history renames x -> z, and the other renames some file to
-+    x/e, causing the need for the merge to do a transitive rename.
++		git checkout A &&
++		git mv x y &&
++		git mv l letters &&
++		git commit -m "Rename x to y, l to letters" &&
 +
-+  * one side of history renames x -> z, but also renames all files within
-+    x.  For example, x/a -> z/alpha, x/b -> z/bravo, etc.
++		git checkout B &&
++		echo j >>l &&
++		test_seq 31 40 >x/d &&
++		git add l x/d &&
++		git commit -m "Modify l, add x/d"
++	)
++'
 +
-+  * both 'x' and 'y' being merged into a single directory 'z', with a
-+    directory rename being detected for both x->z and y->z.
++test_expect_success 'rebase --interactive: directory rename detected' '
++	(
++		cd dir-rename &&
 +
-+  * not all files in a directory being renamed to the same location;
-+    i.e. perhaps most the files in 'x' are now found under 'z', but a few
-+    are found under 'w'.
++		git checkout B^0 &&
 +
-+  * a directory being renamed, which also contained a subdirectory that was
-+    renamed to some entirely different location.  (And perhaps the inner
-+    directory itself contained inner directories that were renamed to yet
-+    other locations).
++		set_fake_editor &&
++		FAKE_LINES="1" git rebase --interactive A &&
 +
-+  * combinations of the above; see t/t6043-merge-rename-directories.sh for
-+    various interesting cases.
++		git ls-files -s >out &&
++		test_line_count = 5 out &&
 +
-+Limitations -- applicability of directory renames
-+-------------------------------------------------
++		test_path_is_file y/d &&
++		test_path_is_missing x/d
++	)
++'
 +
-+In order to prevent edge and corner cases resulting in either conflicts
-+that cannot be represented in the index or which might be too complex for
-+users to try to understand and resolve, a couple basic rules limit when
-+directory rename detection applies:
++test_expect_failure 'rebase (am): directory rename detected' '
++	(
++		cd dir-rename &&
 +
-+  1) If a given directory still exists on both sides of a merge, we do
-+     not consider it to have been renamed.
++		git checkout B^0 &&
 +
-+  2) If a subset of to-be-renamed files have a file or directory in the
-+     way (or would be in the way of each other), "turn off" the directory
-+     rename for those specific sub-paths and report the conflict to the
-+     user.
++		git rebase A &&
 +
-+  3) If the other side of history did a directory rename to a path that
-+     your side of history renamed away, then ignore that particular
-+     rename from the other side of history for any implicit directory
-+     renames (but warn the user).
++		git ls-files -s >out &&
++		test_line_count = 5 out &&
 +
-+Limitations -- detailed rules and testcases
-+-------------------------------------------
++		test_path_is_file y/d &&
++		test_path_is_missing x/d
++	)
++'
 +
-+t/t6043-merge-rename-directories.sh contains extensive tests and commentary
-+which generate and explore the rules listed above.  It also lists a few
-+additional rules:
++test_expect_success 'rebase --merge: directory rename detected' '
++	(
++		cd dir-rename &&
 +
-+  a) If renames split a directory into two or more others, the directory
-+     with the most renames, "wins".
++		git checkout B^0 &&
 +
-+  b) Avoid directory-rename-detection for a path, if that path is the
-+     source of a rename on either side of a merge.
++		git rebase --merge A &&
 +
-+  c) Only apply implicit directory renames to directories if the other side
-+     of history is the one doing the renaming.
++		git ls-files -s >out &&
++		test_line_count = 5 out &&
 +
-+Limitations -- support in different commands
-+--------------------------------------------
++		test_path_is_file y/d &&
++		test_path_is_missing x/d
++	)
++'
 +
-+Directory rename detection is supported by 'merge' and 'cherry-pick'.
-+Other git commands which users might be surprised to see limited or no
-+directory rename detection support in:
++test_expect_failure 'am: directory rename detected' '
++	(
++		cd dir-rename &&
 +
-+  * diff
++		git checkout A^0 &&
 +
-+    Folks have requested in the past that `git diff` detect directory
-+    renames and somehow simplify its output.  It is not clear whether this
-+    would be desirable or how the output should be simplified, so this was
-+    simply not implemented.  Further, to implement this, directory rename
-+    detection logic would need to move from merge-recursive to
-+    diffcore-rename.
++		git format-patch -1 B &&
++
++		git am --3way 0001*.patch &&
++
++		git ls-files -s >out &&
++		test_line_count = 5 out &&
++
++		test_path_is_file y/d &&
++		test_path_is_missing x/d
++	)
++'
++
++test_done
 -- 
 2.18.0.9.g431b2c36d5
 
