@@ -3,65 +3,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 220E11F516
-	for <e@80x24.org>; Wed, 27 Jun 2018 18:51:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9648B1F516
+	for <e@80x24.org>; Wed, 27 Jun 2018 18:53:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965987AbeF0Svb (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Jun 2018 14:51:31 -0400
-Received: from mail-lj1-f177.google.com ([209.85.208.177]:41283 "EHLO
-        mail-lj1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965779AbeF0Sva (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jun 2018 14:51:30 -0400
-Received: by mail-lj1-f177.google.com with SMTP id v12-v6so2444416ljj.8
-        for <git@vger.kernel.org>; Wed, 27 Jun 2018 11:51:29 -0700 (PDT)
+        id S965995AbeF0SxY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Jun 2018 14:53:24 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:52686 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965942AbeF0SxX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jun 2018 14:53:23 -0400
+Received: by mail-wm0-f68.google.com with SMTP id e69-v6so4033856wme.2
+        for <git@vger.kernel.org>; Wed, 27 Jun 2018 11:53:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=saville-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=R4xmHhLRb9vG+fw9lObtKJfPTETkMjRo4o0QHo/q18E=;
-        b=wF915fXoSWYWyWY1X43DhXn4XrLTdlH4yWmOuN2Ez86AL9Q3JwqGV95LC3pMTIeFjQ
-         7boh1dpJgscKDDKj+8W0+wbIH/AUvPuK9hmM0m+PTJ0e3prpB7ZnZu4OqG+iHmn8zT9F
-         Yuk7BS47q3Uy7vOL38jOwKgOcUQty134cG2VQ/RknQ8zmW5vmE1v6S6rak2zey7Sl9Cq
-         Za1OAKv47XQaSqKf7gcTZnAFIZeVLH3gMvhjZB9UScZGi8pjX4oGMVig7Do4jJUZ3UJ6
-         IKVJhWo9DYZ+1aSkKAJhlaV2OzNkqk5PQrqG0k43o7LWNjpStVukAtVQvJoGNDWIeIYa
-         Rgyg==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=dtU1C2rPxTGrLjKllvKJNgBIWvOM/aEC8F1SM2s/COY=;
+        b=iObSnNxuXFaz3Yk0LosBvZFSlCUtC9ZRyQlwRndQKDU4NIRQXGTaRKDD7TuxxYxZyq
+         6g6ESXtM8sY+ABC125TXAqI0uBNmDB0rkB+UO135Mc8prPxlp+1Gc0bURTmyXfmAR5EI
+         Np4bSWQdD9EqU4kynp0P/u5IYHUx1SFbg2rP52i0J+kBBcAtDEM3nTRZgc2EWYpVsfJF
+         TdALvpDfPAHaRS4Rfh09tgBdBVoP48NwrMYLYn7h+eKDDqAgyQyQ1O2znPTTg1ezmPoX
+         u6BGou3jBpD9EyDtk26Hxc8CIkxfXPVqnny/jooPZ+d0ntC92bKkqTapom8cNR0AmnkT
+         rewQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=R4xmHhLRb9vG+fw9lObtKJfPTETkMjRo4o0QHo/q18E=;
-        b=Vs5kvytCwXReq8ANTrd7i3Eg16pgt0UR+j6b+hW62pV4U4v/IW1wKuzc87nvK6fFEp
-         49+yP9Cy304nb4Kw0Gz4KqUsu72SHJnxBfPS5iiwdohhHO8tbc4zMLRQlU2NK6mrnZGy
-         zw1sUoXbPrCNVddNyhbiCb2YPom7zZJy5CRm3ZyQ/IBpGpruXg1nuY+2Sv8+tJaBB5Xe
-         PVlhzP2cO77TjBBAf9+T9xXM5Jp2zSlb+Wol5WVLzyJJPpwHS8UzVLnmLF13Vm8ZvgCe
-         Wu8QEM7T9rchZRq09JhnWmYKmG4JM/FqLoXIT0BEXVSwvPJ0o9ihlAV+nLT3704WX9bL
-         BGhQ==
-X-Gm-Message-State: APt69E0FNs1JwJMv+z+tBFtFX3M+F7Mq5blhIIiT2zGwsWJ7MAuqzT8G
-        DLhXwwCu2sdtaJatDnbEIOAph4rfyO0x1P3lQc9LjA==
-X-Google-Smtp-Source: AAOMgpeXk1q309VU6uLxyFqibKIMUitoHCe9vIepH8y3z9rmq00DhMTPlIfdWS/WZenKt5AANLyUkwLgW/QuCMGRlU0=
-X-Received: by 2002:a2e:2bc9:: with SMTP id r70-v6mr489948ljr.133.1530125488776;
- Wed, 27 Jun 2018 11:51:28 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=dtU1C2rPxTGrLjKllvKJNgBIWvOM/aEC8F1SM2s/COY=;
+        b=eEnEqNjpm/fbJ0x/8i7WXmiMXjfSRksTPAqSu+Mp+0qlwwUiW9reJrMn8G8I6XllBp
+         Rhg5Ekdu2FJ3ggxWmKz7i3qgcQIm1bWxxJvhUyE3v3itTwhqobP5xBzHhK9UXhFUjwMs
+         /Yy7PTY01KQo6pBvnyo5OdLgxuHKMtabM8DZyWagb6NsBRLidPcF8OkaLdcZeCxCiRcw
+         yF+fDCFHASSCW3EVb1no5LhdcAehG3/BZb0Fi05GpZeHG4AZRgx3m1JiPlvyhYYCI2UU
+         cvfieYzu7oo2fbzmjok+S6r76z/VwxAEGpxqrF7mUklEbJY8fOkcsx28TBqZE3Zp1jW1
+         G4Jg==
+X-Gm-Message-State: APt69E2XOee0JBo6jk3NghwAtCopuUAw6lWFRgK4vnzVTYkpvojt+4DF
+        MczqbzPgoBLYJGMNUbw8uDSjBaRe
+X-Google-Smtp-Source: AAOMgpeMnl9Zi7PzCJhN7wOsKQ2AincFYKlGHTxDIjBWV2c4+oJxnXc+Rhsmh+3njO/qxDpmPCYflA==
+X-Received: by 2002:a1c:6485:: with SMTP id y127-v6mr2584777wmb.38.1530125602285;
+        Wed, 27 Jun 2018 11:53:22 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 17-v6sm2859429wms.27.2018.06.27.11.53.21
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 27 Jun 2018 11:53:21 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, jonathantanmy@google.com, sbeller@google.com,
+        jrnieder@gmail.com
+Subject: Re: [PATCH v5 2/8] upload-pack: implement ref-in-want
+References: <20180625185332.164142-1-bmwill@google.com>
+        <20180626205438.110764-1-bmwill@google.com>
+        <20180626205438.110764-3-bmwill@google.com>
+        <xmqqsh59i6jx.fsf@gitster-ct.c.googlers.com>
+        <20180627180557.GG19910@google.com>
+Date:   Wed, 27 Jun 2018 11:53:21 -0700
+In-Reply-To: <20180627180557.GG19910@google.com> (Brandon Williams's message
+        of "Wed, 27 Jun 2018 11:05:57 -0700")
+Message-ID: <xmqq7emkf4da.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 2002:a19:c801:0:0:0:0:0 with HTTP; Wed, 27 Jun 2018 11:51:08
- -0700 (PDT)
-In-Reply-To: <nycvar.QRO.7.76.6.1806271251130.21419@tvgsbejvaqbjf.bet>
-References: <614F0C12-7173-48BD-9212-71AD6FBBDAA7@dana.is> <nycvar.QRO.7.76.6.1806262329390.21419@tvgsbejvaqbjf.bet>
- <nycvar.QRO.7.76.6.1806262331340.21419@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.1806262343410.21419@tvgsbejvaqbjf.bet>
- <D5941A31-B9B3-4EB1-9D55-D5E86A541D2C@dana.is> <nycvar.QRO.7.76.6.1806271251130.21419@tvgsbejvaqbjf.bet>
-From:   Wink Saville <wink@saville.com>
-Date:   Wed, 27 Jun 2018 11:51:08 -0700
-Message-ID: <CAKk8ispLOsfe+t9yMaLdWd9tzN+zBfrXBmt3j-PjF1dYYJbfLg@mail.gmail.com>
-Subject: Re: [PATCH] rebase -i: Fix white space in comments
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     dana <dana@dana.is>, Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
- Sorry for the whitespace bug, it looks like everything is under
-control one way or the other.
+Brandon Williams <bmwill@google.com> writes:
+
+>> > +	* The server SHOULD NOT send any refs which were not requested
+>> > +	  using 'want-ref' lines and a client MUST ignore refs which
+>> > +	  weren't requested.
+>> 
+>> Just being curious, but the above feels the other way around.  Why
+>> are we being more lenient to writers of broken server than writers
+>> of broken clients?  The number of installations they need to take
+>> back and replace is certainly lower for the former, which means
+>> that, if exchanges of unsoliclited refs are unwanted, clients should
+>> notice and barf (or warn) if the server misbehaves, and the server
+>> should be forbidden from sending unsolicited refs, no?
+>
+> Ok so should I change the server part to "MUST NOT" and the client part
+> to "SHOULD"?  And I can add code to die when we see refs that weren't
+> requested, but i feel like if we add an ability to request a pattern in
+> the future this will completely change, which is why I currently have a
+> client just ignoring anything else.
+
+I did not have enough information to give an answer to "should I do
+X?"; that is why I asked these questions prefixed with "Just being
+curious".  I do not quite get a good feeling that I now know enough
+to answer, still, but let me try.
+
+If we anticipate backward incompatible changes between this early
+WIP stage and the final completed protocol, it would be GOOD to make
+sure that an early WIP clients/servers fail when seeing the other
+side gives them something they do not understand, no?
+
+So...
