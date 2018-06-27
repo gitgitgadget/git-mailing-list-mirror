@@ -2,124 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DD581F516
-	for <e@80x24.org>; Wed, 27 Jun 2018 14:14:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DCDFA1F516
+	for <e@80x24.org>; Wed, 27 Jun 2018 14:54:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964810AbeF0OOd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Jun 2018 10:14:33 -0400
-Received: from cloud.peff.net ([104.130.231.41]:56846 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1754339AbeF0OOc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jun 2018 10:14:32 -0400
-Received: (qmail 22422 invoked by uid 109); 27 Jun 2018 14:14:31 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 27 Jun 2018 14:14:31 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8407 invoked by uid 111); 27 Jun 2018 14:14:52 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 27 Jun 2018 10:14:52 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Jun 2018 10:14:30 -0400
-Date:   Wed, 27 Jun 2018 10:14:30 -0400
-From:   Jeff King <peff@peff.net>
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] doc: substitute ETC_GIT(CONFIG|ATTRIBUTES) in generated
- docs
-Message-ID: <20180627141430.GA13904@sigill.intra.peff.net>
-References: <20180627045637.13818-1-tmz@pobox.com>
+        id S934390AbeF0Oys (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Jun 2018 10:54:48 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:45170 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933868AbeF0Oyr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jun 2018 10:54:47 -0400
+Received: by mail-wr0-f193.google.com with SMTP id u7-v6so2350489wrn.12
+        for <git@vger.kernel.org>; Wed, 27 Jun 2018 07:54:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:openpgp:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=FVUkj0mKYyKhcL55v/EH+Z4O90IOz527PNHJgx0lvvk=;
+        b=dxgC0sXQQvtkSX6rwYfY8L3yYUaEiQkL0M8fiwVJY2vQK17B5mcLogx1IIahTUSsPY
+         GeYxqII5jPxH1OSPsnmVSqLO2QUUbdzNWCCulx0bnp08O/IdhlFiyaocIqb2b7ybvd5B
+         eQRG/UXQSzbZU0zxINwHyNnzQjTrpCeIaIrSCslvghJr40Rs5C9ojJIrZY6Q7Ndqdm5L
+         cmO9TP/fiGLrG5/QouMj3sK2zki86xODTKGA/TVGZt9jZ5P8+V6PRHKK5iEc+cUNF5ab
+         +Nw7VyRdTK18nEBXmpRjlqFyskZEti0+UYKgboRpsGT7tLdKJUhlrQDQ9yajmb08cC5Q
+         8+xw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
+         :date:user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=FVUkj0mKYyKhcL55v/EH+Z4O90IOz527PNHJgx0lvvk=;
+        b=tGdHmcwt8PqAkjxC8L1QCp5v5LucHeNuqhRwKvDYAYOXKowLIwdWoopJ5NqU5xN7Ry
+         CztDx8ZSIUgccuJucDLn3iEA/mhbFb4djZh3ntdfsuOu7Sm+MKZCES86VLO0Sj/xW1w0
+         oUBSZ7kLMI/OVYizfmQNCf74prAQG+7qz14cx/Bb2iy2k50H1lW3ebmPfobJJvHol0oq
+         CMW1FNTOvXmdSrx1QyZdYdxT//WLzAhUdZUGWaEYHxYzJUT8s4OGJwvYX+vsYQ1EznO2
+         g1nBeftPb0jIF0ras8UlfWpDoV6LxYXCEbPKeCKXBWb59J/7x9KKivB8jGjoD5xhKHa8
+         CEHA==
+X-Gm-Message-State: APt69E0GCA1FbiE9S/jmR//z6gqdSDMXMaSCt5TAq6THms9pIzmSu1kc
+        57qMj+LBXAM9TJUtVN3JOeQ=
+X-Google-Smtp-Source: AAOMgpeJS8ZRq/PHVkd0hwf8BaPsLu91Ec/oKIAFQuFog+hDaqiDv8H5M2ywlxygeVvcZsvF4YwQjw==
+X-Received: by 2002:adf:a18f:: with SMTP id u15-v6mr5399403wru.194.1530111286625;
+        Wed, 27 Jun 2018 07:54:46 -0700 (PDT)
+Received: from [192.168.0.104] (AToulouse-658-1-72-143.w92-156.abo.wanadoo.fr. [92.156.124.143])
+        by smtp.gmail.com with ESMTPSA id r123-v6sm7004489wmb.21.2018.06.27.07.54.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 27 Jun 2018 07:54:45 -0700 (PDT)
+Subject: Re: [GSoC][PATCH v4 1/2] sequencer: make two functions and an enum
+ from sequencer.c public
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        phillip.wood@dunelm.org.uk
+References: <20180607103012.22981-1-alban.gruin@gmail.com>
+ <20180626161643.31152-1-alban.gruin@gmail.com>
+ <20180626161643.31152-2-alban.gruin@gmail.com>
+ <nycvar.QRO.7.76.6.1806262337360.21419@tvgsbejvaqbjf.bet>
+From:   Alban Gruin <alban.gruin@gmail.com>
+Openpgp: preference=signencrypt
+Message-ID: <e2d8310a-0bbc-b786-97c1-e32c2090aca9@gmail.com>
+Date:   Wed, 27 Jun 2018 16:54:34 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
+In-Reply-To: <nycvar.QRO.7.76.6.1806262337360.21419@tvgsbejvaqbjf.bet>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180627045637.13818-1-tmz@pobox.com>
+Content-Language: fr-FR
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 27, 2018 at 12:56:37AM -0400, Todd Zullinger wrote:
+Hi Johannes,
 
-> Replace `$(prefix)/etc/gitconfig` and `$(prefix)/etc/gitattributes` in
-> generated documentation with the paths chosen when building.  Readers of
-> the documentation should not need to know how `$(prefix)` was defined.
+Le 26/06/2018 à 23:41, Johannes Schindelin a écrit :
+> Hi Alban,
+> 
+> On Tue, 26 Jun 2018, Alban Gruin wrote:
+> 
+>> diff --git a/sequencer.h b/sequencer.h
+>> index c5787c6b5..08397b0d1 100644
+>> --- a/sequencer.h
+>> +++ b/sequencer.h
+>> @@ -3,6 +3,7 @@
+>>  
+>>  const char *git_path_commit_editmsg(void);
+>>  const char *git_path_seq_dir(void);
+>> +const char *rebase_path_todo(void);
+>>  
+>>  #define APPEND_SIGNOFF_DEDUP (1u << 0)
+>>  
+>> @@ -57,6 +58,10 @@ struct replay_opts {
+>>  };
+>>  #define REPLAY_OPTS_INIT { .action = -1, .current_fixups = STRBUF_INIT }
+>>  
+>> +enum check_level {
+>> +	CHECK_IGNORE = 0, CHECK_WARN, CHECK_ERROR
+>> +};
+>> +
+> 
+> While this is contained within scopes that include `sequencer.h`, it *is*
+> public now, so I am slightly uneasy about keeping this enum so generic.
+> Maybe we want to use
+> 
+> enum missing_commit_check_level {
+> 	MISSING_COMMIT_CHECK_IGNORE = 0,
+> 	MISSING_COMMIT_CHECK_WARN,
+> 	MISSING_COMMIT_CHECK_ERROR
+> };
+> 
+> instead?
+> 
 
-Yes, I was just complaining about this yesterday. Besides readers not
-having any clue what $(prefix) means here, $(prefix)/etc is not even
-correct for builds with prefix=/usr.
+You’re right, this would be better.
 
-So I like the overall direction here, but it leaves me with one
-question: what happens for documentation outside of customized builds?
+Cheers,
+Alban
 
-Specifically, I'm thinking of:
-
-  1. The pre-built documentation that Junio builds for
-     quick-install-doc. This _could_ be customized during the "quick"
-     step, but it's probably not worth the effort. However, we'd want
-     some kind of generic fill-in then, and hopefully not
-     "/home/jch/etc" or something.
-
-  2. The manpages on git-scm.com, which are built with asciidoctor. I
-     think we'd want the same generic value there. Ideally it would be
-     embedded in the asciidoc source as "if this attribute isn't
-     defined, then use this", but it's not the end of the world to
-     require a patch to the site to handle this.
-
-     (Related, there's a build target in the local Makefile for using
-     asciidoctor; does it need updated, too?)
-
-> diff --git a/Documentation/Makefile b/Documentation/Makefile
-> index d079d7c73a..75af671798 100644
-> --- a/Documentation/Makefile
-> +++ b/Documentation/Makefile
-> @@ -95,6 +95,7 @@ DOC_MAN7 = $(patsubst %.txt,%.7,$(MAN7_TXT))
->  
->  prefix ?= $(HOME)
->  bindir ?= $(prefix)/bin
-> +sysconfdir ?= $(prefix)/etc
->  htmldir ?= $(prefix)/share/doc/git-doc
->  infodir ?= $(prefix)/share/info
->  pdfdir ?= $(prefix)/share/doc/git-doc
-> @@ -205,6 +206,18 @@ DEFAULT_EDITOR_SQ = $(subst ','\'',$(DEFAULT_EDITOR))
->  ASCIIDOC_EXTRA += -a 'git-default-editor=$(DEFAULT_EDITOR_SQ)'
->  endif
->  
-> +ifndef ETC_GITCONFIG
-> +ETC_GITCONFIG = $(sysconfdir)/gitconfig
-> +endif
-> +ETC_GITCONFIG_SQ = $(subst ','\'',$(ETC_GITCONFIG))
-> +ASCIIDOC_EXTRA += -a 'etc-gitconfig=$(ETC_GITCONFIG_SQ)'
-> +
-> +ifndef ETC_GITATTRIBUTES
-> +ETC_GITATTRIBUTES = $(sysconfdir)/gitattributes
-> +endif
-> +ETC_GITATTRIBUTES_SQ = $(subst ','\'',$(ETC_GITATTRIBUTES))
-> +ASCIIDOC_EXTRA += -a 'etc-gitattributes=$(ETC_GITATTRIBUTES_SQ)'
-> +
-
-It's a shame we have to repeat this logic from the Makefile, though I
-guess we already do so for prefix, bindir, etc, so far.
-
-Should we factor the path logic from the top-level Makefile into an
-include that can be used from either?
-
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 1cc18a828c..ed903b60bd 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -5,7 +5,7 @@ The Git configuration file contains a number of variables that affect
->  the Git commands' behavior. The `.git/config` file in each repository
->  is used to store the configuration for that repository, and
->  `$HOME/.gitconfig` is used to store a per-user configuration as
-> -fallback values for the `.git/config` file. The file `/etc/gitconfig`
-> +fallback values for the `.git/config` file. The file +{etc-gitconfig}+
-
-I think the formatting tweak you've done here is the right thing.
-There's no way to expand within literal backticks (since that's the
-point). So we only care about the monospacing effect, which ++ should
-give.
-
--Peff
