@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 961541F516
-	for <e@80x24.org>; Wed, 27 Jun 2018 13:25:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97C361F516
+	for <e@80x24.org>; Wed, 27 Jun 2018 13:26:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965459AbeF0NZx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Jun 2018 09:25:53 -0400
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:41166 "EHLO
+        id S965462AbeF0N0A (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Jun 2018 09:26:00 -0400
+Received: from mail-qt0-f196.google.com ([209.85.216.196]:35445 "EHLO
         mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965430AbeF0NZf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jun 2018 09:25:35 -0400
-Received: by mail-qt0-f196.google.com with SMTP id y20-v6so1571897qto.8
-        for <git@vger.kernel.org>; Wed, 27 Jun 2018 06:25:35 -0700 (PDT)
+        with ESMTP id S965405AbeF0NZO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jun 2018 09:25:14 -0400
+Received: by mail-qt0-f196.google.com with SMTP id z6-v6so1584339qti.2
+        for <git@vger.kernel.org>; Wed, 27 Jun 2018 06:25:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=tnqsEfU47DpWGW3XRC4ovvJjS9QkyJ4JYmPXmYWwWWI=;
-        b=dBvp6dmf1hRmAVaaUp+4X7Rx2zW75ExdtGr38zeFxgElcWVPxiWlH1j2QrspuahawA
-         R4F6xVGXTwXsfpypSHYBbqB2t2ALWqSQ4+31/WSKrqX9GwF/IM43k7yp+lUF6OUpHWIg
-         R7Dtj/aPzarCQkIDKsrRkK2sNTqqWQ4qeaz6Q8QuE/Dxg3xsRMbU5d7COY16T5Sh02sm
-         lxq/F3QvnDsWhrDLwRnxOIyGNuk1AqwqYUoMDeTwfsMZPxLGyl+vW8ndUr/vcQiNIcoX
-         jVQVG4MCfubf3G9VzNyifXt8YOAcCVAyW+Gbef0tlZVwN9zwDd/XUe+C7F+EHqSavm1p
-         07Ug==
+        bh=NgkUYoWU9hoyNJBf6oWYsvj2f+MmN8Sq0+kpqoEWfw8=;
+        b=oN6g5F0V4/Xw3gqAIVZvO26+6s6gz9aVTZoUMTidU9NBMcKAn/UlnaiPBvInUxRlD5
+         7Jfw1N0myofUyJdIqCwJoo+S+cd6jBl9kruAC/S6W7JzSKRUG80ULcdm+f/rmUxITa7+
+         mAiBZ1EN1T9iT2bXW/4pHLVfT8Ewk9FCfRwDODsu13G92PpWqilcJyaVvrjIVpCtsJho
+         cUBNry4zurnVKJEfeSlhp/vHOvGpPDGnKqTZ7asCC0C5F6av93bTIaIbjKdnAn2YNU6V
+         p6ccYZT/k0nuN1ylKrf5iihHph3PldZv7dlnENn2HwxIkr1UsNx1M7gjl1FdoqjVw91b
+         o7KA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=tnqsEfU47DpWGW3XRC4ovvJjS9QkyJ4JYmPXmYWwWWI=;
-        b=Vo2kF0YdDoQzeHNGPzBHMxkJ8Xre84ckEjXdcl0o3okiSeNBi8NMRQB429HKv2m8If
-         IP3pXFy2rY9V85SGrTg3Qo/GQfgh3eQD1dXUuFkxzdSRUlLJc52bTJIpRewwvHYVjneL
-         iFDikMo6fNPkcUDFsfWXOTsf8xdaNusrjzUkqgUh6/+yUH4/vRnf5bhFaQo3Q8HcLwf1
-         eODRAoW27IozrCdP8fLgdgr5/FcGE7HWLCjQk1rIUSzehng5RGxJged+xWjuen9xy1ky
-         4Zpehe/zfTNLgrpOPu9pMJMlg9IDxuQaYX+TAgGElaEonFvpuWIsVCCjIi0zVcFl3lxr
-         EGvw==
-X-Gm-Message-State: APt69E1GIMkErvrLG4eHgeSpDyEA98ra0lnKH56JBfzc/znrE6D6XxqQ
-        iuAm3eTOgf5WmwJPr1AdNl/0LAAYRVQ=
-X-Google-Smtp-Source: AAOMgpc6Xw/ZShuY7iAJ08LXWEGshLMOAi2hxmugWW8A0e3zF9nnn9gRDPb3rDVtLRrioa97P1n+pg==
-X-Received: by 2002:ac8:2696:: with SMTP id 22-v6mr5201823qto.304.1530105934523;
-        Wed, 27 Jun 2018 06:25:34 -0700 (PDT)
+        bh=NgkUYoWU9hoyNJBf6oWYsvj2f+MmN8Sq0+kpqoEWfw8=;
+        b=Z1DPyrRMu89ySo1/TVi9mrNIw2AbOS3qRxp4FTI/ffT7km6TLqMtYsB/PzGr3REirI
+         lbTBTjs8DNlWdhDgY9vPQS0szbJJnEgSX8mOK+GjXW4qOogHaFHfWJc9FnpnQliMS9ab
+         +UZIDFASrMgykj6JS9yTaNIDnI6ipKdvba2baM6amkeMbxYXIbo7xTLzYlZbBlXclCa0
+         C6pHwOq8C+eXndSwC94z6EPJQ6znVc5NsUQmltsc1MVF0Wwo5Rb+CReVZHk1adwaNIAP
+         J7ogEA787Gq3RCTAphtr6uEFVOyfQ3hi3/skWODwaJrCvRfb5ONf+Nr4w6wlRRrRrc8a
+         jZ/g==
+X-Gm-Message-State: APt69E39N4W4zOFTYD9NUWRQhZ/eRh80iOAw+pAHeY/ZLpfQ3yPdmCEf
+        bXaYn8hb+8uSYvC0hZdQ7RCISV3fnL0=
+X-Google-Smtp-Source: AAOMgpfBiIMK5ftjrdHVDKd4KOP4cMZBea/T/62IhygEfU0cNG3wPX26UVf+Jh0GsWaNpEJslmTxZg==
+X-Received: by 2002:ac8:172c:: with SMTP id w41-v6mr5363020qtj.32.1530105913955;
+        Wed, 27 Jun 2018 06:25:13 -0700 (PDT)
 Received: from stolee-linux-2.corp.microsoft.com ([2001:4898:8010:0:eb4a:5dff:fe0f:730f])
-        by smtp.gmail.com with ESMTPSA id 15-v6sm3761019qtv.56.2018.06.27.06.25.33
+        by smtp.gmail.com with ESMTPSA id 15-v6sm3761019qtv.56.2018.06.27.06.25.12
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 27 Jun 2018 06:25:33 -0700 (PDT)
+        Wed, 27 Jun 2018 06:25:13 -0700 (PDT)
 From:   Derrick Stolee <stolee@gmail.com>
 X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, avarab@gmail.com, sbeller@google.com,
         jnareb@gmail.com, marten.agren@gmail.com,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v7 20/22] commit-graph: add '--reachable' option
-Date:   Wed, 27 Jun 2018 09:24:45 -0400
-Message-Id: <20180627132447.142473-21-dstolee@microsoft.com>
+Subject: [PATCH v7 09/22] commit-graph: verify required chunks are present
+Date:   Wed, 27 Jun 2018 09:24:34 -0400
+Message-Id: <20180627132447.142473-10-dstolee@microsoft.com>
 X-Mailer: git-send-email 2.18.0.24.g1b579a2ee9
 In-Reply-To: <20180627132447.142473-1-dstolee@microsoft.com>
 References: <20180608135548.216405-1-dstolee@microsoft.com>
@@ -66,168 +66,86 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When writing commit-graph files, it can be convenient to ask for all
-reachable commits (starting at the ref set) in the resulting file. This
-is particularly helpful when writing to stdin is complicated, such as a
-future integration with 'git gc'.
+The commit-graph file requires the following three chunks:
+
+* OID Fanout
+* OID Lookup
+* Commit Data
+
+If any of these are missing, then the 'verify' subcommand should
+report a failure. This includes the chunk IDs malformed or the
+chunk count is truncated.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/git-commit-graph.txt |  8 ++++++--
- builtin/commit-graph.c             | 16 ++++++++++++----
- commit-graph.c                     | 18 ++++++++++++++++++
- commit-graph.h                     |  1 +
- t/t5318-commit-graph.sh            | 10 ++++++++++
- 5 files changed, 47 insertions(+), 6 deletions(-)
+ commit-graph.c          |  9 +++++++++
+ t/t5318-commit-graph.sh | 29 +++++++++++++++++++++++++++++
+ 2 files changed, 38 insertions(+)
 
-diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
-index a222cfab08..dececb79d7 100644
---- a/Documentation/git-commit-graph.txt
-+++ b/Documentation/git-commit-graph.txt
-@@ -38,12 +38,16 @@ Write a commit graph file based on the commits found in packfiles.
- +
- With the `--stdin-packs` option, generate the new commit graph by
- walking objects only in the specified pack-indexes. (Cannot be combined
--with --stdin-commits.)
-+with `--stdin-commits` or `--reachable`.)
- +
- With the `--stdin-commits` option, generate the new commit graph by
- walking commits starting at the commits specified in stdin as a list
- of OIDs in hex, one OID per line. (Cannot be combined with
----stdin-packs.)
-+`--stdin-packs` or `--reachable`.)
-++
-+With the `--reachable` option, generate the new commit graph by walking
-+commits starting at all refs. (Cannot be combined with `--stdin-commits`
-+or `--stdin-packs`.)
- +
- With the `--append` option, include all commits that are present in the
- existing commit-graph file.
-diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index ea28bc311a..c7d0db5ab4 100644
---- a/builtin/commit-graph.c
-+++ b/builtin/commit-graph.c
-@@ -10,7 +10,7 @@ static char const * const builtin_commit_graph_usage[] = {
- 	N_("git commit-graph [--object-dir <objdir>]"),
- 	N_("git commit-graph read [--object-dir <objdir>]"),
- 	N_("git commit-graph verify [--object-dir <objdir>]"),
--	N_("git commit-graph write [--object-dir <objdir>] [--append] [--stdin-packs|--stdin-commits]"),
-+	N_("git commit-graph write [--object-dir <objdir>] [--append] [--reachable|--stdin-packs|--stdin-commits]"),
- 	NULL
- };
- 
-@@ -25,12 +25,13 @@ static const char * const builtin_commit_graph_read_usage[] = {
- };
- 
- static const char * const builtin_commit_graph_write_usage[] = {
--	N_("git commit-graph write [--object-dir <objdir>] [--append] [--stdin-packs|--stdin-commits]"),
-+	N_("git commit-graph write [--object-dir <objdir>] [--append] [--reachable|--stdin-packs|--stdin-commits]"),
- 	NULL
- };
- 
- static struct opts_commit_graph {
- 	const char *obj_dir;
-+	int reachable;
- 	int stdin_packs;
- 	int stdin_commits;
- 	int append;
-@@ -127,6 +128,8 @@ static int graph_write(int argc, const char **argv)
- 		OPT_STRING(0, "object-dir", &opts.obj_dir,
- 			N_("dir"),
- 			N_("The object directory to store the graph")),
-+		OPT_BOOL(0, "reachable", &opts.reachable,
-+			N_("start walk at all refs")),
- 		OPT_BOOL(0, "stdin-packs", &opts.stdin_packs,
- 			N_("scan pack-indexes listed by stdin for commits")),
- 		OPT_BOOL(0, "stdin-commits", &opts.stdin_commits,
-@@ -140,11 +143,16 @@ static int graph_write(int argc, const char **argv)
- 			     builtin_commit_graph_write_options,
- 			     builtin_commit_graph_write_usage, 0);
- 
--	if (opts.stdin_packs && opts.stdin_commits)
--		die(_("cannot use both --stdin-commits and --stdin-packs"));
-+	if (opts.reachable + opts.stdin_packs + opts.stdin_commits > 1)
-+		die(_("use at most one of --reachable, --stdin-commits, or --stdin-packs"));
- 	if (!opts.obj_dir)
- 		opts.obj_dir = get_object_directory();
- 
-+	if (opts.reachable) {
-+		write_commit_graph_reachable(opts.obj_dir, opts.append);
-+		return 0;
-+	}
-+
- 	string_list_init(&lines, 0);
- 	if (opts.stdin_packs || opts.stdin_commits) {
- 		struct strbuf buf = STRBUF_INIT;
 diff --git a/commit-graph.c b/commit-graph.c
-index a06e7e9549..adf54e3fe7 100644
+index 22ef696e18..f30b4ccee9 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -7,6 +7,7 @@
- #include "packfile.h"
- #include "commit.h"
- #include "object.h"
-+#include "refs.h"
- #include "revision.h"
- #include "sha1-lookup.h"
- #include "commit-graph.h"
-@@ -656,6 +657,23 @@ static void compute_generation_numbers(struct packed_commit_list* commits)
+@@ -848,5 +848,14 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g)
+ 		return 1;
  	}
+ 
++	verify_commit_graph_error = 0;
++
++	if (!g->chunk_oid_fanout)
++		graph_report("commit-graph is missing the OID Fanout chunk");
++	if (!g->chunk_oid_lookup)
++		graph_report("commit-graph is missing the OID Lookup chunk");
++	if (!g->chunk_commit_data)
++		graph_report("commit-graph is missing the Commit Data chunk");
++
+ 	return verify_commit_graph_error;
  }
- 
-+static int add_ref_to_list(const char *refname,
-+			   const struct object_id *oid,
-+			   int flags, void *cb_data)
-+{
-+	struct string_list *list = (struct string_list*)cb_data;
-+	string_list_append(list, oid_to_hex(oid));
-+	return 0;
-+}
-+
-+void write_commit_graph_reachable(const char *obj_dir, int append)
-+{
-+	struct string_list list;
-+	string_list_init(&list, 1);
-+	for_each_ref(add_ref_to_list, &list);
-+	write_commit_graph(obj_dir, NULL, &list, append);
-+}
-+
- void write_commit_graph(const char *obj_dir,
- 			struct string_list *pack_indexes,
- 			struct string_list *commit_hex,
-diff --git a/commit-graph.h b/commit-graph.h
-index a79b854470..506cb45fb1 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -48,6 +48,7 @@ struct commit_graph {
- 
- struct commit_graph *load_commit_graph_one(const char *graph_file);
- 
-+void write_commit_graph_reachable(const char *obj_dir, int append);
- void write_commit_graph(const char *obj_dir,
- 			struct string_list *pack_indexes,
- 			struct string_list *commit_hex,
 diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index a9e8c774d5..2208c266b5 100755
+index c0c1ff09b9..dc16849ddd 100755
 --- a/t/t5318-commit-graph.sh
 +++ b/t/t5318-commit-graph.sh
-@@ -205,6 +205,16 @@ test_expect_success 'build graph from commits with append' '
- graph_git_behavior 'append graph, commit 8 vs merge 1' full commits/8 merge/1
- graph_git_behavior 'append graph, commit 8 vs merge 2' full commits/8 merge/2
+@@ -249,6 +249,15 @@ test_expect_success 'git commit-graph verify' '
  
-+test_expect_success 'build graph using --reachable' '
-+	cd "$TRASH_DIRECTORY/full" &&
-+	git commit-graph write --reachable &&
-+	test_path_is_file $objdir/info/commit-graph &&
-+	graph_read_expect "11" "large_edges"
+ GRAPH_BYTE_VERSION=4
+ GRAPH_BYTE_HASH=5
++GRAPH_BYTE_CHUNK_COUNT=6
++GRAPH_CHUNK_LOOKUP_OFFSET=8
++GRAPH_CHUNK_LOOKUP_WIDTH=12
++GRAPH_CHUNK_LOOKUP_ROWS=5
++GRAPH_BYTE_OID_FANOUT_ID=$GRAPH_CHUNK_LOOKUP_OFFSET
++GRAPH_BYTE_OID_LOOKUP_ID=$(($GRAPH_CHUNK_LOOKUP_OFFSET + \
++			    1 * $GRAPH_CHUNK_LOOKUP_WIDTH))
++GRAPH_BYTE_COMMIT_DATA_ID=$(($GRAPH_CHUNK_LOOKUP_OFFSET + \
++			     2 * $GRAPH_CHUNK_LOOKUP_WIDTH))
+ 
+ # usage: corrupt_graph_and_verify <position> <data> <string>
+ # Manipulates the commit-graph file at the position
+@@ -283,4 +292,24 @@ test_expect_success 'detect bad hash version' '
+ 		"hash version"
+ '
+ 
++test_expect_success 'detect low chunk count' '
++	corrupt_graph_and_verify $GRAPH_BYTE_CHUNK_COUNT "\02" \
++		"missing the .* chunk"
 +'
 +
-+graph_git_behavior 'append graph, commit 8 vs merge 1' full commits/8 merge/1
-+graph_git_behavior 'append graph, commit 8 vs merge 2' full commits/8 merge/2
++test_expect_success 'detect missing OID fanout chunk' '
++	corrupt_graph_and_verify $GRAPH_BYTE_OID_FANOUT_ID "\0" \
++		"missing the OID Fanout chunk"
++'
 +
- test_expect_success 'setup bare repo' '
- 	cd "$TRASH_DIRECTORY" &&
- 	git clone --bare --no-local full bare &&
++test_expect_success 'detect missing OID lookup chunk' '
++	corrupt_graph_and_verify $GRAPH_BYTE_OID_LOOKUP_ID "\0" \
++		"missing the OID Lookup chunk"
++'
++
++test_expect_success 'detect missing commit data chunk' '
++	corrupt_graph_and_verify $GRAPH_BYTE_COMMIT_DATA_ID "\0" \
++		"missing the Commit Data chunk"
++'
++
+ test_done
 -- 
 2.18.0.24.g1b579a2ee9
 
