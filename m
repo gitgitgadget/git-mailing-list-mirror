@@ -2,90 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E6B81F516
-	for <e@80x24.org>; Wed, 27 Jun 2018 18:15:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C7C831F516
+	for <e@80x24.org>; Wed, 27 Jun 2018 18:17:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934999AbeF0SPW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Jun 2018 14:15:22 -0400
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:35655 "EHLO
-        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934492AbeF0SPV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jun 2018 14:15:21 -0400
-Received: by mail-pf0-f172.google.com with SMTP id c22-v6so1347006pfi.2
-        for <git@vger.kernel.org>; Wed, 27 Jun 2018 11:15:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=RuveBp5cHRyXIZMTq5dV2Wo1RJ3gBxdDxQ9wvR9dV3E=;
-        b=EfWj39gz3u9uDub6K8a5JgHKhgWFum7AtNKYK875I/ptmc4KNjes3y08c7+baUbRr8
-         jX7eEYcpQNXzUHje4kFFMGR9QarOnivqIVv/s4EGck9DUrAHai8sBL8LCeQ8yLRKBVq4
-         2laXqielM0gyKSEku8FlRUwXEMiryxNNUS4T/Eho38vwZ7erwEkayu9Z6e3dedIzv8B8
-         Yrtqmw5cLU6shKJyY5WhLsQk6iLmYQw2aVy/MzZXy+Okhb42lX+9DRtVYe649pYDxcrx
-         RKDzld6d0wP9E93kUphSSWy7Yt2qcXdPjwzH8wYuuafmmgIaYtBRbrw1+lp+lwielLRJ
-         8j7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=RuveBp5cHRyXIZMTq5dV2Wo1RJ3gBxdDxQ9wvR9dV3E=;
-        b=hzgr9cPo3WTlMvOwmpmzgnI0ik73K4smmT0TW6CkD54hjjCnnkLLMe5snBX3snufsT
-         rmrBtse2Y3EJwWH3EQd7wbYMCnuMzPT2xk1t30+mQc0VWN8v4u4EqsSUI3ZKJ5LydD2h
-         +lu9paIWCerNeNSdEG0lm52Qe8ao1FvNxvlvkK4s5w0926XMDzYc3NbYmpIgendwk5YH
-         PkHDxuP0FbhhZtSr2FZkb6t4HudGcZusnfQXxTPXWpL+KOkC+L9XTLty4aQ8M05bp0X9
-         CS69WjfMtSS/xascWaGWUvpLZ1okcj+CK9N3FPLRr1F7psYc6DdM00a0is4XCfGM9XmS
-         dkJA==
-X-Gm-Message-State: APt69E0VMYdl5ZbFDbDDkpij08ciVM+bkELN8dccabvh3SnZZ87yblvY
-        1VaRpSgZn4Sd5fKlF1L64P51/g==
-X-Google-Smtp-Source: ADUXVKIjH0jB3zmTFTXlqwXodt9Ne6WK2Cqntoc5GrUk4PYhi8Uy4+/peJj+Kn89ADXLfD2ZVJ15vQ==
-X-Received: by 2002:a65:4849:: with SMTP id i9-v6mr6149916pgs.350.1530123320630;
-        Wed, 27 Jun 2018 11:15:20 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id 81-v6sm9069050pfl.125.2018.06.27.11.15.18
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 27 Jun 2018 11:15:19 -0700 (PDT)
-Date:   Wed, 27 Jun 2018 11:15:18 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, jonathantanmy@google.com, sbeller@google.com,
-        jrnieder@gmail.com
-Subject: Re: [PATCH v5 7/8] fetch-pack: put shallow info in output parameter
-Message-ID: <20180627181518.GI19910@google.com>
-References: <20180625185332.164142-1-bmwill@google.com>
- <20180626205438.110764-1-bmwill@google.com>
- <20180626205438.110764-8-bmwill@google.com>
- <xmqqfu19i5rq.fsf@gitster-ct.c.googlers.com>
+        id S965648AbeF0SRq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Jun 2018 14:17:46 -0400
+Received: from bsmtp7.bon.at ([213.33.87.19]:14630 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S934492AbeF0SRo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jun 2018 14:17:44 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 41GB3B2bbYz5tlG;
+        Wed, 27 Jun 2018 20:17:42 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id AEEC31CBC;
+        Wed, 27 Jun 2018 20:17:41 +0200 (CEST)
+Subject: Re: [PATCH v2 1/2] t3418: add testcase showing problems with rebase
+ -i and strategy options
+To:     Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+Newsgroups: gmane.comp.version-control.git
+References: <20180607050845.19779-1-newren@gmail.com>
+ <20180627073623.31725-1-newren@gmail.com>
+ <20180627073623.31725-2-newren@gmail.com>
+ <CAPig+cTwwuqPgF2NtGRgpcdjFqJK22+FFDV2c-20oQXFLEPaWQ@mail.gmail.com>
+ <CABPp-BFkjF5z6axqW-v=zPq9U9sOQGpUKK+WvLknkkGzX-F4rA@mail.gmail.com>
+ <xmqqh8logofg.fsf@gitster-ct.c.googlers.com>
+ <CABPp-BEYbC0C+bczQuNTcC_jxVM59czh7HTpqi9dv09fvCjMrA@mail.gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <eb66b6da-a306-3f65-abf3-9b845fba32cd@kdbg.org>
+Date:   Wed, 27 Jun 2018 20:17:41 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqfu19i5rq.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+In-Reply-To: <CABPp-BEYbC0C+bczQuNTcC_jxVM59czh7HTpqi9dv09fvCjMrA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/26, Junio C Hamano wrote:
-> Brandon Williams <bmwill@google.com> writes:
+Am 27.06.2018 um 19:27 schrieb Elijah Newren:
+> On Wed, Jun 27, 2018 at 9:54 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Having said that, it would be simpler for at least the latter to
+>> write it using a single-shot environment assignment, perhaps?  I.e.
+>>
+>>          PATH=./test-bin:$PATH git rebase --continue &&
+>>
+>> without running in a subshell?
 > 
-> > Expand the transport fetch method signature, by adding an output
-> > parameter, to allow transports to return information about the refs they
-> > have fetched.  Then communicate shallow status information through this
-> > mechanism instead of by modifying the input list of refs.
-> 
-> Makes sense.  Would this mechanism also allow us to be more explicit
-> about the "tag following"?
-> 
+> Seems reasonable.  Since these tests were essentially copies of other
+> tests within the same file, just for rebase -i instead of -m, should I
+> also add another patch to the series fixing up the rebase -m testcase
+> to also replace the subshell with a single-shot environment
+> assignment?
 
-Yes most likely.  We could change it so that when a packfile is sent the
-result of tag following could be sent along too (the actual tag refs
-themselves that is) instead of having the client rely on the ref
-advertisement for tag following.
+Pitfalls ahead!
 
--- 
-Brandon Williams
+	PATH=... git rebase ...
+
+is OK, but
+
+	PATH=... test_must_fail git rebase ...
+
+is not; the latter requires the subshell, otherwise the modified PATH 
+variable survives the command because test_must_fail is a shell 
+function. Yes, it's silly, but that's how it is.
+
+-- Hannes
