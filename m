@@ -2,138 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EECB81F516
-	for <e@80x24.org>; Wed, 27 Jun 2018 06:50:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E72341F516
+	for <e@80x24.org>; Wed, 27 Jun 2018 07:23:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753098AbeF0Gun (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Jun 2018 02:50:43 -0400
-Received: from mail-vk0-f66.google.com ([209.85.213.66]:46559 "EHLO
-        mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753047AbeF0Gum (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jun 2018 02:50:42 -0400
-Received: by mail-vk0-f66.google.com with SMTP id b134-v6so526336vke.13
-        for <git@vger.kernel.org>; Tue, 26 Jun 2018 23:50:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=dBzKa5lZGJMW9yEa/uke23C4rsjEWzzF9BOfKIy4pfs=;
-        b=vT4WTjs1L/PkCEqoX48hQxea2zEQsDY4DsAdMXZBP/Q+kGihLVzZDfjLqdIApytS+t
-         2UaxGChuWazyDO+xb2JPjidZ1A9ANMN8U0S2xDyrp7AIYRAMuZNzHA0JTFy1TVchzppq
-         HE/5ojfuS8xAuMWkPvFiJeyw4xHtXHqpXn+Ziua2VE0LJCy2iCz6Pz/DdlU9tr3l+Zxu
-         0a80R7akG90MY1oJ2rhkkk5/4qp2uK+A1mdSMR7B5NypsbQyMZoGmJAR8+L2Hdk6DEK0
-         3qFmAGr9SZAZfwshmDdXP16/B0YdmTwgyLFkTlcJs8bVdBn4Ty74gzfq8wHUf+HLnCL/
-         DChw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=dBzKa5lZGJMW9yEa/uke23C4rsjEWzzF9BOfKIy4pfs=;
-        b=mVhzTiH4nR4aptMz+30yXl0hpjVRtlpQm+LHjfSJSvqDXlzqzmcYpy2JVvQk/cNKvd
-         q/BHEDzN5AUKA3kcJn031oB7dFHcche8otGT5CCI9lhHB+GgJpHG5U5AveGBUu9VGSJa
-         Koh4quVIyCqsCAn268qxP5zAQgTqrsRua3aOVgASfdHTda0iothHBugcWO4fffLPTmyY
-         LncDmdAxGntNgaLfy4fg29S90DgVg0v/qjapgS5nlEj0POAaocNP4xC0t4NmEiDnXilv
-         SRV93eRuBzyvw0+Q9U6TSSV6Xe+gWZOERuJI/ECsWY+E7mAoSI1w79djLN6n/L7KcCuJ
-         wi6g==
-X-Gm-Message-State: APt69E1sLNH+HmlKAwIkwFsSdLPR7DwrclnbKf6fQPmjMzty5FEM+Z+q
-        GQs9LT4M7Aee1OqXh4DKL3vY1Voano0OxFBwKJE=
-X-Google-Smtp-Source: AAOMgpcaZtQfUf46Yjuol8Di9VhHan9EKP3pkdLcU/Td4Jek8fPMcRwf5zXueXlcgJcFIWVJWYrczW0MmpFX0mfaz10=
-X-Received: by 2002:a1f:2c0d:: with SMTP id s13-v6mr2801909vks.106.1530082241315;
- Tue, 26 Jun 2018 23:50:41 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:ab0:2310:0:0:0:0:0 with HTTP; Tue, 26 Jun 2018 23:50:40
- -0700 (PDT)
-In-Reply-To: <xmqqk1qll8f7.fsf@gitster-ct.c.googlers.com>
-References: <20180621150023.23533-1-newren@gmail.com> <20180625161300.26060-1-newren@gmail.com>
- <20180625161300.26060-4-newren@gmail.com> <xmqqk1qll8f7.fsf@gitster-ct.c.googlers.com>
+        id S932671AbeF0HXl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Jun 2018 03:23:41 -0400
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:36892 "EHLO
+        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S932489AbeF0HXi (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 27 Jun 2018 03:23:38 -0400
+Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w5R7N2cl023642;
+        Wed, 27 Jun 2018 00:23:21 -0700
+Authentication-Results: palantir.com;
+        spf=softfail smtp.mailfrom=newren@gmail.com
+Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
+        by mx0a-00153501.pphosted.com with ESMTP id 2ju94mtgp2-1;
+        Wed, 27 Jun 2018 00:23:21 -0700
+Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 96DE222FD12E;
+        Wed, 27 Jun 2018 00:23:21 -0700 (PDT)
+Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
+        by smtp.yojoe.local (Postfix) with ESMTP id 88A5F2CDE65;
+        Wed, 27 Jun 2018 00:23:21 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 26 Jun 2018 23:50:40 -0700
-Message-ID: <CABPp-BGOqC1YbeYunL_hb=oyDufHKJsC9JvSRapoa7C-Y9Bqyg@mail.gmail.com>
-Subject: Re: [PATCH v4 3/9] t3422: new testcases for checking when
- incompatible options passed
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, phillip.wood@dunelm.org.uk,
+        johannes.schindelin@gmx.de, sunshine@sunshineco.com,
+        szeder.dev@gmail.com, Elijah Newren <newren@gmail.com>
+Subject: [PATCH v5 2/9] git-rebase.sh: update help messages a bit
+Date:   Wed, 27 Jun 2018 00:23:12 -0700
+Message-Id: <20180627072319.31356-3-newren@gmail.com>
+X-Mailer: git-send-email 2.18.0.9.g431b2c36d5
+In-Reply-To: <20180627072319.31356-1-newren@gmail.com>
+References: <20180625161300.26060-1-newren@gmail.com>
+ <20180627072319.31356-1-newren@gmail.com>
+X-Proofpoint-SPF-Result: softfail
+X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-06-27_02:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1806210000 definitions=main-1806270087
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 26, 2018 at 11:17 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Elijah Newren <newren@gmail.com> writes:
->
->> +# Rebase has lots of useful options like --whitepsace=fix, which are
->> +# actually all built in terms of flags to git-am.  Since neither
->> +# --merge nor --interactive (nor any options that imply those two) use
->> +# git-am, using them together will result in flags like --whitespace=fix
->> +# being ignored.  Make sure rebase warns the user and aborts instead.
->> +#
->> +
->> +test_rebase_am_only () {
->> +     opt=$1
->> +     shift
->> +     test_expect_failure "$opt incompatible with --merge" "
->> +             git checkout B^0 &&
->> +             test_must_fail git rebase $opt --merge A
->> +     "
->> +
->> +     test_expect_failure "$opt incompatible with --strategy=ours" "
->> +             git checkout B^0 &&
->> +             test_must_fail git rebase $opt --strategy=ours A
->> +     "
->> +
->> +     test_expect_failure "$opt incompatible with --strategy-option=ours" "
->> +             git checkout B^0 &&
->> +             test_must_fail git rebase $opt --strategy=ours A
->
-> This line is broken and it is carried over to later patches.  It
-> needs to be -Xours (or --strategy-option=ours, if we really want ot
-> be verbose).
+signoff is not specific to the am-backend.  Also, re-order a few options
+to make like things (e.g. strategy and strategy-option) be near each
+other.
 
-Indeed; I'll fix that up and resubmit.  Thanks for catching it.
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ git-rebase.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
->> +     "
->> +
->> +     test_expect_failure "$opt incompatible with --interactive" "
->> +             git checkout B^0 &&
->> +             test_must_fail git rebase $opt --interactive A
->> +     "
->> +
->> +     test_expect_failure "$opt incompatible with --exec" "
->> +             git checkout B^0 &&
->> +             test_must_fail git rebase $opt --exec 'true' A
->> +     "
->> +
->> +}
->
->> +
->> +test_rebase_am_only --whitespace=fix
->> +test_rebase_am_only --ignore-whitespace
->> +test_rebase_am_only --committer-date-is-author-date
->> +test_rebase_am_only -C4
->
-> I was hesitant to hardcode what I perceive as limitations of non-am
-> rebase implementations with a test like this, but once somebody
-> fixes "rebase -i" for example to be capable of --whitespace=fix for
-> example, then we can just drop one line from the above four (and
-> write other tests for "rebase -i --whitespace=fix").  The
-> test_rebase_am_only is to help us make sure what is (still) not
-> supported by non-am rebases gets diagnosed as an error.
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 40be59ecc4..bf71b7fa20 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -20,23 +20,23 @@ onto=!             rebase onto given branch instead of upstream
+ r,rebase-merges?   try to rebase merges instead of skipping them
+ p,preserve-merges! try to recreate merges instead of ignoring them
+ s,strategy=!       use the given merge strategy
++X,strategy-option=! pass the argument through to the merge strategy
+ no-ff!             cherry-pick all commits, even if unchanged
++f,force-rebase!    cherry-pick all commits, even if unchanged
+ m,merge!           use merging strategies to rebase
+ i,interactive!     let the user edit the list of commits to rebase
+ x,exec=!           add exec lines after each commit of the editable list
+ k,keep-empty	   preserve empty commits during rebase
+ allow-empty-message allow rebasing commits with empty messages
+-f,force-rebase!    force rebase even if branch is up to date
+-X,strategy-option=! pass the argument through to the merge strategy
+ stat!              display a diffstat of what changed upstream
+ n,no-stat!         do not show diffstat of what changed upstream
+ verify             allow pre-rebase hook to run
+ rerere-autoupdate  allow rerere to update index with resolved conflicts
+ root!              rebase all reachable commits up to the root(s)
+ autosquash         move commits that begin with squash!/fixup! under -i
++signoff            add a Signed-off-by: line to each commit
+ committer-date-is-author-date! passed to 'git am'
+ ignore-date!       passed to 'git am'
+-signoff            passed to 'git am'
+ whitespace=!       passed to 'git apply'
+ ignore-whitespace! passed to 'git apply'
+ C=!                passed to 'git apply'
+-- 
+2.18.0.9.g431b2c36d5
 
-Yes, and I was thinking in particular that we could start by teaching
-rebase -i to understand --ignore-space-change/--ignore-whitespace by
-just transliterating it into -Xignore-space-change.  That is, after
-https://public-inbox.org/git/20180607050845.19779-2-newren@gmail.com/
-is picked up and eventually merged down.  Speaking of which, I need to
-resubmit that.
-
-> So my worry is totally unfounded, which is good.
