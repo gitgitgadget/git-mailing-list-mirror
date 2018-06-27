@@ -2,119 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 322421F516
-	for <e@80x24.org>; Wed, 27 Jun 2018 18:28:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 911CB1F516
+	for <e@80x24.org>; Wed, 27 Jun 2018 18:31:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965856AbeF0S2P (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Jun 2018 14:28:15 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:56081 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965837AbeF0S2M (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jun 2018 14:28:12 -0400
-Received: by mail-wm0-f68.google.com with SMTP id v16-v6so6909462wmv.5
-        for <git@vger.kernel.org>; Wed, 27 Jun 2018 11:28:11 -0700 (PDT)
+        id S965751AbeF0SbC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Jun 2018 14:31:02 -0400
+Received: from mail-yw0-f202.google.com ([209.85.161.202]:36272 "EHLO
+        mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754654AbeF0SbB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jun 2018 14:31:01 -0400
+Received: by mail-yw0-f202.google.com with SMTP id 202-v6so2312347ywo.3
+        for <git@vger.kernel.org>; Wed, 27 Jun 2018 11:31:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=lCANlbRHlVaGb73Ca8bdxcHSoP3m+MC0FqDYMHw3U1I=;
-        b=a+NeROSs6Y8abR0MjA79zvQ7SQY2MtBOYzbbW1F1SlFbWu/hB90pRKYlhzJTflP6t3
-         8TXVoDqWFX2pkvfKA4aIha3QsFaBZ4xZZxrC3SJ5HpwQn7HeDopibEKhaGrvrOaTYfc0
-         WY4xzxcBlVgGT0NUbCIN73xK5YF3cZVKig0VooFHcmXvMz0sAxCAT1DmcVxK8jMUWR/r
-         JWN4yBMAEvdsb6emOxpf9Mbsz7ZADbGKlkVrISwukU1f4scJ1h/Uo+y7G/R9J7UYHVnn
-         lUu76lWvpjFV/f9LGWrEkn/yFhtliWaapchdcwbjN/csV+gIE+zRX+uykOZaVLP4ju8w
-         u4pw==
+        d=google.com; s=20161025;
+        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
+         :cc;
+        bh=UrLntyU8vdCiLFrLLBM68qXd7Vvv/9nxWUgw4yP9UmY=;
+        b=LDoM9N9R4mdqZaDRB4AOgWXeNGCI3ZW3kI0gyGn6DOczxzAJqt1LHjM2WY7HOC1llt
+         cvjJjFvXY9t4yfFiPY0Rt/ZQGC73UX6VlFhdtwU4n6fDt5p/T8OtoS2iyqq6dYBjqeKR
+         cJuxF/mn2522NlTz4dv/200phrehHjvRKx/TgNB2siFFfN1mBMfv+Z166ZRaB/pfNxq+
+         65pVYKz/KlsYAZ2/qiD9xYT73iDQtdEmINm+0w2qrLpmJ/UAHr8qm7Q6nlXp6pA1sRtz
+         B4EW59kUVxjM2sooH/E9HK2wY1eaGb5OaxPkX7eOokzm/Wr6D8k6OY5BoQvfmPsXOt10
+         M9LA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=lCANlbRHlVaGb73Ca8bdxcHSoP3m+MC0FqDYMHw3U1I=;
-        b=bXyNRQu2TdY0jBsKM10oeo+z4snySDxnxQlMjOTQuzYjDOt/Rd0d3QzaHKjK11bHph
-         fPphYAoIuHv1ol1awJ0Fr047SJ4bVdDKDc5RKiTmzsxh8t+725H5Karb0MIIcdKPfzB5
-         f54rXEkDpPgHHSu4OLzFbGc4Xm5DW1uNXr7n7zR+CorIPnZl31mA93FRxccx9CScxGmO
-         UbWmmbbHXIIg+Cexd9ISsvo1mwBOHsqSdOxtHstd37xdFWygOurjDr+pKpqiRyaGrX5b
-         ie+vkgpV4Fc88UVq2p1yDt/DiQmHue+b+UFJ2VMqOm/9lc233MCR9QRwHur7T0DRi1EV
-         llPA==
-X-Gm-Message-State: APt69E3HHpoYxGMKByF6lHLDUOXXLT6BWYWNjzQ7BNwDi1dvE9Bu5Rid
-        kGukmib9DiTsbFyHujMfUCg6LQ==
-X-Google-Smtp-Source: AAOMgpffwE5+Bmtm0xNDwZ24ckZCg8pCgdoj6RrpiH8aLeAIwACD2EDa6fCwib5IIOYzYpAc083PGw==
-X-Received: by 2002:a1c:9e8a:: with SMTP id h132-v6mr2863768wme.48.1530124091118;
-        Wed, 27 Jun 2018 11:28:11 -0700 (PDT)
-Received: from localhost.localdomain (x590e4475.dyn.telefonica.de. [89.14.68.117])
-        by smtp.gmail.com with ESMTPSA id m185-v6sm5730056wma.36.2018.06.27.11.28.09
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 27 Jun 2018 11:28:10 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        gitster@pobox.com, git@vger.kernel.org, phillip.wood@dunelm.org.uk,
-        johannes.schindelin@gmx.de, sunshine@sunshineco.com
-Subject: Re: [PATCH v3 1/2] t3418: add testcase showing problems with rebase -i and strategy options
-Date:   Wed, 27 Jun 2018 20:28:05 +0200
-Message-Id: <20180627182805.28375-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.18.0.273.g57f1ecce9c
-In-Reply-To: <20180627154804.3743-2-newren@gmail.com>
-References: <20180627073623.31725-1-newren@gmail.com> <20180627154804.3743-1-newren@gmail.com> <20180627154804.3743-2-newren@gmail.com>
+        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
+         :references:subject:from:to:cc;
+        bh=UrLntyU8vdCiLFrLLBM68qXd7Vvv/9nxWUgw4yP9UmY=;
+        b=CCBUDgFOQWXyg96tibbQcGTUavLN5ukmH/aQX/gXS9rMqpuy89zcvgS6dREajFBS/B
+         x+B8UIuHgQKMVEeReX6cu3SiL6/Svtp/O+XY53i7GZGQLplItinY8v+y+6d/h4QO8Iu9
+         +pL192rMWhihnQC8HUvrLqcN5DoP6+J6UoAPXtM4OzwBjEsTKTM5YOSNsvAtV1kTR8L2
+         GtKJuimy2JOwbULhx8QCJSf7o86UKue1R/EfnIjkvDAvCHl6kLOvQvnstRTuGRv0gfsJ
+         Aoyn33dUxHoZfrGeC4DJT837BJQ25jH/A4uCPQvGcKDiEKdcYvW7t+TeTGyB2pa7s7cV
+         6+tg==
+X-Gm-Message-State: APt69E1KckVg2pB90M8Dk/tt8Dp6geSAiqhToRiDXKDHVYxaSHXEQymI
+        /zJIFNdQdffNeo4tMeJWKyybBhFiTGOc
+X-Google-Smtp-Source: ADUXVKKZNi5QfNBJYQ71OMPpMmvsEgfu70oEM7CwDbj1TF34a30GSTQFEai/KBtFS1g1Bnu6uwcvLouBGKNH
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-Received: by 2002:a25:9848:: with SMTP id k8-v6mr1921821ybo.78.1530124261148;
+ Wed, 27 Jun 2018 11:31:01 -0700 (PDT)
+Date:   Wed, 27 Jun 2018 11:30:57 -0700
+In-Reply-To: <20180626073001.6555-14-sunshine@sunshineco.com>
+Message-Id: <20180627183057.254467-1-sbeller@google.com>
+References: <20180626073001.6555-14-sunshine@sunshineco.com>
+X-Mailer: git-send-email 2.18.0.399.gad0ab374a1-goog
+Subject: [PATCH] t/lib-submodule-update: fix absorbing test
+From:   Stefan Beller <sbeller@google.com>
+To:     sunshine@sunshineco.com
+Cc:     git@vger.kernel.org, jonathantanmy@google.com, jrnieder@gmail.com,
+        newren@gmail.com, peff@peff.net, sbeller@google.com,
+        szeder@ira.uka.de
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
-> index 03bf1b8a3b..11546d6e14 100755
-> --- a/t/t3418-rebase-continue.sh
-> +++ b/t/t3418-rebase-continue.sh
-> @@ -74,6 +74,38 @@ test_expect_success 'rebase --continue remembers merge strategy and options' '
->  	test -f funny.was.run
->  '
->  
-> +test_expect_failure 'rebase -i --continue handles merge strategy and options' '
-> +	rm -fr .git/rebase-* &&
-> +	git reset --hard commit-new-file-F2-on-topic-branch &&
-> +	test_commit "commit-new-file-F3-on-topic-branch-for-dash-i" F3 32 &&
-> +	test_when_finished "rm -fr test-bin funny.was.run funny.args" &&
-> +	mkdir test-bin &&
-> +	cat >test-bin/git-merge-funny <<-EOF &&
-> +	#!$SHELL_PATH
-> +	echo "\$@" >>funny.args
-> +	case "\$1" in --opt) ;; *) exit 2 ;; esac
-> +	case "\$2" in --foo) ;; *) exit 2 ;; esac
-> +	case "\$4" in --) ;; *) exit 2 ;; esac
-> +	shift 2 &&
-> +	>funny.was.run &&
-> +	exec git merge-recursive "\$@"
-> +	EOF
-> +	chmod +x test-bin/git-merge-funny &&
+From: Eric Sunshine <sunshine@sunshineco.com>
 
-You could use the 'write_script' helper function here.
+This test has been dysfunctional since it was added by 259f3ee296
+(lib-submodule-update.sh: define tests for recursing into submodules,
+2017-03-14), however, problems went unnoticed due to a broken &&-chain
+toward the end of the test.
 
-> +	(
-> +		PATH=./test-bin:$PATH &&
-> +		test_must_fail git rebase -i -s funny -Xopt -Xfoo master topic
-> +	) &&
-> +	test -f funny.was.run &&
-> +	rm funny.was.run &&
-> +	echo "Resolved" >F2 &&
-> +	git add F2 &&
-> +	(
-> +		PATH=./test-bin:$PATH &&
-> +		git rebase --continue
-> +	) &&
-> +	test -f funny.was.run
-> +'
-> +
->  test_expect_success 'rebase passes merge strategy options correctly' '
->  	rm -fr .git/rebase-* &&
->  	git reset --hard commit-new-file-F3-on-topic-branch &&
-> -- 
-> 2.18.0.9.g431b2c36d5
-> 
-> 
+The test wants to verify that replacing a submodule containing a .git
+directory would absorb the .git directory into the .git/modules/ of the
+superproject, and then replace the working tree content with the liking of
+the superproject. The check if submodule content is around is wrong as
+the submodule should have been replaced by the content of the superproject.
+
+Delete the submodule content check, which also fixes the && chain in the
+test.
+
+While at it, fix broken &&-chains in a couple neighboring tests.
+
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+
+> The test wants to verify that replacing a submodule containing a .git
+> directory must fail. All other "must fail" tests in this script invoke
+> the supplied command as 'test_must_fail', however, this test neglects to
+> do so.
+
+In an ideal world the commands would not fail, but absorb the git directory
+of the submodule. I manually tested that it is absorbed and not data from
+a git directory is lost.
+
+I would propose to replace that patch with the patch below; I hope
+the wording did not add more confusion than there is already.
+
+Thanks,
+Stefan
+
+
+ t/lib-submodule-update.sh | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
+index 1f38a85371a..e90ec790877 100755
+--- a/t/lib-submodule-update.sh
++++ b/t/lib-submodule-update.sh
+@@ -755,7 +755,7 @@ test_submodule_recursing_with_args_common() {
+ 			: >sub1/untrackedfile &&
+ 			test_must_fail $command replace_sub1_with_file &&
+ 			test_superproject_content origin/add_sub1 &&
+-			test_submodule_content sub1 origin/add_sub1
++			test_submodule_content sub1 origin/add_sub1 &&
+ 			test -f sub1/untracked_file
+ 		)
+ 	'
+@@ -842,7 +842,7 @@ test_submodule_switch_recursing_with_args () {
+ 			cd submodule_update &&
+ 			git branch -t add_sub1 origin/add_sub1 &&
+ 			: >sub1 &&
+-			echo sub1 >.git/info/exclude
++			echo sub1 >.git/info/exclude &&
+ 			$command add_sub1 &&
+ 			test_superproject_content origin/add_sub1 &&
+ 			test_submodule_content sub1 origin/add_sub1
+@@ -969,7 +969,6 @@ test_submodule_forced_switch_recursing_with_args () {
+ 			rm -rf .git/modules/sub1 &&
+ 			$command replace_sub1_with_directory &&
+ 			test_superproject_content origin/replace_sub1_with_directory &&
+-			test_submodule_content sub1 origin/modify_sub1
+ 			test_git_directory_exists sub1
+ 		)
+ 	'
+-- 
+2.18.0.399.gad0ab374a1-goog
+
