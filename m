@@ -7,37 +7,37 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CB3A71F516
-	for <e@80x24.org>; Wed, 27 Jun 2018 07:24:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01A151F516
+	for <e@80x24.org>; Wed, 27 Jun 2018 07:24:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932729AbeF0HXv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Jun 2018 03:23:51 -0400
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:49710 "EHLO
+        id S932719AbeF0HXu (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Jun 2018 03:23:50 -0400
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:36900 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932569AbeF0HXj (ORCPT
+        by vger.kernel.org with ESMTP id S932577AbeF0HXj (ORCPT
         <rfc822;git@vger.kernel.org>); Wed, 27 Jun 2018 03:23:39 -0400
-Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w5R7JUCD013566;
-        Wed, 27 Jun 2018 00:23:23 -0700
+Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w5R7MxhH023527;
+        Wed, 27 Jun 2018 00:23:21 -0700
 Authentication-Results: palantir.com;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2ju8sxtfn2-1;
-        Wed, 27 Jun 2018 00:23:22 -0700
+        by mx0a-00153501.pphosted.com with ESMTP id 2ju94mtgp3-1;
+        Wed, 27 Jun 2018 00:23:21 -0700
 Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id BB31722FD1A1;
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id A271A22FD136;
         Wed, 27 Jun 2018 00:23:21 -0700 (PDT)
 Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
-        by smtp.yojoe.local (Postfix) with ESMTP id B06B82CDE65;
+        by smtp.yojoe.local (Postfix) with ESMTP id 950CA2CDE86;
         Wed, 27 Jun 2018 00:23:21 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, phillip.wood@dunelm.org.uk,
         johannes.schindelin@gmx.de, sunshine@sunshineco.com,
         szeder.dev@gmail.com, Elijah Newren <newren@gmail.com>
-Subject: [PATCH v5 5/9] git-rebase.txt: address confusion between --no-ff vs --force-rebase
-Date:   Wed, 27 Jun 2018 00:23:15 -0700
-Message-Id: <20180627072319.31356-6-newren@gmail.com>
+Subject: [PATCH v5 3/9] t3422: new testcases for checking when incompatible options passed
+Date:   Wed, 27 Jun 2018 00:23:13 -0700
+Message-Id: <20180627072319.31356-4-newren@gmail.com>
 X-Mailer: git-send-email 2.18.0.9.g431b2c36d5
 In-Reply-To: <20180627072319.31356-1-newren@gmail.com>
 References: <20180625161300.26060-1-newren@gmail.com>
@@ -47,110 +47,121 @@ X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-06-27_02:,,
  signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=3 phishscore=0 bulkscore=0 spamscore=0
+ malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
  clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
  mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1806210000 definitions=main-1806270086
+ scancount=1 engine=8.0.1-1806210000 definitions=main-1806270087
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-rebase was taught the --force-rebase option in commit b2f82e05de ("Teach
-rebase to rebase even if upstream is up to date", 2009-02-13).  This flag
-worked for the am and merge backends, but wasn't a valid option for the
-interactive backend.
-
-rebase was taught the --no-ff option for interactive rebases in commit
-b499549401cb ("Teach rebase the --no-ff option.", 2010-03-24), to do the
-exact same thing as --force-rebase does for non-interactive rebases.  This
-commit explicitly documented the fact that --force-rebase was incompatible
-with --interactive, though it made --no-ff a synonym for --force-rebase
-for non-interactive rebases.  The choice of a new option was based on the
-fact that "force rebase" didn't sound like an appropriate term for the
-interactive machinery.
-
-In commit 6bb4e485cff8 ("rebase: align variable names", 2011-02-06), the
-separate parsing of command line options in the different rebase scripts
-was removed, and whether on accident or because the author noticed that
-these options did the same thing, the options became synonyms and both
-were accepted by all three rebase types.
-
-In commit 2d26d533a012 ("Documentation/git-rebase.txt: -f forces a rebase
-that would otherwise be a no-op", 2014-08-12), which reworded the
-description of the --force-rebase option, the (no-longer correct) sentence
-stating that --force-rebase was incompatible with --interactive was
-finally removed.
-
-Finally, as explained at
-https://public-inbox.org/git/98279912-0f52-969d-44a6-22242039387f@xiplink.com
-
-    In the original discussion around this option [1], at one point I
-    proposed teaching rebase--interactive to respect --force-rebase
-    instead of adding a new option [2].  Ultimately --no-ff was chosen as
-    the better user interface design [3], because an interactive rebase
-    can't be "forced" to run.
-
-We have accepted both --no-ff and --force-rebase as full synonyms for all
-three rebase types for over seven years.  Documenting them differently
-and in ways that suggest they might not be quite synonyms simply leads to
-confusion.  Adjust the documentation to match reality.
+git rebase is split into three types: am, merge, and interactive.  Various
+options imply different types, and which mode we are using determine which
+sub-script (git-rebase--$type) is executed to finish the work.  Not all
+options work with all types, so add tests for combinations where we expect
+to receive an error rather than having options be silently ignored.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/git-rebase.txt | 30 ++++++++++--------------------
- 1 file changed, 10 insertions(+), 20 deletions(-)
+ t/t3422-rebase-incompatible-options.sh | 88 ++++++++++++++++++++++++++
+ 1 file changed, 88 insertions(+)
+ create mode 100755 t/t3422-rebase-incompatible-options.sh
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index b2d95e3fb9..2f47495a4d 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -337,16 +337,18 @@ See also INCOMPATIBLE OPTIONS below.
- +
- See also INCOMPATIBLE OPTIONS below.
- 
---f::
-+--no-ff::
- --force-rebase::
--	Force a rebase even if the current branch is up to date and
--	the command without `--force` would return without doing anything.
-+-f::
-+	Individually replay all rebased commits instead of fast-forwarding
-+	over the unchanged ones.  This ensures that the entire history of
-+	the rebased branch is composed of new commits.
- +
--You may find this (or --no-ff with an interactive rebase) helpful after
--reverting a topic branch merge, as this option recreates the topic branch with
--fresh commits so it can be remerged successfully without needing to "revert
--the reversion" (see the
--link:howto/revert-a-faulty-merge.html[revert-a-faulty-merge How-To] for details).
-+You may find this helpful after reverting a topic branch merge, as this option
-+recreates the topic branch with fresh commits so it can be remerged
-+successfully without needing to "revert the reversion" (see the
-+link:howto/revert-a-faulty-merge.html[revert-a-faulty-merge How-To] for
-+details).
- 
- --fork-point::
- --no-fork-point::
-@@ -498,18 +500,6 @@ See also INCOMPATIBLE OPTIONS below.
- 	with care: the final stash application after a successful
- 	rebase might result in non-trivial conflicts.
- 
----no-ff::
--	With --interactive, cherry-pick all rebased commits instead of
--	fast-forwarding over the unchanged ones.  This ensures that the
--	entire history of the rebased branch is composed of new commits.
--+
--Without --interactive, this is a synonym for --force-rebase.
--+
--You may find this helpful after reverting a topic branch merge, as this option
--recreates the topic branch with fresh commits so it can be remerged
--successfully without needing to "revert the reversion" (see the
--link:howto/revert-a-faulty-merge.html[revert-a-faulty-merge How-To] for details).
--
- INCOMPATIBLE OPTIONS
- --------------------
- 
+diff --git a/t/t3422-rebase-incompatible-options.sh b/t/t3422-rebase-incompatible-options.sh
+new file mode 100755
+index 0000000000..b007a15eba
+--- /dev/null
++++ b/t/t3422-rebase-incompatible-options.sh
+@@ -0,0 +1,88 @@
++#!/bin/sh
++
++test_description='test if rebase detects and aborts on incompatible options'
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	test_seq 2 9 >foo &&
++	git add foo &&
++	git commit -m orig &&
++
++	git branch A &&
++	git branch B &&
++
++	git checkout A &&
++	test_seq 1 9 >foo &&
++	git add foo &&
++	git commit -m A &&
++
++	git checkout B &&
++	echo "q qfoo();" | q_to_tab >>foo &&
++	git add foo &&
++	git commit -m B
++'
++
++#
++# Rebase has lots of useful options like --whitepsace=fix, which are
++# actually all built in terms of flags to git-am.  Since neither
++# --merge nor --interactive (nor any options that imply those two) use
++# git-am, using them together will result in flags like --whitespace=fix
++# being ignored.  Make sure rebase warns the user and aborts instead.
++#
++
++test_rebase_am_only () {
++	opt=$1
++	shift
++	test_expect_failure "$opt incompatible with --merge" "
++		git checkout B^0 &&
++		test_must_fail git rebase $opt --merge A
++	"
++
++	test_expect_failure "$opt incompatible with --strategy=ours" "
++		git checkout B^0 &&
++		test_must_fail git rebase $opt --strategy=ours A
++	"
++
++	test_expect_failure "$opt incompatible with --strategy-option=ours" "
++		git checkout B^0 &&
++		test_must_fail git rebase $opt --strategy-option=ours A
++	"
++
++	test_expect_failure "$opt incompatible with --interactive" "
++		git checkout B^0 &&
++		test_must_fail git rebase $opt --interactive A
++	"
++
++	test_expect_failure "$opt incompatible with --exec" "
++		git checkout B^0 &&
++		test_must_fail git rebase $opt --exec 'true' A
++	"
++
++}
++
++test_rebase_am_only --whitespace=fix
++test_rebase_am_only --ignore-whitespace
++test_rebase_am_only --committer-date-is-author-date
++test_rebase_am_only -C4
++
++test_expect_success '--preserve-merges incompatible with --signoff' '
++	git checkout B^0 &&
++	test_must_fail git rebase --preserve-merges --signoff A
++'
++
++test_expect_failure '--preserve-merges incompatible with --rebase-merges' '
++	git checkout B^0 &&
++	test_must_fail git rebase --preserve-merges --rebase-merges A
++'
++
++test_expect_failure '--rebase-merges incompatible with --strategy' '
++	git checkout B^0 &&
++	test_must_fail git rebase --rebase-merges -s resolve A
++'
++
++test_expect_failure '--rebase-merges incompatible with --strategy-option' '
++	git checkout B^0 &&
++	test_must_fail git rebase --rebase-merges -Xignore-space-change A
++'
++
++test_done
 -- 
 2.18.0.9.g431b2c36d5
 
