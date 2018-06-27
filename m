@@ -2,112 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E1CDC1F516
-	for <e@80x24.org>; Wed, 27 Jun 2018 02:15:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E45F81F516
+	for <e@80x24.org>; Wed, 27 Jun 2018 04:46:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751749AbeF0CPs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 22:15:48 -0400
-Received: from mail-ua0-f195.google.com ([209.85.217.195]:45384 "EHLO
-        mail-ua0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750997AbeF0CPr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 22:15:47 -0400
-Received: by mail-ua0-f195.google.com with SMTP id l5-v6so268013uad.12
-        for <git@vger.kernel.org>; Tue, 26 Jun 2018 19:15:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=HXnn9BbzeTHOlYksS31Wpl9zfFLkDRAC0m6GhTr7AA8=;
-        b=EPOUPGAM4npMynVXF+IwVa7sb550eTC1Uns39+PG3AA9XXsPRTC429B54lcyL5WfKc
-         ffd6TrCVtoMHpCQWFDuy2MmyoPWej05tuneSTvPIc5HlyDdyWSJNVmPuiPZcAR6WG14n
-         wzDWj8VV+GVfilIQNniXdd+AR44MatuvfXPDkVq3S5VncZ6jxSGToXmtwUhQ6UOirL5K
-         OVx/FBiDbBTOPw1m8j5QUWsHslo5Nq8gKDwrmMgUuTBfnpxFd+wvahzPf+AakxN1CwHi
-         PO/++2acnyNpiJvYtU5CTCFYcR9F3eBk9RQaVzbG+f25E/7asP06UWNU8rV8e3DmaP1O
-         s88w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=HXnn9BbzeTHOlYksS31Wpl9zfFLkDRAC0m6GhTr7AA8=;
-        b=SXb7IARDERXZKcFddvto6nZLpFzpO6aDA1Pdn1JNL2fxukoS9c2FuhJbMqKv+ICLNP
-         qc1RF605BYk/OsAOpiW9LgHexeUXOEBBrGrTyrsaqf/v6a4bEM3qrRGfL8+gvt6B9NC5
-         UZJeUbY3gM2HkxGhhlo7N8J5kVkRtywna6aJugsZynoJ39yJBsyL0N083B/YpLrrI6dw
-         a0uLxc+BlykJ4MD2O9W6bQaCaFesN0cK5k880ZNyAQ7VyX4MQRcxPcZtqX5ER9MZFRl9
-         oSLk/Ota6ybm0oea0fZqLIALDz6sntvGrSA4JtJTLbQAYJVfGrSXvtitFtGitnSI9ky0
-         U/TQ==
-X-Gm-Message-State: APt69E2ph5yjiUAA2vRIdA2Z7dY9R3g5trwZYDWb4cqyyrSSHF55XlYZ
-        udtDhOA6MEzXbKljFx+wCx3BolCjh5JOnrHeC4s=
-X-Google-Smtp-Source: AAOMgpd1EEdPpmWMpzTol7hpdHzKPP9V03G9QR+/ThFl6hCG/PiM4Vn7flImdsnKIpOd5WNezg6CC2R6S/zmAYvdeso=
-X-Received: by 2002:ab0:15ad:: with SMTP id i42-v6mr2533372uae.199.1530065746356;
- Tue, 26 Jun 2018 19:15:46 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:ab0:2310:0:0:0:0:0 with HTTP; Tue, 26 Jun 2018 19:15:45
- -0700 (PDT)
-In-Reply-To: <20180626210100.GA3682@sigill.intra.peff.net>
-References: <20180626073001.6555-1-sunshine@sunshineco.com>
- <20180626073001.6555-30-sunshine@sunshineco.com> <xmqqwouljr5e.fsf@gitster-ct.c.googlers.com>
- <CAPig+cSLyie8mr+u8Thv9cJ0J12nCA+RU6Mg3S5F8U68q1+nzQ@mail.gmail.com>
- <20180626201708.GA2341@sigill.intra.peff.net> <CAPig+cRvgsu-6f+mzjGVDWTVhFrhLY5MsNxEQBJYckKDpeaMAg@mail.gmail.com>
- <20180626210100.GA3682@sigill.intra.peff.net>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 26 Jun 2018 19:15:45 -0700
-Message-ID: <CABPp-BHgPgkgQj7i3rZtdbinVZvqH35uGraUK9doL-E8Y5QuSQ@mail.gmail.com>
-Subject: Re: [PATCH 29/29] t/test-lib: teach --chain-lint to detect broken
- &&-chains in subshells
-To:     Jeff King <peff@peff.net>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1752359AbeF0Eqz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Jun 2018 00:46:55 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56058 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751404AbeF0Eqz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jun 2018 00:46:55 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A12CC4F1C6;
+        Wed, 27 Jun 2018 00:46:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:date:message-id; s=sasl; bh=KAsjp2j1R9/VaRzFLp6zI8BntuE
+        =; b=u8sTBDPCIqhNWX3qUltjCKB4EcZ4cGSKRz+IbbSNW+F5yAwygnCO35ataWS
+        XkVyK8NXvCKbkDDjqgHE1ENVWFEQNDR6j4JiNPm2Y2GqoX8yaaCDNtLIreZh9vPC
+        GL9IoeQOuFXoN2YOclJvoOxhSKiMGfyy40a3wsY17xiWgt44=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:date:message-id; q=dns; s=sasl; b=Z10z+w9JMpzwVCQZ7Sxm8
+        WbIjEaoptq7Y+swqTt07sg/b/lBvS7drpuChCsq6wOIP2m1Zp8HOkEeIUCunjf2T
+        jnEuK4n1sUo54vK9JM9kCv/rGf/2JHEo840NeKtyv3FamrBduCNd+m16Q4wF1mPx
+        6gu0WYfOC6r8ig/H+vuod0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9867F4F1C3;
+        Wed, 27 Jun 2018 00:46:54 -0400 (EDT)
+Received: from morphine.paradise.teonanacatl.net (unknown [47.202.87.169])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0714D4F1C1;
+        Wed, 27 Jun 2018 00:46:53 -0400 (EDT)
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: [PATCH 1/2] gitignore.txt: clarify default core.excludesfile path
+Date:   Wed, 27 Jun 2018 00:46:51 -0400
+Message-Id: <20180627044652.12080-1-tmz@pobox.com>
+X-Mailer: git-send-email 2.18.0
+X-Pobox-Relay-ID: 1D44980A-79C5-11E8-8FC8-0DFB1A68708C-09356542!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 26, 2018 at 2:01 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Jun 26, 2018 at 04:46:18PM -0400, Eric Sunshine wrote:
+The default core.excludesfile path is $XDG_CONFIG_HOME/git/ignore.
+$HOME/.config/git/ignore is used if XDG_CONFIG_HOME is empty or unset,
+as described later in the document.
 
->> Some of these dangers can be de-thoothed during the linting phase by
->> defining do-nothing shell functions:
->>
->>     cp () { :; }
->>     mv () { :; }
->>     ln () { :; }
->>
->> That, at least, makes the scariest case ("rm") much less so.
->
-> Now that's an interesting idea. We can't catch every dangerous action
-> (notably ">" would be hard to override), but it should be pretty cheap
-> to cover some obvious ones.
->
-> -Peff
+Signed-off-by: Todd Zullinger <tmz@pobox.com>
+---
+ Documentation/gitignore.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Crazy idea: maybe we could defang it a little more thoroughly with
-something like the following (apologies in advance if gmail whitespace
-damages this):
+diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
+index ff5d7f9ed6..d107daaffd 100644
+--- a/Documentation/gitignore.txt
++++ b/Documentation/gitignore.txt
+@@ -7,7 +7,7 @@ gitignore - Specifies intentionally untracked files to ignore
+ 
+ SYNOPSIS
+ --------
+-$HOME/.config/git/ignore, $GIT_DIR/info/exclude, .gitignore
++$XDG_CONFIG_HOME/git/ignore, $GIT_DIR/info/exclude, .gitignore
+ 
+ DESCRIPTION
+ -----------
+-- 
+2.18.0
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 28315706be..7fda08a90a 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -675,7 +675,7 @@ test_run_ () {
-                trace=
-                # 117 is magic because it is unlikely to match the exit
-                # code of other programs
--               if test "OK-117" != "$(test_eval_ "(exit 117) &&
-$1${LF}${LF}echo OK-\$?" 3>&1)"
-+               if test "OK-117" != "$(test_eval_ "cd() { return 0; }
-&& PATH=/dev/null && export PATH && (exit 117) && $1${LF}${LF}echo
-OK-\$?" 3>&1)"
-                then
-                        error "bug in the test script: broken &&-chain
-or run-away HERE-DOC: $1"
-                fi
