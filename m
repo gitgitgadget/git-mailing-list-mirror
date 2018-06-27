@@ -2,77 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-8.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 37F0C1F516
-	for <e@80x24.org>; Wed, 27 Jun 2018 18:09:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E6B81F516
+	for <e@80x24.org>; Wed, 27 Jun 2018 18:15:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934983AbeF0SJz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Jun 2018 14:09:55 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:36936 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934797AbeF0SJy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jun 2018 14:09:54 -0400
-Received: by mail-wm0-f65.google.com with SMTP id n17-v6so5928496wmh.2
-        for <git@vger.kernel.org>; Wed, 27 Jun 2018 11:09:53 -0700 (PDT)
+        id S934999AbeF0SPW (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Jun 2018 14:15:22 -0400
+Received: from mail-pf0-f172.google.com ([209.85.192.172]:35655 "EHLO
+        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934492AbeF0SPV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jun 2018 14:15:21 -0400
+Received: by mail-pf0-f172.google.com with SMTP id c22-v6so1347006pfi.2
+        for <git@vger.kernel.org>; Wed, 27 Jun 2018 11:15:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=QSHGQy7+LccY8eq9T5k7QOD9w2VHdES7GESRRq6WBfw=;
-        b=SPxmdwUTu0n4X6lLogCM96jTiXzPgivFC4PwscjDUVs0FgNMCIqXjcuzHcn3f3yFND
-         Aefd792UWR/qh1BhYPvSQ47m0TcZSAfy1S8vOKg1zrdp/uTwh9v0yjDNMfoSlwttb/1I
-         2IzPlKVh8ph0Or4o8hG4c+Pxwu9/rGlYYwmy48b7uccCuU2WZ3nJpPmjdP3R7ZnrY0gW
-         6BZjMYUUXlD8TX/omAYqOYjzK7VJ5hfIOjJ2azj0ymeAB2zvYCujFAaullLnmwqmjADi
-         0m/Lm2VmY2p7iOChm80vgoFEPbcdcoSRTnGFHSEhjTp04OEkqSKtVFCdeY3dlgRBzdkU
-         A70w==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=RuveBp5cHRyXIZMTq5dV2Wo1RJ3gBxdDxQ9wvR9dV3E=;
+        b=EfWj39gz3u9uDub6K8a5JgHKhgWFum7AtNKYK875I/ptmc4KNjes3y08c7+baUbRr8
+         jX7eEYcpQNXzUHje4kFFMGR9QarOnivqIVv/s4EGck9DUrAHai8sBL8LCeQ8yLRKBVq4
+         2laXqielM0gyKSEku8FlRUwXEMiryxNNUS4T/Eho38vwZ7erwEkayu9Z6e3dedIzv8B8
+         Yrtqmw5cLU6shKJyY5WhLsQk6iLmYQw2aVy/MzZXy+Okhb42lX+9DRtVYe649pYDxcrx
+         RKDzld6d0wP9E93kUphSSWy7Yt2qcXdPjwzH8wYuuafmmgIaYtBRbrw1+lp+lwielLRJ
+         8j7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=QSHGQy7+LccY8eq9T5k7QOD9w2VHdES7GESRRq6WBfw=;
-        b=eGNn6efvXmq3O9v3vG0JSI9AZC4pL0H1Wa70nEaiAqsUc2ylw3i22rzVvANQcJbf2m
-         XAG5tKt8SgvhP2g5DaVCnNwYBN///eNi844ddYibPL6AazMBgT5ls77EJPiabmDdgU0S
-         NxrV5Qh87wU7ThBEapc3rcVNmzU5I5z3HcBvu0dE/vfeFHG7M/zAkyI50y8+i03+Nmq5
-         X1IvHYFIBgzrQqnaOmuksLIrRS2nbrl3NYw9L/96n2Lld6UZOZP8mCrZ0l0djY3zus6A
-         mqh4lIIXLVhLpaZYx2CFSHx+NjelkobF109941c9Ba6EGHa0IoeaVpQo14HeM4hJH/wM
-         1qVw==
-X-Gm-Message-State: APt69E34VL9ZjRlcIxnBL9sBNxuWsVIWi3Ix2bIQai5M1kVrhelh0GDe
-        0CqA0FB7sWY7pGZOHFJDMck=
-X-Google-Smtp-Source: AAOMgpfc7cdB5IxqcW51yqRbAGZm4NHyEhHO1jiU7Qexs8ND2E3GaR3AGNWjscw8CnFm+P0TwBD/Ig==
-X-Received: by 2002:a1c:e041:: with SMTP id x62-v6mr5441459wmg.155.1530122992984;
-        Wed, 27 Jun 2018 11:09:52 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 203-v6sm8993953wmp.23.2018.06.27.11.09.52
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=RuveBp5cHRyXIZMTq5dV2Wo1RJ3gBxdDxQ9wvR9dV3E=;
+        b=hzgr9cPo3WTlMvOwmpmzgnI0ik73K4smmT0TW6CkD54hjjCnnkLLMe5snBX3snufsT
+         rmrBtse2Y3EJwWH3EQd7wbYMCnuMzPT2xk1t30+mQc0VWN8v4u4EqsSUI3ZKJ5LydD2h
+         +lu9paIWCerNeNSdEG0lm52Qe8ao1FvNxvlvkK4s5w0926XMDzYc3NbYmpIgendwk5YH
+         PkHDxuP0FbhhZtSr2FZkb6t4HudGcZusnfQXxTPXWpL+KOkC+L9XTLty4aQ8M05bp0X9
+         CS69WjfMtSS/xascWaGWUvpLZ1okcj+CK9N3FPLRr1F7psYc6DdM00a0is4XCfGM9XmS
+         dkJA==
+X-Gm-Message-State: APt69E0VMYdl5ZbFDbDDkpij08ciVM+bkELN8dccabvh3SnZZ87yblvY
+        1VaRpSgZn4Sd5fKlF1L64P51/g==
+X-Google-Smtp-Source: ADUXVKIjH0jB3zmTFTXlqwXodt9Ne6WK2Cqntoc5GrUk4PYhi8Uy4+/peJj+Kn89ADXLfD2ZVJ15vQ==
+X-Received: by 2002:a65:4849:: with SMTP id i9-v6mr6149916pgs.350.1530123320630;
+        Wed, 27 Jun 2018 11:15:20 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id 81-v6sm9069050pfl.125.2018.06.27.11.15.18
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 27 Jun 2018 11:09:52 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com, sbeller@google.com,
-        jnareb@gmail.com, marten.agren@gmail.com,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v7 22/22] commit-graph: update design document
-References: <20180608135548.216405-1-dstolee@microsoft.com>
-        <20180627132447.142473-1-dstolee@microsoft.com>
-        <20180627132447.142473-23-dstolee@microsoft.com>
-Date:   Wed, 27 Jun 2018 11:09:51 -0700
-In-Reply-To: <20180627132447.142473-23-dstolee@microsoft.com> (Derrick
-        Stolee's message of "Wed, 27 Jun 2018 09:24:47 -0400")
-Message-ID: <xmqqmuvgf6ds.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Wed, 27 Jun 2018 11:15:19 -0700 (PDT)
+Date:   Wed, 27 Jun 2018 11:15:18 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, jonathantanmy@google.com, sbeller@google.com,
+        jrnieder@gmail.com
+Subject: Re: [PATCH v5 7/8] fetch-pack: put shallow info in output parameter
+Message-ID: <20180627181518.GI19910@google.com>
+References: <20180625185332.164142-1-bmwill@google.com>
+ <20180626205438.110764-1-bmwill@google.com>
+ <20180626205438.110764-8-bmwill@google.com>
+ <xmqqfu19i5rq.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqfu19i5rq.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+On 06/26, Junio C Hamano wrote:
+> Brandon Williams <bmwill@google.com> writes:
+> 
+> > Expand the transport fetch method signature, by adding an output
+> > parameter, to allow transports to return information about the refs they
+> > have fetched.  Then communicate shallow status information through this
+> > mechanism instead of by modifying the input list of refs.
+> 
+> Makes sense.  Would this mechanism also allow us to be more explicit
+> about the "tag following"?
+> 
 
-> The commit-graph feature is now integrated with 'fsck' and 'gc',
-> so remove those items from the "Future Work" section of the
-> commit-graph design document.
+Yes most likely.  We could change it so that when a packfile is sent the
+result of tag following could be sent along too (the actual tag refs
+themselves that is) instead of having the client rely on the ref
+advertisement for tag following.
 
-Nice ;-)
+-- 
+Brandon Williams
