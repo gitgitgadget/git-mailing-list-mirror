@@ -2,116 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 36BAE1F516
-	for <e@80x24.org>; Wed, 27 Jun 2018 07:49:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1FEBE1F516
+	for <e@80x24.org>; Wed, 27 Jun 2018 07:50:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752683AbeF0HtY (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Jun 2018 03:49:24 -0400
-Received: from mail-ua0-f195.google.com ([209.85.217.195]:43579 "EHLO
-        mail-ua0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752054AbeF0HtX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jun 2018 03:49:23 -0400
-Received: by mail-ua0-f195.google.com with SMTP id z16-v6so664103uaz.10
-        for <git@vger.kernel.org>; Wed, 27 Jun 2018 00:49:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=KxHjzKmYUIoRSQSG0sXugcGyXDlvWCcE+9rBTtUdAfE=;
-        b=ndW1FnwEx0UPLxNCtBDvbLp0kH70Lr87KHKY4NYKIFcQrWsk29HRrZ+1oqU+fkVPMW
-         cyheifrfjzh/gWWwECksJkezz73th9/uzgbJmuBIQq3V22hPV3lJPuG3zLlujlsN100Z
-         8tkKw1yVPMqmfl9ma8Rj2kggelE5JaBIPjm/x+kpCz1MkxRN66jrtz3SQMFGth6WpH06
-         SAGR/oVgmppbT4V1i2GsXsaUsez64acc0I0ENvgzUtWv8NJQqsd0sc77eJAjnS9+NV3s
-         +ngQ8C02sJgOk/PvKfMZ08yR0Qb8dEguFkd4HMeYv3b4Ge7t2+OhSMoRQB1vY6gM9JW6
-         /MgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=KxHjzKmYUIoRSQSG0sXugcGyXDlvWCcE+9rBTtUdAfE=;
-        b=n4Vb4aS3rbPn/TlkaRP/THRvR9A/Gj2CoX2OH65lPPnyGpP2H2LMewUCDtc9NvySdi
-         IkpLc3UnLpyrb1Zxp6/rEst6kDpylAP/6r6+3CJDWuqKCNR0x2ln3X3gQHXO+drEGq6N
-         4GvZa5hAEpdYegP5puzgnjEw39/hwY2b+dBuiZiwpe+R4FavNxAvRNbdxCKstejK+e+J
-         J58JeO1VFFJ9N37j/ZK21Tg9WC61CbQiU07IwxlH9SDwtwPX+5LqTtXUXWAo+ZP4UVrf
-         bijsLkXC2AM5OKpndzgn1RjQnNLm9DuEReosn4EhiHd7pDiEhKmTmk6FmgFYTeDaXnOW
-         t9tQ==
-X-Gm-Message-State: APt69E2bOTxTi3lEK5EKzdBwXhrEJnSnBrhs5x0GO55CHtqpxpcc2X9U
-        SJERVolsYlWQF69/1gqzDR50Jqxkm+HdR+3HAEE=
-X-Google-Smtp-Source: AAOMgpcapsw70ynejm33j6+yiSLRm1O0yvylPk0Kbl2i2364naFqI2wO7/hUT4774v0OsqMxCDJpNDJ1p8MSMtDm8dg=
-X-Received: by 2002:ab0:15ad:: with SMTP id i42-v6mr3005286uae.199.1530085762623;
- Wed, 27 Jun 2018 00:49:22 -0700 (PDT)
+        id S932262AbeF0HuY convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 27 Jun 2018 03:50:24 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5]:38216 "EHLO
+        mx0a-001b2d01.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S932196AbeF0HuX (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 27 Jun 2018 03:50:23 -0400
+Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
+        by mx0b-001b2d01.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w5R7n3Yr054547
+        for <git@vger.kernel.org>; Wed, 27 Jun 2018 03:50:22 -0400
+Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com [192.155.248.91])
+        by mx0b-001b2d01.pphosted.com with ESMTP id 2jv5ks2j9w-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+        for <git@vger.kernel.org>; Wed, 27 Jun 2018 03:50:22 -0400
+Received: from localhost
+        by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
+        for <git@vger.kernel.org> from <GROEGES@uk.ibm.com>;
+        Wed, 27 Jun 2018 07:50:22 -0000
+Received: from us1a3-smtp08.a3.dal06.isc4sb.com (10.146.103.57)
+        by smtp.notes.na.collabserv.com (10.106.227.143) with smtp.notes.na.collabserv.com ESMTP;
+        Wed, 27 Jun 2018 07:50:19 -0000
+Received: from us1a3-mail97.a3.dal06.isc4sb.com ([10.146.21.232])
+          by us1a3-smtp08.a3.dal06.isc4sb.com
+          with ESMTP id 2018062707501955-169670 ;
+          Wed, 27 Jun 2018 07:50:19 +0000 
+X-Disclaimed: 1
 MIME-Version: 1.0
-Received: by 2002:ab0:2310:0:0:0:0:0 with HTTP; Wed, 27 Jun 2018 00:49:22
- -0700 (PDT)
-In-Reply-To: <CAPig+cTwwuqPgF2NtGRgpcdjFqJK22+FFDV2c-20oQXFLEPaWQ@mail.gmail.com>
-References: <20180607050845.19779-1-newren@gmail.com> <20180627073623.31725-1-newren@gmail.com>
- <20180627073623.31725-2-newren@gmail.com> <CAPig+cTwwuqPgF2NtGRgpcdjFqJK22+FFDV2c-20oQXFLEPaWQ@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 27 Jun 2018 00:49:22 -0700
-Message-ID: <CABPp-BFkjF5z6axqW-v=zPq9U9sOQGpUKK+WvLknkkGzX-F4rA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] t3418: add testcase showing problems with rebase
- -i and strategy options
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Sensitivity: 
+Importance: Normal
+X-Priority: 3 (Normal)
+In-Reply-To: 
+References: 
+Subject: Use of new .gitattributes working-tree-encoding attribute across different
+ platform types
+From:   Steve Groeger <GROEGES@uk.ibm.com>
+To:     git@vger.kernel.org
+Date:   Wed, 27 Jun 2018 07:50:19 +0000
+X-Mailer: IBM iNotes ($HaikuForm 1011.1) | IBM Domino Build
+ SCN1809300_20180403T0021_FP2 April 18, 2018 at 18:02
+X-LLNOutbound: False
+X-TNEFEvaluated: 1
+x-cbid: 18062707-9951-0000-0000-0000086217DF
+X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
+ SC=0.415652; ST=0; TS=0; UL=0; ISC=; MB=0.000000
+X-IBM-SpamModules-Versions: BY=3.00009262; HX=3.00000241; KW=3.00000007;
+ PH=3.00000004; SC=3.00000266; SDB=6.01052962; UDB=6.00539845; IPR=6.00830886;
+ BA=6.00006022; NDR=6.00000001; ZLA=6.00000005; ZF=6.00000009; ZB=6.00000000;
+ ZP=6.00000000; ZH=6.00000000; ZU=6.00000002; MB=3.00021878; XFM=3.00000015;
+ UTC=2018-06-27 07:50:20
+X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
+X-IBM-AV-VERSION: SAVI=2018-06-27 05:54:47 - 6.00008627
+x-cbparentid: 18062707-9952-0000-0000-00006FF0172F
+Message-Id: <OFE4F44601.CBA38CA1-ON002582B9.002B0F2C-002582B9.002B0F31@notes.na.collabserv.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-06-27_02:,,
+ signatures=0
+X-Proofpoint-Spam-Reason: safe
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 27, 2018 at 12:45 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Wed, Jun 27, 2018 at 3:36 AM Elijah Newren <newren@gmail.com> wrote:
->> We are not passing the same args to merge strategies when we are doing an
->> --interactive rebase as we do with a --merge rebase.  The merge strategy
->> should not need to be aware of which type of rebase is in effect.  Add a
->> testcase which checks for the appropriate args.
->>
->> Signed-off-by: Elijah Newren <newren@gmail.com>
->> ---
->> diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
->> @@ -74,6 +74,38 @@ test_expect_success 'rebase --continue remembers merge strategy and options' '
->> +test_expect_failure 'rebase -i --continue handles merge strategy and options' '
->> +       rm -fr .git/rebase-* &&
->> +       git reset --hard commit-new-file-F2-on-topic-branch &&
->> +       test_commit "commit-new-file-F3-on-topic-branch-for-dash-i" F3 32 &&
->> +       test_when_finished "rm -fr test-bin funny.was.run funny.args" &&
->> +       mkdir test-bin &&
->> +       cat >test-bin/git-merge-funny <<-EOF &&
->> +       #!$SHELL_PATH
->> +       echo "\$@" >>funny.args
->> +       case "\$1" in --opt) ;; *) exit 2 ;; esac
->> +       case "\$2" in --foo) ;; *) exit 2 ;; esac
->> +       case "\$4" in --) ;; *) exit 2 ;; esac
->> +       shift 2 &&
->> +       >funny.was.run &&
->> +       exec git merge-recursive "\$@"
->> +       EOF
->> +       chmod +x test-bin/git-merge-funny &&
->> +       (
->> +               PATH=./test-bin:$PATH
->
-> Broken &&-chain (in subshell).
->
->> +               test_must_fail git rebase -i -s funny -Xopt -Xfoo master topic
->> +       ) &&
->> +       test -f funny.was.run &&
->> +       rm funny.was.run &&
->> +       echo "Resolved" >F2 &&
->> +       git add F2 &&
->> +       (
->> +               PATH=./test-bin:$PATH
->
-> Ditto.
->
+I could not find anything that would allow us to say 'if platform = z/OS then encoding=EBCDIC else encoding=ASCII'.   Is there a way this can be done? 
+ 
+Thanks
+ Steve Groeger
+ Java Runtimes Development
+ IBM Hursley
+ IBM United Kingdom Ltd
+ Tel: (44) 1962 816911 Mobex: 279990 Mobile: 07718 517 129
+ Fax (44) 1962 816800
+ Lotus Notes: Steve Groeger/UK/IBM
+ Internet: groeges@uk.ibm.com  
+   
+ 
+Unless stated otherwise above:
+ IBM United Kingdom Limited - Registered in England and Wales with number 741598.
+ Registered office: PO Box 41, North Harbour, Portsmouth, Hampshire PO6 3AU      
+Unless stated otherwise above:
+IBM United Kingdom Limited - Registered in England and Wales with number 741598. 
+Registered office: PO Box 41, North Harbour, Portsmouth, Hampshire PO6 3AU
 
-I'm just trying to prove how important your other patch series is.  ;-)
-
-Doh, sorry for the mistake.  Again.  I'll fix it up.
