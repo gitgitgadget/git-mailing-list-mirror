@@ -2,96 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9EA941F516
-	for <e@80x24.org>; Wed, 27 Jun 2018 20:58:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B20D1F516
+	for <e@80x24.org>; Wed, 27 Jun 2018 20:59:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965649AbeF0U6r (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Jun 2018 16:58:47 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62564 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965026AbeF0U6q (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jun 2018 16:58:46 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7D656F3B49;
-        Wed, 27 Jun 2018 16:58:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-        :cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to; s=sasl; bh=+l9R6Dlnp8LVrisM3AQ7iVs0Mgw=; b=SaVWYdA
-        EYJ3XLCUY1paEhJvdF/usyZW7wFlNVPIy++1lWaC6OFkt764a5y9/QtSC/vF6AB/
-        pg5afQsv0aNKJI2prwUyFWAHbf0t88YhKZT9oxOdJ0S5oQbLbyvSJI0ru72MhPsV
-        tFfPf16SASeiLabVUcS55azhoZK+Fm5+lo0Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-        :subject:message-id:references:mime-version:content-type
-        :in-reply-to; q=dns; s=sasl; b=Cs+VZQm/td9zHwmHEG+65vkjhvLlfoPPq
-        hJ9nC4VWdKyD+PEC93vAPpt95MDDYYSfPqXp+5GTVquxuHS8fiw2bUhY+GaiMyIs
-        UCw7cCHYaZZD93BtBQEt6GmyaLgkmsC82iUw+fxBW2qjYSmy9Y4RSrwd/sQXtFeZ
-        1W3YOXhCC0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 75D92F3B47;
-        Wed, 27 Jun 2018 16:58:45 -0400 (EDT)
-Received: from zaya.teonanacatl.net (unknown [98.111.125.125])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id ED124F3B45;
-        Wed, 27 Jun 2018 16:58:44 -0400 (EDT)
-Date:   Wed, 27 Jun 2018 16:58:43 -0400
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH] doc: substitute ETC_GIT(CONFIG|ATTRIBUTES) in generated
- docs
-Message-ID: <20180627205843.GM20217@zaya.teonanacatl.net>
-References: <20180627045637.13818-1-tmz@pobox.com>
- <20180627141430.GA13904@sigill.intra.peff.net>
- <xmqqlgb0goui.fsf@gitster-ct.c.googlers.com>
+        id S934504AbeF0U73 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Jun 2018 16:59:29 -0400
+Received: from mail-yw0-f181.google.com ([209.85.161.181]:47014 "EHLO
+        mail-yw0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933133AbeF0U71 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jun 2018 16:59:27 -0400
+Received: by mail-yw0-f181.google.com with SMTP id g123-v6so1192467ywf.13
+        for <git@vger.kernel.org>; Wed, 27 Jun 2018 13:59:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=LGmjKARWD/ILXphjIxuCeJIIbYhz+SEGSqYyegKQu+k=;
+        b=V/9aFtnRlytwWMBkH5m62oHKAGQuchZxxow00uS6YYs5jyzfV3AFKeJNI23ektxY6a
+         08wyfoK2uRzmYlwQRRAX4NETrvVkdC+8j/UNVAWDf66tNO4BgmvP+Zt84kJTl8ju9jEE
+         mjUyo2+uzGCi53yOut6ZNc+6+ZXRlIDT0zEaCG/UvA06/TZ3yuJBZ49SpYG5rIWm385W
+         WhhO7d9v1bPj7oB76F8iN3IuMwbGqAjJJ2A3qAGbEim78DZWWSaAp5fijg37aaEyN7dv
+         +dpeglZo9oOyUBCgIKWThZQOXVwVFAnH95iN/EtjaU5QViOV4Whng6XNwxfJypX08Emh
+         vvRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=LGmjKARWD/ILXphjIxuCeJIIbYhz+SEGSqYyegKQu+k=;
+        b=GOmO9tvHQOyk6vsHlb1QMRG6Ri9rfKLMJsHcOsxLKHLvreXlHVIEGCvFnmdcrXuTvx
+         vW/r45ziwFRlgGx5mNjYj9lR023LGk0odBPihpFsJCs9+JrX5gpDSDzDv+wxcAuGle2O
+         LFYNqdyWSJEfxiM9X8Z6FsVEq2N6vXSE+zHzZ7ZIT5F36Gdy1AxM++9fJPvdaNsRTD4y
+         9zNyAUQw0f5lpks0505wDStCByqGUeKZNd0tq2izgbY6TGBlv0Vi6Wgq1PmzB84HjiXP
+         V0SwMdvjBzKjfdZ4tmtFyJOogXviNqzqlVe7lHhx1kBp7T1mkSEyvZ7YGiAT0g6U37D1
+         UWDg==
+X-Gm-Message-State: APt69E2oNv3ogPicTLWABZ4xqoPDg5dOhYEygJzCHdAgtJ29/3j+5BWX
+        fYlcpSXulA0FRICzE2I1oudry+Q2ISYVUkYOXTzKf2Xn
+X-Google-Smtp-Source: AAOMgpdwTkFlEyMxOpNhfrzonDC8h253HxMA9toY+JGFsYxUc27KW1mqKkMC4zkCGidiMkV4DKreHZorM3Zd3IvvBI0=
+X-Received: by 2002:a0d:f442:: with SMTP id d63-v6mr3662073ywf.238.1530133166493;
+ Wed, 27 Jun 2018 13:59:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqlgb0goui.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.9.5 (2018-04-13)
-X-Pobox-Relay-ID: E143D66C-7A4C-11E8-A8C0-40570C78B957-09356542!pb-smtp2.pobox.com
+References: <20180625185332.164142-1-bmwill@google.com> <20180626205438.110764-1-bmwill@google.com>
+ <20180626205438.110764-3-bmwill@google.com> <xmqqsh59i6jx.fsf@gitster-ct.c.googlers.com>
+ <20180627180557.GG19910@google.com> <xmqq7emkf4da.fsf@gitster-ct.c.googlers.com>
+ <20180627204630.GK19910@google.com>
+In-Reply-To: <20180627204630.GK19910@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 27 Jun 2018 13:59:15 -0700
+Message-ID: <CAGZ79kbsgnSK3Lqr9waqD+RdVKntbf5G77-eQv0NM-LPTNeFvg@mail.gmail.com>
+Subject: Re: [PATCH v5 2/8] upload-pack: implement ref-in-want
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
-> 
->> Specifically, I'm thinking of:
->>
->>   1. The pre-built documentation that Junio builds for
->>      quick-install-doc. This _could_ be customized during the "quick"
->>      step, but it's probably not worth the effort. However, we'd want
->>      some kind of generic fill-in then, and hopefully not
->>      "/home/jch/etc" or something.
-> 
-> That is very likely to happen, actually X-<.
+> Yeah after thinking more about this
 
-Obviously, we don't want the end result to cause regressions
-in the common case or any burden on you.  Would setting the
-ETC_GIT(CONFIG|ATTRIBUTES) variables in the dist-doc target
-alleviate that concern?
+I wonder if we have some mental model that we want to teach to the users?
+What is the fetch command (using the ref-in-want capability) supposed to do?
+* update to the latest state observed by the latest remote talked to?
+* update to some approximate state that is converged from multiple
+  remotes?
+* update to a state that the first remote had, that we talked to
 
-Alternately, we can make the default use generic paths and
-require some other knob to enable substituting the actual
-paths when building documentation.
+Having such a model would make it easier for me to follow this discussion.
 
-I tend to think that the default should be to build
-documentation that is accurate for that build, but since
-it's something I'll set once for my package builds it's not
-a big deal either way to me.
+> I agree, we should have the client
+> fail out and require that the server MUST not send additional refs.
 
--- 
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Einstein argued that there must be simplified explanations of nature,
-because God is not capricious or arbitrary. No such faith comforts the
-software engineer.
-    -- Fred Brooks
+This is reasoned for by the way we evolve the client, not some state
+the user expects to see short or longterm?
 
+> This can of course be loosened through a capability if we want to do
+> something else in the future.  Thanks for sanity checking me :)
+
+ok, that is a sensible way to go forward.
