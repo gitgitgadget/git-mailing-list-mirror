@@ -2,103 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 484E21F516
-	for <e@80x24.org>; Wed, 27 Jun 2018 18:18:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2AD21F516
+	for <e@80x24.org>; Wed, 27 Jun 2018 18:24:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965689AbeF0SSN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Jun 2018 14:18:13 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:46492 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965557AbeF0SSM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jun 2018 14:18:12 -0400
-Received: by mail-pf0-f196.google.com with SMTP id q1-v6so1341651pff.13
-        for <git@vger.kernel.org>; Wed, 27 Jun 2018 11:18:12 -0700 (PDT)
+        id S965542AbeF0SYN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Jun 2018 14:24:13 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:33986 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S964840AbeF0SYM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jun 2018 14:24:12 -0400
+Received: by mail-qt0-f194.google.com with SMTP id d23-v6so2528117qtp.1
+        for <git@vger.kernel.org>; Wed, 27 Jun 2018 11:24:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=YTNOLDgdLkOer9tw7oOlKvcHbSJaW45oSgB+fDRD4O4=;
-        b=cZUyVEaWHX2xOc4P2rI+/1mTBFC8bKtPaNfcYRX4Aik+y9WT4FQH+XUGlJ/P80RqSx
-         pZGHsHSg5xI54BOCb7BHA3tpqCAKhAJCtpCYeB0fW8R8IDmebRyzZshfpTogGoz8pII4
-         481lsZzUztz9mDHhTOIGhR0Osf3yyraQ7q/BPxLeQVyvLOiHirwT5nLU+xbclAS9YR0n
-         QrKbjUS0WxNS4vROvzxkSad/4JnDq/M8VW6C2Itm027j/7fvOcJZo/FV76x6SiuiQoX/
-         wY4yce3+0gNgQUDx7Tz2hE5VqM/+kbTIJ4C0A+niGV24M5Il+RsFaMJ6CWUOShhA5Nm4
-         jGbw==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=K8VRJxU0TCD6FuxDRDpDXUx8FmPwed6p3/fi/I4Edf0=;
+        b=YoebqsaKHm0OCl0EmsheFeIWx71i7AA5p/a4KWp8NR1yGdS+AGiJGMlGFPeDk/xslZ
+         VV2fHyMXzjCnWPRdayJVKKLIiioFl2VM98F7d21L7ErL7H2YJuYSjZpQOb8RBmatS2jY
+         D+Lakv/4iidvmMfpHDSLiUSPDnbYrtyeknywh4cKkb9aLlqjKhT2CF93OXKJA4TglRni
+         jIwD/94+I8e+y/7NupS01QqbrpalJ3TV41jkZXZtdAjljTMvTxpBFJor94sakAwrrqaH
+         v9nzP7yuCs+9XOqJPPa5Cu3rQ19DB/HTGnY0q+W3QON1MeUYwfv5zwelJ0saomgWUxPu
+         O5Dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=YTNOLDgdLkOer9tw7oOlKvcHbSJaW45oSgB+fDRD4O4=;
-        b=ZSzpxT0Rn4dBZrLLdXBxLYD8/DXRCmr9BSwJqmk3xUGPpiMCmoPC9mMGcKJz9RtsDY
-         MSfiFmY5z1exONdnSIIEytnNxOLBYw0LIg9iL/Az4ZF1eQt2P7T71PyLZx723qlMTus+
-         d0jFT19mEH2FGSdlg23hBie1LYAdUXvS7RQa+6oUO3Wdy23HMN8gExsyQlVqD9gQtv22
-         +y+IosKQKxOrNtr7Chr/AAvts6mlL4R2z5yfWIlaJzFXulKRmvsHaRfYmA6H+kpZ9sma
-         AwXQJygYhEVfTKFl8LXFHgrLisU2rkbFsT43UCL/yXOuNy9kWQXt1mlsKb3JLG2+d63R
-         heiw==
-X-Gm-Message-State: APt69E1DKdExIMXCM1zEnLCNFptIcnLqX/TxJTRQAfGh35oEygtQEI/i
-        cXaQHHDDyk4seet9DG2XhN+6sA==
-X-Google-Smtp-Source: ADUXVKL8eXIVWUypvMHCpZw4nzHUy3PcSrOTInh9qmmtm3J2FitUgmtoobXBrfZQ8aQ3p6i4BaDv2A==
-X-Received: by 2002:a63:41c6:: with SMTP id o189-v6mr6264450pga.323.1530123491469;
-        Wed, 27 Jun 2018 11:18:11 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id z19-v6sm7056119pfm.187.2018.06.27.11.18.09
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 27 Jun 2018 11:18:10 -0700 (PDT)
-Date:   Wed, 27 Jun 2018 11:18:09 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, sbeller@google.com,
-        jrnieder@gmail.com
-Subject: Re: [PATCH v5 8/8] fetch-pack: implement ref-in-want
-Message-ID: <20180627181809.GJ19910@google.com>
-References: <20180626205438.110764-9-bmwill@google.com>
- <20180627180943.35472-1-jonathantanmy@google.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=K8VRJxU0TCD6FuxDRDpDXUx8FmPwed6p3/fi/I4Edf0=;
+        b=Q+3WOVew1Ne8BQvQgWqWeJm0qAOYRjnIyxCu0CwEDO9AkTnM546/2ObexdJFAp7O2s
+         tI9mHvUF7NmjYz88y+gt7/LZGXQJ5Jrl6/IcqcjLDGcvA7B8LpSelZHnmk96WH5L7F8d
+         gBwvkL28NbGTh1qiFI9fhmfRGMrGTY6dW5RyjhjeZu/yzUdbn8vH1+Eyd+IesOQTeSet
+         +GB6/exa7blVtcSYSMF9LAXiAu90ADAR29TPDpEu/Sb43wCT/Dp0o3A7piWyorE08CI0
+         uLf9uk/NOcKtJZnfrgwusl8vAODkMtKu3XJl2pwqeb1MCuPYZsXMZPTIhiJbOAfZXYb1
+         Mo+w==
+X-Gm-Message-State: APt69E3BFRGvcsWQlS8vQl3gyeV76iwJ2I4pe5tOO89WvQk0yz+Juxe+
+        B0XVq6HayKjrpw+V+v8Rtz4=
+X-Google-Smtp-Source: AAOMgpfz1fgSv85Zc+bio01lbcgFoNLWId5buYBqUQ5ArACcOCO4sq76l6Xsmu82voRljH9sjMIpsg==
+X-Received: by 2002:aed:2a82:: with SMTP id t2-v6mr6528034qtd.203.1530123851544;
+        Wed, 27 Jun 2018 11:24:11 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:85f4:e33:9587:4612? ([2001:4898:8010:0:6f2a:e33:9587:4612])
+        by smtp.gmail.com with ESMTPSA id m128-v6sm3019187qkd.33.2018.06.27.11.24.10
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 27 Jun 2018 11:24:10 -0700 (PDT)
+Subject: Re: [PATCH v7 21/22] gc: automatically write commit-graph files
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, avarab@gmail.com, sbeller@google.com,
+        jnareb@gmail.com, marten.agren@gmail.com,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <20180608135548.216405-1-dstolee@microsoft.com>
+ <20180627132447.142473-1-dstolee@microsoft.com>
+ <20180627132447.142473-22-dstolee@microsoft.com>
+ <xmqqr2ksf6ed.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <7ac29eb4-6df7-02a2-e34b-e8622dc0a012@gmail.com>
+Date:   Wed, 27 Jun 2018 14:24:09 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180627180943.35472-1-jonathantanmy@google.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+In-Reply-To: <xmqqr2ksf6ed.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/27, Jonathan Tan wrote:
-> > +test_expect_success 'setup repos for change-while-negotiating test' '
-> 
-> The tests that follow are basic ref-in-want tests, not tests on a repo
-> that changes during negotiation - this would be just "setup repos for
-> fetch tests".
+On 6/27/2018 2:09 PM, Junio C Hamano wrote:
+> Derrick Stolee <stolee@gmail.com> writes:
+>
+>> @@ -40,6 +41,7 @@ static int aggressive_depth = 50;
+>>   static int aggressive_window = 250;
+>>   static int gc_auto_threshold = 6700;
+>>   static int gc_auto_pack_limit = 50;
+>> +static int gc_write_commit_graph = 0;
+> Please avoid unnecessary (and undesirable) explicit initialization
+> to 0.  Instead, let BSS to handle it by leaving " = 0" out.
+>
+>> +test_expect_success 'check that gc computes commit-graph' '
+>> +	cd "$TRASH_DIRECTORY/full" &&
+>> +	git commit --allow-empty -m "blank" &&
+>> +	git commit-graph write --reachable &&
+>> +	cp $objdir/info/commit-graph commit-graph-before-gc &&
+>> +	git reset --hard HEAD~1 &&
+>> +	git config gc.writeCommitGraph true &&
+>> +	git gc &&
+>> +	cp $objdir/info/commit-graph commit-graph-after-gc &&
+>> +	! test_cmp commit-graph-before-gc commit-graph-after-gc &&
+> The set of commits in the commit graph will chanbe by discarding the
+> (old) tip commit, so the fact that the contents of the file changed
+> across gc proves that "commit-graph write" was triggered during gc.
+>
+> Come to think of it, do we promise to end-users (in docs etc.) that
+> commit-graph covers *ONLY* commits reachable from refs and HEAD?  I
+> am wondering what should happen if "git gc" here does not prune the
+> reflog for HEAD---wouldn't we want to reuse the properties of the
+> commit we are discarding when it comes back (e.g. you push, then
+> reset back, and the next pull makes it reappear in your repository)?
 
-That looks like a copy-paste error.
+Today I learned that 'gc' keeps some of the reflog around. That makes 
+sense, but I wouldn't optimize the commit-graph file for this scenario.
 
-> 
-> > +test_expect_success 'fetching with exact OID' '
-> > +	rm -rf local &&
-> > +	cp -r "$LOCAL_PRISTINE" local &&
-> > +	git -C local fetch origin $(git -C "$REPO" rev-parse d):refs/heads/actual &&
-> > +
-> > +	git -C "$REPO" rev-parse "d" >expected &&
-> > +	git -C local rev-parse refs/heads/actual >actual &&
-> > +	test_cmp expected actual
-> > +'
-> 
-> Also verify that "want-ref refs/tags/d" is being sent over the wire, and
-> not any "want ...". (If not we can't distinguish these from the usual
-> non-want-ref behavior.) Same comment for the other tests.
+> I guess what I am really questioning is if it is sensible to define
+> "--reachable" as "starting at all refs", unlike the usual connectivity
+> rules "gc" uses, especially when this is run from inside "gc".
 
-I think your mistaken on how what this test is looking for.  no want-ref
-line is going to be sent because we're requesting an exact OID here, not
-a ref.  But I can add checks for want-ref in the tests that should be
-sending want-ref.
+It is sensible to me, especially because we only lose performance if we 
+visit those other commits that are still in the object database. By 
+writing the commit-graph on 'gc' and not during 'fetch', we are already 
+assuming the commit-graph will usually be behind the set of commits that 
+the user cares about, by design.
 
-> 
-> Other than that (and my other comments), this patch series looks good.
+An alternate view on the decision will need help answering from others 
+who know more than me: In fetch negotiation, does the client report 
+commits in the reflog as 'have's or do they get re-downloaded on a 
+resulting 'git pull'?
 
--- 
-Brandon Williams
+>
+>> +	git commit-graph write --reachable &&
+>> +	test_cmp commit-graph-after-gc $objdir/info/commit-graph
+> This says that running "commit-graph write" twice without changing
+> the topology MUST yield byte-for-byte identical commit-graph file.
+>
+> Is that a reasonable requirement on the future implementation?  I am
+> wondering if there will arise a situation where you need to store
+> records in "some" fixed order but two records compare "the same" and
+> tie-breaking them to give stable sort is expensive, or something
+> like that, which would benefit if you leave an escape hatch to allow
+> two logically identical graphs expressed bitwise differently.
+
+Since the file format allows flexibility in the order of the chunks, it 
+is possible to have bitwise-different files that represent the same set 
+of data. However, I would not want git to provide inconsistent output 
+given the same set of commits covered by the file.
+
+Thanks,
+-Stolee
