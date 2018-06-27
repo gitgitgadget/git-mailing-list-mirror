@@ -2,113 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA6F61F516
-	for <e@80x24.org>; Wed, 27 Jun 2018 15:48:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 206521F516
+	for <e@80x24.org>; Wed, 27 Jun 2018 16:26:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754575AbeF0Psa (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Jun 2018 11:48:30 -0400
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:50800 "EHLO
-        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S965400AbeF0PsX (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 27 Jun 2018 11:48:23 -0400
-Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w5RFhMIc023914;
-        Wed, 27 Jun 2018 08:48:07 -0700
-Authentication-Results: palantir.com;
-        spf=softfail smtp.mailfrom=newren@gmail.com
-Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2ju8sxu2jm-1;
-        Wed, 27 Jun 2018 08:48:07 -0700
-Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 6E7D722378E1;
-        Wed, 27 Jun 2018 08:48:07 -0700 (PDT)
-Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
-        by smtp.yojoe.local (Postfix) with ESMTP id 6336B2CDE86;
-        Wed, 27 Jun 2018 08:48:07 -0700 (PDT)
-From:   Elijah Newren <newren@gmail.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, phillip.wood@dunelm.org.uk,
-        johannes.schindelin@gmx.de, sunshine@sunshineco.com,
-        szeder.dev@gmail.com, Elijah Newren <newren@gmail.com>
-Subject: [PATCH v3 1/2] t3418: add testcase showing problems with rebase -i and strategy options
-Date:   Wed, 27 Jun 2018 08:48:03 -0700
-Message-Id: <20180627154804.3743-2-newren@gmail.com>
-X-Mailer: git-send-email 2.18.0.9.g431b2c36d5
-In-Reply-To: <20180627154804.3743-1-newren@gmail.com>
-References: <20180627073623.31725-1-newren@gmail.com>
- <20180627154804.3743-1-newren@gmail.com>
-X-Proofpoint-SPF-Result: softfail
-X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-06-27_03:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1806210000 definitions=main-1806270170
+        id S934302AbeF0Q0G (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Jun 2018 12:26:06 -0400
+Received: from mail-wm0-f43.google.com ([74.125.82.43]:35162 "EHLO
+        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753013AbeF0Q0F (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jun 2018 12:26:05 -0400
+Received: by mail-wm0-f43.google.com with SMTP id z137-v6so6181491wmc.0
+        for <git@vger.kernel.org>; Wed, 27 Jun 2018 09:26:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=0pp/tluiRS7k6QXq4g2YxPFun/JyM93DUOQq9pN3NSA=;
+        b=bqZ1geOWFxjHqQ+07Vqfywjc+Tiktp/IILoEFAkj6zIpQzTLKu8GYuYhG6KCjpnFWJ
+         tYeCk/rRAyCuyFCF+JclE5U3JbnaPyUjkKPT/mN3c9OwsBgWUv9A8OC+5vTfAeEJq6y8
+         ekySZTFuzCGMyjd8qb2p4EYdUF5OM7JN7/sO3IqaNd/sNvCFBcuNQ+jEz7XixKMet2Ly
+         YA7NdIxpnFSecGKUwDedGLxdf/q5YKRRAXg54kiMBlblu+sQh/SpNUT3xnKLKsZtUVWV
+         MIZIAcRLLbFR65rrylSlj08XmkqQ+aDDQKq5VW1Ahuz3ulxPoGGzTGwhOTtG37PfnoSO
+         z5mg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=0pp/tluiRS7k6QXq4g2YxPFun/JyM93DUOQq9pN3NSA=;
+        b=LeDzsm9FUz4CVJ91sLtw+BhibRf5PlizM1soEYjr5dusasPlqmKPIvxMGPqAxImhHH
+         oDUZT+NPhlCq7kHEmp+q0wzSpzjOdt6P+kyn7S7KhS1FPNtcZggYpjs1Xuf/kN8YGuTS
+         SaVmgp/Kjze/mdrQ5HsyKh1xo4qwDcfkkOK9//8C9eQ4xtlZ9WMw0AgdF9dUYKfeLcV4
+         x0J6AGHeaHbS3GnWGsrwT6nBQr64n+Ox7HpwhmpQLq7CCwq2zxU5narHuKETKkVEmvbc
+         MSybus5x2Vaz7GxCAv6uKQuYTZg7XkW1ye3/0UTV9DpfBR50gKVYytHTEKZSQ/CbrFCB
+         8w+w==
+X-Gm-Message-State: APt69E3cA10qZcEJO2aHadAeuOnh+kBAGnF20yDDx2UeiQk8FcO60+SN
+        lrEfTCUF3rEEYKwgJpzBjO0=
+X-Google-Smtp-Source: AAOMgpe4dEwBPkildDi0LB5Zca07PcruPzC1SXjjqXgv6IX9zYrhNUdhD1jVL2w6wgFqmFETBO3ELw==
+X-Received: by 2002:a1c:3710:: with SMTP id e16-v6mr5614204wma.58.1530116763905;
+        Wed, 27 Jun 2018 09:26:03 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id m10-v6sm3134854wrj.35.2018.06.27.09.26.02
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 27 Jun 2018 09:26:02 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Tiago Botelho <tiagonbotelho@gmail.com>,
+        git <git@vger.kernel.org>,
+        Harald Nordgren <haraldnordgren@gmail.com>,
+        Tiago Botelho <tiagonbotelho@hotmail.com>
+Subject: Re: [RFC PATCH v5] Implement --first-parent for git rev-list --bisect
+References: <20180622123945.68852-1-tiagonbotelho@hotmail.com>
+        <xmqq4lhqpy80.fsf@gitster-ct.c.googlers.com>
+        <CAP8UFD3oEjW75qsk4d_wqo2V8PmzMvZLshutw20CD7AU4b4ocg@mail.gmail.com>
+        <nycvar.QRO.7.76.6.1806261540340.21419@tvgsbejvaqbjf.bet>
+        <CAP8UFD1TeC4czp_8HCRw5CtjGO78A8gRezw_xspnm4MXuhQswg@mail.gmail.com>
+        <xmqqa7rhi40f.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1806271254210.21419@tvgsbejvaqbjf.bet>
+Date:   Wed, 27 Jun 2018 09:26:02 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.1806271254210.21419@tvgsbejvaqbjf.bet>
+        (Johannes Schindelin's message of "Wed, 27 Jun 2018 13:48:43 +0200
+        (DST)")
+Message-ID: <xmqqwoukgpr9.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We are not passing the same args to merge strategies when we are doing an
---interactive rebase as we do with a --merge rebase.  The merge strategy
-should not need to be aware of which type of rebase is in effect.  Add a
-testcase which checks for the appropriate args.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- t/t3418-rebase-continue.sh | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+> 	git rev-list --bisect-all --first-parent F..E >revs &&
+> 	# only E, e1..e8 should be listed, nothing else
+> 	test_line_count = 9 revs &&
+> 	for rev in E e1 e2 e3 e4 e5 e6 e7 e8
+> 	do
+> 		grep "^$(git rev-parse $rev) " revs || return
+> 	done
+>
+> I am faster by... a lot. Like, seconds instead of minutes.
 
-diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
-index 03bf1b8a3b..11546d6e14 100755
---- a/t/t3418-rebase-continue.sh
-+++ b/t/t3418-rebase-continue.sh
-@@ -74,6 +74,38 @@ test_expect_success 'rebase --continue remembers merge strategy and options' '
- 	test -f funny.was.run
- '
- 
-+test_expect_failure 'rebase -i --continue handles merge strategy and options' '
-+	rm -fr .git/rebase-* &&
-+	git reset --hard commit-new-file-F2-on-topic-branch &&
-+	test_commit "commit-new-file-F3-on-topic-branch-for-dash-i" F3 32 &&
-+	test_when_finished "rm -fr test-bin funny.was.run funny.args" &&
-+	mkdir test-bin &&
-+	cat >test-bin/git-merge-funny <<-EOF &&
-+	#!$SHELL_PATH
-+	echo "\$@" >>funny.args
-+	case "\$1" in --opt) ;; *) exit 2 ;; esac
-+	case "\$2" in --foo) ;; *) exit 2 ;; esac
-+	case "\$4" in --) ;; *) exit 2 ;; esac
-+	shift 2 &&
-+	>funny.was.run &&
-+	exec git merge-recursive "\$@"
-+	EOF
-+	chmod +x test-bin/git-merge-funny &&
-+	(
-+		PATH=./test-bin:$PATH &&
-+		test_must_fail git rebase -i -s funny -Xopt -Xfoo master topic
-+	) &&
-+	test -f funny.was.run &&
-+	rm funny.was.run &&
-+	echo "Resolved" >F2 &&
-+	git add F2 &&
-+	(
-+		PATH=./test-bin:$PATH &&
-+		git rebase --continue
-+	) &&
-+	test -f funny.was.run
-+'
-+
- test_expect_success 'rebase passes merge strategy options correctly' '
- 	rm -fr .git/rebase-* &&
- 	git reset --hard commit-new-file-F3-on-topic-branch &&
--- 
-2.18.0.9.g431b2c36d5
-
+I'm fine either way.  I just thought you would not want 9 separate
+invocations of grep ;-)
