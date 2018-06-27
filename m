@@ -2,80 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 722181F516
-	for <e@80x24.org>; Wed, 27 Jun 2018 22:58:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A8521F516
+	for <e@80x24.org>; Wed, 27 Jun 2018 23:16:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751891AbeF0W6X (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Jun 2018 18:58:23 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:33434 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751668AbeF0W6W (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jun 2018 18:58:22 -0400
-Received: by mail-wr0-f196.google.com with SMTP id k7-v6so55147wrq.0
-        for <git@vger.kernel.org>; Wed, 27 Jun 2018 15:58:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=3Nz6OrvgU8CnKTBgZd5s7i3O+6rvuFcpx3IvUhMZMN0=;
-        b=QnIxkPK7wFnMRPzrlramNjxUmQQakAKtpdGJXzEMHQzCp9D9q5dD9ZtGGGjAxkDG0C
-         0peK2vlh9SUqanw1GtwZcLJ/bcWKu5v8TmjbxMn+f9cugYv4XwHldio1hWfKqIBbROW7
-         qobQbIW4qi7m6c1AJhVI/w6Si9aclk5goxtsyQK+1B9WkdGr0F72+tL3WQUnT8VmAVyy
-         7qp157wb5Ja9fxg+iofthffrTzu5faMJVGYZ2PC0FpoSuTHQEQtxgkCsyZUtpyCWTCtk
-         q4DnWdwjtszVH0e8nKmI2LDNfSXq7RWGY/9zzJT6UTgv2F3ne4xj3+HYPWzDfyLH3Cx3
-         qJzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=3Nz6OrvgU8CnKTBgZd5s7i3O+6rvuFcpx3IvUhMZMN0=;
-        b=p5egCqeMFFiC4TvadkT6T7rr/AKSeZnv/TykcC5lAH4lrq8feeyufpaPYXYbij8OJb
-         rZqiupHyW6J3dtDnxj+ABA7RWXJMAzLzbySqTX2U5+dQA3u7s7/XuGzTFmz+k/OlfN0H
-         yGOcq1zTcJBYiKZNV1+kLwvt8Q1KWjHiF9vGtdfC8tTCaHGeo5oJDkUfL0U8lkXUVqa0
-         7c7gpv18MwpkMdb6ZEdLeMOiZG1eQtKVPBpv3KupSWlCiSXFuFqpm3zPiBydoM4n01zg
-         Im0mA7DCfGEmF86b3z/xB5JCQ1oHcd7s+hoaQaXsLyEa/9NzG6KVQjqNcdy4HXVyN/f+
-         DzKA==
-X-Gm-Message-State: APt69E3u1+uHFZkIgXpmYLvHWr2g9J6tDV8KHBvPa80vzPQsE5qqKZi/
-        tWB6WmvUZHXnoIEpdJ9pdik=
-X-Google-Smtp-Source: AAOMgpc2SvFINoIODYJQrXsljvwjlejuxlByuDmFiyRcyMRmeCCU/tMFPCj/UM2CPCde552iehv1Fw==
-X-Received: by 2002:a5d:4306:: with SMTP id h6-v6mr6797541wrq.58.1530140301304;
-        Wed, 27 Jun 2018 15:58:21 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id a184-v6sm6583456wmf.30.2018.06.27.15.58.20
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 27 Jun 2018 15:58:20 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] fetch: when deepening, check connectivity fully
-References: <xmqqa7rgdlwf.fsf@gitster-ct.c.googlers.com>
-        <20180627225105.155996-1-jonathantanmy@google.com>
-Date:   Wed, 27 Jun 2018 15:58:20 -0700
-In-Reply-To: <20180627225105.155996-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Wed, 27 Jun 2018 15:51:05 -0700")
-Message-ID: <xmqqsh57degj.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1752272AbeF0XQO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Jun 2018 19:16:14 -0400
+Received: from pug.qqx.org ([50.116.43.67]:42760 "EHLO pug.qqx.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752172AbeF0XQN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jun 2018 19:16:13 -0400
+X-Greylist: delayed 376 seconds by postgrey-1.27 at vger.kernel.org; Wed, 27 Jun 2018 19:16:13 EDT
+Received: by pug.qqx.org (Postfix, from userid 1000)
+        id 464E71FC52; Wed, 27 Jun 2018 19:09:57 -0400 (EDT)
+Date:   Wed, 27 Jun 2018 19:09:57 -0400
+From:   Aaron Schrab <aaron@schrab.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, sunshine@sunshineco.com,
+        bturner@atlassian.com, Marc Strapetz <marc.strapetz@syntevo.com>
+Subject: Re: [PATCH v3] Documentation: declare "core.ignorecase" as internal
+ variable
+Message-ID: <20180627230957.GB15174@pug.qqx.org>
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        sunshine@sunshineco.com, bturner@atlassian.com,
+        Marc Strapetz <marc.strapetz@syntevo.com>
+References: <7f6b2a42-334d-9443-7b89-625069931ca7@syntevo.com>
+ <c899089d-c195-26b5-66ce-de0273a7152b@syntevo.com>
+ <xmqqzhzgdoyb.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <xmqqzhzgdoyb.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10+54 (a2b9571d3) (2018-06-27)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+At 12:11 -0700 27 Jun 2018, Junio C Hamano <gitster@pobox.com> wrote:
+>Hmph.  Do other people have difficulty applying this patch to their
+>trees?  It is just several lines long so I could retype it myself,
+>but I guess "Content-Type: text/plain; charset=utf-8; format=flowed"
+>has destroyed formatting of the patch rather badly.
 
->> Hmph, don't we quote these in the trace output, requiring us to grep
->> for "'--not' '--all'" or somesuch?  
->
-> I thought so too, but this was changed in commit 1fbdab21bb ("trace:
-> avoid unnecessary quoting", 2018-01-16).
+Yes, format=flowed requires lines that start with a space (along with 
+'>' or 'From ') to be space-stuffed, adding a leading space. This will 
+affect context lines in patches.
 
-Yup; fortunately or unfortunately, that and the "partial clone"
-stuff are among the differences between v2.16 track and newer, so we
-can just forget about v2.16.x and lower and target this fix to
-maint-2.17 and above.
+I was able to apply it cleanly (I think) by sending the message to: 
 
+  sed '/@@/,$s/^  / /' | git am
+
+That's replacing two leading spaces with one.
