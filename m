@@ -1,79 +1,113 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
-X-Spam-Level: **
+X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=2.8 required=3.0 tests=BAYES_50,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIM_INVALID,UNWANTED_LANGUAGE_BODY shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9A3B71F516
-	for <e@80x24.org>; Tue, 26 Jun 2018 23:36:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5644C1F516
+	for <e@80x24.org>; Wed, 27 Jun 2018 00:23:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752242AbeFZXg5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Jun 2018 19:36:57 -0400
-Received: from de15.mihosting.net ([46.4.80.233]:34784 "EHLO
-        de15.mihosting.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751486AbeFZXg4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jun 2018 19:36:56 -0400
-X-Greylist: delayed 3079 seconds by postgrey-1.27 at vger.kernel.org; Tue, 26 Jun 2018 19:36:56 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=gonaturalcaribe.com; s=default; h=Content-transfer-encoding:Content-type:
-        Date:Subject:Reply-To:To:From:Mime-Version:Message-Id:Sender:Cc:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=sTrqS4Aa1jztlEHysoYhPBVxofgSXe6p6j67A5wLHgg=; b=REtfuTQ5h3B/N7MuGhkTw6Blb0
-        D0X5Z0AgbWtBQpFHQUg6xaA+8jURycTpPRPiqG98lhpAnes9tkLH1dlmQno8HFNWWSe+b/OfdCrpi
-        mLJ2QjLdlzmgAI2IGVNCEiwYnyGtebGT8BJdZ1k0R67xMi5HUG0IUOkZc/TCrKm6iIG5x78KJXPIK
-        UAjsy6GHPQym6ndMimkw0yB5t1ISL5iUcAB6Ruol3aJ3duaTnCePiyBiWNxXgQripMeA4dFuL8UJk
-        BGcGYeLL/1PT9UOOjI8lkcO17uAXjktTmrIwzCKp7ZCfpqQzt+z+ySuhWgRMWEaeI3axdweLHFT/q
-        Twh0qVpA==;
-Received: from [77.234.45.168] (port=15506 helo=[100.120.224.39])
-        by de15.mihosting.net with esmtpsa (TLSv1:DHE-RSA-AES256-SHA:256)
-        (Exim 4.91)
-        (envelope-from <support46@gonaturalcaribe.com>)
-        id 1fXwiO-002bWS-95
-        for git@vger.kernel.org; Tue, 26 Jun 2018 22:45:36 +0000
-Message-Id: <TC54DHAE-V58S-RG4U-MM2R-U5TCT35OSUIO@gonaturalcaribe.com>
-Mime-Version: 1.0
-From:   Post Mailer <support46@gonaturalcaribe.com>
-To:     "git" <git@vger.kernel.org>
-Reply-To: mdcoke@europe.com
-Subject: Sie da....
-Date:   Wed, 27 Jun 2018 00:45:30 +0200
-X-Bounce-Tracking-Info: <Z2l0CQkJZ2l0QHZnZXIua2VybmVsLm9yZwlTaWUgZGEuLi4uCTg2CQk2MzkJYm91bmNlCW5vCW5v>
-Content-type: text/plain; charset=iso-8859-1; format=flowed
-Content-transfer-encoding: quoted-printable
-X-Antivirus: Avast (VPS 180626-6, 06/26/2018), Outbound message
-X-Antivirus-Status: Clean
-X-mihostingnet-MailScanner-Information: Please contact the ISP for more information
-X-mihostingnet-MailScanner-ID: 1fXwiO-002bWS-95
-X-mihostingnet-MailScanner: Found to be clean
-X-mihostingnet-MailScanner-SpamCheck: 
-X-mihostingnet-MailScanner-From: support46@gonaturalcaribe.com
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - de15.mihosting.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - gonaturalcaribe.com
-X-Get-Message-Sender-Via: de15.mihosting.net: authenticated_id: support46@gonaturalcaribe.com
-X-Authenticated-Sender: de15.mihosting.net: support46@gonaturalcaribe.com
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+        id S933795AbeF0AXA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Jun 2018 20:23:00 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:38884 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932261AbeF0AW7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jun 2018 20:22:59 -0400
+Received: by mail-pg0-f66.google.com with SMTP id c9-v6so120674pgf.5
+        for <git@vger.kernel.org>; Tue, 26 Jun 2018 17:22:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=x/UfmkTadcyL8dCIvaQ8ZmA188qPdNpfc8LZepcIvN4=;
+        b=eFOkAJQqykU8s1TrPf97+04vSNGNrhdVLW60kyjz6fUxAA7RYI7z9gZvkZ0bH08cv7
+         QTLZoF/fHC1m7oJOK3ZVQnphuynuXV6jxfZdEkZsC3HwQX1zoIiAXJUDPFoXuZhYyEC9
+         oXGytJ34gn/V6KsJG9sMo3maNQOUMFWieZV3GC5HoFou51Z9vLtBBs0g0wewGtS8oUKY
+         bt1Cp8scemGf621yZZEq2oxZ7+HSihdM3jm05HZ/wfJzME/uyrhyyY0Tl7zvkGno/TC+
+         dQm8w018f0GlJo0Lr4G3hU0EE55zfaipRe738geWpJzCAr+z1xvDINtelS8U7UAnXiSL
+         9s5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=x/UfmkTadcyL8dCIvaQ8ZmA188qPdNpfc8LZepcIvN4=;
+        b=leTQyF+3Ebj7F01lmHJ2vosp/8p5It1hdQTubXnc41CbeeJk1DB6v7BCFxWQFQhRI5
+         32bOZ/BpftFAjW/B4aki0shN9Y9/9/Uknkacj76ol9TdFOj4SI/WhMDKPlKV8hnuN5bk
+         LiiLYF3Ep6T1mH0CfCpAdbA0OUzvyzitX/Cjda+3IwPlfblKbKzICYO5G0CcGe0Jj4et
+         X1EBY4GDfkG5KRyFxcHu4UMu9gqQuCf+oFkje5WYSW+1Jbm3fePw9Rfbjmlj9KP2aaoa
+         hJA/QMGdvWG5PzCbmniFPcywrn32UFhUJUnjGrkDS882Vgftuy4cxS0dptykcD2ihXYL
+         FosQ==
+X-Gm-Message-State: APt69E0GLSxOj/MtCoYyMtZ5EKsAgDTv8sgh9a8aXenDRhVhaxWIhScj
+        TxUr6B4G5VeD1U9GgVyGN9zhv/uu
+X-Google-Smtp-Source: ADUXVKJ0CdNSPg9re5qt6gV0fbNJffoH6r+QzSVgP954hOEIqNHXIQVMv/s57i/U716uL9OVZYwYnA==
+X-Received: by 2002:a65:4aca:: with SMTP id c10-v6mr3143244pgu.327.1530058978560;
+        Tue, 26 Jun 2018 17:22:58 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id 14-v6sm4947124pft.10.2018.06.26.17.22.57
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 26 Jun 2018 17:22:57 -0700 (PDT)
+Date:   Tue, 26 Jun 2018 17:22:55 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>,
+        Stefan Beller <sbeller@google.com>,
+        Elijah Newren <newren@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH 00/29] t: detect and fix broken &&-chains in subshells
+Message-ID: <20180627002255.GC12488@aiede.svl.corp.google.com>
+References: <20180626073001.6555-1-sunshine@sunshineco.com>
+ <xmqqo9fxjq39.fsf@gitster-ct.c.googlers.com>
+ <CAPig+cSW6jP3FtYpwf5bB4SM=qw6A3K9H3JPranJ_KMqH-AwZw@mail.gmail.com>
+ <xmqq6025i3io.fsf@gitster-ct.c.googlers.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq6025i3io.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sie haben 5, OOO, OOO.OO EUR in das laufende Spendenprogramm der FIFA Fussb=
-all Weltmeisterschaft Russland 2018 gespendet. Bitte antworten Sie zur=FCck=
- f=FCr Anspr=FCche.
+Jun 26, 2018 at 03:31:11PM -0700, Junio C Hamano wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+>> On Tue, Jun 26, 2018 at 3:38 PM Junio C Hamano <gitster@pobox.com> wrote:
 
+>>> I like these earlier changes that fix existing breakage, of course.
+>>> I also like many of the changes that simplify and/or modernise the
+>>> test scripts very much, but they are unusable as-is as long as their
+>>> justification is "chain-lint will start barfing on these constructs".
+>>
+>> Sorry, I'm having difficulty understanding.
+>>
+>> Are you saying that you don't want patches which exist merely to
+>> pacify --chain-lint? (For instance, 2/29 "t0001: use "{...}" block
+>> around "||" expression rather than subshell".)
+>
+> Yes.
+>
+>> Or are you saying that you don't like how the commit messages are
+>> worded, and that they should instead emphasize that the change is good
+>> for its own sake, without mentioning --chain-lint?
+>
+> Yes, too.
+>
+> For example, 03/29 is a good clean-up, and its value is not
+> diminished even if we reject the subprocess munging --chain-lint in
+> 29/29.
+>
+> As opposed to 02/29 which mostly is about appeasing the "shell
+> parser" in 29/29 (or you could justify it saying "one less fork and
+> process" if that gives us a measurable benefit).
 
+This is a lighter-weight example of the practice described at
+https://lkml.kernel.org/r/alpine.LFD.2.00.1001251002430.3574@localhost.localdomain/.
+In my opinion it's good advice, often worth repeating.
 
----
-This email has been checked for viruses by Avast antivirus software.
-https://www.avast.com/antivirus
-
+Thanks,
+Jonathan
