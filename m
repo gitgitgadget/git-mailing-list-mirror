@@ -2,105 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE1981F516
-	for <e@80x24.org>; Wed, 27 Jun 2018 18:39:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7580B1F516
+	for <e@80x24.org>; Wed, 27 Jun 2018 18:40:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965929AbeF0Sjr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Jun 2018 14:39:47 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:40671 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965874AbeF0Sjr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jun 2018 14:39:47 -0400
-Received: by mail-wr0-f196.google.com with SMTP id l2-v6so2433514wro.7
-        for <git@vger.kernel.org>; Wed, 27 Jun 2018 11:39:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=22Yaif8DI5ays1Fv9rYcKbR7LOnkcDYs8x9EBQz5IEA=;
-        b=G5hoogonKzGoBVjAGe6ZhabB0ajHXcAmUkqx3/Jk9OR7TgBeFS57MQ4kOUhT6R1GR/
-         SMFtKXWN2dOl0XHWVS8kKB+W1g4jSTaqY+FNJDdLXqLBFDQRRs8xMXYP1BOYeN07L4FJ
-         kceNum37ejy0hOQH79WpRgrGUYV4ahCGxw/3Tg94dIdL5ReDxQ5M3xEsS4fc3BwJjdrm
-         shehupmoxPUIcS0FXw/QDYmQT1X5a3oHSJB0lFEEvdU2JrgzUMItYPWYyoOh1bna3Ffm
-         pO+MIXk43pG1RjuLO1gs6HM3lx6xarpiNph02E9P4WtB/TJwXl2u7hlMIvYdmzKGr8tm
-         O8MA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=22Yaif8DI5ays1Fv9rYcKbR7LOnkcDYs8x9EBQz5IEA=;
-        b=bUQyJ3E+1j0R99HUtAXm7YESeTebaKcNrpwF3y1op65FCZjv47pxZxw8w+EPNhFQ2C
-         nNroVVmze1o3wmj1szDRvCXivLe0TKRUHX5KGT9550LHj4wav1BY3L0YoMj1DVZPU+yf
-         6LZMfbZbfLFt70t3ViTsrwu0qmu3YTZQgxS97Ggk62pc6m4OJmsH6o8kbgD+CwCVIryP
-         uPZ87UXKUwzk8eIzwLuuVqCrirWqENNseXGqLLCB4lCNBrRcTB9EP5tkRnfFO5NhsUjs
-         TCGROgbS75B+QmRsaFyLXB2AwPfYxiKEdGZvsPpvQE9fQQC9yEF4vqpnFXJz7Msl2O2W
-         j9Ug==
-X-Gm-Message-State: APt69E3ZkktAM1hR8z2GzpQy6aftNeNsx/BgtYfaI8lI/Lz9ErApC0FX
-        9yPNVTRBPYaCiQzx9vX7SJk=
-X-Google-Smtp-Source: AAOMgpcDwfm/SEXfnkuZziMpHubCh2RrMCtXC+1PXnbMKkq+iZQIgGsKGA9LVrvGWAE4rDUsmnJNRg==
-X-Received: by 2002:adf:ab95:: with SMTP id s21-v6mr6403538wrc.90.1530124785465;
-        Wed, 27 Jun 2018 11:39:45 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 203-v6sm9102513wmp.23.2018.06.27.11.39.44
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 27 Jun 2018 11:39:44 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        git@vger.kernel.org, joel@teichroeb.net
-Subject: Re: [PATCH v6 3/4] stash: convert branch to builtin
-References: <cover.1529943789.git.ungureanupaulsebastian@gmail.com>
-        <ac0a24da8a583a137176d1d215df65bb1a3ada0e.1529943789.git.ungureanupaulsebastian@gmail.com>
-        <nycvar.QRO.7.76.6.1806270018580.21419@tvgsbejvaqbjf.bet>
-Date:   Wed, 27 Jun 2018 11:39:44 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.1806270018580.21419@tvgsbejvaqbjf.bet>
-        (Johannes Schindelin's message of "Wed, 27 Jun 2018 00:23:53 +0200
-        (DST)")
-Message-ID: <xmqqfu18f4zz.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S965932AbeF0Sj6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Jun 2018 14:39:58 -0400
+Received: from avasout08.plus.net ([212.159.14.20]:39921 "EHLO
+        avasout08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965779AbeF0Sj5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jun 2018 14:39:57 -0400
+Received: from [10.0.2.15] ([80.189.70.235])
+        by smtp with ESMTPA
+        id YFM9fP2B0hidhYFMAf5eu1; Wed, 27 Jun 2018 19:39:56 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=B6uXLtlM c=1 sm=1 tr=0
+ a=YX39wz5waiCDnkc2J8opfw==:117 a=YX39wz5waiCDnkc2J8opfw==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=VwQbUJbxAAAA:8 a=ixFjMXWrjZrfXPArhSAA:9
+ a=QEXdDO2ut3YA:10 a=yJM6EZoI5SlJf8ks9Ge_:22 a=AjGcO6oz07-iQ99wixmX:22
+X-AUTH: ramsayjones@:2500
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Jason@zx2c4.com,
+        GIT Mailing-list <git@vger.kernel.org>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] fsck: check skiplist for object in fsck_blob()
+Message-ID: <2fc2d53f-e193-2a2a-9f8f-b3e1d256d940@ramsayjones.plus.com>
+Date:   Wed, 27 Jun 2018 19:39:53 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfI8y53EWj2ngySZ8/O2YNQ61dkYMUif0haqjGEXCL+7vExGt/fPqaePtZ0wgubEdVy3nZyesRP+FeH3n0o9N6d7cjg+d/J9ZMFsMZcLacNqc5NDL2iMD
+ HPzVNSFddFOkQ7V6SySaFIXVGH93CWyk/7jhiPjF/v3t1Cuw9GaORDMTQjq9k0FBk3dWqDEBiQ/acQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->> +	ret = cmd_checkout(args.argc, args.argv, prefix);
->
-> I guess it is okay to run that, but the cmd_() functions are not *really*
-> meant to be called this way... Personally, I would be more comfortable
-> with a `run_command()` here, i.e. with a spawned process, until the time
-> when checkout.c/checkout.h have learned enough API for a direct call.
+Since commit ed8b10f631 ("fsck: check .gitmodules content", 2018-05-02),
+fsck will issue an error message for '.gitmodules' content that cannot
+be parsed correctly. This is the case, even when the corresponding blob
+object has been included on the skiplist. For example, using the cgit
+repository, we see the following:
 
-Thanks for pointing it out.  I'll add a bit more for those who are
-reading from sideline (iow, if you are Dscho, you do not have to
-read the remainder, as I know Dscho knows all of this).
+  $ git fsck
+  Checking object directories: 100% (256/256), done.
+  error: bad config line 5 in blob .gitmodules
+  error in blob 51dd1eff1edc663674df9ab85d2786a40f7ae3a5: gitmodulesParse: could not parse gitmodules blob
+  Checking objects: 100% (6626/6626), done.
+  $
 
-It is not OK to use cmd_$foo() as subroutine; depending on the value
-of $foo, where the call is made and the number of times the call is
-made, it may happen to work OK in the current code, but that is a
-ticking timebomb waiting to go off.
+  $ git config fsck.skiplist '.git/skip'
+  $ echo 51dd1eff1edc663674df9ab85d2786a40f7ae3a5 >.git/skip
+  $
 
-This is primarily because cmd_$foo() is designed to be replacement
-of "main()" in usual programs---it is allowed to assume the global
-variables it uses have their initial values and nobody cares the
-state it leaves behind when it returns.  Argument parser may flip
-bits in file-scope static variables to record which options are
-seen, assuming that these variables are initialized to all-zero, and
-that assumption would not hold for the second call to cmd_$foo(),
-etc.  cmd_$foo() also is allowed to call die() when there is an
-unrecoverable error condition in the context of carrying out $foo; a
-scripted Porcelain that used $foo as a building block to implement a
-larger operation (e.g. "stash" that used "checkout" to switch to a
-different branch) may want to react to the failure and do something
-extra (i.e. "git checkout || do something more").  
+  $ git fsck
+  Checking object directories: 100% (256/256), done.
+  error: bad config line 5 in blob .gitmodules
+  Checking objects: 100% (6626/6626), done.
+  $
 
-Using run_command() interface would not cause any of these problems;
-the subcommand will run in a clean environment, and the caller can
-react to its failure.
+Note that the error message issued by the config parser is still
+present, despite adding the object-id of the blob to the skiplist.
+
+One solution would be to provide a means of suppressing the messages
+issued by the config parser. However, given that (logically) we are
+asking fsck to ignore this object, a simpler approach is to just not
+call the config parser if the object is to be skipped. Add a check to
+the 'fsck_blob()' processing function, to determine if the object is
+on the skiplist and, if so, exit the function early.
+
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
+
+Hi Junio,
+
+I noticed recently that the 'cgit.git' repo was complaining when
+doing an 'git fsck' ...
+
+Note that 'cgit' had a '.gitmodules' file and a 'submodule.sh'
+script back in 2007, which had nothing to do with the current
+git submodule facilities, ... ;-)
+
+Viz:
+
+  $ git show 51dd1eff1e
+  # This file maps a submodule path to an url from where the submodule
+  # can be obtained. The script "submodules.sh" finds the url in this file
+  # when invoked with -i to clone the submodules.
+
+  git             git://git.kernel.org/pub/scm/git/git.git
+  $ 
+
+I just remembered that I had intended to review the name of the
+function that this patch introduces before sending, but totally
+forgot! :(
+
+[Hmm, 'to_be_skipped' -> object_to_be_skipped, object_on_skiplist,
+etc., ... suggestions welcome!]
+
+ATB,
+Ramsay Jones
+
+
+ fsck.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/fsck.c b/fsck.c
+index 48e7e3686..702ceb629 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -281,6 +281,13 @@ static void append_msg_id(struct strbuf *sb, const char *msg_id)
+ 	strbuf_addstr(sb, ": ");
+ }
+ 
++static int to_be_skipped(struct fsck_options *opts, struct object *obj)
++{
++	if (opts && opts->skiplist && obj)
++		return oid_array_lookup(opts->skiplist, &obj->oid) >= 0;
++	return 0;
++}
++
+ __attribute__((format (printf, 4, 5)))
+ static int report(struct fsck_options *options, struct object *object,
+ 	enum fsck_msg_id id, const char *fmt, ...)
+@@ -292,8 +299,7 @@ static int report(struct fsck_options *options, struct object *object,
+ 	if (msg_type == FSCK_IGNORE)
+ 		return 0;
+ 
+-	if (options->skiplist && object &&
+-			oid_array_lookup(options->skiplist, &object->oid) >= 0)
++	if (to_be_skipped(options, object))
+ 		return 0;
+ 
+ 	if (msg_type == FSCK_FATAL)
+@@ -963,6 +969,9 @@ static int fsck_blob(struct blob *blob, const char *buf,
+ 		return 0;
+ 	oidset_insert(&gitmodules_done, &blob->object.oid);
+ 
++	if (to_be_skipped(options, &blob->object))
++		return 0;
++
+ 	if (!buf) {
+ 		/*
+ 		 * A missing buffer here is a sign that the caller found the
+-- 
+2.18.0
