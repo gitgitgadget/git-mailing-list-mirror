@@ -6,59 +6,57 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 393461F597
-	for <e@80x24.org>; Wed, 27 Jun 2018 19:11:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B97751F516
+	for <e@80x24.org>; Wed, 27 Jun 2018 19:16:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966341AbeF0TLp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Jun 2018 15:11:45 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:54581 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S966222AbeF0TLo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jun 2018 15:11:44 -0400
-Received: by mail-wm0-f67.google.com with SMTP id i139-v6so6957081wmf.4
-        for <git@vger.kernel.org>; Wed, 27 Jun 2018 12:11:43 -0700 (PDT)
+        id S934850AbeF0TQp (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Jun 2018 15:16:45 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:37628 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934387AbeF0TQp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jun 2018 15:16:45 -0400
+Received: by mail-wm0-f65.google.com with SMTP id n17-v6so6089461wmh.2
+        for <git@vger.kernel.org>; Wed, 27 Jun 2018 12:16:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=5s0ItGY7ZD8pOmw4xHf+927qIf0CvDM0VVjeWsvBlqU=;
-        b=BFwfShADpIYHJbBSiLUuP5QeKrerf9eXsjqBLoFR4jRz2qfeA3gCJX6NSAWZpqQCaU
-         GygCUAj69UXj41R/o6/Ha/YMU4/9xjoDuRy20CjbCQ8tu+Reo1+8IHC+SVEUc10BDdv5
-         VZ2g59G/2H0IL6yAuhIHxub/mF2t0zjGWBfL3uC/tDqxLGVKm+TlyYFo91wErzarp4MZ
-         Lis7bgoHGEkeHq4dLOnmSVWg+Zng+sBLTStOqj6+7p93XLB2GPhs4KT62dyI4VRDCAiq
-         oyAMFYF2UlCIcD5dl8ePI2c5t9Mgkpb9sL4ObjDQM7x5p085VOg42uNdhiEu0iiGQkmw
-         /ZhQ==
+        bh=F54qRgB/YHnB8OAgE2fScycxuZlsI3ks5Q67SVqr4gw=;
+        b=EKMiS0CbR65U7i91cA1VAMm21DrtPlrsq5IvM35dEv/wbsk/Eh+haAWiHnSUN1eRRL
+         x1kQKAc9Z55cTymDi+e29WBDnEV1R2pDApHnXGpJ3IzmBOei3ar3jT+AgPuWEjaS/4Zv
+         9YPTtuCejzHluYudcU8BenQja8t2qCulFc0a0jaZ6SJvSKrnkgIpfM+OHsBxdgQtrglv
+         2GHFsOkmVpr5V4hknE6g8hsFE3lpn7ClPfewsn9y0NhOTFHSr/nDt2QmYeXh/3lmsJuT
+         Y5Nvep2hF0A6L6ZK7XnVpzaNEk+lG2KDXtAqMwLm59/StIBBRrsDcCQVNMPLl2g5g7s9
+         eV9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=5s0ItGY7ZD8pOmw4xHf+927qIf0CvDM0VVjeWsvBlqU=;
-        b=DrCKq3ycAf1FT/i8/cCEpAJxbrnTh8ShXBvSlqTPdxxP6WbYaUdyQjKDKlwTtwqCfM
-         qx2/LdCiLdT7sXQgAHEw7N7alr6r+zY3WBZf3EqzLpYLGhgC7lHiq7UEbKRSUeH7r3G+
-         ajciRd86MXHbRzzt7RotWCOJ2AS+V1S9kQ7ZbYZ8MvM7FmkQUiRVB14kaSbdK9Iu10RU
-         MuwzuUXBHz/4GMpusiRZFtzHZQWqo7nFdVKmrzo/PlNmriw2QRQqQZ3OVdPbIKV5M2af
-         OeryrMpjfIpbqxZxVqw9WkFnZDrS0Mr3nLwqwbYiKGb+FMYujFtfI/uugFssZokwC5jJ
-         A8Rg==
-X-Gm-Message-State: APt69E1w7gcNV0uh4UidIUt4BuNXlUb6nUbLVmyzqnXSUIc6tBjfef9w
-        iZ/xcSNOwaGTAPlBkaQxiVCJH9RJ
-X-Google-Smtp-Source: AAOMgpcnxyJJ12jxcz2YtyaqZnIRz7o9n17nG9RjBoPfLXXj+KiGC0nebs0SiIsY3/c0F7uxu46ehg==
-X-Received: by 2002:a1c:5982:: with SMTP id n124-v6mr3523056wmb.9.1530126702486;
-        Wed, 27 Jun 2018 12:11:42 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 132-v6sm8824372wmr.33.2018.06.27.12.11.41
+        bh=F54qRgB/YHnB8OAgE2fScycxuZlsI3ks5Q67SVqr4gw=;
+        b=am4h9nnrYHjSsPOMmDQ+FOLpEAaBAJkfdKuqmwIF8hlCeMCvAzUTSTSC3i3PD2jSQ1
+         P5nwzmUObZTGA6o0Ed1uaXzGaDKxjD6lAHhnFM3fPHCNXBZp5Wr5iBGueKN5rhAsFaWR
+         VN4YbiWu3X47CWtBQroCjNtRnd/luLMiibKk5KvqAqI/mfa5lfaNvwypBka+wnfRbSyr
+         0dhOfKrCfVSy86K4knLXnf7SBmGHQRPJuNuY5vauG5ZvzrTWbQg+l3n+KQbb0yxnVSMD
+         zxzwVvsvFZWlTKAzbIokzwaFQH/roAQMWQL3z4Dcui2UhfDotwOGDg9YuQCX9n5uxSMF
+         95gA==
+X-Gm-Message-State: APt69E0u6KVRNk8pENsMrUBwm9jquUNmK3K58UhFc3gXnXhv5Scr3xfd
+        lOUXxmRuMdI7lhpx4MzEYj7PWq14
+X-Google-Smtp-Source: AAOMgpf5B4cD2CZRSpW7w80XKxMk1r5JxH4LCrJLUUvhypIFB+y4UoT6LFaIsaRvKlLmEQe74rRhqA==
+X-Received: by 2002:a1c:2dd5:: with SMTP id t204-v6mr6155571wmt.94.1530127003545;
+        Wed, 27 Jun 2018 12:16:43 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id k82-v6sm9640946wmg.10.2018.06.27.12.16.42
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 27 Jun 2018 12:11:41 -0700 (PDT)
+        Wed, 27 Jun 2018 12:16:42 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     sunshine@sunshineco.com, bturner@atlassian.com,
-        Marc Strapetz <marc.strapetz@syntevo.com>
-Subject: Re: [PATCH v3] Documentation: declare "core.ignorecase" as internal variable
-References: <7f6b2a42-334d-9443-7b89-625069931ca7@syntevo.com>
-        <c899089d-c195-26b5-66ce-de0273a7152b@syntevo.com>
-Date:   Wed, 27 Jun 2018 12:11:40 -0700
-In-Reply-To: <c899089d-c195-26b5-66ce-de0273a7152b@syntevo.com> (Marc
-        Strapetz's message of "Tue, 26 Jun 2018 23:50:56 +0200")
-Message-ID: <xmqqzhzgdoyb.fsf@gitster-ct.c.googlers.com>
+To:     Todd Zullinger <tmz@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/2] gitignore.txt: clarify default core.excludesfile path
+References: <20180627044652.12080-1-tmz@pobox.com>
+Date:   Wed, 27 Jun 2018 12:16:42 -0700
+In-Reply-To: <20180627044652.12080-1-tmz@pobox.com> (Todd Zullinger's message
+        of "Wed, 27 Jun 2018 00:46:51 -0400")
+Message-ID: <xmqqvaa4dopx.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,56 +65,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Marc Strapetz <marc.strapetz@syntevo.com> writes:
+Todd Zullinger <tmz@pobox.com> writes:
 
-> [1. text/plain]
-> The current description of "core.ignoreCase" reads like an option which
-> is intended to be changed by the user while it's actually expected to
-> be set by Git on initialization only. Subsequently, Git relies on the
-> proper configuration of this variable, as noted by Bryan Turner [1]:
-> 
->     Git on a case-insensitive filesystem (APFS, HFS+, FAT32, exFAT,
->     vFAT, NTFS, etc.) is not designed to be run with anything other
->     than core.ignoreCase=true.
-> 
-> [1] https://marc.info/?l=git&m=152998665813997&w=2
->     mid:CAGyf7-GeE8jRGPkME9rHKPtHEQ6P1+ebpMMWAtMh01uO3bfy8w@mail.gmail.com
-> 
-> Signed-off-by: Marc Strapetz <marc.strapetz@syntevo.com>
+> The default core.excludesfile path is $XDG_CONFIG_HOME/git/ignore.
+> $HOME/.config/git/ignore is used if XDG_CONFIG_HOME is empty or unset,
+
+... because $HOME/.config is the default value for XDG_CONFIG_HOME
+when it is unset, that is?  If so, the change makes sense.
+
+> as described later in the document.
+
+
+
+> Signed-off-by: Todd Zullinger <tmz@pobox.com>
 > ---
->  Documentation/config.txt | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
-> 
-
-Hmph.  Do other people have difficulty applying this patch to their
-trees?  It is just several lines long so I could retype it myself,
-but I guess "Content-Type: text/plain; charset=utf-8; format=flowed"
-has destroyed formatting of the patch rather badly.
-
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 1cc18a828..c70cfe956 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -390,16 +390,19 @@ core.hideDotFiles::
->  	default mode is 'dotGitOnly'.
+>  Documentation/gitignore.txt | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
->  core.ignoreCase::
-> -	If true, this option enables various workarounds to enable
-> +	Internal variable which enables various workarounds to enable
->  	Git to work better on filesystems that are not case sensitive,
-> -	like FAT. For example, if a directory listing finds
-> -	"makefile" when Git expects "Makefile", Git will assume
-> +	like APFS, HFS+, FAT, NTFS, etc. For example, if a directory listing
-> +	finds "makefile" when Git expects "Makefile", Git will assume
->  	it is really the same file, and continue to remember it as
->  	"Makefile".
->  +
->  The default is false, except linkgit:git-clone[1] or linkgit:git-init[1]
->  will probe and set core.ignoreCase true if appropriate when the repository
->  is created.
-> ++
-> +Git relies on the proper configuration of this variable for your operating
-> +and file system. Modifying this value may result in unexpected behavior.
->
->  core.precomposeUnicode::
->  	This option is only used by Mac OS implementation of Git.
+> diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
+> index ff5d7f9ed6..d107daaffd 100644
+> --- a/Documentation/gitignore.txt
+> +++ b/Documentation/gitignore.txt
+> @@ -7,7 +7,7 @@ gitignore - Specifies intentionally untracked files to ignore
+>  
+>  SYNOPSIS
+>  --------
+> -$HOME/.config/git/ignore, $GIT_DIR/info/exclude, .gitignore
+> +$XDG_CONFIG_HOME/git/ignore, $GIT_DIR/info/exclude, .gitignore
+>  
+>  DESCRIPTION
+>  -----------
