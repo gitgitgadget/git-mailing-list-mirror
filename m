@@ -6,68 +6,58 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 206521F516
-	for <e@80x24.org>; Wed, 27 Jun 2018 16:26:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF7A61F516
+	for <e@80x24.org>; Wed, 27 Jun 2018 16:40:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934302AbeF0Q0G (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Jun 2018 12:26:06 -0400
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:35162 "EHLO
-        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753013AbeF0Q0F (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jun 2018 12:26:05 -0400
-Received: by mail-wm0-f43.google.com with SMTP id z137-v6so6181491wmc.0
-        for <git@vger.kernel.org>; Wed, 27 Jun 2018 09:26:04 -0700 (PDT)
+        id S1754973AbeF0QkN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Jun 2018 12:40:13 -0400
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:51336 "EHLO
+        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754017AbeF0QkM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jun 2018 12:40:12 -0400
+Received: by mail-wm0-f48.google.com with SMTP id w137-v6so6591962wmw.1
+        for <git@vger.kernel.org>; Wed, 27 Jun 2018 09:40:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=0pp/tluiRS7k6QXq4g2YxPFun/JyM93DUOQq9pN3NSA=;
-        b=bqZ1geOWFxjHqQ+07Vqfywjc+Tiktp/IILoEFAkj6zIpQzTLKu8GYuYhG6KCjpnFWJ
-         tYeCk/rRAyCuyFCF+JclE5U3JbnaPyUjkKPT/mN3c9OwsBgWUv9A8OC+5vTfAeEJq6y8
-         ekySZTFuzCGMyjd8qb2p4EYdUF5OM7JN7/sO3IqaNd/sNvCFBcuNQ+jEz7XixKMet2Ly
-         YA7NdIxpnFSecGKUwDedGLxdf/q5YKRRAXg54kiMBlblu+sQh/SpNUT3xnKLKsZtUVWV
-         MIZIAcRLLbFR65rrylSlj08XmkqQ+aDDQKq5VW1Ahuz3ulxPoGGzTGwhOTtG37PfnoSO
-         z5mg==
+        bh=soCVPVs7o7jsrT9+L9Z93i4Wuh8yfABPfVhPku9K3II=;
+        b=pORVnN2QdvQAtu6Utvn7sV5ZT3oyCbKkFa4ADdqkoixg+KYEegUjZTyL7LdGx+eEbo
+         Bf8R2wYgLu1rZx/RfuJItHFw5DgHdCovEzl8ts5Mb2n9qG6jP2EW+1ZhvdcMFnmUvW/b
+         3LlvP15+MXxpvtdD6YfqiTJF+nfT7dXUD+ctyYtBGOp3lHc8am5nNUVsx3U4EHpkUNAb
+         DvXPrX85RVs2cO6GYVHqLNpTEFLFoz/NTVYU75bwAUU0wwFUfmHRi9TFciJR22QBd4JK
+         3YUCGMNf0IwdsWkKs2q5BlsBWIEACT8Uk1m1y3oHA22VIMceO78vYe2noxCSzVCBNKlL
+         Qf4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=0pp/tluiRS7k6QXq4g2YxPFun/JyM93DUOQq9pN3NSA=;
-        b=LeDzsm9FUz4CVJ91sLtw+BhibRf5PlizM1soEYjr5dusasPlqmKPIvxMGPqAxImhHH
-         oDUZT+NPhlCq7kHEmp+q0wzSpzjOdt6P+kyn7S7KhS1FPNtcZggYpjs1Xuf/kN8YGuTS
-         SaVmgp/Kjze/mdrQ5HsyKh1xo4qwDcfkkOK9//8C9eQ4xtlZ9WMw0AgdF9dUYKfeLcV4
-         x0J6AGHeaHbS3GnWGsrwT6nBQr64n+Ox7HpwhmpQLq7CCwq2zxU5narHuKETKkVEmvbc
-         MSybus5x2Vaz7GxCAv6uKQuYTZg7XkW1ye3/0UTV9DpfBR50gKVYytHTEKZSQ/CbrFCB
-         8w+w==
-X-Gm-Message-State: APt69E3cA10qZcEJO2aHadAeuOnh+kBAGnF20yDDx2UeiQk8FcO60+SN
-        lrEfTCUF3rEEYKwgJpzBjO0=
-X-Google-Smtp-Source: AAOMgpe4dEwBPkildDi0LB5Zca07PcruPzC1SXjjqXgv6IX9zYrhNUdhD1jVL2w6wgFqmFETBO3ELw==
-X-Received: by 2002:a1c:3710:: with SMTP id e16-v6mr5614204wma.58.1530116763905;
-        Wed, 27 Jun 2018 09:26:03 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id m10-v6sm3134854wrj.35.2018.06.27.09.26.02
+        bh=soCVPVs7o7jsrT9+L9Z93i4Wuh8yfABPfVhPku9K3II=;
+        b=uewUr+Wa7bpOIcT9MhEfrCjJStIKtqHEha1FDLR0hNG8erACFO55t13leJG8Vj1FZY
+         L1XW/fUDezxjGErEcwizjSmYU1FSwxUEOHA3p7OCaFNAfApzy/+6C4VscHR6TE8oMTe4
+         16KnfljBGF7ECyaHoZjfXEQzL9mr4NjOwzJgGeF36pXpqyhLgrtHM+En8cytFeVxRWiy
+         u9lzeKj77Vnfib2pZJWNyvAV9Q35xZjEjfqheb6545Es4D0QF5PCuxfka4K1LJpZQi5Q
+         itoMSsV7o1hhqXOSN2NLUn4Knm10qqIGyBMLIMUxwayrYdfzgqLk9cf1KuSBaN+bs8y8
+         iOnA==
+X-Gm-Message-State: APt69E3rLxXLUTetWjt8Je38WHAGLspdJ+vYBDYkF9lbM+9SNFbYozcf
+        qDw/bRsinBuAyMTv3BONfdQ=
+X-Google-Smtp-Source: AAOMgpfwnnA0kYirEbem2/XYX+H3d6KFE1YlSJ+VPvVGFFJhUp5nDzh3U/4MTrqJyqK8JRVNTIvg0w==
+X-Received: by 2002:a1c:497:: with SMTP id 145-v6mr2266647wme.157.1530117611377;
+        Wed, 27 Jun 2018 09:40:11 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id q70-v6sm7372402wmd.45.2018.06.27.09.40.10
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 27 Jun 2018 09:26:02 -0700 (PDT)
+        Wed, 27 Jun 2018 09:40:10 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Tiago Botelho <tiagonbotelho@gmail.com>,
-        git <git@vger.kernel.org>,
-        Harald Nordgren <haraldnordgren@gmail.com>,
-        Tiago Botelho <tiagonbotelho@hotmail.com>
-Subject: Re: [RFC PATCH v5] Implement --first-parent for git rev-list --bisect
-References: <20180622123945.68852-1-tiagonbotelho@hotmail.com>
-        <xmqq4lhqpy80.fsf@gitster-ct.c.googlers.com>
-        <CAP8UFD3oEjW75qsk4d_wqo2V8PmzMvZLshutw20CD7AU4b4ocg@mail.gmail.com>
-        <nycvar.QRO.7.76.6.1806261540340.21419@tvgsbejvaqbjf.bet>
-        <CAP8UFD1TeC4czp_8HCRw5CtjGO78A8gRezw_xspnm4MXuhQswg@mail.gmail.com>
-        <xmqqa7rhi40f.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1806271254210.21419@tvgsbejvaqbjf.bet>
-Date:   Wed, 27 Jun 2018 09:26:02 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.1806271254210.21419@tvgsbejvaqbjf.bet>
-        (Johannes Schindelin's message of "Wed, 27 Jun 2018 13:48:43 +0200
-        (DST)")
-Message-ID: <xmqqwoukgpr9.fsf@gitster-ct.c.googlers.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, avarab@gmail.com, peff@peff.net
+Subject: Re: [PATCH 2/2] grep.c: teach 'git grep --only-matching'
+References: <cover.1529961706.git.me@ttaylorr.com>
+        <f156bd7c897359926ec407e805ecb0630a8b12da.1529961706.git.me@ttaylorr.com>
+Date:   Wed, 27 Jun 2018 09:40:10 -0700
+In-Reply-To: <f156bd7c897359926ec407e805ecb0630a8b12da.1529961706.git.me@ttaylorr.com>
+        (Taylor Blau's message of "Mon, 25 Jun 2018 16:26:00 -0500")
+Message-ID: <xmqqsh58gp3p.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -76,17 +66,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Taylor Blau <me@ttaylorr.com> writes:
 
-> 	git rev-list --bisect-all --first-parent F..E >revs &&
-> 	# only E, e1..e8 should be listed, nothing else
-> 	test_line_count = 9 revs &&
-> 	for rev in E e1 e2 e3 e4 e5 e6 e7 e8
-> 	do
-> 		grep "^$(git rev-parse $rev) " revs || return
-> 	done
+> -		if (sign == ':')
+> -			match_color = opt->color_match_selected;
+> -		else
+> -			match_color = opt->color_match_context;
+> -		if (sign == ':')
+> -			line_color = opt->color_selected;
+> -		else if (sign == '-')
+> -			line_color = opt->color_context;
+> -		else if (sign == '=')
+> -			line_color = opt->color_function;
+> +		if (opt->color) {
+> +			if (sign == ':')
+> +				match_color = opt->color_match_selected;
+> +			else
+> +				match_color = opt->color_match_context;
+> +			if (sign == ':')
+> +				line_color = opt->color_selected;
+> +			else if (sign == '-')
+> +				line_color = opt->color_context;
+> +			else if (sign == '=')
+> +				line_color = opt->color_function;
+> +		}
+
+The above change (specifically, the fact that this now is enclosed
+in "if (opt->color) { ... }") unfortunately leaves match_color
+undefined at this point in the control flow.  The next loop then
+calls output_color() with an undefined match_color and tricks stupid
+compiler to issue a warning and makes -Werror build to fail.
+
+>  		*eol = '\0';
+>  		while (next_match(opt, bol, eol, ctx, &match, eflags)) {
+>  			if (match.rm_so == match.rm_eo)
+>  				break;
 >
-> I am faster by... a lot. Like, seconds instead of minutes.
+> -			output_color(opt, bol, match.rm_so, line_color);
+> +			if (opt->only_matching)
+> +				show_line_header(opt, name, lno, cno, sign);
+> +			else
+> +				output_color(opt, bol, match.rm_so, line_color);
+>  			output_color(opt, bol + match.rm_so,
+>  				     match.rm_eo - match.rm_so, match_color);
 
-I'm fine either way.  I just thought you would not want 9 separate
-invocations of grep ;-)
+output_color() does check want_color(opt->color) before using its
+last parameter, and want_color() gives false for opt->color that is
+0 (i.e. leaves match_color to be undefined), so in this case, the
+compiler is worried too much, but still, we should work it around if
+it is easy to do so.
+
+Just initializing match_color where it is defined at the beginning of
+show_line() should be sufficient, I think.
+
