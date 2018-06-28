@@ -7,354 +7,73 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 596771F516
-	for <e@80x24.org>; Thu, 28 Jun 2018 07:48:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3779B1F516
+	for <e@80x24.org>; Thu, 28 Jun 2018 08:02:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965130AbeF1Hsn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Jun 2018 03:48:43 -0400
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:35269 "EHLO
-        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S964960AbeF1Hsk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jun 2018 03:48:40 -0400
-Received: by mail-pl0-f65.google.com with SMTP id k1-v6so2367700plt.2
-        for <git@vger.kernel.org>; Thu, 28 Jun 2018 00:48:40 -0700 (PDT)
+        id S1753247AbeF1IC4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Jun 2018 04:02:56 -0400
+Received: from mail-it0-f65.google.com ([209.85.214.65]:53265 "EHLO
+        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752680AbeF1ICy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jun 2018 04:02:54 -0400
+Received: by mail-it0-f65.google.com with SMTP id a195-v6so11393245itd.3
+        for <git@vger.kernel.org>; Thu, 28 Jun 2018 01:02:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=JtsaWa2kec3wPhh3HDNr2QNS98Udgq29Z4DiSV9ea38=;
-        b=JT0ufPwNaKDWU0OpcqWNrohwIXlN6IJ0AY0ixoHtfxwJ4EC1nGtPqUroXR4+vyl8xI
-         Z5snR384Du/N2m9YlMsqnAoq3wSNwJdR6t2VH7YrsZHKPhlE9FWaAtcu5MLiX1T27cKR
-         Vl9KKkyVFMuCKIPlI8aY/2XB4aJhCeOFLtTCX6vCy+HyWMVW3gkQoeUiGylNgJIxeER5
-         mm6mhZpT2Sx5WQ8tHFDov5XxreKSxFmN3LCwMGpZfuebcCM4t0kvyijTcKW7DqeJ4PKv
-         qCffqlq8FVrEQA8q/K5L/jdZHd6XzgPFKGi81U9DB+C73dGTkl3mxDuTzZB3bQMWM5Hp
-         V5rg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=NlyoANOSacXWCTNYgF6B0YacawqAG3IPRhffIrd3gXU=;
+        b=EgMVtMuMrvS/1OjrJllT+mXJKO+E4RVDPWtSMeMf45BedrfgyoDk7Sh20rVKyxFjZD
+         tFcYk7hHAqPIzD75n/gdBfZylu49L6E1+JeWWJfPCQPGPyAHysB/wOcfzqzItdzvWGN5
+         QV9dm9pbLE/Kq1lyjtcVVpzHTYXBCcJeVTH1IeZeJXhUmy31lDrGdIHshHBhbyocOCEZ
+         +HJ8GC4gqMSPaJjXoNhy8JcUJhu1RWOzGK0nf1IZs9AMamyNqHDWHBapTGWMNEp4mElc
+         2+uzhzUT8EKtWZjVfEC79rcz+XfdT0itFCBr1dQWDG/cqkY4pwejGdIjR5J01PSQQHSk
+         XxUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=JtsaWa2kec3wPhh3HDNr2QNS98Udgq29Z4DiSV9ea38=;
-        b=aGhZ9sxCT/52GwQT1qqVloHG4ds1z/Zo7Qf8UyWhQLXiq7XuAsoFvf4cpa1AdNZQqK
-         LhhAC+OaplnADOJ+MnPngHt5DKFZDOzs2fdTRgsu+HolDUaSCo49nkcXch9iFz+8/jRJ
-         CYWVHfR6B4PKIdXO4NLnk5BN1FPTIB9IGI8VRzuF42Xg2hAHGdrRK21Pp9zp4wN2TNOf
-         /pd/4iTXdeexGnfsK7mSexERxhetB8Er4YYup+BYmdG+TVdYB6fvqxsZkfkhY4JTEYE7
-         5Gjh/k/a6FOZpEkum7LJmOTVHmjEvNgbkl1qqDhofRbLfXu0n4YJJCgfKEu3duXfThSK
-         vAww==
-X-Gm-Message-State: APt69E3xnEDFWp/Yb2jOB1F58yD7r1bUlSUwHdO3Hrc6vxnyZvJDtr2e
-        vG/iWoqUDNfARSIdOVTJRn7njzYWkdg=
-X-Google-Smtp-Source: ADUXVKJ4r1Irn41xFDz3l8Zqr9zma5BzCoWT4mKG4Hth1/fEXztzqAHnN9vKxoPCbB5T5KEeD+eV5g==
-X-Received: by 2002:a17:902:b08a:: with SMTP id p10-v6mr9615209plr.0.1530172119486;
-        Thu, 28 Jun 2018 00:48:39 -0700 (PDT)
-Received: from localhost.localdomain ([27.34.16.160])
-        by smtp.gmail.com with ESMTPSA id x90-v6sm23416168pfk.151.2018.06.28.00.48.36
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 28 Jun 2018 00:48:38 -0700 (PDT)
-From:   Pratik Karki <predatoramigo@gmail.com>
-To:     git@vger.kernel.org
-Cc:     christian.couder@gmail.com, Johannes.Schindelin@gmx.de,
-        sbeller@google.com, alban.gruin@gmail.com,
-        Pratik Karki <predatoramigo@gmail.com>
-Subject: [PATCH 5/5] builtin/rebase: support running "git rebase <upstream>"
-Date:   Thu, 28 Jun 2018 13:31:55 +0545
-Message-Id: <20180628074655.5756-6-predatoramigo@gmail.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20180628074655.5756-1-predatoramigo@gmail.com>
-References: <20180628074655.5756-1-predatoramigo@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=NlyoANOSacXWCTNYgF6B0YacawqAG3IPRhffIrd3gXU=;
+        b=NG6Po9MBe7jUJf1F/GmVIZDbxNxs7WJvhdVO/CL+gbwGg3rrIwH8TjjubGaT2AJjSV
+         1oyFKOETE9UcTxZ9P7/CXbpD4g83idwda2x1CBNI0A981W4AqbxMiPATq8BmDmVtjebG
+         QgfnvOJ65yu+f+PEbIX1B6hs/SLPm8ZzACAzkUp1jINW7HxYLAFHTFaJuLkllEv9M0lQ
+         6Z78hVTr4k5dmBd0hybNrZvweujXwn1g624n+dG6vjrde2IcHHlbYZZWLicyoXPpeT+k
+         jrV/Q4YXGbb+YfrGInlNkpTO1SfUgRKtn/FzIEw+e3i4h1B7+04fr1xmz5uGpNmLdWzX
+         xeSQ==
+X-Gm-Message-State: APt69E325ayV/zZF4S2FMb1BuOdiGc2iQPS0Ljv156CoyWHe0MgRXprN
+        p8IhpL8yvzdDKTi8xpHg3UlsVBuK5geumh6QA/E=
+X-Google-Smtp-Source: AAOMgpfKsV0P1hWmKES1xLvEaLZLv2QxIPPD/Xciczh2iFsJU0Dc5N9kcEvpntVwTXPloFvW42CmNLT5+MEanZTD54I=
+X-Received: by 2002:a24:6bd7:: with SMTP id v206-v6mr7192108itc.129.1530172973717;
+ Thu, 28 Jun 2018 01:02:53 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 2002:a4f:2293:0:0:0:0:0 with HTTP; Thu, 28 Jun 2018 01:02:53
+ -0700 (PDT)
+In-Reply-To: <20180628074655.5756-4-predatoramigo@gmail.com>
+References: <20180628074655.5756-1-predatoramigo@gmail.com> <20180628074655.5756-4-predatoramigo@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 28 Jun 2018 10:02:53 +0200
+Message-ID: <CAP8UFD1+r6LszVXf=Nv8cR4RoDWdXQV26su1oXN+WzbSdmrr+g@mail.gmail.com>
+Subject: Re: [PATCH 3/5] rebase: refactor common shell functions into their
+ own file
+To:     Pratik Karki <predatoramigo@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Stefan Beller <sbeller@google.com>,
+        Alban Gruin <alban.gruin@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch gives life to the skeleton added in the previous patch.
-This patch makes real operation happen i.e. by using
-`git -c rebase.usebuiltin=true rebase <upstream>`.
-With this patch, the basic operation of rebase can be done.
+On Thu, Jun 28, 2018 at 9:46 AM, Pratik Karki <predatoramigo@gmail.com> wrote:
 
-The current version of the builtin rebase does not, however, make full
-use of the internals but instead chooses to spawn a couple of Git
-processes, still, to make for an easier conversion. There remains a lot
-of room for improvement, left later.
+> The motivation behind this is to call the backend functions
+> *directly* from C, bypassing `git-rebase.sh`. Therefore those functions
+> need to live in a separate file: we need to be able to call
+> `.git-rebase--common` in that script snippet so that those functions
 
-These backends use Unix shell functions defined both by git-sh-setup.sh
-and git-rebase.sh (we move the latter's into git-rebase--common.sh to
-accommodate for that), so we not only have to source the backend file
-before calling the respective Unix shell script function, but we have
-to source git-sh-setup and git-rebase--common before that.
-And since this is all done in a Unix shell script snippet, all of this
-is in argv[0]. There never will be a non-NULL argv[1].
+I think it should be `. git-rebase--common` (space missing between .
+and git-rebase--common).
 
-This patch does the *bare* minimum to get `git rebase <upstream>` to
-work: there is still no option parsing, and only the bare minimum set
-of environment variables are set (in particular, the current revision
-would be susceptible to bugs where e.g. `rebase_root` could be set by
-mistake before running `git rebase` and the `git-rebase--am` backend
-would pick up that variable and use it).
-
-It still calls original `git-legacy-rebase.sh` unless the config
-setting rebase.useBuiltin is set to true. This patch uses the
-detach_head_to() function from checkout.c introduced by a previous
-commit to perform initial checkout.
-
-Signed-off-by: Pratik Karki <predatoramigo@gmail.com>
----
- builtin/rebase.c | 231 ++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 229 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 1152b7229..2f90389c2 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -9,6 +9,19 @@
- #include "exec-cmd.h"
- #include "argv-array.h"
- #include "dir.h"
-+#include "packfile.h"
-+#include "checkout.h"
-+#include "refs.h"
-+
-+static GIT_PATH_FUNC(apply_dir, "rebase-apply");
-+static GIT_PATH_FUNC(merge_dir, "rebase-merge");
-+
-+enum rebase_type {
-+	REBASE_AM,
-+	REBASE_MERGE,
-+	REBASE_INTERACTIVE,
-+	REBASE_PRESERVE_MERGES
-+};
- 
- static int use_builtin_rebase(void)
- {
-@@ -28,8 +41,129 @@ static int use_builtin_rebase(void)
- 	return ret;
- }
- 
-+static int apply_autostash(void)
-+{
-+	warning("TODO");
-+	return 0;
-+}
-+
-+struct rebase_options {
-+	enum rebase_type type;
-+	const char *state_dir;
-+	struct commit *upstream;
-+	const char *upstream_name;
-+	char *head_name;
-+	struct object_id orig_head;
-+	struct commit *onto;
-+	const char *onto_name;
-+	const char *revisions;
-+	const char *root;
-+};
-+
-+static int finish_rebase(struct rebase_options *opts)
-+{
-+	struct strbuf dir = STRBUF_INIT;
-+	const char *argv_gc_auto[] = { "gc", "--auto", NULL };
-+
-+	delete_ref(NULL, "REBASE_HEAD", NULL, REF_NO_DEREF);
-+	apply_autostash();
-+	close_all_packs(the_repository->objects);
-+	/*
-+	 * We ignore errors in 'gc --auto', since the
-+	 * user should see them.
-+	 */
-+	run_command_v_opt(argv_gc_auto, RUN_GIT_CMD);
-+	strbuf_addstr(&dir, opts->state_dir);
-+	remove_dir_recursively(&dir, 0);
-+	strbuf_release(&dir);
-+
-+	return 0;
-+}
-+
-+static struct commit *peel_committish(const char *name)
-+{
-+	struct object *obj;
-+	struct object_id oid;
-+	if (get_oid(name, &oid))
-+		return NULL;
-+	obj = parse_object(&oid);
-+	return (struct commit *)peel_to_type(name, 0, obj, OBJ_COMMIT);
-+}
-+
-+static int run_specific_rebase(struct rebase_options *opts)
-+{
-+	const char *argv[] = { NULL, NULL };
-+	struct strbuf script_snippet = STRBUF_INIT;
-+	struct argv_array env = ARGV_ARRAY_INIT;
-+	int status;
-+	const char *backend, *backend_func;
-+
-+	argv_array_pushf(&env, "upstream_name=%s", opts->upstream_name);
-+	argv_array_pushf(&env, "GIT_DIR=%s", absolute_path(get_git_dir()));
-+	argv_array_pushf(&env, "upstream=%s",
-+				oid_to_hex(&opts->upstream->object.oid));
-+	argv_array_pushf(&env, "orig_head=%s", oid_to_hex(&opts->orig_head));
-+	argv_array_pushf(&env, "onto=%s",
-+				oid_to_hex(&opts->onto->object.oid));
-+	argv_array_pushf(&env, "onto_name=%s", opts->onto_name);
-+	argv_array_pushf(&env, "revisions=%s", opts->revisions);
-+
-+	switch (opts->type) {
-+		case REBASE_AM:
-+			backend = "git-rebase--am";
-+			backend_func = "git_rebase__am";
-+			break;
-+		case REBASE_INTERACTIVE:
-+			backend = "git-rebase--interactive";
-+			backend_func = "git_rebase__interactive";
-+			break;
-+		case REBASE_MERGE:
-+			backend = "git-rebase--merge";
-+			backend_func = "git_rebase__merge";
-+			break;
-+		case REBASE_PRESERVE_MERGES:
-+			backend = "git-rebase--preserve-merges";
-+			backend_func = "git_rebase__preserve_merges";
-+			break;
-+		default:
-+			BUG("Unhandled rebase type %d", opts->type);
-+			break;
-+	}
-+
-+	strbuf_addf(&script_snippet,
-+		    ". git-rebase--common && . %s && %s",
-+		    backend, backend_func);
-+	argv[0] = script_snippet.buf;
-+
-+	status = run_command_v_opt_cd_env(argv, RUN_USING_SHELL, NULL,
-+					  env.argv);
-+	if (status == 0)
-+		finish_rebase(opts);
-+	else if (status == 2) {
-+		struct strbuf dir = STRBUF_INIT;
-+
-+		apply_autostash();
-+		strbuf_addstr(&dir, opts->state_dir);
-+		remove_dir_recursively(&dir, 0);
-+		strbuf_release(&dir);
-+		die("Nothing to do");
-+	}
-+
-+	strbuf_release(&script_snippet);
-+	argv_array_clear(&env);
-+
-+	return status ? -1 : 0;
-+}
-+
- int cmd_rebase(int argc, const char **argv, const char *prefix)
- {
-+	struct rebase_options options = { -1 };
-+	const char *branch_name;
-+	int ret, flags, quiet = 0;
-+	struct strbuf msg = STRBUF_INIT;
-+	struct strbuf revisions = STRBUF_INIT;
-+	const char *restrict_revision = NULL;
-+
- 	/*
- 	* NEEDSWORK: Once the builtin rebase has been tested enough
- 	* and git-legacy-rebase.sh is retired to contrib/, this preamble
-@@ -51,5 +185,98 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	trace_repo_setup(prefix);
- 	setup_work_tree();
- 
--	die("TODO");
--}
-\ No newline at end of file
-+	options.type = REBASE_AM;
-+
-+	switch (options.type) {
-+	case REBASE_AM:
-+		options.state_dir = apply_dir();
-+		break;
-+	case REBASE_MERGE:
-+	case REBASE_INTERACTIVE:
-+	case REBASE_PRESERVE_MERGES:
-+		options.state_dir = merge_dir();
-+		break;
-+	}
-+	if (!options.root) {
-+		if(!argc)
-+			die("TODO: handle @{upstream}");
-+		else {
-+			options.upstream_name = argv[1];
-+			argc--;
-+			argv++;
-+			if (!strcmp(options.upstream_name, "-"))
-+				options.upstream_name = "@{-1}";
-+		}
-+		options.upstream = peel_committish(options.upstream_name);
-+		if (!options.upstream)
-+			die(_("invalid upstream '%s'"), options.upstream_name);
-+	} else
-+		die("TODO: upstream for --root");
-+
-+	/* Make sure the branch to rebase onto is valid. */
-+	options.onto_name = (const char *) options.onto ?
-+		(const char *) options.onto : options.upstream_name;
-+	if (strstr(options.onto_name, "...")) {
-+		die("TODO");
-+	} else {
-+		options.onto = peel_committish(options.onto_name);
-+		if (!options.onto)
-+			die(_("Does not point to a valid commit '%s'"),
-+				options.onto_name);
-+	}
-+
-+	/*
-+	* If the branch to rebase is given, that is the branch we will rebase
-+	* branch_name -- branch/commit being rebased, or HEAD (already detached)
-+	* orig_head -- commit object name of tip of the branch before rebasing
-+	* head_name -- refs/heads/<that-branch> or "detached HEAD"
-+	*/
-+	if (argc > 1)
-+		 die ("TODO: handle switch_to");
-+	else {
-+		/* Do not need to switch branches, we are already on it. */
-+		options.head_name =
-+			xstrdup_or_null(resolve_ref_unsafe("HEAD", 0, NULL,
-+					 &flags));
-+		if (!options.head_name)
-+			die(_("No such ref: %s"), "HEAD");
-+		if (flags & REF_ISSYMREF) {
-+			if (!skip_prefix(options.head_name,
-+					 "refs/heads/", &branch_name))
-+				branch_name = options.head_name;
-+
-+		} else {
-+			options.head_name = xstrdup("detached HEAD");
-+			branch_name = "HEAD";
-+		}
-+		if (get_oid("HEAD", &options.orig_head))
-+			die(_("Could not resolve HEAD to a revision"));
-+	}
-+
-+	/* Detach HEAD and reset the tree */
-+	if (!quiet)
-+		printf("First, rewinding head to replay your work on top of it...");
-+
-+	strbuf_addf(&msg, "rebase: checkout %s", options.onto_name);
-+	if (detach_head_to(&options.onto->object.oid, "checkout", msg.buf))
-+		die(_("Could not detach HEAD"));
-+	strbuf_release(&msg);
-+	if (update_ref("rebase", "ORIG_HEAD", &options.orig_head, NULL, 0,
-+		       UPDATE_REFS_MSG_ON_ERR) < 0)
-+		die(_("Could not update ORIG_HEAD to '%s'"),
-+		    oid_to_hex(&options.orig_head));
-+
-+	strbuf_addf(&revisions, "%s..%s",
-+		!options.root ? oid_to_hex(&options.onto->object.oid) :
-+		    (restrict_revision ? restrict_revision :
-+			    oid_to_hex(&options.upstream->object.oid)),
-+			    oid_to_hex(&options.orig_head));
-+
-+	options.revisions = revisions.buf;
-+
-+	ret = !!run_specific_rebase(&options);
-+
-+	strbuf_release(&revisions);
-+	free(options.head_name);
-+	return ret;
-+}
--- 
-2.18.0
-
+> are defined.
