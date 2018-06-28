@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A73B1F516
-	for <e@80x24.org>; Thu, 28 Jun 2018 08:08:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC4011F597
+	for <e@80x24.org>; Thu, 28 Jun 2018 08:14:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934654AbeF1IIP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Jun 2018 04:08:15 -0400
-Received: from mail-it0-f66.google.com ([209.85.214.66]:53993 "EHLO
+        id S934808AbeF1IO0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Jun 2018 04:14:26 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:37919 "EHLO
         mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932245AbeF1IIN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jun 2018 04:08:13 -0400
-Received: by mail-it0-f66.google.com with SMTP id a195-v6so11415374itd.3
-        for <git@vger.kernel.org>; Thu, 28 Jun 2018 01:08:13 -0700 (PDT)
+        with ESMTP id S934404AbeF1IOY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jun 2018 04:14:24 -0400
+Received: by mail-it0-f66.google.com with SMTP id v83-v6so11247789itc.3
+        for <git@vger.kernel.org>; Thu, 28 Jun 2018 01:14:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=q94AO9YtIziw8ckhx2zKPmwNN42OxQA0kUyEHKjw7Dk=;
-        b=TjLCIHS412auDraZqpHjFRmA3XDET4B4w3Pooigm3K534PuqDxCO5wt6UzBxu7FWeT
-         Gn54xLgp468Ghwpj20zkcsbclZYlauTENqDFLjSvHG5B7Z6gKmcm0eteYLi6lBCVe69l
-         cI6OvZRZ1Ke7LB0UrMmCq/hInE/ipyFNuTM3+Cb/gj0U8x1UW0dQBOvAniRAjsC5+Xze
-         AubGfQLALSoORSxNfsxiFts/8DUwj3qvOwuhO7eL6q5muaqBr8BLssqjE32pziSz/IqO
-         tf2d9wDm5vnAbkNX1kL4gJm+mB0drT6KMKQIIhHYjW5Q0nYmR47DgplHxfeKG2CX4VHs
-         axWg==
+        bh=qqu8RJAwofyMBw77v97J8NIPjLaf5C1BEBq5juI/V64=;
+        b=sEULlqnBYmNyzq+QSLsolQEEolcCXfu9T2R+haLEDxzHgmHUGCJhMCOWPGAX07fVEH
+         eV/Kf+aDt0ODLTLy5yvQDF7MR4dC3pR87bYlLZb/uwOIw1mjpJziOBE/uiQfdQXPwfGH
+         i7dGJGo7ZsXxMKGqcCAE+7OtbgoyehxSuK1s61rXpceHx/xqwASF6+ktyY3mALFENXYk
+         rPQjV4c07J0w0QTNWtOHjuaGlC+2G/uxvSefEMWVVfohTBp0EChO3MwhirvyovcOU0Sm
+         zn6pNSO6s6CFXmPAy0rp8J4bz1/y/0P1kxNVHtiX+GXf55JK80OglMBJb5x9V5Xy8/E4
+         CgHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=q94AO9YtIziw8ckhx2zKPmwNN42OxQA0kUyEHKjw7Dk=;
-        b=eyNUmCNlbvfQKP2ErVg0n24Z5sR3OLoNKfyq0aEKxNcwA/leBOOqYpfy2R/VgiClwV
-         8YSPNal1FRanr4Z2QuCyuGxwsilC7QkFrhUpH3L8Qcy//ZDM7T6sQEHzX6YUXq2U1JqX
-         eJpQkfgVXQooRzi2GmHr8/CQiW9yFnwzlSHNkUOw0KIVM8yZJzBeIGxbwAo7wJjn9mB3
-         zEJ5n8CzP7nABt3UhwcYMadDt4sMDN/38PVCvt96XbvSfHEGs2j2LVcMgVwRqUQpijKs
-         cTEhZfsS4MQyvLVUZrdjPHSptfz8O6zt66bW00rwHUDWw/fFIgSuAAY61XxJW3ea17+G
-         FVjQ==
-X-Gm-Message-State: APt69E1YX+W8OPgjX63LIg07jY4VQ9WZ01r4277tKcpDwqvc3QAF7Mg+
-        DZculMvWFWUZ6vtQxZKl6tEKheuoh5HURmJJN7o=
-X-Google-Smtp-Source: AAOMgpfI2dasnYlrZjnGiRRFMMxnCJJwtxKO69iVismKLxjBcB+t7XhOLCCFdcIgRfYKsZNczUuUNTbpkl9Fis6oDRM=
-X-Received: by 2002:a24:6bd7:: with SMTP id v206-v6mr7204141itc.129.1530173292988;
- Thu, 28 Jun 2018 01:08:12 -0700 (PDT)
+        bh=qqu8RJAwofyMBw77v97J8NIPjLaf5C1BEBq5juI/V64=;
+        b=Wr7guOvv7nS+cIrfa12vVJ9/L0NRJwCE0ilW73ROhCZo+Iv+a+qJEowslWWZul05ta
+         IBaoRQ4nDQJDzA1mZ7IHsnFs+j1i3FvEDUHQwvc9We3AegwzErsTEKoE0SqmjZB2dvnc
+         goBA1NPBABodkRJlUGRzaMfxZE31ZYCmn2jUtrpIU0TtmDxhRc+gGxGWzs/h8d/N7g+f
+         NCW+Ee71CSXUcPcw2kolaWD0JsDoHQ4+SDcY7lw/gwvEXBdnU54xazbB8VbXTTuWWTnZ
+         +RpazPicM8PPx3o7reyqpHGQYxp1wQ7Xxow/9Jon0AugOluIbiXL6YecAcjiGsIECece
+         73Cg==
+X-Gm-Message-State: APt69E1PGjNfFS/q33tfiC8xMVK3zW4op2BmwPBjRPqIyUjScnT/VPD/
+        tSykR7lMnbRiMDt9X0qRsCfEgRO6QDxkwwAFE9A=
+X-Google-Smtp-Source: ADUXVKIEV3LHZAyjCgh68ThSB7Xqhe3C9z7KyaK4YHoNte8G1rYD0WRwMOMIHQMGTY5GvKEsYOw7VPAvxfxIW8dDv10=
+X-Received: by 2002:a24:2908:: with SMTP id p8-v6mr7215308itp.96.1530173663296;
+ Thu, 28 Jun 2018 01:14:23 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a4f:2293:0:0:0:0:0 with HTTP; Thu, 28 Jun 2018 01:08:12
+Received: by 2002:a4f:2293:0:0:0:0:0 with HTTP; Thu, 28 Jun 2018 01:14:22
  -0700 (PDT)
-In-Reply-To: <20180628074655.5756-3-predatoramigo@gmail.com>
-References: <20180628074655.5756-1-predatoramigo@gmail.com> <20180628074655.5756-3-predatoramigo@gmail.com>
+In-Reply-To: <20180628074655.5756-5-predatoramigo@gmail.com>
+References: <20180628074655.5756-1-predatoramigo@gmail.com> <20180628074655.5756-5-predatoramigo@gmail.com>
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 28 Jun 2018 10:08:12 +0200
-Message-ID: <CAP8UFD2+7hRAHOTrYRZZad6OkGDM3CjnOJ3qcWUhS3R9-dn6bg@mail.gmail.com>
-Subject: Re: [PATCH 2/5] rebase: start implementing it as a builtin
+Date:   Thu, 28 Jun 2018 10:14:22 +0200
+Message-ID: <CAP8UFD06HO_j5-4wt=efB1Wr-52OcnZyn=bXAVra=ZpdxKXusA@mail.gmail.com>
+Subject: Re: [PATCH 4/5] sequencer: refactor the code to detach HEAD to checkout.c
 To:     Pratik Karki <predatoramigo@gmail.com>
 Cc:     git <git@vger.kernel.org>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -66,23 +66,12 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Thu, Jun 28, 2018 at 9:46 AM, Pratik Karki <predatoramigo@gmail.com> wrote:
+> The motivation behind this commit is to extract the core part of
+> do_reset() from sequencer.c and move it to a new detach_head_to()
+> function in checkout.c.
 
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> new file mode 100644
-> index 000000000..1152b7229
-> --- /dev/null
-> +++ b/builtin/rebase.c
-> @@ -0,0 +1,55 @@
-> +/*
-> + * "git rebase" builtin command
-> + *
-> + * Copyright (c) 2018 Pratik Karki
-> + */
-
-[...]
-
-> +       die("TODO");
-> +}
-> \ No newline at end of file
-
-Please add a newline at the end of the files you create.
+If this is independent from your other patches and if this can be used
+by Alban's work, then it might be a good idea to send this patch
+separately (and then to state in this patch series that it depends on
+the separate patch) or at least to move this patch to the beginning of
+the patch series.
