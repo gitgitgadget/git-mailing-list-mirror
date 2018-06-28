@@ -2,78 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E06931F516
-	for <e@80x24.org>; Thu, 28 Jun 2018 11:42:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 87BE11F516
+	for <e@80x24.org>; Thu, 28 Jun 2018 11:49:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933703AbeF1LmR (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Jun 2018 07:42:17 -0400
-Received: from smtprelay08.ispgateway.de ([134.119.228.107]:39987 "EHLO
-        smtprelay08.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932118AbeF1LmP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jun 2018 07:42:15 -0400
-X-Greylist: delayed 355 seconds by postgrey-1.27 at vger.kernel.org; Thu, 28 Jun 2018 07:42:15 EDT
-Received: from [91.113.179.170] (helo=[192.168.92.26])
-        by smtprelay08.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
-        (Exim 4.90_1)
-        (envelope-from <marc.strapetz@syntevo.com>)
-        id 1fYVDl-0007xH-7w; Thu, 28 Jun 2018 13:36:17 +0200
-Subject: Re: [PATCH v3] Documentation: declare "core.ignorecase" as internal
- variable
-To:     Junio C Hamano <gitster@pobox.com>
-References: <7f6b2a42-334d-9443-7b89-625069931ca7@syntevo.com>
- <c899089d-c195-26b5-66ce-de0273a7152b@syntevo.com>
- <xmqqzhzgdoyb.fsf@gitster-ct.c.googlers.com>
-From:   Marc Strapetz <marc.strapetz@syntevo.com>
-Cc:     aaron@schrab.com, git@vger.kernel.org
-Message-ID: <8f01e60e-2f4f-49dd-277a-845363554fa9@syntevo.com>
-Date:   Thu, 28 Jun 2018 13:36:22 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+        id S934487AbeF1LtQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Jun 2018 07:49:16 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58002 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S934223AbeF1LtO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jun 2018 07:49:14 -0400
+Received: (qmail 7137 invoked by uid 109); 28 Jun 2018 11:49:14 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 28 Jun 2018 11:49:14 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19067 invoked by uid 111); 28 Jun 2018 11:49:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 28 Jun 2018 07:49:34 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Jun 2018 07:49:12 -0400
+Date:   Thu, 28 Jun 2018 07:49:12 -0400
+From:   Jeff King <peff@peff.net>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jason@zx2c4.com,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH] fsck: check skiplist for object in fsck_blob()
+Message-ID: <20180628114912.GA12901@sigill.intra.peff.net>
+References: <2fc2d53f-e193-2a2a-9f8f-b3e1d256d940@ramsayjones.plus.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqzhzgdoyb.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Df-Sender: bWFyYy5zdHJhcGV0ekBzeW50ZXZvLmNvbQ==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <2fc2d53f-e193-2a2a-9f8f-b3e1d256d940@ramsayjones.plus.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 27.06.2018 21:11, Junio C Hamano wrote:
-> Marc Strapetz <marc.strapetz@syntevo.com> writes:
-> 
->> [1. text/plain]
->> The current description of "core.ignoreCase" reads like an option which
->> is intended to be changed by the user while it's actually expected to
->> be set by Git on initialization only. Subsequently, Git relies on the
->> proper configuration of this variable, as noted by Bryan Turner [1]:
->>
->>      Git on a case-insensitive filesystem (APFS, HFS+, FAT32, exFAT,
->>      vFAT, NTFS, etc.) is not designed to be run with anything other
->>      than core.ignoreCase=true.
->>
->> [1] https://marc.info/?l=git&m=152998665813997&w=2
->>      mid:CAGyf7-GeE8jRGPkME9rHKPtHEQ6P1+ebpMMWAtMh01uO3bfy8w@mail.gmail.com
->>
->> Signed-off-by: Marc Strapetz <marc.strapetz@syntevo.com>
->> ---
->>   Documentation/config.txt | 9 ++++++---
->>   1 file changed, 6 insertions(+), 3 deletions(-)
->>
-> 
-> Hmph.  Do other people have difficulty applying this patch to their
-> trees?  It is just several lines long so I could retype it myself,
-> but I guess "Content-Type: text/plain; charset=utf-8; format=flowed"
-> has destroyed formatting of the patch rather badly.
+On Wed, Jun 27, 2018 at 07:39:53PM +0100, Ramsay Jones wrote:
 
-I had copy-pasted the patch into Thunderbird. The received email was 
-looking fine in the inbox, however it seems that some leading 
-whitespaces have been added to several lines (when comparing raw 
-contents of v3 and v4). I have resent the patch with git send-email now.
+> Since commit ed8b10f631 ("fsck: check .gitmodules content", 2018-05-02),
+> fsck will issue an error message for '.gitmodules' content that cannot
+> be parsed correctly. This is the case, even when the corresponding blob
+> object has been included on the skiplist. For example, using the cgit
+> repository, we see the following:
+> 
+>   $ git fsck
+>   Checking object directories: 100% (256/256), done.
+>   error: bad config line 5 in blob .gitmodules
+>   error in blob 51dd1eff1edc663674df9ab85d2786a40f7ae3a5: gitmodulesParse: could not parse gitmodules blob
+>   Checking objects: 100% (6626/6626), done.
+>   $
+> 
+>   $ git config fsck.skiplist '.git/skip'
+>   $ echo 51dd1eff1edc663674df9ab85d2786a40f7ae3a5 >.git/skip
+>   $
+> 
+>   $ git fsck
+>   Checking object directories: 100% (256/256), done.
+>   error: bad config line 5 in blob .gitmodules
+>   Checking objects: 100% (6626/6626), done.
+>   $
+> 
+> Note that the error message issued by the config parser is still
+> present, despite adding the object-id of the blob to the skiplist.
+> 
+> One solution would be to provide a means of suppressing the messages
+> issued by the config parser. However, given that (logically) we are
+> asking fsck to ignore this object, a simpler approach is to just not
+> call the config parser if the object is to be skipped. Add a check to
+> the 'fsck_blob()' processing function, to determine if the object is
+> on the skiplist and, if so, exit the function early.
 
--Marc
+Yeah, this solution seems sensible. Given that we would never report any
+error for that blob, there is no point in even looking at it. I wonder
+if we ought to do the same for other types, too. Is there any point in
+opening a tree that is in the skiplist?
+
+> I noticed recently that the 'cgit.git' repo was complaining when
+> doing an 'git fsck' ...
+> 
+> Note that 'cgit' had a '.gitmodules' file and a 'submodule.sh'
+> script back in 2007, which had nothing to do with the current
+> git submodule facilities, ... ;-)
+
+Yikes. I worried about that sort of regression when adding the
+.gitmodules checks. But this _is_ a pretty unique case: somebody was
+implementing their own version of submodules (pre-git-submodule) and
+decided to use the same name. So I'm not sure if this is a sign that we
+need to think through the regression, or a sign that it really is rare.
+
+One thing we could do is turn the parse failure into a noop. The main
+point of the check is to protect people against the malicious
+.gitmodules bug. If the file can't be parsed, then it also can't be an
+attack vector (assuming the parser used for the fsck check and the
+parser used by the victim behave identically).
+
+That wouldn't help with your stray message, of course, but it would
+eliminate the need to deal with the skiplist here (and skiplists aren't
+always easy to do -- for instance, pushing up a non-fork of cgit to
+GitHub would now be rejected because of this old file, and you'd have to
+contact support to resolve it).
+
+> I just remembered that I had intended to review the name of the
+> function that this patch introduces before sending, but totally
+> forgot! :(
+> 
+> [Hmm, 'to_be_skipped' -> object_to_be_skipped, object_on_skiplist,
+> etc., ... suggestions welcome!]
+
+The current name is OK to be, but object_on_skiplist() also seems quite
+obvious.
+
+-Peff
