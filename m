@@ -2,93 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 82C841F516
-	for <e@80x24.org>; Thu, 28 Jun 2018 19:18:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7DC471F516
+	for <e@80x24.org>; Thu, 28 Jun 2018 20:38:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933863AbeF1TSM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Jun 2018 15:18:12 -0400
-Received: from mail-yb0-f194.google.com ([209.85.213.194]:33871 "EHLO
-        mail-yb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933853AbeF1TSL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jun 2018 15:18:11 -0400
-Received: by mail-yb0-f194.google.com with SMTP id e9-v6so2440671ybq.1
-        for <git@vger.kernel.org>; Thu, 28 Jun 2018 12:18:11 -0700 (PDT)
+        id S1753473AbeF1UiT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Jun 2018 16:38:19 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:41898 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753431AbeF1UiS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jun 2018 16:38:18 -0400
+Received: by mail-wr0-f193.google.com with SMTP id h10-v6so6744995wrq.8
+        for <git@vger.kernel.org>; Thu, 28 Jun 2018 13:38:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=jM6zHd/fQFKkmiKq0LOCDBUDIVQYZC2GBhAjZylAKJw=;
-        b=alMIgPdfzSaYVYMkVCHte0cRaD9ipDiejN13xe3oABACcMAek78f9cHZ1c3F3rDhJd
-         Ap+A3LuKmTohQK5tmZSLAvp4HJOsBIQU9jPxB4qlHvxZdXByqxTI0NB+p7yyFI/+tQaw
-         cAVXUj4Ndp/qZXHbLsBSSzX72eN6QEbE1Pc0xzsbUn6BpZmmdXnwjydkOYHAyZ+Niogb
-         GtN0oouxJVjUd1pceKr61KQsD67wYQyocTaa7x8KcmuzyyJDJpueTAEi58VMIIlNe0zw
-         Nw9l+T/Kvs91FUC4xEPl5Sr1yjDp89ATIkCDm+liGtTIPIG93PnA3Um/29mqo9pntnpC
-         rStw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=nkYb3rCa/kL6oXpwwirW6u3ielTFEV+KDoeFPe7A8Tg=;
+        b=HI04z5oOgWm+2dTFHJ3TKSu9savXDmAjzox8/HOnpfClo10t0ksznAl9XCspbvyYxm
+         Sfh6/kOnGVsEKx2AiYK//0l26EnR3sK+qJy6u7ELcp49z63ZM3MdgYY2t72M2b0oWMui
+         Coer+dOPjVtNbZ01aN+iJDTBhOtDRqVP5Fts6A3luH2RQY/rsFCPavP5GfFRkJlmAcKo
+         qAdVK1vd9+I2vzh0l7/rjv5yciCN+d7wZBZ79UnPOEHT4jhsiuBQdn1tpK3rramnoH7L
+         1ig/WV1/fLn5eZaY7ANzgfR8yjuoRamElTP72OGQv/P7X0KuPfQzxnhzgO1zThnPUszD
+         nmBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=jM6zHd/fQFKkmiKq0LOCDBUDIVQYZC2GBhAjZylAKJw=;
-        b=j18NJKPDDr8I8rlqok4/8C8NcXCJjO2fNuJCWkuR72iPhnsK7VGwrfB1ZODn/Lgygy
-         8re9dr3nP3G0ZKRhDVrRM9NiT0qnEKG/F9Nq17SD/ktBtCmHIVbpct1Xek6Rr+89voSq
-         Fp8fkWxSbV0sCHamjTMnB8BJpHFfOP186dwRk5i8q1c+kuEyewwWSajSWtP3XMbY4hIR
-         cq3OrAdHQGdlXUugJsVl/kpx7TE6AEuvdOBYOZAVLlBgC7+4PGbfjKkN/IN49lYss6f2
-         3/SO27VfNe/6r9AVNtROG5NOKH43im+BvycFNQLmbLEU0OKXjVjwqFhUh0YLaLtkkzkK
-         RhKQ==
-X-Gm-Message-State: APt69E0nciBLjK5e/GYNVs4pksUx/bTs7YPYkoeI58aNT8BAlBZgLe/c
-        jzG82czxO+dl1itJEUl3KuiTum2UjFkz2S86U2PPCw==
-X-Google-Smtp-Source: ADUXVKL46+i1xBkAgVOP7AdAcLsGnXznoZw3d/a5HbXFxByf0x01rn2cKTbt8mpDdC+53GGno92QdtxzPgBhI1sRslU=
-X-Received: by 2002:a25:c04:: with SMTP id 4-v6mr6139657ybm.247.1530213490505;
- Thu, 28 Jun 2018 12:18:10 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=nkYb3rCa/kL6oXpwwirW6u3ielTFEV+KDoeFPe7A8Tg=;
+        b=U3ykYEXNoYDoUI+8arem/wui70TaoaqZQFd6qaExE8Yw4whr/MdFnl1YDTCzOUuk3E
+         JJtzPl4ZI/r+bQ6tOTNIa0Ab1eb9qNeWqdogPxVH5C9ZMQThSBeobfV7p4qn98bkJ7eG
+         AlGYAZkxBAcIpXhRiS1CreZTU3J9/xShak2b2NDWZYNnD/uBq0vb4qj8FAYIWttwDcDC
+         B2O+ELWy2CiVoFZyF1Y+SEAr5xYUqNqvxyVroMwjo8S2Sf/my720oErJ+ny/LCxBhKFA
+         fnVJA0lvAAJ/gdWfxxM0CjEBNY6yC2Xr0aHwNHDIjxkko2NGWHK2BN+SRwmqZOl2cTYz
+         TJug==
+X-Gm-Message-State: APt69E2IlzKYugXJwtbPuSoOHzTpvpTP8TjrM/9DvWfRC0ed3nfiHgA5
+        fBrk6wTnvfuZOcxeon3NT7Q=
+X-Google-Smtp-Source: AAOMgpfj/0p7qq9RzYM//tbPh0DQ5nwh2Sr86FdedaF+Q9NzLT1Fnp1db44NVgqHzcNo6qDceJvcUA==
+X-Received: by 2002:adf:fd4c:: with SMTP id h12-v6mr7822457wrs.280.1530218296804;
+        Thu, 28 Jun 2018 13:38:16 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id r2-v6sm11645176wmb.39.2018.06.28.13.38.15
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 28 Jun 2018 13:38:16 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Aaron Schrab <aaron@schrab.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] sequencer: use configured comment character
+References: <20180628020414.25036-1-aaron@schrab.com>
+Date:   Thu, 28 Jun 2018 13:38:15 -0700
+In-Reply-To: <20180628020414.25036-1-aaron@schrab.com> (Aaron Schrab's message
+        of "Wed, 27 Jun 2018 22:04:14 -0400")
+Message-ID: <xmqqh8lmwsso.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20180628074655.5756-1-predatoramigo@gmail.com> <20180628074655.5756-4-predatoramigo@gmail.com>
-In-Reply-To: <20180628074655.5756-4-predatoramigo@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 28 Jun 2018 12:17:58 -0700
-Message-ID: <CAGZ79kaVXVu9BWtQfpNturhLMJtCuc7MSuTa6aRwwC8q=nXsgQ@mail.gmail.com>
-Subject: Re: [PATCH 3/5] rebase: refactor common shell functions into their
- own file
-To:     Pratik Karki <predatoramigo@gmail.com>
-Cc:     git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Alban Gruin <alban.gruin@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 28, 2018 at 12:48 AM Pratik Karki <predatoramigo@gmail.com> wrote:
+Aaron Schrab <aaron@schrab.com> writes:
+
+> Use configured comment character when generating comments about branches
+> in an instruction sheet.  Failure to honor this configuration causes a
+> failure to parse the resulting instruction sheet.
 >
-> The function present in `git-legacy-rebase.sh` are used by backends
-> so, this refactor tries to extract the functions out so that, the
-
-it not only tries to, it actually does. :)
-
-> `git-legacy-rebase.sh` can be retired easily as the
-> `git-rebase--common.sh` will provide the functions for now.
+> Signed-off-by: Aaron Schrab <aaron@schrab.com>
+> ---
+>  sequencer.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> The motivation behind this is to call the backend functions
-> *directly* from C, bypassing `git-rebase.sh`. Therefore those functions
-> need to live in a separate file: we need to be able to call
-> `.git-rebase--common` in that script snippet so that those functions
-> are defined.
+> diff --git a/sequencer.c b/sequencer.c
+> index 4034c0461b..caf91af29d 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -3991,7 +3991,7 @@ static int make_script_with_merges(struct pretty_print_context *pp,
+>  		entry = oidmap_get(&state.commit2label, &commit->object.oid);
+>  
+>  		if (entry)
+> -			fprintf(out, "\n# Branch %s\n", entry->string);
+> +			fprintf(out, "\n%c Branch %s\n", comment_line_char, entry->string);
+>  		else
+>  			fprintf(out, "\n");
 
-Makes sense.
-
-I applied the patch (and checked the move via the --color-moved option
-to see if there are discrepancies that slip in easily via rebases as there is
-more work currently going on in the rebase area) and the found the functions
-were moved as-is, just reordered. Can you give a hint on why you choose a
-different order for the moved functions (not as an email reply, but as part
-of the commit message, later on people may ask the same question only
-to find this commit via git-blame or git-log for example)
-
-Thanks,
-Stefan
+Would this interact OK with core.commentchar set to "auto"?
