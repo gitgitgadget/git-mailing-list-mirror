@@ -2,97 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F3351F516
-	for <e@80x24.org>; Thu, 28 Jun 2018 19:10:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 82C841F516
+	for <e@80x24.org>; Thu, 28 Jun 2018 19:18:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752691AbeF1TJ5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Jun 2018 15:09:57 -0400
-Received: from mail-wr0-f182.google.com ([209.85.128.182]:42573 "EHLO
-        mail-wr0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751981AbeF1TJ4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jun 2018 15:09:56 -0400
-Received: by mail-wr0-f182.google.com with SMTP id p1-v6so6560817wrs.9
-        for <git@vger.kernel.org>; Thu, 28 Jun 2018 12:09:55 -0700 (PDT)
+        id S933863AbeF1TSM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Jun 2018 15:18:12 -0400
+Received: from mail-yb0-f194.google.com ([209.85.213.194]:33871 "EHLO
+        mail-yb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933853AbeF1TSL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jun 2018 15:18:11 -0400
+Received: by mail-yb0-f194.google.com with SMTP id e9-v6so2440671ybq.1
+        for <git@vger.kernel.org>; Thu, 28 Jun 2018 12:18:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Qc25R8ZoFgo99xdm/dEKWDO0CQKgranMLvsYDKmZGNU=;
-        b=RQVAiOl6S/3UBq5teCqsZreDHMh3HSBxAHKe+xt1sNGg4aAxdcye9LD/nq7mlU3gx6
-         QL6N394m1vLhFsklOi4H7pO3/qBwCDpLlDZo1dJM68zxFlK4U+nzzZDApsozIb0zDl/4
-         eNhDS5vbVh+aTHVLEFtpKrtBbVZxu0rI9PfyAWFqQh/d2bBXhytgyI1epSKb6vZddSe5
-         NIjdPBusPqt4cYZVSA/LogBmQIGxRzNldXAP2lEEUqIdG7oJ2nxpMvZ+3lj1J/exvm2T
-         3rdPv+U5oQGCt41OTiVFTb1ec7g1vcUievV04t5hq2uQ89wcsf59yLbMXGn/qQLgPKoD
-         5SbA==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=jM6zHd/fQFKkmiKq0LOCDBUDIVQYZC2GBhAjZylAKJw=;
+        b=alMIgPdfzSaYVYMkVCHte0cRaD9ipDiejN13xe3oABACcMAek78f9cHZ1c3F3rDhJd
+         Ap+A3LuKmTohQK5tmZSLAvp4HJOsBIQU9jPxB4qlHvxZdXByqxTI0NB+p7yyFI/+tQaw
+         cAVXUj4Ndp/qZXHbLsBSSzX72eN6QEbE1Pc0xzsbUn6BpZmmdXnwjydkOYHAyZ+Niogb
+         GtN0oouxJVjUd1pceKr61KQsD67wYQyocTaa7x8KcmuzyyJDJpueTAEi58VMIIlNe0zw
+         Nw9l+T/Kvs91FUC4xEPl5Sr1yjDp89ATIkCDm+liGtTIPIG93PnA3Um/29mqo9pntnpC
+         rStw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Qc25R8ZoFgo99xdm/dEKWDO0CQKgranMLvsYDKmZGNU=;
-        b=YofEmW0hx3HJqq3oDevRsdEU3MODVud2TozHfc/HYDYT7qMrkgfvDtQ3LxYo1RWIKU
-         jYJC35+md1oiGYqW5arGh6akc0KFMoCgHhttB/z0bxGl1pS4ZKk9NzHmB/0kL6eaQ9E7
-         V56S67AVAUj61LwqEsQgw3D4esFvE3AVlOwRZSXdN4LjlPxow1judBn1BTWtoXg2CwaW
-         caku61nF2aqNL1+ap4bIV7Nsj3wzIuOev8Q3j7mHEDmVujqBxPpOZWbttV2iFGh6CC5h
-         fqAWw/uudrC1T26u0TOCPtVMNtXzhX3stpBcxEmAEWTkHj7YV0LeSMAyurxllUy8ubqG
-         UIUQ==
-X-Gm-Message-State: APt69E2x2ymhyduce2f1UtYZfkEz5gOYjfPqeTAJyqaJoiKeK5eEU5Mc
-        6g6lhuD9aZmHLPtzcMLUs58=
-X-Google-Smtp-Source: AAOMgpd+cpUUVrMNZa0CjDgBZSNxtZZ5UYhojLCFbq6xYmUjvYIC/U1+1Uzszdfn9zdkrUmoWE5H9w==
-X-Received: by 2002:adf:dec8:: with SMTP id i8-v6mr3036155wrn.72.1530212994833;
-        Thu, 28 Jun 2018 12:09:54 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id v10-v6sm869701wrm.80.2018.06.28.12.09.53
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 28 Jun 2018 12:09:54 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jameson Miller <jamill@microsoft.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "jonathantanmy\@google.com" <jonathantanmy@google.com>,
-        "pclouds\@gmail.com" <pclouds@gmail.com>,
-        "peartben\@gmail.com" <peartben@gmail.com>,
-        "peff\@peff.net" <peff@peff.net>,
-        "sbeller\@google.com" <sbeller@google.com>
-Subject: Re: [PATCH v5 6/8] mem-pool: fill out functionality
-References: <20180620201557.77155-1-jamill@microsoft.com>
-        <20180628135932.225288-1-jamill@microsoft.com>
-        <20180628135932.225288-7-jamill@microsoft.com>
-Date:   Thu, 28 Jun 2018 12:09:53 -0700
-In-Reply-To: <20180628135932.225288-7-jamill@microsoft.com> (Jameson Miller's
-        message of "Thu, 28 Jun 2018 14:00:13 +0000")
-Message-ID: <xmqqo9fuwwvy.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=jM6zHd/fQFKkmiKq0LOCDBUDIVQYZC2GBhAjZylAKJw=;
+        b=j18NJKPDDr8I8rlqok4/8C8NcXCJjO2fNuJCWkuR72iPhnsK7VGwrfB1ZODn/Lgygy
+         8re9dr3nP3G0ZKRhDVrRM9NiT0qnEKG/F9Nq17SD/ktBtCmHIVbpct1Xek6Rr+89voSq
+         Fp8fkWxSbV0sCHamjTMnB8BJpHFfOP186dwRk5i8q1c+kuEyewwWSajSWtP3XMbY4hIR
+         cq3OrAdHQGdlXUugJsVl/kpx7TE6AEuvdOBYOZAVLlBgC7+4PGbfjKkN/IN49lYss6f2
+         3/SO27VfNe/6r9AVNtROG5NOKH43im+BvycFNQLmbLEU0OKXjVjwqFhUh0YLaLtkkzkK
+         RhKQ==
+X-Gm-Message-State: APt69E0nciBLjK5e/GYNVs4pksUx/bTs7YPYkoeI58aNT8BAlBZgLe/c
+        jzG82czxO+dl1itJEUl3KuiTum2UjFkz2S86U2PPCw==
+X-Google-Smtp-Source: ADUXVKL46+i1xBkAgVOP7AdAcLsGnXznoZw3d/a5HbXFxByf0x01rn2cKTbt8mpDdC+53GGno92QdtxzPgBhI1sRslU=
+X-Received: by 2002:a25:c04:: with SMTP id 4-v6mr6139657ybm.247.1530213490505;
+ Thu, 28 Jun 2018 12:18:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20180628074655.5756-1-predatoramigo@gmail.com> <20180628074655.5756-4-predatoramigo@gmail.com>
+In-Reply-To: <20180628074655.5756-4-predatoramigo@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 28 Jun 2018 12:17:58 -0700
+Message-ID: <CAGZ79kaVXVu9BWtQfpNturhLMJtCuc7MSuTa6aRwwC8q=nXsgQ@mail.gmail.com>
+Subject: Re: [PATCH 3/5] rebase: refactor common shell functions into their
+ own file
+To:     Pratik Karki <predatoramigo@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Alban Gruin <alban.gruin@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jameson Miller <jamill@microsoft.com> writes:
+On Thu, Jun 28, 2018 at 12:48 AM Pratik Karki <predatoramigo@gmail.com> wrote:
+>
+> The function present in `git-legacy-rebase.sh` are used by backends
+> so, this refactor tries to extract the functions out so that, the
 
-> +void mem_pool_combine(struct mem_pool *dst, struct mem_pool *src)
-> +{
-> +	struct mp_block *p;
-> +
-> +	/* Append the blocks from src to dst */
-> +	if (dst->mp_block && src->mp_block) {
-> +		/*
-> +		 * src and dst have blocks, append
-> +		 * blocks from src to dst.
-> +		 */
-> +		p = dst->mp_block;
-> +		while (p->next_block)
-> +			p = p->next_block;
-> +
-> +		p->next_block = src->mp_block;
+it not only tries to, it actually does. :)
 
-Just being curious, but does this interact with the "we carve out
-only from the first block" done in step 4/8?  The remaining unused
-space in the first block in the src pool would be wasted, which may
-not be such a big deal and may not even be worth comparing the
-available space in two blocks and picking a larger one.  But we do
-want to decide _after_ thinking things through nevertheless.
+> `git-legacy-rebase.sh` can be retired easily as the
+> `git-rebase--common.sh` will provide the functions for now.
+>
+> The motivation behind this is to call the backend functions
+> *directly* from C, bypassing `git-rebase.sh`. Therefore those functions
+> need to live in a separate file: we need to be able to call
+> `.git-rebase--common` in that script snippet so that those functions
+> are defined.
+
+Makes sense.
+
+I applied the patch (and checked the move via the --color-moved option
+to see if there are discrepancies that slip in easily via rebases as there is
+more work currently going on in the rebase area) and the found the functions
+were moved as-is, just reordered. Can you give a hint on why you choose a
+different order for the moved functions (not as an email reply, but as part
+of the commit message, later on people may ask the same question only
+to find this commit via git-blame or git-log for example)
+
+Thanks,
+Stefan
