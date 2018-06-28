@@ -2,93 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC4101F516
-	for <e@80x24.org>; Thu, 28 Jun 2018 22:51:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 903CE1F516
+	for <e@80x24.org>; Thu, 28 Jun 2018 23:14:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964796AbeF1Wvu (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Jun 2018 18:51:50 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:33274 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932209AbeF1Wvt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jun 2018 18:51:49 -0400
-Received: by mail-wr0-f194.google.com with SMTP id k7-v6so3515825wrq.0
-        for <git@vger.kernel.org>; Thu, 28 Jun 2018 15:51:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=JNu6WkIphgPeeiFs/jfHgS33+Dg4kODZlnHUpPoCLUE=;
-        b=GVZHXyhU2dGb9rYNEDXcNU2bY2BSOX1WUWfInolbAdQHsoe6lN3nqHcYRccQn8+QxE
-         VxNSPKo21RFTjzegadKfurUfk22/FFgTsLf/Mrn3/Lrv952JBSsbNmGO+AWqiJHtwth8
-         lG3XCM6E/X1Lrty/SLgk3prhs66ngkM9oHrY2lvHMRk+Bo60PlBvefc8ogIo+QGWZ+u3
-         yGvF/pYem5vUQlImV7CQkFDbZfZLFEwXMm874gf0kgWcjObbTfFhr0EpbG7X8SF/i6CC
-         shAMuiHiQLGL3Zd8tpdQE9VY7dJ1PBbL7bau+Y9LA7Lu2+uQnJSPwIyfu8BCWWHVwEpU
-         CFbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=JNu6WkIphgPeeiFs/jfHgS33+Dg4kODZlnHUpPoCLUE=;
-        b=en8Sa0by0b5S1alAdOvxD+5idR8R69OY2H4kUKaUVzn3Al7OqCcWxY9fskJzFLI00b
-         ulbC4UAn5qmI+jFTDvMpZCtQTuy99nDUkdZNiKsTtt1U4dYJCb7P/HZywd86ozIJ8V2s
-         V2gBD91qwPG8hQiBiutA1+AKCiuUKu/A2KhU/GwGGFl5FR+WQ47uHWK76QY102YrsFdz
-         rECIMwHnwgI+7pClJ9T41i4EeZFimjwQ6LBxVaW/XZPNZoiFqdLd+YPLD1tYM3AHQCV9
-         LlSnEoag5VECKSE34jzgyJ0BP1LtXEdyb5liaar2P5VgqAJHSENN91bqorndhxYu46MQ
-         Oo4w==
-X-Gm-Message-State: APt69E2w9hXsMo4AbQkedze9Gxkfs3ktkRJieN5VxDlog7May3tmvele
-        dJUD362oku2SLx+Mi+5HGvE=
-X-Google-Smtp-Source: AAOMgpc3Fsdxi8OQSZREzlUNYc8sOAKJysqEoRH0fzXLMr8T+XOFhX6gbsOSI1SRn0tn4a3A+xKt3g==
-X-Received: by 2002:adf:93a6:: with SMTP id 35-v6mr9765410wrp.18.1530226308543;
-        Thu, 28 Jun 2018 15:51:48 -0700 (PDT)
-Received: from [192.168.0.137] (5-13-221-130.residential.rdsnet.ro. [5.13.221.130])
-        by smtp.gmail.com with ESMTPSA id a2-v6sm460wmb.6.2018.06.28.15.51.47
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 28 Jun 2018 15:51:47 -0700 (PDT)
-Subject: Re: [PATCH v6 2/4] stash: convert drop and clear to builtin
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, gitster@pobox.com
-References: <cover.1529943789.git.ungureanupaulsebastian@gmail.com>
- <5373f422a82da2357828b8cc4a2b84fb2bedd780.1529943789.git.ungureanupaulsebastian@gmail.com>
- <nycvar.QRO.7.76.6.1806270015060.21419@tvgsbejvaqbjf.bet>
-From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-Message-ID: <16aa7eed-19af-9793-508e-a13caef020a2@gmail.com>
-Date:   Fri, 29 Jun 2018 01:51:46 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+        id S936173AbeF1XOP (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Jun 2018 19:14:15 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:47996 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S936152AbeF1XOO (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 28 Jun 2018 19:14:14 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:fc1e:cd98:6cd:4087])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D3A346048F;
+        Thu, 28 Jun 2018 23:14:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1530227653;
+        bh=Qad9gaGC0Ungc+8xo/SpsARyaNBr+dA/bOwHzIhfgk8=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=vhU/lvjpl1RmTVc3ZChKFK+tiGX4uP6fDyzxNBw5BmSbb6qQm3+EAdP5C0lFHWxxi
+         b79W+LMKnb8X61DogtknGodqWcrM6WZkqL5IVd5ZgeIYUQ4sUZCbu8JJfun6WC/Xti
+         7kMg2thGfrCPL6WmT721owEeqVJjegyoCkzZ/sOovrAaQYzLrcYS1EohzH8A2LgI14
+         mK5uERx57cNlJ8+nkYi3FekngpL3v40vev7stkBrPw2INpvGh5iTYYCPPU/m4PT3X8
+         LKhEBeW/hehr4CeE3gvtQUJ6x+r4NrxE0ATrhIfPclHua6dXWosv9Atk/cHlk6Jljl
+         OoeZaznC2KkymY90DqlhLT1Ui3W1VbRfMxHyArZE+h8HMcA1onWdyzONpeRq8qRBTN
+         d/7o9IwfqfGDFFwC1qAiXVpFurpEKqRdmggs1WV8M/q5Cz1qiVpxuvaVRkBseaANWc
+         gO6pRUbx2dUD8KTVzZbhILpoMtMgkB3kwzLmbNq3Ts30kGABIxJ
+Date:   Thu, 28 Jun 2018 23:14:08 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/1] Makefile: fix the "built from commit" code
+Message-ID: <20180628231408.GG644867@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+References: <pull.7.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.1806270015060.21419@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="X+8siUETKMkW99st"
+Content-Disposition: inline
+In-Reply-To: <pull.7.git.gitgitgadget@gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.16.0-2-amd64)
+User-Agent: Mutt/1.10.0 (2018-05-17)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-On 27.06.2018 01:17, Johannes Schindelin wrote:
-> I thought you had introduced `get_oidf()` specifically so you could avoid
-> the `rev-parse` call... `get_oidf(&dummy_oid, "%s@{0}", ref_stash)` should
-> do this, right?
+--X+8siUETKMkW99st
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-We discussed this over the IRC channel, but since not everybody might 
-follow the chat, I would like to put it also here.
+On Thu, Jun 28, 2018 at 12:53:15PM +0000, Johannes Schindelin via GitGitGad=
+get wrote:
+> Let's fix that quoting, and while at it, also suppress the unhelpful
+> message
+>=20
+> fatal: not a git repository (or any of the parent directories): .git
+>=20
+> that gets printed to stderr if no current commit could be determined,
+> and might scare the occasional developer who simply tries to build Git
+> from scratch.
 
-The main reason why `get_oidf()` was introduced is to make 
-`assert_stash_like()` less tedious. I am sure that this is not the only 
-place where this function could be useful.
+I saw that building Git 2.18.0 for $DAYJOB.  Thanks for fixing it.
 
-Over the last weeks, I have been working in parallel on adding a new 
-flag (`GET_OID_GENTLY`) for `get_oid_with_context()`. By using this 
-flag, the `rev-parse` call could be replaced with an internal API call. 
-I hope that I will be able to send this patch soon enough.
+The series looked good to me, too.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-Best regards,
-Paul
+--X+8siUETKMkW99st
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.8 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAls1a8AACgkQv1NdgR9S
+9ovxbhAAiAxb4Ycw1s3o557f/d79awxi/4Jnah4Bf1vRg1QaSKEcLrU5nMdlA59q
+1PFtk4MaktUkpNKbJWB2/qr0wCzQhucRjZ3eVRWjMtH/DBpgFs3LBXA+4k63Ap8M
+fPL8kT0XxMIpbBNsu+BG3+muudWeQL//WkIPpYtvo+CVjiYAz/MqWfYctOAFu2yP
+IYIvpbSdMa/wRieeAgv3mmpXcN1I4Whj/FarEPCskYeoRj8z5Y4BU8bjTHyTyoac
+GdsTk9XfbUxqxWwkw2O47f1Vn+/GAAcld/+g1bQVghA1no4jQa4M13qo9XZlxf4K
+lwnEn7/2Jd6XQnRPhFppbNC360LfHTRXdTU6x6WRgQ0PHjdilaH5k82J9NaqLQ0s
+vEP2geYKeZkcXNInnUyqaU0PTuKacjStT+7EQwA22nusYwpVnJ87IxARGo1KtD3D
+lxLemddeAsEySk9IhPbfRIJFIyZftQVs92uUFPxCKn0BX/pVb+OJf06v2eBUKXBd
+jIUp2WmobQx0V6DBW0zbVYNlPAp0aueikfpWwbdQd3GYgi2rFb70VExRaFqXxCYO
+yrgyUSrbhUV+LztjURRSazCyhEanpl3PHUq2IGIFF6qn/2Q3Cj91li2SBZ9m7yfO
+DVxK/6ABIhCfclrAl9atHs+BMvRPcQFaG6H4M84T+xBiB4H8RF4=
+=PDF5
+-----END PGP SIGNATURE-----
+
+--X+8siUETKMkW99st--
