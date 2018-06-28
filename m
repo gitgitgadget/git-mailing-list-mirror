@@ -2,59 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,
+	DATE_IN_PAST_96_XX,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7AC901F597
-	for <e@80x24.org>; Mon, 16 Jul 2018 13:00:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFCA61F597
+	for <e@80x24.org>; Mon, 16 Jul 2018 13:00:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731012AbeGPN14 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jul 2018 09:27:56 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:35977 "EHLO
+        id S1731063AbeGPN15 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jul 2018 09:27:57 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:38089 "EHLO
         mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729854AbeGPN1z (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jul 2018 09:27:55 -0400
-Received: by mail-pg1-f196.google.com with SMTP id m19-v6so7474894pgv.3
-        for <git@vger.kernel.org>; Mon, 16 Jul 2018 06:00:35 -0700 (PDT)
+        with ESMTP id S1729854AbeGPN15 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jul 2018 09:27:57 -0400
+Received: by mail-pg1-f196.google.com with SMTP id k3-v6so7469083pgq.5
+        for <git@vger.kernel.org>; Mon, 16 Jul 2018 06:00:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=AdBtnREL8q8KusRMnxzPkr1jmNAcRFt286LLyMBu/OE=;
-        b=Gi7ek/TST9yAeLBg5Z/vAW85AtE0RLHZII7W5ovWb2uMclDKvicbo9m6zriqxRUIFs
-         BQZ09A8On6Ulth3qmlmA13BM4T+J/IGrixGs3S/7IKUU/bBp7726u0I94fvLemv4E+zO
-         Z74na6A9AB3ePz/4oC0ddESRsiJiwI3pjwwT1+EFzhxhkkpgZkX7J7HH2aPKfjg9wPKW
-         yL8wQ6tTkGndYnlR3sZ1z6fOC7p40Pi8EDVWAXYJDifJw7YaOBTIY0ADm8lvvrcY/q6y
-         C/fSUVBkl7lNxoPHnRR5IFtm4xDIOf2+OllZYYUIvdmhaLKa97ufK0FIsun+4SUibwzu
-         9l9A==
+        bh=OPgBJmVsDd6gmG5DWuvPD4iG6R1oLoyAQlJGLxBkxzQ=;
+        b=M6HDm3YfctIH6jOgBwXqyy/WeuuloVNB4WaWfS56rv6id6GDHu6DyWf2mX+A0iYON1
+         2KdMESq1SHTQIUJfepOpOdyO/048qydxV7K54SBj0/ULVSL+9SMItHlRfPKsuwjMazyc
+         FVWUoQtZrqTyZQlwNTzIjmqiDoc2YzAMur8EMXg9o8uQCnmubqNFeJ7aNJsSF4VYQRnj
+         vIzVtaLyI81VH91cQjIXVJ7YApeTfv3spd6zANEPZbjIy1/ewjhqgABos4N+xwgluCiX
+         uc1Qh+Gvn364vkwO6LfGqqvCCxZfgPig2S/OUFTYZjr1m+mxsbWwJS0cjfPqILANupLv
+         WGhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=AdBtnREL8q8KusRMnxzPkr1jmNAcRFt286LLyMBu/OE=;
-        b=pzY204Ny3oUs0CjX/S0/CQccTRDUdYfAo+9x782xmIdchIViEr7py+3F0A9s8VLNRW
-         oO0sdsgUN5vzHTNy2DX1QI9odGwfAZGNwb/lX43w2B61ebpc5b7JLQBcRMu2VgG4KJ79
-         kIdtGpRqUL9e9JbWMaxjtf2tKfzK4UbplDb1MqB4Ru7MML+U+c3b+eSVISaEdVS+vq4k
-         TaIqRgXO4cb/Oe5xyUiNta6OPAwELMlp9H8Shj3tGb4sTF/hD1VfodYPQ25OConGFEqR
-         uyaQ1js10Gdl5oFPBxSPccuOLULI2D8/YR3NmT7ZXg6dYyufX+NXVKz0WIeQKV0JR0nR
-         exHw==
-X-Gm-Message-State: AOUpUlEOL2dpVKTQN4+ugSxSZTDUisNwL6FDm6QBrNbVsMkRfETFEAfv
-        1VvyZ3npUyrjyckCyYdpSOfLuw==
-X-Google-Smtp-Source: AAOMgpeo2+kr7PljSyoc4zG8l6kxsE4FXUDNuz9GMqjpDjWRHgfAQhD/t2s3WoYoTisqUSHgTcAeaQ==
-X-Received: by 2002:a62:ed5:: with SMTP id 82-v6mr18004231pfo.198.1531746034999;
-        Mon, 16 Jul 2018 06:00:34 -0700 (PDT)
+        bh=OPgBJmVsDd6gmG5DWuvPD4iG6R1oLoyAQlJGLxBkxzQ=;
+        b=YEeKuowiFgUFDBW/E+nExO6WxW1KigKmtYkKHOYtzQjySO3/1Idw99yTCK82mUwVF3
+         CoVUXmWe/USJsY4FIjuZVszGflc5+kG/0NPdFeUz+ujkhjusBc4DMD7v53+Rg28NT0i8
+         4pmal4AVY+9ODFICQjZ5xioP73TIozed/0RzC6Eq9rdLZsKGSyDQ6ySc1rzKixIvbDg6
+         D6UrgrHytJF0rSSexVv7EtT3qlU+z6cPKp0hnCKkUF7Qg7nnmx/kmwutkfMPSXg7exu0
+         SyW3NrpWPa1PDN7UMyrT6QhJqxXvd0K3TykGL498L0Axwx5OsgYm0m/s1Afy0E2xVAZU
+         flYw==
+X-Gm-Message-State: AOUpUlFbHC9t8M/Vf+20WWUeEHUFav+I6br1gL6a1aVQLTPzhknWGorG
+        9Ur9oNYtmr9Q3puMUA8q1n2rsw==
+X-Google-Smtp-Source: AAOMgpfxJw4vCtzDBOkHyyoqeFzC4eDqU/yOJqO2Ur0Umwh/i4Z9HPsR5f9LSSJNxbBMmRLDA6262w==
+X-Received: by 2002:a62:4255:: with SMTP id p82-v6mr18108739pfa.238.1531746036362;
+        Mon, 16 Jul 2018 06:00:36 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.139.85])
-        by smtp.gmail.com with ESMTPSA id j27-v6sm98279069pfe.48.2018.07.16.06.00.33
+        by smtp.gmail.com with ESMTPSA id z76-v6sm15694477pgz.16.2018.07.16.06.00.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 16 Jul 2018 06:00:34 -0700 (PDT)
-Message-Id: <1fd45ef2b15524c18322183231608fe13a733506.1531746012.git.gitgitgadget@gmail.com>
+        Mon, 16 Jul 2018 06:00:35 -0700 (PDT)
+Message-Id: <816821eec9ba476ccdfbfdf6e3cdd3619743ea2e.1531746012.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.10.git.gitgitgadget@gmail.com>
 References: <pull.10.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 13 Jul 2018 14:37:32 -0400
-Subject: [PATCH 14/16] commit-reach: replace ref_newer logic
+Date:   Thu, 28 Jun 2018 08:31:05 -0400
+Subject: [PATCH 15/16] commit-reach: make can_all_from_reach... linear
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,88 +70,279 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The ref_newer method is used by 'git push' to check if a force-push is
-required. This method does not use any kind of cutoff when walking, so
-in the case of a force-push will walk all reachable commits.
+The can_all_from_reach_with_flags() algorithm is currently quadratic in
+the worst case, because it calls the reachable() method for every 'from'
+without tracking which commits have already been walked or which can
+already reach a commit in 'to'.
 
-The is_descendant_of method already uses paint_down_to_common along with
-cutoffs. By translating the ref_newer arguments into the commit and
-commit_list required by is_descendant_of, we can have one fewer commit
-walk and also improve our performance!
+Rewrite the algorithm to walk each commit a constant number of times.
 
-For a copy of the Linux repository, 'test-tool reach ref_newer' presents
-the following improvements with the specified input. In the case that
-ref_newer returns 1, there is no improvement. The improvement is in the
-second case where ref_newer returns 0.
+We also add some optimizations that should work for the main consumer of
+this method: fetch negotitation (haves/wants).
 
-Input
------
-A:v4.9
-B:v3.19
+The first step includes using a depth-first-search (DFS) from each from
+commit, sorted by ascending generation number. We do not walk beyond the
+minimum generation number or the minimum commit date. This DFS is likely
+to be faster than the existing reachable() method because we expect
+previous ref values to be along the first-parent history.
 
-Before: 0.09 s
- After: 0.09 s
+If we find a target commit, then we mark everything in the DFS stack as
+a RESULT. This expands the set of targets for the other from commits. We
+also mark the visited commits using 'assign_flag' to prevent re-walking
+the same code.
 
-To test the negative case, add a new commit with parent v3.19,
-regenerate the commit-graph, and then run with B pointing at that
-commit.
+We still need to clear our flags at the end, which is why we will have a
+total of three visits to each commit.
 
-Before: 0.43 s
- After: 0.09 s
+Performance was measured on the Linux repository using
+'test-tool reach can_all_from_reach'. The input included rows seeded by
+tag values. The "small" case included X-rows as v4.[0-9]* and Y-rows as
+v3.[0-9]*. This mimics a (very large) fetch that says "I have all major
+v3 releases and want all major v4 releases." The "large" case included
+X-rows as "v4.*" and Y-rows as "v3.*". This adds all release-candidate
+tags to the set, which does not greatly increase the number of objects
+that are considered, but does increase the number of 'from' commits,
+demonstrating the quadratic nature of the previous code.
+
+Small Case
+----------
+
+Before: 1.52 s
+ After: 0.26 s
+
+Large Case
+----------
+
+Before: 3.50 s
+ After: 0.27 s
+
+Note how the time increases between the two cases in the two versions.
+The new code increases relative to the number of commits that need to be
+walked, but not directly relative to the number of 'from' commits.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- commit-reach.c | 26 +++-----------------------
- 1 file changed, 3 insertions(+), 23 deletions(-)
+ commit-reach.c | 124 ++++++++++++++++++++++++++++++-------------------
+ commit-reach.h |   6 ++-
+ upload-pack.c  |   5 +-
+ 3 files changed, 85 insertions(+), 50 deletions(-)
 
 diff --git a/commit-reach.c b/commit-reach.c
-index c5e89a2de..c58e50fbb 100644
+index c58e50fbb..ac132c8e4 100644
 --- a/commit-reach.c
 +++ b/commit-reach.c
-@@ -365,20 +365,11 @@ void reduce_heads_replace(struct commit_list **heads)
- 	*heads = result;
+@@ -513,65 +513,88 @@ int commit_contains(struct ref_filter *filter, struct commit *commit,
+ 	return is_descendant_of(commit, list);
  }
  
--static void unmark_and_free(struct commit_list *list, unsigned int mark)
--{
--	while (list) {
--		struct commit *commit = pop_commit(&list);
--		commit->object.flags &= ~mark;
--	}
--}
--
- int ref_newer(const struct object_id *new_oid, const struct object_id *old_oid)
+-int reachable(struct commit *from, int with_flag, int assign_flag,
+-	      time_t min_commit_date)
++static int compare_commits_by_gen(const void *_a, const void *_b)
  {
- 	struct object *o;
- 	struct commit *old_commit, *new_commit;
--	struct commit_list *list, *used;
--	int found = 0;
-+	struct commit_list *old_commit_list = NULL;
+-	struct prio_queue work = { compare_commits_by_commit_date };
++	const struct commit *a = (const struct commit *)_a;
++	const struct commit *b = (const struct commit *)_b;
  
- 	/*
- 	 * Both new_commit and old_commit must be commit-ish and new_commit is descendant of
-@@ -399,19 +390,8 @@ int ref_newer(const struct object_id *new_oid, const struct object_id *old_oid)
- 	if (parse_commit(new_commit) < 0)
- 		return 0;
- 
--	used = list = NULL;
--	commit_list_insert(new_commit, &list);
--	while (list) {
--		new_commit = pop_most_recent_commit(&list, TMP_MARK);
--		commit_list_insert(new_commit, &used);
--		if (new_commit == old_commit) {
--			found = 1;
+-	prio_queue_put(&work, from);
+-	while (work.nr) {
+-		struct commit_list *list;
+-		struct commit *commit = prio_queue_get(&work);
+-
+-		if (commit->object.flags & with_flag) {
+-			from->object.flags |= assign_flag;
 -			break;
 -		}
+-		if (!commit->object.parsed)
+-			parse_object(the_repository, &commit->object.oid);
+-		if (commit->object.flags & REACHABLE)
+-			continue;
+-		commit->object.flags |= REACHABLE;
+-		if (commit->date < min_commit_date)
+-			continue;
+-		for (list = commit->parents; list; list = list->next) {
+-			struct commit *parent = list->item;
+-			if (!(parent->object.flags & REACHABLE))
+-				prio_queue_put(&work, parent);
+-		}
 -	}
--	unmark_and_free(list, TMP_MARK);
--	unmark_and_free(used, TMP_MARK);
--	return found;
-+	commit_list_insert(old_commit, &old_commit_list);
-+	return is_descendant_of(new_commit, old_commit_list);
+-	from->object.flags |= REACHABLE;
+-	clear_commit_marks(from, REACHABLE);
+-	clear_prio_queue(&work);
+-	return (from->object.flags & assign_flag);
++	if (a->generation < b->generation)
++		return -1;
++	if (a->generation > b->generation)
++		return 1;
++	return 0;
  }
  
- /*
+ int can_all_from_reach_with_flag(struct object_array *from,
+ 				 int with_flag, int assign_flag,
+-				 time_t min_commit_date)
++				 time_t min_commit_date,
++				 uint32_t min_generation)
+ {
++	struct commit **list = NULL;
+ 	int i;
++	int result = 1;
+ 
++	ALLOC_ARRAY(list, from->nr);
+ 	for (i = 0; i < from->nr; i++) {
+-		struct object *from_one = from->objects[i].item;
++		list[i] = (struct commit *)from->objects[i].item;
+ 
+-		if (from_one->flags & assign_flag)
+-			continue;
+-		from_one = deref_tag(the_repository, from_one, "a from object", 0);
+-		if (!from_one || from_one->type != OBJ_COMMIT) {
+-			/* no way to tell if this is reachable by
+-			 * looking at the ancestry chain alone, so
+-			 * leave a note to ourselves not to worry about
+-			 * this object anymore.
+-			 */
+-			from->objects[i].item->flags |= assign_flag;
+-			continue;
+-		}
+-		if (!reachable((struct commit *)from_one, with_flag, assign_flag,
+-			       min_commit_date))
++		parse_commit(list[i]);
++
++		if (list[i]->generation < min_generation)
+ 			return 0;
+ 	}
+-	return 1;
++
++	QSORT(list, from->nr, compare_commits_by_gen);
++
++	for (i = 0; i < from->nr; i++) {
++		/* DFS from list[i] */
++		struct commit_list *stack = NULL;
++
++		list[i]->object.flags |= assign_flag;
++		commit_list_insert(list[i], &stack);
++
++		while (stack) {
++			struct commit_list *parent;
++
++			if (stack->item->object.flags & with_flag) {
++				pop_commit(&stack);
++				continue;
++			}
++
++			for (parent = stack->item->parents; parent; parent = parent->next) {
++				if (parent->item->object.flags & (with_flag | RESULT))
++					stack->item->object.flags |= RESULT;
++
++				if (!(parent->item->object.flags & assign_flag)) {
++					parent->item->object.flags |= assign_flag;
++
++					parse_commit(parent->item);
++
++					if (parent->item->date < min_commit_date ||
++					    parent->item->generation < min_generation)
++						continue;
++
++					commit_list_insert(parent->item, &stack);
++					break;
++				}
++			}
++
++			if (!parent)
++				pop_commit(&stack);
++		}
++
++		if (!(list[i]->object.flags & (with_flag | RESULT))) {
++			result = 0;
++			goto cleanup;
++		}
++	}
++
++cleanup:
++	for (i = 0; i < from->nr; i++) {
++		clear_commit_marks(list[i], RESULT);
++		clear_commit_marks(list[i], assign_flag);
++	}
++	return result;
+ }
+ 
+ int can_all_from_reach(struct commit_list *from, struct commit_list *to,
+@@ -581,6 +604,7 @@ int can_all_from_reach(struct commit_list *from, struct commit_list *to,
+ 	time_t min_commit_date = cutoff_by_min_date ? from->item->date : 0;
+ 	struct commit_list *from_iter = from, *to_iter = to;
+ 	int result;
++	uint32_t min_generation = GENERATION_NUMBER_INFINITY;
+ 
+ 	while (from_iter) {
+ 		add_object_array(&from_iter->item->object, NULL, &from_objs);
+@@ -588,6 +612,9 @@ int can_all_from_reach(struct commit_list *from, struct commit_list *to,
+ 		if (!parse_commit(from_iter->item)) {
+ 			if (from_iter->item->date < min_commit_date)
+ 				min_commit_date = from_iter->item->date;
++
++			if (from_iter->item->generation < min_generation)
++				min_generation = from_iter->item->generation;
+ 		}
+ 
+ 		from_iter = from_iter->next;
+@@ -597,6 +624,9 @@ int can_all_from_reach(struct commit_list *from, struct commit_list *to,
+ 		if (!parse_commit(to_iter->item)) {
+ 			if (to_iter->item->date < min_commit_date)
+ 				min_commit_date = to_iter->item->date;
++
++			if (to_iter->item->generation < min_generation)
++				min_generation = to_iter->item->generation;
+ 		}
+ 
+ 		to_iter->item->object.flags |= PARENT2;
+@@ -605,7 +635,7 @@ int can_all_from_reach(struct commit_list *from, struct commit_list *to,
+ 	}
+ 
+ 	result = can_all_from_reach_with_flag(&from_objs, PARENT2, PARENT1,
+-					      min_commit_date);
++					      min_commit_date, min_generation);
+ 
+ 	while (from) {
+ 		clear_commit_marks(from->item, PARENT1);
+diff --git a/commit-reach.h b/commit-reach.h
+index 58de0df56..482d9eb5d 100644
+--- a/commit-reach.h
++++ b/commit-reach.h
+@@ -63,11 +63,13 @@ int reachable(struct commit *from, int with_flag, int assign_flag,
+  * Determine if every commit in 'from' can reach at least one commit
+  * that is marked with 'with_flag'. As we traverse, use 'assign_flag'
+  * as a marker for commits that are already visited. Do not walk
+- * commits with date below 'min_commit_date'.
++ * commits with date below 'min_commit_date' or generation below
++ * 'min_generation'.
+  */
+ int can_all_from_reach_with_flag(struct object_array *from,
+ 				 int with_flag, int assign_flag,
+-				 time_t min_commit_date);
++				 time_t min_commit_date,
++				 uint32_t min_generation);
+ int can_all_from_reach(struct commit_list *from, struct commit_list *to,
+ 		       int commit_date_cutoff);
+ 
+diff --git a/upload-pack.c b/upload-pack.c
+index 11c426685..1e498f118 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -338,11 +338,14 @@ static int got_oid(const char *hex, struct object_id *oid)
+ 
+ static int ok_to_give_up(void)
+ {
++	uint32_t min_generation = GENERATION_NUMBER_ZERO;
++
+ 	if (!have_obj.nr)
+ 		return 0;
+ 
+ 	return can_all_from_reach_with_flag(&want_obj, THEY_HAVE,
+-					    COMMON_KNOWN, oldest_have);
++					    COMMON_KNOWN, oldest_have,
++					    min_generation);
+ }
+ 
+ static int get_common_commits(void)
 -- 
 gitgitgadget
 
