@@ -2,130 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E30BA1F516
-	for <e@80x24.org>; Thu, 28 Jun 2018 12:49:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1DFA81F516
+	for <e@80x24.org>; Thu, 28 Jun 2018 12:52:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934390AbeF1MtH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Jun 2018 08:49:07 -0400
-Received: from mail-qt0-f182.google.com ([209.85.216.182]:40014 "EHLO
-        mail-qt0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932653AbeF1MtE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jun 2018 08:49:04 -0400
-Received: by mail-qt0-f182.google.com with SMTP id s47-v6so4546602qth.7
-        for <git@vger.kernel.org>; Thu, 28 Jun 2018 05:49:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=DGckHzRWRjnRnRI5UWF4W0sFwCgIgVLFRJ0unwqo/Qk=;
-        b=qEqIsgbb+ngaPlyEceKgHEi5mEvU513dOP8PpuubbAz0m38Y/SXiV3DcYh4dZG4o3h
-         x41moZsiA3TPW7oLZcLggFM6oH70vDJMcsTWihjPxCYXrh30XZKZjvhU7PHUZ8U6IXjf
-         A5jBOPeD/gSUSDdk7CRdRc43qnuyZt//Z5yhnFEGDr6esIQnFCUDOzSHYOL1UVAePPiM
-         LhGs+O4pc8/+NlJHC859ow1i8cLYepcbkYbklQR5cg2tUwIUsX+Qr6kPEIlSU3kL1Xco
-         eeCFdyrhDDV+wulyBSoTbWxZNSZpC4Vvnh1/rj8u1kYbTrTkMqP1l3QX1iPffcscfwBM
-         q7ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=DGckHzRWRjnRnRI5UWF4W0sFwCgIgVLFRJ0unwqo/Qk=;
-        b=FDWSqpEVNKs61i1xYAA0BTVyW5HzhE2fsbbtYCgBvj4B5EHcNEEePM3E6LpevooEon
-         Jjn/Y8+g8HupyJ494TKFbSrwKHTLGzb56MogjrAwETXIOekk+MCe9zG+PNAe8gysCMdc
-         9SxDrwjaM7dDFhvEgvC/zvSo6mKZhUaxETEUl7Vkz9GGgRWJUc+U24/uo8qQ/X0Ht3j7
-         fl0aTE2wC2eBrC0ZCL6sGfmRYaBZjDbTjvFYjNiLzooEouOZqFW/iHeFpLQnqNrp/MXK
-         do3/myJxbRkJSS8XnIrLrtKrXtxtyMZMDjV4a+hn0qPItllX/Hv1LcRIIGD0Xa3sKVxA
-         Hjfg==
-X-Gm-Message-State: APt69E31RGWWzvQrZEn1ndL7D/CctDSqFKZihdY5LJ33ODFupi5V+83g
-        hJgd5Gk8GJ/kOWgHRcbkjBbwuqxE
-X-Google-Smtp-Source: AAOMgpepp500s9AiCd1xctpIgXxik+8+d+on8VZK4O4046RWubjq9fYh86MjlRnRA1ikJ4ZTq1SV1g==
-X-Received: by 2002:ac8:3134:: with SMTP id g49-v6mr5967584qtb.55.1530190143158;
-        Thu, 28 Jun 2018 05:49:03 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:fd7e:6eb7:d52f:5988? ([2001:4898:8010:0:e6b4:6eb7:d52f:5988])
-        by smtp.gmail.com with ESMTPSA id u41-v6sm5212209qte.93.2018.06.28.05.49.02
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 28 Jun 2018 05:49:02 -0700 (PDT)
-Subject: Re: Inconsistencies in commit-graph technical docs.
-To:     Grant Welch <gwelch925@gmail.com>, git@vger.kernel.org
-References: <CAMYKhtUi3nCmTjZ8pXbNCxaKa6h9+1OSD7YitTeip+807w7dJA@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <c48629f1-7b41-d516-84f5-c07ef7881e03@gmail.com>
-Date:   Thu, 28 Jun 2018 08:49:01 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
-MIME-Version: 1.0
-In-Reply-To: <CAMYKhtUi3nCmTjZ8pXbNCxaKa6h9+1OSD7YitTeip+807w7dJA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        id S1753647AbeF1Mwt (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Jun 2018 08:52:49 -0400
+Received: from mail-cys01nam02on0139.outbound.protection.outlook.com ([104.47.37.139]:45124
+        "EHLO NAM02-CY1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1752581AbeF1Mws (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jun 2018 08:52:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=G7XrZu6lojmasxPaPfo45UGGyDBN7hTnMnd61hu7cWc=;
+ b=X5f/P99kclC4KdoBLLe9+tVzmPm1wWiKxa7S0PoIZrUB8eN6Faps6is+avKLVIGaLva7CtWnOwJIHVJXpOUwajvEx29wQ0tU3suv8L2CNug1wmevcpuFIrlW3UYT5PFYeTHsV5ujADkOZja0hcxBpv8YdhYuW4jadU6JNj+EI6U=
+Received: from BL0PR2101MB1011.namprd21.prod.outlook.com (52.132.24.10) by
+ BL0PR2101MB1027.namprd21.prod.outlook.com (52.132.20.161) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.930.2; Thu, 28 Jun 2018 12:52:45 +0000
+Received: from BL0PR2101MB1011.namprd21.prod.outlook.com
+ ([fe80::5072:9195:b05b:ed05]) by BL0PR2101MB1011.namprd21.prod.outlook.com
+ ([fe80::5072:9195:b05b:ed05%2]) with mapi id 15.20.0930.005; Thu, 28 Jun 2018
+ 12:52:45 +0000
+From:   Derrick Stolee <dstolee@microsoft.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+CC:     "gitster@pobox.com" <gitster@pobox.com>,
+        "gwelch925@gmail.com" <gwelch925@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: [PATCH] commit-graph: fix documentation inconsistencies
+Thread-Topic: [PATCH] commit-graph: fix documentation inconsistencies
+Thread-Index: AQHUDt7o2Vel3yWiYUqoBXGYObc/OQ==
+Date:   Thu, 28 Jun 2018 12:52:45 +0000
+Message-ID: <20180628125235.77256-1-dstolee@microsoft.com>
+References: <c48629f1-7b41-d516-84f5-c07ef7881e03@gmail.com>
+In-Reply-To: <c48629f1-7b41-d516-84f5-c07ef7881e03@gmail.com>
+Accept-Language: en-US
 Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-clientproxiedby: CY4PR21CA0011.namprd21.prod.outlook.com
+ (2603:10b6:903:dd::21) To BL0PR2101MB1011.namprd21.prod.outlook.com
+ (2603:10b6:207:37::10)
+x-ms-exchange-messagesentrepresentingtype: 1
+x-originating-ip: [2001:4898:8010:0:eb4a:5dff:fe0f:730f]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;BL0PR2101MB1027;7:30OMZfi6rsw3BtEgqR8UHNUCYFmSZvjtY8kLfcEjfDhb8ncR7RqsfiUC+LHmkswjQnROTkeXxQUWN+Z6tHdUqTZKA/KaSHZM+0d/zOqR+2mYiPNEOSspm/GaXQ7iYe9ORpJKvBbwuVlH20RWArmWfsNgU0H+kSDeDNw8MeiYTGaYN5Fuao8fLhUSjDi7pC1m/Epz281nI5ZKGG0iwD/FwbU0AaKpjZrwt7I7E6wPtxU/8aOiCoA0MlhaVfjwvA+3
+x-ms-office365-filtering-correlation-id: eae88af4-8741-4307-b4db-08d5dcf60b04
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652034)(8989117)(4534165)(4627221)(201703031133081)(201702281549075)(8990107)(5600026)(711020)(48565401081)(2017052603328)(7193020);SRVR:BL0PR2101MB1027;
+x-ms-traffictypediagnostic: BL0PR2101MB1027:
+x-microsoft-antispam-prvs: <BL0PR2101MB1027065E8B01291DA9126F6EA14F0@BL0PR2101MB1027.namprd21.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171)(85827821059158);
+x-ms-exchange-senderadcheck: 1
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(10201501046)(3231270)(2018427008)(944501410)(52105095)(3002001)(93006095)(93001095)(6055026)(149027)(150027)(6041310)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123558120)(20161123562045)(20161123564045)(20161123560045)(6072148)(201708071742011)(7699016);SRVR:BL0PR2101MB1027;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB1027;
+x-forefront-prvs: 0717E25089
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(136003)(346002)(39860400002)(376002)(396003)(366004)(189003)(199004)(1076002)(86362001)(6512007)(11346002)(486006)(7736002)(305945005)(2616005)(446003)(6916009)(25786009)(6346003)(97736004)(76176011)(68736007)(102836004)(52116002)(5660300001)(1857600001)(53936002)(46003)(4326008)(39060400002)(2906002)(186003)(10090500001)(107886003)(22452003)(6506007)(54906003)(316002)(8936002)(476003)(2900100001)(256004)(14444005)(106356001)(105586002)(36756003)(99286004)(386003)(10290500003)(2501003)(478600001)(5250100002)(6116002)(86612001)(6486002)(14454004)(575784001)(81156014)(8676002)(6436002)(1730700003)(81166006)(5640700003)(2351001)(22906009);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB1027;H:BL0PR2101MB1011.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None (protection.outlook.com: microsoft.com does not designate
+ permitted sender hosts)
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=dstolee@microsoft.com; 
+x-microsoft-antispam-message-info: NpOSSZSalwXQtdpHaoWldSQCzMANS2QE/WlxwWfQEy4iAULtnUrNTkdnSRZY4A9GdUcsXIuQHlt0wfuGu/gu3C/Src+IixbrqtRrN97S0UYn9WyRRcCFkH59VRwZYm6r0/koV4flSjrTDv04lSmgFJkejfUYcYpgaT1tBJUzuyZzZDDBIljo9vs4Xddkr3l4jVottYElylRbtFyzDX7+nCawBgQ1lBAq+ceGEcQBHlnFhfQ9QWknia+a/D6hnkkgkCth+MsbnNfYOoLZcQXktr5kn/TtxPEwPehoHLFrLG5CE5EHTCT6Jef5gSEORYqT90tOcxxGDUF77soacjZUCTo6yZOhh6Z+TnWBr3tTUQ4=
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: eae88af4-8741-4307-b4db-08d5dcf60b04
+X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Jun 2018 12:52:45.4311
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB1027
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/28/2018 1:11 AM, Grant Welch wrote:
-> I recently read the "Supercharging the Git Commit Graph blog by
-> Derrick Stolee. I found the article interesting and wanted to verify
-> the performance numbers for myself. Then that led me to want to know
-> more about the implementation, so I read the technical design notes in
-> commit-graph.txt, and then I jumped into the format documentation in
-> commit-graph-format.txt.
->
-> Along the way, I noticed a few issues. They might just be errors in
-> the documentation, but I figured it was worth documenting my entire
-> process just to be sure.
->
-> "Supercharging the Git Commit Graph", by Derrick Stolee:
->    https://blogs.msdn.microsoft.com/devops/2018/06/25/supercharging-the-git-commit-graph/
->
-> # TL;DR
->
-> I found a few discrepencies between the documentation in
-> commit-graph-format.txt and the results that I observed for myself.
->
-> 1. The "Commit Data" chunk signature is documented to be 'CGET', but
-> it should be 'CDAT'.
->
-> commit-graph.c:18
->    #define GRAPH_CHUNKID_DATA 0x43444154 /* "CDAT" */
+The commit-graph feature shipped in Git 2.18 has some inconsistencies in
+the constants used by the implementation and specified by the format
+document.
 
-Thanks for catching this! Thankfully, this is an easy fix, as we only 
-need to update the documentation.
+The commit data chunk uses the key "CDAT" in the file format, but was
+previously documented to say "CGET".
 
-> 2. The "no parent" value is documented to be 0xffffffff, but is
-> actually 0x70000000.
->
-> commit-graph.c:34
->    #define GRAPH_PARENT_NONE 0x70000000
+The commit data chunk stores commit parents using two 32-bit fields that
+typically store the integer position of the parent in the list of commit
+ids within the commit-graph file. When a parent does not exist, we had
+documented the value 0xffffffff, but implemented the value 0x70000000.
+This swap is easy to correct in the documentation, but unfortunately
+reduces the number of commits that we can store in the commit-graph.
+Update that estimate, too.
 
-This is a more important mistake, as it affects the data that was 
-written in the commit-graph file.
+Reported-by: Grant Welch <gwelch925@gmail.com>
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ Documentation/technical/commit-graph-format.txt | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-Part of the problem is that leading hex digit of 0x7 which in binary is 
-0b0111. We already designed a limit of at most 2^{31}-1 (~2.1 billion) 
-commits in the commit-graph because of the way we track octopus edges, 
-but this mistake has cost us more: we cannot store more than ~1.8 
-billion commits.
+diff --git a/Documentation/technical/commit-graph-format.txt b/Documentatio=
+n/technical/commit-graph-format.txt
+index ad6af8105c..91c2fbd86a 100644
+--- a/Documentation/technical/commit-graph-format.txt
++++ b/Documentation/technical/commit-graph-format.txt
+@@ -18,9 +18,9 @@ metadata, including:
+   the graph file.
+=20
+ These positional references are stored as unsigned 32-bit integers
+-corresponding to the array position withing the list of commit OIDs. We
+-use the most-significant bit for special purposes, so we can store at most
+-(1 << 31) - 1 (around 2 billion) commits.
++corresponding to the array position withing the list of commit OIDs. Due
++to some special constants we use to track parents, we can store at most
++(1 << 30) + (1 << 29) + (1 << 28) - 1 (around 1.8 billion) commits.
+=20
+ =3D=3D Commit graph files have the following format:
+=20
+@@ -70,10 +70,10 @@ CHUNK DATA:
+   OID Lookup (ID: {'O', 'I', 'D', 'L'}) (N * H bytes)
+       The OIDs for all commits in the graph, sorted in ascending order.
+=20
+-  Commit Data (ID: {'C', 'G', 'E', 'T' }) (N * (H + 16) bytes)
++  Commit Data (ID: {'C', 'D', 'A', 'T' }) (N * (H + 16) bytes)
+     * The first H bytes are for the OID of the root tree.
+     * The next 8 bytes are for the positions of the first two parents
+-      of the ith commit. Stores value 0xffffffff if no parent in that
++      of the ith commit. Stores value 0x7000000 if no parent in that
+       position. If there are more than two parents, the second value
+       has its most-significant bit on and the other bits store an array
+       position into the Large Edge List chunk.
 
-I'm sorry for this mixup, mostly because it is aesthetically unpleasant. 
-Those extra 300 million commits mean less to me than having a clean file 
-format.
+base-commit: ed843436dd4924c10669820cc73daf50f0b4dabd
+--=20
+2.18.0.24.g1b579a2ee9
 
-> 3. The "generation" field isn't set on any of the commits. (I don't
-> know what to make of this.)
-
-This is a difference between 2.18 and current 'master', which merged 
-ds/generation-numbers. Commit-graphs written with Git 2.18 have all 
-generation numbers listed as GENERATION_NUMBER_ZERO (0), which lets 
-future versions know that the generation number is not computed yet, so 
-the next commit-graph write will compute the correct generation number.
-
-I'll send a patch soon fixing these doc issues.
-
-Thanks,
--Stolee
