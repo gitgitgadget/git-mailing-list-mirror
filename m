@@ -2,232 +2,208 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35AD51F516
-	for <e@80x24.org>; Thu, 28 Jun 2018 18:43:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65B8B1F516
+	for <e@80x24.org>; Thu, 28 Jun 2018 18:49:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967828AbeF1SnK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Jun 2018 14:43:10 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:45720 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S966933AbeF1SnJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jun 2018 14:43:09 -0400
-Received: by mail-wr0-f194.google.com with SMTP id u7-v6so6488642wrn.12
-        for <git@vger.kernel.org>; Thu, 28 Jun 2018 11:43:08 -0700 (PDT)
+        id S967959AbeF1StP (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Jun 2018 14:49:15 -0400
+Received: from mail-yw0-f195.google.com ([209.85.161.195]:46863 "EHLO
+        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S966880AbeF1StO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jun 2018 14:49:14 -0400
+Received: by mail-yw0-f195.google.com with SMTP id g123-v6so2512132ywf.13
+        for <git@vger.kernel.org>; Thu, 28 Jun 2018 11:49:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=7CHJ0i1+hnS+gb6NMsm2556r26E14XecQVVt4Lz5r4M=;
-        b=Rnr4tM8Uc1KMv9QoxDDEX/QgNLS1BSrqwssppdwR8m37rVES9l9cg84tAkNkzWZ/4M
-         3jYdRuTiLJrWm1ILhRO5IIjSl+SLSqYUWMPhB/tgGyKdNTkFy4iU/YL1jr+eanTyyRb0
-         GIq6noggOnMmZFerbPFjryoj6TmwaG3xL6e933DknqQR/sZLFv+R6ZVxYsSRJo5D0xN1
-         gD45OK7dZtxPngzC6EZhMYG7dDbb21ISW6C1bAXjfHQNfKWdhPYH66O2X7Sso8l5q4h8
-         uGkMApC2ZwXsz3hloQ6k1BPCIipqcYvVGvrXYNIYPFdtsABhejsQtydnjK2l3l0EpBYL
-         d9wQ==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=o6apYehDaPUZyg48N98XWth7ZE9Gx07x/RafeE7nBUo=;
+        b=T4kshtMEYqH8uUsES1BS9+lNw8fRTDnhxAciOKLzIXf1Z5fLQsyVzT4oamo1HHBgzv
+         ClPEd4vTtszO2B+sWns+imOTQsUUiTnP5vVvdMi/YegmFQW9xA/3X5pCeFpkdHLbOaow
+         BTr95ot1FKq7hA0JRbNKq00SYE5T7JVfkB3V+IO9VUFWRLwC9A5ZF8XmGHr13hnZUhz7
+         6NpzDxTOSmM1kwbQOPiY/AYxXUzu5KDoI4loYi6HQlirOWEaXMU0NItd+rODQ5YMYfxj
+         EAshR9waYU7G8fUNQFIoPO2Q6mlxNg6pbgNtDidPuD4mUJMhRenu8iFaSKXWq3aamalX
+         EgzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=7CHJ0i1+hnS+gb6NMsm2556r26E14XecQVVt4Lz5r4M=;
-        b=tIex5MynsK2ZeJYBP3FMv5DWbSBgxfxJCNVZzl8P+AU3dTvYAqWK8DD6hP97U3RqZu
-         n0YLunuZv5SriiZH5olMwieav4a2tcKlyzhbLN2KZJocNktgphm2ykkUMQp1lZoIC8cf
-         PrKbeNmmv215hNn4jyQ0zzaR0J59QOzewpVtrSuAftNW2SQUhqMNNzKiuL+cQIqmQlOq
-         ow7C4MKDxBwFhR+BxncfCTpVmv1mblwredgA0aEVM1NN3YmMIkuNsRMsfmDI11sc87x5
-         HgdWC6hxi9ryKFMEJDjX/GJdac0G+AW1NwX6iNb5XpNDYJEfEuV8Jc1cZQdhKE5Q2Zei
-         e8cQ==
-X-Gm-Message-State: APt69E1f5OK+9wXsHBOSpxq9JkMOBeAcjauyKMdBG23gsybhb3oNR/Df
-        v8yy0GAvx1kN64T4YaOZEmA=
-X-Google-Smtp-Source: AAOMgpfxGeZVFlPdKKJ3Nb0oE8T1NOtdFqErDsiD04Wy2hyx06M8Ao6Eum0QHLInEfrOIkiHoggU6A==
-X-Received: by 2002:adf:8e89:: with SMTP id q9-v6mr7822795wrb.261.1530211387688;
-        Thu, 28 Jun 2018 11:43:07 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 132-v6sm13508717wmr.33.2018.06.28.11.43.06
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 28 Jun 2018 11:43:06 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jameson Miller <jamill@microsoft.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "jonathantanmy\@google.com" <jonathantanmy@google.com>,
-        "pclouds\@gmail.com" <pclouds@gmail.com>,
-        "peartben\@gmail.com" <peartben@gmail.com>,
-        "peff\@peff.net" <peff@peff.net>,
-        "sbeller\@google.com" <sbeller@google.com>
-Subject: Re: [PATCH v5 3/8] block alloc: add lifecycle APIs for cache_entry structs
-References: <20180620201557.77155-1-jamill@microsoft.com>
-        <20180628135932.225288-1-jamill@microsoft.com>
-        <20180628135932.225288-4-jamill@microsoft.com>
-Date:   Thu, 28 Jun 2018 11:43:06 -0700
-In-Reply-To: <20180628135932.225288-4-jamill@microsoft.com> (Jameson Miller's
-        message of "Thu, 28 Jun 2018 14:00:09 +0000")
-Message-ID: <xmqqsh56wy4l.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=o6apYehDaPUZyg48N98XWth7ZE9Gx07x/RafeE7nBUo=;
+        b=YF/c0NshddG4oBuRtw/ashELEXJy5qCm/ylzp4jNZ2ZrPyrmZ+ZLZ4OQTKBeZCl4jt
+         kch71Z8XJdOH0gVBeupFenZXtR4NBdhLQYLIIMwYQdvTG4uyoQYMhXgWHC8yvNZXRsEC
+         mUQYovKcFe0Ui0+/HMPJ94R5LqhPZEyamkmyamQ6eZaKwco1DKtjv8gfOvZXYgCfvudH
+         bZYuyP9RYfARgZopkkfpc9izUQqPq0d+vdZUxtQEyrPcODRFOwzINlvOk3ezy9v6VHwp
+         ph+PfBwx+QWCKKh9deDq3MCLce9ArUj+3VrEAP1Msz4LX6a4E/diQRG/NkqIJcb38r7Q
+         2s9g==
+X-Gm-Message-State: APt69E2U1CkWbDHPclAuddjPo1A/jmVWWnRVJad9AzXkb2L+XGFyBIv9
+        kDf/S8eZrMoY/sMmd7rFr9m4YFHHYbyO+bHPbpqexQ==
+X-Google-Smtp-Source: AAOMgpcDUE4EBVHkrN8zobDfp9w4uU+gAmir2WQ7mJGDk+dXtfvtMTbHyXgxYknDxw9nqXdtZ7bK+95o6YtzxMrZbkg=
+X-Received: by 2002:a81:b283:: with SMTP id q125-v6mr5688301ywh.414.1530211752853;
+ Thu, 28 Jun 2018 11:49:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20180628074655.5756-1-predatoramigo@gmail.com> <20180628074655.5756-3-predatoramigo@gmail.com>
+In-Reply-To: <20180628074655.5756-3-predatoramigo@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 28 Jun 2018 11:49:01 -0700
+Message-ID: <CAGZ79kZe46nkNd9yRZfwDG_-D-oBV5221qvB5zaj4Vw909U7fw@mail.gmail.com>
+Subject: Re: [PATCH 2/5] rebase: start implementing it as a builtin
+To:     Pratik Karki <predatoramigo@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Alban Gruin <alban.gruin@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jameson Miller <jamill@microsoft.com> writes:
-
-> Add an API around managing the lifetime of cache_entry
-> structs. Abstracting memory management details behind this API will
-> allow for alternative memory management strategies without affecting
-> all the call sites.  This commit does not change how memory is
-> allocated or freed. A later commit in this series will allocate cache
-> entries from memory pools as appropriate.
+On Thu, Jun 28, 2018 at 12:48 AM Pratik Karki <predatoramigo@gmail.com> wrote:
 >
-> Motivation:
-> It has been observed that the time spent loading an index with a large
-> number of entries is partly dominated by malloc() calls. This change
-> is in preparation for using memory pools to reduce the number of
-> malloc() calls made when loading an index.
+> This commit imitates the strategy that was used to convert the
+> difftool to a builtin, see be8a90e (difftool: add a skeleton for the
+> upcoming builtin, 2017-01-17) for details: This commit renames the
+> shell script `git-rebase.sh` to `git-legacy-rebase.sh` and hands off to
+> it by default.
 
-Not worth a reroll, but having these four lines at the very
-beginning, dropping the line "Motivation:", and then following that
-with "Add an API around ..." as the second paragraph, would make the
-above easier to read, without stutter-causing "Motivation:" in the
-middle.
+That is a good way to start, imitating Johannes approach on rewriting
+the difftool. Thanks for pointing this out.
 
-> diff --git a/apply.c b/apply.c
-> index 8ef975a32d..8a4a4439bc 100644
-> --- a/apply.c
-> +++ b/apply.c
-> @@ -4092,12 +4092,12 @@ static int build_fake_ancestor(struct apply_state *state, struct patch *list)
->  			return error(_("sha1 information is lacking or useless "
->  				       "(%s)."), name);
->  
-> -		ce = make_cache_entry(patch->old_mode, &oid, name, 0, 0);
-> +		ce = make_cache_entry(&result, patch->old_mode, &oid, name, 0, 0);
->  		if (!ce)
->  			return error(_("make_cache_entry failed for path '%s'"),
->  				     name);
->  		if (add_index_entry(&result, ce, ADD_CACHE_OK_TO_ADD)) {
-> -			free(ce);
-> +			discard_cache_entry(ce);
->  			return error(_("could not add %s to temporary index"),
->  				     name);
->  		}
+> The current version of the builtin rebase does not, however, make full
+> use of the internals but instead chooses to spawn a couple of Git
+> processes to find out if we run the builtin or legacy rebase as that
+> keeps the directory that we are in correct. There remains a lot
+> of room for improvement, left for a later date. The following commits
+> will recreate the functionality of the shell script, in pure C.
+>
+> We intentionally avoid reading the config directly to avoid
+> messing up the GIT_* environment variables when we need to fall back to
+> exec()ing the shell script.
 
-So..., even though it wasn't clear in the proposed log message, two
-large part of the lifecycle management API is (1) make_cache_entry()
-knows for which istate it is creating the entry and (2) discarding
-the entry may not be just a simple matter of free()ing.  Both of
-which makes perfect sense, but if the changes are that easily
-enumeratable, it would have been nicer for readers if the commit did
-so in the proposed log message.
+Thanks for calling this out!
 
-> @@ -4424,27 +4423,26 @@ static int add_conflicted_stages_file(struct apply_state *state,
->  				       struct patch *patch)
->  {
->  	int stage, namelen;
-> -	unsigned ce_size, mode;
-> +	unsigned mode;
->  	struct cache_entry *ce;
->  
->  	if (!state->update_index)
->  		return 0;
->  	namelen = strlen(patch->new_name);
-> -	ce_size = cache_entry_size(namelen);
->  	mode = patch->new_mode ? patch->new_mode : (S_IFREG | 0644);
->  
->  	remove_file_from_cache(patch->new_name);
->  	for (stage = 1; stage < 4; stage++) {
->  		if (is_null_oid(&patch->threeway_stage[stage - 1]))
->  			continue;
-> -		ce = xcalloc(1, ce_size);
-> +		ce = make_empty_cache_entry(&the_index, namelen);
-
-... and another one in the enumeration is make_empty_cache_entry()
-which is somehow different.  And the readers are forced to read its
-implementation to find out how it is different, but the use of the
-same discard_cache_entry() suggests that the liftime rule of an
-entry allcoated by it may be similar to those created by
-make_cache_entry().
-
-> ...
->  		if (add_cache_entry(ce, ADD_CACHE_OK_TO_ADD) < 0) {
-> -			free(ce);
-> +			discard_cache_entry(ce);
->  			return error(_("unable to add cache entry for %s"),
->  				     patch->new_name);
->  		}
-
-> @@ -230,11 +230,11 @@ static int checkout_merged(int pos, const struct checkout *state)
->  	if (write_object_file(result_buf.ptr, result_buf.size, blob_type, &oid))
->  		die(_("Unable to add merge result for '%s'"), path);
->  	free(result_buf.ptr);
-> -	ce = make_cache_entry(mode, &oid, path, 2, 0);
-> +	ce = make_transient_cache_entry(mode, &oid, path, 2);
-
-... and then yet another, which is "transient".  An intelligent
-reader can guess from the lack of istate parameter (and from the
-word "transient") that the resulting one would not belong to any
-in-core index.
-
->  	if (!ce)
->  		die(_("make_cache_entry failed for path '%s'"), path);
->  	status = checkout_entry(ce, state, NULL);
-> -	free(ce);
-> +	discard_cache_entry(ce);
-
-... but discovers that it is discarded the same way, realizes that
-ce knows how it was allocated to allow discard() different way to
-discard it, and his/her earlier conjecture about make_empty() does
-not hold at all and gets somewhat disappointed.
-
-> diff --git a/cache.h b/cache.h
-> index 3fbf24771a..035a627bea 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -339,6 +339,40 @@ extern void remove_name_hash(struct index_state *istate, struct cache_entry *ce)
->  extern void free_name_hash(struct index_state *istate);
->  
->  
-> +/* Cache entry creation and cleanup */
-> +
+The test of builtin rebase can be done by
+> `git -c rebase.useBuiltin=true rebase ...`
+>
+> Signed-off-by: Pratik Karki <predatoramigo@gmail.com>
+> ---
+>  .gitignore                            |  1 +
+>  Makefile                              |  3 +-
+>  builtin.h                             |  1 +
+>  builtin/rebase.c                      | 55 +++++++++++++++++++++++++++
+>  git-rebase.sh => git-legacy-rebase.sh |  0
+>  git.c                                 |  6 +++
+>  6 files changed, 65 insertions(+), 1 deletion(-)
+>  create mode 100644 builtin/rebase.c
+>  rename git-rebase.sh => git-legacy-rebase.sh (100%)
+>
+> diff --git a/.gitignore b/.gitignore
+> index 3284a1e9b..ec2395901 100644
+> --- a/.gitignore
+> +++ b/.gitignore
+> @@ -78,6 +78,7 @@
+>  /git-init-db
+>  /git-interpret-trailers
+>  /git-instaweb
+> +/git-legacy-rebase
+>  /git-log
+>  /git-ls-files
+>  /git-ls-remote
+> diff --git a/Makefile b/Makefile
+> index 0cb6590f2..e88fe2e5f 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -609,7 +609,7 @@ SCRIPT_SH += git-merge-one-file.sh
+>  SCRIPT_SH += git-merge-resolve.sh
+>  SCRIPT_SH += git-mergetool.sh
+>  SCRIPT_SH += git-quiltimport.sh
+> -SCRIPT_SH += git-rebase.sh
+> +SCRIPT_SH += git-legacy-rebase.sh
+>  SCRIPT_SH += git-remote-testgit.sh
+>  SCRIPT_SH += git-request-pull.sh
+>  SCRIPT_SH += git-stash.sh
+> @@ -1059,6 +1059,7 @@ BUILTIN_OBJS += builtin/prune.o
+>  BUILTIN_OBJS += builtin/pull.o
+>  BUILTIN_OBJS += builtin/push.o
+>  BUILTIN_OBJS += builtin/read-tree.o
+> +BUILTIN_OBJS += builtin/rebase.o
+>  BUILTIN_OBJS += builtin/rebase--helper.o
+>  BUILTIN_OBJS += builtin/receive-pack.o
+>  BUILTIN_OBJS += builtin/reflog.o
+> diff --git a/builtin.h b/builtin.h
+> index 0362f1ce2..44651a447 100644
+> --- a/builtin.h
+> +++ b/builtin.h
+> @@ -202,6 +202,7 @@ extern int cmd_prune_packed(int argc, const char **argv, const char *prefix);
+>  extern int cmd_pull(int argc, const char **argv, const char *prefix);
+>  extern int cmd_push(int argc, const char **argv, const char *prefix);
+>  extern int cmd_read_tree(int argc, const char **argv, const char *prefix);
+> +extern int cmd_rebase(int argc, const char **argv, const char *prefix);
+>  extern int cmd_rebase__helper(int argc, const char **argv, const char *prefix);
+>  extern int cmd_receive_pack(int argc, const char **argv, const char *prefix);
+>  extern int cmd_reflog(int argc, const char **argv, const char *prefix);
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> new file mode 100644
+> index 000000000..1152b7229
+> --- /dev/null
+> +++ b/builtin/rebase.c
+> @@ -0,0 +1,55 @@
 > +/*
-> + * Create cache_entry intended for use in the specified index. Caller
-> + * is responsible for discarding the cache_entry with
-> + * `discard_cache_entry`.
+> + * "git rebase" builtin command
+> + *
+> + * Copyright (c) 2018 Pratik Karki
 > + */
-> +struct cache_entry *make_cache_entry(struct index_state *istate,
-> +				     unsigned int mode,
-> +				     const struct object_id *oid,
-> +				     const char *path,
-> +				     int stage,
-> +				     unsigned int refresh_options);
 > +
-> +struct cache_entry *make_empty_cache_entry(struct index_state *istate,
-> +					   size_t name_len);
+> +#include "builtin.h"
+> +#include "run-command.h"
+> +#include "exec-cmd.h"
+> +#include "argv-array.h"
+> +#include "dir.h"
 > +
-> +/*
-> + * Create a cache_entry that is not intended to be added to an index.
-> + * Caller is responsible for discarding the cache_entry
-> + * with `discard_cache_entry`.
-> + */
-> +struct cache_entry *make_transient_cache_entry(unsigned int mode,
-> +					       const struct object_id *oid,
-> +					       const char *path,
-> +					       int stage);
+> +static int use_builtin_rebase(void)
+> +{
+> +       struct child_process cp = CHILD_PROCESS_INIT;
+> +       struct strbuf out = STRBUF_INIT;
+> +       int ret;
 > +
-> +struct cache_entry *make_empty_transient_cache_entry(size_t name_len);
+> +       argv_array_pushl(&cp.args,
+> +                        "config", "--bool", "rebase.usebuiltin", NULL);
 
-OK, finally it becomes clear that we have per-istate and transient
-sets of two (i.e. one that takes the path, stage and mode pfront,
-and the other that only takes the length of the name), and ...
+--bool is documented as "Historical options for selecting
+a type specifier. Prefer instead --type, (see: above)." in the
+man page of git-config. But as this code will go away once
+the conversion is done, this is not kept around for long.
+So we should be fine using the --bool option.
 
-> +/*
-> + * Discard cache entry.
-> + */
-> +void discard_cache_entry(struct cache_entry *ce);
+> +       cp.git_cmd = 1;
+> +       if (capture_command(&cp, &out, 6))
+> +               return 0;
+> +
+> +       strbuf_trim(&out);
+> +       ret = !strcmp("true", out.buf);
 
-... a single function that knows how to discard each kind.  It would
-have really helped the reader to talk about them in the proposed log
-message, as they are only 5 functions.  Another way to make it easier
-for readers would have been to show the diff for cache.h first before
-diffs for all the others.
+As --bool will make sure that the config command
+prints "true" or "false", even when the user configured
+0 or 1 instead, this is fine.
+
+> +       if (argc != 2)
+> +               die("Usage: %s <base>", argv[0]);
+> +       prefix = setup_git_directory();
+> +       trace_repo_setup(prefix);
+> +       setup_work_tree();
+> +
+> +       die("TODO");
+
+When reading the last sentence in the commit message
+("This can be tested ...") I shortly wondered how we adapt the tests
+but as this is really just the skeleton, there is no need to adapt any tests.
+
+This patch looks fine to me except for the nit that Christian points out.
+
+Thanks!
+Stefan
