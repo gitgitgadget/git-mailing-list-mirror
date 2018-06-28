@@ -2,116 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	DATE_IN_PAST_12_24,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BD3A21F516
-	for <e@80x24.org>; Thu, 28 Jun 2018 12:53:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 462671F516
+	for <e@80x24.org>; Thu, 28 Jun 2018 13:04:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934474AbeF1MxW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Jun 2018 08:53:22 -0400
-Received: from mail-pl0-f67.google.com ([209.85.160.67]:40569 "EHLO
-        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753642AbeF1MxU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jun 2018 08:53:20 -0400
-Received: by mail-pl0-f67.google.com with SMTP id t6-v6so2728094plo.7
-        for <git@vger.kernel.org>; Thu, 28 Jun 2018 05:53:20 -0700 (PDT)
+        id S934626AbeF1NEP (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Jun 2018 09:04:15 -0400
+Received: from mail-it0-f67.google.com ([209.85.214.67]:37527 "EHLO
+        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933090AbeF1NEO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jun 2018 09:04:14 -0400
+Received: by mail-it0-f67.google.com with SMTP id p17-v6so7461745itc.2
+        for <git@vger.kernel.org>; Thu, 28 Jun 2018 06:04:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc:cc;
-        bh=ocGAwDoWofVpG/ugAURKACDErWENa1b7zpp6DQfW5sY=;
-        b=fofGKzfIPuCMNNr6M0zvu1od0c1NRJ29V0IF+1+7+xMmnuCkOGDO/bWhGY49EVhoDg
-         Hpg/X0UVWmcVhTYg/wW81iqWRzfPwDs+SCfbMmeiVLz5+RvWtLRphybdZumBG3jaU9wn
-         +4b7aknbofkXaP6yzyHBzzwdNvjAjEM8N8nLCsQnECG9WC77viu64zSGLK+VUUA3kUes
-         C7WL8EdJnEjJs9C5zzYy+9NJicpKUIZqtdm5FWUtVJoN996oRE6T+QCuld42ba6ikNsU
-         V/9PWaPfa5419HZs3lHBk0vGSaT2cif4dkZVDYpgnbfXJhF+m3j7DpTQZSaSEdJmic0t
-         TwSw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=t0dSyihvFTHVybHAahxCZdzRGWyIBqPEUNhRpuCZ9Xs=;
+        b=oBIYjykANP+9B+BPr+MRC0exdSVRSHRNrXQU/QrnCFE7cA3lfzqd1KZpqIgfyY2xUy
+         TuvJAq5+s+5vJpDm/a0ttxgUpyngkEgwnxWaXM9QO3rdsDT/E38n0gZBHAhfy8spCxMx
+         3gpgc18DNc/V2sz1YFkWaS/YwdWJGgfABUJ8YR+MdlNDLuubEeuWUBcSM+/jrIGnv4uO
+         GwMl9xwALHn3zJAuVde96js3duqy+Q80ETCFxkEZeQRI9TVxFQ9KiJvkvD0TWYb6mUKy
+         7oXQyttw/BJf9GwPRjmWrQ0RvAcoyhxHcb3AS3mFWaFa6RBoUmoqFKhBVz1ZsjKG0TXz
+         K2HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc:cc;
-        bh=ocGAwDoWofVpG/ugAURKACDErWENa1b7zpp6DQfW5sY=;
-        b=qrJ0vc9f5GH8mlBmI0OMBsgRhyBYjVcuO9hSsUBRtbDDk69D1Ro6Hcv6EdgvE0sLcZ
-         E5dZaAmBG3ijKAi91d4Ggah5vJ9qPQFEIiZAjqsDBAqYqFX3wg7dspoNi8sDs2xO4Tea
-         2W8NLMN9bOP8P2s6jutOKzVfmRQahHjNL/rre+LYG4E9fmlHoj1ASbtDlMS/w4abZMg2
-         +D2lLo0EON0sqGV6d6vrZeXJrRYZpRoBpdBEmvLP6rv34NB0V+fDR5S9jsNMall+QAIX
-         dwaJFQR9oY/Ap1+ywGbYYODmMXs4c0KAOIbkeoEgRbHRjgdlkbjB/aKE/VbqT5yqiffg
-         MVag==
-X-Gm-Message-State: APt69E3Aaho9eNNKpNBamV8MW4XYvim/z3EEVvliMxGLvT8Bll2e/kim
-        nx33ZqPpqjjr+j1nq5fpkXI5hw==
-X-Google-Smtp-Source: ADUXVKIJiZCaaj49xhgw2NNiCmuHzQuWyPMJnMmOHtmSt4kw+LeaHiFOboiwrPwENGVV8EFZoqgsQw==
-X-Received: by 2002:a17:902:43a4:: with SMTP id j33-v6mr10442366pld.118.1530190399880;
-        Thu, 28 Jun 2018 05:53:19 -0700 (PDT)
-Received: from [127.0.0.1] ([40.112.139.188])
-        by smtp.gmail.com with ESMTPSA id h189-v6sm9969732pfg.5.2018.06.28.05.53.18
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 28 Jun 2018 05:53:19 -0700 (PDT)
-Message-Id: <e0e41d0b88b4104737b9ee80710c1bec91c9d759.1530190395.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.7.git.gitgitgadget@gmail.com>
-References: <pull.7.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 27 Jun 2018 21:35:23 +0200
-Subject: [PATCH 1/1] Makefile: fix the "built from commit" code
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=t0dSyihvFTHVybHAahxCZdzRGWyIBqPEUNhRpuCZ9Xs=;
+        b=iAwu2U/DznAWv3s/XhJL4WkpjTkLMIh8hebdqtrU/jwU8XDo0Q/+vJhAG8g0AcIlCF
+         G8URh74+a9fw/obNueGPXulg0xIL7KXAgycVijLbENP5xQQqmIomdXea3qxvxXwbbJz+
+         t4uvonQOuTBmDGjacCp9zU6rwlXRvommtONDrk0GmRuh6MyAYRVSKxSXLZUxI65EQg/Y
+         YkX1lzB/4yD01hNm0taltgYnljVBBbUUPIQ9FcwoXCTXNhrhVDkXpgavl4zXcJ9ar1hT
+         AkSloo1zWtVzNAmDOEyXAHZgMYVy/bw5h0YARq+Nv83QfOaJWJQUJyCx3Jlb9BMJzCz4
+         MIIw==
+X-Gm-Message-State: APt69E2sxg925Ijk96xfXFIpnKEKDkO7FpdUDvlkqZVJ/w35g4YlIKhM
+        pKCEkqYo/qHpUgaWJdCTP9hgmlBNPJxEOgUtlhI=
+X-Google-Smtp-Source: AAOMgpdu10IE/Gp0vb/MA44t+/I6/uJ8H/KXvgpxbizWZQCjM1rrMuMGvdONsbCQ0NF5uLmRiwhwUrmo7YR5+YqKe3Y=
+X-Received: by 2002:a24:6bd7:: with SMTP id v206-v6mr7900111itc.129.1530191053613;
+ Thu, 28 Jun 2018 06:04:13 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Received: by 2002:a4f:2293:0:0:0:0:0 with HTTP; Thu, 28 Jun 2018 06:04:13
+ -0700 (PDT)
+In-Reply-To: <xmqqsh5amt8n.fsf@gitster-ct.c.googlers.com>
+References: <20180623121846.19750-1-chriscool@tuxfamily.org> <xmqqsh5amt8n.fsf@gitster-ct.c.googlers.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 28 Jun 2018 15:04:13 +0200
+Message-ID: <CAP8UFD3-abjhC41zYGz5z8Qs_xChwpg4xRcMisTVP8N2ri0hNA@mail.gmail.com>
+Subject: Re: [PATCH v1 0/9] Introducing remote ODBs
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Mon, Jun 25, 2018 at 11:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Just an early warning, as I haven't even complained on patch titles
+> of these patches in the series ;-)
+>
+> 5702.20 and 5702.21 seems to fail in standalone test, when these are
+> directly queued on top of Git v2.18.0; I haven't looked into the
+> failure myself (yet).
 
-In ed32b788c06 (version --build-options: report commit, too, if
-possible, 2017-12-15), we introduced code to let `git version
---build-options` report the current commit from which the binaries were
-built, if any.
+Yeah sorry about that.
 
-To prevent erroneous commits from being reported (e.g. when unpacking
-Git's source code from a .tar.gz file into a subdirectory of a different
-Git project, as e.g. git_osx_installer does), we painstakingly set
-GIT_CEILING_DIRECTORIES when trying to determine the current commit.
-
-Except that we got the quoting wrong, and that variable therefore does
-not have the desired effect.
-
-Let's fix that quoting, and while at it, also suppress the unhelpful
-message
-
-fatal: not a git repository (or any of the parent directories): .git
-
-that gets printed to stderr if no current commit could be determined,
-and might scare the occasional developer who simply tries to build Git
-from scratch.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Makefile | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 0cb6590f2..c70f823a0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2021,8 +2021,9 @@ version.sp version.s version.o: GIT-VERSION-FILE GIT-USER-AGENT
- version.sp version.s version.o: EXTRA_CPPFLAGS = \
- 	'-DGIT_VERSION="$(GIT_VERSION)"' \
- 	'-DGIT_USER_AGENT=$(GIT_USER_AGENT_CQ_SQ)' \
--	'-DGIT_BUILT_FROM_COMMIT="$(shell GIT_CEILING_DIRECTORIES=\"$(CURDIR)/..\" \
--		git rev-parse -q --verify HEAD || :)"'
-+	'-DGIT_BUILT_FROM_COMMIT="$(shell \
-+		GIT_CEILING_DIRECTORIES="$(CURDIR)/.." \
-+		git rev-parse -q --verify HEAD 2>/dev/null)"'
- 
- $(BUILT_INS): git$X
- 	$(QUIET_BUILT_IN)$(RM) $@ && \
--- 
-gitgitgadget
+These tests can be fixed with only
+s/extensions.partialClone/odb.magic.promisorRemote/ though.
