@@ -2,87 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F039F1F516
-	for <e@80x24.org>; Thu, 28 Jun 2018 17:15:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9FAC61F516
+	for <e@80x24.org>; Thu, 28 Jun 2018 17:21:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753751AbeF1RP4 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Jun 2018 13:15:56 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:55384 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753172AbeF1RPz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jun 2018 13:15:55 -0400
-Received: by mail-wm0-f65.google.com with SMTP id v16-v6so10586037wmv.5
-        for <git@vger.kernel.org>; Thu, 28 Jun 2018 10:15:54 -0700 (PDT)
+        id S933879AbeF1RVX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Jun 2018 13:21:23 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:43139 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932186AbeF1RVW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jun 2018 13:21:22 -0400
+Received: by mail-wr0-f194.google.com with SMTP id c5-v6so6286715wrs.10
+        for <git@vger.kernel.org>; Thu, 28 Jun 2018 10:21:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=jK5XZYHf2IISO7d897uKlEIz7gDYx7tBWO/BXQncmV8=;
-        b=rLHpwSKl5QmRroMIc+fvn/e3TxzZ3rz3/wMCdZz4sKUpupNqkvtmMsLsYWooHiLKnY
-         Nq5cjf0N+JEnKz+OaXiMGLaZjbI06OPbDu0d0+u12LwD1r406lhunLg4A0s07cdpn54U
-         aMO+qdoJ80WlrfBKMSmHJ1Z5U0KUseRT9DfQaIQJL/w3bTVXAQweBTCUiEyjo9qQ1RhG
-         IzrfEB4TKR4edyeAiNZq0gcdR2FANHFUUtt9yNSh9S2o7Rg8AqFBr0RDfENOFhZFe7am
-         krSylU5UyqiB0RBnIdptSvcbnWBzUMWC92X8lIblXwGirNoVEJzeSPiOgD4+leMLgzT/
-         qFVg==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=p1FcJjiFCSrexwRnWx7u8yd5fk233T4hYzVxpbrJ1BY=;
+        b=bkJrDVFWCHbW483y277pYj0HO+dX+PbU7DtOEoWjiEqXlcdg3rWlB6hNBhlfB9GuRo
+         01qAkSxjCmeCuSnRwC6uwsdGMjlKpkyKsGS1SJtRtgehL3XEOVHwfhdhvTKRyzWHBDex
+         Chdb1C0d7pxm3Fy0zKQW2cvFXusDonk2l0d/N8GeMinTXTBYqDLFoJEzFj9X7rMSJvgi
+         ucryDCDwHR8io+bi+0Yy69S+8KWV5zyUQV9EO1qdWN9ll1uJx/kfrPYRtHg00KfShCuf
+         QxyTtSY2C3mm4+/emz15NtZLexK8tyBowX1YI7u6yEMhS574UZHpLNKfiG6IYCjR1OR6
+         uXfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=jK5XZYHf2IISO7d897uKlEIz7gDYx7tBWO/BXQncmV8=;
-        b=n/eYJqWqSHAtCW6sQ13bNo74kEIwuj6NyQjk4IBIKHBSE6BG4mWxtbkVaezu/H/Y5I
-         vxxYJdkTSOX0qkjNjKiMAM4rYN1sZV1UA2tL3iQ8UgHW+tuCkkbky17yK0BeSN93btLc
-         XwUoa46sBiQEibMUYQAH9gNZ4qVFCwcmEVC/8hERIgVWxWs2ZsWS1fe869Ip9ifUlIXj
-         BSiwu1zAhwojhaUzKxLc47DkWCT62AC33nuhaPT3Sk75SCKg254DU4Z+2YDn/xoR3P91
-         IE6U8omzWwx/TuGxeO8NGUhvxxJZXXBGaGPnDAifEJffLvRkQD7eDemtZSfaGDHa+ekg
-         Siuw==
-X-Gm-Message-State: APt69E0ybUWVYBSeOlBE08KpBSR9HrktUel2G7v8yUwKd8vOilWnd/5C
-        emMO/zR9Kjg4I20/kMuYsI0=
-X-Google-Smtp-Source: AAOMgpdnkHvWBbD5k4OeJvdQRYKi80QfRPiczuktB6hg4N3r9igEgR9eN43zODLGrc1aK8/fHjJU1Q==
-X-Received: by 2002:a1c:b801:: with SMTP id i1-v6mr8676228wmf.30.1530206153671;
-        Thu, 28 Jun 2018 10:15:53 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id d4-v6sm11111085wrp.51.2018.06.28.10.15.52
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 28 Jun 2018 10:15:52 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jameson Miller <jamill@microsoft.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "jonathantanmy\@google.com" <jonathantanmy@google.com>,
-        "pclouds\@gmail.com" <pclouds@gmail.com>,
-        "peartben\@gmail.com" <peartben@gmail.com>,
-        "peff\@peff.net" <peff@peff.net>,
-        "sbeller\@google.com" <sbeller@google.com>
-Subject: Re: [PATCH v5 5/8] mem-pool: add life cycle management functions
-References: <20180620201557.77155-1-jamill@microsoft.com>
-        <20180628135932.225288-1-jamill@microsoft.com>
-        <20180628135932.225288-6-jamill@microsoft.com>
-Date:   Thu, 28 Jun 2018 10:15:52 -0700
-In-Reply-To: <20180628135932.225288-6-jamill@microsoft.com> (Jameson Miller's
-        message of "Thu, 28 Jun 2018 14:00:12 +0000")
-Message-ID: <xmqqefgqygqf.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=p1FcJjiFCSrexwRnWx7u8yd5fk233T4hYzVxpbrJ1BY=;
+        b=TZrDN6mqKtw4Hbc5/2t/J+JAx9Uoe+aoIZKM5mJvbHCIMXwIJAteQxjg3nbaNV3iB5
+         07v8iI4NZFrLO8bSRHIFa1nT4B/m8eCa3tsKbGu/AoaSU9KewGisIDPYu1YhzX7/nk2J
+         fk5uL4rRXFTiy9OQ//xKVglbZUeEix6sDxGs8qy0NejbrZru1u428w8qe6B4K3AqIXHl
+         qw86pEpe3fWjCjJOV4pzDpKdp7T0mdko6IsEZ+Ik9r/9Je8KuKReVlJOKzMBQbdxdGPN
+         mqqDJsuiRPY7TJkcgJ5UBTIDVc9QS5UUmQx+B6ms5kQeq9fk5uMNk61nUbVF7Nm5AhGk
+         hugA==
+X-Gm-Message-State: APt69E3Qw6Q9bB2HIBAv3iFiTIFGrAJdJnOUSEXvGp9nU1DuJFb9oXN0
+        GrMoBe0NCW5Or0cVmW62vjY=
+X-Google-Smtp-Source: AAOMgpctzJQ8pWOBhFLiBdL9V3MxAzx5CHQIqzsKDGYNlDo0V+YWFBvtBO6bwFjK8/QpnHtf/9sIZA==
+X-Received: by 2002:adf:c7c3:: with SMTP id y3-v6mr9516577wrg.230.1530206481212;
+        Thu, 28 Jun 2018 10:21:21 -0700 (PDT)
+Received: from larsbook.fritz.box (p5DDB68D2.dip0.t-ipconnect.de. [93.219.104.210])
+        by smtp.gmail.com with ESMTPSA id i14-v6sm6160735wro.11.2018.06.28.10.21.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 28 Jun 2018 10:21:20 -0700 (PDT)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 11.4 \(3445.8.2\))
+Subject: Re: Use of new .gitattributes working-tree-encoding attribute across
+ different platform types
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <20180628143405.GA16657@sigill.intra.peff.net>
+Date:   Thu, 28 Jun 2018 19:21:18 +0200
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Steve Groeger <GROEGES@uk.ibm.com>, git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <4E8CDDC9-2957-401F-9BBE-93276C026848@gmail.com>
+References: <OF5D40FE06.C18CD7CD-ON002582B9.002B7A02-002582B9.002B7A07@notes.na.collabserv.com>
+ <20180628024446.GD644867@genre.crustytoothpaste.net>
+ <20180628143405.GA16657@sigill.intra.peff.net>
+To:     Jeff King <peff@peff.net>
+X-Mailer: Apple Mail (2.3445.8.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jameson Miller <jamill@microsoft.com> writes:
 
-> Add initialization and discard functions to mem_pool type. As the
-> memory allocated by mem_pool can now be freed, we also track the large
-> allocations.
->
-> If the there are existing mp_blocks in the mem_poo's linked list of
 
-mem_poo?
+> On Jun 28, 2018, at 4:34 PM, Jeff King <peff@peff.net> wrote:
+>=20
+> On Thu, Jun 28, 2018 at 02:44:47AM +0000, brian m. carlson wrote:
+>=20
+>> On Wed, Jun 27, 2018 at 07:54:52AM +0000, Steve Groeger wrote:
+>>> We have common code that is supposed to be usable across different =
+platforms and hence different file encodings. With the full support of =
+the working-tree-encoding in the latest version of git on all platforms, =
+how do we have files converted to different encodings on different =
+platforms?
+>>> I could not find anything that would allow us to say 'if platform =3D =
+z/OS then encoding=3DEBCDIC else encoding=3DASCII'.   Is there a way =
+this can be done?
+>>=20
+>> I don't believe there is such functionality.  Git doesn't have
+>> attributes that are conditional on the platform in that sort of way.
+>> You could use a smudge/clean filter and adjust the filter for the
+>> platform you're on, which might meet your needs.
+>=20
+> We do have prior art in the line-ending code, though. There the
+> attributes say either that a file needs a specific line-ending type
+> (which is relatively rare), or that it should follow the system type,
+> which is then set separately in the config.
+>=20
+> I have the impression that the working-tree-encoding stuff was made to
+> handle the first case, but not the second. It doesn't seem like an
+> outrageous thing to eventually add.
+>=20
+> (Though I agree that clean/smudge filters would work, and can even
+> implement the existing working-tree-encoding feature, albeit less
+> efficiently and conveniently).
 
-> mp_blocksl, then the mp_block for a large allocation is inserted
+Thanks for the suggestion Peff!=20
+How about this:
 
-mp_blocksl?
+1) We allow users to set the encoding "auto". Example:
 
+	*.txt working-tree-encoding=3Dauto
+
+2) We define a new variable `core.autoencoding`. By default the value is=20=
+
+UTF-8 (=3D=3D no re-encoding) but user can set to any value in their Git =
+config.=20
+Example:
+
+    git config --global core.autoencoding UTF-16
+
+All files marked with the value "auto" will use the encoding defined in
+`core.autoencoding`.
+
+Would that work?
+
+@steve: Would that fix your problem?
+
+- Lars=
