@@ -2,160 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 49F451F516
-	for <e@80x24.org>; Thu, 28 Jun 2018 16:56:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F4A01F516
+	for <e@80x24.org>; Thu, 28 Jun 2018 17:03:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965740AbeF1Q4Y (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Jun 2018 12:56:24 -0400
-Received: from avasout08.plus.net ([212.159.14.20]:40396 "EHLO
-        avasout08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934599AbeF1Q4X (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jun 2018 12:56:23 -0400
-Received: from [10.0.2.15] ([80.189.70.235])
-        by smtp with ESMTPA
-        id YaDSfQcTqhidhYaDTf6Ffl; Thu, 28 Jun 2018 17:56:22 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=B6uXLtlM c=1 sm=1 tr=0
- a=YX39wz5waiCDnkc2J8opfw==:117 a=YX39wz5waiCDnkc2J8opfw==:17
- a=IkcTkHD0fZMA:10 a=UzDhSKQu6RL8ZGDIOXcA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH] fsck: check skiplist for object in fsck_blob()
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jason@zx2c4.com,
-        GIT Mailing-list <git@vger.kernel.org>
-References: <2fc2d53f-e193-2a2a-9f8f-b3e1d256d940@ramsayjones.plus.com>
- <20180628114912.GA12901@sigill.intra.peff.net>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <0a18acbd-0124-1c92-0046-05b8b035dd28@ramsayjones.plus.com>
-Date:   Thu, 28 Jun 2018 17:56:18 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+        id S967408AbeF1RDv (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Jun 2018 13:03:51 -0400
+Received: from mout.web.de ([212.227.17.12]:60239 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S965914AbeF1RDu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jun 2018 13:03:50 -0400
+Received: from [192.168.209.20] ([195.198.252.176]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0Lhev7-1fuSaj2nSr-00mp8V; Thu, 28
+ Jun 2018 18:58:28 +0200
+Subject: Re: [PATCH v4] Documentation: declare "core.ignoreCase" as internal
+ variable
+To:     Marc Strapetz <marc.strapetz@syntevo.com>, git@vger.kernel.org
+Cc:     sunshine@sunshineco.com, gitster@pobox.com, bturner@atlassian.com
+References: <7f6b2a42-334d-9443-7b89-625069931ca7@syntevo.com>
+ <20180628112157.17176-1-marc.strapetz@syntevo.com>
+From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Message-ID: <752f02f7-71e7-9026-9894-d4572b65b187@web.de>
+Date:   Thu, 28 Jun 2018 18:58:26 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0)
+ Gecko/20100101 Thunderbird/52.8.0
 MIME-Version: 1.0
-In-Reply-To: <20180628114912.GA12901@sigill.intra.peff.net>
+In-Reply-To: <20180628112157.17176-1-marc.strapetz@syntevo.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfM491vy+NKTrn4YrO3qPrGMPMgkBapMMXc3rdvB8U7zqct0tpm7IKPCWjaJ6GSlerqbVTj4aHB6oOna5h9+uwybDw8bhNFobstOZmI7gjMT+/3DaptOL
- fgw/tKEPly4q3ZvWgFicnKXWcIhNzICShS+c1d1EvGSy+0JmTcazyAYy
+X-Provags-ID: V03:K1:kQExTjU1bdKEIfxsju4f+9NI4IiSEZdSRkl74uWQ8z0RP661Izv
+ jcO7D5TSSiBX1h5JFOlGd5AtDjZ7kXLeCd+L5+bYED08xkUU+lDmZChvm/fJs/HwtPzbvIh
+ crOTvfvHPrA4zfLGhaBE8B2UUt5JdYmbl8e9g4NsVqmUj+hAzGT2A/V8U+EG7xaCaktsbUO
+ maRt0bcGiHa1RzC32bOgQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:VH7VBz3xSHs=:MHWEtQps1vmYhqtH8P/8Ig
+ vfkR9eiuNF8Ne/N2YYTgbGKmkIIpgli3vIApkS9uYMYamrdmlsVCkJAUZzGDs8lJu2dIRqhAX
+ WyqIJX/1cFfX5eeR1oVUJKS6WAXUHTliy0i4F4AbX1usfl9Bxk6dOF62EykQ5uaEODcdGQ9Xx
+ FOz0Bm3bTokBOSvDuXHeJcP8iorPuh2dO1GTPR5rRwVibUUTPSCwOnhRgIM7mMLk6kcbaLFrN
+ OVhPb5NCIhji1SLyxR36WFQSiOSR9sLnmbPNUVAurjokCNpPZ9eXs7QUKwk0pICUcnXDX4vjH
+ yXh4jtrtvDzYvdlMHUny1/KmrIKOMBB+Wys7YEGFsqJor/q8uUKaVSmJegTBQBf1ipZ+w9qci
+ xv81kJAzoXDJ3w616nIUEJc27omcp525u/qth5AcY6aTSujrgs3m6uQkfkHSI0ylxIGm101i9
+ 949YreROD7cVl/DpluJ4l/fRIL7gnD9kUfcAKEgbPGcCFou3AgUV+lME7/IGVrBPE2NGcdFt+
+ uyF23/+FYvWD3A+5AgLha3j/WuySbTu6B3zxHzP1TOGr1uwiQ7CDSO5+q5pYR+8T6O1s3If4g
+ vnnDevJrmnZ5mi5mpHCw1zY87Zx1u7Xr1gtaD/W6S0TH0wjZU8ZyuVKWCXJg89Z8S+8NXYDDZ
+ Z/aGozRbmiO+60XUjGSBxwxPJvuwR0Vr8Ba8gekC2g6beKNxAqfZ+NDwj+a7fVMbarert+iVT
+ JTGfC22Gi09Qss4AVA8HCQDOZ9iW+lbJOD2n1K/wWGS76o8we9wRCEjAQvDosfPypiqAf48xI
+ nGk4vmG
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 28/06/18 12:49, Jeff King wrote:
-> On Wed, Jun 27, 2018 at 07:39:53PM +0100, Ramsay Jones wrote:
+On 28.06.18 13:21, Marc Strapetz wrote:
+> The current description of "core.ignoreCase" reads like an option which
+> is intended to be changed by the user while it's actually expected to
+> be set by Git on initialization only. Subsequently, Git relies on the
+> proper configuration of this variable, as noted by Bryan Turner [1]:
 > 
->> Since commit ed8b10f631 ("fsck: check .gitmodules content", 2018-05-02),
->> fsck will issue an error message for '.gitmodules' content that cannot
->> be parsed correctly. This is the case, even when the corresponding blob
->> object has been included on the skiplist. For example, using the cgit
->> repository, we see the following:
->>
->>   $ git fsck
->>   Checking object directories: 100% (256/256), done.
->>   error: bad config line 5 in blob .gitmodules
->>   error in blob 51dd1eff1edc663674df9ab85d2786a40f7ae3a5: gitmodulesParse: could not parse gitmodules blob
->>   Checking objects: 100% (6626/6626), done.
->>   $
->>
->>   $ git config fsck.skiplist '.git/skip'
->>   $ echo 51dd1eff1edc663674df9ab85d2786a40f7ae3a5 >.git/skip
->>   $
->>
->>   $ git fsck
->>   Checking object directories: 100% (256/256), done.
->>   error: bad config line 5 in blob .gitmodules
->>   Checking objects: 100% (6626/6626), done.
->>   $
->>
->> Note that the error message issued by the config parser is still
->> present, despite adding the object-id of the blob to the skiplist.
->>
->> One solution would be to provide a means of suppressing the messages
->> issued by the config parser. However, given that (logically) we are
->> asking fsck to ignore this object, a simpler approach is to just not
->> call the config parser if the object is to be skipped. Add a check to
->> the 'fsck_blob()' processing function, to determine if the object is
->> on the skiplist and, if so, exit the function early.
+>     Git on a case-insensitive filesystem (APFS, HFS+, FAT32, exFAT,
+>     vFAT, NTFS, etc.) is not designed to be run with anything other
+>     than core.ignoreCase=true.
 > 
-> Yeah, this solution seems sensible. Given that we would never report any
-> error for that blob, there is no point in even looking at it. I wonder
-> if we ought to do the same for other types, too. Is there any point in
-> opening a tree that is in the skiplist?
-
-Note that the 'blob' object has already been 'loaded' at this
-point anyway (and the basic 'object' checks have been done).
-
-I did think about this, briefly, but decided that we should
-only 'skip' the leaf nodes (blobs). (So, when processing
-commits, trees and tags, we should not report an error for
-that object-id, but that should not stop us from checking
-the tree object associated with a commit, just because of
-a problem with the commit message).
-
-[Oh, wait - Hmm, each object could be checked independently
-of all others and not used for any object traversal right?
-(e.g. using packfile index). I saw fsck_walk() and didn't
-look any further ... Ah, broken link check, ... I obviously
-need to read the code some more ... :-D ]
-
->> I noticed recently that the 'cgit.git' repo was complaining when
->> doing an 'git fsck' ...
->>
->> Note that 'cgit' had a '.gitmodules' file and a 'submodule.sh'
->> script back in 2007, which had nothing to do with the current
->> git submodule facilities, ... ;-)
+> [1] https://marc.info/?l=git&m=152998665813997&w=2
+>     mid:CAGyf7-GeE8jRGPkME9rHKPtHEQ6P1+ebpMMWAtMh01uO3bfy8w@mail.gmail.com
 > 
-> Yikes. I worried about that sort of regression when adding the
-> .gitmodules checks. But this _is_ a pretty unique case: somebody was
-> implementing their own version of submodules (pre-git-submodule) and
-> decided to use the same name. So I'm not sure if this is a sign that we
-> need to think through the regression, or a sign that it really is rare.
-
-I don't have any numbers, but my gut tells me that this would
-be very rare indeed. Of course, my gut has been wrong before ... :-D
-
-> One thing we could do is turn the parse failure into a noop. The main
-> point of the check is to protect people against the malicious
-> .gitmodules bug. If the file can't be parsed, then it also can't be an
-> attack vector (assuming the parser used for the fsck check and the
-> parser used by the victim behave identically).
-
-Hmm, yeah, but I would have to provide a means of suppressing
-the config parser error messages. Something I wanted to avoid. :(
-
-> That wouldn't help with your stray message, of course, but it would
-> eliminate the need to deal with the skiplist here (and skiplists aren't
-> always easy to do -- for instance, pushing up a non-fork of cgit to
-> GitHub would now be rejected because of this old file, and you'd have to
-> contact support to resolve it).
-
-Good point.
-
->> I just remembered that I had intended to review the name of the
->> function that this patch introduces before sending, but totally
->> forgot! :(
->>
->> [Hmm, 'to_be_skipped' -> object_to_be_skipped, object_on_skiplist,
->> etc., ... suggestions welcome!]
+> Signed-off-by: Marc Strapetz <marc.strapetz@syntevo.com>
+> ---
+>  Documentation/config.txt | 9 ++++++---
+>  1 file changed, 6 insertions(+), 3 deletions(-)
 > 
-> The current name is OK to be, but object_on_skiplist() also seems quite
-> obvious.
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 1cc18a828..c70cfe956 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -390,16 +390,19 @@ core.hideDotFiles::
+>  	default mode is 'dotGitOnly'.
+>  
+>  core.ignoreCase::
+> -	If true, this option enables various workarounds to enable
+> +	Internal variable which enables various workarounds to enable
+>  	Git to work better on filesystems that are not case sensitive,
+> -	like FAT. For example, if a directory listing finds
+> -	"makefile" when Git expects "Makefile", Git will assume
+> +	like APFS, HFS+, FAT, NTFS, etc. For example, if a directory listing
+> +	finds "makefile" when Git expects "Makefile", Git will assume
+>  	it is really the same file, and continue to remember it as
+>  	"Makefile".
+>  +
+>  The default is false, except linkgit:git-clone[1] or linkgit:git-init[1]
+>  will probe and set core.ignoreCase true if appropriate when the repository
+>  is created.
+> ++
+> +Git relies on the proper configuration of this variable for your operating
+> +and file system. Modifying this value may result in unexpected behavior.
+>  
+>  core.precomposeUnicode::
+>  	This option is only used by Mac OS implementation of Git.
+> 
 
-object_on_skiplist() it is!
-
-Junio, do you want me to address the above 'rejected push'
-issue in this patch, or with a follow-up patch? (It should
-be a pretty rare problem - famous last words!)
-
-ATB,
-Ramsay Jones
-
-
-
+Looks good to me
