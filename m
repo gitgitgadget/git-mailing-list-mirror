@@ -6,62 +6,60 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 90D031F516
-	for <e@80x24.org>; Thu, 28 Jun 2018 17:27:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 292561F516
+	for <e@80x24.org>; Thu, 28 Jun 2018 17:29:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967523AbeF1R1g (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Jun 2018 13:27:36 -0400
-Received: from mail-wr0-f179.google.com ([209.85.128.179]:41750 "EHLO
-        mail-wr0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S967499AbeF1R1f (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jun 2018 13:27:35 -0400
-Received: by mail-wr0-f179.google.com with SMTP id h10-v6so6293090wrq.8
-        for <git@vger.kernel.org>; Thu, 28 Jun 2018 10:27:34 -0700 (PDT)
+        id S967541AbeF1R3E (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Jun 2018 13:29:04 -0400
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:34860 "EHLO
+        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S967499AbeF1R3B (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jun 2018 13:29:01 -0400
+Received: by mail-wm0-f49.google.com with SMTP id z137-v6so9935598wmc.0
+        for <git@vger.kernel.org>; Thu, 28 Jun 2018 10:29:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=bKMu+dZpfopOw2vhhu6AHeQSy/BNwFtTBJLxa2/sbKM=;
-        b=C/ByQKZWEctg7nfm7iIKQu1BHVOmT0D5ZvU1gy8uBaj4sDtnv6fntSRBXSuiWEElUR
-         oUbOds51ofFMfS+xnfiMZ1u72402m0olH4dntmdn5QTKUZVYz8pIqt1LRE0yAnnUFcMn
-         nRdX7EaLFLQKUhFiPtxja2aSEljh+LG3KKs39ARz3uwp9tef9HzaKuo9byHKvwvK4HMh
-         ovo0XLHdBIqCf48gSBTAJQSnLk4V60ZApmhcocZ0+vRm89sA3pnDeJZJKqPagzsuLFOh
-         etIOMTe3Z5Yc9QV7P9pOdTOS1bWyqLNbtvJZZtFSri8b/B1rigBTFz9wrBG7LCQV1077
-         Nycw==
+        bh=En7WW3fACPmNbFTyXV9giAsBjV+xQ+9dOrLGa4mMVj8=;
+        b=ZyzMxgJ9OO4k3U9v6J6RlyczJkob9HbxiV933gHxidW2sKx+90eXcHl4QyVki1TPtA
+         zKf7zF9OjKoNr8/GADUZ2DTxToFgil1NzUonVj5lsq6Lmkqv0qBduU2lBaAK2eAGSyQM
+         r7ju90HeZAQT4wV3EEMxJ3l/jUbHNtMxoppMXgdPGt4i+jWDrLdXKvx1yoHnlrO/vDcL
+         zIrjaC8tUgbq7kgeTJyn9eRA7E7LxI/rJ7AEx9brXM6EvuCf7Wz+0o+vI9/ZUBUurxNF
+         8w1TxQwW+cnBy1pH5dhGCXkySjr4EOZNfsiXVgZY5jWHGrmrwoeeP/F1i6hez8MIin+N
+         v4lQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=bKMu+dZpfopOw2vhhu6AHeQSy/BNwFtTBJLxa2/sbKM=;
-        b=FZPHBbg3Sqd3qLW3Urdnk2R5N+ESgf00QWAVJbPN15nlErqMpGwofk5uCNF0U0ZBMw
-         u1PCl2Z05RQOHdkjyuDyyguEIFbglIVjJwC7kH9m2iMxlxc9iQqA+8PBLxkf4dSkCHyP
-         bLYwju8mIhjvZ5SSHvFEMd7TXvjhL1fXRPCXYkMmSRQtUcpnq54fkhBRfzSXXmGBp0om
-         vn6lttbQRqNw6IonSV6jkEOGvtL3rqid5Ad9x8gVRi9TzEvNO5JiRYrQW9OzxXr2iJYL
-         fcfNJab1Uz3UhW6DooNTSoUd0gEcVrvlfHtwgsY00MyL/iT2e/Vufd2DzsyIM/r2MSOh
-         8mqg==
-X-Gm-Message-State: APt69E03FLfL9RBv8bIbzfiZa5DH+AXrFw50CTujquh/XDg4SxrQ8mme
-        OAA082VWO85I+42ZEvw93LE=
-X-Google-Smtp-Source: AAOMgpdZ372X1eJ3WSzDJcjuW/3YEIoSneW/DsIkbCBwU8z/lI9Rx9T+bD8NXbhFA5dqMYFl3+cPZw==
-X-Received: by 2002:adf:ae51:: with SMTP id u17-v6mr9207526wrd.201.1530206853913;
-        Thu, 28 Jun 2018 10:27:33 -0700 (PDT)
+        bh=En7WW3fACPmNbFTyXV9giAsBjV+xQ+9dOrLGa4mMVj8=;
+        b=bAx8RwqFqoeYPws2UPMMPycKNIdvL5WOduNwBjhlYGlFBx7WW68M8cublTs8Wdn3ZK
+         cTDRfLo3vr9an7QrADmsziqRBi+kkvhzZUHUkKdO+u6BFjEmoGjFINEG/DES5LUs/kXH
+         wk3OQRAId02YGm5bGcXLbN3ihcjrk/EYJSlwdPQ92YWweCBVwpkaRoRF30DA2/Bs97HY
+         r5PPOamIaa8X1J7yWeoA133/7379MmDtSdnsUrkxj9YQk8EfpMj+l8UVAYaiWm7nY+uE
+         Ig+nBP+GAKcXgunc1CW0Nh9GKb5zZucL29/YuOtQ/rKueE+pAdFvjp51eII/ULKTUVKZ
+         L/HA==
+X-Gm-Message-State: APt69E04aREry6HME/o76rXWo4gD0GRTn+qNcM0aH5pojj4I9OzK4Fk/
+        e7xWPVAPn2L9tY17aCQEEtw=
+X-Google-Smtp-Source: AAOMgpcj3JYCyX/a1U/pslf0iWMbmxHetXsr98SFW21OnnFWmaFAGhRaE6Zyca3aFRizd2KolIFcbg==
+X-Received: by 2002:a1c:5c82:: with SMTP id q124-v6mr9472844wmb.24.1530206940269;
+        Thu, 28 Jun 2018 10:29:00 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id o13-v6sm5533935wmc.8.2018.06.28.10.27.33
+        by smtp.gmail.com with ESMTPSA id m3-v6sm3961842wrs.39.2018.06.28.10.28.59
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 28 Jun 2018 10:27:33 -0700 (PDT)
+        Thu, 28 Jun 2018 10:28:59 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jeff King <peff@peff.net>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/1] Makefile: fix the "built from commit" code
-References: <pull.7.git.gitgitgadget@gmail.com>
-        <e0e41d0b88b4104737b9ee80710c1bec91c9d759.1530190395.git.gitgitgadget@gmail.com>
-        <20180628132314.GA14026@sigill.intra.peff.net>
-        <nycvar.QRO.7.76.6.1806281809060.73@tvgsbejvaqbjf.bet>
-Date:   Thu, 28 Jun 2018 10:27:32 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.1806281809060.73@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Thu, 28 Jun 2018 18:23:56 +0200 (DST)")
-Message-ID: <xmqqa7reyg6z.fsf@gitster-ct.c.googlers.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Jeff King <peff@peff.net>, Jason@zx2c4.com,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH] fsck: check skiplist for object in fsck_blob()
+References: <2fc2d53f-e193-2a2a-9f8f-b3e1d256d940@ramsayjones.plus.com>
+        <20180628114912.GA12901@sigill.intra.peff.net>
+        <0a18acbd-0124-1c92-0046-05b8b035dd28@ramsayjones.plus.com>
+Date:   Thu, 28 Jun 2018 10:28:59 -0700
+In-Reply-To: <0a18acbd-0124-1c92-0046-05b8b035dd28@ramsayjones.plus.com>
+        (Ramsay Jones's message of "Thu, 28 Jun 2018 17:56:18 +0100")
+Message-ID: <xmqq6022yg4k.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,38 +68,13 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
->> I.e.:
->> 
->>   FOO='with spaces'
->>   BAR=$FOO sh -c 'echo $BAR'
->> 
->> works just fine.
->
-> 	$ x="two  spaces"
->
-> 	$ echo $x
-> 	two spaces
->
-> Maybe we should quote a little bit more religiously.
+> Junio, do you want me to address the above 'rejected push'
+> issue in this patch, or with a follow-up patch? (It should
+> be a pretty rare problem - famous last words!)
 
-Both of you are wrong ;-)
+If you feel the need to say "famous last words", it is an indication
+that it is better done as a follow-up, I would think ;-)
 
-Of course, the lack of dq around echo's argument makes shell split
-two and spaces into two args and feed them separately to echo, and
-causes echo to show them with a single SP in between.  Peff's
-exampel should have been
-
-	BAR=$FOO sh -c 'echo "$BAR"'
-
-But that does not have much to do with the primary point Peff was
-talking about, which is that in this sequence:
-
-	$ x="two  spaces"
-	$ y="$x"
-	$ z=$x
-	$ echo "x=<$x>" "y=<$y>" "z=<$z>"
-
-assignment to y and z behave identically, i.e. dq around "$x" when
-assigning to y is not needed.
+Thanks for spotting and addressing this issue.
