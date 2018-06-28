@@ -2,106 +2,55 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-1.5 required=3.0 tests=BAYES_00,FROM_NO_USER,
+	MAILING_LIST_MULTI,PYZOR_CHECK,RCVD_IN_DNSWL_HI,SUBJ_ATTENTION,
+	TVD_PH_BODY_ACCOUNTS_PRE shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F4A01F516
-	for <e@80x24.org>; Thu, 28 Jun 2018 17:03:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6CFB71F516
+	for <e@80x24.org>; Thu, 28 Jun 2018 17:07:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967408AbeF1RDv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Jun 2018 13:03:51 -0400
-Received: from mout.web.de ([212.227.17.12]:60239 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S965914AbeF1RDu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jun 2018 13:03:50 -0400
-Received: from [192.168.209.20] ([195.198.252.176]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0Lhev7-1fuSaj2nSr-00mp8V; Thu, 28
- Jun 2018 18:58:28 +0200
-Subject: Re: [PATCH v4] Documentation: declare "core.ignoreCase" as internal
- variable
-To:     Marc Strapetz <marc.strapetz@syntevo.com>, git@vger.kernel.org
-Cc:     sunshine@sunshineco.com, gitster@pobox.com, bturner@atlassian.com
-References: <7f6b2a42-334d-9443-7b89-625069931ca7@syntevo.com>
- <20180628112157.17176-1-marc.strapetz@syntevo.com>
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <752f02f7-71e7-9026-9894-d4572b65b187@web.de>
-Date:   Thu, 28 Jun 2018 18:58:26 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0)
- Gecko/20100101 Thunderbird/52.8.0
+        id S1752997AbeF1RHs convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 28 Jun 2018 13:07:48 -0400
+Received: from mail.mptngw.net.mm ([203.81.81.76]:56115 "EHLO
+        mail.mptngw.net.mm" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752762AbeF1RHr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jun 2018 13:07:47 -0400
+Received: from [10.0.2.15] (unknown [213.205.242.6])
+        by mail.mptngw.net.mm (Postfix - by mptngw.com.mm) with ESMTP id 5CB5524882FF
+        for <git@vger.kernel.org>; Thu, 28 Jun 2018 23:12:53 +0630 (MMT)
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-In-Reply-To: <20180628112157.17176-1-marc.strapetz@syntevo.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:kQExTjU1bdKEIfxsju4f+9NI4IiSEZdSRkl74uWQ8z0RP661Izv
- jcO7D5TSSiBX1h5JFOlGd5AtDjZ7kXLeCd+L5+bYED08xkUU+lDmZChvm/fJs/HwtPzbvIh
- crOTvfvHPrA4zfLGhaBE8B2UUt5JdYmbl8e9g4NsVqmUj+hAzGT2A/V8U+EG7xaCaktsbUO
- maRt0bcGiHa1RzC32bOgQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:VH7VBz3xSHs=:MHWEtQps1vmYhqtH8P/8Ig
- vfkR9eiuNF8Ne/N2YYTgbGKmkIIpgli3vIApkS9uYMYamrdmlsVCkJAUZzGDs8lJu2dIRqhAX
- WyqIJX/1cFfX5eeR1oVUJKS6WAXUHTliy0i4F4AbX1usfl9Bxk6dOF62EykQ5uaEODcdGQ9Xx
- FOz0Bm3bTokBOSvDuXHeJcP8iorPuh2dO1GTPR5rRwVibUUTPSCwOnhRgIM7mMLk6kcbaLFrN
- OVhPb5NCIhji1SLyxR36WFQSiOSR9sLnmbPNUVAurjokCNpPZ9eXs7QUKwk0pICUcnXDX4vjH
- yXh4jtrtvDzYvdlMHUny1/KmrIKOMBB+Wys7YEGFsqJor/q8uUKaVSmJegTBQBf1ipZ+w9qci
- xv81kJAzoXDJ3w616nIUEJc27omcp525u/qth5AcY6aTSujrgs3m6uQkfkHSI0ylxIGm101i9
- 949YreROD7cVl/DpluJ4l/fRIL7gnD9kUfcAKEgbPGcCFou3AgUV+lME7/IGVrBPE2NGcdFt+
- uyF23/+FYvWD3A+5AgLha3j/WuySbTu6B3zxHzP1TOGr1uwiQ7CDSO5+q5pYR+8T6O1s3If4g
- vnnDevJrmnZ5mi5mpHCw1zY87Zx1u7Xr1gtaD/W6S0TH0wjZU8ZyuVKWCXJg89Z8S+8NXYDDZ
- Z/aGozRbmiO+60XUjGSBxwxPJvuwR0Vr8Ba8gekC2g6beKNxAqfZ+NDwj+a7fVMbarert+iVT
- JTGfC22Gi09Qss4AVA8HCQDOZ9iW+lbJOD2n1K/wWGS76o8we9wRCEjAQvDosfPypiqAf48xI
- nGk4vmG
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: ATTENTION
+To:     git@vger.kernel.org
+From:   "WEBMAIL" <>
+Date:   Thu, 28 Jun 2018 14:27:02 -0330
+Message-Id: <20180628164253.5CB5524882FF@mail.mptngw.net.mm>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 28.06.18 13:21, Marc Strapetz wrote:
-> The current description of "core.ignoreCase" reads like an option which
-> is intended to be changed by the user while it's actually expected to
-> be set by Git on initialization only. Subsequently, Git relies on the
-> proper configuration of this variable, as noted by Bryan Turner [1]:
-> 
->     Git on a case-insensitive filesystem (APFS, HFS+, FAT32, exFAT,
->     vFAT, NTFS, etc.) is not designed to be run with anything other
->     than core.ignoreCase=true.
-> 
-> [1] https://marc.info/?l=git&m=152998665813997&w=2
->     mid:CAGyf7-GeE8jRGPkME9rHKPtHEQ6P1+ebpMMWAtMh01uO3bfy8w@mail.gmail.com
-> 
-> Signed-off-by: Marc Strapetz <marc.strapetz@syntevo.com>
-> ---
->  Documentation/config.txt | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
-> 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 1cc18a828..c70cfe956 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -390,16 +390,19 @@ core.hideDotFiles::
->  	default mode is 'dotGitOnly'.
->  
->  core.ignoreCase::
-> -	If true, this option enables various workarounds to enable
-> +	Internal variable which enables various workarounds to enable
->  	Git to work better on filesystems that are not case sensitive,
-> -	like FAT. For example, if a directory listing finds
-> -	"makefile" when Git expects "Makefile", Git will assume
-> +	like APFS, HFS+, FAT, NTFS, etc. For example, if a directory listing
-> +	finds "makefile" when Git expects "Makefile", Git will assume
->  	it is really the same file, and continue to remember it as
->  	"Makefile".
->  +
->  The default is false, except linkgit:git-clone[1] or linkgit:git-init[1]
->  will probe and set core.ignoreCase true if appropriate when the repository
->  is created.
-> ++
-> +Git relies on the proper configuration of this variable for your operating
-> +and file system. Modifying this value may result in unexpected behavior.
->  
->  core.precomposeUnicode::
->  	This option is only used by Mac OS implementation of Git.
-> 
+Dear eMail User,
 
-Looks good to me
+Your email account is due for upgrade. Kindly click on the
+link below or copy and paste to your browser and follow the
+instruction to upgrade your email Account;
+
+http://mailbox45.getforge.io
+
+Our webmail Technical Team will update your account. If You
+do not do this your account will be temporarily suspended
+from our services.
+
+Warning!! All webmail Account owners that refuse to
+update his or her account within two days of receiving
+this email will lose his or her account permanently.
+
+Thank you for your cooperation!
+
+Sincere regards,
+WEB MAIL ADMINISTRATOR
+Copyright @2018 MAIL OFFICE All rights reserved
