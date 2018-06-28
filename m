@@ -2,83 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C55AE1F516
-	for <e@80x24.org>; Thu, 28 Jun 2018 14:37:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 792F51F516
+	for <e@80x24.org>; Thu, 28 Jun 2018 15:17:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966717AbeF1Oho (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Jun 2018 10:37:44 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58276 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S966506AbeF1Ohl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jun 2018 10:37:41 -0400
-Received: (qmail 14540 invoked by uid 109); 28 Jun 2018 14:37:41 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 28 Jun 2018 14:37:41 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20350 invoked by uid 111); 28 Jun 2018 14:38:01 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 28 Jun 2018 10:38:01 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Jun 2018 10:37:39 -0400
-Date:   Thu, 28 Jun 2018 10:37:39 -0400
-From:   Jeff King <peff@peff.net>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH 29/29] t/test-lib: teach --chain-lint to detect broken
- &&-chains in subshells
-Message-ID: <20180628143738.GC16657@sigill.intra.peff.net>
-References: <20180626073001.6555-1-sunshine@sunshineco.com>
- <20180626073001.6555-30-sunshine@sunshineco.com>
- <xmqqwouljr5e.fsf@gitster-ct.c.googlers.com>
- <CAPig+cSLyie8mr+u8Thv9cJ0J12nCA+RU6Mg3S5F8U68q1+nzQ@mail.gmail.com>
- <20180626201708.GA2341@sigill.intra.peff.net>
- <CAPig+cRvgsu-6f+mzjGVDWTVhFrhLY5MsNxEQBJYckKDpeaMAg@mail.gmail.com>
- <20180626210100.GA3682@sigill.intra.peff.net>
- <CABPp-BHgPgkgQj7i3rZtdbinVZvqH35uGraUK9doL-E8Y5QuSQ@mail.gmail.com>
+        id S935416AbeF1PRf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Jun 2018 11:17:35 -0400
+Received: from mail-it0-f67.google.com ([209.85.214.67]:53720 "EHLO
+        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935064AbeF1PRe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jun 2018 11:17:34 -0400
+Received: by mail-it0-f67.google.com with SMTP id a195-v6so13295806itd.3
+        for <git@vger.kernel.org>; Thu, 28 Jun 2018 08:17:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=P44Keb6BttH4ACEycBKaAWszPR/wC+loQuklIIhZSBw=;
+        b=IGheH2zeOdR8sSSj3jkruR4TjB/1xU0IycSd3AE8oIPmTMtwIETeNOGhnhIB8cw+fa
+         qXlJf8s7i+TxR/u9Yj7WJB6IMwX0imW0Dx4FJUV0K4mG2kh1d919etGrcgfjU9DOxK6q
+         XYSTBGSPRm9/U30aMGaFgHOkxc7ysclJnYSSpZnkd7wTgAkXIkUoUeG7ZYDzl7kmM71x
+         TEnzpjjjJLGZ/dSmOFLOWcyP4iK9TB88gqdxmQuwTONvwsT0jylgbiHlYmU5TwBikLZo
+         iZOFSMakULZW5sRUQECMNsvC5oQ6iXjJx8C8HfqbvsgLq48BRFuo0ztlo+KOk+ukPccZ
+         aYRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=P44Keb6BttH4ACEycBKaAWszPR/wC+loQuklIIhZSBw=;
+        b=UimThPLn1AkAUsrC8w/Tg249iD7XPuY03kAOh6rjtmZxELMO79tHo+FntaDEK3KcOm
+         mOSOfbSzZhTqj0W05JAzatqvuY4o7+IaRCl6PTYWxjnmjUW7mLxgNdBCVq8aLLfc3WyH
+         GlWy7ZTVHkAyvRhqFGQMRD/7FShNocKTlYd1J6803shQUeOoHaU7aqQSvkigtjD1n+WE
+         LfbsCbT5tXA3tfHWp8Id7UhfQPJLhL6MMwmQqY9fvMx1vwCvJ07Bup+ehkpq8eR99+t2
+         e/Any9z84epFBiBV99lsBx9cC5WT5/vdu1tCYDN1nH+qPCV7dWIN2VRRkizbW7PEA/p6
+         UZww==
+X-Gm-Message-State: APt69E2PuCsmyXRVgluQL1FxJER4Efr44mMf26CwyVDZbQ4KkTQ/rcph
+        4Fs+umLCJRnif10mkHuXfLnY4H0R0740HGFTGcE=
+X-Google-Smtp-Source: AAOMgpfrCnyLjLfz6M4MohOqaTZBXenfOrfV3fRtG4JPkxDkms+ZDFs/oUA/fkzSN9QwWyvpjhLCmlTHZP5y+cuT/GI=
+X-Received: by 2002:a02:a999:: with SMTP id q25-v6mr8938636jam.47.1530199054036;
+ Thu, 28 Jun 2018 08:17:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CABPp-BHgPgkgQj7i3rZtdbinVZvqH35uGraUK9doL-E8Y5QuSQ@mail.gmail.com>
+Received: by 2002:a4f:2293:0:0:0:0:0 with HTTP; Thu, 28 Jun 2018 08:17:33
+ -0700 (PDT)
+In-Reply-To: <CAPig+cTaxJ2fAXaXdQUNSWE7ehyROM79YL6wsNpnf1PuMoaxdA@mail.gmail.com>
+References: <20180623121846.19750-1-chriscool@tuxfamily.org>
+ <xmqqsh5amt8n.fsf@gitster-ct.c.googlers.com> <CAPig+cTaxJ2fAXaXdQUNSWE7ehyROM79YL6wsNpnf1PuMoaxdA@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 28 Jun 2018 17:17:33 +0200
+Message-ID: <CAP8UFD0i_PeE6J00LJFpS1_L-MntKYK0=-7ezTQjQ+a4wOB0gA@mail.gmail.com>
+Subject: Re: [PATCH v1 0/9] Introducing remote ODBs
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Mike Hommey <mh@glandium.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 26, 2018 at 07:15:45PM -0700, Elijah Newren wrote:
+On Tue, Jun 26, 2018 at 2:37 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
 
-> Crazy idea: maybe we could defang it a little more thoroughly with
-> something like the following (apologies in advance if gmail whitespace
-> damages this):
-> 
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 28315706be..7fda08a90a 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -675,7 +675,7 @@ test_run_ () {
->                 trace=
->                 # 117 is magic because it is unlikely to match the exit
->                 # code of other programs
-> -               if test "OK-117" != "$(test_eval_ "(exit 117) &&
-> $1${LF}${LF}echo OK-\$?" 3>&1)"
-> +               if test "OK-117" != "$(test_eval_ "cd() { return 0; }
-> && PATH=/dev/null && export PATH && (exit 117) && $1${LF}${LF}echo
-> OK-\$?" 3>&1)"
+> In addition to the t5702 failures, I'm also seeing failures of
+> t0410.1, t5616.6 and t5616.7 at the tip of 'pu' as of [1], all of
+> which seem to be related to these changes.
 
-Clever. We'd still run shell builtins, which is why you need the cd()
-above. There may be others, but at least it narrows things down. Unless
-the shell is busybox or something, and implements everything as a
-builtin. :)
+Yeah but only s/core.partialclonefilter/odb.origin.partialclonefilter/
+is needed on top of the fix for for the master branch.
 
-I agree on the point elsewhere of returning non-zero (and the items
-missing from PATH should do that, which is good).
-
--Peff
+Thanks for the report!
