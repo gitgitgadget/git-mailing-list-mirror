@@ -6,48 +6,48 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 95A441F516
-	for <e@80x24.org>; Thu, 28 Jun 2018 17:14:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F039F1F516
+	for <e@80x24.org>; Thu, 28 Jun 2018 17:15:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934405AbeF1ROg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Jun 2018 13:14:36 -0400
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:50710 "EHLO
-        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753172AbeF1ROd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jun 2018 13:14:33 -0400
-Received: by mail-wm0-f54.google.com with SMTP id e16-v6so10513283wmd.0
-        for <git@vger.kernel.org>; Thu, 28 Jun 2018 10:14:32 -0700 (PDT)
+        id S1753751AbeF1RP4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Jun 2018 13:15:56 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:55384 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753172AbeF1RPz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jun 2018 13:15:55 -0400
+Received: by mail-wm0-f65.google.com with SMTP id v16-v6so10586037wmv.5
+        for <git@vger.kernel.org>; Thu, 28 Jun 2018 10:15:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=7dK+hEc4mfK8NBRylu+2Z9N3UCXZwKoqbEe9E1GjDm4=;
-        b=nhGNvw1YRylqX3nZBY+3orwSDdm4Y77xZwzCwRqGD/ycDR1yVRMqq7Ai9IyYFgFvZB
-         ltDjqNwnlROtaRGYTX8/DipGS6Z8m9UEIyFlHHgU9dM0jSccODiTVC6bVD+5acff7355
-         vyNIVnpqripihySPgqNO3KuKg1UzjmqrK9toobZSnoSscJ7yclxJWgsRFD/h9I8Pi5BY
-         I6HSeOw9v3HQlmaAeOd/Pgc3ykZT1oPLTjsUuLyf8X8L2xAjKQp9u1Dq+TrBDzCtPyH+
-         cE80w/Jru7rk3G4DeKAamxDTLaap/0Dzujjpim4UtX9ASb/jucgqokOe2uyTG+4t3WoJ
-         RO+A==
+        bh=jK5XZYHf2IISO7d897uKlEIz7gDYx7tBWO/BXQncmV8=;
+        b=rLHpwSKl5QmRroMIc+fvn/e3TxzZ3rz3/wMCdZz4sKUpupNqkvtmMsLsYWooHiLKnY
+         Nq5cjf0N+JEnKz+OaXiMGLaZjbI06OPbDu0d0+u12LwD1r406lhunLg4A0s07cdpn54U
+         aMO+qdoJ80WlrfBKMSmHJ1Z5U0KUseRT9DfQaIQJL/w3bTVXAQweBTCUiEyjo9qQ1RhG
+         IzrfEB4TKR4edyeAiNZq0gcdR2FANHFUUtt9yNSh9S2o7Rg8AqFBr0RDfENOFhZFe7am
+         krSylU5UyqiB0RBnIdptSvcbnWBzUMWC92X8lIblXwGirNoVEJzeSPiOgD4+leMLgzT/
+         qFVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=7dK+hEc4mfK8NBRylu+2Z9N3UCXZwKoqbEe9E1GjDm4=;
-        b=PGHhRDDau8me61oPepUaxxnQjW3Np95ak3Aoi3QFYi2Lh7y3YM5hG6bmz10WfHWtiu
-         MD97g72CPpWIt9sgnX7C54P24lfe+ftcQUB504XNV45R0skSh9eeSou915+HmILVs08z
-         MpgBN+EtrPuUFsMmXYC41G3ZhmZHy0M3duEeE58NY03FTHQnZkM6yM/WAd8lfOfHSmCm
-         uZPTiw6v+HmuOlMBeRpqdl42hO3guOAqLOFqCAJlmdrFDQcuSVWwZOi9yRtgACn6wvPC
-         4gxZC1q6G6jlDtteNoK6QxZGN3hNOy43tHWW8sI7WrpxSAzRL2GV4SRZmZ8jPN0KerJQ
-         1NYQ==
-X-Gm-Message-State: APt69E1pBBFPgvz9OEbNtgB0B/qPbILKiIu/5AeJLVbKEiFiY8U94Goh
-        QXfmW8k8CRtph9E1wdNvYB4=
-X-Google-Smtp-Source: AAOMgpfqs+44iHA2yd07ic7XIX7exXg7Ab0wfYa0cy8yQoNdUBo6yoTg6o/DZFMEVFOifKErHCsBoQ==
-X-Received: by 2002:a1c:b80a:: with SMTP id i10-v6mr9328225wmf.123.1530206071929;
-        Thu, 28 Jun 2018 10:14:31 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id g4-v6sm7215452wrq.32.2018.06.28.10.14.31
+        bh=jK5XZYHf2IISO7d897uKlEIz7gDYx7tBWO/BXQncmV8=;
+        b=n/eYJqWqSHAtCW6sQ13bNo74kEIwuj6NyQjk4IBIKHBSE6BG4mWxtbkVaezu/H/Y5I
+         vxxYJdkTSOX0qkjNjKiMAM4rYN1sZV1UA2tL3iQ8UgHW+tuCkkbky17yK0BeSN93btLc
+         XwUoa46sBiQEibMUYQAH9gNZ4qVFCwcmEVC/8hERIgVWxWs2ZsWS1fe869Ip9ifUlIXj
+         BSiwu1zAhwojhaUzKxLc47DkWCT62AC33nuhaPT3Sk75SCKg254DU4Z+2YDn/xoR3P91
+         IE6U8omzWwx/TuGxeO8NGUhvxxJZXXBGaGPnDAifEJffLvRkQD7eDemtZSfaGDHa+ekg
+         Siuw==
+X-Gm-Message-State: APt69E0ybUWVYBSeOlBE08KpBSR9HrktUel2G7v8yUwKd8vOilWnd/5C
+        emMO/zR9Kjg4I20/kMuYsI0=
+X-Google-Smtp-Source: AAOMgpdnkHvWBbD5k4OeJvdQRYKi80QfRPiczuktB6hg4N3r9igEgR9eN43zODLGrc1aK8/fHjJU1Q==
+X-Received: by 2002:a1c:b801:: with SMTP id i1-v6mr8676228wmf.30.1530206153671;
+        Thu, 28 Jun 2018 10:15:53 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id d4-v6sm11111085wrp.51.2018.06.28.10.15.52
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 28 Jun 2018 10:14:31 -0700 (PDT)
+        Thu, 28 Jun 2018 10:15:52 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jameson Miller <jamill@microsoft.com>
 Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
@@ -56,14 +56,14 @@ Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
         "peartben\@gmail.com" <peartben@gmail.com>,
         "peff\@peff.net" <peff@peff.net>,
         "sbeller\@google.com" <sbeller@google.com>
-Subject: Re: [PATCH v5 2/8] read-cache: make_cache_entry should take object_id struct
+Subject: Re: [PATCH v5 5/8] mem-pool: add life cycle management functions
 References: <20180620201557.77155-1-jamill@microsoft.com>
         <20180628135932.225288-1-jamill@microsoft.com>
-        <20180628135932.225288-3-jamill@microsoft.com>
-Date:   Thu, 28 Jun 2018 10:14:30 -0700
-In-Reply-To: <20180628135932.225288-3-jamill@microsoft.com> (Jameson Miller's
-        message of "Thu, 28 Jun 2018 14:00:07 +0000")
-Message-ID: <xmqqin62ygsp.fsf@gitster-ct.c.googlers.com>
+        <20180628135932.225288-6-jamill@microsoft.com>
+Date:   Thu, 28 Jun 2018 10:15:52 -0700
+In-Reply-To: <20180628135932.225288-6-jamill@microsoft.com> (Jameson Miller's
+        message of "Thu, 28 Jun 2018 14:00:12 +0000")
+Message-ID: <xmqqefgqygqf.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -74,46 +74,15 @@ X-Mailing-List: git@vger.kernel.org
 
 Jameson Miller <jamill@microsoft.com> writes:
 
-> The make_cache_entry function should take an object_id struct instead
-> of sha.
+> Add initialization and discard functions to mem_pool type. As the
+> memory allocated by mem_pool can now be freed, we also track the large
+> allocations.
+>
+> If the there are existing mp_blocks in the mem_poo's linked list of
 
-The name of the hash is SHA-1, not sha ;-)
+mem_poo?
 
-It is not worth a reroll, but I do not think "should" is a
-particularly good thing to say in the title or justification in the
-log message in this case.  It is more like you (or somebody else who
-commented) _want_ to make it take an oid for _some_ reason.  "teach
-make_cache_entry() to take object_id" is probably a better title
-that admits that we do not explicitly say _why_ we are doing so,
-than saying "it should", which equally is not explicit ;-)
+> mp_blocksl, then the mp_block for a large allocation is inserted
 
-> diff --git a/read-cache.c b/read-cache.c
-> index fa8366ecab..9624ce1784 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -746,8 +746,10 @@ int add_file_to_index(struct index_state *istate, const char *path, int flags)
->  }
->  
->  struct cache_entry *make_cache_entry(unsigned int mode,
-> -		const unsigned char *sha1, const char *path, int stage,
-> -		unsigned int refresh_options)
-> +				     const struct object_id *oid,
-> +				     const char *path,
-> +				     int stage,
-> +				     unsigned int refresh_options)
->  {
->  	int size, len;
->  	struct cache_entry *ce, *ret;
-> @@ -761,7 +763,7 @@ struct cache_entry *make_cache_entry(unsigned int mode,
->  	size = cache_entry_size(len);
->  	ce = xcalloc(1, size);
->  
-> -	hashcpy(ce->oid.hash, sha1);
-> +	hashcpy(ce->oid.hash, oid->hash);
->  	memcpy(ce->name, path, len);
->  	ce->ce_flags = create_ce_flags(stage);
->  	ce->ce_namelen = len;
+mp_blocksl?
 
-The patch itself looks good.
-
-Thanks.
