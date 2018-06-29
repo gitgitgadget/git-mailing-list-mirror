@@ -7,101 +7,125 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C99751F516
-	for <e@80x24.org>; Fri, 29 Jun 2018 01:23:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C2141F516
+	for <e@80x24.org>; Fri, 29 Jun 2018 01:23:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936478AbeF2BXL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Jun 2018 21:23:11 -0400
-Received: from mail-vk0-f74.google.com ([209.85.213.74]:52047 "EHLO
-        mail-vk0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S936468AbeF2BXK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jun 2018 21:23:10 -0400
-Received: by mail-vk0-f74.google.com with SMTP id y65-v6so777102vkd.18
-        for <git@vger.kernel.org>; Thu, 28 Jun 2018 18:23:10 -0700 (PDT)
+        id S936485AbeF2BXQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Jun 2018 21:23:16 -0400
+Received: from mail-ua0-f201.google.com ([209.85.217.201]:44077 "EHLO
+        mail-ua0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S936468AbeF2BXM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jun 2018 21:23:12 -0400
+Received: by mail-ua0-f201.google.com with SMTP id a11-v6so2251490uak.11
+        for <git@vger.kernel.org>; Thu, 28 Jun 2018 18:23:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=sVdqk55TCKexh3pLN24JLUqGGrz8KUkOkRO1BcHYX5U=;
-        b=uXLYGGHyDuczCg90xzI6oq4SDIOmYTfKtXBMnAPTGQS1jirPwB6ayZDC/AbdfZSu6p
-         fFJy5h+MgDgS3gH7XXMZ7lzr0VG7JM/jeYgZOcDDMeyUV6NOarATAZ9zfGprW5hUsfHL
-         XO+jVqz2Q2wtXpUGzSDD96FSY2hlIiPh8OHivFrOc6hj+Ejd0yfL0h2GC+wTcOmwYyMc
-         C3YeiGOpptpdrB1uXojjgAYkD668KBtQtgVbLVEajE3cjS3qSvbgUVzHBPoq0Qid09Vo
-         URrIGAp4JTYes5reM67Oe8gLSAdccions46WnWOqCQtX0b4io2gqF4r7Wqf2Lypc/S3O
-         HWAg==
+        bh=3dDcULx8V/83AnmF8zuxoQSHYhtHlea/9ZQAdJJEFWQ=;
+        b=OyuYgIiJzZrk9cAeHDwDaqRlhK8p/eBv18hns7WCeBd0CkSdTmsCyTizdw3C4nr2Yu
+         vVmaI4Z/jgbRZta1DPSXlzE+a3tQKzwd2CUs7ZvlQdqIbtqQSaiLR8lLorYgYd//dcOt
+         kJzPkqO2a30z3KUvq9kjDY1rYCJ2e+ama1CNvCW10pQZcfHHz5VnO5BL6wvLhB5K0Z4O
+         2buJqMWQUabG7FC9Nk0HrcUIKW5WZiNE1inPQWzqF7CvT6S2FvL0Msod3/ea6UoRG08P
+         ZoBcIV5KnMTZk3GgguizC6ta3DpDUC9RmjEKwzdTVB70MYU4jiLPPY6qh8wkZcjBZaZx
+         E3Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=sVdqk55TCKexh3pLN24JLUqGGrz8KUkOkRO1BcHYX5U=;
-        b=dIcbXeufO2Ky82UTfDWJJ4HgQL3yYVDXjhdp9XQJpnXorddPJYicdqISu+ErBhrN2b
-         7Tugm3XOdf0mPZcbneIjrRq51djYRKQafFfHlGmhNZkJ0+B8PCFH7KmWQhlEGqDIFgOy
-         qzjw5T1rN4aPPBbsDOo2+r4IFx5rFvUWqsCq5AYlXiPIPixBNO1QYIguDWmE2t1MNArN
-         yP3ksZzRi4OZGcFFRL0L+gNHlj0rkoOsV4yf+NuKfuPW91Sk98HcldNKY1fXwQtoPee0
-         nCK9Yy7OMW4Vc+vMqvfmKhAaFYSfBTktejqG5U4bwPDL+/os7bPiEJHof/D+6vhy0PtT
-         HInw==
-X-Gm-Message-State: APt69E108oL7Px4UlV88m0RPcaj9xXwZdKvR6Y+LFCksCDaJCa7stCCB
-        EvbJ1UNie0IOsq/TaobSM7Bk5YhVdBDDT2cI8h96WdvQ3cZ1gTJKRre6Ku9W48vm0nQx/vK4P/E
-        ONKTNA4Je3E4nwNSgDbJq0UNXiwuiy0+mbq/gUls5D5zKHpz4rnYaHAmF2vzY
-X-Google-Smtp-Source: AAOMgpdY5S9jjxrAoC6NWMM63hHYgbVfWNZgD031Jrc0X3Ubibbr/mkinVWfZJ/SVZ1yBfIzYhIgmDaR7fu3
+        bh=3dDcULx8V/83AnmF8zuxoQSHYhtHlea/9ZQAdJJEFWQ=;
+        b=aXr9YDTk+vJYr7bPhiEcQFFVh3p54OzjMEfC0gjghOnZRkSgTZW4kN4GR3yCMpOcqV
+         jDOkIYRNmIS4mOX50vaYN4AWjx5JLX3fiVZObQTCUzhPVz0Lxk/rRQcl6KKUxOMbdhz+
+         4F9x8acjhjDFcGJGK9NXYJouw57LHDQQgaUjkIAwk5Jdz/+7GFOfIyJbBGw7iIbxJENv
+         KKadVSwUcAuzHZbRxzgj6AUz9qyN/j8YY9gR4tkrJwWHf9VP0B/wc1iZWD/3mD7MiCOD
+         C8FHcSksmPqn1pdiTvFAMmITxdcbEzRNdQW1CiAH1yYsz7I1YdXpqaon21lUA39HJcNa
+         gyPQ==
+X-Gm-Message-State: APt69E3TKkKCA5CgyFqyo1zm2TxrmHmD3jEjwJMpCNK0QYuihKj3Zhg3
+        HBoavb5YlB2f+YAN4P75GkCleZLpIdOyxDAGwOGITEnkpiyyVkba6rz5xcFTwG0d1nMbCMlxss+
+        ny+5cqtpWp9E70oMDjT4kvGeohwl8J4+Rq6dSTxTCpJe8cm79N/d8mlFufNNT
+X-Google-Smtp-Source: AAOMgpf8wenZ8w+VmbVKsqHBQsHNXl3HcjdHybT0zJqUGkan5/RU43liv+v76HIDZ4ncyHDuYPmpsjrd96Tp
 MIME-Version: 1.0
-X-Received: by 2002:ab0:4141:: with SMTP id j59-v6mr5210108uad.1.1530235389697;
- Thu, 28 Jun 2018 18:23:09 -0700 (PDT)
-Date:   Thu, 28 Jun 2018 18:22:06 -0700
+X-Received: by 2002:a1f:960d:: with SMTP id y13-v6mr5370457vkd.60.1530235392093;
+ Thu, 28 Jun 2018 18:23:12 -0700 (PDT)
+Date:   Thu, 28 Jun 2018 18:22:07 -0700
 In-Reply-To: <20180629012222.167426-1-sbeller@google.com>
-Message-Id: <20180629012222.167426-17-sbeller@google.com>
+Message-Id: <20180629012222.167426-18-sbeller@google.com>
 References: <20180629012222.167426-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.399.gad0ab374a1-goog
-Subject: [PATCH v3 16/32] object: allow object_as_type to handle arbitrary repositories
+Subject: [PATCH v3 17/32] object: allow lookup_object to handle arbitrary repositories
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- object.c | 4 ++--
- object.h | 3 +--
- 2 files changed, 3 insertions(+), 4 deletions(-)
+ object.c | 15 +++++++--------
+ object.h |  3 +--
+ 2 files changed, 8 insertions(+), 10 deletions(-)
 
 diff --git a/object.c b/object.c
-index e095d49b379..f41f82c6725 100644
+index f41f82c6725..9d74de95f5b 100644
 --- a/object.c
 +++ b/object.c
-@@ -158,13 +158,13 @@ void *create_object(struct repository *r, const unsigned char *sha1, void *o)
+@@ -84,21 +84,20 @@ static void insert_obj_hash(struct object *obj, struct object **hash, unsigned i
+  * Look up the record for the given sha1 in the hash map stored in
+  * obj_hash.  Return NULL if it was not found.
+  */
+-struct object *lookup_object_the_repository(const unsigned char *sha1)
++struct object *lookup_object(struct repository *r, const unsigned char *sha1)
+ {
+ 	unsigned int i, first;
+ 	struct object *obj;
+ 
+-	if (!the_repository->parsed_objects->obj_hash)
++	if (!r->parsed_objects->obj_hash)
+ 		return NULL;
+ 
+-	first = i = hash_obj(sha1,
+-			     the_repository->parsed_objects->obj_hash_size);
+-	while ((obj = the_repository->parsed_objects->obj_hash[i]) != NULL) {
++	first = i = hash_obj(sha1, r->parsed_objects->obj_hash_size);
++	while ((obj = r->parsed_objects->obj_hash[i]) != NULL) {
+ 		if (!hashcmp(sha1, obj->oid.hash))
+ 			break;
+ 		i++;
+-		if (i == the_repository->parsed_objects->obj_hash_size)
++		if (i == r->parsed_objects->obj_hash_size)
+ 			i = 0;
+ 	}
+ 	if (obj && i != first) {
+@@ -107,8 +106,8 @@ struct object *lookup_object_the_repository(const unsigned char *sha1)
+ 		 * that we do not need to walk the hash table the next
+ 		 * time we look for it.
+ 		 */
+-		SWAP(the_repository->parsed_objects->obj_hash[i],
+-		     the_repository->parsed_objects->obj_hash[first]);
++		SWAP(r->parsed_objects->obj_hash[i],
++		     r->parsed_objects->obj_hash[first]);
+ 	}
  	return obj;
  }
- 
--void *object_as_type_the_repository(struct object *obj, enum object_type type, int quiet)
-+void *object_as_type(struct repository *r, struct object *obj, enum object_type type, int quiet)
- {
- 	if (obj->type == type)
- 		return obj;
- 	else if (obj->type == OBJ_NONE) {
- 		if (type == OBJ_COMMIT)
--			((struct commit *)obj)->index = alloc_commit_index(the_repository);
-+			((struct commit *)obj)->index = alloc_commit_index(r);
- 		obj->type = type;
- 		return obj;
- 	}
 diff --git a/object.h b/object.h
-index 3faa89578fc..6f3271eb228 100644
+index 6f3271eb228..0d7d74129b6 100644
 --- a/object.h
 +++ b/object.h
-@@ -114,8 +114,7 @@ struct object *lookup_object_the_repository(const unsigned char *sha1);
+@@ -109,8 +109,7 @@ extern struct object *get_indexed_object(unsigned int);
+  * half-initialised objects, the caller is expected to initialize them
+  * by calling parse_object() on them.
+  */
+-#define lookup_object(r, s) lookup_object_##r(s)
+-struct object *lookup_object_the_repository(const unsigned char *sha1);
++struct object *lookup_object(struct repository *r, const unsigned char *sha1);
  
  extern void *create_object(struct repository *r, const unsigned char *sha1, void *obj);
  
--#define object_as_type(r, o, t, q) object_as_type_##r(o, t, q)
--void *object_as_type_the_repository(struct object *obj, enum object_type type, int quiet);
-+void *object_as_type(struct repository *r, struct object *obj, enum object_type type, int quiet);
- 
- /*
-  * Returns the object, having parsed it to find out what it is.
 -- 
 2.18.0.399.gad0ab374a1-goog
 
