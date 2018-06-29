@@ -2,122 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	DATE_IN_PAST_24_48,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E5E6B1F516
-	for <e@80x24.org>; Fri, 29 Jun 2018 12:16:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 55D851F516
+	for <e@80x24.org>; Fri, 29 Jun 2018 12:48:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755321AbeF2MQR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Jun 2018 08:16:17 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:41953 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754720AbeF2MQP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jun 2018 08:16:15 -0400
-Received: by mail-pf0-f173.google.com with SMTP id a11-v6so4149503pff.8
-        for <git@vger.kernel.org>; Fri, 29 Jun 2018 05:16:15 -0700 (PDT)
+        id S1755496AbeF2MsA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Jun 2018 08:48:00 -0400
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:39758 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753639AbeF2Mr7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jun 2018 08:47:59 -0400
+Received: by mail-qk0-f196.google.com with SMTP id f3-v6so4811349qkd.6
+        for <git@vger.kernel.org>; Fri, 29 Jun 2018 05:47:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc:cc;
-        bh=1UwZ0OeRnzkrQ+D8AkX8pHDegXoJkn0akj78i56cX4s=;
-        b=PQNhjyfTiyXeQoyANwsFEXIzYT4WnG7m6oi+QAszwuLgSGYwbTjL+bDYGmvJxG5ZFS
-         iGq7duDCOmpBgAyWh4fA4AtBdYPQMRsWlypPYaO51woyL19FsRNXaDPOfpUrVpGkA78J
-         9U7IKdeZ01VIdmS4ecvYrab2deZ8Gg2KVhnEbAbsarpqdusxKN0GKQlogX2wBVvcSOXU
-         ztVwddWHqatK/t3nvbs/4qJ+CD3NRJlna0JoqGjpA7onCpJNlbgt9xqnS/ykyHsD8nHO
-         NY/4N4hdEKXVihEEP8qG62QEVTrbJUvVugrTp3GJy+DGu71ucNSEqZDXTVEkEdhMO0KB
-         +l4g==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=+IRszk0ekXfFuy5F6fwz9YamwFhiSsJUe3vNIRyweYY=;
+        b=rvQoSM+gO7qJXm/rgTWLbDZ7Prw66vUff6+JtLoPfeicgFp5WgmxKcfTpTM1+Jjo8f
+         2qk4oXwVC8RXEiYY2TQFbGvUXRGd4lkm5BXBtdoCMplel1vm5LxJn4rUMP6zXbZOelWL
+         Lh0fXIhUa7g6mlrIbMZ7xq1J1TDffZqvkRq4pv91YOR0X8q4jCNMrPPg/xKM0zrSBeP+
+         Pr5U1R8R6avgYndvVX3NScDhSxmh8lAbx6siibMihEK4uGdxEn2+slWqmIfmNeY6XSK3
+         D/qNSLxznGjC18x0ccLTo3A/oC/v64al80pdPariNrdO93edRqoeR6dMlzoY7ukOXao0
+         HdwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc:cc;
-        bh=1UwZ0OeRnzkrQ+D8AkX8pHDegXoJkn0akj78i56cX4s=;
-        b=B9mX0yMD+GvzkTzz0M3dw1PMrfRRr+EKBp3uYOz4fLBbTYu3QDaHbaatdwmjAMt+zn
-         FpMHmmRJCYyPJkOAg3uaMrok4eaP0MhtwNonLUxqjEPnGribkiL3sHRC8qpoKoduGOcy
-         5VOCTJxDgi9O79YlEvsTC98kxMEcUgCcoaRe8XY1uC9B2Hyp0AXt1TluDsl6eG9122TE
-         CvVAZlTLOFT0cRRseubR1so7CGqLOD1VYsDzxozdiUT1JLbu8mOJpJxjSBxkA8crLzyQ
-         DNa8KHqh4JS+4M7Ab/UIsfmVIXOEjDwPRLBVSKeDQSks3fVnsr5oA0nuF8fzAP1ULrw5
-         Pa2g==
-X-Gm-Message-State: APt69E1uNjrfk3YIhmImE/MUyUEDyp/PTMozF4Tv4YyqyLGa/jsU/roD
-        mtqpVktPPtOQ1pVSCsPNGdldBg==
-X-Google-Smtp-Source: AAOMgpc2KSXkrd8D2/oTpQ5Bml/MK1CL6uIEUnfvecDXBpH50a5d7EIoPpLJMgpKHpIbP8K2ylfaXw==
-X-Received: by 2002:a62:8d16:: with SMTP id z22-v6mr682836pfd.181.1530274575211;
-        Fri, 29 Jun 2018 05:16:15 -0700 (PDT)
-Received: from [127.0.0.1] ([40.112.139.188])
-        by smtp.gmail.com with ESMTPSA id b69-v6sm957316pfd.33.2018.06.29.05.16.14
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=+IRszk0ekXfFuy5F6fwz9YamwFhiSsJUe3vNIRyweYY=;
+        b=ZfKs9dNoHHhzfp8kEMh1dZ4cUszjW+PPEg2JcxuCfH7SE64+cmNf0DA+HyhFr6Uz8Z
+         MdQIjm65qxZ0+5XO51FREC8bozaCKs2UpF12U+LtGbGDZW61pv6qG6PIYuUIGbZafeqH
+         ZIYdoxjJD73Ee4e+3hhKSCRwosE7JGlxF+s253yhuatQyOQ25EdfSdDtKbKMJNM2yTOl
+         2XOMXLYQC2liXPtnaFO5VES/Ded4MO8WeSit19EKb+S2LOxX5iCR3lKUmNp8VRZBuUEN
+         U566SjlxKZcjIa+XfSH66v2U/0iB88fVdph6dXo1DOraOohOlybMlQF+iJ78uMn6ukzh
+         y3TA==
+X-Gm-Message-State: APt69E3ZCnSwMQm38sCnaw996eTK5cuXEGsw0qUw+elURPEt8iN8AukY
+        iy2w9tpN7D0pL60O4GLeGTw=
+X-Google-Smtp-Source: AAOMgpf4xZer/cahjxJRTuw8kLKHS7e2Mx1ZVjTNhY2ZIjllsclSfr+wxwQT/cETdq67hL00/VssMQ==
+X-Received: by 2002:a37:2dc7:: with SMTP id t190-v6mr12098231qkh.229.1530276479211;
+        Fri, 29 Jun 2018 05:47:59 -0700 (PDT)
+Received: from [10.0.1.23] ([98.122.163.216])
+        by smtp.gmail.com with ESMTPSA id t27-v6sm5019068qkl.11.2018.06.29.05.47.57
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 29 Jun 2018 05:16:14 -0700 (PDT)
-Message-Id: <aca087479b35cbcbd7c84c7ca3bcf556133d0548.1530274571.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.7.v2.git.gitgitgadget@gmail.com>
-References: <pull.7.git.gitgitgadget@gmail.com>
-        <pull.7.v2.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 27 Jun 2018 21:35:23 +0200
-Subject: [PATCH v2 1/1] Makefile: fix the "built from commit" code
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Fri, 29 Jun 2018 05:47:58 -0700 (PDT)
+Subject: Re: [PATCH v7 07/22] commit-graph: add 'verify' subcommand
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, avarab@gmail.com,
+        sbeller@google.com, jnareb@gmail.com, marten.agren@gmail.com,
+        dstolee@microsoft.com
+References: <20180627132447.142473-8-dstolee@microsoft.com>
+ <20180627215926.119376-1-jonathantanmy@google.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <f6116a1b-8e5a-9cb9-9c8f-53f56a9b79da@gmail.com>
+Date:   Fri, 29 Jun 2018 08:47:55 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+In-Reply-To: <20180627215926.119376-1-jonathantanmy@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On 6/27/2018 5:59 PM, Jonathan Tan wrote:
+>> +int verify_commit_graph(struct repository *r, struct commit_graph *g)
+> I haven't had the time to review this patch set, but I did rebase my
+> object store refactoring [1] on this and wrote a test:
+>
+>      static void test_verify_commit_graph(const char *gitdir, const char *worktree)
+>      {
+>      	struct repository r;
+>      	char *graph_name;
+>      	struct commit_graph *graph;
+>      
+>      	repo_init(&r, gitdir, worktree);
+>      
+>      	graph_name = get_commit_graph_filename(r.objects->objectdir);
+>      	graph = load_commit_graph_one(graph_name);
+>      
+>      	printf("verification returned %d\n", verify_commit_graph(&r, graph));
+>      
+>      	repo_clear(&r);
+>      }
+>
+> However, it doesn't work because verify_commit_graph() invokes
+> parse_commit_internal(), which tries to look up replace refs in
+> the_repository.
+>
+> I think that verify_commit_graph() should not take a repository argument
+> for now. To minimize churn on the review of this patch set, and to
+> minimize diffs when we migrate parse_commit_internal() (and likely other
+> functions) to take in a repository argument, I would be OK with
+> something like the following instead:
+>
+>      int verify_commit_graph(struct commit_graph *g)
+>      {
+> 	    /*
+> 	     * NEEDSWORK: Make r into a parameter when all functions
+> 	     * invoked by this function are not hardcoded to operate on
+> 	     * the_repository.
+> 	     */
+> 	    struct repository *r = the_repository;
+> 	    /* ... */
+>
+> As for my rebased refactoring, I'll send the patches to the mailing list
+> once Junio updates ds/commit-graph-fsck with these latest changes, so
+> that I can rebase once again on that and ensure that everything still
+> works.
+>
+> [1] https://public-inbox.org/git/cover.1529616356.git.jonathantanmy@google.com/
 
-In ed32b788c06 (version --build-options: report commit, too, if
-possible, 2017-12-15), we introduced code to let `git version
---build-options` report the current commit from which the binaries were
-built, if any.
+Thanks for looking into this, Jonathan. At some point I took my series 
+and moved it on top of Stefan's lookup_object() series, but then moved 
+off of it since those commits were not in 'pu'. This 'struct repository 
+*r' didn't get removed in that process.
 
-To prevent erroneous commits from being reported (e.g. when unpacking
-Git's source code from a .tar.gz file into a subdirectory of a different
-Git project, as e.g. git_osx_installer does), we painstakingly set
-GIT_CEILING_DIRECTORIES when trying to determine the current commit.
+Thanks,
 
-Except that we got the quoting wrong, and that variable therefore does
-not have the desired effect.
+-Stolee
 
-The issue is that the $(shell) is resolved before the output is stuffed
-into the command-line with -DGIT_BUILT_FROM_COMMIT, and therefore is
-*not* inside quotes. And thus backslashing the quotes is wrong, as the
-quote gets literally inserted into the CEILING_DIRECTORIES variable.
-
-Let's fix that quoting, and while at it, also suppress the unhelpful
-message
-
-fatal: not a git repository (or any of the parent directories): .git
-
-that gets printed to stderr if no current commit could be determined,
-and might scare the occasional developer who simply tries to build Git
-from scratch.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Makefile | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 0cb6590f2..c70f823a0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2021,8 +2021,9 @@ version.sp version.s version.o: GIT-VERSION-FILE GIT-USER-AGENT
- version.sp version.s version.o: EXTRA_CPPFLAGS = \
- 	'-DGIT_VERSION="$(GIT_VERSION)"' \
- 	'-DGIT_USER_AGENT=$(GIT_USER_AGENT_CQ_SQ)' \
--	'-DGIT_BUILT_FROM_COMMIT="$(shell GIT_CEILING_DIRECTORIES=\"$(CURDIR)/..\" \
--		git rev-parse -q --verify HEAD || :)"'
-+	'-DGIT_BUILT_FROM_COMMIT="$(shell \
-+		GIT_CEILING_DIRECTORIES="$(CURDIR)/.." \
-+		git rev-parse -q --verify HEAD 2>/dev/null)"'
- 
- $(BUILT_INS): git$X
- 	$(QUIET_BUILT_IN)$(RM) $@ && \
--- 
-gitgitgadget
