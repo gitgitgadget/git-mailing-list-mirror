@@ -2,95 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 16A621F516
-	for <e@80x24.org>; Fri, 29 Jun 2018 20:51:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D80391F516
+	for <e@80x24.org>; Fri, 29 Jun 2018 21:04:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934664AbeF2Uvf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Jun 2018 16:51:35 -0400
-Received: from mail-yw0-f182.google.com ([209.85.161.182]:36623 "EHLO
-        mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932526AbeF2Uve (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jun 2018 16:51:34 -0400
-Received: by mail-yw0-f182.google.com with SMTP id t198-v6so4121999ywc.3
-        for <git@vger.kernel.org>; Fri, 29 Jun 2018 13:51:34 -0700 (PDT)
+        id S965779AbeF2VEq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Jun 2018 17:04:46 -0400
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:50900 "EHLO
+        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965700AbeF2VEp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jun 2018 17:04:45 -0400
+Received: by mail-wm0-f41.google.com with SMTP id v25-v6so2462156wmc.0
+        for <git@vger.kernel.org>; Fri, 29 Jun 2018 14:04:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=D+wQEyryKf9ZRchI6RzyxHyDCizmXVnHk1EthVyufyo=;
-        b=NJTNKHFBWq+yesPoratzFlQKQNa2tQIrUveSIeR76ZHiCGFOosPdosXAiytvt5WR2j
-         Eg1JaIU8Ty63RMhIhLiGw8xd4zQyRld2VdPLmisKaJTpNcEloiNfW2zUDxXHffHM89S/
-         SKUAF8jJzps70NXN5gPQaV9wkdbawpTucKrJ3yumhB+KjZ4nJK2yfHvycQAqHptBV/gi
-         G9H7qzCTwoo2gGBDca+nmV6GNQNLT4D22YvRxhNb7tUjahI4pO197UIWIykWT2ruWBv7
-         jcBoWEOGCKjljopxdYinAFvsicMadDKvOuO9OGv36m8rUt/0mDIqPGd8cHFbFHgFxj60
-         qSjw==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=4b4EuOXNT7bVcXRLe9IBvZyg/HueskV48jN/MPlFbg0=;
+        b=JRapbqF86y9Sr4EDRtsjIYYBrwxW+AeYcZ9B6cQ1VkoD5/r6f2Zvu7cbQjCXfaYe3f
+         YqWQNtaHZRw2tM6idJ8FNrCHiJ8ee6MTpwHz9zOFbq/cq/36dB9PeN/q9XY822Z0p9p0
+         EJ3HACas4NQl6MvPTI4Uz6h5xF2VZqjEAOFNvbz+i6Jn0EL59NYzEdR3o40NocrXC5Ek
+         MBtY6myPQxVtr3aJLyEWos1GB8UnE9dF/kMFUiUpO37gmiisv9bbVYGHUJGIjZmln5hL
+         x5/9NwlmqkSUOJYIaRV5xZ0nKde9W0nMGmtwr8SvK1D9e5b8bXcvMmc9ZWRx0d0oVU+z
+         8txQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=D+wQEyryKf9ZRchI6RzyxHyDCizmXVnHk1EthVyufyo=;
-        b=iD5auQ25xx0T+DBMWDyPBWNVdDmaJCoLzqomo/VadXBVTYqTL7aTGGXo0ck7iTzATk
-         L5fgHsPBVDNMNLnjhYq/3lCImJNep/qO5gCeULM/qhYM/RUSeLVqK2dEzK2mmNCWfucb
-         qVNQAoF5ftzu8tYJvWCYAxUb52tjesQlblDAbuygavN+X4/2zHxCggpG9Qc1QGosdJ7X
-         oRvo2MkRa0TxDGujWVpx6uTDHi6yt+DnozPBfvZ0fmVGJ/QWEWm8bQ5+Se+wpjeN1tsC
-         U4ww7WMWMyJm0Bstly9j5xXWfKU8PDi6IBz7NHahJWnTo3X7LmNTBr5Hx4xmINtnoUlB
-         MUEw==
-X-Gm-Message-State: APt69E0FiqYUxpcvOTElWNw566darS8o8PU2LnuQ+o9PWRXYRceWhSWY
-        VkAW3Qifa2fXr/aQYAzdY1W0Fba40exqMVdJmwCHHg==
-X-Google-Smtp-Source: AAOMgpcLHZG38G7fbsGg9oPTH/1hbRhV1xl5KawSUTslbVQ+06t0iFR1p34WY40c8S5qhcUajprmcR+l/4xVUZKVYUY=
-X-Received: by 2002:a81:360a:: with SMTP id d10-v6mr8535226ywa.421.1530305493250;
- Fri, 29 Jun 2018 13:51:33 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=4b4EuOXNT7bVcXRLe9IBvZyg/HueskV48jN/MPlFbg0=;
+        b=qmARtmwTSDWgQAGS48qWj/Dl6fYPxAkSEtpU0OFlOnyPY245cbTp3m4mXYeAQA3mEx
+         n+y9ce6xyDC6EYHeRe8vhpTTKJmhJk/UqgGmo4FRCM9RbL+OGPuJaLy1HMVW7OaECJxm
+         +O7Sks1eMYNIPwrEYtebESkYRM3mWGleCuSoISa8HIOTJuCcFe1pHuIldBGYDl5R6Knt
+         CCrxcVUqmxv/AxQC4hOj8d1b9zlIHMZSXx6grYliIex3vt8VjbSQC+PjoyVUNzUlY2ta
+         MoJZbgO005K3NLqF4HbJQ8OggsGNnoIh3xmQmYBQLHEac5dHEE4aVVU9hvp/eqWfPmq0
+         J+kg==
+X-Gm-Message-State: APt69E2/dMgEVetBv8ufrz20RYPlJLtMQkpZ+K6vmU2cuoDdUIUn9G+U
+        BNuX5WFZ2FA1ttZkCZK31Zs=
+X-Google-Smtp-Source: AAOMgpc3IxPFWO3kkmjLIMECTCpKqmq31vlhhNa800yk4oEpoUdhM8MgU95FjMZUfcy9J/keTGvIaA==
+X-Received: by 2002:a1c:7c0c:: with SMTP id x12-v6mr2854073wmc.58.1530306284325;
+        Fri, 29 Jun 2018 14:04:44 -0700 (PDT)
+Received: from evledraar (240.red-79-145-32.dynamicip.rima-tde.net. [79.145.32.240])
+        by smtp.gmail.com with ESMTPSA id m58-v6sm20020872wrf.61.2018.06.29.14.04.42
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 29 Jun 2018 14:04:43 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jun 2018, #07; Thu, 28)
+References: <xmqqd0wawpwy.fsf@gitster-ct.c.googlers.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <xmqqd0wawpwy.fsf@gitster-ct.c.googlers.com>
+Date:   Fri, 29 Jun 2018 23:04:44 +0200
+Message-ID: <87po09cnir.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <20180629094413.bgltep6ntlza6vhz@glandium.org> <CAGZ79kb0FOafEsuXU7c_BTwPtcujFeyWVhzSuzFHRFtQHp9weQ@mail.gmail.com>
- <20180629203904.GA27566@sigill.intra.peff.net>
-In-Reply-To: <20180629203904.GA27566@sigill.intra.peff.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 29 Jun 2018 13:51:21 -0700
-Message-ID: <CAGZ79kYSFnKhMPi3J=C-XHMuAg90J76Vir6ocv0uKWoKts4P-w@mail.gmail.com>
-Subject: Re: fast-import slowness when importing large files with small differences
-To:     Jeff King <peff@peff.net>, quark@fb.com
-Cc:     Mike Hommey <mh@glandium.org>,
-        Jameson Miller <jamill@microsoft.com>,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-+cc Jun Wu, original author of these patches
 
-On Fri, Jun 29, 2018 at 1:39 PM Jeff King <peff@peff.net> wrote:
+On Thu, Jun 28 2018, Junio C Hamano wrote:
 
-> > Interesting pieces regarding performance:
-> >
-> > c420792217c8 xdiff: reduce indent heuristic overhead
-> > https://phab.mercurial-scm.org/rHGc420792217c89622482005c99e959b9071c109c5
+> The tip of 'next' has been rewound and it currently has only 4
+> topics.  Quite a many topics are cooking in 'pu' and need to be
+> sifted into good bins (for 'next') and the remainder.  Help is
+> appreciated in that area ;-)
 
-Going by the mailing list, the first patch was not brought over yet,
-so sending it here was warranted.
+Per my
+https://public-inbox.org/git/CACBZZX4yG5h5kk4NFQz_NzAweMa+Nh3H-39OHtcH4XWsA6FGpg@mail.gmail.com/
+(seems to not have been seen) I'd like to suggest that:
 
-Jun, you may want to take ownership of
-https://public-inbox.org/git/20180629202811.131265-1-sbeller@google.com/
-as I merely resend it to the git mailing list?
-If not, that is fine, too.
+[...]
 
-> >
-> > f33a87cf60cc xdiff: add a preprocessing step that trims files
-> > https://phab.mercurial-scm.org/rHGf33a87cf60ccb8b46e06b85e60bc5031420707d6
-> >
-> > I'll see if I can make that into patches.
->
-> Apparently the second one is not so trivial as you might hope; see
-> https://public-inbox.org/git/1520337165-sup-4504@x1c/.
+> * ab/fetch-tags-noclobber (2018-05-16) 9 commits
 
-Thanks so much, this saves me further effort to dig there.
-So I'll just stop porting this.
+This be ejected for now.
 
-Thanks,
-Stefan
+[...]
+
+> * ab/checkout-default-remote (2018-06-11) 8 commits
+
+And this be merged down to "next".
