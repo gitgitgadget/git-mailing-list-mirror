@@ -6,191 +6,103 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E4EA01F516
-	for <e@80x24.org>; Fri, 29 Jun 2018 16:28:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51B7E1F516
+	for <e@80x24.org>; Fri, 29 Jun 2018 16:34:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936960AbeF2Q2S (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Jun 2018 12:28:18 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:55668 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S936957AbeF2Q2Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jun 2018 12:28:16 -0400
-Received: by mail-wm0-f68.google.com with SMTP id v16-v6so2800784wmv.5
-        for <git@vger.kernel.org>; Fri, 29 Jun 2018 09:28:16 -0700 (PDT)
+        id S967032AbeF2QeF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Jun 2018 12:34:05 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:35667 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S967002AbeF2QeD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jun 2018 12:34:03 -0400
+Received: by mail-wr0-f195.google.com with SMTP id c13-v6so9412572wrq.2
+        for <git@vger.kernel.org>; Fri, 29 Jun 2018 09:34:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=DHbntlu5XF0mLj8hlJ1JH1SSyzWJkFXUE/CxUlbUOPY=;
-        b=cNv6/3ZDehpKKO1TcJib6xKFVb82BQ4rqyuBMKA8xRH3jRgoDn4lXBacAo6A/wIJfo
-         dsRn//A77sUiGZv8DElt7eCu2ZAe6ZsyP2P8avsmbVFE7eoZ9bO/m5UpgJdV2pSM2F9d
-         iMt5/wRh3kMAuJpAXijhhYNAAkXzQuNhwm5ErvT0jpacrVVlT+D79Mi7yvJm2ZGeNDVT
-         vh+87w3LagQ75Rt+zwIKVz2NTdH3Bv96w8PiaFNVwGqQ/lkfG/z3YkEM+drf5Ox5wjS7
-         Aqm9FS/7uAzCPzCbTqxnrNqxTQi4FHXS1ntB3zwmQnzPbGQSuFi9Zicvq1yxDAm9VtQ8
-         vcew==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=nIpLRooz8vqSEuSJFhlwwrF74oqSJoOHAvwWxyDw+nQ=;
+        b=bqg6kU5C2JTCtGIMQ0uJ1adNEpqLuhjbL8bVZJCqf7hQlPsYHvzVy0ORX98pq/E7Cj
+         8xUcePDZ4VYPEGA+1tCSJDul5mSryqqmBHpTFDG2C0B/bMxGvMZnquww1CP1vC5gjISn
+         v7H9Lwrqr5uqVKLvwOdeP69HvTv9wh+MycaSYwyHySZdy+Lv68ShSBeg82fVO9ilUuBE
+         qlsayMxopGyOF0goSBSbJeti05rxq4wlG+yHqfaz5GvAHVPRV7Kos7Dop/v2c1FFwPJ4
+         dgNdFr+3wRrzbGufT0sJzuULe0NTmH/iDE0r9k+UmbNAQCWR1/3lExA7I6sMr1m5T0fU
+         h4xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=DHbntlu5XF0mLj8hlJ1JH1SSyzWJkFXUE/CxUlbUOPY=;
-        b=MkiHgKRd0murx+cUI36Tux1JOUip5HZ/nRL1xU+3e9EFPaR6hj7cW5P29s6s2fE5wg
-         TKPjc0meSyKRvJUYDFFFck9zIO/ZtMN7yVmb2pdAstcLiaCf6xDkz6n83R/fAiAOrf3P
-         m17/gaOQ3E4PVfrW2o31wjw55dlXw0PyDDhr/5FBuBO1B120We5woTgU6XGnd/Llgxib
-         8TfqwazL93u8l1EaWRejLCeFwzc+IDIosnBe/9kRhfSU0qQhDVm1APjzZM81ZKeCJEEJ
-         cMO93A/NQrlDGOlsnmh9ZSAmcVQvSg4Shlb7Dif+UW5tIPI4QKyBiCrg6BAOwZrUUiAn
-         hT6g==
-X-Gm-Message-State: APt69E0X53rL8Wr/ms/7b+Adxvpp4NpbLHTm4uVLR0QTPMMIFojWrQ6s
-        L6KCf0/48FHu35ymPCYRocs2KGE/
-X-Google-Smtp-Source: AAOMgpfLM4cP4Q89LjBWrX/7N1khMyMQUOW24w61Tjgvnv9XDIH51U9QssV9gJS3CfJBDDi+z4h6PQ==
-X-Received: by 2002:a1c:2396:: with SMTP id j144-v6mr1778648wmj.26.1530289695119;
-        Fri, 29 Jun 2018 09:28:15 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id z14-v6sm11624671wrm.49.2018.06.29.09.28.14
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=nIpLRooz8vqSEuSJFhlwwrF74oqSJoOHAvwWxyDw+nQ=;
+        b=dlyEZ+Jeks0xMNPk9Sq37XQUYYDRbIL9ft0qZONuf4o3mVF915LIT0/H+qE7ltAapW
+         HcERnFnzjfGa19CRvFkYV8QitBudgISvYsDQgtYEwZX+ERqJszYP+z2pLpFpGamxWIQZ
+         sRUXU1XAaHq9yS0//3ZClysk1or5WXfj2W/p1/ntcQJF/Q2a0kn43tvB4NwbdljBaYg+
+         b8/JePmBj9SOBFk1QGtKLH6Po4Pe48JV5j/cCQekYpcO6t0ymDJV0ieIPPaJ4lujA0cB
+         yxlmUYdeNyRGD5J5GCK7uESSxZZyxxSrNLHbZde4Q3IQdim+kI0T3PcYJawqkOW4cEHp
+         xNNQ==
+X-Gm-Message-State: APt69E2HScft2BqJpCsFzu9dgPZV/EttuPsTBMxpbWn+QnLVABXTmgqX
+        Qra8pfUb1VmppIX0cXPyMvk=
+X-Google-Smtp-Source: AAOMgpfMKqzLmw4TTiEoB0vz2KWEPsmSJQeh92mKdq2EHzZDME+Ua6PPJgTWUX9yLS6YSSHSfMAmbA==
+X-Received: by 2002:adf:fdcd:: with SMTP id i13-v6mr6925964wrs.276.1530290041429;
+        Fri, 29 Jun 2018 09:34:01 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id p4-v6sm9802929wrj.71.2018.06.29.09.34.00
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 29 Jun 2018 09:28:14 -0700 (PDT)
+        Fri, 29 Jun 2018 09:34:00 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, bmwill@google.com
-Subject: Re: [PATCH v3] fetch-pack: support negotiation tip whitelist
-References: <20180625193752.255319-1-jonathantanmy@google.com>
-        <20180628221551.30406-1-jonathantanmy@google.com>
-Date:   Fri, 29 Jun 2018 09:28:13 -0700
-In-Reply-To: <20180628221551.30406-1-jonathantanmy@google.com> (Jonathan Tan's
-        message of "Thu, 28 Jun 2018 15:15:51 -0700")
-Message-ID: <xmqq4lhlwo9u.fsf@gitster-ct.c.googlers.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/3] .mailmap: assume Jason McMullan to be the same person
+References: <20180629021050.187887-1-sbeller@google.com>
+        <20180629021050.187887-2-sbeller@google.com>
+Date:   Fri, 29 Jun 2018 09:33:59 -0700
+In-Reply-To: <20180629021050.187887-2-sbeller@google.com> (Stefan Beller's
+        message of "Thu, 28 Jun 2018 19:10:49 -0700")
+Message-ID: <xmqqzhzdv9fs.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
->> fetch is a perfect example of supporting all three.  I can do
->>
->>   git fetch origin SHA1
->>   git fetch origin master
->>   git fetch origin refs/heads/*:refs/heads/*
+> Over the years of contributing to open source, I realized the world of
+> open source is smaller than I originally thought and a name is still
+> a pretty unique thing. So let's assume these two author idents are the
+> same person.
 >
-> OK, Brandon managed to convince me that this is fine. I've included glob
-> support, supporting the same globs that git notes supports.
+> In 10813e0d3c7 (.mailmap: update long-lost friends with multiple defunct
+> addresses, 2013-08-12) we learned both their email bounce, so asking is
+> no option.
 
-"git notes"???
+True, but leaving them as-is is probably a better option in such a
+case.  Until we get new contribution from the same person, at which
+time we have the chance we've been awaiting to ask the question, it
+is not harming anybody to keep these two names as if they are two
+different people.
 
-As this is to be used in the context of "git fetch", using glob
-e.g. "refs/heads/*", is sensible and good enough.  I was actually
-wondering if we want the head-match refs/heads/, but as "git fetch
-origin refs/heads/" does not work that way, I think we shouldn't.
-
-This is a tangent, but didn't ref-in-want wanted to use head-match
-refs/heads/ to match everything under refs/heads/?  If the latest
-incarnation wants to do so, we may want to fix that.
-
-> diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
-> index 97d3217df..6e4db1738 100644
-> --- a/Documentation/fetch-options.txt
-> +++ b/Documentation/fetch-options.txt
-> @@ -42,6 +42,22 @@ the current repository has the same history as the source repository.
->  	.git/shallow. This option updates .git/shallow and accept such
->  	refs.
->  
-> +--negotiation-tip=<commit|glob>::
-> +	By default, Git will report, to the server, commits reachable
-> +	from all local refs to find common commits in an attempt to
-> +	reduce the size of the to-be-received packfile. If specified,
-> +	Git will only report commits reachable from the given tips.
-> +	This is useful to speed up fetches when the user knows which
-> +	local ref is likely to have commits in common with the
-> +	upstream ref being fetched.
-> ++
-> +This option may be specified more than once; if so, Git will report
-> +commits reachable from any of the given commits.
-> ++
-> +The argument to this option may be a glob on ref names, a ref, or the (possibly
-> +abbreviated SHA-1 of a commit. Specifying a glob is equivalent to specifying
-> +this option multiple times, one for each matching ref name.
-> +
-
-> +static int add_oid(const char *refname, const struct object_id *oid, int flags,
-> +		   void *cb_data)
-> +{
-> +	struct oid_array *oids = cb_data;
-> +	oid_array_append(oids, oid);
-> +	return 0;
-> +}
-
-This by itself is not worth a reason to reroll, but please make it a
-habit to have a blank line after the run of decls before the first
-statement, at least while we still forbid decl-after-stmt.  The
-result is easier to read that way.
-
-> +static void add_negotiation_tips(struct git_transport_options *smart_options)
-> +{
-> +	struct oid_array *oids = xcalloc(1, sizeof(*oids));
-> +	int i;
-> +	for (i = 0; i < negotiation_tip.nr; i++) {
-> +		const char *s = negotiation_tip.items[i].string;
-> +		int old_nr;
-> +		if (!has_glob_specials(s)) {
-> +			struct object_id oid;
-> +			if (get_oid(s, &oid))
-> +				die("%s is not a valid object", s);
-> +			oid_array_append(oids, &oid);
-> +			continue;
-> +		}
-> +		old_nr = oids->nr;
-> +		for_each_glob_ref(add_oid, s, oids);
-> +		if (old_nr == oids->nr)
-> +			warning("Ignoring --negotiation-tip=%s because it does not match any refs",
-> +				s);
-> +	}
-> +	smart_options->negotiation_tips = oids;
-> +}
-
-This may insert duplicate object ids if two refs point at the same
-object, or nego globs match the same ref twice, but it is OK to have
-duplicate object ids in the resulting oids array is OK, because
-rev_list_insert_ref() at the end will dedup them anyway.
-
-> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-> index e402aee6a..8532a6faf 100755
-> --- a/t/t5510-fetch.sh
-> +++ b/t/t5510-fetch.sh
-> @@ -865,4 +865,82 @@ test_expect_success C_LOCALE_OUTPUT 'fetch compact output' '
->  	test_cmp expect actual
->  '
->  
-> +setup_negotiation_tip () {
-> +	SERVER="$1"
-> +	URL="$2"
-> +	USE_PROTOCOL_V2="$3"
-> +
-> +	rm -rf "$SERVER" client trace &&
-> +	git init "$SERVER" &&
-> +	test_commit -C "$SERVER" alpha_1 &&
-> +	test_commit -C "$SERVER" alpha_2 &&
-> +	git -C "$SERVER" checkout --orphan beta &&
-> +	test_commit -C "$SERVER" beta_1 &&
-> +	test_commit -C "$SERVER" beta_2 &&
-> +
-> +	git clone "$URL" client &&
-> +
-> +	if [ "$USE_PROTOCOL_V2" -eq 1 ]
-
-Style: "if test ..."
-
-> +	then
-> +		git -C "$SERVER" config protocol.version 2
-
-broken &&-chaining?
-
-> +		git -C client config protocol.version 2
-> +	fi &&
-> +
-> +	test_commit -C "$SERVER" beta_s &&
-> +	git -C "$SERVER" checkout master &&
-> +	test_commit -C "$SERVER" alpha_s &&
-> +	git -C "$SERVER" tag -d alpha_1 alpha_2 beta_1 beta_2
-> +}
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  .mailmap | 5 +----
+>  1 file changed, 1 insertion(+), 4 deletions(-)
+>
+> diff --git a/.mailmap b/.mailmap
+> index f165222a782..ff96ef7401f 100644
+> --- a/.mailmap
+> +++ b/.mailmap
+> @@ -82,10 +82,7 @@ J. Bruce Fields <bfields@citi.umich.edu> <bfields@pig.linuxdev.us.dell.com>
+>  J. Bruce Fields <bfields@citi.umich.edu> <bfields@puzzle.fieldses.org>
+>  Jakub Narębski <jnareb@gmail.com>
+>  James Y Knight <jknight@itasoftware.com> <foom@fuhm.net>
+> -# The 2 following authors are probably the same person,
+> -# but both emails bounce.
+> -Jason McMullan <jason.mcmullan@timesys.com>
+> -Jason McMullan <mcmullan@netapp.com>
+> +Jason McMullan <jason.mcmullan@timesys.com> Jason McMullan <mcmullan@netapp.com>
+>  Jason Riedy <ejr@eecs.berkeley.edu> <ejr@EECS.Berkeley.EDU>
+>  Jason Riedy <ejr@eecs.berkeley.edu> <ejr@cs.berkeley.edu>
+>  Jay Soffian <jaysoffian@gmail.com> <jaysoffian+git@gmail.com>
