@@ -2,155 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 11CFC1F516
-	for <e@80x24.org>; Fri, 29 Jun 2018 10:18:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C7601F516
+	for <e@80x24.org>; Fri, 29 Jun 2018 11:10:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933651AbeF2KSq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Jun 2018 06:18:46 -0400
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:40378 "EHLO
-        glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932288AbeF2KSp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jun 2018 06:18:45 -0400
-X-Greylist: delayed 2068 seconds by postgrey-1.27 at vger.kernel.org; Fri, 29 Jun 2018 06:18:44 EDT
-Received: from glandium by mitsuha.glandium.org with local (Exim 4.91)
-        (envelope-from <mh@glandium.org>)
-        id 1fYpwr-0002am-6L
-        for git@vger.kernel.org; Fri, 29 Jun 2018 18:44:13 +0900
-Date:   Fri, 29 Jun 2018 18:44:13 +0900
-From:   Mike Hommey <mh@glandium.org>
-To:     git@vger.kernel.org
-Subject: fast-import slowness when importing large files with small
- differences
-Message-ID: <20180629094413.bgltep6ntlza6vhz@glandium.org>
+        id S1754747AbeF2LKm (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Jun 2018 07:10:42 -0400
+Received: from mail-wm0-f53.google.com ([74.125.82.53]:40145 "EHLO
+        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752730AbeF2LKl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jun 2018 07:10:41 -0400
+Received: by mail-wm0-f53.google.com with SMTP id z13-v6so1647901wma.5
+        for <git@vger.kernel.org>; Fri, 29 Jun 2018 04:10:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:openpgp:cc:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=oeJkKA/HnKSTYtNnLoNfj/yXs59disqgqC3Z9/QzfrA=;
+        b=Ak3jTXIO68tDdXKgliS2z88RotlU33zw4cQZa+ZO1p300D488/lADGPvYsYhFdx7Rk
+         6uggkVusXPCGJi5btAvQtQkxS7/Uw9inFWgtRLs2tV53TDgv/DryQl1UyO/ZRo/LfE6+
+         dxDmcV36n/SNG2zA4SEWnnd2ALuPt0cEDQvnmWju3rXLly59rT45tAE/VjvcxLtr43Ay
+         OFrzfH8hL57OKoloASmUpVw6mp5zmavrFtLPsXkmGcSTI3bmWXDgMM/3i9NEgTOtHHQJ
+         7U/hTQLSI7GJBOtzxl+arVl0sR88r2cK6L2Zf2KrZQQRi3hvZR0x/6Mz7EMyyQL20Old
+         0KjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:openpgp:cc:message-id
+         :date:user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=oeJkKA/HnKSTYtNnLoNfj/yXs59disqgqC3Z9/QzfrA=;
+        b=toNSHV2W6Pi4BNqVvyyE2IeNd+EL6hu1N6gQvRVmP1AhsYRf5PHHMoAoq/Ti2nGuaz
+         JYI1WACo4El6yDab3FwvQnY54wPAVoNLiwNNhVa+7lDhIIN+SdlecUPaJYn1iH8Tk7RT
+         UDZFqI1bSKcw/l0N3a9MHNLen6q8+zO91mIcs4xHAeV86Bzf3XW4G3K2vQ+y9Mw0TyGh
+         gNSZ0wGep94SJQPBVA2D7No84ZOx5z0e9PPBDBTg6zS1SFHIGHgpMu4wkotDkGln+B6f
+         dIIxauwNNtLgGMkySqgznH2iLqd3vzMSWoDx+VJC/STLal4esQmTnFcEnld5ObC6Bq0O
+         SvOg==
+X-Gm-Message-State: APt69E2dtoFnUtnmTXfzykJgeZsrJ3Cx8pCkL0+Pg490qSIzYMN/FPMY
+        FGLTGICWg6NL43df0ZOuvvcVvxOY
+X-Google-Smtp-Source: AAOMgpdHLOxHIf4HZZOGg8KHO4INlc0BLJcv0k+SdcY9fFA0Xsjk3Dsa3WaOKtSQFJvv3QW+I7zyKg==
+X-Received: by 2002:a1c:abc6:: with SMTP id u189-v6mr1479269wme.64.1530270640005;
+        Fri, 29 Jun 2018 04:10:40 -0700 (PDT)
+Received: from [192.168.0.104] (AToulouse-658-1-72-143.w92-156.abo.wanadoo.fr. [92.156.124.143])
+        by smtp.gmail.com with ESMTPSA id r2-v6sm1634392wmb.39.2018.06.29.04.10.38
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 29 Jun 2018 04:10:38 -0700 (PDT)
+Subject: ag/rebase-i-append-todo-help, was Re: What's cooking in git.git (Jun
+ 2018, #07; Thu, 28)
+To:     Junio C Hamano <gitster@pobox.com>
+References: <xmqqd0wawpwy.fsf@gitster-ct.c.googlers.com>
+From:   Alban Gruin <alban.gruin@gmail.com>
+Openpgp: preference=signencrypt
+Cc:     git@vger.kernel.org
+Message-ID: <56fc2859-6fb9-62c5-f327-26efae0f38fe@gmail.com>
+Date:   Fri, 29 Jun 2018 13:10:17 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: NeoMutt/20180512
+In-Reply-To: <xmqqd0wawpwy.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr-FR
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Junio,
 
-I noticed some slowness when fast-importing data from the Firefox mercurial
-repository, where fast-import spends more than 5 minutes importing ~2000
-revisions of one particular file. I reduced a testcase while still
-using real data. One could synthesize data with kind of the same
-properties, but I figured real data could be useful.
+Le 28/06/2018 à 23:40, Junio C Hamano a écrit :
+> * ag/rebase-i-append-todo-help (2018-06-14) 2 commits
+>  - rebase--interactive: rewrite append_todo_help() in C
+>  - Merge branch 'ag/rebase-p' into ag/rebase-i-append-todo-help
+>  (this branch is used by ag/rebase-i-rewrite-todo.)
+> 
+>  Stepwise rewriting of the machinery of "rebase -i" into C continues.
+> 
+>  Needs a reroll.
+>  cf. <nycvar.QRO.7.76.6.1806261125330.21419@tvgsbejvaqbjf.bet>
+> 
+> 
+As I moved append_todo_help() to `rebase-interactive.c`, it should be
+because I did not changed `msg = _(…)` to `msg = N_(…)`.
 
-To reproduce:
-$ git clone https://gist.github.com/b6b8edcff2005cc482cf84972adfbba9.git foo
-$ git init bar
-$ cd bar
-$ python ../foo/import.py ../foo/data.gz | git fast-import --depth=2000
+It was pointed out on IRC that it was not necessary, after all[0].
+Basically, N_() is needed for static variables, not for "dynamic"
+variables like `msg` in append_todo_help().
 
-(--depth=2000 to minimize the pack size)
-
-The python script doesn't have much overhead:
-$ time python ../foo/import.py ../foo/data.gz > /dev/null
-
-real	0m14.564s
-user	0m9.813s
-sys	0m4.703s
-
-It generates about 26GB of data from that 4.2MB data.gz.
-
-$ python ../foo/import.py ../foo/data.gz | time git fast-import --depth=2000
-git-fast-import statistics:
----------------------------------------------------------------------
-Alloc'd objects:       5000
-Total objects:         1868 (       133 duplicates                  )
-      blobs  :         1868 (       133 duplicates       1867 deltas of       1868 attempts)
-      trees  :            0 (         0 duplicates          0 deltas of          0 attempts)
-      commits:            0 (         0 duplicates          0 deltas of          0 attempts)
-      tags   :            0 (         0 duplicates          0 deltas of          0 attempts)
-Total branches:           0 (         0 loads     )
-      marks:           1024 (         0 unique    )
-      atoms:              0
-Memory total:          2282 KiB
-       pools:          2048 KiB
-     objects:           234 KiB
----------------------------------------------------------------------
-pack_report: getpagesize()            =       4096
-pack_report: core.packedGitWindowSize = 1073741824
-pack_report: core.packedGitLimit      = 35184372088832
-pack_report: pack_used_ctr            =          0
-pack_report: pack_mmap_calls          =          0
-pack_report: pack_open_windows        =          0 /          0
-pack_report: pack_mapped              =          0 /          0
----------------------------------------------------------------------
-
-321.61user 6.60system 5:50.08elapsed 93%CPU (0avgtext+0avgdata 83192maxresident)k
-0inputs+10568outputs (0major+38689minor)pagefaults 0swaps
-
-(The resulting pack is 5.3MB, fwiw)
-
-Obviously, sha1'ing 26GB is not going to be free, but it's also not the
-dominating cost, according to perf:
-
-    63.52%  git-fast-import  git-fast-import     [.] create_delta_index
-    17.46%  git-fast-import  git-fast-import     [.] sha1_compression_states
-     9.89%  git-fast-import  git-fast-import     [.] ubc_check
-     6.23%  git-fast-import  git-fast-import     [.] create_delta
-     2.49%  git-fast-import  git-fast-import     [.] sha1_process
-
-That's a whole lot of time spent on create_delta_index.
-
-FWIW, if delta was 100% free (yes, I tested that), the fast-import would
-take 1:40 with the following profile:
-
-    58.74%  git-fast-import  git-fast-import     [.] sha1_compression_states
-    32.45%  git-fast-import  git-fast-import     [.] ubc_check
-     8.25%  git-fast-import  git-fast-import     [.] sha1_process
-
-I toyed with the idea of eliminating common head and tail before
-creating the delta, and got some promising result: a fast-import taking
-3:22 instead of 5:50, with the following profile:
-
-    34.67%  git-fast-import  git-fast-import     [.] create_delta_index
-    30.88%  git-fast-import  git-fast-import     [.] sha1_compression_states
-    17.15%  git-fast-import  git-fast-import     [.] ubc_check
-     7.25%  git-fast-import  git-fast-import     [.] store_object
-     4.47%  git-fast-import  git-fast-import     [.] sha1_process
-     2.72%  git-fast-import  git-fast-import     [.] create_delta2
-
-The resulting pack is however much larger (for some reason, many objects
-are left non-deltaed), and the deltas are partly broken (they don't
-apply cleanly), but that just tells the code is not ready to be sent. I
-don't expect working code would be much slower than this. The remaining
-question is whether this is beneficial for more normal cases.
-
-I also seemed to remember when I tested a while ago, that somehow xdiff
-handles those files faster than diff-delta, and I'm wondering if it
-would make sense to to make the pack code use xdiff. So I tested
-replacing diff_delta with a call to xdi_diff_outf with a callback that
-does nothing and zeroed out xpparam_t and xdemitconf_t (not sure that's
-best, though, I haven't looked very deeply), and that finished in 5:15
-with the following profile (without common head trimming,
-xdiff-interface apparently does common tail trimming):
-
-    32.99%  git-fast-import  git-fast-import     [.] xdl_prepare_ctx.isra.0
-    20.42%  git-fast-import  git-fast-import     [.] sha1_compression_states
-    15.26%  git-fast-import  git-fast-import     [.] xdl_hash_record
-    11.65%  git-fast-import  git-fast-import     [.] ubc_check
-     3.09%  git-fast-import  git-fast-import     [.] xdl_recs_cmp
-     3.03%  git-fast-import  git-fast-import     [.] sha1_process
-     2.91%  git-fast-import  git-fast-import     [.] xdl_prepare_env
-
-So maybe it would make sense to consolidate the diff code (after all,
-diff-delta.c is an old specialized fork of xdiff). With manual trimming
-of common head and tail, this gets down to 3:33.
-
-I'll also note that Facebook has imported xdiff from the git code base
-into mercurial and improved performance on it, so it might also be worth
-looking at what's worth taking from there.
+[0] http://colabti.org/irclogger/irclogger_log/git-devel?date=2018-06-26#l44
 
 Cheers,
+Alban
 
-Mike
