@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 914491F516
-	for <e@80x24.org>; Fri, 29 Jun 2018 01:23:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B6BC1F516
+	for <e@80x24.org>; Fri, 29 Jun 2018 01:23:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1030392AbeF2BXh (ORCPT <rfc822;e@80x24.org>);
+        id S1030418AbeF2BXj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Jun 2018 21:23:39 -0400
+Received: from mail-it0-f73.google.com ([209.85.214.73]:53716 "EHLO
+        mail-it0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1030394AbeF2BXh (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 28 Jun 2018 21:23:37 -0400
-Received: from mail-yw0-f201.google.com ([209.85.161.201]:41023 "EHLO
-        mail-yw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1030243AbeF2BXd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jun 2018 21:23:33 -0400
-Received: by mail-yw0-f201.google.com with SMTP id e68-v6so6046257ywh.8
-        for <git@vger.kernel.org>; Thu, 28 Jun 2018 18:23:32 -0700 (PDT)
+Received: by mail-it0-f73.google.com with SMTP id h195-v6so474123itb.3
+        for <git@vger.kernel.org>; Thu, 28 Jun 2018 18:23:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=eSuhXUKHEE4K2Qn9KQswUwECvrnv1ZMkdNhFa6X3fac=;
-        b=GLG3raYyXjpxdD5KvPTS76oMkwR9yMj9C/0eb5XzNbIw+cJ4Huv82t6OTsYPouWm9m
-         BRwrL6XEXBwsgzhd0h6/hwo96TuvUK31Letd5LuwMdLYzYjSUTTEUq47iE5hYSRpTbzT
-         nhBys+zLioLFqcVGg3fhB9pO4XOcCrRtXl6AYhXiS2Kfh/dA/Hxh4Mz6D74bAIiBEFoz
-         Ory3zGqkGBgAc5nfmdMwG45r7aqkZpnt7zp3+Uq9qf6bZvRQBU/O+NC+H4hSCMdeFhHB
-         xjAfLkG7QKF1cc4Wnk/vNVD8r5A4+7a7+QqIf2mXM4aY2M83fHSGw4PE6UyOUz5qNeOH
-         oBgw==
+        bh=hdWoGetGweVAFkeYI2s2faUYfB0ES/5sEXUkVi7dH4s=;
+        b=DE4e5AvYE91GYjNsDunzu2zkb3blnS08muOH2s+5mHl1v3vTYl9D+RvZ3o6njSjm5E
+         IMh5DrB+NEjGnhLn9t2VUMC2hERvNBoG5IgsC5w6alzKOMT5bQCxXSX9trbTfaFaAvIl
+         O+4MGAAlDUiI2MbrBj8nRn2eKaMI75ahB5Sf0/Vl2cbsOBi5yCVTHbJK9J8BKTstWSvQ
+         gSlIP1+JAX87rCOFPqMG46VW2sbomMYeNr3QORQOWW0lsy8KasNeOgFl6h1Z5EeLmNH/
+         BRLoTgF4y9hflqbjYeYPs6W8VEq9/9oN7TQZDlQGo1fLxgcWGTpNrXJ4nrPhbImLOeMm
+         j1BA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=eSuhXUKHEE4K2Qn9KQswUwECvrnv1ZMkdNhFa6X3fac=;
-        b=C9G6csemtZPZVP29M/mq+s0MEKVX+jBI68HRMYZwzbA3P4HtC8o0R4O1yNsmBly4u9
-         t/Ix6Ok8ITl6cGEAX3PlvHs/jep7C0UjKyeKOP2D7AIGw5hOcOxz4t0n29foRjKD1Spg
-         17PrxeefQi3Y0b2RnMTQEKBlgMIa20WBqFNQhX/EfPjKE1RyBdxz4jZD30mIBHGZeHZj
-         /aTUOXZYFbub95DjdgYyx5ayiOgKktsp66wiIM7hTilkn3GDK6oNU0dMh5F9DJ+WBEOe
-         DHNTf6gwivx1w8FTJbC7K3laT9vEgUef/PqyEgSnsJ6gK9J7ATg9Et/vowqSF7VfbF33
-         3cwQ==
-X-Gm-Message-State: APt69E38Kv2XcLX33Tf1J9TNAa6l/OzxB8kc8TZtJAsnJiDy/Hrv6SN9
-        S3tsxfjXtpCKi4DpKdQ6zJSEd3YRLmT/YgVzLPDzXjIXH+9lUQ+UsELH2BXBtfD8ZDETsA2chL0
-        sVNL7CTBkWwVo6Bgrw7oYzxnQiqLLzaJiakCf+AQJs2Xi8Iua8xfk2hPXZIBh
-X-Google-Smtp-Source: AAOMgpcYRuLbgLN1Dmhs1GutNnBQ9elygf/CX0DHDZTrhXYHkvtxkKheAC6BFEg28j3HCkhpIuf2Emw0eKiZ
+        bh=hdWoGetGweVAFkeYI2s2faUYfB0ES/5sEXUkVi7dH4s=;
+        b=aUqQpISS5FRqv5Lj/QqLlqGpR1/dOzQOyNoLQvxmRle3YRSXobVOOPrSAKb61eXFtG
+         grMMVeYbSZSSimJcyrq+EHJtyGTb2GVEe+PP980dajQ/+iUgs8CNh5eqxIRuLUXT9N22
+         5T9P+o3oLfJuwBuVtgAGWlbR43hAauL6O574u5ALmvLRo/xm2nhjDGy5z1O8cpk8cJZ8
+         EaQFfhTt+cV9A1Z9hoUVMRFGt6oNR66m0sxSobgOz4Wu+icOl+Yz+H00nkb2d3p6MQoQ
+         jF3aDd6wFXlA4iScMjWzRiMN65y8sESl5EuvZrp1y7A2q9WKn03w0XAkBRZf4P2l550o
+         vulg==
+X-Gm-Message-State: APt69E1QIpc+3BAtfAtozff66jx47jh07rpDRiHmISeU5H/EobVPQ7D3
+        ivWMwkemFXI+ZF1mZLqEZ4aCRPMi74liAe4ZZzMxbLCKhK1dzJ/CXk9HLIIdbdZvED3UsH1+Y+1
+        LQ2BO1Ap4ItZ10TTZd8M+7ET9kYVpgMLO/Zj3G3dUR2rrprUk+4Qo6Mp+ZgWH
+X-Google-Smtp-Source: AAOMgpcaT3ZsvkDSsZ+QpZgdEGgfnM/4LI4ZFJY7F5PgRFJgS2aiH5zUxcS8ONqDJBMLGF0dHB01fqelwAfa
 MIME-Version: 1.0
-X-Received: by 2002:a81:2407:: with SMTP id k7-v6mr2044013ywk.183.1530235412267;
- Thu, 28 Jun 2018 18:23:32 -0700 (PDT)
-Date:   Thu, 28 Jun 2018 18:22:16 -0700
+X-Received: by 2002:a24:2c43:: with SMTP id i64-v6mr77479iti.25.1530235416979;
+ Thu, 28 Jun 2018 18:23:36 -0700 (PDT)
+Date:   Thu, 28 Jun 2018 18:22:18 -0700
 In-Reply-To: <20180629012222.167426-1-sbeller@google.com>
-Message-Id: <20180629012222.167426-27-sbeller@google.com>
+Message-Id: <20180629012222.167426-29-sbeller@google.com>
 References: <20180629012222.167426-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.399.gad0ab374a1-goog
-Subject: [PATCH v3 26/32] commit.c: allow set_commit_buffer to handle
+Subject: [PATCH v3 28/32] object.c: allow parse_object_buffer to handle
  arbitrary repositories
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
@@ -65,41 +65,80 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- commit.c | 4 ++--
- commit.h | 3 +--
- 2 files changed, 3 insertions(+), 4 deletions(-)
+ object.c | 18 +++++++++---------
+ object.h |  3 +--
+ 2 files changed, 10 insertions(+), 11 deletions(-)
 
-diff --git a/commit.c b/commit.c
-index 1baac77861f..dd8c9c15b14 100644
---- a/commit.c
-+++ b/commit.c
-@@ -275,10 +275,10 @@ void free_commit_buffer_slab(struct buffer_slab *bs)
- 	free(bs);
+diff --git a/object.c b/object.c
+index 9d588448192..cd870fee22b 100644
+--- a/object.c
++++ b/object.c
+@@ -185,21 +185,21 @@ struct object *lookup_unknown_object(const unsigned char *sha1)
+ 	return obj;
  }
  
--void set_commit_buffer_the_repository(struct commit *commit, void *buffer, unsigned long size)
-+void set_commit_buffer(struct repository *r, struct commit *commit, void *buffer, unsigned long size)
+-struct object *parse_object_buffer_the_repository(const struct object_id *oid, enum object_type type, unsigned long size, void *buffer, int *eaten_p)
++struct object *parse_object_buffer(struct repository *r, const struct object_id *oid, enum object_type type, unsigned long size, void *buffer, int *eaten_p)
  {
- 	struct commit_buffer *v = buffer_slab_at(
--		the_repository->parsed_objects->buffer_slab, commit);
-+		r->parsed_objects->buffer_slab, commit);
- 	v->buffer = buffer;
- 	v->size = size;
- }
-diff --git a/commit.h b/commit.h
-index bea5e015b28..7297af467b9 100644
---- a/commit.h
-+++ b/commit.h
-@@ -97,8 +97,7 @@ void free_commit_buffer_slab(struct buffer_slab *bs);
-  * Associate an object buffer with the commit. The ownership of the
-  * memory is handed over to the commit, and must be free()-able.
-  */
--#define set_commit_buffer(r, c, b, s) set_commit_buffer_##r(c, b, s)
--void set_commit_buffer_the_repository(struct commit *, void *buffer, unsigned long size);
-+void set_commit_buffer(struct repository *r, struct commit *, void *buffer, unsigned long size);
+ 	struct object *obj;
+ 	*eaten_p = 0;
  
- /*
-  * Get any cached object buffer associated with the commit. Returns NULL
+ 	obj = NULL;
+ 	if (type == OBJ_BLOB) {
+-		struct blob *blob = lookup_blob(the_repository, oid);
++		struct blob *blob = lookup_blob(r, oid);
+ 		if (blob) {
+ 			if (parse_blob_buffer(blob, buffer, size))
+ 				return NULL;
+ 			obj = &blob->object;
+ 		}
+ 	} else if (type == OBJ_TREE) {
+-		struct tree *tree = lookup_tree(the_repository, oid);
++		struct tree *tree = lookup_tree(r, oid);
+ 		if (tree) {
+ 			obj = &tree->object;
+ 			if (!tree->buffer)
+@@ -211,20 +211,20 @@ struct object *parse_object_buffer_the_repository(const struct object_id *oid, e
+ 			}
+ 		}
+ 	} else if (type == OBJ_COMMIT) {
+-		struct commit *commit = lookup_commit(the_repository, oid);
++		struct commit *commit = lookup_commit(r, oid);
+ 		if (commit) {
+-			if (parse_commit_buffer(the_repository, commit, buffer, size, 1))
++			if (parse_commit_buffer(r, commit, buffer, size, 1))
+ 				return NULL;
+-			if (!get_cached_commit_buffer(the_repository, commit, NULL)) {
+-				set_commit_buffer(the_repository, commit, buffer, size);
++			if (!get_cached_commit_buffer(r, commit, NULL)) {
++				set_commit_buffer(r, commit, buffer, size);
+ 				*eaten_p = 1;
+ 			}
+ 			obj = &commit->object;
+ 		}
+ 	} else if (type == OBJ_TAG) {
+-		struct tag *tag = lookup_tag(the_repository, oid);
++		struct tag *tag = lookup_tag(r, oid);
+ 		if (tag) {
+-			if (parse_tag_buffer(the_repository, tag, buffer, size))
++			if (parse_tag_buffer(r, tag, buffer, size))
+ 			       return NULL;
+ 			obj = &tag->object;
+ 		}
+diff --git a/object.h b/object.h
+index f54a892bd10..38198bb73a1 100644
+--- a/object.h
++++ b/object.h
+@@ -138,8 +138,7 @@ struct object *parse_object_or_die(const struct object_id *oid, const char *name
+  * parsing it.  eaten_p indicates if the object has a borrowed copy
+  * of buffer and the caller should not free() it.
+  */
+-#define parse_object_buffer(r, o, t, s, b, e) parse_object_buffer_##r(o, t, s, b, e)
+-struct object *parse_object_buffer_the_repository(const struct object_id *oid, enum object_type type, unsigned long size, void *buffer, int *eaten_p);
++struct object *parse_object_buffer(struct repository *r, const struct object_id *oid, enum object_type type, unsigned long size, void *buffer, int *eaten_p);
+ 
+ /** Returns the object, with potentially excess memory allocated. **/
+ struct object *lookup_unknown_object(const unsigned  char *sha1);
 -- 
 2.18.0.399.gad0ab374a1-goog
 
