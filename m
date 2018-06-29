@@ -2,121 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 46BC51F597
-	for <e@80x24.org>; Fri, 29 Jun 2018 19:51:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 475FA1F516
+	for <e@80x24.org>; Fri, 29 Jun 2018 20:15:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936275AbeF2TvX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Jun 2018 15:51:23 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35423 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935467AbeF2TvW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jun 2018 15:51:22 -0400
-Received: by mail-wm0-f67.google.com with SMTP id z137-v6so3181349wmc.0
-        for <git@vger.kernel.org>; Fri, 29 Jun 2018 12:51:22 -0700 (PDT)
+        id S935626AbeF2UPF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Jun 2018 16:15:05 -0400
+Received: from mail-yw0-f196.google.com ([209.85.161.196]:45136 "EHLO
+        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932263AbeF2UPE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jun 2018 16:15:04 -0400
+Received: by mail-yw0-f196.google.com with SMTP id v190-v6so4050982ywa.12
+        for <git@vger.kernel.org>; Fri, 29 Jun 2018 13:15:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=li73ZQndSlNdtv6TW6JvWno1ERjdorIBm8uLBRsKKys=;
-        b=ViggPpwWjFOsz2gbkVL5vR8fQ0+Wbh/aciqT1vt6MAdjR9dbby02qTOPlm/UCIiisD
-         bWuxC/Hqfbx0ZHpoUQ2JS28M+BYbcj6uVZWuS+JjZAcNCd4RU7Q16g4ONQJLKFNAhAZ1
-         EXFe3UErrkH6hqci9OaidscliAQkmAM6fvduXOIJYg7KMx7W3lfZQqQ6wfCkoKCkabiv
-         qsvaIQVFmUhur6wWvQJaAgxQHI+zk8/O4OCsr8IX0u+SmCe1qRcGqUxpkfDJY6oPi5aY
-         9WV4aqFSLVFHIXgb0L2VcS49CaLa2Rm3KmONmJOX7ll+8JAKejMf+yVQPlEEu90ypnaK
-         hWCw==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=UeQfannHBq8C2fbB6ocPeLJNFgl850r6lUmsVC37PmY=;
+        b=dnmiKUKwQabuKvDzDP7Nv8pi+P+D/XKp++DDW62kiaz7AE76HTQZSgbsNzrWsHXozC
+         pV+1Dw29NQ1ki0ySsAafXEP5aRhWyFaqkBk9tLwbdkgc6DVHUz4nEbrhlQK+Jz9pSgl4
+         pfOT4Kw5HPUQEnqpSYRM4hZCgjIRn467uZ9aJcYMeIx95rohJCUSKpOX7M9NKCVuipYc
+         BMYJJwHTjjGa5ovV5TZDyJDoE/mBDZ8hc3NNhAuWT8F/o/34iF769LXvce3JvZNmiR75
+         aiGW3FGeyxnwWVrZEVe/EWtdOYykocHxO3ePyBQ/0QNioKmQ2Bhkl52p1ybgEYSb09RV
+         saDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=li73ZQndSlNdtv6TW6JvWno1ERjdorIBm8uLBRsKKys=;
-        b=fh5/mqp5IXLTXHL7R/a6kLNjAzXHLeAQ7sIe9UY1HvATTqdYU4eqY3jSP8HgYIOGwg
-         LVyaVii5oGLtuowxvCWs9GkiQqKSdLnUXfbc8G0LJx4bCndNrUfuMa8qL3Fd1nCGbJzY
-         BA2S67N4nMVJ8qRsCnsdzzcrwuXTW7u0ZUAy68TYk61AZpwsB7lxPCrm9bBlENbNP239
-         Ro43EwnucweQuyBY4TiEqOZT39iEIDUmfRyLTHTR3LT4N7x5h/3Tusxdz2DJFhXWHyDg
-         xR2cYRdLIMLkvebpDvHg38HqKiSgVVy6Zj5Mxchfm3HIGkIj16yLWhw+KuyFCfi3iSql
-         9e5w==
-X-Gm-Message-State: APt69E3AJ1kgLeEieh7bpWNWWMHuGuohxC1J5ljCjSeyntkLeNhcIUzn
-        wxoPY6eTeTaWKXe/Lf2Jdq4=
-X-Google-Smtp-Source: AAOMgpfHWX1QMCUGU+Bl49MZ9tnPUwjpSHTwGqvEGAfkzfhk7DH9GWl5M3yQlxhv4qs4Iz/SLaaWvQ==
-X-Received: by 2002:a1c:b6d6:: with SMTP id g205-v6mr2889904wmf.17.1530301880944;
-        Fri, 29 Jun 2018 12:51:20 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id d15-v6sm2515337wmb.0.2018.06.29.12.51.19
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 29 Jun 2018 12:51:19 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Jun 2018, #07; Thu, 28)
-References: <xmqqd0wawpwy.fsf@gitster-ct.c.googlers.com>
-        <CAGZ79kbKrDu8iW+867c73OMhgqEYA1H3-zQpejxq5jMMNRb2Bg@mail.gmail.com>
-Date:   Fri, 29 Jun 2018 12:51:19 -0700
-In-Reply-To: <CAGZ79kbKrDu8iW+867c73OMhgqEYA1H3-zQpejxq5jMMNRb2Bg@mail.gmail.com>
-        (Stefan Beller's message of "Thu, 28 Jun 2018 15:42:57 -0700")
-Message-ID: <xmqqk1qhtlqg.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=UeQfannHBq8C2fbB6ocPeLJNFgl850r6lUmsVC37PmY=;
+        b=VdR8GuzaXClQpxhlqrLwo2jNKwIKuoHSGzCNwXj7kXCuj/lGAqZgtOgLLDNfL5Wztr
+         n8EvpHNjzCPHjpMEm5Bp+J6s3yshRv83PEYfoO/FH0I3eEEEFkgwSlx3ArMsX8WueUnZ
+         msdZk0xvRhpScq5CTrj0vN7zMEbVT9rsIpNZwZpaOAkunQxN0h9G8YqXJTKGpgMLYMro
+         Cu3QZiB1ahWKqTmPXOaQTwoXykduQ6kqOeHWCnCwqSDXlmB/VIRsQQq3mCPURQKXU8nm
+         mbaUUjRimQnCFHWCVTh2AF9dpWryWldsVLiB9q68llc3XxGuwiQnw5yK/aP8jik0Kv3C
+         l/gQ==
+X-Gm-Message-State: APt69E01KT0kLRAu0Y/LAykId9w0GSH79McoyXwzx4D9zDkbKxy981wa
+        0lKGJdGpGsGD8UQ3k8hlZicRpUy87cHW2yECyoOE6SxCWQo=
+X-Google-Smtp-Source: AAOMgpc4NHTlbpwPOoBtlw27v+OW8B5bn+1NfRYvF4a/K2hvQaD7n3TCUDdhj9yCtSIBIRQpjH8dBsilelIhD/oTLX8=
+X-Received: by 2002:a0d:d304:: with SMTP id v4-v6mr7987587ywd.500.1530303303638;
+ Fri, 29 Jun 2018 13:15:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20180629094413.bgltep6ntlza6vhz@glandium.org>
+In-Reply-To: <20180629094413.bgltep6ntlza6vhz@glandium.org>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 29 Jun 2018 13:14:52 -0700
+Message-ID: <CAGZ79kb0FOafEsuXU7c_BTwPtcujFeyWVhzSuzFHRFtQHp9weQ@mail.gmail.com>
+Subject: Re: fast-import slowness when importing large files with small differences
+To:     Mike Hommey <mh@glandium.org>,
+        Jameson Miller <jamill@microsoft.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
-
->> * jt/remove-pack-bitmap-global (2018-06-21) 2 commits
->>  - pack-bitmap: add free function
->>  - pack-bitmap: remove bitmap_git global variable
->>
->>  The effort to move globals to per-repository in-core structure
->>  continues.
+On Fri, Jun 29, 2018 at 3:18 AM Mike Hommey <mh@glandium.org> wrote:
 >
-> This is mostly done, though Peff seems to expect a reroll with
-> clarification on how the series is structured?
-> https://public-inbox.org/git/20180611211033.GB26235@sigill.intra.peff.net/
-
-That one has been resolved by squashing the updated log message in,
-I think, so we should be able to merge it down.
-
->> * sb/submodule-move-head-error-msg (2018-06-25) 1 commit
->>  - submodule.c: report the submodule that an error occurs in
->>
->>  Needs a reroll.
->>  cf. <20180622081713.5360-1-szeder.dev@gmail.com>
+> Hi,
 >
-> https://public-inbox.org/git/xmqqmuviq2n7.fsf@gitster-ct.c.googlers.com/
+> I noticed some slowness when fast-importing data from the Firefox mercurial
+> repository, where fast-import spends more than 5 minutes importing ~2000
+> revisions of one particular file. I reduced a testcase while still
+> using real data. One could synthesize data with kind of the same
+> properties, but I figured real data could be useful.
+
+I cc'd Jameson, who refactored memory allocation in fast-import recently.
+(I am not aware of other refactorings in the area of fast-import)
+
+> To reproduce:
+[...]
+> Memory total:          2282 KiB
+>        pools:          2048 KiB
+>      objects:           234 KiB
 >
-> suggests that you applied that change and a reroll would not be needed.
-
-Yup, I forgot about that one.  Thanks.
-
-> It is easy to quantify how often we are bitten by code churn
-> (that you call useless here); and very hard to quantify bugs
-
-By definition, churn is useless.  Useful ones are refactoring ;-).
-
-And when you do want to operate on _the_ single in-core instance,
-not having to say &the_index in the argument and use $foo_cache()
-function does *not* become a source of "bugs".  It just saves
-typing, and turning it to $foo_index(&the_index,...) does *not* make
-it less error prone.
-
->> * sb/diff-color-move-more (2018-06-25) 11 commits
->>  - diff: fix a sparse 'dubious one-bit signed bitfield' error
->>  - SQUASH??? t/4015 GETTEXT_POISON emergency fix
->>  - SQUASH????? Documentation breakage emergency fix
-> [...]
->>
->>  "git diff --color-moved" feature has further been tweaked.
->>
->>  Needs to be cleaned-up with various fix-up bits applied inline.
+[...]
+> Obviously, sha1'ing 26GB is not going to be free, but it's also not the
+> dominating cost, according to perf:
 >
-> I'll resend with those squashes and another (test-)fix SZEDER
-> mentioned soon.
+>     63.52%  git-fast-import  git-fast-import     [.] create_delta_index
 
-The interdiff of the topic looked alright.  Thanks.
+So this doesn't sound like a memory issue, but a diffing/deltaing issue.
 
+> So maybe it would make sense to consolidate the diff code (after all,
+> diff-delta.c is an old specialized fork of xdiff). With manual trimming
+> of common head and tail, this gets down to 3:33.
+
+This sounds interesting. I'd love to see that code to be unified.
+
+> I'll also note that Facebook has imported xdiff from the git code base
+> into mercurial and improved performance on it, so it might also be worth
+> looking at what's worth taking from there.
+
+So starting with
+https://www.mercurial-scm.org/repo/hg/rev/34e2ff1f9cd8
+("xdiff: vendor xdiff library from git")
+they adapted it slightly:
+$ hg log --template '{node|short} {desc|firstline}\n' --
+mercurial/thirdparty/xdiff/
+a2baa61bbb14 xdiff: move stdint.h to xdiff.h
+d40b9e29c114 xdiff: fix a hard crash on Windows
+651c80720eed xdiff: silence a 32-bit shift warning on Windows
+d255744de97a xdiff: backport int64_t and uint64_t types to Windows
+e5b14f5b8b94 xdiff: resolve signed unsigned comparison warning
+f1ef0e53e628 xdiff: use int64 for hash table size
+f0d9811dda8e xdiff: remove unused xpp and xecfg parameters
+49fe6249937a xdiff: remove unused flags parameter
+882657a9f768 xdiff: replace {unsigned ,}long with {u,}int64_t
+0c7350656f93 xdiff: add comments for fields in xdfile_t
+f33a87cf60cc xdiff: add a preprocessing step that trims files
+3cf40112efb7 xdiff: remove xmerge related logic
+90f8fe72446c xdiff: remove xemit related logic
+b5bb0f99064d xdiff: remove unused structure, functions, and constants
+09f320067591 xdiff: remove whitespace related feature
+1f9bbd1d6b8a xdiff: fix builds on Windows
+c420792217c8 xdiff: reduce indent heuristic overhead
+b3c9c483cac9 xdiff: add a bdiff hunk mode
+9e7b14caf67f xdiff: remove patience and histogram diff algorithms
+34e2ff1f9cd8 xdiff: vendor xdiff library from git
+
+Interesting pieces regarding performance:
+
+c420792217c8 xdiff: reduce indent heuristic overhead
+https://phab.mercurial-scm.org/rHGc420792217c89622482005c99e959b9071c109c5
+
+f33a87cf60cc xdiff: add a preprocessing step that trims files
+https://phab.mercurial-scm.org/rHGf33a87cf60ccb8b46e06b85e60bc5031420707d6
+
+I'll see if I can make that into patches.
+
+Thanks,
+Stefan
