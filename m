@@ -2,95 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4FF061F516
-	for <e@80x24.org>; Fri, 29 Jun 2018 13:55:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D5BE1F516
+	for <e@80x24.org>; Fri, 29 Jun 2018 14:12:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936019AbeF2Nz5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Jun 2018 09:55:57 -0400
-Received: from mail-qk0-f181.google.com ([209.85.220.181]:42174 "EHLO
-        mail-qk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935466AbeF2Nzz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jun 2018 09:55:55 -0400
-Received: by mail-qk0-f181.google.com with SMTP id u62-v6so4934808qkf.9
-        for <git@vger.kernel.org>; Fri, 29 Jun 2018 06:55:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=/7YGwymDYz4/76FODpRWdHgawmcTnMWq5hSGt9n3ikI=;
-        b=n7KG5bLXFWuSXfGaJz2ZOGRUcFGsNAKN6s/zbYohQNFKfjzLimIhCGzpccR1js3vnF
-         RecdvKajezhPu11PvjmQAN5ZCZaf2mLAjirpmTAvMalIo9TLCobAMj1iGYi+60xn9Gra
-         S40D0EVMYsYrAlcfnRwOIAl03aTz9yRN+dugRxtdTgwQMHRDCuc7ckDw2pno+i4ZlxQI
-         n65NxdHXGRiB2mL7dN8YfK5gwU29X1hYjNGw0DFyTLtj+eSnkA2AOskLI4SKIkFJ1uWw
-         WsVrvD6uMYCtXPxfML68xf7mbG6B+jxnHiD840zt4gXiE3Z/xyl7ExvXcMk+TTe+VO5A
-         o2ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=/7YGwymDYz4/76FODpRWdHgawmcTnMWq5hSGt9n3ikI=;
-        b=ZJLDoFooskGqAMJDodWIMwylafUHkVRY9lYoVw26EGVV+lVWQmRbdPZBhgIKbj/NU9
-         6khtWl7Sgi723iDfZnnJQbyr8VSuxizQJwefEBSQn8blV5/hZgXv9JHNGFXlL440+l46
-         EGea1bK4zZYgJAxCB1KqKD14exQe6VmH0Jl2Rtz7Mvwa+thLZoFo8e4Z3n6juWXrcU8k
-         x3f7cA3dZtFA3HPpMggHtMJ7h9IcuM4+D0d0CDT8jlKqFCMu7cSSQJp0wUu3AOmSGmnh
-         whZwhOdeRN9F1pwD/y/tMFLdTOSqhbEwTSwLhhnFX4LJjEEr/T46vZC08Ms0jboqUV87
-         IQBQ==
-X-Gm-Message-State: APt69E2ypRWK5PkZg77acI1u48pUvEaflaOo1DFvYaEWr+RfysBXH9Dy
-        HdlIC+uV41v50zeIrNtqB2DbCz6m
-X-Google-Smtp-Source: AAOMgpeUjqs06hCmORdNTAU4RXXSa6Ku4yxm8EAO4jJszVBhuyShAfgPZlitk3ZsDm4VexMv4adL8g==
-X-Received: by 2002:a37:7441:: with SMTP id p62-v6mr12982761qkc.262.1530280554529;
-        Fri, 29 Jun 2018 06:55:54 -0700 (PDT)
-Received: from [10.0.1.23] ([98.122.163.216])
-        by smtp.gmail.com with ESMTPSA id q15-v6sm686988qtl.39.2018.06.29.06.55.53
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 29 Jun 2018 06:55:53 -0700 (PDT)
-Subject: Re: What's cooking in git.git (Jun 2018, #07; Thu, 28)
-To:     Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Cc:     git <git@vger.kernel.org>
-References: <xmqqd0wawpwy.fsf@gitster-ct.c.googlers.com>
- <CAGZ79kbKrDu8iW+867c73OMhgqEYA1H3-zQpejxq5jMMNRb2Bg@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <9e583346-2865-231e-04bf-670a36fe1aa7@gmail.com>
-Date:   Fri, 29 Jun 2018 09:55:51 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        id S1755153AbeF2OMe (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Jun 2018 10:12:34 -0400
+Received: from mout.gmx.net ([212.227.15.19]:33869 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754021AbeF2OMd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jun 2018 10:12:33 -0400
+Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MDyFr-1fMSst0POB-00HOfW; Fri, 29
+ Jun 2018 16:12:20 +0200
+Date:   Fri, 29 Jun 2018 16:12:00 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Aaron Schrab <aaron@schrab.com>, git@vger.kernel.org
+Subject: Re: [PATCH] sequencer: use configured comment character
+In-Reply-To: <xmqqh8lmwsso.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1806291607501.74@tvgsbejvaqbjf.bet>
+References: <20180628020414.25036-1-aaron@schrab.com> <xmqqh8lmwsso.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kbKrDu8iW+867c73OMhgqEYA1H3-zQpejxq5jMMNRb2Bg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:15RWzUTWNzswV35GcebUjZCiwxN7AFTPOgKQATq2jDD6z9c0eL+
+ 2had0AMbQGV++IPY+X6BKAEjrgtP/iNB2wUUpG8r5b4uPkH9CQMoDkXmsyIHCWxW8FoQvYY
+ oWAeMYZ0fIc8zWl+zF8UBkm+hhO2EAXhwuG5qZVEioLy2GYX4crsnC8XeIxEwoYIHqXjsLT
+ 0H9dEBuvwEkeLlzdYIZiQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:w//7JDEOCSA=:4o18WN+JejUpskXzWu8jZn
+ baI0upBLitHhfWy1HZ66aUnEjqGQFS1DS05HukGa4nH34HBxtxZajeP15SZmHEyytn8JMTeP/
+ oEGX4KtI3i7VQe963uCiH8U4l51rWpn5gkKewQToXx8yJDgLPOewJt2+hFJzesV5tNmK9a9/s
+ RFOKsivPo2fnvsczOV4woQZRYMeCCJprRqvzvLLcN4ivkNfIEf8zuY4QAJ2WYbJ1W8QVC7qTl
+ a6DvYlLc/LhOSr2jSVoLkbrCNHbybqcKRPGamEbu+dki880LVcfTxFF3dcFKwyHT2SNUQ8FoF
+ 4PLG2U6MHAgqlrkyD/HyI9ju2Q2yvs09+TKJVjRYZYtb26+Wxix4Vu2mxt43pf0xou8OztoI/
+ cf8aiBM9ftyPOfcDbHb/gz1wncNQURr1JeEVa3Wa8Ljim0hgsqWzMCvslLSfxlkWE+6dQnsYw
+ 6XxDNZ9BPqK+o+QLE6Xdw0kcn3yD04I2B0Yy5U7+WLrKyQqBDXQk7H11rs5rsXeoXuab0e+GY
+ gRKtzUgRMARwRFhhb4NJT0SBbobfdne7fk7R8VDBgMYZQjzxhmw2GRaRqyzNrSQK4zLPUTGb3
+ aN2BILs9yfoqQizcvOWLVDvd2oil8tv+hu9GcinatUbQ0vRSx3pZsRFD6xkS/51blx9mCpdvW
+ HGzIkxeObak/+62/qQ9UCHC+9ADpAjlhPvcWkNcuUyqJMYQWynfPX7Bwoywu4Dy3Y0elbG7z+
+ FzZ/zV3gw9QQi5XhyVps/psmJ1MKY9vgX7y16OvME+KHkuBm/lHTLiKck05Q0YrzzSequPce0
+ eH4csXU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/28/2018 6:42 PM, Stefan Beller wrote:
-> On Thu, Jun 28, 2018 at 2:40 PM Junio C Hamano <gitster@pobox.com> wrote:
->
->> * ds/commit-graph-fsck (2018-06-27) 22 commits
-> [...]
->>   "git fsck" learns to make sure the optional commit-graph file is in
->>   a sane state.
->>
->>   Is this ready for 'next'?
-> I hope so, as I plan to reroll the next object store series based
-> on it. I'll also review that.
+Hi Junio,
 
-I think the series is ready. The only new feedback in a while is your 
-style comments on "commit-graph: add '--reachable' option", which can 
-hopefully be squashed in. I'm also open to sending a new series on top 
-for new feedback.
+On Thu, 28 Jun 2018, Junio C Hamano wrote:
 
-Thanks,
+> Aaron Schrab <aaron@schrab.com> writes:
+> 
+> > Use configured comment character when generating comments about branches
+> > in an instruction sheet.  Failure to honor this configuration causes a
+> > failure to parse the resulting instruction sheet.
+> >
+> > Signed-off-by: Aaron Schrab <aaron@schrab.com>
+> > ---
+> >  sequencer.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/sequencer.c b/sequencer.c
+> > index 4034c0461b..caf91af29d 100644
+> > --- a/sequencer.c
+> > +++ b/sequencer.c
+> > @@ -3991,7 +3991,7 @@ static int make_script_with_merges(struct pretty_print_context *pp,
+> >  		entry = oidmap_get(&state.commit2label, &commit->object.oid);
+> >  
+> >  		if (entry)
+> > -			fprintf(out, "\n# Branch %s\n", entry->string);
+> > +			fprintf(out, "\n%c Branch %s\n", comment_line_char, entry->string);
+> >  		else
+> >  			fprintf(out, "\n");
+> 
+> Would this interact OK with core.commentchar set to "auto"?
 
--Stolee
+The idea of "auto" is:
 
+	If set to "auto", `git-commit` would select a character that is not
+	the beginning character of any line in existing commit messages.
 
+As there are no pre-existing lines in that script (apart from the ones we
+are about to add with the todo_help), the setting "auto" is pretty moot
+and we will fall back to the default comment char (or, if there was a
+previous core.commentChar that was parsed, that one).
+
+In short: the code is fine, but yes, I had to convince myself by looking
+through the code. (Hinting at a possible improvement of the commit
+message.)
+
+Ciao,
+Dscho
