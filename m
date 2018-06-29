@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44E831F516
-	for <e@80x24.org>; Fri, 29 Jun 2018 01:23:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3BAD31F516
+	for <e@80x24.org>; Fri, 29 Jun 2018 01:23:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936474AbeF2BXF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Jun 2018 21:23:05 -0400
-Received: from mail-qt0-f202.google.com ([209.85.216.202]:53602 "EHLO
-        mail-qt0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S936468AbeF2BW7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jun 2018 21:22:59 -0400
-Received: by mail-qt0-f202.google.com with SMTP id x16-v6so7667660qto.20
-        for <git@vger.kernel.org>; Thu, 28 Jun 2018 18:22:58 -0700 (PDT)
+        id S936472AbeF2BXE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Jun 2018 21:23:04 -0400
+Received: from mail-qt0-f201.google.com ([209.85.216.201]:54847 "EHLO
+        mail-qt0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S936465AbeF2BXB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jun 2018 21:23:01 -0400
+Received: by mail-qt0-f201.google.com with SMTP id d7-v6so7591420qth.21
+        for <git@vger.kernel.org>; Thu, 28 Jun 2018 18:23:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=CZQaLsfnYyY+cyjVI7IgHBQdsrsSrQeJzstVK9zAMWk=;
-        b=vYr1ncoxbpxXHWAAVBAYxiBst3xZb1S3ri6JZ0zL+dT3WWPz1x/Rptsx1kuChYmr44
-         nUH0RsRVVfKunl/i2tGnS3SD4mfv768yZcPkU4ydde3NIoKhmHauFQZczxltRHYOSCtq
-         uKmTLiXL5WFm321pzc5EHeAQl/UNh3iy6uqOYBCOE1zBItDyslZJJg1fzvwZeCU0/68c
-         Wy4E/dfy5s5d3Zp4i7jEH9O1dm/GKxMhbvxKVZZWUW7M15SmTu7sEbuvwu/IJszcFk8n
-         e9OOcDG+RvIhLFypff9gj3FACKiX9OT4JDD9YHstJr7p/JOwhtW0VhrTTtVQ5Oyh4m+U
-         +P/g==
+        bh=OVlrOX8b/PQO+YMJ5/osTUdwNJFxIKSpbYpzfRfsL2E=;
+        b=Qj2nAHz1OWsKlK032qsZRKwaO9zrMV4kCVqp+O7fkT/L15IkzHjiLLVhYjK130EIfh
+         Um7sGx/z9WV0/l7bZ25yYZoo5dkHoCfxnnvsHrZRCEfUzleDEG3VxEkCAPbH+Rkd/q6A
+         FkZg/EVKU05l/qc/5GgabKl2GNuRRh/9arPqE8nzbIM01E2k1aAF+KH23oN3zXOosMju
+         htJyjbq1TGpm0D2g0M5z1MpoUd1/pzDePRimJVEwVb5xKuvnVbxIMHRz+d0lcYR56aJl
+         TOQZR2kpm5xU4yNtoDa1XvPHwWji+3AXzxCCN9T/i6g7W3stps7UlKA8tJrGOOUof7IV
+         ufAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=CZQaLsfnYyY+cyjVI7IgHBQdsrsSrQeJzstVK9zAMWk=;
-        b=toc1lNjE7vByaI0ebo9EoyHT2uFZLFEvBhcC8MhiXIZ0ek0++S54/z3R9vfCSIq3XW
-         FMhEaJcpxWbiNxp6VWN760O9cdws4uJnaVHlAXmzYEPm8ydiN+i40tE1Z4Pe4nkkXP+7
-         l/3DOJQwtQSmxe9uAn+CAvr0lUMkbrl9NSSTKEbrVtPkW14SwawgrUGaNnL3VBX2sNRy
-         S2yiqg/DfpGEVLlQHAOBkV8vTcd5to0xlxfbe+h8yb53A/Bs8Drj04BajtoX4knZE8vA
-         6dneTPZbYHE/UpFWadXeQ8lXq3aGR+SMGrl53WDeEbZUJQ1KjGwEeL8YF4ZsTM36a0+O
-         Pjrw==
-X-Gm-Message-State: APt69E1zOqv2wJjH06pfHSimQy4uOP0TnnfUMocJZOC53ksq1PYHk401
-        ZfZ2gGGd1D8BpOzdXh8yLgklCKVbKzIMtAJscNz/G+foQ/oPtL2KNEu9vsvztAvsRp4Bgf15/Kr
-        x+UJhhuyCN5rdvjILyN9mStW3UcZG+kOD1Maa5QC8gjjYSeZBafTySix87nPE
-X-Google-Smtp-Source: AAOMgpebfqHBYf2V8siyb9m6k2Epmct31eAjJ4XfKfTxBe6IoKjdm36SsiLby0hzbszbjdICtyjSjWePJK7l
+        bh=OVlrOX8b/PQO+YMJ5/osTUdwNJFxIKSpbYpzfRfsL2E=;
+        b=X2lCeYvIln4cQAX5Pie9+BbPP7JQzeRo0goeiT0yyvqnzLC+Oj/IKVdbD4OTwCaQIX
+         lkK+8qBcmlIUz7FEGJ1oNPXuqfntu179e/j0YXTNiKlLTlkDRGQ27phaeNVqzWf68F/7
+         4oc1ht5Mn4es5wuwj9HpVH5NqiE4QL0jZA2smelzLGd0Qg6B8ltEhHDX36RwbN+vL4hl
+         wDv8zmb+5P+nUD1EAxuQLxXgaGF21YMAAaQEnBp1Vn49CNNWSkzYvMs0L8XfeVRe6Rsz
+         IW2/xR/4C+TjGmxd0F598XXTLPWCtQb6qXMorRDwO23rMvPss40qdXkAePqVrBUDhlPG
+         vQ2g==
+X-Gm-Message-State: APt69E0C9atWxKdP0lTF8QMEOPI2C3sEZig2faopN5tIvxk2Dtdn40yx
+        MtlcbJk/DJIwDyXyPRngpqpJ5h0aADzyCll88AYzpy5Oixnms1/qga6OZ2PQHtt971CO3CYlJJ0
+        5XBDgLCHXe0tASrfi/VOBnQvNTJymfQQzKIRsNn7FZpZShUDpityIfQhvBGFK
+X-Google-Smtp-Source: AAOMgpfzBrQQQLxSn/w8nz9od/27nChstlMTyA7dnhEEeezVl7+tK5iKdCHR3Y6S2/xTQkNKk88/CXyGtLK6
 MIME-Version: 1.0
-X-Received: by 2002:a0c:a101:: with SMTP id d1-v6mr6432688qva.5.1530235378145;
- Thu, 28 Jun 2018 18:22:58 -0700 (PDT)
-Date:   Thu, 28 Jun 2018 18:22:01 -0700
+X-Received: by 2002:a0c:f9c1:: with SMTP id j1-v6mr183708qvo.25.1530235380483;
+ Thu, 28 Jun 2018 18:23:00 -0700 (PDT)
+Date:   Thu, 28 Jun 2018 18:22:02 -0700
 In-Reply-To: <20180629012222.167426-1-sbeller@google.com>
-Message-Id: <20180629012222.167426-12-sbeller@google.com>
+Message-Id: <20180629012222.167426-13-sbeller@google.com>
 References: <20180629012222.167426-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.399.gad0ab374a1-goog
-Subject: [PATCH v3 11/32] commit: add repository argument to set_commit_buffer
+Subject: [PATCH v3 12/32] commit: add repository argument to get_cached_commit_buffer
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>
@@ -62,7 +62,7 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a repository argument to allow callers of set_commit_buffer to
+Add a repository argument to allow callers of get_cached_commit_buffer to
 be more specific about which repository to handle. This is a small
 mechanical change; it doesn't change the implementation to handle
 repositories other than the_repository yet.
@@ -72,74 +72,74 @@ repository other than the_repository at compile time.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- blame.c  | 2 +-
  commit.c | 4 ++--
  commit.h | 3 ++-
  object.c | 2 +-
+ pretty.c | 2 +-
  4 files changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/blame.c b/blame.c
-index 8a0655a5997..cf102276bea 100644
---- a/blame.c
-+++ b/blame.c
-@@ -158,7 +158,7 @@ static void set_commit_buffer_from_strbuf(struct commit *c, struct strbuf *sb)
- {
- 	size_t len;
- 	void *buf = strbuf_detach(sb, &len);
--	set_commit_buffer(c, buf, len);
-+	set_commit_buffer(the_repository, c, buf, len);
- }
- 
- /*
 diff --git a/commit.c b/commit.c
-index 75d0bdede84..cdfb1a025b6 100644
+index cdfb1a025b6..9e2899bd5ad 100644
 --- a/commit.c
 +++ b/commit.c
-@@ -262,7 +262,7 @@ struct commit_buffer {
- define_commit_slab(buffer_slab, struct commit_buffer);
- static struct buffer_slab buffer_slab = COMMIT_SLAB_INIT(1, buffer_slab);
+@@ -269,7 +269,7 @@ void set_commit_buffer_the_repository(struct commit *commit, void *buffer, unsig
+ 	v->size = size;
+ }
  
--void set_commit_buffer(struct commit *commit, void *buffer, unsigned long size)
-+void set_commit_buffer_the_repository(struct commit *commit, void *buffer, unsigned long size)
+-const void *get_cached_commit_buffer(const struct commit *commit, unsigned long *sizep)
++const void *get_cached_commit_buffer_the_repository(const struct commit *commit, unsigned long *sizep)
  {
- 	struct commit_buffer *v = buffer_slab_at(&buffer_slab, commit);
- 	v->buffer = buffer;
-@@ -450,7 +450,7 @@ int parse_commit_gently(struct commit *item, int quiet_on_missing)
- 	}
- 	ret = parse_commit_buffer(the_repository, item, buffer, size, 0);
- 	if (save_commit_buffer && !ret) {
--		set_commit_buffer(item, buffer, size);
-+		set_commit_buffer(the_repository, item, buffer, size);
- 		return 0;
- 	}
- 	free(buffer);
+ 	struct commit_buffer *v = buffer_slab_peek(&buffer_slab, commit);
+ 	if (!v) {
+@@ -284,7 +284,7 @@ const void *get_cached_commit_buffer(const struct commit *commit, unsigned long
+ 
+ const void *get_commit_buffer(const struct commit *commit, unsigned long *sizep)
+ {
+-	const void *ret = get_cached_commit_buffer(commit, sizep);
++	const void *ret = get_cached_commit_buffer(the_repository, commit, sizep);
+ 	if (!ret) {
+ 		enum object_type type;
+ 		unsigned long size;
 diff --git a/commit.h b/commit.h
-index f326c13622b..7c14dfdc54b 100644
+index 7c14dfdc54b..237607d64cb 100644
 --- a/commit.h
 +++ b/commit.h
-@@ -95,7 +95,8 @@ void parse_commit_or_die(struct commit *item);
-  * Associate an object buffer with the commit. The ownership of the
-  * memory is handed over to the commit, and must be free()-able.
+@@ -102,7 +102,8 @@ void set_commit_buffer_the_repository(struct commit *, void *buffer, unsigned lo
+  * Get any cached object buffer associated with the commit. Returns NULL
+  * if none. The resulting memory should not be freed.
   */
--void set_commit_buffer(struct commit *, void *buffer, unsigned long size);
-+#define set_commit_buffer(r, c, b, s) set_commit_buffer_##r(c, b, s)
-+void set_commit_buffer_the_repository(struct commit *, void *buffer, unsigned long size);
+-const void *get_cached_commit_buffer(const struct commit *, unsigned long *size);
++#define get_cached_commit_buffer(r, c, s) get_cached_commit_buffer_##r(c, s)
++const void *get_cached_commit_buffer_the_repository(const struct commit *, unsigned long *size);
  
  /*
-  * Get any cached object buffer associated with the commit. Returns NULL
+  * Get the commit's object contents, either from cache or by reading the object
 diff --git a/object.c b/object.c
-index 5494c0cbaa1..d1f77565af6 100644
+index d1f77565af6..f08a8874de3 100644
 --- a/object.c
 +++ b/object.c
-@@ -217,7 +217,7 @@ struct object *parse_object_buffer_the_repository(const struct object_id *oid, e
+@@ -216,7 +216,7 @@ struct object *parse_object_buffer_the_repository(const struct object_id *oid, e
+ 		if (commit) {
  			if (parse_commit_buffer(the_repository, commit, buffer, size, 1))
  				return NULL;
- 			if (!get_cached_commit_buffer(commit, NULL)) {
--				set_commit_buffer(commit, buffer, size);
-+				set_commit_buffer(the_repository, commit, buffer, size);
+-			if (!get_cached_commit_buffer(commit, NULL)) {
++			if (!get_cached_commit_buffer(the_repository, commit, NULL)) {
+ 				set_commit_buffer(the_repository, commit, buffer, size);
  				*eaten_p = 1;
  			}
- 			obj = &commit->object;
+diff --git a/pretty.c b/pretty.c
+index cbd25b6ceae..cde4fe07db0 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -630,7 +630,7 @@ const char *logmsg_reencode(const struct commit *commit,
+ 		 * the cached copy from get_commit_buffer, we need to duplicate it
+ 		 * to avoid munging the cached copy.
+ 		 */
+-		if (msg == get_cached_commit_buffer(commit, NULL))
++		if (msg == get_cached_commit_buffer(the_repository, commit, NULL))
+ 			out = xstrdup(msg);
+ 		else
+ 			out = (char *)msg;
 -- 
 2.18.0.399.gad0ab374a1-goog
 
