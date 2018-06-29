@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B76DC1F516
-	for <e@80x24.org>; Fri, 29 Jun 2018 01:23:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2CEB61F516
+	for <e@80x24.org>; Fri, 29 Jun 2018 01:23:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1030436AbeF2BXp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Jun 2018 21:23:45 -0400
-Received: from mail-qt0-f201.google.com ([209.85.216.201]:50073 "EHLO
-        mail-qt0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1030424AbeF2BXm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jun 2018 21:23:42 -0400
-Received: by mail-qt0-f201.google.com with SMTP id c4-v6so7633501qtp.16
-        for <git@vger.kernel.org>; Thu, 28 Jun 2018 18:23:41 -0700 (PDT)
+        id S1030425AbeF2BXo (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Jun 2018 21:23:44 -0400
+Received: from mail-yb0-f201.google.com ([209.85.213.201]:47179 "EHLO
+        mail-yb0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1030419AbeF2BXk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jun 2018 21:23:40 -0400
+Received: by mail-yb0-f201.google.com with SMTP id d6-v6so5768389ybn.14
+        for <git@vger.kernel.org>; Thu, 28 Jun 2018 18:23:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=sLxj2h2yg4uxggJvhZSqbeCLtIZkACOIakWjUhAMhC4=;
-        b=PQs3qm4wYdcZErML/FYdDGQcQ44aid0+iOkLJxGJEA7B+gxQCQttkJDzhxo+UQdrN0
-         qweIuYT2Db9P4uuc6XHHfDTZvYU0nh8tXBWRE6+vdwmRAAyRWKf7PM389cKufCXcSKRu
-         Nh7eSxQZxAFgxQy/8uBJIDTjsN6L1GvniTcp/4xtzIgX2ETDMtXiNhZzYafxXvYjmzWk
-         kMfKrKNPQTkaKZz+cPKugO7vFgdjl+sYJZyoiIHD93/7VUU/ijB8Dvul9iLAtzxO7H+L
-         2G+SKRTybiJUS6Dam0XsRBoRwAkDQCtaE9ROTAVDqnL1RA8/ExSCF4+52Wel1L2XG6OH
-         aCyQ==
+        bh=iQ035MjIFNPj764rsMUtja9kir96e+s6VMa5Ofxt9G0=;
+        b=hkCcQ63sWZ5nkiiEEssS4yq32X8727Zfb33/YtdHgPmkZqs+jxry+COduaz9xDuL+S
+         1st0xx6fc+2MwJbbouaJO5fpqvJ/w/I2rieq5a6XTeuMGX/7fOZ/fCYbxLaEnnEbk8iq
+         8Wq/twIEq1lLKs1qRSlKgtxcyNSZ0WOsRnosFj9Mc2nqMG2hDoi/kP38Gc+A0weCQB5Y
+         6Ac6msVWGVgYMkmljvjPR5LlDgC8bwT/G3ZmHkEKS0VbOeKPR3/EBjeYBEyYOAygaU+W
+         SsKQjhZx/UNK90E9Ijs5UG3YP6+Zls71TSNsp5HWWFEJufk4zvSJ/JFYGBsfwazrfzCt
+         li/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=sLxj2h2yg4uxggJvhZSqbeCLtIZkACOIakWjUhAMhC4=;
-        b=K31B+fn2dqe+rVpCrUkVWxhnXjDb8SaGJ4o0eX28T0Vp1TPcjetsfpYhH69qVNKwAH
-         cfcTmJOtJMovv1Yy048ZxrKPaj9gl1DDdepRTmoHwF3cNIchAtHKjuhPCHHg5jjD7Frj
-         t/u4UOsyPY7kNIP9KA8GfjqNggmjAXrCcDYpEtO0SZyaZWc6nAa/bLwkqPDbndjNz8Et
-         EOGU0MFxNRlr6bd5DeGiqCLTQDMWeDi/Fkdtz5I1G3SdagstWFDId/DVnYyacNxAc+/H
-         wYZH/hRBiLRlUKCnxmyWFScEr5EqojggPMO+J/wg3eLrtTzXxZhgnKs1CPvoy0SBXP+7
-         CvOg==
-X-Gm-Message-State: APt69E2jwbCg3NFj4n0/1RV9fZRxwrNAd9Rib3yetfVD16S8KCsDdPON
-        nIaWnROlu/TYxJwB0XXGNUhP52VJqIIAuTooBZMBqPI6GDdNSrDy5EpYFUuNTLsx2N1eKov6oWc
-        7noO2osnHwJwPx7Jq6ohmURN78pOCuCEGJoww/Oy9Y0Kx+Fnc5nD+wAS0/4vr
-X-Google-Smtp-Source: AAOMgpeLpc/6t+8x+9yFEy8pqV0XJQi/V3vVZiotkbsTY4LXJvhhGArQUKX7lpZSpvXxMoRQQj0JRK+Hd1wk
+        bh=iQ035MjIFNPj764rsMUtja9kir96e+s6VMa5Ofxt9G0=;
+        b=Uc7SAdJprkjzB4VOTD6mucwwBfZtgfULyK7doJIugFZw8JEg4IYTydyOLEE0yMSQUH
+         I8yag3VZy7QEo8dI0BKCN5rp04TvoxEqSbEfqWIxfUVTU/iMd4noPNRTcks5sUJDdwXv
+         EJyO5xYQCEhMFMUK7S0LFMl5JOVhfwuzIKxAzuLuCpMVJptQCXuJKtlAli4nrp/VLbQN
+         GJPCCwgeT15Iu+i2qW9zYk/u389Mex/RbOttPs0FGStDJKIcgKmidBBEKzVhBeOQ6j6f
+         Wfu+JN9Kob2v+/p3EMhGhb8aWJ33hQeXcG3fzEKLDMSSSxX1+Vhd0EKDAmarfV0/7agV
+         JNuw==
+X-Gm-Message-State: APt69E2lkdT7ja63a61xDqeDWPvamhPLpdPQhecXn+SAFKGUs4EabvC+
+        4Udl02Mg/SWh7ng5K22GS2tWVyGTq8qsQ9MxwKCCarJykap2Js5KCu7zYpvn18+J0F5+Kz4Zy2I
+        JLCh9yRON1YzQvo+1Yrubw+Gr7ImJdnWwwR9QGhvnG2b1fFSph+GmIStmE2mQ
+X-Google-Smtp-Source: AAOMgpc8POfDkaOUWkq1taeLKweWQVjLVIP65T4iLmGsCvUppkfoDPlvRwdjmJ5ATlnd8pR7Ukx5Jf6c8S90
 MIME-Version: 1.0
-X-Received: by 2002:a0c:facd:: with SMTP id p13-v6mr6714488qvo.10.1530235421518;
- Thu, 28 Jun 2018 18:23:41 -0700 (PDT)
-Date:   Thu, 28 Jun 2018 18:22:20 -0700
+X-Received: by 2002:a81:b663:: with SMTP id h35-v6mr2452092ywk.77.1530235419344;
+ Thu, 28 Jun 2018 18:23:39 -0700 (PDT)
+Date:   Thu, 28 Jun 2018 18:22:19 -0700
 In-Reply-To: <20180629012222.167426-1-sbeller@google.com>
-Message-Id: <20180629012222.167426-31-sbeller@google.com>
+Message-Id: <20180629012222.167426-30-sbeller@google.com>
 References: <20180629012222.167426-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.399.gad0ab374a1-goog
-Subject: [PATCH v3 30/32] tag.c: allow deref_tag to handle arbitrary repositories
+Subject: [PATCH v3 29/32] object.c: allow parse_object to handle arbitrary repositories
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>
@@ -64,43 +64,72 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- tag.c | 5 ++---
- tag.h | 3 +--
- 2 files changed, 3 insertions(+), 5 deletions(-)
+ object.c | 14 +++++++-------
+ object.h |  3 +--
+ 2 files changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/tag.c b/tag.c
-index 682e7793059..94a89b21cb5 100644
---- a/tag.c
-+++ b/tag.c
-@@ -64,12 +64,11 @@ int gpg_verify_tag(const struct object_id *oid, const char *name_to_report,
- 	return ret;
+diff --git a/object.c b/object.c
+index cd870fee22b..b0faab85d40 100644
+--- a/object.c
++++ b/object.c
+@@ -245,28 +245,28 @@ struct object *parse_object_or_die(const struct object_id *oid,
+ 	die(_("unable to parse object: %s"), name ? name : oid_to_hex(oid));
  }
  
--struct object *deref_tag_the_repository(struct object *o, const char *warn, int warnlen)
-+struct object *deref_tag(struct repository *r, struct object *o, const char *warn, int warnlen)
+-struct object *parse_object_the_repository(const struct object_id *oid)
++struct object *parse_object(struct repository *r, const struct object_id *oid)
  {
- 	while (o && o->type == OBJ_TAG)
- 		if (((struct tag *)o)->tagged)
--			o = parse_object(the_repository,
--					 &((struct tag *)o)->tagged->oid);
-+			o = parse_object(r, &((struct tag *)o)->tagged->oid);
- 		else
- 			o = NULL;
- 	if (!o && warn) {
-diff --git a/tag.h b/tag.h
-index efd4c7da67c..e669c3e497a 100644
---- a/tag.h
-+++ b/tag.h
-@@ -15,8 +15,7 @@ extern struct tag *lookup_tag(struct repository *r, const struct object_id *oid)
- extern int parse_tag_buffer(struct repository *r, struct tag *item, const void *data, unsigned long size);
- extern int parse_tag(struct tag *item);
- extern void release_tag_memory(struct tag *t);
--#define deref_tag(r, o, w, l) deref_tag_##r(o, w, l)
--extern struct object *deref_tag_the_repository(struct object *, const char *, int);
-+extern struct object *deref_tag(struct repository *r, struct object *, const char *, int);
- extern struct object *deref_tag_noverify(struct object *);
- extern int gpg_verify_tag(const struct object_id *oid,
- 		const char *name_to_report, unsigned flags);
+ 	unsigned long size;
+ 	enum object_type type;
+ 	int eaten;
+-	const struct object_id *repl = lookup_replace_object(the_repository, oid);
++	const struct object_id *repl = lookup_replace_object(r, oid);
+ 	void *buffer;
+ 	struct object *obj;
+ 
+-	obj = lookup_object(the_repository, oid->hash);
++	obj = lookup_object(r, oid->hash);
+ 	if (obj && obj->parsed)
+ 		return obj;
+ 
+ 	if ((obj && obj->type == OBJ_BLOB && has_object_file(oid)) ||
+ 	    (!obj && has_object_file(oid) &&
+-	     oid_object_info(the_repository, oid, NULL) == OBJ_BLOB)) {
++	     oid_object_info(r, oid, NULL) == OBJ_BLOB)) {
+ 		if (check_object_signature(repl, NULL, 0, NULL) < 0) {
+ 			error("sha1 mismatch %s", oid_to_hex(oid));
+ 			return NULL;
+ 		}
+-		parse_blob_buffer(lookup_blob(the_repository, oid), NULL, 0);
+-		return lookup_object(the_repository, oid->hash);
++		parse_blob_buffer(lookup_blob(r, oid), NULL, 0);
++		return lookup_object(r, oid->hash);
+ 	}
+ 
+ 	buffer = read_object_file(oid, &type, &size);
+@@ -277,7 +277,7 @@ struct object *parse_object_the_repository(const struct object_id *oid)
+ 			return NULL;
+ 		}
+ 
+-		obj = parse_object_buffer(the_repository, oid, type, size,
++		obj = parse_object_buffer(r, oid, type, size,
+ 					  buffer, &eaten);
+ 		if (!eaten)
+ 			free(buffer);
+diff --git a/object.h b/object.h
+index 38198bb73a1..fa5ca975678 100644
+--- a/object.h
++++ b/object.h
+@@ -124,8 +124,7 @@ void *object_as_type(struct repository *r, struct object *obj, enum object_type
+  *
+  * Returns NULL if the object is missing or corrupt.
+  */
+-#define parse_object(r, oid) parse_object_##r(oid)
+-struct object *parse_object_the_repository(const struct object_id *oid);
++struct object *parse_object(struct repository *r, const struct object_id *oid);
+ 
+ /*
+  * Like parse_object, but will die() instead of returning NULL. If the
 -- 
 2.18.0.399.gad0ab374a1-goog
 
