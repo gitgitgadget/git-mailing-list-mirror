@@ -7,214 +7,142 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 054AA1F516
-	for <e@80x24.org>; Fri, 29 Jun 2018 01:24:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 54B331F516
+	for <e@80x24.org>; Fri, 29 Jun 2018 02:10:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1030453AbeF2BYH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Jun 2018 21:24:07 -0400
-Received: from mail-oi0-f74.google.com ([209.85.218.74]:46092 "EHLO
-        mail-oi0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S936441AbeF2BXD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jun 2018 21:23:03 -0400
-Received: by mail-oi0-f74.google.com with SMTP id w189-v6so4800230oiw.13
-        for <git@vger.kernel.org>; Thu, 28 Jun 2018 18:23:03 -0700 (PDT)
+        id S1030334AbeF2CK4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Jun 2018 22:10:56 -0400
+Received: from mail-vk0-f74.google.com ([209.85.213.74]:53445 "EHLO
+        mail-vk0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1030327AbeF2CKz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jun 2018 22:10:55 -0400
+Received: by mail-vk0-f74.google.com with SMTP id x138-v6so2817062vkd.20
+        for <git@vger.kernel.org>; Thu, 28 Jun 2018 19:10:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
-         :cc;
-        bh=43/13s5G//UBTV6z0LytVehtLQpI/CNauiXgGx/kspE=;
-        b=oGUs/yfpE8ewr1s7S8lFF+ag3ObQDkTH9wgN/OshVDJYmUYNXKftsyfFzhuILaKuiD
-         tZo5tPDB4UnCruvlR/UJ7eXr9vGGId6dj8q4Z4kHZsdqw2oq8YQgvVI2tfF9q07XPC7x
-         USCB2uAbH6Fiqv/S/+fKlm2/Vkg4JT+IDDRO3e/4Fogz10i/0VKidOgEimiQz+RmKkCB
-         BbvdazjL9aZRrJsyxiGB3PZLLdVHRa770ZNzOtPph8JsOhu7qI3N7ruMtkzMm7JZZHH+
-         7wDe0vb4f0sTxW2THxpQM/em16BpsDPUZNz1v8UA/Y+RkuJyL9SXB3uYXTYdPlSlIL/n
-         CQ0g==
+        h=date:message-id:mime-version:subject:from:to:cc
+         :content-transfer-encoding;
+        bh=1DK0UF/kL82QrvYABqU/VoJiKaE1Dt6FgsB7/yAupGI=;
+        b=YC8H9xD1wRgs2K9Znc/ingZMPUCI5kU3hx+yY5TGY6p0oMs3r+MHYFRlXENN6XiiDM
+         m7kwjt8JE7LuvFGG1s0PMtNN4+iqES1yoTsM/YV0KZh9XtkkJhi79edXZMemoYQMNACM
+         OZWpAmlgqjDJYKFow8I+goW3lJ6Vn+Ie/lqYgi5ZBu2jCQ9ORM8stuk/R0racQwnm2fE
+         Ub5ALavHEOYYaEi9iT04zNT9OCuJPob8x6Y+wzUnSqrhPl0VOi62hLjwmNi+/jNYoSQe
+         xwtlzdT3VhY1aMu2+Se18iEQkTmFXbIar/ZkqfDKFJoIPYjr/X/XLmRVDilJCzYnFOuJ
+         Wi4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
-         :references:subject:from:to:cc;
-        bh=43/13s5G//UBTV6z0LytVehtLQpI/CNauiXgGx/kspE=;
-        b=V6FtDAGwnuJrrIDXdKlOT4im+EojVgzekjd4ofATrMc6Xhy/ThXf95/n9ydvDuc+jk
-         m+thltxrErYMXLQLlRWrVI7rx+/s8riDa8xZUFa/W2PmEojufKagQsKqk+UL4i7R9Oio
-         9LBXbAHEO2ydvZOi/8Rpp4OUaNxEdbmsaeIhxFmWaCiaC3MDhyMzsNKHzTzDPXhgemhV
-         Wve938k0xWgUwgrpfKkcdRpMYd9b5PoHvRPhb6anQddCzU0dah2K+KVbpW+UAs0pBkVL
-         s7LYt/eTudP8wr1ZvpMOHh7Xt1xaQN/D4Z/+JFnhRiKpBvSwMDFnmAkAfl0Nu/Y+ZKuv
-         yfwQ==
-X-Gm-Message-State: APt69E392k5uLuXUTJhuZ7JxXlyDYgv5emprVcSNaObKJC3X2RMnRcrG
-        tSyeaKrRfkXXLXa6yWrRK9jRbpioNPsZoABQcHQ7z76sFiXQH8wdNnlFxtk9be23KZQVtZ8Vqzq
-        SbgKdVqlrvrhZotfc9caAyqQ6DboCNIddqzqcSte1g8EozXJ2113RKTrYiwdi
-X-Google-Smtp-Source: AAOMgpdwI3+h8KVahwjaM1nLvJ5Qmo7Eur+nIyC1tbHtZIRDgNRqKgwaXYqgJfq8gEV16thVBZeaODvGYkNa
-MIME-Version: 1.0
-X-Received: by 2002:a9d:34ca:: with SMTP id t10-v6mr5338971otd.63.1530235382783;
- Thu, 28 Jun 2018 18:23:02 -0700 (PDT)
-Date:   Thu, 28 Jun 2018 18:22:03 -0700
-In-Reply-To: <20180629012222.167426-1-sbeller@google.com>
-Message-Id: <20180629012222.167426-14-sbeller@google.com>
-References: <20180629012222.167426-1-sbeller@google.com>
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc
+         :content-transfer-encoding;
+        bh=1DK0UF/kL82QrvYABqU/VoJiKaE1Dt6FgsB7/yAupGI=;
+        b=UnJo+LWQLC8V6yf9eWvYboavYyUL6Ef3MbHFKBR/8Ku/iPF/SoN1XzV7K6MBuge1K3
+         Ri0hHb0Ql1aO5X6dxeQ2C42E7Pnn/MpjdASIT2Dv8lxPS0urCgRrb+YwkngVhxKlwN5H
+         tdNEHvc1443RivavVF87iYbEUgS52gzMP2oToqbYWv7PKE7mJVA9gA4rUibyfgHqNJ0t
+         Fm3xJNyXyLd1x9MlW4HS82JOSGwdzuu3Id7ONalqbnEVa+9S0dJMmnCIvxbDMQ84sQ4V
+         LX29kzkeLqJStuZ5V3ZiHk5VJ48V2KSlsoGOGOQ/3gpF+CtmRMeGyxa4Sdkv21KC8pfu
+         I+4w==
+X-Gm-Message-State: APt69E0oeESEZgQUQfJMv+0fmg0jHbCGWb8dyl7RdVGX1P8A9rc5w+Xy
+        VvcbG9kyZozugacDkSvkr1l/qrlT11x6k3sgQdqovwuUNQ3UIKwAxsvrIus02TkKH11VswMDmjP
+        UeylVXE+tl9xqxhEe7NUjCU2kUNSTUUhefsnkdbwS2g3pNPniV5n1j8njOnyl
+X-Google-Smtp-Source: AAOMgpetNdpCs2m7o3eqkW1pVGKcovgGgwHYgCSzC24cfiUS8Th94WW/nte6MDbuWL/PZqpN9vQkdtjO36DR
+X-Received: by 2002:ab0:4141:: with SMTP id j59-v6mr5253683uad.1.1530238254361;
+ Thu, 28 Jun 2018 19:10:54 -0700 (PDT)
+Date:   Thu, 28 Jun 2018 19:10:48 -0700
+Message-Id: <20180629021050.187887-1-sbeller@google.com>
+Mime-Version: 1.0
 X-Mailer: git-send-email 2.18.0.399.gad0ab374a1-goog
-Subject: [PATCH v3 13/32] tag: add repository argument to lookup_tag
+Subject: [PATCH 1/3] .mailmap: merge different spellings of names
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a repository argument to allow the callers of lookup_tag
-to be more specific about which repository to act on. This is a small
-mechanical change; it doesn't change the implementation to handle
-repositories other than the_repository yet.
+This is a continuation of 94b410bba86 (.mailmap: Map email
+addresses to names, 2013-07-12), merging names that are
+spelled differently but have the same author email to the
+same person.
 
-As with the previous commits, use a macro to catch callers passing a
-repository other than the_repository at compile time.
+Most spellings differed in accents or the order of names.
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- builtin/describe.c     | 6 +++---
- builtin/pack-objects.c | 2 +-
- builtin/replace.c      | 2 +-
- log-tree.c             | 2 +-
- object.c               | 2 +-
- sha1-name.c            | 2 +-
- tag.c                  | 4 ++--
- tag.h                  | 4 ++--
- 8 files changed, 12 insertions(+), 12 deletions(-)
+ .mailmap | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/describe.c b/builtin/describe.c
-index c8ff64766d0..41606c8a900 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -93,13 +93,13 @@ static int replace_name(struct commit_name *e,
- 		struct tag *t;
- 
- 		if (!e->tag) {
--			t = lookup_tag(&e->oid);
-+			t = lookup_tag(the_repository, &e->oid);
- 			if (!t || parse_tag(t))
- 				return 1;
- 			e->tag = t;
- 		}
- 
--		t = lookup_tag(oid);
-+		t = lookup_tag(the_repository, oid);
- 		if (!t || parse_tag(t))
- 			return 0;
- 		*tag = t;
-@@ -267,7 +267,7 @@ static unsigned long finish_depth_computation(
- static void append_name(struct commit_name *n, struct strbuf *dst)
- {
- 	if (n->prio == 2 && !n->tag) {
--		n->tag = lookup_tag(&n->oid);
-+		n->tag = lookup_tag(the_repository, &n->oid);
- 		if (!n->tag || parse_tag(n->tag))
- 			die(_("annotated tag %s not available"), n->path);
- 	}
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 69d3d7b82af..6565c800ac3 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -2474,7 +2474,7 @@ static void add_tag_chain(const struct object_id *oid)
- 	if (packlist_find(&to_pack, oid->hash, NULL))
- 		return;
- 
--	tag = lookup_tag(oid);
-+	tag = lookup_tag(the_repository, oid);
- 	while (1) {
- 		if (!tag || parse_tag(tag) || !tag->tagged)
- 			die("unable to pack objects reachable from tag %s",
-diff --git a/builtin/replace.c b/builtin/replace.c
-index 0232f98f020..0351b7c62cf 100644
---- a/builtin/replace.c
-+++ b/builtin/replace.c
-@@ -402,7 +402,7 @@ static int check_one_mergetag(struct commit *commit,
- 	int i;
- 
- 	hash_object_file(extra->value, extra->len, type_name(OBJ_TAG), &tag_oid);
--	tag = lookup_tag(&tag_oid);
-+	tag = lookup_tag(the_repository, &tag_oid);
- 	if (!tag)
- 		return error(_("bad mergetag in commit '%s'"), ref);
- 	if (parse_tag_buffer(tag, extra->value, extra->len))
-diff --git a/log-tree.c b/log-tree.c
-index abe67e8b2e4..840423ca149 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -498,7 +498,7 @@ static int show_one_mergetag(struct commit *commit,
- 	size_t payload_size, gpg_message_offset;
- 
- 	hash_object_file(extra->value, extra->len, type_name(OBJ_TAG), &oid);
--	tag = lookup_tag(&oid);
-+	tag = lookup_tag(the_repository, &oid);
- 	if (!tag)
- 		return -1; /* error message already given */
- 
-diff --git a/object.c b/object.c
-index f08a8874de3..bcfcfd38760 100644
---- a/object.c
-+++ b/object.c
-@@ -223,7 +223,7 @@ struct object *parse_object_buffer_the_repository(const struct object_id *oid, e
- 			obj = &commit->object;
- 		}
- 	} else if (type == OBJ_TAG) {
--		struct tag *tag = lookup_tag(oid);
-+		struct tag *tag = lookup_tag(the_repository, oid);
- 		if (tag) {
- 			if (parse_tag_buffer(tag, buffer, size))
- 			       return NULL;
-diff --git a/sha1-name.c b/sha1-name.c
-index 98480ade12d..5854bc75fe2 100644
---- a/sha1-name.c
-+++ b/sha1-name.c
-@@ -358,7 +358,7 @@ static int show_ambiguous_object(const struct object_id *oid, void *data)
- 			format_commit_message(commit, " %ad - %s", &desc, &pp);
- 		}
- 	} else if (type == OBJ_TAG) {
--		struct tag *tag = lookup_tag(oid);
-+		struct tag *tag = lookup_tag(the_repository, oid);
- 		if (!parse_tag(tag) && tag->tag)
- 			strbuf_addf(&desc, " %s", tag->tag);
- 	}
-diff --git a/tag.c b/tag.c
-index 5dcdf7bf6f9..5b41fc71fad 100644
---- a/tag.c
-+++ b/tag.c
-@@ -92,7 +92,7 @@ struct object *deref_tag_noverify(struct object *o)
- 	return o;
- }
- 
--struct tag *lookup_tag(const struct object_id *oid)
-+struct tag *lookup_tag_the_repository(const struct object_id *oid)
- {
- 	struct object *obj = lookup_object(the_repository, oid->hash);
- 	if (!obj)
-@@ -160,7 +160,7 @@ int parse_tag_buffer(struct tag *item, const void *data, unsigned long size)
- 	} else if (!strcmp(type, commit_type)) {
- 		item->tagged = (struct object *)lookup_commit(the_repository, &oid);
- 	} else if (!strcmp(type, tag_type)) {
--		item->tagged = (struct object *)lookup_tag(&oid);
-+		item->tagged = (struct object *)lookup_tag(the_repository, &oid);
- 	} else {
- 		error("Unknown type %s", type);
- 		item->tagged = NULL;
-diff --git a/tag.h b/tag.h
-index 9057d76a506..276c448cd55 100644
---- a/tag.h
-+++ b/tag.h
-@@ -11,8 +11,8 @@ struct tag {
- 	char *tag;
- 	timestamp_t date;
- };
--
--extern struct tag *lookup_tag(const struct object_id *oid);
-+#define lookup_tag(r, o) lookup_tag_##r(o)
-+extern struct tag *lookup_tag_the_repository(const struct object_id *oid);
- extern int parse_tag_buffer(struct tag *item, const void *data, unsigned long size);
- extern int parse_tag(struct tag *item);
- extern void release_tag_memory(struct tag *t);
--- 
+diff --git a/.mailmap b/.mailmap
+index df7cf6313c7..f165222a782 100644
+--- a/.mailmap
++++ b/.mailmap
+@@ -35,11 +35,13 @@ Chris Wright <chrisw@sous-sol.org> <chrisw@osdl.org>
+ Cord Seele <cowose@gmail.com> <cowose@googlemail.com>
+ Christian Couder <chriscool@tuxfamily.org> <christian.couder@gmail.com>
+ Christian Stimming <stimming@tuhh.de> <chs@ckiste.goetheallee>
++Christopher D=C3=ADaz Riveros <chrisadr@gentoo.org> Christopher Diaz River=
+os
+ Csaba Henk <csaba@gluster.com> <csaba@lowlife.hu>
+ Dan Johnson <computerdruid@gmail.com>
+ Dana L. How <danahow@gmail.com> <how@deathvalley.cswitch.com>
+ Dana L. How <danahow@gmail.com> Dana How
+ Daniel Barkalow <barkalow@iabervon.org>
++Daniel Knittl-Frank <knittl89@googlemail.com> knittl
+ Daniel Trstenjak <daniel.trstenjak@gmail.com> <daniel.trstenjak@online.de>
+ Daniel Trstenjak <daniel.trstenjak@gmail.com> <trsten@science-computing.de=
+>
+ David Brown <git@davidb.org> <davidb@quicinc.com>
+@@ -57,6 +59,7 @@ Eric S. Raymond <esr@thyrsus.com>
+ Eric Wong <e@80x24.org> <normalperson@yhbt.net>
+ Erik Faye-Lund <kusmabite@gmail.com> <kusmabite@googlemail.com>
+ Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com> <eyvind-git@orakel.ntnu.=
+no>
++Fangyi Zhou <fangyi.zhou@yuriko.moe> Zhou Fangyi
+ Florian Achleitner <florian.achleitner.2.6.31@gmail.com> <florian.achleitn=
+er2.6.31@gmail.com>
+ Franck Bui-Huu <vagabon.xyz@gmail.com> <fbuihuu@gmail.com>
+ Frank Lichtenheld <frank@lichtenheld.de> <djpig@debian.org>
+@@ -86,6 +89,8 @@ Jason McMullan <mcmullan@netapp.com>
+ Jason Riedy <ejr@eecs.berkeley.edu> <ejr@EECS.Berkeley.EDU>
+ Jason Riedy <ejr@eecs.berkeley.edu> <ejr@cs.berkeley.edu>
+ Jay Soffian <jaysoffian@gmail.com> <jaysoffian+git@gmail.com>
++Jean-No=C3=ABl Avila <jn.avila@free.fr> Jean-Noel Avila
++Jean-No=C3=ABl Avila <jn.avila@free.fr> Jean-No=C3=ABl AVILA
+ Jeff King <peff@peff.net> <peff@github.com>
+ Jeff Muizelaar <jmuizelaar@mozilla.com> <jeff@infidigm.net>
+ Jens Axboe <axboe@kernel.dk> <axboe@suse.de>
+@@ -149,6 +154,7 @@ Matt Draisey <matt@draisey.ca> <mattdraisey@sympatico.c=
+a>
+ Matt Kraai <kraai@ftbfs.org> <matt.kraai@amo.abbott.com>
+ Matt McCutchen <matt@mattmccutchen.net> <hashproduct@gmail.com>
+ Matthias Kestenholz <matthias@spinlock.ch> <mk@spinlock.ch>
++Matthias R=C3=BCster <matthias.ruester@gmail.com> Matthias Ruester
+ Matthias Urlichs <matthias@urlichs.de> <smurf@kiste.(none)>
+ Matthias Urlichs <matthias@urlichs.de> <smurf@smurf.noris.de>
+ Michael Coleman <tutufan@gmail.com>
+@@ -213,6 +219,8 @@ Sean Estabrooks <seanlkml@sympatico.ca>
+ Sebastian Schuberth <sschuberth@gmail.com> <sschuberth@visageimaging.com>
+ Seth Falcon <seth@userprimary.net> <sfalcon@fhcrc.org>
+ Shawn O. Pearce <spearce@spearce.org>
++Wei Shuyu <wsy@dogben.com> Shuyu Wei
++Sidhant Sharma <tigerkid001@gmail.com> Sidhant Sharma [:tk]
+ Simon Hausmann <hausmann@kde.org> <simon@lst.de>
+ Simon Hausmann <hausmann@kde.org> <shausman@trolltech.com>
+ Stefan Beller <stefanbeller@gmail.com> <stefanbeller@googlemail.com>
+@@ -253,7 +261,8 @@ Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de> =
+<ukleinek@informatik.uni-frei
+ Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de> <uzeisberger@io.fsf=
+orth.de>
+ Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de> <zeisberg@informati=
+k.uni-freiburg.de>
+ Ville Skytt=C3=A4 <ville.skytta@iki.fi> <scop@xemacs.org>
+-Vitaly "_Vi" Shukela <public_vi@tut.by>
++Vitaly "_Vi" Shukela <vi0oss@gmail.com> <public_vi@tut.by>
++Vitaly "_Vi" Shukela <vi0oss@gmail.com> Vitaly _Vi Shukela
+ W. Trevor King <wking@tremily.us> <wking@drexel.edu>
+ William Pursell <bill.pursell@gmail.com>
+ YONETANI Tomokazu <y0n3t4n1@gmail.com> <qhwt+git@les.ath.cx>
+--=20
 2.18.0.399.gad0ab374a1-goog
 
