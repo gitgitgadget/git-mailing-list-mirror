@@ -7,133 +7,179 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 475FA1F516
-	for <e@80x24.org>; Fri, 29 Jun 2018 20:15:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D9451F516
+	for <e@80x24.org>; Fri, 29 Jun 2018 20:28:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935626AbeF2UPF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Jun 2018 16:15:05 -0400
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:45136 "EHLO
-        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932263AbeF2UPE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jun 2018 16:15:04 -0400
-Received: by mail-yw0-f196.google.com with SMTP id v190-v6so4050982ywa.12
-        for <git@vger.kernel.org>; Fri, 29 Jun 2018 13:15:04 -0700 (PDT)
+        id S965537AbeF2U2S (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Jun 2018 16:28:18 -0400
+Received: from mail-yw0-f201.google.com ([209.85.161.201]:55712 "EHLO
+        mail-yw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965491AbeF2U2P (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jun 2018 16:28:15 -0400
+Received: by mail-yw0-f201.google.com with SMTP id a200-v6so8712419ywh.22
+        for <git@vger.kernel.org>; Fri, 29 Jun 2018 13:28:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=UeQfannHBq8C2fbB6ocPeLJNFgl850r6lUmsVC37PmY=;
-        b=dnmiKUKwQabuKvDzDP7Nv8pi+P+D/XKp++DDW62kiaz7AE76HTQZSgbsNzrWsHXozC
-         pV+1Dw29NQ1ki0ySsAafXEP5aRhWyFaqkBk9tLwbdkgc6DVHUz4nEbrhlQK+Jz9pSgl4
-         pfOT4Kw5HPUQEnqpSYRM4hZCgjIRn467uZ9aJcYMeIx95rohJCUSKpOX7M9NKCVuipYc
-         BMYJJwHTjjGa5ovV5TZDyJDoE/mBDZ8hc3NNhAuWT8F/o/34iF769LXvce3JvZNmiR75
-         aiGW3FGeyxnwWVrZEVe/EWtdOYykocHxO3ePyBQ/0QNioKmQ2Bhkl52p1ybgEYSb09RV
-         saDA==
+        bh=VDpYI19eLPd6OYlphnveGUM64xppFy5X+tbL8yrKR+k=;
+        b=Q8VefNYTbCd8DBXlPlxPbxXYkLBdS1n1PofswnGg2PPdwrsRquiRdkK9EflepG4T1i
+         ZII/rukHU02sDteLRRinye5I7QhyepZAGGmWd3Cs3LA1uLxCRBkdjn9Gok0CgLalia+F
+         6kE+SLiZpaceTCyDo14u07FdFL7aD24ht1jn5J2s1liuks4YgZ2KbcdT3ZVw5PgjIQep
+         XHhRe7c0+e2udTcdkSAb6b2H/9tYbNRh2DtGxHWDXJg1jG5nYighhxpAReAHjz7UyG3b
+         Php1yWULrty4+jrC4II/bVjx7o88TjyfgRQaXzCvSFi6oxqnrfr3qDMtG4G44dXPo2lU
+         MX4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=UeQfannHBq8C2fbB6ocPeLJNFgl850r6lUmsVC37PmY=;
-        b=VdR8GuzaXClQpxhlqrLwo2jNKwIKuoHSGzCNwXj7kXCuj/lGAqZgtOgLLDNfL5Wztr
-         n8EvpHNjzCPHjpMEm5Bp+J6s3yshRv83PEYfoO/FH0I3eEEEFkgwSlx3ArMsX8WueUnZ
-         msdZk0xvRhpScq5CTrj0vN7zMEbVT9rsIpNZwZpaOAkunQxN0h9G8YqXJTKGpgMLYMro
-         Cu3QZiB1ahWKqTmPXOaQTwoXykduQ6kqOeHWCnCwqSDXlmB/VIRsQQq3mCPURQKXU8nm
-         mbaUUjRimQnCFHWCVTh2AF9dpWryWldsVLiB9q68llc3XxGuwiQnw5yK/aP8jik0Kv3C
-         l/gQ==
-X-Gm-Message-State: APt69E01KT0kLRAu0Y/LAykId9w0GSH79McoyXwzx4D9zDkbKxy981wa
-        0lKGJdGpGsGD8UQ3k8hlZicRpUy87cHW2yECyoOE6SxCWQo=
-X-Google-Smtp-Source: AAOMgpc4NHTlbpwPOoBtlw27v+OW8B5bn+1NfRYvF4a/K2hvQaD7n3TCUDdhj9yCtSIBIRQpjH8dBsilelIhD/oTLX8=
-X-Received: by 2002:a0d:d304:: with SMTP id v4-v6mr7987587ywd.500.1530303303638;
- Fri, 29 Jun 2018 13:15:03 -0700 (PDT)
+        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
+         :references:subject:from:to:cc;
+        bh=VDpYI19eLPd6OYlphnveGUM64xppFy5X+tbL8yrKR+k=;
+        b=qCSnKYy6o1ZsHAPB1/e2FCieLo3029UnKTnHjtqmtUjmAjT5v5KGCom4Wl9EzPkiNT
+         qO9ejSQs+JtWsgyrDsNDB5OyUsQrcD0RtFiSKV7Yxiy+j2tNqrRbZ/FlUtqhXHAXV1ki
+         HARKcO7wyWcNsVtlc9sn2FH4/Y/5xJBQVEW2rJ3awCpUp1OvGCI4BnFL0+oyf8xlvk5R
+         VQnoPvabVb85WtyRmh2oN4J3ZHRCB19lMI1LNY+XIVWq0H12LMEKp01Mu/okPrXCrort
+         VQ/JNAWhE8FnPOMSHOFTfXrwvJmj0QSiMM7GU8Ljb2w86aKSMpbPJGWEw5NF+yO+wgln
+         QMfA==
+X-Gm-Message-State: APt69E2sRkmFWB5x0DntISUzkCDJd7OzN0tzrA89bqU1eg+pzo+hthaJ
+        nPBV6eDH/4VUR96wf07+ecf8Y7pBrjA4
+X-Google-Smtp-Source: ADUXVKKX19vx5qWjKG7YqRfDNj7L+nH6CtEIo/b52ZCPFd+J08FGX1Umjz4jJiXUouGUMkb+v4vlSpF2FIV0
 MIME-Version: 1.0
-References: <20180629094413.bgltep6ntlza6vhz@glandium.org>
-In-Reply-To: <20180629094413.bgltep6ntlza6vhz@glandium.org>
+X-Received: by 2002:a5b:401:: with SMTP id m1-v6mr4383867ybp.39.1530304095247;
+ Fri, 29 Jun 2018 13:28:15 -0700 (PDT)
+Date:   Fri, 29 Jun 2018 13:28:11 -0700
+In-Reply-To: <CAGZ79kb0FOafEsuXU7c_BTwPtcujFeyWVhzSuzFHRFtQHp9weQ@mail.gmail.com>
+Message-Id: <20180629202811.131265-1-sbeller@google.com>
+References: <CAGZ79kb0FOafEsuXU7c_BTwPtcujFeyWVhzSuzFHRFtQHp9weQ@mail.gmail.com>
+X-Mailer: git-send-email 2.18.0.399.gad0ab374a1-goog
+Subject: [PATCH] xdiff: reduce indent heuristic overhead
 From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 29 Jun 2018 13:14:52 -0700
-Message-ID: <CAGZ79kb0FOafEsuXU7c_BTwPtcujFeyWVhzSuzFHRFtQHp9weQ@mail.gmail.com>
-Subject: Re: fast-import slowness when importing large files with small differences
-To:     Mike Hommey <mh@glandium.org>,
-        Jameson Miller <jamill@microsoft.com>
-Cc:     git <git@vger.kernel.org>
+To:     sbeller@google.com
+Cc:     mhagger@alum.mit.edu, git@vger.kernel.org, jamill@microsoft.com,
+        mh@glandium.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 29, 2018 at 3:18 AM Mike Hommey <mh@glandium.org> wrote:
->
-> Hi,
->
-> I noticed some slowness when fast-importing data from the Firefox mercurial
-> repository, where fast-import spends more than 5 minutes importing ~2000
-> revisions of one particular file. I reduced a testcase while still
-> using real data. One could synthesize data with kind of the same
-> properties, but I figured real data could be useful.
-
-I cc'd Jameson, who refactored memory allocation in fast-import recently.
-(I am not aware of other refactorings in the area of fast-import)
-
-> To reproduce:
-[...]
-> Memory total:          2282 KiB
->        pools:          2048 KiB
->      objects:           234 KiB
->
-[...]
-> Obviously, sha1'ing 26GB is not going to be free, but it's also not the
-> dominating cost, according to perf:
->
->     63.52%  git-fast-import  git-fast-import     [.] create_delta_index
-
-So this doesn't sound like a memory issue, but a diffing/deltaing issue.
-
-> So maybe it would make sense to consolidate the diff code (after all,
-> diff-delta.c is an old specialized fork of xdiff). With manual trimming
-> of common head and tail, this gets down to 3:33.
-
-This sounds interesting. I'd love to see that code to be unified.
-
-> I'll also note that Facebook has imported xdiff from the git code base
-> into mercurial and improved performance on it, so it might also be worth
-> looking at what's worth taking from there.
-
-So starting with
-https://www.mercurial-scm.org/repo/hg/rev/34e2ff1f9cd8
-("xdiff: vendor xdiff library from git")
-they adapted it slightly:
-$ hg log --template '{node|short} {desc|firstline}\n' --
-mercurial/thirdparty/xdiff/
-a2baa61bbb14 xdiff: move stdint.h to xdiff.h
-d40b9e29c114 xdiff: fix a hard crash on Windows
-651c80720eed xdiff: silence a 32-bit shift warning on Windows
-d255744de97a xdiff: backport int64_t and uint64_t types to Windows
-e5b14f5b8b94 xdiff: resolve signed unsigned comparison warning
-f1ef0e53e628 xdiff: use int64 for hash table size
-f0d9811dda8e xdiff: remove unused xpp and xecfg parameters
-49fe6249937a xdiff: remove unused flags parameter
-882657a9f768 xdiff: replace {unsigned ,}long with {u,}int64_t
-0c7350656f93 xdiff: add comments for fields in xdfile_t
-f33a87cf60cc xdiff: add a preprocessing step that trims files
-3cf40112efb7 xdiff: remove xmerge related logic
-90f8fe72446c xdiff: remove xemit related logic
-b5bb0f99064d xdiff: remove unused structure, functions, and constants
-09f320067591 xdiff: remove whitespace related feature
-1f9bbd1d6b8a xdiff: fix builds on Windows
-c420792217c8 xdiff: reduce indent heuristic overhead
-b3c9c483cac9 xdiff: add a bdiff hunk mode
-9e7b14caf67f xdiff: remove patience and histogram diff algorithms
-34e2ff1f9cd8 xdiff: vendor xdiff library from git
-
-Interesting pieces regarding performance:
-
-c420792217c8 xdiff: reduce indent heuristic overhead
+This patch was written originally for mercurial at
 https://phab.mercurial-scm.org/rHGc420792217c89622482005c99e959b9071c109c5
 
-f33a87cf60cc xdiff: add a preprocessing step that trims files
-https://phab.mercurial-scm.org/rHGf33a87cf60ccb8b46e06b85e60bc5031420707d6
+    changeset:   36674:c420792217c8
+    user:        Jun Wu <quark@fb.com>
+    date:        Sat Mar 03 12:39:11 2018 -0800
+    files:       mercurial/thirdparty/xdiff/xdiffi.c
+    description:
+    xdiff: reduce indent heuristic overhead
 
-I'll see if I can make that into patches.
+    Adds some threshold to avoid expensive cases, like:
+
+    ```
+    #!python
+    open('a', 'w').write(" \n" * 1000000)
+    open('b', 'w').write(" \n" * 1000001)
+    ```
+
+    The indent heuristic is O(N * 20) (N = 1000000) for the above case, and
+    makes diff much slower.
+
+    Before this patch (system git 2.14.2):
+
+    ```
+    git diff --no-indent-heuristic a b  0.21s user 0.03s system 100% cpu 0.239 total
+    git diff --indent-heuristic a b     0.77s user 0.02s system 99% cpu 0.785 total
+    ```
+
+    After this patch (git 2fc74f41, with xdiffi.c patched):
+
+    ```
+    # with the changed xdiffi.c
+    git diff --indent-heuristic a b      0.16s user 0.01s system 90% cpu 0.188 total
+    git diff --no-indent-heuristic a b   0.18s user 0.01s system 99% cpu 0.192 total
+    ```
+
+    Now turning on indent-heuristic has no visible impact on performance.
+
+    Differential Revision: https://phab.mercurial-scm.org/D2601
+
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+
+This applies on our master branch, I have not thought of a
+good commit message or if we need to test it.
 
 Thanks,
 Stefan
+
+ xdiff/xdiffi.c | 38 +++++++++++++++++++++++++++++++++++---
+ 1 file changed, 35 insertions(+), 3 deletions(-)
+
+diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
+index 0de1ef463bf..c74ec77da58 100644
+--- a/xdiff/xdiffi.c
++++ b/xdiff/xdiffi.c
+@@ -807,6 +807,14 @@ static void xdl_bug(const char *msg)
+ 	exit(1);
+ }
+ 
++/*
++ * For indentation heuristic, skip searching for better slide position after
++ * checking MAX_BORING lines without finding an improvement. This defends the
++ * indentation heuristic logic against pathological cases. The value is not
++ * picked scientifically but should be good enough.
++ */
++#define MAX_BORING 100
++
+ /*
+  * Move back and forward change groups for a consistent and pretty diff output.
+  * This also helps in finding joinable change groups and reducing the diff
+@@ -903,19 +911,43 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ 			long shift, best_shift = -1;
+ 			struct split_score best_score;
+ 
+-			for (shift = earliest_end; shift <= g.end; shift++) {
++			/*
++			 * This is O(N * MAX_BLANKS) (N = shift-able lines).
++			 * Even with MAX_BLANKS bounded to a small value, a
++			 * large N could still make this loop take several
++			 * times longer than the main diff algorithm. The
++			 * "boring" value is to help cut down N to something
++			 * like (MAX_BORING + groupsize).
++			 *
++			 * Scan from bottom to top. So we can exit the loop
++			 * without compromising the assumption "for a same best
++			 * score, pick the bottommost shift".
++			 */
++			int boring = 0;
++			for (shift = g.end; shift >= earliest_end; shift--) {
+ 				struct split_measurement m;
+ 				struct split_score score = {0, 0};
++				int cmp;
+ 
+ 				measure_split(xdf, shift, &m);
+ 				score_add_split(&m, &score);
+ 				measure_split(xdf, shift - groupsize, &m);
+ 				score_add_split(&m, &score);
+-				if (best_shift == -1 ||
+-				    score_cmp(&score, &best_score) <= 0) {
++
++				if (best_shift == -1) {
++					cmp = -1;
++				} else {
++					cmp = score_cmp(&score, &best_score);
++				}
++				if (cmp < 0) {
++					boring = 0;
+ 					best_score.effective_indent = score.effective_indent;
+ 					best_score.penalty = score.penalty;
+ 					best_shift = shift;
++				} else {
++					boring += 1;
++					if (boring >= MAX_BORING)
++						break;
+ 				}
+ 			}
+ 
+-- 
+2.18.0.399.gad0ab374a1-goog
+
