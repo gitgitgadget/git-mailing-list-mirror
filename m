@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 333841F516
-	for <e@80x24.org>; Fri, 29 Jun 2018 01:23:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B9931F516
+	for <e@80x24.org>; Fri, 29 Jun 2018 01:23:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936492AbeF2BXV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Jun 2018 21:23:21 -0400
-Received: from mail-it0-f74.google.com ([209.85.214.74]:42312 "EHLO
-        mail-it0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S936475AbeF2BXP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jun 2018 21:23:15 -0400
-Received: by mail-it0-f74.google.com with SMTP id y23-v6so435731itc.7
-        for <git@vger.kernel.org>; Thu, 28 Jun 2018 18:23:14 -0700 (PDT)
+        id S936490AbeF2BXT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Jun 2018 21:23:19 -0400
+Received: from mail-ua0-f201.google.com ([209.85.217.201]:52775 "EHLO
+        mail-ua0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S936468AbeF2BXR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jun 2018 21:23:17 -0400
+Received: by mail-ua0-f201.google.com with SMTP id d23-v6so2259476uap.19
+        for <git@vger.kernel.org>; Thu, 28 Jun 2018 18:23:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=+lfnNBslLW8cYpiWcAfXGEApdslsefwD5Gti7693JlY=;
-        b=NHPlYVFORG5OcnDYmmWdhM3EbRBkwgk0srhZZc3X66llzOLxO0APs+he+dd/alsMo4
-         8hQ/DnMM2A/m4HVF0kWbfOIrDEQK71PnBMSVxes7TeElfEtWKORPP1kGNg/cS/vycpAK
-         6E5fV4/vBhaLwv4GyB3s0aHhRQGtdYjWu5CL6u0TLHW09HKCVh3Wh+dPf3W7c0WHteWG
-         YDTu9UWgM/fbrop1/YsLCSSysFubfYwtlB/GSFRkIH4LrGA7oxeEOUCnSJYcSBBwyNoB
-         O1GKQ2bjrZdKTMKB5O2uPydSILoM5Q58IM2fYjI55+PIla0E3+BzN5AcvUuHa+zwD0Y5
-         YBBw==
+        bh=OdPVxzJnlLGc5X/T1ZRtwFmAUFFx1b8hHyGt7DXi7fQ=;
+        b=gTcouiLdf16u+9+ENX+cnJGffsaGU94u6HBZu6nzOo1UmwswwcTXKHAHdAJ6V6mpJc
+         8nzNylg2Ql7qGMzZsk0VBf2MgcBZgLNnyosw+QJj/ihukuLlXcf53Jv3E+ljVVhpeo4n
+         Y5W1+mqB3u3znC3vNhxFHAb9H1Gdc9dCBpHxUzzXjGh7L7NY4Mbm6YCfNsJy8gavAHTV
+         cmkQ1EWOqOWgxfQEkEmR8ffH9x5cV1Kkqk6jahvJTTLcDuAhR6fILVi95w990/OEbkq1
+         72WN/43qsat5OQm/nEpYLqQmEgZvoDaNcLHuTVbEMh3qimpalg+C/4slqSdC8UiuNybP
+         zahg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=+lfnNBslLW8cYpiWcAfXGEApdslsefwD5Gti7693JlY=;
-        b=QFUmvVNz7Z+9d95V6ubWtysawcLocKJZWQCYHpFM10poNGREjLvCwb9sIJF53LvkZ6
-         mS20tYlLlOnPLt2ipRJs7zCmveU5dJHKWr6bMx3a69UERRKq3THX1XMEFKyc+uXgfsSn
-         aGFEL0PjSiZTxIqFBEKoaoxO7MloWK7grub7HFbbQP7rjampSzD0Y/JD/NOnuILCkNzC
-         qljmqVM40yqKF2lgHjnQu0jMIlEMi2sRlWAStDSQLnH83u3F8xh84znYFft2AKKkZ0qr
-         b2/na8aij6TfvaZzX7c6ydVcPOW/EAK85kjtjuqyJLFpq7mu8Mn6nkoKOsGuahRb50QL
-         3gDw==
-X-Gm-Message-State: APt69E1QnhxAd1KY42nO/ZJ6EkNhPXwKDM2oV3c8/y0HhC4yux1U4l4I
-        T+5pdG/yJv9PITfJ3Aq0G9MTWFvZWKXWkeo4bLrdrGwXTifeehc4Wa5DUAd/d4Q33VTTMMH7o0g
-        ScAafBHJ2bEnlQ3YlZgOYO4VrV/qbuBY4Z7youLBdCwKDsk68KQSqBxFvu6wM
-X-Google-Smtp-Source: AAOMgpeXNWIg+bl1e1DvZRwX9NqDHmMhLjxEOgc3uGdBYx+iWlFdmwuCE/1v1aKgLRVzTpYMjyGdMdJADD7V
+        bh=OdPVxzJnlLGc5X/T1ZRtwFmAUFFx1b8hHyGt7DXi7fQ=;
+        b=F72k21cxHZPhZMnqmKZXhtC2L1X2QC96WauGII4gZKSeuDv1M/o+gBLq7f/5eYkysQ
+         GlBkYHZ2I76hIEqwYf5P+B+60i8Y+K8b2BpJPLR7CzhC4cTYNH5q+Pfi7oPbNcNw7R+B
+         I7acwGoDAAeAbM/HOcmYlTtuv/dWXGZMbXfdyTqyoDoRoXi5/8IraORyoYZeBD8htb+e
+         Xz78rHNrmgy/tw2qqX2i7fnml6Jil/BNR759882Sfj1V2SrvUUZrzxk3HBPMPk4uPD/Q
+         On5WpCBEpb7EFNEnLoRPLcI6tjZuYzkMPE9VkZ5hfyogSDDfNCPjTiMfxw1zQkE5dQ4g
+         dWaQ==
+X-Gm-Message-State: APt69E3Jsbce3afPE24wOpdwmD5GyYWcc4lc6FhKLW8INpY1PjdYNRnJ
+        eQR5OXtPgAhOawaQ5GdHPEqpbqZrUcCdIPoM+pxRs2cEyUyX1w5QWVwEdjGOEOUqYtiIa8s0oww
+        6C3cepWKIQ/Qb+pV6olwZvQf6ArJhbOj0CUg1hl8Uq2p8waMuYsglxpQOq9+A
+X-Google-Smtp-Source: AAOMgpfPoZhdUg9LYZwjMY1iVQFupLhbIyRJCuSMQy9ldyMwuu+BfL8fw7Iwv066Yoix8zcoGKvwXvslkjD8
 MIME-Version: 1.0
-X-Received: by 2002:a24:2201:: with SMTP id o1-v6mr89270ito.12.1530235394279;
- Thu, 28 Jun 2018 18:23:14 -0700 (PDT)
-Date:   Thu, 28 Jun 2018 18:22:08 -0700
+X-Received: by 2002:ab0:1a08:: with SMTP id a8-v6mr5013643uai.96.1530235396608;
+ Thu, 28 Jun 2018 18:23:16 -0700 (PDT)
+Date:   Thu, 28 Jun 2018 18:22:09 -0700
 In-Reply-To: <20180629012222.167426-1-sbeller@google.com>
-Message-Id: <20180629012222.167426-19-sbeller@google.com>
+Message-Id: <20180629012222.167426-20-sbeller@google.com>
 References: <20180629012222.167426-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.399.gad0ab374a1-goog
-Subject: [PATCH v3 18/32] blob: allow lookup_blob to handle arbitrary repositories
+Subject: [PATCH v3 19/32] tree: allow lookup_tree to handle arbitrary repositories
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>
@@ -64,46 +64,46 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- blob.c | 10 +++++-----
- blob.h |  3 +--
+ tree.c | 10 +++++-----
+ tree.h |  3 +--
  2 files changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/blob.c b/blob.c
-index 17b9314f0a0..342bdbb1bbe 100644
---- a/blob.c
-+++ b/blob.c
-@@ -5,13 +5,13 @@
+diff --git a/tree.c b/tree.c
+index 45e89ff08eb..78d440a9c8f 100644
+--- a/tree.c
++++ b/tree.c
+@@ -195,13 +195,13 @@ int read_tree(struct tree *tree, int stage, struct pathspec *match,
+ 	return 0;
+ }
  
- const char *blob_type = "blob";
- 
--struct blob *lookup_blob_the_repository(const struct object_id *oid)
-+struct blob *lookup_blob(struct repository *r, const struct object_id *oid)
+-struct tree *lookup_tree_the_repository(const struct object_id *oid)
++struct tree *lookup_tree(struct repository *r, const struct object_id *oid)
  {
 -	struct object *obj = lookup_object(the_repository, oid->hash);
 +	struct object *obj = lookup_object(r, oid->hash);
  	if (!obj)
 -		return create_object(the_repository, oid->hash,
--				     alloc_blob_node(the_repository));
--	return object_as_type(the_repository, obj, OBJ_BLOB, 0);
+-				     alloc_tree_node(the_repository));
+-	return object_as_type(the_repository, obj, OBJ_TREE, 0);
 +		return create_object(r, oid->hash,
-+				     alloc_blob_node(r));
-+	return object_as_type(r, obj, OBJ_BLOB, 0);
++				     alloc_tree_node(r));
++	return object_as_type(r, obj, OBJ_TREE, 0);
  }
  
- int parse_blob_buffer(struct blob *item, void *buffer, unsigned long size)
-diff --git a/blob.h b/blob.h
-index 08bc34487a0..16648720557 100644
---- a/blob.h
-+++ b/blob.h
-@@ -9,8 +9,7 @@ struct blob {
- 	struct object object;
+ int parse_tree_buffer(struct tree *item, void *buffer, unsigned long size)
+diff --git a/tree.h b/tree.h
+index 2ea21ed174b..d4807dc8058 100644
+--- a/tree.h
++++ b/tree.h
+@@ -12,8 +12,7 @@ struct tree {
+ 	unsigned long size;
  };
  
--#define lookup_blob(r, o) lookup_blob_##r(o)
--struct blob *lookup_blob_the_repository(const struct object_id *oid);
-+struct blob *lookup_blob(struct repository *r, const struct object_id *oid);
+-#define lookup_tree(r, oid) lookup_tree_##r(oid)
+-struct tree *lookup_tree_the_repository(const struct object_id *oid);
++struct tree *lookup_tree(struct repository *r, const struct object_id *oid);
  
- int parse_blob_buffer(struct blob *item, void *buffer, unsigned long size);
+ int parse_tree_buffer(struct tree *item, void *buffer, unsigned long size);
  
 -- 
 2.18.0.399.gad0ab374a1-goog
