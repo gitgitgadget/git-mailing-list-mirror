@@ -7,121 +7,112 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9A6C11F516
-	for <e@80x24.org>; Fri, 29 Jun 2018 11:21:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3DF41F516
+	for <e@80x24.org>; Fri, 29 Jun 2018 11:29:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755298AbeF2LV2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Jun 2018 07:21:28 -0400
-Received: from mout.gmx.net ([212.227.17.21]:46057 "EHLO mout.gmx.net"
+        id S1755254AbeF2L3g (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Jun 2018 07:29:36 -0400
+Received: from mout.gmx.net ([212.227.15.15]:35469 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755062AbeF2LVY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jun 2018 07:21:24 -0400
-Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MK0bZ-1fY27L328b-001T8N; Fri, 29
- Jun 2018 13:21:14 +0200
-Date:   Fri, 29 Jun 2018 13:20:58 +0200 (DST)
+        id S932280AbeF2L3g (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jun 2018 07:29:36 -0400
+Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MBnvD-1fOjNz2Kn9-00AjMK; Fri, 29
+ Jun 2018 13:29:24 +0200
+Date:   Fri, 29 Jun 2018 13:29:08 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Christian Couder <christian.couder@gmail.com>,
-        Tiago Botelho <tiagonbotelho@gmail.com>,
-        git <git@vger.kernel.org>,
-        Harald Nordgren <haraldnordgren@gmail.com>,
-        Tiago Botelho <tiagonbotelho@hotmail.com>
-Subject: Re: [RFC PATCH v5] Implement --first-parent for git rev-list
- --bisect
-In-Reply-To: <xmqqvaa2yjo1.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1806291317150.74@tvgsbejvaqbjf.bet>
-References: <20180622123945.68852-1-tiagonbotelho@hotmail.com> <xmqq4lhqpy80.fsf@gitster-ct.c.googlers.com> <CAP8UFD3oEjW75qsk4d_wqo2V8PmzMvZLshutw20CD7AU4b4ocg@mail.gmail.com> <nycvar.QRO.7.76.6.1806261540340.21419@tvgsbejvaqbjf.bet>
- <CAP8UFD1TeC4czp_8HCRw5CtjGO78A8gRezw_xspnm4MXuhQswg@mail.gmail.com> <xmqqa7rhi40f.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1806271254210.21419@tvgsbejvaqbjf.bet> <xmqqwoukgpr9.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1806281505160.73@tvgsbejvaqbjf.bet>
- <xmqqvaa2yjo1.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/1] Makefile: fix the "built from commit" code
+In-Reply-To: <20180628174721.GD31766@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1806291326500.74@tvgsbejvaqbjf.bet>
+References: <pull.7.git.gitgitgadget@gmail.com> <e0e41d0b88b4104737b9ee80710c1bec91c9d759.1530190395.git.gitgitgadget@gmail.com> <20180628132314.GA14026@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1806281809060.73@tvgsbejvaqbjf.bet> <xmqqa7reyg6z.fsf@gitster-ct.c.googlers.com>
+ <20180628174721.GD31766@sigill.intra.peff.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:zi2b+qqHSDn260j10x3KG3rQgeTMjAXabbjGXVfyKQvyQGnOvdM
- LnDL7C0wmwmhYGOmugrNnQLX2ESOxxbSWR/EtmyjdPkwvMob+JRCctuwfRM9ZbEX13Pc9ZH
- 9gm6idi9+s+QKmJKoHMPGXl6otD28ur9DDZKyog0xDpipvSzvj2Tlz/2yEMbXIUtA8wB5UC
- DXI67ZRE7hAHO+/3e1bFg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:S1AWbueLxMo=:k8+WKwwaZpGfbjQHKZGJlG
- lfEiJo3sqwCjcn53R+gr42FhY6ozhIVF9vsyXgeEIZzzALx2Lsyym3ckE4n96XimAJlw1yp7M
- h49ptReZpuNw/hHev1mScbANHi0+Dy5GRy6rhnthgcG6ZbO0rPX3f4BQ0bUeZ7TFSzCG+qlCZ
- Fqtgxb8UkueLfOp8bbXDceBQU5T4P2TMoEva9yxOGKcXEOozIOoFp6OXYNViGqxuT5PrMBUFO
- NkMFBE6qb4VY0Bn+4+Y7kypPcjks+GuPFQT7IZM8CycZECPsK5lnVs+nFczNKlN3qfXFNqWyg
- 31M3ydIUGrduk3ZPK0XjPieyjt4A1ZAdCbHQa6nSP4AORDRCRClMIkHCE2SI3hETfJzQnOe8V
- gf7toMM9SiR4gxyWTw5muhgEA0DNBiBBfMZObyHYA+/Zqr6mmZqe1nsK5XBK9pU77ms1Ba2h6
- nfjc+KXd1PPB2xtgtVMCMgld+cNCO7dywXAQVwsPHfQ8lQXa3YuH6jLUy8koBxfsc/DDcr9Qi
- u2cOTInjYUTyW9Agc3YGGErXBmZgI/Gk4iAx62pR4thnNryTotgDrM7MY6aBcZiOHTFAnDhEj
- ukTI597GyQDhw95CGCiBTby2d/bfTDF2f1VdRkC0Lh2jVFVhAy7OTm3cbDxQzJ3BYL3izsMD7
- 8QYtVrGFvw9bbJfr/3irhMwIdnnBAUfhigX1XmmijHJL3AlT0EF/CdswFkvw9WTQHOMzebtup
- 73yUmflSEKV/8NGS5lxFdBk60sZnf+AmlYqgSxrGg1JXjhPF1tnpMzj8sLPB/45mfeYn57nL7
- DENNdBU
+X-Provags-ID: V03:K1:Cv5kHBitIbRgMW4Gg26GZRjUqtzswRBGERPNvggVZvA7dxE2Z3Q
+ ReVuqOCRzGt5P294hXwE0Z4jmfnM3oqzNJKOFqc8abYd2GHoD2/TbjtuLfbLW9mWFV3cWgz
+ 70iiIEmzGxvopsUSZDK+jMsDhAWywBh8EhTgkD6/Rcb1fotwZ5ATLb0wE1zJPVU2BDe0+AS
+ yM8XxW5fHMrahfCfs1atQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:8evOM+QAaKI=:7/eKEjIMIb0UZZSu0eckJB
+ +qnoqygmHxpNxcb7bu6q25EXu38d5X18Of36k8vUFqTpY6D3sEn/V2vV0Uq00HGeQYVzxuKxQ
+ a7obhWc259es5pLBbZcjV27ztnFCgf3NMuzHByzB6K2aY+HG32iG1hJaY3OG4qZqMRqQKL8H1
+ 0svI4DEcKSIy5T26laJZDMNkXm9/E8Bp8pzufYLub2UG0wpvH+3PPxWdc7tS90s6a0wCOVAkM
+ oJBUkVcChKJcvm9rJcQJSFRcLtM8/Usc7w/dnH0pYubY/B6HLjK5HYKwc393sEc726sYNN8X+
+ MtrT9hHGQDObLZwubJJvupdTLPhEVc2HoPxbY1JDIQYdr/o4CnXFY8qjB6Y0l0tgaBVV4Q1/u
+ ceFejswiknA67XvvdENNoZXkexP1MsNMbp5pwzYCoiOOrt8GfMwqCd2cGvMNseN0VEgZ7GJ/b
+ qodvoEFsOMmzXP6+9Uq2b6smwZ7WBTUQEAohS5CWwGb9k51vfiix5s1q1uFcmuAeJ+rVtPhMY
+ bbcrFWLOgRkMmDUTGXPBDjAPll9WYAMekdwQISwWNCWF2J37U/IjCj1DZKrmZQ15t2jEiu7C1
+ 1NKHq/flK2g+dUjGxAP5TJy3/7gcMT7y2B/OG93AYvoQeVnt1ScmbL2KvVVOKNEzL3p/2JYcr
+ QARlcX6xOXvKt2TdBz0nZP3b5PT5AMwEIa1nR3m2PBuvRGXOIYVNBncZVH1iW+k9KQo0had0o
+ 4Pf4K5TrCiXxxa8Kwl7pEhl/CzWZH3SY+aPbKIygJ3qx3y19nOPABzQLi9PbpZZKKJ8cxoG8a
+ 4NXylgR
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Peff,
 
-On Thu, 28 Jun 2018, Junio C Hamano wrote:
+On Thu, 28 Jun 2018, Jeff King wrote:
 
-> What I meant by "many separte grep calls" was to contrast these two
-> approaches:
+> On Thu, Jun 28, 2018 at 10:27:32AM -0700, Junio C Hamano wrote:
 > 
->  * Have one typical output spelled out as "expect", take an output
->    from an actual run into "actual", make them comparable and then
->    do a compare (which does not use grep; it uses sort in the
->    "making comparable" phase)
-> 
->  * Not have any typical output, take an output from an actual run,
->    and have _code_ that inspects the output encode the rule over the
->    output (e.g. "these must exist" is inspected with many grep
->    invocations)
-> 
-> Two things the "output must have 9 entries, and these 9 must be
-> mentioned" we see at the beginning of this message does not verify
-> are (1) exact dist value given to each of these entries and (2) the
-> order in which these entries appear in the output.  The latter is
-> something we document, and the test should cover.  The former does
-> not have to be cast in stone (i.e. I do not think it does not make a
-> difference to label the edge commits with dist=1 or dist=0 as long
-> as everything is consistent), but if there is no strong reason to
-> keep it possible for us to later change how the numbers are assigned,
-> I am OK if the test cast it in stone.
-> 
-> Another reason (other than "many separate invocation of grep") to
-> favor the former approach (i.e. use real-looking expected output,
-> munge it and the real output into comparable forms and then compare)
-> is that it is easier to see what aspect of the output we care (and
-> we do not care) about.
-> 
-> It is harder to see the omission of exact dist value and ordering of
-> entries in the outpu in the latter approach, and more importantly,
-> know if the omission was deliberate (e.g. it was merely an example)
-> or a mere mistake.
-> 
-> With "using a real-looking expected output, make it and the actual
-> output comparable and then compare" approach, the aspects in the
-> output we choose not to care about will show in the "make them
-> comparable" munging.  If we do not care the exact dist values, there
-> would be something like s/dist=[0-9]*/dist=X/ to mask the exact
-> value before making the two comparable to see that the expect and
-> the actual files have the same entries.  If we still do care about
-> the entries are ordered by the dist values, there would be something
-> that sorts the entries with the actual dist values before doing that
-> masking to ensure if the order is correct.
+> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> > 
+> > >> I.e.:
+> > >> 
+> > >>   FOO='with spaces'
+> > >>   BAR=$FOO sh -c 'echo $BAR'
+> > >> 
+> > >> works just fine.
+> > >
+> > > 	$ x="two  spaces"
+> > >
+> > > 	$ echo $x
+> > > 	two spaces
+> > >
+> > > Maybe we should quote a little bit more religiously.
+> > 
+> > Both of you are wrong ;-)
 
-The problem here is of course that you *cannot* set the exact output
-in stone, because of sorting instabilities.
+Technically, you did not contradict anything I said.
 
-So you have to play tricks to sort (twice, with different keys) the
-expected output and the actual output, to verify that all the expected
-commits are listed (and only those) and to verify that they are ordered by
-the distance, in descending order.
+> > Of course, the lack of dq around echo's argument makes shell split
+> > two and spaces into two args and feed them separately to echo, and
+> > causes echo to show them with a single SP in between.  Peff's
+> > exampel should have been
+> > 
+> > 	BAR=$FOO sh -c 'echo "$BAR"'
+> 
+> Yes, that's a better example. I was primarily trying to show that the
+> outer shell did not barf with "spaces: command not found".
+> 
+> > But that does not have much to do with the primary point Peff was
+> > talking about, which is that in this sequence:
+> > 
+> > 	$ x="two  spaces"
+> > 	$ y="$x"
+> > 	$ z=$x
+> > 	$ echo "x=<$x>" "y=<$y>" "z=<$z>"
+> > 
+> > assignment to y and z behave identically, i.e. dq around "$x" when
+> > assigning to y is not needed.
+> 
+> I actually had to test it to convince myself that one-shot assignments
+> behaved the same way, but they do.
 
-And this trick, while it still makes the test correct and stable and yadda
-yadda, *also* makes this trick a lot less readable than my version. And
-therefore makes it more difficult to verify that your test actually does
-what it is supposed to do.
+The mere fact that you had to test it out to convince yourself suggests to
+me that my suspicion "Maybe we should quote a little bit more religiously"
+was 100% spot on.
+
+After all, almost *none* of the reviews on this mailing list involve
+anything like "testing it out". It happens in the mailing program, and it
+stays in the mailing program.
 
 Ciao,
 Dscho
