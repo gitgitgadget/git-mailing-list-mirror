@@ -2,529 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F7491F516
-	for <e@80x24.org>; Fri, 29 Jun 2018 00:20:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F8171F516
+	for <e@80x24.org>; Fri, 29 Jun 2018 01:11:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1030299AbeF2AUl (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Jun 2018 20:20:41 -0400
-Received: from mail-qk0-f201.google.com ([209.85.220.201]:41735 "EHLO
-        mail-qk0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1030243AbeF2AUe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jun 2018 20:20:34 -0400
-Received: by mail-qk0-f201.google.com with SMTP id 123-v6so7524217qkg.8
-        for <git@vger.kernel.org>; Thu, 28 Jun 2018 17:20:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
-         :cc;
-        bh=RHrtotE9ieZNF4K6ktryXtbhV3xZ0x8/XNBvl1OPEWc=;
-        b=VusAjFI1/3SetHUbLrMNers2qKR01tJv0rHmVanhX4WIxGTunPPogJ9l80415fNd74
-         I8ZIVT6H2Xkb8H+6p5Nnnzx2GZOOrdpNlaVyX08Dif4+svCC0QK4efOkh8bRpVS/SXpu
-         NgwKGqI3tIKNdyKX/B3o2ihAS7SP99w/QMWOm8Ci65l47JURESUq4dvPZfh3am3jz2jx
-         7SHxHX9OSfbKZxc6EJzMkT/2awi6iFniFYho3YHgsd7gUm3YKLC1T+cDg6wDW3H9jddj
-         WUw8CpLm2yPMM1dARF7+Hq38/6Xsn/scIAPJDpll/3nu522mb+4jfL2WlB2nKi7slaO/
-         kNfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
-         :references:subject:from:to:cc;
-        bh=RHrtotE9ieZNF4K6ktryXtbhV3xZ0x8/XNBvl1OPEWc=;
-        b=jnaeSeoy24I58wR2Y1l1JI1Z2REvwIgD8JQv4xesv1KtGheX2RrhDdN/lpRAgl0+Jb
-         t4RTfRXQoh+PP+kq13oqmrpL9p7MMpPq9ZNcfOHJ6L2+k1+VSZRMy2fZ8SiuHM/6KkeG
-         QaoYT04YdFHnvL5RdzR9Zu2nUJ0IvzsXAX+EQDLdfwBmXw5mnKxt09873pHHthSRDmwe
-         4zxzZCS9Sw6LNRP4qW9Pn63urG/2UpogZz4OrHqBD02vjQ6jMWQedBCLoG8RNsWZUKg3
-         Es2gg2Wb0Ms9r6Pi2BHIx8VHWk5zX6Gdtwlt5XB3OC52ZhUGjdru/fE26kCfgkzuHdFa
-         fDZg==
-X-Gm-Message-State: APt69E3VFqDiSHfnyGJTJrZgSOjYqhtv03n7AxJzaVacRMaPgRY4/Jbm
-        m9yxNdd+FrWA+HWXhYZKlyMNwM09gLEr
-X-Google-Smtp-Source: AAOMgpcDVw9UhYxP9QTj9Caa1S94B6O75+MprKgSZ/LgLNb6NBKbLUaGEBOHEAfG6pIpShJSsutFTj6q1c6t
+        id S936412AbeF2BLI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Jun 2018 21:11:08 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:59907 "EHLO
+        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935665AbeF2BLF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jun 2018 21:11:05 -0400
+Received: from [10.0.2.15] ([80.189.70.235])
+        by smtp with ESMTPA
+        id YhwCf6O64jlDzYhwDfMRc4; Fri, 29 Jun 2018 02:11:04 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=GrdsBH9C c=1 sm=1 tr=0
+ a=YX39wz5waiCDnkc2J8opfw==:117 a=YX39wz5waiCDnkc2J8opfw==:17
+ a=IkcTkHD0fZMA:10 a=NxsfUQ8XkgfFYnwsQnIA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH] fsck: check skiplist for object in fsck_blob()
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jason@zx2c4.com,
+        GIT Mailing-list <git@vger.kernel.org>
+References: <2fc2d53f-e193-2a2a-9f8f-b3e1d256d940@ramsayjones.plus.com>
+ <20180628114912.GA12901@sigill.intra.peff.net>
+ <0a18acbd-0124-1c92-0046-05b8b035dd28@ramsayjones.plus.com>
+ <20180628174501.GC31766@sigill.intra.peff.net>
+ <db7683ab-1025-d7bb-d0ce-fc4ee28681e1@ramsayjones.plus.com>
+ <20180628220332.GA5128@sigill.intra.peff.net>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <9162ed69-d245-8b2f-0dcc-3b345264b029@ramsayjones.plus.com>
+Date:   Fri, 29 Jun 2018 02:10:59 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-X-Received: by 2002:a0c:99d7:: with SMTP id y23-v6mr6421760qve.15.1530231632897;
- Thu, 28 Jun 2018 17:20:32 -0700 (PDT)
-Date:   Thu, 28 Jun 2018 17:19:58 -0700
-In-Reply-To: <20180629001958.85143-1-sbeller@google.com>
-Message-Id: <20180629001958.85143-10-sbeller@google.com>
-References: <20180622015725.219575-1-sbeller@google.com> <20180629001958.85143-1-sbeller@google.com>
-X-Mailer: git-send-email 2.18.0.399.gad0ab374a1-goog
-Subject: [PATCH v4 9/9] diff.c: add white space mode to move detection that
- allows indent changes
-From:   Stefan Beller <sbeller@google.com>
-To:     sbeller@google.com
-Cc:     git@vger.kernel.org, jacob.keller@gmail.com,
-        jonathantanmy@google.com, simon@ruderich.org, bmwill@google.com,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20180628220332.GA5128@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfPxfZfPxiU6vlu21omLwwAWihp60dq0I6iWnDkuSLeMeVMpVlj7cR2YZ6HRbGafQa6iEqVnJdp1kqMbORiWpPuG6KKvmvtkvGlrn9sNzg86DDfH6bCSg
+ Zj/yIr656iDhOOvz9bDotCs2jhj2YdQOFP1rbWGheJP/pLdpfyLyTFgx
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The option of --color-moved has proven to be useful as observed on the
-mailing list. However when refactoring sometimes the indentation changes,
-for example when partitioning a functions into smaller helper functions
-the code usually mostly moved around except for a decrease in indentation.
 
-To just review the moved code ignoring the change in indentation, a mode
-to ignore spaces in the move detection as implemented in a previous patch
-would be enough.  However the whole move coloring as motivated in commit
-2e2d5ac (diff.c: color moved lines differently, 2017-06-30), brought
-up the notion of the reviewer being able to trust the move of a "block".
 
-As there are languages such as python, which depend on proper relative
-indentation for the control flow of the program, ignoring any white space
-change in a block would not uphold the promises of 2e2d5ac that allows
-reviewers to pay less attention to the inside of a block, as inside
-the reviewer wants to assume the same program flow.
+On 28/06/18 23:03, Jeff King wrote:
+> On Thu, Jun 28, 2018 at 07:53:27PM +0100, Ramsay Jones wrote:
+[snip]
+> Yes, it can go in quickly. But I'd prefer not to keep it in the long
+> term if it's literally doing nothing.
 
-This new mode of white space ignorance will take this into account and will
-only allow the same white space changes per line in each block. This patch
-even allows only for the same change at the beginning of the lines.
+Hmm, I don't think you can say its doing nothing!
 
-As this is a white space mode, it is made exclusive to other white space
-modes in the move detection.
+    "Yeah, this solution seems sensible. Given that we would
+     never report any error for that blob, there is no point
+     in even looking at it."
 
-This patch brings some challenges, related to the detection of blocks.
-We need a white net the catch the possible moved lines, but then need to
-narrow down to check if the blocks are still in tact. Consider this
-example (ignoring block sizes):
+... is no less true, with or without additional patches! ;-)
 
- - A
- - B
- - C
- +    A
- +    B
- +    C
+> I have some patches which I think solve your problem. They apply on
+> v2.18.0, but not on v2.17.1 (because they rely on Dscho's increased
+> passing of config_options in v2.18). Is that good enough?
 
-At the beginning of a block when checking if there is a counterpart
-for A, we have to ignore all space changes. However at the following
-lines we have to check if the indent change stayed the same.
+Heh, I was also writing patches to address this tonight (but
+I was also watching the football, so I was somewhat behind you).
+My patches were not too dissimilar to yours, except I was aiming
+to allow even do_config_from_file() etc., to suppress errors.
 
-Checking if the indentation change did stay the same, is done by computing
-the indentation change by the difference in line length, and then assume
-the change is only in the beginning of the longer line, the common tail
-is the same. That is why the test contains lines like:
+Your patches were cleaner and more focused than mine. (Instead of
+turning die_on_error into an enum, I added an additional 'quiet'
+flag. When pushing the stack (eg. for include files), I had to
+copy the quiet flag from the parent struct, etc, ... ;-) ).
 
- - <TAB> A
- ...
- + A <TAB>
- ...
+> Yes, it would include any syntax error. I also have a slight worry about
+> that, but nobody seems to have screamed _yet_. :)
 
-As the first line starting a block is caught using a compare function that
-ignores white spaces unlike the rest of the block, where the white space
-delta is taken into account for the comparison, we also have to think about
-the following situation:
+Hmm, I don't think we can ignore this. :(
 
- - A
- - B
- -   A
- -   B
- +    A
- +    B
- +      A
- +      B
+> Here are the patches I came up with.
 
-When checking if the first A (both in the + and - lines) is a start of
-a block, we have to check all 'A' and record all the white space deltas
-such that we can find the example above to be just one block that is
-indented.
+Yes, I applied these locally and tested them. All OK here.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/diff-options.txt |   5 ++
- diff.c                         | 158 ++++++++++++++++++++++++++++++++-
- diff.h                         |   3 +
- t/t4015-diff-whitespace.sh     |  98 ++++++++++++++++++--
- 4 files changed, 256 insertions(+), 8 deletions(-)
+So, FWIW, Ack!
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 80e29e39854..143acd9417e 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -307,6 +307,11 @@ ignore-space-change::
- ignore-all-space::
- 	Ignore whitespace when comparing lines. This ignores differences
- 	even if one line has whitespace where the other line has none.
-+allow-indentation-change::
-+	Initially ignore any white spaces in the move detection, then
-+	group the moved code blocks only into a block if the change in
-+	whitespace is the same per line. This is incompatible with the
-+	other modes.
- --
- 
- --word-diff[=<mode>]::
-diff --git a/diff.c b/diff.c
-index 4963819e530..f51f0ac32f4 100644
---- a/diff.c
-+++ b/diff.c
-@@ -302,12 +302,18 @@ static int parse_color_moved_ws(const char *arg)
- 			ret |= XDF_IGNORE_WHITESPACE_AT_EOL;
- 		else if (!strcmp(sb.buf, "ignore-all-space"))
- 			ret |= XDF_IGNORE_WHITESPACE;
-+		else if (!strcmp(sb.buf, "allow-indentation-change"))
-+			ret |= COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE;
- 		else
- 			error(_("ignoring unknown color-moved-ws mode '%s'"), sb.buf);
- 
- 		strbuf_release(&sb);
- 	}
- 
-+	if ((ret & COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE) &&
-+	    (ret & XDF_WHITESPACE_FLAGS))
-+		die(_("color-moved-ws: allow-indentation-change cannot be combined with other white space modes"));
-+
- 	string_list_clear(&l, 0);
- 
- 	return ret;
-@@ -737,7 +743,91 @@ struct moved_entry {
- 	struct hashmap_entry ent;
- 	const struct emitted_diff_symbol *es;
- 	struct moved_entry *next_line;
-+	struct ws_delta *wsd;
-+};
-+
-+/**
-+ * The struct ws_delta holds white space differences between moved lines, i.e.
-+ * between '+' and '-' lines that have been detected to be a move.
-+ * The string contains the difference in leading white spaces, before the
-+ * rest of the line is compared using the white space config for move
-+ * coloring. The current_longer indicates if the first string in the
-+ * comparision is longer than the second.
-+ */
-+struct ws_delta {
-+	char *string;
-+	unsigned int current_longer : 1;
- };
-+#define WS_DELTA_INIT { NULL, 0 }
-+
-+static int compute_ws_delta(const struct emitted_diff_symbol *a,
-+			     const struct emitted_diff_symbol *b,
-+			     struct ws_delta *out)
-+{
-+	const struct emitted_diff_symbol *longer =  a->len > b->len ? a : b;
-+	const struct emitted_diff_symbol *shorter = a->len > b->len ? b : a;
-+	int d = longer->len - shorter->len;
-+
-+	out->string = xmemdupz(longer->line, d);
-+	out->current_longer = (a == longer);
-+
-+	return !strncmp(longer->line + d, shorter->line, shorter->len);
-+}
-+
-+static int cmp_in_block_with_wsd(const struct diff_options *o,
-+				 const struct moved_entry *cur,
-+				 const struct moved_entry *match,
-+				 struct moved_entry *pmb,
-+				 int n)
-+{
-+	struct emitted_diff_symbol *l = &o->emitted_symbols->buf[n];
-+	int al = cur->es->len, cl = l->len;
-+	const char *a = cur->es->line,
-+		   *b = match->es->line,
-+		   *c = l->line;
-+
-+	int wslen;
-+
-+	/*
-+	 * We need to check if 'cur' is equal to 'match'.
-+	 * As those are from the same (+/-) side, we do not need to adjust for
-+	 * indent changes. However these were found using fuzzy matching
-+	 * so we do have to check if they are equal.
-+	 */
-+	if (strcmp(a, b))
-+		return 1;
-+
-+	if (!pmb->wsd)
-+		/*
-+		 * No white space delta was carried forward? This can happen
-+		 * when we exit early in this function and do not carry
-+		 * forward ws.
-+		 */
-+		return 1;
-+
-+	/*
-+	 * The indent changes of the block are known and carried forward in
-+	 * pmb->wsd; however we need to check if the indent changes of the
-+	 * current line are still the same as before.
-+	 *
-+	 * To do so we need to compare 'l' to 'cur', adjusting the
-+	 * one of them for the white spaces, depending which was longer.
-+	 */
-+
-+	wslen = strlen(pmb->wsd->string);
-+	if (pmb->wsd->current_longer) {
-+		c += wslen;
-+		cl -= wslen;
-+	} else {
-+		a += wslen;
-+		al -= wslen;
-+	}
-+
-+	if (strcmp(a, c))
-+		return 1;
-+
-+	return 0;
-+}
- 
- static int moved_entry_cmp(const void *hashmap_cmp_fn_data,
- 			   const void *entry,
-@@ -750,6 +840,16 @@ static int moved_entry_cmp(const void *hashmap_cmp_fn_data,
- 	unsigned flags = diffopt->color_moved_ws_handling
- 			 & XDF_WHITESPACE_FLAGS;
- 
-+	if (diffopt->color_moved_ws_handling &
-+	    COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE)
-+		/*
-+		 * As there is not specific white space config given,
-+		 * we'd need to check for a new block, so ignore all
-+		 * white space. The setup of the white space
-+		 * configuration for the next block is done else where
-+		 */
-+		flags |= XDF_IGNORE_WHITESPACE;
-+
- 	return !xdiff_compare_lines(a->es->line, a->es->len,
- 				    b->es->line, b->es->len,
- 				    flags);
-@@ -765,6 +865,7 @@ static struct moved_entry *prepare_entry(struct diff_options *o,
- 	ret->ent.hash = xdiff_hash_string(l->line, l->len, flags);
- 	ret->es = l;
- 	ret->next_line = NULL;
-+	ret->wsd = NULL;
- 
- 	return ret;
- }
-@@ -820,6 +921,37 @@ static void pmb_advance_or_null(struct diff_options *o,
- 	}
- }
- 
-+static void pmb_advance_or_null_multi_match(struct diff_options *o,
-+					    struct moved_entry *match,
-+					    struct hashmap *hm,
-+					    struct moved_entry **pmb,
-+					    int pmb_nr, int n)
-+{
-+	int i;
-+	char *got_match = xcalloc(1, pmb_nr);
-+
-+	for (; match; match = hashmap_get_next(hm, match)) {
-+		for (i = 0; i < pmb_nr; i++) {
-+			struct moved_entry *prev = pmb[i];
-+			struct moved_entry *cur = (prev && prev->next_line) ?
-+					prev->next_line : NULL;
-+			if (!cur)
-+				continue;
-+			if (!cmp_in_block_with_wsd(o, cur, match, pmb[i], n))
-+				got_match[i] |= 1;
-+		}
-+	}
-+
-+	for (i = 0; i <pmb_nr; i++) {
-+		if (got_match[i]) {
-+			/* Carry the white space delta forward */
-+			pmb[i]->next_line->wsd = pmb[i]->wsd;
-+			pmb[i] = pmb[i]->next_line;
-+		} else
-+			pmb[i] = NULL;
-+	}
-+}
-+
- static int shrink_potential_moved_blocks(struct moved_entry **pmb,
- 					 int pmb_nr)
- {
-@@ -837,6 +969,10 @@ static int shrink_potential_moved_blocks(struct moved_entry **pmb,
- 
- 		if (lp < pmb_nr && rp > -1 && lp < rp) {
- 			pmb[lp] = pmb[rp];
-+			if (pmb[rp]->wsd) {
-+				free(pmb[rp]->wsd->string);
-+				FREE_AND_NULL(pmb[rp]->wsd);
-+			}
- 			pmb[rp] = NULL;
- 			rp--;
- 			lp++;
-@@ -924,7 +1060,11 @@ static void mark_color_as_moved(struct diff_options *o,
- 		if (o->color_moved == COLOR_MOVED_PLAIN)
- 			continue;
- 
--		pmb_advance_or_null(o, match, hm, pmb, pmb_nr);
-+		if (o->color_moved_ws_handling &
-+		    COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE)
-+			pmb_advance_or_null_multi_match(o, match, hm, pmb, pmb_nr, n);
-+		else
-+			pmb_advance_or_null(o, match, hm, pmb, pmb_nr);
- 
- 		pmb_nr = shrink_potential_moved_blocks(pmb, pmb_nr);
- 
-@@ -935,7 +1075,17 @@ static void mark_color_as_moved(struct diff_options *o,
- 			 */
- 			for (; match; match = hashmap_get_next(hm, match)) {
- 				ALLOC_GROW(pmb, pmb_nr + 1, pmb_alloc);
--				pmb[pmb_nr++] = match;
-+				if (o->color_moved_ws_handling &
-+				    COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE) {
-+					struct ws_delta *wsd = xmalloc(sizeof(*match->wsd));
-+					if (compute_ws_delta(l, match->es, wsd)) {
-+						match->wsd = wsd;
-+						pmb[pmb_nr++] = match;
-+					} else
-+						free(wsd);
-+				} else {
-+					pmb[pmb_nr++] = match;
-+				}
- 			}
- 
- 			flipped_block = (flipped_block + 1) % 2;
-@@ -5583,6 +5733,10 @@ static void diff_flush_patch_all_file_pairs(struct diff_options *o)
- 		if (o->color_moved) {
- 			struct hashmap add_lines, del_lines;
- 
-+			if (o->color_moved_ws_handling &
-+			    COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE)
-+				o->color_moved_ws_handling |= XDF_IGNORE_WHITESPACE;
-+
- 			hashmap_init(&del_lines, moved_entry_cmp, o, 0);
- 			hashmap_init(&add_lines, moved_entry_cmp, o, 0);
- 
-diff --git a/diff.h b/diff.h
-index de5dc680051..5e6bcf09260 100644
---- a/diff.h
-+++ b/diff.h
-@@ -214,6 +214,9 @@ struct diff_options {
- 	} color_moved;
- 	#define COLOR_MOVED_DEFAULT COLOR_MOVED_ZEBRA
- 	#define COLOR_MOVED_MIN_ALNUM_COUNT 20
-+
-+	/* XDF_WHITESPACE_FLAGS regarding block detection are set at 2, 3, 4 */
-+	#define COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE (1<<5)
- 	int color_moved_ws_handling;
- };
- 
-diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
-index 0c737a47cf8..41facf7abf9 100755
---- a/t/t4015-diff-whitespace.sh
-+++ b/t/t4015-diff-whitespace.sh
-@@ -1781,9 +1781,8 @@ test_expect_success 'only move detection ignores white spaces' '
- 	EOF
- 
- 	# Make sure we get a different diff using -w
--	git diff --color --color-moved -w |
--		grep -v "index" |
--		test_decode_color >actual &&
-+	git diff --color --color-moved -w >actual.raw &&
-+	grep -v "index" actual.raw | test_decode_color >actual &&
- 	q_to_tab <<-\EOF >expected &&
- 	<BOLD>diff --git a/text.txt b/text.txt<RESET>
- 	<BOLD>--- a/text.txt<RESET>
-@@ -1798,9 +1797,8 @@ test_expect_success 'only move detection ignores white spaces' '
- 
- 	# And now ignoring white space only in the move detection
- 	git diff --color --color-moved \
--		--color-moved-ws=ignore-all-space,ignore-space-change,ignore-space-at-eol |
--		grep -v "index" |
--		test_decode_color >actual &&
-+		--color-moved-ws=ignore-all-space,ignore-space-change,ignore-space-at-eol >actual.raw &&
-+	grep -v "index" actual.raw | test_decode_color >actual &&
- 	q_to_tab <<-\EOF >expected &&
- 	<BOLD>diff --git a/text.txt b/text.txt<RESET>
- 	<BOLD>--- a/text.txt<RESET>
-@@ -1816,4 +1814,92 @@ test_expect_success 'only move detection ignores white spaces' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'compare whitespace delta across moved blocks' '
-+
-+	git reset --hard &&
-+	q_to_tab <<-\EOF >text.txt &&
-+	QIndented
-+	QText across
-+	Qsome lines
-+	QBut! <- this stands out
-+	QAdjusting with
-+	QQdifferent starting
-+	Qwhite spaces
-+	QAnother outlier
-+	QQQIndented
-+	QQQText across
-+	QQQfive lines
-+	QQQthat has similar lines
-+	QQQto previous blocks, but with different indent
-+	QQQYetQAnotherQoutlierQ
-+	EOF
-+
-+	git add text.txt &&
-+	git commit -m "add text.txt" &&
-+
-+	q_to_tab <<-\EOF >text.txt &&
-+	QQIndented
-+	QQText across
-+	QQsome lines
-+	QQQBut! <- this stands out
-+	Adjusting with
-+	Qdifferent starting
-+	white spaces
-+	AnotherQoutlier
-+	QQIndented
-+	QQText across
-+	QQfive lines
-+	QQthat has similar lines
-+	QQto previous blocks, but with different indent
-+	QQYetQAnotherQoutlier
-+	EOF
-+
-+	git diff --color --color-moved --color-moved-ws=allow-indentation-change >actual.raw &&
-+	grep -v "index" actual.raw | test_decode_color >actual &&
-+
-+	q_to_tab <<-\EOF >expected &&
-+		<BOLD>diff --git a/text.txt b/text.txt<RESET>
-+		<BOLD>--- a/text.txt<RESET>
-+		<BOLD>+++ b/text.txt<RESET>
-+		<CYAN>@@ -1,14 +1,14 @@<RESET>
-+		<BOLD;MAGENTA>-QIndented<RESET>
-+		<BOLD;MAGENTA>-QText across<RESET>
-+		<BOLD;MAGENTA>-Qsome lines<RESET>
-+		<RED>-QBut! <- this stands out<RESET>
-+		<BOLD;MAGENTA>-QAdjusting with<RESET>
-+		<BOLD;MAGENTA>-QQdifferent starting<RESET>
-+		<BOLD;MAGENTA>-Qwhite spaces<RESET>
-+		<RED>-QAnother outlier<RESET>
-+		<BOLD;MAGENTA>-QQQIndented<RESET>
-+		<BOLD;MAGENTA>-QQQText across<RESET>
-+		<BOLD;MAGENTA>-QQQfive lines<RESET>
-+		<BOLD;MAGENTA>-QQQthat has similar lines<RESET>
-+		<BOLD;MAGENTA>-QQQto previous blocks, but with different indent<RESET>
-+		<RED>-QQQYetQAnotherQoutlierQ<RESET>
-+		<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>Indented<RESET>
-+		<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>Text across<RESET>
-+		<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>some lines<RESET>
-+		<GREEN>+<RESET>QQQ<GREEN>But! <- this stands out<RESET>
-+		<BOLD;CYAN>+<RESET><BOLD;CYAN>Adjusting with<RESET>
-+		<BOLD;CYAN>+<RESET>Q<BOLD;CYAN>different starting<RESET>
-+		<BOLD;CYAN>+<RESET><BOLD;CYAN>white spaces<RESET>
-+		<GREEN>+<RESET><GREEN>AnotherQoutlier<RESET>
-+		<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>Indented<RESET>
-+		<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>Text across<RESET>
-+		<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>five lines<RESET>
-+		<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>that has similar lines<RESET>
-+		<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>to previous blocks, but with different indent<RESET>
-+		<GREEN>+<RESET>QQ<GREEN>YetQAnotherQoutlier<RESET>
-+	EOF
-+
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'compare whitespace delta incompatible with other space options' '
-+	test_must_fail git diff \
-+		--color-moved-ws=allow-indentation-change,ignore-all-space \
-+		2>err &&
-+	test_i18ngrep allow-indentation-change err
-+'
-+
- test_done
--- 
-2.18.0.399.gad0ab374a1-goog
+[I still think my original patch, with the 'to_be_skipped'
+function name changed to 'object_on_skiplist', should be
+the first patch of the series!]
 
+ATB,
+Ramsay Jones
