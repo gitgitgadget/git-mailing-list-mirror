@@ -2,87 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 289E01F516
-	for <e@80x24.org>; Fri, 29 Jun 2018 22:05:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32A091F516
+	for <e@80x24.org>; Fri, 29 Jun 2018 22:07:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934901AbeF2WFz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Jun 2018 18:05:55 -0400
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:54451 "EHLO
-        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753108AbeF2WFy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jun 2018 18:05:54 -0400
-Received: by mail-wm0-f54.google.com with SMTP id i139-v6so3530990wmf.4
-        for <git@vger.kernel.org>; Fri, 29 Jun 2018 15:05:53 -0700 (PDT)
+        id S936721AbeF2WHF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Jun 2018 18:07:05 -0400
+Received: from mail-yw0-f196.google.com ([209.85.161.196]:33668 "EHLO
+        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932935AbeF2WHE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jun 2018 18:07:04 -0400
+Received: by mail-yw0-f196.google.com with SMTP id c135-v6so2388636ywa.0
+        for <git@vger.kernel.org>; Fri, 29 Jun 2018 15:07:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=T+QJLnL/88K7VG8TqQqNkI7u7zwxiGZDUTmYn2NCEyc=;
-        b=Ow5wb4yhBvzEE/embQuSGxYrNCqqVJOjE/UoMrPaNN1AFNDMKbXDPKt1HFgFf1wX+O
-         Bbp0EAqB2XEjpn7/8Yf0tCZeypqxF6oeopKlShlRgz0CWLUlbhgAGAW5z2Iqxu8UGsR0
-         XSnfPRz+aIxFWP3IqTn99urZu1z8qgUXWz/7wNaCFrtyW2nNIKJaXjEmxuFV9Vb9nhrD
-         dpfrmGu63iUmRoRWH1FglLN2Q6yczRqvPag721OS4CfrVEhlc94dKSprGosQlHCefM/8
-         HPIA4VrtLB+SGcucjosBrHozKtx4XqlX9pp9tpGPG4RsaDPheJ5B5I6/r+fBOviIE9nK
-         2VDg==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=hZy7z0O5QlgeKUqJFPKS2Xd+7DJaazp4Y2ICgmYuN+4=;
+        b=NL9T/pJuHI7Q7pD5YV6CniSjFaHfTCmDAgqc5rhT+ZLgEuvaP13VZag+GNckllVldW
+         FZNLwNCoeGYbpuuuuvCXdm360xexGFFXguR5x0wnE5RUdxvWvTYztCyhzysxCAkyXX8Y
+         Nps0OT+4OLstDoXwKtC7m2bgUZk747ZwIJR8AGdUDMTeJX3PogoJZYJMdVQT6xPuBTuI
+         cx8CnftniKveEoctufFwfWZFNH7JKUZ/LWcYKtrX//CMYayc93QP++cvw31RWRWsvHuI
+         xZzseJkS1aT/3kxHe9sYkvJyJ5hhSrOSi6knZ7yFU313rCQQ3zGt7/z0hxb/BfwgYBcd
+         kjTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=T+QJLnL/88K7VG8TqQqNkI7u7zwxiGZDUTmYn2NCEyc=;
-        b=HaQwM58r0mj61/WvLxH6C3d6YDKkyo7jHbKD9cBD2QtWzCOYm0Le27YV6MQgAJfVFn
-         PV+d4Gia6lhwSr3mm/Hee5meUT6PfdATZVQ/iISipBD8Yvd0OMXY4pjIb1Ttj8k8/95e
-         Up0OfhfChyQ2njISHRONjySqQZZhXLY4rDNPWjwzmeLj/KvTHnE353pa2+Ce6IFaJOW5
-         9TrRf3MN4agZA4djFcnWanq74ZcdptsJDPbqSGE1QbpFB9FL5sDfInSRpwf8Rws2XBue
-         v2fwF7+eVU2voGdK/ZNAq7FtcW5NkdXuIVL/CE5YSD31AOOBSirm1hW1AT0iP32Vdt/N
-         hLng==
-X-Gm-Message-State: APt69E030wiUVBSGBrXBiWhalBm1dKXnMwoJXiBtubHEcM+NjKnUtotd
-        5BQow4TwWGKAyUFEjYf6AR8=
-X-Google-Smtp-Source: AAOMgpdqUBKPqmdpo26bs9z7tarIIN9oErFglVoT57VdrPEmWoV4abnd2iorXCE43LCY4lesFIQEfw==
-X-Received: by 2002:a1c:2fc7:: with SMTP id v190-v6mr2776027wmv.151.1530309952669;
-        Fri, 29 Jun 2018 15:05:52 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id k17-v6sm10704661wrp.19.2018.06.29.15.05.51
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 29 Jun 2018 15:05:51 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "peff\@peff.net" <peff@peff.net>,
-        "sbeller\@google.com" <sbeller@google.com>,
-        "jnareb\@gmail.com" <jnareb@gmail.com>
-Subject: Re: [RFC PATCH 04/13] upload-pack: make reachable() more generic
-References: <20180629161223.229661-1-dstolee@microsoft.com>
-        <20180629161223.229661-5-dstolee@microsoft.com>
-Date:   Fri, 29 Jun 2018 15:05:51 -0700
-In-Reply-To: <20180629161223.229661-5-dstolee@microsoft.com> (Derrick Stolee's
-        message of "Fri, 29 Jun 2018 16:12:45 +0000")
-Message-ID: <xmqqwouhs0xs.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=hZy7z0O5QlgeKUqJFPKS2Xd+7DJaazp4Y2ICgmYuN+4=;
+        b=VCMNyMw4T2Zygq5rb5xdykBlxs+Bj8TRD7/XPPXmk+ZHLD/aVspc3VOqPs2CpPpraS
+         X3MG5vA8YrcPgF39mOn1TKk1KJJOnd7D3nZca+BOhjE+7Id/Xd/pMpyXGzKD5YYB4lES
+         G1XfNOdajmrm4436BS0EZ2GsRM7xQSHUFKQj2BNKAZ0r0pAhCyPzkipuYB21dFvU0taP
+         pA22NerjiKrns2H1u1yusulLDE1S88QJavFMn40HySoKdUCL9haU1DsFagCMI1gcmDEu
+         J7SBEfxz95HiFoAl1p7fFdkooVIDdx7Gxs97QSIxDEU0uBHtKZs2fCfWlzS7Z188+8Qk
+         /qjA==
+X-Gm-Message-State: APt69E29iLG4j3+hiAAtIEqQdGV2Ze1UmU/Dz7ddZhetlw30KP2e8n6/
+        6RtMtJhdNPO9XtiNRvjN1bH5qvtvZQMvxs0Saa1VDEjejxI=
+X-Google-Smtp-Source: AAOMgpcS2OTeqOREYklgGQvR4LAjKyIkWzBuXUmeaBNHHhnjT/+fTu6UXGtOK2bXJbWOGmUkAObgrVSxGrgItr7vkn0=
+X-Received: by 2002:a81:3743:: with SMTP id e64-v6mr3153845ywa.340.1530310023026;
+ Fri, 29 Jun 2018 15:07:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20180629161223.229661-1-dstolee@microsoft.com> <20180629161223.229661-9-dstolee@microsoft.com>
+In-Reply-To: <20180629161223.229661-9-dstolee@microsoft.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 29 Jun 2018 15:06:52 -0700
+Message-ID: <CAGZ79kafYmpzYws7WQJO4-zmWwTBo9Pwo-PpkbmJF+Z9GzsvZA@mail.gmail.com>
+Subject: Re: [RFC PATCH 08/13] test-reach: test reduce_heads()
+To:     Derrick Stolee <dstolee@microsoft.com>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <dstolee@microsoft.com> writes:
+On Fri, Jun 29, 2018 at 9:13 AM Derrick Stolee <dstolee@microsoft.com> wrote:
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  t/t6600-test-reach.sh | 26 ++++++++++++++++++++++++++
+>  1 file changed, 26 insertions(+)
+>
+> diff --git a/t/t6600-test-reach.sh b/t/t6600-test-reach.sh
+> index c9337b6b46..0f60db9c60 100755
+> --- a/t/t6600-test-reach.sh
+> +++ b/t/t6600-test-reach.sh
+> @@ -78,4 +78,30 @@ test_expect_success 'ref_newer:miss' '
+>         test_reach_two_modes "ref_newer"
+>  '
+>
+> +test_expect_success 'reduce_heads' '
+> +       cat >input <<- EOF &&
+> +       X:commit-1-10
+> +       X:commit-2-8
+> +       X:commit-3-6
+> +       X:commit-4-4
+> +       X:commit-1-7
+> +       X:commit-2-5
+> +       X:commit-3-3
+> +       X:commit-5-1
+> +       Y:commit-10-10
+> +       Y:commit-3-10
+> +       Y:commit-9-9
+> +       Y:commit-8-1
+> +       EOF
+> +       printf "reduce_heads(X):\n" >expect &&
+> +       git rev-parse commit-5-1 >>expect &&
 
-> In anticipation of moving the reachable() method to commit-reach.c,
-> modify the prototype to be more generic to flags known outside of
-> upload-pack.c. Also rename 'want' to 'from' to make the statement
-> more clear outside of the context of haves/wants negotiation.
+See 6ac767e5c00 (t6036, t6042: prefer test_cmp to sequences of test, 2018-05-24)
+on how to avoid some forks here:
 
-FWIW, I find the order of things done quite sensible.  Rename,
-extend, etc., to prepare before moving and then move, not the other
-way around.  You would want to do the same for some symbols named
-overly broadly you moved in earlier steps, too.
-
-Also, if you will be making this function a global one in a later
-step, now is the time to give it a good name suitable in the new
-global context before moving in this preparatory step.  If it will
-be file-scope static in its new home, then reachable() may still be
-a good enough name.  Let's keep reading...
+    git rev-parse >expect \
+        many HEADs or Tips &&
