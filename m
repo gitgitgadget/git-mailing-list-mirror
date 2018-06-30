@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B4941F516
-	for <e@80x24.org>; Sat, 30 Jun 2018 09:09:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 67E051F516
+	for <e@80x24.org>; Sat, 30 Jun 2018 09:09:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935152AbeF3JJS (ORCPT <rfc822;e@80x24.org>);
-        Sat, 30 Jun 2018 05:09:18 -0400
-Received: from mail-lf0-f53.google.com ([209.85.215.53]:34375 "EHLO
-        mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934675AbeF3JIm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Jun 2018 05:08:42 -0400
-Received: by mail-lf0-f53.google.com with SMTP id n96-v6so8462708lfi.1
-        for <git@vger.kernel.org>; Sat, 30 Jun 2018 02:08:41 -0700 (PDT)
+        id S935168AbeF3JJU (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Jun 2018 05:09:20 -0400
+Received: from mail-lf0-f51.google.com ([209.85.215.51]:39883 "EHLO
+        mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934607AbeF3JIk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Jun 2018 05:08:40 -0400
+Received: by mail-lf0-f51.google.com with SMTP id y6-v6so446004lfg.6
+        for <git@vger.kernel.org>; Sat, 30 Jun 2018 02:08:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ZZliiRpHJ86v8RrLRFJ7yL3pEqMKL76HofHFA5qgGmM=;
-        b=VD9qu5RmbmrkXBU+l9gI+d/9yoHJ7O9ChDeJxexJ0rDasLg8Gy9LSA/LFPV0ZvVtG0
-         wYWMZeCR4l+fd+ChOcZWKrSNiSiladrtE+Ql3Nche8xK+03IpL7gcdQMUJLB9IbyECJZ
-         nnm5cHUQJlu5kFrHLDStTJAZqATiR2WiqU7/DjGjPS5xAiT+Etmo1gfY7u4tXlFhW1PX
-         oStGT5baItpA4GNFnmTneymgdN0j4rKEvf1DpPYoF7sP20e98bFhwYB04I9jrFlhxmST
-         b/tWI/RGbs8v3u/jVZPn+8lLN/oub55pYvxgvNPzOypGJasS9cT6u5OnigndnUQM+S5+
-         yxUg==
+        bh=6Xn7hfb9S57WQ756R8BBn2tPRFt1bnEXQNQ9GaoyZVE=;
+        b=CahAwXXSATAFIqFIL4FmnisXEq2BuJHtrkY1FSYUuYKd8jYenHYBRKWhZg4mPQui53
+         aoFyuzxQ0j4654Tls8cUM6daZSCPS6KtisCIB1T1MiKnoqOyzGvJMvM9tjWGglhnEBVs
+         r/6pOnlp/AploxLS34RoYMnkWTQQ/9YMlqaSjBq5RROYeHe2U0Gz4J0kD8kMLtIK1pXe
+         mCir8yOjFVS5BIHHmBI4IeZmJQrd2vbZFS4jybygxp8ziL9zlVrezIAlRMfE3E1hGHZe
+         GLNLEbaBMlSLevBWXzgrH+V/cnUJtvrGNJwcRr/HxJ4C8R8/HfMrjbpTdJWTJTm3K1JW
+         nzMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ZZliiRpHJ86v8RrLRFJ7yL3pEqMKL76HofHFA5qgGmM=;
-        b=R3nE78qddV8+u+pLtQlICMXWoBZQBN6U2le0N6tGWR9hJLaq//eaM0c4ogvixGMVEf
-         kLeJ7l1RwyCmswDw11uETKRYBopiJ7T+1aNP+q1P/A7OxnAbnSL8m748iD37wSUrRSmP
-         b8ZvMGpVqwU0JfxmjfGMMDlEy6jkPW4HXZeXGfD46lvxudEDnQZO7PQceyvgjUPaO18N
-         uJbuy1mAtMxjgMV6385MVWx7fCXegZDKHXcyv4fkE3bVITSMwgHml3Ss4MIFNKF+g4KB
-         15umR8euV85A27deJOJOD+jY9AdChNOSWK9f4StCTLwUIxNyoLypI98ejEpAMrqnQnh/
-         ua5w==
-X-Gm-Message-State: APt69E1WPnT3Z6i1FMJ6uax3Ep6v42WGHaFt2jwkTL2lFAJw2mgbviwB
-        FoomXEDX5GSmmSKaGY4vIQHlmg==
-X-Google-Smtp-Source: AAOMgpfsYsZFeaYzNEqxaF1sZsWP5HcaASRTGywK6XH4nZZ3hgDFzzw8MiPkuukO1MBvj0DoYYOJfg==
-X-Received: by 2002:a19:5c8c:: with SMTP id u12-v6mr9254193lfi.98.1530349720520;
-        Sat, 30 Jun 2018 02:08:40 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id q5-v6sm1831508ljq.33.2018.06.30.02.08.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        bh=6Xn7hfb9S57WQ756R8BBn2tPRFt1bnEXQNQ9GaoyZVE=;
+        b=J3ecWgUMCU9MmJjz0MFfnmWHykMpII+u/F9AFZ7FoQobIBBsFspsLr+lNQ0UNpVG8m
+         biQEyfVWH9Nqf11PQVDmgIDspVdte24EP8WvVylB9Zt4Q2EOz1rkZ5/afFsL8j42zia1
+         CCk0OCXH7xU8LUuYAEkGrCBKwgmi9zk7EEk7N86GUYU2nstmIHNJTDfGhqYKD1dMm6s7
+         EiHbKZOpffkY0ON/Oz3gaVy65qvVqQmhMtcmhxF4I9tS8gM/Ujc0iyN4Q0j/klDLEcxa
+         nFm/ipM9/qSPqDrZ1ItyWiWtmezmaIiT6dFMRQrHBJz0eRZW6d5BfVZTf/KeH85YO2ZS
+         yBRA==
+X-Gm-Message-State: APt69E2LDcFE5OgR9MsY50jnLu7QSbrYtBLrTrAGV7dJC7hXaowRkNnD
+        QV4GNQEBSWQAATnCMpW8rJH+Ig==
+X-Google-Smtp-Source: AAOMgpdURTh7y/VXKBSNgNSHInPF/ap/TZHvZWPzskvYimFS5IKbTSwU9mgD5cUTLxqQza5vx9DICA==
+X-Received: by 2002:a19:a417:: with SMTP id q23-v6mr11439887lfc.59.1530349719242;
         Sat, 30 Jun 2018 02:08:39 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id q5-v6sm1831508ljq.33.2018.06.30.02.08.38
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 30 Jun 2018 02:08:38 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 14/23] exec-cmd.c: mark more strings for translation
-Date:   Sat, 30 Jun 2018 11:08:09 +0200
-Message-Id: <20180630090818.28937-15-pclouds@gmail.com>
+Subject: [PATCH 13/23] environment.c: mark more strings for translation
+Date:   Sat, 30 Jun 2018 11:08:08 +0200
+Message-Id: <20180630090818.28937-14-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc2.476.g39500d3211
 In-Reply-To: <20180630090818.28937-1-pclouds@gmail.com>
 References: <20180630090818.28937-1-pclouds@gmail.com>
@@ -71,22 +71,31 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- exec-cmd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ environment.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/exec-cmd.c b/exec-cmd.c
-index 02d31ee897..4f81f44310 100644
---- a/exec-cmd.c
-+++ b/exec-cmd.c
-@@ -358,7 +358,7 @@ int execl_git_cmd(const char *cmd, ...)
- 	}
- 	va_end(param);
- 	if (MAX_ARGS <= argc)
--		return error("too many args to run %s", cmd);
-+		return error(_("too many args to run %s"), cmd);
+diff --git a/environment.c b/environment.c
+index 2a6de2330b..d129c4adc5 100644
+--- a/environment.c
++++ b/environment.c
+@@ -147,7 +147,7 @@ static char *expand_namespace(const char *raw_namespace)
+ 			strbuf_addf(&buf, "refs/namespaces/%s", (*c)->buf);
+ 	strbuf_list_free(components);
+ 	if (check_refname_format(buf.buf, 0))
+-		die("bad git namespace path \"%s\"", raw_namespace);
++		die(_("bad git namespace path \"%s\""), raw_namespace);
+ 	strbuf_addch(&buf, '/');
+ 	return strbuf_detach(&buf, NULL);
+ }
+@@ -329,7 +329,7 @@ char *get_graft_file(void)
+ static void set_git_dir_1(const char *path)
+ {
+ 	if (setenv(GIT_DIR_ENVIRONMENT, path, 1))
+-		die("could not set GIT_DIR to '%s'", path);
++		die(_("could not set GIT_DIR to '%s'"), path);
+ 	setup_git_env(path);
+ }
  
- 	argv[argc] = NULL;
- 	return execv_git_cmd(argv);
 -- 
 2.18.0.rc2.476.g39500d3211
 
