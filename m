@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF4551F516
+	by dcvr.yhbt.net (Postfix) with ESMTP id E464F1F516
 	for <e@80x24.org>; Sat, 30 Jun 2018 09:20:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933733AbeF3JUr (ORCPT <rfc822;e@80x24.org>);
-        Sat, 30 Jun 2018 05:20:47 -0400
-Received: from mail-lj1-f175.google.com ([209.85.208.175]:45135 "EHLO
-        mail-lj1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752583AbeF3JUl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Jun 2018 05:20:41 -0400
-Received: by mail-lj1-f175.google.com with SMTP id g3-v6so9078203ljk.12
-        for <git@vger.kernel.org>; Sat, 30 Jun 2018 02:20:41 -0700 (PDT)
+        id S934256AbeF3JUs (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Jun 2018 05:20:48 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:46052 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754329AbeF3JUo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Jun 2018 05:20:44 -0400
+Received: by mail-lj1-f196.google.com with SMTP id g3-v6so9078235ljk.12
+        for <git@vger.kernel.org>; Sat, 30 Jun 2018 02:20:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=dUHCZ2CcTmVEmmIJ3W8OydW46SKo3W+FGW729AZwSBc=;
-        b=JS0ARgot9wDyB9vvtRPoRu22CXDIJ+5ZA63PfGCQhtyUhL+TPp3vjpQRLTBapnnNwE
-         mObHykER0tWHpzA5l1tC8aXxUa530xsehf/dgXWGJ9sFt+YEOTPDceQLBorKykGy7wOO
-         17ra9x7VlXCFetY4j6Z7T35op34EbMBn8qbf6jkMUWbIiaSrcU2qIaHBiIW0AxPtAZn1
-         LY7HmYjhpBDupMFlf3j501rHWGuKyeAKdpPYgdtxvzvPGxe0URYxZD4qyOC6Uhec1RKp
-         kuZqYip+M6OXSgght1pM3W5jT64bpvWmOuej5vSFHUTVq7RgXgDIxv+cRQ2udgEcPzzp
-         dAmw==
+        bh=bsqKDbbBw1Hg3KMiixYzH+2a96c4wW6Wz9/d4NwUyS8=;
+        b=ntPD8bq6IXKZVT/I5Osa2qO+Y0TS0nJaC4R5utgbxQ6dKDjV8ZXiOiZuvQ2fGrRs+R
+         LXbhnZBmdWGIPdrOoDf/eZvC0WwLY4FQFeSECjGpm7tooXHb2mdlsK/0V9RTvkph43eW
+         iRghKIne2poiJ+2kfEwHSVkVZjhL1Pl7X1nqbCvTUE1wUYMOBbz0XDpYNe3WQ9Qh8lgJ
+         hHas0iHEeRCn7bC2INn2+4gj6AAiALSGqbDmQbpnyb7vu6uv5xvClIevPbfGBx/3ohVR
+         Tsy/urFa+xQCkqfdflBli5U299RgYFAOoZazYd9tiOacN4EsXkl1t0JZi7+MV6vAJqkA
+         h8pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=dUHCZ2CcTmVEmmIJ3W8OydW46SKo3W+FGW729AZwSBc=;
-        b=CX1db5j+Ne2jziIPWvrY3WwmjE2BkwjlWvtI9hNTJGrMUj1M4LJkC/4/Xk4V8W7FvX
-         IhIfOkGkGtlnJ1h9r/VwaFvxyyqCKm9aWNpF4IheFPK6RQomoVekndAQMSKlVCQsw0yu
-         6vOyBmBACO09O/3+8B6yZCEMCu7/Zt9OWEn1g6NqdZvF5LrtxnXlDd5n+FwLJBxVYzUg
-         NDsc5nupG1ZVho3tKrqQ/umMLpIbu7YFC2o8IaQiTKWmAC3Gk/lixlNofhH2N5F5Ytf3
-         aZdPQUaRBwEA+UwWXQ4gGlyN3RX8ujS7q5dxRmGSwuf0Sj+ljfucbF8vXBhHUdccyX62
-         A3AQ==
-X-Gm-Message-State: APt69E3XOZRlNKitfWKacPRLVpFS7TZ6u1HuPxzOYQRYqNdpZHyO6yrl
-        euEB7PXS4lnD4EYvEWpRXy/Jzg==
-X-Google-Smtp-Source: ADUXVKKgHs4kl7sW02BouK5oQMvsw2bW9Ci4TfJcdcsMSySCK2ebuJ2XnDuQJdn7WYwbSYZl7PjHdg==
-X-Received: by 2002:a2e:558e:: with SMTP id g14-v6mr12761501lje.4.1530350440134;
-        Sat, 30 Jun 2018 02:20:40 -0700 (PDT)
+        bh=bsqKDbbBw1Hg3KMiixYzH+2a96c4wW6Wz9/d4NwUyS8=;
+        b=lmoz+DkVLeCn9DeAkDzzd9Dg+Q8DK0DDN84BC0GzdupDgijvSvRtIDI84444BTftYB
+         P4If9ZxCO0WM7eu2Hll/XD6R8WH6rzDQLan3DmaFLKnZ5vWdUoJhxwHDHN22tY98KbHi
+         u6TUHp6/U246H8GxHCW1oWHyK9MMNTkPE1Efufgu1k78PGK3tZbGT0JPlqNB4imJ/jZ0
+         2MbT2KDAC0hUsOrzZ3gmBV16VrQOf0RZ8bk+poG2mpsO2LrpjPCUc79EeGApBqoYL15l
+         IICa+t0Ch5PNXI7wlcc2HhGmHMbza5Ki7FASlt8XSPbEAULWhTmGnxdVjQ8dGfXPRhJr
+         fIVQ==
+X-Gm-Message-State: APt69E1wee0ZkK6D3UnMAhm347uQbQVq/5okEKU1IKdOwleDHNS6rSr8
+        ujcnMOHs01VZJAM98uhZf4oxAA==
+X-Google-Smtp-Source: AAOMgpcnca0X7Pn7PUoRiZOp5GbePLHsrH4dyPmrse7/M8Pbfzpc1u+I0gHRA7ng1GmiIFo5nARXyQ==
+X-Received: by 2002:a2e:1290:: with SMTP id 16-v6mr10279130ljs.94.1530350442493;
+        Sat, 30 Jun 2018 02:20:42 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id c20-v6sm1854650lji.82.2018.06.30.02.20.39
+        by smtp.gmail.com with ESMTPSA id c20-v6sm1854650lji.82.2018.06.30.02.20.41
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 30 Jun 2018 02:20:39 -0700 (PDT)
+        Sat, 30 Jun 2018 02:20:41 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 01/12] apply.h: drop extern on func declaration
-Date:   Sat, 30 Jun 2018 11:20:20 +0200
-Message-Id: <20180630092031.29910-2-pclouds@gmail.com>
+Subject: [PATCH 03/12] blame.h: drop extern on func declaration
+Date:   Sat, 30 Jun 2018 11:20:22 +0200
+Message-Id: <20180630092031.29910-4-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc2.476.g39500d3211
 In-Reply-To: <20180630092031.29910-1-pclouds@gmail.com>
 References: <20180630092031.29910-1-pclouds@gmail.com>
@@ -70,49 +70,47 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- apply.h | 23 +++++++++++------------
- 1 file changed, 11 insertions(+), 12 deletions(-)
+ blame.h | 28 ++++++++++++++++------------
+ 1 file changed, 16 insertions(+), 12 deletions(-)
 
-diff --git a/apply.h b/apply.h
-index dc4a019057..025dfed7ab 100644
---- a/apply.h
-+++ b/apply.h
-@@ -110,14 +110,14 @@ struct apply_state {
- 	int applied_after_fixing_ws;
- };
+diff --git a/blame.h b/blame.h
+index a6c915c277..8c1e14980d 100644
+--- a/blame.h
++++ b/blame.h
+@@ -159,17 +159,21 @@ static inline struct blame_origin *blame_origin_incref(struct blame_origin *o)
+ 		o->refcnt++;
+ 	return o;
+ }
+-extern void blame_origin_decref(struct blame_origin *o);
+-
+-extern void blame_coalesce(struct blame_scoreboard *sb);
+-extern void blame_sort_final(struct blame_scoreboard *sb);
+-extern unsigned blame_entry_score(struct blame_scoreboard *sb, struct blame_entry *e);
+-extern void assign_blame(struct blame_scoreboard *sb, int opt);
+-extern const char *blame_nth_line(struct blame_scoreboard *sb, long lno);
+-
+-extern void init_scoreboard(struct blame_scoreboard *sb);
+-extern void setup_scoreboard(struct blame_scoreboard *sb, const char *path, struct blame_origin **orig);
+-
+-extern struct blame_entry *blame_entry_prepend(struct blame_entry *head, long start, long end, struct blame_origin *o);
++void blame_origin_decref(struct blame_origin *o);
++
++void blame_coalesce(struct blame_scoreboard *sb);
++void blame_sort_final(struct blame_scoreboard *sb);
++unsigned blame_entry_score(struct blame_scoreboard *sb, struct blame_entry *e);
++void assign_blame(struct blame_scoreboard *sb, int opt);
++const char *blame_nth_line(struct blame_scoreboard *sb, long lno);
++
++void init_scoreboard(struct blame_scoreboard *sb);
++void setup_scoreboard(struct blame_scoreboard *sb,
++		      const char *path,
++		      struct blame_origin **orig);
++
++struct blame_entry *blame_entry_prepend(struct blame_entry *head,
++					long start, long end,
++					struct blame_origin *o);
  
--extern int apply_parse_options(int argc, const char **argv,
--			       struct apply_state *state,
--			       int *force_apply, int *options,
--			       const char * const *apply_usage);
--extern int init_apply_state(struct apply_state *state,
--			    const char *prefix);
--extern void clear_apply_state(struct apply_state *state);
--extern int check_apply_state(struct apply_state *state, int force_apply);
-+int apply_parse_options(int argc, const char **argv,
-+			struct apply_state *state,
-+			int *force_apply, int *options,
-+			const char * const *apply_usage);
-+int init_apply_state(struct apply_state *state,
-+		     const char *prefix);
-+void clear_apply_state(struct apply_state *state);
-+int check_apply_state(struct apply_state *state, int force_apply);
- 
- /*
-  * Some aspects of the apply behavior are controlled by the following
-@@ -126,9 +126,8 @@ extern int check_apply_state(struct apply_state *state, int force_apply);
- #define APPLY_OPT_INACCURATE_EOF	(1<<0) /* accept inaccurate eof */
- #define APPLY_OPT_RECOUNT		(1<<1) /* accept inaccurate line count */
- 
--extern int apply_all_patches(struct apply_state *state,
--			     int argc,
--			     const char **argv,
--			     int options);
-+int apply_all_patches(struct apply_state *state,
-+		      int argc, const char **argv,
-+		      int options);
- 
- #endif
+ #endif /* BLAME_H */
 -- 
 2.18.0.rc2.476.g39500d3211
 
