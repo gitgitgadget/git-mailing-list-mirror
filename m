@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B28AE1F516
-	for <e@80x24.org>; Sat, 30 Jun 2018 09:21:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED2321F516
+	for <e@80x24.org>; Sat, 30 Jun 2018 09:21:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932876AbeF3JU4 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 30 Jun 2018 05:20:56 -0400
-Received: from mail-lf0-f54.google.com ([209.85.215.54]:43812 "EHLO
+        id S934818AbeF3JU7 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Jun 2018 05:20:59 -0400
+Received: from mail-lf0-f54.google.com ([209.85.215.54]:42943 "EHLO
         mail-lf0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933577AbeF3JUr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Jun 2018 05:20:47 -0400
-Received: by mail-lf0-f54.google.com with SMTP id m12-v6so7903097lfc.10
-        for <git@vger.kernel.org>; Sat, 30 Jun 2018 02:20:46 -0700 (PDT)
+        with ESMTP id S1754852AbeF3JUp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Jun 2018 05:20:45 -0400
+Received: by mail-lf0-f54.google.com with SMTP id u202-v6so8474172lff.9
+        for <git@vger.kernel.org>; Sat, 30 Jun 2018 02:20:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Ko5DvuOpig+DhqGeep6L7LvqPDaOhHcIvm9wlmEMeEI=;
-        b=Oeqkos1fUIUbnGyCcDaPzLmAaL7HlbC+C3difRvXO7GRtJdAzmUWypMVeJnMi/EoaZ
-         Ezpr/oHMU4fR8Ic+vWM1wzFjdGHLscVrLYbW6kz7AxUBA871EWdTPz6B+SwFBdnPW9Xn
-         qR+2u440ThxGyfHH5MCyYjsZGBKZSW8zfgac5TnhLyuUBmE9aCOG+BLg/PMgaLiRV7eC
-         FR5Ka85ga/78US4Qq2HI4KXcXLlnqh3k5wF5HLnnBqzJoePA9JdgpTQhzlouXXDEdnzl
-         V8OI7PbwW6UQE4B1oIXZyScAUsl+mY21byGKSQyGdnDL4aon9uTK1IoVBMmZeuRQZXDi
-         Loyw==
+        bh=2O6/xYl8p86pY+IWmfWRGkoudOJd0N8a1VvXw+LWz80=;
+        b=u0AzDcV5QH6ujEIKtcijLB6UYXCEIGBU26957u7iR2YO/DN64yLvFyVdt4zVF+Xfu6
+         G0mfYM7yVKIZDGCvypV+6vcAtU+Xb7vh8hMQKfsPAvu5RalKlESfs6zuLOeg/TWXSMXw
+         zucEEtOQ65Nhdm7k5MGAmRhzwdDymx9P7WxFjKvEqrYTA2J/q0NTNl1Jnpfv94gj849Z
+         /D7bL/xZWDjgSKKKqki+5zbL1dBRXW5HxlJnIQRNm1fqd1FrAWzAl6VWDHSfPAgdW3QH
+         Fv2WHzQ+jNm3nNyHp6xs4wYsr2rD+nDUZLI/J8hN2B63ohPTlmsBbvPiJlXwBp62ZZkw
+         juCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Ko5DvuOpig+DhqGeep6L7LvqPDaOhHcIvm9wlmEMeEI=;
-        b=coLlCarG9D+wmg5t2ckZaLqoZGB3bJ9x42pCYDzxAzIF/PFNUzealzDkJR9GTV6VsM
-         8iuzOw9yNzdzIOhmzlkpJvA92szoAKispY6bBX/mGrE6Sf7qXf1U7jO4u7+eCZ6Gt/Ke
-         BISFW3aZdxxsC5h08u89Erz17YFpR0eMmza5fzXPXr8kgCqWSiuXo83sTLsCppEWvaif
-         ZMnMX+XFwKQ5fj8kRsd1KHbpbP3U7TuqCEoAcEiwZjW7SpbUzfcZ61pSix3RNS0KXUNv
-         8SlUD8E6/GbCe9t4+y7GCmewGPAN0JUat+Kua8w87L3Q5CLEGF9R2geTO1+/z2TlXVHF
-         Lj2w==
-X-Gm-Message-State: APt69E28oLnR2T7o51WBH6Mpe79XmovOfr2LCQX/8qv6Fz1rURFvCB8v
-        fI6uH49A6IOrL07cywNs2ww/wQ==
-X-Google-Smtp-Source: AAOMgpfoVYl3e7UYYa8dsLqSvqHj690LBjnVEZNoiLZ0f0N+cFz5gMa7c/RRS0b2wG0vds82nwEd3w==
-X-Received: by 2002:a19:1a52:: with SMTP id a79-v6mr12313084lfa.43.1530350445440;
-        Sat, 30 Jun 2018 02:20:45 -0700 (PDT)
+        bh=2O6/xYl8p86pY+IWmfWRGkoudOJd0N8a1VvXw+LWz80=;
+        b=eYteybH40FgROd/o504aDrZt2qQrdPv/eTLPVcRMhZ8Nt8nkAA+mKMP+pUmcO8EYhi
+         efpE55Z/B9nwLU3yBPgD7pARCziuoRiXdIAhBDrYKyBLfEagEtN8CgMX8JuWP4/MqqrU
+         ell6dVdXY5y9I57hkAfT7Ui0EnAeOl8uaaE0LiCPQaWksOVAP7XQcxxq3tBqgD6yKuGS
+         HTYCOD7DS5ggg5bf1YdLQBPQ0qWWsAxSQCh1sC8StWastgaQEY9AaHys60qv0tHWg1z4
+         ruIDEJjdh1366s3/NU290OT+jKqiQgxycpfpdgCPztXKexBm+CE3osdv9vfInycrVOY7
+         fvWw==
+X-Gm-Message-State: APt69E0R0BJV1jZZhZWEYZEIj91acyelDDP/aTOliPF3anyPVCx9yXuO
+        kHRORhYXuklnPJjKuUVTTdgxjQ==
+X-Google-Smtp-Source: AAOMgpeLt8KKRGCRnxUCqX9f4J6J2luUIu2WbWL7ggD6eYhKLCc6Yq+HMm+DiSLUSo99OYTh3HqcZA==
+X-Received: by 2002:a19:d245:: with SMTP id j66-v6mr12387546lfg.139.1530350443459;
+        Sat, 30 Jun 2018 02:20:43 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id c20-v6sm1854650lji.82.2018.06.30.02.20.44
+        by smtp.gmail.com with ESMTPSA id c20-v6sm1854650lji.82.2018.06.30.02.20.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 30 Jun 2018 02:20:44 -0700 (PDT)
+        Sat, 30 Jun 2018 02:20:42 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 06/12] diffcore.h: drop extern from function declaration
-Date:   Sat, 30 Jun 2018 11:20:25 +0200
-Message-Id: <20180630092031.29910-7-pclouds@gmail.com>
+Subject: [PATCH 04/12] cache-tree.h: drop extern from function declaration
+Date:   Sat, 30 Jun 2018 11:20:23 +0200
+Message-Id: <20180630092031.29910-5-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc2.476.g39500d3211
 In-Reply-To: <20180630092031.29910-1-pclouds@gmail.com>
 References: <20180630092031.29910-1-pclouds@gmail.com>
@@ -70,93 +70,19 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- diffcore.h | 50 +++++++++++++++++++++++++-------------------------
- 1 file changed, 25 insertions(+), 25 deletions(-)
+ cache-tree.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/diffcore.h b/diffcore.h
-index a30da161da..81281a398b 100644
---- a/diffcore.h
-+++ b/diffcore.h
-@@ -50,17 +50,17 @@ struct diff_filespec {
- 	struct userdiff_driver *driver;
- };
+diff --git a/cache-tree.h b/cache-tree.h
+index cfd5328cc9..9799e894f7 100644
+--- a/cache-tree.h
++++ b/cache-tree.h
+@@ -51,6 +51,6 @@ int write_index_as_tree(struct object_id *oid, struct index_state *index_state,
+ int write_cache_as_tree(struct object_id *oid, int flags, const char *prefix);
+ void prime_cache_tree(struct index_state *, struct tree *);
  
--extern struct diff_filespec *alloc_filespec(const char *);
--extern void free_filespec(struct diff_filespec *);
--extern void fill_filespec(struct diff_filespec *, const struct object_id *,
--			  int, unsigned short);
-+struct diff_filespec *alloc_filespec(const char *);
-+void free_filespec(struct diff_filespec *);
-+void fill_filespec(struct diff_filespec *, const struct object_id *,
-+		   int, unsigned short);
- 
- #define CHECK_SIZE_ONLY 1
- #define CHECK_BINARY    2
--extern int diff_populate_filespec(struct diff_filespec *, unsigned int);
--extern void diff_free_filespec_data(struct diff_filespec *);
--extern void diff_free_filespec_blob(struct diff_filespec *);
--extern int diff_filespec_is_binary(struct diff_filespec *);
-+int diff_populate_filespec(struct diff_filespec *, unsigned int);
-+void diff_free_filespec_data(struct diff_filespec *);
-+void diff_free_filespec_blob(struct diff_filespec *);
-+int diff_filespec_is_binary(struct diff_filespec *);
- 
- struct diff_filepair {
- 	struct diff_filespec *one;
-@@ -86,9 +86,9 @@ struct diff_filepair {
- 
- #define DIFF_PAIR_MODE_CHANGED(p) ((p)->one->mode != (p)->two->mode)
- 
--extern void diff_free_filepair(struct diff_filepair *);
-+void diff_free_filepair(struct diff_filepair *);
- 
--extern int diff_unmodified_pair(struct diff_filepair *);
-+int diff_unmodified_pair(struct diff_filepair *);
- 
- struct diff_queue_struct {
- 	struct diff_filepair **queue;
-@@ -102,16 +102,16 @@ struct diff_queue_struct {
- 	} while (0)
- 
- extern struct diff_queue_struct diff_queued_diff;
--extern struct diff_filepair *diff_queue(struct diff_queue_struct *,
--					struct diff_filespec *,
--					struct diff_filespec *);
--extern void diff_q(struct diff_queue_struct *, struct diff_filepair *);
-+struct diff_filepair *diff_queue(struct diff_queue_struct *,
-+				 struct diff_filespec *,
-+				 struct diff_filespec *);
-+void diff_q(struct diff_queue_struct *, struct diff_filepair *);
- 
--extern void diffcore_break(int);
--extern void diffcore_rename(struct diff_options *);
--extern void diffcore_merge_broken(void);
--extern void diffcore_pickaxe(struct diff_options *);
--extern void diffcore_order(const char *orderfile);
-+void diffcore_break(int);
-+void diffcore_rename(struct diff_options *);
-+void diffcore_merge_broken(void);
-+void diffcore_pickaxe(struct diff_options *);
-+void diffcore_order(const char *orderfile);
- 
- /* low-level interface to diffcore_order */
- struct obj_order {
-@@ -138,11 +138,11 @@ void diff_debug_queue(const char *, struct diff_queue_struct *);
- #define diff_debug_queue(a,b) do { /* nothing */ } while (0)
- #endif
- 
--extern int diffcore_count_changes(struct diff_filespec *src,
--				  struct diff_filespec *dst,
--				  void **src_count_p,
--				  void **dst_count_p,
--				  unsigned long *src_copied,
--				  unsigned long *literal_added);
-+int diffcore_count_changes(struct diff_filespec *src,
-+			   struct diff_filespec *dst,
-+			   void **src_count_p,
-+			   void **dst_count_p,
-+			   unsigned long *src_copied,
-+			   unsigned long *literal_added);
+-extern int cache_tree_matches_traversal(struct cache_tree *, struct name_entry *ent, struct traverse_info *info);
++int cache_tree_matches_traversal(struct cache_tree *, struct name_entry *ent, struct traverse_info *info);
  
  #endif
 -- 
