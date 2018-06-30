@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A78ED1F516
-	for <e@80x24.org>; Sat, 30 Jun 2018 09:09:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 120201F516
+	for <e@80x24.org>; Sat, 30 Jun 2018 09:09:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935933AbeF3JJf (ORCPT <rfc822;e@80x24.org>);
-        Sat, 30 Jun 2018 05:09:35 -0400
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:35724 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934077AbeF3JIg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Jun 2018 05:08:36 -0400
-Received: by mail-lj1-f193.google.com with SMTP id i125-v6so9056337lji.2
-        for <git@vger.kernel.org>; Sat, 30 Jun 2018 02:08:36 -0700 (PDT)
+        id S935949AbeF3JJh (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Jun 2018 05:09:37 -0400
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:34686 "EHLO
+        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934871AbeF3JIt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Jun 2018 05:08:49 -0400
+Received: by mail-lf0-f65.google.com with SMTP id n96-v6so8462877lfi.1
+        for <git@vger.kernel.org>; Sat, 30 Jun 2018 02:08:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Iev5OQMX0GafWzTSVX8cpvFTOIDqrmwN/DJZLxfWjF4=;
-        b=Rb0gYSek5qkGk4TgnC8VJSEneEtmrgr6kfdO2z0aMN8MHiAjEBexYhmgrfNKKyM05r
-         XSeStejRfZLUjuS7AqMb+bha1GdMEOD+DmapmxpNWGJlF3Pkim8S6Q9iDuCs0HuCqANR
-         4OLtOkOn5d+AfzpSWM18k1UAnqF718r1u6Ar8MAWWcUh5hMz4IzZ1SMWnHGnSLj8PLWM
-         9S8QcENbQvc7fGsJZu/qyVWk3Y+b93bfr/cE9UiWvxsGhbHiPC58/zYoxKx/pGUYBARX
-         2Q0VEOxubA2x1Xx8ZEEy0uKUbdvCzxRV9sGInStRuVL3d8xsY1TF1xBfDhzTDIPKsDNo
-         dXtg==
+        bh=WJ5ql7nSj52nKRnENwxV0j2kWupS+HndXS9ZRJ3T6+4=;
+        b=BoKSMyfX831nhfQeMJDystJ5913hLk+KuAUAdN4vnVytXM6Cl35gnDBy83AwZ78bMo
+         mWStNM7XnOb6ebr3kZj/2EBCbKI5MQQCFoWah0I6GUBzpzEe7ZC+i0SVXAL+crvNC0Ur
+         nYju6zJ+ZcLiK/An+6gmlg5G2phJqxne7AD8HGXE9asSGEBMxlZc/+fJJsDkcxjnBanQ
+         49ltMmLUkWvJ7BT5Ia2mY03h6ng5WaH33sOr8OgFnzXMDu+H4zIUTuq+3uUJh46l/RRC
+         AD9gzNt+63QiewpRlWPw9AljRqbUU+UEn8v5QcCudLzvfIEe7aalim5casX+96Iwg+Qp
+         Ln6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Iev5OQMX0GafWzTSVX8cpvFTOIDqrmwN/DJZLxfWjF4=;
-        b=jiGP8fGe8uA+1Y6vk2swXp7AeIPTHXCkcRDONYPgQBfqQmUOjSRR7E69WYjcwBMzlO
-         bILvubpbQ+5WyGnKGEBulDJTjp5scfSA9B1mfV5eNePMj9HF2dY7GbZNq8blQmLWHT9d
-         w6pqSack5K5QzGmSbx8ey4aLnzFrGjsoIXoXkv+SX8SgjqySTGS3oUJwv3codT/nWk/1
-         fWcoPncwiIBQl9ZCQwzvRlTPbXoLgWV/ShmC2iMXQM5Nn/NGuyu0Kxi0ZMzYhK2ieh7a
-         JG6f3XL8qXXDMzx4p/vYHGFCN73m4kmjvQ6CMphcYXLUGgs4uD1qACrwyAIAVOx+0UfO
-         WwqA==
-X-Gm-Message-State: APt69E2ipRIZ1k6gfoqN0UQfmdbHSZUDfy1oNHSw2iJV7L2dQJfqqjVC
-        n+q+dZ9NoC5l3kfEr+e/DB0EVw==
-X-Google-Smtp-Source: AAOMgpd21cqNh1l/Fd6ExlKvbNbX4sBbF81DKBtHGWzSLczO380ZbYc3MFrfDrABb4ubZcm9d6fNjQ==
-X-Received: by 2002:a2e:8185:: with SMTP id e5-v6mr5259184ljg.93.1530349714932;
-        Sat, 30 Jun 2018 02:08:34 -0700 (PDT)
+        bh=WJ5ql7nSj52nKRnENwxV0j2kWupS+HndXS9ZRJ3T6+4=;
+        b=laHC9lRzM1wsPDQjq80pAiBSlp4g4nHUgUdUenIm8A3qp9H7l4KAARkLQp23FhhPR4
+         99bYSi85SJIiFZKxvx60bd101BxXdxwpN+7w1m1YIXhO/MgyIeIw3q50FPp8O3BakTS4
+         RE3S/MHNpreS5/Ux8fzGX5U9uIM1NzUf2bKeVWcj2F0uTNr82tfN+WBvcBBnPZSoYNJJ
+         vfN7bBqibZm84vqA2qXiy88A1PvhWafk4vIw2Zf54BTxAG2nNpxEjMM4+sR4rwBsQAqZ
+         4wp4Pai4Fka1EvqJu6g2gooPTIjhJa2iITi/03+yOm4h/kT1pQ+DkSdaiVQ/co5tSP/y
+         RVTg==
+X-Gm-Message-State: APt69E2ywKzuqK27Il/KFVOwTcyCov08J10C4uiMniSyHJsnOMmxyotx
+        1r2g+N7sXODII5yPebZ3IVnbAQ==
+X-Google-Smtp-Source: AAOMgpeTOzTCJ1ia7Myi2YkTsV8s5BsRwuD/1HSqBi6UzU9DV8ZijxvYCQ6uxMuEol4Jd2EsVThPtA==
+X-Received: by 2002:a19:dbc3:: with SMTP id t64-v6mr11391440lfi.123.1530349727516;
+        Sat, 30 Jun 2018 02:08:47 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id q5-v6sm1831508ljq.33.2018.06.30.02.08.33
+        by smtp.gmail.com with ESMTPSA id q5-v6sm1831508ljq.33.2018.06.30.02.08.46
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 30 Jun 2018 02:08:34 -0700 (PDT)
+        Sat, 30 Jun 2018 02:08:46 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 09/23] config.c: mark more strings for translation
-Date:   Sat, 30 Jun 2018 11:08:04 +0200
-Message-Id: <20180630090818.28937-10-pclouds@gmail.com>
+Subject: [PATCH 20/23] sequencer.c: mark more strings for translation
+Date:   Sat, 30 Jun 2018 11:08:15 +0200
+Message-Id: <20180630090818.28937-21-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc2.476.g39500d3211
 In-Reply-To: <20180630090818.28937-1-pclouds@gmail.com>
 References: <20180630090818.28937-1-pclouds@gmail.com>
@@ -71,329 +71,75 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- config.c                  | 76 +++++++++++++++++++--------------------
- t/t1305-config-include.sh |  2 +-
- 2 files changed, 39 insertions(+), 39 deletions(-)
+ sequencer.c | 26 ++++++++++++++------------
+ 1 file changed, 14 insertions(+), 12 deletions(-)
 
-diff --git a/config.c b/config.c
-index bb2e30fe3d..58d076e833 100644
---- a/config.c
-+++ b/config.c
-@@ -116,12 +116,12 @@ static long config_buf_ftell(struct config_source *conf)
+diff --git a/sequencer.c b/sequencer.c
+index 6b6162d194..f7c2f2422d 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -716,7 +716,7 @@ static const char *read_author_ident(struct strbuf *buf)
+ 	/* dequote values and construct ident line in-place */
+ 	for (in = out = buf->buf; i < 3 && in - buf->buf < buf->len; i++) {
+ 		if (!skip_prefix(in, keys[i], (const char **)&in)) {
+-			warning("could not parse '%s' (looking for '%s'",
++			warning(_("could not parse '%s' (looking for '%s'"),
+ 				rebase_path_author_script(), keys[i]);
+ 			return NULL;
+ 		}
+@@ -738,7 +738,7 @@ static const char *read_author_ident(struct strbuf *buf)
+ 	}
+ 
+ 	if (i < 3) {
+-		warning("could not parse '%s' (looking for '%s')",
++		warning(_("could not parse '%s' (looking for '%s')"),
+ 			rebase_path_author_script(), keys[i]);
+ 		return NULL;
+ 	}
+@@ -1444,7 +1444,7 @@ static const char *command_to_string(const enum todo_command command)
+ {
+ 	if (command < TODO_COMMENT)
+ 		return todo_command_info[command].str;
+-	die("unknown command: %d", command);
++	die(_("unknown command: %d"), command);
  }
  
- #define MAX_INCLUDE_DEPTH 10
--static const char include_depth_advice[] =
-+static const char include_depth_advice[] = N_(
- "exceeded maximum include depth (%d) while including\n"
- "	%s\n"
- "from\n"
- "	%s\n"
--"Do you have circular includes?";
-+"Do you have circular includes?");
- static int handle_path_include(const char *path, struct config_include_data *inc)
- {
- 	int ret = 0;
-@@ -133,7 +133,7 @@ static int handle_path_include(const char *path, struct config_include_data *inc
+ static char command_to_char(const enum todo_command command)
+@@ -2600,15 +2600,17 @@ static int error_with_patch(struct commit *commit,
+ 		if (intend_to_amend())
+ 			return -1;
  
- 	expanded = expand_user_path(path, 0);
- 	if (!expanded)
--		return error("could not expand include path '%s'", path);
-+		return error(_("could not expand include path '%s'"), path);
- 	path = expanded;
+-		fprintf(stderr, "You can amend the commit now, with\n"
+-			"\n"
+-			"  git commit --amend %s\n"
+-			"\n"
+-			"Once you are satisfied with your changes, run\n"
+-			"\n"
+-			"  git rebase --continue\n", gpg_sign_opt_quoted(opts));
++		fprintf(stderr,
++			_("You can amend the commit now, with\n"
++			  "\n"
++			  "  git commit --amend %s\n"
++			  "\n"
++			  "Once you are satisfied with your changes, run\n"
++			  "\n"
++			  "  git rebase --continue\n"),
++			gpg_sign_opt_quoted(opts));
+ 	} else if (exit_code)
+-		fprintf_ln(stderr, "Could not apply %s... %.*s",
++		fprintf_ln(stderr, _("Could not apply %s... %.*s"),
+ 			short_commit_name(commit), subject_len, subject);
  
- 	/*
-@@ -144,7 +144,7 @@ static int handle_path_include(const char *path, struct config_include_data *inc
- 		char *slash;
+ 	return exit_code;
+@@ -2719,7 +2721,7 @@ static int do_label(const char *name, int len)
+ 	struct object_id head_oid;
  
- 		if (!cf || !cf->path)
--			return error("relative config includes must come from files");
-+			return error(_("relative config includes must come from files"));
+ 	if (len == 1 && *name == '#')
+-		return error("illegal label name: '%.*s'", len, name);
++		return error(_("illegal label name: '%.*s'"), len, name);
  
- 		slash = find_last_dir_sep(cf->path);
- 		if (slash)
-@@ -155,7 +155,7 @@ static int handle_path_include(const char *path, struct config_include_data *inc
- 
- 	if (!access_or_die(path, R_OK, 0)) {
- 		if (++inc->depth > MAX_INCLUDE_DEPTH)
--			die(include_depth_advice, MAX_INCLUDE_DEPTH, path,
-+			die(_(include_depth_advice), MAX_INCLUDE_DEPTH, path,
- 			    !cf ? "<unknown>" :
- 			    cf->name ? cf->name :
- 			    "the command line");
-@@ -342,13 +342,13 @@ static int git_config_parse_key_1(const char *key, char **store_key, int *basele
- 
- 	if (last_dot == NULL || last_dot == key) {
- 		if (!quiet)
--			error("key does not contain a section: %s", key);
-+			error(_("key does not contain a section: %s"), key);
- 		return -CONFIG_NO_SECTION_OR_NAME;
- 	}
- 
- 	if (!last_dot[1]) {
- 		if (!quiet)
--			error("key does not contain variable name: %s", key);
-+			error(_("key does not contain variable name: %s"), key);
- 		return -CONFIG_NO_SECTION_OR_NAME;
- 	}
- 
-@@ -372,13 +372,13 @@ static int git_config_parse_key_1(const char *key, char **store_key, int *basele
- 			if (!iskeychar(c) ||
- 			    (i == baselen + 1 && !isalpha(c))) {
- 				if (!quiet)
--					error("invalid key: %s", key);
-+					error(_("invalid key: %s"), key);
- 				goto out_free_ret_1;
- 			}
- 			c = tolower(c);
- 		} else if (c == '\n') {
- 			if (!quiet)
--				error("invalid key (newline): %s", key);
-+				error(_("invalid key (newline): %s"), key);
- 			goto out_free_ret_1;
- 		}
- 		if (store_key)
-@@ -414,7 +414,7 @@ int git_config_parse_parameter(const char *text,
- 
- 	pair = strbuf_split_str(text, '=', 2);
- 	if (!pair[0])
--		return error("bogus config parameter: %s", text);
-+		return error(_("bogus config parameter: %s"), text);
- 
- 	if (pair[0]->len && pair[0]->buf[pair[0]->len - 1] == '=') {
- 		strbuf_setlen(pair[0], pair[0]->len - 1);
-@@ -426,7 +426,7 @@ int git_config_parse_parameter(const char *text,
- 	strbuf_trim(pair[0]);
- 	if (!pair[0]->len) {
- 		strbuf_list_free(pair);
--		return error("bogus config parameter: %s", text);
-+		return error(_("bogus config parameter: %s"), text);
- 	}
- 
- 	if (git_config_parse_key(pair[0]->buf, &canonical_name, NULL)) {
-@@ -461,7 +461,7 @@ int git_config_from_parameters(config_fn_t fn, void *data)
- 	envw = xstrdup(env);
- 
- 	if (sq_dequote_to_argv(envw, &argv, &nr, &alloc) < 0) {
--		ret = error("bogus format in %s", CONFIG_DATA_ENVIRONMENT);
-+		ret = error(_("bogus format in %s"), CONFIG_DATA_ENVIRONMENT);
- 		goto out;
- 	}
- 
-@@ -1154,7 +1154,7 @@ static int git_default_core_config(const char *var, const char *value)
- 		else {
- 			int abbrev = git_config_int(var, value);
- 			if (abbrev < minimum_abbrev || abbrev > 40)
--				return error("abbrev length out of range: %d", abbrev);
-+				return error(_("abbrev length out of range: %d"), abbrev);
- 			default_abbrev = abbrev;
- 		}
- 		return 0;
-@@ -1271,7 +1271,7 @@ static int git_default_core_config(const char *var, const char *value)
- 			comment_line_char = value[0];
- 			auto_comment_line_char = 0;
- 		} else
--			return error("core.commentChar should only be one character");
-+			return error(_("core.commentChar should only be one character"));
- 		return 0;
- 	}
- 
-@@ -1384,7 +1384,7 @@ static int git_default_branch_config(const char *var, const char *value)
- 		else if (!strcmp(value, "always"))
- 			autorebase = AUTOREBASE_ALWAYS;
- 		else
--			return error("malformed value for %s", var);
-+			return error(_("malformed value for %s"), var);
- 		return 0;
- 	}
- 
-@@ -1409,11 +1409,11 @@ static int git_default_push_config(const char *var, const char *value)
- 			push_default = PUSH_DEFAULT_UPSTREAM;
- 		else if (!strcmp(value, "current"))
- 			push_default = PUSH_DEFAULT_CURRENT;
--		else {
--			error("malformed value for %s: %s", var, value);
--			return error("Must be one of nothing, matching, simple, "
--				     "upstream or current.");
--		}
-+		else
-+			return error(_("malformed value for %s: %s\n"
-+				       "Must be one of nothing, matching, simple, "
-+				       "upstream or current."),
-+				     var, value);
- 		return 0;
- 	}
- 
-@@ -1589,10 +1589,10 @@ int git_config_from_blob_oid(config_fn_t fn,
- 
- 	buf = read_object_file(oid, &type, &size);
- 	if (!buf)
--		return error("unable to load config blob object '%s'", name);
-+		return error(_("unable to load config blob object '%s'"), name);
- 	if (type != OBJ_BLOB) {
- 		free(buf);
--		return error("reference '%s' does not point to a blob", name);
-+		return error(_("reference '%s' does not point to a blob"), name);
- 	}
- 
- 	ret = git_config_from_mem(fn, CONFIG_ORIGIN_BLOB, name, buf, size, data);
-@@ -1608,7 +1608,7 @@ static int git_config_from_blob_ref(config_fn_t fn,
- 	struct object_id oid;
- 
- 	if (get_oid(name, &oid) < 0)
--		return error("unable to resolve config blob '%s'", name);
-+		return error(_("unable to resolve config blob '%s'"), name);
- 	return git_config_from_blob_oid(fn, name, &oid, data);
- }
- 
-@@ -1638,7 +1638,7 @@ unsigned long git_env_ulong(const char *k, unsigned long val)
- {
- 	const char *v = getenv(k);
- 	if (v && !git_parse_ulong(v, &val))
--		die("failed to parse %s", k);
-+		die(_("failed to parse %s"), k);
- 	return val;
- }
- 
-@@ -2372,7 +2372,7 @@ static int store_aux_event(enum config_event_t type,
- 
- 	if (type == CONFIG_EVENT_SECTION) {
- 		if (cf->var.len < 2 || cf->var.buf[cf->var.len - 1] != '.')
--			return error("invalid section name '%s'", cf->var.buf);
-+			return error(_("invalid section name '%s'"), cf->var.buf);
- 
- 		/* Is this the section we were looking for? */
- 		store->is_keys_section =
-@@ -2428,7 +2428,7 @@ static int store_aux(const char *key, const char *value, void *cb)
- 
- static int write_error(const char *filename)
- {
--	error("failed to write new configuration file %s", filename);
-+	error(_("failed to write new configuration file %s"), filename);
- 
- 	/* Same error code as "failed to rename". */
- 	return 4;
-@@ -2679,7 +2679,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 	 */
- 	fd = hold_lock_file_for_update(&lock, config_filename, 0);
- 	if (fd < 0) {
--		error_errno("could not lock config file %s", config_filename);
-+		error_errno(_("could not lock config file %s"), config_filename);
- 		ret = CONFIG_NO_LOCK;
- 		goto out_free;
- 	}
-@@ -2690,7 +2690,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 	in_fd = open(config_filename, O_RDONLY);
- 	if ( in_fd < 0 ) {
- 		if ( ENOENT != errno ) {
--			error_errno("opening %s", config_filename);
-+			error_errno(_("opening %s"), config_filename);
- 			ret = CONFIG_INVALID_FILE; /* same as "invalid config file" */
- 			goto out_free;
- 		}
-@@ -2725,7 +2725,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 			store.value_regex = (regex_t*)xmalloc(sizeof(regex_t));
- 			if (regcomp(store.value_regex, value_regex,
- 					REG_EXTENDED)) {
--				error("invalid pattern: %s", value_regex);
-+				error(_("invalid pattern: %s"), value_regex);
- 				FREE_AND_NULL(store.value_regex);
- 				ret = CONFIG_INVALID_PATTERN;
- 				goto out_free;
-@@ -2750,7 +2750,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 		if (git_config_from_file_with_options(store_aux,
- 						      config_filename,
- 						      &store, &opts)) {
--			error("invalid config file %s", config_filename);
-+			error(_("invalid config file %s"), config_filename);
- 			ret = CONFIG_INVALID_FILE;
- 			goto out_free;
- 		}
-@@ -2774,7 +2774,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 		if (contents == MAP_FAILED) {
- 			if (errno == ENODEV && S_ISDIR(st.st_mode))
- 				errno = EISDIR;
--			error_errno("unable to mmap '%s'", config_filename);
-+			error_errno(_("unable to mmap '%s'"), config_filename);
- 			ret = CONFIG_INVALID_FILE;
- 			contents = NULL;
- 			goto out_free;
-@@ -2783,7 +2783,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 		in_fd = -1;
- 
- 		if (chmod(get_lock_file_path(&lock), st.st_mode & 07777) < 0) {
--			error_errno("chmod on %s failed", get_lock_file_path(&lock));
-+			error_errno(_("chmod on %s failed"), get_lock_file_path(&lock));
- 			ret = CONFIG_NO_WRITE;
- 			goto out_free;
- 		}
-@@ -2868,7 +2868,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 	}
- 
- 	if (commit_lock_file(&lock) < 0) {
--		error_errno("could not write config file %s", config_filename);
-+		error_errno(_("could not write config file %s"), config_filename);
- 		ret = CONFIG_NO_WRITE;
- 		goto out_free;
- 	}
-@@ -2994,7 +2994,7 @@ static int git_config_copy_or_rename_section_in_file(const char *config_filename
- 	memset(&store, 0, sizeof(store));
- 
- 	if (new_name && !section_name_is_ok(new_name)) {
--		ret = error("invalid section name: %s", new_name);
-+		ret = error(_("invalid section name: %s"), new_name);
- 		goto out_no_rollback;
- 	}
- 
-@@ -3003,7 +3003,7 @@ static int git_config_copy_or_rename_section_in_file(const char *config_filename
- 
- 	out_fd = hold_lock_file_for_update(&lock, config_filename, 0);
- 	if (out_fd < 0) {
--		ret = error("could not lock config file %s", config_filename);
-+		ret = error(_("could not lock config file %s"), config_filename);
- 		goto out;
- 	}
- 
-@@ -3021,7 +3021,7 @@ static int git_config_copy_or_rename_section_in_file(const char *config_filename
- 	}
- 
- 	if (chmod(get_lock_file_path(&lock), st.st_mode & 07777) < 0) {
--		ret = error_errno("chmod on %s failed",
-+		ret = error_errno(_("chmod on %s failed"),
- 				  get_lock_file_path(&lock));
- 		goto out;
- 	}
-@@ -3118,7 +3118,7 @@ static int git_config_copy_or_rename_section_in_file(const char *config_filename
- 	config_file = NULL;
- commit_and_out:
- 	if (commit_lock_file(&lock) < 0)
--		ret = error_errno("could not write config file %s",
-+		ret = error_errno(_("could not write config file %s"),
- 				  config_filename);
- out:
- 	if (config_file)
-@@ -3161,7 +3161,7 @@ int git_config_copy_section(const char *old_name, const char *new_name)
- #undef config_error_nonbool
- int config_error_nonbool(const char *var)
- {
--	return error("missing value for '%s'", var);
-+	return error(_("missing value for '%s'"), var);
- }
- 
- int parse_config_key(const char *var,
-diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
-index f035ee40a3..635918505d 100755
---- a/t/t1305-config-include.sh
-+++ b/t/t1305-config-include.sh
-@@ -310,7 +310,7 @@ test_expect_success 'include cycles are detected' '
- 	cycle
- 	EOF
- 	test_must_fail git config --get-all test.value 2>stderr &&
--	grep "exceeded maximum include depth" stderr
-+	test_i18ngrep "exceeded maximum include depth" stderr
- '
- 
- test_done
+ 	strbuf_addf(&ref_name, "refs/rewritten/%.*s", len, name);
+ 	strbuf_addf(&msg, "rebase -i (label) '%.*s'", len, name);
 -- 
 2.18.0.rc2.476.g39500d3211
 
