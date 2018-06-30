@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8406D1F516
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF4551F516
 	for <e@80x24.org>; Sat, 30 Jun 2018 09:20:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932448AbeF3JUp (ORCPT <rfc822;e@80x24.org>);
-        Sat, 30 Jun 2018 05:20:45 -0400
-Received: from mail-lj1-f180.google.com ([209.85.208.180]:46875 "EHLO
-        mail-lj1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752494AbeF3JUn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Jun 2018 05:20:43 -0400
-Received: by mail-lj1-f180.google.com with SMTP id u6-v6so9066141lju.13
-        for <git@vger.kernel.org>; Sat, 30 Jun 2018 02:20:42 -0700 (PDT)
+        id S933733AbeF3JUr (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Jun 2018 05:20:47 -0400
+Received: from mail-lj1-f175.google.com ([209.85.208.175]:45135 "EHLO
+        mail-lj1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752583AbeF3JUl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Jun 2018 05:20:41 -0400
+Received: by mail-lj1-f175.google.com with SMTP id g3-v6so9078203ljk.12
+        for <git@vger.kernel.org>; Sat, 30 Jun 2018 02:20:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=G9DKFZs3DN5DgM2IGjo5Cg8tmwta/4YRSUPMcf9wyWo=;
-        b=u9VwC7PnbQ7PBCA+Avx2hUYYA7HqP17PkggFUp7Wp9I7a9TTQkg1m3IA5mTNQzOAwU
-         xvBRu/SVSU1chgiYMsRgXdCPjrRHl1jteDraOg0P3ZUPj9Jv7OGop8SiBuY61RlA/axL
-         rKonpYj/doXrl9B6IojsylOvtgnbTI9KSCbNZ8qfitC+39RMN1MbsDrFyVk1+gJw2Ofm
-         +0WCzBr8iJjbySwA53fSYDhhA5dUvASG2oI0DyvBc2Mosz1UI2ozHuI01hrwFTC7qqDb
-         0PkH8GxG9bEOc7gqvaRdrwZ2oTUYcesyi/6ckaYQ70IZtKGG72ZYbk/22wfEmWbrjmnV
-         SqBA==
+        bh=dUHCZ2CcTmVEmmIJ3W8OydW46SKo3W+FGW729AZwSBc=;
+        b=JS0ARgot9wDyB9vvtRPoRu22CXDIJ+5ZA63PfGCQhtyUhL+TPp3vjpQRLTBapnnNwE
+         mObHykER0tWHpzA5l1tC8aXxUa530xsehf/dgXWGJ9sFt+YEOTPDceQLBorKykGy7wOO
+         17ra9x7VlXCFetY4j6Z7T35op34EbMBn8qbf6jkMUWbIiaSrcU2qIaHBiIW0AxPtAZn1
+         LY7HmYjhpBDupMFlf3j501rHWGuKyeAKdpPYgdtxvzvPGxe0URYxZD4qyOC6Uhec1RKp
+         kuZqYip+M6OXSgght1pM3W5jT64bpvWmOuej5vSFHUTVq7RgXgDIxv+cRQ2udgEcPzzp
+         dAmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=G9DKFZs3DN5DgM2IGjo5Cg8tmwta/4YRSUPMcf9wyWo=;
-        b=FP7rDo/Sxjyya39G7je85YtfQHZMMEoEmcaoehvVsdkE1Ey3995eLAQgEUQSic01H3
-         4rWC0FFoaZknYzUGEs/Y3OG1wCftXClauWNp69RCm+RR77MVQAQg+hxWP0grLZVe4Kah
-         bl9slbKKYZa16soVdQJSOPzBaabkEp2XKspP2h53Dk3bi6okHINMGHYDU8na+26BizU8
-         pjyiOEPxnC2mU0Gm31/pZNtDlGB3Ht27TjRiKBPCBRc8/yLalkopShMppM524Am+a1UL
-         8rd7ToUg1LeBr3bBzrUFVN/K6ZDOXXzIyZbTG41B7aO5tifDLjDjgZtaADzzOVlgm+Pn
-         k+RA==
-X-Gm-Message-State: APt69E0cgmic/WtgVDcA10UE1jxK9agiO2FHOsUF780m91GZ8FYcmZbp
-        asRb489hcUP8NJ1c8pyaDHQkjA==
-X-Google-Smtp-Source: AAOMgpd3cxv2aEHGom1/Rrg4CjUm+IF9QQOfQLsS/JStP1aHafH4Xvc31fKErjZ1vRYpRBlVhSi7dw==
-X-Received: by 2002:a2e:52c3:: with SMTP id n64-v6mr4002612lje.90.1530350441527;
-        Sat, 30 Jun 2018 02:20:41 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id c20-v6sm1854650lji.82.2018.06.30.02.20.40
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        bh=dUHCZ2CcTmVEmmIJ3W8OydW46SKo3W+FGW729AZwSBc=;
+        b=CX1db5j+Ne2jziIPWvrY3WwmjE2BkwjlWvtI9hNTJGrMUj1M4LJkC/4/Xk4V8W7FvX
+         IhIfOkGkGtlnJ1h9r/VwaFvxyyqCKm9aWNpF4IheFPK6RQomoVekndAQMSKlVCQsw0yu
+         6vOyBmBACO09O/3+8B6yZCEMCu7/Zt9OWEn1g6NqdZvF5LrtxnXlDd5n+FwLJBxVYzUg
+         NDsc5nupG1ZVho3tKrqQ/umMLpIbu7YFC2o8IaQiTKWmAC3Gk/lixlNofhH2N5F5Ytf3
+         aZdPQUaRBwEA+UwWXQ4gGlyN3RX8ujS7q5dxRmGSwuf0Sj+ljfucbF8vXBhHUdccyX62
+         A3AQ==
+X-Gm-Message-State: APt69E3XOZRlNKitfWKacPRLVpFS7TZ6u1HuPxzOYQRYqNdpZHyO6yrl
+        euEB7PXS4lnD4EYvEWpRXy/Jzg==
+X-Google-Smtp-Source: ADUXVKKgHs4kl7sW02BouK5oQMvsw2bW9Ci4TfJcdcsMSySCK2ebuJ2XnDuQJdn7WYwbSYZl7PjHdg==
+X-Received: by 2002:a2e:558e:: with SMTP id g14-v6mr12761501lje.4.1530350440134;
         Sat, 30 Jun 2018 02:20:40 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id c20-v6sm1854650lji.82.2018.06.30.02.20.39
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 30 Jun 2018 02:20:39 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 02/12] attr.h: drop extern from function declaration
-Date:   Sat, 30 Jun 2018 11:20:21 +0200
-Message-Id: <20180630092031.29910-3-pclouds@gmail.com>
+Subject: [PATCH 01/12] apply.h: drop extern on func declaration
+Date:   Sat, 30 Jun 2018 11:20:20 +0200
+Message-Id: <20180630092031.29910-2-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc2.476.g39500d3211
 In-Reply-To: <20180630092031.29910-1-pclouds@gmail.com>
 References: <20180630092031.29910-1-pclouds@gmail.com>
@@ -70,64 +70,49 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- attr.h | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ apply.h | 23 +++++++++++------------
+ 1 file changed, 11 insertions(+), 12 deletions(-)
 
-diff --git a/attr.h b/attr.h
-index 442d464db6..46340010bb 100644
---- a/attr.h
-+++ b/attr.h
-@@ -42,31 +42,31 @@ struct attr_check {
- 	struct attr_stack *stack;
+diff --git a/apply.h b/apply.h
+index dc4a019057..025dfed7ab 100644
+--- a/apply.h
++++ b/apply.h
+@@ -110,14 +110,14 @@ struct apply_state {
+ 	int applied_after_fixing_ws;
  };
  
--extern struct attr_check *attr_check_alloc(void);
--extern struct attr_check *attr_check_initl(const char *, ...);
--extern struct attr_check *attr_check_dup(const struct attr_check *check);
-+struct attr_check *attr_check_alloc(void);
-+struct attr_check *attr_check_initl(const char *, ...);
-+struct attr_check *attr_check_dup(const struct attr_check *check);
- 
--extern struct attr_check_item *attr_check_append(struct attr_check *check,
--						 const struct git_attr *attr);
-+struct attr_check_item *attr_check_append(struct attr_check *check,
-+					  const struct git_attr *attr);
- 
--extern void attr_check_reset(struct attr_check *check);
--extern void attr_check_clear(struct attr_check *check);
--extern void attr_check_free(struct attr_check *check);
-+void attr_check_reset(struct attr_check *check);
-+void attr_check_clear(struct attr_check *check);
-+void attr_check_free(struct attr_check *check);
+-extern int apply_parse_options(int argc, const char **argv,
+-			       struct apply_state *state,
+-			       int *force_apply, int *options,
+-			       const char * const *apply_usage);
+-extern int init_apply_state(struct apply_state *state,
+-			    const char *prefix);
+-extern void clear_apply_state(struct apply_state *state);
+-extern int check_apply_state(struct apply_state *state, int force_apply);
++int apply_parse_options(int argc, const char **argv,
++			struct apply_state *state,
++			int *force_apply, int *options,
++			const char * const *apply_usage);
++int init_apply_state(struct apply_state *state,
++		     const char *prefix);
++void clear_apply_state(struct apply_state *state);
++int check_apply_state(struct apply_state *state, int force_apply);
  
  /*
-  * Return the name of the attribute represented by the argument.  The
-  * return value is a pointer to a null-delimited string that is part
-  * of the internal data structure; it should not be modified or freed.
-  */
--extern const char *git_attr_name(const struct git_attr *);
-+const char *git_attr_name(const struct git_attr *);
+  * Some aspects of the apply behavior are controlled by the following
+@@ -126,9 +126,8 @@ extern int check_apply_state(struct apply_state *state, int force_apply);
+ #define APPLY_OPT_INACCURATE_EOF	(1<<0) /* accept inaccurate eof */
+ #define APPLY_OPT_RECOUNT		(1<<1) /* accept inaccurate line count */
  
--extern int git_check_attr(const char *path, struct attr_check *check);
-+int git_check_attr(const char *path, struct attr_check *check);
+-extern int apply_all_patches(struct apply_state *state,
+-			     int argc,
+-			     const char **argv,
+-			     int options);
++int apply_all_patches(struct apply_state *state,
++		      int argc, const char **argv,
++		      int options);
  
- /*
-  * Retrieve all attributes that apply to the specified path.
-  * check holds the attributes and their values.
-  */
--extern void git_all_attrs(const char *path, struct attr_check *check);
-+void git_all_attrs(const char *path, struct attr_check *check);
- 
- enum git_attr_direction {
- 	GIT_ATTR_CHECKIN,
-@@ -76,6 +76,6 @@ enum git_attr_direction {
- void git_attr_set_direction(enum git_attr_direction new_direction,
- 			    struct index_state *istate);
- 
--extern void attr_start(void);
-+void attr_start(void);
- 
- #endif /* ATTR_H */
+ #endif
 -- 
 2.18.0.rc2.476.g39500d3211
 
