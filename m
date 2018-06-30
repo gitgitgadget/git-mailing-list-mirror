@@ -2,81 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E7E41F516
-	for <e@80x24.org>; Sat, 30 Jun 2018 09:12:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E87151F516
+	for <e@80x24.org>; Sat, 30 Jun 2018 09:20:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754120AbeF3JM1 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 30 Jun 2018 05:12:27 -0400
-Received: from mail-oi0-f65.google.com ([209.85.218.65]:34751 "EHLO
-        mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752494AbeF3JMY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Jun 2018 05:12:24 -0400
-Received: by mail-oi0-f65.google.com with SMTP id c2-v6so10584140oic.1
-        for <git@vger.kernel.org>; Sat, 30 Jun 2018 02:12:24 -0700 (PDT)
+        id S1754307AbeF3JUm (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Jun 2018 05:20:42 -0400
+Received: from mail-lj1-f181.google.com ([209.85.208.181]:33238 "EHLO
+        mail-lj1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752494AbeF3JUk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Jun 2018 05:20:40 -0400
+Received: by mail-lj1-f181.google.com with SMTP id t21-v6so9078082lji.0
+        for <git@vger.kernel.org>; Sat, 30 Jun 2018 02:20:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=TxCx5q7fDFnNbgEggvJ2Fwu7K4ehvHKZIad7xetF/WQ=;
-        b=Ms+e9YeYnx4R5b0UJ1Kq5tEu0E39hnhQZJXy1P+IzjTq92NwtDrE0O1jkzH0guDDiI
-         HEOgiOxqP4rwe9PJWHSxGQlztMqWzzqvf7LNirYbwgzq07YvAhgM03PX7xoGCdFuY0hU
-         fol+p5U2KhGe/3kmzOVHx8I5Hj9OYOTB0KO1peBX2EcPU7TCvb44IiqP0jeMpPoGCeDU
-         k+X2VUKXbAOKiZ2jJvcvZOrjRc8WegUIssy12qOc+U6PXafLc3JPCsG79qg9Sau23fP/
-         2svg3f13XAlH0Uqq2BvakOBr0/+3buY9sa1A9k2ccOVOHrYet2iWW6MaZyzX83GERRdM
-         iSDA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=As0gY8UaLokRNmYIMtoVlpA8He/VaBVIVSklwTSvlKI=;
+        b=CCcY8CcXwy9nk6hyG3rmyIBtWxwZdzP8R26ppfjKGcvqifhwTj6DJudbvdIPCs1G6q
+         N13Cz5NP3JmfFvTa6kfHQT5XpAEw53LdXUxQS3m22k0w1S7Oqzbwepah72nf9nhjiOse
+         75DS6uKN35NtRyddyxhP+Y1pCSs77KLycrZaRRe1n2p/9wA9DmVUqA7mZIj4eVlMrXqt
+         zAdfSqndtJQklleTJq1C5dle70WkVhutzg2FQuRG/bO0ekE4yvqsyNR0Jk1zQfRFnj0y
+         BMy2xIdSzOvs/7HO2dbqHqa9TYmpiVyGtZIXITuS4kpixhERgTHFJNCgPm2ISMYvEv70
+         zuIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=TxCx5q7fDFnNbgEggvJ2Fwu7K4ehvHKZIad7xetF/WQ=;
-        b=H6pqUbwOWlthmpEwCnSCfeLuoAOzeL30Jlf4+kHTggmtXmpvZ9W9IP8v9KNvaOy3Bs
-         RKBSb3YSpdGCpVM2Qj+UrTHV22oINRNQEtRSXOaNLWpc+uXn5paVlc4mNhUzUqDiiaro
-         jx3LqSnTawsWT6GSsqbbGzpPzyU9jEQ8PZHyIcsFLP/nwFRtQY0R0j0maj0Cdf8tKyiK
-         vsgG7+2fXApaMA2AyR33TBGAUywqBE3OGEzs8tUxZsWziQ5tpz8BYEzlxd3HPbuOCa9N
-         /jonW2Nv/n+xggH+poOEv0uGfej40iHvwFqZeVOgkU0+mPUoWnBH610hArAxG/yDND8y
-         BLHQ==
-X-Gm-Message-State: APt69E2NTEXEHxnknHDlxik7BGCzPO6MKCX5iIpxTE4E+TREFZNPHjjb
-        e9X8SX4pS2i1ghTIbWS6wvElipwWCwlu30ZZeU0=
-X-Google-Smtp-Source: AAOMgpf2A+oLVtGqNj4aKzJbBUzWMZi8VOwbvPh/JHeoyfJloYTLOiZHwog/xdn933bsD1FOLqtViJGj+I2SZaqvnec=
-X-Received: by 2002:aca:f516:: with SMTP id t22-v6mr10690552oih.56.1530349943893;
- Sat, 30 Jun 2018 02:12:23 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=As0gY8UaLokRNmYIMtoVlpA8He/VaBVIVSklwTSvlKI=;
+        b=tqV7b2j0wzDdGy3kVQU9drJ9u5Os5l93B0UvSBB71oxODjXUwRq21D8B9nQEM0VD0e
+         tTK0LgMOSSBlajp4bE1eb1UKQz04t8GWl7N2pD4E685GjwNYQcObvC4PV1tLCRV5WiCn
+         lTaUVOZl5CYCIxzUgrMf2WsLLnS/FFk+qxjHAuSzTOZLnGqciCehkMTWv/2jgipZkXdc
+         yRZUnxQSwlFf0ewcBTUM+VUNa/xSUUxzTlg/OT7ufOVsM+SZnQEdbjl4NQYwwDkwVWbP
+         SZ6kubJFwE26NiRcma0qnFP8Yzj3hjjKij+0+M2BuN8CZuIyM/JUHqBYi1vEHfwbVs20
+         QmHw==
+X-Gm-Message-State: APt69E3YDp2E1SmFq/od/Gw9JLKAbsXMaTFRrxSM9rfx8nFcjW0PP8S1
+        pu8ya9DcHEqlmU0jX8xaHMfOkQ==
+X-Google-Smtp-Source: ADUXVKLN6z80C8H0/O4at5wxO4mP+H+je/ppre7TGTI4uA54XHFhuucMsp0S2/aTJ8UgDvRHde9vcQ==
+X-Received: by 2002:a2e:1781:: with SMTP id 1-v6mr12188162ljx.76.1530350439194;
+        Sat, 30 Jun 2018 02:20:39 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id c20-v6sm1854650lji.82.2018.06.30.02.20.37
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 30 Jun 2018 02:20:38 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH 00/12] Kill the_index part2, header file cleanup
+Date:   Sat, 30 Jun 2018 11:20:19 +0200
+Message-Id: <20180630092031.29910-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.18.0.rc2.476.g39500d3211
 MIME-Version: 1.0
-References: <20180621142742.28575-1-hertzog@debian.org> <20180621142742.28575-3-hertzog@debian.org>
- <CACsJy8DcXo3HURwZXbvGYjrJpfku+RXESP=ErLzYj3NhNabRTQ@mail.gmail.com>
- <20180621152145.GA29912@home.ouaza.com> <20180625152922.GB27849@home.ouaza.com>
-In-Reply-To: <20180625152922.GB27849@home.ouaza.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 30 Jun 2018 11:11:57 +0200
-Message-ID: <CACsJy8BNVBQFQPKo1SZifS4asi4+_hm_0j4MxQk02aPoQqsisA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] i18n: bisect: mark two supplementary strings for translation
-To:     Raphael Hertzog <hertzog@debian.org>
-Cc:     Git Mailing List <git@vger.kernel.org>, jn.avila@free.fr
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 25, 2018 at 5:29 PM Raphael Hertzog <hertzog@debian.org> wrote:
->
-> Hi,
->
-> On Thu, 21 Jun 2018, Raphael Hertzog wrote:
-> > On Thu, 21 Jun 2018, Duy Nguyen wrote:
-> > > Nice. There's another string in bisect_common() that should also be
-> > > translated: "revision walk setup failed". Maybe you can mark it too?
-> >
-> > Sure. A new version of the second patch is attached.
->
-> I haven't had any other feedback. Is there anything else that I should do
-> to get my changes merged?
+Like part 1 this is also boring. I wanted to drop these 'extern'
+everywhere actually, so before I touched any header file in this
+series, I did a clean up first. This is the result (and to reduce diff
+noise later)
 
-If Junio has not picked up the patches and did not object either,
-there's a chance he missed this, so just resend and include him
+Nguyễn Thái Ngọc Duy (12):
+  apply.h: drop extern on func declaration
+  attr.h: drop extern from function declaration
+  blame.h: drop extern on func declaration
+  cache-tree.h: drop extern from function declaration
+  convert.h: drop 'extern' from function declaration
+  diffcore.h: drop extern from function declaration
+  diff.h: remove extern from function declaration
+  line-range.h: drop extern from function declaration
+  rerere.h: drop extern from function declaration
+  repository.h: drop extern from function declaration
+  revision.h: drop extern from function declaration
+  submodule.h: drop extern from function declaration
+
+ apply.h      |  23 +++++-----
+ attr.h       |  24 +++++------
+ blame.h      |  28 ++++++------
+ cache-tree.h |   2 +-
+ convert.h    |  56 ++++++++++++------------
+ diff.h       | 120 +++++++++++++++++++++++++--------------------------
+ diffcore.h   |  50 ++++++++++-----------
+ line-range.h |  12 +++---
+ repository.h |  25 +++++------
+ rerere.h     |  14 +++---
+ revision.h   |  69 ++++++++++++++---------------
+ submodule.h  | 112 +++++++++++++++++++++++------------------------
+ 12 files changed, 269 insertions(+), 266 deletions(-)
+
 -- 
-Duy
+2.18.0.rc2.476.g39500d3211
+
