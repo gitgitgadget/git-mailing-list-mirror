@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0BA921F516
-	for <e@80x24.org>; Sat, 30 Jun 2018 09:08:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9A3891F516
+	for <e@80x24.org>; Sat, 30 Jun 2018 09:08:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934455AbeF3JIi (ORCPT <rfc822;e@80x24.org>);
-        Sat, 30 Jun 2018 05:08:38 -0400
-Received: from mail-lj1-f181.google.com ([209.85.208.181]:38155 "EHLO
-        mail-lj1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754103AbeF3JI1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Jun 2018 05:08:27 -0400
-Received: by mail-lj1-f181.google.com with SMTP id v15-v6so9069147ljk.5
-        for <git@vger.kernel.org>; Sat, 30 Jun 2018 02:08:26 -0700 (PDT)
+        id S934812AbeF3JIp (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Jun 2018 05:08:45 -0400
+Received: from mail-lf0-f68.google.com ([209.85.215.68]:34675 "EHLO
+        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932298AbeF3JIa (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Jun 2018 05:08:30 -0400
+Received: by mail-lf0-f68.google.com with SMTP id n96-v6so8462457lfi.1
+        for <git@vger.kernel.org>; Sat, 30 Jun 2018 02:08:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=gxRKCy8KkA/rd1acLLw4I3zngcNtamwwR/DaKg7F3y4=;
-        b=rl4p3eMJatIKqJTfdhR67vxrBVBQoFXdX2L4bH+MGhMyvcVoTZ/x6b9od13/Dwc/bc
-         8rrG3ARy1XDSIf4ACm5Krdz8e/BpKTuZyeNSErkushMCFSKYUXmeIx3myd+DYbkayCQB
-         +3dKUGJVyHxtzfo0nerUDnniSyKDA8Tdzfd8DDQixVibjjUfWixRk+2aiySDHyOszlCy
-         O1/4UFMKa9InZnFMxY8hvuLHsL4hl5sGn+fQheUu4E6q/RkWKDZzuSpdXkKykBoE6dEH
-         uf4xmx2KmcOkYyXrEUC5Df2MblgJAbFwxQkS7xNhD0ckvBRilky4hGiAWpUZCTrg9Lu/
-         MXjA==
+        bh=h7XewBTT8aPU01Y15HZSeiLkJsMLacUCcliENKaV8e8=;
+        b=KOTRG0YFkXxMk0Qmf5mM1HYuxW9FUYYIX/oowWyv3CysAABeWhBWFvRtccvxuMFMli
+         0X0n+DUJTE37ATEllEMWcVgjGi38dsR5o+6JVEBVfSoPmtayC3XAPzJRkRD/3mz7EezQ
+         uy+ywcv7MTtsThUBtdvBJ/LMX5LM6GuYWmRk801N0RL7uGIbYa9bvt/X7Ti6xrDO4ieC
+         nK5WZ39NSsgtUfQk3t/s3lZ50LxizAzDIQjgKTRwa126dPfbEl9rqNGw3fAiM5VV1HJ1
+         K1MV3WZjc6visuPLDSl1n4kzOIu0r0UIl8RJG1dkDiKXiK6P7EQXSwiY6BhKr4hYWQXy
+         XzRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=gxRKCy8KkA/rd1acLLw4I3zngcNtamwwR/DaKg7F3y4=;
-        b=fT5EfLP2wc/3p3LQcmjKOMw7i3cNyoSO/7eRsVskubtieszPnksTQl1SuQu6zT5A9u
-         g7Ol7F7oWBneq7gk1zuNcwU0TJ9wmuos9M6rxA/wctcz0TLRcZgCutDag/cWaJ6dro3F
-         pPiRA8S1c1/ctmB4fXi5gLkY9ecTx+20+A+4McW3brBtfdTh4cqQROvD8F9r/udjwG5F
-         ARUwEZuXDcZpP+/WSBlHM5My5x6j33hlL4Xp6HKKfpey9qCmeQvQd7OuXD5TuRd+FKU4
-         Y7+vLEkFl87b0XVIdX0Vz+j+HVV+oaSdp4nni5mOx1TxvYa/GKIooEVCbLjR0GTw5Om6
-         2mDA==
-X-Gm-Message-State: APt69E3mCplIhDgKTgy03XsX/Q/8s2Gt9VP9Xy/qQl4+rYGH2Nox0Cdw
-        mISELxHF7iR7xZERrydhwV0CsA==
-X-Google-Smtp-Source: ADUXVKK1PffPoNe3iWbjlh9D/+6u9MO1S8SMnmuoJWytyGBaGnZD+KTugFgCASTD4GoofKvLsTkWTg==
-X-Received: by 2002:a2e:44c6:: with SMTP id b67-v6mr11892239ljf.120.1530349705737;
-        Sat, 30 Jun 2018 02:08:25 -0700 (PDT)
+        bh=h7XewBTT8aPU01Y15HZSeiLkJsMLacUCcliENKaV8e8=;
+        b=G5Mx6ucFNQluv++00rbZL1knPJ4QD96GVX3wIgpXjXXHe4Taw35PPnZsVXKISJl09l
+         S0muv/aXN3qb0DeQ6elwN5KdDRXsKtXkObuEeCYS06tAmU6rlAaltU+KhqRQNNi8HwSc
+         ByVRpkAV1yogOIASYHKpcaEM1HigKzO/x/59ycTbmf/l3r8eFtHgQIXhEaGvskSAD4LQ
+         aIQiEK2IZbu2C2CXcgVcFZ/N8AARRns6rL9UcvyWeyBZrt72tL0S0t7+cF5IWgmdJOW6
+         N+0Bk8QFASc/HkYoqet2CDcZ1iN0xy3XP8l+HYmXGO0uY5GLW5yH5354q3va0zSgJkbn
+         dJeQ==
+X-Gm-Message-State: APt69E2JmRTC+Y+dGwb5nQENRjejJeNczNwekznyJsMy/p2KHkNyIpSZ
+        kRDX+X9R6l6gvmn8LCP5Lk8jFQ==
+X-Google-Smtp-Source: AAOMgpepneGRHsdZEsIzPP5NCVieCiC5A5lYYtVsv54Td2U0Xnlh858fqVN770/10a7pUNINJhRYmg==
+X-Received: by 2002:a19:910a:: with SMTP id t10-v6mr11648205lfd.24.1530349708494;
+        Sat, 30 Jun 2018 02:08:28 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id q5-v6sm1831508ljq.33.2018.06.30.02.08.24
+        by smtp.gmail.com with ESMTPSA id q5-v6sm1831508ljq.33.2018.06.30.02.08.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 30 Jun 2018 02:08:24 -0700 (PDT)
+        Sat, 30 Jun 2018 02:08:27 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 02/23] archive-tar.c: mark more strings for translation
-Date:   Sat, 30 Jun 2018 11:07:57 +0200
-Message-Id: <20180630090818.28937-3-pclouds@gmail.com>
+Subject: [PATCH 04/23] builtin/config.c: mark more strings for translation
+Date:   Sat, 30 Jun 2018 11:07:59 +0200
+Message-Id: <20180630090818.28937-5-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc2.476.g39500d3211
 In-Reply-To: <20180630090818.28937-1-pclouds@gmail.com>
 References: <20180630090818.28937-1-pclouds@gmail.com>
@@ -71,61 +71,195 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- archive-tar.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ builtin/config.c      | 48 +++++++++++++++++++++----------------------
+ t/t1308-config-set.sh |  2 +-
+ 2 files changed, 25 insertions(+), 25 deletions(-)
 
-diff --git a/archive-tar.c b/archive-tar.c
-index b6f58ddf38..68e72d9176 100644
---- a/archive-tar.c
-+++ b/archive-tar.c
-@@ -121,7 +121,7 @@ static int stream_blocked(const struct object_id *oid)
- 
- 	st = open_istream(oid, &type, &sz, NULL);
- 	if (!st)
--		return error("cannot stream blob %s", oid_to_hex(oid));
-+		return error(_("cannot stream blob %s"), oid_to_hex(oid));
- 	for (;;) {
- 		readlen = read_istream(st, buf, sizeof(buf));
- 		if (readlen <= 0)
-@@ -256,7 +256,7 @@ static int write_tar_entry(struct archiver_args *args,
- 		*header.typeflag = TYPEFLAG_REG;
- 		mode = (mode | ((mode & 0100) ? 0777 : 0666)) & ~tar_umask;
- 	} else {
--		return error("unsupported file mode: 0%o (SHA1: %s)",
-+		return error(_("unsupported file mode: 0%o (SHA1: %s)"),
- 			     mode, oid_to_hex(oid));
+diff --git a/builtin/config.c b/builtin/config.c
+index ebeb4c5638..3c26df6c48 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -110,7 +110,7 @@ static int option_parse_type(const struct option *opt, const char *arg,
+ 		 * --int' and '--type=bool
+ 		 * --type=int'.
+ 		 */
+-		error("only one type at a time");
++		error(_("only one type at a time"));
+ 		usage_with_options(builtin_config_usage,
+ 			builtin_config_options);
  	}
- 	if (pathlen > sizeof(header.name)) {
-@@ -283,7 +283,7 @@ static int write_tar_entry(struct archiver_args *args,
- 		enum object_type type;
- 		buffer = object_file_to_archive(args, path, oid, old_mode, &type, &size);
- 		if (!buffer)
--			return error("cannot read %s", oid_to_hex(oid));
-+			return error(_("cannot read %s"), oid_to_hex(oid));
- 	} else {
- 		buffer = NULL;
- 		size = 0;
-@@ -454,17 +454,17 @@ static int write_tar_filter_archive(const struct archiver *ar,
- 	filter.in = -1;
+@@ -161,9 +161,9 @@ static void check_argc(int argc, int min, int max) {
+ 	if (argc >= min && argc <= max)
+ 		return;
+ 	if (min == max)
+-		error("wrong number of arguments, should be %d", min);
++		error(_("wrong number of arguments, should be %d"), min);
+ 	else
+-		error("wrong number of arguments, should be from %d to %d",
++		error(_("wrong number of arguments, should be from %d to %d"),
+ 		      min, max);
+ 	usage_with_options(builtin_config_usage, builtin_config_options);
+ }
+@@ -297,7 +297,7 @@ static int get_value(const char *key_, const char *regex_)
  
- 	if (start_command(&filter) < 0)
--		die_errno("unable to start '%s' filter", argv[0]);
-+		die_errno(_("unable to start '%s' filter"), argv[0]);
- 	close(1);
- 	if (dup2(filter.in, 1) < 0)
--		die_errno("unable to redirect descriptor");
-+		die_errno(_("unable to redirect descriptor"));
- 	close(filter.in);
+ 		key_regexp = (regex_t*)xmalloc(sizeof(regex_t));
+ 		if (regcomp(key_regexp, key, REG_EXTENDED)) {
+-			error("invalid key pattern: %s", key_);
++			error(_("invalid key pattern: %s"), key_);
+ 			FREE_AND_NULL(key_regexp);
+ 			ret = CONFIG_INVALID_PATTERN;
+ 			goto free_strings;
+@@ -317,7 +317,7 @@ static int get_value(const char *key_, const char *regex_)
  
- 	r = write_tar_archive(ar, args);
+ 		regexp = (regex_t*)xmalloc(sizeof(regex_t));
+ 		if (regcomp(regexp, regex_, REG_EXTENDED)) {
+-			error("invalid pattern: %s", regex_);
++			error(_("invalid pattern: %s"), regex_);
+ 			FREE_AND_NULL(regexp);
+ 			ret = CONFIG_INVALID_PATTERN;
+ 			goto free_strings;
+@@ -390,7 +390,7 @@ static char *normalize_value(const char *key, const char *value)
+ 	if (type == TYPE_COLOR) {
+ 		char v[COLOR_MAXLEN];
+ 		if (git_config_color(v, key, value))
+-			die("cannot parse color '%s'", value);
++			die(_("cannot parse color '%s'"), value);
  
- 	close(1);
- 	if (finish_command(&filter) != 0)
--		die("'%s' filter reported error", argv[0]);
-+		die(_("'%s' filter reported error"), argv[0]);
+ 		/*
+ 		 * The contents of `v` now contain an ANSI escape
+@@ -485,13 +485,13 @@ static int get_colorbool(const char *var, int print)
+ static void check_write(void)
+ {
+ 	if (!given_config_source.file && !startup_info->have_repository)
+-		die("not in a git directory");
++		die(_("not in a git directory"));
  
- 	strbuf_release(&cmd);
- 	return r;
+ 	if (given_config_source.use_stdin)
+-		die("writing to stdin is not supported");
++		die(_("writing to stdin is not supported"));
+ 
+ 	if (given_config_source.blob)
+-		die("writing config blobs is not supported");
++		die(_("writing config blobs is not supported"));
+ }
+ 
+ struct urlmatch_current_candidate_value {
+@@ -599,7 +599,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 
+ 	if (use_global_config + use_system_config + use_local_config +
+ 	    !!given_config_source.file + !!given_config_source.blob > 1) {
+-		error("only one config file at a time");
++		error(_("only one config file at a time"));
+ 		usage_with_options(builtin_config_usage, builtin_config_options);
+ 	}
+ 
+@@ -626,7 +626,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 			 * location; error out even if XDG_CONFIG_HOME
+ 			 * is set and points at a sane location.
+ 			 */
+-			die("$HOME is not set");
++			die(_("$HOME is not set"));
+ 
+ 		if (access_or_warn(user_config, R_OK, 0) &&
+ 		    xdg_config && !access_or_warn(xdg_config, R_OK, 0)) {
+@@ -663,12 +663,12 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	if ((actions & (ACTION_GET_COLOR|ACTION_GET_COLORBOOL)) && type) {
+-		error("--get-color and variable type are incoherent");
++		error(_("--get-color and variable type are incoherent"));
+ 		usage_with_options(builtin_config_usage, builtin_config_options);
+ 	}
+ 
+ 	if (HAS_MULTI_BITS(actions)) {
+-		error("only one action at a time");
++		error(_("only one action at a time"));
+ 		usage_with_options(builtin_config_usage, builtin_config_options);
+ 	}
+ 	if (actions == 0)
+@@ -681,19 +681,19 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		}
+ 	if (omit_values &&
+ 	    !(actions == ACTION_LIST || actions == ACTION_GET_REGEXP)) {
+-		error("--name-only is only applicable to --list or --get-regexp");
++		error(_("--name-only is only applicable to --list or --get-regexp"));
+ 		usage_with_options(builtin_config_usage, builtin_config_options);
+ 	}
+ 
+ 	if (show_origin && !(actions &
+ 		(ACTION_GET|ACTION_GET_ALL|ACTION_GET_REGEXP|ACTION_LIST))) {
+-		error("--show-origin is only applicable to --get, --get-all, "
+-			  "--get-regexp, and --list.");
++		error(_("--show-origin is only applicable to --get, --get-all, "
++			"--get-regexp, and --list"));
+ 		usage_with_options(builtin_config_usage, builtin_config_options);
+ 	}
+ 
+ 	if (default_value && !(actions & ACTION_GET)) {
+-		error("--default is only applicable to --get");
++		error(_("--default is only applicable to --get"));
+ 		usage_with_options(builtin_config_usage,
+ 			builtin_config_options);
+ 	}
+@@ -707,10 +707,10 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 					&given_config_source,
+ 					&config_options) < 0) {
+ 			if (given_config_source.file)
+-				die_errno("unable to read config file '%s'",
++				die_errno(_("unable to read config file '%s'"),
+ 					  given_config_source.file);
+ 			else
+-				die("error processing config file(s)");
++				die(_("error processing config file(s)"));
+ 		}
+ 	}
+ 	else if (actions == ACTION_EDIT) {
+@@ -718,11 +718,11 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 
+ 		check_argc(argc, 0, 0);
+ 		if (!given_config_source.file && nongit)
+-			die("not in a git directory");
++			die(_("not in a git directory"));
+ 		if (given_config_source.use_stdin)
+-			die("editing stdin is not supported");
++			die(_("editing stdin is not supported"));
+ 		if (given_config_source.blob)
+-			die("editing blobs is not supported");
++			die(_("editing blobs is not supported"));
+ 		git_config(git_default_config, NULL);
+ 		config_file = given_config_source.file ?
+ 				xstrdup(given_config_source.file) :
+@@ -823,7 +823,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		if (ret < 0)
+ 			return ret;
+ 		if (ret == 0)
+-			die("no such section: %s", argv[0]);
++			die(_("no such section: %s"), argv[0]);
+ 	}
+ 	else if (actions == ACTION_REMOVE_SECTION) {
+ 		int ret;
+@@ -834,7 +834,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		if (ret < 0)
+ 			return ret;
+ 		if (ret == 0)
+-			die("no such section: %s", argv[0]);
++			die(_("no such section: %s"), argv[0]);
+ 	}
+ 	else if (actions == ACTION_GET_COLOR) {
+ 		check_argc(argc, 1, 2);
+diff --git a/t/t1308-config-set.sh b/t/t1308-config-set.sh
+index 3e00d1af01..d0a2727b85 100755
+--- a/t/t1308-config-set.sh
++++ b/t/t1308-config-set.sh
+@@ -233,7 +233,7 @@ test_expect_success 'check line errors for malformed values' '
+ 
+ test_expect_success 'error on modifying repo config without repo' '
+ 	nongit test_must_fail git config a.b c 2>err &&
+-	grep "not in a git directory" err
++	test_i18ngrep "not in a git directory" err
+ '
+ 
+ cmdline_config="'foo.bar=from-cmdline'"
 -- 
 2.18.0.rc2.476.g39500d3211
 
