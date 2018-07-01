@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 881411F516
-	for <e@80x24.org>; Sun,  1 Jul 2018 05:34:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D6941F516
+	for <e@80x24.org>; Sun,  1 Jul 2018 05:38:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751877AbeGAFeR (ORCPT <rfc822;e@80x24.org>);
-        Sun, 1 Jul 2018 01:34:17 -0400
-Received: from mail-ua0-f194.google.com ([209.85.217.194]:39722 "EHLO
-        mail-ua0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751728AbeGAFeQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Jul 2018 01:34:16 -0400
-Received: by mail-ua0-f194.google.com with SMTP id n4-v6so8181755uad.6
-        for <git@vger.kernel.org>; Sat, 30 Jun 2018 22:34:15 -0700 (PDT)
+        id S1751894AbeGAFiO (ORCPT <rfc822;e@80x24.org>);
+        Sun, 1 Jul 2018 01:38:14 -0400
+Received: from mail-ua0-f195.google.com ([209.85.217.195]:38882 "EHLO
+        mail-ua0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751728AbeGAFiN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Jul 2018 01:38:13 -0400
+Received: by mail-ua0-f195.google.com with SMTP id 59-v6so8188432uas.5
+        for <git@vger.kernel.org>; Sat, 30 Jun 2018 22:38:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=ekbiq5jFuJ8QLNj4dHBiGH3nk2m6DVkBGsUCtwSscYg=;
-        b=WZ2Z0uD4O6IfomzOf66M2FR4Rcni+N1cRjK9dC58pow9ZFqBFsOGBdxQrp2+zzoF8l
-         a0ojEpXCfbdoU0wANW35NTBEb4qwTUMwcPo20Tsi/e8FLKRPLgaXiAIYpvfPd3HDUMj4
-         MEnlNtyR1zLi6n6o9y/fJUJlvO7THdtx3b5k6zGJGd/ej/V1VAN1bJmTXFy0g2AcjnoV
-         YCUTtiT0AHONWtsgIOHqrEMvAwlXj10gjClllbTtTluqlZXRCsqAYPGNgf+BkeCvVo/V
-         DMaFCDF4wnfK807Tt+DcSL4PJP8nGJnAxCGSJM6+BN+vlGTEz63j8sotetv/++6iv+c6
-         WjQw==
+        bh=kq/jflgjhQzLBnhHENCmpyX0yOVZBbbe2DmOXWuchTA=;
+        b=mT45WSHFPLmR8FpvsV3Rw8/UN5YKVaa+X01DFHG41+jf8377SobMIBVeKTNXT1mu0R
+         6iQHPpQXuI6oDk8yrZmXy2/VLJeFWa0LhGjMNvMQSFYVre1xsJKzNs3ORrmaQTsU1Zm5
+         PpOvgm6RTThu9uXY6mvUq01gVVhfKHB4g4PpSV+diMdTjyd5vh/ImGTzwZwWPUxZaF3v
+         c3LZMAEoeAB1ThiXd67bOAH2iDbNhYJdxiF3ZUAVTceCHY0BllLxygklLBRyedqOQNp/
+         h5NPjIzoqhR4Xcs7tSmuQUy3TwuxpDOTvnDY+PbJ0IJSnaiBhAD7yWt27O259z9wtm0W
+         sONQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ekbiq5jFuJ8QLNj4dHBiGH3nk2m6DVkBGsUCtwSscYg=;
-        b=QshTG7D4XU638uP9VEJDin8DuEapqxidfMJSKTmoQFpIZ09yAMM9y9bxPz+IJxcnIG
-         OwU8i6YMHNakorDBBaOg5oL8GnfD//JnTPjGjMe1nD7vIO9LHIm0UoLeA/LwhHZIWp3/
-         G7fIiGFbDk6hxFWIDMfxJnyfxrJo96ijgdtUvh6g/H8NUBZI+NQ7pwJ/pskIFfDWSSaL
-         ePDQtgWV5dqLbYQUWMXkxFkx8WR5ig/+0RJ6fgHDAtIdRI1Y3BzKKWJKWQDBZGEdXR+e
-         JW1XrwAIxrBaoQqaITs0KB/thT1JISkrYsG8VL1u932UdDwh8B386hdvo9Yf6oQuak8P
-         zWXw==
-X-Gm-Message-State: APt69E2auXldqPsmfQBablBoTee6rk0LNmmzrGTJiD9BLahkZkepWjmA
-        1YKA3kP+qKVjK4jQTGIMqpni+CfRgN6lBF+ifEo=
-X-Google-Smtp-Source: AAOMgpc10dfreeCJpjpMaQ52246hoUjfbWXG+phCIo0F6fbFyjERZDmeBtm/lQUjDoZTBeb+FWDwJ1bOsY/XfMBoLb4=
-X-Received: by 2002:a9f:3666:: with SMTP id s35-v6mr3237304uad.94.1530423254737;
- Sat, 30 Jun 2018 22:34:14 -0700 (PDT)
+        bh=kq/jflgjhQzLBnhHENCmpyX0yOVZBbbe2DmOXWuchTA=;
+        b=p3mxo4YNlH+9rxk/kleU5sV3dKUHbGqhcl+kSD02NgCB8HHBTNejBMxTBZubvKR08r
+         qHv6btCsxRtaKXiimPLOjGMfgLYabtmYbXEZM616C8VAXu5h+XH9EAsE9gRan10giXMY
+         J6I/tG6REMHcik4VE2kn4zfGag8DTwVjOKSm01Z4nbt4jq8xFnOC/FpmtbTj0iUA5UK/
+         hZ5O1nttvpThoKOwmpSWMaivbSS9HSKlM3uTUwTASiCyulohtOFLAUtIVvlneqxhdlX9
+         WbZoBMwcgaVlSLhO97wgl5DlprvDsWMDqoVkpzHLIxZqejbKZBdnfaYvHgst9Mi7yVPC
+         poDQ==
+X-Gm-Message-State: APt69E2rZDeRgNl2eUITCF89G9grO69lwJssQheYO35x9I/+4DVX+d9v
+        hmu8iTz1PkLniOCvCZNuCUIkMPG65Pzqjh52Ym4=
+X-Google-Smtp-Source: AAOMgpc6I4zT8dBS7uudvxC69KYx07DTZaKEVWbcIeOoVpviJ3gsitEP+nMCMwfpml6ogd6rced+Nhadsoroobv3u5o=
+X-Received: by 2002:a9f:3563:: with SMTP id o90-v6mr8140895uao.79.1530423491706;
+ Sat, 30 Jun 2018 22:38:11 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:ab0:21c7:0:0:0:0:0 with HTTP; Sat, 30 Jun 2018 22:34:14
+Received: by 2002:ab0:21c7:0:0:0:0:0 with HTTP; Sat, 30 Jun 2018 22:38:11
  -0700 (PDT)
-In-Reply-To: <20180630090818.28937-8-pclouds@gmail.com>
-References: <20180630090818.28937-1-pclouds@gmail.com> <20180630090818.28937-8-pclouds@gmail.com>
+In-Reply-To: <20180630090818.28937-10-pclouds@gmail.com>
+References: <20180630090818.28937-1-pclouds@gmail.com> <20180630090818.28937-10-pclouds@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 30 Jun 2018 22:34:14 -0700
-Message-ID: <CABPp-BEQyEeYvE_JVDeVTWQSpOYj8pCzELQY6dpaz4p2S9d0NQ@mail.gmail.com>
-Subject: Re: [PATCH 07/23] builtin/replace.c: mark more strings for translation
+Date:   Sat, 30 Jun 2018 22:38:11 -0700
+Message-ID: <CABPp-BHQSTxe4=adMSo9Arg0QT7-U_SjsU-AgO42cHiMgUxPog@mail.gmail.com>
+Subject: Re: [PATCH 09/23] config.c: mark more strings for translation
 To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
         <pclouds@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
@@ -67,39 +67,26 @@ X-Mailing-List: git@vger.kernel.org
 
 On Sat, Jun 30, 2018 at 2:08 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
 <pclouds@gmail.com> wrote:
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
-om>
-> ---
->  builtin/replace.c | 82 +++++++++++++++++++++++------------------------
->  1 file changed, 41 insertions(+), 41 deletions(-)
->
 
-> -               return error("invalid replace format '%s'\n"
-> -                            "valid formats are 'short', 'medium' and 'lo=
-ng'\n",
-> +               return error(_("invalid replace format '%s'\n"
-> +                              "valid formats are 'short', 'medium' and '=
-long'"),
+> @@ -1409,11 +1409,11 @@ static int git_default_push_config(const char *va=
+r, const char *value)
+>                         push_default =3D PUSH_DEFAULT_UPSTREAM;
+>                 else if (!strcmp(value, "current"))
+>                         push_default =3D PUSH_DEFAULT_CURRENT;
+> -               else {
+> -                       error("malformed value for %s: %s", var, value);
+> -                       return error("Must be one of nothing, matching, s=
+imple, "
+> -                                    "upstream or current.");
+> -               }
+> +               else
+> +                       return error(_("malformed value for %s: %s\n"
+> +                                      "Must be one of nothing, matching,=
+ simple, "
+> +                                      "upstream or current."),
+> +                                    var, value);
 
-Was the removal of the trailing newline intentional?  If so, move it to pat=
-ch 1?
+Patch 1?
 
-> @@ -456,10 +456,10 @@ static int create_graft(int argc, const char **argv=
-, int force, int gentle)
->                 return -1;
->         }
->
-> -       if (remove_signature(&buf)) {
-> -               warning(_("the original commit '%s' has a gpg signature."=
-), old_ref);
-> -               warning(_("the signature will be removed in the replaceme=
-nt commit!"));
-> -       }
-> +       if (remove_signature(&buf))
-> +               warning(_("the original commit '%s' has a gpg signature.\=
-n"
-> +                         "The signature will be removed in the replaceme=
-nt commit!"),
-> +                       old_ref);
 
-More message changes that probably belong in patch 1 for consistency.
+No other issues noticed.
