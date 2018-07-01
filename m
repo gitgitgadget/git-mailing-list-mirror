@@ -7,57 +7,50 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D1AD51F516
-	for <e@80x24.org>; Sun,  1 Jul 2018 17:57:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1513E1F516
+	for <e@80x24.org>; Sun,  1 Jul 2018 18:15:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965936AbeGAR5R (ORCPT <rfc822;e@80x24.org>);
-        Sun, 1 Jul 2018 13:57:17 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:49696 "EHLO
+        id S965356AbeGASP5 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 1 Jul 2018 14:15:57 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:49700 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S964971AbeGAR5E (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 1 Jul 2018 13:57:04 -0400
+        by vger.kernel.org with ESMTP id S932434AbeGASPw (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 1 Jul 2018 14:15:52 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:7872:b1da:4747:5087])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0CC2960102;
-        Sun,  1 Jul 2018 17:57:02 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 31D9E60102;
+        Sun,  1 Jul 2018 18:15:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1530467823;
-        bh=kNTxYQD8mMGHha28xjNBgoAMXewGUILNCKIBX5y/KUc=;
+        s=default; t=1530468951;
+        bh=A0WIAovm6lWWZsB0IqcHP5/Hdeu0SEtnlnpcGxu9iao=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=XmHbga+lLOlyvEQyG/uft9sULATJ5wJ6huRDE0/xodNO3ON7tqIDHYdLptJFgjKZy
-         oOeWOUp8aOUrjAdsmxBY4xwx9B8YQ27ksircX5gTzB0NPW5b5DUvJRvW9Th+cLOo5+
-         a3Nm1ZkgJ2mzGsqj+yWw/w30eYjC/9mJMv4k1esVJFo1VGeD+3VrD7qyxDV3e7s1li
-         Vo01cSL4QPwyx1rCmJz1d++pdWpEE5s13WfYhorsPLSZ34xT3LhJhciQjpzVqkRbzf
-         sxkDIHxJPeC4fcQ/25rKFLuLOepuwvBzD3RlNDyjA2u0do68TrJGCro9D/bhKYhVRI
-         M5hvtZfLX3xtwAlICDgtS87bBFH7Eu9ucJh+CS8YFhXtGjj6MP8kinNMe1qvYTI8YU
-         Os58qunL+h6jioYaTmsD20jhJuYNrcwgG3F5dYFqMpoAmsaueg2YOO6LQFEzswMIeq
-         uCq1/tvWkhIH1KOZTkgQ0H2/v9iPfutvmbvjnafetqg4CV0Iegz
-Date:   Sun, 1 Jul 2018 17:56:58 +0000
+        b=i6X08UiqkffQmanaZ3Sygc5bznoWIkAePu7V08/njX07XjzDavfA8khvknLr+nEUq
+         9huhRt4w7m0HnTt5Tc/PFNyfUJjJMgHb2IJoZM9m91tD2C540AY9uUm01XC2NrN7gb
+         BUfO2kI2680P42siLJrWdb60J1yJ0soW5AmdDS7jHWNibmrhP3/2birW6QPPNRLf0Q
+         TZY5k0u+fCuKKjTD37T5qyaJbEm/kS+dgQXP+1205aBzRag5/rQEkty4sv0FkZ/KD2
+         mHXY9siwCnR0EvmMjcFQBmQJJEYtJtworgc+ooL83qu6LF/KIwQ+hlRQ55c1P6aGnM
+         0J2uvDA2F4ggeSHYxjOkg2tBf8ZsbTVhFMrSKEp89bXPhCvkLq0vuCF1A1lnMOuY9o
+         wwQMeAyz1dKbsU68KOsFhQR8qQ3Z3gJNKTGIIDdDqzi4ISslnmQTU3yAjmFPcJHfQ8
+         +LgxNhj7tBX9IQSaNeJUo+z+pOcbXr/kuiWmsgr1EgA5wRlk8Ao
+Date:   Sun, 1 Jul 2018 18:15:46 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Steve Groeger <GROEGES@uk.ibm.com>, git@vger.kernel.org
-Subject: Re: Use of new .gitattributes working-tree-encoding attribute across
- different platform types
-Message-ID: <20180701175657.GC7965@genre.crustytoothpaste.net>
+To:     Drew DeVault <sir@cmpwn.com>
+Cc:     git@vger.kernel.org, contact@emersion.fr
+Subject: Re: send-email: change the default value of sendmail.validate
+Message-ID: <20180701181546.GD7965@genre.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Steve Groeger <GROEGES@uk.ibm.com>, git@vger.kernel.org
-References: <OF5D40FE06.C18CD7CD-ON002582B9.002B7A02-002582B9.002B7A07@notes.na.collabserv.com>
- <20180628024446.GD644867@genre.crustytoothpaste.net>
- <20180628143405.GA16657@sigill.intra.peff.net>
- <4E8CDDC9-2957-401F-9BBE-93276C026848@gmail.com>
- <20180628172707.GA31766@sigill.intra.peff.net>
+        Drew DeVault <sir@cmpwn.com>, git@vger.kernel.org,
+        contact@emersion.fr
+References: <20180629190751.GA2559@miku>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ZmUaFz6apKcXQszQ"
+        protocol="application/pgp-signature"; boundary="5p8PegU4iirBW1oA"
 Content-Disposition: inline
-In-Reply-To: <20180628172707.GA31766@sigill.intra.peff.net>
+In-Reply-To: <20180629190751.GA2559@miku>
 X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
  4.16.0-2-amd64)
 User-Agent: Mutt/1.10.0 (2018-05-17)
@@ -68,63 +61,57 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---ZmUaFz6apKcXQszQ
+--5p8PegU4iirBW1oA
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jun 28, 2018 at 01:27:07PM -0400, Jeff King wrote:
-> Yeah, that was along the lines that I was thinking. I wonder if anybody
-> would ever need two such auto-encodings, though. Probably not. But
-> another way to think about it would be to allow something like:
+On Fri, Jun 29, 2018 at 03:07:51PM -0400, Drew DeVault wrote:
+> The purpose of this configuration option is to prevent your emails from
+> blowing up on SMTP servers (rather than Extended SMTP servers). However,
+> I find it often confuses people whose patches are otherwise correct, and
+> they don't know how to solve the issue.
 >=20
->   working-tree-encoding=3Dfoo
+> I haven't seen an SMTP server in a very long time which doesn't support
+> extended SMTP. The default behavior should probably change. If not, the
+> error message should be more clear about action items to address the
+> issue.
 >=20
-> and then in your config "foo" to map to some encoding.
->=20
-> But that may be over-engineering, I dunno. utf8 has always been enough
-> for me. :)
+> I'll send a patch around to change this shortly.
 
-I had a thought the other day about why this solution might be valuable.
-Different platforms encode different values for iconv character sets.
-So, for example, one may have platforms supporting some disjoint sets of
-the following:
+Can you say a bit more about the exact error message you're seeing?
 
-* LATIN-1
-* LATIN1
-* ISO8859-1
-* ISO-8859-1
-* ISO_8859-1
-* ISO_8859-1:1987
-* some lowercase variants of these
+Are you suggesting that we not limit lines to 998 octets?  I've seen
+lots of mail servers that do reject mail over 998 octets.  I've
+configured Postfix to do so because being strict on mail standards is a
+great way to stop spam.
 
-Therefore, specifying a working-tree-encoding value that works across a
-wide variety of system may be non-trivial.  This is less of a problem
-with UTF-8, but having the ability to pick an encoding and remap it to a
-supported value may be useful nevertheless.
+If that's the issue you're seeing, it might be better to either
+automatically encode those patches as binary patches or teach git
+send-email and git am how to automatically handle quoted-printable.
 --=20
 brian m. carlson: Houston, Texas, US
 OpenPGP: https://keybase.io/bk2204
 
---ZmUaFz6apKcXQszQ
+--5p8PegU4iirBW1oA
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.8 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAls5FekACgkQv1NdgR9S
-9ouqZRAAnovG3IN39TbH+o6l5omzpyIkQBpOEZoKZ2n/+NmxpG48TKxwMQaM+X9Q
-WnlyCah/VyKbdFcUdyhOeM/FC97ntfsHCzcJ8/4kyLya1HHfml5ei/Za/RRZiI10
-VXXO6KfqcmBRD0ALr/+xUaeCjaQFRgg2KaTBqHxSCaaEih7xyG7wiFiEnHX4xE9O
-tS7vs5BiiPu1wuqHu9V22UnFbb9OgXlSixXtJhgu9qhBHW/NFgmtpGVNMogPjbmV
-LGTwiW8yUZWE2CEk6MPgZ3cH5gxU/09GtMKVdI7ja7PCRJ/b0pRy0NH/AwOlhsJs
-9aZrC8bfjAQCC664J0u6tLimyMxrFWoU1bwcsLo6/BijqTX1UB5KG66Fh9go5FA/
-7xbq4yqOamNfKDzKkQW4AV2Y2LTJuU/OK2WByE8mEnvSPgvss5V087opqNeNSb3b
-juooY/EvOzOsWzMbdK6eQAcqWnRXraYT9QZzv0doNApojuSfoebFXgBf+WJb/Ffa
-iofWR+xVNKvfttLUJpL1EDV5ThvkDbA9+TvCYUoD4mM76Vts4LMlVRz1opBn3YE9
-i1WHLilNX8VXIPCy0exgtK76chYv6cl0uiAK/lfpK8WqR0OsmLsnNxl+gcInu514
-AEkPzsusftFm6TGZIhaevH3vQIB0b84bxzA/W99xsK6YhhFRJRQ=
-=CqPo
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAls5GlIACgkQv1NdgR9S
+9os6KA//XyDF2FYBEMepW18wSXP35ZnY+YliHdcTt9IJfrGuUbXHzBxwgipMXMVN
+qAdF1/c7re46qKbpfkAtnSCwlULh3zxIq90jhKW0+YfcbZFB9Ghdl6/1N6aIoAa9
+gjx3yfAANK8wjdw3Ry1TpaWiN1vDn3H8EYagaJU9TlWhZzTjWAMaVdbDzE1Bc+8l
+FGmIdWMc/UZ6tN37MEoG0JC5khYUtwf3g3nNgwA6eLtKNd8gmoenpsFJcH8xs1Kz
+r626zwQ9BiC9RJbGyuwqL6HHAkxIMW4EeA8MpHBMjBNJhXsBlTL60k+dMY7sBhXp
+M++DNt+0M4PLhsFkWvK0Ewbx1qWvmUTXWP/ptu03KGOxkm8EARuRES8Wqj0DqnTj
+RuMo5AZlvQxdLi6q4dW0e8CwUZzlkpo/2mn8DTCB+CNcalAg5C595m+9+4AyE1CT
+XWYJFgkSqV4LTvkyefAwabJloe49BonYpdtOIddLKZ0eTYy1IDSzaH/8V6/134ob
+zaE1+fvbsdCSguAiWPUiBXm2+ow36lV0B4zVSCSryDc+t8D/Q+/c3ruv0+GtzvFu
+Llj6aw5y0XIj5hR+SZTEwXkQB1GPY7ApFLZ5MHf6c7v4lNvgAbYmkB6AvbfGRwm2
+jbx7U35faOK7n54KtjGEcKiyl0gDI7lQ1Em0d0DO8bLwQNqZpDM=
+=zcZb
 -----END PGP SIGNATURE-----
 
---ZmUaFz6apKcXQszQ--
+--5p8PegU4iirBW1oA--
