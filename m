@@ -2,142 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3CAC11F516
-	for <e@80x24.org>; Mon,  2 Jul 2018 17:36:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF49D1F516
+	for <e@80x24.org>; Mon,  2 Jul 2018 17:44:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752748AbeGBRgS (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Jul 2018 13:36:18 -0400
-Received: from mail-pl0-f67.google.com ([209.85.160.67]:42278 "EHLO
-        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752646AbeGBRgR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Jul 2018 13:36:17 -0400
-Received: by mail-pl0-f67.google.com with SMTP id y15-v6so6400141pll.9
-        for <git@vger.kernel.org>; Mon, 02 Jul 2018 10:36:17 -0700 (PDT)
+        id S1752816AbeGBRoa (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Jul 2018 13:44:30 -0400
+Received: from mail-yb0-f182.google.com ([209.85.213.182]:41789 "EHLO
+        mail-yb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752067AbeGBRo3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Jul 2018 13:44:29 -0400
+Received: by mail-yb0-f182.google.com with SMTP id s8-v6so1785763ybe.8
+        for <git@vger.kernel.org>; Mon, 02 Jul 2018 10:44:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ZBpBrgbaL35wU2oDvvw4YuAuySpp0+nAUWAHzmAGseI=;
-        b=Ns0ejf7Il4TCzMUvWJ9DcqaH8DWTh3ncP7chFBh+3mCKGlBz99ZGPa3qnlRZiHC78t
-         We3GjLV1BesOcIh3bVgzmlY5K0p/SFjT15U+6Grab3nSjV3iNe8k77RpA8RgWAVcJLpp
-         u50xm0sBhywsR+vz94Ydsh94V6FlZLnZbQ9j4mUNBq21lRyl8iH19cZDfkSoedCy7RV3
-         jkg2E8jrC0I4sZJcJc9RgoGvcEUzvoiRok154tchl8m7PuI0Feh5T2m+7r4eSKEMgqf1
-         wj8juPUtqoPAQp2EjLoFE1X+u5UUqaGt/YYb5f8175z7bJDF9U7S6gKvcYx0c4XrlI4r
-         tRyg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ZBMk5ZQWiVwPs2n6UdHp6soK3jGTj7U3EfDd17Hg7h0=;
+        b=WdHR7tsQe84kHSSD0G9SkZCzRARoTA9NBq4wGQOcfyQdqxXOc8zpoiy9PVK4q8i8Qj
+         fQGkbh1TkGmyr2aCDOZW6h26L49DBA08NtB9LghsoKEiP37oBTKImMYMM+of0fVSzisr
+         Ge8640iosXHYDswhTR6j7UX0gxEP3Zrk7ElFiqaJEqZkjYKDmjGjKXLSHmQft4C7w4qj
+         g64egS058IRIV+mSz5Hj5RD6RAb0rY69/zhcjTeAcGaBkkvXXOWjJkvW/1b8Py5F89hH
+         Fw5nh8xYMmHAa/F2ORPrqoUU82Nn/IsGTME/19uAf+m5r2SzqHP53cbzlKaiLPG+GFtd
+         su6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ZBpBrgbaL35wU2oDvvw4YuAuySpp0+nAUWAHzmAGseI=;
-        b=amx7MdC6L5kzLRRYa5i3K/JV7fU2aAYtuORpHdQXhuBeKoOiTivUv9RRhO8wlZT49S
-         Y2CTRZfcsib9eon4BGenWiFLe8SmSAqg9s3/L4ylNcgPpA11WjafiOpB+Y2y4ml2J0I1
-         l47m8SLr4XqV36fQOW+MDVkzlz82MI6D109JJatEJ8l5fQKih1p2d9rKWEzHls9wXn+d
-         2B+ZMk9xa0CeLX5PDBqK7EJwcNS1Av68pa947X7BJX8/ztN30btoEuROoNmpUG19R7lP
-         CEkiVsV9zjEE3MYKkPNfxnJr9+Uf7UIG8WxCY30sG5PJf0uqrHi2opIs9xq/GXiNqO0P
-         72fQ==
-X-Gm-Message-State: APt69E1VXcExAF6JycotLJI00kEQV06jXiqULMFT6iUZ2qYCQ8z1Xw+Y
-        QDJ07BhOC3oaa8X7rUtebdtnOA==
-X-Google-Smtp-Source: ADUXVKLwl2zRPkV5pAA26Ac5jcbq9UH70QG4UfiG7pdaf4ItpwcwVayYDdWgaJwsmeFYNhdn6DCa6g==
-X-Received: by 2002:a17:902:b48f:: with SMTP id y15-v6mr26972095plr.261.1530552976395;
-        Mon, 02 Jul 2018 10:36:16 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id l28-v6sm14680501pfi.4.2018.07.02.10.36.14
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 02 Jul 2018 10:36:15 -0700 (PDT)
-Date:   Mon, 2 Jul 2018 10:36:14 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, jacob.keller@gmail.com,
-        jonathantanmy@google.com, simon@ruderich.org,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 9/9] diff.c: add white space mode to move detection
- that allows indent changes
-Message-ID: <20180702173614.GD246956@google.com>
-References: <20180622015725.219575-1-sbeller@google.com>
- <20180629001958.85143-1-sbeller@google.com>
- <20180629001958.85143-10-sbeller@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ZBMk5ZQWiVwPs2n6UdHp6soK3jGTj7U3EfDd17Hg7h0=;
+        b=fyQ3Y5uaM6cikRIOxphbfMr7X7VXEqAmB83SR6gAEij36teaS7yA2IleqD72JwtJ53
+         PFl+LooEqifGy6B/qrdLkyUuH+7IINB2nd4C4F1xIYZH0KrpDjETBcTprJQ+YTeDAOBm
+         MKn8UnAVpCrnkYCoVAG5q3Ylq/y4u66DIXrV/YwVekM0YJBF6SQZ82HwTd1dXqHAA771
+         O4sMXcEFCH5xoT9WWVZDNsSxx/dO79ehRPNgzE3KbxOx9vnxfe3pKVQdrMKb2sIDRfbU
+         6ig/5oYG64YhvUMVJ2Bd7bG3ibziIF3R4LIQ4in9sbv7INsvVZ9t4XoPS3/rfgsh0V7q
+         X5lA==
+X-Gm-Message-State: APt69E0r6y4/Va/v/xM35KTEfhLIXl6DMeoHcffL8dLWM47QZWqJrKYd
+        mk7Js2gkKZDWOXSexvBUsoeLfG7VtMJNQWvMJ8pLVQ==
+X-Google-Smtp-Source: ADUXVKKI7aCZIPmQzuMug5VBEdjnO5nt152dWUTQBC34En0k5C5ZkApK+Wv+csQCM+7+79+CwM45XtMMzL6BWCnOLvE=
+X-Received: by 2002:a25:b091:: with SMTP id f17-v6mr13388451ybj.167.1530553467546;
+ Mon, 02 Jul 2018 10:44:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180629001958.85143-10-sbeller@google.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+References: <20180702002405.3042-1-sunshine@sunshineco.com> <20180702002405.3042-2-sunshine@sunshineco.com>
+In-Reply-To: <20180702002405.3042-2-sunshine@sunshineco.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 2 Jul 2018 10:44:16 -0700
+Message-ID: <CAGZ79kah+mFH0YZ1L0R+f=fRVku1mesigm86oHTHKRRFc3y+0A@mail.gmail.com>
+Subject: Re: [PATCH 01/25] t: use test_might_fail() instead of manipulating
+ exit code manually
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     git <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Luke Diamand <luke@diamand.org>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/28, Stefan Beller wrote:
-> The option of --color-moved has proven to be useful as observed on the
-> mailing list. However when refactoring sometimes the indentation changes,
-> for example when partitioning a functions into smaller helper functions
-> the code usually mostly moved around except for a decrease in indentation.
-> 
-> To just review the moved code ignoring the change in indentation, a mode
-> to ignore spaces in the move detection as implemented in a previous patch
-> would be enough.  However the whole move coloring as motivated in commit
-> 2e2d5ac (diff.c: color moved lines differently, 2017-06-30), brought
-> up the notion of the reviewer being able to trust the move of a "block".
-> 
-> As there are languages such as python, which depend on proper relative
-> indentation for the control flow of the program, ignoring any white space
-> change in a block would not uphold the promises of 2e2d5ac that allows
-> reviewers to pay less attention to the inside of a block, as inside
-> the reviewer wants to assume the same program flow.
-> 
-> This new mode of white space ignorance will take this into account and will
-> only allow the same white space changes per line in each block. This patch
-> even allows only for the same change at the beginning of the lines.
-> 
-> As this is a white space mode, it is made exclusive to other white space
-> modes in the move detection.
-> 
-> This patch brings some challenges, related to the detection of blocks.
-> We need a white net the catch the possible moved lines, but then need to
+> diff --git a/t/t4012-diff-binary.sh b/t/t4012-diff-binary.sh
+> index 0a8af76aab..6579c81216 100755
+> --- a/t/t4012-diff-binary.sh
+> +++ b/t/t4012-diff-binary.sh
+> @@ -102,10 +102,8 @@ test_expect_success 'apply binary patch' '
+>
+>  test_expect_success 'diff --no-index with binary creation' '
+>         echo Q | q_to_nul >binary &&
+> -       (: hide error code from diff, which just indicates differences
+> -        git diff --binary --no-index /dev/null binary >current ||
+> -        true
+> -       ) &&
+> +       # hide error code from diff, which just indicates differences
+> +       test_might_fail git diff --binary --no-index /dev/null binary >current &&
 
-s/white/wide/
+I am not sure why we need to be non-deterministic here, i.e. I would rather
+test for success or non-success error code and not just *any* error code.
 
-> +
-> +/**
-> + * The struct ws_delta holds white space differences between moved lines, i.e.
-> + * between '+' and '-' lines that have been detected to be a move.
-> + * The string contains the difference in leading white spaces, before the
-> + * rest of the line is compared using the white space config for move
-> + * coloring. The current_longer indicates if the first string in the
-> + * comparision is longer than the second.
-> + */
-> +struct ws_delta {
-> +	char *string;
-> +	unsigned int current_longer : 1;
->  };
-> +#define WS_DELTA_INIT { NULL, 0 }
-> +
-> +static int compute_ws_delta(const struct emitted_diff_symbol *a,
-> +			     const struct emitted_diff_symbol *b,
-> +			     struct ws_delta *out)
-> +{
-> +	const struct emitted_diff_symbol *longer =  a->len > b->len ? a : b;
-> +	const struct emitted_diff_symbol *shorter = a->len > b->len ? b : a;
-> +	int d = longer->len - shorter->len;
-> +
-> +	out->string = xmemdupz(longer->line, d);
-> +	out->current_longer = (a == longer);
-> +
-> +	return !strncmp(longer->line + d, shorter->line, shorter->len);
-> +}
+This code was introduced in
+71b989e7dd1 (fix bogus "diff --git" header from "diff --no-index", 2008-10-05)
+whereas the test_must_fail was introduced in
+74359821020 (tests: introduce test_must_fail, 2008-02-28).
+However this code was authored without Junios involvement
+(he was AFK 2008-09-23..2008-10-08), so
+maybe test_must_fail was not so popular back then?
 
-I'm having a harder time understanding this block.  This is used to fill
-a ws_delta struct by calculating the whitespace delta between two lines.
-If that is the case then why doesn't this function verify that the first
-'d' characters in the longer line are indeed whitespace?  Also, maybe
-this is just because I'm not as familiar with the move detection code,
-but how would the whitespace detection handle a line being moved from
-being indented with tabs to spaces or vice versa?  Is this something
-already handled and not an issue?
+While I think this patch is a strict improvement for the test suite,
+I do wonder if we can tighten the exit code check here (maybe in
+a follow up series?).
 
--- 
-Brandon Williams
+Thanks,
+Stefan
