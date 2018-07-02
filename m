@@ -2,73 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27BBF1F516
-	for <e@80x24.org>; Mon,  2 Jul 2018 21:23:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 380E41F516
+	for <e@80x24.org>; Mon,  2 Jul 2018 21:30:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753087AbeGBVXP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Jul 2018 17:23:15 -0400
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:39737 "EHLO
-        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752769AbeGBVXO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Jul 2018 17:23:14 -0400
-Received: by mail-yw0-f194.google.com with SMTP id 81-v6so7170173ywb.6
-        for <git@vger.kernel.org>; Mon, 02 Jul 2018 14:23:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=/HjNNXdV03wMFKtSBd6YVACslvPnXW1xZQup54lXm9I=;
-        b=fdOzJfvbc9GLY22hqswA6OxVdjyRpzY3nvmqqlv1qaWKxNXLno+qUvEvNSJ6BVm309
-         AIWEyEqifq9E+TLqNXMj8N1XZK9h9i4azYOSvAVR+fzInS9RMDnmB5sjqcXsgKDO5zZ7
-         fMXRL0QJ/9ZpMkv+idHJHWFRvteIRkma5KqO5+84K+YhgdAw5Q+5YDXBhSXCZwNtuhNT
-         9WaKJIBrzJrGfJ8qcIj4IBAO8+een8GJgiRj3awBfXfMdhcCBQfrpU6+p4v3AZnzOk7N
-         XhoXki4g8YKQzqAU7SPmiLexU4njcbiTQC8PtvLLaqhkij7Z0qEPN/vCKCxoX/8oErzS
-         Jl1g==
+        id S1752860AbeGBVaS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Jul 2018 17:30:18 -0400
+Received: from mail-yb0-f195.google.com ([209.85.213.195]:38809 "EHLO
+        mail-yb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752748AbeGBVaR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Jul 2018 17:30:17 -0400
+Received: by mail-yb0-f195.google.com with SMTP id i9-v6so2025422ybo.5
+        for <git@vger.kernel.org>; Mon, 02 Jul 2018 14:30:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=/HjNNXdV03wMFKtSBd6YVACslvPnXW1xZQup54lXm9I=;
-        b=PzBw13L9Y9oOrQbsg+HgXotwegIjufwXGEtBVn93kInDKITKquWg7E2B7/MQCRFy23
-         0roA1VWyefOVLaIoecGzj3/4k499FeZnJYfKrUFPcQD5zXPZEEdYMXiQqbpRr6hGGelV
-         esOyGb8qHV2v4RalcV2CtjzEbFNlgIPFnJhRRwCCLciTrJdNqgjc5m7DE7WVF8rmNz3Z
-         i84wtt9GGwPhvxlbeZ07WDj6FGv1dfQQKRWJxmcAGuaK8/jpsvbmbgrSXHE/0gnbPtjs
-         YM4sGElsGRIxVAIn3lr6BDgyuP+CpL8Qtrc2rzMY4/HC1CSmjaQfzfMb6dc3Hmu0Qhip
-         Aalw==
-X-Gm-Message-State: APt69E24AGUvnMVNldwaZJZzGw3HFlQPgJuo8odLht5a20MKO7y+Gxhr
-        swsmuaxldD3SHuEnkgyyUuLubKHNdgGrwLoGdv4m8g==
-X-Google-Smtp-Source: AAOMgpfz0Psx0DF4psR1+98tIWcCUNJVj8+2HdhMmbjz9lEnukL8NDb2hZ1VoAVLcWAJfjJjGpLd9Tij5zXOJMcUSk4=
-X-Received: by 2002:a0d:f442:: with SMTP id d63-v6mr13307719ywf.238.1530566593317;
- Mon, 02 Jul 2018 14:23:13 -0700 (PDT)
+        bh=ImYD6UCUbW8OeZHr4HK+mKiLpe/k7He7adWBOMn4Sbo=;
+        b=BnDmaCcs/hSCrtnoDqRRGR1kVAWeXecX1mP9BEcZbLB0xvuWuQN6K1zhmaP1fufQQ2
+         XitfQTkvTWi6FDz8UGbsbgcD4OABKtic9fpm5lqB8ZWAUtrybYHkGXcD3UemN7uxXxQ3
+         R39xAcMnaPqyjwam7gycXfD5oUwGFJxeQuE10oYagJMmyuT1jQRW9NtwMezQgnxMYLhx
+         o4+4Gnyw2Mvm3KusYVYI6ML7dkTz7d9btlcShkT7bEvRTc0wQeLq7wfRPYziT5/Ueazq
+         bLxuqLwosRjc3JtSUnxlIrAKlqILJltDKTeFylCowRq7qwpYc36U6p+/rDiTyhflXrJl
+         Gorw==
+X-Gm-Message-State: APt69E0e1bXKP0W3UhgFbYS/65i+cdl5igwNb3W3tPM5OBtVlqmJeonu
+        KmF10zyh+umlBhwyVlBHl+GSoREVuH7URPnFwzM=
+X-Google-Smtp-Source: AAOMgpfqC7J/MszxYR2vriYokt6DILomukwlUzbP8n2EE3GN1uuLruQL7uV7WSIQAA085MTDG4o9H86x9L5yxXzWexY=
+X-Received: by 2002:a25:c04b:: with SMTP id c72-v6mr10564205ybf.12.1530567017370;
+ Mon, 02 Jul 2018 14:30:17 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180628135932.225288-1-jamill@microsoft.com> <20180702193745.8940-1-jamill@microsoft.com>
- <20180702193745.8940-3-jamill@microsoft.com>
-In-Reply-To: <20180702193745.8940-3-jamill@microsoft.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 2 Jul 2018 14:23:02 -0700
-Message-ID: <CAGZ79kYDyGg8z5FiYNXWAr+wT3r6Qm2Y_hh=o7xEKRkonO8Jaw@mail.gmail.com>
-Subject: Re: [PATCH v6 2/8] read-cache: teach make_cache_entry to take object_id
-To:     Jameson Miller <jamill@microsoft.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Duy Nguyen <pclouds@gmail.com>, Ben Peart <peartben@gmail.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+References: <20180702211100.GA20885@sigill.intra.peff.net> <20180702211242.GC23324@sigill.intra.peff.net>
+In-Reply-To: <20180702211242.GC23324@sigill.intra.peff.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 2 Jul 2018 17:30:05 -0400
+Message-ID: <CAPig+cSJrZi+rVgJp3Yhbc=F2yyooGw7a046e-KKiE++3CiP3w@mail.gmail.com>
+Subject: Re: [PATCH 3/3] ref-filter: avoid backend filtering with --ignore-case
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>, aleksandr.o.makarov@gmail.com,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 2, 2018 at 12:49 PM Jameson Miller <jamill@microsoft.com> wrote:
+On Mon, Jul 2, 2018 at 5:12 PM Jeff King <peff@peff.net> wrote:
+> When for-each-ref is used with --ignore-case, we expect
+> match_name_as_path() to do a case-insensitive match. But
+> there's an extra layer of filtering that happens before we
+> even get there. Since commit cfe004a5a9 (ref-filter: limit
+> traversal to prefix, 2017-05-22), we feed the prefix to the
+> ref backend so that it can optimize the ref iteration.
 >
-> Teach make_cache_entry function to take object_id instead of a SHA-1.
+> There's no mechanism for us to tell the backend we're
+> matching case-insensitively. And nor is there likely to be
 
-This repeats the subject line?
+Perhaps: s/And nor/nor/
 
-Sign off missing.
+> one anytime soon, since the packed backend relies on
+> binary-searching the sorted list of refs. Let's just punt on
+> this case. The extra filtering is an optimization that we
+> simply can't do. We'll still give the correct answer via the
+> filtering in match_name_as_path().
+>
+> Signed-off-by: Jeff King <peff@peff.net>
