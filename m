@@ -2,159 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6084F1F516
-	for <e@80x24.org>; Mon,  2 Jul 2018 10:58:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D0A011F516
+	for <e@80x24.org>; Mon,  2 Jul 2018 12:13:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932809AbeGBK6O (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Jul 2018 06:58:14 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:51897 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753223AbeGBK6J (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Jul 2018 06:58:09 -0400
-Received: by mail-wm0-f68.google.com with SMTP id u22-v6so1267261wmc.1
-        for <git@vger.kernel.org>; Mon, 02 Jul 2018 03:58:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=yc8XEGtHwY1fbb5GqaF9zh1kNv3GnhhlAZ7YsUGGHv8=;
-        b=DK/pP8j/mDT4iCbxvfROLVf/qwMNQihMZzWOBSYadOO60xg+xEc07sHT/UMaeT+ZY4
-         gYjX8lnK0VcNsb4czTHfIdIdcqD9L87D7V2vyVRLk2TwBv37Pmq6SGONONagc6dnlcmS
-         d0+jwbA3iE8gBkXa/0qeZ/+l3sStu35PubNqA1J74RxK8RH/1mqiYf27e9kYvEO5Oo7E
-         kK0qKbX06dNvD3E11tIyJtGPI4uQqI0ArNpPLytcT94W0F4jc8poiCV/MMw0g+NCIQmR
-         8LOg1dTbmJqEUws6EA29McZvFeiZY4xpy+yn8MtU9yfxyB3pvhREE52AIHQ5tB8Nimf/
-         TwMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=yc8XEGtHwY1fbb5GqaF9zh1kNv3GnhhlAZ7YsUGGHv8=;
-        b=cMBP2Vp8RFMaJOmUFH17Sfn6aqBbFo8BI5NOOeIlljl7uegm3ACr8WMd2eCAsmTPbo
-         5ZWPm7FsCaSAIRDNjZXU9YLrNSDsB4u+k8uLBClJKsIi1mE77OPp5oHF53utaftAdwV1
-         DrETd9pxZF/Sai+IX0cfj+jJN+GWPRbFH7qVSogZwk7UgbISpI3ltClp25Ol5CpslvZC
-         Jdk4QnpOsKSiFP/NfoJszFFzQUjiE71ugTavgCiHEOA1dgLlVnQQjl4sZJIOEfNvgVH2
-         Iv9/OAJ1xV3gzcY7lSS3wUxoqpAiaN6u+8rnmve0jZ1a5eK8yUfRJ4rC2lUuofLG3+BO
-         cqyg==
-X-Gm-Message-State: APt69E0RSK+5FtivNv3DfLILTbXONueUrwn7yFz3Yoc9ntWGzLtEixxx
-        KF7Uz5Julm+goZZXC+CNOrjfNNo+
-X-Google-Smtp-Source: AAOMgpfvVrpeQW7qYTcFWzVwA0umx5Szx0yQtB87L43Ie7pefXsTA3xyOpJT5F34za+d0/gEQvHMYQ==
-X-Received: by 2002:a1c:9788:: with SMTP id z130-v6mr8326259wmd.88.1530529087724;
-        Mon, 02 Jul 2018 03:58:07 -0700 (PDT)
-Received: from localhost.localdomain (AToulouse-658-1-72-143.w92-156.abo.wanadoo.fr. [92.156.124.143])
-        by smtp.googlemail.com with ESMTPSA id m64-v6sm7462437wmb.38.2018.07.02.03.58.06
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 02 Jul 2018 03:58:06 -0700 (PDT)
-From:   Alban Gruin <alban.gruin@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        phillip.wood@dunelm.org.uk, gitster@pobox.com,
-        Alban Gruin <alban.gruin@gmail.com>
-Subject: [GSoC][PATCH v2 5/7] sequencer: add a new function to silence a command, except if it fails.
-Date:   Mon,  2 Jul 2018 12:57:15 +0200
-Message-Id: <20180702105717.26386-6-alban.gruin@gmail.com>
-X-Mailer: git-send-email 2.18.0
-In-Reply-To: <20180702105717.26386-1-alban.gruin@gmail.com>
-References: <20180702105717.26386-1-alban.gruin@gmail.com>
+        id S1752213AbeGBMNo convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 2 Jul 2018 08:13:44 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5]:34376 "EHLO
+        mx0a-001b2d01.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1752156AbeGBMNn (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 2 Jul 2018 08:13:43 -0400
+Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
+        by mx0b-001b2d01.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w62C9ZVf124713
+        for <git@vger.kernel.org>; Mon, 2 Jul 2018 08:13:42 -0400
+Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com [158.85.210.114])
+        by mx0b-001b2d01.pphosted.com with ESMTP id 2jyksar8ud-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+        for <git@vger.kernel.org>; Mon, 02 Jul 2018 08:13:42 -0400
+Received: from localhost
+        by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
+        for <git@vger.kernel.org> from <GROEGES@uk.ibm.com>;
+        Mon, 2 Jul 2018 12:13:40 -0000
+Received: from us1b3-smtp01.a3dr.sjc01.isc4sb.com (10.122.7.174)
+        by smtp.notes.na.collabserv.com (10.122.47.58) with smtp.notes.na.collabserv.com ESMTP;
+        Mon, 2 Jul 2018 12:13:35 -0000
+Received: from us1b3-mail97.a3dr.sjc01.isc4sb.com ([10.122.105.210])
+          by us1b3-smtp01.a3dr.sjc01.isc4sb.com
+          with ESMTP id 2018070212133525-436405 ;
+          Mon, 2 Jul 2018 12:13:35 +0000 
+X-Disclaimed: 1
+MIME-Version: 1.0
+Sensitivity: 
+Importance: Normal
+X-Priority: 3 (Normal)
+In-Reply-To: <4E8CDDC9-2957-401F-9BBE-93276C026848@gmail.com>
+References: <4E8CDDC9-2957-401F-9BBE-93276C026848@gmail.com>,
+        <OF5D40FE06.C18CD7CD-ON002582B9.002B7A02-002582B9.002B7A07@notes.na.collabserv.com> <20180628024446.GD644867@genre.crustytoothpaste.net> <20180628143405.GA16657@sigill.intra.peff.net>
+Subject: Re: Use of new .gitattributes working-tree-encoding attribute across
+ different platform types
+From:   Steve Groeger <GROEGES@uk.ibm.com>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Jeff King <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Date:   Mon, 2 Jul 2018 12:13:35 +0000
+X-Mailer: IBM iNotes ($HaikuForm 1011.1) | IBM Domino Build SCN1812108_20180501T0841
+ May 01, 2018 at 08:41
+X-KeepSent: AD36A6D5:F36D27E7-002582BE:0043296C;
+ type=4; name=$KeepSent
+X-LLNOutbound: False
+X-TNEFEvaluated: 1
+X-LLNXfer: False
+x-cbid: 18070212-9695-0000-0000-0000037D2B72
+X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
+ SC=0.399202; ST=0; TS=0; UL=0; ISC=; MB=0.033139
+X-IBM-SpamModules-Versions: BY=3.00009294; HX=3.00000241; KW=3.00000007;
+ PH=3.00000004; SC=3.00000266; SDB=6.01055450; UDB=6.00541338; IPR=6.00833372;
+ BA=6.00006032; NDR=6.00000001; ZLA=6.00000005; ZF=6.00000009; ZB=6.00000000;
+ ZP=6.00000000; ZH=6.00000000; ZU=6.00000002; MB=3.00021960; XFM=3.00000015;
+ UTC=2018-07-02 12:13:39
+X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
+X-IBM-AV-VERSION: SAVI=2018-07-02 05:36:27 - 6.00008647
+x-cbparentid: 18070212-9696-0000-0000-0000E6CE2BA0
+Message-Id: <OFAD36A6D5.F36D27E7-ON002582BE.0043296C-002582BE.0043297F@notes.na.collabserv.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-07-02_04:,,
+ signatures=0
+X-Proofpoint-Spam-Reason: safe
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This adds a new function, run_command_silent_on_success(), to
-redirect the stdout and stderr of a command to a strbuf, and then to run
-that command. This strbuf is printed only if the command fails. It is
-functionnaly similar to output() from git-rebase.sh.
+Lars, 
 
-run_git_commit() is then refactored to use of
-run_command_silent_on_success().
+I think this proposed solution may resolve my issue.
+ 
+ 
+  
+ 
+Thanks
+ Steve Groeger
+ Java Runtimes Development
+ IBM Hursley
+ IBM United Kingdom Ltd
+ Tel: (44) 1962 816911 Mobex: 279990 Mobile: 07718 517 129
+ Fax (44) 1962 816800
+ Lotus Notes: Steve Groeger/UK/IBM
+ Internet: groeges@uk.ibm.com  
+   
+ 
+Unless stated otherwise above:
+ IBM United Kingdom Limited - Registered in England and Wales with number 741598.
+ Registered office: PO Box 41, North Harbour, Portsmouth, Hampshire PO6 3AU      
 
-Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
----
- sequencer.c | 49 ++++++++++++++++++++++++-------------------------
- 1 file changed, 24 insertions(+), 25 deletions(-)
+-----Lars Schneider <larsxschneider@gmail.com> wrote: -----
+To: Jeff King <peff@peff.net>
+From: Lars Schneider <larsxschneider@gmail.com>
+Date: 06/28/2018 18:21
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, Steve Groeger <GROEGES@uk.ibm.com>, git@vger.kernel.org
+Subject: Re: Use of new .gitattributes working-tree-encoding attribute across different platform types
 
-diff --git a/sequencer.c b/sequencer.c
-index 57fd58bc1..9e2b34a49 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -768,6 +768,24 @@ N_("you have staged changes in your working tree\n"
- #define VERIFY_MSG  (1<<4)
- #define CREATE_ROOT_COMMIT (1<<5)
- 
-+static int run_command_silent_on_success(struct child_process *cmd)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	int rc;
-+
-+	cmd->stdout_to_stderr = 1;
-+	rc = pipe_command(cmd,
-+			  NULL, 0,
-+			  /* stdout is already redirected */
-+			  NULL, 0,
-+			  &buf, 0);
-+
-+	if (rc)
-+		fputs(buf.buf, stderr);
-+	strbuf_release(&buf);
-+	return rc;
-+}
-+
- /*
-  * If we are cherry-pick, and if the merge did not result in
-  * hand-editing, we will hit this commit and inherit the original
-@@ -822,18 +840,11 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
- 
- 	cmd.git_cmd = 1;
- 
--	if (is_rebase_i(opts)) {
--		if (!(flags & EDIT_MSG)) {
--			cmd.stdout_to_stderr = 1;
--			cmd.err = -1;
--		}
-+	if (is_rebase_i(opts) && read_env_script(&cmd.env_array)) {
-+		const char *gpg_opt = gpg_sign_opt_quoted(opts);
- 
--		if (read_env_script(&cmd.env_array)) {
--			const char *gpg_opt = gpg_sign_opt_quoted(opts);
--
--			return error(_(staged_changes_advice),
--				     gpg_opt, gpg_opt);
--		}
-+		return error(_(staged_changes_advice),
-+			     gpg_opt, gpg_opt);
- 	}
- 
- 	argv_array_push(&cmd.args, "commit");
-@@ -863,20 +874,8 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
- 	if (opts->allow_empty_message)
- 		argv_array_push(&cmd.args, "--allow-empty-message");
- 
--	if (cmd.err == -1) {
--		/* hide stderr on success */
--		struct strbuf buf = STRBUF_INIT;
--		int rc = pipe_command(&cmd,
--				      NULL, 0,
--				      /* stdout is already redirected */
--				      NULL, 0,
--				      &buf, 0);
--		if (rc)
--			fputs(buf.buf, stderr);
--		strbuf_release(&buf);
--		return rc;
--	}
--
-+	if (is_rebase_i(opts) && !(flags & EDIT_MSG))
-+		return run_command_silent_on_success(&cmd);
- 	return run_command(&cmd);
- }
- 
--- 
-2.18.0
+
+> On Jun 28, 2018, at 4:34 PM, Jeff King <peff@peff.net> wrote:
+> 
+> On Thu, Jun 28, 2018 at 02:44:47AM +0000, brian m. carlson wrote:
+> 
+>> On Wed, Jun 27, 2018 at 07:54:52AM +0000, Steve Groeger wrote:
+>>> We have common code that is supposed to be usable across different platforms and hence different file encodings. With the full support of the working-tree-encoding in the latest version of git on all platforms, how do we have files converted to different encodings on different platforms?
+>>> I could not find anything that would allow us to say 'if platform = z/OS then encoding=EBCDIC else encoding=ASCII'.   Is there a way this can be done?
+>> 
+>> I don't believe there is such functionality.  Git doesn't have
+>> attributes that are conditional on the platform in that sort of way.
+>> You could use a smudge/clean filter and adjust the filter for the
+>> platform you're on, which might meet your needs.
+> 
+> We do have prior art in the line-ending code, though. There the
+> attributes say either that a file needs a specific line-ending type
+> (which is relatively rare), or that it should follow the system type,
+> which is then set separately in the config.
+> 
+> I have the impression that the working-tree-encoding stuff was made to
+> handle the first case, but not the second. It doesn't seem like an
+> outrageous thing to eventually add.
+> 
+> (Though I agree that clean/smudge filters would work, and can even
+> implement the existing working-tree-encoding feature, albeit less
+> efficiently and conveniently).
+
+Thanks for the suggestion Peff! 
+How about this:
+
+1) We allow users to set the encoding "auto". Example:
+
+	*.txt working-tree-encoding=auto
+
+2) We define a new variable `core.autoencoding`. By default the value is 
+UTF-8 (== no re-encoding) but user can set to any value in their Git config. 
+Example:
+
+    git config --global core.autoencoding UTF-16
+
+All files marked with the value "auto" will use the encoding defined in
+`core.autoencoding`.
+
+Would that work?
+
+@steve: Would that fix your problem?
+
+- Lars
+Unless stated otherwise above:
+IBM United Kingdom Limited - Registered in England and Wales with number 741598. 
+Registered office: PO Box 41, North Harbour, Portsmouth, Hampshire PO6 3AU
 
