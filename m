@@ -6,47 +6,47 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 872271F516
-	for <e@80x24.org>; Mon,  2 Jul 2018 00:25:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 969341F516
+	for <e@80x24.org>; Mon,  2 Jul 2018 00:25:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753000AbeGBAZV (ORCPT <rfc822;e@80x24.org>);
-        Sun, 1 Jul 2018 20:25:21 -0400
-Received: from mail-it0-f42.google.com ([209.85.214.42]:55799 "EHLO
-        mail-it0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752881AbeGBAZF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Jul 2018 20:25:05 -0400
-Received: by mail-it0-f42.google.com with SMTP id 16-v6so9851059itl.5
-        for <git@vger.kernel.org>; Sun, 01 Jul 2018 17:25:05 -0700 (PDT)
+        id S1753004AbeGBAZX (ORCPT <rfc822;e@80x24.org>);
+        Sun, 1 Jul 2018 20:25:23 -0400
+Received: from mail-io0-f195.google.com ([209.85.223.195]:46773 "EHLO
+        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752888AbeGBAZG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Jul 2018 20:25:06 -0400
+Received: by mail-io0-f195.google.com with SMTP id p7-v6so860696ioh.13
+        for <git@vger.kernel.org>; Sun, 01 Jul 2018 17:25:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=FRJSidCWbTu5z1nUArmn1d7UcGdgeT21vhZnmw5XSkY=;
-        b=rlPDUus3Qh45Ivr2UbVV2IgJzSWDEOz4LN/ODoeQBU27iOUqk0uBnDFI8AtvpIRTUN
-         4ylzfbDrlVSEuHtD8bYhwfk2141W84OYWSIqzaVFe2M/UQoFeNKU8dY2Rl3enOrtCMlq
-         Bc79N5aQpAfQRLFI80Uo6duP4Vx3xDzOXjunYZIh8J9Ux/XyROBQTjwFkuX7UJYLKQp/
-         qEi+/YQYvlKU30p+Phy4vHmXGD+xziahqQz9M54PpuHVy1WNkZMokp/f9x1gJAQifx3t
-         8JGPDU6z+2xH0upL77I1ZYOEuZpSQgpvy1QsmNSQVKR/GNqdlxJsNak/TCxjUo+Ulrzk
-         QYsg==
+        bh=K/AKEWNYO/1JE+6zzfNUGbmHT/8wKGHzQcgglt2kJh0=;
+        b=Vrjc2jfCWuuIZn8H1hoHwWr6ytbVSOGt3TovgJZDSRLfNJ2GnPG/euZZxSKaPZp7eM
+         fmO22Ekl3DMmZjWXtAugZoXPwX2WP6NUX1uJRLdXt+1pS1Y2QgHnb/cv4yTQynq2ttR6
+         PCVQV4xeYBECGqruvFZ0leqdv0slIoTPMV3tfQnzkx6sl75aTwM36EwumWfcXefmnHjA
+         WhqSRmdyaZ9RbPAxrE1n61a7dEE9XpzP554Cz0tp/tacIjeDbzorE8ERvHyQeD/8G2Ce
+         fbGesjm2NFA9d7tmD+bMGDmMihDDN6xOSuidjfPGurog+XXtwIJe1y/Ow3sVSFmtJsvX
+         +Dng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
          :in-reply-to:references;
-        bh=FRJSidCWbTu5z1nUArmn1d7UcGdgeT21vhZnmw5XSkY=;
-        b=QVmdaqZeq/csxeyafD+qG4AFzG/kTUPR0wI/08i8rNxjM+vOUHjx5Jlo8FhEEwPUWD
-         HgsWFhqpInSL6te9Oc6IRxIB3xeD0WDEnZrhzz3Frc3MNd1C/NF2O+VrOWL6zbGuiJ5C
-         jv8lbus7bHoVaYyrGuPQHi+bZ3Kw7ahRtxFOXQKKLG/uIEqwhmEDMIBPorvL+RImxE6h
-         SZP5LW5DngEKCZXKXFfxUM/aq3683hW80DRaHED+gSEtSZmkNesIv6FN3ZEXjbM11t54
-         eRefqLgPnL8bnROmgbpVbeiTAvkMhP/c3iaMrwpQYr16h4dhoo4iWGeJ6q6BOdUiewmL
-         Ee6w==
-X-Gm-Message-State: APt69E2xfM1QjSDPHxiA3Lw/yc3KgFiWH9Fgp0HTjpCppogX3r/e9E6N
-        LLbumRrlhsP6cER14JcZeXWHxw==
-X-Google-Smtp-Source: AAOMgpensnvStL2O62qtGwlHQa34Mi3UYl7t9pcclGO+UwQNV0HKahy1ziJ4fFO9EDHloLtLIo4pKA==
-X-Received: by 2002:a24:9194:: with SMTP id i142-v6mr6737316ite.122.1530491104694;
-        Sun, 01 Jul 2018 17:25:04 -0700 (PDT)
+        bh=K/AKEWNYO/1JE+6zzfNUGbmHT/8wKGHzQcgglt2kJh0=;
+        b=JUzPXFCFnnUXX6TRGQPPp7nC74afyqU8LNbC11XO2Vr4lSZctbFrqFKaOw+eBYETVZ
+         vzQ48FtOJqdEMT/Cxh6ZaFi55SDwf/e84r/VCZbzTl5CRTQGhHmOugxyCvll+RRZvziL
+         jRKBaP8opPeQsJ6vDrZ6dAD0VxOXICJ6h8hvlDWIwPm2sGgYfIM2PnCIhOy6HcGXv+ls
+         NtMR72/4Ur0D2f2DwsDEi8OhxIb/k7AbouPM1ICEyvDO7ie/zJwfMjcJopnsU0t7q+yN
+         4PvLyNa3LKJcxTpRG3rrlityOgP7Ge//WMNLBezR2+FRDfyRo86RkaJtT4NpTunseElG
+         oZ6Q==
+X-Gm-Message-State: APt69E1pldwr3m2xWn9OvelQwZrWHCXzvHWxmuIFNfusjq5zTiIL+Hqw
+        eaAlWJb1YaWfJdAZBEWbz4KEMQ==
+X-Google-Smtp-Source: AAOMgpcJ2cK+3hBgKzk/X6r5qIF/O2uWb+oJb1CRNrxdbvBhQZvr1kXg2EYP3a9McWeoIOUh33XUgw==
+X-Received: by 2002:a6b:6607:: with SMTP id a7-v6mr5386990ioc.145.1530491105611;
+        Sun, 01 Jul 2018 17:25:05 -0700 (PDT)
 Received: from localhost.localdomain (user-12l2cs3.cable.mindspring.com. [69.81.51.131])
-        by smtp.gmail.com with ESMTPSA id o143-v6sm3302562itb.42.2018.07.01.17.25.03
+        by smtp.gmail.com with ESMTPSA id o143-v6sm3302562itb.42.2018.07.01.17.25.04
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Sun, 01 Jul 2018 17:25:04 -0700 (PDT)
+        Sun, 01 Jul 2018 17:25:05 -0700 (PDT)
 From:   Eric Sunshine <sunshine@sunshineco.com>
 To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
@@ -56,9 +56,9 @@ Cc:     Elijah Newren <newren@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
         Junio C Hamano <gitster@pobox.com>,
         Luke Diamand <luke@diamand.org>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 16/25] t1000-t1999: fix broken &&-chains
-Date:   Sun,  1 Jul 2018 20:23:56 -0400
-Message-Id: <20180702002405.3042-17-sunshine@sunshineco.com>
+Subject: [PATCH 17/25] t2000-t2999: fix broken &&-chains
+Date:   Sun,  1 Jul 2018 20:23:57 -0400
+Message-Id: <20180702002405.3042-18-sunshine@sunshineco.com>
 X-Mailer: git-send-email 2.18.0.203.gfac676dfb9
 In-Reply-To: <20180702002405.3042-1-sunshine@sunshineco.com>
 References: <20180702002405.3042-1-sunshine@sunshineco.com>
@@ -69,160 +69,58 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- t/t1004-read-tree-m-u-wf.sh         |  8 ++++----
- t/t1005-read-tree-reset.sh          | 10 +++++-----
- t/t1020-subdirectory.sh             |  2 +-
- t/t1050-large.sh                    |  6 +++---
- t/t1411-reflog-show.sh              |  6 +++---
- t/t1512-rev-parse-disambiguation.sh |  6 +++---
- 6 files changed, 19 insertions(+), 19 deletions(-)
+ t/t2103-update-index-ignore-missing.sh |  2 +-
+ t/t2202-add-addremove.sh               | 14 +++++++-------
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/t/t1004-read-tree-m-u-wf.sh b/t/t1004-read-tree-m-u-wf.sh
-index 826cd32e23..c13578a635 100755
---- a/t/t1004-read-tree-m-u-wf.sh
-+++ b/t/t1004-read-tree-m-u-wf.sh
-@@ -210,10 +210,10 @@ test_expect_success 'D/F' '
- 	read_tree_u_must_succeed -m -u branch-point side-b side-a &&
- 	git ls-files -u >actual &&
- 	(
--		a=$(git rev-parse branch-point:subdir/file2)
--		b=$(git rev-parse side-a:subdir/file2/another)
--		echo "100644 $a 1	subdir/file2"
--		echo "100644 $a 2	subdir/file2"
-+		a=$(git rev-parse branch-point:subdir/file2) &&
-+		b=$(git rev-parse side-a:subdir/file2/another) &&
-+		echo "100644 $a 1	subdir/file2" &&
-+		echo "100644 $a 2	subdir/file2" &&
- 		echo "100644 $b 3	subdir/file2/another"
- 	) >expect &&
- 	test_cmp expect actual
-diff --git a/t/t1005-read-tree-reset.sh b/t/t1005-read-tree-reset.sh
-index 074568500a..83b09e1310 100755
---- a/t/t1005-read-tree-reset.sh
-+++ b/t/t1005-read-tree-reset.sh
-@@ -33,7 +33,7 @@ test_expect_success 'reset should remove remnants from a failed merge' '
- 	git ls-files -s >expect &&
- 	sha1=$(git rev-parse :new) &&
- 	(
--		echo "100644 $sha1 1	old"
-+		echo "100644 $sha1 1	old" &&
- 		echo "100644 $sha1 3	old"
- 	) | git update-index --index-info &&
- 	>old &&
-@@ -48,7 +48,7 @@ test_expect_success 'two-way reset should remove remnants too' '
- 	git ls-files -s >expect &&
- 	sha1=$(git rev-parse :new) &&
- 	(
--		echo "100644 $sha1 1	old"
-+		echo "100644 $sha1 1	old" &&
- 		echo "100644 $sha1 3	old"
- 	) | git update-index --index-info &&
- 	>old &&
-@@ -63,7 +63,7 @@ test_expect_success 'Porcelain reset should remove remnants too' '
- 	git ls-files -s >expect &&
- 	sha1=$(git rev-parse :new) &&
- 	(
--		echo "100644 $sha1 1	old"
-+		echo "100644 $sha1 1	old" &&
- 		echo "100644 $sha1 3	old"
- 	) | git update-index --index-info &&
- 	>old &&
-@@ -78,7 +78,7 @@ test_expect_success 'Porcelain checkout -f should remove remnants too' '
- 	git ls-files -s >expect &&
- 	sha1=$(git rev-parse :new) &&
- 	(
--		echo "100644 $sha1 1	old"
-+		echo "100644 $sha1 1	old" &&
- 		echo "100644 $sha1 3	old"
- 	) | git update-index --index-info &&
- 	>old &&
-@@ -93,7 +93,7 @@ test_expect_success 'Porcelain checkout -f HEAD should remove remnants too' '
- 	git ls-files -s >expect &&
- 	sha1=$(git rev-parse :new) &&
- 	(
--		echo "100644 $sha1 1	old"
-+		echo "100644 $sha1 1	old" &&
- 		echo "100644 $sha1 3	old"
- 	) | git update-index --index-info &&
- 	>old &&
-diff --git a/t/t1020-subdirectory.sh b/t/t1020-subdirectory.sh
-index df3183ea1a..c2df75e495 100755
---- a/t/t1020-subdirectory.sh
-+++ b/t/t1020-subdirectory.sh
-@@ -148,7 +148,7 @@ test_expect_success 'GIT_PREFIX for built-ins' '
- 	(
- 		cd dir &&
- 		echo "change" >two &&
--		GIT_EXTERNAL_DIFF=./diff git diff >../actual
-+		GIT_EXTERNAL_DIFF=./diff git diff >../actual &&
- 		git checkout -- two
+diff --git a/t/t2103-update-index-ignore-missing.sh b/t/t2103-update-index-ignore-missing.sh
+index 332694e7d3..0114f05228 100755
+--- a/t/t2103-update-index-ignore-missing.sh
++++ b/t/t2103-update-index-ignore-missing.sh
+@@ -32,7 +32,7 @@ test_expect_success basics '
+ 		test_create_repo xyzzy &&
+ 		cd xyzzy &&
+ 		>file &&
+-		git add file
++		git add file &&
+ 		git commit -m "sub initial"
  	) &&
- 	test_cmp expect actual
-diff --git a/t/t1050-large.sh b/t/t1050-large.sh
-index f9eb143f43..1a9b21b293 100755
---- a/t/t1050-large.sh
-+++ b/t/t1050-large.sh
-@@ -108,7 +108,7 @@ test_expect_success 'packsize limit' '
- 		test-tool genrandom "c" $(( 128 * 1024 )) >mid3 &&
- 		git add mid1 mid2 mid3 &&
+ 	git add xyzzy &&
+diff --git a/t/t2202-add-addremove.sh b/t/t2202-add-addremove.sh
+index 6a5a3166b1..17744e8c57 100755
+--- a/t/t2202-add-addremove.sh
++++ b/t/t2202-add-addremove.sh
+@@ -6,12 +6,12 @@ test_description='git add --all'
  
--		count=0
-+		count=0 &&
- 		for pi in .git/objects/pack/pack-*.idx
- 		do
- 			test -f "$pi" && count=$(( $count + 1 ))
-@@ -116,8 +116,8 @@ test_expect_success 'packsize limit' '
- 		test $count = 2 &&
- 
- 		(
--			git hash-object --stdin <mid1
--			git hash-object --stdin <mid2
-+			git hash-object --stdin <mid1 &&
-+			git hash-object --stdin <mid2 &&
- 			git hash-object --stdin <mid3
- 		) |
- 		sort >expect &&
-diff --git a/t/t1411-reflog-show.sh b/t/t1411-reflog-show.sh
-index 596907758d..4d62ceef9c 100755
---- a/t/t1411-reflog-show.sh
-+++ b/t/t1411-reflog-show.sh
-@@ -159,9 +159,9 @@ test_expect_success 'git log -g -p shows diffs vs. parents' '
- 	git log -1 -p HEAD^ >log.one &&
- 	git log -1 -p HEAD >log.two &&
+ test_expect_success setup '
  	(
--		cat log.one; echo
--		cat log.two; echo
--		cat log.one; echo
-+		cat log.one && echo &&
-+		cat log.two && echo &&
-+		cat log.one && echo &&
- 		cat log.two
+-		echo .gitignore
++		echo .gitignore &&
+ 		echo will-remove
  	) >expect &&
- 	test_cmp expect actual
-diff --git a/t/t1512-rev-parse-disambiguation.sh b/t/t1512-rev-parse-disambiguation.sh
-index 96fe3754c8..e4d5b56014 100755
---- a/t/t1512-rev-parse-disambiguation.sh
-+++ b/t/t1512-rev-parse-disambiguation.sh
-@@ -34,8 +34,8 @@ test_expect_success 'blob and tree' '
- 		for i in 0 1 2 3 4 5 6 7 8 9
- 		do
- 			echo $i
--		done
--		echo
-+		done &&
-+		echo &&
- 		echo b1rwzyc3
- 	) >a0blgqsjc &&
- 
-@@ -222,7 +222,7 @@ test_expect_success 'more history' '
- 
- 	test_might_fail git rm -f a0blgqsjc &&
  	(
--		git cat-file blob $side:f5518nwu
-+		git cat-file blob $side:f5518nwu &&
- 		echo j3l0i9s6
- 	) >ab2gs879 &&
- 	git add ab2gs879 &&
+-		echo actual
+-		echo expect
++		echo actual &&
++		echo expect &&
+ 		echo ignored
+ 	) >.gitignore &&
+ 	git --literal-pathspecs add --all &&
+@@ -25,10 +25,10 @@ test_expect_success setup '
+ 
+ test_expect_success 'git add --all' '
+ 	(
+-		echo .gitignore
+-		echo not-ignored
+-		echo "M	.gitignore"
+-		echo "A	not-ignored"
++		echo .gitignore &&
++		echo not-ignored &&
++		echo "M	.gitignore" &&
++		echo "A	not-ignored" &&
+ 		echo "D	will-remove"
+ 	) >expect &&
+ 	>ignored &&
 -- 
 2.18.0.203.gfac676dfb9
 
