@@ -6,47 +6,47 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4BF211F516
-	for <e@80x24.org>; Mon,  2 Jul 2018 00:25:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3ECE11F516
+	for <e@80x24.org>; Mon,  2 Jul 2018 00:25:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752916AbeGBAZI (ORCPT <rfc822;e@80x24.org>);
-        Sun, 1 Jul 2018 20:25:08 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:42408 "EHLO
-        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752839AbeGBAY5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Jul 2018 20:24:57 -0400
-Received: by mail-io0-f196.google.com with SMTP id r24-v6so13225988ioh.9
-        for <git@vger.kernel.org>; Sun, 01 Jul 2018 17:24:57 -0700 (PDT)
+        id S1752939AbeGBAZK (ORCPT <rfc822;e@80x24.org>);
+        Sun, 1 Jul 2018 20:25:10 -0400
+Received: from mail-io0-f194.google.com ([209.85.223.194]:42406 "EHLO
+        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752819AbeGBAY4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Jul 2018 20:24:56 -0400
+Received: by mail-io0-f194.google.com with SMTP id r24-v6so13225970ioh.9
+        for <git@vger.kernel.org>; Sun, 01 Jul 2018 17:24:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=4r9bxVYU/xeyXIJW0QY1PuObXJ2VE2GPcgY8EfWDj0A=;
-        b=Ea3v9YHph++U3RIrDrs2wc54PTguWz+QfhH0Y6mNmcG9z1kcGj7KgfvQChJF49mSup
-         mnsNd1NOKiz3QjJQfPAkqz51zvIVzg6ExcKXYv5KdEjg9iVo+3FVAQpVKfzLNciMr4wV
-         v4DJdeK7mbWyD2iHJJXr1mdgF23MgVGooTHg/OqWOucrUgq0/BL4DRJ/f+krHifasdBB
-         EQq7lidoI126tlF9ez3JHOGg2nGs6C5XpQQjFuhNycjt0ouvpIkLNdTC4UGzdr1MZRiL
-         JAxwzKUFmZr5V+SAQdwhP8syYk+WYIjBepdbeBxaC0U7vz3U1SfL5jdFDmv0DbSSfElf
-         JX+Q==
+        bh=3lcUVGCvLN05qPjaT4bhLg7xw6XZZkN96iujIMVL/F4=;
+        b=pw5qwI5cr0QDe56sxP0+RxLeCpMdZOdLi6kwWBWpPSbVdKf1pP4UKUrXoK/oLFKKG6
+         ++w5u9bG7J9jrryfoR7f1hPXqQmyaCj1SENp4TXHvFiNCMFeh25kH8srxdkSxJ4JxB/q
+         8e2w5H7AtC3ekwQ2NwKXV+zTsPUkC//lYZomxd0sZSNXtmfrazcNTt97MD4SA9N4nd6P
+         ZCQSOuoCnrNysyd+mOV6p79k3opXt++tePOTModm3sbRkjt8kw8ed3EVFYs5tKHvHs8+
+         FnjG7BjDz/PlmSkFU5ZE6IbTElHSLtgzK8dIBGWbWAFijLcSPdZRbLwTv0ZtrSRHkqrW
+         AvZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
          :in-reply-to:references;
-        bh=4r9bxVYU/xeyXIJW0QY1PuObXJ2VE2GPcgY8EfWDj0A=;
-        b=B990rbWFRvEDK5zpVl6qY8IzmNbvv/6dGvr3AXbPuGv3+w/5XLJvjyIWOq81tNuZVL
-         MH6/MLQ8zQ+vRR/dDuQG/YtoZAkVqqpFLYnO9v+O7D+OwaP7gTg7Rd5jHEnB6yA+dddM
-         C6Iluzk3W5hu7H1mRb9dakzGpZltuxKbFIAvCkWqrUHyGDzQwWyXwdbzuw83rH6buMdh
-         H+ZYxB718tVElkSB+B43iChZQswq3epVtw36c1K20XgHDEGCw4SqEU2tTx+Dyv3ETXdm
-         7G0qzDAaqpkFvk6JmLOuUmOyo7G0/TjIYnuLQJbwdQLV6p21q6GKQpmmvmr3jkTDQDa8
-         eMKw==
-X-Gm-Message-State: APt69E0ry/EDDr9hJBBwfvo+okxreKQuqtnkqGJKhH44VES9z8NHGDGV
-        ELRO5/D8yoSlR/Hh51c/eCcDtg==
-X-Google-Smtp-Source: AAOMgpfwGQ5cMw3ykWWD3ubr4eKSIbsqpopn2Y0B3EsCiVkzK0VsoVaPbVZTRcwrVXAHUxebjtU/xA==
-X-Received: by 2002:a6b:5a0a:: with SMTP id o10-v6mr19417006iob.244.1530491096669;
-        Sun, 01 Jul 2018 17:24:56 -0700 (PDT)
+        bh=3lcUVGCvLN05qPjaT4bhLg7xw6XZZkN96iujIMVL/F4=;
+        b=P+OZbZPorrkGJK46HN273TGUyJPhyLoQCKc6j9no0QjZpbuOx4KkYtopwp+g2kHbre
+         mCb8UaBLAr0LvoRxbe2iJFfhL1j4ohhyY1lnaqey2OHboKsY5t0hWIDWfEOlrgnwUAlc
+         gL6SUpMKSd3YOerU8Ob2MVmXQ2eFddZOzGHLKRj2W6ySZrGceRwgBaHW92+sjwoh+jRX
+         AKsO4sOjG8gKXzjMzoYvayqk+F2sBwhHrEPq+hd1vStkI7RIfymBlceF3gYl7b5nWagB
+         Q9rx/gwmFBsOrMT12+AiMHVauhJGqZMfANKgfiyY/Ym6jpgkpXSR3e94kdSG1Ckh2B6G
+         nK4g==
+X-Gm-Message-State: APt69E02lF/dQjSbRcEpHY7oHd63ewpUwkw28mgwn1hVSqsBLvRPdpVc
+        TLUAACOYzE3ikPRzzWXipRbhAA==
+X-Google-Smtp-Source: AAOMgpcQkW/Nxsy9vha0kx+oX1XO0kOt3U0HmSQKWQ8jySRevWQovy+4ST544Y72lyzCvzU7JdU8Xw==
+X-Received: by 2002:a6b:bd43:: with SMTP id n64-v6mr20239149iof.254.1530491095707;
+        Sun, 01 Jul 2018 17:24:55 -0700 (PDT)
 Received: from localhost.localdomain (user-12l2cs3.cable.mindspring.com. [69.81.51.131])
-        by smtp.gmail.com with ESMTPSA id o143-v6sm3302562itb.42.2018.07.01.17.24.55
+        by smtp.gmail.com with ESMTPSA id o143-v6sm3302562itb.42.2018.07.01.17.24.54
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Sun, 01 Jul 2018 17:24:56 -0700 (PDT)
+        Sun, 01 Jul 2018 17:24:55 -0700 (PDT)
 From:   Eric Sunshine <sunshine@sunshineco.com>
 To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
@@ -56,9 +56,9 @@ Cc:     Elijah Newren <newren@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
         Junio C Hamano <gitster@pobox.com>,
         Luke Diamand <luke@diamand.org>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 08/25] t5505: modernize and simplify hard-to-digest test
-Date:   Sun,  1 Jul 2018 20:23:48 -0400
-Message-Id: <20180702002405.3042-9-sunshine@sunshineco.com>
+Subject: [PATCH 07/25] t5406: use write_script() instead of birthing shell script manually
+Date:   Sun,  1 Jul 2018 20:23:47 -0400
+Message-Id: <20180702002405.3042-8-sunshine@sunshineco.com>
 X-Mailer: git-send-email 2.18.0.203.gfac676dfb9
 In-Reply-To: <20180702002405.3042-1-sunshine@sunshineco.com>
 References: <20180702002405.3042-1-sunshine@sunshineco.com>
@@ -67,47 +67,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This test uses a subshell within a subshell but is formatted in such a
-way as to suggests that the inner subshell is a sibling rather than a
-child, which makes it difficult to digest the test's structure and
-intent.
-
-Worse, the inner subshell performs cleanup of actions from earlier in
-the test, however, a failure between the initial actions and the cleanup
-will prevent the cleanup from taking place.
-
-Fix these problems by modernizing and simplifying the test and by using
-test_when_finished() for the cleanup action.
+Take advantage of write_script() to abstract-away details of shell
+script creation, thus allowing the reader to focus on script content.
+Readability benefits, particularly in this case, since the script body
+was buried in a noisy one-liner subshell responsible for emitting
+boilerplate and body.
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- t/t5505-remote.sh | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ t/t5406-remote-rejects.sh | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index a6c0178f3a..3552b51b4c 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -348,17 +348,13 @@ URL: $(pwd)/one
- EOF
+diff --git a/t/t5406-remote-rejects.sh b/t/t5406-remote-rejects.sh
+index 59e80a5ea2..ff06f99649 100755
+--- a/t/t5406-remote-rejects.sh
++++ b/t/t5406-remote-rejects.sh
+@@ -6,8 +6,9 @@ test_description='remote push rejects are reported by client'
  
- test_expect_success 'prune --dry-run' '
--	(
--		cd one &&
--		git branch -m side2 side) &&
-+	git -C one branch -m side2 side &&
-+	test_when_finished "git -C one branch -m side side2" &&
- 	(
- 		cd test &&
- 		git remote prune --dry-run origin >output &&
- 		git rev-parse refs/remotes/origin/side2 &&
- 		test_must_fail git rev-parse refs/remotes/origin/side &&
--	(
--		cd ../one &&
--		git branch -m side side2) &&
- 		test_i18ncmp expect output
- 	)
- '
+ test_expect_success 'setup' '
+ 	mkdir .git/hooks &&
+-	(echo "#!/bin/sh" ; echo "exit 1") >.git/hooks/update &&
+-	chmod +x .git/hooks/update &&
++	write_script .git/hooks/update <<-\EOF &&
++	exit 1
++	EOF
+ 	echo 1 >file &&
+ 	git add file &&
+ 	git commit -m 1 &&
 -- 
 2.18.0.203.gfac676dfb9
 
