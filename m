@@ -6,42 +6,40 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 956AC1F516
-	for <e@80x24.org>; Mon,  2 Jul 2018 21:13:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D836E1F516
+	for <e@80x24.org>; Mon,  2 Jul 2018 21:20:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752948AbeGBVNB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Jul 2018 17:13:01 -0400
-Received: from mail-yb0-f193.google.com ([209.85.213.193]:40214 "EHLO
-        mail-yb0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751069AbeGBVNA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Jul 2018 17:13:00 -0400
-Received: by mail-yb0-f193.google.com with SMTP id y11-v6so2113139ybm.7
-        for <git@vger.kernel.org>; Mon, 02 Jul 2018 14:13:00 -0700 (PDT)
+        id S932126AbeGBVU5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Jul 2018 17:20:57 -0400
+Received: from mail-yw0-f194.google.com ([209.85.161.194]:41415 "EHLO
+        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932113AbeGBVU4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Jul 2018 17:20:56 -0400
+Received: by mail-yw0-f194.google.com with SMTP id j5-v6so7163021ywe.8
+        for <git@vger.kernel.org>; Mon, 02 Jul 2018 14:20:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=zUfaU9fO7Ww4IFHS1NRMCGl8PkWIeEfCDT8I/9vVecQ=;
-        b=omlB7I6p44ZlN5AlqKAsUmU4ETeCO49S7iT2QF7QVmXnSNV7qCEH5h8X7taxFbn4UA
-         UE/34Y74//f4DoednnmAALW3DMdZZ6AXKcM0EFhoikgXvhThhreKiMRl8xQqTfZVT0ej
-         dIl4Ow5sJdEoMmi5Wy9gynf+W6t8f1FB/z8hY4Fg5eQimJyRf46BYSRxZpHdtoF+1WS8
-         gOdNcc/u4xoVY63YhLDN2b95Gvw92u0c1e623IeUN/DXE4r+cetQqS1DPVoNrP4vnEWJ
-         VRib+Ciy6O3wHvY3ZUvDTCapdGoJSDzlDK/fW4suGmTmPViKxNF+suabbdMTsWAcm5gs
-         y9Iw==
-X-Gm-Message-State: APt69E1u8LInBdcuJhV30IidhqxUjI4utCRMOWtL3TE38AC4s9ofXl3Z
-        vJagus66lSlwzy2hqp3RRAk9UZwN9vMqxBkD1U4=
-X-Google-Smtp-Source: AAOMgpdX9MpAwHX4H+OBz3XtIPG8mKsK/iPK9o2dsQL1Mj1c0KvMKtCduuB1wH4oJ73d/ipEuFZyEb0hsniJhZrW6oc=
-X-Received: by 2002:a25:ac44:: with SMTP id r4-v6mr3235639ybd.497.1530565980327;
- Mon, 02 Jul 2018 14:13:00 -0700 (PDT)
+        bh=vTb17z0hCi4AOo2Fn/fxcIDEwdOjJqiokRR4KxzIl+I=;
+        b=gK0E2YzYmU8JWQH81xb1/UJeQJQbi190/w2pfwJ+m7tt1Rdk/vVGnwgdjxDcy6t7Ql
+         P5RwZ5C17j07gnN8OS2sTGPhijo+5DjhEXICLR3TNoHegWe5djjDJtXOD1B7xldFAA+e
+         V9L3nTU6xiEmxuUrWrZc6cge31pcm4upqT88B/GsWtS1KcOy/EHZem/14VCLq8NI19P+
+         YU0bVXGEGDejuUoHQC4sHMHlYtr2LW0PG/j/wb7bLOKvuyDviS8wTo4mLDcXF19IHLJ1
+         j1zOMhHAv1hbtlh2hdSepKPvesEYMtkse+q0i3yRJJaMbftAPFo3m0FC1s9kdfIwmfOd
+         deHQ==
+X-Gm-Message-State: APt69E3sQr3+9LiYmK1OEj6j5uuiu8EYDCquFmOhQ6mZYruJpZnriJLi
+        yX737Nr8acnhl5MfTz7jbdzPWTYbC/HS+qpeK/c=
+X-Google-Smtp-Source: AAOMgpdn5jvGdcuVg4QqsFBMJUGiUbcCfmfJSJi5o9QD/P9Zoz3byzSfgqie37AEkYcSzDghIouplhXxHT9d68NBTu8=
+X-Received: by 2002:a81:4153:: with SMTP id f19-v6mr5952010ywk.418.1530566454806;
+ Mon, 02 Jul 2018 14:20:54 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180702002405.3042-1-sunshine@sunshineco.com>
- <20180702002405.3042-13-sunshine@sunshineco.com> <CAGZ79kZFSAe1NL3EVKtbSm6E9PvhajWdrrbwDNMm2K5FRH7m-Q@mail.gmail.com>
-In-Reply-To: <CAGZ79kZFSAe1NL3EVKtbSm6E9PvhajWdrrbwDNMm2K5FRH7m-Q@mail.gmail.com>
+References: <20180702002405.3042-1-sunshine@sunshineco.com> <CAGZ79kZXhZyhDL_+cFK6BzL-RL7Ac0zKeKux97v9shc+qm+nOA@mail.gmail.com>
+In-Reply-To: <CAGZ79kZXhZyhDL_+cFK6BzL-RL7Ac0zKeKux97v9shc+qm+nOA@mail.gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 2 Jul 2018 17:12:49 -0400
-Message-ID: <CAPig+cTr_nCYkGn6DVtODOa+ufsr4V006FmdvqL63PzvpARvUA@mail.gmail.com>
-Subject: Re: [PATCH 12/25] t7810: use test_expect_code() instead of
- hand-rolled comparison
+Date:   Mon, 2 Jul 2018 17:20:42 -0400
+Message-ID: <CAPig+cTUZ__JgvW4WZZPY0BG+jDgXS8FTU5pSghr0XUeObKDCQ@mail.gmail.com>
+Subject: Re: [PATCH 00/25] fix buggy tests, modernize tests, fix broken &&-chains
 To:     Stefan Beller <sbeller@google.com>
 Cc:     Git List <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>,
@@ -55,34 +53,15 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 2, 2018 at 2:14 PM Stefan Beller <sbeller@google.com> wrote:
-> On Sun, Jul 1, 2018 at 5:25 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> >  test_expect_success 'grep from a subdirectory to search wider area (2)' '
-> >         mkdir -p s &&
-> >         (
-> > -               cd s || exit 1
-> > -               ( git grep xxyyzz .. >out ; echo $? >status )
-> > -               ! test -s out &&
-> > -               test 1 = $(cat status)
-> > +               cd s &&
-> > +               test_expect_code 1 git grep xxyyzz .. >out &&
-> > +               ! test -s out
-> >         )
+On Mon, Jul 2, 2018 at 2:27 PM Stefan Beller <sbeller@google.com> wrote:
+> On Sun, Jul 1, 2018 at 5:24 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+> > This series fixes several buggy tests which went undetected due to
+> > broken &&-chains in subshells, modernizes some tests to take advantage
+> > of test functions (test_might_fail(), test_write_lines(), etc.), and
+> > fixes a lot of broken &&-chains in subshells. [...]
 >
-> Further optimisation would be possible if I understand the code correctly:
->
->     test_expect_code git -C s grep xxyyzz .. >../out
->     test_must_be_empty out
->
-> (dropping the subshell entirely)
+> I think it is good to include it as is and build on top if needed. I had some
+> comments on the earlier part of the series, but that is really just the cherry
+> on top of the cake.
 
-I did consider dropping the subshell in favor of -C, however, decided
-to keep it since the subshell has value by making it very explicit to
-the reader that this git-grep command is running in a subdirectory
-(which is what this test is all about). Contrast that with -C which is
-easy to overlook and might not fully convince the reader that the
-command's entire execution is within the subdirectory, whereas there
-is no question that the entire execution of git-diff in "(cd s &&
-git-diff ...)" occurs in the subdirectory.
-
-I can make the test_must_be_empty() change if I re-roll.
+Thanks for the review comments.
