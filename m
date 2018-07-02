@@ -2,167 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-8.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B00021F516
-	for <e@80x24.org>; Mon,  2 Jul 2018 17:27:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3CAC11F516
+	for <e@80x24.org>; Mon,  2 Jul 2018 17:36:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753083AbeGBR1q (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Jul 2018 13:27:46 -0400
-Received: from mail-yw0-f195.google.com ([209.85.161.195]:39349 "EHLO
-        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752728AbeGBR1o (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Jul 2018 13:27:44 -0400
-Received: by mail-yw0-f195.google.com with SMTP id 81-v6so6933653ywb.6
-        for <git@vger.kernel.org>; Mon, 02 Jul 2018 10:27:43 -0700 (PDT)
+        id S1752748AbeGBRgS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Jul 2018 13:36:18 -0400
+Received: from mail-pl0-f67.google.com ([209.85.160.67]:42278 "EHLO
+        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752646AbeGBRgR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Jul 2018 13:36:17 -0400
+Received: by mail-pl0-f67.google.com with SMTP id y15-v6so6400141pll.9
+        for <git@vger.kernel.org>; Mon, 02 Jul 2018 10:36:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=XdT7sBVskfjwmaFRxErYVtHv7HJMxhoZBvzfTncMThg=;
-        b=t9hFFM+gmxbtltrUS0HzdDz3Atvi2gSwfVj+AIutVUTsoPEWWIOP+3fjaTLVLXWAmU
-         UwY4pBVMB4Hc29CaxbRNLhA2IfVKoyg4P8TsYyat6VwlYXfhvDmeiJe/iwAocPtO0qE2
-         VjIlp3NUxA9pZEeHAMTKypY770uEg8gvXVFjOCkG3FQn2rNEq3/aC5APEpQ8FY10My4Q
-         mCOxs8EA91/nRPKI18Gb+8lG/wfLyzTF0tpduejXj8YXPgcPR98dyon6oSLjkkyfU/T5
-         K43dnk62MIyu2GEmvisSoV/yWyGsM4depBkeS7j3uVagRGUH2H1oHNIQJx+sePRbz+EV
-         FX/g==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ZBpBrgbaL35wU2oDvvw4YuAuySpp0+nAUWAHzmAGseI=;
+        b=Ns0ejf7Il4TCzMUvWJ9DcqaH8DWTh3ncP7chFBh+3mCKGlBz99ZGPa3qnlRZiHC78t
+         We3GjLV1BesOcIh3bVgzmlY5K0p/SFjT15U+6Grab3nSjV3iNe8k77RpA8RgWAVcJLpp
+         u50xm0sBhywsR+vz94Ydsh94V6FlZLnZbQ9j4mUNBq21lRyl8iH19cZDfkSoedCy7RV3
+         jkg2E8jrC0I4sZJcJc9RgoGvcEUzvoiRok154tchl8m7PuI0Feh5T2m+7r4eSKEMgqf1
+         wj8juPUtqoPAQp2EjLoFE1X+u5UUqaGt/YYb5f8175z7bJDF9U7S6gKvcYx0c4XrlI4r
+         tRyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=XdT7sBVskfjwmaFRxErYVtHv7HJMxhoZBvzfTncMThg=;
-        b=Y2Jz1EyKnf/w+RE6BqICMT2lfX0CCDoL9w+Fb2JFuFYghnGOguZ5JM+Mv3JBuiFzqE
-         WK3mFBNlk7DUkmTkDEa5pOtNvAP0GrJuJ9MeW47x1EEKmr1ulRAUeImCzgjR5KnDy0m4
-         70NaCycgB81EiEHQKq1xyuSWgIGtiBCZvxIcxVjdVOmPtyxMG4yADsFLp3rjFODmHb48
-         4qLggQyfdstMU+c+i9q8+EUvX0NN3jFcgaUHDdPPwd19IfovRoXovzk1CL/wb3fw6LEJ
-         oxo0ack5IKelPnK4jtsbsdFCzdgWVRY/21Fp8oizXtP5XbE8SJYVQy1GAVWS6IxarS9R
-         Diow==
-X-Gm-Message-State: APt69E29ed0GxQcB1wahK/FvXTi1g+VqSC/95WicqU2i6xXI8A8iElhT
-        rhSA9dsfPj43JtlNQMopNcfUvZ3E3Zsz+ceJsJTHcQ==
-X-Google-Smtp-Source: AAOMgpfBqds4qIO444xm2hyvBV+J9IM3q7KesnvtJeiP8o7/Gv8ho6HP1oabntTZDEz94u2QqN6W+QZBYLtK2yZ7SfY=
-X-Received: by 2002:a81:360a:: with SMTP id d10-v6mr13740702ywa.421.1530552462490;
- Mon, 02 Jul 2018 10:27:42 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ZBpBrgbaL35wU2oDvvw4YuAuySpp0+nAUWAHzmAGseI=;
+        b=amx7MdC6L5kzLRRYa5i3K/JV7fU2aAYtuORpHdQXhuBeKoOiTivUv9RRhO8wlZT49S
+         Y2CTRZfcsib9eon4BGenWiFLe8SmSAqg9s3/L4ylNcgPpA11WjafiOpB+Y2y4ml2J0I1
+         l47m8SLr4XqV36fQOW+MDVkzlz82MI6D109JJatEJ8l5fQKih1p2d9rKWEzHls9wXn+d
+         2B+ZMk9xa0CeLX5PDBqK7EJwcNS1Av68pa947X7BJX8/ztN30btoEuROoNmpUG19R7lP
+         CEkiVsV9zjEE3MYKkPNfxnJr9+Uf7UIG8WxCY30sG5PJf0uqrHi2opIs9xq/GXiNqO0P
+         72fQ==
+X-Gm-Message-State: APt69E1VXcExAF6JycotLJI00kEQV06jXiqULMFT6iUZ2qYCQ8z1Xw+Y
+        QDJ07BhOC3oaa8X7rUtebdtnOA==
+X-Google-Smtp-Source: ADUXVKLwl2zRPkV5pAA26Ac5jcbq9UH70QG4UfiG7pdaf4ItpwcwVayYDdWgaJwsmeFYNhdn6DCa6g==
+X-Received: by 2002:a17:902:b48f:: with SMTP id y15-v6mr26972095plr.261.1530552976395;
+        Mon, 02 Jul 2018 10:36:16 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id l28-v6sm14680501pfi.4.2018.07.02.10.36.14
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 02 Jul 2018 10:36:15 -0700 (PDT)
+Date:   Mon, 2 Jul 2018 10:36:14 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org, jacob.keller@gmail.com,
+        jonathantanmy@google.com, simon@ruderich.org,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 9/9] diff.c: add white space mode to move detection
+ that allows indent changes
+Message-ID: <20180702173614.GD246956@google.com>
+References: <20180622015725.219575-1-sbeller@google.com>
+ <20180629001958.85143-1-sbeller@google.com>
+ <20180629001958.85143-10-sbeller@google.com>
 MIME-Version: 1.0
-References: <CAGZ79kb0FOafEsuXU7c_BTwPtcujFeyWVhzSuzFHRFtQHp9weQ@mail.gmail.com>
- <20180629202811.131265-1-sbeller@google.com> <72ac1ac2-f567-f241-41d6-d0f83072e0b3@alum.mit.edu>
-In-Reply-To: <72ac1ac2-f567-f241-41d6-d0f83072e0b3@alum.mit.edu>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 2 Jul 2018 10:27:31 -0700
-Message-ID: <CAGZ79kZzrdswds4ejCJrhJD1UcJeODdhifX5-UREuK5wPUM-rg@mail.gmail.com>
-Subject: Re: [PATCH] xdiff: reduce indent heuristic overhead
-To:     Michael Haggerty <mhagger@alum.mit.edu>, quark@fb.com
-Cc:     git <git@vger.kernel.org>, Jameson Miller <jamill@microsoft.com>,
-        Mike Hommey <mh@glandium.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180629001958.85143-10-sbeller@google.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jul 1, 2018 at 8:57 AM Michael Haggerty <mhagger@alum.mit.edu> wrot=
-e:
->
-> On 06/29/2018 10:28 PM, Stefan Beller wrote:
-> > [...]
-> >     Adds some threshold to avoid expensive cases, like:
-> >
-> >     ```
-> >     #!python
-> >     open('a', 'w').write(" \n" * 1000000)
-> >     open('b', 'w').write(" \n" * 1000001)
-> >     ```
-> >
-> >     The indent heuristic is O(N * 20) (N =3D 1000000) for the above cas=
-e, and
-> >     makes diff much slower.
-> > [...]
-> > +/*
-> > + * For indentation heuristic, skip searching for better slide position=
- after
-> > + * checking MAX_BORING lines without finding an improvement. This defe=
-nds the
-> > + * indentation heuristic logic against pathological cases. The value i=
-s not
-> > + * picked scientifically but should be good enough.
-> > + */
-> > +#define MAX_BORING 100
->
-> This is an interesting case, and a speed difference of almost a factor
-> of five seems impressive. But this is a pretty pathological case, isn't
-> it? And I'm pretty sure that the algorithm is `O(N)` both before and
-> after this change. Remember that to find `earliest_end` and `g.end`,
-> there has already been a scan through all 1000000 lines. In other words,
-> you're not improving how the overall algorithm scales with `N`; you're
-> only changing the constant factor in front. So it's a little bit
-> questionable whether it is worth complicating the code for this unusual
-> case.
->
-> But *if* we want to improve this case, I think that we could be smarter
-> about it.
->
-> By the time we get to this point in the code, we already know that there
-> is a "slider" hunk of length `M` (`groupsize`) that can be slid up or
-> down within a range of `N` (`g.end - earliest_end + 1`) possible
-> positions. The interesting case here is `N =E2=89=AB M`, because then nai=
-vely
-> the number of positions to try out is a lot bigger than the size of the
-> hunk itself. (In the case described above, `N` is 1000000 and `M` is 1.)
->
-> But how can that situation even arise? Remember, a hunk can only be slid
-> down by a line if the first line *after* the hunk is identical to the
-> first line *of* the hunk. It follows that if you shift a hunk down `M`
-> lines, then it has the same contents as when you started=E2=80=94you've j=
-ust
-> rotated all of the hunk lines around once.
->
-> So if `N =E2=89=AB M`, there is necessarily a lot of repetition among the=
- `N +
-> M` lines that the hunk could possibly overlay. Specifically, it must
-> consist of `floor((N + M)/M)` identical copies of the hunk, plus
-> possibly a few leftover lines constituting the start of another repetitio=
-n.
->
-> Given this large amount of repetition, it seems to me that there is
-> never a need to scan more than the bottom `M + 1` possible positions [1]
-> plus the highest possible position [2] to be sure of finding the very
-> best one. In the pathological case that you described above, where `M`
-> is 1, only three positions have to be evaluated, not 100.
->
-> In fact, it *could* be that there is even more repetition, namely if the
-> hunk itself contains multiple copies of an even shorter block of `K`
-> lines. In that case, you would only have to scan `K + 1` positions at
-> the bottom plus one at the top to be sure to find the best hunk
-> position. This would be an interesting optimization for a case like
->
-> >     open('a', 'w').write(" \n" * 1000000)
-> >     open('b', 'w').write(" \n" * 1100000)
->
-> (`N =3D 1000000`, `M =3D 100000`, `K =3D 1`) or
->
-> >     open('a', 'w').write("<item>\nMISSING\n</item>\n" * 1000000)
-> >     open('b', 'w').write("<item>\nMISSING\n</item>\n" * 1100000)
->
-> (`N =3D 3000000`, `M =3D 300000`, `K =3D 3`). On the other hand, it's not
-> entirely trivial to find periodicity in a group of lines (i.e., to find
-> `K`), and I don't know offhand how that task scales with `M`.
->
-> Michael
->
-> [1] Actually, to be rigorously correct it might be necessary to check
-> even a bit more than `M + 1` positions at the bottom because the
-> heuristic looks a bit beyond the lines of the hunk.
->
-> [2] The position at the top has different predecessor lines than the
-> other positions, so it could have a lower score than all of the others.
-> It's worth checking it. Here too, to be rigorously correct it might be
-> necessary to check more than one position at the top because the
-> heuristic looks a bit beyond the lines of the hunk.
+On 06/28, Stefan Beller wrote:
+> The option of --color-moved has proven to be useful as observed on the
+> mailing list. However when refactoring sometimes the indentation changes,
+> for example when partitioning a functions into smaller helper functions
+> the code usually mostly moved around except for a decrease in indentation.
+> 
+> To just review the moved code ignoring the change in indentation, a mode
+> to ignore spaces in the move detection as implemented in a previous patch
+> would be enough.  However the whole move coloring as motivated in commit
+> 2e2d5ac (diff.c: color moved lines differently, 2017-06-30), brought
+> up the notion of the reviewer being able to trust the move of a "block".
+> 
+> As there are languages such as python, which depend on proper relative
+> indentation for the control flow of the program, ignoring any white space
+> change in a block would not uphold the promises of 2e2d5ac that allows
+> reviewers to pay less attention to the inside of a block, as inside
+> the reviewer wants to assume the same program flow.
+> 
+> This new mode of white space ignorance will take this into account and will
+> only allow the same white space changes per line in each block. This patch
+> even allows only for the same change at the beginning of the lines.
+> 
+> As this is a white space mode, it is made exclusive to other white space
+> modes in the move detection.
+> 
+> This patch brings some challenges, related to the detection of blocks.
+> We need a white net the catch the possible moved lines, but then need to
 
-So this suggests to have MAX_BORING to be
-"hunk size + some small constant offset" ?
+s/white/wide/
 
-Stefan
+> +
+> +/**
+> + * The struct ws_delta holds white space differences between moved lines, i.e.
+> + * between '+' and '-' lines that have been detected to be a move.
+> + * The string contains the difference in leading white spaces, before the
+> + * rest of the line is compared using the white space config for move
+> + * coloring. The current_longer indicates if the first string in the
+> + * comparision is longer than the second.
+> + */
+> +struct ws_delta {
+> +	char *string;
+> +	unsigned int current_longer : 1;
+>  };
+> +#define WS_DELTA_INIT { NULL, 0 }
+> +
+> +static int compute_ws_delta(const struct emitted_diff_symbol *a,
+> +			     const struct emitted_diff_symbol *b,
+> +			     struct ws_delta *out)
+> +{
+> +	const struct emitted_diff_symbol *longer =  a->len > b->len ? a : b;
+> +	const struct emitted_diff_symbol *shorter = a->len > b->len ? b : a;
+> +	int d = longer->len - shorter->len;
+> +
+> +	out->string = xmemdupz(longer->line, d);
+> +	out->current_longer = (a == longer);
+> +
+> +	return !strncmp(longer->line + d, shorter->line, shorter->len);
+> +}
+
+I'm having a harder time understanding this block.  This is used to fill
+a ws_delta struct by calculating the whitespace delta between two lines.
+If that is the case then why doesn't this function verify that the first
+'d' characters in the longer line are indeed whitespace?  Also, maybe
+this is just because I'm not as familiar with the move detection code,
+but how would the whitespace detection handle a line being moved from
+being indented with tabs to spaces or vice versa?  Is this something
+already handled and not an issue?
+
+-- 
+Brandon Williams
