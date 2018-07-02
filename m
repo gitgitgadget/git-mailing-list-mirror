@@ -2,160 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D0A011F516
-	for <e@80x24.org>; Mon,  2 Jul 2018 12:13:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2CC8A1F516
+	for <e@80x24.org>; Mon,  2 Jul 2018 13:31:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752213AbeGBMNo convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 2 Jul 2018 08:13:44 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5]:34376 "EHLO
-        mx0a-001b2d01.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1752156AbeGBMNn (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 2 Jul 2018 08:13:43 -0400
-Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
-        by mx0b-001b2d01.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w62C9ZVf124713
-        for <git@vger.kernel.org>; Mon, 2 Jul 2018 08:13:42 -0400
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com [158.85.210.114])
-        by mx0b-001b2d01.pphosted.com with ESMTP id 2jyksar8ud-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-        for <git@vger.kernel.org>; Mon, 02 Jul 2018 08:13:42 -0400
-Received: from localhost
-        by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
-        for <git@vger.kernel.org> from <GROEGES@uk.ibm.com>;
-        Mon, 2 Jul 2018 12:13:40 -0000
-Received: from us1b3-smtp01.a3dr.sjc01.isc4sb.com (10.122.7.174)
-        by smtp.notes.na.collabserv.com (10.122.47.58) with smtp.notes.na.collabserv.com ESMTP;
-        Mon, 2 Jul 2018 12:13:35 -0000
-Received: from us1b3-mail97.a3dr.sjc01.isc4sb.com ([10.122.105.210])
-          by us1b3-smtp01.a3dr.sjc01.isc4sb.com
-          with ESMTP id 2018070212133525-436405 ;
-          Mon, 2 Jul 2018 12:13:35 +0000 
-X-Disclaimed: 1
-MIME-Version: 1.0
-Sensitivity: 
-Importance: Normal
-X-Priority: 3 (Normal)
-In-Reply-To: <4E8CDDC9-2957-401F-9BBE-93276C026848@gmail.com>
-References: <4E8CDDC9-2957-401F-9BBE-93276C026848@gmail.com>,
-        <OF5D40FE06.C18CD7CD-ON002582B9.002B7A02-002582B9.002B7A07@notes.na.collabserv.com> <20180628024446.GD644867@genre.crustytoothpaste.net> <20180628143405.GA16657@sigill.intra.peff.net>
-Subject: Re: Use of new .gitattributes working-tree-encoding attribute across
- different platform types
-From:   Steve Groeger <GROEGES@uk.ibm.com>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Jeff King <peff@peff.net>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Date:   Mon, 2 Jul 2018 12:13:35 +0000
-X-Mailer: IBM iNotes ($HaikuForm 1011.1) | IBM Domino Build SCN1812108_20180501T0841
- May 01, 2018 at 08:41
-X-KeepSent: AD36A6D5:F36D27E7-002582BE:0043296C;
- type=4; name=$KeepSent
-X-LLNOutbound: False
-X-TNEFEvaluated: 1
-X-LLNXfer: False
-x-cbid: 18070212-9695-0000-0000-0000037D2B72
-X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.399202; ST=0; TS=0; UL=0; ISC=; MB=0.033139
-X-IBM-SpamModules-Versions: BY=3.00009294; HX=3.00000241; KW=3.00000007;
- PH=3.00000004; SC=3.00000266; SDB=6.01055450; UDB=6.00541338; IPR=6.00833372;
- BA=6.00006032; NDR=6.00000001; ZLA=6.00000005; ZF=6.00000009; ZB=6.00000000;
- ZP=6.00000000; ZH=6.00000000; ZU=6.00000002; MB=3.00021960; XFM=3.00000015;
- UTC=2018-07-02 12:13:39
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2018-07-02 05:36:27 - 6.00008647
-x-cbparentid: 18070212-9696-0000-0000-0000E6CE2BA0
-Message-Id: <OFAD36A6D5.F36D27E7-ON002582BE.0043296C-002582BE.0043297F@notes.na.collabserv.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-07-02_04:,,
- signatures=0
-X-Proofpoint-Spam-Reason: safe
+        id S1752035AbeGBNbK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Jul 2018 09:31:10 -0400
+Received: from mail-oi0-f68.google.com ([209.85.218.68]:36186 "EHLO
+        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751493AbeGBNbI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Jul 2018 09:31:08 -0400
+Received: by mail-oi0-f68.google.com with SMTP id r16-v6so15871268oie.3
+        for <git@vger.kernel.org>; Mon, 02 Jul 2018 06:31:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=yYSiCMUgSwEVOAeoy0JLDh4DFvb8JftrCTcF8API16s=;
+        b=phT9HT2KvyOHJxauDNVUx+8cv+F8dPF1Jh4O00sCl9hCEAaY5OWMfUKJCE+2S2rYMk
+         wh9w79wyEUZey8IJC7XmskRSclS+iU+tVp6NgCdBHsIPJ/h8TV3rOlCO6onWXXG8atp4
+         w5himx6VEmTtAxaJBNag9sWGgU5ohz5DW8HlFmc4Hqd+DUeKyPbxg2eAUEcuMLMv4aq1
+         Ed+e+mX8Sa95AvQqqkv+4VCWW0k2QZzkjutA+F1qPZ2OvrhNTPcUaGifeAgLt+l/mRDv
+         hLYfHNpFglsL4SoKOyqybIHSl93Qshgl0LxDs1E3cdxVTiNYA/DKRBX87c6CrWyIyvZ1
+         NI8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=yYSiCMUgSwEVOAeoy0JLDh4DFvb8JftrCTcF8API16s=;
+        b=bXV/lukYJnHtzBK+nbnEg1t5rOvNBjVWRwUDK5up9xrKjw8cxJI5DJqb+AgrWjyyH/
+         icEToT44QSj8UYBe5frQFU9XYlwhhWh2HfKR5GyCGOPIOaONGf4TRB9CS9SEnsql98P+
+         B8Rp2yn3qjaziCab/2hisIlT1B/Py81IfGrUQO2Wx3O8ftvvuBb33qQ7EnIWbB1t5AT4
+         HhrZ/cS7KVMq73xiD2+tTY3FKb9ZiKIi+b676SkYJCYp8JnuivsdxUFMYxVFrcEYl4hn
+         UrCmbY5w0XiWjEsLxDdo4qKE+gBmAdl0Mrl21slbLmh+bDxoqHhgGnSYa+fWezpaem4T
+         Pz4A==
+X-Gm-Message-State: APt69E1q+vpkDTsFpTA8OAfvxt267lDUCI4tTc9L0pN1JRTeBytlOKHa
+        pvGFLG970zT0KpRMmK2X7L6qVA==
+X-Google-Smtp-Source: AAOMgpdlm6Ap16XzQOz/A3cNimebqo8XYe8SX5iVDXLkNnEZthfoaUR3YNzmpuQEk3Xe08s8nvAIkQ==
+X-Received: by 2002:aca:f10b:: with SMTP id p11-v6mr16541643oih.80.1530538267461;
+        Mon, 02 Jul 2018 06:31:07 -0700 (PDT)
+Received: from tiger.attlocal.net ([2602:30a:2c28:20f0:7c1a:85e3:2ea9:5d7e])
+        by smtp.gmail.com with ESMTPSA id r16-v6sm12232366otd.43.2018.07.02.06.31.05
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 02 Jul 2018 06:31:06 -0700 (PDT)
+From:   Elijah Newren <newren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, Elijah Newren <newren@gmail.com>
+Subject: [PATCH 0/3] Add missing rename-related corner cases for merging
+Date:   Mon,  2 Jul 2018 06:30:51 -0700
+Message-Id: <20180702133054.18638-1-newren@gmail.com>
+X-Mailer: git-send-email 2.18.0.130.gd703bbb5d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Lars, 
+In merging, every rename acts as a two-piece lego in terms of conflicts.
+We have long realized that the other branch can (1) delete the source
+side of a rename, giving a rename/delete conflict, or (2) add a file in
+the way of the rename destination, giving a rename/add conflict, or (3)
+have a rename of its own touching either the same destination or source
+path, giving either a rename/rename(2to1) or rename/rename(1to2)
+conflict.  But only in one case did we ever consider chaining these
+merge-conflict lego pieces (namely with rename/rename(1to2)/add/add
+conflicts).  Add some testcases that show other ways these conflicts can
+be chained.
 
-I think this proposed solution may resolve my issue.
- 
- 
-  
- 
-Thanks
- Steve Groeger
- Java Runtimes Development
- IBM Hursley
- IBM United Kingdom Ltd
- Tel: (44) 1962 816911 Mobex: 279990 Mobile: 07718 517 129
- Fax (44) 1962 816800
- Lotus Notes: Steve Groeger/UK/IBM
- Internet: groeges@uk.ibm.com  
-   
- 
-Unless stated otherwise above:
- IBM United Kingdom Limited - Registered in England and Wales with number 741598.
- Registered office: PO Box 41, North Harbour, Portsmouth, Hampshire PO6 3AU      
+In short, any rename's source side can attach to a delete or another
+rename, and any rename's destination side can attach to an add or
+another rename.
 
------Lars Schneider <larsxschneider@gmail.com> wrote: -----
-To: Jeff King <peff@peff.net>
-From: Lars Schneider <larsxschneider@gmail.com>
-Date: 06/28/2018 18:21
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, Steve Groeger <GROEGES@uk.ibm.com>, git@vger.kernel.org
-Subject: Re: Use of new .gitattributes working-tree-encoding attribute across different platform types
+This series was spurred by Robert Dailey's report back in March of a
+rename case that git currently handles poorly:
+  https://public-inbox.org/git/CAHd499Axo7HFviUJavigTZ6BGZCkj9iOSeNVndu1oPivkPv+5Q@mail.gmail.com/
+
+This series adds a testcase covering the issue he reported, and then
+rounds things out additional testcases demonstrating other ways rename
+conflicts could be "chained" together.
 
 
-> On Jun 28, 2018, at 4:34 PM, Jeff King <peff@peff.net> wrote:
-> 
-> On Thu, Jun 28, 2018 at 02:44:47AM +0000, brian m. carlson wrote:
-> 
->> On Wed, Jun 27, 2018 at 07:54:52AM +0000, Steve Groeger wrote:
->>> We have common code that is supposed to be usable across different platforms and hence different file encodings. With the full support of the working-tree-encoding in the latest version of git on all platforms, how do we have files converted to different encodings on different platforms?
->>> I could not find anything that would allow us to say 'if platform = z/OS then encoding=EBCDIC else encoding=ASCII'.   Is there a way this can be done?
->> 
->> I don't believe there is such functionality.  Git doesn't have
->> attributes that are conditional on the platform in that sort of way.
->> You could use a smudge/clean filter and adjust the filter for the
->> platform you're on, which might meet your needs.
-> 
-> We do have prior art in the line-ending code, though. There the
-> attributes say either that a file needs a specific line-ending type
-> (which is relatively rare), or that it should follow the system type,
-> which is then set separately in the config.
-> 
-> I have the impression that the working-tree-encoding stuff was made to
-> handle the first case, but not the second. It doesn't seem like an
-> outrageous thing to eventually add.
-> 
-> (Though I agree that clean/smudge filters would work, and can even
-> implement the existing working-tree-encoding feature, albeit less
-> efficiently and conveniently).
+Elijah Newren (3):
+  t6042: add testcase covering rename/add/delete conflict type
+  t6042: add testcase covering rename/rename(2to1)/delete/delete
+    conflict
+  t6042: add testcase covering long chains of rename conflicts
 
-Thanks for the suggestion Peff! 
-How about this:
+ t/t6042-merge-rename-corner-cases.sh | 245 +++++++++++++++++++++++++++
+ 1 file changed, 245 insertions(+)
 
-1) We allow users to set the encoding "auto". Example:
-
-	*.txt working-tree-encoding=auto
-
-2) We define a new variable `core.autoencoding`. By default the value is 
-UTF-8 (== no re-encoding) but user can set to any value in their Git config. 
-Example:
-
-    git config --global core.autoencoding UTF-16
-
-All files marked with the value "auto" will use the encoding defined in
-`core.autoencoding`.
-
-Would that work?
-
-@steve: Would that fix your problem?
-
-- Lars
-Unless stated otherwise above:
-IBM United Kingdom Limited - Registered in England and Wales with number 741598. 
-Registered office: PO Box 41, North Harbour, Portsmouth, Hampshire PO6 3AU
+-- 
+2.18.0.130.gd703bbb5d
 
