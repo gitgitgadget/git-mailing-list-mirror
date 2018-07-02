@@ -7,91 +7,151 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2CC8A1F516
-	for <e@80x24.org>; Mon,  2 Jul 2018 13:31:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 48A031F516
+	for <e@80x24.org>; Mon,  2 Jul 2018 13:31:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752035AbeGBNbK (ORCPT <rfc822;e@80x24.org>);
+        id S1752162AbeGBNbM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Jul 2018 09:31:12 -0400
+Received: from mail-oi0-f65.google.com ([209.85.218.65]:39801 "EHLO
+        mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751493AbeGBNbK (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 2 Jul 2018 09:31:10 -0400
-Received: from mail-oi0-f68.google.com ([209.85.218.68]:36186 "EHLO
-        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751493AbeGBNbI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Jul 2018 09:31:08 -0400
-Received: by mail-oi0-f68.google.com with SMTP id r16-v6so15871268oie.3
-        for <git@vger.kernel.org>; Mon, 02 Jul 2018 06:31:08 -0700 (PDT)
+Received: by mail-oi0-f65.google.com with SMTP id d189-v6so7648348oib.6
+        for <git@vger.kernel.org>; Mon, 02 Jul 2018 06:31:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=yYSiCMUgSwEVOAeoy0JLDh4DFvb8JftrCTcF8API16s=;
-        b=phT9HT2KvyOHJxauDNVUx+8cv+F8dPF1Jh4O00sCl9hCEAaY5OWMfUKJCE+2S2rYMk
-         wh9w79wyEUZey8IJC7XmskRSclS+iU+tVp6NgCdBHsIPJ/h8TV3rOlCO6onWXXG8atp4
-         w5himx6VEmTtAxaJBNag9sWGgU5ohz5DW8HlFmc4Hqd+DUeKyPbxg2eAUEcuMLMv4aq1
-         Ed+e+mX8Sa95AvQqqkv+4VCWW0k2QZzkjutA+F1qPZ2OvrhNTPcUaGifeAgLt+l/mRDv
-         hLYfHNpFglsL4SoKOyqybIHSl93Qshgl0LxDs1E3cdxVTiNYA/DKRBX87c6CrWyIyvZ1
-         NI8Q==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=OiCAIQ+PWUu5dupqnRSsHCiGp8OTgOL6F/ml/Z9SOi8=;
+        b=nBUPt7g9yYNGV6vqoslthPvx0DOTQpOGiKwgo/shwO70Q+OxwDQgq+dm5hzGfj2oJB
+         HhJUBKu5/5osDq3FgDrB8akmuXaTdMF0LccB+gj1O5zbI3Jl6eUorZ4XIWg1puHSLRsC
+         FV17l0iFpXMXsS3HdCGun2z7gxe14du0nS1Xl3wdmBQgeg4HBKjqMoLR4BdySsvYQBx3
+         wStkEOSLj1VyV39NYUF6hIq3Wq2OWk7yfD6vj3ygJEgdTi5Wd1JwU18kTvvih99lXC5t
+         rOKypeAEEMTLW5L4D/hY6C+/WNybalXu90UlvcsQK3Lq85iYL4CmyzGOxM1eD98II2fn
+         kYvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=yYSiCMUgSwEVOAeoy0JLDh4DFvb8JftrCTcF8API16s=;
-        b=bXV/lukYJnHtzBK+nbnEg1t5rOvNBjVWRwUDK5up9xrKjw8cxJI5DJqb+AgrWjyyH/
-         icEToT44QSj8UYBe5frQFU9XYlwhhWh2HfKR5GyCGOPIOaONGf4TRB9CS9SEnsql98P+
-         B8Rp2yn3qjaziCab/2hisIlT1B/Py81IfGrUQO2Wx3O8ftvvuBb33qQ7EnIWbB1t5AT4
-         HhrZ/cS7KVMq73xiD2+tTY3FKb9ZiKIi+b676SkYJCYp8JnuivsdxUFMYxVFrcEYl4hn
-         UrCmbY5w0XiWjEsLxDdo4qKE+gBmAdl0Mrl21slbLmh+bDxoqHhgGnSYa+fWezpaem4T
-         Pz4A==
-X-Gm-Message-State: APt69E1q+vpkDTsFpTA8OAfvxt267lDUCI4tTc9L0pN1JRTeBytlOKHa
-        pvGFLG970zT0KpRMmK2X7L6qVA==
-X-Google-Smtp-Source: AAOMgpdlm6Ap16XzQOz/A3cNimebqo8XYe8SX5iVDXLkNnEZthfoaUR3YNzmpuQEk3Xe08s8nvAIkQ==
-X-Received: by 2002:aca:f10b:: with SMTP id p11-v6mr16541643oih.80.1530538267461;
-        Mon, 02 Jul 2018 06:31:07 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=OiCAIQ+PWUu5dupqnRSsHCiGp8OTgOL6F/ml/Z9SOi8=;
+        b=qk3yHpcoMaLgB+8w6aP8WylUdn/VTGBSdc/COVJuSw/uOEwduZELXnou3Cz0ZyEfax
+         hZ8LFrJXhuYAre+khfkbyfslPSV8+sniPStKZZRLU7MyuKFVxkm7Gnp8J8hsmuoIsCtH
+         9lL1QWORWDXv1C4Z4As/2/3UC1jznz4iXY2COHMTkZ5h1QhSwl/VBlYWH7FGlPuX/+D8
+         c89SCPSaBFVIugfZZzbMb4TrBC4kiESHUzbXf1e4peVskgY5uqA5YpGsGHRIBoHXP+0s
+         B5Hbsa+g6n65UN3Dfqn5Eguy9JnEouMyMYPlyb/z0zYlwNXdFhRkc+BySopURoyig4CM
+         8x2A==
+X-Gm-Message-State: APt69E30SAjswMtYNkRWRSlH2+qxMek2i/pkOc2G35gnWaDtyEdHno0b
+        j1/vHFRU4FJSxY92xxyahUilCQ==
+X-Google-Smtp-Source: AAOMgpf5J9lNPxl9RSaVn/BSYn2+zuBs9dfvffsrs3IVCtgBoLp99ik1NIGBjz662/X712X8LXXyLg==
+X-Received: by 2002:aca:b7c3:: with SMTP id h186-v6mr14550527oif.54.1530538269910;
+        Mon, 02 Jul 2018 06:31:09 -0700 (PDT)
 Received: from tiger.attlocal.net ([2602:30a:2c28:20f0:7c1a:85e3:2ea9:5d7e])
-        by smtp.gmail.com with ESMTPSA id r16-v6sm12232366otd.43.2018.07.02.06.31.05
+        by smtp.gmail.com with ESMTPSA id r16-v6sm12232366otd.43.2018.07.02.06.31.08
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 02 Jul 2018 06:31:06 -0700 (PDT)
+        Mon, 02 Jul 2018 06:31:09 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, Elijah Newren <newren@gmail.com>
-Subject: [PATCH 0/3] Add missing rename-related corner cases for merging
-Date:   Mon,  2 Jul 2018 06:30:51 -0700
-Message-Id: <20180702133054.18638-1-newren@gmail.com>
+Subject: [PATCH 2/3] t6042: add testcase covering rename/rename(2to1)/delete/delete conflict
+Date:   Mon,  2 Jul 2018 06:30:53 -0700
+Message-Id: <20180702133054.18638-3-newren@gmail.com>
 X-Mailer: git-send-email 2.18.0.130.gd703bbb5d
+In-Reply-To: <20180702133054.18638-1-newren@gmail.com>
+References: <20180702133054.18638-1-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In merging, every rename acts as a two-piece lego in terms of conflicts.
-We have long realized that the other branch can (1) delete the source
-side of a rename, giving a rename/delete conflict, or (2) add a file in
-the way of the rename destination, giving a rename/add conflict, or (3)
-have a rename of its own touching either the same destination or source
-path, giving either a rename/rename(2to1) or rename/rename(1to2)
-conflict.  But only in one case did we ever consider chaining these
-merge-conflict lego pieces (namely with rename/rename(1to2)/add/add
-conflicts).  Add some testcases that show other ways these conflicts can
-be chained.
+If either side of a rename/rename(2to1) conflict is itself also involved
+in a rename/delete conflict, then the conflict is a little more complex;
+we can even have what I'd call a rename/rename(2to1)/delete/delete
+conflict.  (In some ways, this is similar to a rename/rename(1to2)/add/add
+conflict, as added in commit 3672c9714830 ("merge-recursive: Fix working
+copy handling for rename/rename/add/add", 2011-08-11)).  Add a testcase
+for such a conflict.
 
-In short, any rename's source side can attach to a delete or another
-rename, and any rename's destination side can attach to an add or
-another rename.
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ t/t6042-merge-rename-corner-cases.sh | 68 ++++++++++++++++++++++++++++
+ 1 file changed, 68 insertions(+)
 
-This series was spurred by Robert Dailey's report back in March of a
-rename case that git currently handles poorly:
-  https://public-inbox.org/git/CAHd499Axo7HFviUJavigTZ6BGZCkj9iOSeNVndu1oPivkPv+5Q@mail.gmail.com/
-
-This series adds a testcase covering the issue he reported, and then
-rounds things out additional testcases demonstrating other ways rename
-conflicts could be "chained" together.
-
-
-Elijah Newren (3):
-  t6042: add testcase covering rename/add/delete conflict type
-  t6042: add testcase covering rename/rename(2to1)/delete/delete
-    conflict
-  t6042: add testcase covering long chains of rename conflicts
-
- t/t6042-merge-rename-corner-cases.sh | 245 +++++++++++++++++++++++++++
- 1 file changed, 245 insertions(+)
-
+diff --git a/t/t6042-merge-rename-corner-cases.sh b/t/t6042-merge-rename-corner-cases.sh
+index 788a31451..46e1aa7df 100755
+--- a/t/t6042-merge-rename-corner-cases.sh
++++ b/t/t6042-merge-rename-corner-cases.sh
+@@ -759,4 +759,72 @@ test_expect_failure 'rad-check: rename/add/delete conflict' '
+ 	)
+ '
+ 
++# Testcase rrdd, rename/rename(2to1)/delete/delete
++#   Commit O: foo, bar
++#   Commit A: rename foo->baz, rm bar
++#   Commit B: rename bar->baz, rm foo
++#   Expected: CONFLICT (rename/rename/delete/delete), two-way merged baz
++
++test_expect_success 'rrdd-setup: rename/rename(2to1)/delete/delete conflict' '
++	test_create_repo rrdd &&
++	(
++		cd rrdd &&
++		echo foo >foo &&
++		echo bar >bar &&
++		git add foo bar &&
++		git commit -m O &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		git mv foo baz &&
++		git rm bar &&
++		git commit -m "Rename foo, remove bar" &&
++
++		git checkout B &&
++		git mv bar baz &&
++		git rm foo &&
++		git commit -m "Rename bar, remove foo"
++	)
++'
++
++test_expect_failure 'rrdd-check: rename/rename(2to1)/delete/delete conflict' '
++	(
++		cd rrdd &&
++
++		git checkout A^0 &&
++		test_must_fail git merge -s recursive B^0 >out 2>err &&
++
++		# Not sure whether the output should contain just one
++		# "CONFLICT (rename/rename/delete/delete)" line, or if it
++		# should break it into three: "CONFLICT (rename/rename)" and
++		# two "CONFLICT (rename/delete)" lines; allow for either.
++		test_i18ngrep "CONFLICT (rename/rename)" out &&
++		test_i18ngrep "CONFLICT (rename.*delete)" out &&
++		test_must_be_empty err &&
++
++		git ls-files -s >file_count &&
++		test_line_count = 2 file_count &&
++		git ls-files -u >file_count &&
++		test_line_count = 2 file_count &&
++		git ls-files -o >file_count &&
++		test_line_count = 2 file_count &&
++
++		git rev-parse >actual \
++			:2:baz :3:baz &&
++		git rev-parse >expect \
++			O:foo  O:bar  &&
++
++		test_cmp file_is_missing foo &&
++		test_cmp file_is_missing bar &&
++		# baz should have two-way merged contents of the original
++		# contents of foo and bar; check that content from both sides
++		# is present.
++		grep foo baz &&
++		grep bar baz
++	)
++'
++
+ test_done
 -- 
 2.18.0.130.gd703bbb5d
 
