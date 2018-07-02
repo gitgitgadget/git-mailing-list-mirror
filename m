@@ -2,106 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AFA571F516
-	for <e@80x24.org>; Mon,  2 Jul 2018 00:26:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 478051F516
+	for <e@80x24.org>; Mon,  2 Jul 2018 01:52:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752898AbeGBAZ4 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 1 Jul 2018 20:25:56 -0400
-Received: from mail-it0-f65.google.com ([209.85.214.65]:34006 "EHLO
-        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752862AbeGBAZC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Jul 2018 20:25:02 -0400
-Received: by mail-it0-f65.google.com with SMTP id d191-v6so597672ite.1
-        for <git@vger.kernel.org>; Sun, 01 Jul 2018 17:25:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=o/lwkXPcCadfSAGj2S9H3FPd5a6TPoADWOBjyzrCvwA=;
-        b=AdQncqmAGJZSm6AAJm311lJP8IudVJfoMIyj2YZVlJ1iYyyBMM1gtn6HCPdeBcqSCj
-         vLGnWW/iTsrBMTLM3KsgsK5GSG+BpRhi6WPsbb8JjDbpG4OoEbwKdf2gUbqOf+l6jBdE
-         KxrwqtCZ+/HpixwqIDj8Z/M58YnSofMKlE+oVwNjf5K0ICvAxzzlDt4QPwc37EpCFvxR
-         Qv3C6lEhbxAMilrIPB7DzqzOLt95EtSd5Aas72VOzxVB+FIaXCJDS1k753xGQs4/YzSJ
-         9z1WRbUrqTbrQndq9m76q+NIggzA24m39gl2QeZW2s4Qbmcp0WuQCvHqF6bpQwTbHwAU
-         fXMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :in-reply-to:references;
-        bh=o/lwkXPcCadfSAGj2S9H3FPd5a6TPoADWOBjyzrCvwA=;
-        b=WEmw25zGaebsdMAkaKA/dcrkrnI4Yhe/zdG4Jm0kRcDhGfG52uqUeHPMslmjrJpYJ3
-         XzMr6JxTC1Uy14Vyi5juZwhyQKJqrw7vLWfazDtOQuRhUpT9Qls/puPfSUq5ql73aUmv
-         au/yJawt3cDU5gFKiOTZZmWToops5xeaxsdO9oqymecRfFZ4/R2No+9e2VaRM4zzBrvm
-         mlGcI7FFb3L7YNVhwmworU2alP+No9hfuOdKk9KkljHBczcYgS4lhmeol1ozYVygi9rP
-         pG5es0YG4Us6ZbYzGqq76GO+TJHq1asB35zPv+3kmpoO0vyfRfRUPp0G79FSaWOy1H4n
-         bh8A==
-X-Gm-Message-State: APt69E34S5FtJgw+jznKkXo2f0diDbIs3UezzmY7rMcclrrDfWSjKMFZ
-        Sq2tWHe6bW0JZ6leQDwmbEAgGg==
-X-Google-Smtp-Source: AAOMgpcWcGhLL0tRiQKnD7fvKldXGniQYkC20DoP/3ti61TKZ1c8PlUE90KkfN07PN5cE55yG0Uh1Q==
-X-Received: by 2002:a24:308b:: with SMTP id q133-v6mr4607670itq.55.1530491101888;
-        Sun, 01 Jul 2018 17:25:01 -0700 (PDT)
-Received: from localhost.localdomain (user-12l2cs3.cable.mindspring.com. [69.81.51.131])
-        by smtp.gmail.com with ESMTPSA id o143-v6sm3302562itb.42.2018.07.01.17.25.00
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Sun, 01 Jul 2018 17:25:01 -0700 (PDT)
-From:   Eric Sunshine <sunshine@sunshineco.com>
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Luke Diamand <luke@diamand.org>, Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 13/25] t9001: fix broken "invoke hook" test
-Date:   Sun,  1 Jul 2018 20:23:53 -0400
-Message-Id: <20180702002405.3042-14-sunshine@sunshineco.com>
-X-Mailer: git-send-email 2.18.0.203.gfac676dfb9
-In-Reply-To: <20180702002405.3042-1-sunshine@sunshineco.com>
-References: <20180702002405.3042-1-sunshine@sunshineco.com>
+        id S932343AbeGBBw1 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 1 Jul 2018 21:52:27 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:49898 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S932102AbeGBBw0 (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 1 Jul 2018 21:52:26 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:7872:b1da:4747:5087])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3CD2560431;
+        Mon,  2 Jul 2018 01:52:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1530496342;
+        bh=ekOvKhtCVwpnaELB62tq6A50/z93R9H4XYIWOr1jxT8=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=FkuclyjmCkyC1BIZgLeM2Rb7Vi/1Y3luLyr8uJf6bEPAwvTGaxP4AdbEKdDR2em/D
+         cCuYSVjOnD2GY0RB5HHWXdr0aYO5Qpq/7jsvQmrm13q44sPwe4wyRsPW+3KOBCwGvz
+         wVWcqnZH/2vop+9qrpaTHfXNFO6s1zgF8DEQFWuf3s5/7wuuwdg//VgExhhGFCCIlg
+         O131DgdWp2Xky6H2DSDZ7Y3RZmrbgyTD+Qg7Ar4Cp0X7qWmXLMyay0GDXClFns1Cso
+         jnG1Aq3k6mQdNzLoEI8mIxpKzkxVkQ3QYCMYZNgLsv4TXiPXV/1DwAZq8fwfXiA5VF
+         86PvikA1nlMm8bB8PW45keGc2nH1ilvd7RRawlFn1WYajuDmFapT1rrbw4H39Kp0W5
+         XbPysOacJnaztbEK10XsbPauiTvcwSApf1EdBC+we89UuD0ohv6E2m1nbNAvgf8WzY
+         MAFiOcLDI4Jcf00zHQb2q7yykinv2pc3JVqAy1Tzzr80cKu34lM
+Date:   Mon, 2 Jul 2018 01:52:16 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Drew DeVault <sir@cmpwn.com>
+Cc:     git@vger.kernel.org, contact@emersion.fr
+Subject: Re: send-email: change the default value of sendmail.validate
+Message-ID: <20180702015216.GA627376@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Drew DeVault <sir@cmpwn.com>, git@vger.kernel.org,
+        contact@emersion.fr
+References: <20180629190751.GA2559@miku>
+ <20180701181546.GD7965@genre.crustytoothpaste.net>
+ <20180702001753.GA30086@homura.localdomain>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="oyUTqETQ0mS9luUI"
+Content-Disposition: inline
+In-Reply-To: <20180702001753.GA30086@homura.localdomain>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.16.0-2-amd64)
+User-Agent: Mutt/1.10.0 (2018-05-17)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This test has been dysfunctional since it was added by 6489660b4b
-(send-email: support validate hook, 2017-05-12), however, the problem
-went unnoticed due to a broken &&-chain late in the test.
 
-The test wants to verify that a non-zero exit code from the
-'sendemail-validate' hook causes git-send-email to abort with a
-particular error message. A command which is expected to fail should be
-run with 'test_must_fail', however, the test neglects to do so.
+--oyUTqETQ0mS9luUI
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Fix this problem, as well as the broken &&-chain behind which the
-problem hid.
+On Sun, Jul 01, 2018 at 08:17:53PM -0400, Drew DeVault wrote:
+> On 2018-07-01  6:15 PM, brian m. carlson wrote:
+> > Are you suggesting that we not limit lines to 998 octets?  I've seen
+> > lots of mail servers that do reject mail over 998 octets.  I've
+> > configured Postfix to do so because being strict on mail standards is a
+> > great way to stop spam.
+>=20
+> Yes, that's what I'm suggesting. We should error out later when the SMTP
+> server rejects the mail.
 
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
- t/t9001-send-email.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+I don't think it's a good idea to continue when we know we're going to
+send invalid data.  If you really want to send the email and you know
+it's safe in your environment, use --no-validate.
 
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index e80eacbb1b..776769fe0d 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -1966,11 +1966,11 @@ test_expect_success $PREREQ 'invoke hook' '
- 
- 		# Verify error message when a patch is rejected by the hook
- 		sed -e "s/add master/x/" ../0001-add-master.patch >../another.patch &&
--		git send-email \
-+		test_must_fail git send-email \
- 			--from="Example <nobody@example.com>" \
- 			--to=nobody@example.com \
- 			--smtp-server="$(pwd)/../fake.sendmail" \
--			../another.patch 2>err
-+			../another.patch 2>err &&
- 		test_i18ngrep "rejected by sendemail-validate hook" err
- 	)
- '
--- 
-2.18.0.203.gfac676dfb9
+> Also, Extended SMTP is a standard. RFC 1869.
 
+ESMTP doesn't lift the 998-octet limit.  RFC 5321 specifies ESMTP and is
+silent about line length.  RFC 5322, which defines the email message
+format, limits lines in an email message to 998 octets.  The limit is in
+the email format, rather than the ESMTP protocol.
+
+> > If that's the issue you're seeing, it might be better to either
+> > automatically encode those patches as binary patches or teach git
+> > send-email and git am how to automatically handle quoted-printable.
+>=20
+> I'm really not fond of quoted-printable. Extended SMTP has been
+> standardized for over 20 years. Assuming people don't blithly disable it
+> on their servers, we can expect it to be present on almost all mail
+> servers.
+
+I'm not bothered if we don't support pre-ESMTP servers.  I do care
+whether we produce properly formatted email messages.  Long lines
+require wrapping, and that means either base64 or quoted-printable.  For
+plain text data, quoted-printable is less likely to be filtered as spam
+than base64.  It's also easier to read with plain text tools such as
+less.
+
+I'd be willing to implement quoted-printable formatting at some point if
+that's the direction we want to go.
+
+> I don't think I've ever seen a spam email that would have been stopped
+> because it contained 998 lines. Approaches like SpamAssassin,
+> greylisting, DNSBLs, SPF/DKIM, these are much more effective.
+
+It is actually extremely effective.  Most spam-ware produces invalid
+messages, and IME almost all malformed messages are spam.  I use a
+variety of techniques, including this one and most of the others you've
+mentioned.  Other people do so as well.
+
+Regardless, a default mail server configuration on Debian rejects overly
+long lines, and there are various other systems that do so as well, so
+"just send it" isn't a viable solution.  Fixing Git so it produces valid
+data in this case seems more robust.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--oyUTqETQ0mS9luUI
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.8 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAls5hVAACgkQv1NdgR9S
+9ov+Ng//d69Ev8I0UXFcZ+IM3WW9dklrmFgBvbO5Tvh702DoxepH20kYHkBm4jKh
+33BglRV9pd92cczQ7be3Hjr3AOqxEybY+p9xd5WnxXhPZFuZ3DxOZYcoc2ofJK8+
+f0qA6We54che80oXXk+dnj7WSHqGhcJaTrWo4eA+wOYvHEDjXygTfC4cIgKTgKsW
+FdhuUO07QmufWmURxgQRmGXAcw7APvW1AZY/PqgnfyntJ+52I9Y+ggJjhD2t6FTX
+3nxZK/PgA4hmUnm0y0cNjHd3tIJNvJ/zZdHXUKdeiUOzeCx3kCezGH4r5zDSl9Hf
+Z2WJgtKecSANu/f1y6kOCkozqpzXFN0InHt2Jw98VrAUAMnJTtAwbcJjfPQz4tq5
+v5hcyJlN9eZlfWyXs1cuVNAFZXI5WmQ7XZvobcij/rEw+Kfsd2AJ4IBrkawE8Zt3
+ptGf7QIcNhEi1Qk0tz8abAKDsjpF1BF4YGvS2k+xALrxbmu8G5cHqV4CnaUa9EO2
+CacUARbnwI+/7AeilMhnTcnakRMbWdD+h8d0e8SNQDIa7AohFYRZAyhVPdAzNWz/
+0NZ3PHk2jFG+9lywMS4Oq/xZUcQSASlcd4D+aDuW7/0IHDaiVpJF8H34pPgi/Mp9
+TASThNOAfX3/KeD2Md2uj4+UZxPYuF/hohijwkzP/WI+WNJ7YUw=
+=w2kB
+-----END PGP SIGNATURE-----
+
+--oyUTqETQ0mS9luUI--
