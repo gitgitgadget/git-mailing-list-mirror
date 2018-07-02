@@ -6,47 +6,47 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 531EA1F516
-	for <e@80x24.org>; Mon,  2 Jul 2018 00:25:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 677921F516
+	for <e@80x24.org>; Mon,  2 Jul 2018 00:25:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753020AbeGBAZe (ORCPT <rfc822;e@80x24.org>);
-        Sun, 1 Jul 2018 20:25:34 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:38558 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752782AbeGBAZM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Jul 2018 20:25:12 -0400
-Received: by mail-it0-f67.google.com with SMTP id v83-v6so9852006itc.3
-        for <git@vger.kernel.org>; Sun, 01 Jul 2018 17:25:12 -0700 (PDT)
+        id S932095AbeGBAZi (ORCPT <rfc822;e@80x24.org>);
+        Sun, 1 Jul 2018 20:25:38 -0400
+Received: from mail-it0-f68.google.com ([209.85.214.68]:40152 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752945AbeGBAZL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Jul 2018 20:25:11 -0400
+Received: by mail-it0-f68.google.com with SMTP id 188-v6so9832242ita.5
+        for <git@vger.kernel.org>; Sun, 01 Jul 2018 17:25:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=6j5dHkLBwrdVvwrsoLeBmTxTHKAVWUTofQxOwYnHYcQ=;
-        b=bmfn0W0zj1aJadtCwXxAN57TmIvM85VfbS6gFKYKgf6ujIOoE/W5c7D/olbgo5Q7HU
-         E0SUfzVXWRq85yTzx5thcWbcaqbb69+pCYGdFykKnLUXsMgZxqZuadhgfTXGZGh5LlLW
-         cPgeXEnPnBr1lHNKR3qwRnnp590xMoCihKRLaJ3j2DjDnIlIwed5woiE9i7l7WJWTbeA
-         nJxtOcOXW0RRfSSep8rNnTQCeFQJGhZG+fgtN0AjnaAZjixp/eLiSJLuPNSEEgfe+NqR
-         AbCQ+Hl46QU/O1hLf73lKmJjHexZllt3+HKRLWv2DVrio7TbMJaQ2nmU1EzW41OuBnTH
-         Pacw==
+        bh=joR0FYiTMqs52HB0G8cC64SVo/EWna7AWIrHcyzf0Sk=;
+        b=h0A98IkzdV5HIxWRhO9sPaTw0fZmJZdsdZQM4vcudsDNw1WFfZ/6ryKH1mL3LJLk9K
+         cJkqpjLhynAfT5zzqmkyE+nWCa/iHFwTHWM5+Ds+V07HrRdjwSnvGbQDIz3oLXpe5obv
+         X0nsRSdv8XI04qL+rzgVht4aWy040Y0UoQM/bvHN/KZmLZt1j+ZZ9piwEy2z5IHvPrNV
+         qnI2+gnN0rFJYar0pG/RDSBwXNx4V3Id48Wy3ngaJMxlcON1A7Bxrr/HKWzVsEsHSp09
+         bSYGXFSTtUQenD8M2W5v1prB03Id6NM8MCnwfxQ2mAc2m+NrfAIajpUhHiT2v0e9D6Fx
+         ikmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
          :in-reply-to:references;
-        bh=6j5dHkLBwrdVvwrsoLeBmTxTHKAVWUTofQxOwYnHYcQ=;
-        b=U/jz7Ue6mz8ElIBg5FiEUEKLHKb6RIX+iq+C5ydKr7TsFvpbNVVZjvMRhdAkR64Dmf
-         pHG82RQJk8wmEPlT5vZhNUEKV9o6TMBxjRz0gYOrVWtMApyKqFF2rEk/dlSzbHx4nJt8
-         lmr/E3w+ms+0rUQw9Ju5lyY3kyxS5zKoS5IIwvn45xDBSIhTQbFE+svQzFWTQz6U7vli
-         4hmbI/QSaUDbr0wVXPR0X+stfpewqmtxj9R6Kr4wiyL93z0deEUuewZPheM7KhacAaP4
-         0ON+z5bkCIzweNouV2j57RMEnIi45/PwWge4XPSwt2fqGLd8oad2VpF/RFeXZMR2+wPO
-         qDeg==
-X-Gm-Message-State: APt69E2z0vLJMVRmadM0cPBMFASnrvYhbTwEhJYszjxV0MNEg6vx5V/1
-        uzXUwAmd+sratgeZA/Y0Q4mwpw==
-X-Google-Smtp-Source: AAOMgpc60/x1RPEhepEod9eufhgC2U6fBO8kNKMfKekj82WGRGn68wGdAoeVHlR2Hkma4O6oBGaFRw==
-X-Received: by 2002:a24:cb83:: with SMTP id u125-v6mr8583754itg.76.1530491111710;
-        Sun, 01 Jul 2018 17:25:11 -0700 (PDT)
+        bh=joR0FYiTMqs52HB0G8cC64SVo/EWna7AWIrHcyzf0Sk=;
+        b=V3zCUCIRy7gO4JzD9O0rJ+8J9nKFk3EywW1R+FHySwp+VlVnOiFGM1bTrT6L/k93en
+         qfTXrZoAHNPcE5gH94FFcdNNo/8i0Xrmaj7yLEaEfT81xnNlJs5hE4YRqgl4hJlmdBsM
+         3eUlEBtJrRdtav8AbNZqDHFnIDb0f8TVGznVCY1sqIcro+/wjqCx7/lLmcePlVs4KniA
+         Yd1Gul8B0XtUR7pHxmHOJd864XUTcArM2D74F39l0cri9Hpuvh32WVwnqqux5I50+aUM
+         H/qFuqx3910xBvpA1xZKSPsoC7XN+JuF/2O5ZpuRD9r71rvdmKKGOCIBKECxmOSfidCR
+         KeIQ==
+X-Gm-Message-State: APt69E10wbaEuem2kHusi5cTcjaNLjK4h8C+YMEVtnBIEBkUKwe+UsK3
+        NDA5txzfaI5nsNWJlWMx518seQ==
+X-Google-Smtp-Source: AAOMgpds8i5IKNEIrmOcfszXgMWK/FWioVo2XiZmSWo4+XggVBH/yVZiZaKj3CJJGulqo49HVdUOeg==
+X-Received: by 2002:a24:46d4:: with SMTP id j203-v6mr4650093itb.93.1530491110782;
+        Sun, 01 Jul 2018 17:25:10 -0700 (PDT)
 Received: from localhost.localdomain (user-12l2cs3.cable.mindspring.com. [69.81.51.131])
-        by smtp.gmail.com with ESMTPSA id o143-v6sm3302562itb.42.2018.07.01.17.25.10
+        by smtp.gmail.com with ESMTPSA id o143-v6sm3302562itb.42.2018.07.01.17.25.09
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Sun, 01 Jul 2018 17:25:11 -0700 (PDT)
+        Sun, 01 Jul 2018 17:25:10 -0700 (PDT)
 From:   Eric Sunshine <sunshine@sunshineco.com>
 To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
@@ -56,9 +56,9 @@ Cc:     Elijah Newren <newren@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
         Junio C Hamano <gitster@pobox.com>,
         Luke Diamand <luke@diamand.org>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 23/25] t7000-t7999: fix broken &&-chains
-Date:   Sun,  1 Jul 2018 20:24:03 -0400
-Message-Id: <20180702002405.3042-24-sunshine@sunshineco.com>
+Subject: [PATCH 22/25] t6000-t6999: fix broken &&-chains
+Date:   Sun,  1 Jul 2018 20:24:02 -0400
+Message-Id: <20180702002405.3042-23-sunshine@sunshineco.com>
 X-Mailer: git-send-email 2.18.0.203.gfac676dfb9
 In-Reply-To: <20180702002405.3042-1-sunshine@sunshineco.com>
 References: <20180702002405.3042-1-sunshine@sunshineco.com>
@@ -69,288 +69,163 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- t/t7001-mv.sh                  |  2 +-
- t/t7201-co.sh                  | 40 +++++++++++++-------------
- t/t7400-submodule-basic.sh     |  2 +-
- t/t7406-submodule-update.sh    |  6 ++--
- t/t7408-submodule-reference.sh |  2 +-
- t/t7501-commit.sh              | 52 +++++++++++++++++-----------------
- t/t7506-status-submodule.sh    | 10 +++----
- 7 files changed, 57 insertions(+), 57 deletions(-)
+ t/t6010-merge-base.sh                |  2 +-
+ t/t6029-merge-subtree.sh             | 16 ++++++++--------
+ t/t6036-recursive-corner-cases.sh    |  6 +++---
+ t/t6042-merge-rename-corner-cases.sh |  8 ++++----
+ t/t6043-merge-rename-directories.sh  |  2 +-
+ 5 files changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
-index cc3fd2baf2..9e59e5a5dd 100755
---- a/t/t7001-mv.sh
-+++ b/t/t7001-mv.sh
-@@ -509,7 +509,7 @@ test_expect_success 'moving nested submodules' '
- 		touch nested_level1 &&
- 		git init &&
- 		git add . &&
--		git commit -m "nested level 1"
-+		git commit -m "nested level 1" &&
- 		git submodule add ../sub_nested_nested &&
- 		git commit -m "add nested level 2"
- 	) &&
-diff --git a/t/t7201-co.sh b/t/t7201-co.sh
-index 8d8a63a24b..94cb039a03 100755
---- a/t/t7201-co.sh
-+++ b/t/t7201-co.sh
-@@ -528,10 +528,10 @@ test_expect_success 'checkout with --merge' '
- 	cat sample >filf &&
- 	git checkout -m -- fild file filf &&
+diff --git a/t/t6010-merge-base.sh b/t/t6010-merge-base.sh
+index aa2d360ce3..44c726ea39 100755
+--- a/t/t6010-merge-base.sh
++++ b/t/t6010-merge-base.sh
+@@ -245,7 +245,7 @@ test_expect_success 'using reflog to find the fork point' '
+ 			git commit --allow-empty -m "Derived #$count" &&
+ 			git rev-parse HEAD >derived$count &&
+ 			git checkout -B base $E || exit 1
+-		done
++		done &&
+ 
+ 		for count in 1 2 3
+ 		do
+diff --git a/t/t6029-merge-subtree.sh b/t/t6029-merge-subtree.sh
+index 3e692454a7..7d5bc78472 100755
+--- a/t/t6029-merge-subtree.sh
++++ b/t/t6029-merge-subtree.sh
+@@ -55,7 +55,7 @@ test_expect_success 'initial merge' '
+ 	git checkout -b work &&
+ 	git ls-files -s >actual &&
  	(
--		echo "<<<<<<< ours"
--		echo ourside
--		echo "======="
--		echo theirside
-+		echo "<<<<<<< ours" &&
-+		echo ourside &&
-+		echo "=======" &&
-+		echo theirside &&
- 		echo ">>>>>>> theirs"
- 	) >merged &&
- 	test_cmp expect fild &&
-@@ -549,12 +549,12 @@ test_expect_success 'checkout with --merge, in diff3 -m style' '
- 	cat sample >filf &&
- 	git checkout -m -- fild file filf &&
+-		echo "100644 $o1 0	git-gui/git-gui.sh"
++		echo "100644 $o1 0	git-gui/git-gui.sh" &&
+ 		echo "100644 $o2 0	git.c"
+ 	) >expected &&
+ 	test_cmp expected actual
+@@ -72,7 +72,7 @@ test_expect_success 'merge update' '
+ 	git pull -s subtree gui master2 &&
+ 	git ls-files -s >actual &&
  	(
--		echo "<<<<<<< ours"
--		echo ourside
--		echo "||||||| base"
--		echo original
--		echo "======="
--		echo theirside
-+		echo "<<<<<<< ours" &&
-+		echo ourside &&
-+		echo "||||||| base" &&
-+		echo original &&
-+		echo "=======" &&
-+		echo theirside &&
- 		echo ">>>>>>> theirs"
- 	) >merged &&
- 	test_cmp expect fild &&
-@@ -572,10 +572,10 @@ test_expect_success 'checkout --conflict=merge, overriding config' '
- 	cat sample >filf &&
- 	git checkout --conflict=merge -- fild file filf &&
+-		echo "100644 $o3 0	git-gui/git-gui.sh"
++		echo "100644 $o3 0	git-gui/git-gui.sh" &&
+ 		echo "100644 $o2 0	git.c"
+ 	) >expected &&
+ 	test_cmp expected actual
+@@ -88,8 +88,8 @@ test_expect_success 'initial ambiguous subtree' '
+ 	git checkout -b work2 &&
+ 	git ls-files -s >actual &&
  	(
--		echo "<<<<<<< ours"
--		echo ourside
--		echo "======="
--		echo theirside
-+		echo "<<<<<<< ours" &&
-+		echo ourside &&
-+		echo "=======" &&
-+		echo theirside &&
- 		echo ">>>>>>> theirs"
- 	) >merged &&
- 	test_cmp expect fild &&
-@@ -593,12 +593,12 @@ test_expect_success 'checkout --conflict=diff3' '
- 	cat sample >filf &&
- 	git checkout --conflict=diff3 -- fild file filf &&
+-		echo "100644 $o1 0	git-gui/git-gui.sh"
+-		echo "100644 $o1 0	git-gui2/git-gui.sh"
++		echo "100644 $o1 0	git-gui/git-gui.sh" &&
++		echo "100644 $o1 0	git-gui2/git-gui.sh" &&
+ 		echo "100644 $o2 0	git.c"
+ 	) >expected &&
+ 	test_cmp expected actual
+@@ -101,8 +101,8 @@ test_expect_success 'merge using explicit' '
+ 	git pull -Xsubtree=git-gui gui master2 &&
+ 	git ls-files -s >actual &&
  	(
--		echo "<<<<<<< ours"
--		echo ourside
--		echo "||||||| base"
--		echo original
--		echo "======="
--		echo theirside
-+		echo "<<<<<<< ours" &&
-+		echo ourside &&
-+		echo "||||||| base" &&
-+		echo original &&
-+		echo "=======" &&
-+		echo theirside &&
- 		echo ">>>>>>> theirs"
- 	) >merged &&
- 	test_cmp expect fild &&
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 401adaed32..76cf522a08 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -818,7 +818,7 @@ test_expect_success '../bar/a/b/c works with relative local path - ../foo/bar.gi
- 		cp pristine-.git-config .git/config &&
- 		cp pristine-.gitmodules .gitmodules &&
- 		mkdir -p a/b/c &&
--		(cd a/b/c; git init) &&
-+		(cd a/b/c && git init) &&
- 		git config remote.origin.url ../foo/bar.git &&
- 		git submodule add ../bar/a/b/c ./a/b/c &&
- 		git submodule init &&
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 9e0d31700e..f604ef7a72 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -865,9 +865,9 @@ test_expect_success 'submodule update places git-dir in superprojects git-dir re
- 	 (cd submodule/subsubmodule &&
- 	  git log > ../../expected
- 	 ) &&
--	 (cd .git/modules/submodule/modules/subsubmodule
-+	 (cd .git/modules/submodule/modules/subsubmodule &&
- 	  git log > ../../../../../actual
--	 )
-+	 ) &&
- 	 test_cmp actual expected
+-		echo "100644 $o3 0	git-gui/git-gui.sh"
+-		echo "100644 $o1 0	git-gui2/git-gui.sh"
++		echo "100644 $o3 0	git-gui/git-gui.sh" &&
++		echo "100644 $o1 0	git-gui2/git-gui.sh" &&
+ 		echo "100644 $o2 0	git.c"
+ 	) >expected &&
+ 	test_cmp expected actual
+@@ -114,8 +114,8 @@ test_expect_success 'merge2 using explicit' '
+ 	git pull -Xsubtree=git-gui2 gui master2 &&
+ 	git ls-files -s >actual &&
+ 	(
+-		echo "100644 $o1 0	git-gui/git-gui.sh"
+-		echo "100644 $o3 0	git-gui2/git-gui.sh"
++		echo "100644 $o1 0	git-gui/git-gui.sh" &&
++		echo "100644 $o3 0	git-gui2/git-gui.sh" &&
+ 		echo "100644 $o2 0	git.c"
+ 	) >expected &&
+ 	test_cmp expected actual
+diff --git a/t/t6036-recursive-corner-cases.sh b/t/t6036-recursive-corner-cases.sh
+index b32ff8e1db..892cf08743 100755
+--- a/t/t6036-recursive-corner-cases.sh
++++ b/t/t6036-recursive-corner-cases.sh
+@@ -72,7 +72,7 @@ test_expect_success 'merge simple rename+criss-cross with no modifications' '
+ 		git rev-parse   >actual     \
+ 			:2:three   :3:three &&
+ 		git hash-object >>actual    \
+-			three~HEAD three~R2^0
++			three~HEAD three~R2^0 &&
+ 		test_cmp expect actual
  	)
  '
-@@ -886,7 +886,7 @@ test_expect_success 'submodule update properly revives a moved submodule' '
- 	 git commit -am "pre move" &&
- 	 H2=$(git rev-parse --short HEAD) &&
- 	 git status | sed "s/$H/XXX/" >expect &&
--	 H=$(cd submodule2; git rev-parse HEAD) &&
-+	 H=$(cd submodule2 && git rev-parse HEAD) &&
- 	 git rm --cached submodule2 &&
- 	 rm -rf submodule2 &&
- 	 mkdir -p "moved/sub module" &&
-diff --git a/t/t7408-submodule-reference.sh b/t/t7408-submodule-reference.sh
-index 08d9add05e..34ac28c056 100755
---- a/t/t7408-submodule-reference.sh
-+++ b/t/t7408-submodule-reference.sh
-@@ -148,7 +148,7 @@ test_expect_success 'preparing second superproject with a nested submodule plus
- 		cd supersuper &&
- 		echo "I am super super." >file &&
- 		git add file &&
--		git commit -m B-super-super-initial
-+		git commit -m B-super-super-initial &&
- 		git submodule add "file://$base_dir/super" subwithsub &&
- 		git commit -m B-super-super-added &&
- 		git submodule update --init --recursive &&
-diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
-index 282ff42331..51646d8019 100755
---- a/t/t7501-commit.sh
-+++ b/t/t7501-commit.sh
-@@ -411,8 +411,8 @@ test_expect_success 'sign off (1)' '
- 	git commit -s -m "thank you" &&
- 	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
- 	(
--		echo thank you
--		echo
-+		echo thank you &&
-+		echo &&
- 		git var GIT_COMMITTER_IDENT |
- 		sed -e "s/>.*/>/" -e "s/^/Signed-off-by: /"
- 	) >expected &&
-@@ -430,9 +430,9 @@ test_expect_success 'sign off (2)' '
- $existing" &&
- 	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
- 	(
--		echo thank you
--		echo
--		echo $existing
-+		echo thank you &&
-+		echo &&
-+		echo $existing &&
- 		git var GIT_COMMITTER_IDENT |
- 		sed -e "s/>.*/>/" -e "s/^/Signed-off-by: /"
- 	) >expected &&
-@@ -450,9 +450,9 @@ test_expect_success 'signoff gap' '
- $alt" &&
- 	git cat-file commit HEAD | sed -e "1,/^\$/d" > actual &&
- 	(
--		echo welcome
--		echo
--		echo $alt
-+		echo welcome &&
-+		echo &&
-+		echo $alt &&
- 		git var GIT_COMMITTER_IDENT |
- 		sed -e "s/>.*/>/" -e "s/^/Signed-off-by: /"
- 	) >expected &&
-@@ -470,11 +470,11 @@ We have now
- $alt" &&
- 	git cat-file commit HEAD | sed -e "1,/^\$/d" > actual &&
- 	(
--		echo welcome
--		echo
--		echo We have now
--		echo $alt
--		echo
-+		echo welcome &&
-+		echo &&
-+		echo We have now &&
-+		echo $alt &&
-+		echo &&
- 		git var GIT_COMMITTER_IDENT |
- 		sed -e "s/>.*/>/" -e "s/^/Signed-off-by: /"
- 	) >expected &&
-@@ -491,11 +491,11 @@ non-trailer line
- Myfooter: x" &&
- 	git cat-file commit HEAD | sed -e "1,/^\$/d" > actual &&
- 	(
--		echo subject
--		echo
--		echo non-trailer line
--		echo Myfooter: x
--		echo
-+		echo subject &&
-+		echo &&
-+		echo non-trailer line &&
-+		echo Myfooter: x &&
-+		echo &&
- 		echo "Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>"
- 	) >expected &&
- 	test_cmp expected actual &&
-@@ -508,10 +508,10 @@ non-trailer line
- Myfooter: x" &&
- 	git cat-file commit HEAD | sed -e "1,/^\$/d" > actual &&
- 	(
--		echo subject
--		echo
--		echo non-trailer line
--		echo Myfooter: x
-+		echo subject &&
-+		echo &&
-+		echo non-trailer line &&
-+		echo Myfooter: x &&
- 		echo "Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>"
- 	) >expected &&
- 	test_cmp expected actual
-@@ -524,10 +524,10 @@ test_expect_success 'multiple -m' '
- 	git commit -m "one" -m "two" -m "three" &&
- 	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
- 	(
--		echo one
--		echo
--		echo two
--		echo
-+		echo one &&
-+		echo &&
-+		echo two &&
-+		echo &&
- 		echo three
- 	) >expected &&
- 	test_cmp expected actual
-diff --git a/t/t7506-status-submodule.sh b/t/t7506-status-submodule.sh
-index b4b74dbe29..943708fb04 100755
---- a/t/t7506-status-submodule.sh
-+++ b/t/t7506-status-submodule.sh
-@@ -193,9 +193,9 @@ test_expect_success 'status with added and untracked file in modified submodule
+@@ -148,7 +148,7 @@ test_expect_success 'merge criss-cross + rename merges with basic modification'
+ 		git rev-parse   >actual     \
+ 			:2:three   :3:three &&
+ 		git hash-object >>actual    \
+-			three~HEAD three~R2^0
++			three~HEAD three~R2^0 &&
+ 		test_cmp expect actual
+ 	)
+ '
+@@ -228,7 +228,7 @@ test_expect_success 'git detects differently handled merges conflict' '
+ 			D:new_a  E:new_a &&
+ 		git rev-parse   >actual     \
+ 			:2:new_a :3:new_a &&
+-		test_cmp expect actual
++		test_cmp expect actual &&
  
- test_expect_success 'setup .git file for sub' '
- 	(cd sub &&
--	 rm -f new-file
-+	 rm -f new-file &&
- 	 REAL="$(pwd)/../.real" &&
--	 mv .git "$REAL"
-+	 mv .git "$REAL" &&
- 	 echo "gitdir: $REAL" >.git) &&
- 	 echo .real >>.gitignore &&
- 	 git commit -m "added .real to .gitignore" .gitignore
-@@ -209,12 +209,12 @@ test_expect_success 'status with added file in modified submodule with .git file
+ 		git cat-file -p B:new_a >ours &&
+ 		git cat-file -p C:new_a >theirs &&
+diff --git a/t/t6042-merge-rename-corner-cases.sh b/t/t6042-merge-rename-corner-cases.sh
+index 1cbd946fc2..661b633478 100755
+--- a/t/t6042-merge-rename-corner-cases.sh
++++ b/t/t6042-merge-rename-corner-cases.sh
+@@ -352,7 +352,7 @@ test_expect_success 'rename/directory conflict + content merge conflict' '
+ 			base:file   left-conflict:newfile  right:file &&
+ 		git rev-parse >actual                                 \
+ 			:1:newfile  :2:newfile             :3:newfile &&
+-		test_cmp expect actual
++		test_cmp expect actual &&
  
- test_expect_success 'status with a lot of untracked files in the submodule' '
- 	(
--		cd sub
-+		cd sub &&
- 		i=0 &&
- 		while test $i -lt 1024
- 		do
--			>some-file-$i
--			i=$(( $i + 1 ))
-+			>some-file-$i &&
-+			i=$(( $i + 1 )) || exit 1
- 		done
- 	) &&
- 	git status --porcelain sub 2>err.actual &&
+ 		test_path_is_file newfile/realfile &&
+ 		test_path_is_file newfile~HEAD
+@@ -580,7 +580,7 @@ test_expect_failure 'detect conflict with rename/rename(1to2)/add-source merge'
+ 			C:a   A:a   B:b   C:C &&
+ 		git rev-parse >actual          \
+ 			:3:a  :1:a  :2:b  :3:c &&
+-		test_cmp expect actual
++		test_cmp expect actual &&
+ 
+ 		test_path_is_file a &&
+ 		test_path_is_file b &&
+@@ -680,13 +680,13 @@ test_expect_success 'rename/rename/add-dest merge still knows about conflicting
+ 			A:a   C:b   B:b   C:c   B:c &&
+ 		git rev-parse >actual                \
+ 			:1:a  :2:b  :3:b  :2:c  :3:c &&
+-		test_cmp expect actual
++		test_cmp expect actual &&
+ 
+ 		git rev-parse >expect               \
+ 			C:c     B:c     C:b     B:b &&
+ 		git hash-object >actual                \
+ 			c~HEAD  c~B\^0  b~HEAD  b~B\^0 &&
+-		test_cmp expect actual
++		test_cmp expect actual &&
+ 
+ 		test_path_is_missing b &&
+ 		test_path_is_missing c
+diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-directories.sh
+index 2e28f2908d..4a71f17edd 100755
+--- a/t/t6043-merge-rename-directories.sh
++++ b/t/t6043-merge-rename-directories.sh
+@@ -3583,7 +3583,7 @@ test_expect_success '11d-check: Avoid losing not-uptodate with rename + D/F conf
+ 		grep -q stuff z/c &&
+ 		test_seq 1 10 >expected &&
+ 		echo stuff >>expected &&
+-		test_cmp expected z/c
++		test_cmp expected z/c &&
+ 
+ 		git ls-files -s >out &&
+ 		test_line_count = 4 out &&
 -- 
 2.18.0.203.gfac676dfb9
 
