@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF49D1F516
-	for <e@80x24.org>; Mon,  2 Jul 2018 17:44:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ECB131F516
+	for <e@80x24.org>; Mon,  2 Jul 2018 17:53:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752816AbeGBRoa (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Jul 2018 13:44:30 -0400
-Received: from mail-yb0-f182.google.com ([209.85.213.182]:41789 "EHLO
-        mail-yb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752067AbeGBRo3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Jul 2018 13:44:29 -0400
-Received: by mail-yb0-f182.google.com with SMTP id s8-v6so1785763ybe.8
-        for <git@vger.kernel.org>; Mon, 02 Jul 2018 10:44:28 -0700 (PDT)
+        id S1753130AbeGBRxV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Jul 2018 13:53:21 -0400
+Received: from mail-yw0-f195.google.com ([209.85.161.195]:43057 "EHLO
+        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752808AbeGBRxV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Jul 2018 13:53:21 -0400
+Received: by mail-yw0-f195.google.com with SMTP id l189-v6so563564ywb.10
+        for <git@vger.kernel.org>; Mon, 02 Jul 2018 10:53:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=ZBMk5ZQWiVwPs2n6UdHp6soK3jGTj7U3EfDd17Hg7h0=;
-        b=WdHR7tsQe84kHSSD0G9SkZCzRARoTA9NBq4wGQOcfyQdqxXOc8zpoiy9PVK4q8i8Qj
-         fQGkbh1TkGmyr2aCDOZW6h26L49DBA08NtB9LghsoKEiP37oBTKImMYMM+of0fVSzisr
-         Ge8640iosXHYDswhTR6j7UX0gxEP3Zrk7ElFiqaJEqZkjYKDmjGjKXLSHmQft4C7w4qj
-         g64egS058IRIV+mSz5Hj5RD6RAb0rY69/zhcjTeAcGaBkkvXXOWjJkvW/1b8Py5F89hH
-         Fw5nh8xYMmHAa/F2ORPrqoUU82Nn/IsGTME/19uAf+m5r2SzqHP53cbzlKaiLPG+GFtd
-         su6Q==
+        bh=wCQJU/H21G4jhhYBR3zxtQA3mLyWdVDHaqF/Nl3327s=;
+        b=c/gbpYhFz+SszveDnwFZt7Eg5I7t6YP4TNOIqVkoyIU4/tPXbZpiRZ8uRB1FJ1qci1
+         /hHNlfUlWFJNxI1YOU59U9XG9MoB428qD4367QJahrmV1fexdmmMUPcLGooC4jtBMfXc
+         9Z5Ykz5R0zLYJiqMIQL4CeAJr9yTNU4X9XeVg9ggk4ZKsaN3D/3ztQjWgxCByL4X0j7R
+         4UIVk7LMF7ZjOsLSqUklb1KcxsoaE4bPm/d3mx/I7A3effsBEGapKdKbTf+rjKnoqZCx
+         dueKtm1EOwXl+L1vWvLq2FlJy3TAbkF2JGlgfW5OzQYdCIW0oNTElOvNd07OFfFNCfdQ
+         DX9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=ZBMk5ZQWiVwPs2n6UdHp6soK3jGTj7U3EfDd17Hg7h0=;
-        b=fyQ3Y5uaM6cikRIOxphbfMr7X7VXEqAmB83SR6gAEij36teaS7yA2IleqD72JwtJ53
-         PFl+LooEqifGy6B/qrdLkyUuH+7IINB2nd4C4F1xIYZH0KrpDjETBcTprJQ+YTeDAOBm
-         MKn8UnAVpCrnkYCoVAG5q3Ylq/y4u66DIXrV/YwVekM0YJBF6SQZ82HwTd1dXqHAA771
-         O4sMXcEFCH5xoT9WWVZDNsSxx/dO79ehRPNgzE3KbxOx9vnxfe3pKVQdrMKb2sIDRfbU
-         6ig/5oYG64YhvUMVJ2Bd7bG3ibziIF3R4LIQ4in9sbv7INsvVZ9t4XoPS3/rfgsh0V7q
-         X5lA==
-X-Gm-Message-State: APt69E0r6y4/Va/v/xM35KTEfhLIXl6DMeoHcffL8dLWM47QZWqJrKYd
-        mk7Js2gkKZDWOXSexvBUsoeLfG7VtMJNQWvMJ8pLVQ==
-X-Google-Smtp-Source: ADUXVKKI7aCZIPmQzuMug5VBEdjnO5nt152dWUTQBC34En0k5C5ZkApK+Wv+csQCM+7+79+CwM45XtMMzL6BWCnOLvE=
-X-Received: by 2002:a25:b091:: with SMTP id f17-v6mr13388451ybj.167.1530553467546;
- Mon, 02 Jul 2018 10:44:27 -0700 (PDT)
+        bh=wCQJU/H21G4jhhYBR3zxtQA3mLyWdVDHaqF/Nl3327s=;
+        b=TKDBjkGZ2R9yAe+5/O5SUq5pNEZ08pA1HfPC+vLhQLTZOfGUqTQlIgws5Vlrz1XkMO
+         8EMJRdKBNKMKvJj6s90NS5VeNAAiRYNItoijgqoZYkGXpWGchd8G5IVuYrQ2tXoOrQ3G
+         feLElftLmOJhOrg06cFIxOyC57jgeBYS1EPOc0Ir0rwHi5OMBKC/MqhfTtPChR+3r0JV
+         vwXTkeiZWe3DOeGZcwQMrWwGvOYfdFP/ZlWvzjZPWnnVaYX4C1/4HONMfi50Xz7M4Duj
+         ECqlEMsKMdXpv+xo/anQCyVdEWkOd3Z31lg23UxCbeE+58Vd75PrEO1hjLmW4I6pdiEL
+         Qdjw==
+X-Gm-Message-State: APt69E0XFYp75Ar5gy4bJ9hFHlzh+6FgFEJf1jWZQMqBK1d1yxN7p4Yy
+        ammVa6ZdtDBLM0ulYgXgTZdIKG95iSkF2V2WiaEf7Q==
+X-Google-Smtp-Source: AAOMgpdEQ+kUXlxywH7cDkmPt0f9RIC7q9EF776PcLsv+UGzWebNkSGK+AIkSjNKpivXAEZpqKO/5qadkYZiDufZmwM=
+X-Received: by 2002:a81:3758:: with SMTP id e85-v6mr4812993ywa.340.1530554000263;
+ Mon, 02 Jul 2018 10:53:20 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180702002405.3042-1-sunshine@sunshineco.com> <20180702002405.3042-2-sunshine@sunshineco.com>
-In-Reply-To: <20180702002405.3042-2-sunshine@sunshineco.com>
+References: <20180702002405.3042-1-sunshine@sunshineco.com> <20180702002405.3042-3-sunshine@sunshineco.com>
+In-Reply-To: <20180702002405.3042-3-sunshine@sunshineco.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 2 Jul 2018 10:44:16 -0700
-Message-ID: <CAGZ79kah+mFH0YZ1L0R+f=fRVku1mesigm86oHTHKRRFc3y+0A@mail.gmail.com>
-Subject: Re: [PATCH 01/25] t: use test_might_fail() instead of manipulating
- exit code manually
+Date:   Mon, 2 Jul 2018 10:53:09 -0700
+Message-ID: <CAGZ79kamB-bid=RhDj1_vviHtD=5KCWaRJAFXh1RtwGdXgPTWA@mail.gmail.com>
+Subject: Re: [PATCH 02/25] t: use test_write_lines() instead of series of
+ 'echo' commands
 To:     Eric Sunshine <sunshine@sunshineco.com>
 Cc:     git <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>,
@@ -66,35 +66,34 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> diff --git a/t/t4012-diff-binary.sh b/t/t4012-diff-binary.sh
-> index 0a8af76aab..6579c81216 100755
-> --- a/t/t4012-diff-binary.sh
-> +++ b/t/t4012-diff-binary.sh
-> @@ -102,10 +102,8 @@ test_expect_success 'apply binary patch' '
+On Sun, Jul 1, 2018 at 5:24 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
 >
->  test_expect_success 'diff --no-index with binary creation' '
->         echo Q | q_to_nul >binary &&
-> -       (: hide error code from diff, which just indicates differences
-> -        git diff --binary --no-index /dev/null binary >current ||
-> -        true
-> -       ) &&
-> +       # hide error code from diff, which just indicates differences
-> +       test_might_fail git diff --binary --no-index /dev/null binary >current &&
+> These tests employ a noisy subshell (with missing &&-chain) to feed
+> input into Git commands or files:
+>
+>     (echo a; echo b; echo c) | git some-command ...
+>
+> Simplify by taking advantage of test_write_lines():
+>
+>     test_write_lines a b c | git some-command ...
 
-I am not sure why we need to be non-deterministic here, i.e. I would rather
-test for success or non-success error code and not just *any* error code.
+...
+and as piped commands only return the exit code of
+the last command in the piping structure this is ok,
+as all git commands are the last command here.
 
-This code was introduced in
-71b989e7dd1 (fix bogus "diff --git" header from "diff --no-index", 2008-10-05)
-whereas the test_must_fail was introduced in
-74359821020 (tests: introduce test_must_fail, 2008-02-28).
-However this code was authored without Junios involvement
-(he was AFK 2008-09-23..2008-10-08), so
-maybe test_must_fail was not so popular back then?
+If any of the non-last commands are failing (which
+are the test_write_lines after this patch), we would
+only care if the git command fails any way, as there is
+no benefit in testing the correctness of test_write_lines.
 
-While I think this patch is a strict improvement for the test suite,
-I do wonder if we can tighten the exit code check here (maybe in
-a follow up series?).
+This is why we chose to go this route instead of
+writing the output to a file and then taking the file
+as input for the git command. Although this alternative
+might be easier to debug, we choose to not use that
+as it would complicate this patch even more and these
+tests did not need debugging for a long time.
 
-Thanks,
+Makes sense.
+
 Stefan
