@@ -2,66 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D836E1F516
-	for <e@80x24.org>; Mon,  2 Jul 2018 21:20:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27BBF1F516
+	for <e@80x24.org>; Mon,  2 Jul 2018 21:23:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932126AbeGBVU5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Jul 2018 17:20:57 -0400
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:41415 "EHLO
+        id S1753087AbeGBVXP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Jul 2018 17:23:15 -0400
+Received: from mail-yw0-f194.google.com ([209.85.161.194]:39737 "EHLO
         mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932113AbeGBVU4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Jul 2018 17:20:56 -0400
-Received: by mail-yw0-f194.google.com with SMTP id j5-v6so7163021ywe.8
-        for <git@vger.kernel.org>; Mon, 02 Jul 2018 14:20:55 -0700 (PDT)
+        with ESMTP id S1752769AbeGBVXO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Jul 2018 17:23:14 -0400
+Received: by mail-yw0-f194.google.com with SMTP id 81-v6so7170173ywb.6
+        for <git@vger.kernel.org>; Mon, 02 Jul 2018 14:23:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=/HjNNXdV03wMFKtSBd6YVACslvPnXW1xZQup54lXm9I=;
+        b=fdOzJfvbc9GLY22hqswA6OxVdjyRpzY3nvmqqlv1qaWKxNXLno+qUvEvNSJ6BVm309
+         AIWEyEqifq9E+TLqNXMj8N1XZK9h9i4azYOSvAVR+fzInS9RMDnmB5sjqcXsgKDO5zZ7
+         fMXRL0QJ/9ZpMkv+idHJHWFRvteIRkma5KqO5+84K+YhgdAw5Q+5YDXBhSXCZwNtuhNT
+         9WaKJIBrzJrGfJ8qcIj4IBAO8+een8GJgiRj3awBfXfMdhcCBQfrpU6+p4v3AZnzOk7N
+         XhoXki4g8YKQzqAU7SPmiLexU4njcbiTQC8PtvLLaqhkij7Z0qEPN/vCKCxoX/8oErzS
+         Jl1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=vTb17z0hCi4AOo2Fn/fxcIDEwdOjJqiokRR4KxzIl+I=;
-        b=gK0E2YzYmU8JWQH81xb1/UJeQJQbi190/w2pfwJ+m7tt1Rdk/vVGnwgdjxDcy6t7Ql
-         P5RwZ5C17j07gnN8OS2sTGPhijo+5DjhEXICLR3TNoHegWe5djjDJtXOD1B7xldFAA+e
-         V9L3nTU6xiEmxuUrWrZc6cge31pcm4upqT88B/GsWtS1KcOy/EHZem/14VCLq8NI19P+
-         YU0bVXGEGDejuUoHQC4sHMHlYtr2LW0PG/j/wb7bLOKvuyDviS8wTo4mLDcXF19IHLJ1
-         j1zOMhHAv1hbtlh2hdSepKPvesEYMtkse+q0i3yRJJaMbftAPFo3m0FC1s9kdfIwmfOd
-         deHQ==
-X-Gm-Message-State: APt69E3sQr3+9LiYmK1OEj6j5uuiu8EYDCquFmOhQ6mZYruJpZnriJLi
-        yX737Nr8acnhl5MfTz7jbdzPWTYbC/HS+qpeK/c=
-X-Google-Smtp-Source: AAOMgpdn5jvGdcuVg4QqsFBMJUGiUbcCfmfJSJi5o9QD/P9Zoz3byzSfgqie37AEkYcSzDghIouplhXxHT9d68NBTu8=
-X-Received: by 2002:a81:4153:: with SMTP id f19-v6mr5952010ywk.418.1530566454806;
- Mon, 02 Jul 2018 14:20:54 -0700 (PDT)
+        bh=/HjNNXdV03wMFKtSBd6YVACslvPnXW1xZQup54lXm9I=;
+        b=PzBw13L9Y9oOrQbsg+HgXotwegIjufwXGEtBVn93kInDKITKquWg7E2B7/MQCRFy23
+         0roA1VWyefOVLaIoecGzj3/4k499FeZnJYfKrUFPcQD5zXPZEEdYMXiQqbpRr6hGGelV
+         esOyGb8qHV2v4RalcV2CtjzEbFNlgIPFnJhRRwCCLciTrJdNqgjc5m7DE7WVF8rmNz3Z
+         i84wtt9GGwPhvxlbeZ07WDj6FGv1dfQQKRWJxmcAGuaK8/jpsvbmbgrSXHE/0gnbPtjs
+         YM4sGElsGRIxVAIn3lr6BDgyuP+CpL8Qtrc2rzMY4/HC1CSmjaQfzfMb6dc3Hmu0Qhip
+         Aalw==
+X-Gm-Message-State: APt69E24AGUvnMVNldwaZJZzGw3HFlQPgJuo8odLht5a20MKO7y+Gxhr
+        swsmuaxldD3SHuEnkgyyUuLubKHNdgGrwLoGdv4m8g==
+X-Google-Smtp-Source: AAOMgpfz0Psx0DF4psR1+98tIWcCUNJVj8+2HdhMmbjz9lEnukL8NDb2hZ1VoAVLcWAJfjJjGpLd9Tij5zXOJMcUSk4=
+X-Received: by 2002:a0d:f442:: with SMTP id d63-v6mr13307719ywf.238.1530566593317;
+ Mon, 02 Jul 2018 14:23:13 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180702002405.3042-1-sunshine@sunshineco.com> <CAGZ79kZXhZyhDL_+cFK6BzL-RL7Ac0zKeKux97v9shc+qm+nOA@mail.gmail.com>
-In-Reply-To: <CAGZ79kZXhZyhDL_+cFK6BzL-RL7Ac0zKeKux97v9shc+qm+nOA@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 2 Jul 2018 17:20:42 -0400
-Message-ID: <CAPig+cTUZ__JgvW4WZZPY0BG+jDgXS8FTU5pSghr0XUeObKDCQ@mail.gmail.com>
-Subject: Re: [PATCH 00/25] fix buggy tests, modernize tests, fix broken &&-chains
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Git List <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
+References: <20180628135932.225288-1-jamill@microsoft.com> <20180702193745.8940-1-jamill@microsoft.com>
+ <20180702193745.8940-3-jamill@microsoft.com>
+In-Reply-To: <20180702193745.8940-3-jamill@microsoft.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 2 Jul 2018 14:23:02 -0700
+Message-ID: <CAGZ79kYDyGg8z5FiYNXWAr+wT3r6Qm2Y_hh=o7xEKRkonO8Jaw@mail.gmail.com>
+Subject: Re: [PATCH v6 2/8] read-cache: teach make_cache_entry to take object_id
+To:     Jameson Miller <jamill@microsoft.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Luke Diamand <luke@diamand.org>, Jeff King <peff@peff.net>
+        Duy Nguyen <pclouds@gmail.com>, Ben Peart <peartben@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 2, 2018 at 2:27 PM Stefan Beller <sbeller@google.com> wrote:
-> On Sun, Jul 1, 2018 at 5:24 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > This series fixes several buggy tests which went undetected due to
-> > broken &&-chains in subshells, modernizes some tests to take advantage
-> > of test functions (test_might_fail(), test_write_lines(), etc.), and
-> > fixes a lot of broken &&-chains in subshells. [...]
+On Mon, Jul 2, 2018 at 12:49 PM Jameson Miller <jamill@microsoft.com> wrote:
 >
-> I think it is good to include it as is and build on top if needed. I had some
-> comments on the earlier part of the series, but that is really just the cherry
-> on top of the cake.
+> Teach make_cache_entry function to take object_id instead of a SHA-1.
 
-Thanks for the review comments.
+This repeats the subject line?
+
+Sign off missing.
