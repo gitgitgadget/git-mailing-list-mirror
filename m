@@ -2,97 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AEBF91F660
-	for <e@80x24.org>; Tue,  3 Jul 2018 13:06:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C0F8E1F660
+	for <e@80x24.org>; Tue,  3 Jul 2018 13:17:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753055AbeGCNGS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Jul 2018 09:06:18 -0400
-Received: from mout.gmx.net ([212.227.15.19]:47443 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752832AbeGCNGK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Jul 2018 09:06:10 -0400
-Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M2Ldk-1gSIZN2kTM-00s91q; Tue, 03
- Jul 2018 15:06:05 +0200
-Date:   Tue, 3 Jul 2018 15:05:49 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: js/branch-diff, was Re: What's cooking in git.git (Jun 2018, #07;
- Thu, 28)
-In-Reply-To: <xmqqd0wawpwy.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1807031504130.75@tvgsbejvaqbjf.bet>
-References: <xmqqd0wawpwy.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:5nLCAqvgtvY2BkhaxAnCFfseShmDNwtKCbqqLxHyL4WYVbDm+Cd
- fA3ikTDhyEr5ee08ivrIAlSYndKXmPI0Fqkl31ZHLUBf8DS/IHR5V6btz5e/VYHeDniFXik
- aet/q9GlfpbKytwi2AFHQwBETO+qCZY/vygbYZdPeXbhiqIelB5sHA36ouz5MeZn7Wsws4p
- 4gvUwd33JvVWxveqKdCcg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:re34JB0BBc4=:CUNGLf1KnRNStk+WuHAk3a
- QQLQ2m2n4W41GG2BJQsEpKSE0CDDJ+WG3jA6WKpdkR/94SQARL9iUD+ZL858fqA79dflbP1gd
- V43h9n9KqzE+y8xzhKb9vOfgEBonLBXUq2KX3mUjjnP5Iy80ifQG782cGmbqBunc/goSubw35
- LWShE+TbLjff0OFSUj63ovjZteWQhMtpM/fs6NP5934KiglxO2LIMSDqDDSe0UxOjBibYEuiE
- 439x5ehBHjNRASIt8pCuNgvbBsQV7rIlUA9D1nI0BPZjFNY+RaXPHkf5MpcMdZlxBcSdCn6vk
- EWqjvk0NpjF1lJtceq/PC3h/3r8GfjXgpkVTdgbvwGXWc/KFyJBB+POrztuq/lyk8geJ8SRUV
- 7PNJ65Pr21ck3c4ptHQsRnUFmGW1GNG2nXixJue19APAhUEMRAl/DDMT9H2FeSWJYLIHzpvN3
- +4cVoEH0VNPm3l5B2qYUuCunjJjCfbunejWh5VtwZ4wfao7NpCPfv5+Q6vs7fESPPykF5ZwU+
- Jg9/WGRBEgH3bZ6ztmaCeO1TctJLrarEqvT61XuChdoXjsQbWOiGaaTPve5czeXORxzwuq4E3
- lyX/oeWO/X9NfJzTApOIZ4vIMC77X4cMkQIwkAeixCYUhDTLKiPZ834Buqn/FBXGR9OZnZM7A
- 3duB5EnkeuM6LDJjyHxpQvZlwGGFBn7lwUgjJ3VF4Yn9ccwklrSsznvCPrcjZhk4/Uodwso1R
- 06FUd0lZLXFhsARkzDO9ka0r5PO9daWyUeO7DxRyT+n4k0tHcuxoPJY55RORLgpAUlVX7yahS
- rFNExT9
+        id S1753236AbeGCNRS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Jul 2018 09:17:18 -0400
+Received: from mail-pf0-f173.google.com ([209.85.192.173]:43883 "EHLO
+        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752494AbeGCNRR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Jul 2018 09:17:17 -0400
+Received: by mail-pf0-f173.google.com with SMTP id y8-v6so1014859pfm.10
+        for <git@vger.kernel.org>; Tue, 03 Jul 2018 06:17:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=whileimautomaton-net.20150623.gappssmtp.com; s=20150623;
+        h=sender:from:to:cc:subject:date:message-id;
+        bh=eH7Z5KKZGT2APIsaWXAoY+Sr2PyIDBCiuq+sKTAVXOI=;
+        b=Y7H63Fl1xHXJUvkzp0unj7xwXtHebuyRBuCC3GzIZQFz63yACZ+676n3pQ2T0n1C6d
+         lI7i9gGbYkOx+3+TNtwOMA5EdQLpZ34NicTS8Co56VE3f5HQ+Rz0sXJJURhKeuFK4a8U
+         kA90M53480glGWZLyBSjGVxbY6G8KQNBzBSt4Wro2M39aZaqJK+ZxZTT9jUhc8EWDZOB
+         CiO0alvKGOo7FqedRpUmitFlojRm8XcqgT6IGN+NPOjUp2ve3eSsA1zEHctT/7hTflP/
+         om+ufaXo2GnO08ngb+Pbv29hZ7ZdvR1I6r4kPIAAsSwxuEzlP5hchLR3u6AWNGNBtOJH
+         zIog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id;
+        bh=eH7Z5KKZGT2APIsaWXAoY+Sr2PyIDBCiuq+sKTAVXOI=;
+        b=BGqa7Am1hycm1zfumj7y/9JgKFTfKdBaK1vwB2CP7+l4dMURHC1L/QhP+7rSV+bL0C
+         lzSSw59CYWzlcoppiGkjKMNDDE5WBdH3vIcxaRgG2RvIjB/vLOeg8cwhxKznoMo/U11l
+         5tsYidFAlumSXlwdiBr8IiTDZ5YpAtQJ5eOhw7Sqbm74L/Y+mX6HSeU6A4q0rpcr7tLW
+         dKW3WE5uoZ0aUDBguqUkvRYNLzk3pTl7qDd380MbTo01lG+g+Hm3K4Q/i/N15e0u2umY
+         H50mUoNSPYaDxw+93bfoQoFKOMP1s+4CYGKuLdzzwhGy16hWQXduivr1sXPEL8YYM1TF
+         z8Nw==
+X-Gm-Message-State: APt69E2Ybt9HVhKoyVYZK9sIU+1B6v4wa6JktTDgN7HyVnyH6jBioL/D
+        cmsYqFOBOYHbd9ik5TtkAF7d9RM1thbBKQ==
+X-Google-Smtp-Source: ADUXVKLmnE/Yguz4KW+LQHVRgV6ySgZYsod5lQ+aA9fTpqWr3FGF4C0m3pqXo0P09uc1sPa5YOScYA==
+X-Received: by 2002:a63:6092:: with SMTP id u140-v6mr25373150pgb.433.1530623837006;
+        Tue, 03 Jul 2018 06:17:17 -0700 (PDT)
+Received: from localhost.localdomain ([150.249.215.106])
+        by smtp.gmail.com with ESMTPSA id 14-v6sm3664730pft.10.2018.07.03.06.17.15
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Tue, 03 Jul 2018 06:17:16 -0700 (PDT)
+From:   Kana Natsuno <dev@whileimautomaton.net>
+To:     git@vger.kernel.org
+Cc:     Kana Natsuno <dev@whileimautomaton.net>
+Subject: [PATCH 0/2] userdiff: support new keywords in PHP hunk header
+Date:   Tue,  3 Jul 2018 22:15:38 +0900
+Message-Id: <20180703131540.60789-1-dev@whileimautomaton.net>
+X-Mailer: git-send-email 2.10.1 (Apple Git-78)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Recent version of PHP supports interface, trait, abstract class and
+final class.  This patch fixes the PHP hunk header regexp to support
+all of these keywords.
 
-On Thu, 28 Jun 2018, Junio C Hamano wrote:
+Kana Natsuno (2):
+  t4018: add missing test cases for PHP
+  userdiff: support new keywords in PHP hunk header
 
-> * js/branch-diff (2018-05-16) 19 commits
->  - fixup! Add a function to solve least-cost assignment problems
->  - completion: support branch-diff
->  - branch-diff: add a man page
->  - branch-diff --dual-color: work around bogus white-space warning
->  - branch-diff: offer to dual-color the diffs
->  - diff: add an internal option to dual-color diffs of diffs
->  - color: provide inverted colors, too
->  - branch-diff: use color for the commit pairs
->  - branch-diff: add tests
->  - branch-diff: do not show "function names" in hunk headers
->  - branch-diff: adjust the output of the commit pairs
->  - branch-diff: suppress the diff headers
->  - branch-diff: indent the diffs just like tbdiff
->  - branch-diff: right-trim commit messages
->  - branch-diff: also show the diff between patches
->  - branch-diff: improve the order of the shown commits
->  - branch-diff: first rudimentary implementation
->  - Add a new builtin: branch-diff
->  - Add a function to solve least-cost assignment problems
-> 
->  "git tbdiff" that lets us compare individual patches in two
->  iterations of a topic has been rewritten and made into a built-in
->  command.
-> 
->  Expecting a reroll.
->  cf. <nycvar.QRO.7.76.6.1805052351560.77@tvgsbejvaqbjf.bet>
+ t/t4018/php-abstract-class | 4 ++++
+ t/t4018/php-class          | 4 ++++
+ t/t4018/php-final-class    | 4 ++++
+ t/t4018/php-function       | 4 ++++
+ t/t4018/php-interface      | 4 ++++
+ t/t4018/php-method         | 7 +++++++
+ t/t4018/php-trait          | 7 +++++++
+ userdiff.c                 | 2 +-
+ 8 files changed, 35 insertions(+), 1 deletion(-)
+ create mode 100644 t/t4018/php-abstract-class
+ create mode 100644 t/t4018/php-class
+ create mode 100644 t/t4018/php-final-class
+ create mode 100644 t/t4018/php-function
+ create mode 100644 t/t4018/php-interface
+ create mode 100644 t/t4018/php-method
+ create mode 100644 t/t4018/php-trait
 
-I rolled it around so hard that it got dizzy.
+-- 
+2.10.1 (Apple Git-78)
 
-(Yes, I just made fun of this Git speak "to re-roll".)
-
-Seriously again, I sent a new iteration:
-
-	https://public-inbox.org/git/pull.1.v3.git.gitgitgadget@gmail.com/
-
-Ciao,
-Dscho
