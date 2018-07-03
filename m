@@ -2,144 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A747C1F6AC
-	for <e@80x24.org>; Tue,  3 Jul 2018 22:30:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5CE0D1F6AC
+	for <e@80x24.org>; Tue,  3 Jul 2018 22:36:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753339AbeGCWag (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Jul 2018 18:30:36 -0400
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:44050 "EHLO
-        glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753076AbeGCWag (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Jul 2018 18:30:36 -0400
-Received: from glandium by mitsuha.glandium.org with local (Exim 4.91)
-        (envelope-from <mh@glandium.org>)
-        id 1faToc-00066c-RE; Wed, 04 Jul 2018 07:30:30 +0900
-Date:   Wed, 4 Jul 2018 07:30:30 +0900
-From:   Mike Hommey <mh@glandium.org>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: Checks added for CVE-2018-11235 too restrictive?
-Message-ID: <20180703223030.xds2bfgeuaa35isj@glandium.org>
-References: <20180703070650.b3drk5a6kb4k4tnp@glandium.org>
- <20180703141518.GA21629@sigill.intra.peff.net>
+        id S932382AbeGCWgo (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Jul 2018 18:36:44 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:39407 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932079AbeGCWgn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Jul 2018 18:36:43 -0400
+Received: by mail-wr0-f196.google.com with SMTP id b8-v6so3426150wro.6
+        for <git@vger.kernel.org>; Tue, 03 Jul 2018 15:36:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=aCR4jRXXY2HWkwnb2C7L/2gWhPMfS1Z5FXsXWdoOsIM=;
+        b=Qr8geBij0qVMsIWBgz9wyUtIbONU0ISpygZHhCXrZYhKEDr6EXD61ggVainGqOeHqy
+         bpaZgQvhk7syE2MEhNk4qLvWfSnThVaT5Y+74f07yfgcwmUE8ME+hJz0C1ozqc8OgkXB
+         o9XI4olK3aXhnJTDjg3nEo2ztVu2KwJnmlwkvpBqXJvl8OlQN2s4N7Rail4wT0XRVbDe
+         mo14Sztd2A3GxejkKpffU1S2g31CxwCWb/pByqKAhDidBOtOtLSNDeyxKuItgvze57oQ
+         BlBxtQrErZYw676kL2R0i1Aim5BqNmWhtUUeT6y15WmO7tzn1pK9i0oPE3k4Y4Q1colS
+         3caw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=aCR4jRXXY2HWkwnb2C7L/2gWhPMfS1Z5FXsXWdoOsIM=;
+        b=fLNJFIl4yUOB6l3YV32WZXHVMUb0VjEwlwMJun9pfe7r1fxXs1geks3FsQUhqwTSMC
+         bVaWb3fpxFVQ84DMVBoyPyLo6KeLMIDe0Y0ayq82X7xPW9VCFzeDoGnbRXDjZWFRxDL2
+         KJhLVdNpYR+4Zlao3Szrq93tVAjF8/5A/rtPP0WTe2D12/s+pke8y1dJCNq1ZNyu+188
+         Qqw0FMLvCXfn6zb8ly3tKyRU8vfmP+zqW3qnSJSgsM5s4K7vMSsSB2ktTW1+i678hbJD
+         eLoTbe8DU19uHn3n38h0l0ln/TzNUliGiJ5YttaWHIwi6Pts6JZe+pqWtG6pTswTQm1K
+         I1+w==
+X-Gm-Message-State: APt69E2deG9vQMKW69UIiF8NkHhPbnsKSoTg7whNI7e1+nC7/r9PPqwq
+        xzj8pNy9Iv50D6AjiKwWbtw=
+X-Google-Smtp-Source: AAOMgpfDr0u+czKVDMHXk4RVdQYYoLmRONV7Xo1ZeqbMxFJE3ax70P6culBZnYrvt5qjHWrlildSyw==
+X-Received: by 2002:adf:b445:: with SMTP id v5-v6mr23587387wrd.67.1530657402287;
+        Tue, 03 Jul 2018 15:36:42 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 39-v6sm4363076wrv.79.2018.07.03.15.36.41
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 03 Jul 2018 15:36:41 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Tiago Botelho <tiagonbotelho@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Christian Couder <christian.couder@gmail.com>,
+        git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>,
+        Tiago Botelho <tiagonbotelho@hotmail.com>
+Subject: Re: [RFC PATCH v5] Implement --first-parent for git rev-list --bisect
+References: <20180622123945.68852-1-tiagonbotelho@hotmail.com>
+        <xmqq4lhqpy80.fsf@gitster-ct.c.googlers.com>
+        <CAP8UFD3oEjW75qsk4d_wqo2V8PmzMvZLshutw20CD7AU4b4ocg@mail.gmail.com>
+        <nycvar.QRO.7.76.6.1806261540340.21419@tvgsbejvaqbjf.bet>
+        <CAP8UFD1TeC4czp_8HCRw5CtjGO78A8gRezw_xspnm4MXuhQswg@mail.gmail.com>
+        <xmqqa7rhi40f.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1806271254210.21419@tvgsbejvaqbjf.bet>
+        <xmqqwoukgpr9.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1806281505160.73@tvgsbejvaqbjf.bet>
+        <xmqqvaa2yjo1.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1806291317150.74@tvgsbejvaqbjf.bet>
+        <CAADF+x3jd5G9+SP3UmhwqrR_T6BuD0PkQJ3x+NLpq2BJ_Ej-Sw@mail.gmail.com>
+Date:   Tue, 03 Jul 2018 15:36:41 -0700
+In-Reply-To: <CAADF+x3jd5G9+SP3UmhwqrR_T6BuD0PkQJ3x+NLpq2BJ_Ej-Sw@mail.gmail.com>
+        (Tiago Botelho's message of "Tue, 3 Jul 2018 22:33:10 +0100")
+Message-ID: <xmqq36x0ndza.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180703141518.GA21629@sigill.intra.peff.net>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: NeoMutt/20180512
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 03, 2018 at 10:15:19AM -0400, Jeff King wrote:
-> On Tue, Jul 03, 2018 at 04:06:50PM +0900, Mike Hommey wrote:
-> 
-> > I had a first shot at that a few months ago, but the format of the
-> > metadata branch made it impossible to push to github, hitting its push
-> > size limit. With some pre-processing work, I was able to push the data
-> > to github, with the intent to come back with a new metadata branch
-> > format that would make the push directly possible.
-> 
-> This is sort of tangential to your email here, but I'm curious which
-> limit you hit. Too-big blob, tree, or commit?
+Tiago Botelho <tiagonbotelho@gmail.com> writes:
 
-Too-big pack, iirc.
+> git rev-list --first-parent --bisect-all F..E >revs &&
+> test_line_count = 9 revs &&
+> for rev in E e1 e2 e3 e4 e5 e6 e7 e8
+> do
+>   grep "^$(git rev-parse $rev) " revs ||
+>   {
+>     echo "$rev not shown" >&2 &&
+>     return 1
+>   }
+> done &&
+> sed -e "s/.*(dist=\([0-9]*\)).*/\1/" revs >actual.dists &&
+> sort -r actual.dists >actual.dists.sorted &&
+> test_cmp actual.dists.sorted actual.dists
 
-> > Fast forward to this week, where I was trying to upload a new metadata
-> > branch, and failed in a rather interesting way: multiple lines looking
-> > like:
-> > 
-> > remote: error: object 81eae74b046d284c47e788143bbbcc681cb53418: gitmodulesMissing: unable to read .gitmodules blob
-> > 
-> > which, apart from the fact that they have some formatting issue, appear
-> > to be new from the fixes for CVE-2018-11235.
-> 
-> Also tangential to your main point (I promise I'll get to it ;) ), but
-> what formatting issue do you mean? Are you referring to
-> "gitmodulesMissing"? That's a machine-readable tag which means you can
-> set "fsck.gitmodulesMissing" to "ignore".
+The distance in the current graph might be all lower single-digits,
+but you need "sort -n -r" to be future-proof, as dist=10 would sort
+next to dist=1, perhaps in between dist=1 and dist=2.
 
-Oh, I was reading it as something finishing with "gitmodules", and
-another message starting with "Missing". The fact the error is so
-long and on one line made me think that, I guess.
+Another thing you missed in my message is that the above does not
+say what distance value each commit should be assigned in the
+history.  Even though the grep loop makes sure that each of E, e1,
+... e8 appears at least once, and line-count before that ensures
+that the output has 9 entries (and taken together, it guarantees
+that each of these appears not just "at least once", but also
+exactly once), nothing guarantees if they are getting relative
+distance correctly, as the sed strips a bit too much (and that
+relates to my earlier point why starting from a concrete expected
+output and explicitly discard the aspect of the output we do not
+care about before comparison---that way, we can easily tell when the
+code is _designed to_ discard too much).
 
-> > I can see what those fixes are trying to prevent, but they seem to be
-> > overly restrictive, at least in the context of transfer.fsckObjects.
-> > 
-> > The core problem is that the mercurial repository has some .gitmodules
-> > files in some subdirectories. As a consequence, the git objects storing
-> > the info for those mercurial files contain trees with .gitmodules files
-> > with a commit ref, and that's what the remote is complaining about.
-> > 
-> > (Surpringly, it doesn't hit the "non-blob found at .gitmodules" case
-> > first, which is weird).
-> 
-> The reason it doesn't hit the "non-blob" case is that we are trying to
-> analyze the object itself. So we don't pay any attention to the mode in
-> the containing tree, but instead literally look for 81eae74b0. If it
-> were a non-blob we'd complain then, but in fact we don't have it at all
-> (which is otherwise OK because it's a gitlink).
-> 
-> > A small testcase to reproduce looks like this:
-> > 
-> > $ git init bar; cd bar
-> > $ git fast-import <<EOF
-> > commit refs/heads/bar
-> > committer Bar <bar@bar> 0 +0000
-> > data 0
-> >                                                                  
-> > M 160000 81eae74b046d284c47e788143bbbcc681cb53418 bar/.gitmodules
-> >                                                                  
-> > EOF
-> >
-> > [...]
-> > 
-> > Would it be reasonable to make the transfer.fsckObject checks ignore
-> > non-blob .gitmodules?
-> 
-> I'm open to the idea that the new checks are too restrictive (both this
-> and the gitmodulesParse error we're discussing in [1]). They definitely
-> outlaw things that _used_ to be OK. And the security benefit is a little
-> hand-wavy. They're not strictly needed to block the recent
-> vulnerability[2].  However, they _could_ protect us from future problems
-> (e.g., an overflow in the config-parsing code, which is not accessible
-> to attackers outside of .gitmodules). So there is some value in being
-> restrictive, but it's mostly hypothetical for now.
-> 
-> So I think we could simply loosen these cases without immediate effect.
-> That said, I'm not sure that having a gitlink .gitmodules is sane in the
-> first place. Attempting to "git submodule init" there is going to cause
-> errors. Well, sort of -- your example actually includes it in a
-> subdirectory of the repository, so technically we wouldn't use it for
-> real submodules. That fudging (finding .gitmodules anywhere instead of
-> just at the root) was a conscious decision to reduce the complexity and
-> cost of the check.
-> 
-> It sounds like in this case you don't have existing history that does
-> this with .gitmodules, but are rather looking into designing a new
-> feature that stuffs data into git trees. I'd be interested to hear a bit
-> more about that feature to see if there are other alternatives.
-
-Yes, in fact, this history is not even meant to be checked out. It's
-internal stuff, stuck in a ref in a non-traditional ref namespace (that
-is, it's not under refs/heads, refs/tags, etc., it's under
-refs/cinnabar)
-
-I'd rather avoid using entirely new features that wouldn't work with
-widely used git versions. I can actually work around the current problem
-by adding a prefix to all file names. That doesn't sound great, but is
-probably good enough. In fact, it might even avoid future similar problems.
-
-That being said, I'm not even sure this particular use case is worth a
-new feature. I'm not storing random stuff as gitlinks, I'm storing
-sha1s. Well, maybe a mode that makes the distinction between "git oid"
-and "external oid" might make things clearer for git itself, especially
-for fsck.
-
-Mike
