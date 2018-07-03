@@ -6,61 +6,66 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21D651F6AC
-	for <e@80x24.org>; Tue,  3 Jul 2018 18:14:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA76F1F6AC
+	for <e@80x24.org>; Tue,  3 Jul 2018 18:15:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934336AbeGCSO3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Jul 2018 14:14:29 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:33386 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934141AbeGCSO3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Jul 2018 14:14:29 -0400
-Received: by mail-wr0-f195.google.com with SMTP id k7-v6so2902185wrq.0
-        for <git@vger.kernel.org>; Tue, 03 Jul 2018 11:14:28 -0700 (PDT)
+        id S934381AbeGCSPH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Jul 2018 14:15:07 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:33434 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934295AbeGCSPG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Jul 2018 14:15:06 -0400
+Received: by mail-wr0-f194.google.com with SMTP id k7-v6so2903665wrq.0
+        for <git@vger.kernel.org>; Tue, 03 Jul 2018 11:15:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=FJxS7kW1z9BKanD/pUPA+paBrho4pyN+dUSqh7Apa+w=;
-        b=HDEqp+pMkS45Vxx+GxAmDmsQgPTGRvWfix+voSXoeFsXXw2gkIX6JW0KrkAU5tN5NT
-         wfLDtbe6lfC91nG4xgpIqOMZ1U0tZun/10kjAMxvpmXPoQphclRuR1UtLULTBDRwtYlv
-         AYf4uAVYXMIoUQxHX8vwD+zcu4PbE0X5bvAbny8UTTWdJXhz/vsDvzu6DVKtRQRJi/kE
-         f6zCymN5YTFmY+n4xHKADC/mUne1Ai1dyqAo+YQ+fhApV6eIqpWaxNwHNga6rx3EB/o8
-         9eGouobmB8N25CidWB+Vy6FauA8eDsF/qeScTGAftO1w1ac/kDoMBPo6+vuI8LX43NCO
-         fchA==
+        bh=zodI3psApLz34eWBp7n/O6N1zlSP7HXZCUclSRsJvEw=;
+        b=AtjLeRPLCf0BJYouEj3KWyrslgxN1CNUc3qb+8MMv4wpTfwzlf6dOMzV8c48HM383S
+         Bxn9IWD2M+XdiEsrDznTLuhs9pxmVeRgPFKM6M8Hg/kTTt1+MyukHQhx7XXvqJZY3UmL
+         e7OlS1whMTS/CJb7r216BA72wJf78Kk5BqUeLeIlVwVwcgYps/QHDKcfepemTTUtvSRI
+         j8cay839sJBoh6bhOKADG/x0fZ5DS7L1m4Kv7WTfrlRdqiczwnOq+o5SXA/6iUtpSRT2
+         hpHfkLK1a5u0AzQAzQQu2D4ey9GbwxSTMxSVxWlhd45jo6mHwZRHIbNR6Kh0RGBglXkP
+         EkFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=FJxS7kW1z9BKanD/pUPA+paBrho4pyN+dUSqh7Apa+w=;
-        b=jjq3G8rGJ1JH/4Oi0qxbKfysH95EU61aU/DCN01nRFEe3E6yUT2aPxBsMdRvdk1hF7
-         beZ1oShhLOKEcGHHrNbXsSGzp+ox5PxCwTcw53VAAo3P3dMkqEiw1Oa8LSVE8Ct7Jrbk
-         NG9FFpzIseIuX6CfLwZOC/CTJmNNvxePntm7fymqGjU24fmA/oBGB88zSuGcRnzAOLsk
-         hUGDHv9gpzWMejkJTVE5+HWUNMFzs1cje44HJJFBZkoLrQp2xVs94/PurGPaRqM3lZTW
-         DP1V7YgE0tOnuvxl7PSZfEmqVqon73qxjgV/tcmqcz6Af5ZSaXmPa7un7Lcte4dlsSC7
-         tpnQ==
-X-Gm-Message-State: APt69E0AOhZ86669s2paoOtMVnTomcWT9NT6blluD1WATKNCOeT/tJbL
-        75OJlWaDQ9c5PNqAjuR5yEw=
-X-Google-Smtp-Source: AAOMgpdM2rvhjP4t/EPavrxkkX2YWUnICcbf/Ip90LC9t/ixn7Mu4wDbjvuPjnFXaX0+BZbBTl8n7A==
-X-Received: by 2002:adf:b502:: with SMTP id a2-v6mr24428972wrd.273.1530641667604;
-        Tue, 03 Jul 2018 11:14:27 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 65-v6sm3341660wml.32.2018.07.03.11.14.26
+        bh=zodI3psApLz34eWBp7n/O6N1zlSP7HXZCUclSRsJvEw=;
+        b=RC6xRIwvcXCCk+EQM+zu2kI9LtgWpkYvP212dGtpHPCyJD4Um658EvCnRw94Uo1K01
+         G192lpeMm1sVyKdGDcK8j3AB7YuqdhiyQ/RwHdxxHfQIZpVeY9EsxDqa7O6BwrjmE1FS
+         yZ6wEJ27aZNsKakEa4K8agDKj5Pt34vDRRubbgIiwJxd4A+TKJfDNvcyHk06PSIK209v
+         TenwZHuowBW5d+YI5ReNP71uKoPuOUB1HJytlBgUt0PyRINzYfz4iX6ync2j3lhVinSW
+         rM1QJsrtADDn0Gt0cooYRKi1D04bhCGIzo+AG0xBLtDOOy8m3HUM6YXsGZx+GT84HvcP
+         Xf9g==
+X-Gm-Message-State: APt69E2JRTVOegBv9esBbygh62Iyibj5Fr7Y7r0+JRE1u1nI4MCoYr0K
+        hvM39G5jx8SllKFRllbXwL8=
+X-Google-Smtp-Source: AAOMgpcOWohAfJmbeXjFlDKXFeAcsx/nACDQRBogSduZOhJnAKtm+0w0wtIrZhp9cugB2Omtd7BJEA==
+X-Received: by 2002:adf:b964:: with SMTP id b33-v6mr24814019wrg.265.1530641704029;
+        Tue, 03 Jul 2018 11:15:04 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 39-v6sm3534340wrv.79.2018.07.03.11.15.03
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 03 Jul 2018 11:14:26 -0700 (PDT)
+        Tue, 03 Jul 2018 11:15:03 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
-        jamill@microsoft.com, mh@glandium.org
-Subject: Re: [PATCH] xdiff: reduce indent heuristic overhead
-References: <CAGZ79kb0FOafEsuXU7c_BTwPtcujFeyWVhzSuzFHRFtQHp9weQ@mail.gmail.com>
-        <20180629202811.131265-1-sbeller@google.com>
-        <72ac1ac2-f567-f241-41d6-d0f83072e0b3@alum.mit.edu>
-Date:   Tue, 03 Jul 2018 11:14:26 -0700
-In-Reply-To: <72ac1ac2-f567-f241-41d6-d0f83072e0b3@alum.mit.edu> (Michael
-        Haggerty's message of "Sun, 1 Jul 2018 17:57:35 +0200")
-Message-ID: <xmqq1sckrxtp.fsf@gitster-ct.c.googlers.com>
+To:     Alban Gruin <alban.gruin@gmail.com>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        phillip.wood@dunelm.org.uk
+Subject: Re: [GSoC][PATCH v5 0/3] rebase -i: rewrite reflog operations in C
+References: <20180625134419.18435-1-alban.gruin@gmail.com>
+        <20180629151435.31868-1-alban.gruin@gmail.com>
+        <xmqqr2kpv8ft.fsf@gitster-ct.c.googlers.com>
+        <xmqqzhzdtpt4.fsf@gitster-ct.c.googlers.com>
+        <e703f571-4966-f3aa-da81-fae1962c8906@gmail.com>
+Date:   Tue, 03 Jul 2018 11:15:02 -0700
+In-Reply-To: <e703f571-4966-f3aa-da81-fae1962c8906@gmail.com> (Alban Gruin's
+        message of "Mon, 2 Jul 2018 12:36:21 +0200")
+Message-ID: <xmqqwoucqj89.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -70,17 +75,9 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Alban Gruin <alban.gruin@gmail.com> writes:
 
-> So if `N ≫ M`, there is necessarily a lot of repetition among the `N +
-> M` lines that the hunk could possibly overlay. Specifically, it must
-> consist of `floor((N + M)/M)` identical copies of the hunk, plus
-> possibly a few leftover lines constituting the start of another repetition.
->
-> Given this large amount of repetition, it seems to me that there is
-> never a need to scan more than the bottom `M + 1` possible positions [1]
-> plus the highest possible position [2] to be sure of finding the very
-> best one. In the pathological case that you described above, where `M`
-> is 1, only three positions have to be evaluated, not 100.
+> The patches about append_todo_help() and edit-todo are not up to date,
+> so I’ll resend them in a few minutes
 
-Nicely analysed.
+Good.
