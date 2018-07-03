@@ -2,140 +2,170 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D657A1F6AC
-	for <e@80x24.org>; Tue,  3 Jul 2018 21:27:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B2F781F6AC
+	for <e@80x24.org>; Tue,  3 Jul 2018 21:35:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753164AbeGCV1v (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Jul 2018 17:27:51 -0400
-Received: from mail-ua0-f182.google.com ([209.85.217.182]:37695 "EHLO
-        mail-ua0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752949AbeGCV1u (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Jul 2018 17:27:50 -0400
-Received: by mail-ua0-f182.google.com with SMTP id u8-v6so2162595uao.4
-        for <git@vger.kernel.org>; Tue, 03 Jul 2018 14:27:50 -0700 (PDT)
+        id S1753171AbeGCVfA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Jul 2018 17:35:00 -0400
+Received: from mail-qt0-f170.google.com ([209.85.216.170]:46738 "EHLO
+        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752949AbeGCVdX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Jul 2018 17:33:23 -0400
+Received: by mail-qt0-f170.google.com with SMTP id h5-v6so2918064qtm.13
+        for <git@vger.kernel.org>; Tue, 03 Jul 2018 14:33:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=4KYCfQFo9fpw8RQngLPKIp1AvOvW9pEWJMwMLrsdXQA=;
-        b=WCbk37Tx+ZxhX1om0gz8BOd733dBdcFSsDimMZAfTzzE7Lo46YUo4OAGLmuRWyx1pF
-         9qWlqj7RjbWU/W8MoU9XZglnWSgGgClS8kOaeLZNw+Kpz1/py0fyTTiD3Z7kj1eGCXsq
-         XJkwd7gdp2vGn8Qk4Ey/uZLRxZTAJMpRLPF3HG4N5/15kjOqGpl3x1tSMt6akccvC0a/
-         F59LXLho4Enzn7X5QnuzLR0I2j8gQKSFcoMyru/vlURKzoLQrAJ0W9IEZCtIc0H3zRop
-         ptIBJVauFLjxrwhyjhORrkVX2EDHTnx5KHrSg5ge5NlQUGKQYtGhkMPV2ce60IRc1+JY
-         sXNg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=CSzsP08zRMafOlMaRfjGTFwkg7l/KeVED91V36PM4/w=;
+        b=U8d5almk0uP84EIONXnf7vEwsHKBdNe5D5am/G7O2n8DYorpjILC0NIqCooi45rs5A
+         IKTMy5+t1IVAJwa6rhcpHsdRC0F1T/GuDo7sBf3OmikHPAJg1eyoO2KY7BdgC0wyDTML
+         3NsSVREMfWfJaj8lZeGgZspk5D6bBCN3IRIE5qbKSc9Y69cfq3wVBM/QwWc2ImoTy/Lj
+         Dl08nE8o5ZxT+1nVsxgti0E6x2qKv8lJ6l9aXBfV+eKxRTqGbjgqzux7tqP90ZeMs1v5
+         LlBG5hW6Vo889zYw2OEs1Eyy9OkuXv+GNu0FtrRti31z2lmgXeb6Qctwps3WDHh1wdK5
+         buOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=4KYCfQFo9fpw8RQngLPKIp1AvOvW9pEWJMwMLrsdXQA=;
-        b=UsQvfkwqUUgW5EhJMYQ3l0eYqHe/08qEUTj+gRNd4LCal53ztxnizzLlAd5laZp0Ps
-         UqATE0ZvKtlAVO6N9Pb2JRi2a3ni9krXJERYACzz2avNomFNxbzmPvguiB/zhCptwIaC
-         poavhxSONrTk4mL1wWaCszd6rhpJyLOaO4guesgt3YxrFHIrHVvXQyWswwIExm1UPHBb
-         R6ftL5T60I3uvtyyYXdyK8Y2HBnbdqAObhA+Ux0zZNFrXAvz/7aebIAYXcUK7kzCDis4
-         A4x25MXcxyPND5FwdDwJL6LiBQqXH1U8OH6jS4Ax0p+opHXxyu9DhhkgXXL353aeNjT9
-         nBHA==
-X-Gm-Message-State: APt69E1UcXQysrW1HvSCceMZY3eu2514+/cPxdYez3RIUN331IrwZYNL
-        aoMc/761JhyUFY0i8NCKPWt+GcGLGo9HO+wnyXRk3A==
-X-Google-Smtp-Source: AAOMgpeOq/Bi/on83hS0caKBaVxCRARVuridDyHOudg8oC5qtVEkVVEC34BOCBKiZ/lEHuiQjUX+miRV14H5KSaYCQc=
-X-Received: by 2002:a9f:3563:: with SMTP id o90-v6mr3467585uao.79.1530653269565;
- Tue, 03 Jul 2018 14:27:49 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=CSzsP08zRMafOlMaRfjGTFwkg7l/KeVED91V36PM4/w=;
+        b=GxeAwac09Wsyyw2CpGIpMAcLASCzhwAK6C0ibJp8Twka0Bq2yLVqzlE9q2nxPzNEL9
+         HH7a/g7vygnApzJVozp4/W/WJ3sqmaV0LS2RA3J6AkT+oEPsuLraPhlu/ik8QqqOJRVY
+         5yeICs7CqYUtlL1GrUwE81ftEf/FYZUl7sVE1IuXjuC0ai1A0okkltP32Wgr5rbZmFzE
+         f6IxuEUYxcdB0+QTyOeA4k2swuDgLgVrWEirsx02J2M/Y91kcmsppGi2J64qsjZOmglY
+         I8h6WWcGPJ4Q9DkNwtt51EfZTQif4rdJZ5IhhdKVlIHQfhXeWoYf8mLYevqdCek4P+s4
+         ygTQ==
+X-Gm-Message-State: APt69E0VIayJxRFVeOBPp5/W4Wt9fArt2EMXbLuewWZyVIowSqyWgMj/
+        3kOie39jF+s2tfSRUZE5fd+oqoj8/AFr0wUfyJY=
+X-Google-Smtp-Source: AAOMgpcgcW/Dpd6j6/6MUIX/kY6mxJWawnwZqcB/hM2xmBztLbnaIbXJRMEP+wPmtuajvrlXynYsaj5VsSP6BaBJSj0=
+X-Received: by 2002:a0c:98d1:: with SMTP id g17-v6mr27870964qvd.27.1530653602091;
+ Tue, 03 Jul 2018 14:33:22 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:ab0:21c7:0:0:0:0:0 with HTTP; Tue, 3 Jul 2018 14:27:48 -0700 (PDT)
-In-Reply-To: <E37C3A33-489B-4FEB-9170-097514B41317@redfish-solutions.com>
-References: <E37C3A33-489B-4FEB-9170-097514B41317@redfish-solutions.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 3 Jul 2018 14:27:48 -0700
-Message-ID: <CABPp-BFbDx4z2TiqiexyNJzA5UC5D7ZH6Uw-XLXeG3tDCHRKog@mail.gmail.com>
-Subject: Re: Better interoperability with Bitkeeper for fast-import/-export
-To:     Philip Prindeville <philipp_subx@redfish-solutions.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+References: <20180622123945.68852-1-tiagonbotelho@hotmail.com>
+ <xmqq4lhqpy80.fsf@gitster-ct.c.googlers.com> <CAP8UFD3oEjW75qsk4d_wqo2V8PmzMvZLshutw20CD7AU4b4ocg@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1806261540340.21419@tvgsbejvaqbjf.bet> <CAP8UFD1TeC4czp_8HCRw5CtjGO78A8gRezw_xspnm4MXuhQswg@mail.gmail.com>
+ <xmqqa7rhi40f.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1806271254210.21419@tvgsbejvaqbjf.bet>
+ <xmqqwoukgpr9.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1806281505160.73@tvgsbejvaqbjf.bet>
+ <xmqqvaa2yjo1.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1806291317150.74@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1806291317150.74@tvgsbejvaqbjf.bet>
+From:   Tiago Botelho <tiagonbotelho@gmail.com>
+Date:   Tue, 3 Jul 2018 22:33:10 +0100
+Message-ID: <CAADF+x3jd5G9+SP3UmhwqrR_T6BuD0PkQJ3x+NLpq2BJ_Ej-Sw@mail.gmail.com>
+Subject: Re: [RFC PATCH v5] Implement --first-parent for git rev-list --bisect
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>,
+        Tiago Botelho <tiagonbotelho@hotmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Philip,
-
-On Tue, Jul 3, 2018 at 1:40 PM, Philip Prindeville
-<philipp_subx@redfish-solutions.com> wrote:
-> Hi.
+On Fri, 29 Jun 2018 at 12:21, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 >
-> I tried to import into git a repo that I was working on (because it just =
-seemed easier), but when I tried to export the repo back out after making m=
-y changes I found it choking on a few things.
+> Hi Junio,
 >
-> It was explained to me (by the Bitkeeper folks) that git meta-data doesn=
-=E2=80=99t accurately track file moves=E2=80=A6  If a file disappears from =
-one place and reappears in another with the same contents, that=E2=80=99s a=
-ssumed to be a move.
+> On Thu, 28 Jun 2018, Junio C Hamano wrote:
 >
-> Given that =E2=80=9Cgit mv=E2=80=9D is an explicit action, I=E2=80=99m no=
-t sure why that wouldn=E2=80=99t be explicitly tracked.
-
-Not a full explanation, but see
-https://git-scm.com/book/en/v2/Git-Internals-Moving-Files
-
-> But I=E2=80=99ve not looked too closely under the covers about how git re=
-presents stuff, so maybe there=E2=80=99s more to it than I=E2=80=99m assumi=
-ng.
+> > What I meant by "many separte grep calls" was to contrast these two
+> > approaches:
+> >
+> >  * Have one typical output spelled out as "expect", take an output
+> >    from an actual run into "actual", make them comparable and then
+> >    do a compare (which does not use grep; it uses sort in the
+> >    "making comparable" phase)
+> >
+> >  * Not have any typical output, take an output from an actual run,
+> >    and have _code_ that inspects the output encode the rule over the
+> >    output (e.g. "these must exist" is inspected with many grep
+> >    invocations)
+> >
+> > Two things the "output must have 9 entries, and these 9 must be
+> > mentioned" we see at the beginning of this message does not verify
+> > are (1) exact dist value given to each of these entries and (2) the
+> > order in which these entries appear in the output.  The latter is
+> > something we document, and the test should cover.  The former does
+> > not have to be cast in stone (i.e. I do not think it does not make a
+> > difference to label the edge commits with dist=1 or dist=0 as long
+> > as everything is consistent), but if there is no strong reason to
+> > keep it possible for us to later change how the numbers are assigned,
+> > I am OK if the test cast it in stone.
+> >
+> > Another reason (other than "many separate invocation of grep") to
+> > favor the former approach (i.e. use real-looking expected output,
+> > munge it and the real output into comparable forms and then compare)
+> > is that it is easier to see what aspect of the output we care (and
+> > we do not care) about.
+> >
+> > It is harder to see the omission of exact dist value and ordering of
+> > entries in the outpu in the latter approach, and more importantly,
+> > know if the omission was deliberate (e.g. it was merely an example)
+> > or a mere mistake.
+> >
+> > With "using a real-looking expected output, make it and the actual
+> > output comparable and then compare" approach, the aspects in the
+> > output we choose not to care about will show in the "make them
+> > comparable" munging.  If we do not care the exact dist values, there
+> > would be something like s/dist=[0-9]*/dist=X/ to mask the exact
+> > value before making the two comparable to see that the expect and
+> > the actual files have the same entries.  If we still do care about
+> > the entries are ordered by the dist values, there would be something
+> > that sorts the entries with the actual dist values before doing that
+> > masking to ensure if the order is correct.
 >
-> During an export using =E2=80=9C-M=E2=80=9D and =E2=80=9C-C=E2=80=9D, Bit=
-keeper complained:
-
-Why would you add -C?  Does bitkeeper also track copies?
-
-> fast-import: line 'R ports/winnt/libntp/nt_clockstuff.c ports/winnt/ntpd/=
-nt_clockstuff.c' not supported
+> The problem here is of course that you *cannot* set the exact output
+> in stone, because of sorting instabilities.
 >
-> so I tried removing those two options, and it got further, this time stal=
-ling on:
+> So you have to play tricks to sort (twice, with different keys) the
+> expected output and the actual output, to verify that all the expected
+> commits are listed (and only those) and to verify that they are ordered by
+> the distance, in descending order.
 >
-> fast-import: Unknown command: tag ntp-stable
-
-If the fast-import command you are using can't read tags, then perhaps
-you should report that to the authors of the fast-import tool you are
-using and/or only feed branches to your fast-export command.
-
-> I like git, mostly because I=E2=80=99ve used it a lot more=E2=80=A6 and I=
- like the GitHub service.  I use Bitkeeper because a few projects I work on=
- are already set up to use it and it=E2=80=99s not my call whether it=E2=80=
-=99s worth the effort to make the conversion or live with it.
+> And this trick, while it still makes the test correct and stable and yadda
+> yadda, *also* makes this trick a lot less readable than my version. And
+> therefore makes it more difficult to verify that your test actually does
+> what it is supposed to do.
 >
-> So=E2=80=A6 this is an appeal for both to play better together.
->
-> What=E2=80=99s involved in getting git to track file/directory moves/rena=
-mes so that it=E2=80=99s palatable to Bitkeeper?
+> Ciao,
+> Dscho
 
-Not tracking file/directory moves/renames wasn't an oversight but a
-fundamental design decision; see e.g.
-https://public-inbox.org/git/Pine.LNX.4.64.0510211826350.10477@g5.osdl.org/=
-.
+Hello,
 
-However, supposing that we did track renames, how would we tell
-bitkeeper?  Well, we'd print out a line that looks like this in the
-fast-export:
+first of all I would like to thank all the feedback provided in this patch it
+has truly helped me progress on my first contribution to git.
 
-'R ports/winnt/libntp/nt_clockstuff.c ports/winnt/ntpd/nt_clockstuff.c'
+After looking through Junio's and Johannes's suggestions I believe that
+the *only* test we should add will be something like:
 
-which is precisely the line that bitkeeper's fast-import was choking
-on.  So, it sounds like they don't support importing rename
-information (or at least the version of fast-import you're using
-doesn't).  I think this is where the bug is; you'll probably want to
-report it to whoever maintains the fast-import command that is choking
-on this line.
+-- snip --
+test_expect_success '--first-parent --bisect-all lists correct revs' '
+git rev-list --first-parent --bisect-all F..E >revs &&
+test_line_count = 9 revs &&
+for rev in E e1 e2 e3 e4 e5 e6 e7 e8
+do
+  grep "^$(git rev-parse $rev) " revs ||
+  {
+    echo "$rev not shown" >&2 &&
+    return 1
+  }
+done &&
+sed -e "s/.*(dist=\([0-9]*\)).*/\1/" revs >actual.dists &&
+sort -r actual.dists >actual.dists.sorted &&
+test_cmp actual.dists.sorted actual.dists
+'
+-- snap --
 
-Once that's fixed, you can export from git with the -M flag, and from
-that output, there'll be no way to tell whether the original
-repository tracked renames or detected them after the fact.
+The only change I had to make was use -r in sort to
+revert the sorting in `sort` otherwise we get it in
+ascending order but the revs are provided in descending order.
 
-
-Hope that helps,
-Elijah
+Kind regards,
+Tiago
