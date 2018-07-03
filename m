@@ -2,293 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4CD01F6AC
-	for <e@80x24.org>; Tue,  3 Jul 2018 21:52:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1841F1F6AC
+	for <e@80x24.org>; Tue,  3 Jul 2018 21:56:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753388AbeGCVwO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Jul 2018 17:52:14 -0400
-Received: from mail-oi0-f67.google.com ([209.85.218.67]:34962 "EHLO
-        mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753339AbeGCVwK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Jul 2018 17:52:10 -0400
-Received: by mail-oi0-f67.google.com with SMTP id i12-v6so6834227oik.2
-        for <git@vger.kernel.org>; Tue, 03 Jul 2018 14:52:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=XJ9t7YEkwLuX/c/LjQhX9h076qErfNezYb2grWfhxlU=;
-        b=nj9XaRPvLvgG7cJikGEay/8Ndk9G+JRpuzjM0c6DR1Cms51qB+HodL7PqVSsCtwS4N
-         v3f3NoBZmzHtLlONVGdGmC3Arb2jgNGMwdPFljXVEEkrYzBrZpLg8K7b/GP8KnqWwbIp
-         ZINdYMZD5Eq5JejB7MZTIrp5hCdy0tWkwguHVKXZKOGdtck9cC9KbDvBHm9D+0PreKPG
-         niM3n31Vgp9hTzlZ30WafQ8gFUK0Onygt4J5lu107QQgwsTedhXTYsfANj2yOgU8fHUl
-         eZmJBKseKbyvGWVXjbvxlMOoTz0y2IqT0pHDkVx27huVGX6w5manu4BMm1L+PpVslEBO
-         ZeTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=XJ9t7YEkwLuX/c/LjQhX9h076qErfNezYb2grWfhxlU=;
-        b=NXZNZYOS+QZgLSnEQI9RUP41a9kpDmoCNx2FfjiX24h0N9SVap3e6PvNiEBJntoo3X
-         7U7Sxli/xN3xEoz1yU4/t1rHOWKIATJXVqbDc1kCVL0cuHqk9iaMAKpACeVXT+AgIQZv
-         HgSuq9/KEl4BqIqKbRNcPq4whr7wnWl4oLpRov/22lnmwKFTeB83ILkrCVafU1AMedBv
-         6kmahZok7K91/T0jnlmTy//U3n0jDFQSioFxLsmbSYKyWQS5ZvHnUGHtDWTiRN/Aaj0z
-         j6oVg8xlORIxObuT0TLRflDE2ixycNLwpZ5f/g9lm3hXMJYldj2GuwzaLnBv8t4Tfo9c
-         rjSQ==
-X-Gm-Message-State: APt69E3UpxMbCSdCmYqR9J4dYbyXA7eTkAboy1DLtSUJu2JCiqOgEfmW
-        NzkMMj5SD4OrqW9H7rlz7eZW+fX5t8Y=
-X-Google-Smtp-Source: AAOMgpfn+qDy5zNfZqTr2mBxyAIwKmKCeG+DM6ALqn7PuxqIqLoWKwnKV82LskPnwwZL64UzJz14pA==
-X-Received: by 2002:aca:b1c1:: with SMTP id a184-v6mr11520924oif.182.1530654728770;
-        Tue, 03 Jul 2018 14:52:08 -0700 (PDT)
-Received: from localhost ([107.217.158.181])
-        by smtp.gmail.com with ESMTPSA id o16-v6sm1250323otc.3.2018.07.03.14.52.04
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 03 Jul 2018 14:52:07 -0700 (PDT)
-Date:   Tue, 3 Jul 2018 16:52:02 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, gitster@pobox.com, avarab@gmail.com
-Subject: [PATCH v3 2/2] grep.c: teach 'git grep --only-matching'
-Message-ID: <702e1d2a26704c7c932ee4b96f32bff4c45e485e.1530654455.git.me@ttaylorr.com>
-References: <cover.1529961706.git.me@ttaylorr.com>
- <cover.1530654455.git.me@ttaylorr.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1530654455.git.me@ttaylorr.com>
-User-Agent: Mutt/1.9.5 (2018-04-13)
+        id S1753404AbeGCV4K convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Tue, 3 Jul 2018 17:56:10 -0400
+Received: from mail.redfish-solutions.com ([66.232.79.143]:48184 "EHLO
+        mail.redfish-solutions.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753105AbeGCV4J (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 3 Jul 2018 17:56:09 -0400
+Received: from macmini.redfish-solutions.com (macmini.redfish-solutions.com [192.168.1.38])
+        (authenticated bits=0)
+        by mail.redfish-solutions.com (8.15.2/8.15.2) with ESMTPSA id w63Lu8IR002836
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Tue, 3 Jul 2018 15:56:08 -0600
+Content-Type: text/plain;
+        charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 11.3 \(3445.6.18\))
+Subject: Re: Better interoperability with Bitkeeper for fast-import/-export
+From:   Philip Prindeville <philipp_subx@redfish-solutions.com>
+In-Reply-To: <CABPp-BFbDx4z2TiqiexyNJzA5UC5D7ZH6Uw-XLXeG3tDCHRKog@mail.gmail.com>
+Date:   Tue, 3 Jul 2018 15:56:06 -0600
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Transfer-Encoding: 8BIT
+Message-Id: <D7D581C6-6349-4319-895C-55930431A933@redfish-solutions.com>
+References: <E37C3A33-489B-4FEB-9170-097514B41317@redfish-solutions.com>
+ <CABPp-BFbDx4z2TiqiexyNJzA5UC5D7ZH6Uw-XLXeG3tDCHRKog@mail.gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+X-Mailer: Apple Mail (2.3445.6.18)
+X-Scanned-By: MIMEDefang 2.84 on 192.168.1.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach 'git grep --only-matching', a new option to only print the
-matching part(s) of a line.
 
-For instance, a line containing the following (taken from README.md:27):
 
-  (`man gitcvs-migration` or `git help cvs-migration` if git is
+> On Jul 3, 2018, at 3:27 PM, Elijah Newren <newren@gmail.com> wrote:
+> 
+> Hi Philip,
+> 
+> On Tue, Jul 3, 2018 at 1:40 PM, Philip Prindeville
+> <philipp_subx@redfish-solutions.com> wrote:
+>> Hi.
+>> 
+>> I tried to import into git a repo that I was working on (because it just seemed easier), but when I tried to export the repo back out after making my changes I found it choking on a few things.
+>> 
+>> It was explained to me (by the Bitkeeper folks) that git meta-data doesn’t accurately track file moves…  If a file disappears from one place and reappears in another with the same contents, that’s assumed to be a move.
+>> 
+>> Given that “git mv” is an explicit action, I’m not sure why that wouldn’t be explicitly tracked.
+> 
+> Not a full explanation, but see
+> https://git-scm.com/book/en/v2/Git-Internals-Moving-Files
 
-Is printed as follows:
 
-  $ git grep --line-number --column --only-matching -e git -- \
-    README.md | grep ":27"
-  README.md:27:7:git
-  README.md:27:16:git
-  README.md:27:38:git
+Why not add the logic to track moves/renames?  That link explains what it does, but not why it does it.
 
-The patch works mostly as one would expect, with the exception of a few
-considerations that are worth mentioning here.
 
-Like GNU grep, this patch ignores --only-matching when --invert (-v) is
-given. There is a sensible answer here, but parity with the behavior of
-other tools is preferred.
+> 
+>> But I’ve not looked too closely under the covers about how git represents stuff, so maybe there’s more to it than I’m assuming.
+>> 
+>> During an export using “-M” and “-C”, Bitkeeper complained:
+> 
+> Why would you add -C?  Does bitkeeper also track copies?
 
-Because a line might contain more than one match, there are special
-considerations pertaining to when to print line headers, newlines, and
-how to increment the match column offset. The line header and newlines
-are handled as a special case within the main loop to avoid polluting
-the surrounding code with conditionals that have large blocks.
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- Documentation/git-grep.txt |  6 ++++-
- builtin/grep.c             |  6 +++++
- grep.c                     | 51 ++++++++++++++++++++++++++------------
- grep.h                     |  1 +
- t/t7810-grep.sh            | 15 +++++++++++
- 5 files changed, 62 insertions(+), 17 deletions(-)
+I figure that I’d furnish the maximum amount of meta data, and bitkeeper would use what it could and ignore the rest.
 
-diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-index 0de3493b80..be13fc3253 100644
---- a/Documentation/git-grep.txt
-+++ b/Documentation/git-grep.txt
-@@ -17,7 +17,7 @@ SYNOPSIS
- 	   [-l | --files-with-matches] [-L | --files-without-match]
- 	   [(-O | --open-files-in-pager) [<pager>]]
- 	   [-z | --null]
--	   [-c | --count] [--all-match] [-q | --quiet]
-+	   [ -o | --only-matching ] [-c | --count] [--all-match] [-q | --quiet]
- 	   [--max-depth <depth>]
- 	   [--color[=<when>] | --no-color]
- 	   [--break] [--heading] [-p | --show-function]
-@@ -201,6 +201,10 @@ providing this option will cause it to die.
- 	Output \0 instead of the character that normally follows a
- 	file name.
- 
-+-o::
-+--only-matching::
-+  Output only the matching part of the lines.
-+
- -c::
- --count::
- 	Instead of showing every matched line, show the number of
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 61bcaf6e58..228b83990f 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -843,6 +843,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL_F('z', "null", &opt.null_following_name,
- 			   N_("print NUL after filenames"),
- 			   PARSE_OPT_NOCOMPLETE),
-+		OPT_BOOL('o', "only-matching", &opt.only_matching,
-+			N_("show only matching parts of a line")),
- 		OPT_BOOL('c', "count", &opt.count,
- 			N_("show the number of matches instead of matching lines")),
- 		OPT__COLOR(&opt.color, N_("highlight matches")),
-@@ -962,6 +964,10 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	if (!opt.pattern_list)
- 		die(_("no pattern given."));
- 
-+	/* --only-matching has no effect with --invert. */
-+	if (opt.invert)
-+		opt.only_matching = 0;
-+
- 	/*
- 	 * We have to find "--" in a separate pass, because its presence
- 	 * influences how we will parse arguments that come before it.
-diff --git a/grep.c b/grep.c
-index 4ff8a73043..49a744f96b 100644
---- a/grep.c
-+++ b/grep.c
-@@ -51,6 +51,7 @@ void init_grep_defaults(void)
- 	color_set(opt->color_match_selected, GIT_COLOR_BOLD_RED);
- 	color_set(opt->color_selected, "");
- 	color_set(opt->color_sep, GIT_COLOR_CYAN);
-+	opt->only_matching = 0;
- 	opt->color = -1;
- 	opt->output = std_output;
- }
-@@ -158,6 +159,7 @@ void grep_init(struct grep_opt *opt, const char *prefix)
- 	opt->pattern_tail = &opt->pattern_list;
- 	opt->header_tail = &opt->header_list;
- 
-+	opt->only_matching = def->only_matching;
- 	opt->color = def->color;
- 	opt->extended_regexp_option = def->extended_regexp_option;
- 	opt->pattern_type_option = def->pattern_type_option;
-@@ -1446,7 +1448,8 @@ static void show_line(struct grep_opt *opt, char *bol, char *eol,
- 		      const char *name, unsigned lno, ssize_t cno, char sign)
- {
- 	int rest = eol - bol;
--	const char *match_color, *line_color = NULL;
-+	const char *match_color = NULL;
-+	const char *line_color = NULL;
- 
- 	if (opt->file_break && opt->last_shown == 0) {
- 		if (opt->show_hunk_mark)
-@@ -1462,39 +1465,55 @@ static void show_line(struct grep_opt *opt, char *bol, char *eol,
- 			opt->output(opt, "\n", 1);
- 		}
- 	}
--	show_line_header(opt, name, lno, cno, sign);
--	if (opt->color) {
-+	if (!opt->only_matching) {
-+		/*
-+		 * In case the line we're being called with contains more than
-+		 * one match, leave printing each header to the loop below.
-+		 */
-+		show_line_header(opt, name, lno, cno, sign);
-+	}
-+	if (opt->color || opt->only_matching) {
- 		regmatch_t match;
- 		enum grep_context ctx = GREP_CONTEXT_BODY;
- 		int ch = *eol;
- 		int eflags = 0;
- 
--		if (sign == ':')
--			match_color = opt->color_match_selected;
--		else
--			match_color = opt->color_match_context;
--		if (sign == ':')
--			line_color = opt->color_selected;
--		else if (sign == '-')
--			line_color = opt->color_context;
--		else if (sign == '=')
--			line_color = opt->color_function;
-+		if (opt->color) {
-+			if (sign == ':')
-+				match_color = opt->color_match_selected;
-+			else
-+				match_color = opt->color_match_context;
-+			if (sign == ':')
-+				line_color = opt->color_selected;
-+			else if (sign == '-')
-+				line_color = opt->color_context;
-+			else if (sign == '=')
-+				line_color = opt->color_function;
-+		}
- 		*eol = '\0';
- 		while (next_match(opt, bol, eol, ctx, &match, eflags)) {
- 			if (match.rm_so == match.rm_eo)
- 				break;
- 
--			output_color(opt, bol, match.rm_so, line_color);
-+			if (opt->only_matching)
-+				show_line_header(opt, name, lno, cno, sign);
-+			else
-+				output_color(opt, bol, match.rm_so, line_color);
- 			output_color(opt, bol + match.rm_so,
- 				     match.rm_eo - match.rm_so, match_color);
-+			if (opt->only_matching)
-+				opt->output(opt, "\n", 1);
- 			bol += match.rm_eo;
-+			cno += match.rm_eo;
- 			rest -= match.rm_eo;
- 			eflags = REG_NOTBOL;
- 		}
- 		*eol = ch;
- 	}
--	output_color(opt, bol, rest, line_color);
--	opt->output(opt, "\n", 1);
-+	if (!opt->only_matching) {
-+		output_color(opt, bol, rest, line_color);
-+		opt->output(opt, "\n", 1);
-+	}
- }
- 
- #ifndef NO_PTHREADS
-diff --git a/grep.h b/grep.h
-index 08a0b391c5..4d474d8ec4 100644
---- a/grep.h
-+++ b/grep.h
-@@ -150,6 +150,7 @@ struct grep_opt {
- 	int relative;
- 	int pathname;
- 	int null_following_name;
-+	int only_matching;
- 	int color;
- 	int max_depth;
- 	int funcname;
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index 9312c8daf5..d8c232dbf4 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -262,6 +262,21 @@ do
- 		fi
- 	'
- 
-+	test_expect_success "grep $L (with --column, --only-matching)" '
-+		{
-+			echo ${HC}file:1:5:mmap
-+			echo ${HC}file:2:5:mmap
-+			echo ${HC}file:3:5:mmap
-+			echo ${HC}file:3:13:mmap
-+			echo ${HC}file:4:5:mmap
-+			echo ${HC}file:4:13:mmap
-+			echo ${HC}file:5:5:mmap
-+			echo ${HC}file:5:13:mmap
-+		} >expected &&
-+		git grep --column -n -o -e mmap $H >actual &&
-+		test_cmp expected actual
-+	'
-+
- 	test_expect_success "grep $L (t-1)" '
- 		echo "${HC}t/t:1:test" >expected &&
- 		git grep -n -e test $H >actual &&
--- 
-2.18.0
+
+> 
+>> fast-import: line 'R ports/winnt/libntp/nt_clockstuff.c ports/winnt/ntpd/nt_clockstuff.c' not supported
+>> 
+>> so I tried removing those two options, and it got further, this time stalling on:
+>> 
+>> fast-import: Unknown command: tag ntp-stable
+> 
+> If the fast-import command you are using can't read tags, then perhaps
+> you should report that to the authors of the fast-import tool you are
+> using and/or only feed branches to your fast-export command.
+
+
+Well, I’ll just do branches for now…
+
+
+> 
+>> I like git, mostly because I’ve used it a lot more… and I like the GitHub service.  I use Bitkeeper because a few projects I work on are already set up to use it and it’s not my call whether it’s worth the effort to make the conversion or live with it.
+>> 
+>> So… this is an appeal for both to play better together.
+>> 
+>> What’s involved in getting git to track file/directory moves/renames so that it’s palatable to Bitkeeper?
+> 
+> Not tracking file/directory moves/renames wasn't an oversight but a
+> fundamental design decision; see e.g.
+> https://public-inbox.org/git/Pine.LNX.4.64.0510211826350.10477@g5.osdl.org/.
+
+
+"I'm convinced that git handles renames better than any other SCM ever. 
+Exactly because we figure it out when it matters.”
+
+I disagree.  When the move happens, there’s a commit message that goes along with that.  There’s an insight into why the move is happening.
+
+That’s something that software can’t do for you.
+
+
+> 
+> However, supposing that we did track renames, how would we tell
+> bitkeeper?  Well, we'd print out a line that looks like this in the
+> fast-export:
+> 
+> 'R ports/winnt/libntp/nt_clockstuff.c ports/winnt/ntpd/nt_clockstuff.c'
+> 
+> which is precisely the line that bitkeeper's fast-import was choking
+> on.  So, it sounds like they don't support importing rename
+> information (or at least the version of fast-import you're using
+> doesn't).  I think this is where the bug is; you'll probably want to
+> report it to whoever maintains the fast-import command that is choking
+> on this line.
+
+
+Already done:
+
+https://users.bitkeeper.org/t/using-fast-import-from-git-into-bk/907
+
+Not sure I understand the response:
+
+"The rename info that git gives us is a guess, that’s why there is that 0-100% next to it, that’s showing you how much of the two versions of the file were identical. So that info is unreliable, it’s just a guess."
+
+Okay, what’s stopping them from doing their best with the information provided, even if it is a guess?
+
+By the way, what happens when you interactively rebase a bunch of commits, change their order, and in the middle of an “edit”, do a “git mv … …” followed by a “git commit --amend && git rebase --continue”?
+
+-Philip
+
+
+
+> 
+> Once that's fixed, you can export from git with the -M flag, and from
+> that output, there'll be no way to tell whether the original
+> repository tracked renames or detected them after the fact.
+> 
+> 
+> Hope that helps,
+> Elijah
+
