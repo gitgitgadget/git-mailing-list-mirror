@@ -7,216 +7,244 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B34A41F6AC
-	for <e@80x24.org>; Tue,  3 Jul 2018 23:15:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9DF511F6AC
+	for <e@80x24.org>; Tue,  3 Jul 2018 23:56:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752177AbeGCXPm (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Jul 2018 19:15:42 -0400
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:46730 "EHLO
-        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750764AbeGCXPl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Jul 2018 19:15:41 -0400
-Received: by mail-yw0-f196.google.com with SMTP id e23-v6so782081ywe.13
-        for <git@vger.kernel.org>; Tue, 03 Jul 2018 16:15:40 -0700 (PDT)
+        id S1753407AbeGCX44 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Jul 2018 19:56:56 -0400
+Received: from mail-yb0-f195.google.com ([209.85.213.195]:44075 "EHLO
+        mail-yb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753366AbeGCX4z (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Jul 2018 19:56:55 -0400
+Received: by mail-yb0-f195.google.com with SMTP id a2-v6so1397410ybe.11
+        for <git@vger.kernel.org>; Tue, 03 Jul 2018 16:56:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=E5et0yBInDhSrtYbiQO7cALGzEwzwnSLoqZnxHDEup0=;
-        b=GgXHh/qvfmtrmGskfwwF2eE9f0PBtR97H5og+Dmx4y5+bdQVXPYIyilRxMX9NWm3/E
-         i26Hpo7RjxKm5J7PQvASxbpZdINoMw4yoLz0z8kVtmgVOZIvrQc3jeuzMam5Qke/SS32
-         8L5ELqQIR7/INKQQN8ZCqKtipjXjXfB6mW/22VZ5O4SeEKFTlvJv9TL6uPvDHjyx4p6C
-         NU9J+5mT8wzHU5QnezaQugZ+gUyPW9QEV3wOWLDOKO72mx0uWngSWxisJxm48ntY4Zp7
-         K/TFNNKNAoN4qF7ZEuIUl56Q9hn0oHdTBB4AzAvtjndbbJmC+Suu3sD9FoUuYODhqOJq
-         9UKQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=cpQh49jxMysSamGTwAdtZV1hs8zG8Ds9r8vrNxZVfKY=;
+        b=AHlcV/CT/adhxtMPbrcZA7cqerNC6R7VskNz8L39wefnTxWdpBq48S9klaU4TtHo81
+         OGf/PpKzlbBg5jUGRZeLw7ckAZIITkB0OzKgK1HH8ph8NGVUSUbTYGaMG/UbYu+gM7Xw
+         V54LCMppyWj2FoYCWhSj25aoTMs9IsGXMQGN66pdC01rXfhB+7Awcba7TFj0OH2j3aHh
+         iglSVFmkOSUCYQgoQ2A2zr781RqCI86i6S9WGGniT2wkS1enjqb0H9v9WRPb59PXOprW
+         kMZNzoXS+OHCkSXyjId1ss8PaG6wfQg0gl0NmwBOpgADWasDyPtCMiiOwMR1Wf1vQSSU
+         8ciQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=E5et0yBInDhSrtYbiQO7cALGzEwzwnSLoqZnxHDEup0=;
-        b=So7HV70YYy3YSog4xsaB4rDv8nfl3whdReQQiSGI5e0i7hkWsKg2MtNWyZzrzueYc6
-         m4BTe3kTYgiOjuVRGxeyBqyj0WY4VJbGI1H+5QIrHtSojMQ/J8850jWZ8+/mjZj9OOfI
-         xiqa5qhBGHSwDNAedN9S9OZicZASTK9qmy2NsZtzDo34wx5yP1aRnqDYR0DpzBBaKzZc
-         uorE61XLDt/Qcv53UQLBxOs1FYDrNL8pRvT8upZROjc7EZgTbg7e+kV96GA5YM7OAQtk
-         9B48PYbaV5vNDaBPmVy5+BfFf+9V7+dPjOeJPLvNwsSTlWXzGsFjcILZmAmFfrrLEM+Q
-         mPFA==
-X-Gm-Message-State: APt69E2KrLqDJy89DLSVjEL9jwkj+v1cFGPmuWcehPOSsCAql/rKHqXC
-        tuy+gUjYo5bADv/fU4lX931W70qe
-X-Google-Smtp-Source: AAOMgpehxMoh5EdFHIEkZy8br8bhsk1cNhdJD+MVLXZPQU2czmxMx4Z5nov0j07g9WQXrWw6AoRaRA==
-X-Received: by 2002:a81:23d7:: with SMTP id j206-v6mr14282766ywj.100.1530659740073;
-        Tue, 03 Jul 2018 16:15:40 -0700 (PDT)
-Received: from [10.20.131.237] ([70.63.112.210])
-        by smtp.gmail.com with ESMTPSA id w64-v6sm824500ywe.46.2018.07.03.16.15.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 03 Jul 2018 16:15:39 -0700 (PDT)
-Subject: Re: [PATCH 1/3] ls-tree: make <tree-ish> optional
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>
-References: <20180703035802.24060-1-jyn514@gmail.com>
- <CAPig+cT9XB-nJFm0rD9RckBzcbk9vh8Hz=3XOA-HA-JoXssG_A@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=cpQh49jxMysSamGTwAdtZV1hs8zG8Ds9r8vrNxZVfKY=;
+        b=a0+ljay+MKGXoGxsSJSx3MwRhFUHWiJeFxkNuYwMZUnG5G1NJTG7vvLPOzXK2Jf2sK
+         xlvx+TltZVE2TgRaGcuY5Geu4EKE5cUX2Rh/nFwWE5UbUPIt4nTCezufC3PEZKA47t5c
+         XJoxwqCRAhhWwjtwHjgzVjL5kGFG9mQ99EtTutux2PSXb3BxWG3VkAgRKxROIeJy6qXs
+         6dJXjB42udZE6QZzOHI9RzIzI5nnoYlc+gy3kEMB7aoez2HdTAgxHmRSaKRuEBDftTE9
+         t2F9B0cUb2AegbQjm4DlkTGOxqgLznA4XXKIaOFqAA3iR/YjBJzoEsYTNC6jAKkxLRfu
+         XJ6g==
+X-Gm-Message-State: APt69E2S7CHrDa1eCsc3MUWsKjS+E7oA02dnkmzuJP0Mh0/52m3YIx+H
+        JnAVbTfVn8PtCBI7Hr5n/pt0/GUM
+X-Google-Smtp-Source: ADUXVKLI9mfOh3gCLut0CLJU7GTkZ0b196z2PhnCaGb91uGFd7fi3zwl8Y+w6sqbAf8OeS8M17Z2Wg==
+X-Received: by 2002:a25:748d:: with SMTP id p135-v6mr16950751ybc.23.1530662214564;
+        Tue, 03 Jul 2018 16:56:54 -0700 (PDT)
+Received: from localhost.localdomain ([70.63.112.210])
+        by smtp.gmail.com with ESMTPSA id o126-v6sm845544ywf.102.2018.07.03.16.56.53
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 03 Jul 2018 16:56:53 -0700 (PDT)
 From:   Joshua Nelson <jyn514@gmail.com>
-Message-ID: <26b538bd-df59-d9a6-460d-0b1042b35250@gmail.com>
-Date:   Tue, 3 Jul 2018 19:15:39 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
-MIME-Version: 1.0
-In-Reply-To: <CAPig+cT9XB-nJFm0rD9RckBzcbk9vh8Hz=3XOA-HA-JoXssG_A@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+To:     git@vger.kernel.org
+Cc:     Joshua Nelson <jyn514@gmail.com>
+Subject: [PATCH] ls-tree: make <tree-ish> optional
+Date:   Tue,  3 Jul 2018 19:53:38 -0400
+Message-Id: <20180703235337.31770-1-jyn514@gmail.com>
+X-Mailer: git-send-email 2.18.GIT
+In-Reply-To: <26b538bd-df59-d9a6-460d-0b1042b35250@gmail.com>
+References: <26b538bd-df59-d9a6-460d-0b1042b35250@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Use syntax similar to `git-checkout` to make <tree-ish> optional for
+`ls-tree`. If <tree-ish> is omitted, default to HEAD. Infer arguments as
+follows:
 
-On 07/03/2018 03:15 AM, Eric Sunshine wrote:
-> Thanks for contributing to Git. As this seems to be your first
-> submission to the project, don't be alarmed by the extent and nature
-> of the review comments. They are intended to help you polish the
-> submission, and are not meant with ill-intent.
-> 
-> On Mon, Jul 2, 2018 at 11:58 PM Joshua Nelson <jyn514@gmail.com> wrote:
->> use syntax similar to `git-checkout` to make <tree-ish> optional for
->> `ls-tree`. if <tree-ish> is omitted, default to HEAD. infer arguments as
->> follows:
-> 
-> Nit: Capitalize first word of each sentence.
-> 
-> This commit message explains what the patch changes (which is a good
-> thing to do), but it's missing the really important explanation of
-> _why_ this change is desirable. Without such justification, it's
-> difficult to judge if such a change is worthwhile. As this is a
-> plumbing command, people may need more convincing (especially if other
-> plumbing commands don't provide convenient defaults like this).
-> 
->> 1. if args start with --
->>         assume <tree-ish> to be HEAD
->> 2. if exactly one arg precedes --, treat the argument as <tree-ish>
->> 3. if more than one arg precedes --, exit with an error
->> 4. if -- is not in args
->>         a) if args[0] is a valid <tree-ish> object, treat is as such
->>         b) else, assume <tree-ish> to be HEAD
->>
->> in all cases, every argument besides <tree-ish> is treated as a <path>
-> 
-> This and the other patches are missing your Signed-off-by: (which
-> should be placed right here).
-> 
-> The three patches of this series are all directly related to this one
-> change. As such, they should be combined into a single patch. (At the
-> very least, 1/3 and 2/3 should be combined; one could argue that 3/3
-> is lengthy enough to make it separate, but that's a judgment call.)
-> 
-> Now, on to the actual code...
-> 
->> diff --git builtin/ls-tree.c builtin/ls-tree.c
->> @@ -163,10 +163,39 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
->>             ((LS_TREE_ONLY|LS_RECURSIVE) & ls_options))
->>                 ls_options |= LS_SHOW_TREES;
->>
->> +       const char *object;
->> +       short initialized = 0;
-> 
-> This project frowns on declaration-after-statement. Move these to the
-> top of the {...} block where other variables are declared.
-> 
-> Why use 'short'? Unless there's a very good reason that this needs to
-> be a particular size, you shouldn't deviate from project norm, which
-> is to use the natural word size 'int'.
-> 
-> 'initialized' is too generic, thus isn't a great name.
-> 
->>         if (argc < 1)
->> -               usage_with_options(ls_tree_usage, ls_tree_options);
->> -       if (get_oid(argv[0], &oid))
->> -               die("Not a valid object name %s", argv[0]);
->> +               object = "HEAD";
->> +       else {
->> +               /* taken from checkout.c;
->> +                * we have a simpler case because we never create a branch */
-> 
-> Style: Multi-line comments are formatted like this:
-> 
->     /*
->      * Gobble
->      * wobble.
->      */
-> 
-> However, this comment doesn't belong in the code, as it won't be
-> particularly helpful to anyone reading the code in the future. This
-> sort of note would be more appropriate in the commit message or, even
-> better, in the commentary section just below the "---" lines following
-> your Signed-off-by:.
+1. If args start with '--', assume <tree-ish> to be HEAD
+2. If exactly one arg precedes '--', treat the argument as <tree-ish>
+3. If more than one arg precedes '--', exit with an error
+4. If '--' is not in args:
+	a) If args[0] is a valid <tree-ish> object, treat it as such
+	b) Else, assume <tree-ish> to be HEAD
 
-I wasn't aware I could put comments in email generated by
-git-send-email, thanks for the tip :)
+In all cases, every argument besides <tree-ish> is treated as a <path>.
 
-> 
->> +               short dash_dash_pos = -1, i = 0;
-> 
-> Same question about why you used 'short' rather than 'int' (especially
-> as 'dash_dash_pos' is declared 'int' in checkout.c).
-> 
-> Is there a good reason why you initialize 'i' in the declaration
-> rather than in the for-loop? A _good_ reason to do so in the for-loop
-> is that doing so makes the for-loop more idiomatic, reduces cognitive
-> load on readers (since they don't have to chase down the
-> initialization), and safeguards against someone adding new code
-> between the declaration and the for-loop which might inadvertently
-> alter the initial value.
+Signed-off-by: Joshua Nelson <jyn514@gmail.com>
+---
 
-No good reason, it happened to end up that way after I finished
-debugging. I've changed it to a more conventional declaration.
+ Documentation/git-ls-tree.txt    |  2 +-
+ builtin/ls-tree.c                | 40 ++++++++++++++++----
+ t/t3104-ls-tree-optional-args.sh | 63 ++++++++++++++++++++++++++++++++
+ 3 files changed, 97 insertions(+), 8 deletions(-)
+ create mode 100755 t/t3104-ls-tree-optional-args.sh
 
-> 
->> +               for (; i < argc; i++) {
->> +                       if (!strcmp(argv[i], "--")) {
->> +                               dash_dash_pos = i;
->> +                               break;
->> +                       }
->> +               }
->> +               if (dash_dash_pos == 0) {
->> +                       object = "HEAD";
->> +                       argv++, argc++;
-> 
-> 'argc' is never accessed beyond this point, so changing its value is
-> pointless. Same observation for the 'else' arms. (And, even if there
-> was a valid reason to modify 'argc', I think you'd want to be
-> decrementing it, not incrementing it, to show that you've consumed an
-> argument.)
-> 
->> +               } else if (dash_dash_pos == 1) {
->> +                       object = argv[0];
->> +                       argv += 2, argc += 2;
->> +               } else if (dash_dash_pos >= 2)
->> +                       die(_("only one reference expected, %d given."), dash_dash_pos);
->> +               else if (get_oid(argv[0], &oid)) // not a valid object
-> 
-> Style: Use /* comments */ in this codebase, not // comments.
-> 
->> +                       object = "HEAD";
->> +               else {
->> +                       argv++, argc++;
->> +                       initialized = 1;
->> +               }
->> +       }
->> +
->> +       if (!initialized) // if we've already run get_oid, don't run it again
->> +               if (get_oid(object, &oid))
->> +                       die("Not a valid object name %s", object);
-> 
-> Can't you accomplish the same without the 'initialized' variable by
-> instead initializing 'object' to NULL and then checking it here?
+diff --git a/Documentation/git-ls-tree.txt b/Documentation/git-ls-tree.txt
+index 9dee7bef3..290fd11c3 100644
+--- a/Documentation/git-ls-tree.txt
++++ b/Documentation/git-ls-tree.txt
+@@ -11,7 +11,7 @@ SYNOPSIS
+ [verse]
+ 'git ls-tree' [-d] [-r] [-t] [-l] [-z]
+ 	    [--name-only] [--name-status] [--full-name] [--full-tree] [--abbrev[=<n>]]
+-	    <tree-ish> [<path>...]
++	    [<tree-ish>] [--] [<path>...]
+ 
+ DESCRIPTION
+ -----------
+diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
+index 409da4e83..64bfbae71 100644
+--- a/builtin/ls-tree.c
++++ b/builtin/ls-tree.c
+@@ -26,7 +26,7 @@ static int chomp_prefix;
+ static const char *ls_tree_prefix;
+ 
+ static const  char * const ls_tree_usage[] = {
+-	N_("git ls-tree [<options>] <tree-ish> [<path>...]"),
++	N_("git ls-tree [<options>] [<tree-ish>] [--] [<path>...]"),
+ 	NULL
+ };
+ 
+@@ -122,7 +122,9 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
+ {
+ 	struct object_id oid;
+ 	struct tree *tree;
+-	int i, full_tree = 0;
++	const char *tree_ish;
++	int i, full_tree = 0, oid_initialized = 0, dash_dash_pos = -1;
++
+ 	const struct option ls_tree_options[] = {
+ 		OPT_BIT('d', NULL, &ls_options, N_("only show trees"),
+ 			LS_TREE_ONLY),
+@@ -153,7 +155,7 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
+ 		chomp_prefix = strlen(prefix);
+ 
+ 	argc = parse_options(argc, argv, prefix, ls_tree_options,
+-			     ls_tree_usage, 0);
++			     ls_tree_usage, PARSE_OPT_KEEP_DASHDASH);
+ 	if (full_tree) {
+ 		ls_tree_prefix = prefix = NULL;
+ 		chomp_prefix = 0;
+@@ -164,9 +166,33 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
+ 		ls_options |= LS_SHOW_TREES;
+ 
+ 	if (argc < 1)
+-		usage_with_options(ls_tree_usage, ls_tree_options);
+-	if (get_oid(argv[0], &oid))
+-		die("Not a valid object name %s", argv[0]);
++		tree_ish = "HEAD";
++	else {
++		for (i = 0; i < argc; i++) {
++			if (!strcmp(argv[i], "--")) {
++				dash_dash_pos = i;
++				break;
++			}
++		}
++		if (dash_dash_pos == 0) {
++			tree_ish = "HEAD";
++			argv++;
++		} else if (dash_dash_pos == 1) {
++			tree_ish = argv[0];
++			argv += 2;
++		} else if (dash_dash_pos >= 2)
++			die(_("only one reference expected, %d given."), dash_dash_pos);
++		else if (get_oid(argv[0], &oid)) // not a valid object
++			tree_ish = "HEAD";
++		else {
++			argv++;
++			oid_initialized = 1;
++		}
++	}
++
++	if (!oid_initialized) /* if we've already run get_oid, don't run it again */
++		if (get_oid(tree_ish, &oid))
++			die("Not a valid object name %s", tree_ish);
+ 
+ 	/*
+ 	 * show_recursive() rolls its own matching code and is
+@@ -177,7 +203,7 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
+ 	parse_pathspec(&pathspec, PATHSPEC_ALL_MAGIC &
+ 				  ~(PATHSPEC_FROMTOP | PATHSPEC_LITERAL),
+ 		       PATHSPEC_PREFER_CWD,
+-		       prefix, argv + 1);
++		       prefix, argv);
+ 	for (i = 0; i < pathspec.nr; i++)
+ 		pathspec.items[i].nowildcard_len = pathspec.items[i].len;
+ 	pathspec.has_wildcard = 0;
+diff --git a/t/t3104-ls-tree-optional-args.sh b/t/t3104-ls-tree-optional-args.sh
+new file mode 100755
+index 000000000..e9d8389bc
+--- /dev/null
++++ b/t/t3104-ls-tree-optional-args.sh
+@@ -0,0 +1,63 @@
++#!/bin/sh
++
++test_description='ls-tree test (optional args)
++
++This test runs git-ls-tree with ambiguous positional options.'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	echo hi > test &&
++	cp test test2 &&
++	git add test test2 &&
++	git commit -m initial &&
++	printf "100644 blob 45b983be36b73c0788dc9cbcb76cbb80fc7bb057\ttest\n" > expected1 &&
++	printf "100644 blob 45b983be36b73c0788dc9cbcb76cbb80fc7bb057\ttest2\n" > expected2
++'
++
++# cat appends newlines after every file
++test_expect_success 'show HEAD when given no args' '
++	if [ "$(git ls-tree)" != "$(cat expected1 expected2)" ]; then false; fi
++'
++
++test_expect_success 'show HEAD when given only --' '
++	if [ "$(git ls-tree --)" != "$(cat expected1 expected2)" ]; then false; fi
++'
++
++test_expect_success 'setup' '
++	echo hi > test3 &&
++	echo there >> test1 &&
++	git add test3 test1 &&
++	git commit -m "commit 2" &&
++	printf "100644 blob 45b983be36b73c0788dc9cbcb76cbb80fc7bb057\ttest3\n" > expected3
++'
++
++test_expect_success 'show all files when given only revision' '
++	if [ "$(git ls-tree HEAD~1)" != "$(cat expected1 expected2)" ]; then false; fi
++'
++
++test_expect_success 'show all files when given revision and --' '
++	if [ "$(git ls-tree HEAD~1 --)" != "$(cat expected1 expected2)" ]; then false; fi
++'
++
++test_expect_success 'show file when given -- and file' '
++	if [ "$(git ls-tree -- test3)" != "$(cat expected3)" ]; then false; fi
++'
++
++test_expect_success 'show file when given revision and file' '
++	if [ "$(git ls-tree HEAD~1 test)" != "$(cat expected1)" ]; then false; fi
++'
++
++test_expect_success 'show file when given only file' '
++	if [ "$(git ls-tree test3)" != "$(cat expected3)" ]; then false; fi
++'
++
++test_expect_success 'raise error when given bad args' '
++	test_must_fail  git ls-tree HEAD HEAD --
++'
++
++test_expect_success 'raise error when given bad revision' '
++	test_must_fail git ls-tree bad_revision --
++'
++
++test_done
+-- 
+2.18.GIT
 
-I think my code wasn't very clear here - 'initialized' checks if 'oid'
-has been initialized, not 'object'. AFAIK, structs can't be initialized
-to NULL, but my C is not very good so I'd be interested to learn otherwise.
-
-I'm writing a new patch with variable names that are more descriptive.
-
-> 
->     if (object && get_oid(object, &oid))
->         die(_("not a valid object name: %s", object);
-> 
