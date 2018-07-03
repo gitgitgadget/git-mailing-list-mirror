@@ -2,107 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0423C1F6AC
-	for <e@80x24.org>; Tue,  3 Jul 2018 21:59:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A5741F6AC
+	for <e@80x24.org>; Tue,  3 Jul 2018 22:05:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753384AbeGCV70 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Jul 2018 17:59:26 -0400
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:42558 "EHLO
-        glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753180AbeGCV7Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Jul 2018 17:59:25 -0400
-Received: from glandium by mitsuha.glandium.org with local (Exim 4.91)
-        (envelope-from <mh@glandium.org>)
-        id 1faTKS-00032B-N2; Wed, 04 Jul 2018 06:59:20 +0900
-Date:   Wed, 4 Jul 2018 06:59:20 +0900
-From:   Mike Hommey <mh@glandium.org>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] fast-import: Don't count delta attempts against an empty
- buffer
-Message-ID: <20180703215920.wjzhhp5yn3mt6rqw@glandium.org>
-References: <20180630214106.19848-1-mh@glandium.org>
- <xmqqmuv8qhzt.fsf@gitster-ct.c.googlers.com>
+        id S933300AbeGCWFk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Jul 2018 18:05:40 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:55838 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932516AbeGCWFj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Jul 2018 18:05:39 -0400
+Received: by mail-wm0-f65.google.com with SMTP id v16-v6so3780631wmv.5
+        for <git@vger.kernel.org>; Tue, 03 Jul 2018 15:05:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=ZKwZKkkrH7slVXrlWY03RmhLL1oRLp9DfRs6PBQyOr0=;
+        b=lx76nutpD7NRwe5VWskj4zf+DHPE9xRjt3nHglpltO+iENQicgP/fzuB9SPdA66Shy
+         wvc1bIPvoFtoITZOhgTfDpI9py52UskgVwUUFO09aCQDJZInIpjmIjxTz40Ffplws3gw
+         TY7PbOafkyG6zFm5Ksg4BuKMa96n8KX3ZQ/rVEW9sNoViGIzo/8WYtrGetv9anjA3t8Y
+         cdvFzIlKEB5dQR2glW1Pz6kr2Nnk9Tivfg8Zmq19R/M/gZU3kT7rd8/ZaEtxZUAw+1qz
+         tV30uUm36uEk9mCzl8kUbrSFrzvzJTKYwrWkgdrUGTXoDtcFlvJxiFgcnlyCQzPesYaa
+         hBqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=ZKwZKkkrH7slVXrlWY03RmhLL1oRLp9DfRs6PBQyOr0=;
+        b=gQnTfpxu66BzwqYQrTBn1O3L9QLYmDPycOtNFM/xJBVQyw19xNcyxzgYAW7+twik6m
+         KkRJrLKBv8Ynsh45NZQLWHaEqtfO+zMf8O6FmnLUhscCYINIpDCIsRlaNQQcxi7BC3Ub
+         Reidd7VvLWkMS1c2d1tzuFw9I5Ahcp0hTtvzBIs0KoDeO/tYqSk2dcGETEKUd0ySN/Ue
+         jbgaxURfoFx6u0qszTlFTEL9nCkilbsHCxad4i9PcscbbeZ6HorDxgazSMGS/ip/miNo
+         9v3U+9pZ2Zvp50Lc6NVcNj5Few8n29JFO5xy2H33wtBfc7c+f5hD7ST4Xstq8h7FJvMT
+         dG+Q==
+X-Gm-Message-State: APt69E2LisUGZfk/ACdKLjkEKFO+MOCm3p+r6gOxt0BHU13F0RNN7RNt
+        KNrbA2fHAf6yJAhPxTkhF2w=
+X-Google-Smtp-Source: AAOMgpcRsPay8NWaupdiScunS88715qUVHcdSklZeGNxT+lpogo3/RB45+EzZZBiPCmFbIV2RAeYhw==
+X-Received: by 2002:a1c:bd5:: with SMTP id 204-v6mr5406732wml.160.1530655537901;
+        Tue, 03 Jul 2018 15:05:37 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id q8-v6sm4722467wmb.3.2018.07.03.15.05.36
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 03 Jul 2018 15:05:37 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Joshua Nelson <jyn514@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 1/3] ls-tree: make <tree-ish> optional
+References: <20180703035802.24060-1-jyn514@gmail.com>
+        <CABPp-BFu+m-7Fyf4kj8hUO33vhAxKuAu5JnyL5Tzc7c6Kq+Hjg@mail.gmail.com>
+Date:   Tue, 03 Jul 2018 15:05:36 -0700
+In-Reply-To: <CABPp-BFu+m-7Fyf4kj8hUO33vhAxKuAu5JnyL5Tzc7c6Kq+Hjg@mail.gmail.com>
+        (Elijah Newren's message of "Tue, 3 Jul 2018 00:12:43 -0700")
+Message-ID: <xmqqbmbonff3.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqmuv8qhzt.fsf@gitster-ct.c.googlers.com>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: NeoMutt/20180512
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 03, 2018 at 11:41:42AM -0700, Junio C Hamano wrote:
-> Mike Hommey <mh@glandium.org> writes:
-> 
-> > When the reference buffer is empty, diff_delta returns NULL without
-> > really attempting anything, yet fast-import counts that as a delta
-> > attempt.
-> 
-> But that is an attempt nevertheless, no?  Attempted and failed to
-> find anything useful, that is.  What problem are you trying to solve
-> and what issue are you trying to address, exactly?
-> 
-> ... goes and reads the patch ...
-> 
-> > Signed-off-by: Mike Hommey <mh@glandium.org>
-> > ---
-> >  fast-import.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/fast-import.c b/fast-import.c
-> > index 4d55910ab9..12195d54d7 100644
-> > --- a/fast-import.c
-> > +++ b/fast-import.c
-> > @@ -1076,7 +1076,7 @@ static int store_object(
-> >  		return 1;
-> >  	}
-> >  
-> > -	if (last && last->data.buf && last->depth < max_depth
-> > +	if (last && last->data.len && last->data.buf && last->depth < max_depth
-> >  		&& dat->len > the_hash_algo->rawsz) {
-> >  
-> >  		delta_count_attempts_by_type[type]++;
-> 
-> This is a misleading patch as the title and the proposed log message
-> both talk about "attempts are counted but we didn't actually do
-> anything", implying that the only problem is that the counter is not
-> aligned with reality.  The fact that the post-context we see here
-> only shows the "counting" part does not help us, either.
-> 
-> But the next line in the post-context is actually code that does
-> something important, which is ...
-> 
-> 		delta = diff_delta(last->data.buf, last->data.len,
-> 			dat->buf, dat->len,
-> 			&deltalen, dat->len - the_hash_algo->rawsz);
-> 	} else
-> 		delta = NULL;
-> 
-> 
-> ... and makes the reader realize that the change itself is much
-> better than the patch with 3-line context, the title, and the
-> proposed log message advertises it as ;-)
-> 
-> How about selling it this way instead?
-> 
-> 	fast-import: do not call diff_delta() with empty buffer
-> 
-> 	We know diff_delta() returns NULL, saying "no good delta
-> 	exists for it", when fed an empty data.  Check the length of
-> 	the data in the caller to avoid such a call.  
-> 
-> 	This incidentally reduces the number of attempted deltification
-> 	we see in the final statistics.
-> 
-> or something like that?
+Elijah Newren <newren@gmail.com> writes:
 
-Fair enough. Do you want me to send a v2 with this description?
+> On Mon, Jul 2, 2018 at 8:58 PM, Joshua Nelson <jyn514@gmail.com> wrote:
+>> use syntax similar to `git-checkout` to make <tree-ish> optional for
+>> `ls-tree`. if <tree-ish> is omitted, default to HEAD. infer arguments as
+>> follows:
+>>
+>> 1. if args start with --
+>>         assume <tree-ish> to be HEAD
+>> 2. if exactly one arg precedes --, treat the argument as <tree-ish>
+>> 3. if more than one arg precedes --, exit with an error
+>> 4. if -- is not in args
+>>         a) if args[0] is a valid <tree-ish> object, treat is as such
+>>         b) else, assume <tree-ish> to be HEAD
+>>
+>> in all cases, every argument besides <tree-ish> is treated as a <path>
+>
+> Cool, this is something I've wanted a few times.
 
-Mike
+Hmph, is it, and why?  
+
+I'd prefer *not* to have such a DWIM in a command like ls-tree, aka
+plumbing commands, where predictability is worth 1000 times more
+than ease of typing.
