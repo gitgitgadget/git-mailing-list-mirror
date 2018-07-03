@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC56A1F660
-	for <e@80x24.org>; Tue,  3 Jul 2018 11:45:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 92D331F660
+	for <e@80x24.org>; Tue,  3 Jul 2018 11:47:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752878AbeGCLo7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Jul 2018 07:44:59 -0400
-Received: from mout.gmx.net ([212.227.15.15]:44893 "EHLO mout.gmx.net"
+        id S1752863AbeGCLrQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Jul 2018 07:47:16 -0400
+Received: from mout.gmx.net ([212.227.17.21]:59569 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752844AbeGCLo5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Jul 2018 07:44:57 -0400
-Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MBnvD-1fRlPp3Uz1-00AjOf; Tue, 03
- Jul 2018 13:44:50 +0200
-Date:   Tue, 3 Jul 2018 13:44:35 +0200 (DST)
+        id S1752342AbeGCLrP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Jul 2018 07:47:15 -0400
+Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LsTjw-1gG9uW3gt6-011zQz; Tue, 03
+ Jul 2018 13:47:08 +0200
+Date:   Tue, 3 Jul 2018 13:46:52 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
 cc:     git@vger.kernel.org
-Subject: as/safecrlf-quiet-fix, was Re: What's cooking in git.git (Jun 2018,
- #07; Thu, 28)
+Subject: jh/partial-clone, was Re: What's cooking in git.git (Jun 2018, #07;
+ Thu, 28)
 In-Reply-To: <xmqqd0wawpwy.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1807031344080.75@tvgsbejvaqbjf.bet>
+Message-ID: <nycvar.QRO.7.76.6.1807031346320.75@tvgsbejvaqbjf.bet>
 References: <xmqqd0wawpwy.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:G+J0itj4QzCAPj/9OLrA0dNMLt1kapOBgHkX7Fxsxitb7A5UMw1
- DJkNetTpKm06N4rKOTyappPVzfKGSUl5ihv3WYIqGCyr6t1ibO5ZwZTj/bLi5TuaP3d6/XY
- +XkmpIBdA57PzpsOnXkCH4mOucatkCuhjow1Dmgh5sVneS+XXBYwA92TxzYaq51gVx2TdQR
- gTc5fguoxameRaw0jQn6w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:X5ZcETeVwXU=:+i3cBsndOmlVKGJZTtrk3G
- 02a+ZrZG4GIdVXpNAwWuop/g+l8CAxIDYdBhmlJHy3MUjLHpSIZrf21UjGK+XtEjw7RhO1T6T
- lszl2vJl2HfIqtQSkbHulA66BF15KX+UGe3Uul6hOZoJQzQMK03JKqe+1FEEO4YLgzjRpdJ9+
- mT8Xd8XZ4DNbxKBLXANY1GtWQPwt+aqSKokLBv23Fk2BzhzpDfpGKQGWA/RLz5Bv5N7hbzReg
- XS7N0nUs6tHFq5FbfPNWLEb7e6w1rZFxhGSvsIQMTjuOLUBLL//DLiLBsMMiqAZRul1Dr3mUh
- l/hr1+gtRgO1Qdvhu7SefVo8RvaGwW3ifwexGTXpa1PzZVHPncu+fy9W5VwscaHHDvHhAZA0b
- lclSAdTV30sNLjP1FBr/WOJmgRDr2US2b+7UHuqXlWwizR5PoXnui3UTYTf4l+Ic0IKWgrG8R
- msQT6QKFUPt+LA0gZhG9pipvEEc74hiSiHkXN+yPbS6bAu96/haebCXHj6eTAVu4atyU96PVT
- 4CV2XyhfsRzjWNEyNx/v87Jf/hgGXckRFtrMSO7lUw+PwYK7DhOvzUkx9okjp+PP6GLhHhLZw
- +hY+SPSUI/WuOMhdRuGZHeq9hzRBKlfvXr3ogsYzUUO+mAwJSLe6qU/rHHNf7tOP1S721oEgF
- IcfaeYlCJ7dAj8ypkZX+aNWDLno+52vndqEGxBnTzbm+/mQ4lc34wJ53AB7glHIau/UxzNCiI
- +eQRbhRSOsDx4/BrMhw1odaXrBqVd5UyQYpsfJ1zy2mrLJxRvD0MjDuTXsGXdq+jVZh7Ae9bN
- +eAa1yl
+X-Provags-ID: V03:K1:9a0toPa0iLtd5MhLQ5nvIZ2eeqEQuwOgJxbGa0skESxO8zHNFPJ
+ aolGvrnCCShmsoCt0LBxuP0oXagO+uBRG8+k4VYDESsp5LUlb80FUrHGUalUH31kfSNLtQu
+ b37ofk4a+GwET0MuV6xF1XlyHJG6pDRlfLnPOrJ7Qe7vSwyukdb9yHRr3V7KVqPbHmyQ129
+ dCX1kSMSNl0epnY48UBeQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:z7peuL0fd1E=:PnZomvZCHiBOSoKlGgZqul
+ lcy21lLLpmlSnG/KgZkzJdmNw7Y8/GH062lEZoWxQjrBRRxVWyuSBmeneroXxuETyM9brwPZJ
+ P7LIbzEOy5UybFm09V86EaHbHxBTC6oitQ1VBzBfB6cF/RcOphzX1rkvcqL5P0ETKp+UzWUjk
+ 9no/tSbc4AMzxYKErIoxy4cR9/12zYn+04n/+wxIZhoOjHMOaHrClGPfMAob9qTM0uyUq6C1M
+ 03XPk1QYKMLgR4+IKW4QT3wY9vzAi61ezqsSa3ipbwT9enzJPlRuR+WJD36oPwo6h4fcp4P1w
+ v2mVxDBBAnYDW7iU9nswn6zk4/mPYvUroM5GregfwiFs/rjwUoSFppnKHSypqPx/I3RjEadE2
+ iaTnN3M8XEh9BLYUGmuWm7WrXzeynIh8ekIQQfQT73o8ySKZ2eyWQj3pI8ojus5pD7LnTKoyq
+ YVcJ2QqbK0J1lpI4aZmCEc/FIMk/l0ZY920I0JybU1qdp2meG/t3Ofvl1kLx/6KFWbU9wyg5F
+ ZnutAA2ZBbu0vKYLF6xM4Nivvbwu2Pkgwx2bQ+9Bnurgq4WQwFtaadsodxeiOkJnI5S1VUdx5
+ NpZS5ttgX+pLVSG7thIH3g91NIC4IMjCbg5dUwkBkiia/PSRNmN/3HBx6Sd3Yd0Dgo5QgUd8P
+ nuOsm0qMdM+vvi8ncH0ZfXSV6bSVHzTX6+ps1gU/7Zx5U7ahhVPXmCb95MEK+Qw2alBnsEBGb
+ bpk5nP6C4x/MsceglPCV9waPE1DhN+EdrzMa0rJMLWdaiM05E6+bJKZhLE8hSjgSY+mcvcuH2
+ hatuqGo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -58,11 +58,13 @@ Hi Junio,
 
 On Thu, 28 Jun 2018, Junio C Hamano wrote:
 
-> * as/safecrlf-quiet-fix (2018-06-11) 1 commit
->   (merged to 'next' on 2018-06-13 at b163674843)
->  + config.c: fix regression for core.safecrlf false
+> * jh/partial-clone (2018-06-12) 1 commit
+>   (merged to 'next' on 2018-06-13 at 818f864b0c)
+>  + list-objects: check if filter is NULL before using
 > 
->  Fix for 2.17-era regression around `core.safecrlf`.
+>  The recent addition of "partial clone" experimental feature kicked
+>  in when it shouldn't, namely, when there is no partial-clone filter
+>  defined even if extensions.partialclone is set.
 
 Is this `maint` material?
 
