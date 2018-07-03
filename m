@@ -6,54 +6,54 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C4B61F6AC
-	for <e@80x24.org>; Tue,  3 Jul 2018 21:52:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C4CD01F6AC
+	for <e@80x24.org>; Tue,  3 Jul 2018 21:52:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753228AbeGCVwD (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Jul 2018 17:52:03 -0400
-Received: from mail-oi0-f67.google.com ([209.85.218.67]:41858 "EHLO
+        id S1753388AbeGCVwO (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Jul 2018 17:52:14 -0400
+Received: from mail-oi0-f67.google.com ([209.85.218.67]:34962 "EHLO
         mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753183AbeGCVwC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Jul 2018 17:52:02 -0400
-Received: by mail-oi0-f67.google.com with SMTP id k12-v6so6804308oiw.8
-        for <git@vger.kernel.org>; Tue, 03 Jul 2018 14:52:02 -0700 (PDT)
+        with ESMTP id S1753339AbeGCVwK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Jul 2018 17:52:10 -0400
+Received: by mail-oi0-f67.google.com with SMTP id i12-v6so6834227oik.2
+        for <git@vger.kernel.org>; Tue, 03 Jul 2018 14:52:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=mPnWLlaaxQHcg1P6E71V5VYxO28KUnrEX+UXLKPQ2Qo=;
-        b=Su9DC2GOMiqDx8K+r3uo2QNx/9+7sMp7XiGV2ZHiqQP8Xe+r9j8ax2Cft+w5VEi2Md
-         yto2OPQku+HZ8LkdAti1I/EoFoqqYtqyaQbu1XVhwZtpUOJbQGWDYokRWdosZZRM7suF
-         wmDi/b7YqI/3XQDG6Vjo6+BPTVgjUKRsHAS0yvXaL2Tby4y0lfChSQf5GijObeoplZbt
-         N/W59btXM1HMuyS8mu+PXTvstzmX21xdkLDDai97KfRylW1rlHt+G2pL/aqrq1ns8Tgg
-         Xko2vXKBlJ/oQ4YWL2KdqcYtQXtZN7OGxvubq6DzW/Y9Kqoj0UhAd9AThPt/zUkb3Zqn
-         XgRg==
+        bh=XJ9t7YEkwLuX/c/LjQhX9h076qErfNezYb2grWfhxlU=;
+        b=nj9XaRPvLvgG7cJikGEay/8Ndk9G+JRpuzjM0c6DR1Cms51qB+HodL7PqVSsCtwS4N
+         v3f3NoBZmzHtLlONVGdGmC3Arb2jgNGMwdPFljXVEEkrYzBrZpLg8K7b/GP8KnqWwbIp
+         ZINdYMZD5Eq5JejB7MZTIrp5hCdy0tWkwguHVKXZKOGdtck9cC9KbDvBHm9D+0PreKPG
+         niM3n31Vgp9hTzlZ30WafQ8gFUK0Onygt4J5lu107QQgwsTedhXTYsfANj2yOgU8fHUl
+         eZmJBKseKbyvGWVXjbvxlMOoTz0y2IqT0pHDkVx27huVGX6w5manu4BMm1L+PpVslEBO
+         ZeTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=mPnWLlaaxQHcg1P6E71V5VYxO28KUnrEX+UXLKPQ2Qo=;
-        b=e08VQSPkFq2JUuoeDc60WGDMJsA005cWFpgKL3C2KS7IL2TW1M2leIVC+Or8LHgR+J
-         BHaVweyowF4dxWapIgYxGfv0Qjz8yMgOag9q2R2PECpNy8loq66641sG4ZbiR+pzdfzc
-         nAy2PGoL1JsTEbbWSKn7CgZn9DmGnNgH3YNq05YhLstm9Q7XJSInDxZN0l+/NBpen/II
-         pAV4Db/DeDUox1lcQuYu9bi0u1s8cDmc9OScdn9EJJUEoYQRueaYwYTGn3bo1IqV3DG7
-         6fTp/Vu2EWRoF+2uaBY/xRV6NiERCXjAiSHEgvOVM2TZDfZsKK0vtCUKEiFOqhEcHnXP
-         c7eg==
-X-Gm-Message-State: APt69E0RDsTeH4rPBINWTzOpMKnJZsPcuVPU4No/5fLWRBFZKLy9DGVt
-        9++wk6WHKSx6OQvCgpYCiFZIqoQFIX8=
-X-Google-Smtp-Source: AAOMgpc7R2mu0tnQHMgCl9aniwnEZZZMOqLmEHugiF61/toyiW5dKA2I9BQeyfYu+25fB8darx5I0w==
-X-Received: by 2002:aca:b954:: with SMTP id j81-v6mr24371174oif.356.1530654721408;
-        Tue, 03 Jul 2018 14:52:01 -0700 (PDT)
+        bh=XJ9t7YEkwLuX/c/LjQhX9h076qErfNezYb2grWfhxlU=;
+        b=NXZNZYOS+QZgLSnEQI9RUP41a9kpDmoCNx2FfjiX24h0N9SVap3e6PvNiEBJntoo3X
+         7U7Sxli/xN3xEoz1yU4/t1rHOWKIATJXVqbDc1kCVL0cuHqk9iaMAKpACeVXT+AgIQZv
+         HgSuq9/KEl4BqIqKbRNcPq4whr7wnWl4oLpRov/22lnmwKFTeB83ILkrCVafU1AMedBv
+         6kmahZok7K91/T0jnlmTy//U3n0jDFQSioFxLsmbSYKyWQS5ZvHnUGHtDWTiRN/Aaj0z
+         j6oVg8xlORIxObuT0TLRflDE2ixycNLwpZ5f/g9lm3hXMJYldj2GuwzaLnBv8t4Tfo9c
+         rjSQ==
+X-Gm-Message-State: APt69E3UpxMbCSdCmYqR9J4dYbyXA7eTkAboy1DLtSUJu2JCiqOgEfmW
+        NzkMMj5SD4OrqW9H7rlz7eZW+fX5t8Y=
+X-Google-Smtp-Source: AAOMgpfn+qDy5zNfZqTr2mBxyAIwKmKCeG+DM6ALqn7PuxqIqLoWKwnKV82LskPnwwZL64UzJz14pA==
+X-Received: by 2002:aca:b1c1:: with SMTP id a184-v6mr11520924oif.182.1530654728770;
+        Tue, 03 Jul 2018 14:52:08 -0700 (PDT)
 Received: from localhost ([107.217.158.181])
-        by smtp.gmail.com with ESMTPSA id n20-v6sm890237otf.35.2018.07.03.14.51.58
+        by smtp.gmail.com with ESMTPSA id o16-v6sm1250323otc.3.2018.07.03.14.52.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 03 Jul 2018 14:52:00 -0700 (PDT)
-Date:   Tue, 3 Jul 2018 16:51:56 -0500
+        Tue, 03 Jul 2018 14:52:07 -0700 (PDT)
+Date:   Tue, 3 Jul 2018 16:52:02 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, gitster@pobox.com, avarab@gmail.com
-Subject: [PATCH v3 1/2] grep.c: extract show_line_header()
-Message-ID: <62e19e5583e30117b6754be5de5582a07c9e78dc.1530654455.git.me@ttaylorr.com>
+Subject: [PATCH v3 2/2] grep.c: teach 'git grep --only-matching'
+Message-ID: <702e1d2a26704c7c932ee4b96f32bff4c45e485e.1530654455.git.me@ttaylorr.com>
 References: <cover.1529961706.git.me@ttaylorr.com>
  <cover.1530654455.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -66,89 +66,229 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The grep code invokes show_line() to display the contents of a matched
-or context line in its output. Part of this execution is to print a line
-header that includes information such as the kind, the line- and
-column-number and etc. of that match.
+Teach 'git grep --only-matching', a new option to only print the
+matching part(s) of a line.
 
-To prepare for the addition of an option to print only the matching
-component(s) of a non-context line, we must prepare for the possibility
-that a single line may contain multiple matching parts, and thus will
-need multiple headers printed for a single line.
+For instance, a line containing the following (taken from README.md:27):
 
-Extracting show_line_header allows us to do just that. In the subsequent
-commit, it will be used within the colorization loop to print out only
-the matching parts of a line, optionally with LFs delimiting
-sub-matches.
+  (`man gitcvs-migration` or `git help cvs-migration` if git is
+
+Is printed as follows:
+
+  $ git grep --line-number --column --only-matching -e git -- \
+    README.md | grep ":27"
+  README.md:27:7:git
+  README.md:27:16:git
+  README.md:27:38:git
+
+The patch works mostly as one would expect, with the exception of a few
+considerations that are worth mentioning here.
+
+Like GNU grep, this patch ignores --only-matching when --invert (-v) is
+given. There is a sensible answer here, but parity with the behavior of
+other tools is preferred.
+
+Because a line might contain more than one match, there are special
+considerations pertaining to when to print line headers, newlines, and
+how to increment the match column offset. The line header and newlines
+are handled as a special case within the main loop to avoid polluting
+the surrounding code with conditionals that have large blocks.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- grep.c | 44 +++++++++++++++++++++++++-------------------
- 1 file changed, 25 insertions(+), 19 deletions(-)
+ Documentation/git-grep.txt |  6 ++++-
+ builtin/grep.c             |  6 +++++
+ grep.c                     | 51 ++++++++++++++++++++++++++------------
+ grep.h                     |  1 +
+ t/t7810-grep.sh            | 15 +++++++++++
+ 5 files changed, 62 insertions(+), 17 deletions(-)
 
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index 0de3493b80..be13fc3253 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -17,7 +17,7 @@ SYNOPSIS
+ 	   [-l | --files-with-matches] [-L | --files-without-match]
+ 	   [(-O | --open-files-in-pager) [<pager>]]
+ 	   [-z | --null]
+-	   [-c | --count] [--all-match] [-q | --quiet]
++	   [ -o | --only-matching ] [-c | --count] [--all-match] [-q | --quiet]
+ 	   [--max-depth <depth>]
+ 	   [--color[=<when>] | --no-color]
+ 	   [--break] [--heading] [-p | --show-function]
+@@ -201,6 +201,10 @@ providing this option will cause it to die.
+ 	Output \0 instead of the character that normally follows a
+ 	file name.
+ 
++-o::
++--only-matching::
++  Output only the matching part of the lines.
++
+ -c::
+ --count::
+ 	Instead of showing every matched line, show the number of
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 61bcaf6e58..228b83990f 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -843,6 +843,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOL_F('z', "null", &opt.null_following_name,
+ 			   N_("print NUL after filenames"),
+ 			   PARSE_OPT_NOCOMPLETE),
++		OPT_BOOL('o', "only-matching", &opt.only_matching,
++			N_("show only matching parts of a line")),
+ 		OPT_BOOL('c', "count", &opt.count,
+ 			N_("show the number of matches instead of matching lines")),
+ 		OPT__COLOR(&opt.color, N_("highlight matches")),
+@@ -962,6 +964,10 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 	if (!opt.pattern_list)
+ 		die(_("no pattern given."));
+ 
++	/* --only-matching has no effect with --invert. */
++	if (opt.invert)
++		opt.only_matching = 0;
++
+ 	/*
+ 	 * We have to find "--" in a separate pass, because its presence
+ 	 * influences how we will parse arguments that come before it.
 diff --git a/grep.c b/grep.c
-index 992673fe7e..4ff8a73043 100644
+index 4ff8a73043..49a744f96b 100644
 --- a/grep.c
 +++ b/grep.c
-@@ -1410,26 +1410,9 @@ static int next_match(struct grep_opt *opt, char *bol, char *eol,
- 	return hit;
+@@ -51,6 +51,7 @@ void init_grep_defaults(void)
+ 	color_set(opt->color_match_selected, GIT_COLOR_BOLD_RED);
+ 	color_set(opt->color_selected, "");
+ 	color_set(opt->color_sep, GIT_COLOR_CYAN);
++	opt->only_matching = 0;
+ 	opt->color = -1;
+ 	opt->output = std_output;
  }
+@@ -158,6 +159,7 @@ void grep_init(struct grep_opt *opt, const char *prefix)
+ 	opt->pattern_tail = &opt->pattern_list;
+ 	opt->header_tail = &opt->header_list;
  
--static void show_line(struct grep_opt *opt, char *bol, char *eol,
--		      const char *name, unsigned lno, ssize_t cno, char sign)
-+static void show_line_header(struct grep_opt *opt, const char *name,
-+			     unsigned lno, ssize_t cno, char sign)
++	opt->only_matching = def->only_matching;
+ 	opt->color = def->color;
+ 	opt->extended_regexp_option = def->extended_regexp_option;
+ 	opt->pattern_type_option = def->pattern_type_option;
+@@ -1446,7 +1448,8 @@ static void show_line(struct grep_opt *opt, char *bol, char *eol,
+ 		      const char *name, unsigned lno, ssize_t cno, char sign)
  {
--	int rest = eol - bol;
+ 	int rest = eol - bol;
 -	const char *match_color, *line_color = NULL;
--
--	if (opt->file_break && opt->last_shown == 0) {
--		if (opt->show_hunk_mark)
--			opt->output(opt, "\n", 1);
--	} else if (opt->pre_context || opt->post_context || opt->funcbody) {
--		if (opt->last_shown == 0) {
--			if (opt->show_hunk_mark) {
--				output_color(opt, "--", 2, opt->color_sep);
--				opt->output(opt, "\n", 1);
--			}
--		} else if (lno > opt->last_shown + 1) {
--			output_color(opt, "--", 2, opt->color_sep);
--			opt->output(opt, "\n", 1);
--		}
--	}
- 	if (opt->heading && opt->last_shown == 0) {
- 		output_color(opt, name, strlen(name), opt->color_filename);
- 		opt->output(opt, "\n", 1);
-@@ -1457,6 +1440,29 @@ static void show_line(struct grep_opt *opt, char *bol, char *eol,
- 		output_color(opt, buf, strlen(buf), opt->color_columnno);
- 		output_sep(opt, sign);
++	const char *match_color = NULL;
++	const char *line_color = NULL;
+ 
+ 	if (opt->file_break && opt->last_shown == 0) {
+ 		if (opt->show_hunk_mark)
+@@ -1462,39 +1465,55 @@ static void show_line(struct grep_opt *opt, char *bol, char *eol,
+ 			opt->output(opt, "\n", 1);
+ 		}
  	}
-+}
-+
-+static void show_line(struct grep_opt *opt, char *bol, char *eol,
-+		      const char *name, unsigned lno, ssize_t cno, char sign)
-+{
-+	int rest = eol - bol;
-+	const char *match_color, *line_color = NULL;
-+
-+	if (opt->file_break && opt->last_shown == 0) {
-+		if (opt->show_hunk_mark)
-+			opt->output(opt, "\n", 1);
-+	} else if (opt->pre_context || opt->post_context || opt->funcbody) {
-+		if (opt->last_shown == 0) {
-+			if (opt->show_hunk_mark) {
-+				output_color(opt, "--", 2, opt->color_sep);
-+				opt->output(opt, "\n", 1);
-+			}
-+		} else if (lno > opt->last_shown + 1) {
-+			output_color(opt, "--", 2, opt->color_sep);
-+			opt->output(opt, "\n", 1);
-+		}
+-	show_line_header(opt, name, lno, cno, sign);
+-	if (opt->color) {
++	if (!opt->only_matching) {
++		/*
++		 * In case the line we're being called with contains more than
++		 * one match, leave printing each header to the loop below.
++		 */
++		show_line_header(opt, name, lno, cno, sign);
 +	}
-+	show_line_header(opt, name, lno, cno, sign);
- 	if (opt->color) {
++	if (opt->color || opt->only_matching) {
  		regmatch_t match;
  		enum grep_context ctx = GREP_CONTEXT_BODY;
+ 		int ch = *eol;
+ 		int eflags = 0;
+ 
+-		if (sign == ':')
+-			match_color = opt->color_match_selected;
+-		else
+-			match_color = opt->color_match_context;
+-		if (sign == ':')
+-			line_color = opt->color_selected;
+-		else if (sign == '-')
+-			line_color = opt->color_context;
+-		else if (sign == '=')
+-			line_color = opt->color_function;
++		if (opt->color) {
++			if (sign == ':')
++				match_color = opt->color_match_selected;
++			else
++				match_color = opt->color_match_context;
++			if (sign == ':')
++				line_color = opt->color_selected;
++			else if (sign == '-')
++				line_color = opt->color_context;
++			else if (sign == '=')
++				line_color = opt->color_function;
++		}
+ 		*eol = '\0';
+ 		while (next_match(opt, bol, eol, ctx, &match, eflags)) {
+ 			if (match.rm_so == match.rm_eo)
+ 				break;
+ 
+-			output_color(opt, bol, match.rm_so, line_color);
++			if (opt->only_matching)
++				show_line_header(opt, name, lno, cno, sign);
++			else
++				output_color(opt, bol, match.rm_so, line_color);
+ 			output_color(opt, bol + match.rm_so,
+ 				     match.rm_eo - match.rm_so, match_color);
++			if (opt->only_matching)
++				opt->output(opt, "\n", 1);
+ 			bol += match.rm_eo;
++			cno += match.rm_eo;
+ 			rest -= match.rm_eo;
+ 			eflags = REG_NOTBOL;
+ 		}
+ 		*eol = ch;
+ 	}
+-	output_color(opt, bol, rest, line_color);
+-	opt->output(opt, "\n", 1);
++	if (!opt->only_matching) {
++		output_color(opt, bol, rest, line_color);
++		opt->output(opt, "\n", 1);
++	}
+ }
+ 
+ #ifndef NO_PTHREADS
+diff --git a/grep.h b/grep.h
+index 08a0b391c5..4d474d8ec4 100644
+--- a/grep.h
++++ b/grep.h
+@@ -150,6 +150,7 @@ struct grep_opt {
+ 	int relative;
+ 	int pathname;
+ 	int null_following_name;
++	int only_matching;
+ 	int color;
+ 	int max_depth;
+ 	int funcname;
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index 9312c8daf5..d8c232dbf4 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -262,6 +262,21 @@ do
+ 		fi
+ 	'
+ 
++	test_expect_success "grep $L (with --column, --only-matching)" '
++		{
++			echo ${HC}file:1:5:mmap
++			echo ${HC}file:2:5:mmap
++			echo ${HC}file:3:5:mmap
++			echo ${HC}file:3:13:mmap
++			echo ${HC}file:4:5:mmap
++			echo ${HC}file:4:13:mmap
++			echo ${HC}file:5:5:mmap
++			echo ${HC}file:5:13:mmap
++		} >expected &&
++		git grep --column -n -o -e mmap $H >actual &&
++		test_cmp expected actual
++	'
++
+ 	test_expect_success "grep $L (t-1)" '
+ 		echo "${HC}t/t:1:test" >expected &&
+ 		git grep -n -e test $H >actual &&
 -- 
 2.18.0
-
