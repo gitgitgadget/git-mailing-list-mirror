@@ -2,78 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 083F51F660
-	for <e@80x24.org>; Tue,  3 Jul 2018 11:54:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F8AB1F660
+	for <e@80x24.org>; Tue,  3 Jul 2018 12:38:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753091AbeGCLyo (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Jul 2018 07:54:44 -0400
-Received: from mout.gmx.net ([212.227.15.19]:34155 "EHLO mout.gmx.net"
+        id S1753304AbeGCMil (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Jul 2018 08:38:41 -0400
+Received: from thoth.sbs.de ([192.35.17.2]:39897 "EHLO thoth.sbs.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752958AbeGCLyn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Jul 2018 07:54:43 -0400
-Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M6jIK-1gNuEQ2Ei4-00wTgF; Tue, 03
- Jul 2018 13:54:26 +0200
-Date:   Tue, 3 Jul 2018 13:54:06 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>, Aaron Schrab <aaron@schrab.com>
-cc:     git@vger.kernel.org
-Subject: as/sequencer-customizable-comment-char, was Re: What's cooking in
- git.git (Jun 2018, #07; Thu, 28)
-In-Reply-To: <xmqqd0wawpwy.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1807031353520.75@tvgsbejvaqbjf.bet>
-References: <xmqqd0wawpwy.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ndDfX1D11O/7/wpwFS804K45u+dP9RvdhKp9HbqJ8hmXUqtXq7D
- C1z7KL55GtqMSfa2jX/4lJY2ZVd7UyVq9t1pXQiW+zVX8f1UNWX5OtW7yD92IW+i3Tx+Gwq
- zHbm1sNJOtWn5TMSzu2aPpGZ8cf2eFGgmLA7PPL0Um0igHozdPhlzjysDJxKkvbc2/L9MJ/
- IKQIN0CoyOZyaYoLtsIaQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:iiwORn7bv0Y=:VsnPNwsVAm7cUvEwD7Z0A0
- OczkluNjOFZaw+qqwdgU3LmGr0AAuhQ8apwyaFDlWVsEjBJPg1VnivF2KLZC8Kdw508ar2KiS
- gd6GalESOhZbH9FctDLfl/RD2EE3dSgIwAbfR3uUuq0/3RfN84NwqJrBr/vUexrlA6b5Foznr
- +vykJ8/CqGBdSzr8LoENVbbJkZmiW2z/5RX4+Bx/h7fy86Alk7f5AwaC2XnCC/rpPthO/tuxa
- JDtRcWSMXqmY3Wjm0XDqmiAKkSTKuOm5w1gYArTZjhH7gWgitxh8O4+iZWXrcuBG5q7SDizwb
- T541tkK3N7+Hv+HQrt8ZzxGp2HWMaHr4kaLRrlCFkXBZZK55sBs0+MhBkEMFBhMwJexhSCSX+
- e3KW/m1fLo27BLXMssZQSnc/f4UNi800RNphvD6ijCuKn2qVlg1P8/kMH1uHdnawXEBfsEzY9
- iWmqQyK5iucNGWs9Ym9UKUE9nbgr0/GXEUXhBxY010T9xMhSkg5qeo0ZK+0X3JrPz1qKAbvmk
- p8/S8MXn3koWFqEeR3je4x1RpKmlHmNWw3k1qCbfBX4V2j+/es797Ifdznu+g/kls8pRf4J9v
- FbwMWhcc7JfT8kWIrfhvFfOtbmPEKlipLbzPNIRZeOcLs90LzIoZKsbNaX5o5o1WdnMBo2fY6
- CzYWRd2WQKOJ/JDLm5xg7N61h5zOORmil9nEjaCOZj//r0sVU2g7KzGwZVpL0XXUHqwOq8kCU
- yufGUZ6V/D1na9zlhx+dqXD1SAtStHOD7Oe/suAdtMyfurrfQQf8fCSgtOVPVs/sg0xUDegL8
- RQgq57q
+        id S1752990AbeGCMij (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Jul 2018 08:38:39 -0400
+Received: from mail3.siemens.de (mail3.siemens.de [139.25.208.14])
+        by thoth.sbs.de (8.15.2/8.15.2) with ESMTPS id w63CcN9u014627
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Tue, 3 Jul 2018 14:38:23 +0200
+Received: from md1pvb1c.ad001.siemens.net (md1pvb1c.ad001.siemens.net [139.25.68.40])
+        by mail3.siemens.de (8.15.2/8.15.2) with ESMTP id w63CcME5008580;
+        Tue, 3 Jul 2018 14:38:23 +0200
+From:   Henning Schild <henning.schild@siemens.com>
+To:     git@vger.kernel.org
+Cc:     Ben Toews <mastahyeti@gmail.com>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Henning Schild <henning.schild@siemens.com>
+Subject: [PATCH 2/8] gpg-interface: make parse_gpg_output static and remove from interface header
+Date:   Tue,  3 Jul 2018 14:38:14 +0200
+Message-Id: <192cf9fc4e7a601d2639ec2d82c777d4c7b26e99.1530616446.git.henning.schild@siemens.com>
+X-Mailer: git-send-email 2.16.4
+In-Reply-To: <cover.1530616446.git.henning.schild@siemens.com>
+References: <cover.1530616446.git.henning.schild@siemens.com>
+In-Reply-To: <cover.1530616446.git.henning.schild@siemens.com>
+References: <cover.1530616446.git.henning.schild@siemens.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio & Aaron,
+This commit turns parse_gpg_output into an internal function, the only
+outside user was migrated in an earlier commit.
 
-On Thu, 28 Jun 2018, Junio C Hamano wrote:
+Signed-off-by: Henning Schild <henning.schild@siemens.com>
+---
+ gpg-interface.c | 2 +-
+ gpg-interface.h | 2 --
+ 2 files changed, 1 insertion(+), 3 deletions(-)
 
-> * as/sequencer-customizable-comment-char (2018-06-28) 1 commit
->  - sequencer: use configured comment character
-> 
->  Honor core.commentchar when preparing the list of commits to replay
->  in "rebase -i".
+diff --git a/gpg-interface.c b/gpg-interface.c
+index 0647bd634..09ddfbc26 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -35,7 +35,7 @@ static struct {
+ 	{ 'R', "\n[GNUPG:] REVKEYSIG "},
+ };
+ 
+-void parse_gpg_output(struct signature_check *sigc)
++static void parse_gpg_output(struct signature_check *sigc)
+ {
+ 	const char *buf = sigc->gpg_status;
+ 	int i;
+diff --git a/gpg-interface.h b/gpg-interface.h
+index a5e6517ae..5ecff4aa0 100644
+--- a/gpg-interface.h
++++ b/gpg-interface.h
+@@ -33,8 +33,6 @@ void signature_check_clear(struct signature_check *sigc);
+  */
+ size_t parse_signature(const char *buf, size_t size);
+ 
+-void parse_gpg_output(struct signature_check *);
+-
+ /*
+  * Create a detached signature for the contents of "buffer" and append
+  * it after "signature"; "buffer" and "signature" can be the same
+-- 
+2.16.4
 
-As per
-https://public-inbox.org/git/nycvar.QRO.7.76.6.1806291607501.74@tvgsbejvaqbjf.bet/
-I am inclined to ask for a "v2" (i.e. second iteration of the patch, see
-e.g.
-https://github.com/git-for-windows/git/blob/master/CONTRIBUTING.md#submit-the-patch
-where it talks about submitting an "nth version") that adds an explanation
-to the commit message why the "auto" value is handled correctly by this
-patch, as this is not really obvious from reading the diff alone.
-
-After that change, I think this is ready for `next`.
-
-Ciao,
-Dscho
