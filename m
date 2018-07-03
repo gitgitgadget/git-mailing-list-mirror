@@ -6,127 +6,118 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A8B61F6AC
-	for <e@80x24.org>; Tue,  3 Jul 2018 14:15:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 72B6E1F6AC
+	for <e@80x24.org>; Tue,  3 Jul 2018 14:34:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932799AbeGCOPW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Jul 2018 10:15:22 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57712 "HELO cloud.peff.net"
+        id S1753129AbeGCOeT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Jul 2018 10:34:19 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57726 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S932219AbeGCOPV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Jul 2018 10:15:21 -0400
-Received: (qmail 20116 invoked by uid 109); 3 Jul 2018 14:15:20 -0000
+        id S1752745AbeGCOeS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Jul 2018 10:34:18 -0400
+Received: (qmail 20786 invoked by uid 109); 3 Jul 2018 14:34:18 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 03 Jul 2018 14:15:20 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 03 Jul 2018 14:34:18 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2119 invoked by uid 111); 3 Jul 2018 14:15:20 -0000
+Received: (qmail 2205 invoked by uid 111); 3 Jul 2018 14:34:18 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 03 Jul 2018 10:15:20 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 03 Jul 2018 10:34:18 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Jul 2018 10:15:19 -0400
-Date:   Tue, 3 Jul 2018 10:15:19 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Jul 2018 10:34:16 -0400
+Date:   Tue, 3 Jul 2018 10:34:16 -0400
 From:   Jeff King <peff@peff.net>
-To:     Mike Hommey <mh@glandium.org>
-Cc:     git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: Checks added for CVE-2018-11235 too restrictive?
-Message-ID: <20180703141518.GA21629@sigill.intra.peff.net>
-References: <20180703070650.b3drk5a6kb4k4tnp@glandium.org>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jason@zx2c4.com,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH] fsck: check skiplist for object in fsck_blob()
+Message-ID: <20180703143416.GA23556@sigill.intra.peff.net>
+References: <2fc2d53f-e193-2a2a-9f8f-b3e1d256d940@ramsayjones.plus.com>
+ <20180628114912.GA12901@sigill.intra.peff.net>
+ <0a18acbd-0124-1c92-0046-05b8b035dd28@ramsayjones.plus.com>
+ <20180628174501.GC31766@sigill.intra.peff.net>
+ <db7683ab-1025-d7bb-d0ce-fc4ee28681e1@ramsayjones.plus.com>
+ <20180628220332.GA5128@sigill.intra.peff.net>
+ <9162ed69-d245-8b2f-0dcc-3b345264b029@ramsayjones.plus.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20180703070650.b3drk5a6kb4k4tnp@glandium.org>
+In-Reply-To: <9162ed69-d245-8b2f-0dcc-3b345264b029@ramsayjones.plus.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 03, 2018 at 04:06:50PM +0900, Mike Hommey wrote:
+On Fri, Jun 29, 2018 at 02:10:59AM +0100, Ramsay Jones wrote:
 
-> I had a first shot at that a few months ago, but the format of the
-> metadata branch made it impossible to push to github, hitting its push
-> size limit. With some pre-processing work, I was able to push the data
-> to github, with the intent to come back with a new metadata branch
-> format that would make the push directly possible.
-
-This is sort of tangential to your email here, but I'm curious which
-limit you hit. Too-big blob, tree, or commit?
-
-> Fast forward to this week, where I was trying to upload a new metadata
-> branch, and failed in a rather interesting way: multiple lines looking
-> like:
+> On 28/06/18 23:03, Jeff King wrote:
+> > On Thu, Jun 28, 2018 at 07:53:27PM +0100, Ramsay Jones wrote:
+> [snip]
+> > Yes, it can go in quickly. But I'd prefer not to keep it in the long
+> > term if it's literally doing nothing.
 > 
-> remote: error: object 81eae74b046d284c47e788143bbbcc681cb53418: gitmodulesMissing: unable to read .gitmodules blob
+> Hmm, I don't think you can say its doing nothing!
 > 
-> which, apart from the fact that they have some formatting issue, appear
-> to be new from the fixes for CVE-2018-11235.
-
-Also tangential to your main point (I promise I'll get to it ;) ), but
-what formatting issue do you mean? Are you referring to
-"gitmodulesMissing"? That's a machine-readable tag which means you can
-set "fsck.gitmodulesMissing" to "ignore".
-
-> I can see what those fixes are trying to prevent, but they seem to be
-> overly restrictive, at least in the context of transfer.fsckObjects.
+>     "Yeah, this solution seems sensible. Given that we would
+>      never report any error for that blob, there is no point
+>      in even looking at it."
 > 
-> The core problem is that the mercurial repository has some .gitmodules
-> files in some subdirectories. As a consequence, the git objects storing
-> the info for those mercurial files contain trees with .gitmodules files
-> with a commit ref, and that's what the remote is complaining about.
+> ... is no less true, with or without additional patches! ;-)
+
+True that we don't even bother doing the parsing with your patch. But I
+think I talked myself out of that part being a significant savings
+elsewhere.
+
+I guess it would be OK to leave it in. It just feels like it would be
+vestigial after the rest of the patches.
+
+> > I have some patches which I think solve your problem. They apply on
+> > v2.18.0, but not on v2.17.1 (because they rely on Dscho's increased
+> > passing of config_options in v2.18). Is that good enough?
 > 
-> (Surpringly, it doesn't hit the "non-blob found at .gitmodules" case
-> first, which is weird).
+> Heh, I was also writing patches to address this tonight (but
+> I was also watching the football, so I was somewhat behind you).
+> My patches were not too dissimilar to yours, except I was aiming
+> to allow even do_config_from_file() etc., to suppress errors.
 
-The reason it doesn't hit the "non-blob" case is that we are trying to
-analyze the object itself. So we don't pay any attention to the mode in
-the containing tree, but instead literally look for 81eae74b0. If it
-were a non-blob we'd complain then, but in fact we don't have it at all
-(which is otherwise OK because it's a gitlink).
+I think this should work via do_config_from_file(). The thing it really
+misses is that git_config_with_options() will not respect it, but the
+handling of options there is already a bug (well, I don't think there's
+anything triggerable either before or after my patches, but it feels
+like a bug waiting to happen).
 
-> A small testcase to reproduce looks like this:
+> Your patches were cleaner and more focused than mine. (Instead of
+> turning die_on_error into an enum, I added an additional 'quiet'
+> flag. When pushing the stack (eg. for include files), I had to
+> copy the quiet flag from the parent struct, etc, ... ;-) ).
+
+Yes, I think that's what you have to do pre-v2.18, where we don't pass
+the options struct around.
+
+> > Yes, it would include any syntax error. I also have a slight worry about
+> > that, but nobody seems to have screamed _yet_. :)
 > 
-> $ git init bar; cd bar
-> $ git fast-import <<EOF
-> commit refs/heads/bar
-> committer Bar <bar@bar> 0 +0000
-> data 0
->                                                                  
-> M 160000 81eae74b046d284c47e788143bbbcc681cb53418 bar/.gitmodules
->                                                                  
-> EOF
->
-> [...]
+> Hmm, I don't think we can ignore this. :(
+
+I'm not sure. This has been running on every push to GitHub for the past
+6 weeks, and this is the first report. It's hard to say what that means,
+and technically speaking of course this _is_ a regression.
+
+There's a nearby thread of interest, too, which I cc'd you on:
+
+  https://public-inbox.org/git/20180703070650.b3drk5a6kb4k4tnp@glandium.org/
+
+> > Here are the patches I came up with.
 > 
-> Would it be reasonable to make the transfer.fsckObject checks ignore
-> non-blob .gitmodules?
+> Yes, I applied these locally and tested them. All OK here.
+> 
+> So, FWIW, Ack!
+> 
+> [I still think my original patch, with the 'to_be_skipped'
+> function name changed to 'object_on_skiplist', should be
+> the first patch of the series!]
 
-I'm open to the idea that the new checks are too restrictive (both this
-and the gitmodulesParse error we're discussing in [1]). They definitely
-outlaw things that _used_ to be OK. And the security benefit is a little
-hand-wavy. They're not strictly needed to block the recent
-vulnerability[2].  However, they _could_ protect us from future problems
-(e.g., an overflow in the config-parsing code, which is not accessible
-to attackers outside of .gitmodules). So there is some value in being
-restrictive, but it's mostly hypothetical for now.
+Thanks. If we're going to do any loosening, I think we may want to
+address that _first_, so it can go directly on top of the patches in
+v2.17.1 (because it's a bigger issue than the stray message, IMHO).
 
-So I think we could simply loosen these cases without immediate effect.
-That said, I'm not sure that having a gitlink .gitmodules is sane in the
-first place. Attempting to "git submodule init" there is going to cause
-errors. Well, sort of -- your example actually includes it in a
-subdirectory of the repository, so technically we wouldn't use it for
-real submodules. That fudging (finding .gitmodules anywhere instead of
-just at the root) was a conscious decision to reduce the complexity and
-cost of the check.
-
-It sounds like in this case you don't have existing history that does
-this with .gitmodules, but are rather looking into designing a new
-feature that stuffs data into git trees. I'd be interested to hear a bit
-more about that feature to see if there are other alternatives.
-
-[1] https://public-inbox.org/git/2fc2d53f-e193-2a2a-9f8f-b3e1d256d940@ramsayjones.plus.com/
-
-[2] If you do not have the object, or cannot parse it as config, it
-    cannot have a malicious config name in it. We do have to be wary of
-    cases where we get the tree in one push, and then later get the
-    pointed-to object. But I think for anything _except_ a gitlink, we'd
-    complain about the missing object for the first push. And for a
-    gitlink, we wouldn't check out the blob, so we're OK.
+-Peff
