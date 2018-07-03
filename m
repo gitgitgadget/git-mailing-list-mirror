@@ -2,130 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B7E31F516
-	for <e@80x24.org>; Tue,  3 Jul 2018 07:33:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A4A351F516
+	for <e@80x24.org>; Tue,  3 Jul 2018 08:58:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932896AbeGCHdV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Jul 2018 03:33:21 -0400
-Received: from mail-yb0-f196.google.com ([209.85.213.196]:36018 "EHLO
-        mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932120AbeGCHdU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Jul 2018 03:33:20 -0400
-Received: by mail-yb0-f196.google.com with SMTP id s1-v6so358377ybk.3
-        for <git@vger.kernel.org>; Tue, 03 Jul 2018 00:33:19 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=kxSZ8uMIYo464xxRdCH7/AAjOoOc1laBht7VDN42opo=;
-        b=pdtiz2G8TegxIQWjCWoRIZBtKuK8EgxPW8PvBAxl9D10pOHpYhHffbKsDzugq0na/P
-         fJHtHshdDdOlNe3WVNGy9Hj/vV6lUaCQbcDvTew42ugn6EczzJ/gRnQ/nBGizTyVhD7H
-         LirMeFKrhcFN/zvAGqqO8rAVIC9EoZd1BBL9MLBt3ZaLIiSo2ypFCWJLGY2IV/oFU4qd
-         GD5l37cSLrkSCjN0pcQ5FreStnrH00POS5QATZ5FsgnIfk9FMo/4ZAI0Nl95dZWc7nSH
-         kQEI89lr7Gb5nefcydwy4lT8C8iguNoPNqbMEaz4UyVWAWK6by9bS6wjKDmS8fcitudm
-         o17Q==
-X-Gm-Message-State: APt69E3hkJP1O5LREOTK/HG3K5fQioLwlPe9KEKJSwX5mT2ClwDzJSyT
-        J+J16CXZU6dmLZh3JIVCLq/Qci6LPXq1hq/QV/4=
-X-Google-Smtp-Source: AAOMgpeHiVGUUv/7ctNxgsohG07hU+IRdHf8olZsoALJi/8Trdk+eid/40IEXAWaqBbDgZl9hqasyZJvY+SwhyjkaCc=
-X-Received: by 2002:a25:d38f:: with SMTP id e137-v6mr5404258ybf.287.1530603199388;
- Tue, 03 Jul 2018 00:33:19 -0700 (PDT)
+        id S932388AbeGCI6r (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Jul 2018 04:58:47 -0400
+Received: from portal.weinmann.de ([62.8.140.122]:16756 "EHLO
+        portal.loewensteinmedical.de" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1754500AbeGCI6q (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 3 Jul 2018 04:58:46 -0400
+X-Greylist: delayed 315 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 Jul 2018 04:58:45 EDT
+From:   "Schoen, Martin" <Martin.Schoen@loewensteinmedical.de>
+To:     Stefan Beller <sbeller@google.com>,
+        Pat Thoyts <patthoyts@users.sourceforge.net>
+CC:     git <git@vger.kernel.org>
+Subject: AW: [PATCH] git-gui: use commit message template
+Thread-Topic: [PATCH] git-gui: use commit message template
+Thread-Index: AQHUEj3XCV67FUPmw0ORDCbmYA8WQaR9JsyA
+Date:   Tue, 3 Jul 2018 08:53:28 +0000
+Message-ID: <1530608011429.41203@loewensteinmedical.de>
+References: <20180702182521.EC55341BAC@mail.steuer-voss.de>,<CAGZ79kbwbUSYDKVfxFyYX6LUW6xgBd7dSPethwP9w5Zz4ritdQ@mail.gmail.com>
+In-Reply-To: <CAGZ79kbwbUSYDKVfxFyYX6LUW6xgBd7dSPethwP9w5Zz4ritdQ@mail.gmail.com>
+Accept-Language: de-DE, en-US
+Content-Language: de-DE
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.10.10.120]
+x-c2processedorg: a378c7e9-0079-4426-8197-7b88a526ab38
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <20180703035802.24060-1-jyn514@gmail.com> <20180703035802.24060-3-jyn514@gmail.com>
-In-Reply-To: <20180703035802.24060-3-jyn514@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 3 Jul 2018 03:33:08 -0400
-Message-ID: <CAPig+cSZbGSsUvXmM1+q7ZhHmRg75tuM+=KyuzG5NFuzOdbYVA@mail.gmail.com>
-Subject: Re: [PATCH 3/3] ls-tree: add unit tests for arguments
-To:     jyn514@gmail.com
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+x-msw-jemd-newsletter: false
+X-OriginalId: qfw63ArTDX036572
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 2, 2018 at 11:58 PM Joshua Nelson <jyn514@gmail.com> wrote:
-> Signed-off-by: Joshua Nelson <jyn514@gmail.com>
-> ---
-> diff --git t/t3104-ls-tree-optional-args.sh t/t3104-ls-tree-optional-args.sh
-> @@ -0,0 +1,43 @@
-> +test_expect_success 'initial setup' '
-> +echo hi > test && cp test test2 && git add test test2 && git commit -m initial'
-
-As this is a new test script, please use modern formatting style:
-indent test body with tabs, closing single-quote goes on its own line,
-break lines at &&, and no whitespace between > and the filename. Also,
-it's customary to simply to call the test "setup".
-
-test_expect_success 'setup' '
-    echo hi >test &&
-    cp test test2 &&
-    git add test test2 &&
-    git commit -m initial
-'
-
-> +# cat appends newlines after every file
-
-Why is this talking about a "cat"? Doesn't seem relevant.
-
-> +test_expect_success 'succeed when given no args' 'git ls-tree'
-
-This test seems too minimal. As the intention of this patch series is
-to make git-ls-tree default to HEAD when no treeish is given, I would
-expect the test with no arguments to verify that it did indeed list
-the tree associated with HEAD. As implemented, this test tells us
-nothing other than that it didn't error out or crash.
-
-> +test_expect_success 'succeed when given only --' 'git ls-tree'
-
-Um, what's this supposed to be testing? Presently, it seems to
-duplicate the previous test. I'm guessing it should be running "git
-ls-tree --" instead.
-
-> +test_expect_success 'add second commit' '
-> +echo hi > test3 && git add test3 && git commit -m "commit 2"'
-> +
-> +test_expect_success 'succeed when given revision' '
-> +git ls-tree HEAD~1'
-
-Given how patch 1/3 makes some fundamental changes to how git-ls-tree
-processes its arguments, I would again expect this test to verify that
-it indeed lists the correct tree. As the test is currently
-implemented, we have no way of knowing what tree (if any) it listed.
-
-> +test_expect_success 'succeed when given revision and --' '
-> +git ls-tree HEAD~1 --'
-> +
-> +test_expect_success 'succeed when given -- and file' '
-> +git ls-tree -- test3'
-
-As above, given the fundamental changes to argument processing, I'd
-expect this to verify that the output of this command is indeed what
-is expected.
-
-> +test_expect_success 'do nothing when given bad files' '
-> +git ls-tree -- bad_files'
-
-I wonder about this. Is it just an accident of implementation that
-git-ls-tree doesn't error out in this case, or is it intended behavior
-that it should return 0 even when the file is not in the tree? If the
-0 exit code is just an accident of implementation, then we shouldn't
-be enforcing this by a test (instead, someone perhaps ought to fix
-git-ls-tree).
-
-> +test_expect_success 'succeed when given file from past revision' '
-> +git ls-tree HEAD~1 test'
-
-Same comment as above about verifying gave expected output.
-
-> +test_expect_success 'succeed when given only file' 'git ls-tree test'
-> +
-> +test_expect_success 'raise error when given bad args' '
-> +test_must_fail  git ls-tree HEAD HEAD --'
-> +
-> +test_expect_success 'raise error when given bad revision' '
-> +test_must_fail git ls-tree bad_revision --'
+SGksCnRoYW5rcyBmb3IgdGhlIGluZm8uCgpJIGhhdmUgcmVhZCB0aGUgcGFydHMgb2YgdGhlIGNv
+ZGUgcmVxdWlyZWQgdG8gY3JlYXRlIHRoZSBwYXRjaCwgYnV0IEkgZG8gbm90IHRoaW5rIEkgcmVh
+bGx5IHVuZGVyc3RhbmQgCnRoZSBnaXQtZ3VpIGNvZGUsIG5vciB0Y2wvdGsuCgpUaGlzIGNoYW5n
+ZSB3YXMgcmVxdWVzdGVkIGJ5IHNvbWUgb2YgbXkgY29sbGVhZ3Vlcywgd2hvIGFyZSB1c2VkIHRv
+IGdpdC1ndWkgYW5kIHdvdWxkIGxpa2UgdG8gCmNvbnRpbnVlIHVzaW5nIGl0LiBJIHBlcnNvbmFs
+bHkgcHJlZmVyIG1hZ2l0IG9yIHRoZSBzaGVsbC4gVGhpcyBpcyB3aHkgSSBjYW5ub3QgaW52ZXN0
+IG1vcmUgdGltZSAKaW50byBmaXhpbmcgaXNzdWVzIHdpdGggZ2l0Lmd1aSwgc29ycnkuCgpIb3dl
+dmVyLCBJIHRlc3RlZCBteSBjaGFuZ2Ugd2l0aCBvdXIgY29tbWl0IHRlbXBsYXRlLCB3aGljaCBp
+cyBiYXNpY2FsbHkgMzAgbGluZXMgb2YgY29tbWVudGVkCnRleHQuIFdoZW4gY29tbWl0dGluZywg
+d2UgdW5jb21tZW50IHRoZSBsaW5lcyB0aGF0IGFyZSByZWxldmFudCBmb3IgdGhlIGNvbW1pdC4g
+VGhlIGNvbW1lbnRlZCAKbGluZXMgd2VyZSBjb3JyZWN0bHkgcmVtb3ZlZCBpbiBteSB0ZXN0cy4g
+QXMgSSB1bmRlcnN0YW5kIGl0LCBib3RoIGNhc2VzIHVzZSB0aGUgc2FtZSBtZWNoYW5pc20sCnNv
+IEkgdGhpbmsgdGhpcyBpcyBhIGJ1Zy4gSSBjYW5ub3QgbWFrZSBhbnkgcHJvbWlzZXMsIGJ1dCBJ
+IHdpbGwgbG9vayBpbnRvIGl0LCBzaG91bGQgaXQgaGFwcGVuIGhlcmUuCgpUaGUgYnJva2VuIGVu
+Y29kaW5nIGlzIHdlaXJkLiBUaGUgcGF0Y2ggZ2VuZXJhdGVkIGJ5IGZvcm1hdC1wYXRjaCBpcyBj
+bGVhbiB1dGYtOCBhbmQgbG9va3Mgb2theSBpbiBhbiAKZWRpdG9yLiBNYXliZSBpdCB3YXMgY29y
+cnVwdGVkIHNvbWV3aGVyZSBpbiB0cmFuc2Zlci4KCkJlc3QgUmVnYXJkcwoKTMO2d2Vuc3RlaW4g
+TWVkaWNhbCBUZWNobm9sb2d5IEdtYkggKyBDby4gS0cKaS5BLiBNYXJ0aW4gU2Now7ZuCkVudHdp
+Y2tsdW5nc2luZ2VuaWV1ciBGaXJtd2FyZSwgRiZFIFNjaGxhZnRoZXJhcGllL0hlaW1iZWF0bXVu
+Zy9QSQpLcm9uc2FhbHN3ZWcgNDAg4oiZIDIyNTI1IEhhbWJ1cmcKVDogKzQ5IDQwIDU0NzAyLTEy
+NiDiiJkgRjogKzQ5IDQwIDU0NzAyLTQ3MwpNYXJ0aW4uU2Nob2VuQGxvZXdlbnN0ZWlubWVkaWNh
+bC5kZSDiiJkgd3d3LmxvZXdlbnN0ZWlubWVkaWNhbC5kZQoKR2VzY2jDpGZ0c2bDvGhydW5nOiBC
+ZW5qYW1pbiBMw7Z3ZW5zdGVpbiwgU2FzY2hhIEzDtndlbnN0ZWluIOKImSBSZWdpc3Rlcmdlcmlj
+aHQ6IEFtdHNnZXJpY2h0CkhhbWJ1cmcsIEFidC4gQSwgTnIuIDY3IDY5OCwgVVN0LUlkTnIuIERF
+IDExODA1MTU5OCwgIFdFRUUtUmVnLk5yLiBERSA2MzM5MTE0IOKImSBLb21wbGVtZW50w6RyOiBM
+w7Z3ZW5zdGVpbiBNZWRpY2FsClRlY2hub2xvZ3kgVmVyd2FsdHVuZ3MgR21iSCwgSGFtYnVyZyDi
+iJkgUmVnaXN0ZXJnZXJpY2h0IEFtdHNnZXJpY2h0IEhhbWJ1cmcsICBBYnQuIEIsIE5yLiA4Njc4
+CgpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fClZvbjogU3RlZmFuIEJl
+bGxlciA8c2JlbGxlckBnb29nbGUuY29tPgpHZXNlbmRldDogTW9udGFnLCAyLiBKdWxpIDIwMTgg
+MjE6NDkKQW46IFNjaG9lbiwgTWFydGluOyBQYXQgVGhveXRzCkNjOiBnaXQKQmV0cmVmZjogUmU6
+IFtQQVRDSF0gZ2l0LWd1aTogdXNlIGNvbW1pdCBtZXNzYWdlIHRlbXBsYXRlCgorY2MgUGF0LCBp
+biB0aGUgaG9wZSBvZiBhbiBhbnN3ZXIuCgpTZWUKaHR0cHM6Ly9wdWJsaWMtaW5ib3gub3JnL2dp
+dC94bXFxZDB6NjF4c3YuZnNmQGdpdHN0ZXItY3QuYy5nb29nbGVycy5jb20vCm9uIHRoZSBzdGF0
+ZSBvZiBnaXQtZ3VpIGFuZCBpdHMgbGFjayBvZiBtYWludGVuYW5jZS4gTWF5YmUgSnVuaW8gd2ls
+bApwaWNrdXAgdGhpcyBwYXRjaC4KCk9uIE1vbiwgSnVsIDIsIDIwMTggYXQgMTE6MzUgQU0gTWFy
+dGluIFNjaMO2bgo8TWFydGluLlNjaG9lbkBsb2V3ZW5zdGVpbm1lZGljYWwuZGU+IHdyb3RlOgo+
+Cj4gVXNlIHRoZSBmaWxlIGRlc2NyaWJlZCBieSBjb21taXQudGVtcGxhdGUgKGlmIHNldCkgdG8g
+c2hvdyB0aGUgY29tbWl0IG1lc3NhZ2UKPiB0ZW1wbGF0ZSwganVzdCBsaWtlIG90aGVyIEdVSXMu
+CgpZb3Ugc2VlbSB0byBoYXZlIGxvb2tlZCBhdCBhbmQgdW5kZXJzdG9vZCB0aGUgZ2l0LWd1aSBj
+b2RlLCBzbwpJIGhhdmUgYSBmZWF0dXJlIHJlcXVlc3QgZm9yIHlvdSBpZiB5b3UgZG9uJ3QgbWlu
+ZDoKZ2l0LWd1aSB0YWtlcyBhIGNvbW1pdCBtZXNzYWdlIGFzIGEgc3VnZ2VzdGlvbiBmcm9tIGdp
+dCwgZm9yIGV4YW1wbGUKYWZ0ZXIgYSBmYWlsZWQgbWVyZ2UsIHdoZW4geW91IG9wZW4gZ2l0LWd1
+aSwgaXQgcHJlLXBvcHVsYXRlcyB0aGUKY29tbWl0IG1lc3NhZ2Ugd2l0aAoKICA8cHJldmlvdXMg
+Y29tbWl0IG1lc3NhZ2U+CgogICMgQ29uZmxpY3Q6IDxmaWxlLmM+Cgp3aGljaCBnaXQga25vd3Mg
+aG93IHRvIGRlYWwgd2l0aCBhcyAnIycgaXMgYSBjb21tZW50IGNoYXJhY3Rlci4gSG93ZXZlciB3
+aGVuCnVzaW5nIGdpdC1ndWkgdG8gY29tcG9zZSBjb21taXQgbWVzc2FnZXMsIHRoZXNlIGNvbW1l
+bnRlZCBjb25mbGljdHMgYXJlIG5vdApjdXQgb3V0IGFzIGdpdC1ndWkgZG9lc24ndCBrbm93IGhv
+dyB0byBoYW5kbGUgY29tbWVudHM/CgpTbyBpdCB3b3VsZCBiZSBhd2Vzb21lIGlmIGdpdC1ndWkg
+Y291bGQgZWl0aGVyIHJlc3BlY3QgJyMnIGFzIGEgY29tbWVudCBjaGFyLApvciByYXRoZXIgJ2Nv
+cmUuY29tbWVudENoYXInCgo+Cj4gU2lnbmVkLW9mZi1ieTogTWFydGluIFNjaD8/biA8TWFydGlu
+LlNjaG9lbkBsb2V3ZW5zdGVpbm1lZGljYWwuZGU+CgpUaGUgZW5jb2Rpbmcgc2VlbXMgdG8gYmUg
+YnJva2VuIGhlcmUsIGFzIEkgc2VlICc/PycgaW4geW91ciBsYXN0IG5hbWUuCgo+IC0tLQo+ICBn
+aXQtZ3VpLnNoICAgICB8IDkgKysrKysrKysrCj4gIGxpYi9jb21taXQudGNsIHwgMSArCj4gIDIg
+ZmlsZXMgY2hhbmdlZCwgMTAgaW5zZXJ0aW9ucygrKQo+Cj4gZGlmZiAtLWdpdCBhL2dpdC1ndWku
+c2ggYi9naXQtZ3VpLnNoCj4gaW5kZXggNWJjMjFiOC4uNmZjNTk4ZCAxMDA3NTUKPiAtLS0gYS9n
+aXQtZ3VpLnNoCj4gKysrIGIvZ2l0LWd1aS5zaAo+IEBAIC0xNjExLDYgKzE2MTEsMTIgQEAgcHJv
+YyBydW5fcHJlcGFyZV9jb21taXRfbXNnX2hvb2sge30gewo+ICAgICAgICAgICAgICAgICBmY29u
+ZmlndXJlICRmZF9zbSAtZW5jb2RpbmcgdXRmLTgKPiAgICAgICAgICAgICAgICAgcHV0cyAtbm9u
+ZXdsaW5lICRmZF9wY20gW3JlYWQgJGZkX3NtXQo+ICAgICAgICAgICAgICAgICBjbG9zZSAkZmRf
+c20KPiArICAgICAgIH0gZWxzZWlmIHtbZmlsZSBpc2ZpbGUgW2dldF9jb25maWcgY29tbWl0LnRl
+bXBsYXRlXV19IHsKPiArICAgICAgICAgICAgICAgc2V0IHBjbV9zb3VyY2UgInRlbXBsYXRlIgo+
+ICsgICAgICAgICAgICAgICBzZXQgZmRfc20gW29wZW4gW2dldF9jb25maWcgY29tbWl0LnRlbXBs
+YXRlXSByXQo+ICsgICAgICAgICAgICAgICBmY29uZmlndXJlICRmZF9zbSAtZW5jb2RpbmcgdXRm
+LTgKPiArICAgICAgICAgICAgICAgcHV0cyAtbm9uZXdsaW5lICRmZF9wY20gW3JlYWQgJGZkX3Nt
+XQo+ICsgICAgICAgICAgICAgICBjbG9zZSAkZmRfc20KPiAgICAgICAgIH0gZWxzZSB7Cj4gICAg
+ICAgICAgICAgICAgIHNldCBwY21fc291cmNlICIiCj4gICAgICAgICB9Cj4gQEAgLTE2MjAsNiAr
+MTYyNiw5IEBAIHByb2MgcnVuX3ByZXBhcmVfY29tbWl0X21zZ19ob29rIHt9IHsKPiAgICAgICAg
+IHNldCBmZF9waCBbZ2l0aG9va19yZWFkIHByZXBhcmUtY29tbWl0LW1zZyBcCj4gICAgICAgICAg
+ICAgICAgICAgICAgICAgW2dpdGRpciBQUkVQQVJFX0NPTU1JVF9NU0ddICRwY21fc291cmNlXQo+
+ICAgICAgICAgaWYgeyRmZF9waCBlcSB7fX0gewo+ICsgICAgICAgICAgICAgICBpZiB7JHBjbV9z
+b3VyY2UgZXEgInRlbXBsYXRlIn0gewo+ICsgICAgICAgICAgICAgICAgICAgICAgIGxvYWRfbWVz
+c2FnZSBQUkVQQVJFX0NPTU1JVF9NU0cKPiArICAgICAgICAgICAgICAgfQo+ICAgICAgICAgICAg
+ICAgICBjYXRjaCB7ZmlsZSBkZWxldGUgW2dpdGRpciBQUkVQQVJFX0NPTU1JVF9NU0ddfQo+ICAg
+ICAgICAgICAgICAgICByZXR1cm4gMDsKPiAgICAgICAgIH0KPiBkaWZmIC0tZ2l0IGEvbGliL2Nv
+bW1pdC50Y2wgYi9saWIvY29tbWl0LnRjbAo+IGluZGV4IDgzNjIwYjcuLjE2OGY2OTYgMTAwNjQ0
+Cj4gLS0tIGEvbGliL2NvbW1pdC50Y2wKPiArKysgYi9saWIvY29tbWl0LnRjbAo+IEBAIC01MDYs
+NiArNTA2LDcgQEAgQSByZXNjYW4gd2lsbCBiZSBhdXRvbWF0aWNhbGx5IHN0YXJ0ZWQgbm93Lgo+
+ICAgICAgICAgdW5sb2NrX2luZGV4Cj4gICAgICAgICByZXNob3dfZGlmZgo+ICAgICAgICAgdWlf
+c3RhdHVzIFttYyAiQ3JlYXRlZCBjb21taXQgJXM6ICVzIiBbc3RyaW5nIHJhbmdlICRjbXRfaWQg
+MCA3XSAkc3ViamVjdF0KPiArICAgICAgIHJlc2NhbiB1aV9yZWFkeQo+ICB9Cj4KPiAgcHJvYyBj
+b21taXRfcG9zdGNvbW1pdF93YWl0IHtmZF9waCBjbXRfaWR9IHsKPiAtLQo+IDIuMTcuMQo+Cg==
