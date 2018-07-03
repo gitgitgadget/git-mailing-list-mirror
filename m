@@ -2,133 +2,179 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF1B11F6AC
-	for <e@80x24.org>; Tue,  3 Jul 2018 21:05:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4566F1F6AC
+	for <e@80x24.org>; Tue,  3 Jul 2018 21:09:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753104AbeGCVFU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Jul 2018 17:05:20 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:53249 "EHLO
+        id S1753085AbeGCVJF (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Jul 2018 17:09:05 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:36131 "EHLO
         mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752872AbeGCVFT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Jul 2018 17:05:19 -0400
-Received: by mail-wm0-f66.google.com with SMTP id b188-v6so3684893wme.3
-        for <git@vger.kernel.org>; Tue, 03 Jul 2018 14:05:19 -0700 (PDT)
+        with ESMTP id S1752872AbeGCVJE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Jul 2018 17:09:04 -0400
+Received: by mail-wm0-f66.google.com with SMTP id s14-v6so3638195wmc.1
+        for <git@vger.kernel.org>; Tue, 03 Jul 2018 14:09:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=n0+7yXrh+X/ILDgWAwSYiFut7lZdUvIhr9vXhiCj0LM=;
-        b=mVv9UfgiI5G56Q4w5H0o/JcKi2kSI4CBO9eO1TdVl3qJ7AN5xxbunhWgcVSAdXr5UX
-         D6U6nJsXKwx1OBNlc4KBh0Y+LK5PMAbAPixmCTOF7PX57yQ+tkyDEyBSAWH/VuK5bdDa
-         BRA7ftFbD6UHyGpuigu7f/ERw+/STAHrv2t1xCA424umrWeR4Wb4R+0WeRQPeT3f9zLW
-         8XetwjXisOlIzT9CmwobmU4YIZYiQDLl0XULPuGPUgQZl4KRAVdvhbqoD6T+CBhTLqwH
-         X1ArrU7t35F1N2EXxzq5goDklXwwPhUzl3hDxr2MxhDUObDdzW///XaJf4Dj/c7OZmXQ
-         2p1g==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=r/F84z7BtUFiXOV2/Y/GgDekOR0GUuOyYlL9IpuuKBQ=;
+        b=KN/2hj6LmhzvEMY3JZIFVZMgYkpVfyGiJ9/Gmu0uOTCU5slmxGOullDWFgKecpAFzh
+         RC7SvERTQFnXFc2Mlnwe26Q9ToYxgVQRoZrHDkyMnPJazlC16/Ht6RJJzzJjYeVYRLZb
+         lJUQzUXuesmErL75OHateYWpLxPwkTbidcyod7PSCdmU/2vPYY6YS4BY3luax89M4bJw
+         PGvLof3W14cneOFNzDjpfJLq1gdV12n4N3f9xVFKxJCvJ8G1L/PVavYGlGUXqB+oJsUw
+         RHZ6HH1LZq063xWZO/uq3sdDAZk6Z7CzZrjN4CnXgn9tbVXIzTSCByKsdCcATCEbcPv2
+         mH1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=n0+7yXrh+X/ILDgWAwSYiFut7lZdUvIhr9vXhiCj0LM=;
-        b=Jkh5lNFVVZJfAWQB6uDxaxoL4Y73yQSUD2OwXatKkDjtMY2upjwgfqda2pTci3b/50
-         pnFHF/i7E6j3fC5pbgg/zPEnLzvj/gBIQJMWXGryhvzfqPBRSgQxpQLiNSOd9kPhTAvR
-         8uSMA4Ag7DEEqLliHw+irxhiQLMiVt906WBJ4lii6QCMKmmS5SH4QzOa+nfuurdyXrxB
-         vcfaxz7GcR7LhQ2HHNzoJI49Ejogit4HGBWMucAogqRZbAYo0qUrbJ/L3VRw/GOKEVfY
-         pb9ltLhLA3bjIxoF0Kp8KbmwsbA/6X6kW4O2TFnJKwD6iYmvC0MUrENz3ofXN4iMPQ5Q
-         vLvA==
-X-Gm-Message-State: APt69E1AlPxsGCTSo1vqb0Vc82s/30dCrLPOSBag2ksk2N9qhimrB/ZF
-        IwFPxUUHgYPPec7FOCLLvD5jSeaB
-X-Google-Smtp-Source: AAOMgpcx2zxcZ8LDO6YKOE5ExskxVmS14PPFR/9KpPsdP8IYjt+/WqUnXNtYVeaNznlEFXc4Xv91JA==
-X-Received: by 2002:a1c:1182:: with SMTP id 124-v6mr11451283wmr.75.1530651917852;
-        Tue, 03 Jul 2018 14:05:17 -0700 (PDT)
-Received: from localhost ([2.30.90.233])
-        by smtp.gmail.com with ESMTPSA id o17-v6sm1487905wrp.62.2018.07.03.14.05.15
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=r/F84z7BtUFiXOV2/Y/GgDekOR0GUuOyYlL9IpuuKBQ=;
+        b=lV+32LiS3guuj6dukkSE76sbwMmihT+SwX/DlWJOmFyuRENtx4wKjqCAVelk8RFYNs
+         E+enM+IrG9xONmevgafCaMIrLBQuwY5YSjN4/+DMdtGQOS6fI0u4Z5B7wnRT60S4iL1C
+         irXBnQu7oE2fHHtVdHJbdpLTMb95bamcI6FSbNGIU/tWvxgYrK8K/o7RZyFzge7O8avm
+         oXnpcfkZvTV7emNUkLvvOPtBN5d1XeO2HYjvGoh/cu3zu/wpUsekX4vQo3jDOE5QcpTX
+         1KwH4DpZ5XCke4Dg5PAREc3E05+sp2C1k9lUlJeXKDFjEJ715Nk8wpjsMU4PPMXF7uAm
+         fbZw==
+X-Gm-Message-State: APt69E068BEILkw3CQXU8DI92PscX2jjyl4uLcCz+OCFFq2HvIv5JON4
+        PAO4kw3XlwLQws3gp+msJEY=
+X-Google-Smtp-Source: AAOMgpc5+2eKCtYJ/ub1OPetw3J3n2ZC6Nt+fujWfWYj+cD2+TKVsd4iqlvTB6EgGG7zf50g/Rn/8Q==
+X-Received: by 2002:a1c:37cd:: with SMTP id e196-v6mr9381851wma.84.1530652142341;
+        Tue, 03 Jul 2018 14:09:02 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id 39-v6sm4144632wrv.79.2018.07.03.14.09.01
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 03 Jul 2018 14:05:16 -0700 (PDT)
-Date:   Tue, 3 Jul 2018 22:05:15 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 00/10] rerere: handle nested conflicts
-Message-ID: <20180703210515.GA31234@hank.intra.tgummerer.com>
-References: <20180520211210.1248-1-t.gummerer@gmail.com>
- <20180605215219.28783-1-t.gummerer@gmail.com>
+        Tue, 03 Jul 2018 14:09:01 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Pratik Karki <predatoramigo@gmail.com>
+Cc:     git@vger.kernel.org, christian.couder@gmail.com,
+        Johannes.Schindelin@gmx.de, sbeller@google.com,
+        alban.gruin@gmail.com
+Subject: Re: [PATCH v2 1/4] rebase: start implementing it as a builtin
+References: <20180628074655.5756-1-predatoramigo@gmail.com>
+        <20180702091509.15950-1-predatoramigo@gmail.com>
+        <20180702091509.15950-2-predatoramigo@gmail.com>
+Date:   Tue, 03 Jul 2018 14:09:00 -0700
+In-Reply-To: <20180702091509.15950-2-predatoramigo@gmail.com> (Pratik Karki's
+        message of "Mon, 2 Jul 2018 15:00:06 +0545")
+Message-ID: <xmqqva9wni1f.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180605215219.28783-1-t.gummerer@gmail.com>
-User-Agent: Mutt/1.10.0 (2018-05-17)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/05, Thomas Gummerer wrote:
-> The previous round was at
-> <20180520211210.1248-1-t.gummerer@gmail.com>.
-> 
-> Thanks Junio for the comments on the previous round.
-> 
-> Changes since v2:
->  - lowercase the first letter in some error/warning messages before
->    marking them for translation
->  - wrap paths in output in single quotes, for consistency, and to make
->    some of the messages the same as ones that are already translated
->  - mark messages in builtin/rerere.c for translation as well, which I
->    had previously forgotten.
->  - expanded the technical documentation on rerere.  The entire
->    document is basically rewritten.
->  - changed the test in 6/10 to just fake a conflict marker inside of
->    one of the hunks instead of using an inner conflict created by a
->    merge.  This is to make sure the codepath is still hit after we
->    handle inner conflicts properly.
->  - added tests for handling inner conflict markers
->  - added one commit to recalculate the conflict ID when an unresolved
->    conflict is committed, and the subsequent operation conflicts again
->    in the same file.  More explanation in the commit message of that
->    commit.
+Pratik Karki <predatoramigo@gmail.com> writes:
 
-Now that 2.18 is out (and I'm caught up on the list after being away
-from it for a few days), is there any interest in this series? I guess
-it was overlooked as it's been sent in the rc phase for 2.18.
+> This commit imitates the strategy that was used to convert the
+> difftool to a builtin, see be8a90e (difftool: add a skeleton for the
+> upcoming builtin, 2017-01-17) for details: This commit renames the
+> shell script `git-rebase.sh` to `git-legacy-rebase.sh` and hands off to
+> it by default.
 
-I think the most important bit here is 6/10 which fixes a crash that
-can happen in "normal" usage of git.  The translation bits are also
-nice to have I think, but I could send them in a different series if
-that's preferred.
+I'd appreciate it if mentors can teach a bit more log message
+writing to students, thanks.
 
-The other patches would be nice to have, but are arguably less
-important.
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> new file mode 100644
+> index 000000000..c0c9d6cd2
+> --- /dev/null
+> +++ b/builtin/rebase.c
+> @@ -0,0 +1,55 @@
+> +/*
+> + * "git rebase" builtin command
 
-> range-diff below.  A few commits changed enough for range-diff
-> to give up showing the differences in those, they are probably best
-> reviewed as the whole patch anyway:
->
-> [snip]
-> 
-> Thomas Gummerer (10):
->   rerere: unify error messages when read_cache fails
->   rerere: lowercase error messages
->   rerere: wrap paths in output in sq
->   rerere: mark strings for translation
->   rerere: add some documentation
->   rerere: fix crash when conflict goes unresolved
->   rerere: only return whether a path has conflicts or not
->   rerere: factor out handle_conflict function
->   rerere: teach rerere to handle nested conflicts
->   rerere: recalculate conflict ID when unresolved conflict is committed
-> 
->  Documentation/technical/rerere.txt | 182 +++++++++++++++++++++
->  builtin/rerere.c                   |   4 +-
->  rerere.c                           | 246 ++++++++++++++---------------
->  t/t4200-rerere.sh                  |  67 ++++++++
->  4 files changed, 372 insertions(+), 127 deletions(-)
->  create mode 100644 Documentation/technical/rerere.txt
-> 
-> -- 
-> 2.18.0.rc1.242.g61856ae69
-> 
+Nice ;-)
+
+> + * Copyright (c) 2018 Pratik Karki
+> + */
+> +
+> +#include "builtin.h"
+> +#include "run-command.h"
+> +#include "exec-cmd.h"
+> +#include "argv-array.h"
+> +#include "dir.h"
+> +
+> +static int use_builtin_rebase(void)
+> +{
+> +	struct child_process cp = CHILD_PROCESS_INIT;
+> +	struct strbuf out = STRBUF_INIT;
+> +	int ret;
+> +
+> +	argv_array_pushl(&cp.args,
+> +			 "config", "--bool", "rebase.usebuiltin", NULL);
+> +	cp.git_cmd = 1;
+> +	if (capture_command(&cp, &out, 6))
+> +		return 0;
+> +
+> +	strbuf_trim(&out);
+> +	ret = !strcmp("true", out.buf);
+> +	strbuf_release(&out);
+> +	return ret;
+> +}
+
+OK.  As we give "--bool", it is perfectly OK to check with "true"
+and no other forms of positive setting.
+
+> +int cmd_rebase(int argc, const char **argv, const char *prefix)
+> +{
+> +	/*
+> +	* NEEDSWORK: Once the builtin rebase has been tested enough
+> +	* and git-legacy-rebase.sh is retired to contrib/, this preamble
+
+Align these asterisks, i.e.
+
+	/*
+	 * NEEDSWORK: ...
+	 */
+
+> +	if (!use_builtin_rebase()) {
+> +		const char *path = mkpath("%s/git-legacy-rebase",
+> +					  git_exec_path());
+> +
+> +		if (sane_execvp(path, (char **)argv) < 0)
+> +			die_errno("could not exec %s", path);
+> +
+> +		return 0;
+
+Hmph, I know this was inherited from the old commit you modelled
+this patch after, but can sane_execvp() ever give us control back
+with non-negative value returned?  IOW I am wondering if this should
+be more like
+
+	if (sane_execvp(...) < 0)
+		die_errno(...);
+	else
+		die("sane_execvp() returned???");
+
+Not worth a reroll, but something to think about.
+
+> diff --git a/git-rebase.sh b/git-legacy-rebase.sh
+> similarity index 100%
+> rename from git-rebase.sh
+> rename to git-legacy-rebase.sh
+> diff --git a/git.c b/git.c
+> index 9dbe6ffaa..bacfefb2d 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -518,6 +518,12 @@ static struct cmd_struct commands[] = {
+>  	{ "pull", cmd_pull, RUN_SETUP | NEED_WORK_TREE },
+>  	{ "push", cmd_push, RUN_SETUP },
+>  	{ "read-tree", cmd_read_tree, RUN_SETUP | SUPPORT_SUPER_PREFIX},
+> +	/*
+> +	 *NEEDSWORK: Until the rebase is independent and needs no redirection
+> +	 to rebase shell script this is kept as is, then should be changed to
+> +	 RUN_SETUP | NEED_WORK_TREE
+> +	*/
+
+Likewise.
+
+> +	{ "rebase", cmd_rebase },
+>  	{ "rebase--helper", cmd_rebase__helper, RUN_SETUP | NEED_WORK_TREE },
+>  	{ "receive-pack", cmd_receive_pack },
+>  	{ "reflog", cmd_reflog, RUN_SETUP },
