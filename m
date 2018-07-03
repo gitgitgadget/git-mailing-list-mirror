@@ -2,113 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DDD3A1F6AC
-	for <e@80x24.org>; Tue,  3 Jul 2018 16:05:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 227841F6AC
+	for <e@80x24.org>; Tue,  3 Jul 2018 16:55:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932377AbeGCQFU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Jul 2018 12:05:20 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35483 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932209AbeGCQFT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Jul 2018 12:05:19 -0400
-Received: by mail-wm0-f67.google.com with SMTP id z137-v6so2903226wmc.0
-        for <git@vger.kernel.org>; Tue, 03 Jul 2018 09:05:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=Cm1BcZ0zqmhdRrM/MgCcaJlcd4Fk4vkZMhhF9Eiubf0=;
-        b=jlaVhvlX6PLF4cx9BqeGNNDR66PgCtszx2C/+nvBfp1ljTeTLNFEvIJ3g5T0vwclDc
-         EhxArRFb+aa91n7o9US31HdUEaRgW07qCaaz5jVNMqtadWbGvulXBJblqTs1UJpeWFsn
-         6ewTf9DYPBLjI6Ja2BLA3xNaD2SxXKKckaweio7Li6PBkENK/acZ8bQxW2UOJwEhPLB3
-         ELRobpTJdB6B5GLkMi3c0lCmVxafkTCdMZ4e8+GmowPU9PSL5zWJwHLuVIYWsqJEiveJ
-         ZbIU7Z4mHTW5fNEX7fTEYsQ6IR7GLJIPIi0yf+oaTdJahuAvSZesELKk08lDZXuodd65
-         gydw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=Cm1BcZ0zqmhdRrM/MgCcaJlcd4Fk4vkZMhhF9Eiubf0=;
-        b=lvGgxgUaOQl+YBvptrCdWMkuZTT6mAgkVGTBvp/18MjJUi8udZqmCLIb1M5v//zxOM
-         glS5VIvkTrhfjX4VvgP0DumcyQVTOKVPKhxHzrRj0yyqSVAqoXZ7mH73izGFGG8OoFbO
-         bGiPz4nWfv+xQZZRnqn+jAqg+6fP8yv+ROrrF680IDD0TU/sdL7i+sLEiikpPNGoGcCV
-         H2JTq9O4TNMn+/NHqWHWOVK/fSaMQbBWui0pX0mc9GGa62w8OVb82ZZrKrwuDi4y71/s
-         RRrn5dhOqX9iHcVchztMp7ulxpcNph8u4HsrxEsjpGTvddSTTrpuLzMqLQC3KZm+fSLR
-         2CPw==
-X-Gm-Message-State: APt69E1RmPlSN0Zu7eq1AqykOa5WK+8bd9u9DucqqVLj0Owt5JBkk5hr
-        ao3FHpydsSWDUenQADYgKIzbfBzY
-X-Google-Smtp-Source: AAOMgpcmYpYM0KQa41PZcUbfJ/67yMQBNw0sXR1umvcf/avjyu0CzSSw2l7BeGj+rsjwkvImX6liwg==
-X-Received: by 2002:a1c:a341:: with SMTP id m62-v6mr12536373wme.3.1530633918720;
-        Tue, 03 Jul 2018 09:05:18 -0700 (PDT)
-Received: from evledraar ([139.47.6.17])
-        by smtp.gmail.com with ESMTPSA id 49-v6sm195593wrx.18.2018.07.03.09.05.16
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 03 Jul 2018 09:05:16 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Mike Hommey <mh@glandium.org>
-Cc:     git@vger.kernel.org
-Subject: Re: fast-import slowness when importing large files with small differences
-References: <20180629094413.bgltep6ntlza6vhz@glandium.org> <87o9ftckhb.fsf@evledraar.gmail.com> <20180629233538.7zxxrvou4twqyd6d@glandium.org>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180629233538.7zxxrvou4twqyd6d@glandium.org>
-Date:   Tue, 03 Jul 2018 18:05:16 +0200
-Message-ID: <87muv8cnk3.fsf@evledraar.gmail.com>
+        id S933569AbeGCQzW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Jul 2018 12:55:22 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57854 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S932775AbeGCQzV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Jul 2018 12:55:21 -0400
+Received: (qmail 26370 invoked by uid 109); 3 Jul 2018 16:55:21 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 03 Jul 2018 16:55:21 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3271 invoked by uid 111); 3 Jul 2018 16:55:20 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 03 Jul 2018 12:55:20 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Jul 2018 12:55:19 -0400
+Date:   Tue, 3 Jul 2018 12:55:19 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Kirill Smelkov <kirr@nexedi.com>
+Subject: [PATCH] t5500: prettify non-commit tag tests
+Message-ID: <20180703165518.GA29295@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+We don't need to use backslash continuation, as the "&&"
+already provides continuation (and happily soaks up empty
+lines between commands).
 
-On Fri, Jun 29 2018, Mike Hommey wrote:
+We can also expand the multi-line printf into a
+here-document, which lets us use line breaks more naturally
+(and avoids another continuation that required us to break
+the natural indentation).
 
-> On Sat, Jun 30, 2018 at 12:10:24AM +0200, Ævar Arnfjörð Bjarmason wrote:
->>
->> On Fri, Jun 29 2018, Mike Hommey wrote:
->>
->> > I noticed some slowness when fast-importing data from the Firefox mercurial
->> > repository, where fast-import spends more than 5 minutes importing ~2000
->> > revisions of one particular file. I reduced a testcase while still
->> > using real data. One could synthesize data with kind of the same
->> > properties, but I figured real data could be useful.
->> >
->> > To reproduce:
->> > $ git clone https://gist.github.com/b6b8edcff2005cc482cf84972adfbba9.git foo
->> > $ git init bar
->> > $ cd bar
->> > $ python ../foo/import.py ../foo/data.gz | git fast-import --depth=2000
->> >
->> > [...]
->> > So maybe it would make sense to consolidate the diff code (after all,
->> > diff-delta.c is an old specialized fork of xdiff). With manual trimming
->> > of common head and tail, this gets down to 3:33.
->> >
->> > I'll also note that Facebook has imported xdiff from the git code base
->> > into mercurial and improved performance on it, so it might also be worth
->> > looking at what's worth taking from there.
->>
->> It would be interesting to see how does this compares with a more naïve
->> approach of committing every version of this file one-at-a-time into a
->> new repository (with & without gc.auto=0). Perhaps deltaing as we go is
->> suboptimal compared to just writing out a lot of redundant data and
->> repacking it all at once later.
->
-> "Just" writing 26GB? And that's only one file. If I were to do that for
-> the whole repository, it would yield a > 100GB pack. Instead of < 2GB
-> currently.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I had prepared this as a squash-in for what became c12c9df527, but since
+that's now in master, it can go on top (or get dropped, but I think it
+is worth it as a style fixup).
 
-To clarify on my terse response. I mean to try this on an isolated test
-case to see to what extent the problem you're describing is unique to
-fast-import, and to what extent it's encountered during "normal" git use
-when you commit all the revisions of that file in succession.
+ t/t5500-fetch-pack.sh | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-Perhaps the difference between the two would give some hint as to how to
-proceed, or not.
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index ea6570e819..3d33ab3875 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -533,19 +533,26 @@ test_expect_success 'test --all wrt tag to non-commits' '
+ 	# are reachable only via created tag references.
+ 	blob=$(echo "hello blob" | git hash-object -t blob -w --stdin) &&
+ 	git tag -a -m "tag -> blob" tag-to-blob $blob &&
+- \
++
+ 	tree=$(printf "100644 blob $blob\tfile" | git mktree) &&
+ 	git tag -a -m "tag -> tree" tag-to-tree $tree &&
+- \
++
+ 	tree2=$(printf "100644 blob $blob\tfile2" | git mktree) &&
+ 	commit=$(git commit-tree -m "hello commit" $tree) &&
+ 	git tag -a -m "tag -> commit" tag-to-commit $commit &&
+- \
++
+ 	blob2=$(echo "hello blob2" | git hash-object -t blob -w --stdin) &&
+-	tag=$(printf "object $blob2\ntype blob\ntag tag-to-blob2\n\
+-tagger author A U Thor <author@example.com> 0 +0000\n\nhello tag" | git mktag) &&
++	tag=$(git mktag <<-EOF
++		object $blob2
++		type blob
++		tag tag-to-blob2
++		tagger author A U Thor <author@example.com> 0 +0000
++
++		hello tag
++	EOF
++	) &&
+ 	git tag -a -m "tag -> tag" tag-to-tag $tag &&
+- \
++
+ 	# `fetch-pack --all` should succeed fetching all those objects.
+ 	mkdir fetchall &&
+ 	(
+-- 
+2.18.0.359.ge51c883f96
