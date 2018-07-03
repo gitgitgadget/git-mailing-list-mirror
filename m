@@ -2,119 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: *
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=1.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=1.8 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,LIST_MIRROR_BCC,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
+	RCVD_IN_DNSWL_HI,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA45C1F6AC
-	for <e@80x24.org>; Mon,  9 Jul 2018 22:38:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E81EC1F6AC
+	for <e@80x24.org>; Mon,  9 Jul 2018 22:38:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932886AbeGIWio (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jul 2018 18:38:44 -0400
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:36899 "EHLO
-        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932801AbeGIWii (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jul 2018 18:38:38 -0400
-Received: by mail-pf0-f174.google.com with SMTP id x10-v6so4786499pfm.4
-        for <git@vger.kernel.org>; Mon, 09 Jul 2018 15:38:37 -0700 (PDT)
+        id S932998AbeGIWiu (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jul 2018 18:38:50 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:38845 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932798AbeGIWil (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jul 2018 18:38:41 -0400
+Received: by mail-pf0-f195.google.com with SMTP id x13-v6so4714629pfh.5
+        for <git@vger.kernel.org>; Mon, 09 Jul 2018 15:38:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=resent-from:resent-date:resent-message-id:resent-to:date:from:to:cc
+         :subject:message-id:references:mime-version:content-disposition
+         :in-reply-to:user-agent;
+        bh=s185+mPgeGH/5zOWTyKx2vDX0Aq87EsjjvwNzhBcKfQ=;
+        b=SveUL+e/WkGmJeAttf38lHxOWiPtyzSlmkC8sklvhv9+lwTwAMLtjEHKWyP1ltfg2A
+         K5OAhDyYFLt3Y7M1slKKvWIzvkcbabuEVYaRpERIGRtzJkV/MZDI2oxqfVqD/xJYgh61
+         Dta//Dg9eU95WAHI1f5Bfwfc8cJtoO8FDi+1rRtYXEb+v9EcycY6zx6sJvwz1IImnr4o
+         MXJFUia+bQRaNCB0rLoyLSeJ4SHv4kU47VoShcnVJnLWixo2ZCsZEwVu+4Dl6Xp91UAW
+         qKOtifYYk8+oEplkXDQAtNDltMD8btnw5k08FgQafdVLxdupLCIfSdRmkBXeXcHSx3Br
+         uBrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-original-authentication-results:x-gm-message-state:resent-from
-         :resent-date:resent-message-id:resent-to:date:from:to:cc:subject
-         :message-id:references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to;
-        bh=LvKP8YYNMKdeGUeBcJtjkmp8gcGbR2O1H293GDkH7Y4=;
-        b=YTszQh8nrlU6ruyGnTJfDqriBjPq50SA0hoSr6xOqh7oBMNMFmjei1Lf+55bxyFv43
-         bd5ICqnS+h2hP9r5//u+Jeu+xn8UxBOUpjLKYkEpzKUT5QSO6VJA836e29tpjNL8SiyA
-         DQGLU1oMfmhDV4w99nROUvcUBt3sOnOdlDe34nhrA1/dJUBR6tGqIa7I4xnPgFPP7wGP
-         fd93arWprfIVKG6Bs1q689ClP0FPT357f2cAtiJLS2zwy81GFbdOorhAwkQNrpVhpOGo
-         ImUb+bcUiLdLcOt32D50hjdxfzHan++nEzo+dTr7cLOsD1DN3T0WYaoy9EY2VVyWWVYa
-         rFLw==
-X-Original-Authentication-Results: peff.net; auth=none
-X-Gm-Message-State: APt69E2Z2foLNJjSnbUI8zP0yJDhLSIxnEP7PZMMf8H1JukBTGc/kmXJ
-        lJtpovP94ENADi0OcfdZKA8HqqST
-X-Google-Smtp-Source: AAOMgpflwonEWIQNmsdItBRmgbLfolgTAYilTh5hnfHboQKzuzi3DLRwFHdyCXYIMcI3XdiR1SCjWQ==
-X-Received: by 2002:a63:a1a:: with SMTP id 26-v6mr20515841pgk.221.1531175917175;
-        Mon, 09 Jul 2018 15:38:37 -0700 (PDT)
+        h=x-gm-message-state:resent-from:resent-date:resent-message-id
+         :resent-to:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=s185+mPgeGH/5zOWTyKx2vDX0Aq87EsjjvwNzhBcKfQ=;
+        b=iRRGOSEisXKrFYlM8TQHYzZGvoz1zskZLLs3k5+tiAY4fT8RLQ+qObGmoSNeB9b2tj
+         +o7ILHsNT3appArm+K3K909oJ/8WmAM/Lx4gHyrSb2XFTYUTM5FptMyOqpTNd6ywlriH
+         Yjr69YEC6nT97NOKadErPrqJt7yXi3Ack2qkLanUcbPynTvEZbRhSaRPbud3duNqngR+
+         m96PBCcHVC8PNSbS/Kyi7bJBCds+F5LmlZlLjaVJvbl5qIFLpsdl97mfiB5V1w8Bqtwy
+         ycwepKsfBUAj+4DC6FIQs+bsuYRnL0jCGhGNV5WFw3ZCQrElxrX+++1AzdxYPXWY1jOJ
+         l4AQ==
+X-Gm-Message-State: APt69E1MKB1hiOEFUe1VK2ZYf66yyipbX27HVKmsaT3+yOtTGUXWOiPM
+        LtMAtejLYgrCxNE2Mcvkx5E2cB0M
+X-Google-Smtp-Source: AAOMgpe2uNhWbLrMV5sktUsaN7wjJZSm05aDhxSxsdGG9ZjTVRmyRFmiTUo1D3RKY7vFfJ446MXyqQ==
+X-Received: by 2002:a65:620b:: with SMTP id d11-v6mr20631874pgv.429.1531175920529;
+        Mon, 09 Jul 2018 15:38:40 -0700 (PDT)
 Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id b1-v6sm29533567pff.141.2018.07.09.15.38.36
+        by smtp.gmail.com with ESMTPSA id c128-v6sm29185101pfb.18.2018.07.09.15.38.40
         for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 09 Jul 2018 15:38:36 -0700 (PDT)
-Authentication-Results: peff.net; auth=none
-Authentication-Results: cloud.peff.net; auth=none
-Received: by 2002:a6b:c8cc:0:0:0:0:0 with SMTP id y195-v6csp457054iof;
-        Mon, 2 Jul 2018 14:17:06 -0700 (PDT)
-X-Received: by 2002:a0c:9e5d:: with SMTP id z29-v6mr24106803qve.15.1530566226588;
-        Mon, 02 Jul 2018 14:17:06 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1530566226; cv=none;
-        d=google.com; s=arc-20160816;
-        b=lpTnGa5rdvWG1MhMcl5jqVphyWUU2y045Oe3BkKELrbXCKFwvFA4LhOl6fuoLSrWpR
-         PX87TIEQQ1Uwl82UE5Dl0REREIwNJZnSSlVNhCkPxv6p/1PMZzCZrgzgWplHBCrBCzRQ
-         I7VarfKNltoiR3FgEufOlChQwZIZkwq4oKTO1QPoSAETUsLfHEkD8O16IPgBZokQZ79J
-         RXvgLNDy4ZS1xPPoDFfH0uI5xUeet5Karij3AxcJ0UvQgSkWpc1aaLsq9a6xdcNHYZ/D
-         TzczbPZOo5VQRcKcOvFAf9PiDE01S55Ll38OzB9TZUZDNOAqrnhLfyTU7Gj6fuODmpWw
-         ZEhw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :arc-authentication-results;
-        bh=LvKP8YYNMKdeGUeBcJtjkmp8gcGbR2O1H293GDkH7Y4=;
-        b=UKfoMq/Y3ThkgV2S0kcK0/o4IRXlETGH+z7qfcWWuD++SGNSNk5S+Aw7QaEQPLD3aN
-         kxJ4L+2YcttZAjn921Wj1hkao0ao95FGTAIlQe1h8bzyMQAMwde/DscYTDZpBX5VYnUO
-         u7KGY6+h8XxDVWOhxw/9dOfx6Xp9+/aQpKZT9aFW2Og+OW7Qm3W/kvfx0X1C3CK7wu8l
-         c8OkaADFAwsHNIbhcuIpQlianY7AGVegzufOSNvIuKkPK74FHUi3RRgKweFF87iRkfDc
-         XEa6mW3N/Z8VY6hsnBt63pqhVxbeo5Wc5heaokpL12/5V5W51Ork5luIULS3eivob9EK
-         Iwhg==
-ARC-Authentication-Results: i=1; mx.google.com;
-       spf=pass (google.com: domain of peff@peff.net designates 104.130.231.41 as permitted sender) smtp.mailfrom=peff@peff.net
-Received: from cloud.peff.net (cloud.peff.net. [104.130.231.41])
-        by mx.google.com with SMTP id a139-v6si178980qkb.405.2018.07.02.14.17.06
-        for <jrnieder@gmail.com>;
-        Mon, 02 Jul 2018 14:17:06 -0700 (PDT)
-Received-SPF: pass (google.com: domain of peff@peff.net designates 104.130.231.41 as permitted sender) client-ip=104.130.231.41;
-Received: (qmail 8155 invoked by uid 109); 2 Jul 2018 21:17:06 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 02 Jul 2018 21:17:06 +0000
-Received: (qmail 27578 invoked by uid 111); 2 Jul 2018 21:17:05 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 02 Jul 2018 17:17:05 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Jul 2018 17:17:04 -0400
-Date:   Mon, 2 Jul 2018 17:17:04 -0400
-From:   Jeff King <peff@peff.net>
-To:     Akilsrin <Akilsrin@apple.com>
+        Mon, 09 Jul 2018 15:38:40 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id o26-v6sm3987659pfi.167.2018.07.03.08.48.18
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 03 Jul 2018 08:48:18 -0700 (PDT)
+Date:   Tue, 3 Jul 2018 08:48:14 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jeff King <peff@peff.net>
 Cc:     Jeremy Huddleston Sequoia <jeremyhu@apple.com>,
+        Akilsrin <Akilsrin@apple.com>,
         Christian Couder <christian@gitlab.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
         Tim Triemstra <timt@apple.com>,
         Eliran Mesika <eliran@gitlab.com>
 Subject: Re: Subscribing Apple people to git-security@googlegroups.com
-Message-ID: <20180702211704.GA23484@sigill.intra.peff.net>
+Message-ID: <20180703154814.GA51821@aiede.svl.corp.google.com>
 References: <CAGba+=U4nbxL2uuSxyqyZqiiavJpo_E=GhUkipz6DczLdmnkgQ@mail.gmail.com>
  <20180702195016.GA17102@sigill.intra.peff.net>
  <91A9F3A0-5F3F-4137-9A40-CB42EDE4F243@apple.com>
- <9AE01C9B-7D10-45F2-8910-1607A19DF722@apple.com>
+ <20180703133645.GA20316@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <9AE01C9B-7D10-45F2-8910-1607A19DF722@apple.com>
+In-Reply-To: <20180703133645.GA20316@sigill.intra.peff.net>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 02, 2018 at 01:58:21PM -0700, Akilsrin wrote:
+Administrivia: do you mind if I bounce these messages to some archived
+list, either git@vger.kernel.org or git-security?  Or if we'd prefer
+to avoid the noise from that, do you mind if I work with Eric Wong to
+get them injected in the https://public-inbox.org/ archive?
 
-> Could “ProdsecOSS " <prodsecoss@apple.com> also be added to the
-> git-security mailing list. It’s another account I control to ensure my
-> team and I track open source bugs.
-> 
-> The git repo: could you add https://github.com/product-security-OSS
-> <https://github.com/product-security-OSS> and
-> https://github.com/Akilsrin <https://github.com/Akilsrin> to the
-> GitHub cabal repo please.
+Hi,
 
-Done, done, and done.
+Jeff King wrote:
+> On Mon, Jul 02, 2018 at 01:15:19PM -0700, Jeremy Huddleston Sequoia wrote:
 
--Peff
+>> I'm very very interested in having reduced differences between what we
+>> ship in Xcode and what is upstream.
+[...]
+> Thanks for sharing. Skimming over it, I see:
+>
+>  - several of the changes look related to run-time relocation. There was
+>    a series that shipped in v2.18.0 related to this, so that may reduce
+>    your diff once you rebase.
+>
+>  - The xcode_gitattributes() bits aren't likely to go upstream as-is.
+>    But possibly these could ship as a default $sysconfdir/gitattributes?
+>
+>  - the rest look like assorted little fixes that probably could go
+>    upstream
+
+I agree with Peff's assessment.  I'd also like to emphasize that
+upstream is happy to see an [FYI/PATCH] when you have a divergence,
+which would provide a thread to reply to to figure out whether there's
+some generalization that is suitable for upstream.  (For example,
+maybe we want some Makefile knob to allow setting some baked-in
+attributes.)
+
+Thanks,
+Jonathan
