@@ -2,65 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BCF9E1F6AC
-	for <e@80x24.org>; Wed,  4 Jul 2018 06:39:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 63CB21F6AC
+	for <e@80x24.org>; Wed,  4 Jul 2018 06:43:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932717AbeGDGjB (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Jul 2018 02:39:01 -0400
-Received: from mail136-9.atl41.mandrillapp.com ([198.2.136.9]:33590 "EHLO
-        mail136-9.atl41.mandrillapp.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753518AbeGDGjB (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 4 Jul 2018 02:39:01 -0400
-X-Greylist: delayed 900 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Jul 2018 02:39:01 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=mandrill; d=nexedi.com;
- h=From:Subject:To:Cc:Message-Id:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding; i=kirr@nexedi.com;
- bh=jlGwiY6F9o85Iqd1qWTsFeGdJY/x8K3GF5oGTUOpab4=;
- b=QD7RbOss06FhTY0LPSA9COLhvErvL+MeScF55XWJ1ppGXDU22TEpJpbWKRDl2K3cWjkqR9WPrTr2
-   sw9lFtenLfmqoASWTQvlGynnF6Y0TSa5CAtLBxvAG4lRu4S/Il+1vWKTkTaFk7YNtslintT1CmlT
-   JhgPXygNnz9Q5xC0S9U=
-Received: from pmta04.mandrill.prod.atl01.rsglab.com (127.0.0.1) by mail136-9.atl41.mandrillapp.com id h7hloa1sb1k3 for <git@vger.kernel.org>; Wed, 4 Jul 2018 06:23:59 +0000 (envelope-from <bounce-md_31050260.5b3c67ff.v1-e1824fccfcec43ccb1262cb199269b92@mandrillapp.com>)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mandrillapp.com; 
- i=@mandrillapp.com; q=dns/txt; s=mandrill; t=1530685439; h=From : 
- Subject : To : Cc : Message-Id : References : In-Reply-To : Date : 
- MIME-Version : Content-Type : Content-Transfer-Encoding : From : 
- Subject : Date : X-Mandrill-User : List-Unsubscribe; 
- bh=jlGwiY6F9o85Iqd1qWTsFeGdJY/x8K3GF5oGTUOpab4=; 
- b=hIWTr26MRmUAJ7cblB30mPRxjq826F6K/Vt7Zctgi2pDMeEIuMzj4tBYyuqwQ2tNzC2Ign
- bW4z3mVrowHjyJ6304AxI3lh/un6+vBDgIVqEggku/KQhPrbmllr/4AHaV21LSXIfhSeEvhA
- 1+cejZ0+iFRSdbZ2qBdRfRqgwxH2Q=
-From:   Kirill Smelkov <kirr@nexedi.com>
-Subject: Re: [PATCH] t5500: prettify non-commit tag tests
-Received: from [87.98.221.171] by mandrillapp.com id e1824fccfcec43ccb1262cb199269b92; Wed, 04 Jul 2018 06:23:59 +0000
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>
-Message-Id: <20180704062353.GA24862@deco.navytux.spb.ru>
-References: <20180703165518.GA29295@sigill.intra.peff.net>
-In-Reply-To: <20180703165518.GA29295@sigill.intra.peff.net>
-X-Report-Abuse: Please forward a copy of this message, including all headers, to abuse@mandrill.com
-X-Report-Abuse: You can also report abuse here: http://mandrillapp.com/contact/abuse?id=31050260.e1824fccfcec43ccb1262cb199269b92
-X-Mandrill-User: md_31050260
-Date:   Wed, 04 Jul 2018 06:23:59 +0000
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+        id S933489AbeGDGnu (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Jul 2018 02:43:50 -0400
+Received: from gproxy4-pub.mail.unifiedlayer.com ([69.89.23.142]:44774 "EHLO
+        gproxy4-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S932615AbeGDGnt (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 4 Jul 2018 02:43:49 -0400
+X-Greylist: delayed 2100 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Jul 2018 02:43:49 EDT
+Received: from cmgw14.unifiedlayer.com (unknown [10.9.0.14])
+        by gproxy4.mail.unifiedlayer.com (Postfix) with ESMTP id 08D4F175DCD
+        for <git@vger.kernel.org>; Wed,  4 Jul 2018 00:08:48 -0600 (MDT)
+Received: from box5008.bluehost.com ([50.116.64.19])
+        by cmsmtp with ESMTP
+        id aay6fcCA29wBZaay6fC1mV; Wed, 04 Jul 2018 00:08:46 -0600
+X-Authority-Reason: nr=8
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=mad-scientist.us; s=default; h=Content-Transfer-Encoding:Mime-Version:
+        Content-Type:Date:To:Reply-To:From:Subject:Message-ID:Sender:Cc:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=rr4EZckH9gRgOfUpk7XCgzQY/x0gq2qXzoxtDhttZN8=; b=aqcsMG3YPGxpSGEbqkjQNqE5wn
+        rvJPkJ1CQbaEeA9qslTsnUUPOR2Ng5DsY7nhC3pDHW5jWMQVKENfUsS8qxI4+bzxKBkM2zvUFaJjz
+        +sm9K7Gr/M9gZdLbrkI2UprCY;
+Received: from pool-72-70-58-227.bstnma.fios.verizon.net ([72.70.58.227]:34234 helo=homebase.home)
+        by box5008.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <paul@mad-scientist.net>)
+        id 1faay7-003SZa-Dw
+        for git@vger.kernel.org; Wed, 04 Jul 2018 00:08:47 -0600
+Message-ID: <e9d5bbec6242e47b1f4141ffd99b276eb6a41347.camel@mad-scientist.net>
+Subject: RUNTIME_PREFIX references in gitconfig variable paths
+From:   Paul Smith <paul@mad-scientist.net>
+Reply-To: paul@mad-scientist.net
+To:     Git mailing list <git@vger.kernel.org>
+Date:   Wed, 04 Jul 2018 02:08:46 -0400
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.1-2 
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5008.bluehost.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - mad-scientist.net
+X-BWhitelist: no
+X-Source-IP: 72.70.58.227
+X-Source-L: No
+X-Exim-ID: 1faay7-003SZa-Dw
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: pool-72-70-58-227.bstnma.fios.verizon.net (homebase.home) [72.70.58.227]:34234
+X-Source-Auth: paul@mad-scientist.us
+X-Email-Count: 1
+X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTAwOC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 03, 2018 at 12:55:19PM -0400, Jeff King wrote:
-> I had prepared this as a squash-in for what became c12c9df527, but since
-> that's now in master, it can go on top (or get dropped, but I think it
-> is worth it as a style fixup).
+One thing I wanted to do was provide a default ca-bundle.crt file along
+with my local build of Git.  I need my installation to be relocatable
+and I'm using RUNTIME_PREFIX with Git 2.18.0 (on GNU/Linux).
 
-I'm ok with the patch. I thought it was already squashed in into my
-version, but maybe it got lost.
+I can provide a system gitconfig file with a setting for http.sslCAInfo
+but the problem is I can't create a relocatable path here so I don't
+know how to set it:
 
-Thanks for this prettification.
+  $ cat $prefix/etc/gitconfig
+  [http]
+      sslCAInfo = <prefix>/etc/ca-bundle.crt
 
-Kirill
+What do I use for <prefix> above since I want it to be relocatable? 
+Basically I want this to be in the same directory as the relocatable
+sysconfdir (I don't actually care much but that seems like a good
+place).
+
+Is there some way to create a reference to a path relative to the
+installation directory?
+
+For example "~" is accepted as the users $HOME path; is there some
+syntax which refers to the Git installation directory?
+
+If not this seems like something that would be very useful.
+
+
+I can use a wrapper script and set GIT_SSL_CAINFO, but that will also
+override any user's setting of http.sslCAInfo in their local gitconfig
+which I don't really want.
