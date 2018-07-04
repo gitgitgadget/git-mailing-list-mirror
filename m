@@ -2,144 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 003D01F6AC
-	for <e@80x24.org>; Wed,  4 Jul 2018 00:12:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32B2A1F6AC
+	for <e@80x24.org>; Wed,  4 Jul 2018 05:53:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752480AbeGDAMs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Jul 2018 20:12:48 -0400
-Received: from avasout07.plus.net ([84.93.230.235]:35935 "EHLO
-        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752003AbeGDAMr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Jul 2018 20:12:47 -0400
-Received: from [10.0.2.15] ([80.189.70.235])
-        by smtp with ESMTPA
-        id aVPUfERyvjlDzaVPVfP79n; Wed, 04 Jul 2018 01:12:45 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=GrdsBH9C c=1 sm=1 tr=0
- a=YX39wz5waiCDnkc2J8opfw==:117 a=YX39wz5waiCDnkc2J8opfw==:17
- a=IkcTkHD0fZMA:10 a=5rxgeBVgAAAA:8 a=z23upLkTAAAA:8 a=hR-PrDIbnsUMQAlOTYoA:9
- a=QEXdDO2ut3YA:10 a=PwKx63F5tFurRwaNxrlG:22 a=Dsv3lYUHObwL8zqxSzzR:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH] fsck: check skiplist for object in fsck_blob()
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jason@zx2c4.com,
-        GIT Mailing-list <git@vger.kernel.org>
-References: <2fc2d53f-e193-2a2a-9f8f-b3e1d256d940@ramsayjones.plus.com>
- <20180628114912.GA12901@sigill.intra.peff.net>
- <0a18acbd-0124-1c92-0046-05b8b035dd28@ramsayjones.plus.com>
- <20180628174501.GC31766@sigill.intra.peff.net>
- <db7683ab-1025-d7bb-d0ce-fc4ee28681e1@ramsayjones.plus.com>
- <20180628220332.GA5128@sigill.intra.peff.net>
- <9162ed69-d245-8b2f-0dcc-3b345264b029@ramsayjones.plus.com>
- <20180703143416.GA23556@sigill.intra.peff.net>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <80fad203-8196-c4b6-ed9e-10def0890d59@ramsayjones.plus.com>
-Date:   Wed, 4 Jul 2018 01:12:40 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
-MIME-Version: 1.0
-In-Reply-To: <20180703143416.GA23556@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
+        id S933635AbeGDFxV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Jul 2018 01:53:21 -0400
+Received: from gproxy2-pub.mail.unifiedlayer.com ([69.89.18.3]:47401 "EHLO
+        gproxy2-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S932978AbeGDFxT (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 4 Jul 2018 01:53:19 -0400
+X-Greylist: delayed 2367 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Jul 2018 01:53:19 EDT
+Received: from cmgw14.unifiedlayer.com (unknown [10.9.0.14])
+        by gproxy2.mail.unifiedlayer.com (Postfix) with ESMTP id E37D61E17B0
+        for <git@vger.kernel.org>; Tue,  3 Jul 2018 23:12:14 -0600 (MDT)
+Received: from box5008.bluehost.com ([50.116.64.19])
+        by cmsmtp with ESMTP
+        id aa5NfbKNz9wBZaa5NfBTjT; Tue, 03 Jul 2018 23:12:13 -0600
+X-Authority-Reason: nr=8
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=mad-scientist.us; s=default; h=Content-Transfer-Encoding:Mime-Version:
+        Content-Type:Date:To:Reply-To:From:Subject:Message-ID:Sender:Cc:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=Vksx4tv97qDPDKF08CIDIlFYu2NSdGYyH6ijReLGRe0=; b=CHDWNxpqpsp3h2evkA5uAcm00q
+        HmsjkoLdboeeMWWkGMm9L+NYjRZ5XEa9CY/Y1mmMEGm9mG/SHnWtk0+Dkc2erFhlzzgW1wwSjNpGm
+        uIewK+oD1bb0r1Nuz7tk+WK8v;
+Received: from pool-72-70-58-227.bstnma.fios.verizon.net ([72.70.58.227]:33766 helo=homebase.home)
+        by box5008.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <paul@mad-scientist.net>)
+        id 1faa5O-0033hN-8M
+        for git@vger.kernel.org; Tue, 03 Jul 2018 23:12:14 -0600
+Message-ID: <97803ec8dae0a73bae301a37377b7b4a78f77e99.camel@mad-scientist.net>
+Subject: Git 2.18: RUNTIME_PREFIX... is it working?
+From:   Paul Smith <paul@mad-scientist.net>
+Reply-To: paul@mad-scientist.net
+To:     Git mailing list <git@vger.kernel.org>
+Date:   Wed, 04 Jul 2018 01:12:13 -0400
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.1-2 
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfOElSI6x1S8BVqSyhY59Yv5/802/6yPMwTLrEBODboYGi14e80FecoYVIqy3c1dlhoKToBAboRnGKcf4eQuIXG3qnatRrXffcprAbQFSUTp1/2G8rgjt
- +c9ZrwumFhGoTXadi3gqJpx6zM+MxNli4WfP1yFwYPnhZ1b5bxl4Einm
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5008.bluehost.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - mad-scientist.net
+X-BWhitelist: no
+X-Source-IP: 72.70.58.227
+X-Source-L: No
+X-Exim-ID: 1faa5O-0033hN-8M
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: pool-72-70-58-227.bstnma.fios.verizon.net (homebase.home) [72.70.58.227]:33766
+X-Source-Auth: paul@mad-scientist.us
+X-Email-Count: 1
+X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTAwOC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+I was excited to see the RUNTIME_PREFIX for POSIX systems patchset go
+by earlier this year.  Although I didn't see any mention of it being
+included in the 2.18.0 release notes, it does appear that it was merged
+in for this release.
 
+Has anyone else tried to get it working?  It doesn't appear to be
+working properly for me so I'm not sure if I'm supposed to be doing
+something different... I didn't see any documentation on it.
 
-On 03/07/18 15:34, Jeff King wrote:
-> On Fri, Jun 29, 2018 at 02:10:59AM +0100, Ramsay Jones wrote:
-> 
->> On 28/06/18 23:03, Jeff King wrote:
->>> On Thu, Jun 28, 2018 at 07:53:27PM +0100, Ramsay Jones wrote:
->> [snip]
->>> Yes, it can go in quickly. But I'd prefer not to keep it in the long
->>> term if it's literally doing nothing.
->>
->> Hmm, I don't think you can say its doing nothing!
->>
->>     "Yeah, this solution seems sensible. Given that we would
->>      never report any error for that blob, there is no point
->>      in even looking at it."
->>
->> ... is no less true, with or without additional patches! ;-)
-> 
-> True that we don't even bother doing the parsing with your patch. But I
-> think I talked myself out of that part being a significant savings
-> elsewhere.
+Basically what happens is that I run configure with
+--prefix=/my/install/path --with-gitconfig=etc/gitconfig
+--with-gitattributes=etc/gitattributes.
 
-[Sorry for the late reply - watching football again!]
+Then I run make with RUNTIME_PREFIX=YesPlease.
 
-I'm not interested in any savings - it would have to be a pretty
-wacky repo for there to be much in the way of savings!
+When I look in the makefile, I see that the make variable gitexecdir is
+initially properly set to libexec/git-core which is what I expect.
 
-Simply, I have found (for many different reasons) that, if there
-is no good reason to execute some code, it is _far_ better to not
-do so! ;-)
+However, later in the makefile we include the config.mak.autogen file,
+which was generated from config.mk.in by configure.  In the .in file we
+have this:
 
-> I guess it would be OK to leave it in. It just feels like it would be
-> vestigial after the rest of the patches.
-> 
-[snip]
+ gitexecdir = @libexecdir@/git-core
 
->>> Yes, it would include any syntax error. I also have a slight worry about
->>> that, but nobody seems to have screamed _yet_. :)
->>
->> Hmm, I don't think we can ignore this. :(
-> 
-> I'm not sure. This has been running on every push to GitHub for the past
-> 6 weeks, and this is the first report. It's hard to say what that means,
-> and technically speaking of course this _is_ a regression.
+After configure gets done with it, this becomes:
 
-Hmm, are you concerned about old clients 'transmitting' the
-bad data via large hosting sites? (New clients would complain
-about a dodgy .gitmodules file, no matter were it came from,
-right?)
+ gitexecdir = ${prefix}/libexec/git-core
 
-Has the definition of the config file syntax changed recently?
-If not, then old client versions will see the same syntax errors
-as recently 'fixed' versions. So they should error out without
-'looking' at the bad data, right? (ignoring the 'lets fix the
-obvious syntax error' idea).
+which is a fully-qualified path.  This means that exec-cmd.c is
+compiled with -DGIT_EXEC_PATH="/my/install/path/libexec/git-core" which
+effectively disables RUNTIME_PREFIX, as the exec-cmd.c:system_prefix()
+function always returns FALLBACK_RUNTIME_PREFIX since GIT_EXEC_PATH is
+not a suffix of executable_dirname (once the install location has been
+moved).
 
-> There's a nearby thread of interest, too, which I cc'd you on:
-> 
->   https://public-inbox.org/git/20180703070650.b3drk5a6kb4k4tnp@glandium.org/
+I suppose we need to pass more configure options to reset paths; is
+there information somewhere on exactly which ones should be overridden?
+ For example if I try to pass configure --libexecdir=libexec to solve
+the above issue, I get an error from configure:
 
-Yeah, I don't quite follow what's going on there - I would have
-to read up some more. ;-)
+ configure: error: expected an absolute directory name for --libexecdir: libexec
 
->> So, FWIW, Ack!
->>
->> [I still think my original patch, with the 'to_be_skipped'
->> function name changed to 'object_on_skiplist', should be
->> the first patch of the series!]
-> 
-> Thanks. If we're going to do any loosening, I think we may want to
-> address that _first_, so it can go directly on top of the patches in
-> v2.17.1 (because it's a bigger issue than the stray message, IMHO).
-
-Agreed. I probably haven't given it sufficient thought, but my
-immediate reaction is to loosen the check - I don't see how
-this could be exploited to significantly reduce security. (My lack
-of imagination has been noted several times in the past, however!)
-
-Having said that, I am no security expert, so I will let those who
-have security expertise decide what is best to do in this situation.
-
-Thanks!
-
-ATB,
-Ramsay Jones
-
-
-
-
+Any info on how this is supposed to work, is welcome!
