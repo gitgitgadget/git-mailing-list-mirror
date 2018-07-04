@@ -2,43 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 57AE81F6AC
-	for <e@80x24.org>; Wed,  4 Jul 2018 15:46:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3EDC11F6AC
+	for <e@80x24.org>; Wed,  4 Jul 2018 19:33:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752406AbeGDPqA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Jul 2018 11:46:00 -0400
-Received: from smtp6-g21.free.fr ([212.27.42.6]:6294 "EHLO smtp6-g21.free.fr"
+        id S1752897AbeGDTdM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Jul 2018 15:33:12 -0400
+Received: from mout.gmx.net ([212.227.17.22]:48877 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752197AbeGDPp7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Jul 2018 11:45:59 -0400
-Received: from [192.168.1.108] (unknown [164.177.97.114])
-        (Authenticated sender: jn.avila)
-        by smtp6-g21.free.fr (Postfix) with ESMTPSA id 2B1747802D6;
-        Wed,  4 Jul 2018 15:45:53 +0000 (UTC)
-Subject: Re: [PATCH 1/2] l10n: fr: fix a message seen in git bisect
-To:     =?UTF-8?Q?Rapha=c3=abl_Hertzog?= <hertzog@debian.org>,
-        git@vger.kernel.org
-References: <20180704154357.26964-1-hertzog@debian.org>
- <20180704154357.26964-2-hertzog@debian.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Jean-No=c3=abl_Avila?= <jn.avila@free.fr>
-Message-ID: <e5233798-eefc-5c8d-937b-659726ab2a6a@free.fr>
-Date:   Wed, 4 Jul 2018 17:45:52 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+        id S1752653AbeGDTdL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Jul 2018 15:33:11 -0400
+Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M96Jd-1fOP2p3pMb-00CNop; Wed, 04
+ Jul 2018 21:33:03 +0200
+Date:   Wed, 4 Jul 2018 21:32:46 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Tobias Klauser <tklauser@distanz.ch>
+cc:     git@vger.kernel.org, gitster@pobox.com, dana <dana@dana.is>,
+        Wink Saville <wink@saville.com>,
+        Alban Gruin <alban.gruin@gmail.com>
+Subject: Re: [PATCH] git-rebase--{interactive,preserve-merges}: fix formatting
+ of todo help message
+In-Reply-To: <20180704141635.GH24016@distanz.ch>
+Message-ID: <nycvar.QRO.7.76.6.1807042131460.75@tvgsbejvaqbjf.bet>
+References: <1530706658-20519-1-git-send-email-tklauser@distanz.ch> <nycvar.QRO.7.76.6.1807041505000.75@tvgsbejvaqbjf.bet> <20180704141635.GH24016@distanz.ch>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <20180704154357.26964-2-hertzog@debian.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: fr
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:ZuRPx6UjOaNvWLYd9Loo+R9lozgPvE3fH8onGwbSAf89z8MO5Q8
+ 6YKjKXij6S4KgE4KdJ6FmphHdmIhF24x/LKuL4symu1jSdCmUeQ9fkLcxioeIV2GfFiEyXe
+ EH2xye3KVLA/sURQSlNbnkDCQQcqCFSkVkF92F3GF9Ibze7W7vYqt+4tsqNZyMDVrt9Y3bq
+ 07465eqssQ5wc38JPkDXQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:mOd6OUnI1qM=:3OYt5ow2rgHlif/HJwZMO7
+ WQsKcSi+Ab1KiTpa/Galmbv7RNAQobapQ7qJ020x886TjGTFgL3s+/UvOVN3AHUTYVfISkjJ1
+ E5IJmjs9HI+2+qjZnNZ8bZFpm/IDS/0KPhfPPWf86B7tyOsl4lhKunUeVrhcCFrIype8mNqzM
+ oxRhQEzwG62O7etQ/rkiSxuMJq8FYO2jigmtOMcUi14t+WYzwgTA5+s+rsyiqPL7j8EFkaK9m
+ BTrZ3jZB6VLKX4yqH2CbHp1JjGiPpoSi9BPrJD9rx552o4ndmlK0iGFVPJGyxy9YyPyxO4GvE
+ 9KCpuPE21mQM+iY+TlVTSHcPxmY+jTn32Fem8HW5vS1yYDZq55/Nj2vqEssQYwRXQxBzzzxnO
+ 5ZKTKrpaXoRAO9TOKeUBFFTX84Fu2ZGjZum+WbbgewGfdYa24AQUlhD58flrl8pOlksqHtRVu
+ cGIn/JD7nZ0xyFKU1/6fDmSw+aH8Ca+KV+eD4+mY3el4MMd07dUVQkbFmbQ38e5SVYLAKsqyd
+ prkCqyHPeZGMuxlg5ld5WBT0UBsTGZIK9QhtDA/KzQJrOdYYdPBOgdawAVvwb2IFkCOQAJaJx
+ OEDdelTAWI2LNI/fC433wcAmwYI+w3JzVhxKMkmeBiTAJ8jzLnEQe5DIr36xGqw0qh/vi0Gku
+ berUfwxIg5mOt9sa4znFw17+fUwmF+4JygSTe8l2P5c8IDSzGhR/hvZpMmHwSU4uJhD5Kwwji
+ GJ6K/HNXIqIuFFGpx0n/XY+YiYpEWchckW7c11QE3oHA0SstVHmcUF2Q4M/YfyfZRs07ewcrv
+ zuqdCeA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-OK, Will queue this patch for next round of translation
+Hi Tobias,
+
+On Wed, 4 Jul 2018, Tobias Klauser wrote:
+
+> On 2018-07-04 at 15:09:34 +0200, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>
+> > Junio, this gets an ACK from me, could you apply the
+> > `git-rebase--preserve-merges.sh` part selectively, please?
+> 
+> Let me know if I should provide an updated patch just for
+> git-rebase--preserve-merges.sh
+
+I think we'll have to wait for tomorrow to get an answer to this; today is
+a holiday in the States.
+
+Ciao,
+Johannes
