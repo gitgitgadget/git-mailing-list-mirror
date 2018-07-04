@@ -7,103 +7,145 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B9EB1F6AC
-	for <e@80x24.org>; Wed,  4 Jul 2018 10:26:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8274B1F6AC
+	for <e@80x24.org>; Wed,  4 Jul 2018 11:22:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753520AbeGDK04 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Jul 2018 06:26:56 -0400
-Received: from mout.gmx.net ([212.227.15.19]:53943 "EHLO mout.gmx.net"
+        id S932673AbeGDLWZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Jul 2018 07:22:25 -0400
+Received: from mout.gmx.net ([212.227.17.21]:58339 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753262AbeGDK0z (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Jul 2018 06:26:55 -0400
-Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MexaL-1fm1ui0ITB-00OVhX; Wed, 04
- Jul 2018 12:26:49 +0200
-Date:   Wed, 4 Jul 2018 12:26:32 +0200 (DST)
+        id S1753520AbeGDLWY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Jul 2018 07:22:24 -0400
+Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MADqP-1fPuDK3Sv3-00BJFO; Wed, 04
+ Jul 2018 13:22:19 +0200
+Date:   Wed, 4 Jul 2018 13:22:02 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Tiago Botelho <tiagonbotelho@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>,
-        Tiago Botelho <tiagonbotelho@hotmail.com>
-Subject: Re: [RFC PATCH v5] Implement --first-parent for git rev-list
- --bisect
-In-Reply-To: <xmqq36x0ndza.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1807041224460.75@tvgsbejvaqbjf.bet>
-References: <20180622123945.68852-1-tiagonbotelho@hotmail.com> <xmqq4lhqpy80.fsf@gitster-ct.c.googlers.com> <CAP8UFD3oEjW75qsk4d_wqo2V8PmzMvZLshutw20CD7AU4b4ocg@mail.gmail.com> <nycvar.QRO.7.76.6.1806261540340.21419@tvgsbejvaqbjf.bet>
- <CAP8UFD1TeC4czp_8HCRw5CtjGO78A8gRezw_xspnm4MXuhQswg@mail.gmail.com> <xmqqa7rhi40f.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1806271254210.21419@tvgsbejvaqbjf.bet> <xmqqwoukgpr9.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1806281505160.73@tvgsbejvaqbjf.bet>
- <xmqqvaa2yjo1.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1806291317150.74@tvgsbejvaqbjf.bet> <CAADF+x3jd5G9+SP3UmhwqrR_T6BuD0PkQJ3x+NLpq2BJ_Ej-Sw@mail.gmail.com> <xmqq36x0ndza.fsf@gitster-ct.c.googlers.com>
+To:     Paul Smith <paul@mad-scientist.net>
+cc:     Git mailing list <git@vger.kernel.org>,
+        Dan Jacques <dnj@google.com>
+Subject: Re: Git 2.18: RUNTIME_PREFIX... is it working?
+In-Reply-To: <97803ec8dae0a73bae301a37377b7b4a78f77e99.camel@mad-scientist.net>
+Message-ID: <nycvar.QRO.7.76.6.1807041312150.75@tvgsbejvaqbjf.bet>
+References: <97803ec8dae0a73bae301a37377b7b4a78f77e99.camel@mad-scientist.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:oBxukxxT+Or39rD1YOuPoJF56HU1K0uUNsFzhj+08v2wdTUJGun
- eF0u74zizvhqVqs562SQKqxfYlJ7DsSMAlUC715JskzfUGo+VCVPRnAXjKjA4g8l3KozX3f
- mFUujLPDsO6PdVoGC/obb59waiDKr0Gp36VyWkWio9/AALggg316Vn6zScKwGTsKh+3hWIu
- EwzF01lApQ3vdFVLCcYSQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:8X97EauUndI=:dARSaIPR940pry8tZw9Zt8
- Cqgb5tYhavRnoxbhgLgigB30Al3NMP6piznpXmTlEA+6gTCNHJQaZ7nh+0GC8xgZI/xkbvvFL
- U74QZyJeyVFT2Io1dQeiKIt+ZmEGsjs+oVu4YzpalD/YBdJMumEYP03zsYuFetlpIbQKZ533B
- huOSgBuVDzJeFWDZyuXWtoOlV5I1TTg0yJ2X1g6ha5rAKRd6K6FjfY4Sh9QNrWOonkctltXJ+
- 96yjqTp1oEhAgrxVPX2zond5FM91f3qhP6kkLH2AuGW992FQDuA+BobkFCu7AvjYBiRziEqtS
- tV62fP6W2I9B2BB6S8YZy7EW51GYE3vOO7MB6CiRlAjCY/AFMtoQPY6Vijy7E4rs8dxqJ/nE0
- TJEYk425E2uWZRQJWEjGSGgkQYHBQZWVrC3iFIZPw8CbkOJtH4nUBVNUXQWC00wz8N39BHLDb
- vcGzW62iiLk1afmmrFHpzpJcbhknBzQ7fXJXioau2s1g87tnQT0tPur0ZzxprWwGImco9tt12
- HcUI20r0Kv/3saqGw2Up0I9vpFbdgo4vHZzxxqquD00f8esyPlOAaPtBLifFxFtWDY513yzMV
- 1XHhv9Xmavu9kYPKjkFKaZ1OpJNorQfgtZ3zUJoJGUFq8j6K7RFtD1jDW8F6KfL/kATroeyYJ
- hELCL6FPGkcWiAbygSn3YUQshTwBOn18tNRKJE/QgWB+/ruWZa9/HRqAOy3dT/gzBtBhYN86p
- 840DfzAGO06yAyUJEktkspjKCk3Qp3alUumohYaSMPPIARK+RyQ3WnqNYf6ZsEiDV1GwQbU5i
- BlAuTxx
+X-Provags-ID: V03:K1:ZhEmRBkvTNStSvr78YMNKtlmeDdfJvBA5Z/uFKYYDD+JMblPhMy
+ 0LyLHPZyE/18B1uvrCG9RZk9pt8VV1avdtRymRx/tYgIXYm4gdp/ONchtce18omNH/C3MeM
+ t5Y/Gw1wfedalRU1jkHqOBTRaxRvIKhFt0zEcS0rj6ipeYBTic16WYkKumsYy1NvgM+IaHA
+ sQHryVFg6dvhk0b0FSHmg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:EkaeaB67y4E=:JcLncslOAaAJq22JF2lrRy
+ yBUn+0retMZPV6pj/zs9E0iC0FxgDOEGGEp35BamJNFHMBGNfWw6+eCjOMPjyeilMzjaJcSl7
+ UPt3/d7Dr7gmn2nN/c8TaXsftZwkvKAwMBJDmhRDl1pHKSuaK6+CyOPNZXVy/4c74Sf2RBQuP
+ VX115qF0/7R1QbGoYPb6Nl8sPiG+NqPiburSK8hAfJlEd25hp8HNEGrAUSUYKFV4+6I74xkh+
+ oRWGe5uZM6/AW5Zai7MwSet/aMx508z7UvmxbJjVv7XhYHjRBOVjTiekRtcZVH9fWoshI2d37
+ T38DeStbRl4AHJCW4okeivJNii0kHC4da2EyM0DMJ/2dPkg2oWiJnolaZvQWgF/Z0rTtWHlAG
+ AzxHUfDsltZg0ZNpzasqkgUExi5wNXZJ8QDl9zypNptJQcFnumSZn2JIEYxnzh/o9ME2TIEKA
+ JImv6cBW32BkU280D36t3OhV2sAxqxxE/JfVMYjg7IeJfcw9oTbJLK4WpF6tLPAvfwj/A/GTG
+ +Yi4/UqIKqbYLbmu37xu69SgPI6Un4eaYf9vkkfbzzyAd1Z9vB1r/I+8WSBb9OBDRcuJcEzRH
+ vGt0VftmijuU/2oe1xIAX4Mm98SphMumZLzJ1SAvfILi8ce365ELxbZKGhkldAVg+33nDiM/+
+ qoY5r6D2PcchlZYVHomrGlaAdq04rPxZoHAZiuppzUH5AQtfmQ2DQPBjXrf4xtEp+a8oCqPDU
+ BrsWcRJYD70TnCm0lXBQJlUmJOOuUwfBp3mBdb5W08Vub6a/cwydfy54icqSw+UWzECATxKpX
+ FJRNgKu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Paul,
 
-On Tue, 3 Jul 2018, Junio C Hamano wrote:
+On Wed, 4 Jul 2018, Paul Smith wrote:
 
-> Tiago Botelho <tiagonbotelho@gmail.com> writes:
+> I was excited to see the RUNTIME_PREFIX for POSIX systems patchset go
+> by earlier this year.  Although I didn't see any mention of it being
+> included in the 2.18.0 release notes, it does appear that it was merged
+> in for this release.
 > 
-> > git rev-list --first-parent --bisect-all F..E >revs &&
-> > test_line_count = 9 revs &&
-> > for rev in E e1 e2 e3 e4 e5 e6 e7 e8
-> > do
-> >   grep "^$(git rev-parse $rev) " revs ||
-> >   {
-> >     echo "$rev not shown" >&2 &&
-> >     return 1
-> >   }
-> > done &&
-> > sed -e "s/.*(dist=\([0-9]*\)).*/\1/" revs >actual.dists &&
-> > sort -r actual.dists >actual.dists.sorted &&
-> > test_cmp actual.dists.sorted actual.dists
-> 
-> The distance in the current graph might be all lower single-digits,
-> but you need "sort -n -r" to be future-proof, as dist=10 would sort
-> next to dist=1, perhaps in between dist=1 and dist=2.
-> 
-> Another thing you missed in my message is that the above does not
-> say what distance value each commit should be assigned in the
-> history.  Even though the grep loop makes sure that each of E, e1,
-> ... e8 appears at least once, and line-count before that ensures
-> that the output has 9 entries (and taken together, it guarantees
-> that each of these appears not just "at least once", but also
-> exactly once), nothing guarantees if they are getting relative
-> distance correctly, as the sed strips a bit too much (and that
-> relates to my earlier point why starting from a concrete expected
-> output and explicitly discard the aspect of the output we do not
-> care about before comparison---that way, we can easily tell when the
-> code is _designed to_ discard too much).
+> Has anyone else tried to get it working?  It doesn't appear to be
+> working properly for me so I'm not sure if I'm supposed to be doing
+> something different... I didn't see any documentation on it.
 
-From my point of view, this indicates that you want to set those exact
-dist values in stone. I am not sure I follow that reasoning, as this
-particular test case's purpose is to ensure that the `--first-parent`
-option works with `--bisect`, not that the distance values match a fixed
-expectation.
+It is working (for ages) in the Git for Windows build.
 
-In short: I disagree that the *exact* values (beyond testing the order)
-should be tested *here*.
+> Basically what happens is that I run configure with
+> --prefix=/my/install/path --with-gitconfig=etc/gitconfig
+> --with-gitattributes=etc/gitattributes.
+> 
+> Then I run make with RUNTIME_PREFIX=YesPlease.
+
+Ah. In Git for Windows, we do not use configure. I *think* this points to
+an incompatibility of the RUNTIME_PREFIX feature with our autoconf
+support, and this is a grand opportunity for you to step in and help.
+
+Essentially, what you will want to do is to implement a new configure
+option --with-runtime-prefix that then prevents the autoconf script from
+munging the relative paths in the way it does.
+
+> When I look in the makefile, I see that the make variable gitexecdir is
+> initially properly set to libexec/git-core which is what I expect.
+> 
+> However, later in the makefile we include the config.mak.autogen file,
+> which was generated from config.mk.in by configure.  In the .in file we
+> have this:
+> 
+>  gitexecdir = @libexecdir@/git-core
+> 
+> After configure gets done with it, this becomes:
+> 
+>  gitexecdir = ${prefix}/libexec/git-core
+> 
+> which is a fully-qualified path.  This means that exec-cmd.c is
+> compiled with -DGIT_EXEC_PATH="/my/install/path/libexec/git-core" which
+> effectively disables RUNTIME_PREFIX, as the exec-cmd.c:system_prefix()
+> function always returns FALLBACK_RUNTIME_PREFIX since GIT_EXEC_PATH is
+> not a suffix of executable_dirname (once the install location has been
+> moved).
+
+Right.
+
+I am actually quite surprised that it builds for you, given this part of
+the Makefile:
+
+-- snip --
+ifdef RUNTIME_PREFIX
+
+ifneq ($(filter /%,$(firstword $(gitexecdir_relative))),)
+$(error RUNTIME_PREFIX requires a relative gitexecdir, not: $(gitexecdir))
+endif
+
+[...]
+-- snap --
+
+I am also quite surprised that config.mk.in tries to set gitexecdir. But I
+guess that is for cases where you want to override it via --libexecdir?
+
+> I suppose we need to pass more configure options to reset paths; is
+> there information somewhere on exactly which ones should be overridden?
+>  For example if I try to pass configure --libexecdir=libexec to solve
+> the above issue, I get an error from configure:
+> 
+>  configure: error: expected an absolute directory name for --libexecdir: libexec
+> 
+> Any info on how this is supposed to work, is welcome!
+
+I just saw another thing:
+
+-- snip --
+exec-cmd.sp exec-cmd.s exec-cmd.o: GIT-PREFIX
+exec-cmd.sp exec-cmd.s exec-cmd.o: EXTRA_CPPFLAGS = \
+        '-DGIT_EXEC_PATH="$(gitexecdir_SQ)"' \
+        '-DGIT_LOCALE_PATH="$(localedir_relative_SQ)"' \
+        '-DBINDIR="$(bindir_relative_SQ)"' \
+        '-DFALLBACK_RUNTIME_PREFIX="$(prefix_SQ)"'
+-- snap --
+
+Is it possible that we should use `gitexecdir_relative_SQ` here instead?
+Does that fix things for you?
+
+I Cc:ed Dan so he could correct my hunch that this GIT_EXEC_PATH
+definition needs to be fixed.
 
 Ciao,
-Dscho
+Johannes
