@@ -2,136 +2,292 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 081791F6AC
-	for <e@80x24.org>; Wed,  4 Jul 2018 14:32:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC2341F6AC
+	for <e@80x24.org>; Wed,  4 Jul 2018 14:53:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752451AbeGDOb7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Jul 2018 10:31:59 -0400
-Received: from gproxy8-pub.mail.unifiedlayer.com ([67.222.33.93]:46643 "EHLO
-        gproxy8-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752136AbeGDOb6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 4 Jul 2018 10:31:58 -0400
-X-Greylist: delayed 2084 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Jul 2018 10:31:58 EDT
-Received: from cmgw12.unifiedlayer.com (unknown [10.9.0.12])
-        by gproxy8.mail.unifiedlayer.com (Postfix) with ESMTP id 92A141AB182
-        for <git@vger.kernel.org>; Wed,  4 Jul 2018 07:56:58 -0600 (MDT)
-Received: from box5008.bluehost.com ([50.116.64.19])
-        by cmsmtp with ESMTP
-        id aiHBfBl67BMJeaiHBfaAwR; Wed, 04 Jul 2018 07:56:57 -0600
-X-Authority-Reason: nr=8
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=mad-scientist.us; s=default; h=Content-Transfer-Encoding:Mime-Version:
-        Content-Type:References:In-Reply-To:Date:Cc:To:Reply-To:From:Subject:
-        Message-ID:Sender:Content-ID:Content-Description:Resent-Date:Resent-From:
-        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=fUtNGpEJy71G8cmxfXyjm3gunDFtTRBcH/QTIkwUFBE=; b=QCyi7i/eqDHLFYqTcHiVkjgXDA
-        IcuH4s4R8u73Gv6N4t4kFeaFzDiQzDBrZ4WFUluc1bnXMfzilUSAA5hcbgbQpqIbFshiXl8WXr+s3
-        kinoWvmpg/FbhwWbmb5B+M3sN;
-Received: from pool-72-70-58-227.bstnma.fios.verizon.net ([72.70.58.227]:36128 helo=homebase.home)
-        by box5008.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <paul@mad-scientist.net>)
-        id 1faiHB-002I1W-Tj; Wed, 04 Jul 2018 07:56:58 -0600
-Message-ID: <55733da67095123ced63095aa554970053bef321.camel@mad-scientist.net>
-Subject: Re: RUNTIME_PREFIX references in gitconfig variable paths
-From:   Paul Smith <paul@mad-scientist.net>
-Reply-To: paul@mad-scientist.net
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Git mailing list <git@vger.kernel.org>
-Date:   Wed, 04 Jul 2018 09:56:56 -0400
-In-Reply-To: <nycvar.QRO.7.76.6.1807041323490.75@tvgsbejvaqbjf.bet>
-References: <e9d5bbec6242e47b1f4141ffd99b276eb6a41347.camel@mad-scientist.net>
-         <nycvar.QRO.7.76.6.1807041323490.75@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.1-2 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5008.bluehost.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - mad-scientist.net
-X-BWhitelist: no
-X-Source-IP: 72.70.58.227
-X-Source-L: No
-X-Exim-ID: 1faiHB-002I1W-Tj
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: pool-72-70-58-227.bstnma.fios.verizon.net (homebase.home) [72.70.58.227]:36128
-X-Source-Auth: paul@mad-scientist.us
-X-Email-Count: 1
-X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTAwOC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+        id S1752197AbeGDOxf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Jul 2018 10:53:35 -0400
+Received: from mail-oi0-f66.google.com ([209.85.218.66]:36630 "EHLO
+        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752114AbeGDOxe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Jul 2018 10:53:34 -0400
+Received: by mail-oi0-f66.google.com with SMTP id r16-v6so11233039oie.3
+        for <git@vger.kernel.org>; Wed, 04 Jul 2018 07:53:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=L2z1vn2KFmC46KZvRG+lBQZS7Ta37Ohlo+Pmy92K1zY=;
+        b=z6RwbVNH4tJmORuUbNkQMKBxQYPI9z4EyUNs5FbmuQmPoQjQMaSXshGOjtWlzb7PNl
+         O5C6b3Dif8dStR8uIDEn3jtbo+yifOi6ewLlNDhf/IVRRpLUqPuDhwGlIa4StLa+nHwF
+         LrbgQGwm+vPveo5Z/nhbHedAp5oq+SE9NPjYY2EEYqlIMb4m5qqK46RYkOLjKrbYOEnc
+         D3Fjjp/ICK8mjnGSwkS2o6d3KoCZbZhGWQYUWAGKfDX4nid6wl61xigKKHCD9T/Il/Mt
+         VSTKx04jbkRdMRIrGu+VUZEFxI3tKtnYj1NsJP8wF0D6KU4PFY0exK7prsvAhK6hjXU4
+         xH1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=L2z1vn2KFmC46KZvRG+lBQZS7Ta37Ohlo+Pmy92K1zY=;
+        b=uiFk1emhvJ/Z3EP95HD6qgkY74uYH9NV502XZYx18hdqbKbRmkQ4KyJ/AFmY4MwjF1
+         8aYLhWZSjm9Di6SJiuuau6GsEhxmsOWbSTKA2/8GI1d13Fp5hcnYfn/zYHIfBxEbjFpi
+         QpQKzfJu9lkPnz1AL+8h1scFSxS5aIbbhdyZS8a/QHwFxFdjXEMcWzPzHEjXkZLBYU/r
+         JVZosdGML/nal2oA8IfL0wWxItQAMPsstWqpvJ5Jtdnt2kOmMp9nZyO5JV/U68FBkQzk
+         KQOPIO251OY8S+0dwGs8vKZuBxTuDV4y1ivxNg7E9+YMxR1AGXjRxW2OzqGJ75HUEmCe
+         f/Cw==
+X-Gm-Message-State: APt69E0nL21dZk3EGmFwayrUNLkqJEQB0jLKJFIZNBWob1qYcOqhtQlK
+        Jctb+Bevh+dY+/fcdsKaAcueDOXnkDs=
+X-Google-Smtp-Source: AAOMgpcy/aTCiDrE8aWnAlNDUhoyuLQ5x3MjZoJigYx4klp0c6ZfgL9S/kIEyXY+uaPqxB9ZmC+yig==
+X-Received: by 2002:aca:7596:: with SMTP id q144-v6mr2708707oic.105.1530716013247;
+        Wed, 04 Jul 2018 07:53:33 -0700 (PDT)
+Received: from localhost ([107.217.158.181])
+        by smtp.gmail.com with ESMTPSA id 13-v6sm1542004otm.39.2018.07.04.07.53.31
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 04 Jul 2018 07:53:32 -0700 (PDT)
+Date:   Wed, 4 Jul 2018 09:53:30 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, gitster@pobox.com, avarab@gmail.com
+Subject: [PATCH v2] grep.c: teach 'git grep --only-matching'
+Message-ID: <bf53ea90c9114d0c4e3cc2b1df05464bfeb6e84f.1530716005.git.me@ttaylorr.com>
+References: <702e1d2a26704c7c932ee4b96f32bff4c45e485e.1530654455.git.me@ttaylorr.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <702e1d2a26704c7c932ee4b96f32bff4c45e485e.1530654455.git.me@ttaylorr.com>
+User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 2018-07-04 at 13:26 +0200, Johannes Schindelin wrote:
-> On Wed, 4 Jul 2018, Paul Smith wrote:
-> 
-> > One thing I wanted to do was provide a default ca-bundle.crt file
-> > along with my local build of Git.  I need my installation to be
-> > relocatable and I'm using RUNTIME_PREFIX with Git 2.18.0 (on
-> > GNU/Linux).
-> 
-> Understandable. We do this all the time in Git for Windows. Our
-> config entry has this form:
-> 
->         [http]
->                 sslCAinfo = /ssl/certs/ca-bundle.crt
-> 
-> and in the RUNTIME_PREFIX mode, this will be made relative to the
-> runtime prefix. It is my understanding that bf9acba (http: treat
-> config options sslCAPath and sslCAInfo as paths, 2015-11-23) makes
-> this work.
+Teach 'git grep --only-matching', a new option to only print the
+matching part(s) of a line.
 
-Hm.  Unless I'm missing something this doesn't happen (and indeed, it
-does not work for me; with:
+For instance, a line containing the following (taken from README.md:27):
 
-  [http]
-      sslcainfo = /etc/ca-bundle.crt
+  (`man gitcvs-migration` or `git help cvs-migration` if git is
 
-I get:
+Is printed as follows:
 
-  fatal: unable to access 'https://github.com/myrepo.git/': error
-setting certificate verify locations:
-    CAfile: /etc/ca-bundle.crt
-    CApath: none
+  $ git grep --line-number --column --only-matching -e git -- \
+    README.md | grep ":27"
+  README.md:27:7:git
+  README.md:27:16:git
+  README.md:27:38:git
 
-although it works if I use a fully-qualified pathname, and using strace
-I find the process never attempted to access any other path for ca-
-bundle.crt).
+The patch works mostly as one would expect, with the exception of a few
+considerations that are worth mentioning here.
 
-In http.c we see how this path is treated in http_options():
+Like GNU grep, this patch ignores --only-matching when --invert (-v) is
+given. There is a sensible answer here, but parity with the behavior of
+other tools is preferred.
 
-        if (!strcmp("http.sslcainfo", var))
-                return git_config_pathname(&ssl_cainfo, var, value);
+Because a line might contain more than one match, there are special
+considerations pertaining to when to print line headers, newlines, and
+how to increment the match column offset. The line header and newlines
+are handled as a special case within the main loop to avoid polluting
+the surrounding code with conditionals that have large blocks.
 
-I can't tell exactly how this function is invoked, but the result
-(ssl_cainfo) is used here without further modification:
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ Documentation/git-grep.txt |  6 ++++-
+ builtin/grep.c             |  6 +++++
+ grep.c                     | 51 ++++++++++++++++++++++++++------------
+ grep.h                     |  1 +
+ t/t7810-grep.sh            | 15 +++++++++++
+ 5 files changed, 62 insertions(+), 17 deletions(-)
 
-        curl_easy_setopt(result, CURLOPT_CAINFO, ssl_cainfo);
-
-In config.c we find get_config_pathname() which does this:
-
-        *dest = expand_user_path(value, 0);
-
-In path.c we find expand_user_path() which does this:
-
-        if (path == NULL)
-                goto return_null;
-        if (path[0] == '~') {
-            ...
-        }
-        strbuf_addstr(&user_path, to_copy);
-        return strbuf_detach(&user_path, NULL);
-
-I don't see any reference to system_prefix(), system_path(), etc. which
-would be needed to RUNTIME_PREFIX-ize things.
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index 0de3493b80..078b4e3730 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -17,7 +17,7 @@ SYNOPSIS
+ 	   [-l | --files-with-matches] [-L | --files-without-match]
+ 	   [(-O | --open-files-in-pager) [<pager>]]
+ 	   [-z | --null]
+-	   [-c | --count] [--all-match] [-q | --quiet]
++	   [ -o | --only-matching ] [-c | --count] [--all-match] [-q | --quiet]
+ 	   [--max-depth <depth>]
+ 	   [--color[=<when>] | --no-color]
+ 	   [--break] [--heading] [-p | --show-function]
+@@ -201,6 +201,10 @@ providing this option will cause it to die.
+ 	Output \0 instead of the character that normally follows a
+ 	file name.
+ 
++-o::
++--only-matching::
++	Output only the matching part of the lines.
++
+ -c::
+ --count::
+ 	Instead of showing every matched line, show the number of
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 61bcaf6e58..228b83990f 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -843,6 +843,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOL_F('z', "null", &opt.null_following_name,
+ 			   N_("print NUL after filenames"),
+ 			   PARSE_OPT_NOCOMPLETE),
++		OPT_BOOL('o', "only-matching", &opt.only_matching,
++			N_("show only matching parts of a line")),
+ 		OPT_BOOL('c', "count", &opt.count,
+ 			N_("show the number of matches instead of matching lines")),
+ 		OPT__COLOR(&opt.color, N_("highlight matches")),
+@@ -962,6 +964,10 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 	if (!opt.pattern_list)
+ 		die(_("no pattern given."));
+ 
++	/* --only-matching has no effect with --invert. */
++	if (opt.invert)
++		opt.only_matching = 0;
++
+ 	/*
+ 	 * We have to find "--" in a separate pass, because its presence
+ 	 * influences how we will parse arguments that come before it.
+diff --git a/grep.c b/grep.c
+index 4ff8a73043..49a744f96b 100644
+--- a/grep.c
++++ b/grep.c
+@@ -51,6 +51,7 @@ void init_grep_defaults(void)
+ 	color_set(opt->color_match_selected, GIT_COLOR_BOLD_RED);
+ 	color_set(opt->color_selected, "");
+ 	color_set(opt->color_sep, GIT_COLOR_CYAN);
++	opt->only_matching = 0;
+ 	opt->color = -1;
+ 	opt->output = std_output;
+ }
+@@ -158,6 +159,7 @@ void grep_init(struct grep_opt *opt, const char *prefix)
+ 	opt->pattern_tail = &opt->pattern_list;
+ 	opt->header_tail = &opt->header_list;
+ 
++	opt->only_matching = def->only_matching;
+ 	opt->color = def->color;
+ 	opt->extended_regexp_option = def->extended_regexp_option;
+ 	opt->pattern_type_option = def->pattern_type_option;
+@@ -1446,7 +1448,8 @@ static void show_line(struct grep_opt *opt, char *bol, char *eol,
+ 		      const char *name, unsigned lno, ssize_t cno, char sign)
+ {
+ 	int rest = eol - bol;
+-	const char *match_color, *line_color = NULL;
++	const char *match_color = NULL;
++	const char *line_color = NULL;
+ 
+ 	if (opt->file_break && opt->last_shown == 0) {
+ 		if (opt->show_hunk_mark)
+@@ -1462,39 +1465,55 @@ static void show_line(struct grep_opt *opt, char *bol, char *eol,
+ 			opt->output(opt, "\n", 1);
+ 		}
+ 	}
+-	show_line_header(opt, name, lno, cno, sign);
+-	if (opt->color) {
++	if (!opt->only_matching) {
++		/*
++		 * In case the line we're being called with contains more than
++		 * one match, leave printing each header to the loop below.
++		 */
++		show_line_header(opt, name, lno, cno, sign);
++	}
++	if (opt->color || opt->only_matching) {
+ 		regmatch_t match;
+ 		enum grep_context ctx = GREP_CONTEXT_BODY;
+ 		int ch = *eol;
+ 		int eflags = 0;
+ 
+-		if (sign == ':')
+-			match_color = opt->color_match_selected;
+-		else
+-			match_color = opt->color_match_context;
+-		if (sign == ':')
+-			line_color = opt->color_selected;
+-		else if (sign == '-')
+-			line_color = opt->color_context;
+-		else if (sign == '=')
+-			line_color = opt->color_function;
++		if (opt->color) {
++			if (sign == ':')
++				match_color = opt->color_match_selected;
++			else
++				match_color = opt->color_match_context;
++			if (sign == ':')
++				line_color = opt->color_selected;
++			else if (sign == '-')
++				line_color = opt->color_context;
++			else if (sign == '=')
++				line_color = opt->color_function;
++		}
+ 		*eol = '\0';
+ 		while (next_match(opt, bol, eol, ctx, &match, eflags)) {
+ 			if (match.rm_so == match.rm_eo)
+ 				break;
+ 
+-			output_color(opt, bol, match.rm_so, line_color);
++			if (opt->only_matching)
++				show_line_header(opt, name, lno, cno, sign);
++			else
++				output_color(opt, bol, match.rm_so, line_color);
+ 			output_color(opt, bol + match.rm_so,
+ 				     match.rm_eo - match.rm_so, match_color);
++			if (opt->only_matching)
++				opt->output(opt, "\n", 1);
+ 			bol += match.rm_eo;
++			cno += match.rm_eo;
+ 			rest -= match.rm_eo;
+ 			eflags = REG_NOTBOL;
+ 		}
+ 		*eol = ch;
+ 	}
+-	output_color(opt, bol, rest, line_color);
+-	opt->output(opt, "\n", 1);
++	if (!opt->only_matching) {
++		output_color(opt, bol, rest, line_color);
++		opt->output(opt, "\n", 1);
++	}
+ }
+ 
+ #ifndef NO_PTHREADS
+diff --git a/grep.h b/grep.h
+index 08a0b391c5..4d474d8ec4 100644
+--- a/grep.h
++++ b/grep.h
+@@ -150,6 +150,7 @@ struct grep_opt {
+ 	int relative;
+ 	int pathname;
+ 	int null_following_name;
++	int only_matching;
+ 	int color;
+ 	int max_depth;
+ 	int funcname;
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index 9312c8daf5..d8c232dbf4 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -262,6 +262,21 @@ do
+ 		fi
+ 	'
+ 
++	test_expect_success "grep $L (with --column, --only-matching)" '
++		{
++			echo ${HC}file:1:5:mmap
++			echo ${HC}file:2:5:mmap
++			echo ${HC}file:3:5:mmap
++			echo ${HC}file:3:13:mmap
++			echo ${HC}file:4:5:mmap
++			echo ${HC}file:4:13:mmap
++			echo ${HC}file:5:5:mmap
++			echo ${HC}file:5:13:mmap
++		} >expected &&
++		git grep --column -n -o -e mmap $H >actual &&
++		test_cmp expected actual
++	'
++
+ 	test_expect_success "grep $L (t-1)" '
+ 		echo "${HC}t/t:1:test" >expected &&
+ 		git grep -n -e test $H >actual &&
+-- 
+2.18.0
