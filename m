@@ -7,48 +7,47 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8274B1F6AC
-	for <e@80x24.org>; Wed,  4 Jul 2018 11:22:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7CB8E1F6AC
+	for <e@80x24.org>; Wed,  4 Jul 2018 11:27:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932673AbeGDLWZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Jul 2018 07:22:25 -0400
-Received: from mout.gmx.net ([212.227.17.21]:58339 "EHLO mout.gmx.net"
+        id S933214AbeGDL1O (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Jul 2018 07:27:14 -0400
+Received: from mout.gmx.net ([212.227.15.15]:35739 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753520AbeGDLWY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Jul 2018 07:22:24 -0400
-Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MADqP-1fPuDK3Sv3-00BJFO; Wed, 04
- Jul 2018 13:22:19 +0200
-Date:   Wed, 4 Jul 2018 13:22:02 +0200 (DST)
+        id S932594AbeGDL1N (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Jul 2018 07:27:13 -0400
+Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LkfdE-1g8dFD1WbM-00aS2D; Wed, 04
+ Jul 2018 13:27:11 +0200
+Date:   Wed, 4 Jul 2018 13:26:54 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Paul Smith <paul@mad-scientist.net>
-cc:     Git mailing list <git@vger.kernel.org>,
-        Dan Jacques <dnj@google.com>
-Subject: Re: Git 2.18: RUNTIME_PREFIX... is it working?
-In-Reply-To: <97803ec8dae0a73bae301a37377b7b4a78f77e99.camel@mad-scientist.net>
-Message-ID: <nycvar.QRO.7.76.6.1807041312150.75@tvgsbejvaqbjf.bet>
-References: <97803ec8dae0a73bae301a37377b7b4a78f77e99.camel@mad-scientist.net>
+cc:     Git mailing list <git@vger.kernel.org>
+Subject: Re: RUNTIME_PREFIX references in gitconfig variable paths
+In-Reply-To: <e9d5bbec6242e47b1f4141ffd99b276eb6a41347.camel@mad-scientist.net>
+Message-ID: <nycvar.QRO.7.76.6.1807041323490.75@tvgsbejvaqbjf.bet>
+References: <e9d5bbec6242e47b1f4141ffd99b276eb6a41347.camel@mad-scientist.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ZhEmRBkvTNStSvr78YMNKtlmeDdfJvBA5Z/uFKYYDD+JMblPhMy
- 0LyLHPZyE/18B1uvrCG9RZk9pt8VV1avdtRymRx/tYgIXYm4gdp/ONchtce18omNH/C3MeM
- t5Y/Gw1wfedalRU1jkHqOBTRaxRvIKhFt0zEcS0rj6ipeYBTic16WYkKumsYy1NvgM+IaHA
- sQHryVFg6dvhk0b0FSHmg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:EkaeaB67y4E=:JcLncslOAaAJq22JF2lrRy
- yBUn+0retMZPV6pj/zs9E0iC0FxgDOEGGEp35BamJNFHMBGNfWw6+eCjOMPjyeilMzjaJcSl7
- UPt3/d7Dr7gmn2nN/c8TaXsftZwkvKAwMBJDmhRDl1pHKSuaK6+CyOPNZXVy/4c74Sf2RBQuP
- VX115qF0/7R1QbGoYPb6Nl8sPiG+NqPiburSK8hAfJlEd25hp8HNEGrAUSUYKFV4+6I74xkh+
- oRWGe5uZM6/AW5Zai7MwSet/aMx508z7UvmxbJjVv7XhYHjRBOVjTiekRtcZVH9fWoshI2d37
- T38DeStbRl4AHJCW4okeivJNii0kHC4da2EyM0DMJ/2dPkg2oWiJnolaZvQWgF/Z0rTtWHlAG
- AzxHUfDsltZg0ZNpzasqkgUExi5wNXZJ8QDl9zypNptJQcFnumSZn2JIEYxnzh/o9ME2TIEKA
- JImv6cBW32BkU280D36t3OhV2sAxqxxE/JfVMYjg7IeJfcw9oTbJLK4WpF6tLPAvfwj/A/GTG
- +Yi4/UqIKqbYLbmu37xu69SgPI6Un4eaYf9vkkfbzzyAd1Z9vB1r/I+8WSBb9OBDRcuJcEzRH
- vGt0VftmijuU/2oe1xIAX4Mm98SphMumZLzJ1SAvfILi8ce365ELxbZKGhkldAVg+33nDiM/+
- qoY5r6D2PcchlZYVHomrGlaAdq04rPxZoHAZiuppzUH5AQtfmQ2DQPBjXrf4xtEp+a8oCqPDU
- BrsWcRJYD70TnCm0lXBQJlUmJOOuUwfBp3mBdb5W08Vub6a/cwydfy54icqSw+UWzECATxKpX
- FJRNgKu
+X-Provags-ID: V03:K1:DEnhngFxUU1s25OVH3DALflMJQ8U7dXFiCIZdNrI03ev9n1Ze7i
+ B2oiZZ4h4FMsKztVR8JTEf6pidOX61lqsVukjz8/zDhHVgju7HQJCEpBZIMRcLV+/7vwIoq
+ ViJ2GrrCAPC/dvDtZspBA0eZecDUBSYgSGNx2dJmHSgtmRsgSTORtEcO6DIM2UuW3jxT1gQ
+ MO4rucZ5saucyNManjWww==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:9Wxhd4KgKc0=:cW9rEE41r9w0Tu+ZjjOdeY
+ 8VXbvOhVpREExW6MhKzlvRwZOHBk44fV9o61bWt2VQV93dK0FsvOi3CdK2uVmWxWIuyD/d12w
+ zoz0I6fNYmDffwxaAkd5W4DPicqHqmIPvel/5P3jnVJVaKNqJuBGg5fm/aog2l6v8uhZkwc6Z
+ 2JuY/Dw8nTsciO1Pp5YH0jqi5qON9dLE9h3Div3i+ewJWZ3sNIgsbISLpRTQiBrBppowQ9kGi
+ vyya0jwC7fX8E8aoNCIxRhcpuXQuJrgTJVDk/2zvV6oAYX8jZX5+PZJoHnGAq0KO5GHZfGw7d
+ ufeeuZstSDsDW9sYL3JZdjLFJjn0U02mFNyqhjCyRDl+d49rhixqCBWljnPhLowXW+7OFqlfp
+ ygJRGaFA/CPjEKy348rpgYbU5TsF40wCwzqBWZt/IRIlKC7FS5xSGsNJBNTZ52Y5JZXmz3HlK
+ pBi4cwLlV6DDSL13B5dwSM36CMvGhZkabHgq2zhoAA23eRD02zxcOZcFrJzBiL6FL3QlVkzGw
+ PTOUM5nYHAymvZQzzgrv3ZjwVLZ7aUEfmRT5l96gJ6onvW4vqFWVJPZgAqzWO1GczR+QmU3+1
+ W434Li8/XpuvVj5rIE/Cl43jcT0SUu2olFVivDCorS6NUSfhIhZqg1X4Oqt87JUXdQdykXx4V
+ nQcHmY6Ea/Q7zOMmn/UKB7AgcgmmGRCVUhvgDVr/oE5ynNIU8s1SDHlEBqGLqhsmouzsfAABA
+ jyglTxkpilT5pmvMpo5fAP8AwkkqAkIB9jApT2zwRGSjW1cYXAQ3WaM1evmINs2DVtk02ispm
+ +O8yI5B
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -58,94 +57,47 @@ Hi Paul,
 
 On Wed, 4 Jul 2018, Paul Smith wrote:
 
-> I was excited to see the RUNTIME_PREFIX for POSIX systems patchset go
-> by earlier this year.  Although I didn't see any mention of it being
-> included in the 2.18.0 release notes, it does appear that it was merged
-> in for this release.
+> One thing I wanted to do was provide a default ca-bundle.crt file along
+> with my local build of Git.  I need my installation to be relocatable
+> and I'm using RUNTIME_PREFIX with Git 2.18.0 (on GNU/Linux).
+
+Understandable. We do this all the time in Git for Windows. Our config
+entry has this form:
+
+	[http]
+		sslCAinfo = /ssl/certs/ca-bundle.crt
+
+and in the RUNTIME_PREFIX mode, this will be made relative to the runtime
+prefix. It is my understanding that bf9acba (http: treat config options
+sslCAPath and sslCAInfo as paths, 2015-11-23) makes this work.
+
+> I can provide a system gitconfig file with a setting for http.sslCAInfo
+> but the problem is I can't create a relocatable path here so I don't
+> know how to set it:
 > 
-> Has anyone else tried to get it working?  It doesn't appear to be
-> working properly for me so I'm not sure if I'm supposed to be doing
-> something different... I didn't see any documentation on it.
-
-It is working (for ages) in the Git for Windows build.
-
-> Basically what happens is that I run configure with
-> --prefix=/my/install/path --with-gitconfig=etc/gitconfig
-> --with-gitattributes=etc/gitattributes.
+>   $ cat $prefix/etc/gitconfig
+>   [http]
+>       sslCAInfo = <prefix>/etc/ca-bundle.crt
 > 
-> Then I run make with RUNTIME_PREFIX=YesPlease.
-
-Ah. In Git for Windows, we do not use configure. I *think* this points to
-an incompatibility of the RUNTIME_PREFIX feature with our autoconf
-support, and this is a grand opportunity for you to step in and help.
-
-Essentially, what you will want to do is to implement a new configure
-option --with-runtime-prefix that then prevents the autoconf script from
-munging the relative paths in the way it does.
-
-> When I look in the makefile, I see that the make variable gitexecdir is
-> initially properly set to libexec/git-core which is what I expect.
+> What do I use for <prefix> above since I want it to be relocatable? 
+> Basically I want this to be in the same directory as the relocatable
+> sysconfdir (I don't actually care much but that seems like a good
+> place).
 > 
-> However, later in the makefile we include the config.mak.autogen file,
-> which was generated from config.mk.in by configure.  In the .in file we
-> have this:
+> Is there some way to create a reference to a path relative to the
+> installation directory?
 > 
->  gitexecdir = @libexecdir@/git-core
+> For example "~" is accepted as the users $HOME path; is there some
+> syntax which refers to the Git installation directory?
 > 
-> After configure gets done with it, this becomes:
+> If not this seems like something that would be very useful.
 > 
->  gitexecdir = ${prefix}/libexec/git-core
 > 
-> which is a fully-qualified path.  This means that exec-cmd.c is
-> compiled with -DGIT_EXEC_PATH="/my/install/path/libexec/git-core" which
-> effectively disables RUNTIME_PREFIX, as the exec-cmd.c:system_prefix()
-> function always returns FALLBACK_RUNTIME_PREFIX since GIT_EXEC_PATH is
-> not a suffix of executable_dirname (once the install location has been
-> moved).
+> I can use a wrapper script and set GIT_SSL_CAINFO, but that will also
+> override any user's setting of http.sslCAInfo in their local gitconfig
+> which I don't really want.
 
-Right.
-
-I am actually quite surprised that it builds for you, given this part of
-the Makefile:
-
--- snip --
-ifdef RUNTIME_PREFIX
-
-ifneq ($(filter /%,$(firstword $(gitexecdir_relative))),)
-$(error RUNTIME_PREFIX requires a relative gitexecdir, not: $(gitexecdir))
-endif
-
-[...]
--- snap --
-
-I am also quite surprised that config.mk.in tries to set gitexecdir. But I
-guess that is for cases where you want to override it via --libexecdir?
-
-> I suppose we need to pass more configure options to reset paths; is
-> there information somewhere on exactly which ones should be overridden?
->  For example if I try to pass configure --libexecdir=libexec to solve
-> the above issue, I get an error from configure:
-> 
->  configure: error: expected an absolute directory name for --libexecdir: libexec
-> 
-> Any info on how this is supposed to work, is welcome!
-
-I just saw another thing:
-
--- snip --
-exec-cmd.sp exec-cmd.s exec-cmd.o: GIT-PREFIX
-exec-cmd.sp exec-cmd.s exec-cmd.o: EXTRA_CPPFLAGS = \
-        '-DGIT_EXEC_PATH="$(gitexecdir_SQ)"' \
-        '-DGIT_LOCALE_PATH="$(localedir_relative_SQ)"' \
-        '-DBINDIR="$(bindir_relative_SQ)"' \
-        '-DFALLBACK_RUNTIME_PREFIX="$(prefix_SQ)"'
--- snap --
-
-Is it possible that we should use `gitexecdir_relative_SQ` here instead?
-Does that fix things for you?
-
-I Cc:ed Dan so he could correct my hunch that this GIT_EXEC_PATH
-definition needs to be fixed.
+I think if you simply delete `<prefix>`, it will start working.
 
 Ciao,
 Johannes
