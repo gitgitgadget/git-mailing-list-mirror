@@ -6,41 +6,41 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D677D1F6AC
-	for <e@80x24.org>; Wed,  4 Jul 2018 09:30:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 302821F6AC
+	for <e@80x24.org>; Wed,  4 Jul 2018 09:38:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932997AbeGDJ36 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Jul 2018 05:29:58 -0400
-Received: from mail-yb0-f193.google.com ([209.85.213.193]:34441 "EHLO
-        mail-yb0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932517AbeGDJ35 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Jul 2018 05:29:57 -0400
-Received: by mail-yb0-f193.google.com with SMTP id e9-v6so1845261ybq.1
-        for <git@vger.kernel.org>; Wed, 04 Jul 2018 02:29:56 -0700 (PDT)
+        id S932758AbeGDJiw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Jul 2018 05:38:52 -0400
+Received: from mail-yb0-f195.google.com ([209.85.213.195]:37736 "EHLO
+        mail-yb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932652AbeGDJin (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Jul 2018 05:38:43 -0400
+Received: by mail-yb0-f195.google.com with SMTP id r3-v6so1857060ybo.4
+        for <git@vger.kernel.org>; Wed, 04 Jul 2018 02:38:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=5D1htwIm4a8DXcAXG27GSf6Y+D+w+cpNt7Xbv7czQgQ=;
-        b=Ez2EP8eY9zZJC6oC8fwWH96z7DpUbz2rfcIlmcbBP97HcDSYzgx1FO5vw+Oo/PmyTZ
-         hEAqzuUu+TL9A1fd7duMpnm+R42JC4tOT8ZpwxdhDzA2qnFPbE5X7j752aOUSYJqFoD4
-         tGE2VZL1njZ4s7hjYfRvyoluXbq0o3bY0/BOaEIlcQScN+NC3FcSD/FM57/CaEPNX5Nm
-         /RJcIA480v509qMok4JVil954pRJlFAKq4ZxqFv32jsi7ESdY2tyu3clAELpVolG8/cw
-         tLwzRJEA9f7+I2UWfUfQt0tLrCIEmpRn/PSt95T4hh310o75x9BMM0d6zKSxC1CusGa4
-         fupw==
-X-Gm-Message-State: APt69E16mJVmAXOoivuKbg8QdG4b/si0V/HYiZ8qz8qM6BOg1trmOXV2
-        8/HCm+0tAQI7NUq5EppSeeZE2nXHTiPUHxn+MMnALQ==
-X-Google-Smtp-Source: AAOMgpdHnGVhbGY2SMaYhm3bVaocazCOfXNL4W1rj8w+13lorirYqHYoYG2T6LCShW3WO59hKzFQ0phGjc1gFf8l2t4=
-X-Received: by 2002:a25:c0c1:: with SMTP id c184-v6mr563556ybf.76.1530696596475;
- Wed, 04 Jul 2018 02:29:56 -0700 (PDT)
+        bh=0gHd8lTtP7woNtMYbHAocrA84/sTBZL2Leuq+GNH8wA=;
+        b=J+jKUThgVe79p97k05fmQsuHig0czROoTnmG5qkqXcMXYxk/yO9U18fUuSa7KqBcC0
+         Y2MRDTMqnVrgpVj+0vi7TQNVh0VW9GZRp7tlj7cFLZ5yBsHTQYYNgdfcF0fGkDnqw1Yn
+         1GbgLT59qxSMgmy2VFrghcsmoXxz6rYdzxWzQgXFmxhcB9I/Tt4ExsN23IlP5AjrsweJ
+         07nOJsLUHgyq5gLvQLnYcX6GIq8I8cYj/NqghQNigD+CuDjvYZF1R241VQXnNKGtWa9j
+         BXUChBVLlRPyt85aN6fMNxTky0fosugEIc5jU/Nz6ZQGwl2JLKCGH4jeiL5Ok0bRToTA
+         e6KA==
+X-Gm-Message-State: APt69E0xdVHeLAWkXFcQEgc5Sgbj3N+ieyvPa5c017c2A1MtleA9itoE
+        so8W2qqo0bZE7W8ng6UqkzrO+Io9JmUyWiL4BLs=
+X-Google-Smtp-Source: AAOMgpceoX5KgNOxHbqQJRpPz9IA9q/IbuNLTtUUtdtIM95DO6biIDfNNM3HenzpRBdyCl095a9Cvtv9YywzpbrAgEE=
+X-Received: by 2002:a5b:601:: with SMTP id d1-v6mr559456ybq.295.1530697123217;
+ Wed, 04 Jul 2018 02:38:43 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180703035802.24060-1-jyn514@gmail.com> <CAPig+cT9XB-nJFm0rD9RckBzcbk9vh8Hz=3XOA-HA-JoXssG_A@mail.gmail.com>
- <26b538bd-df59-d9a6-460d-0b1042b35250@gmail.com>
-In-Reply-To: <26b538bd-df59-d9a6-460d-0b1042b35250@gmail.com>
+References: <26b538bd-df59-d9a6-460d-0b1042b35250@gmail.com>
+ <20180703235337.31770-1-jyn514@gmail.com> <368608dc-4351-541c-0236-9f5760ca5d97@gmail.com>
+In-Reply-To: <368608dc-4351-541c-0236-9f5760ca5d97@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 4 Jul 2018 05:29:45 -0400
-Message-ID: <CAPig+cQu-e63NUUXAB_QA+M-rgPfqBLOOm5fdjsSVuWHJt7TJA@mail.gmail.com>
-Subject: Re: [PATCH 1/3] ls-tree: make <tree-ish> optional
+Date:   Wed, 4 Jul 2018 05:38:32 -0400
+Message-ID: <CAPig+cR4=0r5qRmKzV7Tzph49Ln0kJDAGtSMxF0BNxujwjeiWg@mail.gmail.com>
+Subject: Re: [PATCH] ls-tree: make <tree-ish> optional
 To:     jyn514@gmail.com
 Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
@@ -49,59 +49,22 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 3, 2018 at 7:15 PM Joshua Nelson <jyn514@gmail.com> wrote:
-> On 07/03/2018 03:15 AM, Eric Sunshine wrote:
-> >> +               /* taken from checkout.c;
-> >> +                * we have a simpler case because we never create a branch */
-> >
-> > However, this comment doesn't belong in the code, as it won't be
-> > particularly helpful to anyone reading the code in the future. This
-> > sort of note would be more appropriate in the commit message or, even
-> > better, in the commentary section just below the "---" lines following
-> > your Signed-off-by:.
->
-> I wasn't aware I could put comments in email generated by
-> git-send-email, thanks for the tip :)
+On Tue, Jul 3, 2018 at 8:05 PM Joshua Nelson <jyn514@gmail.com> wrote:
+> Is it customary to send a new patch or second patch that builds on the
+> first?
 
-An even more common workflow is to use git-format-patch to generate
-the patches locally, then edit the patches to add commentary below the
-"---" line if needed, proof-read everything, and finally use
-git-send-email to send out the already-generated patches.
+It depends what you mean. If there were problems with a version of a
+patch you sent, then you "re-roll", which means you re-send the patch
+in its entirety as if it's brand new (not building on the problematic
+previous version). You'd also indicate the attempt number in the
+subject; for instance "[PATCH v2]" for the second attempt.
 
-> >> +                       object = "HEAD";
-> >> +               else {
-> >> +                       argv++, argc++;
-> >> +                       initialized = 1;
-> >> +               }
-> >> +       }
-> >> +
-> >> +       if (!initialized) // if we've already run get_oid, don't run it again
-> >> +               if (get_oid(object, &oid))
-> >> +                       die("Not a valid object name %s", object);
-> >
-> > Can't you accomplish the same without the 'initialized' variable by
-> > instead initializing 'object' to NULL and then checking it here?
->
-> I think my code wasn't very clear here - 'initialized' checks if 'oid'
-> has been initialized, not 'object'. AFAIK, structs can't be initialized
-> to NULL, but my C is not very good so I'd be interested to learn otherwise.
+If you're working on some functionality that is built up over a series
+steps, then you would send all those patches as a "patch series", in
+which each patch in the series builds upon the patch or patches
+preceding it in the series.
 
-Oh, the intention of 'initialized' was quite clear, but it seems
-unnecessary, which is why I was suggesting an alternative. Unless I'm
-misunderstanding the code (certainly a possibility), I think
-'initialized' is redundant, thus you can get by without it
-Specifically, the only time you set 'initialized' is when you don't
-set 'object', which means that you can infer whether 'oid' was
-initialized based upon whether 'object' was set. So, my suggestion
-was:
+> If I specify a commit range to git-send-email it sends both, not
+> just the latest.
 
-    const char *object = NULL;
-    ...
-    ... conditionals possibly assigning to 'object' ...
-    ...
-    if (object && get_oid(object, &oid))
-        die(_("not a valid object name: %s", object);
-
-If you arrived at that final 'if' statement and object is still NULL,
-then you know that 'oid' is already initialized; if 'object' is not
-NULL, then you use it to initialized 'oid'.
+I'm not quite sure what you mean.
