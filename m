@@ -2,74 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3EDC11F6AC
-	for <e@80x24.org>; Wed,  4 Jul 2018 19:33:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE4C81F6AC
+	for <e@80x24.org>; Wed,  4 Jul 2018 20:16:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752897AbeGDTdM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Jul 2018 15:33:12 -0400
-Received: from mout.gmx.net ([212.227.17.22]:48877 "EHLO mout.gmx.net"
+        id S1752960AbeGDUQ2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Jul 2018 16:16:28 -0400
+Received: from hel.is.scarlet.be ([193.74.71.26]:27138 "EHLO hel.is.scarlet.be"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752653AbeGDTdL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Jul 2018 15:33:11 -0400
-Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M96Jd-1fOP2p3pMb-00CNop; Wed, 04
- Jul 2018 21:33:03 +0200
-Date:   Wed, 4 Jul 2018 21:32:46 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Tobias Klauser <tklauser@distanz.ch>
-cc:     git@vger.kernel.org, gitster@pobox.com, dana <dana@dana.is>,
-        Wink Saville <wink@saville.com>,
-        Alban Gruin <alban.gruin@gmail.com>
-Subject: Re: [PATCH] git-rebase--{interactive,preserve-merges}: fix formatting
- of todo help message
-In-Reply-To: <20180704141635.GH24016@distanz.ch>
-Message-ID: <nycvar.QRO.7.76.6.1807042131460.75@tvgsbejvaqbjf.bet>
-References: <1530706658-20519-1-git-send-email-tklauser@distanz.ch> <nycvar.QRO.7.76.6.1807041505000.75@tvgsbejvaqbjf.bet> <20180704141635.GH24016@distanz.ch>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ZuRPx6UjOaNvWLYd9Loo+R9lozgPvE3fH8onGwbSAf89z8MO5Q8
- 6YKjKXij6S4KgE4KdJ6FmphHdmIhF24x/LKuL4symu1jSdCmUeQ9fkLcxioeIV2GfFiEyXe
- EH2xye3KVLA/sURQSlNbnkDCQQcqCFSkVkF92F3GF9Ibze7W7vYqt+4tsqNZyMDVrt9Y3bq
- 07465eqssQ5wc38JPkDXQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:mOd6OUnI1qM=:3OYt5ow2rgHlif/HJwZMO7
- WQsKcSi+Ab1KiTpa/Galmbv7RNAQobapQ7qJ020x886TjGTFgL3s+/UvOVN3AHUTYVfISkjJ1
- E5IJmjs9HI+2+qjZnNZ8bZFpm/IDS/0KPhfPPWf86B7tyOsl4lhKunUeVrhcCFrIype8mNqzM
- oxRhQEzwG62O7etQ/rkiSxuMJq8FYO2jigmtOMcUi14t+WYzwgTA5+s+rsyiqPL7j8EFkaK9m
- BTrZ3jZB6VLKX4yqH2CbHp1JjGiPpoSi9BPrJD9rx552o4ndmlK0iGFVPJGyxy9YyPyxO4GvE
- 9KCpuPE21mQM+iY+TlVTSHcPxmY+jTn32Fem8HW5vS1yYDZq55/Nj2vqEssQYwRXQxBzzzxnO
- 5ZKTKrpaXoRAO9TOKeUBFFTX84Fu2ZGjZum+WbbgewGfdYa24AQUlhD58flrl8pOlksqHtRVu
- cGIn/JD7nZ0xyFKU1/6fDmSw+aH8Ca+KV+eD4+mY3el4MMd07dUVQkbFmbQ38e5SVYLAKsqyd
- prkCqyHPeZGMuxlg5ld5WBT0UBsTGZIK9QhtDA/KzQJrOdYYdPBOgdawAVvwb2IFkCOQAJaJx
- OEDdelTAWI2LNI/fC433wcAmwYI+w3JzVhxKMkmeBiTAJ8jzLnEQe5DIr36xGqw0qh/vi0Gku
- berUfwxIg5mOt9sa4znFw17+fUwmF+4JygSTe8l2P5c8IDSzGhR/hvZpMmHwSU4uJhD5Kwwji
- GJ6K/HNXIqIuFFGpx0n/XY+YiYpEWchckW7c11QE3oHA0SstVHmcUF2Q4M/YfyfZRs07ewcrv
- zuqdCeA
+        id S1752719AbeGDUQ1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Jul 2018 16:16:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=scarlet.be;
+        s=scarlet; t=1530735369;
+        bh=8HVcYsgnK5w+vz5jsXCogaMFaNVf5qoWChPrIhVAcHc=;
+        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References;
+        b=pGjut0/zRMhSEQuNgTJcK6uK4W2lkrI1/hRivDL2qpKWs2JjKkbHSn4D2vC6qDnj/
+         SLh74KlmAFqN9wtcFCuDem59kMGl4q+Wp6tiFAkYFsyBiwJgqm+9O8j8Ibutu+Db6q
+         NqNXy2kRl+PZqxjjTe1Vvo4SDlFs49g+A3TsEPTM=
+Received: from localhost.localdomain (ip-213-49-0-206.dsl.scarlet.be [213.49.0.206])
+        by hel.is.scarlet.be (8.14.9/8.14.9) with ESMTP id w64KG7jN023063
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+        Wed, 4 Jul 2018 22:16:08 +0200
+X-Scarlet: d=1530735368 c=213.49.0.206
+From:   Kim Gybels <kgybels@infogroep.be>
+To:     git@vger.kernel.org
+Cc:     Kim Gybels <kgybels@infogroep.be>,
+        Adam Borowski <kilobyte@angband.pl>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Michael J Gruber <git@grubix.eu>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH v2] gc --auto: clear repository before auto packing
+Date:   Wed,  4 Jul 2018 22:16:00 +0200
+Message-Id: <20180704201600.9908-1-kgybels@infogroep.be>
+X-Mailer: git-send-email 2.18.0.windows.1
+In-Reply-To: <20180630133822.4580-1-kgybels@infogroep.be>
+References: <20180630133822.4580-1-kgybels@infogroep.be>
+X-DCC-scarlet.be-Metrics: hel 20001; Body=11 Fuz1=11 Fuz2=11
+X-Virus-Scanned: clamav-milter 0.98.1-exp at hel
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Tobias,
+Teach gc --auto to clear the repository before auto packing it to
+prevent failures when removing files on Windows.
 
-On Wed, 4 Jul 2018, Tobias Klauser wrote:
+Also teach the test 'fetching with auto-gc does not lock up' to complain
+when it is no longer triggering an auto packing of the repository.
 
-> On 2018-07-04 at 15:09:34 +0200, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->
-> > Junio, this gets an ACK from me, could you apply the
-> > `git-rebase--preserve-merges.sh` part selectively, please?
-> 
-> Let me know if I should provide an updated patch just for
-> git-rebase--preserve-merges.sh
+Fixes https://github.com/git-for-windows/git/issues/500
 
-I think we'll have to wait for tomorrow to get an answer to this; today is
-a holiday in the States.
+Signed-off-by: Kim Gybels <kgybels@infogroep.be>
+---
 
-Ciao,
-Johannes
+Updated after Duy Nguyen's comments:
+- use repo_clear instead of close_all_packs, and add the call in
+  gc_before_repack intead of just before executing git repack
+- use test_i18ngrep instead of grep in updated test
+
+ builtin/gc.c     | 7 +++++++
+ t/t5510-fetch.sh | 4 +++-
+ 2 files changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/gc.c b/builtin/gc.c
+index ccfb1ceaeb..22a6fc4863 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -473,6 +473,13 @@ static int report_last_gc_error(void)
+ 
+ static int gc_before_repack(void)
+ {
++	/*
++	 * Shut down everything, we should have all the info we need
++	 * at this point. Leaving some file descriptors open may
++	 * prevent them from being removed on Windows.
++	 */
++	repo_clear(the_repository);
++
+ 	if (pack_refs && run_command_v_opt(pack_refs_cmd.argv, RUN_GIT_CMD))
+ 		return error(FAILED_RUN, pack_refs_cmd.argv[0]);
+ 
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index e402aee6a2..ef599c11cd 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -828,10 +828,12 @@ test_expect_success 'fetching with auto-gc does not lock up' '
+ 	test_commit test2 &&
+ 	(
+ 		cd auto-gc &&
++		git config fetch.unpackLimit 1 &&
+ 		git config gc.autoPackLimit 1 &&
+ 		git config gc.autoDetach false &&
+ 		GIT_ASK_YESNO="$D/askyesno" git fetch >fetch.out 2>&1 &&
+-		! grep "Should I try again" fetch.out
++		test_i18ngrep "Auto packing the repository" fetch.out &&
++		test_i18ngrep ! "Should I try again" fetch.out
+ 	)
+ '
+ 
+-- 
+2.18.0.windows.1
+
