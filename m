@@ -2,104 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 30E201F6AC
-	for <e@80x24.org>; Thu,  5 Jul 2018 15:35:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 713861F6AC
+	for <e@80x24.org>; Thu,  5 Jul 2018 16:42:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753372AbeGEPfP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Jul 2018 11:35:15 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:40578 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753259AbeGEPfO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Jul 2018 11:35:14 -0400
-Received: by mail-wm0-f66.google.com with SMTP id z13-v6so11675347wma.5
-        for <git@vger.kernel.org>; Thu, 05 Jul 2018 08:35:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:openpgp:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=/cWVB14oJV+7QfnoEMTrZ1Jqp4pM84+Yhf2BPZmBUSg=;
-        b=nDqgdYKIMndJ61j0vX/siDVVxRZHt9XKlb6/OwU0iL5pf/FzXIAMV6m/aJwBHmtvvg
-         XopH1dspiPhONRonJA8BpVmHynbdixaOiOZL1SbqdGRNL/kueAjCzzvllPfSCJyke1zz
-         ULxLEaUt693LnfmjVBEIqLmMGacK3jKp/UncJoeN+PfcqZJWvubYM/QGbkeCpUWMZFA0
-         wBv1hluVrhYQIUtIOC84JEOLm4zHvBuSu83FOHe3yhWtFO+Vco92VYL1H2Jr9sXp9JJ8
-         ZuDoqsFLd+iDMsdmF5tmSWgFFf2TV4HJ4J0B7avBrqq0fmJY4kGOCs0e/vbSftUayV7E
-         lU6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=/cWVB14oJV+7QfnoEMTrZ1Jqp4pM84+Yhf2BPZmBUSg=;
-        b=GyT+J3wW9OS5n77rMa7BqtI3tFLirZc3wNcY43de4OPfJAyZ4Xt54d7zFmuObmQgxX
-         G9EpTHhDvGS/8JzGHtAlf1NTCQrkel/XAfKHRKhoaERiwAXDLtk/BuaAW8vO8pcQ4ZSH
-         T3tJ4jXmnqqF4NydrCJe9S/sSNcWKcarn4s3hcBGHLai+pFjMM1Yhm4nkFShzEQNuthh
-         NQRKy1Wqe2bx20E273GO/OF8sPwz3GLB7PRIpjn9MOwlWeQlxPEq52LMDyoLVat+pd+D
-         MsIRYk8PdL9vw8kqH0Dx4qjN9Uornf/jCJMYi5/OttZHkCebjL/SZAkKt50dc0wjXuIM
-         1Yjw==
-X-Gm-Message-State: APt69E0foEBanRsmHLGB/yx665GQmrXFAL393GAunsH22/tXUuzNNKN+
-        sftyy3Eq4ybGK0Bqw4X6JQE=
-X-Google-Smtp-Source: AAOMgpeXGzAVn98r39kcWUxc8iG0knoPC39Ga3suGro9cqNcf69DMp0ekFTgXBKZTaJZ3uW+wardrg==
-X-Received: by 2002:adf:87f1:: with SMTP id c46-v6mr4869204wrc.246.1530804913451;
-        Thu, 05 Jul 2018 08:35:13 -0700 (PDT)
-Received: from [192.168.0.104] (AToulouse-658-1-239-37.w90-38.abo.wanadoo.fr. [90.38.238.37])
-        by smtp.gmail.com with ESMTPSA id c18-v6sm8852926wrq.17.2018.07.05.08.35.11
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 05 Jul 2018 08:35:12 -0700 (PDT)
-Subject: Re: [GSoC][PATCH v2 1/7] sequencer: make two functions and an enum
- from sequencer.c public
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        phillip.wood@dunelm.org.uk
-References: <20180702105717.26386-1-alban.gruin@gmail.com>
- <20180702105717.26386-2-alban.gruin@gmail.com>
- <xmqqsh50oyu4.fsf@gitster-ct.c.googlers.com>
-From:   Alban Gruin <alban.gruin@gmail.com>
-Openpgp: preference=signencrypt
-Message-ID: <d9ee3afd-2464-0a7c-d55f-951b89777d27@gmail.com>
-Date:   Thu, 5 Jul 2018 17:35:11 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
-MIME-Version: 1.0
-In-Reply-To: <xmqqsh50oyu4.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr-FR
-Content-Transfer-Encoding: 8bit
+        id S1754509AbeGEQmu (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Jul 2018 12:42:50 -0400
+Received: from outbound-ss-348.hostmonster.com ([74.220.202.212]:60680 "EHLO
+        outbound-ss-348.hostmonster.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753715AbeGEQmt (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 5 Jul 2018 12:42:49 -0400
+X-Greylist: delayed 2391 seconds by postgrey-1.27 at vger.kernel.org; Thu, 05 Jul 2018 12:42:49 EDT
+Received: from cmgw13.unifiedlayer.com (unknown [10.9.0.13])
+        by gproxy6.mail.unifiedlayer.com (Postfix) with ESMTP id 3A7DD1E14E6
+        for <git@vger.kernel.org>; Thu,  5 Jul 2018 09:36:43 -0600 (MDT)
+Received: from box5008.bluehost.com ([50.116.64.19])
+        by cmsmtp with ESMTP
+        id b6JFfPmrYlpkrb6JFfStZI; Thu, 05 Jul 2018 09:36:41 -0600
+X-Authority-Reason: nr=8
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=mad-scientist.us; s=default; h=Content-Transfer-Encoding:Mime-Version:
+        Content-Type:References:In-Reply-To:Date:Cc:To:Reply-To:From:Subject:
+        Message-ID:Sender:Content-ID:Content-Description:Resent-Date:Resent-From:
+        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=LTJc8EtlCS7bmRxkZ6xK0d6UdLQDFUtTcsyM7Zkcwf0=; b=CDuAKiWPbCpXUGt5Ch+kyJpcG7
+        BvQYx6l1SuqPnggFyuvQGusZ9ueZBcRrrRl/qHyRXE1GXIGNWLRAEHhT4pYeL14YBKqo+WNV5fhyd
+        zkZ/HbeTVqLE9I1+VH8DbftSL;
+Received: from [50.226.24.42] (port=43710 helo=pdsdesk)
+        by box5008.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <paul@mad-scientist.net>)
+        id 1fb6JG-003jYh-El; Thu, 05 Jul 2018 09:36:42 -0600
+Message-ID: <986185d30a0f09b4e2a9832d324a265cd3da7354.camel@mad-scientist.net>
+Subject: Re: Git 2.18: RUNTIME_PREFIX... is it working?
+From:   Paul Smith <paul@mad-scientist.net>
+Reply-To: paul@mad-scientist.net
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Dan Jacques <dnj@google.com>
+Date:   Thu, 05 Jul 2018 11:36:38 -0400
+In-Reply-To: <nycvar.QRO.7.76.6.1807041312150.75@tvgsbejvaqbjf.bet>
+References: <97803ec8dae0a73bae301a37377b7b4a78f77e99.camel@mad-scientist.net>
+         <nycvar.QRO.7.76.6.1807041312150.75@tvgsbejvaqbjf.bet>
+Organization: I may be mad, but I'm a professional!
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.1-2 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5008.bluehost.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - mad-scientist.net
+X-BWhitelist: no
+X-Source-IP: 50.226.24.42
+X-Source-L: No
+X-Exim-ID: 1fb6JG-003jYh-El
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: (pdsdesk) [50.226.24.42]:43710
+X-Source-Auth: paul@mad-scientist.us
+X-Email-Count: 2
+X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTAwOC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
-
-Le 03/07/2018 à 22:20, Junio C Hamano a écrit :
-> Alban Gruin <alban.gruin@gmail.com> writes:
+On Wed, 2018-07-04 at 13:22 +0200, Johannes Schindelin wrote:
+> > Basically what happens is that I run configure with
+> > --prefix=/my/install/path --with-gitconfig=etc/gitconfig
+> > --with-gitattributes=etc/gitattributes.
+> > 
+> > Then I run make with RUNTIME_PREFIX=YesPlease.
 > 
->> -enum check_level {
->> -	CHECK_IGNORE = 0, CHECK_WARN, CHECK_ERROR
->> -};
->> -
->> -static enum check_level get_missing_commit_check_level(void)
->> +enum missing_commit_check_level get_missing_commit_check_level(void)
+> Ah. In Git for Windows, we do not use configure. I *think* this
+> points to an incompatibility of the RUNTIME_PREFIX feature with our
+> autoconf support, and this is a grand opportunity for you to step in
+> and help.
 > 
-> The new name definitely is better than "check_level" in the global
-> context, but "missing_commit" is much less important thing to say
-> than "this symbol is to be used when driving 'rebase' (or even
-> 'rebase-i')", I think.  "enum rebase_i_drop_commit_check" with
-> "get_rebase_i_drop_commit_check()" perhaps?
-> 
+> Essentially, what you will want to do is to implement a new configure
+> option --with-runtime-prefix that then prevents the autoconf script
+> from munging the relative paths in the way it does.
 
-I don’t really like those names, but the function and the enum should
-eventually move to rebase-interactive.c and become static again, so we
-could revert their names in due course.
+FYI I was able to get this to work by overriding variables on the make
+command line, like this:
 
-Cheers,
-Alban
+  make ... RUNTIME_PREFIX=YesPlease \
+      gitexecdir=libexec/git-core \
+      template_dir=share/git-core/templates \
+      sysconfdir=etc
 
+I agree a new autoconf option would be much simpler to use.  I'll think
+about it as I happen to have some some experience in these areas ;) ...
+but time is limited of course :).
