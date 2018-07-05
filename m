@@ -2,89 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FORGED_MUA_MOZILLA,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 550931F62D
-	for <e@80x24.org>; Thu,  5 Jul 2018 19:38:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 44E9F1F62D
+	for <e@80x24.org>; Thu,  5 Jul 2018 19:51:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753950AbeGETiK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Jul 2018 15:38:10 -0400
-Received: from cloud.peff.net ([104.130.231.41]:49696 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1753752AbeGETiJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Jul 2018 15:38:09 -0400
-Received: (qmail 11896 invoked by uid 109); 5 Jul 2018 19:38:09 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 05 Jul 2018 19:38:09 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17852 invoked by uid 111); 5 Jul 2018 19:38:09 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 05 Jul 2018 15:38:09 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Jul 2018 15:38:07 -0400
-Date:   Thu, 5 Jul 2018 15:38:07 -0400
-From:   Jeff King <peff@peff.net>
-To:     Beat Bolli <dev+git@drbeat.li>
-Cc:     git@vger.kernel.org, gitster@pobox.com,
-        Taylor Blau <me@taylorr.com>
+        id S1754045AbeGETvD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Jul 2018 15:51:03 -0400
+Received: from [195.159.176.226] ([195.159.176.226]:40843 "EHLO
+        blaine.gmane.org" rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org
+        with ESMTP id S1753828AbeGETvC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Jul 2018 15:51:02 -0400
+Received: from list by blaine.gmane.org with local (Exim 4.84_2)
+        (envelope-from <gcvg-git-3@m.gmane.org>)
+        id 1fbAFE-0006Dp-8A
+        for git@vger.kernel.org; Thu, 05 Jul 2018 21:48:48 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To:     git@vger.kernel.org
+From:   Beat Bolli <dev+git@drbeat.li>
 Subject: Re: [PATCH] builtin/config: work around an unsized array forward
  declaration
-Message-ID: <20180705193807.GA4826@sigill.intra.peff.net>
+Date:   Thu, 5 Jul 2018 21:50:53 +0200
+Message-ID: <phlsmp$mot$1@blaine.gmane.org>
 References: <20180705183445.30901-1-dev+git@drbeat.li>
-MIME-Version: 1.0
+ <20180705193807.GA4826@sigill.intra.peff.net>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180705183445.30901-1-dev+git@drbeat.li>
+Content-Transfer-Encoding: 7bit
+X-Complaints-To: usenet@blaine.gmane.org
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:52.0)
+ Gecko/20100101 Thunderbird/52.8.0
+In-Reply-To: <20180705193807.GA4826@sigill.intra.peff.net>
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 05, 2018 at 08:34:45PM +0200, Beat Bolli wrote:
+Hi Peff
 
-> As reported here[0], Microsoft Visual Studio 2017.2 and "gcc -pedantic"
-> don't understand the forward declaration of an unsized static array.
-> They insist on an array size:
+On 05.07.18 21:38, Jeff King wrote:
+> On Thu, Jul 05, 2018 at 08:34:45PM +0200, Beat Bolli wrote:
 > 
->     d:\git\src\builtin\config.c(70,46): error C2133: 'builtin_config_options': unknown size
+>> As reported here[0], Microsoft Visual Studio 2017.2 and "gcc -pedantic"
+>> don't understand the forward declaration of an unsized static array.
+>> They insist on an array size:
+>>
+>>     d:\git\src\builtin\config.c(70,46): error C2133: 'builtin_config_options': unknown size
+>>
+>> The thread [1] explains that this is due to the single-pass nature of
+>> old compilers.
 > 
-> The thread [1] explains that this is due to the single-pass nature of
-> old compilers.
-
-Right, that makes sense.
-
-> To work around this error, introduce the forward-declared function
-> usage_builtin_config() instead that uses the array
-> builtin_config_options only after it has been defined.
+> Right, that makes sense.
 > 
-> Also use this function in all other places where usage_with_options() is
-> called with the same arguments.
+>> To work around this error, introduce the forward-declared function
+>> usage_builtin_config() instead that uses the array
+>> builtin_config_options only after it has been defined.
+>>
+>> Also use this function in all other places where usage_with_options() is
+>> called with the same arguments.
+> 
+> Your patch is obviously correct, but I think here there might be an even
+> simpler solution: just bump option_parse_type() below the declaration,
+> since it's the only one that needs it. That hunk is bigger, but the
+> overall diff is simpler, and we don't need to carry that extra wrapper
+> function.
 
-Your patch is obviously correct, but I think here there might be an even
-simpler solution: just bump option_parse_type() below the declaration,
-since it's the only one that needs it. That hunk is bigger, but the
-overall diff is simpler, and we don't need to carry that extra wrapper
-function.
+That was dscho's first try in the GitHub issue. It doesn't compile
+because the OPT_CALLBACK* macros in the builtin_config_options
+declaration inserts a pointer to option_parse_type into the array items.
+We need at least one forward declaration, and my patch seemed the least
+intrusive.
 
-As a general rule for this case (because reordering isn't always an
-option), I also wonder if we should prefer just introducing a pointer
-alias:
+> As a general rule for this case (because reordering isn't always an
+> option), I also wonder if we should prefer just introducing a pointer
+> alias:
+> 
+>   /* forward declaration is a pointer */
+>   static struct option *builtin_config_options;
+> 
+>   /* later, declare the actual storage and its alias */
+>   static struct option builtin_config_options_storage[] = {
+> 	...
+>   };
+>   static struct option *builtin_config_options = builtin_config_options_storage;
+> 
+> There are occasionally cases where the caller really wants an array and
+> not a pointer, but in practice those are pretty rare.
+> 
+> I have a slight preference for the reordering solution in this case, but
+> any of them would be OK with me.
+> 
+> -Peff 
 
-  /* forward declaration is a pointer */
-  static struct option *builtin_config_options;
+Regards, Beat
 
-  /* later, declare the actual storage and its alias */
-  static struct option builtin_config_options_storage[] = {
-	...
-  };
-  static struct option *builtin_config_options = builtin_config_options_storage;
-
-There are occasionally cases where the caller really wants an array and
-not a pointer, but in practice those are pretty rare.
-
-I have a slight preference for the reordering solution in this case, but
-any of them would be OK with me.
-
--Peff
