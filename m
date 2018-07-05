@@ -2,164 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3323F1F6AC
-	for <e@80x24.org>; Thu,  5 Jul 2018 13:22:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE9281F6AC
+	for <e@80x24.org>; Thu,  5 Jul 2018 14:20:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754048AbeGENW3 convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 5 Jul 2018 09:22:29 -0400
-Received: from thoth.sbs.de ([192.35.17.2]:50789 "EHLO thoth.sbs.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753548AbeGENW2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Jul 2018 09:22:28 -0400
-Received: from mail1.siemens.de (mail1.siemens.de [139.23.33.14])
-        by thoth.sbs.de (8.15.2/8.15.2) with ESMTPS id w65DLxq8007237
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Thu, 5 Jul 2018 15:22:00 +0200
-Received: from md1pvb1c.ad001.siemens.net (md1pvb1c.ad001.siemens.net [139.25.68.40])
-        by mail1.siemens.de (8.15.2/8.15.2) with ESMTP id w65DLxAs021676;
-        Thu, 5 Jul 2018 15:21:59 +0200
-Date:   Thu, 5 Jul 2018 15:21:58 +0200
-From:   Henning Schild <henning.schild@siemens.com>
-To:     Martin =?UTF-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Ben Toews <mastahyeti@gmail.com>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        "Eric Sunshine" <sunshine@sunshineco.com>
-Subject: Re: [PATCH 4/8] gpg-interface: introduce an abstraction for
- multiple gpg formats
-Message-ID: <20180705152158.6f661c85@md1pvb1c.ad001.siemens.net>
-In-Reply-To: <CAN0heSrXpLCDRjnZC80QXBG27gd6m5reBn1hfNd_KXxnPVkA2g@mail.gmail.com>
-References: <cover.1530616446.git.henning.schild@siemens.com>
-        <db46732d1cd09a71200e00c2d09605d5beaff364.1530616446.git.henning.schild@siemens.com>
-        <CAN0heSrXpLCDRjnZC80QXBG27gd6m5reBn1hfNd_KXxnPVkA2g@mail.gmail.com>
-X-Mailer: Claws Mail 3.15.0-dirty (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+        id S1753483AbeGEOUB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Jul 2018 10:20:01 -0400
+Received: from mail-qt0-f193.google.com ([209.85.216.193]:40121 "EHLO
+        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753323AbeGEOUA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Jul 2018 10:20:00 -0400
+Received: by mail-qt0-f193.google.com with SMTP id h4-v6so7207700qtj.7
+        for <git@vger.kernel.org>; Thu, 05 Jul 2018 07:20:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=PRiIiU1MADBAO93uj6W6UuxlzpgvLxFDK8O7t/TqUq8=;
+        b=Znit2MqDsKTxKhplygC1A+XjuuagEbFvT5bGpdIzV5oIe+YVo85E9/CFgX8Rsvx4Ax
+         MNF2d4tSv8aKcY/vgI+i626lh52FJOqG3b4NeEIEG5T0H5ysuek0QiU0q9LIx5qOOwy3
+         KTRRVXmzOQmcndY/G2jRVPXYgxVcFCFU6HhWBEwWzjHmolvdnSytdSskznWQP8BxMJG5
+         4ILrzdKXpA6fEOo7qk39l/N5urV6iZ73202bGK5f5Tr9dBbjGT9j6FSKrRwGNMo8qhoT
+         m29rAjoB7GBAOeXVFHHMMjHtWxu5J4hEtD/++7K2VGD+7dAaFCa1cQFJEf2VXOzP0Knn
+         /IpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=PRiIiU1MADBAO93uj6W6UuxlzpgvLxFDK8O7t/TqUq8=;
+        b=M8dYqyPzxz4OgMn6wa51fgCnlm+BTy4Dhdh0+i0MnbFbPJn9+3ZiXT+tzKSfF45YLo
+         BnIAwwSwyr5rzUl2qr7fTi7ff4eI151JI4bv62I63GfZeRyzY9CJ30EQNQDiTmz/wX6F
+         ngesWfPQrNhWMtjgUJyTiN//y5D36Z2WilcYVyifG3RIpp5D1KQJr9InQwmfaVAB8hMj
+         i3MLN29vhYqnGS7f9/nVTWcM4Oy0pWlPYb4xj+Es2N+2xw9Uc46hTUhSUSZUumgV3QKa
+         iHtr3HYrT/dElYwOBmShbJbH5eWZ6yE95qJHRhgUEEmEfWGcsxjvKcJcBTbL7DU0s7FQ
+         sq5w==
+X-Gm-Message-State: APt69E1FC4feHc0GIcsWGDAakkxNxQRF1xCZMAO0Gt30oP1Sy5WZHU8l
+        JtcAd5yZQQaIhJ+JaLGVFsM=
+X-Google-Smtp-Source: AAOMgpeH0EUH4LgAhKKaY1k7Kw1QKpVCIGzag4Fy8ifwvdKkv+irg9RbX3Ezrpl3RrR9kpA37gQkEg==
+X-Received: by 2002:ac8:b45:: with SMTP id m5-v6mr5570265qti.335.1530800400029;
+        Thu, 05 Jul 2018 07:20:00 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:6515:4fd3:d5dd:f9bf? ([2001:4898:8010:0:4e4b:4fd3:d5dd:f9bf])
+        by smtp.gmail.com with ESMTPSA id l7-v6sm4368959qtc.27.2018.07.05.07.19.58
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 05 Jul 2018 07:19:59 -0700 (PDT)
+Subject: Re: [PATCH v2 06/24] multi-pack-index: load into memory
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, pclouds@gmail.com,
+        avarab@gmail.com, Derrick Stolee <dstolee@microsoft.com>
+References: <20180607140338.32440-1-dstolee@microsoft.com>
+ <20180625143434.89044-1-dstolee@microsoft.com>
+ <20180625143434.89044-7-dstolee@microsoft.com>
+ <xmqqfu1aodw3.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <2bb2a12f-f22d-990b-636c-73b2b805d12d@gmail.com>
+Date:   Thu, 5 Jul 2018 10:19:58 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+In-Reply-To: <xmqqfu1aodw3.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am Wed, 4 Jul 2018 09:10:17 +0200
-schrieb Martin Ågren <martin.agren@gmail.com>:
+On 6/25/2018 3:38 PM, Junio C Hamano wrote:
+> Derrick Stolee <stolee@gmail.com> writes:
+>> +	cat >expect <<- EOF
+> "<<-\EOF", i.e. make it easy for readers to spot that there is no
+> funny substitutions happening in the here-doc body.
 
-> Hi Henning,
-> 
-> On 3 July 2018 at 14:38, Henning Schild <henning.schild@siemens.com>
-> wrote:
-> > Create a struct that holds the format details for the supported
-> > formats. At the moment that is still just "PGP". This commit
-> > prepares for the introduction of more formats, that might use other
-> > programs and match other signatures.
-> >
-> > Signed-off-by: Henning Schild <henning.schild@siemens.com>  
-> 
-> Welcome to the mailing list! :-)
+While I don't use substitutions in this patch, I do use them in later 
+patches. Here is the final version of this method:
 
-Thanks!
+midx_read_expect () {
+         NUM_PACKS=$1
+         NUM_OBJECTS=$2
+         NUM_CHUNKS=$3
+         OBJECT_DIR=$4
+         EXTRA_CHUNKS="$5"
+         cat >expect <<-\EOF
+         header: 4d494458 1 $NUM_CHUNKS $NUM_PACKS
+         chunks: pack_names oid_fanout oid_lookup 
+object_offsets$EXTRA_CHUNKS
+         num_objects: $NUM_OBJECTS
+         packs:
+         EOF
+         if [ $NUM_PACKS -ge 1 ]
+         then
+                 ls $OBJECT_DIR/pack/ | grep idx | sort >> expect
+         fi
+         printf "object_dir: $OBJECT_DIR\n" >>expect &&
+         test-tool read-midx $OBJECT_DIR >actual &&
+         test_cmp expect actual
+}
 
-> I'll just comment on a few thoughts I had while skimming this.
-> 
-> >  static char *configured_signing_key;
-> > -static const char *gpg_format = "PGP";
-> > -static const char *gpg_program = "gpg";
-> > +struct gpg_format_data {
-> > +       const char *format;
-> > +       const char *program;
-> > +       const char *extra_args_verify[1];
-> > +       const char *sigs[2];
-> > +};
-> >
-> >  #define PGP_SIGNATURE "-----BEGIN PGP SIGNATURE-----"
-> >  #define PGP_MESSAGE "-----BEGIN PGP MESSAGE-----"
-> >
-> > +enum gpgformats { PGP_FMT };
-> > +struct gpg_format_data gpg_formats[] = {
-> > +       { .format = "PGP", .program = "gpg",
-> > +         .extra_args_verify = { "--keyid-format=long", },
-> > +         .sigs = { PGP_SIGNATURE, PGP_MESSAGE, },
-> > +       },
-> > +};  
-> 
-> I think those trailing commas are ok now, but I'm not sure...
-> 
-> I had the same thought about designated initializers. Those should be
-> ok now, c.f. cbc0f81d96 (strbuf: use designated initializers in
-> STRBUF_INIT, 2017-07-10) and a73b3680c4 (Add and use generic name->id
-> mapping code for color slot parsing, 2018-05-26).
+Using <<-\EOF causes these substitutions to fail. Is there a different 
+way I should construct this method?
 
-Ok, i did not actually check coding style yet. I could run it through a
-tool, given there is a suggestion. Or i could address issues someone
-points out in the review.
-What i get from your comment is that it might be ok to leave the code
-as is, others have introduces similar constructs before me.
-
-> > +static const char *gpg_format = "PGP";
-> > +
-> > +static struct gpg_format_data *get_format_data(void)
-> > +{
-> > +       int i;
-> > +       for (i = 0; i < ARRAY_SIZE(gpg_formats); i++)
-> > +               if (!strcmp(gpg_formats[i].format, gpg_format))
-> > +                       return gpg_formats + i;
-> > +       assert(0);  
-> 
-> This might be better written as `BUG("bad gpg_format '%s'",
-> gpg_format);` or something like that.
-> 
-> (It's not supposed to be triggered, not even by invalid data from the
-> user, right?)
-
-Yes that is code that can not (should not) be reached. I agree that an
-assert(0) is not very expressive and will fix that in v2.
-
-> 
-> >         if (!strcmp(var, "gpg.format")) {
-> > -               if (!strcmp(value, "PGP"))  
-> 
-> This line was added in patch 3. It errors out precisely when
-> gpg.format is "PGP", no? That this doesn't break the whole series is
-> explained by 1) it being removed in this patch 4, and 2) there being
-> no tests. It makes me wonder if something like patch 5 (test
-> gpg.format) could be part of patch 3, both with negative ("=
-> malformed") and positive ("= PGP") tests?
-
-I will pull the tests from patch 5 before touching that code and fix up
-issues inbetween. The whole series saw a "make test" inbetween all
-commits.
-
-> > +               j = 0;
-> > +               for (i = 0; i < ARRAY_SIZE(gpg_formats); i++)
-> > +                       if (!strcmp(value, gpg_formats[i].format)) {
-> > +                               j++;
-> > +                               break;
-> > +                       }
-> > +               if (!j)
-> >                         return error("malformed value for %s: %s",
-> > var, value);  
-> 
-> `if (i == ARRAY_SIZE(gpg_formats))` and drop `j`?
-> 
-> Or check whether `get_format_data()` returns NULL? Hmm, well you
-> can't, since it takes its "input" from a global variable...
-> 
-> If you want to keep that global nature, the duplication of
-> search-logic could perhaps be avoided by having a helper function for
-> returning the index of a gpg_format (or -1).
-
-True, the two are almost the same and should be merged. Will do in v2.
-
-Henning
-
-> >                 return git_config_string(&gpg_format, var, value);
-> >         }  
-> 
-> Martin
-
+Thanks,
+-Stolee
