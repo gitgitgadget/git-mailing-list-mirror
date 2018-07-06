@@ -6,59 +6,73 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BDA5C1F62D
-	for <e@80x24.org>; Fri,  6 Jul 2018 17:57:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6749E1F62D
+	for <e@80x24.org>; Fri,  6 Jul 2018 18:14:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934490AbeGFR46 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Jul 2018 13:56:58 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:36375 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934160AbeGFR44 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Jul 2018 13:56:56 -0400
-Received: by mail-wr1-f66.google.com with SMTP id h9-v6so4967812wro.3
-        for <git@vger.kernel.org>; Fri, 06 Jul 2018 10:56:55 -0700 (PDT)
+        id S933832AbeGFSO2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Jul 2018 14:14:28 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:33348 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933413AbeGFSO1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Jul 2018 14:14:27 -0400
+Received: by mail-wm0-f67.google.com with SMTP id z6-v6so5978862wma.0
+        for <git@vger.kernel.org>; Fri, 06 Jul 2018 11:14:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=RGk9hO0LWlmyNkAo2qVW6zIDiowY+r8/fDFNnygOc2k=;
-        b=Fr5Hlb3UjVETunbsQ5aijfVktQEb3AR3GHlIlI45ZDKExNY/CNMGOBpAfie/jfUpLE
-         E66UQNlF0BrtCbuOVaDSEro6TMevwKoEU3kjreMpiqH5O8q0WEIAqDMwK8YSpuyWnPdR
-         sKtlJb255K2HUR98B/wWW1DoyvgX0k7o7COYfb7dzNTMTHupHHrqX/IhPdo5noIiUTo9
-         SoP3KP4XU0kt6jbrl9nKSx0fjQWwWOkdxLw6i48OvIxErYyaEQraFOY93nVzUW65445U
-         YBHQ7NMYx0Zl+P+xuroXk4HnEC2szy8uHnkRQpX1mLM4ayfvYh4dGB1AgP0EfI4/JnGT
-         b4YA==
+        bh=BrU4MKDTM0ncF/1HDtr8c9cwzVETZvR0tfpCD1AfR/0=;
+        b=Noab4cUE0vu82VFx77IyGgsu39PBY4CHN/+qJfk4QeWB4jSQ/1Ey5A2DD6oB3Mpoqe
+         PeosxyC9gp/QL/C60cC6KwITUMZOjUKSt6JruQAbCTdqNM8NkOmqJma52QDQ3o+z2HGi
+         EoGZBODQE8T9tSnOMHhpYUpy3HbJf1NXZAWmTlqxrV2f4UYAeX4p7fj7G9XQiHdUSZA/
+         YQRdFsCjpYrzhWFcutSbDKKhqf6BrglANwJJDfQ44gTHJjscU05PdI88oPvNR13VQA/v
+         9j2MTLcWpCtSWFsJ6R7s9WK6eq3ERTWCf+DLNg8D8m0WEb7UNeMLEf7KERgb/L5HLd4b
+         s95w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=RGk9hO0LWlmyNkAo2qVW6zIDiowY+r8/fDFNnygOc2k=;
-        b=oOaak0+7fPtTaXkkMi3UGe6/I2CPgkX3TLd+zxOy6vPnWbiYFxmKzCV66g2Suun43Q
-         JND9FRPp2rpabMb4acf93dykaUy4v+LMB8UNowcPlNUsKaoIBrZJqmxPoo3HlSdLqngS
-         BjxtFXFf9O1/FUal/WEKLPO8yNu6R7ob83LUUcVIEBrN35VZ2WuUSKpfys3wMWA8wnoI
-         uPIs15nJPvzpHmxw2zX5RtvF/xkh2aT8wcGvEZBEIrxt1hihqkOoF8tgYkeITpf1Viwl
-         Jz80n5FaClPEzr+kjMx7c88rAO/T4KroXqplb65liTuaXq+c01AKe/7k7AwpkPtW2sOI
-         dH4A==
-X-Gm-Message-State: APt69E28/AOASzfj3bwne2i2tjpy7QAk1HVK3Io3de/c4CikVZVSyW41
-        xJLASFqcpL4BQg5uoGrf+MZudUXc
-X-Google-Smtp-Source: AAOMgpfb7Bcp6SlgKwAVbm4rU6nRKwdHCWcUFIHNlOArLUWzzT/aV8dXe9Lz5sUVeVqwOmqqrZW43w==
-X-Received: by 2002:adf:ac66:: with SMTP id v93-v6mr7940683wrc.7.1530899815065;
-        Fri, 06 Jul 2018 10:56:55 -0700 (PDT)
+        bh=BrU4MKDTM0ncF/1HDtr8c9cwzVETZvR0tfpCD1AfR/0=;
+        b=btHSTBukZ3ioETdx2otBW+VPJLV4NSCRvJ3pU5qdFmWu9j2x3kRq91N80Ma9boY88k
+         bXE2T/GIdGQ+jjamkzeBNFj5+3DmISRLWNrQdjhADY1LbzvlaFhKr/Kz6x+iCHPGSSzT
+         yiZnX/R6pqtFqWwQmyJfQSKjnF0Nbr2EmRReUAYwZpA/tcHCcJMAEV0+6X2HRQ/lDQ4g
+         V8rLEFn7VGjKP+hdesR7vjTf7SvSZhR/xeIBz1Ht2MyX5I2LtUzxTQVmjKLwDKArFldz
+         B4Ir6Bl/Fh1PrFVeneexHN11UJ48yUYDt75nISbiqCCSnrc+E7WyqjfF2Li92hp+n/a0
+         Ltdg==
+X-Gm-Message-State: APt69E1ki3SQxJ+jDAr7etQG842Pmy44LK+WDotdMsc9szWkpSTr+ipp
+        rBx23Td13/GPPhY0UShc12A=
+X-Google-Smtp-Source: AAOMgpfWr7pzHxxQwyMQvTk8owQZd++scwzUv/aka4SZ1PwZfcx1flfjxqmbQ02yu4QjcWwdaJ6Y1A==
+X-Received: by 2002:a1c:d554:: with SMTP id m81-v6mr7064309wmg.28.1530900866295;
+        Fri, 06 Jul 2018 11:14:26 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id b6-v6sm9028271wru.66.2018.07.06.10.56.54
+        by smtp.gmail.com with ESMTPSA id a17-v6sm6801354wrr.81.2018.07.06.11.14.25
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 06 Jul 2018 10:56:54 -0700 (PDT)
+        Fri, 06 Jul 2018 11:14:25 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 00/10] rerere: handle nested conflicts
-References: <20180520211210.1248-1-t.gummerer@gmail.com>
-        <20180605215219.28783-1-t.gummerer@gmail.com>
-        <20180703210515.GA31234@hank.intra.tgummerer.com>
-Date:   Fri, 06 Jul 2018 10:56:53 -0700
-In-Reply-To: <20180703210515.GA31234@hank.intra.tgummerer.com> (Thomas
-        Gummerer's message of "Tue, 3 Jul 2018 22:05:15 +0100")
-Message-ID: <xmqq1scgmemy.fsf@gitster-ct.c.googlers.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Tiago Botelho <tiagonbotelho@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>,
+        Tiago Botelho <tiagonbotelho@hotmail.com>
+Subject: Re: [RFC PATCH v5] Implement --first-parent for git rev-list --bisect
+References: <20180622123945.68852-1-tiagonbotelho@hotmail.com>
+        <xmqq4lhqpy80.fsf@gitster-ct.c.googlers.com>
+        <CAP8UFD3oEjW75qsk4d_wqo2V8PmzMvZLshutw20CD7AU4b4ocg@mail.gmail.com>
+        <nycvar.QRO.7.76.6.1806261540340.21419@tvgsbejvaqbjf.bet>
+        <CAP8UFD1TeC4czp_8HCRw5CtjGO78A8gRezw_xspnm4MXuhQswg@mail.gmail.com>
+        <xmqqa7rhi40f.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1806271254210.21419@tvgsbejvaqbjf.bet>
+        <xmqqwoukgpr9.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1806281505160.73@tvgsbejvaqbjf.bet>
+        <xmqqvaa2yjo1.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1806291317150.74@tvgsbejvaqbjf.bet>
+        <CAADF+x3jd5G9+SP3UmhwqrR_T6BuD0PkQJ3x+NLpq2BJ_Ej-Sw@mail.gmail.com>
+        <xmqq36x0ndza.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1807041224460.75@tvgsbejvaqbjf.bet>
+Date:   Fri, 06 Jul 2018 11:14:24 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.1807041224460.75@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Wed, 4 Jul 2018 12:26:32 +0200 (DST)")
+Message-ID: <xmqqwou8kz9b.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,80 +81,57 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> On 06/05, Thomas Gummerer wrote:
->> The previous round was at
->> <20180520211210.1248-1-t.gummerer@gmail.com>.
+>> > git rev-list --first-parent --bisect-all F..E >revs &&
+>> > test_line_count = 9 revs &&
+>> > for rev in E e1 e2 e3 e4 e5 e6 e7 e8
+>> > do
+>> >   grep "^$(git rev-parse $rev) " revs ||
+>> >   {
+>> >     echo "$rev not shown" >&2 &&
+>> >     return 1
+>> >   }
+>> > done &&
+>> > sed -e "s/.*(dist=\([0-9]*\)).*/\1/" revs >actual.dists &&
+>> > sort -r actual.dists >actual.dists.sorted &&
+>> > test_cmp actual.dists.sorted actual.dists
 >> 
->> Thanks Junio for the comments on the previous round.
->> 
->> Changes since v2:
->>  - lowercase the first letter in some error/warning messages before
->>    marking them for translation
->>  - wrap paths in output in single quotes, for consistency, and to make
->>    some of the messages the same as ones that are already translated
->>  - mark messages in builtin/rerere.c for translation as well, which I
->>    had previously forgotten.
->>  - expanded the technical documentation on rerere.  The entire
->>    document is basically rewritten.
->>  - changed the test in 6/10 to just fake a conflict marker inside of
->>    one of the hunks instead of using an inner conflict created by a
->>    merge.  This is to make sure the codepath is still hit after we
->>    handle inner conflicts properly.
->>  - added tests for handling inner conflict markers
->>  - added one commit to recalculate the conflict ID when an unresolved
->>    conflict is committed, and the subsequent operation conflicts again
->>    in the same file.  More explanation in the commit message of that
->>    commit.
->
-> Now that 2.18 is out (and I'm caught up on the list after being away
-> from it for a few days), is there any interest in this series? I guess
-> it was overlooked as it's been sent in the rc phase for 2.18.
+> From my point of view, this indicates that you want to set those exact
+> dist values in stone.
 
-I deliberately ignored, not because I wasn't interested in it, but
-because I'd be distracted during the pre-release feature freeze as
-I'd be heavily intereseted in it.
+As I already said, I do not think it is absolutely necessary to
+declare that the minimum dist is 0 or 1, or how big one step of dist
+is.  For those reading from the sidelines, the history we are
+testing this new feature over looks like this
 
-Now is a good time to repost to stir/re-ignite the interest from
-others, possibly after rebasing on v2.18.0 and polishing further.
+#     E		dist=0
+#    / \
+#   e1  |	dist=1
+#   |   |
+#   e2  |	dist=2
+#   |   |       ...
+#   |   |       ...
+#   e7  |	dist=2
+#   |   |
+#   e8  |	dist=1
+#    \ /
+#     F		dist=0
 
-Thanks.
+Current code will say dist=0 for E and F, dist=1 for e1 and e8,
+etc., and I am fine if the code suddenly start saying that E and F
+(i.e. those at the boundary of the graph) have dist=1 and one hop
+weighs 10 so dist=11 for e1 and e8 (i.e. those at one hop from the
+boundary).
 
->
-> I think the most important bit here is 6/10 which fixes a crash that
-> can happen in "normal" usage of git.  The translation bits are also
-> nice to have I think, but I could send them in a different series if
-> that's preferred.
->
-> The other patches would be nice to have, but are arguably less
-> important.
->
->> range-diff below.  A few commits changed enough for range-diff
->> to give up showing the differences in those, they are probably best
->> reviewed as the whole patch anyway:
->>
->> [snip]
->> 
->> Thomas Gummerer (10):
->>   rerere: unify error messages when read_cache fails
->>   rerere: lowercase error messages
->>   rerere: wrap paths in output in sq
->>   rerere: mark strings for translation
->>   rerere: add some documentation
->>   rerere: fix crash when conflict goes unresolved
->>   rerere: only return whether a path has conflicts or not
->>   rerere: factor out handle_conflict function
->>   rerere: teach rerere to handle nested conflicts
->>   rerere: recalculate conflict ID when unresolved conflict is committed
->> 
->>  Documentation/technical/rerere.txt | 182 +++++++++++++++++++++
->>  builtin/rerere.c                   |   4 +-
->>  rerere.c                           | 246 ++++++++++++++---------------
->>  t/t4200-rerere.sh                  |  67 ++++++++
->>  4 files changed, 372 insertions(+), 127 deletions(-)
->>  create mode 100644 Documentation/technical/rerere.txt
->> 
->> -- 
->> 2.18.0.rc1.242.g61856ae69
->> 
+But I am not fine if E and F get larger dist than e1 and e8, or e1
+and e8 get different ones.  I do not think the code quoted upfront
+would catch such future breakages.
+
+And I also do not see a reason why somebody wants to make the dist
+computation to be 1-based (iow, changing the minimum from 0 to 1) or
+one step not to be 1 (iow, giving 11 to e1 and e8), so while I agree
+it is not strictly necessary to cast the concrete distance value in
+stone, I do not see much harm doing so *if* it helps to make it
+simpler the test that is necessary to make sure relative dist values
+assigned to these commits are in correct order.
