@@ -3,45 +3,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BEB6B1F62D
-	for <e@80x24.org>; Fri,  6 Jul 2018 04:58:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 42C981F62D
+	for <e@80x24.org>; Fri,  6 Jul 2018 05:04:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932115AbeGFE60 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Jul 2018 00:58:26 -0400
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:43573 "EHLO
-        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754035AbeGFE6Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Jul 2018 00:58:25 -0400
-Received: by mail-yw0-f196.google.com with SMTP id l189-v6so3754887ywb.10
-        for <git@vger.kernel.org>; Thu, 05 Jul 2018 21:58:25 -0700 (PDT)
+        id S932097AbeGFFEc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Jul 2018 01:04:32 -0400
+Received: from mail-yb0-f194.google.com ([209.85.213.194]:38403 "EHLO
+        mail-yb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753943AbeGFFEb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Jul 2018 01:04:31 -0400
+Received: by mail-yb0-f194.google.com with SMTP id i9-v6so4098996ybo.5
+        for <git@vger.kernel.org>; Thu, 05 Jul 2018 22:04:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Wsm6F6Nqlc3sb8Bt954TfD+U3SMllfO+7vdWrmsbXWs=;
-        b=sW5FwD0MsT3ziEyD+DVU8nq2zMkIFikfW2GDEIF1YZukodly/kbe3H3/N95sGhsoyh
-         moz8dcugZXsAKgnRuQkPBTjkmere+hYt5qZpf0GESbKR8K6igZQr8cAJRCmfM6bfxJQh
-         ku2G/VARzZsQcRzNaAOWy4HBmu2ZntdmwGdNc/LjEgIUmgPFXHsHVSpGAX5zDs1t0i/T
-         VvQ3z2VegFWRQQ92PWseoIu+UNflk7zS5ve13QAIm4bJVQpcwzMi4YMQrPwOlIHzn4PV
-         VokZMxDxREW4BN5Zh/cERZuTb4yKDqlgF7WU58QkMC8bO8jn0W9ptHwEDOpaX2q7g7cQ
-         DgAA==
-X-Gm-Message-State: APt69E0RlIij4lQrki83C0NEjNaMRh7+5WNutxLN1PeBK69Iph2wi1gU
-        XM0dnkn3vQhUyZego+mLmRlXDhpx7yRXurObGnM=
-X-Google-Smtp-Source: AAOMgpd0gqtkWB9U4ZaW2vqSy50HQyMwKd4dvD4wDTRcCFhD+wIEAzuxuQ+QcaCe93CRZRGQhY3/2VGI+bUxXxS0lbo=
-X-Received: by 2002:a81:7bd4:: with SMTP id w203-v6mr4228263ywc.70.1530853104654;
- Thu, 05 Jul 2018 21:58:24 -0700 (PDT)
+        bh=z+sXWJdaIMTknxzHm8ulJaGp5TSclDsc0XHhqk8mS+Q=;
+        b=ejAH+HXge0XEOAYJvk2xNTazLd3B3OiTshOsjJ+TK6gmCXSbZJSTSOgBmC8FoCyH1U
+         k2LP8LAmRI+Mx9RpmKrBF/65F55q+sZK7doO8qhwVbHNgz4hVAkZlEAWMuIp52rfgdNN
+         ReozaD8MzYb8o8jcsnqWXgK22TbFTt77sBjoRNNHEpCLESQHWOR62l4r9RdsveA89978
+         iVGkWAF6O0bSkiEUXTTj0bxSyVit0DuoB90ok9gg4A+peT5DwQR/3qAFnRM3/vpljPIY
+         G1iyHtTTZrp+EDgY2xjHHwZzF0lSdYtt+jqw7oe8irZ/+BE5OSPhKAVmd5XRANtynNYo
+         e4LA==
+X-Gm-Message-State: APt69E3e78mRU2tJLmGxFsY1ba0pQ+z8U4gGDA6bXbd96FBJfpz+r+FD
+        dzEm33rDPxHHVH4AASWY4TQT7HhhqPSoDohEx58=
+X-Google-Smtp-Source: AAOMgpfFffp2Jcs8Ea0LY4w9nqXAQxsOOzLPG7+rAqmcOVBILmzywfHvZxo5D95yc+ZiEn3zl6YqScH8D9M2269RO2s=
+X-Received: by 2002:a25:d38f:: with SMTP id e137-v6mr4430161ybf.287.1530853471187;
+ Thu, 05 Jul 2018 22:04:31 -0700 (PDT)
 MIME-Version: 1.0
 References: <20180625143434.89044-1-dstolee@microsoft.com> <20180706005321.124643-1-dstolee@microsoft.com>
- <20180706005321.124643-12-dstolee@microsoft.com>
-In-Reply-To: <20180706005321.124643-12-dstolee@microsoft.com>
+ <20180706005321.124643-14-dstolee@microsoft.com>
+In-Reply-To: <20180706005321.124643-14-dstolee@microsoft.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 6 Jul 2018 00:58:13 -0400
-Message-ID: <CAPig+cQ2cz8H9qYn09g1o-ZAVQc98Z=hD9R0c7pfha257BsX3w@mail.gmail.com>
-Subject: Re: [PATCH v3 11/24] midx: read pack names into array
+Date:   Fri, 6 Jul 2018 01:04:20 -0400
+Message-ID: <CAPig+cRK0GWVueJgM-DKSFSJxiE5OhN98F8ZXkBDnLwrVSDFMA@mail.gmail.com>
+Subject: Re: [PATCH v3 13/24] midx: write object ids in a chunk
 To:     Derrick Stolee <stolee@gmail.com>
 Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>,
@@ -58,46 +57,28 @@ X-Mailing-List: git@vger.kernel.org
 On Thu, Jul 5, 2018 at 8:54 PM Derrick Stolee <stolee@gmail.com> wrote:
 > Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 > ---
-> diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-> @@ -8,8 +8,13 @@ midx_read_expect () {
->         cat >expect <<-EOF
+> diff --git a/midx.c b/midx.c
+> @@ -18,9 +18,10 @@
+> @@ -384,6 +391,32 @@ static size_t write_midx_pack_names(struct hashfile *f,
+> +static size_t write_midx_oid_lookup(struct hashfile *f, unsigned char hash_len,
+> +                                   struct pack_midx_entry *objects,
+> +                                   uint32_t nr_objects)
+> +{
+> +       struct pack_midx_entry *list = objects;
+> +       uint32_t i;
+> +       size_t written = 0;
+> +
+> +       for (i = 0; i < nr_objects; i++) {
+> +               struct pack_midx_entry *obj = list++;
+> +
+> +               if (i < nr_objects - 1) {
+> +                       struct pack_midx_entry *next = list;
+> +                       if (oidcmp(&obj->oid, &next->oid) >= 0)
+> +                               BUG("OIDs not in order: %s >= %s",
+> +                               oid_to_hex(&obj->oid),
+> +                               oid_to_hex(&next->oid));
 
-Broken &&-chain.
+The above two lines are arguments to BUG(), thus should be indented more.
 
->         header: 4d494458 1 1 $NUM_PACKS
->         chunks: pack_names
-> -       object_dir: .
-> +       packs:
->         EOF
-> +       if [ $NUM_PACKS -ge 1 ]
-
-On this project, use 'test' rather than '['.
-
-> +       then
-> +               ls pack/ | grep idx | sort >> expect
-> +       fi
-
-Broken &&-chain.
-
-> +       printf "object_dir: .\n" >>expect &&
-
-All this code building up 'expect' could be in a {...} block to make
-it clearer and less noisy:
-
-    {
-        cat <<-EOF &&
-        ...
-        EOF
-        if test $NUM_PACKS -ge 1
-        then
-            ls -1 pack/ | ...
-        fi &&
-        printf "..."
-    } >expect &&
-
-And, some pointless bike-shedding while here: perhaps dashes instead
-of underlines? "pack-names", "object-dir"
-
->         test-tool read-midx . >actual &&
->         test_cmp expect actual
->  }
+> +               }
+> +
