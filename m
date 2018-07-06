@@ -7,57 +7,55 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D4A1D1F62D
-	for <e@80x24.org>; Fri,  6 Jul 2018 01:15:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 150661F62D
+	for <e@80x24.org>; Fri,  6 Jul 2018 01:18:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753617AbeGFBPA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Jul 2018 21:15:00 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:52354 "EHLO
+        id S1753497AbeGFBSm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Jul 2018 21:18:42 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:52376 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753439AbeGFBO5 (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 5 Jul 2018 21:14:57 -0400
+        by vger.kernel.org with ESMTP id S1753439AbeGFBSl (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 5 Jul 2018 21:18:41 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:294b:af98:ff6d:ed6])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 09E6660102;
-        Fri,  6 Jul 2018 01:14:51 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3C7C860102;
+        Fri,  6 Jul 2018 01:18:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1530839692;
-        bh=EydAnixDKvkkLKua7wboNo+FyZMaUhMWQfNQfROHxyY=;
+        s=default; t=1530839919;
+        bh=5QTkUP/DcWWEN/DO459Bip3Hun7BqZ2b1284quw+MdY=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=QzKuFSwwMYP1a4dv4zIr4YTnlCRGHhAqW0hn/RSde+riDL87h9DDglNF1y3Os1Hz2
-         hwqi+j5tf6/Q80t/yKqVYBz7BUIYCi8n4nnVeYxikhefKS9nt3UOutF8NULm7P79QC
-         Wue1EEWWgzaCO06HMehN1Iw1ujWBlCYC35pI6YfMLIMnnSleKX4MASumBw6N+iBQJp
-         EJcKXUScHVhKocnuFCzzVf+9Z7huRd14UAuK5595xs0tV2tTDKath9Cz1II2OeiHpn
-         tETzM3B4x8LwiYpsl2y7WOECMXwezolCmy+XBSDHGhNVPEXAlkjEINRvMBCNiUNONm
-         /7jD3SauQuQzP98AG2+DBhNIZ/zm2Dfh0nfN7NeEW1Tnj1OndcN74Q5TvVDjKPnSJl
-         Pf/23BRyCyy9MnaQa3uaS/h9dvoxxGdlj4gaF8S1HT+bdugJiF7gBX1Fhcwmhn3Cu9
-         GB7RllqGt6/oy0ZPyvjJ1pOzMN4E6YGnuPmTzUd1verhQtBRrzQ
-Date:   Fri, 6 Jul 2018 01:14:47 +0000
+        b=HEwDrUloFmYfWDOq0q6vXhs2JVkBDNPutdJGwF2zvGcUB7vgSHKR4w8OLji5j9PXA
+         1YGtitkVeSDP7w2kkVTEq+Dr2tPt9HyFnv62S7CU4mtusqqeN8IIBrifP3LAv9/DVt
+         QYGBZDcYrTJSlIBwAfwtr03U+Ql8yndXh+lf+dwiho69W7OwsGAZ3Q40Mc5/uiQNw2
+         tkX1TWtcXZXCx3EyB0Pe8TTs7c1UXvEvphip5H4NOPvsxfG+VFMEmoqz7mx7T+EKh8
+         9ydKIIr1z9y9fHy0efGGH43NdnIWyGY+mFpyQv2mDIF5qHbpsNLRMufMZfyyYUn6+Z
+         u9C8o1W7R7Rf0rEzGMPnr6HfyLLnSkWHJeyl3BPW56a8aEELlxDkEl8Yb7JDrKv/dQ
+         ifCytKlJRSSBuDEgpcalLzipxLbZinTE0xhTvhk25lqDMK0PAyxFa9s2Z+O25w5LWw
+         2hpjxzNdAqWZMofOrpSzkUFGW5EyKVojuaqyvO4zLUZJki+nyfW
+Date:   Fri, 6 Jul 2018 01:18:35 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     Henning Schild <henning.schild@siemens.com>
 Cc:     git@vger.kernel.org, Ben Toews <mastahyeti@gmail.com>,
         Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         Taylor Blau <me@ttaylorr.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 8/8] gpg-interface t: extend the existing GPG tests with
- GPGSM
-Message-ID: <20180706011447.GC7697@genre.crustytoothpaste.net>
+Subject: Re: [PATCH 0/8] X509 (gpgsm) commit signing support
+Message-ID: <20180706011834.GD7697@genre.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
         Henning Schild <henning.schild@siemens.com>, git@vger.kernel.org,
         Ben Toews <mastahyeti@gmail.com>, Jeff King <peff@peff.net>,
         Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
         Eric Sunshine <sunshine@sunshineco.com>
 References: <cover.1530616446.git.henning.schild@siemens.com>
- <9ad3e4b6adb38440d5766e34e3a41b7f64281dca.1530616446.git.henning.schild@siemens.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="WfZ7S8PLGjBY9Voh"
+        protocol="application/pgp-signature"; boundary="2iBwrppp/7QCDedR"
 Content-Disposition: inline
-In-Reply-To: <9ad3e4b6adb38440d5766e34e3a41b7f64281dca.1530616446.git.henning.schild@siemens.com>
+In-Reply-To: <cover.1530616446.git.henning.schild@siemens.com>
 X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
  4.17.0-1-amd64)
 User-Agent: Mutt/1.10.0 (2018-05-17)
@@ -68,82 +66,52 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---WfZ7S8PLGjBY9Voh
+--2iBwrppp/7QCDedR
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jul 03, 2018 at 02:38:20PM +0200, Henning Schild wrote:
-> Add test cases to cover the new X509/gpgsm support. Most of them
-> resemble existing ones. They just switch the format to X509 and set the
-> signingkey when creating signatures. Validation of signatures does not
-> need any configuration of git, it does need gpgsm to be configured to
-> trust the key(-chain).
-> We generate a self-signed key for committer@example.com and configure
-> gpgsm to trust it.
+On Tue, Jul 03, 2018 at 02:38:12PM +0200, Henning Schild wrote:
+> This series adds support for signing commits with gpgsm.
 >=20
-> Signed-off-by: Henning Schild <henning.schild@siemens.com>
-> ---
->  t/lib-gpg.sh               |  9 ++++++-
->  t/lib-gpg/gpgsm-gen-key.in |  6 +++++
->  t/t4202-log.sh             | 66 ++++++++++++++++++++++++++++++++++++++++=
-++++++
->  t/t5534-push-signed.sh     | 52 ++++++++++++++++++++++++++++++++++++
->  t/t7003-filter-branch.sh   | 15 +++++++++++
->  t/t7030-verify-tag.sh      | 47 +++++++++++++++++++++++++++++++--
->  t/t7600-merge.sh           | 31 ++++++++++++++++++++++
->  7 files changed, 223 insertions(+), 3 deletions(-)
->  create mode 100644 t/lib-gpg/gpgsm-gen-key.in
+> The first two patches are cleanups of gpg-interface, while the next
+> four prepare for the introduction of the actual feature in patch 7.
+> Finally patch 8 extends the testsuite to cover the new feature.
 >=20
-> diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
-> index a5d3b2cba..9dcb4e990 100755
-> --- a/t/lib-gpg.sh
-> +++ b/t/lib-gpg.sh
-> @@ -38,7 +38,14 @@ then
->  			"$TEST_DIRECTORY"/lib-gpg/ownertrust &&
->  		gpg --homedir "${GNUPGHOME}" </dev/null >/dev/null 2>&1 \
->  			--sign -u committer@example.com &&
-> -		test_set_prereq GPG
-> +		test_set_prereq GPG &&
-> +		echo | gpgsm --homedir "${GNUPGHOME}" -o "$TEST_DIRECTORY"/lib-gpg/gpg=
-sm.crt.user --passphrase-fd 0 --pinentry-mode loopback --generate-key --bat=
-ch "$TEST_DIRECTORY"/lib-gpg/gpgsm-gen-key.in &&
-> +		gpgsm --homedir "${GNUPGHOME}" --import "$TEST_DIRECTORY"/lib-gpg/gpgs=
-m.crt.user &&
-> +		gpgsm --homedir "${GNUPGHOME}" -K | grep fingerprint: | cut -d" " -f4 =
-| tr -d '\n' > ${GNUPGHOME}/trustlist.txt &&
-> +		echo " S relax" >> ${GNUPGHOME}/trustlist.txt &&
-> +		(gpgconf --kill gpg-agent >/dev/null 2>&1 || : ) &&
-> +		echo hello | gpgsm --homedir "${GNUPGHOME}" -u committer@example.com -=
-o /dev/null --sign - 2>&1 &&
-> +		test_set_prereq GPGSM
+> This series can be seen as a follow up of a series that appeared under
+> the name "gpg-interface: Multiple signing tools" in april 2018 [1]. After
+> that series was not merged i decided to get my patches ready. The
+> original series aimed at being generic for any sort of signing tool, while
+> this series just introduced the X509 variant of gpg. (gpgsm)
+> I collected authors and reviewers of that first series and already put th=
+em
+> on cc.
 
-It looks like the GPGSM prerequisite will only be set if the GPG
-prerequisite is set as well.  Do we want to consider the case when the
-user might have gpgsm but not gpg?
+Overall, I think this is heading in a good direction.  I left a few
+comments, but it seemed pretty sane.
 --=20
 brian m. carlson: Houston, Texas, US
 OpenPGP: https://keybase.io/bk2204
 
---WfZ7S8PLGjBY9Voh
+--2iBwrppp/7QCDedR
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.8 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAls+wocACgkQv1NdgR9S
-9oszyw/+KdP3d8KHVVmDisEt0bREam1HWigclQkT/GAXfdTWNlZWGCoy6cAKtPjw
-WYptyQe3vbeSchNvwdqq0X1NhDdZiEGtuRh3jH+8fDtnTwoUVBuDYN0DzlJfrdkE
-Ls45g+gGcjOn1eR1Q0NZl1+qvJM6PWFB2dOwedcGr+imgC1yfUUMuNvwNslXRbPY
-kqvHO9UISqmy30OOMbmxxlwvMGql87fZfmKeiRyCXCBEyCoznHQkt/nMtrIB52Dd
-mlK5zb7axHVRImGVlzTjM1trF3JU3d7ufFsHjf64Au2rPPEr8L4XoNmbhjggvHVr
-pZRvEwJ1ZV/bplSDvBIL0pxtGsMzfs1isvpwlztFBbmn2IMh44wJzXvnBlvmttpi
-L2HOUDVBxNEhDH51x8Sdw7gQCIsqwDHPEyjHc5ExK+ogjYXzhPqX4veLfb9icldJ
-aJ1zQEt6e7MAc5h2sj4FZOBRftnvMUycJN7KaJXgGYzuAGl43h3jglnYRYzOzwCy
-JylGh/te33Nln6FDx5t+D/CbVOBmJAFZbecpl1+HR7GYKqgYr/mikZiUizFJY+rR
-FxGAim5PdCu9Yp9pB0lWiGefIRW6YxcGiAFKbRy2F0XTjxMKB1b6UoezS9ZDiLoX
-6eync6jGLox2Z5YAzJTzDZppjNfyRalzUx+dht3eHKuJodmqr54=
-=QnHP
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAls+w2oACgkQv1NdgR9S
+9ouIjQ/+L2Zth+CL9pmHSkY8IP45kvZ294dsjHlMPYc6foSKHx5RDIcUbWpxrsTU
+dQDXXlAzQvF5UA8j8VkzYpLnIsmHD2eTD2qyEVeE9/6EekCypNjNIcj8XK4SlAQg
+BqYtV5LaykIvN9ZXm8z0G+V726KJ/nYkyOCMHhDjJxzJYYDOuKpXZCYtNNDEid61
+Tv2weePPpmu9soKsgKiGYl2xg7tdXcCQ6LYO0xKAmE0kQy4uy3JcfmeXxbZk2SNZ
+uxlohOaCqrFzUVjEss4oPe50FRqnWQJirKyNACQNwTlOCzhGKXehHc0oVpyx6SU3
+7EVQl/adJ9VikPoEezK7OwCwOH0WcIScRrheBDczrGtfnTzYJoLxJNDERxxUAuPa
+53CcLeCF3UIJ+Xn45Us+Hc0u2mxL1m4L8UsRgAsl1zkIFyVUrzF9sOk8vlvfVGC8
++8q/qS9XCax+L38nzXVNGkUQDFRxdmnwNtVrfE17NRxafDyNZnsUFEDlGuyrUhMB
+FitAIdyHsdccyMFE7Z1JPT1E4w2Uc2N80QIr9CHck3YBcLpvKmfJX8oA2EIpDz8A
+N6fCxwGs37nlsGTE1LfHwSMYvD8/8hgtuHGeMjnBSNbbDxx81H7ewSwCR0GQapyt
+yhSq2EImEBhYbkrzhf3V8BqYfvwiYNqyFQpU4B0vjl+nDNZ2izs=
+=5nRw
 -----END PGP SIGNATURE-----
 
---WfZ7S8PLGjBY9Voh--
+--2iBwrppp/7QCDedR--
