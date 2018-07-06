@@ -2,135 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D5C941F62D
-	for <e@80x24.org>; Fri,  6 Jul 2018 21:09:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE9781F62D
+	for <e@80x24.org>; Fri,  6 Jul 2018 21:16:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932584AbeGFVJd (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Jul 2018 17:09:33 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:55436 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754227AbeGFVJc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Jul 2018 17:09:32 -0400
-Received: by mail-wm0-f67.google.com with SMTP id v16-v6so16000641wmv.5
-        for <git@vger.kernel.org>; Fri, 06 Jul 2018 14:09:31 -0700 (PDT)
+        id S1753587AbeGFVQE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Jul 2018 17:16:04 -0400
+Received: from mail-pl0-f68.google.com ([209.85.160.68]:40571 "EHLO
+        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751517AbeGFVQD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Jul 2018 17:16:03 -0400
+Received: by mail-pl0-f68.google.com with SMTP id t6-v6so3383971plo.7
+        for <git@vger.kernel.org>; Fri, 06 Jul 2018 14:16:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=oRvhUqsudbxnSZh1pQ46sqhz8qAKr3798GnEXNIcUck=;
-        b=KSnRTT6qBe5Iyc7aH9vJ8pLmrpSmn/HuZnxvXv6v2BbVEf6RZ+GsUsPScue0hLQpSr
-         8AjcPQLrTs8WKJ+6nKM6HUqvqV79SbVOdkmV2jWGBRGW07j6Tr3FlVZq8vez/25hgKxH
-         B0I+V253SY6yN1jsS5eAqEZl3dQolml2aBXxzde1k61H3nRjvPFI/k50/fELT65f1XM3
-         HQvcxF+oiEu3Uqcy5LW26dQ0Yb7IluQcQj9KURMJCwA3+MamS3VB0d3pnmV3097qkODL
-         K+9bUIC3EGwPcqkOolc739zxQ2wWo6fp6yIBQNLDf55FdJ/jN//2oFSJ5Zc2skTlyhE8
-         0Hzg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=oAEdEvRqRolZdHD9deKogl4YCLqmXe2PDYrg//FnEQM=;
+        b=DV3UHRUGtyJewnUOYoBsZxA+0JfZFVDZ15AL13W3BrdXKddyeAxlMoHs2t5xgk9XsS
+         jTnMdvZ+1+mRCR1aIsOFgLa516f0Ik4UBZlrdTQl1I7xw4mI9kSnb2zN04MVuqft+dBR
+         aA3s2Xu2X7FamP2zI0qmvpyTeMy9BC+GN0JtVDzkSJ5NrLeEwAtDRXr+SIHByaAW7q9I
+         gojZRDtWQcjQVYPtLUtCg0G2qieN6MsZsgUIGgQrTLnheWdofOsDHBtmz5juhdBUR+Zx
+         Vf1+xp/PLm3U2XKnWA4+Yk/EkITA53YyYUq2eYpQdaCMbWFUVdFLVLSD4cTeeB/9g8qr
+         hrhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=oRvhUqsudbxnSZh1pQ46sqhz8qAKr3798GnEXNIcUck=;
-        b=qC5ciDKspcfUbVWvkTGut7n5gqGxagvJOyRQm97XWAaQ5cmgh8WUYn3SRSM62C1kaI
-         IboqlO1quR5HuY+f2LwG5DZ1nBPiDxjqQnduvlgkBTPQk383Kc1f4ZEg7cUECimPzPBp
-         KT2lb+Gz2E68fEtjgnbmY0WMDGlWIRWUCJ2Df4JHDFMkNrNz37g85Ew8uLJdf5aGbL9z
-         stQEQihOT5ulSg6rXKpR1duWt8eWSICq8N8gptFYUaQPY6ImNVoiwVLj3KUew2O/DvzV
-         v5xGwrwv1ipJz9teCpcnipKxTPc4QtA4lEsgwpjps6iD8JbBd8xM/3VjrzGjLN1HoHdB
-         FSdw==
-X-Gm-Message-State: APt69E2W95AysDaR3tSMd+JMwoda07nNlBXxiZECmOMBOzoFT/XadU0F
-        fodYvDpfIkxadxYwb9qzPNs=
-X-Google-Smtp-Source: AAOMgpf8be8g8uYRgJeBXgaPo9CopOR2q15Usco1HScL/XFtykr3Nta0FvOwgO+U/+VHfq1UhUz/ug==
-X-Received: by 2002:a1c:570a:: with SMTP id l10-v6mr7786029wmb.56.1530911370609;
-        Fri, 06 Jul 2018 14:09:30 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id u7-v6sm18315592wmd.3.2018.07.06.14.09.29
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=oAEdEvRqRolZdHD9deKogl4YCLqmXe2PDYrg//FnEQM=;
+        b=Hj/O+x99YAsgR+tFL5BpqpMxxmnaIbeURWU9xkafqDUPHqbHB3zcNyl3A1JusDfsvM
+         I6/clgLXxssYENBTt1WtYslwghfgow/gnsibioUNtSbG0TegcAlzgdS9ECswX2LAG3Ya
+         fVmxh7E+ULdAIt12NO7r4W4RF7HlNy+ot0FLBG4xy5uTV4ejYZaGu7IqWi0GkNlHhASo
+         IToSAnv8cR1NTldFQqvc6P7oWl4ZtqQGfv6hyfda40FcBVsc1llYL12w6uMM72UIgFTU
+         6qi5B+0a2GGUc1PZERoh3qS7aBYfc6ndyKMdeAw+2jetIF3PTfBw/WLGEKk3l9kFaPEs
+         Tr9A==
+X-Gm-Message-State: APt69E1AZT0kkllRS6F99DC/m4pjoLgKdyR4lrLUT0PApah+zX+RrYwt
+        /L0kKgxCNfr3JSSlE91evNbQSCia
+X-Google-Smtp-Source: AAOMgpd29zWu5HMfYJfr6OjPPQVvRkxot2ckqlftAK2krtGqV2Y1DPDRjmkK14pctGCw0P1E+u/jzw==
+X-Received: by 2002:a17:902:64c2:: with SMTP id y2-v6mr11630959pli.53.1530911762866;
+        Fri, 06 Jul 2018 14:16:02 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id h16-v6sm20335896pfd.71.2018.07.06.14.16.02
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 06 Jul 2018 14:09:29 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Pratik Karki <predatoramigo@gmail.com>
-Cc:     git@vger.kernel.org, christian.couder@gmail.com,
-        Johannes.Schindelin@gmx.de, sbeller@google.com,
-        alban.gruin@gmail.com
-Subject: Re: [PATCH v3 1/4] rebase: start implementing it as a builtin
-References: <20180628074655.5756-1-predatoramigo@gmail.com>
-        <20180706120815.17851-1-predatoramigo@gmail.com>
-        <20180706120815.17851-2-predatoramigo@gmail.com>
-Date:   Fri, 06 Jul 2018 14:09:29 -0700
-In-Reply-To: <20180706120815.17851-2-predatoramigo@gmail.com> (Pratik Karki's
-        message of "Fri, 6 Jul 2018 17:53:12 +0545")
-Message-ID: <xmqq36wwjcl2.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Fri, 06 Jul 2018 14:16:02 -0700 (PDT)
+Date:   Fri, 6 Jul 2018 14:16:00 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Frederick Eaton <frederik@ofb.net>
+Cc:     git@vger.kernel.org, "Robert P. J. Day" <rpjday@crashcourse.ca>
+Subject: Re: de-alphabetizing the documentation
+Message-ID: <20180706211600.GB6195@aiede.svl.corp.google.com>
+References: <20180706200423.GC6343@ofb.net>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180706200423.GC6343@ofb.net>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pratik Karki <predatoramigo@gmail.com> writes:
+Hi Frederick,
 
-> +static int use_builtin_rebase(void)
-> +{
-> +	struct child_process cp = CHILD_PROCESS_INIT;
-> +	struct strbuf out = STRBUF_INIT;
-> +	int ret;
-> +
-> +	argv_array_pushl(&cp.args,
-> +			 "config", "--bool", "rebase.usebuiltin", NULL);
-> +	cp.git_cmd = 1;
-> +	if (capture_command(&cp, &out, 6))
-> +		return 0;
-> +
-> +	strbuf_trim(&out);
-> +	ret = !strcmp("true", out.buf);
-> +	strbuf_release(&out);
-> +	return ret;
-> +}
-> +
-> +int cmd_rebase(int argc, const char **argv, const char *prefix)
-> +{
-> +	/*
-> +	 * NEEDSWORK: Once the builtin rebase has been tested enough
-> +	 * and git-legacy-rebase.sh is retired to contrib/, this preamble
-> +	 * can be removed.
-> +	 */
-> +
-> +	if (!use_builtin_rebase()) {
-> +		const char *path = mkpath("%s/git-legacy-rebase",
-> +					  git_exec_path());
-> +
-> +		if (sane_execvp(path, (char **)argv) < 0)
-> +			die_errno("could not exec %s", path);
-> +		else
-> +			die("sane_execvp() returned???");
+Frederick Eaton wrote:
 
-This part got changed from returning 0 since the previous round,
-which makes sense, but if we are making this change relative to the
-original in be8a90e, just because we mention explicitly that we
-imitate that old commit, we must mention how and why we "improved"
-on it, in the log message.
+> I am trying to learn how to use Git but I've been put off by not
+> knowing where to start. I would like to start with the 'git' man page,
+> but it lists the Git subcommands in alphabetical order, rather than in
+> an order which would be useful for learners. For example, I'm not sure
+> how often 'git bisect' is used, but it is strange to see it listed
+> before 'git init' and 'git clone'.
+[...]
+> I wonder if someone familiar with Git could list the commands in an
+> order which makes more sense for learning, for example in the order in
+> which they were invented by Git developers,
 
-	In the old original used while converting difftool, if
-	sane_execvp() that attempts to run the legacy scripted
-	version returned with non-negative status, the command
-	silently exited without doing anything with success, but
-	sane_execvp() should not retun with non-negative status in
-	the first place, so make sure we die() to notice such an
-	abnormal case.
+That doesn't seem like a useful order pedagogically, but
 
-or something like that, perhaps (but you should be able to shorten
-it further).
+>                                             or in the reverse order of
+> frequency of use by a typical Git user.
 
-Between die() and BUG(), I am not sure which is more appropriate.
-It certainly is not _our_ bug if platform execvp() returns success,
-so BUG() would not help our developers all that much.  But end-users
-won't be helped by being told that sane_execvp() returned, so die()
-is not all that useful, either.  I guess it does not matter that
-much bewteen the two, as this is something that is not supposed to
-happen anyway ;-)
+That does.
 
-In any case, this one looks good.  Will queue.
+Currently the commands are already broken into a few categories:
 
-Thanks.
+  High-level commands
+    Main porcelain commands
+    Ancillary commands
+    Interacting with others
+  Low-level commands
+    Manipulation commands
+    Interrogation commands
+    Synching repositories
+    Internal helper commands
+
+While it's alphabetical within each section, overall it is not
+alphabetical at all!
+
+Alas, there are plenty of "Main porcelain commands", and I think that
+is where your question comes from.  It would be nicer to list just five
+to start, say.
+
+Some of the most thoughtful documentation that comes with Git is at
+https://www.kernel.org/pub/software/scm/git/docs/user-manual.html.
+It might be useful for inspiration.
+
+Ideas?  If you start with a proposal, we're happy to help refine it.
+People in the #git channel on irc.freenode.net (wechat.freenode.net)
+might also be useful for inspiration in coming up with a proposal.
+
+Each of us have our weaknesses for this kind of work: you're telling
+me you're too new to have a sense of which commands are the first a
+person would need to learn (and I have no reason to doubt you), while
+many on this list would have the opposite problem of taking too much
+for granted and not being able to put themselves in the mind of a
+newcomer.  So we'll have to help each other.
+
+tl/dr: if you come up with a proposed "first commands to learn"
+category with some proposed commands to go in it, we'll be happy to
+help you with the next steps.
+
+[...]
+> Finally, perhaps the same listing and/or reordering could be done for
+> other important manual pages, like 'gitglossary'. Presumably
+> 'gitglossary' should be sorted topologically, so that each term is
+> defined prior to any terms depending on it.
+
+Your help is welcome here as well.  Probably a similar kind of
+categorization, with entries ordered either alphabetically or
+according to some narrative in each section, would be the easiest to
+maintain over time.
+
+Thanks,
+Jonathan
