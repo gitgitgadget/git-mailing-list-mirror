@@ -2,127 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 77E581F62D
-	for <e@80x24.org>; Fri,  6 Jul 2018 21:32:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 000311F62D
+	for <e@80x24.org>; Fri,  6 Jul 2018 21:35:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932678AbeGFVct (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Jul 2018 17:32:49 -0400
-Received: from mail-io0-f180.google.com ([209.85.223.180]:45335 "EHLO
-        mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932546AbeGFVcr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Jul 2018 17:32:47 -0400
-Received: by mail-io0-f180.google.com with SMTP id l25-v6so12029591ioh.12
-        for <git@vger.kernel.org>; Fri, 06 Jul 2018 14:32:46 -0700 (PDT)
+        id S1753946AbeGFVfd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Jul 2018 17:35:33 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:38676 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753714AbeGFVfc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Jul 2018 17:35:32 -0400
+Received: by mail-wm0-f67.google.com with SMTP id 69-v6so15513488wmf.3
+        for <git@vger.kernel.org>; Fri, 06 Jul 2018 14:35:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=YS/4tHSJDLlBVzeD2Vlnqfn9SvWuSJOcD2MA2t4u9gA=;
-        b=qmiKFDVtDhqgVwPa3mgn5YZvu0DpzPufdcWU9OSa7ZFAx4Vbo2KhhkmltT1frQujxk
-         0wPJnArvIkAFTGSG+ckOGH80M569hQiUxew5JBR4sG34NppFfdxchE6IxlZvsHWsV8SO
-         5AEoFvR8kXPDLbCunwX2tuMIUf9UPuEe2wogsbdy1Ffq8VYZd05Fm8XWzEQywSJi48yT
-         /clrlAj0FKJkHsBsJbBP7U4yERG9amBTaLAN4xJNFrHzQMzJEFe90RYow5kP5X9c6xMm
-         JbdKRBK2N/1xZPzv8Rpy68aHqgRHqMT37MILDugE3WNvPIwZTg7FNpuKpNO85yK/4xWi
-         tH0g==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=mafn8YpPnkDK7oNfm2L3fB/Pa4iyPootvKtwEjqtQaY=;
+        b=vhKLanY/XWFFtMSKNYzrPiuk9a4WkhnXR/deFIywdNB4bghDkIUdAKzR3KCLE2BxlR
+         /Rxh0meaIZwpb270Cgx7TAmhWAKASlr8h5juXTcmYLf7hfJHPUDRyZp8knjz/Z3Emjg5
+         /F/J3+QNR+EiXk8XES5JBmo3TUvHELzlf2WHxuqINVfmXi04JuF7DU8FaR54GuBhyEan
+         0oLYHl+1G5WUqVO3E/BjHPGKoKxEubaBjTZ9gHy966tsTUl+RTiNYxwwgPxmgfS0DdTf
+         xBnPaRwr6m/Di2KQaBIcZ7X0OmgNneGkQkHefj8JocbSlhOujVQJV7C0iGzXufV9vC9Y
+         FvsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=YS/4tHSJDLlBVzeD2Vlnqfn9SvWuSJOcD2MA2t4u9gA=;
-        b=HDfNv1t8Om3LTDSGWaQbOWSNoZ2OoJ2di3D0PiCNokbtpp/0NOpo1p1C3Xr8GLmWJx
-         dMXLbkgwC1ZLnVN9EPeCQxw610+ASzFuQQO+YK7xUyYJrtq+IZJOMiS4PyTP5/jwp2/s
-         rxIQU6KvKD2bjgKYprvrO6GIKC61P3qjOxmD8y34A/hQQNOSwtU8NY0Hfug3If7NpdN0
-         L65HZyy+iixpqenydh31CbkJF5X+YOoUek5eSoAOMx7+EVIc7twy1szk0fqWURa6768a
-         YzXSZdo3Nyav/kDWidNKbpNszgijL1eq/b+65lky9DNrKvSAxzJ+7S9fBf5+IoTFVwqB
-         5QkQ==
-X-Gm-Message-State: APt69E2L2iWaZwvxYUbcUO0T7aHrxh+xYhoAtd0ukqzr6s/txU1ZWz9W
-        HehFJmxfmWPMmTKpxHSUN4o=
-X-Google-Smtp-Source: AAOMgpeSGu2+xiZnWigur/6GsFGQsDgsEuzYOfjDEwU1v81mF1P51oVvd6FiiP3XXJFZH6zfAGc33Q==
-X-Received: by 2002:a6b:bc83:: with SMTP id m125-v6mr10167009iof.80.1530912766135;
-        Fri, 06 Jul 2018 14:32:46 -0700 (PDT)
-Received: from flurp.local (user-12l2cs3.cable.mindspring.com. [69.81.51.131])
-        by smtp.gmail.com with ESMTPSA id k16-v6sm4509192iog.45.2018.07.06.14.32.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 06 Jul 2018 14:32:45 -0700 (PDT)
-Date:   Fri, 6 Jul 2018 17:32:39 -0400
-From:   Eric Sunshine <sunshine@sunshineco.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Frederick Eaton <frederik@ofb.net>, git@vger.kernel.org,
-        "Robert P. J. Day" <rpjday@crashcourse.ca>
-Subject: Re: de-alphabetizing the documentation
-Message-ID: <20180706213239.GA867@flurp.local>
-References: <20180706200423.GC6343@ofb.net>
- <20180706211600.GB6195@aiede.svl.corp.google.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=mafn8YpPnkDK7oNfm2L3fB/Pa4iyPootvKtwEjqtQaY=;
+        b=SiU0gkiCvqClzNRmsTr+nroxfVJkssjvUp8oIseeRHOeCN+xvw3qlI/DeJ6Np3H3W/
+         13rA2C/wT9pOt9mF+J7LNB5NSDpS3W563KveFHHDqDu1Vyspu64sNUJYW8/z/wzJzIz2
+         ZF4B2LP7b5VKU2pthMC7RkHSdh0/9iqVZ3gR8D7Ua/K6ogzxwPjKYxaug/H0BG3AGRcI
+         1ONaHoi1PU1tuVAfF+fbJqE9B92VgF2ArRQ5PQlwM/XFBQm6uP7p9rWfQa+zv7bLF9Ry
+         vaEvDKfMYGNW8vmypRS6SMnK4FfZw4Gf9mcZGh2shO9pOgify320FoSx6NW413iTsrg4
+         JGyQ==
+X-Gm-Message-State: APt69E0YDGOsyWVul5MJiA9DP3wzD99/lpSAa0XiBzORyoLvDwp40M/m
+        tNheKCfw4Tn6pko9aehyAJc=
+X-Google-Smtp-Source: AAOMgpeUGfSwtQ6EY2xHd/q0Kt2NPOQBbPQ41W5ACTLgqmDOsChT95O5WhorViKfMjD6yNKljAZnMw==
+X-Received: by 2002:a1c:ae8d:: with SMTP id x135-v6mr7147277wme.20.1530912930731;
+        Fri, 06 Jul 2018 14:35:30 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id i14-v6sm7186375wro.11.2018.07.06.14.35.30
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 06 Jul 2018 14:35:30 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Henning Schild <henning.schild@siemens.com>
+Cc:     git@vger.kernel.org, Ben Toews <mastahyeti@gmail.com>,
+        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 1/8] builtin/receive-pack: use check_signature from gpg-interface
+References: <cover.1530616446.git.henning.schild@siemens.com>
+        <cover.1530616446.git.henning.schild@siemens.com>
+        <f9e371c8dd2a17ddb5fd5989a7fdad1c0d1bb6e7.1530616446.git.henning.schild@siemens.com>
+        <xmqqsh4wjg7b.fsf@gitster-ct.c.googlers.com>
+Date:   Fri, 06 Jul 2018 14:35:29 -0700
+In-Reply-To: <xmqqsh4wjg7b.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Fri, 06 Jul 2018 12:51:20 -0700")
+Message-ID: <xmqqk1q8hwta.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180706211600.GB6195@aiede.svl.corp.google.com>
-User-Agent: Mutt/1.10.0 (2018-05-17)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 06, 2018 at 02:16:00PM -0700, Jonathan Nieder wrote:
-> Frederick Eaton wrote:
-> > I wonder if someone familiar with Git could list the commands in an
-> > order which makes more sense for learning, for example in the order in
-> > which they were invented by Git developers,
-> 
-> Alas, there are plenty of "Main porcelain commands", and I think that
-> is where your question comes from.  It would be nicer to list just five
-> to start, say.
+Junio C Hamano <gitster@pobox.com> writes:
 
-"git help" makes some attempt at narrowing the list of porcelain
-commands likely to be used on an everyday basis (and it categorizes
-the list by general activity). Of the 21 commands listed, I use 14-16
-in pretty much every development session, so "git help" might be a
-good starting place for someone trying to figure out which commands to
-study, or for someone wishing to help focus the documentation a bit
-more for beginners.
+> Henning Schild <henning.schild@siemens.com> writes:
+>
+>> The combination of verify_signed_buffer followed by parse_gpg_output is
+>> available as check_signature. Use that instead of implementing it again.
+>>
+>> Signed-off-by: Henning Schild <henning.schild@siemens.com>
+>> ---
+>
+> Makes sense.  
+>
+> When d05b9618 ("receive-pack: GPG-validate push certificates",
+> 2014-08-14) implemented the check, there wasn't check_signature()
+> available.  The commit probably should have done what a4cc18f2
+> ("verify-tag: share code with verify-commit", 2015-06-21) later did
+> to introduce the check_signature() function by factoring it out of
+> commit.c::check_commit_signature() as a preparatory step.
+>
+> Will queue.  Thanks.
 
---- >8 ---
-$ git help
-usage: git ...
+Well, I guess I won't queue this version that would waste others'
+time, as you'd be rerolling to update variable names and such, so
+I'd wait for that (and you in turn would wait for the names and
+other discussions to settle).
 
-These are common Git commands used in various situations:
+Thanks anyway.
 
-start a working area (see also: git help tutorial)
-   clone      Clone a repository into a new directory
-   init       Create an empty Git repository or reinitialize an existing one
-
-work on the current change (see also: git help everyday)
-   add        Add file contents to the index
-   mv         Move or rename a file, a directory, or a symlink
-   reset      Reset current HEAD to the specified state
-   rm         Remove files from the working tree and from the index
-
-examine the history and state (see also: git help revisions)
-   bisect     Use binary search to find the commit that introduced a bug
-   grep       Print lines matching a pattern
-   log        Show commit logs
-   show       Show various types of objects
-   status     Show the working tree status
-
-grow, mark and tweak your common history
-   branch     List, create, or delete branches
-   checkout   Switch branches or restore working tree files
-   commit     Record changes to the repository
-   diff       Show changes between commits, commit and working tree, etc
-   merge      Join two or more development histories together
-   rebase     Reapply commits on top of another base tip
-   tag        Create, list, delete or verify a tag object signed with GPG
-
-collaborate (see also: git help workflows)
-   fetch      Download objects and refs from another repository
-   pull       Fetch from and integrate with another repository or a local branch
-   push       Update remote refs along with associated objects
-
-'git help -a' and 'git help -g' list available subcommands and some
-concept guides. See 'git help <command>' or 'git help <concept>'
-to read about a specific subcommand or concept.
---- >8 ---
