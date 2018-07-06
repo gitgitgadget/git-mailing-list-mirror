@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A25E1F62D
-	for <e@80x24.org>; Fri,  6 Jul 2018 00:54:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3A7FD1F62D
+	for <e@80x24.org>; Fri,  6 Jul 2018 00:54:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753990AbeGFAyR (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Jul 2018 20:54:17 -0400
-Received: from mail-qk0-f196.google.com ([209.85.220.196]:39758 "EHLO
-        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753592AbeGFAyJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Jul 2018 20:54:09 -0400
-Received: by mail-qk0-f196.google.com with SMTP id b5-v6so3505114qkg.6
-        for <git@vger.kernel.org>; Thu, 05 Jul 2018 17:54:09 -0700 (PDT)
+        id S1753983AbeGFAyO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Jul 2018 20:54:14 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:42768 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753968AbeGFAyL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Jul 2018 20:54:11 -0400
+Received: by mail-qt0-f194.google.com with SMTP id z8-v6so205089qto.9
+        for <git@vger.kernel.org>; Thu, 05 Jul 2018 17:54:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=TC24dwZrssf6gOi4GW6mZX8vOQ3INDg8q+FCzwt/sl0=;
-        b=t2sQv9dLpehZLP8wWLnYVRNx0MrH23O1VOjJmq3Az4iDH3ewBMVJ0S76E/SFPIxHYD
-         nDntErFuZsMTqQDT8KP9nMDnF1aVu9FNvJLcOEXY3W9Pb7KwXEx+8Boo5y7GbFNYb2eF
-         XHuD/JtyCrmrsWv+DdeFwnP6xsEQUiv/1miKSlsDq6r2q+Z8HmBXeFknou8Bixn3cNdS
-         jR6bR8kVdbaTAFQfw7zplp9rZzdCz6bgyGKV9/hPej7XU8o9+hfq3JfZEWKBrOLagqNV
-         2mgSfmPHQMddXcEeemb8Zm1W+DlTN5wY5m1x1w3TRUV5Eo8qEQRU6gStJVM/UcjKUimL
-         t5MA==
+        bh=PapCkNg8zUXqosRjO+QQ13YR2f0D19KojVYcVUe7CcU=;
+        b=PEXPBiNPgRsBEIp6nJ7CTwYGg0dKvVzsmeGo/bFAqvNTe/d+FJuDNqJ//Jhy/uOTwe
+         7/LMME40HKDS5Y98SmKsJeN6gBE1ySrhukCOjcJJl2GKGltltyTTHkJn1A1YpOneXROv
+         G4saq5vh1NrpsgqsbdDRdzJCShwIje+9f5vxZ5/MifQ5XHBetatd2Vs0zV/LeJO0DT7Q
+         rVOEEZo1XRMKEzhgtg2AHeXNHAe0cfW8QVSzEWOpLMxZfLIPNt8vlN3Kz9H6XnTfKgxQ
+         hBerJdYYEpjkTxi0vMJqy66bjw0rRf8ee/HVjyBe13sF4Jd3zZ3hTWa7KUiK6Qdumqbn
+         gN/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=TC24dwZrssf6gOi4GW6mZX8vOQ3INDg8q+FCzwt/sl0=;
-        b=EgKEJT/Rodivc4vke/PAEGGjfHvzYozPalSLchzxo3I/zGOHLMoaLjvEoQphpO3KcU
-         tc+FhGO4FR6Q2btrB3JXNY43ibcIsrfBEiZ3CGMbtnI/fKC/KlIe6GM7U0tQAmiUQcsy
-         plITR9yJGmEm5oQvToKkoxPDY3QRCadyB30b2ty/cOAogBoOAShrSktehiSJ67BM5VG0
-         o9fd4WwkAk4h4njIMIw7kjJdkWCqqFmZbzCeflZYgst6pJyRcKD0AP0d747Pfk0BJhjV
-         VswJq6nSKdiXbb9Uo3DkM7i1/3n8wsTVh+WpH0ibNsaoz+qoKUjR3mVBOoJNoiYkA1Cw
-         riqw==
-X-Gm-Message-State: APt69E2nE9tswvrOJeYx2tCZNyHkZNbFBd1k6bjkObNFMv3S5FxkJYr0
-        U763bM2mjdmjlXivgn0hbX0U9toR
-X-Google-Smtp-Source: AAOMgpdSGyk+nJrvpBEkLSnN/SvgcsSPvpq007NPnfJSIGk6ZCvuEljfCnzZ/X6h2GFwU9dCnEcRGw==
-X-Received: by 2002:ae9:c002:: with SMTP id u2-v6mr6875892qkk.391.1530838448884;
-        Thu, 05 Jul 2018 17:54:08 -0700 (PDT)
+        bh=PapCkNg8zUXqosRjO+QQ13YR2f0D19KojVYcVUe7CcU=;
+        b=SBAt45JHK86eX+ecbRp20IsTPL/7iG6L9AJeiiqH1sHcl7B0CnupjjM53MyjExn59U
+         MZRCR4yaTrIujwiWqj9ABA99WCsHAuKQ8rCRdQe2G6R8eayoOExRPC0Lk+qCupjWAnR3
+         vf9rQoUMx2Jt53exGxUBKZs6kB9VPohPyUebWbvWT/l15Ip/Bi8ojk85p+7Ld6hIR4no
+         oMlVKC2VoFPNfZH3g0/TgK9mM4PfITZrvRGlOALQitrMjiiLhkE1GbqQKaDeUx4lF5nL
+         lytiJnzaA68kI+oimyyae1vjBs+ZFQgspZwKxDM6CZEDx02rYWo4TkHwUA1JNoAa6tLP
+         FehA==
+X-Gm-Message-State: APt69E1dK5ZQb28MRIC8Teo8uYVA2aYR+cPOE0hvkEf2GyPswB+Ck3GH
+        ja//SM9E1EPotIGXOusxvD2RuZPE
+X-Google-Smtp-Source: AAOMgpd+ak0jDITvUkCItfkND1H+av2CaNVJBi2nH30+Wo6gFIPd1GcCQjKfB8U8zMnV+qOhrOtpSg==
+X-Received: by 2002:a0c:8283:: with SMTP id i3-v6mr7141972qva.21.1530838450494;
+        Thu, 05 Jul 2018 17:54:10 -0700 (PDT)
 Received: from stolee-linux-2.corp.microsoft.com ([2001:4898:8010:0:eb4a:5dff:fe0f:730f])
-        by smtp.gmail.com with ESMTPSA id u25-v6sm4882791qku.3.2018.07.05.17.54.07
+        by smtp.gmail.com with ESMTPSA id u25-v6sm4882791qku.3.2018.07.05.17.54.09
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 05 Jul 2018 17:54:08 -0700 (PDT)
+        Thu, 05 Jul 2018 17:54:10 -0700 (PDT)
 From:   Derrick Stolee <stolee@gmail.com>
 X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, sbeller@google.com, pclouds@gmail.com,
         avarab@gmail.com, dstolee@microsoft.com
-Subject: [PATCH v3 22/24] midx: prevent duplicate packfile loads
-Date:   Thu,  5 Jul 2018 20:53:19 -0400
-Message-Id: <20180706005321.124643-23-dstolee@microsoft.com>
+Subject: [PATCH v3 23/24] packfile: skip loading index if in multi-pack-index
+Date:   Thu,  5 Jul 2018 20:53:20 -0400
+Message-Id: <20180706005321.124643-24-dstolee@microsoft.com>
 X-Mailer: git-send-email 2.18.0.118.gd4f65b8d14
 In-Reply-To: <20180706005321.124643-1-dstolee@microsoft.com>
 References: <20180625143434.89044-1-dstolee@microsoft.com>
@@ -65,55 +65,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The multi-pack-index, when present, tracks the existence of objects and
-their offsets within a list of packfiles. This allows us to use the
-multi-pack-index for object lookups, abbreviations, and object counts.
-
-When the multi-pack-index tracks a packfile, then we do not need to add
-that packfile to the packed_git linked list or the MRU list.
-
-We still need to load the packfiles that are not tracked by the
-multi-pack-index.
-
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- packfile.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ packfile.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
 diff --git a/packfile.c b/packfile.c
-index 97e7812b6b..2c819a0ad8 100644
+index 2c819a0ad8..e6ecf12ab5 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -795,6 +795,7 @@ struct prepare_pack_data {
- 	struct repository *r;
- 	struct string_list *garbage;
- 	int local;
-+	struct multi_pack_index *m;
- };
+@@ -469,8 +469,19 @@ static int open_packed_git_1(struct packed_git *p)
+ 	ssize_t read_result;
+ 	const unsigned hashsz = the_hash_algo->rawsz;
  
- static void prepare_pack(const char *full_name, size_t full_name_len,
-@@ -805,6 +806,8 @@ static void prepare_pack(const char *full_name, size_t full_name_len,
- 	size_t base_len = full_name_len;
- 
- 	if (strip_suffix_mem(full_name, &base_len, ".idx")) {
-+		if (data->m && midx_contains_pack(data->m, file_name))
-+			return;
- 		/* Don't reopen a pack we already have. */
- 		for (p = data->r->objects->packed_git; p; p = p->next) {
- 			size_t len;
-@@ -839,6 +842,12 @@ static void prepare_packed_git_one(struct repository *r, char *objdir, int local
- 	struct prepare_pack_data data;
- 	struct string_list garbage = STRING_LIST_INIT_DUP;
- 
-+	data.m = r->objects->multi_pack_index;
+-	if (!p->index_data && open_pack_index(p))
+-		return error("packfile %s index unavailable", p->pack_name);
++	if (!p->index_data) {
++		struct multi_pack_index *m;
++		const char *pack_name = strrchr(p->pack_name, '/');
 +
-+	/* look for the multi-pack-index for this object directory */
-+	while (data.m && strcmp(data.m->object_dir, objdir))
-+		data.m = data.m->next;
++		for (m = the_repository->objects->multi_pack_index;
++		     m; m = m->next) {
++			if (midx_contains_pack(m, pack_name))
++				break;
++		}
 +
- 	data.r = r;
- 	data.garbage = &garbage;
- 	data.local = local;
++		if (!m && open_pack_index(p))
++			return error("packfile %s index unavailable", p->pack_name);
++	}
+ 
+ 	if (!pack_max_fds) {
+ 		unsigned int max_fds = get_max_fd_limit();
+@@ -521,6 +532,10 @@ static int open_packed_git_1(struct packed_git *p)
+ 			" supported (try upgrading GIT to a newer version)",
+ 			p->pack_name, ntohl(hdr.hdr_version));
+ 
++	/* Skip index checking if in multi-pack-index */
++	if (!p->index_data)
++		return 0;
++
+ 	/* Verify the pack matches its index. */
+ 	if (p->num_objects != ntohl(hdr.hdr_entries))
+ 		return error("packfile %s claims to have %"PRIu32" objects"
 -- 
 2.18.0.118.gd4f65b8d14
 
