@@ -2,107 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 56EBC1F62D
-	for <e@80x24.org>; Fri,  6 Jul 2018 20:15:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F0D7F1F62D
+	for <e@80x24.org>; Fri,  6 Jul 2018 20:18:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932656AbeGFUP0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Jul 2018 16:15:26 -0400
-Received: from mail-yb0-f194.google.com ([209.85.213.194]:33164 "EHLO
-        mail-yb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932328AbeGFUPZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Jul 2018 16:15:25 -0400
-Received: by mail-yb0-f194.google.com with SMTP id e84-v6so5030003ybb.0
-        for <git@vger.kernel.org>; Fri, 06 Jul 2018 13:15:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=CoaDm7cey5ybvvmrekdboRy1H+hXW5JalwqZfoqLLQk=;
-        b=GoK0wuwYh3eKrRVSQ6EWmE68oFgru19lva/TbOgdArVHBPefWfX5paf/IEZcGFigIE
-         ahp+CbZeisb0VvKCA23jjHcIqM45wr+SE6z+nF+K3ZYseD3lY7E3dCtF0jqOZDYLmxGt
-         YF3PtqSf3Sqc9vX6vU9p4G6eWMDHQYm7t1h3GqO06Dyki67MrMcNfrwWF05n3jZfPRGS
-         bwG2ulmAmqsW2zsRuxbUAdva7D2UAI/58WMQiAiea3P8wzqLN50pX0uCBKA4HItBCPDK
-         2wx0senUxos/RzaB2RfKzPZEc9QhX7sKLnsmRzGOU2K4E/s1i/n8HUeYLw9uuJh+6bmn
-         sqzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=CoaDm7cey5ybvvmrekdboRy1H+hXW5JalwqZfoqLLQk=;
-        b=s6sO/qtLauB8jEzENqHL/6GSItqqUVR9bhsn5715y8ZhyJWTiV4bAQ3T4jO6hONf7z
-         OJoJj7eotRW7f/EjUf505ycKG7w3ABvUkO5EGK26tvpqe0ON7l7bUyOOTg3gZmWDbMJn
-         ThdycYfLgvfnWTg3nlge4r3XFCV/ugcMi6Ex4W3NgVCfAEyrSxmS51LButB9KbixyKrO
-         NywLq7qFLBsj2Lh6OvuG2mcBmtyHP2ujI08rbr2tXz4mkFlwM0pT9ThFJR6LC6fpvGZ0
-         Yx0uc95bnb8zPBopdoc71ju4jD8hj90WIMFDGynQEcyG/WFR3Ya+G2zCkVySaWPUmL6P
-         kWlQ==
-X-Gm-Message-State: APt69E2HixdF0FIfxLJX7p1zBtVU7XIsiNjdT5RqXGSLuSDRC/LuS/u0
-        7UgITQwHJRxE1SkHXi4ZNWs+XA==
-X-Google-Smtp-Source: AAOMgpdw2YS3SUgpv0318QommKjMcWp0V0KJIyhn0ptRDcBeMh9vuQsUS6jhfCdII3JVwbIW9gr/5g==
-X-Received: by 2002:a25:ce49:: with SMTP id x70-v6mr6336311ybe.18.1530908124591;
-        Fri, 06 Jul 2018 13:15:24 -0700 (PDT)
-Received: from localhost ([107.217.158.181])
-        by smtp.gmail.com with ESMTPSA id b68-v6sm7108704ywh.68.2018.07.06.13.15.22
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 06 Jul 2018 13:15:23 -0700 (PDT)
-Date:   Fri, 6 Jul 2018 15:15:22 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org, avarab@gmail.com
-Subject: Re: [PATCH v3 0/2] grep.c: teach --only-matching to 'git-grep(1)'
-Message-ID: <20180706201522.GA657@syl.attlocal.net>
-References: <cover.1529961706.git.me@ttaylorr.com>
- <cover.1530654455.git.me@ttaylorr.com>
- <20180705142110.GA10192@sigill.intra.peff.net>
- <20180705143401.GA87330@syl.attlocal.net>
- <xmqqlgaokyy5.fsf@gitster-ct.c.googlers.com>
+        id S932842AbeGFUSu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Jul 2018 16:18:50 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:52900 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S932502AbeGFUSt (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 6 Jul 2018 16:18:49 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:294b:af98:ff6d:ed6])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B92FE60431;
+        Fri,  6 Jul 2018 20:18:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1530908328;
+        bh=IvrRqCR7LRBgrOQCTpDo4uI7X8TV+LJL92iNSDxyzDo=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=BMUEnsLxCQoY3Mjoqr8F5FCFKQlPSF0k5nYnQa7V2bh2nfr7QtvfsLBLV8la/GqPT
+         lx3VYuNuq9TH5kjiSE6kA35njwOSuB02gB9tHGHciuIgHWzp+LqNItG6c/mIex+C4T
+         aim5+N7kbMaGNy7QvHugMrpCmHGB3j3KnyGONAezm+swobiYTPvbHylZZfzZ96QKkx
+         Cnefi/yx6nuTQvZWrllcAK5suUMwQZdPefrX7why8MN3gXcSZBo911DAOiBj9PNiqN
+         oW1dPyStmcrL3EMj+jGzOWnKdHVYTvNnpcu+hbeyB7yvjdUpREGRYDrM6nUP9VpL7E
+         hkMMA9puLlhy3SG8rE7ct6PdqO5QMWHVULi7XBTA4zAa6Sr5HHUQwW5wz3H6HvOdUG
+         3fBPb1uyuT84lttNDVULlmvGfYixQGiYKyLajsTDc7NalCfsbu0x3AReEG8e1DBe6V
+         VQmYNm+ZEs3GznXqijBxQCe3xL/T7uirJfq8w2JVpcgonGts0VJ
+Date:   Fri, 6 Jul 2018 20:18:43 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Drew DeVault <sir@cmpwn.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/3] send-email: accept long lines with suitable transfer
+ encoding
+Message-ID: <20180706201843.GF7697@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Drew DeVault <sir@cmpwn.com>, git@vger.kernel.org,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20180706022357.739657-1-sandals@crustytoothpaste.net>
+ <20180706022357.739657-3-sandals@crustytoothpaste.net>
+ <20180706122604.GA9255@homura.localdomain>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="oFbHfjnMgUMsrGjO"
 Content-Disposition: inline
-In-Reply-To: <xmqqlgaokyy5.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.9.5 (2018-04-13)
+In-Reply-To: <20180706122604.GA9255@homura.localdomain>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.17.0-1-amd64)
+User-Agent: Mutt/1.10.0 (2018-05-17)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 06, 2018 at 11:21:06AM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
->
-> > I think that this might be clear enough on its own, especially since
-> > this is the same as BSD grep on my machine. I think that part_s_ of a
-> > line indicates that behavior, but perhaps not. On GNU grep, this is:
-> >
-> >   Print only the matched (non-empty) parts of a matching line, with each
-> >   such part on a separate output line.
->
-> Interesting.  I wonder what "git grep -o '^'" would do ;-)
 
-That invocation prints nothing, but on BSD grep it prints quite a few
-blank lines :-).
+--oFbHfjnMgUMsrGjO
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I'm hesitant on sending a patch per the hunk of your reply below because
-of this. Should we mirror BSD grep's behavior exactly here? I suppose
-that we could somehow, but it seems like we might be doing too much to
-support what appears to me to be an odd use-case.
+On Fri, Jul 06, 2018 at 08:26:04AM -0400, Drew DeVault wrote:
+> On 2018-07-06  2:23 AM, brian m. carlson wrote:
+> > diff --git a/git-send-email.perl b/git-send-email.perl
+> > index a76953c310..4ea30c4070 100755
+> > --- a/git-send-email.perl
+> > +++ b/git-send-email.perl
+> > @@ -1899,6 +1899,10 @@ sub validate_patch {
+> >  		return $hook_error if $hook_error;
+> >  	}
+> > =20
+> > +	# Any long lines will be automatically fixed if we use a suitable tra=
+nsfer
+> > +	# encoding.
+> > +	return if $xfer_encoding =3D~ /^(?:auto|quoted-printable|base64)$/;
+>=20
+> Rather than returning in this case I'd sooner wrap the length check in
+> this test. If additional checks are added in the future it'd be too easy
+> to accidentally skip them if the transfer encoding is quoted-printable.
 
-> > I'm happy to pick either and re-send this patch (2/2) again, if it
-> > wouldn't be too much to juggle. Otherwise, I can re-roll to v4.
->
-> Please do not re-send a different version of a patch with the same
-> v$n value.  Either re-send, otherwise re-roll, will give us v4, not
-> v3.
->
-> In any case, I find that the GNU phrasing is the most clear among
-> the ones I've seen in this thread so far.
+Okay, that's fair.  I can do that.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-OK. I'm happy to re-send that patch with the GNU phrasing depending on
-what others think (and the above). I'll let this cook and collect some
-thoughts over the weekend.
+--oFbHfjnMgUMsrGjO
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.8 (GNU/Linux)
 
-Thanks,
-Taylor
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAls/zqIACgkQv1NdgR9S
+9otNaA//eM3eitfpOExpiqSsMN1Um8V0Biu9F4NHQ/cmgJ3U81HOZr7IruY8rvlx
+cOh/WdKiQB7v2vBwm7l4Ue/qYbHRQ1Baejbtr+G+BTxjzyxkLbBINy+GcRFWG1mK
++f1BQUow8TOdhBL4CQknDYNsE7OPSb3iorHrjHuoRqDqkr1nPjd0f7VD4tX2+p86
+xcoVa+pnYUW4NdACKpLjWZmtkmMwhKlRd0DyzjQFkFXf8yJqdT0+wXjZwLqDh5ik
+87w1aFiX7FsiNH5kKqUrk5K1hoko9YYFYVZ38/ClsPYLBg6543z2eX+uv8Om1gbe
+y9m7C+rNyh3e1rAGAhmXAAZMYUHq8xPRNB07pMB8aZQNNfbLNXypA0bwIPS27Y1C
+tuiY+cm2FKy4r2fhyxv2qgufBCXedErQyhAsO6Fj0JX15Yp8t68jnMM8cx+/UWYC
+vnzNK1GquVfH9gbBcs1dYMslx0IKqT8JfCgv1GMaytSmgeeqG6z3LTkseSYILjzQ
+Iog8MyZgbLwXsLIFbh6g67SrNKbxBPuVo7CxPF6PnC4ZufixzB+FBrQzmq5GQrTh
+QV7ogXVEoTSaQLvL5JmFRvHqKUpkH9LgHL1zZ4fZTi11S/WlHcCTkPioipNlVgUZ
+lw+XO+fW2Qjb17e+9La+ka3HIPs2DRTBUhFdaXoYT/h8Pz0NI7M=
+=djtC
+-----END PGP SIGNATURE-----
+
+--oFbHfjnMgUMsrGjO--
