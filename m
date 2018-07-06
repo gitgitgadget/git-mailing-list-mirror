@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BA8C1F62D
-	for <e@80x24.org>; Fri,  6 Jul 2018 00:54:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED67B1F62D
+	for <e@80x24.org>; Fri,  6 Jul 2018 00:54:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753963AbeGFAyH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Jul 2018 20:54:07 -0400
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:40271 "EHLO
-        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753927AbeGFAyC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Jul 2018 20:54:02 -0400
-Received: by mail-qk0-f193.google.com with SMTP id b129-v6so5504400qke.7
-        for <git@vger.kernel.org>; Thu, 05 Jul 2018 17:54:02 -0700 (PDT)
+        id S1753956AbeGFAyG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Jul 2018 20:54:06 -0400
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:39757 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753912AbeGFAyE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Jul 2018 20:54:04 -0400
+Received: by mail-qt0-f195.google.com with SMTP id q12-v6so8712095qtp.6
+        for <git@vger.kernel.org>; Thu, 05 Jul 2018 17:54:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=WeTOpijTpOnE2iSUOCcX5t6+zX5i9OJHaGjFF5vOwNU=;
-        b=gsdaoxVLGNaVK3V2k9tjJjZS2mVFYJvyIlfRNW5jH7E+JAFFqkzHcwzMrfMZVkna1B
-         nfo2myzzfGMENSxUC6dprM6jXAN71y7mAW+Lon8CxtLDSCiBJ7pF1YFzcWbhVxioRH/8
-         YhswYHLU5yTr96Tzkt8Sn+bqQXYm0bLQqH5yM+I3XRRORcPE2AbPq1LPgAV1VsqNd5ia
-         /ua5BzEPwXugLguzV4nGpDUvirbf0Kjo+N3Kb++BJVEmSZpq1XU59vDc4rmAySmi2fv4
-         U9Lr61hqK4SI0DcyGCq4A2U+0PWupPj4jI06OU0f9x0zeFnq70jCiq71gXcyVYt8Co4/
-         I0QQ==
+        bh=4wKgoLR4cBRXi7xg2TVStQAMiRVUQ2HmL3gGHIfEqlk=;
+        b=idTXJqzEJuJp57jUho6BOdONBKGZzJ9PA2uY/NfJsJriAeg6pehGAIDyQUQ/mEPO+K
+         idNxQm64EzUp4e6crzeQZnF7RsJGAr7N8TEiUIT+eNPhl+kR3mmfpHrNwytvI8HtchFX
+         pZHhYzbWTmx0xLC5F/bBhqhLmxgc5Q7OE75FWcrN/+5uBsfVQbECn4YVyTKQIBc3/tVr
+         nQpoQRdBCyq678VuWJBtv3wp1z442b/jMk+5duQfO9qDaYfrYcqmvMq4AYgrc/WkxMSX
+         C8AiJVqD5YXg8zSSnJttm43Z7pAq7NGXfDu7/0Cl5SXx6Dg/azlMU6ZefHLV3Vi0D99x
+         5qPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=WeTOpijTpOnE2iSUOCcX5t6+zX5i9OJHaGjFF5vOwNU=;
-        b=GAkyOMWn1WxKUPRAWIRun83hWXB7+x+CDaDlTc0qUyUzIu3gMTL1ZWeBrQGjR+XMmm
-         ro4qcGJi448A3BFNopCvMZFqGJwi7WtmqB9h3LFmKt8R9CnxmSIexDqStCHWMYnrPlW2
-         nfk/e3a1n0Cc1Ta4C1cpuqXvDWgiK/OcCJ+XB8v3z85YjxH2/PAwhypgY/yj9XwkNZUo
-         n+LEijR2lciHCT6B/4mAavvL7d97CI7W2TqXh8aullFoZQBeQDQljkJ1IVtMb17ntPaB
-         5lXCyf+gIMo/ulYkouWz0Ce7P/Tp67K0Zh3Fh2pohpdewZaAzHbo8lxZ4H/gERgUmzrN
-         gJlQ==
-X-Gm-Message-State: APt69E3y1QocWyJVkw7nVygjSZaMRbRcF94dZio4/OjYuhZdqlW7HskF
-        nRkVlA8X0eqZLMtAI7XDGsfA2fu5
-X-Google-Smtp-Source: AAOMgpdn1AgraaS5ngAKmz2DXbgw+sGl/H5IcnMNh3xOje7qVwqLs8BJp6Iz53vHqkDsiF3MSyOxXw==
-X-Received: by 2002:a37:444a:: with SMTP id r71-v6mr7015638qka.79.1530838441787;
-        Thu, 05 Jul 2018 17:54:01 -0700 (PDT)
+        bh=4wKgoLR4cBRXi7xg2TVStQAMiRVUQ2HmL3gGHIfEqlk=;
+        b=mqpdE5QAe37mPqq6EGhVe1FLm8F00/UBXr/O9S7neUiHXF+yXozMKLIRf4+qb+ADO7
+         WFYZD//3MLcLMB0offEusgqPoC78f/j7HQKlqFHMXkzTJtuoSXNJj9GzsR9fy2RF7TVY
+         Z6gcKK2eiuTNee2yNZoJj9Pr2WXi5dI8RIcrTe44hKW5c6AYOQCHjoIAe3NnuOWpTRP+
+         WOYtOrHVrUst+R/kisp+PwvXSkMTs60tfVD/vUQhQxOR/8nS/1FLJ+O9Mpt6vRAiSz9b
+         +9fPeyjUOFnVUbsGrmTSfqF1o77RNWDXlF813P9NgpdPgqSKJr8yURDglaGtPS1rhYEs
+         KQzw==
+X-Gm-Message-State: APt69E2Qc66RrTg+cWKAuCMsTMxop4KH8RjWGOwyFhT6nHeCFqBzxn9x
+        L7qmEC73gKZDP5tJ9bPZBzGIscSo
+X-Google-Smtp-Source: AAOMgpcM+bN/VQhAgPul0ooaqGTept5zoy9l+JqkchxWJYfaTgb/HBZXQNmCaRtc2I+YXTHef5kbrg==
+X-Received: by 2002:a0c:ae89:: with SMTP id j9-v6mr7138270qvd.174.1530838443575;
+        Thu, 05 Jul 2018 17:54:03 -0700 (PDT)
 Received: from stolee-linux-2.corp.microsoft.com ([2001:4898:8010:0:eb4a:5dff:fe0f:730f])
-        by smtp.gmail.com with ESMTPSA id u25-v6sm4882791qku.3.2018.07.05.17.54.00
+        by smtp.gmail.com with ESMTPSA id u25-v6sm4882791qku.3.2018.07.05.17.54.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 05 Jul 2018 17:54:01 -0700 (PDT)
+        Thu, 05 Jul 2018 17:54:02 -0700 (PDT)
 From:   Derrick Stolee <stolee@gmail.com>
 X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, sbeller@google.com, pclouds@gmail.com,
         avarab@gmail.com, dstolee@microsoft.com
-Subject: [PATCH v3 18/24] midx: read objects from multi-pack-index
-Date:   Thu,  5 Jul 2018 20:53:15 -0400
-Message-Id: <20180706005321.124643-19-dstolee@microsoft.com>
+Subject: [PATCH v3 19/24] midx: use midx in abbreviation calculations
+Date:   Thu,  5 Jul 2018 20:53:16 -0400
+Message-Id: <20180706005321.124643-20-dstolee@microsoft.com>
 X-Mailer: git-send-email 2.18.0.118.gd4f65b8d14
 In-Reply-To: <20180706005321.124643-1-dstolee@microsoft.com>
 References: <20180625143434.89044-1-dstolee@microsoft.com>
@@ -67,176 +67,206 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- midx.c         | 91 +++++++++++++++++++++++++++++++++++++++++++++++++-
- midx.h         |  2 ++
- object-store.h |  1 +
- packfile.c     |  8 ++++-
- 4 files changed, 100 insertions(+), 2 deletions(-)
+ midx.c                      | 11 ++++++
+ midx.h                      |  3 ++
+ packfile.c                  |  6 ++++
+ packfile.h                  |  1 +
+ sha1-name.c                 | 70 +++++++++++++++++++++++++++++++++++++
+ t/t5319-multi-pack-index.sh |  3 +-
+ 6 files changed, 93 insertions(+), 1 deletion(-)
 
 diff --git a/midx.c b/midx.c
-index d5a61c0c53..84b045060a 100644
+index 84b045060a..e66025f066 100644
 --- a/midx.c
 +++ b/midx.c
-@@ -4,7 +4,7 @@
- #include "lockfile.h"
- #include "packfile.h"
- #include "object-store.h"
--#include "packfile.h"
-+#include "sha1-lookup.h"
- #include "midx.h"
- 
- #define MIDX_SIGNATURE 0x4d494458 /* "MIDX" */
-@@ -152,6 +152,7 @@ struct multi_pack_index *load_multi_pack_index(const char *object_dir)
- 	m->num_objects = ntohl(m->chunk_oid_fanout[255]);
- 
- 	m->pack_names = xcalloc(m->num_packs, sizeof(*m->pack_names));
-+	m->packs = xcalloc(m->num_packs, sizeof(*m->packs));
- 
- 	cur_pack_name = (const char *)m->chunk_pack_names;
- 	for (i = 0; i < m->num_packs; i++) {
-@@ -180,6 +181,94 @@ struct multi_pack_index *load_multi_pack_index(const char *object_dir)
- 	return NULL;
+@@ -205,6 +205,17 @@ int bsearch_midx(const struct object_id *oid, struct multi_pack_index *m, uint32
+ 			    MIDX_HASH_LEN, result);
  }
  
-+static int prepare_midx_pack(struct multi_pack_index *m, uint32_t pack_int_id)
++struct object_id *nth_midxed_object_oid(struct object_id *oid,
++					struct multi_pack_index *m,
++					uint32_t n)
 +{
-+	struct strbuf pack_name = STRBUF_INIT;
++	if (n >= m->num_objects)
++		return NULL;
 +
-+	if (pack_int_id >= m->num_packs)
-+		BUG("bad pack-int-id");
-+
-+	if (m->packs[pack_int_id])
-+		return 0;
-+
-+	strbuf_addf(&pack_name, "%s/pack/%s", m->object_dir,
-+		    m->pack_names[pack_int_id]);
-+
-+	m->packs[pack_int_id] = add_packed_git(pack_name.buf, pack_name.len, 1);
-+	strbuf_release(&pack_name);
-+	return !m->packs[pack_int_id];
++	hashcpy(oid->hash, m->chunk_oid_lookup + m->hash_len * n);
++	return oid;
 +}
 +
-+int bsearch_midx(const struct object_id *oid, struct multi_pack_index *m, uint32_t *result)
-+{
-+	return bsearch_hash(oid->hash, m->chunk_oid_fanout, m->chunk_oid_lookup,
-+			    MIDX_HASH_LEN, result);
-+}
-+
-+static off_t nth_midxed_offset(struct multi_pack_index *m, uint32_t pos)
-+{
-+	const unsigned char *offset_data;
-+	uint32_t offset32;
-+
-+	offset_data = m->chunk_object_offsets + pos * MIDX_CHUNK_OFFSET_WIDTH;
-+	offset32 = get_be32(offset_data + sizeof(uint32_t));
-+
-+	if (m->chunk_large_offsets && offset32 & MIDX_LARGE_OFFSET_NEEDED) {
-+		if (sizeof(offset32) < sizeof(uint64_t))
-+			die(_("multi-pack-index stores a 64-bit offset, but off_t is too small"));
-+
-+		offset32 ^= MIDX_LARGE_OFFSET_NEEDED;
-+		return get_be64(m->chunk_large_offsets + sizeof(uint64_t) * offset32);
-+	}
-+
-+	return offset32;
-+}
-+
-+static uint32_t nth_midxed_pack_int_id(struct multi_pack_index *m, uint32_t pos)
-+{
-+	return get_be32(m->chunk_object_offsets + pos * MIDX_CHUNK_OFFSET_WIDTH);
-+}
-+
-+static int nth_midxed_pack_entry(struct multi_pack_index *m, struct pack_entry *e, uint32_t pos)
-+{
-+	uint32_t pack_int_id;
-+	struct packed_git *p;
-+
-+	if (pos >= m->num_objects)
-+		return 0;
-+
-+	pack_int_id = nth_midxed_pack_int_id(m, pos);
-+
-+	if (prepare_midx_pack(m, pack_int_id))
-+		die(_("error preparing packfile from multi-pack-index"));
-+	p = m->packs[pack_int_id];
-+
-+	/*
-+	* We are about to tell the caller where they can locate the
-+	* requested object.  We better make sure the packfile is
-+	* still here and can be accessed before supplying that
-+	* answer, as it may have been deleted since the MIDX was
-+	* loaded!
-+	*/
-+	if (!is_pack_valid(p))
-+		return 0;
-+
-+	e->offset = nth_midxed_offset(m, pos);
-+	e->p = p;
-+
-+	return 1;
-+}
-+
-+int fill_midx_entry(const struct object_id *oid, struct pack_entry *e, struct multi_pack_index *m)
-+{
-+	uint32_t pos;
-+
-+	if (!bsearch_midx(oid, m, &pos))
-+		return 0;
-+
-+	return nth_midxed_pack_entry(m, e, pos);
-+}
-+
- int prepare_multi_pack_index_one(struct repository *r, const char *object_dir)
+ static off_t nth_midxed_offset(struct multi_pack_index *m, uint32_t pos)
  {
- 	struct multi_pack_index *m = r->objects->multi_pack_index;
+ 	const unsigned char *offset_data;
 diff --git a/midx.h b/midx.h
-index 731ad6f094..6b74a0640f 100644
+index 6b74a0640f..f7c2ec7893 100644
 --- a/midx.h
 +++ b/midx.h
-@@ -6,6 +6,8 @@
- struct multi_pack_index;
+@@ -7,6 +7,9 @@ struct multi_pack_index;
  
  struct multi_pack_index *load_multi_pack_index(const char *object_dir);
-+int bsearch_midx(const struct object_id *oid, struct multi_pack_index *m, uint32_t *result);
-+int fill_midx_entry(const struct object_id *oid, struct pack_entry *e, struct multi_pack_index *m);
+ int bsearch_midx(const struct object_id *oid, struct multi_pack_index *m, uint32_t *result);
++struct object_id *nth_midxed_object_oid(struct object_id *oid,
++					struct multi_pack_index *m,
++					uint32_t n);
+ int fill_midx_entry(const struct object_id *oid, struct pack_entry *e, struct multi_pack_index *m);
  int prepare_multi_pack_index_one(struct repository *r, const char *object_dir);
  
- int write_midx_file(const char *object_dir);
-diff --git a/object-store.h b/object-store.h
-index 7d67ad7aa9..03cc278758 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -106,6 +106,7 @@ struct multi_pack_index {
- 	const unsigned char *chunk_large_offsets;
- 
- 	const char **pack_names;
-+	struct packed_git **packs;
- 	char object_dir[FLEX_ARRAY];
- };
- 
 diff --git a/packfile.c b/packfile.c
-index 5d4493dbf4..bc763d91b9 100644
+index bc763d91b9..c0eb5ac885 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -1902,11 +1902,17 @@ static int fill_pack_entry(const struct object_id *oid,
- int find_pack_entry(struct repository *r, const struct object_id *oid, struct pack_entry *e)
- {
- 	struct list_head *pos;
-+	struct multi_pack_index *m;
+@@ -961,6 +961,12 @@ struct packed_git *get_packed_git(struct repository *r)
+ 	return r->objects->packed_git;
+ }
  
- 	prepare_packed_git(r);
--	if (!r->objects->packed_git)
-+	if (!r->objects->packed_git && !r->objects->multi_pack_index)
- 		return 0;
- 
-+	for (m = r->objects->multi_pack_index; m; m = m->next) {
-+		if (fill_midx_entry(oid, e, m))
-+			return 1;
-+	}
++struct multi_pack_index *get_multi_pack_index(struct repository *r)
++{
++	prepare_packed_git(r);
++	return r->objects->multi_pack_index;
++}
 +
- 	list_for_each(pos, &r->objects->packed_git_mru) {
- 		struct packed_git *p = list_entry(pos, struct packed_git, mru);
- 		if (fill_pack_entry(oid, e, p)) {
+ struct list_head *get_packed_git_mru(struct repository *r)
+ {
+ 	prepare_packed_git(r);
+diff --git a/packfile.h b/packfile.h
+index b0eed44c0b..046280caf3 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -45,6 +45,7 @@ extern void install_packed_git(struct repository *r, struct packed_git *pack);
+ 
+ struct packed_git *get_packed_git(struct repository *r);
+ struct list_head *get_packed_git_mru(struct repository *r);
++struct multi_pack_index *get_multi_pack_index(struct repository *r);
+ 
+ /*
+  * Give a rough count of objects in the repository. This sacrifices accuracy
+diff --git a/sha1-name.c b/sha1-name.c
+index 60d9ef3c7e..7dc71201e6 100644
+--- a/sha1-name.c
++++ b/sha1-name.c
+@@ -12,6 +12,7 @@
+ #include "packfile.h"
+ #include "object-store.h"
+ #include "repository.h"
++#include "midx.h"
+ 
+ static int get_oid_oneline(const char *, struct object_id *, struct commit_list *);
+ 
+@@ -149,6 +150,32 @@ static int match_sha(unsigned len, const unsigned char *a, const unsigned char *
+ 	return 1;
+ }
+ 
++static void unique_in_midx(struct multi_pack_index *m,
++			   struct disambiguate_state *ds)
++{
++	uint32_t num, i, first = 0;
++	const struct object_id *current = NULL;
++	num = m->num_objects;
++
++	if (!num)
++		return;
++
++	bsearch_midx(&ds->bin_pfx, m, &first);
++
++	/*
++	 * At this point, "first" is the location of the lowest object
++	 * with an object name that could match "bin_pfx".  See if we have
++	 * 0, 1 or more objects that actually match(es).
++	 */
++	for (i = first; i < num && !ds->ambiguous; i++) {
++		struct object_id oid;
++		current = nth_midxed_object_oid(&oid, m, i);
++		if (!match_sha(ds->len, ds->bin_pfx.hash, current->hash))
++			break;
++		update_candidates(ds, current);
++	}
++}
++
+ static void unique_in_pack(struct packed_git *p,
+ 			   struct disambiguate_state *ds)
+ {
+@@ -177,8 +204,12 @@ static void unique_in_pack(struct packed_git *p,
+ 
+ static void find_short_packed_object(struct disambiguate_state *ds)
+ {
++	struct multi_pack_index *m;
+ 	struct packed_git *p;
+ 
++	for (m = get_multi_pack_index(the_repository); m && !ds->ambiguous;
++	     m = m->next)
++		unique_in_midx(m, ds);
+ 	for (p = get_packed_git(the_repository); p && !ds->ambiguous;
+ 	     p = p->next)
+ 		unique_in_pack(p, ds);
+@@ -527,6 +558,42 @@ static int extend_abbrev_len(const struct object_id *oid, void *cb_data)
+ 	return 0;
+ }
+ 
++static void find_abbrev_len_for_midx(struct multi_pack_index *m,
++				     struct min_abbrev_data *mad)
++{
++	int match = 0;
++	uint32_t num, first = 0;
++	struct object_id oid;
++	const struct object_id *mad_oid;
++
++	if (!m->num_objects)
++		return;
++
++	num = m->num_objects;
++	mad_oid = mad->oid;
++	match = bsearch_midx(mad_oid, m, &first);
++
++	/*
++	 * first is now the position in the packfile where we would insert
++	 * mad->hash if it does not exist (or the position of mad->hash if
++	 * it does exist). Hence, we consider a maximum of two objects
++	 * nearby for the abbreviation length.
++	 */
++	mad->init_len = 0;
++	if (!match) {
++		if (nth_midxed_object_oid(&oid, m, first))
++			extend_abbrev_len(&oid, mad);
++	} else if (first < num - 1) {
++		if (nth_midxed_object_oid(&oid, m, first + 1))
++			extend_abbrev_len(&oid, mad);
++	}
++	if (first > 0) {
++		if (nth_midxed_object_oid(&oid, m, first - 1))
++			extend_abbrev_len(&oid, mad);
++	}
++	mad->init_len = mad->cur_len;
++}
++
+ static void find_abbrev_len_for_pack(struct packed_git *p,
+ 				     struct min_abbrev_data *mad)
+ {
+@@ -565,8 +632,11 @@ static void find_abbrev_len_for_pack(struct packed_git *p,
+ 
+ static void find_abbrev_len_packed(struct min_abbrev_data *mad)
+ {
++	struct multi_pack_index *m;
+ 	struct packed_git *p;
+ 
++	for (m = get_multi_pack_index(the_repository); m; m = m->next)
++		find_abbrev_len_for_midx(m, mad);
+ 	for (p = get_packed_git(the_repository); p; p = p->next)
+ 		find_abbrev_len_for_pack(p, mad);
+ }
+diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
+index fc582c9a59..4c630ecab4 100755
+--- a/t/t5319-multi-pack-index.sh
++++ b/t/t5319-multi-pack-index.sh
+@@ -93,7 +93,8 @@ compare_results_with_midx() {
+ 	MSG=$1
+ 	test_expect_success "check normal git operations: $MSG" '
+ 		midx_git_two_modes "rev-list --objects --all" &&
+-		midx_git_two_modes "log --raw"
++		midx_git_two_modes "log --raw" &&
++		midx_git_two_modes "log --oneline"
+ 	'
+ }
+ 
 -- 
 2.18.0.118.gd4f65b8d14
 
