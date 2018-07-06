@@ -6,106 +6,96 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9044D1F62D
-	for <e@80x24.org>; Fri,  6 Jul 2018 17:25:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D24411F62D
+	for <e@80x24.org>; Fri,  6 Jul 2018 17:50:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933531AbeGFRZC (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Jul 2018 13:25:02 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:39038 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932834AbeGFRZB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Jul 2018 13:25:01 -0400
-Received: by mail-wr1-f65.google.com with SMTP id h10-v6so4891369wre.6
-        for <git@vger.kernel.org>; Fri, 06 Jul 2018 10:25:01 -0700 (PDT)
+        id S933739AbeGFRuW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Jul 2018 13:50:22 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:52989 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932895AbeGFRuV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Jul 2018 13:50:21 -0400
+Received: by mail-wm0-f68.google.com with SMTP id w16-v6so15553293wmc.2
+        for <git@vger.kernel.org>; Fri, 06 Jul 2018 10:50:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=0n0zj0GK8m5e9ReIF5+F1tea8ZKfHXxlyrEnlFdex6o=;
-        b=nz/S012Hfofo9JNoKhQYunIwHYkQhtYj3Pj6/70KsL5ctH0c0SldjdDQ/p6Au9XA2r
-         d14P0SFJqaeGwK1BaOzdlv4UOXF2wtdTJwob8Q8aZHzXEXzTcHkbNnUPbZkYyNblTBQv
-         +aRKdt1vIJk9nPHu1PgVFoslCTJTyLR+5Dby1ngaDdscP1vncuJo/dTrRlngSAhln2W2
-         mt6RPeQ/uIVldjl7AUENVzPFxgIviSM/QQrLQ9Iu2eBoiK16gO02884agQZ4o+u/HEYh
-         SXn3nHj8EClkdotLYIG6CxX6EumLbGzHsSjYh3Bj5CkIzdYLctqtXWid6V4H48LwRcG8
-         PRyg==
+         :user-agent:mime-version;
+        bh=t9sKmfzL3OJ+EsJdvW8L08OyO2mITDYkcu8FKxB5RBA=;
+        b=L1k7PXMY+IWNDjaFRy6tjnPzbTOnA/2Yz0tWtXxqQH6V2QamQKaHCj9xpCykD/OoFo
+         pOBa1VSp9r0R4PCm5/7oCdCFj8/3+vo2nXgSpIDhO6h98GCvFiV0WXXksUd/3ljq7EmY
+         LrhYmov1TD60tSnY1PSolOdcy5OyGSn4xyonM3FTt4u75bxlSc++PEKusipUAwjle8Kf
+         f/bjy7fgD0Sn2Qrpv7scGi5cevasbX02/u1hLwwUyhHY9LMUAfRrJM9B/Rp8d0Voy1rQ
+         AJejW/9Ghi73PVk6meLCfeYKgFrYUus3+OtY/KEvojiRNkGiKSje7RqrluxpffTHlq9i
+         3KbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=0n0zj0GK8m5e9ReIF5+F1tea8ZKfHXxlyrEnlFdex6o=;
-        b=n23RGicY8P/dMf7lfxKwhKW8K7I2yo5aCKtipm8MS9kvbsxTKvdiGM0Ikf354Hc6n0
-         iU4te1ymNfhINxsU6EzNp6Gf1RiPAa8u1Mb89LaSna4F0zjomi495tb89sIQUaJvVFNH
-         IIdQgS82NroyjTGqnLoBjJRZExiCJN9lH34f/GfaUq7ED2OI3Stg5H29r/dGoeZDpJBB
-         iddeT4I0l1ShIejQsKrvmTmv5OzyNfMlGOiIpUskikh0lP2b92zVs5W/JNihCZLPgzQe
-         ASsVpfKoXY3BE0SsJqJyFDNRd8PRC/8SIcG3+y7FBG9NiFN1mnn/XFxDJ9zX/gtWFIuh
-         lVHg==
-X-Gm-Message-State: APt69E0Bs+cNhWX0qnJh/12JMM3Ga29q0ZQkSgAp67q6fHBC+amo3xYQ
-        YBCPAopwQdMecnc+xsNXWuQ=
-X-Google-Smtp-Source: AAOMgpcy3dqPqqoaJcU9ECTq9xI775Do1CvyGO2X4KnBMWEn74JokgrLzDT+95INDl3LJFwhYeiRRw==
-X-Received: by 2002:adf:e642:: with SMTP id b2-v6mr9180304wrn.254.1530897900175;
-        Fri, 06 Jul 2018 10:25:00 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=t9sKmfzL3OJ+EsJdvW8L08OyO2mITDYkcu8FKxB5RBA=;
+        b=geIoWVojKj+p6C1R2GIU9IzwXOI2IIk1L2YspLIeOZlhQAd2S5yX/VrwW+3MEjs5V+
+         NXdeE8owSSVcaEwE0cQoN2S33E2KazOW6WuDf3AXIz8hbzCvkDHc+ML3KNbP87fmXqkd
+         q+jAXwLEGRxEjgoZLfxy8BTB5HD9ztmGN6rwcbEPQ/UF4X79ivNjTXQBXKFERII89b3O
+         RDMwzUDZ1RmVD0lZrr4ky7LdAX1dpvOB9h+mGjoJZsOUpwxyu4DBvx/rxg6nOTBz3iXV
+         VSFOIVHuVpmN6aByrqyjqwlUmGkWBK58dUn1UZag4sqza2hDSWdqwa5pvtTyMGkmOcWo
+         4WOg==
+X-Gm-Message-State: APt69E09CPIEf7ahKO6EsMXQOtbyG5MqqKpgRHxXvZEatOt3XAmkWEvD
+        8SL467HueZfVAsuT8oodbaM=
+X-Google-Smtp-Source: AAOMgpe3VxV56lLgiS8Aeet6tAIfOwtU/Z9uT0jYOizENbbxN7lf5a6UwF893f8AAjqE3NUiN1LTcQ==
+X-Received: by 2002:a1c:8f0e:: with SMTP id r14-v6mr7611169wmd.79.1530899420454;
+        Fri, 06 Jul 2018 10:50:20 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id o8-v6sm15936619wro.68.2018.07.06.10.24.59
+        by smtp.gmail.com with ESMTPSA id o21-v6sm6710081wmg.28.2018.07.06.10.50.17
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 06 Jul 2018 10:24:59 -0700 (PDT)
+        Fri, 06 Jul 2018 10:50:18 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Henning Schild <henning.schild@siemens.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Ben Toews <mastahyeti@gmail.com>, Jeff King <peff@peff.net>,
-        Taylor Blau <me@ttaylorr.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 4/8] gpg-interface: introduce an abstraction for multiple gpg formats
-References: <cover.1530616446.git.henning.schild@siemens.com>
-        <db46732d1cd09a71200e00c2d09605d5beaff364.1530616446.git.henning.schild@siemens.com>
-        <CAN0heSrXpLCDRjnZC80QXBG27gd6m5reBn1hfNd_KXxnPVkA2g@mail.gmail.com>
-Date:   Fri, 06 Jul 2018 10:24:58 -0700
-In-Reply-To: <CAN0heSrXpLCDRjnZC80QXBG27gd6m5reBn1hfNd_KXxnPVkA2g@mail.gmail.com>
-        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Wed, 4 Jul 2018 09:10:17
- +0200")
-Message-ID: <xmqqa7r4mg45.fsf@gitster-ct.c.googlers.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org
+Subject: Re: ag/rebase-i-rewrite-todo, was Re: What's cooking in git.git (Jun 2018, #07; Thu, 28)
+References: <xmqqd0wawpwy.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1807031438240.75@tvgsbejvaqbjf.bet>
+Date:   Fri, 06 Jul 2018 10:50:17 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.1807031438240.75@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Tue, 3 Jul 2018 14:52:32 +0200 (DST)")
+Message-ID: <xmqq601smexy.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin Ågren <martin.agren@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->> +enum gpgformats { PGP_FMT };
->> +struct gpg_format_data gpg_formats[] = {
->> +       { .format = "PGP", .program = "gpg",
->> +         .extra_args_verify = { "--keyid-format=long", },
->> +         .sigs = { PGP_SIGNATURE, PGP_MESSAGE, },
->> +       },
->> +};
->
-> I think those trailing commas are ok now, but I'm not sure...
->
-> I had the same thought about designated initializers. Those should be ok
-> now, c.f. cbc0f81d96 (strbuf: use designated initializers in STRBUF_INIT,
-> 2017-07-10) and a73b3680c4 (Add and use generic name->id mapping code
-> for color slot parsing, 2018-05-26).
+> The latest iteration of this is here:
+> https://public-inbox.org/git/20180702105717.26386-5-alban.gruin@gmail.com/T/#r8eea71077745d6f2c839acb6200bb8b2bea579d3
 
-As you said, we dipped our toes in designated initializers in both
-struct and array, i.e. { .field = init }, { [offset] = init } last
-summer and we haven't got complaints from minor platforms so far.
+Good.  I think we have it in tree now.
 
-The "comma" thing you are wondering is something else.  The comma we
-see above is after the last element in an array's initializer (and
-the last element in a struct's initializer), which we have been
-happily using from very early days (and they are kosher ANSI C).
+> I would *strongly* encourage you to allow Alban to go back to the small,
+> incremental patch series he sent before, because it will make it
+> *substantially* easier to not only review, but also develop, and for you
+> to merge.
 
-What we've been avoiding was the comma after the last element in the
-enum (in other words, if PGP_FMT had ',' after it in the above
-quoted addition, that would have been violation of that rule), as
-having such a trailing comma used to be ANSI C violation as well.  I
-do not recall offhand if we loosened that deliberately.
+An organization in which you can make sure that the order of
+dependency and which ones have been updated since previous rounds
+are clear, even to those who are looking from the sidelines ("these
+4 patches are to replace patch 3, 7 and 8 from the previous round"
+is already hostile to late reviewers and doing so without a pointer
+to the archive is even worse---a full reroll with the unchanged ones
+marked below the three-dash lines would be perfect), would be good.
+A random collection of seemingly separate but actually
+interdependent topics is very hard to work with with limited mental
+bandwidth.
 
-4b05548f ("enums: omit trailing comma for portability", 2010-05-14),
-c9b6782a ("enums: omit trailing comma for portability", 2011-03-16)
+Once the core of _a_ topic hits 'next', we can go incremental
+(because by definition things get quiet and require small updates by
+then), but not before.
+
+I think the 7 patches in ag/rebase-i-in-c are more or less in good
+shape, modulo the issues pointed out on the list yet to be
+addressed, which I do not think require redesign.  Which is good.
+
+
+
