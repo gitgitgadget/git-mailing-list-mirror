@@ -7,79 +7,90 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 62F181F62D
-	for <e@80x24.org>; Fri,  6 Jul 2018 12:36:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 55C6F1F62D
+	for <e@80x24.org>; Fri,  6 Jul 2018 12:59:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932876AbeGFMge (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Jul 2018 08:36:34 -0400
-Received: from mout.gmx.net ([212.227.15.15]:52297 "EHLO mout.gmx.net"
+        id S932995AbeGFM7B (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Jul 2018 08:59:01 -0400
+Received: from mout.gmx.net ([212.227.17.22]:49853 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932648AbeGFMgd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Jul 2018 08:36:33 -0400
-Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LgYuT-1fwATn1O1V-00nyBF; Fri, 06
- Jul 2018 14:36:26 +0200
-Date:   Fri, 6 Jul 2018 14:36:10 +0200 (DST)
+        id S932870AbeGFM7A (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Jul 2018 08:59:00 -0400
+Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M3zG2-1gRjj62jo2-00rWHd; Fri, 06
+ Jul 2018 14:58:50 +0200
+Date:   Fri, 6 Jul 2018 14:58:32 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Pratik Karki <predatoramigo@gmail.com>
-cc:     git@vger.kernel.org, christian.couder@gmail.com,
-        sbeller@google.com, alban.gruin@gmail.com, gitster@pobox.com
-Subject: Re: [PATCH v3 2/4] rebase: refactor common shell functions into
- their own file
-In-Reply-To: <20180706120815.17851-3-predatoramigo@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1807061432100.75@tvgsbejvaqbjf.bet>
-References: <20180628074655.5756-1-predatoramigo@gmail.com> <20180706120815.17851-1-predatoramigo@gmail.com> <20180706120815.17851-3-predatoramigo@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org,
+        Stefan Beller <sbeller@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        phillip.wood@dunelm.org.uk
+Subject: Re: [GSoC][PATCH v2 6/7] rebase -i: rewrite setup_reflog_action()
+ in C
+In-Reply-To: <xmqq8t6soy2f.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1807061457250.75@tvgsbejvaqbjf.bet>
+References: <20180702105717.26386-1-alban.gruin@gmail.com> <20180702105717.26386-7-alban.gruin@gmail.com> <xmqq8t6soy2f.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Tb7k7X1J4zDSLV+JUr0h28wg+4/khdXOKPB4Gx0lK2xAkgetKau
- NIKyq5tpNZnM9xUErB4eMmTcuFV5Nad+leWkb5vJNMhsLOZSv/VsE8kc/ab1bElqGDGr2kr
- TuwZm9fGhgUG1VCP5uwYwzqFcTxnVSwZ+1eEOIsGFtn8KY8A1rcHxK+mHUgMPSOcXlMdSlC
- ttauJygGZpW4wHNFlW58Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:dUXK7iVJQzQ=:05jav9cwE6bfSVPuNnBkq+
- ZxXNVBwNFxKKVXEJeyX9mPG9kFhaapWaf+EOcJYgqeFaLS+/F74jUAX+EUaLlJcQ5+tdvrPTg
- MA8/JDCbtLlN8huyKPsoLxa8mXtq/o/KP1gxMMahbZGHGmWSkM6K2jZfrXAo3Pw2j8ScYqORP
- tX8g3xD87DOTnCrilzrMVkfkVgCFic0enHY+Q3rP3y9rV7dKY4KfmrH6pNv5HPTJD6vIbuJVR
- 0YijXY853jHBM89JZihvRNhQYMokgOguDCWKhGWX/jlUi3lkjZkKLZD6PJhQoQJwdDrUxTJ8q
- F8JQs0rk6w+dhtAuXoq20ItSfAsNldSnGXH7LJpPdPQyhkS2ONsgKc+IEFNidbx6NWw/DQF4Q
- e1rHXp1uSI4IJDsTvHoVHrm1HXXqXTjfjZ3sePgPDy7CJ1ld+z0I3p0Y+PzZNnxEGibJjoFB3
- RUNkXqoZJB0Z4/HvN0EF9Z34SIilW4orm1YvPLctHcj0/U9Yx9X7jc02W/1Dwf0KoD8vvLFxM
- Rjbnkp8R912tO1ud+fsGS24ysDdRlbtrRNcwkabrlOwgZ9b9mUpjkCQxPVoaxTLJY02JUsi7C
- kCWfZEtG59f0xk/ecefigpu5+Bhzf3T1KE/+S9qVF+u/72kh9w+SmY/IARCNRMIl1VDiRGkB4
- qfLIxfVrfNWbFASsVlf/w5kzJE9MH+tpoVbCPS1cZ+EOXs0EUo9bydIu6eCWJ8//AsYxrzUuO
- a11umtGiOwjGjd40RIsx2lxhCJ1csT/nOfCRJmyjRyH/Mk1vCZEfbJOURT6T8STJsPoLhD+QH
- oZSrSKr
+X-Provags-ID: V03:K1:5bDHAybAO/YvEFEitg6uFqA1wMw24vHvOv508Xgx5kpASPQj8a9
+ tKoab/uJyczUDRxJbcaab370hBhzrmpmc1GXKmxlgRu8RCoFTawnK1mi9JA4Z25b9TFsQNt
+ 25zta0xcdKl9Mg+x+sm0wQES1WpJozyptIh/mPEYQcVUsI2P2l/7rENsEJu+BP263TgUhey
+ D+w+Wmv6dlWA8xl6hwuPQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:mNwJehNNLM4=:5P/dJpNGmWPoYUScNpwdbl
+ cNlt5ZrSotjewkS7qn9UBibd5+MeUf9I9a4d5ETb0pR2cSRU2lKjE5uA7KHFdvrtOP+Smi2Dx
+ 2OfayIJSUGef0fs9O5GoF2hbK7yM0eOaawK7afUbPjHl4hD3B/oZhK8DR0iuW1oR3mepySO7G
+ id5It8A40DaGT1MK7KKrsEFPEO/NeS97eA9rR9v1pnewfv1sqZnQfIX4yvmnWrfrfLRBFQJy8
+ eGifVXKxSZWtrwlyIEghEzi65Xki/401UY1aKD4H09PyWZI6U9dbAVImovk2Y5UInd17KRKUz
+ RmN6QUo+pNA6E1xAlOKyuO1qugeGGC3+Sp9n6nWjR0IVdheIlz1bYjzZxgsj5+dbegURKDone
+ 6muMEM8qQJLjabbjPSOXCGl1TDGOaj/LDARUBT1CSdrenZVgjI3v1VPPpXo0S70Xm7HZJVQkx
+ +hZIsmTqr/A0C2f46Lx5irMIPA3XAhE6WKY7cuqwgrXlZaT4rE8DDdXFrWjEIDTFpWfywK4zn
+ H5YaD1LDHfp4+HRtLQEjRMVuzs6X4k0p25cXdcKV1lwRLDSZHULxskldtpPSJ7x+fhc/WV4ag
+ 1oPsV0vbl3GkmfD09dkoWREoeic6uzJU+ZxDU/wqGTgLsBAC45Erg9PbQWfUSylnRPmx8ecVs
+ XCHEwf3o2/dGsM2h+8bJ9zQoySfU5LZIUEVW21HkKU+QJbUoiaSrQYQSnomtrJAePiDO0+v3V
+ +lkajmBAHRCkzaxvpU3Sx/B6G4lZlrghoAK1nJUUMq3HzOCQpLNKKY2DUvBahWLW3mHk7a6p0
+ qFLBS8J
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Pratik,
+Hi Junio,
 
-On Fri, 6 Jul 2018, Pratik Karki wrote:
+On Tue, 3 Jul 2018, Junio C Hamano wrote:
 
-> The functions present in `git-legacy-rebase.sh` are used by the rebase
-> backends as they are implemented as shell script functions in the
-> `git-rebase--<backend>` files.
+> Alban Gruin <alban.gruin@gmail.com> writes:
 > 
-> To make the `builtin/rebase.c` work, we have to provide support via
-> a Unix shell script snippet that uses these functions and so, we
-> want to use the rebase backends *directly* from the builtin rebase
-> without going through `git-legacy-rebase.sh`.
+> > +static int run_git_checkout(struct replay_opts *opts, const char *commit,
+> > +				int verbose, const char *action)
+> > +{
+> > +	struct child_process cmd = CHILD_PROCESS_INIT;
+> > +
+> > +	cmd.git_cmd = 1;
+> > +
+> > +	argv_array_push(&cmd.args, "checkout");
+> > +	argv_array_push(&cmd.args, commit);
+> > +	argv_array_pushf(&cmd.env_array, GIT_REFLOG_ACTION "=%s", action);
+> > +
+> > +	if (verbose)
+> > +		return run_command(&cmd);
+> > +	return run_command_silent_on_success(&cmd);
 > 
-> This commit extracts the functions to a separate file,
-> `git-rebase--common`, that will be read by `git-legacy-rebase.sh` and
-> by the shell script snippets which will be used extensively in the
-> following commits.
+> I thought we made this into
+> 
+> 	if verbose
+> 		return run_command
+> 	else
+> 		return run_command_silently
+> 
+> to help readers in the previous round already.
 
-Good.
-
-While this seems to catch all the functions required by the backends, I am
-fairly certain that the `resolvemsg` variable is used exclusively by the
-backends, and it should therefore also moved into `git-rebase--common`.
-See my comments on your https://github.com/git/git/pull/505 for more
-details.
+FWIW we had quite a couple of reviews in the recent years which pointed
+out "unnecessary else" after returning or die()ing. Maybe we should make
+up our minds, and set a consistent rule to follow.
 
 Ciao,
 Dscho
