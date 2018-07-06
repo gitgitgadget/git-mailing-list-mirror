@@ -7,42 +7,42 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3AF21F62D
-	for <e@80x24.org>; Fri,  6 Jul 2018 02:24:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 918761F62D
+	for <e@80x24.org>; Fri,  6 Jul 2018 02:24:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753782AbeGFCYR (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Jul 2018 22:24:17 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:52430 "EHLO
+        id S1753779AbeGFCYQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Jul 2018 22:24:16 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:52420 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753703AbeGFCYO (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 5 Jul 2018 22:24:14 -0400
+        by vger.kernel.org with ESMTP id S1753560AbeGFCYN (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 5 Jul 2018 22:24:13 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:294b:af98:ff6d:ed6])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id AC54C60745;
-        Fri,  6 Jul 2018 02:24:12 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id DA10F60102;
+        Fri,  6 Jul 2018 02:24:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1530843853;
-        bh=ghB3i76YL5t2sxowsgxBOmoDu+Pp1VuIkbtCdM6CxOo=;
+        s=default; t=1530843852;
+        bh=qIFQHelP821Mv6TDQcgw7jK/xBI+yVHeNcJkNWvnmvY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=yWyKN3B4QkrVHwxfpkbay44Q9j+rHCACNRerD3ZdYzCCPPpAZ3LT7E0lMJZcDVOHa
-         r+Hxz+Ep0K6wN0KdtMDMm0qKZopHsbbF+bnV7kkp7/Jfw3SjDz55ybSk3jzRt0RqWb
-         441FesfgT/yCzRm1L5UwV1c1ag7FjuWF+veMETAKMZFJ4kLElYeX/wQDXSi5e+CRhU
-         JSPhznFWeX+vseg4OqFCP9B7WWg2SHAbMhghJA4gMSLIBuq6Sfba6oCk77hrB+MGs1
-         NoYQ8Ub7Lj23R7QPYBlmZJOPQVKnRwrtIqq3O+SBbSTZCbE6VpHtsM9c5iXmxUqI/l
-         3zquJgIJw1xQBUGKCL/GSi1qpPxruVrC2MtXTrtQxsKkXN9pXMfnc0jRKpKMt7hkvd
-         cngKdq/RiX4R0HUeMhGaoMwOo4he4R76nkBuEHka4rkT3572iUIQC2xVP5u3ufEm26
-         kZIWXsiluYV8xCaFvUNskd2ZdLGmD2c/sZXT61oWQAYOOXV0gkM
+        b=Y1m8co26LzlgNtStJv90NxdGx8PANpk1M6Vt1yFHrfuhNl5G40sJ0AJXD/1sJl1yb
+         QwPsfX0MwqtXyu6LMjzHnunZC866gg/DdeNCCPQfEQN93wc0dTZgzWrbXJ/eZBHQ8g
+         WJMXrgUISfBPLuZe4gbEc3jLxtBlFxkIO0W0zcUaBwG0t7nke3GQ88zGTqf4+88k1d
+         EQzJjaQSXkIkCHdoNWqdSdiErdE+kJ04W6DLz+iqkWpbqB8butfO98MCFOmYkOkaQQ
+         iIzqNwibv68UMyyhG1DD+kOVwrsRn2LxOk+ZuYi90BQgCNnJoUPLY196ACWZuA75dE
+         hboyIuLDg1Rm9NNUb0m6snf3sMHFclElNzccY5DSK5phwx0jfqxopyVLkgp5LEOKIF
+         C3+ac/IT08zl9i0D3aBLW9sdmsgYK7OGd0kFaxQ+8jUMevTBsWlvLsiNWMZaGzSgbV
+         V50rVN5VaNl7RrTfmRA42eG0Ff02z0tzyid7G8M48AHXavECbDC
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>,
         Junio C Hamano <gitster@pobox.com>,
         Drew DeVault <sir@cmpwn.com>
-Subject: [PATCH 3/3] send-email: automatically determine transfer-encoding
-Date:   Fri,  6 Jul 2018 02:23:57 +0000
-Message-Id: <20180706022357.739657-4-sandals@crustytoothpaste.net>
+Subject: [PATCH 2/3] send-email: accept long lines with suitable transfer encoding
+Date:   Fri,  6 Jul 2018 02:23:56 +0000
+Message-Id: <20180706022357.739657-3-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.18.0.132.g7d961b6d40
 In-Reply-To: <20180706022357.739657-1-sandals@crustytoothpaste.net>
 References: <20180706022357.739657-1-sandals@crustytoothpaste.net>
@@ -54,183 +54,90 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git send-email, when invoked without a --transfer-encoding option, sends
-8bit data without a MIME version or a transfer encoding.  This has
-several downsides.
-
-First, unless the transfer encoding is specified, it defaults to 7bit,
-meaning that non-ASCII data isn't allowed.  Second, if lines longer than
-998 bytes are used, we will send an message that is invalid according to
-RFC 5321.  The --validate option, which is the default, catches this
-issue, but it isn't clear to many people how to resolve this.
-
-To solve these issues, default the transfer encoding to "auto", so that
-we explicitly specify 8bit encoding when lines don't exceed 998 bytes
-and quoted-printable otherwise.  This means that we now always emit
-Content-Transfer-Encoding and MIME-Version headers, so remove the
-conditionals from this portion of the code.
-
-It is unlikely that the unconditional inclusion of these two headers
-will affect the deliverability of messages in anything but a positive
-way, since MIME is already widespread and well understood by most email
-programs.
+With --validate (which is the default), we warn about lines exceeding
+998 characters due to the limits specified in RFC 5321.  However, if
+we're using a suitable transfer encoding (quoted-printable or base64),
+we're guaranteed not to have lines exceeding 76 characters, so there's
+no need to fail in this case.  The auto transfer encoding handles this
+specific case, so accept it as well.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- Documentation/git-send-email.txt |  3 +--
- git-send-email.perl              | 18 ++++++------------
- t/t9001-send-email.sh            | 21 +++++++++++++++++++++
- 3 files changed, 28 insertions(+), 14 deletions(-)
+ Documentation/git-send-email.txt |  5 +++--
+ git-send-email.perl              |  8 ++++++--
+ t/t9001-send-email.sh            | 13 +++++++++++++
+ 3 files changed, 22 insertions(+), 4 deletions(-)
 
 diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index f44fb4b81e..1a240b52fc 100644
+index 385c7de9e2..f44fb4b81e 100644
 --- a/Documentation/git-send-email.txt
 +++ b/Documentation/git-send-email.txt
-@@ -147,8 +147,7 @@ Note that no attempts whatsoever are made to validate the encoding.
- 	otherwise.
+@@ -401,8 +401,9 @@ have been specified, in which case default to 'compose'.
  +
- Default is the value of the `sendemail.transferEncoding` configuration
--value; if that is unspecified, git will use 8bit and not add a
--Content-Transfer-Encoding header.
-+value; if that is unspecified, default to `auto`.
- 
- --xmailer::
- --no-xmailer::
+ --
+ 		*	Invoke the sendemail-validate hook if present (see linkgit:githooks[5]).
+-		*	Warn of patches that contain lines longer than 998 characters; this
+-			is due to SMTP limits as described by http://www.ietf.org/rfc/rfc2821.txt.
++		*	Warn of patches that contain lines longer than 998 characters unless
++			a suitable transfer encoding is used; this is due to SMTP limits as
++			described by http://www.ietf.org/rfc/rfc2821.txt.
+ --
+ +
+ Default is the value of `sendemail.validate`; if this is not set,
 diff --git a/git-send-email.perl b/git-send-email.perl
-index 4ea30c4070..c4fae17787 100755
+index a76953c310..4ea30c4070 100755
 --- a/git-send-email.perl
 +++ b/git-send-email.perl
-@@ -231,7 +231,7 @@ sub do_edit {
- my (@suppress_cc);
- my ($auto_8bit_encoding);
- my ($compose_encoding);
--my ($target_xfer_encoding);
-+my $target_xfer_encoding = 'auto';
- 
- my ($debug_net_smtp) = 0;		# Net::SMTP, see send_message()
- 
-@@ -1737,17 +1737,11 @@ sub process_file {
- 			}
+@@ -645,7 +645,7 @@ sub is_format_patch_arg {
+ if ($validate) {
+ 	foreach my $f (@files) {
+ 		unless (-p $f) {
+-			my $error = validate_patch($f);
++			my $error = validate_patch($f, $target_xfer_encoding);
+ 			$error and die sprintf(__("fatal: %s: %s\nwarning: no patches were sent\n"),
+ 						  $f, $error);
  		}
- 	}
--	if (defined $target_xfer_encoding) {
--		$xfer_encoding = '8bit' if not defined $xfer_encoding;
--		($message, $xfer_encoding) = apply_transfer_encoding(
--			$message, $xfer_encoding, $target_xfer_encoding);
--	}
--	if (defined $xfer_encoding) {
--		push @xh, "Content-Transfer-Encoding: $xfer_encoding";
--	}
--	if (defined $xfer_encoding or $has_content_type) {
--		unshift @xh, 'MIME-Version: 1.0' unless $has_mime_version;
--	}
-+	$xfer_encoding = '8bit' if not defined $xfer_encoding;
-+	($message, $xfer_encoding) = apply_transfer_encoding(
-+		$message, $xfer_encoding, $target_xfer_encoding);
-+	push @xh, "Content-Transfer-Encoding: $xfer_encoding";
-+	unshift @xh, 'MIME-Version: 1.0' unless $has_mime_version;
+@@ -1879,7 +1879,7 @@ sub unique_email_list {
+ }
  
- 	$needs_confirm = (
- 		$confirm eq "always" or
+ sub validate_patch {
+-	my $fn = shift;
++	my ($fn, $xfer_encoding) = @_;
+ 
+ 	if ($repo) {
+ 		my $validate_hook = catfile(catdir($repo->repo_path(), 'hooks'),
+@@ -1899,6 +1899,10 @@ sub validate_patch {
+ 		return $hook_error if $hook_error;
+ 	}
+ 
++	# Any long lines will be automatically fixed if we use a suitable transfer
++	# encoding.
++	return if $xfer_encoding =~ /^(?:auto|quoted-printable|base64)$/;
++
+ 	open(my $fh, '<', $fn)
+ 		or die sprintf(__("unable to open %s: %s\n"), $fn, $!);
+ 	while (my $line = <$fh>) {
 diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 6a0ace386b..7edce50e65 100755
+index 6cdcbcb19e..6a0ace386b 100755
 --- a/t/t9001-send-email.sh
 +++ b/t/t9001-send-email.sh
-@@ -225,6 +225,8 @@ X-Mailer: X-MAILER-STRING
- In-Reply-To: <unique-message-id@example.com>
- References: <unique-message-id@example.com>
- Reply-To: Reply <reply@example.com>
-+MIME-Version: 1.0
-+Content-Transfer-Encoding: 8bit
+@@ -480,6 +480,19 @@ test_expect_success $PREREQ 'long lines with auto encoding are quoted-printable'
+ 	grep "Content-Transfer-Encoding: quoted-printable" msgtxt1
+ '
  
- Result: OK
- EOF
-@@ -415,6 +417,7 @@ test_expect_success $PREREQ 'reject long lines' '
- 		--from="Example <nobody@example.com>" \
- 		--to=nobody@example.com \
- 		--smtp-server="$(pwd)/fake.sendmail" \
-+		--transfer-encoding=8bit \
- 		$patches longline.patch \
- 		2>errors &&
- 	grep longline.patch errors
-@@ -610,6 +613,8 @@ Subject: [PATCH 1/1] Second.
- Date: DATE-STRING
- Message-Id: MESSAGE-ID-STRING
- X-Mailer: X-MAILER-STRING
-+MIME-Version: 1.0
-+Content-Transfer-Encoding: 8bit
- 
- Result: OK
- EOF
-@@ -654,6 +659,8 @@ Subject: [PATCH 1/1] Second.
- Date: DATE-STRING
- Message-Id: MESSAGE-ID-STRING
- X-Mailer: X-MAILER-STRING
-+MIME-Version: 1.0
-+Content-Transfer-Encoding: 8bit
- 
- Result: OK
- EOF
-@@ -689,6 +696,8 @@ Subject: [PATCH 1/1] Second.
- Date: DATE-STRING
- Message-Id: MESSAGE-ID-STRING
- X-Mailer: X-MAILER-STRING
-+MIME-Version: 1.0
-+Content-Transfer-Encoding: 8bit
- 
- Result: OK
- EOF
-@@ -715,6 +724,8 @@ Subject: [PATCH 1/1] Second.
- Date: DATE-STRING
- Message-Id: MESSAGE-ID-STRING
- X-Mailer: X-MAILER-STRING
-+MIME-Version: 1.0
-+Content-Transfer-Encoding: 8bit
- 
- Result: OK
- EOF
-@@ -749,6 +760,8 @@ Subject: [PATCH 1/1] Second.
- Date: DATE-STRING
- Message-Id: MESSAGE-ID-STRING
- X-Mailer: X-MAILER-STRING
-+MIME-Version: 1.0
-+Content-Transfer-Encoding: 8bit
- 
- Result: OK
- EOF
-@@ -780,6 +793,8 @@ Subject: [PATCH 1/1] Second.
- Date: DATE-STRING
- Message-Id: MESSAGE-ID-STRING
- X-Mailer: X-MAILER-STRING
-+MIME-Version: 1.0
-+Content-Transfer-Encoding: 8bit
- 
- Result: OK
- EOF
-@@ -811,6 +826,8 @@ Subject: [PATCH 1/1] Second.
- Date: DATE-STRING
- Message-Id: MESSAGE-ID-STRING
- X-Mailer: X-MAILER-STRING
-+MIME-Version: 1.0
-+Content-Transfer-Encoding: 8bit
- 
- Result: OK
- EOF
-@@ -846,6 +863,8 @@ Subject: [PATCH 1/1] Second.
- Date: DATE-STRING
- Message-Id: MESSAGE-ID-STRING
- X-Mailer: X-MAILER-STRING
-+MIME-Version: 1.0
-+Content-Transfer-Encoding: 8bit
- 
- Result: OK
- EOF
-@@ -874,6 +893,8 @@ Subject: [PATCH 1/1] Second.
- Date: DATE-STRING
- Message-Id: MESSAGE-ID-STRING
- X-Mailer: X-MAILER-STRING
-+MIME-Version: 1.0
-+Content-Transfer-Encoding: 8bit
- 
- Result: OK
- EOF
++test_expect_success $PREREQ '--validate passes with certain encodings' '
++	for enc in auto quoted-printable base64
++	do
++		git send-email \
++			--from="Example <nobody@example.com>" \
++			--to=nobody@example.com \
++			--smtp-server="$(pwd)/fake.sendmail" \
++			--transfer-encoding=$enc \
++			--validate \
++			$patches longline.patch
++	done
++'
++
+ test_expect_success $PREREQ 'Invalid In-Reply-To' '
+ 	clean_fake_sendmail &&
+ 	git send-email \
