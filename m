@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D3A031F62D
-	for <e@80x24.org>; Fri,  6 Jul 2018 00:54:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A25E1F62D
+	for <e@80x24.org>; Fri,  6 Jul 2018 00:54:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753992AbeGFAyS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Jul 2018 20:54:18 -0400
-Received: from mail-qt0-f193.google.com ([209.85.216.193]:46462 "EHLO
-        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753966AbeGFAyI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Jul 2018 20:54:08 -0400
-Received: by mail-qt0-f193.google.com with SMTP id h5-v6so8702219qtm.13
-        for <git@vger.kernel.org>; Thu, 05 Jul 2018 17:54:07 -0700 (PDT)
+        id S1753990AbeGFAyR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Jul 2018 20:54:17 -0400
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:39758 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753592AbeGFAyJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Jul 2018 20:54:09 -0400
+Received: by mail-qk0-f196.google.com with SMTP id b5-v6so3505114qkg.6
+        for <git@vger.kernel.org>; Thu, 05 Jul 2018 17:54:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=7QrX80NkK7qSrQnM10xlJagNOI523/RXVGm2aeTrajE=;
-        b=gkVziuakXaMybMVZM+kAbc/RD7WqMDl0ZFqNBks9RtcCipETS94edqOu5qcnd7b+Ew
-         QSTnsr++3nrKnNy5G0h9lCTmA0dWqo6q/tBcn4LihDEBa7diAyNHk9MVOwVafcUHVsk9
-         tyTxwtW87GAZOCuvVVQgxm5ooOTMo3Qn99i7EiD/hGYij9wuPdMrXJ1XN9zb73hpXwVq
-         v5c4yUiFz5HtQIyxwAApk13vyPxM+UDUyFxe4f1moIqRWSRW8l/OX/CMZ9VFJ8ojers3
-         s8eChsp98xoPy0EpdAZMYV+Cs+6dBPOYKAsQIisTp+t7QHK2ajmId0lY2HWUNM5E32A0
-         yR7Q==
+        bh=TC24dwZrssf6gOi4GW6mZX8vOQ3INDg8q+FCzwt/sl0=;
+        b=t2sQv9dLpehZLP8wWLnYVRNx0MrH23O1VOjJmq3Az4iDH3ewBMVJ0S76E/SFPIxHYD
+         nDntErFuZsMTqQDT8KP9nMDnF1aVu9FNvJLcOEXY3W9Pb7KwXEx+8Boo5y7GbFNYb2eF
+         XHuD/JtyCrmrsWv+DdeFwnP6xsEQUiv/1miKSlsDq6r2q+Z8HmBXeFknou8Bixn3cNdS
+         jR6bR8kVdbaTAFQfw7zplp9rZzdCz6bgyGKV9/hPej7XU8o9+hfq3JfZEWKBrOLagqNV
+         2mgSfmPHQMddXcEeemb8Zm1W+DlTN5wY5m1x1w3TRUV5Eo8qEQRU6gStJVM/UcjKUimL
+         t5MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=7QrX80NkK7qSrQnM10xlJagNOI523/RXVGm2aeTrajE=;
-        b=fequoiataxuCso/1Yy7EMGQH/c5GNsdxYZXvxpSK1INnEJ5oE8Ob0D2kmQBKjFUHrD
-         Fs2bCCjPtjbtFaP97kr2/RO9UkXzS78k6dGL7rZ8oS+MWP2En5N2VOWdJ5avi+g1uVKI
-         SRWhc7JiJzMvsU2pu5mJkO60wFzYewkM2K7v+Vp7DFxKybBY9XdxEAarhHUwzhcnr1L/
-         b0ppK4iNa55Dnun/4D43cACq15Ss4KIWn78t+8779Jk40L+FyRLPk+gd0rOKgdWqaork
-         H4e7lCPpdB/qHckbbVCRXfYoIVAfXCkd+E8A3Vlbcoigzw6Ouq8m47AE32tjFnbUf0AR
-         ktpQ==
-X-Gm-Message-State: APt69E2ZBbLtVuG04Nkk2KlV0NB/ocqhZrZDiK21EYDk5Y9FUdycx5D7
-        NoCYC/yHT7IQ7KFU021QPFhUrcuO
-X-Google-Smtp-Source: AAOMgpe/TqCPMPJP6A86UtdYzalIkGyMvnM9V/Jz4LPF/oCJ5ryjpLnyZzxLeoEMgzBU8G3zfUKSaA==
-X-Received: by 2002:a0c:e792:: with SMTP id x18-v6mr7093482qvn.3.1530838447096;
-        Thu, 05 Jul 2018 17:54:07 -0700 (PDT)
+        bh=TC24dwZrssf6gOi4GW6mZX8vOQ3INDg8q+FCzwt/sl0=;
+        b=EgKEJT/Rodivc4vke/PAEGGjfHvzYozPalSLchzxo3I/zGOHLMoaLjvEoQphpO3KcU
+         tc+FhGO4FR6Q2btrB3JXNY43ibcIsrfBEiZ3CGMbtnI/fKC/KlIe6GM7U0tQAmiUQcsy
+         plITR9yJGmEm5oQvToKkoxPDY3QRCadyB30b2ty/cOAogBoOAShrSktehiSJ67BM5VG0
+         o9fd4WwkAk4h4njIMIw7kjJdkWCqqFmZbzCeflZYgst6pJyRcKD0AP0d747Pfk0BJhjV
+         VswJq6nSKdiXbb9Uo3DkM7i1/3n8wsTVh+WpH0ibNsaoz+qoKUjR3mVBOoJNoiYkA1Cw
+         riqw==
+X-Gm-Message-State: APt69E2nE9tswvrOJeYx2tCZNyHkZNbFBd1k6bjkObNFMv3S5FxkJYr0
+        U763bM2mjdmjlXivgn0hbX0U9toR
+X-Google-Smtp-Source: AAOMgpdSGyk+nJrvpBEkLSnN/SvgcsSPvpq007NPnfJSIGk6ZCvuEljfCnzZ/X6h2GFwU9dCnEcRGw==
+X-Received: by 2002:ae9:c002:: with SMTP id u2-v6mr6875892qkk.391.1530838448884;
+        Thu, 05 Jul 2018 17:54:08 -0700 (PDT)
 Received: from stolee-linux-2.corp.microsoft.com ([2001:4898:8010:0:eb4a:5dff:fe0f:730f])
-        by smtp.gmail.com with ESMTPSA id u25-v6sm4882791qku.3.2018.07.05.17.54.06
+        by smtp.gmail.com with ESMTPSA id u25-v6sm4882791qku.3.2018.07.05.17.54.07
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 05 Jul 2018 17:54:06 -0700 (PDT)
+        Thu, 05 Jul 2018 17:54:08 -0700 (PDT)
 From:   Derrick Stolee <stolee@gmail.com>
 X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, sbeller@google.com, pclouds@gmail.com,
         avarab@gmail.com, dstolee@microsoft.com
-Subject: [PATCH v3 21/24] midx: use midx in approximate_object_count
-Date:   Thu,  5 Jul 2018 20:53:18 -0400
-Message-Id: <20180706005321.124643-22-dstolee@microsoft.com>
+Subject: [PATCH v3 22/24] midx: prevent duplicate packfile loads
+Date:   Thu,  5 Jul 2018 20:53:19 -0400
+Message-Id: <20180706005321.124643-23-dstolee@microsoft.com>
 X-Mailer: git-send-email 2.18.0.118.gd4f65b8d14
 In-Reply-To: <20180706005321.124643-1-dstolee@microsoft.com>
 References: <20180625143434.89044-1-dstolee@microsoft.com>
@@ -65,29 +65,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The multi-pack-index, when present, tracks the existence of objects and
+their offsets within a list of packfiles. This allows us to use the
+multi-pack-index for object lookups, abbreviations, and object counts.
+
+When the multi-pack-index tracks a packfile, then we do not need to add
+that packfile to the packed_git linked list or the MRU list.
+
+We still need to load the packfiles that are not tracked by the
+multi-pack-index.
+
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- packfile.c | 3 +++
- 1 file changed, 3 insertions(+)
+ packfile.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/packfile.c b/packfile.c
-index c0eb5ac885..97e7812b6b 100644
+index 97e7812b6b..2c819a0ad8 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -861,10 +861,13 @@ unsigned long approximate_object_count(void)
- {
- 	if (!the_repository->objects->approximate_object_count_valid) {
- 		unsigned long count;
-+		struct multi_pack_index *m;
- 		struct packed_git *p;
+@@ -795,6 +795,7 @@ struct prepare_pack_data {
+ 	struct repository *r;
+ 	struct string_list *garbage;
+ 	int local;
++	struct multi_pack_index *m;
+ };
  
- 		prepare_packed_git(the_repository);
- 		count = 0;
-+		for (m = get_multi_pack_index(the_repository); m; m = m->next)
-+			count += m->num_objects;
- 		for (p = the_repository->objects->packed_git; p; p = p->next) {
- 			if (open_pack_index(p))
- 				continue;
+ static void prepare_pack(const char *full_name, size_t full_name_len,
+@@ -805,6 +806,8 @@ static void prepare_pack(const char *full_name, size_t full_name_len,
+ 	size_t base_len = full_name_len;
+ 
+ 	if (strip_suffix_mem(full_name, &base_len, ".idx")) {
++		if (data->m && midx_contains_pack(data->m, file_name))
++			return;
+ 		/* Don't reopen a pack we already have. */
+ 		for (p = data->r->objects->packed_git; p; p = p->next) {
+ 			size_t len;
+@@ -839,6 +842,12 @@ static void prepare_packed_git_one(struct repository *r, char *objdir, int local
+ 	struct prepare_pack_data data;
+ 	struct string_list garbage = STRING_LIST_INIT_DUP;
+ 
++	data.m = r->objects->multi_pack_index;
++
++	/* look for the multi-pack-index for this object directory */
++	while (data.m && strcmp(data.m->object_dir, objdir))
++		data.m = data.m->next;
++
+ 	data.r = r;
+ 	data.garbage = &garbage;
+ 	data.local = local;
 -- 
 2.18.0.118.gd4f65b8d14
 
