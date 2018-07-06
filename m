@@ -2,133 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BEFE31F62D
-	for <e@80x24.org>; Fri,  6 Jul 2018 20:34:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B6A51F62D
+	for <e@80x24.org>; Fri,  6 Jul 2018 20:34:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934181AbeGFUeU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Jul 2018 16:34:20 -0400
-Received: from mout.gmx.net ([212.227.17.21]:60439 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932884AbeGFUeT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Jul 2018 16:34:19 -0400
-Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Ls8Qd-1gFFco2wTH-013yEc; Fri, 06
- Jul 2018 22:34:13 +0200
-Date:   Fri, 6 Jul 2018 22:33:56 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Tiago Botelho <tiagonbotelho@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>,
-        Tiago Botelho <tiagonbotelho@hotmail.com>
-Subject: Re: [RFC PATCH v5] Implement --first-parent for git rev-list
- --bisect
-In-Reply-To: <xmqqwou8kz9b.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1807062123280.75@tvgsbejvaqbjf.bet>
-References: <20180622123945.68852-1-tiagonbotelho@hotmail.com> <xmqq4lhqpy80.fsf@gitster-ct.c.googlers.com> <CAP8UFD3oEjW75qsk4d_wqo2V8PmzMvZLshutw20CD7AU4b4ocg@mail.gmail.com> <nycvar.QRO.7.76.6.1806261540340.21419@tvgsbejvaqbjf.bet>
- <CAP8UFD1TeC4czp_8HCRw5CtjGO78A8gRezw_xspnm4MXuhQswg@mail.gmail.com> <xmqqa7rhi40f.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1806271254210.21419@tvgsbejvaqbjf.bet> <xmqqwoukgpr9.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1806281505160.73@tvgsbejvaqbjf.bet>
- <xmqqvaa2yjo1.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1806291317150.74@tvgsbejvaqbjf.bet> <CAADF+x3jd5G9+SP3UmhwqrR_T6BuD0PkQJ3x+NLpq2BJ_Ej-Sw@mail.gmail.com> <xmqq36x0ndza.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1807041224460.75@tvgsbejvaqbjf.bet>
- <xmqqwou8kz9b.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S933891AbeGFUe5 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Jul 2018 16:34:57 -0400
+Received: from mail-wr1-f46.google.com ([209.85.221.46]:34343 "EHLO
+        mail-wr1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932884AbeGFUe4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Jul 2018 16:34:56 -0400
+Received: by mail-wr1-f46.google.com with SMTP id c13-v6so5233578wrt.1
+        for <git@vger.kernel.org>; Fri, 06 Jul 2018 13:34:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=HDYW5jYAYD6GaGY95ECe4RKoWecCJ5AOoOqoqLOn4j8=;
+        b=tEeIKDmJSrPVRKNbyc/elnnSCrZcqOkLZ8ksIScXw4Nrq/SphVcO0n0RLvH9GGqdxP
+         24d8b+MjZSipluxmLulHTJJAxeQi1u9I1uz2EQXWg+4MQMeRkeXqMyErzpByVHf+rwjx
+         KRmX60sh7DSpYABdQfTeizkGk6Jyt63T4ESiqo8TlFEGRcm2Uqaez32rYtHQUwQFOydp
+         ZYehK9g+0vhNLAN+HCEbxO8UWd/f+1qMRFDCP3ZQhe3Xrp8JYeKKcGMBK6bFE2OwRlgw
+         sZSTF3ggIEON18R7BLRdET3dsqXbYyWvsjxh8P6Qf0yq3RCMhXDb8NRzH6s79LV6L+4e
+         SqZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=HDYW5jYAYD6GaGY95ECe4RKoWecCJ5AOoOqoqLOn4j8=;
+        b=TdhSgRFTR/5LLTtcY6afIg7S8ela+VPaeO5ibeh7po9nKdGmM98C7mPLT/1ek8+HsG
+         Pu7FMapctNHf9xjtZ002oh5ej+LWIOP0i0LWSm3H8ZVZ5AyB1RkVWTvM8eRUkCmvHHcw
+         3pG0qzTV2h54odz49sJlI5IokMz+Zb5W7YZEce2mdMJ/nyNGSBH0tBOmLAP9ySjp4Jng
+         wPKjqffvK4hPOF2lKI820GeL+O9lJPI1x6hDZIYEt03AQYmfNo2n4S6tbuFOGytTLswj
+         490s7yjlPtnf3/iH+iaQMqx0LxB1SWkMiiwtQ0iLkEh82aCafxi0TRY7bJcy2tbxPXT9
+         mydg==
+X-Gm-Message-State: APt69E0LtKQQjr97vDuGlORHAdiVjXB978eX1bpXHezeQ6fLZ1zxpepT
+        ytW7vF+8mb5lSr/01RyGKGs=
+X-Google-Smtp-Source: AAOMgpffvLX5SjN+py2ehjWfpC8wYkc+90NH3jbOISfmBLR6vPiCd4kzbJA5BOG6qbd08aYra1byBg==
+X-Received: by 2002:adf:8877:: with SMTP id e52-v6mr9210576wre.30.1530909294630;
+        Fri, 06 Jul 2018 13:34:54 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id v15-v6sm7921432wrq.37.2018.07.06.13.34.53
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 06 Jul 2018 13:34:53 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Henning Schild <henning.schild@siemens.com>
+Cc:     git@vger.kernel.org, Ben Toews <mastahyeti@gmail.com>,
+        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 7/8] gpg-interface: introduce new signature format "X509" using gpgsm
+References: <cover.1530616446.git.henning.schild@siemens.com>
+        <cover.1530616446.git.henning.schild@siemens.com>
+        <1f99ef66bc5e115ec06a3c456658ad54ce405ce3.1530616446.git.henning.schild@siemens.com>
+Date:   Fri, 06 Jul 2018 13:34:53 -0700
+In-Reply-To: <1f99ef66bc5e115ec06a3c456658ad54ce405ce3.1530616446.git.henning.schild@siemens.com>
+        (Henning Schild's message of "Tue, 3 Jul 2018 14:38:19 +0200")
+Message-ID: <xmqq7em8je6q.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:qxl//GWPrPaZeypdhTBR1PoO79dMECRhmr8n/iHRk0kfXPWQOmt
- L4TXO/10v+ThjCXGSXDV2GYKsUHQMEfgmdEq7YsP4Leexr4qy9SS9DC8LYeRFqC4kHN0F7w
- gT7Lh+k5Dbgm1Lv4KBJdgI2F0a+TUZPw6AYy8eK6+321wfG6u3HQiVFCqsBNQRnE7Yil7qy
- TmcPN98Xc68CAKgAAdyhw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Xw4sfH/QLOE=:qIVrp8RNVGriRKAch71yUe
- VzFWpLp9YdMPhem9Wu5OtZOII22q4HrKAjA1evoVGUEPRCzTwNqJ/BmYOgyYP8F+aFB5yB2Z9
- cic8ps42olt0XNvS0LSCTXTkeTnM5LeGkpWKD/IvQzMjA2UvJtSnXNrB4ObSvQDEYxrsOPeV3
- ZACST+VqgHfZP4QJEUQvBqO8QcAmHAhzsCXv4P02aDZg5LSr6ECjheKQR/ZK6stLQHLCB7RlT
- raUdhdemZna/itMHKkxIgTJgHDhhZv0LWoAwxvMiFBT+Qc+ORbC42qHw+JtSo7sblO8t+7e3b
- 7J7Hq1Lj8EqIjreXfYsPGnCkso5rdetqrxVxd2l8mkVMCGx/HwL6lKAwcmUJqz+cYCGvgGWQX
- Lr9hzj0JFBOA/4welevtNEt5MX5ti7OY/iU7Po55h37WJlfA6wS8A/YAIqinm5milTX4kMBjj
- 05HV6TBm1iDkurd+6lJS/vWM8O8lpBHD4EvCeYIfJtjguQttj2jYkWzWir9NCFHGtaCVQ2FZE
- mesFnyHFk16HKNzulakzGdpBG03Rc8KjeoN5UWM86jWei3q5JVWNrLW7yksdP8BHtazU2G1p9
- vpI0tdXIA6eyVOmZj7uznedDqXZiR9pDQrjEZ75ZWkBr45Gbd4LYPw2qZvyUnKg4Evze+bYT0
- f4bCIseM7mwXWiPfIa/i6HPepuMMTB2MRgrZssuQaIBNfsAhFOcgQQhykC92dzsx2pDgqYfpV
- ai/Lu297cC8qrb2M2o2oBxniFh4ue6bktvz8KBaSpMieyMc1L1ia2lXhFeb3Vj230oDqhg1Sa
- W1/jNlv
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Henning Schild <henning.schild@siemens.com> writes:
 
-On Fri, 6 Jul 2018, Junio C Hamano wrote:
+> -enum gpgformats { PGP_FMT };
+> +enum gpgformats { PGP_FMT, X509_FMT };
+>  struct gpg_format_data gpg_formats[] = {
+>  	{ .format = "PGP", .program = "gpg",
+>  	  .extra_args_verify = { "--keyid-format=long", },
+>  	  .sigs = { PGP_SIGNATURE, PGP_MESSAGE, },
+>  	},
+> +	{ .format = "X509", .program = "gpgsm",
+> +	  .extra_args_verify = { NULL },
+> +	  .sigs = {X509_SIGNATURE, NULL, }
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> >> > git rev-list --first-parent --bisect-all F..E >revs &&
-> >> > test_line_count = 9 revs &&
-> >> > for rev in E e1 e2 e3 e4 e5 e6 e7 e8
-> >> > do
-> >> >   grep "^$(git rev-parse $rev) " revs ||
-> >> >   {
-> >> >     echo "$rev not shown" >&2 &&
-> >> >     return 1
-> >> >   }
-> >> > done &&
-> >> > sed -e "s/.*(dist=\([0-9]*\)).*/\1/" revs >actual.dists &&
-> >> > sort -r actual.dists >actual.dists.sorted &&
-> >> > test_cmp actual.dists.sorted actual.dists
-> >> 
-> > From my point of view, this indicates that you want to set those exact
-> > dist values in stone.
-> 
-> As I already said, I do not think it is absolutely necessary to
-> declare that the minimum dist is 0 or 1, or how big one step of dist
-> is.  For those reading from the sidelines, the history we are
-> testing this new feature over looks like this
-> 
-> #     E		dist=0
-> #    / \
-> #   e1  |	dist=1
-> #   |   |
-> #   e2  |	dist=2
-> #   |   |       ...
-> #   |   |       ...
-> #   e7  |	dist=2
-> #   |   |
-> #   e8  |	dist=1
-> #    \ /
-> #     F		dist=0
-> 
-> Current code will say dist=0 for E and F, dist=1 for e1 and e8,
-> etc., and I am fine if the code suddenly start saying that E and F
-> (i.e. those at the boundary of the graph) have dist=1 and one hop
-> weighs 10 so dist=11 for e1 and e8 (i.e. those at one hop from the
-> boundary).
-> 
-> But I am not fine if E and F get larger dist than e1 and e8, or e1
-> and e8 get different ones.  I do not think the code quoted upfront
-> would catch such future breakages.
-> 
-> And I also do not see a reason why somebody wants to make the dist
-> computation to be 1-based (iow, changing the minimum from 0 to 1) or
-> one step not to be 1 (iow, giving 11 to e1 and e8), so while I agree
-> it is not strictly necessary to cast the concrete distance value in
-> stone, I do not see much harm doing so *if* it helps to make it
-> simpler the test that is necessary to make sure relative dist values
-> assigned to these commits are in correct order.
+Missing SP between "{X" is a bit irritating.
 
-I guess that you still want to misunderstand me.
+Also the trailing comma (the issue is shared with the PGP side) when
+the initializer is smashed on a single line feels pretty much
+pointless.  If it were multi-line, then such a trailing comma would 
+help future developers to add a new entry, i.e.
 
-Because it is not really hard to understand what I said: a good regression
-test will verify precisely what you want to ensure, not precisely what the
-command's output is.
+	 .sigs = { 
+	 	PGP_SIGNATURE,
+	 	PGP_MESSAGE,
+	+	PGP_SOMETHING_NEW,
+	 }
 
-So in this case, quite obviously what you want to do is to verify that E
-and F get larger dist than e1 and e8. So that is what you test for. Not
-some fixed text that might require adjusting in the future for any other
-reason than a real bug.
+without touching the last existing entry.  But on a single line?
 
-Ciao,
-Dscho
+	-.sigs = { PGP_SIGNATURE, PGP_MESSAGE }
+	+.sigs = { PGP_SIGNATURE, PGP_MESSAGE, PGP_SOMETHING_NEW }
+
+is probably prettier without such a trailing comma.
+
+> @@ -190,6 +195,9 @@ int git_gpg_config(const char *var, const char *value, void *cb)
+>  	if (!strcmp(var, "gpg.program"))
+>  		return git_config_string(&gpg_formats[PGP_FMT].program, var,
+>  					 value);
+> +	if (!strcmp(var, "gpg.programX509"))
+> +		return git_config_string(&gpg_formats[X509_FMT].program, var,
+> +					 value);
+
+This is a git_config() callback, isn't it?  A two-level variable
+name is given to a callback after downcasing, so nothing will match
+"gpg.programX509", I suspect.  I see Brian already commented on the
+name and the better organization being
+
+ - gpg.format defines 'openpgp' or whatever other values;
+ - gpg.<format>.program defines the actual program
+
+where <format> is the value gpg.format would take
+(e.g. "gpg.openpgp.program = gnupg").  And I agree with these
+suggestions.
+
+
+
