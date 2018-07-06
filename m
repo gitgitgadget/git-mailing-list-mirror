@@ -2,105 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 843031F62D
-	for <e@80x24.org>; Fri,  6 Jul 2018 19:22:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 48BB21F62D
+	for <e@80x24.org>; Fri,  6 Jul 2018 19:24:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934650AbeGFTV6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Jul 2018 15:21:58 -0400
-Received: from mout.gmx.net ([212.227.17.20]:38415 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S934389AbeGFTV5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Jul 2018 15:21:57 -0400
-Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lz0aC-1gExmZ1bpA-014Dz0; Fri, 06
- Jul 2018 21:21:51 +0200
-Date:   Fri, 6 Jul 2018 21:21:35 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org
-Subject: Re: ag/rebase-i-rewrite-todo, was Re: What's cooking in git.git (Jun
- 2018, #07; Thu, 28)
-In-Reply-To: <xmqq601smexy.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1807062117170.75@tvgsbejvaqbjf.bet>
-References: <xmqqd0wawpwy.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1807031438240.75@tvgsbejvaqbjf.bet> <xmqq601smexy.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S934750AbeGFTYp (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Jul 2018 15:24:45 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:38225 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934493AbeGFTYo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Jul 2018 15:24:44 -0400
+Received: by mail-wr1-f65.google.com with SMTP id j33-v6so5141006wrj.5
+        for <git@vger.kernel.org>; Fri, 06 Jul 2018 12:24:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=kbJu8WIldo1s9QGBUJQ5H5xB5kjijmjpoJ+9c3AZUNM=;
+        b=lsvowSA32vCiCypNHxTnQqfKY+F2pNoLTONXc8qZ+20aHJ1OBVGF84/LKWoXzOpGG7
+         k0RNQujDHj3iajroVD9a5K45ug6YBsWPfTXq6AfX2rVRsrA6b+izwyZ6rSWPWuSEPQVD
+         xvOdVDEogem/O2AUsUzIau7BP70r/7r6fK7XOdz0AbC0CmE7jm4US2FbNKDZcAxSl59/
+         Jv0velrWVy4r5yZ6k+zMAUlcL4ozcQQHlZUL7StLcOJBIJTGGn2TZhzI0mb7lyRQgU5y
+         QXlaWLc9CJKkDFL8uV7nY26CQQ9ShziMTRtlbgd7bTxWRNoMU3rThbyBjRst3vOvFD2g
+         SyYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=kbJu8WIldo1s9QGBUJQ5H5xB5kjijmjpoJ+9c3AZUNM=;
+        b=aoUMRH6TokHgpbxE1o9NrJF7cxfFWdN+0MpDgBjYoSlvKo9IYJ94vYSJkiCwoclUSC
+         YCYiF7aTaE+Q6EcyLCmgxeOkVzgMNggRE4DilhU19rfN0NDfGLZxet+0mbtcn+VAAYFE
+         bFMGa83pbKN11mZ3jEHyjJlnaTspXwR8tTG02ZWQoxHYLnmx2ONBg3b86xwAZTfRz+D7
+         lAnzN0XZfoUZPs6WqdLrSyHjqJ9Pph5Th2e6rlOfQR36uWKK5ZKKdBxizPv7Dl64oTHl
+         es9RiGnXu2mdUzQHubcRPdz1iCL9sR76yOKgrjpJymg5m9kGZ1F2jrgruxJOqpfRhove
+         759g==
+X-Gm-Message-State: APt69E1OonYwEJ/Mnsa/SkJVTqnIIkqD+6ByRBashO0e1NNfhQ4U5s64
+        dn+tXulhAhc49Fy4Csb319Q=
+X-Google-Smtp-Source: AAOMgpceI5K9E1C+JZp0Qjym4g6ovtVo8TSgunGXopceiTTqKqNYilSLCpM7999b43CfOKMeHu2k5w==
+X-Received: by 2002:adf:9063:: with SMTP id h90-v6mr8922377wrh.147.1530905082943;
+        Fri, 06 Jul 2018 12:24:42 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id t140-v6sm23175wmd.14.2018.07.06.12.24.41
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 06 Jul 2018 12:24:42 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Beat Bolli <dev+git@drbeat.li>, git@vger.kernel.org
+Subject: Re: [PATCH] builtin/config: work around an unsized array forward declaration
+References: <20180705183445.30901-1-dev+git@drbeat.li>
+        <20180705193807.GA4826@sigill.intra.peff.net>
+        <phlsmp$mot$1@blaine.gmane.org>
+        <20180705200205.GA29861@sigill.intra.peff.net>
+Date:   Fri, 06 Jul 2018 12:24:41 -0700
+In-Reply-To: <20180705200205.GA29861@sigill.intra.peff.net> (Jeff King's
+        message of "Thu, 5 Jul 2018 16:02:05 -0400")
+Message-ID: <xmqq1scgkw06.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:PL5/cEnQ5uIED8+CIGFk73NQcuHAsDVJFa9gKPRbNZ5lNGjFIlE
- VRHdlxYuAEXRep6Fke22SZ/zewR3k2yQca6G3XWMAGktSSFdUwc/fUX9irjyi52Kfg2Ee9L
- GQ6svz/vGRcjJABEDMXgBLNRazdKEn5csef72WdyxyWHCMKkf9P84bdtODIf+fkA+seFqw+
- 9pAPbbsTAeZaxzXrbIrjg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:R8i2+fH5rdY=:1om38R+hChvzdsqWNDaIlV
- BVA9di2Ci4b0jI+iaSSmB/aZD5acW21GcLdFu9TQ0ZoweTr768OwYMP1FuVjNSXLizKlzzAUb
- eT/WsZKTKfZB1vMcZRPgwbB1RE8HhB5C5lC1XQpBuc7hWHP6lgaaV6OKV2XiQSCPpvhRt31VY
- P6Lz5rVuXksBxFXnb7yEQfVus8iBjUrM3orkuq7rkzmz2VA7t1ZVG+DUk/rKzljelrg8ZfJO/
- 2q2jvh7uuXR/9OGILS1Bmkt5hDjtOgq2mUOqUEjjEh588ctG4XCysMq/oJDe5kjLjmIiC6kzV
- M0lHMfJoSYAn3F28LqMFuxoRMs9cL1ZVy+ElvBurlOseOfKW/YD9OgDoVIimXz29phX/mXLrG
- g0DX2DpAGWnYgSYcU3eixwbljoYjSPG7DWMh1N6O0m+5lTdlNJiAUN6+djlgNaxk48pQeYQwo
- FghYyv+8DEmOXJ9STbpk1hHYrNB8F0ioG+YWQY0ET3W7C3hfsUSYJNukTrcwdpzqhxZkU6dNQ
- GURCu4w0pFd3Iyq7fS7FHo4FPrVL7I60jhH7bhTKlYB5/4sFbRbGQUc/dn1g1PDlO+1gDRyxd
- v67KfXVP2zWR6oUTDOiBH0i10lrv9EBml+//kllD9clYe2o8mpCVjimB12o559imjLbR41BpK
- whOgKhmO9zHE0JF/9rEn1ttAqOP/H+0YWzqyFR2EdkTJDai639apy/Ucnh2q6oxAdX6UQoAz7
- ua5z1Bs8e9wvubvY2fJjVlhhHHjKJd6Yd1ZyiKgKRluarzZYd6awZmVQwXQI/wO/QX4bli6ix
- Ni5NOqh
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Jeff King <peff@peff.net> writes:
 
-On Fri, 6 Jul 2018, Junio C Hamano wrote:
+> On Thu, Jul 05, 2018 at 09:50:53PM +0200, Beat Bolli wrote:
+>
+>> > Your patch is obviously correct, but I think here there might be an even
+>> > simpler solution: just bump option_parse_type() below the declaration,
+>> > since it's the only one that needs it. That hunk is bigger, but the
+>> > overall diff is simpler, and we don't need to carry that extra wrapper
+>> > function.
+>> 
+>> That was dscho's first try in the GitHub issue. It doesn't compile
+>> because the OPT_CALLBACK* macros in the builtin_config_options
+>> declaration inserts a pointer to option_parse_type into the array items.
+>> We need at least one forward declaration, and my patch seemed the least
+>> intrusive.
+>
+> Ah, right, so it actually is mutually recursive.  Forward-declaring
+> option_parse_type() would fix it, along with the reordering. I'm
+> ambivalent between the available options, then; we might as well go with
+> what you posted, then, since it's already done. :)
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > I would *strongly* encourage you to allow Alban to go back to the small,
-> > incremental patch series he sent before, because it will make it
-> > *substantially* easier to not only review, but also develop, and for
-> > you to merge.
-> 
-> An organization in which you can make sure that the order of dependency
-> and which ones have been updated since previous rounds are clear, even
-> to those who are looking from the sidelines ("these 4 patches are to
-> replace patch 3, 7 and 8 from the previous round" is already hostile to
-> late reviewers and doing so without a pointer to the archive is even
-> worse---a full reroll with the unchanged ones marked below the
-> three-dash lines would be perfect), would be good.  A random collection
-> of seemingly separate but actually interdependent topics is very hard to
-> work with with limited mental bandwidth.
-> 
-> Once the core of _a_ topic hits 'next', we can go incremental (because
-> by definition things get quiet and require small updates by then), but
-> not before.
-> 
-> I think the 7 patches in ag/rebase-i-in-c are more or less in good
-> shape, modulo the issues pointed out on the list yet to be addressed,
-> which I do not think require redesign.  Which is good.
+Among three, forward declaration of the function with reordering
+that nobody has written except for in the brain smells the best, and
+turning an array to a pointer that points at a separate storage looked
+the worst.  I also am OK with what's already posted, too.
 
-You do understand that with your proposed "let's just roll them up into
-one big patch series, and just add freely whatever you need on top", these
-7 patches (3 of which I reviewed I think four times on the list now, and
-more times on GitHub, which is quite taxing on my time) will be soon
-joined by 6 more patches: https://github.com/git/git/pull/518
-
-Of course, at that point I will have to look through those 7 patches
-again, if only to verify that yes, they are still the same.
-
-And Alban is not sitting on his hands, either.
-
-So after reviewing those 13 patches, which undoubtedly will not be
-integrated into `next` under the premise that they are still in flux, they
-will most likely be joined by another dozen patches until the interactive
-rebase is rewritten completely in C. After which time, I will have
-reviewed the first 3 patches over 15 times.
-
-I wish there was a better way.
-
-Ciao,
-Dscho
+Thanks.
