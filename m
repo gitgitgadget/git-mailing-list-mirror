@@ -2,96 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6178B1F62D
-	for <e@80x24.org>; Fri,  6 Jul 2018 20:11:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 56EBC1F62D
+	for <e@80x24.org>; Fri,  6 Jul 2018 20:15:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754060AbeGFULC (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Jul 2018 16:11:02 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:54895 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754036AbeGFULB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Jul 2018 16:11:01 -0400
-Received: by mail-wm0-f67.google.com with SMTP id i139-v6so15804008wmf.4
-        for <git@vger.kernel.org>; Fri, 06 Jul 2018 13:11:01 -0700 (PDT)
+        id S932656AbeGFUP0 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Jul 2018 16:15:26 -0400
+Received: from mail-yb0-f194.google.com ([209.85.213.194]:33164 "EHLO
+        mail-yb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932328AbeGFUPZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Jul 2018 16:15:25 -0400
+Received: by mail-yb0-f194.google.com with SMTP id e84-v6so5030003ybb.0
+        for <git@vger.kernel.org>; Fri, 06 Jul 2018 13:15:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=i0g8FdVmcJd2TIuThZo65X1FJVLgBOrg6CDDMkY2NE4=;
-        b=HRra+g1Mtffq550yqS2UvyEERmYHZfhtBcPfnZvLsgv+UhCRwXev2lOW7CtyY03Nsw
-         OFYBw5HSUhwpFfr62gaxWUs02cqB48IhpI296U10i/VQ7STeIOGBcVXKh3S4jYQH56sV
-         Xj6HxpfQ6HEqg8nJddTVVMxr9tbRW1k5kTURUPL0P8svjJewXNkphCJWKdrfGmSlZ8eo
-         Lwhrjc1tIxCjDXc0SQF/hXCjDZEOrZSC5/+X+0+S+nqZCVJCnxJZvkU2K+7DnByKqS9q
-         spE5MXKR07m/kkGfRX43VRushiAvT8WoArynWVzOe0+vLiU8SF580yrMEp+GgQ0DFold
-         g2XA==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=CoaDm7cey5ybvvmrekdboRy1H+hXW5JalwqZfoqLLQk=;
+        b=GoK0wuwYh3eKrRVSQ6EWmE68oFgru19lva/TbOgdArVHBPefWfX5paf/IEZcGFigIE
+         ahp+CbZeisb0VvKCA23jjHcIqM45wr+SE6z+nF+K3ZYseD3lY7E3dCtF0jqOZDYLmxGt
+         YF3PtqSf3Sqc9vX6vU9p4G6eWMDHQYm7t1h3GqO06Dyki67MrMcNfrwWF05n3jZfPRGS
+         bwG2ulmAmqsW2zsRuxbUAdva7D2UAI/58WMQiAiea3P8wzqLN50pX0uCBKA4HItBCPDK
+         2wx0senUxos/RzaB2RfKzPZEc9QhX7sKLnsmRzGOU2K4E/s1i/n8HUeYLw9uuJh+6bmn
+         sqzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=i0g8FdVmcJd2TIuThZo65X1FJVLgBOrg6CDDMkY2NE4=;
-        b=NC/HqKqbvgcmoaYL6izaLJSki7ASJuc+zUoM19lm3r5HMnR3JPw80s3hi3ZfU14GYt
-         2/0hm39LTDozdwD6I74Rzh/qfQ0NzKPV7tgHBZnPDjndzKcEebZdpLNvrdK2YV4xNXCs
-         hCKyh5NmUeKtFsx4aELXQLkKXXixsHinKJU8dpk58cjRjhQ4S+yErLb15SNxAZ0Ov/DU
-         o1JJo9PDqhJyLfLD+lMB+GLZ9BlkV+8Ns1cUb4FID2TpkeBNDFrDzmR8+tPir1V0h+zD
-         kSgRq4CdOCENtxgd92xlYeON08hwuXuHa/W8ju88+pRhqOas3BFzqS2155PfzfmLJGak
-         pjmA==
-X-Gm-Message-State: APt69E3khaYPX/798BrAk/ZFPklxzRAZzt9Xwqh+9I+NRTYsj5kjx6bv
-        yELHYdj5S/nsyq/rFNSj5AURpY8z
-X-Google-Smtp-Source: AAOMgpeN/iQlE+6UalVsqIO/g3YMGVgJHA3Bm8nSF0upHLsFHHJiQqz+kUq5lywF4q4soZn6TATKCQ==
-X-Received: by 2002:a1c:b756:: with SMTP id h83-v6mr7924343wmf.8.1530907860479;
-        Fri, 06 Jul 2018 13:11:00 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id i6-v6sm8002251wrr.2.2018.07.06.13.10.59
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 06 Jul 2018 13:10:59 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, git@jeffhostetler.com
-Subject: Re: [PATCH 0/2] Avoiding errors when partial cloning a tagged blob
-References: <cover.1530905323.git.jonathantanmy@google.com>
-        <20180706193847.160161-1-jonathantanmy@google.com>
-Date:   Fri, 06 Jul 2018 13:10:59 -0700
-In-Reply-To: <20180706193847.160161-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Fri, 6 Jul 2018 12:38:47 -0700")
-Message-ID: <xmqqk1q8jfak.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=CoaDm7cey5ybvvmrekdboRy1H+hXW5JalwqZfoqLLQk=;
+        b=s6sO/qtLauB8jEzENqHL/6GSItqqUVR9bhsn5715y8ZhyJWTiV4bAQ3T4jO6hONf7z
+         OJoJj7eotRW7f/EjUf505ycKG7w3ABvUkO5EGK26tvpqe0ON7l7bUyOOTg3gZmWDbMJn
+         ThdycYfLgvfnWTg3nlge4r3XFCV/ugcMi6Ex4W3NgVCfAEyrSxmS51LButB9KbixyKrO
+         NywLq7qFLBsj2Lh6OvuG2mcBmtyHP2ujI08rbr2tXz4mkFlwM0pT9ThFJR6LC6fpvGZ0
+         Yx0uc95bnb8zPBopdoc71ju4jD8hj90WIMFDGynQEcyG/WFR3Ya+G2zCkVySaWPUmL6P
+         kWlQ==
+X-Gm-Message-State: APt69E2HixdF0FIfxLJX7p1zBtVU7XIsiNjdT5RqXGSLuSDRC/LuS/u0
+        7UgITQwHJRxE1SkHXi4ZNWs+XA==
+X-Google-Smtp-Source: AAOMgpdw2YS3SUgpv0318QommKjMcWp0V0KJIyhn0ptRDcBeMh9vuQsUS6jhfCdII3JVwbIW9gr/5g==
+X-Received: by 2002:a25:ce49:: with SMTP id x70-v6mr6336311ybe.18.1530908124591;
+        Fri, 06 Jul 2018 13:15:24 -0700 (PDT)
+Received: from localhost ([107.217.158.181])
+        by smtp.gmail.com with ESMTPSA id b68-v6sm7108704ywh.68.2018.07.06.13.15.22
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 06 Jul 2018 13:15:23 -0700 (PDT)
+Date:   Fri, 6 Jul 2018 15:15:22 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org, avarab@gmail.com
+Subject: Re: [PATCH v3 0/2] grep.c: teach --only-matching to 'git-grep(1)'
+Message-ID: <20180706201522.GA657@syl.attlocal.net>
+References: <cover.1529961706.git.me@ttaylorr.com>
+ <cover.1530654455.git.me@ttaylorr.com>
+ <20180705142110.GA10192@sigill.intra.peff.net>
+ <20180705143401.GA87330@syl.attlocal.net>
+ <xmqqlgaokyy5.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqlgaokyy5.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+On Fri, Jul 06, 2018 at 11:21:06AM -0700, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+>
+> > I think that this might be clear enough on its own, especially since
+> > this is the same as BSD grep on my machine. I think that part_s_ of a
+> > line indicates that behavior, but perhaps not. On GNU grep, this is:
+> >
+> >   Print only the matched (non-empty) parts of a matching line, with each
+> >   such part on a separate output line.
+>
+> Interesting.  I wonder what "git grep -o '^'" would do ;-)
 
->> When cloning a repository with a tagged blob (like the Git repository)
->> with --filter=blob:none, the following message appears:
->> 
->>         error: missing object referenced by 'refs/tags/junio-gpg-pub'
->> 
->> and the resulting repository also fails fsck.
+That invocation prints nothing, but on BSD grep it prints quite a few
+blank lines :-).
 
-Hmph, the approach taken by these two patches smells bad.
+I'm hesitant on sending a patch per the hunk of your reply below because
+of this. Should we mirror BSD grep's behavior exactly here? I suppose
+that we could somehow, but it seems like we might be doing too much to
+support what appears to me to be an odd use-case.
 
-When a blob is deliberately omitted with --fitler=blob:none, the
-fsck that encounters an entry in a tree object that is about that
-expected-to-be-and-actually-is-missing blob does *not* complain and
-that is by design, right?  Naïvely, I may expect fsck to follow the
-same principle--when it encounters a reference to an object that is
-deliberately missing, refrain from complaining, regardless of the
-place the offending reference was found, be it inside a tree object
-or a ref.
+> > I'm happy to pick either and re-send this patch (2/2) again, if it
+> > wouldn't be too much to juggle. Otherwise, I can re-roll to v4.
+>
+> Please do not re-send a different version of a patch with the same
+> v$n value.  Either re-send, otherwise re-roll, will give us v4, not
+> v3.
+>
+> In any case, I find that the GNU phrasing is the most clear among
+> the ones I've seen in this thread so far.
 
-Perhaps that line of consistent behaviour may be impossible due to
-the way the reference is stored inside a tree object and a ref?
-E.g. a reference to an expected-to-be-missing blob still lets us
-know that the missing object is expected to be a blob, but a ref
-only stores the object name and not its type, so we can tell it is
-missing, but we cannot say it is OK to be missing because we expect
-it to be a blob, or something?
+OK. I'm happy to re-send that patch with the GNU phrasing depending on
+what others think (and the above). I'll let this cook and collect some
+thoughts over the weekend.
+
+
+Thanks,
+Taylor
