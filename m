@@ -6,58 +6,59 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D24411F62D
-	for <e@80x24.org>; Fri,  6 Jul 2018 17:50:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BDA5C1F62D
+	for <e@80x24.org>; Fri,  6 Jul 2018 17:57:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933739AbeGFRuW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Jul 2018 13:50:22 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:52989 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932895AbeGFRuV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Jul 2018 13:50:21 -0400
-Received: by mail-wm0-f68.google.com with SMTP id w16-v6so15553293wmc.2
-        for <git@vger.kernel.org>; Fri, 06 Jul 2018 10:50:21 -0700 (PDT)
+        id S934490AbeGFR46 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Jul 2018 13:56:58 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:36375 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934160AbeGFR44 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Jul 2018 13:56:56 -0400
+Received: by mail-wr1-f66.google.com with SMTP id h9-v6so4967812wro.3
+        for <git@vger.kernel.org>; Fri, 06 Jul 2018 10:56:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=t9sKmfzL3OJ+EsJdvW8L08OyO2mITDYkcu8FKxB5RBA=;
-        b=L1k7PXMY+IWNDjaFRy6tjnPzbTOnA/2Yz0tWtXxqQH6V2QamQKaHCj9xpCykD/OoFo
-         pOBa1VSp9r0R4PCm5/7oCdCFj8/3+vo2nXgSpIDhO6h98GCvFiV0WXXksUd/3ljq7EmY
-         LrhYmov1TD60tSnY1PSolOdcy5OyGSn4xyonM3FTt4u75bxlSc++PEKusipUAwjle8Kf
-         f/bjy7fgD0Sn2Qrpv7scGi5cevasbX02/u1hLwwUyhHY9LMUAfRrJM9B/Rp8d0Voy1rQ
-         AJejW/9Ghi73PVk6meLCfeYKgFrYUus3+OtY/KEvojiRNkGiKSje7RqrluxpffTHlq9i
-         3KbQ==
+        bh=RGk9hO0LWlmyNkAo2qVW6zIDiowY+r8/fDFNnygOc2k=;
+        b=Fr5Hlb3UjVETunbsQ5aijfVktQEb3AR3GHlIlI45ZDKExNY/CNMGOBpAfie/jfUpLE
+         E66UQNlF0BrtCbuOVaDSEro6TMevwKoEU3kjreMpiqH5O8q0WEIAqDMwK8YSpuyWnPdR
+         sKtlJb255K2HUR98B/wWW1DoyvgX0k7o7COYfb7dzNTMTHupHHrqX/IhPdo5noIiUTo9
+         SoP3KP4XU0kt6jbrl9nKSx0fjQWwWOkdxLw6i48OvIxErYyaEQraFOY93nVzUW65445U
+         YBHQ7NMYx0Zl+P+xuroXk4HnEC2szy8uHnkRQpX1mLM4ayfvYh4dGB1AgP0EfI4/JnGT
+         b4YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=t9sKmfzL3OJ+EsJdvW8L08OyO2mITDYkcu8FKxB5RBA=;
-        b=geIoWVojKj+p6C1R2GIU9IzwXOI2IIk1L2YspLIeOZlhQAd2S5yX/VrwW+3MEjs5V+
-         NXdeE8owSSVcaEwE0cQoN2S33E2KazOW6WuDf3AXIz8hbzCvkDHc+ML3KNbP87fmXqkd
-         q+jAXwLEGRxEjgoZLfxy8BTB5HD9ztmGN6rwcbEPQ/UF4X79ivNjTXQBXKFERII89b3O
-         RDMwzUDZ1RmVD0lZrr4ky7LdAX1dpvOB9h+mGjoJZsOUpwxyu4DBvx/rxg6nOTBz3iXV
-         VSFOIVHuVpmN6aByrqyjqwlUmGkWBK58dUn1UZag4sqza2hDSWdqwa5pvtTyMGkmOcWo
-         4WOg==
-X-Gm-Message-State: APt69E09CPIEf7ahKO6EsMXQOtbyG5MqqKpgRHxXvZEatOt3XAmkWEvD
-        8SL467HueZfVAsuT8oodbaM=
-X-Google-Smtp-Source: AAOMgpe3VxV56lLgiS8Aeet6tAIfOwtU/Z9uT0jYOizENbbxN7lf5a6UwF893f8AAjqE3NUiN1LTcQ==
-X-Received: by 2002:a1c:8f0e:: with SMTP id r14-v6mr7611169wmd.79.1530899420454;
-        Fri, 06 Jul 2018 10:50:20 -0700 (PDT)
+        bh=RGk9hO0LWlmyNkAo2qVW6zIDiowY+r8/fDFNnygOc2k=;
+        b=oOaak0+7fPtTaXkkMi3UGe6/I2CPgkX3TLd+zxOy6vPnWbiYFxmKzCV66g2Suun43Q
+         JND9FRPp2rpabMb4acf93dykaUy4v+LMB8UNowcPlNUsKaoIBrZJqmxPoo3HlSdLqngS
+         BjxtFXFf9O1/FUal/WEKLPO8yNu6R7ob83LUUcVIEBrN35VZ2WuUSKpfys3wMWA8wnoI
+         uPIs15nJPvzpHmxw2zX5RtvF/xkh2aT8wcGvEZBEIrxt1hihqkOoF8tgYkeITpf1Viwl
+         Jz80n5FaClPEzr+kjMx7c88rAO/T4KroXqplb65liTuaXq+c01AKe/7k7AwpkPtW2sOI
+         dH4A==
+X-Gm-Message-State: APt69E28/AOASzfj3bwne2i2tjpy7QAk1HVK3Io3de/c4CikVZVSyW41
+        xJLASFqcpL4BQg5uoGrf+MZudUXc
+X-Google-Smtp-Source: AAOMgpfb7Bcp6SlgKwAVbm4rU6nRKwdHCWcUFIHNlOArLUWzzT/aV8dXe9Lz5sUVeVqwOmqqrZW43w==
+X-Received: by 2002:adf:ac66:: with SMTP id v93-v6mr7940683wrc.7.1530899815065;
+        Fri, 06 Jul 2018 10:56:55 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id o21-v6sm6710081wmg.28.2018.07.06.10.50.17
+        by smtp.gmail.com with ESMTPSA id b6-v6sm9028271wru.66.2018.07.06.10.56.54
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 06 Jul 2018 10:50:18 -0700 (PDT)
+        Fri, 06 Jul 2018 10:56:54 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org
-Subject: Re: ag/rebase-i-rewrite-todo, was Re: What's cooking in git.git (Jun 2018, #07; Thu, 28)
-References: <xmqqd0wawpwy.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1807031438240.75@tvgsbejvaqbjf.bet>
-Date:   Fri, 06 Jul 2018 10:50:17 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.1807031438240.75@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Tue, 3 Jul 2018 14:52:32 +0200 (DST)")
-Message-ID: <xmqq601smexy.fsf@gitster-ct.c.googlers.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 00/10] rerere: handle nested conflicts
+References: <20180520211210.1248-1-t.gummerer@gmail.com>
+        <20180605215219.28783-1-t.gummerer@gmail.com>
+        <20180703210515.GA31234@hank.intra.tgummerer.com>
+Date:   Fri, 06 Jul 2018 10:56:53 -0700
+In-Reply-To: <20180703210515.GA31234@hank.intra.tgummerer.com> (Thomas
+        Gummerer's message of "Tue, 3 Jul 2018 22:05:15 +0100")
+Message-ID: <xmqq1scgmemy.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,36 +67,80 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-> The latest iteration of this is here:
-> https://public-inbox.org/git/20180702105717.26386-5-alban.gruin@gmail.com/T/#r8eea71077745d6f2c839acb6200bb8b2bea579d3
+> On 06/05, Thomas Gummerer wrote:
+>> The previous round was at
+>> <20180520211210.1248-1-t.gummerer@gmail.com>.
+>> 
+>> Thanks Junio for the comments on the previous round.
+>> 
+>> Changes since v2:
+>>  - lowercase the first letter in some error/warning messages before
+>>    marking them for translation
+>>  - wrap paths in output in single quotes, for consistency, and to make
+>>    some of the messages the same as ones that are already translated
+>>  - mark messages in builtin/rerere.c for translation as well, which I
+>>    had previously forgotten.
+>>  - expanded the technical documentation on rerere.  The entire
+>>    document is basically rewritten.
+>>  - changed the test in 6/10 to just fake a conflict marker inside of
+>>    one of the hunks instead of using an inner conflict created by a
+>>    merge.  This is to make sure the codepath is still hit after we
+>>    handle inner conflicts properly.
+>>  - added tests for handling inner conflict markers
+>>  - added one commit to recalculate the conflict ID when an unresolved
+>>    conflict is committed, and the subsequent operation conflicts again
+>>    in the same file.  More explanation in the commit message of that
+>>    commit.
+>
+> Now that 2.18 is out (and I'm caught up on the list after being away
+> from it for a few days), is there any interest in this series? I guess
+> it was overlooked as it's been sent in the rc phase for 2.18.
 
-Good.  I think we have it in tree now.
+I deliberately ignored, not because I wasn't interested in it, but
+because I'd be distracted during the pre-release feature freeze as
+I'd be heavily intereseted in it.
 
-> I would *strongly* encourage you to allow Alban to go back to the small,
-> incremental patch series he sent before, because it will make it
-> *substantially* easier to not only review, but also develop, and for you
-> to merge.
+Now is a good time to repost to stir/re-ignite the interest from
+others, possibly after rebasing on v2.18.0 and polishing further.
 
-An organization in which you can make sure that the order of
-dependency and which ones have been updated since previous rounds
-are clear, even to those who are looking from the sidelines ("these
-4 patches are to replace patch 3, 7 and 8 from the previous round"
-is already hostile to late reviewers and doing so without a pointer
-to the archive is even worse---a full reroll with the unchanged ones
-marked below the three-dash lines would be perfect), would be good.
-A random collection of seemingly separate but actually
-interdependent topics is very hard to work with with limited mental
-bandwidth.
+Thanks.
 
-Once the core of _a_ topic hits 'next', we can go incremental
-(because by definition things get quiet and require small updates by
-then), but not before.
-
-I think the 7 patches in ag/rebase-i-in-c are more or less in good
-shape, modulo the issues pointed out on the list yet to be
-addressed, which I do not think require redesign.  Which is good.
-
-
-
+>
+> I think the most important bit here is 6/10 which fixes a crash that
+> can happen in "normal" usage of git.  The translation bits are also
+> nice to have I think, but I could send them in a different series if
+> that's preferred.
+>
+> The other patches would be nice to have, but are arguably less
+> important.
+>
+>> range-diff below.  A few commits changed enough for range-diff
+>> to give up showing the differences in those, they are probably best
+>> reviewed as the whole patch anyway:
+>>
+>> [snip]
+>> 
+>> Thomas Gummerer (10):
+>>   rerere: unify error messages when read_cache fails
+>>   rerere: lowercase error messages
+>>   rerere: wrap paths in output in sq
+>>   rerere: mark strings for translation
+>>   rerere: add some documentation
+>>   rerere: fix crash when conflict goes unresolved
+>>   rerere: only return whether a path has conflicts or not
+>>   rerere: factor out handle_conflict function
+>>   rerere: teach rerere to handle nested conflicts
+>>   rerere: recalculate conflict ID when unresolved conflict is committed
+>> 
+>>  Documentation/technical/rerere.txt | 182 +++++++++++++++++++++
+>>  builtin/rerere.c                   |   4 +-
+>>  rerere.c                           | 246 ++++++++++++++---------------
+>>  t/t4200-rerere.sh                  |  67 ++++++++
+>>  4 files changed, 372 insertions(+), 127 deletions(-)
+>>  create mode 100644 Documentation/technical/rerere.txt
+>> 
+>> -- 
+>> 2.18.0.rc1.242.g61856ae69
+>> 
