@@ -2,140 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF0611F62D
-	for <e@80x24.org>; Fri,  6 Jul 2018 20:20:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 480A01F62D
+	for <e@80x24.org>; Fri,  6 Jul 2018 20:21:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933061AbeGFUUD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Jul 2018 16:20:03 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:52912 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932328AbeGFUUC (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 6 Jul 2018 16:20:02 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:294b:af98:ff6d:ed6])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3FBA960431;
-        Fri,  6 Jul 2018 20:20:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1530908400;
-        bh=r1DzzpgureVtdAXVjc9Q0i8jdCgDvxRzoZWbiIZqoqk=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=HK2Z2Cj5Yzrlux8VevG0elw/nfVr9Yzbiu+7zzhy2c74N+CzNs8kKFp4XN1OUgl1d
-         voSMdBkRx4AqxUlpfW3+a1P3P5CWOnR59wXmWxmQGQL1zPGGNooBAMrct38+KXbA1j
-         Tq0qZ80yE4p4+nU9/qWJgu3hTNh5ZwA+ch6CujuC/QQeqqfxkf5u/H44l/eloaz+VO
-         Zk8r4YVf5e8698YNJ/ugp+CvVAmYYQ54Znz58nOoamshNmnSX9wkDT8KRGlGCKoJOw
-         dxpmY+C/89TCkHogKsfg5DL6xbSlL+BoGkGL7oKTz/KaOlG6wBZWwM5fLOaQ5yeZv6
-         KudtfbO9hjDj5hXaqPpxw1CBNrWQ9xcJTMY4+K7VjFd5GWbREHKjfhbNUbFg5yZ33M
-         EcGtyfdCGCdV/rQBzo6SvcaAcBZrZZYw0VFnOftUAoyUozbdUiGwCE+856TGgltgHi
-         AiE7E1tsJcFJMJKnSQO3aM4Ui2kUy2IW7f0QP71U0EO04ZLp8ut
-Date:   Fri, 6 Jul 2018 20:19:55 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>, sir@cmpwn.com
-Subject: Re: [PATCH 1/3] send-email: add an auto option for transfer encoding
-Message-ID: <20180706201955.GG7697@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>, sir@cmpwn.com
-References: <20180706022357.739657-1-sandals@crustytoothpaste.net>
- <20180706022357.739657-2-sandals@crustytoothpaste.net>
- <CAPig+cR7tWw7D8JMg1a9G2Jgi=HQj3YZjCn+tHDNjDEsrfSLqg@mail.gmail.com>
+        id S933936AbeGFUVO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Jul 2018 16:21:14 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:54457 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932328AbeGFUVN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Jul 2018 16:21:13 -0400
+Received: by mail-wm0-f66.google.com with SMTP id i139-v6so15821417wmf.4
+        for <git@vger.kernel.org>; Fri, 06 Jul 2018 13:21:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=BjaMtAJH+Rynkd2374YIBZIqde1tFekXiLZPDLqNwD4=;
+        b=Sc+iX02XmG2W5o+8iXkJxjlWsxM62PexjwPI3Zr2jMQgbM9iN1A5Rh+JcsT9F0Wozg
+         x7AB0bD1Xq33z2lMUOCc+TdUYiYbc5yPYZB8o2074HzQM4Zym2Pmb0kkiNHlPISqwn+2
+         mE9O0xnbGve6PmNkNCXj7HI1XfFA3xzbk2mLdpCGPm7gDT29G22Pve8SF7JjYmIe8mxF
+         A+f156MCgCIkYJeUh8tCU5XtxkQLyMbPbS/RXHWjtLdNAmGJbHDYvJkeZeQn9DylfwoU
+         X9vO96WikgWZzECKIPCFRRrcnQQp9l49S1N1Y6AtXxMzhKlH57seAAc+DhGTbocUq11p
+         XgHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=BjaMtAJH+Rynkd2374YIBZIqde1tFekXiLZPDLqNwD4=;
+        b=IWoaH3mEwu/smUPl0T+2b8LLSzueNdlYQripMc7Ag42ZdI2yf2sbods+14ve6PbcVH
+         MTvLp8XsG+ImVvIXReMwsSwT8j7QiEMdS7ZckU61tc1l2768kEZaOjNW1HFuQbTPQFWi
+         dQ0bsV0Qlx5Bj4xjXZsS3TjEWhJlB4PRrkf2W/iP0/OpXKW3OA8lkbjzYrnujSXF46AF
+         0CjHTfdG/21JmxBOdNbdx/Z1JiDu7eP+4/wKcHtE3z/jpgLYT8hVvz3aEwRko3KOkwz/
+         tF6U2cFq0wToPHPi4lTs1ttXhFFSRFiORgVpr4qVEVYJqB0XIA3NvnAYRTx0wMi/HvRW
+         6YcQ==
+X-Gm-Message-State: APt69E0MJXVpX8FJfy+cnkNi0Hgdm3uz95bIfltfl8MNG7VN4jeH3weA
+        y3YJdObAyJnHf7KZyizo7Xg=
+X-Google-Smtp-Source: AAOMgpc24M+QPtbSYOTwb/fTIRkt6IJFd5n8S1mSt7lAxu9RBd9iWP1zsZK41S+XkOx6HCrLTyrLEw==
+X-Received: by 2002:a1c:928c:: with SMTP id u134-v6mr6979151wmd.106.1530908472196;
+        Fri, 06 Jul 2018 13:21:12 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id x10-v6sm9010041wrn.25.2018.07.06.13.21.10
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 06 Jul 2018 13:21:10 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Henning Schild <henning.schild@siemens.com>
+Cc:     git@vger.kernel.org, Ben Toews <mastahyeti@gmail.com>,
+        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 5/8] t/t7510: check the validation of the new config gpg.format
+References: <cover.1530616446.git.henning.schild@siemens.com>
+        <cover.1530616446.git.henning.schild@siemens.com>
+        <9fd9d0d2ee3ae549baf8e9a710dfffbc118e66f7.1530616446.git.henning.schild@siemens.com>
+Date:   Fri, 06 Jul 2018 13:21:10 -0700
+In-Reply-To: <9fd9d0d2ee3ae549baf8e9a710dfffbc118e66f7.1530616446.git.henning.schild@siemens.com>
+        (Henning Schild's message of "Tue, 3 Jul 2018 14:38:17 +0200")
+Message-ID: <xmqqfu0wjetl.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="oOB74oR0WcNeq9Zb"
-Content-Disposition: inline
-In-Reply-To: <CAPig+cR7tWw7D8JMg1a9G2Jgi=HQj3YZjCn+tHDNjDEsrfSLqg@mail.gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.17.0-1-amd64)
-User-Agent: Mutt/1.10.0 (2018-05-17)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Henning Schild <henning.schild@siemens.com> writes:
 
---oOB74oR0WcNeq9Zb
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Valid values are already covered by all tests that use GPG, now also
+> test what happens if we go for an invalid one.
+>
+> Signed-off-by: Henning Schild <henning.schild@siemens.com>
+> ---
+>  t/t7510-signed-commit.sh | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+>
+> diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
+> index 6e2015ed9..cb523513f 100755
+> --- a/t/t7510-signed-commit.sh
+> +++ b/t/t7510-signed-commit.sh
+> @@ -227,4 +227,14 @@ test_expect_success GPG 'log.showsignature behaves like --show-signature' '
+>  	grep "gpg: Good signature" actual
+>  '
+>  
+> +test_expect_success GPG 'check gpg config for malformed values' '
+> +	mv .git/config .git/config.old &&
+> +	test_when_finished "mv .git/config.old .git/config" &&
 
-On Fri, Jul 06, 2018 at 02:01:25AM -0400, Eric Sunshine wrote:
-> On Thu, Jul 5, 2018 at 10:24 PM brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
-> > For most patches, using a transfer encoding of 8bit provides good
-> > compatibility with most servers and makes it as easy as possible to view
-> > patches.  However, there are some patches for which 8bit is not a valid
-> > encoding: RFC 5321 specifies that a message must not have lines
-> > exceeding 998 octets.
-> >
-> > Add a transfer encoding value, auto, which indicates that a patch should
-> > use 8bit where allowed and quoted-printable otherwise.  Choose
-> > quoted-printable instead of base64, since base64-encoded plain text is
-> > treated as suspicious by some spam filters.
-> >
-> > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> > ---
-> > diff --git a/git-send-email.perl b/git-send-email.perl
-> > @@ -1852,13 +1851,16 @@ sub apply_transfer_encoding {
-> > +       $to =3D ($message =3D~ /.{999,}/) ? 'quoted-printable' :'8bit'
-> > +               if $to eq 'auto';
->=20
-> Style: space after colon: 'quoted-printable' : '8bit'
+Hmmmmm.  
 
-Will fix.
+Is the damage caused by throwing a bad value at gpg.format designed
+to be so severe that "test_when_finished test_unconfig ..." cannot
+recover from?  This test script is not about how "git config" is
+implemented and works, so it would be a good idea for it to be even
+oblivious to the fact that .git/config is the file being mucked with
+when we do "git config".
 
-> > diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-> > +test_expect_success $PREREQ 'long lines with auto encoding are quoted-=
-printable' '
-> > +       clean_fake_sendmail &&
-> > +       git send-email \
-> > +               --from=3D"Example <nobody@example.com>" \
-> > +               --to=3Dnobody@example.com \
-> > +               --smtp-server=3D"$(pwd)/fake.sendmail" \
-> > +               --transfer-encoding=3Dauto \
-> > +               --no-validate \
-> > +               longline.patch \
-> > +               2>errors &&
->=20
-> Why capture stderr to a file then ignore the file?
+I have a suspicion that you can just use test_config (which would
+arrange "test_when_finished test_unconfig ..." for free).
 
-Copy-paste error from an earlier test.  Will fix.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+> +	git config gpg.format malformed &&
+> +	test_expect_code 128 git commit -S --amend -m "fail" 2>result &&
 
---oOB74oR0WcNeq9Zb
-Content-Type: application/pgp-signature; name="signature.asc"
+Is this 128 something we document and have users rely on?  Or should
+we rather say
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.8 (GNU/Linux)
+	test_must_fail git commit ...
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAls/zusACgkQv1NdgR9S
-9otlCQ//bgYang/poal6XYX9zxjfzuNyk5NFShRTERUSVrzweTs2BXrLC5+UaET4
-2gOiGH/X5FS3ceuuSRgKyL6XZ3TaGcONBCF9bmtR12K9kleHWcqLNGo9ngEodyeP
-gIPfsK0GV38iL4vCYYEsvJq3Q+54G7dBWObhh8fQAxmCmpYDKh7awytDLR6M6Ok8
-7LIdU9VpsTr9yu2Dhz0uSC+xtrdsrVz81Xj4ucgvPNBkYtQA39S8He96HsxvLIlE
-FIkg7GgUgP0Lqf3PP47GOnombBgYioCzenjV7u2KOJYXeV8noRU4AAU1SifYwjy8
-oS88PhRqXY8S4RCbn9K/KFVu8SYB3uNc9UhL5Rkdq80i+ZUtNE2K5AzGAOonSRb1
-gCnDZl6ax+VgmVoMWBUObcHShjJQ+I8bxnjOdLFQ5t666OQnBvfhZfJgaQmNwXRX
-GLeT/nqO9sylK/64ZBAAodQ5rH8JJWQx1Qlfc9uW2+6S72TJb66BV3hMuz7Igm76
-0Axp2VEU1YpvoQQry+sJ+g08JcIcbZmdjIWpvSYE34rdMzAAIV9IpYq6q0uzfwAR
-2TewZU9Lg7OXIYIMtGyD/CsDxj7UDOb7LhAhyB1HCA8dfGDGXL0bnzXUfuTSX/gI
-KobVDCch9W0fYT9UrEIKcCpCitd6A81X8lV0BYAo7BMvgK7bXrc=
-=woTz
------END PGP SIGNATURE-----
+here instead?
 
---oOB74oR0WcNeq9Zb--
+> +	test_i18ngrep "malformed value for gpg.format: malformed" result &&
+> +	test_i18ngrep "fatal: .*\.git/config" result &&
+> +	test_i18ngrep "fatal: .*line 2" result
+> +'
+> +
+>  test_done
