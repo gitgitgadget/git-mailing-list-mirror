@@ -4,58 +4,59 @@ X-Spam-Level:
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A7FD1F62D
-	for <e@80x24.org>; Fri,  6 Jul 2018 00:54:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 891271F62D
+	for <e@80x24.org>; Fri,  6 Jul 2018 00:54:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753983AbeGFAyO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Jul 2018 20:54:14 -0400
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:42768 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753968AbeGFAyL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Jul 2018 20:54:11 -0400
-Received: by mail-qt0-f194.google.com with SMTP id z8-v6so205089qto.9
-        for <git@vger.kernel.org>; Thu, 05 Jul 2018 17:54:11 -0700 (PDT)
+        id S1753924AbeGFAyB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Jul 2018 20:54:01 -0400
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:40270 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753565AbeGFAx7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Jul 2018 20:53:59 -0400
+Received: by mail-qk0-f196.google.com with SMTP id b129-v6so5504350qke.7
+        for <git@vger.kernel.org>; Thu, 05 Jul 2018 17:53:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=PapCkNg8zUXqosRjO+QQ13YR2f0D19KojVYcVUe7CcU=;
-        b=PEXPBiNPgRsBEIp6nJ7CTwYGg0dKvVzsmeGo/bFAqvNTe/d+FJuDNqJ//Jhy/uOTwe
-         7/LMME40HKDS5Y98SmKsJeN6gBE1ySrhukCOjcJJl2GKGltltyTTHkJn1A1YpOneXROv
-         G4saq5vh1NrpsgqsbdDRdzJCShwIje+9f5vxZ5/MifQ5XHBetatd2Vs0zV/LeJO0DT7Q
-         rVOEEZo1XRMKEzhgtg2AHeXNHAe0cfW8QVSzEWOpLMxZfLIPNt8vlN3Kz9H6XnTfKgxQ
-         hBerJdYYEpjkTxi0vMJqy66bjw0rRf8ee/HVjyBe13sF4Jd3zZ3hTWa7KUiK6Qdumqbn
-         gN/Q==
+        bh=7TKw2x4CZ1LtEiY8TYXAnm8DTYK/GW5xtwNyiWAgbcM=;
+        b=SNMgj9sQDObAQqDfM/TymH/7ceS7on26E/fKae7bUcH3AOFWw6tbjOD2IzXhDTdR+i
+         wkI8j0kXLt0Fd+NsoWSHpdiqkRvjeOkdSJ3Vx1zJwRDgez/0Rlfb/1oQQOQndWnJzfVN
+         DNXetraZMtwdK6YbNaKbJqsYvPvP66BQwS0MGMC8a1nghKYz8wyyr3MoTCVey3Lrnwqp
+         nDSr9LXm4Hqd3bTQ9rA0jKAW4sBVGiNuH/hC1R3eY7yJt0DI3trWPeEJ9jWtdyCEJS1Z
+         Xui5fYhRMp9rKlenWhQ6mXvsEDU1sU9Hxspqfh1KorHVT1eVYPG7hQwfJ43j9xKsrat8
+         LYWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=PapCkNg8zUXqosRjO+QQ13YR2f0D19KojVYcVUe7CcU=;
-        b=SBAt45JHK86eX+ecbRp20IsTPL/7iG6L9AJeiiqH1sHcl7B0CnupjjM53MyjExn59U
-         MZRCR4yaTrIujwiWqj9ABA99WCsHAuKQ8rCRdQe2G6R8eayoOExRPC0Lk+qCupjWAnR3
-         vf9rQoUMx2Jt53exGxUBKZs6kB9VPohPyUebWbvWT/l15Ip/Bi8ojk85p+7Ld6hIR4no
-         oMlVKC2VoFPNfZH3g0/TgK9mM4PfITZrvRGlOALQitrMjiiLhkE1GbqQKaDeUx4lF5nL
-         lytiJnzaA68kI+oimyyae1vjBs+ZFQgspZwKxDM6CZEDx02rYWo4TkHwUA1JNoAa6tLP
-         FehA==
-X-Gm-Message-State: APt69E1dK5ZQb28MRIC8Teo8uYVA2aYR+cPOE0hvkEf2GyPswB+Ck3GH
-        ja//SM9E1EPotIGXOusxvD2RuZPE
-X-Google-Smtp-Source: AAOMgpd+ak0jDITvUkCItfkND1H+av2CaNVJBi2nH30+Wo6gFIPd1GcCQjKfB8U8zMnV+qOhrOtpSg==
-X-Received: by 2002:a0c:8283:: with SMTP id i3-v6mr7141972qva.21.1530838450494;
-        Thu, 05 Jul 2018 17:54:10 -0700 (PDT)
+        bh=7TKw2x4CZ1LtEiY8TYXAnm8DTYK/GW5xtwNyiWAgbcM=;
+        b=jzL3Ekn9l9XFryouQpaqf1GjVgeXun5SuWp6pxI6Z9O2by8HQzeJ7r4drJ+vZFO6/W
+         5ZRHO5TKRhyS4DN2DudlrelhHTHcF2c7i0wg2+pYBrt8hKVBOaqC9CP++b3y5R0QQX9Z
+         +2rcdQ6d5x+bmGd3S+WwwhWFT50TobmtrzQFLwhXIPHpPBrCOaxkgBO3d9kJPD7x6Bav
+         azeyhGbNDQtbBkxdEGWTAHuMFIwZPk8bUs8p0BNJfjLXFUu0fifOtniDf8vw6cMdQkvc
+         g72LUDs9D5kCwtBpL4rJoV8SbaSlYG8tSsv6SBiNPtBmR3s8MSHTcoeNcZyYkKentJ4X
+         uAYQ==
+X-Gm-Message-State: APt69E25gHLhb80JwDkQJeNPRZKo/l95QwOVZRZRjwOk1ygbCo4hXoWB
+        2UsYRgJh+CSRv0ersaNdKWzpCMcr
+X-Google-Smtp-Source: AAOMgpfkXdSWz6HltcRXcFIfqF+NAkuqEBuBUiQq5b0t4p2qdU9+dCVfhlWxG7r7FQi4KERsbnVk+Q==
+X-Received: by 2002:a37:3515:: with SMTP id c21-v6mr6997095qka.355.1530838438192;
+        Thu, 05 Jul 2018 17:53:58 -0700 (PDT)
 Received: from stolee-linux-2.corp.microsoft.com ([2001:4898:8010:0:eb4a:5dff:fe0f:730f])
-        by smtp.gmail.com with ESMTPSA id u25-v6sm4882791qku.3.2018.07.05.17.54.09
+        by smtp.gmail.com with ESMTPSA id u25-v6sm4882791qku.3.2018.07.05.17.53.57
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 05 Jul 2018 17:54:10 -0700 (PDT)
+        Thu, 05 Jul 2018 17:53:57 -0700 (PDT)
 From:   Derrick Stolee <stolee@gmail.com>
 X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, sbeller@google.com, pclouds@gmail.com,
         avarab@gmail.com, dstolee@microsoft.com
-Subject: [PATCH v3 23/24] packfile: skip loading index if in multi-pack-index
-Date:   Thu,  5 Jul 2018 20:53:20 -0400
-Message-Id: <20180706005321.124643-24-dstolee@microsoft.com>
+Subject: [PATCH v3 16/24] config: create core.multiPackIndex setting
+Date:   Thu,  5 Jul 2018 20:53:13 -0400
+Message-Id: <20180706005321.124643-17-dstolee@microsoft.com>
 X-Mailer: git-send-email 2.18.0.118.gd4f65b8d14
 In-Reply-To: <20180706005321.124643-1-dstolee@microsoft.com>
 References: <20180625143434.89044-1-dstolee@microsoft.com>
@@ -65,48 +66,180 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The core.multiPackIndex config setting controls the multi-pack-
+index (MIDX) feature. If false, the setting will disable all reads
+from the multi-pack-index file.
+
+Add comparison commands in t5319-multi-pack-index.sh to check
+typical Git behavior remains the same as the config setting is turned
+on and off. This currently includes 'git rev-list' and 'git log'
+commands to trigger several object database reads.
+
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- packfile.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ Documentation/config.txt    |  4 +++
+ cache.h                     |  1 +
+ config.c                    |  5 ++++
+ environment.c               |  1 +
+ t/t5319-multi-pack-index.sh | 56 +++++++++++++++++++++++++++++++------
+ 5 files changed, 58 insertions(+), 9 deletions(-)
 
-diff --git a/packfile.c b/packfile.c
-index 2c819a0ad8..e6ecf12ab5 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -469,8 +469,19 @@ static int open_packed_git_1(struct packed_git *p)
- 	ssize_t read_result;
- 	const unsigned hashsz = the_hash_algo->rawsz;
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index ab641bf5a9..ab895ebb32 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -908,6 +908,10 @@ core.commitGraph::
+ 	Enable git commit graph feature. Allows reading from the
+ 	commit-graph file.
  
--	if (!p->index_data && open_pack_index(p))
--		return error("packfile %s index unavailable", p->pack_name);
-+	if (!p->index_data) {
-+		struct multi_pack_index *m;
-+		const char *pack_name = strrchr(p->pack_name, '/');
++core.multiPackIndex::
++	Use the multi-pack-index file to track multiple packfiles using a
++	single index. See linkgit:technical/multi-pack-index[1].
 +
-+		for (m = the_repository->objects->multi_pack_index;
-+		     m; m = m->next) {
-+			if (midx_contains_pack(m, pack_name))
-+				break;
-+		}
-+
-+		if (!m && open_pack_index(p))
-+			return error("packfile %s index unavailable", p->pack_name);
-+	}
+ core.sparseCheckout::
+ 	Enable "sparse checkout" feature. See section "Sparse checkout" in
+ 	linkgit:git-read-tree[1] for more information.
+diff --git a/cache.h b/cache.h
+index 89a107a7f7..d12aa49710 100644
+--- a/cache.h
++++ b/cache.h
+@@ -814,6 +814,7 @@ extern char *git_replace_ref_base;
+ extern int fsync_object_files;
+ extern int core_preload_index;
+ extern int core_commit_graph;
++extern int core_multi_pack_index;
+ extern int core_apply_sparse_checkout;
+ extern int precomposed_unicode;
+ extern int protect_hfs;
+diff --git a/config.c b/config.c
+index fbbf0f8e9f..95d8da4243 100644
+--- a/config.c
++++ b/config.c
+@@ -1313,6 +1313,11 @@ static int git_default_core_config(const char *var, const char *value)
+ 		return 0;
+ 	}
  
- 	if (!pack_max_fds) {
- 		unsigned int max_fds = get_max_fd_limit();
-@@ -521,6 +532,10 @@ static int open_packed_git_1(struct packed_git *p)
- 			" supported (try upgrading GIT to a newer version)",
- 			p->pack_name, ntohl(hdr.hdr_version));
- 
-+	/* Skip index checking if in multi-pack-index */
-+	if (!p->index_data)
++	if (!strcmp(var, "core.multipackindex")) {
++		core_multi_pack_index = git_config_bool(var, value);
 +		return 0;
++	}
 +
- 	/* Verify the pack matches its index. */
- 	if (p->num_objects != ntohl(hdr.hdr_entries))
- 		return error("packfile %s claims to have %"PRIu32" objects"
+ 	if (!strcmp(var, "core.sparsecheckout")) {
+ 		core_apply_sparse_checkout = git_config_bool(var, value);
+ 		return 0;
+diff --git a/environment.c b/environment.c
+index 2a6de2330b..b9bc919cdb 100644
+--- a/environment.c
++++ b/environment.c
+@@ -67,6 +67,7 @@ enum object_creation_mode object_creation_mode = OBJECT_CREATION_MODE;
+ char *notes_ref_name;
+ int grafts_replace_parents = 1;
+ int core_commit_graph;
++int core_multi_pack_index;
+ int core_apply_sparse_checkout;
+ int merge_log_config = -1;
+ int precomposed_unicode = -1; /* see probe_utf8_pathname_composition() */
+diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
+index ae6c9d4d02..fc582c9a59 100755
+--- a/t/t5319-multi-pack-index.sh
++++ b/t/t5319-multi-pack-index.sh
+@@ -3,6 +3,8 @@
+ test_description='multi-pack-indexes'
+ . ./test-lib.sh
+ 
++objdir=.git/objects
++
+ midx_read_expect () {
+ 	NUM_PACKS=$1
+ 	NUM_OBJECTS=$2
+@@ -61,12 +63,42 @@ test_expect_success 'write midx with one v1 pack' '
+ 	midx_read_expect 1 17 4 .
+ '
+ 
++midx_git_two_modes() {
++	git -c core.multiPackIndex=false $1 >expect &&
++	git -c core.multiPackIndex=true $1 >actual &&
++	test_cmp expect actual
++}
++
++compare_results_with_midx() {
++	MSG=$1
++	test_expect_success "check normal git operations: $MSG" '
++		midx_git_two_modes "rev-list --objects --all" &&
++		midx_git_two_modes "log --raw"
++	'
++}
++
+ test_expect_success 'write midx with one v2 pack' '
+-	git pack-objects --index-version=2,0x40 pack/test <obj-list &&
+-	git multi-pack-index --object-dir=. write &&
+-	midx_read_expect 1 17 4 .
++	git pack-objects --index-version=2,0x40 $objdir/pack/test <obj-list &&
++	git multi-pack-index --object-dir=$objdir write &&
++	midx_read_expect 1 17 4 $objdir
+ '
+ 
++midx_git_two_modes() {
++	git -c core.multiPackIndex=false $1 >expect &&
++	git -c core.multiPackIndex=true $1 >actual &&
++	test_cmp expect actual
++}
++
++compare_results_with_midx() {
++	MSG=$1
++	test_expect_success "check normal git operations: $MSG" '
++		midx_git_two_modes "rev-list --objects --all" &&
++		midx_git_two_modes "log --raw"
++	'
++}
++
++compare_results_with_midx "one v2 pack"
++
+ test_expect_success 'Add more objects' '
+ 	for i in $(test_seq 6 10)
+ 	do
+@@ -92,11 +124,13 @@ test_expect_success 'Add more objects' '
+ '
+ 
+ test_expect_success 'write midx with two packs' '
+-	git pack-objects --index-version=1 pack/test-2 <obj-list2 &&
+-	git multi-pack-index --object-dir=. write &&
+-	midx_read_expect 2 33 4 .
++	git pack-objects --index-version=1 $objdir/pack/test-2 <obj-list2 &&
++	git multi-pack-index --object-dir=$objdir write &&
++	midx_read_expect 2 33 4 $objdir
+ '
+ 
++compare_results_with_midx "two packs"
++
+ test_expect_success 'Add more packs' '
+ 	for j in $(test_seq 1 10)
+ 	do
+@@ -117,17 +151,21 @@ test_expect_success 'Add more packs' '
+ 		git ls-tree $tree | sed -e "s/.* \\([0-9a-f]*\\)	.*/\\1/"
+ 		} >obj-list &&
+ 		git update-ref HEAD $commit &&
+-		git pack-objects --index-version=2 pack/test-pack <obj-list &&
++		git pack-objects --index-version=2 $objdir/pack/test-pack <obj-list &&
+ 		i=$(expr $i + 1) || return 1 &&
+ 		j=$(expr $j + 1) || return 1
+ 	done
+ '
+ 
++compare_results_with_midx "mixed mode (two packs + extra)"
++
+ test_expect_success 'write midx with twelve packs' '
+-	git multi-pack-index --object-dir=. write &&
+-	midx_read_expect 12 73 4 .
++	git multi-pack-index --object-dir=$objdir write &&
++	midx_read_expect 12 73 4 $objdir
+ '
+ 
++compare_results_with_midx "twelve packs"
++
+ # usage: corrupt_data <file> <pos> [<data>]
+ corrupt_data() {
+ 	file=$1
 -- 
 2.18.0.118.gd4f65b8d14
 
