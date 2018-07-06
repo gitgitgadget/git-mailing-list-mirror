@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9AEA61F62D
-	for <e@80x24.org>; Fri,  6 Jul 2018 00:54:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2AF871F62D
+	for <e@80x24.org>; Fri,  6 Jul 2018 00:54:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753986AbeGFAy3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Jul 2018 20:54:29 -0400
-Received: from mail-qk0-f196.google.com ([209.85.220.196]:38037 "EHLO
-        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753921AbeGFAyA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Jul 2018 20:54:00 -0400
-Received: by mail-qk0-f196.google.com with SMTP id y4-v6so5503946qka.5
-        for <git@vger.kernel.org>; Thu, 05 Jul 2018 17:54:00 -0700 (PDT)
+        id S1754002AbeGFAyg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Jul 2018 20:54:36 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:44252 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753829AbeGFAxl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Jul 2018 20:53:41 -0400
+Received: by mail-qt0-f194.google.com with SMTP id b15-v6so8704612qtp.11
+        for <git@vger.kernel.org>; Thu, 05 Jul 2018 17:53:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=yuS/sYza6iDM2Pw9TN4UCK/sBmWi6PRRGx+AVQn9C1k=;
-        b=uCwVJzzDiHPArxpsB03wFlucNmR7U6XF6mUFCR8YGhwJlW4n54hE7C2H5U4SFjV4J/
-         Cw4ctI7J6GvR5fKMXO7gOXlVmpq3tSQkE7lPyQ79rxYgKR1Yw4vgDuvZQbAM6zwm6bBB
-         rw38bfTVGa95bqaPioVoH3Qns10L0MuzqaYTWJ6wYyUH00kc0hWSXDvL8nYjH/BF4Aif
-         7IKleBEzslRr0I8I490K62DOAY+o724j4kB45SHKfV2eTlgGGGpuinZMHvq075iadTwh
-         X8DlAFcZfveaZyQy4gjO3/g4NHnuXJGUtfHMUVwa7AVnJ3QVFHZD/GcvJSxO8fqc3F3i
-         fOcg==
+        bh=oE2UVtBKiS1ufaSgi4BHZb7Cnm8IwBGOno/qBnOpULU=;
+        b=reoVqvOKOQZ8/WiNGFnj6QBFe7hCV8BpQamg00M14wuf5Tcw3h9mYEAtXF8UnBiKjJ
+         Vq5Cc2EJ3tqe/jnhic7PEfQIlh1h1v8hwht7S3LlL651T917uelckScMOFE4bLIz08zo
+         eaH6cnhOgYsffEY1gmgut7RjqjCI6whtWTAAjeY2fw90B6tQqDEMOwYarzNoD/3faqfY
+         CEKvWX/IxxHpHDGP2WdQrtOvH+nXy5bSF1K4WPHVwA+TzYhbm7pUV/cfQZqFQ6ubl9op
+         GwP+UlzuIsNOXlwD8Da4cZqxhfpCXDDtQABvVI+g9MgbpEPoH+oCI0ShVOSYg0u43rWP
+         GTNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=yuS/sYza6iDM2Pw9TN4UCK/sBmWi6PRRGx+AVQn9C1k=;
-        b=hyfGJMEnG230bjzmGsaKKWOqmSmQJCbk+b+ij7r80YF/slkgG6xLo+KZkNPMramltU
-         fiNiY5Dwlhs0OpUP4/veUGMTbLsRux8gDnMt84bE8eWoY2fz1P0KFC9DH5AwdMeUdkZB
-         JYPRjFHU1RGtAdNuLsBirxb5ymJaBF7V3oYYKWdLr0q9XwlnRMcUww+DRQtIrfqpJimZ
-         g0x+5xx+C17HrIcnj8Qfc6l/TqG2L8OxEp+sfMY3AVH3q8Q8y6PI2kM174fQxHreKxRA
-         KMuH/UxTPQCmqqHS+/yUpbQH4wFOz2Ksi9KAyzOGd73g6UteZsqwkK0nDrpmZThVI38W
-         q+Ag==
-X-Gm-Message-State: APt69E0GZhWS7kMA9KoYfga6GWtfYS8P1Z8BMwAqSZTWeIytTqlH3yEP
-        ZHAlRG44qkLp9WPYCMus9lzhuuzb
-X-Google-Smtp-Source: AAOMgpdQUYr/Jec0saEFm+XmfddUVrQ5pgZcZMtePb6y3zrYlVjQC+h9t+Wbl66kauiNZzTP1xQ+8g==
-X-Received: by 2002:ae9:dfc2:: with SMTP id t185-v6mr7088598qkf.274.1530838439996;
-        Thu, 05 Jul 2018 17:53:59 -0700 (PDT)
+        bh=oE2UVtBKiS1ufaSgi4BHZb7Cnm8IwBGOno/qBnOpULU=;
+        b=b+hS0UA86XBzcGqKhu7ZEW6S0ohQDaxIAiVG/27LeWMWIJRdJEDGNEaPzcQdJw/SrH
+         umGgj1GfeofqxbqEMcMG8stVYchIq0IRynMVOXkIZVv4J2oyhRQxLCIfZZy7ClcZKx3G
+         JCo8mbahzphENIpPJHc37IBM+X7fc+kg6GRl1kgNCbdbWOquw2Ppv0YWLhWPwJRyrwCI
+         g4ipg4coV899vb6X4iLYp0W28mUDEM3TY4iIz2YQQ6/Ig9TGvLag8tBjNaU5qsafd7ti
+         Gncfo8XSTjbR72bYtK9vaqmHVnmN72aPmoSwTqeYR3TM92TmaBptXi1B7ozT4JX18zR3
+         RKPg==
+X-Gm-Message-State: APt69E0YJw+NqshJdU4Xg1WAfSjT7ftbFSUXcMjFcxnOKNj16InojjZO
+        zv5Q4ZkH6W2XwGrCYDRD0wRsgDdd
+X-Google-Smtp-Source: AAOMgpfjTerVAEAPSXqMmBsTjh0UYolZMVUMNGQY4IpQcqEdablP3Zka2QvK+y7WhJd/aGqugcRfbw==
+X-Received: by 2002:a0c:d647:: with SMTP id e7-v6mr7182529qvj.238.1530838420291;
+        Thu, 05 Jul 2018 17:53:40 -0700 (PDT)
 Received: from stolee-linux-2.corp.microsoft.com ([2001:4898:8010:0:eb4a:5dff:fe0f:730f])
-        by smtp.gmail.com with ESMTPSA id u25-v6sm4882791qku.3.2018.07.05.17.53.59
+        by smtp.gmail.com with ESMTPSA id u25-v6sm4882791qku.3.2018.07.05.17.53.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 05 Jul 2018 17:53:59 -0700 (PDT)
+        Thu, 05 Jul 2018 17:53:39 -0700 (PDT)
 From:   Derrick Stolee <stolee@gmail.com>
 X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, sbeller@google.com, pclouds@gmail.com,
         avarab@gmail.com, dstolee@microsoft.com
-Subject: [PATCH v3 17/24] midx: prepare midxed_git struct
-Date:   Thu,  5 Jul 2018 20:53:14 -0400
-Message-Id: <20180706005321.124643-18-dstolee@microsoft.com>
+Subject: [PATCH v3 07/24] multi-pack-index: expand test data
+Date:   Thu,  5 Jul 2018 20:53:04 -0400
+Message-Id: <20180706005321.124643-8-dstolee@microsoft.com>
 X-Mailer: git-send-email 2.18.0.118.gd4f65b8d14
 In-Reply-To: <20180706005321.124643-1-dstolee@microsoft.com>
 References: <20180625143434.89044-1-dstolee@microsoft.com>
@@ -65,118 +65,133 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+As we build the multi-pack-index file format, we want to test the format
+on real repoasitories. Add tests to t5319-multi-pack-index.sh that
+create repository data including multiple packfiles with both version 1
+and version 2 formats.
+
+The current 'git multi-pack-index write' command will always write the
+same file with no "real" data. This will be expanded in future commits,
+along with the test expectations.
+
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- midx.c         | 22 ++++++++++++++++++++++
- midx.h         |  3 +++
- object-store.h |  9 +++++++++
- packfile.c     |  6 +++++-
- 4 files changed, 39 insertions(+), 1 deletion(-)
+ t/t5319-multi-pack-index.sh | 99 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 99 insertions(+)
 
-diff --git a/midx.c b/midx.c
-index cc35abe7a2..d5a61c0c53 100644
---- a/midx.c
-+++ b/midx.c
-@@ -180,6 +180,28 @@ struct multi_pack_index *load_multi_pack_index(const char *object_dir)
- 	return NULL;
+diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
+index 2ecc369529..1be7be02b8 100755
+--- a/t/t5319-multi-pack-index.sh
++++ b/t/t5319-multi-pack-index.sh
+@@ -13,9 +13,108 @@ midx_read_expect () {
  }
  
-+int prepare_multi_pack_index_one(struct repository *r, const char *object_dir)
-+{
-+	struct multi_pack_index *m = r->objects->multi_pack_index;
-+	struct multi_pack_index *m_search;
-+
-+	if (!core_multi_pack_index)
-+		return 0;
-+
-+	for (m_search = m; m_search; m_search = m_search->next)
-+		if (!strcmp(object_dir, m_search->object_dir))
-+			return 1;
-+
-+	r->objects->multi_pack_index = load_multi_pack_index(object_dir);
-+
-+	if (r->objects->multi_pack_index) {
-+		r->objects->multi_pack_index->next = m;
-+		return 1;
-+	}
-+
-+	return 0;
-+}
-+
- static size_t write_midx_header(struct hashfile *f,
- 				unsigned char num_chunks,
- 				uint32_t num_packs)
-diff --git a/midx.h b/midx.h
-index 2d83dd9ec1..731ad6f094 100644
---- a/midx.h
-+++ b/midx.h
-@@ -1,9 +1,12 @@
- #ifndef __MIDX_H__
- #define __MIDX_H__
+ test_expect_success 'write midx with no packs' '
++	test_when_finished rm -f pack/multi-pack-index &&
+ 	git multi-pack-index --object-dir=. write &&
+ 	test_path_is_file pack/multi-pack-index &&
+ 	midx_read_expect
+ '
  
-+#include "repository.h"
++test_expect_success 'create objects' '
++	for i in $(test_seq 1 5)
++	do
++		iii=$(printf '%03i' $i)
++		test-tool genrandom "bar" 200 >wide_delta_$iii &&
++		test-tool genrandom "baz $iii" 50 >>wide_delta_$iii &&
++		test-tool genrandom "foo"$i 100 >deep_delta_$iii &&
++		test-tool genrandom "foo"$(expr $i + 1) 100 >>deep_delta_$iii &&
++		test-tool genrandom "foo"$(expr $i + 2) 100 >>deep_delta_$iii &&
++		echo $iii >file_$iii &&
++		test-tool genrandom "$iii" 8192 >>file_$iii &&
++		git update-index --add file_$iii deep_delta_$iii wide_delta_$iii &&
++		i=$(expr $i + 1) || return 1
++	done &&
++	{ echo 101 && test-tool genrandom 100 8192; } >file_101 &&
++	git update-index --add file_101 &&
++	tree=$(git write-tree) &&
++	commit=$(git commit-tree $tree </dev/null) && {
++	echo $tree &&
++	git ls-tree $tree | sed -e "s/.* \\([0-9a-f]*\\)	.*/\\1/"
++	} >obj-list &&
++	git update-ref HEAD $commit
++'
 +
- struct multi_pack_index;
- 
- struct multi_pack_index *load_multi_pack_index(const char *object_dir);
-+int prepare_multi_pack_index_one(struct repository *r, const char *object_dir);
- 
- int write_midx_file(const char *object_dir);
- 
-diff --git a/object-store.h b/object-store.h
-index 07bcc80e02..7d67ad7aa9 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -85,6 +85,8 @@ struct packed_git {
- };
- 
- struct multi_pack_index {
-+	struct multi_pack_index *next;
++test_expect_success 'write midx with one v1 pack' '
++	pack=$(git pack-objects --index-version=1 pack/test <obj-list) &&
++	test_when_finished rm pack/test-$pack.pack pack/test-$pack.idx pack/multi-pack-index &&
++	git multi-pack-index --object-dir=. write &&
++	midx_read_expect
++'
 +
- 	int fd;
- 
- 	const unsigned char *data;
-@@ -126,6 +128,13 @@ struct raw_object_store {
- 	 */
- 	struct oidmap *replace_map;
- 
-+	/*
-+	 * private data
-+	 *
-+	 * should only be accessed directly by packfile.c and midx.c
-+	 */
-+	struct multi_pack_index *multi_pack_index;
++test_expect_success 'write midx with one v2 pack' '
++	git pack-objects --index-version=2,0x40 pack/test <obj-list &&
++	git multi-pack-index --object-dir=. write &&
++	midx_read_expect
++'
 +
- 	/*
- 	 * private data
- 	 *
-diff --git a/packfile.c b/packfile.c
-index 3d652212c6..5d4493dbf4 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -15,6 +15,7 @@
- #include "tree-walk.h"
- #include "tree.h"
- #include "object-store.h"
-+#include "midx.h"
- 
- char *odb_pack_name(struct strbuf *buf,
- 		    const unsigned char *sha1,
-@@ -935,10 +936,13 @@ static void prepare_packed_git(struct repository *r)
- 
- 	if (r->objects->packed_git_initialized)
- 		return;
-+	prepare_multi_pack_index_one(r, r->objects->objectdir);
- 	prepare_packed_git_one(r, r->objects->objectdir, 1);
- 	prepare_alt_odb(r);
--	for (alt = r->objects->alt_odb_list; alt; alt = alt->next)
-+	for (alt = r->objects->alt_odb_list; alt; alt = alt->next) {
-+		prepare_multi_pack_index_one(r, alt->path);
- 		prepare_packed_git_one(r, alt->path, 0);
-+	}
- 	rearrange_packed_git(r);
- 	prepare_packed_git_mru(r);
- 	r->objects->packed_git_initialized = 1;
++test_expect_success 'Add more objects' '
++	for i in $(test_seq 6 10)
++	do
++		iii=$(printf '%03i' $i)
++		test-tool genrandom "bar" 200 >wide_delta_$iii &&
++		test-tool genrandom "baz $iii" 50 >>wide_delta_$iii &&
++		test-tool genrandom "foo"$i 100 >deep_delta_$iii &&
++		test-tool genrandom "foo"$(expr $i + 1) 100 >>deep_delta_$iii &&
++		test-tool genrandom "foo"$(expr $i + 2) 100 >>deep_delta_$iii &&
++		echo $iii >file_$iii &&
++		test-tool genrandom "$iii" 8192 >>file_$iii &&
++		git update-index --add file_$iii deep_delta_$iii wide_delta_$iii &&
++		i=$(expr $i + 1) || return 1
++	done &&
++	{ echo 101 && test-tool genrandom 100 8192; } >file_101 &&
++	git update-index --add file_101 &&
++	tree=$(git write-tree) &&
++	commit=$(git commit-tree $tree -p HEAD</dev/null) && {
++	echo $tree &&
++	git ls-tree $tree | sed -e "s/.* \\([0-9a-f]*\\)	.*/\\1/"
++	} >obj-list2 &&
++	git update-ref HEAD $commit
++'
++
++test_expect_success 'write midx with two packs' '
++	git pack-objects --index-version=1 pack/test-2 <obj-list2 &&
++	git multi-pack-index --object-dir=. write &&
++	midx_read_expect
++'
++
++test_expect_success 'Add more packs' '
++	for j in $(test_seq 1 10)
++	do
++		iii=$(printf '%03i' $i)
++		test-tool genrandom "bar" 200 >wide_delta_$iii &&
++		test-tool genrandom "baz $iii" 50 >>wide_delta_$iii &&
++		test-tool genrandom "foo"$i 100 >deep_delta_$iii &&
++		test-tool genrandom "foo"$(expr $i + 1) 100 >>deep_delta_$iii &&
++		test-tool genrandom "foo"$(expr $i + 2) 100 >>deep_delta_$iii &&
++		echo $iii >file_$iii &&
++		test-tool genrandom "$iii" 8192 >>file_$iii &&
++		git update-index --add file_$iii deep_delta_$iii wide_delta_$iii &&
++		{ echo 101 && test-tool genrandom 100 8192; } >file_101 &&
++		git update-index --add file_101 &&
++		tree=$(git write-tree) &&
++		commit=$(git commit-tree $tree -p HEAD</dev/null) && {
++		echo $tree &&
++		git ls-tree $tree | sed -e "s/.* \\([0-9a-f]*\\)	.*/\\1/"
++		} >obj-list &&
++		git update-ref HEAD $commit &&
++		git pack-objects --index-version=2 test-pack <obj-list &&
++		i=$(expr $i + 1) || return 1 &&
++		j=$(expr $j + 1) || return 1
++	done
++'
++
++test_expect_success 'write midx with twelve packs' '
++	git multi-pack-index --object-dir=. write &&
++	midx_read_expect
++'
++
+ test_done
 -- 
 2.18.0.118.gd4f65b8d14
 
