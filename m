@@ -7,94 +7,103 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B48681F62D
-	for <e@80x24.org>; Sat,  7 Jul 2018 11:39:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D91391F62D
+	for <e@80x24.org>; Sat,  7 Jul 2018 12:00:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754107AbeGGLjB (ORCPT <rfc822;e@80x24.org>);
-        Sat, 7 Jul 2018 07:39:01 -0400
-Received: from mout.gmx.net ([212.227.17.22]:36273 "EHLO mout.gmx.net"
+        id S1753953AbeGGMAE (ORCPT <rfc822;e@80x24.org>);
+        Sat, 7 Jul 2018 08:00:04 -0400
+Received: from mout.gmx.net ([212.227.17.22]:40459 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753612AbeGGLi7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 7 Jul 2018 07:38:59 -0400
+        id S1753889AbeGGMAD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 7 Jul 2018 08:00:03 -0400
 Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LzpWx-1g7IoH1aYl-0153EI; Sat, 07
- Jul 2018 13:38:54 +0200
-Date:   Sat, 7 Jul 2018 13:38:38 +0200 (DST)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LuJDv-1g3zdD1t4R-011jJT; Sat, 07
+ Jul 2018 13:59:56 +0200
+Date:   Sat, 7 Jul 2018 13:59:40 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v3 18/20] completion: support `git range-diff`
-In-Reply-To: <xmqqpo00geys.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1807071334480.75@tvgsbejvaqbjf.bet>
-References: <cover.1525448066.git.johannes.schindelin@gmx.de> <pull.1.v3.git.gitgitgadget@gmail.com> <d05b54c603dc68acf198bb8826e3af4f2f11021f.1530617166.git.gitgitgadget@gmail.com> <xmqqpo00geys.fsf@gitster-ct.c.googlers.com>
+To:     Christian Couder <christian.couder@gmail.com>
+cc:     Pratik Karki <predatoramigo@gmail.com>, git <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 4/4] builtin/rebase: support running "git rebase
+ <upstream>"
+In-Reply-To: <CAP8UFD3_+0EDSzcrx9f70HBpWKvr94re5ZimuXDhfTZzJpfCvQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1807071356520.75@tvgsbejvaqbjf.bet>
+References: <20180628074655.5756-1-predatoramigo@gmail.com> <20180706120815.17851-1-predatoramigo@gmail.com> <20180706120815.17851-5-predatoramigo@gmail.com> <CAP8UFD3_+0EDSzcrx9f70HBpWKvr94re5ZimuXDhfTZzJpfCvQ@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:NKoS+qdpD8lxxogf0ApNVJ0HNzD50yC6OoZYOtzm/PWg+XSgQGb
- WyOnmRG5kdfNLhAd8j8rTqq+kuQELbuIvbPsjkwr73cW9Dk09m8KGrzYZqN+gorQpMXW1P2
- AtHBMWLiFrJ0P1wDCU+l30/doGPXvQSQfddNaZai7LAtpAvbX0wxEwrPlPlY/0LTlLGDeVu
- uswnG0lnjaLfvMl7ZShLw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:stDJvKVKYe4=:RN3IXHVCM3xuKukC6h+XBS
- AJqNtauSUmK4lh6kh/2uc8GLVcEJJYZGsygUrdIhunPaTIkTsBimdQe92kryhxmrAcZLzCTIU
- vuPQCUc6bL0B/dbNqznPmyFSKP5KyQ8pGp7X3a7mA3ZxJlEoolA2AhKmZ6Vt1l1BNvNPQDng3
- 33O/OXsoIWbdst9DJnPy0+mdS4Tyu87wNw0szxGKoTv3F445ItbjxEaUva4CcIQPCUscSO5Xf
- 19qE75SEHwpr3faigIyHrIntBQhWJdUu/7L+LxlXl+6jzK+XZ1bUO2ecDMZToMfWkHN8njs2W
- WqaDxZFgZtvGumB7JD4tPIV04CTAC6ttRD15fFHlX0M7ZS1cuvWESccQUkpjQo7OPj2a0RVoJ
- IgN9hCEI8KjDxSrkekfXWQVfP0rZpxYvA/FiFHe57bdxG88z1VSkaO9XFZ+SpEXJmJw0lIXme
- CdAb3yqkWqT3LBUrbz7z9TnRd+pZMnA1YqW2W6AYJvPfUf1fzZCfW4CIjCui3aXXmoAtfMVw5
- FQEOc73a7SLW/4ev3YM2fxgwxxfgJYZMPh1X7mRzsJWz/xBe0oBCbnxAjsQPJO2vYeJc4EIL+
- h1UG9h3NZE4GU+3oE6J6b/ik+d+dzhVt0tPZqzGoND7AfXoLKEQKDyt2MfST0awRwSuPAft2t
- qWaYWshdO2ugu6ddxLpFYY0UkuAmwonCYIsHN8etDMa+YCxdGNJQkQOjIUVjP6sRM8y/M89v5
- 3dAFgKkmPpTf5kmgWzdwFMuBsBfVkK5s2jrOA8kNv9qF1U2LOTadXsw5qs2vyGfLlhCF4TW7q
- FjZRgBq
+X-Provags-ID: V03:K1:DvhomodM827BrTOpEihey+2YeEklaD2dLX5j7C0UyB/MBhrdbjf
+ wwhY3pkLiokZ3RQJb22AL5dZtY+v+xDGz0PtHa/xM+S7UvIjtAr81MJWDtCaXW/RQ71Uo64
+ O9L2XYu0RUAXy4yuu9He3xxHm0NQHH//GUaNnDFFTpe6y7ZWjq50fEzBezzXnRup0CsgWYC
+ f24F5+D/GzPnxuM00lYJg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:hLclAK3/Q8k=:Qlzshnn8BUco1R9F+H94ol
+ vpFHHwflJocIhM+QnXHhiysuu/n+BO4Sl6ihhl7JD4GTHK8nYsQZuLVapdz209binitV+oMZ4
+ QoGm6Mqtq8Yz3/UfML46B+2evjNMi7DcenbWBCxf2UP4enwC1J+5fbXaGGLTrWGGXmAAcECce
+ EfXORrthlyafZ9QkbVHL8b2WtrBHrgBAdKjYIDGAne/GWz2t3QNngLJXwOe0605KBTRfmCtDk
+ DoCoiBUhbp8sloLPQpgvvJw1/IlKsgkyq1SelLuzK0/hJs4xAKvG/KscCXJSv9c9KYgherbLa
+ Jlikn7Mn9LkvtN1QSTK0eFF9cGIHCVhSfZT78New9rVWEjZZtDnlZZnjBNdXqTMh7987S17U2
+ 3JvhSaf0+WChO+ToQqBu/ndm0jvTRlkdA3cqMRiLMOXBxJp4OUlxg+fPiUgcFAR/1DBX8c1FP
+ LwXOzFDcoceizbzBwcvfzwi6m4eqH+0Tix7x3vm5XFbBAzuvlb+2A0UveWF9Si/VG8idMEx6k
+ 0oDjsUeIY6t2boJmdoh7uJA+xRB1FSzgatWnuyomQNNb7AmO/AnpoySHSM7ThtBVABe+6hQtC
+ qyNTc8omUSX5nxHZANa7ehDk7/cTqe8+M3wgWoQcA0Hb/uz9hOxUZR1VXIYp0AQnkieULHDBZ
+ VMkUZIiYqIqhCNQM2HAYOWP6Wui/bCpL/k8qnfvcm7TEdCsGjdfQAJlbzB8X4n+qP7IL3Oofi
+ 8Rs3pULF8m8kZIrhwoIxso1FFx4blF8i0Cgj4MPw/QYoWR0jknpwpobhVbLsISvytL02yepLA
+ 4s5jEts
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Christian,
 
-On Fri, 6 Jul 2018, Junio C Hamano wrote:
+On Sat, 7 Jul 2018, Christian Couder wrote:
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
+> On Fri, Jul 6, 2018 at 2:08 PM, Pratik Karki <predatoramigo@gmail.com> wrote:
 > 
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > Tab completion of `git range-diff` is very convenient, especially
-> > given that the revision arguments to specify the commit ranges to
-> > compare are typically more complex than, say, your grandfather's `git
-> > log` arguments.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > +       switch (opts->type) {
+> > +       case REBASE_AM:
+> > +               backend = "git-rebase--am";
+> > +               backend_func = "git_rebase__am";
+> > +               break;
+> > +       case REBASE_INTERACTIVE:
+> > +               backend = "git-rebase--interactive";
+> > +               backend_func = "git_rebase__interactive";
+> > +               break;
+> > +       case REBASE_MERGE:
+> > +               backend = "git-rebase--merge";
+> > +               backend_func = "git_rebase__merge";
+> > +               break;
+> > +       case REBASE_PRESERVE_MERGES:
+> > +               backend = "git-rebase--preserve-merges";
+> > +               backend_func = "git_rebase__preserve_merges";
+> > +               break;
+> > +       default:
+> > +               BUG("Unhandled rebase type %d", opts->type);
+> > +               break;
 > 
-> Have three-dash lines here, or perhaps have some validation hook in
-> the garden-shears tool to notice these leftoer bits we see below?
+> Nit: I think the "break;" line could be removed as the BUG() should always exit.
+> 
+> A quick grep shows that there are other places where there is a
+> "break;" line after a BUG() though. Maybe one of the #leftoverbits
+> could be about removing those "break;" lines.
 
-This is just a simple case of me overlooking the `squash!` while rebasing.
-The shears were not involved, as it is not a branch thicket, it is a
-simple, linear branch.
+But what if there is a bug in the BUG() function? Shouldn't we then not
+call `die()` directly after the `BUG()`?
 
-I guess I could install some sort of post-rewrite hook, but then, I'd
-rather have this as a more generally useful feature, directly in `rebase
--i`: if running in autosquash mode, when offering to edit squashed commit
-messages, `git rebase -i` should refuse by default to accept a commit
-message that contains a line that starts with `squash! `.
+Okay, sorry, I let myself loose a little, as I think that we are still
+safely in the territory where the code needs to be made correct. We can
+nitpick when there are no "biggies" left to comment about. Maybe focus a
+little more on whether the code does what it should do, rather than
+whether some stylistic guidelines are violated?
 
-Would make for a nice micro-project, methinks.
+I mean, we can argue back and forth about white-space, indentation,
+superfluous break statements, etc. But that way, we won't get anywhere
+with the builtin rebase.
 
-> > squash! WIP completion: support `git range-diff`
-> >
-> > Revert "WIP completion: support `git range-diff`"
-> >
-> > This reverts commit 2e7af652af9e53a19fd947f8ebe37a78043afa49.
-> > ---
-
-I will fix this in my branch, of course, and force-push, but will wait
-with sending out a new revision of the patch series in case more reviews
-roll in.
+Let's help Pratik instead to complete his project, okay?
 
 Ciao,
 Dscho
