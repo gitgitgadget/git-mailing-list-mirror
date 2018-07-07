@@ -2,95 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_BL_SPAMCOP_NET,
-	RCVD_IN_DNSWL_HI,T_DKIM_INVALID shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 83A981F62D
-	for <e@80x24.org>; Sat,  7 Jul 2018 16:41:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D3C961F62D
+	for <e@80x24.org>; Sat,  7 Jul 2018 19:27:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754248AbeGGQlD (ORCPT <rfc822;e@80x24.org>);
-        Sat, 7 Jul 2018 12:41:03 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:42428 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754233AbeGGQlC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 7 Jul 2018 12:41:02 -0400
-Received: by mail-wr1-f68.google.com with SMTP id p1-v6so6874411wrs.9
-        for <git@vger.kernel.org>; Sat, 07 Jul 2018 09:41:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=z27uvwhB8G7e0r+lpxVEw2w7GyGwg1OQCE6Nxd85YOY=;
-        b=rdQdMWe3bJJza+dlUKV5f6E/6hKweoRm1s3LhKG9pXHxJ8kq4a9MuvBUba2M+upwKv
-         S/QzqSOUb68pHCnTs5MMQ+/KMuX7tjQztdgCs3aL6lTEGrXzV98zmeiMabhYI3ZrAS8w
-         RcjaSrkt7D89W0vbCwEPklSh4y+nmRyofAylY9KJD9MPg3nlAFT6z0mligY1bggDKtoM
-         v8kzF/UMyAgxZNu75I8y+U+l+isvCi+1qHDxpB+k9KaUJWjE0KtJS5aIOuZqZnmyc25g
-         l3OAfju5CZJ/wRkauty1zvVJgmIA6DjfQQwvVofrI8tjGScxBPrqRMvaMbXPnS7TRQId
-         7+Ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=z27uvwhB8G7e0r+lpxVEw2w7GyGwg1OQCE6Nxd85YOY=;
-        b=iGll6ckyLNR4HRtjLLAUG6BE7U2EWQCu3wTekWDRxGxJYCiwTYJoxmh+EcP4uUiMxj
-         9jRViTZooOmVsZ0brTDdXah/sKGpZOcxCfa0QOIxBwn8AVu3KXlphg8MTlfGUtNZp9H6
-         Uy20+0WsEKLVeYgW1GBvKUKXUiwd/PFIsOCTrJQnxVOakwyLiURJL70EOg8hdj37DH6M
-         jZfwrHooOJHdf43HGLD4ItRq8U2fpKHgruzZMYQpnqM42VTeR5GBYGlcpIG6/joFtzuR
-         8SItCe7v/clskKBfsOTMy2qaE5d2jMEIxJGKeYrcwXU8FFaNFmvQa1Ss3uAB03dFXCUq
-         IWfQ==
-X-Gm-Message-State: APt69E1P+A8hoNQixsOgxVwJ0/LsfGhwhP+HNyBMH3dGSlvhV041neFo
-        IJ41q10ayqmPl7aIuUzOZvwi8Tsl
-X-Google-Smtp-Source: AAOMgpechfsMOQ/yBUTBOc19GFhBvKd/kisyrKKaI0YcLNHFzfVeIAHdETcMoUZRRo2eGDMh1UiygQ==
-X-Received: by 2002:adf:9ed0:: with SMTP id b16-v6mr9580664wrf.170.1530981660450;
-        Sat, 07 Jul 2018 09:41:00 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id m17-v6sm17086554wrg.65.2018.07.07.09.40.59
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 07 Jul 2018 09:40:59 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Alban Gruin <alban.gruin@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        phillip.wood@dunelm.org.uk,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [GSoC][PATCH v2 6/7] rebase -i: rewrite setup_reflog_action() in C
-References: <20180702105717.26386-1-alban.gruin@gmail.com>
-        <20180702105717.26386-7-alban.gruin@gmail.com>
-        <xmqq8t6soy2f.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1807061457250.75@tvgsbejvaqbjf.bet>
-        <xmqqy3eommq2.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1807062052230.75@tvgsbejvaqbjf.bet>
-        <xmqq7em8hvv9.fsf@gitster-ct.c.googlers.com>
-Date:   Sat, 07 Jul 2018 09:40:59 -0700
-In-Reply-To: <xmqq7em8hvv9.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Fri, 06 Jul 2018 14:55:54 -0700")
-Message-ID: <xmqq36wvgfs4.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1754308AbeGGT1P (ORCPT <rfc822;e@80x24.org>);
+        Sat, 7 Jul 2018 15:27:15 -0400
+Received: from mout.gmx.net ([212.227.17.21]:46257 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754150AbeGGT1P (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 7 Jul 2018 15:27:15 -0400
+Received: from MININT-6BKU6QN ([89.204.154.202]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MY3Ho-1fXZQy2qmG-00UvOf; Sat, 07
+ Jul 2018 21:27:08 +0200
+Date:   Sat, 7 Jul 2018 21:27:07 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v3 01/20] linear-assignment: a function to solve least-cost
+ assignment problems
+In-Reply-To: <xmqq7em7gg3j.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1807072116570.75@tvgsbejvaqbjf.bet>
+References: <cover.1525448066.git.johannes.schindelin@gmx.de> <pull.1.v3.git.gitgitgadget@gmail.com> <39272eefcfe66de3ca1aa2ee43d6626ce558caae.1530617166.git.gitgitgadget@gmail.com> <xmqqtvpcgf40.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1807071320110.75@tvgsbejvaqbjf.bet>
+ <xmqq7em7gg3j.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Q6D5fr/jTtkBrN2k2kwWmFvgikp1uPy8uml0bVyohMVaj6VCvMy
+ Yu2w8hvY18f0uFhe+FbkodmX1ujE/sqUhNHNibB0HUFc3YUy36yL8yFclJl6kjA3p9JxHEA
+ SpF2wIbnsmWf7gaiUL2YFtd2URmrGrh8Eqk7HclrD2w0IU2e9fL4+yR7BJF5xC3wv4rSZat
+ GtKSRk4ZeeASqdIvDQWYw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:QPb8O74pWY0=:ZLwXdN4BYZ5DuwGChIaxiY
+ BL78/J8nzQIOsDBNu2azAsvmXW2MZdw+I948cBwAjgcUcbrSQ3wIil5FzDA9aIeERs5MuswF5
+ uJyVdiLz0/HF0aZM3T/ydXe8DVWFHPiGAUQIFNvZoZ09zEBwwMNZgj90BFT0uhXwl2oFzPc9B
+ C4WjKlTYodwNTn5A3MbhMeGWTCrlPtyyWhTGtEpGAzNjrpipmLBPlwHwpB0NMQxZRzdvcDBn8
+ 8Rp6qcyjcaTh6Z5/goWoTi0bBK1gjajAACi7zfV5O6UxEbMkGelCPm9g+TrgiibSuCnzX7s6Z
+ eXQcH9M7IsR41H5VMi8U+/sDBI5dDeXr7cpW5LYsSIzZ28Zey1mwf+VhuKtKbU5rp65UD78KL
+ cAxpkMdZyAtptPJlP+Jh+wrKfM+7BEMXyfYEnZRlhWXhG7qGRS69Fj0NcOYpIIP3rdskSEAEk
+ MbBc1nYcLDJpF2z+2NcGOuatJ1eJKQILVH5gOm4a0g7YPbIx4+gv0QToYeYvOieqV/xWykcYi
+ aL4uBLHHbJWkrcIllZuBrOeawkSka7DrgHE0kGtGzr72rluSw0B66DxulrkOJwih7musqooZY
+ loA4z1a/yYQTENiBWvcEeb3TNRud0lS9oTWok84xY/BfzRCKkJuTe+Ac2CuJnJrg5SHSAG7rv
+ PQENxocET0ruZlC75mJDb5t9gVeCPHnUMy95XVwaMyLqDNyip2P9piGbVpWFtn43U2iZ0pitE
+ fNfaZ0GzCzfT01jReeU2JnbFQCqurbzy1akfqJ0hW2TarD29QDUFOJ01Kpmhlp9MMNwhr8PrJ
+ JE7Sy/i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi Junio,
 
-> I actually think that is a good example of doing the same thing
-> slightly differently.  ...
+On Sat, 7 Jul 2018, Junio C Hamano wrote:
 
-[jc: Beating the dead horse, only to avoid misleading those who are
-learning from the sidelines...]
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> Does the "gitgitgadget" thing lie on the Date: e-mail header?
+> >
+> > No, GitGitGadget takes the literal output from `git format-patch`, as far
+> > as I can tell. So if at all, it is `format-patch` that is lying.
+> 
+> format-patch faithfully records the fact about the commit that is
+> made into the patch.  How pieces of information should (or should
+> not) be used depends on the purpose of the application that uses
+> its output.
 
-The above was a stupid thing to say and end the message with, as it
-made it sound as if there are only two cases and we have a simple
-(but not that simple as alluded to earlier by Dscho that essentially
-says not to write 'else' when 'if' body returns or exits) rule that
-you should blindly apply after telling these two cases apart.  
+I guess this is one of the fallouts for abusing the `format-patch|am`
+dance for `rebase--am`.
 
-That is a total opposite of the message that should be read from the
-whole thread.
+> I'd suggest to match what send-email does, which is to notice but
+> use the current date when adding a Date: header.  An option to lie
+> to SMTP servers may be OK but I do not think we want to encourage
+> such a behaviour by making it the default.
 
+I opened a PR to add a TODO:
+
+	https://github.com/gitgitgadget/gitgitgadget/pull/15
+
+> What is missing in the core-git tools is an ability to tell
+> send-email to optionaly add an in-body header to record the author
+> date of the original.  We add an in-body header that records the
+> real author when it is different from the sender automatically, and
+> it is OK to have an option to allow doing so (but not encouraged
+> around here---it is easier to reason about the resulting history for
+> everybody, perhaps other than the original author, to record the
+> first time you show the change to the public as the author time).
+
+Pull Request-based workflows keep the original author date all the time.
+If that is not desired, we need to do more than paper over it by adjusting
+`send-email`.
+
+Ciao,
+Dscho
