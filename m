@@ -2,94 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E3E71F62D
-	for <e@80x24.org>; Sat,  7 Jul 2018 02:16:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 512571F62D
+	for <e@80x24.org>; Sat,  7 Jul 2018 04:25:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932714AbeGGCQH (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Jul 2018 22:16:07 -0400
-Received: from mail-ua0-f169.google.com ([209.85.217.169]:44663 "EHLO
-        mail-ua0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932362AbeGGCQG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Jul 2018 22:16:06 -0400
-Received: by mail-ua0-f169.google.com with SMTP id v15-v6so8650555ual.11
-        for <git@vger.kernel.org>; Fri, 06 Jul 2018 19:16:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=xT9Tsv41+0H4B/uIi1izQg3wb7KQQKSj5Qzy8/WRYbE=;
-        b=nwNeJQemOQJYkpb8MuBKGXQcd7iro+PhXA7ahWh8wxD/VIp/0v6lk+hYusItUv0tm6
-         SWy5exGwRpQweAOMxrE3uJnFEzLStCEXCPcXZzWUkp1S/eeZlCT1cJQETuI9RaDiKqb2
-         4Ms7uqHJssY/7cGYvUzEm/DDUwhV8wqiUp7Srz1zM1K/lEtjSpTrIj7WD7WKYWFBv61O
-         oAl85c8Gr2z0xI6xLiSLq5wDvDtWFmNerEw9mq5hrezmqZ9o+f3SkwFRsqT8PSMaxiO/
-         Xg6JKPpuxMNup0P+jkMjrmJvt2vPsedFfFmqFiJYs4yaCu3hvsCLkng5DNkmJ8/oJLMQ
-         TrYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=xT9Tsv41+0H4B/uIi1izQg3wb7KQQKSj5Qzy8/WRYbE=;
-        b=E69IUf/ZlqodB/tNxnAlDRhi+51Yh437dm3iwnhefhOQgUwXqw5VceBdJHiEqK0mN+
-         0BeSp1rKz4pTONcOy9v0m8Ug1R+vLYsTFibq7jpzofS4qTOWklFWcDvE0G5wNk38k3bj
-         Bau9pbE14wSko0ljYDN/Qi2jglEZyNdSDar1SIIbcFSaCnT1bsshxMEgvZuPUaEV7xc1
-         UoET4oTrug80/1SaD9oK/it7EeeZ53r7VfQixTsRMlNnoV4QeGBJ4ZujNZG+LN+gzptU
-         XG67QiT865pH+FUvANCrzNPJ9DfJxvDsAH12vTLrJiq5ewy+BqS53gzG2+riTfesK66r
-         pQZA==
-X-Gm-Message-State: APt69E0SL7AdHLIIMZlwVKdpIsaI8b7/ovt7ch7uZFBUpnghiRuk3gEs
-        mjTVKSDFKOsKDPSizmVjPB7f0ma4kYLI0e69/8w=
-X-Google-Smtp-Source: AAOMgpfjx85Q8yW2Xzh+HJOloAkpUqG7Fg3eXyv9PnDfyU9oTwExWykVe/nL5A19dwR2yKEVzCKTwf10r1U28icqRIA=
-X-Received: by 2002:ab0:4eef:: with SMTP id x47-v6mr7629588uah.23.1530929765306;
- Fri, 06 Jul 2018 19:16:05 -0700 (PDT)
+        id S1750885AbeGGEZo (ORCPT <rfc822;e@80x24.org>);
+        Sat, 7 Jul 2018 00:25:44 -0400
+Received: from imap.thunk.org ([74.207.234.97]:42194 "EHLO imap.thunk.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750762AbeGGEZn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 7 Jul 2018 00:25:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org;
+         s=ef5046eb; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
+        Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=opkMrG9/+9Ykf3za8xpLHZPj3pe56aXTrQb1Exl1Y60=; b=QQRatm9zx35YiIWtIVkws565zq
+        FR27ig4hrrQTKc5hZbqcidJp2fQHSt8+OaHe1Wa08xINZVA+3o8vtRSjbZ+1yF7ELs2EnfPhiwxWK
+        OUE9Q/UD0qCYyDiYV3T6owhxh85uo2iczrvzCQKF2Q2ZFXhJZ6gqxRD6YFjrMUHhBFeE=;
+Received: from root (helo=callcc.thunk.org)
+        by imap.thunk.org with local-esmtp (Exim 4.89)
+        (envelope-from <tytso@thunk.org>)
+        id 1fbemt-00068E-Jt; Sat, 07 Jul 2018 04:25:35 +0000
+Received: by callcc.thunk.org (Postfix, from userid 15806)
+        id 674CF7A552B; Sat,  7 Jul 2018 00:25:34 -0400 (EDT)
+Date:   Sat, 7 Jul 2018 00:25:34 -0400
+From:   "Theodore Y. Ts'o" <tytso@mit.edu>
+To:     frederik@ofb.net
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
+        "Robert P. J. Day" <rpjday@crashcourse.ca>
+Subject: Re: de-alphabetizing the documentation
+Message-ID: <20180707042534.GC3546@thunk.org>
+References: <20180706213239.GA867@flurp.local>
+ <20180706211828.GC6195@aiede.svl.corp.google.com>
+ <20180706232147.GF6343@ofb.net>
 MIME-Version: 1.0
-Received: by 2002:ab0:21c7:0:0:0:0:0 with HTTP; Fri, 6 Jul 2018 19:16:04 -0700 (PDT)
-In-Reply-To: <xmqqlgaogeff.fsf@gitster-ct.c.googlers.com>
-References: <xmqqlgaogeff.fsf@gitster-ct.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 6 Jul 2018 19:16:04 -0700
-Message-ID: <CABPp-BFs1gYzBY5+QrrLEB5kJTaierSGDnYWs=5HKRcPksx9cw@mail.gmail.com>
-Subject: Re: What's (not) cooking
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-        kgybels@infogroep.be
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180706232147.GF6343@ofb.net>
+User-Agent: Mutt/1.10.0 (2018-05-17)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 6, 2018 at 3:57 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> I'll be pushing out the integration branches with some updates, but
-> there is no change in 'next' and below.  The following topics I gave
-> a quick look and gave them topic branches, but I had trouble merging
-> them in 'pu' and making them work correctly or pass the tests, so
-> they are not part of 'pu' in today's pushout.
->
->     pk/rebase-in-c
->     en/dirty-merge-fixes
->     en/t6036-merge-recursive-tests
->     en/t6042-insane-merge-rename-testcases
->     ds/multi-pack-index
+On Fri, Jul 06, 2018 at 04:21:47PM -0700, frederik@ofb.net wrote:
+> I don't think that it's really important to find a "best" ordering for
+> commands or glossary terms; it's more a matter of finding someone who
+> is willing to take responsibility for choosing a reasonable ordering.
+> Presumably the head maintainer of this project could delegate the task
+> to a qualified volunteer, not a newbie like myself but not necessarily
+> someone with expert knowledge either. It's too bad that a policy of
+> not listing things alphabetically wasn't adopted from the beginning of
+> this project, but I guess that's life.
 
-It looks to me like the main problem is that pu itself has lots of
-test failures.  It seems to bisect down to
-kg/gc-auto-windows-workaround.  If I revert commit ac9d3fdbebbd ("gc
---auto: clear repository before auto packing", 2018-07-04), then pu
-passes tests again for me.  With that reverted, I can merge
-en/t6036-merge-recursive-tests and
-en/t6042-insane-merge-rename-testcases without conflicts and the tests
-pass without incident.
+That wasn't that portion of the man page, for better or for worse.  We
+can debate whethher using a non-alphabetical order would be better or
+worse for everyone; personally, I think the much better pointer is at
+the very beginning of the git man page, which points people at "man
+gittutorial" and "man giteveryday".
 
-The other three topics all have merge conflicts.
+It seems to me that for your stated goal, "git everyday" has a good
+list of commands that people should learn, complete with a proposed
+workflow.
 
-en/dirty-merge-fixes has a small conflict with the new topic
-nd/use-the-index-compat-less, which I mentioned as a possibility in
-the cover letter to my series.  I'm happy to do whatever makes it
-easiest for you to pick up; I can easily rebase on that topic branch,
-but I thought you wanted to see that topic redone first (to avoid
-"useless churn"), so I'm unsure what the right next step is.
+That's probably the biggest stumbling block of finding an ideal
+ordering.  What's reasonable really depends on your workflow, and
+there are many different workflows depending on what a particular
+developer is trying to do.  Consider carpentry; for some use cases, a
+screwdriver is an absolutely critical tool.  For others, they might
+never use it, and instead almost exclusively join two pieces of woods
+using mortise and tenon joint.  Others might use a butt joint, plus
+glue and nails.  All of these different techniques can be used to make
+a wooden box, and they all involve a very different set of tools.
+
+Regards,
+
+					- Ted
