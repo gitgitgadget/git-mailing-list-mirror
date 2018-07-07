@@ -7,103 +7,91 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D91391F62D
-	for <e@80x24.org>; Sat,  7 Jul 2018 12:00:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D1271F62D
+	for <e@80x24.org>; Sat,  7 Jul 2018 12:25:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753953AbeGGMAE (ORCPT <rfc822;e@80x24.org>);
-        Sat, 7 Jul 2018 08:00:04 -0400
-Received: from mout.gmx.net ([212.227.17.22]:40459 "EHLO mout.gmx.net"
+        id S1753993AbeGGMZf (ORCPT <rfc822;e@80x24.org>);
+        Sat, 7 Jul 2018 08:25:35 -0400
+Received: from mout.gmx.net ([212.227.15.18]:54703 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753889AbeGGMAD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 7 Jul 2018 08:00:03 -0400
-Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LuJDv-1g3zdD1t4R-011jJT; Sat, 07
- Jul 2018 13:59:56 +0200
-Date:   Sat, 7 Jul 2018 13:59:40 +0200 (DST)
+        id S1753905AbeGGMIx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 7 Jul 2018 08:08:53 -0400
+Received: from [192.168.0.129] ([37.201.195.74]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M8Nik-1fyGyh2xSk-00vvXw; Sat, 07
+ Jul 2018 14:08:49 +0200
+Date:   Sat, 7 Jul 2018 14:08:33 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Christian Couder <christian.couder@gmail.com>
-cc:     Pratik Karki <predatoramigo@gmail.com>, git <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 4/4] builtin/rebase: support running "git rebase
- <upstream>"
-In-Reply-To: <CAP8UFD3_+0EDSzcrx9f70HBpWKvr94re5ZimuXDhfTZzJpfCvQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1807071356520.75@tvgsbejvaqbjf.bet>
-References: <20180628074655.5756-1-predatoramigo@gmail.com> <20180706120815.17851-1-predatoramigo@gmail.com> <20180706120815.17851-5-predatoramigo@gmail.com> <CAP8UFD3_+0EDSzcrx9f70HBpWKvr94re5ZimuXDhfTZzJpfCvQ@mail.gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: Re: What's (not) cooking
+In-Reply-To: <xmqqlgaogeff.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1807071403320.75@tvgsbejvaqbjf.bet>
+References: <xmqqlgaogeff.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:DvhomodM827BrTOpEihey+2YeEklaD2dLX5j7C0UyB/MBhrdbjf
- wwhY3pkLiokZ3RQJb22AL5dZtY+v+xDGz0PtHa/xM+S7UvIjtAr81MJWDtCaXW/RQ71Uo64
- O9L2XYu0RUAXy4yuu9He3xxHm0NQHH//GUaNnDFFTpe6y7ZWjq50fEzBezzXnRup0CsgWYC
- f24F5+D/GzPnxuM00lYJg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:hLclAK3/Q8k=:Qlzshnn8BUco1R9F+H94ol
- vpFHHwflJocIhM+QnXHhiysuu/n+BO4Sl6ihhl7JD4GTHK8nYsQZuLVapdz209binitV+oMZ4
- QoGm6Mqtq8Yz3/UfML46B+2evjNMi7DcenbWBCxf2UP4enwC1J+5fbXaGGLTrWGGXmAAcECce
- EfXORrthlyafZ9QkbVHL8b2WtrBHrgBAdKjYIDGAne/GWz2t3QNngLJXwOe0605KBTRfmCtDk
- DoCoiBUhbp8sloLPQpgvvJw1/IlKsgkyq1SelLuzK0/hJs4xAKvG/KscCXJSv9c9KYgherbLa
- Jlikn7Mn9LkvtN1QSTK0eFF9cGIHCVhSfZT78New9rVWEjZZtDnlZZnjBNdXqTMh7987S17U2
- 3JvhSaf0+WChO+ToQqBu/ndm0jvTRlkdA3cqMRiLMOXBxJp4OUlxg+fPiUgcFAR/1DBX8c1FP
- LwXOzFDcoceizbzBwcvfzwi6m4eqH+0Tix7x3vm5XFbBAzuvlb+2A0UveWF9Si/VG8idMEx6k
- 0oDjsUeIY6t2boJmdoh7uJA+xRB1FSzgatWnuyomQNNb7AmO/AnpoySHSM7ThtBVABe+6hQtC
- qyNTc8omUSX5nxHZANa7ehDk7/cTqe8+M3wgWoQcA0Hb/uz9hOxUZR1VXIYp0AQnkieULHDBZ
- VMkUZIiYqIqhCNQM2HAYOWP6Wui/bCpL/k8qnfvcm7TEdCsGjdfQAJlbzB8X4n+qP7IL3Oofi
- 8Rs3pULF8m8kZIrhwoIxso1FFx4blF8i0Cgj4MPw/QYoWR0jknpwpobhVbLsISvytL02yepLA
- 4s5jEts
+X-Provags-ID: V03:K1:7RUU+2COCEvDB431dAFM2dmsMLpC9yli3BLcdit6NePuT13D7po
+ HzUmYsgQbZAaURfOedNhkhjZMbSpmufOuh4CDp+HAeiT68fpEdouDxzWdmKRqAm5xf8G+Km
+ wvLSNd8jsGLHn2Y52TkdbJn2xVtMH/CDzKJfckDg2qbSXEzywCZUFT5hvPe1aNJAECJsR0I
+ 9Nha9cLg9+g0mNokp0e2A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:MxaCadz49ZQ=:aKxkJ0+yeULrvuznhvodHP
+ vxT+WkkK4MCa5sAGvPSe/PjyLUoc6GgEKquPby8cnFP12DVJlfJ3K0SCwjQbpfLkXiNV6Ztly
+ xveZFtd97mZVMyaCHTmatr0WF+2OuhKuQLDHzJees0XObnryxrDLaDt2SaCGPRcqDE4BH/GlC
+ mjofmGYk69XOmA+6qHoTeggqVUxG9G5RFehktGJqpJEZxUkZvmC/tMoUwZvZZC4xPvyRwOiLb
+ 3VSXm3fR7fnO9XTMYnxYAJ2ysGi2vM2q2xHHP/9SCE4WCvI/PIeAmM3A36l4tiVa03zQd59t9
+ lqUBV7W00t51hMlJNpYsevPMEUuTfSKhAWmN5CVgLOoskfupoSqAVZF7PRprMZYbRg66u83d+
+ Joxo1rjcbBAtWiR3q17BUOf+wu8Xpw4zjHUlJo1b9GUAIKoOKBBR03nqCeyFM3SYuaZslhHzA
+ 6oaVWDt2cU3xQgH0HbReqdZfkw7VFXAvJndxnWJjUKyZI7pKeSQ32pheFLnZFpm7xj5lwtLCS
+ +MC9An9r8baQ0gPu/T7KmkdduhsfXeSyh1KGXP1uaiV/X3kwoNm4fxWWs62oNf4rgMytROr4d
+ K7Q/zEwMzvvrcNCkK22E4yeHnhAwAaGchN4s0dckPwDUhMSvRomhKBb99WIy3/kWEXcWjNeat
+ cU56ggp2Wv2mGUqu9EzlUy9wh883z/k+bGc1YS/smrE6CI8sr7fyvCg9vHRZD8eIpWQo1JvyC
+ HF8ov+7WHtaqzzBFklnJkJ4WCyggkClo7rFE1MemSOddD+6KCefBdj49DWkytCw16Nc220XhH
+ M8Dyw4l
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Christian,
+Hi Junio,
 
-On Sat, 7 Jul 2018, Christian Couder wrote:
+On Fri, 6 Jul 2018, Junio C Hamano wrote:
 
-> On Fri, Jul 6, 2018 at 2:08 PM, Pratik Karki <predatoramigo@gmail.com> wrote:
+> I'll be pushing out the integration branches with some updates, but
+> there is no change in 'next' and below.  The following topics I gave
+> a quick look and gave them topic branches, but I had trouble merging
+> them in 'pu' and making them work correctly or pass the tests, so
+> they are not part of 'pu' in today's pushout.
 > 
-> > +       switch (opts->type) {
-> > +       case REBASE_AM:
-> > +               backend = "git-rebase--am";
-> > +               backend_func = "git_rebase__am";
-> > +               break;
-> > +       case REBASE_INTERACTIVE:
-> > +               backend = "git-rebase--interactive";
-> > +               backend_func = "git_rebase__interactive";
-> > +               break;
-> > +       case REBASE_MERGE:
-> > +               backend = "git-rebase--merge";
-> > +               backend_func = "git_rebase__merge";
-> > +               break;
-> > +       case REBASE_PRESERVE_MERGES:
-> > +               backend = "git-rebase--preserve-merges";
-> > +               backend_func = "git_rebase__preserve_merges";
-> > +               break;
-> > +       default:
-> > +               BUG("Unhandled rebase type %d", opts->type);
-> > +               break;
-> 
-> Nit: I think the "break;" line could be removed as the BUG() should always exit.
-> 
-> A quick grep shows that there are other places where there is a
-> "break;" line after a BUG() though. Maybe one of the #leftoverbits
-> could be about removing those "break;" lines.
+>     pk/rebase-in-c
+>     en/dirty-merge-fixes
+>     en/t6036-merge-recursive-tests
+>     en/t6042-insane-merge-rename-testcases
+>     ds/multi-pack-index
 
-But what if there is a bug in the BUG() function? Shouldn't we then not
-call `die()` directly after the `BUG()`?
+Quick note that `pu` is broken on Windows:
 
-Okay, sorry, I let myself loose a little, as I think that we are still
-safely in the territory where the code needs to be made correct. We can
-nitpick when there are no "biggies" left to comment about. Maybe focus a
-little more on whether the code does what it should do, rather than
-whether some stylistic guidelines are violated?
+https://git-for-windows.visualstudio.com/git/git%20Team/_build/results?buildId=11901&view=logs
 
-I mean, we can argue back and forth about white-space, indentation,
-superfluous break statements, etc. But that way, we won't get anywhere
-with the builtin rebase.
+One quite serious looking symptom is this (line 169728 in the log):
 
-Let's help Pratik instead to complete his project, okay?
+2018-07-07T00:25:33.9171932Z ./test-lib.sh: line 664:  4516 Segmentation
+fault      git gc
+
+As you know, some time ago I tried to implement an automated build that
+auto-bisects issues like this, and unfortunately I had to disable this
+because it regularly ran out of time after 4h to bisect through the
+complex commit history (due to the fact that many branches in `pu` are not
+based on `master` but on commits that are way back in the past, and an
+automated build cannot retain information easily such as "this commit was
+clean, and please do not bother bisecting past it".
+
+And sadly, previous tests of `pu` (see
+https://git-for-windows.visualstudio.com/git/_build/index?definitionId=1&_a=history)
+were failing on Windows already in the compile stage, see
+e.g. https://git-for-windows.visualstudio.com/git/git%20Team/_build/results?buildId=11612&view=logs
+
+So I have no idea what caused this `gc` breakage.
 
 Ciao,
 Dscho
