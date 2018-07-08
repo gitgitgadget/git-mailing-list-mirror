@@ -2,115 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C6E7A1F62D
-	for <e@80x24.org>; Sun,  8 Jul 2018 18:51:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F4A11F62D
+	for <e@80x24.org>; Sun,  8 Jul 2018 19:01:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932799AbeGHSvU (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Jul 2018 14:51:20 -0400
-Received: from wout1-smtp.messagingengine.com ([64.147.123.24]:47285 "EHLO
-        wout1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932688AbeGHSvU (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 8 Jul 2018 14:51:20 -0400
-X-Greylist: delayed 574 seconds by postgrey-1.27 at vger.kernel.org; Sun, 08 Jul 2018 14:51:20 EDT
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id 10D89292;
-        Sun,  8 Jul 2018 14:42:28 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Sun, 08 Jul 2018 14:42:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=living180.net;
-         h=cc:date:from:in-reply-to:message-id:references:subject:to
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=9gEoLDEVd+uTpIxYS
-        CXg9jyrjVyKFB2OJ/Fq1hTIv3U=; b=SGUyNzcjDkgA+XYIopEQ2RJKg05nRixok
-        TBbXUCwWIsLVifb9bQ64hC+B0DIYjFeTukSanXoN9LqYBMqUc68w7zpDnESjEbPh
-        jm4I5DmAVmiEY0zkMwojX9tQJHBVUNRUYwusAv/EV6A3RvXy1rqpwvhA8JhOVgX/
-        K4PuoQrRUpgxe22raNGSaufegaQ/tDd05SsZ/lKfq1J4paUCQHV8JnWp7W3ZEG2h
-        x6Ms2PNQEOoEVZgIrYLYesGQCidsNTMw9gBzbpfoPXdbSZ8J1ZHeY4dBfLxedTFw
-        Eimwmw1Zqu6INCxTB0UEEMKurf1jlQo0BoKUGs54PUMRWf0CD2zaA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:date:from:in-reply-to:message-id
-        :references:subject:to:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm3; bh=9gEoLDEVd+uTpIxYSCXg9jyrjVyKFB2OJ/Fq1hTIv3U=; b=ir0wYAJD
-        6P6omvZMpO+/r2NK2oLac/esgnadlVNIQrDM6GQAhAySdEYQiatGYkKlBVWac5gh
-        ySiUJ6amuQv9pY+VbAHeCYsKO4HcbzQxJWgIfCj+EZ7vekGikxnDtKT5g8T47IQr
-        Hdj3pCumS9gNi0NgMFHyNRVKn2p4a6y5fZC1LkS+U4616I8ipwsSKsV0OTyIV6FC
-        oKBzRzyJrPjdgOAtc+im/u9CQHfPN39wlwBz0EVChGjwMKVnXs33VY9B84yXkCIW
-        AxhJROClhmpjq7WWx+/C+xDqtNPasX+922gWAKWQE2EpRqZvhggIGkTTAivBesxg
-        z9gHM+UvTPvQMg==
-X-ME-Proxy: <xmx:E1tCW6qCTG5p8qgWvX4-Id3G7yafYaUlM9D1VkRD5G_foDyGmYeCJQ>
-    <xmx:E1tCW2M69H94FU9ILOHHfEefnnBiVP2HTgLedoTghdRBgaHFXF_h7A>
-    <xmx:E1tCW1o8ZSN5vk-QaCHNrAe49HcLKuUHrlRB7b5AnRvdd3x835N6cg>
-    <xmx:E1tCW7diAP2JwzXWrgCIwvnlt-oFELGWPc6wfMC0yaExIfL5YLiIQw>
-    <xmx:E1tCW7TR2xbdh1b6Ti6tjQbt5Vm11u1FHgRFVYJNngANxVvK1Xg_lQ>
-    <xmx:E1tCW6mHd17_u5bxrH2FFsxrQXDnlSe2ZuumR-P9Un8mKQcSHBZcGg>
-X-ME-Sender: <xms:E1tCW9VUtafsX7vbMWt2v2tVr_66TkvBaROErZOsUxix8aafCcX5sw>
-Received: from localhost (unknown [46.185.196.38])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 87A1B10266;
-        Sun,  8 Jul 2018 14:42:26 -0400 (EDT)
-From:   Daniel Harding <dharding@living180.net>
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Daniel Harding <dharding@living180.net>
-Subject: [PATCH 2/2] t3430: update to test with custom commentChar
-Date:   Sun,  8 Jul 2018 21:41:11 +0300
-Message-Id: <20180708184110.14792-3-dharding@living180.net>
-X-Mailer: git-send-email 2.18.0
-In-Reply-To: <20180708184110.14792-1-dharding@living180.net>
-References: <20180708184110.14792-1-dharding@living180.net>
+        id S932867AbeGHTBq (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Jul 2018 15:01:46 -0400
+Received: from gproxy8-pub.mail.unifiedlayer.com ([67.222.33.93]:45506 "EHLO
+        gproxy8-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S932760AbeGHTBp (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 8 Jul 2018 15:01:45 -0400
+Received: from cmgw12.unifiedlayer.com (unknown [10.9.0.12])
+        by gproxy8.mail.unifiedlayer.com (Postfix) with ESMTP id 147761AC1A5
+        for <git@vger.kernel.org>; Sun,  8 Jul 2018 12:52:12 -0600 (MDT)
+Received: from box5008.bluehost.com ([50.116.64.19])
+        by cmsmtp with ESMTP
+        id cEn1fVDjh0gMjcEn3fnAjf; Sun, 08 Jul 2018 12:52:09 -0600
+X-Authority-Reason: nr=8
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=mad-scientist.us; s=default; h=Content-Transfer-Encoding:Mime-Version:
+        Content-Type:References:In-Reply-To:Date:Cc:To:Reply-To:From:Subject:
+        Message-ID:Sender:Content-ID:Content-Description:Resent-Date:Resent-From:
+        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=YRqPdiOefcrMIAMSCPv7RQAVoikrStiRLt2uTo/UyII=; b=pojnnsfTppm5B+p6VC2fen/R7P
+        b7mXaBmqo4pV9gPP8M7IKJ25QKosuOC60n3q6WHQpSe5jCgWjXcMCIs+ATou3FJciIzSFPFywExY0
+        /Y2ZOjP0diy8uAfWzkiv0OuYX;
+Received: from pool-72-70-58-227.bstnma.fios.verizon.net ([72.70.58.227]:35388 helo=homebase.home)
+        by box5008.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <paul@mad-scientist.net>)
+        id 1fcEmy-000VkI-D5; Sun, 08 Jul 2018 12:52:04 -0600
+Message-ID: <bf0d4f33701ec694917f2e710c3fb097085c8d69.camel@mad-scientist.net>
+Subject: Re: Git 2.18: RUNTIME_PREFIX... is it working?
+From:   Paul Smith <paul@mad-scientist.net>
+Reply-To: paul@mad-scientist.net
+To:     Daniel Jacques <dnj@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Date:   Sun, 08 Jul 2018 14:52:03 -0400
+In-Reply-To: <CAD1RUU-4a_jV_JjozjXOR4bi+_7rFW_AjmHbbrw6NHJ77=oGkw@mail.gmail.com>
+References: <97803ec8dae0a73bae301a37377b7b4a78f77e99.camel@mad-scientist.net>
+         <nycvar.QRO.7.76.6.1807041312150.75@tvgsbejvaqbjf.bet>
+         <986185d30a0f09b4e2a9832d324a265cd3da7354.camel@mad-scientist.net>
+         <nycvar.QRO.7.76.6.1807061059260.75@tvgsbejvaqbjf.bet>
+         <CAD1RUU-4a_jV_JjozjXOR4bi+_7rFW_AjmHbbrw6NHJ77=oGkw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.1-2 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5008.bluehost.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - mad-scientist.net
+X-BWhitelist: no
+X-Source-IP: 72.70.58.227
+X-Source-L: No
+X-Exim-ID: 1fcEmy-000VkI-D5
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: pool-72-70-58-227.bstnma.fios.verizon.net (homebase.home) [72.70.58.227]:35388
+X-Source-Auth: paul@mad-scientist.us
+X-Email-Count: 1
+X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTAwOC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Daniel Harding <dharding@living180.net>
----
- t/t3430-rebase-merges.sh | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+On Fri, 2018-07-06 at 09:18 -0400, Daniel Jacques wrote:
+> I forewent autoconf because I was concerned that the option was too
+> obscure and the configuration too nuanced to be worth adding via
+> flag, as RUNTIME_PREFIX requires some degree of path alignment and is
+> fairly special-case. If you prefer autoconf, though, it sounds like a
+> good thing to add, and I'm happy that you are finding the feature
+> useful!
 
-diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-index 78f7c9958..ff474d033 100755
---- a/t/t3430-rebase-merges.sh
-+++ b/t/t3430-rebase-merges.sh
-@@ -56,12 +56,12 @@ test_expect_success 'create completely different structure' '
- 	cat >script-from-scratch <<-\EOF &&
- 	label onto
- 
--	# onebranch
-+	> onebranch
- 	pick G
- 	pick D
- 	label onebranch
- 
--	# second
-+	> second
- 	reset onto
- 	pick B
- 	label second
-@@ -70,6 +70,7 @@ test_expect_success 'create completely different structure' '
- 	merge -C H second
- 	merge onebranch # Merge the topic branch '\''onebranch'\''
- 	EOF
-+	test_config core.commentChar ">" &&
- 	test_config sequence.editor \""$PWD"/replace-editor.sh\" &&
- 	test_tick &&
- 	git rebase -i -r A &&
-@@ -107,10 +108,10 @@ test_expect_success 'generate correct todo list' '
- 	pick 12bd07b D
- 	merge -C 2051b56 E # E
- 	merge -C 233d48a H # H
--
- 	EOF
- 
--	grep -v "^#" <.git/ORIGINAL-TODO >output &&
-+	test_config core.commentChar ">" &&
-+	git stripspace -s <.git/ORIGINAL-TODO >output &&
- 	test_cmp expect output
- '
- 
--- 
-2.18.0
+Well, far from obscure, I actually think that RUNTIME_PREFIX should be
+the default behavior on all platforms.  In fact speaking for myself, I
+see no value at all in the hardcoded path behavior and it could be
+removed and RUNTIME_PREFIX be the only option and that would be fine
+with me.
 
+The only possible advantage I can see to the current default that you
+can copy the Git binary alone somewhere else, but that's of very little
+value IMO: you could instead create a symbolic link or a two-line shell
+script wrapper if you wanted to have "git" available outside of its
+normal relation to the rest of the installation for some reason.
+
+Thanks for making this work in any event, Daniel!
