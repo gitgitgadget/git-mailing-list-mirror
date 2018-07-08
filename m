@@ -7,56 +7,57 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 341BA1F62D
-	for <e@80x24.org>; Sun,  8 Jul 2018 18:51:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C6E7A1F62D
+	for <e@80x24.org>; Sun,  8 Jul 2018 18:51:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932832AbeGHSvW (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Jul 2018 14:51:22 -0400
-Received: from wout1-smtp.messagingengine.com ([64.147.123.24]:36971 "EHLO
+        id S932799AbeGHSvU (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Jul 2018 14:51:20 -0400
+Received: from wout1-smtp.messagingengine.com ([64.147.123.24]:47285 "EHLO
         wout1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932760AbeGHSvU (ORCPT
+        by vger.kernel.org with ESMTP id S932688AbeGHSvU (ORCPT
         <rfc822;git@vger.kernel.org>); Sun, 8 Jul 2018 14:51:20 -0400
+X-Greylist: delayed 574 seconds by postgrey-1.27 at vger.kernel.org; Sun, 08 Jul 2018 14:51:20 EDT
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id 67FF228C;
-        Sun,  8 Jul 2018 14:42:19 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Sun, 08 Jul 2018 14:42:19 -0400
+        by mailout.west.internal (Postfix) with ESMTP id 10D89292;
+        Sun,  8 Jul 2018 14:42:28 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Sun, 08 Jul 2018 14:42:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=living180.net;
          h=cc:date:from:in-reply-to:message-id:references:subject:to
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=FS1bDWdgUO5CgVb+r
-        KLK0+exMLwEtUlf1ERF+bDG4os=; b=BuD+HAL8PoO9bPS9g94NNKvkItWrIdRcD
-        yJ9DQ/sAvJSACVcfua0Q52dZO+dVQwqgRkVlCOF4HUtIs625oNZVQaIKIQBFuXEJ
-        RDHHAJ6wRiK2EUO9xvBPNPLbiz2/zgX2iRDot+ivtu0l4N2TIhq9IkfG4OxdroSl
-        3ces+MeFrcMjdIXOFjTNrd+9Ryh09+xWGhePyIInhQ+C6IJ0E/iCEyNsHJoS4moa
-        k+y5y7eozZweq8WoKYzQweTQVp2rgHhuJrAJ0rtmaVp8BlUGeCz+t9HiXNk4yxee
-        V8i55h5gHW4umtGJvKk2HggRER0eLmj+rtlhBvKor+hu5NUwofmsg==
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=9gEoLDEVd+uTpIxYS
+        CXg9jyrjVyKFB2OJ/Fq1hTIv3U=; b=SGUyNzcjDkgA+XYIopEQ2RJKg05nRixok
+        TBbXUCwWIsLVifb9bQ64hC+B0DIYjFeTukSanXoN9LqYBMqUc68w7zpDnESjEbPh
+        jm4I5DmAVmiEY0zkMwojX9tQJHBVUNRUYwusAv/EV6A3RvXy1rqpwvhA8JhOVgX/
+        K4PuoQrRUpgxe22raNGSaufegaQ/tDd05SsZ/lKfq1J4paUCQHV8JnWp7W3ZEG2h
+        x6Ms2PNQEOoEVZgIrYLYesGQCidsNTMw9gBzbpfoPXdbSZ8J1ZHeY4dBfLxedTFw
+        Eimwmw1Zqu6INCxTB0UEEMKurf1jlQo0BoKUGs54PUMRWf0CD2zaA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:date:from:in-reply-to:message-id
         :references:subject:to:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm3; bh=FS1bDWdgUO5CgVb+rKLK0+exMLwEtUlf1ERF+bDG4os=; b=ViWIlSYu
-        jfE2oP6LnYQUNoAyxOAWcmaBK4YyQMHLKCAeFEbtEdYAClyaFhZnUv0+P0c+xkdS
-        em8mo0IF+AFj7+GFPGNgZa0U2y5QpTaJI0bH8K0OJn73HobdGJ2QTH9zCdhsqqg3
-        Iz61Tx5kxtpWmv0AzMCBLr+Xef+LNqxqGjbFHQSI4rNFEnWAA/bqZXLPv7Lh1OuL
-        i+ZdjpKZRzzSUQ1e9+fkFR8VcW+NUR8vHE+1763eFE8OvDvRB11bfL6s0BachJdH
-        4Z/zVDcDy2LA4V5DlFaDFssdfqYM0CQj6NgJH7xskrYKJxQc1W3jnLr5jaSEwPPr
-        fjx0BsFX297MNg==
-X-ME-Proxy: <xmx:CltCW0HthwYabzqBAX2sbA9XB0FYVsRbtB7Oup1buoHVEN4lCmLHTQ>
-    <xmx:CltCW2qXpy_Fpq6oQ8BgJgE1Yzmy4tf2HX-DMRcQwbAHhm289UUS7w>
-    <xmx:CltCW87-mczJUYJtKCfXIKsXewgQPf01Je1khbA9_HDaDZgvXH6NOQ>
-    <xmx:CltCWxHiQwCeyX1sbaPMVfEL0rICzB3ipJHo3tT2MU4q7mKSSm9u8A>
-    <xmx:CltCW3mjCLuPTX4QBn4JFZOqTe7JIoXPKWS8RrT-YXF88iZm5kPOxQ>
-    <xmx:C1tCW1KhDhauWLXRIUGodBUU78XvZYHd3R1kus6EV9VBpaL1wL9FRQ>
-X-ME-Sender: <xms:CltCW-eZFGelxUuz6EVg7iN5guAMvtC7z5xdL2ALMzYpa0uo53tGNw>
+        fm3; bh=9gEoLDEVd+uTpIxYSCXg9jyrjVyKFB2OJ/Fq1hTIv3U=; b=ir0wYAJD
+        6P6omvZMpO+/r2NK2oLac/esgnadlVNIQrDM6GQAhAySdEYQiatGYkKlBVWac5gh
+        ySiUJ6amuQv9pY+VbAHeCYsKO4HcbzQxJWgIfCj+EZ7vekGikxnDtKT5g8T47IQr
+        Hdj3pCumS9gNi0NgMFHyNRVKn2p4a6y5fZC1LkS+U4616I8ipwsSKsV0OTyIV6FC
+        oKBzRzyJrPjdgOAtc+im/u9CQHfPN39wlwBz0EVChGjwMKVnXs33VY9B84yXkCIW
+        AxhJROClhmpjq7WWx+/C+xDqtNPasX+922gWAKWQE2EpRqZvhggIGkTTAivBesxg
+        z9gHM+UvTPvQMg==
+X-ME-Proxy: <xmx:E1tCW6qCTG5p8qgWvX4-Id3G7yafYaUlM9D1VkRD5G_foDyGmYeCJQ>
+    <xmx:E1tCW2M69H94FU9ILOHHfEefnnBiVP2HTgLedoTghdRBgaHFXF_h7A>
+    <xmx:E1tCW1o8ZSN5vk-QaCHNrAe49HcLKuUHrlRB7b5AnRvdd3x835N6cg>
+    <xmx:E1tCW7diAP2JwzXWrgCIwvnlt-oFELGWPc6wfMC0yaExIfL5YLiIQw>
+    <xmx:E1tCW7TR2xbdh1b6Ti6tjQbt5Vm11u1FHgRFVYJNngANxVvK1Xg_lQ>
+    <xmx:E1tCW6mHd17_u5bxrH2FFsxrQXDnlSe2ZuumR-P9Un8mKQcSHBZcGg>
+X-ME-Sender: <xms:E1tCW9VUtafsX7vbMWt2v2tVr_66TkvBaROErZOsUxix8aafCcX5sw>
 Received: from localhost (unknown [46.185.196.38])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 01544E405A;
-        Sun,  8 Jul 2018 14:42:17 -0400 (EDT)
+        by mail.messagingengine.com (Postfix) with ESMTPA id 87A1B10266;
+        Sun,  8 Jul 2018 14:42:26 -0400 (EDT)
 From:   Daniel Harding <dharding@living180.net>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Daniel Harding <dharding@living180.net>
-Subject: [PATCH 1/2] sequencer: fix --rebase-merges with custom commentChar
-Date:   Sun,  8 Jul 2018 21:41:10 +0300
-Message-Id: <20180708184110.14792-2-dharding@living180.net>
+Subject: [PATCH 2/2] t3430: update to test with custom commentChar
+Date:   Sun,  8 Jul 2018 21:41:11 +0300
+Message-Id: <20180708184110.14792-3-dharding@living180.net>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20180708184110.14792-1-dharding@living180.net>
 References: <20180708184110.14792-1-dharding@living180.net>
@@ -65,26 +66,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Prefix the "Branch <name>" comments in the todo list with the configured
-comment character instead of hard-coding '#'.
-
 Signed-off-by: Daniel Harding <dharding@living180.net>
 ---
- sequencer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t3430-rebase-merges.sh | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index 4034c0461..caf91af29 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -3991,7 +3991,7 @@ static int make_script_with_merges(struct pretty_print_context *pp,
- 		entry = oidmap_get(&state.commit2label, &commit->object.oid);
+diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
+index 78f7c9958..ff474d033 100755
+--- a/t/t3430-rebase-merges.sh
++++ b/t/t3430-rebase-merges.sh
+@@ -56,12 +56,12 @@ test_expect_success 'create completely different structure' '
+ 	cat >script-from-scratch <<-\EOF &&
+ 	label onto
  
- 		if (entry)
--			fprintf(out, "\n# Branch %s\n", entry->string);
-+			fprintf(out, "\n%c Branch %s\n", comment_line_char, entry->string);
- 		else
- 			fprintf(out, "\n");
+-	# onebranch
++	> onebranch
+ 	pick G
+ 	pick D
+ 	label onebranch
+ 
+-	# second
++	> second
+ 	reset onto
+ 	pick B
+ 	label second
+@@ -70,6 +70,7 @@ test_expect_success 'create completely different structure' '
+ 	merge -C H second
+ 	merge onebranch # Merge the topic branch '\''onebranch'\''
+ 	EOF
++	test_config core.commentChar ">" &&
+ 	test_config sequence.editor \""$PWD"/replace-editor.sh\" &&
+ 	test_tick &&
+ 	git rebase -i -r A &&
+@@ -107,10 +108,10 @@ test_expect_success 'generate correct todo list' '
+ 	pick 12bd07b D
+ 	merge -C 2051b56 E # E
+ 	merge -C 233d48a H # H
+-
+ 	EOF
+ 
+-	grep -v "^#" <.git/ORIGINAL-TODO >output &&
++	test_config core.commentChar ">" &&
++	git stripspace -s <.git/ORIGINAL-TODO >output &&
+ 	test_cmp expect output
+ '
  
 -- 
 2.18.0
