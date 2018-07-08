@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 452BC1F62D
-	for <e@80x24.org>; Sun,  8 Jul 2018 18:01:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 835A71F62D
+	for <e@80x24.org>; Sun,  8 Jul 2018 18:01:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932436AbeGHSBm (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Jul 2018 14:01:42 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:38245 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932184AbeGHSBk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Jul 2018 14:01:40 -0400
-Received: by mail-pg1-f193.google.com with SMTP id k3-v6so803694pgq.5
-        for <git@vger.kernel.org>; Sun, 08 Jul 2018 11:01:40 -0700 (PDT)
+        id S932688AbeGHSBp (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Jul 2018 14:01:45 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:40020 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932184AbeGHSBo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Jul 2018 14:01:44 -0400
+Received: by mail-pf0-f196.google.com with SMTP id z24-v6so12009284pfe.7
+        for <git@vger.kernel.org>; Sun, 08 Jul 2018 11:01:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=VWunDpT5Sf11NMSdgI/VNK7W2+FmCmLXh9CUwTe0CRQ=;
-        b=FEBeqRWPkTSet3TIulqrV6LYKoAAeXxgPBXBXeIGmQ3YIxh5/rrYeB6Bewgxi94o+J
-         pTmXjToAVdYbsw0yPLLmupiZo14aZYpjwyS1OnqG90ZlwG510gsjyBEcHQKZfgtREyT3
-         DEvGm9+6EWZh6GKk2XthULSTStNTstd4yYYh3HaY1V13cIEghOXiZM6sBYHhHhrsqoqu
-         AS7IYUme8f5FUMaewxVFU62IoCxZ0LZdv2XkVNjaGPB1x+CS0CLW6/CBWlsyWL0WxAP7
-         JHA6/+f/IA/D2HPySLlZJ8lb3Po/62HrYOCeL/2DClHDECejJH53q085qw5H6Dd75XmF
-         OsEw==
+        bh=f8+cZYV2nU0nDXPGSUBUVGQEvSxII/fB4fyw4ixcZYs=;
+        b=ZaBPVusHH/0sB2kYc4/Ymve/3a1KnuIg5r4GZZPkroeh3QL3fBz81cb+VCNmuWQRLm
+         iPGIqKKui5hl6wIrk36HiWOdykoWfxC0guGiafp7f+LYFCIz0+YzKvBWR4Qg9uRWKLeh
+         5JPVGegZBZQtpqU+1612cYpg3K1A7aqLiIYVTni4G6ThyZr5RJlnGp1rfaRI+TCclG67
+         Ta7NrjhGeS29HW0Z0CFCGy9jujFeXCO00I0tC0eX94Hi0/U9jjZ44PVP0uoxskJeYO3g
+         nTxzgy655oCSX4/jpiA+/Hk2MVoaRNo5OuPBaxWzuav1IvWS39Glr/b50P+BWUXUZFc8
+         qJPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=VWunDpT5Sf11NMSdgI/VNK7W2+FmCmLXh9CUwTe0CRQ=;
-        b=oE7bUvMteJ4ddtFhnNsO33N6itBiaRjFIhSU9dt9wf0KUnvx5OPGrtF11PNz15idn/
-         Y/9rSWBtsMRZ74c5044Jn+ZLj1Kil6YxClgEtKllgyib78zbEBsMQOa0s2z5xDUB4fVp
-         ZIcL6mgml9JNHssZoMHvdPODITXUmYdIpxd6AwtWxqDJInBxJau+hLKIrtnn52VLLqte
-         wjNRM4cI2rPSOJd7ttNnTS3yY+8MDTBUO/d/DcD4sFzZKzc98MlyOjNODKs+Grlz8VO5
-         xBfh0lwPdIAJX32z3wEMwvyZTexOhY54uQIRiGgPb0tlwh1/utqgPfWRgE9z6QhYZ7Fa
-         UFjQ==
-X-Gm-Message-State: APt69E0mMmQ9eB5zlhddJKB34LkupfBqPwakahhOVSV0RltASbUXBBPY
-        dGGkA4OpaFRe6b0Y3YFr/J8hZYP6
-X-Google-Smtp-Source: AAOMgpeZhRtt3yHvHl00s1ioY0shbNMJ0HEKPhpkOBXCa/IM/jt6aBCVzvLBgr3rTJjkfmm/pOzgNg==
-X-Received: by 2002:a63:1844:: with SMTP id 4-v6mr10524296pgy.313.1531072899389;
-        Sun, 08 Jul 2018 11:01:39 -0700 (PDT)
+        bh=f8+cZYV2nU0nDXPGSUBUVGQEvSxII/fB4fyw4ixcZYs=;
+        b=iBxVNoccW8WBofNQbZZeOTAaLl9nUB9xxchvtmsAy01b0ylh7YDADVrDLzqeNY7Q19
+         QUcHX6kNKg2XGSgtA7/MQSnh/a2HweXkdBIWu+jhhf3fXOQmKOf4t3SuE5yaJHLJpGKb
+         xN1sxEa2GA0RCaCaHYVT6K/kiGBQWWiV9Zdh+Xuot41rMe+x2sbO+yowI/94QQY5Z0P8
+         ggFvFImdiFx4c0nV121yESP8cIIOqkV2CeD4Wei2HSN/45i2MROsag5H+LMoJ4OkQNro
+         7h5S9ZMX29a0zdv1poeLcs71thr9QpH1P40rqUUGAO4J2i1Y/lyU+c+273BX4sFsBsZl
+         MbKQ==
+X-Gm-Message-State: APt69E3hdaWqAsstxIcTIXOeca9IhTTY1UMVwvUMItTLqRymEX/MFxy2
+        ZuFvHWjcGffReNwOz37xDpRXiMpV
+X-Google-Smtp-Source: AAOMgpcp1HspDL7YAJVU9vPiDHtd62h33c/l2zpvSZnxtEi+jWeqg1hC45bH4PyzS2Rgs5TA0gfEZg==
+X-Received: by 2002:a65:620b:: with SMTP id d11-v6mr16394815pgv.429.1531072903133;
+        Sun, 08 Jul 2018 11:01:43 -0700 (PDT)
 Received: from localhost.localdomain ([27.34.68.75])
-        by smtp.gmail.com with ESMTPSA id u13-v6sm18019149pgr.36.2018.07.08.11.01.36
+        by smtp.gmail.com with ESMTPSA id u13-v6sm18019149pgr.36.2018.07.08.11.01.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 08 Jul 2018 11:01:38 -0700 (PDT)
+        Sun, 08 Jul 2018 11:01:42 -0700 (PDT)
 From:   Pratik Karki <predatoramigo@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Pratik Karki <predatoramigo@gmail.com>, christian.couder@gmail.com,
         Johannes.Schindelin@gmx.de, sbeller@google.com,
         alban.gruin@gmail.com, gitster@pobox.com
-Subject: [PATCH v4 3/4] sequencer: refactor the code to detach HEAD to checkout.c
-Date:   Sun,  8 Jul 2018 23:46:03 +0545
-Message-Id: <20180708180104.17921-4-predatoramigo@gmail.com>
+Subject: [PATCH v4 4/4] builtin/rebase: support running "git rebase <upstream>"
+Date:   Sun,  8 Jul 2018 23:46:04 +0545
+Message-Id: <20180708180104.17921-5-predatoramigo@gmail.com>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20180708180104.17921-1-predatoramigo@gmail.com>
 References: <20180628074655.5756-1-predatoramigo@gmail.com>
@@ -65,214 +65,295 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the upcoming builtin rebase, we will have to start by detaching
-the HEAD, just like shell script version does. Essentially, we have
-to do the same thing as `git checkout -q <revision>^0 --`, in pure C.
+This patch gives life to the skeleton added in the previous patches:
+With this change, we can perform a elementary rebase (without any
+options).
 
-The aforementioned functionality was already present in `sequencer.c`
-in `do_reset()` function. But `do_reset()` performs more than detaching
-the HEAD, and performs action specific to `sequencer.c`.
+It can be tested thusly by:
 
-So this commit refactors out that part from `do_reset()`, and moves it
-to a new function called `detach_head_to()`. As this function has
-nothing to do with the sequencer, and everything to do with what `git
-checkout -q <revision>^0 --` does, we move that function to checkout.c.
+git -c rebase.usebuiltin=true rebase HEAD~2
 
-This refactoring actually introduces a slight change in behavior:
-previously, the index was locked before parsing the argument to the
-todo command `reset`, while it now gets locked *after* that, in the
-`detach_head_to()` function.
+The rebase backends (i.e. the shell script functions defined in
+`git-rebase--<backend>`) are still at work here and the "builtin
+rebase"'s purpose is simply to parse the options and set
+everything up so that those rebase backends can do their work.
 
-It does not make a huge difference, and the upside is that this closes
-a few (unlikely) code paths where the index would not be unlocked upon
-error.
+Note: We take an alternative approach here which is *not* to set the
+environment variables via `run_command_v_opt_cd_env()` because those
+variables would then be visible by processes spawned from the rebase
+backends. Instead, we work hard to set them in the shell script snippet.
+
+The next commits will handle and support all the wonderful rebase
+options.
 
 Signed-off-by: Pratik Karki <predatoramigo@gmail.com>
 ---
- checkout.c  | 64 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- checkout.h  |  3 +++
- sequencer.c | 58 +++++-------------------------------------------
- 3 files changed, 72 insertions(+), 53 deletions(-)
+ builtin/rebase.c | 238 ++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 237 insertions(+), 1 deletion(-)
 
-diff --git a/checkout.c b/checkout.c
-index bdefc888ba..da68915fd7 100644
---- a/checkout.c
-+++ b/checkout.c
-@@ -2,6 +2,11 @@
- #include "remote.h"
- #include "refspec.h"
- #include "checkout.h"
-+#include "unpack-trees.h"
-+#include "lockfile.h"
-+#include "refs.h"
-+#include "tree.h"
-+#include "cache-tree.h"
- 
- struct tracking_name_data {
- 	/* const */ char *src_ref;
-@@ -42,3 +47,62 @@ const char *unique_tracking_name(const char *name, struct object_id *oid)
- 	free(cb_data.dst_ref);
- 	return NULL;
- }
-+
-+int detach_head_to(struct object_id *oid, const char *action,
-+		   const char *reflog_message)
-+{
-+	struct strbuf ref_name = STRBUF_INIT;
-+	struct tree_desc desc;
-+	struct lock_file lock = LOCK_INIT;
-+	struct unpack_trees_options unpack_tree_opts;
-+	struct tree *tree;
-+	int ret = 0;
-+
-+	if (hold_locked_index(&lock, LOCK_REPORT_ON_ERROR) < 0)
-+		return -1;
-+
-+	memset(&unpack_tree_opts, 0, sizeof(unpack_tree_opts));
-+	setup_unpack_trees_porcelain(&unpack_tree_opts, action);
-+	unpack_tree_opts.head_idx = 1;
-+	unpack_tree_opts.src_index = &the_index;
-+	unpack_tree_opts.dst_index = &the_index;
-+	unpack_tree_opts.fn = oneway_merge;
-+	unpack_tree_opts.merge = 1;
-+	unpack_tree_opts.update = 1;
-+
-+	if (read_cache_unmerged()) {
-+		rollback_lock_file(&lock);
-+		strbuf_release(&ref_name);
-+		return error_resolve_conflict(_(action));
-+	}
-+
-+	if (!fill_tree_descriptor(&desc, oid)) {
-+		error(_("failed to find tree of %s"), oid_to_hex(oid));
-+		rollback_lock_file(&lock);
-+		free((void *)desc.buffer);
-+		strbuf_release(&ref_name);
-+		return -1;
-+	}
-+
-+	if (unpack_trees(1, &desc, &unpack_tree_opts)) {
-+		rollback_lock_file(&lock);
-+		free((void *)desc.buffer);
-+		strbuf_release(&ref_name);
-+		return -1;
-+	}
-+
-+	tree = parse_tree_indirect(oid);
-+	prime_cache_tree(&the_index, tree);
-+
-+	if (write_locked_index(&the_index, &lock, COMMIT_LOCK) < 0)
-+		ret = error(_("could not write index"));
-+	free((void *)desc.buffer);
-+
-+	if (!ret)
-+		ret = update_ref(reflog_message, "HEAD", oid,
-+				 NULL, 0, UPDATE_REFS_MSG_ON_ERR);
-+
-+	strbuf_release(&ref_name);
-+	return ret;
-+
-+}
-diff --git a/checkout.h b/checkout.h
-index 9980711179..6ce46cf4e8 100644
---- a/checkout.h
-+++ b/checkout.h
-@@ -10,4 +10,7 @@
-  */
- extern const char *unique_tracking_name(const char *name, struct object_id *oid);
- 
-+int detach_head_to(struct object_id *oid, const char *action,
-+		   const char *reflog_message);
-+
- #endif /* CHECKOUT_H */
-diff --git a/sequencer.c b/sequencer.c
-index 5354d4d51e..106d518f4d 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -29,6 +29,7 @@
- #include "oidset.h"
- #include "commit-slab.h"
- #include "alias.h"
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index fab7fca37e..e38ea80874 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -9,6 +9,20 @@
+ #include "exec-cmd.h"
+ #include "argv-array.h"
+ #include "dir.h"
++#include "packfile.h"
 +#include "checkout.h"
++#include "refs.h"
++#include "quote.h"
++
++static GIT_PATH_FUNC(apply_dir, "rebase-apply");
++static GIT_PATH_FUNC(merge_dir, "rebase-merge");
++
++enum rebase_type {
++	REBASE_AM,
++	REBASE_MERGE,
++	REBASE_INTERACTIVE,
++	REBASE_PRESERVE_MERGES
++};
  
- #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
- 
-@@ -2756,14 +2757,7 @@ static int do_reset(const char *name, int len, struct replay_opts *opts)
+ static int use_builtin_rebase(void)
  {
- 	struct strbuf ref_name = STRBUF_INIT;
- 	struct object_id oid;
--	struct lock_file lock = LOCK_INIT;
--	struct tree_desc desc;
--	struct tree *tree;
--	struct unpack_trees_options unpack_tree_opts;
--	int ret = 0, i;
--
--	if (hold_locked_index(&lock, LOCK_REPORT_ON_ERROR) < 0)
--		return -1;
-+	int i;
- 
- 	if (len == 10 && !strncmp("[new root]", name, len)) {
- 		if (!opts->have_squash_onto) {
-@@ -2789,56 +2783,14 @@ static int do_reset(const char *name, int len, struct replay_opts *opts)
- 		if (get_oid(ref_name.buf, &oid) &&
- 		    get_oid(ref_name.buf + strlen("refs/rewritten/"), &oid)) {
- 			error(_("could not read '%s'"), ref_name.buf);
--			rollback_lock_file(&lock);
- 			strbuf_release(&ref_name);
- 			return -1;
- 		}
- 	}
- 
--	memset(&unpack_tree_opts, 0, sizeof(unpack_tree_opts));
--	setup_unpack_trees_porcelain(&unpack_tree_opts, "reset");
--	unpack_tree_opts.head_idx = 1;
--	unpack_tree_opts.src_index = &the_index;
--	unpack_tree_opts.dst_index = &the_index;
--	unpack_tree_opts.fn = oneway_merge;
--	unpack_tree_opts.merge = 1;
--	unpack_tree_opts.update = 1;
--
--	if (read_cache_unmerged()) {
--		rollback_lock_file(&lock);
--		strbuf_release(&ref_name);
--		return error_resolve_conflict(_(action_name(opts)));
--	}
--
--	if (!fill_tree_descriptor(&desc, &oid)) {
--		error(_("failed to find tree of %s"), oid_to_hex(&oid));
--		rollback_lock_file(&lock);
--		free((void *)desc.buffer);
--		strbuf_release(&ref_name);
--		return -1;
--	}
--
--	if (unpack_trees(1, &desc, &unpack_tree_opts)) {
--		rollback_lock_file(&lock);
--		free((void *)desc.buffer);
--		strbuf_release(&ref_name);
--		return -1;
--	}
--
--	tree = parse_tree_indirect(&oid);
--	prime_cache_tree(&the_index, tree);
--
--	if (write_locked_index(&the_index, &lock, COMMIT_LOCK) < 0)
--		ret = error(_("could not write index"));
--	free((void *)desc.buffer);
--
--	if (!ret)
--		ret = update_ref(reflog_message(opts, "reset", "'%.*s'",
--						len, name), "HEAD", &oid,
--				 NULL, 0, UPDATE_REFS_MSG_ON_ERR);
--
--	strbuf_release(&ref_name);
--	return ret;
-+	return detach_head_to(&oid, action_name(opts),
-+			      reflog_message(opts, "reset", "'%.*s'",
-+					     len, name));
+@@ -28,8 +42,136 @@ static int use_builtin_rebase(void)
+ 	return ret;
  }
  
- static int do_merge(struct commit *commit, const char *arg, int arg_len,
++static int apply_autostash(void)
++{
++	warning("TODO");
++	return 0;
++}
++
++struct rebase_options {
++	enum rebase_type type;
++	const char *state_dir;
++	struct commit *upstream;
++	const char *upstream_name;
++	char *head_name;
++	struct object_id orig_head;
++	struct commit *onto;
++	const char *onto_name;
++	const char *revisions;
++	const char *root;
++};
++
++static int finish_rebase(struct rebase_options *opts)
++{
++	struct strbuf dir = STRBUF_INIT;
++	const char *argv_gc_auto[] = { "gc", "--auto", NULL };
++
++	delete_ref(NULL, "REBASE_HEAD", NULL, REF_NO_DEREF);
++	apply_autostash();
++	close_all_packs(the_repository->objects);
++	/*
++	 * We ignore errors in 'gc --auto', since the
++	 * user should see them.
++	 */
++	run_command_v_opt(argv_gc_auto, RUN_GIT_CMD);
++	strbuf_addstr(&dir, opts->state_dir);
++	remove_dir_recursively(&dir, 0);
++	strbuf_release(&dir);
++
++	return 0;
++}
++
++static struct commit *peel_committish(const char *name)
++{
++	struct object *obj;
++	struct object_id oid;
++
++	if (get_oid(name, &oid))
++		return NULL;
++	obj = parse_object(&oid);
++	return (struct commit *)peel_to_type(name, 0, obj, OBJ_COMMIT);
++}
++
++static void add_var(struct strbuf *buf, const char *name, const char *value)
++{
++	strbuf_addstr(buf, name);
++	strbuf_addstr(buf, "=");
++	sq_quote_buf(buf, value);
++	strbuf_addstr(buf, "; ");
++}
++
++static int run_specific_rebase(struct rebase_options *opts)
++{
++	const char *argv[] = { NULL, NULL };
++	struct strbuf script_snippet = STRBUF_INIT;
++	int status;
++	const char *backend, *backend_func;
++
++	add_var(&script_snippet, "GIT_DIR", absolute_path(get_git_dir()));
++
++	add_var(&script_snippet, "upstream_name", opts->upstream_name);
++	add_var(&script_snippet, "upstream",
++				 oid_to_hex(&opts->upstream->object.oid));
++	add_var(&script_snippet, "head_name", opts->head_name);
++	add_var(&script_snippet, "orig_head", oid_to_hex(&opts->orig_head));
++	add_var(&script_snippet, "onto", oid_to_hex(&opts->onto->object.oid));
++	add_var(&script_snippet, "onto_name", opts->onto_name);
++	add_var(&script_snippet, "revisions", opts->revisions);
++
++	switch (opts->type) {
++	case REBASE_AM:
++		backend = "git-rebase--am";
++		backend_func = "git_rebase__am";
++		break;
++	case REBASE_INTERACTIVE:
++		backend = "git-rebase--interactive";
++		backend_func = "git_rebase__interactive";
++		break;
++	case REBASE_MERGE:
++		backend = "git-rebase--merge";
++		backend_func = "git_rebase__merge";
++		break;
++	case REBASE_PRESERVE_MERGES:
++		backend = "git-rebase--preserve-merges";
++		backend_func = "git_rebase__preserve_merges";
++		break;
++	default:
++		BUG("Unhandled rebase type %d", opts->type);
++		break;
++	}
++
++	strbuf_addf(&script_snippet,
++		    ". git-rebase--common && . %s && %s",
++		    backend, backend_func);
++	argv[0] = script_snippet.buf;
++
++	status = run_command_v_opt(argv, RUN_USING_SHELL);
++	if (status == 0)
++		finish_rebase(opts);
++	else if (status == 2) {
++		struct strbuf dir = STRBUF_INIT;
++
++		apply_autostash();
++		strbuf_addstr(&dir, opts->state_dir);
++		remove_dir_recursively(&dir, 0);
++		strbuf_release(&dir);
++		die("Nothing to do");
++	}
++
++	strbuf_release(&script_snippet);
++
++	return status ? -1 : 0;
++}
++
+ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ {
++	struct rebase_options options = { -1 };
++	const char *branch_name;
++	int ret, flags, quiet = 0;
++	struct strbuf msg = STRBUF_INIT;
++	struct strbuf revisions = STRBUF_INIT;
++	const char *restrict_revision = NULL;
++
+ 	/*
+ 	 * NEEDSWORK: Once the builtin rebase has been tested enough
+ 	 * and git-legacy-rebase.sh is retired to contrib/, this preamble
+@@ -52,5 +194,99 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	trace_repo_setup(prefix);
+ 	setup_work_tree();
+ 
+-	die("TODO");
++	options.type = REBASE_AM;
++
++	switch (options.type) {
++	case REBASE_AM:
++		options.state_dir = apply_dir();
++		break;
++	case REBASE_MERGE:
++	case REBASE_INTERACTIVE:
++	case REBASE_PRESERVE_MERGES:
++		options.state_dir = merge_dir();
++		break;
++	}
++	if (!options.root) {
++		if (argc != 2)
++			die("TODO: handle @{upstream}");
++		else {
++			options.upstream_name = argv[1];
++			argc--;
++			argv++;
++			if (!strcmp(options.upstream_name, "-"))
++				options.upstream_name = "@{-1}";
++		}
++		options.upstream = peel_committish(options.upstream_name);
++		if (!options.upstream)
++			die(_("invalid upstream '%s'"), options.upstream_name);
++	} else
++		die("TODO: upstream for --root");
++
++	/* Make sure the branch to rebase onto is valid. */
++	if (!options.onto_name)
++		options.onto_name = options.upstream_name;
++	if (strstr(options.onto_name, "...")) {
++		die("TODO");
++	} else {
++		options.onto = peel_committish(options.onto_name);
++		if (!options.onto)
++			die(_("Does not point to a valid commit '%s'"),
++				options.onto_name);
++	}
++
++	/*
++	 * If the branch to rebase is given, that is the branch we will rebase
++	 * branch_name -- branch/commit being rebased, or
++	 * 		  HEAD (already detached)
++	 * orig_head -- commit object name of tip of the branch before rebasing
++	 * head_name -- refs/heads/<that-branch> or "detached HEAD"
++	 */
++	if (argc > 1)
++		 die("TODO: handle switch_to");
++	else {
++		/* Do not need to switch branches, we are already on it. */
++		options.head_name =
++			xstrdup_or_null(resolve_ref_unsafe("HEAD", 0, NULL,
++					 &flags));
++		if (!options.head_name)
++			die(_("No such ref: %s"), "HEAD");
++		if (flags & REF_ISSYMREF) {
++			if (!skip_prefix(options.head_name,
++					 "refs/heads/", &branch_name))
++				branch_name = options.head_name;
++
++		} else {
++			options.head_name = xstrdup("detached HEAD");
++			branch_name = "HEAD";
++		}
++		if (get_oid("HEAD", &options.orig_head))
++			die(_("Could not resolve HEAD to a revision"));
++	}
++
++	/* Detach HEAD and reset the tree */
++	if (!quiet)
++		printf("First, rewinding head to replay your work on top of it...");
++
++	strbuf_addf(&msg, "rebase: checkout %s", options.onto_name);
++	if (detach_head_to(&options.onto->object.oid, "checkout", msg.buf))
++		die(_("Could not detach HEAD"));
++	strbuf_release(&msg);
++	if (update_ref("rebase", "ORIG_HEAD", &options.orig_head, NULL, 0,
++		       UPDATE_REFS_MSG_ON_ERR) < 0)
++		die(_("Could not update ORIG_HEAD to '%s'"),
++		    oid_to_hex(&options.orig_head));
++
++	strbuf_addf(&revisions, "%s..%s",
++		!options.root ? oid_to_hex(&options.onto->object.oid) :
++		    (restrict_revision ? restrict_revision :
++			    oid_to_hex(&options.upstream->object.oid)),
++			    oid_to_hex(&options.orig_head));
++
++	options.revisions = revisions.buf;
++
++	ret = !!run_specific_rebase(&options);
++
++	strbuf_release(&revisions);
++	free(options.head_name);
++	return ret;
+ }
 -- 
 2.18.0
 
