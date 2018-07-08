@@ -2,126 +2,162 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 096C51F62D
-	for <e@80x24.org>; Sun,  8 Jul 2018 21:02:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C28B51F62D
+	for <e@80x24.org>; Sun,  8 Jul 2018 21:15:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932380AbeGHVCK (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Jul 2018 17:02:10 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:54160 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754365AbeGHVCJ (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 8 Jul 2018 17:02:09 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:5996:38d5:9b31:ef84])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E572B6073C;
-        Sun,  8 Jul 2018 21:02:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1531083728;
-        bh=foe+V/2a+owppE5IdQI8ThjLz1GBHS0qtaFRR2Bkcw4=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=1APZZoWjQ925gdfVC2DREtHomgTJ5zekaeEAowT5CYWBupUZbGS+O1JlBAd4pTlvR
-         Syaxi0EigJok5UxF/bty15FrCLmUTlcR9uBq83XxDF4pA3WMTiaN4wFPEdqCE9GGzc
-         UxfMBqqy7MLSK8HY+q/H/8uXzqw0+xHfGiStGVrJUKjtNScAOJwtlW7mkchnAhZJ1F
-         49CX2PmhPEQbxlF6cVNSz4J/q8IpE81NiRcbToj3+ugSWVTFwvNXAMJR30LFMH5FKN
-         b2zfVO05sD4TYv0nOX4oOFYEoJVuvy00ViSnuJdjR+WdtCJK8JjtKqYN7ckUNFoHWY
-         SAtgNtCgx0AaZbgWa+zseHgyoufQ7nUKYEInZfrhxCQpAkrAktOswJxOZL1RO962bd
-         ks+YqB/YtknPJSLnKkzQ1bGX+F+L4xkOqrQeilzaPmAWBDQ7hTycfM19DPQIncAo+o
-         bUiaDR12BN4lTCv2LRp/iQELYJz3rA+3+OgvysUoB9hhhJQbu00
-Date:   Sun, 8 Jul 2018 21:02:00 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Daniel Harding <dharding@living180.net>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] t3430: update to test with custom commentChar
-Message-ID: <20180708210200.GA4573@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Daniel Harding <dharding@living180.net>, git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20180708184110.14792-1-dharding@living180.net>
- <20180708184110.14792-3-dharding@living180.net>
+        id S933273AbeGHVPL (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Jul 2018 17:15:11 -0400
+Received: from mout.gmx.net ([212.227.17.21]:37653 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S933261AbeGHVPJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Jul 2018 17:15:09 -0400
+Received: from MININT-6BKU6QN ([89.204.155.168]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M0cs6-1fwfvB3msI-00urOD; Sun, 08
+ Jul 2018 23:15:00 +0200
+Date:   Sun, 8 Jul 2018 23:14:58 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Pratik Karki <predatoramigo@gmail.com>
+cc:     git@vger.kernel.org, christian.couder@gmail.com,
+        sbeller@google.com, alban.gruin@gmail.com, gitster@pobox.com
+Subject: Re: [GSoC] [PATCH v4 0/4] rebase: rewrite rebase in C
+In-Reply-To: <20180708180104.17921-1-predatoramigo@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1807082311540.75@tvgsbejvaqbjf.bet>
+References: <20180628074655.5756-1-predatoramigo@gmail.com> <20180708180104.17921-1-predatoramigo@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="0OAP2g/MAC+5xKAE"
-Content-Disposition: inline
-In-Reply-To: <20180708184110.14792-3-dharding@living180.net>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.17.0-1-amd64)
-User-Agent: Mutt/1.10.0 (2018-05-17)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:KSLhM922jBiZOEmXzeuxEk2/csjSUyU1VuesKXowrB3mGgdXJH4
+ 5O5lpWGB7ugUYHpvgMRT3R8UJNQ+tmlcfIpiMgTFIuMaaEc+CHUTl6B1J/7KNJIWo5DQXT4
+ YLoJ9ohMYFwcsWsEyQ/40yQQ4Upx4Un0qrKfXvhTIhCOMTdByQH9j31BUJIFjcIUwiOojAO
+ yetc2ALIC0nxA3UAws8lA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:s+fkvQh3vlE=:4j8B/hFKkbtX3D8QOwknRR
+ L35Tst2hhxWGf60BovCumT/HXXLPDEJNqDzC0N+sRVMxjqVwjNVT95PT+5JiHhG6xd4t6ncxx
+ 8LrOFLs0/SOnxfkn7BBQVUK8CN66SHMgFwvujV6pshysbmoWUi5OlypAUVpLbDUT6ysokJwFb
+ ldn3LoJOleWw+zrVe2tCzijJL//cuUmFKLF7idaVDeucSqIy7xmyplFgdgdwPMrk+luNaquEc
+ vC+9LFVbColb3Kdd/MxyH01762Ln75bg7Rwt959prEmZpxSwDyAwvEDKrXtkcBaSEnt8hvoBh
+ pK+Bv4i36b7uOsMXItitDiu0OHcOFeZchA9NWSJQkoogxYzAtpnVi8XBVnBRAXcNDaK2bT+Ma
+ W/4UmHtgURVbi7tVXE1UFlNxckrI46bm7gn+gshXqpPhy7ArHUJj9LbxeDfYyhYlfQdvNtsyC
+ OcL+B1CTOFbsP6jAUdw2+o52uL3Dcn9IOPjE07h7Sd1tSDkLF7sFjzbr39o5B96qPp0Aul0Zk
+ tBS2wIyWJBt248vicYr/IJ0Rok5Qmsar570vv4SqXvMuZoqHf7RYCxrchIOZpjjFvKS4xqanQ
+ n7reLfOnGKj+oyI0stBaEDfpgixUaEtDWja2ETseDJEfKOYhwhUFywCdpVqOuzfHDFVzjCbx+
+ Spu04l1rX3vtw//Zq/6PrHoLd9LRvgS7NpK5tmkLCCiQeBpPPjbBOEyM1J3qfJy1lNo9R7mUD
+ HYftQV7qVWFqyQkG0fO0G8Nk7J0BojOpOayWh9Bg3Ba6lVhjSLI4ArefUVPMhPvl2jOWL0CN4
+ jnNg/Tf
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Pratik,
 
---0OAP2g/MAC+5xKAE
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Sun, 8 Jul 2018, Pratik Karki wrote:
 
-On Sun, Jul 08, 2018 at 09:41:11PM +0300, Daniel Harding wrote:
-> Signed-off-by: Daniel Harding <dharding@living180.net>
+> As a GSoC project, I have been working on the builtin rebase.
+> 
+> The motivation behind the rewrite of rebase i.e. from shell script to C
+> are for following reasons:
+> 
+> 1.  Writing shell scripts and getting it to production is much faster
+>     than doing the equivalent in C but lacks in performance and extra
+>     workarounds are needed for non-POSIX platforms.
+> 
+> 2.  Git for Windows is at loss as the installer size increases due to
+>     addition of extra dependencies for the shell scripts which are usually
+>     available in POSIX compliant platforms.
+> 
+> This series of patches serves to demonstrate a minimal builtin rebase
+> which supports running `git rebase <upstream>` and also serves to ask for
+> reviews.
+> 
+> Changes since v3:
+> 
+>   -  Fix commit message of `rebase: start implementing it as a builtin`.
+> 
+>   -  Acknowledge Junio's style reviews.
+> 
+>   -  Acknowledge Johannes Schindelin's review.
 
-I think maybe, as you suggested, a separate test for this would be
-beneficial.  It might be as simple as modifying 'script-from-scratch' by
-doing "sed 's/#/>/'".
+The range-diff looks like this (and makes sense to me; you might want to
+fix the typo s/retun/return/, but that's all for now):
 
-> diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-> index 78f7c9958..ff474d033 100755
-> --- a/t/t3430-rebase-merges.sh
-> +++ b/t/t3430-rebase-merges.sh
-> @@ -56,12 +56,12 @@ test_expect_success 'create completely different stru=
-cture' '
->  	cat >script-from-scratch <<-\EOF &&
->  	label onto
-> =20
-> -	# onebranch
-> +	> onebranch
->  	pick G
->  	pick D
->  	label onebranch
-> =20
-> -	# second
-> +	> second
->  	reset onto
->  	pick B
->  	label second
+-- snipsnap --
+ 1:  7baec70f219 !  1:  42778b20edf rebase: start implementing it as a builtin
+    @@ -13,6 +13,12 @@
+         be able to conveniently test new features by configuring
+         `rebase.useBuiltin`.
 
-Should this affect the "# Merge the topic branch" line (and the "# C",
-"# E", and "# H" lines in the next test) that appears below this?  It
-would seem those would qualify as comments as well.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+    +    In the original difftool conversion, if sane_execvp() that attempts to
+    +    run the legacy scripted version returned with non-negative status, the
+    +    command silently exited without doing anything with success, but
+    +    sane_execvp() should not retun with non-negative status in the first
+    +    place, so we use die() to notice such an abnormal case.
+    +
+         We intentionally avoid reading the config directly to avoid
+         messing up the GIT_* environment variables when we need to fall back to
+         exec()ing the shell script. The test of builtin rebase can be done by
+ 2:  f385f42dc56 !  2:  a28be7308e6 rebase: refactor common shell functions into their own file
+    @@ -45,6 +45,20 @@
+     diff --git a/git-legacy-rebase.sh b/git-legacy-rebase.sh
+     --- a/git-legacy-rebase.sh
+     +++ b/git-legacy-rebase.sh
+    +@@
+    + LF='
+    + '
+    + ok_to_skip_pre_rebase=
+    +-resolvemsg="
+    +-$(gettext 'Resolve all conflicts manually, mark them as resolved with
+    +-"git add/rm <conflicted_files>", then run "git rebase --continue".
+    +-You can instead skip this commit: run "git rebase --skip".
+    +-To abort and get back to the state before "git rebase", run "git rebase --abort".')
+    +-"
+    ++
+    + squash_onto=
+    + unset onto
+    + unset restrict_revision
+     @@
+      true)     gpg_sign_opt=-S ;;
+      *)        gpg_sign_opt= ;;
+    @@ -128,6 +142,13 @@
+     +++ b/git-rebase--common.sh
+     @@
+     +
+    ++resolvemsg="
+    ++$(gettext 'Resolve all conflicts manually, mark them as resolved with
+    ++"git add/rm <conflicted_files>", then run "git rebase --continue".
+    ++You can instead skip this commit: run "git rebase --skip".
+    ++To abort and get back to the state before "git rebase", run "git rebase --abort".')
+    ++"
+    ++
+     +write_basic_state () {
+     +  echo "$head_name" > "$state_dir"/head-name &&
+     +  echo "$onto" > "$state_dir"/onto &&
+ 3:  147699bd195 =  3:  7591098c4d1 sequencer: refactor the code to detach HEAD to checkout.c
+ 4:  bbaa4264caa !  4:  f8429e950a4 builtin/rebase: support running "git rebase <upstream>"
+    @@ -232,13 +232,14 @@
+     +  }
+     +
+     +  /*
+    -+  * If the branch to rebase is given, that is the branch we will rebase
+    -+  * branch_name -- branch/commit being rebased, or HEAD (already detached)
+    -+  * orig_head -- commit object name of tip of the branch before rebasing
+    -+  * head_name -- refs/heads/<that-branch> or "detached HEAD"
+    -+  */
+    ++   * If the branch to rebase is given, that is the branch we will rebase
+    ++   * branch_name -- branch/commit being rebased, or
+    ++   *                HEAD (already detached)
+    ++   * orig_head -- commit object name of tip of the branch before rebasing
+    ++   * head_name -- refs/heads/<that-branch> or "detached HEAD"
+    ++   */
+     +  if (argc > 1)
+    -+           die ("TODO: handle switch_to");
+    ++           die("TODO: handle switch_to");
+     +  else {
+     +          /* Do not need to switch branches, we are already on it.  */
+     +          options.head_name =
 
---0OAP2g/MAC+5xKAE
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.8 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAltCe8cACgkQv1NdgR9S
-9os2hxAApc64jBmI29c7KMg2/gSYiZJfGCdqz46v82smEJGLK+llgK7RaOew6s1q
-JWinXTKTBepOLvP4Fs4Ke8sQyYVvat4qg2+citdiTDs1++L3eAKT37y8Q4YX28Xu
-qogVa889aXkwmsbImuzvn1A1zZIt0jZk85Vi+jPVSX/j15pa7/1748OG0l2/nj3/
-kRKaBVuAlBHxj3I3GOGZhFA3c3DYILNT5m3kl49OHJdBiAgwuOArBMfMStBovy1G
-odwIZtDjMTMolg0lG7FkhX3iCBzwsUGEDE5RJ58WqxW9RjGnrFN5GN+pRDbgoeVY
-nC3nqbBmkH60vo8r0sd9pc7ndDgi0sOmvQQ6IbQcHzXyL9XPAEvqx+gK3tktcrcx
-ZC9i604fA+0D4jRzekBqajkgJMgMYfijq6vLccXxwNZ9XQh7VhyGlxbcYmFvfQmI
-gthXEgS6tD5bQTxoQBKSRn1bGRxqvkKZ1kMD1/totmrWWojfoHnIQ9hYMiLxq6s9
-BxEgZcY5u8oY9wZjHH82itUvsSKEHl+UKXAyP3ORg7C67npWXahymh9R1zf1Qy/L
-v4VpX0SzWywU1FfOQrrdouGjrAEjjkoElhbUWAhpkxxP5I3eP/+yFBemhojf7X2s
-i4jhNQXcnDBjkeLk3yQ7asrDxSDadMI79+BE/ugw4u3XS7ETewY=
-=kyv8
------END PGP SIGNATURE-----
-
---0OAP2g/MAC+5xKAE--
