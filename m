@@ -2,108 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 81A2E1F62D
-	for <e@80x24.org>; Sun,  8 Jul 2018 21:52:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A99131F62D
+	for <e@80x24.org>; Sun,  8 Jul 2018 22:17:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932860AbeGHVw1 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Jul 2018 17:52:27 -0400
-Received: from mout.gmx.net ([212.227.15.15]:45257 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932545AbeGHVw0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Jul 2018 17:52:26 -0400
-Received: from MININT-6BKU6QN ([89.204.155.168]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LomN9-1gHgpI2BAJ-00grcp; Sun, 08
- Jul 2018 23:52:23 +0200
-Date:   Sun, 8 Jul 2018 23:52:22 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Paul Smith <paul@mad-scientist.net>
-cc:     Daniel Jacques <dnj@google.com>, git@vger.kernel.org
-Subject: Re: Git 2.18: RUNTIME_PREFIX... is it working?
-In-Reply-To: <bf0d4f33701ec694917f2e710c3fb097085c8d69.camel@mad-scientist.net>
-Message-ID: <nycvar.QRO.7.76.6.1807082346140.75@tvgsbejvaqbjf.bet>
-References: <97803ec8dae0a73bae301a37377b7b4a78f77e99.camel@mad-scientist.net>  <nycvar.QRO.7.76.6.1807041312150.75@tvgsbejvaqbjf.bet>  <986185d30a0f09b4e2a9832d324a265cd3da7354.camel@mad-scientist.net>  <nycvar.QRO.7.76.6.1807061059260.75@tvgsbejvaqbjf.bet>
-  <CAD1RUU-4a_jV_JjozjXOR4bi+_7rFW_AjmHbbrw6NHJ77=oGkw@mail.gmail.com> <bf0d4f33701ec694917f2e710c3fb097085c8d69.camel@mad-scientist.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:JE2p7SGJa18YbRpkiySVPSnsjt7z62CqgUK7RWqWU71mBUC1Rg7
- P8Pwl2I8UCV2oAMdmKk5FHMrjRJ3QjPiQNiEXHwBxPMz2PP7/gOmfVCbE4hNewvc8dUIaED
- INhPjE+MEMMjoySubF4b39RrmA6GmkRkU4FdH+zXRr/NeeF50GUrUOqxiZpnUTXD38ZI9Vr
- Nvkv4HrcrO1njieqYAJWg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:400YPSfxt14=:fOVy0708kUVqOekE52tHL3
- sGzVmYTGDBTD1ppEZ/xNqTvpYGtUcBNgurjhIrC/ZYzftjmmaFIZD67AIt0ghfPij+lhp1CEI
- jBBiHqgBQw0nt5LN6jte8PTWagnSfztgw2/9suK4fGQBGwzrUC/4v0BemTFFxu1K4X/YmLqWE
- 9i5jcFO2LAvjKLs6gxwL5q1xMxbYR0dxnM+L8ory2uAR92+XhAzGDgol3Q6YMIkfMrlg0+UNM
- UY0qhr9rU91DcOvMfTpD6aE7SNnyCoTVt3w3Je6nuzAkgdqBkF+Wf7MXd7il101Pdu0oGavPW
- jPMZfMggm5YHUXXIhbv73gR2CLOZOCflw/gP78oisEYf/zzv0FA/3WA5SPHQ8BTeV0IQtO2mb
- cUGYUYWOnZIoqqdkn1HEvPVWbDNsMN7/FBeOtKSLd5i0wo58DePGSGuImQZ+zBA6sKJjUgYd1
- fIHp2lKKWKagaQz6bXJ2F09ojdeqpLzSnYyf3DyUxDZ0dArXmEVPglDtrHWFlfAZRHyWCnjM1
- ONKP6bdvm4LU5mCkpjoOSdYkNMZkSI45rmbDdwsIMApO0F5duhfzxE23RnwtyvxuXLoOpySk9
- MpbXI9hxw25phQbuXwfeO/MUO74kyNYlYWtm6eLKRd2rgOH8HDFk6uabMTEsxGt0tsaAn/H8t
- GUTcb3pT8bQ/P1ISm0vVHmgZbikJscd8ZK2aVsyPa4zR+EJ23GnmC4aDZfmzkQ0zu6mF6B5w6
- uX8ChDI1xeUat1/mUfrikq/oeWNqcrmc8iRkeK30M/3BgIFZcyYTVPMwxsmkqRJV/RA5UbqcY
- SAlV4cy
+        id S932932AbeGHWRV (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Jul 2018 18:17:21 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:54190 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1754377AbeGHWRV (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 8 Jul 2018 18:17:21 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:5996:38d5:9b31:ef84])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id C850C6073C;
+        Sun,  8 Jul 2018 22:17:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1531088240;
+        bh=EaiiRpWCdW6ZnDcKB9HWM04C0D9LMVuKy3akUS2EsIQ=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+         In-Reply-To:References:Content-Type:Content-Disposition;
+        b=gw57nR3H9moTIZz30Y9DChipFIhJ42zxCjw/DtxFFVOjV5QfjTynjjGsr4yV6Ad27
+         7f3SFGKxQGfitTUV+VCknnMSLqI4Ldc95nQoAhBH3h6UqSPqMV0Lkewt4ic6zpLoNU
+         IY0rFjiSDgZCX0XN2vmloRMIQmTAiDae6QoV8hH7MTc+TqsmC+qD5riD8OLtS7LszH
+         eoMWWsX49aGD3bsyVjDQxLPiwsAQksD/w+pmTBowOXl2dHB0CrThw18QJ4XqNBMh/u
+         dbDLVEAckx5Mv4zABu5AHkG0aJbD1ps/sCO7f26ssadO7fkl+yeo6YITWUErYl1ovH
+         85Cj/NEy7nNOMmesKmQkWrKSQrsnUdrIeW19nUFmFP7kttpIUXASulcard1hT9ZIS1
+         xa8O/t/1AzyxAPdU1OBhO7zN01774XcojEw9kg+3LdLDZJeYogwVt01LD7yK3itThs
+         6perqPOR+5NGUVVLHaCE/q/CupiiYCUjCC1fZtm5z/uS2UVbPgE
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Drew DeVault <sir@cmpwn.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH v2 0/4] Automatic transfer encoding for patches
+Date:   Sun,  8 Jul 2018 22:17:09 +0000
+Message-Id: <20180708221713.518276-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.18.0.399.gad0ab374a1
+In-Reply-To: <20180706022357.739657-1-sandals@crustytoothpaste.net>
+References: <20180706022357.739657-1-sandals@crustytoothpaste.net>
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Paul,
+This series introduces an "auto" value for git send-email
+--transfer-encoding that uses 8bit when possible (i.e. when lines are
+998 octets or shorter) and quoted-printable otherwise; it then makes
+this the default behavior.  It also makes --validate aware of transfer
+encoding so it doesn't complain when using quoted-printable or base64.
 
-On Sun, 8 Jul 2018, Paul Smith wrote:
+Changes from v1:
+* Update commit messages to refer to RFC 5322.
+* Add a missing space.
+* Remove the needless capture of stderr.
+* Define "suitable transfer encoding".
+* Invert test to better capture failures.
+* Wrap --validate code in an if block instead of returning early.
+* Update documentation to reflect correct, modern RFC.
 
-> On Fri, 2018-07-06 at 09:18 -0400, Daniel Jacques wrote:
-> > I forewent autoconf because I was concerned that the option was too
-> > obscure and the configuration too nuanced to be worth adding via
-> > flag, as RUNTIME_PREFIX requires some degree of path alignment and is
-> > fairly special-case. If you prefer autoconf, though, it sounds like a
-> > good thing to add, and I'm happy that you are finding the feature
-> > useful!
-> 
-> Well, far from obscure, I actually think that RUNTIME_PREFIX should be
-> the default behavior on all platforms.  In fact speaking for myself, I
-> see no value at all in the hardcoded path behavior and it could be
-> removed and RUNTIME_PREFIX be the only option and that would be fine
-> with me.
-> 
-> The only possible advantage I can see to the current default that you
-> can copy the Git binary alone somewhere else, but that's of very little
-> value IMO: you could instead create a symbolic link or a two-line shell
-> script wrapper if you wanted to have "git" available outside of its
-> normal relation to the rest of the installation for some reason.
+brian m. carlson (4):
+  send-email: add an auto option for transfer encoding
+  send-email: accept long lines with suitable transfer encoding
+  send-email: automatically determine transfer-encoding
+  docs: correct RFC specifying email line length
 
-In theory, I agree with you, I would love for RUNTIME_PREFIX not even to
-be needed.
+ Documentation/git-send-email.txt | 17 ++++++----
+ git-send-email.perl              | 46 +++++++++++++-------------
+ t/t9001-send-email.sh            | 57 ++++++++++++++++++++++++++++++++
+ 3 files changed, 91 insertions(+), 29 deletions(-)
 
-In practice, however, a *loooong* time ago it was decided that it was okay
-to implement parts of Git as shell scripts, and when those shell scripts
-finally became too many, in order not to clutter the `PATH`, they were
-moved to the libexec/git-core/ directory.
-
-Obviously, for this to work, Git needs to prefix the `PATH` variable
-internally, and for that it has to know where that libexec/git-core/
-directory lives.
-
-Now, if you care to have a look at Dan's (and my) patches to implement
-RUNTIME_PREFIX so that it looks for a directory *relative to the Git
-binary*, you will see that it is far from portable. In fact, it is very
-definitely not portable, and needs specific support for *every single
-supported Operating System*. And while we covered a lot, we did not cover
-all of them.
-
-So unfortunately, it is impossible to make it the default, I am afraid.
-Until the time when we can ship a single `git` binary (which is sadly
-unlikely to happen, as there has been a *lot* of pushback against that
-e.g. on the grounds that having to (lazy-)load the cURL library adds a
-tiny bit to the startup time of the `git` binary).
-
-It is all a bit complex, due to non-technical reasons.
-
-Ciao,
-Dscho
