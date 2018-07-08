@@ -7,41 +7,41 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E075C1F62D
-	for <e@80x24.org>; Sun,  8 Jul 2018 23:36:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E6771F62D
+	for <e@80x24.org>; Sun,  8 Jul 2018 23:37:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933056AbeGHXgy (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Jul 2018 19:36:54 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:54314 "EHLO
+        id S933135AbeGHXg6 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Jul 2018 19:36:58 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:54326 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932799AbeGHXgx (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 8 Jul 2018 19:36:53 -0400
+        by vger.kernel.org with ESMTP id S933087AbeGHXgz (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 8 Jul 2018 19:36:55 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:5996:38d5:9b31:ef84])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id DF2FE60748;
-        Sun,  8 Jul 2018 23:36:51 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7F95760746;
+        Sun,  8 Jul 2018 23:36:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1531093012;
-        bh=kooRTQrVZbLa+3VM2xFOZ/aF0DSny2EtmdQ1Efx/kSk=;
+        s=default; t=1531093013;
+        bh=YW6ZugRDXIu9uUNfX1tK/nceo2rm76l5nk2nhovdXFw=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=z9QVjsWSMxGbOQDj14oNbghjgtSOqRA8Zrt+1Q7zl5mQBIlf+VCJBxCKSsBhktETy
-         aMFubi8fOHHxKVtIOr4pgmnFSkqHpPAX44fo9Xg15qL750cDU5ZedCQdi2jKlntFt8
-         lmjZIz13KfR08Kkxojai8BQHgU7k6fsWoTIFJXbZljjgswD+n+XtNael+cS0X4Jyil
-         j3UjDPXYdQUBcJEAnaF9DveaqVSqFr3s6DGDIw9qx05dCkHZ26Pa8O8A76uiIbtdJ5
-         1JYFnnB/iZ1I8yJ2l0/1M6LDV6DfBE11fPvMGX9Yu7CyWs601vrxUUgSOfcNyWCXPF
-         ephLzZ+MOOCMH2oSq3ngJLZOYC4peHQ+uoU1bIl9N2j7KnSPJk8aLxpFBN3EitY6sd
-         FbDNGL8j9V+6WdBDVwL4kWyR27VFo4Y8girteomxJZCqKyYH5qMPmcWvPeF4L7VJwV
-         xgpXDIEud22RDEluGXgMaoUeSYiYI5hE7RF8bF3m5hjPgZkz7dg
+        b=vTbq2D5RjAAqSduiKCkhnVeq3xjEAGwUScXxLdFozdlRS7PN5CGLrXR1Vbxqh99Pt
+         9gapKbo8R9ByCG5xuGiiRUAuAXP0qHmWvlTRiTGMZbhudvCuLhnxvINzOsP/+66R6C
+         dES14YXuHmoS+izGjw8AUic4kCuV2yx0GbBN7HS/Ntlr9sM0EZroIaGS/KYkfKwhi3
+         zQRXadGJFPCJqUqw+g8QxgxqFt36FKwXR79KhGDu9eGz2uvn7M7A5pH57ZhiXiT1Vk
+         qSjG52u9O95brFgg7elNs+S3cesSD1xg+hc0qJTtGhGhWam8Gd+ZzIVz+MNBtxFjY7
+         rVyocyvg5Jls7PzzBzghPOzc7t9l9MUTbJpLx71zfciCpNsEHNpm9wzrkZoYj+7TJN
+         VvK14ap1y6xadsmoRBFLZuvUO0EaSPHaxCBSqNMltTULDnbLg2B4KM2cZV79boEnSJ
+         rJeXhhNP8AiktTjXoRVp1FpDShU7QpLyucVojUAYGhZSfHFg3JH
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 04/17] commit: express tree entry constants in terms of the_hash_algo
-Date:   Sun,  8 Jul 2018 23:36:25 +0000
-Message-Id: <20180708233638.520172-5-sandals@crustytoothpaste.net>
+Subject: [PATCH 06/17] sha1-name: use the_hash_algo when parsing object names
+Date:   Sun,  8 Jul 2018 23:36:27 +0000
+Message-Id: <20180708233638.520172-7-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.18.0.399.gad0ab374a1
 In-Reply-To: <20180708233638.520172-1-sandals@crustytoothpaste.net>
 References: <20180708233638.520172-1-sandals@crustytoothpaste.net>
@@ -51,26 +51,59 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Specify these constants in terms of the size of the hash algorithm
-currently in use.
-
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- commit.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sha1-name.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/commit.c b/commit.c
-index 0c3b75aeff..ff05d04570 100644
---- a/commit.c
-+++ b/commit.c
-@@ -364,8 +364,8 @@ int parse_commit_buffer(struct commit *item, const void *buffer, unsigned long s
- 	struct object_id parent;
- 	struct commit_list **pptr;
- 	struct commit_graft *graft;
--	const int tree_entry_len = GIT_SHA1_HEXSZ + 5;
--	const int parent_entry_len = GIT_SHA1_HEXSZ + 7;
-+	const int tree_entry_len = the_hash_algo->hexsz + 5;
-+	const int parent_entry_len = the_hash_algo->hexsz + 7;
+diff --git a/sha1-name.c b/sha1-name.c
+index 60d9ef3c7e..ba6a5a689f 100644
+--- a/sha1-name.c
++++ b/sha1-name.c
+@@ -310,7 +310,7 @@ static int init_object_disambiguation(const char *name, int len,
+ {
+ 	int i;
  
- 	if (item->object.parsed)
- 		return 0;
+-	if (len < MINIMUM_ABBREV || len > GIT_SHA1_HEXSZ)
++	if (len < MINIMUM_ABBREV || len > the_hash_algo->hexsz)
+ 		return -1;
+ 
+ 	memset(ds, 0, sizeof(*ds));
+@@ -576,6 +576,8 @@ int find_unique_abbrev_r(char *hex, const struct object_id *oid, int len)
+ 	struct disambiguate_state ds;
+ 	struct min_abbrev_data mad;
+ 	struct object_id oid_ret;
++	const unsigned hexsz = the_hash_algo->hexsz;
++
+ 	if (len < 0) {
+ 		unsigned long count = approximate_object_count();
+ 		/*
+@@ -599,8 +601,8 @@ int find_unique_abbrev_r(char *hex, const struct object_id *oid, int len)
+ 	}
+ 
+ 	oid_to_hex_r(hex, oid);
+-	if (len == GIT_SHA1_HEXSZ || !len)
+-		return GIT_SHA1_HEXSZ;
++	if (len == hexsz || !len)
++		return hexsz;
+ 
+ 	mad.init_len = len;
+ 	mad.cur_len = len;
+@@ -706,7 +708,7 @@ static int get_oid_basic(const char *str, int len, struct object_id *oid,
+ 	int refs_found = 0;
+ 	int at, reflog_len, nth_prior = 0;
+ 
+-	if (len == GIT_SHA1_HEXSZ && !get_oid_hex(str, oid)) {
++	if (len == the_hash_algo->hexsz && !get_oid_hex(str, oid)) {
+ 		if (warn_ambiguous_refs && warn_on_object_refname_ambiguity) {
+ 			refs_found = dwim_ref(str, len, &tmp_oid, &real_ref);
+ 			if (refs_found > 0) {
+@@ -750,7 +752,7 @@ static int get_oid_basic(const char *str, int len, struct object_id *oid,
+ 		int detached;
+ 
+ 		if (interpret_nth_prior_checkout(str, len, &buf) > 0) {
+-			detached = (buf.len == GIT_SHA1_HEXSZ && !get_oid_hex(buf.buf, oid));
++			detached = (buf.len == the_hash_algo->hexsz && !get_oid_hex(buf.buf, oid));
+ 			strbuf_release(&buf);
+ 			if (detached)
+ 				return 0;
