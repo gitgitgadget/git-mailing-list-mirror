@@ -2,46 +2,46 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	RCVD_IN_DNSWL_HI,UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42A141F62D
-	for <e@80x24.org>; Sun,  8 Jul 2018 23:37:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DAAD91F62D
+	for <e@80x24.org>; Sun,  8 Jul 2018 23:37:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933292AbeGHXhK (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Jul 2018 19:37:10 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:54400 "EHLO
+        id S933308AbeGHXhU (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Jul 2018 19:37:20 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:54370 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S933174AbeGHXhG (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 8 Jul 2018 19:37:06 -0400
+        by vger.kernel.org with ESMTP id S933087AbeGHXhC (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 8 Jul 2018 19:37:02 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:5996:38d5:9b31:ef84])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5BCB76047B;
-        Sun,  8 Jul 2018 23:37:05 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 609526047B;
+        Sun,  8 Jul 2018 23:37:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1531093025;
-        bh=FZevZFIE9zCFGfByasyRYTbqLDI/t9xWWD9TrnfAPgs=;
+        s=default; t=1531093021;
+        bh=5GKqYD+Qjg6NCuj33n6oL/9O+atTLH+x2Qzp4236Xhc=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=bSWkah5FT5Tt8q9SJBrmj1I11UMh6G6Pk4XFOssuyElUiqiCNrSO4yxqil35bU3YK
-         hktRnBzNZb9qCD/2fzLss1vqSgPAUADvR/JYGiSC5GRUezLRBz79xvkiu2tFllpjh9
-         hkeXCTKecadFE3azA0gWNSiZ467tr031gmrFSF2q7fP1basD5Omc+HmScVAyLAjGBA
-         vGAwhtnmuNwE/EMGyKw5m3bkCszoGN8FL8X5Eh8ob47+howMhhOMkB1ystBveVYoBT
-         V2894BC11k/DXViSQAXicFmVrQXVt2QoK2a2fSq36Ho2YlISjW148QcrJRKG+Fbs3G
-         x3xq04cA5wxHQPP+siIP6IT5swMaeLg1YfgsBrV8rVG1uTeotAWTkOUGBnx8vXhFNN
-         NDfw9nyXYhj+gp9QnI5P1D/iYzrKFYUNcmkOLCMh2tm4f23u6DbWQEnBSVVNbjE5Is
-         d/S7bK51MEmX8JSyvWCp80c6saYlloZZjhh3TNhCADatAiw8L7b
+        b=iNXFIv9AcfBZSA0vfOy9O+o1iYK4hDwQKXZ5H7L6jHfstEAcy/1h85XcrXxvhpUGY
+         CDjzfLnIT0+Wm7NZZonDSC2DrbF5lVhE6hULgJGfVF3tNIe/1/+nIWa9jr60igBwpw
+         tDT9YUGfm/UjUNzAkCSIDuOTPb0hXj0hcK0u8goBgroPRvRmaCTxBOxQyyJiOBRYmY
+         uI4YXIhebyP75yFUpwS0ixUGFLBfUWIf1PHWw6WfcMBofe3CWHIdD4kmguFBlhbHQC
+         PzpmciOKCVOqZJQmZk+v5p9umgGBMX6QMROJX8NOqkEXLnfEnCU0jfYTJUYQKM2tSi
+         /GcgTAxHe/K5AiKnvDaaYGrqlbYLT2NimoNCJ2Aliv1lAJt1R9rv8zjShtMyrlhwH1
+         2r0763u4KA685k7SuG3hLNyG4fw/Xq51K32MBLJa0oPwQh1nA8ZaumWsfkKH9okatz
+         EfhCvDMtvo+q5QZgMOX6xfIV48+6jKXMMEh4lZQVZd4IVUry33z
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 16/17] sha1-file: convert constants to uses of the_hash_algo
-Date:   Sun,  8 Jul 2018 23:36:37 +0000
-Message-Id: <20180708233638.520172-17-sandals@crustytoothpaste.net>
+Subject: [PATCH 12/17] builtin/merge: switch to use the_hash_algo
+Date:   Sun,  8 Jul 2018 23:36:33 +0000
+Message-Id: <20180708233638.520172-13-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.18.0.399.gad0ab374a1
 In-Reply-To: <20180708233638.520172-1-sandals@crustytoothpaste.net>
 References: <20180708233638.520172-1-sandals@crustytoothpaste.net>
@@ -51,45 +51,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert one use of 20 and several uses of GIT_SHA1_HEXSZ into references
-to the_hash_algo.
+Switch uses of GIT_SHA1_HEXSZ to use the_hash_algo instead.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- sha1-file.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ builtin/merge.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/sha1-file.c b/sha1-file.c
-index de4839e634..1f66b9594f 100644
---- a/sha1-file.c
-+++ b/sha1-file.c
-@@ -336,7 +336,7 @@ int raceproof_create_file(const char *path, create_file_fn fn, void *cb)
- static void fill_sha1_path(struct strbuf *buf, const unsigned char *sha1)
- {
- 	int i;
--	for (i = 0; i < 20; i++) {
-+	for (i = 0; i < the_hash_algo->rawsz; i++) {
- 		static char hex[] = "0123456789abcdef";
- 		unsigned int val = sha1[i];
- 		strbuf_addch(buf, hex[val >> 4]);
-@@ -1473,7 +1473,7 @@ void *read_object_with_reference(const struct object_id *oid,
- 		}
- 		ref_length = strlen(ref_type);
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 4a4c09496c..916c9f0569 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -1034,6 +1034,7 @@ static void handle_fetch_head(struct commit_list **remotes, struct strbuf *merge
+ 	const char *filename;
+ 	int fd, pos, npos;
+ 	struct strbuf fetch_head_file = STRBUF_INIT;
++	const unsigned hexsz = the_hash_algo->hexsz;
  
--		if (ref_length + GIT_SHA1_HEXSZ > isize ||
-+		if (ref_length + the_hash_algo->hexsz > isize ||
- 		    memcmp(buffer, ref_type, ref_length) ||
- 		    get_oid_hex((char *) buffer + ref_length, &actual_oid)) {
- 			free(buffer);
-@@ -2062,9 +2062,9 @@ int for_each_file_in_obj_subdir(unsigned int subdir_nr,
- 		namelen = strlen(de->d_name);
- 		strbuf_setlen(path, baselen);
- 		strbuf_add(path, de->d_name, namelen);
--		if (namelen == GIT_SHA1_HEXSZ - 2 &&
-+		if (namelen == the_hash_algo->hexsz - 2 &&
- 		    !hex_to_bytes(oid.hash + 1, de->d_name,
--				  GIT_SHA1_RAWSZ - 1)) {
-+				  the_hash_algo->rawsz - 1)) {
- 			if (obj_cb) {
- 				r = obj_cb(&oid, path->buf, data);
- 				if (r)
+ 	if (!merge_names)
+ 		merge_names = &fetch_head_file;
+@@ -1059,16 +1060,16 @@ static void handle_fetch_head(struct commit_list **remotes, struct strbuf *merge
+ 		else
+ 			npos = merge_names->len;
+ 
+-		if (npos - pos < GIT_SHA1_HEXSZ + 2 ||
++		if (npos - pos < hexsz + 2 ||
+ 		    get_oid_hex(merge_names->buf + pos, &oid))
+ 			commit = NULL; /* bad */
+-		else if (memcmp(merge_names->buf + pos + GIT_SHA1_HEXSZ, "\t\t", 2))
++		else if (memcmp(merge_names->buf + pos + hexsz, "\t\t", 2))
+ 			continue; /* not-for-merge */
+ 		else {
+-			char saved = merge_names->buf[pos + GIT_SHA1_HEXSZ];
+-			merge_names->buf[pos + GIT_SHA1_HEXSZ] = '\0';
++			char saved = merge_names->buf[pos + hexsz];
++			merge_names->buf[pos + hexsz] = '\0';
+ 			commit = get_merge_parent(merge_names->buf + pos);
+-			merge_names->buf[pos + GIT_SHA1_HEXSZ] = saved;
++			merge_names->buf[pos + hexsz] = saved;
+ 		}
+ 		if (!commit) {
+ 			if (ptr)
