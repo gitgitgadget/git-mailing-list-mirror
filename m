@@ -2,168 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C4A61F62D
-	for <e@80x24.org>; Sun,  8 Jul 2018 01:10:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CBC261F62D
+	for <e@80x24.org>; Sun,  8 Jul 2018 08:23:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754347AbeGHBKn (ORCPT <rfc822;e@80x24.org>);
-        Sat, 7 Jul 2018 21:10:43 -0400
-Received: from ICGRIDDB04.SEAS.UPENN.EDU ([158.130.57.72]:51970 "EHLO
-        ICGRIDDB04.SEAS.upenn.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754249AbeGHBKm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 7 Jul 2018 21:10:42 -0400
-Received: from [10.13.0.6] (helo=ofb.net)
-        by ICGRIDDB04.SEAS.upenn.edu with esmtp (Exim 4.89)
-        (envelope-from <frederik@ofb.net>)
-        id 1fbyDg-0007ar-T9; Sat, 07 Jul 2018 21:10:33 -0400
-Received: from thutmose (unknown [173.239.75.234])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ofb.net (Postfix) with ESMTPSA id A95C83EDF2;
-        Sat,  7 Jul 2018 18:10:27 -0700 (PDT)
-Received: from frederik by thutmose with local (Exim 4.91)
-        (envelope-from <frederik@thutmose>)
-        id 1fbyCc-0007Zn-8f; Sat, 07 Jul 2018 18:09:26 -0700
-Date:   Sat, 7 Jul 2018 18:09:26 -0700
-From:   frederik@ofb.net
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
-        "Robert P. J. Day" <rpjday@crashcourse.ca>
-Subject: Re: de-alphabetizing the documentation
-Message-ID: <20180708010926.GK6343@ofb.net>
-Reply-To: frederik@ofb.net
-References: <20180706213239.GA867@flurp.local>
- <20180706211828.GC6195@aiede.svl.corp.google.com>
- <20180706232147.GF6343@ofb.net>
- <20180706234715.GA81694@aiede.svl.corp.google.com>
+        id S1753745AbeGHIXd (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Jul 2018 04:23:33 -0400
+Received: from mail109.syd.optusnet.com.au ([211.29.132.80]:32908 "EHLO
+        mail109.syd.optusnet.com.au" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752951AbeGHIXc (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 8 Jul 2018 04:23:32 -0400
+X-Greylist: delayed 1297 seconds by postgrey-1.27 at vger.kernel.org; Sun, 08 Jul 2018 04:23:32 EDT
+Received: from [192.168.0.5] (n1-41-150-25.bla2.nsw.optusnet.com.au [1.41.150.25])
+        (Authenticated sender: josipzamboni@optusnet.com.au)
+        by mail109.syd.optusnet.com.au (Postfix) with ESMTPSA id 0F5A0D6AF1B
+        for <git@vger.kernel.org>; Sun,  8 Jul 2018 18:01:54 +1000 (AEST)
+To:     git@vger.kernel.org
+From:   josip zamboni <josipzamboni@optusnet.com.au>
+Subject: Croatian version of Pro Git book
+Message-ID: <58c9972c-55c8-8fd7-71bc-97f2f11d519a@optusnet.com.au>
+Date:   Sun, 8 Jul 2018 18:01:52 +1000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180706234715.GA81694@aiede.svl.corp.google.com>
-User-Agent: Mutt/1.10.0 (2018-05-17)
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Optus-CM-Score: 0
+X-Optus-CM-Analysis: v=2.2 cv=I9sVfJog c=1 sm=1 tr=0
+        a=h/4zQmFCIQfYAJrcANhKbg==:117 a=h/4zQmFCIQfYAJrcANhKbg==:17
+        a=IkcTkHD0fZMA:10 a=zpIvgkWePbsEyOTYLO0A:9 a=xAiLs6GpWY8TLzmq:21
+        a=SPG0qbXbx4R4LROA:21 a=QEXdDO2ut3YA:10 a=gYUBzLz5yPcA:10
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+Dear all,
 
-If it's really just a matter of needing someone with a newcomer's
-perspective, then I'd be happy to look over the ordering of the git
-subcommands. You can run the command I provided to glean the frequency
-of each subcommand from your shell history, I'll look over the output
-and see if the ordering makes sense to me, and then you or someone
-else can rearrange the manual page to list the subcommands in this
-order. Is that a suitable plan?
+I've noticed there is no Croatian version of Pro Git Book and I'd like 
+to produce it. If you agree, do let me know the contact details of 
+person(s) I should be dealing with.
 
-Thanks,
+With kind regards,
 
-Frederick
+Josip Zamboni
 
-On Fri, Jul 06, 2018 at 04:47:15PM -0700, Jonathan Nieder wrote:
-> Hi,
-> 
-> Frederick Eaton wrote:
-> 
-> >       Unfortunately my contribution will have to be limited for the
-> > moment to making this suggestion, as I am extraordinarily busy. I hope
-> > it will not be too burdensome to add this item to your TODO list and
-> > keep it there until a willing volunteer comes along.
-> 
-> No problem.  If you have time to contribute later, we can wait. :)
-> 
-> > For what it's worth, I made extensive changes to the Arch Wiki Git
-> > article back in 2015, following an initial attempt of mine to
-> > understand various tutorials. It was the most prominent wiki-based Git
-> > documentation I could find at the time. The article has of course seen
-> > numerous improvements since then.
-> 
-> For reference: https://wiki.archlinux.org/index.php/git
-> 
-> > I don't think that it's really important to find a "best" ordering for
-> > commands or glossary terms; it's more a matter of finding someone who
-> > is willing to take responsibility for choosing a reasonable ordering.
-> > Presumably the head maintainer of this project could delegate the task
-> > to a qualified volunteer, not a newbie like myself but not necessarily
-> > someone with expert knowledge either.
-> 
-> I'd have to say, when I compare the troubles a new user and a
-> long-timer would run into, I conclude that the long-timers would be
-> more likely to produce worse documentation.  It is very difficult to
-> remember how new users see things.  The ideal skill set in fact has
-> nothing to do with level of Git expertise: to produce a good result, a
-> good technical writer would ask the right questions to gather
-> information from the experts and then test their documentation on
-> newcomers until it works well.
-> 
-> Based on the work you've described already having done, it sounds like
-> you'd be an ideal person to get this going, if you find yourself with
-> time for it.
-> 
-> >                                       It's too bad that a policy of
-> > not listing things alphabetically wasn't adopted from the beginning of
-> > this project, but I guess that's life.
-> 
-> From this thread I've been convinced that for this kind of reference
-> document, alphabetical organization within each section is a good
-> organization, provided each section is small enough (as in "git help"
-> output).
-> 
-> I'm also a fan of non reference documentation that can use a narrative
-> ordering instead (like "git help core-tutorial", except with more
-> modern commands).
-> 
-> > Thanks Eric for the pointer to "git help". This does indeed provide a
-> > finer and better grouping than the man-page (but it also looks like
-> > another candidate for de-alphabetization...!).
-> 
-> Indeed, copying that organization over from "git help" to the git(1)
-> manpage may be a good step for any interested people overhearing this
-> conversation.
-> 
-> As a first step, how about making git(1) recommend "git help", like
-> this?  It already recommends giteveryday(7) but the more interactive
-> first command might be useful for some people.
-> 
-> Thoughts?  Improvements?
-> 
-> -- >8 --
-> Subject: git doc: recommend "git help" as a starting point
-> 
-> The list of subcommands described in git(1) can be overwhelming.
-> Encourage newcomers to run "git help" to get a shorter list of
-> commands as a starting point.
-> 
-> Based on a suggestion by Frederick Eaton.
-> 
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> ---
->  Documentation/git.txt | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
-> 
-> diff --git a/Documentation/git.txt b/Documentation/git.txt
-> index dba7f0c18e..0149ce9af0 100644
-> --- a/Documentation/git.txt
-> +++ b/Documentation/git.txt
-> @@ -23,9 +23,12 @@ unusually rich command set that provides both high-level operations
->  and full access to internals.
->  
->  See linkgit:gittutorial[7] to get started, then see
-> -linkgit:giteveryday[7] for a useful minimum set of
-> -commands.  The link:user-manual.html[Git User's Manual] has a more
-> -in-depth introduction.
-> +linkgit:giteveryday[7] and run
-> +
-> +    git help
-> +
-> +for a useful minimum set of commands.  The link:user-manual.html[Git
-> +User's Manual] has a more in-depth introduction.
->  
->  After you mastered the basic concepts, you can come back to this
->  page to learn what commands Git offers.  You can learn more about
-> -- 
-> 2.18.0.203.gfac676dfb9
-> 
+Castle Hill, NSW 2154, Australia
+
+Phone: +614 03 234 333
+
