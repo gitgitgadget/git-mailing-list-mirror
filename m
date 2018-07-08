@@ -2,80 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4AA051F62D
-	for <e@80x24.org>; Sun,  8 Jul 2018 21:17:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 89E741F62D
+	for <e@80x24.org>; Sun,  8 Jul 2018 21:31:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933274AbeGHVR5 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Jul 2018 17:17:57 -0400
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:64064 "EHLO
-        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932681AbeGHVR4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Jul 2018 17:17:56 -0400
-Received: from PhilipOakley ([92.29.14.162])
-        by smtp.talktalk.net with SMTP
-        id cH45f3x0AbZX5cH45fmeIE; Sun, 08 Jul 2018 22:17:55 +0100
-X-Originating-IP: [92.29.14.162]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=Poq9kTE3 c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
- a=NXc+vVEgz70gitWznrz3ig==:17 a=IkcTkHD0fZMA:10 a=BCjA09oAAAAA:8
- a=Parqv8uTYqe6tUMFJoAA:9 a=QEXdDO2ut3YA:10 a=jYKBPJSq9nmHKCndOPe9:22
-Message-ID: <AED9D71037D249F8A56FDF0B1AA48603@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Eric Sunshine" <sunshine@sunshineco.com>,
-        "Beat Bolli" <dev+git@drbeat.li>
-Cc:     "Git List" <git@vger.kernel.org>,
-        "Junio C Hamano" <gitster@pobox.com>
-References: <20180708144342.11922-1-dev+git@drbeat.li> <20180708144342.11922-5-dev+git@drbeat.li> <CAPig+cSGj6Pt4OmRAQauZCiVG3PnjWeXm20RtYGbsjdZ5Tk4gg@mail.gmail.com>
-Subject: Re: [RFC PATCH 4/6] sequencer.c: avoid empty statements at top level
-Date:   Sun, 8 Jul 2018 22:17:55 +0100
-Organization: OPDS
+        id S933003AbeGHVbq (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Jul 2018 17:31:46 -0400
+Received: from mout.gmx.net ([212.227.17.22]:47445 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932834AbeGHVbp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Jul 2018 17:31:45 -0400
+Received: from MININT-6BKU6QN ([89.204.155.168]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LvhC4-1gAN3024vk-017Z1p; Sun, 08
+ Jul 2018 23:31:38 +0200
+Date:   Sun, 8 Jul 2018 23:31:38 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Pratik Karki <predatoramigo@gmail.com>
+cc:     git@vger.kernel.org, christian.couder@gmail.com,
+        sbeller@google.com, alban.gruin@gmail.com, gitster@pobox.com
+Subject: Re: [PATCH v4 3/4] sequencer: refactor the code to detach HEAD to
+ checkout.c
+In-Reply-To: <20180708180104.17921-4-predatoramigo@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1807082315350.75@tvgsbejvaqbjf.bet>
+References: <20180628074655.5756-1-predatoramigo@gmail.com> <20180708180104.17921-1-predatoramigo@gmail.com> <20180708180104.17921-4-predatoramigo@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="UTF-8";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Antivirus: AVG (VPS 180708-6, 08/07/2018), Outbound message
-X-Antivirus-Status: Clean
-X-CMAE-Envelope: MS4wfCvwuNiD3XiRC5aru9DvcrMebu3rGfWIhhRQUCkAmSTOS35cGS/RZn349I666OcSX7lc5bihC1OJB+p3j7YAGHeTNdKGtD630TPHnmBXLlAOWjKj29CH
- t9Ij9ju3iDVbCgOpSbMXZ4nvY6sDFRRegaZTCfLeLyN1qk78Ro9/Fa28IKZdLTKYlpL1E8svIIe/BVOjsfIZIkTU7W/eo8G/uG3wJjrZGzw9W5B+opq5/JDI
- 2PK6vCOKD2F77byx5Xw8Lg==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:y3Wi6KgyaUhl+ZIBcBnaKDtGNKYwlB7NLPakgc9uii5YLVOq+JY
+ ZIE4uiKurMpP37UGoXQHndNiLGpyIP3K3Z8aLtk5zg0X7t0ohTx6zZakrW92HGhNQ+wDjMc
+ Z8gEt/5JJ8d5mInThmzx4i4CDA8sArL7S0PETNUuQm4Gu/+ZarK1D0sQY8CyWQbO4CTbkHp
+ +j7gTY9GpXBxKNLub3rzg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:4sKB3ADj2Sg=:V3Uug1ioOPFSveB8iDXnOQ
+ 0hz6Ap/KBy0gjumRcJZ3307S1chMA/q/SH9pZb+uVwgDZ9FUcThGtfGvtuF27vbar2ah/b567
+ mD11CMAKbjHI8vOZBXJepjW4tvBd8BvUw2th38vfwCW3FwfEtpoj0dglaBeSCjTUwS3WSbhAp
+ tUP28i+Q9dvHpLcY+Rke3tMEcxRrmwHowypQoBEJ58auCnbkX5qEEYfyQIH2iRDadqMnP5Rdn
+ CERJ/CIDzt6sw+2dL/gGx3qZ8o5i1r2IVJzUZSBMkeyDGL3ZaK0pV6pcOXqp0K/sBr9eEyM3e
+ zusmr7h1QDkwZCwKJD2Uq/O/XSYfoiRls5YaTyymTCzDHldMBW0+J14Z1sMmVMtpC2l7TyzBB
+ he7yQCSiTkG+p1oV1cfkDYW59kS03ygp/nxuRIP2keGnlP18/AWTtpWBrcTMPtiGtDrtdmgus
+ wd+tlmAGgbelvycznB2JxAupp0vBzCqRi/TobLvTvDlK2IJwKNh4rpFGy4wC17Zcm8QTfZvfj
+ qMeFEhCdQfxeQKfF4JxxbExYiT3SI4fMd/9492K8QKp8oczRa+WAatNZ7++GzWCGFQ37wH4yH
+ kuExF87fErh6L5EyL1/7ok8lNHmuWN9YnTxj9fhA5h7XVmOY3coSeUn4VANVxhJqxrxXqqh8o
+ kkfVhDz0Gj6kw3uKBqyGGHeuBTtJxiyYszf4wfgC6A6Kn+v+Qe2KFYtRqQqThYy9BvtbDGEkd
+ sjvQq1gjOzcG2V0DiiULjpUJQEbDAOGd5C/ppAavZ4R4GdN1PPoqaXRnQZxJR5jZrd9vP1Jv1
+ szFqj9s
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Eric Sunshine" <sunshine@sunshineco.com>
-To: "Beat Bolli" <dev+git@drbeat.li>
-> On Sun, Jul 8, 2018 at 10:44 AM Beat Bolli <dev+git@drbeat.li> wrote:
->> The marco GIT_PATH_FUNC expands to a complete statement including the
+Hi Pratik,
 
-s/marco/macro/
+On Sun, 8 Jul 2018, Pratik Karki wrote:
 
->> semicolon. Remove two extra trailing semicolons.
->>
->> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
->> ---
->>  sequencer.c | 4 ++--
->>  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> While you're at it, perhaps it would be a good idea to fix the example
-> in path.h which teaches the "wrong" way:
-> 
-> /*
-> * You can define a static memoized git path like:
-> *
-> *    static GIT_PATH_FUNC(git_path_foo, "FOO");
-> *
-> * or use one of the global ones below.
-> */
->
+> diff --git a/checkout.c b/checkout.c
+> index bdefc888ba..da68915fd7 100644
+> --- a/checkout.c
+> +++ b/checkout.c
+> @@ -2,6 +2,11 @@
+>  #include "remote.h"
+>  #include "refspec.h"
+>  #include "checkout.h"
+> +#include "unpack-trees.h"
+> +#include "lockfile.h"
+> +#include "refs.h"
+> +#include "tree.h"
+> +#include "cache-tree.h"
+>  
+>  struct tracking_name_data {
+>  	/* const */ char *src_ref;
+> @@ -42,3 +47,62 @@ const char *unique_tracking_name(const char *name, struct object_id *oid)
+>  	free(cb_data.dst_ref);
+>  	return NULL;
+>  }
+> +
+> +int detach_head_to(struct object_id *oid, const char *action,
+> +		   const char *reflog_message)
+> +{
+> +	struct strbuf ref_name = STRBUF_INIT;
+> +	struct tree_desc desc;
+> +	struct lock_file lock = LOCK_INIT;
+> +	struct unpack_trees_options unpack_tree_opts;
+> +	struct tree *tree;
+> +	int ret = 0;
+> +
+> +	if (hold_locked_index(&lock, LOCK_REPORT_ON_ERROR) < 0)
+> +		return -1;
+> +
+> +	memset(&unpack_tree_opts, 0, sizeof(unpack_tree_opts));
+> +	setup_unpack_trees_porcelain(&unpack_tree_opts, action);
+> +	unpack_tree_opts.head_idx = 1;
+> +	unpack_tree_opts.src_index = &the_index;
+> +	unpack_tree_opts.dst_index = &the_index;
+> +	unpack_tree_opts.fn = oneway_merge;
+> +	unpack_tree_opts.merge = 1;
+> +	unpack_tree_opts.update = 1;
+> +
+> +	if (read_cache_unmerged()) {
+> +		rollback_lock_file(&lock);
+> +		strbuf_release(&ref_name);
+> +		return error_resolve_conflict(_(action));
+> +	}
+> +
+> +	if (!fill_tree_descriptor(&desc, oid)) {
+> +		error(_("failed to find tree of %s"), oid_to_hex(oid));
+> +		rollback_lock_file(&lock);
+> +		free((void *)desc.buffer);
+> +		strbuf_release(&ref_name);
+> +		return -1;
+> +	}
+> +
+> +	if (unpack_trees(1, &desc, &unpack_tree_opts)) {
+> +		rollback_lock_file(&lock);
+> +		free((void *)desc.buffer);
+> +		strbuf_release(&ref_name);
+> +		return -1;
+> +	}
+> +
+> +	tree = parse_tree_indirect(oid);
+> +	prime_cache_tree(&the_index, tree);
+> +
+> +	if (write_locked_index(&the_index, &lock, COMMIT_LOCK) < 0)
+> +		ret = error(_("could not write index"));
+> +	free((void *)desc.buffer);
+> +
+> +	if (!ret)
+> +		ret = update_ref(reflog_message, "HEAD", oid,
+> +				 NULL, 0, UPDATE_REFS_MSG_ON_ERR);
+
+I noticed that this does not actually detach the HEAD. That is my fault,
+of course, as I should have not only suggested refactoring the
+`do_reset()` function from `sequencer.c`, but I should also have
+remembered that that function has the benefit of *always* acting on a
+detached HEAD (because it runs during an interactive rebase), and
+therefore does not need to detach it explicitly.
+
+In light of the `reset_hard()` function that you added in a `wip` (see
+https://github.com/git/git/pull/505/files#diff-c7361e406139e8cd3a300b80b8f8cc8dR296),
+I could imagine that it might be better, after all, to leave `do_reset()`
+alone and implement a `reset_hard()` function that also optionally
+detaches the `HEAD` (I *think* that the flag `REF_NO_DEREF` would do that
+for you).
+
+Alternatively, just update the code in `do_reset()` to use that flag
+first, and only *then* extract the code to `checkout.c`.
+
+(I could not resist, and made this quick change on top of your
+`wip-rebase`, and together with a couple more, obvious fixups, this lets
+t3403 pass. It still needs some things that you have not yet sent to the
+mailing list, such as support for `--skip`.)
+
+Ciao,
+Dscho
+
