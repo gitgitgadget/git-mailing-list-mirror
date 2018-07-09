@@ -2,90 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6FE561F6AC
-	for <e@80x24.org>; Mon,  9 Jul 2018 20:21:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C0FF1F6AC
+	for <e@80x24.org>; Mon,  9 Jul 2018 20:22:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932856AbeGIUVP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jul 2018 16:21:15 -0400
-Received: from mout.gmx.net ([212.227.15.18]:33639 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754528AbeGIUVO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jul 2018 16:21:14 -0400
-Received: from MININT-6BKU6QN ([89.204.155.168]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MO7im-1fi8xg1dtk-005YXj; Mon, 09
- Jul 2018 22:21:04 +0200
-Date:   Mon, 9 Jul 2018 22:21:04 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Andrei Rybak <rybak.a.v@gmail.com>, git@vger.kernel.org,
-        Christian Couder <christian.couder@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/2] sequencer: handle empty-set cases consistently
-In-Reply-To: <20180709194819.GA7980@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1807092220460.75@tvgsbejvaqbjf.bet>
-References: <20180709194636.GB9852@sigill.intra.peff.net> <20180709194819.GA7980@sigill.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:FzRlDNpUDWT+2vwVNz1/ObGZDxdtjManlOxL1zTAw0n0bImtAi1
- yiaqqP7Cp/XCUimMfL+3H8JyBLVrT3Zs2s72O7vJml7TopjuTj4SSMjm4lPg/73n4rQLdOi
- fhVxGmPLbpxa32CHx6foMLHvaey6r/k1lCtojjsNteF9K0okwyzH8P0YA6tZvhSxRnPgmE1
- 9XZM9iMJfFn7MXyGF+0hw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:g1+1lP/7IfA=:Ytx/9PwFhhrOIxr/bv2MJV
- sR961UYjAysN7pKeND6MAAd/M3TW1QqQMTMzHPxq7CVcAmlKLztFiGLsxEGevGV4N5NnzIaUO
- T1PkV0BCSmtQkXhGDLsWc6dXlk9q+nkCuYq7Vwx7CMCBYInyXx8DshIMIxbMQ5mBt/kgqJU3A
- SWc/q7Qtx6GAzdoJykyves/6HHOI38FoYDtZLAjWc8i72tr4fGamXtKGl4m44hsdiCu1XROWW
- azzU6QcNoAsFW9m80aqovN5gdXRTkNVfLunYLgeghg0BYcqgs2AvVBOJhFxW/rFizYUvRzdTw
- WYX3r5y/2JCuROTfF30yF1DV0c5mciMSDtQMihy2diyS72TFFkOvBNrRcIzdnlzuRYXp5glA4
- I4Hl3+2mmjGIVS6RZ5uCr7HAVZ3W+BoiORnaVuubg4MVhmjMc8ODuCi5U+LFEOdbsEgwkQvLE
- CUNBFyb/AZjuwr2YGpLy8aNiXC6MNZVX7uyBFITa6uvVfozEjP8hdNPX5YZ1G48pS7IVRTPOe
- 7zcvYReyB6iziI4/srMXFd8xmpRiywIH4ZLb3T2cEwU6KYuazFku8trABlW97j4cqcTkN1LJT
- 6NNNAZcqJ78hu3bfy2jQ7IXqPFcuWc8ADIk1EBbhfcbR2lGqyKnamy2VAzVUUPaZqarQVQVaw
- 6BprixXH8g5E4qVbDWV5ta0ene1064v2l9jODnxWYR1uZgxOArv8xqSD5Stq51V3/H5VhDLkD
- L8KyPc3PFlFI1vHADjNvG+q+0KZYc1XrFMaRLCeg5ToQb6wvO/FPnsWpWEnjPpuuGwNmn8+Sk
- 5C4AeVZ
+        id S933009AbeGIUWf (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jul 2018 16:22:35 -0400
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:36628 "EHLO
+        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S933002AbeGIUWe (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 9 Jul 2018 16:22:34 -0400
+Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w69KIXeX010273;
+        Mon, 9 Jul 2018 13:22:31 -0700
+Authentication-Results: palantir.com;
+        spf=softfail smtp.mailfrom=newren@gmail.com
+Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
+        by mx0a-00153501.pphosted.com with ESMTP id 2k2uchbmr7-1;
+        Mon, 09 Jul 2018 13:22:31 -0700
+Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 93B432230FC2;
+        Mon,  9 Jul 2018 13:22:31 -0700 (PDT)
+Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
+        by smtp.yojoe.local (Postfix) with ESMTP id 805922CDE78;
+        Mon,  9 Jul 2018 13:22:31 -0700 (PDT)
+From:   Elijah Newren <newren@gmail.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 0/6] Add merge recursive testcases with undetected conflicts
+Date:   Mon,  9 Jul 2018 13:22:29 -0700
+Message-Id: <20180709202229.10222-1-newren@gmail.com>
+X-Mailer: git-send-email 2.18.0.135.gd4ea5491ab
+In-Reply-To: <xmqqr2kce1mw.fsf@gitster-ct.c.googlers.com>
+References: <xmqqr2kce1mw.fsf@gitster-ct.c.googlers.com>
+X-Proofpoint-SPF-Result: softfail
+X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-07-09_07:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1806210000 definitions=main-1807090230
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+On Mon, Jul 9, 2018 at 10:53 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Elijah Newren <newren@gmail.com> writes:
+>
+>> When a merge succeeds, we expect the resulting contents to depend only
+>> upon the trees and blobs of the branches involved and of their merge
+>> base(s).  Unfortunately, there are currently about half a dozen cases
+>> where the contents of a "successful" merge depend on the relative
+>> commit timestamps of the merge bases.  Document these with testcases.
+>>
+>> (This series came out of looking at modifying how file collision
+>> conflict types are handled, as discussed at [1].  I discovered these
+>> issues while working on that topic.)
+>
+> I have a topic branch for this series but not merged to 'pu' as
+> test-lint gives these:
+>
+> t6036-recursive-corner-cases.sh:1222: error: "export FOO=bar" is not portable (please use FOO=bar && export FOO):               echo "export PATH=~/bin:$PATH" >source_me.bash &&
+> t6036-recursive-corner-cases.sh:1227: error: "export FOO=bar" is not portable (please use FOO=bar && export FOO):               echo "export PATH=~/bin:$PATH" >source_me.bash &&
+> Makefile:77: recipe for target 'test-lint-shell-syntax' failed
+> make: *** [test-lint-shell-syntax] Error 1
+>
+> Arguably these are false positives because "source_me.bash" file is
+> a mere payload to go through the merge process to be munged and we
+> never intend to actually execute its contents with bash, but then
+> the test payload probably does not even have to be a string that
+> triggers such a false positive to begin with ;-)
 
-On Mon, 9 Jul 2018, Jeff King wrote:
+Oh, I didn't know about test-lint.  Is there a place that documents the various checks you run, so I can avoid slowing you down?  Ones I know about:
 
-> If the user gives us a set that prepare_revision_walk()
-> takes to be empty, like:
-> 
->   git cherry-pick base..base
-> 
-> then we report an error. It's nonsense, and there's nothing
-> to pick.
-> 
-> But if they use revision options that later cull the list,
-> like:
-> 
->   git cherry-pick --author=nobody base~2..base
-> 
-> then we quietly create an empty todo list and return
-> success.
-> 
-> Arguably either behavior is acceptable, but we should
-> definitely be consistent about it. Reporting an error
-> seems to match the original intent, which dates all the way
-> back to 7e2bfd3f99 (revert: allow cherry-picking more than
-> one commit, 2010-06-02). That in turn was trying to match
-> the single-commit case that exited before then (and which
-> continues to issue an error).
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
+Already documented:
+  * `make DEVELOPER=1` (from CodingGuidelines)
+  * running tests (from SubmittingPatches)
 
-Makes sense to me.
+Stuff I've seen you mention in emails over time:
+  * linux/scripts/checkpatch.pl
+  * git grep -e '\<inline\>' --and --not -e 'static inline' -- \*.h
+  * make -C t/ test-lint
 
-Thanks,
-Dscho
+Are there others?
+
+
+Also, here's a fixup to the topic; as you pointed out, the exact contents
+of the script being written were actually irrelevant; it was just an
+input to a merge.
+
+-- 8< --
+Subject: [PATCH] fixup! t6036: add a failed conflict detection case: regular
+ files, different modes
+
+---
+ t/t6036-recursive-corner-cases.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/t/t6036-recursive-corner-cases.sh b/t/t6036-recursive-corner-cases.sh
+index f8f7b30460..5a8fe061ab 100755
+--- a/t/t6036-recursive-corner-cases.sh
++++ b/t/t6036-recursive-corner-cases.sh
+@@ -1219,12 +1219,12 @@ test_expect_success 'setup conflicting modes for regular file' '
+ 		git tag A &&
+ 
+ 		git checkout -b B A &&
+-		echo "export PATH=~/bin:$PATH" >source_me.bash &&
++		echo "command_to_run" >source_me.bash &&
+ 		git add source_me.bash &&
+ 		git commit -m B &&
+ 
+ 		git checkout -b C A &&
+-		echo "export PATH=~/bin:$PATH" >source_me.bash &&
++		echo "command_to_run" >source_me.bash &&
+ 		git add source_me.bash &&
+ 		test_chmod +x source_me.bash &&
+ 		git commit -m C &&
+-- 
+2.18.0.135.gd4ea5491ab
+
