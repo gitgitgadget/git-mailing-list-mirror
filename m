@@ -2,96 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C045E1F6AC
-	for <e@80x24.org>; Mon,  9 Jul 2018 13:12:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 64BCA1F6AC
+	for <e@80x24.org>; Mon,  9 Jul 2018 13:14:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754522AbeGINMG (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jul 2018 09:12:06 -0400
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:36625 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754519AbeGINMF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jul 2018 09:12:05 -0400
-Received: by mail-qt0-f195.google.com with SMTP id f1-v6so15289261qti.3
-        for <git@vger.kernel.org>; Mon, 09 Jul 2018 06:12:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=evYHtsNn9mJq1dgLVZrgqR4Vo2W7xhtRzw2JB44RphM=;
-        b=OLTJKRQhtEOzDTDKNHDsYueD2Li6k/DqGqe/mV54xbqQDg1VIiexgAFkfqB7A7ZN+/
-         lkPoACSZaECK2fZb2VYLAjgE2N7tFbLcqSrZcfPGUtzYdSjBfvvoAssQggo1hvuaQHv2
-         sT9htqOYJ/+zCWErc1P0n5DMgRW65juaN1yGIAFQo5JizYZThPor3GPtZPbqiP/Kt7Qg
-         2BDXrcUHEVSFhKjtoCRMViegbeOaTbVgTtI0fiZ3dcz6wZU6mszOiPqcBvB8vyYizYKu
-         e5uyNPWyQp3C7PZ8isFcNfm+wDLDqHPNuUv+WDEYgZo8op29VWrW8JCcF7G3U2xopQGl
-         HRGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=evYHtsNn9mJq1dgLVZrgqR4Vo2W7xhtRzw2JB44RphM=;
-        b=G/60PmJOFz/DBNhd+XF/s0cHnOxKLnQVNOoHaZ8KEoqePJ0wA9EJKM6cbKOOuwLM5o
-         38/L9taymhWr8Buh1va4mwcRp+yzmfcQFW9CIsuncI3HJgP2fzAaj0UYVWmlUb4qs9U/
-         vlQT+1xtlgXdMC6Q8BB2vFycI0l9xT2xhAR2DP+8HqY6MjScIYbQ6mt7SmVE96p1tkdh
-         X6Xblw1JRngUB1UL1uYwiKnC4SLHFIUVHfbvx0bIctRopMoX0pTJ5o/8cx8otDvkauCY
-         GdN2R01UMSAAEbVwnuLRrRTss422ak3qPnWglrMo0NolL+zSTuOtmfuGUiVOIz92mfqO
-         fcnA==
-X-Gm-Message-State: APt69E1BTdviFWMFlS/KOedH7IcIGGGJjMhEEOxOdXOZsRXzI26mC+3q
-        0b7l4cb1/9C1mrgmE8dq56g=
-X-Google-Smtp-Source: AAOMgpdesaWhCuv7esuia0635WF3LhGGT5ZPuloOg6PSgF6SoPCSHB+kWjFQkX4Fsyg1ydFzKMs11Q==
-X-Received: by 2002:ac8:710f:: with SMTP id z15-v6mr18373143qto.387.1531141925282;
-        Mon, 09 Jul 2018 06:12:05 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:4d64:6d41:6305:74de? ([2001:4898:8010:0:369a:6d41:6305:74de])
-        by smtp.gmail.com with ESMTPSA id e1-v6sm3118354qkd.15.2018.07.09.06.12.04
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 09 Jul 2018 06:12:04 -0700 (PDT)
-Subject: Re: [PATCH 00/17] object_id part 14
-To:     Jacob Keller <jacob.keller@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Git mailing list <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-References: <20180708233638.520172-1-sandals@crustytoothpaste.net>
- <CA+P7+xq9SeoZjYYWhM14-u4kGgwmNVPs6c+wFR2EbwK+_hVetg@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <1438bdfd-cb13-8da4-2dd2-16362b242ff3@gmail.com>
-Date:   Mon, 9 Jul 2018 09:12:03 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.0
+        id S1754444AbeGINOw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jul 2018 09:14:52 -0400
+Received: from mout.gmx.net ([212.227.15.15]:46885 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750996AbeGINOv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jul 2018 09:14:51 -0400
+Received: from MININT-6BKU6QN ([89.204.153.232]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LlVZv-1gC7Km3wNb-00bIgH; Mon, 09
+ Jul 2018 15:14:44 +0200
+Date:   Mon, 9 Jul 2018 15:14:43 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Beat Bolli <dev+git@drbeat.li>
+cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [RFC PATCH 6/6] utf8.c: avoid char overflow
+In-Reply-To: <20180708144342.11922-7-dev+git@drbeat.li>
+Message-ID: <nycvar.QRO.7.76.6.1807091513130.75@tvgsbejvaqbjf.bet>
+References: <20180708144342.11922-1-dev+git@drbeat.li> <20180708144342.11922-7-dev+git@drbeat.li>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <CA+P7+xq9SeoZjYYWhM14-u4kGgwmNVPs6c+wFR2EbwK+_hVetg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:jqa/Va40dbk4JPZVcIHhL+w0LqE6MtTj6EjqoD4kYmD7N/QLNdg
+ mDB81t26J0eoELhhziLKXc9UVdi5UYZJNhH9vz6/bd+bCM1tHJLa4Qy5m3LAgcDJt3fS7O+
+ cIgQu4lEadkXcIO7v7ST4vcNq2U/v+TaN1HOd7eroo7HFRwe9xsJ8qL/+Adveg58XqEiDxJ
+ VLEZnZIDbvR97fecboyAg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:gVDx5JkMxi8=:KXD7IbVKUcEiRK93WNwPYh
+ iFVZT5xv4N1RbE8d7hPuvjJ+fcl/Ty69az9YQoYytMgIDA5avIpy6trhFAq/b2fnWo9elmSOW
+ UXt/R2yNImonBwe74WnzcvSge1rxWagVd2hW9DUr0QJHbP9xAJ/b8erLu0yEWPXu5SfEn7YRW
+ QnVMMS51aVe9jlOINBb1bdxRaxwsJIIL7rSCVmPLcTrHMGE0ju04Q9Zen/jgsCMAoxwL+fU7W
+ 2qCoqWHay/Pt3frHdWuSf1JQLrCDDVKLyA2ccvqHutomPeK4oq0OuaMWS3xSIanVJzWm1HzeK
+ BOK/KeyftIJBEkUqSm4Fb+p/U3eWhea4jQyRIy//OZeLMQ2tM03H0ZRxMKCU8RHvKJuqU1DTz
+ YA1qpGemD0cdYonyQCh2T0JCMrWZOedygQW5pqSv5Gd3PR7QTbU8n8B8pS1is8kAqJT3ezXxN
+ yzGu0K9dpSRxVYyYZIExYykdqgNGJo1+I0j/+dOBnUpgxpp+BbDiO/ztHYMfF+JL+iuF3BAMx
+ /siEaX9I5Akf4/cMadd5cUi34m14vILAxnoTEvNJpssAVB65DmywyPl1d0H5tXSoQ/deBSA1u
+ mFpbtE+k/02RTyGJLLOH3TxBnnW3uPLdMfygpAFk1Txx97mT5tqm1KlYmCiJ39vvL9sNVsCV7
+ aopEUmJSHmj1xSXpO3CB3FNuN9/ayvbkOpzY3x/lX7ZG1tH7wqx9Ot9GFncYbLl6W8//ohthF
+ 2H2uZMq4v4O5lzmA3D1mSBBPGHOIbv7IQ0dhpcmuKZDQ3TVrs8GIMW/W4FHdMOrxia2/kvJFH
+ f/R+ZKc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/8/2018 11:12 PM, Jacob Keller wrote:
-> On Sun, Jul 8, 2018 at 4:39 PM brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
->> This is the fourteenth series of patches to switch to using struct
->> object_id and the_hash_algo.  This series converts several core pieces
->> to use struct object_id, including the oid* and hex functions.
->>
->> All of these patches have been tested with both SHA-1 and a 256-bit
->> hash.
->>
-> I read through the series, and didn't spot anything odd, except for
-> the question about reasoning for why we use memcmp directly over using
-> hashcmp. I don't think that's any sort of blocker, it just seemed an
-> odd decision to me.
+Hi Beat,
 
-I also read through the series and only found the 100/200 constants 
-confusing. Not worth blocking on, but I'm CC'ing Michael Haggerty to 
-comment if he knows how the magic 100 was computed.
+On Sun, 8 Jul 2018, Beat Bolli wrote:
 
-Thanks,
--Stolee
+> In ISO C, char constants must be in the range -128..127. Change the BOM
+> constants to unsigned char to avoid overflow.
+> 
+> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+> ---
+>  utf8.c | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
+> 
+> diff --git a/utf8.c b/utf8.c
+> index d55e20c641..833ce00617 100644
+> --- a/utf8.c
+> +++ b/utf8.c
+> @@ -561,15 +561,15 @@ char *reencode_string_len(const char *in, int insz,
+>  #endif
+>  
+>  static int has_bom_prefix(const char *data, size_t len,
+> -			  const char *bom, size_t bom_len)
+> +			  const unsigned char *bom, size_t bom_len)
+>  {
+>  	return data && bom && (len >= bom_len) && !memcmp(data, bom, bom_len);
+>  }
+>  
+> -static const char utf16_be_bom[] = {0xFE, 0xFF};
+> -static const char utf16_le_bom[] = {0xFF, 0xFE};
+> -static const char utf32_be_bom[] = {0x00, 0x00, 0xFE, 0xFF};
+> -static const char utf32_le_bom[] = {0xFF, 0xFE, 0x00, 0x00};
+> +static const unsigned char utf16_be_bom[] = {0xFE, 0xFF};
+> +static const unsigned char utf16_le_bom[] = {0xFF, 0xFE};
+> +static const unsigned char utf32_be_bom[] = {0x00, 0x00, 0xFE, 0xFF};
+> +static const unsigned char utf32_le_bom[] = {0xFF, 0xFE, 0x00, 0x00};
+
+An alternative approach that might be easier to read (and avoids the
+confusion arising from our use of (signed) chars for strings pretty much
+everywhere):
+
+#define FE ((char)0xfe)
+#define FF ((char)0xff)
+
+...
+
+Ciao,
+Dscho
