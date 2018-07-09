@@ -2,122 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7FCD61F6AC
-	for <e@80x24.org>; Mon,  9 Jul 2018 20:02:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A6F001F6AC
+	for <e@80x24.org>; Mon,  9 Jul 2018 20:04:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933136AbeGIUCE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jul 2018 16:02:04 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:50356 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932764AbeGIUCC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jul 2018 16:02:02 -0400
-Received: by mail-wm0-f66.google.com with SMTP id v25-v6so22364256wmc.0
-        for <git@vger.kernel.org>; Mon, 09 Jul 2018 13:02:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=P0RuN3SBMG91r5IkmDOYTj6xqvYtIJU/hxSBOyiqJ4Q=;
-        b=VP1lNITNinzKxaw4kwQNj0JcPMpXowUw0BuKffU/WQM8CBhksCb02wQN64cfSlShVZ
-         HkHi5VYJ9nOcALwIj8rDrRcMf0ln2eh0h4SNlXauOLdBTF97nQOQP3ERPe9bEQSa0IG9
-         ycLSqxgutYuFvn1TNs9bVkDJi0bFmFQZY21MxE5y4dLDmsJcl6quXpbzasbD7JfHQizS
-         Vso3xuxU03E6Ybpj0QY2xpnnvke6SdDEp7JgqxZDAoLXVnrXep7mCm0VOQtwJ5oYrb7b
-         W8Gq0nVQUfNBAuW/eqs3puvWFh4zao2Jw2AvbF4poguKvJaXeTMW1pSmB/mtvBS3kWgi
-         OQIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=P0RuN3SBMG91r5IkmDOYTj6xqvYtIJU/hxSBOyiqJ4Q=;
-        b=hSKEZYftEuPG4OW4QADgjhu12igNJqtcYZyuXIs6qYfNrOrpy7Z8qcHX2OFQqC7Cys
-         fzFa7fa6rSj/APehn0r0CJfAyjbZVz/8KGH9tQWec83/nPJ84g8V9w808sgx4StOdOrR
-         Q/x6Pn5P44QxMzPJdk+D9YBqcfV+0XFyJZzVIInkaAcZel3f8++L3xcQSIcoymp5HjLR
-         GvbJSLylB1F9hi0PB17kzmMv6MVzU7sFjiYnXiR68N7/NIm/9EjBvQ+TX33gto+G0Izv
-         3wgyh3UAWr5YWFm/jq59EmVB1+VJh73W53Z4HmTjBLDKr1W459fcyAzPfK9HXfZ5Hsp8
-         OgZg==
-X-Gm-Message-State: APt69E1Ht2Z2ejJprVREoVhR9ciITwf01wK9jIQPgOpdb9BkUqp6Itlr
-        iR11Hv2OZu1yAxW1m4+uMKA=
-X-Google-Smtp-Source: AAOMgpcGa8O/NZREXxa/BcuhHCrQiIdcsz7DABKAsMSgwQs06TIrsvJEUFktAQUUaYYCTtEGYKSZ8w==
-X-Received: by 2002:a1c:20cb:: with SMTP id g194-v6mr13941384wmg.102.1531166520603;
-        Mon, 09 Jul 2018 13:02:00 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id y203-v6sm15890337wme.42.2018.07.09.13.01.59
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 09 Jul 2018 13:01:59 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Johannes.Schindelin@gmx.de, jehan@orb.com, whee@smaertness.net,
-        me@ttaylorr.com
-Subject: Re: [PATCH v1 1/2] convert: refactor conversion driver config parsing
-References: <20180708183036.29459-1-larsxschneider@gmail.com>
-        <20180708183036.29459-2-larsxschneider@gmail.com>
-        <5D87BD79-983C-45D8-A284-1CFC65FBDDB8@gmail.com>
-Date:   Mon, 09 Jul 2018 13:01:59 -0700
-In-Reply-To: <5D87BD79-983C-45D8-A284-1CFC65FBDDB8@gmail.com> (Lars
-        Schneider's message of "Sun, 8 Jul 2018 20:35:50 +0200")
-Message-ID: <xmqqtvp8ch54.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S932921AbeGIUEJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jul 2018 16:04:09 -0400
+Received: from mout.gmx.net ([212.227.17.21]:49453 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932764AbeGIUEI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jul 2018 16:04:08 -0400
+Received: from MININT-6BKU6QN ([89.204.155.168]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MN1Gu-1fjBxh2Ef2-006jB3; Mon, 09
+ Jul 2018 22:04:01 +0200
+Date:   Mon, 9 Jul 2018 22:04:00 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Beat Bolli <dev+git@drbeat.li>
+cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [RFC PATCH 6/6] utf8.c: avoid char overflow
+In-Reply-To: <0ceeb342fec1d0868b81cd64941df53c@drbeat.li>
+Message-ID: <nycvar.QRO.7.76.6.1807092203110.75@tvgsbejvaqbjf.bet>
+References: <20180708144342.11922-1-dev+git@drbeat.li> <20180708144342.11922-7-dev+git@drbeat.li> <nycvar.QRO.7.76.6.1807091513130.75@tvgsbejvaqbjf.bet> <0ceeb342fec1d0868b81cd64941df53c@drbeat.li>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:NXnJtyXTawg2eP6A7YvPprvgsr7z09cT0ALtZ+UfmvJGaGiHVer
+ O3xFmhN4iWUOvwMbUYpbhXzwMCoDRtZzNxYh4O6hEJH26kKIYJDh70ng8vOd+HdarH7fQhO
+ gjx/PKuSwYa6xDs75IJoE+hYAHB9BMqEAfZJgDZwcs6UHHQINWLNFVVVmm+H5SykZDpKwas
+ GkJSb4Shi+KyFsVKZz8rQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:1Togz3hGpCE=:KLfzIXiu6ZlFtHTTqgvwGi
+ jgua/NDufLht62luknKtW1vHUao2ehZuzy2mpMtWZhw/GyN3xnmk9/4v8217oV5YsUlYujv/u
+ 3qbmuV39758v1gvibd592xXhAPnEc2XIAUPlYNcoFqyHohXa6d41ze6GItIuGhSVwovVFBsl7
+ zzQQdtOColJaqb9isDz38Z5kdwGWDj1RBXtDUfh0VLv/VPhfX6Yrv58pAWkD/6IePGcyRnF75
+ yzZxz+MejQ1o+u5KM4fkB8Zj2fQcWgF90xLL50Mx4eY2CnO3tj2Li30SFRuGeoKACYHrZ5tuC
+ FRFI2RcZDTESd6NXbVFAXQw1TvNLtRDzMv6zngUeHS8E35Rth5GZBs/BIU5vkA6uTTomx3KMM
+ meLP0RZHyAH2VLyWYEcb8AWh4W5zrX6hTW+y0/v8pYYXOdtu4Gj78BurXW6WvYNVuH+SFQ0Yi
+ FXHELq9XYkxn2cWNtws/CD6kHiX6kOKOWxVndOBonwV3GTPwv0/6KFCXsqpx63UCY666+zKAI
+ LTXORn8v7AY6yzPDwyxMKRDLHq68WuEjLbHDdlnr6UznFzlZu15yOMK8PZ99gRmVqjBp+5aBG
+ 7BVb/zSbx/YJGSKs1nyQdjNoZ7DzDKWLaEzR3mTb10iku1W5iKCYavKhVbKn84GMVWcELCneq
+ TazEyXyb1ln/y52QblNqYdkjptZMgbWHFP869T/48nxXIMaJaGfhpWlfZXKyVQ9BP3li1+zVI
+ k3PaJFo+v4gc+BiM8JHvVXD1OtPojrUFJi4JLLLyzq3lt32tUR/cafgo8avgUhGhtwTE/k7oN
+ OZwYIr8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Lars Schneider <larsxschneider@gmail.com> writes:
+Hi Beat,
 
->> On Jul 8, 2018, at 8:30 PM, larsxschneider@gmail.com wrote:
->> 
->> From: Lars Schneider <larsxschneider@gmail.com>
->> 
->> Refactor conversion driver config parsing to ease the parsing of new
->> configs in a subsequent patch.
->> 
->> No functional change intended.
->> 
->> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
->> ---
->> convert.c | 64 +++++++++++++++++++++++++++----------------------------
->> 1 file changed, 32 insertions(+), 32 deletions(-)
->> 
->> diff --git a/convert.c b/convert.c
->> index 64d0d30e08..949bc783e4 100644
->> --- a/convert.c
->> +++ b/convert.c
->> @@ -1003,43 +1003,43 @@ static int read_convert_config(const char *var, const char *value, void *cb)
->> 	int namelen;
->> 	struct convert_driver *drv;
->> 
->> ...
->> 
->> -	/*
->> -	 * filter.<name>.smudge and filter.<name>.clean specifies
->> -	 * the command line:
->> -	 *
->> -	 *	command-line
->> -	 *
->> -	 * The command-line will not be interpolated in any way.
->> -	 */
->> +		/*
->> +		 * filter.<name>.smudge and filter.<name>.clean specifies
->> +		 * the command line:
->> +		 *
->> +		 *	command-line
->> +		 *
->> +		 * The command-line will not be interpolated in any way.
->> +		 */
->
-> I stumbled over this comment introduced in aa4ed402c9 
-> ("Add 'filter' attribute and external filter driver definition.", 2007-04-21).
->
-> Is the middle "command-line" intentional?
+On Mon, 9 Jul 2018, Beat Bolli wrote:
 
-I think it was a deliberate but ineffective attempt to emphasize the
-fact that the command line is used as-is, and does not get split at
-SP nor goes through interpolation of placeholders using API such as
-strbuf_expand().
+> Am 09.07.2018 15:14, schrieb Johannes Schindelin:
+> > 
+> > On Sun, 8 Jul 2018, Beat Bolli wrote:
+> > 
+> > > In ISO C, char constants must be in the range -128..127. Change the BOM
+> > > constants to unsigned char to avoid overflow.
+> > > 
+> > > Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+> > > ---
+> > >  utf8.c | 10 +++++-----
+> > >  1 file changed, 5 insertions(+), 5 deletions(-)
+> > > 
+> > > diff --git a/utf8.c b/utf8.c
+> > > index d55e20c641..833ce00617 100644
+> > > --- a/utf8.c
+> > > +++ b/utf8.c
+> > > @@ -561,15 +561,15 @@ char *reencode_string_len(const char *in, int insz,
+> > >  #endif
+> > > 
+> > > static int has_bom_prefix(const char *data, size_t len,
+> > > -			  const char *bom, size_t bom_len)
+> > > +			  const unsigned char *bom, size_t bom_len)
+> > >  {
+> > > 	return data && bom && (len >= bom_len) && !memcmp(data, bom, bom_len);
+> > >  }
+> > > 
+> > > -static const char utf16_be_bom[] = {0xFE, 0xFF};
+> > > -static const char utf16_le_bom[] = {0xFF, 0xFE};
+> > > -static const char utf32_be_bom[] = {0x00, 0x00, 0xFE, 0xFF};
+> > > -static const char utf32_le_bom[] = {0xFF, 0xFE, 0x00, 0x00};
+> > > +static const unsigned char utf16_be_bom[] = {0xFE, 0xFF};
+> > > +static const unsigned char utf16_le_bom[] = {0xFF, 0xFE};
+> > > +static const unsigned char utf32_be_bom[] = {0x00, 0x00, 0xFE, 0xFF};
+> > > +static const unsigned char utf32_le_bom[] = {0xFF, 0xFE, 0x00, 0x00};
+> > 
+> > An alternative approach that might be easier to read (and avoids the
+> > confusion arising from our use of (signed) chars for strings pretty much
+> > everywhere):
+> > 
+> > #define FE ((char)0xfe)
+> > #define FF ((char)0xff)
+> > 
+> > ...
+> 
+> I have tried this first (without the macros, though), and thought it looked
+> really ugly.
+
+Yep, I would totally agree that it would be very ugly without the macros.
+
+Which is why I suggested the macros instead, in which case it looks
+relatively elegant to my eyes.
+
+Ciao,
+Dscho
