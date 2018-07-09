@@ -2,100 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B18591F6AC
-	for <e@80x24.org>; Mon,  9 Jul 2018 09:43:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 434BD1F6AC
+	for <e@80x24.org>; Mon,  9 Jul 2018 13:09:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754418AbeGIJnQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jul 2018 05:43:16 -0400
-Received: from s019.cyon.net ([149.126.4.28]:60298 "EHLO s019.cyon.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932436AbeGIJnO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jul 2018 05:43:14 -0400
-X-Greylist: delayed 349 seconds by postgrey-1.27 at vger.kernel.org; Mon, 09 Jul 2018 05:43:14 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=drbeat.li;
-         s=default; h=Message-ID:References:In-Reply-To:Subject:Cc:To:From:Date:
-        Content-Transfer-Encoding:Content-Type:MIME-Version:Sender:Reply-To:
-        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-        Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=iI8tbZMHW6VPRkYfZmNNzC00S2zG5BJwBTJ35gR76Wk=; b=EtGOe/IRH1KDy/v6AiJeTt8Lo/
-        sxjhmMezrF2SuHvh7U+6jxdqbZDYY8jkjcYxIPueNPFPwWFj3GYrvQThpE/Ii2K99FXyOT65PZCWq
-        3M2U9wMGxc5z+HGs68DRXVa9nPed27ilWT2EyF9t/UXFUOP1+/4asdLzl6Jxv5m2EFv11VsPvEmdb
-        rPDPxZlEEQ7k03o48gsaNvXNSvonOFSiAwwhbfPc6iSkI/Xw6jkqOuH8qxpmWHMZq9yNZnRVB8meP
-        3iywF3TKvHbh/Z6D5FYFMkNJa930aKEWfO7dt5Q6q1ZiTNZpOqg7GQeRNfUcJbzPMDblHBQn47yI0
-        VQOiLX0A==;
-Received: from [10.20.10.231] (port=20840 helo=mail.cyon.ch)
-        by s019.cyon.net with esmtpa (Exim 4.91)
-        (envelope-from <ig@drbeat.li>)
-        id 1fcSbh-009mq0-HT; Mon, 09 Jul 2018 11:37:23 +0200
+        id S932742AbeGINJE (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jul 2018 09:09:04 -0400
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:38468 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932595AbeGINJD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jul 2018 09:09:03 -0400
+Received: by mail-qk0-f196.google.com with SMTP id y4-v6so9634709qka.5
+        for <git@vger.kernel.org>; Mon, 09 Jul 2018 06:09:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=jfUxQdhsdAde6vdMYtDR88ykBeYGF1d6KWE4Ne2oiXk=;
+        b=NftW4cZ5YozJX3lznQEryI0MkJwiPbLRSApn/Nd9YmCnJTllgp4EvfqKwftXoRfXGD
+         3IEfSMUkYeU8DDd7nOAQ1gFY/ZziLIMrXeni9BII7PskB/i5szNNGFMyDCo/bGazqt1D
+         rg30PQCJD7cOeBRQ+dOHr9OfoZOyVKAg3UL8MWmwloGwz/4wzXr1A/xKQCh+K+yQizx8
+         3z2SmSWpQF5uFGzFsFmiUKa7/LzI9JkzY4TdVYiwU4IbPAiBgF7WQZdLMXEIIYIcosj1
+         CVgvNeCYcH1rzjCdHINW/PQc1cAE+jHRCzq/AxrJEXVsH+SFK8xZTJc76oSsnP0hD22Z
+         B/ug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=jfUxQdhsdAde6vdMYtDR88ykBeYGF1d6KWE4Ne2oiXk=;
+        b=lLlS5k7LacvhnYf74VZ7fthTtxSjssfn8SI8vVNQy7yZkdVD/E5Jk+mo7XMyWfNYpX
+         OTeGQq3q4jfU0zDct97vdwGbHUv+osDr9URm2ReOW3auquPqD/ReCLHWv2SGHDI2SCsl
+         IP3V6PbrrOxJlgsb6ahsriBVJmbz+jjMhx9FDOuGRI1gQTqSVOvZfglm//CSQVovEVXD
+         8I5yN26R8XA9DoLNS38aZUFXbrGGN04vOro3dbI/b1W4GfnIZwiUjVl6dq++U4O418Qj
+         66uhBNP3nfOVPRaMAHEgoVNQyHqWUXhUrvUNJaWWV26Pu+f4vFYS74suQpWduqpqwM/L
+         sPEg==
+X-Gm-Message-State: APt69E2nR9gDoSd8A30AOswqDvSpO00C8cuymDSWbbYRtdTzuFr/vwVH
+        mYTKPfllzXq8N0XxcVY9d00=
+X-Google-Smtp-Source: AAOMgpcFJh96DsnF/gC7f1gm2Znatf05KnaOePod9CMkQNON1TLNmunBUuupr+OyHs1NbjYXRL/BPg==
+X-Received: by 2002:a37:6dc4:: with SMTP id i187-v6mr15031939qkc.34.1531141742588;
+        Mon, 09 Jul 2018 06:09:02 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:4d64:6d41:6305:74de? ([2001:4898:8010:0:369a:6d41:6305:74de])
+        by smtp.gmail.com with ESMTPSA id l36-v6sm483483qtk.12.2018.07.09.06.09.01
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 09 Jul 2018 06:09:01 -0700 (PDT)
+Subject: Re: [PATCH 07/17] commit: increase commit message buffer size
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+References: <20180708233638.520172-1-sandals@crustytoothpaste.net>
+ <20180708233638.520172-8-sandals@crustytoothpaste.net>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <4eb44f33-ac9c-7ce2-0e53-ec6fcb4560fd@gmail.com>
+Date:   Mon, 9 Jul 2018 09:09:00 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <20180708233638.520172-8-sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Mon, 09 Jul 2018 11:37:21 +0200
-From:   ig@drbeat.li
-To:     Philip Oakley <philipoakley@iee.org>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Beat Bolli <dev+git@drbeat.li>, Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH 4/6] sequencer.c: avoid empty statements at top level
-In-Reply-To: <AED9D71037D249F8A56FDF0B1AA48603@PhilipOakley>
-References: <20180708144342.11922-1-dev+git@drbeat.li>
- <20180708144342.11922-5-dev+git@drbeat.li>
- <CAPig+cSGj6Pt4OmRAQauZCiVG3PnjWeXm20RtYGbsjdZ5Tk4gg@mail.gmail.com>
- <AED9D71037D249F8A56FDF0B1AA48603@PhilipOakley>
-X-Priority: 4 (Low)
-Message-ID: <b1427480e2b70c2ad1ab5873409e5fdc@drbeat.li>
-X-Sender: ig@drbeat.li
-User-Agent: cyon Webmail/1.2.9
-X-OutGoing-Spam-Status: No, score=-1.0
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - s019.cyon.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - drbeat.li
-X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
-X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 08.07.2018 23:17, schrieb Philip Oakley:
-> From: "Eric Sunshine" <sunshine@sunshineco.com>
-> To: "Beat Bolli" <dev+git@drbeat.li>
->> On Sun, Jul 8, 2018 at 10:44 AM Beat Bolli <dev+git@drbeat.li> wrote:
->>> The marco GIT_PATH_FUNC expands to a complete statement including the
-> 
-> s/marco/macro/
+On 7/8/2018 7:36 PM, brian m. carlson wrote:
+> 100 bytes is not sufficient to ensure we can write a commit message
+> buffer when using a 32-byte hash algorithm.  Increase the buffer size to
+> ensure we have sufficient space.
+>
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>   refs/files-backend.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index a9a066dcfb..252f835bae 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
+> @@ -1587,7 +1587,7 @@ static int log_ref_write_fd(int fd, const struct object_id *old_oid,
+>   	char *logrec;
+>   
+>   	msglen = msg ? strlen(msg) : 0;
+> -	maxlen = strlen(committer) + msglen + 100;
+> +	maxlen = strlen(committer) + msglen + 200;
+>   	logrec = xmalloc(maxlen);
+>   	len = xsnprintf(logrec, maxlen, "%s %s %s\n",
+>   			oid_to_hex(old_oid),
 
-ACK. In addition, the whole sentence is wrong: GIT_PATH_FUNC defines a
-function, not a statement. Will be fixes in a reroll.
-
->>> semicolon. Remove two extra trailing semicolons.
->>> 
->>> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
->>> ---
->>>  sequencer.c | 4 ++--
->>>  1 file changed, 2 insertions(+), 2 deletions(-)
->> 
->> While you're at it, perhaps it would be a good idea to fix the example
->> in path.h which teaches the "wrong" way:
->> 
->> /*
->> * You can define a static memoized git path like:
->> *
->> *    static GIT_PATH_FUNC(git_path_foo, "FOO");
->> *
->> * or use one of the global ones below.
->> */
+nit: 100 is not enough anymore, but wasn't a very descriptive value. 200 
+may be enough now, but I'm not sure why.
 
 Thanks,
-Beat
+-Stolee
