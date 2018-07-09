@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67C411F62D
-	for <e@80x24.org>; Mon,  9 Jul 2018 02:38:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 651981F62D
+	for <e@80x24.org>; Mon,  9 Jul 2018 03:13:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754371AbeGICih (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Jul 2018 22:38:37 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:45415 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754356AbeGICig (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Jul 2018 22:38:36 -0400
-Received: by mail-ed1-f66.google.com with SMTP id g15-v6so12671450edr.12
-        for <git@vger.kernel.org>; Sun, 08 Jul 2018 19:38:35 -0700 (PDT)
+        id S933118AbeGIDNL (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Jul 2018 23:13:11 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:37589 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932820AbeGIDNJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Jul 2018 23:13:09 -0400
+Received: by mail-ed1-f68.google.com with SMTP id v22-v6so12729312edq.4
+        for <git@vger.kernel.org>; Sun, 08 Jul 2018 20:13:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Uphqg689USNCaWRur1FmgRqbyrFRKMjWikVpMAXY9Tk=;
-        b=GXb3CWHtRp/HQM5bU05+lR3ra0QKP1S6s+bKTFifB1aFvn9s8lD993g6eYuTvbIdK4
-         M46UN8y8hmEa/LF2amhO/9Ow6dOS7eW5C4YoblLdZ67qOn8Bjz98/2zgH8OBfF8oCHr/
-         ngNaELwn1v/5JL5MbfnFcnR1idbDUyB6quV5Xek1/m9Btu1Wqw6GCGfx121pRh/Rd8ru
-         wm20p3Y4qdBuvNoNoltE84RmXGmPbfdvFGZCqjKbH/qrPmNE7lrHGFKXf4SKQHVFDBkc
-         FAB4ndA1R+5kNZTPXSBvb6oTMV75ML5JTer1LU+/MxwXc9iBqo+aDKTw7QLOIlwH40j8
-         0F1g==
+        bh=pJPkALoxD+ckgCWSrs5m7t9g/ZrN2WXfdnXJ4gi9PQg=;
+        b=amgwqsiwjc+Y1iKVNHXgsolQlNJeOPNQ+vgtEBagVISddb+h37QRHhsXnUepCygjmm
+         51XPWX7/E+ci+oJH7x7YnpyEbI3j02P2zRCkBebrSFEbRlBVZpk7rndA9WO39r8j/k6g
+         699k4U1h2+VQDVSjy73Mstd0BZt0470R9tifoBNVpXDxcimPW26vWcp0bJtj2J/+3SFg
+         CjATCu3xwHlDXSPulaLvN7ahckJYsbrEhWlIrnBpn+g7noT3ykgqMR0filsfeEZAkYEg
+         RJNJe8FYgJ7uQE497wscE5Rg1IPVBQ4w99C/mO04xUmnNLv/zxR5/dlcrNIICVF3ImdV
+         KjAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Uphqg689USNCaWRur1FmgRqbyrFRKMjWikVpMAXY9Tk=;
-        b=kwygEx0o6nDT+jJ+1cdRizTkHEhpaPCV44KzaFWZc6nZl/Er+luOIClQY/zodWolrB
-         APtff/ZA2hFwxsEFASkxbodBRhGU+Ih1TfpoDNYjhysr9MEYX7DIRiYqT9m7ydXRN0Gl
-         4zYmXr/I+BD30KET214KcP4JvZSB6qZzK61umtgOoEXgam5JnydfxNF+2+4m/0fKqkIb
-         gM5/kjhDccbE/vMEFxUp8CIH//uyU6jL2Wx09Cd6bnBNjx3lmf6ZoM5k3lzDZJoQtim1
-         y+VbfewrU8YznomFPXjMQxjxghAeN1vbrCYBDqzWTn9tdCJxfz8lO36gr9H/hMTaA93/
-         viqw==
-X-Gm-Message-State: APt69E0ZB5gAocgNRqBaL2x8PG8996rMEiKKQLCzX063latbJip1Mz1s
-        PpGWdGA7i0T1GnBQR3m/1zjQ2KuRRVapIUH4WDE=
-X-Google-Smtp-Source: AAOMgpcuKm7CiRF5Tbne8vEac3SkrM3+ZWFzhigqdWTCdbrrZwJMr2O7cJ1UEEHlOI+ospV7YpkLtatY9QOaJC3u1dU=
-X-Received: by 2002:a50:8b25:: with SMTP id l34-v6mr83595edl.265.1531103915047;
- Sun, 08 Jul 2018 19:38:35 -0700 (PDT)
+        bh=pJPkALoxD+ckgCWSrs5m7t9g/ZrN2WXfdnXJ4gi9PQg=;
+        b=DDfyDU83d9AELkTKiC38qtupr5YN3bwuqI1agvXQc7tN7mZZyE2uWjISfNK19Eusw9
+         32yCvdNrPE+qmYHEChkHnDXMjqEWtZdR4UsZljCT3cWEbR9uUegNWogGpM4LlwQgtT15
+         V4p1viKO+YGYKyIjWoQ/mAk5d6Ifv7vh4zA2vCyPksS+skhekvgcLN4T80WdGsnWt6u6
+         U/upZOTI08GKSulDPyo7jZUi7TpuSPrZO7Tb+zeQJm+lCltb5V+lnHfE6vyMk55dJB74
+         hWSOp4a/n3o0rHQqnJytGe8feKNP/4Gjk/Ad3RQ/LWQ3qSGVNiTU4hNxywk1vuirBw6S
+         mLRw==
+X-Gm-Message-State: APt69E38bAumVLhp2nNAU98tJpj5L5R01ANaOV9vybuodsNP3p1QqSNW
+        fZAaIt7o48LMQ5XJDfYO+XUfMc+XEDIrlYJ70OQ=
+X-Google-Smtp-Source: AAOMgpfGFZuCzd12OOc/YLvu+LXRqjSKTI2qlkTYMhGfGod1CTlSixDnoIm96jgzPYZDGOwHMI1H9civMAa0dGnQeA8=
+X-Received: by 2002:a50:ab13:: with SMTP id s19-v6mr20932083edc.133.1531105988404;
+ Sun, 08 Jul 2018 20:13:08 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180708233638.520172-1-sandals@crustytoothpaste.net> <20180708233638.520172-2-sandals@crustytoothpaste.net>
-In-Reply-To: <20180708233638.520172-2-sandals@crustytoothpaste.net>
+References: <20180708233638.520172-1-sandals@crustytoothpaste.net>
+In-Reply-To: <20180708233638.520172-1-sandals@crustytoothpaste.net>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Sun, 8 Jul 2018 19:38:21 -0700
-Message-ID: <CA+P7+xq900ikNR3uBEo28rjrTh5iYJm-R8jcAjhq-7G2jh3iVA@mail.gmail.com>
-Subject: Re: [PATCH 01/17] cache: update object ID functions for the_hash_algo
+Date:   Sun, 8 Jul 2018 20:12:54 -0700
+Message-ID: <CA+P7+xq9SeoZjYYWhM14-u4kGgwmNVPs6c+wFR2EbwK+_hVetg@mail.gmail.com>
+Subject: Re: [PATCH 00/17] object_id part 14
 To:     "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     Git mailing list <git@vger.kernel.org>, Jeff King <peff@peff.net>,
         Junio C Hamano <gitster@pobox.com>,
@@ -64,14 +64,19 @@ X-Mailing-List: git@vger.kernel.org
 
 On Sun, Jul 8, 2018 at 4:39 PM brian m. carlson
 <sandals@crustytoothpaste.net> wrote:
->  static inline int oidcmp(const struct object_id *oid1, const struct object_id *oid2)
->  {
-> -       return hashcmp(oid1->hash, oid2->hash);
-> +       return memcmp(oid1->hash, oid2->hash, the_hash_algo->rawsz);
->  }
+>
+> This is the fourteenth series of patches to switch to using struct
+> object_id and the_hash_algo.  This series converts several core pieces
+> to use struct object_id, including the oid* and hex functions.
+>
+> All of these patches have been tested with both SHA-1 and a 256-bit
+> hash.
 >
 
-Just curious, what's the reasoning for not using the hashcmp anymore?
+I read through the series, and didn't spot anything odd, except for
+the question about reasoning for why we use memcmp directly over using
+hashcmp. I don't think that's any sort of blocker, it just seemed an
+odd decision to me.
 
 Thanks,
 Jake
