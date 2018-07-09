@@ -1,116 +1,142 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
-X-Spam-Level: *
+X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=1.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,LIST_MIRROR_BCC,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 438D01F6AC
-	for <e@80x24.org>; Mon,  9 Jul 2018 22:38:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DCE021F6AC
+	for <e@80x24.org>; Mon,  9 Jul 2018 22:39:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932967AbeGIWit (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jul 2018 18:38:49 -0400
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:38908 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932875AbeGIWin (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jul 2018 18:38:43 -0400
-Received: by mail-pf0-f169.google.com with SMTP id x13-v6so4714676pfh.5
-        for <git@vger.kernel.org>; Mon, 09 Jul 2018 15:38:43 -0700 (PDT)
+        id S933187AbeGIWjF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jul 2018 18:39:05 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:40726 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932801AbeGIWjD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jul 2018 18:39:03 -0400
+Received: by mail-wm0-f68.google.com with SMTP id z13-v6so22303090wma.5
+        for <git@vger.kernel.org>; Mon, 09 Jul 2018 15:39:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=Ji5k5LH+Nrs/zhAjgSuTaanvc6kswipUBIPL3N/QfH4=;
+        b=eLtEaoCnFM76PUnWGX2a728OJSIQYuBXS0kQn2MGcwWrCuuWkwOr2ia6xvbay1Kb6m
+         8LfRmSiQvEikacBBjKClFr5QNuvyhzoewAcUUmBWZBcvdQWENtyhu8o5lYadHLE4ULy9
+         jbqP6hZWJwiHc/HDhP2MXLG/p0EkZHlcsKbya9gnSQ9NcSyBp8lk6m287Fy2HusSSOwH
+         4+W33LUr5cA2PSR6YWRUcdyyXwQntk42+SJue8QpFSouYBHuvWQ0tFGXRqRTk8UVtvR5
+         8pAgZWBuAf6osW4ZngtikZaJVqjR4e1wwYTXVQaRh+JbEG6ITTG5t7BIPWyy0BZq0YVi
+         Ja6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-original-authentication-results:x-gm-message-state:resent-from
-         :resent-date:resent-message-id:resent-to:date:from:to:cc:subject
-         :message-id:references:mime-version:content-disposition:in-reply-to;
-        bh=F1C5GADG6A+/2459HZI74cO1SC6+VnxhFjKgtzGAb6w=;
-        b=amCEaIWl8E8qjdzC+oCqwX72bHrRaY3ncByVTv9x+jIehcllzDbheq9dciHueeOw+V
-         37RW3BCi7qZ53aNTVaiISDXjnDg8NErTmjWTn8XQYnu6+v+GKVmpOokubFXBstDHrFL9
-         TDteqvgrYYDqWjJRVk++/lJWAiPyjB5h+Eu6ulzWuMMiBUgFYpGKb3vVKWktwIh6PtZn
-         cQ9i5d0R1LxZRoS7RSbBZ/RsGkCkjFKysXmR/MU5ycwcWiOE+QwIKaHwuusu/U1lcqhG
-         tv5e6CB/uiDqpQ/23L3DxaDJcj7XNU+qjdt1ydLMhUAN78bqdjZaboHTUszwLWZjizde
-         EhwA==
-X-Original-Authentication-Results: peff.net; auth=none
-X-Gm-Message-State: APt69E1XyDLCYy10UbG29piq0J5Wzu0HKXSZgUztRYZohWbacTAZxKnA
-        LGFkvbWDy/60e/HTXcYgXHleJEN9
-X-Google-Smtp-Source: AAOMgpf8nd8xfjbxulxDUYjKTDmNS7BKGuZiS4q9v+/jeV/p+zdhYJ2FbCYIHSygJ+aHReJ/mgbQXQ==
-X-Received: by 2002:a63:fd06:: with SMTP id d6-v6mr17252644pgh.348.1531175922178;
-        Mon, 09 Jul 2018 15:38:42 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id s87-v6sm25382014pfg.172.2018.07.09.15.38.41
-        for <git@vger.kernel.org>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Ji5k5LH+Nrs/zhAjgSuTaanvc6kswipUBIPL3N/QfH4=;
+        b=SX8AKYk5xvDEBWnVEcaLCKMZLO9aMTzKouGdAOrHpNYysttoUPr+aOeBlzIW5t9KmZ
+         7aQ0gnhmM7W7HOXg/qlwq4TftxHu13vmD4E8o6HsJAwm2n1rJsYP8hA9Mxya8URx/yn8
+         WE5fZMoCHL58J8TymhaJGmTlVfVsJcvDnlyixMbDiyJelyatyrcPBgSIbsKMLfCGsMqR
+         cSIE9tLwU6KDGD7qCpCx78FHkumzAS7qhR5vP7e7cPyNo5yUtoO/UOrpC6ga77dk59pu
+         QW+JgNXoA/mmWbXAJ6MVnoUriBVf59Z22ulDq22h8Il/AuM7rN72ZCqcZ9z46yTf/cf7
+         2eqg==
+X-Gm-Message-State: APt69E2oG0TtPF+SisC8A0hcNoR60hxfYnwx9XexsEBh4K7xU/V0VC+b
+        FYCzryKa0SqWsFfkXurpDfY=
+X-Google-Smtp-Source: AAOMgpeFQ2scGRCJYX7f2p4Oc0VA05DRL/ry2R2X61BFTLQpJFUHsjT2RWVTFz/wGFwZ/kpQpoIiBw==
+X-Received: by 2002:a1c:55c8:: with SMTP id j191-v6mr12749544wmb.67.1531175941031;
+        Mon, 09 Jul 2018 15:39:01 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id c10-v6sm15582960wrs.6.2018.07.09.15.39.00
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 09 Jul 2018 15:38:42 -0700 (PDT)
-Authentication-Results: peff.net; auth=none
-Authentication-Results: cloud.peff.net; auth=none
-Received: by 2002:a6b:c8cc:0:0:0:0:0 with SMTP id y195-v6csp1397375iof;
-        Tue, 3 Jul 2018 09:01:13 -0700 (PDT)
-X-Received: by 2002:ac8:35b8:: with SMTP id k53-v6mr1833014qtb.39.1530633673792;
-        Tue, 03 Jul 2018 09:01:13 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1530633673; cv=none;
-        d=google.com; s=arc-20160816;
-        b=QQMbtiTkhsCC7Us5/1cJpbEqPJWVmBO7eQs91MubSyCfVwaRD425CBnpU5Gl35x984
-         sUzILxjn+DyQ1Ppt/TS6s14QvEtL6TqVFlAeRYEogDLLqP8anhQAUShGcRU2Vp353Q7t
-         Eqg+THHQmamwsV5pnYRXM1sas72IOz+6FO4d20vh8lXcWjBtxLKDg+PboD9yntUCgF9a
-         BOGj/lwgD16JnX4MGku8dOe/g/edjXaoEimBcsEVU0FRZQf1hQLKJCl42oC/yeq+yWqn
-         /XGVRimerDCtbz1wkzRAi9nBm15SMVqJCLXH55u4066VzXQP5PIgk66i/CjzRjS6YziJ
-         wGXw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:arc-authentication-results;
-        bh=F1C5GADG6A+/2459HZI74cO1SC6+VnxhFjKgtzGAb6w=;
-        b=kZwa1iBZUDURRJ2OnnXlIKtX5kmFttmtEY48wQVrNz7S8qmfxsTkzG7VSLOJatY6IX
-         7kOOhL0uCYAP1wa06PTD+P3kLczZnTGJSh6jrvHeSZUWsiLnyZ849Cd77E+ZE/rlUcEn
-         xHK4eaISp3eiC5DJM+Gv3fRZKqlGDQmMPsxcebdIy+UoH5LDFAa2wNejt3nkycq+DavK
-         cgCXuJXMCk4T72k+LPvzmWMQSBQc5FOXZj/CtzUfkGVEazSZh1RYf3FCCi+WKW0kDsMd
-         gqutQNCvqbjF0ElFizYVlwAWMG/OgBU7zIHG6RVx1CkA4K/KLIgqNc55llsXsNESIV4Q
-         IJIg==
-ARC-Authentication-Results: i=1; mx.google.com;
-       spf=pass (google.com: domain of peff@peff.net designates 104.130.231.41 as permitted sender) smtp.mailfrom=peff@peff.net
-Received: from cloud.peff.net (cloud.peff.net. [104.130.231.41])
-        by mx.google.com with SMTP id p50-v6si1496184qta.67.2018.07.03.09.01.13
-        for <jrnieder@gmail.com>;
-        Tue, 03 Jul 2018 09:01:13 -0700 (PDT)
-Received-SPF: pass (google.com: domain of peff@peff.net designates 104.130.231.41 as permitted sender) client-ip=104.130.231.41;
-Received: (qmail 24177 invoked by uid 109); 3 Jul 2018 16:01:12 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 03 Jul 2018 16:01:12 +0000
-Received: (qmail 2875 invoked by uid 111); 3 Jul 2018 16:01:12 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 03 Jul 2018 12:01:12 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Jul 2018 12:01:10 -0400
-Date:   Tue, 3 Jul 2018 12:01:10 -0400
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Jeremy Huddleston Sequoia <jeremyhu@apple.com>,
-        Akilsrin <Akilsrin@apple.com>,
-        Christian Couder <christian@gitlab.com>,
-        Tim Triemstra <timt@apple.com>,
-        Eliran Mesika <eliran@gitlab.com>
-Subject: Re: Subscribing Apple people to git-security@googlegroups.com
-Message-ID: <20180703160110.GA26771@sigill.intra.peff.net>
-References: <CAGba+=U4nbxL2uuSxyqyZqiiavJpo_E=GhUkipz6DczLdmnkgQ@mail.gmail.com>
- <20180702195016.GA17102@sigill.intra.peff.net>
- <91A9F3A0-5F3F-4137-9A40-CB42EDE4F243@apple.com>
- <20180703133645.GA20316@sigill.intra.peff.net>
- <20180703154814.GA51821@aiede.svl.corp.google.com>
+        Mon, 09 Jul 2018 15:39:00 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Olga Telezhnaya <olyatelezhnaya@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/4] ref-filter: add empty values to technical fields
+References: <010201647e19c0f0-68cd728f-c86a-4be2-be6b-fd7e19e930fa-000000@eu-west-1.amazonses.com>
+        <010201647e19c191-8c24e128-8822-4c77-b3bf-60fe17ecb62b-000000@eu-west-1.amazonses.com>
+Date:   Mon, 09 Jul 2018 15:39:00 -0700
+In-Reply-To: <010201647e19c191-8c24e128-8822-4c77-b3bf-60fe17ecb62b-000000@eu-west-1.amazonses.com>
+        (Olga Telezhnaya's message of "Mon, 9 Jul 2018 08:12:54 +0000")
+Message-ID: <xmqqzhz09gqj.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180703154814.GA51821@aiede.svl.corp.google.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 03, 2018 at 08:48:14AM -0700, Jonathan Nieder wrote:
+Olga Telezhnaya <olyatelezhnaya@gmail.com> writes:
 
-> Administrivia: do you mind if I bounce these messages to some archived
-> list, either git@vger.kernel.org or git-security?  Or if we'd prefer
-> to avoid the noise from that, do you mind if I work with Eric Wong to
-> get them injected in the https://public-inbox.org/ archive?
+> Atoms like "align" or "end" do not have string representation.
+> Earlier we had to go and parse whole object with a hope that we
+> could fill their string representations. It's easier to fill them
+> with an empty string before we start to work with whole object.
+>
+> Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
+> ---
 
-I don't mind at all. I'm actually going to work later today on preparing
-other messages from the security list to go to the public-inbox.org
-archive, so that might pave the way.
+Just being curious, but is there any meaningful relationship between
+what was labelled as SOURCE_NONE in the previous step and what this
+step calls "technical fields"?  Things like "upstream" (which is not
+affected by the contents of the object, but is affected by the ref
+in question) and "if" (which merely exists to construct the language
+syntax) would fall into quite different category, so one might be
+subset/superset of the other, but I am wondering if we can take
+advantage of more table-driven approach taken by the previous step. 
 
--Peff
+
+>  ref-filter.c | 8 +++++++-
+>  1 file changed, 7 insertions(+), 1 deletion(-)
+>
+> diff --git a/ref-filter.c b/ref-filter.c
+> index 8611c24fd57d1..27733ef013bed 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -1497,6 +1497,7 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
+>  			refname = get_symref(atom, ref);
+>  		else if (starts_with(name, "upstream")) {
+>  			const char *branch_name;
+> +			v->s = "";
+>  			/* only local branches may have an upstream */
+>  			if (!skip_prefix(ref->refname, "refs/heads/",
+>  					 &branch_name))
+> @@ -1509,6 +1510,7 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
+>  			continue;
+>  		} else if (atom->u.remote_ref.push) {
+>  			const char *branch_name;
+> +			v->s = "";
+>  			if (!skip_prefix(ref->refname, "refs/heads/",
+>  					 &branch_name))
+>  				continue;
+> @@ -1549,22 +1551,26 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
+>  			continue;
+>  		} else if (starts_with(name, "align")) {
+>  			v->handler = align_atom_handler;
+> +			v->s = "";
+>  			continue;
+>  		} else if (!strcmp(name, "end")) {
+>  			v->handler = end_atom_handler;
+> +			v->s = "";
+>  			continue;
+>  		} else if (starts_with(name, "if")) {
+>  			const char *s;
+> -
+> +			v->s = "";
+>  			if (skip_prefix(name, "if:", &s))
+>  				v->s = xstrdup(s);
+>  			v->handler = if_atom_handler;
+>  			continue;
+>  		} else if (!strcmp(name, "then")) {
+>  			v->handler = then_atom_handler;
+> +			v->s = "";
+>  			continue;
+>  		} else if (!strcmp(name, "else")) {
+>  			v->handler = else_atom_handler;
+> +			v->s = "";
+>  			continue;
+>  		} else
+>  			continue;
+>
+> --
+> https://github.com/git/git/pull/520
