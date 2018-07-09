@@ -6,87 +6,65 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1EC2D1F6AC
-	for <e@80x24.org>; Mon,  9 Jul 2018 19:49:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3030D1F6AC
+	for <e@80x24.org>; Mon,  9 Jul 2018 19:58:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933118AbeGITtQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jul 2018 15:49:16 -0400
-Received: from cloud.peff.net ([104.130.231.41]:52524 "HELO cloud.peff.net"
+        id S932909AbeGIT6Z (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jul 2018 15:58:25 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52536 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S933100AbeGITtO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jul 2018 15:49:14 -0400
-Received: (qmail 2165 invoked by uid 109); 9 Jul 2018 19:49:14 -0000
+        id S932824AbeGIT6Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jul 2018 15:58:24 -0400
+Received: (qmail 2516 invoked by uid 109); 9 Jul 2018 19:58:24 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 09 Jul 2018 19:49:14 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 09 Jul 2018 19:58:24 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15183 invoked by uid 111); 9 Jul 2018 19:49:15 -0000
+Received: (qmail 15237 invoked by uid 111); 9 Jul 2018 19:58:25 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 09 Jul 2018 15:49:15 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 09 Jul 2018 15:58:25 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 09 Jul 2018 15:49:12 -0400
-Date:   Mon, 9 Jul 2018 15:49:12 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 09 Jul 2018 15:58:22 -0400
+Date:   Mon, 9 Jul 2018 15:58:22 -0400
 From:   Jeff King <peff@peff.net>
-To:     Andrei Rybak <rybak.a.v@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Christian Couder <christian.couder@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 2/2] sequencer: don't say BUG on bogus input
-Message-ID: <20180709194912.GB7980@sigill.intra.peff.net>
-References: <20180709194636.GB9852@sigill.intra.peff.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Paul Smith <paul@mad-scientist.net>,
+        Daniel Jacques <dnj@google.com>, git@vger.kernel.org
+Subject: Re: Git 2.18: RUNTIME_PREFIX... is it working?
+Message-ID: <20180709195822.GA9000@sigill.intra.peff.net>
+References: <97803ec8dae0a73bae301a37377b7b4a78f77e99.camel@mad-scientist.net>
+ <nycvar.QRO.7.76.6.1807041312150.75@tvgsbejvaqbjf.bet>
+ <986185d30a0f09b4e2a9832d324a265cd3da7354.camel@mad-scientist.net>
+ <nycvar.QRO.7.76.6.1807061059260.75@tvgsbejvaqbjf.bet>
+ <CAD1RUU-4a_jV_JjozjXOR4bi+_7rFW_AjmHbbrw6NHJ77=oGkw@mail.gmail.com>
+ <bf0d4f33701ec694917f2e710c3fb097085c8d69.camel@mad-scientist.net>
+ <nycvar.QRO.7.76.6.1807082346140.75@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20180709194636.GB9852@sigill.intra.peff.net>
+In-Reply-To: <nycvar.QRO.7.76.6.1807082346140.75@tvgsbejvaqbjf.bet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When cherry-picking a single commit, we go through a special
-code path that avoids creating a sequencer todo list at all.
-This path expects our revision parsing to turn up exactly
-one commit, and dies with a BUG if it doesn't.
+On Sun, Jul 08, 2018 at 11:52:22PM +0200, Johannes Schindelin wrote:
 
-But it's actually quite easy to fool. For example:
+> Now, if you care to have a look at Dan's (and my) patches to implement
+> RUNTIME_PREFIX so that it looks for a directory *relative to the Git
+> binary*, you will see that it is far from portable. In fact, it is very
+> definitely not portable, and needs specific support for *every single
+> supported Operating System*. And while we covered a lot, we did not cover
+> all of them.
+> 
+> So unfortunately, it is impossible to make it the default, I am afraid.
 
-  $ git cherry-pick --author=no.such.person HEAD
-  error: BUG: expected exactly one commit from walk
-  fatal: cherry-pick failed
+Would it be reasonable to make RUNTIME_PREFIX the default on systems
+where we _do_ have that support? AFAIK there is no downside to having it
+enabled (minus a few syscalls to find the prefix, I suppose, but I
+assume that's negligible).
 
-This isn't a bug; it's just bogus input.
+I.e., a patch to config.mak.uname (and possibly better support for
+_disabling_ it, though I think "make RUNTIME_PREFIX=" would probably
+work).
 
-Let's drop the "BUG" to make it clear that the input is the
-problem. And let's also use the phrase "empty commit set
-passed", which matches what we say when we do a real
-revision walk and it turns up empty.
-
-This BUG dates back to 7acaaac275 (revert: allow single-pick
-in the middle of cherry-pick sequence, 2011-12-10), and
-could be triggered in the same way even then. So clearly
-this outcome is unexpected. Another approach would be to
-make the conditional from 7acaaac275 smarter, and avoid even
-entering this single-pick case.  But since the action is
-identical either way (we have nothing to pick, so we exit)
-there's not much point in trying to distinguish the two.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- sequencer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/sequencer.c b/sequencer.c
-index f692b2ef44..234666b980 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -3637,7 +3637,7 @@ int sequencer_pick_revisions(struct replay_opts *opts)
- 			return error(_("revision walk setup failed"));
- 		cmit = get_revision(opts->revs);
- 		if (!cmit || get_revision(opts->revs))
--			return error("BUG: expected exactly one commit from walk");
-+			return error(_("empty commit set passed"));
- 		return single_pick(cmit, opts);
- 	}
- 
--- 
-2.18.0.400.g702e398724
+-Peff
