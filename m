@@ -2,92 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B91AA1F6AC
-	for <e@80x24.org>; Mon,  9 Jul 2018 21:37:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4530F1F6AC
+	for <e@80x24.org>; Mon,  9 Jul 2018 21:41:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933523AbeGIVhV (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jul 2018 17:37:21 -0400
-Received: from s019.cyon.net ([149.126.4.28]:46622 "EHLO s019.cyon.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933353AbeGIVhT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jul 2018 17:37:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=drbeat.li;
-         s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:MIME-Version
-        :Date:Message-ID:From:References:Cc:To:Subject:Sender:Reply-To:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-        List-Post:List-Owner:List-Archive;
-        bh=dvWLfTPxi7sDPbrUjrzkdhSqjghbMDBTZjn9qnWkFd0=; b=Us1Ghyh5a9KS8reDM05dOgjvSU
-        QyO6vvEW3QAcF7bkFaXfPwCRhPLEyeQbcDV7TrklPvAC0o5NZHcSRkW7jxgjBcSZJnVuijTnKnjSg
-        zdU8DymqL4hKFExden39d9DYFLpchRnjqnc53o7PWOwo9PTI3KelR4PIdHF2Fs1ZHQPiRPMKCqr10
-        bXw/xsjihTYNA0F2Vpfak/zYrFcvHuP2y/CHh4lTY2aZ9ZvGFygBMkq5pnCvNK/RfVUDKFy+pRL0W
-        uxJ2VQ7HF8DF6jlfcZnDkDos7mnR38vyfz0NlZexBHGWDY1IfzdOyBuKP8y2K64klVoXyKQVeuNz7
-        Z49gyRkw==;
-Received: from [10.20.10.233] (port=57052 helo=mail.cyon.ch)
-        by s019.cyon.net with esmtpa (Exim 4.91)
-        (envelope-from <dev+git@drbeat.li>)
-        id 1fcdqO-00DL5M-8D; Mon, 09 Jul 2018 23:37:17 +0200
-Subject: Re: [RFC PATCH 4/6] sequencer.c: avoid empty statements at top level
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <20180708144342.11922-1-dev+git@drbeat.li>
- <20180708144342.11922-5-dev+git@drbeat.li>
- <xmqqo9fgayb6.fsf@gitster-ct.c.googlers.com>
-From:   Beat Bolli <dev+git@drbeat.li>
-Message-ID: <82fa7e95-5e27-bb8a-2fbf-4895bdfea05c@drbeat.li>
-Date:   Mon, 9 Jul 2018 23:37:15 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:52.0)
- Gecko/20100101 Thunderbird/52.9.0
+        id S933206AbeGIVlg (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jul 2018 17:41:36 -0400
+Received: from mail-yw0-f196.google.com ([209.85.161.196]:40055 "EHLO
+        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933060AbeGIVlf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jul 2018 17:41:35 -0400
+Received: by mail-yw0-f196.google.com with SMTP id p129-v6so7091446ywg.7
+        for <git@vger.kernel.org>; Mon, 09 Jul 2018 14:41:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=bOb5MLqU4BDayEN51of3EcypsPds9IKmsnyJ7u9JA4c=;
+        b=oiV5IACG3Gzr8pcMr3EY+qxEjttk14zMVdCOwJPsDfFh6A5BXoV2SSQ7t5Al2esOj3
+         f1gY8S/PZVOMQuAxCiHHSvXqwdkZScyyzKbr+19wD6P8z9WtZwSULlPZtS7IPJlmL/m6
+         nAO/20ZkxsORsN9XocMkJkzNiYTcZxCPKn4+35iRYxJFK3uY+7YEEDc16Wx8jtav+GRa
+         ITkEE46rK0MOlCBOVnuA6Vo6ymcjWW/wSMWv6Pff36bw/nq0v2n1bmucJe36MlZyIMEi
+         ZmA/AlrOCCz9cp77aV0QG9yirlKvla9iBXQgrXsXpSE1jLtUBvCUR5UbhhaBCgaUnCKQ
+         54Gw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=bOb5MLqU4BDayEN51of3EcypsPds9IKmsnyJ7u9JA4c=;
+        b=LLWJ98vcoP2XgNiIyF5a4z6Z2HgR78wPZnymDDfNreGkqcLpK8vHXM7qWahStARhRC
+         vARR86uJAONf5e/9EuL+Ize8wXtJhUT+hhWJyHMMnmsebrTWkG7XbBtm4Dv550P3BOqg
+         Vz9gpmtsWNIvKqjakGKxdQSKlf6Gc2fgc/54aK/X22U66LKIItAT2rL/CFv4ElF0+U9X
+         /JOC2K7mZr6khB4SRbVSMYnK9S4PyYFc07ZoGncsIE4xtSNEohpNHEeHZYoFPZBWq3T/
+         bnPlxn6V3ifBj5R5eSwqhlbuP3VpudqeLoKoX8CCu1JUttKFNxXhrCnVjt0JIX1W7q22
+         mcPw==
+X-Gm-Message-State: APt69E152xSK6ebXzZ4S3q871xAClyqIIvMOLTJc8JPJHDjWH3+uUYfp
+        P2VqszmqS2PJlwLvZCipwaiFQyvQEBoH3nE3h4PKFw==
+X-Google-Smtp-Source: AAOMgpeOnkZB6BhE7HeQv+ssp8h9nonHaziEn4X8HtxoDTjZUPpaCCzUJGAsktSoLC7HUTJ5uXuh6GoBAYzFlKObZjQ=
+X-Received: by 2002:a0d:d342:: with SMTP id v63-v6mr10728694ywd.500.1531172494768;
+ Mon, 09 Jul 2018 14:41:34 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqqo9fgayb6.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-OutGoing-Spam-Status: No, score=-1.0
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - s019.cyon.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - drbeat.li
-X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
-X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+References: <cover.1529616356.git.jonathantanmy@google.com>
+ <cover.1531168854.git.jonathantanmy@google.com> <9769e2a7471c2b32185896e833cc74824ac5437e.1531168854.git.jonathantanmy@google.com>
+In-Reply-To: <9769e2a7471c2b32185896e833cc74824ac5437e.1531168854.git.jonathantanmy@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 9 Jul 2018 14:41:23 -0700
+Message-ID: <CAGZ79kaE_42A2B=VjRcNdJzueeVZmrsj6iNgk=6u9bi6pA4hQA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/6] commit-graph: refactor preparing commit graph
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09.07.18 23:34, Junio C Hamano wrote:
-> Beat Bolli <dev+git@drbeat.li> writes:
-> 
->> The marco GIT_PATH_FUNC expands to a complete statement including the
->> semicolon. Remove two extra trailing semicolons.
-> 
-> Wait a bit.  The observation in the log message and the
-> implementation of GIT_PATH_FUNC() do not match.
-> 
->         #define GIT_PATH_FUNC(func, filename) \
->                 const char *func(void) \
->                 { \
->                         static char *ret; \
->                         if (!ret) \
->                                 ret = git_pathdup(filename); \
->                         return ret; \
->                 }
-> 
-> The code generated does "include semicolon" but that is not why the
-> caller should place semicolon after the closing parens.  Perhaps
-> replace "including the semicolon." with something else, like ", and
-> adding a semicolon after it not only is unnecessary but is wrong."
-> or soemthing like that?
+Hi Jonathan,
+On Mon, Jul 9, 2018 at 1:44 PM Jonathan Tan <jonathantanmy@google.com> wrote:
+>
+> Two functions in the code (1) check if the repository is configured for
+> commit graphs, (2) call prepare_commit_graph(), and (3) check if the
+> graph exists. Move (1) and (3) into prepare_commit_graph(), reducing
+> duplication of code.
+>
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 
-This message is fixed in the non-RFC series that I sent at 19:25 UTC. I
-noticed the error after the message from Philip Oakley.
 
-Beat
+
+>  static int prepare_commit_graph_run_once = 0;
+> -static void prepare_commit_graph(void)
+> +
+> +/*
+> + * Return 1 if commit_graph is non-NULL, and 0 otherwise.
+> + *
+> + * On the first invocation, this function attemps to load the commit
+> + * graph if the_repository is configured to have one.
+
+and as we talk about in-memory commit graph (and not some
+stale file that may still be around on the fs), we can assertly return
+0 when core_commit_graph is false.
+
+Makes sense!
+
+> @@ -337,22 +348,17 @@ static int parse_commit_in_graph_one(struct commit_graph *g, struct commit *item
+>
+>  int parse_commit_in_graph(struct commit *item)
+>  {
+> -       if (!core_commit_graph)
+> +       if (!prepare_commit_graph())
+>                 return 0;
+> -
+> -       prepare_commit_graph();
+> -       if (commit_graph)
+> -               return parse_commit_in_graph_one(commit_graph, item);
+> -       return 0;
+> +       return parse_commit_in_graph_one(commit_graph, item);
+
+Makes sense.
+
+>  }
+>
+>  void load_commit_graph_info(struct commit *item)
+>  {
+>         uint32_t pos;
+> -       if (!core_commit_graph)
+> +       if (!prepare_commit_graph())
+>                 return;
+> -       prepare_commit_graph();
+> -       if (commit_graph && find_commit_in_graph(item, commit_graph, &pos))
+> +       if (find_commit_in_graph(item, commit_graph, &pos))
+>                 fill_commit_graph_info(item, commit_graph, pos);
+
+here too,
+
+This is
+Reviewed-by: Stefan Beller <sbeller@google.com>
