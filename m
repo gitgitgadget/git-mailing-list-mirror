@@ -7,80 +7,78 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA4EF1F6AC
-	for <e@80x24.org>; Mon,  9 Jul 2018 14:33:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E2251F6AC
+	for <e@80x24.org>; Mon,  9 Jul 2018 14:35:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932727AbeGIOdv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jul 2018 10:33:51 -0400
-Received: from mail-oi0-f49.google.com ([209.85.218.49]:34744 "EHLO
-        mail-oi0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932633AbeGIOdu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jul 2018 10:33:50 -0400
-Received: by mail-oi0-f49.google.com with SMTP id 13-v6so36278400ois.1
-        for <git@vger.kernel.org>; Mon, 09 Jul 2018 07:33:50 -0700 (PDT)
+        id S932742AbeGIOfp (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jul 2018 10:35:45 -0400
+Received: from mail-oi0-f65.google.com ([209.85.218.65]:39098 "EHLO
+        mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932633AbeGIOfo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jul 2018 10:35:44 -0400
+Received: by mail-oi0-f65.google.com with SMTP id d189-v6so36266138oib.6
+        for <git@vger.kernel.org>; Mon, 09 Jul 2018 07:35:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=C85o+t1H/COanhkQQMki4AkE3A+UeYpIloPwfhE7U8E=;
-        b=YaLrBpMNgfl79g2izucaoMiCgQ33C55nNA0oR8/Mk5b4w9cIBcRIFkwjcbP8fM2IEi
-         mPpjX4wxUasUuCUPUtjfRVy+31kb9acGeCnU7ABpOD2rVf+wkXf+/0egUT1N4DV8Oxiv
-         SrqouLBv6swawBqLZXv0vhW/qHWbMz7uMCOsMRyezF6PExzjh51XrAMrI+6wBRI58vmS
-         YT9J/yyharlQMyoRHw0uS6NTOUqc2ZbCt1u5GgBNm0RvWLA5R/CXvnWEVUzk7zebI/O5
-         GeqCdDg0Kawcew3LynludGE1NWByUDcgq2q/K2YrDB9S8ZmUlYTPKxoHpaHyLiDrlL4R
-         LLBw==
+        bh=jQN2TkEHndEgJbsANbdFl2KQPxMGv3Yhvb+PzSUd3wo=;
+        b=Hr196SFmMhzKlGDgtwRDO4o3ZLORDUxhZMR2LHepq66wa/b/ror5demGY5Yj8+35EW
+         n088GeRn3DYjsjAM2YMDpJ22ollbWH5BBjZxwjDeT4IcdgZJhA0ZgRQcOZMTfwi2LVWC
+         yjRW48lkovJ0U2q9anHMTjXLivM+rWCe+ZnL4sCExqRvpeFHdwW/tt8fF4mgHBzrDHNI
+         y+Lipj1TqXynVp1T/tHTZL7eJKT6cThIn3061UX51hau2+3PCjeRknmbszarc9jlA8zQ
+         HO0kWf7jnEVGYxfz1TbFBXKANHqE8w7xtUCDQ2/h6YEILffCWaTDpfN66gVDYeJrnZSg
+         MTIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=C85o+t1H/COanhkQQMki4AkE3A+UeYpIloPwfhE7U8E=;
-        b=ScyWuk3WRJBRqPB16QHRu/azDARLCr5uFi44266mQ8f5lZAApib8GuCnN/ft1EtWoZ
-         med7J8XxHPfy1k/V6sjETG3ZLd3xvBniOOz4ZtQ4+SSqZDyZqNdhn+Ej9jZni0Ue1vwB
-         +LeM1E9Em0+Jvp+FcTAzLgsBIhZn5gE3H+NekInhIZws8lcsu0TClRGWKVUSmC7LHynU
-         h44ds/r+8i5UZijGlr1wLqQwsrhYHjTyED1BdzVIdzIFPQQquPYmLchmNUOSsU64RD9t
-         z5srDWQKfC68QJkIS1mhILaXVuMDQFo4Wy58QNUkIkU9quByNL5xXnu9QV9Uuj9+pYBW
-         2yyg==
-X-Gm-Message-State: APt69E15R+YGu5+vNsKW2vqVj8b4MLnQQQiMyoXxQw2gZhHCP5cjX08P
-        czm6lkPu2I0jflb3Dl+lbvoB/dpK76Uz3fI1/+A=
-X-Google-Smtp-Source: AAOMgpdGZyqYsFdbnJwUneDK/gAYdPhjVm0Cylc2bdUvTR0IIyAN2bHmKyi78tC9OOlbt9PLXqFZ8PFi3+Busk/sH28=
-X-Received: by 2002:a54:4406:: with SMTP id k6-v6mr12529543oiw.34.1531146830265;
- Mon, 09 Jul 2018 07:33:50 -0700 (PDT)
+        bh=jQN2TkEHndEgJbsANbdFl2KQPxMGv3Yhvb+PzSUd3wo=;
+        b=dARRW2kl3Oz8f32p9KTX38YVEx3EsL6Bk3Zsy9UjyHD3wrwt7yI/c1CH0SQ6BKu1Z+
+         4laKOpZrDAYXVSA4Q87IAuMTvRl96gU2pCRUZRV7jjBx//qL/4Uw0ZtS27sh4Wx3Mz51
+         16l3NXhurCmwRh8D6UNVkBLHewezGgGql1N7oWKn2sllXpW5EH/oLvHFQIX3cwfkfHyx
+         rxrPRK/UnXHlRZa84ZJx/wHEYJ5mEyuOfQbCSD3zHG+/eIpyCX/em0V8vJQy56IHryd2
+         K0mNyCKdrjmackR+pFvDHV7OL3r3PIsxr6msE2LATwDlSlXYsDzVTsaxBVWG1jSBxRWt
+         I13A==
+X-Gm-Message-State: APt69E3oXiNCk1sEOi3z41mKtb4TsxNqBaaUNBnMnTncKi81HCcrmSwv
+        DnGBes3mhoUxnAQZV91K7Dg1N/zz63bzUeJjeoo=
+X-Google-Smtp-Source: AAOMgpcYnYm0weu+nuwZP4til+EUlU3KZ7EN/oouS5/OUi8TvpRXURVG1uQw9tMxGbQCjgSsnt98L2ta7oM9FK6G8k0=
+X-Received: by 2002:aca:d452:: with SMTP id l79-v6mr22085507oig.222.1531146944279;
+ Mon, 09 Jul 2018 07:35:44 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180630133822.4580-1-kgybels@infogroep.be> <20180630145849.GA9416@duynguyen.home>
- <xmqqpo00mi7q.fsf@gitster-ct.c.googlers.com> <CAM0VKj=u0OVad3QDRFOc+NWZ9TfwqAwmZ47s=5e5jGZaPQRH6g@mail.gmail.com>
- <20180707231651.GB6152@infogroep.be>
-In-Reply-To: <20180707231651.GB6152@infogroep.be>
+References: <20180616054157.32433-1-pclouds@gmail.com> <20180616054157.32433-3-pclouds@gmail.com>
+ <xmqqbmbypyis.fsf@gitster-ct.c.googlers.com> <20180630083825.GA2436@duynguyen.home>
+ <xmqqsh50qiiw.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqsh50qiiw.fsf@gitster-ct.c.googlers.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 9 Jul 2018 16:33:22 +0200
-Message-ID: <CACsJy8C=Xs1QY_cMu+H4DR9XovBd5bO-ZC=ie-1x9yZepgUMdA@mail.gmail.com>
-Subject: Re: [PATCH] gc --auto: release pack files before auto packing
-To:     Kim Gybels <kgybels@infogroep.be>
-Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Adam Borowski <kilobyte@angband.pl>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Michael J Gruber <git@grubix.eu>, Jeff King <peff@peff.net>,
-        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+Date:   Mon, 9 Jul 2018 16:35:17 +0200
+Message-ID: <CACsJy8DrGnK3eM1mL7eLUL1hBNct=8qNC2f=PmO+g+7rjV8idg@mail.gmail.com>
+Subject: Re: [PATCH 02/15] apply.c: stop using index compat macros
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jul 8, 2018 at 1:16 AM Kim Gybels <kgybels@infogroep.be> wrote:
-> Should I post a v3 that goes back to the original fix, but uses
-> test_i18ngrep instead of grep?
-
-Yes please. In my comment I did write we didn't need the repo anymore
-(or something along that line) which turns out to be wrong.
-
-> In addition to not breaking any tests, close_all_packs is already used
-> in a similar way in am and fetch just before running "gc --auto".
+On Tue, Jul 3, 2018 at 8:30 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> -Kim
+> Duy Nguyen <pclouds@gmail.com> writes:
+>
+> > A singe patch conversion would look like below. But for that to
+> > happen, convert.c, rerere, ws.c and read-cache.c have to be converted
+> > first to not use the_index.
+>
+> Yes, that was pretty much what I was driving at.  I do not have any
+> trouble seeing a patch that converts callees that are deep in the
+> callchain and are meant to serve helpers to make them capable of
+> working on arbitrary in-core index instance.  That's a welcome
+> change that allows us to reuse them in more context (namely, by
+> callers that want to work on istate that is not the_index
+> themselves).  Skipping the "intermediate" step like this patch would
+> force us to focus on converting these lower-layer dependencies.
 
-
-
+OK I'll drop part one and incorporate the changes in later patches.
 -- 
 Duy
