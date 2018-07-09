@@ -2,81 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 651981F62D
-	for <e@80x24.org>; Mon,  9 Jul 2018 03:13:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7796A1F62D
+	for <e@80x24.org>; Mon,  9 Jul 2018 03:30:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933118AbeGIDNL (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Jul 2018 23:13:11 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:37589 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932820AbeGIDNJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Jul 2018 23:13:09 -0400
-Received: by mail-ed1-f68.google.com with SMTP id v22-v6so12729312edq.4
-        for <git@vger.kernel.org>; Sun, 08 Jul 2018 20:13:09 -0700 (PDT)
+        id S932992AbeGIDaP (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Jul 2018 23:30:15 -0400
+Received: from mail-oi0-f41.google.com ([209.85.218.41]:37428 "EHLO
+        mail-oi0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932656AbeGIDaO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Jul 2018 23:30:14 -0400
+Received: by mail-oi0-f41.google.com with SMTP id k81-v6so33251420oib.4
+        for <git@vger.kernel.org>; Sun, 08 Jul 2018 20:30:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=pJPkALoxD+ckgCWSrs5m7t9g/ZrN2WXfdnXJ4gi9PQg=;
-        b=amgwqsiwjc+Y1iKVNHXgsolQlNJeOPNQ+vgtEBagVISddb+h37QRHhsXnUepCygjmm
-         51XPWX7/E+ci+oJH7x7YnpyEbI3j02P2zRCkBebrSFEbRlBVZpk7rndA9WO39r8j/k6g
-         699k4U1h2+VQDVSjy73Mstd0BZt0470R9tifoBNVpXDxcimPW26vWcp0bJtj2J/+3SFg
-         CjATCu3xwHlDXSPulaLvN7ahckJYsbrEhWlIrnBpn+g7noT3ykgqMR0filsfeEZAkYEg
-         RJNJe8FYgJ7uQE497wscE5Rg1IPVBQ4w99C/mO04xUmnNLv/zxR5/dlcrNIICVF3ImdV
-         KjAA==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=7w0pgjruIhLWoRlPP04a7e3VZLJ/z9JyAc5+NeQovCs=;
+        b=EV0JrpK7x2xqTw9Xe7bKflmuHzY9ZCmUG5hL3AAB+hoKwdpBZ0d7KAN7KdATE0wdT9
+         TtEgzYLsMgIBkLMpLve/78IuSuPIPXYDazOYB/oGMDILhgAmZnNwdJVKmRlxpPmCTdCI
+         cNcdzQ53POvu6XyvEQDo4ajpAWecljWu+Gle90hD9InVlmbD1aIyb1uOXy3ASXrrD30P
+         ZVEWHjglGDNlC2Om0NDRvbhfmY46++mVWsltStv54UXcsMMm7Cuv9Uh1oRqKg51lMKkl
+         jVle0xtaImpYT9hLi/NEHhbdgrQxAErLH4pvT7oEfqSyHaWxuYSKuMjM4imnNKy05cMF
+         bcaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=pJPkALoxD+ckgCWSrs5m7t9g/ZrN2WXfdnXJ4gi9PQg=;
-        b=DDfyDU83d9AELkTKiC38qtupr5YN3bwuqI1agvXQc7tN7mZZyE2uWjISfNK19Eusw9
-         32yCvdNrPE+qmYHEChkHnDXMjqEWtZdR4UsZljCT3cWEbR9uUegNWogGpM4LlwQgtT15
-         V4p1viKO+YGYKyIjWoQ/mAk5d6Ifv7vh4zA2vCyPksS+skhekvgcLN4T80WdGsnWt6u6
-         U/upZOTI08GKSulDPyo7jZUi7TpuSPrZO7Tb+zeQJm+lCltb5V+lnHfE6vyMk55dJB74
-         hWSOp4a/n3o0rHQqnJytGe8feKNP/4Gjk/Ad3RQ/LWQ3qSGVNiTU4hNxywk1vuirBw6S
-         mLRw==
-X-Gm-Message-State: APt69E38bAumVLhp2nNAU98tJpj5L5R01ANaOV9vybuodsNP3p1QqSNW
-        fZAaIt7o48LMQ5XJDfYO+XUfMc+XEDIrlYJ70OQ=
-X-Google-Smtp-Source: AAOMgpfGFZuCzd12OOc/YLvu+LXRqjSKTI2qlkTYMhGfGod1CTlSixDnoIm96jgzPYZDGOwHMI1H9civMAa0dGnQeA8=
-X-Received: by 2002:a50:ab13:: with SMTP id s19-v6mr20932083edc.133.1531105988404;
- Sun, 08 Jul 2018 20:13:08 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=7w0pgjruIhLWoRlPP04a7e3VZLJ/z9JyAc5+NeQovCs=;
+        b=XT3LpEl/OkW6XnllrQlO+76qqvY/2I1QFJIkdpltVOIu+v6iDBydSdyV6VV3oFRxCu
+         FhFmNUAR64VWSCS6I2qRnLoER/PQhMV7OAg37sq7zKRq04hPFesrnULE5y2vi3uOTtxt
+         5bz4/x3kZFgxJrDW8Vq95sX4yc1Rw9p5DU4sxdtO6ABxn6YpkvQCYGLQXh8iE4Sruqs9
+         48yAr4q6rNgocNOMhKokplFhqzIt2lsj9SyDFJqtV0Gxq1IfEr/KmZGcYFIWkVIGhnDy
+         iNo2lTHp/f9Zc36QNcyBEQYYOka+gntkYxmrVfiMoGWLKciAvHVef8CkVkdmOAQaD5vF
+         /8xQ==
+X-Gm-Message-State: APt69E2HrknQTxGQpSfzrczPTRx3dGOc5zaZPAu2Rpn63C+wpdNzo26H
+        cEyvbc02aYHgWWUTVU0ioL7oX0ACK1CAYrGHIx+4bw==
+X-Google-Smtp-Source: AAOMgpd0yRcDBhCfCklwvKriihCWC48ZHMfN7bwrXtjcxHvaBdG8YCO8oywYJy/WQ7UmNjhHs/uKkZA4zyGltgkbSr8=
+X-Received: by 2002:aca:c0d5:: with SMTP id q204-v6mr19760636oif.77.1531107013622;
+ Sun, 08 Jul 2018 20:30:13 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180708233638.520172-1-sandals@crustytoothpaste.net>
-In-Reply-To: <20180708233638.520172-1-sandals@crustytoothpaste.net>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Sun, 8 Jul 2018 20:12:54 -0700
-Message-ID: <CA+P7+xq9SeoZjYYWhM14-u4kGgwmNVPs6c+wFR2EbwK+_hVetg@mail.gmail.com>
-Subject: Re: [PATCH 00/17] object_id part 14
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Git mailing list <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
+Received: by 2002:ac9:74c3:0:0:0:0:0 with HTTP; Sun, 8 Jul 2018 20:29:53 -0700 (PDT)
+From:   William Chargin <wchargin@gmail.com>
+Date:   Sun, 8 Jul 2018 20:29:53 -0700
+Message-ID: <CAFW+GMBLeLyJjJPaEXkyQ5fJ=L4q4vQ=26wjZ+n07ZvSaTaCUg@mail.gmail.com>
+Subject: Unexpected behavior with :/<text> references
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jul 8, 2018 at 4:39 PM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> This is the fourteenth series of patches to switch to using struct
-> object_id and the_hash_algo.  This series converts several core pieces
-> to use struct object_id, including the oid* and hex functions.
->
-> All of these patches have been tested with both SHA-1 and a 256-bit
-> hash.
->
+Hello,
 
-I read through the series, and didn't spot anything odd, except for
-the question about reasoning for why we use memcmp directly over using
-hashcmp. I don't think that's any sort of blocker, it just seemed an
-odd decision to me.
+I'm experiencing strange behavior with :/<text> references, which seems
+to be inconsistent with the explanation in the docs on two counts.
+First, sometimes the matched commit is not the youngest. Second, some
+commits cannot be found at all, even if they are reachable from HEAD.
 
-Thanks,
-Jake
+Here is a script to reproduce the behavior (Git built from current pu):
+
+    #!/bin/sh
+    export GIT_CONFIG_NOSYSTEM=1
+    export GIT_ATTR_NOSYSTEM=1
+    cd "$(mktemp -d --suffix .gitrepro)"
+
+    git --version
+    git init
+
+    git commit -q --allow-empty -m initial
+    git commit -q --allow-empty -m foo
+    git checkout -q -b early-branch
+    git commit -q --allow-empty -m foobar
+    git checkout -q --detach
+    git commit -q --allow-empty -m foobarbaz
+
+    echo
+    echo "The following should all print 'foobarbaz':"
+    git show --format=%s ':/foo' --
+    git show --format=%s ':/foobar' --
+    git show --format=%s ':/foobarbaz' --
+
+    echo
+    echo "With an explicit branch:"
+    git branch late-branch
+    git show --format=%s ':/foo' --
+    git show --format=%s ':/foobar' --
+    git show --format=%s ':/foobarbaz' --
+
+Here is the output on my machine:
+
+    git version 2.18.0.516.g6fb7f6652
+    Initialized empty Git repository in /tmp/tmp.WeCD0QZPIf.gitrepro/.git/
+
+    The following should all print 'foobarbaz':
+    foo
+    foobar
+    fatal: bad revision ':/foobarbaz'
+
+    With an explicit branch:
+    foo
+    foobarbaz
+    foobarbaz
+
+First, the commit with message "foobar" clearly matches the regular
+expression /foo/ as well as /foobar/, but ":/foo" resolves to an older
+commit. However, Documentation/revisions.txt indicates that a :/<text>
+reference should resolve to the _youngest_ matching commit.
+
+Second, the commit with message "foobarbaz" is reachable from HEAD, and
+yet the regular expression /foobarbaz/ fails to match it. The same
+documentation indicates that :/<text> references find commits reachable
+from any ref, and the glossary entry for "ref" states that HEAD is a
+"special-purpose ref" even though it does not begin with "refs/".
+
+It looks to me like references reachable from `master` are always picked
+over other references, and that references reachable only from HEAD are
+not matched at all.
+
+Is the observed behavior intentional? If so, what am I misunderstanding?
+
+Thanks!
+WC
+
+(for searchability: colon slash text references)
