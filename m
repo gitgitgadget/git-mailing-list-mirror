@@ -6,61 +6,61 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B5851F6AC
-	for <e@80x24.org>; Mon,  9 Jul 2018 16:42:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D6661F6AC
+	for <e@80x24.org>; Mon,  9 Jul 2018 16:46:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933506AbeGIQmm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jul 2018 12:42:42 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:37318 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932755AbeGIQmi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jul 2018 12:42:38 -0400
-Received: by mail-wm0-f68.google.com with SMTP id n17-v6so21461182wmh.2
-        for <git@vger.kernel.org>; Mon, 09 Jul 2018 09:42:37 -0700 (PDT)
+        id S933314AbeGIQqO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jul 2018 12:46:14 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:32839 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932893AbeGIQqO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jul 2018 12:46:14 -0400
+Received: by mail-wr1-f67.google.com with SMTP id g6-v6so2774763wrp.0
+        for <git@vger.kernel.org>; Mon, 09 Jul 2018 09:46:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=//QE9oAZlOtonJ8ApTBZZeTWXC2xU5TUrB7BinZFaeQ=;
-        b=IOhNxvxNAzVR58eEpfVZesn/yfGSB6r8SFoRlS39D8+YCH8NEslACTH+795Tl/fAYH
-         taymPYRx7NrQGUvq78Egwn46G3EjoeYpJ2XQGFUHB7B1ZL8YcyrXJ7ElWTdUlk2OB9sF
-         Z5wb3i9J3xItPEQFoiVdCi8xV8OktsaWy0UnFOdz1nJFfvO6WJ3uznMHpxMp7OkrGUE0
-         kF0kcK+oWqMutMbTTZ9wDeaQkC2n5XwrnguAvsJpU+FPhtyWvC/lFJ/3h+BRYJRAqUPL
-         hNuTEW/tO4KEkaMFaW9odi4gv12IhgnB7f8UB6YKYqd+Ng8vfykbah841b9hm/d9FkyA
-         kMng==
+        bh=dwKsQNohHWHBgwkEE62aDdXBsZ0YqYOBME/ItaF3wAo=;
+        b=C9teCREDXCHkeTlJ8qC8Mp8HOREqPYlOx77Nr3Y71W2Uj9wAARjQQNpcd4YmmMU9Nl
+         qSc79GfA+0yiPrUUfpcl5JKK51XuseEgzVW293CSuMsKtnr6V6TRfBA/8D8ZJUTA92ta
+         PHinnV36gvefJo1fuAHUE527p4uM5gBxK7/uox1Q4NoDYxWP4qSQf/whvJg48PJvXDKD
+         fx8wptiqzKBl3HsUFApvSTWHo45hhcZ9P/VK8EyQZ1shuqIqMBpX91N8vmfXIeIZLUP4
+         tp69qgW+8f2YleDsnuyhCArCrEhUq1R3SfZDRVySP5Box+SSSAJ3zxwEBIWl4jqXOpbs
+         LHVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=//QE9oAZlOtonJ8ApTBZZeTWXC2xU5TUrB7BinZFaeQ=;
-        b=Vy2pLC5my9n7ieWmzFswXaOqVyP7WAfYytc7w3ktPq4SRi2JrvYEdbnUuqBkrqj/VG
-         b56t81g+7SWff/nlCLx0pzhsGWAbjJ0+Y15GILtmR9BiBcgd7fynxs7GDCwzIwdJ8LAk
-         09giVUV/gS2mDNQMQVb5BgV26JU4lvBiwYr9NR0Hp46XGfi3hstd9HYnpJ5qdAQ90Q2d
-         yzUxGD9RvlJcBjLIA8NB9GnlblOUQWF9nH/lYqIVY+U0jKXluTGqcuO8qoA73gB/z+Pa
-         Pa9w0OmeZ3upQsKqqhnyzsUKspPeqXRoKodvmCr2wqnJPgSnofhXuVysUdsJqobDWpzt
-         PEXg==
-X-Gm-Message-State: APt69E2JXN/v9ygc83A6DB6ejmmS5Zp3hXOsgL/26lezdqk00WT7CTvD
-        646LlM5gLFqj4i/UZXw/JnE=
-X-Google-Smtp-Source: AAOMgpe7Pva3XNUMnEcE4WSX18lOlZALw4TTzax+W46q3D89xZ/vs1yA7NrI3WlYcXHOkLTvPTDcyQ==
-X-Received: by 2002:a1c:1414:: with SMTP id 20-v6mr11046773wmu.61.1531154556607;
-        Mon, 09 Jul 2018 09:42:36 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id g10-v6sm4890147wru.43.2018.07.09.09.42.35
+        bh=dwKsQNohHWHBgwkEE62aDdXBsZ0YqYOBME/ItaF3wAo=;
+        b=EbM63Jgr0J+9ae5QZvN7H1LA/3gvhDPMDcbIIzOO16zQwSZxplue3MSEQ/NLLY8e1g
+         1rRR1HXksoU80ichJPf9htIjZ+4lz2xPGKH0EKP4s7Fj79fORgnwaO3Qg1PtXI3X1HPk
+         ECOgLTkX1z38MD+lklLjhYacL4ZViNVVWJ4QhJLkYAaXnTtm1T1sUVvUf8esawFQahGo
+         b0Tg0+2W4djiUZw3xuCWQ5n9c6ZcdSE2038s4iZLARAu65tPyd7a3id22C6mWD5HQSfe
+         zHLWhH9L5yerHdgYhzavwBXIa5qvNADf9LBTq14EguE+ypsiFmpMnJyE6EiOe1zu1DGT
+         r2hA==
+X-Gm-Message-State: APt69E2x9ypayu4DpPI3gvOhLjNH0Je3ikTV6++C5hIgxCIbsEmD9/Hu
+        0RMDeioiXFH0t59DDJayf2g=
+X-Google-Smtp-Source: AAOMgpeC6nXyJkWDSLmCwH8GwNIX/pTJJ3pAMmkjCXF8JMGRBIxyPXr3ASMOsrJga0Yh8AFYqU0V6w==
+X-Received: by 2002:adf:a541:: with SMTP id j1-v6mr17165467wrb.155.1531154772532;
+        Mon, 09 Jul 2018 09:46:12 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id b33-v6sm14471176wrg.45.2018.07.09.09.46.11
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 09 Jul 2018 09:42:35 -0700 (PDT)
+        Mon, 09 Jul 2018 09:46:11 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Pratik Karki <predatoramigo@gmail.com>
-Cc:     git@vger.kernel.org, christian.couder@gmail.com,
-        Johannes.Schindelin@gmx.de, sbeller@google.com,
-        alban.gruin@gmail.com
-Subject: Re: [PATCH v4 3/4] sequencer: refactor the code to detach HEAD to checkout.c
-References: <20180628074655.5756-1-predatoramigo@gmail.com>
-        <20180708180104.17921-1-predatoramigo@gmail.com>
-        <20180708180104.17921-4-predatoramigo@gmail.com>
-Date:   Mon, 09 Jul 2018 09:42:35 -0700
-In-Reply-To: <20180708180104.17921-4-predatoramigo@gmail.com> (Pratik Karki's
-        message of "Sun, 8 Jul 2018 23:46:03 +0545")
-Message-ID: <xmqq8t6kfjic.fsf@gitster-ct.c.googlers.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Daniel Harding <dharding@living180.net>, git@vger.kernel.org
+Subject: Re: [PATCH 2/2] t3430: update to test with custom commentChar
+References: <20180708184110.14792-1-dharding@living180.net>
+        <20180708184110.14792-3-dharding@living180.net>
+        <20180708210200.GA4573@genre.crustytoothpaste.net>
+        <nycvar.QRO.7.76.6.1807090944400.75@tvgsbejvaqbjf.bet>
+Date:   Mon, 09 Jul 2018 09:46:11 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.1807090944400.75@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Mon, 9 Jul 2018 09:52:13 +0200 (DST)")
+Message-ID: <xmqq4lh8fjcc.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,223 +69,37 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pratik Karki <predatoramigo@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> In the upcoming builtin rebase, we will have to start by detaching
-> the HEAD, just like shell script version does. Essentially, we have
-> to do the same thing as `git checkout -q <revision>^0 --`, in pure C.
+> Hi Brian,
 >
-> The aforementioned functionality was already present in `sequencer.c`
-> in `do_reset()` function. But `do_reset()` performs more than detaching
-> the HEAD, and performs action specific to `sequencer.c`.
+> On Sun, 8 Jul 2018, brian m. carlson wrote:
 >
-> So this commit refactors out that part from `do_reset()`, and moves it
-> to a new function called `detach_head_to()`. As this function has
-> nothing to do with the sequencer, and everything to do with what `git
-> checkout -q <revision>^0 --` does, we move that function to checkout.c.
+>> On Sun, Jul 08, 2018 at 09:41:11PM +0300, Daniel Harding wrote:
+>> > Signed-off-by: Daniel Harding <dharding@living180.net>
+>> 
+>> I think maybe, as you suggested, a separate test for this would be
+>> beneficial.  It might be as simple as modifying 'script-from-scratch' by
+>> doing "sed 's/#/>/'".
 >
-> This refactoring actually introduces a slight change in behavior:
-> previously, the index was locked before parsing the argument to the
-> todo command `reset`, while it now gets locked *after* that, in the
-> `detach_head_to()` function.
+> It might be even simpler if you come up with a new "fake editor" to merely
+> copy the todo list, then run a rebase without overridden
+> commentChar, then one with overridden commentChar, then pipe the todo list
+> of the first through that `sed` call:
 >
-> It does not make a huge difference, and the upside is that this closes
-> a few (unlikely) code paths where the index would not be unlocked upon
-> error.
 >
-> Signed-off-by: Pratik Karki <predatoramigo@gmail.com>
-> ---
+>         write_script copy-todo-list.sh <<-\EOF &&
+>         cp "$1" todo-list.copy
+>         EOF
+> 	test_config sequence.editor \""$PWD"/copy-todo-list.sh\" &&
+> 	git rebase -r <base> &&
+> 	sed "s/#/%/" <todo-list.copy >expect &&
+> 	test_config core.commentChar % &&
+> 	git rebase -r <base> &&
+> 	test_cmp expect todo-list.copy
+>
+> Ciao,
+> Johannes
 
-Here is a place to say "unchanged since v3" for a change like this
-one that changes neither the proposed log message above nor the
-patch below to help reviewers who have seen the previous round (they
-can stop reading here).  Hopefully there are more reviewers than you
-who write new code, so spending a bit more time to help them spend
-less would be an overall win for the project.
-
-Thanks.
-
->  checkout.c  | 64 +++++++++++++++++++++++++++++++++++++++++++++++++++++
->  checkout.h  |  3 +++
->  sequencer.c | 58 +++++-------------------------------------------
->  3 files changed, 72 insertions(+), 53 deletions(-)
->
-> diff --git a/checkout.c b/checkout.c
-> index bdefc888ba..da68915fd7 100644
-> --- a/checkout.c
-> +++ b/checkout.c
-> @@ -2,6 +2,11 @@
->  #include "remote.h"
->  #include "refspec.h"
->  #include "checkout.h"
-> +#include "unpack-trees.h"
-> +#include "lockfile.h"
-> +#include "refs.h"
-> +#include "tree.h"
-> +#include "cache-tree.h"
->  
->  struct tracking_name_data {
->  	/* const */ char *src_ref;
-> @@ -42,3 +47,62 @@ const char *unique_tracking_name(const char *name, struct object_id *oid)
->  	free(cb_data.dst_ref);
->  	return NULL;
->  }
-> +
-> +int detach_head_to(struct object_id *oid, const char *action,
-> +		   const char *reflog_message)
-> +{
-> +	struct strbuf ref_name = STRBUF_INIT;
-> +	struct tree_desc desc;
-> +	struct lock_file lock = LOCK_INIT;
-> +	struct unpack_trees_options unpack_tree_opts;
-> +	struct tree *tree;
-> +	int ret = 0;
-> +
-> +	if (hold_locked_index(&lock, LOCK_REPORT_ON_ERROR) < 0)
-> +		return -1;
-> +
-> +	memset(&unpack_tree_opts, 0, sizeof(unpack_tree_opts));
-> +	setup_unpack_trees_porcelain(&unpack_tree_opts, action);
-> +	unpack_tree_opts.head_idx = 1;
-> +	unpack_tree_opts.src_index = &the_index;
-> +	unpack_tree_opts.dst_index = &the_index;
-> +	unpack_tree_opts.fn = oneway_merge;
-> +	unpack_tree_opts.merge = 1;
-> +	unpack_tree_opts.update = 1;
-> +
-> +	if (read_cache_unmerged()) {
-> +		rollback_lock_file(&lock);
-> +		strbuf_release(&ref_name);
-> +		return error_resolve_conflict(_(action));
-> +	}
-> +
-> +	if (!fill_tree_descriptor(&desc, oid)) {
-> +		error(_("failed to find tree of %s"), oid_to_hex(oid));
-> +		rollback_lock_file(&lock);
-> +		free((void *)desc.buffer);
-> +		strbuf_release(&ref_name);
-> +		return -1;
-> +	}
-> +
-> +	if (unpack_trees(1, &desc, &unpack_tree_opts)) {
-> +		rollback_lock_file(&lock);
-> +		free((void *)desc.buffer);
-> +		strbuf_release(&ref_name);
-> +		return -1;
-> +	}
-> +
-> +	tree = parse_tree_indirect(oid);
-> +	prime_cache_tree(&the_index, tree);
-> +
-> +	if (write_locked_index(&the_index, &lock, COMMIT_LOCK) < 0)
-> +		ret = error(_("could not write index"));
-> +	free((void *)desc.buffer);
-> +
-> +	if (!ret)
-> +		ret = update_ref(reflog_message, "HEAD", oid,
-> +				 NULL, 0, UPDATE_REFS_MSG_ON_ERR);
-> +
-> +	strbuf_release(&ref_name);
-> +	return ret;
-> +
-> +}
-> diff --git a/checkout.h b/checkout.h
-> index 9980711179..6ce46cf4e8 100644
-> --- a/checkout.h
-> +++ b/checkout.h
-> @@ -10,4 +10,7 @@
->   */
->  extern const char *unique_tracking_name(const char *name, struct object_id *oid);
->  
-> +int detach_head_to(struct object_id *oid, const char *action,
-> +		   const char *reflog_message);
-> +
->  #endif /* CHECKOUT_H */
-> diff --git a/sequencer.c b/sequencer.c
-> index 5354d4d51e..106d518f4d 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -29,6 +29,7 @@
->  #include "oidset.h"
->  #include "commit-slab.h"
->  #include "alias.h"
-> +#include "checkout.h"
->  
->  #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
->  
-> @@ -2756,14 +2757,7 @@ static int do_reset(const char *name, int len, struct replay_opts *opts)
->  {
->  	struct strbuf ref_name = STRBUF_INIT;
->  	struct object_id oid;
-> -	struct lock_file lock = LOCK_INIT;
-> -	struct tree_desc desc;
-> -	struct tree *tree;
-> -	struct unpack_trees_options unpack_tree_opts;
-> -	int ret = 0, i;
-> -
-> -	if (hold_locked_index(&lock, LOCK_REPORT_ON_ERROR) < 0)
-> -		return -1;
-> +	int i;
->  
->  	if (len == 10 && !strncmp("[new root]", name, len)) {
->  		if (!opts->have_squash_onto) {
-> @@ -2789,56 +2783,14 @@ static int do_reset(const char *name, int len, struct replay_opts *opts)
->  		if (get_oid(ref_name.buf, &oid) &&
->  		    get_oid(ref_name.buf + strlen("refs/rewritten/"), &oid)) {
->  			error(_("could not read '%s'"), ref_name.buf);
-> -			rollback_lock_file(&lock);
->  			strbuf_release(&ref_name);
->  			return -1;
->  		}
->  	}
->  
-> -	memset(&unpack_tree_opts, 0, sizeof(unpack_tree_opts));
-> -	setup_unpack_trees_porcelain(&unpack_tree_opts, "reset");
-> -	unpack_tree_opts.head_idx = 1;
-> -	unpack_tree_opts.src_index = &the_index;
-> -	unpack_tree_opts.dst_index = &the_index;
-> -	unpack_tree_opts.fn = oneway_merge;
-> -	unpack_tree_opts.merge = 1;
-> -	unpack_tree_opts.update = 1;
-> -
-> -	if (read_cache_unmerged()) {
-> -		rollback_lock_file(&lock);
-> -		strbuf_release(&ref_name);
-> -		return error_resolve_conflict(_(action_name(opts)));
-> -	}
-> -
-> -	if (!fill_tree_descriptor(&desc, &oid)) {
-> -		error(_("failed to find tree of %s"), oid_to_hex(&oid));
-> -		rollback_lock_file(&lock);
-> -		free((void *)desc.buffer);
-> -		strbuf_release(&ref_name);
-> -		return -1;
-> -	}
-> -
-> -	if (unpack_trees(1, &desc, &unpack_tree_opts)) {
-> -		rollback_lock_file(&lock);
-> -		free((void *)desc.buffer);
-> -		strbuf_release(&ref_name);
-> -		return -1;
-> -	}
-> -
-> -	tree = parse_tree_indirect(&oid);
-> -	prime_cache_tree(&the_index, tree);
-> -
-> -	if (write_locked_index(&the_index, &lock, COMMIT_LOCK) < 0)
-> -		ret = error(_("could not write index"));
-> -	free((void *)desc.buffer);
-> -
-> -	if (!ret)
-> -		ret = update_ref(reflog_message(opts, "reset", "'%.*s'",
-> -						len, name), "HEAD", &oid,
-> -				 NULL, 0, UPDATE_REFS_MSG_ON_ERR);
-> -
-> -	strbuf_release(&ref_name);
-> -	return ret;
-> +	return detach_head_to(&oid, action_name(opts),
-> +			      reflog_message(opts, "reset", "'%.*s'",
-> +					     len, name));
->  }
->  
->  static int do_merge(struct commit *commit, const char *arg, int arg_len,
+Sounds sensible.  Nice to see multiple brains working together going
+in the right direction ;-)
