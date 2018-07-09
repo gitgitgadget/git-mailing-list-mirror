@@ -6,141 +6,84 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D8AC71F6AC
-	for <e@80x24.org>; Mon,  9 Jul 2018 15:47:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 37C901F6AC
+	for <e@80x24.org>; Mon,  9 Jul 2018 15:55:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932947AbeGIPrM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jul 2018 11:47:12 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:34930 "EHLO
+        id S933775AbeGIPzo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jul 2018 11:55:44 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:38160 "EHLO
         mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932688AbeGIPrL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jul 2018 11:47:11 -0400
-Received: by mail-wm0-f67.google.com with SMTP id v3-v6so17667851wmh.0
-        for <git@vger.kernel.org>; Mon, 09 Jul 2018 08:47:11 -0700 (PDT)
+        with ESMTP id S933582AbeGIPzm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jul 2018 11:55:42 -0400
+Received: by mail-wm0-f67.google.com with SMTP id 69-v6so21170794wmf.3
+        for <git@vger.kernel.org>; Mon, 09 Jul 2018 08:55:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=HGR4O7BKEzotBYUuenYI7k5zsWOfuurde+7VK+pvDR4=;
-        b=G2TzCxq/1IabEZyDgZvRmw1AXtaPN+F2JOHsykgeXDikU2R+GQdp0dqbRD8c9edDXr
-         LOvmjD+sPc6FeVTns3kZbZc76QxHDMNCCOzvii5F9kouYEtwoKFYmU+4/nXlkAtjgpTH
-         AR0j7yzkl6hkqBTLzM7iAMys5UENOCvsdAR0iBOsWLSS2URFe10FH4z8qfjUs1G1LSva
-         5ACJKFPbZ+8sauwmfrslzpu1WnHOTSBM0k846Ghv/swEdcEOE7BKeixI/Q0mVrlV7AoW
-         uKdXoBPgLrsrs4DVkkxXJ1vF1pbkA8BCgEKm1uQLmF1dmzI5W5p7QNoB5gTSghVe2ou7
-         /dFg==
+         :user-agent:mime-version;
+        bh=GkXkkaRq0pV7dVM/JFn21QvZLORblj7LP6hRNcn21kw=;
+        b=H/x12vWbY6LL7CFc36xx3YIL+oylpe5qlI1QmFQ+ryEVIKeo30toxcaQFJM+eKxRLr
+         BtDnJjoPRt3qgFv40VUBzvQFXmFEoq5J2aQBz593Q7ELtmn4UEKFOGD3dyrQE6O5Ses4
+         0KTdNa+obJ6QXfrws1RoGAFC8kLmYI7f26iuiDO2/Km1hhpNKu98vZgcf2yr2eOd0UX1
+         clV+n2vPkUoN4j1P+biItYLtjGoDS53xCsPFZ/II9DhkSreDciDZ1yt8rfDk0s93Dh0W
+         jHgKxU2fGeIHP/rW2kGT2/ob7R9jTPbtFuIdcNLHThOcxOmKd+ORMBg8YnSsSyNK66Ld
+         aOVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=HGR4O7BKEzotBYUuenYI7k5zsWOfuurde+7VK+pvDR4=;
-        b=fzZX7aPPCgeCPjzX6mdbtHb8iWsqL7DZahDrx+havXfnaizhsyBmmmTXKsKNbB9Wkq
-         DcCgDn1mTeDpBaK9yRWHCRuGWff7rag+AilJEoqWDs+dVnmOZGqZxlNbhrnD7tHZ2wTR
-         4pUlj+Ja87xLybV4X7pcsv8v6Oy2+fBaCMuo36IUpuOkaoSihlskNj3OdEUCPuPP1JjC
-         KYnFL4IzpPiflwcxDPKRxriWjcgt8FThbritvQlI20zeVues+yp1poqRh20dQNQUrb8Y
-         FRYPDwnX4RV6ZLxM+WKqP4V5draFjoDewbOSC0EbTUUMtLDGTaZTyllU5C5Pir9pJjAI
-         7AHQ==
-X-Gm-Message-State: APt69E1tgjTbelEl9Fib276pEsNNjXPJGkkRVgjUJiqfpFMwfEtsXmdL
-        OHIgI4M5b8A0P8Jknvj+HHY=
-X-Google-Smtp-Source: AAOMgpe7dlyQnfAevwzSEg8YaZFMSiykNlyZHOuA2LWal2hLLhoZ6lyYdrVLdfPzei2HpUSE9WiZZA==
-X-Received: by 2002:a1c:790b:: with SMTP id l11-v6mr9071644wme.66.1531151229932;
-        Mon, 09 Jul 2018 08:47:09 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=GkXkkaRq0pV7dVM/JFn21QvZLORblj7LP6hRNcn21kw=;
+        b=iEbFuHMCvhJ3FaZRFc+MOyWwh5BPn1MibrUXpGuM0hlfqSFtlB/ucpAfOlbKnBgArj
+         d52EekivnjFfQIJdjP+xWWpPBuW9zQeosWBvQ8l/GaCAAmUFRpqGm8wLSzawoMb3Xfx3
+         LvitkZ9x+lJ1YYQqDDcbhLn3R0lpPoEVkEIbqfApS9JqcvMCptoH5ZJQbNcQUKZr/p6n
+         974FpJiarwWZAqg6Rq6Zm8twmwLSz1c9h21LU5m5bGR6kgXJw5ZY+yexerKuiMK5EDhy
+         qJ9hU40wKL7n5EcJM7djLxd8+3xCgbvgIG08oLW44l9VkBZhg5TcEShoYh0Z0qPMTWom
+         FpzQ==
+X-Gm-Message-State: APt69E39Z3hjHTvtPC8zdjZOT5O45sDn0SFpbQfGX0muJq+wEXNj72kD
+        FIilbcDpMVlvaByqCsGpSpg=
+X-Google-Smtp-Source: AAOMgpcTs4kfAjqbIWhUJGSTggQqpaKeXmn2XkpnXjkJ1a1s2acUQ/V1bRVYFmEgf55DDW5wbMUOkg==
+X-Received: by 2002:a1c:4885:: with SMTP id v127-v6mr12260495wma.161.1531151740591;
+        Mon, 09 Jul 2018 08:55:40 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id g17-v6sm625980wmd.25.2018.07.09.08.47.08
+        by smtp.gmail.com with ESMTPSA id z9-v6sm28548271wre.49.2018.07.09.08.55.39
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 09 Jul 2018 08:47:08 -0700 (PDT)
+        Mon, 09 Jul 2018 08:55:39 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     henning.schild@siemens.com,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Ben Toews <mastahyeti@gmail.com>, Jeff King <peff@peff.net>,
-        Taylor Blau <me@ttaylorr.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH 4/8] gpg-interface: introduce an abstraction for multiple gpg formats
+To:     Henning Schild <henning.schild@siemens.com>
+Cc:     <git@vger.kernel.org>, Ben Toews <mastahyeti@gmail.com>,
+        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 1/8] builtin/receive-pack: use check_signature from gpg-interface
 References: <cover.1530616446.git.henning.schild@siemens.com>
-        <db46732d1cd09a71200e00c2d09605d5beaff364.1530616446.git.henning.schild@siemens.com>
-        <CAN0heSrXpLCDRjnZC80QXBG27gd6m5reBn1hfNd_KXxnPVkA2g@mail.gmail.com>
-        <xmqqa7r4mg45.fsf@gitster-ct.c.googlers.com>
-        <20180709102139.274f0560@md1pvb1c.ad001.siemens.net>
-        <CAPig+cQyXC2o4fUARL_kqPn5+6adBpr+WUfAWWgu2QLjDn1eoQ@mail.gmail.com>
-Date:   Mon, 09 Jul 2018 08:47:08 -0700
-In-Reply-To: <CAPig+cQyXC2o4fUARL_kqPn5+6adBpr+WUfAWWgu2QLjDn1eoQ@mail.gmail.com>
-        (Eric Sunshine's message of "Mon, 9 Jul 2018 04:44:01 -0400")
-Message-ID: <xmqqy3ekfm2r.fsf@gitster-ct.c.googlers.com>
+        <cover.1530616446.git.henning.schild@siemens.com>
+        <f9e371c8dd2a17ddb5fd5989a7fdad1c0d1bb6e7.1530616446.git.henning.schild@siemens.com>
+        <xmqqsh4wjg7b.fsf@gitster-ct.c.googlers.com>
+        <xmqqk1q8hwta.fsf@gitster-ct.c.googlers.com>
+        <20180709101854.2777aae2@md1pvb1c.ad001.siemens.net>
+Date:   Mon, 09 Jul 2018 08:55:39 -0700
+In-Reply-To: <20180709101854.2777aae2@md1pvb1c.ad001.siemens.net> (Henning
+        Schild's message of "Mon, 9 Jul 2018 10:18:54 +0200")
+Message-ID: <xmqqtvp8flok.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Henning Schild <henning.schild@siemens.com> writes:
 
-> On Mon, Jul 9, 2018 at 4:22 AM Henning Schild
-> <henning.schild@siemens.com> wrote:
->> Am Fri, 6 Jul 2018 10:24:58 -0700
->> schrieb Junio C Hamano <gitster@pobox.com>:
->> > Martin Ågren <martin.agren@gmail.com> writes:
->> > >> +struct gpg_format_data gpg_formats[] = {
->> > >> +       { .format = "PGP", .program = "gpg",
->> > >> +         .extra_args_verify = { "--keyid-format=long", },
->> > >> +         .sigs = { PGP_SIGNATURE, PGP_MESSAGE, },
->> > >> +       },
->> > >> +};
->> > >
->> > > I think those trailing commas are ok now, but I'm not sure...
->> >
->> > What we've been avoiding was the comma after the last element in the
->> > enum (in other words, if PGP_FMT had ',' after it in the above
->> > quoted addition, that would have been violation of that rule), as
->> > having such a trailing comma used to be ANSI C violation as well.
->>
->> I guess that means the style is acceptable and does not require
->> changes, please correct me if i am wrong.
->
-> The trailing comma in the 'sigs' initializer is bothersome because
-> 'sigs' is declared as a 2-element array, and this initializer already
-> has two elements. Therefore, the comma is misleading to anyone reading
-> the code, making it appears as if additional items can be added. For
-> that reason, alone, it would be nice to see the unnecessary comma
-> removed.
->
-> Ditto with regard to the trailing comma in the 'extra_args_verify'
-> initializer since 'extra_args_verify' is declared as a 1-element
-> array.
+> I think 1 and 2 can be seen as somewhat unrelated to the gpgsm feature,
+> they are more general refactoring. So i think picking them is a good
+> idea. It will make the series shorter and ease review in the next round.
 
-I am not sure I agree with that reasoning.  The primary benefit we
-gain from the convention to allow trailing comma in struct/array
-initializers like these is that we can add a new field with a patch
-like this:
+Surely, resending from patch 3 and upwards labelled as "add support
+for gpgsm", saying that the topic depends on a different topic
+branch named $X in my tree (after $X actually gets pushed out,
+preferrably as part of 'next'---which is a promise that the changes
+won't see any more drastic rewrites), is a good approach.
 
-	 struct {
-	 	char *foo;
-	 	char *bar;
-	+	char *baz;
-	 } xyzzy = {
-	 	"foo",
-	 	"bar",
-	+	"baz",
-	 };
-
-without having to touch the initialization of the field that used to
-be at the end, i.e. .bar="bar", and just can add the new stuff at
-the end.  But that is only possible as long as we allow the trailing
-comma after the last element.  The same argument applies to an array
-initialization (i.e. when we need to allow more elements to the
-.extra_args_to_verify[] array).
-
-All of the above is somewhat moot for the other reason I already
-stated in the thread, though.  And that may be a good reason why we
-would want to lose these trailing commas from the last elements
-(i.e.  if it does not prepare the current code to avoid having to
-touch the last line when we add a new element at the end, then
-trailing comma is a visual hiccup that does not serve any useful
-purpose).
-
-
+Thanks.
 
