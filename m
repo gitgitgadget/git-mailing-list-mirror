@@ -2,112 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A6F001F6AC
-	for <e@80x24.org>; Mon,  9 Jul 2018 20:04:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B2C71F6AC
+	for <e@80x24.org>; Mon,  9 Jul 2018 20:06:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932921AbeGIUEJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jul 2018 16:04:09 -0400
-Received: from mout.gmx.net ([212.227.17.21]:49453 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932764AbeGIUEI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jul 2018 16:04:08 -0400
-Received: from MININT-6BKU6QN ([89.204.155.168]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MN1Gu-1fjBxh2Ef2-006jB3; Mon, 09
- Jul 2018 22:04:01 +0200
-Date:   Mon, 9 Jul 2018 22:04:00 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Beat Bolli <dev+git@drbeat.li>
-cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [RFC PATCH 6/6] utf8.c: avoid char overflow
-In-Reply-To: <0ceeb342fec1d0868b81cd64941df53c@drbeat.li>
-Message-ID: <nycvar.QRO.7.76.6.1807092203110.75@tvgsbejvaqbjf.bet>
-References: <20180708144342.11922-1-dev+git@drbeat.li> <20180708144342.11922-7-dev+git@drbeat.li> <nycvar.QRO.7.76.6.1807091513130.75@tvgsbejvaqbjf.bet> <0ceeb342fec1d0868b81cd64941df53c@drbeat.li>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S932938AbeGIUGB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jul 2018 16:06:01 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:50680 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932764AbeGIUGA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jul 2018 16:06:00 -0400
+Received: by mail-wm0-f67.google.com with SMTP id v25-v6so22374161wmc.0
+        for <git@vger.kernel.org>; Mon, 09 Jul 2018 13:05:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=SfZx6yf0lzzlrKTNfaKS3++UuW2LJmbKeVqg/4XzTqg=;
+        b=njAvKdE+LPZwXERa2zH6b+L66CDcaIWscdrNrPRtOrr8xWn2+nJ/iv17BRLeLnWyG0
+         lrgBEPINkYYBJmRCjqH2FQyeIY9jW4JIIGb10taUOvCavc5HwW/B0tz/qQb6JVUg5s3p
+         IXaisndX/mo+tDodlrlBmxqZj5XpyfL0ZJ9+gNEx3jK7tb7wBBu+A1G2q5bWvQ1GzCod
+         ZsYVCxojVgGmUpFq6J35enZWWd2Qz2FX7TdSsow+aH9Wm7Z9UsLDWOv2tQGatUuBynMJ
+         HmRV456PN3SMFNcHGqfBYqNvJ0HaowAdczGXKk6JaC19SbDpesO5BPMKENkDRTql7LwJ
+         r6JA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=SfZx6yf0lzzlrKTNfaKS3++UuW2LJmbKeVqg/4XzTqg=;
+        b=fR0l/pYxyaCQu6/YZEudrj8H2Y38QI4LniSdC1ffI2eWYRTIdv0KdmXFvW0UMFnyr4
+         uPnoyfzJH1j4rNR4TkZI1gHZatzm88ek1KO5FsPpvrVxJ/gUNKwwLpiRl7fBqUGHRRH7
+         lL57kG7LmOJTdn9Cfl0fztLiluiSicRJc2pmImUk06aazeOdg9qje88Uo/l26XF1rwgG
+         AA4ffgogDu1aniy1VfY6HuIlLk3mROt4l+yN7c80FkH81dnLzUaNeiOGNecK84S1jDJ6
+         T9DGH1LGM6s/IuEJ7SHdGS2ipguYqrVnQNA6EaqHFa7i8aIy9cDpXyPYKIpOpDrvmab0
+         gocw==
+X-Gm-Message-State: APt69E3wDQJ3HiPi/9v5pKmjyHFvsjipGBa+4ogH/XCLL9FPauEQx10g
+        SO8RQEOGVQo05WYdtyUEGF8=
+X-Google-Smtp-Source: AAOMgpffaIIUvUr8OCzV/LzRrA7+f4lhQiXhjpo5MAhc0Soax6zxkFKj8yGNc/qZIsMjKW7PeM2xhQ==
+X-Received: by 2002:a1c:9c4c:: with SMTP id f73-v6mr12415091wme.141.1531166758535;
+        Mon, 09 Jul 2018 13:05:58 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id w135-v6sm45119793wme.7.2018.07.09.13.05.57
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 09 Jul 2018 13:05:57 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Daniel Harding <dharding@living180.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 2/2] t3430: update to test with custom commentChar
+References: <20180708184110.14792-1-dharding@living180.net>
+        <20180708184110.14792-3-dharding@living180.net>
+        <20180708210200.GA4573@genre.crustytoothpaste.net>
+        <nycvar.QRO.7.76.6.1807090944400.75@tvgsbejvaqbjf.bet>
+        <13a876a2-7fbc-de05-2e82-814c782e8a80@living180.net>
+Date:   Mon, 09 Jul 2018 13:05:57 -0700
+In-Reply-To: <13a876a2-7fbc-de05-2e82-814c782e8a80@living180.net> (Daniel
+        Harding's message of "Mon, 9 Jul 2018 21:22:22 +0300")
+Message-ID: <xmqqpnzwcgyi.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:NXnJtyXTawg2eP6A7YvPprvgsr7z09cT0ALtZ+UfmvJGaGiHVer
- O3xFmhN4iWUOvwMbUYpbhXzwMCoDRtZzNxYh4O6hEJH26kKIYJDh70ng8vOd+HdarH7fQhO
- gjx/PKuSwYa6xDs75IJoE+hYAHB9BMqEAfZJgDZwcs6UHHQINWLNFVVVmm+H5SykZDpKwas
- GkJSb4Shi+KyFsVKZz8rQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:1Togz3hGpCE=:KLfzIXiu6ZlFtHTTqgvwGi
- jgua/NDufLht62luknKtW1vHUao2ehZuzy2mpMtWZhw/GyN3xnmk9/4v8217oV5YsUlYujv/u
- 3qbmuV39758v1gvibd592xXhAPnEc2XIAUPlYNcoFqyHohXa6d41ze6GItIuGhSVwovVFBsl7
- zzQQdtOColJaqb9isDz38Z5kdwGWDj1RBXtDUfh0VLv/VPhfX6Yrv58pAWkD/6IePGcyRnF75
- yzZxz+MejQ1o+u5KM4fkB8Zj2fQcWgF90xLL50Mx4eY2CnO3tj2Li30SFRuGeoKACYHrZ5tuC
- FRFI2RcZDTESd6NXbVFAXQw1TvNLtRDzMv6zngUeHS8E35Rth5GZBs/BIU5vkA6uTTomx3KMM
- meLP0RZHyAH2VLyWYEcb8AWh4W5zrX6hTW+y0/v8pYYXOdtu4Gj78BurXW6WvYNVuH+SFQ0Yi
- FXHELq9XYkxn2cWNtws/CD6kHiX6kOKOWxVndOBonwV3GTPwv0/6KFCXsqpx63UCY666+zKAI
- LTXORn8v7AY6yzPDwyxMKRDLHq68WuEjLbHDdlnr6UznFzlZu15yOMK8PZ99gRmVqjBp+5aBG
- 7BVb/zSbx/YJGSKs1nyQdjNoZ7DzDKWLaEzR3mTb10iku1W5iKCYavKhVbKn84GMVWcELCneq
- TazEyXyb1ln/y52QblNqYdkjptZMgbWHFP869T/48nxXIMaJaGfhpWlfZXKyVQ9BP3li1+zVI
- k3PaJFo+v4gc+BiM8JHvVXD1OtPojrUFJi4JLLLyzq3lt32tUR/cafgo8avgUhGhtwTE/k7oN
- OZwYIr8
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Beat,
+Daniel Harding <dharding@living180.net> writes:
 
-On Mon, 9 Jul 2018, Beat Bolli wrote:
+> One question about my original patch - there I had replaced a "grep
+> -v" call with a "git stripspace" call in the 'generate correct todo
+> list' test.  Is relying on "git stripspace" in a test acceptable, or
+> should external text manipulation tools like grep, sed etc. be
+> preferred?
 
-> Am 09.07.2018 15:14, schrieb Johannes Schindelin:
-> > 
-> > On Sun, 8 Jul 2018, Beat Bolli wrote:
-> > 
-> > > In ISO C, char constants must be in the range -128..127. Change the BOM
-> > > constants to unsigned char to avoid overflow.
-> > > 
-> > > Signed-off-by: Beat Bolli <dev+git@drbeat.li>
-> > > ---
-> > >  utf8.c | 10 +++++-----
-> > >  1 file changed, 5 insertions(+), 5 deletions(-)
-> > > 
-> > > diff --git a/utf8.c b/utf8.c
-> > > index d55e20c641..833ce00617 100644
-> > > --- a/utf8.c
-> > > +++ b/utf8.c
-> > > @@ -561,15 +561,15 @@ char *reencode_string_len(const char *in, int insz,
-> > >  #endif
-> > > 
-> > > static int has_bom_prefix(const char *data, size_t len,
-> > > -			  const char *bom, size_t bom_len)
-> > > +			  const unsigned char *bom, size_t bom_len)
-> > >  {
-> > > 	return data && bom && (len >= bom_len) && !memcmp(data, bom, bom_len);
-> > >  }
-> > > 
-> > > -static const char utf16_be_bom[] = {0xFE, 0xFF};
-> > > -static const char utf16_le_bom[] = {0xFF, 0xFE};
-> > > -static const char utf32_be_bom[] = {0x00, 0x00, 0xFE, 0xFF};
-> > > -static const char utf32_le_bom[] = {0xFF, 0xFE, 0x00, 0x00};
-> > > +static const unsigned char utf16_be_bom[] = {0xFE, 0xFF};
-> > > +static const unsigned char utf16_le_bom[] = {0xFF, 0xFE};
-> > > +static const unsigned char utf32_be_bom[] = {0x00, 0x00, 0xFE, 0xFF};
-> > > +static const unsigned char utf32_le_bom[] = {0xFF, 0xFE, 0x00, 0x00};
-> > 
-> > An alternative approach that might be easier to read (and avoids the
-> > confusion arising from our use of (signed) chars for strings pretty much
-> > everywhere):
-> > 
-> > #define FE ((char)0xfe)
-> > #define FF ((char)0xff)
-> > 
-> > ...
-> 
-> I have tried this first (without the macros, though), and thought it looked
-> really ugly.
-
-Yep, I would totally agree that it would be very ugly without the macros.
-
-Which is why I suggested the macros instead, in which case it looks
-relatively elegant to my eyes.
-
-Ciao,
-Dscho
+I think trusting stripspace is OK here.  Even though this test is
+not about stripspace (i.e. trying to catch breakage in stripspace),
+if we broke it, we'll notice it as a side effect of running this
+test ;-).
