@@ -2,91 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F8431F6AC
-	for <e@80x24.org>; Mon,  9 Jul 2018 08:44:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B18591F6AC
+	for <e@80x24.org>; Mon,  9 Jul 2018 09:43:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932621AbeGIIoP convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 9 Jul 2018 04:44:15 -0400
-Received: from mail-yb0-f193.google.com ([209.85.213.193]:45767 "EHLO
-        mail-yb0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932494AbeGIIoM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jul 2018 04:44:12 -0400
-Received: by mail-yb0-f193.google.com with SMTP id h127-v6so6877300ybg.12
-        for <git@vger.kernel.org>; Mon, 09 Jul 2018 01:44:12 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Z+ctsyoF8RDraXPi8J3+KG9PZG19G+cQFJNVR7QQaFE=;
-        b=pPYgJY+ZD6CDfx7SGTpCvYHvkvFZ3vc7cnHLJwIiK2dzZTtVCHv+hgcb3mPm4QYWiA
-         x4YcarlI7ZCOifJfQ+eN7fxFJ88gafmQIJu5Qs3DWVLk/eylI+W3QkXRpItEq3VKk0nM
-         fF0MP9jxC012vTLzRr2gIBA6mAe51Z+H04juI5rE+4FtKCZK5re8neIswiDGvGVpGKmf
-         Y3x/vwGbxSC3VkwKCq4jdUXZY7F0ZTzJLepNmlNHR7ShITvhIEgYT1gsVIbiKO9V5Bpk
-         LvtX7td4b8nw+/Ktu36nFRBhzl23CGTD3jTVf406jH065Z/uxU72ZrG5uK4HRjOL2nhf
-         ILDA==
-X-Gm-Message-State: APt69E185Ot6En+0QOdhI3xAd/8zWOiRhKqFDRpZ2a34AL4mCrZagtj3
-        JEeXe3fKrDNS1JZNh5f59y8HoFk4k+DlKlvq6cA=
-X-Google-Smtp-Source: AAOMgpcnvSouC0Ig+5+kK0CtBkQ6IX06WXQFQBUpx6ufG3u2kZ5IowZDYH6pBJy9h8XHrHmnpWOV4gT5GdA2EyXLDPU=
-X-Received: by 2002:a25:9d81:: with SMTP id v1-v6mr9684763ybp.76.1531125852056;
- Mon, 09 Jul 2018 01:44:12 -0700 (PDT)
+        id S1754418AbeGIJnQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jul 2018 05:43:16 -0400
+Received: from s019.cyon.net ([149.126.4.28]:60298 "EHLO s019.cyon.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932436AbeGIJnO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jul 2018 05:43:14 -0400
+X-Greylist: delayed 349 seconds by postgrey-1.27 at vger.kernel.org; Mon, 09 Jul 2018 05:43:14 EDT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=drbeat.li;
+         s=default; h=Message-ID:References:In-Reply-To:Subject:Cc:To:From:Date:
+        Content-Transfer-Encoding:Content-Type:MIME-Version:Sender:Reply-To:
+        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+        Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=iI8tbZMHW6VPRkYfZmNNzC00S2zG5BJwBTJ35gR76Wk=; b=EtGOe/IRH1KDy/v6AiJeTt8Lo/
+        sxjhmMezrF2SuHvh7U+6jxdqbZDYY8jkjcYxIPueNPFPwWFj3GYrvQThpE/Ii2K99FXyOT65PZCWq
+        3M2U9wMGxc5z+HGs68DRXVa9nPed27ilWT2EyF9t/UXFUOP1+/4asdLzl6Jxv5m2EFv11VsPvEmdb
+        rPDPxZlEEQ7k03o48gsaNvXNSvonOFSiAwwhbfPc6iSkI/Xw6jkqOuH8qxpmWHMZq9yNZnRVB8meP
+        3iywF3TKvHbh/Z6D5FYFMkNJa930aKEWfO7dt5Q6q1ZiTNZpOqg7GQeRNfUcJbzPMDblHBQn47yI0
+        VQOiLX0A==;
+Received: from [10.20.10.231] (port=20840 helo=mail.cyon.ch)
+        by s019.cyon.net with esmtpa (Exim 4.91)
+        (envelope-from <ig@drbeat.li>)
+        id 1fcSbh-009mq0-HT; Mon, 09 Jul 2018 11:37:23 +0200
 MIME-Version: 1.0
-References: <cover.1530616446.git.henning.schild@siemens.com>
- <db46732d1cd09a71200e00c2d09605d5beaff364.1530616446.git.henning.schild@siemens.com>
- <CAN0heSrXpLCDRjnZC80QXBG27gd6m5reBn1hfNd_KXxnPVkA2g@mail.gmail.com>
- <xmqqa7r4mg45.fsf@gitster-ct.c.googlers.com> <20180709102139.274f0560@md1pvb1c.ad001.siemens.net>
-In-Reply-To: <20180709102139.274f0560@md1pvb1c.ad001.siemens.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 9 Jul 2018 04:44:01 -0400
-Message-ID: <CAPig+cQyXC2o4fUARL_kqPn5+6adBpr+WUfAWWgu2QLjDn1eoQ@mail.gmail.com>
-Subject: Re: [PATCH 4/8] gpg-interface: introduce an abstraction for multiple
- gpg formats
-To:     henning.schild@siemens.com
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Ben Toews <mastahyeti@gmail.com>, Jeff King <peff@peff.net>,
-        Taylor Blau <me@ttaylorr.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 09 Jul 2018 11:37:21 +0200
+From:   ig@drbeat.li
+To:     Philip Oakley <philipoakley@iee.org>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Beat Bolli <dev+git@drbeat.li>, Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH 4/6] sequencer.c: avoid empty statements at top level
+In-Reply-To: <AED9D71037D249F8A56FDF0B1AA48603@PhilipOakley>
+References: <20180708144342.11922-1-dev+git@drbeat.li>
+ <20180708144342.11922-5-dev+git@drbeat.li>
+ <CAPig+cSGj6Pt4OmRAQauZCiVG3PnjWeXm20RtYGbsjdZ5Tk4gg@mail.gmail.com>
+ <AED9D71037D249F8A56FDF0B1AA48603@PhilipOakley>
+X-Priority: 4 (Low)
+Message-ID: <b1427480e2b70c2ad1ab5873409e5fdc@drbeat.li>
+X-Sender: ig@drbeat.li
+User-Agent: cyon Webmail/1.2.9
+X-OutGoing-Spam-Status: No, score=-1.0
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - s019.cyon.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - drbeat.li
+X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
+X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 9, 2018 at 4:22 AM Henning Schild
-<henning.schild@siemens.com> wrote:
-> Am Fri, 6 Jul 2018 10:24:58 -0700
-> schrieb Junio C Hamano <gitster@pobox.com>:
-> > Martin Ågren <martin.agren@gmail.com> writes:
-> > >> +struct gpg_format_data gpg_formats[] = {
-> > >> +       { .format = "PGP", .program = "gpg",
-> > >> +         .extra_args_verify = { "--keyid-format=long", },
-> > >> +         .sigs = { PGP_SIGNATURE, PGP_MESSAGE, },
-> > >> +       },
-> > >> +};
-> > >
-> > > I think those trailing commas are ok now, but I'm not sure...
-> >
-> > What we've been avoiding was the comma after the last element in the
-> > enum (in other words, if PGP_FMT had ',' after it in the above
-> > quoted addition, that would have been violation of that rule), as
-> > having such a trailing comma used to be ANSI C violation as well.
->
-> I guess that means the style is acceptable and does not require
-> changes, please correct me if i am wrong.
+Am 08.07.2018 23:17, schrieb Philip Oakley:
+> From: "Eric Sunshine" <sunshine@sunshineco.com>
+> To: "Beat Bolli" <dev+git@drbeat.li>
+>> On Sun, Jul 8, 2018 at 10:44 AM Beat Bolli <dev+git@drbeat.li> wrote:
+>>> The marco GIT_PATH_FUNC expands to a complete statement including the
+> 
+> s/marco/macro/
 
-The trailing comma in the 'sigs' initializer is bothersome because
-'sigs' is declared as a 2-element array, and this initializer already
-has two elements. Therefore, the comma is misleading to anyone reading
-the code, making it appears as if additional items can be added. For
-that reason, alone, it would be nice to see the unnecessary comma
-removed.
+ACK. In addition, the whole sentence is wrong: GIT_PATH_FUNC defines a
+function, not a statement. Will be fixes in a reroll.
 
-Ditto with regard to the trailing comma in the 'extra_args_verify'
-initializer since 'extra_args_verify' is declared as a 1-element
-array.
+>>> semicolon. Remove two extra trailing semicolons.
+>>> 
+>>> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+>>> ---
+>>>  sequencer.c | 4 ++--
+>>>  1 file changed, 2 insertions(+), 2 deletions(-)
+>> 
+>> While you're at it, perhaps it would be a good idea to fix the example
+>> in path.h which teaches the "wrong" way:
+>> 
+>> /*
+>> * You can define a static memoized git path like:
+>> *
+>> *    static GIT_PATH_FUNC(git_path_foo, "FOO");
+>> *
+>> * or use one of the global ones below.
+>> */
+
+Thanks,
+Beat
