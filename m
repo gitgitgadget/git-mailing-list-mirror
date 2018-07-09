@@ -6,14 +6,14 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A8121F85A
-	for <e@80x24.org>; Mon,  9 Jul 2018 19:26:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A889C1F85A
+	for <e@80x24.org>; Mon,  9 Jul 2018 19:26:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932967AbeGIT0E (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jul 2018 15:26:04 -0400
-Received: from s019.cyon.net ([149.126.4.28]:33888 "EHLO s019.cyon.net"
+        id S932980AbeGIT0F (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jul 2018 15:26:05 -0400
+Received: from s019.cyon.net ([149.126.4.28]:33904 "EHLO s019.cyon.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932798AbeGIT0C (ORCPT <rfc822;git@vger.kernel.org>);
+        id S932800AbeGIT0C (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 9 Jul 2018 15:26:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=drbeat.li;
          s=default; h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
@@ -21,24 +21,24 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=drbeat.li;
         Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
         Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
         List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=riCUPdWnbi7m6QZoXCNRek64xhRBUXyw38jWmWOTZ5o=; b=vCPEd8qX3LMr2iC+YI0P7lN6hk
-        u0Hxut/vCUoqCjUItkkl7/0vcbWHc7Jj+okBPNEQJNcyehbBWer2U67OQgE6DxXHIhs9EWpnvpNC2
-        2Pei/7zc5zm/A5KGrew693tcGl10v4NPsF2j5knGMUfS5sPbxq9KiXRnF3fdsuEL0z+Pj/48m9qSi
-        6yK70QFVQNUzkWIsb9+93I1thkQdzYA/Ll0iF2JQx6e1z+CECG/tlUzD5ymW5RJeN7vTBSPK9hHeN
-        1u9/flKHVMSPuzQz1Fbvp0ymmzz1NyxZmUbU6bK/eIB2hfu0DQDZ6xECXyBuPk9MatOb0s4V1X0QM
-        gm/MnOFg==;
-Received: from [10.20.10.230] (port=60052 helo=mail.cyon.ch)
+        bh=M5P3hP3fE+m7orEo19IInlPXNJBOdvUea5Apd3zwwl8=; b=LU8K8xyjKRPLTOhGzpFSAhQYay
+        yFij4lwwz8vqFPe2fvtzmc8fLN2OMRJTG49NA8InVKK/Rgh0Dzo8tuHdlIzxyjEBByyvXggzCFgj2
+        30FL0KNs2IijOeirgC8RmNW3dFiOHxzbKpy6/tPiTz+Fu5QhEMokmg5VjL2oEMN+q0h/uWL5S0yxy
+        5Necxk4X8wqg5i9wus1NDn4N2/35GZnF93RqGBgw7ZkDxeBSZDX6a40zeEonminX6tnWfhDc6Y4CO
+        KcsEdzolIwJN3qZ+qXh6Yz2EDE0DvSmvX33n5LEqPDwZ6T1RjraKLNQmSMLu/YSxMmJPpZY7dffmf
+        9nXgyqQw==;
+Received: from [10.20.10.230] (port=60060 helo=mail.cyon.ch)
         by s019.cyon.net with esmtpa (Exim 4.91)
         (envelope-from <bb@drbeat.li>)
-        id 1fcbnL-00Ck4H-Rt; Mon, 09 Jul 2018 21:26:01 +0200
+        id 1fcbnL-00Ck4L-Rx; Mon, 09 Jul 2018 21:26:01 +0200
 Received: by drbeat.li (Postfix, from userid 1000)
-        id 7768722F27; Mon,  9 Jul 2018 21:25:59 +0200 (CEST)
+        id 83C89234F6; Mon,  9 Jul 2018 21:25:59 +0200 (CEST)
 From:   Beat Bolli <dev+git@drbeat.li>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, Beat Bolli <dev+git@drbeat.li>
-Subject: [PATCH 1/6] connect.h: avoid forward declaration of an enum
-Date:   Mon,  9 Jul 2018 21:25:32 +0200
-Message-Id: <20180709192537.18564-2-dev+git@drbeat.li>
+Subject: [PATCH 5/6] string-list.c: avoid conversion from void * to function pointer
+Date:   Mon,  9 Jul 2018 21:25:36 +0200
+Message-Id: <20180709192537.18564-6-dev+git@drbeat.li>
 X-Mailer: git-send-email 2.18.0.203.gfac676dfb9
 In-Reply-To: <20180708144342.11922-1-dev+git@drbeat.li>
 References: <20180708144342.11922-1-dev+git@drbeat.li>
@@ -58,26 +58,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Include protocol.h to define enum protocol_version.
+ISO C forbids the conversion of void pointers to function pointers.
+Introduce a context struct that encapsulates the function pointer.
 
 Signed-off-by: Beat Bolli <dev+git@drbeat.li>
 ---
- connect.h | 2 ++
- 1 file changed, 2 insertions(+)
+ string-list.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/connect.h b/connect.h
-index 0e69c6709c..c86f862f2f 100644
---- a/connect.h
-+++ b/connect.h
-@@ -1,6 +1,8 @@
- #ifndef CONNECT_H
- #define CONNECT_H
+diff --git a/string-list.c b/string-list.c
+index a0cf0cfe88..771c455098 100644
+--- a/string-list.c
++++ b/string-list.c
+@@ -224,18 +224,28 @@ struct string_list_item *string_list_append(struct string_list *list,
+ 			list->strdup_strings ? xstrdup(string) : (char *)string);
+ }
  
-+#include "protocol.h"   /* for enum protocol_version */
++/*
++ * Encapsulate the compare function pointer because ISO C99 forbids
++ * casting from void * to a function pointer and vice versa.
++ */
++struct string_list_sort_ctx
++{
++	compare_strings_fn cmp;
++};
 +
- #define CONNECT_VERBOSE       (1u << 0)
- #define CONNECT_DIAG_URL      (1u << 1)
- #define CONNECT_IPV4          (1u << 2)
+ static int cmp_items(const void *a, const void *b, void *ctx)
+ {
+-	compare_strings_fn cmp = ctx;
++	struct string_list_sort_ctx *sort_ctx = ctx;
+ 	const struct string_list_item *one = a;
+ 	const struct string_list_item *two = b;
+-	return cmp(one->string, two->string);
++	return sort_ctx->cmp(one->string, two->string);
+ }
+ 
+ void string_list_sort(struct string_list *list)
+ {
+-	QSORT_S(list->items, list->nr, cmp_items,
+-		list->cmp ? list->cmp : strcmp);
++	struct string_list_sort_ctx sort_ctx = {list->cmp ? list->cmp : strcmp};
++
++	QSORT_S(list->items, list->nr, cmp_items, &sort_ctx);
+ }
+ 
+ struct string_list_item *unsorted_string_list_lookup(struct string_list *list,
 -- 
 2.18.0.203.gfac676dfb9
 
