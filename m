@@ -2,82 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E80C51F6AC
-	for <e@80x24.org>; Mon,  9 Jul 2018 17:31:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 15E0B1F6AC
+	for <e@80x24.org>; Mon,  9 Jul 2018 17:34:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933717AbeGIRbg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jul 2018 13:31:36 -0400
-Received: from mail-it0-f73.google.com ([209.85.214.73]:56302 "EHLO
-        mail-it0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933619AbeGIRbf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jul 2018 13:31:35 -0400
-Received: by mail-it0-f73.google.com with SMTP id k13-v6so14541983ite.5
-        for <git@vger.kernel.org>; Mon, 09 Jul 2018 10:31:35 -0700 (PDT)
+        id S933678AbeGIReK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jul 2018 13:34:10 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:50802 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933537AbeGIReI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jul 2018 13:34:08 -0400
+Received: by mail-wm0-f67.google.com with SMTP id v25-v6so22005774wmc.0
+        for <git@vger.kernel.org>; Mon, 09 Jul 2018 10:34:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
-         :cc;
-        bh=ml889uQFSe6WScvONUycLaboYNjdoj3qbzz/+ffCuJg=;
-        b=THWSze+pfsORcLTlCh9OE3PYf3moC43R5VF/c7j6kx5gi/rmToX3KIzpIW1Fuzam0l
-         enYC16CboYR4rz3x0aQKmvxqxCOLLsvNlnkdR1vesz8V4gvkOTW+yvU7MufKGgF2ORPH
-         Hp19TU453f9x93fhymxBBxZFB1L16jumNCGhqeYEjvMWymGB0FeqaaUauFY1Jw25Zbq/
-         G8j5WVDcz+eONy+VBKWGvIw80Gg6c/q5u+Y5+M6tUHjUCZ42GibpLvqfro5z4r/Z1b0s
-         gNON7VCwc7xsqK66veQ9m/EXE9bxGgqS5vXNkEKy/OJAEvGGDZDeE6PsjK2vo2Ociz83
-         HXTw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=CWLt3ontvgqai584asSkN/V9ZI4bEDERryr2Tr5v+5E=;
+        b=S2LwRYi/5HJC1a5MMTEwZKqBHep7PflKcd2gE4ZOsmoNcxCPhBYxl/M5lBEILOmaQu
+         6Hsi+JXAaWltsP4rasc+H0hw/Xx1p1oB6yr0rGufPiwuUULwe69Vs1sZG/YRibYDbulc
+         gTbDKRLrku45Nklh4gstDFQOKJtRaEILXycG4E20mpr5LxKwYobqn74/AqGssrbhI5lf
+         OdXtnauAXk3bp+B1gCoJ5CG7+8XDbnScWgSZUVy9P9NhL/JtQYHcg3Jnje64gukmu/CR
+         Q+vKxuHFtfkmoxpZhCXFQKMIbcuQBL2peMNrVU11EB0gL9ORRptSuray9apYbAdcp0Bj
+         pgVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
-         :references:subject:from:to:cc;
-        bh=ml889uQFSe6WScvONUycLaboYNjdoj3qbzz/+ffCuJg=;
-        b=GLjprhCNYanMBesERFhVoSiloOoEDH23LaVl0OiPfZ5FSCtGUuK8glZMc+4igMf1r9
-         +0oeyOBAf+B9fe2BIVNbOCqe7rMEbwSGkKVe/W2uzwq4tEi2lG8J90XxX3ir29wLGLYm
-         AmErTQiUN2WpSsaRlQEt4vY/ETEbMxtAW1kpfpgXEQNSm/vNydxUr/xFzpQvXvdKOgyQ
-         S1wNeyFtSkcdJIL/9sDU+E7l5ZOemFzGrIjZCaI8Yw6+7/CM8k8In9VdkoMmGHhCOjZ6
-         akyGJv+TWvhr39dajLZNzPqALaSNLo8BJNFV1a4JjByEXvti0wmihb20AhMLskt7uXiW
-         GknA==
-X-Gm-Message-State: APt69E32TNFYuiNDFhLKLBtNYdVclL2br/+G67VKMI0Jeaca+0bCtTgu
-        iRaarW79JxkgEfL0v0b5RlxbrdIjpYsPspdDyYP7
-X-Google-Smtp-Source: AAOMgpfJZcgM7GY6M9+9igNHl0WyXOMZYRX+FFHYg6wPuYFgv37A2coj+McRgmxcbggMM/52IIKZT76TuRqDHP0xp6Kr
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=CWLt3ontvgqai584asSkN/V9ZI4bEDERryr2Tr5v+5E=;
+        b=GjOYgTL+DOwHI3scmB60WwZ2y9imd19oLwUfxMVigKH8UjRj62m3PjV5/NAfKEnfZd
+         cy1AbFcZpXpWzim0N6yzEuhOK8sk4oz719Luut9Di+s26n9IaxVGduEqfPD8qVJNDYxg
+         jkLbFTJM8DV+DryiGmGOTtfVXmUfZfkMwvzw8mwbZxGkB436kZrxh05YbTmEgq3XYGzR
+         EnwQAmRwiVotegzmsAvxRGpqtSqYbTSJCUz1pHv7BUEnC4Z+yNzevoK1rUQt86d6vZFw
+         gzZf3t+iuu8mFkwoXK+YmoUvj+0lDJTt+Ia4UquxQCElsH7bl5VEDMKV6I0bBLYEaAPi
+         kWtQ==
+X-Gm-Message-State: APt69E2pLmDdKLxWFOI6QnaZzuk1jtX0KAT68nZRL3NWkRcubIOqkGD9
+        oNYKQrdRZX1H1tqgCc3kSE0=
+X-Google-Smtp-Source: AAOMgpeMNxyHX4xpqVgYxrJQgl2sZHaZSCEmfhNNm4ItBYEdKW4LgeMyKpswz7D5UEeY/eHteQlxjg==
+X-Received: by 2002:a1c:b94c:: with SMTP id j73-v6mr13848391wmf.104.1531157647478;
+        Mon, 09 Jul 2018 10:34:07 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id q8-v6sm30377384wmb.3.2018.07.09.10.34.06
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 09 Jul 2018 10:34:06 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 07/17] commit: increase commit message buffer size
+References: <20180708233638.520172-1-sandals@crustytoothpaste.net>
+        <20180708233638.520172-8-sandals@crustytoothpaste.net>
+        <4eb44f33-ac9c-7ce2-0e53-ec6fcb4560fd@gmail.com>
+        <CAGZ79kaJKjWj9SY-cZYYcKShuooh3nuRqf26CzhCsusTXX42NA@mail.gmail.com>
+        <20180709172716.GA81741@google.com>
+Date:   Mon, 09 Jul 2018 10:34:06 -0700
+In-Reply-To: <20180709172716.GA81741@google.com> (Brandon Williams's message
+        of "Mon, 9 Jul 2018 10:27:16 -0700")
+Message-ID: <xmqqzhz0e2k1.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-X-Received: by 2002:a24:228c:: with SMTP id o134-v6mr9287815ito.30.1531157494609;
- Mon, 09 Jul 2018 10:31:34 -0700 (PDT)
-Date:   Mon,  9 Jul 2018 10:31:31 -0700
-In-Reply-To: <xmqqd0wawpwy.fsf@gitster-ct.c.googlers.com>
-Message-Id: <20180709173131.58704-1-jonathantanmy@google.com>
-References: <xmqqd0wawpwy.fsf@gitster-ct.c.googlers.com>
-X-Mailer: git-send-email 2.18.0.203.gfac676dfb9-goog
-Subject: Re: What's cooking in git.git (Jun 2018, #07; Thu, 28)
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> * jt/fetch-pack-negotiator (2018-06-15) 7 commits
->  - fetch-pack: introduce negotiator API
->  - fetch-pack: move common check and marking together
->  - fetch-pack: make negotiation-related vars local
->  - fetch-pack: use ref adv. to prune "have" sent
->  - fetch-pack: directly end negotiation if ACK ready
->  - fetch-pack: clear marks before re-marking
->  - fetch-pack: split up everything_local()
->  (this branch is used by jt/fetch-nego-tip.)
-> 
->  Code restructuring and a small fix to transport protocol v2 during
->  fetching.
-> 
->  Is this ready for 'next'?
+Brandon Williams <bmwill@google.com> writes:
 
-Sorry for the late reply - I think that this is ready for "next". I have
-addressed all the comments that you, Jonathan Nieder and Brandon
-Williams have given, and Brandon has given his OK [1].
+>> > > diff --git a/refs/files-backend.c b/refs/files-backend.c
+>> > > index a9a066dcfb..252f835bae 100644
+>> > > --- a/refs/files-backend.c
+>> > > +++ b/refs/files-backend.c
+>> > > @@ -1587,7 +1587,7 @@ static int log_ref_write_fd(int fd, const struct object_id *old_oid,
+>> > >       char *logrec;
+>> > >
+>> > >       msglen = msg ? strlen(msg) : 0;
+>> > > -     maxlen = strlen(committer) + msglen + 100;
+>> > > +     maxlen = strlen(committer) + msglen + 200;
+>> > >       logrec = xmalloc(maxlen);
+>> > >       len = xsnprintf(logrec, maxlen, "%s %s %s\n",
+>> > >                       oid_to_hex(old_oid),
+>> >
+>> > nit: 100 is not enough anymore, but wasn't a very descriptive value. 200
+>> > may be enough now, but I'm not sure why.
+>> 
+>> That line was touched in by Michael in 7bd9bcf372d (refs: split filesystem-based
+>> refs code into a new file, 2015-11-09) and before that by Ronnie in 2c6207abbd6
+>> (refs.c: add a function to append a reflog entry to a fd, 2014-12-12)
+>> and introduced
+>> by Junio in 8ac65937d03 (Make sure we do not write bogus reflog
+>> entries., 2007-01-26)
+>> and it appears to me that 2*40 + 5 ought to be sufficient, but no
+>> comments or commit
+>> messages are found as to why we rather choose 100.
+>
+> Whats the reason for not using a strbuf here so that we don't have to
+> play with magic numbers?
 
-[1] https://public-inbox.org/git/20180625182434.GE19910@google.com/
+Quite a legitimate question.  
+
+I suspect that the reason is because the code (even though it now
+sits in a file that was relatively recently creted) predates either
+the introduction or wide adoption of strbuf.
+
+Back when 6de08ae6 ("Log ref updates to logs/refs/<ref>",
+2006-05-17) was done, we already had strbuf.c, but it only had
+read_line() and nothing else back then, so it wouldn't have been
+possible to use a strbuf there.
+
+
