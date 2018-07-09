@@ -2,113 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0BBEF1F6AC
-	for <e@80x24.org>; Mon,  9 Jul 2018 20:36:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B9E01F6AC
+	for <e@80x24.org>; Mon,  9 Jul 2018 20:38:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933036AbeGIUgT (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jul 2018 16:36:19 -0400
-Received: from mail-yb0-f170.google.com ([209.85.213.170]:40071 "EHLO
-        mail-yb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932947AbeGIUgS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jul 2018 16:36:18 -0400
-Received: by mail-yb0-f170.google.com with SMTP id y11-v6so7719264ybm.7
-        for <git@vger.kernel.org>; Mon, 09 Jul 2018 13:36:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=oMP4VdE7B3gTdKMF+2rlvL7DCjNhfjoF0+LK6AcLTHs=;
-        b=PZ1bSOHxSNhCE5PTaE6543ijZXTSDsa1PPsiafhbV5rCCMdZEphGpNrlGiFLiaiaTo
-         uNmANP25M/hw3248BGsLgQr4XSBTGQIdOIq/3Bq5Ctqhkip7ITTC7lYeosAvX0Bbdisr
-         UM5vjInH4DHSJSDyaAIchVnfagvNLkmKg/mkkEAgXHLHu3/y8hNZWXoJxMRDf3SxWDh+
-         rOrMA1PsKXbuncWLHNY9imzPv4s9aSlXoyoG9C6bl/uGguaPxetSDkA+AaCGRTRp4fqv
-         WIezhJgvLQPhVPk3LDlxVvwqum8NKQUX+CBNo+EJLtjrOFJMcy0YByJNVByCfp5XwfSs
-         AbKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=oMP4VdE7B3gTdKMF+2rlvL7DCjNhfjoF0+LK6AcLTHs=;
-        b=fLGPTKndbNjqJTELZB0o4F5aGQ8X+puN1B1CyOvygMgxnEgWAapond5/3ayClCTm+i
-         OvYtNqj/KbD022ZvecQt+pnGwciViUxw+3JacYsaaE/h8ZKs8qS90MIc66fAdLsiHUjY
-         kh2CoY6XxAOCirhwAjKlTxqFKqiNCBtOyPNLtDKiiSo++SWXBuFFLRwTxd8JFvbCHnRu
-         w/1r92VNgLz0RmJT3s7vLGqR7aYvtvkmTQ1IrN5CBZ25cHOFgbl9zejr6nzPKBxG/LrN
-         8hrBU9iEcoLE2/FFHHMDBwjS05zcp55THTFsDUZldgY60Eb2hdasw//vWwlsXdcEShrC
-         p7Mw==
-X-Gm-Message-State: APt69E2iHYtoME/8Or1Ch14MnidxnuHvQQi9u4zjcviAyOljbqdcbnoW
-        MEhydoDswg4FUjMybxy/cBEA2xmEB+U=
-X-Google-Smtp-Source: AAOMgpdD3AYPOZPhLB9a+xHV/PlwD4L5CyttGDHOtPi8wIUo9/mWS0nO32AkiWp+P5EiHCcCUrry7w==
-X-Received: by 2002:a25:b582:: with SMTP id q2-v6mr11285205ybj.482.1531168577011;
-        Mon, 09 Jul 2018 13:36:17 -0700 (PDT)
-Received: from localhost ([107.217.158.181])
-        by smtp.gmail.com with ESMTPSA id o204-v6sm3842580ywd.16.2018.07.09.13.36.15
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 09 Jul 2018 13:36:15 -0700 (PDT)
-Date:   Mon, 9 Jul 2018 15:36:14 -0500
-From:   Taylor Blau <me@ttaylorr.com>
+        id S933299AbeGIUiF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jul 2018 16:38:05 -0400
+Received: from hel.is.scarlet.be ([193.74.71.26]:51141 "EHLO hel.is.scarlet.be"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932938AbeGIUiB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jul 2018 16:38:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=scarlet.be;
+        s=scarlet; t=1531168655;
+        bh=zd+ZeznGUllf1jky40Mohy9JxkT3QnAthYGHm6SdDmM=;
+        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References;
+        b=qMNbU1h+a5YWZ0VhgtbjQMcgpL/VIWdeKwZt/acqXn/6oZsEd44O4dCy9ovTiHNkm
+         jH6nPLmEBfX8I88VSTCwSos/xKscbxhoH+LAI6xN1FZhvAdmt5kdv7JSsgOUmJG4WV
+         pDLGWBcJCypCe5x2GFT7ROgQ/1zwaF9oRq56nhPg=
+Received: from localhost.localdomain (ip-62-235-173-141.dsl.scarlet.be [62.235.173.141])
+        by hel.is.scarlet.be (8.14.9/8.14.9) with ESMTP id w69KbYU4009908
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+        Mon, 9 Jul 2018 22:37:35 +0200
+X-Scarlet: d=1531168655 c=62.235.173.141
+From:   Kim Gybels <kgybels@infogroep.be>
 To:     git@vger.kernel.org
-Cc:     peff@peff.net, gitster@pobox.com, avarab@gmail.com
-Subject: Re: [PATCH v4] grep.c: teach 'git grep --only-matching'
-Message-ID: <20180709203614.GA83328@syl.attlocal.net>
-References: <20180705143401.GA87330@syl.attlocal.net>
- <17fb488dad653d6378af122c91805294e1a1e93a.1531168412.git.me@ttaylorr.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <17fb488dad653d6378af122c91805294e1a1e93a.1531168412.git.me@ttaylorr.com>
-User-Agent: Mutt/1.9.5 (2018-04-13)
+Cc:     Kim Gybels <kgybels@infogroep.be>,
+        Adam Borowski <kilobyte@angband.pl>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Michael J Gruber <git@grubix.eu>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH v3] gc --auto: release pack files before auto packing
+Date:   Mon,  9 Jul 2018 22:37:27 +0200
+Message-Id: <20180709203727.8236-1-kgybels@infogroep.be>
+X-Mailer: git-send-email 2.18.0.windows.1
+In-Reply-To: <20180704201600.9908-1-kgybels@infogroep.be>
+References: <20180704201600.9908-1-kgybels@infogroep.be>
+X-DCC-scarlet.be-Metrics: hel 20002; Body=10 Fuz1=10 Fuz2=10
+X-Virus-Scanned: clamav-milter 0.98.1-exp at hel
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 09, 2018 at 03:33:47PM -0500, Taylor Blau wrote:
-> [ ... ]
-> ---
->  Documentation/git-grep.txt |  7 +++++-
->  builtin/grep.c             |  6 +++++
->  grep.c                     | 51 ++++++++++++++++++++++++++------------
->  grep.h                     |  1 +
->  t/t7810-grep.sh            | 15 +++++++++++
->  5 files changed, 63 insertions(+), 17 deletions(-)
->
-> diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-> index 0de3493b80..a3049af1a3 100644
-> --- a/Documentation/git-grep.txt
-> +++ b/Documentation/git-grep.txt
-> @@ -17,7 +17,7 @@ SYNOPSIS
->  	   [-l | --files-with-matches] [-L | --files-without-match]
->  	   [(-O | --open-files-in-pager) [<pager>]]
->  	   [-z | --null]
-> -	   [-c | --count] [--all-match] [-q | --quiet]
-> +	   [ -o | --only-matching ] [-c | --count] [--all-match] [-q | --quiet]
->  	   [--max-depth <depth>]
->  	   [--color[=<when>] | --no-color]
->  	   [--break] [--heading] [-p | --show-function]
-> @@ -201,6 +201,11 @@ providing this option will cause it to die.
->  	Output \0 instead of the character that normally follows a
->  	file name.
->
-> +-o::
-> +--only-matching::
-> +	Print only the matched (non-empty) parts of a matching line, with each such
-> +	part on a separate output line.
+Teach gc --auto to release pack files before auto packing the repository
+to prevent failures when removing them.
 
-OK, it seems as if the consensus is (1) take the description as-is from
-GNU grep, and (2) don't change the existing behavior of "git grep -o
-'^'".
+Also teach the test 'fetching with auto-gc does not lock up' to complain
+when it is no longer triggering an auto packing of the repository.
 
-This patch does both of those things, and can be queued as 2/2 in this
-series.
+Fixes https://github.com/git-for-windows/git/issues/500
 
-Thanks, everybody :-).
+Signed-off-by: Kim Gybels <kgybels@infogroep.be>
+---
 
-> --
-> 2.18.0
+Changes since v2:
+- revert fix back to v1: use close_all_packs instead of repo_clear
+- use test_i18ngrep only for translated string
 
-Thanks,
-Taylor
+ builtin/gc.c     | 1 +
+ t/t5510-fetch.sh | 2 ++
+ 2 files changed, 3 insertions(+)
+
+diff --git a/builtin/gc.c b/builtin/gc.c
+index ccfb1ceaeb..63b62ab57c 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -612,6 +612,7 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 		return -1;
+ 
+ 	if (!repository_format_precious_objects) {
++		close_all_packs(the_repository->objects);
+ 		if (run_command_v_opt(repack.argv, RUN_GIT_CMD))
+ 			return error(FAILED_RUN, repack.argv[0]);
+ 
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index e402aee6a2..6f1450eb69 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -828,9 +828,11 @@ test_expect_success 'fetching with auto-gc does not lock up' '
+ 	test_commit test2 &&
+ 	(
+ 		cd auto-gc &&
++		git config fetch.unpackLimit 1 &&
+ 		git config gc.autoPackLimit 1 &&
+ 		git config gc.autoDetach false &&
+ 		GIT_ASK_YESNO="$D/askyesno" git fetch >fetch.out 2>&1 &&
++		test_i18ngrep "Auto packing the repository" fetch.out &&
+ 		! grep "Should I try again" fetch.out
+ 	)
+ '
+-- 
+2.18.0.windows.1
+
