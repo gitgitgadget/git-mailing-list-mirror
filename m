@@ -6,81 +6,87 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E40471F6AC
-	for <e@80x24.org>; Mon,  9 Jul 2018 08:19:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 503481F6AC
+	for <e@80x24.org>; Mon,  9 Jul 2018 08:22:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754455AbeGIITV (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jul 2018 04:19:21 -0400
-Received: from gecko.sbs.de ([194.138.37.40]:42704 "EHLO gecko.sbs.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754326AbeGIITU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jul 2018 04:19:20 -0400
-Received: from mail1.sbs.de (mail1.sbs.de [192.129.41.35])
-        by gecko.sbs.de (8.15.2/8.15.2) with ESMTPS id w698It2r010058
+        id S1754388AbeGIIWC convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 9 Jul 2018 04:22:02 -0400
+Received: from goliath.siemens.de ([192.35.17.28]:43637 "EHLO
+        goliath.siemens.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751211AbeGIIWB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jul 2018 04:22:01 -0400
+Received: from mail2.sbs.de (mail2.sbs.de [192.129.41.66])
+        by goliath.siemens.de (8.15.2/8.15.2) with ESMTPS id w698LeqU026428
         (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Mon, 9 Jul 2018 10:18:55 +0200
+        Mon, 9 Jul 2018 10:21:41 +0200
 Received: from md1pvb1c.ad001.siemens.net (md1pvb1c.ad001.siemens.net [139.25.68.40])
-        by mail1.sbs.de (8.15.2/8.15.2) with ESMTP id w698IsY9017675;
-        Mon, 9 Jul 2018 10:18:54 +0200
-Date:   Mon, 9 Jul 2018 10:18:54 +0200
+        by mail2.sbs.de (8.15.2/8.15.2) with ESMTP id w698Ledv022021;
+        Mon, 9 Jul 2018 10:21:40 +0200
+Date:   Mon, 9 Jul 2018 10:21:39 +0200
 From:   Henning Schild <henning.schild@siemens.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     <git@vger.kernel.org>, Ben Toews <mastahyeti@gmail.com>,
-        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+Cc:     Martin =?UTF-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Ben Toews <mastahyeti@gmail.com>, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 1/8] builtin/receive-pack: use check_signature from
- gpg-interface
-Message-ID: <20180709101854.2777aae2@md1pvb1c.ad001.siemens.net>
-In-Reply-To: <xmqqk1q8hwta.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [PATCH 4/8] gpg-interface: introduce an abstraction for
+ multiple gpg formats
+Message-ID: <20180709102139.274f0560@md1pvb1c.ad001.siemens.net>
+In-Reply-To: <xmqqa7r4mg45.fsf@gitster-ct.c.googlers.com>
 References: <cover.1530616446.git.henning.schild@siemens.com>
-        <cover.1530616446.git.henning.schild@siemens.com>
-        <f9e371c8dd2a17ddb5fd5989a7fdad1c0d1bb6e7.1530616446.git.henning.schild@siemens.com>
-        <xmqqsh4wjg7b.fsf@gitster-ct.c.googlers.com>
-        <xmqqk1q8hwta.fsf@gitster-ct.c.googlers.com>
+        <db46732d1cd09a71200e00c2d09605d5beaff364.1530616446.git.henning.schild@siemens.com>
+        <CAN0heSrXpLCDRjnZC80QXBG27gd6m5reBn1hfNd_KXxnPVkA2g@mail.gmail.com>
+        <xmqqa7r4mg45.fsf@gitster-ct.c.googlers.com>
 X-Mailer: Claws Mail 3.15.0-dirty (GTK+ 2.24.31; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am Fri, 6 Jul 2018 14:35:29 -0700
+Am Fri, 6 Jul 2018 10:24:58 -0700
 schrieb Junio C Hamano <gitster@pobox.com>:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+> Martin Ågren <martin.agren@gmail.com> writes:
 > 
-> > Henning Schild <henning.schild@siemens.com> writes:
-> >  
-> >> The combination of verify_signed_buffer followed by
-> >> parse_gpg_output is available as check_signature. Use that instead
-> >> of implementing it again.
-> >>
-> >> Signed-off-by: Henning Schild <henning.schild@siemens.com>
-> >> ---  
+> >> +enum gpgformats { PGP_FMT };
+> >> +struct gpg_format_data gpg_formats[] = {
+> >> +       { .format = "PGP", .program = "gpg",
+> >> +         .extra_args_verify = { "--keyid-format=long", },
+> >> +         .sigs = { PGP_SIGNATURE, PGP_MESSAGE, },
+> >> +       },
+> >> +};  
 > >
-> > Makes sense.  
+> > I think those trailing commas are ok now, but I'm not sure...
 > >
-> > When d05b9618 ("receive-pack: GPG-validate push certificates",
-> > 2014-08-14) implemented the check, there wasn't check_signature()
-> > available.  The commit probably should have done what a4cc18f2
-> > ("verify-tag: share code with verify-commit", 2015-06-21) later did
-> > to introduce the check_signature() function by factoring it out of
-> > commit.c::check_commit_signature() as a preparatory step.
-> >
-> > Will queue.  Thanks.  
+> > I had the same thought about designated initializers. Those should
+> > be ok now, c.f. cbc0f81d96 (strbuf: use designated initializers in
+> > STRBUF_INIT, 2017-07-10) and a73b3680c4 (Add and use generic
+> > name->id mapping code for color slot parsing, 2018-05-26).  
 > 
-> Well, I guess I won't queue this version that would waste others'
-> time, as you'd be rerolling to update variable names and such, so
-> I'd wait for that (and you in turn would wait for the names and
-> other discussions to settle).
+> As you said, we dipped our toes in designated initializers in both
+> struct and array, i.e. { .field = init }, { [offset] = init } last
+> summer and we haven't got complaints from minor platforms so far.
 > 
-> Thanks anyway.
+> The "comma" thing you are wondering is something else.  The comma we
+> see above is after the last element in an array's initializer (and
+> the last element in a struct's initializer), which we have been
+> happily using from very early days (and they are kosher ANSI C).
+> 
+> What we've been avoiding was the comma after the last element in the
+> enum (in other words, if PGP_FMT had ',' after it in the above
+> quoted addition, that would have been violation of that rule), as
+> having such a trailing comma used to be ANSI C violation as well.  I
+> do not recall offhand if we loosened that deliberately.
+> 
+> 4b05548f ("enums: omit trailing comma for portability", 2010-05-14),
+> c9b6782a ("enums: omit trailing comma for portability", 2011-03-16)
 
-I think 1 and 2 can be seen as somewhat unrelated to the gpgsm feature,
-they are more general refactoring. So i think picking them is a good
-idea. It will make the series shorter and ease review in the next round.
+I guess that means the style is acceptable and does not require
+changes, please correct me if i am wrong.
 
 Henning
