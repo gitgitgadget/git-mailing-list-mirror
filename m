@@ -7,49 +7,48 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 64C211F6AC
-	for <e@80x24.org>; Mon,  9 Jul 2018 19:09:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F4251F6AC
+	for <e@80x24.org>; Mon,  9 Jul 2018 19:15:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933683AbeGITJu (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jul 2018 15:09:50 -0400
-Received: from mout.gmx.net ([212.227.15.19]:44325 "EHLO mout.gmx.net"
+        id S932993AbeGITPL (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jul 2018 15:15:11 -0400
+Received: from mout.gmx.net ([212.227.17.20]:44099 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933353AbeGITJt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jul 2018 15:09:49 -0400
-Received: from MININT-6BKU6QN ([89.204.155.168]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MQR3s-1fX9Sl1ZG8-00TmYl; Mon, 09
- Jul 2018 21:09:35 +0200
-Date:   Mon, 9 Jul 2018 21:09:34 +0200 (DST)
+        id S932947AbeGITPK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jul 2018 15:15:10 -0400
+Received: from MININT-6BKU6QN ([89.204.155.168]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LlGoc-1gCDMD34Eg-00b1Gp; Mon, 09
+ Jul 2018 21:15:00 +0200
+Date:   Mon, 9 Jul 2018 21:14:58 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Daniel Harding <dharding@living180.net>
 cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
         git@vger.kernel.org
 Subject: Re: [PATCH 2/2] t3430: update to test with custom commentChar
-In-Reply-To: <13a876a2-7fbc-de05-2e82-814c782e8a80@living180.net>
-Message-ID: <nycvar.QRO.7.76.6.1807092107260.75@tvgsbejvaqbjf.bet>
-References: <20180708184110.14792-1-dharding@living180.net> <20180708184110.14792-3-dharding@living180.net> <20180708210200.GA4573@genre.crustytoothpaste.net> <nycvar.QRO.7.76.6.1807090944400.75@tvgsbejvaqbjf.bet>
- <13a876a2-7fbc-de05-2e82-814c782e8a80@living180.net>
+In-Reply-To: <1084a573-4ed5-5a8c-a159-7773f7465704@living180.net>
+Message-ID: <nycvar.QRO.7.76.6.1807092109440.75@tvgsbejvaqbjf.bet>
+References: <20180708184110.14792-1-dharding@living180.net> <20180708184110.14792-3-dharding@living180.net> <20180708210200.GA4573@genre.crustytoothpaste.net> <1084a573-4ed5-5a8c-a159-7773f7465704@living180.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:YipGH0RuceccavWlLYnRl+MH95nRqzIpwd5LnR78V9myjJqNeRH
- btwmGbcqyWJiT5CBxQtleiAXfgx7KXM50MBz0zYQVp41QN/8VlNGsZ1Z4cqEs0GCEbES5jk
- AEIigdukKGJzLmfA5p4+W/1OldLZ7iVJCqigA7sk/vL+60uV0zamhIKoUKTJ7LIpngv1suf
- iKRSgRkEk+mg6Pc7o7ReA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:9hWMeqMj/3A=:qVw+COExLf5K/RkDR8UsBA
- 5J0NyEIQX9UpSsNwJfRNu94oXwoL7N+oS3H//r/ELu0DE3BIU8fmme+/5Y6Zyf1ucN6izhCMr
- ci1bA8DocOCakCA5ptaWt390B5n8d3mpBLZmj4rzMn+9kNCqPq/9e5w4gyPbLyPemZ8g59Sbb
- sJHx4EECc0aQD5uUVSgxmPnLaAg43/WyYLdC465SE4yslP4WZJXwFLURCGx7tjISLL6ECh5pO
- xVuOboXt6Er9PrzvxtG8vJ8AOaByfntF8clAVlgmVXCDW6rxnHqz9Qbj/+A0+Vy9wDzeVF3I+
- GEuSCJEsV3tChwSKXmxt+zA2GoUTmQrWoP20CnIj5Sny28N87wsS9KP0rlQk4NvhZU08NeNaU
- Jb55FXQUiGApLZqEcCo99WnP0j7OF0UlYw9DKUFUySKMzsXXEssIus666P3AZBRP4pEhkUBEc
- /QxXooHNMVSaBVmuBDLuKsM9a8XPnotzv0nCGBzTIEAEF80zsMRgljIvp5TZZUFsH64mqWECk
- iVUG3OKMOPFCi3pnLg8mJThcq9Q8S2RNpMiSA4BvnhAfDB1Xl1Rg8kTNytY6zA5pOYvrB3Gox
- BUwt5wC096xMLvB3PnM3ocINIqaEm/xE3BcNOVkZwUWkaYJXrYUmK7gDsyHac/8Xl0amhHYcb
- i+xkxU11ImEJ0JIkmsd97QuTKkMa2PRxt+Hm+aK7AfOUVVsXo2FaCGEAJ8EK02cnyKb9v30Ts
- ZvNujDKr6bJVaxwVrIZTYY66yQRLB0D5H0D8hIjMmyDZWAFm4jJJaDfEXVZfsJftieHjFJbv0
- Vr8IUIm
+X-Provags-ID: V03:K1:yZsCxhzFgbMKv0Bx4H5iIUsrKR3YdJU2mlOX0KHwdXLlWcklOqF
+ mTbhsNHpyzVvfImvGFHpy57KM+8XfVtLHFfugffv9QebAdEsyhpQ19oikaKou39PCMWsoi1
+ wi+1ORAFAZdN4S3QcyJMNiBnza5E5yH8AwS9b1bi5xCa8d6BY1mlY2kMdldrk7VVMYujXC0
+ zb/8TmFAZpJJ1d13ZaHvg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:iabanSaxk24=:MHIpPBJqBIou3fkNHZ9ZHk
+ lFugJB4epEOOgOEt423rEEdJwTw8EuUet60VLCB01y+iJIjZcM8o89efqKOVCrWtdSVfYoXSa
+ KV35s8hKnm49xr1NvPeIvy80NpM3pUekqj2tJui6AC0XkE6NnPgcfiPt+xrlNNo9xDhbIrmlR
+ PX6rJ8VH2ddzlLbg11vmdLEH4K2Ly1a436AzhyQ/yUHRNgZunemnnbCTkZGc2sRr1/E95KK1V
+ ZgJrNqxvwqU5Uor6NkHKeNd/lH3Tf7jotHe3bg/Rc6L9ZByd9L6cmeVWyPvMjStNAjlxXf7Fa
+ NJKs8OTpgE6Ai8wrQWSVIyYo7UeGm1q9m+LR6yZ65rGxIFbBfW3d2RsbKMBnihzpRFZoxUQw/
+ JxJWJvcx1ZTuPNSIfuFxsgqG+ZwJIRfHW9a+F4oIYPE3mcQ23jS7IksdrfFNuBNCB1PgqplUs
+ +SEUkw2F57s8wPdBriOEBQH56dHNQijXD45vTPKTZsMQmg3qhRCzsZZAkXRnJfmMY/Vt4uesp
+ z/1eE0mEmQWrf2190caMQiIx6RTjLBd99CQ0JAVZE8/lDAo7CYiTb0CF2fYGOnB803XWX2Qix
+ QWQgtToSVLGcF8zX+exb+NECd+h1F3QAayV/dzlNSLO11AcEQcnxiAuVwyvRuc94R9MZWzM1L
+ AtfLfeIZSsPBUXeqJllucxTX8ETlYsfUBCDoe4mTbiluoqyLYSU2BfPMxNUtr6MBTlgzcI4Vj
+ /RwYtlelhoUWhMMwIOevVkiEkSUqVcVefRX5+mbkeycNJBzX058iPLQalCivNDximJoRMyofb
+ KpwRQBV
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -59,15 +58,65 @@ Hi Daniel,
 
 On Mon, 9 Jul 2018, Daniel Harding wrote:
 
-> One question about my original patch - there I had replaced a "grep -v"
-> call with a "git stripspace" call in the 'generate correct todo list'
-> test.  Is relying on "git stripspace" in a test acceptable, or should
-> external text manipulation tools like grep, sed etc. be preferred?
+> On Mon, 09 Jul 2018 at 00:02:00 +0300, brian m. carlson wrote:
+> > On Sun, Jul 08, 2018 at 09:41:11PM +0300, Daniel Harding wrote:
+> > > Signed-off-by: Daniel Harding <dharding@living180.net>
+> > 
+> > > diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
+> > > index 78f7c9958..ff474d033 100755
+> > > --- a/t/t3430-rebase-merges.sh
+> > > +++ b/t/t3430-rebase-merges.sh
+> > > @@ -56,12 +56,12 @@ test_expect_success 'create completely different
+> > > structure' '
+> > >    cat >script-from-scratch <<-\EOF &&
+> > >    label onto
+> > >   -	# onebranch
+> > > +	 > onebranch
+> > >    pick G
+> > >    pick D
+> > >    label onebranch
+> > >   -	# second
+> > > +	 > second
+> > >    reset onto
+> > >    pick B
+> > >    label second
+> > 
+> > Should this affect the "# Merge the topic branch" line (and the "# C",
+> > "# E", and "# H" lines in the next test) that appears below this?  It
+> > would seem those would qualify as comments as well.
+> 
+> I intentionally did not change that behavior for two reasons:
+> 
+> a) from a Git perspective, comment characters are only effectual for comments
+> if they are the first character in a line
+> 
+> and
+> 
+> b) there are places where a '#' character from the todo list is actually
+> parsed and used e.g. [0] and [1].  I have not yet gotten to the point of
+> grokking what is going on there, so I didn't want to risk breaking something I
+> didn't understand.  Perhaps Johannes could shed some light on whether the
+> cases you mentioned should be changed to use the configured commentChar or
+> not.
+> 
+> [0]
+> https://github.com/git/git/blob/53f9a3e157dbbc901a02ac2c73346d375e24978c/sequencer.c#L2869
+> [1]
+> https://github.com/git/git/blob/53f9a3e157dbbc901a02ac2c73346d375e24978c/sequencer.c#L3797
 
-I personally have no strong preference there; I tend to trust the
-"portability" of Git's tools more than the idiosyncrasies of whatever
-`grep` any setup happens to sport. But I am relatively certain that it is
-the exact opposite for, say, Junio (Git's maintainer), so...
+These are related. The first one tries to support
+
+	merge -C cafecafe second-branch third-branch # Octopus 2nd/3rd branch
+
+i.e. use '#' to separate between the commit(s) to merge and the oneline
+(the latter for the reader's pleasure, just like the onelines in the `pick
+<hash> <oneline>` lines.
+
+The second ensures that there is no valid label `#`.
+
+I have not really thought about the ramifications of changing this to
+comment_line_char, but I guess it *could* work if both locations were
+changed.
 
 Ciao,
 Johannes
