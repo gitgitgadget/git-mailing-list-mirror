@@ -6,58 +6,57 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC42B1F6AC
-	for <e@80x24.org>; Mon,  9 Jul 2018 16:13:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B4DA1F6AC
+	for <e@80x24.org>; Mon,  9 Jul 2018 16:26:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932938AbeGIQNe (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jul 2018 12:13:34 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:41154 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932770AbeGIQNd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jul 2018 12:13:33 -0400
-Received: by mail-wr1-f67.google.com with SMTP id j5-v6so5064515wrr.8
-        for <git@vger.kernel.org>; Mon, 09 Jul 2018 09:13:33 -0700 (PDT)
+        id S1754549AbeGIQ0A (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jul 2018 12:26:00 -0400
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:38484 "EHLO
+        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754459AbeGIQZ7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jul 2018 12:25:59 -0400
+Received: by mail-wm0-f54.google.com with SMTP id 69-v6so21269776wmf.3
+        for <git@vger.kernel.org>; Mon, 09 Jul 2018 09:25:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=0tSE5wwpoLjAKfkeN462Icf7QMUJz7/mV5foXq3SvvM=;
-        b=XK/y4U3pRi7TkuAT8RnyNmI60vAAdzpufys63E1a/j5pGUEKCenp0iEsjCC30JdO20
-         Hy3UfRVlIzP+NOfg1sfUA8tz8jqy6f/97xeKjUgogCAiL7To4mFHl2CDNF65aq3Gp3Qf
-         doN2EJN2/DH5aJ42O52Hj+ojSp0Eqe1SltktE26F/iRnm1vP6GoOSNiAtVscv3gq0x8G
-         iTgfMEgDaXy8WNmcMG503IDfLBYidTTyuf6q5aXMEMyQZox33T2uLsqloK4ofXzcfRI5
-         10EfBUahypjymUc3XIamlCd0t35FFgez9eJcVojErsFOpjC85V0JkSKq0Mb4P0uCshOb
-         6SjA==
+        bh=Lnog0SocHsPajkMDJ3dVEhqgllSrroukfNU9udvkznI=;
+        b=b5w/51xu92WUCryzJivK1gL1fUnVAqybZKfZek8W49+CJJvqvgtyJ6TS5+yta5XVg9
+         qRzmC1RMOaezucfF0l22N2ROY8oHwlDm2gHN8+w+/pYPZmbEcPM1Kq8Koln+N0MFNC3x
+         weaHenIPv1Jk2aJFpcMGEoP42SxgwHWNXC72ljfHBUUtypZr57WI0oRDt3m3h8kS61XF
+         45/cVilAgvsQcTxuGWkDn9G0/EkXmBRrjwAqDtfS9+4AHsAkogdU9CeZ1mEfEx07L+wA
+         j3nVZoX74YbBK8FD4wphghSNX36aT5rjnVSvwjpuaj/KVaGb/ndf20Ss61hgAiJ6Z/n9
+         MSgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=0tSE5wwpoLjAKfkeN462Icf7QMUJz7/mV5foXq3SvvM=;
-        b=buoiHetOQ1Eo2sbjGWJSuQYYnOwaT0cV7dUSjyKpS+8/4qsGHZakmzvfvLjidFygAT
-         xKtUDtJYMIRX2N6vqvAkI5wYbCpwVl0XncMpTdh/CIqUsqz9DacbO5UhSdL6rQqiwceu
-         By5m34BerZnLkTknVScSH32Y9zeXWK9R2Sq/ro8TtCatU72KVvejD6nV6kRpIVcYG960
-         +MsHArCMfZr8dDYMrsJXOco4cfWEHFZNp+WzchXDPvQE46nIvkLCGPr49t3bB1UIPqWY
-         49jeyDdAGrhVeMK/PxAaiPRPzZVjHcwVVsD5GWIzNz3kIEMMJRKIlxyOnfyidL7cA77z
-         g3Yg==
-X-Gm-Message-State: APt69E15uBHLTrDFaKSW/LgQi9KJSnDsMTjlYVnRNlGoAbD6kc/OOprJ
-        VauVisRyMJ0ZPh4M8mWfh6c=
-X-Google-Smtp-Source: AAOMgpcL2/b30LY2w7Y/Oo6p9NryokU/LGWOk8BlkfWaCvAmUnTvag1xYLi5DzjAlTakRUSTR1vGBg==
-X-Received: by 2002:adf:b002:: with SMTP id f2-v6mr15964369wra.75.1531152812473;
-        Mon, 09 Jul 2018 09:13:32 -0700 (PDT)
+        bh=Lnog0SocHsPajkMDJ3dVEhqgllSrroukfNU9udvkznI=;
+        b=iCuQ6rRIEbWtktnAKZBRfsCibQG4shfkErgINAjK4ue4z8aDp/vV/F///mkVIrlY61
+         EfDybu97lO4fAYWI80wi9Xo/RBUCkDTma/W8pVIpZZ2HMFu86aLXdJpF2TK7k79QqEWR
+         ITtOtMiVnzvaCK3jq1SmCZWqkrIfiqnu1B1qSCK0DH/2ChDSWPen6APFNHh7L6FPkf3/
+         nSAQ8g3mJfdubqPu5rlasQCXWw66NbBYM0/p3V3nx3c0sV4kG37sp2mnPQBJlFXFu1I+
+         zgcmqFalQ9KJCHDr7JT/bpbvyw814OecstXSttm/ycr7kkHPnd2fHFEnE1S7UgEnm4Oj
+         52Vg==
+X-Gm-Message-State: APt69E3SpvSapD0xCIYBhC2T6Z+lhnNOZxnF4Q5q3c7CVwk6vCbzLZh2
+        QmvW66NUKx7dRtKdRoRd4pY=
+X-Google-Smtp-Source: AAOMgpf6CBgtrG5XST9Wi377hzqM3fwRy0memwUJsUrkRcn+0ohei63vDbxwTxHmjiWKESI0hOYh9g==
+X-Received: by 2002:a1c:b18a:: with SMTP id a132-v6mr11779182wmf.18.1531153558063;
+        Mon, 09 Jul 2018 09:25:58 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id w24-v6sm13263142wmc.15.2018.07.09.09.13.31
+        by smtp.gmail.com with ESMTPSA id g4-v6sm12872614wrq.32.2018.07.09.09.25.57
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 09 Jul 2018 09:13:31 -0700 (PDT)
+        Mon, 09 Jul 2018 09:25:57 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
+To:     Beat Bolli <dev+git@drbeat.li>
 Cc:     git@vger.kernel.org
-Subject: Re: What's (not) cooking
-References: <xmqqlgaogeff.fsf@gitster-ct.c.googlers.com>
-        <3d8bc7b8-b7be-4583-469e-6b962607b3a7@gmail.com>
-Date:   Mon, 09 Jul 2018 09:13:31 -0700
-In-Reply-To: <3d8bc7b8-b7be-4583-469e-6b962607b3a7@gmail.com> (Derrick
-        Stolee's message of "Mon, 9 Jul 2018 09:50:24 -0400")
-Message-ID: <xmqqlgakfkus.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [RFC PATCH 0/6] Compile cleanly in pedantic mode
+References: <20180708144342.11922-1-dev+git@drbeat.li>
+Date:   Mon, 09 Jul 2018 09:25:57 -0700
+In-Reply-To: <20180708144342.11922-1-dev+git@drbeat.li> (Beat Bolli's message
+        of "Sun, 8 Jul 2018 16:43:36 +0200")
+Message-ID: <xmqqh8l8fka2.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,32 +65,13 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+Beat Bolli <dev+git@drbeat.li> writes:
 
-> On 7/6/2018 6:57 PM, Junio C Hamano wrote:
->> I'll be pushing out the integration branches with some updates, but
->> there is no change in 'next' and below.  The following topics I gave
->> a quick look and gave them topic branches, but I had trouble merging
->> them in 'pu' and making them work correctly or pass the tests, so
->> they are not part of 'pu' in today's pushout.
->>
->>      pk/rebase-in-c
->>      en/dirty-merge-fixes
->>      en/t6036-merge-recursive-tests
->>      en/t6042-insane-merge-rename-testcases
->>      ds/multi-pack-index
->
-> I tested merging ds/multi-pack-index against the latest pu and the
-> only issue I had was with header files being added to 'packfile.c' and
-> 'building/repack.c'. Both were that I added "#include <midx.h>" and
-> cc/remote-odb added "#include <remote-odb.h>".
+> While developing 6aaded550 ("builtin/config: work around an unsized
+> array forward declaration", 2018-07-05), I have compiled Git with
+> CFLAGS="-std=c99 -pedantic".
 
-I think ds/multi-pack-index didn't have any difficult textual merge
-conflicts.  I ran out of time making 'pu' build with new topics and
-listed the ones that were left behind.  As Elijah already
-identified, there was a bad apple not listed above that was in 'pu'
-that made the tests fail, so the above is not even a complete list
-of "bad" topics.  It was merely an "I have them but 'pu' doesn't
-include them" list.
-
-Thanks.
+Nice.  I also pretty recently realized that I stopped building with
+the pedantic option by accident, probably when DEVELOPER build knob
+was added to the main Makefile, and have been disturbed by these
+failures.
