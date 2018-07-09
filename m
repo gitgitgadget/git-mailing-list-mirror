@@ -6,61 +6,57 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 887EB1F6AC
-	for <e@80x24.org>; Mon,  9 Jul 2018 17:45:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8FEE91F6AC
+	for <e@80x24.org>; Mon,  9 Jul 2018 17:54:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934124AbeGIRpi (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jul 2018 13:45:38 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:37047 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934100AbeGIRpg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jul 2018 13:45:36 -0400
-Received: by mail-wm0-f68.google.com with SMTP id n17-v6so21642897wmh.2
-        for <git@vger.kernel.org>; Mon, 09 Jul 2018 10:45:35 -0700 (PDT)
+        id S934119AbeGIRyE (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jul 2018 13:54:04 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:41476 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933860AbeGIRyC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jul 2018 13:54:02 -0400
+Received: by mail-wr1-f68.google.com with SMTP id j5-v6so5360561wrr.8
+        for <git@vger.kernel.org>; Mon, 09 Jul 2018 10:54:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=gQd7awpctrtepj2ukzRpVor6jgOqx8OBVgfUgpaUBaE=;
-        b=Oc9a13eHrGMV1QgV0lAQ4cyoojdJ1MMmUm4WQK5TLkOtEDF92ppkz1lwnS62eL1AIQ
-         jfew/LmmKemK+1JNIhA7ZPGwZ9UAINMQXh6hqq1O8Fs6A/axGANcrEY3c6mjB8KiymbM
-         qYc0dVX/Cc7uTwYSiSobkLArmGNJlVkxMlulNDST6Mi7SNV2JneTWXpaW8wkHstUMcMc
-         sUh8+RaVlQwGmdAzusG/OdG/Sc9X+NdirJzjDZI6usTZBBqwfHvBYspNgHQu//8kQYg5
-         ItdWRTZXWYlN2i3x0OzNKFy1ooOwXJzVScbNe8Dv6dT8HmoCO2jI2UQZpFuZh6q4wUJ4
-         x4AQ==
+        bh=pXfuiDB2IiialPt+3vrMh1DcrnGpjH8VvchT/iLWDgM=;
+        b=IXCF17bmCvcvE5nN+XPqQbg+5lPBJGU8l7nFid1yA6hEIx7tLyzFV45uQig5+T9zMl
+         qgIkwY+mYXOdlyotVD5HOp29bSdsHGk1uQgA6BFQhv7qjKKgwiO4q1f1EbgLzcYBWwb8
+         mzqS+OUviVrLnxulQd3kWNX0y99VMs+/ykXY9Ms96ES8QW5Cu/GohCBK6eoYCDlo5vY/
+         Js5rzCwLf2WktFJPn2ZXFZFnIDzkTjtkfn1GHNcW+07NaQ+koZcNGOQlq+wA1qxyAX+t
+         sewWYjzRWpdXu3t7ahkpH4hOvgpSXTLKR41YkQ7aKSjT4so+wiJrxuor2M+GVEZk+i48
+         Z2NA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=gQd7awpctrtepj2ukzRpVor6jgOqx8OBVgfUgpaUBaE=;
-        b=b0k7odb3cOSpEyTajx8YqGb55KuPIpkNgCRlu/eoJBBCEqLI58gDbG51ch2DY9nEq6
-         JhRFleILgNjMy4wpWgFto25rUmySZQCiiONkjGO0s0d9KuJ3kwTViJXq11Q0/7shT7uo
-         HIdUWz9kGj9Vd/aH8xfCAuAOAGArgdiNaMQefZKJ3IgcK0O8G3cqrtspg3UGrXFwQG4z
-         4KkdihzTjbMSEFbJXKFUYMu5hgNCvwsWogpIt2e6ayV9mf3SIGOUO4Ep+BPj14YdMqjz
-         pWdfBfSyQjP7gxij4xkZELfgc7HVopvrZoZLWulo2VOB61w9KK2I5KyQZ5myR7FumBbf
-         gglA==
-X-Gm-Message-State: APt69E276vUm0h/iTILFphFFwo5ZG/NvHBFxDlZbvSSNRB39+Vqn02j2
-        PbRSWrWyuudTc7xcCpdOf08=
-X-Google-Smtp-Source: AAOMgpf0nVz/pmYfe4u5T5kY2CxrPPIthaRi9+c8SmxAKlHc3feKleXWfQJAb6mNk02FUT/HOEWUIQ==
-X-Received: by 2002:a1c:8952:: with SMTP id l79-v6mr12138001wmd.7.1531158335087;
-        Mon, 09 Jul 2018 10:45:35 -0700 (PDT)
+        bh=pXfuiDB2IiialPt+3vrMh1DcrnGpjH8VvchT/iLWDgM=;
+        b=HdMcgYrBYO6JZf/9n+sxZi1sXWhfa7Zk2aEqTns/FjWjQPGReo1btGFGG6C0MGcMKb
+         JEuoohpokhtxAU2VwKeNVGWkfe7DF5+jRaUaLddIKN1DXCivVck3A9pZzilLXspceimF
+         cW5pZaKc4cRZFu9y2GvmNqQRBcDAFyOZX+ueKS8bhlMG1l5wTYFbgQxtUOYU0InwP1++
+         jji4o2rU93T8PS/fTEbJlEDAQ8jGKEPyOnzSJoyaOiFHIbbvGYNpGpqJ0vADfr4L8grZ
+         mVZa4jgOdB6NERFs+w5TxOLgEzaVvWzkeTDVVibcxPbsdmFrSFc+WM0smvLzFNaldbX3
+         hzug==
+X-Gm-Message-State: AOUpUlFvDEoJ1MIGmTt1vTMO0ibxJvantXYIWE2UwBWyqVQCo7MaLpsN
+        Iaos84TFAmLWRwAGvrHr8zo=
+X-Google-Smtp-Source: AAOMgpeVyFQ+sP7s2tNiodXJd2NVfg8U8g4m/5Ayd21tIATHLn0+hCxF2A+y9tkux4GeEq6NzokY7g==
+X-Received: by 2002:adf:ec04:: with SMTP id x4-v6mr4785528wrn.245.1531158840656;
+        Mon, 09 Jul 2018 10:54:00 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id g10-v6sm5120290wru.43.2018.07.09.10.45.34
+        by smtp.gmail.com with ESMTPSA id g125-v6sm16787864wmf.16.2018.07.09.10.53.59
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 09 Jul 2018 10:45:34 -0700 (PDT)
+        Mon, 09 Jul 2018 10:53:59 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 07/17] commit: increase commit message buffer size
-References: <20180708233638.520172-1-sandals@crustytoothpaste.net>
-        <20180708233638.520172-8-sandals@crustytoothpaste.net>
-        <4eb44f33-ac9c-7ce2-0e53-ec6fcb4560fd@gmail.com>
-Date:   Mon, 09 Jul 2018 10:45:33 -0700
-In-Reply-To: <4eb44f33-ac9c-7ce2-0e53-ec6fcb4560fd@gmail.com> (Derrick
-        Stolee's message of "Mon, 9 Jul 2018 09:09:00 -0400")
-Message-ID: <xmqqva9oe20y.fsf@gitster-ct.c.googlers.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/6] Add merge recursive testcases with undetected conflicts
+References: <20180701041122.8753-1-newren@gmail.com>
+Date:   Mon, 09 Jul 2018 10:53:59 -0700
+In-Reply-To: <20180701041122.8753-1-newren@gmail.com> (Elijah Newren's message
+        of "Sat, 30 Jun 2018 21:11:16 -0700")
+Message-ID: <xmqqr2kce1mw.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,45 +65,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+Elijah Newren <newren@gmail.com> writes:
 
-> On 7/8/2018 7:36 PM, brian m. carlson wrote:
->> 100 bytes is not sufficient to ensure we can write a commit message
->> buffer when using a 32-byte hash algorithm.  Increase the buffer size to
->> ensure we have sufficient space.
->>
->> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
->> ---
->>   refs/files-backend.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/refs/files-backend.c b/refs/files-backend.c
->> index a9a066dcfb..252f835bae 100644
->> --- a/refs/files-backend.c
->> +++ b/refs/files-backend.c
->> @@ -1587,7 +1587,7 @@ static int log_ref_write_fd(int fd, const struct object_id *old_oid,
->>   	char *logrec;
->>     	msglen = msg ? strlen(msg) : 0;
->> -	maxlen = strlen(committer) + msglen + 100;
->> +	maxlen = strlen(committer) + msglen + 200;
->>   	logrec = xmalloc(maxlen);
->>   	len = xsnprintf(logrec, maxlen, "%s %s %s\n",
->>   			oid_to_hex(old_oid),
+> SPOILER ALERT: This series contains answers to the "fun puzzle" at
+>   https://public-inbox.org/git/CABPp-BFc1OLYKzS5rauOehvEugPc0oGMJp-NMEAmVMW7QR=4Eg@mail.gmail.com/
 >
-> nit: 100 is not enough anymore, but wasn't a very descriptive
-> value. 200 may be enough now, but I'm not sure why.
+> When a merge succeeds, we expect the resulting contents to depend only
+> upon the trees and blobs of the branches involved and of their merge
+> base(s).  Unfortunately, there are currently about half a dozen cases
+> where the contents of a "successful" merge depend on the relative
+> commit timestamps of the merge bases.  Document these with testcases.
+>
+> (This series came out of looking at modifying how file collision
+> conflict types are handled, as discussed at [1].  I discovered these
+> issues while working on that topic.)
 
-As Brandon alludes to downthread, we probably should use strbuf for
-things like this these days, so a preliminary clean-up to do so is
-probably a welcome change to sneak in and rebase this series on top
-of.
+I have a topic branch for this series but not merged to 'pu' as
+test-lint gives these:
 
-"%s %s %s\n" with old and new commit object name and the message
-will be "2 * len(hash_in_hex) + 4" bytes long (counting the three
-whitespaces and the terminating NUL), and Shawn's original in
-6de08ae6 ("Log ref updates to logs/refs/<ref>", 2006-05-17) actually
-computed this one as "strlen(...) + 2*40+4".
+t6036-recursive-corner-cases.sh:1222: error: "export FOO=bar" is not portable (please use FOO=bar && export FOO): 		echo "export PATH=~/bin:$PATH" >source_me.bash &&
+t6036-recursive-corner-cases.sh:1227: error: "export FOO=bar" is not portable (please use FOO=bar && export FOO): 		echo "export PATH=~/bin:$PATH" >source_me.bash &&
+Makefile:77: recipe for target 'test-lint-shell-syntax' failed
+make: *** [test-lint-shell-syntax] Error 1
 
-100 was merely me being sloppier than Shawn at 8ac65937 ("Make sure
-we do not write bogus reflog entries.", 2007-01-26), preferring
-being sufficient over not wasting even a single byte.
+Arguably these are false positives because "source_me.bash" file is
+a mere payload to go through the merge process to be munged and we
+never intend to actually execute its contents with bash, but then
+the test payload probably does not even have to be a string that
+triggers such a false positive to begin with ;-)
