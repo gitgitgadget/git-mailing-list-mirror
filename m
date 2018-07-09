@@ -2,117 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD1E91F6AC
-	for <e@80x24.org>; Mon,  9 Jul 2018 20:35:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0BBEF1F6AC
+	for <e@80x24.org>; Mon,  9 Jul 2018 20:36:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933399AbeGIUfw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jul 2018 16:35:52 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:40628 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933374AbeGIUfu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jul 2018 16:35:50 -0400
-Received: by mail-wr1-f67.google.com with SMTP id t6-v6so12305630wrn.7
-        for <git@vger.kernel.org>; Mon, 09 Jul 2018 13:35:50 -0700 (PDT)
+        id S933036AbeGIUgT (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jul 2018 16:36:19 -0400
+Received: from mail-yb0-f170.google.com ([209.85.213.170]:40071 "EHLO
+        mail-yb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932947AbeGIUgS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jul 2018 16:36:18 -0400
+Received: by mail-yb0-f170.google.com with SMTP id y11-v6so7719264ybm.7
+        for <git@vger.kernel.org>; Mon, 09 Jul 2018 13:36:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=BB3ThR29HCf0V8FwMtmiUTjsqeS8WyFI7gQIhC4FWkE=;
-        b=tTYLtArW7NkSwLOyNBNZqXpmKO39PKchEr2wVDf/IELSH27+G2g7ePNQZl1jd0JbDr
-         FUbJA9c2puIRmvlq+ZhzPIPOqVMsYMa7K5puH71vSoqleq+6NvU8/Vr9P5LTgGSrw5sC
-         RU9fvu7UDKdDywjRagMh94ezGItBtXa1cAQI7HF51VTRyWn3jwm7l3dGZejRJAkY+vj5
-         3nbg1SRSDn/VvaRFoiN5BQiZfSRMnrRzxIsnKuoVgp0SQ/XzbJSy8sna7cOOgY9SjIIp
-         Bkcidhbx2od55zPpC/bAYKWM9QKKwCGMtIRgOhf2PfbGh3bPvF7eUno45PMtms2VjIv6
-         LcXQ==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=oMP4VdE7B3gTdKMF+2rlvL7DCjNhfjoF0+LK6AcLTHs=;
+        b=PZ1bSOHxSNhCE5PTaE6543ijZXTSDsa1PPsiafhbV5rCCMdZEphGpNrlGiFLiaiaTo
+         uNmANP25M/hw3248BGsLgQr4XSBTGQIdOIq/3Bq5Ctqhkip7ITTC7lYeosAvX0Bbdisr
+         UM5vjInH4DHSJSDyaAIchVnfagvNLkmKg/mkkEAgXHLHu3/y8hNZWXoJxMRDf3SxWDh+
+         rOrMA1PsKXbuncWLHNY9imzPv4s9aSlXoyoG9C6bl/uGguaPxetSDkA+AaCGRTRp4fqv
+         WIezhJgvLQPhVPk3LDlxVvwqum8NKQUX+CBNo+EJLtjrOFJMcy0YByJNVByCfp5XwfSs
+         AbKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=BB3ThR29HCf0V8FwMtmiUTjsqeS8WyFI7gQIhC4FWkE=;
-        b=jiRyPJJ5q0Zjr/QLAYmH0J/YHJI1iBhWLkMzDLFmg1HSyLiXVxVuaaOR+tNuu0IzIL
-         SpRxhbGHeuYNrVmJkWWSq4ykXBdoZTR6W+wfuQeTmcl0bov3u+wCUCaUhXhICp1aOtq4
-         JQBsgM8iOKbkj6Ma9+4fa3bY29E6n0qctKrfpGq8pvjYXS/iQE6El0Yd4getmOTLVic6
-         B5wiNbV0vIH4PN2uWTiizc1tLiyXPSEXDrcWWQGPtzvOihzxEUaGeI/9VVR7Jic9Q6kg
-         1u5OuECWnYyDsgQjIPGVK85kZRPYKq1AyuU+SdIvJcHBtCkCbTNUIb8ILo2hxgKQ44cB
-         Pfvg==
-X-Gm-Message-State: APt69E1MJ0H5Rr82uMAs8/5rgoglk+y+LuAWHQgEAws/Ie5WUVafpKMe
-        OxsPbLjiHeyK5T5PkRum8mg=
-X-Google-Smtp-Source: AAOMgpd0EIHW/SqfpOfiZA+UlJ+48vvcFQrZDGsR6rgYMGMyonkLndy0zLAQx+0eNhNAeHpBHhe35Q==
-X-Received: by 2002:adf:ac2d:: with SMTP id v42-v6mr15470517wrc.142.1531168549271;
-        Mon, 09 Jul 2018 13:35:49 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id m10-v6sm16761715wrj.35.2018.07.09.13.35.48
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 09 Jul 2018 13:35:48 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] fetch: send "refs/tags/" prefix upon CLI refspecs
-References: <cover.1528233146.git.jonathantanmy@google.com>
-        <cover.1528234587.git.jonathantanmy@google.com>
-        <c6910161aab1f383b5721bdc91969baad8c10a66.1528234587.git.jonathantanmy@google.com>
-        <20180709173813.GA14196@aiede.svl.corp.google.com>
-        <20180709175939.GC81741@google.com>
-        <xmqq8t6ke07x.fsf@gitster-ct.c.googlers.com>
-        <20180709183328.GD81741@google.com>
-Date:   Mon, 09 Jul 2018 13:35:48 -0700
-In-Reply-To: <20180709183328.GD81741@google.com> (Brandon Williams's message
-        of "Mon, 9 Jul 2018 11:33:28 -0700")
-Message-ID: <xmqqd0vwcfkr.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=oMP4VdE7B3gTdKMF+2rlvL7DCjNhfjoF0+LK6AcLTHs=;
+        b=fLGPTKndbNjqJTELZB0o4F5aGQ8X+puN1B1CyOvygMgxnEgWAapond5/3ayClCTm+i
+         OvYtNqj/KbD022ZvecQt+pnGwciViUxw+3JacYsaaE/h8ZKs8qS90MIc66fAdLsiHUjY
+         kh2CoY6XxAOCirhwAjKlTxqFKqiNCBtOyPNLtDKiiSo++SWXBuFFLRwTxd8JFvbCHnRu
+         w/1r92VNgLz0RmJT3s7vLGqR7aYvtvkmTQ1IrN5CBZ25cHOFgbl9zejr6nzPKBxG/LrN
+         8hrBU9iEcoLE2/FFHHMDBwjS05zcp55THTFsDUZldgY60Eb2hdasw//vWwlsXdcEShrC
+         p7Mw==
+X-Gm-Message-State: APt69E2iHYtoME/8Or1Ch14MnidxnuHvQQi9u4zjcviAyOljbqdcbnoW
+        MEhydoDswg4FUjMybxy/cBEA2xmEB+U=
+X-Google-Smtp-Source: AAOMgpdD3AYPOZPhLB9a+xHV/PlwD4L5CyttGDHOtPi8wIUo9/mWS0nO32AkiWp+P5EiHCcCUrry7w==
+X-Received: by 2002:a25:b582:: with SMTP id q2-v6mr11285205ybj.482.1531168577011;
+        Mon, 09 Jul 2018 13:36:17 -0700 (PDT)
+Received: from localhost ([107.217.158.181])
+        by smtp.gmail.com with ESMTPSA id o204-v6sm3842580ywd.16.2018.07.09.13.36.15
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 09 Jul 2018 13:36:15 -0700 (PDT)
+Date:   Mon, 9 Jul 2018 15:36:14 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, gitster@pobox.com, avarab@gmail.com
+Subject: Re: [PATCH v4] grep.c: teach 'git grep --only-matching'
+Message-ID: <20180709203614.GA83328@syl.attlocal.net>
+References: <20180705143401.GA87330@syl.attlocal.net>
+ <17fb488dad653d6378af122c91805294e1a1e93a.1531168412.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <17fb488dad653d6378af122c91805294e1a1e93a.1531168412.git.me@ttaylorr.com>
+User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
-
-> On 07/09, Junio C Hamano wrote:
->> Brandon Williams <bmwill@google.com> writes:
->> 
->> > I agree with this observation, though I'm a bit sad about it.  I think
->> > that having tag auto-following the default is a little confusing (and
->> > hurts perf[1] when using proto v2) but since thats the way its always been
->> > we'll have to live with it for now.  I think exploring changing the
->> > defaults might be a good thing to do in the future.  But for now we've
->> > had enough people comment on this lacking functionality that we should
->> > fix it.
->> >
->> > [1] Thankfully it doesn't completely undo what protocol v2 did, as we
->> > still are able to eliminate refs/changes or refs/pull or other various
->> > refs which significantly add to the number of refs advertised during
->> > fetch.
->> 
->> I thought JTan's <20180618231642.174650-1-jonathantanmy@google.com>
->> showed us a way forward to reduce the overhead even further without
->> having to be sad ;-).  Am I mistaken?
+On Mon, Jul 09, 2018 at 03:33:47PM -0500, Taylor Blau wrote:
+> [ ... ]
+> ---
+>  Documentation/git-grep.txt |  7 +++++-
+>  builtin/grep.c             |  6 +++++
+>  grep.c                     | 51 ++++++++++++++++++++++++++------------
+>  grep.h                     |  1 +
+>  t/t7810-grep.sh            | 15 +++++++++++
+>  5 files changed, 63 insertions(+), 17 deletions(-)
 >
-> That's true, what Jonathan mentioned there would avoid having to send
-> "refs/tags/*" when requesting the refs.  The question is do we wait on
-> implementing that functionality (as another feature to fetch) or do we
-> fix this now?
+> diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+> index 0de3493b80..a3049af1a3 100644
+> --- a/Documentation/git-grep.txt
+> +++ b/Documentation/git-grep.txt
+> @@ -17,7 +17,7 @@ SYNOPSIS
+>  	   [-l | --files-with-matches] [-L | --files-without-match]
+>  	   [(-O | --open-files-in-pager) [<pager>]]
+>  	   [-z | --null]
+> -	   [-c | --count] [--all-match] [-q | --quiet]
+> +	   [ -o | --only-matching ] [-c | --count] [--all-match] [-q | --quiet]
+>  	   [--max-depth <depth>]
+>  	   [--color[=<when>] | --no-color]
+>  	   [--break] [--heading] [-p | --show-function]
+> @@ -201,6 +201,11 @@ providing this option will cause it to die.
+>  	Output \0 instead of the character that normally follows a
+>  	file name.
+>
+> +-o::
+> +--only-matching::
+> +	Print only the matched (non-empty) parts of a matching line, with each such
+> +	part on a separate output line.
 
-It's not like the earlier v2 protocol used to be super efficient and
-correct, whose performance benefit is destroyed with this "fix"
-irreversibly.  It was a fast but sometimes incorrect implementation,
-and we'd protect users of the still-under-development feature with
-these two patches while updating the protocol further in order to
-become truly efficient and correct, so I do not see it a wrong move
-to take a hit like this patch does in the meantime.
+OK, it seems as if the consensus is (1) take the description as-is from
+GNU grep, and (2) don't change the existing behavior of "git grep -o
+'^'".
 
-What I would see a wrong move would be to leave it very long as-is
-after we apply this fix, and declare to flip the default not to
-follow tags, using the performance hit as an excuse.
+This patch does both of those things, and can be queued as 2/2 in this
+series.
 
-So I do not care too deeply either way, whether we wait to regain
-efficiency or taking this safe fix as the first step, as long as it
-is fixed in the longer term.  I had an impression that the sentiment
-in the thread was that it was OK to accept the inefficiency for now
-and fix it later, and I am personally fine with that approach.
+Thanks, everybody :-).
+
+> --
+> 2.18.0
+
+Thanks,
+Taylor
