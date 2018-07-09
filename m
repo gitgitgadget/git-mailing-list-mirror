@@ -2,110 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B89B1F6AC
-	for <e@80x24.org>; Mon,  9 Jul 2018 08:27:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3B481F6AC
+	for <e@80x24.org>; Mon,  9 Jul 2018 08:36:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754467AbeGII1p (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jul 2018 04:27:45 -0400
-Received: from thoth.sbs.de ([192.35.17.2]:58853 "EHLO thoth.sbs.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754446AbeGII1n (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jul 2018 04:27:43 -0400
-Received: from mail2.sbs.de (mail2.sbs.de [192.129.41.66])
-        by thoth.sbs.de (8.15.2/8.15.2) with ESMTPS id w698RRbM023875
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Mon, 9 Jul 2018 10:27:27 +0200
-Received: from md1pvb1c.ad001.siemens.net (md1pvb1c.ad001.siemens.net [139.25.68.40])
-        by mail2.sbs.de (8.15.2/8.15.2) with ESMTP id w698RQX2009035;
-        Mon, 9 Jul 2018 10:27:26 +0200
-Date:   Mon, 9 Jul 2018 10:27:26 +0200
-From:   Henning Schild <henning.schild@siemens.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     <git@vger.kernel.org>, Ben Toews <mastahyeti@gmail.com>,
-        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 5/8] t/t7510: check the validation of the new config
- gpg.format
-Message-ID: <20180709102726.754c37cf@md1pvb1c.ad001.siemens.net>
-In-Reply-To: <xmqqfu0wjetl.fsf@gitster-ct.c.googlers.com>
-References: <cover.1530616446.git.henning.schild@siemens.com>
-        <cover.1530616446.git.henning.schild@siemens.com>
-        <9fd9d0d2ee3ae549baf8e9a710dfffbc118e66f7.1530616446.git.henning.schild@siemens.com>
-        <xmqqfu0wjetl.fsf@gitster-ct.c.googlers.com>
-X-Mailer: Claws Mail 3.15.0-dirty (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+        id S1754515AbeGIIgb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jul 2018 04:36:31 -0400
+Received: from mail-yb0-f195.google.com ([209.85.213.195]:41317 "EHLO
+        mail-yb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754495AbeGIIga (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jul 2018 04:36:30 -0400
+Received: by mail-yb0-f195.google.com with SMTP id s8-v6so6877344ybe.8
+        for <git@vger.kernel.org>; Mon, 09 Jul 2018 01:36:30 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=MVAM6uI4blVPZGxv1hD4mjRfGWRqXmMC0XTjXsXsb/w=;
+        b=IKoJ2Yplj95EANVxH1bD2Fv8GuembLDWfnpMGc/BNt3uLhoVZzCSJZIgIaJ7W7NyEu
+         jrRmoTsBJt3zOl7vqJrvhxZnA32iP3Hm5TWGlRTrPkUFF2hZTiaSUv+YvmfoVXCdYwjX
+         FZQn2Q61Yy4/dwhsDiofBSwKcJjDSycNY3xujaZCZXc/VTNIrswn80af/SFx9yCcr32Q
+         iiqK5UNPJlCclnFezEdXFOmWvRfb76fJH/TSpzaI33Yw1RmkI3KGZEW8uwKtND4FPgIC
+         pXMyEuNFCUbFoaSX5BXOX+3SxBbUL6vOHEKxcXc1o27erEOWY+LGHvE22KF7VQljA37s
+         wo/Q==
+X-Gm-Message-State: APt69E2gSks7oocZ1ipC2toQh6iQrfZuoEjZA9XrjGpo5ZZik3X+HmfU
+        UBGS2iW4BOqbdM6b8lOtBdYbvdi/pfmp1MA5uQs=
+X-Google-Smtp-Source: AAOMgpc8QehseJ5Vba6cTt10/X+b1Kw9sOGT+RIPl2z0OfHTemA7DuNUgVgTPTqAotah3KdnBWorwg7N/GwnKDApQ1g=
+X-Received: by 2002:a25:ac44:: with SMTP id r4-v6mr10193626ybd.497.1531125390011;
+ Mon, 09 Jul 2018 01:36:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+References: <20180628074655.5756-1-predatoramigo@gmail.com>
+ <20180708180104.17921-1-predatoramigo@gmail.com> <20180708180104.17921-2-predatoramigo@gmail.com>
+ <857b04d8-37b4-596f-6f3e-45b6e2a59442@gmail.com>
+In-Reply-To: <857b04d8-37b4-596f-6f3e-45b6e2a59442@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 9 Jul 2018 04:36:19 -0400
+Message-ID: <CAPig+cQopjftfSoPHPZQAzECTAUUwZ-pXYMeWEV=VJBFm63t9g@mail.gmail.com>
+Subject: Re: [PATCH v4 1/4] rebase: start implementing it as a builtin
+To:     rybak.a.v@gmail.com
+Cc:     Pratik Karki <predatoramigo@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Stefan Beller <sbeller@google.com>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am Fri, 6 Jul 2018 13:21:10 -0700
-schrieb Junio C Hamano <gitster@pobox.com>:
-
-> Henning Schild <henning.schild@siemens.com> writes:
-> 
-> > Valid values are already covered by all tests that use GPG, now also
-> > test what happens if we go for an invalid one.
-> >
-> > Signed-off-by: Henning Schild <henning.schild@siemens.com>
-> > ---
-> >  t/t7510-signed-commit.sh | 10 ++++++++++
-> >  1 file changed, 10 insertions(+)
-> >
-> > diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
-> > index 6e2015ed9..cb523513f 100755
-> > --- a/t/t7510-signed-commit.sh
-> > +++ b/t/t7510-signed-commit.sh
-> > @@ -227,4 +227,14 @@ test_expect_success GPG 'log.showsignature
-> > behaves like --show-signature' ' grep "gpg: Good signature" actual
-> >  '
-> >  
-> > +test_expect_success GPG 'check gpg config for malformed values' '
-> > +	mv .git/config .git/config.old &&
-> > +	test_when_finished "mv .git/config.old .git/config" &&  
-> 
-> Hmmmmm.  
-> 
-> Is the damage caused by throwing a bad value at gpg.format designed
-> to be so severe that "test_when_finished test_unconfig ..." cannot
-> recover from?  This test script is not about how "git config" is
-> implemented and works, so it would be a good idea for it to be even
-> oblivious to the fact that .git/config is the file being mucked with
-> when we do "git config".
-> 
-> I have a suspicion that you can just use test_config (which would
-> arrange "test_when_finished test_unconfig ..." for free).
-> 
-> > +	git config gpg.format malformed &&
-> > +	test_expect_code 128 git commit -S --amend -m "fail"
-> > 2>result &&  
-> 
-> Is this 128 something we document and have users rely on?  Or should
-> we rather say
-> 
-> 	test_must_fail git commit ...
-> 
-> here instead?
-
-This is basically an adopted copy of t1308 'check line errors for
-malformed values'.
-
-I will have a look at test_config.
-
-Henning
-
-> > +	test_i18ngrep "malformed value for gpg.format: malformed"
-> > result &&
-> > +	test_i18ngrep "fatal: .*\.git/config" result &&
-> > +	test_i18ngrep "fatal: .*line 2" result
-> > +'
+On Mon, Jul 9, 2018 at 3:59 AM Andrei Rybak <rybak.a.v@gmail.com> wrote:
+> On 2018-07-08 20:01, Pratik Karki wrote:
+> > +static int use_builtin_rebase(void)
+> > +{
+> > +     struct child_process cp = CHILD_PROCESS_INIT;
+> > +     struct strbuf out = STRBUF_INIT;
+> > +     int ret;
 > > +
-> >  test_done  
+> > +     argv_array_pushl(&cp.args,
+> > +                      "config", "--bool", "rebase.usebuiltin", NULL);
+> > +     cp.git_cmd = 1;
+> > +     if (capture_command(&cp, &out, 6))
+> > +             return 0;
+>
+> Does strbuf out leak on return here?
 
+Good catch. This _is_ a potential leak. Here is an excerpt from the
+documentation of pipe_command(), which is called by capture_command():
+
+    Any output collected in the buffers is kept even if the
+    command returns a non-zero exit.
+
+So, yes, this needs a strbuf_release() before returning.
+
+> > +     strbuf_trim(&out);
+> > +     ret = !strcmp("true", out.buf);
+> > +     strbuf_release(&out);
+> > +     return ret;
+> > +}
