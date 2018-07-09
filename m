@@ -2,83 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E2251F6AC
-	for <e@80x24.org>; Mon,  9 Jul 2018 14:35:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B69C61F6AC
+	for <e@80x24.org>; Mon,  9 Jul 2018 15:00:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932742AbeGIOfp (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jul 2018 10:35:45 -0400
-Received: from mail-oi0-f65.google.com ([209.85.218.65]:39098 "EHLO
-        mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932633AbeGIOfo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jul 2018 10:35:44 -0400
-Received: by mail-oi0-f65.google.com with SMTP id d189-v6so36266138oib.6
-        for <git@vger.kernel.org>; Mon, 09 Jul 2018 07:35:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=jQN2TkEHndEgJbsANbdFl2KQPxMGv3Yhvb+PzSUd3wo=;
-        b=Hr196SFmMhzKlGDgtwRDO4o3ZLORDUxhZMR2LHepq66wa/b/ror5demGY5Yj8+35EW
-         n088GeRn3DYjsjAM2YMDpJ22ollbWH5BBjZxwjDeT4IcdgZJhA0ZgRQcOZMTfwi2LVWC
-         yjRW48lkovJ0U2q9anHMTjXLivM+rWCe+ZnL4sCExqRvpeFHdwW/tt8fF4mgHBzrDHNI
-         y+Lipj1TqXynVp1T/tHTZL7eJKT6cThIn3061UX51hau2+3PCjeRknmbszarc9jlA8zQ
-         HO0kWf7jnEVGYxfz1TbFBXKANHqE8w7xtUCDQ2/h6YEILffCWaTDpfN66gVDYeJrnZSg
-         MTIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=jQN2TkEHndEgJbsANbdFl2KQPxMGv3Yhvb+PzSUd3wo=;
-        b=dARRW2kl3Oz8f32p9KTX38YVEx3EsL6Bk3Zsy9UjyHD3wrwt7yI/c1CH0SQ6BKu1Z+
-         4laKOpZrDAYXVSA4Q87IAuMTvRl96gU2pCRUZRV7jjBx//qL/4Uw0ZtS27sh4Wx3Mz51
-         16l3NXhurCmwRh8D6UNVkBLHewezGgGql1N7oWKn2sllXpW5EH/oLvHFQIX3cwfkfHyx
-         rxrPRK/UnXHlRZa84ZJx/wHEYJ5mEyuOfQbCSD3zHG+/eIpyCX/em0V8vJQy56IHryd2
-         K0mNyCKdrjmackR+pFvDHV7OL3r3PIsxr6msE2LATwDlSlXYsDzVTsaxBVWG1jSBxRWt
-         I13A==
-X-Gm-Message-State: APt69E3oXiNCk1sEOi3z41mKtb4TsxNqBaaUNBnMnTncKi81HCcrmSwv
-        DnGBes3mhoUxnAQZV91K7Dg1N/zz63bzUeJjeoo=
-X-Google-Smtp-Source: AAOMgpcYnYm0weu+nuwZP4til+EUlU3KZ7EN/oouS5/OUi8TvpRXURVG1uQw9tMxGbQCjgSsnt98L2ta7oM9FK6G8k0=
-X-Received: by 2002:aca:d452:: with SMTP id l79-v6mr22085507oig.222.1531146944279;
- Mon, 09 Jul 2018 07:35:44 -0700 (PDT)
+        id S933283AbeGIPAY (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jul 2018 11:00:24 -0400
+Received: from s019.cyon.net ([149.126.4.28]:42400 "EHLO s019.cyon.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932903AbeGIPAW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jul 2018 11:00:22 -0400
+X-Greylist: delayed 709 seconds by postgrey-1.27 at vger.kernel.org; Mon, 09 Jul 2018 11:00:21 EDT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=drbeat.li;
+         s=default; h=Message-ID:References:In-Reply-To:Subject:Cc:To:From:Date:
+        Content-Transfer-Encoding:Content-Type:MIME-Version:Sender:Reply-To:
+        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+        Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=iTbdvD23kY+jAKhAaV1j8Std91bkC7vBDoHzlknZXkY=; b=h5JHSfhFYDGzxP+kpMqTPS3pSa
+        4t4BndibBKz9mn7i29+i8Ufa89vHHY4PASfBKFVKErjxA7kXOWjhjE9JId11GlI+CddlIHtY6Uk7h
+        YEvqZxgM2vA1PxKDKaJN8pE5uLUD0ROX8XwKOk37A2MsZQ7Bc8Y04oEsrP0WiuW+hyCGO4MZ0ueim
+        7DTAUOgy/TycdQWO59jsXKha3Lp4NsaXsOz1rcKk8RFrKRNPWUCgbj5Xj5K9x1ZXRoMDqu3+9+T90
+        jVvvZ4/scNiiyHTCh8K7rw/tF/HrdfNT395m/f9uGkjp4NEWflx94P8dXzk+r+aWbLXLbyL7i1s28
+        ibwd6Z7Q==;
+Received: from [10.20.10.230] (port=60002 helo=mail.cyon.ch)
+        by s019.cyon.net with esmtpa (Exim 4.91)
+        (envelope-from <dev+git@drbeat.li>)
+        id 1fcXSn-00BPqO-2C; Mon, 09 Jul 2018 16:48:30 +0200
 MIME-Version: 1.0
-References: <20180616054157.32433-1-pclouds@gmail.com> <20180616054157.32433-3-pclouds@gmail.com>
- <xmqqbmbypyis.fsf@gitster-ct.c.googlers.com> <20180630083825.GA2436@duynguyen.home>
- <xmqqsh50qiiw.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqsh50qiiw.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 9 Jul 2018 16:35:17 +0200
-Message-ID: <CACsJy8DrGnK3eM1mL7eLUL1hBNct=8qNC2f=PmO+g+7rjV8idg@mail.gmail.com>
-Subject: Re: [PATCH 02/15] apply.c: stop using index compat macros
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 09 Jul 2018 16:48:28 +0200
+From:   Beat Bolli <dev+git@drbeat.li>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [RFC PATCH 6/6] utf8.c: avoid char overflow
+In-Reply-To: <nycvar.QRO.7.76.6.1807091513130.75@tvgsbejvaqbjf.bet>
+References: <20180708144342.11922-1-dev+git@drbeat.li>
+ <20180708144342.11922-7-dev+git@drbeat.li>
+ <nycvar.QRO.7.76.6.1807091513130.75@tvgsbejvaqbjf.bet>
+Message-ID: <0ceeb342fec1d0868b81cd64941df53c@drbeat.li>
+X-Sender: dev+git@drbeat.li
+User-Agent: cyon Webmail/1.2.9
+X-OutGoing-Spam-Status: No, score=-1.0
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - s019.cyon.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - drbeat.li
+X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
+X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 3, 2018 at 8:30 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Duy Nguyen <pclouds@gmail.com> writes:
->
-> > A singe patch conversion would look like below. But for that to
-> > happen, convert.c, rerere, ws.c and read-cache.c have to be converted
-> > first to not use the_index.
->
-> Yes, that was pretty much what I was driving at.  I do not have any
-> trouble seeing a patch that converts callees that are deep in the
-> callchain and are meant to serve helpers to make them capable of
-> working on arbitrary in-core index instance.  That's a welcome
-> change that allows us to reuse them in more context (namely, by
-> callers that want to work on istate that is not the_index
-> themselves).  Skipping the "intermediate" step like this patch would
-> force us to focus on converting these lower-layer dependencies.
+Hi Dscho
 
-OK I'll drop part one and incorporate the changes in later patches.
--- 
-Duy
+Am 09.07.2018 15:14, schrieb Johannes Schindelin:
+> Hi Beat,
+> 
+> On Sun, 8 Jul 2018, Beat Bolli wrote:
+> 
+>> In ISO C, char constants must be in the range -128..127. Change the 
+>> BOM
+>> constants to unsigned char to avoid overflow.
+>> 
+>> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+>> ---
+>>  utf8.c | 10 +++++-----
+>>  1 file changed, 5 insertions(+), 5 deletions(-)
+>> 
+>> diff --git a/utf8.c b/utf8.c
+>> index d55e20c641..833ce00617 100644
+>> --- a/utf8.c
+>> +++ b/utf8.c
+>> @@ -561,15 +561,15 @@ char *reencode_string_len(const char *in, int 
+>> insz,
+>>  #endif
+>> 
+>>  static int has_bom_prefix(const char *data, size_t len,
+>> -			  const char *bom, size_t bom_len)
+>> +			  const unsigned char *bom, size_t bom_len)
+>>  {
+>>  	return data && bom && (len >= bom_len) && !memcmp(data, bom, 
+>> bom_len);
+>>  }
+>> 
+>> -static const char utf16_be_bom[] = {0xFE, 0xFF};
+>> -static const char utf16_le_bom[] = {0xFF, 0xFE};
+>> -static const char utf32_be_bom[] = {0x00, 0x00, 0xFE, 0xFF};
+>> -static const char utf32_le_bom[] = {0xFF, 0xFE, 0x00, 0x00};
+>> +static const unsigned char utf16_be_bom[] = {0xFE, 0xFF};
+>> +static const unsigned char utf16_le_bom[] = {0xFF, 0xFE};
+>> +static const unsigned char utf32_be_bom[] = {0x00, 0x00, 0xFE, 0xFF};
+>> +static const unsigned char utf32_le_bom[] = {0xFF, 0xFE, 0x00, 0x00};
+> 
+> An alternative approach that might be easier to read (and avoids the
+> confusion arising from our use of (signed) chars for strings pretty 
+> much
+> everywhere):
+> 
+> #define FE ((char)0xfe)
+> #define FF ((char)0xff)
+> 
+> ...
+
+I have tried this first (without the macros, though), and thought it 
+looked
+really ugly. That's why I chose this solution. The usage is pretty local 
+and
+close to function has_bom_prefix().
+
+Would an explaining comment help?
+
+Beat
