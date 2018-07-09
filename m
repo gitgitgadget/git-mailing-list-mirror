@@ -2,157 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 45AF31F6AC
-	for <e@80x24.org>; Mon,  9 Jul 2018 15:45:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D8AC71F6AC
+	for <e@80x24.org>; Mon,  9 Jul 2018 15:47:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933077AbeGIPpK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jul 2018 11:45:10 -0400
-Received: from s019.cyon.net ([149.126.4.28]:35334 "EHLO s019.cyon.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932735AbeGIPpJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jul 2018 11:45:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=drbeat.li;
-         s=default; h=Message-ID:References:In-Reply-To:Subject:Cc:To:From:Date:
-        Content-Transfer-Encoding:Content-Type:MIME-Version:Sender:Reply-To:
-        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-        Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=PPLntW1QcsFOvyRtNWW9NjGiG+4bIEz/hPy6V6jHHQE=; b=FUgrhkUNLH6LnyAx3EvUhdvH3L
-        mCXdmUWwZgu41Oa25p7zxkwxarx2sIE1kqCq/FDdcyEyOphE+ewVMBwG3GlBXy9GeQc6w6Fcvz/5j
-        PX3ohjMqM5vZV/xpvvrTsjlO/qevLA9Q0DDXBYkTLAQX2CSeWp2ABuvGDHJcvGo2yMfIAnVY1MyTQ
-        kKpdayL9fU6WNbF8CD1KyFosKegDYOmvMc4r72G5yoQV0kW1NmeG5sJYqecknLq/LN2QAcXjL0TF4
-        GGge6TgSPfD7voJSoQGWhC5Dzx7ojJQ8J2eJAbWZdm88b05t46kLFkrdvd7VAwzlrtI4WN3iAjPmi
-        /o2a+84A==;
-Received: from [10.20.10.232] (port=63520 helo=mail.cyon.ch)
-        by s019.cyon.net with esmtpa (Exim 4.91)
-        (envelope-from <dev+git@drbeat.li>)
-        id 1fcYLZ-00Bh8r-W4; Mon, 09 Jul 2018 17:45:07 +0200
+        id S932947AbeGIPrM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jul 2018 11:47:12 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:34930 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932688AbeGIPrL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jul 2018 11:47:11 -0400
+Received: by mail-wm0-f67.google.com with SMTP id v3-v6so17667851wmh.0
+        for <git@vger.kernel.org>; Mon, 09 Jul 2018 08:47:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=HGR4O7BKEzotBYUuenYI7k5zsWOfuurde+7VK+pvDR4=;
+        b=G2TzCxq/1IabEZyDgZvRmw1AXtaPN+F2JOHsykgeXDikU2R+GQdp0dqbRD8c9edDXr
+         LOvmjD+sPc6FeVTns3kZbZc76QxHDMNCCOzvii5F9kouYEtwoKFYmU+4/nXlkAtjgpTH
+         AR0j7yzkl6hkqBTLzM7iAMys5UENOCvsdAR0iBOsWLSS2URFe10FH4z8qfjUs1G1LSva
+         5ACJKFPbZ+8sauwmfrslzpu1WnHOTSBM0k846Ghv/swEdcEOE7BKeixI/Q0mVrlV7AoW
+         uKdXoBPgLrsrs4DVkkxXJ1vF1pbkA8BCgEKm1uQLmF1dmzI5W5p7QNoB5gTSghVe2ou7
+         /dFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=HGR4O7BKEzotBYUuenYI7k5zsWOfuurde+7VK+pvDR4=;
+        b=fzZX7aPPCgeCPjzX6mdbtHb8iWsqL7DZahDrx+havXfnaizhsyBmmmTXKsKNbB9Wkq
+         DcCgDn1mTeDpBaK9yRWHCRuGWff7rag+AilJEoqWDs+dVnmOZGqZxlNbhrnD7tHZ2wTR
+         4pUlj+Ja87xLybV4X7pcsv8v6Oy2+fBaCMuo36IUpuOkaoSihlskNj3OdEUCPuPP1JjC
+         KYnFL4IzpPiflwcxDPKRxriWjcgt8FThbritvQlI20zeVues+yp1poqRh20dQNQUrb8Y
+         FRYPDwnX4RV6ZLxM+WKqP4V5draFjoDewbOSC0EbTUUMtLDGTaZTyllU5C5Pir9pJjAI
+         7AHQ==
+X-Gm-Message-State: APt69E1tgjTbelEl9Fib276pEsNNjXPJGkkRVgjUJiqfpFMwfEtsXmdL
+        OHIgI4M5b8A0P8Jknvj+HHY=
+X-Google-Smtp-Source: AAOMgpe7dlyQnfAevwzSEg8YaZFMSiykNlyZHOuA2LWal2hLLhoZ6lyYdrVLdfPzei2HpUSE9WiZZA==
+X-Received: by 2002:a1c:790b:: with SMTP id l11-v6mr9071644wme.66.1531151229932;
+        Mon, 09 Jul 2018 08:47:09 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id g17-v6sm625980wmd.25.2018.07.09.08.47.08
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 09 Jul 2018 08:47:08 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     henning.schild@siemens.com,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Ben Toews <mastahyeti@gmail.com>, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH 4/8] gpg-interface: introduce an abstraction for multiple gpg formats
+References: <cover.1530616446.git.henning.schild@siemens.com>
+        <db46732d1cd09a71200e00c2d09605d5beaff364.1530616446.git.henning.schild@siemens.com>
+        <CAN0heSrXpLCDRjnZC80QXBG27gd6m5reBn1hfNd_KXxnPVkA2g@mail.gmail.com>
+        <xmqqa7r4mg45.fsf@gitster-ct.c.googlers.com>
+        <20180709102139.274f0560@md1pvb1c.ad001.siemens.net>
+        <CAPig+cQyXC2o4fUARL_kqPn5+6adBpr+WUfAWWgu2QLjDn1eoQ@mail.gmail.com>
+Date:   Mon, 09 Jul 2018 08:47:08 -0700
+In-Reply-To: <CAPig+cQyXC2o4fUARL_kqPn5+6adBpr+WUfAWWgu2QLjDn1eoQ@mail.gmail.com>
+        (Eric Sunshine's message of "Mon, 9 Jul 2018 04:44:01 -0400")
+Message-ID: <xmqqy3ekfm2r.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 09 Jul 2018 17:45:05 +0200
-From:   Beat Bolli <dev+git@drbeat.li>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [RFC PATCH 6/6] utf8.c: avoid char overflow
-In-Reply-To: <0ceeb342fec1d0868b81cd64941df53c@drbeat.li>
-References: <20180708144342.11922-1-dev+git@drbeat.li>
- <20180708144342.11922-7-dev+git@drbeat.li>
- <nycvar.QRO.7.76.6.1807091513130.75@tvgsbejvaqbjf.bet>
- <0ceeb342fec1d0868b81cd64941df53c@drbeat.li>
-Message-ID: <e3df2644b59b170e26b2a7c0d3978331@drbeat.li>
-X-Sender: dev+git@drbeat.li
-User-Agent: cyon Webmail/1.2.9
-X-OutGoing-Spam-Status: No, score=-1.0
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - s019.cyon.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - drbeat.li
-X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
-X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 09.07.2018 16:48, schrieb Beat Bolli:
-> Hi Dscho
-> 
-> Am 09.07.2018 15:14, schrieb Johannes Schindelin:
->> Hi Beat,
->> 
->> On Sun, 8 Jul 2018, Beat Bolli wrote:
->> 
->>> In ISO C, char constants must be in the range -128..127. Change the 
->>> BOM
->>> constants to unsigned char to avoid overflow.
->>> 
->>> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
->>> ---
->>>  utf8.c | 10 +++++-----
->>>  1 file changed, 5 insertions(+), 5 deletions(-)
->>> 
->>> diff --git a/utf8.c b/utf8.c
->>> index d55e20c641..833ce00617 100644
->>> --- a/utf8.c
->>> +++ b/utf8.c
->>> @@ -561,15 +561,15 @@ char *reencode_string_len(const char *in, int 
->>> insz,
->>>  #endif
->>> 
->>>  static int has_bom_prefix(const char *data, size_t len,
->>> -			  const char *bom, size_t bom_len)
->>> +			  const unsigned char *bom, size_t bom_len)
->>>  {
->>>  	return data && bom && (len >= bom_len) && !memcmp(data, bom, 
->>> bom_len);
->>>  }
->>> 
->>> -static const char utf16_be_bom[] = {0xFE, 0xFF};
->>> -static const char utf16_le_bom[] = {0xFF, 0xFE};
->>> -static const char utf32_be_bom[] = {0x00, 0x00, 0xFE, 0xFF};
->>> -static const char utf32_le_bom[] = {0xFF, 0xFE, 0x00, 0x00};
->>> +static const unsigned char utf16_be_bom[] = {0xFE, 0xFF};
->>> +static const unsigned char utf16_le_bom[] = {0xFF, 0xFE};
->>> +static const unsigned char utf32_be_bom[] = {0x00, 0x00, 0xFE, 
->>> 0xFF};
->>> +static const unsigned char utf32_le_bom[] = {0xFF, 0xFE, 0x00, 
->>> 0x00};
->> 
->> An alternative approach that might be easier to read (and avoids the
->> confusion arising from our use of (signed) chars for strings pretty 
->> much
->> everywhere):
->> 
->> #define FE ((char)0xfe)
->> #define FF ((char)0xff)
->> 
->> ...
-> 
-> I have tried this first (without the macros, though), and thought it 
-> looked
-> really ugly. That's why I chose this solution. The usage is pretty 
-> local and
-> close to function has_bom_prefix().
-> 
-> Would an explaining comment help?
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-I have found an even simpler solution. Use proper char literals.
+> On Mon, Jul 9, 2018 at 4:22 AM Henning Schild
+> <henning.schild@siemens.com> wrote:
+>> Am Fri, 6 Jul 2018 10:24:58 -0700
+>> schrieb Junio C Hamano <gitster@pobox.com>:
+>> > Martin Ågren <martin.agren@gmail.com> writes:
+>> > >> +struct gpg_format_data gpg_formats[] = {
+>> > >> +       { .format = "PGP", .program = "gpg",
+>> > >> +         .extra_args_verify = { "--keyid-format=long", },
+>> > >> +         .sigs = { PGP_SIGNATURE, PGP_MESSAGE, },
+>> > >> +       },
+>> > >> +};
+>> > >
+>> > > I think those trailing commas are ok now, but I'm not sure...
+>> >
+>> > What we've been avoiding was the comma after the last element in the
+>> > enum (in other words, if PGP_FMT had ',' after it in the above
+>> > quoted addition, that would have been violation of that rule), as
+>> > having such a trailing comma used to be ANSI C violation as well.
+>>
+>> I guess that means the style is acceptable and does not require
+>> changes, please correct me if i am wrong.
+>
+> The trailing comma in the 'sigs' initializer is bothersome because
+> 'sigs' is declared as a 2-element array, and this initializer already
+> has two elements. Therefore, the comma is misleading to anyone reading
+> the code, making it appears as if additional items can be added. For
+> that reason, alone, it would be nice to see the unnecessary comma
+> removed.
+>
+> Ditto with regard to the trailing comma in the 'extra_args_verify'
+> initializer since 'extra_args_verify' is declared as a 1-element
+> array.
 
-I will put this into v2.
+I am not sure I agree with that reasoning.  The primary benefit we
+gain from the convention to allow trailing comma in struct/array
+initializers like these is that we can add a new field with a patch
+like this:
 
-Regards,
-Beat
+	 struct {
+	 	char *foo;
+	 	char *bar;
+	+	char *baz;
+	 } xyzzy = {
+	 	"foo",
+	 	"bar",
+	+	"baz",
+	 };
+
+without having to touch the initialization of the field that used to
+be at the end, i.e. .bar="bar", and just can add the new stuff at
+the end.  But that is only possible as long as we allow the trailing
+comma after the last element.  The same argument applies to an array
+initialization (i.e. when we need to allow more elements to the
+.extra_args_to_verify[] array).
+
+All of the above is somewhat moot for the other reason I already
+stated in the thread, though.  And that may be a good reason why we
+would want to lose these trailing commas from the last elements
+(i.e.  if it does not prepare the current code to avoid having to
+touch the last line when we add a new element at the end, then
+trailing comma is a visual hiccup that does not serve any useful
+purpose).
 
 
-diff --git a/utf8.c b/utf8.c
-index d55e20c641..982217eec9 100644
---- a/utf8.c
-+++ b/utf8.c
-@@ -566,10 +566,10 @@ static int has_bom_prefix(const char *data, size_t 
-len,
-         return data && bom && (len >= bom_len) && !memcmp(data, bom, 
-bom_len);
-  }
 
--static const char utf16_be_bom[] = {0xFE, 0xFF};
--static const char utf16_le_bom[] = {0xFF, 0xFE};
--static const char utf32_be_bom[] = {0x00, 0x00, 0xFE, 0xFF};
--static const char utf32_le_bom[] = {0xFF, 0xFE, 0x00, 0x00};
-+static const char utf16_be_bom[] = {'\xFE', '\xFF'};
-+static const char utf16_le_bom[] = {'\xFF', '\xFE'};
-+static const char utf32_be_bom[] = {'\0', '\0', '\xFE', '\xFF'};
-+static const char utf32_le_bom[] = {'\xFF', '\xFE', '\0', '\0'};
-
-  int has_prohibited_utf_bom(const char *enc, const char *data, size_t 
-len)
-  {
