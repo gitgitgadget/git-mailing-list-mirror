@@ -2,152 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 385C91F85A
-	for <e@80x24.org>; Mon,  9 Jul 2018 18:20:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8169C1F6AC
+	for <e@80x24.org>; Mon,  9 Jul 2018 18:22:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932798AbeGISUv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jul 2018 14:20:51 -0400
-Received: from mail-yw0-f193.google.com ([209.85.161.193]:38130 "EHLO
-        mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932633AbeGISUu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jul 2018 14:20:50 -0400
-Received: by mail-yw0-f193.google.com with SMTP id r3-v6so6878388ywc.5
-        for <git@vger.kernel.org>; Mon, 09 Jul 2018 11:20:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=cGvpVIh5rVuSHIp6Vdsk/R9r17kQ602t7Tro8s0kDlQ=;
-        b=a8QDFfDfJaBN46s6xTxAIf6Uu9XXzw0nxPzmLCESLWRKPmazMmnw5NofdquTYuzahG
-         U1Vrw3RKthmeJBnsuEEE2eV8Yk2zubw2CZt0yiBycj+PilLOSZgS6H5x3Px69l1DPSIM
-         pZLrau08Agb783jFEWpMRWxq67rbxUMlNkn50vXUi7BaEVna94VTl65p4DwLmBYT7DJj
-         cReiV78ctCKJ01pAHwylWA2EsI5uHee9Ud0Oi4r9Hs3Dls+QayLi4F8dAC6VaIcsP0HQ
-         2k4pGXXk03dXvpp0ATo+NEoNDXctXr2GXJR7cDZ4/UDRw7zdKn13C7YNmPED1siI5DZ/
-         ZLpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=cGvpVIh5rVuSHIp6Vdsk/R9r17kQ602t7Tro8s0kDlQ=;
-        b=KTQkbfyB6Bi+pW4kE3jymd8ku62cotF0fe1DqlIeO5K9D/LbyYzDvR9hQp+ApzM3Et
-         YzRedI16+qBYzFCGo4BGaqrh1o6ZlROZurixBRoDzJSMh5U2Eu/t0wvqLBZYbz2nTza2
-         Y5TL5radAef11Go564pkTy0rtdIq3hSB9nN2kFjyzNt1G/SN2La+v7iOe8hCzjoAoQMX
-         NC98ImvyevFa7WPX2Sn/jlD0p/SwgIOptHqM3/25RZj8thHNL+1A0zFO19bqreNdFbGx
-         GA8JBgAQsFTcM62gPu1ayWYaleFf7Re6py/TdPZWtq7qRSfrVqM2aVsNcxWwHe3SFTYq
-         Ch9g==
-X-Gm-Message-State: APt69E1a9t8CJIfmQiznwsfEB0uk4MozGLfDnyPlBEiT28k5xPc9ChFm
-        SZClRsY3GAZaOH+KxWSJIyCHsQxJ0l/mxI+iuacLHA==
-X-Google-Smtp-Source: AAOMgpfagsjUdyChVMCW/Ivyj7UW3W3jriPJ3clPaElmY9rUVCm1ZbGNlJv+n2lPwoTIiYcuOou/gKVcMYgQiyinIuw=
-X-Received: by 2002:a81:ae41:: with SMTP id g1-v6mr10283641ywk.345.1531160449279;
- Mon, 09 Jul 2018 11:20:49 -0700 (PDT)
+        id S932902AbeGISW3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jul 2018 14:22:29 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:34347 "EHLO
+        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S932574AbeGISW2 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 9 Jul 2018 14:22:28 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.nyi.internal (Postfix) with ESMTP id ABA3121ADE;
+        Mon,  9 Jul 2018 14:22:27 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Mon, 09 Jul 2018 14:22:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=living180.net;
+         h=cc:content-transfer-encoding:content-type:date:from
+        :in-reply-to:message-id:mime-version:references:subject:to
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=KSJg446aMRgzmiDsW
+        DxiaOUN/FfxCPGrYcm+L31iGUI=; b=OZl/qslPvDHgLd29PzXnhlEVj1UDPvB2v
+        rDxYiYPUBZnefAU+pQ0sJ03xcuHJgL0ouYTiE3ah4kc93Yc08NP9crLnfsqeyncF
+        OVpWk3jgeDvd9EVneElLsmM7zqflfZQBtyKpsVyiMWftIMYpdra8wLURq1MktN3v
+        bcVIFYu5ulQ8S3/UvPsTrZaFWMbrqBLkX+ypAlyseCeFF2DyLc9rc9FuvnwmCz9U
+        N6IRh5Yhv5mRRKrSuqlRN8JtRcnKoaYiws9vs44YqzJMYpCgjJEa+GLbvwaubnyc
+        1/vc17VEWvExwnK24LIMLZPw4yi4SIveDIgg8u+nPYQ8FtpUJPbPw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:content-type
+        :date:from:in-reply-to:message-id:mime-version:references
+        :subject:to:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=KSJg44
+        6aMRgzmiDsWDxiaOUN/FfxCPGrYcm+L31iGUI=; b=PblsgvmxExV08VsT9wKveK
+        6U5HqFmjC1Dwrnw6GrxywvIVnKqy6RCUCZ0TMoyGIaZ8EsCJ/wRClNBWFRIdouhK
+        Yu1AG/wB1E+GYv/odLw8pXahtzLe3GLvudEfZDwZ9NI4d0961YHo5AWMloc0sGeg
+        W1wcUTOHoM2nHfCWUuQnqsEHrKGlsySMVtL23B2dRptSkEdbh3xUXm6ydhjdfM9V
+        xchWVVg8IrFOQglf9wlmuaGo78srbnQxsyPJTjKloMluzBFFAVoLE6KvhRigxQRU
+        LnYNgSh7oDlFvd/mSPfV23YqHjRnmyLMnxHQpRkHlCpXKLLfFh1H7OfObpSON6KA
+        ==
+X-ME-Proxy: <xmx:46dDW2y1NEcEimK-OoFfdHUn9tL4yq6YY89yeNY_WuBwT7GGUUg-Ug>
+    <xmx:46dDWznF9rpuiqSbKif-vXT44Y3IcPPfrKiqHfXJ9wWs1HYf-VYXeA>
+    <xmx:46dDW95OgiaXgQh7rWgD0z3TEZzSAP5hHvFFzXaJNuAyPHntGWAYnA>
+    <xmx:46dDWyHouYG31DWeDSVeaZdnxbf-siatrsJffvXvQjY6_d7juBZIsg>
+    <xmx:46dDW2t_U8pHrf4obY3DF7gpRMwwJkofoanGr7wx9eEbGZZ607LlRA>
+    <xmx:46dDWxo52TxLu-Hu-u-CXy3AIibRnePdZANFGWp4MVZVp-rX-eeXbA>
+X-ME-Sender: <xms:46dDW1i4gwhw0hx-iARZ1BogbTTM4cQhL9SwwNrHyCUMkigiO-HeBQ>
+Received: from [0.0.0.0] (unknown [173.199.115.247])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 596FAE4514;
+        Mon,  9 Jul 2018 14:22:26 -0400 (EDT)
+Subject: Re: [PATCH 2/2] t3430: update to test with custom commentChar
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+References: <20180708184110.14792-1-dharding@living180.net>
+ <20180708184110.14792-3-dharding@living180.net>
+ <20180708210200.GA4573@genre.crustytoothpaste.net>
+ <nycvar.QRO.7.76.6.1807090944400.75@tvgsbejvaqbjf.bet>
+From:   Daniel Harding <dharding@living180.net>
+Message-ID: <13a876a2-7fbc-de05-2e82-814c782e8a80@living180.net>
+Date:   Mon, 9 Jul 2018 21:22:22 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.0
 MIME-Version: 1.0
-References: <cover.1525448066.git.johannes.schindelin@gmx.de>
- <pull.1.v3.git.gitgitgadget@gmail.com> <799da25ef35d2b23dc0df1e6af0772e634f39f19.1530617166.git.gitgitgadget@gmail.com>
-In-Reply-To: <799da25ef35d2b23dc0df1e6af0772e634f39f19.1530617166.git.gitgitgadget@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 9 Jul 2018 11:20:38 -0700
-Message-ID: <CAGZ79ka9kjnu=taVBnkTicZBGZo-EbPOkzRxXihH8Y=Fcn5+-g@mail.gmail.com>
-Subject: Re: [PATCH v3 17/20] range-diff: add a man page
-To:     gitgitgadget@gmail.com
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <nycvar.QRO.7.76.6.1807090944400.75@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 3, 2018 at 4:26 AM Johannes Schindelin via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+Hi Johannes,
 
-> +'git range-diff' [--color=[<when>]] [--no-color] [<diff-options>]
-> +       [--dual-color] [--creation-factor=<factor>]
-> +       ( <range1> <range2> | <rev1>...<rev2> | <base> <rev1> <rev2> )
-> +
-> +DESCRIPTION
-> +-----------
-> +
-> +This command shows the differences between two versions of a patch
-> +series, or more generally, two commit ranges (ignoring merges).
+On Mon, 09 Jul 2018 at 10:52:13 +0300, Johannes Schindelin wrote:
+> Hi Brian,
+> 
+> On Sun, 8 Jul 2018, brian m. carlson wrote:
+> 
+>> On Sun, Jul 08, 2018 at 09:41:11PM +0300, Daniel Harding wrote:
+>>> Signed-off-by: Daniel Harding <dharding@living180.net>
+>>
+>> I think maybe, as you suggested, a separate test for this would be
+>> beneficial.  It might be as simple as modifying 'script-from-scratch' by
+>> doing "sed 's/#/>/'".
+> 
+> It might be even simpler if you come up with a new "fake editor" to merely
+> copy the todo list, then run a rebase without overridden
+> commentChar, then one with overridden commentChar, then pipe the todo list
+> of the first through that `sed` call:
+> 
+> 
+>          write_script copy-todo-list.sh <<-\EOF &&
+>          cp "$1" todo-list.copy
+>          EOF
+> 	test_config sequence.editor \""$PWD"/copy-todo-list.sh\" &&
+> 	git rebase -r <base> &&
+> 	sed "s/#/%/" <todo-list.copy >expect &&
+> 	test_config core.commentChar % &&
+> 	git rebase -r <base> &&
+> 	test_cmp expect todo-list.copy
 
-Does it completely ignore merges or does it die("not supported"), how is the
-user expected to cope with the accidental merge in the given range?
+Indeed, as I thought about it more, using a "no-op" todo editor seemed 
+like a good approach.  Thanks for giving me a head start - I'll play 
+with that and try to get a new patch with an improved test posted in the 
+next couple of days.
 
-> +To that end, it first finds pairs of commits from both commit ranges
-> +that correspond with each other. Two commits are said to correspond when
-> +the diff between their patches (i.e. the author information, the commit
-> +message and the commit diff) is reasonably small compared to the
-> +patches' size. See ``Algorithm` below for details.
-> +
-> +Finally, the list of matching commits is shown in the order of the
-> +second commit range, with unmatched commits being inserted just after
-> +all of their ancestors have been shown.
-> +
-> +
-> +OPTIONS
-> +-------
-> +--dual-color::
-> +       When the commit diffs differ, recreate the original diffs'
-> +       coloring, and add outer -/+ diff markers with the *background*
-> +       being red/green to make it easier to see e.g. when there was a
-> +       change in what exact lines were added.
+One question about my original patch - there I had replaced a "grep -v" 
+call with a "git stripspace" call in the 'generate correct todo list' 
+test.  Is relying on "git stripspace" in a test acceptable, or should 
+external text manipulation tools like grep, sed etc. be preferred?
 
-I presume this is a boolean option, and can be turned off with
---no-dual-color, but not with --dual-color=no. Would it be worth to
-give the --no-option here as well.
-The more pressing question I had when reading this, is whether this
-is the default.
+Thanks,
 
-> +--creation-factor=<percent>::
-> +       Set the creation/deletion cost fudge factor to `<percent>`.
-> +       Defaults to 60. Try a larger value if `git range-diff` erroneously
-> +       considers a large change a total rewrite (deletion of one commit
-> +       and addition of another), and a smaller one in the reverse case.
-> +       See the ``Algorithm`` section below for an explanation why this is
-> +       needed.
-> +
-> +<range1> <range2>::
-> +       Compare the commits specified by the two ranges, where
-> +       `<range1>` is considered an older version of `<range2>`.
-
-Is it really older? How does that help the user?
-I think this comes from the notion of e.g. patch 4 ("range-diff: improve the
-order of the shown commits "), that assume the user wants the range-diff
-to be expressed with range2 as its "base range".
-
-> +<rev1>...<rev2>::
-> +       Equivalent to passing `<rev2>..<rev1>` and `<rev1>..<rev2>`.
-
-That is cool.
-
-> +Algorithm
-> +---------
-> +
-> +The general idea is this: we generate a cost matrix between the commits
-> +in both commit ranges, then solve the least-cost assignment.
-
-Can you say more about the generation of the cost matrix?
-I assume that it counts the number of lines added/deleted to make
-one patch into the other patch.
-
-If that assumption was correct, an edit of a commit message adding one
-line is just as costly as adding one line in the diff.
-
-Further I would assume that the context lines are ignored?
-
-I think this is worth spelling out.
-
-Another spot to look at is further metadata, such as author and author-date,
-which are kept the same in a rebase workflow.
-
-Maybe worth noting that this algorithm doesn't pay special attention to these,
-but a change in them would be strong signal that the two patches compared are
-not the same?
-
-I like the example below, thanks!
-Stefan
+Daniel Harding
