@@ -2,73 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D4F411F6AC
-	for <e@80x24.org>; Mon,  9 Jul 2018 21:47:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 467D11F6AC
+	for <e@80x24.org>; Mon,  9 Jul 2018 21:47:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933280AbeGIVrS (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jul 2018 17:47:18 -0400
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:36262 "EHLO
-        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933118AbeGIVrR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jul 2018 17:47:17 -0400
-Received: by mail-yw0-f196.google.com with SMTP id t198-v6so7108467ywc.3
-        for <git@vger.kernel.org>; Mon, 09 Jul 2018 14:47:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ulxRs9pkpKpkzKdJYVW4SWYsvFkexprthLaDCsqLEEE=;
-        b=kGJWBKfdT9eSQmI8JsoGcXstGHXNA71aQuv1GowZUfdsJsGpMxUxzFQM45a342vyjG
-         Y2MX04zN1X0FbbIqPw23Ns4K2Tk1YDSoQFuG2z07Y8t8VCBrN8/iLbeLLsdDhR4TVwqV
-         m2N7j8zt8sGvZ6TyrX5TCKPbdRGO+kGFguzsj71k3KgOYS05nIN1GgqBU/lCQinkcT5j
-         x2LDwBLZdadywybHqCKZXbGPXtQADqdecq5ScYN9OG/2WtHAD3UIxek/ymzcllNXpaXl
-         ag9z8YMBeEXGH1MqMjFNcajQt/z2jDkGRxuS02P/o9HyUkHeuyD2ebo+pCmTvPNZHwtz
-         758Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ulxRs9pkpKpkzKdJYVW4SWYsvFkexprthLaDCsqLEEE=;
-        b=ucyLwcSIlChqd0yVvUAHh/ywHlDyLL//drhpYT1ZmbNFHUoPoUSe7WfkEMVsgAxI6b
-         izmdxYnIb1MQ7M4xyraQsgNm5Ir29rBw2tSx2SFM2XHpRqQesfPiZu0BueQR6wodOuSm
-         xxJ86zy+dtMW063C2sf9xKB27dVrngt4MTkrYqLi2Tg//oH5Df0bICktrEsbZpryWzPW
-         17u9kdsiVA1xsWUFu3xAYHLS7QhYhj/Zb7gV2as6pOTKG2D2Zvi+WBMX1zpQJTHMbC8q
-         KO+vyqZsN4ZqQYfD713zNQZEKxJQWR52e/PAkweZDJv9iwd3vZSBR5zoleF79KT1fHgn
-         TAQQ==
-X-Gm-Message-State: APt69E1IpwrD5ag2e9+PgC5hcZOKjgZO/f7i2mx3kQLb7yAbnc/SjiOI
-        s2k0urtRbl9vnMS4XVzbYDHVrulLO7Xz3dzV9d46Yw==
-X-Google-Smtp-Source: AAOMgperhlyvDfsLrNHQ92zyfWO3dzNoiVSQ7gj0/CbZad8LGlgj59Z052XpqnvzjkOEJd6TmyEbTN743ZEfsACTxiI=
-X-Received: by 2002:a0d:c944:: with SMTP id l65-v6mr10792739ywd.414.1531172836937;
- Mon, 09 Jul 2018 14:47:16 -0700 (PDT)
+        id S933255AbeGIVru (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jul 2018 17:47:50 -0400
+Received: from s019.cyon.net ([149.126.4.28]:50798 "EHLO s019.cyon.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S933118AbeGIVrt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jul 2018 17:47:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=drbeat.li;
+         s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:MIME-Version
+        :Date:Message-ID:From:References:Cc:To:Subject:Sender:Reply-To:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=Mu7nftuPZYnA32GYua1RHG8yy636vrSUbqMxOjXTCRs=; b=vfcW0Dx8+SaY5KPSJBp3AKXJdU
+        sEOsLtjX6PkauwKp+59Tu04XJPAi8u4VnCdXN9A3G2mQgr4bPSspdnFNs0job68Nu1m2JMHZ0a7B0
+        irg4qDWlC6cx11wIhfzTnSKXNamayqC0Pnpseyo8yV/jVqdcUOhSiAgCU8qJxdhcQGZKmVIK+DiTa
+        zdVircV3cKxU6dxXCQrI9xRhGpCjRXxvPvg705yqeIqXrZZOKz+1thGLiBFTOrf26YwnAAD+icqD8
+        4ZxTgsB1h1EEyX2uBjacGv3XWoMLW75WOK3DFogiDlkv0AiiydhF3xoWlXGzAZYNzj06WEOyltIB2
+        OkvmyY1A==;
+Received: from [10.20.10.233] (port=25956 helo=mail.cyon.ch)
+        by s019.cyon.net with esmtpa (Exim 4.91)
+        (envelope-from <dev+git@drbeat.li>)
+        id 1fce0Y-00DNe6-OV; Mon, 09 Jul 2018 23:47:48 +0200
+Subject: Re: [PATCH 0/6] Compile cleanly in pedantic mode
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+References: <20180708144342.11922-1-dev+git@drbeat.li>
+ <20180709192537.18564-1-dev+git@drbeat.li>
+ <xmqqd0vwaxrq.fsf@gitster-ct.c.googlers.com>
+From:   Beat Bolli <dev+git@drbeat.li>
+Message-ID: <0306f303-81c1-af5a-4b4f-007f948dc563@drbeat.li>
+Date:   Mon, 9 Jul 2018 23:47:46 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:52.0)
+ Gecko/20100101 Thunderbird/52.9.0
 MIME-Version: 1.0
-References: <cover.1529616356.git.jonathantanmy@google.com> <cover.1531168854.git.jonathantanmy@google.com>
-In-Reply-To: <cover.1531168854.git.jonathantanmy@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 9 Jul 2018 14:47:05 -0700
-Message-ID: <CAGZ79kadsaoiM4o+GJQGX=HF2nLrgcLfHbvarvF+22cNDsn95w@mail.gmail.com>
-Subject: Re: [PATCH v2 on ds/commit-graph-fsck 0/6] Object store refactoring:
- commit graph
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <xmqqd0vwaxrq.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-OutGoing-Spam-Status: No, score=-1.0
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - s019.cyon.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - drbeat.li
+X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
+X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+On 09.07.18 23:45, Junio C Hamano wrote:
+> Beat Bolli <dev+git@drbeat.li> writes:
+> 
+>> While developing 6aaded550 ("builtin/config: work around an unsized
+>> array forward declaration", 2018-07-05), I have compiled Git with
+>> CFLAGS="-std=c99 -pedantic".
+> 
+> Nicely done.  
+> 
+> With these 6 patches and the USE_PARENCE_AROUND_GETTEXT_N hack, the
+> forward decl of the unsized static array you dealt with separately
+> becomes the only remaining violation in the codebase, which is good.
+> 
+> Will queue.  Thanks.
 
-> This is on ds/commit-graph-fsck.
->
-[...]
-> I've also added a patch (patch 1) that removes some duplication of
-> implementation that Junio talked about in [1].
+Thanks!
 
-I think this series is good;
-Thanks,
-Stefan
+Beat
