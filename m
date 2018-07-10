@@ -6,32 +6,32 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 134781F85A
-	for <e@80x24.org>; Tue, 10 Jul 2018 04:31:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 845DD1F85B
+	for <e@80x24.org>; Tue, 10 Jul 2018 04:32:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751082AbeGJEbq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jul 2018 00:31:46 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53132 "HELO cloud.peff.net"
+        id S1751129AbeGJEcN (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jul 2018 00:32:13 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53150 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751000AbeGJEbo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jul 2018 00:31:44 -0400
-Received: (qmail 22173 invoked by uid 109); 10 Jul 2018 04:31:44 -0000
+        id S1751099AbeGJEcK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jul 2018 00:32:10 -0400
+Received: (qmail 22191 invoked by uid 109); 10 Jul 2018 04:32:10 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 10 Jul 2018 04:31:44 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 10 Jul 2018 04:32:10 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19643 invoked by uid 111); 10 Jul 2018 04:31:45 -0000
+Received: (qmail 19666 invoked by uid 111); 10 Jul 2018 04:32:11 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 10 Jul 2018 00:31:45 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 10 Jul 2018 00:32:11 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Jul 2018 00:31:42 -0400
-Date:   Tue, 10 Jul 2018 00:31:42 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Jul 2018 00:32:08 -0400
+Date:   Tue, 10 Jul 2018 00:32:08 -0400
 From:   Jeff King <peff@peff.net>
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Cc:     Andrei Rybak <rybak.a.v@gmail.com>, git@vger.kernel.org,
         Christian Couder <christian.couder@gmail.com>,
         Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH v2 1/2] sequencer: handle empty-set cases consistently
-Message-ID: <20180710043142.GA1909@sigill.intra.peff.net>
+Subject: [PATCH v2 2/2] sequencer: don't say BUG on bogus input
+Message-ID: <20180710043207.GB1909@sigill.intra.peff.net>
 References: <20180710043120.GA1330@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -42,82 +42,63 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If the user gives us a set that prepare_revision_walk()
-takes to be empty, like:
+When cherry-picking a single commit, we go through a special
+code path that avoids creating a sequencer todo list at all.
+This path expects our revision parsing to turn up exactly
+one commit, and dies with a BUG if it doesn't.
 
-  git cherry-pick base..base
+But it's actually quite easy to fool. For example:
 
-then we report an error. It's nonsense, and there's nothing
-to pick.
+  $ git cherry-pick --author=no.such.person HEAD
+  error: BUG: expected exactly one commit from walk
+  fatal: cherry-pick failed
 
-But if they use revision options that later cull the list,
-like:
+This isn't a bug; it's just bogus input.
 
-  git cherry-pick --author=nobody base~2..base
+The condition to trigger this message actually has two
+parts:
 
-then we quietly create an empty todo list and return
-success.
+  1. We saw no commits. That's the case in the example
+     above. Let's drop the "BUG" here to make it clear that
+     the input is the problem. And let's also use the phrase
+     "empty commit set passed", which matches what we say
+     when we do a real revision walk and it turns up empty.
 
-Arguably either behavior is acceptable, but we should
-definitely be consistent about it. Reporting an error
-seems to match the original intent, which dates all the way
-back to 7e2bfd3f99 (revert: allow cherry-picking more than
-one commit, 2010-06-02). That in turn was trying to match
-the single-commit case that existed before then (and which
-continues to issue an error).
+  2. We saw more than one commit. That one _should_ be
+     impossible to trigger, since we fed at most one tip and
+     provided the no_walk option (and we'll have already
+     expanded options like "--branches" that can turn into
+     multiple tips). If this ever triggers, it's an
+     indication that the conditional added by 7acaaac275
+     (revert: allow single-pick in the middle of cherry-pick
+     sequence, 2011-12-10) needs to more carefully define
+     the single-pick case.
+
+     So this can remain a bug, but we'll upgrade it to use
+     the BUG() macro, which would make it easier to detect
+     and analyze if it does trigger.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- sequencer.c                     | 6 ++++--
- t/t3510-cherry-pick-sequence.sh | 7 ++++++-
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ sequencer.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 5354d4d51e..f692b2ef44 100644
+index f692b2ef44..8f0a015160 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -1863,8 +1863,6 @@ static int prepare_revs(struct replay_opts *opts)
- 	if (prepare_revision_walk(opts->revs))
- 		return error(_("revision walk setup failed"));
- 
--	if (!opts->revs->commits)
--		return error(_("empty commit set passed"));
- 	return 0;
- }
- 
-@@ -2317,6 +2315,10 @@ static int walk_revs_populate_todo(struct todo_list *todo_list,
- 			short_commit_name(commit), subject_len, subject);
- 		unuse_commit_buffer(commit, commit_buffer);
+@@ -3636,8 +3636,10 @@ int sequencer_pick_revisions(struct replay_opts *opts)
+ 		if (prepare_revision_walk(opts->revs))
+ 			return error(_("revision walk setup failed"));
+ 		cmit = get_revision(opts->revs);
+-		if (!cmit || get_revision(opts->revs))
+-			return error("BUG: expected exactly one commit from walk");
++		if (!cmit)
++			return error(_("empty commit set passed"));
++		if (get_revision(opts->revs))
++			BUG("unexpected extra commit from walk");
+ 		return single_pick(cmit, opts);
  	}
-+
-+	if (!todo_list->nr)
-+		return error(_("empty commit set passed"));
-+
- 	return 0;
- }
  
-diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
-index b42cd66d3a..3505b6aa14 100755
---- a/t/t3510-cherry-pick-sequence.sh
-+++ b/t/t3510-cherry-pick-sequence.sh
-@@ -480,11 +480,16 @@ test_expect_success 'malformed instruction sheet 2' '
- 	test_expect_code 128 git cherry-pick --continue
- '
- 
--test_expect_success 'empty commit set' '
-+test_expect_success 'empty commit set (no commits to walk)' '
- 	pristine_detach initial &&
- 	test_expect_code 128 git cherry-pick base..base
- '
- 
-+test_expect_success 'empty commit set (culled during walk)' '
-+	pristine_detach initial &&
-+	test_expect_code 128 git cherry-pick -2 --author=no.such.author base
-+'
-+
- test_expect_success 'malformed instruction sheet 3' '
- 	pristine_detach initial &&
- 	test_expect_code 1 git cherry-pick base..anotherpick &&
 -- 
 2.18.0.400.g702e398724
-
