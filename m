@@ -2,131 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C4821F85A
-	for <e@80x24.org>; Tue, 10 Jul 2018 21:26:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 141CC1F85B
+	for <e@80x24.org>; Tue, 10 Jul 2018 21:37:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732413AbeGJV1o (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jul 2018 17:27:44 -0400
-Received: from mail-qt0-f174.google.com ([209.85.216.174]:32802 "EHLO
-        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732205AbeGJV1n (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jul 2018 17:27:43 -0400
-Received: by mail-qt0-f174.google.com with SMTP id l10-v6so19697548qtj.0
-        for <git@vger.kernel.org>; Tue, 10 Jul 2018 14:26:45 -0700 (PDT)
+        id S1732313AbeGJViq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jul 2018 17:38:46 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:43952 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732187AbeGJViq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jul 2018 17:38:46 -0400
+Received: by mail-wr1-f66.google.com with SMTP id b15-v6so16093734wrv.10
+        for <git@vger.kernel.org>; Tue, 10 Jul 2018 14:37:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=+1XhkXx99dLPu/k9o0KIMjv4vERJ3EQuU+nAZps4gZs=;
-        b=j+EpXemLol4m2pDfKO+IkXF0qWtl0hVSQpt3CQ0MpTBU+KzcAulmsk3T/nqYQ+xly5
-         cMJywqvj/A7+cFjARckAuMFUkPC77AcMqNya+dgAVUba1tRjmqce7RaSF8/3bT+i6nkI
-         3Bt5bw9jZiWuiPLWk798iKj4lUSzulOfCZpo+UQmZ3+mZrP+5cigUuwe/KzLltSwk9sE
-         w3d0B8VqNU9/7yD8/e0Cx3GcYduS5xHWVl5LOR7MNz47/up1oZ4Hk27F3Nks5YhUB1+D
-         WV/yKXdbEP+PgzXq8FRye+qtkaMg5UM+pyI7zosdDPJA/su+e2+lULO6nPrk49gyqw0C
-         9Ovg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=4YDhGqe+Ve+uN2rSkrjbzuD9Nd5CWq5ktkKz3qmb2HY=;
+        b=JapTEDyTwDvg04aaNC3FyC+HjGEGo6OQLo+00M/PxKxuA25xIx7PpE/jdK/5LCm4oo
+         Pcw6AnCFnXkkT1jgxL7m07vwiAKOZPk1ELLLPBkmgFCNsHzqArAPonxoBK3+IdFb4x96
+         PZ2EzEKUlqbfdaafgfVs4m8gDRnI+TmQn6l8IzxR7MNuwhyTHsYPzdDQvsn/d9RVjmBL
+         MkNdNrRhwHV5hZLXhoah/CM3Q0hLpyAB0O+eUBlzfUNLrbe4ahCM+iZ3DIMiUzW0d7eZ
+         yGCa9Vbnzt8CoqvPi2sXgZAEXXI+iPRLMs64anpPP0hWqZNvP4Af9kWAjxiK+mdjFr2W
+         cP+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=+1XhkXx99dLPu/k9o0KIMjv4vERJ3EQuU+nAZps4gZs=;
-        b=NVyMXf/NLgYhwduOcYQXMlG444JXh35WtcqR4d3ElQn/raC/8opPLvWqypurr9G+vO
-         wuRg/wrllp/GJ+SD6ERYkmN9vZGWxR+Fs+Mz9Yl5ubHJiOO3dhvYKas3HvlSUYw4vVma
-         gl+tPeuGQyq6MRbxcZtiLFlE72C+izUSPXcjv8jQdF2sRxDhaPuxDdWFuaaJcgE2leUR
-         iALiQowxEaGVLhwj5xvz8uTB/Jos7F5SKxw2BHEWFfxMODjr27Bt8K7/xdao34puJQvu
-         xBsDv0zvQ98p1xGtGgn/CQUTs01olW2adLZehoSvTSW4CByJQhUyri94hs6/YHRaMzgb
-         QMTg==
-X-Gm-Message-State: APt69E1Pr0V6Bm+Wk6sDrdUZDKYq5IZQyMgmYOOeiwT8NHCBjyn2cPI7
-        BiOeHTGsYdxi//i8gyWg2os=
-X-Google-Smtp-Source: AAOMgpdHlQsJg+VU1bP+xBGxQYapjE3p5sDlyiaGYZoLcBckWYgOv0qN1K13Bpyqh594jr+U6ZJqpQ==
-X-Received: by 2002:ac8:354e:: with SMTP id z14-v6mr25604567qtb.261.1531256231231;
-        Tue, 10 Jul 2018 13:57:11 -0700 (PDT)
-Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id w79-v6sm15841377qkw.35.2018.07.10.13.57.09
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 10 Jul 2018 13:57:10 -0700 (PDT)
-Subject: Re: [PATCH v1] convert log_ref_write_fd() to use strbuf
-To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Cc:     Ben Peart <Ben.Peart@microsoft.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "sandals@crustytoothpaste.net" <sandals@crustytoothpaste.net>,
-        "stolee@gmail.com" <stolee@gmail.com>
-References: <20180710182000.21404-1-benpeart@microsoft.com>
- <20180710184534.GA27535@sigill.intra.peff.net>
- <xmqqsh4q6fpb.fsf@gitster-ct.c.googlers.com>
- <20180710202128.GA6886@sigill.intra.peff.net>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <9666fa00-607c-a212-3104-a9ef8ff2a60b@gmail.com>
-Date:   Tue, 10 Jul 2018 16:57:09 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=4YDhGqe+Ve+uN2rSkrjbzuD9Nd5CWq5ktkKz3qmb2HY=;
+        b=rJXham7wRGiyXe0q5S+BJ99oKzuOTvJL/5oWAi5BkoYIbr7PnSSZB/ZlOaeieWwx1E
+         18QuhR1lWpEHlQyiuiB9Ye2nXtK/M+19v1IexqeYZUVtEqxsqYf8zxc4Lyo/xL7YBEKT
+         eNvzgTBJVCtPpgqO1TXz6IBepcMcn67YDH8WZTJl0IRsOOZ8ob9KnfjtbDFyBVOcCyKU
+         EUmhkNnF4YqT5FB75APKN7XtO0IJTN85RKYMqGPwY/UShGm4GGKzxRdTuWsAYxI1LfPe
+         qb++UQsJZSQ+FWlqV4u+api2WPadoSu74lub14pc3/fYpti5pk+3imd5mAVkjHoL6+BA
+         htrQ==
+X-Gm-Message-State: APt69E35OVtDmENKOYiBGGpmLCBjh2kvYwiqSaQuEHxNfSmz6mnK7FKK
+        ACwvg3BdokYgtQWoumtKulE/JB7Y
+X-Google-Smtp-Source: AAOMgpeDRmSvrCuAwZ8HNyE5kjz4HjBsHt8mwX13hkL+TE0RGS2+qbiBtCNhKQoGZOVroX00A3JhEg==
+X-Received: by 2002:a5d:4a07:: with SMTP id m7-v6mr20873940wrq.8.1531258664960;
+        Tue, 10 Jul 2018 14:37:44 -0700 (PDT)
+Received: from localhost ([2.30.88.37])
+        by smtp.gmail.com with ESMTPSA id 11-v6sm21420053wrw.67.2018.07.10.14.37.43
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 10 Jul 2018 14:37:43 -0700 (PDT)
+Date:   Tue, 10 Jul 2018 22:37:42 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 00/10] rerere: handle nested conflicts
+Message-ID: <20180710213742.GA2186@hank.intra.tgummerer.com>
+References: <20180520211210.1248-1-t.gummerer@gmail.com>
+ <20180605215219.28783-1-t.gummerer@gmail.com>
+ <20180703210515.GA31234@hank.intra.tgummerer.com>
+ <xmqq1scgmemy.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <20180710202128.GA6886@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq1scgmemy.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.0 (2018-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 07/06, Junio C Hamano wrote:
+> Thomas Gummerer <t.gummerer@gmail.com> writes:
+> 
+> > On 06/05, Thomas Gummerer wrote:
+> >> The previous round was at
+> >> <20180520211210.1248-1-t.gummerer@gmail.com>.
+> >> 
+> >> Thanks Junio for the comments on the previous round.
+> >> 
+> >> Changes since v2:
+> >>  - lowercase the first letter in some error/warning messages before
+> >>    marking them for translation
+> >>  - wrap paths in output in single quotes, for consistency, and to make
+> >>    some of the messages the same as ones that are already translated
+> >>  - mark messages in builtin/rerere.c for translation as well, which I
+> >>    had previously forgotten.
+> >>  - expanded the technical documentation on rerere.  The entire
+> >>    document is basically rewritten.
+> >>  - changed the test in 6/10 to just fake a conflict marker inside of
+> >>    one of the hunks instead of using an inner conflict created by a
+> >>    merge.  This is to make sure the codepath is still hit after we
+> >>    handle inner conflicts properly.
+> >>  - added tests for handling inner conflict markers
+> >>  - added one commit to recalculate the conflict ID when an unresolved
+> >>    conflict is committed, and the subsequent operation conflicts again
+> >>    in the same file.  More explanation in the commit message of that
+> >>    commit.
+> >
+> > Now that 2.18 is out (and I'm caught up on the list after being away
+> > from it for a few days), is there any interest in this series? I guess
+> > it was overlooked as it's been sent in the rc phase for 2.18.
+> 
+> I deliberately ignored, not because I wasn't interested in it, but
+> because I'd be distracted during the pre-release feature freeze as
+> I'd be heavily intereseted in it.
+> 
+> Now is a good time to repost to stir/re-ignite the interest from
+> others, possibly after rebasing on v2.18.0 and polishing further.
 
+I sometimes find it hard to gauge whether there are no replies because
+nobody is interested in the series, or if it is because it was ignored
+or slipped to the cracks.  I guess I could have inferred it from your
+replies to the previous iteration though :)
 
-On 7/10/2018 4:21 PM, Jeff King wrote:
-> On Tue, Jul 10, 2018 at 12:41:52PM -0700, Junio C Hamano wrote:
-> 
->> Jeff King <peff@peff.net> writes:
->>
->>>> -	while (buf < cp && isspace(cp[-1]))
->>>> -		cp--;
->>>> -	*cp++ = '\n';
->>>> -	return cp - buf;
->>>> +	strbuf_rtrim(sb);
->>>
->>> Using rtrim is a nice reduction in complexity. A pure translation would
->>> include a final strbuf_addch(sb, '\n'). It looks like you moved that to
->>> the caller. There's only one, so that's OK now, but it may affect topics
->>> in flight (and I do in fact have an old topic that calls it).
->>>
->>> But I think it's OK, as the change in function signature means that any
->>> callers will need updated anyway. So there's little risk of a silent
->>> mis-merge.
->>
->> It is interesting that we came to a slightly different conclusion,
->> after doing pretty much the same analysis ;-).  Unless Ben has a
->> plan to use a version that trims the trailing LF elsewhere, there is
->> no point changing what the function does, especially because the
->> existing and only caller does want the terminating LF at the end.
-> 
-> The original actually does a funny thing. It writes the newline into the
-> buffer, and then maybe calls copy_reflog_msg(). If it does, then we
-> actually subtract one from the length we feed to the function, to roll
-> back over the newline. That's harder to do with a strbuf, as those kinds
-> of manual length shenanigans are discouraged (you'd use strbuf_setlen()
-> to roll it back). At which point, you are much better off not adding it
-> in the first place, and building the whole thing sequentially:
-> 
->    1. add the early bits that are in all entries
-> 
->    2. (maybe) add the tab and message if there is one
-> 
->    3. add the trailing newline
-> 
-> And that's exactly what Ben's patch does.
-> 
-> So I think the end result is much cleaner that way. My concern was just
-> that the function semantics were changed.
-> 
-> -Peff
-> 
+I'll go back and polish my patches, and then send a new iteration,
+thanks! 
 
-And that is exactly why I ended up moving the logic to append the 
-newline out to the caller.  I wrote it the other way first but it was 
-pretty messy - since there were no other callers, it was cleaner/simpler 
-to move it out. :)  For any future callers, it is pretty trivial to add 
-the call to strbuf_addch(&sb, '\n') if they want a trailing newline.
+> Thanks.
+> 
+> >
+> > I think the most important bit here is 6/10 which fixes a crash that
+> > can happen in "normal" usage of git.  The translation bits are also
+> > nice to have I think, but I could send them in a different series if
+> > that's preferred.
+> >
+> > The other patches would be nice to have, but are arguably less
+> > important.
+> >
+> >> range-diff below.  A few commits changed enough for range-diff
+> >> to give up showing the differences in those, they are probably best
+> >> reviewed as the whole patch anyway:
+> >>
+> >> [snip]
+> >> 
+> >> Thomas Gummerer (10):
+> >>   rerere: unify error messages when read_cache fails
+> >>   rerere: lowercase error messages
+> >>   rerere: wrap paths in output in sq
+> >>   rerere: mark strings for translation
+> >>   rerere: add some documentation
+> >>   rerere: fix crash when conflict goes unresolved
+> >>   rerere: only return whether a path has conflicts or not
+> >>   rerere: factor out handle_conflict function
+> >>   rerere: teach rerere to handle nested conflicts
+> >>   rerere: recalculate conflict ID when unresolved conflict is committed
+> >> 
+> >>  Documentation/technical/rerere.txt | 182 +++++++++++++++++++++
+> >>  builtin/rerere.c                   |   4 +-
+> >>  rerere.c                           | 246 ++++++++++++++---------------
+> >>  t/t4200-rerere.sh                  |  67 ++++++++
+> >>  4 files changed, 372 insertions(+), 127 deletions(-)
+> >>  create mode 100644 Documentation/technical/rerere.txt
+> >> 
+> >> -- 
+> >> 2.18.0.rc1.242.g61856ae69
+> >> 
