@@ -2,101 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D55D1F85A
-	for <e@80x24.org>; Tue, 10 Jul 2018 18:39:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E0FDC1F85A
+	for <e@80x24.org>; Tue, 10 Jul 2018 18:39:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732733AbeGJSjO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jul 2018 14:39:14 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:39923 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389922AbeGJSjN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jul 2018 14:39:13 -0400
-Received: by mail-wm0-f68.google.com with SMTP id h20-v6so31755wmb.4
-        for <git@vger.kernel.org>; Tue, 10 Jul 2018 11:38:57 -0700 (PDT)
+        id S1732986AbeGJSjw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jul 2018 14:39:52 -0400
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:44076 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732424AbeGJSjv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jul 2018 14:39:51 -0400
+Received: by mail-qt0-f195.google.com with SMTP id b15-v6so19220025qtp.11
+        for <git@vger.kernel.org>; Tue, 10 Jul 2018 11:39:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=LrCnwLl0E1o+MckPPGQPMuDEYzgSaiQwKVnELse4FGA=;
-        b=dQ8d1Y3fo6ckvJRDD8ningvhzo9sKJ0bKy7lekrexjsudpao9VT39di1LrlXP47bGF
-         fFZ+zjRI3AbA/BcuNnU0OC84YlAdFODfAFf7pytApU+w7+LYemsogC0KEIXHw9usLkuo
-         bnl6qXdu41i6yz2hB/BFuIR8e3QP0DCDMCwSzXAvIhomsSIl00JaNX5ui7NmkscHclQj
-         zZYSbsvNOK0ickAhN25TZIatChJgrdlHfiLedNKNMbl2XbQKyKtyYL/XX0MM8YgqRJYU
-         2dz7jEDxYxqpq7rsN9RTaxiqvyRmuz+s6osqdhcaFNYoQvXdKf+Fu/brrJPwiTazRPao
-         kcLw==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=JuiGOWbBcGgeBKBxqb2/6DzdkHqQLfQ7xtafbkhXu0o=;
+        b=TJmbeOcrlL2r4bvpzYBnVmMZYbOX2h/WUHJf9i8NEH2loE76Szn49A0ZEnQHrDTGy/
+         4DInTsMMEIdLT82qpvNm91HbhZZ6nO4Wlsn3fl0EnrXOF05vm6F0/0G++omck7OjzfC6
+         4fHThuPNmAdED3cZNre8+8KyTnQUVpA02SUtFj9rsNyCx/hhgu+4mt0dLsz8QaKvv5eI
+         adOHQ9o+65PTnHVFbWnh2S0DyjpMeZ9SK3DmLFVfU5N6v3zv4005HBgYmCgRGNVYtnsv
+         7TaOqt5oq53s3AbpqRSKMfy4l7hksrjQYe0y7wZdRCs7vUDp3N9/7l5Jte2KLO32lsrz
+         05ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=LrCnwLl0E1o+MckPPGQPMuDEYzgSaiQwKVnELse4FGA=;
-        b=GYhxWgeWzxZUW30EYeHVX2+W2yi4Co8SOLBDhcaAS7I4Lyexci5f0XxnQDVJirmJoP
-         83YDWZ50B/xjYE7wXKpCAHkg9KMBjPpnJFePaCEonuBU/psLCY5F+RrOOO6foTYM2TWd
-         51inWGV4gDK/NTtW91pE/j6HI4eJO8Mkh4biaX5lJncNPFfHY7Esij0AnmKHZZ8wslxX
-         umGVWfts6Kxe8dnZqOj7+csqP2ZClbSqtEKwesEEEtGxXvcNvUIziBTLcM4C63UKsEif
-         Sra28IUwm7v+Hp54s3JI3GVawtLPlV85lZ58Lw8ruJNxPMQ7XGJIdY+4+iE1iXaL3Lwh
-         JN7g==
-X-Gm-Message-State: APt69E3KYsFIRueY76NGDYFt7rwrvf+VwVM8GvLSWvDbiFjuZQo1iSrH
-        Co4dNqEEBJrOPf+AfYmqcfE=
-X-Google-Smtp-Source: AAOMgpdO6/uAAUdcHtmChgCWHzHiD2WToAO7Xy26yjfWwP+xMM3X55e1migat4HlNHQY3qQ9RLfrhA==
-X-Received: by 2002:a1c:8a04:: with SMTP id m4-v6mr15020076wmd.137.1531247937041;
-        Tue, 10 Jul 2018 11:38:57 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id w135-v6sm53918wme.7.2018.07.10.11.38.55
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 10 Jul 2018 11:38:56 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Alban Gruin <alban.gruin@gmail.com>
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        phillip.wood@dunelm.org.uk
-Subject: Re: [GSoC][PATCH v3 09/13] sequencer: change the way skip_unnecessary_picks() returns its result
-References: <20180702105717.26386-1-alban.gruin@gmail.com>
-        <20180710121557.6698-1-alban.gruin@gmail.com>
-        <20180710121557.6698-10-alban.gruin@gmail.com>
-Date:   Tue, 10 Jul 2018 11:38:55 -0700
-In-Reply-To: <20180710121557.6698-10-alban.gruin@gmail.com> (Alban Gruin's
-        message of "Tue, 10 Jul 2018 14:15:53 +0200")
-Message-ID: <xmqq8t6j6im8.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=JuiGOWbBcGgeBKBxqb2/6DzdkHqQLfQ7xtafbkhXu0o=;
+        b=lEeuUUeFajT6EilrSGGmtq81T7JIMmbEDF8PZd8IZugZezEvg7YZAn9Xee6fO3Odk6
+         7JLHNZW7QeDe8a3xsde0QQowvJgtYyexWBQHuCQR+ZW6iTz/krKo+Ub55SgybvWpfDp7
+         IsI6cPNSwuBnG+A1vHwyGIaPWQmWsx3F4j7Qlv3P5EFuXNFOM6ErXXJmCDqan5uBlp54
+         iO0Q8F+/FWSgPIYtfMUTgC4XT5sZ8cHl9PRxPNCzvMmEpwWipuPs6Bg/L/NHPte6Bvje
+         sTuXAikr28BK6eU5F5S3Q5+ymlaifiwbS9M657wx48dcbCEsUOsE9Oz+tyK98x4biTSZ
+         ZCqw==
+X-Gm-Message-State: APt69E2F6myGfPBjnewSoTB2cE4gJqJKNFjdxp/9QIxiTEcuM2CsUNud
+        UPMQTni8xPDf/2CrJ5ZyXKylW68U
+X-Google-Smtp-Source: AAOMgpeOJ67CTqRh3znAB+2ZH5e8ZoITXVaFI3ppeB2w2ziaNZRP/YiKhgxmpLWB8Gay/vPC2UfvVA==
+X-Received: by 2002:aed:3e92:: with SMTP id n18-v6mr6234893qtf.236.1531246110053;
+        Tue, 10 Jul 2018 11:08:30 -0700 (PDT)
+Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id p78-v6sm15368095qkl.38.2018.07.10.11.08.28
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 10 Jul 2018 11:08:29 -0700 (PDT)
+Subject: Re: [PATCH 07/17] commit: increase commit message buffer size
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
+References: <20180708233638.520172-1-sandals@crustytoothpaste.net>
+ <20180708233638.520172-8-sandals@crustytoothpaste.net>
+ <4eb44f33-ac9c-7ce2-0e53-ec6fcb4560fd@gmail.com>
+ <xmqqva9oe20y.fsf@gitster-ct.c.googlers.com>
+ <20180709233952.GB535220@genre.crustytoothpaste.net>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <02c0682a-8cc9-be49-b646-00cbdb5783f3@gmail.com>
+Date:   Tue, 10 Jul 2018 14:08:28 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <20180709233952.GB535220@genre.crustytoothpaste.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alban Gruin <alban.gruin@gmail.com> writes:
 
-> @@ -4467,7 +4467,7 @@ int skip_unnecessary_picks(void)
->  	}
->  
->  	todo_list_release(&todo_list);
-> -	printf("%s\n", oid_to_hex(oid));
-> +	*output_oid = oid_to_hex(oid);
 
-The return value from oid_to_hex() is volatile and does not survive
-across multiple calls to it.  If this interface is meant to be long
-lived (as opposed to an intermediate step during the conversion that
-will soon disappear), it probably makes more sense to have the
-caller supply an output buffer and call oid_to_hex_r() into it, or
-something like that.
+On 7/9/2018 7:39 PM, brian m. carlson wrote:
+> On Mon, Jul 09, 2018 at 10:45:33AM -0700, Junio C Hamano wrote:
+>> Derrick Stolee <stolee@gmail.com> writes:
+>>
+>>> On 7/8/2018 7:36 PM, brian m. carlson wrote:
+>>>> diff --git a/refs/files-backend.c b/refs/files-backend.c
+>>>> index a9a066dcfb..252f835bae 100644
+>>>> --- a/refs/files-backend.c
+>>>> +++ b/refs/files-backend.c
+>>>> @@ -1587,7 +1587,7 @@ static int log_ref_write_fd(int fd, const struct object_id *old_oid,
+>>>>    	char *logrec;
+>>>>      	msglen = msg ? strlen(msg) : 0;
+>>>> -	maxlen = strlen(committer) + msglen + 100;
+>>>> +	maxlen = strlen(committer) + msglen + 200;
+>>>>    	logrec = xmalloc(maxlen);
+>>>>    	len = xsnprintf(logrec, maxlen, "%s %s %s\n",
+>>>>    			oid_to_hex(old_oid),
+>>>
+>>> nit: 100 is not enough anymore, but wasn't a very descriptive
+>>> value. 200 may be enough now, but I'm not sure why.
+> 
+> 200 is definitely enough.  Suppose we had a message consisting entirely
+> of SHA-1 hashes (5, at 20 bytes a piece).  If our new hash is 32 bytes
+> long, then it would require at most 160 bytes.
+> 
+> I only noticed this because the old code segfaulted.  My approach to
+> using a 32-byte hash was to set it up, do some basic tests, find out
+> what crashed, and fix it.  Most of this series is the basics necessary
+> to get the most rudimentary functionality out of a 32-byte Git,
+> excluding the index pieces, which are necessarily inelegant.
+> 
+> I didn't include them because there are other ways to implement the
+> changes which are more elegant in some ways and less elegant in other
+> ways, and I want to think more about it before I send them in.
+> 
+>> As Brandon alludes to downthread, we probably should use strbuf for
+>> things like this these days, so a preliminary clean-up to do so is
+>> probably a welcome change to sneak in and rebase this series on top
+>> of.
+> 
+> Sure, I agree that would be a better change, and I'm happy to reroll
+> with that.
+> 
 
-> diff --git a/sequencer.h b/sequencer.h
-> index 11a533461..25b50efe2 100644
-> --- a/sequencer.h
-> +++ b/sequencer.h
-> @@ -88,7 +88,7 @@ int sequencer_add_exec_commands(const char *command);
->  int transform_todos(unsigned flags);
->  enum missing_commit_check_level get_missing_commit_check_level(void);
->  int check_todo_list(void);
-> -int skip_unnecessary_picks(void);
-> +int skip_unnecessary_picks(const char **output_oid);
->  int rearrange_squash(void);
->  
->  extern const char sign_off_header[];
+I've put together a patch to update log_ref_write_fd() to use strbuf and 
+will submit it shortly.
