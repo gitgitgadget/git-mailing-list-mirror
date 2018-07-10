@@ -2,94 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CAC6C1F85A
-	for <e@80x24.org>; Tue, 10 Jul 2018 04:45:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B068D1F85A
+	for <e@80x24.org>; Tue, 10 Jul 2018 07:34:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751119AbeGJEpD (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jul 2018 00:45:03 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53156 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751099AbeGJEo6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jul 2018 00:44:58 -0400
-Received: (qmail 22696 invoked by uid 109); 10 Jul 2018 04:44:58 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 10 Jul 2018 04:44:58 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19734 invoked by uid 111); 10 Jul 2018 04:44:59 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 10 Jul 2018 00:44:59 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Jul 2018 00:44:56 -0400
-Date:   Tue, 10 Jul 2018 00:44:56 -0400
-From:   Jeff King <peff@peff.net>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>, gitster@pobox.com,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/6] Add merge recursive testcases with undetected
- conflicts
-Message-ID: <20180710044456.GA1870@sigill.intra.peff.net>
-References: <xmqqr2kce1mw.fsf@gitster-ct.c.googlers.com>
- <20180709202229.10222-1-newren@gmail.com>
+        id S1751151AbeGJHew (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jul 2018 03:34:52 -0400
+Received: from s019.cyon.net ([149.126.4.28]:36638 "EHLO s019.cyon.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751103AbeGJHew (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jul 2018 03:34:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=drbeat.li;
+         s=default; h=Message-ID:References:In-Reply-To:Subject:Cc:To:From:Date:
+        Content-Transfer-Encoding:Content-Type:MIME-Version:Sender:Reply-To:
+        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+        Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=2ih0FCwQFwnEPUHiabCzIzIN5ceveql7kM8wpa1XJtQ=; b=cUSO6mT6a6D8aUYmsr0fU1XX2F
+        0QAoY/5F4su1stePUN3db/N/vAK7IVPvxsprFeI0mOHwPenSqOTSbmGhv6CdZ7cU9EMR/gbk8M6JO
+        DKbfO57o0tnUzcaquI3/QsZwJcQhtfH/HHeN3Yd4ZtPUhdbOcTp+PiLoDYKktFqTO0eQ6GQeqi0fp
+        UlucdCpapBubP3SxIVVBqzvbSTgnnD3D63Ow6wNCJBpeu+1eX7P8y+GiAdspUsRipdaGJLWQQvzU+
+        vQDK7DEufQqBJhSIyY6fyoqgfLmLADi6nUtmuEPnV4V8HF9/5/94/TWfI+mg+2Vif69jYArgN2TMh
+        N73nQn3Q==;
+Received: from [10.20.10.233] (port=45520 helo=mail.cyon.ch)
+        by s019.cyon.net with esmtpa (Exim 4.91)
+        (envelope-from <dev+git@drbeat.li>)
+        id 1fcnAe-00G4cz-Ki; Tue, 10 Jul 2018 09:34:50 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180709202229.10222-1-newren@gmail.com>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 10 Jul 2018 09:34:48 +0200
+From:   Beat Bolli <dev+git@drbeat.li>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <jch2355@gmail.com>
+Subject: Re: [PATCH 0/6] Compile cleanly in pedantic mode
+In-Reply-To: <xmqqd0vwaxrq.fsf@gitster-ct.c.googlers.com>
+References: <20180708144342.11922-1-dev+git@drbeat.li>
+ <20180709192537.18564-1-dev+git@drbeat.li>
+ <xmqqd0vwaxrq.fsf@gitster-ct.c.googlers.com>
+Message-ID: <3f0ab3f42606d2251a6574d6fb45bf11@drbeat.li>
+X-Sender: dev+git@drbeat.li
+User-Agent: cyon Webmail/1.2.9
+X-OutGoing-Spam-Status: No, score=-1.0
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - s019.cyon.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - drbeat.li
+X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
+X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 09, 2018 at 01:22:29PM -0700, Elijah Newren wrote:
+Hi Junio
 
-> Oh, I didn't know about test-lint.  Is there a place that documents
-> the various checks you run, so I can avoid slowing you down?  Ones I
-> know about:
+Am 09.07.2018 23:45, schrieb Junio C Hamano:
+> Beat Bolli <dev+git@drbeat.li> writes:
 > 
-> Already documented:
->   * `make DEVELOPER=1` (from CodingGuidelines)
->   * running tests (from SubmittingPatches)
+>> While developing 6aaded550 ("builtin/config: work around an unsized
+>> array forward declaration", 2018-07-05), I have compiled Git with
+>> CFLAGS="-std=c99 -pedantic".
 > 
-> Stuff I've seen you mention in emails over time:
->   * linux/scripts/checkpatch.pl
->   * git grep -e '\<inline\>' --and --not -e 'static inline' -- \*.h
->   * make -C t/ test-lint
+> Nicely done.
+> 
+> With these 6 patches and the USE_PARENCE_AROUND_GETTEXT_N hack, the
+> forward decl of the unsized static array you dealt with separately
+> becomes the only remaining violation in the codebase, which is good.
+> 
+> Will queue.  Thanks.
 
-test-lint is supposed to be run automatically as part of "make test" (or
-"make prove"), unless you've specifically disabled it by setting
-TEST_LINT. And it does complain for me with your patches. If it doesn't
-for you, then we have a bug to fix. :)
+Should we add a "pedantic" flag to DEVOPTS that would simplify building 
+pedantically? It would also have to set USE_PARENS_AROUND_GETTEXT_N so 
+as to not overwhelm the developer with too much output.
 
-I won't be surprised, though, if you just ran "./t6036" manually before
-sending, since your patches literally didn't touch any other files.
-
-In theory we could push some of the linting down into the test scripts
-themselves (some of it, like the &&-linter, is there already by
-necessity). But it might also end up annoying, since usually dropping
-down to manual single-test runs means you're trying to debug something,
-and extra linting processes could get in the way.
-
-> Are there others?
-
-I like:
-
-  make SANITIZE=address,undefined test
-
-though it's pretty heavy-weight (but not nearly as much as valgrind).
-You probably also need BLK_SHA1=Yes, since the default DC_SHA1 has some
-unaligned loads that make UBSan complain. We should maybe teach the
-Makefile to do that by default.
-
-I've also been playing with clang's scan-build. It _did_ find a real bug
-recently, but it has a bunch of false positives.
-
-Stefan runs Coverity against pu periodically. IIRC It's a pain to run
-yourself, but the shared results can be mailed to you, or you can poke
-around at https://scan.coverity.com/projects/git. That _also_ has a ton
-of false positives, but it's good about cataloguing them so the periodic
-email usually just mentions the new ones.
-
--Peff
+Beat
