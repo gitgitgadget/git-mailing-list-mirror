@@ -2,73 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F4581F85A
-	for <e@80x24.org>; Tue, 10 Jul 2018 10:41:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C531D1F85A
+	for <e@80x24.org>; Tue, 10 Jul 2018 10:47:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933169AbeGJKle (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jul 2018 06:41:34 -0400
-Received: from mail-wr1-f51.google.com ([209.85.221.51]:37438 "EHLO
-        mail-wr1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751332AbeGJKld (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jul 2018 06:41:33 -0400
-Received: by mail-wr1-f51.google.com with SMTP id q10-v6so14066321wrd.4
-        for <git@vger.kernel.org>; Tue, 10 Jul 2018 03:41:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=WizTOcqK2QUWESK07N1vWaTGDlCCgsTBpGTGiHtitIQ=;
-        b=q3qiLEXRR9SpTj4TkbIOJEcsI93Wl4CPcm+deOWqx2oTdcSgVAn1blmplDN6ZhTASK
-         GjhM32ntBPP2fEBHhUsTlry+NW66HcgnLoGd2Qi86Srd7F0e781S6lDEVHC2Bjamjcps
-         +a8rxroloU/1lSdsLYfB999go9BDt50rR/4RBJXqnDLkhPivODMPZKV3XRA0FQAZ9CpH
-         A5mr4MgtoIj0HUodhZ+XjCgTm6in0vlIgvHWm05tjXYFFX83G2KuGQVKS8UQv8h2pPRk
-         nmplv+aRlwZ5m5PcqXVObCgS8EtUT4LeUZnkRjwW/gQEv80UmA0QpdLwfnnqS/bcteaa
-         bMyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=WizTOcqK2QUWESK07N1vWaTGDlCCgsTBpGTGiHtitIQ=;
-        b=QxHij/nK/VNAgUF7MRp9U4pXuut3Di7V0qHTjfaPxK9adSE/X9AobegQrTmhYeC9x0
-         SGgUOz60tpkIkh/T+ghkuXPBW6SarfYhyx5S6AYlBjDnOH3zdv6Q0/NZdTmY+VjZ5WzC
-         bXxiscLBu1Gz/Kl6PrFG4BL1tvDOBqXNa9iUw0RXUxoUOSazQdFuSSdRScNA2trwISps
-         +wssq5FX77m0ZNps6I7PKLCMuygs4opQZx4BYibpDTK9Vl0gOPHBtHsW7uxJe7xlOvhI
-         HyIV+pKVi/xxPcMm4MfPViXXji/k3NR/TxmP1h25I0L84A5YHbBqCSMsNwyMKPfVxdV0
-         RfiQ==
-X-Gm-Message-State: APt69E3KvM732EY6AXnbgkF7hhgpiHqWfPOJmo+DF7r5g4pXK4bI2tpY
-        30GRP4JnzoJ5V0wM7CyCgxSVa12N38wEB7FXtTA1kQ==
-X-Google-Smtp-Source: AAOMgpfobM2mGAPvG24H3aYZ16064/Fh7X5nVcItDhUbLhW90oKLuR5VJ8qiBzMMOSf+96n65aj1/jKeaYNUy50/+Y4=
-X-Received: by 2002:adf:cd0e:: with SMTP id w14-v6mr16244285wrm.226.1531219292657;
- Tue, 10 Jul 2018 03:41:32 -0700 (PDT)
+        id S1751432AbeGJKrf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jul 2018 06:47:35 -0400
+Received: from mout.gmx.net ([212.227.17.21]:40889 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751332AbeGJKre (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jul 2018 06:47:34 -0400
+Received: from [192.168.0.129] ([37.201.195.87]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MOCSm-1fg9ZM30Tc-005YGZ; Tue, 10
+ Jul 2018 12:47:28 +0200
+Date:   Tue, 10 Jul 2018 12:47:30 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: refs/notes/amlog woes, was Re: [PATCH v3 01/20] linear-assignment:
+ a function to solve least-cost assignment problems
+In-Reply-To: <xmqq601oaw00.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1807101241010.75@tvgsbejvaqbjf.bet>
+References: <cover.1525448066.git.johannes.schindelin@gmx.de> <pull.1.v3.git.gitgitgadget@gmail.com> <39272eefcfe66de3ca1aa2ee43d6626ce558caae.1530617166.git.gitgitgadget@gmail.com> <xmqqtvpcgf40.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1807071320110.75@tvgsbejvaqbjf.bet>
+ <xmqq7em7gg3j.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1807072116570.75@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.1807080017160.75@tvgsbejvaqbjf.bet> <xmqq601oaw00.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 2002:adf:e9c6:0:0:0:0:0 with HTTP; Tue, 10 Jul 2018 03:41:32
- -0700 (PDT)
-In-Reply-To: <20180710102937.12499-1-szeder.dev@gmail.com>
-References: <010201647e19c0f0-68cd728f-c86a-4be2-be6b-fd7e19e930fa-000000@eu-west-1.amazonses.com>
- <010201647e19c24c-fd353913-225a-4153-aa0f-6ddf41ae6354-000000@eu-west-1.amazonses.com>
- <nycvar.QRO.7.76.6.1807101115570.75@tvgsbejvaqbjf.bet> <20180710102937.12499-1-szeder.dev@gmail.com>
-From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-Date:   Tue, 10 Jul 2018 13:41:32 +0300
-Message-ID: <CAL21Bmmm3rO0DjE5aq1NNMJYcUViG4GEXHSgqqmWMnmZt478sg@mail.gmail.com>
-Subject: Re: [PATCH 3/4] ref-filter: merge get_obj and get_object
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:vKJxmhfw+FbzqjoYvxxS8sfSeJyVVUEMs7hCLydM5J61vuraHAI
+ e9qnrazXI6IvV90XFQbv5XgBDwK8kfC+kXpP2PGUMaqEMziDlglyRmKAEd8tB6avvZoLkXJ
+ jLBikOj9IZ0RziN1aGzviH2SSb3JUvFYRZ5PD/COM38ni8Byd5qkKsvJtBgLnteqND0f7af
+ 9Qk5CABrzeUUIlnJMdL3A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:xPFGGTW71Jo=:gN+pz4V8jXLgZ3a4R5oE9y
+ amN1ruyDB0EtPkud0sQjHpIPR5SW+X4gghdfvVFaXgQcVRQuQIBYMsBXNndQKWsLKOnjkMb2p
+ KNPMwukabDMzaDsxUe9v2syY/LEoEH5ranvs/4gSTDS5Pkt0TfjY0CSFCCcoAAqiq6SJ5ySv5
+ 7QbrT5mKUoNzk96KOegyvkuBBlMbtjq76cCYxb5neEj7m7KR+rMPawvJHoMu896a2FcHUMdTK
+ TE1151jUJVBFd9gbVHKDnksPajl5yTYh94ecrOA4BtLlAxTmgMZpO1nXRXbEFkzTi8Su4tF28
+ 4UHc0A9mJ4dr+4k5NHRUVQKkyzZuu8UX6lAEur48tAB+/lI8ETwgSjJ/CwviknveQ+IUTiin1
+ 6DtLhQlaGUAD7rUlRfJX4NN3pQA0LeYTVuC0dtVuMHQJnROgd+FjsNpbJoO+zbG8613fXLHV6
+ B4jW14mzdcO8dSR6fO1P+n9ARJHo/wdslt2KpeOkP9MqD4tisywVy4MXb8bELo22ueA4qOQFS
+ Ib5J4SVbjOkBGX7BMdoeDfwAWeIq6105nmbKu1jWgT7KZXKbX6sFTXZmz6TuHmf7XefcWW6ea
+ JL2RFfH3YrIwMoc4965WQuyTru3Dk6EffnhKmmwVu96Vp8Fc/gdJ+RT7jtInJlFrI/z+05Jl0
+ oh+3ak836TpdrwkNOdxFivUhiS5yixMaLvU8Xki0q6WbAlQDMTtFgZj2BVndLtsRXjZxnCo1U
+ EVB7FvvEIl5RmoxBJFG3DRNu75wk241xsh601184lFZRyDL7xkweTUI3+JmX6BHjfu8QX95gR
+ i5fRdvf
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fully agree, thank you so much.
-I have fixed it. Waiting for other issues that need to be fixed, then
-I will re-send the patch.
+Hi Junio,
 
-Thank you!
+On Mon, 9 Jul 2018, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > Speaking of GitGitGadget: I just encoutered a problem with your
+> > `refs/notes/amlog` and I hope you can help me with that.
+> > ...
+> > When I ask `git notes --ref=refs/notes/gitster-amlog show
+> > 4cec3986f017d84c8d6a2c4233d2eba4a3ffa60d` (the SHA-1 is the one
+> > corresponding to `Message-Id: <...>` for that mail), it insists on
+> > outputting
+> >
+> > 	5902152ab02291af4454f24a8ccaf2adddefc306
+> 
+> It is not uncommon for me to have to do "am" the same patch twice
+> when attempting to find the right branch/commit to base a change on,
+
+But then the `post-applypatch` hook just kicks in twice, leaving the
+correct mapping in place, no?
+
+> so the reverse direction that abuses the notes mechanism to map
+> message id to resulting commits would be unreliable, especially
+> given that they may need to further go through "rebase -i" or manual
+> "cherry-pick <range>" depending on the situation.
+
+We already have a mechanism in place that rewrites notes in `rebase -i`'s
+case. Not so sure about `cherry-pick`, but if it is missing, then that is
+definitely something we will want to address.
+
+In other words, let's not let shortcomings of our own software dictate
+what we record and what we don't record.
+
+This is highly important information that we willfully lose by using the
+patch contribution process we are going with. And we *can* at least record
+that information.
+
+> I am kind of surprised that the message-to-commit mapping still
+> records any data that is remotely useful (these days, I only use it
+> to run "show --notes=amlog" for commit-to-message mapping).
+
+Please do understand that this information is the only remotely sane way
+to work around the limitations of the mailing list-based approach we use
+here.
+
+It costs me a ton of time to figure out these mappings manually, and I
+think that others simply are not as tenacious as I am and simply drop the
+ball, which is not good for the project.
+
+> I do not think I have anything special when amending the commit, but
+> amlog notes should be updated in both diretions for its entries to stay
+> correct across amending, I would think.
+
+Indeed. See my other mail about the `post-rewrite` hook I suggest you to
+install (I did not test this code, of course, but you will probably be
+able to validate/fix it without much trouble).
+
+Ciao,
+Dscho
