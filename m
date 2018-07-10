@@ -2,142 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E20011F85A
-	for <e@80x24.org>; Tue, 10 Jul 2018 18:41:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A01341F85A
+	for <e@80x24.org>; Tue, 10 Jul 2018 18:43:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389797AbeGJSla (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jul 2018 14:41:30 -0400
-Received: from mail-io0-f201.google.com ([209.85.223.201]:55289 "EHLO
-        mail-io0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388754AbeGJSl3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jul 2018 14:41:29 -0400
-Received: by mail-io0-f201.google.com with SMTP id d11-v6so6133721iok.21
-        for <git@vger.kernel.org>; Tue, 10 Jul 2018 11:41:14 -0700 (PDT)
+        id S2389064AbeGJSdw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jul 2018 14:33:52 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:42006 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388082AbeGJSdv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jul 2018 14:33:51 -0400
+Received: by mail-wr1-f68.google.com with SMTP id p1-v6so15624804wrs.9
+        for <git@vger.kernel.org>; Tue, 10 Jul 2018 11:33:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
-         :cc;
-        bh=yVlMMdzYxLI5N3ftRKH0W00D7G5pe3WW/agboDBp37E=;
-        b=Hb2oWgIMGsd0UOWL7Pe3gcllA5iXa06H5ioX3hNSfNhhOz4j5qjxBebN8DH1UPNwDA
-         YK1AeNgwecSishpZWuz4y5Ky4eOBgHDjvRdljdQ0xqWEyYtwpLTOGCRPOvuBecSWtxBA
-         1CNa0KBNMqDPJiqbXMn9v7fQCyZIahIspoUA0Mh691vDTcHmKFeRDqyrA/+gqyvWqH8J
-         vYEcWDNvc8P11x7Bx7A+NGmuFvZcVsJdOZsu8WOUv9zVv2G6eToMtlLHFaLvtWs+j58M
-         FLO3wM0ecTBUu0IGU6NyT0ATYOw/oAa9Qu8Nfo3njtP4/YvNavHT7kTTlvt3zLbQSpUU
-         /l/w==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=RzGdzKJct1W7zvh1IcUu+WUkEeql30mVhJ8bow3yXug=;
+        b=mqD1k58VMU2gF6a7kmV5M6GAy55h/qiH4kUdkPTCvJSb1qyk2aB3oLwu0aSfdLrSVr
+         zIeWmtkJJhd10YD4Ybj9DQj+jvciEKmt+a7HLwKD2PLqO1mI6ddpquSsfNAYOmz8HcJL
+         1N2R7mQGDrQbRIQLFesX7A9FbFqvySMv5hOw0zfa6SQQeepoG2daAsCprWt2yyRO4pMh
+         qrFqz332R2liyX7Y1Q0UBpTwQyPJehCSdHOaYbFfBSbnsFcWPV+RX7VDw9FF6sZOabWT
+         eQXtbnd0vX8kxVvecdZIea6YTewl1e7gNGXv6FCGyXlBRqddaIMGM9H4VnwA4Awcl7PP
+         PY8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
-         :references:subject:from:to:cc;
-        bh=yVlMMdzYxLI5N3ftRKH0W00D7G5pe3WW/agboDBp37E=;
-        b=NsMLFK0/PATdbv8W67sBn2lru1dZLAkR4zBwy7XNHqhEiJUklOOMYBdNTtpAETXTLP
-         QSHHQqkpVHw5emw2gJWWuKlEwsqbBCV4GMMXCMbCf+bb/fXHkLQAhjeFRC4s9g+q6nDj
-         Nqi15MuFITxCev1Q0Mg1HQPkEPx1myeF5/AqRbNEq40+8x8QQOxvU8DEo/LgKJbf1kAI
-         buC4SIq8G85PqO9rgjPf4vf98RWyg3OZ5KMxjekcTlGC4sRCDhS6Yjza8QRrofonVam7
-         ViwgFjdQnNRY/TkSu2mskXM6mn8uZvvsZuh1iJ3cRYQCJEh0kVc+wRjn1xkfBTOzgEfd
-         ooHg==
-X-Gm-Message-State: APt69E0JRBqc8cpFHPo92Uxp7fm0bq3o0jY/1EIi7mWguAioU7Q99kwf
-        IIfSxvx4qnIat6s4iKqu/3ukVA95SzrDfph/zH7Y
-X-Google-Smtp-Source: AAOMgpebtkSU9iCpJ5KZCUpyYX59nsZDjbsFrmus2sOg+fQj/Jprlw1zdRZHvK/oBZl1yL6ZkPBl3768xPo35AeJTHSl
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=RzGdzKJct1W7zvh1IcUu+WUkEeql30mVhJ8bow3yXug=;
+        b=a/7JqWTQQDSi5L9BWMu+dNGKMbqiiPP3FSFM4SVsJcWOFr/MZ7GXMdGK42TM3M+qqe
+         36RJKkJIsBsCqdIKVz0vjtjlcyTQpKyc871y0Bl9Z1WEm/afTJH4wwFKKh6YacF5CzX/
+         aLobIt9ZAUMDken5JC+0Cdjs9JNZIFoVsTLBGi71Fxqw+6dNj0oGPvSoZ4+eeveBZ6BL
+         pIHkJ93x1x4bdTeNj1aLYS/aIibKngzWTlo+Q+rTbqYyjlNJ+nCNuE6DuKwNYOK0GIwa
+         W/jW1nC0fOtLIgG9aTw+l+4/+XcAJ7JuF0TSmEdesiA1bwwd9TH5zuO2gWfYHqR9hKG5
+         x0SQ==
+X-Gm-Message-State: APt69E2IWihCsD76Wse0MOkLvMha4mqd48kLElSs6APWBaWc6/EFc6HN
+        nQT4imattWp7SDVTfm68n1EwU7p8
+X-Google-Smtp-Source: AAOMgpfmFvPisJ3GzMb/ronl/i+754I1xRg6WWogwyNkmpOzU4MFB8C2U6AelzBV7lxUlHZMb9xvWA==
+X-Received: by 2002:adf:e887:: with SMTP id d7-v6mr19504937wrm.43.1531244424035;
+        Tue, 10 Jul 2018 10:40:24 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id s12-v6sm22996032wrf.0.2018.07.10.10.40.22
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 10 Jul 2018 10:40:23 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Henning Schild <henning.schild@siemens.com>, git@vger.kernel.org,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Ben Toews <mastahyeti@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 8/9] gpg-interface: introduce new signature format "x509" using gpgsm
+References: <cover.1531208187.git.henning.schild@siemens.com>
+        <4a2cf83a63d25776cb1996490240ce3e5df8ada4.1531208187.git.henning.schild@siemens.com>
+        <20180710170109.GG23624@sigill.intra.peff.net>
+Date:   Tue, 10 Jul 2018 10:40:22 -0700
+In-Reply-To: <20180710170109.GG23624@sigill.intra.peff.net> (Jeff King's
+        message of "Tue, 10 Jul 2018 13:01:10 -0400")
+Message-ID: <xmqqbmbf7zw9.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-X-Received: by 2002:a6b:a303:: with SMTP id m3-v6mr11456783ioe.96.1531243911569;
- Tue, 10 Jul 2018 10:31:51 -0700 (PDT)
-Date:   Tue, 10 Jul 2018 10:31:47 -0700
-In-Reply-To: <75ef9935-342a-bbda-4ce6-e5a033f273a9@gmail.com>
-Message-Id: <20180710173147.104757-1-jonathantanmy@google.com>
-References: <75ef9935-342a-bbda-4ce6-e5a033f273a9@gmail.com>
-X-Mailer: git-send-email 2.18.0.203.gfac676dfb9-goog
-Subject: Re: [PATCH v2 6/6] commit-graph: add repo arg to graph readers
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     stolee@gmail.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > -	if (!core_commit_graph)
-> > +	if (repo_config_get_bool(r, "core.commitgraph", &config_value) ||
-> > +	    !config_value)
-> > +		/*
-> > +		 * This repository is not configured to use commit graphs, so
-> > +		 * do not load one. (But report commit_graph_attempted anyway
-> > +		 * so that commit graph loading is not attempted again for this
-> > +		 * repository.)
-> > +		 */
-> 
-> I reacted first to complain about this extra config lookup, but it is 
-> only run once per repository, so that should be fine.
+Jeff King <peff@peff.net> writes:
 
-Thanks for checking. It is indeed run at most once per repository, and
-only if a commit graph is requested - the same as the current code.
+>> @@ -16,13 +16,18 @@ struct gpg_format_data {
+>>  
+>>  #define PGP_SIGNATURE "-----BEGIN PGP SIGNATURE-----"
+>>  #define PGP_MESSAGE "-----BEGIN PGP MESSAGE-----"
+>> +#define X509_SIGNATURE "-----BEGIN SIGNED MESSAGE-----"
+>>  
+>> -enum gpgformats { PGP_FMT };
+>> +enum gpgformats { PGP_FMT, X509_FMT };
+>>  struct gpg_format_data gpg_formats[] = {
+>>  	{ .format = "openpgp", .program = "gpg",
+>>  	  .extra_args_verify = { "--keyid-format=long" },
+>>  	  .sigs = { PGP_SIGNATURE, PGP_MESSAGE }
+>>  	},
+>> +	{ .format = "x509", .program = "gpgsm",
+>> +	  .extra_args_verify = { NULL },
+>> +	  .sigs = { X509_SIGNATURE, NULL }
+>> +	},
+>
+> Extremely minor nit, but if there are no other uses of PGP_SIGNATURE etc
+> outside of this array (as I hope there wouldn't be after this series),
+> would it make more sense to just include the literals inline in the
+> array definition? That's one less layer of indirection when somebody is
+> reading the code.
 
-> The tests below form a decently-large patch on their own. Perhaps split 
-> them out so it is easier to know that we have some interesting things to 
-> check here.
+It is good design-sense to shoot for fewer levels of indirection,
+but I suspect that "'const char **' instead of maximally-sized fixed
+array of strings" would require a named array and constants like
+this:
 
-The patch is 168+ 42-, which doesn't seem that large to me, but I'll do
-this if others think that it is large too.
+	static const char *gpg_verify_args[] = {
+		"--verify",
+		"--status-fd=1",
+		"--keyid-format=long",
+		NULL
+	};
+	static const char *gpg_sigs[] = {
+		"-----BEGIN PGP SIGNATURE-----",
+		"-----BEGIN PGP MESSAGE-----",
+		NULL
+	};
 
-> It's worth spending some extra time looking at this test pattern as I 
-> believe we will want to follow it with other arbitrary repository changes.
+	struct gpg_format {
+		const char *name;
+		const char *program;
+		const char * const *verify_args;
+		const char * const *sigs;
+	} gpg_format[] = {
+		{
+			.name = "openpgp",
+			.program = "gpg',
+			.verify_args = gpg_verify_args,
+			.sigs = gpg_sigs,
+		},
+		{
+			...
+		},
+	};
 
-I agree - let me know if you notice anything you think should be
-changed.
+so we may end up having the same number of levels of indirection
+anyway in the long-term final form.
 
-> > +static void test_get_commit_tree_in_graph(const char *gitdir,
-> > +					  const char *worktree,
-> > +					  const struct object_id *commit_oid)
-> > +{
-> > +	struct repository r;
-> > +	struct commit *c;
-> > +	struct tree *tree;
-> > +
-> > +	/*
-> > +	 * Create a commit independent of any repository.
-> > +	 */
-> > +	c = lookup_commit(commit_oid);
-> 
-> Would this be more accurate to say we are creating a commit object 
-> stored in the object cache of the_repository? How would you expect this 
-> to work if/when lookup_commit() takes an arbitrary repository? You want 
-> to provide &r, right (after initializing)?
-
-Yes, you're right - Stefan too mentioned that this will need to be moved
-below lookup_commit(). I'm not sure what the best way is to handle this
-- maybe move this, and add a "needswork" stating that we need to pass r
-to lookup_commit once it supports taking in a repository argument, as an
-aid to the person who performs the merge. I'll do that if a reroll is
-needed.
-
-> Also, this will conflict with sb/object-store-lookup, won't it? I'm 
-> guessing this is why you didn't touch the "git commit-graph 
-> [write|verify]"code paths.
-
-It will conflict because of the change to lookup_commit(), but the only
-new code I'm writing is in t/helper/test-repository.c, so hopefully the
-merge won't be too tedious. The main reason why I didn't touch the
-writing/verifying part is to reduce the size of this patch set, and
-because that change is not needed to update parse_commit() and others.
-
-> > +
-> > +	repo_init(&r, gitdir, worktree);
-> 
-> I think you want to move the lookup_commit() to after this.
-
-Yes, that's right.
-
-> > +int cmd__repository(int argc, const char **argv)
-> > +{
-> > +	if (argc < 2)
-> > +		die("must have at least 2 arguments");
-> 
-> I think this "test-tool repository <verb>" pattern is a good way to get 
-> some testing here.
-
-Thanks.
+As readers may be able to read from the above, I also have a
+suspicion that it is a mistake to pretend that "--verify" etc.,
+which merely happen to be common across the variants the series
+covers, will stay forever to be common across _all_ variants and
+that is why the field no longer is called "extra" args but is meant
+to contain the full args.
