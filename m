@@ -2,125 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 593831F85A
-	for <e@80x24.org>; Tue, 10 Jul 2018 16:47:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 03F541F85A
+	for <e@80x24.org>; Tue, 10 Jul 2018 16:54:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933691AbeGJQr3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jul 2018 12:47:29 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:44027 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933307AbeGJQr2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jul 2018 12:47:28 -0400
-Received: by mail-wr1-f67.google.com with SMTP id b15-v6so15345557wrv.10
-        for <git@vger.kernel.org>; Tue, 10 Jul 2018 09:47:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=+hw0ArnSHSYoJdiIvWLIgJ311tVdhqv3dQcD5a8k/9Y=;
-        b=SevC25EnLaJTW7MJCB77G/eDgmcD3XdQZrE7XZZTUI1D8/4x6r3vNBdMU/NGzXwADS
-         PAs0IxrhAWMjMzxUfRi8otTepW6HV+JK2z6RhiZ/RyovZNFArYKk4kbNWQTidgoyedU+
-         VfYreljZMsPEw0gn03xnPaY0FT/k2RHCrXV2tFRaIfwuUN4zpF+BO/5rgadpHJ91VLT9
-         5jgTJ0aFAj5NL7s1GR0xGeRNNt7LxViP7grD27XeAO9X2lFYNnL4zUfiSF0IR+ML4r+9
-         vZHxpyH7DZrRzbUUt8maP30hfrvWcqrq4v9J1Owgf26s2HEaf6YbLGrS/c5KAIA1nHGW
-         3EBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=+hw0ArnSHSYoJdiIvWLIgJ311tVdhqv3dQcD5a8k/9Y=;
-        b=CDGSPZdRBJX0oQisWzW44Cn8+taZ3tnj/tANV7wEYBh2LLIuybUd3zJRFzbCZyhjcq
-         0Ax00nPMqqvadVoVDQOMn+IqcbZlw7+Q1KBl9eMr79ki1gtJ9SVicBYBXVKdKofp4Zys
-         yp1YC0L1wuGnRUXKCiDXn2Jzj4Rfy5VqXNly9vZfsuuwa7HgLv+0MfKjIFDHL4jNwrFn
-         rCjvwVk6m38N5O7ccFzQQKSvCYelgGpp2eQWA7EZAdM1bndLlsR340tDM99dQICwrIvf
-         kHAmJADK103P5OyZZ8OHH4YxB2FBuVHRYwunnDUGbvUSYxdLUVPeWs5/bi2kVKWBHaS6
-         xnDw==
-X-Gm-Message-State: APt69E093ZrQZdEhgJRLgie8PpKC1HopmjPjVAqjpUxgMJgbmjPCaA/m
-        oRHPd+QFaRmuUbwlJxMGhLI=
-X-Google-Smtp-Source: AAOMgpclDhU5gBX3Mop/hAwRO2E4mFtRZP/JhrAY/49G4fU8js9bzOQI1rS2Quhw0yKaUvW8g64KJw==
-X-Received: by 2002:adf:da4e:: with SMTP id r14-v6mr18031855wrl.154.1531241247133;
-        Tue, 10 Jul 2018 09:47:27 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id q200-v6sm11622949wmg.8.2018.07.10.09.47.26
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 10 Jul 2018 09:47:26 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S933268AbeGJQyP (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jul 2018 12:54:15 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53932 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1753848AbeGJQyP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jul 2018 12:54:15 -0400
+Received: (qmail 25946 invoked by uid 109); 10 Jul 2018 16:54:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 10 Jul 2018 16:54:15 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 28495 invoked by uid 111); 10 Jul 2018 16:54:16 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 10 Jul 2018 12:54:16 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Jul 2018 12:54:13 -0400
+Date:   Tue, 10 Jul 2018 12:54:13 -0400
+From:   Jeff King <peff@peff.net>
 To:     Henning Schild <henning.schild@siemens.com>
 Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Ben Toews <mastahyeti@gmail.com>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Ben Toews <mastahyeti@gmail.com>,
         Taylor Blau <me@ttaylorr.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 2/9] gpg-interface: make parse_gpg_output static and remove from interface header
+Subject: Re: [PATCH v2 7/9] gpg-interface: introduce new config to select per
+ gpg format program
+Message-ID: <20180710165412.GE23624@sigill.intra.peff.net>
 References: <cover.1531208187.git.henning.schild@siemens.com>
-        <cover.1531208187.git.henning.schild@siemens.com>
-        <192cf9fc4e7a601d2639ec2d82c777d4c7b26e99.1531208187.git.henning.schild@siemens.com>
-Date:   Tue, 10 Jul 2018 09:47:26 -0700
-In-Reply-To: <192cf9fc4e7a601d2639ec2d82c777d4c7b26e99.1531208187.git.henning.schild@siemens.com>
-        (Henning Schild's message of "Tue, 10 Jul 2018 10:52:24 +0200")
-Message-ID: <xmqqwou382ch.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+ <4905c1907a866c0fd1a4dac978dd6ca3e468ac43.1531208187.git.henning.schild@siemens.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <4905c1907a866c0fd1a4dac978dd6ca3e468ac43.1531208187.git.henning.schild@siemens.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Henning Schild <henning.schild@siemens.com> writes:
+On Tue, Jul 10, 2018 at 10:52:29AM +0200, Henning Schild wrote:
 
-> This commit turns parse_gpg_output into an internal function, the only
-> outside user was migrated in an earlier commit.
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index ac373e3f4..c0bd80954 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -1832,6 +1832,11 @@ gpg.format::
+>  	Specifies which key format to use when signing with `--gpg-sign`.
+>  	Default is "openpgp", that is also the only supported value.
+>  
+> +gpg.<format>.program::
+> +	Use this to customize the program used for the signing format you
+> +	chose. (see gpg.program) gpg.openpgp.program is a synonym for the
+> +	legacy gpg.program.
 
-It is not too big a deal but as we prefer to see our history speak
-in consistent voice, we would usually phrase the above as if we are
-giving an order to "make it so" to the codebase, e.g.
+This seems like a good step forward. This is similar to the
+signingtool.$name.program I proposed earlier, but keeping it specific to
+gpg, which makes sense.
 
-	Turn parse_gpg_output() into a static function, as the only
-	outside user was removed in the previous step.
+On the other hand, do we anticipate the user ever being able to add
+gpg.foo.program? I don't think so; we'll provide a limited set of
+options. So we _could_ go with "gpg.openpgpProgram" or similar, and
+later add "gpg.x509Program".
 
-or something like that.
+And one reason to do so might be...
 
-These two steps, as you said earlier, are nice clean-up patches
-whose goodness can be measured independently, regardless of the
-gpgsm support which is the primary focus of this series.
-
-Thanks.
-
->
-> Signed-off-by: Henning Schild <henning.schild@siemens.com>
-> ---
->  gpg-interface.c | 2 +-
->  gpg-interface.h | 2 --
->  2 files changed, 1 insertion(+), 3 deletions(-)
->
 > diff --git a/gpg-interface.c b/gpg-interface.c
-> index 0647bd634..09ddfbc26 100644
+> index ac2df498d..65098430f 100644
 > --- a/gpg-interface.c
 > +++ b/gpg-interface.c
-> @@ -35,7 +35,7 @@ static struct {
->  	{ 'R', "\n[GNUPG:] REVKEYSIG "},
->  };
+> @@ -179,7 +179,7 @@ int git_gpg_config(const char *var, const char *value, void *cb)
+>  		return git_config_string(&gpg_format, var, value);
+>  	}
 >  
-> -void parse_gpg_output(struct signature_check *sigc)
-> +static void parse_gpg_output(struct signature_check *sigc)
->  {
->  	const char *buf = sigc->gpg_status;
->  	int i;
-> diff --git a/gpg-interface.h b/gpg-interface.h
-> index a5e6517ae..5ecff4aa0 100644
-> --- a/gpg-interface.h
-> +++ b/gpg-interface.h
-> @@ -33,8 +33,6 @@ void signature_check_clear(struct signature_check *sigc);
->   */
->  size_t parse_signature(const char *buf, size_t size);
->  
-> -void parse_gpg_output(struct signature_check *);
-> -
->  /*
->   * Create a detached signature for the contents of "buffer" and append
->   * it after "signature"; "buffer" and "signature" can be the same
+> -	if (!strcmp(var, "gpg.program"))
+> +	if (!strcmp(var, "gpg.program") || !strcmp(var, "gpg.openpgp.program"))
+>  		return git_config_string(&gpg_formats[PGP_FMT].program, var,
+>  					 value);
+
+We normally match config keys with strcmp() because the config machinery
+will have already normalized them to lowercase. But in Git's config
+format, the subsection (the middle in a three-dot name) is less
+restricted and is case-sensitive.
+
+Should we allow:
+
+  [gpg "OpenPGP"]
+  program = whatever
+
+given that we allow:
+
+  [gpg]
+  format = OpenPGP
+
+? I think just using strcasecmp() here would be sufficient. But I wonder
+if it is a symptom of using the wrong tool (subsections) when we don't
+need it.
+
+-Peff
