@@ -6,63 +6,63 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4F811F85A
-	for <e@80x24.org>; Tue, 10 Jul 2018 16:35:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 593831F85A
+	for <e@80x24.org>; Tue, 10 Jul 2018 16:47:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933359AbeGJQf4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jul 2018 12:35:56 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:37442 "EHLO
+        id S933691AbeGJQr3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jul 2018 12:47:29 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:44027 "EHLO
         mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933313AbeGJQfz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jul 2018 12:35:55 -0400
-Received: by mail-wr1-f67.google.com with SMTP id q10-v6so15296039wrd.4
-        for <git@vger.kernel.org>; Tue, 10 Jul 2018 09:35:55 -0700 (PDT)
+        with ESMTP id S933307AbeGJQr2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jul 2018 12:47:28 -0400
+Received: by mail-wr1-f67.google.com with SMTP id b15-v6so15345557wrv.10
+        for <git@vger.kernel.org>; Tue, 10 Jul 2018 09:47:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=sLaaotVDmvFfFxvliwtk+OQVmKPdWDpOozQZYPu7wbY=;
-        b=S51HCwZLM0KT3pEMWZdYMrsBLxpAKUChps3uN3Axh9rc9ZObBmSSTrmmDrXrN59W4W
-         5EtkKFxBOwqx5GtwHL+PdNJkw6/YTKkWk6XMcEBsPoo17szU80t99LilbxTV2e5VhBxn
-         tIw1m7MVrwEAKdy/bM86sAF9424X4ddyZqEeAdNFGZqTLSmnY9Nun5YjNdvuTvhva7m4
-         DLZCGbynLmh5rwlcEupd5zye3BA/SWDwAr+O40f240lj2rTZZjVDRU81TBnJf4aVeixe
-         JA3btnxaUM9NXSA2i3afi4ODAllSUeatzY3xAMqVzm8SMtOIJwy1SI1MG3Xr8cyVcE1T
-         KhjQ==
+        bh=+hw0ArnSHSYoJdiIvWLIgJ311tVdhqv3dQcD5a8k/9Y=;
+        b=SevC25EnLaJTW7MJCB77G/eDgmcD3XdQZrE7XZZTUI1D8/4x6r3vNBdMU/NGzXwADS
+         PAs0IxrhAWMjMzxUfRi8otTepW6HV+JK2z6RhiZ/RyovZNFArYKk4kbNWQTidgoyedU+
+         VfYreljZMsPEw0gn03xnPaY0FT/k2RHCrXV2tFRaIfwuUN4zpF+BO/5rgadpHJ91VLT9
+         5jgTJ0aFAj5NL7s1GR0xGeRNNt7LxViP7grD27XeAO9X2lFYNnL4zUfiSF0IR+ML4r+9
+         vZHxpyH7DZrRzbUUt8maP30hfrvWcqrq4v9J1Owgf26s2HEaf6YbLGrS/c5KAIA1nHGW
+         3EBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=sLaaotVDmvFfFxvliwtk+OQVmKPdWDpOozQZYPu7wbY=;
-        b=qpm/Qljcc4Avl7jb5X/4My6zeuouBEnCoK1Rjvrm6u5LrniVZGgB+KStfdw1wO2B2k
-         MW3lH8Kn3UyrmhsZ24UcfI22tdhKZy49r8VJq4O8EB8po4XeTdQL4sJRoMLOyB4f/gFL
-         a1VTaenm782G2ZKoFc4jN/Pxh83DPrabDwHqGPgD/D29P5ExfVN3/IkrfUMMCbdeGykX
-         ZhPjGYLWY896xfMp/Jqmzqg0dMlAiLfrWtWiMYRraZ1IGJQ64xvwfn9NJ6r0lreNk31i
-         XdV95K44tABcaqoHf49u7skpYQQ/Xr01rvEJJOz/UCEIqtK+3/3qIh4cPaUt8nrYKP9d
-         tSTw==
-X-Gm-Message-State: AOUpUlHQTJ0nbIdQeCz1ZYOjkknZyo28oijYlwqofaCLIDGMa8L9xUYE
-        KvR825U5kOcOpmQ57YgLBpM=
-X-Google-Smtp-Source: AAOMgpfUgaeZAomQJI0Va0RqBZIzCVxnWz4WQVcPsg0UDnnY7fGDOHPtCfJWaDAhYQqnWZy/MxBlpQ==
-X-Received: by 2002:adf:84e5:: with SMTP id 92-v6mr2165686wrg.56.1531240554542;
-        Tue, 10 Jul 2018 09:35:54 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id y5-v6sm9752702wrs.86.2018.07.10.09.35.53
+        bh=+hw0ArnSHSYoJdiIvWLIgJ311tVdhqv3dQcD5a8k/9Y=;
+        b=CDGSPZdRBJX0oQisWzW44Cn8+taZ3tnj/tANV7wEYBh2LLIuybUd3zJRFzbCZyhjcq
+         0Ax00nPMqqvadVoVDQOMn+IqcbZlw7+Q1KBl9eMr79ki1gtJ9SVicBYBXVKdKofp4Zys
+         yp1YC0L1wuGnRUXKCiDXn2Jzj4Rfy5VqXNly9vZfsuuwa7HgLv+0MfKjIFDHL4jNwrFn
+         rCjvwVk6m38N5O7ccFzQQKSvCYelgGpp2eQWA7EZAdM1bndLlsR340tDM99dQICwrIvf
+         kHAmJADK103P5OyZZ8OHH4YxB2FBuVHRYwunnDUGbvUSYxdLUVPeWs5/bi2kVKWBHaS6
+         xnDw==
+X-Gm-Message-State: APt69E093ZrQZdEhgJRLgie8PpKC1HopmjPjVAqjpUxgMJgbmjPCaA/m
+        oRHPd+QFaRmuUbwlJxMGhLI=
+X-Google-Smtp-Source: AAOMgpclDhU5gBX3Mop/hAwRO2E4mFtRZP/JhrAY/49G4fU8js9bzOQI1rS2Quhw0yKaUvW8g64KJw==
+X-Received: by 2002:adf:da4e:: with SMTP id r14-v6mr18031855wrl.154.1531241247133;
+        Tue, 10 Jul 2018 09:47:27 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id q200-v6sm11622949wmg.8.2018.07.10.09.47.26
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 10 Jul 2018 09:35:53 -0700 (PDT)
+        Tue, 10 Jul 2018 09:47:26 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 07/17] commit: increase commit message buffer size
-References: <20180708233638.520172-1-sandals@crustytoothpaste.net>
-        <20180708233638.520172-8-sandals@crustytoothpaste.net>
-        <4eb44f33-ac9c-7ce2-0e53-ec6fcb4560fd@gmail.com>
-        <xmqqva9oe20y.fsf@gitster-ct.c.googlers.com>
-        <20180709233952.GB535220@genre.crustytoothpaste.net>
-Date:   Tue, 10 Jul 2018 09:35:53 -0700
-In-Reply-To: <20180709233952.GB535220@genre.crustytoothpaste.net> (brian
-        m. carlson's message of "Mon, 9 Jul 2018 23:39:52 +0000")
-Message-ID: <xmqq1scb9hg6.fsf@gitster-ct.c.googlers.com>
+To:     Henning Schild <henning.schild@siemens.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Ben Toews <mastahyeti@gmail.com>, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 2/9] gpg-interface: make parse_gpg_output static and remove from interface header
+References: <cover.1531208187.git.henning.schild@siemens.com>
+        <cover.1531208187.git.henning.schild@siemens.com>
+        <192cf9fc4e7a601d2639ec2d82c777d4c7b26e99.1531208187.git.henning.schild@siemens.com>
+Date:   Tue, 10 Jul 2018 09:47:26 -0700
+In-Reply-To: <192cf9fc4e7a601d2639ec2d82c777d4c7b26e99.1531208187.git.henning.schild@siemens.com>
+        (Henning Schild's message of "Tue, 10 Jul 2018 10:52:24 +0200")
+Message-ID: <xmqqwou382ch.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -71,18 +71,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Henning Schild <henning.schild@siemens.com> writes:
 
->> As Brandon alludes to downthread, we probably should use strbuf for
->> things like this these days, so a preliminary clean-up to do so is
->> probably a welcome change to sneak in and rebase this series on top
->> of.
+> This commit turns parse_gpg_output into an internal function, the only
+> outside user was migrated in an earlier commit.
+
+It is not too big a deal but as we prefer to see our history speak
+in consistent voice, we would usually phrase the above as if we are
+giving an order to "make it so" to the codebase, e.g.
+
+	Turn parse_gpg_output() into a static function, as the only
+	outside user was removed in the previous step.
+
+or something like that.
+
+These two steps, as you said earlier, are nice clean-up patches
+whose goodness can be measured independently, regardless of the
+gpgsm support which is the primary focus of this series.
+
+Thanks.
+
 >
-> Sure, I agree that would be a better change, and I'm happy to reroll
-> with that.
-
-Or we can do the clean-up after this 17-patch series settles, which
-probably is a better order to do things.  It is usually better to
-make a longer but more mechanical topic like this pass through the
-system rather quickly, which tends to minimize disruption on other
-topics.
+> Signed-off-by: Henning Schild <henning.schild@siemens.com>
+> ---
+>  gpg-interface.c | 2 +-
+>  gpg-interface.h | 2 --
+>  2 files changed, 1 insertion(+), 3 deletions(-)
+>
+> diff --git a/gpg-interface.c b/gpg-interface.c
+> index 0647bd634..09ddfbc26 100644
+> --- a/gpg-interface.c
+> +++ b/gpg-interface.c
+> @@ -35,7 +35,7 @@ static struct {
+>  	{ 'R', "\n[GNUPG:] REVKEYSIG "},
+>  };
+>  
+> -void parse_gpg_output(struct signature_check *sigc)
+> +static void parse_gpg_output(struct signature_check *sigc)
+>  {
+>  	const char *buf = sigc->gpg_status;
+>  	int i;
+> diff --git a/gpg-interface.h b/gpg-interface.h
+> index a5e6517ae..5ecff4aa0 100644
+> --- a/gpg-interface.h
+> +++ b/gpg-interface.h
+> @@ -33,8 +33,6 @@ void signature_check_clear(struct signature_check *sigc);
+>   */
+>  size_t parse_signature(const char *buf, size_t size);
+>  
+> -void parse_gpg_output(struct signature_check *);
+> -
+>  /*
+>   * Create a detached signature for the contents of "buffer" and append
+>   * it after "signature"; "buffer" and "signature" can be the same
