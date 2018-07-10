@@ -2,98 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A17AF1F85A
-	for <e@80x24.org>; Tue, 10 Jul 2018 11:40:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27A4C1F85A
+	for <e@80x24.org>; Tue, 10 Jul 2018 11:53:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752352AbeGJLkO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jul 2018 07:40:14 -0400
-Received: from mout.gmx.net ([212.227.17.22]:51795 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751649AbeGJLkO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jul 2018 07:40:14 -0400
-Received: from [192.168.0.129] ([37.201.195.87]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MdaiW-1fQnnB1daG-00PIcv; Tue, 10
- Jul 2018 13:40:01 +0200
-Date:   Tue, 10 Jul 2018 13:40:01 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Paul Smith <paul@mad-scientist.net>,
-        Daniel Jacques <dnj@google.com>, git@vger.kernel.org
-Subject: Re: Git 2.18: RUNTIME_PREFIX... is it working?
-In-Reply-To: <20180710022141.GC10248@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1807101339370.75@tvgsbejvaqbjf.bet>
-References: <97803ec8dae0a73bae301a37377b7b4a78f77e99.camel@mad-scientist.net> <nycvar.QRO.7.76.6.1807041312150.75@tvgsbejvaqbjf.bet> <986185d30a0f09b4e2a9832d324a265cd3da7354.camel@mad-scientist.net> <nycvar.QRO.7.76.6.1807061059260.75@tvgsbejvaqbjf.bet>
- <CAD1RUU-4a_jV_JjozjXOR4bi+_7rFW_AjmHbbrw6NHJ77=oGkw@mail.gmail.com> <bf0d4f33701ec694917f2e710c3fb097085c8d69.camel@mad-scientist.net> <nycvar.QRO.7.76.6.1807082346140.75@tvgsbejvaqbjf.bet> <20180709195822.GA9000@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1807092225120.75@tvgsbejvaqbjf.bet> <20180710022141.GC10248@sigill.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1753072AbeGJLxv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jul 2018 07:53:51 -0400
+Received: from mail-ed1-f50.google.com ([209.85.208.50]:35903 "EHLO
+        mail-ed1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751715AbeGJLxu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jul 2018 07:53:50 -0400
+Received: by mail-ed1-f50.google.com with SMTP id t3-v6so16352360eds.3
+        for <git@vger.kernel.org>; Tue, 10 Jul 2018 04:53:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=k5Kq99yeBHbwe6bQ6HauASqwu+7LzGdgbMck9DQOaVU=;
+        b=WrYhjqJ2N4k8XA4L0nPWPDmrSXsGXxylbdKtvXGkymThmarH3fFKiEKmAhUsQ7oTtK
+         KBDZvOqntHRL/8HdCSEgnmaAm9x8ln5dYeeHW/Matom/87erPBsYvYIHk43ym2ZkmSLl
+         u6i+/oce+eibNUQSoQoBJY1HaBw6HxQdIbf7hc4h4dEY6lED0ZEF4SbF8PmNGViULdXp
+         efIFCzYSLfpE5gpZ6av+PA36pjg6YkmOURP4fiE5zb5Tcz5lJDuc+5QIFoCT670dbkL2
+         pm9LJkDOH+nIChI9nC01wxl9muyDVUDVhc76UnXqnw7GLkT6pQdYccRFQV/XabPnZOYz
+         WRxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=k5Kq99yeBHbwe6bQ6HauASqwu+7LzGdgbMck9DQOaVU=;
+        b=G1NFUwIiDomOOikQE1Y3J9ti8GcanFg0dsWxijctBlwSRSvldrALS8+ODz/T77qZYw
+         chyl7eHBEO7zmbPPQx4qsBBH5UyhLR6NCbUaKVt5GrXg84L+eCJydTVVBJPnnrPY+At6
+         YiaBt/tsMkkkLzpIrHlhjsYldFsm8thNB1eXsMzamPl9IaY9BZ9Nnh5NAVe1FgRDuNQI
+         Sn6u0J9qu+OpenC8Wd1oVQLbXye99NJmFar4WS5kelQW2MhmBhA+u2VjLlN7mvI9oAfK
+         SI/I5ioOq0GGfYTqbEvZybMR+psQyxuhPrOBcmWvANrf0pdPZ/zrW2X8ACDCXjMczwCd
+         sbRw==
+X-Gm-Message-State: APt69E1DeiQplEKDiwItGtV05ehaOKNyTVzO6pdM1bLZl+PZWiI2O3u6
+        K8i6V13+M4+VoKKNJikTqVQ=
+X-Google-Smtp-Source: AAOMgpfqjJVuiOQvZ0IUUo/33OIhN7aR+ntvryPCgNN97EA2yLkl8Ea/7n2Ft0+NkbQiqvFfncxi3w==
+X-Received: by 2002:a50:ec0b:: with SMTP id g11-v6mr22820132edr.38.1531223629266;
+        Tue, 10 Jul 2018 04:53:49 -0700 (PDT)
+Received: from localhost.localdomain (x4db10d5d.dyn.telefonica.de. [77.177.13.93])
+        by smtp.gmail.com with ESMTPSA id e2-v6sm4207272edn.11.2018.07.10.04.53.47
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 10 Jul 2018 04:53:48 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v2 6/6] commit-graph: add repo arg to graph readers
+Date:   Tue, 10 Jul 2018 13:53:44 +0200
+Message-Id: <20180710115344.14392-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.18.0.273.g57f1ecce9c
+In-Reply-To: <f1ccfdccc851039cf62978d162cd9de99ea619de.1531168854.git.jonathantanmy@google.com>
+References: <cover.1529616356.git.jonathantanmy@google.com> <cover.1531168854.git.jonathantanmy@google.com> <f1ccfdccc851039cf62978d162cd9de99ea619de.1531168854.git.jonathantanmy@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:87xd8vce1Lqa58zhyHVXEhcZW8fBZRVHPcnzoBA431pQBNBlVaK
- c//kiHKJWsKU8zBOb7MRd1N8pLq05UPMyaAQ41BhR/KHizyesrd4amkpUZN2CjzD3FiAfFV
- us2cQZtarT4Ojf4Iv1DO79mJbDJ2/pziEPNPMi2hOeZYojHZzcs4UDOiA9zRbbgOthS6ko7
- ucYlKRXxwJEITJ6udMUlw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:sfIpaVwG8aI=:W/8UisZTZovx8NAEc8Hy5A
- LNOxi5fLzpZntohW7XwkAmm+7/mY4kYZxNq4HWqc1S3qC1ktLnjk/t7I6azq8Q6w9VNw/kWf9
- 5jVP6jqw1XXnFO6wt0C4w8Ns2FwvMvwS3LQDsLha3eHTPBufaMFEANF5KZzLiPVANu5uXPpN5
- Nto/kKFPllRFt8ZwWUjd4qvyTD1t3WqpQtsV0M8BteRsQ20hGph8fLptB2rnmp+JkGVgNYlzb
- rJ6QJCEz/Lagj0HFwW/tMYGsQM8yvlfwITFlC01qP/VcYoCk6IzDlHOswfd5s/dPXjPQeDjQo
- 37JnuFDebhloqP+RftLoiiCsFitwgcKe4Ofn2ejk7K15q8D0qA/eyq7KhrWLpg6T1pI3u3Ptn
- c8Nvo6h2C6dL4kDcTmh2oswB1RWcS3QiHiwhbpxGoop1qIxwygQoPUBwr950rFZt5Db3Rqp7e
- PZAK4Y3V89DmwO97/Pq1ziCnACG4e80Nq/MWCAxyGnN2ZvMHzdraek2Pf8uWtoeBVV9oydMGM
- Kf4B/80xSscXdZI5NX08MXtWD1/yZFbkQWsmF4HixG3U9cZOxuzkNBo2iPY6sC8dujiAgpC3g
- YE210xVpxVf9LpYWt0+5+3KgRL6dhP0ear+ZLOk/aocIbbyhIKxFiA9mzRVxmnXEm3BNBTMCo
- +PF0K/1uHMvKL21sE6hbCq24msXkwppac2WFvVdVDaob0aQ0dMWHh1HdkZ0qHcveDRSoHreJ6
- IwVnPvUqBk9prM8MZEZFstH6uSCMdh6oFx0neASSu8MbHZhvLvYiEobq0m3nazjBUNeCqxlZd
- T/TU8Yf
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+> diff --git a/t/helper/test-repository.c b/t/helper/test-repository.c
+> new file mode 100644
+> index 0000000000..5fff540a26
+> --- /dev/null
+> +++ b/t/helper/test-repository.c
+> @@ -0,0 +1,88 @@
+> +#include "test-tool.h"
+> +#include "cache.h"
+> +#include "commit-graph.h"
+> +#include "commit.h"
+> +#include "config.h"
+> +#include "object-store.h"
+> +#include "object.h"
+> +#include "repository.h"
+> +#include "tree.h"
+> +
+> +static void test_parse_commit_in_graph(const char *gitdir, const char *worktree,
+> +				       const struct object_id *commit_oid)
+> +{
+> +	struct repository r;
+> +	struct commit *c;
+> +	struct commit_list *parent;
+> +
+> +	/*
+> +	 * Create a commit independent of any repository.
+> +	 */
+> +	c = lookup_commit(commit_oid);
+> +
+> +	repo_init(&r, gitdir, worktree);
+> +
+> +	if (!parse_commit_in_graph(&r, c))
+> +		die("Couldn't parse commit");
+> +
+> +	printf("%lu", c->date);
 
-On Mon, 9 Jul 2018, Jeff King wrote:
+32-bit builds complain about this:
 
-> On Mon, Jul 09, 2018 at 10:26:54PM +0200, Johannes Schindelin wrote:
-> 
-> > > Would it be reasonable to make RUNTIME_PREFIX the default on systems
-> > > where we _do_ have that support? AFAIK there is no downside to having it
-> > > enabled (minus a few syscalls to find the prefix, I suppose, but I
-> > > assume that's negligible).
-> > > 
-> > > I.e., a patch to config.mak.uname (and possibly better support for
-> > > _disabling_ it, though I think "make RUNTIME_PREFIX=" would probably
-> > > work).
-> > 
-> > The obvious downside is that we would be a lot more likely to break one
-> > side of the equation. At least right now, we have Git for Windows being a
-> > prime user of RUNTIME_PREFIX (so breakages should be caught relatively
-> > quickly), and macOS/Linux *not* being users of that feature (so breakages
-> > in the non-RUNTIME_PREFIX code paths should be caught even quicker). By
-> > turning on RUNTIME_PREFIX for the major platforms, the fringe platforms
-> > are even further out on their own.
-> 
-> That's true. On the other hand, we have a zillion compat features for
-> fringe platforms already, so there already is an expectation that people
-> on those platforms would need to occasionally report and fix
-> system-specific bugs. Perhaps thinking of it not as an feature to opt
-> into, but rather as a compat for "your system has not caught up to the
-> modern world by implementing RUNTIME_PREFIX" would encourage people on
-> those platforms to implement the necessary scaffolding.
-> 
-> I also have a gut feeling that it is much easier for static-path devs to
-> break RUNTIME_PREFIX folks, rather than the other way around, simply
-> because RUNTIME_PREFIX has a lot more moving parts. But I admit that's
-> just a feeling.
+  t/helper/test-repository.c: In function 'test_parse_commit_in_graph':
+  t/helper/test-repository.c:28:9: error: format '%lu' expects argument of type 'long unsigned int', but argument 2 has type 'timestamp_t {aka long long unsigned int}' [-Werror=format=]
+    printf("%lu", c->date);
+         ^
+  cc1: all warnings being treated as errors
+  Makefile:2262: recipe for target 't/helper/test-repository.o' failed
+  make: *** [t/helper/test-repository.o] Error 1
 
-Your gut feeling comes from a lot of experience that I trust. So I'll go
-with it, too.
-
-Ciao,
-Dscho
+> +	for (parent = c->parents; parent; parent = parent->next)
+> +		printf(" %s", oid_to_hex(&parent->item->object.oid));
+> +	printf("\n");
+> +
+> +	repo_clear(&r);
+> +}
