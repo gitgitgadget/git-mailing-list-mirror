@@ -1,56 +1,41 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
-X-Spam-Level: *
+X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=1.7 required=3.0 tests=BAYES_20,
-	FREEMAIL_REPLYTO_END_DIGIT,HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,
-	MAILING_LIST_MULTI,MONEY_FORM,PP_MIME_FAKE_ASCII_TEXT,PYZOR_CHECK,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-0.5 required=3.0 tests=BAYES_00,DATE_IN_FUTURE_12_24,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A4261F85B
-	for <e@80x24.org>; Tue, 10 Jul 2018 22:16:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B44471F85A
+	for <e@80x24.org>; Tue, 10 Jul 2018 20:06:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732282AbeGJWRR (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jul 2018 18:17:17 -0400
-Received: from [65.255.195.133] ([65.255.195.133]:46069 "EHLO monte.montcc.com"
+        id S1732437AbeGJUHQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jul 2018 16:07:16 -0400
+Received: from [202.197.74.49] ([202.197.74.49]:2245 "EHLO master.spark"
         rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1732242AbeGJWRR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jul 2018 18:17:17 -0400
-X-Greylist: delayed 92039 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Jul 2018 18:17:15 EDT
-Received: from WIN-FL56GROP19V (loopback [127.0.0.1])
-        by monte.montcc.com (AIX7.1/8.14.4/8.14.4) with ESMTP id w69KhEMm13828316
-        for <git@vger.kernel.org>; Mon, 9 Jul 2018 13:43:15 -0700
-Message-ID: <025ebcc7-43290-9e579050986227@win-fl56grop19v>
-Reply-To: "Richard & Angela Maxwell" <rmaxwell81@yahoo.com>
-From:   "Richard & Angela Maxwell" <info@maxwellscharity.org.montcc.com>
+        id S1732373AbeGJUHQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jul 2018 16:07:16 -0400
+X-Greylist: delayed 4079 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Jul 2018 16:07:15 EDT
+Received: from A2bE4LN7TWncX16140 (localhost [IPv6:::1])
+        by master.spark (Postfix) with ESMTP id 776C322CFFF
+        for <git@vger.kernel.org>; Wed, 11 Jul 2018 02:03:54 +0800 (CST)
+Message-ID: <0427a507-43292-21974162916204@a2be4ln7twncx16140>
+Reply-To: "Lee Morrow" <morrowlee@proton.com>
+From:   "Lee Morrow" <morrow.lee@aol.com>
 To:     git@vger.kernel.org
-Subject: Important Notice...Reply Now
-Date:   Mon, 9 Jul 2018 21:42:21 +0100
+Subject: info!!
+Date:   Wed, 11 Jul 2018 09:58:27 -0700
 MIME-Version: 1.0
 Content-Type: text/plain
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Priority: 3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-My wife and I won the Euro Millions Lottery of £53 Million British Pounds and we have voluntarily decided to donate €1,000,000EUR(One Million Euros) to 5 individuals randomly as part of our own charity project.
- 
-To verify our lottery winnings,please see our interview by visiting the web page below:
-
-telegraph.co.uk/news/newstopics/howaboutthat/11511467/Lincolnshire-couple-win-53m-on-EuroMillions.html
- 
-Your email address was among the emails which were submitted to us by the Google Inc. as a web user; if you have received our email,kindly send us the below details so that we can transfer your €1,000,000.00 EUR(One Million Euros) to you in your own country.
-
-Full Names:
-Mobile No:
-Age:
-Occupation:
-Country:
-
-Send your response to: rmaxwell81@yahoo.com
-
-Best Regards,
-Richard & Angela Maxwell
+Top of the day to you, this is in respect of a very beneficial transaction which you would not want to let go reply for more details,
+Regards,
+Lee 
 
