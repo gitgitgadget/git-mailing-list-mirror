@@ -6,21 +6,21 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2CFB21F85A
-	for <e@80x24.org>; Tue, 10 Jul 2018 08:53:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B4031F85A
+	for <e@80x24.org>; Tue, 10 Jul 2018 08:53:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751312AbeGJIxM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jul 2018 04:53:12 -0400
-Received: from david.siemens.de ([192.35.17.14]:57654 "EHLO david.siemens.de"
+        id S1751303AbeGJIxL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jul 2018 04:53:11 -0400
+Received: from lizzard.sbs.de ([194.138.37.39]:53488 "EHLO lizzard.sbs.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751232AbeGJIxI (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751235AbeGJIxI (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 10 Jul 2018 04:53:08 -0400
 Received: from mail2.sbs.de (mail2.sbs.de [192.129.41.66])
-        by david.siemens.de (8.15.2/8.15.2) with ESMTPS id w6A8qhmd011100
+        by lizzard.sbs.de (8.15.2/8.15.2) with ESMTPS id w6A8qhsb015874
         (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
         Tue, 10 Jul 2018 10:52:43 +0200
 Received: from md1pvb1c.ad001.siemens.net (md1pvb1c.ad001.siemens.net [139.25.68.40])
-        by mail2.sbs.de (8.15.2/8.15.2) with ESMTP id w6A8qgGO024364;
+        by mail2.sbs.de (8.15.2/8.15.2) with ESMTP id w6A8qgGR024364;
         Tue, 10 Jul 2018 10:52:43 +0200
 From:   Henning Schild <henning.schild@siemens.com>
 To:     git@vger.kernel.org
@@ -31,9 +31,9 @@ Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Taylor Blau <me@ttaylorr.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         Henning Schild <henning.schild@siemens.com>
-Subject: [PATCH v2 1/9] builtin/receive-pack: use check_signature from gpg-interface
-Date:   Tue, 10 Jul 2018 10:52:23 +0200
-Message-Id: <f9e371c8dd2a17ddb5fd5989a7fdad1c0d1bb6e7.1531208187.git.henning.schild@siemens.com>
+Subject: [PATCH v2 4/9] t/t7510: check the validation of the new config gpg.format
+Date:   Tue, 10 Jul 2018 10:52:26 +0200
+Message-Id: <b02154496033220897f6f773e1149a98b21ccba7.1531208187.git.henning.schild@siemens.com>
 X-Mailer: git-send-email 2.16.4
 In-Reply-To: <cover.1531208187.git.henning.schild@siemens.com>
 References: <cover.1531208187.git.henning.schild@siemens.com>
@@ -44,52 +44,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The combination of verify_signed_buffer followed by parse_gpg_output is
-available as check_signature. Use that instead of implementing it again.
+Test setting gpg.format to both invalid and valid values.
 
 Signed-off-by: Henning Schild <henning.schild@siemens.com>
 ---
- builtin/receive-pack.c | 17 ++---------------
- 1 file changed, 2 insertions(+), 15 deletions(-)
+ t/t7510-signed-commit.sh | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 68d36e0a5..9f0583deb 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -629,8 +629,6 @@ static void prepare_push_cert_sha1(struct child_process *proc)
- 		return;
+diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
+index 6e2015ed9..7e1e9caf4 100755
+--- a/t/t7510-signed-commit.sh
++++ b/t/t7510-signed-commit.sh
+@@ -227,4 +227,14 @@ test_expect_success GPG 'log.showsignature behaves like --show-signature' '
+ 	grep "gpg: Good signature" actual
+ '
  
- 	if (!already_done) {
--		struct strbuf gpg_output = STRBUF_INIT;
--		struct strbuf gpg_status = STRBUF_INIT;
- 		int bogs /* beginning_of_gpg_sig */;
- 
- 		already_done = 1;
-@@ -639,22 +637,11 @@ static void prepare_push_cert_sha1(struct child_process *proc)
- 			oidclr(&push_cert_oid);
- 
- 		memset(&sigcheck, '\0', sizeof(sigcheck));
--		sigcheck.result = 'N';
- 
- 		bogs = parse_signature(push_cert.buf, push_cert.len);
--		if (verify_signed_buffer(push_cert.buf, bogs,
--					 push_cert.buf + bogs, push_cert.len - bogs,
--					 &gpg_output, &gpg_status) < 0) {
--			; /* error running gpg */
--		} else {
--			sigcheck.payload = push_cert.buf;
--			sigcheck.gpg_output = gpg_output.buf;
--			sigcheck.gpg_status = gpg_status.buf;
--			parse_gpg_output(&sigcheck);
--		}
-+		check_signature(push_cert.buf, bogs, push_cert.buf + bogs,
-+				push_cert.len - bogs, &sigcheck);
- 
--		strbuf_release(&gpg_output);
--		strbuf_release(&gpg_status);
- 		nonce_status = check_nonce(push_cert.buf, bogs);
- 	}
- 	if (!is_null_oid(&push_cert_oid)) {
++test_expect_success GPG 'check config gpg.format values' '
++	rm .git/config &&
++	test_config gpg.format openpgp &&
++	git commit -S --amend -m "success" &&
++	test_config gpg.format OpEnPgP &&
++	git commit -S --amend -m "success" &&
++	test_config gpg.format malformed &&
++	test_must_fail git commit -S --amend -m "fail" 2>result
++'
++
+ test_done
 -- 
 2.16.4
 
