@@ -2,65 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8308C1F85A
-	for <e@80x24.org>; Tue, 10 Jul 2018 07:58:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D8531F85A
+	for <e@80x24.org>; Tue, 10 Jul 2018 08:53:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751297AbeGJH6H (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jul 2018 03:58:07 -0400
-Received: from agora.rdrop.com ([199.26.172.34]:1212 "EHLO agora.rdrop.com"
+        id S1751219AbeGJIxF (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jul 2018 04:53:05 -0400
+Received: from gecko.sbs.de ([194.138.37.40]:43854 "EHLO gecko.sbs.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751057AbeGJH6E (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jul 2018 03:58:04 -0400
-X-Greylist: delayed 961 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Jul 2018 03:58:04 EDT
-Received: from agora.rdrop.com (66@localhost [127.0.0.1])
-        by agora.rdrop.com (8.13.1/8.12.7) with ESMTP id w6A7fSni030330
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-        Tue, 10 Jul 2018 00:41:29 -0700 (PDT)
-        (envelope-from perryh@pluto.rain.com)
-Received: (from uucp@localhost)
-        by agora.rdrop.com (8.13.1/8.14.2/Submit) with UUCP id w6A7fSmd030329;
-        Tue, 10 Jul 2018 00:41:28 -0700 (PDT)
-        (envelope-from perryh@pluto.rain.com)
-Received: from fbsd81 by pluto.rain.com (4.1/SMI-4.1-pluto-M2060407)
-        id AA08876; Tue, 10 Jul 18 00:14:09 PDT
-Date:   Tue, 10 Jul 2018 00:13:42 -0700
-From:   perryh@pluto.rain.com (Perry Hutchison)
-To:     peff@peff.net, Johannes.Schindelin@gmx.de
-Cc:     git@vger.kernel.org, paul@mad-scientist.net, dnj@google.com
-Subject: Re: Git 2.18: RUNTIME_PREFIX... is it working?
-Message-Id: <5b445ca6.TkV9Dj8T2KFinxZP%perryh@pluto.rain.com>
-References: <97803ec8dae0a73bae301a37377b7b4a78f77e99.camel@mad-scientist.net>
- <nycvar.QRO.7.76.6.1807041312150.75@tvgsbejvaqbjf.bet>
- <986185d30a0f09b4e2a9832d324a265cd3da7354.camel@mad-scientist.net>
- <nycvar.QRO.7.76.6.1807061059260.75@tvgsbejvaqbjf.bet>
- <CAD1RUU-4a_jV_JjozjXOR4bi+_7rFW_AjmHbbrw6NHJ77=oGkw@mail.gmail.com>
- <bf0d4f33701ec694917f2e710c3fb097085c8d69.camel@mad-scientist.net>
- <nycvar.QRO.7.76.6.1807082346140.75@tvgsbejvaqbjf.bet>
- <20180709195822.GA9000@sigill.intra.peff.net>
- <20180710035635.GA13459@sigill.intra.peff.net>
-In-Reply-To: <20180710035635.GA13459@sigill.intra.peff.net>
-User-Agent: nail 11.25 7/29/05
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+        id S1751153AbeGJIxF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jul 2018 04:53:05 -0400
+Received: from mail2.sbs.de (mail2.sbs.de [192.129.41.66])
+        by gecko.sbs.de (8.15.2/8.15.2) with ESMTPS id w6A8qim0018341
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Tue, 10 Jul 2018 10:52:44 +0200
+Received: from md1pvb1c.ad001.siemens.net (md1pvb1c.ad001.siemens.net [139.25.68.40])
+        by mail2.sbs.de (8.15.2/8.15.2) with ESMTP id w6A8qgGU024364;
+        Tue, 10 Jul 2018 10:52:43 +0200
+From:   Henning Schild <henning.schild@siemens.com>
+To:     git@vger.kernel.org
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
+        Ben Toews <mastahyeti@gmail.com>, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Henning Schild <henning.schild@siemens.com>
+Subject: [PATCH v2 7/9] gpg-interface: introduce new config to select per gpg format program
+Date:   Tue, 10 Jul 2018 10:52:29 +0200
+Message-Id: <4905c1907a866c0fd1a4dac978dd6ca3e468ac43.1531208187.git.henning.schild@siemens.com>
+X-Mailer: git-send-email 2.16.4
+In-Reply-To: <cover.1531208187.git.henning.schild@siemens.com>
+References: <cover.1531208187.git.henning.schild@siemens.com>
+In-Reply-To: <cover.1531208187.git.henning.schild@siemens.com>
+References: <cover.1531208187.git.henning.schild@siemens.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> wrote:
+Supporting multiple signing formats we will have the need to configure a
+custom program each. Add a new config value to cater for that.
 
-> If I understand correctly, the Linux implementation requires reading
-> from /proc. So an executable that only did RUNTIME_PREFIX (with no
-> fallback to static paths) would be unhappy inside a chroot or other
-> container that didn't mount /proc.
+Signed-off-by: Henning Schild <henning.schild@siemens.com>
+---
+ Documentation/config.txt | 5 +++++
+ gpg-interface.c          | 2 +-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-If we need /proc, wouldn't we _already_ be unhappy inside a chroot
-that didn't mount /proc, even _with_ fallback to static paths?
-Last I knew, the whole point of chroots/containers/jails/etc. was to
-prevent access, from a process running inside the container, to any
-part of the FS that's outside of the container.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index ac373e3f4..c0bd80954 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1832,6 +1832,11 @@ gpg.format::
+ 	Specifies which key format to use when signing with `--gpg-sign`.
+ 	Default is "openpgp", that is also the only supported value.
+ 
++gpg.<format>.program::
++	Use this to customize the program used for the signing format you
++	chose. (see gpg.program) gpg.openpgp.program is a synonym for the
++	legacy gpg.program.
++
+ gui.commitMsgWidth::
+ 	Defines how wide the commit message window is in the
+ 	linkgit:git-gui[1]. "75" is the default.
+diff --git a/gpg-interface.c b/gpg-interface.c
+index ac2df498d..65098430f 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -179,7 +179,7 @@ int git_gpg_config(const char *var, const char *value, void *cb)
+ 		return git_config_string(&gpg_format, var, value);
+ 	}
+ 
+-	if (!strcmp(var, "gpg.program"))
++	if (!strcmp(var, "gpg.program") || !strcmp(var, "gpg.openpgp.program"))
+ 		return git_config_string(&gpg_formats[PGP_FMT].program, var,
+ 					 value);
+ 	return 0;
+-- 
+2.16.4
+
