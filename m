@@ -2,52 +2,52 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C2EB31F85A
-	for <e@80x24.org>; Tue, 10 Jul 2018 12:18:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 239C51F85A
+	for <e@80x24.org>; Tue, 10 Jul 2018 12:18:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933255AbeGJMRY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jul 2018 08:17:24 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:37795 "EHLO
+        id S933222AbeGJMRW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jul 2018 08:17:22 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:40162 "EHLO
         mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933209AbeGJMRU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jul 2018 08:17:20 -0400
-Received: by mail-wr1-f66.google.com with SMTP id q10-v6so14377309wrd.4
-        for <git@vger.kernel.org>; Tue, 10 Jul 2018 05:17:20 -0700 (PDT)
+        with ESMTP id S933176AbeGJMRR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jul 2018 08:17:17 -0400
+Received: by mail-wr1-f66.google.com with SMTP id t6-v6so14374218wrn.7
+        for <git@vger.kernel.org>; Tue, 10 Jul 2018 05:17:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=/PmT7tCRCH4Mwz38Gjh83SPf8AwRhxlaSqIDB9WjcAk=;
-        b=jb1bLBrC1IyKa/UhpPgspZOVTdeLfzKJBkmnURD3lJgTMmqGwUKU+R51+PawLU2DnE
-         eg6XrkWD9AK9XkHlBPYK//fvqwCU32PRpB9q9KvPrn5xGB4UDQft3jMzqqwQ6UFoADi8
-         TC8bKm/NNbSmCUo1XZ6c1hqzcrBOjh/KBi3lMtZFtX4ydW4CNwkVpNDoF3UnxNJYOKJd
-         N+0csA6fXmBaRHszx6ubfwG/RCc2lPxhopPwOfNk9SHvNVcjsF7Dk5NymU2G+GmIADwk
-         sXB4GSaVNLLnHUWh9krCNvlFDnnRlvnoX1mEA3DtwUU3+pDQpiqGYYLOeCsIiiWY9hRE
-         x0tg==
+        bh=cPOF8pqILzJemW3Fn7kMoQoxtsQpE56H3rLcZ/JC5p0=;
+        b=nWqKOvT6NvY41FV9AZ6x4yL1a9poSCR3VowPK3HTlXMRcxfQt1coyCFUrra80xVlP6
+         a8lfbn/pm/Me8S/tz59AfDITMYF8IHFldi+o8WVtgWcAu29ewip5Wj6huZgHjfoYHZRJ
+         8E2On63BYmMQsXGtl8iMJf8ZIwO6ugLO4IL4c7WTYFq6EmP5/jc/xYb5ZaqAD2vjJjtC
+         VRD5J9P6u9MyzfXyhL9NrKd5qPMkhUIK3zBuo4oYnNiA+MBG87Jz6qe1swHcy5yxL4SJ
+         NoQMXCks30IwfL+W5T64P4KsyaszoB1erhtSM8QR1GmfeUi2cRnrLC9RQc9LZom8VjoO
+         fVLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=/PmT7tCRCH4Mwz38Gjh83SPf8AwRhxlaSqIDB9WjcAk=;
-        b=b3mO9yEsGlk+6+5kfPmPtNRXQ7Miss5oep6YVbwRt0Q184excr5rGBcnY1JSEQjuWl
-         xtIxlsH1wLAkQ2YmQEE6pHWGHOKMhjaMey2mTNE/j+m5NU9m3FTaqwBp0OFi+fQFPGk6
-         u6IFqdZCX617TXgaretBdNBb0v1+5EikaieJr6n/C98Xtm6WQGaVGUxwDMuzTtins6m7
-         H54Aecs8SAchorDY6PM2nyM7BNcS9ol0cird5xWqIeRyCB0qer1s5ORiErMS2imhIVu8
-         WviHIXbTRY7wBiXupJNH32PLneljB55l+UAf2k1hCfv8Eo3L2J+tN8pvl3uq13dxjmeK
-         Cb2g==
-X-Gm-Message-State: AOUpUlE6ZiD8m3dZ73+32rcQqFckOocJw5poQf7y0lQqDt9J6Rl+e58u
-        AOZmofbI+14kMwAtZWB8sNsq0TeA
-X-Google-Smtp-Source: AAOMgpfZDmqlImBao5YoD0XgEsSTqxmzMQq+UK5J8eLXEWF6BJMkvA4zfqoEfZZfN+SF8x14aJx8CQ==
-X-Received: by 2002:adf:bacf:: with SMTP id w15-v6mr11308881wrg.203.1531225039481;
-        Tue, 10 Jul 2018 05:17:19 -0700 (PDT)
+        bh=cPOF8pqILzJemW3Fn7kMoQoxtsQpE56H3rLcZ/JC5p0=;
+        b=H7zV1DqfpwWZT/QtjIlEJmXjR/ig/QcNQJc2a10dHEhKbHZHQCdROAa3xX4h4lOQuk
+         9lSiAkUl07cduCpn28Kz07Lfap99DajsjWYCe/KbLgMIancWYV2Dg3swIJTSqpw+GlTn
+         GX+l7XESIDrKj3yopF43osP3C9K7eubR4EsXiLX7lrKt34chBxWLAHun+upd/GkofUvq
+         MFZN3d63RzDPw4DT6e9hH+l0Pr+ZFJPJUlZpTDfAEbYlW5KVwzIOK4j4YvPVXbMbkT5v
+         +LyiN13O5skjFxwswkVfgHfVcBuzcfZ70iAPCVVHbm6yOvyw9/2IhBpEstijPQJvEOT4
+         1Dfg==
+X-Gm-Message-State: AOUpUlE//t/THue5cXWrP1ZwBdaWPy4m50mWiG7MSvlErPz0lo1y75UO
+        x5amLi2ScW2qncEHNZGB4fpPKCad
+X-Google-Smtp-Source: AAOMgpfwgnodLilY6Hjc3dLhnP9+nR1IGYQnXLLAuk9BHkU+kryseOflY39K8nDrifnLTZ50vqUvIg==
+X-Received: by 2002:adf:b842:: with SMTP id u2-v6mr6924880wrf.162.1531225036340;
+        Tue, 10 Jul 2018 05:17:16 -0700 (PDT)
 Received: from localhost.localdomain (AToulouse-658-1-239-37.w90-38.abo.wanadoo.fr. [90.38.238.37])
-        by smtp.googlemail.com with ESMTPSA id t10-v6sm28244334wre.95.2018.07.10.05.17.18
+        by smtp.googlemail.com with ESMTPSA id t10-v6sm28244334wre.95.2018.07.10.05.17.14
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 10 Jul 2018 05:17:18 -0700 (PDT)
+        Tue, 10 Jul 2018 05:17:15 -0700 (PDT)
 From:   Alban Gruin <alban.gruin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
@@ -56,9 +56,9 @@ Cc:     Stefan Beller <sbeller@google.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         phillip.wood@dunelm.org.uk, gitster@pobox.com,
         Alban Gruin <alban.gruin@gmail.com>
-Subject: [GSoC][PATCH v3 05/13] sequencer: add a new function to silence a command, except if it fails
-Date:   Tue, 10 Jul 2018 14:15:49 +0200
-Message-Id: <20180710121557.6698-6-alban.gruin@gmail.com>
+Subject: [GSoC][PATCH v3 03/13] editor: add a function to launch the sequence editor
+Date:   Tue, 10 Jul 2018 14:15:47 +0200
+Message-Id: <20180710121557.6698-4-alban.gruin@gmail.com>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20180710121557.6698-1-alban.gruin@gmail.com>
 References: <20180702105717.26386-1-alban.gruin@gmail.com>
@@ -68,96 +68,95 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This adds a new function, run_command_silent_on_success(), to
-redirect the stdout and stderr of a command to a strbuf, and then to run
-that command. This strbuf is printed only if the command fails. It is
-functionnaly similar to output() from git-rebase.sh.
-
-run_git_commit() is then refactored to use of
-run_command_silent_on_success().
+As part of the rewrite of interactive rebase, the sequencer will need to
+open the sequence editor to allow the user to edit the todo list.
+Instead of duplicating the existing launch_editor() function, this
+refactors it to a new function, launch_specified_editor(), which takes
+the editor as a parameter, in addition to the path, the buffer and the
+environment variables.  launch_sequence_editor() is then added to launch
+the sequence editor.
 
 Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
 ---
- sequencer.c | 51 +++++++++++++++++++++++++--------------------------
- 1 file changed, 25 insertions(+), 26 deletions(-)
+ cache.h  |  1 +
+ editor.c | 27 +++++++++++++++++++++++++--
+ strbuf.h |  2 ++
+ 3 files changed, 28 insertions(+), 2 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index 57fd58bc1..1b5d50298 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -768,6 +768,23 @@ N_("you have staged changes in your working tree\n"
- #define VERIFY_MSG  (1<<4)
- #define CREATE_ROOT_COMMIT (1<<5)
- 
-+static int run_command_silent_on_success(struct child_process *cmd)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	int rc;
-+
-+	cmd->stdout_to_stderr = 1;
-+	rc = pipe_command(cmd,
-+			  NULL, 0,
-+			  NULL, 0,
-+			  &buf, 0);
-+
-+	if (rc)
-+		fputs(buf.buf, stderr);
-+	strbuf_release(&buf);
-+	return rc;
-+}
-+
- /*
-  * If we are cherry-pick, and if the merge did not result in
-  * hand-editing, we will hit this commit and inherit the original
-@@ -822,18 +839,11 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
- 
- 	cmd.git_cmd = 1;
- 
--	if (is_rebase_i(opts)) {
--		if (!(flags & EDIT_MSG)) {
--			cmd.stdout_to_stderr = 1;
--			cmd.err = -1;
--		}
--
--		if (read_env_script(&cmd.env_array)) {
--			const char *gpg_opt = gpg_sign_opt_quoted(opts);
-+	if (is_rebase_i(opts) && read_env_script(&cmd.env_array)) {
-+		const char *gpg_opt = gpg_sign_opt_quoted(opts);
- 
--			return error(_(staged_changes_advice),
--				     gpg_opt, gpg_opt);
--		}
-+		return error(_(staged_changes_advice),
-+			     gpg_opt, gpg_opt);
- 	}
- 
- 	argv_array_push(&cmd.args, "commit");
-@@ -863,21 +873,10 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
- 	if (opts->allow_empty_message)
- 		argv_array_push(&cmd.args, "--allow-empty-message");
- 
--	if (cmd.err == -1) {
--		/* hide stderr on success */
--		struct strbuf buf = STRBUF_INIT;
--		int rc = pipe_command(&cmd,
--				      NULL, 0,
--				      /* stdout is already redirected */
--				      NULL, 0,
--				      &buf, 0);
--		if (rc)
--			fputs(buf.buf, stderr);
--		strbuf_release(&buf);
--		return rc;
--	}
--
--	return run_command(&cmd);
-+	if (is_rebase_i(opts) && !(flags & EDIT_MSG))
-+		return run_command_silent_on_success(&cmd);
-+	else
-+		return run_command(&cmd);
+diff --git a/cache.h b/cache.h
+index d49092d94..33fa70f55 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1472,6 +1472,7 @@ extern const char *fmt_name(const char *name, const char *email);
+ extern const char *ident_default_name(void);
+ extern const char *ident_default_email(void);
+ extern const char *git_editor(void);
++extern const char *git_sequence_editor(void);
+ extern const char *git_pager(int stdout_is_tty);
+ extern int is_terminal_dumb(void);
+ extern int git_ident_config(const char *, const char *, void *);
+diff --git a/editor.c b/editor.c
+index 9a9b4e12d..c985eee1f 100644
+--- a/editor.c
++++ b/editor.c
+@@ -1,4 +1,5 @@
+ #include "cache.h"
++#include "config.h"
+ #include "strbuf.h"
+ #include "run-command.h"
+ #include "sigchain.h"
+@@ -34,10 +35,21 @@ const char *git_editor(void)
+ 	return editor;
  }
  
- static int rest_is_empty(const struct strbuf *sb, int start)
+-int launch_editor(const char *path, struct strbuf *buffer, const char *const *env)
++const char *git_sequence_editor(void)
+ {
+-	const char *editor = git_editor();
++	const char *editor = getenv("GIT_SEQUENCE_EDITOR");
++
++	if (!editor)
++		git_config_get_string_const("sequence.editor", &editor);
++	if (!editor)
++		editor = git_editor();
+ 
++	return editor;
++}
++
++static int launch_specified_editor(const char *editor, const char *path,
++				   struct strbuf *buffer, const char *const *env)
++{
+ 	if (!editor)
+ 		return error("Terminal is dumb, but EDITOR unset");
+ 
+@@ -95,3 +107,14 @@ int launch_editor(const char *path, struct strbuf *buffer, const char *const *en
+ 		return error_errno("could not read file '%s'", path);
+ 	return 0;
+ }
++
++int launch_editor(const char *path, struct strbuf *buffer, const char *const *env)
++{
++	return launch_specified_editor(git_editor(), path, buffer, env);
++}
++
++int launch_sequence_editor(const char *path, struct strbuf *buffer,
++			   const char *const *env)
++{
++	return launch_specified_editor(git_sequence_editor(), path, buffer, env);
++}
+diff --git a/strbuf.h b/strbuf.h
+index 60a35aef1..66da9822f 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -575,6 +575,8 @@ extern void strbuf_add_unique_abbrev(struct strbuf *sb,
+  * file's contents are not read into the buffer upon completion.
+  */
+ extern int launch_editor(const char *path, struct strbuf *buffer, const char *const *env);
++extern int launch_sequence_editor(const char *path, struct strbuf *buffer,
++				  const char *const *env);
+ 
+ extern void strbuf_add_lines(struct strbuf *sb, const char *prefix, const char *buf, size_t size);
+ 
 -- 
 2.18.0
 
