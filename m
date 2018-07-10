@@ -2,120 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 694041F85A
-	for <e@80x24.org>; Tue, 10 Jul 2018 13:18:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D70D1F85A
+	for <e@80x24.org>; Tue, 10 Jul 2018 13:24:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933299AbeGJNSV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jul 2018 09:18:21 -0400
-Received: from mout.gmx.net ([212.227.17.20]:59901 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754201AbeGJNSU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jul 2018 09:18:20 -0400
-Received: from [192.168.0.129] ([37.201.195.87]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MEbYb-1fsViy1c2j-00FmGF; Tue, 10
- Jul 2018 15:18:17 +0200
-Date:   Tue, 10 Jul 2018 15:18:19 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 6/6] commit-graph: add repo arg to graph readers
-In-Reply-To: <20180710115344.14392-1-szeder.dev@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1807101517290.75@tvgsbejvaqbjf.bet>
-References: <cover.1529616356.git.jonathantanmy@google.com> <cover.1531168854.git.jonathantanmy@google.com> <f1ccfdccc851039cf62978d162cd9de99ea619de.1531168854.git.jonathantanmy@google.com> <20180710115344.14392-1-szeder.dev@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S933229AbeGJNYZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jul 2018 09:24:25 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:39505 "EHLO
+        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S933145AbeGJNYY (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 10 Jul 2018 09:24:24 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.nyi.internal (Postfix) with ESMTP id 9AAC5218B4;
+        Tue, 10 Jul 2018 09:24:23 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Tue, 10 Jul 2018 09:24:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=living180.net;
+         h=cc:content-transfer-encoding:content-type:date:from
+        :in-reply-to:message-id:mime-version:references:subject:to
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=iL+pNUuWiC8K4AECY
+        hh9WFStpA8lWbo8AkxvFG68UVQ=; b=AqxT0/dOudV0IBVa+6IJwSlAB1nSWTcPY
+        JKZmON8vUp1SWcs9hVYI3bGfKFgglfYYrj/lF0IW93ZP5jG0HJdSse7d9XXoTH/U
+        GxxvHjMn0wh5/EiHTDGxIEDo9ixpZpxLUDkESjDc8Psi01fq/IZBQ+3PvlB+OuGT
+        dtOYUMpJ+ugX1rgQc8zuXlhVaLKsKMjU7CHmijNG8Sc5tTNVRNHPBzA8OHmORHc3
+        WnvBRZGVUoU8rwX3YtVWtIU0E3DZBhfrv1E/evAQmQ+P1YIIYcDgAS9YG+RBw2Pe
+        owQ3Zh7RxwYySpZlyyBX2DlO0sFonOn+mQSegq0B31uciDYPNTh0Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:content-type
+        :date:from:in-reply-to:message-id:mime-version:references
+        :subject:to:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=iL+pNU
+        uWiC8K4AECYhh9WFStpA8lWbo8AkxvFG68UVQ=; b=WPjfh2t9f70y9ow+q1KC2V
+        p1HKJgRTVkS0xaOnE/hTfPgtq2SR35im4aFofrzCbI75XhYt/qd459C9t8LJeFND
+        O2NplV2brErLF3Gb9vG0r6xMcGOctda7h9LgVfIDWH5L8fVtt2ET6ZUzwTqXCI5G
+        fHUQLgc1kuJuB0fIkf6/6HE3zgK6QkTAgAksvpedUJJfeG4rXPGAT5Y6PcEBQBfW
+        y70RnoNjOcbZkkBZeu5IJIzlZhWp65CQwqS2lH/Vy3IEE2BXc7NHtcpi7dQLyu2W
+        lVNIx+7JBsh4J9p/2bURGhKKQreFgf5LUorMZFcc+W8e50bDJrsqBUpdPtkBYYOQ
+        ==
+X-ME-Proxy: <xmx:h7NEW-37BwDqa5IG4TVE5kI3RWPz-2qopVvCwTJJ_ekjfGonOJno9A>
+    <xmx:h7NEWxOzyv58ja0hoMZD7XdrBUNvX9oFpNUcG5x2yzlof0rqg53HVg>
+    <xmx:h7NEW-1aiJZEQsocCxDzHTAzJgHVFSMMyL0YIjFwSHe5WXR_dc_tlA>
+    <xmx:h7NEW4FlalXix4-3Aqp4tQ2jL4EIXHy-Ljm2rnzMEYiWPSqBeKKe1w>
+    <xmx:h7NEW74rVdSF-X5L-BZ6A_ID5i1IA2AWLK4bShDPFuIQKdtlKDh-Zw>
+    <xmx:h7NEWyEp6NwCom-f4J9FKj-43VdkZUbqvAXMNzkMqrRpeSzIleAjpA>
+X-ME-Sender: <xms:h7NEW5zY0rbmdFckySwNPziVlh7ok8hEQ9eWGpXBSMDFxfhohmrXfQ>
+Received: from [0.0.0.0] (unknown [173.199.115.247])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 79E0BE4516;
+        Tue, 10 Jul 2018 09:24:21 -0400 (EDT)
+Subject: Re: [PATCH 0/2] Fix --rebase-merges with custom commentChar
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Aaron Schrab <aaron@schrab.com>
+Cc:     git@vger.kernel.org
+References: <20180708184110.14792-1-dharding@living180.net>
+ <nycvar.QRO.7.76.6.1807090936230.75@tvgsbejvaqbjf.bet>
+From:   Daniel Harding <dharding@living180.net>
+Message-ID: <e8973797-fc5f-2ca5-1881-5ee66fc8279b@living180.net>
+Date:   Tue, 10 Jul 2018 16:24:19 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-512442736-1531228699=:75"
-X-Provags-ID: V03:K1:q/SMRbTL//zm+u1hQ1yAyqSwYlGCCBXNZ/+kL1NwUcSM00rCcs8
- Itt6vJ9mDBtXYU7ziLsE1k+hhqdwswyx+1EF+cxH6Q5ZmINx3+FK4yARwaZ1O9HuEY+4VQ6
- AiJ1HIKRwu3lC52BVJZ/llJF3cnL4fbYyRqpiuYjrTYj74HfnMqK7Xdy+f2KExFE3DPIpjO
- ruJzON3a3lbhTBA510fIw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:9SiN6ZINTbM=:DAfJgfWsSGp80Ci4ori2Ak
- 87AKO4b0p3fXNw4ae1HI9Ga102ii8Wkd5Ha9qiq2Gq70LZN4lozxlQlJMw2B9FsyAOGMcvkE2
- cnwkYJ2XjtjhoMJ4y3WVHcbyY82Q4UnWY2MT/sSbEg7QVecDv9WeJl+nkc9QxZwAUtTCcmjpw
- x6a4E3WNBSituaF1abJjiQ3YfgrsJwyat/TmHdrqfhGUNi5IiLf/g0dPdgJGnfNT0q6BkvZQA
- uGETildZr3QoJhflqAAQtvhDOsRl0ERhMDun5YWJ8FB+kZams+M2QUKVCeQ70qlLiyJzMauRJ
- Susnos+4MnpEnUuKPug6XlZGEsZ2W9LcO8PpXKH62J8toK5Hde4ufrHwrOAz/iy5U8tXlomFf
- YpfYTRs5wt7LYyfSIh/AZwm5THvVWnOo26Sm2v3NIDZ2C0iUbmfCt59BuzOfywOzxYFRewaq/
- iIZraZhVe1ITGpFJcw/9U+fO0q1lYuIIGNuoKKqdD2o5XWQwD45UmYa+EfcJFVbraYnh73rHU
- grsVyHm0EKa8MgzmVnX4KmYt8e5QKid57iWZWGcAZ6Cjw1RomNt88q7dQVUUcsHiLsWlk8ysS
- 0SMTAFj9SN+imipmMFMl6gCokSczQZbPsERZJbi0V97G2Psb5TnjTyzaxYzqrocCZfY5ifNtN
- QDmCzJb3tsLxX4BH6ovRfSGVq9x61FFLKEoVCAWgYmnMJTcuoOwhFUxOwODkR3FesKsK4FTnF
- iSjWk/teCkvGZrRWZyhVuL/QljrTYKHHFTViNeaCBuD5a6OuWtR8L4dSEIma2o3ko/s7L0ery
- Sw49xPr
+In-Reply-To: <nycvar.QRO.7.76.6.1807090936230.75@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Mon, 09 Jul 2018 at 10:53:14 +0300, Johannes Schindelin wrote>
+> On Sun, 8 Jul 2018, Daniel Harding wrote:
+> 
+>> I have core.commentChar set in my .gitconfig, and when I tried to run
+>> git rebase -i -r, I received an error message like the following:
+>>
+>> error: invalid line 3: # Branch <name>
+>>
+>> To fix this, I updated sequencer.c to use the configured commentChar
+>> for the Branch <name> comments.  I also tweaked the tests in t3430 to
+>> verify todo list generation with a custom commentChar.  I'm not sure
+>> if I took the right approach with that, or if it would be better to
+>> add additional tests for that case, so feel free to
+>> tweak/replace/ignore the second commit as appropriate.
+> 
+> Nothing is as powerful as an idea whose time has come. Or as a patch whose
+> time has come, I guess:
+> 
+> https://public-inbox.org/git/20180628020414.25036-1-aaron@schrab.com/
 
---8323328-512442736-1531228699=:75
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Oops, I should have done a bit a searching before I tossed off a patch. 
+Thanks Johannes for the pointer.
 
-Hi,
+> AFAICT the remaining task was to send a new revision of the patch, with
+> the commit message touched up, to reflect the analysis that it handles the
+> `auto` setting well.
+> 
+> Your patch adds a regression test in addition, which is very nice.
+> 
+> So maybe you can coordinate with Aaron about that first patch? I really
+> think that the commit message needs to explain why the `auto` setting is
+> not a problem here.
 
-On Tue, 10 Jul 2018, SZEDER G=C3=A1bor wrote:
+Aaron, how would you like to move forward on this?  I don't want to take 
+credit from you since you were the first to post the patch.  If you 
+would like to post a new version of your patch with the commit message 
+updated based on the feedback, I can then add my tests to go with it. 
+Alternatively if you'd like me to run with this I can repost the patch 
+with you as the author along with an updated commit message and my name 
+in a "Commit-message-by:" line.  Let me know your thoughts.  If I don't 
+hear from you in a couple of days, I'll go ahead and repost the patch as 
+I described.
 
-> > diff --git a/t/helper/test-repository.c b/t/helper/test-repository.c
-> > new file mode 100644
-> > index 0000000000..5fff540a26
-> > --- /dev/null
-> > +++ b/t/helper/test-repository.c
-> > @@ -0,0 +1,88 @@
-> > +#include "test-tool.h"
-> > +#include "cache.h"
-> > +#include "commit-graph.h"
-> > +#include "commit.h"
-> > +#include "config.h"
-> > +#include "object-store.h"
-> > +#include "object.h"
-> > +#include "repository.h"
-> > +#include "tree.h"
-> > +
-> > +static void test_parse_commit_in_graph(const char *gitdir, const char =
-*worktree,
-> > +=09=09=09=09       const struct object_id *commit_oid)
-> > +{
-> > +=09struct repository r;
-> > +=09struct commit *c;
-> > +=09struct commit_list *parent;
-> > +
-> > +=09/*
-> > +=09 * Create a commit independent of any repository.
-> > +=09 */
-> > +=09c =3D lookup_commit(commit_oid);
-> > +
-> > +=09repo_init(&r, gitdir, worktree);
-> > +
-> > +=09if (!parse_commit_in_graph(&r, c))
-> > +=09=09die("Couldn't parse commit");
-> > +
-> > +=09printf("%lu", c->date);
->=20
-> 32-bit builds complain about this:
->=20
->   t/helper/test-repository.c: In function 'test_parse_commit_in_graph':
->   t/helper/test-repository.c:28:9: error: format '%lu' expects argument o=
-f type 'long unsigned int', but argument 2 has type 'timestamp_t {aka long =
-long unsigned int}' [-Werror=3Dformat=3D]
->     printf("%lu", c->date);
->          ^
->   cc1: all warnings being treated as errors
->   Makefile:2262: recipe for target 't/helper/test-repository.o' failed
->   make: *** [t/helper/test-repository.o] Error 1
+Thanks,
 
-Let's also state how we usually fix this:
-
-=09printf("%"PRItime, c->date);
-
-Ciao,
-Dscho
---8323328-512442736-1531228699=:75--
+Daniel Harding
