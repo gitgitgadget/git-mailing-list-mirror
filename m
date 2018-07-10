@@ -6,22 +6,22 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA51B1F85A
-	for <e@80x24.org>; Tue, 10 Jul 2018 08:53:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE2791F85A
+	for <e@80x24.org>; Tue, 10 Jul 2018 08:53:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751248AbeGJIxH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jul 2018 04:53:07 -0400
-Received: from david.siemens.de ([192.35.17.14]:57640 "EHLO david.siemens.de"
+        id S1751289AbeGJIxK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jul 2018 04:53:10 -0400
+Received: from thoth.sbs.de ([192.35.17.2]:42053 "EHLO thoth.sbs.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751194AbeGJIxG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jul 2018 04:53:06 -0400
+        id S1751250AbeGJIxI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jul 2018 04:53:08 -0400
 Received: from mail2.sbs.de (mail2.sbs.de [192.129.41.66])
-        by david.siemens.de (8.15.2/8.15.2) with ESMTPS id w6A8qi2n011126
+        by thoth.sbs.de (8.15.2/8.15.2) with ESMTPS id w6A8qh7n026158
         (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Tue, 10 Jul 2018 10:52:44 +0200
+        Tue, 10 Jul 2018 10:52:43 +0200
 Received: from md1pvb1c.ad001.siemens.net (md1pvb1c.ad001.siemens.net [139.25.68.40])
-        by mail2.sbs.de (8.15.2/8.15.2) with ESMTP id w6A8qgGV024364;
-        Tue, 10 Jul 2018 10:52:44 +0200
+        by mail2.sbs.de (8.15.2/8.15.2) with ESMTP id w6A8qgGN024364;
+        Tue, 10 Jul 2018 10:52:42 +0200
 From:   Henning Schild <henning.schild@siemens.com>
 To:     git@vger.kernel.org
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
@@ -31,75 +31,71 @@ Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Taylor Blau <me@ttaylorr.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         Henning Schild <henning.schild@siemens.com>
-Subject: [PATCH v2 8/9] gpg-interface: introduce new signature format "x509" using gpgsm
-Date:   Tue, 10 Jul 2018 10:52:30 +0200
-Message-Id: <4a2cf83a63d25776cb1996490240ce3e5df8ada4.1531208187.git.henning.schild@siemens.com>
+Subject: [PATCH v2 0/9] X509 (gpgsm) commit signing support
+Date:   Tue, 10 Jul 2018 10:52:22 +0200
+Message-Id: <cover.1531208187.git.henning.schild@siemens.com>
 X-Mailer: git-send-email 2.16.4
-In-Reply-To: <cover.1531208187.git.henning.schild@siemens.com>
-References: <cover.1531208187.git.henning.schild@siemens.com>
-In-Reply-To: <cover.1531208187.git.henning.schild@siemens.com>
-References: <cover.1531208187.git.henning.schild@siemens.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This commit allows git to create and check x509 type signatures using
-gpgsm.
+Changes in v2:
+ - removed trailing commas in array initializers and add leading space
+ - replaced assert(0) with BUG in p5
+ - consolidated 2 format lookups reusing get_format_data p5
+ - changed from format "PGP" to "openpgp", later X509 to "x509"
+ - use strcasecmp instead of strcmp for format matching
+ - introduce gpg.<format>.program in p8, no gpg.programX509 anymore
+ - moved t/7510 patch inbetween the two patches changing validation code
+ - changed t/7510 patch to use test_config and test_must_fail
 
-Signed-off-by: Henning Schild <henning.schild@siemens.com>
----
- Documentation/config.txt |  2 +-
- gpg-interface.c          | 10 +++++++++-
- 2 files changed, 10 insertions(+), 2 deletions(-)
+This series adds support for signing commits with gpgsm.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index c0bd80954..b6f9b47d5 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1830,7 +1830,7 @@ gpg.program::
- 
- gpg.format::
- 	Specifies which key format to use when signing with `--gpg-sign`.
--	Default is "openpgp", that is also the only supported value.
-+	Default is "opengpg" and another possible value is "x509".
- 
- gpg.<format>.program::
- 	Use this to customize the program used for the signing format you
-diff --git a/gpg-interface.c b/gpg-interface.c
-index 65098430f..bf8d567a4 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -16,13 +16,18 @@ struct gpg_format_data {
- 
- #define PGP_SIGNATURE "-----BEGIN PGP SIGNATURE-----"
- #define PGP_MESSAGE "-----BEGIN PGP MESSAGE-----"
-+#define X509_SIGNATURE "-----BEGIN SIGNED MESSAGE-----"
- 
--enum gpgformats { PGP_FMT };
-+enum gpgformats { PGP_FMT, X509_FMT };
- struct gpg_format_data gpg_formats[] = {
- 	{ .format = "openpgp", .program = "gpg",
- 	  .extra_args_verify = { "--keyid-format=long" },
- 	  .sigs = { PGP_SIGNATURE, PGP_MESSAGE }
- 	},
-+	{ .format = "x509", .program = "gpgsm",
-+	  .extra_args_verify = { NULL },
-+	  .sigs = { X509_SIGNATURE, NULL }
-+	},
- };
- static const char *gpg_format = "openpgp";
- 
-@@ -182,6 +187,9 @@ int git_gpg_config(const char *var, const char *value, void *cb)
- 	if (!strcmp(var, "gpg.program") || !strcmp(var, "gpg.openpgp.program"))
- 		return git_config_string(&gpg_formats[PGP_FMT].program, var,
- 					 value);
-+	if (!strcmp(var, "gpg.x509.program"))
-+		return git_config_string(&gpg_formats[X509_FMT].program, var,
-+					 value);
- 	return 0;
- }
- 
+The first two patches are cleanups of gpg-interface, they are already
+close to being merged. But since they have not been pulled to next i am
+resending them.
+The following 5 patches (p3-p7) prepare for the introduction of the
+actual feature in patch 8.
+Finally patch 9 extends the testsuite to cover the new feature.
+
+This series can be seen as a follow up of a series that appeared under
+the name "gpg-interface: Multiple signing tools" in april 2018 [1]. After
+that series was not merged i decided to get my patches ready. The
+original series aimed at being generic for any sort of signing tool, while
+this series just introduced the X509 variant of gpg. (gpgsm)
+I collected authors and reviewers of that first series and already put them
+on cc.
+
+[1] https://public-inbox.org/git/20180409204129.43537-1-mastahyeti@gmail.com/
+
+Henning Schild (9):
+  builtin/receive-pack: use check_signature from gpg-interface
+  gpg-interface: make parse_gpg_output static and remove from interface
+    header
+  gpg-interface: add new config to select how to sign a commit
+  t/t7510: check the validation of the new config gpg.format
+  gpg-interface: introduce an abstraction for multiple gpg formats
+  gpg-interface: do not hardcode the key string len anymore
+  gpg-interface: introduce new config to select per gpg format program
+  gpg-interface: introduce new signature format "x509" using gpgsm
+  gpg-interface t: extend the existing GPG tests with GPGSM
+
+ Documentation/config.txt   |  9 +++++
+ builtin/receive-pack.c     | 17 ++-------
+ gpg-interface.c            | 88 ++++++++++++++++++++++++++++++++++++++--------
+ gpg-interface.h            |  2 --
+ t/lib-gpg.sh               |  9 ++++-
+ t/lib-gpg/gpgsm-gen-key.in |  6 ++++
+ t/t4202-log.sh             | 66 ++++++++++++++++++++++++++++++++++
+ t/t5534-push-signed.sh     | 52 +++++++++++++++++++++++++++
+ t/t7003-filter-branch.sh   | 15 ++++++++
+ t/t7030-verify-tag.sh      | 47 +++++++++++++++++++++++--
+ t/t7510-signed-commit.sh   | 10 ++++++
+ t/t7600-merge.sh           | 31 ++++++++++++++++
+ 12 files changed, 317 insertions(+), 35 deletions(-)
+ create mode 100644 t/lib-gpg/gpgsm-gen-key.in
+
 -- 
 2.16.4
 
