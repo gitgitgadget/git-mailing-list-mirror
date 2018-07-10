@@ -2,136 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9AB8D1F85A
-	for <e@80x24.org>; Tue, 10 Jul 2018 09:23:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F3AF1F85A
+	for <e@80x24.org>; Tue, 10 Jul 2018 09:47:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751285AbeGJJXT (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jul 2018 05:23:19 -0400
-Received: from mout.gmx.net ([212.227.17.22]:48373 "EHLO mout.gmx.net"
+        id S932756AbeGJJrk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jul 2018 05:47:40 -0400
+Received: from mout.gmx.net ([212.227.15.18]:35341 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751235AbeGJJXT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jul 2018 05:23:19 -0400
-Received: from [192.168.0.129] ([37.201.195.87]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LiTrM-1gDFc11Cl2-00cinp; Tue, 10
- Jul 2018 11:23:17 +0200
-Date:   Tue, 10 Jul 2018 11:23:18 +0200 (DST)
+        id S1751194AbeGJJrk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jul 2018 05:47:40 -0400
+Received: from [192.168.0.129] ([37.201.195.87]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M7Gj8-1fyEEx1pfa-00x52p; Tue, 10
+ Jul 2018 11:47:29 +0200
+Date:   Tue, 10 Jul 2018 11:47:29 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Olga Telezhnaya <olyatelezhnaya@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH 3/4] ref-filter: merge get_obj and get_object
-In-Reply-To: <010201647e19c24c-fd353913-225a-4153-aa0f-6ddf41ae6354-000000@eu-west-1.amazonses.com>
-Message-ID: <nycvar.QRO.7.76.6.1807101115570.75@tvgsbejvaqbjf.bet>
-References: <010201647e19c0f0-68cd728f-c86a-4be2-be6b-fd7e19e930fa-000000@eu-west-1.amazonses.com> <010201647e19c24c-fd353913-225a-4153-aa0f-6ddf41ae6354-000000@eu-west-1.amazonses.com>
+To:     =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>
+cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH 0/4] Use oid_object_info() instead of
+ read_object_file()
+In-Reply-To: <CAL21BmkBohTOVdCO_ENVfzL28aRjoh1MCCF6750AQEYsc7L54w@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1807101133060.75@tvgsbejvaqbjf.bet>
+References: <CAL21BmkBohTOVdCO_ENVfzL28aRjoh1MCCF6750AQEYsc7L54w@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:HTCDM6rdHmFMbe77gH+EAMBecCFONl3XDz1axvJSmpYW3czIwBW
- +Oea0xCPek4RBpdCL1mvrxKJt+vkVQsZ87rWoF+jHYMaUnNlFWE9wNjFDzubgDHIpFISDio
- Vh+LajCwugjmzN433cIIt+EQjYExK6xTI9Q3wqGBkmr86yoKSvCIfOWRCyc7a/uumxlzSNh
- uYyXHZ/CNMSNkYlB5SNDw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:4SXmPJJeQkg=:Ok85s5rhKa4e/qzYYFN3z+
- mkWVhkXNr1yytzYOGiQVunv7s0CwCc/f/zpad/0rYm4T17mAMvss7PJq8opDwugg0CQLWWEWg
- MKBTRNJAiNjpp3sQvw8k/DMO1JmSOf50REiE66t1VVeS8p2qC4MjZEhluFOCg4oOY0m5u6NA1
- bA7jOI0Oo6XuEukuHUzuhiR4LTtkpkrBAXI3dMPDSq6pYjqheQAwQH2mDtXcpQ6pzo2K1xPe8
- Ah1869vtYwunxOFj146wT3tB06IGR8BRxZA1LPqKeFvL4tUFkpnAkGyU3bfvw4X4KWMT/usn4
- FWc24mPRwzTHExffIk6OxOP/CjNV0JpADFSncB+2iM7Fst0YhhbYePMCHqAP/gUi0zKGtJLX6
- hhCeC4BK5nzhEplb7B84qqomQQLK7XYxO0j9rIy2xKdBxMK7biB85PhbPmLL5B64cGp9gYobd
- wY0OHf9nzli8QHnhxa3E3zDz7joNpxwTE4kei9cg5WKXuWsQJCS5/E4q4TWjHx+BRyEX2BQ+n
- /FLnH0RJHSHJL6AckvPlZL+DN78z9L3qgQK7nGThbuN0eXxd1bTIeyItkTfIAZoyfRUeb3Yf/
- kkPEESedGxwuZBA4Zg3cp46Jtib6/p7qjUPabMj+dfXP/9BSV0al/blPRADHVGbfeFhLg6/cI
- DN1wGpvViei80/xTfJAIYKySzZBiVr31KEq96yYErI92dcFAO5fIpkLH+G8gIOGeA6wUWtbQ6
- 2jmPNtBXOsGG9Khc6pudfMNRIbKj1aEVuvanv3DmqV3mYN6fu6Dmnt0DfZl6UQj4Dclun1sjc
- p6btFyf
+Content-Type: multipart/mixed; boundary="8323328-989113513-1531216051=:75"
+X-Provags-ID: V03:K1:MBQp4R3a4DhEoL3uyfAn5EsgcmwQLJ9D2KIsy7OaG7ZqehMRkrC
+ bxcVp2pqMR182PmKDJbXfJmO8folTFNtm2l49dnrH5ZEdQl8d/sLGIVUM9anbXcu7lPuU74
+ HnWoqqYxS/l/9vklnmVwG+imS57mm6Df8YC8nP9V6fjyHGDKL3Vdtl6K2ex3Iw2pEVIb256
+ VjtO4nxBkBnHd7YazhA6A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:6xsd24exxHw=:So5Wbzz/po8hn8JIV3DXZO
+ 27Cvx4srZDpbxybQthQ1J0dpRk9m+hDiZOr4D/iYIRj2ByVFeLy8Gwbq5/zny3mLvmQr8keCR
+ FG82bwXzUksCsBUAooAkZAumFCyp28GEdgkeGVni0Gm7SA//dOOnlkIcXI5RRLBcwzRRLS3Mw
+ g8ZVdcJA8G1BHo4dTh9+PiQGrKjSd+Ovs5lKL1LZVoSrEDjyW1T1t45qOtfJYdMJMgf/yVWKk
+ XpK6DnAwYiEOwlXHQX9nqykG75xIIzupK0CH6vkkajcGTSmFN+47s8k3+V8BpZWuvJHaDj43g
+ JKpgUHM7q0/QPCeQfxnEx2y98BZQcmVdugazLeO2CbTAJFopMm4y9Is5XwwEg3uJdpTIuuT7r
+ K2wHoOCAwvmnsAmqYy5ymTZxq/B9b7o/fvcc+EwgfxpMlu4z4DUxOdIkNwQHJYsHeweZReuaJ
+ CyEAKdwqOolb7x3xhyIEvtGxqqgIZ+kk5H44C2uFKCHRg3+rbvRZLrYgpioIEKJfxb4q49lyS
+ Vp/+ROolb+YIBuOJmdAyU/YU47Tcd84Gd3efjD/aAhA9lxdkB304I8jevTflJw+OML41XMYFp
+ wC+2kuyWj7jXCEC6yM5nsORSVHsG4dSH99Cs8A5ziCBFXDZvf4+TzYTP2CfoIcjjKzuYvVG4i
+ Sto50XgZrZdsb8QAVWWaTZhuPJsHUyWIYIuuHhZC7d8IY8lRaHNFrCwrlF2VlGSveR7i9PFts
+ qyoksarExHtL7+28Ca5TlcVmaBlAbEgsGo85vG3Z8pJUrQSDKF+2NkqJsJhKnVfJZrIFwL69J
+ knReG4l
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-989113513-1531216051=:75
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+
 Hi Olga,
 
-On Mon, 9 Jul 2018, Olga Telezhnaya wrote:
+On Mon, 9 Jul 2018, =D0=9E=D0=BB=D1=8F =D0=A2=D0=B5=D0=BB=D0=B5=D0=B6=D0=BD=
+=D0=B0=D1=8F wrote:
 
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 27733ef013bed..f04169f0ea0e3 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -1437,20 +1419,24 @@ static const char *get_refname(struct used_atom *atom, struct ref_array_item *re
->  }
->  
->  static int get_object(struct ref_array_item *ref, const struct object_id *oid,
-> -		       int deref, struct object **obj, struct strbuf *err)
-> +		      int deref, struct object **obj, struct strbuf *err)
->  {
->  	int eaten;
->  	int ret = 0;
->  	unsigned long size;
-> -	void *buf = get_obj(oid, obj, &size, &eaten);
+> [2] https://public-inbox.org/git/010201637254c969-a346030e-0b75-41ad-8ef3=
+-2ac7e04ba4fb-000000@eu-west-1.amazonses.com/
 
-So previously, `eaten` has been assigned always... but...
+This type of Message-Id makes me think that you used SubmitGit to send
+this patch series.
 
-> +	enum object_type type;
-> +	void *buf = read_object_file(oid, &type, &size);
->  	if (!buf)
->  		ret = strbuf_addf_ret(err, -1, _("missing object %s for %s"),
->  				      oid_to_hex(oid), ref->refname);
-> -	else if (!*obj)
-> -		ret = strbuf_addf_ret(err, -1, _("parse_object_buffer failed on %s for %s"),
-> -				      oid_to_hex(oid), ref->refname);
-> -	else
-> -		grab_values(ref->value, deref, *obj, buf, size);
-> +	else {
-> +		*obj = parse_object_buffer(oid, type, size, buf, &eaten);
+The main problem I see here is that the patches are not sent as replies to
+this cover letter, and therefore they are seemingly disconnected on the
+mailing list.
 
-... now it only gets assigned in case `buf` was non-`NULL`... yet...
-
-> +		if (!*obj)
-> +			ret = strbuf_addf_ret(err, -1, _("parse_object_buffer failed on %s for %s"),
-> +					      oid_to_hex(oid), ref->refname);
-> +		else
-> +			grab_values(ref->value, deref, *obj, buf, size);
-> +	}
->  	if (!eaten)
->		free(buf);
-
-... here, we still act on `eaten`. This causes GCC to complain thusly:
-
-
-```
-2018-07-10T04:59:38.6368270Z ref-filter.c:1477:6: error: variable 'eaten' is used uninitialized whenever 'if' condition is false [-Werror,-Wsometimes-uninitialized]
-2018-07-10T04:59:38.6468620Z         if (oi->info.contentp) {
-2018-07-10T04:59:38.6568710Z             ^~~~~~~~~~~~~~~~~
-2018-07-10T04:59:38.6669970Z ref-filter.c:1489:7: note: uninitialized use occurs here
-2018-07-10T04:59:38.6774240Z         if (!eaten)
-2018-07-10T04:59:38.6874860Z              ^~~~~
-2018-07-10T04:59:38.6976740Z ref-filter.c:1477:2: note: remove the 'if' if its condition is always true
-2018-07-10T04:59:38.7072330Z         if (oi->info.contentp) {
-2018-07-10T04:59:38.7172760Z         ^~~~~~~~~~~~~~~~~~~~~~~
-2018-07-10T04:59:38.7274040Z ref-filter.c:1466:11: note: initialize the variable 'eaten' to silence this warning
-2018-07-10T04:59:38.7374670Z         int eaten;
-2018-07-10T04:59:38.7474870Z                  ^
-2018-07-10T04:59:38.7575690Z                   = 0
-```
-
-(See
-https://mseng.visualstudio.com/VSOnline/_build/results?buildId=6640204&view=logs
-for details)
-
-I think that GCC is correct, and at the same time, it isn't. Because it
-does not matter whether `eaten` is uninitialized here: if it is, then
-`buf` is NULL, and the `free(buf);` call does nothing in particular.
-
-However, it *is* sloppy to have a conditional block of code that acts on
-an uninitialized value, whether it has adverse consequences or not. So I
-would suggest to initialize `eaten` to `1` (not `0` as suggested by GCC
-because we can avoid the no-op `free(buf)` while we're already touching
-that code path).
+It was also my impression that SubmitGit started supporting sending cover
+letters, in which case you would not have to jump through hoops to thread
+the mails properly. But for that to work, the PR has to have a description
+which is then used as cover letter. I do not see any description in
+https://github.com/git/git/pull/520, though. Maybe provide one?
 
 Ciao,
 Johannes
 
+P.S.: You might have noticed that I am working (slowly, but steadily) on a
+contender for SubmitGit that I call GitGitGadget. Originally, I really
+wanted to enhance SubmitGit instead because I am a big believer of *not*
+reinventing the wheel (so much energy gets wasted that way).
+
+However, in this case the limitations of the chosen language (I do not
+want to learn Scala, I have absolutely zero need to know Scala in any of
+my other endeavors, and my time to learn new things is limited, so I spend
+it wisely) and the limitations of the design (the UI is completely
+separate from GitHub, you have to allow Amazon to send mails in your name,
+and SubmitGit's design makes it impossible to work bi-directionally, it is
+only GitHub -> mailing list, while I also want the option to add replies
+on the mailing list as comments to the GitHub PR in the future) made me
+reconsider.
+
+If you want to kick the tires, so to say, I welcome you to give
+GitGitGadget a try. It would require only a couple of things from you:
+
+- You would have to settle for a branch name, and then not open new PRs
+  for every iteration you want to send, but force-push the branch instead.
+
+- You would have to open a PR at https://github.com/gitgitgadget/git.
+
+- You would have to provide the cover letter via the PR's description (and
+  update that description before sending newer iterations).
+
+- I would have to add you to the list of users allowed to send patches via
+  GitGitGadget (GitGitGadget has some really light-weight access control
+  to prevent spamming).
+
+- You would then send a new iteration by simply adding a comment to your
+  PR that contains this command: /submit
+
+- To integrate well with previous patch series iterations (i.e. to connect
+  the threads), I would have to come up with a little bit of tooling to
+  add some metadata that I have to reconstruct manually from your
+  previously-sent iterations.
+--8323328-989113513-1531216051=:75--
