@@ -6,99 +6,90 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 845DD1F85B
-	for <e@80x24.org>; Tue, 10 Jul 2018 04:32:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CAC6C1F85A
+	for <e@80x24.org>; Tue, 10 Jul 2018 04:45:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751129AbeGJEcN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jul 2018 00:32:13 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53150 "HELO cloud.peff.net"
+        id S1751119AbeGJEpD (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jul 2018 00:45:03 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53156 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751099AbeGJEcK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jul 2018 00:32:10 -0400
-Received: (qmail 22191 invoked by uid 109); 10 Jul 2018 04:32:10 -0000
+        id S1751099AbeGJEo6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jul 2018 00:44:58 -0400
+Received: (qmail 22696 invoked by uid 109); 10 Jul 2018 04:44:58 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 10 Jul 2018 04:32:10 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 10 Jul 2018 04:44:58 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19666 invoked by uid 111); 10 Jul 2018 04:32:11 -0000
+Received: (qmail 19734 invoked by uid 111); 10 Jul 2018 04:44:59 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 10 Jul 2018 00:32:11 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 10 Jul 2018 00:44:59 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Jul 2018 00:32:08 -0400
-Date:   Tue, 10 Jul 2018 00:32:08 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Jul 2018 00:44:56 -0400
+Date:   Tue, 10 Jul 2018 00:44:56 -0400
 From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Andrei Rybak <rybak.a.v@gmail.com>, git@vger.kernel.org,
-        Christian Couder <christian.couder@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH v2 2/2] sequencer: don't say BUG on bogus input
-Message-ID: <20180710043207.GB1909@sigill.intra.peff.net>
-References: <20180710043120.GA1330@sigill.intra.peff.net>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>, gitster@pobox.com,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/6] Add merge recursive testcases with undetected
+ conflicts
+Message-ID: <20180710044456.GA1870@sigill.intra.peff.net>
+References: <xmqqr2kce1mw.fsf@gitster-ct.c.googlers.com>
+ <20180709202229.10222-1-newren@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20180710043120.GA1330@sigill.intra.peff.net>
+In-Reply-To: <20180709202229.10222-1-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When cherry-picking a single commit, we go through a special
-code path that avoids creating a sequencer todo list at all.
-This path expects our revision parsing to turn up exactly
-one commit, and dies with a BUG if it doesn't.
+On Mon, Jul 09, 2018 at 01:22:29PM -0700, Elijah Newren wrote:
 
-But it's actually quite easy to fool. For example:
+> Oh, I didn't know about test-lint.  Is there a place that documents
+> the various checks you run, so I can avoid slowing you down?  Ones I
+> know about:
+> 
+> Already documented:
+>   * `make DEVELOPER=1` (from CodingGuidelines)
+>   * running tests (from SubmittingPatches)
+> 
+> Stuff I've seen you mention in emails over time:
+>   * linux/scripts/checkpatch.pl
+>   * git grep -e '\<inline\>' --and --not -e 'static inline' -- \*.h
+>   * make -C t/ test-lint
 
-  $ git cherry-pick --author=no.such.person HEAD
-  error: BUG: expected exactly one commit from walk
-  fatal: cherry-pick failed
+test-lint is supposed to be run automatically as part of "make test" (or
+"make prove"), unless you've specifically disabled it by setting
+TEST_LINT. And it does complain for me with your patches. If it doesn't
+for you, then we have a bug to fix. :)
 
-This isn't a bug; it's just bogus input.
+I won't be surprised, though, if you just ran "./t6036" manually before
+sending, since your patches literally didn't touch any other files.
 
-The condition to trigger this message actually has two
-parts:
+In theory we could push some of the linting down into the test scripts
+themselves (some of it, like the &&-linter, is there already by
+necessity). But it might also end up annoying, since usually dropping
+down to manual single-test runs means you're trying to debug something,
+and extra linting processes could get in the way.
 
-  1. We saw no commits. That's the case in the example
-     above. Let's drop the "BUG" here to make it clear that
-     the input is the problem. And let's also use the phrase
-     "empty commit set passed", which matches what we say
-     when we do a real revision walk and it turns up empty.
+> Are there others?
 
-  2. We saw more than one commit. That one _should_ be
-     impossible to trigger, since we fed at most one tip and
-     provided the no_walk option (and we'll have already
-     expanded options like "--branches" that can turn into
-     multiple tips). If this ever triggers, it's an
-     indication that the conditional added by 7acaaac275
-     (revert: allow single-pick in the middle of cherry-pick
-     sequence, 2011-12-10) needs to more carefully define
-     the single-pick case.
+I like:
 
-     So this can remain a bug, but we'll upgrade it to use
-     the BUG() macro, which would make it easier to detect
-     and analyze if it does trigger.
+  make SANITIZE=address,undefined test
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- sequencer.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+though it's pretty heavy-weight (but not nearly as much as valgrind).
+You probably also need BLK_SHA1=Yes, since the default DC_SHA1 has some
+unaligned loads that make UBSan complain. We should maybe teach the
+Makefile to do that by default.
 
-diff --git a/sequencer.c b/sequencer.c
-index f692b2ef44..8f0a015160 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -3636,8 +3636,10 @@ int sequencer_pick_revisions(struct replay_opts *opts)
- 		if (prepare_revision_walk(opts->revs))
- 			return error(_("revision walk setup failed"));
- 		cmit = get_revision(opts->revs);
--		if (!cmit || get_revision(opts->revs))
--			return error("BUG: expected exactly one commit from walk");
-+		if (!cmit)
-+			return error(_("empty commit set passed"));
-+		if (get_revision(opts->revs))
-+			BUG("unexpected extra commit from walk");
- 		return single_pick(cmit, opts);
- 	}
- 
--- 
-2.18.0.400.g702e398724
+I've also been playing with clang's scan-build. It _did_ find a real bug
+recently, but it has a bunch of false positives.
+
+Stefan runs Coverity against pu periodically. IIRC It's a pain to run
+yourself, but the shared results can be mailed to you, or you can poke
+around at https://scan.coverity.com/projects/git. That _also_ has a ton
+of false positives, but it's good about cataloguing them so the periodic
+email usually just mentions the new ones.
+
+-Peff
