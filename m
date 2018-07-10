@@ -2,125 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E0FDC1F85A
-	for <e@80x24.org>; Tue, 10 Jul 2018 18:39:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E20011F85A
+	for <e@80x24.org>; Tue, 10 Jul 2018 18:41:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732986AbeGJSjw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jul 2018 14:39:52 -0400
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:44076 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732424AbeGJSjv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jul 2018 14:39:51 -0400
-Received: by mail-qt0-f195.google.com with SMTP id b15-v6so19220025qtp.11
-        for <git@vger.kernel.org>; Tue, 10 Jul 2018 11:39:36 -0700 (PDT)
+        id S2389797AbeGJSla (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jul 2018 14:41:30 -0400
+Received: from mail-io0-f201.google.com ([209.85.223.201]:55289 "EHLO
+        mail-io0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388754AbeGJSl3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jul 2018 14:41:29 -0400
+Received: by mail-io0-f201.google.com with SMTP id d11-v6so6133721iok.21
+        for <git@vger.kernel.org>; Tue, 10 Jul 2018 11:41:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=JuiGOWbBcGgeBKBxqb2/6DzdkHqQLfQ7xtafbkhXu0o=;
-        b=TJmbeOcrlL2r4bvpzYBnVmMZYbOX2h/WUHJf9i8NEH2loE76Szn49A0ZEnQHrDTGy/
-         4DInTsMMEIdLT82qpvNm91HbhZZ6nO4Wlsn3fl0EnrXOF05vm6F0/0G++omck7OjzfC6
-         4fHThuPNmAdED3cZNre8+8KyTnQUVpA02SUtFj9rsNyCx/hhgu+4mt0dLsz8QaKvv5eI
-         adOHQ9o+65PTnHVFbWnh2S0DyjpMeZ9SK3DmLFVfU5N6v3zv4005HBgYmCgRGNVYtnsv
-         7TaOqt5oq53s3AbpqRSKMfy4l7hksrjQYe0y7wZdRCs7vUDp3N9/7l5Jte2KLO32lsrz
-         05ew==
+        d=google.com; s=20161025;
+        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
+         :cc;
+        bh=yVlMMdzYxLI5N3ftRKH0W00D7G5pe3WW/agboDBp37E=;
+        b=Hb2oWgIMGsd0UOWL7Pe3gcllA5iXa06H5ioX3hNSfNhhOz4j5qjxBebN8DH1UPNwDA
+         YK1AeNgwecSishpZWuz4y5Ky4eOBgHDjvRdljdQ0xqWEyYtwpLTOGCRPOvuBecSWtxBA
+         1CNa0KBNMqDPJiqbXMn9v7fQCyZIahIspoUA0Mh691vDTcHmKFeRDqyrA/+gqyvWqH8J
+         vYEcWDNvc8P11x7Bx7A+NGmuFvZcVsJdOZsu8WOUv9zVv2G6eToMtlLHFaLvtWs+j58M
+         FLO3wM0ecTBUu0IGU6NyT0ATYOw/oAa9Qu8Nfo3njtP4/YvNavHT7kTTlvt3zLbQSpUU
+         /l/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=JuiGOWbBcGgeBKBxqb2/6DzdkHqQLfQ7xtafbkhXu0o=;
-        b=lEeuUUeFajT6EilrSGGmtq81T7JIMmbEDF8PZd8IZugZezEvg7YZAn9Xee6fO3Odk6
-         7JLHNZW7QeDe8a3xsde0QQowvJgtYyexWBQHuCQR+ZW6iTz/krKo+Ub55SgybvWpfDp7
-         IsI6cPNSwuBnG+A1vHwyGIaPWQmWsx3F4j7Qlv3P5EFuXNFOM6ErXXJmCDqan5uBlp54
-         iO0Q8F+/FWSgPIYtfMUTgC4XT5sZ8cHl9PRxPNCzvMmEpwWipuPs6Bg/L/NHPte6Bvje
-         sTuXAikr28BK6eU5F5S3Q5+ymlaifiwbS9M657wx48dcbCEsUOsE9Oz+tyK98x4biTSZ
-         ZCqw==
-X-Gm-Message-State: APt69E2F6myGfPBjnewSoTB2cE4gJqJKNFjdxp/9QIxiTEcuM2CsUNud
-        UPMQTni8xPDf/2CrJ5ZyXKylW68U
-X-Google-Smtp-Source: AAOMgpeOJ67CTqRh3znAB+2ZH5e8ZoITXVaFI3ppeB2w2ziaNZRP/YiKhgxmpLWB8Gay/vPC2UfvVA==
-X-Received: by 2002:aed:3e92:: with SMTP id n18-v6mr6234893qtf.236.1531246110053;
-        Tue, 10 Jul 2018 11:08:30 -0700 (PDT)
-Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id p78-v6sm15368095qkl.38.2018.07.10.11.08.28
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 10 Jul 2018 11:08:29 -0700 (PDT)
-Subject: Re: [PATCH 07/17] commit: increase commit message buffer size
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>
-References: <20180708233638.520172-1-sandals@crustytoothpaste.net>
- <20180708233638.520172-8-sandals@crustytoothpaste.net>
- <4eb44f33-ac9c-7ce2-0e53-ec6fcb4560fd@gmail.com>
- <xmqqva9oe20y.fsf@gitster-ct.c.googlers.com>
- <20180709233952.GB535220@genre.crustytoothpaste.net>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <02c0682a-8cc9-be49-b646-00cbdb5783f3@gmail.com>
-Date:   Tue, 10 Jul 2018 14:08:28 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
+         :references:subject:from:to:cc;
+        bh=yVlMMdzYxLI5N3ftRKH0W00D7G5pe3WW/agboDBp37E=;
+        b=NsMLFK0/PATdbv8W67sBn2lru1dZLAkR4zBwy7XNHqhEiJUklOOMYBdNTtpAETXTLP
+         QSHHQqkpVHw5emw2gJWWuKlEwsqbBCV4GMMXCMbCf+bb/fXHkLQAhjeFRC4s9g+q6nDj
+         Nqi15MuFITxCev1Q0Mg1HQPkEPx1myeF5/AqRbNEq40+8x8QQOxvU8DEo/LgKJbf1kAI
+         buC4SIq8G85PqO9rgjPf4vf98RWyg3OZ5KMxjekcTlGC4sRCDhS6Yjza8QRrofonVam7
+         ViwgFjdQnNRY/TkSu2mskXM6mn8uZvvsZuh1iJ3cRYQCJEh0kVc+wRjn1xkfBTOzgEfd
+         ooHg==
+X-Gm-Message-State: APt69E0JRBqc8cpFHPo92Uxp7fm0bq3o0jY/1EIi7mWguAioU7Q99kwf
+        IIfSxvx4qnIat6s4iKqu/3ukVA95SzrDfph/zH7Y
+X-Google-Smtp-Source: AAOMgpebtkSU9iCpJ5KZCUpyYX59nsZDjbsFrmus2sOg+fQj/Jprlw1zdRZHvK/oBZl1yL6ZkPBl3768xPo35AeJTHSl
 MIME-Version: 1.0
-In-Reply-To: <20180709233952.GB535220@genre.crustytoothpaste.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-Received: by 2002:a6b:a303:: with SMTP id m3-v6mr11456783ioe.96.1531243911569;
+ Tue, 10 Jul 2018 10:31:51 -0700 (PDT)
+Date:   Tue, 10 Jul 2018 10:31:47 -0700
+In-Reply-To: <75ef9935-342a-bbda-4ce6-e5a033f273a9@gmail.com>
+Message-Id: <20180710173147.104757-1-jonathantanmy@google.com>
+References: <75ef9935-342a-bbda-4ce6-e5a033f273a9@gmail.com>
+X-Mailer: git-send-email 2.18.0.203.gfac676dfb9-goog
+Subject: Re: [PATCH v2 6/6] commit-graph: add repo arg to graph readers
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     stolee@gmail.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+> > -	if (!core_commit_graph)
+> > +	if (repo_config_get_bool(r, "core.commitgraph", &config_value) ||
+> > +	    !config_value)
+> > +		/*
+> > +		 * This repository is not configured to use commit graphs, so
+> > +		 * do not load one. (But report commit_graph_attempted anyway
+> > +		 * so that commit graph loading is not attempted again for this
+> > +		 * repository.)
+> > +		 */
+> 
+> I reacted first to complain about this extra config lookup, but it is 
+> only run once per repository, so that should be fine.
 
+Thanks for checking. It is indeed run at most once per repository, and
+only if a commit graph is requested - the same as the current code.
 
-On 7/9/2018 7:39 PM, brian m. carlson wrote:
-> On Mon, Jul 09, 2018 at 10:45:33AM -0700, Junio C Hamano wrote:
->> Derrick Stolee <stolee@gmail.com> writes:
->>
->>> On 7/8/2018 7:36 PM, brian m. carlson wrote:
->>>> diff --git a/refs/files-backend.c b/refs/files-backend.c
->>>> index a9a066dcfb..252f835bae 100644
->>>> --- a/refs/files-backend.c
->>>> +++ b/refs/files-backend.c
->>>> @@ -1587,7 +1587,7 @@ static int log_ref_write_fd(int fd, const struct object_id *old_oid,
->>>>    	char *logrec;
->>>>      	msglen = msg ? strlen(msg) : 0;
->>>> -	maxlen = strlen(committer) + msglen + 100;
->>>> +	maxlen = strlen(committer) + msglen + 200;
->>>>    	logrec = xmalloc(maxlen);
->>>>    	len = xsnprintf(logrec, maxlen, "%s %s %s\n",
->>>>    			oid_to_hex(old_oid),
->>>
->>> nit: 100 is not enough anymore, but wasn't a very descriptive
->>> value. 200 may be enough now, but I'm not sure why.
-> 
-> 200 is definitely enough.  Suppose we had a message consisting entirely
-> of SHA-1 hashes (5, at 20 bytes a piece).  If our new hash is 32 bytes
-> long, then it would require at most 160 bytes.
-> 
-> I only noticed this because the old code segfaulted.  My approach to
-> using a 32-byte hash was to set it up, do some basic tests, find out
-> what crashed, and fix it.  Most of this series is the basics necessary
-> to get the most rudimentary functionality out of a 32-byte Git,
-> excluding the index pieces, which are necessarily inelegant.
-> 
-> I didn't include them because there are other ways to implement the
-> changes which are more elegant in some ways and less elegant in other
-> ways, and I want to think more about it before I send them in.
-> 
->> As Brandon alludes to downthread, we probably should use strbuf for
->> things like this these days, so a preliminary clean-up to do so is
->> probably a welcome change to sneak in and rebase this series on top
->> of.
-> 
-> Sure, I agree that would be a better change, and I'm happy to reroll
-> with that.
-> 
+> The tests below form a decently-large patch on their own. Perhaps split 
+> them out so it is easier to know that we have some interesting things to 
+> check here.
 
-I've put together a patch to update log_ref_write_fd() to use strbuf and 
-will submit it shortly.
+The patch is 168+ 42-, which doesn't seem that large to me, but I'll do
+this if others think that it is large too.
+
+> It's worth spending some extra time looking at this test pattern as I 
+> believe we will want to follow it with other arbitrary repository changes.
+
+I agree - let me know if you notice anything you think should be
+changed.
+
+> > +static void test_get_commit_tree_in_graph(const char *gitdir,
+> > +					  const char *worktree,
+> > +					  const struct object_id *commit_oid)
+> > +{
+> > +	struct repository r;
+> > +	struct commit *c;
+> > +	struct tree *tree;
+> > +
+> > +	/*
+> > +	 * Create a commit independent of any repository.
+> > +	 */
+> > +	c = lookup_commit(commit_oid);
+> 
+> Would this be more accurate to say we are creating a commit object 
+> stored in the object cache of the_repository? How would you expect this 
+> to work if/when lookup_commit() takes an arbitrary repository? You want 
+> to provide &r, right (after initializing)?
+
+Yes, you're right - Stefan too mentioned that this will need to be moved
+below lookup_commit(). I'm not sure what the best way is to handle this
+- maybe move this, and add a "needswork" stating that we need to pass r
+to lookup_commit once it supports taking in a repository argument, as an
+aid to the person who performs the merge. I'll do that if a reroll is
+needed.
+
+> Also, this will conflict with sb/object-store-lookup, won't it? I'm 
+> guessing this is why you didn't touch the "git commit-graph 
+> [write|verify]"code paths.
+
+It will conflict because of the change to lookup_commit(), but the only
+new code I'm writing is in t/helper/test-repository.c, so hopefully the
+merge won't be too tedious. The main reason why I didn't touch the
+writing/verifying part is to reduce the size of this patch set, and
+because that change is not needed to update parse_commit() and others.
+
+> > +
+> > +	repo_init(&r, gitdir, worktree);
+> 
+> I think you want to move the lookup_commit() to after this.
+
+Yes, that's right.
+
+> > +int cmd__repository(int argc, const char **argv)
+> > +{
+> > +	if (argc < 2)
+> > +		die("must have at least 2 arguments");
+> 
+> I think this "test-tool repository <verb>" pattern is a good way to get 
+> some testing here.
+
+Thanks.
