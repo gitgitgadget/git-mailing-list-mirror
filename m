@@ -2,122 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 023011F6AC
-	for <e@80x24.org>; Mon,  9 Jul 2018 23:41:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 507981F6AC
+	for <e@80x24.org>; Tue, 10 Jul 2018 00:02:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933256AbeGIXlz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jul 2018 19:41:55 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:55046 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932828AbeGIXly (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 9 Jul 2018 19:41:54 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:5996:38d5:9b31:ef84])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 88AFB6047B;
-        Mon,  9 Jul 2018 23:41:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1531179713;
-        bh=ZuvCptSy5Cp/xTEg/NBLD9LDS5PPeTg98pDKMx+V9RA=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=zWblXRTkocD/aUN1SlPIv9nhIHxZbfOnHBx/py9ictcD2qiwMEOp3wopo4fNnEiWf
-         2Ive29UR7e+VaNBJdAriu4so1TPIe5iDxf0bC4aG/rtN597J0IrsMbL4WUE5AcTn9N
-         WNvucRBA23oCmrAR46mPkQJ4D8aNThC6pU7a74TKJ3tGYWrpidZOOBgj0x+Akg3C9T
-         hgBRs5tIxlx3OZLsIL8XUSlDHh9dKXDLN/3Wy76PUfgiRrxIfvyeThTpcUpyXWLCIE
-         L+2ZZTYz3uOAvqcDmGyBkpqFnBPncMtq0mmSZGSB8ecCatvd5qvN8kgY7wk/GKssFO
-         wzSbOiI/E8CxLXi6Qsl19vdnQ2/mIAT+h+7+ocd4IIskoOvuwhpgxIc+iFsLZS4TCM
-         FRTeJtprjlFBAMb5Ot6TJECNr2blqL++wtS9Eky1Mo+auqVFZP9YcBZHKU2rhUEDCe
-         Y4WKT5CSLUQA/2i6oKJqSdFK7oUQChsq3LMK8ER7byWgD6dnC+j
-Date:   Mon, 9 Jul 2018 23:41:49 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Daniel Harding <dharding@living180.net>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] t3430: update to test with custom commentChar
-Message-ID: <20180709234149.GC535220@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Daniel Harding <dharding@living180.net>, git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20180708184110.14792-1-dharding@living180.net>
- <20180708184110.14792-3-dharding@living180.net>
- <20180708210200.GA4573@genre.crustytoothpaste.net>
- <1084a573-4ed5-5a8c-a159-7773f7465704@living180.net>
+        id S933206AbeGJACt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jul 2018 20:02:49 -0400
+Received: from mail-pl0-f67.google.com ([209.85.160.67]:46111 "EHLO
+        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932858AbeGJACq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jul 2018 20:02:46 -0400
+Received: by mail-pl0-f67.google.com with SMTP id 30-v6so6744568pld.13
+        for <git@vger.kernel.org>; Mon, 09 Jul 2018 17:02:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=MbjxxOHnSqA81TLIjNDQVSDGz5MIs8sBV69Zy1gDUGw=;
+        b=p0YrKWxsFTrXDGLrVZy06Uc+zKYMHYbRRbhCjSCV8ofSiaz0q9g37HF+AOBO3OmT34
+         vWvdv0AzaruKkSRed1pFHBoTcCQDqI+4JbLRE9/iOoWgsy49DUp0u1qP9sZRqm9mmPuk
+         jwz2Dfw7tg0GDG3dpGsejdtQQDJibNbwR3yGmTugAUtnAa/2Ze4kxGcaODUwrwBFAeO9
+         GS/tt5zpLECL83/004MziutPJgZbD+6qic2y4nRSx25H8CejSY3taIq+ggwwBWe3jhHs
+         CXmWE+rjBTVfnFB5aoboQnueoOyTC2UU7qHAwoz94CG4k7mGn4PYgj41yQq3betWWW2i
+         r2tA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=MbjxxOHnSqA81TLIjNDQVSDGz5MIs8sBV69Zy1gDUGw=;
+        b=d656ImXE9PuMNv8WGeZp4+l0Z1jC252PfSCDkKBwBbbP9R55Kl6yF6A3A11Z4d/56y
+         cluYkzCihIw3zR+SsLIGLY95nq/MnFPSnPYqgaFxbuA5OjWPoG9nh3/GkK43dbGUDbGO
+         ZBHRWraoZjCJSZCfBqeWCRWxXBigAPQ9tQpemo/7iv8mSS4ICQTVvnFA8zxFVfJdzGmE
+         wGMoNrXlociHwUALQG6AVhamD6Qx+IBxnRbxki9jW3C6vAtNHChj3+jCdVBzY1GLUVgq
+         31WLzf5LzgjwGIpz7+ySJvChFi/gDTE/i95n6XqY7v0vOPnZjmCUK/9Emmyd7ehCXY8A
+         VzcA==
+X-Gm-Message-State: APt69E1d1WH6YYK8gbGqltVChD+ZgWNZsVu6zgYLep4Zp/UbJcWl15Mr
+        NVtP4N+lpTpjA/byQSTm/j4=
+X-Google-Smtp-Source: AAOMgpeYq/oHjtd/epNVbBercrC7tAJmDCQAUObSrbW+nEG2xmzjWXwX4Qx4BcVSJINNBkpQCEUbhg==
+X-Received: by 2002:a17:902:8604:: with SMTP id f4-v6mr22132244plo.4.1531180965919;
+        Mon, 09 Jul 2018 17:02:45 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id m11-v6sm29678054pfk.42.2018.07.09.17.02.44
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 09 Jul 2018 17:02:45 -0700 (PDT)
+Date:   Mon, 9 Jul 2018 17:02:43 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Lin Terry <terrylin.developer@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: I can do past and feature commits. It is a bug?
+Message-ID: <20180710000243.GK14196@aiede.svl.corp.google.com>
+References: <CACNAd2RB4GqfrfbqViX5Jwtpcsm64uQ2uU4K4W+AVR0y5d96gA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="7qSK/uQB79J36Y4o"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1084a573-4ed5-5a8c-a159-7773f7465704@living180.net>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.17.0-1-amd64)
-User-Agent: Mutt/1.10.0 (2018-05-17)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+In-Reply-To: <CACNAd2RB4GqfrfbqViX5Jwtpcsm64uQ2uU4K4W+AVR0y5d96gA@mail.gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
++the public git mailing list, git-security@googlegroups.com -> bcc
+Hi,
 
---7qSK/uQB79J36Y4o
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Lin Terry wrote:
 
-On Mon, Jul 09, 2018 at 09:48:55PM +0300, Daniel Harding wrote:
-> Hello brian,
->=20
-> On Mon, 09 Jul 2018 at 00:02:00 +0300, brian m. carlson wrote:
-> > Should this affect the "# Merge the topic branch" line (and the "# C",
-> > "# E", and "# H" lines in the next test) that appears below this?  It
-> > would seem those would qualify as comments as well.
->=20
-> I intentionally did not change that behavior for two reasons:
->=20
-> a) from a Git perspective, comment characters are only effectual for
-> comments if they are the first character in a line
->=20
-> and
->=20
-> b) there are places where a '#' character from the todo list is actually
-> parsed and used e.g. [0] and [1].  I have not yet gotten to the point of
-> grokking what is going on there, so I didn't want to risk breaking someth=
-ing
-> I didn't understand.  Perhaps Johannes could shed some light on whether t=
-he
-> cases you mentioned should be changed to use the configured commentChar or
-> not.
+> I can do past and feature commits. It is a bug?
+>
+> Check out my gitgub page.
+> https://github.com/terrylinooo
+>
+> You can see a LOVE, they are past commits I commited yesterday.
 
-Fair enough.  Thanks for the explanation.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+The ability to set the author and committer date freely is an
+intentional capability.  See the 'Commit Information' section of "git
+help commit-tree", for example.
 
---7qSK/uQB79J36Y4o
-Content-Type: application/pgp-signature; name="signature.asc"
+If you'd like the ability to prove that an object was pushed by a
+particular person at a particular time, you might like the push
+certificates feature.  The pusher is authenticated using a GPG
+signature; the push time can be recorded by the server in its
+pre-receive or post-receive hook (so you still have to trust the
+server for that).  See the description of --signed in "git help push"
+and of hooks in "git help receive-pack" for more details on that
+subject.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.8 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAltD8r0ACgkQv1NdgR9S
-9ouBXhAAv9MLbvzcQwHuJkLCdd1KxcnKbd5L3xaZ9+QkPfZu9GJei6EbxWF2F9M9
-SkJsd2YxiZ0o+POaA+4o/GqHNjSLYJwksGFM4IDvA+v8TDjOmp9xTWg6gw0ybUVo
-LGpXTt9+24DNVc5i0N8REAyxTUE8lGG1aN0NVHlTfaMW/8XJsLM9kBgdLuo+by94
-b3E8fVqZGChzQ+DChCDKEiKQo7cO6uTSaSQUaoTpom9x4y+Dh7YJRpVpJn68grQt
-V19iO9iNJmKiuX73XtOdg8vEQa7T3gTE9M+9HWoyVFn1Kab1Ep2l+knqq6ILVXSH
-MqWV137ww7KqVIv0D7IckQ2F4LQkrj86QK+tbzoiWSi18ODDnPBFzur/dd/omQ9z
-zG1JW6WYlejLz9JNerI6MhEbYVcXvTkTed5aT+kw/pzvFzNJjuL+zBpr0IwjoPtb
-vlwrl8WE3A2uycXI9Dq5gUDYWnStgUGaCxX3E1g7Zkln73wZUZBhx7+vIbJD61pm
-V7xDIyKWNlfsk9+G1+Mlqgl/ymXXi+hdTbGzLepV0sItHF0/iRLfGeBnDzv297kP
-RUuA1jyhK9RO/k3VtmpUDzY1aaTOPceNRkhvBCBbyWuMRFlNpBT6rUMe3onLgDSX
-rYizFY9hw+vPm8GE88RsSG9a72rl6VOqm81vo3vFzVBNpuGpmr4=
-=OENS
------END PGP SIGNATURE-----
-
---7qSK/uQB79J36Y4o--
+Thanks and hope that helps,
+Jonathan
