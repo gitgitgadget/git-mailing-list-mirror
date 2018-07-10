@@ -2,112 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E4561F85A
-	for <e@80x24.org>; Tue, 10 Jul 2018 18:23:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 46D421F85A
+	for <e@80x24.org>; Tue, 10 Jul 2018 18:32:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732383AbeGJSXN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jul 2018 14:23:13 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:53865 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732266AbeGJSXN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jul 2018 14:23:13 -0400
-Received: by mail-wm0-f65.google.com with SMTP id b188-v6so25616326wme.3
-        for <git@vger.kernel.org>; Tue, 10 Jul 2018 11:23:03 -0700 (PDT)
+        id S2388632AbeGJScb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jul 2018 14:32:31 -0400
+Received: from mail-ua0-f193.google.com ([209.85.217.193]:40467 "EHLO
+        mail-ua0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387739AbeGJSca (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jul 2018 14:32:30 -0400
+Received: by mail-ua0-f193.google.com with SMTP id p22-v6so4031480uao.7
+        for <git@vger.kernel.org>; Tue, 10 Jul 2018 11:32:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=asYGmg7vsmqALYTEHR5KP9GJaOO23kSFOJKcgz7xw2w=;
-        b=GONhtDHNXB+54vccTNRkF4fhKtPSQX8JQRjaM1wItXWjsB1FcLXxUxX6mIMEEQkHuJ
-         pLRlKTDupbHm4zNLJZPPbTBEI0Hl6OFORQaGA9qpcNO2C3ol0qsWhnRLfC8DIzUqi/dC
-         ermFccrg8RqbzRl074+t4z6tOxy+EKqj1nPbtPHKyhxRJY4VeY334txoMWpy7irjxktS
-         P/zzzx8mlehuqGz2VtymA6YVibFOacNTBHOD2cp0TTZY4kq0+WthGURiso1KbuzcY6L2
-         Qi18t6SQqa1HqvQMPTdD8lzSh8WCI5Oz4aR9txlU4J6fFpKMTN+jpMKB34mBU6bhLJpP
-         KelA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=AQKNA2emNWi8Jx1hwdd3RB3Zw0W1KIfIGMvlaCpY9S0=;
+        b=iUnLDTRGFFx0k4Brgf1210jJuhwu8692y1d4onAhfNRrPbpL/Ounxgg8YsZC9MTdqv
+         CYhtyBFFU1A/SFGahGB/QP7QxMhq47v1RlRxcdTRTyKZpPXWy6TzFtHrQ7fDezt2nfq4
+         T9N6EnlcV2OkeKHAL2hq8W4VeQBBnSYVueBy3D6gYPlRazvYd0z+MyhVp6VEO2Sj2NP8
+         VqMmsUeSNtMOjhI+xA6fKNTR+yj5e6wQAa1SFMmWguPmum+6WuOhupn5ONsFyLFPo44E
+         zo1jNBvqv3yl9Kdk+iRZMjP6YMuujsaevD3feCllC6Xml1SH9PIUGG9khnjpvRDRwlmz
+         27/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=asYGmg7vsmqALYTEHR5KP9GJaOO23kSFOJKcgz7xw2w=;
-        b=fr6tfag0tQjubMbnH9E7ykodjYcSDJOiw/4yenP+8RJpyYq7plzDwJsmVa9a7VhOOJ
-         iChPS7gZ9ZPLTniMVqL1nAbLkZ4ynBX12aYgv9RoCMWR10IIfE2DkHesjORzAfj5h1h9
-         zQZ2Wwsah1otg7o7PGO2EocDJTieDBbwo878+DosP5yj/QyA7sj4dtMjxA3aEXN9f2Jg
-         tTwaNSW6ZS4yUNl23nTdn60Lo1PoEqJz58EusZAvghmweAI1n9MQkMzaJtXSMGDxiHAo
-         tSAIhkQ9Y5xu3oB7Ro7qwz7DptCmnpaz2RqMESFPsc7uWIN+GWOMnYuY24HhAmw2NgHj
-         Qj7w==
-X-Gm-Message-State: AOUpUlFTA8aSolhQVL9rzeHkJKV1FmMx1GcECBtruG356OoeCRnb9VEm
-        1Mqjq5JiebkBdhQAHwV7SDMwxM6x
-X-Google-Smtp-Source: AAOMgpcLtCv/3fQaGyKfSc1ujrf+T65ZYjrl7fdKVXEW4X+YCfwnUFRSFVbcQpf/+xDfYccnLxKFSA==
-X-Received: by 2002:a1c:b406:: with SMTP id d6-v6mr598845wmf.126.1531245407168;
-        Tue, 10 Jul 2018 10:56:47 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id j77-v6sm22852311wmd.19.2018.07.10.10.56.46
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 10 Jul 2018 10:56:46 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Alban Gruin <alban.gruin@gmail.com>
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        phillip.wood@dunelm.org.uk
-Subject: Re: [GSoC][PATCH v3 02/13] rebase--interactive: rewrite append_todo_help() in C
-References: <20180702105717.26386-1-alban.gruin@gmail.com>
-        <20180710121557.6698-1-alban.gruin@gmail.com>
-        <20180710121557.6698-3-alban.gruin@gmail.com>
-Date:   Tue, 10 Jul 2018 10:56:46 -0700
-In-Reply-To: <20180710121557.6698-3-alban.gruin@gmail.com> (Alban Gruin's
-        message of "Tue, 10 Jul 2018 14:15:46 +0200")
-Message-ID: <xmqq36wr7z4x.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=AQKNA2emNWi8Jx1hwdd3RB3Zw0W1KIfIGMvlaCpY9S0=;
+        b=HRq7+sHTzOJoxJ1kHs/9zeCctWAzGNuGczTmE+1SBVXrpjPT2Lqf2Dxx1Z4p48MbHY
+         Up1MTH3MCTqmnhpe9bp7ty+rpRTJ37t5SHdcHD57UhyNcl9/6judN9LUsOXM/cDFwDd3
+         UzKDdltw7nNc61xfE1klmiyUvaV/2K1zxA+8cOJOecpaBdnZFMg7AiaqKilIDpu5PA/Y
+         V2aK1VyzDjGU6/MMp1FY/0M90Qwbg29WJKv7o0J1Vmx62ZjZBBwppMk3DZKDuWmIQug7
+         Bv96Xoz/ENTkv5vtIGSmup+BLkfqXeSHpyhp5yJj4Q6M+3z1am5Idya9F3dxzBOzsa/C
+         BKVQ==
+X-Gm-Message-State: APt69E1sL+EPESBV4Jlv7L5nlLEKbXm+QG3o24ifnvexVCQ5gL0kDFDD
+        1vkDS1qfeVK2BnVYjBLIfW8QfvN01nqisIgXRUE=
+X-Google-Smtp-Source: AAOMgpfUv+3OHQ2+hk1RcK4+Vv1SiomxgxwDlGWpB6vuMvOyE+m+LEmj0uziPSC+KgxCqCDB/3bw81TKO8RGURYh7ps=
+X-Received: by 2002:ab0:4c24:: with SMTP id l36-v6mr15919682uaf.199.1531243814311;
+ Tue, 10 Jul 2018 10:30:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 2002:ab0:21c7:0:0:0:0:0 with HTTP; Tue, 10 Jul 2018 10:30:13
+ -0700 (PDT)
+In-Reply-To: <CAGZ79kYK4uwUeDECoabrXJesVzgFBKNejV3reJOXhMyYxUjXyw@mail.gmail.com>
+References: <20180707204404.7208-1-newren@gmail.com> <20180707204404.7208-2-newren@gmail.com>
+ <CAGZ79kZ0xyHMT8SngGCUSAEf31NXdPvzkvdaPb8Khm27xRjgTg@mail.gmail.com>
+ <CABPp-BFjZZZ9uGXYe0gAA_VvcFmTsnurAknVrr-CytP2hT6wLg@mail.gmail.com> <CAGZ79kYK4uwUeDECoabrXJesVzgFBKNejV3reJOXhMyYxUjXyw@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 10 Jul 2018 10:30:13 -0700
+Message-ID: <CABPp-BE1kqjiGPqJfrsj8AiFnWg0CUZErUnDb8dAvXWkt7cDMA@mail.gmail.com>
+Subject: Re: [PATCH 1/3] t7405: add a file/submodule conflict
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alban Gruin <alban.gruin@gmail.com> writes:
+On Tue, Jul 10, 2018 at 8:53 AM, Stefan Beller <sbeller@google.com> wrote:
+> On Tue, Jul 10, 2018 at 8:28 AM Elijah Newren <newren@gmail.com> wrote:
 
-> This rewrites append_todo_help() from shell to C. It also incorporates
-> some parts of initiate_action() and complete_action() that also write
-> help texts to the todo file.
+>> 2) I didn't just check what was currently failing but other things
+>> that should be true for this test.
+>>
+>> For item 2, I've had multiple cases in the past where I created a
+>> minimal test, only to find that if I had more carefully checked the
+>> expected results that it would have prevented a future bug.  Also, it
+>> was harder in the future to figure out, because I no longer remembered
+>> the context for the test setup.  So, in this test I check the contents
+>> of the index, make sure that the submodule is still present, and then
+>> I finally check for the thing that currently fails:
+>>
+>> commit B added a file called 'path'; its contents should appear
+>> somewhere in the directory for the user to use when trying to resolve
+>> the failed merge.  It cannot appear at 'path' (there's a submodule in
+>> the way from commit A), but it should be present somewhere, and in
+>> particular I'd expect it in the same directory.  So, I simply grep all
+>> files in the current directory for the string (and ignore errors about
+>> 'grep: path is a directory').
+>>
+>> Does that help?  If so, I'll submit a reroll with the changes and a
+>> few extra comments.
 >
-> This also introduces the source file rebase-interactive.c. This file
-> will contain functions necessary for interactive rebase that are too
-> specific for the sequencer, and is part of libgit.a.
+> That does help; yes, I thought
+> * we want to check for the file content of the file to be somewhere
+>   (maybe path.file?)
+
+Yes.  I wanted to avoid nailing down the expected pathname until the
+code was in place that handled this case.  merge-recursive currently
+elsewhere uses path~$BRANCH to workaround conflicting paths, but I had
+a (half-baked-so-far) idea for changing some of the path-conflict
+stuff which would involve different names.  So, I just left it
+undecided until implemented.
+
+> * equally we'd want to have the submodule somewhere; you seem
+>   to expect it at path (we could have moved it to path.sub or path.git,
+>   but that involves extra work as we have to update the .gitmodules
+>   file to have the correct path <->name mapping)
+
+Yes I wanted it at path for a specific reason: git can detect renames
+of files, and now of directories, but not of submodules, so it seems
+more important to keep the submodule where it is when possible.
+(merge_file_1() has code running counter to this, but that pre-dates
+submodules and should be updated, IMO.)
+
+> * good call with the index, I skimmed over the ls-files calls not thinking
+>   what they'd check.
 >
-> Two flags are added to rebase--helper.c: one to call
-> append_todo_help() (`--append-todo-help`), and another one to tell
-> append_todo_help() to write the help text suited for the edit-todo
-> mode (`--write-edit-todo`).
+> So for now only the "file content is missing" part is failing the test,
+> whereas the rest is successful.
 >
-> Finally, append_todo_help() is removed from git-rebase--interactive.sh
-> to use `rebase--helper --append-todo-help` instead.
->
-> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
-> ---
-> Unchanged from what have been queued on `pu` (ag/rebase-i-in-c), and
-> from v2.
+> Thanks for the explanation!
+> Stefan
 
-With something like '...except downcasing an error message "Could
-not append..."', a comment like this is very much appreciated as it
-helps readers who have read the previous round and remember what was
-in there ;-)
-
-> + ...
-> +	if (get_missing_commit_check_level() == MISSING_COMMIT_CHECK_ERROR)
-> +		msg = _("\nDo not remove any line. Use 'drop' "
-> +			 "explicitly to remove a commit.\n");
-> +	else
-> +		msg = _("\nIf you remove a line here "
-> +			 "THAT COMMIT WILL BE LOST.\n");
-> +
-> +	strbuf_add_commented_lines(&buf, msg, strlen(msg));
-
-Nice use of strbuf_add_comment_lines() function ;-).
-
+:-)
