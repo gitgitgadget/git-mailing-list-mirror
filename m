@@ -2,92 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	STOX_REPLY_TYPE,T_DKIM_INVALID shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D4EDD1F85A
-	for <e@80x24.org>; Tue, 10 Jul 2018 15:30:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 33F1E1F85A
+	for <e@80x24.org>; Tue, 10 Jul 2018 15:37:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934156AbeGJPak (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jul 2018 11:30:40 -0400
-Received: from e1i428.smtp2go.com ([103.36.109.172]:45337 "EHLO
-        e1i428.smtp2go.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933932AbeGJPaj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jul 2018 11:30:39 -0400
-X-Greylist: delayed 703 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Jul 2018 11:30:39 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=smtpservice.net; s=m1fbw0.a1-4.dyn; x=1531237539; h=Feedback-ID:
-        X-Smtpcorp-Track:Date:Subject:To:From:Reply-To:Message-ID:Sender:
-        List-Unsubscribe; bh=0G4fXF9AM9mK2hP+iZ49gYnd4j7BopkKbUkeh15kxw4=; b=JQGf1N8e
-        NPITarpSZN7v3BEMmTVn5xk674ubo+L7eka2BuxXMH6famogYZDqGk3raY4taaU/mFKHRNFhhGZVm
-        9/Ps07B1iQ2PRuMe3sykW4oUvl238CrrVBlBObfscwVV1xI+7PUcheLO0yDd+NXYb6W3MzbMor+EC
-        Er8nYIjxeBFEFheE8F2t33z6bt4we1XS8uKQxAFH/dUEQrN7QQthXFaXxFVsmMWgwUc1SwVYLPvz3
-        0cOrmu1n5ErKRY44hMyQt6NTisomhW5bmmC/5lsDWMpG8wCgrLRf7wHSfaULnlg9hXi2/jE/vgWLE
-        YxGDDLUHLIJLS61qKG0EM+C10Q==;
-Message-ID: <2314380CD5BB4E75AD989D7CAC2EB93B@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-        "Philipp Gortan" <philipp@gortan.org>
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-        "Git Mailing List" <git@vger.kernel.org>
-References: <953845c2-4326-608a-c342-2d2141da561c@gortan.org> <CACBZZX6H4wxQ7hrO1Y1u6Qyr5gpK9GeCxpv-x2q3Eq2WCbkK8Q@mail.gmail.com> <alpine.DEB.2.21.1.1706141457500.171564@virtualbox> <74c84bda-4f3d-b2d3-91cf-e80e84fe46b1@gortan.org> <nycvar.QRO.7.76.6.1807101405570.75@tvgsbejvaqbjf.bet>
-Subject: Re: git-gui ignores core.hooksPath
-Date:   Tue, 10 Jul 2018 16:18:46 +0100
-Organization: OPDS
+        id S934209AbeGJPh1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jul 2018 11:37:27 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53702 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S933475AbeGJPh1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jul 2018 11:37:27 -0400
+Received: (qmail 22859 invoked by uid 109); 10 Jul 2018 15:37:26 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 10 Jul 2018 15:37:26 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 27626 invoked by uid 111); 10 Jul 2018 15:37:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 10 Jul 2018 11:37:28 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Jul 2018 11:37:25 -0400
+Date:   Tue, 10 Jul 2018 11:37:25 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Henning Schild <henning.schild@siemens.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Ben Toews <mastahyeti@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 4/8] gpg-interface: introduce an abstraction for multiple
+ gpg formats
+Message-ID: <20180710153724.GA23438@sigill.intra.peff.net>
+References: <cover.1530616446.git.henning.schild@siemens.com>
+ <db46732d1cd09a71200e00c2d09605d5beaff364.1530616446.git.henning.schild@siemens.com>
+ <CAN0heSrXpLCDRjnZC80QXBG27gd6m5reBn1hfNd_KXxnPVkA2g@mail.gmail.com>
+ <xmqqa7r4mg45.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="iso-8859-1";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Smtpcorp-Track: 1fcIefl24cnH2P.RH5TDoBuU
-Feedback-ID: 66524m:66524aMf6O2Y:66524s8D2EnYH2H:SMTPCORP
-X-Report-Abuse: Please forward a copy of this message, including all
- headers, to <abuse-report@smtp2go.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqa7r4mg45.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-> Hi Phillip,
->
-> On Wed, 14 Jun 2017, Philipp Gortan wrote:
->
->> thanks for following up,
->>
->> > Indeed. Why don't you give it a try?
->>
->> Actually, I already did: https://github.com/patthoyts/git-gui/pull/12
->>
->> You might want to post your analysis and patch there as well...
->
-> I wonder what good posting my analysis did, if nothing changed as a
-> consequence.
->
-> FWIW I opened this PR with Git for Windows to fix it properly:
->
-> https://github.com/git-for-windows/git/pull/1757
->
-> I plan on consolidating all of the PRs at
-> https://github.com/patthoyts/git-gui, too, and to try to get them into
-> git.git.
+On Fri, Jul 06, 2018 at 10:24:58AM -0700, Junio C Hamano wrote:
 
+> What we've been avoiding was the comma after the last element in the
+> enum (in other words, if PGP_FMT had ',' after it in the above
+> quoted addition, that would have been violation of that rule), as
+> having such a trailing comma used to be ANSI C violation as well.  I
+> do not recall offhand if we loosened that deliberately.
+> 
+> 4b05548f ("enums: omit trailing comma for portability", 2010-05-14),
+> c9b6782a ("enums: omit trailing comma for portability", 2011-03-16)
 
->        I guess that means that I just volunteered as interim maintainer
-> of the git-gui repository. However, I will really act as maintainer, not
-> as "cleaner upper".
+I think we accidentally did a weather-balloon in e1327023ea (grep:
+refactor the concept of "grep source" into an object, 2012-02-02).
+It's still there and nobody has complained about it yet.
 
-"Curator" is a useful intermediate level concept between active maintenance 
-and passive benign neglect, if that term is a help...
+So I think we can consider that requirement loosened at this point.
 
---
-Philip 
-
+-Peff
