@@ -2,107 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 03F541F85A
-	for <e@80x24.org>; Tue, 10 Jul 2018 16:54:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 809411F85A
+	for <e@80x24.org>; Tue, 10 Jul 2018 16:55:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933268AbeGJQyP (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jul 2018 12:54:15 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53932 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1753848AbeGJQyP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jul 2018 12:54:15 -0400
-Received: (qmail 25946 invoked by uid 109); 10 Jul 2018 16:54:15 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 10 Jul 2018 16:54:15 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28495 invoked by uid 111); 10 Jul 2018 16:54:16 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 10 Jul 2018 12:54:16 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Jul 2018 12:54:13 -0400
-Date:   Tue, 10 Jul 2018 12:54:13 -0400
-From:   Jeff King <peff@peff.net>
+        id S933310AbeGJQzC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jul 2018 12:55:02 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:37917 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933275AbeGJQzB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jul 2018 12:55:01 -0400
+Received: by mail-wm0-f65.google.com with SMTP id 69-v6so24942233wmf.3
+        for <git@vger.kernel.org>; Tue, 10 Jul 2018 09:55:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=fEge9r3iSrsHPJb235nEAHeMQWYAfAHKxcDqMoZZSZ8=;
+        b=X5xrIPJyrGw2xJ7zi/5ywxvsJwap+KuUm7bEKVjBYi57kD4gyaUDTAipMm/f27ELRj
+         jh0vsF5hF0y52jTqb9om67CyLBKPlCKtENfEGeL5I5qGWALyW2HrAIYgHZISUoqCXg5y
+         TV9GeSW7nPIh5/8te/6Jv1HQcw2ME7BoljzJHOm+kuJ/9NAZIV5yCWpajFuKA/zkrQzl
+         lGUhyb++Dkz3F7/3c3Ji+XEeLBK1yGU+B3LdAURQ7fZWVozT1KPlgreBU74/bnX88/hr
+         CNoBqg42/epQuFN5obYJeRtkk0M5alYsN+akFM+f0fo3TaNcnkvR/cRgTnfjSONz3kjn
+         3JiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=fEge9r3iSrsHPJb235nEAHeMQWYAfAHKxcDqMoZZSZ8=;
+        b=lifMxzQwXbKgj1iZuDPzoIKu2l6dPFCGeEcqm1CpbaX6CfzFciI+Rg+A0qcui6xnh7
+         5Vk0MpGbtlICfv7iepLJBaMz5QEFSq97s+uiMnLlRMa2yIT7ijl4WKZV62AxtLDuQ9ex
+         emjon7PKXgN0uBM1b/5GB3PCMVI0F+b9j8YU9rzxwXK7V2EGAhrbOFEXn/J89yZM81Pj
+         UzMxHBNcz8jM9OH3L08b2gQfNV7+nXfmav09zAEplDcGCjiUMgBc8S9231ZIJ1tm7Iaj
+         Vbn2Hz0XjSl++2pNX++tSwGI++B1Xd8/GjwHEAKzfXxDcvEza5TXaJepnH783xKGON0P
+         bfBw==
+X-Gm-Message-State: APt69E0BG947LNzGI1Z9NIEJ1LxoqCRY0YbbSau6Ra2o+0N3piR6guox
+        XVrQXaoPYK2qnQ4gG21mK9s=
+X-Google-Smtp-Source: AAOMgpfYznnro6Z9pnSo+1BpjPcQs1c2BB2l274qiKD/kbW+Tor+MFQ4j70N/gl5eYoXYBqZRh33Aw==
+X-Received: by 2002:a1c:d78c:: with SMTP id o134-v6mr14729576wmg.115.1531241700113;
+        Tue, 10 Jul 2018 09:55:00 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id c18-v6sm22592825wrq.17.2018.07.10.09.54.59
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 10 Jul 2018 09:54:59 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Henning Schild <henning.schild@siemens.com>
 Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Ben Toews <mastahyeti@gmail.com>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Ben Toews <mastahyeti@gmail.com>, Jeff King <peff@peff.net>,
         Taylor Blau <me@ttaylorr.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 7/9] gpg-interface: introduce new config to select per
- gpg format program
-Message-ID: <20180710165412.GE23624@sigill.intra.peff.net>
+Subject: Re: [PATCH v2 4/9] t/t7510: check the validation of the new config gpg.format
 References: <cover.1531208187.git.henning.schild@siemens.com>
- <4905c1907a866c0fd1a4dac978dd6ca3e468ac43.1531208187.git.henning.schild@siemens.com>
+        <cover.1531208187.git.henning.schild@siemens.com>
+        <b02154496033220897f6f773e1149a98b21ccba7.1531208187.git.henning.schild@siemens.com>
+Date:   Tue, 10 Jul 2018 09:54:59 -0700
+In-Reply-To: <b02154496033220897f6f773e1149a98b21ccba7.1531208187.git.henning.schild@siemens.com>
+        (Henning Schild's message of "Tue, 10 Jul 2018 10:52:26 +0200")
+Message-ID: <xmqqr2kb81zw.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <4905c1907a866c0fd1a4dac978dd6ca3e468ac43.1531208187.git.henning.schild@siemens.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 10, 2018 at 10:52:29AM +0200, Henning Schild wrote:
+Henning Schild <henning.schild@siemens.com> writes:
 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index ac373e3f4..c0bd80954 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -1832,6 +1832,11 @@ gpg.format::
->  	Specifies which key format to use when signing with `--gpg-sign`.
->  	Default is "openpgp", that is also the only supported value.
+> Test setting gpg.format to both invalid and valid values.
+>
+> Signed-off-by: Henning Schild <henning.schild@siemens.com>
+> ---
+>  t/t7510-signed-commit.sh | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+>
+> diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
+> index 6e2015ed9..7e1e9caf4 100755
+> --- a/t/t7510-signed-commit.sh
+> +++ b/t/t7510-signed-commit.sh
+> @@ -227,4 +227,14 @@ test_expect_success GPG 'log.showsignature behaves like --show-signature' '
+>  	grep "gpg: Good signature" actual
+>  '
 >  
-> +gpg.<format>.program::
-> +	Use this to customize the program used for the signing format you
-> +	chose. (see gpg.program) gpg.openpgp.program is a synonym for the
-> +	legacy gpg.program.
+> +test_expect_success GPG 'check config gpg.format values' '
+> +	rm .git/config &&
 
-This seems like a good step forward. This is similar to the
-signingtool.$name.program I proposed earlier, but keeping it specific to
-gpg, which makes sense.
+Please don't.  .git/config has stuff that are more important than
+just collection of random configuration these days, and we can even
+expect that future versions of Git may not store its config in a
+flat file .git/config but in a different mechanism "git config"
+command knows how to access.  A low-level test for "git config"
+command's operation may have to be implemented by inspecting the
+resulting .git/config, but as this test is not about "git config"'s
+inner workins but is about one feature "git commit" command has,
+we prefer not to depend too much on the internal implementation
+detail such as "local config is stored in .git/config file".
 
-On the other hand, do we anticipate the user ever being able to add
-gpg.foo.program? I don't think so; we'll provide a limited set of
-options. So we _could_ go with "gpg.openpgpProgram" or similar, and
-later add "gpg.x509Program".
+Let's hear why you want to remove this file; what things that have
+previously been placed in the file do you want not to see, before
+performing the following actions?  Once we know that, we can suggest
+a way to do so better than removing the entire file.
 
-And one reason to do so might be...
-
-> diff --git a/gpg-interface.c b/gpg-interface.c
-> index ac2df498d..65098430f 100644
-> --- a/gpg-interface.c
-> +++ b/gpg-interface.c
-> @@ -179,7 +179,7 @@ int git_gpg_config(const char *var, const char *value, void *cb)
->  		return git_config_string(&gpg_format, var, value);
->  	}
->  
-> -	if (!strcmp(var, "gpg.program"))
-> +	if (!strcmp(var, "gpg.program") || !strcmp(var, "gpg.openpgp.program"))
->  		return git_config_string(&gpg_formats[PGP_FMT].program, var,
->  					 value);
-
-We normally match config keys with strcmp() because the config machinery
-will have already normalized them to lowercase. But in Git's config
-format, the subsection (the middle in a three-dot name) is less
-restricted and is case-sensitive.
-
-Should we allow:
-
-  [gpg "OpenPGP"]
-  program = whatever
-
-given that we allow:
-
-  [gpg]
-  format = OpenPGP
-
-? I think just using strcasecmp() here would be sufficient. But I wonder
-if it is a symptom of using the wrong tool (subsections) when we don't
-need it.
-
--Peff
+> +	test_config gpg.format openpgp &&
+> +	git commit -S --amend -m "success" &&
+> +	test_config gpg.format OpEnPgP &&
+> +	git commit -S --amend -m "success" &&
+> +	test_config gpg.format malformed &&
+> +	test_must_fail git commit -S --amend -m "fail" 2>result
+> +'
+> +
+>  test_done
