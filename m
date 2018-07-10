@@ -6,56 +6,53 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 276311F85A
-	for <e@80x24.org>; Tue, 10 Jul 2018 19:22:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 061FD1F85A
+	for <e@80x24.org>; Tue, 10 Jul 2018 19:23:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732660AbeGJTW1 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jul 2018 15:22:27 -0400
-Received: from p3plsmtpa11-01.prod.phx3.secureserver.net ([68.178.252.102]:51857
-        "EHLO p3plsmtpa11-01.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1732337AbeGJTW1 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 10 Jul 2018 15:22:27 -0400
+        id S1732306AbeGJTXk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jul 2018 15:23:40 -0400
+Received: from p3plsmtpa11-09.prod.phx3.secureserver.net ([68.178.252.110]:46112
+        "EHLO p3plsmtpa11-09.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1732246AbeGJTXk (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 10 Jul 2018 15:23:40 -0400
 Received: from jessie.local ([212.149.203.197])
         by :SMTPAUTH: with ESMTPSA
-        id cyCvfHy0AZinvcyD1fCbGY; Tue, 10 Jul 2018 12:22:01 -0700
-Date:   Tue, 10 Jul 2018 22:21:53 +0300
+        id cyE9fN1pCXYbAcyECfVeVy; Tue, 10 Jul 2018 12:23:13 -0700
+Date:   Tue, 10 Jul 2018 22:23:10 +0300
 From:   Max Kirillov <max@max630.net>
-To:     Duy Nguyen <pclouds@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Max Kirillov <max@max630.net>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
 Subject: Re: [PATCH] unpack-trees: do not fail reset because of unmerged
  skipped entry
-Message-ID: <20180710192153.GA2050@jessie.local>
+Message-ID: <20180710192309.GB2050@jessie.local>
 References: <20180615044251.10597-1-max@max630.net>
- <20180616051444.GA29754@duynguyen.home>
+ <xmqqh8m3zurz.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20180616051444.GA29754@duynguyen.home>
+In-Reply-To: <xmqqh8m3zurz.fsf@gitster-ct.c.googlers.com>
 User-Agent: Mutt/1.5.23 (2014-03-12)
-X-CMAE-Envelope: MS4wfMzaLToaI54DBr5R1DwjAAepOKo4LerIHUZ1fbeNJ4Ncb7itdcDhpKXfTexDG5TIZDm4OX4IoeSLp9JL53YG1D7EH02023bX3Pgi808VH+xu3hHccaFZ
- t4G+kMvwrATwZmKtvmBIAaioRhp7dHOh+Ftrp2zViRETbRvkvNQeR/liZKSitBbVgIXz4Lh4Rn65K9B1q9MCk/FWRVkftEcm3Sp4f2MDt/xc8FqzPTuepi1K
- tfu7QtmwaNk2Yx+OT0D2/Q==
+X-CMAE-Envelope: MS4wfBNQa7kLaK1V6TICbYEmRDEly0jwFDkBg6fzKPh6ARExRrXm7rFzh+/asUXb6hnkkwuu1n+dBKmuNPzqgbOCBCra9UQxeDUqNyYGVr5lh2Oogy9h0Di9
+ RNYzdchl1DOkfev10hZMVMtZcxrzFy93RDZN3X4qyOulYKr13yYXFh3emtlfX9jd8K3w3FyIygZdsK1f5y0NUItUZ3GJo8Dc/A1WAxi3uTOl3sME3a8yLqiW
+ Jq45piazx4NTfdoOlj6dMg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jun 16, 2018 at 07:14:44AM +0200, Duy Nguyen wrote:
-> -- 8< --
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index 3a85a02a77..eb544ee1b3 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -1246,7 +1246,7 @@ static void mark_new_skip_worktree(struct exclude_list *el,
->  		if (select_flag && !(ce->ce_flags & select_flag))
->  			continue;
->  
-> -		if (!ce_stage(ce))
-> +		if (!ce_stage(ce) && !(ce->ce_flags & CE_CONFLICTED))
->  			ce->ce_flags |= skip_wt_flag;
->  		else
->  			ce->ce_flags &= ~skip_wt_flag;
-> -- 8< --
+On Fri, Jun 15, 2018 at 12:58:40PM -0700, Junio C Hamano wrote:
+> Do we want to verify the state after the 'hard' reset succeeds as
+> well?  Things like 
+> 
+>  - all paths in the HEAD and all paths in the index are identical;
+> 
+>  - paths that do exist in the working tree are all identical to HEAD
+>    version; and
+> 
+>  - paths that do not exist in the working tree are missing due to
+>    the sparse checkout setting (iow, it is a bug if a path that is
+>    outside the "sparse" setting is missing from the working tree).
 
-I tried your fix and it is working. I put it instead of my original fix. Would you sign it off?
+I implemented the additional check, it is a bit different
+literally, but should be equivalent for this case
