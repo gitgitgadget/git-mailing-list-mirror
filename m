@@ -6,22 +6,22 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D9CE31F85A
-	for <e@80x24.org>; Tue, 10 Jul 2018 08:53:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 208921F85A
+	for <e@80x24.org>; Tue, 10 Jul 2018 08:53:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751406AbeGJIxY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jul 2018 04:53:24 -0400
-Received: from goliath.siemens.de ([192.35.17.28]:39269 "EHLO
-        goliath.siemens.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751263AbeGJIxK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jul 2018 04:53:10 -0400
+        id S1751233AbeGJIxH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jul 2018 04:53:07 -0400
+Received: from thoth.sbs.de ([192.35.17.2]:42004 "EHLO thoth.sbs.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751182AbeGJIxF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jul 2018 04:53:05 -0400
 Received: from mail2.sbs.de (mail2.sbs.de [192.129.41.66])
-        by goliath.siemens.de (8.15.2/8.15.2) with ESMTPS id w6A8qiTB017343
+        by thoth.sbs.de (8.15.2/8.15.2) with ESMTPS id w6A8qh6Q026188
         (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Tue, 10 Jul 2018 10:52:44 +0200
+        Tue, 10 Jul 2018 10:52:43 +0200
 Received: from md1pvb1c.ad001.siemens.net (md1pvb1c.ad001.siemens.net [139.25.68.40])
-        by mail2.sbs.de (8.15.2/8.15.2) with ESMTP id w6A8qgGW024364;
-        Tue, 10 Jul 2018 10:52:44 +0200
+        by mail2.sbs.de (8.15.2/8.15.2) with ESMTP id w6A8qgGQ024364;
+        Tue, 10 Jul 2018 10:52:43 +0200
 From:   Henning Schild <henning.schild@siemens.com>
 To:     git@vger.kernel.org
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
@@ -31,9 +31,9 @@ Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Taylor Blau <me@ttaylorr.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         Henning Schild <henning.schild@siemens.com>
-Subject: [PATCH v2 9/9] gpg-interface t: extend the existing GPG tests with GPGSM
-Date:   Tue, 10 Jul 2018 10:52:31 +0200
-Message-Id: <f97d2d79f6a46ddffcd0065239f99b084708e813.1531208187.git.henning.schild@siemens.com>
+Subject: [PATCH v2 3/9] gpg-interface: add new config to select how to sign a commit
+Date:   Tue, 10 Jul 2018 10:52:25 +0200
+Message-Id: <911565bda250ebffc9a87203f2a5ae453f87e5da.1531208187.git.henning.schild@siemens.com>
 X-Mailer: git-send-email 2.16.4
 In-Reply-To: <cover.1531208187.git.henning.schild@siemens.com>
 References: <cover.1531208187.git.henning.schild@siemens.com>
@@ -44,381 +44,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add test cases to cover the new X509/gpgsm support. Most of them
-resemble existing ones. They just switch the format to x509 and set the
-signingkey when creating signatures. Validation of signatures does not
-need any configuration of git, it does need gpgsm to be configured to
-trust the key(-chain).
-We generate a self-signed key for committer@example.com and configure
-gpgsm to trust it.
+Add "gpg.format" where the user can specify which type of signature to
+use for commits. At the moment only "openpgp" is supported and the value is
+not even used. This commit prepares for a new types of signatures.
 
 Signed-off-by: Henning Schild <henning.schild@siemens.com>
 ---
- t/lib-gpg.sh               |  9 ++++++-
- t/lib-gpg/gpgsm-gen-key.in |  6 +++++
- t/t4202-log.sh             | 66 ++++++++++++++++++++++++++++++++++++++++++++++
- t/t5534-push-signed.sh     | 52 ++++++++++++++++++++++++++++++++++++
- t/t7003-filter-branch.sh   | 15 +++++++++++
- t/t7030-verify-tag.sh      | 47 +++++++++++++++++++++++++++++++--
- t/t7600-merge.sh           | 31 ++++++++++++++++++++++
- 7 files changed, 223 insertions(+), 3 deletions(-)
- create mode 100644 t/lib-gpg/gpgsm-gen-key.in
+ Documentation/config.txt | 4 ++++
+ gpg-interface.c          | 7 +++++++
+ 2 files changed, 11 insertions(+)
 
-diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
-index a5d3b2cba..9dcb4e990 100755
---- a/t/lib-gpg.sh
-+++ b/t/lib-gpg.sh
-@@ -38,7 +38,14 @@ then
- 			"$TEST_DIRECTORY"/lib-gpg/ownertrust &&
- 		gpg --homedir "${GNUPGHOME}" </dev/null >/dev/null 2>&1 \
- 			--sign -u committer@example.com &&
--		test_set_prereq GPG
-+		test_set_prereq GPG &&
-+		echo | gpgsm --homedir "${GNUPGHOME}" -o "$TEST_DIRECTORY"/lib-gpg/gpgsm.crt.user --passphrase-fd 0 --pinentry-mode loopback --generate-key --batch "$TEST_DIRECTORY"/lib-gpg/gpgsm-gen-key.in &&
-+		gpgsm --homedir "${GNUPGHOME}" --import "$TEST_DIRECTORY"/lib-gpg/gpgsm.crt.user &&
-+		gpgsm --homedir "${GNUPGHOME}" -K | grep fingerprint: | cut -d" " -f4 | tr -d '\n' > ${GNUPGHOME}/trustlist.txt &&
-+		echo " S relax" >> ${GNUPGHOME}/trustlist.txt &&
-+		(gpgconf --kill gpg-agent >/dev/null 2>&1 || : ) &&
-+		echo hello | gpgsm --homedir "${GNUPGHOME}" -u committer@example.com -o /dev/null --sign - 2>&1 &&
-+		test_set_prereq GPGSM
- 		;;
- 	esac
- fi
-diff --git a/t/lib-gpg/gpgsm-gen-key.in b/t/lib-gpg/gpgsm-gen-key.in
-new file mode 100644
-index 000000000..3470b9dc7
---- /dev/null
-+++ b/t/lib-gpg/gpgsm-gen-key.in
-@@ -0,0 +1,6 @@
-+Key-Type: RSA
-+Key-Length: 2048
-+Key-Usage: sign
-+Serial: random
-+Name-DN: CN=C O Mitter, O=Example, SN=C O, GN=Mitter
-+Name-Email: committer@example.com
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 25b1f8cc7..abbfa648c 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -1556,12 +1556,30 @@ test_expect_success GPG 'setup signed branch' '
- 	git commit -S -m signed_commit
- '
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 1cc18a828..ac373e3f4 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1828,6 +1828,10 @@ gpg.program::
+ 	signed, and the program is expected to send the result to its
+ 	standard output.
  
-+test_expect_success GPGSM 'setup signed branch x509' '
-+	test_when_finished "git reset --hard && git checkout master" &&
-+	git checkout -b signed-x509 master &&
-+	echo foo >foo &&
-+	git add foo &&
-+	git config gpg.format x509 &&
-+	git config user.signingkey $GIT_COMMITTER_EMAIL &&
-+	git commit -S -m signed_commit &&
-+	git config --unset gpg.format &&
-+	git config --unset user.signingkey
-+'
++gpg.format::
++	Specifies which key format to use when signing with `--gpg-sign`.
++	Default is "openpgp", that is also the only supported value.
 +
- test_expect_success GPG 'log --graph --show-signature' '
- 	git log --graph --show-signature -n1 signed >actual &&
- 	grep "^| gpg: Signature made" actual &&
- 	grep "^| gpg: Good signature" actual
- '
+ gui.commitMsgWidth::
+ 	Defines how wide the commit message window is in the
+ 	linkgit:git-gui[1]. "75" is the default.
+diff --git a/gpg-interface.c b/gpg-interface.c
+index 09ddfbc26..ed0e55917 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -7,6 +7,7 @@
+ #include "tempfile.h"
  
-+test_expect_success GPGSM 'log --graph --show-signature x509' '
-+	git log --graph --show-signature -n1 signed-x509 >actual &&
-+	grep "^| gpgsm: Signature made" actual &&
-+	grep "^| gpgsm: Good signature" actual
-+'
-+
- test_expect_success GPG 'log --graph --show-signature for merged tag' '
- 	test_when_finished "git reset --hard && git checkout master" &&
- 	git checkout -b plain master &&
-@@ -1581,11 +1599,39 @@ test_expect_success GPG 'log --graph --show-signature for merged tag' '
- 	grep "^| | gpg: Good signature" actual
- '
+ static char *configured_signing_key;
++static const char *gpg_format = "openpgp";
+ static const char *gpg_program = "gpg";
  
-+test_expect_success GPGSM 'log --graph --show-signature for merged tag x509' '
-+	test_when_finished "git reset --hard && git checkout master" &&
-+	git config gpg.format x509 &&
-+	git config user.signingkey $GIT_COMMITTER_EMAIL &&
-+	git checkout -b plain-x509 master &&
-+	echo aaa >bar &&
-+	git add bar &&
-+	git commit -m bar_commit &&
-+	git checkout -b tagged-x509 master &&
-+	echo bbb >baz &&
-+	git add baz &&
-+	git commit -m baz_commit &&
-+	git tag -s -m signed_tag_msg signed_tag_x509 &&
-+	git checkout plain-x509 &&
-+	git merge --no-ff -m msg signed_tag_x509 &&
-+	git log --graph --show-signature -n1 plain-x509 >actual &&
-+	grep "^|\\\  merged tag" actual &&
-+	grep "^| | gpgsm: Signature made" actual &&
-+	grep "^| | gpgsm: Good signature" actual &&
-+	git config --unset gpg.format &&
-+	git config --unset user.signingkey
-+'
-+
- test_expect_success GPG '--no-show-signature overrides --show-signature' '
- 	git log -1 --show-signature --no-show-signature signed >actual &&
- 	! grep "^gpg:" actual
- '
+ #define PGP_SIGNATURE "-----BEGIN PGP SIGNATURE-----"
+@@ -138,6 +139,12 @@ int git_gpg_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
  
-+test_expect_success GPGSM '--no-show-signature overrides --show-signature x509' '
-+	git log -1 --show-signature --no-show-signature signed-x509 >actual &&
-+	! grep "^gpgsm:" actual
-+'
++	if (!strcmp(var, "gpg.format")) {
++		if (strcasecmp(value, "openpgp"))
++			return error("malformed value for %s: %s", var, value);
++		return git_config_string(&gpg_format, var, value);
++	}
 +
- test_expect_success GPG 'log.showsignature=true behaves like --show-signature' '
- 	test_config log.showsignature true &&
- 	git log -1 signed >actual &&
-@@ -1593,12 +1639,25 @@ test_expect_success GPG 'log.showsignature=true behaves like --show-signature' '
- 	grep "gpg: Good signature" actual
- '
- 
-+test_expect_success GPGSM 'log.showsignature=true behaves like --show-signature x509' '
-+	test_config log.showsignature true &&
-+	git log -1 signed-x509 >actual &&
-+	grep "gpgsm: Signature made" actual &&
-+	grep "gpgsm: Good signature" actual
-+'
-+
- test_expect_success GPG '--no-show-signature overrides log.showsignature=true' '
- 	test_config log.showsignature true &&
- 	git log -1 --no-show-signature signed >actual &&
- 	! grep "^gpg:" actual
- '
- 
-+test_expect_success GPGSM '--no-show-signature overrides log.showsignature=true x509' '
-+	test_config log.showsignature true &&
-+	git log -1 --no-show-signature signed-x509 >actual &&
-+	! grep "^gpgsm:" actual
-+'
-+
- test_expect_success GPG '--show-signature overrides log.showsignature=false' '
- 	test_config log.showsignature false &&
- 	git log -1 --show-signature signed >actual &&
-@@ -1606,6 +1665,13 @@ test_expect_success GPG '--show-signature overrides log.showsignature=false' '
- 	grep "gpg: Good signature" actual
- '
- 
-+test_expect_success GPGSM '--show-signature overrides log.showsignature=false x509' '
-+	test_config log.showsignature false &&
-+	git log -1 --show-signature signed-x509 >actual &&
-+	grep "gpgsm: Signature made" actual &&
-+	grep "gpgsm: Good signature" actual
-+'
-+
- test_expect_success 'log --graph --no-walk is forbidden' '
- 	test_must_fail git log --graph --no-walk
- '
-diff --git a/t/t5534-push-signed.sh b/t/t5534-push-signed.sh
-index 1cea758f7..ef2789afa 100755
---- a/t/t5534-push-signed.sh
-+++ b/t/t5534-push-signed.sh
-@@ -218,4 +218,56 @@ test_expect_success GPG 'fail without key and heed user.signingkey' '
- 	test_cmp expect dst/push-cert-status
- '
- 
-+test_expect_success GPGSM 'fail without key and heed user.signingkey x509' '
-+	git config gpg.format x509 &&
-+	env | grep GIT > envfile &&
-+	prepare_dst &&
-+	mkdir -p dst/.git/hooks &&
-+	git -C dst config receive.certnonceseed sekrit &&
-+	write_script dst/.git/hooks/post-receive <<-\EOF &&
-+	# discard the update list
-+	cat >/dev/null
-+	# record the push certificate
-+	if test -n "${GIT_PUSH_CERT-}"
-+	then
-+		git cat-file blob $GIT_PUSH_CERT >../push-cert
-+	fi &&
-+
-+	cat >../push-cert-status <<E_O_F
-+	SIGNER=${GIT_PUSH_CERT_SIGNER-nobody}
-+	KEY=${GIT_PUSH_CERT_KEY-nokey}
-+	STATUS=${GIT_PUSH_CERT_STATUS-nostatus}
-+	NONCE_STATUS=${GIT_PUSH_CERT_NONCE_STATUS-nononcestatus}
-+	NONCE=${GIT_PUSH_CERT_NONCE-nononce}
-+	E_O_F
-+
-+	EOF
-+	unset GIT_COMMITTER_EMAIL &&
-+	git config user.email hasnokey@nowhere.com &&
-+	git config user.signingkey "" &&
-+	test_must_fail git push --signed dst noop ff +noff &&
-+	git config user.signingkey committer@example.com &&
-+	git push --signed dst noop ff +noff &&
-+
-+	(
-+		cat <<-\EOF &&
-+		SIGNER=/CN=C O Mitter/O=Example/SN=C O/GN=Mitter
-+		KEY=
-+		STATUS=G
-+		NONCE_STATUS=OK
-+		EOF
-+		sed -n -e "s/^nonce /NONCE=/p" -e "/^$/q" dst/push-cert
-+	) >expect.in &&
-+	key=$(cat "${GNUPGHOME}/trustlist.txt" | cut -d" " -f1 | tr -d ":") &&
-+	sed -e "s/^KEY=/KEY=${key}/" expect.in > expect &&
-+
-+	noop=$(git rev-parse noop) &&
-+	ff=$(git rev-parse ff) &&
-+	noff=$(git rev-parse noff) &&
-+	grep "$noop $ff refs/heads/ff" dst/push-cert &&
-+	grep "$noop $noff refs/heads/noff" dst/push-cert &&
-+	test_cmp expect dst/push-cert-status
-+'
-+
-+
- test_done
-diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
-index ec4b160dd..d1ce7a189 100755
---- a/t/t7003-filter-branch.sh
-+++ b/t/t7003-filter-branch.sh
-@@ -309,6 +309,21 @@ test_expect_success GPG 'Filtering retains message of gpg signed commit' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success GPGSM 'Filtering retains message of gpgsm signed commit' '
-+	mkdir gpgsm &&
-+	touch gpgsm/foo &&
-+	git add gpgsm &&
-+	git config gpg.format x509 &&
-+	git config user.signingkey $GIT_COMMITTER_EMAIL &&
-+	test_tick &&
-+	git commit -S -m "Adding gpgsm" &&
-+
-+	git log -1 --format="%s" > expect &&
-+	git filter-branch -f --msg-filter "cat" &&
-+	git log -1 --format="%s" > actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'Tag name filtering allows slashes in tag names' '
- 	git tag -m tag-with-slash X/1 &&
- 	git cat-file tag X/1 | sed -e s,X/1,X/2, > expect &&
-diff --git a/t/t7030-verify-tag.sh b/t/t7030-verify-tag.sh
-index 291a1e2b0..510e643cf 100755
---- a/t/t7030-verify-tag.sh
-+++ b/t/t7030-verify-tag.sh
-@@ -41,6 +41,13 @@ test_expect_success GPG 'create signed tags' '
- 	git tag -uB7227189 -m eighth eighth-signed-alt
- '
- 
-+test_expect_success GPGSM 'create signed tags x509 ' '
-+	git config gpg.format x509 &&
-+	git config user.signingkey $GIT_COMMITTER_EMAIL &&
-+	echo 9 >file && test_tick && git commit -a -m "nineth gpgsm-signed" &&
-+	git tag -s -m nineth nineth-signed-x509
-+'
-+
- test_expect_success GPG 'verify and show signatures' '
- 	(
- 		for tag in initial second merge fourth-signed sixth-signed seventh-signed
-@@ -72,6 +79,18 @@ test_expect_success GPG 'verify and show signatures' '
- 	)
- '
- 
-+test_expect_success GPGSM 'verify and show signatures x509' '
-+	(
-+		for tag in nineth-signed-x509
-+		do
-+			git verify-tag $tag 2>actual &&
-+			grep "Good signature from" actual &&
-+			! grep "BAD signature from" actual &&
-+			echo $tag OK || exit 1
-+		done
-+	)
-+'
-+
- test_expect_success GPG 'detect fudged signature' '
- 	git cat-file tag seventh-signed >raw &&
- 	sed -e "/^tag / s/seventh/7th forged/" raw >forged1 &&
-@@ -112,8 +131,32 @@ test_expect_success GPG 'verify signatures with --raw' '
- 	)
- '
- 
--test_expect_success GPG 'verify multiple tags' '
--	tags="fourth-signed sixth-signed seventh-signed" &&
-+test_expect_success GPGSM 'verify signatures with --raw x509' '
-+	(
-+		for tag in nineth-signed-x509
-+		do
-+			git verify-tag --raw $tag 2>actual &&
-+			grep "GOODSIG" actual &&
-+			! grep "BADSIG" actual &&
-+			echo $tag OK || exit 1
-+		done
-+	)
-+'
-+test_expect_success GPGSM 'verify multiple tags' '
-+	tags="fourth-signed sixth-signed seventh-signed nineth-signed-x509" &&
-+	for i in $tags
-+	do
-+		git verify-tag -v --raw $i || return 1
-+	done >expect.stdout 2>expect.stderr.1 &&
-+	grep "^.GNUPG:." <expect.stderr.1 >expect.stderr &&
-+	git verify-tag -v --raw $tags >actual.stdout 2>actual.stderr.1 &&
-+	grep "^.GNUPG:." <actual.stderr.1 >actual.stderr &&
-+	test_cmp expect.stdout actual.stdout &&
-+	test_cmp expect.stderr actual.stderr
-+'
-+
-+test_expect_success GPGSM 'verify multiple tags x509' '
-+	tags="fourth-signed sixth-signed seventh-signed nineth-signed-x509" &&
- 	for i in $tags
- 	do
- 		git verify-tag -v --raw $i || return 1
-diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-index 6736d8d13..db18b6c31 100755
---- a/t/t7600-merge.sh
-+++ b/t/t7600-merge.sh
-@@ -747,6 +747,21 @@ test_expect_success GPG 'merge --ff-only tag' '
- 	git rev-parse HEAD >actual &&
- 	test_cmp expect actual
- '
-+test_expect_success GPGSM 'merge --ff-only tag x509' '
-+	git reset --hard c0 &&
-+	git commit --allow-empty -m "A newer commit" &&
-+	git config gpg.format x509 &&
-+	git config user.signingkey $GIT_COMMITTER_EMAIL &&
-+	git tag -s -m "A newer commit" signed-x509 &&
-+	git reset --hard c0 &&
-+
-+	git merge --ff-only signed &&
-+	git rev-parse signed^0 >expect &&
-+	git rev-parse HEAD >actual &&
-+	test_cmp expect actual &&
-+	git config --unset gpg.format &&
-+	git config --unset user.signingkey
-+'
- 
- test_expect_success GPG 'merge --no-edit tag should skip editor' '
- 	git reset --hard c0 &&
-@@ -760,6 +775,22 @@ test_expect_success GPG 'merge --no-edit tag should skip editor' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success GPGSM 'merge --no-edit tag should skip editor x509' '
-+	git reset --hard c0 &&
-+	git commit --allow-empty -m "A newer commit" &&
-+	git config gpg.format x509 &&
-+	git config user.signingkey $GIT_COMMITTER_EMAIL &&
-+	git tag -f -s -m "A newer commit" signed &&
-+	git reset --hard c0 &&
-+
-+	EDITOR=false git merge --no-edit --no-ff signed-x509 &&
-+	git rev-parse signed^0 >expect &&
-+	git rev-parse HEAD^2 >actual &&
-+	test_cmp expect actual &&
-+	git config --unset gpg.format &&
-+	git config --unset user.signingkey
-+'
-+
- test_expect_success 'set up mod-256 conflict scenario' '
- 	# 256 near-identical stanzas...
- 	for i in $(test_seq 1 256); do
+ 	if (!strcmp(var, "gpg.program")) {
+ 		if (!value)
+ 			return config_error_nonbool(var);
 -- 
 2.16.4
 
