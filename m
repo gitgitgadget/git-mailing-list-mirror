@@ -2,154 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 081381F85A
-	for <e@80x24.org>; Tue, 10 Jul 2018 18:45:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FC911F85A
+	for <e@80x24.org>; Tue, 10 Jul 2018 18:46:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388204AbeGJSpx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jul 2018 14:45:53 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54254 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1732237AbeGJSpw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jul 2018 14:45:52 -0400
-Received: (qmail 30491 invoked by uid 109); 10 Jul 2018 18:45:36 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 10 Jul 2018 18:45:36 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29679 invoked by uid 111); 10 Jul 2018 18:45:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 10 Jul 2018 14:45:38 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Jul 2018 14:45:34 -0400
-Date:   Tue, 10 Jul 2018 14:45:34 -0400
-From:   Jeff King <peff@peff.net>
-To:     Ben Peart <Ben.Peart@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "sandals@crustytoothpaste.net" <sandals@crustytoothpaste.net>,
-        "stolee@gmail.com" <stolee@gmail.com>
-Subject: Re: [PATCH v1] convert log_ref_write_fd() to use strbuf
-Message-ID: <20180710184534.GA27535@sigill.intra.peff.net>
-References: <20180710182000.21404-1-benpeart@microsoft.com>
+        id S2388617AbeGJSc2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jul 2018 14:32:28 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:37924 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732845AbeGJSc1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jul 2018 14:32:27 -0400
+Received: by mail-wr1-f65.google.com with SMTP id m1-v6so2910116wrg.5
+        for <git@vger.kernel.org>; Tue, 10 Jul 2018 11:32:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=uz3KELOhA5tZitLiEY86v3ozK8B8HsUUyGGd8Jwf3YQ=;
+        b=f8DhQ5A9Bou9LabCk806S+KOOtvk/QNxVEvtK8c20ltdnSCB6b8gSwl5D49C1BYG4i
+         ks3FJ+7GyMV/hChDFijzJDr0KZBTf5/Eyd7sa+PHBwwTP07Ueffjhry3TQbgfdhRfap7
+         aaa1rwJqNbQkAMj2bznWj8uHF6WGQvR/pLZGMnCHI0XfvVolNeES1MRcQMgmXWF16KE0
+         oCH2NPiBFbgBadLOTUj9mT7NalRwzu4PhW1sKg9KxB6AUm4Mwz/zZAzLWwz06mGGLDY/
+         PkEKBPApLP7FffmHxj8zwMfGhHJR1uz9dOsioPM3iA/fy/gMkzSvOLVPIds8tLLyomFk
+         GNBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=uz3KELOhA5tZitLiEY86v3ozK8B8HsUUyGGd8Jwf3YQ=;
+        b=KuS3UrWFHO0fakvZyT/A4HYtpyRrlK/MDHYr2kiSkaLtcVR8j3yNbFxynCwvNzW883
+         XB3LhRY3a/oXeJn5jhMD+zeL2aPjEPNQyUG2H/Qh+NhMmjnor4v9j4sIB1Xl4tZMOcAr
+         QU33y0wHt30O6hlQxlTlHD/gYqITUm71IYBqozPl3uvQ85gJPrG71nESVOw/87GATVpp
+         fk8vffpSWIGgOGFNfLvSkKy5KUCS8lra9evtm1zVuOSMfz2DV9OPR64wmsnXLVhBQlIM
+         CrNri/L/nf0dcwxfM9BWh+GFBYe9+a89DrOR5hKn/8ZcG4CWJSOc88GNK76BGKPVTsGU
+         RSag==
+X-Gm-Message-State: APt69E1XKM8Rh2fW7Icqc2te7HgkUoxI5LzaWsWbIpB2yYZxWEujlhCH
+        OKM8eSPUlkZJFUDjqi+FuPrw4QqP
+X-Google-Smtp-Source: AAOMgpeHsDEi4fqayLcgPcWOUMgmOHESAY80mN4/Bo2/4lA1gVOpJhQoqpigkNuBMu4WRUxgDjTWyA==
+X-Received: by 2002:adf:fe42:: with SMTP id m2-v6mr13485332wrs.171.1531245646877;
+        Tue, 10 Jul 2018 11:00:46 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id r7-v6sm16287131wrn.83.2018.07.10.11.00.45
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 10 Jul 2018 11:00:45 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Alban Gruin <alban.gruin@gmail.com>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        phillip.wood@dunelm.org.uk
+Subject: Re: [GSoC][PATCH v3 04/13] rebase-interactive: rewrite the edit-todo functionality in C
+References: <20180702105717.26386-1-alban.gruin@gmail.com>
+        <20180710121557.6698-1-alban.gruin@gmail.com>
+        <20180710121557.6698-5-alban.gruin@gmail.com>
+Date:   Tue, 10 Jul 2018 11:00:45 -0700
+In-Reply-To: <20180710121557.6698-5-alban.gruin@gmail.com> (Alban Gruin's
+        message of "Tue, 10 Jul 2018 14:15:48 +0200")
+Message-ID: <xmqqtvp76kdu.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180710182000.21404-1-benpeart@microsoft.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 10, 2018 at 06:20:22PM +0000, Ben Peart wrote:
+Alban Gruin <alban.gruin@gmail.com> writes:
 
-> log_ref_write_fd() was written long before strbuf was fleshed out. Remove
-> the old manual buffer management code and replace it with strbuf(). Also
-> update copy_reflog_msg() which is called only by log_ref_write_fd() to use
-> strbuf as it keeps things consistent.
+> This rewrites the edit-todo functionality from shell to C.
+>
+> To achieve that, a new command mode, `edit-todo`, is added, and the
+> `write-edit-todo` flag is removed, as the shell script does not need to
+> write the edit todo help message to the todo list anymore.
+>
+> The shell version is then stripped in favour of a call to the helper.
+>
+> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+> ---
+> Unchanged from v2.
 
-Yay! In all of my buffer size auditing over the years, I've repeatedly
-come across this "+ 100" but it never quite made the cut for fixing,
-since it wasn't (yet) actually broken. Thanks for tackling it.
-
-> -int copy_reflog_msg(char *buf, const char *msg)
-> +void copy_reflog_msg(struct strbuf *sb, const char *msg)
-
-Glad to see this "int" go; it should have been size_t anyway.
-
->  {
-> -	char *cp = buf;
->  	char c;
->  	int wasspace = 1;
->  
-> -	*cp++ = '\t';
-> +	strbuf_addch(sb, '\t');
->  	while ((c = *msg++)) {
->  		if (wasspace && isspace(c))
->  			continue;
->  		wasspace = isspace(c);
->  		if (wasspace)
->  			c = ' ';
-> -		*cp++ = c;
-> +		strbuf_addch(sb, c);
->  	}
-
-This is all fairly straight-forward.
-
-> -	while (buf < cp && isspace(cp[-1]))
-> -		cp--;
-> -	*cp++ = '\n';
-> -	return cp - buf;
-> +	strbuf_rtrim(sb);
-
-Using rtrim is a nice reduction in complexity. A pure translation would
-include a final strbuf_addch(sb, '\n'). It looks like you moved that to
-the caller. There's only one, so that's OK now, but it may affect topics
-in flight (and I do in fact have an old topic that calls it).
-
-But I think it's OK, as the change in function signature means that any
-callers will need updated anyway. So there's little risk of a silent
-mis-merge.
-
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index a9a066dcfb..c0e892d0c8 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -1582,22 +1582,15 @@ static int log_ref_write_fd(int fd, const struct object_id *old_oid,
->  			    const struct object_id *new_oid,
->  			    const char *committer, const char *msg)
->  {
-> -	int msglen, written;
-> -	unsigned maxlen, len;
-> -	char *logrec;
-> -
-> -	msglen = msg ? strlen(msg) : 0;
-> -	maxlen = strlen(committer) + msglen + 100;
-> -	logrec = xmalloc(maxlen);
-> -	len = xsnprintf(logrec, maxlen, "%s %s %s\n",
-> -			oid_to_hex(old_oid),
-> -			oid_to_hex(new_oid),
-> -			committer);
-> -	if (msglen)
-> -		len += copy_reflog_msg(logrec + len - 1, msg) - 1;
-> -
-> -	written = len <= maxlen ? write_in_full(fd, logrec, len) : -1;
-> -	free(logrec);
-> +	int written;
-> +	struct strbuf sb = STRBUF_INIT;
-> +
-> +	strbuf_addf(&sb, "%s %s %s", oid_to_hex(old_oid), oid_to_hex(new_oid), committer);
-> +	if (msg && *msg)
-> +		copy_reflog_msg(&sb, msg);
-> +	strbuf_addch(&sb, '\n');
-> +	written = write_in_full(fd, sb.buf, sb.len);
-> +	strbuf_release(&sb);
->  	if (written < 0)
->  		return -1;
-
-This looks like another straight-forward translation.
-
-While we're here, is it worth turning "written" into an ssize_t, which
-is the correct return from write_in_full()? Alternatively, I wonder if
-the logic would be simpler to follow with:
-
-  int ret;
-
-  ...strbuf bits...
-
-  if (write_in_full(fd, sb.buf, sb.len) < 0)
-	ret = -1;
-  else
-	ret = 0;
-
-  strbuf_release(&sb);
-  return ret;
-
-We don't actually care about the number of bytes at all.
-
-That's minor, though. With or without such a change, I'd be happy to see
-it applied.
-
--Peff
+A quite straight-forward rewrite.  Looks sensible.
