@@ -7,64 +7,64 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E9FF1F6AC
-	for <e@80x24.org>; Tue, 10 Jul 2018 00:23:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B77F1F85A
+	for <e@80x24.org>; Tue, 10 Jul 2018 00:30:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754608AbeGJAXP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jul 2018 20:23:15 -0400
-Received: from mail-qk0-f195.google.com ([209.85.220.195]:44767 "EHLO
-        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754530AbeGJAXM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jul 2018 20:23:12 -0400
-Received: by mail-qk0-f195.google.com with SMTP id v17-v6so8231354qkb.11
-        for <git@vger.kernel.org>; Mon, 09 Jul 2018 17:23:12 -0700 (PDT)
+        id S1754651AbeGJAaS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jul 2018 20:30:18 -0400
+Received: from mail-qk0-f193.google.com ([209.85.220.193]:34934 "EHLO
+        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754648AbeGJAaO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jul 2018 20:30:14 -0400
+Received: by mail-qk0-f193.google.com with SMTP id u21-v6so10710805qku.2
+        for <git@vger.kernel.org>; Mon, 09 Jul 2018 17:30:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=VLMXKQ2lMwdxBblldMM57/ZthHcDVirUr8OM4Z1W3iQ=;
-        b=U+n2lYxEE6ppg+YsJmRvWWH9/XFWjRtWixLySWLbSQh1glIz1IYRlAoXssKi29hypR
-         aJvbgx5ArCaL1gZk7OWZg9IzYOjOEMedYKvQn1FcGKdy2Wg+pw7h+GEWgcPiRMir4OpE
-         /YK/9bbQr44bQ15i0HXh1nz6X1HON1OMgJbhEYYNqrdPnrC2bzA6ghG0GA+wJPBfefNq
-         0nKljgPvkkixzQ4W0J4EHc+CTGyHuhYhH+L005SV9oaopTF5TMG0da1yyL7W+bC22N8F
-         F76x5ROhE2bQV825/WZ0EJEXPpEGvF83vfc/RvkMAe2OwnjqGvtoFFS3nRW+4Xn0Gxa8
-         2twA==
+        bh=8N0sPX6KMQgLXhk1whlX7s6+WZRBuPKeEeU4BZfijh4=;
+        b=L1JBqec/Z6EGsbHGiLxrIePiGDZVMMdNj9r7zCkZMmcAR9+AEAzeHOAqWZ/0xJBrLD
+         INQWQCKO7ZvLB1anDhw6UVt7HWnORqmL5fA8sFJbg999efaSSULgSHHtLbmyNPQOQ39D
+         S5xmNmAdhsZL/mU8UCdPDGH9ChwpjzvKCL8LLO9sMpXKGvm5fxWpmDhOOx5AuKnERKJR
+         plmAhGGEhuoX15g6Ua9aWxW1peQNPvbE99HZQWSTeqXQMMk1KbOOva5zpuM7ZQATNRaK
+         ZVTLDcVeVKcdM8kE49sqfIuOldfIBl8Xfc8P9nmOXVaHLg2B3gR8m8hqEMBWB+Ygit1w
+         ARdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding
          :content-language;
-        bh=VLMXKQ2lMwdxBblldMM57/ZthHcDVirUr8OM4Z1W3iQ=;
-        b=pu3Aqm/xkuJC+jdknmDeqmlnj1LqV8gowR2Q6xXZmdOdynWiXV76ns8cBPXzrsbqO1
-         HXNxyMppdrVUiS5bMujL6EjyLhb+yakqGjFi+xifDVME5pDkkrJtL+XOZYnYJ/LIfCA/
-         9fKKXOX4LrM3MyNKxv66f+bZ5Jhd46CgGa7fDRHIJeF6PNTE3bvYP9W1QsmpuSmvvmf6
-         hsjZajxLqAFahTYmEbArztQ0QpF8Ce9hvWj4RXjuJFsrhlpze8YHqFtMGlmGsNh0uPCV
-         KsZJCySOj9Z9G+nVUcjviduvO6W1fZm+XUxp2JdG/0+LaYDJ5ybTuwCqO8X7PJqUk5Ih
-         zZHg==
-X-Gm-Message-State: AOUpUlGEBaJ4q+HzNNM3uOmfJaiAmbAqicaiDFlJiB6MCTuBtUfn39xN
-        5jBlj9Rk9Javej+WvWuvu5Ju+hBT
-X-Google-Smtp-Source: AAOMgpf3Jo4pVAmksQQWmfoS8dGJfwGIJ4ogHrKEA/R5T2RHzbsAD81CLQOyVhJkCjnWYdEK3Kt+VQ==
-X-Received: by 2002:a37:8f41:: with SMTP id r62-v6mr3147712qkd.412.1531182191636;
-        Mon, 09 Jul 2018 17:23:11 -0700 (PDT)
+        bh=8N0sPX6KMQgLXhk1whlX7s6+WZRBuPKeEeU4BZfijh4=;
+        b=bwkfKXeQWcOzgOyBa4WiI8RG47gLKbpTTiUZ66LcRcQKu8J4u0W/J5mncuQ0Ifsaml
+         35QuYnCrAXxRUUdGwxZskB+2g0GjzWWWPGN9PfE+4BkOgw04x2TAt4XIvaWhepKJbQu2
+         775MFVP8+JL38quucxm8eAbx1E/sGxNjb+IkxuRKN2gawlrjQMLF7kHNUYo2btoqLSKB
+         mEfn/fp2i3G3sSt6jPciy0Q29iMLGnI0WTcz3lHoBfNOFdrqYmcq0YgEA77iBNsNIcPR
+         uSXgyhooaWN2mEuodz5Qj95MnRpHu+yc1qS2upo178BUkBYW44g8W2OoPHYe8TwRLKG2
+         q33Q==
+X-Gm-Message-State: AOUpUlEvX5a4phsVAw9ExYSp5+5dJ/Q8h++P/LT0wt8qPW4J1apYlsHK
+        9HXj/CWueEiV0pHlvxPzYVCXJCnD
+X-Google-Smtp-Source: AAOMgpfm5Qs+VFG5atIEJT9IZBL5SWYRFa6U23k6bxA832Y545WtrdfU7l3yMIZ3d2g5c/GOE+Y+xg==
+X-Received: by 2002:ae9:df81:: with SMTP id t123-v6mr2471946qkf.55.1531182613575;
+        Mon, 09 Jul 2018 17:30:13 -0700 (PDT)
 Received: from [10.0.1.23] ([98.122.163.216])
-        by smtp.gmail.com with ESMTPSA id m12-v6sm9461994qkl.54.2018.07.09.17.23.10
+        by smtp.gmail.com with ESMTPSA id p78-v6sm13673524qkl.38.2018.07.09.17.30.12
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 09 Jul 2018 17:23:11 -0700 (PDT)
-Subject: Re: [PATCH v2 1/6] commit-graph: refactor preparing commit graph
-To:     Stefan Beller <sbeller@google.com>,
+        Mon, 09 Jul 2018 17:30:12 -0700 (PDT)
+Subject: Re: [PATCH v2 on ds/commit-graph-fsck 0/6] Object store refactoring:
+ commit graph
+To:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Tan <jonathantanmy@google.com>
-Cc:     git <git@vger.kernel.org>
+Cc:     git@vger.kernel.org
 References: <cover.1529616356.git.jonathantanmy@google.com>
  <cover.1531168854.git.jonathantanmy@google.com>
- <9769e2a7471c2b32185896e833cc74824ac5437e.1531168854.git.jonathantanmy@google.com>
- <CAGZ79kaE_42A2B=VjRcNdJzueeVZmrsj6iNgk=6u9bi6pA4hQA@mail.gmail.com>
+ <xmqq4lh8avus.fsf@gitster-ct.c.googlers.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <45e838b8-7741-bc6a-f0e5-d7604639a006@gmail.com>
-Date:   Mon, 9 Jul 2018 20:23:08 -0400
+Message-ID: <3ced0e1e-1312-2f3b-bb67-fad3525e5500@gmail.com>
+Date:   Mon, 9 Jul 2018 20:30:10 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.0
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kaE_42A2B=VjRcNdJzueeVZmrsj6iNgk=6u9bi6pA4hQA@mail.gmail.com>
+In-Reply-To: <xmqq4lh8avus.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Content-Language: en-US
@@ -73,62 +73,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/9/2018 5:41 PM, Stefan Beller wrote:
-> Hi Jonathan,
-> On Mon, Jul 9, 2018 at 1:44 PM Jonathan Tan <jonathantanmy@google.com> wrote:
->> Two functions in the code (1) check if the repository is configured for
->> commit graphs, (2) call prepare_commit_graph(), and (3) check if the
->> graph exists. Move (1) and (3) into prepare_commit_graph(), reducing
->> duplication of code.
+On 7/9/2018 6:27 PM, Junio C Hamano wrote:
+> Jonathan Tan <jonathantanmy@google.com> writes:
+>
+>> This is on ds/commit-graph-fsck.
 >>
->> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
->
->
->>   static int prepare_commit_graph_run_once = 0;
->> -static void prepare_commit_graph(void)
->> +
->> +/*
->> + * Return 1 if commit_graph is non-NULL, and 0 otherwise.
->> + *
->> + * On the first invocation, this function attemps to load the commit
->> + * graph if the_repository is configured to have one.
-> and as we talk about in-memory commit graph (and not some
-> stale file that may still be around on the fs), we can assertly return
-> 0 when core_commit_graph is false.
->
-> Makes sense!
->
->> @@ -337,22 +348,17 @@ static int parse_commit_in_graph_one(struct commit_graph *g, struct commit *item
+>> I saw that ds/commit-graph-fsck has been updated to the latest version
+>> (v7, including "gc.writeCommitGraph"), so I've rebased my changes on top
+>> of that branch. There were some mechanical changes needed during the
+>> rebase, so I'm sending the rebased patches out.
 >>
->>   int parse_commit_in_graph(struct commit *item)
->>   {
->> -       if (!core_commit_graph)
->> +       if (!prepare_commit_graph())
->>                  return 0;
->> -
->> -       prepare_commit_graph();
->> -       if (commit_graph)
->> -               return parse_commit_in_graph_one(commit_graph, item);
->> -       return 0;
->> +       return parse_commit_in_graph_one(commit_graph, item);
-> Makes sense.
->
->>   }
+>> I've also added a patch (patch 1) that removes some duplication of
+>> implementation that Junio talked about in [1].
 >>
->>   void load_commit_graph_info(struct commit *item)
->>   {
->>          uint32_t pos;
->> -       if (!core_commit_graph)
->> +       if (!prepare_commit_graph())
->>                  return;
->> -       prepare_commit_graph();
->> -       if (commit_graph && find_commit_in_graph(item, commit_graph, &pos))
->> +       if (find_commit_in_graph(item, commit_graph, &pos))
->>                  fill_commit_graph_info(item, commit_graph, pos);
-> here too,
->
-> This is
-> Reviewed-by: Stefan Beller <sbeller@google.com>
+>> [1] https://public-inbox.org/git/xmqqefgtmrgi.fsf@gitster-ct.c.googlers.com/
+> While attempting to merge this topic to 'pu', I noticed that you and
+> Derrick are perhaps playing a game of whack-a-mole by you getting
+> rid of core_commit_graph global and making it a per in-core
+> repository instance, while Derrick adding core_multi_pack_index,
+> making it necessary for yet another round of similar clean-up?
 
-These changes make sense. Thanks!
+We did have collisions with Jonathan's v1, but this v2 is on my latest 
+commit-graph things so should not have conflicts.
+
+The core_commit_graph variable appears to still be global (do we have 
+config storage in the_repository yet?) so core_multi_pack_index is similar.
+
+I do put the multi_pack_index pointer inside the_repository->objects, so 
+the equivalent of this series will not be necessary for the MIDX series.
+
+
+This series looks good to me, so please add "Reviewed-by: Derrick Stolee 
+<dstolee@microsoft.com>"
+
+I think we are set for another series on top of this one that lets the 
+commit-graph feature handle arbitrary repositories (pass a 'struct 
+repository *r' in all of the functions).
+
+Thanks,
+
+-Stolee
 
