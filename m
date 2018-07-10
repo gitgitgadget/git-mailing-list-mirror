@@ -2,135 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A12A91F85A
-	for <e@80x24.org>; Tue, 10 Jul 2018 15:42:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A60BB1F85A
+	for <e@80x24.org>; Tue, 10 Jul 2018 15:49:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934230AbeGJPmU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jul 2018 11:42:20 -0400
-Received: from mail-yb0-f194.google.com ([209.85.213.194]:45196 "EHLO
-        mail-yb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933737AbeGJPmT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jul 2018 11:42:19 -0400
-Received: by mail-yb0-f194.google.com with SMTP id h127-v6so8771694ybg.12
-        for <git@vger.kernel.org>; Tue, 10 Jul 2018 08:42:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=Ir2B4QpT8Krpq9075kFDnbzmcCkldu8PWQ7D9atUWe0=;
-        b=OiYAJFmMfvVAsI+BrokAXuICNSGoDd+xEZaSfcO2axKWogt7AJtisuOSXhq3qLY/jB
-         sJi5SMvQK/OEZcgyj5g+T2Dl3ZT2H2qkGNLx+On0Lxla57tmTsZXeghxLHnrOEaKaYJ5
-         tiCr3IxLxmw6OO/nbYUvr4W12BUelARKT2lMbQqmy+54gBi0I/+U2Ha+UhBfQGRSec3G
-         RqVZL1AxYqpjYXJ3n8eDLcUVKTqFkIbi9NkEoENNp2V5Z63fRf/x4a3jOsa9opN94ppd
-         KOTaXiq3sEGr4aPc9amJhUM+pslxPBp3SXEaAs9ib1KzyNTQy/9kGXwAHyB+lLlSJTWJ
-         zh/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=Ir2B4QpT8Krpq9075kFDnbzmcCkldu8PWQ7D9atUWe0=;
-        b=rp5PHuh3A5cTCpeH3UEQAyWOu6SzxnSyvNWaXtnc1VLgfRuGzq5RgNYBnmy47ebVhC
-         wDhePD5fMO435n0ZJ2s3CMi75FRBbv+Bnoj2+ETRWCTGZ5xB0a0QTlSzcqoi8H+mbEZ4
-         2kLKIWGfyYz1hTH4zMHPfRERLThXczcGTBtH9WiuI/AH2eF69aT9/tTz+Zha40xJ2zG1
-         ZGn1gDmTf8ChvWa9uBHsV3wWJmnOv/2eIvQgsFtEg6KptXUVSx3fpsqv230zBI2cjMzA
-         zIa0F7OJtp/Z/uo4kJsMgUtQXTLSEOOI+xrgQVgL/1HnwgSj1bB01EueNe0V0c24lcgA
-         KTig==
-X-Gm-Message-State: APt69E1GmLOlsv5D9M9S4KukW331VVqaRilzcwUBDVW336hyjvS6lJFR
-        zCCV2Ou5Rf6SxVjWdaoxoqkJOUco
-X-Google-Smtp-Source: AAOMgpf9oHRkII54NW8cwygxn21Eu5nbWQT6gW20e8FWkELsfIBZjHx7s+pHUD21xWSrWEaF6f3jhw==
-X-Received: by 2002:a25:2102:: with SMTP id h2-v6mr9270047ybh.31.1531237339223;
-        Tue, 10 Jul 2018 08:42:19 -0700 (PDT)
-Received: from wchargin-t440s.attlocal.net ([2600:1700:a460:31e0:2181:1c0a:6178:b7a4])
-        by smtp.gmail.com with ESMTPSA id b6-v6sm7656670ywb.29.2018.07.10.08.42.18
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 10 Jul 2018 08:42:18 -0700 (PDT)
-From:   William Chargin <wchargin@gmail.com>
-To:     git@vger.kernel.org
-Cc:     William Chargin <wchargin@gmail.com>, Jeff King <peff@peff.net>
-Subject: [PATCH] sha1-name.c: for ":/", find detached HEAD commits
-Date:   Tue, 10 Jul 2018 08:41:06 -0700
-Message-Id: <20180710154106.5356-1-wchargin@gmail.com>
-X-Mailer: git-send-email 2.18.0.130.g61d0c9dcf
+        id S934107AbeGJPtq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jul 2018 11:49:46 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53754 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S934257AbeGJPtd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jul 2018 11:49:33 -0400
+Received: (qmail 23348 invoked by uid 109); 10 Jul 2018 15:49:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 10 Jul 2018 15:49:33 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 27827 invoked by uid 111); 10 Jul 2018 15:49:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 10 Jul 2018 11:49:34 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Jul 2018 11:49:31 -0400
+Date:   Tue, 10 Jul 2018 11:49:31 -0400
+From:   Jeff King <peff@peff.net>
+To:     Henning Schild <henning.schild@siemens.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Ben Toews <mastahyeti@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 6/9] gpg-interface: do not hardcode the key string len
+ anymore
+Message-ID: <20180710154931.GA23624@sigill.intra.peff.net>
+References: <cover.1531208187.git.henning.schild@siemens.com>
+ <7300c85a1c6d484c781cc80b307b5e7f085ac226.1531208187.git.henning.schild@siemens.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <7300c85a1c6d484c781cc80b307b5e7f085ac226.1531208187.git.henning.schild@siemens.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch broadens the set of commits matched by ":/" pathspecs to
-include commits reachable from HEAD but not any named ref. This avoids
-surprising behavior when working with a detached HEAD and trying to
-refer to a commit that was recently created and only exists within the
-detached state.
+On Tue, Jul 10, 2018 at 10:52:28AM +0200, Henning Schild wrote:
 
-Signed-off-by: William Chargin <wchargin@gmail.com>
-Based-on-patch-by: Jeff King <peff@peff.net>
----
- Documentation/revisions.txt   | 10 +++++-----
- sha1-name.c                   |  1 +
- t/t4208-log-magic-pathspec.sh | 14 ++++++++++++++
- 3 files changed, 20 insertions(+), 5 deletions(-)
+> gnupg does print the keyid followed by a space and the signer comes
+> next. The same pattern is also used in gpgsm, but there the key length
+> would be 40 instead of 16. Instead of hardcoding the expected length,
+> find the first space and calculate it.
 
-diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-index 7d1bd4409..aa56907fd 100644
---- a/Documentation/revisions.txt
-+++ b/Documentation/revisions.txt
-@@ -181,11 +181,11 @@ existing tag object.
-   the '<rev>' before '{caret}'.
- 
- ':/<text>', e.g. ':/fix nasty bug'::
--  A colon, followed by a slash, followed by a text, names
--  a commit whose commit message matches the specified regular expression.
--  This name returns the youngest matching commit which is
--  reachable from any ref. The regular expression can match any part of the
--  commit message. To match messages starting with a string, one can use
-+  A colon, followed by a slash, followed by a text, names a commit whose
-+  commit message matches the specified regular expression. This name
-+  returns the youngest matching commit which is reachable from any ref
-+  or from HEAD. The regular expression can match any part of the commit
-+  message. To match messages starting with a string, one can use
-   e.g. ':/^foo'. The special sequence ':/!' is reserved for modifiers to what
-   is matched. ':/!-foo' performs a negative match, while ':/!!foo' matches a
-   literal '!' character, followed by 'foo'. Any other sequence beginning with
-diff --git a/sha1-name.c b/sha1-name.c
-index 60d9ef3c7..641ca12f9 100644
---- a/sha1-name.c
-+++ b/sha1-name.c
-@@ -1650,6 +1650,7 @@ static int get_oid_with_context_1(const char *name,
- 			struct commit_list *list = NULL;
- 
- 			for_each_ref(handle_one_ref, &list);
-+			head_ref(handle_one_ref, &list);
- 			commit_list_sort_by_date(&list);
- 			return get_oid_oneline(name + 2, oid, list);
- 		}
-diff --git a/t/t4208-log-magic-pathspec.sh b/t/t4208-log-magic-pathspec.sh
-index 62f335b2d..41b9f3eba 100755
---- a/t/t4208-log-magic-pathspec.sh
-+++ b/t/t4208-log-magic-pathspec.sh
-@@ -25,6 +25,20 @@ test_expect_success '"git log :/a -- " should not be ambiguous' '
- 	git log :/a --
- '
- 
-+test_expect_success '"git log :/detached -- " should find a commit only in HEAD' '
-+	test_when_finished "git checkout master" &&
-+	git checkout --detach &&
-+	test_tick &&
-+	git commit --allow-empty -m detached &&
-+	test_tick &&
-+	git commit --allow-empty -m something-else &&
-+	git log :/detached --
-+'
-+
-+test_expect_success '"git log :/detached -- " should not find an orphaned commit' '
-+	test_must_fail git log :/detached --
-+'
-+
- test_expect_success '"git log -- :/a" should not be ambiguous' '
- 	git log -- :/a
- '
--- 
-2.18.0.130.g61d0c9dcf
+Sounds good, but I think there's an off-by-one in the patch.
 
+> diff --git a/gpg-interface.c b/gpg-interface.c
+> index 0a8d1bff3..ac2df498d 100644
+> --- a/gpg-interface.c
+> +++ b/gpg-interface.c
+> @@ -88,10 +88,11 @@ static void parse_gpg_output(struct signature_check *sigc)
+>  		sigc->result = sigcheck_gpg_status[i].result;
+>  		/* The trust messages are not followed by key/signer information */
+>  		if (sigc->result != 'U') {
+> -			sigc->key = xmemdupz(found, 16);
+> +			next = strchrnul(found, ' ');
+> +			sigc->key = xmemdupz(found, next - found);
+
+Here "next" may point to the trailing NUL of the string...
+
+>  			/* The ERRSIG message is not followed by signer information */
+>  			if (sigc-> result != 'E') {
+> -				found += 17;
+> +				found = next + 1;
+>  				next = strchrnul(found, '\n');
+
+...in which case "found" points past the end of the string, and we
+search random memory. That's presumably impossible with well-formed gpg
+output (you don't get 'E' without an extra message), but we should be
+robust against bogus input.
+
+In the general case you need:
+
+  found = *next ? next + 1 : next;
+
+or similar. In this case, you can actually do:
+
+  found = next;
+
+because we know that it's OK to search over the literal space again. But
+that's pretty subtle, so we're probably better off just doing the
+conditional above.
+
+(And yes, looking at the existing code, I think it's even worse, as
+there does not seem to be a guarantee that we even have 16 characters in
+the string).
+
+-Peff
