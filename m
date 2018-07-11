@@ -2,94 +2,181 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EDC511F85D
-	for <e@80x24.org>; Wed, 11 Jul 2018 13:46:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 928881F85D
+	for <e@80x24.org>; Wed, 11 Jul 2018 14:14:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388157AbeGKNvG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Jul 2018 09:51:06 -0400
-Received: from lizzard.sbs.de ([194.138.37.39]:46712 "EHLO lizzard.sbs.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388122AbeGKNvG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jul 2018 09:51:06 -0400
-Received: from mail2.sbs.de (mail2.sbs.de [192.129.41.66])
-        by lizzard.sbs.de (8.15.2/8.15.2) with ESMTPS id w6BDkKu9025682
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Wed, 11 Jul 2018 15:46:20 +0200
-Received: from md1pvb1c.ad001.siemens.net (md1pvb1c.ad001.siemens.net [139.25.68.40])
-        by mail2.sbs.de (8.15.2/8.15.2) with ESMTP id w6BDkK0C004057;
-        Wed, 11 Jul 2018 15:46:20 +0200
-Date:   Wed, 11 Jul 2018 15:46:19 +0200
-From:   Henning Schild <henning.schild@siemens.com>
-To:     Jeff King <peff@peff.net>
-Cc:     <git@vger.kernel.org>, Eric Sunshine <sunshine@sunshineco.com>,
-        "Junio C Hamano" <gitster@pobox.com>,
-        Martin =?UTF-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Ben Toews <mastahyeti@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 6/9] gpg-interface: do not hardcode the key string
- len anymore
-Message-ID: <20180711154619.7b574dff@md1pvb1c.ad001.siemens.net>
-In-Reply-To: <20180711123425.GB23835@sigill.intra.peff.net>
-References: <cover.1531208187.git.henning.schild@siemens.com>
-        <7300c85a1c6d484c781cc80b307b5e7f085ac226.1531208187.git.henning.schild@siemens.com>
-        <20180710154931.GA23624@sigill.intra.peff.net>
-        <20180711105459.57ed99cc@md1pvb1c.ad001.siemens.net>
-        <20180711123425.GB23835@sigill.intra.peff.net>
-X-Mailer: Claws Mail 3.15.0-dirty (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+        id S2387835AbeGKOSl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Jul 2018 10:18:41 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55194 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726639AbeGKOSl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jul 2018 10:18:41 -0400
+Received: (qmail 9878 invoked by uid 109); 11 Jul 2018 14:14:08 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 11 Jul 2018 14:14:08 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 7249 invoked by uid 111); 11 Jul 2018 14:14:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 11 Jul 2018 10:14:10 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 11 Jul 2018 10:14:06 -0400
+Date:   Wed, 11 Jul 2018 10:14:06 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] has_uncommitted_changes(): fall back to empty tree
+Message-ID: <20180711141406.GE23835@sigill.intra.peff.net>
+References: <87k1q2c9zq.fsf@evledraar.gmail.com>
+ <20180711133402.GD23835@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180711133402.GD23835@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am Wed, 11 Jul 2018 08:34:25 -0400
-schrieb Jeff King <peff@peff.net>:
+On Wed, Jul 11, 2018 at 09:34:02AM -0400, Jeff King wrote:
 
-> On Wed, Jul 11, 2018 at 10:54:59AM +0200, Henning Schild wrote:
+> I do worry that other callers of run_diff_index() might have similar
+> problems, though. Grepping around, the other callers seem to fall into
+> one of three categories:
 > 
-> > > In the general case you need:
-> > > 
-> > >   found = *next ? next + 1 : next;
-> > > 
-> > > or similar. In this case, you can actually do:
-> > > 
-> > >   found = next;
-> > > 
-> > > because we know that it's OK to search over the literal space
-> > > again. But that's pretty subtle, so we're probably better off
-> > > just doing the conditional above.
-> > > 
-> > > (And yes, looking at the existing code, I think it's even worse,
-> > > as there does not seem to be a guarantee that we even have 16
-> > > characters in the string).  
-> > 
-> > The existing code works only on expected output and the same is true
-> > for the version after this patch. Making the parser robust against
-> > random input would imho be a sort of cleanup patch on top of my
-> > series. .. or before, in which case i would become responsible for
-> > making sure that still works after my modification.
-> > This argument is twofold. I do not really want to fix that as well
-> > and it might be a good idea to separate concerns anyways.  
+>  - they resolve the object themselves and put it in the pending list
+>    (and often fallback to the empty tree, which is more or less what the
+>    patch above is doing)
 > 
-> I think it's worth addressing in the near term, if only because this
-> kind of off-by-one is quite subtle, and I don't want to forget to deal
-> with it. Whether that happens as part of this patch, or as a cleanup
-> before or after, I'm not picky. :)
+>  - they resolve the object themselves and avoid calling run_diff_index()
+>    if it's not valid
+> 
+>  - they use setup_revisions(), which will barf on the broken object
+> 
+> So I think this may be sufficient. We probably should also add an
+> assertion to run_diff_index(), since that's better than segfaulting.
 
-I get that and if anyone is willing to write that code, i will base my
-patches on it. What i want to avoid is taking responsibility for
-problems i did not introduce, just because i happen to work on that
-code at the moment. Keeping track of that (not forgetting) is also not
-for the random contributor like myself.
+Here's a patch to do that. I tweaked it slightly from what I showed
+earlier to use the empty tree, which matches what other code (e.g.,
+git-diff) would do.
 
-Henning
+-- >8 --
+Subject: has_uncommitted_changes(): fall back to empty tree
 
-> -Peff
+If has_uncommitted_changes() can't resolve HEAD (e.g.,
+because it's unborn or corrupt), then we end up calling
+run_diff_index() with an empty revs.pending array. This
+causes a segfault, as run_diff_index() blindly looks at the
+first pending item.
+
+Fixing this raises a question of fault: should
+run_diff_index() handle this case, or is the caller wrong to
+pass an empty pending list?
+
+Looking at the other callers of run_diff_index(), they
+handle this in one of three ways:
+
+ - they resolve the object themselves, and avoid doing the
+   diff if it's not valid
+
+ - they resolve the object themselves, and fall back to the
+   empty tree
+
+ - they use setup_revisions(), which will die() if the
+   object isn't valid
+
+Since this is the only broken caller, that argues that the
+fix should go there. Falling back to the empty tree makes
+sense here, as we'd claim uncommitted changes if and only if
+the index is non-empty. This may be a little funny in the
+case of corruption (the corrupt HEAD probably _isn't_
+empty), but:
+
+  - we don't actually know the reason here that HEAD didn't
+    resolve (the much more likely case is that we have an
+    unborn HEAD, in which case the empty tree comparison is
+    the right thing)
+
+  - this matches how other code, like "git diff", behaves
+
+While we're thinking about it, let's add an assertion to
+run_diff_index(). It should always be passed a single
+object, and as this bug shows, it's easy to get it wrong
+(and an assertion is easier to hunt down than a segfault, or
+a quietly ignored extra tree).
+
+Reported-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ diff-lib.c      |  3 +++
+ t/t5520-pull.sh | 12 ++++++++++++
+ wt-status.c     | 10 ++++++++++
+ 3 files changed, 25 insertions(+)
+
+diff --git a/diff-lib.c b/diff-lib.c
+index a9f38eb5a3..732f684a49 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -520,6 +520,9 @@ int run_diff_index(struct rev_info *revs, int cached)
+ 	struct object_array_entry *ent;
+ 	uint64_t start = getnanotime();
+ 
++	if (revs->pending.nr != 1)
++		BUG("run_diff_index must be passed exactly one tree");
++
+ 	ent = revs->pending.objects;
+ 	if (diff_cache(revs, &ent->item->oid, ent->name, cached))
+ 		exit(128);
+diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+index 59c4b778d3..68aa5f0340 100755
+--- a/t/t5520-pull.sh
++++ b/t/t5520-pull.sh
+@@ -618,6 +618,18 @@ test_expect_success 'pull --rebase fails on unborn branch with staged changes' '
+ 	)
+ '
+ 
++test_expect_success 'pull --rebase fails on corrupt HEAD' '
++	test_when_finished "rm -rf corrupt" &&
++	git init corrupt &&
++	(
++		cd corrupt &&
++		test_commit one &&
++		obj=$(git rev-parse --verify HEAD | sed "s#^..#&/#") &&
++		rm -f .git/objects/$obj &&
++		test_must_fail git pull --rebase
++	)
++'
++
+ test_expect_success 'setup for detecting upstreamed changes' '
+ 	mkdir src &&
+ 	(cd src &&
+diff --git a/wt-status.c b/wt-status.c
+index d1c05145a4..d89c41ba10 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -2340,7 +2340,17 @@ int has_uncommitted_changes(int ignore_submodules)
+ 	if (ignore_submodules)
+ 		rev_info.diffopt.flags.ignore_submodules = 1;
+ 	rev_info.diffopt.flags.quick = 1;
++
+ 	add_head_to_pending(&rev_info);
++	if (!rev_info.pending.nr) {
++		/*
++		 * We have no head (or it's corrupt); use the empty tree,
++		 * which will complain if the index is non-empty.
++		 */
++		struct tree *tree = lookup_tree(the_hash_algo->empty_tree);
++		add_pending_object(&rev_info, &tree->object, "");
++	}
++
+ 	diff_setup_done(&rev_info.diffopt);
+ 	result = run_diff_index(&rev_info, 1);
+ 	return diff_result_code(&rev_info.diffopt, result);
+-- 
+2.18.0.400.g702e398724
 
