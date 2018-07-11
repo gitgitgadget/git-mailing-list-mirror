@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C8BE91F85B
-	for <e@80x24.org>; Wed, 11 Jul 2018 03:57:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 831D01F85B
+	for <e@80x24.org>; Wed, 11 Jul 2018 03:57:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732419AbeGKD7Y (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jul 2018 23:59:24 -0400
-Received: from mail-yb0-f196.google.com ([209.85.213.196]:33100 "EHLO
-        mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732394AbeGKD7Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jul 2018 23:59:24 -0400
-Received: by mail-yb0-f196.google.com with SMTP id e84-v6so9500811ybb.0
-        for <git@vger.kernel.org>; Tue, 10 Jul 2018 20:57:08 -0700 (PDT)
+        id S1732428AbeGKD7Z (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jul 2018 23:59:25 -0400
+Received: from mail-yb0-f195.google.com ([209.85.213.195]:47095 "EHLO
+        mail-yb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732394AbeGKD7Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jul 2018 23:59:25 -0400
+Received: by mail-yb0-f195.google.com with SMTP id s14-v6so9495500ybp.13
+        for <git@vger.kernel.org>; Tue, 10 Jul 2018 20:57:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=8t3IbcrcsoIqKunrvNFY67w0Vun0a9tAJ3r0R97zoFg=;
-        b=CxUTWAw2DbJ2HW7GOeWi2yDX3qJ+vaPdFC+sdwz3DMgl81eGPNGU1QuQHIP0HpYW25
-         X6skggT9+H8Qc113/dB8hDRDrensKiYjl/0r9UR1ha5XOOkg7h7VJ8GklpS9rnosLvty
-         e0sZd/VfsIeDCivNM/4Kh7b2QowA5uxva8YLyueqIVW4hB4S55BT4fGAAG7jjHdTRVxF
-         4n54D9Q7BXOCXPc/ZWOtrYMO7dWBNjS/0O0xYvLmMnQMLt813R3noWrQeVCiynmHdgh8
-         8eMEyyDrhcKTUndhZksuTj5YH1m2XjrByZ3F1s9r7zyd+9AP5mSzRluFr82pwGY2hG3J
-         yuvw==
+        bh=E9elZoDof4jOaMwO7Y5LZGbC8wRPCZhM6aQ20bCs8cE=;
+        b=V3B4ppV6nPI4hOBbwdP52zAzLJ4QO5FVtDJZY7YDIuCVj47LN4wMZDJ4GKDFDTK5T3
+         mGykWkGXtOrzjT2tbzxbrGqWN7GCTSMCDw+BRVm9i5xOhFIfgoi4BbMJOvZVWVfEvbaB
+         PLJ+7cCpZUtmaek52sb4SvYX1kD0X1fjhoEDjkoyNH1bGNYkAJwYbnBhvfgadhG4w5lG
+         Lg0C9IYM59Ue9mqZ/EzTCLiy4EPLAdjDj/5SCzp9o3ewkT9RrAY8ax9CydPIEOXDehci
+         xGmB/rXAte1a553EqasD1gYL0crsn6U1KU+StGqmllHXbUk3GLJPgctbXd1PQ8p/aCXW
+         2avg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=8t3IbcrcsoIqKunrvNFY67w0Vun0a9tAJ3r0R97zoFg=;
-        b=oggY/A/kM9ZUwvxrlD8lRzJ41cHaeAUiXozwO5fanurfFZMEysJMQ7K53K5VhtHlT9
-         MpMZumsmzQntA3LB2D6SStYzkTyUHW3SsBVkd/2mRqz4sRqEjl4O56AzYWne8fOYoxRN
-         jBkE9PsgxTdmvJ7+nh+6MoSzfuNTmMCY7Vwhd/wIFhPPaX9KU4khVo6P+qaKZ3dvpKke
-         tejpFXkCkmUeUkX28BusRC2Xgkaxh6bvG1d8ysqtTxxwpgh0qvGS9RKDX1NM5ACouI/S
-         iLWL0H7qBKmQaI4cmGKy7AqMl+PoNo/pUAlBK5MIG6/MLxJ5A2uVtXARSPOHz/cU4Lz7
-         JDvg==
-X-Gm-Message-State: APt69E2HEJQUWdGwmY5oIT7PIg4e5ZmjjIX/QodVJt3xCTwmvMC7bR33
-        wE9d4VMhIpvTxJgRkgnzhCo=
-X-Google-Smtp-Source: AAOMgpfpG1sEpO1LgfNmNK9R3iAnIhhfMY3V5XO436jgrVkmN6Xh31jNMPmvx+F+1wDYJgmbDVA5WA==
-X-Received: by 2002:a25:6b0d:: with SMTP id g13-v6mr14483483ybc.75.1531281427798;
-        Tue, 10 Jul 2018 20:57:07 -0700 (PDT)
+        bh=E9elZoDof4jOaMwO7Y5LZGbC8wRPCZhM6aQ20bCs8cE=;
+        b=g02CyBKlgmOoRR1W2obd6Fmimg8fCBVPTDbM30Ioz/r7cXUwCvIemHX1G7JbQkHfjv
+         dur4dL8LfK6893aKBQYPl0dAk8kxprem+RDbNbIKr2aO5qfU7m914dUsR2i7ZBm7Zf8n
+         TlX6mfM+f7QI62Wn+Hh9quN/otxj/k75sW1GN+slH+B2cOA9lbK29ZLSNsqW45v3myp1
+         z2V2fOSShwhC10ALeXxk6Zi81XZEhDU9li/ZyL7oQ8wB7VQEeV73NN5f/MapnxAf265b
+         NdI52dYNRkW4BZp1FRTUVUQM/nmga4NKEh6/Xiir9xN4v4k/gWVXcIs8tfXww8LKzHdt
+         GB+w==
+X-Gm-Message-State: APt69E2bD/ukSmg6Dwl/qEaSHnZC7N1iCqMoKVsrGbUggW+ZAnAoU1FM
+        U8gGfO+zRAOShihxXz3xu1k=
+X-Google-Smtp-Source: AAOMgpeSG1O4n+9aK/XfUpYJU088wz9Zh7uvN4TMnmmNUpvpiGge6UjwzsVyETJEJ+9pQ90Wq1xmFg==
+X-Received: by 2002:a25:49c4:: with SMTP id w187-v6mr14509256yba.274.1531281429013;
+        Tue, 10 Jul 2018 20:57:09 -0700 (PDT)
 Received: from tiger.attlocal.net ([2602:30a:2c28:20f0:7c1a:85e3:2ea9:5d7e])
-        by smtp.gmail.com with ESMTPSA id a62-v6sm1938699ywf.79.2018.07.10.20.57.06
+        by smtp.gmail.com with ESMTPSA id a62-v6sm1938699ywf.79.2018.07.10.20.57.07
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 10 Jul 2018 20:57:07 -0700 (PDT)
+        Tue, 10 Jul 2018 20:57:08 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, sbeller@google.com,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v2 1/3] t7405: add a file/submodule conflict
-Date:   Tue, 10 Jul 2018 20:56:57 -0700
-Message-Id: <20180711035659.27352-2-newren@gmail.com>
+Subject: [PATCH v2 2/3] t7405: add a directory/submodule conflict
+Date:   Tue, 10 Jul 2018 20:56:58 -0700
+Message-Id: <20180711035659.27352-3-newren@gmail.com>
 X-Mailer: git-send-email 2.18.0.132.g6e63b23f4
 In-Reply-To: <20180711035659.27352-1-newren@gmail.com>
 References: <20180707204404.7208-1-newren@gmail.com>
@@ -64,74 +64,110 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the case of a file/submodule conflict, although both cannot exist at
-the same path, we expect both to be present somewhere for the user to be
-able to resolve the conflict with.  Add a testcase for this.
+For a directory/submodule conflict, we want contents from both the
+directory and the submodule to be present for the user to use to resolve
+the conflict, but we do not want paths under the directory being written
+into the submodule and we do not want the merge being confused by paths
+under the submodule being in the way.  Add testcases for these situations.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t7405-submodule-merge.sh | 54 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 54 insertions(+)
+ t/t7405-submodule-merge.sh | 88 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 88 insertions(+)
 
 diff --git a/t/t7405-submodule-merge.sh b/t/t7405-submodule-merge.sh
-index 7bfb2f498..62888c2c5 100755
+index 62888c2c5..45d1779d2 100755
 --- a/t/t7405-submodule-merge.sh
 +++ b/t/t7405-submodule-merge.sh
-@@ -279,4 +279,58 @@ test_expect_success 'recursive merge with submodule' '
- 	 grep "$(cat expect3)" actual > /dev/null)
+@@ -333,4 +333,92 @@ test_expect_failure 'file/submodule conflict' '
+ 	)
  '
  
-+# File/submodule conflict
++# Directory/submodule conflict
 +#   Commit O: <empty>
-+#   Commit A: path (submodule)
-+#   Commit B: path
-+#   Expected: path/ is submodule and file contents for B's path are somewhere
++#   Commit A: path (submodule), with sole tracked file named 'world'
++#   Commit B1: path/file
++#   Commit B2: path/world
++#
++#   Expected from merge of A & B1:
++#     Contents under path/ from commit B1 are renamed elsewhere; we do not
++#     want to write files from one of our tracked directories into a submodule
++#
++#   Expected from merge of A & B2:
++#     Similar to last merge, but with a slight twist: we don't want paths
++#     under the submodule to be treated as untracked or in the way.
 +
-+test_expect_success 'setup file/submodule conflict' '
-+	test_create_repo file-submodule &&
++test_expect_success 'setup directory/submodule conflict' '
++	test_create_repo directory-submodule &&
 +	(
-+		cd file-submodule &&
++		cd directory-submodule &&
 +
 +		git commit --allow-empty -m O &&
 +
 +		git branch A &&
-+		git branch B &&
++		git branch B1 &&
++		git branch B2 &&
 +
-+		git checkout B &&
-+		echo content >path &&
-+		git add path &&
-+		git commit -m B &&
++		git checkout B1 &&
++		mkdir path &&
++		echo contents >path/file &&
++		git add path/file &&
++		git commit -m B1 &&
++
++		git checkout B2 &&
++		mkdir path &&
++		echo contents >path/world &&
++		git add path/world &&
++		git commit -m B2 &&
 +
 +		git checkout A &&
 +		test_create_repo path &&
-+		test_commit -C path world &&
++		test_commit -C path hello world &&
 +		git submodule add ./path &&
 +		git commit -m A
 +	)
 +'
 +
-+test_expect_failure 'file/submodule conflict' '
-+	test_when_finished "git -C file-submodule reset --hard" &&
++test_expect_failure 'directory/submodule conflict; keep submodule clean' '
++	test_when_finished "git -C directory-submodule reset --hard" &&
 +	(
-+		cd file-submodule &&
++		cd directory-submodule &&
 +
 +		git checkout A^0 &&
-+		test_must_fail git merge B^0 &&
++		test_must_fail git merge B1^0 &&
 +
 +		git ls-files -s >out &&
 +		test_line_count = 3 out &&
 +		git ls-files -u >out &&
-+		test_line_count = 2 out &&
++		test_line_count = 1 out &&
 +
 +		# path/ is still a submodule
 +		test_path_is_dir path/.git &&
 +
-+		# There is a submodule at "path", so B:path cannot be written
-+		# there.  We expect it to be written somewhere in the same
-+		# directory, though, so just grep for its content in all
-+		# files, and ignore "grep: path: Is a directory" message
-+		echo Checking if contents from B:path showed up anywhere &&
-+		grep -q content * 2>/dev/null
++		echo Checking if contents from B1:path/file showed up &&
++		# Would rather use grep -r, but that is GNU extension...
++		git ls-files -co | xargs grep -q contents 2>/dev/null &&
++
++		# However, B1:path/file should NOT have shown up at path/file,
++		# because we should not write into the submodule
++		test_path_is_missing path/file
++	)
++'
++
++test_expect_failure 'directory/submodule conflict; should not treat submodule files as untracked or in the way' '
++	test_when_finished "git -C directory-submodule/path reset --hard" &&
++	test_when_finished "git -C directory-submodule reset --hard" &&
++	(
++		cd directory-submodule &&
++
++		git checkout A^0 &&
++		test_must_fail git merge B2^0 >out 2>err &&
++
++		# We do not want files within the submodule to prevent the
++		# merge from starting; we should not be writing to such paths
++		# anyway.
++		test_i18ngrep ! "refusing to lose untracked file at" err
++
 +	)
 +'
 +
