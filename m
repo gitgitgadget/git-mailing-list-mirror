@@ -2,99 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 501BA1F85D
-	for <e@80x24.org>; Wed, 11 Jul 2018 15:49:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F9691F85D
+	for <e@80x24.org>; Wed, 11 Jul 2018 15:57:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389501AbeGKPyK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Jul 2018 11:54:10 -0400
-Received: from thoth.sbs.de ([192.35.17.2]:46429 "EHLO thoth.sbs.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732935AbeGKPyK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jul 2018 11:54:10 -0400
-Received: from mail2.sbs.de (mail2.sbs.de [192.129.41.66])
-        by thoth.sbs.de (8.15.2/8.15.2) with ESMTPS id w6BFmmY8029867
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Wed, 11 Jul 2018 17:48:48 +0200
-Received: from md1pvb1c.ad001.siemens.net (md1pvb1c.ad001.siemens.net [139.25.68.40])
-        by mail2.sbs.de (8.15.2/8.15.2) with ESMTP id w6BFmlxG019933;
-        Wed, 11 Jul 2018 17:48:47 +0200
-Date:   Wed, 11 Jul 2018 17:48:46 +0200
-From:   Henning Schild <henning.schild@siemens.com>
-To:     Jeff King <peff@peff.net>
-Cc:     <git@vger.kernel.org>, Eric Sunshine <sunshine@sunshineco.com>,
-        "Junio C Hamano" <gitster@pobox.com>,
-        Martin =?UTF-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Ben Toews <mastahyeti@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 9/9] gpg-interface t: extend the existing GPG tests
- with GPGSM
-Message-ID: <20180711174846.12618aea@md1pvb1c.ad001.siemens.net>
-In-Reply-To: <20180711143554.GG23835@sigill.intra.peff.net>
-References: <cover.1531208187.git.henning.schild@siemens.com>
-        <f97d2d79f6a46ddffcd0065239f99b084708e813.1531208187.git.henning.schild@siemens.com>
-        <20180710170901.GH23624@sigill.intra.peff.net>
-        <20180711123824.7e0be91a@md1pvb1c.ad001.siemens.net>
-        <20180711125109.GC23835@sigill.intra.peff.net>
-        <20180711154019.202e75c5@md1pvb1c.ad001.siemens.net>
-        <20180711143554.GG23835@sigill.intra.peff.net>
-X-Mailer: Claws Mail 3.15.0-dirty (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+        id S1732961AbeGKQCX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Jul 2018 12:02:23 -0400
+Received: from mail-oi0-f43.google.com ([209.85.218.43]:44691 "EHLO
+        mail-oi0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726429AbeGKQCX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jul 2018 12:02:23 -0400
+Received: by mail-oi0-f43.google.com with SMTP id s198-v6so50150211oih.11
+        for <git@vger.kernel.org>; Wed, 11 Jul 2018 08:57:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=rcUpPefkzlmOQq2mblAJnBhdPeE8FODSWHZb7LZsLZs=;
+        b=rbu8E7epEmS2/QEFIz8hyYt7xT8az0f66ue427QwH9X+TxEeyMyIUO4CHzqJ3zquB1
+         jw7nOfI1Ct2nEm8qdfp2mBPwrRzhl4Wu6B+LpXoMRrKLuNBlL7/PGbvN5q8mzpozs/dv
+         ++FBXqNmu/3kVA5EXDenAvxh++vwGodfb1JUE54KSkwSo7sEEpkg1n7EZEHsG9TdpYQ8
+         NCfnCj3NVWli3BOAGMZri3AGjOj2oIPBBOODd/eV5qmj1TUUm7/10A0mSFyRBYVQSkhq
+         e0/dv1X6ugq9LaUhI5boGomquCWTjbkDs9UO2jNVPiXTZJxBxBCgx/fLCacEqqX2JKD5
+         cUGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=rcUpPefkzlmOQq2mblAJnBhdPeE8FODSWHZb7LZsLZs=;
+        b=ib/z4tNKTrc6f1PP9/6nXRlf2+7jKbC5wTvb4Rwg04PIlmk471CDiGEnyrGkceUBo0
+         /7e0XRu/BGS8bzjM0BdTQXRL2AS0Vy9I2iILAFDO347IReMRaIJ4o8huXc9+FrNxABHW
+         woNWZ4d2z7qS5gujd+Ynrfywrkoik1+QyfXVrxp4P9Wh/pOy2AR7ygFX4d1flmeOZB8u
+         mxECpgzED/KefHuO7YjdVqEsO93fnyAjdJfJDOg5NRaYPZnvklXso8CR/shwTO8ykvo8
+         PYT9YkaiU/HSAUizi3ocoxsT6+z1pWgWsrMdGPqbhEp14lQoSYkblr7LtcNiZPk0IN2l
+         WaNg==
+X-Gm-Message-State: APt69E3649IZ7YvgGEnhQ+xmoMtO8Z5+rsEqd+r9CavEj9rPtzsXsCmh
+        iME0sMoGWQKRCN4eQB7kDkeImR7NlrQM2dBUwLc=
+X-Google-Smtp-Source: AAOMgpeaW1DTwHi2Wm1WCFTsGfG3fbtH3e9l/e0EoxqRszOhMwg5IClYVBOK7o8ATIRr0l4mHB1WkTpV0cpiq4roDoY=
+X-Received: by 2002:a54:4406:: with SMTP id k6-v6mr22749887oiw.34.1531324644272;
+ Wed, 11 Jul 2018 08:57:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+References: <87k1q2c9zq.fsf@evledraar.gmail.com>
+In-Reply-To: <87k1q2c9zq.fsf@evledraar.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 11 Jul 2018 17:56:56 +0200
+Message-ID: <CACsJy8BM7zJxgeM37YQ4Yh4bH=4iS5CJ2P_-4Vm3oA+cuQYkJA@mail.gmail.com>
+Subject: Re: BUG: Segfault on "git pull" on "bad object HEAD"
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am Wed, 11 Jul 2018 10:35:54 -0400
-schrieb Jeff King <peff@peff.net>:
-
-> On Wed, Jul 11, 2018 at 03:40:19PM +0200, Henning Schild wrote:
-> 
-> > > So it may be simplest to just run most of the tests twice, once
-> > > with gpg and once with gpgsm. I kind of wonder if all of t7510
-> > > could just be bumped into a function. Or even into a sourced file
-> > > and run from two different scripts. See the way that t8001 and
-> > > t8002 use annotate-tests.sh for an example.  
-> > 
-> > I do not agree and would like to leave the tests as they are.
-> > Instead of introducing a whole lot of very similar copies, i added
-> > just a few.  
-> 
-> I'm not sure I understand why you added the ones you did, though. For
-> instance, "--no-show-signature overrides --show-signature x509" seems
-> like it has nothing to do with the gpg/gpgsm distinction.
-> 
-> So I'd have expected that to be _outside_ of the shared battery of
-> tests.
-
-True, it took my quite some time to figure out a way to configure gpgsm
-non-interactively. Generate the key etc. without even a single popup of
-the gpg-agent... After that i just added random tests to create
-"coverage", without much focus. I would be happy to revisit that and
-drop test cases, and add some that are missing.
-
-Henning
-
-> > The original ones are even very similar between each other.
-> > We are again talking about two problems. 1. we need test cases for
-> > gpgsm if we want to merge gpgsm 2. the testsuite is very repetitive
-> > 
-> > While addressing 1 make 2 obvious and worse, addressing 2 is a whole
-> > different story and should probably be discussed outside of this
-> > thread. And i would not like to inherit responsibility for 2. In
-> > fact the whole discussion emphasizes that it was a good idea to make
-> > GPGSM depend on GPG, because it allows to somewhat reuse existing
-> > tests.  
-> 
-> IMHO there is a big difference between inheriting responsibility for
-> something, and not making it worse. But I'm not all that interested in
-> fighting about it.
+On Wed, Jul 11, 2018 at 1:02 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
-> -Peff
+> This segfaults, but should print an error instead, have a repo with a
+> corrupt HEAD:
+>
+>     (
+>         rm -rf /tmp/git &&
+>         git clone --single-branch --branch todo git@github.com:git/git.gi=
+t /tmp/git &&
+>         echo 1111111111111111111111111111111111111111 >/tmp/git/.git/refs=
+/heads/todo &&
+>         git -C /tmp/git pull
+>     )
+>
+> On this repository e.g. "git log" will print "fatal: bad object HEAD",
+> but for some reason "git pull" makes it this far:
+>
+>     $ git pull
+>     Segmentation fault
+>
+> The immediate reason is that in run_diff_index() we have this:
+>
+>         ent =3D revs->pending.objects;
+>
+> And that in this case that's NULL:
 
+Probably because add_head_to_pending() in has_uncommitted_change()
+does not add anything to the "pending" list because HEAD is broken.
+
+I think if we make add_head_to_pending() return a boolean, then we can
+check that if no HEAD is added, there's no point to run_diff_index and
+has_uncommitted_changes() can return 0 immediately.
+
+A new BUG() could still be added in run_diff_index() though, to check
+if revs->pending.nr is non-zero before attempting to access
+revs->pending.objects.
+
+>
+>     (gdb) bt
+>     #0  0x000055555565993f in run_diff_index (revs=3D0x7fffffffcb90, cach=
+ed=3D1) at diff-lib.c:524
+>     #1  0x00005555557633da in has_uncommitted_changes (ignore_submodules=
+=3D1) at wt-status.c:2345
+>     #2  0x00005555557634c9 in require_clean_work_tree (action=3D0x5555557=
+98f18 "pull with rebase", hint=3D0x555555798efb "please commit or stash the=
+m.", ignore_submodules=3D1, gently=3D0) at wt-status.c:2370
+>     #3  0x00005555555dbdee in cmd_pull (argc=3D0, argv=3D0x7fffffffd868, =
+prefix=3D0x0) at builtin/pull.c:885
+>     #4  0x000055555556c9da in run_builtin (p=3D0x555555a2de50 <commands+1=
+872>, argc=3D1, argv=3D0x7fffffffd868) at git.c:417
+>     #5  0x000055555556cce2 in handle_builtin (argc=3D1, argv=3D0x7fffffff=
+d868) at git.c:633
+>     #6  0x000055555556ce8a in run_argv (argcp=3D0x7fffffffd71c, argv=3D0x=
+7fffffffd710) at git.c:685
+>     #7  0x000055555556d03f in cmd_main (argc=3D1, argv=3D0x7fffffffd868) =
+at git.c:762
+>     #8  0x0000555555611786 in main (argc=3D3, argv=3D0x7fffffffd858) at c=
+ommon-main.c:45
+>     (gdb) p revs
+>     $4 =3D (struct rev_info *) 0x7fffffffcb90
+>     (gdb) p revs->pending
+>     $5 =3D {nr =3D 0, alloc =3D 0, objects =3D 0x0}
+>     (gdb)
+>
+> This has been an issue since at least v2.8.0 (didn't test back
+> further). I'm not familiar with the status / diff code, so I'm not sure
+> where the assertion should be added.
+>
+> This came up in the wild due to a user with a corrupt repo (don't know
+> how it got corrupt) trying "git pull" and seeing git segfault.
+
+
+
+--=20
+Duy
