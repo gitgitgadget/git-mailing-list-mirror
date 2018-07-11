@@ -2,108 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.9 required=3.0 tests=AWL,BAYES_00,
-	DATE_IN_PAST_96_XX,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 96B461F85D
-	for <e@80x24.org>; Wed, 11 Jul 2018 12:38:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 71AB01F85D
+	for <e@80x24.org>; Wed, 11 Jul 2018 12:51:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387579AbeGKMmZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Jul 2018 08:42:25 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:33044 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726399AbeGKMmY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jul 2018 08:42:24 -0400
-Received: by mail-pg1-f196.google.com with SMTP id r5-v6so2838963pgv.0
-        for <git@vger.kernel.org>; Wed, 11 Jul 2018 05:38:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc:cc;
-        bh=etyyWltjX4R6CcU1NT9PwXzmzAmUjuM1IWr4FVmy8rI=;
-        b=aK5BNYId9xo1RrQTmsqhG9Tnvx/vft6UdgzMuAWcMRabth5byv6TIAY60kYlLp+OdV
-         MY8LIQugwv/ihxIto2hR41Ok0R7dqm/OK57r/5rHHhLC1TjMhDi+v+5BF0w3rvgI9oYn
-         lYVC2nBCUhLfQ+ZEhIDoCLTXQGKClGWqvZwRrKrWvhTXD0hfxE8clx3shd37Vkwawp7a
-         5cmg8ooiLWcodyWGVwYbU3wu/HB270rFhaDkv8aBoko0Z9ZbKHRa+kNlV0Rl7x/5jcM1
-         hznKrxwH3wFrHl5913DUrHXdCW8ACalPJqj+wHvUD7XZBhAoQT99mCWXyhkk3FjUQnGG
-         RFqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc:cc;
-        bh=etyyWltjX4R6CcU1NT9PwXzmzAmUjuM1IWr4FVmy8rI=;
-        b=oscKce0pc29iRNdE7coy6xDNgzScRT9x9YK/vhgVznXYxgyoV2gJCVcIAJYgsOc2cU
-         4X+8vuRjP872h2KJvPr5BwCTzhO0frUXDl+cibA0VIBWqPsOAP4Y2sUXiS3N5GhkGbmt
-         SHifTfa9KeIJMEXj5rn1G7IX/+J3hRKJDRr+nAw5uaC3BTj3z86etD2n0rIh5ks/EPry
-         x9Vi8r01fJmZ7Qhl3pfCoILHk8vdm1EG699OqwV3aTkhE3ItWiAEpbnznmIhQ5mqUc4V
-         ETS+WLtorGEoDMxJ+K2kU0YLlHEu91tz0OBSCxglQocyxXHxTQ2e9DgAyhZKFnnOTHBV
-         64Lw==
-X-Gm-Message-State: APt69E1776NL/q2yONfuJOYqy3xlEXW4ggsD+Iq9d2ZvHIirjNFuv41m
-        nKg2UGvKgafJSh6iDxIlUqlzLQ==
-X-Google-Smtp-Source: AAOMgpfxGV71LgssvE4ruxRK1ODaA6pa0Q/aHZTtgTXw3WlXJYw4rBzhDm5vjc1pSRlKYDbT12M4qw==
-X-Received: by 2002:a62:398c:: with SMTP id u12-v6mr30076185pfj.9.1531312695763;
-        Wed, 11 Jul 2018 05:38:15 -0700 (PDT)
-Received: from [127.0.0.1] ([40.112.139.85])
-        by smtp.gmail.com with ESMTPSA id b1-v6sm23317019pfa.181.2018.07.11.05.38.14
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 11 Jul 2018 05:38:14 -0700 (PDT)
-Message-Id: <20cd1b914e74c8f45e5cc9ed82d83eee1463cd91.1531312689.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.8.git.gitgitgadget@gmail.com>
-References: <pull.8.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 9 Mar 2018 17:36:47 +0100
-Subject: [PATCH 3/3] rebase --rebase-merges: adjust man page for octopus
- support
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1732925AbeGKMzX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Jul 2018 08:55:23 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55090 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726457AbeGKMzX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jul 2018 08:55:23 -0400
+Received: (qmail 6599 invoked by uid 109); 11 Jul 2018 12:51:12 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 11 Jul 2018 12:51:12 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6760 invoked by uid 111); 11 Jul 2018 12:51:13 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 11 Jul 2018 08:51:13 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 11 Jul 2018 08:51:10 -0400
+Date:   Wed, 11 Jul 2018 08:51:10 -0400
+From:   Jeff King <peff@peff.net>
+To:     Henning Schild <henning.schild@siemens.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Ben Toews <mastahyeti@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 9/9] gpg-interface t: extend the existing GPG tests
+ with GPGSM
+Message-ID: <20180711125109.GC23835@sigill.intra.peff.net>
+References: <cover.1531208187.git.henning.schild@siemens.com>
+ <f97d2d79f6a46ddffcd0065239f99b084708e813.1531208187.git.henning.schild@siemens.com>
+ <20180710170901.GH23624@sigill.intra.peff.net>
+ <20180711123824.7e0be91a@md1pvb1c.ad001.siemens.net>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20180711123824.7e0be91a@md1pvb1c.ad001.siemens.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Wed, Jul 11, 2018 at 12:38:24PM +0200, Henning Schild wrote:
 
-Now that we support octopus merges in the `--rebase-merges` mode,
-we should give users who actually read the manuals a chance to know
-about this fact.
+> > Can we save a dummy generated key and just import it? That's what we
+> > do for the regular gpg case.
+> 
+> I will look into storing a binary and leaving notes how it was
+> generated, just like regular gpg does. The reason i did not do that in
+> the first place is that x509 certs have a validity and we introduce
+> time into the picture. But i will see if i can generate epoch->infinity
+> to get the host clock or just the future out of the picture.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Documentation/git-rebase.txt | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+That would be preferable. But even if we can just get something like a
+10-year expiration, that may be enough. Somebody dealing with failing
+tests and regenerating keys in ten years is probably not the end of the
+world.
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 0e20a66e7..c4bcd24bb 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -879,8 +879,8 @@ rescheduled immediately, with a helpful message how to edit the todo list
- (this typically happens when a `reset` command was inserted into the todo
- list manually and contains a typo).
- 
--The `merge` command will merge the specified revision into whatever is
--HEAD at that time. With `-C <original-commit>`, the commit message of
-+The `merge` command will merge the specified revision(s) into whatever
-+is HEAD at that time. With `-C <original-commit>`, the commit message of
- the specified merge commit will be used. When the `-C` is changed to
- a lower-case `-c`, the message will be opened in an editor after a
- successful merge so that the user can edit the message.
-@@ -889,7 +889,8 @@ If a `merge` command fails for any reason other than merge conflicts (i.e.
- when the merge operation did not even start), it is rescheduled immediately.
- 
- At this time, the `merge` command will *always* use the `recursive`
--merge strategy, with no way to choose a different one. To work around
-+merge strategy for regular merges, and `octopus` for octopus merges,
-+strategy, with no way to choose a different one. To work around
- this, an `exec` command can be used to call `git merge` explicitly,
- using the fact that the labels are worktree-local refs (the ref
- `refs/rewritten/onto` would correspond to the label `onto`, for example).
--- 
-gitgitgadget
+It could hurt people with drastically incorrect system clocks, but I
+suspect there are other tests with similar problems (especially if your
+clock is in the past).
+
+> > We're going to have a lot of duplicated tests here. That's a
+> > maintenance burden when one of them needs fixes later. And when new
+> > tests are added, we won't automatically get them tested under each
+> > format.
+> > 
+> > Can we move the battery of tests into a function that takes a few
+> > parameters (prereq name, branch to look at, etc) and then call it for
+> > both the gpg/gpgsm cases?
+> 
+> I guess this is part of the earlier "allow GPGSM without GPG" and i
+> can ignore it if we agree that this is not needed?
+
+I think it's orthogonal. Even if GPGSM requires GPG, you'd still want to
+make sure that whatever exercise we give to the GPG code is also
+exercised using GPGSM.
+
+I will note, though, that _some_ tests are not really exercising
+gpg-specific bits, but more how we react to it (e.g., how we format %G
+placeholders). And it's probably OK for those to just be run once.
+
+So in an ideal world, the test script would probably look something
+like:
+
+  # this function holds tests which exercise the interactions
+  # with the gpg binary itself
+  type_specific_tests() {
+	prereq=$1
+	branch=$2
+
+	test_expect_success $prereq "test whatever ($prereq)" '
+		some test using $branch here
+	'
+  }
+
+  test_expect_success 'setup' '
+	set up both openpgp and x509 branches here
+  '
+
+  type_specific_tests GPG openpgp
+  type_specific_tests GPGSM x509
+
+  # and now tests that generically care about getting _some_ signature
+  # result (e.g., the way we format signature info)
+
+  # and then probably a few tests specific to how the config is handled,
+  # like your new gpg.format coverage
+
+But in practice, the type-specific bits are often muddled together with
+the type-independent ones (e.g., we happen to test the parsing of a
+failed signature from gpg by checking how %G? is formatted or similar).
+
+So it may be simplest to just run most of the tests twice, once with gpg
+and once with gpgsm. I kind of wonder if all of t7510 could just be
+bumped into a function. Or even into a sourced file and run from two
+different scripts. See the way that t8001 and t8002 use
+annotate-tests.sh for an example.
+
+-Peff
