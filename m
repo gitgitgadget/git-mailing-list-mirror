@@ -7,245 +7,100 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE7161F85D
-	for <e@80x24.org>; Wed, 11 Jul 2018 18:23:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3AAF21F85D
+	for <e@80x24.org>; Wed, 11 Jul 2018 18:24:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387766AbeGKS2u (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Jul 2018 14:28:50 -0400
-Received: from mail-vk0-f65.google.com ([209.85.213.65]:44884 "EHLO
-        mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732287AbeGKS2u (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jul 2018 14:28:50 -0400
-Received: by mail-vk0-f65.google.com with SMTP id 125-v6so14947560vke.11
-        for <git@vger.kernel.org>; Wed, 11 Jul 2018 11:23:18 -0700 (PDT)
+        id S2387821AbeGKSa2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Jul 2018 14:30:28 -0400
+Received: from mail-ua0-f195.google.com ([209.85.217.195]:45464 "EHLO
+        mail-ua0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732583AbeGKSa2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jul 2018 14:30:28 -0400
+Received: by mail-ua0-f195.google.com with SMTP id k8-v6so1402846uaq.12
+        for <git@vger.kernel.org>; Wed, 11 Jul 2018 11:24:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=vrGJzuYfy6aeeuTH2WGMsfSaRvzNNJfrLznE1QoQ4X0=;
-        b=CiHOVjFxbV34gwn8WBHaVEBM0k0vdgAyV31CumlNPmSL7UCXAnFU922QV2FI1dDHIi
-         YrI3HpXDVmIHR742hvVKRR313iU5DdELf2lKPt/MKkDgiquwR2z2RqLEMVoxUQUq0V/U
-         c9pGbb8UjCThH0ZiZWShslB2LhvLpjCuhHMgTIosUghff1aP5QWoOT7MIUcqGbhfihTM
-         uCbRSUC+t7HRESXzyloiOWzE5FRuRpfYBA2w7CW1sOLI1zLW3DVofJtz4N6DL8VgROY5
-         Tk5AunhEPNq1R6yOlf/z5SgYl8wwSkXey8iO/lDgU7YJyHkew52F8Cq++5rDd/YHuZt1
-         miAg==
+        bh=tKJp9ks9Xv+Fnus/6e8puuSRPd8QgZ4xldsMGKNSSn4=;
+        b=hZGi/+Zx22k0Kq0KJNU9H8ynOkHG6RVrh04CCgLgR0RjTrFK8TmWeuXTFdwiKyLyzx
+         A/8kCDh3joBaDQl6sdTwkSJ8SSgS7ulf8ywbx5zCKcGPF7g8qjaZLDKTuLNtLGZyOyIm
+         xVN0q03yWdDFeGr7vqwKLvcoFMmXydIgbZzL+SH4648TuIw8wdTkOQeWQ8+tzGDic28N
+         stDR+GN3R3zDkkTNoit+rdnhIvVEqDmO8GkJbnNpRWvUP45EebervECwcnUqV/UjIeWl
+         YQtStZr13kfrfhmiWJBBMQ2QByNcOY6krAyzKDCmr2JqZ9H365OCv/BtN49v48mRQeLm
+         +frQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=vrGJzuYfy6aeeuTH2WGMsfSaRvzNNJfrLznE1QoQ4X0=;
-        b=ncYDfGYTxD3HF+WB5qFD2zvZ28COk/+KeAe90SKMabG6AHlpbOK0sd3ZiV+ilYURFV
-         PWwTxcntHBizuxOj2MaXJpJPS+tEokGgp1HhTy9zszpUJO+fDOdZYtNKxRmXzri5Lv34
-         /XLGZ9uxjvOeUIRbsi6E5HBKZMPVy5YabPqbYLWslP//tHcSRHeXD/sMAsKwP5Xp1bux
-         IqSY+UpuC7qazSoaZX9N6vpX6iXTHjB6cWg4n2+EkuoW8SMkAJlMnfjX6scbhoeTPFfi
-         sOwwdOag9cOJJz2YtsON81pp8Y8OS76xfkOIIGGM4kdXbUCpsFbqlhBWuqfZYUpi/Nmt
-         QDhg==
-X-Gm-Message-State: APt69E0Teo7OY1nnSFqtNkUXtGiYpqPUY3NRLI1nhcinIiSmIqh25HpD
-        gTX55jI/2yfRHFhXsb9SWjJXDwEeHHyD7eqXzV4=
-X-Google-Smtp-Source: AAOMgpfNJy2oglRb8TgwchCHyWaIIa3RrUTz78CNRmB+0DaHWFIBzoNaNete3LAxMJH7OPSOsJJ/uHeatPjNymjXr2U=
-X-Received: by 2002:a1f:41d4:: with SMTP id o203-v6mr17326964vka.149.1531333397718;
- Wed, 11 Jul 2018 11:23:17 -0700 (PDT)
+        bh=tKJp9ks9Xv+Fnus/6e8puuSRPd8QgZ4xldsMGKNSSn4=;
+        b=h2ZG3J7AMGIx3YIH2aQ9av97SGXiW53nllFez2xnsIahQZ7ncgzIQL4RyeFqfh8YFs
+         UikSuLLM8/YyrbaRPzmhv7L9dzokF2e5FgLmoOvYILKHappMGyqQHRG+C7Cvbpkr6vqm
+         lNvtvjO65NT2qdgmL7KHByEG+Qi7IZRS0fx7LXgLYsZqnJaGWBDZ6bjD1jS3k7NNHLcg
+         enN8/o60Ml/6eJzj6UQDA52I03HlK5YbZDl2KZsDzXIh0Mz98SBXUR/lU/yRix3Zm0JE
+         XRfEpFwKe575EmbChVixpc9l2zlb8HknDFjkzhVVMNruVaXt2wNRIQ3W+hx+9TiFrA4T
+         TSyg==
+X-Gm-Message-State: APt69E1a1ynf3dEffS/4eVX6cTX7J6Byp3QmXGMvpe9v5GbEXW5d8QxF
+        jXO9FKIYTtmZiaN4DqZ3jANfHVUFXYW+nLWeDt0=
+X-Google-Smtp-Source: AAOMgpdvj3+ec4Q/XB8TOacAeIj4VPvT+cB0xEcJwSDbHu4bD6m1YdkDNRNfQ6sfCHTu4DJuMf0CZIejoi2E6Y/pMT8=
+X-Received: by 2002:ab0:5e8e:: with SMTP id y14-v6mr19093342uag.112.1531333495624;
+ Wed, 11 Jul 2018 11:24:55 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:ab0:21c7:0:0:0:0:0 with HTTP; Wed, 11 Jul 2018 11:23:17
+Received: by 2002:ab0:21c7:0:0:0:0:0 with HTTP; Wed, 11 Jul 2018 11:24:55
  -0700 (PDT)
-In-Reply-To: <20180711092126.GA17315@flurp.local>
-References: <20180711051834.28181-1-newren@gmail.com> <20180711051834.28181-2-newren@gmail.com>
- <20180711092126.GA17315@flurp.local>
+In-Reply-To: <xmqqsh4p3dtk.fsf@gitster-ct.c.googlers.com>
+References: <20180711051834.28181-1-newren@gmail.com> <20180711051834.28181-3-newren@gmail.com>
+ <xmqqsh4p3dtk.fsf@gitster-ct.c.googlers.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 11 Jul 2018 11:23:17 -0700
-Message-ID: <CABPp-BHHkL0Uns9QoeG8LHJgZmfRJu=qAesdpTWJcNmmqhJF9A@mail.gmail.com>
-Subject: Re: [PATCH 1/2] t1015: demonstrate directory/file conflict recovery failures
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+Date:   Wed, 11 Jul 2018 11:24:55 -0700
+Message-ID: <CABPp-BEzsj6T2eaz-OEi_+CMJetHVsMTBgy6DBfVY26e3M1NoA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] read-cache: fix directory/file conflict handling in read_index_unmerged()
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
+On Wed, Jul 11, 2018 at 10:03 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Elijah Newren <newren@gmail.com> writes:
+>
+>>     The _only_ reason we want to keep a previously unmerged entry in the
+>>     index at stage #0 is so that we don't forget the fact that we have
+>>     corresponding file in the work tree in order to be able to remove it
+>>     when the tree we are resetting to does not have the path.
+>> ...
+>> So, that's the intended purpose of this function.  The problem is that
+>> when directory/files conflicts are present, trying to add the file to the
+>> index at stage 0 fails (because there is still a directory in the way),
+>> and the function returns early with a -1 return code to signify the error.
+>> As noted above, none of the callers who want the drop-to-stage-0 behavior
+>> check the return status, though, so this means all remaining unmerged
+>> entries remain in the index and the callers proceed assuming otherwise.
+>
+> Nicely analysed and explained so far.
+>
+>> ...  The temporary simultaneous appearance of the
+>> directory and file entries in the index will be removed by the callers
+>> before they attempt to write the index anywhere.
+>
+> But this part makes me feel a bit uneasy, as I find this "will be
+> removed" a bit hand-wavy.  There are two such callers.  "am --skip"
+> and "reset".
+>
+> The former uses am.c::fast_forward_to that calls unpack_trees() to
+> two-way merge (aka "switch to the other branch") and these entries
+> with CE_CONFLICTED flag get removed in merged/deleted_entry().
+>
+> "reset" (all variants) call unpack_trees() on the index prepared
+> with read_cache_unmerged(), and the unmerged entries that are marked
+> with CE_CONFLICTED bit get removed the same way.
+>
+> So perhaps before "before they attempt to", saying "by calling
+> unpack_trees(), which excludes these unmerged entries marked with
+> CE_CONFLICTED flag from the resulting index," or something like that
+> would help uneasy readers?
 
-On Wed, Jul 11, 2018 at 2:21 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Tue, Jul 10, 2018 at 10:18:33PM -0700, Elijah Newren wrote:
->> Several "recovery" commands outright fail or do not fully recover
->> when directory-file conflicts are present.  This includes:
->>   * git read-tree --reset HEAD
->>   * git am --skip
->>   * git am --abort
->>   * git merge --abort
->>   * git reset --hard
->>
->> Add testcases documenting these shortcomings.
->>
->> Signed-off-by: Elijah Newren <newren@gmail.com>
->> ---
->> diff --git a/t/t1015-read-index-unmerged.sh b/t/t1015-read-index-unmerged.sh
->> @@ -0,0 +1,123 @@
->> +test_expect_success 'setup modify/delete + directory/file conflict' '
->> +     test_create_repo df_plus_modify_delete &&
->> +     (
->> +             cd df_plus_modify_delete &&
->> +
->> +             printf "a\nb\nc\nd\ne\nf\ng\nh\n" >letters &&
->
-> test_write_lines a b c d e f g h >letters &&
-
-Copying and modifying an existing testcase, while forgetting to check
-for anachronisms, strikes again.  As always, thanks for reviewing and
-catching this; I'll fix it up.
-
->> +             git add letters &&
->> +             git commit -m initial &&
->> +
->> +             git checkout -b modify &&
->> +             # Throw in letters.txt for sorting order fun
->> +             # ("letters.txt" sorts between "letters" and "letters/file")
->> +             echo i >>letters &&
->> +             echo "version 2" >letters.txt &&
->> +             git add letters letters.txt &&
->> +             git commit -m modified &&
->> +
->> +             git checkout -b delete HEAD^ &&
->> +             git rm letters &&
->> +             mkdir letters &&
->> +             >letters/file &&
->> +             echo "version 1" >letters.txt &&
->> +             git add letters letters.txt &&
->> +             git commit -m deleted
->> +     )
->> +'
->> +
->> +test_expect_failure 'read-tree --reset cleans unmerged entries' '
->> +     test_when_finished "git -C df_plus_modify_delete clean -f" &&
->> +     test_when_finished "git -C df_plus_modify_delete reset --hard" &&
->> +     (
->> +             cd df_plus_modify_delete &&
->> +             ...
->> +     )
->> +'
->
-> I wonder how much value these distinct repositories add over not using
-> them:
-
-In my opinion, that'd be much worse.  Personally, I think we should
-move in the opposite direction and try to migrate more of the
-testsuite elsewhere towards clearly independent tests.  A huge pet
-peeve of mine is that trying to debug a test often requires working
-through dozens and dozens of unrelated tests and their setup just to
-understand which part of the repository state is related to the test
-at hand and which parts can be ignored.  It's happened enough times
-that I just intentionally try to make it clear which tests of mine are
-independent by making sure they have their own separate repo (and I
-used to do a git reset --hard && git clean -fdqx && rm -rf .git && git
-init at the beginning of tests).  If folks have a better suggestion
-for how to ensure test independence than using test_create_repo, I'm
-all ears, but I'm strongly against just adding more files into the
-repo than what previous tests did and continuing running from there.
-I feel that's especially important for future readers when dealing
-with weird edge and corner cases for merges, but I'd really like to
-see that clean separation spread throughout the test suite.
-
-> --- >8 ---
-> #!/bin/sh
->
-> test_description='Test various callers of read_index_unmerged'
-> . ./test-lib.sh
->
-> test_expect_success 'setup modify/delete + directory/file conflict' '
->         test_write_lines a b c d e f g h >letters &&
->         git add letters &&
->         git commit -m initial &&
->
->         git checkout -b modify &&
->         # Throw in letters.txt for sorting order fun
->         # ("letters.txt" sorts between "letters" and "letters/file")
->         echo i >>letters &&
->         echo "version 2" >letters.txt &&
->         git add letters letters.txt &&
->         git commit -m modified &&
->
->         git checkout -b delete HEAD^ &&
->         git rm letters &&
->         mkdir letters &&
->         >letters/file &&
->         echo "version 1" >letters.txt &&
->         git add letters letters.txt &&
->         git commit -m deleted
-> '
->
-> test_expect_failure 'read-tree --reset cleans unmerged entries' '
->         test_when_finished "git clean -f" &&
->         test_when_finished "git reset --hard" &&
->
->         git checkout delete^0 &&
->         test_must_fail git merge modify &&
->
->         git read-tree --reset HEAD &&
->         git ls-files -u >conflicts &&
->         test_must_be_empty conflicts
-> '
->
-> test_expect_failure 'One reset --hard cleans unmerged entries' '
->         test_when_finished "git clean -f" &&
->         test_when_finished "git reset --hard" &&
->
->         git checkout delete^0 &&
->         test_must_fail git merge modify &&
->
->         git reset --hard &&
->         test_path_is_missing .git/MERGE_HEAD &&
->         git ls-files -u >conflicts &&
->         test_must_be_empty conflicts
-> '
->
-> test_expect_success 'setup directory/file conflict + simple edit/edit' '
->         test_seq 1 10 >numbers &&
->         git add numbers &&
->         git commit -m initial &&
->
->         git checkout -b d-edit &&
->         mkdir foo &&
->         echo content >foo/bar &&
->         git add foo &&
->         echo 11 >>numbers &&
->         git add numbers &&
->         git commit -m "directory and edit" &&
->
->         git checkout -b f-edit d-edit^1 &&
->         echo content >foo &&
->         git add foo &&
->         echo eleven >>numbers &&
->         git add numbers &&
->         git commit -m "file and edit"
-> '
->
-> test_expect_failure 'git merge --abort succeeds despite D/F conflict' '
->         test_when_finished "git clean -f" &&
->         test_when_finished "git reset --hard" &&
->
->         git checkout f-edit^0 &&
->         test_must_fail git merge d-edit^0 &&
->
->         git merge --abort &&
->         test_path_is_missing .git/MERGE_HEAD &&
->         git ls-files -u >conflicts &&
->         test_must_be_empty conflicts
-> '
->
-> test_expect_failure 'git am --skip succeeds despite D/F conflict' '
->         test_when_finished "git clean -f" &&
->         test_when_finished "git reset --hard" &&
->
->         git checkout f-edit^0 &&
->         git format-patch -1 d-edit &&
->         test_must_fail git am -3 0001*.patch &&
->
->         git am --skip &&
->         test_path_is_missing .git/rebase-apply &&
->         git ls-files -u >conflicts &&
->         test_must_be_empty conflicts
-> '
->
-> test_done
-> --- >8 ---
+Makes sense, I'll include that in my re-roll after waiting a little
+bit for any further reviews.
