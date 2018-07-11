@@ -2,129 +2,184 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE6A51F85D
-	for <e@80x24.org>; Wed, 11 Jul 2018 21:41:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF5EA1F85D
+	for <e@80x24.org>; Wed, 11 Jul 2018 21:49:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390491AbeGKVrt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Jul 2018 17:47:49 -0400
-Received: from mail-bl2nam02on0122.outbound.protection.outlook.com ([104.47.38.122]:12608
-        "EHLO NAM02-BL2-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S2389121AbeGKVrt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jul 2018 17:47:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=KrUXnzc22E2KNI31q0P51AXCxDtBWBvzgLEqXta232I=;
- b=FeT7RpMRJmPq4IEfiOJIjFDUPbn2gSzd1jeh/r5rWEJDcIhxkL8vNx7h6RVEHbrM0NcrZ0WP6UKgR/sP6n/NdhvnID7NsL3ZIsCb7fLISuEKZMyYyVkw8m87YzZiSeFuPOnlesXrgpe0AbKxzq5WwP28dm31CqNcuj2EpXYGaqY=
-Received: from BL0PR2101MB1012.namprd21.prod.outlook.com (52.132.24.11) by
- BL0PR2101MB1060.namprd21.prod.outlook.com (52.132.24.18) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.952.4; Wed, 11 Jul 2018 21:41:26 +0000
-Received: from BL0PR2101MB1012.namprd21.prod.outlook.com
- ([fe80::d865:2b6c:e0c8:7724]) by BL0PR2101MB1012.namprd21.prod.outlook.com
- ([fe80::d865:2b6c:e0c8:7724%3]) with mapi id 15.20.0952.017; Wed, 11 Jul 2018
- 21:41:26 +0000
-From:   Ben Peart <Ben.Peart@microsoft.com>
-To:     Ben Peart <Ben.Peart@microsoft.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "sbeller@google.com" <sbeller@google.com>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Ben Peart <Ben.Peart@microsoft.com>
-Subject: [PATCH v2] handle lower case drive letters on Windows
-Thread-Topic: [PATCH v2] handle lower case drive letters on Windows
-Thread-Index: AQHUGV/rQxoDRab+A0SVbRKOt9Xf/w==
-Date:   Wed, 11 Jul 2018 21:41:26 +0000
-Message-ID: <20180711214110.17396-1-benpeart@microsoft.com>
-References: <20180711175420.16940-1-benpeart@microsoft.com>
-In-Reply-To: <20180711175420.16940-1-benpeart@microsoft.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [70.33.148.227]
-x-mailer: git-send-email 2.17.0.gvfs.1.123.g449c066
-x-clientproxiedby: CY4PR02CA0046.namprd02.prod.outlook.com
- (2603:10b6:903:117::32) To BL0PR2101MB1012.namprd21.prod.outlook.com
- (2603:10b6:207:37::11)
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;BL0PR2101MB1060;7:xXi7Q5XguKWbenKENcQq158BAcF8YeQ9b/eksi1mmb52TbXgRkWmW/5ReglbFz/rdqQvGAlW9tZwBA2ZP7pOGtZfuqB3J6DJ+0y+w7ncqi/8EoWdtyQYJfk+AEnq6ZPV6B6WZ6rBZrsKvPmpW6vi3tQG81yeO7jNPmv8wxvtYA0gIusK0LYedNHsPS7otKXN8Jd3gZlyxUCE1WuQ7Xbj6XOr8+j53wAV3P71iGneNpuY6eUNfoUV51kDAIsaREPn
-x-ms-office365-filtering-correlation-id: 6ae7fcc9-8859-4581-f76d-08d5e7770dc6
-x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652040)(8989117)(5600053)(711020)(48565401081)(2017052603328)(7193020);SRVR:BL0PR2101MB1060;
-x-ms-traffictypediagnostic: BL0PR2101MB1060:
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=Ben.Peart@microsoft.com; 
-x-microsoft-antispam-prvs: <BL0PR2101MB10603AC79A8BB2FD4E84B116F45A0@BL0PR2101MB1060.namprd21.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171)(166708455590820);
-x-ms-exchange-senderadcheck: 1
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(5005006)(8121501046)(3002001)(93006095)(93001095)(10201501046)(3231311)(944501410)(52105095)(2018427008)(6055026)(149027)(150027)(6041310)(20161123560045)(20161123562045)(20161123558120)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123564045)(6072148)(201708071742011)(7699016);SRVR:BL0PR2101MB1060;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB1060;
-x-forefront-prvs: 0730093765
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(39860400002)(396003)(346002)(136003)(376002)(366004)(189003)(199004)(107886003)(1511001)(81166006)(81156014)(86612001)(66066001)(25786009)(305945005)(8676002)(8936002)(10290500003)(478600001)(966005)(386003)(102836004)(3846002)(72206003)(68736007)(26005)(76176011)(256004)(4326008)(6862004)(10090500001)(97736004)(6116002)(1076002)(14444005)(7736002)(2616005)(5660300001)(106356001)(2906002)(50226002)(52116002)(6486002)(99286004)(316002)(6506007)(11346002)(54906003)(2900100001)(446003)(476003)(37006003)(6636002)(6436002)(14454004)(22452003)(36756003)(53936002)(486006)(6306002)(6512007)(5250100002)(105586002);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB1060;H:BL0PR2101MB1012.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
-received-spf: None (protection.outlook.com: microsoft.com does not designate
- permitted sender hosts)
-x-microsoft-antispam-message-info: yfaOqrIyMXgDhthsL2MG5y6t/WKlIYIz0DFLnsemRxoc5xprsC8eBV2VmqoKrWB6kvlIfKEM6vOXVKQi1STwvigmzjuLC8I+2OTNpQzqL14kITwsaL8aJfwif3mIxmY+ywkYl4S5HuFvibXL+8SVqFBJ6RpSpijbBx+b09c/rUZ4ppxc5IQXJ9kVckTMRPaCDgBDHPvzqFyxDJ0zsWiwaVYNoF5lRZAXf2hSrLqr8gLVW/CoRK0Z1eGVtwL81MJns9GvPp1DCuFdzcjpMA5qgMU++Q9Q1lAZCEPnOwOOOJwhIkvDqLtXJERbDjD9kNgWgEvIPu03BtEIsPItoPR3EuCNVozE0Zt8sXAf6B8DTXE=
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        id S2387428AbeGKV4F (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Jul 2018 17:56:05 -0400
+Received: from mail-io0-f193.google.com ([209.85.223.193]:46092 "EHLO
+        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732452AbeGKV4E (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jul 2018 17:56:04 -0400
+Received: by mail-io0-f193.google.com with SMTP id i18-v6so10087005ioj.13
+        for <git@vger.kernel.org>; Wed, 11 Jul 2018 14:49:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=nVinoVHc9ZTuIIAkchXoaLA1zMRXSmS/VtRTis4w9j0=;
+        b=c6j3MPLlNVOZgCicavz7Ikw5prKDl+UH1sINXjazCivComWhye30vPXKK5YmyOoIk2
+         pkuj43t1n/dG7RLVjnniBKm8ut7kCDtpLLUYI/YIxB9m0bajeNu5/b70fVKd0+JZ5ENv
+         9S+Md09dKfq6gxM+VPqmeUPKCqh36Se+n10xs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=nVinoVHc9ZTuIIAkchXoaLA1zMRXSmS/VtRTis4w9j0=;
+        b=MbTnjKn8kZKUyNQwA10hfHzNJRgtsYy/vgDIA2DlgXZGwPlg/XkzxUOR7wB4blekJL
+         JqKkrdAN+6zAH1elWKY/b541Wq2rWdiF0EJ+9dLfjlfRM7CLgsQBrTWTwcSKUbke66f4
+         CoJp36SznahWIscV6+LDE2SBkiZJVsNhL+GoHJTGZk+T/LTLL/aRKd8ug7CocNvW32dj
+         ALpVCeHZbC5qwqgPz4K9vqP1HePH7Mc+NCSNKoRxUNT48b6NI4p+xu3iitdlp2DUFlCR
+         2290mzspwMuI7F+XjSjWOP4W+F+XFE2chwMKSfx6ywlKvuBqS/UnfLVnphsO3AGyolQi
+         Gv9g==
+X-Gm-Message-State: AOUpUlF/Z4BsOdqhfyqOCwd9G8nUZMSKcXcMg/Z8qTRphxhZu2Aq8bdG
+        D0K7cwZBa5rmkGZvghMiQ1mnhDh1xv8TNiN7pe7mmonT
+X-Google-Smtp-Source: AAOMgpeqUSBCa4zvNQL88TIgJYi5R7d1xpWeuSmlBqeKsQM7OlOX/44Vhjv7guoM+4LXHwVKzdHnQ0JcD6BLu2P6GEE=
+X-Received: by 2002:a6b:380b:: with SMTP id f11-v6mr678327ioa.560.1531345783103;
+ Wed, 11 Jul 2018 14:49:43 -0700 (PDT)
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6ae7fcc9-8859-4581-f76d-08d5e7770dc6
-X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Jul 2018 21:41:26.9029
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB1060
+References: <alpine.LFD.2.21.999.1807071238410.18818@i7.lan>
+ <alpine.LFD.2.21.999.1807071502260.18818@i7.lan> <87h8l5cvp3.fsf@evledraar.gmail.com>
+In-Reply-To: <87h8l5cvp3.fsf@evledraar.gmail.com>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Wed, 11 Jul 2018 14:49:32 -0700
+Message-ID: <CA+55aFw2srtqU2B60wWo9h38pTTwT4zCDHZDwb+WMpMAbc0wOg@mail.gmail.com>
+Subject: Re: [RFC PATCH v2] Add 'human' date format
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Windows, if a tool calls SetCurrentDirectory with a lower case drive
-letter, the subsequent call to GetCurrentDirectory will return the same
-lower case drive letter. If that happens, test-drop-caches will error out a=
-s
-it does not correctly to handle lower case drive letters.
+On Wed, Jul 11, 2018 at 2:24 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+> I think that's true for the likes of linux.git & git.git, but a lot of
+> users of git say work in some corporate setting entirely or mostly in
+> the same timezone.
+>
+> In that case, knowing if some commit whose sole message was "fix"[1] was
+> made at 3am or in the afternoon, even if it's really old, is really
+> useful information, even years later.
 
-Signed-off-by: Ben Peart <Ben.Peart@microsoft.com>
----
+Heh.
 
-Notes:
-    Base Ref: master
-    Web-Diff: https://github.com/benpeart/git/commit/b497c111a7
-    Checkout: git fetch https://github.com/benpeart/git drop-caches-v2 && g=
-it checkout b497c111a7
-   =20
-    ### Interdiff (v1..v2):
-   =20
-    ### Patches
+Maybe. But if  you care about that kind of information, would you
+actually want to use the "human" date? Wouldn't you want to use the
+strftime thing instead, which gets you whatever field you care about,
+and gets it consistently regardless of how old the data is?
 
- t/helper/test-drop-caches.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+That said, I do acknowledge that the "human" format may be a bit
+inflexible and ad-hoc. Of course some more generic way that allowed
+arbitrary rules might be better for some uses.
 
-diff --git a/t/helper/test-drop-caches.c b/t/helper/test-drop-caches.c
-index d6bcfddf13..37047189c3 100644
---- a/t/helper/test-drop-caches.c
-+++ b/t/helper/test-drop-caches.c
-@@ -16,7 +16,7 @@ static int cmd_sync(void)
- 	if ((0 =3D=3D dwRet) || (dwRet > MAX_PATH))
- 		return error("Error getting current directory");
-=20
--	if ((Buffer[0] < 'A') || (Buffer[0] > 'Z'))
-+	if ((toupper(Buffer[0]) < 'A') || (toupper(Buffer[0]) > 'Z'))
- 		return error("Invalid drive letter '%c'", Buffer[0]);
-=20
- 	szVolumeAccessPath[4] =3D Buffer[0];
+I'll just explain the cases that made me zero in on what that last patch di=
+d:
 
-base-commit: e3331758f12da22f4103eec7efe1b5304a9be5e9
---=20
-2.17.0.gvfs.1.123.g449c066
+ (a) I do like the "relative" date for recent stuff.
 
+Quite often, I look at how recent the commits are, for example, and
+then I really like seeing "2 hours ago" rather than a time with a
+timezone (which is a lot harder for me to mentally parse)
+
+This was the primary impetus for my original "auto" patch many years
+ago, that was (rightly) not merged. It really boiled down to just
+"default or relative, depending on how recent it was".
+
+ (b) I noticed that I was distracted by dates that were *too* terse.
+
+My first patch had _just_ the time when it was today and the same
+timezone (but older than two hours, so the original relative logic
+didn't trigger).
+
+That initially sounded great to me, which is why it was that first time.
+
+But after _using_ it for a while, I actually found that it didn't have
+enough context for me (visually) to really trigger my date parsing at
+all.
+
+So "five hours ago" actually parsed better than just "9:48" to me. I
+didn't think it would do that, but it did. Which was why I changed the
+"relative" time to trigger every time if it was the exact same date
+(and in the past) - just to avoid the really terse model.
+
+ (c) when I played around with other commands than just "git log", I
+also noticed that a consistent length mattered.,
+
+Again, my first version was more along the lines of "if it's long ago,
+just use the full format, exactly like the default date". It wasn't
+*quite* that, because it would always skip the seconds, but it was
+close.
+
+And with "git log", that worked fine, because dates were fairly
+uniformly increasing, so the date format would slowly get longer, and
+that was fine.
+
+But then when I played with "git blame -C --date=3Dhuman", I noticed
+that not only did the human date actually make sense there too, it
+actually made it easier for me to read - and that in particular, the
+"extra" info was just annoying.
+
+So now I find that shortened "only show the date" format to be really
+good _particularly_ for "git blame". You can see very clearly whether
+it's something recent or something old.
+
+Maybe my use of "git blame" is unusual, but I don't think so. I tend
+to do "git blame -C" when I'm looking for a bug, and then seeing
+something like this:
+
+        ...
+          Apr 16 2005       437)
+          Apr 16 2005       438)
+          Jan 14 2016       439)
+          Apr 16 2005       440)
+          Apr 16 2005       441)
+          Apr 16 2005       442)
+          Thu Jun 14 15:26  443)
+          Thu Jun 14 15:26  444)
+          Thu Jun 14 15:26  445)
+          Thu Jun 14 15:26  446)
+          Thu Jun 14 15:26  447)
+          Thu Jun 14 15:26  448)
+          Thu Jun 14 15:26  449)
+          Thu Jun 14 15:26  450)
+          Apr 16 2005       451)
+          Jul 30 2012       452)
+          Jul 30 2012       453)
+          Feb 13 2012       454)
+          Apr 16 2005       455)
+          Apr 16 2005       456)
+        ....
+
+in that date field (yeah. that happens to be "kernel/fork.c" in the
+current kernel - I just edited out all the other stuff than time and
+line number) is actually very visually easy to see what parts are old,
+and which ones are recent, because it changes the format pretty
+clearly and unambiguously, without changing the size of that field
+_dramatically_.
+
+(Sure, the size changes, but it's not a radical difference, it's a
+fairly small variation, and the variation only highlights the
+different time range, without making it compltely unbalanced).
+
+Anyway, enough excuses. I'l just trying to explain some of the things
+that I noticed simply _while_ making some of the decisions I made.
+
+Are they the "right" decisions? I don't know. But I've been running with th=
+at
+
+        git config --add log.date auto
+
+in my kernel repo since I posted the patches, and so far I'm still liking i=
+t.
+
+                 Linus
