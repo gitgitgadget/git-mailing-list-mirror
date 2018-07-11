@@ -2,114 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8540B1F85D
-	for <e@80x24.org>; Wed, 11 Jul 2018 08:55:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C1D601F85D
+	for <e@80x24.org>; Wed, 11 Jul 2018 08:58:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732375AbeGKI6k (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Jul 2018 04:58:40 -0400
-Received: from thoth.sbs.de ([192.35.17.2]:47278 "EHLO thoth.sbs.de"
+        id S1732407AbeGKJBp (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Jul 2018 05:01:45 -0400
+Received: from mout.gmx.net ([212.227.15.18]:52975 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726289AbeGKI6i (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jul 2018 04:58:38 -0400
-Received: from mail2.sbs.de (mail2.sbs.de [192.129.41.66])
-        by thoth.sbs.de (8.15.2/8.15.2) with ESMTPS id w6B8t0Q8006910
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Wed, 11 Jul 2018 10:55:01 +0200
-Received: from md1pvb1c.ad001.siemens.net (md1pvb1c.ad001.siemens.net [139.25.68.40])
-        by mail2.sbs.de (8.15.2/8.15.2) with ESMTP id w6B8sxpQ023212;
-        Wed, 11 Jul 2018 10:55:00 +0200
-Date:   Wed, 11 Jul 2018 10:54:59 +0200
-From:   Henning Schild <henning.schild@siemens.com>
+        id S1726384AbeGKJBp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jul 2018 05:01:45 -0400
+Received: from [192.168.0.129] ([37.201.195.87]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MMShK-1fjFE92PiY-008GQW; Wed, 11
+ Jul 2018 10:58:23 +0200
+Date:   Wed, 11 Jul 2018 10:58:07 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
 To:     Jeff King <peff@peff.net>
-Cc:     <git@vger.kernel.org>, Eric Sunshine <sunshine@sunshineco.com>,
-        "Junio C Hamano" <gitster@pobox.com>,
-        Martin =?UTF-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Ben Toews <mastahyeti@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 6/9] gpg-interface: do not hardcode the key string
- len anymore
-Message-ID: <20180711105459.57ed99cc@md1pvb1c.ad001.siemens.net>
-In-Reply-To: <20180710154931.GA23624@sigill.intra.peff.net>
-References: <cover.1531208187.git.henning.schild@siemens.com>
-        <7300c85a1c6d484c781cc80b307b5e7f085ac226.1531208187.git.henning.schild@siemens.com>
-        <20180710154931.GA23624@sigill.intra.peff.net>
-X-Mailer: Claws Mail 3.15.0-dirty (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+cc:     Andrei Rybak <rybak.a.v@gmail.com>, git@vger.kernel.org,
+        Christian Couder <christian.couder@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2 0/2] de-confuse git cherry-pick --author
+In-Reply-To: <20180710043120.GA1330@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1807111057500.75@tvgsbejvaqbjf.bet>
+References: <20180709194636.GB9852@sigill.intra.peff.net> <20180709194912.GB7980@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1807092222300.75@tvgsbejvaqbjf.bet> <20180710021505.GA10248@sigill.intra.peff.net> <20180710043120.GA1330@sigill.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:GR6q/OWbhAIxFcFeAA1K2OM6OgTiZpEsOZ+eSWXGRLffmo6V1xY
+ 3560Bifh80CsyVlT/z9tRAwxdytuXEfIbv4ybm8WcJcyn7PCu2bo5JqW0xYcZ3ITnxypkky
+ IW9QM/4FnwdgoVvrLQb3a0l+ckJ+Oud+N4AIbX8LTXWGAVn8gh7J4xCC+v/4FRcowzitpL7
+ QD6B+eix+EERO/BIyRS9w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Y93q/ZBSkhs=:1AAjoKBj6/EXQpUD2GJmsJ
+ EYS7O4Rik9VRL120EVapZH197Jj+a4IO9jJVcDR/6y8o0MVV/klY5LdiHgeUqS8A2pVbIv4F0
+ Gkh0UkPrS9ewp9/4kJ6VmE2R+dj1E4m7zqd3CIZ9j7NhztisjezqZDzo5gj21DWpePLbYIi0F
+ OLzh8ZHOm8TQkBf3TAfgLGABwMuxDE2YxhJPMkLM8wBXlRZUaSAfGHdoueLxdRu5HKyurUfxu
+ 1mt9wAtKdL1ErUyWqpp3NIvtv/uC+eO6ZALwgZiJkO08HN/PIqaHs+V9YKPewc7b+/tYAgBnI
+ 0ZdbaZIuhyAUB2y2fMXg0Ni224znYLJYBLmnq8YY7CVAIIqABRpNZnACyVALGYLegAOpQ7pgB
+ uPun/5GlatmqNtV9DtTV3peVPlaylaqyZ5jGpI/OTiwSY1jMuuW7F25WYdliOl7Bz+iCy+yPY
+ Q7tHTLF+7duHUDV5N6DRHtOUes/W8OgcsMLT9NHDwQPAK786pzo18aU+r3jtId1la+MzA8xbG
+ PrbcOkpqAD9z9jRKlTU9lgjZnAcQArgvWTh5vak29ws3r4XiZLaqfVRfyE/sVi+y0748E6HEn
+ CfMdGTybO7WrCMAyWGtp8jyAIs9Qqn/ZuSc9g474sFH0ZxNEh/PD2d2o3sVeNZ3AOHJtuBS+N
+ 81zs9FfwCa+C453dwzC9jqt9yvMJG/Hgh+xc2t+ZQKAEFut1I6mvPOJ7LlsLEWrqUsUcbcsqR
+ /2zIE5Oaj4LIseRWhkAKP8bbCeMAaaG7NISr8EaxylhDHUmgDaQyiaWsEQU6GgUsL5E6Xo78N
+ i9tUsKG
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am Tue, 10 Jul 2018 11:49:31 -0400
-schrieb Jeff King <peff@peff.net>:
+Hi Peff,
 
-> On Tue, Jul 10, 2018 at 10:52:28AM +0200, Henning Schild wrote:
-> 
-> > gnupg does print the keyid followed by a space and the signer comes
-> > next. The same pattern is also used in gpgsm, but there the key
-> > length would be 40 instead of 16. Instead of hardcoding the
-> > expected length, find the first space and calculate it.  
-> 
-> Sounds good, but I think there's an off-by-one in the patch.
-> 
-> > diff --git a/gpg-interface.c b/gpg-interface.c
-> > index 0a8d1bff3..ac2df498d 100644
-> > --- a/gpg-interface.c
-> > +++ b/gpg-interface.c
-> > @@ -88,10 +88,11 @@ static void parse_gpg_output(struct
-> > signature_check *sigc) sigc->result = sigcheck_gpg_status[i].result;
-> >  		/* The trust messages are not followed by
-> > key/signer information */ if (sigc->result != 'U') {
-> > -			sigc->key = xmemdupz(found, 16);
-> > +			next = strchrnul(found, ' ');
-> > +			sigc->key = xmemdupz(found, next -
-> > found);  
-> 
-> Here "next" may point to the trailing NUL of the string...
-> 
-> >  			/* The ERRSIG message is not followed by
-> > signer information */ if (sigc-> result != 'E') {
-> > -				found += 17;
-> > +				found = next + 1;
-> >  				next = strchrnul(found, '\n');  
-> 
-> ...in which case "found" points past the end of the string, and we
-> search random memory. That's presumably impossible with well-formed
-> gpg output (you don't get 'E' without an extra message), but we
-> should be robust against bogus input.
-> 
-> In the general case you need:
-> 
->   found = *next ? next + 1 : next;
-> 
-> or similar. In this case, you can actually do:
-> 
->   found = next;
-> 
-> because we know that it's OK to search over the literal space again.
-> But that's pretty subtle, so we're probably better off just doing the
-> conditional above.
-> 
-> (And yes, looking at the existing code, I think it's even worse, as
-> there does not seem to be a guarantee that we even have 16 characters
-> in the string).
+On Tue, 10 Jul 2018, Jeff King wrote:
 
-The existing code works only on expected output and the same is true
-for the version after this patch. Making the parser robust against
-random input would imho be a sort of cleanup patch on top of my
-series. .. or before, in which case i would become responsible for
-making sure that still works after my modification.
-This argument is twofold. I do not really want to fix that as well and
-it might be a good idea to separate concerns anyways.
+> On Mon, Jul 09, 2018 at 10:15:05PM -0400, Jeff King wrote:
+> 
+> > > Should this not rather be
+> > > 
+> > > -		if (!cmit || get_revision(opts->revs))
+> > > -			return error("BUG: expected exactly one commit from walk");
+> > > +		if (!cmit)
+> > > +			return error(_("empty commit set passed"));
+> > > +		if (get_revision(opts->revs))
+> > > +			return error(_("unexpected extra commit from walk"));
+> > 
+> > Yeah, you're right. I'm not sure how a single rev with no-walk would
+> > ever turn up more than one commit, though. So I think we should probably
+> > go with:
+> > 
+> >   if (!cmit)
+> > 	return error(_("empty commit set passed"));
+> >   if (get_revision(opts->revs))
+> > 	BUG("unexpected extra commit from walk");
+> > 
+> > And then if we ever see that case, we can decide from there what the
+> > right action is (though _probably_ it's just to emit an error like you
+> > have above, it might be a sign that our single-pick logic is wrong).
+> > 
+> > I'll re-roll in that direction, and discuss further in the commit
+> > message.
+> 
+> After poking at it a bit more, I've convinced myself that this is the
+> right thing, as options like "--branches" which expand into multiple
+> tips already push us into the other code path.
+> 
+> So here's a re-roll. The first one is identical except for the typo-fix
+> in the commit message.
+> 
+>   [1/2]: sequencer: handle empty-set cases consistently
+>   [2/2]: sequencer: don't say BUG on bogus input
+> 
+>  sequencer.c                     | 12 ++++++++----
+>  t/t3510-cherry-pick-sequence.sh |  7 ++++++-
+>  2 files changed, 14 insertions(+), 5 deletions(-)
 
-Henning
-
-> -Peff
-
+ACK,
+Dscho
