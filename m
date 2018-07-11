@@ -2,189 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E4B6B1F85D
-	for <e@80x24.org>; Wed, 11 Jul 2018 20:28:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D2941F85D
+	for <e@80x24.org>; Wed, 11 Jul 2018 20:34:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389324AbeGKUeB (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Jul 2018 16:34:01 -0400
-Received: from mail-oi0-f65.google.com ([209.85.218.65]:34384 "EHLO
-        mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733237AbeGKUeB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jul 2018 16:34:01 -0400
-Received: by mail-oi0-f65.google.com with SMTP id 13-v6so51689655ois.1
-        for <git@vger.kernel.org>; Wed, 11 Jul 2018 13:27:59 -0700 (PDT)
+        id S1732556AbeGKUkj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Jul 2018 16:40:39 -0400
+Received: from mail-oi0-f68.google.com ([209.85.218.68]:36601 "EHLO
+        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726706AbeGKUkj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jul 2018 16:40:39 -0400
+Received: by mail-oi0-f68.google.com with SMTP id r16-v6so51729990oie.3
+        for <git@vger.kernel.org>; Wed, 11 Jul 2018 13:34:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=Ge1MsvXSrg77p8SpAjNvwQPa0AMnUqkjPhzh08+RhzI=;
-        b=GnQ6ihlKcULGvKS1iooAVz9Y/eCny9WoplYgm0djM+pXMLHmzdEoErjFfR53M19eQB
-         JZlZpKo6pPpvxyEQ55VbtrFHZfHM7Ihe9rQ5WR94mZ55DRxqPPk2jFqgWsz6y3hILI7l
-         P//LZzfeOOie/oQgzoyfLTXqUv0h6ovV+U3KbLRLmG7TKHxOaWhamnhR8Fa3Fwg+j2rU
-         JeV6G4zXkdpLyHbkikMo0LypTCYjtuqotJAF7VYQEI409A8zOP3Rujl4SbMkdsDqjcEI
-         Xt8cIYepSD3Qvf6/9eMPjqD+jmEUBduit7U0szxDdctfZ+0lIDwX8Iq5jhg4/Nv6AhqU
-         JBTA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=wEbET8dYpoBtMsSSyLKJrLQu+a8lvmE/HvSQAvNaUJ8=;
+        b=cjNchzJC69n8SXFJZ5v++QaTVsXvxZ329QHNel+DZ4NcxKgeTA7v0MJJK0KI2Iczjj
+         PIVqh918L+uGRKFCgeycslLLce3HkYZ39QGXqmxVAY62xJm6xor49kexpq1jVyiLQh/y
+         +I7Re5Ke8j6C0GVMUJoFSrljbAdgrBsdzInPqQwc9tRmKdX4Ie2+bcn54MTxCHwQC4nl
+         Ay7A8ExykIY691sAFCHIh7osOYrCRbaIiHUMBQbJsPwWL2WmVpiNDEqArfiAGgYHlpm6
+         lu2Ez5386uiww73vTGR5jQtR2TvQxOHqGKMMN9/IOAvBI3wxIIDLeb4YpM+lO9kjeKig
+         MfqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=Ge1MsvXSrg77p8SpAjNvwQPa0AMnUqkjPhzh08+RhzI=;
-        b=ZaIjob47fyfI1EX4f0lfbbZotRHfOyTYtVD5+3fHrJ3LV/lG/0GVee+2rMFVis9tzX
-         w3SgwICMOD1oIXYUv+EyNIPp4S3uXc62HP8JnPvdO13mRbmIAC1cxlD2Z6u4VZrkrarv
-         xFi+h/ZXGythQNaAXTz+NWFkRRHNaifHzEE18Scuof1agKzTmX0JnnzWOD6tcVUP5vtB
-         VfWisuFZqzLr2f+BUrdQ2SWAtGMVHjYFkV/hollmnHVy02/q1HKS2/R71kKouuwxKkEb
-         492WMyDPZ1CH6tifYWiSm1UIhDSfQySLHVOLwWlRXA3q1U2DN/5cu2dZ6QCtyHFiW3H1
-         Kxeg==
-X-Gm-Message-State: AOUpUlHdPnTOM7LvvArUPoRj+aP4SeCN57Ch0voBHbd5fPbFx8kOoZ44
-        E6gEoyCN+F7kPa6lXGxnDCQ=
-X-Google-Smtp-Source: AAOMgpfBm58GVQ2LnmHCZX7l0k1bQd2FC4j6nxRCtBIS7kxYN1zbBYOGVoVyBG2lz4l02ydNdZqUpw==
-X-Received: by 2002:aca:c585:: with SMTP id v127-v6mr179712oif.348.1531340879401;
-        Wed, 11 Jul 2018 13:27:59 -0700 (PDT)
-Received: from [172.16.100.100] (cpe-70-113-92-26.austin.res.rr.com. [70.113.92.26])
-        by smtp.gmail.com with ESMTPSA id j193-v6sm1781299oih.55.2018.07.11.13.27.58
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 11 Jul 2018 13:27:58 -0700 (PDT)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 11.4 \(3445.8.2\))
-Subject: Re: [PATCH v2] add -p: fix counting empty context lines in edited
- patches
-From:   Jeff Felchner <jfelchner1@gmail.com>
-In-Reply-To: <20180611094602.17469-1-phillip.wood@talktalk.net>
-Date:   Wed, 11 Jul 2018 15:27:57 -0500
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Martin Agren <martin.agren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Oliver Joseph Ash <oliverjash@gmail.com>,
-        Mahmoud Al-Qudsi <mqudsi@neosmart.net>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <C9B989D9-5148-4AF1-80EB-ADFAE0DB8FF8@gmail.com>
-References: <20180601174644.13055-1-phillip.wood@talktalk.net>
- <20180611094602.17469-1-phillip.wood@talktalk.net>
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-X-Mailer: Apple Mail (2.3445.8.2)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=wEbET8dYpoBtMsSSyLKJrLQu+a8lvmE/HvSQAvNaUJ8=;
+        b=udLb5NyfSh8iYkMRHSDYPqb1X6mv22NHqbUGKtMDYlfYEofIo9QxrZBo2TqarsMp7x
+         aEQMssVfYqaCIM1LAWeJIbC5iFlFJrQKOtmNqB7bmdyPtRp5UmDawulOtUlgxFv1hTZ3
+         9inEYwJBAIM4QZnUd5V9GI8chSAgFIU/sDT1/rc9zehfn1oO+5kmgf2USQaEwiYFSTo0
+         REnxkWxrUa5nN2N2vWMKd4ItqRH+tHTvk94JmMd9dcXyx7EYJJ3BEX5Vgxz9EfA99qTQ
+         RSM1xwop7NsZ31JXBJ6vBXRBx/8oQ2tgQwT9YdXilSWXiWp96GvE+VMapyC3KRsWueo4
+         pgAg==
+X-Gm-Message-State: AOUpUlFWjxMPXScNbSR50IxDY3c7pvMbMS3VGrVPNyPRz/TFXM91L15R
+        gO5s3h1vAwnvUUeR0chH6uimjwWIMGySoA0BhTbxvspY
+X-Google-Smtp-Source: AAOMgpe+hWhobiM3vxKeZw82x/r8HtM5ZYCsMtCuq+27iI3xuLV/xd9hV64LQLMGxxP8vTjWFoTZ7OLcUT+3dFkktWI=
+X-Received: by 2002:aca:5585:: with SMTP id j127-v6mr199830oib.202.1531341275926;
+ Wed, 11 Jul 2018 13:34:35 -0700 (PDT)
+MIME-Version: 1.0
+References: <alpine.LFD.2.21.999.1807071238410.18818@i7.lan> <alpine.LFD.2.21.999.1807071502260.18818@i7.lan>
+In-Reply-To: <alpine.LFD.2.21.999.1807071502260.18818@i7.lan>
+From:   Andrei Rybak <rybak.a.v@gmail.com>
+Date:   Wed, 11 Jul 2018 22:34:19 +0200
+Message-ID: <CACayv=ifE5BQVtxXCVEhS3uO7iz1z+ZPrF3J_n=e-uoYOpwNtA@mail.gmail.com>
+Subject: Re: [RFC PATCH v2] Add 'human' date format
+To:     torvalds@linux-foundation.org, Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey all, I assumed this was going to be in 2.18, but I'm still having =
-the same issue.  What's the plan for release of this?
+On 2018-07-08 00:02, Linus Torvalds wrote:
+> diff --git a/date.c b/date.c
+> index 49f943e25..4486c028a 100644
+> --- a/date.c
+> +++ b/date.c
+> @@ -77,22 +77,16 @@ static struct tm *time_to_tm_local(timestamp_t time)
+>  }
+>
+>  /*
+> - * What value of "tz" was in effect back then at "time" in the
+> - * local timezone?
+> + * Fill in the localtime 'struct tm' for the supplied time,
+> + * and return the local tz.
+>   */
+> -static int local_tzoffset(timestamp_t time)
+> +static int local_time_tzoffset(time_t t, struct tm *tm)
+>  {
+> -     time_t t, t_local;
+> -     struct tm tm;
+> +     time_t t_local;
+>       int offset, eastwest;
+>
+> -     if (date_overflows(time))
+> -             die("Timestamp too large for this system: %"PRItime, time);
+> -
+> -     t = (time_t)time;
+> -     localtime_r(&t, &tm);
+> -     t_local = tm_to_time_t(&tm);
+> -
+> +     localtime_r(&t, tm);
+> +     t_local = tm_to_time_t(tm);
+>       if (t_local == -1)
+>               return 0; /* error; just use +0000 */
+>       if (t_local < t) {
+> @@ -107,6 +101,20 @@ static int local_tzoffset(timestamp_t time)
+>       return offset * eastwest;
+>  }
+>
 
-> On 2018 Jun 11, at 4:46, Phillip Wood <phillip.wood@talktalk.net> =
-wrote:
->=20
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->=20
-> recount_edited_hunk() introduced in commit 2b8ea7f3c7 ("add -p:
-> calculate offset delta for edited patches", 2018-03-05) required all
-> context lines to start with a space, empty lines are not counted. This
-> was intended to avoid any recounting problems if the user had
-> introduced empty lines at the end when editing the patch. However this
-> introduced a regression into 'git add -p' as it seems it is common for
-> editors to strip the trailing whitespace from empty context lines when
-> patches are edited thereby introducing empty lines that should be
-> counted. 'git apply' knows how to deal with such empty lines and POSIX
-> states that whether or not there is an space on an empty context line
-> is implementation defined [1].
->=20
-> Fix the regression by counting lines that consist solely of a newline
-> as well as lines starting with a space as context lines and add a test
-> to prevent future regressions.
->=20
-> [1] =
-http://pubs.opengroup.org/onlinepubs/9699919799/utilities/diff.html
->=20
-> Reported-by: Mahmoud Al-Qudsi <mqudsi@neosmart.net>
-> Reported-by: Oliver Joseph Ash <oliverjash@gmail.com>
-> Reported-by: Jeff Felchner <jfelchner1@gmail.com>
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
->=20
-> Thanks for the feedback, the only changes since v1 are to fix the
-> commit message to match what was in pu and to change '$_' to '$mode'
-> in the comparison as I think that is clearer. In the end I decided to
-> leave the tests as they are.
->=20
-> git-add--interactive.perl  |  2 +-
-> t/t3701-add-interactive.sh | 43 ++++++++++++++++++++++++++++++++++++++
-> 2 files changed, 44 insertions(+), 1 deletion(-)
->=20
-> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-> index ab022ec073..8361ef45e7 100755
-> --- a/git-add--interactive.perl
-> +++ b/git-add--interactive.perl
-> @@ -1047,7 +1047,7 @@ sub recount_edited_hunk {
-> 			$o_cnt++;
-> 		} elsif ($mode eq '+') {
-> 			$n_cnt++;
-> -		} elsif ($mode eq ' ') {
-> +		} elsif ($mode eq ' ' or $mode eq "\n") {
-> 			$o_cnt++;
-> 			$n_cnt++;
-> 		}
-> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-> index e5c66f7500..f1bb879ea4 100755
-> --- a/t/t3701-add-interactive.sh
-> +++ b/t/t3701-add-interactive.sh
-> @@ -175,6 +175,49 @@ test_expect_success 'real edit works' '
-> 	diff_cmp expected output
-> '
->=20
-> +test_expect_success 'setup file' '
-> +	test_write_lines a "" b "" c >file &&
-> +	git add file &&
-> +	test_write_lines a "" d "" c >file
-> +'
-> +
-> +test_expect_success 'setup patch' '
-> +	SP=3D" " &&
-> +	NULL=3D"" &&
-> +	cat >patch <<-EOF
-> +	@@ -1,4 +1,4 @@
-> +	 a
-> +	$NULL
-> +	-b
-> +	+f
-> +	$SP
-> +	c
-> +	EOF
-> +'
-> +
-> +test_expect_success 'setup expected' '
-> +	cat >expected <<-EOF
-> +	diff --git a/file b/file
-> +	index b5dd6c9..f910ae9 100644
-> +	--- a/file
-> +	+++ b/file
-> +	@@ -1,5 +1,5 @@
-> +	 a
-> +	$SP
-> +	-f
-> +	+d
-> +	$SP
-> +	 c
-> +	EOF
-> +'
-> +
-> +test_expect_success 'edit can strip spaces from empty context lines' =
-'
-> +	test_write_lines e n q | git add -p 2>error &&
-> +	test_must_be_empty error &&
-> +	git diff >output &&
-> +	diff_cmp expected output
-> +'
-> +
-> test_expect_success 'skip files similarly as commit -a' '
-> 	git reset &&
-> 	echo file >.gitignore &&
-> --=20
-> 2.17.0
->=20
+[...]
 
+> +
+>  const char *show_date(timestamp_t time, int tz, const struct date_mode *mode)
+>  {
+>       struct tm *tm;
+> +     struct tm human_tm = { 0 };
+> +     int human_tz = -1;
+
+Is -1 an OK initial value for timezone if local_time_tzoffset returns
+negative values as well? It looks like it doesn't matter for from functional
+
+>       static struct strbuf timebuf = STRBUF_INIT;
+>
+>       if (mode->type == DATE_UNIX) {
+> @@ -202,6 +281,15 @@ const char *show_date(timestamp_t time, int tz, const struct date_mode *mode)
+>               return timebuf.buf;
+>       }
+>
+> +     if (mode->type == DATE_HUMAN) {
+> +             struct timeval now;
+> +
+> +             gettimeofday(&now, NULL);
+> +
+> +             /* Fill in the data for "current time" in human_tz and human_tm */
+> +             human_tz = local_time_tzoffset(now.tv_sec, &human_tm);
+> +     }
+> +
+>       if (mode->local)
+>               tz = local_tzoffset(time);
+>
+
+--
+Best regards, Andrei Rybak
