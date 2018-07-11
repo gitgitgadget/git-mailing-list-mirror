@@ -6,47 +6,47 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B08F41F85B
-	for <e@80x24.org>; Wed, 11 Jul 2018 06:48:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F6331F85B
+	for <e@80x24.org>; Wed, 11 Jul 2018 06:48:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726618AbeGKGux (ORCPT <rfc822;e@80x24.org>);
+        id S1726629AbeGKGux (ORCPT <rfc822;e@80x24.org>);
         Wed, 11 Jul 2018 02:50:53 -0400
-Received: from mail-io0-f195.google.com ([209.85.223.195]:37234 "EHLO
-        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726496AbeGKGuw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jul 2018 02:50:52 -0400
-Received: by mail-io0-f195.google.com with SMTP id z19-v6so22640723ioh.4
-        for <git@vger.kernel.org>; Tue, 10 Jul 2018 23:48:06 -0700 (PDT)
+Received: from mail-io0-f193.google.com ([209.85.223.193]:40869 "EHLO
+        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726532AbeGKGux (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jul 2018 02:50:53 -0400
+Received: by mail-io0-f193.google.com with SMTP id l14-v6so12689307iob.7
+        for <git@vger.kernel.org>; Tue, 10 Jul 2018 23:48:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=46yYIJQiuOXatLnyWf4w1OrABsvS+FtqLhPje1yxg2M=;
-        b=HYFYdI/aSQHM8Lic3kP+4AyWVSGTeNvr3pafGmnlP/FFxgMRZeEramMCkFUuxIBKMc
-         HTREWQ2SjNwzVCpWRtp3aD0ZV9G5ieTtYgAOPPpCnjjOsjKWaV+Fl5o+J2LEvkVPNhkP
-         SgmqMjL5+axRabw8Q4GC1x1aQHu+M6ykRmnHz123UzzNtQ+KS4prGC3r1eWqlTki6D58
-         xuF844xdQJTzhfTyH3yM5cP5sNWSKadJ5MA6jZXq4wlPt8M52DwQ8enpP6IK+31iljbh
-         Pjb6Qx1CgomDN6rn2PIxxUO0WG4U0E6Yu6wmsfb2nkAzIwV1VvQpAvBjEHDG/FwYMYJD
-         kuuw==
+        bh=GzTAdZxPqMoDk2BBmh87gjorArldYvPq06/QtiPpGmM=;
+        b=Zl+10znyaN5laGeKf4/8CJ6TnYLqz1RnDYjXvDH6aVgQEWytRnYTDaqNPb2T/dTegg
+         uOmaYbRwvlftE4gWCF/WzprjeYVPwvIN0DM4cqRWtHnWBxRyKigIAgZ/swE8IEiT4JTX
+         5ZbHjDvujl5oDFRxCEJiQt0U4gOsl1r8RUNdH76PFeesO5Kyqg44+kAMStgy4RCyo6TU
+         3ApJIs5tewmoz+yjI0I6LgDrkBEh0oolVj5RvtnbNElwH4OCHNnKSxM5RPIRM08UT4Xt
+         JW3zbPkDkOWo1nQ0NDLT1/XZxrYhBzi5lpBQAoFc0/QuXC6K9FFddDd3bx/14SXkVy+r
+         yIKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
          :in-reply-to:references;
-        bh=46yYIJQiuOXatLnyWf4w1OrABsvS+FtqLhPje1yxg2M=;
-        b=lQ/sVeOc0Xw9fWYBvQaBDZh18d/8fHKZLe4eN0Q2ZBlylgqFdZpI1Q+kFFStmE7Hyf
-         QxoHHeieCIx1bb+OoRVesgh3653O6C6FNqykQBCOZeu7+LKK1IN8qwiryXCOYvfCto/o
-         JCEiFjikFvIsHKWR+Ycu5nGomDXR9mvfdQiWmVH41NsJlV11y6FrrOpdRDjCkESPkcKF
-         cTqDFBCqEmH2PeSC0JllJN3dTdDadzHLJ2rAuL3kgahmPxVpboEieymjaWZ11alNbHmW
-         kgDkAbiNsWKgObz3fpmwVdzyLcmxj3TvT9SIrtmt8+ON4cAgS7vBWBv1OSMjbBy9zPL2
-         JP5Q==
-X-Gm-Message-State: AOUpUlGNT/9XbeJdKqMkmbAoYEqOy49ArbzEyzBmzgkyD0RKm5LKdgDY
-        ezfy3gsISCaWmBhYKrLpi2cTxg==
-X-Google-Smtp-Source: AAOMgpcrsR4IbLCpLJIBStKYG/n5/JvrZ9O++m/zEiwSuh+FdtEkXt2n/QOWakkgFk1HSWT9yVEG9w==
-X-Received: by 2002:a6b:de09:: with SMTP id v9-v6mr2995431iog.10.1531291686333;
-        Tue, 10 Jul 2018 23:48:06 -0700 (PDT)
+        bh=GzTAdZxPqMoDk2BBmh87gjorArldYvPq06/QtiPpGmM=;
+        b=tKG0hIE9aTeHQryAOm5lAKI+cjJk4GuGMZVwrC/bpkjDNvgkBSEUPX+QJhyw90mce7
+         p+boaJ82a00S2k+mnSf8XmxtIFfEFii07JFLiwO+vzJo47pFgWK4Jm3RHYsyd54pmpIT
+         yIBXWmqj3MV5AWK4iHitGEL+voa5n3WBKMF19bgg3Ew42FE0TKcjJs3+aikG/QPe9PQD
+         XReW2lbImJ1wfvlOQhBxWCX8FpKegTM8QQAKV9o3vA5IBDGhqeGlGb2MrjRnj2inh+al
+         EkyCZk5rVRimCCIbRMYTuZx76fdkXo956TYRP/K4810A5PnvWBd7uuCfLLha02+Q4j+Y
+         kNSQ==
+X-Gm-Message-State: APt69E0s6l3Ijv4XQs/y3p6bpsocn36EMr86UcjGDxKu4XzOC+lIEhkF
+        5RScatpoaaG0vWxK5XtWO/e+wQ==
+X-Google-Smtp-Source: AAOMgpcJqyhOkZREHJ3E8O1ZMirgJBIQ6uugHAEpvjS3/BhlSYDmPIuE0TMO3xPml1Z/yeJQXxaOcw==
+X-Received: by 2002:a6b:df4a:: with SMTP id d10-v6mr23984077iop.152.1531291687281;
+        Tue, 10 Jul 2018 23:48:07 -0700 (PDT)
 Received: from localhost.localdomain (user-12l2cs3.cable.mindspring.com. [69.81.51.131])
-        by smtp.gmail.com with ESMTPSA id b143-v6sm11308298ioe.66.2018.07.10.23.48.05
+        by smtp.gmail.com with ESMTPSA id b143-v6sm11308298ioe.66.2018.07.10.23.48.06
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Tue, 10 Jul 2018 23:48:05 -0700 (PDT)
+        Tue, 10 Jul 2018 23:48:06 -0700 (PDT)
 From:   Eric Sunshine <sunshine@sunshineco.com>
 To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
@@ -56,9 +56,9 @@ Cc:     Elijah Newren <newren@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
         Junio C Hamano <gitster@pobox.com>,
         Luke Diamand <luke@diamand.org>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 05/10] t/chainlint: add chainlint "one-liner" test cases
-Date:   Wed, 11 Jul 2018 02:46:37 -0400
-Message-Id: <20180711064642.6933-6-sunshine@sunshineco.com>
+Subject: [PATCH v2 06/10] t/chainlint: add chainlint "nested subshell" test cases
+Date:   Wed, 11 Jul 2018 02:46:38 -0400
+Message-Id: <20180711064642.6933-7-sunshine@sunshineco.com>
 X-Mailer: git-send-email 2.18.0.203.gfac676dfb9
 In-Reply-To: <20180711064642.6933-1-sunshine@sunshineco.com>
 References: <20180626073001.6555-1-sunshine@sunshineco.com>
@@ -83,126 +83,276 @@ comprehension.
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- t/chainlint/negated-one-liner.expect  |  5 +++++
- t/chainlint/negated-one-liner.test    |  7 +++++++
- t/chainlint/one-liner.expect          |  9 +++++++++
- t/chainlint/one-liner.test            | 12 ++++++++++++
- t/chainlint/subshell-one-liner.expect | 14 ++++++++++++++
- t/chainlint/subshell-one-liner.test   | 24 ++++++++++++++++++++++++
- 6 files changed, 71 insertions(+)
- create mode 100644 t/chainlint/negated-one-liner.expect
- create mode 100644 t/chainlint/negated-one-liner.test
- create mode 100644 t/chainlint/one-liner.expect
- create mode 100644 t/chainlint/one-liner.test
- create mode 100644 t/chainlint/subshell-one-liner.expect
- create mode 100644 t/chainlint/subshell-one-liner.test
+ t/chainlint/block.expect                      | 12 +++++++
+ t/chainlint/block.test                        | 15 +++++++++
+ ...ti-line-nested-command-substitution.expect |  9 ++++++
+ ...ulti-line-nested-command-substitution.test |  9 ++++++
+ t/chainlint/nested-cuddled-subshell.expect    | 19 ++++++++++++
+ t/chainlint/nested-cuddled-subshell.test      | 31 +++++++++++++++++++
+ t/chainlint/nested-here-doc.expect            |  5 +++
+ t/chainlint/nested-here-doc.test              | 23 ++++++++++++++
+ t/chainlint/nested-subshell-comment.expect    | 11 +++++++
+ t/chainlint/nested-subshell-comment.test      | 13 ++++++++
+ t/chainlint/nested-subshell.expect            | 12 +++++++
+ t/chainlint/nested-subshell.test              | 14 +++++++++
+ 12 files changed, 173 insertions(+)
+ create mode 100644 t/chainlint/block.expect
+ create mode 100644 t/chainlint/block.test
+ create mode 100644 t/chainlint/multi-line-nested-command-substitution.expect
+ create mode 100644 t/chainlint/multi-line-nested-command-substitution.test
+ create mode 100644 t/chainlint/nested-cuddled-subshell.expect
+ create mode 100644 t/chainlint/nested-cuddled-subshell.test
+ create mode 100644 t/chainlint/nested-here-doc.expect
+ create mode 100644 t/chainlint/nested-here-doc.test
+ create mode 100644 t/chainlint/nested-subshell-comment.expect
+ create mode 100644 t/chainlint/nested-subshell-comment.test
+ create mode 100644 t/chainlint/nested-subshell.expect
+ create mode 100644 t/chainlint/nested-subshell.test
 
-diff --git a/t/chainlint/negated-one-liner.expect b/t/chainlint/negated-one-liner.expect
+diff --git a/t/chainlint/block.expect b/t/chainlint/block.expect
 new file mode 100644
-index 0000000000..cf18429d03
+index 0000000000..fed7e89ae8
 --- /dev/null
-+++ b/t/chainlint/negated-one-liner.expect
-@@ -0,0 +1,5 @@
-+! (foo && bar) &&
-+! (foo && bar) >baz &&
-+
-+?!SEMI?!! (foo; bar) &&
-+?!SEMI?!! (foo; bar) >baz
-diff --git a/t/chainlint/negated-one-liner.test b/t/chainlint/negated-one-liner.test
-new file mode 100644
-index 0000000000..c9598e9153
---- /dev/null
-+++ b/t/chainlint/negated-one-liner.test
-@@ -0,0 +1,7 @@
-+# LINT: top-level one-liner subshell
-+! (foo && bar) &&
-+! (foo && bar) >baz &&
-+
-+# LINT: top-level one-liner subshell missing internal "&&"
-+! (foo; bar) &&
-+! (foo; bar) >baz
-diff --git a/t/chainlint/one-liner.expect b/t/chainlint/one-liner.expect
-new file mode 100644
-index 0000000000..237f227349
---- /dev/null
-+++ b/t/chainlint/one-liner.expect
-@@ -0,0 +1,9 @@
-+(foo && bar) &&
-+(foo && bar) |
-+(foo && bar) >baz &&
-+
-+?!SEMI?!(foo; bar) &&
-+?!SEMI?!(foo; bar) |
-+?!SEMI?!(foo; bar) >baz
-+
-+(foo "bar; baz")
-diff --git a/t/chainlint/one-liner.test b/t/chainlint/one-liner.test
-new file mode 100644
-index 0000000000..ec9acb9825
---- /dev/null
-+++ b/t/chainlint/one-liner.test
++++ b/t/chainlint/block.expect
 @@ -0,0 +1,12 @@
-+# LINT: top-level one-liner subshell
-+(foo && bar) &&
-+(foo && bar) |
-+(foo && bar) >baz &&
-+
-+# LINT: top-level one-liner subshell missing internal "&&"
-+(foo; bar) &&
-+(foo; bar) |
-+(foo; bar) >baz
-+
-+# LINT: ";" in string not misinterpreted as broken &&-chain
-+(foo "bar; baz")
-diff --git a/t/chainlint/subshell-one-liner.expect b/t/chainlint/subshell-one-liner.expect
-new file mode 100644
-index 0000000000..51162821d7
---- /dev/null
-+++ b/t/chainlint/subshell-one-liner.expect
-@@ -0,0 +1,14 @@
 +(
-+	(foo && bar) &&
-+	(foo && bar) |
-+	(foo && bar) >baz &&
-+?!SEMI?!	(foo; bar) &&
-+?!SEMI?!	(foo; bar) |
-+?!SEMI?!	(foo; bar) >baz &&
-+	(foo || exit 1) &&
-+	(foo || exit 1) |
-+	(foo || exit 1) >baz &&
-+?!AMP?!	(foo && bar)
-+?!AMP?!?!SEMI?!	(foo && bar; baz)
++	foo &&
++	{
++		echo a
++		echo b
++	} &&
++	bar &&
++	{
++		echo c
++?!AMP?!	}
++	baz
++>)
+diff --git a/t/chainlint/block.test b/t/chainlint/block.test
+new file mode 100644
+index 0000000000..d859151af1
+--- /dev/null
++++ b/t/chainlint/block.test
+@@ -0,0 +1,15 @@
++(
++# LINT: missing "&&" in block not currently detected (for consistency with
++# LINT: --chain-lint at top level and to provide escape hatch if needed)
++	foo &&
++	{
++		echo a
++		echo b
++	} &&
++	bar &&
++# LINT: missing "&&" at closing "}"
++	{
++		echo c
++	}
++	baz
++)
+diff --git a/t/chainlint/multi-line-nested-command-substitution.expect b/t/chainlint/multi-line-nested-command-substitution.expect
+new file mode 100644
+index 0000000000..19c023b1c8
+--- /dev/null
++++ b/t/chainlint/multi-line-nested-command-substitution.expect
+@@ -0,0 +1,9 @@
++(
++	foo &&
++	x=$(
++		echo bar |
++		cat
++>>	) &&
++	echo ok
++>) |
++sort
+diff --git a/t/chainlint/multi-line-nested-command-substitution.test b/t/chainlint/multi-line-nested-command-substitution.test
+new file mode 100644
+index 0000000000..ca0620ab6b
+--- /dev/null
++++ b/t/chainlint/multi-line-nested-command-substitution.test
+@@ -0,0 +1,9 @@
++(
++	foo &&
++	x=$(
++		echo bar |
++		cat
++	) &&
++	echo ok
++) |
++sort
+diff --git a/t/chainlint/nested-cuddled-subshell.expect b/t/chainlint/nested-cuddled-subshell.expect
+new file mode 100644
+index 0000000000..c2a59ffc33
+--- /dev/null
++++ b/t/chainlint/nested-cuddled-subshell.expect
+@@ -0,0 +1,19 @@
++(
++	(cd foo &&
++		bar
++>>	) &&
++	(cd foo &&
++		bar
++?!AMP?!>>	)
++	(
++		cd foo &&
++>>		bar) &&
++	(
++		cd foo &&
++?!AMP?!>>		bar)
++	(cd foo &&
++>>		bar) &&
++	(cd foo &&
++?!AMP?!>>		bar)
 +	foobar
 +>)
-diff --git a/t/chainlint/subshell-one-liner.test b/t/chainlint/subshell-one-liner.test
+diff --git a/t/chainlint/nested-cuddled-subshell.test b/t/chainlint/nested-cuddled-subshell.test
 new file mode 100644
-index 0000000000..37fa643c20
+index 0000000000..8fd656c7b5
 --- /dev/null
-+++ b/t/chainlint/subshell-one-liner.test
-@@ -0,0 +1,24 @@
++++ b/t/chainlint/nested-cuddled-subshell.test
+@@ -0,0 +1,31 @@
 +(
-+# LINT: nested one-liner subshell
-+	(foo && bar) &&
-+	(foo && bar) |
-+	(foo && bar) >baz &&
++# LINT: opening "(" cuddled with first nested subshell statement
++	(cd foo &&
++		bar
++	) &&
 +
-+# LINT: nested one-liner subshell missing internal "&&"
-+	(foo; bar) &&
-+	(foo; bar) |
-+	(foo; bar) >baz &&
++# LINT: same but "&&" missing
++	(cd foo &&
++		bar
++	)
 +
-+# LINT: nested one-liner subshell with "|| exit"
-+	(foo || exit 1) &&
-+	(foo || exit 1) |
-+	(foo || exit 1) >baz &&
++# LINT: closing ")" cuddled with final nested subshell statement
++	(
++		cd foo &&
++		bar) &&
 +
-+# LINT: nested one-liner subshell lacking ending "&&"
-+	(foo && bar)
++# LINT: same but "&&" missing
++	(
++		cd foo &&
++		bar)
 +
-+# LINT: nested one-liner subshell missing internal "&&" and lacking ending "&&"
-+	(foo && bar; baz)
++# LINT: "(" and ")" cuddled with first and final subshell statements
++	(cd foo &&
++		bar) &&
++
++# LINT: same but "&&" missing
++	(cd foo &&
++		bar)
 +
 +	foobar
++)
+diff --git a/t/chainlint/nested-here-doc.expect b/t/chainlint/nested-here-doc.expect
+new file mode 100644
+index 0000000000..559301e005
+--- /dev/null
++++ b/t/chainlint/nested-here-doc.expect
+@@ -0,0 +1,5 @@
++(
++	cat &&
++?!AMP?!	cat
++	foobar
++>)
+diff --git a/t/chainlint/nested-here-doc.test b/t/chainlint/nested-here-doc.test
+new file mode 100644
+index 0000000000..027e0bb3ff
+--- /dev/null
++++ b/t/chainlint/nested-here-doc.test
+@@ -0,0 +1,23 @@
++(
++# LINT: inner "EOF" not misintrepreted as closing INPUT_END here-doc
++	cat <<-\INPUT_END &&
++	fish are mice
++	but geese go slow
++	data <<EOF
++		perl is lerp
++		and nothing else
++	EOF
++	toink
++	INPUT_END
++
++# LINT: same but missing "&&"
++	cat <<-\EOT
++	text goes here
++	data <<EOF
++		data goes here
++	EOF
++	more test here
++	EOT
++
++	foobar
++)
+diff --git a/t/chainlint/nested-subshell-comment.expect b/t/chainlint/nested-subshell-comment.expect
+new file mode 100644
+index 0000000000..15b68d4373
+--- /dev/null
++++ b/t/chainlint/nested-subshell-comment.expect
+@@ -0,0 +1,11 @@
++(
++	foo &&
++	(
++		bar &&
++		# bottles wobble while fiddles gobble
++		# minor numbers of cows (or do they?)
++		baz &&
++		snaff
++?!AMP?!>>	)
++	fuzzy
++>)
+diff --git a/t/chainlint/nested-subshell-comment.test b/t/chainlint/nested-subshell-comment.test
+new file mode 100644
+index 0000000000..0ff136ab3c
+--- /dev/null
++++ b/t/chainlint/nested-subshell-comment.test
+@@ -0,0 +1,13 @@
++(
++	foo &&
++	(
++		bar &&
++# LINT: ")" in comment in nested subshell not misinterpreted as closing ")"
++		# bottles wobble while fiddles gobble
++		# minor numbers of cows (or do they?)
++		baz &&
++		snaff
++# LINT: missing "&&" on ')'
++	)
++	fuzzy
++)
+diff --git a/t/chainlint/nested-subshell.expect b/t/chainlint/nested-subshell.expect
+new file mode 100644
+index 0000000000..c8165ad19e
+--- /dev/null
++++ b/t/chainlint/nested-subshell.expect
+@@ -0,0 +1,12 @@
++(
++	cd foo &&
++	(
++		echo a &&
++		echo b
++>>	) >file &&
++	cd foo &&
++	(
++		echo a
++		echo b
++>>	) >file
++>)
+diff --git a/t/chainlint/nested-subshell.test b/t/chainlint/nested-subshell.test
+new file mode 100644
+index 0000000000..998b05a47d
+--- /dev/null
++++ b/t/chainlint/nested-subshell.test
+@@ -0,0 +1,14 @@
++(
++	cd foo &&
++	(
++		echo a &&
++		echo b
++	) >file &&
++
++	cd foo &&
++	(
++# LINT: nested multi-line subshell not presently checked for missing "&&"
++		echo a
++		echo b
++	) >file
 +)
 -- 
 2.18.0.203.gfac676dfb9
