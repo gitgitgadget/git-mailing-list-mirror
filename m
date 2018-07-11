@@ -2,128 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 71AB01F85D
-	for <e@80x24.org>; Wed, 11 Jul 2018 12:51:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9D7C1F85D
+	for <e@80x24.org>; Wed, 11 Jul 2018 12:53:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732925AbeGKMzX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Jul 2018 08:55:23 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55090 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726457AbeGKMzX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jul 2018 08:55:23 -0400
-Received: (qmail 6599 invoked by uid 109); 11 Jul 2018 12:51:12 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 11 Jul 2018 12:51:12 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6760 invoked by uid 111); 11 Jul 2018 12:51:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 11 Jul 2018 08:51:13 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 11 Jul 2018 08:51:10 -0400
-Date:   Wed, 11 Jul 2018 08:51:10 -0400
-From:   Jeff King <peff@peff.net>
-To:     Henning Schild <henning.schild@siemens.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Ben Toews <mastahyeti@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 9/9] gpg-interface t: extend the existing GPG tests
- with GPGSM
-Message-ID: <20180711125109.GC23835@sigill.intra.peff.net>
-References: <cover.1531208187.git.henning.schild@siemens.com>
- <f97d2d79f6a46ddffcd0065239f99b084708e813.1531208187.git.henning.schild@siemens.com>
- <20180710170901.GH23624@sigill.intra.peff.net>
- <20180711123824.7e0be91a@md1pvb1c.ad001.siemens.net>
+        id S1732985AbeGKM5t (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Jul 2018 08:57:49 -0400
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:40459 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732556AbeGKM5t (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jul 2018 08:57:49 -0400
+Received: by mail-lf0-f66.google.com with SMTP id y200-v6so21192386lfd.7
+        for <git@vger.kernel.org>; Wed, 11 Jul 2018 05:53:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=uGVZTYghjg4S/cKpdcG1mRWa6y2mvXWo3/ZixoG6f58=;
+        b=cUDst41BQTl8hdkfvqL10pDmEN6uybBVeu+w9vNz3OTuSSIErKeRXu/z3gGOzNSx6C
+         4LuASon5aAEnJvuTvvfyKUaRM7o2ThFsYyyGzSwT5NF5RthUypB6bKheDleUOumVXXQS
+         z/O/Kmp1sI+tjwO0+gx3qisRAn6P3xU6p0nA4yoTja7ysH/FFe5LhAyEGuDfOA7YARzz
+         XBb2AtwEtGPRcWoDZ5AunFBbeKPRfTGqoUiQQ1ZQ233mW51TCYsH6yNRtJCLq8p7w4U4
+         mPtTPbtrve3B6RfBA6tFcxVpehKFx52w+WN2bq+X7FI7vP/9CwfwjD0mNoRDzr5Na/SG
+         57bA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=uGVZTYghjg4S/cKpdcG1mRWa6y2mvXWo3/ZixoG6f58=;
+        b=WWy57jb25I6UOSRyITU43X6X6tjBa05t8/cSaXUdq6+YYn95V/3fjb2GXEqKjdtZqB
+         XjX1avQpVRwKi9v/zv/KqENI69y4xeNuHIQqnMCC54NGKvuCs2OXp9ZHuQp/J0YcBNDL
+         jklsPkbbPK4pSeRg+zhnsBmnKnrrFkdSQ8Y6Ws6jhHi1VvRx/BnIW8KIGiAXQTeOzbmz
+         GI3lcSxruq8J8tvfhwMJUA2xACGs7fUj1FpcaL0iJ0AoT8ZJStjgz7lHlbPH18R50ww5
+         5TBfxCOEDCllu6id+v8ZH3urjKj16tIghR8YbEDj/DQXEa/HfDoXZ69TQl5eVNwWWh7U
+         uXJQ==
+X-Gm-Message-State: APt69E3WZLt9pHw0BioGQerGG+/aRnMKURmPsitG3ZdjVCIxZvUOQ/VH
+        DdCDPX0WXM5ZocVDxo9AOZtTZmTrGhEPjQb32YAP3Q==
+X-Google-Smtp-Source: AAOMgpc5JqpEGnDQN0qOlqYSnrP+bmU9F05D4vEUGGZOrJq5g4DvQIMh4bA5opU6a065TmJ7MiptsMDNucQiGNrUGGI=
+X-Received: by 2002:a19:d942:: with SMTP id q63-v6mr5633427lfg.39.1531313614677;
+ Wed, 11 Jul 2018 05:53:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180711123824.7e0be91a@md1pvb1c.ad001.siemens.net>
+References: <20180614123107.11608-1-szeder.dev@gmail.com> <20180614123107.11608-5-szeder.dev@gmail.com>
+ <20180614175325.GA14935@sigill.intra.peff.net>
+In-Reply-To: <20180614175325.GA14935@sigill.intra.peff.net>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Wed, 11 Jul 2018 14:53:23 +0200
+Message-ID: <CAM0VKjmXoOaYFrkNJzNp_wgzReaXSZHiDCtJRADX0RRG123wPw@mail.gmail.com>
+Subject: Re: [RFC PATCH 4/4] t/lib-httpd: sort log based on timestamp to avoid
+ occasional failure
+To:     Jeff King <peff@peff.net>
+Cc:     Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 11, 2018 at 12:38:24PM +0200, Henning Schild wrote:
+On Thu, Jun 14, 2018 at 7:53 PM Jeff King <peff@peff.net> wrote:
+>
+> On Thu, Jun 14, 2018 at 02:31:07PM +0200, SZEDER G=C3=A1bor wrote:
+>
+> > The last test of 't5561-http-backend.sh', 'server request log matches
+> > test results' may fail occasionally, because the order of entries in
+> > Apache's access log doesn't match the order of requests sent in the
+> > previous tests, although all the right requests are there.
 
-> > Can we save a dummy generated key and just import it? That's what we
-> > do for the regular gpg case.
-> 
-> I will look into storing a binary and leaving notes how it was
-> generated, just like regular gpg does. The reason i did not do that in
-> the first place is that x509 certs have a validity and we introduce
-> time into the picture. But i will see if i can generate epoch->infinity
-> to get the host clock or just the future out of the picture.
+> I've occasionally run into these failures on my local box, too. I'm
+> happy somebody is looking into it (I have before, but eventually threw
+> up my hands in disgust).
 
-That would be preferable. But even if we can just get something like a
-10-year expiration, that may be enough. Somebody dealing with failing
-tests and regenerating keys in ten years is probably not the end of the
-world.
+Heh, well, I found it to be one of the more entertaining debugging
+sessions... ;)
+I'm glad that somebody else saw it, too, and outside of Travis CI.
 
-It could hurt people with drastically incorrect system clocks, but I
-suspect there are other tests with similar problems (especially if your
-clock is in the past).
+> > Now, by default the timestamp of a log entry marks the beginning of
+> > the request processing, not when the log entry gets written.  Since
+> > our requests are sent sequentially, sorting the log entries based on
+> > their timestamps would ensure that their order corresponds to the
+> > order of our requests.
+>
+> That's a reasonably clever solution. One thing I wonder, though: are we
+> always guaranteed that the log entries are written _at all_ before we
+> look at them?
+>
+> I.e., could we have a situation where we make a request, the client
+> finishes, and then we look at the logs, but nothing has been written by
+> apache yet?
 
-> > We're going to have a lot of duplicated tests here. That's a
-> > maintenance burden when one of them needs fixes later. And when new
-> > tests are added, we won't automatically get them tested under each
-> > format.
-> > 
-> > Can we move the battery of tests into a function that takes a few
-> > parameters (prereq name, branch to look at, etc) and then call it for
-> > both the gpg/gpgsm cases?
-> 
-> I guess this is part of the earlier "allow GPGSM without GPG" and i
-> can ignore it if we agree that this is not needed?
+That's possible, I suppose.  Highly improbable, but possible.  Or the
+log entries can be written only partially by the time we look at them.
 
-I think it's orthogonal. Even if GPGSM requires GPG, you'd still want to
-make sure that whatever exercise we give to the GPG code is also
-exercised using GPGSM.
+FWIW, Apache has the 'BufferedLogs' directive, which "causes
+mod_log_config to store several log entries in memory and write them
+together to disk, rather than writing them after each request."  It
+very sensibly defaults to off, and our test config doesn't set it.
 
-I will note, though, that _some_ tests are not really exercising
-gpg-specific bits, but more how we react to it (e.g., how we format %G
-placeholders). And it's probably OK for those to just be run once.
+I would think that stopping Apache should flush the logs, but I don't
+know whether 'stop_httpd' blocks until the web server is indeed
+stopped, or it's all async.  Perhaps a SIGHUP would suffice to flush
+the logs, but that's definitely async.  Also note that while t5561
+checks the access log at the end of the script, t5541 and t5551 do
+check the logs in the middle of the script, so we would have to stop
+Apache and then start again.
 
-So in an ideal world, the test script would probably look something
-like:
+Anyway, I would prefer not to do anything about it just yet, because
+I'm curious :) and I'd like to see whether this actually happens in
+practice.
 
-  # this function holds tests which exercise the interactions
-  # with the gpg binary itself
-  type_specific_tests() {
-	prereq=$1
-	branch=$2
 
-	test_expect_success $prereq "test whatever ($prereq)" '
-		some test using $branch here
-	'
-  }
+> >     I don't really like the fix in this patch.  I think an unfortunate
+> >     clock skew during the test run could mess up the sorting added in t=
+his
+> >     patch and cause test failure.  Or if DST or even a leap second happ=
+en
+> >     while the test is running.  Do we care?  Anyway, this occasional te=
+st
+> >     failure apparently happens more often than DST and leap seconds
+> >     combined.
+>
+> We could probably eliminate DST issues by consistently using UTC for the
+> timestamps. Leap seconds are probably infrequent enough not to worry
+> about. More likely is something like clock adjustment due to ntp. Those
+> adjustments are usually small enough not to matter, but if we're talking
+> microseconds, it could trigger.
 
-  test_expect_success 'setup' '
-	set up both openpgp and x509 branches here
-  '
+Ok, so admittedly I haven't quite thought through all these potential
+clock-related issues that I mentioned.
 
-  type_specific_tests GPG openpgp
-  type_specific_tests GPGSM x509
+Setting back the clock at the end of DST is not an issue, because
+Apache uses the timezone it finds set in the environment, and our test
+environment does set UTC, so as far as the tests and Apache's log
+timestamps are concerned there is no such thing as DST.
+Leap seconds don't go back in time, they are only added to compensate
+for Earth's slowing rotation, so that's not an issue, either.
+And I think NTP is supposed to be clever enough to not set back the
+clock recklessly, but only advance it slower.
 
-  # and now tests that generically care about getting _some_ signature
-  # result (e.g., the way we format signature info)
+Of course, someone can still set back the clock manually while these
+tests run, but I would put that in the "If it hurts, don't do it" box.
 
-  # and then probably a few tests specific to how the config is handled,
-  # like your new gpg.format coverage
 
-But in practice, the type-specific bits are often muddled together with
-the type-independent ones (e.g., we happen to test the parsing of a
-failed signature from gpg by checking how %G? is formatted or similar).
+However, having said all this, ...
 
-So it may be simplest to just run most of the tests twice, once with gpg
-and once with gpgsm. I kind of wonder if all of t7510 could just be
-bumped into a function. Or even into a sourced file and run from two
-different scripts. See the way that t8001 and t8002 use
-annotate-tests.sh for an example.
+> What if the test script provides the in-order expectation, but we check
+> only the unordered version (by sorting both actual and expected output
+> on the fly)? That would give us a more relaxed check most of the time,
+> but somebody digging in to a failure could run the ordered diff (or we
+> could even show it automatically on failure instead of just using
+> test_cmp).
 
--Peff
+this is the fix I'll go for in v2.
