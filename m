@@ -2,209 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF20E1F85D
-	for <e@80x24.org>; Wed, 11 Jul 2018 17:03:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 114EC1F85D
+	for <e@80x24.org>; Wed, 11 Jul 2018 17:05:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388425AbeGKRIU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Jul 2018 13:08:20 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:46151 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726460AbeGKRIU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jul 2018 13:08:20 -0400
-Received: by mail-wr1-f65.google.com with SMTP id s11-v6so18894829wra.13
-        for <git@vger.kernel.org>; Wed, 11 Jul 2018 10:03:05 -0700 (PDT)
+        id S2388529AbeGKRKQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Jul 2018 13:10:16 -0400
+Received: from mail-ua0-f194.google.com ([209.85.217.194]:40438 "EHLO
+        mail-ua0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387415AbeGKRKQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jul 2018 13:10:16 -0400
+Received: by mail-ua0-f194.google.com with SMTP id p22-v6so6073041uao.7
+        for <git@vger.kernel.org>; Wed, 11 Jul 2018 10:05:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=on60a4sAOCFDMRpIIMAaYSVmINJ1aNVZD3tDVxflAAQ=;
-        b=jP0GKYhNVkpBGnab0SCOvifrXFFBAuoX+s1HFyh1TlymGu6hkcJF73M5o19CVyF12O
-         /6FuUNninPxPQ0KUaCje0hN2LVdh4xnpH/oSYtVJMwLElkiV1ghnN0avu2p3cJqqmh9i
-         NK+CkRO0M8rL3rA1Fw3FR3w5bPK9phnplf9FzZsVYe6fQLjYP/AHINHIApDtryYq1lrW
-         afEWhuZaMZsPdpnf8EOmJOL8YamJGQjmVLgHWVZEp796vG1NpH9zo+FrZeINCXMJM98H
-         4QeCuEymfLfbFmM5xWZvU3bJESwBVuriY4Z8EDRJIPxH0qHal1YpJnnmghsqLGRkEhyH
-         Z3eA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=CU+o6pqlLVey1NIyReRwq6VhNCCPfmSERS6iVtdIlwY=;
+        b=kDfFndXlKqeNcDN0zhZjCRzbTSffdQf+uqN33kyk3x96W5t3kYUEXY6KyxA+A9mksh
+         ZMJYezA0sLx7yW6vKwjd6Bo44ikq7xpdvjJ+yn8OPT4kQbdwUYnHN1r4TMawSMXdE9y+
+         ItW9ir3vWT67Xo0eZk6uYraxCfD7/Vi6GR9d37Cv/JAqjGFyb6JSHmHamsSfQjJGsTRT
+         gR2s+BSI0CFGIlLAGcQIfUi3tSsy2FfSzFzgzR5HFJhdBpL7D0+9gIfPaDx4DWZi90JB
+         bh/riheQbDiaTUKOwA6ajT79+hqeTvcUSG9a43eoeuElsEySAhCPkTzvOqM53by5Ed5X
+         cmsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=on60a4sAOCFDMRpIIMAaYSVmINJ1aNVZD3tDVxflAAQ=;
-        b=fN2tgFgsGB2FinJZr5+jkdHxAcuSUGhqOth3JXkSZjIGXPo2/ep36qWED88CgJQrhb
-         4xnSPzr86ITWsfhXpfjxGImHED2p/fowTtiGe/Zmjhd+WVKmk7N0jY9z6Z+Emx+O+kdB
-         eUOvtXHsLVOiCslAvh5cZa1lOQg9PlcduCgs89j1U/rst0DV9buh7Ak1khBO5nVYnj2V
-         NxItfjBlQtgvescu+CQowza7Cm2+oJOgP4/zl7OaTWVywU4IoKIU4sv/GdL3eKgxFs5e
-         acuIyHjvV+Dq7xyrCrmPqhHJfs2d14kEJcS1KBAxZOQee20Q6f+iMWq31ek8tzBHdHaA
-         /0rw==
-X-Gm-Message-State: APt69E3rd9i1dp55OP2n/OCpr9uUVZj+D1GgLbI0ThUmgJPRPV6dnlRk
-        1N7JfXv5CcbpgaB7/b6/+tQ=
-X-Google-Smtp-Source: AAOMgpfAKCv7joMN971X/ucICbqriN2m06LIt5kTWbRJkhL1aPCs7diMcDzzrD/i5YaulRQImuKDvQ==
-X-Received: by 2002:adf:8bd7:: with SMTP id w23-v6mr20526979wra.208.1531328584661;
-        Wed, 11 Jul 2018 10:03:04 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id l10-v6sm38119046wrv.23.2018.07.11.10.03.03
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 11 Jul 2018 10:03:03 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/2] read-cache: fix directory/file conflict handling in read_index_unmerged()
-References: <20180711051834.28181-1-newren@gmail.com>
-        <20180711051834.28181-3-newren@gmail.com>
-Date:   Wed, 11 Jul 2018 10:03:03 -0700
-In-Reply-To: <20180711051834.28181-3-newren@gmail.com> (Elijah Newren's
-        message of "Tue, 10 Jul 2018 22:18:34 -0700")
-Message-ID: <xmqqsh4p3dtk.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=CU+o6pqlLVey1NIyReRwq6VhNCCPfmSERS6iVtdIlwY=;
+        b=fRoY05NZ6Wd/xtiSSCRuKzo7lfMvWzEmp1v8Y4Vy2uKToRtASvU++HlqeBGqcAM6FW
+         0gOS0UG39PJZouskpYwC+63aHBT2+y+iS67a13SPnfICuIJNN1rjBlTXA2YVcRsijEJh
+         1I7xBdajvro1+THRi3N3yS/GujTVwp5IqPc1iBakd+9rynks7nqJLt3fuzFEstjjk9ld
+         eRdzgrbrwtX/ji+YfGU44TCJznsTJlMqy+MqVR8BhVkBwyxeUeZo7Efk7NTDoBLei57R
+         FAIQ9IL+cQgILpQ7sxKGc9gxG4J4xv6urFPpq0Y29PY6/gvDV8H6HFFwLa44RA9Db42p
+         zgGw==
+X-Gm-Message-State: APt69E2wI8QPdDFBMwGtEHuKxYB50Y7JaHWFKZVutuRosbFerFhKIWtg
+        vu+oVKJ6+hqeNhtlNRsfaTIE+/ssuicuMltgf40=
+X-Google-Smtp-Source: AAOMgpdP1H4GRdPBptABSqDe9hPO0azmPlGRyjooFOxKuPj8vKp+vOAs5UOaWhG+1TS8FEpcIcIBPA1NI3lla55b9QE=
+X-Received: by 2002:ab0:4f26:: with SMTP id n38-v6mr4836776uah.29.1531328700928;
+ Wed, 11 Jul 2018 10:05:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 2002:ab0:21c7:0:0:0:0:0 with HTTP; Wed, 11 Jul 2018 10:05:00
+ -0700 (PDT)
+In-Reply-To: <20cd1b914e74c8f45e5cc9ed82d83eee1463cd91.1531312689.git.gitgitgadget@gmail.com>
+References: <pull.8.git.gitgitgadget@gmail.com> <20cd1b914e74c8f45e5cc9ed82d83eee1463cd91.1531312689.git.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 11 Jul 2018 10:05:00 -0700
+Message-ID: <CABPp-BFMKnTMYTd3mK69wZ7__TZTwoF9NmX+RXwyqgUj7NJ0Kw@mail.gmail.com>
+Subject: Re: [PATCH 3/3] rebase --rebase-merges: adjust man page for octopus support
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Hi Dscho,
 
->     The _only_ reason we want to keep a previously unmerged entry in the
->     index at stage #0 is so that we don't forget the fact that we have
->     corresponding file in the work tree in order to be able to remove it
->     when the tree we are resetting to does not have the path.
-> ...
-> So, that's the intended purpose of this function.  The problem is that
-> when directory/files conflicts are present, trying to add the file to the
-> index at stage 0 fails (because there is still a directory in the way),
-> and the function returns early with a -1 return code to signify the error.
-> As noted above, none of the callers who want the drop-to-stage-0 behavior
-> check the return status, though, so this means all remaining unmerged
-> entries remain in the index and the callers proceed assuming otherwise.
-
-Nicely analysed and explained so far.
-
-> ...  The temporary simultaneous appearance of the
-> directory and file entries in the index will be removed by the callers
-> before they attempt to write the index anywhere.
-
-But this part makes me feel a bit uneasy, as I find this "will be
-removed" a bit hand-wavy.  There are two such callers.  "am --skip"
-and "reset".  
-
-The former uses am.c::fast_forward_to that calls unpack_trees() to
-two-way merge (aka "switch to the other branch") and these entries
-with CE_CONFLICTED flag get removed in merged/deleted_entry().
-
-"reset" (all variants) call unpack_trees() on the index prepared
-with read_cache_unmerged(), and the unmerged entries that are marked
-with CE_CONFLICTED bit get removed the same way.
-
-So perhaps before "before they attempt to", saying "by calling
-unpack_trees(), which excludes these unmerged entries marked with
-CE_CONFLICTED flag from the resulting index," or something like that
-would help uneasy readers?
-
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  read-cache.c                         | 13 ++++++++-----
->  t/t1015-read-index-unmerged.sh       |  8 ++++----
->  t/t6020-merge-df.sh                  |  3 ---
->  t/t6042-merge-rename-corner-cases.sh |  1 -
->  4 files changed, 12 insertions(+), 13 deletions(-)
+On Fri, Mar 9, 2018 at 8:36 AM, Johannes Schindelin via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
-> diff --git a/read-cache.c b/read-cache.c
-> index 372588260..666d295a5 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -2632,10 +2632,13 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
->  
->  /*
->   * Read the index file that is potentially unmerged into given
-> - * index_state, dropping any unmerged entries.  Returns true if
-> - * the index is unmerged.  Callers who want to refuse to work
-> - * from an unmerged state can call this and check its return value,
-> - * instead of calling read_cache().
-> + * index_state, dropping any unmerged entries to stage #0 (potentially
-> + * resulting in a path appearing as both a file and a directory in the
-> + * index; the caller is responsible to clear out the extra entries
-> + * before writing the index to a tree).  Returns true if the index is
-> + * unmerged.  Callers who want to refuse to work from an unmerged
-> + * state can call this and check its return value, instead of calling
-> + * read_cache().
->   */
->  int read_index_unmerged(struct index_state *istate)
->  {
-> @@ -2658,7 +2661,7 @@ int read_index_unmerged(struct index_state *istate)
->  		new_ce->ce_flags = create_ce_flags(0) | CE_CONFLICTED;
->  		new_ce->ce_namelen = len;
->  		new_ce->ce_mode = ce->ce_mode;
-> -		if (add_index_entry(istate, new_ce, 0))
-> +		if (add_index_entry(istate, new_ce, ADD_CACHE_SKIP_DFCHECK))
->  			return error("%s: cannot drop to stage #0",
->  				     new_ce->name);
->  	}
-> diff --git a/t/t1015-read-index-unmerged.sh b/t/t1015-read-index-unmerged.sh
-> index bbd64587c..5034ed931 100755
-> --- a/t/t1015-read-index-unmerged.sh
-> +++ b/t/t1015-read-index-unmerged.sh
-> @@ -30,7 +30,7 @@ test_expect_success 'setup modify/delete + directory/file conflict' '
->  	)
->  '
->  
-> -test_expect_failure 'read-tree --reset cleans unmerged entries' '
-> +test_expect_success 'read-tree --reset cleans unmerged entries' '
->  	test_when_finished "git -C df_plus_modify_delete clean -f" &&
->  	test_when_finished "git -C df_plus_modify_delete reset --hard" &&
->  	(
-> @@ -45,7 +45,7 @@ test_expect_failure 'read-tree --reset cleans unmerged entries' '
->  	)
->  '
->  
-> -test_expect_failure 'One reset --hard cleans unmerged entries' '
-> +test_expect_success 'One reset --hard cleans unmerged entries' '
->  	test_when_finished "git -C df_plus_modify_delete clean -f" &&
->  	test_when_finished "git -C df_plus_modify_delete reset --hard" &&
->  	(
-> @@ -87,7 +87,7 @@ test_expect_success 'setup directory/file conflict + simple edit/edit' '
->  	)
->  '
->  
-> -test_expect_failure 'git merge --abort succeeds despite D/F conflict' '
-> +test_expect_success 'git merge --abort succeeds despite D/F conflict' '
->  	test_when_finished "git -C df_plus_edit_edit clean -f" &&
->  	test_when_finished "git -C df_plus_edit_edit reset --hard" &&
->  	(
-> @@ -103,7 +103,7 @@ test_expect_failure 'git merge --abort succeeds despite D/F conflict' '
->  	)
->  '
->  
-> -test_expect_failure 'git am --skip succeeds despite D/F conflict' '
-> +test_expect_success 'git am --skip succeeds despite D/F conflict' '
->  	test_when_finished "git -C df_plus_edit_edit clean -f" &&
->  	test_when_finished "git -C df_plus_edit_edit reset --hard" &&
->  	(
-> diff --git a/t/t6020-merge-df.sh b/t/t6020-merge-df.sh
-> index 2af1beec5..46b506b3b 100755
-> --- a/t/t6020-merge-df.sh
-> +++ b/t/t6020-merge-df.sh
-> @@ -89,9 +89,6 @@ test_expect_success 'modify/delete + directory/file conflict' '
->  '
->  
->  test_expect_success 'modify/delete + directory/file conflict; other way' '
-> -	# Yes, we really need the double reset since "letters" appears as
-> -	# both a file and a directory.
-> -	git reset --hard &&
->  	git reset --hard &&
->  	git clean -f &&
->  	git checkout modify^0 &&
-> diff --git a/t/t6042-merge-rename-corner-cases.sh b/t/t6042-merge-rename-corner-cases.sh
-> index 1cbd946fc..583e68997 100755
-> --- a/t/t6042-merge-rename-corner-cases.sh
-> +++ b/t/t6042-merge-rename-corner-cases.sh
-> @@ -323,7 +323,6 @@ test_expect_success 'rename/directory conflict + content merge conflict' '
->  	(
->  		cd rename-directory-1 &&
->  
-> -		git reset --hard &&
->  		git reset --hard &&
->  		git clean -fdqx &&
+> Now that we support octopus merges in the `--rebase-merges` mode,
+> we should give users who actually read the manuals a chance to know
+> about this fact.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  Documentation/git-rebase.txt | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
+>
+> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+> index 0e20a66e7..c4bcd24bb 100644
+> --- a/Documentation/git-rebase.txt
+> +++ b/Documentation/git-rebase.txt
+> @@ -879,8 +879,8 @@ rescheduled immediately, with a helpful message how to edit the todo list
+>  (this typically happens when a `reset` command was inserted into the todo
+>  list manually and contains a typo).
+>
+> -The `merge` command will merge the specified revision into whatever is
+> -HEAD at that time. With `-C <original-commit>`, the commit message of
+> +The `merge` command will merge the specified revision(s) into whatever
+> +is HEAD at that time. With `-C <original-commit>`, the commit message of
+>  the specified merge commit will be used. When the `-C` is changed to
+>  a lower-case `-c`, the message will be opened in an editor after a
+>  successful merge so that the user can edit the message.
+> @@ -889,7 +889,8 @@ If a `merge` command fails for any reason other than merge conflicts (i.e.
+>  when the merge operation did not even start), it is rescheduled immediately.
+>
+>  At this time, the `merge` command will *always* use the `recursive`
+> -merge strategy, with no way to choose a different one. To work around
+> +merge strategy for regular merges, and `octopus` for octopus merges,
+> +strategy, with no way to choose a different one. To work around
+
+The "...merges, strategy, with..." looks like an incomplete edit.
+Perhaps "...and `octopus` strategy for octopus merges, with no way..."
+?
+
+>  this, an `exec` command can be used to call `git merge` explicitly,
+>  using the fact that the labels are worktree-local refs (the ref
+>  `refs/rewritten/onto` would correspond to the label `onto`, for example).
+> --
+> gitgitgadget
