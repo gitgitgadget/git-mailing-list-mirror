@@ -2,105 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0BC931F85D
-	for <e@80x24.org>; Wed, 11 Jul 2018 21:24:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ABFF71F85D
+	for <e@80x24.org>; Wed, 11 Jul 2018 21:24:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388780AbeGKVaP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Jul 2018 17:30:15 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:44018 "EHLO
-        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733028AbeGKVaO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jul 2018 17:30:14 -0400
-Received: by mail-io0-f196.google.com with SMTP id y10-v6so10920337ioa.10
-        for <git@vger.kernel.org>; Wed, 11 Jul 2018 14:23:59 -0700 (PDT)
+        id S1733028AbeGKVat (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Jul 2018 17:30:49 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:42672 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732356AbeGKVas (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jul 2018 17:30:48 -0400
+Received: by mail-ed1-f65.google.com with SMTP id g12-v6so20227110edi.9
+        for <git@vger.kernel.org>; Wed, 11 Jul 2018 14:24:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=aKwr2CawaMvZxmN5DlHSJ498LdBsVrfPzPd/qP4tfy0=;
-        b=aUgkC3Dkf/jLTW34JINLFWhQb2/1fiFatENIg7V0CfYr/qwkjoagLv5X7BENpHh9t3
-         JtyT3TrkwUfS7eVS+ecv418gflbw3WU4mp9biQU3YmOJlNC/0L4+WSrVn2CANWo2Eu/5
-         lYZK3ewLrtZpFAIO9FfVVLyabffJoDNYUapS0=
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=DLdFsV1k7Z+p3Fb350ICMQkyPwSQFCgdGMvywfOZMXs=;
+        b=ITWKC2LzRB3UrPTYpUkwmApBa1HxoACgeKZU8WRbKoOGRsmjP7N8l/njCf+xvNjIiL
+         6FobYmZ0pAdRMW/1Q5D1OahdlWQ285v+whQbYQeeO9XnqAhS/DCm+lpoTrKOcHAEjNAL
+         mOiWsTavT6Aj1LHaVmXqpO3ea8jyn9OTPWniYMORtqT2MZ9yoodkGhxbvk0mN+pEnOyN
+         vMHUejwe7sNIqIBcOfV/y2cQlllvoetIZYk0Mh9C7vzMRX6bKo6La+wEZYTmtNxPXWie
+         QkqQxjoIFF/ig6jXtQjDvKcrwpWDL4PDBOa4SWzxZOtJJOsKF0vFRPOUVzgqcxKln6rl
+         HArA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=aKwr2CawaMvZxmN5DlHSJ498LdBsVrfPzPd/qP4tfy0=;
-        b=fFcQFPtnFU48LD1YUxBtJYUAgLVgiWroZPiXNsDkXvYAWf7ysmaAhxb/ggq2lIJg+R
-         SkMtu5KoBQgt1YWS+tNvIKuCfHw+vbea+rznmGtrSF7EJG9HJrXZ2oR75QnFoPl5xwxe
-         r4QrbwcoE0UF6usqNgj0eM8Pn2UvBtZKZ83e0H0Kco5hKhFD5XWlVFh5EVpGelsFrO2r
-         GhogVBF5suUPAwqyoWFOE0ElgOvLpF7ddP+zDYAaZgKiIH9c4f9pn/vkFNizsBVoWdo7
-         03KB8V7nUH5V0cMqZmZRhfrtmbwwFulRpQRdcURnX6psyam3+ZFTgYD6bwljn29DyE4n
-         IGrw==
-X-Gm-Message-State: AOUpUlHVxgEVfPg0/p5ttXrCsPe0gaM56DARMYLQtVaXDCd356NmnVy8
-        293iSPDe2sbSCRTbCXy94qVmTm2ubkMe39fmXDo=
-X-Google-Smtp-Source: AAOMgpc2rOokESfq+CO/KlV+GShMqAXi1za31qQztuZVcoEOfNvtlpYRtt4ClVqi9mCMxX+Qh8ZflmNHr0cii/oZZZI=
-X-Received: by 2002:a6b:19c7:: with SMTP id 190-v6mr646066ioz.670.1531344238827;
- Wed, 11 Jul 2018 14:23:58 -0700 (PDT)
-MIME-Version: 1.0
-References: <alpine.LFD.2.21.999.1807071238410.18818@i7.lan>
- <alpine.LFD.2.21.999.1807071502260.18818@i7.lan> <CACayv=ifE5BQVtxXCVEhS3uO7iz1z+ZPrF3J_n=e-uoYOpwNtA@mail.gmail.com>
- <CA+55aFym5aSudSHiVA=VmvoY=WFytUqficLQCE4Sd_urjwKqPw@mail.gmail.com>
-In-Reply-To: <CA+55aFym5aSudSHiVA=VmvoY=WFytUqficLQCE4Sd_urjwKqPw@mail.gmail.com>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Wed, 11 Jul 2018 14:23:47 -0700
-Message-ID: <CA+55aFx8-hni4WoDpc6jkNo03GJr1jVbRr5-Pz35X=yaq+hEqQ@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=DLdFsV1k7Z+p3Fb350ICMQkyPwSQFCgdGMvywfOZMXs=;
+        b=AbKaaLVaqbfWsiIT2T8MM2+UIYhYv8zmiu9za0P3FMnNkBCSdalv9Bci4U/vLGtnqq
+         Rg5EMjPv4g1xQJK+RzB28T2n25xtiXZ9YK73HeqJc0EGr1DjWWhdvk8FElLopSuKobLN
+         zV+1kN8r3uHhw18yXB+dxq2rB1HX0aL0ENoSeQxG2MrH2mbl9+lGD5IDGvTbnBXcuCK3
+         VputAT5kON89h4JXMh9wG+0Ee+TsLrhJprTv9zoDAjNlG0+sn+EYFsru1FU9M8aog9dq
+         qCNNhjaXWNwj4MUJ8NFWhnZTlRMi7BoegamYZyAq46F0r85zGiUrXQJfpFKKc+wa0X9A
+         LaHw==
+X-Gm-Message-State: AOUpUlGx8XGj2orgYlcP2e6AHN7mFAZobagg8kszutWHGzJ7mwAIWUtk
+        X9/XfL4cYQ1EbROMNd37nzU=
+X-Google-Smtp-Source: AAOMgpctcI7xqVSIe+JsoWsQ4lYqXjFAUbb2qW1pOAbyE5GwuMAyAv7jgA5YgWQ5By1pDSwb7t7nfQ==
+X-Received: by 2002:a50:8c02:: with SMTP id p2-v6mr229177edp.282.1531344271720;
+        Wed, 11 Jul 2018 14:24:31 -0700 (PDT)
+Received: from evledraar (h98111.upc-h.chello.nl. [62.194.98.111])
+        by smtp.gmail.com with ESMTPSA id a5-v6sm10692222edr.47.2018.07.11.14.24.24
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 11 Jul 2018 14:24:25 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 Subject: Re: [RFC PATCH v2] Add 'human' date format
-To:     rybak.a.v@gmail.com
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+References: <alpine.LFD.2.21.999.1807071238410.18818@i7.lan> <alpine.LFD.2.21.999.1807071502260.18818@i7.lan>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <alpine.LFD.2.21.999.1807071502260.18818@i7.lan>
+Date:   Wed, 11 Jul 2018 23:24:24 +0200
+Message-ID: <87h8l5cvp3.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[ Trying to come up with crazy special cases ]
 
-On Wed, Jul 11, 2018 at 1:49 PM Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
->
-> But it could be anything else invalid, of course. It could be MAX_INT
-> or something like that.
+On Sat, Jul 07 2018, Linus Torvalds wrote:
 
-That might be better. A timezone of -1 isn't actually a valid
-timezone, but I guess you could create a commit by hand that had
-"-0001" as the timezone.
+I really like where this is going in general. Having a "human" format
+would be great.
 
-You can't do that with something like MAX_INT, without fsck
-complaining - since it has to be exactly four digits.
+> For really recent dates (same day), use the relative date stamp, while
+> for old dates (year doesn't match), don't bother with time and timezone.
+> [...]
+> Once you're talking "last year" patches, you don't tend to care about time
+> of day or timezone. So the longest date is basically "Thu Oct 19 16:00",
+> because if you show the year (four characters), you don't show the time
+> (five characters). And the timezone (five characters) is only shown if not
+> showing the date (5-6 characters).
 
-> The clearing of "human_tm" is done for a similar reason: the code does
->
->         hide.year = tm->tm_year == human_tm->tm_year;
->
-> (and then later just checks "if (human_tm->tm_year)") knowing that a
-> non-zero tm_year will only ever happen for human_tz (and that 1900 is
-> not a valid git date, even though I guess in theory you could do it).
+Just chiming in on this part, I think it's a worthwile trade-off to
+always keep it relatively short, but I'd like to challenge the "you
+don't tend to care about time [for really old commits]".
 
-Actually, the 1900 should be safe, because 'timestamp_t' is unsigned.
-So a valid timestamp really can't be before 1970.
+I think that's true for the likes of linux.git & git.git, but a lot of
+users of git say work in some corporate setting entirely or mostly in
+the same timezone.
 
-Of course, you can probably try to mess with it by giving values that
-don't actually fit, because sometimes we do convert mindlessly from
-'timestamp_t' to 'time_t'. In particular, if you use the
-"default-local" time, it will use that
+In that case, knowing if some commit whose sole message was "fix"[1] was
+made at 3am or in the afternoon, even if it's really old, is really
+useful information, even years later.
 
-  static struct tm *time_to_tm_local(timestamp_t time)
-  {
-        time_t t = time;
-        return localtime(&t);
-  }
+Maybe something like v2 could be a human-lossy and v1 human-short (or
+better names...). I.e. (AFAICT) v1 didn't lose any information, just
+smartly abbreviated it, but v2 does.
 
-and not check the range of the timestamp.
-
-But other proper time stamp functions will actually do range checking
-with "date_overflow()", so in general that whole assumption of "a real
-git date cannot be in the year 1900" is valid.
-
-              Linus
+1. Because let's face it, bothering to write good commit messages like
+   git.git is the exception.
