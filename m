@@ -2,108 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D6031F85D
-	for <e@80x24.org>; Wed, 11 Jul 2018 11:01:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 026A51F85D
+	for <e@80x24.org>; Wed, 11 Jul 2018 12:32:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732544AbeGKLEq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Jul 2018 07:04:46 -0400
-Received: from mail-ed1-f52.google.com ([209.85.208.52]:38430 "EHLO
-        mail-ed1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732502AbeGKLEq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jul 2018 07:04:46 -0400
-Received: by mail-ed1-f52.google.com with SMTP id t2-v6so4301098edr.5
-        for <git@vger.kernel.org>; Wed, 11 Jul 2018 04:00:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:user-agent:date:message-id:mime-version;
-        bh=d+yeslBOglY4d+gtaRNiF7xJdu5gf3k/Ks6MYDRoGh0=;
-        b=Rh21WcyiJZ6cqFTstMQrihBEWBVnIsCFYjL9sIX9JfD8IvlKak6XCVbdBA0uWv26sz
-         tG5/rmZb7IsSiDBPauVWl+GtKVyNSchSNd7q4gpdq4p423oQkaBy21gnXza9j0+wQVbs
-         K1Q2oMbGPxj6My+3XE+Bpu9DwLrj+yIo48+kyTKrYgkb+vpm5PWKz1bmaTtkbtpk2yn0
-         0GUsMPU0d4WWfSlmoLeQ30VyL/GEHkXrEqdhseM5gmLK4V6haFJVMX50+/2StvQB53R/
-         o6ZI/PGGTggRbKj+gQuVyCPGZcBq8WDju+mQnuXeVHkzooqUPRMNMXySuyNqLrL2CApz
-         3xiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:user-agent:date:message-id
-         :mime-version;
-        bh=d+yeslBOglY4d+gtaRNiF7xJdu5gf3k/Ks6MYDRoGh0=;
-        b=Gmva28NyYZ7MGnwtkVFrKnR61na8PTOBfrRnwkxRCsToUIrRKdYiHwCMt0idK1wg7K
-         Diac9B12Z/5okPi6J6aVuvYJ7ta9c2tp7Ils4JEOp+Gcv8Ccp30pt0zQ2IMjS6RuF8tq
-         9BZW7Kx9cMhBVFCDDI3vJh+L97nK+10b6TZxOyOjM/Z2FleH0tTsHIABQJH9Kh22kM6s
-         TvxWtf6DDnap1KYJeCvyr0RArMKm0qfuvIvtnoC9dlv7E4VTQMEjWw713tkPOzjevg8m
-         aCMMrPzkiWmmoZIxkROnERhtP1CEddrfu5XUX9q195XPo5p3mIA0zalLrRh2nSzYdMyl
-         piRQ==
-X-Gm-Message-State: APt69E2YKEb6zc5dsb2jC47edB+qDtOhv8pr9J3ZOpO553seUrXkR3pS
-        mzgEygly+mihEDVNPrkdCyxt7lP0
-X-Google-Smtp-Source: AAOMgpe5hE+UFbUjKg0wO1fg/3FSiyRMmBN73SLos2IC/NHWqdDC8kQACf94AEcnjLMHmXNnarKpBg==
-X-Received: by 2002:aa7:d0d8:: with SMTP id u24-v6mr18507721edo.144.1531306858514;
-        Wed, 11 Jul 2018 04:00:58 -0700 (PDT)
-Received: from evledraar ([5.57.21.50])
-        by smtp.gmail.com with ESMTPSA id u3-v6sm2927895edo.44.2018.07.11.04.00.57
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 11 Jul 2018 04:00:57 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: BUG: Segfault on "git pull" on "bad object HEAD"
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-Date:   Wed, 11 Jul 2018 13:00:57 +0200
-Message-ID: <87k1q2c9zq.fsf@evledraar.gmail.com>
+        id S2387474AbeGKMgW (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Jul 2018 08:36:22 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55034 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S2387471AbeGKMgW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jul 2018 08:36:22 -0400
+Received: (qmail 5810 invoked by uid 109); 11 Jul 2018 12:32:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 11 Jul 2018 12:32:15 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6610 invoked by uid 111); 11 Jul 2018 12:32:17 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 11 Jul 2018 08:32:17 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 11 Jul 2018 08:32:13 -0400
+Date:   Wed, 11 Jul 2018 08:32:13 -0400
+From:   Jeff King <peff@peff.net>
+To:     William Chargin <wchargin@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] sha1-name.c: for ":/", find detached HEAD commits
+Message-ID: <20180711123213.GA23835@sigill.intra.peff.net>
+References: <20180710154106.5356-1-wchargin@gmail.com>
+ <xmqqwou26hcv.fsf@gitster-ct.c.googlers.com>
+ <CAFW+GMAP6hwU1frm-FUVqx4pokpSQajWz7N6mGtMC-EO+01m2Q@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAFW+GMAP6hwU1frm-FUVqx4pokpSQajWz7N6mGtMC-EO+01m2Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This segfaults, but should print an error instead, have a repo with a
-corrupt HEAD:
+On Tue, Jul 10, 2018 at 11:18:22PM -0700, William Chargin wrote:
 
-    (
-        rm -rf /tmp/git &&
-        git clone --single-branch --branch todo git@github.com:git/git.git /tmp/git &&
-        echo 1111111111111111111111111111111111111111 >/tmp/git/.git/refs/heads/todo &&
-        git -C /tmp/git pull
-    )
+> > Also, I am not sure if "or from HEAD" is even needed when we say
+> > "from ANY ref" already, as we count things like HEAD as part of the
+> > ref namespace.
+> 
+> My two cents: with the docs as is, I wasn't sure whether HEAD was
+> intended to count as a ref for this purpose. The gitglossary man page
+> defines a ref as a "name that begins with refs/" (seemingly excluding
+> HEAD), though it later says that HEAD is a "special-purpose ref". In my
+> opinion, the change adds clarity without any particular downside---but
+> I'm happy to revert it if you'd prefer. I'd also be happy to change the
+> wording to something like "any ref, including HEAD" if we want to
+> emphasize that HEAD really is a ref.
 
-On this repository e.g. "git log" will print "fatal: bad object HEAD",
-but for some reason "git pull" makes it this far:
+FWIW, I think the clarification to include HEAD is helpful here, since
+it took me a few minutes of thinking to decide whether the current
+behavior was a bug or just a subtlety. Your "including HEAD" suggestion
+seems like the best route to me. But I can live with it either way.
 
-    $ git pull
-    Segmentation fault
+> After reaching consensus on the change to the docs, should I send in a
+> [PATCH v2] In-Reply-To this thread?
 
-The immediate reason is that in run_diff_index() we have this:
+Yes.
 
-	ent = revs->pending.objects;
+> Peff, should I add your
+> Signed-off-by to the commit message, or is that not how things are done?
 
-And that in this case that's NULL:
+Yes, you can add in any sign-offs that have been explicitly given. It's
+normal to order them chronologically, too (so mine would come first,
+then yours, showing that the patch flowed through me to you; Junio will
+add his at the end).
 
-    (gdb) bt
-    #0  0x000055555565993f in run_diff_index (revs=0x7fffffffcb90, cached=1) at diff-lib.c:524
-    #1  0x00005555557633da in has_uncommitted_changes (ignore_submodules=1) at wt-status.c:2345
-    #2  0x00005555557634c9 in require_clean_work_tree (action=0x555555798f18 "pull with rebase", hint=0x555555798efb "please commit or stash them.", ignore_submodules=1, gently=0) at wt-status.c:2370
-    #3  0x00005555555dbdee in cmd_pull (argc=0, argv=0x7fffffffd868, prefix=0x0) at builtin/pull.c:885
-    #4  0x000055555556c9da in run_builtin (p=0x555555a2de50 <commands+1872>, argc=1, argv=0x7fffffffd868) at git.c:417
-    #5  0x000055555556cce2 in handle_builtin (argc=1, argv=0x7fffffffd868) at git.c:633
-    #6  0x000055555556ce8a in run_argv (argcp=0x7fffffffd71c, argv=0x7fffffffd710) at git.c:685
-    #7  0x000055555556d03f in cmd_main (argc=1, argv=0x7fffffffd868) at git.c:762
-    #8  0x0000555555611786 in main (argc=3, argv=0x7fffffffd858) at common-main.c:45
-    (gdb) p revs
-    $4 = (struct rev_info *) 0x7fffffffcb90
-    (gdb) p revs->pending
-    $5 = {nr = 0, alloc = 0, objects = 0x0}
-    (gdb)
-
-This has been an issue since at least v2.8.0 (didn't test back
-further). I'm not familiar with the status / diff code, so I'm not sure
-where the assertion should be added.
-
-This came up in the wild due to a user with a corrupt repo (don't know
-how it got corrupt) trying "git pull" and seeing git segfault.
+-Peff
