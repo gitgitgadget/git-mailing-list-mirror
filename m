@@ -2,90 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 055DA1F85D
-	for <e@80x24.org>; Wed, 11 Jul 2018 20:49:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 120341F85D
+	for <e@80x24.org>; Wed, 11 Jul 2018 20:50:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732621AbeGKUzm (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Jul 2018 16:55:42 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:36992 "EHLO
-        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726692AbeGKUzm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jul 2018 16:55:42 -0400
-Received: by mail-io0-f196.google.com with SMTP id z19-v6so25630272ioh.4
-        for <git@vger.kernel.org>; Wed, 11 Jul 2018 13:49:35 -0700 (PDT)
+        id S1733021AbeGKU4b (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Jul 2018 16:56:31 -0400
+Received: from mail-wr1-f49.google.com ([209.85.221.49]:33387 "EHLO
+        mail-wr1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726692AbeGKU4b (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jul 2018 16:56:31 -0400
+Received: by mail-wr1-f49.google.com with SMTP id g6-v6so10569980wrp.0
+        for <git@vger.kernel.org>; Wed, 11 Jul 2018 13:50:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ql0C7DBljrLdb0NwArKgFQ8PTpYPWm6zgpXFDO32nGk=;
-        b=eITPkvJQ4IBEXfJChXe8PZ6lxpKnkFv+XgRAQGrCMhfjfCMzmgwsUwsgW3lOmQzkt8
-         U0HQhy9YqjdDcu97/YI7b7GOHVAOw3AoEfea+g5MVo9GDc265Xsi4HwPdyJr03Z1BW5s
-         gRCUlEMfhMJbY5jx3jtG7PXwIN4aYYgVinFpA=
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=CmBR7AR5YaoQkhkEMDSCwixLOHeP0/VynfwxSGe+AtY=;
+        b=REtrn4YdhAX7VzW+gcSBskEylmmWPn7RF5+uTwJXeVyuNXY/zQHKq/yKAGgTY86M4C
+         uhpJYiQk6MLQMdCgMBkuZ+PKTClbV76QuD/RTqCuNz5Zr/HZxgzGQsRnhUbQQO3w3iZW
+         9TtkYKiSXOTqbUl78r9XjfEVWJKrpgZHQKSeEaMSVYBL7V3+Kl4jHWuQN0WcCXpgOW34
+         WzgvuSENh9OXLRmsvveJMHAFSaPKTND1y/4KNzMEZtrx4XAHw500dOoY89lR1vCNLCpY
+         ahEe+nTT7CfofaGr89ExO3pozKwX8Q81SgOaZLnCrh+hrxAiz79BUES6fqSi1ItwOSeE
+         Xwmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ql0C7DBljrLdb0NwArKgFQ8PTpYPWm6zgpXFDO32nGk=;
-        b=nI1AbI1YCIkKuB5JKckck6FCeZ9e8zdNTwydW2ZYmvVbC+7AahtGMfRSX9Oe04DDha
-         kbINEO5acx3WZSsuCKWe0KGgt2kChWltTh7oCSAb7jogtqAqvI6didP/PtXjvBqPolUh
-         9l5YkYnb/kwYg3yQCi5fRjwu1gqE5K2IL/0fbK10VJ9TbYwfZFBC89wGR8WO+r0+XQXg
-         IrrbECjLkOIIYYJMpXy7kho1QGP55Zq3Daj1xzDUWa1b2G42r44t8by3QPAUC0kBGG/+
-         wtr+H0Ql+WX5LM0SIsqkvQ/SbcD4j7xBWwB1600ukd8X1GFmzq778qhrWrRCIhwMkKAn
-         6t9Q==
-X-Gm-Message-State: AOUpUlGCxttus+Yy2ROQSAvqqYD1+Vat4rDxkCJUXLwqNpb6bAdLMc74
-        Zp8Kcs7VjMLHx/Py6i5wsiR9VfLptmVGgjliQ4Y=
-X-Google-Smtp-Source: AAOMgpdde7Rz9ATeJ0dW3CjNW4BZ51LyEKVaqO0Mp8JxJgrF9jld+ro/z7dkxfxUO5TSdYzC9YopdMRJrFFdwU3fQyU=
-X-Received: by 2002:a6b:380b:: with SMTP id f11-v6mr580039ioa.560.1531342174915;
- Wed, 11 Jul 2018 13:49:34 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=CmBR7AR5YaoQkhkEMDSCwixLOHeP0/VynfwxSGe+AtY=;
+        b=st8ZhoH2640H0juynmG58iODTZZWRRZBEqawur45DO+IlwAbI2AKxPWzdBEm+bG5WI
+         h0IDhWLob7rZ99qAQLScPOR3uD1Cbew0ohDNa0teJMF7qQGUkGul0JU9nIWOC7KN9+ih
+         ImQt2JrnKtMYwcgzYyt9ml7yu6vEC/yJBxg6XOPQAD9Iunj5OzpscqB6pRuOtoX1ubcQ
+         CxZi55K6zkxnUfBt6Xj0Rh17hA0Dl6gxU5AF39xOB6GP3GMoe95oPAUVfCxF1+oE8/z3
+         DczGyd077orYXlR2IJsfD4YMKpb83QUeDgZaElJDIzbJZoafUDsUkj1RPWgrAI7gsdo9
+         KQiw==
+X-Gm-Message-State: AOUpUlGnweZjVV6giebR2UaWdfAgziEFQGmeJ0cWhuMgUh/N3WxT5bc6
+        nQEf1Lmh6fC3zzVUL4d5Z0E=
+X-Google-Smtp-Source: AAOMgpfA+zyeP7ZKXfpGhdNk3h8wpVCXJlHwlsMccZ7yLDLSs8Jof8+cz2zMnVXLejHY3Om/dKyoSg==
+X-Received: by 2002:adf:f210:: with SMTP id p16-v6mr134460wro.184.1531342222216;
+        Wed, 11 Jul 2018 13:50:22 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id t6-v6sm3016239wrn.97.2018.07.11.13.50.21
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 11 Jul 2018 13:50:21 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff Felchner <jfelchner1@gmail.com>
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Martin Agren <martin.agren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Oliver Joseph Ash <oliverjash@gmail.com>,
+        Mahmoud Al-Qudsi <mqudsi@neosmart.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2] add -p: fix counting empty context lines in edited patches
+References: <20180601174644.13055-1-phillip.wood@talktalk.net>
+        <20180611094602.17469-1-phillip.wood@talktalk.net>
+        <C9B989D9-5148-4AF1-80EB-ADFAE0DB8FF8@gmail.com>
+Date:   Wed, 11 Jul 2018 13:50:21 -0700
+In-Reply-To: <C9B989D9-5148-4AF1-80EB-ADFAE0DB8FF8@gmail.com> (Jeff Felchner's
+        message of "Wed, 11 Jul 2018 15:27:57 -0500")
+Message-ID: <xmqqy3eh1oqa.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <alpine.LFD.2.21.999.1807071238410.18818@i7.lan>
- <alpine.LFD.2.21.999.1807071502260.18818@i7.lan> <CACayv=ifE5BQVtxXCVEhS3uO7iz1z+ZPrF3J_n=e-uoYOpwNtA@mail.gmail.com>
-In-Reply-To: <CACayv=ifE5BQVtxXCVEhS3uO7iz1z+ZPrF3J_n=e-uoYOpwNtA@mail.gmail.com>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Wed, 11 Jul 2018 13:49:24 -0700
-Message-ID: <CA+55aFym5aSudSHiVA=VmvoY=WFytUqficLQCE4Sd_urjwKqPw@mail.gmail.com>
-Subject: Re: [RFC PATCH v2] Add 'human' date format
-To:     rybak.a.v@gmail.com
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 11, 2018 at 1:34 PM Andrei Rybak <rybak.a.v@gmail.com> wrote:
->
-> > +     int human_tz = -1;
->
-> Is -1 an OK initial value for timezone if local_time_tzoffset returns
-> negative values as well? It looks like it doesn't matter for from functional
+Jeff Felchner <jfelchner1@gmail.com> writes:
 
-The value was intentionally picked to *not* be a valid timezone value,
-so that the comparison of "human_tz == tz" would always fail if
-DATE_HUMAN is not selected.
+> Hey all, I assumed this was going to be in 2.18, but I'm still having the same issue.  What's the plan for release of this?
 
-But it could be anything else invalid, of course. It could be MAX_INT
-or something like that.
+You assumed wrong ;-)  A patch written on June 11th that is already
+deep into pre-release freeze, unless it is about fixing a regression
+during the same cycle, would never be in the release tagged on 21st.
 
-By picking something that isn't possibly a real timezone value, late
-code can do things like
-
-        hide.tz = local || tz == human_tz;
-
-without worrying about whther it's really DATE_HUMAN or not.
-
-The clearing of "human_tm" is done for a similar reason: the code does
-
-        hide.year = tm->tm_year == human_tm->tm_year;
-
-(and then later just checks "if (human_tm->tm_year)") knowing that a
-non-zero tm_year will only ever happen for human_tz (and that 1900 is
-not a valid git date, even though I guess in theory you could do it).
-
-               Linus
+It is already a part of the 'master' branch after v2.18, so v2.19
+would be the first feature release that would see it (unless we
+discover problems in that change and need to revert it, that is).
