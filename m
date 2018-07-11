@@ -6,68 +6,60 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4EA041F85D
-	for <e@80x24.org>; Wed, 11 Jul 2018 16:26:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A3CF1F85D
+	for <e@80x24.org>; Wed, 11 Jul 2018 16:34:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732516AbeGKQbw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Jul 2018 12:31:52 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:38019 "EHLO
+        id S2389764AbeGKQkD (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Jul 2018 12:40:03 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:53262 "EHLO
         mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726609AbeGKQbv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jul 2018 12:31:51 -0400
-Received: by mail-wm0-f68.google.com with SMTP id 69-v6so3181104wmf.3
-        for <git@vger.kernel.org>; Wed, 11 Jul 2018 09:26:45 -0700 (PDT)
+        with ESMTP id S1732191AbeGKQkC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jul 2018 12:40:02 -0400
+Received: by mail-wm0-f68.google.com with SMTP id b188-v6so3017791wme.3
+        for <git@vger.kernel.org>; Wed, 11 Jul 2018 09:34:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=toE1v44k3fm0UjpEJduf2+XsnGKyLiPwMYeXiLmha5w=;
-        b=Xk6kb1TNk7oLtUSu8u254DTQX0sHxvNLkLnaC4mSntykSSvLaM0Vssu66x5qVdF3Gy
-         EKRc3zHntWvaXTEgezm24CrSA9d+xS0WVseAmxThCHcYzIickPA5PLJItrJsNczjMvmQ
-         WinqA4iUKWTGqsWiMlmU57LGmhMzJcY4WDUZmHXGwUuej3Z/OvRlU57e1RanhlfUtCfm
-         QxXmk1zEMIrU6niytAMuB1V8YlkLrDIJ063K52V8y5nsRoXm3ZwKzRJrACSFB6AuWGFv
-         pPTCX5dYqR55Xel6CHMB13zBlL7khEt0aLDFjfZeDGcngopcpsUQNRtfa+vI1/8tXuzP
-         Bkvw==
+        bh=hI4VkouVL4RikOof0xTvFQ5MY5AAsIu7aMDfW6lBoe0=;
+        b=T1OVlYbwbDi8+kxyCseYfKzoUsDkQCnxD/4/QhQoj/ILgtWpOsgwdkbj1VG/mSJzxh
+         oybTWbvh1muolPaPhROUJ2Uvov665MmLpv4o0LylUXCcRAMSrH7u7qYQM1Z1w3GH3vw1
+         cU1r1doCaxPzj61WhiLdKLIsWB53m4bY8VXvMW111Q2vgXmYPGdKIruCJve+vYS5mZ5n
+         JMwHTc2/L1BRCC8Hz3LfZ6Uiug2JQHjc230YdNN0iv280wXc5IFiDrUeWXo4GCJCbN0D
+         6/bdoHOk2+1HnkjmW+8jIdg8rLA6YRYl3a7g5n310TEfd8pc7+FLGncf0H2McerGXkn7
+         np3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=toE1v44k3fm0UjpEJduf2+XsnGKyLiPwMYeXiLmha5w=;
-        b=FovR76GdUk8Sl6HdnM+Jl6KAzNXOY2CHQKrYrV+qXscEFOj/JGT7zEFCvmNGMbmUil
-         IBPJUFQgIhT8JWky8QNxlLZFSrAi0xtHu+53YdQ38qkTmmW8kDC1/ouQixpUUYy4+8nP
-         3Yfel0YU/p8y5skQZY9AqozyTwt9nEua3e1kCzI1jKA+9cpWyKixGuDk4GYKavFmBsVG
-         h6O34ydlk81k/PH/s6MvpFKNlXvnPTILM8Md+6VCBBYaPS0aBromYwO6i0JTcUbRnj4r
-         PLwvVFPKw50+TQmmgQv2LR6j/iOvxEPbpSaUigco5ayWFHUDm6/+19bWHSNJH1YE4eCH
-         pk+w==
-X-Gm-Message-State: APt69E1AsHqXeb2hP3DqS/nUyBiQXr66IUukU+QrAYwFoGbH6LDJYsRh
-        ILhwgpDgufgFjvFhyJKZ+fY=
-X-Google-Smtp-Source: AAOMgpePLTNH/RbJ1szXoJZvI4Q7TEHXhKRe+BmTyq7VtgWwcQpsFAridZklHzJSX2r7YXaHwPrp5Q==
-X-Received: by 2002:a1c:d78c:: with SMTP id o134-v6mr17202288wmg.115.1531326404904;
-        Wed, 11 Jul 2018 09:26:44 -0700 (PDT)
+        bh=hI4VkouVL4RikOof0xTvFQ5MY5AAsIu7aMDfW6lBoe0=;
+        b=iLpCn3UOwkGK66pzdrbsutMD5JQ7vfKInlLLYT4tCZSxq3c1cwBGiQJQo8+xbi71l3
+         uhHIwfkqsZnQOT1XFzvN3F7DhvW5RjwmVqRUN6W994yS4FzEfEGHO4IHIL0MBKczVFhb
+         EfOQMssXwi+LJAYzZSbrcPyY/3xYj5/hdGf8QpooLsmqhRoo3alyt0WvaEY89FEaYKAH
+         SjnycbISccC3NNpfKPCNl2gIxkk1Bbo5y3/FWRDw9eCuWkrudqynH8E6ADW6gFwHnybA
+         cx6NYOQLSmLTQxyTALzHZOJKvIyBWAOpcZOM64dHpL/YXzs2pMPbkiIfVPz0pFDj1MAh
+         nK8A==
+X-Gm-Message-State: APt69E19TEvlcdMEI5KhHs68jzIaI+qHzsfc7LmOsf4HdniYmZx1nmYc
+        YhT3QKr7L3Ijy12uU1x8pL03BZnJ
+X-Google-Smtp-Source: AAOMgpf6wDTmOp2GB0Wuy93ajCNLdYW8DqyagdBhVY643OVpYyzxQLEgCBelrGuE1x+aDiVYgMWptw==
+X-Received: by 2002:a1c:70b:: with SMTP id 11-v6mr17095317wmh.151.1531326893272;
+        Wed, 11 Jul 2018 09:34:53 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id p3-v6sm34513761wrg.47.2018.07.11.09.26.43
+        by smtp.gmail.com with ESMTPSA id v5-v6sm8567011wru.60.2018.07.11.09.34.52
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 11 Jul 2018 09:26:43 -0700 (PDT)
+        Wed, 11 Jul 2018 09:34:52 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Henning Schild <henning.schild@siemens.com>, git@vger.kernel.org,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Ben Toews <mastahyeti@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 9/9] gpg-interface t: extend the existing GPG tests with GPGSM
-References: <cover.1531208187.git.henning.schild@siemens.com>
-        <f97d2d79f6a46ddffcd0065239f99b084708e813.1531208187.git.henning.schild@siemens.com>
-        <20180710170901.GH23624@sigill.intra.peff.net>
-        <20180711123824.7e0be91a@md1pvb1c.ad001.siemens.net>
-        <20180711125109.GC23835@sigill.intra.peff.net>
-        <20180711154019.202e75c5@md1pvb1c.ad001.siemens.net>
-        <20180711143554.GG23835@sigill.intra.peff.net>
-Date:   Wed, 11 Jul 2018 09:26:43 -0700
-In-Reply-To: <20180711143554.GG23835@sigill.intra.peff.net> (Jeff King's
-        message of "Wed, 11 Jul 2018 10:35:54 -0400")
-Message-ID: <xmqqa7qx4u2k.fsf@gitster-ct.c.googlers.com>
+Cc:     William Chargin <wchargin@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] sha1-name.c: for ":/", find detached HEAD commits
+References: <20180710154106.5356-1-wchargin@gmail.com>
+        <xmqqwou26hcv.fsf@gitster-ct.c.googlers.com>
+        <CAFW+GMAP6hwU1frm-FUVqx4pokpSQajWz7N6mGtMC-EO+01m2Q@mail.gmail.com>
+        <20180711123213.GA23835@sigill.intra.peff.net>
+Date:   Wed, 11 Jul 2018 09:34:52 -0700
+In-Reply-To: <20180711123213.GA23835@sigill.intra.peff.net> (Jeff King's
+        message of "Wed, 11 Jul 2018 08:32:13 -0400")
+Message-ID: <xmqq601l4toz.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -78,13 +70,37 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
->> While addressing 1 make 2 obvious and worse, addressing 2 is a whole
->> different story and should probably be discussed outside of this
->> thread. And i would not like to inherit responsibility for 2. In
->> fact the whole discussion emphasizes that it was a good idea to make
->> GPGSM depend on GPG, because it allows to somewhat reuse existing tests.
+> On Tue, Jul 10, 2018 at 11:18:22PM -0700, William Chargin wrote:
 >
-> IMHO there is a big difference between inheriting responsibility for
-> something, and not making it worse.
+>> > Also, I am not sure if "or from HEAD" is even needed when we say
+>> > "from ANY ref" already, as we count things like HEAD as part of the
+>> > ref namespace.
+>> 
+>> My two cents: with the docs as is, I wasn't sure whether HEAD was
+>> intended to count as a ref for this purpose. The gitglossary man page
+>> defines a ref as a "name that begins with refs/" (seemingly excluding
+>> HEAD), though it later says that HEAD is a "special-purpose ref". In my
+>> opinion, the change adds clarity without any particular downside---but
+>> I'm happy to revert it if you'd prefer. I'd also be happy to change the
+>> wording to something like "any ref, including HEAD" if we want to
+>> emphasize that HEAD really is a ref.
+>
+> FWIW, I think the clarification to include HEAD is helpful here, since
+> it took me a few minutes of thinking to decide whether the current
+> behavior was a bug or just a subtlety. Your "including HEAD" suggestion
+> seems like the best route to me. But I can live with it either way.
+>
+>> After reaching consensus on the change to the docs, should I send in a
+>> [PATCH v2] In-Reply-To this thread?
+>
+> Yes.
+>
+>> Peff, should I add your
+>> Signed-off-by to the commit message, or is that not how things are done?
+>
+> Yes, you can add in any sign-offs that have been explicitly given. It's
+> normal to order them chronologically, too (so mine would come first,
+> then yours, showing that the patch flowed through me to you; Junio will
+> add his at the end).
 
-Well said.
+Thanks, agreed 100% and I have nothing more to add.
