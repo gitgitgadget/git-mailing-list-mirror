@@ -6,38 +6,38 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B53F51F85D
-	for <e@80x24.org>; Wed, 11 Jul 2018 08:47:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8540B1F85D
+	for <e@80x24.org>; Wed, 11 Jul 2018 08:55:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726570AbeGKIus (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Jul 2018 04:50:48 -0400
-Received: from goliath.siemens.de ([192.35.17.28]:39196 "EHLO
-        goliath.siemens.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726321AbeGKIus (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jul 2018 04:50:48 -0400
+        id S1732375AbeGKI6k (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Jul 2018 04:58:40 -0400
+Received: from thoth.sbs.de ([192.35.17.2]:47278 "EHLO thoth.sbs.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726289AbeGKI6i (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jul 2018 04:58:38 -0400
 Received: from mail2.sbs.de (mail2.sbs.de [192.129.41.66])
-        by goliath.siemens.de (8.15.2/8.15.2) with ESMTPS id w6B8lJ8Y007577
+        by thoth.sbs.de (8.15.2/8.15.2) with ESMTPS id w6B8t0Q8006910
         (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Wed, 11 Jul 2018 10:47:19 +0200
+        Wed, 11 Jul 2018 10:55:01 +0200
 Received: from md1pvb1c.ad001.siemens.net (md1pvb1c.ad001.siemens.net [139.25.68.40])
-        by mail2.sbs.de (8.15.2/8.15.2) with ESMTP id w6B8lJX5030521;
-        Wed, 11 Jul 2018 10:47:19 +0200
-Date:   Wed, 11 Jul 2018 10:47:19 +0200
+        by mail2.sbs.de (8.15.2/8.15.2) with ESMTP id w6B8sxpQ023212;
+        Wed, 11 Jul 2018 10:55:00 +0200
+Date:   Wed, 11 Jul 2018 10:54:59 +0200
 From:   Henning Schild <henning.schild@siemens.com>
-To:     Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
 Cc:     <git@vger.kernel.org>, Eric Sunshine <sunshine@sunshineco.com>,
+        "Junio C Hamano" <gitster@pobox.com>,
         Martin =?UTF-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Ben Toews <mastahyeti@gmail.com>, Jeff King <peff@peff.net>,
+        Ben Toews <mastahyeti@gmail.com>,
         Taylor Blau <me@ttaylorr.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 4/9] t/t7510: check the validation of the new config
- gpg.format
-Message-ID: <20180711104719.1bf5d835@md1pvb1c.ad001.siemens.net>
-In-Reply-To: <xmqqr2kb81zw.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [PATCH v2 6/9] gpg-interface: do not hardcode the key string
+ len anymore
+Message-ID: <20180711105459.57ed99cc@md1pvb1c.ad001.siemens.net>
+In-Reply-To: <20180710154931.GA23624@sigill.intra.peff.net>
 References: <cover.1531208187.git.henning.schild@siemens.com>
-        <cover.1531208187.git.henning.schild@siemens.com>
-        <b02154496033220897f6f773e1149a98b21ccba7.1531208187.git.henning.schild@siemens.com>
-        <xmqqr2kb81zw.fsf@gitster-ct.c.googlers.com>
+        <7300c85a1c6d484c781cc80b307b5e7f085ac226.1531208187.git.henning.schild@siemens.com>
+        <20180710154931.GA23624@sigill.intra.peff.net>
 X-Mailer: Claws Mail 3.15.0-dirty (GTK+ 2.24.31; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -47,61 +47,69 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am Tue, 10 Jul 2018 09:54:59 -0700
-schrieb Junio C Hamano <gitster@pobox.com>:
+Am Tue, 10 Jul 2018 11:49:31 -0400
+schrieb Jeff King <peff@peff.net>:
 
-> Henning Schild <henning.schild@siemens.com> writes:
+> On Tue, Jul 10, 2018 at 10:52:28AM +0200, Henning Schild wrote:
 > 
-> > Test setting gpg.format to both invalid and valid values.
-> >
-> > Signed-off-by: Henning Schild <henning.schild@siemens.com>
-> > ---
-> >  t/t7510-signed-commit.sh | 10 ++++++++++
-> >  1 file changed, 10 insertions(+)
-> >
-> > diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
-> > index 6e2015ed9..7e1e9caf4 100755
-> > --- a/t/t7510-signed-commit.sh
-> > +++ b/t/t7510-signed-commit.sh
-> > @@ -227,4 +227,14 @@ test_expect_success GPG 'log.showsignature
-> > behaves like --show-signature' ' grep "gpg: Good signature" actual
-> >  '
-> >  
-> > +test_expect_success GPG 'check config gpg.format values' '
-> > +	rm .git/config &&  
+> > gnupg does print the keyid followed by a space and the signer comes
+> > next. The same pattern is also used in gpgsm, but there the key
+> > length would be 40 instead of 16. Instead of hardcoding the
+> > expected length, find the first space and calculate it.  
 > 
-> Please don't.  .git/config has stuff that are more important than
-> just collection of random configuration these days, and we can even
-> expect that future versions of Git may not store its config in a
-> flat file .git/config but in a different mechanism "git config"
-> command knows how to access.  A low-level test for "git config"
-> command's operation may have to be implemented by inspecting the
-> resulting .git/config, but as this test is not about "git config"'s
-> inner workins but is about one feature "git commit" command has,
-> we prefer not to depend too much on the internal implementation
-> detail such as "local config is stored in .git/config file".
+> Sounds good, but I think there's an off-by-one in the patch.
 > 
-> Let's hear why you want to remove this file; what things that have
-> previously been placed in the file do you want not to see, before
-> performing the following actions?  Once we know that, we can suggest
-> a way to do so better than removing the entire file.
+> > diff --git a/gpg-interface.c b/gpg-interface.c
+> > index 0a8d1bff3..ac2df498d 100644
+> > --- a/gpg-interface.c
+> > +++ b/gpg-interface.c
+> > @@ -88,10 +88,11 @@ static void parse_gpg_output(struct
+> > signature_check *sigc) sigc->result = sigcheck_gpg_status[i].result;
+> >  		/* The trust messages are not followed by
+> > key/signer information */ if (sigc->result != 'U') {
+> > -			sigc->key = xmemdupz(found, 16);
+> > +			next = strchrnul(found, ' ');
+> > +			sigc->key = xmemdupz(found, next -
+> > found);  
+> 
+> Here "next" may point to the trailing NUL of the string...
+> 
+> >  			/* The ERRSIG message is not followed by
+> > signer information */ if (sigc-> result != 'E') {
+> > -				found += 17;
+> > +				found = next + 1;
+> >  				next = strchrnul(found, '\n');  
+> 
+> ...in which case "found" points past the end of the string, and we
+> search random memory. That's presumably impossible with well-formed
+> gpg output (you don't get 'E' without an extra message), but we
+> should be robust against bogus input.
+> 
+> In the general case you need:
+> 
+>   found = *next ? next + 1 : next;
+> 
+> or similar. In this case, you can actually do:
+> 
+>   found = next;
+> 
+> because we know that it's OK to search over the literal space again.
+> But that's pretty subtle, so we're probably better off just doing the
+> conditional above.
+> 
+> (And yes, looking at the existing code, I think it's even worse, as
+> there does not seem to be a guarantee that we even have 16 characters
+> in the string).
 
-That was a leftover of parsing the result and expecting the malformed
-value in a certain line. Now i do not look at result anymore. If the
-first two do succeed and the third fails it is probably fair enough to
-assume that the format "malformed" triggerd the config validation path.
-
-That rm is gone from what will be v3.
+The existing code works only on expected output and the same is true
+for the version after this patch. Making the parser robust against
+random input would imho be a sort of cleanup patch on top of my
+series. .. or before, in which case i would become responsible for
+making sure that still works after my modification.
+This argument is twofold. I do not really want to fix that as well and
+it might be a good idea to separate concerns anyways.
 
 Henning
 
-> > +	test_config gpg.format openpgp &&
-> > +	git commit -S --amend -m "success" &&
-> > +	test_config gpg.format OpEnPgP &&
-> > +	git commit -S --amend -m "success" &&
-> > +	test_config gpg.format malformed &&
-> > +	test_must_fail git commit -S --amend -m "fail" 2>result
-> > +'
-> > +
-> >  test_done  
+> -Peff
 
