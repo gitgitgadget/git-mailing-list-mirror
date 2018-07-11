@@ -7,50 +7,51 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D2941F85D
-	for <e@80x24.org>; Wed, 11 Jul 2018 20:34:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 52A1E1F85D
+	for <e@80x24.org>; Wed, 11 Jul 2018 20:38:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732556AbeGKUkj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Jul 2018 16:40:39 -0400
-Received: from mail-oi0-f68.google.com ([209.85.218.68]:36601 "EHLO
+        id S1732979AbeGKUoo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Jul 2018 16:44:44 -0400
+Received: from mail-oi0-f68.google.com ([209.85.218.68]:40098 "EHLO
         mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726706AbeGKUkj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jul 2018 16:40:39 -0400
-Received: by mail-oi0-f68.google.com with SMTP id r16-v6so51729990oie.3
-        for <git@vger.kernel.org>; Wed, 11 Jul 2018 13:34:36 -0700 (PDT)
+        with ESMTP id S1726508AbeGKUoo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jul 2018 16:44:44 -0400
+Received: by mail-oi0-f68.google.com with SMTP id w126-v6so51704066oie.7
+        for <git@vger.kernel.org>; Wed, 11 Jul 2018 13:38:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=wEbET8dYpoBtMsSSyLKJrLQu+a8lvmE/HvSQAvNaUJ8=;
-        b=cjNchzJC69n8SXFJZ5v++QaTVsXvxZ329QHNel+DZ4NcxKgeTA7v0MJJK0KI2Iczjj
-         PIVqh918L+uGRKFCgeycslLLce3HkYZ39QGXqmxVAY62xJm6xor49kexpq1jVyiLQh/y
-         +I7Re5Ke8j6C0GVMUJoFSrljbAdgrBsdzInPqQwc9tRmKdX4Ie2+bcn54MTxCHwQC4nl
-         Ay7A8ExykIY691sAFCHIh7osOYrCRbaIiHUMBQbJsPwWL2WmVpiNDEqArfiAGgYHlpm6
-         lu2Ez5386uiww73vTGR5jQtR2TvQxOHqGKMMN9/IOAvBI3wxIIDLeb4YpM+lO9kjeKig
-         MfqQ==
+        bh=7wHgGSk7sTchyZvf2RYI8i2cMgZmEVwAxWHxx+a8rHk=;
+        b=XckMDMxZww4qOKjdEF2dKaghZfxoX6EmYR2OVy1az0ejLVJ1S/1I3WkDBM6jBwR2A8
+         MiIld7jd56bZRN6NUrfi4FaJIg9dLmNElE/DzUN15rEvRrApeiR+AZBlt6t/giHmtg7B
+         pmZIkcT1RP9MH4hbq5F+w7tEi/Uw9uxDk82vsnULHto53rLVl2rC9b+oo4NTWqpw+juz
+         9X04sR83LChCDdZhJ3EQdoWqUzjGZb9hXzLT72QudajjikPMBqYQUT0aYJ5/ivs28Phs
+         UCtMM/DCAJBlK8VmkyuOoxV6P0TDnKU2ELZ3eitmgYhGJRKSy1t/1xwCYwY/ZGKsZQN4
+         VvYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=wEbET8dYpoBtMsSSyLKJrLQu+a8lvmE/HvSQAvNaUJ8=;
-        b=udLb5NyfSh8iYkMRHSDYPqb1X6mv22NHqbUGKtMDYlfYEofIo9QxrZBo2TqarsMp7x
-         aEQMssVfYqaCIM1LAWeJIbC5iFlFJrQKOtmNqB7bmdyPtRp5UmDawulOtUlgxFv1hTZ3
-         9inEYwJBAIM4QZnUd5V9GI8chSAgFIU/sDT1/rc9zehfn1oO+5kmgf2USQaEwiYFSTo0
-         REnxkWxrUa5nN2N2vWMKd4ItqRH+tHTvk94JmMd9dcXyx7EYJJ3BEX5Vgxz9EfA99qTQ
-         RSM1xwop7NsZ31JXBJ6vBXRBx/8oQ2tgQwT9YdXilSWXiWp96GvE+VMapyC3KRsWueo4
-         pgAg==
-X-Gm-Message-State: AOUpUlFWjxMPXScNbSR50IxDY3c7pvMbMS3VGrVPNyPRz/TFXM91L15R
-        gO5s3h1vAwnvUUeR0chH6uimjwWIMGySoA0BhTbxvspY
-X-Google-Smtp-Source: AAOMgpe+hWhobiM3vxKeZw82x/r8HtM5ZYCsMtCuq+27iI3xuLV/xd9hV64LQLMGxxP8vTjWFoTZ7OLcUT+3dFkktWI=
-X-Received: by 2002:aca:5585:: with SMTP id j127-v6mr199830oib.202.1531341275926;
- Wed, 11 Jul 2018 13:34:35 -0700 (PDT)
+        bh=7wHgGSk7sTchyZvf2RYI8i2cMgZmEVwAxWHxx+a8rHk=;
+        b=tmKIhQBSzrIqA7GfCq6nHoGPN9A3/yEtX7TGbZCHDlqkppDwKMKqq3V/gL0ZdIBF9R
+         ilxZgsndZgU68/buGEL9UaG47wMSB+7Z4lEvyXFl8fX2zLmoP57/3ziAcokN3yfhU5Q9
+         QZX14IF4g5d/krjPRjfMk51+lFyK/p/jGVeXzz+kdcToQ2LvSP/ehTI/rX1OYh6Tic0k
+         xw3N8Qm7TNE842mCOMWUR23SyMY1dVVGFOKBcl/S8pAaq/vk6q2m8eZOGp8XpZp4MmYX
+         narjCJBffzX9yuoZUyOAqyuhk2Ns9UiquJuj4UvPTiAtBaxcX35eqW2WkJpjjOaTsYme
+         MIiw==
+X-Gm-Message-State: AOUpUlFt0D3lY22/b5BFiKUP1t/uarfHnHS4ZM0zG6QOA+F8xLart7xR
+        9ZJgWQ5zpLf4cATjuEJNGuKeJg0GOqOi68vOibY=
+X-Google-Smtp-Source: AAOMgpfF1saO7+ZOu+BLw6RDMR+My2ckZRjcVZ+0yl5CQIt0lvkNoxE1YPGjd5giNEqxRRZlwpuw1+fSCdkKCFbka0g=
+X-Received: by 2002:aca:b841:: with SMTP id i62-v6mr220780oif.290.1531341519794;
+ Wed, 11 Jul 2018 13:38:39 -0700 (PDT)
 MIME-Version: 1.0
-References: <alpine.LFD.2.21.999.1807071238410.18818@i7.lan> <alpine.LFD.2.21.999.1807071502260.18818@i7.lan>
-In-Reply-To: <alpine.LFD.2.21.999.1807071502260.18818@i7.lan>
+References: <alpine.LFD.2.21.999.1807071238410.18818@i7.lan>
+ <alpine.LFD.2.21.999.1807071502260.18818@i7.lan> <CACayv=ifE5BQVtxXCVEhS3uO7iz1z+ZPrF3J_n=e-uoYOpwNtA@mail.gmail.com>
+In-Reply-To: <CACayv=ifE5BQVtxXCVEhS3uO7iz1z+ZPrF3J_n=e-uoYOpwNtA@mail.gmail.com>
 From:   Andrei Rybak <rybak.a.v@gmail.com>
-Date:   Wed, 11 Jul 2018 22:34:19 +0200
-Message-ID: <CACayv=ifE5BQVtxXCVEhS3uO7iz1z+ZPrF3J_n=e-uoYOpwNtA@mail.gmail.com>
+Date:   Wed, 11 Jul 2018 22:38:23 +0200
+Message-ID: <CACayv=jM0Q4x=U+4=_YqJHto_ZdZAz8r89xALOcW5a+n9w=LeA@mail.gmail.com>
 Subject: Re: [RFC PATCH v2] Add 'human' date format
 To:     torvalds@linux-foundation.org, Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
@@ -60,76 +61,11 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2018-07-08 00:02, Linus Torvalds wrote:
-> diff --git a/date.c b/date.c
-> index 49f943e25..4486c028a 100644
-> --- a/date.c
-> +++ b/date.c
-> @@ -77,22 +77,16 @@ static struct tm *time_to_tm_local(timestamp_t time)
->  }
+On Wed, 11 Jul 2018 at 22:34, Andrei Rybak <rybak.a.v@gmail.com> wrote:
 >
->  /*
-> - * What value of "tz" was in effect back then at "time" in the
-> - * local timezone?
-> + * Fill in the localtime 'struct tm' for the supplied time,
-> + * and return the local tz.
->   */
-> -static int local_tzoffset(timestamp_t time)
-> +static int local_time_tzoffset(time_t t, struct tm *tm)
->  {
-> -     time_t t, t_local;
-> -     struct tm tm;
-> +     time_t t_local;
->       int offset, eastwest;
->
-> -     if (date_overflows(time))
-> -             die("Timestamp too large for this system: %"PRItime, time);
-> -
-> -     t = (time_t)time;
-> -     localtime_r(&t, &tm);
-> -     t_local = tm_to_time_t(&tm);
-> -
-> +     localtime_r(&t, tm);
-> +     t_local = tm_to_time_t(tm);
->       if (t_local == -1)
->               return 0; /* error; just use +0000 */
->       if (t_local < t) {
-> @@ -107,6 +101,20 @@ static int local_tzoffset(timestamp_t time)
->       return offset * eastwest;
->  }
+> Is -1 an OK initial value for timezone if local_time_tzoffset returns
+> negative values as well? It looks like it doesn't matter for from functional
 >
 
-[...]
-
-> +
->  const char *show_date(timestamp_t time, int tz, const struct date_mode *mode)
->  {
->       struct tm *tm;
-> +     struct tm human_tm = { 0 };
-> +     int human_tz = -1;
-
-Is -1 an OK initial value for timezone if local_time_tzoffset returns
-negative values as well? It looks like it doesn't matter for from functional
-
->       static struct strbuf timebuf = STRBUF_INIT;
->
->       if (mode->type == DATE_UNIX) {
-> @@ -202,6 +281,15 @@ const char *show_date(timestamp_t time, int tz, const struct date_mode *mode)
->               return timebuf.buf;
->       }
->
-> +     if (mode->type == DATE_HUMAN) {
-> +             struct timeval now;
-> +
-> +             gettimeofday(&now, NULL);
-> +
-> +             /* Fill in the data for "current time" in human_tz and human_tm */
-> +             human_tz = local_time_tzoffset(now.tv_sec, &human_tm);
-> +     }
-> +
->       if (mode->local)
->               tz = local_tzoffset(time);
->
-
---
-Best regards, Andrei Rybak
+meant to say: "It looks like it doesn't matter from the functional
+point of view".
