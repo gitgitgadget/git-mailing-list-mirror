@@ -6,47 +6,47 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA7AF1F85B
-	for <e@80x24.org>; Wed, 11 Jul 2018 06:48:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CBADE1F85B
+	for <e@80x24.org>; Wed, 11 Jul 2018 06:48:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726664AbeGKGu4 (ORCPT <rfc822;e@80x24.org>);
+        id S1726675AbeGKGvA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Jul 2018 02:51:00 -0400
+Received: from mail-io0-f194.google.com ([209.85.223.194]:46229 "EHLO
+        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726637AbeGKGu4 (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 11 Jul 2018 02:50:56 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:41110 "EHLO
-        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726532AbeGKGuy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jul 2018 02:50:54 -0400
-Received: by mail-io0-f193.google.com with SMTP id q9-v6so22633963ioj.8
-        for <git@vger.kernel.org>; Tue, 10 Jul 2018 23:48:09 -0700 (PDT)
+Received: by mail-io0-f194.google.com with SMTP id i18-v6so6901773ioj.13
+        for <git@vger.kernel.org>; Tue, 10 Jul 2018 23:48:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=2I7OYueBaU/f8ltzSekxyPxjmldCQGi0kGgjwtn553k=;
-        b=ZDwnULCipm8U9r5JOCYktsl5Ljd59P+XkmkI1p6NX2/gldBVp9djuyR1oMVwXD9+l1
-         +6jsK1zVRqi6t/62uEfpq6J/gJHCmnos+3rBqzNBnXwAykUy5Wa6/F2KKP6/JZlAjAsI
-         ZpUUt7VCHYAJ8gq5It+XHet6mLHSM82iLqFfTQY6ypN9owxTeaJwHnyLX3XAmcGtvHHj
-         SI6KcijcgIa0O5/pGmItMWVs0t+NWmOAgh+c/WpnpFa/koIbFLNx9E1nhmGtc0cemLvs
-         Qwzafd77gj6+9JaE+f2VMXwjKug0gdjjlgUXESDj5c6ON0W+/s7w3CzpvTmhCho6PF56
-         VcjQ==
+        bh=35aNHsTh507xLcuXx69wuQwfowH/kA/dLdrugGffNU4=;
+        b=dfEeuZY5AyATWoSFN8m8Mzqs0ORdtQix2M7ZUgXbznP6zLaFP5hgmnqhHD0TFPE7rS
+         xA/e9qDbQXWCFXr92mL9lJ4IwtyT4jwWl4pnUuYvyN1bQ/GYO6QTJWYniagT7WyK5tsf
+         0Aj5uBBETdZPf7xJQ9QUxYtwBuk42aZklmBIMGkRkwnZDqYeeIhcxcrLsIvPIexHKbzw
+         LJYWTJNdrLQJgQ9dX+sk4nItd60m4aYn4HsUf1VgQXHjU8fcTC8YsMf5lLKaFGv2pCVs
+         9k0fthWM2/iv/TNxYJKR2ivO1auIYBXnp5YQfz1Tf6YJpagAXpPr+y4BJ6pvFrO65Kx7
+         Ok4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
          :in-reply-to:references;
-        bh=2I7OYueBaU/f8ltzSekxyPxjmldCQGi0kGgjwtn553k=;
-        b=bfokPmtazEKbjBG0/8H4l9E+jV5PKlGlm1wxCa4LhTeSEwFr5eqPYLJU6v79MOrmCZ
-         7+cDR63ZYPCBu49BcFEAr2ITFhHERJY4n1IDIJK3k/POkG3LKCLnF6XnRoy0K9DJMRCj
-         KOz+WLT9HCsdNqAguLZXeikwwW/RNqYOjaAozkFHLobd5lwHpbwki9mFwdDzXMztt+14
-         h7izNB5hBu6UmAv5UETI9Ebtrc7SUf5xLh1uBYBTFIcVqtTJ2SCPVuVw65WudzuPZ0/L
-         lA02hsLursNjeydgkAGs7L0iQvmf1nBIplfETkWWA6GNRubSLYtsR0CVvHaH32eoAJmX
-         cziw==
-X-Gm-Message-State: APt69E1VHgfo+Wv/wjEwbNs4eryFHx+2FTIXW18hfsQagb1KkGMUrJuJ
-        B2BsxYOlTx18eTahMZZrfnKHOQ==
-X-Google-Smtp-Source: AAOMgpcO9XiSicPMHhRo8GaN6m0JsA8wIiBIV/8YO2AiX1vG1FUiPiJYq++AS4njzJlMRWPm2NpLqQ==
-X-Received: by 2002:a6b:bd43:: with SMTP id n64-v6mr24406503iof.254.1531291689120;
-        Tue, 10 Jul 2018 23:48:09 -0700 (PDT)
+        bh=35aNHsTh507xLcuXx69wuQwfowH/kA/dLdrugGffNU4=;
+        b=Mng/UVSFe++ymvyBz48KcZpW0KEeVzZOfrBEGR8HrdKAg6AsR9QgzngvDNUFk/a0ub
+         moAswN9M3dFVGER5Ax0ACmz2Nv3buSELq7TXGH1dPALMYuyP0KRpmSul2RAqeAQGxVyM
+         oVcHoydAozCZULJYcGuOWpe2owu14LCkYvdP2aIEXO/aMZRIPzzOjt4dV3uwR6qMp0NY
+         uJRQ3UCrhe2L1SKnU3XSu5nBrkzKDr8mFJ9r+4bLjR/NN62z1j29RZOGURHgBTgofr/A
+         wKk4abk362l11eM2cq1Qx6ZZdDp5cSrjOgsNeK6vwfu2f+wSWHOoXsN6eUy1DqxhTs7q
+         lz0Q==
+X-Gm-Message-State: AOUpUlG3LoDrxBt2G848slSZ0PpqHd2RiDYt/Klcsy52uFFwVO7xE0lO
+        DQjf5H81Ac93wd+F/HG1ndULZQ==
+X-Google-Smtp-Source: AAOMgpeW9YCbG+D1Wd8Knk3OSFisOAa/P9cuWKmIvW5sLnmO7JGW7GOrrjGknEt95dZDaEJRqsl93A==
+X-Received: by 2002:a6b:3e46:: with SMTP id l67-v6mr22601970ioa.294.1531291690914;
+        Tue, 10 Jul 2018 23:48:10 -0700 (PDT)
 Received: from localhost.localdomain (user-12l2cs3.cable.mindspring.com. [69.81.51.131])
-        by smtp.gmail.com with ESMTPSA id b143-v6sm11308298ioe.66.2018.07.10.23.48.08
+        by smtp.gmail.com with ESMTPSA id b143-v6sm11308298ioe.66.2018.07.10.23.48.10
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Tue, 10 Jul 2018 23:48:08 -0700 (PDT)
+        Tue, 10 Jul 2018 23:48:10 -0700 (PDT)
 From:   Eric Sunshine <sunshine@sunshineco.com>
 To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
@@ -56,9 +56,9 @@ Cc:     Elijah Newren <newren@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
         Junio C Hamano <gitster@pobox.com>,
         Luke Diamand <luke@diamand.org>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 08/10] t/chainlint: add chainlint "cuddled" test cases
-Date:   Wed, 11 Jul 2018 02:46:40 -0400
-Message-Id: <20180711064642.6933-9-sunshine@sunshineco.com>
+Subject: [PATCH v2 10/10] t/chainlint: add chainlint "specialized" test cases
+Date:   Wed, 11 Jul 2018 02:46:42 -0400
+Message-Id: <20180711064642.6933-11-sunshine@sunshineco.com>
 X-Mailer: git-send-email 2.18.0.203.gfac676dfb9
 In-Reply-To: <20180711064642.6933-1-sunshine@sunshineco.com>
 References: <20180626073001.6555-1-sunshine@sunshineco.com>
@@ -83,126 +83,71 @@ comprehension.
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- t/chainlint/cuddled-if-then-else.expect |  7 +++++++
- t/chainlint/cuddled-if-then-else.test   |  7 +++++++
- t/chainlint/cuddled-loop.expect         |  5 +++++
- t/chainlint/cuddled-loop.test           |  7 +++++++
- t/chainlint/cuddled.expect              | 21 +++++++++++++++++++++
- t/chainlint/cuddled.test                | 23 +++++++++++++++++++++++
- 6 files changed, 70 insertions(+)
- create mode 100644 t/chainlint/cuddled-if-then-else.expect
- create mode 100644 t/chainlint/cuddled-if-then-else.test
- create mode 100644 t/chainlint/cuddled-loop.expect
- create mode 100644 t/chainlint/cuddled-loop.test
- create mode 100644 t/chainlint/cuddled.expect
- create mode 100644 t/chainlint/cuddled.test
+ t/chainlint/bash-array.expect  | 10 ++++++++++
+ t/chainlint/bash-array.test    | 12 ++++++++++++
+ t/chainlint/p4-filespec.expect |  4 ++++
+ t/chainlint/p4-filespec.test   |  5 +++++
+ 4 files changed, 31 insertions(+)
+ create mode 100644 t/chainlint/bash-array.expect
+ create mode 100644 t/chainlint/bash-array.test
+ create mode 100644 t/chainlint/p4-filespec.expect
+ create mode 100644 t/chainlint/p4-filespec.test
 
-diff --git a/t/chainlint/cuddled-if-then-else.expect b/t/chainlint/cuddled-if-then-else.expect
+diff --git a/t/chainlint/bash-array.expect b/t/chainlint/bash-array.expect
 new file mode 100644
-index 0000000000..ab2a026fbc
+index 0000000000..c4a830d1c1
 --- /dev/null
-+++ b/t/chainlint/cuddled-if-then-else.expect
-@@ -0,0 +1,7 @@
++++ b/t/chainlint/bash-array.expect
+@@ -0,0 +1,10 @@
 +(
-+if test -z ""; then
-+    echo empty
-+ else
-+    echo bizzy
-+> fi) &&
-+echo foobar
-diff --git a/t/chainlint/cuddled-if-then-else.test b/t/chainlint/cuddled-if-then-else.test
++	foo &&
++	bar=(gumbo stumbo wumbo) &&
++	baz
++>) &&
++(
++	foo &&
++	bar=${#bar[@]} &&
++	baz
++>)
+diff --git a/t/chainlint/bash-array.test b/t/chainlint/bash-array.test
 new file mode 100644
-index 0000000000..eed774a9d6
+index 0000000000..92bbb777b8
 --- /dev/null
-+++ b/t/chainlint/cuddled-if-then-else.test
-@@ -0,0 +1,7 @@
-+# LINT: 'if' cuddled with "(" and ")"; indented with spaces, not tabs
-+(if test -z ""; then
-+    echo empty
-+ else
-+    echo bizzy
-+ fi) &&
-+echo foobar
-diff --git a/t/chainlint/cuddled-loop.expect b/t/chainlint/cuddled-loop.expect
++++ b/t/chainlint/bash-array.test
+@@ -0,0 +1,12 @@
++(
++	foo &&
++# LINT: ")" in Bash array assignment not misinterpreted as subshell-closing ")"
++	bar=(gumbo stumbo wumbo) &&
++	baz
++) &&
++(
++	foo &&
++# LINT: Bash array length operator not misinterpreted as comment
++	bar=${#bar[@]} &&
++	baz
++)
+diff --git a/t/chainlint/p4-filespec.expect b/t/chainlint/p4-filespec.expect
 new file mode 100644
-index 0000000000..8c0260d7f1
+index 0000000000..98b3d881fd
 --- /dev/null
-+++ b/t/chainlint/cuddled-loop.expect
++++ b/t/chainlint/p4-filespec.expect
+@@ -0,0 +1,4 @@
++(
++	p4 print -1 //depot/fiddle#42 >file &&
++	foobar
++>)
+diff --git a/t/chainlint/p4-filespec.test b/t/chainlint/p4-filespec.test
+new file mode 100644
+index 0000000000..4fd2d6e2b8
+--- /dev/null
++++ b/t/chainlint/p4-filespec.test
 @@ -0,0 +1,5 @@
 +(
-+ while read x
-+  do foobar bop || exit 1
-+>  done <file ) &&
-+outside subshell
-diff --git a/t/chainlint/cuddled-loop.test b/t/chainlint/cuddled-loop.test
-new file mode 100644
-index 0000000000..a841d781f0
---- /dev/null
-+++ b/t/chainlint/cuddled-loop.test
-@@ -0,0 +1,7 @@
-+# LINT: 'while' loop cuddled with "(" and ")", with embedded (allowed)
-+# LINT: "|| exit {n}" to exit loop early, and using redirection "<" to feed
-+# LINT: loop; indented with spaces, not tabs
-+( while read x
-+  do foobar bop || exit 1
-+  done <file ) &&
-+outside subshell
-diff --git a/t/chainlint/cuddled.expect b/t/chainlint/cuddled.expect
-new file mode 100644
-index 0000000000..b506d46221
---- /dev/null
-+++ b/t/chainlint/cuddled.expect
-@@ -0,0 +1,21 @@
-+(
-+cd foo &&
-+	bar
-+>) &&
-+
-+(
-+?!AMP?!cd foo
-+	bar
-+>) &&
-+
-+(
-+	cd foo &&
-+>	bar) &&
-+
-+(
-+cd foo &&
-+>	bar) &&
-+
-+(
-+?!AMP?!cd foo
-+>	bar)
-diff --git a/t/chainlint/cuddled.test b/t/chainlint/cuddled.test
-new file mode 100644
-index 0000000000..0499fa4180
---- /dev/null
-+++ b/t/chainlint/cuddled.test
-@@ -0,0 +1,23 @@
-+# LINT: first subshell statement cuddled with opening "("; for implementation
-+# LINT: simplicity, "(..." is split into two lines, "(" and "..."
-+(cd foo &&
-+	bar
-+) &&
-+
-+# LINT: same with missing "&&"
-+(cd foo
-+	bar
-+) &&
-+
-+# LINT: closing ")" cuddled with final subshell statement
-+(
-+	cd foo &&
-+	bar) &&
-+
-+# LINT: "(" and ")" cuddled with first and final subshell statements
-+(cd foo &&
-+	bar) &&
-+
-+# LINT: same with missing "&&"
-+(cd foo
-+	bar)
++# LINT: Perforce revspec in filespec not misinterpreted as in-line comment
++	p4 print -1 //depot/fiddle#42 >file &&
++	foobar
++)
 -- 
 2.18.0.203.gfac676dfb9
 
