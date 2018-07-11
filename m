@@ -6,64 +6,60 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 120341F85D
-	for <e@80x24.org>; Wed, 11 Jul 2018 20:50:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E7471F85D
+	for <e@80x24.org>; Wed, 11 Jul 2018 20:54:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733021AbeGKU4b (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Jul 2018 16:56:31 -0400
-Received: from mail-wr1-f49.google.com ([209.85.221.49]:33387 "EHLO
+        id S1733168AbeGKVAS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Jul 2018 17:00:18 -0400
+Received: from mail-wr1-f49.google.com ([209.85.221.49]:37871 "EHLO
         mail-wr1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726692AbeGKU4b (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jul 2018 16:56:31 -0400
-Received: by mail-wr1-f49.google.com with SMTP id g6-v6so10569980wrp.0
-        for <git@vger.kernel.org>; Wed, 11 Jul 2018 13:50:23 -0700 (PDT)
+        with ESMTP id S1726611AbeGKVAR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jul 2018 17:00:17 -0400
+Received: by mail-wr1-f49.google.com with SMTP id q10-v6so19485343wrd.4
+        for <git@vger.kernel.org>; Wed, 11 Jul 2018 13:54:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=CmBR7AR5YaoQkhkEMDSCwixLOHeP0/VynfwxSGe+AtY=;
-        b=REtrn4YdhAX7VzW+gcSBskEylmmWPn7RF5+uTwJXeVyuNXY/zQHKq/yKAGgTY86M4C
-         uhpJYiQk6MLQMdCgMBkuZ+PKTClbV76QuD/RTqCuNz5Zr/HZxgzGQsRnhUbQQO3w3iZW
-         9TtkYKiSXOTqbUl78r9XjfEVWJKrpgZHQKSeEaMSVYBL7V3+Kl4jHWuQN0WcCXpgOW34
-         WzgvuSENh9OXLRmsvveJMHAFSaPKTND1y/4KNzMEZtrx4XAHw500dOoY89lR1vCNLCpY
-         ahEe+nTT7CfofaGr89ExO3pozKwX8Q81SgOaZLnCrh+hrxAiz79BUES6fqSi1ItwOSeE
-         Xwmg==
+        bh=ZGQ8QE2uezMGDeeMpyimnTn8xaoD1biu+09c1VgQm2I=;
+        b=nWbXU5Jd8Ikb4AmIFliKdwtg2DmuuK51PQBt+arBUGh6zoNiUsLe8+1XVr4kimjSs3
+         0JYANmQbHXLxgkQ3d+QTJbUytws+9SyZo+gXEDajZCKv+BH0pQp0rbIk8burJ5j/BBv5
+         neyt5ByZMqGT5y2vdtimtLKfaNZAj075IBeR4Nc0NgP//o9HtUhVr3HDRiPg3Cj1o2Cq
+         AbQvBxurRhMi4lG6nCDe/t9ziztInbNqm082HF9NXQrnfyIRROj+cBqqBs4TsaJNSWMi
+         vEiVWemCncwMwuu5R33hc79gj67lOdNRZQewPVTrHmj71RP0Wnta808l31iDwSKRMYyU
+         uyEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=CmBR7AR5YaoQkhkEMDSCwixLOHeP0/VynfwxSGe+AtY=;
-        b=st8ZhoH2640H0juynmG58iODTZZWRRZBEqawur45DO+IlwAbI2AKxPWzdBEm+bG5WI
-         h0IDhWLob7rZ99qAQLScPOR3uD1Cbew0ohDNa0teJMF7qQGUkGul0JU9nIWOC7KN9+ih
-         ImQt2JrnKtMYwcgzYyt9ml7yu6vEC/yJBxg6XOPQAD9Iunj5OzpscqB6pRuOtoX1ubcQ
-         CxZi55K6zkxnUfBt6Xj0Rh17hA0Dl6gxU5AF39xOB6GP3GMoe95oPAUVfCxF1+oE8/z3
-         DczGyd077orYXlR2IJsfD4YMKpb83QUeDgZaElJDIzbJZoafUDsUkj1RPWgrAI7gsdo9
-         KQiw==
-X-Gm-Message-State: AOUpUlGnweZjVV6giebR2UaWdfAgziEFQGmeJ0cWhuMgUh/N3WxT5bc6
-        nQEf1Lmh6fC3zzVUL4d5Z0E=
-X-Google-Smtp-Source: AAOMgpfA+zyeP7ZKXfpGhdNk3h8wpVCXJlHwlsMccZ7yLDLSs8Jof8+cz2zMnVXLejHY3Om/dKyoSg==
-X-Received: by 2002:adf:f210:: with SMTP id p16-v6mr134460wro.184.1531342222216;
-        Wed, 11 Jul 2018 13:50:22 -0700 (PDT)
+        bh=ZGQ8QE2uezMGDeeMpyimnTn8xaoD1biu+09c1VgQm2I=;
+        b=sYe09iwNDzRTiHpP2aLADcpzD9+MSE3YQeILLmjtJe+ltHdGT6FXkfHqmMpFDnj8/D
+         3gb5W8QxIx96yauhftGPpvXwp4PiUMXwC2Ck3ZrOs8benLbgUiTWuj3adLnGHnqTd/Yh
+         mRiSXhL/6Ljks+VVQgjprRIFsGP+viJocwTd5akAV8zRyqvKxbHeT75K1KFyPSCJ9f1c
+         uAC4Jq/41arqO8QmrvBWQgsGPpvSbZCcIFyE/TU5ShOHk1U8FRoyGBChpY7t5dbGehuo
+         JvYOVtyl9kclrzd01FF0XgFCvgu5nJ+IQ5DN5veobVc9HFpBmGapEOZkL/MeLodczO3S
+         YFbw==
+X-Gm-Message-State: AOUpUlGVb6rVDTftgPbFi3Ct4fI8gSuQ6V7sA2HR/nwlnMiI0h0IpMrW
+        Ev2SK4ccNnQlfxocTRyE7yg=
+X-Google-Smtp-Source: AAOMgpfIQhzMot8sXGApBOW8AAY1qanAso2mG23AAI2YTEUDyUSthVx4WfFGXWXNk5yRzNLtQg7XKQ==
+X-Received: by 2002:adf:f90d:: with SMTP id b13-v6mr138942wrr.38.1531342448082;
+        Wed, 11 Jul 2018 13:54:08 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id t6-v6sm3016239wrn.97.2018.07.11.13.50.21
+        by smtp.gmail.com with ESMTPSA id g75-v6sm4024165wmd.38.2018.07.11.13.54.07
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 11 Jul 2018 13:50:21 -0700 (PDT)
+        Wed, 11 Jul 2018 13:54:07 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff Felchner <jfelchner1@gmail.com>
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Martin Agren <martin.agren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Oliver Joseph Ash <oliverjash@gmail.com>,
-        Mahmoud Al-Qudsi <mqudsi@neosmart.net>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2] add -p: fix counting empty context lines in edited patches
-References: <20180601174644.13055-1-phillip.wood@talktalk.net>
-        <20180611094602.17469-1-phillip.wood@talktalk.net>
-        <C9B989D9-5148-4AF1-80EB-ADFAE0DB8FF8@gmail.com>
-Date:   Wed, 11 Jul 2018 13:50:21 -0700
-In-Reply-To: <C9B989D9-5148-4AF1-80EB-ADFAE0DB8FF8@gmail.com> (Jeff Felchner's
-        message of "Wed, 11 Jul 2018 15:27:57 -0500")
-Message-ID: <xmqqy3eh1oqa.fsf@gitster-ct.c.googlers.com>
+To:     Andrei Rybak <rybak.a.v@gmail.com>
+Cc:     torvalds@linux-foundation.org, git@vger.kernel.org
+Subject: Re: [RFC PATCH v2] Add 'human' date format
+References: <alpine.LFD.2.21.999.1807071238410.18818@i7.lan>
+        <alpine.LFD.2.21.999.1807071502260.18818@i7.lan>
+        <CACayv=ifE5BQVtxXCVEhS3uO7iz1z+ZPrF3J_n=e-uoYOpwNtA@mail.gmail.com>
+        <CACayv=jM0Q4x=U+4=_YqJHto_ZdZAz8r89xALOcW5a+n9w=LeA@mail.gmail.com>
+Date:   Wed, 11 Jul 2018 13:54:07 -0700
+In-Reply-To: <CACayv=jM0Q4x=U+4=_YqJHto_ZdZAz8r89xALOcW5a+n9w=LeA@mail.gmail.com>
+        (Andrei Rybak's message of "Wed, 11 Jul 2018 22:38:23 +0200")
+Message-ID: <xmqqtvp51ok0.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -72,14 +68,17 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff Felchner <jfelchner1@gmail.com> writes:
+Andrei Rybak <rybak.a.v@gmail.com> writes:
 
-> Hey all, I assumed this was going to be in 2.18, but I'm still having the same issue.  What's the plan for release of this?
+> On Wed, 11 Jul 2018 at 22:34, Andrei Rybak <rybak.a.v@gmail.com> wrote:
+>>
+>> Is -1 an OK initial value for timezone if local_time_tzoffset returns
+>> negative values as well? It looks like it doesn't matter for from functional
+>>
+>
+> meant to say: "It looks like it doesn't matter from the functional
+> point of view".
 
-You assumed wrong ;-)  A patch written on June 11th that is already
-deep into pre-release freeze, unless it is about fixing a regression
-during the same cycle, would never be in the release tagged on 21st.
-
-It is already a part of the 'master' branch after v2.18, so v2.19
-would be the first feature release that would see it (unless we
-discover problems in that change and need to revert it, that is).
+As long as we do not show data in a timezone that is exactly one
+minute ahead (or is it behind???) of UTC, it does not cause an issue
+in practice.
