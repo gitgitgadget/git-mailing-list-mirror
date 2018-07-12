@@ -2,95 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 78FE81F85E
-	for <e@80x24.org>; Thu, 12 Jul 2018 15:23:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B9691F85E
+	for <e@80x24.org>; Thu, 12 Jul 2018 15:23:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732426AbeGLPdG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jul 2018 11:33:06 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:38024 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732418AbeGLPdG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jul 2018 11:33:06 -0400
-Received: by mail-wm0-f65.google.com with SMTP id 69-v6so6442445wmf.3
-        for <git@vger.kernel.org>; Thu, 12 Jul 2018 08:23:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=HjfP0mYD8YxCuELeBCFjR3Sy6LiMCQi7Vol+pSLkXno=;
-        b=RPfoaBYIorHwWGyAN6j31KhxiHg7w+6nigE1RLTmQOgEI2pciMTkIIs6DpNFXegK9h
-         gBblX1/HMeEbRTlIoh/5450UiwUmTe/HMV50bOlTGP3rrDZcxwHH5WTS31Kuu4Tqdx9T
-         p4z5y79Y/IV97SYi4IHmIKC1YiIUvZsuBeyCktQ1bANUDEo0zDz4BW0I8PnUnY2bmiba
-         RAq2cj2OvEYY3ctNvJ2I9vIuUXTRO5j6QDf7kkAa++YkjzLjJ7LGJexHoUKiw6PIEPUa
-         rnQ/yjAn+/JwdHb6Bql+MCRXyLEwDZ1tIvNDhw1r8XwgSigm55b2OQOjCEhqGVCnrbPL
-         Om7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=HjfP0mYD8YxCuELeBCFjR3Sy6LiMCQi7Vol+pSLkXno=;
-        b=BRBY1gfS7HX4qRlAfIWma+ky5NsdJ6MEPQXOS61QRk6hxOyg+7VGX7D3Lh8B+ujUMU
-         BgafXYomYNGW1AowyidFWglgNz7tqhiucqoTL1/KLPym+N1CoYnQqEI8AMJIwDLuVbrd
-         yNXI/dca34ZWBNwskC9SyEZU8JBIsjAEM9I4X47a0hYveyx8bFPEp9UtM28uJqJwCzWR
-         0lvE9v6rPR6BMG0Q7ycSlQD+Tv0InWa3XLcQkkPaAKhtd38OPwDz7eNjEs+NhUwya5wJ
-         qSHRiISQC9nxFHpa2FNBr25Y8hGataW2nq7ANfo8ByE6yCfhhw6Ks/DnOLp8ho5CR55i
-         hTAg==
-X-Gm-Message-State: AOUpUlEqErMtEei80pKi/bkFH8YCUQC5+cVi1TT+guScFCas5BOoGARo
-        WxcKWU34trdaEnN+IeDDaew=
-X-Google-Smtp-Source: AAOMgpeIZHVV8tsgwO+4v1siDnmbH7i9vOMz/t+zLyzHSN15z9lXrbiJBn2PiI2142axTXvk85dj5Q==
-X-Received: by 2002:a1c:1d4d:: with SMTP id d74-v6mr1729361wmd.85.1531408983243;
-        Thu, 12 Jul 2018 08:23:03 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id h5-v6sm13050051wrr.19.2018.07.12.08.23.02
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 12 Jul 2018 08:23:02 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Vitali Lovich <vlovich@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: rev-parse --show-toplevel broken during exec'ed rebase?
-References: <CAF8PYMjub1KK_ZK0hijTNBACSa6SaFyu1dJgrXd5fJU5Hc_dhg@mail.gmail.com>
-Date:   Thu, 12 Jul 2018 08:23:02 -0700
-In-Reply-To: <CAF8PYMjub1KK_ZK0hijTNBACSa6SaFyu1dJgrXd5fJU5Hc_dhg@mail.gmail.com>
-        (Vitali Lovich's message of "Wed, 11 Jul 2018 19:50:47 -0700")
-Message-ID: <xmqq7em01ns9.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1732373AbeGLPds (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jul 2018 11:33:48 -0400
+Received: from mout.gmx.net ([212.227.17.22]:50553 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727366AbeGLPds (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jul 2018 11:33:48 -0400
+Received: from [192.168.0.129] ([37.201.195.126]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M7UUd-1fxlQB3t0J-00xIl6; Thu, 12
+ Jul 2018 17:23:41 +0200
+Date:   Thu, 12 Jul 2018 17:23:24 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: refs/notes/amlog problems, was Re: [PATCH v3 01/20] linear-assignment:
+ a function to solve least-cost assignment problems
+In-Reply-To: <xmqqefg94uq1.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1807121720340.75@tvgsbejvaqbjf.bet>
+References: <cover.1525448066.git.johannes.schindelin@gmx.de> <pull.1.v3.git.gitgitgadget@gmail.com> <39272eefcfe66de3ca1aa2ee43d6626ce558caae.1530617166.git.gitgitgadget@gmail.com> <xmqqtvpcgf40.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1807071320110.75@tvgsbejvaqbjf.bet>
+ <xmqq7em7gg3j.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1807072116570.75@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.1807080017160.75@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.1807092342490.75@tvgsbejvaqbjf.bet> <xmqqefg94uq1.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:/LIf0mallSgH8D+vFrahHMrcB7SW12ld8oOIOfFrCUswGcNTeQU
+ ugY+PETOURhriVcgLGiabd/wndhGGF51kjOZAT/Zp8FxJK9mTAKSKusy+eXP+GU2D0hPvlD
+ Vo/8gePejfACIaOhsnZNZbak66jcVB0/bzlgWCkhipZuOQr3makeHD+Ecz94yPNnV/hGfwD
+ NumLj7YCpmS+mgIOBou0A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:XrYEi2mpQ/Q=:Kxm8sVXhLDV/CJj5+q5nx4
+ A9OF1RoqwjNXGgZhDa0jK6aaL6rLCVnHyHmAI6QjtZ8eHsAnl5Y803yX3Y4iKD3ylPCC7528S
+ M+Rv5o0QKAGzIv1ZGMfemlamMdlAysNdu4aHPHlci4hEBD6vgeLP46aUnCL+zb4i1PKwoJmBh
+ zU2KYmcDbzGYQY9bFS7liVC1lGUARmLiBh8ce0ypvqCgg2Ss7RepsqfDiBX7s7JCcSX6duBiU
+ tsJLnRPlkT1ZXJerUWcAKmCI6VDDRXPZ87qEaKGOmtdhTMQL34FbND4vXufLMP2TezxZbBy7S
+ v1iAuGLxkypPtgThfRzBNQmBlbveSZAesBRjatubrGTQ9r1nc2Nq5VZo0qwvihHwdWSc+H/fm
+ slfSKq2WC/YQeqZVFTa2mI1GJg9YSiKAPuQAAKpid1T18CXQdinlqOw1AXlao3vC7J0fJTqxb
+ DoOoG3pzJfVXPtsxJXRrGoltED5KIHK2EDcy3A40e+CJHbCN8Hh4nZVKdZyrDCZS77yaKYCuI
+ xuVoQpEErT4cPtlJnRCic5+rbBqAyAAI1pgImLZjGwceBnW5wSzC8z5VDp7XbmKdHEm8m7eEh
+ Z4gxv7MkEzHnAO48f+x+uSa+AG17JQP7vLUIq8M8CKQdKWhUScBmCDkIp+8BiQXxeW+t9RhUQ
+ DlLZCMdT0rXJ8to0gCW8JLKhFRtL6Cmyy17YomdELcpoUjbGQhXbT6n6KvfB3iLcjmKztGrP1
+ dYDO3KlkaT1B91vdA3f0WJ7Z2SrGSIGAJPM1N+HyBUxsk7+t0iPB1AyCHyHHnS6rShQsfxP5o
+ haSTOc2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Vitali Lovich <vlovich@gmail.com> writes:
+Hi Junio,
 
-> Repro (starting with cwd within git project):
->> (cd xdiff; git rev-parse --show-toplevel)
-> ... path to git repository
->> git rebase -i 18404434bf406f6a6f892ed73320c5cf9cc187dd
-> # Stop at some commit for editing
->> (cd xdiff; git rev-parse --show-toplevel)
-> ... path to git repository
->> git rebase 18404434bf406f6a6f892ed73320c5cf9cc187dd -x "(cd xdiff; git rev-parse --show-toplevel)"
-> ... path to git repository/xdiff !!!
->
-> This seems like incorrect behaviour to me since it's a weird
-> inconsistency (even with other rebase contexts) & the documentation
-> says "Show the absolute path of the top-level directory." with no
-> caveats.
+On Wed, 11 Jul 2018, Junio C Hamano wrote:
 
-Does it reproduce with older rebase (say from v2.10 days), too?
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > To summarize, there are two commits recorded for that Message-Id, the
+> > later one not mapped back, and neither is the correct commit that made it
+> > into `master`.
+> >
+> > It would be nice to figure out what went wrong there, and how to fix it
+> > for the future (and also to fix up the existing mis-mappings in `amlog`).
+> 
+> I think what happened is that I used to have post-rewrite, but
+> because it did not solve the real issue of multiple commits existing
+> for the same message ID (either because of amending, or because of
+> running "am" multiple times while looking for the best base to
+> contruct a topic branch for the series that contains it) *and* the
+> one that will eventually used in the final history may not be the
+> last one (e.g. I may "am" twice to see if an older base I use in my
+> second attempt is a better one than the base I originally used, and
+> the patches may even apply cleanly to the older history, but may
+> turn out to need semantic adjustment, at which point I would discard
+> that second attempt and use the old commit from the first attempt
+> that built on a newer base), I stopped using it.
+> 
+> The mid-to-commit, for it to be relialble, needs to keep mapping for
+> all the commits created from a single message, instead of being the
+> last-one-survives mapping.  I just didn't have that much interest
+> back when I decided it was not worth and dropped the post-rewrite, I
+> think.
 
-I suspect that the above is because "git rebase" is exporting
-GIT_DIR without exporting GIT_WORK_TREE.  When the former is given
-without the latter, that tells Git that you are at the top-level of
-the working tree (if that is not the case, you also export the
-latter to tell Git where the top-level is).  
+I would like to ask you to reinstate the post-rewrite hook, as it still
+improves the situation over the current one.
 
-I suspect that "git rebase" before the ongoing piecemeal rewrite to
-C started (or scripted Porcelain in general) refrained from
-exporting GIT_DIR to the environment, and if my suspicion is correct,
-older "git rebase" would behave differently to your test case.
+Of course, it would be nice to get the automation into a shape where
+the mappings in `refs/notes/amlog` of commits that hit `next` are fixed,
+if necessary, to stop referring to commits that did not make it into
+`next`.
+
+Because the *concept* of `amlog` is quite useful, to put back at least
+*some* of the information we lost by transiting Git commits via mails
+without any connection to their original commits. It is still the most
+annoying thing when I contribute patches myself.
+
+Ciao,
+Dscho
