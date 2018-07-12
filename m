@@ -2,109 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BAB281F85E
-	for <e@80x24.org>; Thu, 12 Jul 2018 17:43:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 110C51F85E
+	for <e@80x24.org>; Thu, 12 Jul 2018 17:45:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726444AbeGLRyH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jul 2018 13:54:07 -0400
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:46250 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726416AbeGLRyH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jul 2018 13:54:07 -0400
-Received: by mail-qt0-f196.google.com with SMTP id d4-v6so9331223qtn.13
-        for <git@vger.kernel.org>; Thu, 12 Jul 2018 10:43:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=lKV5MujpvqAiT0R7OYSni6e4oMK7hn8d8LToTt47OxU=;
-        b=cN2iR52Os+oTsTqROyGTyxBExxC7ssqR7XuGUDhm0KmNtayFR4W82ufUKBdRNuKTUj
-         B7S681qB+4dBTB6kOLh61OWMhTI5e7qg91ZLOLZrL8bYAlQ/flx4bNMtWdm+fgp7+iwb
-         xDJCEfvIFVfdHZmRhnrKf+yrTrpWwSp1nWJXhTiu5JSzMd/3G8oXwLRqUmWPcSD0sHyB
-         slJfuqFbuziZcbJN84crhPpu1GBJwuRVW1RFtnbeFDoxAJ2C4h6ir3Dm9k2nIZaMJeLi
-         82BcEaDqTHZXj58E64AHQzGueEQAlmGPDUSRLcMEVG4Gw0AjAtLENQG33UDeegMlgweh
-         +oEA==
+        id S1726443AbeGLRzg convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 12 Jul 2018 13:55:36 -0400
+Received: from mail-yw0-f194.google.com ([209.85.161.194]:40550 "EHLO
+        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726416AbeGLRzg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jul 2018 13:55:36 -0400
+Received: by mail-yw0-f194.google.com with SMTP id p129-v6so10750435ywg.7
+        for <git@vger.kernel.org>; Thu, 12 Jul 2018 10:45:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=lKV5MujpvqAiT0R7OYSni6e4oMK7hn8d8LToTt47OxU=;
-        b=W6gn+1oXfV+pYKTxPufiiHHfk37Tq9Il8XGrfLKlhde8uju9WbDw5cdbh5dfDxsh5L
-         c6uZV3A1lam30JdZ9GgLZ2Vu/NnTJxz34tW/2hhdcA1ggv1b3xpKDyVm8roVgAoUrbCB
-         1Wv5fnV4oCfr6H4TRAGMTwEWCVMud4Zhyo9E791DQbeBmU9KYn4eQWaPc3/CLZWzIu2b
-         d74Vu4hSlJMCZ6eLRnEWLO5IJuYplL8HutdSrpwF9nvvAC7qnmzruJAW9PnHpY3Omj75
-         wKtMxMQmyTnZvqndND7To3fZD0tFkYNzMB7NHskhEy2GaHncQpI8e955YOY2xF2NVRbZ
-         /GyQ==
-X-Gm-Message-State: AOUpUlEPo/hHhFrOeIiA0Ef1uaRyMpVfgbt5UmKu80ppcFu+e1boqxS3
-        pK1xJpAaNjjJTiNfv1ylWECmm7fu
-X-Google-Smtp-Source: AAOMgpdu8nX4xA9ZCxfpXCbT6l1BRYxSarXpsqgmKlkYIznerPhYdc4GLjGLlgSta6DIb1k07YPo8A==
-X-Received: by 2002:ac8:3579:: with SMTP id z54-v6mr2670735qtb.161.1531417411952;
-        Thu, 12 Jul 2018 10:43:31 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:7999:2a5f:44db:50fd? ([2001:4898:8010:0:62cf:2a5f:44db:50fd])
-        by smtp.gmail.com with ESMTPSA id g39-v6sm2552883qtb.47.2018.07.12.10.43.31
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 12 Jul 2018 10:43:31 -0700 (PDT)
-Subject: Re: [PATCH v3 0/6] Object store refactoring: commit graph
-To:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-References: <cover.1529616356.git.jonathantanmy@google.com>
- <cover.1531348540.git.jonathantanmy@google.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <b9d9df97-c950-fec3-83dd-aed32441dae0@gmail.com>
-Date:   Thu, 12 Jul 2018 13:43:28 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=7WlYNX5bqU6LN5iKh8FjzI0UJt0bu7rOGxPL1zKB0l0=;
+        b=Ci9jbD8iwtRiocLZtD9gjUfbct3rvtenQ1A6EiBqFy6u2SZBfZG3e2yFXEy7IxqIZ9
+         fscF9iXxjV9nPYua6gH6erm+AsvKczmwkwcWeIrojCcCvMdEnjref8T4Ht5ttfK1H4Ou
+         uSxcm8ZydKrxjyUEQoamK8SZJES7vUTVyfdlx2Aw4I5cCgUSRh4vDfDA/CcI3G0ALEK0
+         9pYwRyG2MOJ/ytu2UulbtbbxPJhiMph3ewdcKoGbhlaf9vuBt94a0Oi1Zylzxqw1a5f7
+         30bMYudwgrVVaPg70jaoeI7v1q2uZZN6pkAVOYQ5FKs4ChmuzREx8UA2W6u0wCIe0KQN
+         W/zA==
+X-Gm-Message-State: AOUpUlFCPRQEw8hMPf83UDrq/6OIBegJmOoqYbjpuQvJCbb0TnGdeMyn
+        +7HGa02fu+DNkF9nW0dnpUUAM3ULf6TPcCYgoSc=
+X-Google-Smtp-Source: AAOMgpfRONdIxrxVrwQ40AFYrPpuUpw158CXL5q1N4t9GyrRkWCVB9OXbmvrudWcImJgrAB9hFuuSDAOU9YPj4UST68=
+X-Received: by 2002:a0d:c105:: with SMTP id c5-v6mr1613788ywd.131.1531417500900;
+ Thu, 12 Jul 2018 10:45:00 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <cover.1531348540.git.jonathantanmy@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+References: <20180702002405.3042-1-sunshine@sunshineco.com>
+ <20180702002405.3042-22-sunshine@sunshineco.com> <20180712123729.17861-1-szeder.dev@gmail.com>
+In-Reply-To: <20180712123729.17861-1-szeder.dev@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 12 Jul 2018 13:44:49 -0400
+Message-ID: <CAPig+cRYNo_KL02LN1LOa79Zm2oYZqbnBHJ=KDA3oaF4pVfjcA@mail.gmail.com>
+Subject: Re: [PATCH 21/25] t5000-t5999: fix broken &&-chains
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Luke Diamand <luke@diamand.org>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/11/2018 6:42 PM, Jonathan Tan wrote:
-> This is on _both_ ds/commit-graph-fsck and sb/object-store-lookup,
-> following Stolee's suggestion.
+On Thu, Jul 12, 2018 at 8:37 AM SZEDER Gábor <szeder.dev@gmail.com> wrote:
+> The change below should be squashed into this patch to fix a
+> previously unnoticed broken &&-chain.  I think you missed it, because
+> this test script is rather expensive and you didn't run it with
+> GIT_TEST_CLONE_2GB=YesPlease.
 >
-> (It also seems better to build it this way to me, since both these
-> branches are going into "next" according to the latest What's Cooking.)
->
-> Junio wrote in [1]:
->
->> I've added SQUASH??? patch at the tip of each of the above,
->> rebuilt 'pu' with them and pushed the result out.  It seems that
->> Travis is happier with the result.
->>
->> Please do not forget to squash them in when/if rerolling.  If there
->> is no need to change anything else other than squashing them, you
->> can tell me to which commit in your series the fix needs to be
->> squashed in (that would save me time to figure it out, obviously).
-> I'm rerolling because I also need to update the last patch with the new
-> lookup_commit() function signature that Stefan's sb/object-store-lookup
-> introduces. I have squashed the SQUASH??? patch into the corresponding
-> patch in this patch set.
->
-> Changes from v2:
->   - now also based on sb/object-store-lookup in addition to
->     ds/commit-graph-fsck (I rebased ds/commit-graph-fsck onto
->     sb-object-store-lookup, then rebased this patch set onto the result)
->   - patches 1-5 are unchanged
->   - patch 6:
->     - used "PRItime" instead of "ul" when printing a timestamp (the
->       SQUASH??? patch)
->     - updated invocations of lookup_commit() to take a repository object
->
-> [1] https://public-inbox.org/git/xmqqpnzt1myi.fsf@gitster-ct.c.googlers.com/
+> diff --git a/t/t5608-clone-2gb.sh b/t/t5608-clone-2gb.sh
+> @@ -23,7 +23,7 @@ test_expect_success CLONE_2GB 'setup' '
+> -               echo "M 100644 :$i $i" >> commit
+> +               echo "M 100644 :$i $i" >> commit &&
 
-I re-read the patch series and think you addressed all feedback. I have 
-no more to add.
+Thanks for finding this. I tried to get as much coverage as possible
+by installing packages I don't normally have installed (Apache, cvs,
+cvsps, Subversion, Perforce, etc.) and even temporarily modified a
+script or two to force it run when I simply couldn't meet some
+prerequisite, thus reducing the "skipped" messages to a minimum, but I
+wasn't even aware of this prerequisite since I never saw a "skipped"
+message for it.
 
-Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
-
+Looking at it more closely, I think the reason it didn't come to my
+attention is that this script doesn't use the standard skip_all="..."
+mechanism for skipping the tests but instead "rolls its own", and
+apparently 'prove' simply swallowed (or was unable to produce) an
+overall "skipped" message for this script.
