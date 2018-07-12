@@ -2,104 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B9691F85E
-	for <e@80x24.org>; Thu, 12 Jul 2018 15:23:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 91CC11F85E
+	for <e@80x24.org>; Thu, 12 Jul 2018 15:32:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732373AbeGLPds (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jul 2018 11:33:48 -0400
-Received: from mout.gmx.net ([212.227.17.22]:50553 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727366AbeGLPds (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jul 2018 11:33:48 -0400
-Received: from [192.168.0.129] ([37.201.195.126]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M7UUd-1fxlQB3t0J-00xIl6; Thu, 12
- Jul 2018 17:23:41 +0200
-Date:   Thu, 12 Jul 2018 17:23:24 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
+        id S1732402AbeGLPmb (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jul 2018 11:42:31 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:39104 "EHLO
+        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732384AbeGLPmb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jul 2018 11:42:31 -0400
+Received: from [10.0.2.15] ([80.189.70.183])
+        by smtp with ESMTPA
+        id ddZxfSLdPjlDzddZyfTDah; Thu, 12 Jul 2018 16:32:27 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=GrdsBH9C c=1 sm=1 tr=0
+ a=6SF67mWK+VR8hB1Kjo6y2g==:117 a=6SF67mWK+VR8hB1Kjo6y2g==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=7vvq5RCAhBOpVVYpc8cA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: refs/notes/amlog problems, was Re: [PATCH v3 01/20] linear-assignment:
- a function to solve least-cost assignment problems
-In-Reply-To: <xmqqefg94uq1.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1807121720340.75@tvgsbejvaqbjf.bet>
-References: <cover.1525448066.git.johannes.schindelin@gmx.de> <pull.1.v3.git.gitgitgadget@gmail.com> <39272eefcfe66de3ca1aa2ee43d6626ce558caae.1530617166.git.gitgitgadget@gmail.com> <xmqqtvpcgf40.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1807071320110.75@tvgsbejvaqbjf.bet>
- <xmqq7em7gg3j.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1807072116570.75@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.1807080017160.75@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.1807092342490.75@tvgsbejvaqbjf.bet> <xmqqefg94uq1.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+Cc:     Elijah Newren <newren@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] t6036: fix broken && chain in sub-shell
+Message-ID: <c9201ced-34a8-98f4-2da6-9c36c408b501@ramsayjones.plus.com>
+Date:   Thu, 12 Jul 2018 16:32:25 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:/LIf0mallSgH8D+vFrahHMrcB7SW12ld8oOIOfFrCUswGcNTeQU
- ugY+PETOURhriVcgLGiabd/wndhGGF51kjOZAT/Zp8FxJK9mTAKSKusy+eXP+GU2D0hPvlD
- Vo/8gePejfACIaOhsnZNZbak66jcVB0/bzlgWCkhipZuOQr3makeHD+Ecz94yPNnV/hGfwD
- NumLj7YCpmS+mgIOBou0A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:XrYEi2mpQ/Q=:Kxm8sVXhLDV/CJj5+q5nx4
- A9OF1RoqwjNXGgZhDa0jK6aaL6rLCVnHyHmAI6QjtZ8eHsAnl5Y803yX3Y4iKD3ylPCC7528S
- M+Rv5o0QKAGzIv1ZGMfemlamMdlAysNdu4aHPHlci4hEBD6vgeLP46aUnCL+zb4i1PKwoJmBh
- zU2KYmcDbzGYQY9bFS7liVC1lGUARmLiBh8ce0ypvqCgg2Ss7RepsqfDiBX7s7JCcSX6duBiU
- tsJLnRPlkT1ZXJerUWcAKmCI6VDDRXPZ87qEaKGOmtdhTMQL34FbND4vXufLMP2TezxZbBy7S
- v1iAuGLxkypPtgThfRzBNQmBlbveSZAesBRjatubrGTQ9r1nc2Nq5VZo0qwvihHwdWSc+H/fm
- slfSKq2WC/YQeqZVFTa2mI1GJg9YSiKAPuQAAKpid1T18CXQdinlqOw1AXlao3vC7J0fJTqxb
- DoOoG3pzJfVXPtsxJXRrGoltED5KIHK2EDcy3A40e+CJHbCN8Hh4nZVKdZyrDCZS77yaKYCuI
- xuVoQpEErT4cPtlJnRCic5+rbBqAyAAI1pgImLZjGwceBnW5wSzC8z5VDp7XbmKdHEm8m7eEh
- Z4gxv7MkEzHnAO48f+x+uSa+AG17JQP7vLUIq8M8CKQdKWhUScBmCDkIp+8BiQXxeW+t9RhUQ
- DlLZCMdT0rXJ8to0gCW8JLKhFRtL6Cmyy17YomdELcpoUjbGQhXbT6n6KvfB3iLcjmKztGrP1
- dYDO3KlkaT1B91vdA3f0WJ7Z2SrGSIGAJPM1N+HyBUxsk7+t0iPB1AyCHyHHnS6rShQsfxP5o
- haSTOc2
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfNiTbooyI8y1wfCyq98goNP30ApSeJiQ8H9rk2f2xt1WDpvW6WHQfvLg0valwJZ0rJVjZcUZ+b5jkwYSkDWA7CxBGNRVEFdrGrw2/uLRtALPjQQinO5c
+ 7CIQjpdMNcsRheooGbDt3/LMQ/0hQ5Xpsl/nxs6cnBYV0poor1OgYUJZqKyNXX37Nd6bRaeX94VSPA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
+
 Hi Junio,
 
-On Wed, 11 Jul 2018, Junio C Hamano wrote:
+I had a test failure on 'pu' today - Eric's chain-lint series
+found another broken chain in one of Elijah's new tests (on the
+'en/t6036-recursive-corner-cases' branch).
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > To summarize, there are two commits recorded for that Message-Id, the
-> > later one not mapped back, and neither is the correct commit that made it
-> > into `master`.
-> >
-> > It would be nice to figure out what went wrong there, and how to fix it
-> > for the future (and also to fix up the existing mis-mappings in `amlog`).
-> 
-> I think what happened is that I used to have post-rewrite, but
-> because it did not solve the real issue of multiple commits existing
-> for the same message ID (either because of amending, or because of
-> running "am" multiple times while looking for the best base to
-> contruct a topic branch for the series that contains it) *and* the
-> one that will eventually used in the final history may not be the
-> last one (e.g. I may "am" twice to see if an older base I use in my
-> second attempt is a better one than the base I originally used, and
-> the patches may even apply cleanly to the older history, but may
-> turn out to need semantic adjustment, at which point I would discard
-> that second attempt and use the old commit from the first attempt
-> that built on a newer base), I stopped using it.
-> 
-> The mid-to-commit, for it to be relialble, needs to keep mapping for
-> all the commits created from a single message, instead of being the
-> last-one-survives mapping.  I just didn't have that much interest
-> back when I decided it was not worth and dropped the post-rewrite, I
-> think.
+ATB,
+Ramsay Jones
 
-I would like to ask you to reinstate the post-rewrite hook, as it still
-improves the situation over the current one.
+ t/t6036-recursive-corner-cases.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Of course, it would be nice to get the automation into a shape where
-the mappings in `refs/notes/amlog` of commits that hit `next` are fixed,
-if necessary, to stop referring to commits that did not make it into
-`next`.
-
-Because the *concept* of `amlog` is quite useful, to put back at least
-*some* of the information we lost by transiting Git commits via mails
-without any connection to their original commits. It is still the most
-annoying thing when I contribute patches myself.
-
-Ciao,
-Dscho
+diff --git a/t/t6036-recursive-corner-cases.sh b/t/t6036-recursive-corner-cases.sh
+index 2a44acace..59e52c5a0 100755
+--- a/t/t6036-recursive-corner-cases.sh
++++ b/t/t6036-recursive-corner-cases.sh
+@@ -495,7 +495,7 @@ test_expect_success 'setup differently handled merges of directory/file conflict
+ 		test_write_lines 1 2 3 4 5 6 7 8 >a &&
+ 		git add a &&
+ 		git commit -m E3 &&
+-		git tag E3
++		git tag E3 &&
+ 
+ 		git checkout C^0 &&
+ 		test_must_fail git merge B^0 &&
+-- 
+2.18.0
