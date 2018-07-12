@@ -2,191 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F04801F85E
-	for <e@80x24.org>; Thu, 12 Jul 2018 19:48:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F7C21F85E
+	for <e@80x24.org>; Thu, 12 Jul 2018 19:53:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732399AbeGLT7O (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jul 2018 15:59:14 -0400
-Received: from mail-yb0-f202.google.com ([209.85.213.202]:51125 "EHLO
-        mail-yb0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732373AbeGLT7O (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jul 2018 15:59:14 -0400
-Received: by mail-yb0-f202.google.com with SMTP id x13-v6so26780317ybl.17
-        for <git@vger.kernel.org>; Thu, 12 Jul 2018 12:48:12 -0700 (PDT)
+        id S1732399AbeGLUET (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jul 2018 16:04:19 -0400
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:50213 "EHLO
+        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732204AbeGLUET (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jul 2018 16:04:19 -0400
+Received: by mail-wm0-f52.google.com with SMTP id v25-v6so6730498wmc.0
+        for <git@vger.kernel.org>; Thu, 12 Jul 2018 12:53:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
-         :cc;
-        bh=NG7ID0myn141RVkG4i89dUF6diIO4kdcmAfRcFzNp0A=;
-        b=GBTuCBjm9hkQdzpJla+9F8FXl+Pj5MDhoXYRTPbF0WFAs15m3fjrt/7VtL7otNkcfL
-         dN5HqhMuLYseS+p3mmDE6LcWqTaqxrRJeH/9SfIZN/Pk1U3MkbaBjuJ+nqNUqkoIAhhQ
-         70vMTCPjjAn1OuT5qh9BbwVSDiOfcwY6L0Wfka7F1jdcluZFpc/e8XYmNWQKpq8G3/Vj
-         uuxpyUDYyGkxkqj5SCawgmSppCFzq8tKmIPGtPMRd0w/7snZyAqSA34TFsyx8OCBlHk9
-         8LeEg51Gl5Ql97eFswupiBAzh747X16hxnu2xeBKir45j4baXhwtLuw0FMwzRXvlBz73
-         f2gw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=v6JD0xD25AT98hBkt3/izPKyxVlEEnam4BQaqKS4Fx0=;
+        b=LV06SGjzR2owFhQxncquhYWZ3uho+t242LOa3HT1ifd3r5xmXThqbGAAr/TopY7Qld
+         /u8BbDHDrrFhq/ohAEwZJ+OBoEQSIMAY0Ue+dqQAo7GS79FOnKXNrCjHG0SUsJLgiSLp
+         E4rS9EFg3t4Yk6ZmETYJJfkIYqThjtLaT1hH5lDTVRVyBIdYqEZXVq1Cp7/OmdEPoKdK
+         6p0aokuZaUe71juC0oLZrjUyHEjeb0Q6rt+AIx9VyVbVrBL2IkmaUBa306MYfMcCn14i
+         Nrl+dgHmeZ696BYwCESFXrClt4XuhDtasgHXxtvUPZYoccHyNKpslMkOKJiikB3yrVbf
+         8WHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
-         :references:subject:from:to:cc;
-        bh=NG7ID0myn141RVkG4i89dUF6diIO4kdcmAfRcFzNp0A=;
-        b=oofaDBnAqQ4URk5pMYWBz8pvconbcL85Fc22xylRveiG+ubfA2F4yHXOhIrUWHSXHa
-         bsN3Ji2OGFsqgbGgzdknOnTjKYf4gVCC1pAIgS0IO5dFw/1qrQ9I4bnaqmDvLChBiNxV
-         2ALB14JexN8Ny7scI6hWDRcCF/embo/eA+INpAUmZAgGv4AjlTGtuLVDH7CDLlpvbtYf
-         FHrYMfLMVIM82hQFjcPwGOMYyEfjJ2IRxPW3AaV1WW5WNDIb42b/28D57NkWLGs7KKS3
-         ilQJPpADSuXUUaiufX/3B8cQTjPN90lFpuB4mrCt6t/HH6gKqHgeMyA7Y6Djm10hTZKD
-         F/UQ==
-X-Gm-Message-State: AOUpUlEeUXqQQSAiuSuSyqUZxDBNjPFDO2aemoGA1La3lnc9MEXXWxGY
-        kdtR9WqtGvv+B/wxWLdZcubf3U4TD4uvQQn/YVFQr1zSMTgb5GvQJLgaw07XNVbBrFpoZOv/3WK
-        NgvP8noObk+pL1qtv7zinPjdPijwSEk9Y0g3Lr8tWxGPSGwu97xAZbz1yOoad
-X-Google-Smtp-Source: AAOMgpe7/2bsoqZm1/n0kIPNXDPOJ+6YeR540oD0T3Gm50IBq4mADGeTKWtVwuXrEnTQ/mE0GHeTfJFoo0Um
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=v6JD0xD25AT98hBkt3/izPKyxVlEEnam4BQaqKS4Fx0=;
+        b=tGRQm2OxZslepeJ9Vkfkdb8lWbp/+Wfdz8szdqmcrqrszpuA99brh7oFKUQxYKMypB
+         4nH7jxmAbEIll6utrMF7jdGPn7rTGdnqHzCJdZACXmsk7EHBQXGVVjbJ67QLGZ8eYxt1
+         2YGtAsg05x0P8T03iTqM7z0Co8mR1K6BpPQJLLj3wARekBWQ1FpZK1iZ9VnO77pOQjsn
+         TMdxc1wNeWQlIFlHEsrArLGOK0n2y0XKW7w1Lk39fIfCb7FsTOhXl3kyxfZdYzvMO1qy
+         09ez+sMU1LwUFXshatUE9qZus0FR5CJeZHo1u8sMy9OT3XSOzwq+lZj+qi9VT5Dycq6I
+         J3Cw==
+X-Gm-Message-State: AOUpUlFsGTOpWyDxkLpYs1CFvWH4OWbknTb4l3uUlfmXYEVMOseHC0Gp
+        SokYjEn/4+HriMKAROb0IEg=
+X-Google-Smtp-Source: AAOMgpeixBiFvStSe1kvhCPtaJaOSWDaX8YnybrxGG1bvY3t9iJ+dj6LFbWwlhOA50wZkbSHor2b0Q==
+X-Received: by 2002:a1c:ae8d:: with SMTP id x135-v6mr2146260wme.20.1531425194289;
+        Thu, 12 Jul 2018 12:53:14 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id r14-v6sm30555541wrl.4.2018.07.12.12.53.13
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 12 Jul 2018 12:53:13 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ben Peart <Ben.Peart@microsoft.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
+        "sbeller\@google.com" <sbeller@google.com>,
+        "johannes.schindelin\@gmx.de" <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v3] handle lower case drive letters on Windows
+References: <20180711175420.16940-1-benpeart@microsoft.com>
+        <20180712154419.18100-1-benpeart@microsoft.com>
+        <xmqqr2k8w9n2.fsf@gitster-ct.c.googlers.com>
+        <BL0PR2101MB1012EDB64112A8805A2C3D82F4590@BL0PR2101MB1012.namprd21.prod.outlook.com>
+Date:   Thu, 12 Jul 2018 12:53:13 -0700
+In-Reply-To: <BL0PR2101MB1012EDB64112A8805A2C3D82F4590@BL0PR2101MB1012.namprd21.prod.outlook.com>
+        (Ben Peart's message of "Thu, 12 Jul 2018 19:23:23 +0000")
+Message-ID: <xmqqmuuww7rq.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-X-Received: by 2002:a81:3788:: with SMTP id e130-v6mr1170435ywa.172.1531424891950;
- Thu, 12 Jul 2018 12:48:11 -0700 (PDT)
-Date:   Thu, 12 Jul 2018 12:47:54 -0700
-In-Reply-To: <20180712194754.71979-1-sbeller@google.com>
-Message-Id: <20180712194754.71979-7-sbeller@google.com>
-References: <20180712194754.71979-1-sbeller@google.com>
-X-Mailer: git-send-email 2.18.0.203.gfac676dfb9-goog
-Subject: [PATCH 6/6] submodule--helper: introduce new update-module-mode helper
-From:   Stefan Beller <sbeller@google.com>
-To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This chews off a bit of the shell part of the update command in
-git-submodule.sh. When writing the C code, keep in mind that the
-submodule--helper part will go away eventually and we want to have
-a C function that is able to determine the submodule update strategy,
-it as a nicety, make determine_submodule_update_strategy accessible
-for arbitrary repositories.
+Ben Peart <Ben.Peart@microsoft.com> writes:
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- builtin/submodule--helper.c | 61 +++++++++++++++++++++++++++++++++++++
- git-submodule.sh            | 16 +---------
- 2 files changed, 62 insertions(+), 15 deletions(-)
+>> -----Original Message-----
+>> From: Junio C Hamano <jch2355@gmail.com> On Behalf Of Junio C Hamano
+>> Sent: Thursday, July 12, 2018 3:13 PM
+>> To: Ben Peart <Ben.Peart@microsoft.com>
+>> Cc: git@vger.kernel.org; sbeller@google.com; johannes.schindelin@gmx.de
+>> Subject: Re: [PATCH v3] handle lower case drive letters on Windows
+>> 
+>> Ben Peart <Ben.Peart@microsoft.com> writes:
+>> 
+>> > On Windows, if a tool calls SetCurrentDirectory with a lower case drive
+>> > letter, the subsequent call to GetCurrentDirectory will return the same
+>> > lower case drive letter. Powershell, for example, does not normalize the
+>> > path. If that happens, test-drop-caches will error out as it does not
+>> > correctly to handle lower case drive letters.
+>> >
+>> > Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> > Signed-off-by: Ben Peart <Ben.Peart@microsoft.com>
+>> > ---
+>> 
+>> Thanks.  Will replace, even though showing the whole Buffer (I am
+>> guessing it is the equivalent of result from getcwd(3) call) and
+>> complaining about drive "letter" feels a bit strange ;-)
+>> 
+>
+> Thanks.  I thought it was strange as well until I realized you only see the
+> error message if there _isn't_ a valid drive letter so seeing the entire
+> path makes sense as it will likely be something like "\\server\volume\directory"
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 4bbf580df79..e53231cf286 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -1444,6 +1444,66 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 	return 0;
- }
- 
-+static void determine_submodule_update_strategy(struct repository *r,
-+						int just_cloned,
-+						const char *path,
-+						const char *update,
-+						struct submodule_update_strategy *out)
-+{
-+	const struct submodule *sub = submodule_from_path(r, &null_oid, path);
-+	char *key;
-+	const char *val;
-+
-+	key = xstrfmt("submodule.%s.update", sub->name);
-+
-+	if (update) {
-+		trace_printf("parsing update");
-+		if (parse_submodule_update_strategy(update, out) < 0)
-+			die(_("Invalid update mode '%s' for submodule path '%s'"),
-+				update, path);
-+	} else if (!repo_config_get_string_const(r, key, &val)) {
-+		if (parse_submodule_update_strategy(val, out) < 0)
-+			die(_("Invalid update mode '%s' configured for submodule path '%s'"),
-+				val, path);
-+	} else if (sub->update_strategy.type != SM_UPDATE_UNSPECIFIED) {
-+		trace_printf("loaded thing");
-+		out->type = sub->update_strategy.type;
-+		out->command = sub->update_strategy.command;
-+	} else
-+		out->type = SM_UPDATE_CHECKOUT;
-+
-+	if (just_cloned &&
-+	    (out->type == SM_UPDATE_MERGE ||
-+	     out->type == SM_UPDATE_REBASE ||
-+	     out->type == SM_UPDATE_NONE))
-+		out->type = SM_UPDATE_CHECKOUT;
-+
-+	free(key);
-+}
-+
-+static int module_update_module_mode(int argc, const char **argv, const char *prefix)
-+{
-+	const char *path, *update = NULL;
-+	int just_cloned;
-+	struct submodule_update_strategy update_strategy = { .type = SM_UPDATE_CHECKOUT };
-+
-+	if (argc < 3 || argc > 4)
-+		die("submodule--helper update-module-clone expects <just-cloned> <path> [<update>]");
-+
-+	just_cloned = git_config_int("just_cloned", argv[1]);
-+	path = argv[2];
-+
-+	if (argc == 4)
-+		update = argv[3];
-+
-+	determine_submodule_update_strategy(the_repository,
-+					    just_cloned, path, update,
-+					    &update_strategy);
-+	fprintf(stdout, submodule_strategy_to_string(&update_strategy));
-+
-+	return 0;
-+}
-+
- struct submodule_update_clone_information {
- 	const struct submodule *sub;
- 	struct object_id oid;
-@@ -2039,6 +2099,7 @@ static struct cmd_struct commands[] = {
- 	{"list", module_list, 0},
- 	{"name", module_name, 0},
- 	{"clone", module_clone, 0},
-+	{"update-module-mode", module_update_module_mode, 0},
- 	{"update-clone", update_clone, 0},
- 	{"relative-path", resolve_relative_path, 0},
- 	{"resolve-relative-url", resolve_relative_url, 0},
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 56588aa304d..215760898ce 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -535,27 +535,13 @@ cmd_update()
- 	do
- 		die_if_unmatched "$quickabort" "$sha1"
- 
--		name=$(git submodule--helper name "$sm_path") || exit
--		if ! test -z "$update"
--		then
--			update_module=$update
--		else
--			update_module=$(git config submodule."$name".update)
--			if test -z "$update_module"
--			then
--				update_module="checkout"
--			fi
--		fi
-+		update_module=$(git submodule--helper update-module-mode $just_cloned "$sm_path" $update)
- 
- 		displaypath=$(git submodule--helper relative-path "$prefix$sm_path" "$wt_prefix")
- 
- 		if test $just_cloned -eq 1
- 		then
- 			subsha1=
--			case "$update_module" in
--			merge | rebase | none)
--				update_module=checkout ;;
--			esac
- 		else
- 			subsha1=$(sanitize_submodule_env; cd "$sm_path" &&
- 				git rev-parse --verify HEAD) ||
--- 
-2.18.0.203.gfac676dfb9-goog
+Yup, that is why I thought Dscho meant to say something like
+
+	"'%s': path without valid drive prefix"
+
+in my response ;-)
 
