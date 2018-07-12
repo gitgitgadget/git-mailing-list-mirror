@@ -2,206 +2,187 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 11A5C1F85E
-	for <e@80x24.org>; Thu, 12 Jul 2018 19:05:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 370151F85E
+	for <e@80x24.org>; Thu, 12 Jul 2018 19:10:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726709AbeGLTP5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jul 2018 15:15:57 -0400
-Received: from mail-qk0-f201.google.com ([209.85.220.201]:41612 "EHLO
-        mail-qk0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726629AbeGLTP5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jul 2018 15:15:57 -0400
-Received: by mail-qk0-f201.google.com with SMTP id 123-v6so33740771qkg.8
-        for <git@vger.kernel.org>; Thu, 12 Jul 2018 12:05:05 -0700 (PDT)
+        id S1726856AbeGLTUx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jul 2018 15:20:53 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:36950 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726480AbeGLTUx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jul 2018 15:20:53 -0400
+Received: by mail-wr1-f67.google.com with SMTP id q10-v6so22764233wrd.4
+        for <git@vger.kernel.org>; Thu, 12 Jul 2018 12:10:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:date:message-id:subject:from:to:cc;
-        bh=0QVnongDshtf2uJLWUSTR83RrBMhUkraMgX9I3TbIck=;
-        b=YbSq5yC9lizbG0hKOFQOzy9ruEvUl1WVv1QBwBe6GxYg90dhjgn4TvkqlhFhpARM4F
-         CzWaUnrIdKSei+4mbrcHxXZk8Qf8zqDKtnqPb44mWyCz7AfStQ7Kh1LGR57zkZy13TZq
-         uF2Xj7S8CVwtwK/PoTlmwf8M82jhOunOaqd85VADoaoIUXt8H9ktZJwdGkCBsrjYrG+X
-         EeNDma/bLwLhFdbbkFLmpa2PLAunYWeV2ZKhhWtah1BbW8kt2hM637XYz3moRRDhAfrD
-         3UQa828600GT3mSjx9l0bQPRTvESt9/ZatoDqNRroSfbgHOuzAsgS9kwO2v9lPKvjXjz
-         7v1Q==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=y4NpF3WQu97gJAfhMci67nmlr3PxtSpliQb13YkCWzk=;
+        b=FA5rquruwcJwQuUj7Ybb80ua3HD7vuAM4vtEntXEgQgAnKD+qwEjqjIGU4l3I3DWvK
+         QvmHVgvf3wtr8C4S2GcDKUdvxhASvFPSrHGIaIYW6QTuN9XUUsme7zyTQJbsn2E1UhwW
+         Li+Xh8X1pV1S+I6C0Tyyamy6fVSTV4i7U2yI0XYxPo9bX3tOOZwAMRdx90g3c1EBQfE5
+         cXxlsrVo9puZzvaGTB6BaFaBLhrEO+rdOggEiy102vg7Gjqdx/Zvtfuou6d6xtqyVEOn
+         Lv5S+pU1r6DDDGhm5/aqcC6v7n8M2VWGcq7151+qzmFmm3zuVOAoqBwhPnHkxs+/wDOM
+         d2Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc;
-        bh=0QVnongDshtf2uJLWUSTR83RrBMhUkraMgX9I3TbIck=;
-        b=tZHT3XNMvoljpcxW/di4L1RypgTToDvSFNGCudmJv3eekt72l5zMYiUaHNW7nirRW9
-         +4o6UXNvPm6oi2zgQSfBMcKNPX5CQo83rDN0gsrX7ioXaaE5DDzd6AgCYbKVGoZVgVOT
-         MnKpOKCzH832FAD5KTG38qu9b7hMh+maP9KMmnCwaaS2WcBNlVSBcl6sXu3LgH/Ny8jf
-         fVAC9L08FT5f03Mx/Sc4XWSCA9GTAhyFGmK9hsQsh3zGsbQX4tdf+CQeft06x68DwRMK
-         QMj97FYK6c1vLMc0Bz26KGfoVpr3UcmDcfb3sw8kJ2fCEdLQ8edxktuUJfcDI7WMgMMK
-         cgHg==
-X-Gm-Message-State: AOUpUlGf2Wfkqpm1kJlMeU2kSt1IOC6DNG92d7AYKvyX3M4pFET2TYQD
-        AZypddIO7J5kG/KMAOyMvAJcxmRAYv7K
-X-Google-Smtp-Source: AAOMgpd7+wYNVrbAlMk5+490WOz3PUQRkDrFJ4MpSMMPmZvlJysGpCw/49SeFAuL2RsMZDS0SggsY7mdGDQ+
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=y4NpF3WQu97gJAfhMci67nmlr3PxtSpliQb13YkCWzk=;
+        b=J7Dw05hb6NRkO3q+uS5Hyh48Aewco1ouov+fHuZnTnIG1PB9A1PxEwo6WwSQYqF+Z5
+         4xFA4SWWHfw0bdxvz/mk7JiQXJDn8wZ1hmNBY6kuHDs/eWDpHIAVbaAIC3pZyyh75Nqx
+         UHPxDEe54fWML0ngdP4EiwO2pej1i9jL6liwe31eTM/rZ+qJmUTJgBIii8NJ68br14JM
+         MuuvwpvAyQkPnUp6FRlV8KEKxvH8+WnyN4RqQyoqPTV7iq3GESU3DdakL3GWSQqLg/Fa
+         QBimomqeY+1DTR94i8kGk9wEacqQnRqkL/YTUn9TOM/AG80oOqp0rwWaaswysrewuE3m
+         IGKA==
+X-Gm-Message-State: AOUpUlF85UVlEE3bTRdvXYt3N294nOS/8GIFiyAzvr+QO3mwmR766AI7
+        Shye/leqNa8VE2DD4O7Kn/o=
+X-Google-Smtp-Source: AAOMgpfVSgeeWQkY1mOg58Buzj9WdWAbr3Mv6vYqAuvlUVLgJIQZ+wM8gmmwJjBNoPDSTel/1L9+xQ==
+X-Received: by 2002:a5d:550a:: with SMTP id b10-v6mr2813787wrv.228.1531422599302;
+        Thu, 12 Jul 2018 12:09:59 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id p184-v6sm4597144wmp.31.2018.07.12.12.09.58
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 12 Jul 2018 12:09:58 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     William Chargin <wchargin@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] sha1-name.c: for ":/", find detached HEAD commits
+References: <CAFW+GMD62V=o4hoEYKVteBZHzqBtquzLzTv2WXiSPZf3ZhOpeg@mail.gmail.com>
+        <20180712054909.29077-1-wchargin@gmail.com>
+        <xmqqva9kzbhi.fsf@gitster-ct.c.googlers.com>
+        <CAFW+GMAp2bA2=_BZ2S0HLO2x2aLE01zXigHrY3QtCmWxRuyAtA@mail.gmail.com>
+Date:   Thu, 12 Jul 2018 12:09:57 -0700
+In-Reply-To: <CAFW+GMAp2bA2=_BZ2S0HLO2x2aLE01zXigHrY3QtCmWxRuyAtA@mail.gmail.com>
+        (William Chargin's message of "Thu, 12 Jul 2018 09:14:10 -0700")
+Message-ID: <xmqqva9kw9ru.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-X-Received: by 2002:a37:aa4e:: with SMTP id t75-v6mr1953452qke.2.1531422305271;
- Thu, 12 Jul 2018 12:05:05 -0700 (PDT)
-Date:   Thu, 12 Jul 2018 12:04:56 -0700
-Message-Id: <20180712190456.29337-1-sbeller@google.com>
-X-Mailer: git-send-email 2.18.0.203.gfac676dfb9-goog
-Subject: [PATCH] RFC: submodule-config: introduce trust level
-From:   Stefan Beller <sbeller@google.com>
-To:     bmwill@google.com, ao2@ao2.it, hvoigt@hvoigt.net
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The series merged at 614ea03a71e (Merge branch
-'bw/submodule-config-cleanup', 2017-08-26) went to great length to make it
-explicit to the caller where a value came from, as that would help the
-caller to be careful to decide which values to take from where, i.e. be
-careful about security implications.
+William Chargin <wchargin@gmail.com> writes:
 
-In practice we always want to stack the settings starting with the
-.gitmodules file as a base and then put the config on top of it.
-So let's manage the security aspects impolitely in the submodule-config
-machinery directly where we implement its parsing as there is a good
-place to reason about the trust that we need to put into a parsed value.
+>> As we discussed during the review on v1, ":/<substring in commit>"
+>> is *NOT* pathspec (that is why having these tests in t4208 is wrong
+>> but we are following existing mistakes).
+>
+> Ah, I understand the terminology better now. Thanks. I'll change the
+> commit message wording to use "extended SHA-1s" instead of "pathspecs".
+>
+>> Now you have Peff's sign-off for the one-liner code change, the last
+>> one is redundant.
+>
+> Okay: I'll remove the "Based-on-patch-by" line.
+>
+>> Other than the above two nits, the patch looks good.  I would have
+>> broken the line after "including HEAD.", but the slightly-long line
+>> is also OK.
+>
+> Happy to change this while making the above edits. :-)
 
-This patch implements the trust level that is passed to the parsing,'
-currently we only pass in the 'in_repo' level of trust, which is the
-.gitmodules file.
+Let's save a round-trip.  Here is what I'd queue for now, and you
+can just say "looks good" if you agree with the result, or send an
+updated version ;-).
 
-Follow up patches could add other sources that populate the submodule
-config again.
+Thanks for working on this.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
+-- >8 --
+From: William Chargin <wchargin@gmail.com>
+Date: Wed, 11 Jul 2018 22:49:09 -0700
+Subject: [PATCH] sha1-name.c: for ":/", find detached HEAD commits
+
+This patch broadens the set of commits matched by ":/<pattern>" to
+include commits reachable from HEAD but not any named ref. This avoids
+surprising behavior when working with a detached HEAD and trying to
+refer to a commit that was recently created and only exists within the
+detached state.
+
+If multiple worktrees exist, only the current worktree's HEAD is
+considered reachable. This is consistent with the existing behavior for
+other per-worktree refs: e.g., bisect refs are considered reachable, but
+only within the relevant worktree.
+
+Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: William Chargin <wchargin@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
+ Documentation/revisions.txt   |  3 ++-
+ sha1_name.c                   |  1 +
+ t/t4208-log-magic-pathspec.sh | 26 ++++++++++++++++++++++++++
+ 3 files changed, 29 insertions(+), 1 deletion(-)
 
- This is on top of ao/config-from-gitmodules.
-
- submodule-config.c | 31 ++++++++++++++++++++++++++++---
- 1 file changed, 28 insertions(+), 3 deletions(-)
-
-diff --git a/submodule-config.c b/submodule-config.c
-index 77421a49719..09eab9f00e0 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -21,6 +21,11 @@ struct submodule_cache {
- 	unsigned gitmodules_read:1;
- };
+diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
+index dfcc49c72c..0845c3f590 100644
+--- a/Documentation/revisions.txt
++++ b/Documentation/revisions.txt
+@@ -180,7 +180,8 @@ existing tag object.
+   A colon, followed by a slash, followed by a text, names
+   a commit whose commit message matches the specified regular expression.
+   This name returns the youngest matching commit which is
+-  reachable from any ref. The regular expression can match any part of the
++  reachable from any ref, including HEAD.
++  The regular expression can match any part of the
+   commit message. To match messages starting with a string, one can use
+   e.g. ':/^foo'. The special sequence ':/!' is reserved for modifiers to what
+   is matched. ':/!-foo' performs a negative match, while ':/!!foo' matches a
+diff --git a/sha1_name.c b/sha1_name.c
+index 611c7d24dd..19f66713e1 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -1649,6 +1649,7 @@ static int get_oid_with_context_1(const char *name,
+ 			struct commit_list *list = NULL;
  
-+enum submodule_config_trust_level {
-+	in_repo = 1,
-+	configured_by_user = 2
-+};
+ 			for_each_ref(handle_one_ref, &list);
++			head_ref(handle_one_ref, &list);
+ 			commit_list_sort_by_date(&list);
+ 			return get_oid_oneline(name + 2, oid, list);
+ 		}
+diff --git a/t/t4208-log-magic-pathspec.sh b/t/t4208-log-magic-pathspec.sh
+index a1705f70cf..69643d101d 100755
+--- a/t/t4208-log-magic-pathspec.sh
++++ b/t/t4208-log-magic-pathspec.sh
+@@ -25,6 +25,32 @@ test_expect_success '"git log :/a -- " should not be ambiguous' '
+ 	git log :/a --
+ '
+ 
++test_expect_success '"git log :/detached -- " should find a commit only in HEAD' '
++	test_when_finished "git checkout master" &&
++	git checkout --detach &&
++	# Must manually call `test_tick` instead of using `test_commit`,
++	# because the latter additionally creates a tag, which would make
++	# the commit reachable not only via HEAD.
++	test_tick &&
++	git commit --allow-empty -m detached &&
++	test_tick &&
++	git commit --allow-empty -m something-else &&
++	git log :/detached --
++'
 +
- /*
-  * thin wrapper struct needed to insert 'struct submodule' entries to
-  * the hashmap
-@@ -387,12 +392,14 @@ struct parse_config_parameter {
- 	struct submodule_cache *cache;
- 	const struct object_id *treeish_name;
- 	const struct object_id *gitmodules_oid;
-+	enum submodule_config_trust_level source;
- 	int overwrite;
- };
- 
- static int parse_config(const char *var, const char *value, void *data)
- {
- 	struct parse_config_parameter *me = data;
-+	enum submodule_config_trust_level source = me->source;
- 	struct submodule *submodule;
- 	struct strbuf name = STRBUF_INIT, item = STRBUF_INIT;
- 	int ret = 0;
-@@ -406,6 +413,7 @@ static int parse_config(const char *var, const char *value, void *data)
- 					     name.buf);
- 
- 	if (!strcmp(item.buf, "path")) {
-+		/* all sources allowed */
- 		if (!value)
- 			ret = config_error_nonbool(var);
- 		else if (!me->overwrite && submodule->path)
-@@ -419,6 +427,7 @@ static int parse_config(const char *var, const char *value, void *data)
- 			cache_put_path(me->cache, submodule);
- 		}
- 	} else if (!strcmp(item.buf, "fetchrecursesubmodules")) {
-+		/* all sources allowed */
- 		/* when parsing worktree configurations we can die early */
- 		int die_on_error = is_null_oid(me->gitmodules_oid);
- 		if (!me->overwrite &&
-@@ -430,6 +439,7 @@ static int parse_config(const char *var, const char *value, void *data)
- 								var, value,
- 								die_on_error);
- 	} else if (!strcmp(item.buf, "ignore")) {
-+		/* all sources allowed */
- 		if (!value)
- 			ret = config_error_nonbool(var);
- 		else if (!me->overwrite && submodule->ignore)
-@@ -446,6 +456,7 @@ static int parse_config(const char *var, const char *value, void *data)
- 			submodule->ignore = xstrdup(value);
- 		}
- 	} else if (!strcmp(item.buf, "url")) {
-+		/* all sources allowed */
- 		if (!value) {
- 			ret = config_error_nonbool(var);
- 		} else if (!me->overwrite && submodule->url) {
-@@ -456,16 +467,27 @@ static int parse_config(const char *var, const char *value, void *data)
- 			submodule->url = xstrdup(value);
- 		}
- 	} else if (!strcmp(item.buf, "update")) {
-+		struct submodule_update_strategy st;
- 		if (!value)
- 			ret = config_error_nonbool(var);
- 		else if (!me->overwrite &&
- 			 submodule->update_strategy.type != SM_UPDATE_UNSPECIFIED)
- 			warn_multiple_config(me->treeish_name, submodule->name,
- 					     "update");
--		else if (parse_submodule_update_strategy(value,
--			 &submodule->update_strategy) < 0)
--				die(_("invalid value for %s"), var);
-+		else if (parse_submodule_update_strategy(value, &st) < 0)
-+			die(_("invalid value for %s"), var);
-+		else if (source <= in_repo) {
-+			if (st.type == SM_UPDATE_COMMAND) {
-+				submodule->update_strategy.type = st.type;
-+				submodule->update_strategy.command = \
-+				"!echo Not trusting command in submodule.<name>.update";
-+			} else {
-+				submodule->update_strategy.type = st.type;
-+				submodule->update_strategy.command = st.command;
-+			}
-+		}
- 	} else if (!strcmp(item.buf, "shallow")) {
-+		/* all sources allowed */
- 		if (!me->overwrite && submodule->recommend_shallow != -1)
- 			warn_multiple_config(me->treeish_name, submodule->name,
- 					     "shallow");
-@@ -473,6 +495,7 @@ static int parse_config(const char *var, const char *value, void *data)
- 			submodule->recommend_shallow =
- 				git_config_bool(var, value);
- 	} else if (!strcmp(item.buf, "branch")) {
-+		/* all sources allowed */
- 		if (!me->overwrite && submodule->branch)
- 			warn_multiple_config(me->treeish_name, submodule->name,
- 					     "branch");
-@@ -560,6 +583,7 @@ static const struct submodule *config_from(struct submodule_cache *cache,
- 	parameter.treeish_name = treeish_name;
- 	parameter.gitmodules_oid = &oid;
- 	parameter.overwrite = 0;
-+	parameter.source = in_repo;
- 	git_config_from_mem(parse_config, CONFIG_ORIGIN_SUBMODULE_BLOB, rev.buf,
- 			config, config_size, &parameter);
- 	strbuf_release(&rev);
-@@ -617,6 +641,7 @@ static int gitmodules_cb(const char *var, const char *value, void *data)
- 	parameter.treeish_name = NULL;
- 	parameter.gitmodules_oid = &null_oid;
- 	parameter.overwrite = 1;
-+	parameter.source = in_repo;
- 
- 	return parse_config(var, value, &parameter);
- }
++test_expect_success '"git log :/detached -- " should not find an orphaned commit' '
++	test_must_fail git log :/detached --
++'
++
++test_expect_success '"git log :/detached -- " should find HEAD only of own worktree' '
++	git worktree add other-tree HEAD &&
++	git -C other-tree checkout --detach &&
++	test_tick &&
++	git -C other-tree commit --allow-empty -m other-detached &&
++	git -C other-tree log :/other-detached -- &&
++	test_must_fail git log :/other-detached --
++'
++
+ test_expect_success '"git log -- :/a" should not be ambiguous' '
+ 	git log -- :/a
+ '
 -- 
-2.18.0.203.gfac676dfb9-goog
+2.18.0-129-ge3331758f1
 
