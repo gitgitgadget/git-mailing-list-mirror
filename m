@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 368371F85E
-	for <e@80x24.org>; Thu, 12 Jul 2018 19:40:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C12E91F85E
+	for <e@80x24.org>; Thu, 12 Jul 2018 19:40:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732419AbeGLTvd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jul 2018 15:51:33 -0400
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:45081 "EHLO
-        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732395AbeGLTvc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jul 2018 15:51:32 -0400
-Received: by mail-qk0-f193.google.com with SMTP id c192-v6so16057275qkg.12
-        for <git@vger.kernel.org>; Thu, 12 Jul 2018 12:40:32 -0700 (PDT)
+        id S1732429AbeGLTvf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jul 2018 15:51:35 -0400
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:38688 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732395AbeGLTvf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jul 2018 15:51:35 -0400
+Received: by mail-qt0-f195.google.com with SMTP id c5-v6so25154297qth.5
+        for <git@vger.kernel.org>; Thu, 12 Jul 2018 12:40:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=1/q9/q/91w+pRCchfb5V1DEwyjfyb70rNvKi6b7boKI=;
-        b=eru7NgHyIwFBKNNqfAYlaEURqBvA0ElmAkVak2EMve2q+TShPD7fzpHDmOLqVfM7vH
-         D8fcC4cX54igprkENCKNNIrueS6jiZZWTP/YE81wgG7XgxjCc7S1VWuwKPu2ZYPepTUC
-         35E//iF1GLIFB2h7yqjfGbhChef96RxaJf9Y6eCVNciCS+kK1JiQAN8GlF2fm68f6Kj0
-         7DIRcom3sJhqFaWv1HlJmbd7knXWR4ZUueWKALH57ZKK1yiUh9j74gvnsIJOrYWBVM+p
-         wUGvMemzv4Pple+YZzyrajUCVZBabWvGIaf0vlVAaSgFpN0BdJTocpP2Th/1cPXEpp27
-         RTsg==
+        bh=+324KRRHlZFkPTu7zwTrmDa5LOGdDxdODej836/x3+w=;
+        b=Nk4v7Fo/4v+XSXhXe/GPN1aW4B+A7szUE63iRCjD99XJ4OYisbYOnCYzzah3UmheKw
+         IFBMYogGt1AyQS+apTi9++wcVlzohXQNbuCVY2k82p7Nh8BgpqfNcClPWQM5/iDdJuMd
+         vp+uq7XZcpn/+xsNFytpuyal8yJwXy2R8AcZ0k82mvgvhgA81k6Kwz9cjuVPtwPzbHqh
+         moUqeJa1Tte8cMGPrBgmtageZCV5YGMbUx7TwPhNubSEVzzPvNftcbkx7HFwsZ/7ES0c
+         GvfYc1VGIZyBQjcW9cCdfcYQ2V0adHXnSeAlXJfxZqdj99hyRVuXUk69iccTCEAaPtDl
+         kcSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=1/q9/q/91w+pRCchfb5V1DEwyjfyb70rNvKi6b7boKI=;
-        b=l1HvrElnfo0D3VFpC7dOfKqQiWcGhD+Tnxzv+oVPOoGIJSE61+fUon7GwnAQQr3OaA
-         hUazUdchIKTkN4DhTGJNaCKDUhoWhNyfXiGY65MetGz6FSgv5dv63cfW2sRoDwqRTw4Q
-         +ocGFvOdlzcimLxrGTlMVihr0e1owAOMSc0wEUle+J0t4veTnZJdWOGt9UEXA+soXX3f
-         FCjpSr5pYziR158UhC+ygW40QH+BalNs6KmpIfJjOr0RvKWCyUVcLGR8zgOmu+8d4WCT
-         DyMwlyR84Ni+MXb5SsgYTnaapPrz7vdjhgBd56B5z0iElxp7KQJxg7tDtBeceB10zRBZ
-         FAlQ==
-X-Gm-Message-State: AOUpUlHvxn0nwbyUeek9MV0MGjZV4MBlZLdpl0tIapnX/h+nemvNoUfQ
-        aEJzxgK95ZgXz+rzboMpYyzqHRxhMYU=
-X-Google-Smtp-Source: AAOMgpckg+q2cJZ+mo8Edn6valM7wPPw2VZlAfX69ab5XPCwK1MGSYu7hgH5lcNGoV9GTPRtYe/LVw==
-X-Received: by 2002:a37:8883:: with SMTP id k125-v6mr3009458qkd.274.1531424431975;
-        Thu, 12 Jul 2018 12:40:31 -0700 (PDT)
+        bh=+324KRRHlZFkPTu7zwTrmDa5LOGdDxdODej836/x3+w=;
+        b=o2x87iyqExtb9FW0DCwp6PXKPrym/3XxentCnaZOfifacL6c80uKlGgEPPCM80lJn3
+         qpB8s30Y6ZISqwG55eKJxtwSE8GyvoiRzxunM8uekywKu3Oflm3jKb3uB5qGElzCzLIm
+         hr6vR8h9LGfad4PQt2ebFWgMnjJGzw5rovLcmuRiDg2lYBUoYtEeBU05abOZ5CFgO5XO
+         UzxDzgZh2M4kLV8D1A2ENRFRoFKqMTUykBBUPLrj845E6Un2RwD5MNMudAQDqIjq8IuG
+         +MrggvUQWm7KjgwqH+Sj9M+OlS9bKroBwtoXUE1QOPpy5N1GLebUVF+cmiCRWRPvz47G
+         UYdA==
+X-Gm-Message-State: AOUpUlG2k2mF1tobYFLM5CF64d0VQFd2X1FRF9ng2l/s0Rl8G7PGebl6
+        454dtwgaH/ss2jdTFddF6QdC4+Wn/KA=
+X-Google-Smtp-Source: AAOMgpesdNC6MsqchF0YTfJ0uxwmQo2jwcd9iBPGvX6G7zQtVYNxDb+bqUArCd/48ERV6CDreqPUZA==
+X-Received: by 2002:aed:2381:: with SMTP id j1-v6mr3222643qtc.413.1531424434876;
+        Thu, 12 Jul 2018 12:40:34 -0700 (PDT)
 Received: from stolee-linux-2.corp.microsoft.com ([2001:4898:8010:0:eb4a:5dff:fe0f:730f])
-        by smtp.gmail.com with ESMTPSA id j5-v6sm14247756qte.57.2018.07.12.12.40.31
+        by smtp.gmail.com with ESMTPSA id j5-v6sm14247756qte.57.2018.07.12.12.40.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 12 Jul 2018 12:40:31 -0700 (PDT)
+        Thu, 12 Jul 2018 12:40:34 -0700 (PDT)
 From:   Derrick Stolee <stolee@gmail.com>
 X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
 To:     git@vger.kernel.org, dstolee@microsoft.com
 Cc:     gitster@pobox.com, sbeller@google.com, pclouds@gmail.com,
         avarab@gmail.com, sunshine@sunshineco.com, szeder.dev@gmail.com
-Subject: [PATCH v4 15/23] midx: write object offsets
-Date:   Thu, 12 Jul 2018 15:39:32 -0400
-Message-Id: <20180712193940.21065-16-dstolee@microsoft.com>
+Subject: [PATCH v4 16/23] config: create core.multiPackIndex setting
+Date:   Thu, 12 Jul 2018 15:39:33 -0400
+Message-Id: <20180712193940.21065-17-dstolee@microsoft.com>
 X-Mailer: git-send-email 2.18.0.118.gd4f65b8d14
 In-Reply-To: <20180712193940.21065-1-dstolee@microsoft.com>
 References: <20180706005321.124643-1-dstolee@microsoft.com>
@@ -66,359 +66,256 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The final pair of chunks for the multi-pack-index file stores the object
-offsets. We default to using 32-bit offsets as in the pack-index version
-1 format, but if there exists an offset larger than 32-bits, we use a
-trick similar to the pack-index version 2 format by storing all offsets
-at least 2^31 in a 64-bit table; we use the 32-bit table to point into
-that 64-bit table as necessary.
+The core.multiPackIndex config setting controls the multi-pack-
+index (MIDX) feature. If false, the setting will disable all reads
+from the multi-pack-index file.
 
-We only store these 64-bit offsets if necessary, so create a test that
-manipulates a version 2 pack-index to fake a large offset. This allows
-us to test that the large offset table is created, but the data does not
-match the actual packfile offsets. The multi-pack-index offset does match
-the (corrupted) pack-index offset, so a future feature will compare these
-offsets during a 'verify' step.
+Read this config setting in the new prepare_multi_pack_index_one()
+which is called during prepare_packed_git(). This check is run once
+per repository.
+
+Add comparison commands in t5319-multi-pack-index.sh to check
+typical Git behavior remains the same as the config setting is turned
+on and off. This currently includes 'git rev-list' and 'git log'
+commands to trigger several object database reads. Currently, these
+would only catch an error in the prepare_multi_pack_index_one(), but
+with later commits will catch errors in object lookups, abbreviations,
+and approximate object counts.
+
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+
+midx: prepare midxed_git struct
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/technical/pack-format.txt |  15 +++-
- midx.c                                  | 100 +++++++++++++++++++++++-
- midx.h                                  |   2 +
- t/helper/test-read-midx.c               |   4 +
- t/t5319-multi-pack-index.sh             |  49 +++++++++---
- 5 files changed, 155 insertions(+), 15 deletions(-)
+ Documentation/config.txt    |  5 ++++
+ midx.c                      | 25 ++++++++++++++++++
+ midx.h                      |  5 ++++
+ object-store.h              |  7 +++++
+ packfile.c                  |  6 ++++-
+ t/t5319-multi-pack-index.sh | 51 +++++++++++++++++++++++++++----------
+ 6 files changed, 85 insertions(+), 14 deletions(-)
 
-diff --git a/Documentation/technical/pack-format.txt b/Documentation/technical/pack-format.txt
-index 3215f7bfcd..cab5bdd2ff 100644
---- a/Documentation/technical/pack-format.txt
-+++ b/Documentation/technical/pack-format.txt
-@@ -311,7 +311,20 @@ CHUNK DATA:
- 	    The OIDs for all objects in the MIDX are stored in lexicographic
- 	    order in this chunk.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index ab641bf5a9..25f817ca42 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -908,6 +908,11 @@ core.commitGraph::
+ 	Enable git commit graph feature. Allows reading from the
+ 	commit-graph file.
  
--	(This section intentionally left incomplete.)
-+	Object Offsets (ID: {'O', 'O', 'F', 'F'})
-+	    Stores two 4-byte values for every object.
-+	    1: The pack-int-id for the pack storing this object.
-+	    2: The offset within the pack.
-+		If all offsets are less than 2^31, then the large offset chunk
-+		will not exist and offsets are stored as in IDX v1.
-+		If there is at least one offset value larger than 2^32-1, then
-+		the large offset chunk must exist. If the large offset chunk
-+		exists and the 31st bit is on, then removing that bit reveals
-+		the row in the large offsets containing the 8-byte offset of
-+		this object.
++core.multiPackIndex::
++	Use the multi-pack-index file to track multiple packfiles using a
++	single index. See link:technical/multi-pack-index.html[the
++	multi-pack-index design document].
 +
-+	[Optional] Object Large Offsets (ID: {'L', 'O', 'F', 'F'})
-+	    8-byte offsets into large packfiles.
- 
- TRAILER:
- 
+ core.sparseCheckout::
+ 	Enable "sparse checkout" feature. See section "Sparse checkout" in
+ 	linkgit:git-read-tree[1] for more information.
 diff --git a/midx.c b/midx.c
-index 7a954eb0cd..e83110ae92 100644
+index e83110ae92..4090cf4ca4 100644
 --- a/midx.c
 +++ b/midx.c
-@@ -18,13 +18,18 @@
- #define MIDX_HASH_LEN 20
- #define MIDX_MIN_SIZE (MIDX_HEADER_SIZE + MIDX_HASH_LEN)
- 
--#define MIDX_MAX_CHUNKS 3
-+#define MIDX_MAX_CHUNKS 5
- #define MIDX_CHUNK_ALIGNMENT 4
- #define MIDX_CHUNKID_PACKNAMES 0x504e414d /* "PNAM" */
- #define MIDX_CHUNKID_OIDFANOUT 0x4f494446 /* "OIDF" */
- #define MIDX_CHUNKID_OIDLOOKUP 0x4f49444c /* "OIDL" */
-+#define MIDX_CHUNKID_OBJECTOFFSETS 0x4f4f4646 /* "OOFF" */
-+#define MIDX_CHUNKID_LARGEOFFSETS 0x4c4f4646 /* "LOFF" */
- #define MIDX_CHUNKLOOKUP_WIDTH (sizeof(uint32_t) + sizeof(uint64_t))
- #define MIDX_CHUNK_FANOUT_SIZE (sizeof(uint32_t) * 256)
-+#define MIDX_CHUNK_OFFSET_WIDTH (2 * sizeof(uint32_t))
-+#define MIDX_CHUNK_LARGE_OFFSET_WIDTH (sizeof(uint64_t))
-+#define MIDX_LARGE_OFFSET_NEEDED 0x80000000
- 
- static char *get_midx_filename(const char *object_dir)
- {
-@@ -112,6 +117,14 @@ struct multi_pack_index *load_multi_pack_index(const char *object_dir)
- 				m->chunk_oid_lookup = m->data + chunk_offset;
- 				break;
- 
-+			case MIDX_CHUNKID_OBJECTOFFSETS:
-+				m->chunk_object_offsets = m->data + chunk_offset;
-+				break;
-+
-+			case MIDX_CHUNKID_LARGEOFFSETS:
-+				m->chunk_large_offsets = m->data + chunk_offset;
-+				break;
-+
- 			case 0:
- 				die(_("terminating multi-pack-index chunk id appears earlier than expected"));
- 				break;
-@@ -131,6 +144,8 @@ struct multi_pack_index *load_multi_pack_index(const char *object_dir)
- 		die(_("multi-pack-index missing required OID fanout chunk"));
- 	if (!m->chunk_oid_lookup)
- 		die(_("multi-pack-index missing required OID lookup chunk"));
-+	if (!m->chunk_object_offsets)
-+		die(_("multi-pack-index missing required object offsets chunk"));
- 
- 	m->num_objects = ntohl(m->chunk_oid_fanout[255]);
- 
-@@ -454,6 +469,56 @@ static size_t write_midx_oid_lookup(struct hashfile *f, unsigned char hash_len,
- 	return written;
+@@ -1,4 +1,5 @@
+ #include "cache.h"
++#include "config.h"
+ #include "csum-file.h"
+ #include "dir.h"
+ #include "lockfile.h"
+@@ -177,6 +178,30 @@ struct multi_pack_index *load_multi_pack_index(const char *object_dir)
+ 	return NULL;
  }
  
-+static size_t write_midx_object_offsets(struct hashfile *f, int large_offset_needed,
-+					struct pack_midx_entry *objects, uint32_t nr_objects)
++int prepare_multi_pack_index_one(struct repository *r, const char *object_dir)
 +{
-+	struct pack_midx_entry *list = objects;
-+	uint32_t i, nr_large_offset = 0;
-+	size_t written = 0;
++	struct multi_pack_index *m = r->objects->multi_pack_index;
++	struct multi_pack_index *m_search;
++	int config_value;
 +
-+	for (i = 0; i < nr_objects; i++) {
-+		struct pack_midx_entry *obj = list++;
++	if (repo_config_get_bool(r, "core.multipackindex", &config_value) ||
++	    !config_value)
++		return 0;
 +
-+		hashwrite_be32(f, obj->pack_int_id);
++	for (m_search = m; m_search; m_search = m_search->next)
++		if (!strcmp(object_dir, m_search->object_dir))
++			return 1;
 +
-+		if (large_offset_needed && obj->offset >> 31)
-+			hashwrite_be32(f, MIDX_LARGE_OFFSET_NEEDED | nr_large_offset++);
-+		else if (!large_offset_needed && obj->offset >> 32)
-+			BUG("object %s requires a large offset (%"PRIx64") but the MIDX is not writing large offsets!",
-+			    oid_to_hex(&obj->oid),
-+			    obj->offset);
-+		else
-+			hashwrite_be32(f, (uint32_t)obj->offset);
++	r->objects->multi_pack_index = load_multi_pack_index(object_dir);
 +
-+		written += MIDX_CHUNK_OFFSET_WIDTH;
++	if (r->objects->multi_pack_index) {
++		r->objects->multi_pack_index->next = m;
++		return 1;
 +	}
 +
-+	return written;
++	return 0;
 +}
 +
-+static size_t write_midx_large_offsets(struct hashfile *f, uint32_t nr_large_offset,
-+				       struct pack_midx_entry *objects, uint32_t nr_objects)
-+{
-+	struct pack_midx_entry *list = objects;
-+	size_t written = 0;
-+
-+	while (nr_large_offset) {
-+		struct pack_midx_entry *obj = list++;
-+		uint64_t offset = obj->offset;
-+
-+		if (!(offset >> 31))
-+			continue;
-+
-+		hashwrite_be32(f, offset >> 32);
-+		hashwrite_be32(f, offset & 0xffffffffUL);
-+		written += 2 * sizeof(uint32_t);
-+
-+		nr_large_offset--;
-+	}
-+
-+	return written;
-+}
-+
- int write_midx_file(const char *object_dir)
- {
- 	unsigned char cur_chunk, num_chunks = 0;
-@@ -466,8 +531,9 @@ int write_midx_file(const char *object_dir)
- 	uint64_t written = 0;
- 	uint32_t chunk_ids[MIDX_MAX_CHUNKS + 1];
- 	uint64_t chunk_offsets[MIDX_MAX_CHUNKS + 1];
--	uint32_t nr_entries;
-+	uint32_t nr_entries, num_large_offsets = 0;
- 	struct pack_midx_entry *entries = NULL;
-+	int large_offsets_needed = 0;
- 
- 	midx_name = get_midx_filename(object_dir);
- 	if (safe_create_leading_directories(midx_name)) {
-@@ -494,13 +560,19 @@ int write_midx_file(const char *object_dir)
- 	sort_packs_by_name(packs.names, packs.nr, pack_perm);
- 
- 	entries = get_sorted_entries(packs.list, pack_perm, packs.nr, &nr_entries);
-+	for (i = 0; i < nr_entries; i++) {
-+		if (entries[i].offset > 0x7fffffff)
-+			num_large_offsets++;
-+		if (entries[i].offset > 0xffffffff)
-+			large_offsets_needed = 1;
-+	}
- 
- 	hold_lock_file_for_update(&lk, midx_name, LOCK_DIE_ON_ERROR);
- 	f = hashfd(lk.tempfile->fd, lk.tempfile->filename.buf);
- 	FREE_AND_NULL(midx_name);
- 
- 	cur_chunk = 0;
--	num_chunks = 3;
-+	num_chunks = large_offsets_needed ? 5 : 4;
- 
- 	written = write_midx_header(f, num_chunks, packs.nr);
- 
-@@ -516,9 +588,21 @@ int write_midx_file(const char *object_dir)
- 	chunk_offsets[cur_chunk] = chunk_offsets[cur_chunk - 1] + MIDX_CHUNK_FANOUT_SIZE;
- 
- 	cur_chunk++;
--	chunk_ids[cur_chunk] = 0;
-+	chunk_ids[cur_chunk] = MIDX_CHUNKID_OBJECTOFFSETS;
- 	chunk_offsets[cur_chunk] = chunk_offsets[cur_chunk - 1] + nr_entries * MIDX_HASH_LEN;
- 
-+	cur_chunk++;
-+	chunk_offsets[cur_chunk] = chunk_offsets[cur_chunk - 1] + nr_entries * MIDX_CHUNK_OFFSET_WIDTH;
-+	if (large_offsets_needed) {
-+		chunk_ids[cur_chunk] = MIDX_CHUNKID_LARGEOFFSETS;
-+
-+		cur_chunk++;
-+		chunk_offsets[cur_chunk] = chunk_offsets[cur_chunk - 1] +
-+					   num_large_offsets * MIDX_CHUNK_LARGE_OFFSET_WIDTH;
-+	}
-+
-+	chunk_ids[cur_chunk] = 0;
-+
- 	for (i = 0; i <= num_chunks; i++) {
- 		if (i && chunk_offsets[i] < chunk_offsets[i - 1])
- 			BUG("incorrect chunk offsets: %"PRIu64" before %"PRIu64,
-@@ -556,6 +640,14 @@ int write_midx_file(const char *object_dir)
- 				written += write_midx_oid_lookup(f, MIDX_HASH_LEN, entries, nr_entries);
- 				break;
- 
-+			case MIDX_CHUNKID_OBJECTOFFSETS:
-+				written += write_midx_object_offsets(f, large_offsets_needed, entries, nr_entries);
-+				break;
-+
-+			case MIDX_CHUNKID_LARGEOFFSETS:
-+				written += write_midx_large_offsets(f, num_large_offsets, entries, nr_entries);
-+				break;
-+
- 			default:
- 				BUG("trying to write unknown chunk id %"PRIx32,
- 				    chunk_ids[i]);
+ static size_t write_midx_header(struct hashfile *f,
+ 				unsigned char num_chunks,
+ 				uint32_t num_packs)
 diff --git a/midx.h b/midx.h
-index 8572cf0f4b..e15966272f 100644
+index e15966272f..9bcfc82d2e 100644
 --- a/midx.h
 +++ b/midx.h
-@@ -17,6 +17,8 @@ struct multi_pack_index {
- 	const unsigned char *chunk_pack_names;
- 	const uint32_t *chunk_oid_fanout;
- 	const unsigned char *chunk_oid_lookup;
-+	const unsigned char *chunk_object_offsets;
-+	const unsigned char *chunk_large_offsets;
+@@ -1,7 +1,11 @@
+ #ifndef __MIDX_H__
+ #define __MIDX_H__
  
- 	const char **pack_names;
- 	char object_dir[FLEX_ARRAY];
-diff --git a/t/helper/test-read-midx.c b/t/helper/test-read-midx.c
-index f7c17b0940..8e19972e89 100644
---- a/t/helper/test-read-midx.c
-+++ b/t/helper/test-read-midx.c
-@@ -26,6 +26,10 @@ static int read_midx_file(const char *object_dir)
- 		printf(" oid-fanout");
- 	if (m->chunk_oid_lookup)
- 		printf(" oid-lookup");
-+	if (m->chunk_object_offsets)
-+		printf(" object-offsets");
-+	if (m->chunk_large_offsets)
-+		printf(" large-offsets");
++#include "repository.h"
++
+ struct multi_pack_index {
++	struct multi_pack_index *next;
++
+ 	int fd;
  
- 	printf("\nnum_objects: %d\n", m->num_objects);
+ 	const unsigned char *data;
+@@ -25,6 +29,7 @@ struct multi_pack_index {
+ };
  
+ struct multi_pack_index *load_multi_pack_index(const char *object_dir);
++int prepare_multi_pack_index_one(struct repository *r, const char *object_dir);
+ 
+ int write_midx_file(const char *object_dir);
+ 
+diff --git a/object-store.h b/object-store.h
+index 13a766aea8..c2b162489a 100644
+--- a/object-store.h
++++ b/object-store.h
+@@ -105,6 +105,13 @@ struct raw_object_store {
+ 	 */
+ 	struct oidmap *replace_map;
+ 
++	/*
++	 * private data
++	 *
++	 * should only be accessed directly by packfile.c and midx.c
++	 */
++	struct multi_pack_index *multi_pack_index;
++
+ 	/*
+ 	 * private data
+ 	 *
+diff --git a/packfile.c b/packfile.c
+index 3d652212c6..5d4493dbf4 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -15,6 +15,7 @@
+ #include "tree-walk.h"
+ #include "tree.h"
+ #include "object-store.h"
++#include "midx.h"
+ 
+ char *odb_pack_name(struct strbuf *buf,
+ 		    const unsigned char *sha1,
+@@ -935,10 +936,13 @@ static void prepare_packed_git(struct repository *r)
+ 
+ 	if (r->objects->packed_git_initialized)
+ 		return;
++	prepare_multi_pack_index_one(r, r->objects->objectdir);
+ 	prepare_packed_git_one(r, r->objects->objectdir, 1);
+ 	prepare_alt_odb(r);
+-	for (alt = r->objects->alt_odb_list; alt; alt = alt->next)
++	for (alt = r->objects->alt_odb_list; alt; alt = alt->next) {
++		prepare_multi_pack_index_one(r, alt->path);
+ 		prepare_packed_git_one(r, alt->path, 0);
++	}
+ 	rearrange_packed_git(r);
+ 	prepare_packed_git_mru(r);
+ 	r->objects->packed_git_initialized = 1;
 diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-index 1cf609958f..4a4fa26f7a 100755
+index 4a4fa26f7a..601e28a2f0 100755
 --- a/t/t5319-multi-pack-index.sh
 +++ b/t/t5319-multi-pack-index.sh
-@@ -6,27 +6,30 @@ test_description='multi-pack-indexes'
+@@ -3,6 +3,8 @@
+ test_description='multi-pack-indexes'
+ . ./test-lib.sh
+ 
++objdir=.git/objects
++
  midx_read_expect () {
  	NUM_PACKS=$1
  	NUM_OBJECTS=$2
-+	NUM_CHUNKS=$3
-+	OBJECT_DIR=$4
-+	EXTRA_CHUNKS="$5"
- 	{
- 		cat <<-EOF &&
--		header: 4d494458 1 3 $NUM_PACKS
--		chunks: pack-names oid-fanout oid-lookup
-+		header: 4d494458 1 $NUM_CHUNKS $NUM_PACKS
-+		chunks: pack-names oid-fanout oid-lookup object-offsets$EXTRA_CHUNKS
- 		num_objects: $NUM_OBJECTS
- 		packs:
- 		EOF
- 		if test $NUM_PACKS -ge 1
- 		then
--			ls pack/ | grep idx | sort
-+			ls $OBJECT_DIR/pack/ | grep idx | sort
- 		fi &&
--		printf "object-dir: .\n"
-+		printf "object-dir: $OBJECT_DIR\n"
- 	} >expect &&
--	test-tool read-midx . >actual &&
-+	test-tool read-midx $OBJECT_DIR >actual &&
- 	test_cmp expect actual
- }
- 
- test_expect_success 'write midx with no packs' '
- 	test_when_finished rm -f pack/multi-pack-index &&
- 	git multi-pack-index --object-dir=. write &&
--	midx_read_expect 0 0
-+	midx_read_expect 0 0 4 .
+@@ -76,18 +78,35 @@ test_expect_success 'create objects' '
  '
  
- generate_objects () {
-@@ -76,13 +79,13 @@ test_expect_success 'write midx with one v1 pack' '
- 	pack=$(git pack-objects --index-version=1 pack/test <obj-list) &&
- 	test_when_finished rm pack/test-$pack.pack pack/test-$pack.idx pack/multi-pack-index &&
- 	git multi-pack-index --object-dir=. write &&
--	midx_read_expect 1 18
-+	midx_read_expect 1 18 4 .
+ test_expect_success 'write midx with one v1 pack' '
+-	pack=$(git pack-objects --index-version=1 pack/test <obj-list) &&
+-	test_when_finished rm pack/test-$pack.pack pack/test-$pack.idx pack/multi-pack-index &&
+-	git multi-pack-index --object-dir=. write &&
+-	midx_read_expect 1 18 4 .
++	pack=$(git pack-objects --index-version=1 $objdir/pack/test <obj-list) &&
++	test_when_finished rm $objdir/pack/test-$pack.pack \
++		$objdir/pack/test-$pack.idx $objdir/pack/multi-pack-index &&
++	git multi-pack-index --object-dir=$objdir write &&
++	midx_read_expect 1 18 4 $objdir
  '
  
- test_expect_success 'write midx with one v2 pack' '
- 	git pack-objects --index-version=2,0x40 pack/test <obj-list &&
- 	git multi-pack-index --object-dir=. write &&
--	midx_read_expect 1 18
-+	midx_read_expect 1 18 4 .
- '
- 
- test_expect_success 'add more objects' '
-@@ -96,7 +99,7 @@ test_expect_success 'add more objects' '
- test_expect_success 'write midx with two packs' '
- 	git pack-objects --index-version=1 pack/test-2 <obj-list &&
- 	git multi-pack-index --object-dir=. write &&
--	midx_read_expect 2 34
-+	midx_read_expect 2 34 4 .
- '
- 
- test_expect_success 'add more packs' '
-@@ -110,7 +113,33 @@ test_expect_success 'add more packs' '
- 
- test_expect_success 'write midx with twelve packs' '
- 	git multi-pack-index --object-dir=. write &&
--	midx_read_expect 12 74 
-+	midx_read_expect 12 74 4 .
-+'
-+
-+# usage: corrupt_data <file> <pos> [<data>]
-+corrupt_data () {
-+	file=$1
-+	pos=$2
-+	data="${3:-\0}"
-+	printf "$data" | dd of="$file" bs=1 seek="$pos" conv=notrunc
++midx_git_two_modes() {
++	git -c core.multiPackIndex=false $1 >expect &&
++	git -c core.multiPackIndex=true $1 >actual &&
++	test_cmp expect actual
 +}
 +
-+# Force 64-bit offsets by manipulating the idx file.
-+# This makes the IDX file _incorrect_ so be careful to clean up after!
-+test_expect_success 'force some 64-bit offsets with pack-objects' '
-+	mkdir objects64 &&
-+	mkdir objects64/pack &&
-+	for i in $(test_seq 1 11)
-+	do
-+		generate_objects 11
-+	done &&
-+	commit_and_list_objects &&
-+	pack64=$(git pack-objects --index-version=2,0x40 objects64/pack/test-64 <obj-list) &&
-+	idx64=objects64/pack/test-64-$pack64.idx &&
-+	chmod u+w $idx64 &&
-+	corrupt_data $idx64 2999 "\02" &&
-+	midx64=$(git multi-pack-index --object-dir=objects64 write) &&
-+	midx_read_expect 1 63 5 objects64 " large-offsets"
++compare_results_with_midx() {
++	MSG=$1
++	test_expect_success "check normal git operations: $MSG" '
++		midx_git_two_modes "rev-list --objects --all" &&
++		midx_git_two_modes "log --raw"
++	'
++}
++
+ test_expect_success 'write midx with one v2 pack' '
+-	git pack-objects --index-version=2,0x40 pack/test <obj-list &&
+-	git multi-pack-index --object-dir=. write &&
+-	midx_read_expect 1 18 4 .
++	git pack-objects --index-version=2,0x40 $objdir/pack/test <obj-list &&
++	git multi-pack-index --object-dir=$objdir write &&
++	midx_read_expect 1 18 4 $objdir
  '
  
- test_done
++compare_results_with_midx "one v2 pack"
++
+ test_expect_success 'add more objects' '
+ 	for i in $(test_seq 6 10)
+ 	do
+@@ -97,25 +116,31 @@ test_expect_success 'add more objects' '
+ '
+ 
+ test_expect_success 'write midx with two packs' '
+-	git pack-objects --index-version=1 pack/test-2 <obj-list &&
+-	git multi-pack-index --object-dir=. write &&
+-	midx_read_expect 2 34 4 .
++	git pack-objects --index-version=1 $objdir/pack/test-2 <obj-list &&
++	git multi-pack-index --object-dir=$objdir write &&
++	midx_read_expect 2 34 4 $objdir
+ '
+ 
++compare_results_with_midx "two packs"
++
+ test_expect_success 'add more packs' '
+ 	for j in $(test_seq 11 20)
+ 	do
+ 		generate_objects $j &&
+ 		commit_and_list_objects &&
+-		git pack-objects --index-version=2 pack/test-pack <obj-list
++		git pack-objects --index-version=2 $objdir/pack/test-pack <obj-list
+ 	done
+ '
+ 
++compare_results_with_midx "mixed mode (two packs + extra)"
++
+ test_expect_success 'write midx with twelve packs' '
+-	git multi-pack-index --object-dir=. write &&
+-	midx_read_expect 12 74 4 .
++	git multi-pack-index --object-dir=$objdir write &&
++	midx_read_expect 12 74 4 $objdir
+ '
+ 
++compare_results_with_midx "twelve packs"
++
+ # usage: corrupt_data <file> <pos> [<data>]
+ corrupt_data () {
+ 	file=$1
 -- 
 2.18.0.118.gd4f65b8d14
 
