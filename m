@@ -2,98 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 14F9C1F85E
-	for <e@80x24.org>; Thu, 12 Jul 2018 18:19:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 515081F85E
+	for <e@80x24.org>; Thu, 12 Jul 2018 18:24:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727660AbeGLSaj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jul 2018 14:30:39 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57178 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726444AbeGLSaj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jul 2018 14:30:39 -0400
-Received: (qmail 6562 invoked by uid 109); 12 Jul 2018 18:19:57 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 12 Jul 2018 18:19:57 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24968 invoked by uid 111); 12 Jul 2018 18:19:59 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 12 Jul 2018 14:19:59 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Jul 2018 14:19:55 -0400
-Date:   Thu, 12 Jul 2018 14:19:55 -0400
-From:   Jeff King <peff@peff.net>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH 21/25] t5000-t5999: fix broken &&-chains
-Message-ID: <20180712181955.GA13268@sigill.intra.peff.net>
-References: <20180702002405.3042-1-sunshine@sunshineco.com>
- <20180702002405.3042-22-sunshine@sunshineco.com>
- <20180712123729.17861-1-szeder.dev@gmail.com>
- <CAPig+cRYNo_KL02LN1LOa79Zm2oYZqbnBHJ=KDA3oaF4pVfjcA@mail.gmail.com>
+        id S1726561AbeGLSfd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jul 2018 14:35:33 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:38296 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726444AbeGLSfd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jul 2018 14:35:33 -0400
+Received: by mail-wr1-f68.google.com with SMTP id m1-v6so9929933wrg.5
+        for <git@vger.kernel.org>; Thu, 12 Jul 2018 11:24:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=WEA0NE5LE7rY5oW4W9+zVp9lcTa9HDEOXzP1bcGlnX0=;
+        b=OjNLMuv5+D9ZWhVA/jMiX2Fmv3miwsm7d6LpEs6EHxBrC0EuJ9mRL/OBUfUr2IWXEz
+         UZtUnsS+DBrJW/wnZ18SFYixuU6GYcbP8wrAWlktzvWkWjzBNgL6Gjg+4garHNyt9NQL
+         jrKF8+rMJie1nB++F4fXg0IIGoJ8prPyATSODlmeUAG2P0gDGMMGesE/sP4diGQauB9F
+         VOhF3kfZv96SMx76wz32q1eB6lRoxr2tB9piubHlpnMe/33p3rzDwr236Cf2SCZMDk+4
+         Poe+QrkxThKyxxy6eXIYKRD2vWJtoGKx8ARxP8QBcEICJDLLbEIgmbSe39SDR7lhBblZ
+         lrSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=WEA0NE5LE7rY5oW4W9+zVp9lcTa9HDEOXzP1bcGlnX0=;
+        b=s/weuWGo/SaKCU/ujjZ9cg0hu2AiLbV4K3Rlgz4KKbLAw2v0wFVib3Ml03zI3I7atS
+         velazmMyg7mm6OL46+ODeaOIkKfMrPwuq7NBrdqrxl7PYYviQLhW1shCP+K7OcQiRsui
+         ivTKys7k8DCDAH62uRfuIN6zkmMx4O0HD5NNiDzoTv/EpRwUyjEYymJs3WMDBcKPtBmN
+         Bfs58LwndusSU7Uq6RBG9Mym22AVaoZPqE7/6ChUo2l7B5XsSkYN+4P8M3NPoEZa5SWf
+         xZQG9esxclpNCE/MDJe7obqgNTanT/htXwLapYtp9+82u7Pz2fRkmEvr0MoMhrvKJOHF
+         vBqw==
+X-Gm-Message-State: AOUpUlG2YxE8KQvFkZi5qoIBXfgMe+N26kK8cQ3UnN0tuoPWP8a6eomc
+        U18+TO3bUxMP1cbUQlIx3/Y=
+X-Google-Smtp-Source: AAOMgpcYn/YAY7bNRHQp9jNwMqBvWeO6BaF0CSxpDUeSjyQy4aVukNpQg3ZiMPns3ZEy9vsoDVe/FQ==
+X-Received: by 2002:a5d:5641:: with SMTP id j1-v6mr2700874wrw.209.1531419889066;
+        Thu, 12 Jul 2018 11:24:49 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id z9-v6sm40718784wre.49.2018.07.12.11.24.48
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 12 Jul 2018 11:24:48 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Alban Gruin <alban.gruin@gmail.com>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        phillip.wood@dunelm.org.uk
+Subject: Re: [GSoC][PATCH v3 12/13] rebase -i: implement the logic to initialize the variable $revision in C
+References: <20180702105717.26386-1-alban.gruin@gmail.com>
+        <20180710121557.6698-1-alban.gruin@gmail.com>
+        <20180710121557.6698-13-alban.gruin@gmail.com>
+        <xmqqo9fcxquk.fsf@gitster-ct.c.googlers.com>
+Date:   Thu, 12 Jul 2018 11:24:48 -0700
+In-Reply-To: <xmqqo9fcxquk.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Thu, 12 Jul 2018 11:15:47 -0700")
+Message-ID: <xmqqk1q0xqfj.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cRYNo_KL02LN1LOa79Zm2oYZqbnBHJ=KDA3oaF4pVfjcA@mail.gmail.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 12, 2018 at 01:44:49PM -0400, Eric Sunshine wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Thu, Jul 12, 2018 at 8:37 AM SZEDER Gábor <szeder.dev@gmail.com> wrote:
-> > The change below should be squashed into this patch to fix a
-> > previously unnoticed broken &&-chain.  I think you missed it, because
-> > this test script is rather expensive and you didn't run it with
-> > GIT_TEST_CLONE_2GB=YesPlease.
-> >
-> > diff --git a/t/t5608-clone-2gb.sh b/t/t5608-clone-2gb.sh
-> > @@ -23,7 +23,7 @@ test_expect_success CLONE_2GB 'setup' '
-> > -               echo "M 100644 :$i $i" >> commit
-> > +               echo "M 100644 :$i $i" >> commit &&
-> 
-> Thanks for finding this. I tried to get as much coverage as possible
-> by installing packages I don't normally have installed (Apache, cvs,
-> cvsps, Subversion, Perforce, etc.) and even temporarily modified a
-> script or two to force it run when I simply couldn't meet some
-> prerequisite, thus reducing the "skipped" messages to a minimum, but I
-> wasn't even aware of this prerequisite since I never saw a "skipped"
-> message for it.
+> If I am reading the body of this if() block correctly, I think it
+> does everything init_revisions_and_shortrevisions shell function
+> does, i.e. compute $revisions for both cases with or without
+> upstream and write squash-onto state if needed, so that we can call
+> the sequencer_make_script() helper with necessary $revisions arg
+> without being passed from the command line of --make-script helper.
+>
+> But the hunk below tells me that you are still calling
+> init_revisions_and_shortrevisions shell function before we are
+> called.  Why?  IOW, why isn't this step removing that shell function
+> *and* the call to it, now its logic is fully implemented in the body
+> of this if() block?
 
-I think in theory we should be able to lint _every_ test, even if we're
-not running it. After all, the point is that a proper linting runs zero
-commands.
+You can ignore this part (but not the rest) of my comments, as 13/13
+answers it adequately.  After this step, the shell function still
+needs to be called to set $shortrevisions.
 
-That said, it may not be worth the implementation effort. The linting
-happens at a pretty low-level, and we've already decided to skip tests
-long before then (even for single prereqs, let alone skip_all cases
-where we exit the script early).
-
-> Looking at it more closely, I think the reason it didn't come to my
-> attention is that this script doesn't use the standard skip_all="..."
-> mechanism for skipping the tests but instead "rolls its own", and
-> apparently 'prove' simply swallowed (or was unable to produce) an
-> overall "skipped" message for this script.
-
-Yeah, that is a bit funny. For a whole-test skip like this, I think
-skip_all is easier to read, as it is immediately apparent to the reader
-that nothing that _doesn't_ meet that prereq should be in the file. So
-I'd be happy to see it switched (though it's not _that_ big a deal, so
-leaving it is fine, too).
-
-By the way, "prove --directives" can help with finding individual
-skipped tests.
-
--Peff
+Thanks.
