@@ -2,58 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-10.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,UNWANTED_LANGUAGE_BODY,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE2881F85E
-	for <e@80x24.org>; Thu, 12 Jul 2018 19:48:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F04801F85E
+	for <e@80x24.org>; Thu, 12 Jul 2018 19:48:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732384AbeGLT7L (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jul 2018 15:59:11 -0400
-Received: from mail-qt0-f201.google.com ([209.85.216.201]:53475 "EHLO
-        mail-qt0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732355AbeGLT7L (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jul 2018 15:59:11 -0400
-Received: by mail-qt0-f201.google.com with SMTP id k11-v6so5172939qtj.20
-        for <git@vger.kernel.org>; Thu, 12 Jul 2018 12:48:10 -0700 (PDT)
+        id S1732399AbeGLT7O (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jul 2018 15:59:14 -0400
+Received: from mail-yb0-f202.google.com ([209.85.213.202]:51125 "EHLO
+        mail-yb0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732373AbeGLT7O (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jul 2018 15:59:14 -0400
+Received: by mail-yb0-f202.google.com with SMTP id x13-v6so26780317ybl.17
+        for <git@vger.kernel.org>; Thu, 12 Jul 2018 12:48:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=YarDi+XlLkz07ssLMuaE2nrphMu29jkE+6o/kMRH0Y0=;
-        b=PgZjL1Vgl4JoBJIovbfIbmb611BYgOdXYT+XVugsj9cfDIUmYdwApKgHIU4VPbRDgQ
-         66UgjCXqW3F3iBCIVyCkGuQLN3ruZVBcTyao007TAiRRuudORCC8gOBCj3HOUAcc4AzP
-         Zsa2ngzE+2yfV9qKTvCAc0IuU+TycTZf6tc64iowyGyvmT/goOWi1Jm5XaPE91uNXV6h
-         msw2VQRJRJtWC5gXyNM9lg0NLrg8sng7ubACNzQyjnthzl4nuqVRIRbCna7SjXCg9DTF
-         xiptPdQbq8Mp3KE2BaYvH2P3npyax7N+3/23jyPAhTcVgzKUCY/7WcuMv+jIELrFvMA9
-         MDuA==
+        bh=NG7ID0myn141RVkG4i89dUF6diIO4kdcmAfRcFzNp0A=;
+        b=GBTuCBjm9hkQdzpJla+9F8FXl+Pj5MDhoXYRTPbF0WFAs15m3fjrt/7VtL7otNkcfL
+         dN5HqhMuLYseS+p3mmDE6LcWqTaqxrRJeH/9SfIZN/Pk1U3MkbaBjuJ+nqNUqkoIAhhQ
+         70vMTCPjjAn1OuT5qh9BbwVSDiOfcwY6L0Wfka7F1jdcluZFpc/e8XYmNWQKpq8G3/Vj
+         uuxpyUDYyGkxkqj5SCawgmSppCFzq8tKmIPGtPMRd0w/7snZyAqSA34TFsyx8OCBlHk9
+         8LeEg51Gl5Ql97eFswupiBAzh747X16hxnu2xeBKir45j4baXhwtLuw0FMwzRXvlBz73
+         f2gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=YarDi+XlLkz07ssLMuaE2nrphMu29jkE+6o/kMRH0Y0=;
-        b=LsOzIqAOBOCpRUq5RFfdLv8tFdrohzFj5yNrDV2ZzpS7ikK4WXg1RkE8r5Pq7hdI0J
-         wR0Phc2BOnobbJ8QEk2a3rycmsMVp0DNoi9wdVd/6LnAsGMmLEoLNF2lvnUivYjX5ms2
-         zox1T7cLDpn60xF2hxQODmMjMT5TA/3cGBUeWvmhksuAGoq6Mz5eDOk3MNnyhQqBp9PR
-         KCyGOL4fGKMH4LfcCySwaHZ6Sx4jxjz9QK5UoX1JYbtLoixtRRvfjy4muk4EW0hJ8fgM
-         FICdqMYI7ph/2ACFgJIHWJNmD+b0MGJBs6LmLnG5yDLUJuu87kQ9s9FmOSPGv3qSeQLq
-         72og==
-X-Gm-Message-State: AOUpUlH50QEK2en4ua29syFSjUYGMeh1eAojfNIH1Fl/sFKDsKW0UI6n
-        rOFxs3egzd7kVGWkrzoyS0zBUA3lIBkdBnDT/8BRBzEJd6dLtH9rS1GUrE7ihOiwICjvyLbF1xE
-        dqsC0LCgMXQe06S8ER8o0sDOfctweLBHrkxp1VRgakgNeoGqbfxCsu3rIY24j
-X-Google-Smtp-Source: AAOMgpc5Dx+1CwEmAp7/jkChATBkFXho2BUL+WRAV07R1ql9PlRzzsSTm1+hPaSNj9xFOILIuuciW37yQMSu
+        bh=NG7ID0myn141RVkG4i89dUF6diIO4kdcmAfRcFzNp0A=;
+        b=oofaDBnAqQ4URk5pMYWBz8pvconbcL85Fc22xylRveiG+ubfA2F4yHXOhIrUWHSXHa
+         bsN3Ji2OGFsqgbGgzdknOnTjKYf4gVCC1pAIgS0IO5dFw/1qrQ9I4bnaqmDvLChBiNxV
+         2ALB14JexN8Ny7scI6hWDRcCF/embo/eA+INpAUmZAgGv4AjlTGtuLVDH7CDLlpvbtYf
+         FHrYMfLMVIM82hQFjcPwGOMYyEfjJ2IRxPW3AaV1WW5WNDIb42b/28D57NkWLGs7KKS3
+         ilQJPpADSuXUUaiufX/3B8cQTjPN90lFpuB4mrCt6t/HH6gKqHgeMyA7Y6Djm10hTZKD
+         F/UQ==
+X-Gm-Message-State: AOUpUlEeUXqQQSAiuSuSyqUZxDBNjPFDO2aemoGA1La3lnc9MEXXWxGY
+        kdtR9WqtGvv+B/wxWLdZcubf3U4TD4uvQQn/YVFQr1zSMTgb5GvQJLgaw07XNVbBrFpoZOv/3WK
+        NgvP8noObk+pL1qtv7zinPjdPijwSEk9Y0g3Lr8tWxGPSGwu97xAZbz1yOoad
+X-Google-Smtp-Source: AAOMgpe7/2bsoqZm1/n0kIPNXDPOJ+6YeR540oD0T3Gm50IBq4mADGeTKWtVwuXrEnTQ/mE0GHeTfJFoo0Um
 MIME-Version: 1.0
-X-Received: by 2002:a0c:e982:: with SMTP id z2-v6mr2266791qvn.29.1531424889722;
- Thu, 12 Jul 2018 12:48:09 -0700 (PDT)
-Date:   Thu, 12 Jul 2018 12:47:53 -0700
+X-Received: by 2002:a81:3788:: with SMTP id e130-v6mr1170435ywa.172.1531424891950;
+ Thu, 12 Jul 2018 12:48:11 -0700 (PDT)
+Date:   Thu, 12 Jul 2018 12:47:54 -0700
 In-Reply-To: <20180712194754.71979-1-sbeller@google.com>
-Message-Id: <20180712194754.71979-6-sbeller@google.com>
+Message-Id: <20180712194754.71979-7-sbeller@google.com>
 References: <20180712194754.71979-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.203.gfac676dfb9-goog
-Subject: [PATCH 5/6] builtin/submodule--helper: factor out method to update a
- single submodule
+Subject: [PATCH 6/6] submodule--helper: introduce new update-module-mode helper
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>
@@ -63,55 +62,131 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a later patch we'll find this method handy.
+This chews off a bit of the shell part of the update command in
+git-submodule.sh. When writing the C code, keep in mind that the
+submodule--helper part will go away eventually and we want to have
+a C function that is able to determine the submodule update strategy,
+it as a nicety, make determine_submodule_update_strategy accessible
+for arbitrary repositories.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- builtin/submodule--helper.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ builtin/submodule--helper.c | 61 +++++++++++++++++++++++++++++++++++++
+ git-submodule.sh            | 16 +---------
+ 2 files changed, 62 insertions(+), 15 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index c9c3fe2bf28..4bbf580df79 100644
+index 4bbf580df79..e53231cf286 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -1725,10 +1725,17 @@ static int gitmodules_update_clone_config(const char *var, const char *value,
+@@ -1444,6 +1444,66 @@ static int module_clone(int argc, const char **argv, const char *prefix)
  	return 0;
  }
  
-+static void update_submodule(struct submodule_update_clone_information *suci)
++static void determine_submodule_update_strategy(struct repository *r,
++						int just_cloned,
++						const char *path,
++						const char *update,
++						struct submodule_update_strategy *out)
 +{
-+	fprintf(stdout, "dummy %s %d\t%s\n",
-+		oid_to_hex(&suci->oid),
-+		suci->just_cloned,
-+		suci->sub->path);
++	const struct submodule *sub = submodule_from_path(r, &null_oid, path);
++	char *key;
++	const char *val;
++
++	key = xstrfmt("submodule.%s.update", sub->name);
++
++	if (update) {
++		trace_printf("parsing update");
++		if (parse_submodule_update_strategy(update, out) < 0)
++			die(_("Invalid update mode '%s' for submodule path '%s'"),
++				update, path);
++	} else if (!repo_config_get_string_const(r, key, &val)) {
++		if (parse_submodule_update_strategy(val, out) < 0)
++			die(_("Invalid update mode '%s' configured for submodule path '%s'"),
++				val, path);
++	} else if (sub->update_strategy.type != SM_UPDATE_UNSPECIFIED) {
++		trace_printf("loaded thing");
++		out->type = sub->update_strategy.type;
++		out->command = sub->update_strategy.command;
++	} else
++		out->type = SM_UPDATE_CHECKOUT;
++
++	if (just_cloned &&
++	    (out->type == SM_UPDATE_MERGE ||
++	     out->type == SM_UPDATE_REBASE ||
++	     out->type == SM_UPDATE_NONE))
++		out->type = SM_UPDATE_CHECKOUT;
++
++	free(key);
 +}
 +
- static int update_submodules(struct submodule_update_clone *suc)
- {
- 	int i;
--	struct strbuf sb = STRBUF_INIT;
++static int module_update_module_mode(int argc, const char **argv, const char *prefix)
++{
++	const char *path, *update = NULL;
++	int just_cloned;
++	struct submodule_update_strategy update_strategy = { .type = SM_UPDATE_CHECKOUT };
++
++	if (argc < 3 || argc > 4)
++		die("submodule--helper update-module-clone expects <just-cloned> <path> [<update>]");
++
++	just_cloned = git_config_int("just_cloned", argv[1]);
++	path = argv[2];
++
++	if (argc == 4)
++		update = argv[3];
++
++	determine_submodule_update_strategy(the_repository,
++					    just_cloned, path, update,
++					    &update_strategy);
++	fprintf(stdout, submodule_strategy_to_string(&update_strategy));
++
++	return 0;
++}
++
+ struct submodule_update_clone_information {
+ 	const struct submodule *sub;
+ 	struct object_id oid;
+@@ -2039,6 +2099,7 @@ static struct cmd_struct commands[] = {
+ 	{"list", module_list, 0},
+ 	{"name", module_name, 0},
+ 	{"clone", module_clone, 0},
++	{"update-module-mode", module_update_module_mode, 0},
+ 	{"update-clone", update_clone, 0},
+ 	{"relative-path", resolve_relative_path, 0},
+ 	{"resolve-relative-url", resolve_relative_url, 0},
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 56588aa304d..215760898ce 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -535,27 +535,13 @@ cmd_update()
+ 	do
+ 		die_if_unmatched "$quickabort" "$sha1"
  
- 	run_processes_parallel(suc->max_jobs,
- 			       update_clone_get_next_task,
-@@ -1747,16 +1754,9 @@ static int update_submodules(struct submodule_update_clone *suc)
- 	if (suc->quickstop)
- 		return 1;
+-		name=$(git submodule--helper name "$sm_path") || exit
+-		if ! test -z "$update"
+-		then
+-			update_module=$update
+-		else
+-			update_module=$(git config submodule."$name".update)
+-			if test -z "$update_module"
+-			then
+-				update_module="checkout"
+-			fi
+-		fi
++		update_module=$(git submodule--helper update-module-mode $just_cloned "$sm_path" $update)
  
--	for (i = 0; i < suc->submodule_lines_nr; i++) {
--		strbuf_addf(&sb, "dummy %s %d\t%s\n",
--			oid_to_hex(&suc->submodule_lines[i].oid),
--			suc->submodule_lines[i].just_cloned,
--			suc->submodule_lines[i].sub->path);
--		fprintf(stdout, "%s", sb.buf);
--		strbuf_reset(&sb);
--	}
-+	for (i = 0; i < suc->submodule_lines_nr; i++)
-+		update_submodule(&suc->submodule_lines[i]);
+ 		displaypath=$(git submodule--helper relative-path "$prefix$sm_path" "$wt_prefix")
  
--	strbuf_release(&sb);
- 	return 0;
- }
- 
+ 		if test $just_cloned -eq 1
+ 		then
+ 			subsha1=
+-			case "$update_module" in
+-			merge | rebase | none)
+-				update_module=checkout ;;
+-			esac
+ 		else
+ 			subsha1=$(sanitize_submodule_env; cd "$sm_path" &&
+ 				git rev-parse --verify HEAD) ||
 -- 
 2.18.0.203.gfac676dfb9-goog
 
