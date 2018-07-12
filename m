@@ -2,87 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B913D1F85E
-	for <e@80x24.org>; Thu, 12 Jul 2018 16:59:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 577251F85E
+	for <e@80x24.org>; Thu, 12 Jul 2018 17:07:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727113AbeGLRKC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jul 2018 13:10:02 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:38709 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727006AbeGLRKC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jul 2018 13:10:02 -0400
-Received: by mail-wr1-f66.google.com with SMTP id m1-v6so9699413wrg.5
-        for <git@vger.kernel.org>; Thu, 12 Jul 2018 09:59:38 -0700 (PDT)
+        id S1727366AbeGLRRj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jul 2018 13:17:39 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:54325 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726912AbeGLRRj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jul 2018 13:17:39 -0400
+Received: by mail-wm0-f66.google.com with SMTP id i139-v6so6292383wmf.4
+        for <git@vger.kernel.org>; Thu, 12 Jul 2018 10:07:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=WLmjDLq1/pLmAgwE6aI2BxOEmCfK6kBAI/EG9zqRflg=;
-        b=D1eSqRADsC2HTVGxZ5QNaI16yC7LRl6CNJJWtQsCL9CKjdQ9rksAtBCHzAYfeQUavW
-         GK4GhigU0TqDq91SCTpuIiSjYnsdYWy530olaXhdjyr6CXqxLGKQqmoDnKvHRYvBIM+A
-         2II7DuRqP+/pklL176X6Os1Qhxw8Gy25QNjEAvphCOZmbArUW/4CDHxehlSFyyhu6KjX
-         b1/9kR5ksPXXbIDBozpMmWwiB0KeaTnMplPTY0kqb1K5TYKaYtfenkijX1RRABDWG6tA
-         I0HG/Do204HzJ9zGBJRSo2+63cEhoHXt0rnxM8CEoWsx0ZqSy5bcK52JT4oiicMxwkfY
-         V2Lw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=o9/Omw1zRzcyfC0MpyFmVpVU24B5mxQqVyxm7PT7ezs=;
+        b=NApvgR+NmdPaObxIMDm8GK9pEk1WV46dsLqWw1rluxRP1TADy9WHGpLm9tJqKO/iGT
+         EW/6spG2E0gNK6RBl1yEQbuEqbLgJFIkb6O/ReIgAVblqToVDdnhSc3aActvKOyxB/lp
+         tEM0Imu5Bo6+VPCIAmiupTJumhLrThXhEGIpEqMbS1MAmkbM1BwLMzj273qNDmuXFAk8
+         W5VuCCISh2PhzgF7kk5B9Y/zzbe/J5k6kVMftS/4wY7+y8C9o+n7Fg7IJVP6wW9ToLte
+         TopGvJCOFNAuP2Yx79+psmcqw9ihF2qQWftuZv4FK9zQSQILGNilkkqejtUyu3CSi+if
+         vP1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=WLmjDLq1/pLmAgwE6aI2BxOEmCfK6kBAI/EG9zqRflg=;
-        b=AzLQTPPZijemwDAHt7U5IlwMYxY70e33A2Nydz1hLf6nAEcQwQcdo3ATHX/kMUbkZu
-         kbKgwL4WP4qXzi+B0ic/QXD7I6J3/uIjsSePs+UQqiPg8luW3IgKQ5oxv8s+okslZAzW
-         jsI5MtF+coLCKvDQ1t7RsfebGPw840JK6yWVZNb6hToO9HxWmooD4rlzGw5nyny2NO5g
-         ITbqstEvLyG2agATxVBHfEHGPJaeWb2BFXlqlngKDRpylljAjryZM+nPGTQnT382QVeB
-         Q1sI5/xOchN0o4WZvaxY/JKTY8PLZWs1qKt8vBF5LqDXd/vN9TCqbvS9d4JS1hVSelMF
-         KXmQ==
-X-Gm-Message-State: AOUpUlE7PBTF4hUmO8ONFrVZKKaey7zlJ0ed4jzHh9iPMg36YD240GXW
-        mStw81nedsqL3/7MkEZtUnbF/Wda
-X-Google-Smtp-Source: AAOMgpf8OsypUiNJiqn6j78+rWwnUL0XFyi3IAC8EGqlGby+tn7GR5ap/e5aYVZSnKyyDFnyjPPl3g==
-X-Received: by 2002:adf:90e9:: with SMTP id i96-v6mr2561405wri.146.1531414777516;
-        Thu, 12 Jul 2018 09:59:37 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id i21-v6sm2816400wmf.26.2018.07.12.09.59.36
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 12 Jul 2018 09:59:36 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: refs/notes/amlog problems, was Re: [PATCH v3 01/20] linear-assignment: a function to solve least-cost assignment problems
-References: <cover.1525448066.git.johannes.schindelin@gmx.de>
-        <pull.1.v3.git.gitgitgadget@gmail.com>
-        <39272eefcfe66de3ca1aa2ee43d6626ce558caae.1530617166.git.gitgitgadget@gmail.com>
-        <xmqqtvpcgf40.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1807071320110.75@tvgsbejvaqbjf.bet>
-        <xmqq7em7gg3j.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1807072116570.75@tvgsbejvaqbjf.bet>
-        <nycvar.QRO.7.76.6.1807080017160.75@tvgsbejvaqbjf.bet>
-        <nycvar.QRO.7.76.6.1807092342490.75@tvgsbejvaqbjf.bet>
-        <xmqqefg94uq1.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1807121720340.75@tvgsbejvaqbjf.bet>
-Date:   Thu, 12 Jul 2018 09:59:36 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.1807121720340.75@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Thu, 12 Jul 2018 17:23:24 +0200 (DST)")
-Message-ID: <xmqq8t6gz8xz.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=o9/Omw1zRzcyfC0MpyFmVpVU24B5mxQqVyxm7PT7ezs=;
+        b=gRGxym34qsuXU6A878wbWjIFRj7NpKsE21LwyoYiHKmBioWd26H7E0ebT8ze8g+vOb
+         Ou3vo5vS6oCjd7WYTEA+P/3Ypcb0Y2liWjKZxjcLvytk0qrmcwfsdemEluXwaeeecMaK
+         42OEw1eWfkt9sjNWlZWLyTFQth6GkqnH+RNyal0apGAh+TJiw8domH1j/z+vzQ5LXm4+
+         ZsYDoRv7Z3B0r1gXxYpSVhrQ6NgAxdPraJgy26z3CvlX+Iv0D3sqtsSDKI6IL4MgEakm
+         pjyOVGr3rwFlZ6qeyCZUbyGHyKmzHvOq1BM7adatbqBq32gvn4E2El8Zf3E09kjiKJC+
+         95PA==
+X-Gm-Message-State: AOUpUlHpx3wH66703ZTwtIyLC564Shn28UQ4EVO/CxTXZQVgq8pERxyq
+        MvOauG0+sxwOC964PIRfLIRSW/0WYaN9SRPTMHU=
+X-Google-Smtp-Source: AAOMgpeDQTpSfT1E27FaB9tc6wxcBW3uT+et7Hbal1J1qZB3pLgTsP5dMbkqYxsCBRxhORvjcZLnvlnx/sMYsEhiuXc=
+X-Received: by 2002:a1c:85cc:: with SMTP id h195-v6mr1772655wmd.110.1531415232989;
+ Thu, 12 Jul 2018 10:07:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 2002:adf:e9c6:0:0:0:0:0 with HTTP; Thu, 12 Jul 2018 10:07:12
+ -0700 (PDT)
+In-Reply-To: <bbd5f6f5-8587-606e-01be-4c5e37609037@ramsayjones.plus.com>
+References: <bbd5f6f5-8587-606e-01be-4c5e37609037@ramsayjones.plus.com>
+From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>
+Date:   Thu, 12 Jul 2018 20:07:12 +0300
+Message-ID: <CAL21Bm=eqEV8qXECvXBm5Nqx6Wgbsha7ya=pEvTuqw+F-FncDg@mail.gmail.com>
+Subject: Re: [PATCH] ref-filter: mark some file-local symbols as static
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+2018-07-12 18:57 GMT+03:00 Ramsay Jones <ramsay@ramsayjones.plus.com>:
+>
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
+>
+> Hi Olga,
+>
+> If you need to re-roll your 'ot/ref-filter-object-info' branch,
+> could you please squash this into the relevant patch (commit c5d9a471d6,
+> "ref-filter: use oid_object_info() to get object", 2018-07-09).
+>
+> [Both sparse and my static-check.pl script are complaining about
+> the 'oi' and 'oi_deref' symbols.]
 
-> I would like to ask you to reinstate the post-rewrite hook, as it still
-> improves the situation over the current one.
+You are right. Thanks a lot!
 
-Without post-rewrite I seem to be getting correct amlog entries for
-commits created by "git rebase"; do our rebase--am backend still
-trigger post-applypatch hook in its "am" phase to apply the patches
-created with "format-patch"?
-
+>
+> Thanks!
+>
+> ATB,
+> Ramsay Jones
+>
+>  ref-filter.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/ref-filter.c b/ref-filter.c
+> index 9aedf29e0..70fb15619 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -63,7 +63,7 @@ struct refname_atom {
+>         int lstrip, rstrip;
+>  };
+>
+> -struct expand_data {
+> +static struct expand_data {
+>         struct object_id oid;
+>         enum object_type type;
+>         unsigned long size;
+> --
+> 2.18.0
