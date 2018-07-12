@@ -7,59 +7,64 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 189061F85E
-	for <e@80x24.org>; Thu, 12 Jul 2018 12:22:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 114381F85E
+	for <e@80x24.org>; Thu, 12 Jul 2018 12:37:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727641AbeGLMbs (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jul 2018 08:31:48 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:45970 "EHLO
+        id S1726946AbeGLMrC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jul 2018 08:47:02 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:37124 "EHLO
         mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727006AbeGLMbs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jul 2018 08:31:48 -0400
-Received: by mail-ed1-f67.google.com with SMTP id i20-v6so8718331eds.12
-        for <git@vger.kernel.org>; Thu, 12 Jul 2018 05:22:28 -0700 (PDT)
+        with ESMTP id S1726695AbeGLMrC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jul 2018 08:47:02 -0400
+Received: by mail-ed1-f67.google.com with SMTP id v22-v6so21766499edq.4
+        for <git@vger.kernel.org>; Thu, 12 Jul 2018 05:37:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=s4UuJkXUYVddcaNxp/nAyxXAOJsPnioC6Y8zpcKyrKs=;
-        b=snxIQHt6QuaNr6US8cKEhw7SjDBGmnuy73aGxVVj4EWuR4tSgibzB4975Z/z83d6zb
-         t9IjlSH7U6QnWV+HW5x6aDgrDoPf6dKd61oSKo5pF2sjHx0lK1flCh7kSf/x/DOa6mgG
-         kGAhIyT4F/lFNUxzMZJCAetWRj64+4E7n5hBLD9E5YN17OR7E95v19UicDuDW4sWdoxe
-         ybUbzyIhvoDv1wbctTcQ1Aac/7r5ExIJe6ENA1NhxzclRT+ikm8W2YLvG6JPUl79NH+Y
-         gqD4xvr95XpMHrWse1aPUJNZ/7tOiS9pRGJSh3W/hhhk08k8NMn0UU+UwsYXUzbhQ7yb
-         SYtQ==
+        bh=/AbEmCXwP5x4ZABfmt0P59kiU3DTlMKbEIR5lSImNVE=;
+        b=kGTkiNpsk4ODpRZpDulo6cB+WJQ98O+KQuLQ5LqVPSoDdeUSnxLq0XpqEDoESFphEy
+         9zg/vJtCyHpX4TILBS4se+O2MiE4cR0YC+Main7BztOM9QWAReciWFa7pspt1pclTRfk
+         ijZob3ZopI5z5sg6FJh23IQdhvarXH37yptppaG//2Y6ruUBga8jShzovbaS2DBIle1F
+         uWcmHyXDrOj2k3oJ/V++sf+MVEDpq9k6GOVrSrjJF7lAcJrtz0PGuUGQrAiDj9aGbNz7
+         5TqvEGmTla7sTiwwSE3eYeDiJJ+7K53sJbdVASVJWzd4L7cc5WgfgDvKeO2MwAXDejQR
+         h6Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=s4UuJkXUYVddcaNxp/nAyxXAOJsPnioC6Y8zpcKyrKs=;
-        b=qGQ6E4mtybQaMrBboUwfdDloCuD4EUwlUjS8zg+HeJdLA/jVOrClezjbd2jqrCwmeQ
-         v1v85Zt46IQWHWa327SsXgKHneXky4ZCT48FnDPakFOCa6qTgGxslkuQ7r1KXMp3pOW+
-         Tb+WvK6uZ1R87XCGUQpf5Y2pzNQhs6wjXloLpkF1odx+kP9wk3+IAmX4hMhfK/3YLFvC
-         xxma+cZJIgDpc3n3Y8EV8RViLkTHA9O/IIMlKg1eS/OJI3/Am3FTtDrSfQPzkVK+TsXK
-         uy0pmTA09O3lqMM0FPeepsZwdq5bPrjWU5u+icDLEYGnwc+TLz/ZMxzIDOqvGMP6b1A8
-         XGdg==
-X-Gm-Message-State: AOUpUlFut5GjxZ7ZxK6n4cun+c+De6IJfi0FSnhCDMUgRDIjOdtE8YwQ
-        PCZhQvNCaDmqrLHSZNg6CIQ=
-X-Google-Smtp-Source: AAOMgpcknfTdmZEcxqgIoJOQkTDePSdwOTJrWOjkAhpJJgDV5Zvbpzzng7OC9pzcRCOlwf/FCwOFGQ==
-X-Received: by 2002:a50:92c5:: with SMTP id l5-v6mr2367893eda.52.1531398147586;
-        Thu, 12 Jul 2018 05:22:27 -0700 (PDT)
+        bh=/AbEmCXwP5x4ZABfmt0P59kiU3DTlMKbEIR5lSImNVE=;
+        b=LSy5Fqt5XU8nSs75D6SDU9pkpZNKOzE7ZkICDHEtsQoePLGYCaG8ChKdStJlhwS4NP
+         qD8T9gjoijvBF0SuO60z0NLLyKbbk/y5NCoBmjxUqcQfm/jwSHaSLt5iMIjRnLlINYXH
+         2d/3PAZt7ljCaIuMADHtwLTvjcFuTKAi0dMep5oP1+N6S6JE61OSDGdhaATb8Oe1aDqA
+         mGyIfT1kUZtGmzpUMUak916oVnGVKOuKVyyL55k8XTxLUNEw77YFJhBi/eYvaEgKfKeG
+         fUMEWLbhwtnwHxJazHY8XZStxpET7K+AEjWaosVf1b3DLKKp3fcWTiwLfiV1B2PEFAem
+         NAAA==
+X-Gm-Message-State: AOUpUlGK48rU1KQKA9y+PuhCdspjyuedX+jKX/P7mMdU9yA55Nrlx7Dp
+        1nwiuL5+7WdkshgLQ5fZN7U=
+X-Google-Smtp-Source: AAOMgpe2yWdxqAyEU6ROx6dvQ+QYrGebe8/32+qS3cDv+jX955xD9d+JIGBXiIDYBadlvBzsoJP+Mw==
+X-Received: by 2002:a50:b4db:: with SMTP id x27-v6mr2399980edd.155.1531399058010;
+        Thu, 12 Jul 2018 05:37:38 -0700 (PDT)
 Received: from localhost.localdomain (x590d07e3.dyn.telefonica.de. [89.13.7.227])
-        by smtp.gmail.com with ESMTPSA id a2-v6sm165618ede.21.2018.07.12.05.22.26
+        by smtp.gmail.com with ESMTPSA id d11-v6sm11604309edo.63.2018.07.12.05.37.36
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 12 Jul 2018 05:22:26 -0700 (PDT)
+        Thu, 12 Jul 2018 05:37:37 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v3 3/3] t/lib-httpd: avoid occasional failures when checking access.log
-Date:   Thu, 12 Jul 2018 14:22:16 +0200
-Message-Id: <20180712122216.12691-4-szeder.dev@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Luke Diamand <luke@diamand.org>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 21/25] t5000-t5999: fix broken &&-chains
+Date:   Thu, 12 Jul 2018 14:37:29 +0200
+Message-Id: <20180712123729.17861-1-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.18.0.305.g66e9e0a543
-In-Reply-To: <20180712122216.12691-1-szeder.dev@gmail.com>
-References: <20180711125647.16512-1-szeder.dev@gmail.com>
- <20180712122216.12691-1-szeder.dev@gmail.com>
+In-Reply-To: <20180702002405.3042-22-sunshine@sunshineco.com>
+References: <20180702002405.3042-1-sunshine@sunshineco.com> <20180702002405.3042-22-sunshine@sunshineco.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,146 +73,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The last test of 't5561-http-backend.sh', 'server request log matches
-test results' may fail occasionally, because the order of entries in
-Apache's access log doesn't match the order of requests sent in the
-previous tests, although all the right requests are there.  I saw it
-fail on Travis CI five times in the span of about half a year, when
-the order of two subsequent requests was flipped, and could trigger
-the failure with a modified Git.  However, I was unable to trigger it
-with stock Git on my machine.  Three tests in
-'t5541-http-push-smart.sh' and 't5551-http-fetch-smart.sh' check
-requests in the log the same way, so they might be prone to a similar
-occasional failure as well.
 
-When a test sends a HTTP request, it can continue execution after
-'git-http-backend' fulfilled that request, but Apache writes the
-corresponding access log entry only after 'git-http-backend' exited.
-Some time inevitably passes between fulfilling the request and writing
-the log entry, and, under unfavourable circumstances, enough time
-might pass for the subsequent request to be sent and fulfilled by a
-different Apache thread or process, and then Apache writes access log
-entries racily.
+> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+> ---
+>  t/t5300-pack-object.sh         |  2 +-
+>  t/t5302-pack-index.sh          |  2 +-
+>  t/t5401-update-hooks.sh        |  4 ++--
+>  t/t5500-fetch-pack.sh          |  2 +-
+>  t/t5505-remote.sh              |  2 +-
+>  t/t5512-ls-remote.sh           |  4 ++--
+>  t/t5516-fetch-push.sh          | 10 +++++-----
+>  t/t5517-push-mirror.sh         | 10 +++++-----
+>  t/t5526-fetch-submodules.sh    |  2 +-
+>  t/t5531-deep-submodule-push.sh |  2 +-
+>  t/t5543-atomic-push.sh         |  2 +-
+>  t/t5601-clone.sh               |  2 +-
+>  t/t5605-clone-local.sh         |  2 +-
+>  t/t5801-remote-helpers.sh      |  2 +-
+>  14 files changed, 24 insertions(+), 24 deletions(-)
 
-This effect can be exacerbated by adding a bit of variable delay after
-the request is fulfilled but before 'git-http-backend' exits, e.g.
-like this:
+The change below should be squashed into this patch to fix a
+previously unnoticed broken &&-chain.  I think you missed it, because
+this test script is rather expensive and you didn't run it with
+GIT_TEST_CLONE_2GB=YesPlease.
 
-  diff --git a/http-backend.c b/http-backend.c
-  index f3dc218b2..bbf4c125b 100644
-  --- a/http-backend.c
-  +++ b/http-backend.c
-  @@ -709,5 +709,7 @@ int cmd_main(int argc, const char **argv)
-   					   max_request_buffer);
 
-   	cmd->imp(&hdr, cmd_arg);
-  +	if (getpid() % 2)
-  +		sleep(1);
-   	return 0;
-   }
-
-This delay considerably increases the chances of log entries being
-written out of order, and in turn makes t5561's last test fail almost
-every time.  Alas, it doesn't seem to be enough to trigger a similar
-failure in t5541 and t5551.
-
-So, since we can't just rely on the order of access log entries always
-corresponding the order of requests, make checking the access log more
-deterministic by sorting (simply lexicographically) both the stripped
-access log entries and the expected entries before the comparison with
-'test_cmp'.  This way the order of log entries won't matter and
-occasional out-of-order entries won't trigger a test failure, but the
-comparison will still notice any unexpected or missing log entries.
-
-OTOH, this sorting will make it harder to identify from which test an
-unexpected log entry came from or which test's request went missing.
-Therefore, in case of an error include the comparison of the unsorted
-log enries in the test output as well.
-
-And since all this should be performed in four tests in three test
-scripts, put this into a new helper function 'check_access_log' in
-'t/lib-httpd.sh'.
-
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
- t/lib-httpd.sh              | 12 ++++++++++++
- t/t5541-http-push-smart.sh  |  6 ++----
- t/t5551-http-fetch-smart.sh |  3 +--
- t/t5561-http-backend.sh     |  3 +--
- 4 files changed, 16 insertions(+), 8 deletions(-)
-
-diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
-index b6788fea57..7f060aebd0 100644
---- a/t/lib-httpd.sh
-+++ b/t/lib-httpd.sh
-@@ -296,3 +296,15 @@ strip_access_log() {
- 		s/^GET /GET  /
- 	" "$HTTPD_ROOT_PATH"/access.log
- }
-+
-+# Requires one argument: the name of a file containing the expected stripped
-+# access log entries.
-+check_access_log() {
-+	sort "$1" >"$1".sorted &&
-+	strip_access_log >access.log.stripped &&
-+	sort access.log.stripped >access.log.sorted &&
-+	if ! test_cmp "$1".sorted access.log.sorted
-+	then
-+		test_cmp "$1" access.log.stripped
-+	fi
-+}
-diff --git a/t/t5541-http-push-smart.sh b/t/t5541-http-push-smart.sh
-index 83390f80cc..a9836e4af0 100755
---- a/t/t5541-http-push-smart.sh
-+++ b/t/t5541-http-push-smart.sh
-@@ -47,8 +47,7 @@ test_expect_success 'no empty path components' '
- 	cd "$ROOT_PATH" &&
- 	git clone $HTTPD_URL/smart/test_repo.git/ test_repo_clone &&
- 
--	strip_access_log >act &&
--	test_cmp exp act
-+	check_access_log exp
- '
- 
- test_expect_success 'clone remote repository' '
-@@ -129,8 +128,7 @@ GET  /smart/test_repo.git/info/refs?service=git-receive-pack HTTP/1.1 200
- POST /smart/test_repo.git/git-receive-pack HTTP/1.1 200
- EOF
- test_expect_success 'used receive-pack service' '
--	strip_access_log >act &&
--	test_cmp exp act
-+	check_access_log exp
- '
- 
- test_http_push_nonff "$HTTPD_DOCUMENT_ROOT_PATH"/test_repo.git \
-diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
-index c8b6ec493b..3aab44bdcb 100755
---- a/t/t5551-http-fetch-smart.sh
-+++ b/t/t5551-http-fetch-smart.sh
-@@ -103,8 +103,7 @@ GET  /smart/repo.git/info/refs?service=git-upload-pack HTTP/1.1 200
- POST /smart/repo.git/git-upload-pack HTTP/1.1 200
- EOF
- test_expect_success 'used upload-pack service' '
--	strip_access_log >act &&
--	test_cmp exp act
-+	check_access_log exp
- '
- 
- test_expect_success 'follow redirects (301)' '
-diff --git a/t/t5561-http-backend.sh b/t/t5561-http-backend.sh
-index 4248b5a06d..1c49054595 100755
---- a/t/t5561-http-backend.sh
-+++ b/t/t5561-http-backend.sh
-@@ -129,8 +129,7 @@ GET  /smart/repo.git/info/refs?service=git-receive-pack HTTP/1.1 403 -
- POST /smart/repo.git/git-receive-pack HTTP/1.1 403 -
- EOF
- test_expect_success 'server request log matches test results' '
--	strip_access_log >act &&
--	test_cmp exp act
-+	check_access_log exp
- '
- 
- stop_httpd
--- 
-2.18.0.305.g66e9e0a543
+diff --git a/t/t5608-clone-2gb.sh b/t/t5608-clone-2gb.sh
+index df822d9a3e..2c6bc07344 100755
+--- a/t/t5608-clone-2gb.sh
++++ b/t/t5608-clone-2gb.sh
+@@ -23,7 +23,7 @@ test_expect_success CLONE_2GB 'setup' '
+ 		printf "blob\nmark :$i\ndata $blobsize\n" &&
+ 		#test-tool genrandom $i $blobsize &&
+ 		printf "%-${blobsize}s" $i &&
+-		echo "M 100644 :$i $i" >> commit
++		echo "M 100644 :$i $i" >> commit &&
+ 		i=$(($i+1)) ||
+ 		echo $? > exit-status
+ 	 done &&
 
