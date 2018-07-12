@@ -2,79 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 667391F85E
-	for <e@80x24.org>; Thu, 12 Jul 2018 16:56:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B913D1F85E
+	for <e@80x24.org>; Thu, 12 Jul 2018 16:59:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732412AbeGLRGd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jul 2018 13:06:33 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57054 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726925AbeGLRGd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jul 2018 13:06:33 -0400
-Received: (qmail 3557 invoked by uid 109); 12 Jul 2018 16:56:10 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 12 Jul 2018 16:56:10 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24171 invoked by uid 111); 12 Jul 2018 16:56:12 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 12 Jul 2018 12:56:12 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Jul 2018 12:56:08 -0400
-Date:   Thu, 12 Jul 2018 12:56:08 -0400
-From:   Jeff King <peff@peff.net>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Stefan Beller <sbeller@google.com>,
-        Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH v2 01/10] t/test-lib: teach --chain-lint to detect broken
- &&-chains in subshells
-Message-ID: <20180712165608.GA10515@sigill.intra.peff.net>
-References: <20180626073001.6555-1-sunshine@sunshineco.com>
- <20180711064642.6933-1-sunshine@sunshineco.com>
- <20180711064642.6933-2-sunshine@sunshineco.com>
- <xmqqk1q11mkj.fsf@gitster-ct.c.googlers.com>
- <CAPig+cS+fFZNZMxc0ARu=cZ2RVjHSP0iiLTsAJ_L7iOarwftgg@mail.gmail.com>
+        id S1727113AbeGLRKC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jul 2018 13:10:02 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:38709 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727006AbeGLRKC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jul 2018 13:10:02 -0400
+Received: by mail-wr1-f66.google.com with SMTP id m1-v6so9699413wrg.5
+        for <git@vger.kernel.org>; Thu, 12 Jul 2018 09:59:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=WLmjDLq1/pLmAgwE6aI2BxOEmCfK6kBAI/EG9zqRflg=;
+        b=D1eSqRADsC2HTVGxZ5QNaI16yC7LRl6CNJJWtQsCL9CKjdQ9rksAtBCHzAYfeQUavW
+         GK4GhigU0TqDq91SCTpuIiSjYnsdYWy530olaXhdjyr6CXqxLGKQqmoDnKvHRYvBIM+A
+         2II7DuRqP+/pklL176X6Os1Qhxw8Gy25QNjEAvphCOZmbArUW/4CDHxehlSFyyhu6KjX
+         b1/9kR5ksPXXbIDBozpMmWwiB0KeaTnMplPTY0kqb1K5TYKaYtfenkijX1RRABDWG6tA
+         I0HG/Do204HzJ9zGBJRSo2+63cEhoHXt0rnxM8CEoWsx0ZqSy5bcK52JT4oiicMxwkfY
+         V2Lw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=WLmjDLq1/pLmAgwE6aI2BxOEmCfK6kBAI/EG9zqRflg=;
+        b=AzLQTPPZijemwDAHt7U5IlwMYxY70e33A2Nydz1hLf6nAEcQwQcdo3ATHX/kMUbkZu
+         kbKgwL4WP4qXzi+B0ic/QXD7I6J3/uIjsSePs+UQqiPg8luW3IgKQ5oxv8s+okslZAzW
+         jsI5MtF+coLCKvDQ1t7RsfebGPw840JK6yWVZNb6hToO9HxWmooD4rlzGw5nyny2NO5g
+         ITbqstEvLyG2agATxVBHfEHGPJaeWb2BFXlqlngKDRpylljAjryZM+nPGTQnT382QVeB
+         Q1sI5/xOchN0o4WZvaxY/JKTY8PLZWs1qKt8vBF5LqDXd/vN9TCqbvS9d4JS1hVSelMF
+         KXmQ==
+X-Gm-Message-State: AOUpUlE7PBTF4hUmO8ONFrVZKKaey7zlJ0ed4jzHh9iPMg36YD240GXW
+        mStw81nedsqL3/7MkEZtUnbF/Wda
+X-Google-Smtp-Source: AAOMgpf8OsypUiNJiqn6j78+rWwnUL0XFyi3IAC8EGqlGby+tn7GR5ap/e5aYVZSnKyyDFnyjPPl3g==
+X-Received: by 2002:adf:90e9:: with SMTP id i96-v6mr2561405wri.146.1531414777516;
+        Thu, 12 Jul 2018 09:59:37 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id i21-v6sm2816400wmf.26.2018.07.12.09.59.36
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 12 Jul 2018 09:59:36 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: refs/notes/amlog problems, was Re: [PATCH v3 01/20] linear-assignment: a function to solve least-cost assignment problems
+References: <cover.1525448066.git.johannes.schindelin@gmx.de>
+        <pull.1.v3.git.gitgitgadget@gmail.com>
+        <39272eefcfe66de3ca1aa2ee43d6626ce558caae.1530617166.git.gitgitgadget@gmail.com>
+        <xmqqtvpcgf40.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1807071320110.75@tvgsbejvaqbjf.bet>
+        <xmqq7em7gg3j.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1807072116570.75@tvgsbejvaqbjf.bet>
+        <nycvar.QRO.7.76.6.1807080017160.75@tvgsbejvaqbjf.bet>
+        <nycvar.QRO.7.76.6.1807092342490.75@tvgsbejvaqbjf.bet>
+        <xmqqefg94uq1.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1807121720340.75@tvgsbejvaqbjf.bet>
+Date:   Thu, 12 Jul 2018 09:59:36 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.1807121720340.75@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Thu, 12 Jul 2018 17:23:24 +0200 (DST)")
+Message-ID: <xmqq8t6gz8xz.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAPig+cS+fFZNZMxc0ARu=cZ2RVjHSP0iiLTsAJ_L7iOarwftgg@mail.gmail.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 12, 2018 at 06:50:20AM -0400, Eric Sunshine wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> And, perhaps most important: We're not tied indefinitely to the
-> "subset" implemented by the current linter. If it is indeed found to
-> be too strict or limiting, it can always be loosened or retired
-> altogether.
+> I would like to ask you to reinstate the post-rewrite hook, as it still
+> improves the situation over the current one.
 
-Yeah, I agree this is the key point.
+Without post-rewrite I seem to be getting correct amlog entries for
+commits created by "git rebase"; do our rebase--am backend still
+trigger post-applypatch hook in its "am" phase to apply the patches
+created with "format-patch"?
 
-Like Junio, I'm a little nervous that this is going to end up being a
-maintenance burden. People may hit false positives and then be
-confronted with this horrible mass of sed to try to figure out what went
-wrong (which isn't to bust on your sed in particular; I think you made a
-heroic effort in commenting).
-
-But I came around to thinking:
-
-  - this found and fixed real problems in the test suite, with minimal
-    false positives across the existing code
-
-  - it's being done by a long-time contributor, not somebody who is
-    going to dump sed on us and leave
-
-  - worst case is that relief is only a "git revert" away
-
-So I'm OK with merging it, and even running it by default.
-
--Peff
