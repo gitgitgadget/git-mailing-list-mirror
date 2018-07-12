@@ -7,87 +7,142 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC9801F85E
-	for <e@80x24.org>; Thu, 12 Jul 2018 12:54:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA28E1F85E
+	for <e@80x24.org>; Thu, 12 Jul 2018 12:59:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732250AbeGLNEZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jul 2018 09:04:25 -0400
-Received: from mout.gmx.net ([212.227.17.22]:45143 "EHLO mout.gmx.net"
+        id S1727113AbeGLNIu (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jul 2018 09:08:50 -0400
+Received: from mout.gmx.net ([212.227.15.15]:49357 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726946AbeGLNEZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jul 2018 09:04:25 -0400
-Received: from [192.168.0.129] ([37.201.195.126]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MF5C3-1fsDB70MWZ-00GLTI; Thu, 12
- Jul 2018 14:54:54 +0200
-Date:   Thu, 12 Jul 2018 14:54:38 +0200 (DST)
+        id S1726946AbeGLNIu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jul 2018 09:08:50 -0400
+Received: from [192.168.0.129] ([37.201.195.126]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M7YF5-1fxjPQ2FNP-00xKcn; Thu, 12
+ Jul 2018 14:59:15 +0200
+Date:   Thu, 12 Jul 2018 14:58:59 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Stefan Beller <sbeller@google.com>
-cc:     Junio C Hamano <gitster@pobox.com>, gitgitgadget@gmail.com,
-        git <git@vger.kernel.org>
-Subject: Re: [PATCH 0/3] rebase -r: support octopus merges
-In-Reply-To: <CAGZ79kaYpw9t3kCvPnDiLc5z7cLFsVQv4XJDAff_T-bShEjPoQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1807121450100.75@tvgsbejvaqbjf.bet>
-References: <pull.8.git.gitgitgadget@gmail.com> <xmqqbmbd3cc3.fsf@gitster-ct.c.googlers.com> <CAGZ79kaYpw9t3kCvPnDiLc5z7cLFsVQv4XJDAff_T-bShEjPoQ@mail.gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/3] merge: allow reading the merge commit message from
+ a file
+In-Reply-To: <xmqqbmbd1l7i.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1807121455130.75@tvgsbejvaqbjf.bet>
+References: <pull.8.git.gitgitgadget@gmail.com> <9e2c1fe83178f7047d8f2aacaa961381a4894081.1531312689.git.gitgitgadget@gmail.com> <xmqqbmbd1l7i.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:CxOm7sd6H+abjb/n37IR6AUlSHtwAb3x6flzj1JT6P2BvKnG+8j
- pONbxs6vlcMFwQXxYb3gVF6F/XmUsg0AP0nSAlHZgAAX5u6wolM6JdaR3k1lNGRF6UqSF/K
- 1ydGZdelRPH4MEjsgmNvypjkRnbnpAY8h5GxcTjffGUFts7M7oKJDUAKmrExX8QMEuecxDQ
- ncvNhJM/NGBPG39rzhs9g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:XojfEr4nFFA=:/yd394fCpeSrqZpCGR6knL
- F3XSPHam/IVJ8hVw2flH+zZQ32ciB028iUMEWTaYPj8xWpbVF66oi1EjXbG8TAmTHTH1J2lf2
- 4syxu/bI+oWG6eA9IPaSaVV0p53nR1nTbkea6eLb0/rytRbkgJ+yxlLr+MU2Rwcga2j5AQw6g
- kQm7xkyM6KkkLHB8wU3PFe81w0cG0iiPvkFQ1m3MW6CyvwhklmQqx4lqr1wZ89sDATH28ogAl
- vG+CX43a/QcyRVlwvCiO/wSsRSd1tIYTCqU2EuFXoJQuwDrK5AwhL6rC955NbpMe8dHp0jXi8
- Q7+s/5chJwX5+mWDYVJLqn1Zkgy8tXoYhnyAVJNLYH7fVe3d82uB9BgcRMTwOhhao1wsClU6v
- 4nk+tXWZ1+3sMsIqMCBnOT7CNleDDj3BcsA+tyfXK+e5cjsPQrhKXrQWK6XK3UvfEhpd/bdUL
- 434ktw8o7C941Z9YFkS0yI0GcXGhwpObe1SvDTWdonFGebWunzK46xQyE8X7mwlOi4rNcHOg9
- d8VLeqfEcDrdCeEKhZakc240Z4CSlWKwQl3EPZ+zNMYX79zc6IzNDZ2HZp+MlsDdR6rzi+hSV
- s9zWtVkajEv7wRjYPmoBfjGlicKPyiYT0IoWodzSU+IP7raoQXciBZPM9lCKhRvTzp6/KvkNv
- mPtwlhQISSDr34/KXrqp7JsWVLyhZnWwWOQUvAfcOXIt8nKn3HF+6QxR89kgbz5VSIPxRQsBH
- 21w7GgT//Ot/vB89ByE4OAhTuateWWkRymLCAO5i1G1nl2LxKf1Qlp1FPDX5ooDEhjJwZsXWZ
- n9bPY4C
+X-Provags-ID: V03:K1:LTSvbmu7PQdnvfzLfzYOn1bTrH0NZkLwp2RMjVXWomRD+JnMvzF
+ l81TTg1wQJmvTVmmZYDJjt+92Z9vtqclMsW8h+wHQm9hYQQqXEgxXPSxeO+YHEt15tOAKCt
+ TEBX+WgafKYc25y8fGLzKepx6bCTim3KT4oGTozpyaVVV7lZwydgyuG0VOCPYE6VDSIiTEM
+ s+BOhnMnoWYRvfgLoxIGg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:cIT7lEZAoFg=:oIEHtaKO7SWx+u1WM0lQ0e
+ CPj7UwNZCOFoCdV1trPtVvH3Zce9bpK3yG3t4QFh05jk7TOWHCFAz/mI6oZqS8/fvKsq0PLFc
+ CLvAFSzB6qE1UPoRnYp/w4R6vlPWBkcEPFjcOthzqf7/dgzYbboJDmoYcocWhwl6QutJ9AA9J
+ sgbtorXVMqlGL/ILsGeAuqFZBlq4K75UlRaWyc3YFzWVd5pr7vc0HdGy+YB5RTByGxT+BWNFo
+ htNqrblgoB5o5uo89LD0+TAodqscW51hNYqJEb/cJZXKf9NaTzqVKFaxNYswYFnqTc4ciJDaJ
+ r9sQL7b9YdARmz0mqruE0T1wSaixGytwHMcxAsC6K6VNxR0zFcMVhGKGE5gHDsOltiPHgNjOP
+ 5VG/qN3sO5NOGKPB48uKf66xNbyYoejB7dVRp/6ZDA1wIKgEe4UTwhZm/hCC+7vIZaIa/Idx/
+ za5bZg7ZZMj6j3HHT0V6VD/cfd8FnGWBwKmtaqJqEjrTxxA/1/DDlRBlA9ktsemDfoZRJQxOj
+ Zs0dbQvKypiTPK/ZmrHPM20ikyqDJyqBAVRv+fmxxam096Zc0RmFJQRkLdq3wZ1lqpmu9tkmQ
+ sNH+li9GcomltnJFZlr13IZdjWGPIu5LUpvZTZSpBkTjJRuz1qON9VZCRHpZpESWgBaqIzsgm
+ 0e35sN9qS4x9MdoSwFt3/01pZLhyOV6xgncARFjBlZfQXtQeE9NNoIuHWqX/jtH/kMsFail7W
+ NrP2FY3vunD40MCsoQkKSX8KzArnKaGbfn3gZS0qIit70XB1ZSIVQRC0vL3BfQMyyzHm4tNVC
+ Qlk/rO1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan,
+Hi Junio,
 
-On Wed, 11 Jul 2018, Stefan Beller wrote:
+On Wed, 11 Jul 2018, Junio C Hamano wrote:
 
-> On Wed, Jul 11, 2018 at 10:35 AM Junio C Hamano <gitster@pobox.com> wrote:
-> > To be honest, I am not sure if there still are people who use
-> > octopus
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
 > 
-> The latest merge with more than 2 parents in linux.git is df958569dbaa
-> (Merge branches 'acpi-tables' and 'acpica', 2018-07-05), although
-> looking through the log of octopusses I get the impression that mostly
-> Rafael J. Wysocki <rafael.j.wysocki@intel.com> is really keen on these.
-> :-)
+> > diff --git a/builtin/merge.c b/builtin/merge.c
+> > index 4a4c09496..b0e907751 100644
+> > --- a/builtin/merge.c
+> > +++ b/builtin/merge.c
+> > @@ -111,6 +111,35 @@ static int option_parse_message(const struct option *opt,
+> >  	return 0;
+> >  }
+> >  
+> > +static int option_read_message(struct parse_opt_ctx_t *ctx,
+> > +			       const struct option *opt, int unset)
+> > +{
+> > +	struct strbuf *buf = opt->value;
+> > +	const char *arg;
+> > +
+> > +	if (unset)
+> > +		BUG("-F cannot be negated");
+> 
+> The message "-F cannot be negated" looks as if it is pointing out a
+> mistake by the end user, and does not mesh well with the real reason
+> why this is BUG() and is not die().
+> 
+> I understand that this is BUG() not die() because options[] array
+> tells this callback not to be called with unset by having the
+> PARSE_OPT_NONEG bit there.
 
-IMO core Git contributors seriously need to forget about using the Linux
-kernel repository as the gold standard when looking how Git is used.
+Okay. I would have appreciated some sort of indication what you prefer
+instead. I went with "--no-file?!?"
 
-Git is used in *so many* different scenarios, and both in terms of
-commits/day as well as overall repository size *and* development speed,
-Linux is not even in the "smack down the middle" category. Compared to
-what is being done with Git on a daily basis, the Linux kernel repository
-(and project structure) is relatively small.
+> > +	if (ctx->opt) {
+> > +		arg = ctx->opt;
+> > +		ctx->opt = NULL;
+> > +	} else if (ctx->argc > 1) {
+> > +		ctx->argc--;
+> > +		arg = *++ctx->argv;
+> > +	} else
+> > +		return opterror(opt, "requires a value", 0);
+> > +
+> > +	if (buf->len)
+> > +		strbuf_addch(buf, '\n');
+> 
+> Do we assume that buf, if it is not empty, is properly terminated
+> with LF already?  I am wondering if the real reason we do these two
+> lines is to make sure we have a separating blank line between what
+> is already there (if there already is something) and what we add, in
+> which case the above would want to say
+> 
+> 	if (buf->len) {
+> 		strbuf_complete_line(buf);
+> 		strbuf_addch(buf, '\n');
+> 	}
+> 
+> instead.
 
-A much more meaningful measure would be: how many octopus merge commits
-have been pushed to GitHub in the past two weeks. I don't think I have the
-technical means to answer that question, though.
+True. Thanks for the suggestion!
 
-In any case, the Git project is run in such a way that even having a
-feature used even by just single user whose name happens to be Andrew
-Morton declares that feature off-limits for deprecation.
+> > +	if (ctx->prefix && !is_absolute_path(arg))
+> > +		arg = prefix_filename(ctx->prefix, arg);
+> > +	if (strbuf_read_file(buf, arg, 0) < 0)
+> > +		return error(_("could not read file '%s'"), arg);
+> > +	have_message = 1;
+> 
+> A similar question is what we would want to do when the file ends
+> with an incomplete line.  With "--log", we would be appending more
+> stuff to buf, and we'd want to complete such an incomplete line
+> before that happens, either here or in the code immediately before
+> "--log" is processed.
 
-When applying this context to `--rebase-merges` and Octopus merges, even a
-single user would be sufficient for us to support that feature. And I am
-sure that there are more than just a dozen users of this feature.
+This is what I inserted here:
+
+	strbuf_complete_line(buf);
+
+> > +
+> > +	return 0;
+> > +}
+> > +
+> >  static struct strategy *get_strategy(const char *name)
+> >  {
+> >  	int i;
+
+Thanks for the review, and especially for the suggestions how to improve
+the code.
 
 Ciao,
 Dscho
