@@ -6,89 +6,94 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 515081F85E
-	for <e@80x24.org>; Thu, 12 Jul 2018 18:24:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C6EC11F914
+	for <e@80x24.org>; Thu, 12 Jul 2018 18:31:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726561AbeGLSfd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jul 2018 14:35:33 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:38296 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726444AbeGLSfd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jul 2018 14:35:33 -0400
-Received: by mail-wr1-f68.google.com with SMTP id m1-v6so9929933wrg.5
-        for <git@vger.kernel.org>; Thu, 12 Jul 2018 11:24:49 -0700 (PDT)
+        id S1726778AbeGLSmX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jul 2018 14:42:23 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:43305 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726543AbeGLSmX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jul 2018 14:42:23 -0400
+Received: by mail-wr1-f67.google.com with SMTP id b15-v6so22703701wrv.10
+        for <git@vger.kernel.org>; Thu, 12 Jul 2018 11:31:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=WEA0NE5LE7rY5oW4W9+zVp9lcTa9HDEOXzP1bcGlnX0=;
-        b=OjNLMuv5+D9ZWhVA/jMiX2Fmv3miwsm7d6LpEs6EHxBrC0EuJ9mRL/OBUfUr2IWXEz
-         UZtUnsS+DBrJW/wnZ18SFYixuU6GYcbP8wrAWlktzvWkWjzBNgL6Gjg+4garHNyt9NQL
-         jrKF8+rMJie1nB++F4fXg0IIGoJ8prPyATSODlmeUAG2P0gDGMMGesE/sP4diGQauB9F
-         VOhF3kfZv96SMx76wz32q1eB6lRoxr2tB9piubHlpnMe/33p3rzDwr236Cf2SCZMDk+4
-         Poe+QrkxThKyxxy6eXIYKRD2vWJtoGKx8ARxP8QBcEICJDLLbEIgmbSe39SDR7lhBblZ
-         lrSg==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=R9FsNELna1g9jIZXly+aPC/PJwhODH/hxe3Kn9w6iMM=;
+        b=V0BREWcaGDWV0+CKVwZyQn0lO1fogUJhniOMN4drbEwLt35oWvPTXzJ1UOlleLqQev
+         Tllk9jWkOdF65yMlxm3z7BejlYUA8HYGtJ7uCtYKOpQCyPnk/e6Ld5fNXKFYRwV4Bhr+
+         hDypF3TdtabHl0BRdMc14YZCdpkbgVjhzooAvemTtqCTtVx8CkLzdlMLdZLvYhjq61sV
+         BCjcpCqUCxIXVDQyMFGgfe4Rk7DUQk6XacEXfBxx3dEKhIl1WiqNQ+a/byIkouNPKJDr
+         z0Y69Nlfr/JeutnWraPvhme6QetQdPqYyKE0IVe4VHqRcFyGz6hEIFL3Z0CUVRR2AjB+
+         QvhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=WEA0NE5LE7rY5oW4W9+zVp9lcTa9HDEOXzP1bcGlnX0=;
-        b=s/weuWGo/SaKCU/ujjZ9cg0hu2AiLbV4K3Rlgz4KKbLAw2v0wFVib3Ml03zI3I7atS
-         velazmMyg7mm6OL46+ODeaOIkKfMrPwuq7NBrdqrxl7PYYviQLhW1shCP+K7OcQiRsui
-         ivTKys7k8DCDAH62uRfuIN6zkmMx4O0HD5NNiDzoTv/EpRwUyjEYymJs3WMDBcKPtBmN
-         Bfs58LwndusSU7Uq6RBG9Mym22AVaoZPqE7/6ChUo2l7B5XsSkYN+4P8M3NPoEZa5SWf
-         xZQG9esxclpNCE/MDJe7obqgNTanT/htXwLapYtp9+82u7Pz2fRkmEvr0MoMhrvKJOHF
-         vBqw==
-X-Gm-Message-State: AOUpUlG2YxE8KQvFkZi5qoIBXfgMe+N26kK8cQ3UnN0tuoPWP8a6eomc
-        U18+TO3bUxMP1cbUQlIx3/Y=
-X-Google-Smtp-Source: AAOMgpcYn/YAY7bNRHQp9jNwMqBvWeO6BaF0CSxpDUeSjyQy4aVukNpQg3ZiMPns3ZEy9vsoDVe/FQ==
-X-Received: by 2002:a5d:5641:: with SMTP id j1-v6mr2700874wrw.209.1531419889066;
-        Thu, 12 Jul 2018 11:24:49 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=R9FsNELna1g9jIZXly+aPC/PJwhODH/hxe3Kn9w6iMM=;
+        b=tcfN1JkakKGGpCzF3YFe8hRVKgSFzMuKUQHXGP7OcqpGc3PKf3ytyZAsfofEe62/lE
+         i3cgBRY6iNHLhLI5zBjYBcImJtvS4IRleT85THVUbt6wBb0TzBfXs7hyB7460VFdqqaZ
+         TDxaZn0DdBKF6FDfjP+7nk30wRSq4bvOY90FPaOxvnTqp1r406hq6sJnHJD9J/H8c6JO
+         XEwfuku2NiP0oC6kLB4P/N9/Oz2P6VDM1SKDVIr9afFVtEGoBGAPPDooONF4+EosWveA
+         WmZZs3UV/LqzybcdccTmQuC+wbC3ENvOfQqlZqvCoxjxE3oqSh88WXF+S5ub/ed8j77x
+         bFkg==
+X-Gm-Message-State: AOUpUlE/VsUFWagha6HRI9du1Qf0AktGD0RT/uD5ElNFcYgBv6hX4LrE
+        TEvTIQLCUh6/Cx52GYzQfN8bHzns
+X-Google-Smtp-Source: AAOMgpe/WgjX6byHOTrqk5oYefp3x9pakcd+y911k+zAOEAoSH4TFvi08ABaYoVb7gZTtKONVMy8jQ==
+X-Received: by 2002:adf:c44c:: with SMTP id a12-v6mr2744086wrg.20.1531420297345;
+        Thu, 12 Jul 2018 11:31:37 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id z9-v6sm40718784wre.49.2018.07.12.11.24.48
+        by smtp.gmail.com with ESMTPSA id 5-v6sm9349711wmv.48.2018.07.12.11.31.36
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 12 Jul 2018 11:24:48 -0700 (PDT)
+        Thu, 12 Jul 2018 11:31:36 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Alban Gruin <alban.gruin@gmail.com>
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        phillip.wood@dunelm.org.uk
-Subject: Re: [GSoC][PATCH v3 12/13] rebase -i: implement the logic to initialize the variable $revision in C
-References: <20180702105717.26386-1-alban.gruin@gmail.com>
-        <20180710121557.6698-1-alban.gruin@gmail.com>
-        <20180710121557.6698-13-alban.gruin@gmail.com>
-        <xmqqo9fcxquk.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 12 Jul 2018 11:24:48 -0700
-In-Reply-To: <xmqqo9fcxquk.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Thu, 12 Jul 2018 11:15:47 -0700")
-Message-ID: <xmqqk1q0xqfj.fsf@gitster-ct.c.googlers.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Elijah Newren <newren@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Stefan Beller <sbeller@google.com>,
+        Luke Diamand <luke@diamand.org>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 21/25] t5000-t5999: fix broken &&-chains
+References: <20180702002405.3042-1-sunshine@sunshineco.com>
+        <20180702002405.3042-22-sunshine@sunshineco.com>
+        <20180712123729.17861-1-szeder.dev@gmail.com>
+        <CAPig+cRYNo_KL02LN1LOa79Zm2oYZqbnBHJ=KDA3oaF4pVfjcA@mail.gmail.com>
+Date:   Thu, 12 Jul 2018 11:31:36 -0700
+In-Reply-To: <CAPig+cRYNo_KL02LN1LOa79Zm2oYZqbnBHJ=KDA3oaF4pVfjcA@mail.gmail.com>
+        (Eric Sunshine's message of "Thu, 12 Jul 2018 13:44:49 -0400")
+Message-ID: <xmqqd0vsxq47.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> If I am reading the body of this if() block correctly, I think it
-> does everything init_revisions_and_shortrevisions shell function
-> does, i.e. compute $revisions for both cases with or without
-> upstream and write squash-onto state if needed, so that we can call
-> the sequencer_make_script() helper with necessary $revisions arg
-> without being passed from the command line of --make-script helper.
+> On Thu, Jul 12, 2018 at 8:37 AM SZEDER Gábor <szeder.dev@gmail.com> wrote:
+>> The change below should be squashed into this patch to fix a
+>> previously unnoticed broken &&-chain.  I think you missed it, because
+>> this test script is rather expensive and you didn't run it with
+>> GIT_TEST_CLONE_2GB=YesPlease.
+>>
+>> diff --git a/t/t5608-clone-2gb.sh b/t/t5608-clone-2gb.sh
+>> @@ -23,7 +23,7 @@ test_expect_success CLONE_2GB 'setup' '
+>> -               echo "M 100644 :$i $i" >> commit
+>> +               echo "M 100644 :$i $i" >> commit &&
 >
-> But the hunk below tells me that you are still calling
-> init_revisions_and_shortrevisions shell function before we are
-> called.  Why?  IOW, why isn't this step removing that shell function
-> *and* the call to it, now its logic is fully implemented in the body
-> of this if() block?
+> Thanks for finding this. I tried to get as much coverage as possible
+> by installing packages I don't normally have installed (Apache, cvs,
+> cvsps, Subversion, Perforce, etc.) and even temporarily modified a
+> script or two to force it run ...
 
-You can ignore this part (but not the rest) of my comments, as 13/13
-answers it adequately.  After this step, the shell function still
-needs to be called to set $shortrevisions.
-
-Thanks.
+Thanks, both.  I think the &&-chain fix series is already large and
+also otherwise seem to be pretty solid, so let's not reroll but
+queue this addition on top.
