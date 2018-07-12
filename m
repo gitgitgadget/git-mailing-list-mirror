@@ -2,125 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A5C7C1F85E
-	for <e@80x24.org>; Thu, 12 Jul 2018 16:33:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BEDE61F85E
+	for <e@80x24.org>; Thu, 12 Jul 2018 16:33:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727006AbeGLQnf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jul 2018 12:43:35 -0400
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:33860 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726744AbeGLQnf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jul 2018 12:43:35 -0400
-Received: by mail-qt0-f194.google.com with SMTP id m13-v6so24623467qth.1
-        for <git@vger.kernel.org>; Thu, 12 Jul 2018 09:33:17 -0700 (PDT)
+        id S1727455AbeGLQoH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jul 2018 12:44:07 -0400
+Received: from mail-wm0-f53.google.com ([74.125.82.53]:55968 "EHLO
+        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726744AbeGLQoG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jul 2018 12:44:06 -0400
+Received: by mail-wm0-f53.google.com with SMTP id v128-v6so6192906wme.5
+        for <git@vger.kernel.org>; Thu, 12 Jul 2018 09:33:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=YUgmGtkAHxakIyH5OV3PGkPxrifzYCKVZRqMd5zv7E4=;
-        b=CyvidqBIvSdH4ZljhGVxk+xw/US17oxB5W3Ua6gQ2CXX+TPyJhqnLq0x7qhf00VmZk
-         EqVW1/AAExUXwPXKyfSzzgQFAafeROIkl2eB6SJFvxC5lUtC4c5p2hgn5VSGLsXY7mG7
-         kNtj46lN4Kmp5D4T3cQ560Fcd6o9KbcJZnkvUmueA/+4qhcrPfxj7uhkhmvBGyTORFl+
-         AgNIwaEs6eq6oC+9Bqw1hZZM9EIWGIju60T3qthCe3Nt0rb8KOd1SIdy27aS6al8ZusC
-         9Qlbfj9QZlYYdj3Jias4E40bZ8CVPc+vCwyzWLe8FhxpYhFmE7pZ1AvyEkyuyoPFhGcn
-         K8jw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=QnRO2FlNwrbBtEUDVgMuczZ9z+L/UTAYxRvQa/C/Id8=;
+        b=aXMdH/1ZMANU4aCRSy7VfUiyZJpSV6thwu4hdqlJr8wwgS9yyfOBjvWNekUWpIin4g
+         ukFCGToOVgz+9NrrCjY87aYtPzq12ASM/M3B1eaOw/W2fr54O5hnIwdVQys9mbTaKvuM
+         skD0VLnNu/94t0yd7IPNSvXKzJqgt2PJ8tMk/t2MwRUF7DUjASZNYicggBVo9xqAnpA7
+         EIL0a88Gaal7Nav/FaCSYqnwwgKjId+msVk4G4ILOIoXhAo41MkAOr+JON+sgLwjUsGO
+         WsOjeoYfPW2Kz6R9n5QhI9OqJ1UMmMnIKvmyaWy5x8CCCBcXPSWRHE4HV8/ATf8gFfEN
+         QHFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=YUgmGtkAHxakIyH5OV3PGkPxrifzYCKVZRqMd5zv7E4=;
-        b=umfFrXESMMWf96zCjZigETwLpCQvoz6DFSQB/188S0puRaUjXWQazh120VLV+Df+3s
-         QON+71PeNrTJ5me/mYi5R/IaQ3FTqEsrzlQrZe6JubHN2nawkOgQX+zUCWnMOZ13X82v
-         Ycd1UDfAQXRxslx7yiaGQIiOl0t/SN+fcdBSKjMz+NEOLav+JOkuICZbuo1iW4s4+zLU
-         TZ1B9kDyrHEK0EFCF66FY4KurC77rUHyfHErbEVZOVrwPXRSuQaYrZ+QIq0a08YqlrP0
-         DOZjBI1HZ7kWwhK3JRWAE+BT5tKB7ULFfvfNlHha2weSj/llmmgRISZdozYzuQ+kTzJc
-         36hQ==
-X-Gm-Message-State: AOUpUlEOPa/tHM1GJd/dWaJKMI9M9lFB1S/LPgvXaxgL0VrC3CqXzACN
-        AbrIOovhOL650FqSrmtXb+ACz1nImF4=
-X-Google-Smtp-Source: AAOMgpfImVTmVqAQGgaspUshmoLntoq07stxSXivlovcHhWvV6GMAnmBAQiQVsPKKDdmnhkWr+LuwA==
-X-Received: by 2002:a0c:a991:: with SMTP id a17-v6mr3181719qvb.83.1531413197554;
-        Thu, 12 Jul 2018 09:33:17 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:7999:2a5f:44db:50fd? ([2001:4898:8010:0:62cf:2a5f:44db:50fd])
-        by smtp.gmail.com with ESMTPSA id l61-v6sm13869955qte.67.2018.07.12.09.33.16
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 12 Jul 2018 09:33:16 -0700 (PDT)
-Subject: Re: [PATCH v3 15/24] midx: write object offsets
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= =?UTF-8?Q?_Duy?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <20180625143434.89044-1-dstolee@microsoft.com>
- <20180706005321.124643-1-dstolee@microsoft.com>
- <20180706005321.124643-16-dstolee@microsoft.com>
- <CAPig+cR1BaOTTjg751NO14sAr6UZ0WT_G3Hu59KyiWTASZ8D2A@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <e33b0e17-bf32-3ee9-5874-96555ce98cbc@gmail.com>
-Date:   Thu, 12 Jul 2018 12:33:13 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=QnRO2FlNwrbBtEUDVgMuczZ9z+L/UTAYxRvQa/C/Id8=;
+        b=c7bXB/NO/y8rwgm4JX5plpT15IofUacZA3LGHgD0LRWo5d+tJd6gYTUV+tgO8u66xd
+         3SMXeZs2r+mCKNAmB2gnhj7ZCGzVx0EoMMzpbW5eAgfLK9MKTgCWWJVMDVgKk2p9oJqt
+         8wrBsNoTJ3qDHG92ZvWr05LZpsIFiIZfqVTQ8HXPhK+Z9mz1ACK1ky3n2Xvf5wrHDHoj
+         YcCpym9AtrmRKcCdm+OGHIxsJbZbzk2iMM6FqUBFcSFZ2eb3IReNO5sQdMoO/vDO7kae
+         pVL40f2OGT4dHlUbEf1uIcVEU6XcsDKZ+KK3DkMZfO1IzHtwpRGg8ftAXHQMJm+qQZpc
+         mikg==
+X-Gm-Message-State: AOUpUlEGVCAe9+yojuN9KY3+C2H/ns61lXJUzBcFpcuihwetmWk866cz
+        630gJhNrzZFPi7XJM+qNvec=
+X-Google-Smtp-Source: AAOMgpeGXHmGY3TCm8kCn8VRuOyxFCMxfJVRfTnYrA1If5mn62j7+aub+A2cey9v/K8IrvVDXU/HQg==
+X-Received: by 2002:a1c:1252:: with SMTP id 79-v6mr1750225wms.70.1531413228208;
+        Thu, 12 Jul 2018 09:33:48 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id j131-v6sm6162131wmb.35.2018.07.12.09.33.47
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 12 Jul 2018 09:33:47 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Ben Peart <Ben.Peart@microsoft.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH v1] handle lower case drive letters on Windows
+References: <20180711175420.16940-1-benpeart@microsoft.com>
+        <nycvar.QRO.7.76.6.1807121556030.75@tvgsbejvaqbjf.bet>
+Date:   Thu, 12 Jul 2018 09:33:47 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.1807121556030.75@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Thu, 12 Jul 2018 15:59:30 +0200 (DST)")
+Message-ID: <xmqqh8l4za50.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAPig+cR1BaOTTjg751NO14sAr6UZ0WT_G3Hu59KyiWTASZ8D2A@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/6/2018 1:27 AM, Eric Sunshine wrote:
-> On Thu, Jul 5, 2018 at 8:54 PM Derrick Stolee <stolee@gmail.com> wrote:
->> The final pair of chunks for the multi-pack-index file stores the object
->> offsets. We default to using 32-bit offsets as in the pack-index version
->> 1 format, but if there exists an offset larger than 32-bits, we use a
->> trick similar to the pack-index version 2 format by storing all offsets
->> at least 2^31 in a 64-bit table; we use the 32-bit table to point into
->> that 64-bit table as necessary.
->>
->> We only store these 64-bit offsets if necessary, so create a test that
->> manipulates a version 2 pack-index to fake a large offset. This allows
->> us to test that the large offset table is created, but the data does not
->> match the actual packfile offsets. The multi-pack-index offset does match
->> the (corrupted) pack-index offset, so a future feature will compare these
->> offsets during a 'verify' step.
->>
->> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
->> ---
->> diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
->> @@ -6,25 +6,28 @@ test_description='multi-pack-indexes'
->> +# usage: corrupt_data <file> <pos> [<data>]
->> +corrupt_data() {
-> Style: corrupt_data () {
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+> So maybe a much better idea is to use our `has_dos_drive_prefix()`
+> function:
 >
->> +       file=$1
->> +       pos=$2
->> +       data="${3:-\0}"
->> +       printf "$data" | dd of="$file" bs=1 seek="$pos" conv=notrunc
->> +}
->> +
->> +# Force 64-bit offsets by manipulating the idx file.
->> +# This makes the IDX file _incorrect_ so be careful to clean up after!
->> +test_expect_success 'force some 64-bit offsets with pack-objects' '
->> +       mkdir objects64 &&
->> +       mkdir objects64/pack &&
->> +       pack64=$(git pack-objects --index-version=2,0x40 objects64/pack/test-64 <obj-list) &&
->> +       idx64=objects64/pack/test-64-$pack64.idx &&
->> +       chmod u+w $idx64 &&
-> I guess you don't have to worry about the POSIXPERM prerequisite here
-> because the file is already writable on Windows, right?
+> 	if (!has_dos_drive_prefix(Buffer))
+> 		return error("'%s': invalid drive letter", Buffer);
 
-Correct. And I want this test to still run on Windows.
-
-Thanks,
-
--Stolee
-
+"'%s': path without valid drive prefix", you mean?
