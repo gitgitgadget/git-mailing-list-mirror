@@ -6,60 +6,57 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3055E1F85E
-	for <e@80x24.org>; Thu, 12 Jul 2018 17:15:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3FBD61F85E
+	for <e@80x24.org>; Thu, 12 Jul 2018 17:22:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732405AbeGLR0T (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jul 2018 13:26:19 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:37082 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727092AbeGLR0S (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jul 2018 13:26:18 -0400
-Received: by mail-wm0-f66.google.com with SMTP id n17-v6so6864408wmh.2
-        for <git@vger.kernel.org>; Thu, 12 Jul 2018 10:15:49 -0700 (PDT)
+        id S1732195AbeGLRdZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jul 2018 13:33:25 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:42842 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726528AbeGLRdZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jul 2018 13:33:25 -0400
+Received: by mail-wr1-f68.google.com with SMTP id e7-v6so2927509wrs.9
+        for <git@vger.kernel.org>; Thu, 12 Jul 2018 10:22:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=oiqOLBV5dLRWT7/lwIWHiMV5e7lA9OsrhdClEqKnHhw=;
-        b=DJYQie1ZV/lHn36KbjOusswTGrmgVedXwbOea842rXtZuRul6Jk4Pdc3aqcFSMxigE
-         6VdvL1p/lwEDw6+e9XySGBu0CEWuFufPtYtexpXFgSKCcdrmtCgvzZsuXn6IzKOwSreb
-         Szaa3fOcPdtJ3CIEyyH4m6Qgty9U5abUiCRnRTs0blYp7u9olvWcW4jCd3sw0yVmVrjH
-         TNoX7qFAx/ebUOH0PrfKzBsZcWQQnWyZVs2YJQXmh+EsCCE/vpNAMhBdav0M0qvw0Rki
-         lLkQ22loJmNbMwyH4rS+ondlAN0ZRuQm9aXYXk8FNjzaq0sfN2KSxD90MEo4WVzq1AUw
-         BuLg==
+        bh=2GJbPf301Tq90njmx73Ya1C8jEnOH+hhsJnCWjadBYQ=;
+        b=SUxsxzccVPJXOZqDc45B8NLu0WICLXFyRh3jAAbth6DuGHSmurjt0EIt/O9ekGPKmu
+         lG3RegtMNztssH1GOFLPiiuMjc54Z6akuD1pvzZ6HgS6E7bhRGQ1YzDEWi3lgf5hlNfy
+         V/IDe2IgRrwy3gWa8sU4YyNrnSDktjmrceRebmTYJOjO2QtgSswQRh8sG4K17Pk7AOPw
+         sTHmlzxaGRgDK3ZmHFFUsyg3qOol7q7ubucbIl1E7k5X18JpqxaO3qoaMQSvCDFWk9rV
+         hQpN3+5c6/26sxPRo/lhUWuTweSx+4iCnvCPb0thkGdrDjut6Fbvj2DxaeI5OY4/LyiS
+         LWlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=oiqOLBV5dLRWT7/lwIWHiMV5e7lA9OsrhdClEqKnHhw=;
-        b=ihCQ/k4cFalWby3wdGrCJTBj0iUqeUbmWagTXT8ESBaVi52o4pIgU3C6tJ7Ha50NE7
-         kz8qWmYNhQc69ftCBgIgqJNTZXs1+CPuYtM3/NOXiRQGguuxcOJznLQ0kHuhqUT2Qdhs
-         gjsjxNwxEMwjRuC0gzySS2GfryaZ60TUmKbcWAhIpN/lisL8CM2mrbw26JqWTwf2PjeB
-         1fvPsPZmU+qZiRwChbcZrgFDNp5IDDS2ewDnzoRtbwNTPBAhSJ3e3XKT9THcgw8tA8qg
-         L1kEEuaCuNoCAH5GXUxcVEA4pnGtO2tvG1dnJCeLum+bz3rE1dAJ2m9HmuVj5YiIOf1f
-         60DQ==
-X-Gm-Message-State: AOUpUlFw3ZgTEoI+Vk3fGMrVI6Co5ejWxs+4G0Kz01HWcfAa69Zk3P+Y
-        F1iHum63dDH62sfWxG33jzk=
-X-Google-Smtp-Source: AAOMgpewXxlcxkt+S/n4VQJg9kZOTRHrwWuIV7cGaVmgQRPfraKmww8Ygbtw3/HlWHWj5Jp4Z+RLzw==
-X-Received: by 2002:a1c:78b:: with SMTP id 133-v6mr2017208wmh.59.1531415749012;
-        Thu, 12 Jul 2018 10:15:49 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id i125-v6sm104738wmd.11.2018.07.12.10.15.47
+        bh=2GJbPf301Tq90njmx73Ya1C8jEnOH+hhsJnCWjadBYQ=;
+        b=BJT2b9l2QVnuVS6Y1J8rnQz8jH44ZET758dI3mTsdazufDd5ijGNUtLTalT4FcqP7B
+         WMj0KgliWe5ndj2JLW0/Zqe4GO8hYjl11f4QqkfpLMSnsfhsLWSM6NhHD533YzCV7rRR
+         jg4T4EYtTtfoBUwOdXvTYi7w3F4QOqOsh8PRFCsghuiav+OMZvVr0QzGAHlPYE2oNY5P
+         YxdzzKEpgemrGy0/lZ77EvEAYtr4yDo9vbPUX56g/u7CgJGu2OYcOgKnhDzkKivQZCue
+         OHu3GTTixLJRoX+M+r641MFKy6IVPsfnyJLhvB2RJt140MwxXZNqN87K1rROBaxFkzEr
+         ff2w==
+X-Gm-Message-State: AOUpUlFswCCXWbOm77eYqutJ26NzpFJ2TxY1SSGVEtp4SCxB29wtdK4+
+        /mqkU3Cvl7slu7RE0S+mdrAnpVIy
+X-Google-Smtp-Source: AAOMgpe7cCaQD/7U5gYp8P6WGAYHm1slEBhpRjvfs9f2xoloqsDx/2Heo47IUq7ONmsdcKJlwhLzSw==
+X-Received: by 2002:adf:9954:: with SMTP id x78-v6mr2599064wrb.178.1531416173745;
+        Thu, 12 Jul 2018 10:22:53 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id z5-v6sm24897505wrv.2.2018.07.12.10.22.52
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 12 Jul 2018 10:15:47 -0700 (PDT)
+        Thu, 12 Jul 2018 10:22:52 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Aaron Schrab <aaron@schrab.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Daniel Harding <dharding@living180.net>
-Subject: Re: [PATCH 0/2] Fix --rebase-merges with custom commentChar
-References: <e8973797-fc5f-2ca5-1881-5ee66fc8279b@living180.net>
-        <20180712030249.22071-1-aaron@schrab.com>
-Date:   Thu, 12 Jul 2018 10:15:47 -0700
-In-Reply-To: <20180712030249.22071-1-aaron@schrab.com> (Aaron Schrab's message
-        of "Wed, 11 Jul 2018 23:02:49 -0400")
-Message-ID: <xmqq4lh4z870.fsf@gitster-ct.c.googlers.com>
+To:     "Akinori MUSHA" <knu@iDaemons.org>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] sequencer.c: terminate the last line of author-script properly
+References: <86a7qwpt9g.knu@iDaemons.org>
+Date:   Thu, 12 Jul 2018 10:22:52 -0700
+In-Reply-To: <86a7qwpt9g.knu@iDaemons.org> (Akinori MUSHA's message of "Thu,
+        12 Jul 2018 20:18:52 +0900")
+Message-ID: <xmqqwou0xtar.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,54 +65,74 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Aaron Schrab <aaron@schrab.com> writes:
+"Akinori MUSHA" <knu@iDaemons.org> writes:
 
-> Subject: [PATCH v2] sequencer: use configured comment character
->
-> Use the configured comment character when generating comments about
-> branches in a todo list.  Failure to honor this configuration causes a
-> failure to parse the resulting todo list.
+> It looks like write_author_script() intends to write out a file in
+> Bourne shell syntax, but it doesn't put a closing single quote on the
+> last line.
 
-OK.
+s/closing single quote/& and the terminating newline/?
 
 >
-> Note that the comment_line_char has already been resolved by this point,
-> even if the user has configured the comment character to be selected
-> automatically.
+> This patch makes .git/rebase-merge/author-script actually parsable by
+> sh(1) by adding a single quote and a linefeed to terminate the line
+> properly.
 
-Isn't this a slight lie?
+Sounds good.
 
-The core.commentchar=auto setting is noticed by everybody (including
-the users of the sequencer machinery), but it is honored only by
-builtin/commit.c::prepare_to_commit() that is called by
-builtin/commit.c::cmd_commit(), i.e. the implementation of "git
-commit" that should not be used as a subroutine by other commands,
-and by nothing else.  If the user has core.commentchar=auto, the
-comment_line_char is left to the default '#' in the sequencer
-codepath.
+I wonder why this breakage was left unnoticed for a long time,
+though.  It's not like writing and reading the author-script from C
+code was done first in the "rebase -i" and friends that are users of
+the sequencer machinery (I think we had code to do so in "git am"
+that was rewritten in C first).  Do we have a similar issue over
+there as well?  If not, perhaps if we reused the existing code that
+was not broken, we wouldn't have seen this breakage on the sequencer
+side?
 
-I think the patch is still correct and safe, but the reason why it
-is so is not because we chose a suitable character (that is how I
-read what "has already been resolved by this point" means) by
-calling builtin/commit.c::adjust_comment_line_char().  Isn't it
-because the "script" the function is working on does not have a line
-that came from arbitrary end-user input that may happen to begin
-with '#', hence the default '#' is safe to use?
+Thanks.
 
-> Signed-off-by: Aaron Schrab <aaron@schrab.com>
+>
+> Signed-off-by: Akinori MUSHA <knu@idaemons.org>
 > ---
->  sequencer.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  sequencer.c                   |  1 +
+>  t/t3404-rebase-interactive.sh | 13 +++++++++++++
+>  2 files changed, 14 insertions(+)
 >
 > diff --git a/sequencer.c b/sequencer.c
-> index 4034c0461b..caf91af29d 100644
+> index 4034c0461..5f32b6df1 100644
 > --- a/sequencer.c
 > +++ b/sequencer.c
-> @@ -3991,7 +3991,7 @@ static int make_script_with_merges(struct pretty_print_context *pp,
->  		entry = oidmap_get(&state.commit2label, &commit->object.oid);
->  
->  		if (entry)
-> -			fprintf(out, "\n# Branch %s\n", entry->string);
-> +			fprintf(out, "\n%c Branch %s\n", comment_line_char, entry->string);
+> @@ -651,6 +651,7 @@ static int write_author_script(const char *message)
+>  			strbuf_addch(&buf, *(message++));
 >  		else
->  			fprintf(out, "\n");
+>  			strbuf_addf(&buf, "'\\\\%c'", *(message++));
+> +	strbuf_addstr(&buf, "'\n");
+>  	res = write_message(buf.buf, buf.len, rebase_path_author_script(), 1);
+>  	strbuf_release(&buf);
+>  	return res;
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index 352a52e59..345b103eb 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -75,6 +75,19 @@ test_expect_success 'rebase --keep-empty' '
+>  	test_line_count = 6 actual
+>  '
+>  
+> +test_expect_success 'rebase -i writes out .git/rebase-merge/author-script in "edit" that sh(1) can parse' '
+> +	test_when_finished "git rebase --abort ||:" &&
+> +	git checkout master &&
+> +	set_fake_editor &&
+> +	FAKE_LINES="edit 1" git rebase -i HEAD^ &&
+> +	test -f .git/rebase-merge/author-script &&
+> +	unset GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_AUTHOR_DATE &&
+> +	eval "$(cat .git/rebase-merge/author-script)" &&
+> +	test "$(git show --quiet --pretty=format:%an)" = "$GIT_AUTHOR_NAME" &&
+> +	test "$(git show --quiet --pretty=format:%ae)" = "$GIT_AUTHOR_EMAIL" &&
+> +	test "$(git show --quiet --date=raw --pretty=format:@%ad)" = "$GIT_AUTHOR_DATE"
+> +'
+> +
+>  test_expect_success 'rebase -i with the exec command' '
+>  	git checkout master &&
+>  	(
+> -- 
+> 2.18.0
