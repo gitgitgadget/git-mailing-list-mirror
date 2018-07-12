@@ -7,48 +7,53 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 677791F85E
-	for <e@80x24.org>; Thu, 12 Jul 2018 19:48:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 85FA41F85E
+	for <e@80x24.org>; Thu, 12 Jul 2018 19:48:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732226AbeGLT7A (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jul 2018 15:59:00 -0400
-Received: from mail-qk0-f202.google.com ([209.85.220.202]:44162 "EHLO
-        mail-qk0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727517AbeGLT7A (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jul 2018 15:59:00 -0400
-Received: by mail-qk0-f202.google.com with SMTP id w126-v6so24863639qka.11
-        for <git@vger.kernel.org>; Thu, 12 Jul 2018 12:47:58 -0700 (PDT)
+        id S1732284AbeGLT7C (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jul 2018 15:59:02 -0400
+Received: from mail-yw0-f201.google.com ([209.85.161.201]:42212 "EHLO
+        mail-yw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727517AbeGLT7C (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jul 2018 15:59:02 -0400
+Received: by mail-yw0-f201.google.com with SMTP id r144-v6so18667727ywg.9
+        for <git@vger.kernel.org>; Thu, 12 Jul 2018 12:48:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:date:message-id:subject:from:to:cc;
-        bh=yNdSSIbPH/W1l4UCKRPHfOR6RaBY7tsyUDTClZs4Sw8=;
-        b=SrUFM7dLVJvzvSO/SabGk8OfsQvD4yjwijr+jqlAdOMhttR6uH5NHODgRr5x669ZmG
-         dq8aCBwcA7Jq8ZloukOpwmIp9NwPEj6m+0V/mOhH7Q3/oK5IbNfHJTz5M9AfQ7rvucXe
-         B+ol4san9MeJ7lfStZ99k82xuCG0y/jQC+dkzxHRS2CEZP9jCzLRd8puJLeDHqFVu/rL
-         +DGigQSSMD43oTkbrXdx6ReisbnWHqvVnvQ05Ul8vI+pA8DtyqyeA92wt8UJjJZfUUoN
-         rvdZtQ1S1oTW1FVGc7XhqnqXsdY0/UHkNmMqk0dQSmTEERBYZMIJbrWUvA7b/+r6jeNX
-         q7zw==
+        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
+         :cc;
+        bh=XfPP60whMlE2PCMkhx5wZqYkrrSb+TsbpNIxUxvU3vY=;
+        b=I7HONdQ6N/QEFHk9rB90ZqXBfevYpYKf12gmO89IL75Ar845W8i0RN5S5ub3283Iac
+         uRKWpD27SN0MI/VbKh2N7cGtgOC8XfjoNYw1wBFbOht0PHnj0omVkvGDmndq08rPLQAQ
+         eYbsnLyXaw6yZ+VnEpS92d6JqFlTBFd0Jsv3jHFF38GpdJB7rmZQa2Z2VQMHJ72IBalt
+         RDqBFacBlyFiccqX0V+p59CLNOpNZgrTG1zoyEdNnwFekVzWzymVDhQaYXHZHZ3m3nPY
+         ySWVVnKiKMtwfBdV0G8NsFrdBlSKOlcyd6JgEIrUsAUNgmzRdWHgGGUoWyzoN4aZSdXg
+         NGlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc;
-        bh=yNdSSIbPH/W1l4UCKRPHfOR6RaBY7tsyUDTClZs4Sw8=;
-        b=Kv3iRzCgjrfYGNtjrBOhYWerHcqLbYTbqx2vN2LO0otgo2NIkFdMwX/UmgAVpr3x5o
-         FNHMPGfEIW6JwqH4/tWpUOLQ6bFse1QBoFMQSUaNkZZZ50QQspox4gNkRjvrkJw9dy+0
-         p5Edau0FdwwEgp9yJ7M3oluU9Pv0UByaso/DE84BjcPCoqAsarFDg7VzMlRXA0t2OBaI
-         ovrqUW237NWLLT/T57XEbEUSkozMvYkcbYHAvVrolY81sJBcDHKm5bKI5bsIASCd0nCr
-         G3DVnij75bbUz7aFrkpl0FPVswniPyBiMe4PghtlQGCt5Ws8kme8d9JZ8H3tSDIAnzM0
-         cAhA==
-X-Gm-Message-State: AOUpUlGZ9OyUIfLS3EyU9N+ctMccbqnnKPFRJ3FZRwzLzgHlnbM7jzWR
-        aFKc1/K3bCmbznvX4Xu3NoKhuDPv3ILKrDTatF+jHkRwR/ZqscjtEGrF0oFt+x1frnYwErZ8rCi
-        hxj1UocELPV9E8WhIDKRfG41D2CyQTXXZ44KdnBYcfahYREvWU4qIvmLqfSYI
-X-Google-Smtp-Source: AAOMgpcLCE3/XkawOJDzUv3reo6jitIc7E0NHJJo3jOR85QweGNmqZZjz2b1+0MvtbEdCyWrxzt6eRvMp65p
+        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
+         :references:subject:from:to:cc;
+        bh=XfPP60whMlE2PCMkhx5wZqYkrrSb+TsbpNIxUxvU3vY=;
+        b=t4Op6UxWFa4JU4oY9KzTbjg37als2QN5a0/89BD+FAuLdJKsBATj0Wn0ZRvx+3Ppmv
+         NXLC/pvPAaqNvR2lwHCkMoL6oSWWnlvAI9aXazfdNzb5TyKKlIeaWS+CxH37fbFPEFTK
+         tktdWVMA5w1AbdvqKUl/okf8PtoscWjhtN8PXPSIOKo5m9qrTycqPiP6yMksuK+kidSA
+         Vu9BhSrGKJuZFQupbSPnk+/juG18Zkqs+hY/P8oFPzHvzaTvXyjdP6PL/FB5WMQzppVN
+         O8xNNBOg29kGWa8s+VipSUn8biCoD3ImEGayFzYhzLtR1xcEX/C5Pt6nNecGW6hZ8Svm
+         3M4w==
+X-Gm-Message-State: AOUpUlE3fFqu0Y/KWMZOPB7x0WKFP2zqG0jLDkIu66aoz3gn+sZ8o5sw
+        iIr6yj0hkWobjeMJga8CgUQLlqvDQCeHkUZCFmM1xWKDsBpBF9LtFuT0JjTLY3h+kXXlUrAgpwe
+        JN1KegceN4JFaTFB/153dhPQBiRooiZbuYA8WkBG65FcfOiq19E7S6uHdLcuO
+X-Google-Smtp-Source: AAOMgpdSQ2EHpIbIlHDmRO4MozpQOTHpu+dKEj8oKGZOq0/rEPuD7rKOEO5+VfBQGCmIWK7J5w1gnlB9VcIb
 MIME-Version: 1.0
-X-Received: by 2002:a37:5d03:: with SMTP id r3-v6mr1846499qkb.27.1531424878006;
- Thu, 12 Jul 2018 12:47:58 -0700 (PDT)
-Date:   Thu, 12 Jul 2018 12:47:48 -0700
-Message-Id: <20180712194754.71979-1-sbeller@google.com>
+X-Received: by 2002:a81:b667:: with SMTP id h39-v6mr1187469ywk.2.1531424880325;
+ Thu, 12 Jul 2018 12:48:00 -0700 (PDT)
+Date:   Thu, 12 Jul 2018 12:47:49 -0700
+In-Reply-To: <20180712194754.71979-1-sbeller@google.com>
+Message-Id: <20180712194754.71979-2-sbeller@google.com>
+References: <20180712194754.71979-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.203.gfac676dfb9-goog
-Subject: [PATCH 0/6] git-submodule.sh: convert part of cmd_update to C
+Subject: [PATCH 1/6] git-submodule.sh: align error reporting for update mode
+ to use path
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>
@@ -58,25 +63,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I thought about writing it all in one go, but the series got too large,
-so let's chew one bite at a time.
+All other error messages in cmd_update are reporting the submodule based
+on its path, so let's do that for invalid update modes, too.
 
-Thanks,
-Stefan
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ git-submodule.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Stefan Beller (6):
-  git-submodule.sh: align error reporting for update mode to use path
-  git-submodule.sh: rename unused variables
-  builtin/submodule--helper: factor out submodule updating
-  builtin/submodule--helper: store update_clone information in a struct
-  builtin/submodule--helper: factor out method to update a single
-    submodule
-  submodule--helper: introduce new update-module-mode helper
-
- builtin/submodule--helper.c | 152 ++++++++++++++++++++++++++++--------
- git-submodule.sh            |  22 +-----
- 2 files changed, 122 insertions(+), 52 deletions(-)
-
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 5f9d9f6ea37..8a611865397 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -627,7 +627,7 @@ cmd_update()
+ 				must_die_on_failure=yes
+ 				;;
+ 			*)
+-				die "$(eval_gettext "Invalid update mode '$update_module' for submodule '$name'")"
++				die "$(eval_gettext "Invalid update mode '$update_module' for submodule path '$path'")"
+ 			esac
+ 
+ 			if (sanitize_submodule_env; cd "$sm_path" && $command "$sha1")
 -- 
 2.18.0.203.gfac676dfb9-goog
 
