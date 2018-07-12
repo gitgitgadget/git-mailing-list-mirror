@@ -2,108 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 332731F85E
-	for <e@80x24.org>; Thu, 12 Jul 2018 16:56:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 667391F85E
+	for <e@80x24.org>; Thu, 12 Jul 2018 16:56:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732383AbeGLRGb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jul 2018 13:06:31 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:35361 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726820AbeGLRGa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jul 2018 13:06:30 -0400
-Received: by mail-wr1-f68.google.com with SMTP id a3-v6so13189056wrt.2
-        for <git@vger.kernel.org>; Thu, 12 Jul 2018 09:56:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=dBfnJHQ3DqWRjyP24/j5jD8J1m0bdtv0qas0QiBDMkA=;
-        b=HuSj7/a6PkuWZvBRYjRMYpB2M6f2dYAh+JPZfDwWGzV15c42XOV+6lyO/PnwbLBiid
-         tp4WZFF2Qe+oHSc3ODg000nOdahJF+XOH6pNikT5ZWNU26H/i9eU3CsxoBSFHab5vf27
-         IW81arc6i71a83XvEedsp7UphIRX0EOEyEZP2+ggUo2UA6iWDfHvWdFuYEBCUjVwzYdf
-         jHEj/cEV0iRryMY9bcDyYx/QUuTLb4YwLLVWlAs8RMcbJL4RKJnqGUp3mjY3cMzGapeF
-         Cr3Ew8bTeokPx7TjrM5lJYCWTS6xzDDHVSDQvurzfs+93H1mZ1OzWIR2+qPncVeGWGnq
-         Myvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=dBfnJHQ3DqWRjyP24/j5jD8J1m0bdtv0qas0QiBDMkA=;
-        b=C/pu+9MXvM/Mmv/wi/jL7oIw+GnAlYkKMbHx/42tIYzE9J/cgbf27DzfaYNREeg+i/
-         BGqXqWDHMJwvad6lcGueKeImvn9BmEculXdl8PqPL+kJseQ09x6Sb7pKyB0jegAQQHSm
-         TQ28GFuvqbAVJbYfW9i8FWR8+EaIxDVTHy6qL/D/CNKvT2w9anxsn8V57CRpG8m9oQT7
-         tt9SwmdazgSqtUGdByHePzG5qqpGkMI/TgHRT4zw6DS9C3a9NFZnK4WQaXVNXOqvrQY3
-         sS2MqNO4uKzZ4NeL5Fk3Spblr3Ct+2vUdm91WK75C4/DaVRXpF3QfGl9w4YxVeEzqIAK
-         xGMA==
-X-Gm-Message-State: AOUpUlEtNW22OUuHYhgIJjuVEOXYu2d85FslBqIBjE59qnxWrW8ez9Yu
-        XeEZgz5yCPXqcO8J7C6QeSw=
-X-Google-Smtp-Source: AAOMgpeGcSoU8zRuU/6M+jZ+SaqaYtrI4tjNEbInqhvgYcwS/FnUoP5U2wh5stxJ6DVwW4gpNHt3OA==
-X-Received: by 2002:adf:c321:: with SMTP id n30-v6mr2301636wrf.235.1531414566249;
-        Thu, 12 Jul 2018 09:56:06 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id a145-v6sm5816366wmd.39.2018.07.12.09.56.05
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 12 Jul 2018 09:56:05 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 0/6] Object store refactoring: commit graph
-References: <cover.1529616356.git.jonathantanmy@google.com>
-        <cover.1531348540.git.jonathantanmy@google.com>
-Date:   Thu, 12 Jul 2018 09:56:05 -0700
-In-Reply-To: <cover.1531348540.git.jonathantanmy@google.com> (Jonathan Tan's
-        message of "Wed, 11 Jul 2018 15:42:36 -0700")
-Message-ID: <xmqqd0vsz93u.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1732412AbeGLRGd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jul 2018 13:06:33 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57054 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726925AbeGLRGd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jul 2018 13:06:33 -0400
+Received: (qmail 3557 invoked by uid 109); 12 Jul 2018 16:56:10 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 12 Jul 2018 16:56:10 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24171 invoked by uid 111); 12 Jul 2018 16:56:12 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 12 Jul 2018 12:56:12 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Jul 2018 12:56:08 -0400
+Date:   Thu, 12 Jul 2018 12:56:08 -0400
+From:   Jeff King <peff@peff.net>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Elijah Newren <newren@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Stefan Beller <sbeller@google.com>,
+        Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH v2 01/10] t/test-lib: teach --chain-lint to detect broken
+ &&-chains in subshells
+Message-ID: <20180712165608.GA10515@sigill.intra.peff.net>
+References: <20180626073001.6555-1-sunshine@sunshineco.com>
+ <20180711064642.6933-1-sunshine@sunshineco.com>
+ <20180711064642.6933-2-sunshine@sunshineco.com>
+ <xmqqk1q11mkj.fsf@gitster-ct.c.googlers.com>
+ <CAPig+cS+fFZNZMxc0ARu=cZ2RVjHSP0iiLTsAJ_L7iOarwftgg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAPig+cS+fFZNZMxc0ARu=cZ2RVjHSP0iiLTsAJ_L7iOarwftgg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+On Thu, Jul 12, 2018 at 06:50:20AM -0400, Eric Sunshine wrote:
 
-> This is on _both_ ds/commit-graph-fsck and sb/object-store-lookup,
-> following Stolee's suggestion.
->
-> (It also seems better to build it this way to me, since both these
-> branches are going into "next" according to the latest What's Cooking.)
+> And, perhaps most important: We're not tied indefinitely to the
+> "subset" implemented by the current linter. If it is indeed found to
+> be too strict or limiting, it can always be loosened or retired
+> altogether.
 
-OK.  I am perfectly OK if this left lookup_commit() with older
-function signature and instead asked the integrator to fix up with
-evil merge with sb/object-store-lookup, but given that this topic is
-no more urgent than the other one, making them intertwined is fine.
+Yeah, I agree this is the key point.
 
-Merging ds/commit-graph-fsck into sb/object-store-lookup already
-requires an evil merge to build correctly due to this new parameter.
-I really wish we did the more canonical "do not change signature of
-a widely used function.  If the widely used one is a mere
-specialization that calls the new one with the default parameter,
-make that widely used one a thin wraper (or a macro) of the new one"
-approach to avoid having to repeatedly create such pointless evil
-merges X-<.
+Like Junio, I'm a little nervous that this is going to end up being a
+maintenance burden. People may hit false positives and then be
+confronted with this horrible mass of sed to try to figure out what went
+wrong (which isn't to bust on your sed in particular; I think you made a
+heroic effort in commenting).
 
+But I came around to thinking:
 
->  Makefile                   |   1 +
->  builtin/commit-graph.c     |   2 +
->  builtin/fsck.c             |   2 +-
->  cache.h                    |   1 -
->  commit-graph.c             | 108 +++++++++++++++++++++----------------
->  commit-graph.h             |  11 ++--
->  commit.c                   |   6 +--
->  config.c                   |   5 --
->  environment.c              |   1 -
->  object-store.h             |   6 +++
->  object.c                   |   5 ++
->  ref-filter.c               |   2 +-
->  t/helper/test-repository.c |  82 ++++++++++++++++++++++++++++
->  t/helper/test-tool.c       |   1 +
->  t/helper/test-tool.h       |   1 +
->  t/t5318-commit-graph.sh    |  35 ++++++++++++
->  16 files changed, 207 insertions(+), 62 deletions(-)
->  create mode 100644 t/helper/test-repository.c
+  - this found and fixed real problems in the test suite, with minimal
+    false positives across the existing code
+
+  - it's being done by a long-time contributor, not somebody who is
+    going to dump sed on us and leave
+
+  - worst case is that relief is only a "git revert" away
+
+So I'm OK with merging it, and even running it by default.
+
+-Peff
