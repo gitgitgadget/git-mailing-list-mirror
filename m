@@ -2,147 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA28E1F85E
-	for <e@80x24.org>; Thu, 12 Jul 2018 12:59:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3797D1F85E
+	for <e@80x24.org>; Thu, 12 Jul 2018 13:01:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727113AbeGLNIu (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jul 2018 09:08:50 -0400
-Received: from mout.gmx.net ([212.227.15.15]:49357 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726946AbeGLNIu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jul 2018 09:08:50 -0400
-Received: from [192.168.0.129] ([37.201.195.126]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M7YF5-1fxjPQ2FNP-00xKcn; Thu, 12
- Jul 2018 14:59:15 +0200
-Date:   Thu, 12 Jul 2018 14:58:59 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/3] merge: allow reading the merge commit message from
- a file
-In-Reply-To: <xmqqbmbd1l7i.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1807121455130.75@tvgsbejvaqbjf.bet>
-References: <pull.8.git.gitgitgadget@gmail.com> <9e2c1fe83178f7047d8f2aacaa961381a4894081.1531312689.git.gitgitgadget@gmail.com> <xmqqbmbd1l7i.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1732384AbeGLNLV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jul 2018 09:11:21 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:39134 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726650AbeGLNLV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jul 2018 09:11:21 -0400
+Received: by mail-qt0-f194.google.com with SMTP id q12-v6so23938471qtp.6
+        for <git@vger.kernel.org>; Thu, 12 Jul 2018 06:01:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=MUHOAP66VlNY/UkumLe2uRbhNVZx3QB1Q4/WvPPbwGc=;
+        b=eiJ+izl9phy/Cw1d8YcdU8PneNRpnaafZVaGb8wmmssAjwmu3EpPYR7MhlQ2N9VlCb
+         0dNw2u3E3zQ9EfpXn5nBpDsZKI3Ns43OQjpf6Q8HJ9epsAG3sQJ7KkD+dz7REvryySgH
+         M1JSZoYi0939k4yaTnk1LigHsWja66uGtiXZJvcnFiLuUeTCXZtp7Lx7ekb6kCnEOJfr
+         U7brAZeiGvq6sHSxkTaOr9ZBrkOc6DABAk2NhRqIsSt5D7T0XebiOvqfG4E/xaSsHhyr
+         RCODhklp+zgNKIwFf8a8ub/jpkrnsqs2+vAqnqd0gHRtNk6DcuVLvr6Ukik6Ezg8PrxO
+         GtLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=MUHOAP66VlNY/UkumLe2uRbhNVZx3QB1Q4/WvPPbwGc=;
+        b=X9zVEnZjHqt4eRfNNg9Vc5KIJ3IWc7o4k0CRUbGn/wavvlWToA8AM/EsP63GGd2DnX
+         lIW1j4iRNio4J7szpXNUSI+P3jsq4xCHI2pVy9j/fw6t+R/GTljPvgqcI8swRxk6WBlZ
+         T97M8GkXisp1Dj+Psb3AxD2z1BUOoqFBfAT85MwkDCExAd/8bh5YHWBeeL5COsk8vkkk
+         Agv7K1pnZ9josZprzTfNhjlBwGmI++ZA2HvoL+33JaE6lVsoG3NOFmu4RlkwmVh9CnbR
+         P1hJcrwujSzKluEQu5J8VMz2O8TEWwC25bV65//2Y6Z4IHSnUlUSs5s+kWC0TmcfoF0m
+         1DBA==
+X-Gm-Message-State: AOUpUlHaznycw5pE6Ie26794/3wTjUaW8H65LyUhccqzEdxSAvWC4kkj
+        9Xw18pmW8hVtzYBXS5Ffh3U=
+X-Google-Smtp-Source: AAOMgpclZlWDJRvpmjr/huYQmShDK35IFkWkfNup4n5nXBB8ng/44+k+GOduk3HZvIZ+2K43zZM8NQ==
+X-Received: by 2002:a0c:bc8a:: with SMTP id l10-v6mr2212475qvg.130.1531400511440;
+        Thu, 12 Jul 2018 06:01:51 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:d4d2:4c73:ca82:12f0? ([2001:4898:8010:0:be08:4c73:ca82:12f0])
+        by smtp.gmail.com with ESMTPSA id y49-v6sm20009287qty.91.2018.07.12.06.01.49
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 12 Jul 2018 06:01:50 -0700 (PDT)
+Subject: Re: [PATCH v3 16/24] config: create core.multiPackIndex setting
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, sbeller@google.com,
+        pclouds@gmail.com, avarab@gmail.com, dstolee@microsoft.com
+References: <20180625143434.89044-1-dstolee@microsoft.com>
+ <20180706005321.124643-1-dstolee@microsoft.com>
+ <20180706005321.124643-17-dstolee@microsoft.com>
+ <20180711094858.3230-1-szeder.dev@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <dd2f774d-a217-0273-efbe-d133ae23c5bc@gmail.com>
+Date:   Thu, 12 Jul 2018 09:01:47 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:LTSvbmu7PQdnvfzLfzYOn1bTrH0NZkLwp2RMjVXWomRD+JnMvzF
- l81TTg1wQJmvTVmmZYDJjt+92Z9vtqclMsW8h+wHQm9hYQQqXEgxXPSxeO+YHEt15tOAKCt
- TEBX+WgafKYc25y8fGLzKepx6bCTim3KT4oGTozpyaVVV7lZwydgyuG0VOCPYE6VDSIiTEM
- s+BOhnMnoWYRvfgLoxIGg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:cIT7lEZAoFg=:oIEHtaKO7SWx+u1WM0lQ0e
- CPj7UwNZCOFoCdV1trPtVvH3Zce9bpK3yG3t4QFh05jk7TOWHCFAz/mI6oZqS8/fvKsq0PLFc
- CLvAFSzB6qE1UPoRnYp/w4R6vlPWBkcEPFjcOthzqf7/dgzYbboJDmoYcocWhwl6QutJ9AA9J
- sgbtorXVMqlGL/ILsGeAuqFZBlq4K75UlRaWyc3YFzWVd5pr7vc0HdGy+YB5RTByGxT+BWNFo
- htNqrblgoB5o5uo89LD0+TAodqscW51hNYqJEb/cJZXKf9NaTzqVKFaxNYswYFnqTc4ciJDaJ
- r9sQL7b9YdARmz0mqruE0T1wSaixGytwHMcxAsC6K6VNxR0zFcMVhGKGE5gHDsOltiPHgNjOP
- 5VG/qN3sO5NOGKPB48uKf66xNbyYoejB7dVRp/6ZDA1wIKgEe4UTwhZm/hCC+7vIZaIa/Idx/
- za5bZg7ZZMj6j3HHT0V6VD/cfd8FnGWBwKmtaqJqEjrTxxA/1/DDlRBlA9ktsemDfoZRJQxOj
- Zs0dbQvKypiTPK/ZmrHPM20ikyqDJyqBAVRv+fmxxam096Zc0RmFJQRkLdq3wZ1lqpmu9tkmQ
- sNH+li9GcomltnJFZlr13IZdjWGPIu5LUpvZTZSpBkTjJRuz1qON9VZCRHpZpESWgBaqIzsgm
- 0e35sN9qS4x9MdoSwFt3/01pZLhyOV6xgncARFjBlZfQXtQeE9NNoIuHWqX/jtH/kMsFail7W
- NrP2FY3vunD40MCsoQkKSX8KzArnKaGbfn3gZS0qIit70XB1ZSIVQRC0vL3BfQMyyzHm4tNVC
- Qlk/rO1
+In-Reply-To: <20180711094858.3230-1-szeder.dev@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On 7/11/2018 5:48 AM, SZEDER Gábor wrote:
+>> diff --git a/Documentation/config.txt b/Documentation/config.txt
+>> index ab641bf5a9..ab895ebb32 100644
+>> --- a/Documentation/config.txt
+>> +++ b/Documentation/config.txt
+>> @@ -908,6 +908,10 @@ core.commitGraph::
+>>   	Enable git commit graph feature. Allows reading from the
+>>   	commit-graph file.
+>>   
+>> +core.multiPackIndex::
+>> +	Use the multi-pack-index file to track multiple packfiles using a
+>> +	single index. See linkgit:technical/multi-pack-index[1].
+> The 'linkgit' macro should be used to create links to other man pages,
+> but 'technical/multi-pack-index' is not a man page and this causes
+> 'make check-docs' to complain:
+>
+>        LINT lint-docs
+>    ./config.txt:929: nongit link: technical/multi-pack-index[1]
+>    Makefile:456: recipe for target 'lint-docs' failed
+>    make[1]: *** [lint-docs] Error 1
+>
+Thanks for this point. It seems to work using 
+"link:technical/multi-pack-index[1]", which is what I'll use in the next 
+version.
 
-On Wed, 11 Jul 2018, Junio C Hamano wrote:
+-Stolee
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
-> 
-> > diff --git a/builtin/merge.c b/builtin/merge.c
-> > index 4a4c09496..b0e907751 100644
-> > --- a/builtin/merge.c
-> > +++ b/builtin/merge.c
-> > @@ -111,6 +111,35 @@ static int option_parse_message(const struct option *opt,
-> >  	return 0;
-> >  }
-> >  
-> > +static int option_read_message(struct parse_opt_ctx_t *ctx,
-> > +			       const struct option *opt, int unset)
-> > +{
-> > +	struct strbuf *buf = opt->value;
-> > +	const char *arg;
-> > +
-> > +	if (unset)
-> > +		BUG("-F cannot be negated");
-> 
-> The message "-F cannot be negated" looks as if it is pointing out a
-> mistake by the end user, and does not mesh well with the real reason
-> why this is BUG() and is not die().
-> 
-> I understand that this is BUG() not die() because options[] array
-> tells this callback not to be called with unset by having the
-> PARSE_OPT_NONEG bit there.
-
-Okay. I would have appreciated some sort of indication what you prefer
-instead. I went with "--no-file?!?"
-
-> > +	if (ctx->opt) {
-> > +		arg = ctx->opt;
-> > +		ctx->opt = NULL;
-> > +	} else if (ctx->argc > 1) {
-> > +		ctx->argc--;
-> > +		arg = *++ctx->argv;
-> > +	} else
-> > +		return opterror(opt, "requires a value", 0);
-> > +
-> > +	if (buf->len)
-> > +		strbuf_addch(buf, '\n');
-> 
-> Do we assume that buf, if it is not empty, is properly terminated
-> with LF already?  I am wondering if the real reason we do these two
-> lines is to make sure we have a separating blank line between what
-> is already there (if there already is something) and what we add, in
-> which case the above would want to say
-> 
-> 	if (buf->len) {
-> 		strbuf_complete_line(buf);
-> 		strbuf_addch(buf, '\n');
-> 	}
-> 
-> instead.
-
-True. Thanks for the suggestion!
-
-> > +	if (ctx->prefix && !is_absolute_path(arg))
-> > +		arg = prefix_filename(ctx->prefix, arg);
-> > +	if (strbuf_read_file(buf, arg, 0) < 0)
-> > +		return error(_("could not read file '%s'"), arg);
-> > +	have_message = 1;
-> 
-> A similar question is what we would want to do when the file ends
-> with an incomplete line.  With "--log", we would be appending more
-> stuff to buf, and we'd want to complete such an incomplete line
-> before that happens, either here or in the code immediately before
-> "--log" is processed.
-
-This is what I inserted here:
-
-	strbuf_complete_line(buf);
-
-> > +
-> > +	return 0;
-> > +}
-> > +
-> >  static struct strategy *get_strategy(const char *name)
-> >  {
-> >  	int i;
-
-Thanks for the review, and especially for the suggestions how to improve
-the code.
-
-Ciao,
-Dscho
