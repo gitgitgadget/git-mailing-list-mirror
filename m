@@ -2,85 +2,165 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 419581F85E
-	for <e@80x24.org>; Thu, 12 Jul 2018 16:14:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F61C1F85E
+	for <e@80x24.org>; Thu, 12 Jul 2018 16:20:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726912AbeGLQYo (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jul 2018 12:24:44 -0400
-Received: from mail-oi0-f46.google.com ([209.85.218.46]:46270 "EHLO
-        mail-oi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726775AbeGLQYo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jul 2018 12:24:44 -0400
-Received: by mail-oi0-f46.google.com with SMTP id y207-v6so56818584oie.13
-        for <git@vger.kernel.org>; Thu, 12 Jul 2018 09:14:31 -0700 (PDT)
+        id S1727366AbeGLQay (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jul 2018 12:30:54 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34006 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726744AbeGLQax (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jul 2018 12:30:53 -0400
+Received: by mail-wm0-f66.google.com with SMTP id s13-v6so2463334wmc.1
+        for <git@vger.kernel.org>; Thu, 12 Jul 2018 09:20:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=mE5mpR7Z0w8cj51r5egmX5AwKhkDzE9xKY1jZ55s6u0=;
-        b=feYkSeIrfPPVBqGhReJ6V3apGOnQJbHpmviScBeH7mUDe8lera2eoAxwCaiOWWo+zr
-         L6TuANEtgLGwsWQR/wpHGuetaJ1xHSPdIDWidTGNNoAnK1I8OvVixHUxZXrftNQGkJB6
-         /06UE7VF7qznyT0xcb9LdkqgIMWH0Eh2Iwu6r/LuxR6G3IfjOfS43Jb47+Hifk2WvSF8
-         JJf7jX+w7NNHx6uRCUsbDcf5y5noVMcWdQA9U8atUNBfPLJLtDzzQeCuIvUv50VIV/ye
-         k+54QdbI5Ub7ZvlFNtzBo0wG8gi8hNK4vhX380ykx7v0ZHc3IPNMa/EnPvfvCgmmyoMI
-         sT3Q==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=PiN+SDgzOrCiXlHo+8BVJlWYPaL4WETyizNxwlfVhRg=;
+        b=sI+/OfxwP5opgxN0orHApljF6yNkbMS1bDaWklJ/DlaeUOBmGn/1H7u4l82Houk8Y3
+         UzcN3EMGhqnYIZkfYHfoF6TqK9xOWAU3IpArhTXZVYKSMYMaUdTKy9CjHtmrkheLfxVB
+         4T9sfVyjkPPMMb0nzw/7b8I8Qre+49fB8TfvUXM1dFvh051ErQ1NZCeQjljNy8RhLKK3
+         amQ0bCCxBkzUTEfsLZrIf9rQzXYkhtZwIwjwCy5JElnDEeZ3mBd9ySqzuX1TmI3HQgD4
+         lU/ztm3VbV0lqSrYKScEzkk8W1ZrZgSiUQb3F116ohL5Z63QmLA9YpDEJ1ceBbpBhZty
+         pruQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=mE5mpR7Z0w8cj51r5egmX5AwKhkDzE9xKY1jZ55s6u0=;
-        b=Af02SQ3uZwH0urCW1dTqMFhplX96p38FCox4cA4sPI4pY2SiW80VaHEBZnOO/vNEgw
-         vU6lVwu5gPoP/YyR8Bn5es76dvkGGvGSniJuK+3mIcP9yKouawIj6P4GqRAv+i7gN6g6
-         mmJ8gC8BEPO0rhFGVNiUwOp/WmAz8GJ/BfKZB6vouY3JLn7B5A8MxpV7ca1hL50M0Zd/
-         EX+aTq861UrSbiG5Lyw1Y41CI667ORUri2E1cxr7hqS3xFs8dR3gfP/ShOYx5a7VZ2Ps
-         zEfUDKahKjctGoImbaNXfY7kWYIhMObTwAKs7uY+agVeva7b9PxIFO1AdB4ytGQsDYRl
-         yG0A==
-X-Gm-Message-State: AOUpUlFusGO4F2f0yOjgUx6LEr2ADEVdEJ61P+D5+EvG9KZdBtBc/zvg
-        07ZM6albb5oYZtPYUhQRe/ALNUzMpEhkhceFUzs=
-X-Google-Smtp-Source: AAOMgpfROPSYsfF4wBTKeVgTeJxjrQGURZSRn3NoKLT0XL/Ul/Q20QxgfhPX1nMVG3Vb0WJbS80mjfMCDlRCAYuAtgU=
-X-Received: by 2002:aca:3ad4:: with SMTP id h203-v6mr2881181oia.294.1531412071245;
- Thu, 12 Jul 2018 09:14:31 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=PiN+SDgzOrCiXlHo+8BVJlWYPaL4WETyizNxwlfVhRg=;
+        b=cladiShQ8w+J532hXTNLwFZizI8pcMGMHelKApqcycxjqzPp7hJnWGaKzccHgBy45R
+         84qzDEwPhDb0bqdmHODWsR89jrQn74uAWZfuu0RW34jJlflHn+xYDRfmBejcP8UfdklL
+         iof0InPhuNa4qddbPklyIL2BstZyHvk9XEfCwB+nIIjLdjP2NslNSrfk5VkPYiusdqOA
+         vkwHI2y4UvqbiW2XXi0hBaJRq4zf5N8TQtomL1NPzbE3FuxBxTTnv1oahwMLImc4lrHk
+         O62nfhhQ5JQtZjDMuiF212TqyntJ0VYmL22HSD1VoeVJ9XzGJ2VwGf4yIsQ3DP3vsw2d
+         gueA==
+X-Gm-Message-State: AOUpUlEOp7eigtRZvEvGINn+adBW//hiEZxEm2s8HA79OOr0iadFN/Bw
+        PfYv4HKBNeNAMmBFn14UB6c=
+X-Google-Smtp-Source: AAOMgpefLFvYpEyOvqwj7YgN/ImbFr4Pyil7i9doGstDbcjOp5BfMhFmSWFt5xNzZWXzgAY64QD2yg==
+X-Received: by 2002:a1c:8010:: with SMTP id b16-v6mr1886103wmd.9.1531412436781;
+        Thu, 12 Jul 2018 09:20:36 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id h4-v6sm22371441wre.89.2018.07.12.09.20.35
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 12 Jul 2018 09:20:35 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/3] merge: allow reading the merge commit message from a file
+References: <pull.8.git.gitgitgadget@gmail.com>
+        <9e2c1fe83178f7047d8f2aacaa961381a4894081.1531312689.git.gitgitgadget@gmail.com>
+        <xmqqbmbd1l7i.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1807121455130.75@tvgsbejvaqbjf.bet>
+Date:   Thu, 12 Jul 2018 09:20:35 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.1807121455130.75@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Thu, 12 Jul 2018 14:58:59 +0200 (DST)")
+Message-ID: <xmqqpnzszar0.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 2002:ac9:74c3:0:0:0:0:0 with HTTP; Thu, 12 Jul 2018 09:14:10
- -0700 (PDT)
-In-Reply-To: <xmqqva9kzbhi.fsf@gitster-ct.c.googlers.com>
-References: <CAFW+GMD62V=o4hoEYKVteBZHzqBtquzLzTv2WXiSPZf3ZhOpeg@mail.gmail.com>
- <20180712054909.29077-1-wchargin@gmail.com> <xmqqva9kzbhi.fsf@gitster-ct.c.googlers.com>
-From:   William Chargin <wchargin@gmail.com>
-Date:   Thu, 12 Jul 2018 09:14:10 -0700
-Message-ID: <CAFW+GMAp2bA2=_BZ2S0HLO2x2aLE01zXigHrY3QtCmWxRuyAtA@mail.gmail.com>
-Subject: Re: [PATCH v2] sha1-name.c: for ":/", find detached HEAD commits
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> As we discussed during the review on v1, ":/<substring in commit>"
-> is *NOT* pathspec (that is why having these tests in t4208 is wrong
-> but we are following existing mistakes).
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Ah, I understand the terminology better now. Thanks. I'll change the
-commit message wording to use "extended SHA-1s" instead of "pathspecs".
+>> > +static int option_read_message(struct parse_opt_ctx_t *ctx,
+>> > +			       const struct option *opt, int unset)
+>> > +{
+>> > +	struct strbuf *buf = opt->value;
+>> > +	const char *arg;
+>> > +
+>> > +	if (unset)
+>> > +		BUG("-F cannot be negated");
+>> 
+>> The message "-F cannot be negated" looks as if it is pointing out a
+>> mistake by the end user, and does not mesh well with the real reason
+>> why this is BUG() and is not die().
+>> 
+>> I understand that this is BUG() not die() because options[] array
+>> tells this callback not to be called with unset by having the
+>> PARSE_OPT_NONEG bit there.
+>
+> Okay. I would have appreciated some sort of indication what you prefer
+> instead. I went with "--no-file?!?"
 
-> Now you have Peff's sign-off for the one-liner code change, the last
-> one is redundant.
+I have no strong preference; anything is OK as long as the message
+is unique and points reading developer in the right direction, and
+"--no-file?!?" signals quite strongly that the code is not expected
+that it has to handle that option at this point (instead, it expects
+somebody else has dealt with it), so it sounds fine.
 
-Okay: I'll remove the "Based-on-patch-by" line.
+I think doing all of these inside parse_options callback means that
+you can have "merge -F file1 -F file2" and slurp contents from both
+files as separate paragraphs.  I briefly wondered if --no-file is
+something the end user might want to be able to use to discard what
+has been read so far, but "merge -m msg -F file --no-file" would
+have to discard everything, not just what we read from the file, so
+it would not be useful with the structure of the message assembly
+we have today, which this code builds on.
 
-> Other than the above two nits, the patch looks good.  I would have
-> broken the line after "including HEAD.", but the slightly-long line
-> is also OK.
+>> > +	if (ctx->opt) {
+>> > +		arg = ctx->opt;
+>> > +		ctx->opt = NULL;
+>> > +	} else if (ctx->argc > 1) {
+>> > +		ctx->argc--;
+>> > +		arg = *++ctx->argv;
+>> > +	} else
+>> > +		return opterror(opt, "requires a value", 0);
+>> > +
+>> > +	if (buf->len)
+>> > +		strbuf_addch(buf, '\n');
+>> 
+>> Do we assume that buf, if it is not empty, is properly terminated
+>> with LF already?  I am wondering if the real reason we do these two
+>> lines is to make sure we have a separating blank line between what
+>> is already there (if there already is something) and what we add, in
+>> which case the above would want to say
+>> 
+>> 	if (buf->len) {
+>> 		strbuf_complete_line(buf);
+>> 		strbuf_addch(buf, '\n');
+>> 	}
+>> 
+>> instead.
+>
+> True. Thanks for the suggestion!
+>
+>> > +	if (ctx->prefix && !is_absolute_path(arg))
+>> > +		arg = prefix_filename(ctx->prefix, arg);
+>> > +	if (strbuf_read_file(buf, arg, 0) < 0)
+>> > +		return error(_("could not read file '%s'"), arg);
+>> > +	have_message = 1;
+>> 
+>> A similar question is what we would want to do when the file ends
+>> with an incomplete line.  With "--log", we would be appending more
+>> stuff to buf, and we'd want to complete such an incomplete line
+>> before that happens, either here or in the code immediately before
+>> "--log" is processed.
+>
+> This is what I inserted here:
+>
+> 	strbuf_complete_line(buf);
 
-Happy to change this while making the above edits. :-)
+I had a slight suspicion that completing immediately before we
+append anything in a later step in the codepath would be safer.
+When we get a complaint: 
 
-Best,
-WC
+    'merge -F file' when I am not using '--log' or adding sign-off,
+    adds an extra newline at the end when I deliberately give a file
+    that ends with an incomplete line for such and such reasons.
+
+I do not think I would have a good argument why the then-current
+behaviour is not a bug but an intended behaviour.
+
+And I do not think the fact that I am unable to fill "such and such"
+above means such a complaint is nonsense---it merely indicates that
+I lack imagination and that I am not thinking enough to accomodate
+other people's needs.
