@@ -2,139 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 321361F85E
-	for <e@80x24.org>; Thu, 12 Jul 2018 15:40:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9873C1F85E
+	for <e@80x24.org>; Thu, 12 Jul 2018 15:42:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726803AbeGLPuo (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jul 2018 11:50:44 -0400
-Received: from mail-qk0-f194.google.com ([209.85.220.194]:40700 "EHLO
-        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726623AbeGLPun (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jul 2018 11:50:43 -0400
-Received: by mail-qk0-f194.google.com with SMTP id c126-v6so6902174qkd.7
-        for <git@vger.kernel.org>; Thu, 12 Jul 2018 08:40:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=PdU560njYH1hlQkOkpD9/Pj3Ur8NMoTJZNPEyhPZFk8=;
-        b=tzi8OTT48tm0mz7iMHCNKg13HCLm48qPNR5NcYKrBSpy2iAgByHApaXTc6+bpzL6k8
-         VsGI1zRPLfcBNUept1WiiWtYbQVrgdyZSzyDqLL97XmtdfeNm1IWMsbjvAOWxaf0xesz
-         RpqfS78XFHCzfw5VpCp06HEd4uY8ienT5rjJhuBdNc7dXZxtk56UFSWSC/ANbiRODIHa
-         YStc0XZbK+WU5WzXykumALSaApE0KtwMTCXZgf73yX6c8gxWR7yfDYBBsQ1gOb7qNCFR
-         djG7/tLEaoVMsjofCgF+wr8obsRcCeLHXpTpLieWit6GEHlTRcvNsLG0lxofEn18YIJw
-         9arQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=PdU560njYH1hlQkOkpD9/Pj3Ur8NMoTJZNPEyhPZFk8=;
-        b=cePcl/u8u8K3TjtAPEYNHt3l+jCcYxx/zmSJbQs5k+XjVPahwOvCENdKDyotKVM1Gc
-         NyizhhU9RNsUaBxN/VWvklzSg2IPMQzaINA7y6T2iAuxkug2QKQqJEn0INQw3H88ezy8
-         wNkQ/18BJ0dU27Dp2ffnAyqrBEfRa3NierTWN3jLF0CYzIQMCE9C73n7lF3gtnDlcm1S
-         8UT/DJfmuOoMA8s+cDhy+Gd75RL0FgFJc8TmkeSGhk8IMDwFSVY4pivZWjf84+DuFtNo
-         UhoSwZpX3sVWrvk3csHa4LfeJk2Xf3eveotSvaRRVKeT5Obl0ZOjJNdocD7nGC++ylTO
-         pVGg==
-X-Gm-Message-State: AOUpUlFoAdC+A3IoTa8tMH3r8lGZoVZUn6PHZt6nIuZ7uWg8MRKHAsRA
-        eXEz3dB6EwiyNtDFr73YW+X1qDi0vpo=
-X-Google-Smtp-Source: AAOMgpfsQTSPVBi4pzznT9DvfUjJeAGMPNMrx5ihT7WQ13KlwNFtko0p4HcC74Q3O2X3E3LYlu9Vxw==
-X-Received: by 2002:a37:c597:: with SMTP id k23-v6mr2194456qkl.324.1531410038058;
-        Thu, 12 Jul 2018 08:40:38 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:7999:2a5f:44db:50fd? ([2001:4898:8010:0:62cf:2a5f:44db:50fd])
-        by smtp.gmail.com with ESMTPSA id k67-v6sm15024830qte.95.2018.07.12.08.40.36
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 12 Jul 2018 08:40:37 -0700 (PDT)
-Subject: Re: [PATCH v3 16/24] config: create core.multiPackIndex setting
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <20180625143434.89044-1-dstolee@microsoft.com>
- <20180706005321.124643-1-dstolee@microsoft.com>
- <20180706005321.124643-17-dstolee@microsoft.com>
- <20180711094858.3230-1-szeder.dev@gmail.com>
- <dd2f774d-a217-0273-efbe-d133ae23c5bc@gmail.com>
- <CAM0VKjkuC5Qc6HtQZP4dpHE4CcCvNkg1D8_AFw7+PQDU6bU5Wg@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <540316c3-b74e-f187-797a-2b2d0b14c025@gmail.com>
-Date:   Thu, 12 Jul 2018 11:40:33 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        id S1726820AbeGLPwO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jul 2018 11:52:14 -0400
+Received: from mout.gmx.net ([212.227.15.18]:36031 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726703AbeGLPwO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jul 2018 11:52:14 -0400
+Received: from [192.168.0.129] ([37.201.195.126]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MOwbP-1fg5lx3vHj-006KZV; Thu, 12
+ Jul 2018 17:41:59 +0200
+Date:   Thu, 12 Jul 2018 17:41:42 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Elijah Newren <newren@gmail.com>
+cc:     gitster@pobox.com, git@vger.kernel.org, phillip.wood@dunelm.org.uk,
+        sunshine@sunshineco.com, szeder.dev@gmail.com
+Subject: Re: [PATCH v3 2/2] Fix use of strategy options with interactive
+ rebases
+In-Reply-To: <20180627154804.3743-3-newren@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1807121740270.75@tvgsbejvaqbjf.bet>
+References: <20180627073623.31725-1-newren@gmail.com> <20180627154804.3743-1-newren@gmail.com> <20180627154804.3743-3-newren@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <CAM0VKjkuC5Qc6HtQZP4dpHE4CcCvNkg1D8_AFw7+PQDU6bU5Wg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:1OSO+Cr70z4XKIWKi4Su/e+ew1UTOUUxCtrET+TzSVGsO+6GWaX
+ XPxCK71GAU5QrbeW9T1J0o1ff7OuQ8IXcEOIo6FeVJgBMeCEwwINaMCeLfpXzPbhC6aKPZr
+ dumIFdH5ZGdo7JSTM09g+VlgVgqeAXveMPaRq3USmZ7AKMIE/i0/yBCBJqWtvwIvCaPAZ2s
+ 55pNDHr0OVt6+/r/UKHcQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:o3Ip8j5M2wo=:GIoopapke1WsgqewS+dluO
+ 2ZpxjuPGhRelheCTtK44mroflzleUIqc1ZFEOI6XrTMxylz+lwZrUO0mxiLebjHMwRFWMoQP8
+ Ly1WqTWJaoJsjslWug5QmxejF51439dbZSsrfS85EgxAfUcjnVHrtnojUa+q8+OTUsDJIkphU
+ DI/S1XAEc+z60b50HACuZzl7NCLldCjneCyFvaQeZc4JV7z22hg+VGE97+mvzUcmWbp4drXMX
+ K/PnDGjILaHF7gJ0w0t8gdI59+7B1WndgHjEtrQEcPuslzyKROUhTuU80NEoPB2N7YZV6YotA
+ H79D+TE4zRn5gXiNofJZ/ImEsY3RCsqsM6c/1M67FqgZiORc2Z6mjss5mK5NJBrvT024gaCza
+ F/O6mLNKEe2rCOzh0XuiaIkUWPeQWgRSm7DaC17LN4qtr3cWJcSeueOnERB7qxhPySIuGw3mc
+ 0MUAuRuGjSIqiM+s6DyvXimutn+tqI8whVgMpN0ICBKcmWl4F8S+npZ5B5GHIzEHs5Vix8zXc
+ djdopdiPFe5UA4KDj5yHriSHZmIeZs3xWxDQcw7cZwVXXPlZzqOG6/X318yDWJNhng48ptT+1
+ 7K61G5PEY7LhWvUxLGRgMip/Wh4qPdJ9Y1YndOciuAEWY67yvt+Iy0v38S5g/v+uXxoY1/tjR
+ LYwE3jKwyyXEKCPot8RGpqPG3YJXhfrpyIlgy0UFEOugJ3vtkTn4wKSOZLcGbUGXO8JCDofS3
+ kTg+wpiTKRkOPRg8Y5wokw5/V3kQBc0bFjLZtxNB2BozBV4L8Kdh/jXIzprWDLcrlShv8o+pr
+ dqrMgJU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/12/2018 9:31 AM, SZEDER Gábor wrote:
-> On Thu, Jul 12, 2018 at 3:01 PM Derrick Stolee <stolee@gmail.com> wrote:
->> On 7/11/2018 5:48 AM, SZEDER Gábor wrote:
->>>> diff --git a/Documentation/config.txt b/Documentation/config.txt
->>>> index ab641bf5a9..ab895ebb32 100644
->>>> --- a/Documentation/config.txt
->>>> +++ b/Documentation/config.txt
->>>> @@ -908,6 +908,10 @@ core.commitGraph::
->>>>       Enable git commit graph feature. Allows reading from the
->>>>       commit-graph file.
->>>>
->>>> +core.multiPackIndex::
->>>> +    Use the multi-pack-index file to track multiple packfiles using a
->>>> +    single index. See linkgit:technical/multi-pack-index[1].
->>> The 'linkgit' macro should be used to create links to other man pages,
->>> but 'technical/multi-pack-index' is not a man page and this causes
->>> 'make check-docs' to complain:
->>>
->>>         LINT lint-docs
->>>     ./config.txt:929: nongit link: technical/multi-pack-index[1]
->>>     Makefile:456: recipe for target 'lint-docs' failed
->>>     make[1]: *** [lint-docs] Error 1
->>>
->> Thanks for this point. It seems to work using
->> "link:technical/multi-pack-index[1]", which is what I'll use in the next
->> version.
-> It doesn't work, it merely works around the build failure.
->
-> The generated man page looks like this:
->
->    core.multiPackIndex
->        Use the multi-pack-index file to track multiple packfiles using a
->        single index. See 1[1].
->
-> And the resulting html page looks similar:
->
->    core.multiPackIndex
->
->        Use the multi-pack-index file to track multiple packfiles using a
->        single index. See 1.
->
-> where that "1" is a link pointing to the non-existing URL
-> file:///home/me/src/git/Documentation/technical/multi-pack-index
+Hi Elijah,
 
-Right. Sorry. I also see that I use the correct kind of links in 
-Documentation/git-multi-pack-index.txt (see below) so I will use it 
-here, too.
+On Wed, 27 Jun 2018, Elijah Newren wrote:
 
-SEE ALSO
---------
-See link:technical/multi-pack-index.html[The Multi-Pack-Index Design
-Document] and link:technical/pack-format.html[The Multi-Pack-Index
-Format] for more information on the multi-pack-index feature.
+> git-rebase.sh wrote strategy options to .git/rebase/merge/strategy_opts
+> in the following format:
+>   '--ours'  '--renormalize'
+> Note the double spaces.
+> 
+> git-rebase--interactive uses sequencer.c to parse that file, and
+> sequencer.c used split_cmdline() to get the individual strategy options.
+> After splitting, sequencer.c prefixed each "option" with a double dash,
+> so, concatenating all its options would result in:
+>   -- --ours -- --renormalize
+> 
+> So, when it ended up calling try_merge_strategy(), that in turn would run
+>   git merge-$strategy -- --ours -- --renormalize $merge_base -- $head $remote
+> 
+> instead of the expected/desired
+>   git merge-$strategy --ours --renormalize $merge_base -- $head $remote
+> 
+> Remove the extra spaces so that when it goes through split_cmdline() we end
+> up with the desired command line.
+> 
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  git-rebase.sh              | 2 +-
+>  sequencer.c                | 7 ++++++-
+>  t/t3418-rebase-continue.sh | 2 +-
+>  3 files changed, 8 insertions(+), 3 deletions(-)
+> 
+> diff --git a/git-rebase.sh b/git-rebase.sh
+> index 19bdebb480..f3b10c7f62 100755
+> --- a/git-rebase.sh
+> +++ b/git-rebase.sh
+> @@ -328,7 +328,7 @@ do
+>  		do_merge=t
+>  		;;
+>  	--strategy-option=*)
+> -		strategy_opts="$strategy_opts $(git rev-parse --sq-quote "--${1#--strategy-option=}")"
+> +		strategy_opts="$strategy_opts $(git rev-parse --sq-quote "--${1#--strategy-option=}" | sed -e s/^.//)"
 
-Thanks,
+Didn't you mean to use "s/^ *//" instead?
 
--Stolee
+>  		do_merge=t
+>  		test -z "$strategy" && strategy=recursive
+>  		;;
+> diff --git a/sequencer.c b/sequencer.c
+> index 5354d4d51e..ef9237c814 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -2206,6 +2206,7 @@ static int populate_opts_cb(const char *key, const char *value, void *data)
+>  static void read_strategy_opts(struct replay_opts *opts, struct strbuf *buf)
+>  {
+>  	int i;
+> +	char *strategy_opts_string;
+>  
+>  	strbuf_reset(buf);
+>  	if (!read_oneliner(buf, rebase_path_strategy(), 0))
+> @@ -2214,7 +2215,11 @@ static void read_strategy_opts(struct replay_opts *opts, struct strbuf *buf)
+>  	if (!read_oneliner(buf, rebase_path_strategy_opts(), 0))
+>  		return;
+>  
+> -	opts->xopts_nr = split_cmdline(buf->buf, (const char ***)&opts->xopts);
+> +	strategy_opts_string = buf->buf;
+> +	if (*strategy_opts_string == ' ')
 
+I think that this would ideally even be a `while` instead of an `if`.
+
+> +		strategy_opts_string++;
+> +	opts->xopts_nr = split_cmdline(strategy_opts_string,
+> +				       (const char ***)&opts->xopts);
+>  	for (i = 0; i < opts->xopts_nr; i++) {
+>  		const char *arg = opts->xopts[i];
+>  
+> diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
+> index 11546d6e14..c145dbac38 100755
+> --- a/t/t3418-rebase-continue.sh
+> +++ b/t/t3418-rebase-continue.sh
+> @@ -74,7 +74,7 @@ test_expect_success 'rebase --continue remembers merge strategy and options' '
+>  	test -f funny.was.run
+>  '
+>  
+> -test_expect_failure 'rebase -i --continue handles merge strategy and options' '
+> +test_expect_success 'rebase -i --continue handles merge strategy and options' '
+>  	rm -fr .git/rebase-* &&
+>  	git reset --hard commit-new-file-F2-on-topic-branch &&
+>  	test_commit "commit-new-file-F3-on-topic-branch-for-dash-i" F3 32 &&
+
+Thanks!
+Dscho
