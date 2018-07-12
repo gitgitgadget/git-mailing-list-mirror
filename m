@@ -2,88 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 631171F85E
-	for <e@80x24.org>; Thu, 12 Jul 2018 18:46:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 40C101F85E
+	for <e@80x24.org>; Thu, 12 Jul 2018 18:48:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726500AbeGLS5T (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jul 2018 14:57:19 -0400
-Received: from mail-yw0-f193.google.com ([209.85.161.193]:46588 "EHLO
-        mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726351AbeGLS5T (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jul 2018 14:57:19 -0400
-Received: by mail-yw0-f193.google.com with SMTP id e23-v6so10322743ywe.13
-        for <git@vger.kernel.org>; Thu, 12 Jul 2018 11:46:31 -0700 (PDT)
+        id S1726570AbeGLS7g (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jul 2018 14:59:36 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:36797 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726351AbeGLS7g (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jul 2018 14:59:36 -0400
+Received: by mail-wr1-f68.google.com with SMTP id h9-v6so22723651wro.3
+        for <git@vger.kernel.org>; Thu, 12 Jul 2018 11:48:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=yfHHtxoQi2uRBYlHkyMMAu7vvdkt0neLcl2KCew9dgI=;
+        b=DfZPEqNsbgIkzhecRmbfVTtXhu19A+tcZxGLWGhK1TtlLThBMrfMP/r60olBDfujsU
+         oj5ZIS/81KERxTOWXLCs4yszmjbG5MhAPiuwYbUMXcT2GgmxGCEqhAk660QwQDJOGf3/
+         8/WQySKCU0hNwaCW6B/sWxGyy73QKVlET5uA9LM2oKlgRxzFt+qm4ZoqmkBgWRBJmGrF
+         LdxQ2e039lmR9r1uqGZju80zCQRC12S6vp0eQt5q/3mesh/arnlLWEIFsI16DQgIZMDL
+         rcBr3aMa1/SPymOmRbHx0hAh+q/2VK383WIGZNAww8Ks0vY0Q651wWmdABbyXzDYdCE8
+         geTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=qpmMG7kTHzS7eiKpQXhdUJf634iwdvOMAT8jltfzC/w=;
-        b=HcrDlQsCsqkES0DQDMjRbi14/vwtDZCksxEw5HUQBsD6GK93dpGenXxzSfUS1XBAzD
-         4DVuNL25O9IRmxinayCSnR98hm0E6Zf4AC9BZk+y38cc54P5h7wWoX1rR7nPFY7TaZpG
-         5Hlc9panTiz3lP1oCWbwJaKRg/AVHTzxlrHW7PRcD19hvcXO0rEsObawLyz0SNUoFlrg
-         dxS+s+EfUGdBVXnayGl/g1DPFcKw4U1dKSGNRq2bEVcNZeRy4vnnmSSBr9ef1HdTRWhd
-         VJeOsPLizZG2CClmql6F4rcfMhc1o8wrvCFNF5R0C4dsGM9agrmTBuAZSjTWW4VvoRAX
-         wj8Q==
-X-Gm-Message-State: AOUpUlGIPUOxb+gE0KKHmGpk+Eqf4wGKL9+YX3blgq9eLWRkuDNqCD24
-        fNkez8fmGr1W9xOVJ5XuMuqBFnQY1mpHCFh80MA=
-X-Google-Smtp-Source: AAOMgpc6+kbP/k7dhShdGfq+KOqIcipM0pZHyZdDVCmJJeavYkk9oLVzX4xieOwYZKVrnuH3SpOBdzAAbgYcEKb72ms=
-X-Received: by 2002:a81:110e:: with SMTP id 14-v6mr1702104ywr.16.1531421191271;
- Thu, 12 Jul 2018 11:46:31 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=yfHHtxoQi2uRBYlHkyMMAu7vvdkt0neLcl2KCew9dgI=;
+        b=CE0hdZuoKNhsQIMUO7dFbqzJ99gxsAlkel4fcxfB0HpBXwqyctPj5cSJt+p9u+2uEd
+         KDfBbWrq7z+NP09HKpzkv7BpNIrkPQvCtt3qdoahY3JgbX6wYFA1X2/HWghwhiHip6BN
+         /AD3FX3ixzDA7fHT0c+ntrbkqaM1NL83vq61Gg9095jCB7dtdp2DbYXwc6SwKn/HBIPF
+         PVUgnw6tsH0/uamrYcE3PIoPd14FcUBL9T+9+nsvfbKlsplUVKbOEx2H2DIwytLXqm2X
+         I9+FjVuqFEHShF/v4/QsXM5bSl5hpql37byBv1gLOZtxiOClfxUt4z/Z3Od0BdmE74Eb
+         LCCw==
+X-Gm-Message-State: AOUpUlH9MZ1ddezbrH32VWlnwIkY4z+RNxOjF4TA6qUFOoj6IpGPROwF
+        B0Ht1M4UkhIct59/iY5ASuU=
+X-Google-Smtp-Source: AAOMgpc5GCLqJojWyseyPBbJgcyBD9/ETeU2K1eJWFYhs8DwKOUAjp6dpC+9xdXwRjUvy2UpAWuIww==
+X-Received: by 2002:adf:9996:: with SMTP id y22-v6mr2748176wrb.69.1531421326778;
+        Thu, 12 Jul 2018 11:48:46 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id s2-v6sm19588733wrn.75.2018.07.12.11.48.45
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 12 Jul 2018 11:48:46 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH] t6036: fix broken && chain in sub-shell
+References: <c9201ced-34a8-98f4-2da6-9c36c408b501@ramsayjones.plus.com>
+Date:   Thu, 12 Jul 2018 11:48:45 -0700
+In-Reply-To: <c9201ced-34a8-98f4-2da6-9c36c408b501@ramsayjones.plus.com>
+        (Ramsay Jones's message of "Thu, 12 Jul 2018 16:32:25 +0100")
+Message-ID: <xmqq4lh4xpbm.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20180702002405.3042-1-sunshine@sunshineco.com>
- <20180702002405.3042-22-sunshine@sunshineco.com> <20180712123729.17861-1-szeder.dev@gmail.com>
- <CAPig+cRYNo_KL02LN1LOa79Zm2oYZqbnBHJ=KDA3oaF4pVfjcA@mail.gmail.com>
- <xmqqd0vsxq47.fsf@gitster-ct.c.googlers.com> <xmqq8t6gxpxb.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq8t6gxpxb.fsf@gitster-ct.c.googlers.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 12 Jul 2018 14:46:19 -0400
-Message-ID: <CAPig+cRZmx5_3-a0C=WdWnmcrh4J_1YHY_0FmXZh5LzcDq+6Uw@mail.gmail.com>
-Subject: Re: [PATCH 21/25] t5000-t5999: fix broken &&-chains
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Stefan Beller <sbeller@google.com>,
-        Luke Diamand <luke@diamand.org>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 12, 2018 at 2:35 PM Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> Oops, sent before completing the message.
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
 >
->         For that to happen, we need a sign-off ;-)
+> Hi Junio,
 >
-> I guess this one would have been caught with the "sed script on
-> subshell" linter that does not execute?
+> I had a test failure on 'pu' today - Eric's chain-lint series
+> found another broken chain in one of Elijah's new tests (on the
+> 'en/t6036-recursive-corner-cases' branch).
 
-Yes, this is correctly caught when the prerequisite is met.
+Thanks, I see the same breakage in my build, too.
 
-> -- >8 --
-> Subject: t5608: fix broken &&-chain
 >
-> This is inside a loop that is run inside a subshell, in a test that
-> is protected with CLONE_2GB prerequisite, one or more which is quite
-> likely reason why it wasn't caught durin the previous clean-up.
-
-s/durin/during/
-
-The exact reason is that the prerequisite was not met (indeed, I
-wasn't even aware of that prerequisite), so the commit message can be
-more direct:
-
-    This was missed by the previous clean-ups due to an unmet
-    CLONE_2GB prerequisite.
-
-Thanks for saving a round-trip.
-
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ATB,
+> Ramsay Jones
+>
+>  t/t6036-recursive-corner-cases.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/t/t6036-recursive-corner-cases.sh b/t/t6036-recursive-corner-cases.sh
+> index 2a44acace..59e52c5a0 100755
+> --- a/t/t6036-recursive-corner-cases.sh
+> +++ b/t/t6036-recursive-corner-cases.sh
+> @@ -495,7 +495,7 @@ test_expect_success 'setup differently handled merges of directory/file conflict
+>  		test_write_lines 1 2 3 4 5 6 7 8 >a &&
+>  		git add a &&
+>  		git commit -m E3 &&
+> -		git tag E3
+> +		git tag E3 &&
+>  
+>  		git checkout C^0 &&
+>  		test_must_fail git merge B^0 &&
