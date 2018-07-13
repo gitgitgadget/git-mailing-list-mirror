@@ -2,98 +2,165 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.8 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 589B71F85E
-	for <e@80x24.org>; Fri, 13 Jul 2018 12:46:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 21C981F85E
+	for <e@80x24.org>; Fri, 13 Jul 2018 15:51:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729768AbeGMNBY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Jul 2018 09:01:24 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:44569 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727999AbeGMNBY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Jul 2018 09:01:24 -0400
-Received: by mail-wr1-f67.google.com with SMTP id r16-v6so25000531wrt.11
-        for <git@vger.kernel.org>; Fri, 13 Jul 2018 05:46:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=H7e+0bO9mgWn7S8vOO+zOiCLEyT0os4mMDsJz9GJdEk=;
-        b=BFsxW5Z1kMZK7Zm3fm6WMYstUZsEJMtrVJUh15akDSkRDuwcpy0Fah2/a1+1cklq1q
-         rVuuw3/lzS8iEdHZVyQkWWtGbMrzkzAq14rjQMgOAcPn8HSqFZUfH9kV7de7sndS0KSD
-         Tbwk+mEYnVqQd/8vRWZHE3oii5xBz9KsjIl+Jo6Btv6O2NnjSHXuAh52nqSeXuaasbUO
-         rg1jEoIBht8q6bSjcv1ROHhFmHktWv8IeSEFJKmSQdWZql9rOkOq/sADGwWCA5iXdnSM
-         MKfCKbKDlRICWwelFRwSyPU1vdYjP3SxeIJeINWH63xscG0rY5kuk1hLHCBVM8LPDq13
-         dzHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=H7e+0bO9mgWn7S8vOO+zOiCLEyT0os4mMDsJz9GJdEk=;
-        b=pqYq7Iunq6Mi+BbfoPMMW0cCtL18tx3vNmmO/2IV3axnjmw/Gv3kzCITlHci4+BOds
-         uv1wQKjbTJQrBHjABDh7GHxqOZQcVp+Ms6SyfUSwaEr3WwsheSH5Xx3PTg9Gv6XqRC3y
-         BkkZ9+mlEYsgkPBSWEbMcJPtXKq3aXo8X1T5wS30OACi76OysPlXEZ1UWNkuX3rzu0KO
-         AbYRiGy2hnJJcJ19BxgZyqfelUCMe+F8ocTTjGPRAyZUr0MmQwdYSlRCZcIw5oKaiXtj
-         1U0o5DZW92nrcjdW84wBtcgdUDeu/qLe5mXpd1Po9C+bSN+AquenC9CjvSn1PoPa8e1t
-         1ofg==
-X-Gm-Message-State: AOUpUlE3pU1m8azl0sSkgwBxHB1BlQr0pvi/2Pn4OcxfIHIRN9jcGsbJ
-        vUAR33yA+J0HLxNyMZ7ZD48x1auKOBvkhCyfmGHuA0Bx
-X-Google-Smtp-Source: AAOMgpeMM6btt7+7VjLgNt16rK6HgAWFZ7pyUU5UT+yR6p5bmY8hbAPG9gBH/mhFNxoJhTZNnWg+lG/VQD55t5udoFk=
-X-Received: by 2002:adf:9086:: with SMTP id i6-v6mr2199752wri.271.1531486012153;
- Fri, 13 Jul 2018 05:46:52 -0700 (PDT)
+        id S1729736AbeGMQGg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Jul 2018 12:06:36 -0400
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:35342 "EHLO
+        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729681AbeGMQGg (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 13 Jul 2018 12:06:36 -0400
+Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w6DFn4lD029375;
+        Fri, 13 Jul 2018 08:51:13 -0700
+Authentication-Results: palantir.com;
+        spf=softfail smtp.mailfrom=newren@gmail.com
+Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
+        by mx0a-00153501.pphosted.com with ESMTP id 2k2uchjy19-1;
+        Fri, 13 Jul 2018 08:51:12 -0700
+Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id B512122E02C9;
+        Fri, 13 Jul 2018 08:51:12 -0700 (PDT)
+Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
+        by smtp.yojoe.local (Postfix) with ESMTP id A7D1E2CDE6A;
+        Fri, 13 Jul 2018 08:51:12 -0700 (PDT)
+From:   Elijah Newren <newren@gmail.com>
+To:     Johannes.Schindelin@gmx.de
+Cc:     git@vger.kernel.org, gitster@pobox.com, phillip.wood@dunelm.org.uk,
+        sunshine@sunshineco.com, szeder.dev@gmail.com,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v3 2/2] Fix use of strategy options with interactive rebases
+Date:   Fri, 13 Jul 2018 08:51:10 -0700
+Message-Id: <20180713155110.21627-1-newren@gmail.com>
+X-Mailer: git-send-email 2.18.0.645.g72fe132ec2
+In-Reply-To: <nycvar.QRO.7.76.6.1807121740270.75@tvgsbejvaqbjf.bet>
+References: <nycvar.QRO.7.76.6.1807121740270.75@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Received: by 2002:adf:e9c6:0:0:0:0:0 with HTTP; Fri, 13 Jul 2018 05:46:51
- -0700 (PDT)
-In-Reply-To: <CAL21BmkBohTOVdCO_ENVfzL28aRjoh1MCCF6750AQEYsc7L54w@mail.gmail.com>
-References: <CAL21BmkBohTOVdCO_ENVfzL28aRjoh1MCCF6750AQEYsc7L54w@mail.gmail.com>
-From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-Date:   Fri, 13 Jul 2018 15:46:51 +0300
-Message-ID: <CAL21BmmwRDwWc_4JmFKMA6ZYcx=A4biG+tmrBHPRNAxpSkt_NA@mail.gmail.com>
-Subject: Re: [PATCH 0/4] Use oid_object_info() instead of read_object_file()
-To:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Christian Couder <christian.couder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-SPF-Result: softfail
+X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-07-13_05:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1806210000 definitions=main-1807130136
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2018-07-09 11:27 GMT+03:00 =D0=9E=D0=BB=D1=8F =D0=A2=D0=B5=D0=BB=D0=B5=D0=
-=B6=D0=BD=D0=B0=D1=8F <olyatelezhnaya@gmail.com>:
-> Hello everyone,
-> This is my new attempt to start using oid_object_info_extended() in
-> ref-filter. You could look at previous one [1] [2] but it is not
-> necessary.
->
-> The goal (still) is to improve performance by avoiding calling expensive
-> functions when we don't need the information they provide
-> or when we could get it by using a cheaper function.
->
-> This patch is a middle step. In the end, I want to add new atoms
-> ("objectsize:disk" and "deltabase") and reuse ref-filter logic in
-> cat-file command.
->
-> I also know about problems with memory leaks in ref-filter: that would
-> be my next task that I will work on. Since I did not generate any new
-> leaks in this patch (just use existing ones), I decided to put this
-> part on a review and fix leaks as a separate task.
+Hi Dscho,
 
-UPDATES since v1:
-add init to eaten variable (thanks to Szeder Gabor, Johannes Schindelin)
-improve second commit message (thanks to Junio C Hamano)
-add static keyword (thanks to Ramsay Jones)
+On Thu, Jul 12, 2018 at 8:41 AM, Johannes Schindelin <Johannes.Schindelin=
+@gmx.de> wrote:
+> Hi Elijah,
+>
+> On Wed, 27 Jun 2018, Elijah Newren wrote:
+>
+...
+>> diff --git a/git-rebase.sh b/git-rebase.sh
+>> index 19bdebb480..f3b10c7f62 100755
+>> --- a/git-rebase.sh
+>> +++ b/git-rebase.sh
+>> @@ -328,7 +328,7 @@ do
+>>               do_merge=3Dt
+>>               ;;
+>>       --strategy-option=3D*)
+>> -             strategy_opts=3D"$strategy_opts $(git rev-parse --sq-quo=
+te "--${1#--strategy-option=3D}")"
+>> +             strategy_opts=3D"$strategy_opts $(git rev-parse --sq-quo=
+te "--${1#--strategy-option=3D}" | sed -e s/^.//)"
+>
+> Didn't you mean to use "s/^ *//" instead?
+>
+>>               do_merge=3Dt
+>>               test -z "$strategy" && strategy=3Drecursive
+>>               ;;
+>> diff --git a/sequencer.c b/sequencer.c
+>> index 5354d4d51e..ef9237c814 100644
+>> --- a/sequencer.c
+>> +++ b/sequencer.c
+>> @@ -2206,6 +2206,7 @@ static int populate_opts_cb(const char *key, con=
+st char *value, void *data)
+>>  static void read_strategy_opts(struct replay_opts *opts, struct strbu=
+f *buf)
+>>  {
+>>       int i;
+>> +     char *strategy_opts_string;
+>>
+>>       strbuf_reset(buf);
+>>       if (!read_oneliner(buf, rebase_path_strategy(), 0))
+>> @@ -2214,7 +2215,11 @@ static void read_strategy_opts(struct replay_op=
+ts *opts, struct strbuf *buf)
+>>       if (!read_oneliner(buf, rebase_path_strategy_opts(), 0))
+>>               return;
+>>
+>> -     opts->xopts_nr =3D split_cmdline(buf->buf, (const char ***)&opts=
+->xopts);
+>> +     strategy_opts_string =3D buf->buf;
+>> +     if (*strategy_opts_string =3D=3D ' ')
+>
+> I think that this would ideally even be a `while` instead of an `if`.
 
->
-> Thank you!
->
-> [1] https://github.com/git/git/pull/493
-> [2] https://public-inbox.org/git/010201637254c969-a346030e-0b75-41ad-8ef3=
--2ac7e04ba4fb-000000@eu-west-1.amazonses.com/
+Thanks for taking a look; both sound like good suggestions.  Since the
+patch in question has already reached next, here's a patch on top of
+en/rebase-i-microfixes to make these two changes:
+
+-- 8< --
+Subject: [PATCH] Whitespace handling improvements with interactive rebase
+ strategy options
+
+In commit 0060041df ("Fix use of strategy options with interactive
+rebases", 2018-06-27), extra whitespace was removed from a generated
+string to fix up parsing.  Instead of assuming one extra space, though, w=
+e
+can just remove all leading whitespace and make the code slightly more
+robust.
+
+Suggested-by: Johanness Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ git-rebase.sh | 2 +-
+ sequencer.c   | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/git-rebase.sh b/git-rebase.sh
+index f3b10c7f62..e572980bbc 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -328,7 +328,7 @@ do
+ 		do_merge=3Dt
+ 		;;
+ 	--strategy-option=3D*)
+-		strategy_opts=3D"$strategy_opts $(git rev-parse --sq-quote "--${1#--st=
+rategy-option=3D}" | sed -e s/^.//)"
++		strategy_opts=3D"$strategy_opts $(git rev-parse --sq-quote "--${1#--st=
+rategy-option=3D}" | sed -e "s/ *//")"
+ 		do_merge=3Dt
+ 		test -z "$strategy" && strategy=3Drecursive
+ 		;;
+diff --git a/sequencer.c b/sequencer.c
+index ef9237c814..3f780f8f50 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -2216,7 +2216,7 @@ static void read_strategy_opts(struct replay_opts *=
+opts, struct strbuf *buf)
+ 		return;
+=20
+ 	strategy_opts_string =3D buf->buf;
+-	if (*strategy_opts_string =3D=3D ' ')
++	while (*strategy_opts_string =3D=3D ' ')
+ 		strategy_opts_string++;
+ 	opts->xopts_nr =3D split_cmdline(strategy_opts_string,
+ 				       (const char ***)&opts->xopts);
+--=20
+2.18.0.645.g72fe132ec2
+
