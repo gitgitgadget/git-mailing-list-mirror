@@ -2,176 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-1.8 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C9291F85E
-	for <e@80x24.org>; Fri, 13 Jul 2018 12:44:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 589B71F85E
+	for <e@80x24.org>; Fri, 13 Jul 2018 12:46:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729670AbeGMM62 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Jul 2018 08:58:28 -0400
-Received: from a7-19.smtp-out.eu-west-1.amazonses.com ([54.240.7.19]:38832
-        "EHLO a7-19.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729645AbeGMM61 (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 13 Jul 2018 08:58:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1531485836;
-        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=ftUU4RrSQvIaVPalc+DDodOA2KIEoNDMFvRmzsWexdo=;
-        b=hMi3qaR9LnOGl8vSJgPwWUj9S/BStkAqghy/3hy7FEChEOULBHR4ENOanDFirblX
-        GauulRK9CobBZ+vfla06JhFAxKLjEoR8MbjwF9PajgW+KojKyHGD76sSX9jqEiHHCJ6
-        wvU/cM3cglDHaAnFv1HC7Mqi8VqriV8KJyRLNUGs=
-From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
-To:     git@vger.kernel.org
-Message-ID: <0102016493ab5347-c0429041-6e66-4550-894c-2d500cb2ed8e-000000@eu-west-1.amazonses.com>
-In-Reply-To: <010201647e19c0f0-68cd728f-c86a-4be2-be6b-fd7e19e930fa-000000@eu-west-1.amazonses.com>
-References: <010201647e19c0f0-68cd728f-c86a-4be2-be6b-fd7e19e930fa-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v2 1/4] ref-filter: add info_source to valid_atom
+        id S1729768AbeGMNBY (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Jul 2018 09:01:24 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:44569 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727999AbeGMNBY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Jul 2018 09:01:24 -0400
+Received: by mail-wr1-f67.google.com with SMTP id r16-v6so25000531wrt.11
+        for <git@vger.kernel.org>; Fri, 13 Jul 2018 05:46:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=H7e+0bO9mgWn7S8vOO+zOiCLEyT0os4mMDsJz9GJdEk=;
+        b=BFsxW5Z1kMZK7Zm3fm6WMYstUZsEJMtrVJUh15akDSkRDuwcpy0Fah2/a1+1cklq1q
+         rVuuw3/lzS8iEdHZVyQkWWtGbMrzkzAq14rjQMgOAcPn8HSqFZUfH9kV7de7sndS0KSD
+         Tbwk+mEYnVqQd/8vRWZHE3oii5xBz9KsjIl+Jo6Btv6O2NnjSHXuAh52nqSeXuaasbUO
+         rg1jEoIBht8q6bSjcv1ROHhFmHktWv8IeSEFJKmSQdWZql9rOkOq/sADGwWCA5iXdnSM
+         MKfCKbKDlRICWwelFRwSyPU1vdYjP3SxeIJeINWH63xscG0rY5kuk1hLHCBVM8LPDq13
+         dzHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=H7e+0bO9mgWn7S8vOO+zOiCLEyT0os4mMDsJz9GJdEk=;
+        b=pqYq7Iunq6Mi+BbfoPMMW0cCtL18tx3vNmmO/2IV3axnjmw/Gv3kzCITlHci4+BOds
+         uv1wQKjbTJQrBHjABDh7GHxqOZQcVp+Ms6SyfUSwaEr3WwsheSH5Xx3PTg9Gv6XqRC3y
+         BkkZ9+mlEYsgkPBSWEbMcJPtXKq3aXo8X1T5wS30OACi76OysPlXEZ1UWNkuX3rzu0KO
+         AbYRiGy2hnJJcJ19BxgZyqfelUCMe+F8ocTTjGPRAyZUr0MmQwdYSlRCZcIw5oKaiXtj
+         1U0o5DZW92nrcjdW84wBtcgdUDeu/qLe5mXpd1Po9C+bSN+AquenC9CjvSn1PoPa8e1t
+         1ofg==
+X-Gm-Message-State: AOUpUlE3pU1m8azl0sSkgwBxHB1BlQr0pvi/2Pn4OcxfIHIRN9jcGsbJ
+        vUAR33yA+J0HLxNyMZ7ZD48x1auKOBvkhCyfmGHuA0Bx
+X-Google-Smtp-Source: AAOMgpeMM6btt7+7VjLgNt16rK6HgAWFZ7pyUU5UT+yR6p5bmY8hbAPG9gBH/mhFNxoJhTZNnWg+lG/VQD55t5udoFk=
+X-Received: by 2002:adf:9086:: with SMTP id i6-v6mr2199752wri.271.1531486012153;
+ Fri, 13 Jul 2018 05:46:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 13 Jul 2018 12:43:56 +0000
-X-SES-Outgoing: 2018.07.13-54.240.7.19
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+Received: by 2002:adf:e9c6:0:0:0:0:0 with HTTP; Fri, 13 Jul 2018 05:46:51
+ -0700 (PDT)
+In-Reply-To: <CAL21BmkBohTOVdCO_ENVfzL28aRjoh1MCCF6750AQEYsc7L54w@mail.gmail.com>
+References: <CAL21BmkBohTOVdCO_ENVfzL28aRjoh1MCCF6750AQEYsc7L54w@mail.gmail.com>
+From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>
+Date:   Fri, 13 Jul 2018 15:46:51 +0300
+Message-ID: <CAL21BmmwRDwWc_4JmFKMA6ZYcx=A4biG+tmrBHPRNAxpSkt_NA@mail.gmail.com>
+Subject: Re: [PATCH 0/4] Use oid_object_info() instead of read_object_file()
+To:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add the source of object data to prevent parsing of unneeded data.
-The goal is to improve performance by avoiding calling expensive
-functions when we don't need the information they provide
-or when we could get it by using a cheaper function.
+2018-07-09 11:27 GMT+03:00 =D0=9E=D0=BB=D1=8F =D0=A2=D0=B5=D0=BB=D0=B5=D0=
+=B6=D0=BD=D0=B0=D1=8F <olyatelezhnaya@gmail.com>:
+> Hello everyone,
+> This is my new attempt to start using oid_object_info_extended() in
+> ref-filter. You could look at previous one [1] [2] but it is not
+> necessary.
+>
+> The goal (still) is to improve performance by avoiding calling expensive
+> functions when we don't need the information they provide
+> or when we could get it by using a cheaper function.
+>
+> This patch is a middle step. In the end, I want to add new atoms
+> ("objectsize:disk" and "deltabase") and reuse ref-filter logic in
+> cat-file command.
+>
+> I also know about problems with memory leaks in ref-filter: that would
+> be my next task that I will work on. Since I did not generate any new
+> leaks in this patch (just use existing ones), I decided to put this
+> part on a review and fix leaks as a separate task.
 
-It is stored in valid_atoms because it depends on the atoms we are
-interested in.
+UPDATES since v1:
+add init to eaten variable (thanks to Szeder Gabor, Johannes Schindelin)
+improve second commit message (thanks to Junio C Hamano)
+add static keyword (thanks to Ramsay Jones)
 
-Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
----
- ref-filter.c | 82 +++++++++++++++++++++++++++++++-----------------------------
- 1 file changed, 43 insertions(+), 39 deletions(-)
-
-diff --git a/ref-filter.c b/ref-filter.c
-index fa3685d91f046..8611c24fd57d1 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -41,6 +41,7 @@ void setup_ref_filter_porcelain_msg(void)
- 
- typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
- typedef enum { COMPARE_EQUAL, COMPARE_UNEQUAL, COMPARE_NONE } cmp_status;
-+typedef enum { SOURCE_NONE = 0, SOURCE_OBJ, SOURCE_OTHER } info_source;
- 
- struct align {
- 	align_type position;
-@@ -73,6 +74,7 @@ struct refname_atom {
- static struct used_atom {
- 	const char *name;
- 	cmp_type type;
-+	info_source source;
- 	union {
- 		char color[COLOR_MAXLEN];
- 		struct align align;
-@@ -380,49 +382,50 @@ static int head_atom_parser(const struct ref_format *format, struct used_atom *a
- 
- static struct {
- 	const char *name;
-+	info_source source;
- 	cmp_type cmp_type;
- 	int (*parser)(const struct ref_format *format, struct used_atom *atom,
- 		      const char *arg, struct strbuf *err);
- } valid_atom[] = {
--	{ "refname" , FIELD_STR, refname_atom_parser },
--	{ "objecttype" },
--	{ "objectsize", FIELD_ULONG },
--	{ "objectname", FIELD_STR, objectname_atom_parser },
--	{ "tree" },
--	{ "parent" },
--	{ "numparent", FIELD_ULONG },
--	{ "object" },
--	{ "type" },
--	{ "tag" },
--	{ "author" },
--	{ "authorname" },
--	{ "authoremail" },
--	{ "authordate", FIELD_TIME },
--	{ "committer" },
--	{ "committername" },
--	{ "committeremail" },
--	{ "committerdate", FIELD_TIME },
--	{ "tagger" },
--	{ "taggername" },
--	{ "taggeremail" },
--	{ "taggerdate", FIELD_TIME },
--	{ "creator" },
--	{ "creatordate", FIELD_TIME },
--	{ "subject", FIELD_STR, subject_atom_parser },
--	{ "body", FIELD_STR, body_atom_parser },
--	{ "trailers", FIELD_STR, trailers_atom_parser },
--	{ "contents", FIELD_STR, contents_atom_parser },
--	{ "upstream", FIELD_STR, remote_ref_atom_parser },
--	{ "push", FIELD_STR, remote_ref_atom_parser },
--	{ "symref", FIELD_STR, refname_atom_parser },
--	{ "flag" },
--	{ "HEAD", FIELD_STR, head_atom_parser },
--	{ "color", FIELD_STR, color_atom_parser },
--	{ "align", FIELD_STR, align_atom_parser },
--	{ "end" },
--	{ "if", FIELD_STR, if_atom_parser },
--	{ "then" },
--	{ "else" },
-+	{ "refname", SOURCE_NONE, FIELD_STR, refname_atom_parser },
-+	{ "objecttype", SOURCE_OTHER },
-+	{ "objectsize", SOURCE_OTHER, FIELD_ULONG },
-+	{ "objectname", SOURCE_OTHER, FIELD_STR, objectname_atom_parser },
-+	{ "tree", SOURCE_OBJ },
-+	{ "parent", SOURCE_OBJ },
-+	{ "numparent", SOURCE_OBJ, FIELD_ULONG },
-+	{ "object", SOURCE_OBJ },
-+	{ "type", SOURCE_OBJ },
-+	{ "tag", SOURCE_OBJ },
-+	{ "author", SOURCE_OBJ },
-+	{ "authorname", SOURCE_OBJ },
-+	{ "authoremail", SOURCE_OBJ },
-+	{ "authordate", SOURCE_OBJ, FIELD_TIME },
-+	{ "committer", SOURCE_OBJ },
-+	{ "committername", SOURCE_OBJ },
-+	{ "committeremail", SOURCE_OBJ },
-+	{ "committerdate", SOURCE_OBJ, FIELD_TIME },
-+	{ "tagger", SOURCE_OBJ },
-+	{ "taggername", SOURCE_OBJ },
-+	{ "taggeremail", SOURCE_OBJ },
-+	{ "taggerdate", SOURCE_OBJ, FIELD_TIME },
-+	{ "creator", SOURCE_OBJ },
-+	{ "creatordate", SOURCE_OBJ, FIELD_TIME },
-+	{ "subject", SOURCE_OBJ, FIELD_STR, subject_atom_parser },
-+	{ "body", SOURCE_OBJ, FIELD_STR, body_atom_parser },
-+	{ "trailers", SOURCE_OBJ, FIELD_STR, trailers_atom_parser },
-+	{ "contents", SOURCE_OBJ, FIELD_STR, contents_atom_parser },
-+	{ "upstream", SOURCE_NONE, FIELD_STR, remote_ref_atom_parser },
-+	{ "push", SOURCE_NONE, FIELD_STR, remote_ref_atom_parser },
-+	{ "symref", SOURCE_NONE, FIELD_STR, refname_atom_parser },
-+	{ "flag", SOURCE_NONE },
-+	{ "HEAD", SOURCE_NONE, FIELD_STR, head_atom_parser },
-+	{ "color", SOURCE_NONE, FIELD_STR, color_atom_parser },
-+	{ "align", SOURCE_NONE, FIELD_STR, align_atom_parser },
-+	{ "end", SOURCE_NONE },
-+	{ "if", SOURCE_NONE, FIELD_STR, if_atom_parser },
-+	{ "then", SOURCE_NONE },
-+	{ "else", SOURCE_NONE },
- };
- 
- #define REF_FORMATTING_STATE_INIT  { 0, NULL }
-@@ -498,6 +501,7 @@ static int parse_ref_filter_atom(const struct ref_format *format,
- 	REALLOC_ARRAY(used_atom, used_atom_cnt);
- 	used_atom[at].name = xmemdupz(atom, ep - atom);
- 	used_atom[at].type = valid_atom[i].cmp_type;
-+	used_atom[at].source = valid_atom[i].source;
- 	if (arg) {
- 		arg = used_atom[at].name + (arg - atom) + 1;
- 		if (!*arg) {
-
---
-https://github.com/git/git/pull/520
+>
+> Thank you!
+>
+> [1] https://github.com/git/git/pull/493
+> [2] https://public-inbox.org/git/010201637254c969-a346030e-0b75-41ad-8ef3=
+-2ac7e04ba4fb-000000@eu-west-1.amazonses.com/
