@@ -7,39 +7,40 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1B3D1F85E
-	for <e@80x24.org>; Fri, 13 Jul 2018 16:33:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C1011F85E
+	for <e@80x24.org>; Fri, 13 Jul 2018 16:33:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731914AbeGMQtB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Jul 2018 12:49:01 -0400
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:47164 "EHLO
+        id S1731946AbeGMQtC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Jul 2018 12:49:02 -0400
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:47166 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729214AbeGMQtB (ORCPT
+        by vger.kernel.org with ESMTP id S1729592AbeGMQtB (ORCPT
         <rfc822;git@vger.kernel.org>); Fri, 13 Jul 2018 12:49:01 -0400
 Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w6DGS2BU024515;
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w6DGSGp2025010;
         Fri, 13 Jul 2018 09:33:34 -0700
 Authentication-Results: palantir.com;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2k2tdhk8bx-1;
+        by mx0a-00153501.pphosted.com with ESMTP id 2k2tdhk8by-1;
         Fri, 13 Jul 2018 09:33:34 -0700
-Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 32512225F28D;
+Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 552F7225F292;
         Fri, 13 Jul 2018 09:33:34 -0700 (PDT)
 Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
-        by smtp.yojoe.local (Postfix) with ESMTP id 28D2A2CDEB1;
+        by smtp.yojoe.local (Postfix) with ESMTP id 4AD622CDE86;
         Fri, 13 Jul 2018 09:33:34 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, sunshine@sunshineco.com,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v2 0/2] Address recovery failures with directory/file conflicts
-Date:   Fri, 13 Jul 2018 09:33:29 -0700
-Message-Id: <20180713163331.22446-1-newren@gmail.com>
+Subject: [PATCH v2 2/2] read-cache: fix directory/file conflict handling in read_index_unmerged()
+Date:   Fri, 13 Jul 2018 09:33:31 -0700
+Message-Id: <20180713163331.22446-3-newren@gmail.com>
 X-Mailer: git-send-email 2.18.0.645.g72fe132ec2
-In-Reply-To: <20180711051834.28181-1-newren@gmail.com>
+In-Reply-To: <20180713163331.22446-1-newren@gmail.com>
 References: <20180711051834.28181-1-newren@gmail.com>
+ <20180713163331.22446-1-newren@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 X-Proofpoint-SPF-Result: softfail
@@ -56,60 +57,181 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch series fixes several "recovery" commands that outright fail
-or do not fully recover when directory-file conflicts are present.
-This includes:
-   * git read-tree --reset HEAD
-   * git am --skip
-   * git am --abort
-   * git merge --abort (or git reset --merge)
-   * git reset --hard
+read_index_unmerged() has two intended purposes:
+  * return 1 if there are any unmerged entries, 0 otherwise
+  * drops any higher-stage entries down to stage #0
 
-Changes since v1 (full range-diff below):
-  - Make use of test_write_lines, as suggested by Eric.
-  - Provide a little more explanation in one of the commit messages, as
-    suggested by Junio.
+There are several callers of read_index_unmerged() that check the return
+value to see if it is non-zero, all of which then die() if that condition
+is met.  For these callers, dropping higher-stage entries down to stage #=
+0
+is a waste of resources, and returning immediately on first unmerged entr=
+y
+would be better.  But it's probably only a very minor difference and isn'=
+t
+the focus of this series.
 
-Elijah Newren (2):
-  t1015: demonstrate directory/file conflict recovery failures
-  read-cache: fix directory/file conflict handling in
-    read_index_unmerged()
+The remaining callers ignore the return value and call this function for
+the side effect of dropping higher-stage entries down to stage #0.  As
+mentioned in commit e11d7b596970 ("'reset --merge': fix unmerged case",
+2009-12-31),
 
- read-cache.c                         |  13 +--
- t/t1015-read-index-unmerged.sh       | 123 +++++++++++++++++++++++++++
- t/t6020-merge-df.sh                  |   3 -
- t/t6042-merge-rename-corner-cases.sh |   1 -
- 4 files changed, 131 insertions(+), 9 deletions(-)
- create mode 100755 t/t1015-read-index-unmerged.sh
+    The _only_ reason we want to keep a previously unmerged entry in the
+    index at stage #0 is so that we don't forget the fact that we have
+    corresponding file in the work tree in order to be able to remove it
+    when the tree we are resetting to does not have the path.
 
-1:  a85e462914 ! 1:  8f53327a8d t1015: demonstrate directory/file conflic=
-t recovery failures
-    @@ -29,7 +29,7 @@
-     +	(
-     +		cd df_plus_modify_delete &&
-     +
-    -+		printf "a\nb\nc\nd\ne\nf\ng\nh\n" >letters &&
-    ++		test_write_lines a b c d e f g h >letters &&
-     +		git add letters &&
-     +		git commit -m initial &&
-     +
-2:  43d5b0a5ae ! 2:  990a469d44 read-cache: fix directory/file conflict h=
-andling in read_index_unmerged()
-    @@ -53,7 +53,9 @@
-         we can just skip the DFCHECK and allow both the file and directo=
-ry to
-         appear in the index.  The temporary simultaneous appearance of t=
-he
-         directory and file entries in the index will be removed by the c=
-allers
-    -    before they attempt to write the index anywhere.
-    +    by calling unpack_trees(), which excludes these unmerged entries=
- marked
-    +    with CE_CONFLICTED flag from the resulting index, before they at=
-tempt to
-    +    write the index anywhere.
-    =20
-         Signed-off-by: Elijah Newren <newren@gmail.com>
-    =20
+In fact, prior to commit d1a43f2aa4bf ("reset --hard/read-tree --reset -u=
+:
+remove unmerged new paths", 2008-10-15), read_index_unmerged() did just
+remove unmerged entries from the cache immediately but that had the
+unwanted effect of leaving around new untracked files in the tree from
+aborted merges.
+
+So, that's the intended purpose of this function.  The problem is that
+when directory/files conflicts are present, trying to add the file to the
+index at stage 0 fails (because there is still a directory in the way),
+and the function returns early with a -1 return code to signify the error=
+.
+As noted above, none of the callers who want the drop-to-stage-0 behavior
+check the return status, though, so this means all remaining unmerged
+entries remain in the index and the callers proceed assuming otherwise.
+Users then see errors of the form:
+
+    error: 'DIR-OR-FILE' appears as both a file and as a directory
+    error: DIR-OR-FILE: cannot drop to stage #0
+
+and potentially also messages about other unmerged entries which came
+lexicographically later than whatever pathname was both a file and a
+directory.  Google finds a few hits searching for those messages,
+suggesting there were probably a couple people who hit this besides me.
+Luckily, calling `git reset --hard` multiple times would workaround
+this bug.
+
+Since the whole purpose here is to just put the entry *temporarily* into
+the index so that any associated file in the working copy can be removed,
+we can just skip the DFCHECK and allow both the file and directory to
+appear in the index.  The temporary simultaneous appearance of the
+directory and file entries in the index will be removed by the callers
+by calling unpack_trees(), which excludes these unmerged entries marked
+with CE_CONFLICTED flag from the resulting index, before they attempt to
+write the index anywhere.
+
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ read-cache.c                         | 13 ++++++++-----
+ t/t1015-read-index-unmerged.sh       |  8 ++++----
+ t/t6020-merge-df.sh                  |  3 ---
+ t/t6042-merge-rename-corner-cases.sh |  1 -
+ 4 files changed, 12 insertions(+), 13 deletions(-)
+
+diff --git a/read-cache.c b/read-cache.c
+index 372588260e..666d295a5a 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -2632,10 +2632,13 @@ int write_locked_index(struct index_state *istate=
+, struct lock_file *lock,
+=20
+ /*
+  * Read the index file that is potentially unmerged into given
+- * index_state, dropping any unmerged entries.  Returns true if
+- * the index is unmerged.  Callers who want to refuse to work
+- * from an unmerged state can call this and check its return value,
+- * instead of calling read_cache().
++ * index_state, dropping any unmerged entries to stage #0 (potentially
++ * resulting in a path appearing as both a file and a directory in the
++ * index; the caller is responsible to clear out the extra entries
++ * before writing the index to a tree).  Returns true if the index is
++ * unmerged.  Callers who want to refuse to work from an unmerged
++ * state can call this and check its return value, instead of calling
++ * read_cache().
+  */
+ int read_index_unmerged(struct index_state *istate)
+ {
+@@ -2658,7 +2661,7 @@ int read_index_unmerged(struct index_state *istate)
+ 		new_ce->ce_flags =3D create_ce_flags(0) | CE_CONFLICTED;
+ 		new_ce->ce_namelen =3D len;
+ 		new_ce->ce_mode =3D ce->ce_mode;
+-		if (add_index_entry(istate, new_ce, 0))
++		if (add_index_entry(istate, new_ce, ADD_CACHE_SKIP_DFCHECK))
+ 			return error("%s: cannot drop to stage #0",
+ 				     new_ce->name);
+ 	}
+diff --git a/t/t1015-read-index-unmerged.sh b/t/t1015-read-index-unmerged=
+.sh
+index 32ef6bdcfa..55d22da32c 100755
+--- a/t/t1015-read-index-unmerged.sh
++++ b/t/t1015-read-index-unmerged.sh
+@@ -30,7 +30,7 @@ test_expect_success 'setup modify/delete + directory/fi=
+le conflict' '
+ 	)
+ '
+=20
+-test_expect_failure 'read-tree --reset cleans unmerged entries' '
++test_expect_success 'read-tree --reset cleans unmerged entries' '
+ 	test_when_finished "git -C df_plus_modify_delete clean -f" &&
+ 	test_when_finished "git -C df_plus_modify_delete reset --hard" &&
+ 	(
+@@ -45,7 +45,7 @@ test_expect_failure 'read-tree --reset cleans unmerged =
+entries' '
+ 	)
+ '
+=20
+-test_expect_failure 'One reset --hard cleans unmerged entries' '
++test_expect_success 'One reset --hard cleans unmerged entries' '
+ 	test_when_finished "git -C df_plus_modify_delete clean -f" &&
+ 	test_when_finished "git -C df_plus_modify_delete reset --hard" &&
+ 	(
+@@ -87,7 +87,7 @@ test_expect_success 'setup directory/file conflict + si=
+mple edit/edit' '
+ 	)
+ '
+=20
+-test_expect_failure 'git merge --abort succeeds despite D/F conflict' '
++test_expect_success 'git merge --abort succeeds despite D/F conflict' '
+ 	test_when_finished "git -C df_plus_edit_edit clean -f" &&
+ 	test_when_finished "git -C df_plus_edit_edit reset --hard" &&
+ 	(
+@@ -103,7 +103,7 @@ test_expect_failure 'git merge --abort succeeds despi=
+te D/F conflict' '
+ 	)
+ '
+=20
+-test_expect_failure 'git am --skip succeeds despite D/F conflict' '
++test_expect_success 'git am --skip succeeds despite D/F conflict' '
+ 	test_when_finished "git -C df_plus_edit_edit clean -f" &&
+ 	test_when_finished "git -C df_plus_edit_edit reset --hard" &&
+ 	(
+diff --git a/t/t6020-merge-df.sh b/t/t6020-merge-df.sh
+index 2af1beec5f..46b506b3b7 100755
+--- a/t/t6020-merge-df.sh
++++ b/t/t6020-merge-df.sh
+@@ -89,9 +89,6 @@ test_expect_success 'modify/delete + directory/file con=
+flict' '
+ '
+=20
+ test_expect_success 'modify/delete + directory/file conflict; other way'=
+ '
+-	# Yes, we really need the double reset since "letters" appears as
+-	# both a file and a directory.
+-	git reset --hard &&
+ 	git reset --hard &&
+ 	git clean -f &&
+ 	git checkout modify^0 &&
+diff --git a/t/t6042-merge-rename-corner-cases.sh b/t/t6042-merge-rename-=
+corner-cases.sh
+index 1cbd946fc2..583e68997e 100755
+--- a/t/t6042-merge-rename-corner-cases.sh
++++ b/t/t6042-merge-rename-corner-cases.sh
+@@ -323,7 +323,6 @@ test_expect_success 'rename/directory conflict + cont=
+ent merge conflict' '
+ 	(
+ 		cd rename-directory-1 &&
+=20
+-		git reset --hard &&
+ 		git reset --hard &&
+ 		git clean -fdqx &&
+=20
 --=20
 2.18.0.645.g72fe132ec2
+
