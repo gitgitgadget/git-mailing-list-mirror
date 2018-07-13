@@ -2,86 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	URIBL_DBL_ABUSE_REDIR shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F82B1F85E
-	for <e@80x24.org>; Fri, 13 Jul 2018 17:00:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5362F1F85E
+	for <e@80x24.org>; Fri, 13 Jul 2018 17:45:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730017AbeGMRPz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Jul 2018 13:15:55 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:40556 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729783AbeGMRPz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Jul 2018 13:15:55 -0400
-Received: by mail-pf0-f195.google.com with SMTP id e13-v6so9595227pff.7
-        for <git@vger.kernel.org>; Fri, 13 Jul 2018 10:00:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=TpKaiVez928gez6fUR4A9sZ4+WYpnX/iUAsBG+b01h4=;
-        b=clv0nKUlqwCkIz4txGoS1Nm0/GN4/ewM9X/BZplzN6Rfo6iCBQaoHSGksl5jTihg4v
-         dHpPmMyx7yib/uuMbDWTZzE+gq/Lbpq2e9R4H1THd/LFYoQbQRhuiyjuea7qLmV8KMDs
-         3uQHbNPDqGjLPkqnnrXjRUSEM5ecm+m83ZGX/XF8Gb0gX0nxfDnykcvv8rHxcWbwxwRu
-         0+NtMMio6dGUc218aNLStK4vcejxGMwPznUdqroSwnYq9hDW2fOCT/w0J4nlfeUOMDnM
-         FdT5drtKJpyen0O4IkXEsGidbcBAU+dlImGW4S1ppDPeCt8RR5bckbj+FuAJHZ6ZRgWA
-         BLrw==
+        id S1730595AbeGMSA5 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Jul 2018 14:00:57 -0400
+Received: from mail-yw0-f193.google.com ([209.85.161.193]:46241 "EHLO
+        mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729926AbeGMSA5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Jul 2018 14:00:57 -0400
+Received: by mail-yw0-f193.google.com with SMTP id e23-v6so11521708ywe.13
+        for <git@vger.kernel.org>; Fri, 13 Jul 2018 10:45:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=TpKaiVez928gez6fUR4A9sZ4+WYpnX/iUAsBG+b01h4=;
-        b=XqbwPVIARdDzGlNG3Dzr7B8gQUhyufGHnNRdx3AL/LoVgTLajvolCtJMm0GF32fNjK
-         xLEIH8zZrJek84xsOi9bd79cPCGDVpdVjVbQkI18b3CSmTuO4H1uXa2Y0rJd2JpTVdgH
-         WfwBa4VoS70puaIdqXPVbxEVjR15/RkRyZgcMWBYpt2uVFU7MJGle/eQyADQlz6sHJAP
-         UbUmNc9Xygc5Ekww/bS6ikdr4cYg3SMpNAXB6lRHp0y7tbj9S+LoCp9Ea8KUlwUJWaKk
-         g+2dcKmPqkZE8qyYrvZDEI6hrHTRFMIUDp+4NPPdCM8H9L7i9c4B8uO2vWvtZ3ggUa1n
-         J8LA==
-X-Gm-Message-State: AOUpUlE/Z22j8FMXljXPtrkIElCyEzCUvUu5lYJJdPe/vLcWj5k2Lc0H
-        rCzQ2Ic+ouq8GsxscJBj8Lk9ActI
-X-Google-Smtp-Source: AAOMgpcEg9Hf35W036ng5MFl6+Afh55sNvkYfZ7/ly2JegdRfEGDgyF1p/hrvo4jACV3pl9xppkWkg==
-X-Received: by 2002:a63:4f63:: with SMTP id p35-v6mr6862894pgl.167.1531501226980;
-        Fri, 13 Jul 2018 10:00:26 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id u185-v6sm31214813pfu.134.2018.07.13.10.00.26
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 13 Jul 2018 10:00:26 -0700 (PDT)
-Date:   Fri, 13 Jul 2018 10:00:18 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <stolee@gmail.com>
-Subject: Git standup on IRC
-Message-ID: <20180713170018.GA139708@aiede.svl.corp.google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=j6Pf3fh5aE6BjCNHnPiHYYrTSvM9DDm1/2qZe7xzaQY=;
+        b=YLwwcJDTGejgPjbS3pRVpRS2McDzKDUEWUvBhYJJXi3tV8JFw8pGkEZrC6uSTF2wVu
+         UhSUZ9ddQESM19uFuF8aTA17aV5Uqu4Bi1iEo3Xmz0thGehPOOewcEZjHEvgkYD+gico
+         ePF46/Cr+RtS5Fvdmz7v2/u86/RNag3yoykRgE2P0Emoachht62m9Wb/AYH5imubCY2e
+         zNDjgJyG6zMuo4xYtFMX5DWB/3x7/2uCXpCqHRVIsgKIhYN7ixI6E5m/rRNEs3mZj33a
+         jq+9BMZEPM4Dhqfiv0rNKnIBEbdM2FKH3hcPopocYl9b6SLNiEXeyaDCfAzUUCqbfA+V
+         TpKQ==
+X-Gm-Message-State: AOUpUlHL/XVhljR5UCFeCpF38agFvkVTNV1amfymsnbxoFh0DnjMxmZu
+        yFW/b+6vDSCkYmkbnSfidDzbvPZzlJUIzUo+kyM=
+X-Google-Smtp-Source: AAOMgpfcmtI1QVHwSBRrvVIN2NrIEfzdjHBgPOvhJximb9M9WdvN+flQBagZJO7htcubomdeENLnaoGE1ZkvjUjmkWk=
+X-Received: by 2002:a81:ae66:: with SMTP id g38-v6mr3875004ywk.74.1531503920341;
+ Fri, 13 Jul 2018 10:45:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.9.2 (2017-12-15)
+References: <20180711093822.2123-1-szeder.dev@gmail.com> <20180713163033.110497-1-dstolee@microsoft.com>
+In-Reply-To: <20180713163033.110497-1-dstolee@microsoft.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 13 Jul 2018 13:45:09 -0400
+Message-ID: <CAPig+cQezN26oebER5wno0ENHdZ3+nKKW6avhW5ZsPo50bJ+ew@mail.gmail.com>
+Subject: Re: [PATCH] coccinelle: update commit.cocci
+To:     Derrick Stolee <dstolee@microsoft.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Fri, Jul 13, 2018 at 12:30 PM Derrick Stolee <dstolee@microsoft.com> wrote:
+> A recent patch series renamed the get_commit_tree_from_graph method but
+> forgot to update the coccinelle script that excempted it from rules
 
-Some of us have been informally doing a "git standup" on #git-devel on
-irc.freenode.net on IRC every two weeks at 17:00-17:30 UTC.  It's a
-way for people to say what they're working on and ask questions.  It
-generally goes into a lot less depth than on-list discussions like
-https://public-inbox.org/git/CAGZ79kZtEZA1rvgfSCS+m4dsrB86Cf-XiePWQmeU-kCNxP_NLQ@mail.gmail.com/.
-Logs are at https://j.mp/gitdevlog --- e.g. the previous one starts at
-http://colabti.org/irclogger/irclogger_log/git-devel?date=2018-06-29#l96.
+s/excempted/exempted/
 
-All are welcome to join in, especially including newcomers.
-
-Another way to contribute is to lurk and summarize for the list
-(either with an email or by adding to git rev news). :)
-
-Sorry for the late notice (today's is in 1 minutes); I figured late is
-better than never.
-
-Thanks,
-Jonathan
+> regarding accesses to 'maybe_tree'. This fixes that oversight to bring
+> the coccinelle scripts back to a good state.
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
