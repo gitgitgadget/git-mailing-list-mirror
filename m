@@ -7,80 +7,113 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C378D1F85E
-	for <e@80x24.org>; Fri, 13 Jul 2018 15:54:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CD2B1F85E
+	for <e@80x24.org>; Fri, 13 Jul 2018 16:13:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729764AbeGMQJX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Jul 2018 12:09:23 -0400
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:51754 "EHLO
-        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729681AbeGMQJX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Jul 2018 12:09:23 -0400
-Received: by mail-wm0-f54.google.com with SMTP id s12-v6so9315690wmc.1
-        for <git@vger.kernel.org>; Fri, 13 Jul 2018 08:54:10 -0700 (PDT)
+        id S1729783AbeGMQ2f (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Jul 2018 12:28:35 -0400
+Received: from mail-vk0-f65.google.com ([209.85.213.65]:35157 "EHLO
+        mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729765AbeGMQ2f (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Jul 2018 12:28:35 -0400
+Received: by mail-vk0-f65.google.com with SMTP id o202-v6so18474775vko.2
+        for <git@vger.kernel.org>; Fri, 13 Jul 2018 09:13:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=xZSD2eyLdskiRbp6deSSoifoygI+Ls/y/fnTAV+vIAU=;
-        b=owPES5fyYkkq+z/MfDQg/925p8hmDVt4VVZqqEXqBPotp+zDXiex98mOZZjP77orpd
-         wPx+2cHwEflI5wytOyP0lUUoNI7oS4S9UQmNPWc5Ys2t0OLkRcxNRatPWmyLdjGFlJqQ
-         qP06TPn8WikoeYHdtZOklZAzzDvItXSyZwK8f7LaIpCFiKOrfComzkKc1azJGGZQjFOS
-         yVOHDSiyBZlqAI/pgfZvmek7aNtbLuap7pU7QakrmF1UHe7RZWiqCTjmz4M6u4QKdJGJ
-         Zubhsl0TeMcrbYG1njfZ11Daq4GzrBOBuwnS6djxwinDf2aIrib9U95vCclsyNLicnxt
-         r/SQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=RpmO7Rde4yfeDLlQruifFuRum/uFCKcpTQhQdbmo81U=;
+        b=U3O/hRlWbtNczGak0e7qj9r/CD8aMfcGFFoMcEaVIGRnJeDjUHtst8Fu4BcC/jC9D4
+         rq0RnfspT45wxJaD9unqYjpsqMyjJSin8mGOHYcUvs9HFrfFxdGuVGJu01YSaC516GZa
+         6wz6kWo3a/Wmar9A3NVehoixX11gHS6BvHktnkVH/jsB7NozDWMrCnswyM0d4PZzJ+A5
+         s5BS+5iLrccIjrTNCDV27MvTyHpH3NGrjI0mHwVGoCsMBRuhei0Jw6fQXTWqYMdQYNLV
+         DSkQ2HjQPz3GOGwqq5hGEfRTGHJeD9Sx/NMYMuBxveNEhSF3xNF15QaLVDrIf4eE/6fZ
+         U95w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=xZSD2eyLdskiRbp6deSSoifoygI+Ls/y/fnTAV+vIAU=;
-        b=Kl/StifPNvV/QHw2Fpbmnsg6jU2yeEJCbAL5lNYoTX+GsC12kQbTDlkFgq5cB2a/6C
-         h4V/P83Z3AeNxuykyKD6DsZPVrHMBGImNPnuFQHcxhQ6bLsJkyqRcCigtdRyW/VwCmdD
-         bl6HY2nZpdUb7fQBrt4DoYCakr0EUokBI/5DVISKmZuQhLEelpFlxL7z3cGaGrtHWNpS
-         s30uhdPwO9J0zXT400fmMniLK6F1rG9p1sZIMMZ9wPpWCbGk7heB0dJM0NjH8lgy2bFV
-         pQmOdLQ83vid46MewKTXVCsirbV/FTjp4izB74FARMUGwzIFIBxznLyiX/fDerEaV7TF
-         R6Zg==
-X-Gm-Message-State: AOUpUlHY6QUC5UIm9VvnoNOGr86wKzm1m8l4mC87BO8lB+I1tii28z5Z
-        FB+gFQbj86UWcihT5TyM7bw=
-X-Google-Smtp-Source: AAOMgpcKMOoIIKlZXVroR83/OBkI//vcm4pqIsEr9DKgIqP0yHCncwCj4DS29IwraPhPlQTDTtq6QA==
-X-Received: by 2002:a1c:1745:: with SMTP id 66-v6mr4113371wmx.38.1531497249844;
-        Fri, 13 Jul 2018 08:54:09 -0700 (PDT)
-Received: from [192.168.0.137] (5-13-238-53.residential.rdsnet.ro. [5.13.238.53])
-        by smtp.gmail.com with ESMTPSA id 63-v6sm4888087wmo.22.2018.07.13.08.54.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 13 Jul 2018 08:54:09 -0700 (PDT)
-Subject: Re: [GSoC] GSoC with git, week 10
-To:     Pratik Karki <predatoramigo@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>
-Cc:     git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <d6b9e84b-4d9e-ff1d-e726-56aa58a6b358@gmail.com>
- <CAOZc8M-CVgSqCByngV3DjQ0wNhDFOoWZuHVyRmoHiHZ9kuB-OQ@mail.gmail.com>
- <f2fcb7ef-8d24-b11d-42cc-33f0d3bc6367@gmail.com>
-From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-Message-ID: <171c2d7c-7031-ac1f-2c48-5dd1ce4cd2c4@gmail.com>
-Date:   Fri, 13 Jul 2018 18:54:08 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=RpmO7Rde4yfeDLlQruifFuRum/uFCKcpTQhQdbmo81U=;
+        b=TyMrvybw4jhsWKiXiTXsrQwNxhIN+MJydlnwaCbiKURV2mn7NhJhMNq3mzBmDu9NQG
+         8F1f9/4ToRAtHapns04QE5IQjF1F6SdNYQHZdg0A+1AcG1tvZYNAsRw8xAuaF+vZkEj8
+         GCLnX297EifJqfBu7VMCddaL0xXBXCDD/YVLUaMuj2OQzvObyzbmKz+OllT+eGFahRbp
+         /YST5BrwaHDaDB/ZZF0vcZL24cRmucsU+BYCshjQlKiCRAZIpvgcALJkxPnyByWk5AmI
+         hmUwrguDsSOjY5Oys2UuUMCtdkpBiu0wDZrxOups5zF52K8dFCPcQCdf0wTm1jD9jkbI
+         FUKw==
+X-Gm-Message-State: AOUpUlGCGTokSCIiETTL8T0cymUhVy1Eg9g+M4ufhENycwQrWswEdb15
+        JvVZ7WhOlKolvQml4h+2HNAZ7emXj8QZXXPivwc=
+X-Google-Smtp-Source: AAOMgpdGF55XYs7RNVKWACHiOF3K+w9cpoBnCcGZ5fMhd4UUVFUwAY2UaLGK4Gj6pNsn5M0UfXjtQbsbL3KtcGaoRhg=
+X-Received: by 2002:a1f:c884:: with SMTP id y126-v6mr4061660vkf.76.1531498397401;
+ Fri, 13 Jul 2018 09:13:17 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <f2fcb7ef-8d24-b11d-42cc-33f0d3bc6367@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Received: by 2002:ab0:21c7:0:0:0:0:0 with HTTP; Fri, 13 Jul 2018 09:13:16
+ -0700 (PDT)
+In-Reply-To: <nycvar.QRO.7.76.6.1807121743040.75@tvgsbejvaqbjf.bet>
+References: <20180607050615.19598-1-newren@gmail.com> <20180627074600.32149-1-newren@gmail.com>
+ <nycvar.QRO.7.76.6.1807121743040.75@tvgsbejvaqbjf.bet>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 13 Jul 2018 09:13:16 -0700
+Message-ID: <CABPp-BHrjqHVpV3bwR+aa5Q4yvARMyna10TrXPXBuKpDQ0r_tQ@mail.gmail.com>
+Subject: Re: [PATCH v2] git-rebase--merge: modernize "git-$cmd" to "git $cmd"
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Hi Dscho,
 
-I am back with a new (and updated) blog entry, in which I talked more 
-about the bugs I mentioned in the previous post.
+On Thu, Jul 12, 2018 at 8:49 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Elijah,
+>
+> On Wed, 27 Jun 2018, Elijah Newren wrote:
+>
+>> Signed-off-by: Elijah Newren <newren@gmail.com>
+>> ---
+>>
+>> Changes since v1:
+>>   - Fixed up commit message (move below comment to below diffstat as
+>>     originally intended)
+>>
+>> Long term I just want to make git-rebase--merge go away, so this patch
+>> will eventually be obsoleted.  But since I'm waiting for multiple
+>> topics to merge down before re-submitting that series, and since that
+>> series has some open questions as well, I figure it's worth
+>> (re-)submitting this simple fix in the mean time.
+>
+> I carry essentially the same patch in Git for Windows for a while now
+> (more than a year, to be a little preciser):
+>
+> https://github.com/git-for-windows/git/commit/42c6f1c943a
+>
+> (but it seems that I either missed one when I wrote that commit, or I
+> missed when it was introduced)
 
-https://ungps.github.io/
+So...I helped you get your work upstream without knowing it?  :-)
 
-Best regards,
-Paul
+> There are more dashed forms in Git's code base, still, see e.g.
+>
+> https://github.com/git-for-windows/git/commit/4b3fc41b117
+> https://github.com/git-for-windows/git/commit/c47a29c373c
+>
+> I would *love* to see those go away.
+
+Are there blockers or more known work needed to get these ready for
+submission, or is it more a case of you just haven't had time to
+submit upstream?
+
+> FWIW I had originally also "undashed" the use of `git-receive-pack`, but
+> that breaks things, as the dashed form was unfortunately baked into the
+> protocol (which is of course a design mistake even if Linus still denies
+> it).
+>
+> It would go a long way to help with platforms and packaging methods where
+> hardlinks are simply inconvenient. Because we could then finally get rid
+> of (almost) all those hardlinked builtins.
+
+I thought they were symlinked rather than hardlinked, but yeah I've
+always found them slightly annoying.
