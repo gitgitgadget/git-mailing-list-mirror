@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D43C1F915
-	for <e@80x24.org>; Fri, 13 Jul 2018 17:50:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 15E031F939
+	for <e@80x24.org>; Fri, 13 Jul 2018 17:50:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731592AbeGMSGI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Jul 2018 14:06:08 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:36071 "EHLO
+        id S1731634AbeGMSGJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Jul 2018 14:06:09 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:46874 "EHLO
         mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731305AbeGMSGI (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1731560AbeGMSGI (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 13 Jul 2018 14:06:08 -0400
-Received: by mail-wr1-f65.google.com with SMTP id h9-v6so25922747wro.3
-        for <git@vger.kernel.org>; Fri, 13 Jul 2018 10:50:28 -0700 (PDT)
+Received: by mail-wr1-f65.google.com with SMTP id s11-v6so25897756wra.13
+        for <git@vger.kernel.org>; Fri, 13 Jul 2018 10:50:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=pn5x011rm1Cp0bRwuzTgWqjWZb1Kd94yvS3prIlWJLw=;
-        b=BvDGgio/Hd8C/dWj3QA6vWmL53HmLS+wOoQe9ikXovyvz3omIiw8xR9Uug9j/e4Pn6
-         4lvdJKCv/OEvc40P998w7lrjIkh3WHBgZs5Go1Mz43pNo472SB5PJWIYxZ5Y66EE+u0F
-         I2SENt1pDNBj+wuPRdw6uemN34eSKVm8V5cu/9OS9KJ75gxzP5dRUdjmFgOyWTtCTMps
-         N/CA48Y55zxTSUdpMcZ2Bs2jHWpRExnGeDqY8DX9utFklRId0lGRbNdCx65GFdkdUGl8
-         paYdaegWe7vQ7oyZCkM3L7kgXc1klyiVvLTsfBpy3TagStZ99pjBA/t7g44l3oLnov0C
-         IYEA==
+        bh=TELGS2/cH8VH7UmHxWBLz4TdgY10ZiWkZQGG2jFVApQ=;
+        b=nMI/xfA/sY2A34WGbec8ZeORrzMEJF7A1nT4+M0RfT14XJn8hy8wB5pJ7mRURKl2O4
+         X1aImw1wzlS94b+SJ+UmFuzIRk/Mxa0x69tDPqXADIoEVne+7+wVpzK+KjN96aLn7G2a
+         SYCJcj6qHzj5FbOEu4R8Pu+FzPQvcMBG0TDf4fAmJG6RpNTyKyhRPYf0w9qjaAbLPObu
+         EEMOQBB2QZaiMbJHLTEvIZ9YVadWl6vESELFjzv2XgiJUdBsFSBh7gpSNOpfgr7fx5h5
+         5bk4exyheiI7kHCkaCFswOWS55+95fLCv0TNrllO0RRUAuj/YuK0DnFuIf81sRQ+BTo2
+         LBZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=pn5x011rm1Cp0bRwuzTgWqjWZb1Kd94yvS3prIlWJLw=;
-        b=B00gRglolNxtflTgCtvixeUjyZb70tO5yVsTdimnOppwvlLsK/1IvIGT0kgmlheImf
-         MVMEu2zimeM2x4x5QwwxiCqDQBdaEEw6zaYVwvrY6xtgXNmnbaL1FYGmWXELSlS9b25G
-         eim8v4MhX99eWlCa+Z2BW4Wjd0LDb0c2RJCFt/am7z1sZCj9kQ4emoBDRFScjwPuJyzz
-         CNj1OFW6QUZsK+sdlTk/7+lKK6dHr3tWTeqQXvvQsqQClJ0dCajNQNkfGoQYoeqgn1vx
-         Ix2VCvvHQCoD8FOzi0x8kSIdqT3a52WhcqeHgWpwr70yWJqnohNONgiyeZ9JI8PyuzzB
-         UHhQ==
-X-Gm-Message-State: AOUpUlH6d6CwQnfhroTQaovfNCUILP9xA3GJQKscqLa3xA2MgM0/WeWZ
-        /N56APEoLIs3BwCWmojvuzyXqlQ8
-X-Google-Smtp-Source: AAOMgpcW1BwxPA0vnejLu1W+admEkQZFG4cdtjEc8ILsJBS3sqrr/BopkpYmA+rJ2hy2N+9zPOs3oQ==
-X-Received: by 2002:a5d:514d:: with SMTP id u13-v6mr5553621wrt.162.1531504227181;
-        Fri, 13 Jul 2018 10:50:27 -0700 (PDT)
+        bh=TELGS2/cH8VH7UmHxWBLz4TdgY10ZiWkZQGG2jFVApQ=;
+        b=bqoGQ8ccaUT2ky69kg7VgZFlF6lwnMZASJO+fp3HcKxI1nKX2d/iFNR3AywELI7sK7
+         IBXPnSTLHd0v0b4JEDihDLgtKgB4NSZFphN7W6LLKErqipn0oeLQ/thm5s0ad1wx3nOd
+         QkZ4w0m2h+c63TXvQj+dy4f4CormWeo8ThqWH9LyjOnmZPiLMN+6flIHENc/0Y5w0sIQ
+         smXICrx0azwqsoIeQleoTVLD3l2E2Y4PDHBOpFOUHnAaw9aWDsxGYVU6pM+O+QncVDFA
+         n8iGdIkGdJ39xU4punDZxYi+9VMAMnnvpw9rF5DIHJVN1UL2frPMaWXbOBTZd6U9oAW2
+         mafg==
+X-Gm-Message-State: AOUpUlEToBYlvfLGvnEyl0KpmE6L3LhX9sb5RpAWC9LWJFXxHp09DMHz
+        AVcm6EZHmZKXeHYBagPr6oJipkWJ
+X-Google-Smtp-Source: AAOMgpfKgga40EB70TE/GDwh62Mtxy8EQ4zE1B+Cn190YsG+3wFNN1cnFLloZ0HUz8qisYnHlsGWnw==
+X-Received: by 2002:adf:8162:: with SMTP id 89-v6mr5427271wrm.192.1531504228677;
+        Fri, 13 Jul 2018 10:50:28 -0700 (PDT)
 Received: from localhost.localdomain (188.10.112.78.rev.sfr.net. [78.112.10.188])
-        by smtp.gmail.com with ESMTPSA id v15-v6sm6556862wmc.16.2018.07.13.10.50.25
+        by smtp.gmail.com with ESMTPSA id v15-v6sm6556862wmc.16.2018.07.13.10.50.27
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 13 Jul 2018 10:50:26 -0700 (PDT)
+        Fri, 13 Jul 2018 10:50:28 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Jeff Hostetler <jeffhost@microsoft.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v3 6/9] Use remote_odb_get_direct() and has_remote_odb()
-Date:   Fri, 13 Jul 2018 19:49:56 +0200
-Message-Id: <20180713174959.16748-7-chriscool@tuxfamily.org>
+Subject: [PATCH v3 7/9] Use odb.origin.partialclonefilter instead of core.partialclonefilter
+Date:   Fri, 13 Jul 2018 19:49:57 +0200
+Message-Id: <20180713174959.16748-8-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.18.0.138.g7076a5fae1
 In-Reply-To: <20180713174959.16748-1-chriscool@tuxfamily.org>
 References: <20180713174959.16748-1-chriscool@tuxfamily.org>
@@ -75,586 +75,156 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Christian Couder <christian.couder@gmail.com>
 
-Instead of using the repository_format_partial_clone global
-and fetch_object() directly, let's use has_remote_odb() and
-remote_odb_get_direct().
+Let's make the partial clone filter specific to one odb
+instead of general to all the odbs.
+
+This makes it possible to have different partial clone
+filters for different odbs.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/cat-file.c            |  5 +++--
- builtin/fetch.c               | 11 ++++++-----
- builtin/gc.c                  |  3 ++-
- builtin/repack.c              |  3 ++-
- cache.h                       |  2 --
- connected.c                   |  3 ++-
- environment.c                 |  1 -
- list-objects-filter-options.c | 27 +++++++++++++++------------
- packfile.c                    |  3 ++-
- setup.c                       |  7 +------
- sha1-file.c                   | 14 ++++++++------
- t/t0410-partial-clone.sh      | 34 +++++++++++++++++-----------------
- t/t5500-fetch-pack.sh         |  4 ++--
- t/t5601-clone.sh              |  2 +-
+ builtin/fetch.c               |  2 +-
+ list-objects-filter-options.c | 28 ++++++++++++++++------------
+ list-objects-filter-options.h |  3 ++-
+ odb-helper.h                  |  1 +
+ remote-odb.c                  |  2 ++
  t/t5616-partial-clone.sh      |  2 +-
- t/t5702-protocol-v2.sh        |  2 +-
- unpack-trees.c                |  6 +++---
- 17 files changed, 66 insertions(+), 63 deletions(-)
+ 6 files changed, 23 insertions(+), 15 deletions(-)
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 665b581949..3b24c1b9b7 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -13,6 +13,7 @@
- #include "tree-walk.h"
- #include "sha1-array.h"
- #include "packfile.h"
-+#include "remote-odb.h"
- 
- struct batch_options {
- 	int enabled;
-@@ -477,8 +478,8 @@ static int batch_objects(struct batch_options *opt)
- 
- 		for_each_loose_object(batch_loose_object, &sa, 0);
- 		for_each_packed_object(batch_packed_object, &sa, 0);
--		if (repository_format_partial_clone)
--			warning("This repository has extensions.partialClone set. Some objects may not be loaded.");
-+		if (has_remote_odb())
-+			warning("This repository uses an odb. Some objects may not be loaded.");
- 
- 		cb.opt = opt;
- 		cb.expand = &data;
 diff --git a/builtin/fetch.c b/builtin/fetch.c
-index ea5b9669ad..1fd4dfd024 100644
+index 1fd4dfd024..52ec2fd200 100644
 --- a/builtin/fetch.c
 +++ b/builtin/fetch.c
-@@ -21,6 +21,7 @@
- #include "utf8.h"
- #include "packfile.h"
- #include "list-objects-filter-options.h"
-+#include "remote-odb.h"
- 
- static const char * const builtin_fetch_usage[] = {
- 	N_("git fetch [<options>] [<repository> [<refspec>...]]"),
-@@ -1313,7 +1314,7 @@ static inline void fetch_one_setup_partial(struct remote *remote)
- 	 * If no prior partial clone/fetch and the current fetch DID NOT
- 	 * request a partial-fetch, do a normal fetch.
+@@ -1343,7 +1343,7 @@ static inline void fetch_one_setup_partial(struct remote *remote)
+ 	 * the config.
  	 */
--	if (!repository_format_partial_clone && !filter_options.choice)
-+	if (!has_remote_odb() && !filter_options.choice)
- 		return;
+ 	if (!filter_options.choice)
+-		partial_clone_get_default_filter_spec(&filter_options);
++		partial_clone_get_default_filter_spec(&filter_options, remote->name);
+ 	return;
+ }
  
- 	/*
-@@ -1321,7 +1322,7 @@ static inline void fetch_one_setup_partial(struct remote *remote)
- 	 * on this repo and remember the given filter-spec as the default
- 	 * for subsequent fetches to this remote.
- 	 */
--	if (!repository_format_partial_clone && filter_options.choice) {
-+	if (!has_remote_odb() && filter_options.choice) {
- 		partial_clone_register(remote->name, &filter_options);
- 		return;
- 	}
-@@ -1330,7 +1331,7 @@ static inline void fetch_one_setup_partial(struct remote *remote)
- 	 * We are currently limited to only ONE promisor remote and only
- 	 * allow partial-fetches from the promisor remote.
- 	 */
--	if (strcmp(remote->name, repository_format_partial_clone)) {
-+	if (!find_odb_helper(remote->name)) {
- 		if (filter_options.choice)
- 			die(_("--filter can only be used with the remote configured in core.partialClone"));
- 		return;
-@@ -1461,7 +1462,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 	if (depth || deepen_since || deepen_not.nr)
- 		deepen = 1;
- 
--	if (filter_options.choice && !repository_format_partial_clone)
-+	if (filter_options.choice && !has_remote_odb())
- 		die("--filter can only be used when extensions.partialClone is set");
- 
- 	if (all) {
-@@ -1495,7 +1496,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (remote) {
--		if (filter_options.choice || repository_format_partial_clone)
-+		if (filter_options.choice || has_remote_odb())
- 			fetch_one_setup_partial(remote);
- 		result = fetch_one(remote, argc, argv, prune_tags_ok);
- 	} else {
-diff --git a/builtin/gc.c b/builtin/gc.c
-index ccfb1ceaeb..02c783b514 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -26,6 +26,7 @@
- #include "pack-objects.h"
- #include "blob.h"
- #include "tree.h"
-+#include "remote-odb.h"
- 
- #define FAILED_RUN "failed to run %s"
- 
-@@ -619,7 +620,7 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
- 			argv_array_push(&prune, prune_expire);
- 			if (quiet)
- 				argv_array_push(&prune, "--no-progress");
--			if (repository_format_partial_clone)
-+			if (has_remote_odb())
- 				argv_array_push(&prune,
- 						"--exclude-promisor-objects");
- 			if (run_command_v_opt(prune.argv, RUN_GIT_CMD))
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 6c636e159e..72b1e2d94f 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -8,6 +8,7 @@
- #include "strbuf.h"
- #include "string-list.h"
- #include "argv-array.h"
-+#include "remote-odb.h"
- 
- static int delta_base_offset = 1;
- static int pack_kept_objects = -1;
-@@ -249,7 +250,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	argv_array_push(&cmd.args, "--all");
- 	argv_array_push(&cmd.args, "--reflog");
- 	argv_array_push(&cmd.args, "--indexed-objects");
--	if (repository_format_partial_clone)
-+	if (has_remote_odb())
- 		argv_array_push(&cmd.args, "--exclude-promisor-objects");
- 	if (window)
- 		argv_array_pushf(&cmd.args, "--window=%s", window);
-diff --git a/cache.h b/cache.h
-index d49092d94d..af689abd19 100644
---- a/cache.h
-+++ b/cache.h
-@@ -904,13 +904,11 @@ extern int grafts_replace_parents;
- #define GIT_REPO_VERSION 0
- #define GIT_REPO_VERSION_READ 1
- extern int repository_format_precious_objects;
--extern char *repository_format_partial_clone;
- extern const char *core_partial_clone_filter_default;
- 
- struct repository_format {
- 	int version;
- 	int precious_objects;
--	char *partial_clone; /* value of extensions.partialclone */
- 	int is_bare;
- 	int hash_algo;
- 	char *work_tree;
-diff --git a/connected.c b/connected.c
-index 91feb78815..07154a358d 100644
---- a/connected.c
-+++ b/connected.c
-@@ -4,6 +4,7 @@
- #include "connected.h"
- #include "transport.h"
- #include "packfile.h"
-+#include "remote-odb.h"
- 
- /*
-  * If we feed all the commits we want to verify to this command
-@@ -56,7 +57,7 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
- 	argv_array_push(&rev_list.args,"rev-list");
- 	argv_array_push(&rev_list.args, "--objects");
- 	argv_array_push(&rev_list.args, "--stdin");
--	if (repository_format_partial_clone)
-+	if (has_remote_odb())
- 		argv_array_push(&rev_list.args, "--exclude-promisor-objects");
- 	argv_array_push(&rev_list.args, "--not");
- 	argv_array_push(&rev_list.args, "--all");
-diff --git a/environment.c b/environment.c
-index 2a6de2330b..f8048f4a5d 100644
---- a/environment.c
-+++ b/environment.c
-@@ -30,7 +30,6 @@ int warn_ambiguous_refs = 1;
- int warn_on_object_refname_ambiguity = 1;
- int ref_paranoia = -1;
- int repository_format_precious_objects;
--char *repository_format_partial_clone;
- const char *core_partial_clone_filter_default;
- const char *git_commit_encoding;
- const char *git_log_output_encoding;
 diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
-index c0e2bd6a06..60452c8f36 100644
+index 60452c8f36..755a793664 100644
 --- a/list-objects-filter-options.c
 +++ b/list-objects-filter-options.c
-@@ -6,6 +6,7 @@
- #include "list-objects.h"
+@@ -7,6 +7,7 @@
  #include "list-objects-filter.h"
  #include "list-objects-filter-options.h"
-+#include "remote-odb.h"
+ #include "remote-odb.h"
++#include "odb-helper.h"
  
  /*
   * Parse value of the argument to the "filter" keyword.
-@@ -114,30 +115,32 @@ void partial_clone_register(
- 	const char *remote,
+@@ -29,6 +30,9 @@ static int gently_parse_list_objects_filter(
+ {
+ 	const char *v0;
+ 
++	if (!arg)
++		return 0;
++
+ 	if (filter_options->choice) {
+ 		if (errbuf) {
+ 			strbuf_init(errbuf, 0);
+@@ -116,6 +120,7 @@ void partial_clone_register(
  	const struct list_objects_filter_options *filter_options)
  {
--	/*
--	 * Record the name of the partial clone remote in the
--	 * config and in the global variable -- the latter is
--	 * used throughout to indicate that partial clone is
--	 * enabled and to expect missing objects.
--	 */
--	if (repository_format_partial_clone &&
--	    *repository_format_partial_clone &&
--	    strcmp(remote, repository_format_partial_clone))
--		die(_("cannot change partial clone promisor remote"));
-+	char *cfg_name;
-+
-+	/* Check if it is already registered */
-+	if (find_odb_helper(remote))
-+		return;
+ 	char *cfg_name;
++	char *filter_name;
  
- 	git_config_set("core.repositoryformatversion", "1");
--	git_config_set("extensions.partialclone", remote);
- 
--	repository_format_partial_clone = xstrdup(remote);
-+	/* Add odb config for the remote */
-+	cfg_name = xstrfmt("odb.%s.promisorRemote", remote);
-+	git_config_set(cfg_name, remote);
-+	free(cfg_name);
- 
+ 	/* Check if it is already registered */
+ 	if (find_odb_helper(remote))
+@@ -131,27 +136,26 @@ void partial_clone_register(
  	/*
  	 * Record the initial filter-spec in the config as
  	 * the default for subsequent fetches from this remote.
-+	 *
-+	 * TODO: move core.partialclonefilter into odb.<name>
+-	 *
+-	 * TODO: move core.partialclonefilter into odb.<name>
  	 */
- 	core_partial_clone_filter_default =
- 		xstrdup(filter_options->filter_spec);
- 	git_config_set("core.partialclonefilter",
- 		       core_partial_clone_filter_default);
-+
-+	/* Make sure the config info are reset */
-+	remote_odb_reinit();
+-	core_partial_clone_filter_default =
+-		xstrdup(filter_options->filter_spec);
+-	git_config_set("core.partialclonefilter",
+-		       core_partial_clone_filter_default);
++	filter_name = xstrfmt("odb.%s.partialclonefilter", remote);
++	git_config_set(filter_name, filter_options->filter_spec);
++	free(filter_name);
+ 
+ 	/* Make sure the config info are reset */
+ 	remote_odb_reinit();
  }
  
  void partial_clone_get_default_filter_spec(
-diff --git a/packfile.c b/packfile.c
-index 7cd45aa4b2..9cbc974612 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -15,6 +15,7 @@
- #include "tree-walk.h"
- #include "tree.h"
- #include "object-store.h"
-+#include "remote-odb.h"
+-	struct list_objects_filter_options *filter_options)
++	struct list_objects_filter_options *filter_options,
++	const char *remote)
+ {
++	struct odb_helper *helper = find_odb_helper(remote);
++
+ 	/*
+ 	 * Parse default value, but silently ignore it if it is invalid.
+ 	 */
+-	if (!core_partial_clone_filter_default)
+-		return;
+-	gently_parse_list_objects_filter(filter_options,
+-					 core_partial_clone_filter_default,
+-					 NULL);
++	if (helper)
++		gently_parse_list_objects_filter(filter_options,
++						 helper->partial_clone_filter,
++						 NULL);
+ }
+diff --git a/list-objects-filter-options.h b/list-objects-filter-options.h
+index 0000a61f82..12ceef3230 100644
+--- a/list-objects-filter-options.h
++++ b/list-objects-filter-options.h
+@@ -74,6 +74,7 @@ void partial_clone_register(
+ 	const char *remote,
+ 	const struct list_objects_filter_options *filter_options);
+ void partial_clone_get_default_filter_spec(
+-	struct list_objects_filter_options *filter_options);
++	struct list_objects_filter_options *filter_options,
++	const char *remote);
  
- char *odb_pack_name(struct strbuf *buf,
- 		    const unsigned char *sha1,
-@@ -1976,7 +1977,7 @@ int is_promisor_object(const struct object_id *oid)
- 	static int promisor_objects_prepared;
+ #endif /* LIST_OBJECTS_FILTER_OPTIONS_H */
+diff --git a/odb-helper.h b/odb-helper.h
+index 154ce4c7e4..4af75ef55c 100644
+--- a/odb-helper.h
++++ b/odb-helper.h
+@@ -10,6 +10,7 @@
+ struct odb_helper {
+ 	const char *name;                 /* odb.<NAME>.* */
+ 	const char *remote;               /* odb.<NAME>.promisorRemote */
++	const char *partial_clone_filter; /* odb.<NAME>.partialCloneFilter */
  
- 	if (!promisor_objects_prepared) {
--		if (repository_format_partial_clone) {
-+		if (has_remote_odb()) {
- 			for_each_packed_object(add_promisor_object,
- 					       &promisor_objects,
- 					       FOR_EACH_OBJECT_PROMISOR_ONLY);
-diff --git a/setup.c b/setup.c
-index b24c811c1c..4eeb7fe073 100644
---- a/setup.c
-+++ b/setup.c
-@@ -419,11 +419,7 @@ static int check_repo_format(const char *var, const char *value, void *vdata)
- 			;
- 		else if (!strcmp(ext, "preciousobjects"))
- 			data->precious_objects = git_config_bool(var, value);
--		else if (!strcmp(ext, "partialclone")) {
--			if (!value)
--				return config_error_nonbool(var);
--			data->partial_clone = xstrdup(value);
--		} else
-+		else
- 			string_list_append(&data->unknown_extensions, ext);
- 	} else if (strcmp(var, "core.bare") == 0) {
- 		data->is_bare = git_config_bool(var, value);
-@@ -465,7 +461,6 @@ static int check_repository_format_gently(const char *gitdir, struct repository_
+ 	struct odb_helper *next;
+ };
+diff --git a/remote-odb.c b/remote-odb.c
+index 53a72b4ba5..847a865057 100644
+--- a/remote-odb.c
++++ b/remote-odb.c
+@@ -60,6 +60,8 @@ static int remote_odb_config(const char *var, const char *value, void *data)
+ 
+ 		return 0;
  	}
++	if (!strcmp(subkey, "partialclonefilter"))
++		return git_config_string(&o->partial_clone_filter, var, value);
  
- 	repository_format_precious_objects = candidate->precious_objects;
--	repository_format_partial_clone = candidate->partial_clone;
- 	string_list_clear(&candidate->unknown_extensions, 0);
- 	if (!has_common) {
- 		if (candidate->is_bare != -1) {
-diff --git a/sha1-file.c b/sha1-file.c
-index c099f5584d..5e183d2cd4 100644
---- a/sha1-file.c
-+++ b/sha1-file.c
-@@ -32,6 +32,7 @@
- #include "packfile.h"
- #include "fetch-object.h"
- #include "object-store.h"
-+#include "remote-odb.h"
- 
- /* The maximum size for an object header. */
- #define MAX_HEADER_LEN 32
-@@ -1309,15 +1310,16 @@ int oid_object_info_extended(struct repository *r, const struct object_id *oid,
- 		}
- 
- 		/* Check if it is a missing object */
--		if (fetch_if_missing && repository_format_partial_clone &&
-+		if (fetch_if_missing && has_remote_odb() &&
- 		    !already_retried && r == the_repository) {
- 			/*
--			 * TODO Investigate checking fetch_object() return
--			 * TODO value and stopping on error here.
--			 * TODO Pass a repository struct through fetch_object,
--			 * such that arbitrary repositories work.
-+			 * TODO Investigate checking remote_odb_get_direct()
-+			 * TODO return value and stopping on error here.
-+			 * TODO Pass a repository struct through
-+			 * remote_odb_get_direct(), such that arbitrary
-+			 * repositories work.
- 			 */
--			fetch_object(repository_format_partial_clone, real->hash);
-+			remote_odb_get_direct(real->hash);
- 			already_retried = 1;
- 			continue;
- 		}
-diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
-index 4984ca583d..71a9b9a3e8 100755
---- a/t/t0410-partial-clone.sh
-+++ b/t/t0410-partial-clone.sh
-@@ -23,10 +23,10 @@ promise_and_delete () {
- 	delete_object repo "$HASH"
+ 	return 0;
  }
- 
--test_expect_success 'extensions.partialclone without filter' '
-+test_expect_success 'promisor remote without filter' '
- 	test_create_repo server &&
- 	git clone --filter="blob:none" "file://$(pwd)/server" client &&
--	git -C client config --unset core.partialclonefilter &&
-+	git -C client config --unset odb.origin.partialclonefilter &&
- 	git -C client fetch origin
- '
- 
-@@ -51,7 +51,7 @@ test_expect_success 'missing reflog object, but promised by a commit, passes fsc
- 
- 	# But with the extension, it succeeds
- 	git -C repo config core.repositoryformatversion 1 &&
--	git -C repo config extensions.partialclone "arbitrary string" &&
-+	git -C repo config odb.magic.promisorRemote "arbitrary string" &&
- 	git -C repo fsck
- '
- 
-@@ -74,7 +74,7 @@ test_expect_success 'missing reflog object, but promised by a tag, passes fsck'
- 	printf "$T\n" | pack_as_from_promisor &&
- 
- 	git -C repo config core.repositoryformatversion 1 &&
--	git -C repo config extensions.partialclone "arbitrary string" &&
-+	git -C repo config odb.magic.promisorRemote "arbitrary string" &&
- 	git -C repo fsck
- '
- 
-@@ -92,7 +92,7 @@ test_expect_success 'missing reflog object alone fails fsck, even with extension
- 	delete_object repo "$A" &&
- 
- 	git -C repo config core.repositoryformatversion 1 &&
--	git -C repo config extensions.partialclone "arbitrary string" &&
-+	git -C repo config odb.magic.promisorRemote "arbitrary string" &&
- 	test_must_fail git -C repo fsck
- '
- 
-@@ -108,7 +108,7 @@ test_expect_success 'missing ref object, but promised, passes fsck' '
- 	promise_and_delete "$A" &&
- 
- 	git -C repo config core.repositoryformatversion 1 &&
--	git -C repo config extensions.partialclone "arbitrary string" &&
-+	git -C repo config odb.magic.promisorRemote "arbitrary string" &&
- 	git -C repo fsck
- '
- 
-@@ -131,7 +131,7 @@ test_expect_success 'missing object, but promised, passes fsck' '
- 	promise_and_delete "$AT" &&
- 
- 	git -C repo config core.repositoryformatversion 1 &&
--	git -C repo config extensions.partialclone "arbitrary string" &&
-+	git -C repo config odb.magic.promisorRemote "arbitrary string" &&
- 	git -C repo fsck
- '
- 
-@@ -144,7 +144,7 @@ test_expect_success 'missing CLI object, but promised, passes fsck' '
- 	promise_and_delete "$A" &&
- 
- 	git -C repo config core.repositoryformatversion 1 &&
--	git -C repo config extensions.partialclone "arbitrary string" &&
-+	git -C repo config odb.magic.promisorRemote "arbitrary string" &&
- 	git -C repo fsck "$A"
- '
- 
-@@ -159,7 +159,7 @@ test_expect_success 'fetching of missing objects' '
- 	rm -rf repo/.git/objects/* &&
- 
- 	git -C repo config core.repositoryformatversion 1 &&
--	git -C repo config extensions.partialclone "origin" &&
-+	git -C repo config odb.magic.promisorRemote "origin" &&
- 	git -C repo cat-file -p "$HASH" &&
- 
- 	# Ensure that the .promisor file is written, and check that its
-@@ -180,7 +180,7 @@ test_expect_success 'rev-list stops traversal at missing and promised commit' '
- 	promise_and_delete "$FOO" &&
- 
- 	git -C repo config core.repositoryformatversion 1 &&
--	git -C repo config extensions.partialclone "arbitrary string" &&
-+	git -C repo config odb.magic.promisorRemote "arbitrary string" &&
- 	git -C repo rev-list --exclude-promisor-objects --objects bar >out &&
- 	grep $(git -C repo rev-parse bar) out &&
- 	! grep $FOO out
-@@ -205,7 +205,7 @@ test_expect_success 'rev-list stops traversal at missing and promised tree' '
- 	promise_and_delete "$TREE2" &&
- 
- 	git -C repo config core.repositoryformatversion 1 &&
--	git -C repo config extensions.partialclone "arbitrary string" &&
-+	git -C repo config odb.magic.promisorRemote "arbitrary string" &&
- 	git -C repo rev-list --exclude-promisor-objects --objects HEAD >out &&
- 	grep $(git -C repo rev-parse foo) out &&
- 	! grep $TREE out &&
-@@ -224,7 +224,7 @@ test_expect_success 'rev-list stops traversal at missing and promised blob' '
- 	promise_and_delete "$BLOB" &&
- 
- 	git -C repo config core.repositoryformatversion 1 &&
--	git -C repo config extensions.partialclone "arbitrary string" &&
-+	git -C repo config odb.magic.promisorRemote "arbitrary string" &&
- 	git -C repo rev-list --exclude-promisor-objects --objects HEAD >out &&
- 	grep $(git -C repo rev-parse HEAD) out &&
- 	! grep $BLOB out
-@@ -243,7 +243,7 @@ test_expect_success 'rev-list stops traversal at promisor commit, tree, and blob
- 	printf "%s\n%s\n%s\n" $COMMIT $TREE $BLOB | pack_as_from_promisor &&
- 
- 	git -C repo config core.repositoryformatversion 1 &&
--	git -C repo config extensions.partialclone "arbitrary string" &&
-+	git -C repo config odb.magic.promisorRemote "arbitrary string" &&
- 	git -C repo rev-list --exclude-promisor-objects --objects HEAD >out &&
- 	! grep $COMMIT out &&
- 	! grep $TREE out &&
-@@ -267,7 +267,7 @@ test_expect_success 'rev-list accepts missing and promised objects on command li
- 	promise_and_delete $BLOB &&
- 
- 	git -C repo config core.repositoryformatversion 1 &&
--	git -C repo config extensions.partialclone "arbitrary string" &&
-+	git -C repo config odb.magic.promisorRemote "arbitrary string" &&
- 	git -C repo rev-list --exclude-promisor-objects --objects "$COMMIT" "$TREE" "$BLOB"
- '
- 
-@@ -280,7 +280,7 @@ test_expect_success 'gc does not repack promisor objects' '
- 	HASH=$(printf "$TREE_HASH\n" | pack_as_from_promisor) &&
- 
- 	git -C repo config core.repositoryformatversion 1 &&
--	git -C repo config extensions.partialclone "arbitrary string" &&
-+	git -C repo config odb.magic.promisorRemote "arbitrary string" &&
- 	git -C repo gc &&
- 
- 	# Ensure that the promisor packfile still exists, and remove it
-@@ -304,7 +304,7 @@ test_expect_success 'gc stops traversal when a missing but promised object is re
- 	HASH=$(promise_and_delete $TREE_HASH) &&
- 
- 	git -C repo config core.repositoryformatversion 1 &&
--	git -C repo config extensions.partialclone "arbitrary string" &&
-+	git -C repo config odb.magic.promisorRemote "arbitrary string" &&
- 	git -C repo gc &&
- 
- 	# Ensure that the promisor packfile still exists, and remove it
-@@ -335,7 +335,7 @@ test_expect_success 'fetching of missing objects from an HTTP server' '
- 	rm -rf repo/.git/objects/* &&
- 
- 	git -C repo config core.repositoryformatversion 1 &&
--	git -C repo config extensions.partialclone "origin" &&
-+	git -C repo config odb.magic.promisorRemote "origin" &&
- 	git -C repo cat-file -p "$HASH" &&
- 
- 	# Ensure that the .promisor file is written, and check that its
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index ea6570e819..72654b24c4 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -844,14 +844,14 @@ fetch_filter_blob_limit_zero () {
- 	test_config -C "$SERVER" uploadpack.allowfilter 1 &&
- 
- 	git clone "$URL" client &&
--	test_config -C client extensions.partialclone origin &&
-+	test_config -C client odb.magic.promisorRemote origin &&
- 
- 	test_commit -C "$SERVER" two &&
- 
- 	git -C client fetch --filter=blob:limit=0 origin HEAD:somewhere &&
- 
- 	# Ensure that commit is fetched, but blob is not
--	test_config -C client extensions.partialclone "arbitrary string" &&
-+	test_config -C client odb.magic.promisorRemote "arbitrary string" &&
- 	git -C client cat-file -e $(git -C "$SERVER" rev-parse two) &&
- 	test_must_fail git -C client cat-file -e $(git hash-object "$SERVER/two.t")
- }
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 0b62037744..022c65a7ae 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -647,7 +647,7 @@ partial_clone () {
- 	git -C client fsck &&
- 
- 	# Ensure that unneeded blobs are not inadvertently fetched.
--	test_config -C client extensions.partialclone "not a remote" &&
-+	test_config -C client odb.origin.promisorRemote "not a remote" &&
- 	test_must_fail git -C client cat-file -e "$HASH1" &&
- 
- 	# But this blob was fetched, because clone performs an initial checkout
 diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-index cee5565367..5ddd1e011c 100755
+index 5ddd1e011c..4231121181 100755
 --- a/t/t5616-partial-clone.sh
 +++ b/t/t5616-partial-clone.sh
-@@ -40,7 +40,7 @@ test_expect_success 'do partial clone 1' '
- 		| sort >observed.oids &&
+@@ -41,7 +41,7 @@ test_expect_success 'do partial clone 1' '
  	test_cmp expect_1.oids observed.oids &&
  	test "$(git -C pc1 config --local core.repositoryformatversion)" = "1" &&
--	test "$(git -C pc1 config --local extensions.partialclone)" = "origin" &&
-+	test "$(git -C pc1 config --local odb.origin.promisorRemote)" = "origin" &&
- 	test "$(git -C pc1 config --local core.partialclonefilter)" = "blob:none"
+ 	test "$(git -C pc1 config --local odb.origin.promisorRemote)" = "origin" &&
+-	test "$(git -C pc1 config --local core.partialclonefilter)" = "blob:none"
++	test "$(git -C pc1 config --local odb.origin.partialclonefilter)" = "blob:none"
  '
  
-diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index a4fe6508bd..0c47599568 100755
---- a/t/t5702-protocol-v2.sh
-+++ b/t/t5702-protocol-v2.sh
-@@ -285,7 +285,7 @@ test_expect_success 'partial fetch' '
- 	rm -rf client "$(pwd)/trace" &&
- 	git init client &&
- 	SERVER="file://$(pwd)/server" &&
--	test_config -C client extensions.partialClone "$SERVER" &&
-+	test_config -C client odb.magic.promisorRemote "$SERVER" &&
- 
- 	GIT_TRACE_PACKET="$(pwd)/trace" git -C client -c protocol.version=2 \
- 		fetch --filter=blob:none "$SERVER" master:refs/heads/other &&
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 3a85a02a77..e6ac3e6d10 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -17,6 +17,7 @@
- #include "submodule-config.h"
- #include "fsmonitor.h"
- #include "fetch-object.h"
-+#include "remote-odb.h"
- 
- /*
-  * Error messages expected by scripts out of plumbing commands such as
-@@ -382,7 +383,7 @@ static int check_updates(struct unpack_trees_options *o)
- 		load_gitmodules_file(index, &state);
- 
- 	enable_delayed_checkout(&state);
--	if (repository_format_partial_clone && o->update && !o->dry_run) {
-+	if (has_remote_odb() && o->update && !o->dry_run) {
- 		/*
- 		 * Prefetch the objects that are to be checked out in the loop
- 		 * below.
-@@ -399,8 +400,7 @@ static int check_updates(struct unpack_trees_options *o)
- 			}
- 		}
- 		if (to_fetch.nr)
--			fetch_objects(repository_format_partial_clone,
--				      &to_fetch);
-+			remote_odb_get_many_direct(&to_fetch);
- 		fetch_if_missing = fetch_if_missing_store;
- 		oid_array_clear(&to_fetch);
- 	}
+ # checkout master to force dynamic object fetch of blobs at HEAD.
 -- 
 2.18.0.171.ge260395bfe
 
