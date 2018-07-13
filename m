@@ -6,30 +6,30 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E442F1F85E
-	for <e@80x24.org>; Fri, 13 Jul 2018 16:56:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 180C61F90A
+	for <e@80x24.org>; Fri, 13 Jul 2018 16:56:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732981AbeGMRMD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Jul 2018 13:12:03 -0400
-Received: from siwi.pair.com ([209.68.5.199]:31839 "EHLO siwi.pair.com"
+        id S2387722AbeGMRME (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Jul 2018 13:12:04 -0400
+Received: from siwi.pair.com ([209.68.5.199]:31833 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731651AbeGMRMC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Jul 2018 13:12:02 -0400
+        id S1730822AbeGMRMD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Jul 2018 13:12:03 -0400
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 95F833F4151;
+        by siwi.pair.com (Postfix) with ESMTP id 0A3EC3F4158;
         Fri, 13 Jul 2018 12:56:35 -0400 (EDT)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 2CFEE3F4149;
-        Fri, 13 Jul 2018 12:56:35 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTPSA id 95F403F4155;
+        Fri, 13 Jul 2018 12:56:34 -0400 (EDT)
 From:   git@jeffhostetler.com
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v1 08/25] structured-logging: add detail-event facility
-Date:   Fri, 13 Jul 2018 16:56:04 +0000
-Message-Id: <20180713165621.52017-9-git@jeffhostetler.com>
+Subject: [PATCH v1 07/25] structured-logging: t0420 basic tests
+Date:   Fri, 13 Jul 2018 16:56:03 +0000
+Message-Id: <20180713165621.52017-8-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20180713165621.52017-1-git@jeffhostetler.com>
 References: <20180713165621.52017-1-git@jeffhostetler.com>
@@ -40,213 +40,237 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Add a generic "detail-event" to structured logging.  This can be used
-to emit context-specific events for performance or debugging purposes.
-These are conceptually similar to the various GIT_TRACE_<key> messages.
+Add structured logging prereq definition "SLOG" to test-lib.sh.
+Create t0420 test script with some basic tests.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- Documentation/config.txt | 13 +++++++
- structured-logging.c     | 95 ++++++++++++++++++++++++++++++++++++++++++++++++
- structured-logging.h     | 16 ++++++++
- 3 files changed, 124 insertions(+)
+ t/t0420-structured-logging.sh | 143 ++++++++++++++++++++++++++++++++++++++++++
+ t/t0420/parse_json.perl       |  52 +++++++++++++++
+ t/test-lib.sh                 |   1 +
+ 3 files changed, 196 insertions(+)
+ create mode 100755 t/t0420-structured-logging.sh
+ create mode 100644 t/t0420/parse_json.perl
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index c79f2bf..88f93fe 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -3176,6 +3176,19 @@ slog.pretty::
- 	(EXPERIMENTAL) Pretty-print structured log data when true.
- 	(Git must be compiled with STRUCTURED_LOGGING=1.)
- 
-+slog.detail::
-+	(EXPERIMENTAL) May be set to a boolean value or a list of comma
-+	separated tokens.  Controls which categories of optional "detail"
-+	events are generated.  Default to off.  This is conceptually
-+	similar to the different GIT_TRACE_<key> values.
-++
-+Detail events are generic events with a context-specific payload.  This
-+may represent a single function call or a section of performance sensitive
-+code.
-++
-+This is intended to be an extendable facility where new events can easily
-+be added (possibly only for debugging or performance testing purposes).
+diff --git a/t/t0420-structured-logging.sh b/t/t0420-structured-logging.sh
+new file mode 100755
+index 0000000..a594af3
+--- /dev/null
++++ b/t/t0420-structured-logging.sh
+@@ -0,0 +1,143 @@
++#!/bin/sh
 +
- splitIndex.maxPercentChange::
- 	When the split index feature is used, this specifies the
- 	percent of entries the split index can contain compared to the
-diff --git a/structured-logging.c b/structured-logging.c
-index 289140f..9cbf3bd 100644
---- a/structured-logging.c
-+++ b/structured-logging.c
-@@ -34,6 +34,34 @@ static struct argv_array my__argv = ARGV_ARRAY_INIT;
- static struct strbuf my__session_id = STRBUF_INIT;
- static struct json_writer my__errors = JSON_WRITER_INIT;
- 
-+struct category_filter
-+{
-+	char *categories;
-+	int want;
-+};
++test_description='structured logging tests'
 +
-+static struct category_filter my__detail_categories;
++. ./test-lib.sh
 +
-+static void set_want_categories(struct category_filter *cf, const char *value)
-+{
-+	FREE_AND_NULL(cf->categories);
++if ! test_have_prereq SLOG
++then
++	skip_all='skipping structured logging tests'
++	test_done
++fi
 +
-+	cf->want = git_parse_maybe_bool(value);
-+	if (cf->want == -1)
-+		cf->categories = xstrdup(value);
++LOGFILE=$TRASH_DIRECTORY/test.log
++
++test_expect_success 'setup' '
++	test_commit hello &&
++	cat >key_cmd_start <<-\EOF &&
++	"event":"cmd_start"
++	EOF
++	cat >key_cmd_exit <<-\EOF &&
++	"event":"cmd_exit"
++	EOF
++	cat >key_exit_code_0 <<-\EOF &&
++	"exit_code":0
++	EOF
++	cat >key_exit_code_129 <<-\EOF &&
++	"exit_code":129
++	EOF
++	git config --local slog.pretty false &&
++	git config --local slog.path "$LOGFILE"
++'
++
++test_expect_success 'basic events' '
++	test_when_finished "rm \"$LOGFILE\"" &&
++	git status >/dev/null &&
++	grep -f key_cmd_start "$LOGFILE" &&
++	grep -f key_cmd_exit "$LOGFILE" &&
++	grep -f key_exit_code_0 "$LOGFILE"
++'
++
++test_expect_success 'basic error code and message' '
++	test_when_finished "rm \"$LOGFILE\" event_exit" &&
++	test_expect_code 129 git status --xyzzy >/dev/null 2>/dev/null &&
++	grep -f key_cmd_exit "$LOGFILE" >event_exit &&
++	grep -f key_exit_code_129 event_exit &&
++	grep "\"errors\":" event_exit
++'
++
++test_lazy_prereq PERLJSON '
++	perl -MJSON -e "exit 0"
++'
++
++# Let perl parse the resulting JSON and dump it out.
++#
++# Since the output contains PIDs, SIDs, clock values, and the full path to
++# git[.exe] we cannot have a HEREDOC with the expected result, so we look
++# for a few key fields.
++#
++test_expect_success PERLJSON 'parse JSON for basic command' '
++	test_when_finished "rm \"$LOGFILE\" event_exit" &&
++	git status >/dev/null &&
++
++	grep -f key_cmd_exit "$LOGFILE" >event_exit &&
++
++	perl "$TEST_DIRECTORY"/t0420/parse_json.perl <event_exit >parsed_exit &&
++
++	grep "row\[0\]\.version\.slog 0" <parsed_exit &&
++	grep "row\[0\]\.argv\[1\] status" <parsed_exit &&
++	grep "row\[0\]\.event cmd_exit" <parsed_exit &&
++	grep "row\[0\]\.result\.exit_code 0" <parsed_exit &&
++	grep "row\[0\]\.command status" <parsed_exit
++'
++
++test_expect_success PERLJSON 'parse JSON for branch command/sub-command' '
++	test_when_finished "rm \"$LOGFILE\" event_exit" &&
++	git branch -v >/dev/null &&
++	git branch --all >/dev/null &&
++	git branch new_branch >/dev/null &&
++
++	grep -f key_cmd_exit "$LOGFILE" >event_exit &&
++
++	perl "$TEST_DIRECTORY"/t0420/parse_json.perl <event_exit >parsed_exit &&
++
++	grep "row\[0\]\.version\.slog 0" <parsed_exit &&
++	grep "row\[0\]\.argv\[1\] branch" <parsed_exit &&
++	grep "row\[0\]\.argv\[2\] -v" <parsed_exit &&
++	grep "row\[0\]\.event cmd_exit" <parsed_exit &&
++	grep "row\[0\]\.result\.exit_code 0" <parsed_exit &&
++	grep "row\[0\]\.command branch" <parsed_exit &&
++	grep "row\[0\]\.sub_command list" <parsed_exit &&
++
++	grep "row\[1\]\.argv\[1\] branch" <parsed_exit &&
++	grep "row\[1\]\.argv\[2\] --all" <parsed_exit &&
++	grep "row\[1\]\.event cmd_exit" <parsed_exit &&
++	grep "row\[1\]\.result\.exit_code 0" <parsed_exit &&
++	grep "row\[1\]\.command branch" <parsed_exit &&
++	grep "row\[1\]\.sub_command list" <parsed_exit &&
++
++	grep "row\[2\]\.argv\[1\] branch" <parsed_exit &&
++	grep "row\[2\]\.argv\[2\] new_branch" <parsed_exit &&
++	grep "row\[2\]\.event cmd_exit" <parsed_exit &&
++	grep "row\[2\]\.result\.exit_code 0" <parsed_exit &&
++	grep "row\[2\]\.command branch" <parsed_exit &&
++	grep "row\[2\]\.sub_command create" <parsed_exit
++'
++
++test_expect_success PERLJSON 'parse JSON for checkout command' '
++	test_when_finished "rm \"$LOGFILE\" event_exit" &&
++	git checkout new_branch >/dev/null &&
++	git checkout master >/dev/null &&
++	git checkout -- hello.t >/dev/null &&
++
++	grep -f key_cmd_exit "$LOGFILE" >event_exit &&
++
++	perl "$TEST_DIRECTORY"/t0420/parse_json.perl <event_exit >parsed_exit &&
++
++	grep "row\[0\]\.version\.slog 0" <parsed_exit &&
++	grep "row\[0\]\.argv\[1\] checkout" <parsed_exit &&
++	grep "row\[0\]\.argv\[2\] new_branch" <parsed_exit &&
++	grep "row\[0\]\.event cmd_exit" <parsed_exit &&
++	grep "row\[0\]\.result\.exit_code 0" <parsed_exit &&
++	grep "row\[0\]\.command checkout" <parsed_exit &&
++	grep "row\[0\]\.sub_command switch_branch" <parsed_exit &&
++
++	grep "row\[1\]\.version\.slog 0" <parsed_exit &&
++	grep "row\[1\]\.argv\[1\] checkout" <parsed_exit &&
++	grep "row\[1\]\.argv\[2\] master" <parsed_exit &&
++	grep "row\[1\]\.event cmd_exit" <parsed_exit &&
++	grep "row\[1\]\.result\.exit_code 0" <parsed_exit &&
++	grep "row\[1\]\.command checkout" <parsed_exit &&
++	grep "row\[1\]\.sub_command switch_branch" <parsed_exit &&
++
++	grep "row\[2\]\.version\.slog 0" <parsed_exit &&
++	grep "row\[2\]\.argv\[1\] checkout" <parsed_exit &&
++	grep "row\[2\]\.argv\[2\] --" <parsed_exit &&
++	grep "row\[2\]\.argv\[3\] hello.t" <parsed_exit &&
++	grep "row\[2\]\.event cmd_exit" <parsed_exit &&
++	grep "row\[2\]\.result\.exit_code 0" <parsed_exit &&
++	grep "row\[2\]\.command checkout" <parsed_exit &&
++	grep "row\[2\]\.sub_command path" <parsed_exit
++'
++
++test_done
+diff --git a/t/t0420/parse_json.perl b/t/t0420/parse_json.perl
+new file mode 100644
+index 0000000..ca4e5bf
+--- /dev/null
++++ b/t/t0420/parse_json.perl
+@@ -0,0 +1,52 @@
++#!/usr/bin/perl
++use strict;
++use warnings;
++use JSON;
++
++sub dump_array {
++    my ($label_in, $ary_ref) = @_;
++    my @ary = @$ary_ref;
++
++    for ( my $i = 0; $i <= $#{ $ary_ref }; $i++ )
++    {
++	my $label = "$label_in\[$i\]";
++	dump_item($label, $ary[$i]);
++    }
 +}
 +
-+static int want_category(const struct category_filter *cf, const char *category)
-+{
-+	if (cf->want == 0 || cf->want == 1)
-+		return cf->want;
++sub dump_hash {
++    my ($label_in, $obj_ref) = @_;
++    my %obj = %$obj_ref;
 +
-+	if (!category || !*category)
-+		return 0;
++    foreach my $k (sort keys %obj) {
++	my $label = (length($label_in) > 0) ? "$label_in.$k" : "$k";
++	my $value = $obj{$k};
 +
-+	return !!strstr(cf->categories, category);
++	dump_item($label, $value);
++    }
 +}
 +
- /*
-  * Compute a new session id for the current process.  Build string
-  * with the start time and PID of the current process and append
-@@ -207,6 +235,40 @@ static void emit_exit_event(void)
- 	jw_release(&jw);
- }
- 
-+static void emit_detail_event(const char *category, const char *label,
-+			      const struct json_writer *data)
-+{
-+	struct json_writer jw = JSON_WRITER_INIT;
-+	uint64_t clock_us = getnanotime() / 1000;
-+
-+	/* build "detail" event */
-+	jw_object_begin(&jw, my__is_pretty);
-+	{
-+		jw_object_string(&jw, "event", "detail");
-+		jw_object_intmax(&jw, "clock_us", (intmax_t)clock_us);
-+		jw_object_intmax(&jw, "pid", (intmax_t)my__pid);
-+		jw_object_string(&jw, "sid", my__session_id.buf);
-+
-+		if (my__command_name && *my__command_name)
-+			jw_object_string(&jw, "command", my__command_name);
-+		if (my__sub_command_name && *my__sub_command_name)
-+			jw_object_string(&jw, "sub_command", my__sub_command_name);
-+
-+		jw_object_inline_begin_object(&jw, "detail");
-+		{
-+			jw_object_string(&jw, "category", category);
-+			jw_object_string(&jw, "label", label);
-+			if (data)
-+				jw_object_sub_jw(&jw, "data", data);
-+		}
-+		jw_end(&jw);
-+	}
-+	jw_end(&jw);
-+
-+	emit_event(&jw, "detail");
-+	jw_release(&jw);
++sub dump_item {
++    my ($label_in, $value) = @_;
++    if (ref($value) eq 'ARRAY') {
++	print "$label_in array\n";
++	dump_array($label_in, $value);
++    } elsif (ref($value) eq 'HASH') {
++	print "$label_in hash\n";
++	dump_hash($label_in, $value);
++    } elsif (defined $value) {
++	print "$label_in $value\n";
++    } else {
++	print "$label_in null\n";
++    }
 +}
 +
- static int cfg_path(const char *key, const char *value)
- {
- 	if (is_absolute_path(value)) {
-@@ -226,6 +288,12 @@ static int cfg_pretty(const char *key, const char *value)
- 	return 0;
- }
- 
-+static int cfg_detail(const char *key, const char *value)
-+{
-+	set_want_categories(&my__detail_categories, value);
-+	return 0;
++my $row = 0;
++while (<>) {
++    my $data = decode_json( $_ );
++    my $label = "row[$row]";
++
++    dump_hash($label, $data);
++    $row++;
 +}
 +
- int slog_default_config(const char *key, const char *value)
- {
- 	const char *sub;
-@@ -244,6 +312,8 @@ int slog_default_config(const char *key, const char *value)
- 			return cfg_path(key, value);
- 		if (!strcmp(sub, "pretty"))
- 			return cfg_pretty(key, value);
-+		if (!strcmp(sub, "detail"))
-+			return cfg_detail(key, value);
- 	}
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 2831570..3d38bc7 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1071,6 +1071,7 @@ test -n "$USE_LIBPCRE1$USE_LIBPCRE2" && test_set_prereq PCRE
+ test -n "$USE_LIBPCRE1" && test_set_prereq LIBPCRE1
+ test -n "$USE_LIBPCRE2" && test_set_prereq LIBPCRE2
+ test -z "$NO_GETTEXT" && test_set_prereq GETTEXT
++test -z "$STRUCTURED_LOGGING" || test_set_prereq SLOG
  
- 	return 0;
-@@ -424,4 +494,29 @@ void slog_error_message(const char *prefix, const char *fmt, va_list params)
- 	strbuf_release(&em);
- }
- 
-+int slog_want_detail_event(const char *category)
-+{
-+	return want_category(&my__detail_categories, category);
-+}
-+
-+void slog_emit_detail_event(const char *category, const char *label,
-+			    const struct json_writer *data)
-+{
-+	if (!my__wrote_start_event)
-+		emit_start_event();
-+
-+	if (!slog_want_detail_event(category))
-+		return;
-+
-+	if (!category || !*category)
-+		BUG("no category for slog.detail event");
-+	if (!label || !*label)
-+		BUG("no label for slog.detail event");
-+	if (data && !jw_is_terminated(data))
-+		BUG("unterminated slog.detail data: '%s' '%s' '%s'",
-+		    category, label, data->json.buf);
-+
-+	emit_detail_event(category, label, data);
-+}
-+
- #endif
-diff --git a/structured-logging.h b/structured-logging.h
-index 61e98e6..01ae55d 100644
---- a/structured-logging.h
-+++ b/structured-logging.h
-@@ -1,6 +1,8 @@
- #ifndef STRUCTURED_LOGGING_H
- #define STRUCTURED_LOGGING_H
- 
-+struct json_writer;
-+
- typedef int (*slog_fn_main_t)(int, const char **);
- 
- #if !defined(STRUCTURED_LOGGING)
-@@ -17,6 +19,8 @@ typedef int (*slog_fn_main_t)(int, const char **);
- #define slog_is_pretty() (0)
- #define slog_exit_code(exit_code) (exit_code)
- #define slog_error_message(prefix, fmt, params) do { } while (0)
-+#define slog_want_detail_event(category) (0)
-+#define slog_emit_detail_event(category, label, data) do { } while (0)
- 
- #else
- 
-@@ -91,5 +95,17 @@ int slog_exit_code(int exit_code);
-  */
- void slog_error_message(const char *prefix, const char *fmt, va_list params);
- 
-+/*
-+ * Is detail logging enabled for this category?
-+ */
-+int slog_want_detail_event(const char *category);
-+
-+/*
-+ * Write a detail event.
-+ */
-+
-+void slog_emit_detail_event(const char *category, const char *label,
-+			    const struct json_writer *data);
-+
- #endif /* STRUCTURED_LOGGING */
- #endif /* STRUCTURED_LOGGING_H */
+ # Can we rely on git's output in the C locale?
+ if test -n "$GETTEXT_POISON"
 -- 
 2.9.3
 
