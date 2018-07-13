@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C6441F597
-	for <e@80x24.org>; Mon, 16 Jul 2018 13:00:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7AC901F597
+	for <e@80x24.org>; Mon, 16 Jul 2018 13:00:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730974AbeGPN1z (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jul 2018 09:27:55 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:40339 "EHLO
+        id S1731012AbeGPN14 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jul 2018 09:27:56 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:35977 "EHLO
         mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
         with ESMTP id S1729854AbeGPN1z (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 16 Jul 2018 09:27:55 -0400
-Received: by mail-pg1-f196.google.com with SMTP id x5-v6so7474096pgp.7
-        for <git@vger.kernel.org>; Mon, 16 Jul 2018 06:00:34 -0700 (PDT)
+Received: by mail-pg1-f196.google.com with SMTP id m19-v6so7474894pgv.3
+        for <git@vger.kernel.org>; Mon, 16 Jul 2018 06:00:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Mo1CMvb0+wuF+9MKetnsbfwyw0hShCD3RS4eXfMY8EY=;
-        b=eC++2xiwriKeOisn2SNrY3lZDyw+DTa/qSh4KATpGQV7+COMlaPY1iFjJ1EPzDCwC9
-         KoX7Vfd8yULlWvkJ9pTgDXxPwphX72QWJdMcUkmuQxO/LsSJfWnVAKhCzLPWLUQOtotm
-         1NRC7QY9/uUaStG2nk//pyXuCiED6CM/3TOE95tZ8pBP9BeEQ8UxDL1UwPsnGdewtp/V
-         uvE7NH1RSPhiQX+EEU9jpAveUGG2f+HWzGEx6Q/54rY6Ghd7GqeEW4dLGC38eLrkfoB2
-         kcYhVt5/7jI0ISgzd+63gOz5pPG0gqnAxkGOuOawf0U2j0xC2xohJNdkn+nwWq+kYY3+
-         CIFQ==
+        bh=AdBtnREL8q8KusRMnxzPkr1jmNAcRFt286LLyMBu/OE=;
+        b=Gi7ek/TST9yAeLBg5Z/vAW85AtE0RLHZII7W5ovWb2uMclDKvicbo9m6zriqxRUIFs
+         BQZ09A8On6Ulth3qmlmA13BM4T+J/IGrixGs3S/7IKUU/bBp7726u0I94fvLemv4E+zO
+         Z74na6A9AB3ePz/4oC0ddESRsiJiwI3pjwwT1+EFzhxhkkpgZkX7J7HH2aPKfjg9wPKW
+         yL8wQ6tTkGndYnlR3sZ1z6fOC7p40Pi8EDVWAXYJDifJw7YaOBTIY0ADm8lvvrcY/q6y
+         C/fSUVBkl7lNxoPHnRR5IFtm4xDIOf2+OllZYYUIvdmhaLKa97ufK0FIsun+4SUibwzu
+         9l9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Mo1CMvb0+wuF+9MKetnsbfwyw0hShCD3RS4eXfMY8EY=;
-        b=ByFHlzlxhakaH11AYlEVOLGxGwVQtuD8oQzS7JZiBoEBd9Xpnf9+gOlRWN5+dC4Y/c
-         Gr5pwQjuz852T7+xO2ttP7xNwhUzXZiUYjOhsjM/irsPBby8DnMpY8dU6rrGSjnvf5bE
-         F+4A+ezmyLC85tbFn6vDnIX+4vQ/Plhv7d00fg5C/hliigjCcFPXLjUfDgQXz/E8z+JF
-         wgR162ZaDgODOtDmP42kH/mZKd/+qL3SMSOckKDwyFLZkeJ5oa08NALg6G7UpiHfBQzB
-         NRExP+Q8DxTf65WviEnMOEHY8a0JVLbDIJbU+eNgjm6Vqtjn+KKCcBXSBeZReudI6KcW
-         n+wA==
-X-Gm-Message-State: AOUpUlHeO2apWdVebZkTkbaoIRkQRMCpQiqwqA7s2uODMW2SNNUcAwhQ
-        GiPLcdr1cq4Ilx8ko7rLsdM2pg==
-X-Google-Smtp-Source: AAOMgpfuqtoPoI0z+xG6G5yim5xknTIljS0u8B70PRWVpACA5OrIvVGBXGkTIlHqey6mFiFxw86HNA==
-X-Received: by 2002:aa7:88d3:: with SMTP id p19-v6mr17956702pfo.160.1531746033567;
-        Mon, 16 Jul 2018 06:00:33 -0700 (PDT)
-Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id x68-v6sm51351571pfb.138.2018.07.16.06.00.32
+        bh=AdBtnREL8q8KusRMnxzPkr1jmNAcRFt286LLyMBu/OE=;
+        b=pzY204Ny3oUs0CjX/S0/CQccTRDUdYfAo+9x782xmIdchIViEr7py+3F0A9s8VLNRW
+         oO0sdsgUN5vzHTNy2DX1QI9odGwfAZGNwb/lX43w2B61ebpc5b7JLQBcRMu2VgG4KJ79
+         kIdtGpRqUL9e9JbWMaxjtf2tKfzK4UbplDb1MqB4Ru7MML+U+c3b+eSVISaEdVS+vq4k
+         TaIqRgXO4cb/Oe5xyUiNta6OPAwELMlp9H8Shj3tGb4sTF/hD1VfodYPQ25OConGFEqR
+         uyaQ1js10Gdl5oFPBxSPccuOLULI2D8/YR3NmT7ZXg6dYyufX+NXVKz0WIeQKV0JR0nR
+         exHw==
+X-Gm-Message-State: AOUpUlEOL2dpVKTQN4+ugSxSZTDUisNwL6FDm6QBrNbVsMkRfETFEAfv
+        1VvyZ3npUyrjyckCyYdpSOfLuw==
+X-Google-Smtp-Source: AAOMgpeo2+kr7PljSyoc4zG8l6kxsE4FXUDNuz9GMqjpDjWRHgfAQhD/t2s3WoYoTisqUSHgTcAeaQ==
+X-Received: by 2002:a62:ed5:: with SMTP id 82-v6mr18004231pfo.198.1531746034999;
+        Mon, 16 Jul 2018 06:00:34 -0700 (PDT)
+Received: from [127.0.0.1] ([40.112.139.85])
+        by smtp.gmail.com with ESMTPSA id j27-v6sm98279069pfe.48.2018.07.16.06.00.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 16 Jul 2018 06:00:32 -0700 (PDT)
-Message-Id: <95b11ced4c0355aabf458539a284bb3895d73f6f.1531746012.git.gitgitgadget@gmail.com>
+        Mon, 16 Jul 2018 06:00:34 -0700 (PDT)
+Message-Id: <1fd45ef2b15524c18322183231608fe13a733506.1531746012.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.10.git.gitgitgadget@gmail.com>
 References: <pull.10.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 13 Jul 2018 13:22:57 -0400
-Subject: [PATCH 13/16] test-reach: test can_all_from_reach_with_flags
+Date:   Fri, 13 Jul 2018 14:37:32 -0400
+Subject: [PATCH 14/16] commit-reach: replace ref_newer logic
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,192 +69,88 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The can_all_from_reach_with_flags method is used by ok_to_give_up in
-upload-pack.c to see if we have done enough negotiation during a fetch.
-This method is intentionally created to preserve state between calls to
-assist with stateful negotiation, such as over SSH.
+The ref_newer method is used by 'git push' to check if a force-push is
+required. This method does not use any kind of cutoff when walking, so
+in the case of a force-push will walk all reachable commits.
 
-To make this method testable, add a new can_all_from_reach method that
-does the initial setup and final tear-down. Call the method from
-'test-tool reach'.
+The is_descendant_of method already uses paint_down_to_common along with
+cutoffs. By translating the ref_newer arguments into the commit and
+commit_list required by is_descendant_of, we can have one fewer commit
+walk and also improve our performance!
 
-Since this is a many-to-many reachability query, add a new type of input
-to the 'test-tool reach' input format. Lines "Y:<committish>" create a
-list of commits to be the reachability targets from the commits in the
-'X' list. In the context of fetch negotiation, the 'X' commits are the
-'want' commits and the 'Y' commits are the 'have' commits.
+For a copy of the Linux repository, 'test-tool reach ref_newer' presents
+the following improvements with the specified input. In the case that
+ref_newer returns 1, there is no improvement. The improvement is in the
+second case where ref_newer returns 0.
+
+Input
+-----
+A:v4.9
+B:v3.19
+
+Before: 0.09 s
+ After: 0.09 s
+
+To test the negative case, add a new commit with parent v3.19,
+regenerate the commit-graph, and then run with B pointing at that
+commit.
+
+Before: 0.43 s
+ After: 0.09 s
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- commit-reach.c        | 47 +++++++++++++++++++++++++++++++++++++++++++
- commit-reach.h        |  2 ++
- t/helper/test-reach.c | 10 +++++++--
- t/t6600-test-reach.sh | 45 +++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 102 insertions(+), 2 deletions(-)
+ commit-reach.c | 26 +++-----------------------
+ 1 file changed, 3 insertions(+), 23 deletions(-)
 
 diff --git a/commit-reach.c b/commit-reach.c
-index e07ff993f..c5e89a2de 100644
+index c5e89a2de..c58e50fbb 100644
 --- a/commit-reach.c
 +++ b/commit-reach.c
-@@ -593,3 +593,50 @@ int can_all_from_reach_with_flag(struct object_array *from,
- 	}
- 	return 1;
+@@ -365,20 +365,11 @@ void reduce_heads_replace(struct commit_list **heads)
+ 	*heads = result;
  }
-+
-+int can_all_from_reach(struct commit_list *from, struct commit_list *to,
-+		       int cutoff_by_min_date)
-+{
-+	struct object_array from_objs = OBJECT_ARRAY_INIT;
-+	time_t min_commit_date = cutoff_by_min_date ? from->item->date : 0;
-+	struct commit_list *from_iter = from, *to_iter = to;
-+	int result;
-+
-+	while (from_iter) {
-+		add_object_array(&from_iter->item->object, NULL, &from_objs);
-+
-+		if (!parse_commit(from_iter->item)) {
-+			if (from_iter->item->date < min_commit_date)
-+				min_commit_date = from_iter->item->date;
-+		}
-+
-+		from_iter = from_iter->next;
-+	}
-+
-+	while (to_iter) {
-+		if (!parse_commit(to_iter->item)) {
-+			if (to_iter->item->date < min_commit_date)
-+				min_commit_date = to_iter->item->date;
-+		}
-+
-+		to_iter->item->object.flags |= PARENT2;
-+
-+		to_iter = to_iter->next;
-+	}
-+
-+	result = can_all_from_reach_with_flag(&from_objs, PARENT2, PARENT1,
-+					      min_commit_date);
-+
-+	while (from) {
-+		clear_commit_marks(from->item, PARENT1);
-+		from = from->next;
-+	}
-+
-+	while (to) {
-+		clear_commit_marks(to->item, PARENT2);
-+		to = to->next;
-+	}
-+
-+	object_array_clear(&from_objs);
-+	return result;
-+}
-diff --git a/commit-reach.h b/commit-reach.h
-index ce3b963e6..58de0df56 100644
---- a/commit-reach.h
-+++ b/commit-reach.h
-@@ -68,5 +68,7 @@ int reachable(struct commit *from, int with_flag, int assign_flag,
- int can_all_from_reach_with_flag(struct object_array *from,
- 				 int with_flag, int assign_flag,
- 				 time_t min_commit_date);
-+int can_all_from_reach(struct commit_list *from, struct commit_list *to,
-+		       int commit_date_cutoff);
  
- #endif
-diff --git a/t/helper/test-reach.c b/t/helper/test-reach.c
-index 73cb55208..dc9710099 100644
---- a/t/helper/test-reach.c
-+++ b/t/helper/test-reach.c
-@@ -9,7 +9,7 @@ int cmd__reach(int ac, const char **av)
+-static void unmark_and_free(struct commit_list *list, unsigned int mark)
+-{
+-	while (list) {
+-		struct commit *commit = pop_commit(&list);
+-		commit->object.flags &= ~mark;
+-	}
+-}
+-
+ int ref_newer(const struct object_id *new_oid, const struct object_id *old_oid)
  {
- 	struct object_id oid_A, oid_B;
- 	struct commit *A, *B;
--	struct commit_list *X;
-+	struct commit_list *X, *Y;
- 	struct commit **X_array;
- 	int X_nr, X_alloc;
- 	struct strbuf buf = STRBUF_INIT;
-@@ -21,7 +21,7 @@ int cmd__reach(int ac, const char **av)
- 		exit(1);
+ 	struct object *o;
+ 	struct commit *old_commit, *new_commit;
+-	struct commit_list *list, *used;
+-	int found = 0;
++	struct commit_list *old_commit_list = NULL;
  
- 	A = B = NULL;
--	X = NULL;
-+	X = Y = NULL;
- 	X_nr = 0;
- 	X_alloc = 16;
- 	ALLOC_ARRAY(X_array, X_alloc);
-@@ -66,6 +66,10 @@ int cmd__reach(int ac, const char **av)
- 				X_array[X_nr++] = c;
- 				break;
+ 	/*
+ 	 * Both new_commit and old_commit must be commit-ish and new_commit is descendant of
+@@ -399,19 +390,8 @@ int ref_newer(const struct object_id *new_oid, const struct object_id *old_oid)
+ 	if (parse_commit(new_commit) < 0)
+ 		return 0;
  
-+			case 'Y':
-+				commit_list_insert(c, &Y);
-+				break;
-+
- 			default:
- 				die("unexpected start of line: %c", buf.buf[0]);
- 		}
-@@ -92,6 +96,8 @@ int cmd__reach(int ac, const char **av)
- 			printf("%s\n", oid_to_hex(&list->item->object.oid));
- 			list = list->next;
- 		}
-+	} else if (!strcmp(av[1], "can_all_from_reach")) {
-+		printf("%s(X,Y):%d\n", av[1], can_all_from_reach(X, Y, 1));
- 	}
+-	used = list = NULL;
+-	commit_list_insert(new_commit, &list);
+-	while (list) {
+-		new_commit = pop_most_recent_commit(&list, TMP_MARK);
+-		commit_list_insert(new_commit, &used);
+-		if (new_commit == old_commit) {
+-			found = 1;
+-			break;
+-		}
+-	}
+-	unmark_and_free(list, TMP_MARK);
+-	unmark_and_free(used, TMP_MARK);
+-	return found;
++	commit_list_insert(old_commit, &old_commit_list);
++	return is_descendant_of(new_commit, old_commit_list);
+ }
  
- 	exit(0);
-diff --git a/t/t6600-test-reach.sh b/t/t6600-test-reach.sh
-index e365a4ea6..cb07c6431 100755
---- a/t/t6600-test-reach.sh
-+++ b/t/t6600-test-reach.sh
-@@ -160,4 +160,49 @@ test_expect_success 'reduce_heads' '
- 	test_three_modes reduce_heads
- '
- 
-+test_expect_success 'can_all_from_reach:hit' '
-+	cat >input <<-\EOF &&
-+		X:commit-2-10
-+		X:commit-3-9
-+		X:commit-4-8
-+		X:commit-5-7
-+		X:commit-6-6
-+		X:commit-7-5
-+		X:commit-8-4
-+		X:commit-9-3
-+		Y:commit-1-9
-+		Y:commit-2-8
-+		Y:commit-3-7
-+		Y:commit-4-6
-+		Y:commit-5-5
-+		Y:commit-6-4
-+		Y:commit-7-3
-+		Y:commit-8-1
-+	EOF
-+	printf "can_all_from_reach(X,Y):1\n" >expect &&
-+	test_three_modes can_all_from_reach
-+'
-+
-+test_expect_success 'can_all_from_reach:miss' '
-+	cat >input <<-\EOF &&
-+		X:commit-2-10
-+		X:commit-3-9
-+		X:commit-4-8
-+		X:commit-5-7
-+		X:commit-6-6
-+		X:commit-7-5
-+		X:commit-8-4
-+		X:commit-9-3
-+		Y:commit-1-9
-+		Y:commit-2-8
-+		Y:commit-3-7
-+		Y:commit-4-6
-+		Y:commit-5-5
-+		Y:commit-6-4
-+		Y:commit-8-5
-+	EOF
-+	printf "can_all_from_reach(X,Y):0\n" >expect &&
-+	test_three_modes can_all_from_reach
-+'
-+
- test_done
+ /*
 -- 
 gitgitgadget
 
