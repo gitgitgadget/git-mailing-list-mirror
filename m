@@ -2,81 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F02AE1F85E
-	for <e@80x24.org>; Fri, 13 Jul 2018 20:43:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 56F081F85E
+	for <e@80x24.org>; Fri, 13 Jul 2018 20:58:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731622AbeGMVAH (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Jul 2018 17:00:07 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58980 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1731564AbeGMVAG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Jul 2018 17:00:06 -0400
-Received: (qmail 3054 invoked by uid 109); 13 Jul 2018 20:43:52 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 13 Jul 2018 20:43:52 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7323 invoked by uid 111); 13 Jul 2018 20:43:55 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 13 Jul 2018 16:43:55 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Jul 2018 16:43:50 -0400
-Date:   Fri, 13 Jul 2018 16:43:50 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: [PATCH] blame: prefer xsnprintf to strcpy for colors
-Message-ID: <20180713204350.GA16999@sigill.intra.peff.net>
+        id S1731897AbeGMVOf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Jul 2018 17:14:35 -0400
+Received: from mail-yw0-f195.google.com ([209.85.161.195]:41038 "EHLO
+        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731639AbeGMVOf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Jul 2018 17:14:35 -0400
+Received: by mail-yw0-f195.google.com with SMTP id q129-v6so9435256ywg.8
+        for <git@vger.kernel.org>; Fri, 13 Jul 2018 13:58:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=IhHANQFYUubPTOAuzBVJ9dNZzjoFqxIwPluViHBHnBc=;
+        b=gJIAmyKEfyh73ahoRM/eTsVJYjGMI85253kokXBDU1HXDStRTwX1rY2CSPxDYDKI+I
+         SamOiDYS+b34f6qu2kVhDFiIy9yv8AiQqLqycVyv+IlEX6YjMv1D21lvjA6OUr526vfP
+         JZwPVGKGa+WHkZQO18zadPq5DWO8W/NjUrG+C2eXYu0u1CzZZnI2oVbgTqKBmG2JVUbC
+         OSQsNB4ntPMSpSPPngy5ynU+gxreoKg+G7i+uTmU4roX/FH1Vg6T0/YQ/cdxwLMenLou
+         B++CW/FMqaV4H3kNqz5LugwDgbKvUco8Ac7sVhv1GwetfcX1rtRPt8cIj/+g0nUEfKIG
+         XyBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=IhHANQFYUubPTOAuzBVJ9dNZzjoFqxIwPluViHBHnBc=;
+        b=S1PjAC4aTGevqtpjS4Q7ddaO09nKKb+ZH3BVuqyVeq2AwX62kN3Tijwo4MerwB/VY8
+         4tqcxnS4FUb/q4zdBb/kT1dCUeLYk3wanPcJ6AJWoeqy6PBijr7//aNR/CKfDJZ3qRrq
+         gMdaa/WpkfkSHwPn0PSdS+J4bnXzZkCxFXCInVZhd+XjhkRX5ccqvBH6RuQQYfnFpO3L
+         dGq90VweR5UN/Crinr2NFT2AisvqXD9i1If84ZMZl7Yy59Po4M+6MpKpxNC3Z3UaalOF
+         wNx5Ay6CjNMSbZDpcmR95FeGKIPbDf0NhNomjMJwGlWwoA6sbRY70B1M1zIn0QRGgy2E
+         ijWg==
+X-Gm-Message-State: AOUpUlGfWMDM4sBjJJOFbqg0YAwyH/CRWHI2oGOF3D38VYo9XKnhAg6U
+        slcO5pufwalE6EpPoSmoyjwgTWw+Y/QjnDyEQuDAIQ==
+X-Google-Smtp-Source: AAOMgpf2YQ3l8XUuyr4TqXjEkV6jadBxWWOS6EuOYNoD+GHoJazsEFBbLXhE1HCmY/40Wdaefc3/1CPZB1OMWmRZIck=
+X-Received: by 2002:a0d:c5c7:: with SMTP id h190-v6mr4328926ywd.421.1531515496857;
+ Fri, 13 Jul 2018 13:58:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <20180713204350.GA16999@sigill.intra.peff.net>
+In-Reply-To: <20180713204350.GA16999@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 13 Jul 2018 13:58:05 -0700
+Message-ID: <CAGZ79kakrS_tk=x4Rb9qSu9e4RVSJ=J64eOdasKhOy=g8kV68w@mail.gmail.com>
+Subject: Re: [PATCH] blame: prefer xsnprintf to strcpy for colors
+To:     Jeff King <peff@peff.net>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Our color buffers are all COLOR_MAXLEN, which fits the
-largest possible color. So we can never overflow the buffer
-by copying an existing color. However, using strcpy() makes
-it harder to audit the code-base for calls that _are_
-problems. We should use something like xsnprintf(), which
-shows the reader that we expect this never to fail (and
-provides a run-time assertion if it does, just in case).
+On Fri, Jul 13, 2018 at 1:43 PM Jeff King <peff@peff.net> wrote:
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-Another option would just be color_parse(repeated_meta_color, "cyan").
-The run-time cost is slightly higher, but it probably doesn't matter
-here, and perhaps it's more readable.
+> ---
+> Another option would just be color_parse(repeated_meta_color, "cyan").
+> The run-time cost is slightly higher, but it probably doesn't matter
+> here, and perhaps it's more readable.
+>
 
-This is a repost from:
+Thanks for posting this again; this looks good to me!
+Stefan
 
-  https://public-inbox.org/git/20180610204419.GA11273@sigill.intra.peff.net/
+> I'm sad that this strcpy() wasn't caught in review. IMHO we should avoid
+> that function altogether, even when we _think_ it can't trigger an
+> overflow. That's easier to reason about (and makes auditing easier).
 
-which I think just got overlooked as we were in the midst of the 2.18
-release cycle.
-
- builtin/blame.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 5a0388aaef..63bdf755bb 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -1069,7 +1069,9 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 		find_alignment(&sb, &output_option);
- 		if (!*repeated_meta_color &&
- 		    (output_option & OUTPUT_COLOR_LINE))
--			strcpy(repeated_meta_color, GIT_COLOR_CYAN);
-+			xsnprintf(repeated_meta_color,
-+				  sizeof(repeated_meta_color),
-+				  "%s", GIT_COLOR_CYAN);
- 	}
- 	if (output_option & OUTPUT_ANNOTATE_COMPAT)
- 		output_option &= ~(OUTPUT_COLOR_LINE | OUTPUT_SHOW_AGE_WITH_COLOR);
--- 
-2.18.0.433.gb9621797ee
+Can we somehow automatically find "bad code" either in pathces
+or in new code (such as pu), e.g. as a coccicheck for these functions?
