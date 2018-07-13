@@ -2,148 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CB17F1F85E
-	for <e@80x24.org>; Fri, 13 Jul 2018 00:03:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 48DA51F85E
+	for <e@80x24.org>; Fri, 13 Jul 2018 00:50:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387827AbeGMAPN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jul 2018 20:15:13 -0400
-Received: from mail-ua0-f202.google.com ([209.85.217.202]:42121 "EHLO
-        mail-ua0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387733AbeGMAPL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jul 2018 20:15:11 -0400
-Received: by mail-ua0-f202.google.com with SMTP id m10-v6so7342198uao.9
-        for <git@vger.kernel.org>; Thu, 12 Jul 2018 17:03:15 -0700 (PDT)
+        id S2387836AbeGMBCq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jul 2018 21:02:46 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:42999 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387827AbeGMBCp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jul 2018 21:02:45 -0400
+Received: by mail-qt0-f194.google.com with SMTP id z8-v6so17287958qto.9
+        for <git@vger.kernel.org>; Thu, 12 Jul 2018 17:50:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
-         :cc;
-        bh=oMrssp6XfHT4Kfp+IlvYj9oeFkELsiLPtJBxqLnxYwE=;
-        b=rYkB8OCe+Z5kxopxVbFoaZ65b7owKPiD0WfGR+KXiUKs+q3KEwdMsDisVpYyFmFqui
-         BFvmT/qOHvvosn/9/tYL4L7mhN6TkwZirdJmw85I80YM45APK1QspEum4JNw/tmLd2wT
-         GXuiHyXm/2wOMkbgQqgz+lc/rdVRsrE9NoRCezyIWraevYEJijtEiwltnkvCPf3oxOow
-         xtVNORdh4ota3K6qlYxQCer7yp+M7XdQDYOC54uCYoF1kKT+xRIMJOkLWujgCCZFQWUW
-         OZyF4eKIGUaY+69xFa+gkQTAW36I892Plml+1F3JTirfxeZeI9WY7iQftsNVBIWo+Zgm
-         iybw==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=utpK3xDMJsirZ672FkNlrFxXdOcdPHYfec8RS0jk8ZA=;
+        b=QwA0dlfBlmhhShifZJ5f5t5UlOVtEgHkPKNdraVai9sEOcrOYDVElGVTO+tjbH45PX
+         mQMI7lr1GBa2RYdG1UOR3S/Sj8xptA8ckC6UvF9LiyGfmUk08sOozNKrxx/ryU9KBfJT
+         ut2YUEECr7ZzuE/TvYimZSXx7jQ64aPKVsZsQImIVVBMvqdO8d3SNldgd3E3vh3oCAOn
+         YoHdClguWWQcVBd3HORidCMsykl+t4kGY9bxbGDGvjBRABVny2K0Hja+hg75XM71nRAT
+         O7Xm+XnK5mfFcycUwdqzgdJAQ0U9WbjtbpLcA1JPYhKY78IOBuHgkjIJK3gEN7f9PzCy
+         CYWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
-         :references:subject:from:to:cc;
-        bh=oMrssp6XfHT4Kfp+IlvYj9oeFkELsiLPtJBxqLnxYwE=;
-        b=lnPKbSnnNrJri8mE/HKcRUR17tHAq/atRg9xlVvKTu9ztalqGNTWYixZMjsF9oGl/s
-         CVSLdTpCXPrzaLrFVD7ePj7aPYXFzQJ3lN0QcZHNEteq+IVzH6ekh/DWc190xDIoSIAC
-         Ap+P32uVTHaqDsaoGqVJPf1ltpRGVazuDr57CB5OBAERBmeUwJ7oe6SDUc8JZgh/72nI
-         CNjHP8E4twKlm4KjegAsENxzkJwqPvAhJg6fwUyGZ2KFALMqd0nGGNX8/0jGdMcb570X
-         dcWnZxObIjB5PKrpd0p6GBFO+vv3Za0VpEbN8koHRLD/AsRL40eazA99I4t7eM9PTB4m
-         /15Q==
-X-Gm-Message-State: AOUpUlFsuEoEqk07b4OxdRIV5jxPFf/iRYVCbdz4BPMau9VKKjsCF9Q9
-        UuzhiEGJ3W8Ts04OhV8l8w1efedTCK4sgXu9a7wqe1TxOxYd9YMn8gE9v8SnY7nD9egTHIzhmlI
-        ZDK6ZlyO6vBOBP9P8aNQlqHukn0N3vYm+xXtOVl+0CZOf8JZdyP+3loAL7h1MRNgLt1Zqr3cZY9
-        bd
-X-Google-Smtp-Source: AAOMgpf51Q2tPoXTxDWUw7/E1g4Bu6/9z7sM8Nb892gMBueGjAXWNInSic8YvLPvO+8ARZDytFBGC9xTvZOkkBY7dpMI
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=utpK3xDMJsirZ672FkNlrFxXdOcdPHYfec8RS0jk8ZA=;
+        b=X2JDRTY2jklqmhLkBMOrRXSH0dSKTjnU5QQeY4XHvaEy3t43CDODcbvQIqA6hlMsnp
+         qlXh+qUS1bauq/iQMmjuuSFr+Q7fqv4p52muxRmbK/MDgQJhDF7dRQ5nkYs81Pa7HxXn
+         Tn8fKslKXoBSrfWBwzGgbCzhoTryAPnZcvTV5iQOfPx3ggJZ8WcNLWJ8SRQRMd24ZK0p
+         JkTxZX7adXQZG/Yq3XVJs+Aq4O3/BxmGQK8AFguk+DKJP5V9OxMoQZVPfBX1ub/fiRBc
+         CzUNmvBlCBafxgAG47XICoCQji1l/ybZzwozQKU4YjaMYn7GVNg0yI/y/j3ICGP5H/Lf
+         YGRQ==
+X-Gm-Message-State: AOUpUlGD0Z0vILYP04PE3hc8uBumSsxEzRF3AhAl7Kx//dxevLalkId1
+        VPCal6rg9TbGxiy/oUttpxk=
+X-Google-Smtp-Source: AAOMgpclO6tfMAT5DpHzeodJxcALKlps4uRoKBHyl5iSjcTb0ClaoLMVGPhA5UQ+RxVC9P2htYBazw==
+X-Received: by 2002:a0c:f04e:: with SMTP id b14-v6mr4934824qvl.20.1531443039836;
+        Thu, 12 Jul 2018 17:50:39 -0700 (PDT)
+Received: from [10.0.1.23] ([98.122.163.216])
+        by smtp.gmail.com with ESMTPSA id y142-v6sm1600800qka.5.2018.07.12.17.50.38
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 12 Jul 2018 17:50:38 -0700 (PDT)
+Subject: Re: [PATCH v4 16/23] config: create core.multiPackIndex setting
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com, sbeller@google.com,
+        pclouds@gmail.com, avarab@gmail.com, sunshine@sunshineco.com,
+        szeder.dev@gmail.com
+References: <20180706005321.124643-1-dstolee@microsoft.com>
+ <20180712193940.21065-1-dstolee@microsoft.com>
+ <20180712193940.21065-17-dstolee@microsoft.com>
+ <xmqqin5kupu3.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <61de4c01-daeb-2fad-491e-aa06facc3db8@gmail.com>
+Date:   Thu, 12 Jul 2018 20:50:36 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-X-Received: by 2002:a1f:2f8a:: with SMTP id v132-v6mr2091672vkv.64.1531440194818;
- Thu, 12 Jul 2018 17:03:14 -0700 (PDT)
-Date:   Thu, 12 Jul 2018 17:03:07 -0700
-In-Reply-To: <cover.1531438861.git.jonathantanmy@google.com>
-Message-Id: <5a7731b13f8607740f7519e781b22d4098b1e979.1531438861.git.jonathantanmy@google.com>
-References: <cover.1531438861.git.jonathantanmy@google.com>
-X-Mailer: git-send-email 2.18.0.203.gfac676dfb9-goog
-Subject: [PATCH 2/2] tag: don't warn if target is missing but promised
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <xmqqin5kupu3.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-deref_tag() prints a warning if the object that a tag refers to does not
-exist. However, when a partial clone has an annotated tag from its
-promisor remote, but not the object that it refers to, printing a
-warning on such a tag is incorrect.
+On 7/12/2018 5:05 PM, Junio C Hamano wrote:
+> Derrick Stolee <stolee@gmail.com> writes:
+>
+>> The core.multiPackIndex config setting controls the multi-pack-
+>> index (MIDX) feature. If false, the setting will disable all reads
+>> from the multi-pack-index file.
+>>
+>> Read this config setting in the new prepare_multi_pack_index_one()
+>> which is called during prepare_packed_git(). This check is run once
+>> per repository.
+>>
+>> Add comparison commands in t5319-multi-pack-index.sh to check
+>> typical Git behavior remains the same as the config setting is turned
+>> on and off. This currently includes 'git rev-list' and 'git log'
+>> commands to trigger several object database reads. Currently, these
+>> would only catch an error in the prepare_multi_pack_index_one(), but
+>> with later commits will catch errors in object lookups, abbreviations,
+>> and approximate object counts.
+>>
+>> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+>>
+>> midx: prepare midxed_git struct
+>>
+>> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> What is going on around here?
+Sorry. I squashed the commits, and intended to drop this second commit 
+message.
+>
+>> diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
+>> index 4a4fa26f7a..601e28a2f0 100755
+>> --- a/t/t5319-multi-pack-index.sh
+>> +++ b/t/t5319-multi-pack-index.sh
+>> @@ -3,6 +3,8 @@
+>>   test_description='multi-pack-indexes'
+>>   . ./test-lib.sh
+>>   
+>> +objdir=.git/objects
+>> +
+>>   midx_read_expect () {
+>>   	NUM_PACKS=$1
+>>   	NUM_OBJECTS=$2
+>> @@ -76,18 +78,35 @@ test_expect_success 'create objects' '
+>>   '
+>>   
+>>   test_expect_success 'write midx with one v1 pack' '
+>> -	pack=$(git pack-objects --index-version=1 pack/test <obj-list) &&
+>> -	test_when_finished rm pack/test-$pack.pack pack/test-$pack.idx pack/multi-pack-index &&
+>> -	git multi-pack-index --object-dir=. write &&
+>> -	midx_read_expect 1 18 4 .
+>> +	pack=$(git pack-objects --index-version=1 $objdir/pack/test <obj-list) &&
+>> +	test_when_finished rm $objdir/pack/test-$pack.pack \
+>> +		$objdir/pack/test-$pack.idx $objdir/pack/multi-pack-index &&
+>> +	git multi-pack-index --object-dir=$objdir write &&
+>> +	midx_read_expect 1 18 4 $objdir
+> Hmph, so we used to run tests as if $cwd were GIT_OBJECT_DIRECTORY
+> but now we are running them from the top-level of the working tree,
+> just like all the other tests?  Interesting.
+This is the first time we _need_ them in the .git/object directory.
+>>   '
+>>   
+>> +midx_git_two_modes() {
+>> +	git -c core.multiPackIndex=false $1 >expect &&
+>> +	git -c core.multiPackIndex=true $1 >actual &&
+>> +	test_cmp expect actual
+>> +}
+>> +
+>> +compare_results_with_midx() {
+> Style: "compare_results_with_midx () {", just like mdx_read_expect
+> near the top of the file, but unlike midx_git_two_modes we see
+> nearby.  Please keep "git grep 'funcname () {'" a usable way to
+> locate where a shell function is defined without forcing people to
+> type an asterisk.
 
-This occurs, for example, when the checkout that happens after a partial
-clone causes some objects to be fetched - and as part of the fetch, all
-local refs are read. The test included in this patch demonstrates this
-situation.
+Sorry that I missed these two.
 
-Therefore, do not print a warning in this case.
+Thanks,
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
- t/t5616-partial-clone.sh |  9 +++++++--
- tag.c                    | 13 ++++++++++---
- 2 files changed, 17 insertions(+), 5 deletions(-)
-
-diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-index e8dfeafe7..bbbe7537d 100755
---- a/t/t5616-partial-clone.sh
-+++ b/t/t5616-partial-clone.sh
-@@ -229,9 +229,13 @@ test_expect_success 'when partial cloning, tolerate server not sending target of
- 	git -C "$SERVER" tag -m message -a myblob "$BLOB" &&
- 
- 	# Craft a packfile including the tag, but not the blob it points to.
--	printf "%s\n%s\n--not\n%s\n" \
-+	# Also, omit objects referenced from HEAD in order to force a second
-+	# fetch (to fetch missing objects) upon the automatic checkout that
-+	# happens after a clone.
-+	printf "%s\n%s\n--not\n%s\n%s\n" \
- 		$(git -C "$SERVER" rev-parse HEAD) \
- 		$(git -C "$SERVER" rev-parse myblob) \
-+		$(git -C "$SERVER" rev-parse HEAD^{tree}) \
- 		$(git -C "$SERVER" rev-parse myblob^{blob}) |
- 		git -C "$SERVER" pack-objects --thin --stdout >incomplete.pack &&
- 
-@@ -249,7 +253,8 @@ test_expect_success 'when partial cloning, tolerate server not sending target of
- 
- 	# Exercise to make sure it works.
- 	git -c protocol.version=2 clone \
--		--filter=blob:none $HTTPD_URL/one_time_sed/server repo &&
-+		--filter=blob:none $HTTPD_URL/one_time_sed/server repo 2> err &&
-+	! grep "missing object referenced by" err &&
- 
- 	# Ensure that the one-time-sed script was used.
- 	! test -e "$HTTPD_ROOT_PATH/one-time-sed"
-diff --git a/tag.c b/tag.c
-index 3d37c1bd2..1110e3643 100644
---- a/tag.c
-+++ b/tag.c
-@@ -4,6 +4,7 @@
- #include "tree.h"
- #include "blob.h"
- #include "gpg-interface.h"
-+#include "packfile.h"
- 
- const char *tag_type = "tag";
- 
-@@ -64,12 +65,18 @@ int gpg_verify_tag(const struct object_id *oid, const char *name_to_report,
- 
- struct object *deref_tag(struct object *o, const char *warn, int warnlen)
- {
-+	struct object_id *last_oid = NULL;
- 	while (o && o->type == OBJ_TAG)
--		if (((struct tag *)o)->tagged)
--			o = parse_object(&((struct tag *)o)->tagged->oid);
--		else
-+		if (((struct tag *)o)->tagged) {
-+			last_oid = &((struct tag *)o)->tagged->oid;
-+			o = parse_object(last_oid);
-+		} else {
-+			last_oid = NULL;
- 			o = NULL;
-+		}
- 	if (!o && warn) {
-+		if (last_oid && is_promisor_object(last_oid))
-+			return NULL;
- 		if (!warnlen)
- 			warnlen = strlen(warn);
- 		error("missing object referenced by '%.*s'", warnlen, warn);
--- 
-2.18.0.203.gfac676dfb9-goog
+-Stolee
 
