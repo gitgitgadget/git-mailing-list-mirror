@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF4B51F597
-	for <e@80x24.org>; Mon, 16 Jul 2018 13:00:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2B0A1F597
+	for <e@80x24.org>; Mon, 16 Jul 2018 13:00:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730798AbeGPN1q (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jul 2018 09:27:46 -0400
-Received: from mail-pl0-f44.google.com ([209.85.160.44]:34489 "EHLO
-        mail-pl0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730621AbeGPN1q (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jul 2018 09:27:46 -0400
-Received: by mail-pl0-f44.google.com with SMTP id f6-v6so1305545plo.1
-        for <git@vger.kernel.org>; Mon, 16 Jul 2018 06:00:25 -0700 (PDT)
+        id S1730828AbeGPN1t (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jul 2018 09:27:49 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:38403 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729881AbeGPN1t (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jul 2018 09:27:49 -0400
+Received: by mail-pf0-f195.google.com with SMTP id v15-v6so6240158pff.5
+        for <git@vger.kernel.org>; Mon, 16 Jul 2018 06:00:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=g+atoe3IMwAm0GUIThsbdQmhF0GiadMMtZvodwVJBRY=;
-        b=IspDeFToDjPWSU5bcJEEzmSzfwnXgutC98IfBB9eFLZIsIbDS1P3VCHibA/alXBVib
-         kG6Zw83FQLE+B74LVdhwMP4G2ybG3AKOfmw+R0Kecrzj4PqdGJf8WX99AGOCJGplMjEp
-         9wkug830sv4tdPbmCnyL7102eQfAYz8TkhqppL+LU4PU02iJxf2H8ijUzhP8Utnm5yKa
-         tXAOd8HXBl69aK3eXJXf6ChonPdqvx2GePbRaUOxKVF+bh8ppHJzq+MrlsN8wWOhxJ13
-         o3BWHblofdz5VDHYcZDUe6mbK9FImfomafl4sNHA6eHWktFNEAKyaoi/+iSOtciMNU0t
-         kF0Q==
+        bh=lB04JKwskabFxR6iDhLuKE9r9pjnKt1CNJ/YEM4EqdE=;
+        b=MkIWSUzZGBCdmcs6jw49YDd1Zq9KBFQhm6ZOH5kDagTaHZZ55F+N90sp+ZojvqkBW+
+         AXkf/jiIKi/oKXPkjXq7YkPN2kX6GVKdTij9WPY/Zihw4m9Szx+NRUd2zSTn5zoyvmf8
+         AYiSCKreKRvtIYs+0FOqfzjV2tQT6exh451MOjyHKPdOP8FMbH+HBZb44jA6PG3UyIHw
+         728j1sQNOZI8ZVygPBvlKkrFdsvOdSi9cr/9DclJVXrFotpRbhiupykw79AMjbOcnIBx
+         qaaCG03D5lgf4sUXhtQI1xAVZcZ9Xow9c7Iz9YDSYc0T7TZdxZcONMWyDUzpU8xoao/W
+         FIWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=g+atoe3IMwAm0GUIThsbdQmhF0GiadMMtZvodwVJBRY=;
-        b=gSexGZCA5nEOFDzJ86IFHXKNurvjW8+qVqzNCDApOaXcNm/cLSIIMo9qQKDu1q0/Is
-         NgEIGm4142CjtNQmHEJ47jFd/5LUd3i0Dzc00x7nsvwyq80gY57d9HixeqBhdhWCryU7
-         gUtcoBISr7WxiwXIlecmbjiLeNiDvUlyI1JqPkw5KJueh5ZOz4+i8AYCFD0oZ/f1I5W8
-         5FYQAd1PZtWXyi3cSX/k1Rza+oOz6l8+4o/Q69qiEl9sOsPWCVF8qsjiFiYKs7XtjxTW
-         0mI+rsJNWLRPvQMEPXiQT1wl6iq2TiZ7ogX6fKwGeE0Ssv9MFr7WwbfCDR/viT12L97i
-         wwlg==
-X-Gm-Message-State: AOUpUlEckXPBc53FcrwnGDmbElyDY3mRBA9LvfzDOGdsq6vEnfSPaMZY
-        klzNK9ezj/v6f/bfie6LrgZvEg==
-X-Google-Smtp-Source: AAOMgpe0HeY7OOBCpPYKgRtd6gwIlfk8j1C8G7dZmMggzGr/eIcubHA2LhMMFCUvbYa9aO52ZNv3Og==
-X-Received: by 2002:a17:902:5381:: with SMTP id c1-v6mr16393222pli.137.1531746024903;
-        Mon, 16 Jul 2018 06:00:24 -0700 (PDT)
+        bh=lB04JKwskabFxR6iDhLuKE9r9pjnKt1CNJ/YEM4EqdE=;
+        b=BzL+yQcJyBZafOGsmJtZHd7Fx1afMKE+jFzwWKWYHQQVB+qgfCcOXfhJp/pm4Irplt
+         W6W9hk6LwyFSp+lkpp6j9ukkdTUzBIj8d5984Etuy1gu+W9F+wxJeSUIWv1oCC9Vv7W3
+         uzeDUkxfzpy6bBlTNQ+2s59/YexQiaKeGQBqTG9stlmap9PfNAjwB92+Z7s7lL1FwWmP
+         R4PMEQ/2uhC+uv7St8CU0P+aO1YJBiOBt1Wtk/KXnMJr9bZAMUU9gyqOfd3fcQuYIZFW
+         vR59c0GalePZ+Plw0BZjdviH30pkqOSuCtcLaCGuhQ5XrjwtuIxFAh5N8e6Y9Q/XWwJR
+         2F3w==
+X-Gm-Message-State: AOUpUlEmwcpiBim98wU6g6UCOA+lg57Msw1JWdKb3vDyydjFnHzJX1OW
+        QUYeAO8HDbiZooqec+uj8XMa3w==
+X-Google-Smtp-Source: AAOMgpdF2bkS0KJDjmpg9v8B0Uc2kR0tUMykftoQzMgjSmLbvEfYyhMahf36/fAixsYyDjNxgrWSuQ==
+X-Received: by 2002:a63:5a5e:: with SMTP id k30-v6mr15770193pgm.123.1531746027881;
+        Mon, 16 Jul 2018 06:00:27 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.139.85])
-        by smtp.gmail.com with ESMTPSA id p11-v6sm69392494pfj.72.2018.07.16.06.00.23
+        by smtp.gmail.com with ESMTPSA id c68-v6sm5004315pfj.51.2018.07.16.06.00.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 16 Jul 2018 06:00:23 -0700 (PDT)
-Message-Id: <cf4559e08c47adcaf4c938a325acf829a5759285.1531746011.git.gitgitgadget@gmail.com>
+        Mon, 16 Jul 2018 06:00:27 -0700 (PDT)
+Message-Id: <dbe75e7d2192a493825ef34fecfecbc021e3d4fb.1531746011.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.10.git.gitgitgadget@gmail.com>
 References: <pull.10.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 12 Jul 2018 16:52:23 -0400
-Subject: [PATCH 07/16] commit-reach: move can_all_from_reach_with_flags
+Date:   Fri, 13 Jul 2018 10:28:05 -0400
+Subject: [PATCH 09/16] test-reach: test in_merge_bases
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,203 +71,79 @@ From: Derrick Stolee <dstolee@microsoft.com>
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- commit-reach.c | 62 +++++++++++++++++++++++++++++++++++++++++++++
- commit-reach.h | 13 ++++++++++
- upload-pack.c  | 69 +-------------------------------------------------
- 3 files changed, 76 insertions(+), 68 deletions(-)
+ t/helper/test-reach.c |  6 ++++++
+ t/t6600-test-reach.sh | 18 ++++++++++++++++++
+ 2 files changed, 24 insertions(+)
 
-diff --git a/commit-reach.c b/commit-reach.c
-index 9e56f90ea..e07ff993f 100644
---- a/commit-reach.c
-+++ b/commit-reach.c
-@@ -9,6 +9,7 @@
- #include "commit-reach.h"
- 
- /* Remember to update object flag allocation in object.h */
-+#define REACHABLE       (1u<<15)
- #define PARENT1		(1u<<16)
- #define PARENT2		(1u<<17)
- #define STALE		(1u<<18)
-@@ -531,3 +532,64 @@ int commit_contains(struct ref_filter *filter, struct commit *commit,
- 		return contains_tag_algo(commit, list, cache) == CONTAINS_YES;
- 	return is_descendant_of(commit, list);
- }
-+
-+int reachable(struct commit *from, int with_flag, int assign_flag,
-+	      time_t min_commit_date)
-+{
-+	struct prio_queue work = { compare_commits_by_commit_date };
-+
-+	prio_queue_put(&work, from);
-+	while (work.nr) {
-+		struct commit_list *list;
-+		struct commit *commit = prio_queue_get(&work);
-+
-+		if (commit->object.flags & with_flag) {
-+			from->object.flags |= assign_flag;
-+			break;
-+		}
-+		if (!commit->object.parsed)
-+			parse_object(the_repository, &commit->object.oid);
-+		if (commit->object.flags & REACHABLE)
-+			continue;
-+		commit->object.flags |= REACHABLE;
-+		if (commit->date < min_commit_date)
-+			continue;
-+		for (list = commit->parents; list; list = list->next) {
-+			struct commit *parent = list->item;
-+			if (!(parent->object.flags & REACHABLE))
-+				prio_queue_put(&work, parent);
-+		}
-+	}
-+	from->object.flags |= REACHABLE;
-+	clear_commit_marks(from, REACHABLE);
-+	clear_prio_queue(&work);
-+	return (from->object.flags & assign_flag);
-+}
-+
-+int can_all_from_reach_with_flag(struct object_array *from,
-+				 int with_flag, int assign_flag,
-+				 time_t min_commit_date)
-+{
-+	int i;
-+
-+	for (i = 0; i < from->nr; i++) {
-+		struct object *from_one = from->objects[i].item;
-+
-+		if (from_one->flags & assign_flag)
-+			continue;
-+		from_one = deref_tag(the_repository, from_one, "a from object", 0);
-+		if (!from_one || from_one->type != OBJ_COMMIT) {
-+			/* no way to tell if this is reachable by
-+			 * looking at the ancestry chain alone, so
-+			 * leave a note to ourselves not to worry about
-+			 * this object anymore.
-+			 */
-+			from->objects[i].item->flags |= assign_flag;
-+			continue;
-+		}
-+		if (!reachable((struct commit *)from_one, with_flag, assign_flag,
-+			       min_commit_date))
-+			return 0;
-+	}
-+	return 1;
-+}
-diff --git a/commit-reach.h b/commit-reach.h
-index 925cb05d7..ce3b963e6 100644
---- a/commit-reach.h
-+++ b/commit-reach.h
-@@ -56,4 +56,17 @@ define_commit_slab(contains_cache, enum contains_result);
- int commit_contains(struct ref_filter *filter, struct commit *commit,
- 		    struct commit_list *list, struct contains_cache *cache);
- 
-+int reachable(struct commit *from, int with_flag, int assign_flag,
-+	      time_t min_commit_date);
-+
-+/*
-+ * Determine if every commit in 'from' can reach at least one commit
-+ * that is marked with 'with_flag'. As we traverse, use 'assign_flag'
-+ * as a marker for commits that are already visited. Do not walk
-+ * commits with date below 'min_commit_date'.
-+ */
-+int can_all_from_reach_with_flag(struct object_array *from,
-+				 int with_flag, int assign_flag,
-+				 time_t min_commit_date);
-+
- #endif
-diff --git a/upload-pack.c b/upload-pack.c
-index 96298e50e..11c426685 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -24,13 +24,13 @@
- #include "quote.h"
- #include "upload-pack.h"
- #include "serve.h"
-+#include "commit-reach.h"
- 
- /* Remember to update object flag allocation in object.h */
- #define THEY_HAVE	(1u << 11)
- #define OUR_REF		(1u << 12)
- #define WANTED		(1u << 13)
- #define COMMON_KNOWN	(1u << 14)
--#define REACHABLE	(1u << 15)
- 
- #define SHALLOW		(1u << 16)
- #define NOT_SHALLOW	(1u << 17)
-@@ -336,73 +336,6 @@ static int got_oid(const char *hex, struct object_id *oid)
- 	return 0;
- }
- 
--static int reachable(struct commit *from, int with_flag, int assign_flag,
--		     time_t min_commit_date)
--{
--	struct prio_queue work = { compare_commits_by_commit_date };
--
--	prio_queue_put(&work, from);
--	while (work.nr) {
--		struct commit_list *list;
--		struct commit *commit = prio_queue_get(&work);
--
--		if (commit->object.flags & with_flag) {
--			from->object.flags |= assign_flag;
--			break;
--		}
--		if (!commit->object.parsed)
--			parse_object(the_repository, &commit->object.oid);
--		if (commit->object.flags & REACHABLE)
--			continue;
--		commit->object.flags |= REACHABLE;
--		if (commit->date < min_commit_date)
--			continue;
--		for (list = commit->parents; list; list = list->next) {
--			struct commit *parent = list->item;
--			if (!(parent->object.flags & REACHABLE))
--				prio_queue_put(&work, parent);
--		}
--	}
--	from->object.flags |= REACHABLE;
--	clear_commit_marks(from, REACHABLE);
--	clear_prio_queue(&work);
--	return (from->object.flags & assign_flag);
--}
--
--/*
-- * Determine if every commit in 'from' can reach at least one commit
-- * that is marked with 'with_flag'. As we traverse, use 'assign_flag'
-- * as a marker for commits that are already visited. Do not walk
-- * commits with date below 'min_commit_date'.
-- */
--static int can_all_from_reach_with_flag(struct object_array *from,
--					int with_flag, int assign_flag,
--					time_t min_commit_date)
--{
--	int i;
--
--	for (i = 0; i < from->nr; i++) {
--		struct object *from_one = from->objects[i].item;
--
--		if (from_one->flags & assign_flag)
--			continue;
--		from_one = deref_tag(the_repository, from_one, "a from object", 0);
--		if (!from_one || from_one->type != OBJ_COMMIT) {
--			/* no way to tell if this is reachable by
--			 * looking at the ancestry chain alone, so
--			 * leave a note to ourselves not to worry about
--			 * this object anymore.
--			 */
--			from->objects[i].item->flags |= assign_flag;
--			continue;
--		}
--		if (!reachable((struct commit *)from_one, with_flag, assign_flag,
--			       min_commit_date))
--			return 0;
--	}
--	return 1;
--}
--
- static int ok_to_give_up(void)
+diff --git a/t/helper/test-reach.c b/t/helper/test-reach.c
+index 8cc570f3b..29104d41a 100644
+--- a/t/helper/test-reach.c
++++ b/t/helper/test-reach.c
+@@ -8,6 +8,7 @@
+ int cmd__reach(int ac, const char **av)
  {
- 	if (!have_obj.nr)
+ 	struct object_id oid_A, oid_B;
++	struct commit *A, *B;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct repository *r = the_repository;
+ 
+@@ -16,6 +17,7 @@ int cmd__reach(int ac, const char **av)
+ 	if (ac < 2)
+ 		exit(1);
+ 
++	A = B = NULL;
+ 
+ 	while (strbuf_getline(&buf, stdin) != EOF) {
+ 		struct object_id oid;
+@@ -43,10 +45,12 @@ int cmd__reach(int ac, const char **av)
+ 		switch (buf.buf[0]) {
+ 			case 'A':
+ 				oidcpy(&oid_A, &oid);
++				A = c;
+ 				break;
+ 
+ 			case 'B':
+ 				oidcpy(&oid_B, &oid);
++				B = c;
+ 				break;
+ 
+ 			default:
+@@ -57,6 +61,8 @@ int cmd__reach(int ac, const char **av)
+ 
+ 	if (!strcmp(av[1], "ref_newer"))
+ 		printf("%s:%d\n", av[1], ref_newer(&oid_A, &oid_B));
++	else if (!strcmp(av[1], "in_merge_bases"))
++		printf("%s(A,B):%d\n", av[1], in_merge_bases(A, B));
+ 
+ 	exit(0);
+ }
+diff --git a/t/t6600-test-reach.sh b/t/t6600-test-reach.sh
+index 4ffe0174d..d065f2602 100755
+--- a/t/t6600-test-reach.sh
++++ b/t/t6600-test-reach.sh
+@@ -83,4 +83,22 @@ test_expect_success 'ref_newer:hit' '
+ 	test_three_modes ref_newer
+ '
+ 
++test_expect_success 'in_merge_bases:hit' '
++	cat >input <<- EOF &&
++		A:commit-5-7
++		B:commit-8-8
++	EOF
++	printf "in_merge_bases(A,B):1\n" >expect &&
++	test_three_modes in_merge_bases
++'
++
++test_expect_success 'in_merge_bases:miss' '
++	cat >input <<- EOF &&
++		A:commit-6-8
++		B:commit-5-9
++	EOF
++	printf "in_merge_bases(A,B):0\n" >expect &&
++	test_three_modes in_merge_bases
++'
++
+ test_done
 -- 
 gitgitgadget
 
