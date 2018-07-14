@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 911311F915
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7BD771F915
 	for <e@80x24.org>; Sat, 14 Jul 2018 21:44:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731493AbeGNWFV (ORCPT <rfc822;e@80x24.org>);
-        Sat, 14 Jul 2018 18:05:21 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:36696 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731432AbeGNWFV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Jul 2018 18:05:21 -0400
-Received: by mail-wr1-f67.google.com with SMTP id h9-v6so28288819wro.3
-        for <git@vger.kernel.org>; Sat, 14 Jul 2018 14:44:54 -0700 (PDT)
+        id S1731454AbeGNWFT (ORCPT <rfc822;e@80x24.org>);
+        Sat, 14 Jul 2018 18:05:19 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:54293 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731242AbeGNWFT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Jul 2018 18:05:19 -0400
+Received: by mail-wm0-f67.google.com with SMTP id c14-v6so1394960wmb.4
+        for <git@vger.kernel.org>; Sat, 14 Jul 2018 14:44:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=RbY0mnX06eOxfAMsq5Zvj4QxsCtIWpLiQWo5iFAPxjE=;
-        b=RgdFR82cXzNq+66Vh8IZDppx0Gra3WFx9vkGRG+qgUrbRZ2xW1Dc7all1oBm5d/zru
-         ennuCTUTBvQvjdhxypCueuYieGfwIvzYQ1KtWkdU9709GfTKXQAmTRKX5umVevO9Rln6
-         16axXIG2oS9rjdEhLexrvVxGwjgAkEKhvPm/dSS/i2vtMOMD0yhUsili7Z8D8PMtV399
-         tRn5sge6IPX3OMqpcn4DLJ3wIgpZgGq8HWGgwLaLgEBSk+rwXcVgWBMj/tiXsvje+iD/
-         DCqY6ery/dpgEMymQQ0/bnzTeML5BX/MICSwTFTmPptonEzCzFtqiaGnOslwxFLlTKu7
-         53sg==
+        bh=sZBgv6Jqk9EVh6/Hijetao3liAdLmN6CKEeHufmaRQ8=;
+        b=tHo7os4HmQS8lGkrvPX6u/38a/WTh2sEkhj3KjVLzf25oSuQTg+0eZ0/UNy7ED90+c
+         w8zIPrPQU65VklYW3FuPGSDCK/8/yye44+QoilfZHFfaCtz/IJir6OucB/RwS19PptBq
+         raWP/zRSBVL9xZK8mnS5gAt3CugzExtZq+j10c5qQW8BgvGxbmRoyZyrtl7lF0ytigTs
+         rrEc3mKjs4IHaU38cNQrMPuQzqJ9Mghjj4n6gNaCxK6PB/cPAqz1S2czHj4SFUf77ILA
+         Ag9DaYooPnEN3Clqa/B4+SnNz/6/b7mhlMu05bE3uOdepbWni3gD6ypMWDNiRF7r5RxF
+         lkCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=RbY0mnX06eOxfAMsq5Zvj4QxsCtIWpLiQWo5iFAPxjE=;
-        b=OEaY/Wmzz+zJGOK99gotL7oyOPIprmB/gKNIKpZ7Mcq1t70ZbXHC1OUIeH7U1XywBA
-         Iu3uPMa5DgQTvDXcFgEZGIlYQUVcOHvhb3eooTzx+gKe0bSln74Zv4l5gFvlDVoVofkE
-         oMtTVjX6HHwQbXJA4vfedQjJ5T85j8DHyFhWxNen/g/7coFgtlwgPLWQQIHXJy8yeE61
-         2Ji1HChpnZO7BNxQRDgoMR5vWaA3A2iZfxCM96b/jXOXJymz9IK11TVQn9Dt4//LT0vD
-         AsXDblLDfUdQm+AO86to5KGS9hvgt6SnPKK3UyhClkDiP4cyFupgRQ2Qzhftfdcn45/b
-         AOSg==
-X-Gm-Message-State: AOUpUlFoxYAJWkXdVhFelrtiwUblcFpWE5WlsEhEohXHYzFnBBVGxSnU
-        bp55J/+Y8ZmxRDqrTH4XjhzPNpvw
-X-Google-Smtp-Source: AAOMgpco18ckcKayz0v/gNmjcKQ42qtZqws+36dOZ73UNUrs+hS8EE6MHUf8hH9r/dWENbn7UFXizw==
-X-Received: by 2002:adf:b786:: with SMTP id s6-v6mr8068107wre.247.1531604693404;
-        Sat, 14 Jul 2018 14:44:53 -0700 (PDT)
+        bh=sZBgv6Jqk9EVh6/Hijetao3liAdLmN6CKEeHufmaRQ8=;
+        b=UWm18gwWr5H04n1J4xrhCTL+LoFqoVmAnbPxMFdHJs1YmtFylk3rjbvNeDzJjj9euf
+         N2h+u23e9daOAIHPPLhBF9q7leUcEXiYVOEGDseUlvQ/fMtZCkUPcYbhqhYsxuFlmliQ
+         ce4i0I13hx6Cgse5/7VmF/HCKAfYTACoKORTMi8IeCG3pOk6MN3o3Im03ekTbJcoD4Zs
+         MkYRG1IlP3Abp68XrrKdyOrB8razd+W4myOqS0SUojzyEMKQiK0vb5WGJvowKn5rP3hz
+         XX0lye3BfGTIzNOGz64uu9qGcw1UIO+Ul0tfvaTtwDcb/wJ7qRFuRHCp/77oo0vrpotU
+         6bXQ==
+X-Gm-Message-State: AOUpUlGm1iiM2NSBP8EtbqLjIA6U3z9Y6XeO/CJYP23cywQ39UclcSOC
+        +9bCWjZ3W3MKFQDQIp8TAbhCOpP/
+X-Google-Smtp-Source: AAOMgpdcqSl+IwzzA4Zx6R9izM6uDkPQavlta5biMAjufZ6KAVJsL/wP63xiEe10r5leV7oP5bIi+w==
+X-Received: by 2002:a1c:6354:: with SMTP id x81-v6mr6138721wmb.23.1531604691854;
+        Sat, 14 Jul 2018 14:44:51 -0700 (PDT)
 Received: from localhost ([2.30.88.37])
-        by smtp.gmail.com with ESMTPSA id w9-v6sm273747wrk.28.2018.07.14.14.44.52
+        by smtp.gmail.com with ESMTPSA id a13-v6sm11875751wrf.93.2018.07.14.14.44.50
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 14 Jul 2018 14:44:52 -0700 (PDT)
+        Sat, 14 Jul 2018 14:44:51 -0700 (PDT)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v3 03/11] rerere: wrap paths in output in sq
-Date:   Sat, 14 Jul 2018 22:44:35 +0100
-Message-Id: <20180714214443.7184-4-t.gummerer@gmail.com>
+Subject: [PATCH v3 02/11] rerere: lowercase error messages
+Date:   Sat, 14 Jul 2018 22:44:34 +0100
+Message-Id: <20180714214443.7184-3-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.17.0.410.g65aef3a6c4
 In-Reply-To: <20180714214443.7184-1-t.gummerer@gmail.com>
 References: <20180605215219.28783-1-t.gummerer@gmail.com>
@@ -64,49 +64,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It looks like most paths in the output in the git codebase are wrapped
-in single quotes.  Standardize on that in rerere as well.
-
-Apart from being more consistent, this also makes some of the strings
-match strings that are already translated in other parts of the
-codebase, thus reducing the work for translators, when the strings are
-marked for translation in a subsequent commit.
+Documentation/CodingGuidelines mentions that error messages should be
+lowercase.  Prior to marking them for translation follow that pattern
+in rerere as well, so translators won't have to translate messages
+that don't conform to our guidelines.
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- builtin/rerere.c |  2 +-
- rerere.c         | 26 +++++++++++++-------------
- 2 files changed, 14 insertions(+), 14 deletions(-)
+ rerere.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/builtin/rerere.c b/builtin/rerere.c
-index 0bc40298c2..e0c67c98e9 100644
---- a/builtin/rerere.c
-+++ b/builtin/rerere.c
-@@ -107,7 +107,7 @@ int cmd_rerere(int argc, const char **argv, const char *prefix)
- 			const char *path = merge_rr.items[i].string;
- 			const struct rerere_id *id = merge_rr.items[i].util;
- 			if (diff_two(rerere_path(id, "preimage"), path, path, path))
--				die("unable to generate diff for %s", rerere_path(id, NULL));
-+				die("unable to generate diff for '%s'", rerere_path(id, NULL));
- 		}
- 	} else
- 		usage_with_options(rerere_usage, options);
 diff --git a/rerere.c b/rerere.c
-index c5d9ea171f..cde1f6e696 100644
+index 473d32a5cd..c5d9ea171f 100644
 --- a/rerere.c
 +++ b/rerere.c
 @@ -484,12 +484,12 @@ static int handle_file(const char *path, unsigned char *sha1, const char *output
  	io.input = fopen(path, "r");
  	io.io.wrerror = 0;
  	if (!io.input)
--		return error_errno("could not open %s", path);
-+		return error_errno("could not open '%s'", path);
+-		return error_errno("Could not open %s", path);
++		return error_errno("could not open %s", path);
  
  	if (output) {
  		io.io.output = fopen(output, "w");
  		if (!io.io.output) {
--			error_errno("could not write %s", output);
-+			error_errno("could not write '%s'", output);
+-			error_errno("Could not write %s", output);
++			error_errno("could not write %s", output);
  			fclose(io.input);
  			return -1;
  		}
@@ -114,73 +97,72 @@ index c5d9ea171f..cde1f6e696 100644
  
  	fclose(io.input);
  	if (io.io.wrerror)
--		error("there were errors while writing %s (%s)",
-+		error("there were errors while writing '%s' (%s)",
+-		error("There were errors while writing %s (%s)",
++		error("there were errors while writing %s (%s)",
  		      path, strerror(io.io.wrerror));
  	if (io.io.output && fclose(io.io.output))
--		io.io.wrerror = error_errno("failed to flush %s", path);
-+		io.io.wrerror = error_errno("failed to flush '%s'", path);
+-		io.io.wrerror = error_errno("Failed to flush %s", path);
++		io.io.wrerror = error_errno("failed to flush %s", path);
  
  	if (hunk_no < 0) {
  		if (output)
  			unlink_or_warn(output);
--		return error("could not parse conflict hunks in %s", path);
-+		return error("could not parse conflict hunks in '%s'", path);
+-		return error("Could not parse conflict hunks in %s", path);
++		return error("could not parse conflict hunks in %s", path);
  	}
  	if (io.io.wrerror)
  		return -1;
-@@ -684,17 +684,17 @@ static int merge(const struct rerere_id *id, const char *path)
- 	 * Mark that "postimage" was used to help gc.
- 	 */
- 	if (utime(rerere_path(id, "postimage"), NULL) < 0)
--		warning_errno("failed utime() on %s",
-+		warning_errno("failed utime() on '%s'",
- 			      rerere_path(id, "postimage"));
- 
+@@ -690,11 +690,11 @@ static int merge(const struct rerere_id *id, const char *path)
  	/* Update "path" with the resolution */
  	f = fopen(path, "w");
  	if (!f)
--		return error_errno("could not open %s", path);
-+		return error_errno("could not open '%s'", path);
+-		return error_errno("Could not open %s", path);
++		return error_errno("could not open %s", path);
  	if (fwrite(result.ptr, result.size, 1, f) != 1)
--		error_errno("could not write %s", path);
-+		error_errno("could not write '%s'", path);
+-		error_errno("Could not write %s", path);
++		error_errno("could not write %s", path);
  	if (fclose(f))
--		return error_errno("writing %s failed", path);
-+		return error_errno("writing '%s' failed", path);
+-		return error_errno("Writing %s failed", path);
++		return error_errno("writing %s failed", path);
  
  out:
  	free(cur.ptr);
+@@ -720,7 +720,7 @@ static void update_paths(struct string_list *update)
+ 
+ 	if (write_locked_index(&the_index, &index_lock,
+ 			       COMMIT_LOCK | SKIP_IF_UNCHANGED))
+-		die("Unable to write new index file");
++		die("unable to write new index file");
+ }
+ 
+ static void remove_variant(struct rerere_id *id)
 @@ -878,7 +878,7 @@ static int is_rerere_enabled(void)
  		return rr_cache_exists;
  
  	if (!rr_cache_exists && mkdir_in_gitdir(git_path_rr_cache()))
--		die("could not create directory %s", git_path_rr_cache());
-+		die("could not create directory '%s'", git_path_rr_cache());
+-		die("Could not create directory %s", git_path_rr_cache());
++		die("could not create directory %s", git_path_rr_cache());
  	return 1;
  }
  
-@@ -1067,9 +1067,9 @@ static int rerere_forget_one_path(const char *path, struct string_list *rr)
- 	filename = rerere_path(id, "postimage");
- 	if (unlink(filename)) {
- 		if (errno == ENOENT)
--			error("no remembered resolution for %s", path);
-+			error("no remembered resolution for '%s'", path);
- 		else
--			error_errno("cannot unlink %s", filename);
-+			error_errno("cannot unlink '%s'", filename);
- 		goto fail_exit;
- 	}
+@@ -1031,7 +1031,7 @@ static int rerere_forget_one_path(const char *path, struct string_list *rr)
+ 	 */
+ 	ret = handle_cache(path, sha1, NULL);
+ 	if (ret < 1)
+-		return error("Could not parse conflict hunks in '%s'", path);
++		return error("could not parse conflict hunks in '%s'", path);
  
-@@ -1088,7 +1088,7 @@ static int rerere_forget_one_path(const char *path, struct string_list *rr)
- 	item = string_list_insert(rr, path);
- 	free_rerere_id(item);
- 	item->util = id;
--	fprintf(stderr, "Forgot resolution for %s\n", path);
-+	fprintf(stderr, "Forgot resolution for '%s'\n", path);
- 	return 0;
- 
- fail_exit:
+ 	/* Nuke the recorded resolution for the conflict */
+ 	id = new_rerere_id(sha1);
+@@ -1049,7 +1049,7 @@ static int rerere_forget_one_path(const char *path, struct string_list *rr)
+ 		handle_cache(path, sha1, rerere_path(id, "thisimage"));
+ 		if (read_mmfile(&cur, rerere_path(id, "thisimage"))) {
+ 			free(cur.ptr);
+-			error("Failed to update conflicted state in '%s'", path);
++			error("failed to update conflicted state in '%s'", path);
+ 			goto fail_exit;
+ 		}
+ 		cleanly_resolved = !try_merge(id, path, &cur, &result);
 -- 
 2.17.0.410.g65aef3a6c4
 
