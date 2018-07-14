@@ -2,73 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE5871F915
-	for <e@80x24.org>; Sat, 14 Jul 2018 21:32:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65BCF1F933
+	for <e@80x24.org>; Sat, 14 Jul 2018 21:39:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731125AbeGNVwl (ORCPT <rfc822;e@80x24.org>);
-        Sat, 14 Jul 2018 17:52:41 -0400
-Received: from mout.gmx.net ([212.227.15.19]:34813 "EHLO mout.gmx.net"
+        id S1731390AbeGNV72 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 14 Jul 2018 17:59:28 -0400
+Received: from mail.aegee.org ([144.76.142.78]:46909 "EHLO mail.aegee.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727580AbeGNVwl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Jul 2018 17:52:41 -0400
-Received: from MININT-3BS5S37.fareast.corp.microsoft.com ([37.201.195.126]) by
- mail.gmx.com (mrgmx003 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 0M2cYX-1fxUvw2lL3-00sOqs; Sat, 14 Jul 2018 23:32:13 +0200
-Date:   Sat, 14 Jul 2018 23:32:12 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     David Brown <david@davidwbrown.name>
-cc:     git@vger.kernel.org
-Subject: Re: gitweb and Levenshtein
-In-Reply-To: <e5903365bd8679d345bf3ca7f535070d@davidwbrown.name>
-Message-ID: <nycvar.QRO.7.76.6.1807142331110.75@tvgsbejvaqbjf.bet>
-References: <e5903365bd8679d345bf3ca7f535070d@davidwbrown.name>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:JR07zzFBQpzgYihK9/36WrH42I3O6+pwBWsooHzOJJYOSkIgXQZ
- m+plFAANosq2ir8BxzvFwBLfyQvR7+cCRwt3GjQI8IcXyZ5O++NfcWIrLaEnh3B2ffkrBE8
- SfVvOCsOJcaXYlAfG9G4awt6Rwv6e1HtziSunRBaXwbNW8Un8EBQEo6+3+bYjI608xhg6Ho
- GX2GnOSvSi34eDGXMzW/A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:q6EUb3IHjfk=:XkO6MrGfX5Jzvz8kaUOYZH
- hhdRcVfOwPLoIsULh0pKwl+JgnB9dzDzlY5VeqOTOQx7eHHQ/HOIAV8NNkndt6iRPRm3ojoW4
- sEDB058tkUlOeu90djJymH6P6fA046nB8Q0ygyhL0EsQikow8Hki3XwtffDi8JcGkgrwRRfC+
- JWmoa1MQB02Xl98NW0hb4gNwCSipe5zlbQOk4QX2eRHlP6sTQIk2y0izwkhyJJXH0sNPHNtNh
- gUWIOt2pHRCyTXbQh5KG9sbLjAils0QQTH0AOJvp1lxLJ0L431PQLTf0qDyQP1thEDBvLhOr0
- uprp9pGiBntfsccg4F/DefwrdNUzRs3BQW8UQMvETRn6c/mSTK6D4Qw8xEhtYFrPJkrabCJ6A
- qrMfaHYtokJdVjS5XPGfhY5Pwjw47DFH3vSSXDFDxhWW8xioVGl6uG3UIUP1e3u3dYqd4eCJi
- H7VPyXJq2O3cam29GvjxDM77WUibSWLvt261H1cejDxevo0JFVQpb5AL3PnWiCw6vFa0RM5xj
- gzu5hL+rESOj3EJAP6yUrN5/4UK2EFSvYwLg9/rtLI+S83ukcdL6K3EpsWVfyu59/gzxPm3jc
- 4GrEcLt9oIEsI78krR20HqcgV+Gg8IM006lGO25iCjW9YsR9OMK/Na1QY7XYJjVnuYLgxyVXA
- p5uM5/0uRNUmYI4/zWN6nvu9Gbb0ETCO3JHIdaGFyGFEvlAoyGqxTlLynXLEcCdTxO7Ume/o0
- 4oG+bjS6Nd9/Rm8qSaL7FGJ6Xu9Ndg1P2g9MkpGNadutdjGrrO3Uv1U5hhKUTBNvXKeVXZm4G
- wBDV9Vw
+        id S1731285AbeGNV72 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Jul 2018 17:59:28 -0400
+Authentication-Results: mail.aegee.org/w6ELcxT0015029; auth=pass (PLAIN) smtp.auth=didopalauzov@aegee.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aegee.org; s=k4096;
+        t=1531604340; i=dkim+MSA-tls@aegee.org; r=y;
+        bh=2Q4iJtkg+HzTB5Zhp4i67lHGAhJwXaQ8PZT4pm9fL3A=;
+        h=Subject:From:To:Cc:Date:In-Reply-To:References;
+        b=TsUqDIOYpUcmASGllkm1QYRH698x6Om2ZJDgPcRziGhatc7LbG7wSooFl6fHXMrmT
+         YHrtrPFy2W1xnjd9e5BiZrloEgwqXybgq3B3Fq7cFLHWKLhN6jMa6muFlsMT59YVMF
+         ywXw53E/vR+OzCGpeN+D59pMzIGKbgBoTFNbGRMcHNEV3VZ7VE4Qw97IRfOQngwtfJ
+         QMk0NC2P3UXDytG7vk9ayatSN0mOce6r6D6Dhuk3SKVCKBC0x8jayD2Pq9piS2FimU
+         bHP7TA5zhFlemdroStbzBHrt3Ouj8JNXjq6+55zH9MnKCwUXOXniryK9kb4mdjOYX4
+         /H6iPsfyO/ciGegF2FkYw/aFfBZNIhOslIlWDpEe5/w3y7/HWkKp1AunCQkCUKtX81
+         Qvu826OxkOMmVbb6WGT4byVlNo2HUyDmitU78MJMrBlv8m+U1NbLf7+mUKNoaNu4ar
+         M+VdRiO0AUDk547SzN7dCwaE1imt9S4/HaDZDZOyVDijLjXAbC8eaGyUBwtAh8uOVb
+         Jr0WU+VYKEflyuzVFQAIpQBn4xho/0m1esO2eUxfDDZad7JAaZHKn8WbKddpkJO2wz
+         XlMOygdlasScprxQd65RptydFaKRt13FbqQNWdD4Ed+Hf5RqlIkuK5kz3cWWTCaN+U
+         9ig7LwBKvYKwUuXuMKMfcA4s=
+Authentication-Results: mail.aegee.org/w6ELcxT0015029; dkim=none
+Received: from Tylan (80-110-70-253.cgn.dynamic.surfer.at [80.110.70.253])
+        (authenticated bits=0)
+        by mail.aegee.org (8.15.2/8.15.2) with ESMTPSA id w6ELcxT0015029
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Sat, 14 Jul 2018 21:38:59 GMT
+Message-ID: <05bba1ef0a5da7662cc8c09f90bacc9059eeac05.camel@aegee.org>
+Subject: Re: bash completion with 2.18.0/maint: unknown options
+From:   =?UTF-8?Q?=D0=94=D0=B8=D0=BB=D1=8F=D0=BD_?=
+         =?UTF-8?Q?=D0=9F=D0=B0=D0=BB=D0=B0=D1=83=D0=B7=D0=BE=D0=B2?= 
+        <Dilyan.Palauzov@aegee.org>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Date:   Sat, 14 Jul 2018 21:38:59 +0000
+In-Reply-To: <20180714212433.GB6430@sigill.intra.peff.net>
+References: <d9272a12c2a38429857777f7811010956b7b6ed5.camel@aegee.org>
+         <20180714212433.GB6430@sigill.intra.peff.net>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.29.4 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Virus-Scanned: clamav-milter 0.100.1 at mail.aegee.org
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi David,
+Hello Jeff,
 
-On Thu, 12 Jul 2018, David Brown wrote:
+thanks for your answer.  You are right: I have forgotten to run 'make
+install'.  After doing so the completion works again.
 
-> Howdy, I want to hack the getweb_make_index.perl script to create a string
-> search using: https://github.com/git/git/blob/master/levenshtein.c.
+type git reports /usr/local/bin/git
+
+Regards
+  Дилян
+
+On Sat, 2018-07-14 at 17:24 -0400, Jeff King wrote:
+> On Sat, Jul 14, 2018 at 02:46:17PM +0000, Дилян Палаузов wrote:
 > 
-> How do i reference the compiled code?
+> > After upgrading to 2.18 the completion does not work:
+> > 
+> > typing "git de<TAB>" prints
+> > my@host:~$ git deUnknown option: --list-cmds=list-
+> > mainporcelain,others,nohelpers,alias,list-complete,config
+> > usage: git [--version] [--help] [-C <path>] [-c name=value]
+> > [...]
 > 
-> I would like to call this routine using Java and maybe Perl.
+> In v2.18, the completions are generated programatically using new
+> options added to the git binary. The completion and the git binary
+> you're using have to be upgraded in lockstep (this has always been the
+> case, though I think this is probably the case where not doing so would
+> have the biggest effect).
+> 
+> Are you sure the git binary you're running matches the completion?
+> 
+> You mentioned that you're sourcing the completion from a clone in
+> /git/git. What does `type git` report?
+> 
+> -Peff
 
-The code to compute the Levenshtein distance is not exposed in Git's
-command-line interface. Therefore, there is currently no way to call it
-directly from Java or Perl.
-
-The best you could do for now is to convert the code to Java or Perl.
-
-Ciao,
-Johannes
