@@ -2,65 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D14BF1F915
-	for <e@80x24.org>; Sat, 14 Jul 2018 21:24:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE5871F915
+	for <e@80x24.org>; Sat, 14 Jul 2018 21:32:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730811AbeGNVo5 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 14 Jul 2018 17:44:57 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59648 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727580AbeGNVo5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Jul 2018 17:44:57 -0400
-Received: (qmail 28465 invoked by uid 109); 14 Jul 2018 21:24:35 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 14 Jul 2018 21:24:35 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3609 invoked by uid 111); 14 Jul 2018 21:24:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 14 Jul 2018 17:24:38 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 14 Jul 2018 17:24:33 -0400
-Date:   Sat, 14 Jul 2018 17:24:33 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?0JTQuNC70Y/QvSDQn9Cw0LvQsNGD0LfQvtCy?= 
-        <Dilyan.Palauzov@aegee.org>
-Cc:     git@vger.kernel.org
-Subject: Re: bash completion with 2.18.0/maint: unknown options
-Message-ID: <20180714212433.GB6430@sigill.intra.peff.net>
-References: <d9272a12c2a38429857777f7811010956b7b6ed5.camel@aegee.org>
+        id S1731125AbeGNVwl (ORCPT <rfc822;e@80x24.org>);
+        Sat, 14 Jul 2018 17:52:41 -0400
+Received: from mout.gmx.net ([212.227.15.19]:34813 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727580AbeGNVwl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Jul 2018 17:52:41 -0400
+Received: from MININT-3BS5S37.fareast.corp.microsoft.com ([37.201.195.126]) by
+ mail.gmx.com (mrgmx003 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 0M2cYX-1fxUvw2lL3-00sOqs; Sat, 14 Jul 2018 23:32:13 +0200
+Date:   Sat, 14 Jul 2018 23:32:12 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     David Brown <david@davidwbrown.name>
+cc:     git@vger.kernel.org
+Subject: Re: gitweb and Levenshtein
+In-Reply-To: <e5903365bd8679d345bf3ca7f535070d@davidwbrown.name>
+Message-ID: <nycvar.QRO.7.76.6.1807142331110.75@tvgsbejvaqbjf.bet>
+References: <e5903365bd8679d345bf3ca7f535070d@davidwbrown.name>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <d9272a12c2a38429857777f7811010956b7b6ed5.camel@aegee.org>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:JR07zzFBQpzgYihK9/36WrH42I3O6+pwBWsooHzOJJYOSkIgXQZ
+ m+plFAANosq2ir8BxzvFwBLfyQvR7+cCRwt3GjQI8IcXyZ5O++NfcWIrLaEnh3B2ffkrBE8
+ SfVvOCsOJcaXYlAfG9G4awt6Rwv6e1HtziSunRBaXwbNW8Un8EBQEo6+3+bYjI608xhg6Ho
+ GX2GnOSvSi34eDGXMzW/A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:q6EUb3IHjfk=:XkO6MrGfX5Jzvz8kaUOYZH
+ hhdRcVfOwPLoIsULh0pKwl+JgnB9dzDzlY5VeqOTOQx7eHHQ/HOIAV8NNkndt6iRPRm3ojoW4
+ sEDB058tkUlOeu90djJymH6P6fA046nB8Q0ygyhL0EsQikow8Hki3XwtffDi8JcGkgrwRRfC+
+ JWmoa1MQB02Xl98NW0hb4gNwCSipe5zlbQOk4QX2eRHlP6sTQIk2y0izwkhyJJXH0sNPHNtNh
+ gUWIOt2pHRCyTXbQh5KG9sbLjAils0QQTH0AOJvp1lxLJ0L431PQLTf0qDyQP1thEDBvLhOr0
+ uprp9pGiBntfsccg4F/DefwrdNUzRs3BQW8UQMvETRn6c/mSTK6D4Qw8xEhtYFrPJkrabCJ6A
+ qrMfaHYtokJdVjS5XPGfhY5Pwjw47DFH3vSSXDFDxhWW8xioVGl6uG3UIUP1e3u3dYqd4eCJi
+ H7VPyXJq2O3cam29GvjxDM77WUibSWLvt261H1cejDxevo0JFVQpb5AL3PnWiCw6vFa0RM5xj
+ gzu5hL+rESOj3EJAP6yUrN5/4UK2EFSvYwLg9/rtLI+S83ukcdL6K3EpsWVfyu59/gzxPm3jc
+ 4GrEcLt9oIEsI78krR20HqcgV+Gg8IM006lGO25iCjW9YsR9OMK/Na1QY7XYJjVnuYLgxyVXA
+ p5uM5/0uRNUmYI4/zWN6nvu9Gbb0ETCO3JHIdaGFyGFEvlAoyGqxTlLynXLEcCdTxO7Ume/o0
+ 4oG+bjS6Nd9/Rm8qSaL7FGJ6Xu9Ndg1P2g9MkpGNadutdjGrrO3Uv1U5hhKUTBNvXKeVXZm4G
+ wBDV9Vw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jul 14, 2018 at 02:46:17PM +0000, Дилян Палаузов wrote:
+Hi David,
 
-> After upgrading to 2.18 the completion does not work:
+On Thu, 12 Jul 2018, David Brown wrote:
+
+> Howdy, I want to hack the getweb_make_index.perl script to create a string
+> search using: https://github.com/git/git/blob/master/levenshtein.c.
 > 
-> typing "git de<TAB>" prints
-> my@host:~$ git deUnknown option: --list-cmds=list-
-> mainporcelain,others,nohelpers,alias,list-complete,config
-> usage: git [--version] [--help] [-C <path>] [-c name=value]
-> [...]
+> How do i reference the compiled code?
+> 
+> I would like to call this routine using Java and maybe Perl.
 
-In v2.18, the completions are generated programatically using new
-options added to the git binary. The completion and the git binary
-you're using have to be upgraded in lockstep (this has always been the
-case, though I think this is probably the case where not doing so would
-have the biggest effect).
+The code to compute the Levenshtein distance is not exposed in Git's
+command-line interface. Therefore, there is currently no way to call it
+directly from Java or Perl.
 
-Are you sure the git binary you're running matches the completion?
+The best you could do for now is to convert the code to Java or Perl.
 
-You mentioned that you're sourcing the completion from a clone in
-/git/git. What does `type git` report?
-
--Peff
+Ciao,
+Johannes
