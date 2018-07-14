@@ -7,80 +7,134 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC3F81F915
-	for <e@80x24.org>; Sat, 14 Jul 2018 22:16:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62FB51F915
+	for <e@80x24.org>; Sat, 14 Jul 2018 22:20:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731429AbeGNWgj (ORCPT <rfc822;e@80x24.org>);
-        Sat, 14 Jul 2018 18:36:39 -0400
-Received: from mout.gmx.net ([212.227.15.19]:43409 "EHLO mout.gmx.net"
+        id S1731493AbeGNWlT (ORCPT <rfc822;e@80x24.org>);
+        Sat, 14 Jul 2018 18:41:19 -0400
+Received: from mout.gmx.net ([212.227.15.15]:36263 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731182AbeGNWgj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Jul 2018 18:36:39 -0400
+        id S1731182AbeGNWlT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Jul 2018 18:41:19 -0400
 Received: from MININT-3BS5S37.fareast.corp.microsoft.com ([37.201.195.126]) by
- mail.gmx.com (mrgmx003 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 0MdKkd-1fMWLC0Xqd-00IVjR; Sun, 15 Jul 2018 00:16:01 +0200
-Date:   Sun, 15 Jul 2018 00:15:59 +0200 (DST)
+ mail.gmx.com (mrgmx001 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 0LyVIk-1g9pBU3J38-015oSF; Sun, 15 Jul 2018 00:20:42 +0200
+Date:   Sun, 15 Jul 2018 00:20:41 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Ben Peart <Ben.Peart@microsoft.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "sbeller@google.com" <sbeller@google.com>
-Subject: Re: [PATCH v3] handle lower case drive letters on Windows
-In-Reply-To: <xmqqva9kurba.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1807150015350.75@tvgsbejvaqbjf.bet>
-References: <20180711175420.16940-1-benpeart@microsoft.com> <20180712154419.18100-1-benpeart@microsoft.com> <xmqqr2k8w9n2.fsf@gitster-ct.c.googlers.com> <BL0PR2101MB1012EDB64112A8805A2C3D82F4590@BL0PR2101MB1012.namprd21.prod.outlook.com>
- <xmqqmuuww7rq.fsf@gitster-ct.c.googlers.com> <BL0PR2101MB10122C1A2F038B61470A6994F4590@BL0PR2101MB1012.namprd21.prod.outlook.com> <xmqqva9kurba.fsf@gitster-ct.c.googlers.com>
+To:     Elijah Newren <newren@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v2] git-rebase--merge: modernize "git-$cmd" to "git
+ $cmd"
+In-Reply-To: <CABPp-BHrjqHVpV3bwR+aa5Q4yvARMyna10TrXPXBuKpDQ0r_tQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1807150018060.75@tvgsbejvaqbjf.bet>
+References: <20180607050615.19598-1-newren@gmail.com> <20180627074600.32149-1-newren@gmail.com> <nycvar.QRO.7.76.6.1807121743040.75@tvgsbejvaqbjf.bet> <CABPp-BHrjqHVpV3bwR+aa5Q4yvARMyna10TrXPXBuKpDQ0r_tQ@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:I96Jn6nH7OFesI4GK9vWGGNmZmDGqbNmbJeeQa25oClAnUoGM/y
- JmwbhDJluYtxigJVDi9uQiJQSs+VXh87C1EAJ1I3ecOmg3nnFN5toc6Wb0wUj0jYVf2qAln
- 02mCmns5rjTqvOzIIjVaGuEWMZ4AbARWb6cr+WS6gRvNlXZU9vQplTkBQbyF6bRAELHi7yh
- rlgMTyI/M4TlsdNj74JvQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:BjIVKYj/E2Y=:eKx1JvByUPsGnHe0pBxh4I
- tc8QujJDeb8V7D3UJ+SmtN6l0G8hA8ZpTZNr05ov9kymBlMAJ6elfUbn/TTjP+QE/GM9vxQE6
- +ubg0ZvPXjzHMdyfa/Dmpiu4glho/GW3ai1I1kqIKz9moHFWw6Z73Kv2KqxhvIBBfy9j+yWp2
- 4xErEB+BFMQTgdTwnpL6WzgcT5uqLspAvLpJ/9AEpFrZvKIoplwWSEfp/v2TPWH7iT+Q0sfip
- 91jS/l0KwUpU1o+HAdUPxXbORFhpKpJrXv28Yl/IZ0/gXRHww64x/saBTDC5IgJtQARyHL/bQ
- osE0UlFgT2l23N4WJ9wiSLiWBomntQYFnef4J/4OvjbgiaU1vgrqQ8y1ucsPdxBx+xO8I0lcO
- HTZl6L/GtjibXOkKJHy24Vl+vGRojFIZODpYKd4IlunnEkkizWSZd3c2jffXBb/bexVxreLuz
- 6AWLSYFAO7Va+c7SlOBWEw6nF8oWuOIB0LltveCTiecX1BlK9fER3nCPryLezoDNjA6d69fux
- q3jcjDUABcJZaHyr4dbodSYkK9yxGk+MMiGQIdHzE+M1/YJahSls0SDxiWoBiyGdjzk+/99li
- 1L35RYSLhNYRbsrtb2RYX9ZsCLgmNbGDnCWMS2HVAhhdefI1Dl3ZgbjUb1aBltNPriOhbwrlT
- UmVqN6arSOHX4dQhtP2CogaUpcyRvI66T4oAn1wJw3vVQpDHEhH+3ou3/GP5IlCQzIH9ivAKn
- 1smR7lzO4WUyJIUitTJAkBgLyQEbtxeF3fNmybjXic5zgqxTmQ5YvnS+BiIbm35ucWp16AAKx
- OsuSOzg
+Content-Type: multipart/mixed; boundary="8323328-1664776162-1531606842=:75"
+X-Provags-ID: V03:K1:VQWW0AVWSY7YKEPRhBn9812nstSZbF9BJYH2iIu1AXUQ/NrOrFs
+ h3bu2oYTC1w149faxb47S7obUz7lvy6Q00J2euKHvv1VllX46RrXALDK/YZcuBoQB+auUhg
+ xvZstNhEJ/59u6ko0HzUXCUSGGLFIrI/1yE/E4PstX/FC+yiEDr+MsqYxsBY3ofX6wIi6sl
+ ToZ6QqIAVQ0i8SMaXmytg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:7tE4AhOzvrs=:1WqapdwuMnD9v+TUYqrfOq
+ 94ei32Wegahma8dKrhfCWG8JiuPO+UPOMrWvW265yBpk3gJyJvcAa+bsbbrG5ssTsMkPf0KI/
+ T6uLHEgC4yu+hUY0gjywRw6oN44crJ8hyzoUhHvYhnUQ3awowK5/kLeNLIk8VOwS63r+OdkEs
+ b2uaqpX02l2ibxca0A2NqNVQYwHNzkOow3qgc84C4jeoBtbtsZOPrSZ9sdjyuLLY+5nsAmu70
+ 44CVAfMtyjoR3BzUJ+FHjZrJ6/FdXR5mZSFgW27ZKZ0pRq2+TcUZVOXK47qRpngQZKuzJscw7
+ LmwVdL4M1/SRjWkD8MuOTvkSAAScSmtzTt5yVzbKtT8Z7xqC4SajGs/vrovXeJPz4UJvBj4C0
+ hRAXZNk3aq1Skiwq9wCgBMYsVyU68dbAFNyQxt+t3/fjR+w28SnPoB0pPdaZnDr4TmiCrq/A0
+ T4sLgh47HbdLh0XSm08SeuvM0tOyWqtsKE51d4T4e7RMoJssYgKWCwkGVJFlhrFwSombVAX1i
+ dBF0bxs/8zMsqur5vb1Wm/792ggyC18owiu29zcDjrPzOu2JZOBltROELii/t+oQbujAOlstr
+ cenbYal+LkTYJAOqaljsb/qBeK00Uza8OdL+hf+2a1ejSgJS9/b0SWPnrs9yJdylk8ky66qx8
+ cyQR8ZTxUUyiG/yDn7QiN1ZFQgFr73K9TThf/aNWeIy6V005rmmTEgLe2zVuJC9NbESzorq1o
+ AcGKcL36kq0Fws9zPD+fneg1Ign8HHJOJ4pSPFzZcj64GVIF8b6RRjK7hZuId5zJwCRXSF+bF
+ d1QcB+h
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Thu, 12 Jul 2018, Junio C Hamano wrote:
+--8323328-1664776162-1531606842=:75
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-> Ben Peart <Ben.Peart@microsoft.com> writes:
-> 
-> >> > Thanks.  I thought it was strange as well until I realized you only
-> >> > see the error message if there _isn't_ a valid drive letter so seeing
-> >> > the entire path makes sense as it will likely be something like
-> >> "\\server\volume\directory"
-> >> 
-> >> Yup, that is why I thought Dscho meant to say something like
-> >> 
-> >> 	"'%s': path without valid drive prefix"
-> >> 
-> >> in my response ;-)
+Hi Elijah,
+
+On Fri, 13 Jul 2018, Elijah Newren wrote:
+
+> On Thu, Jul 12, 2018 at 8:49 AM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
 > >
-> > I'm fine with that - want me to leave it alone, spin a V4 or have you tweak it?
-> 
-> That's "helped-by Dscho" patch, so I'd leave it to him by queuing v3
-> overnight and wait to deal with the final decision by the weekend
-> ;-) That way, I do not have to make a decision on anything Windows
-> related.
+> > On Wed, 27 Jun 2018, Elijah Newren wrote:
+> >
+> >> Signed-off-by: Elijah Newren <newren@gmail.com>
+> >> ---
+> >>
+> >> Changes since v1:
+> >>   - Fixed up commit message (move below comment to below diffstat as
+> >>     originally intended)
+> >>
+> >> Long term I just want to make git-rebase--merge go away, so this patch
+> >> will eventually be obsoleted.  But since I'm waiting for multiple
+> >> topics to merge down before re-submitting that series, and since that
+> >> series has some open questions as well, I figure it's worth
+> >> (re-)submitting this simple fix in the mean time.
+> >
+> > I carry essentially the same patch in Git for Windows for a while now
+> > (more than a year, to be a little preciser):
+> >
+> > https://github.com/git-for-windows/git/commit/42c6f1c943a
+> >
+> > (but it seems that I either missed one when I wrote that commit, or I
+> > missed when it was introduced)
+>=20
+> So...I helped you get your work upstream without knowing it?  :-)
 
-The tweaked error message is fine by me.
+Yes. Thank you.
+
+> > There are more dashed forms in Git's code base, still, see e.g.
+> >
+> > https://github.com/git-for-windows/git/commit/4b3fc41b117
+> > https://github.com/git-for-windows/git/commit/c47a29c373c
+> >
+> > I would *love* to see those go away.
+>=20
+> Are there blockers or more known work needed to get these ready for
+> submission, or is it more a case of you just haven't had time to
+> submit upstream?
+
+Time is the main problem.
+
+I also meant to accompany those patches with a commit (that I did not
+manage to write yet) that optoinally skips hard-linking the builtins
+(except `git-receive-pack`, of course).
+
+> > FWIW I had originally also "undashed" the use of `git-receive-pack`, bu=
+t
+> > that breaks things, as the dashed form was unfortunately baked into the
+> > protocol (which is of course a design mistake even if Linus still denie=
+s
+> > it).
+> >
+> > It would go a long way to help with platforms and packaging methods whe=
+re
+> > hardlinks are simply inconvenient. Because we could then finally get ri=
+d
+> > of (almost) all those hardlinked builtins.
+>=20
+> I thought they were symlinked rather than hardlinked, but yeah I've
+> always found them slightly annoying.
+
+They are hardlinked, with a newly-introduced option to symlink instead
+that =C3=86var came up with IIRC.
+
+Symlinks, of course, are just as impossible to handle portably in .zip
+files as hardlinks.
 
 Ciao,
 Dscho
+--8323328-1664776162-1531606842=:75--
