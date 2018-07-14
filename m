@@ -2,95 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65BCF1F933
-	for <e@80x24.org>; Sat, 14 Jul 2018 21:39:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 414861F915
+	for <e@80x24.org>; Sat, 14 Jul 2018 21:44:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731390AbeGNV72 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 14 Jul 2018 17:59:28 -0400
-Received: from mail.aegee.org ([144.76.142.78]:46909 "EHLO mail.aegee.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731285AbeGNV72 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Jul 2018 17:59:28 -0400
-Authentication-Results: mail.aegee.org/w6ELcxT0015029; auth=pass (PLAIN) smtp.auth=didopalauzov@aegee.org
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aegee.org; s=k4096;
-        t=1531604340; i=dkim+MSA-tls@aegee.org; r=y;
-        bh=2Q4iJtkg+HzTB5Zhp4i67lHGAhJwXaQ8PZT4pm9fL3A=;
-        h=Subject:From:To:Cc:Date:In-Reply-To:References;
-        b=TsUqDIOYpUcmASGllkm1QYRH698x6Om2ZJDgPcRziGhatc7LbG7wSooFl6fHXMrmT
-         YHrtrPFy2W1xnjd9e5BiZrloEgwqXybgq3B3Fq7cFLHWKLhN6jMa6muFlsMT59YVMF
-         ywXw53E/vR+OzCGpeN+D59pMzIGKbgBoTFNbGRMcHNEV3VZ7VE4Qw97IRfOQngwtfJ
-         QMk0NC2P3UXDytG7vk9ayatSN0mOce6r6D6Dhuk3SKVCKBC0x8jayD2Pq9piS2FimU
-         bHP7TA5zhFlemdroStbzBHrt3Ouj8JNXjq6+55zH9MnKCwUXOXniryK9kb4mdjOYX4
-         /H6iPsfyO/ciGegF2FkYw/aFfBZNIhOslIlWDpEe5/w3y7/HWkKp1AunCQkCUKtX81
-         Qvu826OxkOMmVbb6WGT4byVlNo2HUyDmitU78MJMrBlv8m+U1NbLf7+mUKNoaNu4ar
-         M+VdRiO0AUDk547SzN7dCwaE1imt9S4/HaDZDZOyVDijLjXAbC8eaGyUBwtAh8uOVb
-         Jr0WU+VYKEflyuzVFQAIpQBn4xho/0m1esO2eUxfDDZad7JAaZHKn8WbKddpkJO2wz
-         XlMOygdlasScprxQd65RptydFaKRt13FbqQNWdD4Ed+Hf5RqlIkuK5kz3cWWTCaN+U
-         9ig7LwBKvYKwUuXuMKMfcA4s=
-Authentication-Results: mail.aegee.org/w6ELcxT0015029; dkim=none
-Received: from Tylan (80-110-70-253.cgn.dynamic.surfer.at [80.110.70.253])
-        (authenticated bits=0)
-        by mail.aegee.org (8.15.2/8.15.2) with ESMTPSA id w6ELcxT0015029
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Sat, 14 Jul 2018 21:38:59 GMT
-Message-ID: <05bba1ef0a5da7662cc8c09f90bacc9059eeac05.camel@aegee.org>
-Subject: Re: bash completion with 2.18.0/maint: unknown options
-From:   =?UTF-8?Q?=D0=94=D0=B8=D0=BB=D1=8F=D0=BD_?=
-         =?UTF-8?Q?=D0=9F=D0=B0=D0=BB=D0=B0=D1=83=D0=B7=D0=BE=D0=B2?= 
-        <Dilyan.Palauzov@aegee.org>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Date:   Sat, 14 Jul 2018 21:38:59 +0000
-In-Reply-To: <20180714212433.GB6430@sigill.intra.peff.net>
-References: <d9272a12c2a38429857777f7811010956b7b6ed5.camel@aegee.org>
-         <20180714212433.GB6430@sigill.intra.peff.net>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.29.4 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: clamav-milter 0.100.1 at mail.aegee.org
-X-Virus-Status: Clean
+        id S1731429AbeGNWFR (ORCPT <rfc822;e@80x24.org>);
+        Sat, 14 Jul 2018 18:05:17 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:45012 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731242AbeGNWFR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Jul 2018 18:05:17 -0400
+Received: by mail-wr1-f67.google.com with SMTP id r16-v6so28269297wrt.11
+        for <git@vger.kernel.org>; Sat, 14 Jul 2018 14:44:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=1BRcBR2cjcO95g6+ZdeVkFHujcIz5VGP7Xzw+iThbDg=;
+        b=loAGnd3hFFyPga1MKGA3X/fqvqFuygikAskWE6zK0DiQJw8pvw0sdVVqKcAv55d93/
+         aca3vWDHFF/Zi+QxBRFsglxElqjFQb7ps7cvep0xdHCNntHqMdvIuNS0AZ/PH7fT0Dwo
+         RJiHX1AzN6E4z6pm8iYeUmuzMWd1dN3fZ4TYy25JSwtInGrqLjW35GYpxidJrA59nFhP
+         4JeBqOU2+SMlZrM/FSr0NsYO3bchsOI3tf1QYCHDYPVB2Yvz4QBBRK9I2E9LoOmywvmL
+         paIrWZS/+6h5j89+XW0YJC+FpTnRlehKq3jzV5sKKy7fh0SR7IIGtvIOjcI/suVDrPYL
+         7V8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=1BRcBR2cjcO95g6+ZdeVkFHujcIz5VGP7Xzw+iThbDg=;
+        b=S2l834Ys8Zbkdhpf0WEbsLwhJ9NtDA/g9L21fPipMVIdyr7KRWvpLhFRu23TpGIhqT
+         aL/FAyiH2cQFc0nUU9PjUmcZshVaWlOUxzBtMxS9NKggvyH+51zHQc2SbMcetYDJrwsz
+         Jo+e02fwDmAnfi1dI29N7cdVr9yg1anNYNh8tEheDdI+w9m5WckjqRfRIZdRmCLhpWEq
+         bJAY2n1HKSK0gL1Q4SxGxnyLSANzl9tZSngltMqfwLs8D2mXFoGa0o5NQzG//sLOg351
+         rxTCIoSDmktgwgnfAG7eN9hMskLfoy3sO8NkosUiJPjZ/vU2EPH2k0LJJwxP3598S76j
+         nGFA==
+X-Gm-Message-State: AOUpUlHcAsNYRkJpQ803F87mGZN/CWgCDvF5ZinMoC/uQ+yc6kR7Vbq5
+        LxyD8J20zwcayrCnAWas4jbSjGHv
+X-Google-Smtp-Source: AAOMgpeOhHnilgnjiADoGM8ISZCPokr7JtdenuCoQkhWc3nb/NKg8cG9PFdLZMPRmuhIF3Ua4V16rQ==
+X-Received: by 2002:adf:8466:: with SMTP id 93-v6mr7603099wrf.274.1531604690427;
+        Sat, 14 Jul 2018 14:44:50 -0700 (PDT)
+Received: from localhost ([2.30.88.37])
+        by smtp.gmail.com with ESMTPSA id m129-v6sm14147809wmb.46.2018.07.14.14.44.49
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 14 Jul 2018 14:44:49 -0700 (PDT)
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: [PATCH v3 01/11] rerere: unify error messages when read_cache fails
+Date:   Sat, 14 Jul 2018 22:44:33 +0100
+Message-Id: <20180714214443.7184-2-t.gummerer@gmail.com>
+X-Mailer: git-send-email 2.17.0.410.g65aef3a6c4
+In-Reply-To: <20180714214443.7184-1-t.gummerer@gmail.com>
+References: <20180605215219.28783-1-t.gummerer@gmail.com>
+ <20180714214443.7184-1-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Jeff,
+We have multiple different variants of the error message we show to
+the user if 'read_cache' fails.  The "Could not read index" variant we
+are using in 'rerere.c' is currently not used anywhere in translated
+form.
 
-thanks for your answer.  You are right: I have forgotten to run 'make
-install'.  After doing so the completion works again.
+As a subsequent commit will mark all output that comes from 'rerere.c'
+for translation, make the life of the translators a little bit easier
+by using a string that is used elsewhere, and marked for translation
+there, and thus most likely already translated.
 
-type git reports /usr/local/bin/git
+"index file corrupt" seems to be the most common error message we show
+when 'read_cache' fails, so use that here as well.
 
-Regards
-  Дилян
+Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+---
+ rerere.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-On Sat, 2018-07-14 at 17:24 -0400, Jeff King wrote:
-> On Sat, Jul 14, 2018 at 02:46:17PM +0000, Дилян Палаузов wrote:
-> 
-> > After upgrading to 2.18 the completion does not work:
-> > 
-> > typing "git de<TAB>" prints
-> > my@host:~$ git deUnknown option: --list-cmds=list-
-> > mainporcelain,others,nohelpers,alias,list-complete,config
-> > usage: git [--version] [--help] [-C <path>] [-c name=value]
-> > [...]
-> 
-> In v2.18, the completions are generated programatically using new
-> options added to the git binary. The completion and the git binary
-> you're using have to be upgraded in lockstep (this has always been the
-> case, though I think this is probably the case where not doing so would
-> have the biggest effect).
-> 
-> Are you sure the git binary you're running matches the completion?
-> 
-> You mentioned that you're sourcing the completion from a clone in
-> /git/git. What does `type git` report?
-> 
-> -Peff
+diff --git a/rerere.c b/rerere.c
+index e0862e2778..473d32a5cd 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -568,7 +568,7 @@ static int find_conflict(struct string_list *conflict)
+ {
+ 	int i;
+ 	if (read_cache() < 0)
+-		return error("Could not read index");
++		return error("index file corrupt");
+ 
+ 	for (i = 0; i < active_nr;) {
+ 		int conflict_type;
+@@ -601,7 +601,7 @@ int rerere_remaining(struct string_list *merge_rr)
+ 	if (setup_rerere(merge_rr, RERERE_READONLY))
+ 		return 0;
+ 	if (read_cache() < 0)
+-		return error("Could not read index");
++		return error("index file corrupt");
+ 
+ 	for (i = 0; i < active_nr;) {
+ 		int conflict_type;
+@@ -1103,7 +1103,7 @@ int rerere_forget(struct pathspec *pathspec)
+ 	struct string_list merge_rr = STRING_LIST_INIT_DUP;
+ 
+ 	if (read_cache() < 0)
+-		return error("Could not read index");
++		return error("index file corrupt");
+ 
+ 	fd = setup_rerere(&merge_rr, RERERE_NOAUTOUPDATE);
+ 	if (fd < 0)
+-- 
+2.17.0.410.g65aef3a6c4
 
