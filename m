@@ -7,58 +7,62 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C44CF1F915
-	for <e@80x24.org>; Sat, 14 Jul 2018 17:56:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D9561F915
+	for <e@80x24.org>; Sat, 14 Jul 2018 18:13:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728135AbeGNSPu (ORCPT <rfc822;e@80x24.org>);
-        Sat, 14 Jul 2018 14:15:50 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:57998 "EHLO
+        id S1731051AbeGNSdq (ORCPT <rfc822;e@80x24.org>);
+        Sat, 14 Jul 2018 14:33:46 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58024 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727079AbeGNSPu (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 14 Jul 2018 14:15:50 -0400
+        by vger.kernel.org with ESMTP id S1727580AbeGNSdq (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 14 Jul 2018 14:33:46 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:5996:38d5:9b31:ef84])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B73086047B;
-        Sat, 14 Jul 2018 17:56:00 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 48CA06047B;
+        Sat, 14 Jul 2018 18:13:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1531590961;
-        bh=t1fEpGoMpHrYC1PyoTcASkGbJwBnuB7yvcMxVwIOjTs=;
+        s=default; t=1531592032;
+        bh=OnECoGhlZeR0NBM1Gkvr9xwKOjk7EFcJaDvo/cO+xf4=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=TOZ3daXPsaneiSRmkyO3kd9kDZyoPez+DVLmRLvVOVMg4muQRm/FmU4isKUIF6b9L
-         cTgswYNM9ezdVYtpNADWWTnVacYG+6r8zil69/aUbuGFvFmJswOwkAnl+GtLPuaJdi
-         sKfUOy8YyNMUDaZuit5oy/dzFVYNsGJzWzB1TpTsNjC7rEM/36cpRKthgrxjvcYLpW
-         4wtqPW92FMZLGXkC4WI2lo6OFGnEAdPwpwtWXufbdvzfklpkWRv79v3yFxBB3bP2lF
-         NnVOKFdqCoyNAWi48XOJGbuWBFCNv3FsPdLSbA/M125ZgLweWSSEXFW0e8h+mD99mF
-         UGHWmUcmZWsCvOLYw+zYkL8grGtbkjPe2HrUv1VO7Wx9oIV+m787Mef8a3a4sNvrDe
-         2crt2juaOPVsE4rJtImaFwSmbl70QbaiL0eSxv+vjddUfwg7X4iZ/yPvsLJejYczGE
-         LshfdDXjAJoJAfvuYnkHcEgZUewWh1DTlPLKDfV587FfF3Z+RRx
-Date:   Sat, 14 Jul 2018 17:55:55 +0000
+        b=RFUwsE6LwFpzmwJItxceKYLjccd4wSkmuGf3/BtT/rmrmRA+wUrINSLbS1AtHBob3
+         mj7vMHgyzS1pRG1K+wBhThNfxWH/vvtrmGbxKGq5pTvJUguSRj20zygGZNPyCYxxiC
+         OkUX/OMwmXC2+DeU07oox+lZ0/+BqcE6RRutRrEQ6mHLME4CQyRvjG5h9dP6XOYwuw
+         keLBfw8YPSWMK6N7qFCinABPzdButRl//v1SYhTDF6hQZATuC/EyxHL33M1ja/gmef
+         /9O41jpwZuMXOO1EjJbthutBt0lDkUQEm0GglUbGF5YZfEtw3Lew9fvll8l4v9w1xU
+         eWz5nwIsb94Eu3Y6F6BizP9Z7OBeJCVjIX8Eb/WkcKBm2ALmfpQWh5RMG4TrU/hvkm
+         VP4I9B9EYpXKaJM6BulEWVpBYtrabZV7iETqUxvCtccKPkCxxVyFLG5QPBvge8ragX
+         FeIJpAR+jJZc+F0RAoJXJssUOKJMuq+v+MNST1YDLcGOtq7O2Ym
+Date:   Sat, 14 Jul 2018 18:13:47 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>,
+Cc:     Henning Schild <henning.schild@siemens.com>, git@vger.kernel.org,
+        Eric Sunshine <sunshine@sunshineco.com>,
         Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Vitali Lovich <vlovich@gmail.com>
-Subject: Re: [PATCH] sequencer: pass absolute GIT_WORK_TREE to exec commands
-Message-ID: <20180714175555.GD1042117@genre.crustytoothpaste.net>
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Ben Toews <mastahyeti@gmail.com>, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v2 7/9] gpg-interface: introduce new config to select per
+ gpg format program
+Message-ID: <20180714181347.GE1042117@genre.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Jacob Keller <jacob.keller@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Henning Schild <henning.schild@siemens.com>, git@vger.kernel.org,
+        Eric Sunshine <sunshine@sunshineco.com>,
         Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Vitali Lovich <vlovich@gmail.com>
-References: <20180713230548.GC1042117@genre.crustytoothpaste.net>
- <20180714003505.67650-1-sandals@crustytoothpaste.net>
- <20180714005702.GA20399@sigill.intra.peff.net>
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Ben Toews <mastahyeti@gmail.com>, Taylor Blau <me@ttaylorr.com>
+References: <cover.1531208187.git.henning.schild@siemens.com>
+ <4905c1907a866c0fd1a4dac978dd6ca3e468ac43.1531208187.git.henning.schild@siemens.com>
+ <20180710165412.GE23624@sigill.intra.peff.net>
+ <20180710165638.GF23624@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Ycz6tD7Th1CMF4v7"
+        protocol="application/pgp-signature"; boundary="HnQK338I3UIa/qiP"
 Content-Disposition: inline
-In-Reply-To: <20180714005702.GA20399@sigill.intra.peff.net>
+In-Reply-To: <20180710165638.GF23624@sigill.intra.peff.net>
 X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
  4.17.0-1-amd64)
 User-Agent: Mutt/1.10.0 (2018-05-17)
@@ -69,72 +73,58 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---Ycz6tD7Th1CMF4v7
+--HnQK338I3UIa/qiP
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jul 13, 2018 at 08:57:03PM -0400, Jeff King wrote:
-> On Sat, Jul 14, 2018 at 12:35:05AM +0000, brian m. carlson wrote:
+On Tue, Jul 10, 2018 at 12:56:38PM -0400, Jeff King wrote:
+> On Tue, Jul 10, 2018 at 12:54:13PM -0400, Jeff King wrote:
 >=20
-> > diff --git a/sequencer.c b/sequencer.c
-> > index 5354d4d51e..c8e16f9168 100644
-> > --- a/sequencer.c
-> > +++ b/sequencer.c
-> > @@ -2636,6 +2636,8 @@ static int do_exec(const char *command_line)
-> >  	fprintf(stderr, "Executing: %s\n", command_line);
-> >  	child_argv[0] =3D command_line;
-> >  	argv_array_pushf(&child_env, "GIT_DIR=3D%s", absolute_path(get_git_di=
-r()));
-> > +	argv_array_pushf(&child_env, "GIT_WORK_TREE=3D%s",
-> > +			 absolute_path(get_git_work_tree()));
-> >  	status =3D run_command_v_opt_cd_env(child_argv, RUN_USING_SHELL, NULL,
-> >  					  child_env.argv);
-> > =20
+> > Should we allow:
+> >=20
+> >   [gpg "OpenPGP"]
+> >   program =3D whatever
+> >=20
+> > given that we allow:
+> >=20
+> >   [gpg]
+> >   format =3D OpenPGP
+> >=20
+> > ? I think just using strcasecmp() here would be sufficient. But I wonder
+> > if it is a symptom of using the wrong tool (subsections) when we don't
+> > need it.
 >=20
-> As a general rule of "always pass GIT_WORK_TREE with GIT_DIR", you have
-> to deal with the case where there _isn't_ a work tree. Are we OK here
-> because this code is inside sequencer.c, and you cannot do a sequencer
-> operation without a work tree?
+> I did just read the discussion in response to v1, where everybody told
+> you the opposite. ;)
+>=20
+> So I guess my question/points are more for brian and Junio.
 
-I believe that's correct.  We only call this code path from
-sequencer_pick_commits or sequencer_continue, and those code paths are
-only called from revert, commit, and rebase--helper; all of those
-require a working tree.
-
-> So I think it would also work to set:
->=20
->   GIT_IMPLICIT_WORK_TREE=3D0
->=20
-> here. But if the answer to my "are we OK" above is yes, I am fine with
-> either that solution or the one you show here (but I think the commit
-> message should probably mention it).
-
-I'll reroll with a mention of that in the commit message.  Thanks for a
-careful review.
+I'm okay with us forcing "openpgp".  That seems sane enough for now, and
+if people scream loudly, we can loosen it.
 --=20
 brian m. carlson: Houston, Texas, US
 OpenPGP: https://keybase.io/bk2204
 
---Ycz6tD7Th1CMF4v7
+--HnQK338I3UIa/qiP
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.8 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAltKOSsACgkQv1NdgR9S
-9ov1nA/+IB7L/CjwmEw3rzNpK/LN/5YIOXrvNb4Oe7pgtiKEipArYzyubyYwTOkh
-xwN864gG9JzCscRB2ou7Cw+mJU2DuuoZ5KASr8oCtQD6HMIilfXY2Hvm2NlTqwEq
-egPJqGOTfznhAgUVZb5obTV0lHZRbXdWaU7fCmmBTdoDtcm0LogpDZYswbSAgG3G
-wP/B8hhSMcRtEzzWQtOOARbIALy7vf/P2BE1QALq/0ovlFc9WIGdfeI4FeN8vwZ6
-GPGZ0CkNuKH0CjFpr7uF6HZ+hUp3pPVkC0NVEEFhggaqaVpstfAIVIr4b3viPLa+
-1hC2fjk2FQPS0wXwaI6oY/cBlgsoXQTbXTr9xP0kLkhr8a/lAIo8gHnUQJbvXqzP
-Ber6qRG5podPNvZgBLlIuCYWtjOYEgc0fuysvyJWhQdXF9ljJ5UcLiXeNSEBwx9y
-POYz381Fv15ShFi6uq2zVTb7VRWrGpFSTyW16dbZyMMM/ycaKzbG6UkY/QAtJsUt
-0gq9CfymzWRzqzxiVaVv2qJC+cZDTGMUIwinOwrG3cwPJwvPPiHbYCjUwXLw3Hl/
-tj0hhtQl/ZOvg+O7rDjn/mLhvRhSSVavAIj0MY/CjZVsBC6jSXrN+AKf42BqdhUT
-J1WSn/EKBfO4ApTKRSXGOS0hryiZPySai0+dDWrF1boYVfxR1Mc=
-=unG4
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAltKPVsACgkQv1NdgR9S
+9osmFQ/+Lg8efIc9251Ys5yG+G0xmIx4Yh8zHtp732agXMCCySyBrUfUNJa+lemS
+dR4a/Cram357wG78uAiimTRqda1QsPe9PpUwlFqtroJ/xoUEKan3YR31k95Gci0H
+PYAuvs+WDXf6LP5aCWJkMSQ96HMk51FZWKSrz+35Kti22AuRDcLWtWua5J+1z+iA
+DcylcD2kxIsazuYqmqeqjYgCxwSjeiuH1+OHvU9Bsi1jxnSLH/wOLnnzcc6btxeR
+O7s1vdH/zqyUWpspSMjnMkcyv+f6C4XRFf7VX/Jku6zq0tEl35e5Bvlv3FW1zWjO
+95nBvyScHOjSU5wtw5msLVD6qFz611NP5HbdIzLSiIdqG5LkmY+6dztTxMeRnekd
+K1IXRinjBD1VOCyMia2p2AkqF1HXwVs9FiG/rA11MB460AFcMTUrDIiiAxu9c2Mn
+Y5GfrifVlp4iu3A73vObBkMAC5/vwbJo3uFnm4D3O5WpzixS4bww/Y+O8DUMuWzv
+/2VCBhKevD0MqOoCLF1xs2IuB4cbxxvbdGeQzpktJ2JD6g+oCyNulZTeKFViaHL+
+FGVXx9FkdcnhZ55nvvXK0GZTkx57M+lF6gepdzd9Relm0XpVwFzSM1//Izpj5ig3
++PbWlGZNKeAvvP/m6twWiHhyd/qzjrE9na14JwETmYR/FmiGMnY=
+=anjG
 -----END PGP SIGNATURE-----
 
---Ycz6tD7Th1CMF4v7--
+--HnQK338I3UIa/qiP--
