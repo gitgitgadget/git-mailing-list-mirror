@@ -2,111 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1953D1F915
-	for <e@80x24.org>; Sat, 14 Jul 2018 21:09:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4474C1F915
+	for <e@80x24.org>; Sat, 14 Jul 2018 21:20:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731429AbeGNV3r (ORCPT <rfc822;e@80x24.org>);
-        Sat, 14 Jul 2018 17:29:47 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58174 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729637AbeGNV3r (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 14 Jul 2018 17:29:47 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:5996:38d5:9b31:ef84])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5D4DE6047B;
-        Sat, 14 Jul 2018 21:09:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1531602562;
-        bh=Q4DPRs/rqaZFeUXgJvvVN8tMRalzXJBE76EOokZTQcI=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=OCL9l1Ip/Pc6ogMi7B42dPJlhg1ZZ6jf9S4vipNLy2uwU4qIYoCCGf/4zcmZgsuwX
-         5sFUljWGv8eRJYnc6ttz9Mg98FwHOYvw/wbXXEIX46bTObXGBcFlF+4KczifOSZ09j
-         8iNB4tOSNE7yx35knTsEnruldkJClOudb0SHsVB36JHz9YoA6WASEjz+GRfGYpBMwy
-         dbEqCi39BqEpEBh8tiWrB4d7h9pQy0EZTz3WOLDRYbIFE5+2y2Hpzpd1Bo6eLsZrfB
-         KcU+Q7UuoSxm5DG52+BZNsMIl98Kx7wX+UyWEcG0O/sgiZmWsb2MBFj48pIQzYbou8
-         E7l0mlb+piBAEWkKa7dur/wPK6Zf7l/GfBJykdksbSWP3Ml5WzFm7EeOYOMsssPpq0
-         8yj9BJT5sYIdC2QEuEJNnuLGHT5loqWmUhO+AZcw6jyiV2LjWn0k6dPCHYiuVqBVP8
-         PCuKTKMozUBrN7HWK7zRnIVsFrWzpsdntXaFDUdqXc7oQJFcS/Y
-Date:   Sat, 14 Jul 2018 21:09:17 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+        id S1731280AbeGNVkN (ORCPT <rfc822;e@80x24.org>);
+        Sat, 14 Jul 2018 17:40:13 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59632 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1731213AbeGNVkN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Jul 2018 17:40:13 -0400
+Received: (qmail 28200 invoked by uid 109); 14 Jul 2018 21:19:52 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 14 Jul 2018 21:19:52 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3576 invoked by uid 111); 14 Jul 2018 21:19:55 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 14 Jul 2018 17:19:55 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 14 Jul 2018 17:19:50 -0400
+Date:   Sat, 14 Jul 2018 17:19:50 -0400
+From:   Jeff King <peff@peff.net>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
         Vitali Lovich <vlovich@gmail.com>
-Subject: Re: [PATCH] sequencer: pass absolute GIT_WORK_TREE to exec commands
-Message-ID: <20180714210917.GI1042117@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Vitali Lovich <vlovich@gmail.com>
-References: <20180713230548.GC1042117@genre.crustytoothpaste.net>
- <20180714003505.67650-1-sandals@crustytoothpaste.net>
- <nycvar.QRO.7.76.6.1807142304340.75@tvgsbejvaqbjf.bet>
+Subject: Re: [PATCH v2] sequencer: pass absolute GIT_WORK_TREE to exec
+ commands
+Message-ID: <20180714211950.GA6430@sigill.intra.peff.net>
+References: <20180714175555.GD1042117@genre.crustytoothpaste.net>
+ <20180714183859.97988-1-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="3eH4Qcq5fItR5cpy"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1807142304340.75@tvgsbejvaqbjf.bet>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.17.0-1-amd64)
-User-Agent: Mutt/1.10.0 (2018-05-17)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+In-Reply-To: <20180714183859.97988-1-sandals@crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sat, Jul 14, 2018 at 06:38:59PM +0000, brian m. carlson wrote:
 
---3eH4Qcq5fItR5cpy
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> The sequencer currently passes GIT_DIR, but not GIT_WORK_TREE, to exec
+> commands.  In that configuration, we assume that whatever directory
+> we're in is the top level of the work tree, and git rev-parse
+> --show-toplevel responds accordingly.  However, when we're in a
+> subdirectory, that isn't correct: we respond with the subdirectory as
+> the top level, resulting in unexpected behavior.
+> 
+> Ensure that we pass GIT_WORK_TREE as well as GIT_DIR so that git
+> operations within subdirectories work correctly.
+> 
+> Note that we are guaranteed to have a work tree in this case: the
+> relevant sequencer functions are called only from revert, cherry-pick,
+> and rebase--helper; all of these commands require a working tree.
 
-On Sat, Jul 14, 2018 at 11:05:34PM +0200, Johannes Schindelin wrote:
-> Hi Brian,
->=20
-> On Sat, 14 Jul 2018, brian m. carlson wrote:
-> > Dscho, is this test going to cause a problem on Windows with the forward
-> > slash in the grep statement?
->=20
-> It passes on Windows. The reason is that you are asking *Git* for a path,
-> and Git will always try to use forward slashes (which work on Windows
-> under most circumstances).
+Thanks for digging into this corner case.
 
-Great, thanks.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+It's possible, of course, that some day we may have a caller without a
+work-tree, but it seems pretty unlikely for sequencer code. If we did,
+then:
 
---3eH4Qcq5fItR5cpy
-Content-Type: application/pgp-signature; name="signature.asc"
+> diff --git a/sequencer.c b/sequencer.c
+> index 5354d4d51e..c8e16f9168 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -2636,6 +2636,8 @@ static int do_exec(const char *command_line)
+>  	fprintf(stderr, "Executing: %s\n", command_line);
+>  	child_argv[0] = command_line;
+>  	argv_array_pushf(&child_env, "GIT_DIR=%s", absolute_path(get_git_dir()));
+> +	argv_array_pushf(&child_env, "GIT_WORK_TREE=%s",
+> +			 absolute_path(get_git_work_tree()));
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.8 (GNU/Linux)
+I think this would just segfault (feeding NULL to absolute_path). That's
+probably OK, as it would be a big red flag to whomever is trying to
+teach the sequencer to work in a bare repo. :)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAltKZnwACgkQv1NdgR9S
-9osA1Q//Q2q9uQzQwtCcP9Ha3ncq92xwlVRPJzzesqIsgzPBAAM19/dxog9TuFos
-eizXWmSCb7pYZ6ZLAUCxhb01AheYel81yUQJnM9wpLTJSsLm1CH7JjvLvMbH2xGe
-e7lqygYiNT8J5p7STlm8kHiisD8wVFPx9QnrJRPVaWKY3bws2aRzDhAYI5kgQSFq
-OMqX02zYSgZkpqcYgexNDmvnuvDDgNHFZ9GBnID/UwA0B47itON1dbfboIAE1bDa
-g0lCH7Do0KGyYhtWUi5X1IZ+prYxEgoVK3x0P+o6gdkYEljIX/syONatg+Y7VHbp
-99CVJzvBMU5kXzMYi+fPS33TRas7KvEJy6lMot6RTXmnCqseZxxbndc4xI09r1kN
-s4CeI81RMI5P17cUsO73CRGzrsG6WjIWr3ZZrLniJ7DfOJLLW2Zc3sjq+uHaIUPg
-8xum+blofeFSRfCKWhsKSPej4zVKqhQ20x0XyCrrjxXLVXdj484YOJfNeRbMYzLA
-jN70e212gxqDx/xDdpuTajMR5inqEJqw48pqF32RNtOeDoovyki378ZAMN7tkIf/
-GVEd4MB9NUITW6E5hYZ0EKO80FjRiOxHrs9ugIL8nL3vakFL2XaxSqkpW7lPa91b
-Jdgws62PQ0UmF1t+Bf5cnjoI60LnUUZNiRxKRiEtikE87yZ+k4s=
-=NN1j
------END PGP SIGNATURE-----
+So this version looks good to me.
 
---3eH4Qcq5fItR5cpy--
+-Peff
