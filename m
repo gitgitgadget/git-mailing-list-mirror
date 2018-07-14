@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 36A991F915
-	for <e@80x24.org>; Sat, 14 Jul 2018 21:45:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B36D21F915
+	for <e@80x24.org>; Sat, 14 Jul 2018 21:45:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731651AbeGNWFa (ORCPT <rfc822;e@80x24.org>);
-        Sat, 14 Jul 2018 18:05:30 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:38937 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731432AbeGNWFa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Jul 2018 18:05:30 -0400
-Received: by mail-wr1-f67.google.com with SMTP id h10-v6so28272246wre.6
-        for <git@vger.kernel.org>; Sat, 14 Jul 2018 14:45:03 -0700 (PDT)
+        id S1731687AbeGNWFc (ORCPT <rfc822;e@80x24.org>);
+        Sat, 14 Jul 2018 18:05:32 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:55847 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731598AbeGNWFb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Jul 2018 18:05:31 -0400
+Received: by mail-wm0-f67.google.com with SMTP id v128-v6so11634216wme.5
+        for <git@vger.kernel.org>; Sat, 14 Jul 2018 14:45:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=y3uV+0fh0t9OZRHkm5g5zeQO5W2eAME5T6l6xBnniNs=;
-        b=vM2z+uGzgVCanwWhcXTIpKfJTHP+zuiCg4dsazLW3lttuk+XMJgbKFhm6GLiTzixo/
-         f1oAgXtw2SHnrtf3UBHu4e+oi/T+g6yM10eDz8ol3hCfUzuFoOqTP07kq1J5RKH7Us8r
-         VazxXNrfOv7dg1t47zzCGjn3DNU+6bj4CteJ/4tSQRsEDdRo3DF50ZRK7frFnlBgJYzk
-         fLbxnZPeLssVE2Ga+S4lvtTEIRNXo3G7RfLRIqhAXo+KAkFnn03KJ1spWpGDXl3/cu6p
-         xWh0R5GhRtwmsohLb56mOG5Z1zyhNB4kkElafMLsrg9Wmk/cSIL+6UOjnMJLAUFPRcg0
-         ttYg==
+        bh=e6M8jOOFOETxgzidW4apzQwKpwWf/UuH8ddp49xlTn8=;
+        b=W+cSErj1m49N3GDzQjMMBf8GNCsjDBTiKXWkvBFbNVwJTrw0WJ3AUT9Py3HXgK0k2S
+         68N3KMfhWopo+hDWOikUFdmModI6rd/idQFh6k7nSXVx668NBSkh+Eg897xtODVbtwv7
+         fpklu70+NeT5nRHb/IqOngourzl+czgyeJnvXpkslHCyCl1fEp4U98RoHYgRn0LEsKv3
+         3HZhvhR1IziqTIr0IjJCgAc8jylLQOpa72YTGXMTQ/Izt/Yto5asDtH5AvN7Sz9pyMt4
+         ugW6HUUmvH0RPW132lzsPes+S9gi54L607Lj6QRYPkdwetNexG+3/gXLBjUmSlwcpaw4
+         N2dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=y3uV+0fh0t9OZRHkm5g5zeQO5W2eAME5T6l6xBnniNs=;
-        b=RCtvwoeWanKPTmtoHtXpWviOBsmOOAAP1EoIRr+FTOMzplVxLc+x96KEmfyjUQBz08
-         QpqWC4cimCqTl2TX8AGk0gTPg1r/N+BxgH0zY89tGgRDIDHu6774fVBeZ1zsMcrCVwui
-         fZLo3elsKOLMLT0BhxcHlAiqrsINrDz5zETQRNDk6lp6QOKldGxiRQz+UsUSvFAtXI7g
-         CDpyTo3B3VSorKPINhb2IXmfwG9UZV6lN0PwRce/znobb1QONy6ahUjFxEBve71ZaH4m
-         lY2MyCL0c/YEmfCyGXTsyLlda1vOIhImZ14tRZ93oxVIymZElH0QAdNfPgUnigamtnOz
-         krvA==
-X-Gm-Message-State: AOUpUlF7FlAkva4wAD8VxpKmagfYoN7odCsNCIqgxHvcQY+B0YpJGv7a
-        FO9JOkGVCEMk8/xk1XUyKIzKFcZs
-X-Google-Smtp-Source: AAOMgpeu70ebQSNEA6GKtRJdiZOCGSP4Qm16dcZ3S+MjBJlhD3KQrd+aE4ZmJpKwr1pK2uapBjRDjw==
-X-Received: by 2002:adf:e642:: with SMTP id b2-v6mr9044173wrn.254.1531604702803;
-        Sat, 14 Jul 2018 14:45:02 -0700 (PDT)
+        bh=e6M8jOOFOETxgzidW4apzQwKpwWf/UuH8ddp49xlTn8=;
+        b=NZ9cX5IkhiqX0OWx/RDgWLWhtf8l0Y+0+ZeU7HWnXDcZGTQIX0PSE0g4ITBTBmmFNT
+         mH/b+B9CZtXPzyCT8H284VNMr85b7hGl0ZO/J0rLl6fJVSYJsGrH2jJGFjJkRRcTTFOm
+         wDbd6c/WNLDyOqmHjwQRz13/RTTDEsLbi93DKK7HWaeUAAf27c6TlpjsjfmvJ2YZhpZE
+         UYfmVX+m+ZeX2zfwkvSWpwSAAdcZLxN/aK2WQIpwwciSISSx9XK4wplwPEG+6nGxqUki
+         Yynk3dMYepBS87Jf7Sk+RKsgqKibNMJSzIt/fEiCU7LrhGEwveNY2+LLlgqe0kPtBkZB
+         /8wQ==
+X-Gm-Message-State: AOUpUlFAgrfCViycbh7Sv+pQZuqqh7ppMh5E+11aEyXReGG5XqAJgNNk
+        uYeehGs/N09wjpmXlpNaqT0if6da
+X-Google-Smtp-Source: AAOMgpcp7Mb4RNziYD2JwfcV9u9qN7Sitqh1ie06cl8KTmUmN9mmjxT2PmAYnw0qGnZsUXnQY3CRoQ==
+X-Received: by 2002:a1c:2208:: with SMTP id i8-v6mr6286753wmi.105.1531604704255;
+        Sat, 14 Jul 2018 14:45:04 -0700 (PDT)
 Received: from localhost ([2.30.88.37])
-        by smtp.gmail.com with ESMTPSA id z3-v6sm25979633wru.27.2018.07.14.14.45.01
+        by smtp.gmail.com with ESMTPSA id 125-v6sm16385782wmw.9.2018.07.14.14.45.03
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 14 Jul 2018 14:45:02 -0700 (PDT)
+        Sat, 14 Jul 2018 14:45:03 -0700 (PDT)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v3 09/11] rerere: return strbuf from handle path
-Date:   Sat, 14 Jul 2018 22:44:41 +0100
-Message-Id: <20180714214443.7184-10-t.gummerer@gmail.com>
+Subject: [PATCH v3 10/11] rerere: teach rerere to handle nested conflicts
+Date:   Sat, 14 Jul 2018 22:44:42 +0100
+Message-Id: <20180714214443.7184-11-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.17.0.410.g65aef3a6c4
 In-Reply-To: <20180714214443.7184-1-t.gummerer@gmail.com>
 References: <20180605215219.28783-1-t.gummerer@gmail.com>
@@ -64,128 +64,183 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently we write the conflict to disk directly in the handle_path
-function.  To make it re-usable for nested conflicts, instead of
-writing the conflict out directly, store it in a strbuf and let the
-caller write it out.
+Currently rerere can't handle nested conflicts and will error out when
+it encounters such conflicts.  Do that by recursively calling the
+'handle_conflict' function to normalize the conflict.
 
-This does mean some slight increase in memory usage, however that
-increase is limited to the size of the largest conflict we've
-currently processed.  We already keep one copy of the conflict in
-memory, and it shouldn't be too large, so the increase in memory usage
-seems acceptable.
+The conflict ID calculation here deserves some explanation:
 
-As a bonus this lets us get replace the rerere_io_putconflict function
-with a trivial two line function.
+As we are using the same handle_conflict function, the nested conflict
+is normalized the same way as for non-nested conflicts, which means
+the ancestor in the diff3 case is stripped out, and the parts of the
+conflict are ordered alphabetically.
+
+The conflict ID is however is only calculated in the top level
+handle_conflict call, so it will include the markers that 'rerere'
+adds to the output.  e.g. say there's the following conflict:
+
+    <<<<<<< HEAD
+    1
+    =======
+    <<<<<<< HEAD
+    3
+    =======
+    2
+    >>>>>>> branch-2
+    >>>>>>> branch-3~
+
+it would be recorde as follows in the preimage:
+
+    <<<<<<<
+    1
+    =======
+    <<<<<<<
+    2
+    =======
+    3
+    >>>>>>>
+    >>>>>>>
+
+and the conflict ID would be calculated as
+
+    sha1(1<NUL><<<<<<<
+    2
+    =======
+    3
+    >>>>>>><NUL>)
+
+Stripping out vs. leaving the conflict markers in place in the inner
+conflict should have no practical impact, but it simplifies the
+implementation.
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- rerere.c | 58 ++++++++++++++++++--------------------------------------
- 1 file changed, 18 insertions(+), 40 deletions(-)
+ Documentation/technical/rerere.txt | 42 ++++++++++++++++++++++++++++++
+ rerere.c                           | 10 +++++--
+ t/t4200-rerere.sh                  | 37 ++++++++++++++++++++++++++
+ 3 files changed, 87 insertions(+), 2 deletions(-)
 
+diff --git a/Documentation/technical/rerere.txt b/Documentation/technical/rerere.txt
+index 4102cce7aa..60d48dc4fe 100644
+--- a/Documentation/technical/rerere.txt
++++ b/Documentation/technical/rerere.txt
+@@ -138,3 +138,45 @@ SHA1('B<NUL>C<NUL>').
+ If there are multiple conflicts in one file, the sha1 is calculated
+ the same way with all hunks appended to each other, in the order in
+ which they appear in the file, separated by a <NUL> character.
++
++Nested conflicts
++~~~~~~~~~~~~~~~~
++
++Nested conflicts are handled very similarly to "simple" conflicts.
++Similar to simple conflicts, the conflict is first normalized by
++stripping the labels from conflict markers, stripping the diff3
++output, and the sorting the conflict hunks, both for the outer and the
++inner conflict.  This is done recursively, so any number of nested
++conflicts can be handled.
++
++The only difference is in how the conflict ID is calculated.  For the
++inner conflict, the conflict markers themselves are not stripped out
++before calculating the sha1.
++
++Say we have the following conflict for example:
++
++    <<<<<<< HEAD
++    1
++    =======
++    <<<<<<< HEAD
++    3
++    =======
++    2
++    >>>>>>> branch-2
++    >>>>>>> branch-3~
++
++After stripping out the labels of the conflict markers, and sorting
++the hunks, the conflict would look as follows:
++
++    <<<<<<<
++    1
++    =======
++    <<<<<<<
++    2
++    =======
++    3
++    >>>>>>>
++    >>>>>>>
++
++and finally the conflict ID would be calculated as:
++`sha1('1<NUL><<<<<<<\n3\n=======\n2\n>>>>>>><NUL>')`
 diff --git a/rerere.c b/rerere.c
-index 2d62251943..a35b88916c 100644
+index a35b88916c..f78bef80b1 100644
 --- a/rerere.c
 +++ b/rerere.c
-@@ -302,38 +302,6 @@ static void rerere_io_putstr(const char *str, struct rerere_io *io)
- 		ferr_puts(str, io->output, &io->wrerror);
- }
- 
--/*
-- * Write a conflict marker to io->output (if defined).
-- */
--static void rerere_io_putconflict(int ch, int size, struct rerere_io *io)
--{
--	char buf[64];
--
--	while (size) {
--		if (size <= sizeof(buf) - 2) {
--			memset(buf, ch, size);
--			buf[size] = '\n';
--			buf[size + 1] = '\0';
--			size = 0;
--		} else {
--			int sz = sizeof(buf) - 1;
--
--			/*
--			 * Make sure we will not write everything out
--			 * in this round by leaving at least 1 byte
--			 * for the next round, giving the next round
--			 * a chance to add the terminating LF.  Yuck.
--			 */
--			if (size <= sz)
--				sz -= (sz - size) + 1;
--			memset(buf, ch, sz);
--			buf[sz] = '\0';
--			size -= sz;
--		}
--		rerere_io_putstr(buf, io);
--	}
--}
--
- static void rerere_io_putmem(const char *mem, size_t sz, struct rerere_io *io)
- {
- 	if (io->output)
-@@ -384,7 +352,14 @@ static int is_cmarker(char *buf, int marker_char, int marker_size)
- 	return isspace(*buf);
- }
- 
--static int handle_conflict(struct rerere_io *io, int marker_size, git_SHA_CTX *ctx)
-+static void rerere_strbuf_putconflict(struct strbuf *buf, int ch, size_t size)
-+{
-+	strbuf_addchars(buf, ch, size);
-+	strbuf_addch(buf, '\n');
-+}
-+
-+static int handle_conflict(struct strbuf *out, struct rerere_io *io,
-+			   int marker_size, git_SHA_CTX *ctx)
- {
- 	enum {
+@@ -365,12 +365,18 @@ static int handle_conflict(struct strbuf *out, struct rerere_io *io,
  		RR_SIDE_1 = 0, RR_SIDE_2, RR_ORIGINAL
-@@ -410,11 +385,11 @@ static int handle_conflict(struct rerere_io *io, int marker_size, git_SHA_CTX *c
- 			if (strbuf_cmp(&one, &two) > 0)
- 				strbuf_swap(&one, &two);
- 			has_conflicts = 1;
--			rerere_io_putconflict('<', marker_size, io);
--			rerere_io_putmem(one.buf, one.len, io);
--			rerere_io_putconflict('=', marker_size, io);
--			rerere_io_putmem(two.buf, two.len, io);
--			rerere_io_putconflict('>', marker_size, io);
-+			rerere_strbuf_putconflict(out, '<', marker_size);
-+			strbuf_addbuf(out, &one);
-+			rerere_strbuf_putconflict(out, '=', marker_size);
-+			strbuf_addbuf(out, &two);
-+			rerere_strbuf_putconflict(out, '>', marker_size);
- 			if (ctx) {
- 				git_SHA1_Update(ctx, one.buf ? one.buf : "",
- 					    one.len + 1);
-@@ -451,21 +426,24 @@ static int handle_conflict(struct rerere_io *io, int marker_size, git_SHA_CTX *c
- static int handle_path(unsigned char *sha1, struct rerere_io *io, int marker_size)
- {
- 	git_SHA_CTX ctx;
+ 	} hunk = RR_SIDE_1;
+ 	struct strbuf one = STRBUF_INIT, two = STRBUF_INIT;
 -	struct strbuf buf = STRBUF_INIT;
-+	struct strbuf buf = STRBUF_INIT, out = STRBUF_INIT;
- 	int has_conflicts = 0;
- 	if (sha1)
- 		git_SHA1_Init(&ctx);
++	struct strbuf buf = STRBUF_INIT, conflict = STRBUF_INIT;
+ 	int has_conflicts = -1;
  
  	while (!io->getline(&buf, io)) {
  		if (is_cmarker(buf.buf, '<', marker_size)) {
--			has_conflicts = handle_conflict(io, marker_size,
-+			has_conflicts = handle_conflict(&out, io, marker_size,
- 							sha1 ? &ctx : NULL);
- 			if (has_conflicts < 0)
+-			break;
++			if (handle_conflict(&conflict, io, marker_size, NULL) < 0)
++				break;
++			if (hunk == RR_SIDE_1)
++				strbuf_addbuf(&one, &conflict);
++			else
++				strbuf_addbuf(&two, &conflict);
++			strbuf_release(&conflict);
+ 		} else if (is_cmarker(buf.buf, '|', marker_size)) {
+ 			if (hunk != RR_SIDE_1)
  				break;
-+			rerere_io_putmem(out.buf, out.len, io);
-+			strbuf_reset(&out);
- 		} else
- 			rerere_io_putstr(buf.buf, io);
- 	}
- 	strbuf_release(&buf);
-+	strbuf_release(&out);
+diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
+index 34f0518a5e..d63fe2b33b 100755
+--- a/t/t4200-rerere.sh
++++ b/t/t4200-rerere.sh
+@@ -602,4 +602,41 @@ test_expect_success 'rerere with unexpected conflict markers does not crash' '
+ 	git rerere clear
+ '
  
- 	if (sha1)
- 		git_SHA1_Final(sha1, &ctx);
++test_expect_success 'rerere with inner conflict markers' '
++	git reset --hard &&
++
++	git checkout -b A master &&
++	echo "bar" >test &&
++	git add test &&
++	git commit -q -m two &&
++	echo "baz" >test &&
++	git add test &&
++	git commit -q -m three &&
++
++	git reset --hard &&
++	git checkout -b B master &&
++	echo "foo" >test &&
++	git add test &&
++	git commit -q -a -m one &&
++
++	test_must_fail git merge A~ &&
++	git add test &&
++	git commit -q -m "will solve conflicts later" &&
++	test_must_fail git merge A &&
++
++	echo "resolved" >test &&
++	git add test &&
++	git commit -q -m "solved conflict" &&
++
++	echo "resolved" >expect &&
++
++	git reset --hard HEAD~~ &&
++	test_must_fail git merge A~ &&
++	git add test &&
++	git commit -q -m "will solve conflicts later" &&
++	test_must_fail git merge A &&
++	cat test >actual &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 2.17.0.410.g65aef3a6c4
 
