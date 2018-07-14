@@ -7,149 +7,80 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A400F1F915
-	for <e@80x24.org>; Sat, 14 Jul 2018 21:58:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC3F81F915
+	for <e@80x24.org>; Sat, 14 Jul 2018 22:16:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731403AbeGNWRk (ORCPT <rfc822;e@80x24.org>);
-        Sat, 14 Jul 2018 18:17:40 -0400
-Received: from mout.gmx.net ([212.227.17.21]:54285 "EHLO mout.gmx.net"
+        id S1731429AbeGNWgj (ORCPT <rfc822;e@80x24.org>);
+        Sat, 14 Jul 2018 18:36:39 -0400
+Received: from mout.gmx.net ([212.227.15.19]:43409 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728135AbeGNWRk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Jul 2018 18:17:40 -0400
+        id S1731182AbeGNWgj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Jul 2018 18:36:39 -0400
 Received: from MININT-3BS5S37.fareast.corp.microsoft.com ([37.201.195.126]) by
- mail.gmx.com (mrgmx103 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0MVNWU-1fYIwX1yVK-00YhUr; Sat, 14 Jul 2018 23:56:59 +0200
-Date:   Sat, 14 Jul 2018 23:56:57 +0200 (DST)
+ mail.gmx.com (mrgmx003 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 0MdKkd-1fMWLC0Xqd-00IVjR; Sun, 15 Jul 2018 00:16:01 +0200
+Date:   Sun, 15 Jul 2018 00:15:59 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] repack -ad: prune the list of shallow commits
-In-Reply-To: <20180713203140.GB17670@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1807142351100.75@tvgsbejvaqbjf.bet>
-References: <pull.9.git.gitgitgadget@gmail.com> <b4e01a963fd16f50d12c1f67c6e64bec8b1e9673.1531513093.git.gitgitgadget@gmail.com> <20180713203140.GB17670@sigill.intra.peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Ben Peart <Ben.Peart@microsoft.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "sbeller@google.com" <sbeller@google.com>
+Subject: Re: [PATCH v3] handle lower case drive letters on Windows
+In-Reply-To: <xmqqva9kurba.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1807150015350.75@tvgsbejvaqbjf.bet>
+References: <20180711175420.16940-1-benpeart@microsoft.com> <20180712154419.18100-1-benpeart@microsoft.com> <xmqqr2k8w9n2.fsf@gitster-ct.c.googlers.com> <BL0PR2101MB1012EDB64112A8805A2C3D82F4590@BL0PR2101MB1012.namprd21.prod.outlook.com>
+ <xmqqmuuww7rq.fsf@gitster-ct.c.googlers.com> <BL0PR2101MB10122C1A2F038B61470A6994F4590@BL0PR2101MB1012.namprd21.prod.outlook.com> <xmqqva9kurba.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Bjoo/s2affZqPCT8k+i2cupUsBKoFp55vf703K8wRh+bZe92lD6
- MFHNNGfVDkZuNpOYZdDC8MJCv/bUWHOHrYL9QmYIeGWSksJ/eUoLk/QHVJtKbmtGi6phmdk
- 3hkLWaek1lbHaT2sWTYqLsK6KOu7YfKrHtAntsjQ/uGRky1SH5bK4OT8KGoUTYEg7Hi706L
- 2EwuQMD2A7AbQvzk+90xg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:cVHSmxEDRhc=:5zfpaDh54mDWwYq5SUqZS+
- zhIoRn05p4t05Z3mnUTdZwD+qKxsa10UuuejMoP+3jtow6LppkV1vFhb6EdzAcZCSAdjGA+qg
- T9mrIKaSgcKfZXU/moC1RISEbAUSdxo+b4O6Dmdn66iH9a8Sqz1RbMJuOOi0fMI1mHrh8r9GG
- UhZsQxmSkbERw7dfa5ReGN63qQ5XYCRRsWoxq7306YmLRpZMhkZxzfED0heyY08V3LYWLhN8u
- zeWOIhDmO1V+Vdol2b/vK4mSBDG3O0WTVf0w1cqIVkm/wylNZDrLzsc4WAjxedkHwhipHciVf
- ZVJr1Fk1eF4P8N6NPs6wMyuqX1Oo4DiZ39JKt8KXffcS2tvzsxN/Xlsw+cfHcbu5CnuzUMBpY
- GK8P1rbFs44etCtWofnJrkGb9PCvHtLQFfLyS8PW2FBvnmtTmydWo5POi8fVlueqX8N+5vEGX
- AFkizXmrUtbquB61+EVP9ivHWtxtkVsBHHRRXaGao3Uqlwj5stCloHRMc51FXrVauZHhnsBID
- pZz6ClhHKlolsLX53ivCgwAGN696u/cIKiXXCjJVG4+W/eMxLrm7Yih6IejY6siuLZDFSzYw5
- ViPRV+vkr8xWajucprgKdZF7+iotVC1NnZvEY4GwoLUbjngXHEsDA4ZKsS/QXpWyjmTeEz3Ar
- glsiPazHb5anYsnM2409iixwNTshP6POZpdilLOQEjFE93GKe9P5SLxb0bLQWdYBdreMVC8YN
- hSQxrxeIXQYV37AxCsUjWebyPssqsiI62MMphgrzK+PhY8xTp3fciWFHicOixriDPelTaTSJ4
- 3q4lmbK
+X-Provags-ID: V03:K1:I96Jn6nH7OFesI4GK9vWGGNmZmDGqbNmbJeeQa25oClAnUoGM/y
+ JmwbhDJluYtxigJVDi9uQiJQSs+VXh87C1EAJ1I3ecOmg3nnFN5toc6Wb0wUj0jYVf2qAln
+ 02mCmns5rjTqvOzIIjVaGuEWMZ4AbARWb6cr+WS6gRvNlXZU9vQplTkBQbyF6bRAELHi7yh
+ rlgMTyI/M4TlsdNj74JvQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:BjIVKYj/E2Y=:eKx1JvByUPsGnHe0pBxh4I
+ tc8QujJDeb8V7D3UJ+SmtN6l0G8hA8ZpTZNr05ov9kymBlMAJ6elfUbn/TTjP+QE/GM9vxQE6
+ +ubg0ZvPXjzHMdyfa/Dmpiu4glho/GW3ai1I1kqIKz9moHFWw6Z73Kv2KqxhvIBBfy9j+yWp2
+ 4xErEB+BFMQTgdTwnpL6WzgcT5uqLspAvLpJ/9AEpFrZvKIoplwWSEfp/v2TPWH7iT+Q0sfip
+ 91jS/l0KwUpU1o+HAdUPxXbORFhpKpJrXv28Yl/IZ0/gXRHww64x/saBTDC5IgJtQARyHL/bQ
+ osE0UlFgT2l23N4WJ9wiSLiWBomntQYFnef4J/4OvjbgiaU1vgrqQ8y1ucsPdxBx+xO8I0lcO
+ HTZl6L/GtjibXOkKJHy24Vl+vGRojFIZODpYKd4IlunnEkkizWSZd3c2jffXBb/bexVxreLuz
+ 6AWLSYFAO7Va+c7SlOBWEw6nF8oWuOIB0LltveCTiecX1BlK9fER3nCPryLezoDNjA6d69fux
+ q3jcjDUABcJZaHyr4dbodSYkK9yxGk+MMiGQIdHzE+M1/YJahSls0SDxiWoBiyGdjzk+/99li
+ 1L35RYSLhNYRbsrtb2RYX9ZsCLgmNbGDnCWMS2HVAhhdefI1Dl3ZgbjUb1aBltNPriOhbwrlT
+ UmVqN6arSOHX4dQhtP2CogaUpcyRvI66T4oAn1wJw3vVQpDHEhH+3ou3/GP5IlCQzIH9ivAKn
+ 1smR7lzO4WUyJIUitTJAkBgLyQEbtxeF3fNmybjXic5zgqxTmQ5YvnS+BiIbm35ucWp16AAKx
+ OsuSOzg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+Hi Junio,
 
-On Fri, 13 Jul 2018, Jeff King wrote:
+On Thu, 12 Jul 2018, Junio C Hamano wrote:
 
-> On Thu, Jul 12, 2018 at 12:23:28AM +0200, Johannes Schindelin via
-> GitGitGadget wrote:
+> Ben Peart <Ben.Peart@microsoft.com> writes:
 > 
-> > This is particularly important to keep in mind when looking at the
-> > `.git/shallow` file: if any commits listed in that file become
-> > unreachable, it is not a problem, but if they go missing, it *is* a
-> > problem. One symptom of this problem is that a deepening fetch may now
-> > fail with
-> > 
-> > 	fatal: error in object: unshallow <commit-hash>
-> > 
-> > To avoid this problem, let's prune the shallow list in `git repack` when
-> > the `-d` option is passed, unless `-A` is passed, too (which would force
-> > the now-unreachable objects to be turned into loose objects instead of
-> > being deleted).
+> >> > Thanks.  I thought it was strange as well until I realized you only
+> >> > see the error message if there _isn't_ a valid drive letter so seeing
+> >> > the entire path makes sense as it will likely be something like
+> >> "\\server\volume\directory"
+> >> 
+> >> Yup, that is why I thought Dscho meant to say something like
+> >> 
+> >> 	"'%s': path without valid drive prefix"
+> >> 
+> >> in my response ;-)
+> >
+> > I'm fine with that - want me to leave it alone, spin a V4 or have you tweak it?
 > 
-> I'm not sure if this covers all cases:
-> 
->  - even with "-A", we may still drop objects subject to
->    --unpack-unreachable. So if your pack has an old mtime (e.g., because
->    you haven't packed in a while) I think you'd see the same problem.
-> 
->  - if you use "-adk", we'd keep all objects, and this pruning would not
->    be necessary
+> That's "helped-by Dscho" patch, so I'd leave it to him by queuing v3
+> overnight and wait to deal with the final decision by the weekend
+> ;-) That way, I do not have to make a decision on anything Windows
+> related.
 
-Sure. I can add those cases.
-
-> > diff --git a/builtin/repack.c b/builtin/repack.c
-> > index 6c636e159..45f321b23 100644
-> > --- a/builtin/repack.c
-> > +++ b/builtin/repack.c
-> > @@ -444,6 +444,10 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
-> >  		if (!quiet && isatty(2))
-> >  			opts |= PRUNE_PACKED_VERBOSE;
-> >  		prune_packed_objects(opts);
-> > +
-> > +		if (!(pack_everything & LOOSEN_UNREACHABLE) &&
-> > +		    is_repository_shallow())
-> > +			prune_shallow(0);
-> >  	}
-> 
-> I understand how this solves your immediate problem, but it feels like a
-> weird layering violation (which I think is a result of existing layering
-> violations ;) ).
-
-Okay, but please don't punish me for those existing layering violations by
-forcing me to address them, instead of a quick bug fix for a very real bug
-that was reported to me privately, and that I would like to see fixed
-relatively quickly.
-
-> I.e., it seems unexpected that "git repack" is going to tweak your
-> shallow lists. If we were designing from scratch, the sane behavior
-> seems to me to be:
-> 
->   1. Shallow pruning should be its own separate command (distinct from
->      either repacking or loose object pruning), and should be triggered
->      as part of a normal git-gc.
-
-I fail to see the value in a separate command.
-
-And: `git gc` already calls `git prune`, which *does* prune the shallow
-list.
-
->   AND ONE OF:
-> 
->   2a. Objects mentions in the shallow file are important, and therefore
->       _are_ considered reachable on their own. Neither repack nor prune
->       needs to know or care.
-
-If we were to do that, we would never be able to gc any stale shallow
-commits.
-
-That would be rather bad a design, don't you agree?
-
->   OR
-> 
->   2b. It's OK for shallow objects to be missing, and the shallow code
->       should be more resilient to missing objects. Neither repack nor
->       prune needs to know or care.
-
-That would be possible. Kind of like saying: we do have this list of
-shallow commits, but oh, BTW, it is likely incorrect, so we painstakingly
-verify for every entry during every fetch and push that those commits
-objects are still there.
-
-It looks to me like a rather bad design, too, as the whole idea of having
-a `git gc` is to update such information *then*.
-
-Sadly, we also allow `git repack` to drop objects, and it is really the
-responsibility of a command that drops objects to update things like the
-`shallow` list. Because that is exactly the time when its contents can go
-stale.
+The tweaked error message is fine by me.
 
 Ciao,
 Dscho
