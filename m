@@ -6,97 +6,82 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D0651F597
-	for <e@80x24.org>; Mon, 16 Jul 2018 18:30:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6DC0F1F597
+	for <e@80x24.org>; Mon, 16 Jul 2018 18:39:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729591AbeGPS7O (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jul 2018 14:59:14 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48130 "HELO cloud.peff.net"
+        id S1728282AbeGPTIZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jul 2018 15:08:25 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48142 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1729245AbeGPS7O (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jul 2018 14:59:14 -0400
-Received: (qmail 8497 invoked by uid 109); 16 Jul 2018 18:30:24 -0000
+        id S1727618AbeGPTIY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jul 2018 15:08:24 -0400
+Received: (qmail 8939 invoked by uid 109); 16 Jul 2018 18:39:33 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 16 Jul 2018 18:30:24 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 16 Jul 2018 18:39:33 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13732 invoked by uid 111); 16 Jul 2018 18:30:39 -0000
+Received: (qmail 13764 invoked by uid 111); 16 Jul 2018 18:39:48 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 16 Jul 2018 14:30:39 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 16 Jul 2018 14:39:48 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Jul 2018 14:30:34 -0400
-Date:   Mon, 16 Jul 2018 14:30:34 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Jul 2018 14:39:43 -0400
+Date:   Mon, 16 Jul 2018 14:39:43 -0400
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>, Jason@zx2c4.com,
-        GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: [PATCH 2/2] fsck: downgrade gitmodulesParse default to "info"
-Message-ID: <20180716183033.GA22298@sigill.intra.peff.net>
-References: <20180713193759.GB10354@sigill.intra.peff.net>
- <20180713193958.GB12162@sigill.intra.peff.net>
- <xmqqwotvt5uz.fsf@gitster-ct.c.googlers.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Vitali Lovich <vlovich@gmail.com>, git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: rev-parse --show-toplevel broken during exec'ed rebase?
+Message-ID: <20180716183942.GB22298@sigill.intra.peff.net>
+References: <CAF8PYMjub1KK_ZK0hijTNBACSa6SaFyu1dJgrXd5fJU5Hc_dhg@mail.gmail.com>
+ <xmqq7em01ns9.fsf@gitster-ct.c.googlers.com>
+ <20180713184732.GC968742@genre.crustytoothpaste.net>
+ <20180713201949.GA17670@sigill.intra.peff.net>
+ <xmqqsh4jt5d0.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqwotvt5uz.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqsh4jt5d0.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 16, 2018 at 11:04:04AM -0700, Junio C Hamano wrote:
+On Mon, Jul 16, 2018 at 11:14:51AM -0700, Junio C Hamano wrote:
 
 > Jeff King <peff@peff.net> writes:
 > 
-> >    site's support). And the broken .gitmodules may be too
-> >    far back in history for rewriting to be feasible (again,
-> >    this is an issue for cgit).
-> 
-> "again" but this is the first mention that hints cgit has some
-> problem (but not exactly what problem).  Is that the "cgit has a
-> file called .gitmodules that predates the submodule support on our
-> side?" thing?
-
-I think you missed it. In the paragraph above the one you
-quoted, I said:
-
-   The cgit repository, for example, has a file named
-   .gitmodules from a pre-submodule attempt at sharing code,
-   but does not actually have any gitlinks.
-
-> > So we're being unnecessarily restrictive without actually
-> > improving the security in a meaningful way. It would be more
-> > convenient to downgrade this check to "info", which means
-> > we'd still comment on it, but not reject a push. Site admins
-> > can already do this via config, but we should ship sensible
-> > defaults.
-> > ...
-> > Considering both sets of arguments, it makes sense to loosen
-> > this check for now.
+> > None of which is too surprising. The root of the bug is in the
+> > conversion to rebase--helper, I think, when presumably we started
+> > setting GIT_DIR at all (but I didn't dig further). Then 09d7b6c6fa fixed
+> > _one_ fallout of that, which was relative paths, but didn't help the
+> > subdirectory case.
 > >
-> > Note that we have to tweak the test in t7415 since fsck will
-> > no longer consider this a fatal error. But we still check
-> > that it reports the warning, and that we don't get the
-> > spurious error from the config code.
-> >
-> > Signed-off-by: Jeff King <peff@peff.net>
-> > ---
+> > Just reading over this thread, I suspect the simplest fix is to pass
+> > GIT_DIR and GIT_WORK_TREE together, which is almost always the right
+> > thing to do.
 > 
-> Thanks.
+> Perhaps.  Not exporting GIT_DIR (unless the end-user already did to
+> the environment before starting "git rebase"---it would be a bad
+> change to unexport it unconditionally) may probably be a way to make
+> rebase--helper conversion more faithful to the original scripted
+> Porcelain, but I suspect in practice always giving GIT_DIR and
+> GIT_WORK_TREE would work well for many existing hooks.
 
-So I'm curious if you found the argument in my commit
-message compelling. :)
+Yeah, that may be an option. I don't remember if this was discussed in
+this thread or elsewhere, but setting GIT_DIR is a regression for hooks,
+etc, which do:
 
-My recollection from the earlier discussion was that you
-were more in favor of keeping things tight. E.g.,:
+  git -C /some/other/repo log
 
-  https://public-inbox.org/git/xmqqh8lgrz5c.fsf@gitster-ct.c.googlers.com/
+or similar. I'm not sure if that falls under "actual regression" or
+"just how it happened to work in the past". I'm not even sure it worked
+that way _consistently_ in the past.
 
-but reading it again:
+The best practice if you're switching directories is to do:
 
- - there we were talking about non-blob objects as
-   .gitmodules
+  unset $(git rev-parse --local-env-vars)
 
- - I think your main concern was that there be a way for the
-   user to loosen/tighten, which there is.
+though I highly doubt that most people bother.
 
 -Peff
