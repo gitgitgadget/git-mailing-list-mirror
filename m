@@ -2,118 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA06A1F597
-	for <e@80x24.org>; Mon, 16 Jul 2018 23:26:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD72A1F597
+	for <e@80x24.org>; Mon, 16 Jul 2018 23:56:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729360AbeGPXzo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jul 2018 19:55:44 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48944 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728947AbeGPXzn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jul 2018 19:55:43 -0400
-Received: (qmail 22433 invoked by uid 109); 16 Jul 2018 23:25:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 16 Jul 2018 23:25:54 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17402 invoked by uid 111); 16 Jul 2018 23:26:08 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 16 Jul 2018 19:26:08 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Jul 2018 19:26:03 -0400
-Date:   Mon, 16 Jul 2018 19:26:03 -0400
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH] gc: do not warn about too many loose objects
-Message-ID: <20180716232603.GB13570@sigill.intra.peff.net>
-References: <20180716194136.GA25189@sigill.intra.peff.net>
- <20180716195431.GD11513@aiede.svl.corp.google.com>
- <20180716202915.GC25189@sigill.intra.peff.net>
- <20180716203753.GE11513@aiede.svl.corp.google.com>
- <20180716210938.GF25189@sigill.intra.peff.net>
- <20180716214003.GH11513@aiede.svl.corp.google.com>
- <20180716214539.GL25189@sigill.intra.peff.net>
- <20180716220306.GI11513@aiede.svl.corp.google.com>
- <20180716224337.GB12482@sigill.intra.peff.net>
- <20180716225639.GK11513@aiede.svl.corp.google.com>
+        id S1729980AbeGQAZ4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jul 2018 20:25:56 -0400
+Received: from mail-yw0-f193.google.com ([209.85.161.193]:35844 "EHLO
+        mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729615AbeGQAZ4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jul 2018 20:25:56 -0400
+Received: by mail-yw0-f193.google.com with SMTP id v197-v6so2421997ywg.3
+        for <git@vger.kernel.org>; Mon, 16 Jul 2018 16:56:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ELUaB+lGeCCDxCVMGt4LQEjV8sYd9QwBGS7/Wcr6CLQ=;
+        b=D4cd3OAZGo+pIeHWrc1Hhen/h17nuLBB0jN7XSyNb2d3FAijuBUj/K0MBB4CaZieJ+
+         kP/jiWc7wh+qCBo+BxTvHNaUHfdzy17X8dH0dB2zkxDt+eNtx3OGyZDpPpDPWiN2UeYH
+         7XhyJIfOBydV2dDkm51ytk7hFHEhgMDY3vkkJcdzefyxfnZ9TMRJWknnMrea2VBLJQQj
+         8DQzCvSrkLqtWt92kiIgGe4OyQYxW53KKLXM4nn973fFMKmMfMGahsQfVI+graLcYk12
+         FVlSIMaq/UOzNDdxYYJsSduP7M73T3Bfs65xlXa2IGwjIk6Bi4vjQnhvOWWl5H3M7UNn
+         5sZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ELUaB+lGeCCDxCVMGt4LQEjV8sYd9QwBGS7/Wcr6CLQ=;
+        b=mV14sCCIotiG9jW7MV4qawv5jXcwn9MF+Pk8b7K2OaKSQbL3SjLkvp5A3bqfD9MSLm
+         ExeSRr9U23Q2ZfnlgOP677/tLuX3KCr+dW/gpVN7DH0JJ7pJn1XdiKEwzCTn2H/lwD5S
+         e+upjCs0SkO5KJuD3E5yDAqDX2fVyemIz7/8GN9elXZYh4s73e2MMnlHsZZshDVR2JUk
+         J1syBPj39x1aC4G4d9gyqwVDv0p1vVreEWJin89xFGEZ2isfvwrcurqwdeCUDU/xQTNC
+         wbnTHW9sT/DqfXXsWqPENijYBKU/AKWtZVqJDm8FweNb3owQQcbJjzRe7Rj/iAJ/wXlr
+         uidg==
+X-Gm-Message-State: AOUpUlFuf3OS3jBgEZ5UZG4kkdPRjNGTuiIw730xFIz/MUGhKq7zbKD0
+        nlErzg/0S+zt/OyM2UwVjGqjd6lg5p90aEBLD0pZ0A==
+X-Google-Smtp-Source: AAOMgpfhdxJiGG1dsJMCgKObbvzvC9mFjbjf98QdkoJgLUZL+sHvgxiqMxQjLAlhGtPbO7etKDyVuhEG8PKFcKtyySE=
+X-Received: by 2002:a0d:d342:: with SMTP id v63-v6mr9124637ywd.500.1531785370998;
+ Mon, 16 Jul 2018 16:56:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180716225639.GK11513@aiede.svl.corp.google.com>
+References: <20180712194754.71979-1-sbeller@google.com> <20180712194754.71979-5-sbeller@google.com>
+ <xmqqo9f7t1jy.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqo9f7t1jy.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 16 Jul 2018 16:55:59 -0700
+Message-ID: <CAGZ79kaOy0pZJCob4d=66FQLaOu_q_BAJeFc94xkFa0SSqYigw@mail.gmail.com>
+Subject: Re: [PATCH 4/6] builtin/submodule--helper: store update_clone
+ information in a struct
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 16, 2018 at 03:56:39PM -0700, Jonathan Nieder wrote:
+On Mon, Jul 16, 2018 at 12:37 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Stefan Beller <sbeller@google.com> writes:
+>
+> > The information that is printed for update_submodules in
+> > 'submodule--helper update-clone' and consumed by 'git submodule update'
+> > is stored as a string per submodule. This made sense at the time of
+> > 48308681b07 (git submodule update: have a dedicated helper for cloning,
+> > 2016-02-29), but as we want to migrate the rest of the submodule update
+> > into C, we're better off having access to the raw information in a helper
+> > struct.
+>
+> The reasoning above makes sense, but I have a few niggles on the
+> naming.
+>
+>  * Anything you'd place to keep track of the state is "information",
+>    so a whole "_information" suffix to the structure name does not
+>    add much value.  We've seen our fair share of (meaningless)
+>    "_data" suffix used in many places but I think the overly long
+>    "_information" that is equally meaningless trumps them.  I think
+>    we also have "_info", but if we are not going to have a beter
+>    name, let's not be original and stick to "_data" like other
+>    existing codepath.  An alternative with more meaningful name is
+>    of course better, though, but it is not all that much worth to
+>    spend too many braincycles on it.
 
-> The calling command in the motivating example is Android's "repo" tool:
-> 
->             bare_git.gc('--auto')
-> 
-> from https://gerrit-review.googlesource.com/c/git-repo/+/10598/.  I
-> think it's reasonable that it expects a status code of 0 in the normal
-> case.  So life is less simple than I hoped.
+agreed.
 
-IMHO it should ignore the return code, since that's what Git does
-itself. And at any rate, you'd miss errors from daemonized gc's (at
-least until the _next_ one runs and propagates the error code).
+>  * Is the fact that these parameters necessary to help populating
+>    the submodule repository are sent on a line to external process
+>    the most important aspect of the submodule_lines[] array?  As
 
-> Interesting!  It looks like that thread anticipated the problems we've
-> seen here.  Three years without having to have fixed it is a good run,
-> I suppose.
-> 
-> The discussion of stopping there appears to be primarily about
-> stopping in the error case, not rate-limiting in the success or
-> warning case.
+In terms of what the submodule--helper does, it is.
+It is not the most important aspect in the big picture, or once
+we finish the migration to not have shell interpret its output.
 
-I think the two are essentially the same. The point is that we cannot
-make further progress by re-running the gc again, so we should not.
+>    this step is a preparation to migrate out of that line/text
+>    oriented IPC, I think line-ness is the least important and
+>    interesting thing to name the variable with.
 
-Amusingly, the warning we're talking about is the exact reason that the
-logging in that thread was added.  329e6e8794 (gc: save log from
-daemonized gc --auto and print it next time, 2015-09-19) says:
+ok.
 
-  The latest in this set is, as the result of daemonizing, stderr is
-  closed and all warnings are lost. This warning at the end of cmd_gc()
-  is particularly important because it tells the user how to avoid "gc
-  --auto" running repeatedly. Because stderr is closed, the user does
-  not know, naturally they complain about 'gc --auto' wasting CPU.
+> If I were writing this patch, perhaps I'd do
+>
+>         struct update_clone_data *update_clone;
+>         int update_clone_nr, update_clone_alloc;
+>
+> following my gut, but since you've been thinking about submodule
+> longer than I have, perhaps you can come up with a better name.
 
-> -- >8 --
-> Subject: gc: exit with status 128 on failure
-> 
-> A value of -1 returned from cmd_gc gets propagated to exit(),
-> resulting in an exit status of 255.  Use die instead for a clearer
-> error message and a controlled exit.
+That makes sense. We do not need to mention 'submodule' as that
+ought to be obvious from the file name already and 'update_clone'
+is just enough to describe what we are doing.
+Although there is already struct submodule_update_clone, which
+would be the better candidate for 'update_clone' and this new
+struct would be used as a helper in that struct, so update_clone_data
 
-I agree it's better to not pass -1 to exit(). But I thought the original
-motivation was the fact that we were returning non-zero in this case at
-all?  (And I thought you and I both agreed with that motivation).
+I'll think of adding a patch to rename that already existing struct
+(submodule_update_clone -> update_clone) and renaming
+this to update_clone_data.
 
-So is this meant to be a preparatory fix until somebody is interested in
-fixing that?
 
-> -static int gc_before_repack(void)
-> +static void gc_before_repack(void)
->  {
->  	if (pack_refs && run_command_v_opt(pack_refs_cmd.argv, RUN_GIT_CMD))
-> -		return error(FAILED_RUN, pack_refs_cmd.argv[0]);
-> +		die(FAILED_RUN, pack_refs_cmd.argv[0]);
->  
->  	if (prune_reflogs && run_command_v_opt(reflog.argv, RUN_GIT_CMD))
-> -		return error(FAILED_RUN, reflog.argv[0]);
-> +		die(FAILED_RUN, reflog.argv[0]);
 
-Dscho is going to yell at you about replacing error returns with die().  ;)
+>
+> > @@ -1463,8 +1469,9 @@ struct submodule_update_clone {
+> >       const char *recursive_prefix;
+> >       const char *prefix;
+> >
+> > -     /* Machine-readable status lines to be consumed by git-submodule.sh */
+> > -     struct string_list projectlines;
+> > +     /* to be consumed by git-submodule.sh */
+> > +     struct submodule_update_clone_information *submodule_lines;
+> > +     int submodule_lines_nr; int submodule_lines_alloc;
+> >
+> >       /* If we want to stop as fast as possible and return an error */
+> >       unsigned quickstop : 1;
+> > @@ -1478,7 +1485,7 @@ struct submodule_update_clone {
+> >  #define SUBMODULE_UPDATE_CLONE_INIT {0, MODULE_LIST_INIT, 0, \
+> >       SUBMODULE_UPDATE_STRATEGY_INIT, 0, 0, -1, STRING_LIST_INIT_DUP, 0, \
+> >       NULL, NULL, NULL, \
+> > -     STRING_LIST_INIT_DUP, 0, NULL, 0, 0}
+> > +     NULL, 0, 0, 0, NULL, 0, 0, 0}
+>
+> The structure definition and this macro definition are nearby, so it
+> is not crucial, but its probably not a bad idea to switch to C99
+> initializers for a thing like this to make it more readable, once
+> the code around this area stabilizes back again sufficiently (IOW,
+> let's not distract ourselves in the middle of adding a new feature
+> like this one).
 
-I wonder if it would be simpler to just reinterpret the "-1" into "128"
-in cmd_gc(). I thought we had talked about having run_builtin() do that
-at one point, but I don't think we ever did. I dunno. I'm fine with it
-either way.
+Are we still in the phase of "test balloon" or do we now accept
+C99 initializers all over the code base?
 
--Peff
+But I agree to defer the conversion for now.
+
+Thanks,
+Stefan
