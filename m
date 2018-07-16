@@ -2,128 +2,271 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E06E1F597
-	for <e@80x24.org>; Mon, 16 Jul 2018 22:55:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E1151F597
+	for <e@80x24.org>; Mon, 16 Jul 2018 22:56:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729593AbeGPXYy (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jul 2018 19:24:54 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48806 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1729466AbeGPXYy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jul 2018 19:24:54 -0400
-Received: (qmail 20918 invoked by uid 109); 16 Jul 2018 22:55:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 16 Jul 2018 22:55:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16786 invoked by uid 111); 16 Jul 2018 22:55:25 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 16 Jul 2018 18:55:25 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Jul 2018 18:55:20 -0400
-Date:   Mon, 16 Jul 2018 18:55:20 -0400
-From:   Jeff King <peff@peff.net>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
+        id S1729595AbeGPX0P (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jul 2018 19:26:15 -0400
+Received: from mail-pl0-f66.google.com ([209.85.160.66]:42242 "EHLO
+        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729151AbeGPX0P (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jul 2018 19:26:15 -0400
+Received: by mail-pl0-f66.google.com with SMTP id f4-v6so11707301plb.9
+        for <git@vger.kernel.org>; Mon, 16 Jul 2018 15:56:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Pdgn37wFJ+QATwWsGBISOV8rV8qPOppakGNa+qmXEz0=;
+        b=ShHLtt/mh0iw8agsOPhiN3EDUM0mltrXv9Rq4SfFJe2v5HLRUMactb39PcSH+4gTUU
+         9qV11/BU4Ow4jIKOtdX4EQDZeLJYKboSc21q+nAzS5nWdKyYOqY8a8MAT1buV0w8UAx8
+         UseXv+E8kFXtKr6wKe5rSpJpf6tJDR7Tjujn/MH6fz8m2EngUdkaFcCYsRqqgemu0/Z/
+         ECfUyeJH68sPQsC0ord96E5nHMgD7ts2L6Z20IwjsI8JFpSbRI5qQCOBFpqZx1l9qrUh
+         JGwj4xgMQ3khJuW7qNFvIh84nTFiTGDFxO6370K4KW907fn+xpQF1SEeS+JUeRsm9i2f
+         AHUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Pdgn37wFJ+QATwWsGBISOV8rV8qPOppakGNa+qmXEz0=;
+        b=H0BYvRt4lIvTO8R4t4B8u/pK8ADcUgJtz0s834lmXqomzxFV74GzWPOoQ2C2Hd7WEu
+         wCrNs1ZUos8GRaS2PquVFj4+9uZmC5OvBgKNWrQl4610SpucvKv0lYksCjjl3Zmupia7
+         WHfGhE5l4WEiyOaSSIZEuriYJkx6gibU5HPylx8qowxLV+KJ7rNU9E/JnpsaiPZsH2ym
+         x53ZCTS4zZCnPedQtvjyt9LWzVbYtWdm+xRr9ZRJIGtQ7PjaqtVxjdlsLw/w+T+9iMEQ
+         G0Zd/UbdqaXvxgsq9h+wP0/4qdfyJ9wkzE2CQJUwdw1aeiNbsb6a5lhdC8GJK05OeiLM
+         RG6w==
+X-Gm-Message-State: AOUpUlFCwU/l7Kx77uS0KDrOMHRAmcHEV7tWWPlAYl/vkC8xqfkO5GBt
+        gyb+sWfF9JcwLmWhRrno3xE=
+X-Google-Smtp-Source: AAOMgpdy4wHpNeU+sp4Lg990JrV601VjUllvxSUxY8Z5QoZ3kcvfW5HnfTNfrGD/LuFhum14ksXt0g==
+X-Received: by 2002:a17:902:585:: with SMTP id f5-v6mr9980860plf.7.1531781801481;
+        Mon, 16 Jul 2018 15:56:41 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id x2-v6sm69730571pfi.166.2018.07.16.15.56.40
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 16 Jul 2018 15:56:40 -0700 (PDT)
+Date:   Mon, 16 Jul 2018 15:56:39 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
 Subject: Re: [PATCH] gc: do not warn about too many loose objects
-Message-ID: <20180716225520.GC12482@sigill.intra.peff.net>
-References: <20180716172717.237373-1-jonathantanmy@google.com>
- <20180716191505.857-1-newren@gmail.com>
- <20180716195226.GB25189@sigill.intra.peff.net>
- <CABPp-BGdzyhPkFYyocqArtMX8=cDKFuV88q3mboeaTDjt275Tw@mail.gmail.com>
- <20180716203847.GE25189@sigill.intra.peff.net>
- <CABPp-BEpCF9FE7eJwZWjY+bMsjDQnnDaSrHO+e3DtDDsR-=7Hg@mail.gmail.com>
- <20180716212159.GH25189@sigill.intra.peff.net>
- <CABPp-BHFinoE1=1bOhiwOrYpLB+kB3yAKbNg77K9kqKDH_1JLA@mail.gmail.com>
+Message-ID: <20180716225639.GK11513@aiede.svl.corp.google.com>
+References: <20180716190949.GB11513@aiede.svl.corp.google.com>
+ <20180716194136.GA25189@sigill.intra.peff.net>
+ <20180716195431.GD11513@aiede.svl.corp.google.com>
+ <20180716202915.GC25189@sigill.intra.peff.net>
+ <20180716203753.GE11513@aiede.svl.corp.google.com>
+ <20180716210938.GF25189@sigill.intra.peff.net>
+ <20180716214003.GH11513@aiede.svl.corp.google.com>
+ <20180716214539.GL25189@sigill.intra.peff.net>
+ <20180716220306.GI11513@aiede.svl.corp.google.com>
+ <20180716224337.GB12482@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CABPp-BHFinoE1=1bOhiwOrYpLB+kB3yAKbNg77K9kqKDH_1JLA@mail.gmail.com>
+In-Reply-To: <20180716224337.GB12482@sigill.intra.peff.net>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 16, 2018 at 03:07:34PM -0700, Elijah Newren wrote:
+Jeff King wrote:
+> On Mon, Jul 16, 2018 at 03:03:06PM -0700, Jonathan Nieder wrote:
 
-> > If we were to delete those objects, wouldn't it be exactly the same as
-> > running "git prune"? Or setting your gc.pruneExpire to "now" or even "5
-> > minutes"?  Or are you concerned with taking other objects along for the
-> > ride that weren't part of old reflogs? I think that's a valid concern,
-> 
-> Yes, I was worried about taking other objects along for the ride that
-> weren't part of old reflogs.
-> 
-> > but it's also an issue for objects which were previously referenced in
-> > a reflog, but are part of another current operation.
-> 
-> I'm not certain what you're referring to here.
+>> Oh, good point.  In non-daemon mode, we don't let "gc --auto" failure
+>> cause the invoking command to fail, but in daemon mode we do.  That
+>> should be a straightforward fix; patch coming in a moment.
+>
+> OK, that definitely sounds like a bug. I'm still confused how that could
+> happen, though, since from the caller's perspective they ignore git-gc's
+> exit code either way. I guess I'll see in your patch. :)
 
-I mean that an ongoing operation could refer to a blob that just
-recently became unreachable via reflog pruning. And then we would delete
-it, leaving the repository corrupt.
+Alas, I just misremembered.  What I was remembering is that gc --auto
+does
 
-One of the protections we have against that is that if I ask to write
-blob XYZ and we find that we already have the object, Git will freshen
-the mtime of the loose object or pack that contains it, protecting it
-from pruning. But with your suggestion, we'd delete it immediately,
-regardless of the mtime of the containing pack.
+	if (auto_gc && too_many_loose_objects())
+		warning(_("There are too many unreachable loose objects; "
+			"run 'git prune' to remove them."));
+	return 0;
 
-Another way to think of it is this: a reflog mentioning an object does
-not mean it is the exclusive user of that object. So when we expire it,
-that does not mean that it is OK to delete it immediately; there may be
-other users.
+which means that too_many_loose_objects is not an error in undaemonized
+mode, while it is in daemonized mode.  But we've already discussed that.
 
-> > Also, what do you do if there weren't reflogs in the repo? Or the
-> > reflogs were deleted (e.g., because branch deletion drops the associated
-> > reflog entirely)?
-> 
-> Yes, there are issues this rule won't help with, but in my experience
-> it was a primary (if not sole) actual cause in practice.  (I believe I
-> even said elsewhere in this thread that I knew there were unreachable
-> objects for other reasons and they might also become large in number).
-> At $DAYJOB we've had multiple people including myself hit the "too
-> many unreachable loose objects" nasty loop issue (some of us multiple
-> different times), and as far as I can tell, most (perhaps even all) of
-> them would have been avoided by just "properly" deleting garbage as
-> per my object-age-is-reflog-age-if-not-otherwise-referenced rule.
+The calling command in the motivating example is Android's "repo" tool:
 
-I agree with you that this is a frequent cause, and probably even the
-primary one. But my concern is that your loosening increases the risk of
-corruption for other cases.
+            bare_git.gc('--auto')
 
-> > I assume by "these objects" you mean ones which used to be reachable
-> > from a reflog, but that reflog entry just expired.  I think you'd be
-> > sacrificing some race-safety in that case.
-> 
-> Is that inherently any more race unsafe than 'git prune
-> --expire=2.weeks.ago'?  I thought it'd be racy in the same ways, and
-> thus a tradeoff folks are already accepting (at least implicitly) when
-> running git-gc.  Since these objects are actually 90 days old rather
-> than a mere two weeks, it actually seemed more safe to me.  But maybe
-> I'm overlooking something with the pack->loose transition that makes
-> it more racy?
+from https://gerrit-review.googlesource.com/c/git-repo/+/10598/.  I
+think it's reasonable that it expects a status code of 0 in the normal
+case.  So life is less simple than I hoped.
 
-I think it's worse in terms of race-safety because you're losing one of
-the signals that users of the objects can provide to git-prune to tell
-it the object is useful: updating the mtime. So yes, you think of the
-objects as "90 days old", but we don't know if there are other users.
-Has somebody else been accessing them in the meantime?
+[...]
+>> Can you point me to some discussion about building that rate-limiting?
+>> The commit message for v2.12.2~17^2 (gc: ignore old gc.log files,
+>> 2017-02-10) definitely doesn't describe that as its intent.
+>
+> I think that commit is a loosening of the rate-limiting (because we'd
+> refuse to progress for something that was actually time-based). But the
+> original stopping comes from this discussion, I think:
+>
+>   https://public-inbox.org/git/xmqqlhijznpm.fsf@gitster.dls.corp.google.com/
 
-To be honest, I'm not sure how meaningful that distinction is in
-practice. The current scheme is still racy, even if the windows are
-shorter in some circumstances. But it seems like cruft packfiles are
-a similar amount of work to your scheme, cover more cases, and are
-slightly safer. And possibly even give us a long-term route to true
-race-free pruning (via the "garbage pack" mark that Jonathan mentioned).
+Interesting!  It looks like that thread anticipated the problems we've
+seen here.  Three years without having to have fixed it is a good run,
+I suppose.
 
-Assuming you buy into the idea that objects in a cruft-pack are not
-hurting anything aside from a little wasted storage for up to 2 weeks
-(which it sounds like you're at least partially on board with ;) ).
+The discussion of stopping there appears to be primarily about
+stopping in the error case, not rate-limiting in the success or
+warning case.
 
--Peff
+Here's a patch for the 'return -1' thing.
+
+-- >8 --
+Subject: gc: exit with status 128 on failure
+
+A value of -1 returned from cmd_gc gets propagated to exit(),
+resulting in an exit status of 255.  Use die instead for a clearer
+error message and a controlled exit.
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ builtin/gc.c  | 36 ++++++++++++++++--------------------
+ t/t6500-gc.sh |  2 +-
+ 2 files changed, 17 insertions(+), 21 deletions(-)
+
+diff --git a/builtin/gc.c b/builtin/gc.c
+index ccfb1ceaeb..2bebc52bda 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -438,10 +438,10 @@ static const char *lock_repo_for_gc(int force, pid_t* ret_pid)
+ 	return NULL;
+ }
+ 
+-static int report_last_gc_error(void)
++static void report_last_gc_error(void)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
+-	int ret = 0;
++	ssize_t ret;
+ 	struct stat st;
+ 	char *gc_log_path = git_pathdup("gc.log");
+ 
+@@ -449,16 +449,17 @@ static int report_last_gc_error(void)
+ 		if (errno == ENOENT)
+ 			goto done;
+ 
+-		ret = error_errno(_("Can't stat %s"), gc_log_path);
+-		goto done;
++		die_errno(_("cannot stat '%s'"), gc_log_path);
+ 	}
+ 
+ 	if (st.st_mtime < gc_log_expire_time)
+ 		goto done;
+ 
+ 	ret = strbuf_read_file(&sb, gc_log_path, 0);
++	if (ret < 0)
++		die_errno(_("cannot read '%s'"), gc_log_path);
+ 	if (ret > 0)
+-		ret = error(_("The last gc run reported the following. "
++		die(_("The last gc run reported the following. "
+ 			       "Please correct the root cause\n"
+ 			       "and remove %s.\n"
+ 			       "Automatic cleanup will not be performed "
+@@ -468,20 +469,18 @@ static int report_last_gc_error(void)
+ 	strbuf_release(&sb);
+ done:
+ 	free(gc_log_path);
+-	return ret;
+ }
+ 
+-static int gc_before_repack(void)
++static void gc_before_repack(void)
+ {
+ 	if (pack_refs && run_command_v_opt(pack_refs_cmd.argv, RUN_GIT_CMD))
+-		return error(FAILED_RUN, pack_refs_cmd.argv[0]);
++		die(FAILED_RUN, pack_refs_cmd.argv[0]);
+ 
+ 	if (prune_reflogs && run_command_v_opt(reflog.argv, RUN_GIT_CMD))
+-		return error(FAILED_RUN, reflog.argv[0]);
++		die(FAILED_RUN, reflog.argv[0]);
+ 
+ 	pack_refs = 0;
+ 	prune_reflogs = 0;
+-	return 0;
+ }
+ 
+ int cmd_gc(int argc, const char **argv, const char *prefix)
+@@ -562,13 +561,11 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 			fprintf(stderr, _("See \"git help gc\" for manual housekeeping.\n"));
+ 		}
+ 		if (detach_auto) {
+-			if (report_last_gc_error())
+-				return -1;
++			report_last_gc_error(); /* dies on error */
+ 
+ 			if (lock_repo_for_gc(force, &pid))
+ 				return 0;
+-			if (gc_before_repack())
+-				return -1;
++			gc_before_repack(); /* dies on failure */
+ 			delete_tempfile(&pidfile);
+ 
+ 			/*
+@@ -608,12 +605,11 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 		atexit(process_log_file_at_exit);
+ 	}
+ 
+-	if (gc_before_repack())
+-		return -1;
++	gc_before_repack();
+ 
+ 	if (!repository_format_precious_objects) {
+ 		if (run_command_v_opt(repack.argv, RUN_GIT_CMD))
+-			return error(FAILED_RUN, repack.argv[0]);
++			die(FAILED_RUN, repack.argv[0]);
+ 
+ 		if (prune_expire) {
+ 			argv_array_push(&prune, prune_expire);
+@@ -623,18 +619,18 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 				argv_array_push(&prune,
+ 						"--exclude-promisor-objects");
+ 			if (run_command_v_opt(prune.argv, RUN_GIT_CMD))
+-				return error(FAILED_RUN, prune.argv[0]);
++				die(FAILED_RUN, prune.argv[0]);
+ 		}
+ 	}
+ 
+ 	if (prune_worktrees_expire) {
+ 		argv_array_push(&prune_worktrees, prune_worktrees_expire);
+ 		if (run_command_v_opt(prune_worktrees.argv, RUN_GIT_CMD))
+-			return error(FAILED_RUN, prune_worktrees.argv[0]);
++			die(FAILED_RUN, prune_worktrees.argv[0]);
+ 	}
+ 
+ 	if (run_command_v_opt(rerere.argv, RUN_GIT_CMD))
+-		return error(FAILED_RUN, rerere.argv[0]);
++		die(FAILED_RUN, rerere.argv[0]);
+ 
+ 	report_garbage = report_pack_garbage;
+ 	reprepare_packed_git(the_repository);
+diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
+index 818435f04e..c474a94a9f 100755
+--- a/t/t6500-gc.sh
++++ b/t/t6500-gc.sh
+@@ -117,7 +117,7 @@ test_expect_success 'background auto gc does not run if gc.log is present and re
+ 	test_config gc.autodetach true &&
+ 	echo fleem >.git/gc.log &&
+ 	test_must_fail git gc --auto 2>err &&
+-	test_i18ngrep "^error:" err &&
++	test_i18ngrep "^fatal:" err &&
+ 	test_config gc.logexpiry 5.days &&
+ 	test-tool chmtime =-345600 .git/gc.log &&
+ 	test_must_fail git gc --auto &&
+-- 
+2.18.0.233.g985f88cf7e
+
