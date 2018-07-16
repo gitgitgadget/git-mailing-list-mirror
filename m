@@ -2,125 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 32DCA1F597
-	for <e@80x24.org>; Mon, 16 Jul 2018 14:43:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 91BA41F597
+	for <e@80x24.org>; Mon, 16 Jul 2018 14:49:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727387AbeGPPLe (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jul 2018 11:11:34 -0400
-Received: from mout.gmx.net ([212.227.17.22]:53125 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727150AbeGPPLd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jul 2018 11:11:33 -0400
-Received: from [192.168.0.129] ([37.201.195.94]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M2ojS-1fw38t0AJ4-00scJ0; Mon, 16
- Jul 2018 16:43:33 +0200
-Date:   Mon, 16 Jul 2018 16:43:30 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Eric Sunshine <sunshine@sunshineco.com>
-cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
+        id S1727957AbeGPPQ7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jul 2018 11:16:59 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:33358 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727464AbeGPPQ7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jul 2018 11:16:59 -0400
+Received: by mail-qt0-f194.google.com with SMTP id c15-v6so12735883qtp.0
+        for <git@vger.kernel.org>; Mon, 16 Jul 2018 07:49:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=wRO28HBO9J5UFjtfOjchhyOLLaGcQhE8Akuh7+VhUWY=;
+        b=oPolThXxjSwxmFADDfo7EZc0d9dj9g9jfKGX/1skBDqosFyceVDXu5Tn8nSBIZ/LwM
+         QXi7Y8RHhhzTDcwZoEHwmhUBYtSfStue/tYf7XMtsu9RnP4b91+IuR7UApqvFkKpRmOE
+         MyfSby0JEOHX+FIbO0FHeDmXf4qTHfKfFkZNMatAT2WRpwJctPgV9jvV1R0OZ5cZYc+F
+         cspGzHV+ANsvhION68hIB18RQIxWhFgs8fQSVbdCTfyfTKBjFrsIwcuzZPzOINQJvmy4
+         e58qG/By0mNAD/5PQoh311Cw3faUOSmNqacntpbETlhuiipr3OyFtVV7WrIYhU+P5Oh9
+         Lsow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=wRO28HBO9J5UFjtfOjchhyOLLaGcQhE8Akuh7+VhUWY=;
+        b=UjAZ7lVnxaWrP8WNQVHur3ChTJhbDuhMMLEYyEIESFLoe4SEMNWUEOYP5E2mz8fTLA
+         pa5/k9qllcwpexoRX8CWRNFlV79aBSHKyofrviyhwAbod6ulbOSKLUGtMW9sR/oG17vD
+         qup43Z40fc/iKvrFUyxDbncLxrqag7gheFlsD9QKHDsPPhXImyh7RA5bpGKje+W+dR2W
+         wdIa4XReMTcLJs9cMMh4IY1pUH395j/b9tzEntA7miOigZpK0X0+VJMEdXSadkPAFgmA
+         DfSjPX5Obof7K3rKMhoJhBVOmrqY9s+3nlYvVzlEQaQ8gXNgqM1phu6lo3zr5d2mdyq/
+         7Miw==
+X-Gm-Message-State: AOUpUlGQoYs2Xw+wHHLVWKVYE5Kcv2SW+jvbiNHgjEkev7ETCvA4gr4O
+        FcMeUEIR+5DMvrxtv/L4ITs=
+X-Google-Smtp-Source: AAOMgpcwkhkLNan3xHQXLEYlvmH7nKeX4cO0ISky3XM5jlpsfCmTS8SwCjHSh+swma3ji5L7v/c4eQ==
+X-Received: by 2002:ac8:7107:: with SMTP id z7-v6mr14673742qto.326.1531752553246;
+        Mon, 16 Jul 2018 07:49:13 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:60fd:63a1:877b:9618? ([2001:4898:8010:0:4a33:63a1:877b:9618])
+        by smtp.gmail.com with ESMTPSA id x26-v6sm1385727qth.15.2018.07.16.07.49.12
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 16 Jul 2018 07:49:12 -0700 (PDT)
+Subject: Re: [PATCH v2 00/16] object_id part 14
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
         Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Luke Diamand <luke@diamand.org>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 11/25] t7400: fix broken "submodule add/reconfigure
- --force" test
-In-Reply-To: <20180702002405.3042-12-sunshine@sunshineco.com>
-Message-ID: <nycvar.QRO.7.76.6.1807161641140.71@tvgsbejvaqbjf.bet>
-References: <20180702002405.3042-1-sunshine@sunshineco.com> <20180702002405.3042-12-sunshine@sunshineco.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        Brandon Williams <bmwill@google.com>,
+        Jacob Keller <jacob.keller@gmail.com>
+References: <20180716012808.961328-1-sandals@crustytoothpaste.net>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <668c27f2-fb61-32c5-7664-160d9a9f7e18@gmail.com>
+Date:   Mon, 16 Jul 2018 10:49:11 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:P3ozZCZazXC7hZET+pWc/uOfH/woc3YIuy5IIGYBRhHRdUOnVtS
- +nOU0Mwp77AifWLI91MRdawR0Tpg/UiEEaqSJ2SQ4t669DE8fQ559DoesZw2Ej2s4BZvDhS
- n6H1qP+dw0MNcI6/vAWW0Zfw2OqDcFqctBsMJh9B0cxj1LmeN5Tr2u3z1UuXGYnSZoKX8ys
- rxOZBEd96V2rgfIuFe1vA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:P7M6z+NlVL8=:fiWos8M4+VM8Tk3HAEd3Ns
- Jahf7rnsGRxU13SL2MYwC8dTX0caPknUOMbiouHGaWKMFzAt+M7Tq4pPz1yWWhfhhXaI1VAAk
- R/pEhmrfsyBmTBtv5NFMVNsZk03/0QyoZ/C33QmV9ObFl054pkb7PIdQyh9Ysocie4+fp+PVL
- CLLIOUTh56gWeAo1iO+QdHOa5uh8L6Fz4JO4eKe1cCjPSsSYuRvu/P5VkzoaZbOMb2+Rq8099
- z6DxW33vznt/OUS3l5gAeWh4m+OCTN1rQ1T2DRJ4N0aRLchD2sgQ37dUZotBEMlJCWDfkCpRx
- RFsZJt+XlNGfkLHUjcUdZQuU89ojEqkvtLpZXipiIlvlTYDO+7YHWJB+yrpleczBQfAMuntUh
- 35971Ho2z7EiSU7oAIkttg8MpzLdClTedGZv8eG/ludCXUPdEComPMSjEmpqd/SBqERc0usPf
- 3kOWVZVKiCr8rCaOzgBxGekbFuX68GILRcvND+tnid3Kgb2+o9+XviQl/2pKlS0xGdd3xd4jr
- TYONoEivkYIf2ewoNVVPl9UkxD7A3agruAvTr4d7Y0fS9IKZNkrK9Vx22KmhIpbw4e6xm132k
- hLK7Rsyv6iJzYI6SW4G8fyLanz6qbpPd+akmKC9iXUUFT4JCUFiVHuG/hJcM28gne13KQ6sty
- 1IW9mQd07l+B1bh58CgXG51F/kXLony5n3UGFykInL2ydr55/2QeNB5bk1bIHO2cCEbn5CNEx
- G/XgKY6V7Ns3nrlOhksI9XiNJzyzteMhORRnd6dxcZzMoZ3bTXM6ggrdKJWd9OVQtsQKLKxmc
- Fm05X7E
+In-Reply-To: <20180716012808.961328-1-sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
+On 7/15/2018 9:27 PM, brian m. carlson wrote:
+> This is the fourteenth series of patches to switch to using struct
+> object_id and the_hash_algo.  This series converts several core pieces
+> to use struct object_id, including the oid* and hex functions.
+>
+> All of these patches have been tested with both SHA-1 and a 256-bit
+> hash.
+>
+> Most of these patches are fixes for things that will clearly cause
+> segfaults or other very obvious breakage on a Git with a 256-bit hash.
+>
+> Changes from v1:
+> * Drop patch that's been replaced by one from Ben Peart.
+> * Update patch handling hash* and oid* functions.
 
-On Sun, 1 Jul 2018, Eric Sunshine wrote:
+I re-read this series and it looks good to me. Thanks!
 
-> This test has been dysfunctional since it was added by 619acfc78c
-> (submodule add: extend force flag to add existing repos, 2016-10-06),
-> however, two problems early in the test went unnoticed due to a broken
-> &&-chain later in the test.
-> 
-> First, it tries configuring the submodule with repository "bogus-url",
-> however, "git submodule add" insists that the repository be either an
-> absolute URL or a relative pathname requiring prefix "./" or "../" (this
-> is true even with --force), but "bogus-url" does not meet those
-> criteria, thus the command fails.
-> 
-> Second, it then tries configuring a submodule with a path which is
-> .gitignore'd, which is disallowed. This restriction can be overridden
-> with --force, but the test neglects to use that option.
-> 
-> Fix both problems, as well as the broken &&-chain behind which they hid.
-> 
-> Reviewed-by: Stefan Beller <sbeller@google.com>
-> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
-> ---
->  t/t7400-submodule-basic.sh | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
-> 
-> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-> index 812db137b8..401adaed32 100755
-> --- a/t/t7400-submodule-basic.sh
-> +++ b/t/t7400-submodule-basic.sh
-> @@ -171,12 +171,12 @@ test_expect_success 'submodule add to .gitignored path with --force' '
->  test_expect_success 'submodule add to reconfigure existing submodule with --force' '
->  	(
->  		cd addtest-ignore &&
-> -		git submodule add --force bogus-url submod &&
-> -		git submodule add -b initial "$submodurl" submod-branch &&
-> -		test "bogus-url" = "$(git config -f .gitmodules submodule.submod.url)" &&
-> -		test "bogus-url" = "$(git config submodule.submod.url)" &&
-> +		git submodule add --force /bogus-url submod &&
-> +		git submodule add --force -b initial "$submodurl" submod-branch &&
-> +		test "/bogus-url" = "$(git config -f .gitmodules submodule.submod.url)" &&
-> +		test "/bogus-url" = "$(git config submodule.submod.url)" &&
->  		# Restore the url
-> -		git submodule add --force "$submodurl" submod
-> +		git submodule add --force "$submodurl" submod &&
->  		test "$submodurl" = "$(git config -f .gitmodules submodule.submod.url)" &&
->  		test "$submodurl" = "$(git config submodule.submod.url)"
->  	)
+Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
 
-This breaks on Windows because of the absolute Unix-y path having to be
-translated to a Windows path:
-
-	https://git-for-windows.visualstudio.com/git/git%20Team/_build/results?buildId=12365&view=logs
-
-(In this case, it is prefixed with `C:/git-sdk-64-ci` because that is the
-pseudo root when running in a Git for Windows SDK that is installed into
-that directory.)
-
-I could imagine that using "$(pwd)/bogus-url" (which will generate a
-Windows-y absolute path on Windows) would work, though.
-
-Ciao,
-Dscho
