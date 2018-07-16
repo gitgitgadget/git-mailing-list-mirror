@@ -2,137 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19A111F597
-	for <e@80x24.org>; Mon, 16 Jul 2018 21:09:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B90CE1F597
+	for <e@80x24.org>; Mon, 16 Jul 2018 21:10:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730107AbeGPVi5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jul 2018 17:38:57 -0400
-Received: from mail-ua0-f194.google.com ([209.85.217.194]:35617 "EHLO
-        mail-ua0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728300AbeGPVi4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jul 2018 17:38:56 -0400
-Received: by mail-ua0-f194.google.com with SMTP id q12-v6so25775763ual.2
-        for <git@vger.kernel.org>; Mon, 16 Jul 2018 14:09:45 -0700 (PDT)
+        id S1729612AbeGPVjp (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jul 2018 17:39:45 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:41039 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728300AbeGPVjp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jul 2018 17:39:45 -0400
+Received: by mail-wr1-f65.google.com with SMTP id j5-v6so26745418wrr.8
+        for <git@vger.kernel.org>; Mon, 16 Jul 2018 14:10:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ux+vjwZHPLjyuQYB+4hgP1/gcpLjtqXF6z4v839KXqE=;
-        b=m1L/jDSL5sAgcI/cD9oERqUDGxHyi6f9MWT1gy7Ru2QoJFUmLBRk7Hiuh5Ak8+ynH3
-         7VHEY2WK7Om7JtldpgYRxjpZ52a6DTwf8Ll/Ds4mfSG1JLh9tqOww2Dviy42IlIKmOgZ
-         y0CQ17HpthtusOumVslkptz7s40v2x/5+qa9Jf3T7lJBwUolRE2zUF3wc98tc7JQKLCm
-         70L4p7ahksMeJZQ/Vmsd1GUJCuk9ju+1EpsYVFjnJucl+6fzu7X2G/qp4dbOezWldu7P
-         mZhcCR5F4dnw8tc6TrBe3x87vpbLRPf6Y+X0KZ4r/61BeOpHDVku5W8zopUgJLF9eTXa
-         hzJQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=cEChYDquqhb2mkmCr8m+PbTtSBryMyeGKj99DE5Phuc=;
+        b=IDE2gUEFWkWfiP0o6+FJStlc3rQwl1y088fdl/Y4sS+GHGybv1yLIFLfBuawe8J64s
+         wVYViKWXuKeOfZyD2Yj6Sd7lLE0B49k0ewSf/MQ+gCMBPvdEa/RC4KlDZ1UNcgw1sAEH
+         3VOe8oMsS4Kl25SyrN1FHKI9WncRnFeNyCalni5cn8UyIuNJ/rDvJ0nFlOnk40Yhdh69
+         Zkd/FssDgw0fwHJaON8pA7JVymK0Bl2oidXGGv3xhoYEolMkjzMr0qMafPzwc+E5/1Tk
+         lsYpaLt0xEcLBkFi5cwek+Wlz71/7RhXy+G2y1LEk5Qb5ibSzhEDaLhhkuMRQVETgsGe
+         grdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ux+vjwZHPLjyuQYB+4hgP1/gcpLjtqXF6z4v839KXqE=;
-        b=cMoxQu9mLJJ7SzdrhUvzUuKqVmnWaaMJspVPOcwRMpbV5nPwkLNxicZYusOmxb5MUd
-         GSFLy+c5qB5baa/RnE+Z7uqkUX/vR+qEANNXebkeBWt39ieHfZnJqrker2eghb7MZAT3
-         cXl48KRdlSqwqQ3QFOUE0BSed+ezkkMfo2JksDuT0Xzc3YZNaAyco3piR3AR5GVTwFXi
-         KSEAQROUOWUP+xGOruMzamykqkJdK9JbWxzxm6cET1ULpWCx2WEYlEJKpBUW4Uyhtt/2
-         QdiRKWWDb6xeHDU5SWDtaoGuiXsL0RRnNKRarC2SxmhzafvPfymIcn5ehFANAIhufrNH
-         jJzw==
-X-Gm-Message-State: AOUpUlH10xnKE31te2LH9lYczEut0RycDddJOdN5P2tOqR9Vg28xzssi
-        AlOHDp++M3vXuPGzV6cXDzfB3AxoSMV0mkIsors=
-X-Google-Smtp-Source: AAOMgpe6pgSezTMLFRl61M6JkGisFaY50eBa9IcccDexjOhvSg4kX1jgIf4cjTPuSX3X3ZjLP4ancwUr/op0j0yR/mw=
-X-Received: by 2002:ab0:12e2:: with SMTP id o34-v6mr12286129uac.154.1531775384378;
- Mon, 16 Jul 2018 14:09:44 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:ab0:21c7:0:0:0:0:0 with HTTP; Mon, 16 Jul 2018 14:09:43
- -0700 (PDT)
-In-Reply-To: <20180716203847.GE25189@sigill.intra.peff.net>
-References: <20180716172717.237373-1-jonathantanmy@google.com>
- <20180716191505.857-1-newren@gmail.com> <20180716195226.GB25189@sigill.intra.peff.net>
- <CABPp-BGdzyhPkFYyocqArtMX8=cDKFuV88q3mboeaTDjt275Tw@mail.gmail.com> <20180716203847.GE25189@sigill.intra.peff.net>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 16 Jul 2018 14:09:43 -0700
-Message-ID: <CABPp-BEpCF9FE7eJwZWjY+bMsjDQnnDaSrHO+e3DtDDsR-=7Hg@mail.gmail.com>
-Subject: Re: [PATCH] gc: do not warn about too many loose objects
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=cEChYDquqhb2mkmCr8m+PbTtSBryMyeGKj99DE5Phuc=;
+        b=TdCGCb7UY+bQlLXecM+eLErz/U/d83EmH4bi7BGL89ThTR0y230E96T7QTpFK/e9KB
+         VxfygilMCOBwjawQDP9EFCTtw7nCDT54nM42+28KTYwWprJI/K5k60WRwLbxaVe1rSL/
+         cZi84Ly7YEyb65E1D6a9cBqYxIdLNimzWXN7WndwuUTnINlCrbMb33BSLNNGjSexizsn
+         iObMsm1P+uTmHQLIyxI197V7N3rbHjOTM1FQOZJ6RgmnFOp9PNLTS2PMMZBSJlY7P/5Z
+         jXqcLH9bpRulRnyXlB9Eib6ToziIG9g9xHiuaAQf46XI1iUMxpi5Wv7iIq4O8MMHdvsV
+         I5yQ==
+X-Gm-Message-State: AOUpUlED5gVscWuY/QqOsvPDbAV3heCOzHL+KrB6XbJFBLMkt++tfCzt
+        0nyUmeceCuHHaqYM/YtPYY4=
+X-Google-Smtp-Source: AAOMgpeU0ZUAmEWuCQIdHx0rlZHRgE+OUntcTnFzSN3LG+f5ksRQBTIhGELJ5vD7EeeHEoDc4FIZAw==
+X-Received: by 2002:adf:8e89:: with SMTP id q9-v6mr13411221wrb.261.1531775432526;
+        Mon, 16 Jul 2018 14:10:32 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id y11-v6sm4960625wrr.84.2018.07.16.14.10.31
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 16 Jul 2018 14:10:31 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Vitali Lovich <vlovich@gmail.com>, git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: rev-parse --show-toplevel broken during exec'ed rebase?
+References: <CAF8PYMjub1KK_ZK0hijTNBACSa6SaFyu1dJgrXd5fJU5Hc_dhg@mail.gmail.com>
+        <xmqq7em01ns9.fsf@gitster-ct.c.googlers.com>
+        <20180713184732.GC968742@genre.crustytoothpaste.net>
+        <20180713201949.GA17670@sigill.intra.peff.net>
+        <xmqqsh4jt5d0.fsf@gitster-ct.c.googlers.com>
+        <20180716183942.GB22298@sigill.intra.peff.net>
+Date:   Mon, 16 Jul 2018 14:10:31 -0700
+In-Reply-To: <20180716183942.GB22298@sigill.intra.peff.net> (Jeff King's
+        message of "Mon, 16 Jul 2018 14:39:43 -0400")
+Message-ID: <xmqqefg2sx88.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 16, 2018 at 1:38 PM, Jeff King <peff@peff.net> wrote:
-> On Mon, Jul 16, 2018 at 01:16:45PM -0700, Elijah Newren wrote:
+Jeff King <peff@peff.net> writes:
+
+> On Mon, Jul 16, 2018 at 11:14:51AM -0700, Junio C Hamano wrote:
 >
->> >> The basic problem here, at least for us, is that gc has enough
->> >> information to know it could expunge some objects, but because of how
->> >> it is structured in terms of several substeps (reflog expiration,
->> >> repack, prune), the information is lost between the steps and it
->> >> instead writes them out as unreachable objects.  If we could prune (or
->> >> avoid exploding) loose objects that are only reachable from reflog
->> >> entries that we are expiring, then the problem goes away for us.  (I
->> >> totally understand that other repos may have enough unreachable
->> >> objects for other reasons that Peff's suggestion to just pack up
->> >> unreachable objects is still a really good idea.  But on its own, it
->> >> seems like a waste since it's packing stuff that we know we could just
->> >> expunge.)
->> >
->> > No, we should have expunged everything that could be during the "repack"
->> > and "prune" steps. We feed the expiration time to repack, so that it
->> > knows to drop objects entirely instead of exploding them loose.
->>
->> Um, except it doesn't actually do that.  The testcase I provided shows
->> that it leaves around 10000 objects that are totally deletable and
->> were only previously referenced by reflog entries -- entries that gc
->> removed without removing the corresponding objects.
+>> Porcelain, but I suspect in practice always giving GIT_DIR and
+>> GIT_WORK_TREE would work well for many existing hooks.
 >
-> What's your definition of "totally deletable"?
+> Yeah, that may be an option. I don't remember if this was discussed in
+> this thread or elsewhere, but setting GIT_DIR is a regression for hooks,
+> etc, which do:
+>
+>   git -C /some/other/repo log
+>
+> or similar. I'm not sure if that falls under "actual regression" or
+> "just how it happened to work in the past". I'm not even sure it worked
+> that way _consistently_ in the past.
+>
+> The best practice if you're switching directories is to do:
+>
+>   unset $(git rev-parse --local-env-vars)
+>
+> though I highly doubt that most people bother.
 
-The point of gc is to: expire reflogs, repack referenced objects, and
-delete loose objects that (1) are no longer referenced and (2) are
-"old enough".
-
-The "old enough" bit is the special part here.  Before the gc, those
-objects were referenced (only by old reflog entries) and were found in
-a pack.  git currently writes those objects out to disk and gives them
-the age of the packfile they are contained in, which I think is the
-source of the bug.  We have a reference for those objects from the
-reflogs, know they aren't referenced anywhere else, so those objects
-to me are the age of those reflog entries: 90 days.  As such, they are
-"old enough" and should be deleted.
-
-With big repos, it's easy to get into situations where there are well
-more than 10000 objects satisfying these conditions.  In fact, it's
-not all that rare that the repo has far more loose objects after a git
-gc than before.
-
-I never got around to fixing it properly, though, because 'git prune'
-is such a handy workaround that for now.  Having people nuke all their
-loose objects is a bit risky, but the only other workaround people had
-was to re-clone (waiting the requisite 20+ minutes for the repo to
-download) and throw away their old clone.  (Though some people even
-went that route, IIRC.)
-
-> If the pack they were in is less than 2 weeks old, then they are
-> unreachable but "fresh", and are intentionally retained. If it was older
-> than 2 weeks, they should have been deleted.
-
-That's what's currently implemented, yes, but as above I think that
-logic is bad.
-
-> If you don't like that policy, you can set gc.pruneExpire to something
-> lower (including "now", but watch out, as that can race with other
-> operations!). But I don't think that's an implementation short-coming.
-> It's intentional to keep those objects. It's just that the format
-> they're in is inefficient and confuses later gc runs.
-
-I'm aware of pruneExpire, but I think it's the wrong way to handle this.
-
-I totally agree with your general plan to put unreferenced loose
-objects into a pack.  However, I don't think these objects should be
-part of that pack; they should just be deleted instead.
+Yeah, that is exactly where my "in practice" comes from.  I think I
+caught and killed another potential regression last week while it is
+still in the draft status during my review ;-)
