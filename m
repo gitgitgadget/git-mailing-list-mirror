@@ -2,126 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9CAE41F597
-	for <e@80x24.org>; Mon, 16 Jul 2018 20:53:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2EA3F1F597
+	for <e@80x24.org>; Mon, 16 Jul 2018 20:56:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728524AbeGPVXA (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jul 2018 17:23:00 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:55822 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728123AbeGPVXA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jul 2018 17:23:00 -0400
-Received: by mail-wm0-f66.google.com with SMTP id f21-v6so4254893wmc.5
-        for <git@vger.kernel.org>; Mon, 16 Jul 2018 13:53:51 -0700 (PDT)
+        id S1728413AbeGPVZ6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jul 2018 17:25:58 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:37164 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728300AbeGPVZ6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jul 2018 17:25:58 -0400
+Received: by mail-pf0-f195.google.com with SMTP id a26-v6so4792567pfo.4
+        for <git@vger.kernel.org>; Mon, 16 Jul 2018 13:56:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=At5AR4Ms6XdNpAOh0DH6dPEbySYtwLrcQpBNId9+ZoE=;
-        b=g5kgCHQAvthEGq15U7k02nNa/NLv2qkwCVAPlY6gdUwXLFe7q1U0x1CbjPrUaDTG9o
-         9KS2M/47hmkng3TWfrYLL8N2TbFzzNW41VHq3sofypeQMf/hF89jbgsnSrnTXu0B/T9f
-         zJ+VM0gEGY4nzZ2Y7/JGtIIMIgQJfRb1ndnnuso7X6LCAPjklnvjkUM/5hK7ppSv2TN4
-         POaPW9pcGiXUVaKVimvhGvd7gfB+UFOcTn8gBboZHgLd4GG5pOqZr9CPNLRAKQTz5a7P
-         Z5cM98WP5uOjufvkv1Ww5VmGc1HFphk3eFgkau9STUYh1/vm+s5q0FuDkJZYKwpwLyPr
-         FSTQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=frsk0pGw0O7yPJ4+gZ1FCJOOMYsh11ZVIlRHhiSWrIo=;
+        b=YTF0W4zLvJfLxvfYQFFgrgnvt1HPsJ7xJugzwDo508Uu4zIYfM/NIMi1yV4j8UU8HK
+         Tq+AZBx8aNqe+GH0r/e/CnPEEBHSLOLxXy+8djWBrVBnXC1BgOQtNE9BJuEMg/GY1Anx
+         Q1T/InxvOzrYnuB56SBoKG5vsRGI7MEIPF7fB9CtrglHB98TQm7tBIyv9YJ+bGVu0fj2
+         4Ro3xYcT/nW0L2pfEeySOAMqXenKefiCYWWQC8akqMBz+Djk31IT0dgEnhwFd/lWECgh
+         pdFdyX2P+W5FSiWAt3bTYufRo9U2jeJ77E97iC/SehXbFPpOam3vAb+oAwAnoKu3zwq3
+         Xngg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=At5AR4Ms6XdNpAOh0DH6dPEbySYtwLrcQpBNId9+ZoE=;
-        b=gCfzERBdz77whhUaBV44qKq8yDB65KjEDjSKw+j+khlWe07tYqp20NvvHjYmxGGEkk
-         /Fz24MMJu7+4jCatr6Sp7ujn93I503n54z8wiKkMENSXkFHSSpkfJ1u2ca78qRG+yFmW
-         r8Dsspwt3yeHMqnF7JJppHemmON5OdogFpAXJHSmC3QHVj71qBY514TyiuFNKUFgbsYM
-         1EFOhBHua4u91wuzxt4QyXeqs+kYGBvU4Jf5edeJsZRhLGGMEDnzW831lLzR7t/7gRP3
-         Mn93FydOd2kLVZGHHXJ8z7LW9OhSZIyAvz+3obzZoeGZIZIHCrmHuZXkF1x86pgHB4PA
-         DYMg==
-X-Gm-Message-State: AOUpUlE3z5TojIepOtBPqp1tyzfUjnFRw1j99a3NCRAsmwU6bJ5YIaWB
-        8hDi91zL988LD9OkeE7H344=
-X-Google-Smtp-Source: AAOMgpcndQVAwdM4hhHne8ObMaEsfrZvZ7+GlTsbK+s8i/rY9hN/ADLYHBI6XYm/knXHsLEk5voBsA==
-X-Received: by 2002:a1c:e3d5:: with SMTP id a204-v6mr10389691wmh.20.1531774430450;
-        Mon, 16 Jul 2018 13:53:50 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id x184-v6sm8257843wmg.24.2018.07.16.13.53.49
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=frsk0pGw0O7yPJ4+gZ1FCJOOMYsh11ZVIlRHhiSWrIo=;
+        b=bOOdjGiQP9xYcpBNkoC0yprXNvSpZaigv8TtkOXHsF7L/3oMQTkcV0wZD5yVPQBs6Z
+         bgj8PuksCoA4+vPXpckco8/ABjWWUX6aQiBXr4Vf8q9imbw/ZUyubxMr6b4LiicKWlet
+         xd0u55YByHUMys4bY2eNQ9jzP0FZ/D3gPSQSwY54C3mqyINaOtV9SAVFaSu7j+Bww6Vn
+         PcTE+eYocd1PxGjcMjzrZdyf4AQ8YY4P9Ghz9SPA21L1Zt8fxaTq70pCCDPQS1qwWI+5
+         0orVI8eTG8o6q76CF5Obv18R+ARHQSO01WGSMGkpcv5DRL9QwVUvckqwbfX7w7o2Co4W
+         jy7w==
+X-Gm-Message-State: AOUpUlGCdVQf+NXOezp8FMbLpK1vCeUtIyyrlu/jYBZqhTmS9zfGz5yE
+        L1UJBISsIdOdYZMcAOatlk4=
+X-Google-Smtp-Source: AAOMgpdHIUJsddYOmHbaPPk1xyv2/zd/HF4QKiE8bgdBgsS9Qt9TOcQ+Ke/lr9mBpNCw45VDnmhHNQ==
+X-Received: by 2002:a63:f919:: with SMTP id h25-v6mr16368656pgi.401.1531774608930;
+        Mon, 16 Jul 2018 13:56:48 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id y33-v6sm61939115pga.41.2018.07.16.13.56.48
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 16 Jul 2018 13:53:49 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Olga Telezhnaya <olyatelezhnaya@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 4/4] ref-filter: use oid_object_info() to get object
-References: <0102016493ab5347-c0429041-6e66-4550-894c-2d500cb2ed8e-000000@eu-west-1.amazonses.com>
-        <0102016493ab542d-ea2a3e8c-d6a0-44ca-8fc6-f940fe7e84cd-000000@eu-west-1.amazonses.com>
-Date:   Mon, 16 Jul 2018 13:53:49 -0700
-In-Reply-To: <0102016493ab542d-ea2a3e8c-d6a0-44ca-8fc6-f940fe7e84cd-000000@eu-west-1.amazonses.com>
-        (Olga Telezhnaya's message of "Fri, 13 Jul 2018 12:43:56 +0000")
-Message-ID: <xmqqr2k2sy02.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Mon, 16 Jul 2018 13:56:48 -0700 (PDT)
+Date:   Mon, 16 Jul 2018 13:56:46 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH] gc: do not warn about too many loose objects
+Message-ID: <20180716205646.GF11513@aiede.svl.corp.google.com>
+References: <20180716172717.237373-1-jonathantanmy@google.com>
+ <20180716191505.857-1-newren@gmail.com>
+ <20180716191923.GC11513@aiede.svl.corp.google.com>
+ <CABPp-BGN4NeH2QAP0WMyuOdr2GYq+hpt9584wdn2jHHinEAgDg@mail.gmail.com>
+ <20180716203539.GD25189@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180716203539.GD25189@sigill.intra.peff.net>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Olga Telezhnaya <olyatelezhnaya@gmail.com> writes:
+Jeff King wrote:
+> On Mon, Jul 16, 2018 at 01:21:40PM -0700, Elijah Newren wrote:
+>> Jonathan Nieder wrote:
 
-> -static int get_object(struct ref_array_item *ref, const struct object_id *oid,
-> -		      int deref, struct object **obj, struct strbuf *err)
-> +static int get_object(struct ref_array_item *ref, int deref, struct object **obj,
-> +		      struct expand_data *oi, struct strbuf *err)
->  {
-> -	int eaten;
-> -	int ret = 0;
-> -	unsigned long size;
-> -	enum object_type type;
-> -	void *buf = read_object_file(oid, &type, &size);
-> -	if (!buf)
-> -		ret = strbuf_addf_ret(err, -1, _("missing object %s for %s"),
-> -				      oid_to_hex(oid), ref->refname);
-> -	else {
-> -		*obj = parse_object_buffer(oid, type, size, buf, &eaten);
-> -		if (!*obj)
-> -			ret = strbuf_addf_ret(err, -1, _("parse_object_buffer failed on %s for %s"),
-> -					      oid_to_hex(oid), ref->refname);
-> -		else
-> -			grab_values(ref->value, deref, *obj, buf, size);
-> +	/* parse_object_buffer() will set eaten to 0 if free() will be needed */
-> +	int eaten = 1;
+>>> My understanding is that exploding the objects is intentional behavior,
+>>> to avoid a race where objects are newly referenced while they are being
+>>> pruned.
+[...]
+>> Ah, that's good to know and at least makes sense.  It seems somewhat
+>> odd, though; loose objects that are two weeks old are just as
+>> susceptible to being referenced anew by new commits, so the default of
+>> running 'git prune --expire=2.weeks.ago' as gc currently does would
+>> also be unsafe, wouldn't it?  Why is that any more or less unsafe than
+>> pruning objects only referenced by reflog entries that are more than
+>> 90 days old?
 
-Hmph, doesn't this belong to the previous step?  In other words,
-isn't the result of applying 1-3/4 has a bug that can leave eaten
-uninitialized (and base decision to free(buf) later on it), and
-isn't this change a fix for it?
+Part of the answer is that this safety feature applies even when
+reflogs are not in use.  Another part is that as you say, you can
+start referencing an object at the same time as the reflog entry
+pointing to it is expiring.
 
-> +	if (oi->info.contentp) {
-> +		/* We need to know that to use parse_object_buffer properly */
-> +		oi->info.sizep = &oi->size;
-> +		oi->info.typep = &oi->type;
->  	}
-> +	if (oid_object_info_extended(the_repository, &oi->oid, &oi->info,
-> +				     OBJECT_INFO_LOOKUP_REPLACE))
-> +		return strbuf_addf_ret(err, -1, _("missing object %s for %s"),
-> +				       oid_to_hex(&oi->oid), ref->refname);
-> +
-> +	if (oi->info.contentp) {
-> +		*obj = parse_object_buffer(&oi->oid, oi->type, oi->size, oi->content, &eaten);
-> +		if (!obj) {
-> +			if (!eaten)
-> +				free(oi->content);
-> +			return strbuf_addf_ret(err, -1, _("parse_object_buffer failed on %s for %s"),
-> +					       oid_to_hex(&oi->oid), ref->refname);
-> +		}
-> +		grab_values(ref->value, deref, *obj, oi->content, oi->size);
-> +	}
-> +
-> +	grab_common_values(ref->value, deref, oi);
->  	if (!eaten)
-> -		free(buf);
-> -	return ret;
-> +		free(oi->content);
-> +	return 0;
->  }
+[...]
+>                                    That's why we retain non-fresh
+> objects that are referenced from fresh ones (so as long as you made the
+> new commit recently, it transitively infers freshness on the old blob),
+> and why we fresh mtimes when we elide a write for an existing object.
+>
+> That's _still_ not race-proof, because none of these operations is
+> atomic.
 
+Indeed.  One of the advantages of using a packfile for unreachable
+objects is that metadata associated with that packfile can be updated
+atomically.
+
+I don't believe we are very good at transitively propagating freshness
+today, by the way.
+
+Thanks,
+Jonathan
