@@ -7,66 +7,68 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B8B101F597
-	for <e@80x24.org>; Mon, 16 Jul 2018 20:16:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 88AA21F597
+	for <e@80x24.org>; Mon, 16 Jul 2018 20:21:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728412AbeGPUpr (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jul 2018 16:45:47 -0400
-Received: from mail-vk0-f65.google.com ([209.85.213.65]:35574 "EHLO
-        mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728123AbeGPUpr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jul 2018 16:45:47 -0400
-Received: by mail-vk0-f65.google.com with SMTP id p12-v6so428129vkf.2
-        for <git@vger.kernel.org>; Mon, 16 Jul 2018 13:16:47 -0700 (PDT)
+        id S1728558AbeGPUum (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jul 2018 16:50:42 -0400
+Received: from mail-vk0-f66.google.com ([209.85.213.66]:47015 "EHLO
+        mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728197AbeGPUum (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jul 2018 16:50:42 -0400
+Received: by mail-vk0-f66.google.com with SMTP id b14-v6so22358692vke.13
+        for <git@vger.kernel.org>; Mon, 16 Jul 2018 13:21:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=fmIcGl2HovHrAbZ/JRxwaNDrxWHfhr2e3YTI4v0IwXQ=;
-        b=l5+no0EG5ZlfUkhQ2c6f2XyJHRKlGqpReNa7qw8c47Sr5k4lj19KN2VeauqwePaJng
-         +9rcG9fvcoaIJ2FWfbuWW6l8/g/62r335x1xPgpz0HgswpKUG0urA6jVArjeAAqrzdYH
-         e/q2A/fM3BAcE9pWqhwGaR8qbhcnCH9U8s9UWbFBKLKB4pno8R5Yu0tzVZgQ6nQi/s2G
-         ElC87qpnIA27cfL5y08HrGMtMEskCyp60oCSgfacQMKkccCT1ZsD8vFaQDoGmu52F13e
-         XzBRVwfszvAzH7SqZ/T52FanjFjGOIRK0fP4wQ5ElxwAGhNgMFtMkkSl+dEqnVhka7I0
-         EhIA==
+        bh=tKotaOyDNr6orPZtbYfpcUcDn9X5SaiFT19xJhCiYrY=;
+        b=O4nr4iDR8+sxy5kZBZo7MyHxgTI6DXQpkncF8qAEte9lMX/LhpBVZ7V3XacZ9FweXF
+         cg+ZVhePUG21zcvrxBPmpBZcvz7L8G1SCh24ant25HE9VyqbVao4jlZfq6BeHgcm5a84
+         VcWZVfuyHWr1OMAvuwjVZP8EQ6GGIIIDirnbLqYW4y+FPV5JL7Kv0KFp/wbCXxEPsb1w
+         yb3DpZrGJwxIPFoeqp+yvJpoqlGWjzAscF4PDtQgGrDk5UWCfVbLWZGdmqMq6L3vtoGD
+         P4EqpZ4i6OwhrGsrXdlSyq6c2RvfgXJ0nR/3pw9H5OZAv0NoSMuvqzJK3sWDsfLm7Qpm
+         JfSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=fmIcGl2HovHrAbZ/JRxwaNDrxWHfhr2e3YTI4v0IwXQ=;
-        b=MUiq9TvIU4bKd4ypxxCknAU3EnWDg+hBIr4NYX02D5g3taHwY5WvKgIcY+7+HfjVw7
-         x0L3pknXdcYhj9F7yXZXgwb/7gtiPmyqkVvm03G7eB7ozfZVQvaqPXMMGUDw6yVwTUBW
-         GMqCtSSydiBQzV2tEgDW6Ax1AGVQ/lIH5ncr2ODzqhZhTjUDKvq8zY6l/VW7LN8zVdld
-         /3rB8mw/5zr2/35J/iGKH/y7gGTr8Q8SbfWygcxHA3pPjrvybF7zsgT6CTElcyZ3mFZ3
-         1+t2aoSFXdcKdkMH9dtCLTtxRLQwPU3/9PFA8NEW92i+YycTpAO33197uciGbVJSbw/R
-         FCDg==
-X-Gm-Message-State: AOUpUlF8zQuBFkYYM4uNVfU7Foiait7ohXyk6YBMgiCHa2J3HaKaSPmP
-        kZUN73LXSFQTCovluBPYbhCmfagLZArIyzsUoDE=
-X-Google-Smtp-Source: AAOMgpeAVtoelML91CUSb1/DidHIITfYW5X7dig+6EoAelabvfc1VPie17pAsUMhymw8zXH9fV+GtlynF7P2finjxqw=
-X-Received: by 2002:a1f:a182:: with SMTP id k124-v6mr10458964vke.118.1531772206576;
- Mon, 16 Jul 2018 13:16:46 -0700 (PDT)
+        bh=tKotaOyDNr6orPZtbYfpcUcDn9X5SaiFT19xJhCiYrY=;
+        b=baPy0E8fElQkCE5p0lbxIk9TXIVrPbFfniT5pPRLlClfvmcGlyJHXDNFcm9a1BsuHN
+         6QXTvkk+QL0o74NGr85yEy8HcFAXmdpbovRFBdEMLpBcQJYiqy5Fk9l3nNgwFvD5xch+
+         P0ZztMG3Cos9YhiXYVIxA5MUIZXeCSG0iwwj5c+lTCYRRS4jIGzK3iQ2kdF/RaHyHztk
+         BvMZ1lCq6PfxVR8tfR2F/P8VXLq+uKG+/FqptsEWus1sMftQ1IguoCUOTw609tfWwpcC
+         AfNAY1TY9lwzRky9XTU4i+YK6u2OUazjlk+6izXry6Wfm2GRJI+GCPpXOxgRB6FYT7V9
+         k9Ug==
+X-Gm-Message-State: AOUpUlEW4pSlOc54+4zGhZesvOwsg8RKA+vfutMWgXH1Qd2nWqrWKHYg
+        9o4o3SPqon/RB1gY+fGvfKjG5s8NTNUyLLxpGf0=
+X-Google-Smtp-Source: AAOMgpdoB87/2SraH1o/KCcaEHsLYRa5o1dqx39xzlt53QiaPrGWoXgpwaO08tc++JB0jC3nNVnBXq5lmlPGvWEMNzw=
+X-Received: by 2002:a1f:2cce:: with SMTP id s197-v6mr10169909vks.106.1531772500817;
+ Mon, 16 Jul 2018 13:21:40 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:ab0:21c7:0:0:0:0:0 with HTTP; Mon, 16 Jul 2018 13:16:45
+Received: by 2002:ab0:21c7:0:0:0:0:0 with HTTP; Mon, 16 Jul 2018 13:21:40
  -0700 (PDT)
-In-Reply-To: <20180716195226.GB25189@sigill.intra.peff.net>
+In-Reply-To: <20180716191923.GC11513@aiede.svl.corp.google.com>
 References: <20180716172717.237373-1-jonathantanmy@google.com>
- <20180716191505.857-1-newren@gmail.com> <20180716195226.GB25189@sigill.intra.peff.net>
+ <20180716191505.857-1-newren@gmail.com> <20180716191923.GC11513@aiede.svl.corp.google.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 16 Jul 2018 13:16:45 -0700
-Message-ID: <CABPp-BGdzyhPkFYyocqArtMX8=cDKFuV88q3mboeaTDjt275Tw@mail.gmail.com>
+Date:   Mon, 16 Jul 2018 13:21:40 -0700
+Message-ID: <CABPp-BGN4NeH2QAP0WMyuOdr2GYq+hpt9584wdn2jHHinEAgDg@mail.gmail.com>
 Subject: Re: [PATCH] gc: do not warn about too many loose objects
-To:     Jeff King <peff@peff.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
+        Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 16, 2018 at 12:52 PM, Jeff King <peff@peff.net> wrote:
-> On Mon, Jul 16, 2018 at 12:15:05PM -0700, Elijah Newren wrote:
+Hi,
+
+On Mon, Jul 16, 2018 at 12:19 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Elijah Newren wrote:
 >
 >> The basic problem here, at least for us, is that gc has enough
 >> information to know it could expunge some objects, but because of how
@@ -74,71 +76,24 @@ On Mon, Jul 16, 2018 at 12:52 PM, Jeff King <peff@peff.net> wrote:
 >> repack, prune), the information is lost between the steps and it
 >> instead writes them out as unreachable objects.  If we could prune (or
 >> avoid exploding) loose objects that are only reachable from reflog
->> entries that we are expiring, then the problem goes away for us.  (I
->> totally understand that other repos may have enough unreachable
->> objects for other reasons that Peff's suggestion to just pack up
->> unreachable objects is still a really good idea.  But on its own, it
->> seems like a waste since it's packing stuff that we know we could just
->> expunge.)
+>> entries that we are expiring, then the problem goes away for us.
 >
-> No, we should have expunged everything that could be during the "repack"
-> and "prune" steps. We feed the expiration time to repack, so that it
-> knows to drop objects entirely instead of exploding them loose.
+> My understanding is that exploding the objects is intentional behavior,
+> to avoid a race where objects are newly referenced while they are being
+> pruned.
+>
+> I am not a fan of that behavior.  It's still racy.  But when we've
+> brought it up in the past, the consensus seems to have been that it's
+> better than nothing.  Documentation/technical/hash-function-transition.txt
+> section "Loose objects and unreachable objects" describes a way to
+> eliminate the race.
 
-Um, except it doesn't actually do that.  The testcase I provided shows
-that it leaves around 10000 objects that are totally deletable and
-were only previously referenced by reflog entries -- entries that gc
-removed without removing the corresponding objects.
+Ah, that's good to know and at least makes sense.  It seems somewhat
+odd, though; loose objects that are two weeks old are just as
+susceptible to being referenced anew by new commits, so the default of
+running 'git prune --expire=2.weeks.ago' as gc currently does would
+also be unsafe, wouldn't it?  Why is that any more or less unsafe than
+pruning objects only referenced by reflog entries that are more than
+90 days old?
 
-
-I will note that my testcase was slightly out-of-date; with current
-git it needs a call to 'wait_for_background_gc_to_finish' right before
-the 'git gc --quiet' to avoid erroring out.
-
-> You
-> could literally just do:
->
->   find .git/objects/?? -type f |
->   perl -lne 's{../.{38}$} and print "$1$2"' |
->   git pack-objects .git/objects/pack/cruft-pack
->
-> But:
->
->   - that will explode them out only to repack them, which is inefficient
->     (if they're already packed, you can probably reuse deltas, not to
->     mention the I/O savings)
->
->   - there's the question of how to handle timestamps. Some of those
->     objects may have been _about_ to expire, but now you've just put
->     them in a brand-new pack that adds another 2 weeks to their life
->
->   - the find above is sloppy, and will race with somebody adding new
->     objects to the repo
->
-> So probably you want to have pack-objects write out the list of objects
-> it _would_ explode, rather than exploding them. And then before
-> git-repack deletes the old packs, put those into a new cruft pack. That
-> _just_ leaves the timestamp issue (which is discussed at length in the
-> thread I linked earlier).
->
->> git_actual_garbage_collect() {
->>     GITDIR=$(git rev-parse --git-dir)
->>
->>     # Record all revisions stored in reflog before and after gc
->>     git rev-list --no-walk --reflog >$GITDIR/gc.original-refs
->>     git gc --auto
->>     wait_for_background_gc_to_finish
->>     git rev-list --no-walk --reflog >$GITDIR/gc.final-refs
->>
->>     # Find out which reflog entries were removed
->>     DELETED_REFS=$(comm -23 <(sort $GITDIR/gc.original-refs) <(sort $GITDIR/gc.final-refs))
->
-> This is too detailed, I think. There are other reasons to have
-> unreachable objects than expired reflogs. I think you really just want
-> to consider all unreachable objects (like the pack-objects thing I
-> mentioned above).
-
-Yes, like I said, coarse workaround and I never had time to create a
-real fix.  But I thought the testcase might be useful as a
-demonstration of how git gc leaves around loose objects that were
-previously reference by reflogs that gc itself pruned.
+Elijah
