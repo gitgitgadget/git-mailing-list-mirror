@@ -2,73 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 47F8A1F597
-	for <e@80x24.org>; Mon, 16 Jul 2018 18:59:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00CCC1F597
+	for <e@80x24.org>; Mon, 16 Jul 2018 19:09:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729474AbeGPT2h (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jul 2018 15:28:37 -0400
-Received: from mail-yb0-f196.google.com ([209.85.213.196]:36530 "EHLO
-        mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728550AbeGPT2h (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jul 2018 15:28:37 -0400
-Received: by mail-yb0-f196.google.com with SMTP id s1-v6so15838295ybk.3
-        for <git@vger.kernel.org>; Mon, 16 Jul 2018 11:59:53 -0700 (PDT)
+        id S1729245AbeGPTij (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jul 2018 15:38:39 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:37000 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728417AbeGPTij (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jul 2018 15:38:39 -0400
+Received: by mail-pg1-f193.google.com with SMTP id n7-v6so996161pgq.4
+        for <git@vger.kernel.org>; Mon, 16 Jul 2018 12:09:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=kpuCkp0g7Kvv3JwiRqCtd4JjexoaKAGAaWi3z5vi+j0=;
+        b=gxTiNGP4wAwZDIqeMNmW3B40i7S+MpK1duBw4aQepIxnRJQzL0EWfnbf3+eqTTWCgC
+         Np7J3NAB29mzwDGRk47EARdlsqbuUAf8/K8jRSSql+snmn1dDWQ7ZvRzWwR9SOu5ofE4
+         y2HacVpOa0mLrFHVanMGvFOWK0owXEhYFj9I//ActktuJuHG7URgjOnCST6hPwYgh904
+         G8cUokG+LgClfnhYYyUfx1FgFjs2ytDnzk+YllBvV7kgKtaoS1xRfln6ec8wuCo9/jQk
+         gL41nk65RZ9SySdK4oqQzEG7K/kAP0O8lBQfhcM29grim40bzz//ZMt++/1Hti61D0kf
+         VQWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=20i8t2Q4kmWlCRfZrTuLxMKQx1rv3OehU2tbV+qjNnk=;
-        b=UR/zjm1wiPQP9N0QV6s8BKgX5TI/hIo20g5J3yg2V5pamn5QgIbJjICLBLmucNjvos
-         WW+QtYZ8JIRKN7qYOBNO94hNO3wHydnPxslU+8VEeqCUMoJr+tKAUGZOLzRIQVl1QWKd
-         PyblBizgEu+uI1qoD90qmb+uPoSk+vnKQs/iH0aTlj53A+SJXWnaq5+Ol8BzCFlvinVR
-         oGMP5kQ/13N8WW8eIQdy+I4nTHCm6BbDmGsVzpKYydUO/qg33rFLChuDUcobke0RJ43W
-         RA1o+fyZa6Ki+JKbhDvgjbCkZEGFaf983N8l6Wo81Jfy/nB+ogL7XhTS6m7HuphF35xX
-         lEug==
-X-Gm-Message-State: AOUpUlHHxm1r67IYNfVwN4KlZfuR0qIcG5gC0W/ieyIaDQILJwxM2j0X
-        +BjVQot3MpSCgJnvzdDMktGGyuNCUUXukQ8RYGg=
-X-Google-Smtp-Source: AAOMgpfZ3/dXeffyVpVavBSb5RK5a2wXqEna/GjiJKDPAXV/LlZ/M/yzazPzlZ+C5NDx8P9WvIzvlXu/nIs5K1F2dVY=
-X-Received: by 2002:a25:8b04:: with SMTP id i4-v6mr9206895ybl.12.1531767593266;
- Mon, 16 Jul 2018 11:59:53 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.10.git.gitgitgadget@gmail.com> <6b7a50dc-6b71-0e31-030a-42dd1b26bde4@ramsayjones.plus.com>
- <20180716161821.GB18150@sigill.intra.peff.net> <CAPig+cTVP2kubTEZBms_x1FvnqjGcX3pjTRXfjBMfMtdpbJt=Q@mail.gmail.com>
- <20180716185618.GD22298@sigill.intra.peff.net>
-In-Reply-To: <20180716185618.GD22298@sigill.intra.peff.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 16 Jul 2018 14:59:42 -0400
-Message-ID: <CAPig+cQ0t8nDnE9fVbo_wgth_Y2yuYM1O9AD1y6kvyHTqD57Yg@mail.gmail.com>
-Subject: Re: [PATCH 00/16] Consolidate reachability logic
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=kpuCkp0g7Kvv3JwiRqCtd4JjexoaKAGAaWi3z5vi+j0=;
+        b=Y3SFBn+j6fOsxM93dD2kTGZrHmUQKhZHjys0bXaBPGz3ngUA5qUvSKUHa+2ISZVFlY
+         HLhHNwLImQguh3mB1nprIDSbR4iGAkIqBSXumTWhEymfLpbtGRBZ9ITcTMFX0Qb5ctT9
+         ub8Sn/rpCfoLCy+NDC+k9CSNg0MBQi8lg+LVYGxSHckCw973mi+WjjLdOysxswskeJR6
+         G+0qqRUHMAG8JYOLxEGbsME5ibS3d5UlCcXKgK1zdda3txucbT86FekzoQEfTFrECktu
+         RGaqaMezlY7ueBgybgKPgNWJgnge1wAtVLVV9fhHO8tORTyM+2YeN777sNrx0qxGlJ1Q
+         OEIw==
+X-Gm-Message-State: AOUpUlHJ7d5BhamAWwUs46iF2Ns9VvdyyJRoWPZvaohmBfYrT1qGYhP9
+        9DTHiW/1LL1qQXXOoOehrDo=
+X-Google-Smtp-Source: AAOMgpecMfcvUUxDjLvpcM+NXr3RMhN44aigfzgC0SZXpGOriV+ZthrVXe/FlLWc1hZmxviydjN7cw==
+X-Received: by 2002:a62:ccd0:: with SMTP id j77-v6mr19113799pfk.22.1531768191635;
+        Mon, 16 Jul 2018 12:09:51 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id n5-v6sm51481600pgd.7.2018.07.16.12.09.50
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 16 Jul 2018 12:09:50 -0700 (PDT)
+Date:   Mon, 16 Jul 2018 12:09:49 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        gitgitgadget@gmail.com, Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH] gc: do not warn about too many loose objects
+Message-ID: <20180716190949.GB11513@aiede.svl.corp.google.com>
+References: <20180716172717.237373-1-jonathantanmy@google.com>
+ <20180716175103.GB18636@sigill.intra.peff.net>
+ <20180716182207.GA11513@aiede.svl.corp.google.com>
+ <20180716185255.GC22298@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180716185255.GC22298@sigill.intra.peff.net>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 16, 2018 at 2:56 PM Jeff King <peff@peff.net> wrote:
-> On Mon, Jul 16, 2018 at 02:40:21PM -0400, Eric Sunshine wrote:
-> > On Mon, Jul 16, 2018 at 12:18 PM Jeff King <peff@peff.net> wrote:
-> > > git-send-email uses the current time minus an offset, and then
-> > > monotonically increases for each patch:
-> >
-> > Junio pointed this out to gitgitgadget developers in [1], which led to
-> > an issue being opened[2]. That issue was merged today.
-> >
-> > [1]: https://public-inbox.org/git/xmqq7em7gg3j.fsf@gitster-ct.c.googlers.com/
-> > [2]: https://github.com/gitgitgadget/gitgitgadget/pull/15
->
-> I was going to say "oh good, fixed", but it looks like it just merged
-> adding that line to the TODO list. :)
+Hi,
 
-Erm, right. I actually knew a couple days ago that that issue was just
-a change to the TODO list but forgot that important tidbit when I
-wrote the above "was merged today". Anyhow, at least it's on the
-radar.
+Jeff King wrote:
+> On Mon, Jul 16, 2018 at 11:22:07AM -0700, Jonathan Nieder wrote:
+>> Jeff King wrote:
+
+>>> So while I completely agree that it's not a great thing to encourage
+>>> users to blindly run "git prune", I think it _is_ actionable.
+>>
+>> To flesh this out a little more: what user action do you suggest?  Could
+>> we carry out that action automatically?
+>
+> Er, the action is to run "git prune", like the warning says. :)
+
+I don't think we want to recommend that, especially when "git gc --auto"
+does the right thing automatically.
+
+Can you convince me I'm wrong?
+
+[...]
+>> I mentally make a distinction between this warning from "git gc
+>> --auto" and the warning from commands like "git gui".
+[...]
+> I don't think those warnings are the same. The warning from "git gui"
+> is: you may benefit from running gc.
+>
+> The warning that is deleted by this patch is: you _just_ ran gc, and hey
+> we even did it automatically for you, but we're still in a funky state
+> afterwards. You might need to clean up this state.
+
+This sounds awful.  It sounds to me like you're saying "git gc --auto"
+is saying "I just did the wrong thing, and here is how you can clean
+up after me".  That's not how I want a program to behave.
+
+But there's a simpler explanation for what "git gc --auto" was trying
+to say, which Jonathan described.
+
+[...]
+>> Yes, this is a real problem, and it would affect any other warning
+>> (or even GIT_TRACE=1 output) produced by gc --auto as well.  I think we
+>> should consider it a serious bug, separate from the symptom Jonathan is
+>> fixing.
+>>
+>> Unfortunately I don't have a great idea about how to fix it.  Should
+>> we avoid writing warnings to gc.log in daemon mode?  That would
+>> prevent the user from ever seeing the warnings, but because of the
+>> nature of a warning, that might be reasonable.
+>
+> If you do that without anything further, then it will break the
+> protection against repeatedly running auto-gc, as I described in the
+> previous email.
+
+Do you mean ratelimiting for the message, or do you actually mean
+repeatedly running auto-gc itself?
+
+If we suppress warnings, there would still be a gc.log while "git gc
+--auto" is running, just as though there had been no warnings at all.
+I believe this is close to the intended behavior; it's the same as
+what you'd get without daemon mode, except that you lose the warning.
+
+[...]
+>> Should we put warnings
+>> in a separate log file with different semantics?  Should we change the
+>> format of gc.log to allow more structured information (include 'gc'
+>> exit code) and perform a two-stage migration to the new format (first
+>> learn to read the new format, then switch to writing it)?
+>
+> Any of those would work similarly to the "just detect warnings" I
+> suggested earlier, with respect to keeping the "1 day" expiration
+> intact, so I'd be OK with them. In theory they'd be more robust than
+> scraping the "warning:" prefix. But in practice, I think you have to
+> resort to scraping anyway, if you are interested in treating warnings
+> from sub-processes the same way.
+
+Can you say more about this for me?  I am not understanding what
+you're saying necessitates scraping the output.  I would strongly
+prefer to avoid scraping the output.
+
+Thanks,
+Jonathan
