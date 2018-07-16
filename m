@@ -2,110 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B633C1F597
-	for <e@80x24.org>; Mon, 16 Jul 2018 23:12:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA06A1F597
+	for <e@80x24.org>; Mon, 16 Jul 2018 23:26:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729813AbeGPXmd (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jul 2018 19:42:33 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:46216 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729796AbeGPXmd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jul 2018 19:42:33 -0400
-Received: by mail-wr1-f68.google.com with SMTP id s11-v6so33478803wra.13
-        for <git@vger.kernel.org>; Mon, 16 Jul 2018 16:12:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=417GKgOk9Aa4DhAb6Oo1QhHnSI242yjoGhB4Qav5yjk=;
-        b=cK1ad5a59uvbIg2sfVCXxajEuXvzNQL9oHUi2KAk3CrX0zxTI0tXIYFr2cQ2E7jbHM
-         bj9OjxtzLhURhQMhAZ9Dl1Zvy1HA2/gzZkiAj6Qq4MWX/GtuSjZ6gnkOtABgGske4rZp
-         vteGAgpx9UeR+oAXGrl4NnLVZxWJnJlluiH/xgvUaq7VQ0sXpVa6ZbVQ5NLASm499t4r
-         n3wVb7MRdPHLvXjqDr5iHHkHs6B2atG1gWaOtYQGADAQwbAeTuzm6F07QifdXcd2xozv
-         eNK7xw+4YUJQ1YhLfQ3/ZIkwZGKaPrEHb2WHeuwoqAWp2UFMR4CDQyDxZRXp3vR/u6kF
-         DoCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=417GKgOk9Aa4DhAb6Oo1QhHnSI242yjoGhB4Qav5yjk=;
-        b=hJ5P0D/w8NovqgivXHp6YMyEFKxo0sr+gvlUg6/ds1d6oKSxqlCaBOYWc7tXYfmQOS
-         /G3THIxbl/BjZpAtHzyAW5cVFpnFZ26NcQF3roAsk3/2UNf6LB/S1yMDPTFrws13u1mL
-         x1LbWylUz5Q5a6c73RACyeAAdD8SIRNhG8jvVELd9PFSAK4EH7dvUJTQfzqqsEnTjee9
-         jzfX3CiLIh/YlzlDM1qUBt0XZiHZEw9WZsanXfkZseZkbpM2Ec0VZ+KXquRT/oaE21on
-         aPISoC8jE7v5KBtOkv0SQxgrByFG6KM9YCmqfNIRVonijveRcDoSvKUnXBPfUhUCpOFO
-         wJGQ==
-X-Gm-Message-State: AOUpUlESmSQ4BxVxxSm2gvaGiZwLi9wZSGJXXKQw3bnVjFR6rDQ5mwH7
-        G6sUgafv+XbCk/rvHsEV5OE=
-X-Google-Smtp-Source: AAOMgpfLH6EHWBSKsPJ/ZBaOOF8NcpKSCB7va7frzoTz0A+P9qjQwq6UZZDNrpbWuxFWTUjGl88fUw==
-X-Received: by 2002:adf:a3d6:: with SMTP id m22-v6mr13748217wrb.1.1531782775894;
-        Mon, 16 Jul 2018 16:12:55 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id w4-v6sm18410031wrt.40.2018.07.16.16.12.55
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 16 Jul 2018 16:12:55 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Henning Schild <henning.schild@siemens.com>,
-        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Ben Toews <mastahyeti@gmail.com>, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v2 7/9] gpg-interface: introduce new config to select per gpg format program
-References: <cover.1531208187.git.henning.schild@siemens.com>
-        <4905c1907a866c0fd1a4dac978dd6ca3e468ac43.1531208187.git.henning.schild@siemens.com>
-        <20180710165412.GE23624@sigill.intra.peff.net>
-        <20180710165638.GF23624@sigill.intra.peff.net>
-        <20180714181347.GE1042117@genre.crustytoothpaste.net>
-        <20180716213510.GJ25189@sigill.intra.peff.net>
-        <xmqq36wisv3h.fsf@gitster-ct.c.googlers.com>
-        <20180716222354.GA12482@sigill.intra.peff.net>
-Date:   Mon, 16 Jul 2018 16:12:54 -0700
-In-Reply-To: <20180716222354.GA12482@sigill.intra.peff.net> (Jeff King's
-        message of "Mon, 16 Jul 2018 18:23:54 -0400")
-Message-ID: <xmqqo9f6rczt.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1729360AbeGPXzo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jul 2018 19:55:44 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48944 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1728947AbeGPXzn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jul 2018 19:55:43 -0400
+Received: (qmail 22433 invoked by uid 109); 16 Jul 2018 23:25:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 16 Jul 2018 23:25:54 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17402 invoked by uid 111); 16 Jul 2018 23:26:08 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 16 Jul 2018 19:26:08 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Jul 2018 19:26:03 -0400
+Date:   Mon, 16 Jul 2018 19:26:03 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH] gc: do not warn about too many loose objects
+Message-ID: <20180716232603.GB13570@sigill.intra.peff.net>
+References: <20180716194136.GA25189@sigill.intra.peff.net>
+ <20180716195431.GD11513@aiede.svl.corp.google.com>
+ <20180716202915.GC25189@sigill.intra.peff.net>
+ <20180716203753.GE11513@aiede.svl.corp.google.com>
+ <20180716210938.GF25189@sigill.intra.peff.net>
+ <20180716214003.GH11513@aiede.svl.corp.google.com>
+ <20180716214539.GL25189@sigill.intra.peff.net>
+ <20180716220306.GI11513@aiede.svl.corp.google.com>
+ <20180716224337.GB12482@sigill.intra.peff.net>
+ <20180716225639.GK11513@aiede.svl.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20180716225639.GK11513@aiede.svl.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Mon, Jul 16, 2018 at 03:56:39PM -0700, Jonathan Nieder wrote:
 
-> On Mon, Jul 16, 2018 at 02:56:34PM -0700, Junio C Hamano wrote:
->
->> >> I'm okay with us forcing "openpgp".  That seems sane enough for now, and
->> >> if people scream loudly, we can loosen it.
->> >
->> > Well, I specifically meant "are you sure subsections like this are a
->> > good idea". But it seems like people think so?
->> 
->> I admit that I did not even consider that there may be better tool
->> than using subsections to record this information.  What are the
->> possibilities you have in mind (if you have one)?
->
-> I don't think there is another tool except two-level options, like
-> "gpg.openpgpprogram" and "gpg.x509program".
->
-> Although those are a bit ugly, I just wondered if they might make things
-> simpler, since AFAIK we are not planning to add more config options
-> here. Like gpg.x509.someotherflag, nor gpg.someothertool.program.
->
-> Of course one reason _for_ the tri-level is that we might one day add
-> gpg.x509.someotherflag, and this gives us room to do it with less
-> awkwardness (i.e., a proliferation of gpg.x509someflag options).
+> The calling command in the motivating example is Android's "repo" tool:
+> 
+>             bare_git.gc('--auto')
+> 
+> from https://gerrit-review.googlesource.com/c/git-repo/+/10598/.  I
+> think it's reasonable that it expects a status code of 0 in the normal
+> case.  So life is less simple than I hoped.
 
-Yes, and signingtool.<name>.<key> is probably a good (ultra-)long
-term direction.  Preparing the code may be quite a lot of work that
-nobody may be interested in, and nothing other than the GPG family
-might materialize for a long time, but if we can cheaply prepare
-external interface less dependent on GPG/PGP, that by itself would
-be a good thing to have, I would guess.
+IMHO it should ignore the return code, since that's what Git does
+itself. And at any rate, you'd miss errors from daemonized gc's (at
+least until the _next_ one runs and propagates the error code).
 
-Thanks.
+> Interesting!  It looks like that thread anticipated the problems we've
+> seen here.  Three years without having to have fixed it is a good run,
+> I suppose.
+> 
+> The discussion of stopping there appears to be primarily about
+> stopping in the error case, not rate-limiting in the success or
+> warning case.
+
+I think the two are essentially the same. The point is that we cannot
+make further progress by re-running the gc again, so we should not.
+
+Amusingly, the warning we're talking about is the exact reason that the
+logging in that thread was added.  329e6e8794 (gc: save log from
+daemonized gc --auto and print it next time, 2015-09-19) says:
+
+  The latest in this set is, as the result of daemonizing, stderr is
+  closed and all warnings are lost. This warning at the end of cmd_gc()
+  is particularly important because it tells the user how to avoid "gc
+  --auto" running repeatedly. Because stderr is closed, the user does
+  not know, naturally they complain about 'gc --auto' wasting CPU.
+
+> -- >8 --
+> Subject: gc: exit with status 128 on failure
+> 
+> A value of -1 returned from cmd_gc gets propagated to exit(),
+> resulting in an exit status of 255.  Use die instead for a clearer
+> error message and a controlled exit.
+
+I agree it's better to not pass -1 to exit(). But I thought the original
+motivation was the fact that we were returning non-zero in this case at
+all?  (And I thought you and I both agreed with that motivation).
+
+So is this meant to be a preparatory fix until somebody is interested in
+fixing that?
+
+> -static int gc_before_repack(void)
+> +static void gc_before_repack(void)
+>  {
+>  	if (pack_refs && run_command_v_opt(pack_refs_cmd.argv, RUN_GIT_CMD))
+> -		return error(FAILED_RUN, pack_refs_cmd.argv[0]);
+> +		die(FAILED_RUN, pack_refs_cmd.argv[0]);
+>  
+>  	if (prune_reflogs && run_command_v_opt(reflog.argv, RUN_GIT_CMD))
+> -		return error(FAILED_RUN, reflog.argv[0]);
+> +		die(FAILED_RUN, reflog.argv[0]);
+
+Dscho is going to yell at you about replacing error returns with die().  ;)
+
+I wonder if it would be simpler to just reinterpret the "-1" into "128"
+in cmd_gc(). I thought we had talked about having run_builtin() do that
+at one point, but I don't think we ever did. I dunno. I'm fine with it
+either way.
+
+-Peff
