@@ -2,96 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE4BB1F597
-	for <e@80x24.org>; Mon, 16 Jul 2018 18:47:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E8EA91F597
+	for <e@80x24.org>; Mon, 16 Jul 2018 18:50:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728787AbeGPTQF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jul 2018 15:16:05 -0400
-Received: from mail-qk0-f195.google.com ([209.85.220.195]:41317 "EHLO
-        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728202AbeGPTQE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jul 2018 15:16:04 -0400
-Received: by mail-qk0-f195.google.com with SMTP id d22-v6so21010355qkc.8
-        for <git@vger.kernel.org>; Mon, 16 Jul 2018 11:47:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=RAVJal7XuLuqrdUEiIb7OICwB1uvlOxXC5Ybt9rbFKI=;
-        b=ETExcOXwww02i3I2e3Den6ennx6P6exwKWKiB5pbRowaq9/WhJm65rN0B6s5sL/17r
-         R5AyRKUxYiSKqUVOM5L80EVszDRC+PXYqkww7auR0ptnM4bjTw+EHWCajRYKbuFl4UPb
-         LBZ37kBsvz2ALloBmt6YQaSIOrHUSlxYev9xHAZjUjstknIqLQfaZVoFIY8r77T54AaV
-         5twT+9mX8YyBOQGG5Puh7pgWtjNiUHGCIpa6OJPRNNCVmncAuSLaX1C9sVV4Sj+tmyN5
-         lcGFZSBYZp6/WqaP/bT8e3HHlEyyNBQ/l4JJY9YHFE5KZhLpIZD9k/TSiayy+9xqi3ZW
-         cMOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=RAVJal7XuLuqrdUEiIb7OICwB1uvlOxXC5Ybt9rbFKI=;
-        b=XlYKQiYQTAp1eLr7F2fW0lVG2PYCzHJ33FdQLNjeEBSCLc0niCEJC/B++kzBtBNvH4
-         XDGlY2EYRUxW7IuV69xFCd3LDf7jqZkrvGsonUAlnCM9fLBZcLL18dfeIEoCY8D7GHe9
-         TQX86YcE06Dn9PWzgkuBrFbWZ43Fkd7lHAHWe1xDTMF3/2Ax2Mx56XG0jrmjFqJQ8l9h
-         4L6t4acOWl4B/N2EszI15udqGLAmo0OO2rfCUEglxAVR8MlVZUB7dlhcPbVoo0aPDpDI
-         7MbQwc0afv0GroWPGRPaNR33Lrgay/8xt8cBG0Rehav0FHa8uNWF+rmkNLHsKjI+sgge
-         +MWA==
-X-Gm-Message-State: AOUpUlFsa2Fi8j5opYI+sOx5UL69r1Z0iw56p94taMv+I8kQNzRNXC1q
-        1W+kIhasrpswyN5LQa5PZ6k=
-X-Google-Smtp-Source: AAOMgpcBasLcVQlwfAIFZGvBH1fvV/SnFcKnt2pHDAopeBfwW//qC+qQrjsoohVD/wORBgsDmlM+DA==
-X-Received: by 2002:a37:7346:: with SMTP id o67-v6mr14903573qkc.137.1531766842545;
-        Mon, 16 Jul 2018 11:47:22 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:70b0:c563:a7e6:a86e? ([2001:4898:8010:0:59e6:c563:a7e6:a86e])
-        by smtp.gmail.com with ESMTPSA id c9-v6sm27200733qtc.34.2018.07.16.11.47.21
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 16 Jul 2018 11:47:21 -0700 (PDT)
-Subject: Re: [PATCH 00/16] Consolidate reachability logic
-To:     Eric Sunshine <sunshine@sunshineco.com>,
-        Stefan Beller <sbeller@google.com>
-Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        gitgitgadget@gmail.com, Git List <git@vger.kernel.org>,
+        id S1728784AbeGPTSp (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jul 2018 15:18:45 -0400
+Received: from wout5-smtp.messagingengine.com ([64.147.123.21]:36731 "EHLO
+        wout5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728495AbeGPTSp (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 16 Jul 2018 15:18:45 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.west.internal (Postfix) with ESMTP id CE2973C8;
+        Mon, 16 Jul 2018 14:50:02 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Mon, 16 Jul 2018 14:50:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=living180.net;
+         h=cc:content-transfer-encoding:content-type:date:from
+        :in-reply-to:message-id:mime-version:references:subject:to
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=ZE65C4gG0w/z8VnMf
+        GerOvLzwyauPo0NM7s2P6vinAE=; b=ro7zraV+n23wHXWxwz7hMHLE7OvW9/DDb
+        Wlvj7ylGpZbC3b54Z7kZyODmwcKt380hNZB818UCsYfBCxARjvGnmzsA5zlyQhLy
+        eApyGGI9KW34tVOiOXMi4Pr5R9K2uAThTunHjI4/MFnsxyoK2uV6UOt/cjBOByNu
+        4E95Q30qWB8ALzgn/4KLEkOtgDLZKQ9wp4WMJ0S4bDvhOKrUVj6UXcBnzB9Fg5Ed
+        5D1FelOH8QMNuMeLo6ZS5ui79xOTmuvy/wwb9kSqH+n1zU9ft0kireXUB3PheC/K
+        ai9+A3RRqDzD/8DzzqaVFTA3DZZQJv9l2WdZdgBZwc91bwDlPVnHw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:content-type
+        :date:from:in-reply-to:message-id:mime-version:references
+        :subject:to:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=ZE65C4
+        gG0w/z8VnMfGerOvLzwyauPo0NM7s2P6vinAE=; b=U5RSlFNQ7jcZeOq4Hppfso
+        dpXibw08tYJJNW3+TDpi2xO/315BlzgNovsEbdQpzBtxG3at8gQrmb5gMPiyk7fG
+        Af0GarAaf5hwIolH/9iA6uIh2ekIqpvTgHfYfY3g6rdrUortMZewyWArCqOVsbx/
+        U8idgHjMWHR3s40LxrX9m5TvmLihN5/5QQFiNgkti5fmFfeJvgYY7AJzofXDWigA
+        id/bZ2TERlHfEUxZCC0L34I2Y5qvqX5FQ1pbOZmXWSfRdbyd4BFZgaFk61lge53W
+        IoJtm2zl5mWH1vFnY0/SLm7uWn6H9LOhlIdfJlOtOqflFKT7/Sr2rB6395aUivMQ
+        ==
+X-ME-Proxy: <xmx:2ehMW-9PfehkZA8YslKlRq8Tuixm668XX5mFow8zQr0gjz6yJHgXhw>
+    <xmx:2ehMWyYE8XxjTNtCEfpY4RGlbr-4PPI_WqB_90Ib10vu3-3XMu3kow>
+    <xmx:2ehMW91CJMxcsAn2C9bhmX6UNrqoiuFwgUDnpuNm-REZL4XZ5y3_fw>
+    <xmx:2ehMW9Z1LK0YCjjwd3ADRVqEbHIO-7fONmAyOen7-DBk7qDScWA9xA>
+    <xmx:2ehMW1I_ikkxjqSm9N4WTTochT9gLWtizTqoHmXlpkDBVJmJyFDsdA>
+    <xmx:2uhMW1NxhpW6q6hz9nDfo_k5yuao6Nhe9ULjp3NsZO7WqvFNRZJYFw>
+X-ME-Sender: <xms:2ehMWwOok-vMZ1hvjhJSQvTgPr48TMnNQ-dqUToL_5z58c08zj1yBA>
+Received: from [0.0.0.0] (unknown [173.199.115.247])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 1F27C10255;
+        Mon, 16 Jul 2018 14:49:59 -0400 (EDT)
+Subject: Re: [PATCH v3] sequencer: use configured comment character
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Aaron Schrab <aaron@schrab.com>, git@vger.kernel.org,
         Junio C Hamano <gitster@pobox.com>
-References: <pull.10.git.gitgitgadget@gmail.com>
- <6b7a50dc-6b71-0e31-030a-42dd1b26bde4@ramsayjones.plus.com>
- <CAGZ79kYem+uMrhv+CUSDNXtE3C8Pv1cx=aZOyBLG=uo-aQWXeA@mail.gmail.com>
- <CAPig+cQj5_bEiLyAAS4xnsUQEPzqT_2yerdAQxd8FidVpJ5CxA@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <65d51c26-e248-f16d-bac2-e6ba0a3be8e5@gmail.com>
-Date:   Mon, 16 Jul 2018 14:47:19 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+References: <xmqq4lh4z870.fsf@gitster-ct.c.googlers.com>
+ <20180716045902.16629-1-aaron@schrab.com>
+ <nycvar.QRO.7.76.6.1807161758560.71@tvgsbejvaqbjf.bet>
+From:   Daniel Harding <dharding@living180.net>
+Message-ID: <66ce6f94-49ae-618e-bf6c-43a0f15bb752@living180.net>
+Date:   Mon, 16 Jul 2018 21:49:58 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.0
 MIME-Version: 1.0
-In-Reply-To: <CAPig+cQj5_bEiLyAAS4xnsUQEPzqT_2yerdAQxd8FidVpJ5CxA@mail.gmail.com>
+In-Reply-To: <nycvar.QRO.7.76.6.1807161758560.71@tvgsbejvaqbjf.bet>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
 Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/16/2018 2:44 PM, Eric Sunshine wrote:
-> On Mon, Jul 16, 2018 at 1:27 PM Stefan Beller <sbeller@google.com> wrote:
->> Another pain point of the Gadget is that CC's in the cover letter
->> do not work as I would imagine. The line
+Hi Johannes,
+
+On Mon, 16 Jul 2018 at 18:59:03 +0300, Johannes Schindelin wrote:
+> Hi Aaron,
+> 
+> On Mon, 16 Jul 2018, Aaron Schrab wrote:
 >>
->> CC: sbeller@google.com
+>> Looking into that a bit further, it does seem like my explanation above
+>> was incorrect.  Here's another attempt to explain why setting
+>> core.commentChar=auto isn't a problem for this change.
 >>
->> did not put that email into the cc field.
-> gitgitgadget recognizes case-sensitive "Cc:" only[1].
->
-> [1]: https://github.com/gitgitgadget/gitgitgadget/blob/c4805370f59532aa438283431b8ea7d4484c530f/lib/patch-series.ts#L188
+>> 8< -----
+>>
+>> Use the configured comment character when generating comments about
+>> branches in a todo list.  Failure to honor this configuration causes a
+>> failure to parse the resulting todo list.
+>>
+>> Setting core.commentChar to "auto" will not be honored here, and the
+>> previously configured or default value will be used instead. But, since
+>> the todo list will consist of only generated content, there should not
+>> be any non-comment lines beginning with that character.
+> 
+> How about this instead?
+> 
+> 	If core.commentChar is set to "auto", the intention is to
+> 	determine the comment line character from whatever content is there
+> 	already.
+> 
+> 	As the code path in question is the one *generating* the todo list
+> 	from scratch, it will automatically use whatever core.commentChar
+> 	has been configured before the "auto" (and fall back to "#" if none
+> 	has been configured explicitly), which is consistent with users'
+> 	expectations.
 
-Thanks for everyone's patience while we improve gitgitgadget (and - in 
-this case - I learn how to use it).
+Honestly, the above still doesn't read clearly to me.  I've take a stab 
+at it myself - let me know what you think:
 
-Thanks,
+     If core.commentChar is set to "auto", the comment_line_char global
+     variable will be initialized to '#'.  The only time
+     comment_line_char gets changed to an automatic value is when the
+     prepare_to_commit() function (in commit.c) calls
+     adjust_comment_line_char().  This does not happen when generating
+     the todo list, so '#' will be used as the comment character in the
+     todo list if core.commentChar is set to "auto".
 
--Stolee
+Cheers,
 
+Daniel Harding
