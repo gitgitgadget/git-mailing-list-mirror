@@ -2,118 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D017B1F597
-	for <e@80x24.org>; Mon, 16 Jul 2018 22:03:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 59FE11F597
+	for <e@80x24.org>; Mon, 16 Jul 2018 22:07:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730093AbeGPWcb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jul 2018 18:32:31 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:40921 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728758AbeGPWcb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jul 2018 18:32:31 -0400
-Received: by mail-pf0-f193.google.com with SMTP id e13-v6so13575311pff.7
-        for <git@vger.kernel.org>; Mon, 16 Jul 2018 15:03:09 -0700 (PDT)
+        id S1730763AbeGPWhA (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jul 2018 18:37:00 -0400
+Received: from mail-ua0-f196.google.com ([209.85.217.196]:46567 "EHLO
+        mail-ua0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729791AbeGPWg7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jul 2018 18:36:59 -0400
+Received: by mail-ua0-f196.google.com with SMTP id r18-v6so25834690ual.13
+        for <git@vger.kernel.org>; Mon, 16 Jul 2018 15:07:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Qk2z8TKWOKuTkio9egNrHyr0OF2qQA2WSMHq5AyhBwI=;
-        b=lbQUGa0pdQh7m3PWv74YZSdMFelPrnuqEdeD5xg0/Z1F6ZfVoY2RBRQWU4TI5nkkGE
-         yQ3YPjkCwP9GS+0Nd1olQGNfvhBP1xXKZg5Ch7sQq01iVfFU3U03ML14a3XMCG7BW2Uf
-         QyAYh9fmhka9eS8IuLyog6kqGwfrADaIaJkhPLHQZboi6h8OLdktCt1NF4YlA4odI1x2
-         Rqn41A0e94jKNj0uKIaBQAzBriXxStGWh/2BG3Tivom5CfjSwNy1uw5NLypma0FTqNd+
-         4c6uCnw078X0tjrPRepzMmG/azTDcZsq7xKzH2CIgd5cqGjRdfBj20ngXmeZyJhpbS76
-         EBiQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=1V0wyubf16Ki6wGvDVQavin5i/XaY5pC2YBvJb8yEy0=;
+        b=im5X0qXT/dhrldVeVGZd3R1HgV6hIYpiS2AippQd0p8J29TmQhAQmasWg2tR85bvJP
+         6GFivne8+oMB141NErt/L1QlGx/ibUpM74mLuqtcApzTHMC7HZ14J8YlVi1F7UOO8eMk
+         m1tIkBfQAM1Yb/dH7yxF+zA7Nk9jiD3b61yLnQV3Lq1Cm57ujArafXKwKzJ0o2eWgjXO
+         6mc+9aX1cSysaKt1hgnpn1XquNIoq8EMLWhSjfAi1j8P4BW1Jbq8Hd6zNZ/d3cVd6amU
+         dyCTUCEM1DB4ULBjqQffOMZqrNuMMQ23FB7QmIDMw/k5TPpE77z+KIeKOky9bigA5X46
+         GhVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Qk2z8TKWOKuTkio9egNrHyr0OF2qQA2WSMHq5AyhBwI=;
-        b=R2Gri1SrX+b+TRhmjmdPgXomysrAu/fqvHRvrJi01uVouUlA+LkOkSbhu4wD0uaX0s
-         hTSVDmfX975MhkiPcwGUQ/j5cAJWWH2hDdWnZmBnSjEO8IjMmgPt0YP3GDUIFskXe0NW
-         qndu4OeJX2IbLno81slMrZyjpAHQ+6fpy70XRzKJZV+IrhEHc9w4alPJGZikv7Y2s9mD
-         06sSlFX8WYZ77h2RcK6cgByC+YaGMHGxFuuGN4ihbTkOKW82wWk75n7AbKRWVRn6G47U
-         +MfXZ50RbDGjh1ykE9wS45AGyJDgkJzg+S0xYnGt7J5iR7iNxkyk+bDZl3/jO2y4TVZl
-         dB7w==
-X-Gm-Message-State: AOUpUlFeNqhVHNKdbwhIXd6lc4RXcId+6VWguAG0XPNaxpTm4xnUBJti
-        alzxqoEoHebQRQIYJe/oRUA=
-X-Google-Smtp-Source: AAOMgpeOQ2/cKb7uq2SUS0yNsJiWd7Td852fAmN+sHk1PLX0Pz3RZY+rXLNZwNSdAEylD8yagfuKtw==
-X-Received: by 2002:a62:b612:: with SMTP id j18-v6mr19803701pff.199.1531778588486;
-        Mon, 16 Jul 2018 15:03:08 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id v6-v6sm95583789pfa.28.2018.07.16.15.03.07
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 16 Jul 2018 15:03:07 -0700 (PDT)
-Date:   Mon, 16 Jul 2018 15:03:06 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH] gc: do not warn about too many loose objects
-Message-ID: <20180716220306.GI11513@aiede.svl.corp.google.com>
-References: <20180716182207.GA11513@aiede.svl.corp.google.com>
- <20180716185255.GC22298@sigill.intra.peff.net>
- <20180716190949.GB11513@aiede.svl.corp.google.com>
- <20180716194136.GA25189@sigill.intra.peff.net>
- <20180716195431.GD11513@aiede.svl.corp.google.com>
- <20180716202915.GC25189@sigill.intra.peff.net>
- <20180716203753.GE11513@aiede.svl.corp.google.com>
- <20180716210938.GF25189@sigill.intra.peff.net>
- <20180716214003.GH11513@aiede.svl.corp.google.com>
- <20180716214539.GL25189@sigill.intra.peff.net>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=1V0wyubf16Ki6wGvDVQavin5i/XaY5pC2YBvJb8yEy0=;
+        b=R00/lXJreST8stBP707UGjCzQXQKzqraGOrkY2xA2q4fdiWo7/ns6ZcLefUCbfPg1a
+         wP+L3aJEWq+bajX2pD3GNS248VdJdSO+/n0kK+XRHzHj0MVjDR+a1yGigqF9p/HolVX7
+         yU8XSs5draa9H9O7wGnJqpHUw3WgwW/1DcvE22Bz5x70J9afMkH4L1iBF84iYwsY7PG6
+         r6VcpYnBD703Pp54O9Wy9yrfoxT7NoCRMypLLrR0Q41jRYlXY5XjsZiw8ZOb1ZYLxta2
+         QFYNuvaSK41jX3GtlyHi1wFwtCEKl/RFyZq2Ut3PCZZxbR65CjZ25PUbQ60JsMpNeOGS
+         X+GA==
+X-Gm-Message-State: AOUpUlFB7iWsh2dYxF+UIqi7DHnzmLoZ+u8Pez0PkqxVdLsWqDy0M2Uz
+        7X92GKBNEQk1YYuM2V2cSv2hEUPRrv2SGft/YIvSKw==
+X-Google-Smtp-Source: AAOMgpdXkIc2YKaGcFJ/h+1/kOvOKQ+QX9TBL3ua1U4Y5+Lkt9LiFRbU17W63c7arr0TyDBuBUjByQszhcyMl8plA/s=
+X-Received: by 2002:ab0:66d4:: with SMTP id d20-v6mr6285615uaq.112.1531778855293;
+ Mon, 16 Jul 2018 15:07:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180716214539.GL25189@sigill.intra.peff.net>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Received: by 2002:ab0:21c7:0:0:0:0:0 with HTTP; Mon, 16 Jul 2018 15:07:34
+ -0700 (PDT)
+In-Reply-To: <20180716212159.GH25189@sigill.intra.peff.net>
+References: <20180716172717.237373-1-jonathantanmy@google.com>
+ <20180716191505.857-1-newren@gmail.com> <20180716195226.GB25189@sigill.intra.peff.net>
+ <CABPp-BGdzyhPkFYyocqArtMX8=cDKFuV88q3mboeaTDjt275Tw@mail.gmail.com>
+ <20180716203847.GE25189@sigill.intra.peff.net> <CABPp-BEpCF9FE7eJwZWjY+bMsjDQnnDaSrHO+e3DtDDsR-=7Hg@mail.gmail.com>
+ <20180716212159.GH25189@sigill.intra.peff.net>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 16 Jul 2018 15:07:34 -0700
+Message-ID: <CABPp-BHFinoE1=1bOhiwOrYpLB+kB3yAKbNg77K9kqKDH_1JLA@mail.gmail.com>
+Subject: Re: [PATCH] gc: do not warn about too many loose objects
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
+On Mon, Jul 16, 2018 at 2:21 PM, Jeff King <peff@peff.net> wrote:
+> On Mon, Jul 16, 2018 at 02:09:43PM -0700, Elijah Newren wrote:
 
-> I don't think any command should report failure of its _own_ operation
-> if "gc --auto" failed. And grepping around the source code shows that we
-> typically ignore it.
-
-Oh, good point.  In non-daemon mode, we don't let "gc --auto" failure
-cause the invoking command to fail, but in daemon mode we do.  That
-should be a straightforward fix; patch coming in a moment.
-
-> On Mon, Jul 16, 2018 at 02:40:03PM -0700, Jonathan Nieder wrote:
-
->> For comparison, in non-daemon mode, there is nothing enforcing the
->> kind of ratelimiting you are talking about.  It is an accident of
->> history.  If we want this kind of ratelimiting, I'd rather we build it
->> deliberately instead of relying on this accident.
+>> The point of gc is to: expire reflogs, repack referenced objects, and
+>> delete loose objects that (1) are no longer referenced and (2) are
+>> "old enough".
+>>
+>> The "old enough" bit is the special part here.  Before the gc, those
+>> objects were referenced (only by old reflog entries) and were found in
+>> a pack.  git currently writes those objects out to disk and gives them
+>> the age of the packfile they are contained in, which I think is the
+>> source of the bug.  We have a reference for those objects from the
+>> reflogs, know they aren't referenced anywhere else, so those objects
+>> to me are the age of those reflog entries: 90 days.  As such, they are
+>> "old enough" and should be deleted.
 >
-> What I was trying to say earlier is that we _did_ build this
-> rate-limiting, and I think it is a bug that the non-daemon case does not
-> rate-limit (but nobody noticed, because the default is daemonizing).
+> OK, I see what you're saying, but...
 >
-> So the fix is not "rip out the rate-limiting in daemon mode", but rather
-> "extend it to the non-daemon case".
+>> I never got around to fixing it properly, though, because 'git prune'
+>> is such a handy workaround that for now.  Having people nuke all their
+>> loose objects is a bit risky, but the only other workaround people had
+>> was to re-clone (waiting the requisite 20+ minutes for the repo to
+>> download) and throw away their old clone.  (Though some people even
+>> went that route, IIRC.)
+>
+> If we were to delete those objects, wouldn't it be exactly the same as
+> running "git prune"? Or setting your gc.pruneExpire to "now" or even "5
+> minutes"?  Or are you concerned with taking other objects along for the
+> ride that weren't part of old reflogs? I think that's a valid concern,
 
-Can you point me to some discussion about building that rate-limiting?
-The commit message for v2.12.2~17^2 (gc: ignore old gc.log files,
-2017-02-10) definitely doesn't describe that as its intent.
+Yes, I was worried about taking other objects along for the ride that
+weren't part of old reflogs.
 
-This is the kind of review that Dscho often complains about, where
-someone tries to fix something small but significant to users and gets
-told to build something larger that was not their itch instead.
+> but it's also an issue for objects which were previously referenced in
+> a reflog, but are part of another current operation.
 
-The comments about the "Why is 'git commit' so slow?" experience and
-how having the warning helps with that are well taken.  I think we
-should be able to find a way to keep the warning in a v2 of this
-patch.  But the rest about rate-limiting and putting unreachable
-objects in packs etc as a blocker for this are demoralizing, since
-they gives the feeling that even if I handle the cases that are
-handled today well, it will never be enough for the project unless I
-solve the larger problems that were already there.
+I'm not certain what you're referring to here.
 
-Jonathan
+> Also, what do you do if there weren't reflogs in the repo? Or the
+> reflogs were deleted (e.g., because branch deletion drops the associated
+> reflog entirely)?
+
+Yes, there are issues this rule won't help with, but in my experience
+it was a primary (if not sole) actual cause in practice.  (I believe I
+even said elsewhere in this thread that I knew there were unreachable
+objects for other reasons and they might also become large in number).
+At $DAYJOB we've had multiple people including myself hit the "too
+many unreachable loose objects" nasty loop issue (some of us multiple
+different times), and as far as I can tell, most (perhaps even all) of
+them would have been avoided by just "properly" deleting garbage as
+per my object-age-is-reflog-age-if-not-otherwise-referenced rule.
+
+>> With big repos, it's easy to get into situations where there are well
+>> more than 10000 objects satisfying these conditions.  In fact, it's
+>> not all that rare that the repo has far more loose objects after a git
+>> gc than before.
+>
+> Yes, this is definitely a wart and I think is worth addressing.
+>
+>> I totally agree with your general plan to put unreferenced loose
+>> objects into a pack.  However, I don't think these objects should be
+>> part of that pack; they should just be deleted instead.
+>
+> I assume by "these objects" you mean ones which used to be reachable
+> from a reflog, but that reflog entry just expired.  I think you'd be
+> sacrificing some race-safety in that case.
+
+Is that inherently any more race unsafe than 'git prune
+--expire=2.weeks.ago'?  I thought it'd be racy in the same ways, and
+thus a tradeoff folks are already accepting (at least implicitly) when
+running git-gc.  Since these objects are actually 90 days old rather
+than a mere two weeks, it actually seemed more safe to me.  But maybe
+I'm overlooking something with the pack->loose transition that makes
+it more racy?
+
+> If the objects went into a pack under a race-proof scheme, would that
+> actually bother you? Is it the 10,000 objects that's a problem, or is it
+> the horrible I/O from exploding them coupled with the annoying auto-gc
+> behavior?
+
+Yeah, good point.  It's mostly the annoying auto-gc behavior and the
+horrible I/O of future git operations from having lots of loose
+objects.  They've already been paying the cost of storing those
+objects in packed form for 90 days; a few more won't hurt much.  I'd
+be slightly annoyed knowing that we're storing garbage we don't need
+to be, but I don't think it's a real issue.
