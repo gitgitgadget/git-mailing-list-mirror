@@ -7,74 +7,98 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89F661F597
-	for <e@80x24.org>; Mon, 16 Jul 2018 17:26:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D96C1F597
+	for <e@80x24.org>; Mon, 16 Jul 2018 17:27:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727866AbeGPRzR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jul 2018 13:55:17 -0400
-Received: from mail-yw0-f178.google.com ([209.85.161.178]:40770 "EHLO
-        mail-yw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727618AbeGPRzR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jul 2018 13:55:17 -0400
-Received: by mail-yw0-f178.google.com with SMTP id p129-v6so14453055ywg.7
-        for <git@vger.kernel.org>; Mon, 16 Jul 2018 10:26:54 -0700 (PDT)
+        id S1729842AbeGPRzo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jul 2018 13:55:44 -0400
+Received: from mail-qt0-f201.google.com ([209.85.216.201]:42006 "EHLO
+        mail-qt0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727797AbeGPRzo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jul 2018 13:55:44 -0400
+Received: by mail-qt0-f201.google.com with SMTP id f8-v6so41213270qth.9
+        for <git@vger.kernel.org>; Mon, 16 Jul 2018 10:27:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=4mVYIupPwVtF44zU4m0aiWu+VtZk6OflLVvJkpKYHqI=;
-        b=JzlohQGMlzmhwV3Mnw129T5Njac57ND5zjNWrzt3MS+L44RQiRLtXhrk8YjeIncshy
-         10rRCxu4p45IED68MnKLSW+CGSDtaPqLK4wbYxqihd+CpwFt66N52DdPsxilWpBkbw6O
-         WmWG/+1YTMCj0NMKTto4OC2oj60sYzjn2QvIHXNKd0scDp/MjsmXR+Ws3RTAFveo88Y4
-         7aV4rrfUlAzKZzlzGw+LYy5++gOoPYRZjU30qF1bicHvhCeaAUdMr/3KZsrHLAJ6xTGW
-         70NeodoSzPGZz3O0Q62sFMxwIJmlstDJaZ4193XLREvwH4jdSdRAU0w9T2R/DJkXR1HJ
-         bQOw==
+        h=mime-version:date:message-id:subject:from:to:cc;
+        bh=QcEwbx9/c+omAqf00m7gqhCF0BW74QzABDxz4BNGHDU=;
+        b=W/xGF4+kIKrbbmXoT28bqAU/c7thlBCfkC2Q7EsP5a4flzPRf1WVkbloVQA0X1KzT1
+         3UWUE8/iKR9iFZZOUUQOkqst71NJfRNXIKCbjTZaJ6hxtlnyxjCfdrWAlQAxXFBJtjTE
+         eBCX+hi3FHQZdXiZn1qWaMWnMNk2egyAcIslF+Mzt6fjbGrMatRnSTHT+zKgpbB/sQt3
+         bwyXY0dw3Nt3XlXD2yLAmQgSs86QILfeqsokWtNLny5ENteKdD9LYHOGi75+TX4ddbzX
+         tMea48vahL8Yqmd6DAKKSkZ8cA0tmaO6Wd4w/s+F5/5/xKuKdAvtfUtZRT09ONq+dlgn
+         aFWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4mVYIupPwVtF44zU4m0aiWu+VtZk6OflLVvJkpKYHqI=;
-        b=UOGxPG1zWg98qn3rjeF/aSt0p6exCU3x1wCA2uR2ELFvhubItsZ0YwDS/pY2MpRvJ0
-         lv5h8p6XLF/qXa8NsQtgykVy+ZehtFOf/tXukjwXnzpCnY/2NRCXf7+yE3b3dmXfdANd
-         fIhVvAEsNGy6iZ+q9FIgoGZVDP7nnbQLvR9h7dH6JZSbAh8Tt7csso7AwvXVUaBPvr8F
-         ABWJ25kCoMsx2O/C/v5Im04LdezUVMJbDom4/HYsc2ApSP4sVCXnBkBCJJd7qoGETE/I
-         +/YKANNlhfb9f4ICaHRIbkZ9lGjidLxyM+Mgw14lbcNu5YaHxAc0tl5PNi42KSCkjZiD
-         BqaA==
-X-Gm-Message-State: AOUpUlEQpwcpN4rblljpJzCi41xT2KzOConsYTYYING31AWPXciY1IcS
-        8zv8qTB8tLOf5vv+cPG4mx+WxObwS//Oji5nNWlbTw==
-X-Google-Smtp-Source: AAOMgpf8EbuVpP6zN04l2wUm2CXUFCnuson4+YN8lvNod4ySnGUdhBgc3/AgiC/j29AKqUgZGrTuiCBejXCcSxqUQSo=
-X-Received: by 2002:a81:3758:: with SMTP id e85-v6mr8787238ywa.340.1531762013899;
- Mon, 16 Jul 2018 10:26:53 -0700 (PDT)
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc;
+        bh=QcEwbx9/c+omAqf00m7gqhCF0BW74QzABDxz4BNGHDU=;
+        b=VdZvUOA4yN9PIDiCWZNXn/Bc1KFocobKW5XVF01J7xwkRtBt/bOlnR45+jERFEPFNO
+         5u9yg8iVKHw5ESkR3XiL7wg2OAw/WYe0ns44mgDsKzzH182l9rhZCb6yHIi2UzHWpg42
+         oG6B9pSXTwbFp3tS+vSL7oYwic4HrtkHMthRzkOrICDU1BGcawdH2aIJq9t00RhPGEEd
+         lHEnTNa+LnvkGBqUWT+k9I4ZhmeqSadS30g7Pc0/bSgIPY7X2Qb3TqZJ/7bzbJOf7K/o
+         HYU5QBWi9kt0A6KWtHX11na9dY9pxvCD13srBSWDZCe7pZX/ahptwfyZGZfMFJ3fUPCY
+         zUbA==
+X-Gm-Message-State: AOUpUlF4cOgrYUIENCfhRtqeNWFbKpF/NUukjhFoZkPcSBc7sRJwRgZi
+        vPWdzQNonD9lHAv4Y2Ub0hvh9Cv75FKYzm3HZCFWi0PMP3jogE+8/vUE8AA14kZxYgFqEcVTCsM
+        jlywCq3rS5mZC8O6zVfPlCvvZuJluuL0xte9KwjsGosaWcc6QndPSKfEb/2kAL8S74Ec1jhH5MF
+        iY
+X-Google-Smtp-Source: AAOMgpd8GMdvgGVc5QD7vPvXUQimISTY/yIkQehjKoqrUfoWRR5DyWM/QOuPfNDbholFUqFDMGyTYxP+VH08IPikX3zt
 MIME-Version: 1.0
-References: <pull.10.git.gitgitgadget@gmail.com> <6b7a50dc-6b71-0e31-030a-42dd1b26bde4@ramsayjones.plus.com>
-In-Reply-To: <6b7a50dc-6b71-0e31-030a-42dd1b26bde4@ramsayjones.plus.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 16 Jul 2018 10:26:42 -0700
-Message-ID: <CAGZ79kYem+uMrhv+CUSDNXtE3C8Pv1cx=aZOyBLG=uo-aQWXeA@mail.gmail.com>
-Subject: Re: [PATCH 00/16] Consolidate reachability logic
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     gitgitgadget@gmail.com, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+X-Received: by 2002:ae9:ef44:: with SMTP id d65-v6mr10087931qkg.19.1531762040708;
+ Mon, 16 Jul 2018 10:27:20 -0700 (PDT)
+Date:   Mon, 16 Jul 2018 10:27:17 -0700
+Message-Id: <20180716172717.237373-1-jonathantanmy@google.com>
+X-Mailer: git-send-email 2.18.0.203.gfac676dfb9-goog
+Subject: [PATCH] gc: do not warn about too many loose objects
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> This is not your problem, but I find these GitGitGadget
-> submissions somewhat annoying.
+In a087cc9819 ("git-gc --auto: protect ourselves from accumulated
+cruft", 2007-09-17), the user was warned if there were too many
+unreachable loose objects. This made sense at the time, because gc
+couldn't prune them safely. But subsequently, git prune learned the
+ability to not prune recently created loose objects, making pruning able
+to be done more safely, and gc was made to automatically prune old
+unreachable loose objects in 25ee9731c1 ("gc: call "prune --expire
+2.weeks.ago" by default", 2008-03-12).
 
-Another pain point of the Gadget is that CC's in the cover letter
-do not work as I would imagine. The line
+This makes the warning unactionable by the user, as any loose objects
+left are not deleted yet because of safety, and "git prune" is not a
+command that the user is recommended to run directly anyway.
 
-CC: sbeller@google.com
+Therefore, remove this warning.
 
-did not put that email into the cc field.
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+This was noticed when a daemonized gc run wrote this warning to the log
+file, and returned 0; but a subsequent run merely read the log file, saw
+that it is non-empty and returned -1 (which is inconsistent in that such
+a run should return 0, as it did the first time).
+---
+ builtin/gc.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-How did you get Junios email into the TO, though?
+diff --git a/builtin/gc.c b/builtin/gc.c
+index ccfb1ceaeb..fc3b553651 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -641,10 +641,6 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 	if (pack_garbage.nr > 0)
+ 		clean_pack_garbage();
+ 
+-	if (auto_gc && too_many_loose_objects())
+-		warning(_("There are too many unreachable loose objects; "
+-			"run 'git prune' to remove them."));
+-
+ 	if (!daemonized)
+ 		unlink(git_path("gc.log"));
+ 
+-- 
+2.18.0.203.gfac676dfb9-goog
 
-Anyway I'll have a look at this series.
-
-Thanks,
-Stefan
