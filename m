@@ -2,96 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A7CF1F597
-	for <e@80x24.org>; Mon, 16 Jul 2018 15:59:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EAF361F597
+	for <e@80x24.org>; Mon, 16 Jul 2018 16:18:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728413AbeGPQ1Z (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jul 2018 12:27:25 -0400
-Received: from mout.gmx.net ([212.227.17.20]:43461 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727402AbeGPQ1Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jul 2018 12:27:25 -0400
-Received: from [192.168.0.129] ([37.201.195.94]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M7TQZ-1g0dSu3DRn-00xGvA; Mon, 16
- Jul 2018 17:59:07 +0200
-Date:   Mon, 16 Jul 2018 17:59:03 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Aaron Schrab <aaron@schrab.com>
-cc:     git@vger.kernel.org, Daniel Harding <dharding@living180.net>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] sequencer: use configured comment character
-In-Reply-To: <20180716045902.16629-1-aaron@schrab.com>
-Message-ID: <nycvar.QRO.7.76.6.1807161758560.71@tvgsbejvaqbjf.bet>
-References: <xmqq4lh4z870.fsf@gitster-ct.c.googlers.com> <20180716045902.16629-1-aaron@schrab.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728466AbeGPQqb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jul 2018 12:46:31 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48014 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727184AbeGPQqb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jul 2018 12:46:31 -0400
+Received: (qmail 2541 invoked by uid 109); 16 Jul 2018 16:18:12 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 16 Jul 2018 16:18:12 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12990 invoked by uid 111); 16 Jul 2018 16:18:27 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 16 Jul 2018 12:18:27 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Jul 2018 12:18:22 -0400
+Date:   Mon, 16 Jul 2018 12:18:22 -0400
+From:   Jeff King <peff@peff.net>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 00/16] Consolidate reachability logic
+Message-ID: <20180716161821.GB18150@sigill.intra.peff.net>
+References: <pull.10.git.gitgitgadget@gmail.com>
+ <6b7a50dc-6b71-0e31-030a-42dd1b26bde4@ramsayjones.plus.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:9hiSxKwpTg5eWmVEfzPxr4EFgUCwRLMKW9lxE/qPiW/cRvOD6Lu
- jY/FJlsU+5WdrTeHFQlptuGL313sbrLRU/83meGTmh3SKmDfG8oTeJ9WpVtyk2+BVJSK7+Y
- FZcxBkyG8zByQfxWwZircW8m87CwTmPAXhOr3FPvAOjPiZPoK9TVxzR5wZqgQ2lPBZ7y3VM
- qsS8WGVQgbiTG3nsaPTUQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:paUivy40tNo=:aD4du5MoSjnqPYDe4bSlUR
- 51erSVZBozcTxMvFMmm6QbKdm0aPbGyZTZe/zXsp2ulA84cD5gpfgRCWLUvhgX0Shyph1Wqh/
- wFULBp1p7tuh8xeqEXTA/vGp8l+VHzX0xqwBit17ayHcZ5wJy7t5sn6b7cw9RO0KB2HVxxo/y
- 4SA39QsNPdrkRQnQj9Ytu/WaXTN/GaeN0g2aYrXnZ2v0VR1ep3xpPQ+o4lQzaa8+wBmCIicAS
- jEUB3vOQdlzorsfXGHNcZA/Kts01NSwGOZrSlAU5qVh0FH3WkJPfNShxoTeQCiyeDBxSwbam4
- U/6K04rccNo6Cfirr1dimJ1MoQHLJrjSz/+wlv/tIw79FN8o+PTPKiM00QZ/yZ7vvBgnR+P22
- Y1PVsi4Kb4v1rtHAaLvZ6WkMXX4Eesvi3epsQvg5jyGlab/yjn2NRnxHl8qtcTh/x7uT4A+Wk
- YLe0rJiIZKt1fdy/TtvL6144Vb8XhF/nUH08G0tRtWIWpC9dLMX4ZdiT+kCk0bE9Yrs74Rqs0
- 918Mi6CT/qWM/v3YMizkymKLVZU/FonIODqHBceQ0lwJ5VAVE/ZUxxz2lM5tza1eXM+TJwLlL
- +kLUAu0SY5Z5DStN1WAE37G9oJeSbKqZsX1DIIAsRiFxAb+aOXf744OGKzvdRXxQ9W1NuCpQK
- bkGC0Pl64yB9qJp8GzUr7rBmeYid8tk/rYHKe8m/kLtkQgy+GOxVMb3evIH5M2oAUZ18jG1K2
- yQCQO5eN2dCWjn7gbNqnXycdMZA+OLH2dUP/WOpKt2ER+Fiz5hjSByOIwtWquVVlbigpQysy3
- 8ppyUao
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <6b7a50dc-6b71-0e31-030a-42dd1b26bde4@ramsayjones.plus.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Aaron,
+On Mon, Jul 16, 2018 at 02:54:38PM +0100, Ramsay Jones wrote:
 
-On Mon, 16 Jul 2018, Aaron Schrab wrote:
-
-> At 10:15 -0700 12 Jul 2018, Junio C Hamano <gitster@pobox.com> wrote:
-> >Aaron Schrab <aaron@schrab.com> writes:
-> >> Note that the comment_line_char has already been resolved by this point,
-> >> even if the user has configured the comment character to be selected
-> >> automatically.
-> >
-> >Isn't this a slight lie?
+> On 16/07/18 14:00, Derrick Stolee via GitGitGadget wrote:
+> > There are many places in Git that use a commit walk to determine
+> > reachability between commits and/or refs. A lot of this logic is
+> > duplicated.
+> [snip] ...
 > 
-> Looking into that a bit further, it does seem like my explanation above 
-> was incorrect.  Here's another attempt to explain why setting 
-> core.commentChar=auto isn't a problem for this change.
+> This is not your problem, but I find these GitGitGadget
+> submissions somewhat annoying. This series has been spewed
+> all over my in-box in, what I assume, is commit date order.
 > 
-> 8< -----
+> So, patches #4,5 dated 19/06, then #1,2,3 dated 25/06,
+> then #15 dated 28/06, then #6,7 dated 12/07, then #8-16
+> dated 13/07, then 00/16 dated today.
 > 
-> Use the configured comment character when generating comments about
-> branches in a todo list.  Failure to honor this configuration causes a
-> failure to parse the resulting todo list.
-> 
-> Setting core.commentChar to "auto" will not be honored here, and the
-> previously configured or default value will be used instead. But, since
-> the todo list will consist of only generated content, there should not
-> be any non-comment lines beginning with that character.
+> No I don't use a threaded display (I hate it), be even with
+> that turned on, the patches still appear in the above order
+> under the cover letter (but at least all together).
 
-How about this instead?
+Yeah, they're out of order in mutt's threaded display. And the
+back-dating means there's a much higher chance of them getting blocked
+as spam (e.g., some of the dates are from weeks ago).
 
-	If core.commentChar is set to "auto", the intention is to
-	determine the comment line character from whatever content is there
-	already.
+git-send-email uses the current time minus an offset, and then
+monotonically increases for each patch:
 
-	As the code path in question is the one *generating* the todo list
-	from scratch, it will automatically use whatever core.commentChar
-	has been configured before the "auto" (and fall back to "#" if none
-	has been configured explicitly), which is consistent with users'
-	expectations.
+  $time = time - scalar $#files;
+  ...
+  my $date = format_2822_time($time++);
 
-Ciao,
-Johannes
+which seems to work pretty well in practice. It does mean the original
+dates are lost. The committer date is not interesting at all (there will
+be a new committer via "git am" anyway). The original author date is
+potentially of interest, but could be included as an in-body header.
+AFAIK send-email doesn't have such an option, though, and people are
+fine with date-of-sending becoming the new author date.
+
++cc Johannes as the GitGitGadget author
+
+-Peff
