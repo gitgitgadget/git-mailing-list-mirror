@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 880861F597
-	for <e@80x24.org>; Mon, 16 Jul 2018 23:05:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E90F1F597
+	for <e@80x24.org>; Mon, 16 Jul 2018 23:05:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729811AbeGPXfZ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jul 2018 19:35:25 -0400
-Received: from mail-yw0-f202.google.com ([209.85.161.202]:49321 "EHLO
-        mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729350AbeGPXfZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jul 2018 19:35:25 -0400
-Received: by mail-yw0-f202.google.com with SMTP id w190-v6so14017887ywg.16
-        for <git@vger.kernel.org>; Mon, 16 Jul 2018 16:05:50 -0700 (PDT)
+        id S1729818AbeGPXf1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jul 2018 19:35:27 -0400
+Received: from mail-io0-f202.google.com ([209.85.223.202]:48947 "EHLO
+        mail-io0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729350AbeGPXf1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jul 2018 19:35:27 -0400
+Received: by mail-io0-f202.google.com with SMTP id t11-v6so35590165iog.15
+        for <git@vger.kernel.org>; Mon, 16 Jul 2018 16:05:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=iHbizZNcHS4JaVfk1R/4rmfJTdOIaefxalwnxaUiIaY=;
-        b=nV8CfY+hiiZrhHljXdnlgaydcAT7Y9bviE0Tr3r9cJGPXc91zmOV68N6S0cot+HS88
-         n9te9d4MS/J5rAnBF3apvXi+T5ohfbdrIwb8ZHnlm4tnn7bnds4TfQJsQGgkcn+bxwFK
-         XHheBYyyHQf/n5JKbfIsL9IePrrJBMxawUUFplZCgT/kZzDyOvTO1o/h5etxb8IRmZiZ
-         1DR17/1+zY+ji36Q37Fle+WSbudo2IjXm5hT0a4BqZCny/2CfZCSryOoY8iSPCvXmMyz
-         QSvjQpcnWDfA4tUWDkthXJoH5BEBkuwV48oiPMiidx7uCoBRwrEMJvwnj5MqHFX8qyhK
-         tJMQ==
+        bh=Dp1Z/tfK6AzhuQQuEmh8rJQ+jMXMcqYtvX7fPjcxmcU=;
+        b=ZFSwMCGibIt+nXoX5TypZuSj9aRerUw2uEiLHwC9MHW38wZOZzdSqU+Tl66e+Phz2W
+         Fkxbdy2itHhAN7uuk/wOgV2Ov+XbTAxndPRlKiCCPLFHfjG68e7BIO/I3qyL06odSech
+         rTbEWMfoSzVKRUqdoPH2i5wGSU299qD3x/e/GPpiPpznPWOLHaiwNeRa6sb8uUSK3LwI
+         QQJVMCHGQb1MGOq3jY20OXK8q/AJ+I5SR11fJy+yz8u0h/1fgiIHfyT0M1lWj1Ekzc+o
+         DPG7gCeOQnOnFprNOElr45A+zFixNwTgv2almyhpribCrEiS0hNS+lW4QqzFVItIYtrR
+         A0hA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=iHbizZNcHS4JaVfk1R/4rmfJTdOIaefxalwnxaUiIaY=;
-        b=byz+OkebCcRA1yN7aTxrUeov3a2EPV2CmLK8KWICfE3ACJUD0Imb0edEIW8ic0eMHZ
-         WCnIruOD64wV+zDMaQmeJauN4kofpl5p7WYdA2VXQbFUTT+QSE3yvuMIulXLw/+LAVJB
-         kFFY+Q266S4QwR8oHib4qpIyphAA/NU4X4IgzLhMnTI7/srYDsuI4vumgnPVW2EOt4Da
-         KYfVc45u0vM9BNV74Mg0MgrH6+/uDEevVePWYsfpUvtVy8OG/S9fXCwdnvqoehP2PyR7
-         MZwaxQqL6DKnXJQT3F8g5zb2vQiIztrj75C1DeSX2kaLN8fQC6dqZ7ICTcBrLO1Bvi7M
-         Dm+w==
-X-Gm-Message-State: AOUpUlEZnr9B/JRr2jhtrbqz8kGwTSXGuURrlaz3ZpGKmrQR6n3L4So+
-        t85dEd3zr6GfNNHeUrOn2Aa4esv8eR7EzP3UnAZO+i/YndSka/qwLy2YZAWS6xxag7EFkSZbOLl
-        ORyfDSRjwjAuAOR/GEcnfE8rvmfo11Pgp/U2uKbxakVoJ+iFkm4PbYsKvE/Oq
-X-Google-Smtp-Source: AAOMgpdoGcP00/hY36sgjw3cGrcVxYxvkmK2VOt1cNw+aAsYa9GXNcISnu166BGGF9wieZxboXq1oI3yGJNi
+        bh=Dp1Z/tfK6AzhuQQuEmh8rJQ+jMXMcqYtvX7fPjcxmcU=;
+        b=ChbV9/55/aOptU6TKNeyC+ITBPsCLYNWBY8rGaKSenIcUfdIrn/Q26b0iJ9aKbLRvH
+         r2aXF4OFQX7O8xKjLXqrAhJvHAPIqLcmJVJVdJ4hjDcLXApscSGXxWYXmFVpDYQG0aHr
+         0ng8VXW8hxVAWoXkYOy12QlyJjvKPQ5vm4h9bdZZkzX2MCX++sGQxVQxL/fIQZVgjmiJ
+         7t6/isN+37EdOad4gG3lwPiLqbG1Ud0zt1wSXZdhfV4qn6NkFZcebOheZfqURoyKJHim
+         l2biS442523Z4/j9lRyqKHW2wmCPjpgLZwkZWHY3is4Xh/HKwTfDpD+WFu2XCMAfleBM
+         79Xg==
+X-Gm-Message-State: AOUpUlEpj9q8YPXIdWRHcb6+xnfYDwVFQZEvCoy8X1gYYA+8SJsAIvv1
+        SC/WzAiDPlwc1ZtDtoBLH1HHw0EXVnV2T6uY9z7oha8oIVKk2L7ZB06ZClC5z9Ff1ZN2BdYrfTj
+        EYZHwVimfyt6Ok5fxeef8vkDDmIbLAGMbTi1veqjiDpB/pZRuI2qu9im53lL8
+X-Google-Smtp-Source: AAOMgpe2uHEWuDTOn7B8Wx/KYpW3UVuURdh7xiVBlwkryJDriiNFmc1694nCVizFjIECujC5Ph7q9Artzh1Y
 MIME-Version: 1.0
-X-Received: by 2002:a25:b90a:: with SMTP id x10-v6mr5712912ybj.79.1531782350063;
- Mon, 16 Jul 2018 16:05:50 -0700 (PDT)
-Date:   Mon, 16 Jul 2018 16:05:34 -0700
+X-Received: by 2002:a24:3d90:: with SMTP id n138-v6mr7751254itn.43.1531782352406;
+ Mon, 16 Jul 2018 16:05:52 -0700 (PDT)
+Date:   Mon, 16 Jul 2018 16:05:35 -0700
 In-Reply-To: <20180716230542.81372-1-sbeller@google.com>
-Message-Id: <20180716230542.81372-2-sbeller@google.com>
+Message-Id: <20180716230542.81372-3-sbeller@google.com>
 References: <20180716230542.81372-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.203.gfac676dfb9-goog
-Subject: [PATCH 1/9] xdiff/xdiff.h: remove unused flags
+Subject: [PATCH 2/9] xdiff/xdiffi.c: remove unneeded function declarations
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org, gitster@pobox.com
 Cc:     Stefan Beller <sbeller@google.com>
@@ -62,34 +62,54 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These flags were there since the beginning (3443546f6e (Use a *real*
-built-in diff generator, 2006-03-24), but were never used. Remove them.
+There is no need to forward-declare these functions, as they are used
+after their implementation only.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- xdiff/xdiff.h | 8 --------
- 1 file changed, 8 deletions(-)
+ xdiff/xdiffi.c | 17 -----------------
+ 1 file changed, 17 deletions(-)
 
-diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
-index c1937a29112..2356da5f784 100644
---- a/xdiff/xdiff.h
-+++ b/xdiff/xdiff.h
-@@ -52,14 +52,6 @@ extern "C" {
- #define XDL_EMIT_FUNCNAMES (1 << 0)
- #define XDL_EMIT_FUNCCONTEXT (1 << 2)
+diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
+index 0de1ef463bf..3e8aff92bc4 100644
+--- a/xdiff/xdiffi.c
++++ b/xdiff/xdiffi.c
+@@ -22,34 +22,17 @@
  
--#define XDL_MMB_READONLY (1 << 0)
+ #include "xinclude.h"
+ 
 -
--#define XDL_MMF_ATOMIC (1 << 0)
 -
--#define XDL_BDOP_INS 1
--#define XDL_BDOP_CPY 2
--#define XDL_BDOP_INSB 3
+ #define XDL_MAX_COST_MIN 256
+ #define XDL_HEUR_MIN_COST 256
+ #define XDL_LINE_MAX (long)((1UL << (CHAR_BIT * sizeof(long) - 1)) - 1)
+ #define XDL_SNAKE_CNT 20
+ #define XDL_K_HEUR 4
+ 
 -
- /* merge simplification levels */
- #define XDL_MERGE_MINIMAL 0
- #define XDL_MERGE_EAGER 1
+-
+ typedef struct s_xdpsplit {
+ 	long i1, i2;
+ 	int min_lo, min_hi;
+ } xdpsplit_t;
+ 
+-
+-
+-
+-static long xdl_split(unsigned long const *ha1, long off1, long lim1,
+-		      unsigned long const *ha2, long off2, long lim2,
+-		      long *kvdf, long *kvdb, int need_min, xdpsplit_t *spl,
+-		      xdalgoenv_t *xenv);
+-static xdchange_t *xdl_add_change(xdchange_t *xscr, long i1, long i2, long chg1, long chg2);
+-
+-
+-
+-
+-
+ /*
+  * See "An O(ND) Difference Algorithm and its Variations", by Eugene Myers.
+  * Basically considers a "box" (off1, off2, lim1, lim2) and scan from both
 -- 
 2.18.0.203.gfac676dfb9-goog
 
