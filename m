@@ -7,53 +7,52 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 94F3E1F597
-	for <e@80x24.org>; Mon, 16 Jul 2018 23:06:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A701A1F597
+	for <e@80x24.org>; Mon, 16 Jul 2018 23:06:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729983AbeGPXfj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jul 2018 19:35:39 -0400
-Received: from mail-it0-f74.google.com ([209.85.214.74]:50527 "EHLO
-        mail-it0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729350AbeGPXfj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jul 2018 19:35:39 -0400
-Received: by mail-it0-f74.google.com with SMTP id g125-v6so14677633ita.0
-        for <git@vger.kernel.org>; Mon, 16 Jul 2018 16:06:04 -0700 (PDT)
+        id S1729997AbeGPXfl (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jul 2018 19:35:41 -0400
+Received: from mail-yb0-f202.google.com ([209.85.213.202]:43486 "EHLO
+        mail-yb0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729350AbeGPXfl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jul 2018 19:35:41 -0400
+Received: by mail-yb0-f202.google.com with SMTP id a14-v6so33736193ybl.10
+        for <git@vger.kernel.org>; Mon, 16 Jul 2018 16:06:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=R6tPb85kxK4cemxQvtXXZEWbm6g+ekRT2Gz7a7OIcEE=;
-        b=k1RZpvElG8B2HyunoAV3V8Xh4nlV4hpAtTT7UDWsaX71EKnmVYIQLODaSl4FiKhmoy
-         0cp4d5nclBJ48LIDzNQ6TL6DY417ljWpWN3P5j+T2GA8QS9iNgw1EgnUm2QzbmE0xwx9
-         VxhNG4rcGSxdxCVCKp3ZVPlj6hpw/mOXRZ6su1w6l93HYScnOVxL2VXf9QxKndc05GTU
-         7bSVFQdljIXM0DnnedYvN0TiasEmt0WhfiqKuseh4uD+O76keGZll33eApsSPxjYcTQ3
-         2HLr4JXLPRKILDI6QhM2UYfgj2px9PxpgayJnYb8AiNUzHa5AWo+ZqhZle19yElVY79Q
-         +/Sw==
+        bh=StW8LVomGoV/FGT+QgkqQvXJuoojLUwIreL+kEzJR4E=;
+        b=nV6CuDq1IMlxOuSwIM49rwC1tKfBDqudgq3jXvSVnwr61BNWLtLJQIiQVeSdKhjH8p
+         ZRHZ4IUqw9W6B205ydu+bPBNQQb+KsDkq1UfkAkwihKcmafwAi++mB/5eCm09thLZhAI
+         cw4O0pvtFJKd01ENytEGC+lT5wOB4yNZHDiPr3uGAhuDa78bLTw4mi3jN2lCaFv5s1n3
+         LrbUoqG1YOo/5AdJAQF4Bqakd/OvKYZytGctQw0Ak/jGdaRc8WCTbjyXtb7slkjW/Fa4
+         a0RCLTYHB3azEBqmZyDZv7b6Lh9D7K529r6QhGjI/FiD54oCEyRDEf1jnBAiFzd5QapV
+         JywQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=R6tPb85kxK4cemxQvtXXZEWbm6g+ekRT2Gz7a7OIcEE=;
-        b=X/SCWxMRUW1duci0B406dNTgo6bz4Aihy+jWiFJAoSNvp+FyD6NunsnYlf4r27HJKM
-         fwNmqP3EkxCZFsuZysNOmmm1dvc2u5gDVD+tiU4pUWfCPPwu9v8lT0J2CDwkjd9St4bg
-         5PXRbyy076ZbPTRzCUTu7AVlZkig7S8Tkk7YE2TTk3Pl/TFTrgM3b9a63EBgiOw5wgNt
-         f8GTsimV+FguXVWFvQN5ofHDYCwRum+FfdG5YNH75gHCVaECZM1rCIM9DSL//yqybmVK
-         7PcTMkuheFScwiAuOZm1BnGR/b/mCUHuWKnRuyB1fc/h1KdF/J3zSvbPXt3g3hNGOVEp
-         YL/A==
-X-Gm-Message-State: AOUpUlFzL41JmwD+ptFf5J2c7LIMV78WEk4ZXKBv160ybgwJ/o26fMIi
-        PCjKS2MSQ0OYyskYHsYKPIyNZsF15Nowc6ooBzmSiO9g6SO82jVyiW8wTh3GKDY4HxrkeQvGrmG
-        5SAqEeMXljgSpm5EGuzrLm5+O6TdwsFJNB/eVEQl1Js/a32rz+jy4nP5xTM1G
-X-Google-Smtp-Source: AAOMgpf9ZxReN0XNZV5QX3HP4bsYaPtJJMBs/TUBx3IPSd/Exg/u09pyySmzD4yz4bbWwApK6PaaqjWDVqIc
+        bh=StW8LVomGoV/FGT+QgkqQvXJuoojLUwIreL+kEzJR4E=;
+        b=A3mURwFzJxwuUciHjcwDKTOyP1a2HrFNs/NBuUifyzTjOM+MTd9UJviC7h4i28K6zh
+         wJGQSK9/x6he83Akp8hY9FXsk22pZhYuDOLJJsuhlblZbBKxhD2zsS0XkB5+gVbnSFmI
+         8k9lH2dngCwg0SayJo09RGjHXRSjUDlvrfqLXs3h3xqcjv8aVw0R6zT4baVOtcZAS2DL
+         GDGb8wa8n7tmDlhH4HdWONwOsSvPB7IvFtDpDDDFfCopwW1aBgWCShodTiVN8pGrDFnZ
+         AMC7BvlCKJbKl9kaFRzM7Bq2G2gkjTpVFlF29hxZOfYVIFHMUdnl9OgvfQLZ03iVuKEE
+         JnVw==
+X-Gm-Message-State: AOUpUlG5s0Qkp+BfV8uuoZnE+U7mWxwKaGxPQVSP392sROjKK0dniWlB
+        kZUWk1zXUK2od/bQY1ixk7J4rvVSww7PX8HIoVgXa+EToIrVrKpfgnAV0DR8V1S39guH9IYl70x
+        a81ni0GrUY5TjSIi9hS/hcO9t99x4dwaj8yMCx+ulNPoFGxQPSkC5QIZAJv8C
+X-Google-Smtp-Source: AAOMgpcZevJsHbyKe+xDUqxpVBA2IwITIzrRno6o89u+PxhR8sBhO7aB0Sl6SJqZ6TIU6uoSAzjnU6knLm10
 MIME-Version: 1.0
-X-Received: by 2002:a24:b14a:: with SMTP id c10-v6mr7735183itj.4.1531782363909;
- Mon, 16 Jul 2018 16:06:03 -0700 (PDT)
-Date:   Mon, 16 Jul 2018 16:05:40 -0700
+X-Received: by 2002:a25:bec8:: with SMTP id k8-v6mr6087402ybm.18.1531782366113;
+ Mon, 16 Jul 2018 16:06:06 -0700 (PDT)
+Date:   Mon, 16 Jul 2018 16:05:41 -0700
 In-Reply-To: <20180716230542.81372-1-sbeller@google.com>
-Message-Id: <20180716230542.81372-8-sbeller@google.com>
+Message-Id: <20180716230542.81372-9-sbeller@google.com>
 References: <20180716230542.81372-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.203.gfac676dfb9-goog
-Subject: [PATCH 7/9] diff.c: decouple white space treatment from move
- detection algorithm
+Subject: [PATCH 8/9] diff.c: factor advance_or_nullify out of mark_color_as_moved
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org, gitster@pobox.com
 Cc:     Stefan Beller <sbeller@google.com>
@@ -63,252 +62,84 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the original implementation of the move detection logic the choice for
-ignoring white space changes is the same for the move detection as it is
-for the regular diff.  Some cases came up where different treatment would
-have been nice.
+This moves the part of code that checks if we're still in a block
+into its own function.  We'll need a different approach on advancing
+the blocks in a later patch, so having it as a separate function will
+prove useful.
 
-Allow the user to specify that white space should be ignored differently
-during detection of moved lines than during generation of added and removed
-lines. This is done by providing analogs to the --ignore-space-at-eol,
--b, and -w options by introducing the option --color-moved-ws=<modes>
-with the modes named "ignore-space-at-eol", "ignore-space-change" and
-"ignore-all-space", which is used only during the move detection phase.
+While at it rename the variable `p` to `prev` to indicate that it refers
+to the previous line. This is as pmb[i] was assigned in the last iteration
+of the outmost for loop.
 
-As we change the default, we'll adjust the tests.
+Further rename `pnext` to `cur` to indicate that this should match up with
+the current line of the outmost for loop.
 
-For now we do not infer any options to treat white spaces in the move
-detection from the generic white space options given to diff.
-This can be tuned later to reasonable default.
-
-As we plan on adding more white space related options in a later patch,
-that interferes with the current white space options, use a flag field
-and clamp it down to  XDF_WHITESPACE_FLAGS, as that (a) allows to easily
-check at parse time if we give invalid combinations and (b) can reuse
-parts of this patch.
-
-By having the white space treatment in its own option, we'll also
-make it easier for a later patch to have an config option for
-spaces in the move detection.
+Also replace the advancement of pmb[i] to reuse `cur` instead of
+using `p->next` (which is how the name for pnext could be explained.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/diff-options.txt | 17 ++++++++++
- diff.c                         | 39 +++++++++++++++++++--
- diff.h                         |  1 +
- t/t4015-diff-whitespace.sh     | 62 +++++++++++++++++++++++++++++++---
- 4 files changed, 113 insertions(+), 6 deletions(-)
+ diff.c | 32 ++++++++++++++++++++------------
+ 1 file changed, 20 insertions(+), 12 deletions(-)
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index ba56169de31..80e29e39854 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -292,6 +292,23 @@ dimmed_zebra::
- 	blocks are considered interesting, the rest is uninteresting.
- --
- 
-+--color-moved-ws=<modes>::
-+	This configures how white spaces are ignored when performing the
-+	move detection for `--color-moved`. These modes can be given
-+	as a comma separated list:
-++
-+--
-+ignore-space-at-eol::
-+	Ignore changes in whitespace at EOL.
-+ignore-space-change::
-+	Ignore changes in amount of whitespace.  This ignores whitespace
-+	at line end, and considers all other sequences of one or
-+	more whitespace characters to be equivalent.
-+ignore-all-space::
-+	Ignore whitespace when comparing lines. This ignores differences
-+	even if one line has whitespace where the other line has none.
-+--
-+
- --word-diff[=<mode>]::
- 	Show a word diff, using the <mode> to delimit changed words.
- 	By default, words are delimited by whitespace; see
 diff --git a/diff.c b/diff.c
-index 95c51c0b7df..70eeb40c5fd 100644
+index 70eeb40c5fd..4963819e530 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -283,6 +283,36 @@ static int parse_color_moved(const char *arg)
- 		return error(_("color moved setting must be one of 'no', 'default', 'blocks', 'zebra', 'dimmed_zebra', 'plain'"));
+@@ -801,6 +801,25 @@ static void add_lines_to_move_detection(struct diff_options *o,
+ 	}
  }
  
-+static int parse_color_moved_ws(const char *arg)
++static void pmb_advance_or_null(struct diff_options *o,
++				struct moved_entry *match,
++				struct hashmap *hm,
++				struct moved_entry **pmb,
++				int pmb_nr)
 +{
-+	int ret = 0;
-+	struct string_list l = STRING_LIST_INIT_DUP;
-+	struct string_list_item *i;
-+
-+	string_list_split(&l, arg, ',', -1);
-+
-+	for_each_string_list_item(i, &l) {
-+		struct strbuf sb = STRBUF_INIT;
-+		strbuf_addstr(&sb, i->string);
-+		strbuf_trim(&sb);
-+
-+		if (!strcmp(sb.buf, "ignore-space-change"))
-+			ret |= XDF_IGNORE_WHITESPACE_CHANGE;
-+		else if (!strcmp(sb.buf, "ignore-space-at-eol"))
-+			ret |= XDF_IGNORE_WHITESPACE_AT_EOL;
-+		else if (!strcmp(sb.buf, "ignore-all-space"))
-+			ret |= XDF_IGNORE_WHITESPACE;
-+		else
-+			error(_("ignoring unknown color-moved-ws mode '%s'"), sb.buf);
-+
-+		strbuf_release(&sb);
++	int i;
++	for (i = 0; i < pmb_nr; i++) {
++		struct moved_entry *prev = pmb[i];
++		struct moved_entry *cur = (prev && prev->next_line) ?
++				prev->next_line : NULL;
++		if (cur && !hm->cmpfn(o, cur, match, NULL)) {
++			pmb[i] = cur;
++		} else {
++			pmb[i] = NULL;
++		}
 +	}
-+
-+	string_list_clear(&l, 0);
-+
-+	return ret;
 +}
 +
- int git_diff_ui_config(const char *var, const char *value, void *cb)
+ static int shrink_potential_moved_blocks(struct moved_entry **pmb,
+ 					 int pmb_nr)
  {
- 	if (!strcmp(var, "diff.color") || !strcmp(var, "color.diff")) {
-@@ -717,10 +747,12 @@ static int moved_entry_cmp(const void *hashmap_cmp_fn_data,
- 	const struct diff_options *diffopt = hashmap_cmp_fn_data;
- 	const struct moved_entry *a = entry;
- 	const struct moved_entry *b = entry_or_key;
-+	unsigned flags = diffopt->color_moved_ws_handling
-+			 & XDF_WHITESPACE_FLAGS;
+@@ -875,7 +894,6 @@ static void mark_color_as_moved(struct diff_options *o,
+ 		struct moved_entry *key;
+ 		struct moved_entry *match = NULL;
+ 		struct emitted_diff_symbol *l = &o->emitted_symbols->buf[n];
+-		int i;
  
- 	return !xdiff_compare_lines(a->es->line, a->es->len,
- 				    b->es->line, b->es->len,
--				    diffopt->xdl_opts);
-+				    flags);
- }
+ 		switch (l->s) {
+ 		case DIFF_SYMBOL_PLUS:
+@@ -906,17 +924,7 @@ static void mark_color_as_moved(struct diff_options *o,
+ 		if (o->color_moved == COLOR_MOVED_PLAIN)
+ 			continue;
  
- static struct moved_entry *prepare_entry(struct diff_options *o,
-@@ -728,8 +760,9 @@ static struct moved_entry *prepare_entry(struct diff_options *o,
- {
- 	struct moved_entry *ret = xmalloc(sizeof(*ret));
- 	struct emitted_diff_symbol *l = &o->emitted_symbols->buf[line_no];
-+	unsigned flags = o->color_moved_ws_handling & XDF_WHITESPACE_FLAGS;
+-		/* Check any potential block runs, advance each or nullify */
+-		for (i = 0; i < pmb_nr; i++) {
+-			struct moved_entry *p = pmb[i];
+-			struct moved_entry *pnext = (p && p->next_line) ?
+-					p->next_line : NULL;
+-			if (pnext && !hm->cmpfn(o, pnext, match, NULL)) {
+-				pmb[i] = p->next_line;
+-			} else {
+-				pmb[i] = NULL;
+-			}
+-		}
++		pmb_advance_or_null(o, match, hm, pmb, pmb_nr);
  
--	ret->ent.hash = xdiff_hash_string(l->line, l->len, o->xdl_opts);
-+	ret->ent.hash = xdiff_hash_string(l->line, l->len, flags);
- 	ret->es = l;
- 	ret->next_line = NULL;
+ 		pmb_nr = shrink_potential_moved_blocks(pmb, pmb_nr);
  
-@@ -4710,6 +4743,8 @@ int diff_opt_parse(struct diff_options *options,
- 		if (cm < 0)
- 			die("bad --color-moved argument: %s", arg);
- 		options->color_moved = cm;
-+	} else if (skip_prefix(arg, "--color-moved-ws=", &arg)) {
-+		options->color_moved_ws_handling = parse_color_moved_ws(arg);
- 	} else if (skip_to_optional_arg_default(arg, "--color-words", &options->word_regex, NULL)) {
- 		options->use_color = 1;
- 		options->word_diff = DIFF_WORDS_COLOR;
-diff --git a/diff.h b/diff.h
-index 7bd4f182c33..de5dc680051 100644
---- a/diff.h
-+++ b/diff.h
-@@ -214,6 +214,7 @@ struct diff_options {
- 	} color_moved;
- 	#define COLOR_MOVED_DEFAULT COLOR_MOVED_ZEBRA
- 	#define COLOR_MOVED_MIN_ALNUM_COUNT 20
-+	int color_moved_ws_handling;
- };
- 
- void diff_emit_submodule_del(struct diff_options *o, const char *line);
-diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
-index e54529f026d..000c3a2b7de 100755
---- a/t/t4015-diff-whitespace.sh
-+++ b/t/t4015-diff-whitespace.sh
-@@ -1460,7 +1460,8 @@ test_expect_success 'move detection ignoring whitespace ' '
- 	EOF
- 	test_cmp expected actual &&
- 
--	git diff HEAD --no-renames -w --color-moved --color >actual.raw &&
-+	git diff HEAD --no-renames --color-moved --color \
-+		--color-moved-ws=ignore-all-space >actual.raw &&
- 	grep -v "index" actual.raw | test_decode_color >actual &&
- 	cat <<-\EOF >expected &&
- 	<BOLD>diff --git a/lines.txt b/lines.txt<RESET>
-@@ -1522,7 +1523,8 @@ test_expect_success 'move detection ignoring whitespace changes' '
- 	EOF
- 	test_cmp expected actual &&
- 
--	git diff HEAD --no-renames -b --color-moved --color >actual.raw &&
-+	git diff HEAD --no-renames --color-moved --color \
-+		--color-moved-ws=ignore-space-change >actual.raw &&
- 	grep -v "index" actual.raw | test_decode_color >actual &&
- 	cat <<-\EOF >expected &&
- 	<BOLD>diff --git a/lines.txt b/lines.txt<RESET>
-@@ -1587,7 +1589,8 @@ test_expect_success 'move detection ignoring whitespace at eol' '
- 	EOF
- 	test_cmp expected actual &&
- 
--	git diff HEAD --no-renames --ignore-space-at-eol --color-moved --color >actual.raw &&
-+	git diff HEAD --no-renames --color-moved --color \
-+		--color-moved-ws=ignore-space-at-eol >actual.raw &&
- 	grep -v "index" actual.raw | test_decode_color >actual &&
- 	cat <<-\EOF >expected &&
- 	<BOLD>diff --git a/lines.txt b/lines.txt<RESET>
-@@ -1757,7 +1760,58 @@ test_expect_success 'move detection with submodules' '
- 
- 	# nor did we mess with it another way
- 	git diff --submodule=diff --color | test_decode_color >expect &&
--	test_cmp expect decoded_actual
-+	test_cmp expect decoded_actual &&
-+	rm -rf bananas &&
-+	git submodule deinit bananas
-+'
-+
-+test_expect_success 'only move detection ignores white spaces' '
-+	git reset --hard &&
-+	q_to_tab <<-\EOF >text.txt &&
-+		a long line to exceed per-line minimum
-+		another long line to exceed per-line minimum
-+		original file
-+	EOF
-+	git add text.txt &&
-+	git commit -m "add text" &&
-+	q_to_tab <<-\EOF >text.txt &&
-+		Qa long line to exceed per-line minimum
-+		Qanother long line to exceed per-line minimum
-+		new file
-+	EOF
-+
-+	# Make sure we get a different diff using -w
-+	git diff --color --color-moved -w >actual.raw &&
-+	grep -v "index" actual.raw | test_decode_color >actual &&
-+	q_to_tab <<-\EOF >expected &&
-+	<BOLD>diff --git a/text.txt b/text.txt<RESET>
-+	<BOLD>--- a/text.txt<RESET>
-+	<BOLD>+++ b/text.txt<RESET>
-+	<CYAN>@@ -1,3 +1,3 @@<RESET>
-+	 Qa long line to exceed per-line minimum<RESET>
-+	 Qanother long line to exceed per-line minimum<RESET>
-+	<RED>-original file<RESET>
-+	<GREEN>+<RESET><GREEN>new file<RESET>
-+	EOF
-+	test_cmp expected actual &&
-+
-+	# And now ignoring white space only in the move detection
-+	git diff --color --color-moved \
-+		--color-moved-ws=ignore-all-space,ignore-space-change,ignore-space-at-eol >actual.raw &&
-+	grep -v "index" actual.raw | test_decode_color >actual &&
-+	q_to_tab <<-\EOF >expected &&
-+	<BOLD>diff --git a/text.txt b/text.txt<RESET>
-+	<BOLD>--- a/text.txt<RESET>
-+	<BOLD>+++ b/text.txt<RESET>
-+	<CYAN>@@ -1,3 +1,3 @@<RESET>
-+	<BOLD;MAGENTA>-a long line to exceed per-line minimum<RESET>
-+	<BOLD;MAGENTA>-another long line to exceed per-line minimum<RESET>
-+	<RED>-original file<RESET>
-+	<BOLD;YELLOW>+<RESET>Q<BOLD;YELLOW>a long line to exceed per-line minimum<RESET>
-+	<BOLD;YELLOW>+<RESET>Q<BOLD;YELLOW>another long line to exceed per-line minimum<RESET>
-+	<GREEN>+<RESET><GREEN>new file<RESET>
-+	EOF
-+	test_cmp expected actual
- '
- 
- test_done
 -- 
 2.18.0.203.gfac676dfb9-goog
 
