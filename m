@@ -2,123 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E8EA91F597
-	for <e@80x24.org>; Mon, 16 Jul 2018 18:50:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CEEDA1F597
+	for <e@80x24.org>; Mon, 16 Jul 2018 18:50:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728784AbeGPTSp (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jul 2018 15:18:45 -0400
-Received: from wout5-smtp.messagingengine.com ([64.147.123.21]:36731 "EHLO
-        wout5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728495AbeGPTSp (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 16 Jul 2018 15:18:45 -0400
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id CE2973C8;
-        Mon, 16 Jul 2018 14:50:02 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Mon, 16 Jul 2018 14:50:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=living180.net;
-         h=cc:content-transfer-encoding:content-type:date:from
-        :in-reply-to:message-id:mime-version:references:subject:to
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=ZE65C4gG0w/z8VnMf
-        GerOvLzwyauPo0NM7s2P6vinAE=; b=ro7zraV+n23wHXWxwz7hMHLE7OvW9/DDb
-        Wlvj7ylGpZbC3b54Z7kZyODmwcKt380hNZB818UCsYfBCxARjvGnmzsA5zlyQhLy
-        eApyGGI9KW34tVOiOXMi4Pr5R9K2uAThTunHjI4/MFnsxyoK2uV6UOt/cjBOByNu
-        4E95Q30qWB8ALzgn/4KLEkOtgDLZKQ9wp4WMJ0S4bDvhOKrUVj6UXcBnzB9Fg5Ed
-        5D1FelOH8QMNuMeLo6ZS5ui79xOTmuvy/wwb9kSqH+n1zU9ft0kireXUB3PheC/K
-        ai9+A3RRqDzD/8DzzqaVFTA3DZZQJv9l2WdZdgBZwc91bwDlPVnHw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=ZE65C4
-        gG0w/z8VnMfGerOvLzwyauPo0NM7s2P6vinAE=; b=U5RSlFNQ7jcZeOq4Hppfso
-        dpXibw08tYJJNW3+TDpi2xO/315BlzgNovsEbdQpzBtxG3at8gQrmb5gMPiyk7fG
-        Af0GarAaf5hwIolH/9iA6uIh2ekIqpvTgHfYfY3g6rdrUortMZewyWArCqOVsbx/
-        U8idgHjMWHR3s40LxrX9m5TvmLihN5/5QQFiNgkti5fmFfeJvgYY7AJzofXDWigA
-        id/bZ2TERlHfEUxZCC0L34I2Y5qvqX5FQ1pbOZmXWSfRdbyd4BFZgaFk61lge53W
-        IoJtm2zl5mWH1vFnY0/SLm7uWn6H9LOhlIdfJlOtOqflFKT7/Sr2rB6395aUivMQ
-        ==
-X-ME-Proxy: <xmx:2ehMW-9PfehkZA8YslKlRq8Tuixm668XX5mFow8zQr0gjz6yJHgXhw>
-    <xmx:2ehMWyYE8XxjTNtCEfpY4RGlbr-4PPI_WqB_90Ib10vu3-3XMu3kow>
-    <xmx:2ehMW91CJMxcsAn2C9bhmX6UNrqoiuFwgUDnpuNm-REZL4XZ5y3_fw>
-    <xmx:2ehMW9Z1LK0YCjjwd3ADRVqEbHIO-7fONmAyOen7-DBk7qDScWA9xA>
-    <xmx:2ehMW1I_ikkxjqSm9N4WTTochT9gLWtizTqoHmXlpkDBVJmJyFDsdA>
-    <xmx:2uhMW1NxhpW6q6hz9nDfo_k5yuao6Nhe9ULjp3NsZO7WqvFNRZJYFw>
-X-ME-Sender: <xms:2ehMWwOok-vMZ1hvjhJSQvTgPr48TMnNQ-dqUToL_5z58c08zj1yBA>
-Received: from [0.0.0.0] (unknown [173.199.115.247])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 1F27C10255;
-        Mon, 16 Jul 2018 14:49:59 -0400 (EDT)
-Subject: Re: [PATCH v3] sequencer: use configured comment character
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Aaron Schrab <aaron@schrab.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
-References: <xmqq4lh4z870.fsf@gitster-ct.c.googlers.com>
- <20180716045902.16629-1-aaron@schrab.com>
- <nycvar.QRO.7.76.6.1807161758560.71@tvgsbejvaqbjf.bet>
-From:   Daniel Harding <dharding@living180.net>
-Message-ID: <66ce6f94-49ae-618e-bf6c-43a0f15bb752@living180.net>
-Date:   Mon, 16 Jul 2018 21:49:58 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.0
+        id S1728947AbeGPTTR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jul 2018 15:19:17 -0400
+Received: from mail-yb0-f195.google.com ([209.85.213.195]:41168 "EHLO
+        mail-yb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728415AbeGPTTR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jul 2018 15:19:17 -0400
+Received: by mail-yb0-f195.google.com with SMTP id s8-v6so15821610ybe.8
+        for <git@vger.kernel.org>; Mon, 16 Jul 2018 11:50:35 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=esNJuhL3VmwKp69ann3tu5gRfT0LL4xlLeOzPvDAJh4=;
+        b=PW9UpG1bysOD6zk9WhLuEvNTeUI8Qn77MpxPV63LPhcHUj0Q0Ix0SbKMSYMeNPV2Id
+         u5HUgKlIOaXia2LH0WIUzVhAk2V77kcQ2grN7+S+mG95FneCtP2n5bttj+wycrpmbJFp
+         FgCiq30lR2xAlyWaPLThMSUvC+JyTdpO0H1XiGrsx9cP+Z+QmpLxsfjiJ+e2uwxnrdvW
+         cObmhRlxuvHEvE7qrP1fCa9ueHAgGPQNVspdJcC26qXNSH/52lPxdUPuZH9e0ily8dYi
+         XUo88MV7PrZMN40EsqY3MumEQHhJ0XGuhV/RUOTZ9GwaqZNWbdGojwq0IT+QY3bhY/j1
+         AVfg==
+X-Gm-Message-State: AOUpUlH4zGFAsnF0hO+oWCLo4N4n97qMR5+5brXYKhr275stVmFOBptX
+        Rxcg1i49gOBEwpEUOiD0pCNS9wWmQgrAYPbFcZ+ljQ==
+X-Google-Smtp-Source: AAOMgpfnr1K+bBa0wqYsYpgnTc4tQEn49RcK37WjfIiPYvxYfipAdiUqCXlYEFTd5Pp+Us6Jelt9MVzIZXzxpY8IZGs=
+X-Received: by 2002:a25:9b03:: with SMTP id y3-v6mr9184962ybn.194.1531767034893;
+ Mon, 16 Jul 2018 11:50:34 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.1807161758560.71@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20180702002405.3042-1-sunshine@sunshineco.com>
+ <20180702002405.3042-12-sunshine@sunshineco.com> <nycvar.QRO.7.76.6.1807161641140.71@tvgsbejvaqbjf.bet>
+ <nycvar.QRO.7.76.6.1807161749410.71@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1807161749410.71@tvgsbejvaqbjf.bet>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 16 Jul 2018 14:50:23 -0400
+Message-ID: <CAPig+cRFeNt9FVDGnbGcp8Bvfh0ohay+p+tLhfx=EFvJg=Q1Sg@mail.gmail.com>
+Subject: Re: [PATCH 11/25] t7400: fix broken "submodule add/reconfigure
+ --force" test
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git List <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Luke Diamand <luke@diamand.org>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+On Mon, Jul 16, 2018 at 11:51 AM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> On Mon, 16 Jul 2018, Johannes Schindelin wrote:
+> > > -           git submodule add --force bogus-url submod &&
+> > > +           git submodule add --force /bogus-url submod &&
+> >
+> > This breaks on Windows because of the absolute Unix-y path having to be
+> > translated to a Windows path:
+> >
+> >       https://git-for-windows.visualstudio.com/git/git%20Team/_build/results?buildId=12365&view=logs
+> >
+> > I could imagine that using "$(pwd)/bogus-url" (which will generate a
+> > Windows-y absolute path on Windows) would work, though.
+>
+> Yes, this works indeed, see the patch below. Could you please squash it in
+> if you send another iteration of your patch series? Junio, could you
+> please add this as a SQUASH??? commit so that `pu` is fixed on Windows?
 
-On Mon, 16 Jul 2018 at 18:59:03 +0300, Johannes Schindelin wrote:
-> Hi Aaron,
-> 
-> On Mon, 16 Jul 2018, Aaron Schrab wrote:
->>
->> Looking into that a bit further, it does seem like my explanation above
->> was incorrect.  Here's another attempt to explain why setting
->> core.commentChar=auto isn't a problem for this change.
->>
->> 8< -----
->>
->> Use the configured comment character when generating comments about
->> branches in a todo list.  Failure to honor this configuration causes a
->> failure to parse the resulting todo list.
->>
->> Setting core.commentChar to "auto" will not be honored here, and the
->> previously configured or default value will be used instead. But, since
->> the todo list will consist of only generated content, there should not
->> be any non-comment lines beginning with that character.
-> 
-> How about this instead?
-> 
-> 	If core.commentChar is set to "auto", the intention is to
-> 	determine the comment line character from whatever content is there
-> 	already.
-> 
-> 	As the code path in question is the one *generating* the todo list
-> 	from scratch, it will automatically use whatever core.commentChar
-> 	has been configured before the "auto" (and fall back to "#" if none
-> 	has been configured explicitly), which is consistent with users'
-> 	expectations.
+Thanks for reporting and diagnosing. I wondered briefly if we could
+get by with simply "./bogus-url" instead of having to use $(pwd),
+however, "./bogus-url" gets normalized internally into an absolute
+path, so $(pwd) is needed anyhow to make the test '"$bogus_url" =
+"$(git config ...)"' check work.
 
-Honestly, the above still doesn't read clearly to me.  I've take a stab 
-at it myself - let me know what you think:
-
-     If core.commentChar is set to "auto", the comment_line_char global
-     variable will be initialized to '#'.  The only time
-     comment_line_char gets changed to an automatic value is when the
-     prepare_to_commit() function (in commit.c) calls
-     adjust_comment_line_char().  This does not happen when generating
-     the todo list, so '#' will be used as the comment character in the
-     todo list if core.commentChar is set to "auto".
-
-Cheers,
-
-Daniel Harding
+So, this SQUASH looks like the correct way forward. Hopefully, Junio
+can just squash it so I don't have to flood the list again with this
+long series.
