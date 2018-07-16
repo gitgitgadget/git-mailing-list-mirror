@@ -2,145 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D5C1F1F597
-	for <e@80x24.org>; Mon, 16 Jul 2018 23:05:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB0CB1F597
+	for <e@80x24.org>; Mon, 16 Jul 2018 23:05:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729591AbeGPXfR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jul 2018 19:35:17 -0400
-Received: from mail-it0-f65.google.com ([209.85.214.65]:36967 "EHLO
-        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729350AbeGPXfR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jul 2018 19:35:17 -0400
-Received: by mail-it0-f65.google.com with SMTP id p17-v6so23967447itc.2
-        for <git@vger.kernel.org>; Mon, 16 Jul 2018 16:05:42 -0700 (PDT)
+        id S1729726AbeGPXfX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jul 2018 19:35:23 -0400
+Received: from mail-vk0-f74.google.com ([209.85.213.74]:53458 "EHLO
+        mail-vk0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729350AbeGPXfX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jul 2018 19:35:23 -0400
+Received: by mail-vk0-f74.google.com with SMTP id x78-v6so8283069vkd.20
+        for <git@vger.kernel.org>; Mon, 16 Jul 2018 16:05:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Ie3FuFSeGnQzxp/gG6RvU/39LViknC8R4Q5i5KJEG/8=;
-        b=JvuQbufTCqaaMV6zclaDEBQjrH+Nah0FXdTWhJU34kSbNwMgSv8mMJ/SlWkzALWrem
-         yHxf4rUrj5aBpfREt7OBdrMTTG5uQYWbyM0D5GbcLKE4jUINGnK/YuKk/i/MZjek+zeK
-         FWXXUl9XqrMnEQnbpT7xStPKhWF/kovMHGc4oksHJAFqu0H8U/dCNUsp5CZDH1yhIRLn
-         OkMSJ/u3cNn5IavXvunYtQb/oEtMGOfyHAV6wpsxlT2Zadmt0A/MJE+ERLZh7O0dX5JH
-         kHxbGN2gZeUCTWS08OdiScNFN0a2Jpb5L3L00OkOVR/Q10hmldtwwktk6RcIXa8S0UZH
-         h3mw==
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=7i0DCVZEtm5ehOBM3XGYNDKimLLbCSuTjeKKpIr7j3w=;
+        b=pE9wsSl3Sh+UPRg5fgnOVPQJsyQrL0cB9HFbIEb3kBtXGW4etHiuvvrQYIB8wb9Vbb
+         kHT0lzy3cc7YrzJB3V/jurf1liitxoWdREROS1bcM3pKdFaOyuabl7/4exAe44bmaHyh
+         Gvy4OxQPz1+utjAWcDbUVuRUtRD22qcvxV+VpWJ0nv7nEodvAhYTtnRDAHi9rlZ8PYo7
+         FzdYfrRB3NBSsfFD7gCBt1A0Sds0OU2s0HBXmPx+TQKyYIdDQMSgRjWy9kzo+aEGH48G
+         ReGR+iren/jeopA2ETZRFbSbV6Gx/EDX4T5snn0z1AA0EVTO75TGYGXJ5iS+RbI/YiSC
+         hdng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Ie3FuFSeGnQzxp/gG6RvU/39LViknC8R4Q5i5KJEG/8=;
-        b=fziv21bcBiOT9hkNJwmJi3PIY9ITeM6baZz+NkCHbiRX4Gxt9ur9JP6KLMM9Enjqgk
-         nAin6ZIpiWwZIPBn771xRTl+Jniq5VRXo/j/iQbx0xOlozDdwKmT8wPJoxFQUagGYh9f
-         vG24uKLMRmieXWt4CkS7L6p2VYdbQ8psR/h/BnnusOIQD5eJsfcz3x5wpiu2xrJvjAFI
-         nWRLtIRwCB1nuRLFKNSyoFODbFK1b0e7R759NsnGxuBVePuKYbJ7tVBkPX1zFtjkbfh+
-         QoOIVGk64ZDNyvYPmwmoLLHukeEUqBmdMJEiW8opvHEabBJu1oQAQ/MflUG7uYDsf+xn
-         4TwA==
-X-Gm-Message-State: AOUpUlHYjhbwbyzH1lQmTwwHefwj15ogLX/BYlI95g8bOGB4rGNF+PSq
-        csFbF23sCkR4wOme4sJMOuw=
-X-Google-Smtp-Source: AAOMgpcWWZJud1UpJuBjouJb4a9ap0XDlwR0gZxOpk75ufD/QARk5/j2mRMLjX6lbObNBDIetsG1Gw==
-X-Received: by 2002:a24:4612:: with SMTP id j18-v6mr14449610itb.65.1531782342274;
-        Mon, 16 Jul 2018 16:05:42 -0700 (PDT)
-Received: from flurp.local (user-12l2cs3.cable.mindspring.com. [69.81.51.131])
-        by smtp.gmail.com with ESMTPSA id e18-v6sm16815318iof.23.2018.07.16.16.05.41
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 16 Jul 2018 16:05:41 -0700 (PDT)
-Date:   Mon, 16 Jul 2018 19:05:35 -0400
-From:   Eric Sunshine <sunshine@sunshineco.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git List <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Stefan Beller <sbeller@google.com>,
-        Luke Diamand <luke@diamand.org>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 11/25] t7400: fix broken "submodule add/reconfigure
- --force" test
-Message-ID: <20180716230535.GA49654@flurp.local>
-References: <20180702002405.3042-1-sunshine@sunshineco.com>
- <20180702002405.3042-12-sunshine@sunshineco.com>
- <nycvar.QRO.7.76.6.1807161641140.71@tvgsbejvaqbjf.bet>
- <nycvar.QRO.7.76.6.1807161749410.71@tvgsbejvaqbjf.bet>
- <CAPig+cRFeNt9FVDGnbGcp8Bvfh0ohay+p+tLhfx=EFvJg=Q1Sg@mail.gmail.com>
- <xmqq7elusvz7.fsf@gitster-ct.c.googlers.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq7elusvz7.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.0 (2018-05-17)
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=7i0DCVZEtm5ehOBM3XGYNDKimLLbCSuTjeKKpIr7j3w=;
+        b=UYEr1EI586K2RyhRl3+a3JqL6uK8z2xbvVP+u1k662BVxP9PZb3qKHI9x8bZ8uyoS1
+         DMwTXDr9TDzmjSTbUil6c0elL5WVkdqC5TOxf9KD1biYKwJbiaoonbMGe5z5MmfU7Us3
+         LJklnBNwR2XgbooQghUra4j9Q4u2C7kKCoWe1JYt/KciHXPejoAlHUTm//kTtoXTnc58
+         PExeJLM4MvAYt3CIyhQGK/+mHMwNson4Ob/jlfIaO9MeqCeoePoF8TKo1uyVY0GVf6U4
+         2KeT3paY8biRZyXZoVDCLbSuTAAcw4pj2vHhOPxBt82NTM17A0aohplSpw88JePjAc5t
+         uyFg==
+X-Gm-Message-State: AOUpUlHZaEg795pjqhT3sFPV2PwFtoCBezGVN7EIhbIRO3pwjEzER4Di
+        BFL+dkJrpOsMKwYE79nF4NYLCBdeJJdu2N/Q7jx3pO9LiRXFGoiDslm4NW8dTaYHvq//l482fqH
+        sPVl9CtO10CGmUlQiFpnHYgTPrjrt6tdPh+Dl+5t9TH2W04rg/aHPqiFGZm+/
+X-Google-Smtp-Source: AAOMgpfsGVhPRToJ1rxtTmAmcNwHHrGAvzYPHGp+/W1triKCOClWqYPEChUUZuukEA7+/YPVr/ErQgaFBXbF
+X-Received: by 2002:a1f:9b84:: with SMTP id d126-v6mr9025156vke.65.1531782347740;
+ Mon, 16 Jul 2018 16:05:47 -0700 (PDT)
+Date:   Mon, 16 Jul 2018 16:05:33 -0700
+Message-Id: <20180716230542.81372-1-sbeller@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.18.0.203.gfac676dfb9-goog
+Subject: [PATCHv5 0/9] Reroll of sb/diff-color-move-more
+From:   Stefan Beller <sbeller@google.com>
+To:     git@vger.kernel.org, gitster@pobox.com
+Cc:     Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 16, 2018 at 02:37:32PM -0700, Junio C Hamano wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
-> > On Mon, Jul 16, 2018 at 11:51 AM Johannes Schindelin
-> > <Johannes.Schindelin@gmx.de> wrote:
-> >> On Mon, 16 Jul 2018, Johannes Schindelin wrote:
-> >> > > -           git submodule add --force bogus-url submod &&
-> >> > > +           git submodule add --force /bogus-url submod &&
-> >> > This breaks on Windows because of the absolute Unix-y path having to be
-> >> > translated to a Windows path:
-> >> > I could imagine that using "$(pwd)/bogus-url" (which will generate a
-> >> > Windows-y absolute path on Windows) would work, though.
-> >>
-> >> Yes, this works indeed, see the patch below. Could you please squash it in
-> >> if you send another iteration of your patch series? Junio, could you
-> >> please add this as a SQUASH??? commit so that `pu` is fixed on Windows?
-> >
-> > So, this SQUASH looks like the correct way forward. Hopefully, Junio
-> > can just squash it so I don't have to flood the list again with this
-> > long series.
-> 
-> The topic already has another dependent topic so rerolling or
-> squashing would be a bit cumbersome.  I'll see what I could do but
-> it may not be until tomorrow's pushout.
+This is a resend of sb/diff-color-move-more
+https://public-inbox.org/git/20180629001958.85143-1-sbeller@google.com/
+that fixes an errornous squashing within the series; the end result is
+the same. range diff is below. (As the latest cooking email said
+this series is going to land in next soon, I hope this is not too late
+of a resend; otherwise just ignore it as the end result is the same)
 
-No problem. Here's Dscho's fix in the form of a proper patch if
-that makes it easier for you (it just needs his sign-off):
+Thanks,
+Stefan
 
---- >8 ---
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] t7400: make "submodule add/reconfigure --force" work on
- Windows
+Stefan Beller (9):
+  xdiff/xdiff.h: remove unused flags
+  xdiff/xdiffi.c: remove unneeded function declarations
+  t4015: avoid git as a pipe input
+  diff.c: do not pass diff options as keydata to hashmap
+  diff.c: adjust hash function signature to match hashmap expectation
+  diff.c: add a blocks mode for moved code detection
+  diff.c: decouple white space treatment from move detection algorithm
+  diff.c: factor advance_or_nullify out of mark_color_as_moved
+  diff.c: add white space mode to move detection that allows indent
+    changes
 
-On Windows, the "Unixy" path /bogus-url gets translated automatically to
-a Windows-style path (such as C:/git-sdk/bogus_url). This is normally
-not problem, since it's still a valid and usable path in that form,
-however, this test wants to do a comparison against the original path.
-$(pwd) was invented exactly for this case, so use it to make the path
-comparison work.
+ Documentation/diff-options.txt |  30 +++-
+ diff.c                         | 253 +++++++++++++++++++++++++++++----
+ diff.h                         |   9 +-
+ t/t4015-diff-whitespace.sh     | 243 ++++++++++++++++++++++++++-----
+ xdiff/xdiff.h                  |   8 --
+ xdiff/xdiffi.c                 |  17 ---
+ 6 files changed, 472 insertions(+), 88 deletions(-)
 
-[es: commit message]
-
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
- t/t7400-submodule-basic.sh | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
-
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 76cf522a08..bfb09dd566 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -171,10 +171,11 @@ test_expect_success 'submodule add to .gitignored path with --force' '
- test_expect_success 'submodule add to reconfigure existing submodule with --force' '
- 	(
- 		cd addtest-ignore &&
--		git submodule add --force /bogus-url submod &&
-+		bogus_url="$(pwd)/bogus-url" &&
-+		git submodule add --force "$bogus_url" submod &&
- 		git submodule add --force -b initial "$submodurl" submod-branch &&
--		test "/bogus-url" = "$(git config -f .gitmodules submodule.submod.url)" &&
--		test "/bogus-url" = "$(git config submodule.submod.url)" &&
-+		test "$bogus_url" = "$(git config -f .gitmodules submodule.submod.url)" &&
-+		test "$bogus_url" = "$(git config submodule.submod.url)" &&
- 		# Restore the url
- 		git submodule add --force "$submodurl" submod &&
- 		test "$submodurl" = "$(git config -f .gitmodules submodule.submod.url)" &&
 -- 
-2.18.0.233.g985f88cf7e
+2.18.0.203.gfac676dfb9-goog
+
+1:  7199e9b5608 ! 1:  7d58ad461cb diff.c: decouple white space treatment from move detection algorithm
+    @@ -207,9 +207,8 @@
+     +	EOF
+     +
+     +	# Make sure we get a different diff using -w
+    -+	git diff --color --color-moved -w |
+    -+		grep -v "index" |
+    -+		test_decode_color >actual &&
+    ++	git diff --color --color-moved -w >actual.raw &&
+    ++	grep -v "index" actual.raw | test_decode_color >actual &&
+     +	q_to_tab <<-\EOF >expected &&
+     +	<BOLD>diff --git a/text.txt b/text.txt<RESET>
+     +	<BOLD>--- a/text.txt<RESET>
+    @@ -224,9 +223,8 @@
+     +
+     +	# And now ignoring white space only in the move detection
+     +	git diff --color --color-moved \
+    -+		--color-moved-ws=ignore-all-space,ignore-space-change,ignore-space-at-eol |
+    -+		grep -v "index" |
+    -+		test_decode_color >actual &&
+    ++		--color-moved-ws=ignore-all-space,ignore-space-change,ignore-space-at-eol >actual.raw &&
+    ++	grep -v "index" actual.raw | test_decode_color >actual &&
+     +	q_to_tab <<-\EOF >expected &&
+     +	<BOLD>diff --git a/text.txt b/text.txt<RESET>
+     +	<BOLD>--- a/text.txt<RESET>
+2:  5626d523b70 = 2:  f08353f2a02 diff.c: factor advance_or_nullify out of mark_color_as_moved
+3:  e2f1e573699 ! 3:  3fde7cf2194 diff.c: add white space mode to move detection that allows indent changes
+    @@ -339,30 +339,6 @@
+     diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
+     --- a/t/t4015-diff-whitespace.sh
+     +++ b/t/t4015-diff-whitespace.sh
+    -@@
+    - 	EOF
+    - 
+    - 	# Make sure we get a different diff using -w
+    --	git diff --color --color-moved -w |
+    --		grep -v "index" |
+    --		test_decode_color >actual &&
+    -+	git diff --color --color-moved -w >actual.raw &&
+    -+	grep -v "index" actual.raw | test_decode_color >actual &&
+    - 	q_to_tab <<-\EOF >expected &&
+    - 	<BOLD>diff --git a/text.txt b/text.txt<RESET>
+    - 	<BOLD>--- a/text.txt<RESET>
+    -@@
+    - 
+    - 	# And now ignoring white space only in the move detection
+    - 	git diff --color --color-moved \
+    --		--color-moved-ws=ignore-all-space,ignore-space-change,ignore-space-at-eol |
+    --		grep -v "index" |
+    --		test_decode_color >actual &&
+    -+		--color-moved-ws=ignore-all-space,ignore-space-change,ignore-space-at-eol >actual.raw &&
+    -+	grep -v "index" actual.raw | test_decode_color >actual &&
+    - 	q_to_tab <<-\EOF >expected &&
+    - 	<BOLD>diff --git a/text.txt b/text.txt<RESET>
+    - 	<BOLD>--- a/text.txt<RESET>
+     @@
+      	test_cmp expected actual
+      '
