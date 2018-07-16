@@ -2,92 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E72781F597
-	for <e@80x24.org>; Mon, 16 Jul 2018 21:32:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E53B31F597
+	for <e@80x24.org>; Mon, 16 Jul 2018 21:32:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730093AbeGPWBQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jul 2018 18:01:16 -0400
-Received: from mail-it0-f73.google.com ([209.85.214.73]:54242 "EHLO
-        mail-it0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726698AbeGPWBQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jul 2018 18:01:16 -0400
-Received: by mail-it0-f73.google.com with SMTP id u140-v6so14489081itc.3
-        for <git@vger.kernel.org>; Mon, 16 Jul 2018 14:31:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
-         :cc;
-        bh=ZleMgcMY5mIy/ourJMI8cwTgjPqNIe2wVHuHvZbZq2M=;
-        b=TLPIWbsFVkfAm79m9FHokQRcYCyjsZmoyRB0SRvQTqXR1Jm2fPICho+Dtc+dMzwN3h
-         sWQzDEqD4U+0DtySlJWIK6xzKLtP3C6iQK4F2zE0nklKOn0CHxjc/DRaQiz9asqFaRbk
-         e5UEv3kV6ONJ+HOnQNYkBwA/jwMqkCNHaieJQ+NpAdPkBn9cWkIjcuBL7BX0+gd8loY7
-         tY/WRShxAegxPM+dCWPvYDK2W0LTMVYky+Qa5jSP8RvNC/YjTEWuB9BTo+lLi10h8kiJ
-         VWcqpn0WIeyoMvxgPgFqDWFtYK0WLMOo0TazSp1/Z4pqHv43PFl5TX498+YJd0yF6vRQ
-         KxsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
-         :references:subject:from:to:cc;
-        bh=ZleMgcMY5mIy/ourJMI8cwTgjPqNIe2wVHuHvZbZq2M=;
-        b=U8uVqr4BtctGzXnedlaIboxo5xOF/l4zm205aEprj0JTyBTIG9EtwAbdB50aTMsdIC
-         M14TihiNFn4nkxozTd8HobWSm6WnW8wkeoWZhMAE8bnH7sXyxpvXAU4jTwEbtz/Fk1Hu
-         ep1JP+q6lfTW5UEdUbw8TQgySmm5OWl/RUcmchWlqTtYWPIhPV3v5pkqtZ96VQFH/cWx
-         ChVHDCkGkqncqd0MvhTcI9F5R+umeJlDa1Fm8NCdKk0FzR3Ed7r54YqAumqEw8nKm7BF
-         2wZNTO82PmKhRvebF5cgNXiAeTcAMqPYVTWqbWMOi8nv2qtg+sOUHEYj/pxTkRkOVga/
-         AkJg==
-X-Gm-Message-State: AOUpUlHx5Zn23F/8QFLZvy5Sn8DuEAKfCPU4fbNEh1aLZHCfy+rGMY8S
-        qPbICabLl7S4++ULXhlSF2pbvZMzOzDBtnONo+11
-X-Google-Smtp-Source: AAOMgpfCUVYWeasV9XpBP4VXyR/hBM92T1ObOELYSjZ/QWNPMMFmDjb1jUQZAIRVGYEDXoMIXSnBfnfCKAjEZPxPRL7w
+        id S1730733AbeGPWB3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jul 2018 18:01:29 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48580 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726698AbeGPWB2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jul 2018 18:01:28 -0400
+Received: (qmail 16991 invoked by uid 109); 16 Jul 2018 21:32:01 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 16 Jul 2018 21:32:01 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15970 invoked by uid 111); 16 Jul 2018 21:32:16 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 16 Jul 2018 17:32:16 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Jul 2018 17:32:11 -0400
+Date:   Mon, 16 Jul 2018 17:32:11 -0400
+From:   Jeff King <peff@peff.net>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Henning Schild <henning.schild@siemens.com>,
+        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Ben Toews <mastahyeti@gmail.com>, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v2 0/9] X509 (gpgsm) commit signing support
+Message-ID: <20180716213210.GI25189@sigill.intra.peff.net>
+References: <cover.1531208187.git.henning.schild@siemens.com>
+ <20180710171224.GI23624@sigill.intra.peff.net>
+ <20180714183312.GG1042117@genre.crustytoothpaste.net>
 MIME-Version: 1.0
-X-Received: by 2002:a24:5c8f:: with SMTP id q137-v6mr7471195itb.38.1531776719373;
- Mon, 16 Jul 2018 14:31:59 -0700 (PDT)
-Date:   Mon, 16 Jul 2018 14:31:53 -0700
-In-Reply-To: <01bef3d654845236e9115ebc33d80673b7b4a5a2.1531746009.git.gitgitgadget@gmail.com>
-Message-Id: <20180716213153.242065-1-jonathantanmy@google.com>
-References: <01bef3d654845236e9115ebc33d80673b7b4a5a2.1531746009.git.gitgitgadget@gmail.com>
-X-Mailer: git-send-email 2.18.0.13.g5a7731b13
-Subject: Re: [PATCH 01/16] commit-reach: move walk methods from commit.c
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitgitgadget@gmail.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, dstolee@microsoft.com,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20180714183312.GG1042117@genre.crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> +/* Remember to update object flag allocation in object.h */
-> +#define PARENT1		(1u<<16)
-> +#define PARENT2		(1u<<17)
-> +#define STALE		(1u<<18)
-> +#define RESULT		(1u<<19)
+On Sat, Jul 14, 2018 at 06:33:12PM +0000, brian m. carlson wrote:
 
-Update object.h to point to commit-reach.c instead of commit.c also.
+> > This series is a fine replacement for that earlier work. It's flexible
+> > enough to allow what we really wanted out of that series (gpgsm support,
+> > or another drop-in tool that uses the same interface). It doesn't lay
+> > any groundwork for further tools (like signify), but I think the
+> > consensus on the list was to punt on that until somebody had more
+> > concrete plans for adding such a tool.
+> 
+> I actually think this moves in a nice direction for adding support for
+> minisign/signify and other schemes.  There's a way to look up what
+> algorithm is in use in a particular context based on the first line and
+> a general interface for deciding what format to write.  Granted, it
+> currently still is very specific to gpg-style tools, but I think this is
+> an improvement in that regard.
 
-> diff --git a/commit-reach.h b/commit-reach.h
-> new file mode 100644
-> index 000000000..244f48c5f
-> --- /dev/null
-> +++ b/commit-reach.h
-> @@ -0,0 +1,41 @@
-> +#ifndef __COMMIT_REACH_H__
-> +#define __COMMIT_REACH_H__
-> +
-> +#include "commit.h"
-> +
-> +struct commit_list *get_merge_bases_many(struct commit *one,
-> +					 int n,
-> +					 struct commit **twos);
+My issue with this for helping with signify is that it creates a new
+gpg.<tool>.* hierarchy with two slots (openpgp and x509). But we would
+not want gpg.signify.program, would we?  That makes no sense, as neither
+the signature-matching nor the program invocation are gpg-like.
 
-<snip>
+But if we later moved to "signingtool.<tool>.*", now we have an extra
+layer of compatibility to deal with. E.g., signingtool.openpgp.program
+is the same as gpg.openpgp.program which is the same as gpg.program.
 
-Should the declarations in commit.h be deleted also?
+I think we can do that, but it means more historical baggage.
 
-Thanks for copying it over verbatim - it makes it much easier to see
-what's going on with --color-moved.
+I'm OK with that since signify support is purely hypothetical at this
+point.  But that's why I say that this doesn't lay the groundwork in the
+way that the other series did.
+
+> As an OpenPGP user, I have no interest in adding support for other
+> tools, but I think this should make it easier if someone else wants to
+> do that.
+
+I don't plan to work on signify (or other tools) anytime soon either. My
+interest here is in x509, since that's what enterprises would use over
+pgp.
+
+I actually dislike pgp for this application, too, because I find the key
+management kind of complicated and tedious. But at least it's a standard
+among open source folks.
+
+-Peff
