@@ -2,150 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00CCC1F597
-	for <e@80x24.org>; Mon, 16 Jul 2018 19:09:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8DF861F597
+	for <e@80x24.org>; Mon, 16 Jul 2018 19:11:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729245AbeGPTij (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jul 2018 15:38:39 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:37000 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728417AbeGPTij (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jul 2018 15:38:39 -0400
-Received: by mail-pg1-f193.google.com with SMTP id n7-v6so996161pgq.4
-        for <git@vger.kernel.org>; Mon, 16 Jul 2018 12:09:52 -0700 (PDT)
+        id S1729595AbeGPTjs (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jul 2018 15:39:48 -0400
+Received: from mail-yb0-f195.google.com ([209.85.213.195]:36075 "EHLO
+        mail-yb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729466AbeGPTjs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jul 2018 15:39:48 -0400
+Received: by mail-yb0-f195.google.com with SMTP id s1-v6so15852576ybk.3
+        for <git@vger.kernel.org>; Mon, 16 Jul 2018 12:11:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=kpuCkp0g7Kvv3JwiRqCtd4JjexoaKAGAaWi3z5vi+j0=;
-        b=gxTiNGP4wAwZDIqeMNmW3B40i7S+MpK1duBw4aQepIxnRJQzL0EWfnbf3+eqTTWCgC
-         Np7J3NAB29mzwDGRk47EARdlsqbuUAf8/K8jRSSql+snmn1dDWQ7ZvRzWwR9SOu5ofE4
-         y2HacVpOa0mLrFHVanMGvFOWK0owXEhYFj9I//ActktuJuHG7URgjOnCST6hPwYgh904
-         G8cUokG+LgClfnhYYyUfx1FgFjs2ytDnzk+YllBvV7kgKtaoS1xRfln6ec8wuCo9/jQk
-         gL41nk65RZ9SySdK4oqQzEG7K/kAP0O8lBQfhcM29grim40bzz//ZMt++/1Hti61D0kf
-         VQWw==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Bugm38/h0WfZiGgNRMjF9v+Qhb0hvoIxPePq33HITV8=;
+        b=CHoxj29+8Ka2jslTYhkr4gpcHX6EGaStX8w5/x0BAivNXVOIYgkuBw8jpFxvrOz37/
+         4MfUkum8j0SIJp4VfuN5tr7hJztC2wGRUQ2pLfG6iALPPcMDZ8vC4l5FZ5hSX5IoP1QE
+         MGaGHqB625p8id5vjVX/pyai1NKnerv+K4GlTb+755WM6HIT0PDDR+hHTx5glbdBOSYx
+         HP9X6fXFu/awp9ZxZ3NJjmscio9SLhiDw6mrXugNsBgobRnHaYu7L+BaodoOhZWlocZg
+         p+9B93B2J1jrIOrd0DHttlzXrbqfafFu4mPnk93ssnBzAEhpo5QtRTKxbhymZakATx+W
+         +koA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=kpuCkp0g7Kvv3JwiRqCtd4JjexoaKAGAaWi3z5vi+j0=;
-        b=Y3SFBn+j6fOsxM93dD2kTGZrHmUQKhZHjys0bXaBPGz3ngUA5qUvSKUHa+2ISZVFlY
-         HLhHNwLImQguh3mB1nprIDSbR4iGAkIqBSXumTWhEymfLpbtGRBZ9ITcTMFX0Qb5ctT9
-         ub8Sn/rpCfoLCy+NDC+k9CSNg0MBQi8lg+LVYGxSHckCw973mi+WjjLdOysxswskeJR6
-         G+0qqRUHMAG8JYOLxEGbsME5ibS3d5UlCcXKgK1zdda3txucbT86FekzoQEfTFrECktu
-         RGaqaMezlY7ueBgybgKPgNWJgnge1wAtVLVV9fhHO8tORTyM+2YeN777sNrx0qxGlJ1Q
-         OEIw==
-X-Gm-Message-State: AOUpUlHJ7d5BhamAWwUs46iF2Ns9VvdyyJRoWPZvaohmBfYrT1qGYhP9
-        9DTHiW/1LL1qQXXOoOehrDo=
-X-Google-Smtp-Source: AAOMgpecMfcvUUxDjLvpcM+NXr3RMhN44aigfzgC0SZXpGOriV+ZthrVXe/FlLWc1hZmxviydjN7cw==
-X-Received: by 2002:a62:ccd0:: with SMTP id j77-v6mr19113799pfk.22.1531768191635;
-        Mon, 16 Jul 2018 12:09:51 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id n5-v6sm51481600pgd.7.2018.07.16.12.09.50
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 16 Jul 2018 12:09:50 -0700 (PDT)
-Date:   Mon, 16 Jul 2018 12:09:49 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH] gc: do not warn about too many loose objects
-Message-ID: <20180716190949.GB11513@aiede.svl.corp.google.com>
-References: <20180716172717.237373-1-jonathantanmy@google.com>
- <20180716175103.GB18636@sigill.intra.peff.net>
- <20180716182207.GA11513@aiede.svl.corp.google.com>
- <20180716185255.GC22298@sigill.intra.peff.net>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Bugm38/h0WfZiGgNRMjF9v+Qhb0hvoIxPePq33HITV8=;
+        b=RsY8EBbmdsrp0Cgte3df/MIRSjIWBAmtQcCxAQfc4S98xuoYyHXzFcFlwYOjrRyglz
+         eR51bDQE05kOGZ0cdkv4kpcPVwXQ+F10tTi8btxHwlpsZc0yy/8GPvJg8RYxkppPwOD/
+         4eDBQmz0eBSEsE+4egTBgX+M3BuFZHz+1j+/DJKh7t0rVrL8MX534zLU43WgZv71rKUz
+         zZvn/C5J/87EIHLsAujKesCBSGFKZcW+w05+Z2EcedADeaRF80m35s5hGNDpROm96Evc
+         yxpBw7aYyGnKfYF0WlmOyO5ddrBeUizRkxBNVqg/q77S9KU17DRqayR+3cx4pXLWLRtt
+         Jpcg==
+X-Gm-Message-State: AOUpUlHRf+uAODpfFr+6Dp6oVpT7FhjmrwdfrcXUOPUuXmf0EEnhE/I0
+        iJMv5KlRMW0p5RmDcmwKGOTBgZ5SYIuizg0iAYWjNg==
+X-Google-Smtp-Source: AAOMgpew9q0vZaqOL314+WiMcyepA62KMui5lLCccEQWnmkcQpnjHP1UkkcEjr0H7YeZr1F0Hhqdhu9QNcH2+BNVlw4=
+X-Received: by 2002:a25:a263:: with SMTP id b90-v6mr9497485ybi.247.1531768261008;
+ Mon, 16 Jul 2018 12:11:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180716185255.GC22298@sigill.intra.peff.net>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+References: <pull.10.git.gitgitgadget@gmail.com> <7a6d1cbe12efa0a452a977f1f6bb8c618421040b.1531746010.git.gitgitgadget@gmail.com>
+In-Reply-To: <7a6d1cbe12efa0a452a977f1f6bb8c618421040b.1531746010.git.gitgitgadget@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 16 Jul 2018 12:10:50 -0700
+Message-ID: <CAGZ79kZh42em1mQ+LQuzN8UTqY2MCutrS8eXAh-FvzEBVGcmGg@mail.gmail.com>
+Subject: Re: [PATCH 02/16] commit-reach: move ref_newer from remote.c
+To:     gitgitgadget@gmail.com
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-Jeff King wrote:
-> On Mon, Jul 16, 2018 at 11:22:07AM -0700, Jonathan Nieder wrote:
->> Jeff King wrote:
-
->>> So while I completely agree that it's not a great thing to encourage
->>> users to blindly run "git prune", I think it _is_ actionable.
->>
->> To flesh this out a little more: what user action do you suggest?  Could
->> we carry out that action automatically?
+On Mon, Jul 16, 2018 at 6:00 AM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> Er, the action is to run "git prune", like the warning says. :)
-
-I don't think we want to recommend that, especially when "git gc --auto"
-does the right thing automatically.
-
-Can you convince me I'm wrong?
-
-[...]
->> I mentally make a distinction between this warning from "git gc
->> --auto" and the warning from commands like "git gui".
-[...]
-> I don't think those warnings are the same. The warning from "git gui"
-> is: you may benefit from running gc.
+> From: Derrick Stolee <dstolee@microsoft.com>
 >
-> The warning that is deleted by this patch is: you _just_ ran gc, and hey
-> we even did it automatically for you, but we're still in a funky state
-> afterwards. You might need to clean up this state.
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 
-This sounds awful.  It sounds to me like you're saying "git gc --auto"
-is saying "I just did the wrong thing, and here is how you can clean
-up after me".  That's not how I want a program to behave.
-
-But there's a simpler explanation for what "git gc --auto" was trying
-to say, which Jonathan described.
-
-[...]
->> Yes, this is a real problem, and it would affect any other warning
->> (or even GIT_TRACE=1 output) produced by gc --auto as well.  I think we
->> should consider it a serious bug, separate from the symptom Jonathan is
->> fixing.
->>
->> Unfortunately I don't have a great idea about how to fix it.  Should
->> we avoid writing warnings to gc.log in daemon mode?  That would
->> prevent the user from ever seeing the warnings, but because of the
->> nature of a warning, that might be reasonable.
->
-> If you do that without anything further, then it will break the
-> protection against repeatedly running auto-gc, as I described in the
-> previous email.
-
-Do you mean ratelimiting for the message, or do you actually mean
-repeatedly running auto-gc itself?
-
-If we suppress warnings, there would still be a gc.log while "git gc
---auto" is running, just as though there had been no warnings at all.
-I believe this is close to the intended behavior; it's the same as
-what you'd get without daemon mode, except that you lose the warning.
-
-[...]
->> Should we put warnings
->> in a separate log file with different semantics?  Should we change the
->> format of gc.log to allow more structured information (include 'gc'
->> exit code) and perform a two-stage migration to the new format (first
->> learn to read the new format, then switch to writing it)?
->
-> Any of those would work similarly to the "just detect warnings" I
-> suggested earlier, with respect to keeping the "1 day" expiration
-> intact, so I'd be OK with them. In theory they'd be more robust than
-> scraping the "warning:" prefix. But in practice, I think you have to
-> resort to scraping anyway, if you are interested in treating warnings
-> from sub-processes the same way.
-
-Can you say more about this for me?  I am not understanding what
-you're saying necessitates scraping the output.  I would strongly
-prefer to avoid scraping the output.
+Another verbatim move!
+(I'll just re-iterate that the --color-moved option is very helpful in
+these reviews)
 
 Thanks,
-Jonathan
+Stefan
+
+> +++ b/commit-reach.h
+> @@ -38,4 +38,6 @@ struct commit_list *reduce_heads(struct commit_list *heads);
+>   */
+>  void reduce_heads_replace(struct commit_list **heads);
+>
+> +int ref_newer(const struct object_id *new_oid, const struct object_id *old_oid);
+> +
+
+Bonus points for docs on ref_newer!
+
+> +++ b/http-push.c
+> @@ -14,6 +14,7 @@
+>  #include "argv-array.h"
+>  #include "packfile.h"
+>  #include "object-store.h"
+> +#include "commit-reach.h"
+>
+>
+
+Double new line here?
+I missed that in p1, it would be nice if you could fix that up.
