@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BD6A1F597
-	for <e@80x24.org>; Mon, 16 Jul 2018 01:28:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 31D5A1F597
+	for <e@80x24.org>; Mon, 16 Jul 2018 01:28:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727494AbeGPBxS (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Jul 2018 21:53:18 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58948 "EHLO
+        id S1727521AbeGPBxU (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Jul 2018 21:53:20 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58962 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727265AbeGPBxS (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 15 Jul 2018 21:53:18 -0400
+        by vger.kernel.org with ESMTP id S1727265AbeGPBxT (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 15 Jul 2018 21:53:19 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:78f3:848c:e199:5398])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 298C46077A;
-        Mon, 16 Jul 2018 01:28:20 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 531F06077C;
+        Mon, 16 Jul 2018 01:28:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1531704500;
-        bh=Dh07yAP0S1WYJ5syUYfyivyovR7vMSPjpKYViBtKKXM=;
+        s=default; t=1531704503;
+        bh=4MC5CteoJK4k1/NCPq7kXOwTpZKIc1gIvrAAsjBodAE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=hqPhVzcsoq8sBSd/r9CVdU9yzLnKt8M5TDOoqrXdf4OPZmwn9FeWp/df+5U6Hrzd7
-         aG8pzPXrjK/UkWsAKi2dfLqmHYSY79X6voTcTIST/ebx1AUAFpmbwLjrndIc9NTZJW
-         ihZIFypVnRY9BeCw20DlvYPsWKgPtg5uJU9In8i06o4ixxmCfTiqc6ZyQ3jfngNbQD
-         tpow+3A7s0A9sMSy8qspExIKIi1Nuj3aXuXAUMDTiGJm4NMw6mMPtxe8gXS7yAwEBC
-         RgR2biMhmygSOafHP12FYLLdzm31q7r1W+qErznWoNu9oXuRR7OfB5vc/vcIl2Lw23
-         41ighu4E+JGVzAZQJq8kMJtl1D1lCdG6lEr5fW99L9F1BlT5JtC75GSe9GDev0A9XT
-         7pPx7vE52H+ci9QxqW68r0ZYxO1lMFTsZ1rG+EEe4hwjuTyuC0vw+TlxcUc0Wm0ja9
-         zqsHasInu6v1mgzmfMq9EZl+vLSRgVjcjbv8czXOLQiXLjpRBaw
+        b=mmCHNZLRfKBtfbkS/j5f5pIOf/COxjwgx/IbERoxUuhnhWHLTRSdF8IBdRN/l7rjI
+         rjTyzDGuU4wRKDRS10DL1eiJmKIufDmR5HjQu7rzkd0wSlUiHjsTzZeSWEf/GfdaVm
+         XY3huxH/EgyOmTqJbnE3cWRvELQVdVQsW+zaSRVEKU/MWryM9Y8aAoYe/NPw1FvOmb
+         h4/iUbCclii9BTj/IUzNs8vpDhjmLlpYjcgRX+T1+W+qi39j4tJOo2k1e7LJQ5c+Ke
+         fNZ3I168Q0QL7hocmRFxt8gBEhMsj9pw6iXBKqO/K8mxSQQ5w61womLSZ9o3QVIfg4
+         wzMB5oD7BvegGgxsa73pg/GWu8lDjH5vzmM+DM/3nQlTkjGLEWfx+v2f8FEAamGFu5
+         gk4w7OgAT1it8S4V5GtarxqHmLI1JhXskTvDRvf6XncjgnjQEXybNB/Xt3hdHnDyyb
+         Aikxfccdb/LXVYBQlbIlQw+dZIKkh5oN73Kc9S3QxqpCBp+r+gH
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -43,9 +43,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>,
         Brandon Williams <bmwill@google.com>,
         Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH v2 03/16] hex: switch to using the_hash_algo
-Date:   Mon, 16 Jul 2018 01:27:55 +0000
-Message-Id: <20180716012808.961328-4-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 05/16] strbuf: allocate space with GIT_MAX_HEXSZ
+Date:   Mon, 16 Jul 2018 01:27:57 +0000
+Message-Id: <20180716012808.961328-6-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.18.0.399.gad0ab374a1
 In-Reply-To: <20180716012808.961328-1-sandals@crustytoothpaste.net>
 References: <20180716012808.961328-1-sandals@crustytoothpaste.net>
@@ -55,42 +55,24 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of using the GIT_SHA1_* constants, switch to using the_hash_algo
-to convert object IDs to and from hex format.
+In order to be sure we have enough space to use with any hash algorithm,
+use GIT_MAX_HEXSZ to allocate space.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- hex.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ strbuf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hex.c b/hex.c
-index 8df2d63728..10af1a29e8 100644
---- a/hex.c
-+++ b/hex.c
-@@ -50,7 +50,7 @@ int hex_to_bytes(unsigned char *binary, const char *hex, size_t len)
- int get_sha1_hex(const char *hex, unsigned char *sha1)
+diff --git a/strbuf.c b/strbuf.c
+index b0716ac585..030556111d 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -921,7 +921,7 @@ void strbuf_add_unique_abbrev(struct strbuf *sb, const struct object_id *oid,
+ 			      int abbrev_len)
  {
- 	int i;
--	for (i = 0; i < GIT_SHA1_RAWSZ; i++) {
-+	for (i = 0; i < the_hash_algo->rawsz; i++) {
- 		int val = hex2chr(hex);
- 		if (val < 0)
- 			return -1;
-@@ -69,7 +69,7 @@ int parse_oid_hex(const char *hex, struct object_id *oid, const char **end)
- {
- 	int ret = get_oid_hex(hex, oid);
- 	if (!ret)
--		*end = hex + GIT_SHA1_HEXSZ;
-+		*end = hex + the_hash_algo->hexsz;
- 	return ret;
+ 	int r;
+-	strbuf_grow(sb, GIT_SHA1_HEXSZ + 1);
++	strbuf_grow(sb, GIT_MAX_HEXSZ + 1);
+ 	r = find_unique_abbrev_r(sb->buf + sb->len, oid, abbrev_len);
+ 	strbuf_setlen(sb, sb->len + r);
  }
- 
-@@ -79,7 +79,7 @@ char *sha1_to_hex_r(char *buffer, const unsigned char *sha1)
- 	char *buf = buffer;
- 	int i;
- 
--	for (i = 0; i < GIT_SHA1_RAWSZ; i++) {
-+	for (i = 0; i < the_hash_algo->rawsz; i++) {
- 		unsigned int val = *sha1++;
- 		*buf++ = hex[val >> 4];
- 		*buf++ = hex[val & 0xf];
