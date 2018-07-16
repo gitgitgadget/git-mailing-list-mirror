@@ -6,64 +6,59 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97AE71F597
-	for <e@80x24.org>; Mon, 16 Jul 2018 17:56:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B649208E9
+	for <e@80x24.org>; Mon, 16 Jul 2018 18:04:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728285AbeGPSZG (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jul 2018 14:25:06 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:43295 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727957AbeGPSZG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jul 2018 14:25:06 -0400
-Received: by mail-wr1-f66.google.com with SMTP id b15-v6so32833477wrv.10
-        for <git@vger.kernel.org>; Mon, 16 Jul 2018 10:56:36 -0700 (PDT)
+        id S1729980AbeGPScj (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jul 2018 14:32:39 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:37827 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728040AbeGPSci (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jul 2018 14:32:38 -0400
+Received: by mail-wr1-f67.google.com with SMTP id q10-v6so32806609wrd.4
+        for <git@vger.kernel.org>; Mon, 16 Jul 2018 11:04:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=6mMDCkY+kE65iL6huYICQ1sAgWrassx5DFXvfDr0Kyk=;
-        b=brmFgMBKxxSe04WS9pIruTGn7QBQdXMTbJ6AkY2+bn+EwGIqErbiZ08Y+mixbgcW5T
-         UO1+xiIuvk8k2rM3zWjfzaxw1ffvC5ww9Kgp0IBFOCxgMuktsh/DlI4FnvVYHlGTnmbo
-         f3sATWOZ8e1lwR+aAbsZVE3rzsWWDVrDvnCb+8eyWa6rQ4sbtN1FCBFAl0AY+e3+1b4v
-         hPhOHP9d8DA3T2rMrgQb/65Koi2Oif/zeCPhAYZQdVsjrHSfqImXDxhd/+TUwF6siktt
-         quE2DCilgp4CenBrFDJw2zQyhOekQqSIwKGgW5kb5IPJJTyEAG947fkJ9/xHYOhhahpB
-         zpRQ==
+        bh=PtqZeIAy2QvRH8X88wPJNUUVHkUO7kxnnv72iJ2Af0I=;
+        b=hqkfT7bCdvOcgFKMl9ZqHR0X+mcuLoqguykoOAXSbd6Eij0cqDJKE6tP5HBQhZLMc8
+         Fr1efh68+v5pYRmpQzpgnFuDlN5emqJeZz7Jj/3aphXJFVqAp0O+1X0A3TAGjWwpWAmy
+         NBROmxxbtH8Le85YMhvR4EADgfZmycl/3FWAPtw8rHNDAU9RMHMPAnjV4xpVFshpDe5e
+         yrY9q0t2A+cFMkYgcrLH0kHdAkrKmed187FRnMDIdwZM9PzstmcJXwsyyoqSVbfYw91L
+         VQOl/qmVFkbfQvkjWv3dTjPxCz6r2+ME8DyY8Ku7sdzgGeo6QRE1zp1f5BrjLun+u2in
+         30ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=6mMDCkY+kE65iL6huYICQ1sAgWrassx5DFXvfDr0Kyk=;
-        b=iI2d7HfJ+79aXeU7/sbQa9oQjl4YXK/dNJzJSgt0W/36y9vpR9wwp2sfm8n0j5p6V9
-         IkiGB54CaB2StuFQEjkAEvcofz5a4A687Z45PyicVCKVvEb7++KHMTvmPO0NM7/h4i/0
-         +LYSAz+U/aDD8XpZJHem9ih2pSqeFS0U83ERxDFtTUr083+NyXwklbS+l1fRh/mKM+zF
-         /LcWRAALq/97rYrlFCrAJgn2UFn8IVypUoTuqmiXXOSpwOKxL+LuF/KSodySecCyl0Fp
-         d5RG7Uk0+aoBWxo4Xk01TFukl3n6cAEB1Td8JMGvVTaGiq9N7G6KZHjYi4QX9g7GD2a7
-         U1bg==
-X-Gm-Message-State: AOUpUlGwCMGhusWihMrEwhW9d7GkK7kAxPAqRUKSDZvhmzw3KV1veQ4P
-        G+steXfyNMZY/xAfbiPnDg0=
-X-Google-Smtp-Source: AAOMgpcU20h32Dxo0stp4Af+UX2ZtdYgUUm2IppWyuOAgh/2WaYO1owyhovedg2rPYTKwaCpk4oXaQ==
-X-Received: by 2002:adf:ec04:: with SMTP id x4-v6mr12079377wrn.245.1531763795179;
-        Mon, 16 Jul 2018 10:56:35 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 64-v6sm24871761wrj.50.2018.07.16.10.56.34
+        bh=PtqZeIAy2QvRH8X88wPJNUUVHkUO7kxnnv72iJ2Af0I=;
+        b=KGgCi++djuyC49bgE66Sdunp9rTI4tRFsJSjjL2HSNSBzZTqcGCHuiOvPQP+X7X0Ow
+         FFoJqzFeKeVu68/36mP0h0f8veGrs/91shvERU8TQlkcvuTkAXd9TAzB9e6wOkMI/hcD
+         GRd7DywxS3OnlIweRR/7F0xbdKn3x/J1WFatcByQN2hzG+AfHqMp8S9MWZi6Ojr2tQu1
+         8MxTExwIC9GYh1DKpcB/tbRR/NNfQREntmE313QlLr+V+oN2qelTf/S9GN6flDr4Q6Vw
+         Qi5+d1KqtHiWUvbfy78n/LsRPuPBEDQIjZ5Li5U4tBM+rrDwNXp9zd9cU07++MQJl4Qi
+         iu1g==
+X-Gm-Message-State: AOUpUlHG/zCA5DrCLHqqcayvLDyDN8T9c0fnTB/ZxQlvMc0/8BsRCF17
+        HgJwx99HWR9fyHHD4YY4dg4=
+X-Google-Smtp-Source: AAOMgpeYk64SvkSNuqmw2f6ze9vV4x0VB5phRi5xs/IQF2wzZrJL62CYzaMeZDXaxQ5o9vHj3I+jCA==
+X-Received: by 2002:adf:eb0c:: with SMTP id s12-v6mr13640555wrn.174.1531764245912;
+        Mon, 16 Jul 2018 11:04:05 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id w24-v6sm14810083wmc.15.2018.07.16.11.04.04
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 16 Jul 2018 10:56:34 -0700 (PDT)
+        Mon, 16 Jul 2018 11:04:05 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Stefan Beller <sbeller@google.com>, gitgitgadget@gmail.com,
-        git <git@vger.kernel.org>
-Subject: Re: [PATCH 0/3] rebase -r: support octopus merges
-References: <pull.8.git.gitgitgadget@gmail.com>
-        <xmqqbmbd3cc3.fsf@gitster-ct.c.googlers.com>
-        <CAGZ79kaYpw9t3kCvPnDiLc5z7cLFsVQv4XJDAff_T-bShEjPoQ@mail.gmail.com>
-        <nycvar.QRO.7.76.6.1807121450100.75@tvgsbejvaqbjf.bet>
-        <xmqqlgagzah1.fsf@gitster-ct.c.googlers.com>
-        <8dbaefe4-778e-1e83-4beb-0261699cc483@kdbg.org>
-Date:   Mon, 16 Jul 2018 10:56:33 -0700
-In-Reply-To: <8dbaefe4-778e-1e83-4beb-0261699cc483@kdbg.org> (Johannes Sixt's
-        message of "Fri, 13 Jul 2018 18:42:07 +0200")
-Message-ID: <xmqq1sc3ukry.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>, Jason@zx2c4.com,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH 2/2] fsck: downgrade gitmodulesParse default to "info"
+References: <20180713193759.GB10354@sigill.intra.peff.net>
+        <20180713193958.GB12162@sigill.intra.peff.net>
+Date:   Mon, 16 Jul 2018 11:04:04 -0700
+In-Reply-To: <20180713193958.GB12162@sigill.intra.peff.net> (Jeff King's
+        message of "Fri, 13 Jul 2018 15:39:58 -0400")
+Message-ID: <xmqqwotvt5uz.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -72,25 +67,71 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Jeff King <peff@peff.net> writes:
 
-> Am 12.07.2018 um 18:26 schrieb Junio C Hamano:
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->>> A much more meaningful measure would be: how many octopus merge commits
->>> have been pushed to GitHub in the past two weeks. I don't think I have the
->>> technical means to answer that question, though.
->>
->> It does not mean that misusing a feature is a good thing and should
->> be encouraged if many misguided people do so.
->
-> Just recently I had to rebuild the version of git-gui that comes with
-> Git 2.18.0 before it was released:
->
-> https://github.com/j6t/git-gui-ng/commit/f07ae1d7f07b036d78a3d4706e6cb4102e623fb3
->
-> I think that an octopus merge is the right tool for the task. Am I
-> misguided?
+>    site's support). And the broken .gitmodules may be too
+>    far back in history for rewriting to be feasible (again,
+>    this is an issue for cgit).
 
-It could be used and it is the right tool are two different things,
-I would think.
+"again" but this is the first mention that hints cgit has some
+problem (but not exactly what problem).  Is that the "cgit has a
+file called .gitmodules that predates the submodule support on our
+side?" thing?
 
+> So we're being unnecessarily restrictive without actually
+> improving the security in a meaningful way. It would be more
+> convenient to downgrade this check to "info", which means
+> we'd still comment on it, but not reject a push. Site admins
+> can already do this via config, but we should ship sensible
+> defaults.
+> ...
+> Considering both sets of arguments, it makes sense to loosen
+> this check for now.
+>
+> Note that we have to tweak the test in t7415 since fsck will
+> no longer consider this a fatal error. But we still check
+> that it reports the warning, and that we don't get the
+> spurious error from the config code.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+
+Thanks.
+
+>  fsck.c                     | 2 +-
+>  t/t7415-submodule-names.sh | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/fsck.c b/fsck.c
+> index 4129935d86..69ea8d5321 100644
+> --- a/fsck.c
+> +++ b/fsck.c
+> @@ -62,7 +62,6 @@ static struct oidset gitmodules_done = OIDSET_INIT;
+>  	FUNC(ZERO_PADDED_DATE, ERROR) \
+>  	FUNC(GITMODULES_MISSING, ERROR) \
+>  	FUNC(GITMODULES_BLOB, ERROR) \
+> -	FUNC(GITMODULES_PARSE, ERROR) \
+>  	FUNC(GITMODULES_LARGE, ERROR) \
+>  	FUNC(GITMODULES_NAME, ERROR) \
+>  	FUNC(GITMODULES_SYMLINK, ERROR) \
+> @@ -77,6 +76,7 @@ static struct oidset gitmodules_done = OIDSET_INIT;
+>  	FUNC(ZERO_PADDED_FILEMODE, WARN) \
+>  	FUNC(NUL_IN_COMMIT, WARN) \
+>  	/* infos (reported as warnings, but ignored by default) */ \
+> +	FUNC(GITMODULES_PARSE, INFO) \
+>  	FUNC(BAD_TAG_NAME, INFO) \
+>  	FUNC(MISSING_TAGGER_ENTRY, INFO)
+>  
+> diff --git a/t/t7415-submodule-names.sh b/t/t7415-submodule-names.sh
+> index ba8af785a5..293e2e1963 100755
+> --- a/t/t7415-submodule-names.sh
+> +++ b/t/t7415-submodule-names.sh
+> @@ -185,7 +185,7 @@ test_expect_success 'fsck detects corrupt .gitmodules' '
+>  		git add .gitmodules &&
+>  		git commit -m "broken gitmodules" &&
+>  
+> -		test_must_fail git fsck 2>output &&
+> +		git fsck 2>output &&
+>  		grep gitmodulesParse output &&
+>  		test_i18ngrep ! "bad config" output
+>  	)
