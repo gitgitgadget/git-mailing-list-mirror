@@ -2,95 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E30461F597
-	for <e@80x24.org>; Mon, 16 Jul 2018 18:04:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BED35208E9
+	for <e@80x24.org>; Mon, 16 Jul 2018 18:14:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728945AbeGPSdZ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jul 2018 14:33:25 -0400
-Received: from mail-yw0-f195.google.com ([209.85.161.195]:42789 "EHLO
-        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728794AbeGPSdZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jul 2018 14:33:25 -0400
-Received: by mail-yw0-f195.google.com with SMTP id y203-v6so14503965ywd.9
-        for <git@vger.kernel.org>; Mon, 16 Jul 2018 11:04:53 -0700 (PDT)
+        id S1728173AbeGPSn2 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jul 2018 14:43:28 -0400
+Received: from mail-wr1-f54.google.com ([209.85.221.54]:39114 "EHLO
+        mail-wr1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727531AbeGPSn2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jul 2018 14:43:28 -0400
+Received: by mail-wr1-f54.google.com with SMTP id h10-v6so32848495wre.6
+        for <git@vger.kernel.org>; Mon, 16 Jul 2018 11:14:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Q4Bi1HXll2Ye8ed1DNkaQ45pvd230NPy1xSR+MOzIwM=;
-        b=kX7V0Cd/2/0s5y/s1hzuzW2Aj0R4vWNTpiS+sYVJTxgfiuPUy+NiilBtpti86pwhPS
-         sayS0ykHUFatbld+dTC8jTEGaHIADiU77i/3XQnLLuz4tB/JvtdXDT/c3mvNuVO/2f9S
-         pnVrrXvnI3zyq365f31U9i1bvpFlzry/Fi4d+Kci/xM57WaDnbFij/4Q7wAYAtqcg3Uc
-         63Wg0IqgqVL7TjubgLz0L48G+8u0PUFeNaDMIwSZXiq58CPK3bdhK8ijoskUVJ+SWCw+
-         5TnMSAudLZ2aA6wQd8G3fuYVfFsoWydK16iNySRNpWJtT73gjM7wJ7tN/a/HXonXc7iR
-         ZVXw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=UxzaIf229qFniXVPNOHCOC3wwD/Ch3EvwOFNJvRbB+Y=;
+        b=rUZMuenlfv5g+jM+G9dGCKhzT6NNyZ3iH48OkaE9uaLjpaxf/7GWQRgQXyLuNSSWeJ
+         LvK+isLGR0ThNH3crYULZTV48O9YmHpOczryOY/PqMOfCpHU5hsng3tCSKSL+4K/UW4o
+         GjQnhdnOyxIJFlIfLbASsIc/6zECxm5nWeXTN2ftkIcKjBFKGgSGDwmMOfNZT4M5Q0D9
+         ufoxXKprWmRpWPm8QlM4nim6fnNr18hiYAqiO/iaFcMbJMEtvgrG28DswapEhSwqs3qx
+         /gkUKmIDIsQWRS15f5RInBFx2XYeUJghSka/gSliCGdX7vaNhvRnjoyPNHxSiTRImZXW
+         U6yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Q4Bi1HXll2Ye8ed1DNkaQ45pvd230NPy1xSR+MOzIwM=;
-        b=N1ze1vx5mZgpLUTeQgIuPqLH3wkoN2edxy68AtJfRk5Yom04Znp4dZJ4+/8aPsyLns
-         MJawmCIXQb1sdsEXbuqJp9T6zWK4A1SZejpKIwyPJ+T4AQV0B0JoAWC5wLhsNr2t+juB
-         TcqFfdoY3yHxRUPM4NKsKnCwGNtY/pdFob9VwKdxXHhbs69ozHGTALhHNCsY31xES+4Y
-         WPi9DxpcmhQ1k1kLZbquezYnOIBVWmLv/kyvKktAtXRswCUJXqQqBkBnFmaKsUpamlWf
-         82x0CHAoPjf+TZLfO1cK5yiHOq+3aeC3O+CyhcLG6f/AKtIQee8SROUOT9a/i5Qc0XQz
-         536A==
-X-Gm-Message-State: AOUpUlGIqPnaN82EcKo5KNHtmit353d6GFuhli9wVpy1RvBAk7uI0J8h
-        KBJaLnHdjZXRVg3x8+emj6HmpJ9E1GRj4PRwgquz5w==
-X-Google-Smtp-Source: AAOMgpcZWdcN6PVeAIXYDyuOyp9OGiSfwOOHQwtNyVXkevfJd1MUCNpx1eyHRV8KoBchgIos5BsCyxxhNFP4c0PRT2E=
-X-Received: by 2002:a0d:c5c7:: with SMTP id h190-v6mr9063252ywd.421.1531764292322;
- Mon, 16 Jul 2018 11:04:52 -0700 (PDT)
-MIME-Version: 1.0
-References: <20180716012808.961328-1-sandals@crustytoothpaste.net> <20180716152152.GA51419@syl.attlocal.net>
-In-Reply-To: <20180716152152.GA51419@syl.attlocal.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 16 Jul 2018 11:04:41 -0700
-Message-ID: <CAGZ79kbAMJXAPtc5b45_PRDC=AQRKUYLC8seXqfMrJZEaL-KfQ@mail.gmail.com>
-Subject: Re: [PATCH v2 00/16] object_id part 14
-To:     Taylor Blau <me@ttaylorr.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=UxzaIf229qFniXVPNOHCOC3wwD/Ch3EvwOFNJvRbB+Y=;
+        b=KzOidStmy/b8DwUNdRgl+6ptkDha6H3fbwUzIvJzQxdmzgrh/OqoXv+b28yBR9VA17
+         5jWbqcLLjWs53g9aSDVsNYR4mSBgO3sVwLERNOFR/KUmLplPsciPB6GMDtC26IdsTQ/9
+         Amkh95/sHObLUXrEQnamP5z6JcBHN8KLUx1H/7HoUlHr8vWjb8d5HILemfwZM2rJZ/+W
+         rw87ylquqaI04fG1dAWieeN6Rzdfeoxl9qQ46DL16UCkLQXJVdkHjLhFwuM0fvXk4fJt
+         hUZPls5zsSaBaxk1Sl0RB1ToIdDoPPcKhgo/j1slf5VNlkh2b/f1cINV6mc4qjgHyxrF
+         mEYg==
+X-Gm-Message-State: AOUpUlFO89Vya0Es22bNYsVtHP0vlZ03SJIkKljxjHImMs3qr4Rc8W1d
+        0dghsZA5+LEjwQOgV9ZwLbs=
+X-Google-Smtp-Source: AAOMgpf5U8yyaCmIcwxN+oouYuAHoA4wy8xc8dUYZqwe90NEn2QD23XArkrnNocI5nfPuNlgoT7r9Q==
+X-Received: by 2002:adf:92a5:: with SMTP id 34-v6mr13757089wrn.83.1531764892672;
+        Mon, 16 Jul 2018 11:14:52 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id w21-v6sm16033779wmw.29.2018.07.16.11.14.51
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 16 Jul 2018 11:14:51 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
 Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
+        Vitali Lovich <vlovich@gmail.com>, git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Jacob Keller <jacob.keller@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: rev-parse --show-toplevel broken during exec'ed rebase?
+References: <CAF8PYMjub1KK_ZK0hijTNBACSa6SaFyu1dJgrXd5fJU5Hc_dhg@mail.gmail.com>
+        <xmqq7em01ns9.fsf@gitster-ct.c.googlers.com>
+        <20180713184732.GC968742@genre.crustytoothpaste.net>
+        <20180713201949.GA17670@sigill.intra.peff.net>
+Date:   Mon, 16 Jul 2018 11:14:51 -0700
+In-Reply-To: <20180713201949.GA17670@sigill.intra.peff.net> (Jeff King's
+        message of "Fri, 13 Jul 2018 16:19:49 -0400")
+Message-ID: <xmqqsh4jt5d0.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 16, 2018 at 8:21 AM Taylor Blau <me@ttaylorr.com> wrote:
+Jeff King <peff@peff.net> writes:
+
+> None of which is too surprising. The root of the bug is in the
+> conversion to rebase--helper, I think, when presumably we started
+> setting GIT_DIR at all (but I didn't dig further). Then 09d7b6c6fa fixed
+> _one_ fallout of that, which was relative paths, but didn't help the
+> subdirectory case.
 >
-> On Mon, Jul 16, 2018 at 01:27:52AM +0000, brian m. carlson wrote:
-> > This is the fourteenth series of patches to switch to using struct
-> > object_id and the_hash_algo.  This series converts several core pieces
-> > to use struct object_id, including the oid* and hex functions.
-> >
-> > All of these patches have been tested with both SHA-1 and a 256-bit
-> > hash.
-> >
-> > Most of these patches are fixes for things that will clearly cause
-> > segfaults or other very obvious breakage on a Git with a 256-bit hash.
-> >
-> > Changes from v1:
-> > * Drop patch that's been replaced by one from Ben Peart.
-> > * Update patch handling hash* and oid* functions.
->
-> Along with Derrick, I also read this series and found it to be without
-> problems. This looks good to me, too.
+> Just reading over this thread, I suspect the simplest fix is to pass
+> GIT_DIR and GIT_WORK_TREE together, which is almost always the right
+> thing to do.
 
-I just had a hickup with the patch replacing number magic
-( "(num_parents * 50) + 20") in a strbuf_grow, but I do not
-see the problem there, it is just a bit of overly large grow estimates.
-Despite that said, this series is
-
-Reviewed-by: Stefan Beller <sbeller@google.com>
-
-Thanks,
-Stefan
+Perhaps.  Not exporting GIT_DIR (unless the end-user already did to
+the environment before starting "git rebase"---it would be a bad
+change to unexport it unconditionally) may probably be a way to make
+rebase--helper conversion more faithful to the original scripted
+Porcelain, but I suspect in practice always giving GIT_DIR and
+GIT_WORK_TREE would work well for many existing hooks.
