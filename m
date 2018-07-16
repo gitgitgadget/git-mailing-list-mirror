@@ -2,125 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4356F1F597
-	for <e@80x24.org>; Mon, 16 Jul 2018 22:43:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B29241F597
+	for <e@80x24.org>; Mon, 16 Jul 2018 22:47:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728794AbeGPXNK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jul 2018 19:13:10 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48776 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728784AbeGPXNK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jul 2018 19:13:10 -0400
-Received: (qmail 20361 invoked by uid 109); 16 Jul 2018 22:43:28 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 16 Jul 2018 22:43:28 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16695 invoked by uid 111); 16 Jul 2018 22:43:42 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 16 Jul 2018 18:43:42 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Jul 2018 18:43:37 -0400
-Date:   Mon, 16 Jul 2018 18:43:37 -0400
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH] gc: do not warn about too many loose objects
-Message-ID: <20180716224337.GB12482@sigill.intra.peff.net>
-References: <20180716185255.GC22298@sigill.intra.peff.net>
- <20180716190949.GB11513@aiede.svl.corp.google.com>
- <20180716194136.GA25189@sigill.intra.peff.net>
- <20180716195431.GD11513@aiede.svl.corp.google.com>
- <20180716202915.GC25189@sigill.intra.peff.net>
- <20180716203753.GE11513@aiede.svl.corp.google.com>
- <20180716210938.GF25189@sigill.intra.peff.net>
- <20180716214003.GH11513@aiede.svl.corp.google.com>
- <20180716214539.GL25189@sigill.intra.peff.net>
- <20180716220306.GI11513@aiede.svl.corp.google.com>
+        id S1729228AbeGPXRW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jul 2018 19:17:22 -0400
+Received: from mail-yw0-f195.google.com ([209.85.161.195]:39237 "EHLO
+        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728784AbeGPXRW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jul 2018 19:17:22 -0400
+Received: by mail-yw0-f195.google.com with SMTP id r184-v6so9422547ywg.6
+        for <git@vger.kernel.org>; Mon, 16 Jul 2018 15:47:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=PBPxN+V2uXBPwCTudaeJuxMam0sHIEU2RXoF0CNVFJo=;
+        b=VddlZqKDnJKCd2ZxkhMKrBNGP2M9IvSYMai5itozn3HReckDnVJ7VS19xWuLYqObbM
+         dkTgvgBidkoG8+08F8V/QNo+fo8eFdmTAAsr+EJTpFPz4E51vIgxhXd5QjgAPSIWn/E/
+         z3e+F+FuT9MMzi/SFEcDJCQkvBEbjvTbbGnItObc/nR9TuN5cwHtFCgpV1AVdba9epZ0
+         aZkV4XN5p8Un+qOd0k/pzdqcrKpgkuxzkXk/pPwrFzYptGZ7YBTYPh20yLO0z/4THOnU
+         XPigPY46QZQEUihS3QD9GXjYOnrEy8jjmdt6KukBO1u/HBjqXpt+JHSo0uUlUlnoT7BT
+         hBlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=PBPxN+V2uXBPwCTudaeJuxMam0sHIEU2RXoF0CNVFJo=;
+        b=bLx+pmP1V7yhzAn8SxqI0Grhz+QjU9Jt5jGz7vqskRHzqo4stQJDikFtYUi4VKDtH3
+         eVI1o6GIqcn6g1FCNpl7FX6cQ6rp0es5WLG0tNTY4AVRO8kg458mivnDwNciBLlTexK/
+         c0nEbIKfvYU+vkoi1vS+2Vo9FbG4PkIGPXof6t0RxfhXNAuBqwwBF6Q3guVK/O76KsWt
+         ts71JRkvH12lPCdm9kCSy6yerrl98AUjoadL5jDrziVoH+pXOKAbRSpgHxuWTFHRecDg
+         6VlBBMKXMT6OMEX5ym6p4+fXV2XsOJifBbQlIBaCnwvdk334utcEtUKUFQFc9rf8ehQi
+         qpNw==
+X-Gm-Message-State: AOUpUlFB2WR8CXLdGcxbwFOGg/idwl7pf6OdcSR2nE6zli76vOo68Uqg
+        yeJC8CCk1pQdh9iGtExt2ZPHQy+pGpNsQOeiN3wBxg==
+X-Google-Smtp-Source: AAOMgpegcRLA9SfeNV/Sl7cJ3VQJHvDUIb+m0PRwElO+0U93/fn3ZppiGNq01H1CSan28ANV2+sFh/m5DFiDb5qbzus=
+X-Received: by 2002:a81:a9c4:: with SMTP id g187-v6mr7115401ywh.238.1531781269813;
+ Mon, 16 Jul 2018 15:47:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180716220306.GI11513@aiede.svl.corp.google.com>
+References: <pull.10.git.gitgitgadget@gmail.com> <a60b7011adfd107633d7d3158c9c3fa127dc1a61.1531746012.git.gitgitgadget@gmail.com>
+In-Reply-To: <a60b7011adfd107633d7d3158c9c3fa127dc1a61.1531746012.git.gitgitgadget@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 16 Jul 2018 15:47:38 -0700
+Message-ID: <CAGZ79kZesqs4=OWcgT_8ycpc5wFTArLKCbu+9dnOPJJLUbuuZw@mail.gmail.com>
+Subject: Re: [PATCH 16/16] commit-reach: use can_all_from_reach
+To:     gitgitgadget@gmail.com
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 16, 2018 at 03:03:06PM -0700, Jonathan Nieder wrote:
+On Mon, Jul 16, 2018 at 6:00 AM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> The is_descendant_of method previously used in_merge_bases() to check if
+> the commit can reach any of the commits in the provided list. This had
+> two performance problems:
+>
+> 1. The performance is quadratic in worst-case.
+>
+> 2. A single in_merge_bases() call requires walking beyond the target
+>    commit in order to find the full set of boundary commits that may be
+>    merge-bases.
+>
+> The can_all_from_reach method avoids this quadratic behavior and can
+> limit the search beyond the target commits using generation numbers. It
+> requires a small prototype adjustment to stop using commit-date as a
+> cutoff, as that optimization is no longer appropriate here.
+>
+> Since in_merge_bases() uses paint_down_to_common(), is_descendant_of()
+> naturally found cutoffs to avoid walking the entire commit graph. Since
+> we want to always return the correct result, we cannot use the
+> min_commit_date cutoff in can_all_from_reach. We then rely on generation
+> numbers to provide the cutoff.
+>
+> Since not all repos will have a commit-graph file, nor will we always
+> have generation numbers computed for a commit-graph file, create a new
+> method, generation_numbers_enabled(), that checks for a commit-graph
+> file and sees if the first commit in the file has a non-zero generation
+> number. In the case that we do not have generation numbers, use the old
+> logic for is_descendant_of().
+>
+> Performance was meausured on a copy of the Linux repository using the
+> 'test-tool reach is_descendant_of' command using this input:
+>
+> A:v4.9
+> X:v4.10
+> X:v4.11
+> X:v4.12
+> X:v4.13
+> X:v4.14
+> X:v4.15
+> X:v4.16
+> X:v4.17
+> X.v3.0
+>
+> Note that this input is tailored to demonstrate the quadratic nature of
+> the previous method, as it will compute merge-bases for v4.9 versus all
+> of the later versions before checking against v4.1.
+>
+> Before: 0.26 s
+>  After: 0.21 s
+>
+> Since we previously used the is_descendant_of method in the ref_newer
+> method, we also measured performance there using
+> 'test-tool reach ref_newer' with this input:
+>
+> A:v4.9
+> B:v3.19
+>
+> Before: 0.10 s
+>  After: 0.08 s
+>
+> By adding a new commit with parent v3.19, we test the non-reachable case
+> of ref_newer:
+>
+> Before: 0.09 s
+>  After: 0.08 s
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
 
-> Jeff King wrote:
-> 
-> > I don't think any command should report failure of its _own_ operation
-> > if "gc --auto" failed. And grepping around the source code shows that we
-> > typically ignore it.
-> 
-> Oh, good point.  In non-daemon mode, we don't let "gc --auto" failure
-> cause the invoking command to fail, but in daemon mode we do.  That
-> should be a straightforward fix; patch coming in a moment.
+Thanks for the commit message. The code itself looks good!
 
-OK, that definitely sounds like a bug. I'm still confused how that could
-happen, though, since from the caller's perspective they ignore git-gc's
-exit code either way. I guess I'll see in your patch. :)
+I think this series is nearly done, I have only commented on
+style issues so far, which are easier to address than fundamental
+design issues or naming things.
 
-> > What I was trying to say earlier is that we _did_ build this
-> > rate-limiting, and I think it is a bug that the non-daemon case does not
-> > rate-limit (but nobody noticed, because the default is daemonizing).
-> >
-> > So the fix is not "rip out the rate-limiting in daemon mode", but rather
-> > "extend it to the non-daemon case".
-> 
-> Can you point me to some discussion about building that rate-limiting?
-> The commit message for v2.12.2~17^2 (gc: ignore old gc.log files,
-> 2017-02-10) definitely doesn't describe that as its intent.
-
-I think that commit is a loosening of the rate-limiting (because we'd
-refuse to progress for something that was actually time-based). But the
-original stopping comes from this discussion, I think:
-
-  https://public-inbox.org/git/xmqqlhijznpm.fsf@gitster.dls.corp.google.com/
-
-(I didn't read the whole thread, but that was what I hit by blaming the
-log code and then tracing that back to the list).
-
-> This is the kind of review that Dscho often complains about, where
-> someone tries to fix something small but significant to users and gets
-> told to build something larger that was not their itch instead.
-
-I don't know how to say more emphatically that I am not asking anyone to
-build something larger (like cruft packfiles). I'm just trying to bring
-up an impact that the author didn't consider (and that IMHO would be a
-regression). Isn't that what reviews are for?
-
-I only mention packfiles because as the discussion turns to "well, all
-of these solutions are mediocre hacks" (because they absolutely are),
-it's important to realize that there _is_ a right solution, and we even
-already know about it. Even if we don't work on it now, knowing that
-it's there makes it easier to decide about the various hacks.
-
-> The comments about the "Why is 'git commit' so slow?" experience and
-> how having the warning helps with that are well taken.  I think we
-> should be able to find a way to keep the warning in a v2 of this
-> patch.  But the rest about rate-limiting and putting unreachable
-> objects in packs etc as a blocker for this are demoralizing, since
-> they gives the feeling that even if I handle the cases that are
-> handled today well, it will never be enough for the project unless I
-> solve the larger problems that were already there.
-
-I really don't know why we are having such trouble communicating. I've
-tried to make it clear several times that the pack thing is not
-something I expect your or Jonathan Tan to work on, but obviously I
-failed. I'd be _delighted_ if you wanted to work on it, but AFAICT this
-patch is purely motivated by:
-
-  1. there's a funny exit code thing going on (0 on the first run, -1 on
-     the second)
-
-  2. the warning is not actionable by users
-
-I disagree with the second, and I think we've discussed easy solutions
-for the first.
-
--Peff
+Thanks,
+Stefan
