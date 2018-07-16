@@ -7,48 +7,52 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB0CB1F597
-	for <e@80x24.org>; Mon, 16 Jul 2018 23:05:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 880861F597
+	for <e@80x24.org>; Mon, 16 Jul 2018 23:05:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729726AbeGPXfX (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jul 2018 19:35:23 -0400
-Received: from mail-vk0-f74.google.com ([209.85.213.74]:53458 "EHLO
-        mail-vk0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729350AbeGPXfX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jul 2018 19:35:23 -0400
-Received: by mail-vk0-f74.google.com with SMTP id x78-v6so8283069vkd.20
-        for <git@vger.kernel.org>; Mon, 16 Jul 2018 16:05:48 -0700 (PDT)
+        id S1729811AbeGPXfZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jul 2018 19:35:25 -0400
+Received: from mail-yw0-f202.google.com ([209.85.161.202]:49321 "EHLO
+        mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729350AbeGPXfZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jul 2018 19:35:25 -0400
+Received: by mail-yw0-f202.google.com with SMTP id w190-v6so14017887ywg.16
+        for <git@vger.kernel.org>; Mon, 16 Jul 2018 16:05:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=7i0DCVZEtm5ehOBM3XGYNDKimLLbCSuTjeKKpIr7j3w=;
-        b=pE9wsSl3Sh+UPRg5fgnOVPQJsyQrL0cB9HFbIEb3kBtXGW4etHiuvvrQYIB8wb9Vbb
-         kHT0lzy3cc7YrzJB3V/jurf1liitxoWdREROS1bcM3pKdFaOyuabl7/4exAe44bmaHyh
-         Gvy4OxQPz1+utjAWcDbUVuRUtRD22qcvxV+VpWJ0nv7nEodvAhYTtnRDAHi9rlZ8PYo7
-         FzdYfrRB3NBSsfFD7gCBt1A0Sds0OU2s0HBXmPx+TQKyYIdDQMSgRjWy9kzo+aEGH48G
-         ReGR+iren/jeopA2ETZRFbSbV6Gx/EDX4T5snn0z1AA0EVTO75TGYGXJ5iS+RbI/YiSC
-         hdng==
+        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
+         :cc;
+        bh=iHbizZNcHS4JaVfk1R/4rmfJTdOIaefxalwnxaUiIaY=;
+        b=nV8CfY+hiiZrhHljXdnlgaydcAT7Y9bviE0Tr3r9cJGPXc91zmOV68N6S0cot+HS88
+         n9te9d4MS/J5rAnBF3apvXi+T5ohfbdrIwb8ZHnlm4tnn7bnds4TfQJsQGgkcn+bxwFK
+         XHheBYyyHQf/n5JKbfIsL9IePrrJBMxawUUFplZCgT/kZzDyOvTO1o/h5etxb8IRmZiZ
+         1DR17/1+zY+ji36Q37Fle+WSbudo2IjXm5hT0a4BqZCny/2CfZCSryOoY8iSPCvXmMyz
+         QSvjQpcnWDfA4tUWDkthXJoH5BEBkuwV48oiPMiidx7uCoBRwrEMJvwnj5MqHFX8qyhK
+         tJMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=7i0DCVZEtm5ehOBM3XGYNDKimLLbCSuTjeKKpIr7j3w=;
-        b=UYEr1EI586K2RyhRl3+a3JqL6uK8z2xbvVP+u1k662BVxP9PZb3qKHI9x8bZ8uyoS1
-         DMwTXDr9TDzmjSTbUil6c0elL5WVkdqC5TOxf9KD1biYKwJbiaoonbMGe5z5MmfU7Us3
-         LJklnBNwR2XgbooQghUra4j9Q4u2C7kKCoWe1JYt/KciHXPejoAlHUTm//kTtoXTnc58
-         PExeJLM4MvAYt3CIyhQGK/+mHMwNson4Ob/jlfIaO9MeqCeoePoF8TKo1uyVY0GVf6U4
-         2KeT3paY8biRZyXZoVDCLbSuTAAcw4pj2vHhOPxBt82NTM17A0aohplSpw88JePjAc5t
-         uyFg==
-X-Gm-Message-State: AOUpUlHZaEg795pjqhT3sFPV2PwFtoCBezGVN7EIhbIRO3pwjEzER4Di
-        BFL+dkJrpOsMKwYE79nF4NYLCBdeJJdu2N/Q7jx3pO9LiRXFGoiDslm4NW8dTaYHvq//l482fqH
-        sPVl9CtO10CGmUlQiFpnHYgTPrjrt6tdPh+Dl+5t9TH2W04rg/aHPqiFGZm+/
-X-Google-Smtp-Source: AAOMgpfsGVhPRToJ1rxtTmAmcNwHHrGAvzYPHGp+/W1triKCOClWqYPEChUUZuukEA7+/YPVr/ErQgaFBXbF
-X-Received: by 2002:a1f:9b84:: with SMTP id d126-v6mr9025156vke.65.1531782347740;
- Mon, 16 Jul 2018 16:05:47 -0700 (PDT)
-Date:   Mon, 16 Jul 2018 16:05:33 -0700
-Message-Id: <20180716230542.81372-1-sbeller@google.com>
-Mime-Version: 1.0
+        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
+         :references:subject:from:to:cc;
+        bh=iHbizZNcHS4JaVfk1R/4rmfJTdOIaefxalwnxaUiIaY=;
+        b=byz+OkebCcRA1yN7aTxrUeov3a2EPV2CmLK8KWICfE3ACJUD0Imb0edEIW8ic0eMHZ
+         WCnIruOD64wV+zDMaQmeJauN4kofpl5p7WYdA2VXQbFUTT+QSE3yvuMIulXLw/+LAVJB
+         kFFY+Q266S4QwR8oHib4qpIyphAA/NU4X4IgzLhMnTI7/srYDsuI4vumgnPVW2EOt4Da
+         KYfVc45u0vM9BNV74Mg0MgrH6+/uDEevVePWYsfpUvtVy8OG/S9fXCwdnvqoehP2PyR7
+         MZwaxQqL6DKnXJQT3F8g5zb2vQiIztrj75C1DeSX2kaLN8fQC6dqZ7ICTcBrLO1Bvi7M
+         Dm+w==
+X-Gm-Message-State: AOUpUlEZnr9B/JRr2jhtrbqz8kGwTSXGuURrlaz3ZpGKmrQR6n3L4So+
+        t85dEd3zr6GfNNHeUrOn2Aa4esv8eR7EzP3UnAZO+i/YndSka/qwLy2YZAWS6xxag7EFkSZbOLl
+        ORyfDSRjwjAuAOR/GEcnfE8rvmfo11Pgp/U2uKbxakVoJ+iFkm4PbYsKvE/Oq
+X-Google-Smtp-Source: AAOMgpdoGcP00/hY36sgjw3cGrcVxYxvkmK2VOt1cNw+aAsYa9GXNcISnu166BGGF9wieZxboXq1oI3yGJNi
+MIME-Version: 1.0
+X-Received: by 2002:a25:b90a:: with SMTP id x10-v6mr5712912ybj.79.1531782350063;
+ Mon, 16 Jul 2018 16:05:50 -0700 (PDT)
+Date:   Mon, 16 Jul 2018 16:05:34 -0700
+In-Reply-To: <20180716230542.81372-1-sbeller@google.com>
+Message-Id: <20180716230542.81372-2-sbeller@google.com>
+References: <20180716230542.81372-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.203.gfac676dfb9-goog
-Subject: [PATCHv5 0/9] Reroll of sb/diff-color-move-more
+Subject: [PATCH 1/9] xdiff/xdiff.h: remove unused flags
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org, gitster@pobox.com
 Cc:     Stefan Beller <sbeller@google.com>
@@ -58,94 +62,34 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a resend of sb/diff-color-move-more
-https://public-inbox.org/git/20180629001958.85143-1-sbeller@google.com/
-that fixes an errornous squashing within the series; the end result is
-the same. range diff is below. (As the latest cooking email said
-this series is going to land in next soon, I hope this is not too late
-of a resend; otherwise just ignore it as the end result is the same)
+These flags were there since the beginning (3443546f6e (Use a *real*
+built-in diff generator, 2006-03-24), but were never used. Remove them.
 
-Thanks,
-Stefan
+Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ xdiff/xdiff.h | 8 --------
+ 1 file changed, 8 deletions(-)
 
-Stefan Beller (9):
-  xdiff/xdiff.h: remove unused flags
-  xdiff/xdiffi.c: remove unneeded function declarations
-  t4015: avoid git as a pipe input
-  diff.c: do not pass diff options as keydata to hashmap
-  diff.c: adjust hash function signature to match hashmap expectation
-  diff.c: add a blocks mode for moved code detection
-  diff.c: decouple white space treatment from move detection algorithm
-  diff.c: factor advance_or_nullify out of mark_color_as_moved
-  diff.c: add white space mode to move detection that allows indent
-    changes
-
- Documentation/diff-options.txt |  30 +++-
- diff.c                         | 253 +++++++++++++++++++++++++++++----
- diff.h                         |   9 +-
- t/t4015-diff-whitespace.sh     | 243 ++++++++++++++++++++++++++-----
- xdiff/xdiff.h                  |   8 --
- xdiff/xdiffi.c                 |  17 ---
- 6 files changed, 472 insertions(+), 88 deletions(-)
-
+diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
+index c1937a29112..2356da5f784 100644
+--- a/xdiff/xdiff.h
++++ b/xdiff/xdiff.h
+@@ -52,14 +52,6 @@ extern "C" {
+ #define XDL_EMIT_FUNCNAMES (1 << 0)
+ #define XDL_EMIT_FUNCCONTEXT (1 << 2)
+ 
+-#define XDL_MMB_READONLY (1 << 0)
+-
+-#define XDL_MMF_ATOMIC (1 << 0)
+-
+-#define XDL_BDOP_INS 1
+-#define XDL_BDOP_CPY 2
+-#define XDL_BDOP_INSB 3
+-
+ /* merge simplification levels */
+ #define XDL_MERGE_MINIMAL 0
+ #define XDL_MERGE_EAGER 1
 -- 
 2.18.0.203.gfac676dfb9-goog
 
-1:  7199e9b5608 ! 1:  7d58ad461cb diff.c: decouple white space treatment from move detection algorithm
-    @@ -207,9 +207,8 @@
-     +	EOF
-     +
-     +	# Make sure we get a different diff using -w
-    -+	git diff --color --color-moved -w |
-    -+		grep -v "index" |
-    -+		test_decode_color >actual &&
-    ++	git diff --color --color-moved -w >actual.raw &&
-    ++	grep -v "index" actual.raw | test_decode_color >actual &&
-     +	q_to_tab <<-\EOF >expected &&
-     +	<BOLD>diff --git a/text.txt b/text.txt<RESET>
-     +	<BOLD>--- a/text.txt<RESET>
-    @@ -224,9 +223,8 @@
-     +
-     +	# And now ignoring white space only in the move detection
-     +	git diff --color --color-moved \
-    -+		--color-moved-ws=ignore-all-space,ignore-space-change,ignore-space-at-eol |
-    -+		grep -v "index" |
-    -+		test_decode_color >actual &&
-    ++		--color-moved-ws=ignore-all-space,ignore-space-change,ignore-space-at-eol >actual.raw &&
-    ++	grep -v "index" actual.raw | test_decode_color >actual &&
-     +	q_to_tab <<-\EOF >expected &&
-     +	<BOLD>diff --git a/text.txt b/text.txt<RESET>
-     +	<BOLD>--- a/text.txt<RESET>
-2:  5626d523b70 = 2:  f08353f2a02 diff.c: factor advance_or_nullify out of mark_color_as_moved
-3:  e2f1e573699 ! 3:  3fde7cf2194 diff.c: add white space mode to move detection that allows indent changes
-    @@ -339,30 +339,6 @@
-     diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
-     --- a/t/t4015-diff-whitespace.sh
-     +++ b/t/t4015-diff-whitespace.sh
-    -@@
-    - 	EOF
-    - 
-    - 	# Make sure we get a different diff using -w
-    --	git diff --color --color-moved -w |
-    --		grep -v "index" |
-    --		test_decode_color >actual &&
-    -+	git diff --color --color-moved -w >actual.raw &&
-    -+	grep -v "index" actual.raw | test_decode_color >actual &&
-    - 	q_to_tab <<-\EOF >expected &&
-    - 	<BOLD>diff --git a/text.txt b/text.txt<RESET>
-    - 	<BOLD>--- a/text.txt<RESET>
-    -@@
-    - 
-    - 	# And now ignoring white space only in the move detection
-    - 	git diff --color --color-moved \
-    --		--color-moved-ws=ignore-all-space,ignore-space-change,ignore-space-at-eol |
-    --		grep -v "index" |
-    --		test_decode_color >actual &&
-    -+		--color-moved-ws=ignore-all-space,ignore-space-change,ignore-space-at-eol >actual.raw &&
-    -+	grep -v "index" actual.raw | test_decode_color >actual &&
-    - 	q_to_tab <<-\EOF >expected &&
-    - 	<BOLD>diff --git a/text.txt b/text.txt<RESET>
-    - 	<BOLD>--- a/text.txt<RESET>
-     @@
-      	test_cmp expected actual
-      '
