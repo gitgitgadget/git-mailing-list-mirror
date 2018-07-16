@@ -2,76 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A5511F597
-	for <e@80x24.org>; Mon, 16 Jul 2018 22:23:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 251331F597
+	for <e@80x24.org>; Mon, 16 Jul 2018 22:37:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728787AbeGPWxX (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jul 2018 18:53:23 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48726 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728622AbeGPWxX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jul 2018 18:53:23 -0400
-Received: (qmail 19466 invoked by uid 109); 16 Jul 2018 22:23:45 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 16 Jul 2018 22:23:45 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16467 invoked by uid 111); 16 Jul 2018 22:24:00 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 16 Jul 2018 18:24:00 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Jul 2018 18:23:54 -0400
-Date:   Mon, 16 Jul 2018 18:23:54 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Henning Schild <henning.schild@siemens.com>,
-        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Ben Toews <mastahyeti@gmail.com>, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v2 7/9] gpg-interface: introduce new config to select per
- gpg format program
-Message-ID: <20180716222354.GA12482@sigill.intra.peff.net>
-References: <cover.1531208187.git.henning.schild@siemens.com>
- <4905c1907a866c0fd1a4dac978dd6ca3e468ac43.1531208187.git.henning.schild@siemens.com>
- <20180710165412.GE23624@sigill.intra.peff.net>
- <20180710165638.GF23624@sigill.intra.peff.net>
- <20180714181347.GE1042117@genre.crustytoothpaste.net>
- <20180716213510.GJ25189@sigill.intra.peff.net>
- <xmqq36wisv3h.fsf@gitster-ct.c.googlers.com>
+        id S1729151AbeGPXGh (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jul 2018 19:06:37 -0400
+Received: from mail-ua0-f202.google.com ([209.85.217.202]:56234 "EHLO
+        mail-ua0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728622AbeGPXGh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jul 2018 19:06:37 -0400
+Received: by mail-ua0-f202.google.com with SMTP id r19-v6so13992766ual.22
+        for <git@vger.kernel.org>; Mon, 16 Jul 2018 15:37:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
+         :cc;
+        bh=yggDjfiaGVIpxXacFGhUoWG2fxLuoV5WcX6k7ZJk/9k=;
+        b=IpTdqac1vnTR2bXr48IC4p9GSnSkMTklLsa+Wgf8T/S4toN2WYEH9f479RzxM2Yv/1
+         7nfcMP/QGxg70/j/YYc3CUiJ7bKNjvHNcXnGI60AS1qHGOgy/60rR8a1boUV1IFioHm/
+         jwnhs91Xn7JPIV62/yDbcELsP4AkTO5+b+NP4eZvC2sfgxkAwhyBVqgjz4aa7YlvdaNP
+         QzRAuKhsHIIBr9Ug0foDuZB8draVFMz4hwREMaL99zX2fT8sTnZdvLAnrloTCmTcsESv
+         nA+nRuor/iQUthY4jxI3/L8wY3RfR/r/C1uS6h9ylgY8KxOQdVEkDvAJPzlK285NPXGX
+         MBDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
+         :references:subject:from:to:cc;
+        bh=yggDjfiaGVIpxXacFGhUoWG2fxLuoV5WcX6k7ZJk/9k=;
+        b=KEQeeCu3s1dWcpZ+lc0iet246hJpXs5ZgiI6IJZtexrn6BvBS6PVWMLSrmCwjuEhDE
+         5TIF3Sp0Ep0oHlraLcg8Hk3rKAt29NwxuzNpfBC327PGX32MuLW2LRVnsP+8qdK37I3I
+         0BxmCXF2qZzY5jJtImx9fMqsr0ZKRgH71JOjFPUiWEOUGUhxZPYnPqcet0NDo4lrjlz7
+         +1pZ6VjnDI8sXbO+rQf9w5ibHQ57LG60BAPv1C9DLlOHmje/NgYqTyUSdDYrG5wslHaK
+         qPMxbE4sAlfcqe7HzT5LmgTdSCS9OEt0E6buPR+myb+sZq27AZ/9q4yMbt9z1Vmx2dNL
+         VKLQ==
+X-Gm-Message-State: AOUpUlEbBtNuGZarWQ7ByUcAzxTyhXF2/WskpHzZoKHDPLtNGh92SUwM
+        4+N4aS6CswhLO6l1N0tW8v3VWrrwqyhc4B+jF4mM
+X-Google-Smtp-Source: AAOMgpfkmR+bSZhdkH83kU4dhtAmZ1w1Vh/LjDxG8FvnNr5PyeNigaILp9NHkZdQdltgVQL43yNRqHqbaPrCnw/k6J80
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq36wisv3h.fsf@gitster-ct.c.googlers.com>
+X-Received: by 2002:ab0:12e8:: with SMTP id o40-v6mr9884778uac.50.1531780627593;
+ Mon, 16 Jul 2018 15:37:07 -0700 (PDT)
+Date:   Mon, 16 Jul 2018 15:37:03 -0700
+In-Reply-To: <cf4559e08c47adcaf4c938a325acf829a5759285.1531746011.git.gitgitgadget@gmail.com>
+Message-Id: <20180716223703.252965-1-jonathantanmy@google.com>
+References: <cf4559e08c47adcaf4c938a325acf829a5759285.1531746011.git.gitgitgadget@gmail.com>
+X-Mailer: git-send-email 2.18.0.13.g5a7731b13
+Subject: Re: [PATCH 07/16] commit-reach: move can_all_from_reach_with_flags
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitgitgadget@gmail.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, dstolee@microsoft.com,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 16, 2018 at 02:56:34PM -0700, Junio C Hamano wrote:
+>  /* Remember to update object flag allocation in object.h */
+> +#define REACHABLE       (1u<<15)
+>  #define PARENT1		(1u<<16)
+>  #define PARENT2		(1u<<17)
+>  #define STALE		(1u<<18)
 
-> >> I'm okay with us forcing "openpgp".  That seems sane enough for now, and
-> >> if people scream loudly, we can loosen it.
-> >
-> > Well, I specifically meant "are you sure subsections like this are a
-> > good idea". But it seems like people think so?
-> 
-> I admit that I did not even consider that there may be better tool
-> than using subsections to record this information.  What are the
-> possibilities you have in mind (if you have one)?
+Update the object flag allocation in object.h.
 
-I don't think there is another tool except two-level options, like
-"gpg.openpgpprogram" and "gpg.x509program".
+> +int reachable(struct commit *from, int with_flag, int assign_flag,
+> +	      time_t min_commit_date)
 
-Although those are a bit ugly, I just wondered if they might make things
-simpler, since AFAIK we are not planning to add more config options
-here. Like gpg.x509.someotherflag, nor gpg.someothertool.program.
+In this and previous patches: I think it's better to use "unsigned int"
+as the data type for a flag, just like in clear_commit_marks().
 
-Of course one reason _for_ the tri-level is that we might one day add
-gpg.x509.someotherflag, and this gives us room to do it with less
-awkwardness (i.e., a proliferation of gpg.x509someflag options).
-
--Peff
+Other than that, this and all previous patches look good.
