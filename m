@@ -6,115 +6,101 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 087A41F597
-	for <e@80x24.org>; Mon, 16 Jul 2018 19:41:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3C191F597
+	for <e@80x24.org>; Mon, 16 Jul 2018 19:52:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728495AbeGPUKb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jul 2018 16:10:31 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48294 "HELO cloud.peff.net"
+        id S1728290AbeGPUVX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jul 2018 16:21:23 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48316 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728290AbeGPUKb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jul 2018 16:10:31 -0400
-Received: (qmail 11752 invoked by uid 109); 16 Jul 2018 19:41:27 -0000
+        id S1728061AbeGPUVX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jul 2018 16:21:23 -0400
+Received: (qmail 12268 invoked by uid 109); 16 Jul 2018 19:52:17 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 16 Jul 2018 19:41:27 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 16 Jul 2018 19:52:17 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14783 invoked by uid 111); 16 Jul 2018 19:41:41 -0000
+Received: (qmail 14906 invoked by uid 111); 16 Jul 2018 19:52:31 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 16 Jul 2018 15:41:41 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 16 Jul 2018 15:52:31 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Jul 2018 15:41:36 -0400
-Date:   Mon, 16 Jul 2018 15:41:36 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Jul 2018 15:52:26 -0400
+Date:   Mon, 16 Jul 2018 15:52:26 -0400
 From:   Jeff King <peff@peff.net>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+To:     Elijah Newren <newren@gmail.com>
+Cc:     git@vger.kernel.org, jonathantanmy@google.com, jrnieder@gmail.com
 Subject: Re: [PATCH] gc: do not warn about too many loose objects
-Message-ID: <20180716194136.GA25189@sigill.intra.peff.net>
+Message-ID: <20180716195226.GB25189@sigill.intra.peff.net>
 References: <20180716172717.237373-1-jonathantanmy@google.com>
- <20180716175103.GB18636@sigill.intra.peff.net>
- <20180716182207.GA11513@aiede.svl.corp.google.com>
- <20180716185255.GC22298@sigill.intra.peff.net>
- <20180716190949.GB11513@aiede.svl.corp.google.com>
+ <20180716191505.857-1-newren@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20180716190949.GB11513@aiede.svl.corp.google.com>
+In-Reply-To: <20180716191505.857-1-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 16, 2018 at 12:09:49PM -0700, Jonathan Nieder wrote:
+On Mon, Jul 16, 2018 at 12:15:05PM -0700, Elijah Newren wrote:
 
-> >>> So while I completely agree that it's not a great thing to encourage
-> >>> users to blindly run "git prune", I think it _is_ actionable.
-> >>
-> >> To flesh this out a little more: what user action do you suggest?  Could
-> >> we carry out that action automatically?
-> >
-> > Er, the action is to run "git prune", like the warning says. :)
+> The basic problem here, at least for us, is that gc has enough
+> information to know it could expunge some objects, but because of how
+> it is structured in terms of several substeps (reflog expiration,
+> repack, prune), the information is lost between the steps and it
+> instead writes them out as unreachable objects.  If we could prune (or
+> avoid exploding) loose objects that are only reachable from reflog
+> entries that we are expiring, then the problem goes away for us.  (I
+> totally understand that other repos may have enough unreachable
+> objects for other reasons that Peff's suggestion to just pack up
+> unreachable objects is still a really good idea.  But on its own, it
+> seems like a waste since it's packing stuff that we know we could just
+> expunge.)
+
+No, we should have expunged everything that could be during the "repack"
+and "prune" steps. We feed the expiration time to repack, so that it
+knows to drop objects entirely instead of exploding them loose.
+
+So the leftovers really are objects that cannot be deleted yet. You
+could literally just do:
+
+  find .git/objects/?? -type f |
+  perl -lne 's{../.{38}$} and print "$1$2"' |
+  git pack-objects .git/objects/pack/cruft-pack
+
+But:
+
+  - that will explode them out only to repack them, which is inefficient
+    (if they're already packed, you can probably reuse deltas, not to
+    mention the I/O savings)
+
+  - there's the question of how to handle timestamps. Some of those
+    objects may have been _about_ to expire, but now you've just put
+    them in a brand-new pack that adds another 2 weeks to their life
+
+  - the find above is sloppy, and will race with somebody adding new
+    objects to the repo
+
+So probably you want to have pack-objects write out the list of objects
+it _would_ explode, rather than exploding them. And then before
+git-repack deletes the old packs, put those into a new cruft pack. That
+_just_ leaves the timestamp issue (which is discussed at length in the
+thread I linked earlier).
+
+> git_actual_garbage_collect() {
+>     GITDIR=$(git rev-parse --git-dir)
 > 
-> I don't think we want to recommend that, especially when "git gc --auto"
-> does the right thing automatically.
-
-But that's the point. This warning is written literally after running
-"git gc --auto" _didn't_ do the right thing. Yes, it would be nicer if
-it could do the right thing. But it doesn't yet know how to.
-
-See the thread I linked earlier on putting unreachable objects into a
-pack, which I think is the real solution.
-
-> > The warning that is deleted by this patch is: you _just_ ran gc, and hey
-> > we even did it automatically for you, but we're still in a funky state
-> > afterwards. You might need to clean up this state.
+>     # Record all revisions stored in reflog before and after gc
+>     git rev-list --no-walk --reflog >$GITDIR/gc.original-refs
+>     git gc --auto
+>     wait_for_background_gc_to_finish
+>     git rev-list --no-walk --reflog >$GITDIR/gc.final-refs
 > 
-> This sounds awful.  It sounds to me like you're saying "git gc --auto"
-> is saying "I just did the wrong thing, and here is how you can clean
-> up after me".  That's not how I want a program to behave.
+>     # Find out which reflog entries were removed
+>     DELETED_REFS=$(comm -23 <(sort $GITDIR/gc.original-refs) <(sort $GITDIR/gc.final-refs))
 
-Sure, it would be nice if it did the right thing. Nobody has written
-that yet. Until they do, we have to deal with the fallout.
-
-> > If you do that without anything further, then it will break the
-> > protection against repeatedly running auto-gc, as I described in the
-> > previous email.
-> 
-> Do you mean ratelimiting for the message, or do you actually mean
-> repeatedly running auto-gc itself?
-> 
-> If we suppress warnings, there would still be a gc.log while "git gc
-> --auto" is running, just as though there had been no warnings at all.
-> I believe this is close to the intended behavior; it's the same as
-> what you'd get without daemon mode, except that you lose the warning.
-
-I mean that if you do not write a persistent log, then "gc --auto" will
-do an unproductive gc every time it is invoked. I.e., it will see "oh,
-there are too many loose objects", and then waste a bunch of CPU every
-time you commit.
-
-> > Any of those would work similarly to the "just detect warnings" I
-> > suggested earlier, with respect to keeping the "1 day" expiration
-> > intact, so I'd be OK with them. In theory they'd be more robust than
-> > scraping the "warning:" prefix. But in practice, I think you have to
-> > resort to scraping anyway, if you are interested in treating warnings
-> > from sub-processes the same way.
-> 
-> Can you say more about this for me?  I am not understanding what
-> you're saying necessitates scraping the output.  I would strongly
-> prefer to avoid scraping the output.
-
-A daemonized git-gc runs a bunch of sub-commands (e.g., "git prune")
-with their stderr redirected into the logfile. If you want to have
-warnings go somewhere else, then either:
-
-  - you need some way to tell those sub-commands to send the warnings
-    elsewhere (i.e., _not_ stderr)
-
-    or
-
-  - you have to post-process the output they send to separate warnings
-    from other errors. Right now that means scraping. If you are
-    proposing a system of machine-readable output, it would need to work
-    not just for git-gc, but for every sub-command it runs.
+This is too detailed, I think. There are other reasons to have
+unreachable objects than expired reflogs. I think you really just want
+to consider all unreachable objects (like the pack-objects thing I
+mentioned above).
 
 -Peff
