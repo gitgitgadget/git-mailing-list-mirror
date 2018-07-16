@@ -2,92 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2815B1F597
-	for <e@80x24.org>; Mon, 16 Jul 2018 22:37:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4356F1F597
+	for <e@80x24.org>; Mon, 16 Jul 2018 22:43:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729583AbeGPXGt (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jul 2018 19:06:49 -0400
-Received: from mail-yb0-f196.google.com ([209.85.213.196]:41281 "EHLO
-        mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728742AbeGPXGs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jul 2018 19:06:48 -0400
-Received: by mail-yb0-f196.google.com with SMTP id s8-v6so16067604ybe.8
-        for <git@vger.kernel.org>; Mon, 16 Jul 2018 15:37:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=u9yl4QcPmeRjvddwyUmh9oMDkXTrBXhksI2zXJ064z8=;
-        b=BqdYTrjh3mOPmJQWL78x+xbJ60mSbe90n+UbDhVsp1iQIYNbqH8ET8jorw9pBKBlQN
-         tr+BoUSoK0k1Jk/KBTOpkkypvJ5COgpRcbDCD6YvCYjlJDwF82rrSGsfibflNlY/69fO
-         Rt20pIGTTdubn52NAJYpfRRS5mfJRMoTtgHSnpbjzzhLxtD3QXRG81zxcpphdrokWqS6
-         bTooq38r+DyElWVpmHknJZAzaTQJkm+M/fV+4N2FET7ifcgteeLzN23Xb2r8CtChcWB+
-         1OPYS5svvuPFeBQC1paqrn3wh3srffeT+TcTJF2Ai7dIV/vldD/FcVRHrNoTudztz8XA
-         ehpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=u9yl4QcPmeRjvddwyUmh9oMDkXTrBXhksI2zXJ064z8=;
-        b=NVTdZ08qlqw/xMGHyYN87Rs/NZHSqdUtqqlAS5z3FVI+5MaYi9dV0nGtqR90HhmpH/
-         4o4Gs7zYmZCbK7NEVm52bqR++cwNaP6RvGHh4YCOq/PzVzqQqrD1MjjAAmbm0vGOCexV
-         ntU2egyeEzLCPD8X3T3lgwBlzkLYr7ZusoIcoX/Y2U0HV6SCQYnll+t285EHrNs3Ynwv
-         IA+rAeq8Zt1rNOm8AsvYfx+Hr5dyok+kELC9qhQicT77zkCbckzg555RlX8/AR0g3tGz
-         FdvFu9eTTbs49He354i+Ywi2Zq/toMJOPkOnIx80o85e88lC+sMRQx6B75n5ggz2y8Mf
-         U/Iw==
-X-Gm-Message-State: AOUpUlEOzIbY4a08Eo22a6fgS5OpSAhAM9k6uv6qqmx+FSc6w3INuPMC
-        2RpotisvcE07Nn4ZUIkVVEff8OTsTEm6j2nhOA7dyA/UcpA=
-X-Google-Smtp-Source: AAOMgpfnsAzyPy1p8OYmlznPu4M3h2VEUxLEAU+ycZXy4B503VrSg99Ju+zlN/PRWAWdj2ZrwGmKqn63bTtXBxUpnkE=
-X-Received: by 2002:a5b:307:: with SMTP id j7-v6mr9663884ybp.352.1531780638793;
- Mon, 16 Jul 2018 15:37:18 -0700 (PDT)
+        id S1728794AbeGPXNK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jul 2018 19:13:10 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48776 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1728784AbeGPXNK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jul 2018 19:13:10 -0400
+Received: (qmail 20361 invoked by uid 109); 16 Jul 2018 22:43:28 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 16 Jul 2018 22:43:28 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16695 invoked by uid 111); 16 Jul 2018 22:43:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 16 Jul 2018 18:43:42 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Jul 2018 18:43:37 -0400
+Date:   Mon, 16 Jul 2018 18:43:37 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH] gc: do not warn about too many loose objects
+Message-ID: <20180716224337.GB12482@sigill.intra.peff.net>
+References: <20180716185255.GC22298@sigill.intra.peff.net>
+ <20180716190949.GB11513@aiede.svl.corp.google.com>
+ <20180716194136.GA25189@sigill.intra.peff.net>
+ <20180716195431.GD11513@aiede.svl.corp.google.com>
+ <20180716202915.GC25189@sigill.intra.peff.net>
+ <20180716203753.GE11513@aiede.svl.corp.google.com>
+ <20180716210938.GF25189@sigill.intra.peff.net>
+ <20180716214003.GH11513@aiede.svl.corp.google.com>
+ <20180716214539.GL25189@sigill.intra.peff.net>
+ <20180716220306.GI11513@aiede.svl.corp.google.com>
 MIME-Version: 1.0
-References: <pull.10.git.gitgitgadget@gmail.com> <816821eec9ba476ccdfbfdf6e3cdd3619743ea2e.1531746012.git.gitgitgadget@gmail.com>
-In-Reply-To: <816821eec9ba476ccdfbfdf6e3cdd3619743ea2e.1531746012.git.gitgitgadget@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 16 Jul 2018 15:37:08 -0700
-Message-ID: <CAGZ79kY5rEUp3Vsi5ux=KaC0t4vrp8UME-CaQtTvnYsizUGfFQ@mail.gmail.com>
-Subject: Re: [PATCH 15/16] commit-reach: make can_all_from_reach... linear
-To:     gitgitgadget@gmail.com
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20180716220306.GI11513@aiede.svl.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 16, 2018 at 6:00 AM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> Note how the time increases between the two cases in the two versions.
-> The new code increases relative to the number of commits that need to be
-> walked, but not directly relative to the number of 'from' commits.
+On Mon, Jul 16, 2018 at 03:03:06PM -0700, Jonathan Nieder wrote:
 
-Cool!
+> Jeff King wrote:
+> 
+> > I don't think any command should report failure of its _own_ operation
+> > if "gc --auto" failed. And grepping around the source code shows that we
+> > typically ignore it.
+> 
+> Oh, good point.  In non-daemon mode, we don't let "gc --auto" failure
+> cause the invoking command to fail, but in daemon mode we do.  That
+> should be a straightforward fix; patch coming in a moment.
 
->  int can_all_from_reach_with_flag(struct object_array *from,
->                                  int with_flag, int assign_flag,
-> -                                time_t min_commit_date)
-> +                                time_t min_commit_date,
-> +                                uint32_t min_generation)
->  {
+OK, that definitely sounds like a bug. I'm still confused how that could
+happen, though, since from the caller's perspective they ignore git-gc's
+exit code either way. I guess I'll see in your patch. :)
 
->         for (i = 0; i < from->nr; i++) {
-[...]
-> +               parse_commit(list[i]);
+> > What I was trying to say earlier is that we _did_ build this
+> > rate-limiting, and I think it is a bug that the non-daemon case does not
+> > rate-limit (but nobody noticed, because the default is daemonizing).
+> >
+> > So the fix is not "rip out the rate-limiting in daemon mode", but rather
+> > "extend it to the non-daemon case".
+> 
+> Can you point me to some discussion about building that rate-limiting?
+> The commit message for v2.12.2~17^2 (gc: ignore old gc.log files,
+> 2017-02-10) definitely doesn't describe that as its intent.
 
-parse_commit_or_die or handle the return code?
-(or a comment why we specifically are allowed to ignore
-the return code here)
+I think that commit is a loosening of the rate-limiting (because we'd
+refuse to progress for something that was actually time-based). But the
+original stopping comes from this discussion, I think:
 
-[...]
-> +                       for (parent = stack->item->parents; parent; parent = parent->next) {
-[...]
-> +                                       parse_commit(parent->item);
+  https://public-inbox.org/git/xmqqlhijznpm.fsf@gitster.dls.corp.google.com/
 
-same here.
+(I didn't read the whole thread, but that was what I hit by blaming the
+log code and then tracing that back to the list).
+
+> This is the kind of review that Dscho often complains about, where
+> someone tries to fix something small but significant to users and gets
+> told to build something larger that was not their itch instead.
+
+I don't know how to say more emphatically that I am not asking anyone to
+build something larger (like cruft packfiles). I'm just trying to bring
+up an impact that the author didn't consider (and that IMHO would be a
+regression). Isn't that what reviews are for?
+
+I only mention packfiles because as the discussion turns to "well, all
+of these solutions are mediocre hacks" (because they absolutely are),
+it's important to realize that there _is_ a right solution, and we even
+already know about it. Even if we don't work on it now, knowing that
+it's there makes it easier to decide about the various hacks.
+
+> The comments about the "Why is 'git commit' so slow?" experience and
+> how having the warning helps with that are well taken.  I think we
+> should be able to find a way to keep the warning in a v2 of this
+> patch.  But the rest about rate-limiting and putting unreachable
+> objects in packs etc as a blocker for this are demoralizing, since
+> they gives the feeling that even if I handle the cases that are
+> handled today well, it will never be enough for the project unless I
+> solve the larger problems that were already there.
+
+I really don't know why we are having such trouble communicating. I've
+tried to make it clear several times that the pack thing is not
+something I expect your or Jonathan Tan to work on, but obviously I
+failed. I'd be _delighted_ if you wanted to work on it, but AFAICT this
+patch is purely motivated by:
+
+  1. there's a funny exit code thing going on (0 on the first run, -1 on
+     the second)
+
+  2. the warning is not actionable by users
+
+I disagree with the second, and I think we've discussed easy solutions
+for the first.
+
+-Peff
