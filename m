@@ -6,63 +6,58 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 452211F597
-	for <e@80x24.org>; Mon, 16 Jul 2018 20:45:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9CAE41F597
+	for <e@80x24.org>; Mon, 16 Jul 2018 20:53:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729952AbeGPVOt (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jul 2018 17:14:49 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:35076 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728413AbeGPVOt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jul 2018 17:14:49 -0400
-Received: by mail-wm0-f65.google.com with SMTP id y22-v6so2666109wma.0
-        for <git@vger.kernel.org>; Mon, 16 Jul 2018 13:45:42 -0700 (PDT)
+        id S1728524AbeGPVXA (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jul 2018 17:23:00 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:55822 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728123AbeGPVXA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jul 2018 17:23:00 -0400
+Received: by mail-wm0-f66.google.com with SMTP id f21-v6so4254893wmc.5
+        for <git@vger.kernel.org>; Mon, 16 Jul 2018 13:53:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=GN9X9vIQP7PGQbny2hOZ31zJHzoW0aTipGQxuTVeZiY=;
-        b=A9RyHkMqUu4G3rPNEcZqW7oRWVlapAHcJNlSnUQZcMRJsoxHvUUe43ihOsjjclJ6EP
-         gTX+nBqdwqInmxJw4ZzCX+qGVZZ/FFkv+KsAWP7aPKV+2KCQwkOIC8BlbfWrcqPVsWY5
-         T6yvYpl93e/tsBIuM9m+dyzzqjbOhrOggejfnDufVrKEqcIxzzY6gaezZZeTHKCOem8+
-         zyDyenf0EIuCHC9tJF338/HIJL01GpVKQQigGJJedw2HQABAa8U9+amSDXkmBl/k6gnx
-         j/sJECbxdwcn6neNXmdZ1t7sXueQPM0jiLky6wdO8aY5Fh/sZ9e5G/FSOm65WDbKtFI5
-         QP2w==
+        bh=At5AR4Ms6XdNpAOh0DH6dPEbySYtwLrcQpBNId9+ZoE=;
+        b=g5kgCHQAvthEGq15U7k02nNa/NLv2qkwCVAPlY6gdUwXLFe7q1U0x1CbjPrUaDTG9o
+         9KS2M/47hmkng3TWfrYLL8N2TbFzzNW41VHq3sofypeQMf/hF89jbgsnSrnTXu0B/T9f
+         zJ+VM0gEGY4nzZ2Y7/JGtIIMIgQJfRb1ndnnuso7X6LCAPjklnvjkUM/5hK7ppSv2TN4
+         POaPW9pcGiXUVaKVimvhGvd7gfB+UFOcTn8gBboZHgLd4GG5pOqZr9CPNLRAKQTz5a7P
+         Z5cM98WP5uOjufvkv1Ww5VmGc1HFphk3eFgkau9STUYh1/vm+s5q0FuDkJZYKwpwLyPr
+         FSTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=GN9X9vIQP7PGQbny2hOZ31zJHzoW0aTipGQxuTVeZiY=;
-        b=aDCsksE9gQfCnYj6gLXzZX2fwkDh1kUUXyCsyRllPE3oUAVCv2KllFU3GVnuvXuq8E
-         m5IV+G57d/H0RslHf6f41NCp7OxfIP6orhL3rY0XMsBM4Tbm5iJirbv/z1LBGi/Lw5Rf
-         +N+0UUa6HoDQ5de6sO7W9EVSY2IS9/1g3fJPzRjfKiJhZIMiq1CxYT+8s5FrzRirrKE/
-         5gE9G76Te2DQrvW8LFpCx9azsQ0lUKcKyWLCmZOEMm2VHNCz2qi1KSFahPwsVrbmp3yh
-         fn4YpiRkwGbTbVswJqNvstVSBriWwmqvnDZNMrJ99t7oxsEjzBm5mHlSEcr4u5jo3HWS
-         wgJQ==
-X-Gm-Message-State: AOUpUlH4B3AiSBp2KbQmmx5o9si/AaK1CLaOZxkLWmLJWedKQvysjyGH
-        X3dWYQWdH9lf4sUVRK3uv4M=
-X-Google-Smtp-Source: AAOMgpdfV5cKhz1URS4iz9GlhrhI8FKrzvI0DH6Rb370Zm3L0cyQLKHpHdhiYkWeV1OAL5C/BNTecw==
-X-Received: by 2002:a1c:b80c:: with SMTP id i12-v6mr5095813wmf.30.1531773941263;
-        Mon, 16 Jul 2018 13:45:41 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 125-v6sm22695634wmw.9.2018.07.16.13.45.40
+        bh=At5AR4Ms6XdNpAOh0DH6dPEbySYtwLrcQpBNId9+ZoE=;
+        b=gCfzERBdz77whhUaBV44qKq8yDB65KjEDjSKw+j+khlWe07tYqp20NvvHjYmxGGEkk
+         /Fz24MMJu7+4jCatr6Sp7ujn93I503n54z8wiKkMENSXkFHSSpkfJ1u2ca78qRG+yFmW
+         r8Dsspwt3yeHMqnF7JJppHemmON5OdogFpAXJHSmC3QHVj71qBY514TyiuFNKUFgbsYM
+         1EFOhBHua4u91wuzxt4QyXeqs+kYGBvU4Jf5edeJsZRhLGGMEDnzW831lLzR7t/7gRP3
+         Mn93FydOd2kLVZGHHXJ8z7LW9OhSZIyAvz+3obzZoeGZIZIHCrmHuZXkF1x86pgHB4PA
+         DYMg==
+X-Gm-Message-State: AOUpUlE3z5TojIepOtBPqp1tyzfUjnFRw1j99a3NCRAsmwU6bJ5YIaWB
+        8hDi91zL988LD9OkeE7H344=
+X-Google-Smtp-Source: AAOMgpcndQVAwdM4hhHne8ObMaEsfrZvZ7+GlTsbK+s8i/rY9hN/ADLYHBI6XYm/knXHsLEk5voBsA==
+X-Received: by 2002:a1c:e3d5:: with SMTP id a204-v6mr10389691wmh.20.1531774430450;
+        Mon, 16 Jul 2018 13:53:50 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id x184-v6sm8257843wmg.24.2018.07.16.13.53.49
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 16 Jul 2018 13:45:40 -0700 (PDT)
+        Mon, 16 Jul 2018 13:53:49 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Henning Schild <henning.schild@siemens.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Ben Toews <mastahyeti@gmail.com>, Jeff King <peff@peff.net>,
-        Taylor Blau <me@ttaylorr.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v3 5/7] gpg-interface: introduce new config to select per gpg format program
-References: <cover.1531470729.git.henning.schild@siemens.com>
-        <cover.1531470729.git.henning.schild@siemens.com>
-        <8e6f4f547475e3ce26799901e255a78ea74dac8e.1531470729.git.henning.schild@siemens.com>
-Date:   Mon, 16 Jul 2018 13:45:40 -0700
-In-Reply-To: <8e6f4f547475e3ce26799901e255a78ea74dac8e.1531470729.git.henning.schild@siemens.com>
-        (Henning Schild's message of "Fri, 13 Jul 2018 10:41:27 +0200")
-Message-ID: <xmqqva9esydn.fsf@gitster-ct.c.googlers.com>
+To:     Olga Telezhnaya <olyatelezhnaya@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 4/4] ref-filter: use oid_object_info() to get object
+References: <0102016493ab5347-c0429041-6e66-4550-894c-2d500cb2ed8e-000000@eu-west-1.amazonses.com>
+        <0102016493ab542d-ea2a3e8c-d6a0-44ca-8fc6-f940fe7e84cd-000000@eu-west-1.amazonses.com>
+Date:   Mon, 16 Jul 2018 13:53:49 -0700
+In-Reply-To: <0102016493ab542d-ea2a3e8c-d6a0-44ca-8fc6-f940fe7e84cd-000000@eu-west-1.amazonses.com>
+        (Olga Telezhnaya's message of "Fri, 13 Jul 2018 12:43:56 +0000")
+Message-ID: <xmqqr2k2sy02.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -71,40 +66,62 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Henning Schild <henning.schild@siemens.com> writes:
+Olga Telezhnaya <olyatelezhnaya@gmail.com> writes:
 
-> +gpg.<format>.program::
-> +	Use this to customize the program used for the signing format you
-> +	chose. (see gpg.program) gpg.openpgp.program is a synonym for the
-> +	legacy gpg.program.
+> -static int get_object(struct ref_array_item *ref, const struct object_id *oid,
+> -		      int deref, struct object **obj, struct strbuf *err)
+> +static int get_object(struct ref_array_item *ref, int deref, struct object **obj,
+> +		      struct expand_data *oi, struct strbuf *err)
+>  {
+> -	int eaten;
+> -	int ret = 0;
+> -	unsigned long size;
+> -	enum object_type type;
+> -	void *buf = read_object_file(oid, &type, &size);
+> -	if (!buf)
+> -		ret = strbuf_addf_ret(err, -1, _("missing object %s for %s"),
+> -				      oid_to_hex(oid), ref->refname);
+> -	else {
+> -		*obj = parse_object_buffer(oid, type, size, buf, &eaten);
+> -		if (!*obj)
+> -			ret = strbuf_addf_ret(err, -1, _("parse_object_buffer failed on %s for %s"),
+> -					      oid_to_hex(oid), ref->refname);
+> -		else
+> -			grab_values(ref->value, deref, *obj, buf, size);
+> +	/* parse_object_buffer() will set eaten to 0 if free() will be needed */
+> +	int eaten = 1;
 
-I _think_ you meant "see gpg.format", but I am not 100% sure.
+Hmph, doesn't this belong to the previous step?  In other words,
+isn't the result of applying 1-3/4 has a bug that can leave eaten
+uninitialized (and base decision to free(buf) later on it), and
+isn't this change a fix for it?
 
-When X is a synonym for Y, Y is also a synonym for X, so technically
-speaking this does not matter, but when we talk about backward
-compatibility fallback, I think we say "OLDway is retained as a
-legacy synonym for NEWway", i.e. the other way around.
-
-Also, `typeset in tt` what end-users would type literally, like
-configuration variable names, i.e.
-
-	Use this to customize the rpogram used for the signing
-	format you chose (see `gpg.format`).  `gpg.program` can
-	still be used as a legacy synonym for `gpg.openpgp.program`.
-
->  gui.commitMsgWidth::
->  	Defines how wide the commit message window is in the
->  	linkgit:git-gui[1]. "75" is the default.
-> diff --git a/gpg-interface.c b/gpg-interface.c
-> index 93bd0fb32..f3c22b551 100644
-> --- a/gpg-interface.c
-> +++ b/gpg-interface.c
-> @@ -182,7 +182,7 @@ int git_gpg_config(const char *var, const char *value, void *cb)
->  		return 0;
+> +	if (oi->info.contentp) {
+> +		/* We need to know that to use parse_object_buffer properly */
+> +		oi->info.sizep = &oi->size;
+> +		oi->info.typep = &oi->type;
 >  	}
->  
-> -	if (!strcmp(var, "gpg.program"))
-> +	if (!strcmp(var, "gpg.program") || !strcmp(var, "gpg.openpgp.program"))
->  		fmtname = "openpgp";
->  
->  	if (fmtname) {
+> +	if (oid_object_info_extended(the_repository, &oi->oid, &oi->info,
+> +				     OBJECT_INFO_LOOKUP_REPLACE))
+> +		return strbuf_addf_ret(err, -1, _("missing object %s for %s"),
+> +				       oid_to_hex(&oi->oid), ref->refname);
+> +
+> +	if (oi->info.contentp) {
+> +		*obj = parse_object_buffer(&oi->oid, oi->type, oi->size, oi->content, &eaten);
+> +		if (!obj) {
+> +			if (!eaten)
+> +				free(oi->content);
+> +			return strbuf_addf_ret(err, -1, _("parse_object_buffer failed on %s for %s"),
+> +					       oid_to_hex(&oi->oid), ref->refname);
+> +		}
+> +		grab_values(ref->value, deref, *obj, oi->content, oi->size);
+> +	}
+> +
+> +	grab_common_values(ref->value, deref, oi);
+>  	if (!eaten)
+> -		free(buf);
+> -	return ret;
+> +		free(oi->content);
+> +	return 0;
+>  }
+
