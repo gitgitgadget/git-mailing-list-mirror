@@ -2,186 +2,293 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 675861F597
-	for <e@80x24.org>; Tue, 17 Jul 2018 11:00:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 44F6B1F597
+	for <e@80x24.org>; Tue, 17 Jul 2018 12:06:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731120AbeGQLcu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jul 2018 07:32:50 -0400
-Received: from mout.gmx.net ([212.227.15.19]:44419 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730429AbeGQLct (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jul 2018 07:32:49 -0400
-Received: from [192.168.0.129] ([37.201.195.94]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lt2BW-1g3x5f1qsE-012UAb; Tue, 17
- Jul 2018 13:00:41 +0200
-Date:   Tue, 17 Jul 2018 13:00:25 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Eric Sunshine <sunshine@sunshineco.com>
-cc:     git@vger.kernel.org,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Stefan Beller <sbeller@google.com>
-Subject: Re: [RFC PATCH 5/5] format-patch: add --creation-weight tweak for
- --range-diff
-In-Reply-To: <20180530080325.37520-6-sunshine@sunshineco.com>
-Message-ID: <nycvar.QRO.7.76.6.1807171259290.71@tvgsbejvaqbjf.bet>
-References: <20180530080325.37520-1-sunshine@sunshineco.com> <20180530080325.37520-6-sunshine@sunshineco.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:mud6hT+vO1Q0fQr7Zp0DRQyYN4hDoeB6KKe39pdHmGESEpNmv1b
- JexXPftec6m3IstVpbDJ4iix5aBqgiNVODcltbgSKm0AI8O6AF2nlb0xP1arkqQNLGQV2Z5
- bg8hG+IVGQTB42oQgdFLzLDxjiFDuT+s+dqtuOzY5Yk6VeZa3oyQvYCOZCuLBcaxFtVzbun
- QD0cumS6uI2F0V1Ofg+cQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:5ThcsgSKIp8=:4HF0uFy1gFQ3zvoopKgtya
- ewVLOV1AlJQPt0wIZtaZjv48q6ZX1aMLjbHyA5YHDweC90JbP6JdhnXQ9DKNH8Ms7JYemqpIF
- reKHmT1XfZEvPDTmpzPNDvi9AsNF1WoOCRJMM3XC89V9UvD+GVWzY3E8YiwKKnmNJutDyAk8x
- GnIs9Ox9vWHaqO5AfL2+ucIJY3MoSQzHNT+O/+3Zf016SuNTSp2jRIcIc106cGIN5X8Ji7g5x
- GrbUfg9VeLfs+IfLKafPEzJO9ASLOsu0FkIo4H1oVG3hNvxze8Q/Fxc2JSqlkMbb6apQXrpvP
- l6+SI8xwhzgpQMPjQkLijakhBY7Va4DJup/tCITntlMYYwl73PNIIpFaOLV3sqQ/HE2EtYBk7
- mU4kEb5diN13qjJX35lyJKSkUSsyewPpQHD5ZtT2qI3x42eI+1hCdUXfPv0UEiOekut5ToLbW
- jt7Yr88RiKoBeiCvUwMVp+slKjbD7P1EJOOyJtmlAKFk2dKM+bBDKFn7KjhwxyxgU5YTiI/el
- MwKepmnNmHFOoqCkJ8rw8zLN/S/T7jDGM63xpaynf/URP0FXO6fWsG2sNYiXHJve6enFFj2Hi
- 5zgCBMJxEfiuljnSX1qEnFsKhHXwZHdQNjxGJm66jpd72Y4wxlKm23pRn/A0CjaZ0g9k1CpTz
- OE64d/fJpR0J03JcEjDlgpsyNBvv8BN8LCi5iT8yFKrCDo1Z8imjsa7OCY7IJZlkgO/AO5Qn3
- RK8xIqIZnxTSvqI88lLbar/EhjHPpYXbEkxqlwGGtZUV4hMzaE8LwBjV9g9F1wlgwnO6WYYFq
- n+Bt7g+
+        id S1731746AbeGQMjO (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jul 2018 08:39:14 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:40797 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731669AbeGQMjN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jul 2018 08:39:13 -0400
+Received: by mail-wm0-f68.google.com with SMTP id z13-v6so1259548wma.5
+        for <git@vger.kernel.org>; Tue, 17 Jul 2018 05:06:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:subject:date:message-id:in-reply-to:references;
+        bh=J864P+oFQSqBkpYVVPNfswcUeS2MCP8sIjEAz5d8bzQ=;
+        b=sSn3qsAsVDW74MPwm61ieRSkDmzxuxN3CPVC5sKMPElarKxisdMoqUgwRhM84geyM2
+         WmsbyBr1LDzSvwPlM0QM4nk1cxcTbzCtQN7rCaUYpHeGy+b8UwbJIQDQaplaAXm4k0+2
+         E8Qdvs2EUDKzd5pNzD/0WwMfNJh+wSDb7I6YnWRHpRDcLNarHYFrvApluZHKb267tfgt
+         2Vg+0neBy76TGwa8F65OyEkOcQzUxrfDH/Jh/MW2Mrr+HIqk/MMwcBcCVR74oN1AcWCk
+         0qQWRQjwS2Hgf3m91azPOheBwasx519eyzUtOkJIldyTca943/DguQsXl4LOVQ51LC2H
+         qkhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+         :references;
+        bh=J864P+oFQSqBkpYVVPNfswcUeS2MCP8sIjEAz5d8bzQ=;
+        b=ZTv6lWrnPhNchDcfr7aYDTQGlQIGRmCmpH5Rs3y3+VXWQ8xdbvbeUfXL7hzHfk4SwA
+         jUEiVq9mdHUU8PIQe9Vm4v3/Ke2vFNOfDugzT6aLju8jK4zy1E+qiG08lxTj1+CZGwaI
+         NjL5Rm27hmTFTt4o6TZ4uf3DEAtzt+56Z0USgkN6pbrUBb13YmUXamJq/8VcgOTpr8OA
+         cKOJ2RgL8+clDoxvnoQ6iFpUtOwEVqx3pm7OhxxVBxmoFTq3E98sFePc3NmfbnMYQun/
+         IqyWRmrVOB9dGRrvHySZLeSKVMjQ8nlsapXZoLEBNs6q+h42C7bxrJM2vxRa0JbSC8k9
+         PInQ==
+X-Gm-Message-State: AOUpUlEXn9QIvkwsmpfVmY6YWYqBKdhl6K5NGtaFKgxyIlJg8JlurAjO
+        AYygMhCMxgmyS1GlhZrYvdloag==
+X-Google-Smtp-Source: AAOMgpduf+EfbGj5uWzy04Gfe1J0aUeL6iNG5OQonQONfldcprFQGPuPXUl2OcJyh5MMuA4ftBhjTg==
+X-Received: by 2002:a1c:b80c:: with SMTP id i12-v6mr1154120wmf.30.1531829210251;
+        Tue, 17 Jul 2018 05:06:50 -0700 (PDT)
+Received: from sebi-laptop.tendawifi.com (5-13-157-218.residential.rdsnet.ro. [5.13.157.218])
+        by smtp.gmail.com with ESMTPSA id d4-v6sm542099wrp.51.2018.07.17.05.06.49
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 17 Jul 2018 05:06:49 -0700 (PDT)
+From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+To:     git@vger.kernel.org
+Subject: [RFC PATCH 5/6] sha1-name: Teach `get_oid_with_context[_1]()` to be gentle
+Date:   Tue, 17 Jul 2018 15:06:35 +0300
+Message-Id: <dc1abfca46cd536f060b9097b9f2d1a64988f932.1531778417.git.ungureanupaulsebastian@gmail.com>
+X-Mailer: git-send-email 2.18.0.rc2.184.ga79db55c2.dirty
+In-Reply-To: <cover.1531778417.git.ungureanupaulsebastian@gmail.com>
+References: <cover.1531778417.git.ungureanupaulsebastian@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
+This commit makes `get_oid_with_context()` and `get_oid_with_context_1()`
+to recognize the `GET_OID_GENTLY` flag.
 
-On Wed, 30 May 2018, Eric Sunshine wrote:
+The `gentle` flag does not imply `quiet` and we might need to reconsider
+whether we should display any message if `GET_OID_GENTLY` is given.
 
-> When generating a range-diff, matching up commits between two version of
-> a patch series involves heuristics, thus may give unexpected results.
-> git-branch-diff allows tweaking the heuristic via --creation-weight.
-> Follow suit by accepting --creation-weight in combination with
-> --range-diff when generating a range-diff for a cover-letter.
+Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+---
+ sha1-name.c | 103 ++++++++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 83 insertions(+), 20 deletions(-)
 
-Since I opted to change this to `--creation-factor`, taking an integer
-between 0 and 100 (essentially), this patch will need heavy adjustment ;-=)
+diff --git a/sha1-name.c b/sha1-name.c
+index 74ecbd550..a5d4e0dc7 100644
+--- a/sha1-name.c
++++ b/sha1-name.c
+@@ -1521,11 +1521,12 @@ int get_oid_blob(const char *name, struct object_id *oid)
+ }
+ 
+ /* Must be called only when object_name:filename doesn't exist. */
+-static void diagnose_invalid_oid_path(const char *prefix,
++static int diagnose_invalid_oid_path(const char *prefix,
+ 				      const char *filename,
+ 				      const struct object_id *tree_oid,
+ 				      const char *object_name,
+-				      int object_name_len)
++				      int object_name_len,
++				      int gentle)
+ {
+ 	struct object_id oid;
+ 	unsigned mode;
+@@ -1533,12 +1534,19 @@ static void diagnose_invalid_oid_path(const char *prefix,
+ 	if (!prefix)
+ 		prefix = "";
+ 
+-	if (file_exists(filename))
++	if (file_exists(filename)) {
++		if (gentle)
++			return -1;
+ 		die("Path '%s' exists on disk, but not in '%.*s'.",
+ 		    filename, object_name_len, object_name);
++	}
+ 	if (is_missing_file_error(errno)) {
+ 		char *fullname = xstrfmt("%s%s", prefix, filename);
+-
++		if (gentle) {
++			warning(_("%s or %s does not exist."), fullname,
++				filename);
++			return -1;
++		}
+ 		if (!get_tree_entry(tree_oid, fullname, &oid, &mode)) {
+ 			die("Path '%s' exists, but not '%s'.\n"
+ 			    "Did you mean '%.*s:%s' aka '%.*s:./%s'?",
+@@ -1552,12 +1560,14 @@ static void diagnose_invalid_oid_path(const char *prefix,
+ 		die("Path '%s' does not exist in '%.*s'",
+ 		    filename, object_name_len, object_name);
+ 	}
++	return 0;
+ }
+ 
+ /* Must be called only when :stage:filename doesn't exist. */
+-static void diagnose_invalid_index_path(int stage,
++static int diagnose_invalid_index_path(int stage,
+ 					const char *prefix,
+-					const char *filename)
++					const char *filename,
++					int gentle)
+ {
+ 	const struct cache_entry *ce;
+ 	int pos;
+@@ -1574,11 +1584,20 @@ static void diagnose_invalid_index_path(int stage,
+ 	if (pos < active_nr) {
+ 		ce = active_cache[pos];
+ 		if (ce_namelen(ce) == namelen &&
+-		    !memcmp(ce->name, filename, namelen))
++		    !memcmp(ce->name, filename, namelen)) {
++			if (gentle) {
++				warning("Path '%s' is in the index "
++					"but not at stage %d.\n"
++					"Did you mean ':%d:%s'?",
++					filename, stage,
++					ce_stage(ce), filename);
++				return -1;
++			}
+ 			die("Path '%s' is in the index, but not at stage %d.\n"
+ 			    "Did you mean ':%d:%s'?",
+ 			    filename, stage,
+ 			    ce_stage(ce), filename);
++		}
+ 	}
+ 
+ 	/* Confusion between relative and absolute filenames? */
+@@ -1590,31 +1609,58 @@ static void diagnose_invalid_index_path(int stage,
+ 	if (pos < active_nr) {
+ 		ce = active_cache[pos];
+ 		if (ce_namelen(ce) == fullname.len &&
+-		    !memcmp(ce->name, fullname.buf, fullname.len))
++		    !memcmp(ce->name, fullname.buf, fullname.len)) {
++			if (gentle)
++				return -1;
+ 			die("Path '%s' is in the index, but not '%s'.\n"
+ 			    "Did you mean ':%d:%s' aka ':%d:./%s'?",
+ 			    fullname.buf, filename,
+ 			    ce_stage(ce), fullname.buf,
+ 			    ce_stage(ce), filename);
++		}
+ 	}
+ 
+-	if (file_exists(filename))
++	if (file_exists(filename)) {
++		if (gentle)
++			return -1;
+ 		die("Path '%s' exists on disk, but not in the index.", filename);
+-	if (is_missing_file_error(errno))
++	}
++	if (is_missing_file_error(errno)) {
++		if (gentle)
++			return -1;
+ 		die("Path '%s' does not exist (neither on disk nor in the index).",
+ 		    filename);
++	}
+ 
+ 	strbuf_release(&fullname);
++	return 0;
+ }
+ 
++static const char *resolve_error = "dummy";
+ 
+-static char *resolve_relative_path(const char *rel)
++static char *resolve_relative_path_gently(const char *rel, int gentle)
+ {
+ 	if (!starts_with(rel, "./") && !starts_with(rel, "../"))
+ 		return NULL;
+ 
+-	if (!is_inside_work_tree())
++	if (!is_inside_work_tree()) {
++		/*
++		 * `resolve_error` is a dummy variable and it is used to verify
++		 * if there was any problem inside this function. This is
++		 * returned only in the case we want to perform gently,
++		 * otherwise, `exit()` or `die()` can be called.
++		 */
++		if (gentle)
++			return (char*) resolve_error;
+ 		die("relative path syntax can't be used outside working tree.");
++	}
++
++	if (gentle) {
++		return prefix_path_gently(startup_info->prefix,
++					  startup_info->prefix ?
++					  strlen(startup_info->prefix) : 0,
++					  NULL, rel);
++	}
+ 
+ 	/* die() inside prefix_path() if resolved path is outside worktree */
+ 	return prefix_path(startup_info->prefix,
+@@ -1669,7 +1715,16 @@ static int get_oid_with_context_1(const char *name,
+ 			stage = name[1] - '0';
+ 			cp = name + 3;
+ 		}
+-		new_path = resolve_relative_path(cp);
++		/*
++		 * Note that `resolve_relative_path_gently()` may die if
++		 * the second parameter is zero. If it is a non-zero value,
++		 * the function will return `resolve_error` on failure. This
++		 * dummy variable is defined as a `static const char *`.
++		 */
++		new_path = resolve_relative_path_gently(cp, flags & GET_OID_GENTLY);
++		if (new_path == resolve_error)
++			return -1;
++
+ 		if (!new_path) {
+ 			namelen = namelen - (cp - name);
+ 		} else {
+@@ -1698,8 +1753,11 @@ static int get_oid_with_context_1(const char *name,
+ 			}
+ 			pos++;
+ 		}
+-		if (only_to_die && name[1] && name[1] != '/')
+-			diagnose_invalid_index_path(stage, prefix, cp);
++		if (only_to_die && name[1] && name[1] != '/' &&
++			diagnose_invalid_index_path(stage, prefix, cp,
++						    flags & GET_OID_GENTLY))
++			return -1;
++
+ 		free(new_path);
+ 		return -1;
+ 	}
+@@ -1723,7 +1781,10 @@ static int get_oid_with_context_1(const char *name,
+ 			const char *filename = cp+1;
+ 			char *new_filename = NULL;
+ 
+-			new_filename = resolve_relative_path(filename);
++			new_filename = resolve_relative_path_gently(filename,
++								    flags & GET_OID_GENTLY);
++			if (new_filename == resolve_error)
++				return -1;
+ 			if (new_filename)
+ 				filename = new_filename;
+ 			if (flags & GET_OID_FOLLOW_SYMLINKS) {
+@@ -1731,13 +1792,14 @@ static int get_oid_with_context_1(const char *name,
+ 					filename, oid, &oc->symlink_path,
+ 					&oc->mode, flags);
+ 			} else {
+-				ret = get_tree_entry(&tree_oid, filename, oid,
+-						     &oc->mode);
++				ret = get_tree_entry_gently(&tree_oid, filename,
++							    oid, &oc->mode,
++							    flags & GET_OID_GENTLY);
+ 				if (ret && only_to_die) {
+ 					diagnose_invalid_oid_path(prefix,
+ 								   filename,
+ 								   &tree_oid,
+-								   name, len);
++								   name, len, 0);
+ 				}
+ 			}
+ 			if (flags & GET_OID_RECORD_PATH)
+@@ -1769,7 +1831,8 @@ void maybe_die_on_misspelt_object_name(const char *name, const char *prefix)
+ 
+ int get_oid_with_context(const char *str, unsigned flags, struct object_id *oid, struct object_context *oc)
+ {
+-	if (flags & GET_OID_FOLLOW_SYMLINKS && flags & GET_OID_ONLY_TO_DIE)
++	if (flags & (GET_OID_FOLLOW_SYMLINKS | GET_OID_GENTLY) &&
++	    flags & GET_OID_ONLY_TO_DIE)
+ 		BUG("incompatible flags for get_sha1_with_context");
+ 	return get_oid_with_context_1(str, flags, NULL, oid, oc);
+ }
+-- 
+2.18.0.rc2.184.ga79db55c2.dirty
 
-Thanks,
-Dscho
-
-> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
-> ---
->  Documentation/git-format-patch.txt |  8 +++++++-
->  builtin/log.c                      | 19 +++++++++++++++----
->  2 files changed, 22 insertions(+), 5 deletions(-)
-> 
-> diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-> index 25026ae26e..7ed9ec9dae 100644
-> --- a/Documentation/git-format-patch.txt
-> +++ b/Documentation/git-format-patch.txt
-> @@ -23,7 +23,7 @@ SYNOPSIS
->  		   [(--reroll-count|-v) <n>]
->  		   [--to=<email>] [--cc=<email>]
->  		   [--[no-]cover-letter] [--quiet] [--notes[=<ref>]]
-> -		   [--range-diff=<previous>]
-> +		   [--range-diff=<previous> [--creation-weight=<factor>]]
->  		   [--progress]
->  		   [<common diff options>]
->  		   [ <since> | <revision range> ]
-> @@ -240,6 +240,12 @@ feeding the result to `git send-email`.
->  	disjoint (for example `git format-patch --cover-letter
->  	--range-diff=feature/v1~3..feature/v1 -3 feature/v2`).
->  
-> +--creation-weight=<factor>::
-> +	Used with `--range-diff`, tweak the heuristic which matches up commits
-> +	between the previous and current series of patches by adjusting the
-> +	creation/deletion cost fudge factor. See linkgit:git-branch-diff[1])
-> +	for details.
-> +
->  --notes[=<ref>]::
->  	Append the notes (see linkgit:git-notes[1]) for the commit
->  	after the three-dash line.
-> diff --git a/builtin/log.c b/builtin/log.c
-> index 3089d3a50a..2c49011b51 100644
-> --- a/builtin/log.c
-> +++ b/builtin/log.c
-> @@ -1012,12 +1012,16 @@ static void infer_diff_ranges(struct argv_array *args,
->  }
->  
->  static int get_range_diff(struct strbuf *sb,
-> -			  const struct argv_array *ranges)
-> +			  const struct argv_array *ranges,
-> +			  const char *creation_weight)
->  {
->  	struct child_process cp = CHILD_PROCESS_INIT;
->  
->  	cp.git_cmd = 1;
->  	argv_array_pushl(&cp.args, "branch-diff", "--no-color", NULL);
-> +	if (creation_weight)
-> +		argv_array_pushf(&cp.args,
-> +				 "--creation-weight=%s", creation_weight);
->  	argv_array_pushv(&cp.args, ranges->argv);
->  	return capture_command(&cp, sb, 0);
->  }
-> @@ -1047,7 +1051,8 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
->  			      int nr, struct commit **list,
->  			      const char *branch_name,
->  			      int quiet,
-> -			      const char *range_diff)
-> +			      const char *range_diff,
-> +			      const char *creation_weight)
->  {
->  	const char *committer;
->  	const char *body = "*** SUBJECT HERE ***\n\n*** BLURB HERE ***\n";
-> @@ -1070,7 +1075,7 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
->  	if (range_diff) {
->  		struct argv_array ranges = ARGV_ARRAY_INIT;
->  		infer_diff_ranges(&ranges, range_diff, origin, head);
-> -		if (get_range_diff(&diff, &ranges))
-> +		if (get_range_diff(&diff, &ranges, creation_weight))
->  			die(_("failed to generate range-diff"));
->  		argv_array_clear(&ranges);
->  	}
-> @@ -1495,6 +1500,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
->  	int show_progress = 0;
->  	struct progress *progress = NULL;
->  	const char *range_diff = NULL;
-> +	const char *creation_weight = NULL;
->  
->  	const struct option builtin_format_patch_options[] = {
->  		{ OPTION_CALLBACK, 'n', "numbered", &numbered, NULL,
-> @@ -1570,6 +1576,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
->  			 N_("show progress while generating patches")),
->  		OPT_STRING(0, "range-diff", &range_diff, N_("rev-range"),
->  			   N_("show changes against <rev-range> in cover letter")),
-> +		OPT_STRING(0, "creation-weight", &creation_weight, N_("factor"),
-> +			   N_("fudge factor by which creation is weighted")),
->  		OPT_END()
->  	};
->  
-> @@ -1664,6 +1672,9 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
->  		die (_("--subject-prefix/--rfc and -k are mutually exclusive."));
->  	rev.preserve_subject = keep_subject;
->  
-> +	if (creation_weight && !range_diff)
-> +		die(_("--creation-weight requires --range-diff"));
-> +
->  	argc = setup_revisions(argc, argv, &rev, &s_r_opt);
->  	if (argc > 1)
->  		die (_("unrecognized argument: %s"), argv[1]);
-> @@ -1827,7 +1838,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
->  			gen_message_id(&rev, "cover");
->  		make_cover_letter(&rev, use_stdout,
->  				  origin, nr, list, branch_name, quiet,
-> -				  range_diff);
-> +				  range_diff, creation_weight);
->  		print_bases(&bases, rev.diffopt.file);
->  		print_signature(rev.diffopt.file);
->  		total++;
-> -- 
-> 2.17.1.1235.ge295dfb56e
-> 
-> 
