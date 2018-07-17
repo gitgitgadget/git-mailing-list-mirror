@@ -2,91 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A0161F597
-	for <e@80x24.org>; Tue, 17 Jul 2018 17:53:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32DD61F597
+	for <e@80x24.org>; Tue, 17 Jul 2018 17:58:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730203AbeGQS1Q (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jul 2018 14:27:16 -0400
-Received: from mail-wr1-f46.google.com ([209.85.221.46]:34005 "EHLO
-        mail-wr1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729709AbeGQS1Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jul 2018 14:27:16 -0400
-Received: by mail-wr1-f46.google.com with SMTP id c13-v6so2108439wrt.1
-        for <git@vger.kernel.org>; Tue, 17 Jul 2018 10:53:30 -0700 (PDT)
+        id S1729743AbeGQSc2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jul 2018 14:32:28 -0400
+Received: from mail-yw0-f196.google.com ([209.85.161.196]:34423 "EHLO
+        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729688AbeGQSc2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jul 2018 14:32:28 -0400
+Received: by mail-yw0-f196.google.com with SMTP id j68-v6so711084ywg.1
+        for <git@vger.kernel.org>; Tue, 17 Jul 2018 10:58:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=MaARojrrOHHnX5Zyhk/tgETqEPezb8dGguXXPaynOp4=;
-        b=g+Qtbbodch+ti4TJHpSwKt9OVqGM4UQdjBWw+E7k9Y2JAU3nT06yr3A7e4bBp8dxTh
-         ZZquZADN9d+5gu2oa8nkdrwikNBDrmD6BmV05OSwdASmHa/EXKUMbup2BTu/GkuO0oqC
-         Noa3KcoGSGgeN4YVZYUV3MMU4XVFDK5p4Oya+v1GFUItDzo8DukVCGKHh/m8mL0oPy6p
-         qMywtuftz0wxIsflr6KIwCKL027oxu0cY1+bYMpCYIVFGboqm0IPBMmixApCjynDuhxv
-         m8/2KslGlpybrDvhG7lFYgWlNTArz8MWayRwCGsKI9kwbUHPJF1LsBN2yb2pLrF0i/ZO
-         oQZQ==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=PDxu3lQwhQA+wvoG6chmozBIbpkDzraaAViit0JxIek=;
+        b=JSPFMq7hrQhYUKyIYSrDqwsnikVOLrB4vUf2kGUdvI/qt+WcwpND01rugU8GzLtD4C
+         zx/R/oMEqF6qbvN6h8qx+qgrNlLMW1QN1CBKaWrB3iujMWWl1E8uRMbl0/JBLZCTupkF
+         8iz54nRblu1ic2wM1enx/HalaI5nYHP9D3kmMqlwcWhHSPSNB0Xrf3XPYp2YufLh2mK5
+         wkgK/G4v1DE24LhlGAzP+5PTYcK8NWzCURFgne/drWWB0XJ8CBn4YFZk0wXHSsTUaPab
+         s7hoOhk1+BQollPL981XvI3MCaXjSA/KR4x7bud5tyzOg7YCYOJMi29Ovuo+KJy+8z+f
+         sSZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=MaARojrrOHHnX5Zyhk/tgETqEPezb8dGguXXPaynOp4=;
-        b=KpDfZhzTkZK6brCMsUlmpG6xi4EzOtBaqDCmkDrGEiClniZ/BvW4NsmFkRpAE5XLLz
-         Xr8QM6nO24F9CwhhO5K6/ywhTtENsz8x2c6eaeiPhop0TlHDzYtdKy3yeHJkM/getCeU
-         2mdVRHonhwRVr6sKF7Wod90Nn7DVchXYo7yzN9BHZyFox9wGaa/7b+q2ffLxGwb8hZOU
-         9oRvV97hoOU122LKqtu8ohhIJqM2mzvzIhmvxgb+7bvbKzXGTuLqS0bNhyC85qmPqKuK
-         y2JoUxYjK65VFlhp3csk5kk6On8jFFlCwmWUtYuVrlkfM49ekTK35xD2F8Y/zybH0QTX
-         vhLQ==
-X-Gm-Message-State: AOUpUlHUVa7LNZH0fUf1dlHhJ/z+egqDAbn+aypOcNc6vdQsoh6eeQIX
-        dtfeTcr/tRv96CUPJ+HAX10=
-X-Google-Smtp-Source: AAOMgpcN4vU7I8u4qOidcGh3j13efxANoT5Ddi0X5rzCzM7DdOHJS+sOK1P8pwsNoMKHwltsKWQSow==
-X-Received: by 2002:adf:b243:: with SMTP id y3-v6mr2223537wra.90.1531850009706;
-        Tue, 17 Jul 2018 10:53:29 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id d15-v6sm17597706wmb.0.2018.07.17.10.53.28
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 17 Jul 2018 10:53:28 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git List <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Stefan Beller <sbeller@google.com>,
-        Luke Diamand <luke@diamand.org>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 11/25] t7400: fix broken "submodule add/reconfigure --force" test
-References: <20180702002405.3042-1-sunshine@sunshineco.com>
-        <20180702002405.3042-12-sunshine@sunshineco.com>
-        <nycvar.QRO.7.76.6.1807161641140.71@tvgsbejvaqbjf.bet>
-        <nycvar.QRO.7.76.6.1807161749410.71@tvgsbejvaqbjf.bet>
-        <CAPig+cRFeNt9FVDGnbGcp8Bvfh0ohay+p+tLhfx=EFvJg=Q1Sg@mail.gmail.com>
-        <xmqq7elusvz7.fsf@gitster-ct.c.googlers.com>
-Date:   Tue, 17 Jul 2018 10:53:28 -0700
-In-Reply-To: <xmqq7elusvz7.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Mon, 16 Jul 2018 14:37:32 -0700")
-Message-ID: <xmqq8t69px47.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=PDxu3lQwhQA+wvoG6chmozBIbpkDzraaAViit0JxIek=;
+        b=ITDf+j6ktok2Hm57Rj1GtE7JRtknJTWlzeG06kJuBEVRmR3a07X4dsVjaml9UATHLo
+         dsAlbQzFs0OnBxgxGbhrYUGdCpFfe6YCCUc8vHQgJ41m0wwm+iaXB4XyPJDBr9LbH0EV
+         9mfsz4iDo2nTM3WuqqVPJ525hrhjI9a+/1oh8cbkTGKVePPYslDu5gHLGIudykYyFnvY
+         8QHuia51P0MUDe8X6OeDzBaK0qiltkosZu3eOPH+hPVu9nvXO1KlmC8ibNmFJFjCVvyS
+         d86yUZ42xKgCZuCqdcAiJg8sOElyXmWASX18z9M2gXsIB+zFB/M+U8g82swJLVnBb0C8
+         wRuQ==
+X-Gm-Message-State: AOUpUlHzJPwFlWCa0Vk/2ekSH49GTw5pxLIYEhT3ZuP13V60sgEEAdbe
+        7YV9N9xos5JyOmSij6h6qJGidxcvhLBQQul9D//2kQ==
+X-Google-Smtp-Source: AAOMgpcSwlJxS8r5+wuylcLUCDHDOxqAAirqUvZG+Tev7q0BkaDY3HTp8t9wTB74YD1K/S044lOWtw8x23lx3ablP0Q=
+X-Received: by 2002:a0d:c5c7:: with SMTP id h190-v6mr1428599ywd.421.1531850321143;
+ Tue, 17 Jul 2018 10:58:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20180717091429.GA31043@sigkill.com> <87bmb6chvm.fsf@evledraar.gmail.com>
+In-Reply-To: <87bmb6chvm.fsf@evledraar.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 17 Jul 2018 10:58:30 -0700
+Message-ID: <CAGZ79kbJkocY0oe2_efEA3s0dGgR4tnvwpvUTNuJuSSYY=MazQ@mail.gmail.com>
+Subject: Re: Are clone/checkout operations deterministic?
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Ben Peart <peartben@gmail.com>
+Cc:     preed@sigkill.com, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
->> So, this SQUASH looks like the correct way forward. Hopefully, Junio
->> can just squash it so I don't have to flood the list again with this
->> long series.
+On Tue, Jul 17, 2018 at 2:48 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
-> The topic already has another dependent topic so rerolling or
-> squashing would be a bit cumbersome.  I'll see what I could do but
-> it may not be until tomorrow's pushout.
+>
+> On Tue, Jul 17 2018, J. Paul Reed wrote:
+>
+> > Hey Git Devs,
+> >
+> > I have a bit of an odd question: do git clone/checkout operations have =
+a
+> > deterministic ordering?
+> >
+> > That is: are files guaranteed to be laid down onto disk in any specific
+> > (and deterministic) order as a clone and/or checkout operations occurs?
+> > (And if so, is it alphabetical order? Depth-first? Something else?)
+> >
+> > In case the answer is different (and I'd guess that it might be?), I'm
+> > mostly interested in the initial clone case... but it would be great to
+> > know if, indeed, the answer is different for just-checkouts too.
+> >
+> > I did some cursory googling, but nothing hopped out at me as an answer =
+to
+> > this question.
+>
+> In practice I think clone, checkout, reset etc. always work in the same
+> order you see with `git ls-tree -r --name-only HEAD`, but as far as I
+> know this has never been guaranteed or documented, and shouldn't be
+> relied on.
 
-OK, there was only one topic that forked fro this one, so squash
-with rebase are all in the 'pu'.
+The transmission of packfiles is non-deterministic, as the packfiles
+(which are packed for each clone separately when using core git as
+a server) are not packed in a deterministic fashion, but in a threaded
+environment which allows different packing orders.
 
-Thanks, all.
+If you clone from a server that gives you exactly the same pack at
+all times (assuming the remote repo doesn't change refs), then
+checkout is currently deterministic in unpacking files to the working tree.
+
+>
+> E.g. there's probably cases where writing files in parallel is going to
+> be faster than writing them sequentially. We don't have such a mode just
+> because nobody's written a patch for it, but having that patch would
+> break any assumptions of our current order.
+
++cc Ben who is looking into that, but hasn't spoken up on the mailing list =
+yet.
