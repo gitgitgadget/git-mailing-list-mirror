@@ -7,90 +7,105 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B1DE81F597
-	for <e@80x24.org>; Tue, 17 Jul 2018 16:40:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FBFC1F597
+	for <e@80x24.org>; Tue, 17 Jul 2018 16:46:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729708AbeGQROH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jul 2018 13:14:07 -0400
-Received: from mout.gmx.net ([212.227.15.18]:54491 "EHLO mout.gmx.net"
+        id S1729706AbeGQRTw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jul 2018 13:19:52 -0400
+Received: from mout.gmx.net ([212.227.17.21]:58499 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729668AbeGQROH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jul 2018 13:14:07 -0400
-Received: from [192.168.0.129] ([37.201.195.94]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MaIPo-1fLjDK41xQ-00Jsma; Tue, 17
- Jul 2018 18:40:31 +0200
-Date:   Tue, 17 Jul 2018 18:40:28 +0200 (DST)
+        id S1729669AbeGQRTw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jul 2018 13:19:52 -0400
+Received: from [192.168.0.129] ([37.201.195.94]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M8ZtH-1g1NmC2a5T-00wAVa; Tue, 17
+ Jul 2018 18:46:11 +0200
+Date:   Tue, 17 Jul 2018 18:46:03 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Eric Sunshine <sunshine@sunshineco.com>
-cc:     gitgitgadget@gmail.com, Git List <git@vger.kernel.org>,
+To:     Daniel Harding <dharding@living180.net>
+cc:     Aaron Schrab <aaron@schrab.com>, git@vger.kernel.org,
         Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 20/20] range-diff: make --dual-color the default
- mode
-In-Reply-To: <CAPig+cSyTKLOXbfGx3z_RWbHaTZU_EKWJrCqwCaw+urQph=4Tw@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1807171840160.71@tvgsbejvaqbjf.bet>
-References: <cover.1525448066.git.johannes.schindelin@gmx.de> <pull.1.v3.git.gitgitgadget@gmail.com> <4a68b95ce2a6463708c92d1bcc0208352c14f836.1530617166.git.gitgitgadget@gmail.com> <CAPig+cSyTKLOXbfGx3z_RWbHaTZU_EKWJrCqwCaw+urQph=4Tw@mail.gmail.com>
+Subject: Re: [PATCH v3] sequencer: use configured comment character
+In-Reply-To: <66ce6f94-49ae-618e-bf6c-43a0f15bb752@living180.net>
+Message-ID: <nycvar.QRO.7.76.6.1807171844040.71@tvgsbejvaqbjf.bet>
+References: <xmqq4lh4z870.fsf@gitster-ct.c.googlers.com> <20180716045902.16629-1-aaron@schrab.com> <nycvar.QRO.7.76.6.1807161758560.71@tvgsbejvaqbjf.bet> <66ce6f94-49ae-618e-bf6c-43a0f15bb752@living180.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:7zlOV6nET4+w6GiO1ATkN8kkR+SoeihZzKNxkOPAzUz49pSS7CR
- E3UGzqDk4eCLX5wtvpeEQBkzTXjbob1LRoFE0ytKm0UW4Z+vazfkMfTgXcMhlqEuLcMFkUu
- 2hgGk5aBzIpXJx42N0gbrzJt9iyTkCB/JHqYtPvCGWAaSlISM5r9lXTTXlLM00WW/CSyu2g
- hwpZGNm1JMAV9WZX1y+sw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:RvI0k6X/jvY=:gNBURdJ/0EDClAcSKKJjSN
- XyIPx3n1EEUj/JnKt6IuZWCB6Y/nrGh9v/o6y4ntxHYZy8X609WLfvF+vQqtLIvxbLxheyz2y
- sKjyc/oev6/9R2JkOWe8R4G2yaw3qCQc4/QwUldkyFw3+hQ5xoOcE4S3UONUdgWz6TeGZO4tV
- o0HUtDRjGbCyWPUNwYD1OEb8Z8K5wlVTnhOCBxAUeh4VmVyhhxHNOy3zNOWuHO7EOC6mh3VsA
- VSWk3qIelmXXN4JVH1mNzETf6PomElzAvum4X+jTCpjtysOMX4Wu+PGc+up0EGF1SySmW3BmX
- QGkHqPrepnQPpscApiDg1DRHlJXIJUz2StOdOOF5eeWtVGhqNmJT7SzH895rr+PcJ/e2EXkoh
- ozP6nvUNlwt7qyZ7HG281CbpR5ixAriVa4Rqf5btcfn89LqxA5OQkJSgwpbv0+E3zX0kEv/Q7
- 3XVCaW0upt3E4W+RTcP8qYDwVtjQefrkUUa71tqBcQIm756Ed8MMSUUNTxmurgqHjz4mpsFHW
- kXSnSMsNrChR+KdeQ2kUNsaAHXUpbLLfFxjYB+m0sj40LuC6lDHd6d/KLkj6TWYLPc4vn/iWk
- 3Akd7fycA4KAuUXSf59tHChDxMQU9boyha8MLgs1aeaRz9WMkerz46tzfwSsmumXV8WyoJBgK
- jI3t8Dzqbj0LqU4VAV9ipv89/GSPkkkkMhX516GqxXzp/hUL1ugBW7lcmtlYkYKefidIun/rS
- MDGXZ/7PnVfI98Hrb0Y5PsuTMcN+DoipvmMhKWmtG9x7jMQbV7pmlYJ8eR+O+OjUtkGFqZE9Y
- DUC+r8q
+X-Provags-ID: V03:K1:sXobYAYh9Mt7sfel+Jqylhr70R4pXXTYkdoexjXz594hH5fesui
+ IkmEVF/HSvX4ZJFMU4sd6orBV2n9AM1r1mm3ufgq8eIKVANQx6QcfleO4q/Lz6ony1v/sGE
+ 02cgAb/Z7MsaFvdbvJbXKYvXmg5CvrwEsJPWIU5WXAHSUzFIRrAooWwJIjOWu1cHY1tBIvR
+ +POQ/31qpS2YbHIwS1QnA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:CDLQYDnKiBA=:9Y+BGcOr65B7os2Vzwbiap
+ WdG3lSzF/aXbtVqkvTwpFrWYnylBFxcb6ARzHgdj7OQPnsLkGrkJ9SlFXbMB3Lo1JkrLCtytJ
+ 2ScBlltc3vjBa/5kdI8uFXSFM3vsZciT7ersHTh7zQ4rVTJ6qEIazkGJSWhgFOq/GvlMqtrS6
+ PwjTFWLi0opQxIxw3ri0+K8FR9Acitq8J7kipyFeXhl3UhrK1WSim7+DOdF0vcc0rCBHVNzeh
+ LhXS8H8WVPfKa0sNOGnjCKpucZQmEZhGD1mQ1zN+KTAj8R5Pok5pqwgAUGOiXLV8InACNa4lF
+ THeg1nqUCOX2GibFdnLl45bxVjFI953UY4BFqYMEGn2m3TaJVCouALgtqZI985EBdV0NOFll0
+ H2s41vNSquEpxspFrTh/FVKKjQ512wPiG8j9ipS91WOkX1nTlBrtDmmVSIq5cMckKwIbS05JE
+ Yqvl8D3T7J1ij6GI13/9a6Ju0/PsQwEBVniNvgRalq6hensvC9eISHAKKvS+52UejGy7pf+r+
+ cLUjywmg6kSWGvKN/2EkD1JFiOLflil6qyohETSXoT/wBT1rFhOhUvj/CNSogKzEHbKnWl2O7
+ LkLEz3g8emZ5e4IipwW6/q9y8LEKnA1P5/yr7y+cegggjWVmheX9cDTXzHCtYcprhiXn57dBm
+ sQOiReyT2Y+f8mhNedsXFEzgoCqZoML/lhvB6rR00uZkDlsFpZbozK6+GGLykFvjalu+rbtMV
+ npbtIlJB91IrKvAchJ2VoEFia3rwU4f1tFV0QoOnbkMrMbv2DgIPhzZnVzC0gMA6SM7EYzyp0
+ hqTYGS7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
+Hi Daniel,
 
-On Mon, 16 Jul 2018, Eric Sunshine wrote:
+On Mon, 16 Jul 2018, Daniel Harding wrote:
 
-> On Tue, Jul 3, 2018 at 7:26 AM Johannes Schindelin via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> > After using this command extensively for the last two months, this
-> > developer came to the conclusion that even if the dual color mode still
-> > leaves a lot of room for confusion what was actually changed, the
+> On Mon, 16 Jul 2018 at 18:59:03 +0300, Johannes Schindelin wrote:
+> > 
+> > On Mon, 16 Jul 2018, Aaron Schrab wrote:
+> > >
+> > > Looking into that a bit further, it does seem like my explanation above
+> > > was incorrect.  Here's another attempt to explain why setting
+> > > core.commentChar=auto isn't a problem for this change.
+> > >
+> > > 8< -----
+> > >
+> > > Use the configured comment character when generating comments about
+> > > branches in a todo list.  Failure to honor this configuration causes a
+> > > failure to parse the resulting todo list.
+> > >
+> > > Setting core.commentChar to "auto" will not be honored here, and the
+> > > previously configured or default value will be used instead. But, since
+> > > the todo list will consist of only generated content, there should not
+> > > be any non-comment lines beginning with that character.
+> > 
+> > How about this instead?
+> > 
+> >  If core.commentChar is set to "auto", the intention is to
+> >  determine the comment line character from whatever content is there
+> >  already.
+> > 
+> >  As the code path in question is the one *generating* the todo list
+> >  from scratch, it will automatically use whatever core.commentChar
+> >  has been configured before the "auto" (and fall back to "#" if none
+> >  has been configured explicitly), which is consistent with users'
+> >  expectations.
 > 
-> "...confusion _about_ what..."
+> Honestly, the above still doesn't read clearly to me.  I've take a stab at it
+> myself - let me know what you think:
 > 
-> > non-dual color mode is substantially worse in that regard.
-> >
-> > Therefore, we really want to make the dual color mode the default.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> > diff --git a/Documentation/git-range-diff.txt b/Documentation/git-range-diff.txt
-> > @@ -31,11 +31,14 @@ all of their ancestors have been shown.
-> > ---dual-color::
-> > -       When the commit diffs differ, recreate the original diffs'
-> > -       coloring, and add outer -/+ diff markers with the *background*
-> > -       being red/green to make it easier to see e.g. when there was a
-> > -       change in what exact lines were added.
-> > +--no-dual-color::
-> > +       When the commit diffs differ, `git range-diff` recreates the
-> > +       original diffs' coloring, and add outer -/+ diff markers with
-> 
-> s/add/adds/
-> 
-> > +       the *background* being red/green to make it easier to see e.g.
-> > +       when there was a change in what exact lines were added. This is
-> > +       known to `range-diff` as "dual coloring". Use `--no-dual-color`
-> > +       to revert to color all lines according to the outer diff markers
-> > +       (and completely ignore the inner diff when it comes to color).
+>     If core.commentChar is set to "auto", the comment_line_char global
+>     variable will be initialized to '#'.  The only time
+>     comment_line_char gets changed to an automatic value is when the
+>     prepare_to_commit() function (in commit.c) calls
+>     adjust_comment_line_char().  This does not happen when generating
+>     the todo list, so '#' will be used as the comment character in the
+>     todo list if core.commentChar is set to "auto".
 
-Yep, thank you very much!
-Dscho
+There is a concocted way to have core.commentChar = auto *and* to override
+the comment char: if you use `git config --add core.commentChar auto`, or
+if you have it set in $HOME/.gitconfig and in .git/config.
+
+I tried to cover that in my suggestion, but that was probably trying to be
+too precise, rather than being useful...
+
+Ciao,
+Johannes
