@@ -2,104 +2,246 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 64FF61F597
-	for <e@80x24.org>; Tue, 17 Jul 2018 23:25:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DBE381F597
+	for <e@80x24.org>; Tue, 17 Jul 2018 23:25:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731205AbeGRAAY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jul 2018 20:00:24 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:53551 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730043AbeGRAAY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jul 2018 20:00:24 -0400
-Received: by mail-wm0-f68.google.com with SMTP id s9-v6so918295wmh.3
-        for <git@vger.kernel.org>; Tue, 17 Jul 2018 16:25:27 -0700 (PDT)
+        id S1731225AbeGRAAo (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jul 2018 20:00:44 -0400
+Received: from mail-yb0-f193.google.com ([209.85.213.193]:35207 "EHLO
+        mail-yb0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730652AbeGRAAo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jul 2018 20:00:44 -0400
+Received: by mail-yb0-f193.google.com with SMTP id x15-v6so1124641ybm.2
+        for <git@vger.kernel.org>; Tue, 17 Jul 2018 16:25:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=W9swPQjYGUEy8B+XwZDTdOUF3lVMlZuIHqfhLt2OJwQ=;
-        b=gy5TVDJ0v8r6lhP6Y/dlKidAgRGydmzmRD1g7rEvVRCH5BQsS6LIz48DdBIgp/fxIE
-         2n2o0sLBcdiBXBrhTMdiHPhu4sIATqM55JhQG3INHKqxe4GYqByh9AkwK8ZSktRtL2S/
-         gSeyWeLNlBSV4jAByvx7pEz0y/ymJBx9Lwabok0o3n7EhU0GJoGpNldIhjnWSK++fEkI
-         3LT8+7FsjzhxR9n1PUbJLl6SYtuUHo+wGEfv56FEQ4rQMJqW31N6ZZNhnohNie4+rIET
-         aaz13/f3ySdqlMCU181z29ps8HGjIqBcMeg88V3GDeVnH0IhEd6LKqxboosX3R4/td4s
-         ezhA==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=5OzRIzEa86b4qiYYBu6J23DkkeQVN8Yzzc/zHDKdcNw=;
+        b=B/ozBUHo0D8KZfTNHlgmeyn9ZqHZjolYHRMJIw8V3cnC4f+Rm80P/YTQ/VBgaVAJO6
+         6ZleCncaMMkf4H9qPI8QEEI9Ct8opftD2Gfi/v+6NSMkXIDmb96CpJzAOBkuP1j9bcT8
+         d700+T5dFnpA4UvB3sl/huQo2IepTCXg0psQsEaOZ3RtvkL/nfhDkSDAzCmegVzJrCVf
+         MJNv5lEJXvh+alsBHI1uhJgE4X6wbIqGIiREvpKKkiKQdqIRVw2kmHfGYLaLDelVUP36
+         QWQXUbjLuq88mMRegrHbQLT1c/MKjRnB2BlBsIIyI82HBt86OfUJ2wyX0mKa2PnSKKfU
+         NOBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=W9swPQjYGUEy8B+XwZDTdOUF3lVMlZuIHqfhLt2OJwQ=;
-        b=qFRQ66KZgj4jXBCCa47BzCa4ur7ETjZcieoiJfDgN2Y6/SJsuHFO2dkHKyfsNIPKgf
-         Sui+2iQB/qMAMOu/S58Rpc1XIkNR1aCJAqNhkvKi23V9ox5SIJWAZqEEAa+hw4wbp+JI
-         IPHQXwDAINJBtc14vNRve8gNADYemGc1BOl91LUKoKpHe0V8xBV7porxEBx+I9Q1OEGR
-         dsCVDJRtjRPVWVGLbnkJhVAS8oS0NveqkBbRzAsdlt0IBsUHOcAiWJvofiGv/BK9hrcr
-         /TAiclvB6wFNWuy7rbqfO9c6Hj2GacfRAcnp9VL2PEGE48j4HT7UNr+KrrbZrF85kIxi
-         OQNw==
-X-Gm-Message-State: AOUpUlGiTvMFWK7aWw7fg3cVXjG0nSvpu6h7wY5DJUb7arVvVm/sSAwQ
-        0QWslZgWyEOBThlTTeuFjyJvZx4H
-X-Google-Smtp-Source: AAOMgpc+v2VFAUJkgD3wNt0sAvTiHJdjRuhjJbjmI2eA+yxUqV36CjycYRF/DLd8EIs/NjB9sKyC+Q==
-X-Received: by 2002:a1c:2dc8:: with SMTP id t191-v6mr94187wmt.94.1531869926087;
-        Tue, 17 Jul 2018 16:25:26 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id g15-v6sm3867015wrh.48.2018.07.17.16.25.22
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 17 Jul 2018 16:25:23 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     knu@idaemons.org
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] sequencer.c: terminate the last line of author-script properly
-References: <86a7qwpt9g.knu@iDaemons.org>
-        <xmqqa7qww6uk.fsf@gitster-ct.c.googlers.com>
-        <CAPig+cQWA+sE3iH89kQGWgS+0HQDK-V5++S0+F6_dpfOCfXxDg@mail.gmail.com>
-Date:   Tue, 17 Jul 2018 16:25:22 -0700
-In-Reply-To: <CAPig+cQWA+sE3iH89kQGWgS+0HQDK-V5++S0+F6_dpfOCfXxDg@mail.gmail.com>
-        (Eric Sunshine's message of "Thu, 12 Jul 2018 16:16:50 -0400")
-Message-ID: <xmqqpnzlla1p.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=5OzRIzEa86b4qiYYBu6J23DkkeQVN8Yzzc/zHDKdcNw=;
+        b=GgIMU8HrlLHRB04dXcNIIrnWgk0rEp9a6/BCN1Vgk5f2SQrKelCXpbHP9HWw/EnKr4
+         YdxfAD9+0nixc33SfJqfSahXOmCeNsw0kkvY/tfcX5Po1V5OnmFXEW9fftG949Q8e6sw
+         zN6SE64xAs6DmN6b35piCZOJO251g7xR6J9HAPbb8TeV2cQFMKF68WJq+si3VKzQKamx
+         OH7EwPWJLEkVUpQoRqZhPYsnxkupzEVvfiTBI7ff/wS0Y8fy1Bu7TtgVIU8U7xGImN+9
+         bFR93snf9GH9r14k6fJYXqaEAXUI/0uF5dB4AXmDKfGBA6dGG3VfqZP7EbyQZq2lB7Gl
+         15gA==
+X-Gm-Message-State: AOUpUlE/Nrq+WU9S2kJY4CQcRiG5kQLK3rGRsfOg265Zz8LIzXU3mfIG
+        mrxawhzGbk9hOBVBBARzN3kfnE0aXNEA+Rd+98o6KY/jTGI=
+X-Google-Smtp-Source: AAOMgpeNXHeZ43j5XuY2MhDtKWBGRB3+vm7CduyY7IzN7PeownwhfJR9FA80qt6aoC/SjvCKYRWmxHmTU+nsrkKB2wQ=
+X-Received: by 2002:a25:dc47:: with SMTP id y68-v6mr1920556ybe.515.1531869946542;
+ Tue, 17 Jul 2018 16:25:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20180717210915.139521-1-bmwill@google.com>
+In-Reply-To: <20180717210915.139521-1-bmwill@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 17 Jul 2018 16:25:35 -0700
+Message-ID: <CAGZ79kZEpNLkXuEQEiMB_nc-MOOp-KOziHyONmr4SiajA5+F2g@mail.gmail.com>
+Subject: Re: [RFC] push: add documentation on push v2
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I'll squash the following in (which I have been carrying in 'pu' for
-the past few days) unless I hear otherwise soonish to correct the
-issues raised during the review.
+On Tue, Jul 17, 2018 at 2:09 PM Brandon Williams <bmwill@google.com> wrote:
+>
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+> ---
+>
+> Since introducing protocol v2 and enabling fetch I've been thinking
+> about what its inverse 'push' would look like.  After talking with a
+> number of people I have a longish list of things that could be done to
+> improve push and I think I've been able to distill the core features we
+> want in push v2.
 
-Thanks.
+It would be nice to know which things you want to improve.
 
- t/t3404-rebase-interactive.sh | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+>  Thankfully (due to the capability system) most of the
+> other features/improvements can be added later with ease.
+>
+> What I've got now is a rough design for a more flexible push, more
+> flexible because it allows for the server to do what it wants with the
+> refs that are pushed and has the ability to communicate back what was
+> done to the client.  The main motivation for this is to work around
+> issues when working with Gerrit and other code-review systems where you
+> need to have Change-Ids in the commit messages (now the server can just
+> insert them for you and send back new commits) and you need to push to
+> magic refs to get around various limitations (now a Gerrit server should
+> be able to communicate that pushing to 'master' doesn't update master
+> but instead creates a refs/changes/<id> ref).
 
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 2d189da2f1..b0cef509ab 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -81,11 +81,13 @@ test_expect_success 'rebase -i writes out .git/rebase-merge/author-script in "ed
- 	set_fake_editor &&
- 	FAKE_LINES="edit 1" git rebase -i HEAD^ &&
- 	test -f .git/rebase-merge/author-script &&
--	unset GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_AUTHOR_DATE &&
--	eval "$(cat .git/rebase-merge/author-script)" &&
--	test "$(git show --quiet --pretty=format:%an)" = "$GIT_AUTHOR_NAME" &&
--	test "$(git show --quiet --pretty=format:%ae)" = "$GIT_AUTHOR_EMAIL" &&
--	test "$(git show --quiet --date=raw --pretty=format:@%ad)" = "$GIT_AUTHOR_DATE"
-+	(
-+		sane_unset GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_AUTHOR_DATE &&
-+		eval "$(cat .git/rebase-merge/author-script)" &&
-+		test "$(git show --quiet --pretty=format:%an)" = "$GIT_AUTHOR_NAME" &&
-+		test "$(git show --quiet --pretty=format:%ae)" = "$GIT_AUTHOR_EMAIL" &&
-+		test "$(git show --quiet --date=raw --pretty=format:@%ad)" = "$GIT_AUTHOR_DATE"
-+	)
- '
- 
- test_expect_success 'rebase -i with the exec command' '
--- 
-2.18.0-129-ge3331758f1
+Well Gerrit is our main motivation, but this allows for other workflows as well.
+For example Facebook uses hg internally and they have a
+"rebase-on-the-server-after-push" workflow IIRC as pushing to a single repo
+brings up quite some contention. The protocol outlined below would allow
+for such a workflow as well? (This might be an easier sell to the Git
+community as most are not quite familiar with Gerrit)
 
+> Before actually moving to write any code I'm hoping to get some feedback
+> on if we think this is an acceptable base design for push (other
+> features like atomic-push, signed-push, etc can be added as
+> capabilities), so any comments are appreciated.
+>
+>  Documentation/technical/protocol-v2.txt | 76 +++++++++++++++++++++++++
+>  1 file changed, 76 insertions(+)
+>
+> diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
+> index 49bda76d23..16c1ce60dd 100644
+> --- a/Documentation/technical/protocol-v2.txt
+> +++ b/Documentation/technical/protocol-v2.txt
+> @@ -403,6 +403,82 @@ header.
+>                 2 - progress messages
+>                 3 - fatal error message just before stream aborts
+>
+> + push
+> +~~~~~~
+> +
+> +`push` is the command used to push ref-updates and a packfile to a remote
+> +server in v2.
+> +
+> +Additional features not supported in the base command will be advertised
+> +as the value of the command in the capability advertisement in the form
+> +of a space separated list of features: "<command>=<feature 1> <feature 2>"
+> +
+> +The format of a push request is as follows:
+> +
+> +    request = *section
+> +    section = (ref-updates | packfile)
+
+This reads as if a request consists of sections, which
+each can be a "ref-updates" or a packfile, no order given,
+such that multiple ref-update sections mixed with packfiles
+are possible.
+
+I would assume we'd only want to allow for ref-updates
+followed by the packfile.
+
+Given the example above for "rebase-on-push" though
+it is better to first send the packfile (as that is assumed to
+take longer) and then send the ref updates, such that the
+rebasing could be faster and has no bottleneck.
+
+> +              (delim-pkt | flush-pkt)
+
+
+
+> +
+> +    ref-updates = PKT-LINE("ref-updates" LF)
+> +                 *PKT-Line(update/force-update LF)
+> +
+> +    update = txn_id SP action SP refname SP old_oid SP new_oid
+> +    force-update = txn_id SP "force" SP action SP refname SP new_oid
+
+So we insert "force" after the transaction id if we want to force it.
+When adding the atomic capability later we could imagine another insert here
+
+  1 atomic create refs/heads/new-ref <0-hash> <hash>
+  1 atomic delete refs/heads/old-ref <hash> <0-hash>
+
+which would look like a "rename" that we could also add instead.
+The transaction numbers are an interesting concept, how do you
+envision them to be used? In the example I put them both in the same
+transaction to demonstrate the "atomic-ness", but one could also
+imagine different transactions numbers per ref (i.e. exactly one
+ref per txn_id) to have a better understanding of what the server did
+to each individual ref.
+
+> +    action = ("create" | "delete" | "update")
+> +    txn_id = 1*DIGIT
+> +
+> +    packfile = PKT-LINE("packfile" LF)
+> +              *PKT-LINE(*%x00-ff)
+> +
+> +    ref-updates section
+> +       * Transaction id's allow for mapping what was requested to what the
+> +         server actually did with the ref-update.
+
+this would imply the client ought to have at most one ref per transaction id.
+Is the client allowed to put multiple refs per id?
+
+Are new capabilities attached to ref updates or transactions?
+Unlike the example above, stating "atomic" on each line, you could just
+say "transaction 1 should be atomic" in another line, that would address
+all refs in that transaction.
+
+> +       * Normal ref-updates require that the old value of a ref is supplied so
+> +         that the server can verify that the reference that is being updated
+> +         hasn't changed while the request was being processed.
+
+create/delete assume <00..00> for either old or new ? (We could also
+omit the second hash for create delete, which is more appealing to me)
+
+> +       * Forced ref-updates only include the new value of a ref as we don't
+> +         care what the old value was.
+
+How are you implementing force-with-lease then?
+
+> +    packfile section
+> +       * A packfile MAY not be included if only delete commands are used or if
+> +         an update only incorperates objects the server already has
+
+Or rather: "An empty pack SHALL be omitted" ?
+
+> +The server will receive the packfile, unpack it, then validate each ref-update,
+> +and it will run any update hooks to make sure that the update is acceptable.
+> +If all of that is fine, the server will then update the references.
+> +
+> +The format of a push response is as follows:
+> +
+> +    response = *section
+> +    section = (unpack-error | ref-update-status | packfile)
+
+As above, I assume they ought to go in the order as written,
+or would it make sense to allow for any order?
+
+> +             (delim-pkt | flush-pkt)
+> +
+> +    unpack-error = PKT-LINE("ERR" SP error-msg LF)
+> +
+> +    ref-update-status = *(update-result | update-error)
+> +    update-result = *PKT-LINE(txn_id SP result LF)
+> +    result = ("created" | "deleted" | "updated") SP refname SP old_oid SP new_oid
+> +    update-error = PKT-LINE(txn_id SP "error" SP error-msg LF)
+
+Can we unify "ERR" and "error" ?
+
+> +    packfile = PKT-LINE("packfile" LF)
+> +              *PKT-LINE(*%x00-ff)
+> +
+> +    ref-update-status section
+> +       * This section is always included unless there was an error unpacking
+> +         the packfile sent in the request.
+> +       * The server is given the freedom to do what it wants with the
+> +         ref-updates provided in the reqeust.  This means that an update sent
+> +         from the server may result in the creation of a ref or rebasing the
+> +         update on the server.
+> +       * If a server creates any new objects due to a ref-update, a packfile
+> +         MUST be sent back in the response.
+> +
+> +    packfile section
+> +       * This section is included if the server decided to do something with
+> +         the ref-updates that involved creating new objects.
+> +
+>   server-option
+>  ~~~~~~~~~~~~~~~
+>
+> --
+> 2.18.0.203.gfac676dfb9-goog
+>
