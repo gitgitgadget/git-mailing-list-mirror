@@ -7,49 +7,48 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F1BF1F597
-	for <e@80x24.org>; Tue, 17 Jul 2018 16:28:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4616E1F597
+	for <e@80x24.org>; Tue, 17 Jul 2018 16:39:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729714AbeGQRB6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jul 2018 13:01:58 -0400
-Received: from mout.gmx.net ([212.227.17.20]:37639 "EHLO mout.gmx.net"
+        id S1729737AbeGQRMu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jul 2018 13:12:50 -0400
+Received: from mout.gmx.net ([212.227.17.21]:43613 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729600AbeGQRB6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jul 2018 13:01:58 -0400
-Received: from [192.168.0.129] ([37.201.195.94]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MNZVG-1fh5fO3v9W-007Efs; Tue, 17
- Jul 2018 18:28:25 +0200
-Date:   Tue, 17 Jul 2018 18:28:23 +0200 (DST)
+        id S1729648AbeGQRMu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jul 2018 13:12:50 -0400
+Received: from [192.168.0.129] ([37.201.195.94]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mhej1-1fS2cK1Un5-00Ms2n; Tue, 17
+ Jul 2018 18:39:15 +0200
+Date:   Tue, 17 Jul 2018 18:39:13 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Eric Sunshine <sunshine@sunshineco.com>
 cc:     gitgitgadget@gmail.com, Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Thomas Rast <tr@thomasrast.ch>
-Subject: Re: [PATCH v3 11/20] range-diff: add tests
-In-Reply-To: <CAPig+cQB8p1Eo0qyfD78cfSY6N=N9i-KBw5UO2OULXfA8+A=tQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1807171827460.71@tvgsbejvaqbjf.bet>
-References: <cover.1525448066.git.johannes.schindelin@gmx.de> <pull.1.v3.git.gitgitgadget@gmail.com> <3d9e5b0ba383bab3a30b74a96a1d78557e168b7f.1530617166.git.gitgitgadget@gmail.com> <CAPig+cQB8p1Eo0qyfD78cfSY6N=N9i-KBw5UO2OULXfA8+A=tQ@mail.gmail.com>
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 17/20] range-diff: add a man page
+In-Reply-To: <CAPig+cSin5Em1m7uigSLnNg9wbz+fz8uy4sJOECq2Ke2+v+D4A@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1807171839010.71@tvgsbejvaqbjf.bet>
+References: <cover.1525448066.git.johannes.schindelin@gmx.de> <pull.1.v3.git.gitgitgadget@gmail.com> <799da25ef35d2b23dc0df1e6af0772e634f39f19.1530617166.git.gitgitgadget@gmail.com> <CAPig+cSin5Em1m7uigSLnNg9wbz+fz8uy4sJOECq2Ke2+v+D4A@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:T/xmPQjvJBhQFJ0O6MorfMUZrjQu4iTq2GrWTTCDDnpVwlRpc2K
- Ibbjk7CCl/UEzvxjOPxOEH21Q4sr9d56T8Qm6uTAEbBs6L4HDo6/YDsXfeB5YJbZIfqIJuX
- smrDDUKDKRcn3wmemfLVzHLEOT+rn2zif0gIovPmFHAt6VrytxoWsjhKzbHA2sv0koduFVS
- /koUNREgQtURzNl+5sacw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:V8V2L2saFqY=:dxJzdYAHbY0CEUDBawQJMi
- Vr3qBouafQfXXaWk6qLEiUAQqNoDR+Up+hpr3Gf7OVA1YtXPW3axvJ8vPJYeSdVl3Va6tHXS7
- jita0rBks9hK/zy5l1bkPAyeafO1eXhO/pCr0ewKR3XSwjy3Or5RtSJjnsY6ygPGOK5QLsWsa
- 4XXeICcUaeL6yKfJhdiJryhIA2Ze2SdSIu49yOi6ipljyKQR/QLKrgh3NLH8n7kQZYxB3ku+f
- E+WgzjGhwCikdXMTVg7n6unCcpSP+NzU9dG8JsN5msTvfHxgtba/llr9Xu4rGf/E0Ny2BHOwF
- ++7p7GFDkw1aaqMQm4wI5jALRGsdMNq1+ZdQfjwqwiXLg+wRpi0caGa35Sy6R/LKR/SvTCn1M
- 6TQT81ES4nXoRG+6S2PJTf4tR92BZPLWqmIcZoA2WV1hKRnE2y8cECzEt8um31o4ixC4CYN4R
- aMRHkN+y/2tPhqGGfO1eL/EhDTvPM8WOeoeBLXqi+VUVMVrTBECDCY2fXeiL1xEo9kHdbUghY
- Gm5O4FuW1452XqD+JFKEdFcMV1BIzxoKqaTY8fOZxnQJc3NH1arg+il7RaDPAeUWPeU/kHIf5
- IA3DLaF7sbt6S0xnVJfchv0qcrOjgb4YvAVOYAQml2D6gVbR9tuB1f9Put4aPEZ/WQ4J2lPQe
- kbvUqR0pglgmy499+r4wP5eujppcXkm6wOOBLU5F8tPc9VkClf13Oi9B13mytrtzsuuG/FZwQ
- aotliiCG77JQTVWHua4RSAQo277HBy1tMgSqb4UViTJ//bnC7sc353hYuK1f4FdBzzvy9J7Mx
- zpGw+w6
+X-Provags-ID: V03:K1:PK/2yJ7zznmjv9MHe8DaX1bvHB0IS4h0F4NIPkJOJtbJSajYMWb
+ vvMDZcrC6A7lyB9w43FvXkUnHp6fNQsDcVe5t6t0jM9uuof+NGj7CR9GIlQBiY7TIkD3TwE
+ XOJxB956708w/GnmFtBpIW1VPvzXqB5pzuCs3waa0Lwl7qdljr0U/r1AFsPJBoJBcY8C3bf
+ SvN6bd9hqNBmwPu5rsjVQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:FFhuUzJOEyc=:goivH32mjiOlbwJendZirS
+ xcLIaQNxT8R6ukzMxaFy+eHiZdqk7R2bGoikqegH4el4Ia3n9fOk8fSKN3xy0aGX7p3B2oWZs
+ X8Ayps57FwKBa9RMokqlfysBmOIu1Z4frULsBT95RSmK7cehfZ+tBGp6d/UfQHlXzLawGOzfp
+ qG2EAb7zPmT19nydMok+qD/EY5NR/FRP3uqYofx1Qwh8pGEP6n7gdaCIL8pDnWYAUhzV1/6hv
+ Bj01IcwYfbd2B0rU/onBTcAEwheQkYYme0DJ7TVrRYeo4dqgXkQCwkZ7RwFkUN6ImkWgyn87V
+ Wpg2uJ4KCrpPZBFc04GfWk5bzv7IOa16NJrqAY8qCYacgKAPlCLc19KUAbuq8jThbry5L8aTU
+ gsiB1IG8JI2nKL4mACVUNwa49vN6k/rqlouHVRrBuhug+lTJjs+t9vavcS5NcLWA4lTpeeXCm
+ Fv4T7rSYNhqciKt3ik+zb9+vBE3UzErmQ7ja+F2LTAZwvWf/9IStU+4sPJEwcUe5f5YBHOKI3
+ JjdBrPYkhxWQoEUe5PNLh9UdaiAw3uvwEu44J5SWLIuHwTXoiB48vmDQqJPjH7bV0VU5oSaxC
+ vWkn4AwRBjFShzc6/SlMHqWXJUzjm527l4je01/lfjXbyuBTXxtS3e6HPzJoZEtvWKhcBzF3u
+ QFLC9vpEl7YbZV/25ycRpYEZAgszZZ0lspJlxT+Bfq9ruSML17x5YHqxXMJ7tO2n7EBXgx95A
+ vZaZkBT3qdqXqwLN3FgW6Nwo401soQLn1NG9AtB5/ze/BENORjPX3O0H26q0OaRgHmgoBXQKj
+ jRadFIi
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -59,38 +58,31 @@ Hi Eric,
 
 On Mon, 16 Jul 2018, Eric Sunshine wrote:
 
-> On Tue, Jul 3, 2018 at 7:26 AM Thomas Rast via GitGitGadget
+> On Tue, Jul 3, 2018 at 7:27 AM Johannes Schindelin via GitGitGadget
 > <gitgitgadget@gmail.com> wrote:
-> > These are essentially lifted from https://github.com/trast/tbdiff, with
-> > light touch-ups to account for the command now being an option of `git
-> > branch`.
-> 
-> The "option of `git branch`" mention is outdated. Perhaps just drop
-> everything after "...touch-ups" (or mention "range-diff" instead).
-
-Ah, the line break made my `grep` fail :-(
-
-> > Apart from renaming `tbdiff` to `range-diff`, only one test case needed
-> > to be adjusted: 11 - 'changed message'.
-> > [...]
+> > The bulk of this patch consists of a heavily butchered version of
+> > tbdiff's README written by Thomas Rast and Thomas Gummerer, lifted from
+> > https://github.com/trast/tbdiff.
+> >
 > > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > > ---
-> > diff --git a/t/.gitattributes b/t/.gitattributes
-> > @@ -18,5 +18,6 @@ t[0-9][0-9][0-9][0-9]/* -whitespace
-> >  /t7500/* eol=lf
-> > +/t7910/* eol=lf
+> > diff --git a/Documentation/git-range-diff.txt b/Documentation/git-range-diff.txt
+> > @@ -0,0 +1,235 @@
+> > +To that end, it first finds pairs of commits from both commit ranges
+> > +that correspond with each other. Two commits are said to correspond when
+> > +the diff between their patches (i.e. the author information, the commit
+> > +message and the commit diff) is reasonably small compared to the
+> > +patches' size. See ``Algorithm` below for details.
 > 
-> Does this need to be changed to t3206?
+> Unbalanced number of backticks on "Algorithm".
 
-Absolutely.
+Of course!
 
-> 
-> >  /t8005/*.txt eol=lf
-> > diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-> > new file mode 100755
-> > index 000000000..2237c7f4a
-> > --- /dev/null
-> > +++ b/t/t3206-range-diff.sh
-
-Thanks for your thorough review,
+Thanks,
 Dscho
+
+> 
+> > +Finally, the list of matching commits is shown in the order of the
+> > +second commit range, with unmatched commits being inserted just after
+> > +all of their ancestors have been shown.
+> 
