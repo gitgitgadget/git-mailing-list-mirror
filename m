@@ -2,243 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 402531F597
-	for <e@80x24.org>; Tue, 17 Jul 2018 16:00:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C46D1F597
+	for <e@80x24.org>; Tue, 17 Jul 2018 16:24:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729668AbeGQQdo (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jul 2018 12:33:44 -0400
-Received: from mail-it0-f66.google.com ([209.85.214.66]:39158 "EHLO
-        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729641AbeGQQdo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jul 2018 12:33:44 -0400
-Received: by mail-it0-f66.google.com with SMTP id 198-v6so2604610ite.4
-        for <git@vger.kernel.org>; Tue, 17 Jul 2018 09:00:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=mkiFW4nHlSXrS3u1uv/RgZDjDLCCGSXJo2J869DTLJ8=;
-        b=NseqPLuCyzophWlGHQW8N4hMoa3Djs1W2gw5t4JtdiuPdIT98I7Ol/D1WZyVpRWecH
-         2d9IC3vkARUXMd7KshvKEkaTIDT38NGsYuUFIXQNYpAzg7rZ04iT80bM5+3jThksIluV
-         mwRjKSPRjo3SGu/vy0we79iXP6mVxu7WtNM/7oyKJUZLxFz4ExBMOYXYMRc6fMQn/xUl
-         SSnWy3LJCFWSP2+vYrg3fOgDGVZhnfPfkogQJiD0O+1GLg7Al5mmB+b6ih5ZAjf+gq7y
-         GwRAeHN5U8A/tfzO3MRBuYvbuOy8Xg9iOyi+49K630AzT662ErJ1IuUoCNfBNL5XI5GC
-         3KfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=mkiFW4nHlSXrS3u1uv/RgZDjDLCCGSXJo2J869DTLJ8=;
-        b=cBoPTCALYwe1eJjuPxMtDyNhhfZmf+uzwpgjjzkzDOcrYs0shuCaLsNto2M7C3h9zE
-         AGBQ3ersJJ/V7Sy1Dab/9MnQk90e3pTy9nloYkSMAOuGQPNJcABR4Rh05+tQFQeER75H
-         PPpjTN6//fLFTewhu8mxAbNCgpEoWTIX4J+4WQ4a7UJ+0jTqFBcUK3kHwt+JcmU/2VtI
-         NgHauaYeDiO+/f/j1GjAjA8YKYnxYr/IflTrCr7JPUuWJ9WRIhd4E7DMJKP/fOnMIc9N
-         IMrB5FX/3X1NSuq8X4bWLZjbdHYkC0/0AfRT1B4eq0+2lBm0Lz3gCU+Ap/oYLI5TnffH
-         ze4A==
-X-Gm-Message-State: AOUpUlFlbxHqmyWstoJtTNN0865to/ExRMoUU9FTjaymfTqzJvb0MPmA
-        iCNu7l0C5/yLKVI9Ws70T4hSUOwm0Q0lt68tkn8=
-X-Google-Smtp-Source: AAOMgpf5Wlda+YNKmoLsVl4It19t1ITki6vB7oazz1xb3wBU6ah3CACi+9OyrxvRcxhzDtAb0btBffRFqUbjsNVbevU=
-X-Received: by 2002:a24:b101:: with SMTP id o1-v6mr2026728itf.121.1531843224456;
- Tue, 17 Jul 2018 09:00:24 -0700 (PDT)
+        id S1729669AbeGQQ6J (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jul 2018 12:58:09 -0400
+Received: from mout.gmx.net ([212.227.15.19]:45151 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729641AbeGQQ6J (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jul 2018 12:58:09 -0400
+Received: from [192.168.0.129] ([37.201.195.94]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lp3x6-1gI5O31LcK-00er2S; Tue, 17
+ Jul 2018 18:24:35 +0200
+Date:   Tue, 17 Jul 2018 18:24:33 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Eric Sunshine <sunshine@sunshineco.com>
+cc:     gitgitgadget@gmail.com, Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 09/20] range-diff: adjust the output of the commit
+ pairs
+In-Reply-To: <CAPig+cTnRi=HuyZy+bMKeU9qutZb3K5C4qTb7gCQz7GyGN=FRw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1807171306380.71@tvgsbejvaqbjf.bet>
+References: <cover.1525448066.git.johannes.schindelin@gmx.de> <pull.1.v3.git.gitgitgadget@gmail.com> <6b31cbf72c4752771965de333b3cb6e82cf90b2b.1530617166.git.gitgitgadget@gmail.com> <CAPig+cTnRi=HuyZy+bMKeU9qutZb3K5C4qTb7gCQz7GyGN=FRw@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20180716195431.GD11513@aiede.svl.corp.google.com>
- <20180716202915.GC25189@sigill.intra.peff.net> <20180716203753.GE11513@aiede.svl.corp.google.com>
- <20180716210938.GF25189@sigill.intra.peff.net> <20180716214003.GH11513@aiede.svl.corp.google.com>
- <20180716214539.GL25189@sigill.intra.peff.net> <20180716220306.GI11513@aiede.svl.corp.google.com>
- <20180716224337.GB12482@sigill.intra.peff.net> <20180716225639.GK11513@aiede.svl.corp.google.com>
- <20180716232603.GB13570@sigill.intra.peff.net> <20180717015339.GL11513@aiede.svl.corp.google.com>
-In-Reply-To: <20180717015339.GL11513@aiede.svl.corp.google.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 17 Jul 2018 17:59:57 +0200
-Message-ID: <CACsJy8C=+0n_5Uz3ub1t-1fJtu4HJQ3_ro1R+aEmpUz+1Ge6RA@mail.gmail.com>
-Subject: Re: [PATCH] gc: do not warn about too many loose objects
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Jonathan Tan <jonathantanmy@google.com>,
-        Git Mailing List <git@vger.kernel.org>, adehtiarov@google.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:gTrVxZCDRKm7Qoz/L7VwP7pDMZMPhd+AfS1uCzjof+dk45CqqIY
+ S5ANWSOc6ntblVzRZuexp8lJB6d3axX3UnQ8BQzOZ/yJNs5Rp19+iZXgLXThnrf+RN1LWw/
+ 1dw3sgMmNEIfBRa9SiZWaL4RJ3E66ZPWr+nqcb6SwCDG33Xs/tL2Cv/r/uKmEEaWb0/2d5/
+ 2kc+sVTLj9yCgo0dMxXKA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:YXIDqdpZeHg=:S4yyVw1oqjsx0V0MM6E7PP
+ LaZKasMHlq5n8pLiTJ6g5qJv/+NV8ft9Z2ONhIcpG6iUGa7hLKLiCjh7+4zmdSHPS6p5u/V9v
+ NpwGgrL7GFOe7SLi6jGCsbJ7kW4tvAHmU+Geu7ghg+LkZoV2FgRygCyUpwOSji8TgSqE4tc8o
+ AbyzoOjQRaJG5PZv019gDR0w63Sk2GLmUyzALyiKz4zpx/Ex1pfBK8yu8SK7c+BaOTR/PM6Fo
+ qYbaBzCqUXy9ei8yN1JhQ1Q4o3K4kpXL7hSoDBd+RrTnl0vD9GN9GMbkQIDDkFm8vJ/dvRwbR
+ d1Kw/WrciJY+KPSAzm/rBrG1orfaRgKkOlj64v0NcE3gu7EvU8TamzN2lyWFWe9gOSUedR/+C
+ pRwPzoFY7PYqjf0vD/4NJziN5rer0b7z8Si4NrtvsFM1eWABTiZ3lpmyTxUrA0OfeUfU1d5JR
+ 7R5a3cWLE75TonclEUvr+i1PKKqJTCcIoRCms8LdHPwK1X2B7QB151W8dAJ7kBTeOvUJ1g7RS
+ tgSKzxa72yKISsJ/KKawn0C+NNUmxE1RKOkOFeJpH+mAVq/eSlcME9+g2QD88jjV2zshaIphh
+ 0di05TjHUgLg6aWwpyYY20DMAtXT7mjQWBRlJhynFs+xOoPqwc4Ye/2qLBfesXpL6I+2HvOcC
+ reK2orxPXGRukn2OjJcSb8t7VWIgvyqlLUqajpkPYkgK1SSzatA8PTPX8wc+VSILgF/LxV0CR
+ 9LSDC64D1I/h0L/NNFPKOlQ4UHr6kIcvuk551uTDJDvOZNytP6xw4pS+LBo8lzHDUrEeuJTVO
+ WKmPCpw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 17, 2018 at 3:53 AM Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Subject: gc: do not return error for prior errors in daemonized mode
->
-> Some build machines started failing to fetch updated source using
-> "repo sync", with error
->
->   error: The last gc run reported the following. Please correct the root cause
->   and remove /build/.repo/projects/tools/git.git/gc.log.
->   Automatic cleanup will not be performed until the file is removed.
->
->   warning: There are too many unreachable loose objects; run 'git prune' to remove them.
->
-> The cause takes some time to describe.
->
-> In v2.0.0-rc0~145^2 (gc: config option for running --auto in
-> background, 2014-02-08), "git gc --auto" learned to run in the
-> background instead of blocking the invoking command.  In this mode, it
-> closed stderr to avoid interleaving output with any subsequent
-> commands, causing warnings like the above to be swallowed; v2.6.3~24^2
-> (gc: save log from daemonized gc --auto and print it next time,
-> 2015-09-19) addressed this by storing any diagnostic output in
-> .git/gc.log and allowing the next "git gc --auto" run to print it.
->
-> To avoid wasteful repeated fruitless gcs, when gc.log is present, the
-> subsequent "gc --auto" would die after print its contents.  Most git
-> commands, such as "git fetch", ignore the exit status from "git gc
-> --auto" so all is well at this point: the user gets to see the error
-> message, and the fetch succeeds, without a wasteful additional attempt
-> at an automatic gc.
->
-> External tools like repo[1], though, do care about the exit status
-> from "git gc --auto".  In non-daemonized mode, the exit status is
-> straightforward: if there is an error, it is nonzero, but after a
-> warning like the above, the status is zero.  The daemonized mode, as a
-> side effect of the other properties provided, offers a very strange
-> exit code convention:
->
->  - if no housekeeping was required, the exit status is 0
->
->  - the first real run, after forking into the background, returns exit
->    status 0 unconditionally.  The parent process has no way to know
->    whether gc will succeed.
->
->  - if there is any diagnostic output in gc.log, subsequent runs return
->    a nonzero exit status to indicate that gc was not triggered.
->
-> There's nothing for the calling program to act on on the basis of that
-> error.  Use status 0 consistently instead, to indicate that we decided
-> not to run a gc (just like if no housekeeping was required).  This
-> way, repo and similar tools can get the benefit of the same behavior
-> as tools like "git fetch" that ignore the exit status from gc --auto.
+Hi Eric,
 
-This background gc thing is pretty much designed for interactive use.
-When it's scripted, you probably should avoid it. Then you can fork a
-new process by yourself and have much better control if you still want
-"background" gc. So an alternative here is to turn on or off
-gc.autodetach based on interactiveness (i.e. having tty). We can add a
-new (and default) value "auto" to gc.autodetach for this purpose.
+On Mon, 16 Jul 2018, Eric Sunshine wrote:
 
-In automated scripts, it will always run in non-damonized mode. You
-will get non-zero exit code when real errors occur. You don't worry
-about hanging processes. Rate limit is also thrown out in this mode if
-I'm not mistaken, but it could be added back and more tailored for
-server needs.
+> On Tue, Jul 3, 2018 at 7:26 AM Johannes Schindelin via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> > This change brings `git range-diff` yet another step closer to
+> > feature parity with tbdiff: it now shows the oneline, too, and indicates
+> > with `=` when the commits have identical diffs.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> > diff --git a/range-diff.c b/range-diff.c
+> > @@ -251,9 +253,57 @@ static void get_correspondences(struct string_list *a, struct string_list *b,
+> > +static void output_pair_header(struct strbuf *buf,
+> > +                              struct patch_util *a_util,
+> > +                              struct patch_util *b_util)
+> >  {
+> > -       return find_unique_abbrev(&util->oid, DEFAULT_ABBREV);
+> > +       static char *dashes;
+> > +       struct object_id *oid = a_util ? &a_util->oid : &b_util->oid;
+> > +       struct commit *commit;
+> > +
+> > +       if (!dashes) {
+> > +               char *p;
+> > +
+> > +               dashes = xstrdup(find_unique_abbrev(oid, DEFAULT_ABBREV));
+> 
+> It's nice to see that the bulk of the range-diff functionality has
+> been libified in this re-roll (residing in range-diff.c rather than
 
-> Once the period of time described by gc.pruneExpire elapses, the
-> unreachable loose objects will be removed by "git gc --auto"
-> automatically.
->
-> [1] https://gerrit-review.googlesource.com/c/git-repo/+/10598/
->
-> Reported-by: Andrii Dehtiarov <adehtiarov@google.com>
-> Helped-by: Jeff King <peff@peff.net>
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> ---
->  Documentation/config.txt |  3 ++-
->  builtin/gc.c             | 16 +++++++++++-----
->  t/t6500-gc.sh            |  6 +++---
->  3 files changed, 16 insertions(+), 9 deletions(-)
->
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 1cc18a828c..5eaa4aaa7d 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -1649,7 +1649,8 @@ will be repacked. After this the number of packs should go below
->  gc.autoPackLimit and gc.bigPackThreshold should be respected again.
->
->  gc.logExpiry::
-> -       If the file gc.log exists, then `git gc --auto` won't run
-> +       If the file gc.log exists, then `git gc --auto` will print
-> +       its content and exit with status zero instead of running
->         unless that file is more than 'gc.logExpiry' old.  Default is
->         "1.day".  See `gc.pruneExpire` for more ways to specify its
->         value.
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> index 2bebc52bda..484ab21b8c 100644
-> --- a/builtin/gc.c
-> +++ b/builtin/gc.c
-> @@ -438,7 +438,7 @@ static const char *lock_repo_for_gc(int force, pid_t* ret_pid)
->         return NULL;
->  }
->
-> -static void report_last_gc_error(void)
-> +static int report_last_gc_error(void)
->  {
->         struct strbuf sb = STRBUF_INIT;
->         ssize_t ret;
-> @@ -449,7 +449,7 @@ static void report_last_gc_error(void)
->                 if (errno == ENOENT)
->                         goto done;
->
-> -               die_errno(_("cannot stat '%s'"), gc_log_path);
-> +               return error_errno(_("cannot stat '%s'"), gc_log_path);
->         }
->
->         if (st.st_mtime < gc_log_expire_time)
-> @@ -457,9 +457,9 @@ static void report_last_gc_error(void)
->
->         ret = strbuf_read_file(&sb, gc_log_path, 0);
->         if (ret < 0)
-> -               die_errno(_("cannot read '%s'"), gc_log_path);
-> +               return error_errno(_("cannot read '%s'"), gc_log_path);
->         if (ret > 0)
-> -               die(_("The last gc run reported the following. "
-> +               return error(_("The last gc run reported the following. "
->                                "Please correct the root cause\n"
->                                "and remove %s.\n"
->                                "Automatic cleanup will not be performed "
-> @@ -469,6 +469,7 @@ static void report_last_gc_error(void)
->         strbuf_release(&sb);
->  done:
->         free(gc_log_path);
-> +       return 0;
->  }
->
->  static void gc_before_repack(void)
-> @@ -561,7 +562,12 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
->                         fprintf(stderr, _("See \"git help gc\" for manual housekeeping.\n"));
->                 }
->                 if (detach_auto) {
-> -                       report_last_gc_error(); /* dies on error */
-> +                       if (report_last_gc_error())
-> +                               /*
-> +                                * A previous gc failed. We've reported the
-> +                                * error, so there's nothing left to do.
-> +                                */
-> +                               return 0;
->
->                         if (lock_repo_for_gc(force, &pid))
->                                 return 0;
-> diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
-> index c474a94a9f..3e62df616c 100755
-> --- a/t/t6500-gc.sh
-> +++ b/t/t6500-gc.sh
-> @@ -116,11 +116,11 @@ test_expect_success 'background auto gc does not run if gc.log is present and re
->         test_config gc.autopacklimit 1 &&
->         test_config gc.autodetach true &&
->         echo fleem >.git/gc.log &&
-> -       test_must_fail git gc --auto 2>err &&
-> -       test_i18ngrep "^fatal:" err &&
-> +       git gc --auto 2>err &&
-> +       test_i18ngrep "^error:" err &&
->         test_config gc.logexpiry 5.days &&
->         test-tool chmtime =-345600 .git/gc.log &&
-> -       test_must_fail git gc --auto &&
-> +       git gc --auto &&
->         test_config gc.logexpiry 2.days &&
->         run_and_wait_for_auto_gc &&
->         ls .git/objects/pack/pack-*.pack >packs &&
-> --
-> 2.18.0.233.g985f88cf7e
->
+Can we *please* stop calling it "re-roll"? Thanks.
 
+(Or are you really "never gonna give you up, never gonna let you down"?)
 
--- 
-Duy
+> builtin/range-diff.c as in earlier versions), so it's somewhat
+> surprising to see libified code holding onto the 'dashes' buffer like
+> this in a static variable. An alternative would have been for the
+> caller to pass in the same buffer to output_pair_header() for re-use,
+> and then dispose of it at the end of processing.
+
+Sure, to be honest, I had completely forgotten about what I did there, and
+had to read up on it to fix it.
+
+> 
+> > +               for (p = dashes; *p; p++)
+> > +                       *p = '-';
+> > +       }
+> > +
+> > +       strbuf_reset(buf);
+> 
+> ...much like 'buf' is allocated by the caller, passed in and re-used
+> for each invocation, then released by the caller at the end.
+
+Yep, I now pass in another strbuf, `dashes`.
+
+Thanks,
+Dscho
