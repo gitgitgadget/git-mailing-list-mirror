@@ -2,252 +2,243 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E0D01F597
-	for <e@80x24.org>; Tue, 17 Jul 2018 15:24:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 402531F597
+	for <e@80x24.org>; Tue, 17 Jul 2018 16:00:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729659AbeGQP6D (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jul 2018 11:58:03 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:47039 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728904AbeGQP6D (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jul 2018 11:58:03 -0400
-Received: by mail-ed1-f65.google.com with SMTP id o8-v6so1534957edt.13
-        for <git@vger.kernel.org>; Tue, 17 Jul 2018 08:24:53 -0700 (PDT)
+        id S1729668AbeGQQdo (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jul 2018 12:33:44 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:39158 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729641AbeGQQdo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jul 2018 12:33:44 -0400
+Received: by mail-it0-f66.google.com with SMTP id 198-v6so2604610ite.4
+        for <git@vger.kernel.org>; Tue, 17 Jul 2018 09:00:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=YOsxsI8YVgxtYylW+VPR6Nusq6/Mmwt6iVrFhuJa12M=;
-        b=eIXV7Be3UNIbtvEeE+U05KaOGYQadyuoxK1B13arpnPImEWwCwtjGLwtrE+uJOwiYX
-         0Thi6auXuwvcoIhzDxz98xHYChnDlFGqUqQlMJz99+uCgFzkMBp+9+BgQdfse68R8/Ro
-         oZ2IxHItv9q/wdGyTHohZ8GJkXEYnVNThaN34xdURnFify1He/9oKy1Z3STpRAxUQRI/
-         Z4YXElE5t7+nrYOsEYJZfsGWCYN5wn2dqs/yPOp9OqUtX3E+1z9A48gg/aGFPVQ8Bkpv
-         9DsNLBVgenrwnKpfNvgL3WBLWxOiorC6+qOiCpMKEgj+K2olEUPrutI5u4mGJfs8HZaJ
-         apyg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=mkiFW4nHlSXrS3u1uv/RgZDjDLCCGSXJo2J869DTLJ8=;
+        b=NseqPLuCyzophWlGHQW8N4hMoa3Djs1W2gw5t4JtdiuPdIT98I7Ol/D1WZyVpRWecH
+         2d9IC3vkARUXMd7KshvKEkaTIDT38NGsYuUFIXQNYpAzg7rZ04iT80bM5+3jThksIluV
+         mwRjKSPRjo3SGu/vy0we79iXP6mVxu7WtNM/7oyKJUZLxFz4ExBMOYXYMRc6fMQn/xUl
+         SSnWy3LJCFWSP2+vYrg3fOgDGVZhnfPfkogQJiD0O+1GLg7Al5mmB+b6ih5ZAjf+gq7y
+         GwRAeHN5U8A/tfzO3MRBuYvbuOy8Xg9iOyi+49K630AzT662ErJ1IuUoCNfBNL5XI5GC
+         3KfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=YOsxsI8YVgxtYylW+VPR6Nusq6/Mmwt6iVrFhuJa12M=;
-        b=GMGYc/waVe1bbLn9kc6fItGTNBEf8bK3DN5TEnmhYMIq6R5CWzTaanCuT5HoMvQ1ev
-         WtCctqGgicn9VUWurETRteCQ1RRnk4EbgNUfC6NIlkAhWuthQYEybfVEQfPOE2X9DPhx
-         aeqYMDHaPOwmr2HK26qpl4N1rdKy4X876Vx5bZnc27p9MbmJ2YyK6WN9RubsSRzDF874
-         PAWaOphyljF0QUCMnS7M2tdKA0Li+/BRFybUPWjbEA4MDScmvcU77G7GsEPZJ+7Bfz68
-         0UjsqXGqH7aF/1Ou+/RNlNShWVmB5CHXwxxsd++UDAHvOfvwW1Y+GNwg9MysGd9dQMvy
-         FppQ==
-X-Gm-Message-State: AOUpUlGukJcxMkhsBXvyTEXLvnEM25IYybvwDVUCqTdxyMUjMQpWjW3v
-        NFpu1vQf97k8+P/7liJyT1s=
-X-Google-Smtp-Source: AAOMgpfFMFMk4qr5ziB3NZfSKZQmgDNOeHVF7jB4Q2s2akcTq+YcSML5QIZO20RsFe4YP5wXpYbsXA==
-X-Received: by 2002:aa7:c2c1:: with SMTP id m1-v6mr3057818edp.249.1531841092625;
-        Tue, 17 Jul 2018 08:24:52 -0700 (PDT)
-Received: from evledraar ([5.57.21.50])
-        by smtp.gmail.com with ESMTPSA id 8-v6sm507429edv.77.2018.07.17.08.24.50
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 17 Jul 2018 08:24:50 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=mkiFW4nHlSXrS3u1uv/RgZDjDLCCGSXJo2J869DTLJ8=;
+        b=cBoPTCALYwe1eJjuPxMtDyNhhfZmf+uzwpgjjzkzDOcrYs0shuCaLsNto2M7C3h9zE
+         AGBQ3ersJJ/V7Sy1Dab/9MnQk90e3pTy9nloYkSMAOuGQPNJcABR4Rh05+tQFQeER75H
+         PPpjTN6//fLFTewhu8mxAbNCgpEoWTIX4J+4WQ4a7UJ+0jTqFBcUK3kHwt+JcmU/2VtI
+         NgHauaYeDiO+/f/j1GjAjA8YKYnxYr/IflTrCr7JPUuWJ9WRIhd4E7DMJKP/fOnMIc9N
+         IMrB5FX/3X1NSuq8X4bWLZjbdHYkC0/0AfRT1B4eq0+2lBm0Lz3gCU+Ap/oYLI5TnffH
+         ze4A==
+X-Gm-Message-State: AOUpUlFlbxHqmyWstoJtTNN0865to/ExRMoUU9FTjaymfTqzJvb0MPmA
+        iCNu7l0C5/yLKVI9Ws70T4hSUOwm0Q0lt68tkn8=
+X-Google-Smtp-Source: AAOMgpf5Wlda+YNKmoLsVl4It19t1ITki6vB7oazz1xb3wBU6ah3CACi+9OyrxvRcxhzDtAb0btBffRFqUbjsNVbevU=
+X-Received: by 2002:a24:b101:: with SMTP id o1-v6mr2026728itf.121.1531843224456;
+ Tue, 17 Jul 2018 09:00:24 -0700 (PDT)
+MIME-Version: 1.0
+References: <20180716195431.GD11513@aiede.svl.corp.google.com>
+ <20180716202915.GC25189@sigill.intra.peff.net> <20180716203753.GE11513@aiede.svl.corp.google.com>
+ <20180716210938.GF25189@sigill.intra.peff.net> <20180716214003.GH11513@aiede.svl.corp.google.com>
+ <20180716214539.GL25189@sigill.intra.peff.net> <20180716220306.GI11513@aiede.svl.corp.google.com>
+ <20180716224337.GB12482@sigill.intra.peff.net> <20180716225639.GK11513@aiede.svl.corp.google.com>
+ <20180716232603.GB13570@sigill.intra.peff.net> <20180717015339.GL11513@aiede.svl.corp.google.com>
+In-Reply-To: <20180717015339.GL11513@aiede.svl.corp.google.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 17 Jul 2018 17:59:57 +0200
+Message-ID: <CACsJy8C=+0n_5Uz3ub1t-1fJtu4HJQ3_ro1R+aEmpUz+1Ge6RA@mail.gmail.com>
+Subject: Re: [PATCH] gc: do not warn about too many loose objects
 To:     Jonathan Nieder <jrnieder@gmail.com>
 Cc:     Jeff King <peff@peff.net>, Jonathan Tan <jonathantanmy@google.com>,
-        git@vger.kernel.org, Andrii Dehtiarov <adehtiarov@google.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] gc: do not warn about too many loose objects
-References: <20180716203753.GE11513@aiede.svl.corp.google.com>
-        <20180716210938.GF25189@sigill.intra.peff.net>
-        <20180716214003.GH11513@aiede.svl.corp.google.com>
-        <20180716214539.GL25189@sigill.intra.peff.net>
-        <20180716220306.GI11513@aiede.svl.corp.google.com>
-        <20180716224337.GB12482@sigill.intra.peff.net>
-        <20180716225639.GK11513@aiede.svl.corp.google.com>
-        <20180716232603.GB13570@sigill.intra.peff.net>
-        <20180717015339.GL11513@aiede.svl.corp.google.com>
-        <87d0vmck55.fsf@evledraar.gmail.com>
-        <20180717140336.GA229988@aiede.svl.corp.google.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180717140336.GA229988@aiede.svl.corp.google.com>
-Date:   Tue, 17 Jul 2018 17:24:50 +0200
-Message-ID: <878t69dgvx.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+        Git Mailing List <git@vger.kernel.org>, adehtiarov@google.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Tue, Jul 17 2018, Jonathan Nieder wrote:
-
-> Hi Ævar,
+On Tue, Jul 17, 2018 at 3:53 AM Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Subject: gc: do not return error for prior errors in daemonized mode
 >
-> Ævar Arnfjörð Bjarmason wrote:
->> On Tue, Jul 17 2018, Jonathan Nieder wrote:
+> Some build machines started failing to fetch updated source using
+> "repo sync", with error
 >
->>> That suggests a possible improvement.  If all callers should be
->>> ignoring the exit code, can we make the exit code in daemonize mode
->>> unconditionally zero in this kind of case?
->>
->> That doesn't make sense to me. Just because git itself is happily
->> ignoring the exit code I don't think that should mean there shouldn't be
->> a meaningful exit code. Why don't you just ignore the exit code in the
->> repo tool as well?
+>   error: The last gc run reported the following. Please correct the root cause
+>   and remove /build/.repo/projects/tools/git.git/gc.log.
+>   Automatic cleanup will not be performed until the file is removed.
 >
-> I don't maintain the repo tool.  I am just trying to improve git to
-> make some users' lives better.
+>   warning: There are too many unreachable loose objects; run 'git prune' to remove them.
 >
-> repo worked fine for years, until gc's daemonized mode broke it.  I
-> don't think it makes sense for us to declare that it has been holding
-> git gc wrong for all that time before then.
-
-Before the sequence of commits noted at the bottom of my
-https://public-inbox.org/git/87inc89j38.fsf@evledraar.gmail.com/ plus
-a831c06a2b ("gc: ignore old gc.log files", 2017-02-10) we wouldn't do
-that, that's true.
-
-We'd just happily run GC again pointlessly even though it wasn't going
-to accomplish anything, in cases where you really did have ~>6700 loose
-objects that weren't going to be pruned.
-
-I don't think it makes sense to revert those patches and go back to the
-much more naïve (and user waiting there twiddling his thumbs while it
-runs) method, but I also don't think making no distinction between the
-following states:
-
- 1. gc --auto has nothing to do
- 2. gc --auto has something to do, will fork and try to do it
- 3. gc --auto has something to do, but notices that gc has been failing
-    before and can't do anything now.
-
-I think #3 should exit with non-zero.
-
-Yes, before this whole backgrounding etc. we wouldn't have exited with
-non-zero either, we'd just print a thing to STDERR.
-
-But with backgrounding we implicitly introduced a new state, which is we
-won't do *any* maintenance at all, including consolidating packfiles
-(very important for servers), so I think it makes sense to exit with
-non-zero since gc can't run at all.
-
->> Now e.g. automation I have to see if git-gc ---auto is having issues
->> can't just be 'git gc --auto || echo fail @ {hostname}' across a fleet
->> of servers, but will need to start caring if stderr was emitted to.
+> The cause takes some time to describe.
 >
-> Thanks for bringing this up.  The thing is, the current exit code is
-> not useful for that purpose.  It doesn't report a failure until the
-> *next* `git gc --auto` run, when it is too late to be useful.
+> In v2.0.0-rc0~145^2 (gc: config option for running --auto in
+> background, 2014-02-08), "git gc --auto" learned to run in the
+> background instead of blocking the invoking command.  In this mode, it
+> closed stderr to avoid interleaving output with any subsequent
+> commands, causing warnings like the above to be swallowed; v2.6.3~24^2
+> (gc: save log from daemonized gc --auto and print it next time,
+> 2015-09-19) addressed this by storing any diagnostic output in
+> .git/gc.log and allowing the next "git gc --auto" run to print it.
 >
-> See the commit message on the proposed patch
-> https://public-inbox.org/git/20180717065740.GD177907@aiede.svl.corp.google.com/
-> for more on that subject.
-
-Right. I know. What I mean is now I can (and do) use it to run 'git gc
---auto' across our server fleet and see whether I have any of #3, or
-whether it's all #1 or #2. If there's nothing to do in #1 that's fine,
-and it just so happens that I'll run gc due to #2 that's also fine, but
-I'd like to see if gc really is stuck.
-
-This of course relies on them having other users / scripts doing normal
-git commands which would trigger previous 'git gc --auto' runs.
-
->> I don't care if we e.g. have a 'git gc --auto --exit-code' similar to
->> what git-diff does, but it doesn't make sense to me that we *know* we
->> can't background the gc due to a previous error and then always return
->> 0. Having to parse STDERR to see if it *really* failed is un-unixy,
->> let's use exit codes. That's what they're for.
+> To avoid wasteful repeated fruitless gcs, when gc.log is present, the
+> subsequent "gc --auto" would die after print its contents.  Most git
+> commands, such as "git fetch", ignore the exit status from "git gc
+> --auto" so all is well at this point: the user gets to see the error
+> message, and the fetch succeeds, without a wasteful additional attempt
+> at an automatic gc.
 >
-> Do you know of anyone trying to use the exit code from gc --auto in
-> this way?
+> External tools like repo[1], though, do care about the exit status
+> from "git gc --auto".  In non-daemonized mode, the exit status is
+> straightforward: if there is an error, it is nonzero, but after a
+> warning like the above, the status is zero.  The daemonized mode, as a
+> side effect of the other properties provided, offers a very strange
+> exit code convention:
 >
-> It sounds to me like for what you're proposing, a separate
+>  - if no housekeeping was required, the exit status is 0
 >
-> 	git gc --auto --last-run-failed
+>  - the first real run, after forking into the background, returns exit
+>    status 0 unconditionally.  The parent process has no way to know
+>    whether gc will succeed.
 >
-> command that a tool could use to check the outcome from the previous
-> gc --auto run without triggering a new one would be best.
-
-Yeah this is admittedly a bit of a poweruser thing I'm doing, so I don't
-mind if it's hidden behind something like that in principle, but it
-seems wrong to exit with zero in this (#3) case:
-
-    $ git gc --auto; echo $?
-    Auto packing the repository in background for optimum performance.
-    See "git help gc" for manual housekeeping.
-    error: The last gc run reported the following. Please correct the root cause
-    and remove .git/gc.log.
-    Automatic cleanup will not be performed until the file is removed.
-
-    warning: There are too many unreachable loose objects; run 'git prune' to remove them.
-
-    255
-
-As a previous (good) patch in this series notes that shouldn't be 255,
-let's fix that, but I don't see how emitting an "error" and "warning"
-saying we're broken and can't gc at all here in conjunction with exiting
-with zero makes sense.
-
-> [...]
->> I think you're conflating two things here in a way that (if I'm reading
->> this correctly) produces a pretty bad regression for users.
+>  - if there is any diagnostic output in gc.log, subsequent runs return
+>    a nonzero exit status to indicate that gc was not triggered.
 >
-> The patch doesn't touch the "ratelimiting" behavior at all, so I'm not
-> sure what I'm doing to regress users.
+> There's nothing for the calling program to act on on the basis of that
+> error.  Use status 0 consistently instead, to indicate that we decided
+> not to run a gc (just like if no housekeeping was required).  This
+> way, repo and similar tools can get the benefit of the same behavior
+> as tools like "git fetch" that ignore the exit status from gc --auto.
 
-Sorry about being unclear again, this is not a comment on this patch,
-but your paragraph beginning with "To solve[...]", i.e. "this patch
-doesn't do X, but in the future maybe we'll...". I'm pointing out
-potential caveats with that, I realize you have not posted an
-implementation of that yet.
+This background gc thing is pretty much designed for interactive use.
+When it's scripted, you probably should avoid it. Then you can fork a
+new process by yourself and have much better control if you still want
+"background" gc. So an alternative here is to turn on or off
+gc.autodetach based on interactiveness (i.e. having tty). We can add a
+new (and default) value "auto" to gc.autodetach for this purpose.
 
-> [...]
->>> To solve (3), we could
->>> introduce a gc.lastrun file that is touched whenever "gc --auto" runs
->>> successfully and make "gc --auto" a no-op for a while after each run.
->>
->> This would work around my concern with b) above in most cases by
->> introducing a purely time-based rate limit, but I'm uneasy about this
->> change in git-gc semantics.
-> [..]
->> With these proposed semantics we'd skip a needed GC (potentially for
->> days, depending on the default) just because we recently ran one.
->>
->> In many environments, such as on busy servers, we could have tens of
->> thousands of packs by this point, since this facility would (presumably)
->> bypass both gc.autoPackLimit and gc.auto in favor of only running gc at
->> a maximum of every N minutes, similarly in a local checkout I could have
->> a crapload of loose objects because I ran a big rebase or a
->> filter-branch on one of my branches.
+In automated scripts, it will always run in non-damonized mode. You
+will get non-zero exit code when real errors occur. You don't worry
+about hanging processes. Rate limit is also thrown out in this mode if
+I'm not mistaken, but it could be added back and more tailored for
+server needs.
+
+> Once the period of time described by gc.pruneExpire elapses, the
+> unreachable loose objects will be removed by "git gc --auto"
+> automatically.
 >
-> I think we all agree that getting rid of the hack that 'explodes'
-> unreachable objects into loose objects is the best way forward, long
-> term.
+> [1] https://gerrit-review.googlesource.com/c/git-repo/+/10598/
 >
-> Even in that future, some ratelimiting may be useful, though.  I also
-> suspect that we're never going to achieve a perfect set of defaults
-> that works well for both humans and servers, though we can try.
+> Reported-by: Andrii Dehtiarov <adehtiarov@google.com>
+> Helped-by: Jeff King <peff@peff.net>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> ---
+>  Documentation/config.txt |  3 ++-
+>  builtin/gc.c             | 16 +++++++++++-----
+>  t/t6500-gc.sh            |  6 +++---
+>  3 files changed, 16 insertions(+), 9 deletions(-)
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 1cc18a828c..5eaa4aaa7d 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -1649,7 +1649,8 @@ will be repacked. After this the number of packs should go below
+>  gc.autoPackLimit and gc.bigPackThreshold should be respected again.
+>
+>  gc.logExpiry::
+> -       If the file gc.log exists, then `git gc --auto` won't run
+> +       If the file gc.log exists, then `git gc --auto` will print
+> +       its content and exit with status zero instead of running
+>         unless that file is more than 'gc.logExpiry' old.  Default is
+>         "1.day".  See `gc.pruneExpire` for more ways to specify its
+>         value.
+> diff --git a/builtin/gc.c b/builtin/gc.c
+> index 2bebc52bda..484ab21b8c 100644
+> --- a/builtin/gc.c
+> +++ b/builtin/gc.c
+> @@ -438,7 +438,7 @@ static const char *lock_repo_for_gc(int force, pid_t* ret_pid)
+>         return NULL;
+>  }
+>
+> -static void report_last_gc_error(void)
+> +static int report_last_gc_error(void)
+>  {
+>         struct strbuf sb = STRBUF_INIT;
+>         ssize_t ret;
+> @@ -449,7 +449,7 @@ static void report_last_gc_error(void)
+>                 if (errno == ENOENT)
+>                         goto done;
+>
+> -               die_errno(_("cannot stat '%s'"), gc_log_path);
+> +               return error_errno(_("cannot stat '%s'"), gc_log_path);
+>         }
+>
+>         if (st.st_mtime < gc_log_expire_time)
+> @@ -457,9 +457,9 @@ static void report_last_gc_error(void)
+>
+>         ret = strbuf_read_file(&sb, gc_log_path, 0);
+>         if (ret < 0)
+> -               die_errno(_("cannot read '%s'"), gc_log_path);
+> +               return error_errno(_("cannot read '%s'"), gc_log_path);
+>         if (ret > 0)
+> -               die(_("The last gc run reported the following. "
+> +               return error(_("The last gc run reported the following. "
+>                                "Please correct the root cause\n"
+>                                "and remove %s.\n"
+>                                "Automatic cleanup will not be performed "
+> @@ -469,6 +469,7 @@ static void report_last_gc_error(void)
+>         strbuf_release(&sb);
+>  done:
+>         free(gc_log_path);
+> +       return 0;
+>  }
+>
+>  static void gc_before_repack(void)
+> @@ -561,7 +562,12 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+>                         fprintf(stderr, _("See \"git help gc\" for manual housekeeping.\n"));
+>                 }
+>                 if (detach_auto) {
+> -                       report_last_gc_error(); /* dies on error */
+> +                       if (report_last_gc_error())
+> +                               /*
+> +                                * A previous gc failed. We've reported the
+> +                                * error, so there's nothing left to do.
+> +                                */
+> +                               return 0;
+>
+>                         if (lock_repo_for_gc(force, &pid))
+>                                 return 0;
+> diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
+> index c474a94a9f..3e62df616c 100755
+> --- a/t/t6500-gc.sh
+> +++ b/t/t6500-gc.sh
+> @@ -116,11 +116,11 @@ test_expect_success 'background auto gc does not run if gc.log is present and re
+>         test_config gc.autopacklimit 1 &&
+>         test_config gc.autodetach true &&
+>         echo fleem >.git/gc.log &&
+> -       test_must_fail git gc --auto 2>err &&
+> -       test_i18ngrep "^fatal:" err &&
+> +       git gc --auto 2>err &&
+> +       test_i18ngrep "^error:" err &&
+>         test_config gc.logexpiry 5.days &&
+>         test-tool chmtime =-345600 .git/gc.log &&
+> -       test_must_fail git gc --auto &&
+> +       git gc --auto &&
+>         test_config gc.logexpiry 2.days &&
+>         run_and_wait_for_auto_gc &&
+>         ls .git/objects/pack/pack-*.pack >packs &&
+> --
+> 2.18.0.233.g985f88cf7e
+>
 
-Having read this whole thing over again, and with some time to reflect
-on it, I think the best way forward for now, in lieu of the bigger
-solution of consolidating loose objects into a pack, is to split up this
-special case of warning due to too many loose objects at the end, and
-any other errors we may print during GC.
 
-As noted above if our policy for gc.auto is legitimately exceeded, we
-deal with that badly by stopping all gc, includin gc that would just run
-due to too_many_packs().
-
-Instead we should note that we had an error due to too many loose
-objects last time, but still try to run if the too_many_packs()
-condition is satisfied.
-
-Now we're throwing the baby out with the bathwater and not consolidating
-packs (for a default period of 2 weeks!) just because some operation
-produced a lot of loose objects, and not writing bitmaps, commit graph
-etc.
-
-It would also be nice to expose via an exit code "do we need to gc?" and
-"is gc failing here?" separately from the (currently working) "run gc or
-report last error + code" mode we have with "gc --auto".
+-- 
+Duy
