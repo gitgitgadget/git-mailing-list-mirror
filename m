@@ -2,99 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 58B9E1F597
-	for <e@80x24.org>; Tue, 17 Jul 2018 22:17:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C3A7E1F597
+	for <e@80x24.org>; Tue, 17 Jul 2018 22:49:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730571AbeGQWwi (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jul 2018 18:52:38 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:34805 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730043AbeGQWwi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jul 2018 18:52:38 -0400
-Received: by mail-wr1-f67.google.com with SMTP id c13-v6so2690159wrt.1
-        for <git@vger.kernel.org>; Tue, 17 Jul 2018 15:17:53 -0700 (PDT)
+        id S1731215AbeGQXYa (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jul 2018 19:24:30 -0400
+Received: from mail-it0-f74.google.com ([209.85.214.74]:41818 "EHLO
+        mail-it0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731193AbeGQXYa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jul 2018 19:24:30 -0400
+Received: by mail-it0-f74.google.com with SMTP id h26-v6so831961itj.6
+        for <git@vger.kernel.org>; Tue, 17 Jul 2018 15:49:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=AWxZNLeNhkg1IhU1stAD18odQOFjWJojpvL+BajaqbE=;
-        b=IzOHC4aQ3VSsciw3UbCwqRwZirV2XI3lYASLSKy49LQMWUvQgp6l53FMQTilDo+j0x
-         LBRqG26yVWqFxbCtSMj6wmZqxUYyOlOXCRxaP2ij97JLObL0+oXWd5VnDi3YJWxqHAcR
-         ZqIPw7QBEzAFMEZlCezVSRXsA3vEDDQDAsgToljt5CaJhdj+izWcu9PSztnTyaJoObuP
-         nd5kCOzdtDNKcmUnM7k4SF/oBJFwn0afWBWV6q7cTOYK2CEUmbFzxDZ9oRlv3bIpxpxz
-         pDIn+MGtxyA9F4c/1kgoP4n+08/6E9MYUzTDmM8F3zD9GsRqdGtrNfwzGwv1VAxCd/is
-         RWmQ==
+        d=google.com; s=20161025;
+        h=mime-version:date:message-id:subject:from:to:cc;
+        bh=5xZgFLTl8OVxkU1TjDkOZWlqcIQ/DbYc2ZEkWZ4QhNA=;
+        b=oT6J813OK+9lsCnm7VpsfGR5dWmO7Ir9XZmbSNPFalOT5kanb493UbbFx/c3DMZ6Uy
+         tR2HpyrS+RyV9w2qnxeiVV0r6IhYLr+xDEzcMJ+iYbwCkQ3NeJnOyBXZny6RXw2tiwwL
+         GW8kEQ3VNFcSdOuPClihXbx6W8E+JQHqYKvmTXS7YdEhom4Gwx8fptt/326uTn/07Uge
+         z3vKYY/oFgqlkA23JOFIp2X56YbdFVODlKpMXof/sH6pp4FlL0Q6bFAjhsiWZev9Hcfx
+         nsj/zag/k2oLG4mVefl/XpmGki6w79t71rJFmWAqY48Ic6NhMQcXumUQ4cc4Q07whcgx
+         j0Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=AWxZNLeNhkg1IhU1stAD18odQOFjWJojpvL+BajaqbE=;
-        b=QlqBbzgI4+21cN53A7h9UneUEbdDkJmT0z7Vf+YZmxwT15z5iKbbrSzoqLuNo85v4Z
-         RUI3hRaod4A6MPm/qydTzLGV8Lc8hUBWx6V7iHK2WcN6Szht5z5yw9XF5x3XDKQvdnCk
-         WYk4hwbwm3L04WfnvJZGPkEWzjax6MgXD50IPdposgzK12GZH954C4vOoys3uivdeMyy
-         yPwlZuErQAE9awZvo8eQl6q0uARkRtC+v09pmvorvYk+ZibvmgsqFfIzIb5TiFflQiXu
-         cmBGV/a3yZLsb46fnkkx7BEIwZL4wQRdAWNcn333BbJvPLEK72cGsy9jiXvvbTb4N/4S
-         tL5A==
-X-Gm-Message-State: AOUpUlHGvQqgG8qLqjofk+BUUch+sWaNPb5Vws6gyQr0oaM/aiyUbHGY
-        V3CJR63J7N3h9qEZkvHNax4=
-X-Google-Smtp-Source: AAOMgpee8R4F1DOyfUNE76Xkyv9M1QFugw2uKe6y5HWAb7Y8lpcd/rAugRqcql4zdGlu6vAKb0Rj5g==
-X-Received: by 2002:adf:dc8e:: with SMTP id r14-v6mr2546857wrj.166.1531865873003;
-        Tue, 17 Jul 2018 15:17:53 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id y13-v6sm3140471wrg.5.2018.07.17.15.17.51
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 17 Jul 2018 15:17:52 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: [PATCH v2 4/4] ref-filter: use oid_object_info() to get object
-References: <0102016493ab5347-c0429041-6e66-4550-894c-2d500cb2ed8e-000000@eu-west-1.amazonses.com>
-        <0102016493ab542d-ea2a3e8c-d6a0-44ca-8fc6-f940fe7e84cd-000000@eu-west-1.amazonses.com>
-        <xmqqr2k2sy02.fsf@gitster-ct.c.googlers.com>
-        <CAL21BmnDqv9yib5Vqh4q7zj1hd_bmhO+xnDVJBi-zM0Cqtsevw@mail.gmail.com>
-Date:   Tue, 17 Jul 2018 15:17:51 -0700
-In-Reply-To: <CAL21BmnDqv9yib5Vqh4q7zj1hd_bmhO+xnDVJBi-zM0Cqtsevw@mail.gmail.com>
-        (=?utf-8?B?ItCe0LvRjyDQotC10LvQtdC20L3QsNGPIidz?= message of "Tue, 17 Jul
- 2018 10:44:33
-        +0300")
-Message-ID: <xmqqtvoxld68.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc;
+        bh=5xZgFLTl8OVxkU1TjDkOZWlqcIQ/DbYc2ZEkWZ4QhNA=;
+        b=ZbOzY3M+1THf8YvmAx2V93nYgQOG+8WlnfYAD3QbmWnarURuEEMY8woRBhG7A7AZ3u
+         iOerdOmrJlyxGy7KIveN4mG583tsduK/Ur6k2Bu5lbNb9HnTAzdhlnLZq4qoEDkneUFN
+         W2SAwQyDk8yD6ytKHUHI//7P3R0lXyED02jNXECSNOHEEIrhJN7iEVb7E4rm4Ftxj1aW
+         g/tW+xpxSi5/pCb2XG1IOe2tOZRa15uL5FH3kY3NNwIFsIJ19Hnk1RNzojAIza4xqkYr
+         EWYuQREVcVVav2UYb16XQZxMH0lmFSivev1X0ibOHH1rowfre9y1KKI4lAB7QpVwyNaF
+         w4aw==
+X-Gm-Message-State: AOUpUlH/Nf/wZn/6RnMnX0TUoRMs/daPRx+hoSn+reZ/QpfZu/a035qk
+        b8p011JQ0WEYVxkvUMKpeA2W/OP1sXDf
+X-Google-Smtp-Source: AA+uWPzHyA2tYEdyMZj7uADy+k1hlKLFrq/OilQ03+vcWyN38xbfKZvUaXm1incdYGuZG3w21oLcUq3Ho1Y8
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+X-Received: by 2002:a6b:9bcf:: with SMTP id d198-v6mr1426986ioe.52.1531867779516;
+ Tue, 17 Jul 2018 15:49:39 -0700 (PDT)
+Date:   Tue, 17 Jul 2018 15:49:33 -0700
+Message-Id: <20180717224935.96397-1-sbeller@google.com>
+X-Mailer: git-send-email 2.18.0.233.g985f88cf7e-goog
+Subject: [PATCH 0/2] RFC ref store to repository migration
+From:   Stefan Beller <sbeller@google.com>
+To:     dstolee@microsoft.com, stolee@gmail.com
+Cc:     git@vger.kernel.org, mhagger@alum.mit.edu,
+        Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Оля Тележная  <olyatelezhnaya@gmail.com> writes:
+Stolee said (privately):
 
->> Hmph, doesn't this belong to the previous step?  In other words,
->> isn't the result of applying 1-3/4 has a bug that can leave eaten
->> uninitialized (and base decision to free(buf) later on it), and
->> isn't this change a fix for it?
->
-> Oh. I was thinking that it was new bug created by me. Now I see that
-> previously we had the same problem.
+    I also ran into an issue where some of the "arbitrary repository"
+    patches don't fully connect. Jonathan's test demonstrated this
+    issue when I connected some things in an in-process patch 
+    Work in progress: https://github.com/gitgitgadget/git/pull/11
+    Specifically: https://github.com/gitgitgadget/git/pull/11/commits/287ec6c1cd4bf4da76c05698373aee15749d011a
+    
+And I dislike the approach taken in
+https://github.com/gitgitgadget/git/pull/11/commits/287ec6c1cd4bf4da76c05698373aee15749d011a
+and would prefer another approach shown at
+https://github.com/stefanbeller/git/tree/object-store-convert-refstore-partial
+or in this series.
 
-The original said something like:
+This approach doesn't have the ugliness of having the repository around twice,
+e.g.
 
-	int eaten;
-	void *buf = get_obj(..., &eaten);
-	...
-	if (!eaten)
-		free(buf);
+    int register_replace_ref(const char *refname, ...
+    {
+      struct repository *r = cb_data;
+      ...
+    }
+    
+    ...  
 
-and get_obj() left eaten untouched when it returned NULL.  As a
-random uninitialized cruft in eaten that happened to be "true" would
-just cause free(NULL) on many archs, there was no practical problem
-in such a code, but it is undefined behaviour nevertheless.
+    for_each_replace_ref(r, register_replace_ref, r);
+    
+which would iterate over the refs of the first "r" and have "r" as a call back
+data point for register_replace_ref.
 
-And the previous step made it a bit more alarming ;-)
+This approach also takes the gentle hint of Junio to not replace well used functions
+throughout the whole code base (using coccinelle), but for now exposes just
+one example in the second patch.
+
+These patches have been developed on top of jt/commit-graph-per-object-store.
+
+Opinions?
+
+Thanks,
+Stefan   
+
+Stefan Beller (2):
+  refs.c: migrate internal ref iteration to pass thru repository
+    argument
+  refs.c: upgrade for_each_replace_ref to be a each_repo_ref_fn callback
+
+ builtin/replace.c    |  3 ++-
+ refs.c               | 48 +++++++++++++++++++++++++++++++++++++-------
+ refs.h               | 12 ++++++++++-
+ refs/iterator.c      |  6 +++---
+ refs/refs-internal.h |  5 +++--
+ replace-object.c     |  3 ++-
+ 6 files changed, 62 insertions(+), 15 deletions(-)
+
+-- 
+2.18.0.233.g985f88cf7e-goog
 
