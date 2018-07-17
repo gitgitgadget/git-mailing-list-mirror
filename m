@@ -2,95 +2,229 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D1031F597
-	for <e@80x24.org>; Tue, 17 Jul 2018 09:48:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1DB021F597
+	for <e@80x24.org>; Tue, 17 Jul 2018 09:53:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729749AbeGQKUf (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jul 2018 06:20:35 -0400
-Received: from mail-ed1-f46.google.com ([209.85.208.46]:35158 "EHLO
-        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729046AbeGQKUe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jul 2018 06:20:34 -0400
-Received: by mail-ed1-f46.google.com with SMTP id b10-v6so675195edi.2
-        for <git@vger.kernel.org>; Tue, 17 Jul 2018 02:48:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=83/oM5DqtN4z5TUfuHem/s5Y5MNJiOrFVo5ttdOajvI=;
-        b=m1ziMewGTGZvxwcnX/WjYMDDFIB2mTGgaO4McEgrnlV/qJh9g2GMCttMRTlKMWdAlG
-         O1KRcj5av5n3l3ebVSBv24dEKW0C3yIW3eH20r3c/WEyT5fUZJBc/TFehVOA/sgJbDdE
-         goal7JJ1LnIiE9zVcqFBXOoS/naBy3bDu81UhggeoYSuIPvpeqMIFRp1qNNFrDfGVPRf
-         o1xERKXldA12LlWAycMYteiXyKp130Xq3KeX0KyHyEhuLYVyuMTATQmViv74d+sD9p7Y
-         hvsVOaBIxQDZJjn+1n9toA/09MZmerKztEX5ftlxcxdMjzu3DOM+G88/1n0pohCU3aA4
-         +GTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=83/oM5DqtN4z5TUfuHem/s5Y5MNJiOrFVo5ttdOajvI=;
-        b=WeMBfxcrgpXPXmnhpsK0krSAbLCwbNfdyrpRIlo5uarkErjHZzTt5LMpm34z5beahB
-         dbzDgBPryD5d+dkkCNul/FeexhJrdjOjl1O8vm2qHRfEyqte/Kn/mSKmdznWaymviOQh
-         ZoPFXvNvlM1cF/vw11jrInGmTRjTJabYuDqrzhxkDsC3110BtkaqNvMjd4DtC4HV7XY5
-         5oRp2WnmmVm0ZqllXq2IayxDonNR2hX1UH9hCM/MFKtPBef1wwOZpOVdg8HHVGvYRp0s
-         Jc1BNXC1yjhf7GUSPQb+iyL2mYh8OtdAeC2kOu0IA5im6YcclKyptJ9ircvrm3OSK3yE
-         O5VA==
-X-Gm-Message-State: AOUpUlFlC6prPOvB8TMdkTeCH79zRnE6q2apKU3vpU18yyPAHUftfDQV
-        klnIjIFEEba7/3dak9eViIOi1C6K
-X-Google-Smtp-Source: AAOMgpelvXL1bPJIi+inSQiP+MssPchPWJh5qUEga9hIck5uAUmK4cgq789knVPe4guaPoGBWIv7wQ==
-X-Received: by 2002:a50:ba6e:: with SMTP id 43-v6mr1689112eds.292.1531820926330;
-        Tue, 17 Jul 2018 02:48:46 -0700 (PDT)
-Received: from evledraar ([5.57.21.50])
-        by smtp.gmail.com with ESMTPSA id k32-v6sm320379edc.85.2018.07.17.02.48.45
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 17 Jul 2018 02:48:45 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "J. Paul Reed" <preed@sigkill.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Are clone/checkout operations deterministic?
-References: <20180717091429.GA31043@sigkill.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180717091429.GA31043@sigkill.com>
-Date:   Tue, 17 Jul 2018 11:48:45 +0200
-Message-ID: <87bmb6chvm.fsf@evledraar.gmail.com>
+        id S1729690AbeGQKZn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jul 2018 06:25:43 -0400
+Received: from mout.gmx.net ([212.227.15.19]:34541 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729060AbeGQKZn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jul 2018 06:25:43 -0400
+Received: from [192.168.0.129] ([37.201.195.94]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lp3sy-1gHhde2paW-00eq9h; Tue, 17
+ Jul 2018 11:53:46 +0200
+Date:   Tue, 17 Jul 2018 11:53:29 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Eric Sunshine <sunshine@sunshineco.com>
+cc:     gitgitgadget@gmail.com, Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 03/20] range-diff: first rudimentary implementation
+In-Reply-To: <CAPig+cQo1hM59P5eB4YTw=zvMAWh0OO8zsf0PMcwYoJtGwLKCQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1807162011210.71@tvgsbejvaqbjf.bet>
+References: <cover.1525448066.git.johannes.schindelin@gmx.de> <pull.1.v3.git.gitgitgadget@gmail.com> <076e1192d15562d868a8a6014f36155f360da83d.1530617166.git.gitgitgadget@gmail.com> <CAPig+cQo1hM59P5eB4YTw=zvMAWh0OO8zsf0PMcwYoJtGwLKCQ@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:TUrxowA2BcwVLOqrX9KTXDWgXx9cK9j6upk27qC8fmxb6fRJQlV
+ RB4akngvz/rI+GkDZkth7aMSTOOvXpK6xPbv2fW+UjIfs31vnTRz/NDb697O1MnYOD4BI5/
+ iOo6CLtAHQ+3pocj8kgi3dSV9TkJu5umNTkWv7zUgFIIe4icU3lCLcfsE1Aq04pa8aI7XlC
+ eUjKmddjPZmiUWv4OQBLQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:q22rn4pLMrc=:T2RzmVQ4oMdwVN/MepUF3Z
+ Fzr+nfxniMLcM2x3w1rZmly4w7JFPjEfEm1g1b2hHX+VOpKQAxIV2vg1XnuqGyXVDEOi5htxS
+ 0eBnIdioePMp3YiQTgXGIO9HNFBbQO+9oEndMwF+FvWHO8J/3NTbIlDeRTkr/HLsRSwmBtLWN
+ c5KXiQjuFPL6/Dg1iq6h0KZfK8MEih57iDfodEo5gPp8TBdcHmYhgECVLrRyU48jOCcd4j3Tq
+ 5No8N32MIZVBK5xLDTBjDjcKpTGUrVfFIzSOzcwLNElJE7as4+6gX9BSBxjxO5YWiU1JOZFWi
+ xcNTaWGsq8rlrHAgTVyE9O3e/33VCDSzAquzHaijtTW0gT5qJvw7/eYx5EtOyCIiGkWeVx4ZF
+ ORxVgObrrgKQ96HMW6jAarBQDJXiw1O0ZnQLuF0ohrSfO6VykEu+GJrF1QWqF1c8nuTBqW7Fu
+ W7wY7bFVJMGjGgFQFIjHmAeM9pmvWJ7jBY6awDP1wTLb0u7/EbpTtk6ACiPiCbPjVURgdmgIx
+ AG8WSFb5ZWGnDprvPvxZFhOYHvU+8zJgHVgMzAGgHxUYZYAh9mc1HPaJ/cIDyAOAALQvxb72i
+ 3gtdgjbRCkseetArq9U2mpt9t/hIKrhRofYvZ27LBy/dkZOIq8mM0VSZroBpHRymArIvoXR+8
+ 8d3jirxY6gR1a156AleLpMqBi1TYMX//9Q2Si9Yd0z7lDVAGJ+gqiMQsdnRj78CIBz5Q1NpMW
+ agWLecjxcQmaOI0MW4ybW1hB70SSRHsgHIQeK5coXLXAyIVyYcdACm38zC0n/oBQdjNKaIB8u
+ fgeVy7R
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Eric,
 
-On Tue, Jul 17 2018, J. Paul Reed wrote:
+On Mon, 16 Jul 2018, Eric Sunshine wrote:
 
-> Hey Git Devs,
->
-> I have a bit of an odd question: do git clone/checkout operations have a
-> deterministic ordering?
->
-> That is: are files guaranteed to be laid down onto disk in any specific
-> (and deterministic) order as a clone and/or checkout operations occurs?
-> (And if so, is it alphabetical order? Depth-first? Something else?)
->
-> In case the answer is different (and I'd guess that it might be?), I'm
-> mostly interested in the initial clone case... but it would be great to
-> know if, indeed, the answer is different for just-checkouts too.
->
-> I did some cursory googling, but nothing hopped out at me as an answer to
-> this question.
+> On Tue, Jul 3, 2018 at 7:27 AM Johannes Schindelin via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> > At this stage, `git range-diff` can determine corresponding commits
+> > of two related commit ranges. This makes use of the recently introduced
+> > implementation of the Hungarian algorithm.
+> 
+> Did you want s/Hungarian/Jonker-Volgenant/ here? (Not worth a re-roll.)
 
-In practice I think clone, checkout, reset etc. always work in the same
-order you see with `git ls-tree -r --name-only HEAD`, but as far as I
-know this has never been guaranteed or documented, and shouldn't be
-relied on.
+It is worth a new iteration, and I'd rather say "linear assignment" than
+either Hungarian or Jonker-Volgenant. Thanks for pointing this out.
 
-E.g. there's probably cases where writing files in parallel is going to
-be faster than writing them sequentially. We don't have such a mode just
-because nobody's written a patch for it, but having that patch would
-break any assumptions of our current order.
+> > The core of this patch is a straight port of the ideas of tbdiff, the
+> > apparently dormant project at https://github.com/trast/tbdiff.
+> > [...]
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> > diff --git a/builtin/range-diff.c b/builtin/range-diff.c
+> > @@ -17,9 +18,49 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
+> > +       int res = 0;
+> > +       struct strbuf range1 = STRBUF_INIT, range2 = STRBUF_INIT;
+> >
+> > -       argc = parse_options(argc, argv, NULL, options,
+> > -                            builtin_range_diff_usage, 0);
+> > +       argc = parse_options(argc, argv, NULL, options, builtin_range_diff_usage,
+> > +                            0);
+> 
+> This parse_options() change appears to be merely a re-wrapping of the
+> line between patches 2 and 3.
+
+True, and it is a bad change because it makes the line longer than 80
+columns.
+
+Fixed.
+
+> > -       return 0;
+> > +       if (argc == 2) {
+> > +               if (!strstr(argv[0], ".."))
+> > +                       warning(_("no .. in range: '%s'"), argv[0]);
+> > +               strbuf_addstr(&range1, argv[0]);
+> > +
+> > +               if (!strstr(argv[1], ".."))
+> > +                       warning(_("no .. in range: '%s'"), argv[1]);
+> > +               strbuf_addstr(&range2, argv[1]);
+> 
+> Should these die() (like the "..." case below) rather than warning()?
+> Warning and continuing doesn't seem like intended behavior. When I
+> test this with on git.git and omit the "..", git sits for a long, long
+> time consuming the CPU. I guess it's git-log'ing pretty much the
+> entire history.
+
+I had to go back to `git-tbdiff.py` to see how it handles this, and you
+are right: it should die().
+
+Fixed.
+
+(Technically, it is conceivable that some user wants to compare two
+independent commit histories, e.g. when a repository was imported from a
+different SCM two times, independently. I guess when that happens, we can
+always implement a `range-diff --root <tip1> <tip2>` or some such.)
+
+>     % GIT_TRACE=1 git range-diff v1 v2
+>     warning: no .. in range: 'v1'
+>     warning: no .. in range: 'v2'
+>     trace: git log --no-color -p --no-merges --reverse \
+>         --date-order --decorate=no --no-abbrev-commit v1
+>     ^C
+>     %
+> 
+> > +       } else if (argc == 3) {
+> > +               strbuf_addf(&range1, "%s..%s", argv[0], argv[1]);
+> > +               strbuf_addf(&range2, "%s..%s", argv[0], argv[2]);
+> > +       } else if (argc == 1) {
+> > +               const char *b = strstr(argv[0], "..."), *a = argv[0];
+> > +               int a_len;
+> > +
+> > +               if (!b)
+> > +                       die(_("single arg format requires a symmetric range"));
+> > diff --git a/range-diff.c b/range-diff.c
+> > @@ -0,0 +1,307 @@
+> > +static int read_patches(const char *range, struct string_list *list)
+> > +{
+> > +       while (strbuf_getline(&line, in) != EOF) {
+> > +               if (skip_prefix(line.buf, "commit ", &p)) {
+> > +                       [...]
+> > +                       in_header = 1;
+> > +                       continue;
+> > +               }
+> > +               if (starts_with(line.buf, "diff --git")) {
+> > +                       in_header = 0;
+> > +                       [...]
+> > +               } else if (in_header) {
+> > +                       if (starts_with(line.buf, "Author: ")) {
+> > +                               [...]
+> > +                       } else if (starts_with(line.buf, "    ")) {
+> > +                               [...]
+> > +                       }
+> > +                       continue;
+> > +               } else if (starts_with(line.buf, "@@ "))
+> > +                       strbuf_addstr(&buf, "@@");
+> > +               else if (line.buf[0] && !starts_with(line.buf, "index "))
+> > +                       /*
+> > +                        * A completely blank (not ' \n', which is context)
+> > +                        * line is not valid in a diff.  We skip it
+> > +                        * silently, because this neatly handles the blank
+> > +                        * separator line between commits in git-log
+> > +                        * output.
+> > +                        */
+> > +                       strbuf_addbuf(&buf, &line);
+> 
+> This comment had me confused for a bit since it doesn't seem to agree
+> with the 'then' part of the 'if', but rather applies more to the
+> 'else'.  Had it been split into two parts (one for 'then' and one for
+> 'else'), it might have been easier to digest. That is, something like:
+> 
+>     else if (line.buf[0] && !starts_with(..., "index "))
+>         /* A line we wish to keep. */
+>         strbuf_addbuf(...);
+>     else
+>         /*
+>          * A completely blank line between commits or
+>          * or one in which we are otherwise not interested.
+>          */
+>         continue;
+> 
+> or something. Structuring it a bit differently might have helped, as well:
+> 
+>     else if (!line.buf[0])
+>         /* A completely blank line between commits. */
+>         continue;
+>     else if (starts_with(..., "index "))
+>         /* A line in which we are not interested. */
+>         continue;
+>     else
+>         strbuf_addbuf(&buf, &line);
+
+I like this much better, too.
+
+> Not at all worth a re-roll.
+
+I'll have to send a new iteration anyway, after digging into ws.c, I
+think.
+
+Also: I had this idea that dimming the "old" diff would make a ton of
+sense, so I want to try that.
+
+> > +               else
+> > +                       continue;
+> > +       if (util)
+> > +               string_list_append(list, buf.buf)->util = util;
+> 
+> So, the parser is grabbing each commit and shoving all the
+> "interesting" information about the commit in a 'patch_util'. It grabs
+> the OID, author, the commit message (indented), the "diff --git",
+> "+++", "---" lines (but ignores "index" line), "@@" lines (but
+> ignoring the gunk after "@@"), and all context and patch lines.
+> 
+> Looks good.
+
+Correct.
+
+> > +       strbuf_release(&buf);
+> > +
+> > +       if (finish_command(&cp))
+> > +               return -1;
+> > +
+> > +       return 0;
+> > +}
+
+Thank you for your suggestions!
+Dscho
