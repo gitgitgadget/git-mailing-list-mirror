@@ -2,117 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A16061F597
-	for <e@80x24.org>; Tue, 17 Jul 2018 17:45:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B0E1D1F597
+	for <e@80x24.org>; Tue, 17 Jul 2018 17:45:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729855AbeGQSTA (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jul 2018 14:19:00 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:38727 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729708AbeGQSTA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jul 2018 14:19:00 -0400
-Received: by mail-wm0-f66.google.com with SMTP id 69-v6so214339wmf.3
-        for <git@vger.kernel.org>; Tue, 17 Jul 2018 10:45:16 -0700 (PDT)
+        id S1730092AbeGQST1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jul 2018 14:19:27 -0400
+Received: from mail-io0-f194.google.com ([209.85.223.194]:40469 "EHLO
+        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729927AbeGQST1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jul 2018 14:19:27 -0400
+Received: by mail-io0-f194.google.com with SMTP id l14-v6so1716360iob.7
+        for <git@vger.kernel.org>; Tue, 17 Jul 2018 10:45:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=DDjioKacl3HO1jkXORAy20kxeL1te3WxEGXYAhNzIlg=;
-        b=vFmjHBgxmrhy/vv4RVOCYUQW0Qwem+EQme+toRgR2pbTcUemMf/N5rsu0fS1MCRq+6
-         luqtHrVIylewyVq+TDT8TMMM5+HXXAa3oqypy3zuCea5Vtd1ocehY0IaVlscJ+YV/MBJ
-         0gSMRVYz17jsXsTI2v28hCmLLTFqLsuQSELYCEAwfZwee7EKe2WHObuMTIfcpt30trRT
-         yxbqyjAqZisZUGjjbBV5tpEJ5ZQZLEcNmIzX3Asp6WBTbUbfLQQeuKOkIDIX4lxlq8UJ
-         essSrD8P62s/Ttp/gCyumbdrXAbN8NOKvWKDFiBykAq2c/DEaaxZFm/c4dKWp4TE+g6w
-         yR8Q==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=VHT0Z7w5fPtT2OdcO6FIBpW7tuzIf6uR1BRTO8di4NQ=;
+        b=OyVzzW8CPM3iemitGubb/a58JV1hnzazIzAG6wSE+OuVQsuvvNeU26gjkOjQGqT5p0
+         oWRZfwgJsgT724Ab345yDLlOZSOS8p7/i3DXkPYsf79S/VTecETuWfb9ZTMF4HvqIlhS
+         j+pxU5qyrDVKSUi93y8heVOGIsZAWDQYdZLWubVVbRbhLhQ4f92JG/yg3yvLLavfsbXs
+         K9sASEy8vrUwDiM/q/zcO7oMl7MrpQo92zzPlwauQEMM0ICqDdWPO0IoXKWgOeSW4v+G
+         KsTCm4lrtZn/ftwMO8ffbgLWqGOAlPkFGpFIref5e1OSDmMEKuw7cG1JBFRM5HClNXz/
+         AZvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=DDjioKacl3HO1jkXORAy20kxeL1te3WxEGXYAhNzIlg=;
-        b=p1PVj9BV2AeNLJJId14URzBH61PLYsReZIt2Mlfj2/G0Wr76OnrmNAAoyWg1G5OUDi
-         wWi71dJJ4OK8VIdclk6TKoUqm0ZufbGqgWP5r4FlvBqWMXxyOlGiwdOE96lBzfj5O7s9
-         zZ9L+vUhl2E+GU4b3ii440vdgIe0eY4nDhmNCBr2lv0j3X1gobu2uZJ5Nq6aHQx9Cnxh
-         aXCMApU3msOugVgU1NhHD+JXzH4yLcWKWLgesMfxJvFmu+DHRxPrP5CNcD6E0iA8wccR
-         AKLHX6ylb82ioXl67+wfjonALYOWF2w89EaI2gYYpi8fZtbpByUVhbtPYyR0sRBqu5Vl
-         0f5Q==
-X-Gm-Message-State: AOUpUlGk4fOdSdLtrkK+cXZLB61XNwbdVMmflsrDhvXpEUf1dxydfVvO
-        zcV3eKPvSWl/bBJ8XAXnZEAUJHQE
-X-Google-Smtp-Source: AAOMgpeDcklZtf6NLejiP3tJ0mbQDWe9pst6QSAIMixLycZzvhZSdy0TLl8YteWBYAMtKBV1Fo78cQ==
-X-Received: by 2002:a1c:7c0c:: with SMTP id x12-v6mr2014910wmc.58.1531849515086;
-        Tue, 17 Jul 2018 10:45:15 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id z5-v6sm2580660wrv.2.2018.07.17.10.45.13
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 17 Jul 2018 10:45:14 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Samuel Lijin <sxlijin@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 1/3] t7501: add merge conflict tests for dry run
-References: <20180426092524.25264-1-sxlijin@gmail.com>
-        <20180715110807.25544-2-sxlijin@gmail.com>
-        <xmqq1sc1rdvz.fsf@gitster-ct.c.googlers.com>
-Date:   Tue, 17 Jul 2018 10:45:13 -0700
-In-Reply-To: <xmqq1sc1rdvz.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Tue, 17 Jul 2018 10:05:52 -0700")
-Message-ID: <xmqqd0vlpxhy.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=VHT0Z7w5fPtT2OdcO6FIBpW7tuzIf6uR1BRTO8di4NQ=;
+        b=V9byh7E/pSWITvQ/Bkumr+KRZ8vLBW7RWykT0utu9ifDLs31cODk5Z0pbDnl/Dt0hb
+         rtbAzwp/zdqjQWnxkLJgPM7RcRmVaIJ3fToFZAPqz0SSMOTJPszyBCDhfMl7f+UWtFv9
+         TvA4EYfGeBschbWxglJF25ojiKfy2TnaS8rjhco+j6JuJ6GbI7DU9rpEoNecALsy6LF6
+         o5gAFUKAGhu7U4g2e/EcuykWDGXhUG7mnClQ2oZ/RU5g031s6/p8u05UjkOMtmJDc+g7
+         hojw1FNI2/XzHaOk0SrStKO633xAhi5m4ZS0ONxYp3CoXCTh0PxH75BOcUbQFcBn0Sro
+         j+OQ==
+X-Gm-Message-State: AOUpUlG6dtGAeFHBqaagIpzBILXqqJjU3YRTHIJESFFVxL5ah3JZn5d0
+        KlGG/YNcf+v/w8iRmJNg/r580dtg/M7an3KJ1T4=
+X-Google-Smtp-Source: AA+uWPy3qXNvBF+zbxLwOaKSxZXlxWwGq2j+aeq0n2lblLvzTXa7BNZR/e6uYGimFYE1x54EtImoNUvcjN1++5aMemE=
+X-Received: by 2002:a6b:825e:: with SMTP id e91-v6mr2301208iod.118.1531849543847;
+ Tue, 17 Jul 2018 10:45:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <cover.1531778417.git.ungureanupaulsebastian@gmail.com>
+In-Reply-To: <cover.1531778417.git.ungureanupaulsebastian@gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 17 Jul 2018 19:45:17 +0200
+Message-ID: <CACsJy8AEDmyg1XpgXc5KgKdG33t2SeOHw56tEgL_VVXh1Bcprg@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/6] Add gentle alternative for `get_oid()`
+To:     ungureanupaulsebastian@gmail.com
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> But by splitting these into separate tests, the patch makes such a
-> potential failure with "git commit --short" break the later steps.
+On Tue, Jul 17, 2018 at 2:10 PM Paul-Sebastian Ungureanu
+<ungureanupaulsebastian@gmail.com> wrote:
 >
-> Not very nice.
->
-> It may be a better change to just do in the original one
->
-> 	git add test-file &&
-> 	git commit --dry-run &&
-> +	git commit --short &&
-> +	git commit --long &&
-> +	git commit --porcelain &&
-> 	git commit -m "conflicts fixed from merge."
->
-> without adding these new and separate tests, and then mark that one
-> to expect a failure (because it would pass up to the --dry-run
-> commit, but the --short commit would fail) at this step, perhaps?
+> At the moment, `get_oid()` might call `die()` in some cases. To
+> prevent that from happening, this patches introduces a new flag
+> called `GET_OID_GENTLY` and a new function `get_oid_gently()`,
+> which passes the mentioned flag further to `get_oid_with_context()`.
 
-Of course, if you want to be more thorough, anticipating that other
-people in their future updates may break --short but not --long or
---porcelain, testing each option in separate test_expect_success is
-a necessary way to do so, but then you'd need to actually be more
-thorough, by not merely running each of them in separate
-test_expect_success block but also arranging that each of them start
-in an expected state to try the thing we want it to try.  That is
-
-	for opt in --dry-run --short --long --porcelain
-	do
-		test_expect_success "commit $opt" '
-			set up the conflicted state after merge &&
-			git commit $opt
-		'
-	done
-
-where the "set up the state" part makes sure it can tolerate
-potential mistakes of previous run of "git commit $opt" (e.g. it
-by mistake made a commit, making the index identical to HEAD and
-taking us out of "merge in progress" state).
-
-But from your 1/3 I did not get the impression that you particularly
-want to be more thorough, and from your 3/3 I did not get the
-impression that you anticipate --short/--long/--porcelain may get
-broken independently.  And if that is the case, then chaining all of
-them together like the above is a more honest way to express that we
-are only doing a minimum set of testing.
-
-Thanks.
+Since get_oid() callers must handle failure when it returns non-zero,
+I would say "gently" is already implied by get_oid() and we could just
+convert those die() to error() or warning(). Unless some of those
+die() are very special that we need to choose which call sites should
+go "even gentler" where some sites should still die()?
+-- 
+Duy
