@@ -2,110 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2FBFC1F597
-	for <e@80x24.org>; Tue, 17 Jul 2018 16:46:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7604E1F597
+	for <e@80x24.org>; Tue, 17 Jul 2018 16:48:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729706AbeGQRTw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jul 2018 13:19:52 -0400
-Received: from mout.gmx.net ([212.227.17.21]:58499 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729669AbeGQRTw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jul 2018 13:19:52 -0400
-Received: from [192.168.0.129] ([37.201.195.94]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M8ZtH-1g1NmC2a5T-00wAVa; Tue, 17
- Jul 2018 18:46:11 +0200
-Date:   Tue, 17 Jul 2018 18:46:03 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Daniel Harding <dharding@living180.net>
-cc:     Aaron Schrab <aaron@schrab.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] sequencer: use configured comment character
-In-Reply-To: <66ce6f94-49ae-618e-bf6c-43a0f15bb752@living180.net>
-Message-ID: <nycvar.QRO.7.76.6.1807171844040.71@tvgsbejvaqbjf.bet>
-References: <xmqq4lh4z870.fsf@gitster-ct.c.googlers.com> <20180716045902.16629-1-aaron@schrab.com> <nycvar.QRO.7.76.6.1807161758560.71@tvgsbejvaqbjf.bet> <66ce6f94-49ae-618e-bf6c-43a0f15bb752@living180.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729684AbeGQRWZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jul 2018 13:22:25 -0400
+Received: from mail-io0-f193.google.com ([209.85.223.193]:40695 "EHLO
+        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729669AbeGQRWZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jul 2018 13:22:25 -0400
+Received: by mail-io0-f193.google.com with SMTP id l14-v6so1562012iob.7
+        for <git@vger.kernel.org>; Tue, 17 Jul 2018 09:48:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=4Y2UtWWO/nEyEz7kQNu6Kkd3YvUGvVaapthwS8jVz/w=;
+        b=KLZ7Pf0w1YigC15N0epGaGoUZT04YqXhSHZxqM0DJ5gacFV1bPh9jdko5VtKTuz119
+         xPcJOK95HfIuucUhCLLaZ1uTlUEz3uN5AY4FDLFsSebI9ZTpW4l0B2EEJ1I5MHn3IQZy
+         WlkfdKFgiIl8y3XW0ufhdkz3k1kRhq2SgtLY7vzmrOYUiT0K/GPp17zkLwFTYyHCzITT
+         XNEpj8vPGmYmxT89NZDG6ZGYPUOCZt/IJPhE7av8wsTR3VoJE1CYjgnxzEyDJHtVV474
+         ZU0ldGzHA3oJ7+aIgwje2WWoVFULaujZe3q/M4AGGQ+z8cZT4gHOXSqsObZjzYV6Bio5
+         uzBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=4Y2UtWWO/nEyEz7kQNu6Kkd3YvUGvVaapthwS8jVz/w=;
+        b=n9aQqhvLUunKhYhQihfgMniHWK+goA7hxiZHJUJd3AJQVPtHetA/t+wi1lQTlbTnu6
+         ITixLmDgQTdOYWvAOqqXkAuYqtUY1BC9ed6WDib5dMyebHrcVVuBzRDuazvVr948I22C
+         G2t81XMlSlC3KppZklPMnLaBuBuigVBPMDMC305AvKRdIP09NfEtGg3Pxzmgi3m/tJzf
+         yOXgA4vPOBA3xvftwjNMdevnAVXV67AMTSjIVhAIhBo+G29jNZ0Z4Ns15+TnybjMg5SH
+         Ywrv5/tfA3lBur4HfU2OWhQUPfXVR1dUfCZpaHToU4jmVnrvwar4DegC4TbW7lhQicaf
+         9pyg==
+X-Gm-Message-State: AOUpUlE2Tyli3o+FH7ufian+4hKxg5nv1k6wlh3yWR7JECJB7HQiaeBw
+        ZYwqkTTVIsnu19rBThZeDYqnT56uWoTImAhrMwA=
+X-Google-Smtp-Source: AA+uWPyRzJLQhRRjXYOMdT+eJduBcJPbiCWoz+xbJePbz7U7ANTDEbQ81lBWaWei4EnNhjH+s/xsvJmc9fkbzPwFf68=
+X-Received: by 2002:a6b:1f0e:: with SMTP id f14-v6mr1970945iof.236.1531846133461;
+ Tue, 17 Jul 2018 09:48:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:sXobYAYh9Mt7sfel+Jqylhr70R4pXXTYkdoexjXz594hH5fesui
- IkmEVF/HSvX4ZJFMU4sd6orBV2n9AM1r1mm3ufgq8eIKVANQx6QcfleO4q/Lz6ony1v/sGE
- 02cgAb/Z7MsaFvdbvJbXKYvXmg5CvrwEsJPWIU5WXAHSUzFIRrAooWwJIjOWu1cHY1tBIvR
- +POQ/31qpS2YbHIwS1QnA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:CDLQYDnKiBA=:9Y+BGcOr65B7os2Vzwbiap
- WdG3lSzF/aXbtVqkvTwpFrWYnylBFxcb6ARzHgdj7OQPnsLkGrkJ9SlFXbMB3Lo1JkrLCtytJ
- 2ScBlltc3vjBa/5kdI8uFXSFM3vsZciT7ersHTh7zQ4rVTJ6qEIazkGJSWhgFOq/GvlMqtrS6
- PwjTFWLi0opQxIxw3ri0+K8FR9Acitq8J7kipyFeXhl3UhrK1WSim7+DOdF0vcc0rCBHVNzeh
- LhXS8H8WVPfKa0sNOGnjCKpucZQmEZhGD1mQ1zN+KTAj8R5Pok5pqwgAUGOiXLV8InACNa4lF
- THeg1nqUCOX2GibFdnLl45bxVjFI953UY4BFqYMEGn2m3TaJVCouALgtqZI985EBdV0NOFll0
- H2s41vNSquEpxspFrTh/FVKKjQ512wPiG8j9ipS91WOkX1nTlBrtDmmVSIq5cMckKwIbS05JE
- Yqvl8D3T7J1ij6GI13/9a6Ju0/PsQwEBVniNvgRalq6hensvC9eISHAKKvS+52UejGy7pf+r+
- cLUjywmg6kSWGvKN/2EkD1JFiOLflil6qyohETSXoT/wBT1rFhOhUvj/CNSogKzEHbKnWl2O7
- LkLEz3g8emZ5e4IipwW6/q9y8LEKnA1P5/yr7y+cegggjWVmheX9cDTXzHCtYcprhiXn57dBm
- sQOiReyT2Y+f8mhNedsXFEzgoCqZoML/lhvB6rR00uZkDlsFpZbozK6+GGLykFvjalu+rbtMV
- npbtIlJB91IrKvAchJ2VoEFia3rwU4f1tFV0QoOnbkMrMbv2DgIPhzZnVzC0gMA6SM7EYzyp0
- hqTYGS7
+References: <pull.9.git.gitgitgadget@gmail.com> <b4e01a963fd16f50d12c1f67c6e64bec8b1e9673.1531513093.git.gitgitgadget@gmail.com>
+ <CACsJy8Ce0kXTCzLf6jFq1QjY4Q4QePfk1JbgGUr-kQqQDCc7mA@mail.gmail.com>
+In-Reply-To: <CACsJy8Ce0kXTCzLf6jFq1QjY4Q4QePfk1JbgGUr-kQqQDCc7mA@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 17 Jul 2018 18:48:27 +0200
+Message-ID: <CACsJy8Cxp6Gtt3YdWvQ0=t4vqBAqNxrGPeY4B7mtjsiLNpG5TQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] repack -ad: prune the list of shallow commits
+To:     gitgitgadget@gmail.com
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Daniel,
+On Tue, Jul 17, 2018 at 6:39 PM Duy Nguyen <pclouds@gmail.com> wrote:
+>
+> On Fri, Jul 13, 2018 at 10:19 PM Johannes Schindelin via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> >
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > While it is true that we never add unreachable commits into pack files
+> > intentionally (as `git repack`'s documentation states), we must not
+> > forget that a `git fetch --prune` (or even a `git fetch` when a ref was
+> > force-pushed in the meantime) can make a commit unreachable that was
+> > reachable before.
+> >
+> > Therefore it is not safe to assume that a `git repack -adlf` will keep
+> > unreachable commits alone (under the assumption that they had not been
+> > packed in the first place).
+> >
+> > This is particularly important to keep in mind when looking at the
+> > `.git/shallow` file: if any commits listed in that file become
+> > unreachable, it is not a problem, but if they go missing, it *is* a
+> > problem. One symptom of this problem is that a deepening fetch may now
+> > fail with
+> >
+> >         fatal: error in object: unshallow <commit-hash>
+> >
+>
+> Could you elaborate a bit more?
 
-On Mon, 16 Jul 2018, Daniel Harding wrote:
-
-> On Mon, 16 Jul 2018 at 18:59:03 +0300, Johannes Schindelin wrote:
-> > 
-> > On Mon, 16 Jul 2018, Aaron Schrab wrote:
-> > >
-> > > Looking into that a bit further, it does seem like my explanation above
-> > > was incorrect.  Here's another attempt to explain why setting
-> > > core.commentChar=auto isn't a problem for this change.
-> > >
-> > > 8< -----
-> > >
-> > > Use the configured comment character when generating comments about
-> > > branches in a todo list.  Failure to honor this configuration causes a
-> > > failure to parse the resulting todo list.
-> > >
-> > > Setting core.commentChar to "auto" will not be honored here, and the
-> > > previously configured or default value will be used instead. But, since
-> > > the todo list will consist of only generated content, there should not
-> > > be any non-comment lines beginning with that character.
-> > 
-> > How about this instead?
-> > 
-> >  If core.commentChar is set to "auto", the intention is to
-> >  determine the comment line character from whatever content is there
-> >  already.
-> > 
-> >  As the code path in question is the one *generating* the todo list
-> >  from scratch, it will automatically use whatever core.commentChar
-> >  has been configured before the "auto" (and fall back to "#" if none
-> >  has been configured explicitly), which is consistent with users'
-> >  expectations.
-> 
-> Honestly, the above still doesn't read clearly to me.  I've take a stab at it
-> myself - let me know what you think:
-> 
->     If core.commentChar is set to "auto", the comment_line_char global
->     variable will be initialized to '#'.  The only time
->     comment_line_char gets changed to an automatic value is when the
->     prepare_to_commit() function (in commit.c) calls
->     adjust_comment_line_char().  This does not happen when generating
->     the todo list, so '#' will be used as the comment character in the
->     todo list if core.commentChar is set to "auto".
-
-There is a concocted way to have core.commentChar = auto *and* to override
-the comment char: if you use `git config --add core.commentChar auto`, or
-if you have it set in $HOME/.gitconfig and in .git/config.
-
-I tried to cover that in my suggestion, but that was probably trying to be
-too precise, rather than being useful...
-
-Ciao,
-Johannes
+Never mind. The problem is described in another patch.. sigh.. I
+understand you want to flip that "failure" to "success" but personally
+I don't think it worth it to look back in history and have "what?"
+moments like when I read this patch alone.
+-- 
+Duy
