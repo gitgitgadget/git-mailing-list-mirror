@@ -2,73 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CFB451F597
-	for <e@80x24.org>; Tue, 17 Jul 2018 09:46:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D1031F597
+	for <e@80x24.org>; Tue, 17 Jul 2018 09:48:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729728AbeGQKR6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jul 2018 06:17:58 -0400
-Received: from mout.gmx.net ([212.227.17.22]:57157 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729704AbeGQKR6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jul 2018 06:17:58 -0400
-Received: from [192.168.0.129] ([37.201.195.94]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LhTjQ-1gRZPd3g4e-00mcS8; Tue, 17
- Jul 2018 11:46:01 +0200
-Date:   Tue, 17 Jul 2018 11:45:44 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jonathan Nieder <jrnieder@gmail.com>
-cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        paul@mad-scientist.net, dnj@google.com
-Subject: Re: Git 2.18: RUNTIME_PREFIX... is it working?
-In-Reply-To: <20180710222005.GP14196@aiede.svl.corp.google.com>
-Message-ID: <nycvar.QRO.7.76.6.1807171144350.71@tvgsbejvaqbjf.bet>
-References: <nycvar.QRO.7.76.6.1807041312150.75@tvgsbejvaqbjf.bet> <986185d30a0f09b4e2a9832d324a265cd3da7354.camel@mad-scientist.net> <nycvar.QRO.7.76.6.1807061059260.75@tvgsbejvaqbjf.bet> <CAD1RUU-4a_jV_JjozjXOR4bi+_7rFW_AjmHbbrw6NHJ77=oGkw@mail.gmail.com>
- <bf0d4f33701ec694917f2e710c3fb097085c8d69.camel@mad-scientist.net> <nycvar.QRO.7.76.6.1807082346140.75@tvgsbejvaqbjf.bet> <20180709195822.GA9000@sigill.intra.peff.net> <20180710035635.GA13459@sigill.intra.peff.net> <5b445ca6.TkV9Dj8T2KFinxZP%perryh@pluto.rain.com>
- <20180710140310.GA9246@sigill.intra.peff.net> <20180710222005.GP14196@aiede.svl.corp.google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729749AbeGQKUf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jul 2018 06:20:35 -0400
+Received: from mail-ed1-f46.google.com ([209.85.208.46]:35158 "EHLO
+        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729046AbeGQKUe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jul 2018 06:20:34 -0400
+Received: by mail-ed1-f46.google.com with SMTP id b10-v6so675195edi.2
+        for <git@vger.kernel.org>; Tue, 17 Jul 2018 02:48:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=83/oM5DqtN4z5TUfuHem/s5Y5MNJiOrFVo5ttdOajvI=;
+        b=m1ziMewGTGZvxwcnX/WjYMDDFIB2mTGgaO4McEgrnlV/qJh9g2GMCttMRTlKMWdAlG
+         O1KRcj5av5n3l3ebVSBv24dEKW0C3yIW3eH20r3c/WEyT5fUZJBc/TFehVOA/sgJbDdE
+         goal7JJ1LnIiE9zVcqFBXOoS/naBy3bDu81UhggeoYSuIPvpeqMIFRp1qNNFrDfGVPRf
+         o1xERKXldA12LlWAycMYteiXyKp130Xq3KeX0KyHyEhuLYVyuMTATQmViv74d+sD9p7Y
+         hvsVOaBIxQDZJjn+1n9toA/09MZmerKztEX5ftlxcxdMjzu3DOM+G88/1n0pohCU3aA4
+         +GTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=83/oM5DqtN4z5TUfuHem/s5Y5MNJiOrFVo5ttdOajvI=;
+        b=WeMBfxcrgpXPXmnhpsK0krSAbLCwbNfdyrpRIlo5uarkErjHZzTt5LMpm34z5beahB
+         dbzDgBPryD5d+dkkCNul/FeexhJrdjOjl1O8vm2qHRfEyqte/Kn/mSKmdznWaymviOQh
+         ZoPFXvNvlM1cF/vw11jrInGmTRjTJabYuDqrzhxkDsC3110BtkaqNvMjd4DtC4HV7XY5
+         5oRp2WnmmVm0ZqllXq2IayxDonNR2hX1UH9hCM/MFKtPBef1wwOZpOVdg8HHVGvYRp0s
+         Jc1BNXC1yjhf7GUSPQb+iyL2mYh8OtdAeC2kOu0IA5im6YcclKyptJ9ircvrm3OSK3yE
+         O5VA==
+X-Gm-Message-State: AOUpUlFlC6prPOvB8TMdkTeCH79zRnE6q2apKU3vpU18yyPAHUftfDQV
+        klnIjIFEEba7/3dak9eViIOi1C6K
+X-Google-Smtp-Source: AAOMgpelvXL1bPJIi+inSQiP+MssPchPWJh5qUEga9hIck5uAUmK4cgq789knVPe4guaPoGBWIv7wQ==
+X-Received: by 2002:a50:ba6e:: with SMTP id 43-v6mr1689112eds.292.1531820926330;
+        Tue, 17 Jul 2018 02:48:46 -0700 (PDT)
+Received: from evledraar ([5.57.21.50])
+        by smtp.gmail.com with ESMTPSA id k32-v6sm320379edc.85.2018.07.17.02.48.45
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 17 Jul 2018 02:48:45 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     "J. Paul Reed" <preed@sigkill.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Are clone/checkout operations deterministic?
+References: <20180717091429.GA31043@sigkill.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20180717091429.GA31043@sigkill.com>
+Date:   Tue, 17 Jul 2018 11:48:45 +0200
+Message-ID: <87bmb6chvm.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:5ZsO8+GyIHnYBi7NLTsduxoJB4w3i00T8vJMj9HQmuW3K2Iscas
- wO9tZhSfv+0eUexIAAgT89iLEeq+JHmg7sX00oOEM+UUAGITkGABv8SM/hSkV8ScG9s32Ln
- sSduiJPkyqVftUNi8MjMsjup/DGrZ8KHlcRtQj9IBsk1l1S6Qk5YoVPcGYkVluR+y+sDG2m
- QQ2dum3H8yUhg3H4rPZdw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:1ndyF3EB2gs=:HRrd2bmDJyPpZ4URnA75cE
- MUE6fviyu8GgvzZ68gAH4Hx7YT0iz6FqhN6SZGnW+NtlJfLwPf0TrBkKhTS4St7PCGb27keIX
- R+ANQejpsjgjVf2JzoDtM+c7iVbxEVMwaZLEVNXNCx/RKIVmqDCl7j7wKaR9BcYbU3nDFB4oy
- oBvPZNaPPtgYRW0qokNm3SuFFrfliOFo4dYMrcdYZDDLndkPCOgkgF/CPDf3mWCZMQf4vgkz0
- /dQH1q93csaNj52VT8u4HK0rdhraf3sprw2rdc0/d4JG+4uvqepTWFFPIqB0umAqUj1Ez3slG
- 1+h6DF1IAnsMxLNjGIm7lN+K0CdQluGbEy8hi764Q0igUV4USMnB648nMG4LFo6mxBOHstbCX
- e9Uedy6br4vXmfh7yQPElYpTolGUBburLnxbw4vjemTthlyX1Cz28qeDytn4nPzTPNq9e4EJ2
- 2TvoItNz7OyeOpjKQD2D8+yrgX+hGLMAfGbxC19csjufq42bHWVvXjrrp/2wihqp1Hfe3Wsxb
- Lblp2ky5TPdsumWo8fzoJf09yPnFtEe9zbVDbuWo3C5YO7g6+OIqsQOyjq/XruBAijapH8+du
- ZOhH7AbvXOkUodrzwZbTUvKw+/G9f6FHvpmGFeZ/y4EcWS8s3d/6JYi+iY5A9P93NQLC/ay9Q
- 0Syo/c16dL1c7WCcAfZVZpprNH+5eZVxivN1NkaIvdBUxj8TdgG1yOwJZuCyyB1KtPP9cndva
- R0p8Ief5bu8sJO9wvyRgS0L8OluwyY0ch6gNm4wL/wt+aBYYU2LddZ+CrpdvrM6yfQEQUGPNm
- HxLoP1x
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
 
-[had to drop Perry Hutchinson, as the email address is apparently invalid,
-and I only realized now that I never sent this out.]
+On Tue, Jul 17 2018, J. Paul Reed wrote:
 
-On Tue, 10 Jul 2018, Jonathan Nieder wrote:
+> Hey Git Devs,
+>
+> I have a bit of an odd question: do git clone/checkout operations have a
+> deterministic ordering?
+>
+> That is: are files guaranteed to be laid down onto disk in any specific
+> (and deterministic) order as a clone and/or checkout operations occurs?
+> (And if so, is it alphabetical order? Depth-first? Something else?)
+>
+> In case the answer is different (and I'd guess that it might be?), I'm
+> mostly interested in the initial clone case... but it would be great to
+> know if, indeed, the answer is different for just-checkouts too.
+>
+> I did some cursory googling, but nothing hopped out at me as an answer to
+> this question.
 
-> If this [/proc issue] is the main obstacle to enabling RUNTIME_PREFIX by
-> default, one option would be to make RUNTIME_PREFIX fall back to a
-> hard-coded path when and only when git is not able to find the path from
-> which it was run.
+In practice I think clone, checkout, reset etc. always work in the same
+order you see with `git ls-tree -r --name-only HEAD`, but as far as I
+know this has never been guaranteed or documented, and shouldn't be
+relied on.
 
-That is already the case. Look for FALLBACK_RUNTIME_PREFIX in the code.
-
-Ciao,
-Dscho
+E.g. there's probably cases where writing files in parallel is going to
+be faster than writing them sequentially. We don't have such a mode just
+because nobody's written a patch for it, but having that patch would
+break any assumptions of our current order.
