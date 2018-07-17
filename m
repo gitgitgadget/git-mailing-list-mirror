@@ -2,97 +2,227 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B8E51F597
-	for <e@80x24.org>; Tue, 17 Jul 2018 12:09:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D85021F597
+	for <e@80x24.org>; Tue, 17 Jul 2018 12:50:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731784AbeGQMlc (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jul 2018 08:41:32 -0400
-Received: from mail-wr1-f53.google.com ([209.85.221.53]:44472 "EHLO
-        mail-wr1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731391AbeGQMjH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jul 2018 08:39:07 -0400
-Received: by mail-wr1-f53.google.com with SMTP id r16-v6so997138wrt.11
-        for <git@vger.kernel.org>; Tue, 17 Jul 2018 05:06:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id;
-        bh=n5xiyMcQqEsoTY1QgNF6u2YYISi3Unft/23k7Uztufk=;
-        b=ONOPO5ocD/p1CgLQjzN4NrN0bqDrN0X2zSwSKLSOiQ40vALyRtVT/CnrKeHrhvsDgS
-         emo0Gdhyw8SJFmWM9VlBHdX5jU62ZDUQRhNDpoygN/ZC0HsfrroyfCsg6rrgFdAZh5Ah
-         kjGbw5ScPt9kaVImsgaNk6SsAZKjA6IBpE7jQ3BAJOdOJCRX1oqXj6/Rd9hZTk2WvB5l
-         9XJSFOxC9qI4rM47rF5NW4jNLJotuNJI2aRpxtxLKmeksi7y8BTH9HV+ctfWcEKzVYvs
-         qFy4kO4BS7OnS3F5E42Wuas1OfPRTeLUCsHOe00G+GC6g7YDyuLLIxLhL5JzD6P8jk+h
-         jZsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id;
-        bh=n5xiyMcQqEsoTY1QgNF6u2YYISi3Unft/23k7Uztufk=;
-        b=ejuPgrIRs6ZjPLvV7/UEufzmqGyQpO1lwgXuY+De9psQGqI36hMHLY3JJsvmJKSZfi
-         +bmVee2N6s0mlkY617sr9OXEIhR+riwOq3Xpwf5DDdiQDy5jHZAa4VLkCZSzdghn8XyB
-         mxVta+WrDuYbsQHAK9NarIzzKCDqf7HVT+tC+IXJu35ZJ6FQ/hRtvQfsuHcBZDKPoLqu
-         1MBwbBP7IX8UopdiOCUwiYUD386ynHsv6pfvfKynDA08NUuslggGWI/Rq4607xa+puCl
-         pOgpn18qzZdNo7Ph7qcho3Xfs+8g7DgTAmqw9o2MZGHNh3QCrTyC6PZnxoynI9aE2fic
-         IgLg==
-X-Gm-Message-State: AOUpUlGV5zWkVGovsip2L/eY9rFZj+mcMu2dZwMyimWv+zYZAH24g0X6
-        h8SnYj7er47bJvjNJee9iAVErw==
-X-Google-Smtp-Source: AAOMgpcUaNm0ti530NZYLpzNDzYR9UnAnreRZvXxf2T7Fn4k2SVNUStnVXC3V3IwZ7w+hmo3ppv46Q==
-X-Received: by 2002:adf:b202:: with SMTP id u2-v6mr1187022wra.19.1531829205781;
-        Tue, 17 Jul 2018 05:06:45 -0700 (PDT)
-Received: from sebi-laptop.tendawifi.com (5-13-157-218.residential.rdsnet.ro. [5.13.157.218])
-        by smtp.gmail.com with ESMTPSA id d4-v6sm542099wrp.51.2018.07.17.05.06.44
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 17 Jul 2018 05:06:45 -0700 (PDT)
-From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-To:     git@vger.kernel.org
-Subject: [RFC PATCH 0/6] Add gentle alternative for `get_oid()`
-Date:   Tue, 17 Jul 2018 15:06:30 +0300
-Message-Id: <cover.1531778417.git.ungureanupaulsebastian@gmail.com>
-X-Mailer: git-send-email 2.18.0.rc2.184.ga79db55c2.dirty
+        id S1731314AbeGQNW5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jul 2018 09:22:57 -0400
+Received: from thoth.sbs.de ([192.35.17.2]:58729 "EHLO thoth.sbs.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731186AbeGQNW5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jul 2018 09:22:57 -0400
+Received: from mail1.sbs.de (mail1.sbs.de [192.129.41.35])
+        by thoth.sbs.de (8.15.2/8.15.2) with ESMTPS id w6HCo8fV004338
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Tue, 17 Jul 2018 14:50:08 +0200
+Received: from md1pvb1c.ad001.siemens.net (md1pvb1c.ad001.siemens.net [139.25.68.40])
+        by mail1.sbs.de (8.15.2/8.15.2) with ESMTP id w6HCo7qm004744;
+        Tue, 17 Jul 2018 14:50:07 +0200
+Date:   Tue, 17 Jul 2018 14:50:06 +0200
+From:   Henning Schild <henning.schild@siemens.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     <git@vger.kernel.org>, Eric Sunshine <sunshine@sunshineco.com>,
+        Martin =?UTF-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Ben Toews <mastahyeti@gmail.com>, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v3 3/7] gpg-interface: introduce an abstraction for
+ multiple gpg formats
+Message-ID: <20180717145006.466277fe@md1pvb1c.ad001.siemens.net>
+In-Reply-To: <xmqq4lgyud6n.fsf@gitster-ct.c.googlers.com>
+References: <cover.1531470729.git.henning.schild@siemens.com>
+ <cover.1531470729.git.henning.schild@siemens.com>
+ <38e2eb70233709aa73345d64c94d59d4ccc681ec.1531470729.git.henning.schild@siemens.com>
+ <xmqq4lgyud6n.fsf@gitster-ct.c.googlers.com>
+X-Mailer: Claws Mail 3.15.0-dirty (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-At the moment, `get_oid()` might call `die()` in some cases. To
-prevent that from happening, this patches introduces a new flag
-called `GET_OID_GENTLY` and a new function `get_oid_gently()`,
-which passes the mentioned flag further to `get_oid_with_context()`.
+Am Mon, 16 Jul 2018 13:40:32 -0700
+schrieb Junio C Hamano <gitster@pobox.com>:
 
-The call graph of `get_oid()` is pretty complex and I hope I covered
-all the cases where `exit()` might be called. Although I believe this
-series of patches will not introduce any regression and work as
-intended, I think that is better to mark it with [RFC].
+> Henning Schild <henning.schild@siemens.com> writes:
+> 
+> > Create a struct that holds the format details for the supported
+> > formats. At the moment that is still just "openpgp". This commit
+> > prepares for the introduction of more formats, that might use other
+> > programs and match other signatures.
+> >
+> > Signed-off-by: Henning Schild <henning.schild@siemens.com>
+> > ---
+> >  gpg-interface.c | 84
+> > ++++++++++++++++++++++++++++++++++++++++++--------------- 1 file
+> > changed, 63 insertions(+), 21 deletions(-)
+> >
+> > diff --git a/gpg-interface.c b/gpg-interface.c
+> > index 960c40086..699651fd9 100644
+> > --- a/gpg-interface.c
+> > +++ b/gpg-interface.c
+> > @@ -7,11 +7,46 @@
+> >  #include "tempfile.h"
+> >  
+> >  static char *configured_signing_key;
+> > -static const char *gpg_format = "openpgp";
+> > -static const char *gpg_program = "gpg";
+> > +struct gpg_format {
+> > +	const char *name;
+> > +	const char *program;
+> > +	const char **extra_args_verify;
+> > +	const char **sigs;
+> > +};
+> > +
+> > +static const char *openpgp_verify_args[] =
+> > { "--keyid-format=long", NULL };  
+> 
+> Let's write it like this, even if the current line is short enough:
+> 
+> static const char *openpgp_verify_args[] = {
+> 	"--keyid-format=long",
+> 	NULL
+> };
+> 
+> Ditto for the next one.  Even if you do not expect these two arrays
+> to get longer, people tend to copy & paste to imitate existing code
+> when making new things, and we definitely would not want them to be
+> doing so on a code like the above (or below).  When they need to add
+> new elements to their arrays, having the terminating NULL on its own
+> line means they will have to see less patch noise.
 
-This patch would be useful for converting `git stash` to C. At the
-moment, `git stash` spawns a child process to avoid `get_oid()` to
-die. If this series turns out to be good enough to be accepted, do
-I need to wait until it gets merged in `master` to use it in the
-other project mentioned before?
+Ok, for consistency a later patch will introduce { NULL }; on three
+lines.
 
-Thanks,
-Paul
+> > +static const char *openpgp_sigs[] = {
+> > +	"-----BEGIN PGP SIGNATURE-----",
+> > +	"-----BEGIN PGP MESSAGE-----", NULL };
+> > +
+> > +static struct gpg_format gpg_formats[] = {
+> > +	{ .name = "openpgp", .program = "gpg",
+> > +	  .extra_args_verify = openpgp_verify_args,  
+> 
+> If the underlying aray is "verify_args" (not "extra"), perhaps the
+> field name should also be .verify_args to match.
 
-Paul-Sebastian Ungureanu (6):
-  sha1-name: Add `GET_OID_GENTLY` flag
-  tree-walk: Add three new gentle helpers
-  refs.c: Teach `read_ref_at()` to accept `GET_OID_GENTLY` flag
-  sha1-name: Teach `get_oid_basic()` to be gentle
-  sha1-name: Teach `get_oid_with_context[_1]()` to be gentle
-  sha1-name: Add gentle alternative for `get_oid()`
+Renamed extra_args_verify to verify_args.
 
- cache.h     |   2 +
- refs.c      |   2 +
- sha1-name.c | 127 +++++++++++++++++++++++++++++++++++++++++-----------
- tree-walk.c | 108 +++++++++++++++++++++++++++++++++++++-------
- tree-walk.h |   3 +-
- 5 files changed, 199 insertions(+), 43 deletions(-)
+> Giving an array of things a name "things[]" is a disease, unless the
+> array is very often passed around as a whole to represent the
+> collection of everything.  When the array is mostly accessed one
+> element at a time, being able to say thing[3] to mean the third
+> thing is much more pleasant.
+> 
+> So, from that point of view, I pretty much agree with
+> openpgp_verify_args[] and openpgp_sigs[], but am against
+> gpg_formats[].  The last one should be gpg_format[], for which we
+> happen to have only one variant right now.
 
--- 
-2.18.0.rc2.184.ga79db55c2.dirty
+renamed gpg_formats[] to gpg_format[].
+
+> > +	  .sigs = openpgp_sigs
+> > +	},
+> > +};
+> > +static struct gpg_format *current_format = &gpg_formats[0];  
+> 
+> Have a blank line before the above one.
+> 
+> What does "current_format" mean?  Is it different from "format to be
+> used"?  As we will overwrite the variable upon reading the config,
+> we cannot afford to call it default_format, but somehow "current"
+> feels misleading, at least to me.  I expected to find "old format"
+> elsewhere and there may be some format conversion or something from
+> the variable name.
+> 
+>     static struct gpg_format *use_format = &gpg_format[0];
+> 
+> perhaps?
+
+renamed current_format to use_format.
+
+> > +
+> > +static struct gpg_format *get_format_by_name(const char *str)
+> > +{
+> > +	int i;
+> > +
+> > +	for (i = 0; i < ARRAY_SIZE(gpg_formats); i++)
+> > +		if (!strcasecmp(gpg_formats[i].name, str))  
+> 
+> As [1/7], this would become strcmp(), I presume?
+> 
+> > +			return gpg_formats + i;
+> > +	return NULL;
+> > +}
+> >  
+> > -#define PGP_SIGNATURE "-----BEGIN PGP SIGNATURE-----"
+> > -#define PGP_MESSAGE "-----BEGIN PGP MESSAGE-----"
+> > +static struct gpg_format *get_format_by_sig(const char *sig)
+> > +{
+> > +	int i, j;
+> > +
+> > +	for (i = 0; i < ARRAY_SIZE(gpg_formats); i++)
+> > +		for (j = 0; gpg_formats[i].sigs[j]; j++)
+> > +			if (starts_with(sig,
+> > gpg_formats[i].sigs[j]))
+> > +				return gpg_formats + i;
+> > +	return NULL;
+> > +}  
+> 
+> OK.
+> 
+> > @@ -140,18 +172,23 @@ int git_gpg_config(const char *var, const
+> > char *value, void *cb) }
+> >  
+> >  	if (!strcmp(var, "gpg.format")) {
+> > -		if (value && strcasecmp(value, "openpgp"))
+> > -			return error("malformed value for %s: %s",
+> > var, value);
+> > -		return git_config_string(&gpg_format, var, value);
+> > -	}
+> > -
+> > -	if (!strcmp(var, "gpg.program")) {
+> >  		if (!value)
+> >  			return config_error_nonbool(var);
+> > -		gpg_program = xstrdup(value);
+> > +		fmt = get_format_by_name(value);
+> > +		if (!fmt)
+> > +			return error("malformed value for %s: %s",
+> > var, value);  
+> 
+> If I say "opongpg", that probably is not "malformed" (it is all
+> lowercase ascii alphabet that is very plausible-looking string), but
+> simply "bad value".
+
+Switched to "unsupported value", as suggested in another reply. 
+
+Henning
+
+> But other than the minor nit, yes, this structure is what I expected
+> to see from the very first step 1/7.
+> 
+> > +		current_format = fmt;
+> >  		return 0;
+> >  	}  
+> 
+> >  
+> > +	if (!strcmp(var, "gpg.program"))
+> > +		fmtname = "openpgp";  
+> 
+> OK, this is a backward compatibility measure to treat gpg.program as
+> if it were gpg.openpgp.program, which makes sense.
+> 
+> > +	if (fmtname) {
+> > +		fmt = get_format_by_name(fmtname);
+> > +		return git_config_string(&fmt->program, var,
+> > value);
+> > +	}
+> > +
+> >  	return 0;
+> >  }  
 
