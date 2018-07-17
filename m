@@ -2,114 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C46D1F597
-	for <e@80x24.org>; Tue, 17 Jul 2018 16:24:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4BD3C1F597
+	for <e@80x24.org>; Tue, 17 Jul 2018 16:25:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729669AbeGQQ6J (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jul 2018 12:58:09 -0400
-Received: from mout.gmx.net ([212.227.15.19]:45151 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729641AbeGQQ6J (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jul 2018 12:58:09 -0400
-Received: from [192.168.0.129] ([37.201.195.94]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lp3x6-1gI5O31LcK-00er2S; Tue, 17
- Jul 2018 18:24:35 +0200
-Date:   Tue, 17 Jul 2018 18:24:33 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Eric Sunshine <sunshine@sunshineco.com>
-cc:     gitgitgadget@gmail.com, Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 09/20] range-diff: adjust the output of the commit
- pairs
-In-Reply-To: <CAPig+cTnRi=HuyZy+bMKeU9qutZb3K5C4qTb7gCQz7GyGN=FRw@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1807171306380.71@tvgsbejvaqbjf.bet>
-References: <cover.1525448066.git.johannes.schindelin@gmx.de> <pull.1.v3.git.gitgitgadget@gmail.com> <6b31cbf72c4752771965de333b3cb6e82cf90b2b.1530617166.git.gitgitgadget@gmail.com> <CAPig+cTnRi=HuyZy+bMKeU9qutZb3K5C4qTb7gCQz7GyGN=FRw@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729721AbeGQQ6x (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jul 2018 12:58:53 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:51307 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729695AbeGQQ6x (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jul 2018 12:58:53 -0400
+Received: by mail-wm0-f68.google.com with SMTP id s12-v6so2147028wmc.1
+        for <git@vger.kernel.org>; Tue, 17 Jul 2018 09:25:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=aKIC4xDhI7Or4xDidh3aW5iokVoRcyCArC6va926KwU=;
+        b=I01IRxWpPuIu6wuTy51eEeL7Ur2t0tCiRs0/8VY0UBrkqRixmVGfZCZlu5xN60uP38
+         5gNUxjDQpoheqSBClMdAHBmTvLJ8OBl0ZgmsD3kwG/QfpxmYjrICCl4DclpZLlpTR9Ud
+         KJx+xgInXvDNCQ0clOyNRep+OPhIWDGaZuYXqehOJQsq+XY6lefg7wmpG7O484f31d7h
+         emEeSkOgkQ+67Hk/Rdpvx3FYIG/hp6Dm4nNqjV0fTAcYCIz2vlI9QQ23TInfMrzddWYM
+         s4vlloyCjSGf/iiJlSo5KNaXO4tJj1PSCdCqnpVsCCV5MteQKQgC0msS+HnFn568Ph60
+         RX5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=aKIC4xDhI7Or4xDidh3aW5iokVoRcyCArC6va926KwU=;
+        b=MRA8sAxj6WV7NGrDkhVP50kc/KsOPjurODqk2bjwb5EK/Bgj0ug8/gtHr4LSuLE0Rj
+         sox2QIRNuwkI9qwISseO8ioizpEZ78YD5lE1ius8gF74oyurrqeCyYp3szq3eRl3A308
+         pzwb6P/7QxnxevsvLeFouhrjtjWbKjOai0DzNQGf5iNlOxln6LtcQFBsYY9dhLNRS4eW
+         S8H6B8gkCxEGOkHCBZFtvGw8JlR91yCvlZjCCDWA4OkIXpHw/w5FeJO+lUKzOkN9pNRy
+         eJ6ee6G5nv1lI7PDkmNCyc25A/0kf9edbdl40C1/pUaQQfwI0JQO6HNvoZzdAJzlxAKN
+         fMbQ==
+X-Gm-Message-State: AOUpUlFAM64bod1efbRRBjooRBt2j10DL/zF7Im7APM1PQuCdOQGpOvG
+        n6X+wH7JftqPLyohPRAT5Lw=
+X-Google-Smtp-Source: AAOMgpdV4SPEI/A6wEQGlmlBT29Wm/kQIqYG/mLXaA+5zME5JVvIuWBDINhXV1Ribp7KkABOu3AvVA==
+X-Received: by 2002:a1c:8893:: with SMTP id k141-v6mr1866562wmd.36.1531844725533;
+        Tue, 17 Jul 2018 09:25:25 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id c5-v6sm1990665wrh.36.2018.07.17.09.25.24
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 17 Jul 2018 09:25:24 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 2/2] repack -ad: prune the list of shallow commits
+References: <pull.9.git.gitgitgadget@gmail.com>
+        <b4e01a963fd16f50d12c1f67c6e64bec8b1e9673.1531513093.git.gitgitgadget@gmail.com>
+        <20180713203140.GB17670@sigill.intra.peff.net>
+        <nycvar.QRO.7.76.6.1807142351100.75@tvgsbejvaqbjf.bet>
+        <20180716173636.GA18636@sigill.intra.peff.net>
+Date:   Tue, 17 Jul 2018 09:25:24 -0700
+In-Reply-To: <20180716173636.GA18636@sigill.intra.peff.net> (Jeff King's
+        message of "Mon, 16 Jul 2018 13:36:36 -0400")
+Message-ID: <xmqqh8kxrfrf.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:gTrVxZCDRKm7Qoz/L7VwP7pDMZMPhd+AfS1uCzjof+dk45CqqIY
- S5ANWSOc6ntblVzRZuexp8lJB6d3axX3UnQ8BQzOZ/yJNs5Rp19+iZXgLXThnrf+RN1LWw/
- 1dw3sgMmNEIfBRa9SiZWaL4RJ3E66ZPWr+nqcb6SwCDG33Xs/tL2Cv/r/uKmEEaWb0/2d5/
- 2kc+sVTLj9yCgo0dMxXKA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:YXIDqdpZeHg=:S4yyVw1oqjsx0V0MM6E7PP
- LaZKasMHlq5n8pLiTJ6g5qJv/+NV8ft9Z2ONhIcpG6iUGa7hLKLiCjh7+4zmdSHPS6p5u/V9v
- NpwGgrL7GFOe7SLi6jGCsbJ7kW4tvAHmU+Geu7ghg+LkZoV2FgRygCyUpwOSji8TgSqE4tc8o
- AbyzoOjQRaJG5PZv019gDR0w63Sk2GLmUyzALyiKz4zpx/Ex1pfBK8yu8SK7c+BaOTR/PM6Fo
- qYbaBzCqUXy9ei8yN1JhQ1Q4o3K4kpXL7hSoDBd+RrTnl0vD9GN9GMbkQIDDkFm8vJ/dvRwbR
- d1Kw/WrciJY+KPSAzm/rBrG1orfaRgKkOlj64v0NcE3gu7EvU8TamzN2lyWFWe9gOSUedR/+C
- pRwPzoFY7PYqjf0vD/4NJziN5rer0b7z8Si4NrtvsFM1eWABTiZ3lpmyTxUrA0OfeUfU1d5JR
- 7R5a3cWLE75TonclEUvr+i1PKKqJTCcIoRCms8LdHPwK1X2B7QB151W8dAJ7kBTeOvUJ1g7RS
- tgSKzxa72yKISsJ/KKawn0C+NNUmxE1RKOkOFeJpH+mAVq/eSlcME9+g2QD88jjV2zshaIphh
- 0di05TjHUgLg6aWwpyYY20DMAtXT7mjQWBRlJhynFs+xOoPqwc4Ye/2qLBfesXpL6I+2HvOcC
- reK2orxPXGRukn2OjJcSb8t7VWIgvyqlLUqajpkPYkgK1SSzatA8PTPX8wc+VSILgF/LxV0CR
- 9LSDC64D1I/h0L/NNFPKOlQ4UHr6kIcvuk551uTDJDvOZNytP6xw4pS+LBo8lzHDUrEeuJTVO
- WKmPCpw
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
+Jeff King <peff@peff.net> writes:
 
-On Mon, 16 Jul 2018, Eric Sunshine wrote:
+> I'm OK with having a partial fix, or one that fixes immediate pain
+> without doing a big cleanup, as long as it doesn't make anything _worse_
+> in a user-visible way. And that's really my question: is pruning here
+> going to bite people unexpectedly (not rhetorical -- I really don't
+> know)?
 
-> On Tue, Jul 3, 2018 at 7:26 AM Johannes Schindelin via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> > This change brings `git range-diff` yet another step closer to
-> > feature parity with tbdiff: it now shows the oneline, too, and indicates
-> > with `=` when the commits have identical diffs.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> > diff --git a/range-diff.c b/range-diff.c
-> > @@ -251,9 +253,57 @@ static void get_correspondences(struct string_list *a, struct string_list *b,
-> > +static void output_pair_header(struct strbuf *buf,
-> > +                              struct patch_util *a_util,
-> > +                              struct patch_util *b_util)
-> >  {
-> > -       return find_unique_abbrev(&util->oid, DEFAULT_ABBREV);
-> > +       static char *dashes;
-> > +       struct object_id *oid = a_util ? &a_util->oid : &b_util->oid;
-> > +       struct commit *commit;
-> > +
-> > +       if (!dashes) {
-> > +               char *p;
-> > +
-> > +               dashes = xstrdup(find_unique_abbrev(oid, DEFAULT_ABBREV));
-> 
-> It's nice to see that the bulk of the range-diff functionality has
-> been libified in this re-roll (residing in range-diff.c rather than
+Yeah, that matches the general guideline I follow when reviewing a
+patch that claims to make existing things better.  And I do not
+think I can explain to a third person why pruning here is a good
+idea and won't cause problems, after seeing these patches and
+the discussion from the sideline.
 
-Can we *please* stop calling it "re-roll"? Thanks.
+> Right, I think "git gc" is absolutely the place to do such cleanups. My
+> only complaint was that having it as part of repack may be unexpected.
 
-(Or are you really "never gonna give you up, never gonna let you down"?)
-
-> builtin/range-diff.c as in earlier versions), so it's somewhat
-> surprising to see libified code holding onto the 'dashes' buffer like
-> this in a static variable. An alternative would have been for the
-> caller to pass in the same buffer to output_pair_header() for re-use,
-> and then dispose of it at the end of processing.
-
-Sure, to be honest, I had completely forgotten about what I did there, and
-had to read up on it to fix it.
-
-> 
-> > +               for (p = dashes; *p; p++)
-> > +                       *p = '-';
-> > +       }
-> > +
-> > +       strbuf_reset(buf);
-> 
-> ...much like 'buf' is allocated by the caller, passed in and re-used
-> for each invocation, then released by the caller at the end.
-
-Yep, I now pass in another strbuf, `dashes`.
-
-Thanks,
-Dscho
