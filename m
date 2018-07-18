@@ -2,260 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 01602208E9
-	for <e@80x24.org>; Wed, 18 Jul 2018 13:31:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FA811F597
+	for <e@80x24.org>; Wed, 18 Jul 2018 13:40:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730795AbeGROJH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jul 2018 10:09:07 -0400
-Received: from mail-qt0-f193.google.com ([209.85.216.193]:35039 "EHLO
-        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730234AbeGROJG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jul 2018 10:09:06 -0400
-Received: by mail-qt0-f193.google.com with SMTP id a5-v6so3985178qtp.2
-        for <git@vger.kernel.org>; Wed, 18 Jul 2018 06:31:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=TB1Ej2sWciY3sVzAFoEDTRKPcY4TMiXrBH0YR84y5jQ=;
-        b=p4PGMBu4tKzBYTU18G8Z45OxhsDKQwWtnyxTTlONZURtXuRTFAwNE7UOLtKRlw9B5D
-         9DJ1MmXwD59oAzsKPkdqwFDMwI/E0DRQQNTZ0uI/1AkoskKIC9bm7xBH6XkGOSlOFs7h
-         LBPKk1IwHeTrcNkMOk01Ax0dJko795KBtAVcNJYO6e8JP6TY60XAwuV8jw5Lwo88dHqp
-         o/H4m7VjnGE+7eUxTuKAdqEzuKrRm8+mKfgUxfY5YNhpzm18ooX1n7p5QnyVzVvuF1cs
-         eusi8ual93bQmYE0FKWhYyYI8DWITgnKwmhatbR9wxXhJLbxcxIpgt4I/4otBuITzaMm
-         QK0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=TB1Ej2sWciY3sVzAFoEDTRKPcY4TMiXrBH0YR84y5jQ=;
-        b=IqOe26PkeWNtLtGDKg/O3nkQWtCLNw6WBvmiC2qTcf3TQZXifcPKsmuUG/KCCh3ntv
-         Q9g5z0JlR78NmtJJjZj91iHN+eGTAJ5DNwk51mSolq51+tLIyIDBGqX0pA14yCMY4G38
-         eeHJ/Bj6PX1QR99MJZOgmGYCmxpfpAOUqG6ILBGlHrtmAPSl2iN2rV3GfpxPWUyvQlHL
-         iQBfwTk7ST3uKDCu30xI2/o3kw8zaSsnAZFb+a1aEuZwjvviy0hGzDjEz5XhXGjWn+Uo
-         QNPm6e4j+lKCDYOFUsOu7JHBp8fZPfn9JAaBA+arOIRUl9ODhXv0xb4gPzlBgXFDkCKC
-         ZEzw==
-X-Gm-Message-State: AOUpUlFaEwwIhFt3DdNxjF1ah0mIR5yyNL7sI6t+nhiRB/pnItDOB+lo
-        ToDIpkIrYVj10aLpmVM3fM8LP1Fm
-X-Google-Smtp-Source: AAOMgpcGP7OxGjldPBM5T/x6ext8izvG02rNI8ZMA6Y7Hq+TvUbTVHoUm1WShNH3OAeLTK1QZ3AoxA==
-X-Received: by 2002:ac8:2ad8:: with SMTP id c24-v6mr5783721qta.117.1531920668919;
-        Wed, 18 Jul 2018 06:31:08 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:d070:73be:3735:cf07? ([2001:4898:8010:0:b9a6:73be:3735:cf07])
-        by smtp.gmail.com with ESMTPSA id d4-v6sm3221375qtd.72.2018.07.18.06.31.07
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 18 Jul 2018 06:31:08 -0700 (PDT)
-Subject: Re: [RFC] push: add documentation on push v2
-To:     Stefan Beller <sbeller@google.com>,
-        Brandon Williams <bmwill@google.com>
-Cc:     git <git@vger.kernel.org>
-References: <20180717210915.139521-1-bmwill@google.com>
- <CAGZ79kZEpNLkXuEQEiMB_nc-MOOp-KOziHyONmr4SiajA5+F2g@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <a7c43308-a388-e307-6bea-47e6df74b65c@gmail.com>
-Date:   Wed, 18 Jul 2018 09:31:06 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
-MIME-Version: 1.0
-In-Reply-To: <CAGZ79kZEpNLkXuEQEiMB_nc-MOOp-KOziHyONmr4SiajA5+F2g@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        id S1731741AbeGROSl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jul 2018 10:18:41 -0400
+Received: from mail-co1nam03on0125.outbound.protection.outlook.com ([104.47.40.125]:39442
+        "EHLO NAM03-CO1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1731314AbeGROSl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jul 2018 10:18:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=oBdq2DZF+qYDrG3CIN89QHeOcgrmtY4WyU2+Z92DVl4=;
+ b=B/Fa8r9dt9OPYuP3yAiCtuXv27UReZm01mMFt+f7MpUEXTOxojhcAP09/2bi7Mpf7UzVoT70EtPB6+OPLibfQ/klJRi1lAethzrDgGBxuqXtOQFDIGde7FDibbP/Gd41Ofbd3w4Sfgel5ahG7ZUFxS6uFSev23TgJS9vPH4yaRA=
+Received: from BL0PR2101MB1011.namprd21.prod.outlook.com (52.132.24.10) by
+ BL0PR2101MB0993.namprd21.prod.outlook.com (52.132.23.155) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id
+ 15.20.995.0; Wed, 18 Jul 2018 13:40:38 +0000
+Received: from BL0PR2101MB1011.namprd21.prod.outlook.com
+ ([fe80::5072:9195:b05b:ed05]) by BL0PR2101MB1011.namprd21.prod.outlook.com
+ ([fe80::5072:9195:b05b:ed05%2]) with mapi id 15.20.0995.008; Wed, 18 Jul 2018
+ 13:40:38 +0000
+From:   Derrick Stolee <dstolee@microsoft.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+CC:     "sbeller@google.com" <sbeller@google.com>,
+        "mhagger@alum.mit.edu" <mhagger@alum.mit.edu>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: [PATCH] TO-SQUASH: replace the_repository with arbitrary r
+Thread-Topic: [PATCH] TO-SQUASH: replace the_repository with arbitrary r
+Thread-Index: AQHUHpzpdB98e6+lUkS/hoYED3xsHQ==
+Date:   Wed, 18 Jul 2018 13:40:38 +0000
+Message-ID: <20180718134026.243823-1-dstolee@microsoft.com>
+References: <20180717224935.96397-3-sbeller@google.com>
+In-Reply-To: <20180717224935.96397-3-sbeller@google.com>
+Accept-Language: en-US
 Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-clientproxiedby: SN4PR0201CA0034.namprd02.prod.outlook.com
+ (2603:10b6:803:2e::20) To BL0PR2101MB1011.namprd21.prod.outlook.com
+ (2603:10b6:207:37::10)
+x-ms-exchange-messagesentrepresentingtype: 1
+x-originating-ip: [2001:4898:8010:0:eb4a:5dff:fe0f:730f]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;BL0PR2101MB0993;6:NTzjc9ib3xCTyZzXTur8ZGi6hxpmUt1sV3Xu2TmPdgQVau3u7EYUQXNkeS8CekEKgWaw99ZK/Lvmi6YBrkUmNYFqdhpozXg6Ki6T58hAoOKmc7vOkg8Y84NblM6ZMj7WFGXnr7xUspv+NHlJpxfKmxWH2ScQzlHsU0SnJLrYZcYy7jqJxybcyxOR7mNET7KR34+rw8dD2dSfI6CArCwmkDhcI7H+FFKMEtjoWWj6+I65Wby4FCGy3WN2A7DuKMGuetic2HD1rzZjxus8jOKaIffqDvvkjaLH7acSOL/o6ZorgmlVrjfOc1txLda/kVhk7imPsjb1Bi/MU+U7kuKe2PS3BXnRzx6sunY2y9xjHDsulWcVBIeZiZbFkX6oCRh1Xkm9TErAZl8WNkgmCpWYaYAMMR0xf1jpv5KsZIZrbslXMgdoicQ61iby9CDwS9sx2SsccsFMbiwOV/5E2tTz5A==;5:QjukRqnbBTn6I17yqt6qEHcTX6EQp3TH1Gi6NHnBPJ7nwQVLS38bpme6UvwZwGDlIwj2Y3y579r0eN11DGEiUu2nAmnlEBuMxOgv1eDgtATdc86VuXMDhFZlKOLXXkirfujxYnU/tONxivaXitpO9tYRUmdtYunK9qQIkeReSTI=;7:qidVk7izKMJ8ms6JBeyfz8L2/ibOlsqEW/gvzFimEDKRN9U0BHHCrVR9L3ITMiNhAaucpm7MiBB9Zb2CddPN1YuOA2xRKB86qbtVqkE3LLicVCbsNwmCUhHw6bRla8BX4z2ygkYuHUoRZo3aAaMN2Fb44r6Sf9OTHNQ+MOPAULBZJgC1d7bNALwPjXJBgLhL1rNNZgQ6EPne8xCHA/3FOKdKFQ0OODJvbmhXYIY85e6PqVnoCPSoDd9HFNqFyolP
+x-ms-office365-filtering-correlation-id: 7726f2cf-f38b-41ee-5079-08d5ecb40ba7
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(7020095)(4652040)(8989117)(5600064)(711020)(4618075)(4534165)(4627221)(201703031133081)(201702281549075)(8990107)(2017052603328)(7193020);SRVR:BL0PR2101MB0993;
+x-ms-traffictypediagnostic: BL0PR2101MB0993:
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=dstolee@microsoft.com; 
+x-microsoft-antispam-prvs: <BL0PR2101MB099314E8AFAA53AD8A81F695A1530@BL0PR2101MB0993.namprd21.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171)(788757137089);
+x-ms-exchange-senderadcheck: 1
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(93006095)(93001095)(3231311)(944501410)(52105095)(2018427008)(10201501046)(3002001)(6055026)(149027)(150027)(6041310)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123560045)(20161123564045)(20161123562045)(20161123558120)(6072148)(201708071742011)(7699016);SRVR:BL0PR2101MB0993;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB0993;
+x-forefront-prvs: 0737B96801
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(376002)(396003)(366004)(346002)(39860400002)(136003)(189003)(199004)(256004)(6512007)(6436002)(6486002)(1857600001)(186003)(105586002)(2900100001)(6506007)(386003)(102836004)(76176011)(99286004)(52116002)(5640700003)(486006)(2906002)(446003)(36756003)(11346002)(107886003)(46003)(10290500003)(86362001)(5250100002)(2501003)(575784001)(86612001)(106356001)(2616005)(476003)(478600001)(1076002)(2351001)(10090500001)(81156014)(81166006)(1730700003)(14454004)(7736002)(316002)(4326008)(25786009)(8676002)(8936002)(305945005)(22452003)(53936002)(54906003)(5660300001)(68736007)(6116002)(6916009)(97736004)(129723003);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB0993;H:BL0PR2101MB1011.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None (protection.outlook.com: microsoft.com does not designate
+ permitted sender hosts)
+x-microsoft-antispam-message-info: ymZ7yx50RVZ7WXers75OZnRAIXPtqGTi7NRvHcnGS/ng8n44xocWTQcYYdzvbXYsll/8YsGIlRwZKRzUljcazJEJAPVT5nCSdNm1mR468DSvpe9S+oxqyLYNYo2LCT8MVkTh4m7y/hnXTx3uJmOwnFGNKWg5WHR9ODn320VoSVwAqmQn+r0AbQE/BO1DGUBMOXeeTXe+5fk7/hXFMNJCmF0onDBNP2lgbRUe/bNB+Br+sJSA69aVm/qKKSwd1WghrxX2xWwuVCBJx6DcoUej8fk/kgdAk4i/kULte9Jg/1fNaWqHz/+FtwbWR2s6Cvqp0u0KK0IjFpKRgnk+hvZMk5egwxTswP8yed8nuWttoyQ=
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7726f2cf-f38b-41ee-5079-08d5ecb40ba7
+X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Jul 2018 13:40:38.2650
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB0993
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/17/2018 7:25 PM, Stefan Beller wrote:
-> On Tue, Jul 17, 2018 at 2:09 PM Brandon Williams <bmwill@google.com> wrote:
->> Signed-off-by: Brandon Williams <bmwill@google.com>
->> ---
->>
->> Since introducing protocol v2 and enabling fetch I've been thinking
->> about what its inverse 'push' would look like.  After talking with a
->> number of people I have a longish list of things that could be done to
->> improve push and I think I've been able to distill the core features we
->> want in push v2.
-> It would be nice to know which things you want to improve.
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
 
-Hopefully we can also get others to chime in with things they don't like 
-about the existing protocol. What pain points exist, and what can we do 
-to improve at the transport layer before considering new functionality?
+This should just be squashed into PATCH 2.
 
->>   Thankfully (due to the capability system) most of the
->> other features/improvements can be added later with ease.
->>
->> What I've got now is a rough design for a more flexible push, more
->> flexible because it allows for the server to do what it wants with the
->> refs that are pushed and has the ability to communicate back what was
->> done to the client.  The main motivation for this is to work around
->> issues when working with Gerrit and other code-review systems where you
->> need to have Change-Ids in the commit messages (now the server can just
->> insert them for you and send back new commits) and you need to push to
->> magic refs to get around various limitations (now a Gerrit server should
->> be able to communicate that pushing to 'master' doesn't update master
->> but instead creates a refs/changes/<id> ref).
-> Well Gerrit is our main motivation, but this allows for other workflows as well.
-> For example Facebook uses hg internally and they have a
-> "rebase-on-the-server-after-push" workflow IIRC as pushing to a single repo
-> brings up quite some contention. The protocol outlined below would allow
-> for such a workflow as well? (This might be an easier sell to the Git
-> community as most are not quite familiar with Gerrit)
+ builtin/replace.c | 5 ++---
+ replace-object.c  | 2 +-
+ 2 files changed, 3 insertions(+), 4 deletions(-)
 
-I'm also curious how this "change commits on push" would be helpful to 
-other scenarios.
+diff --git a/builtin/replace.c b/builtin/replace.c
+index 5f34659071..d0b1cdb061 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -57,9 +57,8 @@ static int show_reference(struct repository *r, const cha=
+r *refname,
+ 			if (get_oid(refname, &object))
+ 				return error("Failed to resolve '%s' as a valid ref.", refname);
+=20
+-			obj_type =3D oid_object_info(the_repository, &object,
+-						   NULL);
+-			repl_type =3D oid_object_info(the_repository, oid, NULL);
++			obj_type =3D oid_object_info(r, &object, NULL);
++			repl_type =3D oid_object_info(r, oid, NULL);
+=20
+ 			printf("%s (%s) -> %s (%s)\n", refname, type_name(obj_type),
+ 			       oid_to_hex(oid), type_name(repl_type));
+diff --git a/replace-object.c b/replace-object.c
+index 01a5a59a35..017f02f8ef 100644
+--- a/replace-object.c
++++ b/replace-object.c
+@@ -26,7 +26,7 @@ static int register_replace_ref(struct repository *r,
+ 	oidcpy(&repl_obj->replacement, oid);
+=20
+ 	/* Register new object */
+-	if (oidmap_put(the_repository->objects->replace_map, repl_obj))
++	if (oidmap_put(r->objects->replace_map, repl_obj))
+ 		die("duplicate replace ref: %s", refname);
+=20
+ 	return 0;
+--=20
+2.18.0.118.gd4f65b8d14
 
-Since I'm not familiar with Gerrit: what is preventing you from having a 
-commit hook that inserts (or requests) a Change-Id when not present? How 
-can the server identify the Change-Id automatically when it isn't present?
-
->> Before actually moving to write any code I'm hoping to get some feedback
->> on if we think this is an acceptable base design for push (other
->> features like atomic-push, signed-push, etc can be added as
->> capabilities), so any comments are appreciated.
->>
->>   Documentation/technical/protocol-v2.txt | 76 +++++++++++++++++++++++++
->>   1 file changed, 76 insertions(+)
->>
->> diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
->> index 49bda76d23..16c1ce60dd 100644
->> --- a/Documentation/technical/protocol-v2.txt
->> +++ b/Documentation/technical/protocol-v2.txt
->> @@ -403,6 +403,82 @@ header.
->>                  2 - progress messages
->>                  3 - fatal error message just before stream aborts
->>
->> + push
->> +~~~~~~
->> +
->> +`push` is the command used to push ref-updates and a packfile to a remote
->> +server in v2.
->> +
->> +Additional features not supported in the base command will be advertised
->> +as the value of the command in the capability advertisement in the form
->> +of a space separated list of features: "<command>=<feature 1> <feature 2>"
->> +
->> +The format of a push request is as follows:
->> +
->> +    request = *section
->> +    section = (ref-updates | packfile)
-> This reads as if a request consists of sections, which
-> each can be a "ref-updates" or a packfile, no order given,
-> such that multiple ref-update sections mixed with packfiles
-> are possible.
->
-> I would assume we'd only want to allow for ref-updates
-> followed by the packfile.
->
-> Given the example above for "rebase-on-push" though
-> it is better to first send the packfile (as that is assumed to
-> take longer) and then send the ref updates, such that the
-> rebasing could be faster and has no bottleneck.
->
->> +              (delim-pkt | flush-pkt)
->
->
->> +
->> +    ref-updates = PKT-LINE("ref-updates" LF)
->> +                 *PKT-Line(update/force-update LF)
->> +
->> +    update = txn_id SP action SP refname SP old_oid SP new_oid
->> +    force-update = txn_id SP "force" SP action SP refname SP new_oid
-> So we insert "force" after the transaction id if we want to force it.
-> When adding the atomic capability later we could imagine another insert here
->
->    1 atomic create refs/heads/new-ref <0-hash> <hash>
->    1 atomic delete refs/heads/old-ref <hash> <0-hash>
->
-> which would look like a "rename" that we could also add instead.
-> The transaction numbers are an interesting concept, how do you
-> envision them to be used? In the example I put them both in the same
-> transaction to demonstrate the "atomic-ness", but one could also
-> imagine different transactions numbers per ref (i.e. exactly one
-> ref per txn_id) to have a better understanding of what the server did
-> to each individual ref.
->
->> +    action = ("create" | "delete" | "update")
->> +    txn_id = 1*DIGIT
->> +
->> +    packfile = PKT-LINE("packfile" LF)
->> +              *PKT-LINE(*%x00-ff)
->> +
->> +    ref-updates section
->> +       * Transaction id's allow for mapping what was requested to what the
->> +         server actually did with the ref-update.
-> this would imply the client ought to have at most one ref per transaction id.
-> Is the client allowed to put multiple refs per id?
->
-> Are new capabilities attached to ref updates or transactions?
-> Unlike the example above, stating "atomic" on each line, you could just
-> say "transaction 1 should be atomic" in another line, that would address
-> all refs in that transaction.
->
->> +       * Normal ref-updates require that the old value of a ref is supplied so
->> +         that the server can verify that the reference that is being updated
->> +         hasn't changed while the request was being processed.
-> create/delete assume <00..00> for either old or new ? (We could also
-> omit the second hash for create delete, which is more appealing to me)
->
->> +       * Forced ref-updates only include the new value of a ref as we don't
->> +         care what the old value was.
-> How are you implementing force-with-lease then?
-
-I had the same question.
-
->
->> +    packfile section
->> +       * A packfile MAY not be included if only delete commands are used or if
->> +         an update only incorperates objects the server already has
-> Or rather: "An empty pack SHALL be omitted" ?
->
->> +The server will receive the packfile, unpack it, then validate each ref-update,
->> +and it will run any update hooks to make sure that the update is acceptable.
->> +If all of that is fine, the server will then update the references.
->> +
->> +The format of a push response is as follows:
->> +
->> +    response = *section
->> +    section = (unpack-error | ref-update-status | packfile)
-> As above, I assume they ought to go in the order as written,
-> or would it make sense to allow for any order?
->
->> +             (delim-pkt | flush-pkt)
->> +
->> +    unpack-error = PKT-LINE("ERR" SP error-msg LF)
->> +
->> +    ref-update-status = *(update-result | update-error)
->> +    update-result = *PKT-LINE(txn_id SP result LF)
->> +    result = ("created" | "deleted" | "updated") SP refname SP old_oid SP new_oid
->> +    update-error = PKT-LINE(txn_id SP "error" SP error-msg LF)
-> Can we unify "ERR" and "error" ?
->
->> +    packfile = PKT-LINE("packfile" LF)
->> +              *PKT-LINE(*%x00-ff)
->> +
->> +    ref-update-status section
->> +       * This section is always included unless there was an error unpacking
->> +         the packfile sent in the request.
->> +       * The server is given the freedom to do what it wants with the
->> +         ref-updates provided in the reqeust.  This means that an update sent
->> +         from the server may result in the creation of a ref or rebasing the
->> +         update on the server.
->> +       * If a server creates any new objects due to a ref-update, a packfile
->> +         MUST be sent back in the response.
->> +
->> +    packfile section
->> +       * This section is included if the server decided to do something with
->> +         the ref-updates that involved creating new objects.
->> +
->>    server-option
->>   ~~~~~~~~~~~~~~~
->>
->> --
->> 2.18.0.203.gfac676dfb9-goog
->>
