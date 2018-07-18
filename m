@@ -2,89 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 81B2C1F597
-	for <e@80x24.org>; Wed, 18 Jul 2018 15:00:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 06E991F597
+	for <e@80x24.org>; Wed, 18 Jul 2018 15:02:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730987AbeGRPjQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jul 2018 11:39:16 -0400
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:37770 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730689AbeGRPjQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jul 2018 11:39:16 -0400
-Received: by mail-qt0-f196.google.com with SMTP id a18-v6so4267669qtj.4
-        for <git@vger.kernel.org>; Wed, 18 Jul 2018 08:00:57 -0700 (PDT)
+        id S1731140AbeGRPkk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jul 2018 11:40:40 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:54148 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726613AbeGRPkj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jul 2018 11:40:39 -0400
+Received: by mail-it0-f66.google.com with SMTP id 72-v6so4575351itw.3
+        for <git@vger.kernel.org>; Wed, 18 Jul 2018 08:02:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=44dNTYV+0t52paGHfuDphk7R2UnmsYicfAQSMtQ6HIA=;
-        b=uEMrNCKlTI8n2o0RLZTTvSzTUt0eishXVadOqHxErHmRBjmyz/Ck/1lO0vxExo8CdF
-         R3FCURWAHnRgwiNYw9TO1+DY+sT1F+sY8LJUCD/qUq7Mvhdc6YoH8MppLhKeYDbAMVMb
-         dGKh5XUa880BKbi4cn+UYusL4okmXcFPbkbdMvsF5V01C5qOAIl0RApSEd+Hgmvap3nx
-         U43XzqSNOK5PS4vhTUK2RPrBcH84n/u+snojGcG3eNdeITN6HrYLurDaAO/tYmnHg5yD
-         51KDBchKl0foARO5l1v9poUH+oJidpjEs0dQM4R+TCOqJnemkepfhtF0EOrKg6kTLtlV
-         Je1A==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=aQkYwgSm8M7sC0/Sv8TJE1fBvMfVXR8speXwm6dWKck=;
+        b=or5j5RRP+eXjES+4rRcrpVH1XnkdFzLJY0H8qxcvBpFujfVxd05LN7yOr8tuvOBUmm
+         lQIghDLVJRB2bvXLrqnF/NcX9MwQTZlegvvo1z7nbM52g8mw7JXrpyAuYVDcdpq+KRj+
+         FEy50m6S/8576NlyhpmYcbgigFMuDYgrVCBJxhMYydBvXpUKQ4ATNfTugDT1YXwOkthc
+         LxZ15lOFCDsrdxp0ElfLJ1uYf9QsSi9ZueAtjLqf7+3959qlmjBI59kwIt2JuCu/N8z+
+         f5h1ObT7dBGQD+p/UV1wBdRVmZsWp+dr1JLPCpXwI4+s0P2BQMIZuoJuibTD7OP6+uMs
+         Yt3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=44dNTYV+0t52paGHfuDphk7R2UnmsYicfAQSMtQ6HIA=;
-        b=rOP2RJ56bMxxLdInB5kpQSAciJNhdcEEPOK7gROvc12MHcWyrWcUpHPUsnzInGI3Hm
-         RYvBscRkMSa5cMiIqdF+UIaf87Q3YauoHcPCNfV0o9lnF2xkdZnwdAx602mRvJchoblJ
-         QX8/PU0mV7WlWyGErl3StVecbNGfUTceveMCK1YsnMWg/MuXgROd7o77NR25L7qHdS1z
-         IcCq/ZhmdxVf7qssqRfEXIOcfqk7hioSCGbE+o0ya2cPh+Ngr2NZeJdnvFVnMQ+JI+GB
-         dIztL7Q1li/nyNlE4gBq4p9yvTob2lQVjsluVsXtHX74TApzWCy2UwAg18wttMqA9gKA
-         j/mA==
-X-Gm-Message-State: AOUpUlHooiBKLdJ3WIuQasGfSJB1iHUwFzYHiQL5g0m3eAjwd1mbQrq9
-        BZX+v1d6ptQaihFoGfSP4Ur9dfcF
-X-Google-Smtp-Source: AAOMgpdcR/Fh5SCEyVLmVxbBuMGHfAB8vK8y2cwulXaAGlePxiwfoMpCBp9FZFTurLC0h/fCA/N/pg==
-X-Received: by 2002:ac8:6055:: with SMTP id k21-v6mr6174582qtm.204.1531926057094;
-        Wed, 18 Jul 2018 08:00:57 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:d070:73be:3735:cf07? ([2001:4898:8010:0:b9a6:73be:3735:cf07])
-        by smtp.gmail.com with ESMTPSA id v12-v6sm2071391qtv.57.2018.07.18.08.00.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 18 Jul 2018 08:00:55 -0700 (PDT)
-Subject: Re: [PATCH 6/6] submodule--helper: introduce new update-module-mode
- helper
-To:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-References: <20180712194754.71979-1-sbeller@google.com>
- <20180712194754.71979-7-sbeller@google.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <e5366f75-3669-bfbb-2561-ee06751b923d@gmail.com>
-Date:   Wed, 18 Jul 2018 11:00:53 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=aQkYwgSm8M7sC0/Sv8TJE1fBvMfVXR8speXwm6dWKck=;
+        b=dYwulpfIAa2w+FNP2witpYvXHatXfZtqfYTQCbx2DXVVa/AvJdz+ko14Q4P10KRSn9
+         jPMUmbx7WyO5Kagz9lE/Na8knWOExcnjopqpfK95LjlD0aCL+NxKrvmZksrFpS16ku6B
+         YbCbAWP6YXRW+j53GnSLbQ/CQEQdxjrFZSuFzg5Cz8uJcb2A0C/3eSLZH3k6HKbKpdwp
+         GYj+LCkGw6GstqNzccBD9wNSdStKjUziifWHMMeyPxiUeA1ax093xvnWAhAfVD9qNQHv
+         bHctUbghboqncYJIvDloDAkg56FxnZ1Ivx70GkERwtcbAKW73Gm4+vZuwkQUoLw6XU79
+         O7bg==
+X-Gm-Message-State: AOUpUlENP/Fdc3O+7GOhDGfTQFL4ppUzhJA91VtfkKOJTPeMr8RyY3i8
+        4FO83KNSv9R5S0BRhC6gnxS1LYwmoUKw0YCtYO0=
+X-Google-Smtp-Source: AAOMgpeek/FiYy1KFA2ieA+iT+OcqM+2yGvsIS2XSTe7BZP6KhHns/iljwHjRqrQMIis7oJqOa0xDrnC3PqWdTbNaeo=
+X-Received: by 2002:a02:59c9:: with SMTP id v70-v6mr5478246jad.94.1531926139992;
+ Wed, 18 Jul 2018 08:02:19 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20180712194754.71979-7-sbeller@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+References: <pull.10.git.gitgitgadget@gmail.com> <6b7a50dc-6b71-0e31-030a-42dd1b26bde4@ramsayjones.plus.com>
+ <CAGZ79kYem+uMrhv+CUSDNXtE3C8Pv1cx=aZOyBLG=uo-aQWXeA@mail.gmail.com>
+ <CAPig+cQj5_bEiLyAAS4xnsUQEPzqT_2yerdAQxd8FidVpJ5CxA@mail.gmail.com>
+ <65d51c26-e248-f16d-bac2-e6ba0a3be8e5@gmail.com> <nycvar.QRO.7.76.6.1807181427120.71@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1807181427120.71@tvgsbejvaqbjf.bet>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 18 Jul 2018 17:01:52 +0200
+Message-ID: <CACsJy8AbT3=wzKecGqvj8ibHmquU=NfP872f1cAM-VFOLSLSGQ@mail.gmail.com>
+Subject: Re: [PATCH 00/16] Consolidate reachability logic
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Stefan Beller <sbeller@google.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        gitgitgadget@gmail.com, Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/12/2018 3:47 PM, Stefan Beller wrote:
-> +	fprintf(stdout, submodule_strategy_to_string(&update_strategy));
+On Wed, Jul 18, 2018 at 2:30 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi,
+>
+> On Mon, 16 Jul 2018, Derrick Stolee wrote:
+>
+> > On 7/16/2018 2:44 PM, Eric Sunshine wrote:
+> > > On Mon, Jul 16, 2018 at 1:27 PM Stefan Beller <sbeller@google.com> wrote:
+> > > > Another pain point of the Gadget is that CC's in the cover letter
+> > > > do not work as I would imagine. The line
+> > > >
+> > > > CC: sbeller@google.com
+> > > >
+> > > > did not put that email into the cc field.
+> > > gitgitgadget recognizes case-sensitive "Cc:" only[1].
+> > >
+> > > [1]:
+> > > https://github.com/gitgitgadget/gitgitgadget/blob/c4805370f59532aa438283431b8ea7d4484c530f/lib/patch-series.ts#L188
+> >
+> > Thanks for everyone's patience while we improve gitgitgadget (and - in this
+> > case - I learn how to use it).
+>
+> And let's please stop pretending that this GitGitGadget project is
+> somebody else's problem.
+>
+> It is our best shot at addressing the *constant* pain point that is the code
+> contribution process of Git.
+>
+> In other words: if you see something that you don't like about
+> GitGitGadget, get your butts off the ground and contribute a fix.
 
-This line is causing build failures on 'pu' for certain setups:
-
-2018-07-18T14:53:03.6857987Z builtin/submodule--helper.c: In function 
-‘module_update_module_mode’:
-2018-07-18T14:53:03.6874886Z builtin/submodule--helper.c:1504:2: error: 
-format not a string literal and no format arguments 
-[-Werror=format-security]
-2018-07-18T14:53:03.6890814Z   fprintf(stdout, 
-submodule_strategy_to_string(&update_strategy));
-2018-07-18T14:53:03.6905905Z   ^
-
-Thanks,
-
--Stolee
-
+Thank you for the frank words. I will choose to not review any mails
+coming from GitGitGadget.
+-- 
+Duy
