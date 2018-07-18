@@ -2,192 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1ECD41F597
-	for <e@80x24.org>; Wed, 18 Jul 2018 19:49:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B0D6D1F597
+	for <e@80x24.org>; Wed, 18 Jul 2018 19:52:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730955AbeGRU2k (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jul 2018 16:28:40 -0400
-Received: from mail-qk0-f202.google.com ([209.85.220.202]:52599 "EHLO
-        mail-qk0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730899AbeGRU2k (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jul 2018 16:28:40 -0400
-Received: by mail-qk0-f202.google.com with SMTP id b185-v6so4586205qkg.19
-        for <git@vger.kernel.org>; Wed, 18 Jul 2018 12:49:16 -0700 (PDT)
+        id S1730421AbeGRUcW (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jul 2018 16:32:22 -0400
+Received: from mail-qt0-f170.google.com ([209.85.216.170]:46291 "EHLO
+        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728929AbeGRUcW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jul 2018 16:32:22 -0400
+Received: by mail-qt0-f170.google.com with SMTP id d4-v6so5166980qtn.13
+        for <git@vger.kernel.org>; Wed, 18 Jul 2018 12:52:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
-         :cc;
-        bh=UyEPxHOs7uJG8c5Vefw2XS+nCQHPmR0coxnhZzrQeRc=;
-        b=OCIq5TYkOYEPROw41b8DHx6RPwQaCasD6/OBuRAxLIyh+XJrzmyyN574EvaBcoIDdB
-         S6yrXcCr5q2TfQvXwEbFBqHLSUuLgIAzEGf9MVtr91cg+G3n2emRWaQxCw2lbuAMWKDs
-         fe7P5u/kuNLbJKG/fcqP6npBZJ2Tp62OLfmLKxyJyabdZtUnrAFuBNZPObNtn7+uYqG/
-         Y3A8Mz3LnWmaJTXXlUMhtEFtRG7eIgrlzLkehhXbyMqU5v74MKwx/Amvx9+3aJgp1QcU
-         wBXw8UitKH9wNsD8FGfh1UPNdyq1sxcovuMA0HOmTQ7pttcon4nwAdsljGKNsB4jhUDQ
-         ww4Q==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=4tfhu7PJsDrvGON+uvO/oJfB5kX6sEJ9fDMl2GPjZHk=;
+        b=D0bIAAO1CTKzvTutTWjfztYtJWq50/zUKh7pft7mwj1tePhsZ0gZUnmuX06ek7UZa1
+         uiOn4B3wsn7knecq0LkSuvu+NyxRAJTIbm/wuKgQrL0GiVCcCDkJgRJuHrhMCiHnnQxz
+         S9TLG6V3+oPHnf2HNrswvlVBxBgIRw+MAtkl+VrEjQCsJAOt/dYQS9o12RW44squpRWl
+         t2sYG0hEkQ5rRDRjh5NVRzBZtY79vSj7qX8ZcaNrFxVeXhIOQ6KkEUD/5lgPeQW3da3O
+         TuFo9nsnXbTHZlFjHFsfnqH3c2yVq0Er8rmSNJOpiQE4SYoFr9P5/UvvHhN3BQev5FhA
+         mcng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
-         :references:subject:from:to:cc;
-        bh=UyEPxHOs7uJG8c5Vefw2XS+nCQHPmR0coxnhZzrQeRc=;
-        b=tNKj8C+RzyQF5DpPkfbh1i98JtosS+pXByBdsH5d3tocb05ZMdlA/AF3td42txpRlX
-         B30ng/umKxX1d5A2tpePp2L19ATxbiUjAHEnJ0jY/Vkhfoqc6Bc2Ef67pztmPSMsBf8t
-         tNOVIol5Tiz2KM/Uex8+bttB3Y67mH16MZ57Um/13AIdn1EpHSaOS4/na3GUgqW/AIfM
-         mkVRDnit1BSSmThkHIQrGKp6WPP8A/Ji2QpqHdBpipFYtIoAwfibleAmxs89fsEdD4V5
-         RfiBq56C+wyWMVWuYRjGgdnYw/zRfpuMZ3dUrPKHdyArxc8fiiBsnY8M4whNX2OZs9+Q
-         qZ4g==
-X-Gm-Message-State: AOUpUlHNPgczzZGqML7GD8JSGHDTqPTbwOjXsjREymV9eOrOR+ev4Wnl
-        qGlYOxM67ouhLbx15BWOAKhga2voZ2tQxKbEam5x/wPaeR3pH+Utglnv3pmejMc70acsQCGh92p
-        I0cxvkaoUzTWdhuTs16wDKecBJymSfRXacwP/R1NaoJLuc82w9VkFJ2Zk3YHv
-X-Google-Smtp-Source: AAOMgpe4qg78t4NMIkoucGHRNBQqECT5F3JzCO+DPz/siybI5O8RQB4+DMPTWf0+ECOLOIGlSe3s6prbdIg2
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=4tfhu7PJsDrvGON+uvO/oJfB5kX6sEJ9fDMl2GPjZHk=;
+        b=g9j4MKWeO+2PEBvDG0xBErWPiNy4LzuEF5a8cxknBGuqc5lAHqGLCcxbu5JWczxl+k
+         9RQGlTdsVRDy3wS6COPadc/73fhXRlaifPhU/ThzAGHNp5Lk4tbVSZlYJFOISfIpjaB6
+         HyA71gsyePJkwXl5Hu4PoSbVehYvWC6zhaXUs7s5xkG+5ruYpAGIsy/GkQrfv7puqnAr
+         V2NAiWk58k7i/pB15CxTCUQL3XFX9w1KxGTAGohId7lT4BrewQcEM21AwTHGcH78u94i
+         ROyTSq/KXfJiQfY3g86LGIKhE8b/g7UB8Zbnbo2U/FtsFrZTbXy6JGQyg9sz+EDA67kT
+         KuOA==
+X-Gm-Message-State: AOUpUlG6kMVHIZx1Pop01dyVmCX4OdjMOzGFuDkzqnX4RJ9ZVIv920mU
+        9oEdsdw/ItTbqoVbv12kND4=
+X-Google-Smtp-Source: AAOMgpdIWb6Pznlk39AgwI0zrFuJCNv1szTPd73rvFboSif7apRlp+9Qdhwz6MvunAXY9fwag58z9A==
+X-Received: by 2002:a0c:df91:: with SMTP id w17-v6mr8034527qvl.39.1531943576998;
+        Wed, 18 Jul 2018 12:52:56 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:68c3:1c3b:990:6a4f? ([2001:4898:8010:0:51f9:1c3b:990:6a4f])
+        by smtp.gmail.com with ESMTPSA id n36-v6sm3713045qtb.39.2018.07.18.12.52.56
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 18 Jul 2018 12:52:56 -0700 (PDT)
+Subject: Re: [PATCH 5/8] commit-graph: not compatible with replace objects
+To:     Jeff King <peff@peff.net>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, jnareb@gmail.com,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.11.git.gitgitgadget@gmail.com>
+ <7f596c1718d35539f02828edbf933c8e660f123b.1531926932.git.gitgitgadget@gmail.com>
+ <20180718194657.GC7778@sigill.intra.peff.net>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <f5d2f06d-1736-57e4-edbd-aa638ae34238@gmail.com>
+Date:   Wed, 18 Jul 2018 15:52:54 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-X-Received: by 2002:a0c:e801:: with SMTP id y1-v6mr3894905qvn.55.1531943355577;
- Wed, 18 Jul 2018 12:49:15 -0700 (PDT)
-Date:   Wed, 18 Jul 2018 12:48:53 -0700
-In-Reply-To: <20180718194853.57994-1-sbeller@google.com>
-Message-Id: <20180718194853.57994-7-sbeller@google.com>
-References: <20180718194853.57994-1-sbeller@google.com>
-X-Mailer: git-send-email 2.18.0.233.g985f88cf7e-goog
-Subject: [PATCH 6/6] submodule--helper: introduce new update-module-mode helper
-From:   Stefan Beller <sbeller@google.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, szeder.dev@gmail.com, stolee@gmail.com,
-        Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20180718194657.GC7778@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This chews off a bit of the shell part of the update command in
-git-submodule.sh. When writing the C code, keep in mind that the
-submodule--helper part will go away eventually and we want to have
-a C function that is able to determine the submodule update strategy,
-it as a nicety, make determine_submodule_update_strategy accessible
-for arbitrary repositories.
+On 7/18/2018 3:46 PM, Jeff King wrote:
+> On Wed, Jul 18, 2018 at 08:15:41AM -0700, Derrick Stolee via GitGitGadget wrote:
+>
+>> From: Derrick Stolee <dstolee@microsoft.com>
+>>
+>> Create new method commit_graph_compatible(r) to check if a given
+>> repository r is compatible with the commit-graph feature. Fill the
+>> method with a check to see if replace-objects exist. Test this
+>> interaction succeeds, including ignoring an existing commit-graph and
+>> failing to write a new commit-graph.
+> I think this approach is sensible. These are optimizations, and it's not
+> a big deal to just punt no cases we can't handle.
+>
+> I do have one complaint about the implementation, though:
+>
+>> +static int commit_graph_compatible(struct repository *r)
+>> +{
+>> +	prepare_replace_object(r);
+>> +	if (hashmap_get_size(&r->objects->replace_map->map))
+>> +		return 0;
+>> +
+>> +	return 1;
+>> +}
+> If I'm reading the code correctly, this will predicate the decision
+> entirely on the presence of refs in refs/replace/. But you may have a
+> situation where those refs exist, but you are not respecting them in
+> this run.
+>
+> For instance, imagine[1] a server that hosts arbitrary repositories, but
+> wants to use commit graphs to speed up server-side operations (e.g.,
+> serving fetches, but also perhaps a web interface doing --contains,
+> etc). If it runs all of the server-side commands with
+> GIT_NO_REPLACE_OBJECTS=1, then there should be no problem. But if a user
+> pushes anything to refs/replace (because they _do_ use replace refs
+> locally, and want to share them with other clients), that would disable
+> graphs on the server.
+>
+> So I think this should at least be loosened to:
+>
+>    if (check_replace_refs) {
+> 	prepare_replace_object(r);
+> 	if (...)
+>    }
+>
+> which would make this case work. I'd even go so far as to say that for
+> writing, we should just always ignore replace refs and generate the full
+> graph (just like pack-objects does so when writing a pack). Then the
+> resulting graph can be used selectively by disabling replace refs for
+> particular commands. But for the scenario I described above, the
+> distinction is mostly academic, as replacements would be disabled anyway
+> during the write command anyway.
+>
+> -Peff
+>
+> [1] You can probably guess that this is how GitHub handles replace refs.
+>      We ran into this long ago because replacements and grafts mess up
+>      any other caches external to Git that rely on the immutability of
+>      the hash.
+>
+>      We do it with a config option, though, which requires a trivial
+>      patch. I'll post that momentarily.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- builtin/submodule--helper.c | 61 +++++++++++++++++++++++++++++++++++++
- git-submodule.sh            | 16 +---------
- 2 files changed, 62 insertions(+), 15 deletions(-)
+Thanks for the details! I never considered that someone would have these 
+refs around, but would ignore them most of the time.
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 034ba1bb2e0..c7de5d1e0a0 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -1444,6 +1444,66 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 	return 0;
- }
- 
-+static void determine_submodule_update_strategy(struct repository *r,
-+						int just_cloned,
-+						const char *path,
-+						const char *update,
-+						struct submodule_update_strategy *out)
-+{
-+	const struct submodule *sub = submodule_from_path(r, &null_oid, path);
-+	char *key;
-+	const char *val;
-+
-+	key = xstrfmt("submodule.%s.update", sub->name);
-+
-+	if (update) {
-+		trace_printf("parsing update");
-+		if (parse_submodule_update_strategy(update, out) < 0)
-+			die(_("Invalid update mode '%s' for submodule path '%s'"),
-+				update, path);
-+	} else if (!repo_config_get_string_const(r, key, &val)) {
-+		if (parse_submodule_update_strategy(val, out) < 0)
-+			die(_("Invalid update mode '%s' configured for submodule path '%s'"),
-+				val, path);
-+	} else if (sub->update_strategy.type != SM_UPDATE_UNSPECIFIED) {
-+		trace_printf("loaded thing");
-+		out->type = sub->update_strategy.type;
-+		out->command = sub->update_strategy.command;
-+	} else
-+		out->type = SM_UPDATE_CHECKOUT;
-+
-+	if (just_cloned &&
-+	    (out->type == SM_UPDATE_MERGE ||
-+	     out->type == SM_UPDATE_REBASE ||
-+	     out->type == SM_UPDATE_NONE))
-+		out->type = SM_UPDATE_CHECKOUT;
-+
-+	free(key);
-+}
-+
-+static int module_update_module_mode(int argc, const char **argv, const char *prefix)
-+{
-+	const char *path, *update = NULL;
-+	int just_cloned;
-+	struct submodule_update_strategy update_strategy = { .type = SM_UPDATE_CHECKOUT };
-+
-+	if (argc < 3 || argc > 4)
-+		die("submodule--helper update-module-clone expects <just-cloned> <path> [<update>]");
-+
-+	just_cloned = git_config_int("just_cloned", argv[1]);
-+	path = argv[2];
-+
-+	if (argc == 4)
-+		update = argv[3];
-+
-+	determine_submodule_update_strategy(the_repository,
-+					    just_cloned, path, update,
-+					    &update_strategy);
-+	fputs(submodule_strategy_to_string(&update_strategy), stdout);
-+
-+	return 0;
-+}
-+
- struct update_clone_data {
- 	const struct submodule *sub;
- 	struct object_id oid;
-@@ -2039,6 +2099,7 @@ static struct cmd_struct commands[] = {
- 	{"list", module_list, 0},
- 	{"name", module_name, 0},
- 	{"clone", module_clone, 0},
-+	{"update-module-mode", module_update_module_mode, 0},
- 	{"update-clone", update_clone, 0},
- 	{"relative-path", resolve_relative_path, 0},
- 	{"resolve-relative-url", resolve_relative_url, 0},
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 56588aa304d..215760898ce 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -535,27 +535,13 @@ cmd_update()
- 	do
- 		die_if_unmatched "$quickabort" "$sha1"
- 
--		name=$(git submodule--helper name "$sm_path") || exit
--		if ! test -z "$update"
--		then
--			update_module=$update
--		else
--			update_module=$(git config submodule."$name".update)
--			if test -z "$update_module"
--			then
--				update_module="checkout"
--			fi
--		fi
-+		update_module=$(git submodule--helper update-module-mode $just_cloned "$sm_path" $update)
- 
- 		displaypath=$(git submodule--helper relative-path "$prefix$sm_path" "$wt_prefix")
- 
- 		if test $just_cloned -eq 1
- 		then
- 			subsha1=
--			case "$update_module" in
--			merge | rebase | none)
--				update_module=checkout ;;
--			esac
- 		else
- 			subsha1=$(sanitize_submodule_env; cd "$sm_path" &&
- 				git rev-parse --verify HEAD) ||
--- 
-2.18.0.233.g985f88cf7e-goog
+The biggest reason I wanted to punt here was that it is easy to toggle 
+between using replace refs and not using them. Writing and reading as 
+long as we are ignoring those refs is a good idea, and I'll use that 
+approach in v2.
+
+Thanks,
+
+-Stolee
 
