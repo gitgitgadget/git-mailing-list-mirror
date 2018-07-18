@@ -2,111 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A9B51F597
-	for <e@80x24.org>; Wed, 18 Jul 2018 12:14:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB7571F597
+	for <e@80x24.org>; Wed, 18 Jul 2018 12:19:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726990AbeGRMv5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jul 2018 08:51:57 -0400
-Received: from mout.gmx.net ([212.227.15.15]:37921 "EHLO mout.gmx.net"
+        id S1730093AbeGRM4u (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jul 2018 08:56:50 -0400
+Received: from mout.gmx.net ([212.227.15.18]:44993 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726953AbeGRMv5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jul 2018 08:51:57 -0400
-Received: from [192.168.0.129] ([37.201.195.94]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MIMUZ-1fbcc93np9-004EOl; Wed, 18
- Jul 2018 14:14:11 +0200
-Date:   Wed, 18 Jul 2018 14:13:54 +0200 (DST)
+        id S1726258AbeGRM4u (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jul 2018 08:56:50 -0400
+Received: from [192.168.0.129] ([37.201.195.94]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LaFmY-1gK1ud0sJy-00m3BB; Wed, 18
+ Jul 2018 14:19:01 +0200
+Date:   Wed, 18 Jul 2018 14:18:44 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH 0/4] Use oid_object_info() instead of
- read_object_file()
-In-Reply-To: <CAL21BmmwRDwWc_4JmFKMA6ZYcx=A4biG+tmrBHPRNAxpSkt_NA@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1807181413200.71@tvgsbejvaqbjf.bet>
-References: <CAL21BmkBohTOVdCO_ENVfzL28aRjoh1MCCF6750AQEYsc7L54w@mail.gmail.com> <CAL21BmmwRDwWc_4JmFKMA6ZYcx=A4biG+tmrBHPRNAxpSkt_NA@mail.gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+cc:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
+        git@vger.kernel.org, paul@mad-scientist.net, dnj@google.com
+Subject: Re: Git 2.18: RUNTIME_PREFIX... is it working?
+In-Reply-To: <20180714205132.GH1042117@genre.crustytoothpaste.net>
+Message-ID: <nycvar.QRO.7.76.6.1807181418120.71@tvgsbejvaqbjf.bet>
+References: <nycvar.QRO.7.76.6.1807041312150.75@tvgsbejvaqbjf.bet> <986185d30a0f09b4e2a9832d324a265cd3da7354.camel@mad-scientist.net> <nycvar.QRO.7.76.6.1807061059260.75@tvgsbejvaqbjf.bet> <CAD1RUU-4a_jV_JjozjXOR4bi+_7rFW_AjmHbbrw6NHJ77=oGkw@mail.gmail.com>
+ <bf0d4f33701ec694917f2e710c3fb097085c8d69.camel@mad-scientist.net> <nycvar.QRO.7.76.6.1807082346140.75@tvgsbejvaqbjf.bet> <20180709195822.GA9000@sigill.intra.peff.net> <20180710035635.GA13459@sigill.intra.peff.net> <5b445ca6.TkV9Dj8T2KFinxZP%perryh@pluto.rain.com>
+ <20180710140310.GA9246@sigill.intra.peff.net> <20180714205132.GH1042117@genre.crustytoothpaste.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-575473446-1531916050=:71"
-X-Provags-ID: V03:K1:SDCnlTmFL25gKv2KzCV/ul7QWtvzvG1Raqd9pYoJ7gJfYrnS1k7
- B+E3mm8nIVxqk3ue4MhYyNnB1otlhT8FhaqJmGIeMW6JCpmanBgNC8T6lUqvodKJuq/fzaY
- nDw07QDooHdSUPUIU4hk4A+2wxVZ3uKbyhSzhQ5eVON/ZYpc1Ys1OrERYFXfcmmA5bYeZnr
- W6QR1020cJSKCWZbZSx2w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:zZDi0D+Bu0Y=:eV46mcIN/Ep3NFYhUSBtWp
- yzjSOnk42p6CoLZbzkyIkie+o6gHHd0ixXSghMQNIgpHgZF2aTR1GxX+9CshbKNQq2AUIcqKY
- 6USabVn3c1W50z55bJB+wkM8c2t49SSHfm+t2bCZnzl+3Wz3SPwvUn35V0ZYI17mUSxhTHskC
- ZHupcSJPVJp0MEYD6ET2aSTLd1t29V1jDl5nWbeLV8bAcDvN1MwqaQI5TCGmVW9W8Y3VhHXqO
- xuv+Zo+ea1b13H5mzK5NiLcbLxuEI+yUdsO4pO+my8ECGfM+gjXINEXNwtiwPrl2O4r2XEBlQ
- IOTIMP1G3FNvRTy0RrUTkX1EOUSNV63banK5IT90WgVkWW+nOfawMDGQKL016zDGJ8iiVmS16
- FkDmaEC3IZFx9vUQHENYRcQTmzgbFTnqHuwZvNEI+D6r7mkIn47cC9cAm4PL1V57Jn8eQk/rA
- VzTytUTbvQRpI0nmaF/wO8Jm1z2GPkU5C4mfWhGb4nIPfNHor445EU1kbSOTYrNiVCDc6iotz
- VZh7BHwTuwOxbu7p3CxRORDMVUpNiXH0fA4qdq1qlVhIH0p33sRWjtPHhaQITOwuYn5Fk9hhd
- K5/7GtMYc0Gc/Bqe4M6sQaNeU09schZ64WQ4wEHqtLT6FNwXzZZ71UDIw4DU1P1KLG591invt
- nmq99vd9qZ8Jk2wy2E0pLaSDAZpvxZt0TYk6mXgVR/EfColfSoXxNnMq19xhRwEC+Gk0S3x52
- L5cLbRXGDGU7r9IP1xv8RpMuqEXJkzdXmVSK/tXiigxZrUMM7KPLHk6LkopTORBrmTZKcMPgK
- a3Vyu42
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:3+Xt4T2/k6vFmC7tGvOvZ/Y8w9Lm7zZ0Nw1+HfDQTb26Z0eOvd2
+ ek1uBLu438uTMD1ttl/I+51/ldjn23mqsK015WTUyCgMNAhlNaeG/et6Lchixl7tMdNWR9x
+ 2QULT4wdUiF/qUhthoWET0Rhq1EK26EL7JrtSDoWGXy6gDvLPh1ADpAzj9whayGVHLt9VA0
+ aIeLbUbWAHmZ6dcP64SoA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:v+HUQmnD03g=:EZd2yLMt5AVvhyldswl5wY
+ NKTXV5vtObYVm/APRhxPxR9ovyEl3bzsLIcLFDLrxFaezJUZaY5k1uQFcyBR5njiisiSrC+lf
+ P9tTUL7qAMW+g8yCdYQ61wGLF5nbwtTSjxN01uho052Z77AgxwpP12cTHYSIwUkPbTRkEtZU3
+ P7OrchSQbXYIbXoEbyrP+Cqiqh8UqMU3IgvdZbnzWf3+vCKzE38ZZlLv03b9nnNnFPAtAaKDs
+ wcsxrpld16spGtJwl/sz4Kg85heT9vzEVVaeUV1AQc9TCkyQI5kjGfDPKiOF3bSt6X0oz1uCc
+ 2WdZTdzmn82yf+0w+jWKfjtlKy8kiMw8iYeCmOpONQMLRfrbtZn125Z8qCff7SedY4EwaHmlU
+ TrcUNZynTKjAPsi4K53MpeP2kMcrkA8RUvFaOP6mNmLlYpHf4ZeNBcRqmJ0O/zBSqPTvbGg0F
+ pNhKVWqrWraOVGI1G5wrqbvDbRaFuZPRkr67w1BgjwiRl7m+wY7yKlsI+2LwQqZHB/TC7cyKn
+ YCxcESgngo+3jLpX5eTDl/sk53xHFXdH8Y2iGIzWwil1LDQcvb3Ayaj1qycxHew6iC/DIGAGG
+ zx4k43TmXn3yS6Ktw4J43IZ+9Q8XBDPG9MmF3BZ6aOJr+DJw8d8umhjRSXFhq5fmiyd+woG93
+ dksEJ6X3d2ubEkwVIE/j94j6f2deFl1DBWSS1G8tyLorw967zlnrMgmiEBHl0GTaefMeY94vB
+ f2E2uTb/TxBvXI9KRP1+T9qQ/mxAymWcd5APhcY/wG94aM4rZr/V10Hv+Zm5LZTd/OTuFUngO
+ S9U0ZVY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi,
 
---8323328-575473446-1531916050=:71
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+[dropping Perry's non-working email address again]
 
-Hi Olga,
+On Sat, 14 Jul 2018, brian m. carlson wrote:
 
-On Fri, 13 Jul 2018, =D0=9E=D0=BB=D1=8F =D0=A2=D0=B5=D0=BB=D0=B5=D0=B6=D0=
-=BD=D0=B0=D1=8F wrote:
+> On Tue, Jul 10, 2018 at 10:03:10AM -0400, Jeff King wrote:
+> > My point is that aside from RUNTIME_PREFIX, we don't need /proc. So
+> > somebody who currently builds Git with a static path like
+> > "/usr/libexec/git-core" and runs it inside a chroot will be just fine as
+> > long as /usr/libexec/git-core is available at that name inside the
+> > chroot. But if the build starts relying on RUNTIME_PREFIX, it's going to
+> > regress their case.
+> 
+> I will say that at cPanel, we have a configuration where end users can
+> end up inside a mount namespace without /proc (depending on the
+> preferences of the administrator).  However, it's easy enough for us to
+> simply build without RUNTIME_PREFIX if necessary.
+> 
+> If we turn it on by default, it would be nice if we documented (maybe in
+> the Makefile) that it requires /proc on Linux for the benefit of other
+> people who might be in a similar situation.
 
-> 2018-07-09 11:27 GMT+03:00 =D0=9E=D0=BB=D1=8F =D0=A2=D0=B5=D0=BB=D0=B5=D0=
-=B6=D0=BD=D0=B0=D1=8F <olyatelezhnaya@gmail.com>:
-> > Hello everyone,
-> > This is my new attempt to start using oid_object_info_extended() in
-> > ref-filter. You could look at previous one [1] [2] but it is not
-> > necessary.
-> >
-> > The goal (still) is to improve performance by avoiding calling expensiv=
-e
-> > functions when we don't need the information they provide
-> > or when we could get it by using a cheaper function.
-> >
-> > This patch is a middle step. In the end, I want to add new atoms
-> > ("objectsize:disk" and "deltabase") and reuse ref-filter logic in
-> > cat-file command.
-> >
-> > I also know about problems with memory leaks in ref-filter: that would
-> > be my next task that I will work on. Since I did not generate any new
-> > leaks in this patch (just use existing ones), I decided to put this
-> > part on a review and fix leaks as a separate task.
->=20
-> UPDATES since v1:
-> add init to eaten variable (thanks to Szeder Gabor, Johannes Schindelin)
-> improve second commit message (thanks to Junio C Hamano)
-> add static keyword (thanks to Ramsay Jones)
->=20
-> >
-> > Thank you!
-> >
-> > [1] https://github.com/git/git/pull/493
+Is there *really* no other way on Linux to figure out the absolute path of
+the current executable than to open a pseudo file in the `/proc` file
+system?
 
-Could you please populate the description of that PR so that SubmitGit
-picks it up as cover letter?
-
-Thanks,
+Ciao,
 Johannes
-
-> > [2] https://public-inbox.org/git/010201637254c969-a346030e-0b75-41ad-8e=
-f3-2ac7e04ba4fb-000000@eu-west-1.amazonses.com/
->=20
---8323328-575473446-1531916050=:71--
