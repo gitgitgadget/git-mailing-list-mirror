@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E50D1F597
-	for <e@80x24.org>; Wed, 18 Jul 2018 16:12:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 365611F597
+	for <e@80x24.org>; Wed, 18 Jul 2018 16:12:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731830AbeGRQv2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jul 2018 12:51:28 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:41084 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731757AbeGRQv2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jul 2018 12:51:28 -0400
-Received: by mail-lj1-f194.google.com with SMTP id y17-v6so4595321ljy.8
-        for <git@vger.kernel.org>; Wed, 18 Jul 2018 09:12:49 -0700 (PDT)
+        id S1731753AbeGRQvb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jul 2018 12:51:31 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:35809 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731593AbeGRQva (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jul 2018 12:51:30 -0400
+Received: by mail-lj1-f196.google.com with SMTP id p10-v6so4601627ljg.2
+        for <git@vger.kernel.org>; Wed, 18 Jul 2018 09:12:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=u9VooIU/QOX0uoU7Xvng57d1cgGXEec9feexMKch/Mw=;
-        b=MqkN2F5tQRbLWAcYBMNKX2s8eV4SH/grqcwoJH/4srY0HkZN5KOPPErjaKucTdd0+2
-         +RoqH+f8Mxmx9VGGcLsBKotYHxqq6A5zDrne7qRNVWw0aRBnq5JrpcO6Rc4xpfBFu0C0
-         hgu6QmIa04Ao09HTKkuwhGTP1paJ6kYc9zkkQjTJa6jrUpg7YqqQYkKYmccL8wzbpA8v
-         CWdLewt/JPxqbWS0aGFwY6PAsn8hQwq+jMuMWgOkt/08iTinmlaY9xmCj4D833PWbbYn
-         ktQ7HFdnfP08WDYue/MgG3oDrlY0buy26FSzqg6awJLV+HlLrMFSy82Gh4rmm05HaeV0
-         makQ==
+        bh=Xe2A2lJ4aDvYz2LGQUftJy5sybjAuCQt98O4AU7b9q0=;
+        b=umJRATkDYq3nA6HLMnMqMpas6Bvq7dzoeAifcWS4p1yALwGlL/z7W7xZga2UzIJHHs
+         Z97z9JGLI3zBUl3+25p2HOGwJzc4T9VAlNDD7kPuRPfXEGLcTlYuvsJSGZKI5FSJsQsS
+         4Z7deoqi2bExM4M+y3soDUMpOL977FXyyxwUmJd1HwTQkwHwzuxyQMteJjOl8bNKI2l9
+         qpAAAFvZHb6EVx7tHXhSFKFAMXtE/0M8n4f/xX3xMQnE8+plvXw+sntiuSZwwzA5Y70i
+         HUCl9+oG1EQc7APRyposTxZKY0ytJ+Cthw+Ic0JFcDgNC1/3gH1c4I+fzxoy2HkEzzeJ
+         j7/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=u9VooIU/QOX0uoU7Xvng57d1cgGXEec9feexMKch/Mw=;
-        b=c+8gNdxuqz135k6ZHnGW0G+/e5/G3i9skNjM0gCS4N4UR+M+xD7AJn/lGHHpwpo3UJ
-         JPLt6AmNB1YlNNbZTtb1FPN7MoDXCf936emOpqRfne/9gGNfS2RzZP2qKqKzSNcPqD2G
-         pfheJ3+AbHBDzwLFC8cIA2fXGWu8uHMch+Gr1bHfB5CQwCsa0cbj3ZZjM+oCQE1rbhp8
-         jNU+nKHyOr3M6CWQv/vOLO+LdOjpJf3FRfBTMZ9MSALkYzduk2ynKGd0rZi9L1Yoi8kv
-         xP1PCtcGydQrCHslmS44uRNdzYc+AV0Sd4/OXmrU2aVVk3ASYeq7ipLocwvKlzX/wOT0
-         QeQQ==
-X-Gm-Message-State: AOUpUlH6MAk9V6wbwNciaIp8LzUjYaSIq8ki3/V6+HC87vFQiPkQJFcW
-        Je/cA9g2Yfyv/HA44cc+xH4UpQ==
-X-Google-Smtp-Source: AAOMgpdR1okTw4RqjVZObMCSyvVOxgyNwAO5QBG82OX8O+N2wIZpwkjz+CYLb1disH+Imqn6XnLu9g==
-X-Received: by 2002:a2e:428e:: with SMTP id h14-v6mr5352105ljf.136.1531930368627;
-        Wed, 18 Jul 2018 09:12:48 -0700 (PDT)
+        bh=Xe2A2lJ4aDvYz2LGQUftJy5sybjAuCQt98O4AU7b9q0=;
+        b=m8X5f6ZlhK/x8mVU2r2CWzO/KA1U2/ArNnZsC6WhrYptJsquUr8vuIeCVV3Gr35BZa
+         Gpm2NbV7LdZb8FTp5tlo/2d1JOxY1TO8zUBt6l1aKYkLstb8nl8TfxZa9bSpkI+pvzYn
+         OLldcGl5yQ5oNXIsUi/KOtrsl1oMvY0CISa3i9BlD+PlViyOQN5ozxZ9liE5mjqRY1BP
+         lB1Zs8+7XeByi5kWMp0LyvZRwIMXCLxGuOmn28SkLHCNOWpdnZiexvF3FbZdgjxAz8B/
+         Y7cm2sUM1VmK/Y6Q00hgjtYgTQCW8EFlK9YdwwuMgeRDxStEBzRaV17Qn66jdKlMPIK4
+         JvAw==
+X-Gm-Message-State: AOUpUlG9HVLApad+JSlDWkdx5/BjrvkPep1Tm4goXVuf5dA5pyiYjk42
+        8+37Eqw2SFcg3iqBzdvKf6f2uQ==
+X-Google-Smtp-Source: AAOMgpe+Bf4U0s9ydZHEJ5sfQkQII/+72GA03HEXhqhovveJnZ0mPs3n1alMKlrEPQMxOQRBvlnYFA==
+X-Received: by 2002:a2e:9c0f:: with SMTP id s15-v6mr5356000lji.97.1531930371862;
+        Wed, 18 Jul 2018 09:12:51 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id j26-v6sm689203ljc.54.2018.07.18.09.12.46
+        by smtp.gmail.com with ESMTPSA id j26-v6sm689203ljc.54.2018.07.18.09.12.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 18 Jul 2018 09:12:47 -0700 (PDT)
+        Wed, 18 Jul 2018 09:12:50 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 07/23] builtin/replace.c: mark more strings for translation
-Date:   Wed, 18 Jul 2018 18:10:45 +0200
-Message-Id: <20180718161101.19765-8-pclouds@gmail.com>
+Subject: [PATCH v2 09/23] config.c: mark more strings for translation
+Date:   Wed, 18 Jul 2018 18:10:47 +0200
+Message-Id: <20180718161101.19765-10-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc2.476.g39500d3211
 In-Reply-To: <20180718161101.19765-1-pclouds@gmail.com>
 References: <20180718161101.19765-1-pclouds@gmail.com>
@@ -73,274 +73,325 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/replace.c | 74 +++++++++++++++++++++++------------------------
- 1 file changed, 37 insertions(+), 37 deletions(-)
+ config.c                  | 72 +++++++++++++++++++--------------------
+ t/t1305-config-include.sh |  2 +-
+ 2 files changed, 37 insertions(+), 37 deletions(-)
 
-diff --git a/builtin/replace.c b/builtin/replace.c
-index 2d7abf7a43..c77b325aa1 100644
---- a/builtin/replace.c
-+++ b/builtin/replace.c
-@@ -54,7 +54,7 @@ static int show_reference(const char *refname, const struct object_id *oid,
- 			enum object_type obj_type, repl_type;
+diff --git a/config.c b/config.c
+index 6ba07989f1..58d076e833 100644
+--- a/config.c
++++ b/config.c
+@@ -116,12 +116,12 @@ static long config_buf_ftell(struct config_source *conf)
+ }
  
- 			if (get_oid(refname, &object))
--				return error("failed to resolve '%s' as a valid ref", refname);
-+				return error(_("failed to resolve '%s' as a valid ref"), refname);
- 
- 			obj_type = oid_object_info(the_repository, &object,
- 						   NULL);
-@@ -83,8 +83,8 @@ static int list_replace_refs(const char *pattern, const char *format)
- 	else if (!strcmp(format, "long"))
- 		data.format = REPLACE_FORMAT_LONG;
- 	else
--		return error("invalid replace format '%s'\n"
--			     "valid formats are 'short', 'medium' and 'long'",
-+		return error(_("invalid replace format '%s'\n"
-+			       "valid formats are 'short', 'medium' and 'long'"),
- 			     format);
- 
- 	for_each_replace_ref(the_repository, show_reference, (void *)&data);
-@@ -118,7 +118,7 @@ static int for_each_replace_name(const char **argv, each_replace_name_fn fn)
- 		full_hex = ref.buf + base_len;
- 
- 		if (read_ref(ref.buf, &oid)) {
--			error("replace ref '%s' not found", full_hex);
-+			error(_("replace ref '%s' not found"), full_hex);
- 			had_error = 1;
- 			continue;
- 		}
-@@ -134,7 +134,7 @@ static int delete_replace_ref(const char *name, const char *ref,
+ #define MAX_INCLUDE_DEPTH 10
+-static const char include_depth_advice[] =
++static const char include_depth_advice[] = N_(
+ "exceeded maximum include depth (%d) while including\n"
+ "	%s\n"
+ "from\n"
+ "	%s\n"
+-"Do you have circular includes?";
++"Do you have circular includes?");
+ static int handle_path_include(const char *path, struct config_include_data *inc)
  {
- 	if (delete_ref(NULL, ref, oid, 0))
- 		return 1;
--	printf_ln("Deleted replace ref '%s'", name);
-+	printf_ln(_("Deleted replace ref '%s'"), name);
- 	return 0;
- }
+ 	int ret = 0;
+@@ -133,7 +133,7 @@ static int handle_path_include(const char *path, struct config_include_data *inc
  
-@@ -146,12 +146,12 @@ static int check_ref_valid(struct object_id *object,
- 	strbuf_reset(ref);
- 	strbuf_addf(ref, "%s%s", git_replace_ref_base, oid_to_hex(object));
- 	if (check_refname_format(ref->buf, 0))
--		return error("'%s' is not a valid ref name", ref->buf);
-+		return error(_("'%s' is not a valid ref name"), ref->buf);
+ 	expanded = expand_user_path(path, 0);
+ 	if (!expanded)
+-		return error("could not expand include path '%s'", path);
++		return error(_("could not expand include path '%s'"), path);
+ 	path = expanded;
  
- 	if (read_ref(ref->buf, prev))
- 		oidclr(prev);
- 	else if (!force)
--		return error("replace ref '%s' already exists", ref->buf);
-+		return error(_("replace ref '%s' already exists"), ref->buf);
- 	return 0;
- }
+ 	/*
+@@ -144,7 +144,7 @@ static int handle_path_include(const char *path, struct config_include_data *inc
+ 		char *slash;
  
-@@ -171,10 +171,10 @@ static int replace_object_oid(const char *object_ref,
- 	obj_type = oid_object_info(the_repository, object, NULL);
- 	repl_type = oid_object_info(the_repository, repl, NULL);
- 	if (!force && obj_type != repl_type)
--		return error("Objects must be of the same type.\n"
--			     "'%s' points to a replaced object of type '%s'\n"
--			     "while '%s' points to a replacement object of "
--			     "type '%s'.",
-+		return error(_("Objects must be of the same type.\n"
-+			       "'%s' points to a replaced object of type '%s'\n"
-+			       "while '%s' points to a replacement object of "
-+			       "type '%s'."),
- 			     object_ref, type_name(obj_type),
- 			     replace_ref, type_name(repl_type));
+ 		if (!cf || !cf->path)
+-			return error("relative config includes must come from files");
++			return error(_("relative config includes must come from files"));
  
-@@ -200,10 +200,10 @@ static int replace_object(const char *object_ref, const char *replace_ref, int f
- 	struct object_id object, repl;
+ 		slash = find_last_dir_sep(cf->path);
+ 		if (slash)
+@@ -155,7 +155,7 @@ static int handle_path_include(const char *path, struct config_include_data *inc
  
- 	if (get_oid(object_ref, &object))
--		return error("failed to resolve '%s' as a valid ref",
-+		return error(_("failed to resolve '%s' as a valid ref"),
- 			     object_ref);
- 	if (get_oid(replace_ref, &repl))
--		return error("failed to resolve '%s' as a valid ref",
-+		return error(_("failed to resolve '%s' as a valid ref"),
- 			     replace_ref);
+ 	if (!access_or_die(path, R_OK, 0)) {
+ 		if (++inc->depth > MAX_INCLUDE_DEPTH)
+-			die(include_depth_advice, MAX_INCLUDE_DEPTH, path,
++			die(_(include_depth_advice), MAX_INCLUDE_DEPTH, path,
+ 			    !cf ? "<unknown>" :
+ 			    cf->name ? cf->name :
+ 			    "the command line");
+@@ -342,13 +342,13 @@ static int git_config_parse_key_1(const char *key, char **store_key, int *basele
  
- 	return replace_object_oid(object_ref, &object, replace_ref, &repl, force);
-@@ -222,7 +222,7 @@ static int export_object(const struct object_id *oid, enum object_type type,
- 
- 	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0666);
- 	if (fd < 0)
--		return error_errno("unable to open %s for writing", filename);
-+		return error_errno(_("unable to open %s for writing"), filename);
- 
- 	argv_array_push(&cmd.args, "--no-replace-objects");
- 	argv_array_push(&cmd.args, "cat-file");
-@@ -235,7 +235,7 @@ static int export_object(const struct object_id *oid, enum object_type type,
- 	cmd.out = fd;
- 
- 	if (run_command(&cmd))
--		return error("cat-file reported failure");
-+		return error(_("cat-file reported failure"));
- 	return 0;
- }
- 
-@@ -251,7 +251,7 @@ static int import_object(struct object_id *oid, enum object_type type,
- 
- 	fd = open(filename, O_RDONLY);
- 	if (fd < 0)
--		return error_errno("unable to open %s for reading", filename);
-+		return error_errno(_("unable to open %s for reading"), filename);
- 
- 	if (!raw && type == OBJ_TREE) {
- 		const char *argv[] = { "mktree", NULL };
-@@ -265,11 +265,11 @@ static int import_object(struct object_id *oid, enum object_type type,
- 
- 		if (start_command(&cmd)) {
- 			close(fd);
--			return error("unable to spawn mktree");
-+			return error(_("unable to spawn mktree"));
- 		}
- 
- 		if (strbuf_read(&result, cmd.out, 41) < 0) {
--			error_errno("unable to read from mktree");
-+			error_errno(_("unable to read from mktree"));
- 			close(fd);
- 			close(cmd.out);
- 			return -1;
-@@ -278,11 +278,11 @@ static int import_object(struct object_id *oid, enum object_type type,
- 
- 		if (finish_command(&cmd)) {
- 			strbuf_release(&result);
--			return error("mktree reported failure");
-+			return error(_("mktree reported failure"));
- 		}
- 		if (get_oid_hex(result.buf, oid) < 0) {
- 			strbuf_release(&result);
--			return error("mktree did not return an object name");
-+			return error(_("mktree did not return an object name"));
- 		}
- 
- 		strbuf_release(&result);
-@@ -291,12 +291,12 @@ static int import_object(struct object_id *oid, enum object_type type,
- 		int flags = HASH_FORMAT_CHECK | HASH_WRITE_OBJECT;
- 
- 		if (fstat(fd, &st) < 0) {
--			error_errno("unable to fstat %s", filename);
-+			error_errno(_("unable to fstat %s"), filename);
- 			close(fd);
- 			return -1;
- 		}
- 		if (index_fd(oid, fd, &st, type, NULL, flags) < 0)
--			return error("unable to write object to database");
-+			return error(_("unable to write object to database"));
- 		/* index_fd close()s fd for us */
+ 	if (last_dot == NULL || last_dot == key) {
+ 		if (!quiet)
+-			error("key does not contain a section: %s", key);
++			error(_("key does not contain a section: %s"), key);
+ 		return -CONFIG_NO_SECTION_OR_NAME;
  	}
  
-@@ -315,11 +315,11 @@ static int edit_and_replace(const char *object_ref, int force, int raw)
- 	struct strbuf ref = STRBUF_INIT;
- 
- 	if (get_oid(object_ref, &old_oid) < 0)
--		return error("not a valid object name: '%s'", object_ref);
-+		return error(_("not a valid object name: '%s'"), object_ref);
- 
- 	type = oid_object_info(the_repository, &old_oid, NULL);
- 	if (type < 0)
--		return error("unable to get object type for %s",
-+		return error(_("unable to get object type for %s"),
- 			     oid_to_hex(&old_oid));
- 
- 	if (check_ref_valid(&old_oid, &prev, &ref, force)) {
-@@ -335,7 +335,7 @@ static int edit_and_replace(const char *object_ref, int force, int raw)
+ 	if (!last_dot[1]) {
+ 		if (!quiet)
+-			error("key does not contain variable name: %s", key);
++			error(_("key does not contain variable name: %s"), key);
+ 		return -CONFIG_NO_SECTION_OR_NAME;
  	}
- 	if (launch_editor(tmpfile, NULL, NULL) < 0) {
- 		free(tmpfile);
--		return error("editing object file failed");
-+		return error(_("editing object file failed"));
- 	}
- 	if (import_object(&new_oid, type, raw, tmpfile)) {
- 		free(tmpfile);
-@@ -344,7 +344,7 @@ static int edit_and_replace(const char *object_ref, int force, int raw)
- 	free(tmpfile);
  
- 	if (!oidcmp(&old_oid, &new_oid))
--		return error("new object is the same as the old one: '%s'", oid_to_hex(&old_oid));
-+		return error(_("new object is the same as the old one: '%s'"), oid_to_hex(&old_oid));
- 
- 	return replace_object_oid(object_ref, &old_oid, "replacement", &new_oid, force);
- }
-@@ -476,10 +476,10 @@ static int create_graft(int argc, const char **argv, int force, int gentle)
- 
- 	if (!oidcmp(&old_oid, &new_oid)) {
- 		if (gentle) {
--			warning("graft for '%s' unnecessary", oid_to_hex(&old_oid));
-+			warning(_("graft for '%s' unnecessary"), oid_to_hex(&old_oid));
- 			return 0;
+@@ -372,13 +372,13 @@ static int git_config_parse_key_1(const char *key, char **store_key, int *basele
+ 			if (!iskeychar(c) ||
+ 			    (i == baselen + 1 && !isalpha(c))) {
+ 				if (!quiet)
+-					error("invalid key: %s", key);
++					error(_("invalid key: %s"), key);
+ 				goto out_free_ret_1;
+ 			}
+ 			c = tolower(c);
+ 		} else if (c == '\n') {
+ 			if (!quiet)
+-				error("invalid key (newline): %s", key);
++				error(_("invalid key (newline): %s"), key);
+ 			goto out_free_ret_1;
  		}
--		return error("new commit is the same as the old one: '%s'", oid_to_hex(&old_oid));
-+		return error(_("new commit is the same as the old one: '%s'"), oid_to_hex(&old_oid));
+ 		if (store_key)
+@@ -414,7 +414,7 @@ int git_config_parse_parameter(const char *text,
+ 
+ 	pair = strbuf_split_str(text, '=', 2);
+ 	if (!pair[0])
+-		return error("bogus config parameter: %s", text);
++		return error(_("bogus config parameter: %s"), text);
+ 
+ 	if (pair[0]->len && pair[0]->buf[pair[0]->len - 1] == '=') {
+ 		strbuf_setlen(pair[0], pair[0]->len - 1);
+@@ -426,7 +426,7 @@ int git_config_parse_parameter(const char *text,
+ 	strbuf_trim(pair[0]);
+ 	if (!pair[0]->len) {
+ 		strbuf_list_free(pair);
+-		return error("bogus config parameter: %s", text);
++		return error(_("bogus config parameter: %s"), text);
  	}
  
- 	return replace_object_oid(old_ref, &old_oid, "replacement", &new_oid, force);
-@@ -553,7 +553,7 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
- 		cmdmode = argc ? MODE_REPLACE : MODE_LIST;
+ 	if (git_config_parse_key(pair[0]->buf, &canonical_name, NULL)) {
+@@ -461,7 +461,7 @@ int git_config_from_parameters(config_fn_t fn, void *data)
+ 	envw = xstrdup(env);
  
- 	if (format && cmdmode != MODE_LIST)
--		usage_msg_opt("--format cannot be used when not listing",
-+		usage_msg_opt(_("--format cannot be used when not listing"),
- 			      git_replace_usage, options);
+ 	if (sq_dequote_to_argv(envw, &argv, &nr, &alloc) < 0) {
+-		ret = error("bogus format in %s", CONFIG_DATA_ENVIRONMENT);
++		ret = error(_("bogus format in %s"), CONFIG_DATA_ENVIRONMENT);
+ 		goto out;
+ 	}
  
- 	if (force &&
-@@ -561,47 +561,47 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
- 	    cmdmode != MODE_EDIT &&
- 	    cmdmode != MODE_GRAFT &&
- 	    cmdmode != MODE_CONVERT_GRAFT_FILE)
--		usage_msg_opt("-f only makes sense when writing a replacement",
-+		usage_msg_opt(_("-f only makes sense when writing a replacement"),
- 			      git_replace_usage, options);
+@@ -1154,7 +1154,7 @@ static int git_default_core_config(const char *var, const char *value)
+ 		else {
+ 			int abbrev = git_config_int(var, value);
+ 			if (abbrev < minimum_abbrev || abbrev > 40)
+-				return error("abbrev length out of range: %d", abbrev);
++				return error(_("abbrev length out of range: %d"), abbrev);
+ 			default_abbrev = abbrev;
+ 		}
+ 		return 0;
+@@ -1271,7 +1271,7 @@ static int git_default_core_config(const char *var, const char *value)
+ 			comment_line_char = value[0];
+ 			auto_comment_line_char = 0;
+ 		} else
+-			return error("core.commentChar should only be one character");
++			return error(_("core.commentChar should only be one character"));
+ 		return 0;
+ 	}
  
- 	if (raw && cmdmode != MODE_EDIT)
--		usage_msg_opt("--raw only makes sense with --edit",
-+		usage_msg_opt(_("--raw only makes sense with --edit"),
- 			      git_replace_usage, options);
+@@ -1384,7 +1384,7 @@ static int git_default_branch_config(const char *var, const char *value)
+ 		else if (!strcmp(value, "always"))
+ 			autorebase = AUTOREBASE_ALWAYS;
+ 		else
+-			return error("malformed value for %s", var);
++			return error(_("malformed value for %s"), var);
+ 		return 0;
+ 	}
  
- 	switch (cmdmode) {
- 	case MODE_DELETE:
- 		if (argc < 1)
--			usage_msg_opt("-d needs at least one argument",
-+			usage_msg_opt(_("-d needs at least one argument"),
- 				      git_replace_usage, options);
- 		return for_each_replace_name(argv, delete_replace_ref);
+@@ -1410,9 +1410,9 @@ static int git_default_push_config(const char *var, const char *value)
+ 		else if (!strcmp(value, "current"))
+ 			push_default = PUSH_DEFAULT_CURRENT;
+ 		else
+-			return error("malformed value for %s: %s\n"
+-				     "Must be one of nothing, matching, simple, "
+-				     "upstream or current.",
++			return error(_("malformed value for %s: %s\n"
++				       "Must be one of nothing, matching, simple, "
++				       "upstream or current."),
+ 				     var, value);
+ 		return 0;
+ 	}
+@@ -1589,10 +1589,10 @@ int git_config_from_blob_oid(config_fn_t fn,
  
- 	case MODE_REPLACE:
- 		if (argc != 2)
--			usage_msg_opt("bad number of arguments",
-+			usage_msg_opt(_("bad number of arguments"),
- 				      git_replace_usage, options);
- 		return replace_object(argv[0], argv[1], force);
+ 	buf = read_object_file(oid, &type, &size);
+ 	if (!buf)
+-		return error("unable to load config blob object '%s'", name);
++		return error(_("unable to load config blob object '%s'"), name);
+ 	if (type != OBJ_BLOB) {
+ 		free(buf);
+-		return error("reference '%s' does not point to a blob", name);
++		return error(_("reference '%s' does not point to a blob"), name);
+ 	}
  
- 	case MODE_EDIT:
- 		if (argc != 1)
--			usage_msg_opt("-e needs exactly one argument",
-+			usage_msg_opt(_("-e needs exactly one argument"),
- 				      git_replace_usage, options);
- 		return edit_and_replace(argv[0], force, raw);
+ 	ret = git_config_from_mem(fn, CONFIG_ORIGIN_BLOB, name, buf, size, data);
+@@ -1608,7 +1608,7 @@ static int git_config_from_blob_ref(config_fn_t fn,
+ 	struct object_id oid;
  
- 	case MODE_GRAFT:
- 		if (argc < 1)
--			usage_msg_opt("-g needs at least one argument",
-+			usage_msg_opt(_("-g needs at least one argument"),
- 				      git_replace_usage, options);
- 		return create_graft(argc, argv, force, 0);
+ 	if (get_oid(name, &oid) < 0)
+-		return error("unable to resolve config blob '%s'", name);
++		return error(_("unable to resolve config blob '%s'"), name);
+ 	return git_config_from_blob_oid(fn, name, &oid, data);
+ }
  
- 	case MODE_CONVERT_GRAFT_FILE:
- 		if (argc != 0)
--			usage_msg_opt("--convert-graft-file takes no argument",
-+			usage_msg_opt(_("--convert-graft-file takes no argument"),
- 				      git_replace_usage, options);
- 		return !!convert_graft_file(force);
+@@ -1638,7 +1638,7 @@ unsigned long git_env_ulong(const char *k, unsigned long val)
+ {
+ 	const char *v = getenv(k);
+ 	if (v && !git_parse_ulong(v, &val))
+-		die("failed to parse %s", k);
++		die(_("failed to parse %s"), k);
+ 	return val;
+ }
  
- 	case MODE_LIST:
- 		if (argc > 1)
--			usage_msg_opt("only one pattern can be given with -l",
-+			usage_msg_opt(_("only one pattern can be given with -l"),
- 				      git_replace_usage, options);
- 		return list_replace_refs(argv[0], format);
+@@ -2372,7 +2372,7 @@ static int store_aux_event(enum config_event_t type,
  
+ 	if (type == CONFIG_EVENT_SECTION) {
+ 		if (cf->var.len < 2 || cf->var.buf[cf->var.len - 1] != '.')
+-			return error("invalid section name '%s'", cf->var.buf);
++			return error(_("invalid section name '%s'"), cf->var.buf);
+ 
+ 		/* Is this the section we were looking for? */
+ 		store->is_keys_section =
+@@ -2428,7 +2428,7 @@ static int store_aux(const char *key, const char *value, void *cb)
+ 
+ static int write_error(const char *filename)
+ {
+-	error("failed to write new configuration file %s", filename);
++	error(_("failed to write new configuration file %s"), filename);
+ 
+ 	/* Same error code as "failed to rename". */
+ 	return 4;
+@@ -2679,7 +2679,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
+ 	 */
+ 	fd = hold_lock_file_for_update(&lock, config_filename, 0);
+ 	if (fd < 0) {
+-		error_errno("could not lock config file %s", config_filename);
++		error_errno(_("could not lock config file %s"), config_filename);
+ 		ret = CONFIG_NO_LOCK;
+ 		goto out_free;
+ 	}
+@@ -2690,7 +2690,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
+ 	in_fd = open(config_filename, O_RDONLY);
+ 	if ( in_fd < 0 ) {
+ 		if ( ENOENT != errno ) {
+-			error_errno("opening %s", config_filename);
++			error_errno(_("opening %s"), config_filename);
+ 			ret = CONFIG_INVALID_FILE; /* same as "invalid config file" */
+ 			goto out_free;
+ 		}
+@@ -2725,7 +2725,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
+ 			store.value_regex = (regex_t*)xmalloc(sizeof(regex_t));
+ 			if (regcomp(store.value_regex, value_regex,
+ 					REG_EXTENDED)) {
+-				error("invalid pattern: %s", value_regex);
++				error(_("invalid pattern: %s"), value_regex);
+ 				FREE_AND_NULL(store.value_regex);
+ 				ret = CONFIG_INVALID_PATTERN;
+ 				goto out_free;
+@@ -2750,7 +2750,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
+ 		if (git_config_from_file_with_options(store_aux,
+ 						      config_filename,
+ 						      &store, &opts)) {
+-			error("invalid config file %s", config_filename);
++			error(_("invalid config file %s"), config_filename);
+ 			ret = CONFIG_INVALID_FILE;
+ 			goto out_free;
+ 		}
+@@ -2774,7 +2774,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
+ 		if (contents == MAP_FAILED) {
+ 			if (errno == ENODEV && S_ISDIR(st.st_mode))
+ 				errno = EISDIR;
+-			error_errno("unable to mmap '%s'", config_filename);
++			error_errno(_("unable to mmap '%s'"), config_filename);
+ 			ret = CONFIG_INVALID_FILE;
+ 			contents = NULL;
+ 			goto out_free;
+@@ -2783,7 +2783,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
+ 		in_fd = -1;
+ 
+ 		if (chmod(get_lock_file_path(&lock), st.st_mode & 07777) < 0) {
+-			error_errno("chmod on %s failed", get_lock_file_path(&lock));
++			error_errno(_("chmod on %s failed"), get_lock_file_path(&lock));
+ 			ret = CONFIG_NO_WRITE;
+ 			goto out_free;
+ 		}
+@@ -2868,7 +2868,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
+ 	}
+ 
+ 	if (commit_lock_file(&lock) < 0) {
+-		error_errno("could not write config file %s", config_filename);
++		error_errno(_("could not write config file %s"), config_filename);
+ 		ret = CONFIG_NO_WRITE;
+ 		goto out_free;
+ 	}
+@@ -2994,7 +2994,7 @@ static int git_config_copy_or_rename_section_in_file(const char *config_filename
+ 	memset(&store, 0, sizeof(store));
+ 
+ 	if (new_name && !section_name_is_ok(new_name)) {
+-		ret = error("invalid section name: %s", new_name);
++		ret = error(_("invalid section name: %s"), new_name);
+ 		goto out_no_rollback;
+ 	}
+ 
+@@ -3003,7 +3003,7 @@ static int git_config_copy_or_rename_section_in_file(const char *config_filename
+ 
+ 	out_fd = hold_lock_file_for_update(&lock, config_filename, 0);
+ 	if (out_fd < 0) {
+-		ret = error("could not lock config file %s", config_filename);
++		ret = error(_("could not lock config file %s"), config_filename);
+ 		goto out;
+ 	}
+ 
+@@ -3021,7 +3021,7 @@ static int git_config_copy_or_rename_section_in_file(const char *config_filename
+ 	}
+ 
+ 	if (chmod(get_lock_file_path(&lock), st.st_mode & 07777) < 0) {
+-		ret = error_errno("chmod on %s failed",
++		ret = error_errno(_("chmod on %s failed"),
+ 				  get_lock_file_path(&lock));
+ 		goto out;
+ 	}
+@@ -3118,7 +3118,7 @@ static int git_config_copy_or_rename_section_in_file(const char *config_filename
+ 	config_file = NULL;
+ commit_and_out:
+ 	if (commit_lock_file(&lock) < 0)
+-		ret = error_errno("could not write config file %s",
++		ret = error_errno(_("could not write config file %s"),
+ 				  config_filename);
+ out:
+ 	if (config_file)
+@@ -3161,7 +3161,7 @@ int git_config_copy_section(const char *old_name, const char *new_name)
+ #undef config_error_nonbool
+ int config_error_nonbool(const char *var)
+ {
+-	return error("missing value for '%s'", var);
++	return error(_("missing value for '%s'"), var);
+ }
+ 
+ int parse_config_key(const char *var,
+diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
+index f035ee40a3..635918505d 100755
+--- a/t/t1305-config-include.sh
++++ b/t/t1305-config-include.sh
+@@ -310,7 +310,7 @@ test_expect_success 'include cycles are detected' '
+ 	cycle
+ 	EOF
+ 	test_must_fail git config --get-all test.value 2>stderr &&
+-	grep "exceeded maximum include depth" stderr
++	test_i18ngrep "exceeded maximum include depth" stderr
+ '
+ 
+ test_done
 -- 
 2.18.0.rc2.476.g39500d3211
 
