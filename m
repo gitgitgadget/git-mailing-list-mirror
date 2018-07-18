@@ -6,68 +6,65 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 59F4D1F597
-	for <e@80x24.org>; Wed, 18 Jul 2018 17:01:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A0C771F597
+	for <e@80x24.org>; Wed, 18 Jul 2018 17:06:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731546AbeGRRj5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jul 2018 13:39:57 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:38646 "EHLO
+        id S1731529AbeGRRp1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jul 2018 13:45:27 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:34722 "EHLO
         mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731105AbeGRRj4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jul 2018 13:39:56 -0400
-Received: by mail-wm0-f65.google.com with SMTP id 69-v6so3590711wmf.3
-        for <git@vger.kernel.org>; Wed, 18 Jul 2018 10:01:08 -0700 (PDT)
+        with ESMTP id S1731513AbeGRRp0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jul 2018 13:45:26 -0400
+Received: by mail-wm0-f65.google.com with SMTP id l2-v6so1873305wme.1
+        for <git@vger.kernel.org>; Wed, 18 Jul 2018 10:06:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=cwEg+xZ1/CEesGUFE3CTAoaca8QjzaS1HZG30z3TqHc=;
-        b=cwdDbCPZJYA8qegnYahP8ZvPyLLp4piJO4GUzKN1aGQ6VrpPB17/jje8mTFMHiowbt
-         4G9d89N6aOzfnZXDqh+b0jnbwSMzGAOvvhwC4c+eaiMfX5IW5jno8anaXyowkA6t2ZVb
-         gXs1nhK55fMP1bBgCMU2wrfCA8Ow2kn6qxnpuvOEN6K0+kG+wbzTYTBKqlI+uzMoSUD9
-         wBK7Cev+16Vwj+X0Q1kHUscpsRbB6jqneSztfGe7kuUGVcs40062ddMmHxKTDI8wJlNL
-         n4PXIAll5jYz2lJ7hyOo9u9Cfkk7sMfQ7sL41bBqeFeIyVd2k+0LfpVgC9LsLTYBLd1N
-         Etqg==
+        bh=VQPsVRfCKDB4g/RuieHX5TJtWC4bElCQMbnby+JfE+A=;
+        b=HcnZ7cLFe1s3oVTI1lwt7voDMujo4irOowrd01O+uoMhfY56Ao1t6zNcGH1NgeiPFk
+         GAZ500578R3RIuX5UoEI3fBcNKABveqKvEJ6k0+eJSGZQ1FCdgy7r39k5zXoL1Rl5dcR
+         rMjlms8bqanyQ9cAodk3831c4ngH+H9GUT0RGKiQhKeoK1/9Z/fux9FLr8hqm2Yo7bzT
+         ignNMjpiKOG5Rx3l+JXk0GLy3jDutCxWHIFXOHeNDs+kGzAmGNb3cy5afuOGdZi89joH
+         e7KxnQtF0Ts/nQofUiVALjFaF4vUniOFqpd5oZ3vpcpadv4ZmZ6O+wj7k3E4A3M14ETP
+         bcxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=cwEg+xZ1/CEesGUFE3CTAoaca8QjzaS1HZG30z3TqHc=;
-        b=G58mbCwn21fKnxf8izS77ql/UXZ7sbQR9sSFvKGmCJuYj+yaEzIvH+KCsP2V1R2F4u
-         Gt8Dej+I77A9baZPuFaIWeH1EphOpEjE33CKUTR2NClHxVE4hk5FRFgiYYuzLfO2brgy
-         7UpuGskE8/3+dxPoPWW06vE3MI23+5Mvn8z3wWLoqi39aMRMQtSKmshPRJG8UnrQPSSc
-         0dzfcQmdK3vKOgb3nrFLilfwyjSqbqajtsm6VatE6yV6LxJ1GhIaq/r6JMV4kr2Kxjba
-         d8KhcjDXs41R4wZ7es+3Yfhc3m3arXf3tA2OT83JjVO0Y9UXik01JQ7XopilyuOXs620
-         xzug==
-X-Gm-Message-State: AOUpUlEGZNPWRJIjHmW4QxudiJCFWBDxjajyzbCd6mUlhDQY4jPRoJ9z
-        eWuqvkJnV43GHUIK3VnpP8U=
-X-Google-Smtp-Source: AAOMgpe8VU16ysxefJtQosISjWCgSLy+dzQVYnvvh4WcnXPgFJ2jAIh4odlaL7x7afyYkiE/RgpFbA==
-X-Received: by 2002:a1c:9e4d:: with SMTP id h74-v6mr2218461wme.70.1531933267136;
-        Wed, 18 Jul 2018 10:01:07 -0700 (PDT)
+        bh=VQPsVRfCKDB4g/RuieHX5TJtWC4bElCQMbnby+JfE+A=;
+        b=Aul/QK677MTb2ev0JC5VSlYdOr4S0Yaufagy9EjIdTaFKQ5/n10EdS8cIcG48uIUlP
+         mBupenwslOFzXbwq3zlRX+nv9cBYuvf+nc4V1QORC6qpAeYNnYcNhVRW4fU9pFQ2yE1A
+         8F3K63h5XD4qwyUFKrPYcyLPM6v0fSY8Dsp+hAlcjnMDBOvFYDlo95yRjdmXcxq8OpxT
+         zorgAYSES3C9fqpLYEavJvkSl4N8eYCeghCpIrFVR5+yfIQEh7KT5V93DciB0F2X/yI0
+         waI7XkfiYgBBe+zMZck3XN0tGJaSRdOEkDV9crApfT+4wQp3U5dixpJa5pdda9ndbtlK
+         eK/w==
+X-Gm-Message-State: AOUpUlFFy0y8gmzOgcLTe9cChNTgTm5VR6IKY7+wzL2u/7IRWPIYetnE
+        +SkuZKQ0b6EVl7dtvNowWxA=
+X-Google-Smtp-Source: AAOMgpc65lN0ttZvNp4N3FPvbNVeop0nvnM6Eh9e6XeCbbHzHl7E/QiGcuMbLS5LUa3qDjcaCMox+w==
+X-Received: by 2002:a1c:568a:: with SMTP id k132-v6mr2056429wmb.89.1531933595087;
+        Wed, 18 Jul 2018 10:06:35 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id f20-v6sm6206299wrh.89.2018.07.18.10.01.05
+        by smtp.gmail.com with ESMTPSA id u14-v6sm5504188wrs.57.2018.07.18.10.06.34
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 18 Jul 2018 10:01:06 -0700 (PDT)
+        Wed, 18 Jul 2018 10:06:34 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Derrick Stolee <stolee@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Stefan Beller <sbeller@google.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        gitgitgadget@gmail.com, Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 00/16] Consolidate reachability logic
-References: <pull.10.git.gitgitgadget@gmail.com>
-        <6b7a50dc-6b71-0e31-030a-42dd1b26bde4@ramsayjones.plus.com>
-        <CAGZ79kYem+uMrhv+CUSDNXtE3C8Pv1cx=aZOyBLG=uo-aQWXeA@mail.gmail.com>
-        <CAPig+cQj5_bEiLyAAS4xnsUQEPzqT_2yerdAQxd8FidVpJ5CxA@mail.gmail.com>
-        <65d51c26-e248-f16d-bac2-e6ba0a3be8e5@gmail.com>
-        <nycvar.QRO.7.76.6.1807181427120.71@tvgsbejvaqbjf.bet>
-        <CACsJy8AbT3=wzKecGqvj8ibHmquU=NfP872f1cAM-VFOLSLSGQ@mail.gmail.com>
-Date:   Wed, 18 Jul 2018 10:01:05 -0700
-In-Reply-To: <CACsJy8AbT3=wzKecGqvj8ibHmquU=NfP872f1cAM-VFOLSLSGQ@mail.gmail.com>
-        (Duy Nguyen's message of "Wed, 18 Jul 2018 17:01:52 +0200")
-Message-ID: <xmqqfu0glbqm.fsf@gitster-ct.c.googlers.com>
+To:     Henning Schild <henning.schild@siemens.com>
+Cc:     <git@vger.kernel.org>, Eric Sunshine <sunshine@sunshineco.com>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Ben Toews <mastahyeti@gmail.com>, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v4 7/7] gpg-interface t: extend the existing GPG tests with GPGSM
+References: <cover.1531831244.git.henning.schild@siemens.com>
+        <cover.1531831244.git.henning.schild@siemens.com>
+        <74d979ec0779b60d04e5dc7d2351783451e30eb4.1531831244.git.henning.schild@siemens.com>
+        <xmqqefg1mtvr.fsf@gitster-ct.c.googlers.com>
+        <20180718123617.55acfd3b@md1pvb1c.ad001.siemens.net>
+Date:   Wed, 18 Jul 2018 10:06:34 -0700
+In-Reply-To: <20180718123617.55acfd3b@md1pvb1c.ad001.siemens.net> (Henning
+        Schild's message of "Wed, 18 Jul 2018 12:36:17 +0200")
+Message-ID: <xmqqbmb4lbhh.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -76,29 +73,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Henning Schild <henning.schild@siemens.com> writes:
 
->> In other words: if you see something that you don't like about
->> GitGitGadget, get your butts off the ground and contribute a fix.
+>> > +	unset GIT_COMMITTER_EMAIL &&
+>> > +	git config user.email hasnokey@nowhere.com &&
+>> > +	git config user.signingkey "" &&
+>> > +	test_must_fail git push --signed dst noop ff +noff &&  
+>> 
+>> This is OK for a test that is known to be always at the end, but
+>> also forbids others to further update this script to add more tests
+>> at the end, as the standard setting of environment is blown away
+>> (the config is probably OK, but test_config to arrange them to be
+>> cleaned up would have been nicer), which is not very nice.  I think
+>> it should be easy to fix it when it becomes necessary, but at the
+>> same time if it is easy to fix, then probably we shouldn't introduce
+>> a breakage in the first place, so I am on the fence.
 >
-> Thank you for the frank words. I will choose to not review any mails
-> coming from GitGitGadget.
+> Switched to test_config, this is all coming from copying the previous
+> tests, which i left as is.
 
-I wouldn't say I will choose not to, but certainly I noticed that
-I'd backburner reading a series that are way out of order in my
-mailbox, no matter who authored them or how they were sent out, as
-they consume way more concentration-point out of my mind than they
-are often worth X-<.  While there are easier-to-read and more nicely
-organized patch series, I'd deal with them first, consciously or
-not.
+I was specifically talking about the unsetting of GIT_COMMITTER_EMAIL,
+not the configuration variables.
 
-No, fixing a tool that throws such a harder-to-read patch series in
-reader's mailbox is *not* something I'd spend my primary focus on,
-especially when many contributors are perfectly capable of sending
-reasonably formatted series without using such a tool under
-development.
+An easy way to try one step without the environment without
+affecting later tests would be to run the above in a subshell,
+perhaps like
 
-That won't stop those who want to improve the tool.  But I'd wish
-those who want to make Git better spend their time on making Git,
-over making GitGitGadget, better.
+	test_config user.email ... &&
+	test_config user.signingkey "" &&
+	(
+		safe_unset GIT_COMMITTER_EMAIL &&
+		test_must_fail git push --signed ...
+	) &&
 
