@@ -2,123 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 087411F597
-	for <e@80x24.org>; Wed, 18 Jul 2018 17:11:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FAA51F597
+	for <e@80x24.org>; Wed, 18 Jul 2018 17:11:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731351AbeGRRuV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jul 2018 13:50:21 -0400
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:42320 "EHLO
-        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730897AbeGRRuU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jul 2018 13:50:20 -0400
-Received: by mail-pl0-f65.google.com with SMTP id z7-v6so550260plo.9
-        for <git@vger.kernel.org>; Wed, 18 Jul 2018 10:11:30 -0700 (PDT)
+        id S1731344AbeGRRuh (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jul 2018 13:50:37 -0400
+Received: from mail-qt0-f170.google.com ([209.85.216.170]:40065 "EHLO
+        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727635AbeGRRuh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jul 2018 13:50:37 -0400
+Received: by mail-qt0-f170.google.com with SMTP id h4-v6so4691300qtj.7
+        for <git@vger.kernel.org>; Wed, 18 Jul 2018 10:11:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=o/+2zEsiFDS7RH412UniAlvJHIUgNgx8vUReTDUBAgA=;
-        b=jd9OCEukikl+7AV6nbeeB+9F9O02lrnGLT8UfS9L4e6c9jB3Nw2VCMceejLePMFpb5
-         IY9iRseFRBHWR2QrAboCXzV2auTpm6g19oxmw14CrQQiSCYMYyRSM2r0qXztDXQ0+r/3
-         gaF25KmQbbrPnkJSsyR9SBMcXrX1K1nHSAA4U8luF+chgzxxwS5JFR+FYtjvMav6YXCa
-         S0iZVlFLJwpU7k4tDwp6RyqRnGX+5OQBfkAvF92v9xd1iQL7yvmbsoUbbdxcDrYPnB1X
-         tEKIwUdZflKNhIG+D+MBPrTQiuIRjhAuiLmbQ4BpAvHlD8YfcEUJH0SWqQlkZZ1lxbYk
-         1a5A==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=v0OkIxyYUulzBqZnFj3SDGZnNaWYBAs1TcrkDNwMo7k=;
+        b=E7t+GFXDFfkRcAV6NVqQK/vNSY9fszrMahWvTrE+7J1lVV349uiRk1mPYsbNAbGmcD
+         own5S2g30c6+pAp5Fa4aXBsM9Ttl60oXxuwzkwoXoc0kunoo/etZKtGWQQtzr8bNl/oj
+         KkvK+aGarBgXsv78EOTwlR7hFkEBmG4WvmAK/PKNf3sXcE7GODXwWPXX4jc4vXpCPWmt
+         xPBCuOrvTn/kn5P+aZGXs28spHVxYyJ8AnW5uNhW3yLwAW1FPYB4UAVeh2LjV5NDRCr9
+         rGUOq4IA8KE7cxn8GP6/iBo44m+u3+FS3D3hd1OP/1GJdK2wXpQtPAevqPYW/SQEPhtW
+         zLrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=o/+2zEsiFDS7RH412UniAlvJHIUgNgx8vUReTDUBAgA=;
-        b=q/BdVRK4tre48jCH1nLq59TjGAicE+KIkKvHMdsFjctgiTl26oagkBDVhMgfq6Ae++
-         rC9F3MNBeCV5B4hH/47WTFh4Ue26TphMxywEtdhSOM86Hx8IpVi6u2oQf3nC/Z9nhmim
-         uOK5goHvAMXxfrcz+Rholf7MVpnB0jUPuasdpmL7SG79PqqCuPXjw53rVKNlB8t5MKRW
-         zvP/zayfj5sxwKVIJtD3wYGImCXks9WsvtehM5vKG6E0IFpJgOoVHYb8oxdBiv7Sw47M
-         Kn5I73UNB5K2B4zZaaiRWOctk+s2RGgmgCcQsY/UZ2wK5YuPRV8LH40gTbB/i5FkRdIw
-         TC5g==
-X-Gm-Message-State: AOUpUlGq7qGOPmmD5rx+h1/xjTVpxVK7ONsYPcolaHZExI7VmP7Hqx/u
-        AEeZSjxQKtHE8tC3S61I2rJSXA==
-X-Google-Smtp-Source: AAOMgpctYIxzaop2JeeADRXjGDcScAq2t1SI8fsStvxH6w6Qv1aiM2ovP+DWUD6okYBZk6aqnFMjdw==
-X-Received: by 2002:a17:902:112b:: with SMTP id d40-v6mr6757116pla.123.1531933889505;
-        Wed, 18 Jul 2018 10:11:29 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id 65-v6sm6699986pfq.81.2018.07.18.10.11.28
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 18 Jul 2018 10:11:28 -0700 (PDT)
-Date:   Wed, 18 Jul 2018 10:11:27 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>
-Subject: Re: [RFC] push: add documentation on push v2
-Message-ID: <20180718171127.GB17137@google.com>
-References: <20180717210915.139521-1-bmwill@google.com>
- <CAGZ79kZEpNLkXuEQEiMB_nc-MOOp-KOziHyONmr4SiajA5+F2g@mail.gmail.com>
- <a7c43308-a388-e307-6bea-47e6df74b65c@gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=v0OkIxyYUulzBqZnFj3SDGZnNaWYBAs1TcrkDNwMo7k=;
+        b=e+Y67PlutS9Wl+2ATHZVn+MzGO3j5xF9GPPuuaWkBYgoRUZmeZ3MDe1CGD4ugoEhhu
+         OsK10NCFjSSJtOzFm2lRi3ro3x4DnRDCUtrDERSJ/3JCrZmLiFW1Z8jPzYL8/crgP9H5
+         3Op3b6/CufRYSvVTKXB7wqhp/rNJeam04CIW+3DyNwK2KUJ7KTq6zb6xnorIncTim1Gz
+         bZsRpuaJF9dnA2GT+DKXlFVmEHGlYLGyM00P9NvJwEsxZlLMzQJ7GBRJvDJS9j787Tey
+         oY+qoYgi8EIV+UxD8UG1a6fRXhLOsnHpK92h9Qi0Juditi/chPODcsp3wsU304AQEO76
+         hnVA==
+X-Gm-Message-State: AOUpUlGbevoLC6Q2Zkciezcsm2UjBPoMH4ph2dzF4zxvR41D3nt/33lL
+        LukYeeXsqIBAEptizm6ygvMgCMrcAMM=
+X-Google-Smtp-Source: AAOMgpc87gIuLkxqEV6b78wdsUyRsioCGqUbZrHQ27+qgLj0GJDY0v/WlnHdlZ491R7l4PtbZPHcVg==
+X-Received: by 2002:a0c:e505:: with SMTP id l5-v6mr7350448qvm.128.1531933905550;
+        Wed, 18 Jul 2018 10:11:45 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:d070:73be:3735:cf07? ([2001:4898:8010:0:b9a6:73be:3735:cf07])
+        by smtp.gmail.com with ESMTPSA id y142-v6sm3553665qka.5.2018.07.18.10.11.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 18 Jul 2018 10:11:44 -0700 (PDT)
+Subject: Re: [PATCH 00/16] Consolidate reachability logic
+To:     Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Stefan Beller <sbeller@google.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        gitgitgadget@gmail.com, Git Mailing List <git@vger.kernel.org>
+References: <pull.10.git.gitgitgadget@gmail.com>
+ <6b7a50dc-6b71-0e31-030a-42dd1b26bde4@ramsayjones.plus.com>
+ <CAGZ79kYem+uMrhv+CUSDNXtE3C8Pv1cx=aZOyBLG=uo-aQWXeA@mail.gmail.com>
+ <CAPig+cQj5_bEiLyAAS4xnsUQEPzqT_2yerdAQxd8FidVpJ5CxA@mail.gmail.com>
+ <65d51c26-e248-f16d-bac2-e6ba0a3be8e5@gmail.com>
+ <nycvar.QRO.7.76.6.1807181427120.71@tvgsbejvaqbjf.bet>
+ <CACsJy8AbT3=wzKecGqvj8ibHmquU=NfP872f1cAM-VFOLSLSGQ@mail.gmail.com>
+ <xmqqfu0glbqm.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <afc090ea-840d-6c27-d6d0-2202914f1ccf@gmail.com>
+Date:   Wed, 18 Jul 2018 13:11:43 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a7c43308-a388-e307-6bea-47e6df74b65c@gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+In-Reply-To: <xmqqfu0glbqm.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07/18, Derrick Stolee wrote:
-> On 7/17/2018 7:25 PM, Stefan Beller wrote:
-> > On Tue, Jul 17, 2018 at 2:09 PM Brandon Williams <bmwill@google.com> wrote:
-> > > Signed-off-by: Brandon Williams <bmwill@google.com>
-> > > ---
-> > > 
-> > > Since introducing protocol v2 and enabling fetch I've been thinking
-> > > about what its inverse 'push' would look like.  After talking with a
-> > > number of people I have a longish list of things that could be done to
-> > > improve push and I think I've been able to distill the core features we
-> > > want in push v2.
-> > It would be nice to know which things you want to improve.
-> 
-> Hopefully we can also get others to chime in with things they don't like
-> about the existing protocol. What pain points exist, and what can we do to
-> improve at the transport layer before considering new functionality?
-> 
-> > >   Thankfully (due to the capability system) most of the
-> > > other features/improvements can be added later with ease.
-> > > 
-> > > What I've got now is a rough design for a more flexible push, more
-> > > flexible because it allows for the server to do what it wants with the
-> > > refs that are pushed and has the ability to communicate back what was
-> > > done to the client.  The main motivation for this is to work around
-> > > issues when working with Gerrit and other code-review systems where you
-> > > need to have Change-Ids in the commit messages (now the server can just
-> > > insert them for you and send back new commits) and you need to push to
-> > > magic refs to get around various limitations (now a Gerrit server should
-> > > be able to communicate that pushing to 'master' doesn't update master
-> > > but instead creates a refs/changes/<id> ref).
-> > Well Gerrit is our main motivation, but this allows for other workflows as well.
-> > For example Facebook uses hg internally and they have a
-> > "rebase-on-the-server-after-push" workflow IIRC as pushing to a single repo
-> > brings up quite some contention. The protocol outlined below would allow
-> > for such a workflow as well? (This might be an easier sell to the Git
-> > community as most are not quite familiar with Gerrit)
-> 
-> I'm also curious how this "change commits on push" would be helpful to other
-> scenarios.
-> 
-> Since I'm not familiar with Gerrit: what is preventing you from having a
-> commit hook that inserts (or requests) a Change-Id when not present? How can
-> the server identify the Change-Id automatically when it isn't present?
+On 7/18/2018 1:01 PM, Junio C Hamano wrote:
+> No, fixing a tool that throws such a harder-to-read patch series in
+> reader's mailbox is *not* something I'd spend my primary focus on,
+> especially when many contributors are perfectly capable of sending
+> reasonably formatted series without using such a tool under
+> development.
+>
+> That won't stop those who want to improve the tool.  But I'd wish
+> those who want to make Git better spend their time on making Git,
+> over making GitGitGadget, better.
 
-Right now all Gerrit users have a commit hook installed which inserts
-the Change-Id.  The issue is that if you push to gerrit and you don't
-have Change-ids, the push fails and you're prompted to blindly run a
-command to install the commit-hook.  So if we could just have the server
-handle this completely then the users of gerrit wouldn't ever need to
-have a hook installed in the first place.
+I appreciate the feedback in how this series caused reviewer pain. 
+Hopefully this date issue is now resolved. Any further feedback is welcome.
 
+I'm choosing to use and contribute to GitGitGadget not because I'm 
+incapable of sending series myself, but because I _have_ had difficulty. 
+Using the email submissions creates a friction that I'm willing to 
+overcome, but we are probably missing out on contributors who are not 
+willing to push through that friction. Perhaps having another way for 
+new contributors to feel welcome is an indirect way to make Git better.
 
--- 
-Brandon Williams
+Thanks,
+
+-Stolee
+
