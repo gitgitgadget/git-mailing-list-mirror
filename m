@@ -2,132 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 40FE21F597
-	for <e@80x24.org>; Wed, 18 Jul 2018 22:56:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA38C1F597
+	for <e@80x24.org>; Wed, 18 Jul 2018 23:03:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729679AbeGRXgg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jul 2018 19:36:36 -0400
-Received: from mail-wr1-f45.google.com ([209.85.221.45]:36348 "EHLO
-        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727254AbeGRXgg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jul 2018 19:36:36 -0400
-Received: by mail-wr1-f45.google.com with SMTP id h9-v6so6196038wro.3
-        for <git@vger.kernel.org>; Wed, 18 Jul 2018 15:56:29 -0700 (PDT)
+        id S1729221AbeGRXnj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jul 2018 19:43:39 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:32781 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728929AbeGRXnj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jul 2018 19:43:39 -0400
+Received: by mail-wr1-f67.google.com with SMTP id g6-v6so6204959wrp.0
+        for <git@vger.kernel.org>; Wed, 18 Jul 2018 16:03:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=haMbcMKkxnTdNr6YV+pDvdHb8i+DYtVXJIIgBY4RJTI=;
-        b=A02lLvVN3Uy9/PESdI4HcMQfb4xPGxbAu6ZgwE6OmKwgKhX2wHeEIUqIF4M5VNy1Nn
-         lCRioWoRmwu3Ov/8BCnjMw9mjHSDd62VzBV5gta6hZt/cIMJCNmFGE4WD0G0aEDF15Ym
-         4YauobtV/KckI2794zDi2n5hFZlJPjWszz36Z2izouZ9Ujnq2hrckc0jU/9ufQ4yi1Nd
-         M1wRcug1pbXyHGyiSBjglKe8kxI/e21NRXPDLPcN+rCVBA1tdntXzDh4jBzqUFacSj8q
-         G5TsmVRhT7nI2v1xO6fE+AdtSlZaOyOAmVNOd7ePdOTo65kOtDaYwtQSfRUFPoDtzhnM
-         mYOg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=CWfjRMsLPQvz0lf97IRq7jyOOCmE/pQmo+m111gXumw=;
+        b=Ek1U110YkQTMvxGUtR2fFgD6arZmFy/mHWtyE5egj33Qh+HodxgoHe3IpS7cgAmyyg
+         iBsRXqU86WKVP1BJXFXmzOfbyx9BYTT21usjR2sy6YC9ladI2S/QT5tg22pWFFhdPYSB
+         kUeR1/oy1Q0NahfHlE9XOtivZUmUWjq3xa5nSDS3jMOeyqt+mDuucTb6nZX5z5D6Emzl
+         s3eKu3339MALr1dLXR6jU4cjBh5XJvZNk2ngeLVfgNB+BSU9JUQmbtJP2JKQyDBEeYTt
+         x9xBtm6WX2ie75oo1nOlo5nEw4ArjK+91oO6D5BgVx9H4lENuoltqpZqz8BzUVroXZhW
+         O5Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=haMbcMKkxnTdNr6YV+pDvdHb8i+DYtVXJIIgBY4RJTI=;
-        b=Tsyb6S5qzvFJ8McltEhsbizM+Rr7NauyD6zvVUAxDLLR9x+2w9PXJd1egm1VzCww6g
-         UFiiHEKmjWijdaRYhB1s7+gv8xad4UQuQzg+PEq7Gx9qilbypuLxx99TkGNIzVdo7Z8t
-         DBxbbpHfCYXG9zJLI0eYJ78/Ss0euIKKwLNo3mkm+upx3/E5B4cPGplBOVQYH3k1oQaK
-         JsZyuo/V0oSUC5OIwjU904vszigMKCeDru6QULb7saUyLU1sTXy63VgK3TFT9HatFMHi
-         +98vsZXnkXxkGyk2+IdinlfJF81sMnllMRiMT3E3x3v2/crufDZDYT1SXyewp6AbME6I
-         3KcQ==
-X-Gm-Message-State: AOUpUlEB2szOo02dJkbYsnHLkDMd5LFMpZLOZ7IFPfr8vuJ5jYt8kV1p
-        gx6+JRDnNV9EQnW6yeX4NBg1O5I1
-X-Google-Smtp-Source: AAOMgpe5i44wEmwBm3QzcONTWL+09Jd3+vbLiQLZvzvrsCxRHOi+Gxv9l1eRpAzun7+oUjiz9JbjOw==
-X-Received: by 2002:adf:8b01:: with SMTP id n1-v6mr5898716wra.282.1531954588837;
-        Wed, 18 Jul 2018 15:56:28 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id y102-v6sm6026677wmh.9.2018.07.18.15.56.28
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 18 Jul 2018 15:56:28 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Peart <Ben.Peart@microsoft.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH v1 3/3] Add initial parallel version of unpack_trees()
-References: <20180718204458.20936-1-benpeart@microsoft.com>
-        <20180718204458.20936-4-benpeart@microsoft.com>
-Date:   Wed, 18 Jul 2018 15:56:27 -0700
-In-Reply-To: <20180718204458.20936-4-benpeart@microsoft.com> (Ben Peart's
-        message of "Wed, 18 Jul 2018 20:45:17 +0000")
-Message-ID: <xmqqbmb4i25g.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=CWfjRMsLPQvz0lf97IRq7jyOOCmE/pQmo+m111gXumw=;
+        b=jB3p94/INSH4W2IJjWnJputU6p6ciDNMtXCODBFXG6eFFkYPA99Da92TpmrF276u6K
+         JWzGCXkc1U7ULKOh/2VzpmB1e5uo2avSMq0kf0ufdkO5bw8fgM192yRoKVvAbncD3Qa9
+         u84Qoj1pCvoHMwvYHsFDU7aCBctI1BKK0SkdkynKHCc1PMVATBxzzAGlrPMLI25L14ni
+         6YTNduJUZmjB5MsHfM6eL5ePEyEO53xAw86Xi6j3eTHRmWORagBY4d7kC2JmLqMXe6Um
+         pIUtc7/FAN4S0lU1ApOI/g7M9qmRynR82/qoMTSk8SXceOSA5MhkbZdsYAfb/AXPuA21
+         I58Q==
+X-Gm-Message-State: AOUpUlErBilQXOjnAJjH1goUpKF0htCaxsnqdRudgCtqYj/Peb1KeGu4
+        rgSSQiZmzjCD1HKM9vKhoh2S2OFV
+X-Google-Smtp-Source: AAOMgpcUdYTJH8mRw2EiZ9ddiDcicDov0GrybceaIh5cEb6XRMm1McZKJQbne85L6uRGPwzBJ1lb1Q==
+X-Received: by 2002:adf:ebc3:: with SMTP id v3-v6mr5708848wrn.33.1531955010808;
+        Wed, 18 Jul 2018 16:03:30 -0700 (PDT)
+Received: from [192.168.0.137] ([82.78.255.161])
+        by smtp.gmail.com with ESMTPSA id m17-v6sm7615623wrg.65.2018.07.18.16.03.29
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 18 Jul 2018 16:03:30 -0700 (PDT)
+Subject: Re: [RFC PATCH 0/6] Add gentle alternative for `get_oid()`
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+References: <cover.1531778417.git.ungureanupaulsebastian@gmail.com>
+ <CACsJy8AEDmyg1XpgXc5KgKdG33t2SeOHw56tEgL_VVXh1Bcprg@mail.gmail.com>
+From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+Message-ID: <8ebfad3c-7009-d0cc-2ef8-54ebac6783f9@gmail.com>
+Date:   Thu, 19 Jul 2018 02:03:29 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <CACsJy8AEDmyg1XpgXc5KgKdG33t2SeOHw56tEgL_VVXh1Bcprg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Peart <Ben.Peart@microsoft.com> writes:
+Hello,
 
-> +	 * Fetch the tree from the ODB for each peer directory in the
-> +	 * n commits.
-> +	 *
-> +	 * For 2- and 3-way traversals, we try to avoid hitting the
-> +	 * ODB twice for the same OID.  This should yield a nice speed
-> +	 * up in checkouts and merges when the commits are similar.
-> +	 *
-> +	 * We don't bother doing the full O(n^2) search for larger n,
-> +	 * because wider traversals don't happen that often and we
-> +	 * avoid the search setup.
+On 17.07.2018 20:45, Duy Nguyen wrote:
+> Since get_oid() callers must handle failure when it returns non-zero,
+> I would say "gently" is already implied by get_oid() and we could just
+> convert those die() to error() or warning(). Unless some of those
+> die() are very special that we need to choose which call sites should
+> go "even gentler" where some sites should still die()?
 
-It is sensible to optimize for common cases while leaving out the
-complexity that is only needed to support rare cases.
+Of course, "gently" is already implied by `get_oid()` to some extent.
 
-> +	 * When 2 peer OIDs are the same, we just copy the tree
-> +	 * descriptor data.  This implicitly borrows the buffer
-> +	 * data from the earlier cell.
+ From the beginning I tried to follow the safer method to do that.
+Changing `die()` into `error()` or `warning()` and handling the
+error in the caller function not only would mean a harder patch
+to read, but could also introduce some regressions since some of
+the functions in the call graph of `get_oid()` are used by other
+functions as well.
 
-cell meaning...?
+I think that it might be a good idea, but I am not entirely sure.
+The codebase is pretty complex and this might make it harder to
+follow. I am not able to give a clear answer, but thank you for
+taking time to look over these patches!
 
-
-> +	for (i = 0; i < n; i++, dirmask >>= 1) {
-> +		if (i > 0 && are_same_oid(&names[i], &names[i - 1]))
-> +			newinfo->t[i] = newinfo->t[i - 1];
-> +		else if (i > 1 && are_same_oid(&names[i], &names[i - 2]))
-> +			newinfo->t[i] = newinfo->t[i - 2];
-> +		else {
-> +			const struct object_id *oid = NULL;
-> +			if (dirmask & 1)
-> +				oid = names[i].oid;
-> +
-> +			/*
-> +			 * fill_tree_descriptor() will load the tree from the
-> +			 * ODB. Accessing the ODB is not thread safe so
-> +			 * serialize access using the odb_mutex.
-> +			 */
-> +			pthread_mutex_lock(&o->odb_mutex);
-> +			newinfo->buf[newinfo->nr_buf++] =
-> +				fill_tree_descriptor(newinfo->t + i, oid);
-> +			pthread_mutex_unlock(&o->odb_mutex);
-> +		}
-> +	}
-> +
-> +	/*
-> +	 * We can't play games with the cache bottom as we are processing
-> +	 * the tree objects in parallel.
-> +	 * newinfo->bottom = switch_cache_bottom(&newinfo->info);
-> +	 */
-
-Would the resulting code match corresponding entries from two/three
-trees correctly with a tree with entries "foo." (blob), "foo/" (has
-subtree), and "foo0" (blob) at the same time, without adjusting the
-bottom?  I am worried because cache_bottom stuff is not about
-optimization but is about correctness.
-
-> +	/* All I really need here is fetch_and_add() */
-> +	pthread_mutex_lock(&o->work_mutex);
-> +	o->remaining_work++;
-> +	pthread_mutex_unlock(&o->work_mutex);
-> +	mpmcq_push(&o->queue, &newinfo->entry);
-
-Nice.  I like the general idea.
-
+Best,
+Paul
