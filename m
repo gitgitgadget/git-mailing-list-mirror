@@ -3,157 +3,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 237081F597
-	for <e@80x24.org>; Wed, 18 Jul 2018 16:14:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 633A8208E9
+	for <e@80x24.org>; Wed, 18 Jul 2018 16:21:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731191AbeGRQxY (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jul 2018 12:53:24 -0400
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:35623 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726680AbeGRQxX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jul 2018 12:53:23 -0400
-Received: by mail-qt0-f194.google.com with SMTP id a5-v6so4532156qtp.2
-        for <git@vger.kernel.org>; Wed, 18 Jul 2018 09:14:47 -0700 (PDT)
+        id S1731025AbeGRRAB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jul 2018 13:00:01 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:36608 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727535AbeGRRAB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jul 2018 13:00:01 -0400
+Received: by mail-wr1-f67.google.com with SMTP id h9-v6so5295605wro.3
+        for <git@vger.kernel.org>; Wed, 18 Jul 2018 09:21:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=d/7H8FhryQb9+/mG64JLJOFRBcNjL0H60MY5+Jf2/Wo=;
-        b=bQaKtQUX1dh3hsSiYQSHArO5YCYP2fo58Wk4yKboLTI7NwcWRIilytz8nn/y7Fjkzy
-         1kuv8iybeSKOJ4B1jkFVUFCsbWOBMZWblEaGNjGn3G/w/S1ivL/EkaSCWONyssZX/oCE
-         feWQrVFCDlr4vuqkUz0/UGa+YXuqbOCkkmz4tQ5gCLxcPkgkrE2aZ8/ajqEe0HsE2xyy
-         5FljPPriTJ2y63pNIJiBYGRIJJc/BQ4OZ+jX/oF4mv7mRVBQ5ygbZXXijC+h9ZgJWq6Z
-         yOJn6T8tJ10j6ehUmo1yc1PuxnM95DTbU+z/sdge6n1SgGcjj7KXSXP42L5kGr1JqU42
-         NGkA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=Y67Rvju5lmB1gKH4s3fewD3DEVNQNkMpcDPH/EzIwAI=;
+        b=dKcPlxD13mXyAJDEOMkGJBEEx+VN1QZ4q6Yyj2qU46WTGjNG2nNw4fXEsG4kcZ5B8u
+         PSr84b2vnlzPgFcXQw70u1ISZQ85geOvquy6pqJV6LhJlmjkKJl9uXoFb5PStnAv8ky/
+         EMMnmAS5ykXjg+TSeRTSKtH41Ht7xLI8tsdVnRyXQXqqr+QJnPrxNXRey43rj/A2sUJs
+         hcWGvZtJr9nctGfyFOFi2uxEKD/nfv8Dxtse6iYTayYHdhDHZfgfP3NNti4DJ2RNYi8X
+         9/D/c4ILEBXYpf47pAPGTeO/2YS9VLKWOswRDttem2FyicZ0qf7PTXZM5f6JGPyf2Ir2
+         F+Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=d/7H8FhryQb9+/mG64JLJOFRBcNjL0H60MY5+Jf2/Wo=;
-        b=Lk3Sk9YvPr8ra0UkPx5GNhxpZIvfgxASuruajUve4kRypCi07wosm+0SCMS8YA4LA1
-         RC1PeWTn6NjVdYYihbNwS1cyyhV9CvHH5kaa4dYSC7bPE5z44YU5vsOlrR4Aq2WWvllb
-         5R36S6sx7RSM2vtH2rWT3rI/pt/23T0yrYV6lvZLMQ9SPlxJeCmqAtGPkiL323h7+X9Y
-         40xDwLZcBxWknitUTpod9hMxE2/qrq21DcvB/zyaHPt09kFGDPaGzJpsPA2PRwysIkFn
-         mFJqVFSRFE5OY/wBBvhNar0UKvJ2FTZJeaDzWdK3lmJ54Ff3fzV2aSVHh3AkDLH9baf8
-         I6og==
-X-Gm-Message-State: AOUpUlEj8iy0aVZXXfgQezg6+pEMeETnyzLG7iiG2CQs6B105CrOML9g
-        iBmRhN2i2VIz0dSgTAHpYNk=
-X-Google-Smtp-Source: AAOMgpdlaRLfO4JZqEZoUtrMiea6GbHjqO142a11OOu2CFU8I7Au7lgnLfphjf9+3rGRWblwEtQq6w==
-X-Received: by 2002:ac8:2191:: with SMTP id 17-v6mr6441589qty.279.1531930486519;
-        Wed, 18 Jul 2018 09:14:46 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:d070:73be:3735:cf07? ([2001:4898:8010:0:b9a6:73be:3735:cf07])
-        by smtp.gmail.com with ESMTPSA id i32-v6sm2520713qtb.21.2018.07.18.09.14.45
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 18 Jul 2018 09:14:45 -0700 (PDT)
-Subject: Re: [PATCH 08/16] test-reach: create new test tool for ref_newer
-To:     Jonathan Tan <jonathantanmy@google.com>, gitgitgadget@gmail.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, dstolee@microsoft.com
-References: <6acc5e804ea7beabc7c813e4c1c067915a16087b.1531746011.git.gitgitgadget@gmail.com>
- <20180716230019.257742-1-jonathantanmy@google.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <043a5a75-6181-6a4c-e81f-9d82645d8f1b@gmail.com>
-Date:   Wed, 18 Jul 2018 12:14:44 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Y67Rvju5lmB1gKH4s3fewD3DEVNQNkMpcDPH/EzIwAI=;
+        b=OXTEv+CBES5U8aPIMXCyX6lbomcVXpUSTfToXp/L6fS2TpINDMdoX1PT5rai4uyw2w
+         HmOFq9Kq8/p9G2e4p5ypNSUa6TqEFfAI2MTzfHSokwn5i8rE8ifg9PslJYZyZGEXO+3X
+         3bZjOlFDIg2w8vn4U8ZTDii0hS5QrrchURr/bBLFMksd2opM+F7oUSDCaGcOeWbVKRCj
+         K43n71f1hZ1CemL0b3NBbSARBT8nrI1tA1k1XDYx9XhIqV9a/ZzvOFfHCt0oOt2T1mDA
+         AmWw0NEEPrAP+LTzAw5M9Ot8LGJr4OkNZgPhhHDCIURbnJrEeAqsVfV9vsNI2Fj+rH1I
+         oKbg==
+X-Gm-Message-State: AOUpUlFaH0aKgwKWZiktLMgGvlmQSLIS9swIeXfLtAhqB5o5C/2Aotoe
+        MxmXyW0pK8uoBF3ke4w5WwEJG3WQ
+X-Google-Smtp-Source: AAOMgpelxuNq9mMEbb42rVh0o3ycyrrvbfW0o+rU6usqYaZzgiFoOiRfO3UP4PuiMx9iwt+1MfjW3w==
+X-Received: by 2002:adf:e78d:: with SMTP id n13-v6mr5002652wrm.136.1531930881076;
+        Wed, 18 Jul 2018 09:21:21 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id a14-v6sm1869281wmb.44.2018.07.18.09.21.18
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 18 Jul 2018 09:21:18 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        Elijah Newren <newren@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Andrii Dehtiarov <adehtiarov@google.com>
+Subject: Re: [PATCH 3/3] gc: do not return error for prior errors in daemonized mode
+References: <20180716172717.237373-1-jonathantanmy@google.com>
+        <20180717065151.GA177907@aiede.svl.corp.google.com>
+        <20180717065740.GD177907@aiede.svl.corp.google.com>
+        <20180717201348.GD26218@sigill.intra.peff.net>
+Date:   Wed, 18 Jul 2018 09:21:18 -0700
+In-Reply-To: <20180717201348.GD26218@sigill.intra.peff.net> (Jeff King's
+        message of "Tue, 17 Jul 2018 16:13:49 -0400")
+Message-ID: <xmqqk1psldkx.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20180716230019.257742-1-jonathantanmy@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/16/2018 7:00 PM, Jonathan Tan wrote:
->> To use the new test-tool, use 'test-tool reach <method>' and provide
->> input to stdin that describes the inputs to the method. Currently, we
->> only implement the ref_newer method, which requires two commits. Use
->> lines "A:<committish>" and "B:<committish>" for the two inputs. We will
->> expand this input later to accommodate methods that take lists of
->> commits.
-> It would be nice if "A" and "B" were "ancestor" and "descendant" (or
-> something like that) instead, so that I don't have to check which
-> direction the reach is calculated in.
+Jeff King <peff@peff.net> writes:
 
-Different methods will use different combinations. I do notice that I 
-forgot to list the method parameters as part of the test-tool output. It 
-should print "ref_newer(A,B)" so you know which input goes in which place.
+>> There's nothing for the calling program to act on on the basis of that
+>> error.  Use status 0 consistently instead, to indicate that we decided
+>> not to run a gc (just like if no housekeeping was required).  This
+>> way, repo and similar tools can get the benefit of the same behavior
+>> as tools like "git fetch" that ignore the exit status from gc --auto.
+>
+> I think this is a good change.
+>
+> In theory it might be useful to propagate the original exit code (_not_
+> "did we see a warning or an error", but the true original exit code. But
+> as you note, it's not deterministic anyway (we'd miss that exit code on
+> the first run, or even any simultaneous runs that exit early due to lock
+> contention). So it's clear that callers can't really do anything robust
+> based on the exit code of a daemonized "gc --auto".
+>
+> I still think that "repo" should probably stop respecting the exit code.
+> But that's no excuse for Git not to have a sensible exit code in the
+> first place.
 
->
->> +int cmd__reach(int ac, const char **av)
->> +{
->> +	struct object_id oid_A, oid_B;
->> +	struct strbuf buf = STRBUF_INIT;
->> +	struct repository *r = the_repository;
->> +
->> +	setup_git_directory();
->> +
->> +	if (ac < 2)
->> +		exit(1);
->> +
->> +
->> +	while (strbuf_getline(&buf, stdin) != EOF) {
->> +		struct object_id oid;
->> +		struct object *o;
->> +		struct commit *c;
->> +		if (buf.len < 3)
->> +			continue;
->> +
->> +		if (get_oid_committish(buf.buf + 2, &oid))
->> +			die("failed to resolve %s", buf.buf + 2);
-> You can also use skip_prefix() instead of using arithmetic to determine
-> the start of the OID.
->
->> +# Construct a grid-like commit graph with points (x,y)
->> +# with 1 <= x <= 10, 1 <= y <= 10, where (x,y) has
->> +# parents (x-1, y) and (x, y-1), keeping in mind that
->> +# we drop a parent if a coordinate is nonpositive.
->> +#
->> +#             (10,10)
->> +#            /       \
->> +#         (10,9)    (9,10)
->> +#        /     \   /      \
->> +#    (10,8)    (9,9)      (8,10)
->> +#   /     \    /   \      /    \
->> +#         ( continued...)
->> +#   \     /    \   /      \    /
->> +#    (3,1)     (2,2)      (1,3)
->> +#        \     /    \     /
->> +#         (2,1)      (2,1)
->> +#              \    /
->> +#              (1,1)
-> This is quite a good design, thanks.
->
->> +# We use branch 'comit-x-y' to refer to (x,y).
-> s/comit/commit/
->
->> +	git show-ref -s commit-7-7 | git commit-graph write --stdin-commits &&
->> +	mv .git/objects/info/commit-graph commit-graph-half &&
-> My understanding is that this writes for 7-7 and all its ancestors,
-> but...
->
->> +test_expect_success 'ref_newer:hit' '
->> +	cat >input <<-\EOF &&
->> +		A:commit-5-7
->> +		B:commit-2-3
->> +	EOF
->> +	printf "ref_newer:1\n" >expect &&
->> +	test_three_modes ref_newer
->> +'
->> +
->> +test_done
-> ...both 5-7 and 2-3 are ancestors of 7-7, right? Which means that you
-> don't test the "half" commit graph here. (It's probably sufficient to
-> just adjust the numbers.)
+I am not yet convinced that this last step to exit with 0 is a good
+change, even though I can understand that it would be more
+convenient, as there currently is no easy way for the calling script
+to tell two error cases apart.
 
-Good point! Thanks. I'll just write the commit-graph starting at 
-commit-5-5 and that should satisfy the point of the "mixed-mode" tests.
+I think the "sensible exit code" you mention would be something like
+"1 for hard error, 2 for 'I am punting as I see there were previous
+errors---you may want to examine your repository'".  
 
--Stolee
+If we did that from day one and documented that behaviour, nobody
+would have complained, but adopting that suddenly is of course a
+breaking change.
+
+Perhaps we should exit with 2 (not 0) in that "previous error" case
+by default, and then have a configuration knob to turn that 2 into 0
+for those who cannot easily modify the calling script?  That way, we
+by default will *not* break those who have been paying attention to
+zero-ness of the exit status, we allow those who want to treat this
+"prior error" case as if there were no error with just a knob, and
+then those who are willing to update their script can tell two cases
+by the exit status and act differently.
+
+
 
