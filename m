@@ -2,122 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B2F11F597
-	for <e@80x24.org>; Wed, 18 Jul 2018 09:26:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA7921F597
+	for <e@80x24.org>; Wed, 18 Jul 2018 09:30:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730565AbeGRKC7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jul 2018 06:02:59 -0400
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:28947 "EHLO
-        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729095AbeGRKC6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jul 2018 06:02:58 -0400
-Received: from [192.168.2.240] ([92.22.19.104])
-        by smtp.talktalk.net with SMTP
-        id fiiafu9ahdJAefiiafFtNY; Wed, 18 Jul 2018 10:25:57 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1531905957;
-        bh=AbzE8yCN5uE8qExuhJH48gUfvouMxJNozd4DIo6lu6Y=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=duZw3v8lQDEEylxxmnAnm3S/Cvcqiim1yXeUobUuy6SGUFutFS2fxYdrURaelomFy
-         I4i9gjDpK87kUyJORm6e2V82sXygqR/YFcPryIXX1gaRotoKlKCAAmeKJEkq5PEUg/
-         jtlV/0ogyUcS0rpLGE9EPg0McrGBV39wkFMEmLKE=
-X-Originating-IP: [92.22.19.104]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=V8BTL9vi c=1 sm=1 tr=0 a=f/8ZdrXn5sPnqdHA06GUHw==:117
- a=f/8ZdrXn5sPnqdHA06GUHw==:17 a=IkcTkHD0fZMA:10 a=cETuxoCwAAAA:8
- a=i_EA8KvodolMb8miwMkA:9 a=QEXdDO2ut3YA:10 a=tb6VMGFFq-HsUJGUQiVL:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] sequencer.c: terminate the last line of author-script
- properly
-To:     Akinori MUSHA <knu@iDaemons.org>, git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-References: <86a7qwpt9g.knu@iDaemons.org>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <f5b56540-d26a-044e-5f46-1d975f889d06@talktalk.net>
-Date:   Wed, 18 Jul 2018 10:25:54 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
-MIME-Version: 1.0
-In-Reply-To: <86a7qwpt9g.knu@iDaemons.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfKgZ0acIwkO2yghmbhnXqhF1rH6k9Pz0yh+t0bWx60Zqtrrczz7lfrnkbcUmFe1oIx5IZamFkYZ/fEac1ABhKkOnlmGIqlqeonnK5TJ9FHL+fg1jP4Uq
- xWzMG6r4yRlNUGFUShDwMNW5uR3AEOwQ9v62SEHXap9BaUlO/WnBAmYuSpQtSM2XsbRuEsec5ab+EwABPJgGnxeKcZsp3kkgUr78Xs9nh+hXMj7sI/ydmEuo
+        id S1730707AbeGRKHf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jul 2018 06:07:35 -0400
+Received: from lizzard.sbs.de ([194.138.37.39]:39761 "EHLO lizzard.sbs.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730470AbeGRKHf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jul 2018 06:07:35 -0400
+Received: from mail1.sbs.de (mail1.sbs.de [192.129.41.35])
+        by lizzard.sbs.de (8.15.2/8.15.2) with ESMTPS id w6I9UDdL002660
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Wed, 18 Jul 2018 11:30:13 +0200
+Received: from md1pvb1c.ad001.siemens.net (md1pvb1c.ad001.siemens.net [139.25.68.40])
+        by mail1.sbs.de (8.15.2/8.15.2) with ESMTP id w6I9UCdf030810;
+        Wed, 18 Jul 2018 11:30:12 +0200
+From:   Henning Schild <henning.schild@siemens.com>
+To:     git@vger.kernel.org
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
+        Ben Toews <mastahyeti@gmail.com>, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Henning Schild <henning.schild@siemens.com>
+Subject: [PATCH v5 2/7] t/t7510: check the validation of the new config gpg.format
+Date:   Wed, 18 Jul 2018 11:30:10 +0200
+Message-Id: <20180718093010.29651-1-henning.schild@siemens.com>
+X-Mailer: git-send-email 2.16.4
+In-Reply-To: <2f806c4fa4454af59344f0f0e77d1ae8048aa841.1531831244.git.henning.schild@siemens.com>
+References: <2f806c4fa4454af59344f0f0e77d1ae8048aa841.1531831244.git.henning.schild@siemens.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Akinori
+Test setting gpg.format to both invalid and valid values.
 
-On 12/07/18 12:18, Akinori MUSHA wrote:
-> 
-> It looks like write_author_script() intends to write out a file in
-> Bourne shell syntax, but it doesn't put a closing single quote on the
-> last line.
-> 
-> This patch makes .git/rebase-merge/author-script actually parsable by
-> sh(1) by adding a single quote and a linefeed to terminate the line
-> properly.
-> 
-> Signed-off-by: Akinori MUSHA <knu@idaemons.org>
-> ---
->   sequencer.c                   |  1 +
->   t/t3404-rebase-interactive.sh | 13 +++++++++++++
->   2 files changed, 14 insertions(+)
-> 
-> diff --git a/sequencer.c b/sequencer.c
-> index 4034c0461..5f32b6df1 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -651,6 +651,7 @@ static int write_author_script(const char *message)
->   			strbuf_addch(&buf, *(message++));
->   		else
->   			strbuf_addf(&buf, "'\\\\%c'", *(message++));
-> +	strbuf_addstr(&buf, "'\n");
->   	res = write_message(buf.buf, buf.len, rebase_path_author_script(), 1);
+Signed-off-by: Henning Schild <henning.schild@siemens.com>
+---
+ t/t7510-signed-commit.sh | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-The third parameter here means that write_message() will append a new 
-line (you can check this by looking at the file that's created) so 
-strictly speaking we only need to add "'" to the end of the message, 
-alternatively it would be more obvious to keep adding "'\n" and change 1 
-to 0 in the call to write_message()
-
-Best Wishes
-
-Phillip
-
->   	strbuf_release(&buf);
->   	return res;
-> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-> index 352a52e59..345b103eb 100755
-> --- a/t/t3404-rebase-interactive.sh
-> +++ b/t/t3404-rebase-interactive.sh
-> @@ -75,6 +75,19 @@ test_expect_success 'rebase --keep-empty' '
->   	test_line_count = 6 actual
->   '
->   
-> +test_expect_success 'rebase -i writes out .git/rebase-merge/author-script in "edit" that sh(1) can parse' '
-> +	test_when_finished "git rebase --abort ||:" &&
-> +	git checkout master &&
-> +	set_fake_editor &&
-> +	FAKE_LINES="edit 1" git rebase -i HEAD^ &&
-> +	test -f .git/rebase-merge/author-script &&
-> +	unset GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_AUTHOR_DATE &&
-> +	eval "$(cat .git/rebase-merge/author-script)" &&
-> +	test "$(git show --quiet --pretty=format:%an)" = "$GIT_AUTHOR_NAME" &&
-> +	test "$(git show --quiet --pretty=format:%ae)" = "$GIT_AUTHOR_EMAIL" &&
-> +	test "$(git show --quiet --date=raw --pretty=format:@%ad)" = "$GIT_AUTHOR_DATE"
-> +'
-> +
->   test_expect_success 'rebase -i with the exec command' '
->   	git checkout master &&
->   	(
-> 
+diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
+index 6e2015ed9..4e37ff8f1 100755
+--- a/t/t7510-signed-commit.sh
++++ b/t/t7510-signed-commit.sh
+@@ -227,4 +227,11 @@ test_expect_success GPG 'log.showsignature behaves like --show-signature' '
+ 	grep "gpg: Good signature" actual
+ '
+ 
++test_expect_success GPG 'check config gpg.format values' '
++	test_config gpg.format openpgp &&
++	git commit -S --amend -m "success" &&
++	test_config gpg.format OpEnPgP &&
++	test_must_fail git commit -S --amend -m "fail"
++'
++
+ test_done
+-- 
+2.16.4
 
