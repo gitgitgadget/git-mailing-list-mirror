@@ -2,87 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C4BB1F597
-	for <e@80x24.org>; Wed, 18 Jul 2018 17:25:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 105A81F597
+	for <e@80x24.org>; Wed, 18 Jul 2018 17:29:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731498AbeGRSDw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jul 2018 14:03:52 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:35158 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731193AbeGRSDw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jul 2018 14:03:52 -0400
-Received: by mail-wm0-f68.google.com with SMTP id y22-v6so3700715wma.0
-        for <git@vger.kernel.org>; Wed, 18 Jul 2018 10:24:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=5kslTo/JheaiTI2VY0i0KWHYOrYJmGyBGr01E1I6Nh8=;
-        b=tsnRc90qhgGC2OkQ/QIwhte+r+O2jF42kF6hmFLUSP2N4gP1VLi3gEQy/aINjTGc3M
-         kv24t+ez0n4tP6v8mVD8Jqk2jXHepjmPK6jVoIsZUJ4FUMEY/VaCOsT4tuQTTGtnzvS9
-         jJmSw4ViK/8APp4Wv+BU2ur5B0TQqOgjDgrNupyqH+vVeJsb3aqW1oMuBcK0lgbcRlrg
-         XQt4cTLmJQ1kD8OX8C6EMGMbmVH+bASljv1AHWc6xni0kD4wrObonL4wv1DOsprSxwzy
-         Y7YaytYF5uGYUJHZ+oJ/SFEC8IUVbbJlsq5Yi1woRwyr6NoVUkZLPfAA5zrW70X77o95
-         5zPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=5kslTo/JheaiTI2VY0i0KWHYOrYJmGyBGr01E1I6Nh8=;
-        b=I4UppndO5GBLNNgkoi4ziOf+eba/Sllh+bFQjP9HS02WCvnjLF9nBNgRk53vZ0go7X
-         4cA0JscKFx5bCYISdFmdOnDPv8BCMbPkzRrlbY+ine5c73zFz9U4OZfgZ6Bk24n35E6S
-         PMr9aeMRt0OCAsYgdYKZeSznZuRpE6R/yq8X4vddfoxQQlFOR8Kjq+n+y59Kg3PpNmDz
-         J++SRGFo4uzn0ft3JU6Ay06+UnTZBTSCepO7S8JyBj3z1hKTbrdEslG9b1aRzwWlUaV3
-         vF3A9iuTx4J4JFmmce8qnQWrcJCvtCGDFbb0HJPQzDOdE/b7kSLtyxp+WpEIzKlvFwyk
-         NW4Q==
-X-Gm-Message-State: AOUpUlGbQQDQ2T8H59yY7s6hCtFp4BvG62wF1C+NnzVyxt/oZhUmCyAw
-        0ZRTBZEiiudGfDAJeVZtsVA=
-X-Google-Smtp-Source: AAOMgpdWdSEAn82hyQWxybvpYOee9wI+FW5oERu6WJv+WRVpCoXKft4dbpWo/cw/UmgkqjZIvSdXwA==
-X-Received: by 2002:a1c:8e8c:: with SMTP id q134-v6mr2371773wmd.3.1531934697744;
-        Wed, 18 Jul 2018 10:24:57 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id z7-v6sm2598938wrh.85.2018.07.18.10.24.56
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 18 Jul 2018 10:24:57 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood@talktalk.net>
-Cc:     Akinori MUSHA <knu@iDaemons.org>, git@vger.kernel.org
-Subject: Re: [PATCH] sequencer.c: terminate the last line of author-scriptproperly
-References: <86a7qwpt9g.knu@iDaemons.org>
-        <xmqqwou0xtar.fsf@gitster-ct.c.googlers.com>
-        <eb66f8fb-1535-37a8-526d-ed31f06c045c@talktalk.net>
-        <eb295aea-dae5-5e1c-bacf-2c77d3ce0195@talktalk.net>
-Date:   Wed, 18 Jul 2018 10:24:56 -0700
-In-Reply-To: <eb295aea-dae5-5e1c-bacf-2c77d3ce0195@talktalk.net> (Phillip
-        Wood's message of "Wed, 18 Jul 2018 14:46:17 +0100")
-Message-ID: <xmqq36wglamv.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1731531AbeGRSIJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jul 2018 14:08:09 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51258 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1731525AbeGRSIJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jul 2018 14:08:09 -0400
+Received: (qmail 9087 invoked by uid 109); 18 Jul 2018 17:29:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 18 Jul 2018 17:29:15 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 654 invoked by uid 111); 18 Jul 2018 17:29:19 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 18 Jul 2018 13:29:19 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Jul 2018 13:29:13 -0400
+Date:   Wed, 18 Jul 2018 13:29:13 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        Andrii Dehtiarov <adehtiarov@google.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] gc: do not warn about too many loose objects
+Message-ID: <20180718172913.GB2677@sigill.intra.peff.net>
+References: <20180716214003.GH11513@aiede.svl.corp.google.com>
+ <20180716214539.GL25189@sigill.intra.peff.net>
+ <20180716220306.GI11513@aiede.svl.corp.google.com>
+ <20180716224337.GB12482@sigill.intra.peff.net>
+ <20180716225639.GK11513@aiede.svl.corp.google.com>
+ <20180716232603.GB13570@sigill.intra.peff.net>
+ <20180717015339.GL11513@aiede.svl.corp.google.com>
+ <87d0vmck55.fsf@evledraar.gmail.com>
+ <20180717202700.GE26218@sigill.intra.peff.net>
+ <874lgwd6yd.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <874lgwd6yd.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood@talktalk.net> writes:
+On Wed, Jul 18, 2018 at 03:11:38PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
->> The only consumer of a faulty author script written by the sequencer
->> is read_env_script() in sequencer.c which doesn't worry about
->> checking that quotes are paired. 
->
-> That's not quite true anymore, recently another consumer
-> read_author_ident() was added which uses sq_dequote() instead of
-> custom code. Looking more closely at write_author_script() the quoting
-> of single quotes is buggy they are escaped as \\' instead of \'.
+> > Yeah, I agree that deferring repeated gc's based on time is going to run
+> > into pathological corner cases. OTOH, what we've found at GitHub is that
+> > "gc --auto" is quite insufficient for scheduling maintenance anyway
+> > (e.g., if a machine gets pushes to 100 separate repositories in quick
+> > succession, you probably want to queue and throttle any associated gc).
+> 
+> I'm sure you have better solutions for this at GitHub, but as an aside
+> it might be interesting to add some sort of gc flock + retry setting for
+> this use-case, i.e. even if you had 100 concurrent gc's due to
+> too_many_*(), they'd wait + retry until they could get the flock on a
+> given file.
+> 
+> Then again this is probably too specific, and could be done with a
+> pre-auto-gc hook too..
 
-That's embarrassing re-invention (instead of reuse) with additional
-bug X-<.  It seems that all of that blame to d87d48b2 ("sequencer:
-learn about the special "fake root commit" handling", 2018-05-04).
+Yeah, I think any multi-repo solution is getting way too specific for
+Git, and the best thing we can do is provide a hook. I agree you could
+probably do this today with a pre-auto-gc hook (if it skips gc it would
+just queue itself and return non-zero). Or even just make a mark in a
+database that says "there was some activity here".
 
-We should fix both broken writer and readers that compensate for
-breakage in the writer, I guess.  Sigh...
+Since we have so much other infrastructure sitting between the user and
+Git anyway, we do that marking at a separate layer which is already
+talking to a database. ;)
 
+Anyway, I do agree with your general notion that this isn't the right
+approach for many situations, and auto-gc is a better solution for many
+cases.
+
+-Peff
