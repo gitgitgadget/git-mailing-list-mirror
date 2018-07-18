@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B52C1F597
-	for <e@80x24.org>; Wed, 18 Jul 2018 19:32:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 30A261F597
+	for <e@80x24.org>; Wed, 18 Jul 2018 19:32:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730369AbeGRUL3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jul 2018 16:11:29 -0400
-Received: from mail-oi0-f73.google.com ([209.85.218.73]:36566 "EHLO
-        mail-oi0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728929AbeGRUL2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jul 2018 16:11:28 -0400
-Received: by mail-oi0-f73.google.com with SMTP id c23-v6so5109666oiy.3
-        for <git@vger.kernel.org>; Wed, 18 Jul 2018 12:32:08 -0700 (PDT)
+        id S1730384AbeGRULb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jul 2018 16:11:31 -0400
+Received: from mail-it0-f74.google.com ([209.85.214.74]:36289 "EHLO
+        mail-it0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728929AbeGRULb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jul 2018 16:11:31 -0400
+Received: by mail-it0-f74.google.com with SMTP id m185-v6so3529874itm.1
+        for <git@vger.kernel.org>; Wed, 18 Jul 2018 12:32:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=bUvUB+f7+gz3qMR93/h15e845zoUoGIvxGaK2blTLxM=;
-        b=nb+FfP0GrMszamFOmaOGogoEeLilcVQ0ugo3QFpKMAPfcWTbGVuEwDMSpFKUnHdd79
-         817GftqP0YQ5REnzDQpV+OzZwemKfjfp1LugjsA6cz1y+QiO20Xo+68somTmBr6R/Mud
-         YidssEHsNKbyq+oRqjkaHfSKHDp8PG/L6CpCUjvKStrV+E7D3X2p3Qdadbfb985x1cid
-         I/QZBOlJPRl449abVxTXAqtzE8i6ZZ5GypfYmxtps8tjrYqeaIVR20hUMkDuK61JoRsl
-         SLflJTaY0+UqW0QInvdXwX/0h04hEDfJIA04WvgiPvB/6XK9Aww/iwlqr3YAqWDctLkD
-         USwA==
+        bh=DB4XjBgKBkOwqHYzvU1BSlbg2y+lfEdXwl26Qh1hoCQ=;
+        b=SOr2BbYuEmCzEwzHJsGGa5CERgljyGB+ylE05fQ7bBQbBsJnsA/Npkb/D47h9O2Ho+
+         zL0taTnpAPyEig1pjmaozEAnmcNFHm5SUmEqYfmVW/mqb4HGEl7kGZatPwqjR8pzz3Rr
+         YYrmpOvxc61hoVMw7HHdV97+xNuDPM8kssTHvAWE3jRUHmZUcSQRrBportNFulDXKh3U
+         8HXPOX7AKt0fhsEivtnd0pqtzw58JmNtC+sv++bV6Cdk9sCz/L3y/81mtgjmK5jztzHb
+         L1xwK/Qbx1POAoJHu5IJHAj2hy87QnKierUYymPRC9sWbYqTzgOY6x86VXgdoGCfFqka
+         RNWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=bUvUB+f7+gz3qMR93/h15e845zoUoGIvxGaK2blTLxM=;
-        b=SVUNKc6OcA8E2RqKefefaByoiuoqXVfRJrgKT9EpHL67JMLQLTHLUJZqKcuv9SBMDJ
-         IgUedPMyrgaYZbddD2IUyX95ZOZ3soVpVIflkFI4YZJA94rWEN3eVfMKOqTWK42Vq8X+
-         mb7HGVzqQzhYWaPmz7ptj1HtgZubLDgpXurvP77D0GrfpT/DHaF13LAwZHBJyTRzFhni
-         552tpu+YVzzvkISzQsb2ZecK0y7uRY5TT286PpJMTjLJUguSsnLmxd+31eAaJxjb/fRK
-         7OLdOF1rkwdLnu6/XfGLlKyNXzgh1W/cc+9se/gKHj3XcTcUW8VW2qVdQ5tAz/e0um5p
-         ObfQ==
-X-Gm-Message-State: AOUpUlGttzyvwiLRnmJwss8ehc1dkvCtbYqspyzg1hdv4iO8x8nkx6ZB
-        yIbMNqHGnO+qMPA8Y995VCvgPsubkzHp0abWDUFnOhup545jyXLwQYigc2nQZxPDcfLd0XArETW
-        k9khoi6s6RLVqWUQWtEmfCG+TM3AA0sd71csWNTx/DTYVSJdW0ctcCbLrqHg9
-X-Google-Smtp-Source: AAOMgpcAlneJ1leq9hAnrQR6mYVtkjr92rldKFwPUEHc7RuE5OAkWWJTsYSNliFSwu21oKEiK8uwVy/BNwMd
+        bh=DB4XjBgKBkOwqHYzvU1BSlbg2y+lfEdXwl26Qh1hoCQ=;
+        b=n7/QskKS7oUoqwxFn+i1a4tSGGA41gr0patjyS4m2AQYpG89jKMql+t+N/+YmRMbnX
+         4G943IcrGY6ze0nRIcnmSOkFac7cmONgVRMJ9bNZTWWZxoWcQU4ocB3Im2R5a74S2Aax
+         d4Ojg4GSgJVgF+TSqR/C5PHfa35MJ2N6D4D1V8Epg27yp5RO8ijEVrFb1iqOd77IZZhr
+         zxo8nFaS7m3Lz3yjq7YKyQ/+WtA8ERzXxd28mRANTXiYSPlV2q2Fb1esY8lG+xtW0ncK
+         +42uk8zJezKncZChTSkh8a1nMacBMWqyIdWRUcxFheARqT/HC9NEmhAXau95TQRJMe4u
+         MPMg==
+X-Gm-Message-State: AOUpUlGYRQDYDmBunKnynSJprGFvKCymtEFUY2ZltUaNsWVdDjOgROoU
+        pSTc+gvFV9NJL926EAs43BQfxCgjmZzEG5FFNX9GWIKUzMlHajb9WDOuAvOA3lr41yyHKg1vsfe
+        fghB6Tu0UpKLdxbDgasjTtnelbmrKVBEMghQ0mCCoSnuuG+FrDY1LmEehFjqR
+X-Google-Smtp-Source: AAOMgpfiwdcRGz7f5gpOUFQr5VMD/5NpJySu0fCcKzDhSoe/Op/4+xM8T8zc6JK8P++Voco1j0Ff0dDbQvCx
 MIME-Version: 1.0
-X-Received: by 2002:aca:ad0d:: with SMTP id w13-v6mr4133772oie.79.1531942328202;
- Wed, 18 Jul 2018 12:32:08 -0700 (PDT)
-Date:   Wed, 18 Jul 2018 12:31:48 -0700
+X-Received: by 2002:a6b:9cc6:: with SMTP id f189-v6mr2874639ioe.138.1531942331020;
+ Wed, 18 Jul 2018 12:32:11 -0700 (PDT)
+Date:   Wed, 18 Jul 2018 12:31:49 -0700
 In-Reply-To: <20180718193156.47365-1-sbeller@google.com>
-Message-Id: <20180718193156.47365-3-sbeller@google.com>
+Message-Id: <20180718193156.47365-4-sbeller@google.com>
 References: <20180718193156.47365-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.233.g985f88cf7e-goog
-Subject: [PATCH 02/10] xdiff/xdiffi.c: remove unneeded function declarations
+Subject: [PATCH 03/10] t4015: avoid git as a pipe input
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, rybak.a.v@gmail.com,
@@ -63,54 +63,149 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There is no need to forward-declare these functions, as they are used
-after their implementation only.
+In t4015 we have a pattern of
+
+    git diff [<options, related to color>] |
+        grep -v "index" |
+        test_decode_color >actual &&
+
+to produce output that we want to test against. This pattern was introduced
+in 86b452e2769 (diff.c: add dimming to moved line detection, 2017-06-30)
+as then the focus on getting the colors right. However the pattern used
+is not best practice as we do care about the exit code of Git. So let's
+not have Git as the upstream of a pipe. Piping the output of grep to
+some function is fine as we assume grep to be un-flawed in our test suite.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- xdiff/xdiffi.c | 17 -----------------
- 1 file changed, 17 deletions(-)
+ t/t4015-diff-whitespace.sh | 50 +++++++++++++++-----------------------
+ 1 file changed, 20 insertions(+), 30 deletions(-)
 
-diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-index 0de1ef463bf..3e8aff92bc4 100644
---- a/xdiff/xdiffi.c
-+++ b/xdiff/xdiffi.c
-@@ -22,34 +22,17 @@
+diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
+index 17df491a3ab..ddbc3901385 100755
+--- a/t/t4015-diff-whitespace.sh
++++ b/t/t4015-diff-whitespace.sh
+@@ -1271,9 +1271,8 @@ test_expect_success 'detect permutations inside moved code -- dimmed_zebra' '
+ 	test_config color.diff.newMovedDimmed "normal cyan" &&
+ 	test_config color.diff.oldMovedAlternativeDimmed "normal blue" &&
+ 	test_config color.diff.newMovedAlternativeDimmed "normal yellow" &&
+-	git diff HEAD --no-renames --color-moved=dimmed_zebra --color |
+-		grep -v "index" |
+-		test_decode_color >actual &&
++	git diff HEAD --no-renames --color-moved=dimmed_zebra --color >actual.raw &&
++	grep -v "index" actual.raw | test_decode_color >actual &&
+ 	cat <<-\EOF >expected &&
+ 	<BOLD>diff --git a/lines.txt b/lines.txt<RESET>
+ 	<BOLD>--- a/lines.txt<RESET>
+@@ -1315,9 +1314,8 @@ test_expect_success 'cmd option assumes configured colored-moved' '
+ 	test_config color.diff.oldMovedAlternativeDimmed "normal blue" &&
+ 	test_config color.diff.newMovedAlternativeDimmed "normal yellow" &&
+ 	test_config diff.colorMoved zebra &&
+-	git diff HEAD --no-renames --color-moved --color |
+-		grep -v "index" |
+-		test_decode_color >actual &&
++	git diff HEAD --no-renames --color-moved --color >actual.raw &&
++	grep -v "index" actual.raw | test_decode_color >actual &&
+ 	cat <<-\EOF >expected &&
+ 	<BOLD>diff --git a/lines.txt b/lines.txt<RESET>
+ 	<BOLD>--- a/lines.txt<RESET>
+@@ -1395,9 +1393,8 @@ test_expect_success 'move detection ignoring whitespace ' '
+ 	line 4
+ 	line 5
+ 	EOF
+-	git diff HEAD --no-renames --color-moved --color |
+-		grep -v "index" |
+-		test_decode_color >actual &&
++	git diff HEAD --no-renames --color-moved --color >actual.raw &&
++	grep -v "index" actual.raw | test_decode_color >actual &&
+ 	cat <<-\EOF >expected &&
+ 	<BOLD>diff --git a/lines.txt b/lines.txt<RESET>
+ 	<BOLD>--- a/lines.txt<RESET>
+@@ -1419,9 +1416,8 @@ test_expect_success 'move detection ignoring whitespace ' '
+ 	EOF
+ 	test_cmp expected actual &&
  
- #include "xinclude.h"
+-	git diff HEAD --no-renames -w --color-moved --color |
+-		grep -v "index" |
+-		test_decode_color >actual &&
++	git diff HEAD --no-renames -w --color-moved --color >actual.raw &&
++	grep -v "index" actual.raw | test_decode_color >actual &&
+ 	cat <<-\EOF >expected &&
+ 	<BOLD>diff --git a/lines.txt b/lines.txt<RESET>
+ 	<BOLD>--- a/lines.txt<RESET>
+@@ -1459,9 +1455,8 @@ test_expect_success 'move detection ignoring whitespace changes' '
+ 	line 5
+ 	EOF
  
--
--
- #define XDL_MAX_COST_MIN 256
- #define XDL_HEUR_MIN_COST 256
- #define XDL_LINE_MAX (long)((1UL << (CHAR_BIT * sizeof(long) - 1)) - 1)
- #define XDL_SNAKE_CNT 20
- #define XDL_K_HEUR 4
+-	git diff HEAD --no-renames --color-moved --color |
+-		grep -v "index" |
+-		test_decode_color >actual &&
++	git diff HEAD --no-renames --color-moved --color >actual.raw &&
++	grep -v "index" actual.raw | test_decode_color >actual &&
+ 	cat <<-\EOF >expected &&
+ 	<BOLD>diff --git a/lines.txt b/lines.txt<RESET>
+ 	<BOLD>--- a/lines.txt<RESET>
+@@ -1483,9 +1478,8 @@ test_expect_success 'move detection ignoring whitespace changes' '
+ 	EOF
+ 	test_cmp expected actual &&
  
--
--
- typedef struct s_xdpsplit {
- 	long i1, i2;
- 	int min_lo, min_hi;
- } xdpsplit_t;
+-	git diff HEAD --no-renames -b --color-moved --color |
+-		grep -v "index" |
+-		test_decode_color >actual &&
++	git diff HEAD --no-renames -b --color-moved --color >actual.raw &&
++	grep -v "index" actual.raw | test_decode_color >actual &&
+ 	cat <<-\EOF >expected &&
+ 	<BOLD>diff --git a/lines.txt b/lines.txt<RESET>
+ 	<BOLD>--- a/lines.txt<RESET>
+@@ -1526,9 +1520,8 @@ test_expect_success 'move detection ignoring whitespace at eol' '
+ 	# avoid cluttering the output with complaints about our eol whitespace
+ 	test_config core.whitespace -blank-at-eol &&
  
--
--
--
--static long xdl_split(unsigned long const *ha1, long off1, long lim1,
--		      unsigned long const *ha2, long off2, long lim2,
--		      long *kvdf, long *kvdb, int need_min, xdpsplit_t *spl,
--		      xdalgoenv_t *xenv);
--static xdchange_t *xdl_add_change(xdchange_t *xscr, long i1, long i2, long chg1, long chg2);
--
--
--
--
--
- /*
-  * See "An O(ND) Difference Algorithm and its Variations", by Eugene Myers.
-  * Basically considers a "box" (off1, off2, lim1, lim2) and scan from both
+-	git diff HEAD --no-renames --color-moved --color |
+-		grep -v "index" |
+-		test_decode_color >actual &&
++	git diff HEAD --no-renames --color-moved --color >actual.raw &&
++	grep -v "index" actual.raw | test_decode_color >actual &&
+ 	cat <<-\EOF >expected &&
+ 	<BOLD>diff --git a/lines.txt b/lines.txt<RESET>
+ 	<BOLD>--- a/lines.txt<RESET>
+@@ -1550,9 +1543,8 @@ test_expect_success 'move detection ignoring whitespace at eol' '
+ 	EOF
+ 	test_cmp expected actual &&
+ 
+-	git diff HEAD --no-renames --ignore-space-at-eol --color-moved --color |
+-		grep -v "index" |
+-		test_decode_color >actual &&
++	git diff HEAD --no-renames --ignore-space-at-eol --color-moved --color >actual.raw &&
++	grep -v "index" actual.raw | test_decode_color >actual &&
+ 	cat <<-\EOF >expected &&
+ 	<BOLD>diff --git a/lines.txt b/lines.txt<RESET>
+ 	<BOLD>--- a/lines.txt<RESET>
+@@ -1597,9 +1589,8 @@ test_expect_success '--color-moved block at end of diff output respects MIN_ALNU
+ 	irrelevant_line
+ 	EOF
+ 
+-	git diff HEAD --color-moved=zebra --color --no-renames |
+-		grep -v "index" |
+-		test_decode_color >actual &&
++	git diff HEAD --color-moved=zebra --color --no-renames >actual.raw &&
++	grep -v "index" actual.raw | test_decode_color >actual &&
+ 	cat >expected <<-\EOF &&
+ 	<BOLD>diff --git a/bar b/bar<RESET>
+ 	<BOLD>--- a/bar<RESET>
+@@ -1636,9 +1627,8 @@ test_expect_success '--color-moved respects MIN_ALNUM_COUNT' '
+ 	nineteen chars 456789
+ 	EOF
+ 
+-	git diff HEAD --color-moved=zebra --color --no-renames |
+-		grep -v "index" |
+-		test_decode_color >actual &&
++	git diff HEAD --color-moved=zebra --color --no-renames >actual.raw &&
++	grep -v "index" actual.raw | test_decode_color >actual &&
+ 	cat >expected <<-\EOF &&
+ 	<BOLD>diff --git a/bar b/bar<RESET>
+ 	<BOLD>--- a/bar<RESET>
 -- 
 2.18.0.233.g985f88cf7e-goog
 
