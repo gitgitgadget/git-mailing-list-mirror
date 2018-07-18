@@ -2,206 +2,260 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7104B1F597
-	for <e@80x24.org>; Wed, 18 Jul 2018 13:11:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01602208E9
+	for <e@80x24.org>; Wed, 18 Jul 2018 13:31:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729324AbeGRNth (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jul 2018 09:49:37 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:38424 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726258AbeGRNtg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jul 2018 09:49:36 -0400
-Received: by mail-ed1-f67.google.com with SMTP id t2-v6so4198863edr.5
-        for <git@vger.kernel.org>; Wed, 18 Jul 2018 06:11:43 -0700 (PDT)
+        id S1730795AbeGROJH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jul 2018 10:09:07 -0400
+Received: from mail-qt0-f193.google.com ([209.85.216.193]:35039 "EHLO
+        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730234AbeGROJG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jul 2018 10:09:06 -0400
+Received: by mail-qt0-f193.google.com with SMTP id a5-v6so3985178qtp.2
+        for <git@vger.kernel.org>; Wed, 18 Jul 2018 06:31:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=3ClPVyCbGxbwErooZLJpjl+Nqsq+DxY5dZ5o+8WNIpY=;
-        b=siBXFfeWiKwD8QssqEGS/9ZuDc73DfSRFbdn6PsOf84kqU4M6BzzILajem98q7+Gcl
-         S6JWogEmNLIRK2BHI80oacbSvpeQGZUFuFvYkGHBotyT2a1gu3E/f+gWASULqG19xfCV
-         0R9lMvWSDGw92dUFcOoNlT9W29FPmf11N5MlpIhB9DZqJNGtY1CTpZbSfJdZA46wwIXj
-         +ZX77puiDlj254las3mFuCGkdk5P5/WlyiSaQ8XzfPhLFPNBgBJ3OmsOU+5IaEMlxpu+
-         Y0Ptqi9GAtNJtIBuzvXNQ0BBGiSN+285W131kecyndZcVJ/WzT+1Ki5aYRQhkV1gWHDP
-         CF4w==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=TB1Ej2sWciY3sVzAFoEDTRKPcY4TMiXrBH0YR84y5jQ=;
+        b=p4PGMBu4tKzBYTU18G8Z45OxhsDKQwWtnyxTTlONZURtXuRTFAwNE7UOLtKRlw9B5D
+         9DJ1MmXwD59oAzsKPkdqwFDMwI/E0DRQQNTZ0uI/1AkoskKIC9bm7xBH6XkGOSlOFs7h
+         LBPKk1IwHeTrcNkMOk01Ax0dJko795KBtAVcNJYO6e8JP6TY60XAwuV8jw5Lwo88dHqp
+         o/H4m7VjnGE+7eUxTuKAdqEzuKrRm8+mKfgUxfY5YNhpzm18ooX1n7p5QnyVzVvuF1cs
+         eusi8ual93bQmYE0FKWhYyYI8DWITgnKwmhatbR9wxXhJLbxcxIpgt4I/4otBuITzaMm
+         QK0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=3ClPVyCbGxbwErooZLJpjl+Nqsq+DxY5dZ5o+8WNIpY=;
-        b=NAwnf4gVTy4YY6s0O7JhsSkLPfDcdtUWie93spn6LxPJkquSSMYHInj3eZDTRB6kH4
-         Qf9Owxe8QRa/JTwKKj0u9D8af/UfujRVWUjUCODq75rGtYlk4BCL4I/GA2Te8Wwccclo
-         ju0qwIQl3/IvCJhZLDcbcpfHGXDEKMIlFFLcT4xhoN+rtIZNp0ZGxrsS3j776mTGIjHo
-         lwgG+3te+AbszwG9/5v5zXoYYEyE+uJe15L1Xu67UpS8gvz3j2DHJVcLDmArn8jPwpu8
-         +yZGeaeEHfV/izh02sDdrMAZxd+mnKa1ipK9io4dWhEqibb0S/dbuPwrRlIfdNTndAoz
-         Jxng==
-X-Gm-Message-State: AOUpUlHbiJa2o01udLYlouzQhtA5LjV48ic+NEwUJ7g/uftlCGgz6x6R
-        FflFTtS2g4i0cE/bIX21lKs=
-X-Google-Smtp-Source: AAOMgpfOV7nokCUdXJFvYW3jnJVdTTrGSUioDBaEAnfFtxfN+BUsQyEBgTq3OorDxxLbYqSXCkXXDg==
-X-Received: by 2002:a50:ed09:: with SMTP id j9-v6mr6785715eds.28.1531919502377;
-        Wed, 18 Jul 2018 06:11:42 -0700 (PDT)
-Received: from evledraar ([5.57.21.50])
-        by smtp.gmail.com with ESMTPSA id g14-v6sm3620767edm.25.2018.07.18.06.11.38
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 18 Jul 2018 06:11:38 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        Andrii Dehtiarov <adehtiarov@google.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] gc: do not warn about too many loose objects
-References: <20180716203753.GE11513@aiede.svl.corp.google.com>
-        <20180716210938.GF25189@sigill.intra.peff.net>
-        <20180716214003.GH11513@aiede.svl.corp.google.com>
-        <20180716214539.GL25189@sigill.intra.peff.net>
-        <20180716220306.GI11513@aiede.svl.corp.google.com>
-        <20180716224337.GB12482@sigill.intra.peff.net>
-        <20180716225639.GK11513@aiede.svl.corp.google.com>
-        <20180716232603.GB13570@sigill.intra.peff.net>
-        <20180717015339.GL11513@aiede.svl.corp.google.com>
-        <87d0vmck55.fsf@evledraar.gmail.com>
-        <20180717202700.GE26218@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180717202700.GE26218@sigill.intra.peff.net>
-Date:   Wed, 18 Jul 2018 15:11:38 +0200
-Message-ID: <874lgwd6yd.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=TB1Ej2sWciY3sVzAFoEDTRKPcY4TMiXrBH0YR84y5jQ=;
+        b=IqOe26PkeWNtLtGDKg/O3nkQWtCLNw6WBvmiC2qTcf3TQZXifcPKsmuUG/KCCh3ntv
+         Q9g5z0JlR78NmtJJjZj91iHN+eGTAJ5DNwk51mSolq51+tLIyIDBGqX0pA14yCMY4G38
+         eeHJ/Bj6PX1QR99MJZOgmGYCmxpfpAOUqG6ILBGlHrtmAPSl2iN2rV3GfpxPWUyvQlHL
+         iQBfwTk7ST3uKDCu30xI2/o3kw8zaSsnAZFb+a1aEuZwjvviy0hGzDjEz5XhXGjWn+Uo
+         QNPm6e4j+lKCDYOFUsOu7JHBp8fZPfn9JAaBA+arOIRUl9ODhXv0xb4gPzlBgXFDkCKC
+         ZEzw==
+X-Gm-Message-State: AOUpUlFaEwwIhFt3DdNxjF1ah0mIR5yyNL7sI6t+nhiRB/pnItDOB+lo
+        ToDIpkIrYVj10aLpmVM3fM8LP1Fm
+X-Google-Smtp-Source: AAOMgpcGP7OxGjldPBM5T/x6ext8izvG02rNI8ZMA6Y7Hq+TvUbTVHoUm1WShNH3OAeLTK1QZ3AoxA==
+X-Received: by 2002:ac8:2ad8:: with SMTP id c24-v6mr5783721qta.117.1531920668919;
+        Wed, 18 Jul 2018 06:31:08 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:d070:73be:3735:cf07? ([2001:4898:8010:0:b9a6:73be:3735:cf07])
+        by smtp.gmail.com with ESMTPSA id d4-v6sm3221375qtd.72.2018.07.18.06.31.07
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 18 Jul 2018 06:31:08 -0700 (PDT)
+Subject: Re: [RFC] push: add documentation on push v2
+To:     Stefan Beller <sbeller@google.com>,
+        Brandon Williams <bmwill@google.com>
+Cc:     git <git@vger.kernel.org>
+References: <20180717210915.139521-1-bmwill@google.com>
+ <CAGZ79kZEpNLkXuEQEiMB_nc-MOOp-KOziHyONmr4SiajA5+F2g@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <a7c43308-a388-e307-6bea-47e6df74b65c@gmail.com>
+Date:   Wed, 18 Jul 2018 09:31:06 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAGZ79kZEpNLkXuEQEiMB_nc-MOOp-KOziHyONmr4SiajA5+F2g@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Tue, Jul 17 2018, Jeff King wrote:
-
-> On Tue, Jul 17, 2018 at 10:59:50AM +0200, Ævar Arnfjörð Bjarmason wrote:
->
->> That doesn't make sense to me. Just because git itself is happily
->> ignoring the exit code I don't think that should mean there shouldn't be
->> a meaningful exit code. Why don't you just ignore the exit code in the
->> repo tool as well?
+On 7/17/2018 7:25 PM, Stefan Beller wrote:
+> On Tue, Jul 17, 2018 at 2:09 PM Brandon Williams <bmwill@google.com> wrote:
+>> Signed-off-by: Brandon Williams <bmwill@google.com>
+>> ---
 >>
->> Now e.g. automation I have to see if git-gc ---auto is having issues
->> can't just be 'git gc --auto || echo fail @ {hostname}' across a fleet
->> of servers, but will need to start caring if stderr was emitted to.
->
-> If you're daemonizing gc, though, there are a number of cases where the
-> exit code is not propagated. If you really care about the outcome,
-> you're probably better off either:
+>> Since introducing protocol v2 and enabling fetch I've been thinking
+>> about what its inverse 'push' would look like.  After talking with a
+>> number of people I have a longish list of things that could be done to
+>> improve push and I think I've been able to distill the core features we
+>> want in push v2.
+> It would be nice to know which things you want to improve.
 
-In theory a lot of the other stuff can fail, but in practice I've only
-seen it get stuck due to running out of disk space (easily detected in
-other ways), and because of having too many loose objects (e.g. due to,
-but not limited to
-https://public-inbox.org/git/87fu6bmr0j.fsf@evledraar.gmail.com/).
+Hopefully we can also get others to chime in with things they don't like 
+about the existing protocol. What pain points exist, and what can we do 
+to improve at the transport layer before considering new functionality?
 
->   - doing synchronous gc's, which will still return a meaningful code
->     after Jonathan's patches
-
-(Reply to this and "we've found at GitHub..." later in your mail)
-
-I'm targeting clients (dev machines, laptops, staging boxes) which have
-clones of repos, some put in place by automation, some manually cloned
-by users in ~.
-
-So it's much easier to rely on shipping a /etc/gitconfig than setting
-gc.auto=0 and having some system-wide job that goes and hunts for local
-git repos to manually gc.
-
-It's also a big advantage that it's driven by user activity, because
-it's an implicit guard of only_do_this_if_the_user_is_active_here()
-before "git-gc" on a fleet of machines, which when some of those get
-their disk space from shared NFS resources cuts down on overall I/O.
-
->   - inspecting the log yourself. I know that comes close to the un-unixy
->     stderr thing. But in this case, the presence of a non-empty log is
->     literally the on-disk bit for "the previous run failed". And doing
->     so catches all of the daemonized cases, even the "first one" that
->     you'd miss by paying attention to the immediate exit code.
->
->     This will treat the zero-exit-code "warning" case as an error. I'm
->     not against propagating the true original error code, if somebody
->     wants to work on it. But I think Jonathan's patches are a strict
->     improvement over the current situation, and a patch to propagate
->     could come on top.
-
-Yeah, I can check gc.log, if others are of a different opinion about
-this #3 case at the end of the day I don't mind if it returns 0. It just
-doesn't make any conceptual sense to me.
-
->> I think you're conflating two things here in a way that (if I'm reading
->> this correctly) produces a pretty bad regression for users.
+>>   Thankfully (due to the capability system) most of the
+>> other features/improvements can be added later with ease.
 >>
->>  a) If we have something in the gc.log we keep yelling at users until we
->>     reach the gc.logExpiry, this was the subject of my thread back in
->>     January. This sucks, and should be fixed somehow.
+>> What I've got now is a rough design for a more flexible push, more
+>> flexible because it allows for the server to do what it wants with the
+>> refs that are pushed and has the ability to communicate back what was
+>> done to the client.  The main motivation for this is to work around
+>> issues when working with Gerrit and other code-review systems where you
+>> need to have Change-Ids in the commit messages (now the server can just
+>> insert them for you and send back new commits) and you need to push to
+>> magic refs to get around various limitations (now a Gerrit server should
+>> be able to communicate that pushing to 'master' doesn't update master
+>> but instead creates a refs/changes/<id> ref).
+> Well Gerrit is our main motivation, but this allows for other workflows as well.
+> For example Facebook uses hg internally and they have a
+> "rebase-on-the-server-after-push" workflow IIRC as pushing to a single repo
+> brings up quite some contention. The protocol outlined below would allow
+> for such a workflow as well? (This might be an easier sell to the Git
+> community as most are not quite familiar with Gerrit)
+
+I'm also curious how this "change commits on push" would be helpful to 
+other scenarios.
+
+Since I'm not familiar with Gerrit: what is preventing you from having a 
+commit hook that inserts (or requests) a Change-Id when not present? How 
+can the server identify the Change-Id automatically when it isn't present?
+
+>> Before actually moving to write any code I'm hoping to get some feedback
+>> on if we think this is an acceptable base design for push (other
+>> features like atomic-push, signed-push, etc can be added as
+>> capabilities), so any comments are appreciated.
 >>
->>     Maybe we should only emit the warning once, e.g. creating a
->>     .git/gc.log.wasemitted marker and as long as its ctime is later than
->>     the mtime on .git/gc.log we don't emit it again).
+>>   Documentation/technical/protocol-v2.txt | 76 +++++++++++++++++++++++++
+>>   1 file changed, 76 insertions(+)
 >>
->>     But that also creates the UX problem that it's easy to miss this
->>     message in the middle of some huge "fetch" output. Perhaps we should
->>     just start emitting this as part of "git status" or something (or
->>     solve the root cause, as Peff notes...).
+>> diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
+>> index 49bda76d23..16c1ce60dd 100644
+>> --- a/Documentation/technical/protocol-v2.txt
+>> +++ b/Documentation/technical/protocol-v2.txt
+>> @@ -403,6 +403,82 @@ header.
+>>                  2 - progress messages
+>>                  3 - fatal error message just before stream aborts
+>>
+>> + push
+>> +~~~~~~
+>> +
+>> +`push` is the command used to push ref-updates and a packfile to a remote
+>> +server in v2.
+>> +
+>> +Additional features not supported in the base command will be advertised
+>> +as the value of the command in the capability advertisement in the form
+>> +of a space separated list of features: "<command>=<feature 1> <feature 2>"
+>> +
+>> +The format of a push request is as follows:
+>> +
+>> +    request = *section
+>> +    section = (ref-updates | packfile)
+> This reads as if a request consists of sections, which
+> each can be a "ref-updates" or a packfile, no order given,
+> such that multiple ref-update sections mixed with packfiles
+> are possible.
 >
-> I kind of like that "git status" suggestion. Of course many users run
-> "git status" more often than "git commit", so it may actually spam them
-> more!
-
-Maybe piggy-packing on the advice facility ...
-
->>  b) We *also* use this presence of a gc.log as a marker for "we failed
->>     too recently, let's not try again until after a day".
->>
->> The semantics of b) are very useful, and just because they're tied up
->> with a) right now, let's not throw out b) just because we're trying to
->> solve a).
+> I would assume we'd only want to allow for ref-updates
+> followed by the packfile.
 >
-> Yeah. In general my concern was the handling of (b), which I think this
-> last crop of patches is fine with. As far as showing the message
-> repeatedly or not, I don't have a strong opinion (it could even be
-> configurable, once it's split from the "marker" behavior).
+> Given the example above for "rebase-on-push" though
+> it is better to first send the packfile (as that is assumed to
+> take longer) and then send the ref updates, such that the
+> rebasing could be faster and has no bottleneck.
 >
->> Right now one thing we do right is we always try to look at the actual
->> state of the repo with too_many_packs() and too_many_loose_objects().
->>
->> We don't assume the state of your repo hasn't drastically changed
->> recently. That means that we do the right thing and gc when the repo
->> needs it, not just because we GC'd recently enough.
->>
->> With these proposed semantics we'd skip a needed GC (potentially for
->> days, depending on the default) just because we recently ran one.
+>> +              (delim-pkt | flush-pkt)
 >
-> Yeah, I agree that deferring repeated gc's based on time is going to run
-> into pathological corner cases. OTOH, what we've found at GitHub is that
-> "gc --auto" is quite insufficient for scheduling maintenance anyway
-> (e.g., if a machine gets pushes to 100 separate repositories in quick
-> succession, you probably want to queue and throttle any associated gc).
+>
+>> +
+>> +    ref-updates = PKT-LINE("ref-updates" LF)
+>> +                 *PKT-Line(update/force-update LF)
+>> +
+>> +    update = txn_id SP action SP refname SP old_oid SP new_oid
+>> +    force-update = txn_id SP "force" SP action SP refname SP new_oid
+> So we insert "force" after the transaction id if we want to force it.
+> When adding the atomic capability later we could imagine another insert here
+>
+>    1 atomic create refs/heads/new-ref <0-hash> <hash>
+>    1 atomic delete refs/heads/old-ref <hash> <0-hash>
+>
+> which would look like a "rename" that we could also add instead.
+> The transaction numbers are an interesting concept, how do you
+> envision them to be used? In the example I put them both in the same
+> transaction to demonstrate the "atomic-ness", but one could also
+> imagine different transactions numbers per ref (i.e. exactly one
+> ref per txn_id) to have a better understanding of what the server did
+> to each individual ref.
+>
+>> +    action = ("create" | "delete" | "update")
+>> +    txn_id = 1*DIGIT
+>> +
+>> +    packfile = PKT-LINE("packfile" LF)
+>> +              *PKT-LINE(*%x00-ff)
+>> +
+>> +    ref-updates section
+>> +       * Transaction id's allow for mapping what was requested to what the
+>> +         server actually did with the ref-update.
+> this would imply the client ought to have at most one ref per transaction id.
+> Is the client allowed to put multiple refs per id?
+>
+> Are new capabilities attached to ref updates or transactions?
+> Unlike the example above, stating "atomic" on each line, you could just
+> say "transaction 1 should be atomic" in another line, that would address
+> all refs in that transaction.
+>
+>> +       * Normal ref-updates require that the old value of a ref is supplied so
+>> +         that the server can verify that the reference that is being updated
+>> +         hasn't changed while the request was being processed.
+> create/delete assume <00..00> for either old or new ? (We could also
+> omit the second hash for create delete, which is more appealing to me)
+>
+>> +       * Forced ref-updates only include the new value of a ref as we don't
+>> +         care what the old value was.
+> How are you implementing force-with-lease then?
 
-I'm sure you have better solutions for this at GitHub, but as an aside
-it might be interesting to add some sort of gc flock + retry setting for
-this use-case, i.e. even if you had 100 concurrent gc's due to
-too_many_*(), they'd wait + retry until they could get the flock on a
-given file.
+I had the same question.
 
-Then again this is probably too specific, and could be done with a
-pre-auto-gc hook too..
-
-> But there are probably more mid-size sites that are big enough to have
-> corner cases, but not so big that "gc --auto" is hopeless. ;)
-
-FWIW I don't deal with gc on the server at all these days (that's our
-internal GitLab's instance problem to solve). I just mentioned the edge
-case of a growing number of pack files on the server upthread as
-something that we'd be shipping with git if we had time-based backoff
-semantics.
+>
+>> +    packfile section
+>> +       * A packfile MAY not be included if only delete commands are used or if
+>> +         an update only incorperates objects the server already has
+> Or rather: "An empty pack SHALL be omitted" ?
+>
+>> +The server will receive the packfile, unpack it, then validate each ref-update,
+>> +and it will run any update hooks to make sure that the update is acceptable.
+>> +If all of that is fine, the server will then update the references.
+>> +
+>> +The format of a push response is as follows:
+>> +
+>> +    response = *section
+>> +    section = (unpack-error | ref-update-status | packfile)
+> As above, I assume they ought to go in the order as written,
+> or would it make sense to allow for any order?
+>
+>> +             (delim-pkt | flush-pkt)
+>> +
+>> +    unpack-error = PKT-LINE("ERR" SP error-msg LF)
+>> +
+>> +    ref-update-status = *(update-result | update-error)
+>> +    update-result = *PKT-LINE(txn_id SP result LF)
+>> +    result = ("created" | "deleted" | "updated") SP refname SP old_oid SP new_oid
+>> +    update-error = PKT-LINE(txn_id SP "error" SP error-msg LF)
+> Can we unify "ERR" and "error" ?
+>
+>> +    packfile = PKT-LINE("packfile" LF)
+>> +              *PKT-LINE(*%x00-ff)
+>> +
+>> +    ref-update-status section
+>> +       * This section is always included unless there was an error unpacking
+>> +         the packfile sent in the request.
+>> +       * The server is given the freedom to do what it wants with the
+>> +         ref-updates provided in the reqeust.  This means that an update sent
+>> +         from the server may result in the creation of a ref or rebasing the
+>> +         update on the server.
+>> +       * If a server creates any new objects due to a ref-update, a packfile
+>> +         MUST be sent back in the response.
+>> +
+>> +    packfile section
+>> +       * This section is included if the server decided to do something with
+>> +         the ref-updates that involved creating new objects.
+>> +
+>>    server-option
+>>   ~~~~~~~~~~~~~~~
+>>
+>> --
+>> 2.18.0.203.gfac676dfb9-goog
+>>
