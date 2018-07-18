@@ -2,94 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35DD21F597
-	for <e@80x24.org>; Wed, 18 Jul 2018 17:45:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62C131F597
+	for <e@80x24.org>; Wed, 18 Jul 2018 17:45:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731392AbeGRSYF (ORCPT <rfc822;e@80x24.org>);
+        id S1731351AbeGRSYF (ORCPT <rfc822;e@80x24.org>);
         Wed, 18 Jul 2018 14:24:05 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51296 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1731186AbeGRSYE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jul 2018 14:24:04 -0400
-Received: (qmail 9854 invoked by uid 109); 18 Jul 2018 17:45:07 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 18 Jul 2018 17:45:07 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 807 invoked by uid 111); 18 Jul 2018 17:45:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 18 Jul 2018 13:45:10 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Jul 2018 13:45:05 -0400
-Date:   Wed, 18 Jul 2018 13:45:05 -0400
-From:   Jeff King <peff@peff.net>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        gitgitgadget@gmail.com, Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] repack -ad: prune the list of shallow commits
-Message-ID: <20180718174505.GA3084@sigill.intra.peff.net>
-References: <pull.9.git.gitgitgadget@gmail.com>
- <b4e01a963fd16f50d12c1f67c6e64bec8b1e9673.1531513093.git.gitgitgadget@gmail.com>
- <20180713203140.GB17670@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1807142351100.75@tvgsbejvaqbjf.bet>
- <20180716173636.GA18636@sigill.intra.peff.net>
- <CACsJy8BV3ii3MkYf6UObsX_JdDbT9ovY_K9dCCeYvQ3FWqnRUQ@mail.gmail.com>
- <20180717194148.GC30594@sigill.intra.peff.net>
- <CACsJy8DW8=FoRyEwAy48S76q0gxQbrS3emHou7QDhHqzwJRu+g@mail.gmail.com>
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:34943 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730487AbeGRSYD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jul 2018 14:24:03 -0400
+Received: by mail-wr1-f65.google.com with SMTP id a3-v6so5519286wrt.2
+        for <git@vger.kernel.org>; Wed, 18 Jul 2018 10:45:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=Rfy48yO6eerMXco6Jwnn+TO9fTRWv1cudKKRu9vqp4c=;
+        b=Iya1FcAVW7hlq8VTrKq4/5lmtIvztKjKvNIMH28IjWau+PkEuZfn6JRTqT9yl4LlmS
+         Y9DF5PAS1bygIFUKN9p/k62tImhM8iROhqNSs3fZPC9hC17ANpCuEljO9mOkVmmWryIm
+         qhrB+eoWRGjrnt+40ZfWhQk52iwB9iParS15IyHeR4W6gFgpUffAlgLsTPPjvRPFEHdH
+         klFMxMbmAu8R7V0BHmtGvacY7OpOnwcDDbUq3Jtt4ZOvzv2QYl3AHOKmqxRHKpWr4NP7
+         /DmHvbfPznVP8sBMfIjBuJpXTwrJt2S4TZ25Ok/tz6fpTFJdlCvftrZdHvtZpt8LpXEK
+         AX+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Rfy48yO6eerMXco6Jwnn+TO9fTRWv1cudKKRu9vqp4c=;
+        b=DjA8C4cZCYRZPKDGQeCQoKBZRWt46A+aLnlNIyyqrq8DnuEYtqNfrhn8KltYEUoF1A
+         uZEr7RBMpQOYimgpSiWFYRmAqkiZ2fXsBSV/7kU+6nNFuIAGRJz9jutLtyy3VQDHflZf
+         DUsV6eFI6PfDSIGf1jvvcXLbVQ6bwltcwNN78/OTariq98b/v8iEJmU5cg0QEFxlxfc/
+         sjaemlUqcakx/+xruqWMgs40OJNigjT19DLp6ysWJ33VDMrKKPulW4LvKXStGqimK9C7
+         w4D4HrVhI5V1CVCqLS1fhvxFgAhefl+VM3QTLoYCeNVIq5GU2RtltpMaFfT3gYDMCrV+
+         fl6A==
+X-Gm-Message-State: AOUpUlGN8tDJycG3f3QyAvZ97yoXR7ZzRJutwUiXZ/OdlSMNO62lpciJ
+        7PzilrXudaZBelddBSetlSk=
+X-Google-Smtp-Source: AAOMgpe1xiciPZQWuOrRNyjldYURFyG7AP4qfyl4ZJqgFJyEHMEpEzyEi4Fcsaf0vgMEbuYZdIuFhQ==
+X-Received: by 2002:adf:8276:: with SMTP id 109-v6mr5264017wrb.127.1531935904005;
+        Wed, 18 Jul 2018 10:45:04 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id g15-v6sm7469168wrh.48.2018.07.18.10.45.03
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 18 Jul 2018 10:45:03 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] diff.c: offer config option to control ws handling in move detection
+References: <20180718005311.136329-1-sbeller@google.com>
+Date:   Wed, 18 Jul 2018 10:45:02 -0700
+In-Reply-To: <20180718005311.136329-1-sbeller@google.com> (Stefan Beller's
+        message of "Tue, 17 Jul 2018 17:53:11 -0700")
+Message-ID: <xmqqy3e8jv4x.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CACsJy8DW8=FoRyEwAy48S76q0gxQbrS3emHou7QDhHqzwJRu+g@mail.gmail.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 18, 2018 at 07:31:40PM +0200, Duy Nguyen wrote:
+Stefan Beller <sbeller@google.com> writes:
 
-> > Sort of an aside to the patch under discussion, but I think it may make
-> > sense for prune_shallow() to take a callback function for determining
-> > whether a commit is reachable.
-> >
-> > I have an old patch that teaches git-prune to lazily do the reachability
-> > check, since in many cases "git repack" will have just packed all of the
-> > loose objects. But it just occurred to me that this patch is totally
-> > broken with respect to prune_shallow(), because it would not set the
-> > SEEN flag (I've literally been running with it for years, which goes to
-> > show how often I use the shallow feature).
-> >
-> > And if we were to have repack do a prune_shallow(), it may want to use a
-> > different method than traversing and marking each object SEEN.
-> 
-> All of this sounds good. The only thing I'd like to do a bit
-> differently is to pass the reachable commits in prune_shallow() as a
-> commit-slab instead of taking a callback function. I'll refactor this
-> code, move prune_shallow() to a separate command prune-shallow and do
-> the locking thing.
+> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+> index 143acd9417e..8da7fed4e22 100644
+> --- a/Documentation/diff-options.txt
+> +++ b/Documentation/diff-options.txt
+> @@ -294,8 +294,11 @@ dimmed_zebra::
+>  
+>  --color-moved-ws=<modes>::
+>  	This configures how white spaces are ignored when performing the
+> -	move detection for `--color-moved`. These modes can be given
+> -	as a comma separated list:
+> +	move detection for `--color-moved`.
+> +ifdef::git-diff[]
+> +	It can be set by the `diff.colorMovedWS` configuration setting.
+> +endif::git-diff[]
 
-I think using a slab is much nicer than the current global-struct flags.
-But it's not as flexible as a callback, for two reasons:
+The patch to diff.c::git_diff_ui_config() we see below does not seem
+to make any effort to make sure that this new configuration applies
+only to "git diff" and that other commands like "git log" that call
+git_diff_ui_config() are not affected.
 
-  - in the lazy case, the caller might not even have loaded the slab
-    yet. On the other hand, it might be sufficient to just be broad
-    there, and just always pre-populate the slab when
-    is_repository_shallow(), before we even call into prune_shallow().
-    If we have _any_ entries in the shallow file, we'd need to compute
-    reachability.
+And I do not see a strong reason why "git log --color-moved" should
+not honor this setting, either, so I am not quite sure why we want
+this ifdef/endif pair to hide it from "git log --help".
 
-  - it precludes any optimizations that compute partial reachability.
-    Asking "is XYZ reachable" is a much easier question to answer than
-    "show me the full reachability graph." At the least, it lets you
-    stop the graph traversal early. And with generation numbers, it can
-    even avoid traversing down unproductive segments of the graph.
+Or am I totally misunderstanding the reason why we want ifdef/endif
+here?
 
-I think it's OK to switch to a slab for now if you don't want to do the
-callback thing. But I think a callback is probably long-term the right
-thing (and I actually think it may be _less_ work to implement, since
-then prune would probably be OK sticking with the global struct flags).
+Puzzled...
 
--Peff
+> diff --git a/diff.c b/diff.c
+> index f51f0ac32f4..9de917108d8 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -35,6 +35,7 @@ static int diff_rename_limit_default = 400;
+>  static int diff_suppress_blank_empty;
+>  static int diff_use_color_default = -1;
+>  static int diff_color_moved_default;
+> +static int diff_color_moved_ws_default;
+>  static int diff_context_default = 3;
+>  static int diff_interhunk_context_default;
+>  static const char *diff_word_regex_cfg;
+> @@ -332,6 +333,13 @@ int git_diff_ui_config(const char *var, const char *value, void *cb)
+>  		diff_color_moved_default = cm;
+>  		return 0;
+>  	}
+> +	if (!strcmp(var, "diff.colormovedws")) {
+> +		int cm = parse_color_moved_ws(value);
+> +		if (cm < 0)
+> +			return -1;
+> +		diff_color_moved_ws_default = cm;
+> +		return 0;
+> +	}
+>  	if (!strcmp(var, "diff.context")) {
+>  		diff_context_default = git_config_int(var, value);
+>  		if (diff_context_default < 0)
+> @@ -4327,6 +4335,7 @@ void diff_setup(struct diff_options *options)
+>  	}
+>  
+>  	options->color_moved = diff_color_moved_default;
+> +	options->color_moved_ws_handling = diff_color_moved_ws_default;
+>  }
+>  
+>  void diff_setup_done(struct diff_options *options)
