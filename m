@@ -7,87 +7,92 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 102951F597
-	for <e@80x24.org>; Wed, 18 Jul 2018 12:29:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E8B941F597
+	for <e@80x24.org>; Wed, 18 Jul 2018 12:32:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730220AbeGRNHA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jul 2018 09:07:00 -0400
-Received: from mout.gmx.net ([212.227.15.15]:50577 "EHLO mout.gmx.net"
+        id S1730315AbeGRNKW (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jul 2018 09:10:22 -0400
+Received: from mout.gmx.net ([212.227.15.18]:56167 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726909AbeGRNHA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jul 2018 09:07:00 -0400
-Received: from [192.168.0.129] ([37.201.195.94]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LiDrv-1gRQGs40mp-00nOZC; Wed, 18
- Jul 2018 14:29:10 +0200
-Date:   Wed, 18 Jul 2018 14:28:52 +0200 (DST)
+        id S1729281AbeGRNKW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jul 2018 09:10:22 -0400
+Received: from [192.168.0.129] ([37.201.195.94]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M9ra4-1fmLDC0DnM-00B390; Wed, 18
+ Jul 2018 14:32:30 +0200
+Date:   Wed, 18 Jul 2018 14:32:12 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Derrick Stolee <stolee@gmail.com>
-cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Stefan Beller <sbeller@google.com>,
+To:     Eric Sunshine <sunshine@sunshineco.com>
+cc:     Jeff King <peff@peff.net>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
         gitgitgadget@gmail.com, Git List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 00/16] Consolidate reachability logic
-In-Reply-To: <65d51c26-e248-f16d-bac2-e6ba0a3be8e5@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1807181427120.71@tvgsbejvaqbjf.bet>
-References: <pull.10.git.gitgitgadget@gmail.com> <6b7a50dc-6b71-0e31-030a-42dd1b26bde4@ramsayjones.plus.com> <CAGZ79kYem+uMrhv+CUSDNXtE3C8Pv1cx=aZOyBLG=uo-aQWXeA@mail.gmail.com> <CAPig+cQj5_bEiLyAAS4xnsUQEPzqT_2yerdAQxd8FidVpJ5CxA@mail.gmail.com>
- <65d51c26-e248-f16d-bac2-e6ba0a3be8e5@gmail.com>
+In-Reply-To: <CAPig+cQ0t8nDnE9fVbo_wgth_Y2yuYM1O9AD1y6kvyHTqD57Yg@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1807181429580.71@tvgsbejvaqbjf.bet>
+References: <pull.10.git.gitgitgadget@gmail.com> <6b7a50dc-6b71-0e31-030a-42dd1b26bde4@ramsayjones.plus.com> <20180716161821.GB18150@sigill.intra.peff.net> <CAPig+cTVP2kubTEZBms_x1FvnqjGcX3pjTRXfjBMfMtdpbJt=Q@mail.gmail.com> <20180716185618.GD22298@sigill.intra.peff.net>
+ <CAPig+cQ0t8nDnE9fVbo_wgth_Y2yuYM1O9AD1y6kvyHTqD57Yg@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:p+HrYvxTYecR3Um7ahRryqQw7I25WUVk5OZB0u1P7VEOP8ZJK54
- EpvZvQx+gfvLk3Di+7QtJzX1N47CNZxdIBL91alh1ML8iD7fXA1kPglD/jrneNrkTXfDd/K
- oPpqputyFIwwV47wHLXm+gyOAcJmhcres+EGA2gtwDAG76p6fLLhqIQB46lvI90J01sVsmZ
- 2oIJYwkaXg4Hd+XpDwliw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:N871tVUyheE=:7PfM7pwBijFeJcElfltG8g
- H432UCZyz46CXsZz59ferBOEH32SNnDzzxoTorTcAXfLeoH5MGkBKf7XatvHhdUQPvhIigXeT
- CjGFWrThs5GY7P+hN7YBBL9sx0g6lRSv/mHUAF811jfzcGBT+j2bOkNLktstoQaPEcZFfTtJ3
- A5S3NmE6uZ96BFQ5JpnDu+NUqzYKiB1wp0uQSJ02EoHZn8TpdFhfhBXmpyWQdGansDeu+w61i
- HOIqNJ2q0tBpXm6ysPqPjbzknlyrbWFXu6v6DxA/h7Pm3fm3O9gJDBfJO+I1d86ANRA8KvZYZ
- OopimH76VNICF+mUPbchWUvhZGivUvpFiiGYF8iyx/Idj/asdCR8p45ROgUD2h2v3EOBGb0l5
- oAlqwUOHDM9qiAzLA34ErLGm7COf4O6RYkKXsAxmBTF8CzBKsiCPa+/e2ZGNJRtlq8zi3y0yH
- 0nOW3nsiPE1Zhx3gbfY499UlZV+ehBFvEvN79hHfqoEVRbhXY2zizFIOki291zeNvwSYSuS5F
- C5Kzh/MBxSrYND/KjOVs4bPLI/I6oSconpvOwwlPpIx81m7liKuuQCQQs+yWs57AMMR7LPHu4
- iWSQyh/sfLjQJ70dzCDKaBCJp1vJi/RlAwe3tTCu3WzocRtgMTLpKMJncpVCfYefZ0HXAHpQJ
- zvCRn6EtGuP3sIvx7mXXZ3qJ53DxqVgT+15PJ0iB2nuJ/OT5gJgO2Ins7MhbE1zG6odTt+ExL
- QnDvx6qDR9d8J2HpPMBJt+m6Z6Rm0x4ufq7uH4kYsFJVOv8GFy+O2Ik9C5PXBLHpAsEPC3SgX
- L9M55Pf
+X-Provags-ID: V03:K1:uwAoT3wFNF5iMeESZmzZqitd50cm2w5KGoONfF6bi4gNhXy3TSC
+ TQ0ngFfEoTxDfp7k+Dqn6SfhAIFhus2AaLwiulQ7vbl0qSEJo2TpIVD80ykNCQDD9SLeSSe
+ o5gXrsMM8FG4sS6YBdrZRq4eHtqNE8TGIRaNwz0r0gWvxBMWCSp75858d276RDY9HmUw/8p
+ xv/67wcxotI2S28AJ2lXA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:vlpUBI5FrR8=:Did4pAXYxHE8fbFAUftg1A
+ JA6nUEaMkWxR6wN5ouEIISpJJM5gENdmT+kIuBY4ztRdOFqOnCeY02Qth+rqp9V+VhkRAWRrl
+ KLn8Po61haTMm0XaUZFlRKzDl91Msd2CEfv1FVPkgVFGT6IB8ZJLUqlwA/RRFlOxgS2GdIV/X
+ +8xlYqpXxW9x4AbFROxpXXLoP3Yg6mMO5i1gYPckw0VvGcr7bGNOhWjprHt2FokKjXVmE1Dc0
+ hTXum5eOqNHnKjK0ZbSbbuaGGVsBqDrAJRjKHQxI2ZGcHE94nSJA6kZLLoaAbLpm3e5zRcznL
+ w24vT6r26OwA7NLoLhrhWIutEy6POC04TvVqmbB/ejTe7eik/FnALVRTOi9oDjlKODNf9VjR3
+ ZVDHls1n8bPbiCkNxYDqQaH3v5YSIOFwl46GgunJihsHmaRxjyJmgPc+tU0BMCEwbqqXG5pBX
+ zH0DtucsFNWRz+7vAKn6RV3OJuxeKgO3Rp9KxXidePeYr1cAMtNubklmyFQSTHcIzX6yMmdN6
+ xL1ZfqX63FU0fqyqQMnhZ+6YA9Evvi1ZviHlxYgWqzNqwHNHNVWiehVT5trtiOlFhdFXPNudW
+ janhlvKqSHHKJQr1G25s/Xd2xGO+FMwyj6HbBj0UeMWPHT0R21joppwiVXrElOgxAAgNJPq1V
+ jr8ADtAqdIqlCERDQHzizNQzpl2ewWh8ILZWd3Luu+FpuJVeHgG2urwNyx6POlejqFFfO4oRO
+ s6sdwJwTXmWga2V/Z+r+xM9w3jtmWMNKoyUcHYRp08HObplwnx1C4EZdv/oE3YQK+4Kx8p/G2
+ VOG/SwB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Eric & Peff,
 
-On Mon, 16 Jul 2018, Derrick Stolee wrote:
+On Mon, 16 Jul 2018, Eric Sunshine wrote:
 
-> On 7/16/2018 2:44 PM, Eric Sunshine wrote:
-> > On Mon, Jul 16, 2018 at 1:27 PM Stefan Beller <sbeller@google.com> wrote:
-> > > Another pain point of the Gadget is that CC's in the cover letter
-> > > do not work as I would imagine. The line
+> On Mon, Jul 16, 2018 at 2:56 PM Jeff King <peff@peff.net> wrote:
+> > On Mon, Jul 16, 2018 at 02:40:21PM -0400, Eric Sunshine wrote:
+> > > On Mon, Jul 16, 2018 at 12:18 PM Jeff King <peff@peff.net> wrote:
+> > > > git-send-email uses the current time minus an offset, and then
+> > > > monotonically increases for each patch:
 > > >
-> > > CC: sbeller@google.com
+> > > Junio pointed this out to gitgitgadget developers in [1], which led to
+> > > an issue being opened[2]. That issue was merged today.
 > > >
-> > > did not put that email into the cc field.
-> > gitgitgadget recognizes case-sensitive "Cc:" only[1].
+> > > [1]: https://public-inbox.org/git/xmqq7em7gg3j.fsf@gitster-ct.c.googlers.com/
+> > > [2]: https://github.com/gitgitgadget/gitgitgadget/pull/15
 > >
-> > [1]:
-> > https://github.com/gitgitgadget/gitgitgadget/blob/c4805370f59532aa438283431b8ea7d4484c530f/lib/patch-series.ts#L188
+> > I was going to say "oh good, fixed", but it looks like it just merged
+> > adding that line to the TODO list. :)
 > 
-> Thanks for everyone's patience while we improve gitgitgadget (and - in this
-> case - I learn how to use it).
+> Erm, right. I actually knew a couple days ago that that issue was just
+> a change to the TODO list but forgot that important tidbit when I
+> wrote the above "was merged today". Anyhow, at least it's on the
+> radar.
 
-And let's please stop pretending that this GitGitGadget project is
-somebody else's problem.
+It is always nice to get such active contributions.
 
-It is our best shot at addressing the *constant* pain point that is the code
-contribution process of Git.
+Seriously again, do feel free to jump in and contribute improvements to
+GitGitGadget.
 
-In other words: if you see something that you don't like about
-GitGitGadget, get your butts off the ground and contribute a fix. The code
-contribution process of GitGitGadget is very easy: open a PR at
-https://github.com/gitgitgadget/gitgitgadget
+We have a very time-consuming (read: time wasting) code contribution
+process, and it is an untenable situation, and GitGitGadget was designed
+to be able to address this huge problem.
+
+But I can't do it alone. And neither should you pretend that this is my
+problem alone. This problem is as much your problem as it is mine.
+(Whether you realize it or not.)
 
 Ciao,
-Johannes
+Dscho
