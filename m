@@ -7,162 +7,102 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E6D7E1F597
-	for <e@80x24.org>; Wed, 18 Jul 2018 15:15:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C85C1F597
+	for <e@80x24.org>; Wed, 18 Jul 2018 15:15:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730798AbeGRPyA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jul 2018 11:54:00 -0400
-Received: from mail-pl0-f45.google.com ([209.85.160.45]:34369 "EHLO
-        mail-pl0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726613AbeGRPyA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jul 2018 11:54:00 -0400
-Received: by mail-pl0-f45.google.com with SMTP id f6-v6so2188898plo.1
-        for <git@vger.kernel.org>; Wed, 18 Jul 2018 08:15:38 -0700 (PDT)
+        id S1730987AbeGRPyD (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jul 2018 11:54:03 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:42187 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730776AbeGRPyC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jul 2018 11:54:02 -0400
+Received: by mail-pg1-f196.google.com with SMTP id y4-v6so2147665pgp.9
+        for <git@vger.kernel.org>; Wed, 18 Jul 2018 08:15:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc:cc;
-        bh=jyDpV5BzG8iBPDyeyLv1XOV43R7/1fm/0Hrqc+sjK9w=;
-        b=hzTZIoghPvECqWrzRiGPqdN2LQF1qt5svJTuV8jjzFqOGiTvex3C/ycFvcTvA4OOdB
-         4DwIKc16Tcn58saFvfH1Rq8TwEZKPKOjlPABPhOjy2mHdSaqZ/Gcp5i/vloelViKoUWM
-         PGmZl/PugsoUe1kXIDxlyqUSlogu5sFMwW0HdyS9LbkV79pwtD609CJHCIWDlt7J3sYj
-         51TXMg5lcLP3MwX77XEwKs4dQVJC42afSDKrsT1VG0mA5BAboyTIFhWCpltEHkr0XCDP
-         znz+sX3UBP5T1l7Po88Y/RjJ8qDnySWBA7kM4HXzxPwtamhWonBZoLSLutm1Cm6caG0q
-         J3Gw==
+        bh=iGtEWL1AWOtbTeb9R4CE+qjtSLDX0Cl5AHZh4QPdkbc=;
+        b=gWpnz9Xi0uGy7TrKytSUb7hQRtrvs/i0pyA/X1z7b4jSgwoicZjBL4ZGJamudjo4zn
+         4vnSIPiAEkEh9t4GaMuYF8L8Yc2ZSmFC2CpQTAlGRcz4vBduVCQfQYchO4J5UEE2F4Uc
+         Wmw1rqH/njzUmr9+uTsKYWRMZSIorFdwyIJ8kkbIel0X3y+JelbL25XGp9q8t6hGlNtN
+         X3BI0ZgDqf7TKIRWIE1ggO6FhMQVJAaaUMBoBB/Yi6UN3x49gnlAISNjNV83qlrmZ7SF
+         CLePxmmk2s9OyKdU5iLuT2mXHXRKs5Gd8ureKci/519D60fKObcg4LEoVQzOVx+5/ZxV
+         bAyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc:cc;
-        bh=jyDpV5BzG8iBPDyeyLv1XOV43R7/1fm/0Hrqc+sjK9w=;
-        b=l2TXdQ/PdlCTs/pLv6dDNJjfwyIOEqwkhBnYS4hO8ylT7Z8cYkzaCwcdgvai67uwjP
-         GP9b+CoFUy1sQI6fOhm3LAquahFHvYwi2VxsC9Ww9szuBVzj2GoN5A07Pw62+YLPs1Vu
-         mIVe8hTV8uWoqVmqnAEG/kanTltchtqAcDWiW545Y7bwlubcj/T95smxNIABoDgCE6ak
-         SJNem4N4WK7JxVXC43vBJiDECYaQryNUb0fY4qY893hbGXnkZJuj2OHbetB1YkX4GPw3
-         Wr90ShAPratXl1+68ThU8qRIWqyVpXpNCLENdfQxP63xRI929YJgdGi58JD/uwj3TZoQ
-         fEwA==
-X-Gm-Message-State: AOUpUlGl+DPnj9goQNXHQr+vYXnVqOyi7F8WVYn0VyM9U5hwtPZoMnmW
-        QDAB7YIFeisfZ3uVvFCdoriTyA==
-X-Google-Smtp-Source: AAOMgpc66Gxrt/cvbgemE5XrofXj+VGJWVtMSOpb8iajOiw4zMXGQdS070HV+P/S9g8MCpZXzPPF3A==
-X-Received: by 2002:a17:902:22cc:: with SMTP id o12-v6mr6227579plg.68.1531926938212;
-        Wed, 18 Jul 2018 08:15:38 -0700 (PDT)
+        bh=iGtEWL1AWOtbTeb9R4CE+qjtSLDX0Cl5AHZh4QPdkbc=;
+        b=VSmhTQnYy2Ik9h1I+b/SiN+U89ALC8Y/qXAht6Al3eKpWpEOTkcucdRLSpovPH2eTa
+         PvL4REjD4BLxDE9DmsffzUabPW62Vte7NXVeDYoMdL8zhsOOrXx5WVQ/TfIk6fcfkTeZ
+         gb/f0o0ss4+ua6+dnsGpxmt7bK0/YQky/JvfYH3TUmavIwfjFbZlVsejtRJGO1X6EjvR
+         8ATHT0csZiTSqySKJos0OAoMGo+UIokyw3Rnwhj+PB/z9l46oI4fgn07CdTuqd45cwfQ
+         xCEUOEaAfJEFMaobagj/dese5uv66bDnJt1F9aWNx+p4ids4JSJmmfve8F+FLL0xm34z
+         SWKA==
+X-Gm-Message-State: AOUpUlG3rFr5MV1XbQMFQgK7I4gYNbZRcNkYaqy1XpDVxWHvmlae9DMC
+        PO3jYnVCxfSAFFwGXL3zOXBvDA==
+X-Google-Smtp-Source: AAOMgpe/qH915KqVirqBEFScdKTqurgWSvx5wgswZyQR3/hN5hK67ITCc3LE8Conqjkjv9RjO3DYLQ==
+X-Received: by 2002:a63:5106:: with SMTP id f6-v6mr6037405pgb.95.1531926940991;
+        Wed, 18 Jul 2018 08:15:40 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id s195-v6sm11422186pgs.76.2018.07.18.08.15.37
+        by smtp.gmail.com with ESMTPSA id m15-v6sm11120222pfj.171.2018.07.18.08.15.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 18 Jul 2018 08:15:37 -0700 (PDT)
-Date:   Wed, 18 Jul 2018 08:15:37 -0700 (PDT)
-X-Google-Original-Date: Wed, 18 Jul 2018 15:15:25 GMT
-Message-Id: <22dc9ce8364dd20876ab5eb626ecc6a7396d3b3e.1531926932.git.gitgitgadget@gmail.com>
+        Wed, 18 Jul 2018 08:15:40 -0700 (PDT)
+Date:   Wed, 18 Jul 2018 08:15:40 -0700 (PDT)
+X-Google-Original-Date: Wed, 18 Jul 2018 15:15:27 GMT
+Message-Id: <88711a3cf4c045365a40504db94c34675f3bdc4e.1531926932.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.11.git.gitgitgadget@gmail.com>
 References: <pull.11.git.gitgitgadget@gmail.com>
-From:   "Stefan Beller via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 2/8] refs.c: upgrade for_each_replace_ref to be a
- each_repo_ref_fn callback
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 4/8] test-repository: properly init repo
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     jnareb@gmail.com, Junio C Hamano <gitster@pobox.com>
-Cc:     Stefan Beller <sbeller@google.com>
+Cc:     Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Stefan Beller <sbeller@google.com>
+From: Derrick Stolee <dstolee@microsoft.com>
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/replace.c | 8 ++++----
- refs.c            | 9 ++++-----
- refs.h            | 2 +-
- replace-object.c  | 5 +++--
- 4 files changed, 12 insertions(+), 12 deletions(-)
+ t/helper/test-repository.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/replace.c b/builtin/replace.c
-index ef22d724b..d0b1cdb06 100644
---- a/builtin/replace.c
-+++ b/builtin/replace.c
-@@ -39,7 +39,8 @@ struct show_data {
- 	enum replace_format format;
- };
+diff --git a/t/helper/test-repository.c b/t/helper/test-repository.c
+index 2762ca656..6a84a53ef 100644
+--- a/t/helper/test-repository.c
++++ b/t/helper/test-repository.c
+@@ -15,7 +15,10 @@ static void test_parse_commit_in_graph(const char *gitdir, const char *worktree,
+ 	struct commit *c;
+ 	struct commit_list *parent;
  
--static int show_reference(const char *refname, const struct object_id *oid,
-+static int show_reference(struct repository *r, const char *refname,
-+			  const struct object_id *oid,
- 			  int flag, void *cb_data)
- {
- 	struct show_data *data = cb_data;
-@@ -56,9 +57,8 @@ static int show_reference(const char *refname, const struct object_id *oid,
- 			if (get_oid(refname, &object))
- 				return error("Failed to resolve '%s' as a valid ref.", refname);
+-	repo_init(&r, gitdir, worktree);
++	setup_git_env(gitdir);
++
++	if (repo_init(&r, gitdir, worktree))
++		die("Couldn't init repo");
  
--			obj_type = oid_object_info(the_repository, &object,
--						   NULL);
--			repl_type = oid_object_info(the_repository, oid, NULL);
-+			obj_type = oid_object_info(r, &object, NULL);
-+			repl_type = oid_object_info(r, oid, NULL);
+ 	c = lookup_commit(&r, commit_oid);
  
- 			printf("%s (%s) -> %s (%s)\n", refname, type_name(obj_type),
- 			       oid_to_hex(oid), type_name(repl_type));
-diff --git a/refs.c b/refs.c
-index 2513f77ac..5700cd468 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1478,12 +1478,11 @@ int refs_for_each_fullref_in(struct ref_store *refs, const char *prefix,
- 	return do_for_each_ref(refs, prefix, fn, 0, flag, cb_data);
- }
+@@ -38,7 +41,10 @@ static void test_get_commit_tree_in_graph(const char *gitdir,
+ 	struct commit *c;
+ 	struct tree *tree;
  
--int for_each_replace_ref(struct repository *r, each_ref_fn fn, void *cb_data)
-+int for_each_replace_ref(struct repository *r, each_repo_ref_fn fn, void *cb_data)
- {
--	return do_for_each_ref(get_main_ref_store(r),
--			       git_replace_ref_base, fn,
--			       strlen(git_replace_ref_base),
--			       DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
-+	return do_for_each_repo_ref(r, git_replace_ref_base, fn,
-+				    strlen(git_replace_ref_base),
-+				    DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
- }
+-	repo_init(&r, gitdir, worktree);
++	setup_git_env(gitdir);
++
++	if (repo_init(&r, gitdir, worktree))
++		die("Couldn't init repo");
  
- int for_each_namespaced_ref(each_ref_fn fn, void *cb_data)
-diff --git a/refs.h b/refs.h
-index 80eec8bbc..a0a18223a 100644
---- a/refs.h
-+++ b/refs.h
-@@ -317,7 +317,7 @@ int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data,
- int for_each_tag_ref(each_ref_fn fn, void *cb_data);
- int for_each_branch_ref(each_ref_fn fn, void *cb_data);
- int for_each_remote_ref(each_ref_fn fn, void *cb_data);
--int for_each_replace_ref(struct repository *r, each_ref_fn fn, void *cb_data);
-+int for_each_replace_ref(struct repository *r, each_repo_ref_fn fn, void *cb_data);
- int for_each_glob_ref(each_ref_fn fn, const char *pattern, void *cb_data);
- int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
- 			 const char *prefix, void *cb_data);
-diff --git a/replace-object.c b/replace-object.c
-index 801b5c167..017f02f8e 100644
---- a/replace-object.c
-+++ b/replace-object.c
-@@ -6,7 +6,8 @@
- #include "repository.h"
- #include "commit.h"
+ 	c = lookup_commit(&r, commit_oid);
  
--static int register_replace_ref(const char *refname,
-+static int register_replace_ref(struct repository *r,
-+				const char *refname,
- 				const struct object_id *oid,
- 				int flag, void *cb_data)
- {
-@@ -25,7 +26,7 @@ static int register_replace_ref(const char *refname,
- 	oidcpy(&repl_obj->replacement, oid);
- 
- 	/* Register new object */
--	if (oidmap_put(the_repository->objects->replace_map, repl_obj))
-+	if (oidmap_put(r->objects->replace_map, repl_obj))
- 		die("duplicate replace ref: %s", refname);
- 
- 	return 0;
 -- 
 gitgitgadget
 
