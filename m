@@ -2,85 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AC96D1F597
-	for <e@80x24.org>; Wed, 18 Jul 2018 18:24:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED4C51F597
+	for <e@80x24.org>; Wed, 18 Jul 2018 18:25:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729309AbeGRTDz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jul 2018 15:03:55 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35244 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727635AbeGRTDy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jul 2018 15:03:54 -0400
-Received: by mail-wm0-f67.google.com with SMTP id y22-v6so3854564wma.0
-        for <git@vger.kernel.org>; Wed, 18 Jul 2018 11:24:47 -0700 (PDT)
+        id S1726982AbeGRTEb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jul 2018 15:04:31 -0400
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:34673 "EHLO
+        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726484AbeGRTEb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jul 2018 15:04:31 -0400
+Received: by mail-lf0-f65.google.com with SMTP id n96-v6so4154836lfi.1
+        for <git@vger.kernel.org>; Wed, 18 Jul 2018 11:25:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=JbyBUqDB8t0Mhm2LLZLG+rF9kkJUvpC/RtXZhqXBvo4=;
-        b=FBFPQ5Zu0Cv+B3TP3UkADkiqkfG3C8z86CXxXNEop3QUyDE4hei95h0Wi+vv/UT0/O
-         fCrAo1c4krM3LJA2XIFwufj3+vUt6uIWu2jdYyzXk2v3X6ubkghJL5O5rEcPNRZoTT6T
-         T38m4S88HZ+jcdKJljQpLO3N+4iA1tqq7Qr9Pvd947bJGu5ea/ChhaiN6qZUcRM+Ruji
-         Ph/u+dIMqBMddGyHveaoc8S+BSwcl1YtmGiwNKWsOQBcKjgJ0+S8wuzpEhJzSr9d1Usa
-         2nCHsL6+QBXM+zdv8zMTEt/ACCNZOrqSeAjHQKTaP+OhpQwtCPf/cws+EFt6PbFuuPAK
-         +C+g==
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=xr0js/suIVN/B3/PQti49BX7U3af+WCIeMf1P1fIXJk=;
+        b=NbYn6M/XzQUa/kKlcz46YkTsae6r78FHksKF1JZu9ibcVuM86QgL/MLij6s8jcT7jx
+         D0FCNqA/djA79AdxWIAIXXefEkjaRf2nSPc3CzwHEAEHvLHq10GDTLeRm/U4MeyOZEGW
+         JzGzPvMUce+tK0Mf9dQnrU9lMXr9Zq5XI3do4+fB9NC1BDH7qdZ4q3tP+6fvHr6eCdtr
+         Y4LENc3sj/BOZRFgk9JTpBOOkrAwgHqJXAfeBUUEOBdwQ5KUjDwT8OAcZYKgU/G4TLzW
+         hfoKDHb4zp+DBxjwghf+FaMxjCVdSH7EJI4TELsOzV9ptkJy3y0i7EYjDFkh1GWnzuu5
+         yTaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=JbyBUqDB8t0Mhm2LLZLG+rF9kkJUvpC/RtXZhqXBvo4=;
-        b=TNK07ZvK/a0cwf1nGRaZ+r4npzVDkUYzad74Me+U6x9dqVposCOc/42UH5Qa8eK15o
-         1OC7klOC5LrueRtvOZ51y1e/Bo+G/wVEkTQ2q8V6RucCJ07tHTC+/hMMj9O1Qo7zSXyC
-         7LbWm9O/WORktwB51ElUtEYEDlBlET3Z4XoaHi6r4PW2WffHtW7KRkMPcwj2aYxIpO3x
-         8s1XaDBr7ZBGal9M3OslajWP0oCavDx9oLrS1lGxCKKKLGQNV8cOa6FioELszHmiFdNZ
-         VvP2J7Ix+EGfFkhxCnP3Sbkqe7T/xO9jUT8gSU5/R2YmEi28MFE4QoUJx5UJep/CiX0z
-         NgpA==
-X-Gm-Message-State: AOUpUlHGZHFx9YJEfFfR+XHYWArdV5ryTBYSrlqoEfniRb+DxCXD/kC2
-        5621DKAUB3Z1CBy6puCFVpIJT7Gk
-X-Google-Smtp-Source: AAOMgpclEqD/TaE7SdX7rM3z3g7k837wbVuFYFbzwSRxyo7pi8L0QoEc+Pdbnp2mdtBdrEHldRCiiw==
-X-Received: by 2002:a1c:55c8:: with SMTP id j191-v6mr2231855wmb.67.1531938286530;
-        Wed, 18 Jul 2018 11:24:46 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id b1-v6sm4196649wma.23.2018.07.18.11.24.45
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 18 Jul 2018 11:24:45 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Andrei Rybak <rybak.a.v@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Documentation: fix --color option formatting
-References: <ccf73807-1856-1ce8-365a-0c4fb25ea7bf@gmail.com>
-Date:   Wed, 18 Jul 2018 11:24:45 -0700
-In-Reply-To: <ccf73807-1856-1ce8-365a-0c4fb25ea7bf@gmail.com> (Andrei Rybak's
-        message of "Wed, 18 Jul 2018 19:37:48 +0200")
-Message-ID: <xmqqh8kwjtaq.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=xr0js/suIVN/B3/PQti49BX7U3af+WCIeMf1P1fIXJk=;
+        b=iIYJnuq8Uxco5F8HmkfuivW/ZddmILuEbToYgC4FD0iLoj5jPU39NlQsEliwyhiKSI
+         cB34hALM/g/ljksRfHUH6XBoXUoFpWZhmyJHKNExUM9JcmJbRPKAeC3K9L47fdJWqQ22
+         Lrzn1qm825hum7VnWr7Ddh8e0JwPX8qCzU66HLeewP/cBWZHWP9SSinvw5wI6rp/bm0Y
+         8OdamhFAj6BpbZHxKsqFCU/etVlk+jmTOW7Vyi9a4wW//BWXufbcpTeG4cTLsFjD9m0+
+         0X7b6tDwjgAmwHY1Q2Se5ze6Tyw6pJB1sXenZ2oOKGdRkCOPjwBMSgKZTpwv2ehHo0MZ
+         ZfLA==
+X-Gm-Message-State: AOUpUlHTkV1X51ag5Rb8dl716hAEUEdSAmkb2Z9Nuku/Vu2pW9uddxpq
+        DYvbA6fF8/ggC7sxa/IcIoo=
+X-Google-Smtp-Source: AAOMgpfknZF01/grqtbbHMTO8iLapzG10XUS2ZfSCtq32pyZXQdlozkm0NmCvp+tz1vLx9CVqI4DmA==
+X-Received: by 2002:a19:2c4f:: with SMTP id s76-v6mr4920387lfs.25.1531938322376;
+        Wed, 18 Jul 2018 11:25:22 -0700 (PDT)
+Received: from [192.168.221.164] ([185.79.217.61])
+        by smtp.gmail.com with ESMTPSA id b22-v6sm726637ljj.93.2018.07.18.11.25.21
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 18 Jul 2018 11:25:21 -0700 (PDT)
+Subject: Re: [PATCH 9/9] diff.c: add white space mode to move detection that
+ allows indent changes
+To:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+        gitster@pobox.com
+References: <20180716230542.81372-1-sbeller@google.com>
+ <20180716230542.81372-10-sbeller@google.com>
+Cc:     Brandon Williams <bmwill@google.com>
+From:   Andrei Rybak <rybak.a.v@gmail.com>
+Message-ID: <1f7b84aa-5ddb-431a-baa9-16ebb5020670@gmail.com>
+Date:   Wed, 18 Jul 2018 20:25:20 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <20180716230542.81372-10-sbeller@google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Andrei Rybak <rybak.a.v@gmail.com> writes:
+On 2018-07-17 01:05, Stefan Beller wrote:
+> 
+> This patch brings some challenges, related to the detection of blocks.
+> We need a white net the catch the possible moved lines, but then need to
 
-> Add missing colon in two places to fix formatting of options.
->
-> Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
-> ---
->
-> Done on top of maint.
->
-> The earliest this patch applies is on top of commit aebd23506e ("Merge
-> branch 'jk/ui-color-always-to-auto-maint' into
-> jk/ui-color-always-to-auto", 2017-10-04), one commit away from the
-> commit that added both of the affected lines: 0c88bf5050 (provide
-> --color option for all ref-filter users, 2017-10-03).
->
-> I grepped the Documentation folder, and haven't found any other
-> similar typos.
+The s/white/wide/ was already suggested by Brandon Williams in previous
+iteration, but it seems this also needs s/the catch/to catch/
 
-Thanks.
+> narrow down to check if the blocks are still in tact. Consider this
+> example (ignoring block sizes):
+> 
