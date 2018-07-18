@@ -2,97 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A3751F597
-	for <e@80x24.org>; Wed, 18 Jul 2018 17:32:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 669111F597
+	for <e@80x24.org>; Wed, 18 Jul 2018 17:37:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731527AbeGRSLC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jul 2018 14:11:02 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:42776 "EHLO
-        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731431AbeGRSLC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jul 2018 14:11:02 -0400
-Received: by mail-io0-f193.google.com with SMTP id g11-v6so4754875ioq.9
-        for <git@vger.kernel.org>; Wed, 18 Jul 2018 10:32:07 -0700 (PDT)
+        id S1731186AbeGRSQs (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jul 2018 14:16:48 -0400
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:45130 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729619AbeGRSQs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jul 2018 14:16:48 -0400
+Received: by mail-lf0-f66.google.com with SMTP id j143-v6so1853961lfj.12
+        for <git@vger.kernel.org>; Wed, 18 Jul 2018 10:37:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=VT/5SSgeRC//F6PH2YOqch25nreYa3M1LXhquehM81w=;
-        b=KmyHDWMxPx0lqApjGFtbUBIkPxXnV+LFlUWzc82ldX0FXe7IAIk0HyGM3gcsBBx4t/
-         QXvEl2qhZGX75lCZccwRlDnRa3A5e5Dmp/ujDRX5Ewpjp3uICAfKY+L3xtGtt6+vUq16
-         VHBtUSGKNqUQTECaxrc4j/qGA2ik3+eae72rX7y8uANX1xUIuRmIu2acbjbwXPc4mQQx
-         0p/dgvEQ1LfEaDWHkD3S6aEbObCyVMtuhGxaYB9HO88QB+md9ls//ZPhCGProiJ57VPq
-         bFrWco0RQYXnyFaxQCnP567242O1hLAln//bkw3GTtNvOOmqfyvM4pqunabC48UAZKvD
-         kAxg==
+        h=from:subject:to:cc:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=j/98BzM67sPhNQkMmuLx85Iw78nW+n9VN9Ktw2gYNBw=;
+        b=YJTryp0r7ZSNftqA/iDpYBq/yx7CtPQcClQLgTEmlqvUWw0IbMh+fC4Ml05po+e1Vx
+         vr3xawBa3pZr8qOUTWAWh+YP0YPSA/XSJZJio+3p83x3uO4t6ecAI4bASQKSp1Yc5nwC
+         lrV5s+fI/WRlx+JcJxi4ByjYnPC41SPAuLL7JZr2LsQCgY+EJ3j2KRHrlqGoghfu5qiy
+         DdxyBnqws+ftvbIzdGSeyY+s0UOBlJesjoTz4U33blxfP2vCkRydj+CjuL3muDFztlVG
+         8/pnAqQm8Csm/sIELlAHMWC40+OY+uqkoD/g+MtHW/kZx1SHwRzRYXEUV7y+ocsSORlm
+         YotQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=VT/5SSgeRC//F6PH2YOqch25nreYa3M1LXhquehM81w=;
-        b=G7UZ+/6d/flcY7qwndR+LRW1+njLbT5Z2iHQwfuIWoR/WP9sRF5UZkH65BvStf4JC+
-         FC/xcM1rkDd/Ocuepi9goN4pQnzZijgMfdv1gXnpe8Ol8CfnZnKccbv9lfjebDQbr1xT
-         lm6sS1QTYXLT4aJRjTYAd2Zx9L9inOpZFmSmx39K1uw4vESIfId4/4euposILcQk8d1M
-         LtUTt13Sl/OyMX7K2esiYj8B3IbE4Dq0gH+t0S7xLpDhC6qpTEGKN111tio77oVWns+D
-         vP8O8SqzEFAxHUhcocQeE6FbYLLTTgDEEX9fFuoq/5MudDSY+thmkpqMfcx4HcKLJl5o
-         u6+Q==
-X-Gm-Message-State: AOUpUlGRCyNpG68dJ6709j1fQsmFti2R1TzKqZQJuEgznvAD+AI8NU2D
-        2ZjeOrRT1vWzWK1FTIbw+vOqrin+akqnP43WpLA=
-X-Google-Smtp-Source: AA+uWPxkz7mBkimeK/0S+F0Ca4YJTSbe5/1u0hTBsOkPUmaZ6nBBH5OVw08/6wmV7SWJI3B8ofYp9dIemu6yPNqizbE=
-X-Received: by 2002:a6b:1f0e:: with SMTP id f14-v6mr5363114iof.236.1531935126725;
- Wed, 18 Jul 2018 10:32:06 -0700 (PDT)
+        h=x-gm-message-state:from:subject:to:cc:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=j/98BzM67sPhNQkMmuLx85Iw78nW+n9VN9Ktw2gYNBw=;
+        b=rzCB++eoRGbSDAisHB3ytvgncElBU9V+E0ITEWH1NmEBNqvQcRdE6wpxFk75mSUU74
+         rY7HRGGnuxI6/IKRWWR3ktlBXZKmGwypDAVym5tYMqmPM7jHG+bD/a0uwi0OZKa9CM8k
+         PvIZq1vuhT/BLggotCFrH2V0zuC9f+Zsl0Uu3bhaFgYvNmpaBEtE2Tk+K0o1dSl8yH2B
+         Y8OQI4uPfw2CdvoJ+wO41K18mAXXiVajKeS1UWoMd4N7Rn6EvVorKPv2JvsZ/yevOsg6
+         AyMS8QgkeHyTel5Dg4mkHX9jJoNPB02uAe0L9048eb3+ykMdviF05wN4mg+Nj13k4l7w
+         GoVQ==
+X-Gm-Message-State: AOUpUlGmBbxvNQ8r36h9C8w3LMrdGJpexYw6+oVQfYCZTAKbelkV9z83
+        ayCxpwm8/h60OzF3w9JQesOgWhEg
+X-Google-Smtp-Source: AAOMgpdG4Gsqho012LBMtYx5fkYtrAkBo8LwEY5y/Noqi31NWJYZDatOaebfLzIqMGYwAu0/5dVsHA==
+X-Received: by 2002:a19:238d:: with SMTP id j135-v6mr4780341lfj.58.1531935470934;
+        Wed, 18 Jul 2018 10:37:50 -0700 (PDT)
+Received: from [192.168.221.164] ([185.79.217.61])
+        by smtp.gmail.com with ESMTPSA id q4-v6sm711171ljh.36.2018.07.18.10.37.49
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 18 Jul 2018 10:37:50 -0700 (PDT)
+From:   Andrei Rybak <rybak.a.v@gmail.com>
+Subject: [PATCH] Documentation: fix --color option formatting
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Message-ID: <ccf73807-1856-1ce8-365a-0c4fb25ea7bf@gmail.com>
+Date:   Wed, 18 Jul 2018 19:37:48 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-References: <pull.9.git.gitgitgadget@gmail.com> <b4e01a963fd16f50d12c1f67c6e64bec8b1e9673.1531513093.git.gitgitgadget@gmail.com>
- <20180713203140.GB17670@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1807142351100.75@tvgsbejvaqbjf.bet>
- <20180716173636.GA18636@sigill.intra.peff.net> <CACsJy8BV3ii3MkYf6UObsX_JdDbT9ovY_K9dCCeYvQ3FWqnRUQ@mail.gmail.com>
- <20180717194148.GC30594@sigill.intra.peff.net>
-In-Reply-To: <20180717194148.GC30594@sigill.intra.peff.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 18 Jul 2018 19:31:40 +0200
-Message-ID: <CACsJy8DW8=FoRyEwAy48S76q0gxQbrS3emHou7QDhHqzwJRu+g@mail.gmail.com>
-Subject: Re: [PATCH 2/2] repack -ad: prune the list of shallow commits
-To:     Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     gitgitgadget@gmail.com, Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 17, 2018 at 9:41 PM Jeff King <peff@peff.net> wrote:
-> I slept on this to see if I could brainstorm any other ways.
->
-> ..
->
-> Sort of an aside to the patch under discussion, but I think it may make
-> sense for prune_shallow() to take a callback function for determining
-> whether a commit is reachable.
->
-> I have an old patch that teaches git-prune to lazily do the reachability
-> check, since in many cases "git repack" will have just packed all of the
-> loose objects. But it just occurred to me that this patch is totally
-> broken with respect to prune_shallow(), because it would not set the
-> SEEN flag (I've literally been running with it for years, which goes to
-> show how often I use the shallow feature).
->
-> And if we were to have repack do a prune_shallow(), it may want to use a
-> different method than traversing and marking each object SEEN.
+Add missing colon in two places to fix formatting of options.
 
-All of this sounds good. The only thing I'd like to do a bit
-differently is to pass the reachable commits in prune_shallow() as a
-commit-slab instead of taking a callback function. I'll refactor this
-code, move prune_shallow() to a separate command prune-shallow and do
-the locking thing.
+Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
+---
 
-Johannes I could take over this bug too (since I introduced the
-shallow pruning and missed this part) if you are busy, but if you want
-it to be done fast, I can't help. I still have a list of things to go
-through.
+Done on top of maint.
+
+The earliest this patch applies is on top of commit aebd23506e ("Merge
+branch 'jk/ui-color-always-to-auto-maint' into
+jk/ui-color-always-to-auto", 2017-10-04), one commit away from the
+commit that added both of the affected lines: 0c88bf5050 (provide
+--color option for all ref-filter users, 2017-10-03).
+
+I grepped the Documentation folder, and haven't found any other
+similar typos.
+
+---
+
+ Documentation/git-for-each-ref.txt | 2 +-
+ Documentation/git-tag.txt          | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+index 085d177d97..901faef1bf 100644
+--- a/Documentation/git-for-each-ref.txt
++++ b/Documentation/git-for-each-ref.txt
+@@ -57,7 +57,7 @@ OPTIONS
+ 	`xx`; for example `%00` interpolates to `\0` (NUL),
+ 	`%09` to `\t` (TAB) and `%0a` to `\n` (LF).
+ 
+---color[=<when>]:
++--color[=<when>]::
+ 	Respect any colors specified in the `--format` option. The
+ 	`<when>` field must be one of `always`, `never`, or `auto` (if
+ 	`<when>` is absent, behave as if `always` was given).
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index 87c4288ffc..92f9c12b87 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -115,7 +115,7 @@ options for details.
+ 	variable if it exists, or lexicographic order otherwise. See
+ 	linkgit:git-config[1].
+ 
+---color[=<when>]:
++--color[=<when>]::
+ 	Respect any colors specified in the `--format` option. The
+ 	`<when>` field must be one of `always`, `never`, or `auto` (if
+ 	`<when>` is absent, behave as if `always` was given).
 -- 
-Duy
+2.18.0
