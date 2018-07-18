@@ -7,94 +7,68 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A3541F597
-	for <e@80x24.org>; Wed, 18 Jul 2018 19:34:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BCACA208E9
+	for <e@80x24.org>; Wed, 18 Jul 2018 19:41:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729209AbeGRUOG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jul 2018 16:14:06 -0400
-Received: from mail-yb0-f196.google.com ([209.85.213.196]:34405 "EHLO
-        mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728929AbeGRUOG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jul 2018 16:14:06 -0400
-Received: by mail-yb0-f196.google.com with SMTP id e9-v6so2318560ybq.1
-        for <git@vger.kernel.org>; Wed, 18 Jul 2018 12:34:45 -0700 (PDT)
+        id S1728929AbeGRUVL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jul 2018 16:21:11 -0400
+Received: from mail-yb0-f193.google.com ([209.85.213.193]:34790 "EHLO
+        mail-yb0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727131AbeGRUVL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jul 2018 16:21:11 -0400
+Received: by mail-yb0-f193.google.com with SMTP id e9-v6so2327141ybq.1
+        for <git@vger.kernel.org>; Wed, 18 Jul 2018 12:41:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=duuH141ZAEKiwbOhYXGYzl+BzCzhdXEdQ2zjgfQed8Y=;
-        b=hbPvr0yqw8RP6ext+KNkg/WLgoyInmEHxHHLdEIFHt1t9+piY33rP2FHis7f+1agKP
-         g2cRkYd6B5wkAD1w98Z/sKvmaGyT8YJyp9jIFxa8zFFp7WP8tarESZBr7/otPX942UMD
-         zGTXjvvEbKgjbSnI7l8Z+TxegzYFs1opPCKhpPRo5L40og9vn5OD2qzeLnpMLYPZOH9K
-         sht2Q40AYmpKy9WP5GYUAS/nRfKXWhjDsLKr06Remm54W2xROVdm8ioinmr87XsLi7Rn
-         3+RRCnuy1pjmyhZo7K+4xuedFhz6c6RVK+y5HyxBqXcOIxKiOaBjTgheKuU21urwBpws
-         Q7qg==
+        bh=VpUkgcmzkGXkpbkX2PCb671gHQl5MV1KY9TLBO25wgw=;
+        b=LqLcZgZqOuhrq7GX303bZlfWrJgvPdwo8DSRUznHJATuQrdLR+f+d7Ir0va1aLTDrl
+         Hn0XbuxvJxIydP/pesvGNGRIuv5m1wy2p6wxK/EMdo7lXsgX6O9wgURGHe/kttWzEXiz
+         CnI+e1xHwYx6GYxYa2kXT6+UcEHvy94jzetS/YFaD5fM60JFdNIsada8EfAzIUADe242
+         3G5ryRnlW8snyEk5DAtXAEKSDLoqAAmjn/Mf2gzPXBtiZvFEGnXRvPlFjEv4Bv6MoIPx
+         8RwHjuWbXr/D7aI2kC26Y5R38+9SU8tZ5vhsSbqZO3Z8kH4Ek36/MpMy1O+z/Hzx3oKS
+         H51g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=duuH141ZAEKiwbOhYXGYzl+BzCzhdXEdQ2zjgfQed8Y=;
-        b=Cl7+7O2uQjsllGCADHaBnQyh/NGSjjfHcU9TFFGUujDYSyID+pUlHUW/5bEUVsR1QG
-         dhg+k0UWH5mNHNQo0VGK+ovyX6vX6q1B1VQ6Dm8wGWqB/0drhSnHY2qqLb010CvgZNSK
-         q8ZWH7XRxifeFgX8YPKhG8FGaT2af4UVfZG6YJ9T34sMIEeJ9pzV61ASkuGgc80sgwOl
-         0dojwCtblXVMUSkuFD5BwZLUPJy9S6o2u79zIgJtZSGhUeOOqsjJeERkEooGJONcraDL
-         sBcEWIZfkKb3dBnozq1bWXGt+cL2feVfCNjlr5lt2J1JoGUR7UvX6tLILGErBnWXYSNp
-         1sQg==
-X-Gm-Message-State: AOUpUlGJ9K9oXNvzF93CYg+4onLjNyb8SBc8sLKm1BhNNTCF0VO59xZZ
-        tbsWvBOrJteZyrT0TRhgFgFm97U8hgZkQvXh7ExgWhm9N0M=
-X-Google-Smtp-Source: AAOMgpeMNp2+1qE/keecJpvBsmX0Oi3oWT9Qb/vIk6keGSyfev1/JAhCLK/RmCcnTZitISEt9k3uJeaH47tbQq6YVkU=
-X-Received: by 2002:a25:dc47:: with SMTP id y68-v6mr3733130ybe.515.1531942485006;
- Wed, 18 Jul 2018 12:34:45 -0700 (PDT)
+        bh=VpUkgcmzkGXkpbkX2PCb671gHQl5MV1KY9TLBO25wgw=;
+        b=sZ3baRTxDfZa95KyCad0Bz6Z7RnnWnP/niQoG8DI9jHeXH82vBOFTr72/k/J+TwyaV
+         fkY8XiymLxREkgwMxMPlmUnGaxkFGVR58NdKlfdXVZQWddwLGnyBiDnQfffxTfKdBsGu
+         GxQXN6YvHpJfrV9uiIjGWnXGhDgzCG6zihyK8oKT7s/xgichHgBib+8dPO3SC4l6rR/n
+         rjzxpRdRCrfv2WJ8zuCaLGZoLNaDoSTleiesOmzYewFoui5Ela7dYaDjf/yoAcZlw4vI
+         /sxVbsX3F7iyqVqrlt4Ya/7Y1Inxrms7V9hLU9T+vExqlwfRrreOMmKhUlkgzKLSB69R
+         Enpw==
+X-Gm-Message-State: AOUpUlF6KrMOUWkaizH8Cc15YHLqI5qXDviOIkGAsDVyimhA1usarbeV
+        aKSZtBpVuCqRSzlFecjozk7aDYKslLXeSBXlCD7/7qMuSHI=
+X-Google-Smtp-Source: AAOMgpeAZ7P7IANVPfEi+2t7LCC8YMwoyk/vzdhCqUcrhlna/dQ8MZZmLE5/Ug6n4qQZWPad8etK6ZEEpQFNiX3Qv90=
+X-Received: by 2002:a5b:307:: with SMTP id j7-v6mr3967286ybp.352.1531942909194;
+ Wed, 18 Jul 2018 12:41:49 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180717002654.120375-1-sbeller@google.com> <xmqqmuupogei.fsf@gitster-ct.c.googlers.com>
- <CAGZ79kZtrmjODGi1j-HRbchZYuALHnms22=wWBV1AF+zUBru_g@mail.gmail.com> <CAPig+cRx5-2TYOm_8oayFfbKGpmTJf=M0cNR3L5UJGGC6vHPDQ@mail.gmail.com>
-In-Reply-To: <CAPig+cRx5-2TYOm_8oayFfbKGpmTJf=M0cNR3L5UJGGC6vHPDQ@mail.gmail.com>
+References: <20180712194754.71979-1-sbeller@google.com> <20180712194754.71979-7-sbeller@google.com>
+ <e5366f75-3669-bfbb-2561-ee06751b923d@gmail.com>
+In-Reply-To: <e5366f75-3669-bfbb-2561-ee06751b923d@gmail.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 18 Jul 2018 12:34:34 -0700
-Message-ID: <CAGZ79kYCDR=m0C1Vmh5U2tsj5bTTpGUo1mKe0BMDKmO5riBLLw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/6] git-submodule.sh: convert part of cmd_update to C
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git <git@vger.kernel.org>
+Date:   Wed, 18 Jul 2018 12:41:38 -0700
+Message-ID: <CAGZ79ka1Y4ocnES8=iKv+GuCBpuprrjrasU3UQ04CmUQu8QxyQ@mail.gmail.com>
+Subject: Re: [PATCH 6/6] submodule--helper: introduce new update-module-mode helper
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
-On Tue, Jul 17, 2018 at 11:59 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
+On Wed, Jul 18, 2018 at 8:00 AM Derrick Stolee <stolee@gmail.com> wrote:
 >
-> On Tue, Jul 17, 2018 at 2:53 PM Stefan Beller <sbeller@google.com> wrote:
-> > > A tangent.
-> > >
-> > > Because this "-- " is a conventional signature separator, MUAs like
-> > > Emacs message-mode seems to omit everything below it from the quote
-> > > while responding, making it cumbersome to comment on the tbdiff.
-> > >
-> > > Something to think about if somebody is contemplating on adding more
-> > > to format-patch's cover letter.
-> >
-> > +cc Eric who needs to think about this tangent, then.
-> > https://public-inbox.org/git/20180530080325.37520-1-sunshine@sunshineco.com/
+> On 7/12/2018 3:47 PM, Stefan Beller wrote:
+> > +     fprintf(stdout, submodule_strategy_to_string(&update_strategy));
 >
-> The "git-format-patch --range-diff" option implemented by that patch
-> series (and its upcoming re-roll) place the range-diff before the "--
-> " signature line, so this isn't a problem.
+> This line is causing build failures on 'pu' for certain setups:
 >
-> I think Junio's tangent was targeted more at humans blindly plopping
-> the copy/pasted range-diff at the end of the cover letter without
-> taking the "-- " signature line into account. (Indeed, Gmail hides
-> everything below the "-- " line by default, as well.)
 
-Awesome thanks! (I missed that hint given by Junio)
-
-Now that I grow more accustomed to range-diffs, I wonder
-if we want to have them even *before* the short stat in the
-cover letter. (I usually scroll over the short stat just to take it
-as a FYI on what to expect, whereas the range-diff can already
-be reviewed, hence seems more useful that the stats)
-
-Thanks,
-Stefan
+yeah, will fix in a resend.
+originally reported at
+https://public-inbox.org/git/20180717075959.30594-1-szeder.dev@gmail.com/
