@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E8621F597
-	for <e@80x24.org>; Wed, 18 Jul 2018 16:13:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C68661F597
+	for <e@80x24.org>; Wed, 18 Jul 2018 16:13:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731737AbeGRQvu (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jul 2018 12:51:50 -0400
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:45122 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731853AbeGRQvt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jul 2018 12:51:49 -0400
-Received: by mail-lj1-f195.google.com with SMTP id q5-v6so4578608ljh.12
-        for <git@vger.kernel.org>; Wed, 18 Jul 2018 09:13:12 -0700 (PDT)
+        id S1731744AbeGRQvy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jul 2018 12:51:54 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:33981 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731733AbeGRQvy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jul 2018 12:51:54 -0400
+Received: by mail-lj1-f194.google.com with SMTP id f8-v6so4611253ljk.1
+        for <git@vger.kernel.org>; Wed, 18 Jul 2018 09:13:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=iiC8oUeLEF+qDdQc0k9/bDtaZA4FKvUP1Z6j3cD+0p0=;
-        b=gv6qIRFYxm0XdetUjqgigTT2LXpWsZCLJmQEQx5AjMuS+hM5jQ7S7mxgDRgmzOQcIV
-         Cah0zZwK3NvKcizVIAo2dFZtsqwt6SDviY1EBczRYW7Oci96BldMiKqtNe3PdmYhJaxk
-         IGLBtFRfyhgxF4VGUE73Y7ans+8pF5RoXzWLUVM15qgkHTwidNoxV3AfM4dHWUg5Tjrq
-         8BvzY5iF3VZsiI6S6+7iilG3xVYOb7EKRaTqtSZ1tmI+EYJ+leTE/vi32mwml5ncDj/4
-         IVia0C5mMjfkssfV8G8Nd8sC6yJaWv8+NWJxRpGzXFmhLCoRqZjcsbrH9n1TEft9Rq8t
-         KiIA==
+        bh=9Tjdb2jWDXkafY6Cf/HXRs480gX9UAW5hst6qrzvZNk=;
+        b=Y74cPFWbFYekkhgrk00mRdCBX/KqBYg+VOTwfZskHoJK8KyOi1Ar5eEaXHaI8l4YMw
+         78mGeTXdrSnt1JD0KrLRWikjae19QdL1tlILk/hT9Y0S9TWsU1vN6s1nQdVeGGeSN9wu
+         Dn3ll3xFjpykzC0+AVgZM9y0cD8hRtF3qp8UZvcmeum/mBrfAzJOedfP7IR8dYu6jc8W
+         3bFIcxGJUgTqwoJ/m/j+3PtIX7Ot5x32a2xbSlNmoSKlajJOv9DHp6+G2B4btrCqxt9R
+         yRQ0f+NRwkQCKZUSU25r5Sptc32+9LTJayd0eUVB/2obIHaEJrDP0qj7NzQXo9nOnPWO
+         nnQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=iiC8oUeLEF+qDdQc0k9/bDtaZA4FKvUP1Z6j3cD+0p0=;
-        b=rpXXHZKOJMtudVCzR9nXPQtfH/Y4RPSxUFNKSUrpcka42lJPxy4d6TxYO/ToBM6Q1y
-         Fg4ujuwdgWMjvafNZHTYc73rPtbTDL8KUB32OE8kusvznI1LNsYZ0Py1yYMD/OCVhPO9
-         nTZrb9jlkH6hNe9Ci9IPoyItV7hTOyIFs1eCjKJHc1wcwM8xA0jFcfTQ0ZBy/hNvK8S0
-         pLAYlM875JZWrqbPyLzWBN2gcAG0ZtmKxK2am7JMNOfxkWsLUQrCPRtDsfOeJywjCDVN
-         erMl5WFRNPJoXDeq10/HpJFhnpg3mNddUVDIASDQlxB/6JP5ggXvT0pIni5k36UzEy4A
-         N1ZA==
-X-Gm-Message-State: AOUpUlEX/rLuKTsjWysqXrlBqVYFZlmPIRDnPfxyyHzlJEa1q4s4xPPY
-        avGdLhaXhxaNkGI0yhfmLUvLRw==
-X-Google-Smtp-Source: AAOMgpfXPTGSdXUWKoQq6VRwjq1xzJKQRpuDarKMfzFQotPAIXFFxP6+/LlxooLrytlf/BpA9Vr1HQ==
-X-Received: by 2002:a2e:118f:: with SMTP id 15-v6mr5096379ljr.38.1531930391387;
-        Wed, 18 Jul 2018 09:13:11 -0700 (PDT)
+        bh=9Tjdb2jWDXkafY6Cf/HXRs480gX9UAW5hst6qrzvZNk=;
+        b=n+Xqmh6P4g5ezGzo1B4+XbEPHW+QOua9dde0Z9ku/daHMCZ42DVEqND+jnoLNTD7nj
+         4p1YwoNlBBBLSXsR6+dVAPIBE+KuHYt+Rz4V/AX0CsBOgpyG0vvGi2vHSYLfJCiFo+fI
+         7jyJlyXZO5sF58rrT53fMmroTR/yxHJoWQk4wHkySKz2bqMpAJ31PZFJ0lBsryxI/bQi
+         8btfjkW2ZXHBifXi7eYPyZ5esI3+EwlKl8IP7YlNaFj8v1a9Xg2vo6BepiIus3M2DldR
+         s0n2C1m43bdGYJcQKBFHiaUFarJOwBZHIZD0HHR+VOIue9e89pjb8R3veThVpXpdaF7w
+         U9GA==
+X-Gm-Message-State: AOUpUlGIcG562d0IGwQErM30Veg/W9JTB3yj4mJ6sCemXP6aeKMwL5z7
+        wl1aDoT58xgjrt7JxftTTNdo2Q==
+X-Google-Smtp-Source: AAOMgpeYhAo6Cir+tmMieiTBEsW7wdAjSA6azYZa6wtc8RfiWZytB3yF8oxraIFUyUryH/zvcrOdIQ==
+X-Received: by 2002:a2e:3611:: with SMTP id d17-v6mr5368197lja.31.1531930394469;
+        Wed, 18 Jul 2018 09:13:14 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id j26-v6sm689203ljc.54.2018.07.18.09.13.09
+        by smtp.gmail.com with ESMTPSA id j26-v6sm689203ljc.54.2018.07.18.09.13.12
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 18 Jul 2018 09:13:10 -0700 (PDT)
+        Wed, 18 Jul 2018 09:13:13 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 21/23] sha1-file.c: mark more strings for translation
-Date:   Wed, 18 Jul 2018 18:10:59 +0200
-Message-Id: <20180718161101.19765-22-pclouds@gmail.com>
+Subject: [PATCH v2 23/23] transport-helper.c: mark more strings for translation
+Date:   Wed, 18 Jul 2018 18:11:01 +0200
+Message-Id: <20180718161101.19765-24-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc2.476.g39500d3211
 In-Reply-To: <20180718161101.19765-1-pclouds@gmail.com>
 References: <20180718161101.19765-1-pclouds@gmail.com>
@@ -73,399 +73,378 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- sha1-file.c | 104 ++++++++++++++++++++++++++--------------------------
- 1 file changed, 52 insertions(+), 52 deletions(-)
+ t/t5801-remote-helpers.sh |  8 ++--
+ transport-helper.c        | 87 ++++++++++++++++++++-------------------
+ 2 files changed, 48 insertions(+), 47 deletions(-)
 
-diff --git a/sha1-file.c b/sha1-file.c
-index ed7ac73fa9..92c27583db 100644
---- a/sha1-file.c
-+++ b/sha1-file.c
-@@ -378,8 +378,8 @@ static int alt_odb_usable(struct raw_object_store *o,
+diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
+index 88c7f158ef..e3bc53b0c7 100755
+--- a/t/t5801-remote-helpers.sh
++++ b/t/t5801-remote-helpers.sh
+@@ -126,7 +126,7 @@ test_expect_success 'forced push' '
+ test_expect_success 'cloning without refspec' '
+ 	GIT_REMOTE_TESTGIT_REFSPEC="" \
+ 	git clone "testgit::${PWD}/server" local2 2>error &&
+-	grep "this remote helper should implement refspec capability" error &&
++	test_i18ngrep "this remote helper should implement refspec capability" error &&
+ 	compare_refs local2 HEAD server HEAD
+ '
  
- 	/* Detect cases where alternate disappeared */
- 	if (!is_directory(path->buf)) {
--		error("object directory %s does not exist; "
--		      "check .git/objects/info/alternates",
-+		error(_("object directory %s does not exist; "
-+			"check .git/objects/info/alternates"),
- 		      path->buf);
- 		return 0;
- 	}
-@@ -429,7 +429,7 @@ static int link_alt_odb_entry(struct repository *r, const char *entry,
- 	strbuf_addstr(&pathbuf, entry);
+@@ -134,7 +134,7 @@ test_expect_success 'pulling without refspecs' '
+ 	(cd local2 &&
+ 	git reset --hard &&
+ 	GIT_REMOTE_TESTGIT_REFSPEC="" git pull 2>../error) &&
+-	grep "this remote helper should implement refspec capability" error &&
++	test_i18ngrep "this remote helper should implement refspec capability" error &&
+ 	compare_refs local2 HEAD server HEAD
+ '
  
- 	if (strbuf_normalize_path(&pathbuf) < 0 && relative_base) {
--		error("unable to normalize alternate object path: %s",
-+		error(_("unable to normalize alternate object path: %s"),
- 		      pathbuf.buf);
- 		strbuf_release(&pathbuf);
- 		return -1;
-@@ -500,14 +500,14 @@ static void link_alt_odb_entries(struct repository *r, const char *alt,
- 		return;
+@@ -146,7 +146,7 @@ test_expect_success 'pushing without refspecs' '
+ 	GIT_REMOTE_TESTGIT_REFSPEC="" &&
+ 	export GIT_REMOTE_TESTGIT_REFSPEC &&
+ 	test_must_fail git push 2>../error) &&
+-	grep "remote-helper doesn.t support push; refspec needed" error
++	test_i18ngrep "remote-helper doesn.t support push; refspec needed" error
+ '
  
- 	if (depth > 5) {
--		error("%s: ignoring alternate object stores, nesting too deep.",
-+		error(_("%s: ignoring alternate object stores, nesting too deep"),
- 				relative_base);
- 		return;
- 	}
+ test_expect_success 'pulling without marks' '
+@@ -246,7 +246,7 @@ test_expect_success 'proper failure checks for fetching' '
+ 	(cd local &&
+ 	test_must_fail env GIT_REMOTE_TESTGIT_FAILURE=1 git fetch 2>error &&
+ 	cat error &&
+-	grep -q "error while running fast-import" error
++	test_i18ngrep -q "error while running fast-import" error
+ 	)
+ '
  
- 	strbuf_add_absolute_path(&objdirbuf, r->objects->objectdir);
- 	if (strbuf_normalize_path(&objdirbuf) < 0)
--		die("unable to normalize object directory: %s",
-+		die(_("unable to normalize object directory: %s"),
- 		    objdirbuf.buf);
- 
- 	while (*alt) {
-@@ -562,7 +562,7 @@ void add_to_alternates_file(const char *reference)
- 	hold_lock_file_for_update(&lock, alts, LOCK_DIE_ON_ERROR);
- 	out = fdopen_lock_file(&lock, "w");
- 	if (!out)
--		die_errno("unable to fdopen alternates lockfile");
-+		die_errno(_("unable to fdopen alternates lockfile"));
- 
- 	in = fopen(alts, "r");
- 	if (in) {
-@@ -580,14 +580,14 @@ void add_to_alternates_file(const char *reference)
- 		fclose(in);
- 	}
- 	else if (errno != ENOENT)
--		die_errno("unable to read alternates file");
-+		die_errno(_("unable to read alternates file"));
- 
- 	if (found) {
- 		rollback_lock_file(&lock);
- 	} else {
- 		fprintf_or_die(out, "%s\n", reference);
- 		if (commit_lock_file(&lock))
--			die_errno("unable to move new alternates file into place");
-+			die_errno(_("unable to move new alternates file into place"));
- 		if (the_repository->objects->alt_odb_tail)
- 			link_alt_odb_entries(the_repository, reference,
- 					     '\n', NULL, 0);
-@@ -778,7 +778,7 @@ static void mmap_limit_check(size_t length)
- 			limit = SIZE_MAX;
- 	}
- 	if (length > limit)
--		die("attempting to mmap %"PRIuMAX" over limit %"PRIuMAX,
-+		die(_("attempting to mmap %"PRIuMAX" over limit %"PRIuMAX),
- 		    (uintmax_t)length, (uintmax_t)limit);
+diff --git a/transport-helper.c b/transport-helper.c
+index 9f487cc905..84a10661cc 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -48,7 +48,7 @@ static void sendline(struct helper_data *helper, struct strbuf *buffer)
+ 	if (debug)
+ 		fprintf(stderr, "Debug: Remote helper: -> %s", buffer->buf);
+ 	if (write_in_full(helper->helper->in, buffer->buf, buffer->len) < 0)
+-		die_errno("full write to remote helper failed");
++		die_errno(_("full write to remote helper failed"));
  }
  
-@@ -803,7 +803,7 @@ void *xmmap(void *start, size_t length,
- {
- 	void *ret = xmmap_gently(start, length, prot, flags, fd, offset);
- 	if (ret == MAP_FAILED)
--		die_errno("mmap failed");
-+		die_errno(_("mmap failed"));
+ static int recvline_fh(FILE *helper, struct strbuf *buffer)
+@@ -77,7 +77,7 @@ static void write_constant(int fd, const char *str)
+ 	if (debug)
+ 		fprintf(stderr, "Debug: Remote helper: -> %s", str);
+ 	if (write_in_full(fd, str, strlen(str)) < 0)
+-		die_errno("full write to remote helper failed");
++		die_errno(_("full write to remote helper failed"));
+ }
+ 
+ static const char *remove_ext_force(const char *url)
+@@ -129,7 +129,7 @@ static struct child_process *get_helper(struct transport *transport)
+ 
+ 	code = start_command(helper);
+ 	if (code < 0 && errno == ENOENT)
+-		die("unable to find remote helper for '%s'", data->name);
++		die(_("unable to find remote helper for '%s'"), data->name);
+ 	else if (code != 0)
+ 		exit(code);
+ 
+@@ -145,7 +145,7 @@ static struct child_process *get_helper(struct transport *transport)
+ 	 */
+ 	duped = dup(helper->out);
+ 	if (duped < 0)
+-		die_errno("can't dup helper output fd");
++		die_errno(_("can't dup helper output fd"));
+ 	data->out = xfdopen(duped, "r");
+ 
+ 	write_constant(helper->in, "capabilities\n");
+@@ -196,13 +196,13 @@ static struct child_process *get_helper(struct transport *transport)
+ 		} else if (starts_with(capname, "no-private-update")) {
+ 			data->no_private_update = 1;
+ 		} else if (mandatory) {
+-			die("unknown mandatory capability %s; this remote "
+-			    "helper probably needs newer version of Git",
++			die(_("unknown mandatory capability %s; this remote "
++			      "helper probably needs newer version of Git"),
+ 			    capname);
+ 		}
+ 	}
+ 	if (!data->rs.nr && (data->import || data->bidi_import || data->export)) {
+-		warning("this remote helper should implement refspec capability");
++		warning(_("this remote helper should implement refspec capability"));
+ 	}
+ 	strbuf_release(&buf);
+ 	if (debug)
+@@ -269,7 +269,7 @@ static int strbuf_set_helper_option(struct helper_data *data,
+ 	else if (!strcmp(buf->buf, "unsupported"))
+ 		ret = 1;
+ 	else {
+-		warning("%s unexpectedly said: '%s'", data->name, buf->buf);
++		warning(_("%s unexpectedly said: '%s'"), data->name, buf->buf);
+ 		ret = 1;
+ 	}
  	return ret;
- }
- 
-@@ -970,7 +970,7 @@ static void *map_sha1_file_1(struct repository *r, const char *path,
- 			*size = xsize_t(st.st_size);
- 			if (!*size) {
- 				/* mmap() is forbidden on empty files */
--				error("object file %s is empty", path);
-+				error(_("object file %s is empty"), path);
- 				return NULL;
- 			}
- 			map = xmmap(NULL, *size, PROT_READ, MAP_PRIVATE, fd, 0);
-@@ -1090,9 +1090,9 @@ static void *unpack_sha1_rest(git_zstream *stream, void *buffer, unsigned long s
- 	}
- 
- 	if (status < 0)
--		error("corrupt loose object '%s'", sha1_to_hex(sha1));
-+		error(_("corrupt loose object '%s'"), sha1_to_hex(sha1));
- 	else if (stream->avail_in)
--		error("garbage at end of loose object '%s'",
-+		error(_("garbage at end of loose object '%s'"),
- 		      sha1_to_hex(sha1));
- 	free(buf);
- 	return NULL;
-@@ -1134,7 +1134,7 @@ static int parse_sha1_header_extended(const char *hdr, struct object_info *oi,
- 	if ((flags & OBJECT_INFO_ALLOW_UNKNOWN_TYPE) && (type < 0))
- 		type = 0;
- 	else if (type < 0)
--		die("invalid object type");
-+		die(_("invalid object type"));
- 	if (oi->typep)
- 		*oi->typep = type;
- 
-@@ -1216,19 +1216,19 @@ static int sha1_loose_object_info(struct repository *r,
- 		*oi->disk_sizep = mapsize;
- 	if ((flags & OBJECT_INFO_ALLOW_UNKNOWN_TYPE)) {
- 		if (unpack_sha1_header_to_strbuf(&stream, map, mapsize, hdr, sizeof(hdr), &hdrbuf) < 0)
--			status = error("unable to unpack %s header with --allow-unknown-type",
-+			status = error(_("unable to unpack %s header with --allow-unknown-type"),
- 				       sha1_to_hex(sha1));
- 	} else if (unpack_sha1_header(&stream, map, mapsize, hdr, sizeof(hdr)) < 0)
--		status = error("unable to unpack %s header",
-+		status = error(_("unable to unpack %s header"),
- 			       sha1_to_hex(sha1));
- 	if (status < 0)
- 		; /* Do nothing */
- 	else if (hdrbuf.len) {
- 		if ((status = parse_sha1_header_extended(hdrbuf.buf, oi, flags)) < 0)
--			status = error("unable to parse %s header with --allow-unknown-type",
-+			status = error(_("unable to parse %s header with --allow-unknown-type"),
- 				       sha1_to_hex(sha1));
- 	} else if ((status = parse_sha1_header_extended(hdr, oi, flags)) < 0)
--		status = error("unable to parse %s header", sha1_to_hex(sha1));
-+		status = error(_("unable to parse %s header"), sha1_to_hex(sha1));
- 
- 	if (status >= 0 && oi->contentp) {
- 		*oi->contentp = unpack_sha1_rest(&stream, hdr,
-@@ -1419,19 +1419,19 @@ void *read_object_file_extended(const struct object_id *oid,
- 		return data;
- 
- 	if (errno && errno != ENOENT)
--		die_errno("failed to read object %s", oid_to_hex(oid));
-+		die_errno(_("failed to read object %s"), oid_to_hex(oid));
- 
- 	/* die if we replaced an object with one that does not exist */
- 	if (repl != oid)
--		die("replacement %s not found for %s",
-+		die(_("replacement %s not found for %s"),
- 		    oid_to_hex(repl), oid_to_hex(oid));
- 
- 	if (!stat_sha1_file(the_repository, repl->hash, &st, &path))
--		die("loose object %s (stored in %s) is corrupt",
-+		die(_("loose object %s (stored in %s) is corrupt"),
- 		    oid_to_hex(repl), path);
- 
- 	if ((p = has_packed_and_bad(repl->hash)) != NULL)
--		die("packed object %s (stored in %s) is corrupt",
-+		die(_("packed object %s (stored in %s) is corrupt"),
- 		    oid_to_hex(repl), p->pack_name);
- 
- 	return NULL;
-@@ -1533,21 +1533,21 @@ int finalize_object_file(const char *tmpfile, const char *filename)
- 	unlink_or_warn(tmpfile);
- 	if (ret) {
- 		if (ret != EEXIST) {
--			return error_errno("unable to write sha1 filename %s", filename);
-+			return error_errno(_("unable to write sha1 filename %s"), filename);
+@@ -398,7 +398,7 @@ static int fetch_with_fetch(struct transport *transport,
+ 		if (starts_with(buf.buf, "lock ")) {
+ 			const char *name = buf.buf + 5;
+ 			if (transport->pack_lockfile)
+-				warning("%s also locked %s", data->name, name);
++				warning(_("%s also locked %s"), data->name, name);
+ 			else
+ 				transport->pack_lockfile = xstrdup(name);
  		}
- 		/* FIXME!!! Collision check here ? */
- 	}
- 
- out:
- 	if (adjust_shared_perm(filename))
--		return error("unable to set permission to '%s'", filename);
-+		return error(_("unable to set permission to '%s'"), filename);
- 	return 0;
- }
- 
- static int write_buffer(int fd, const void *buf, size_t len)
- {
- 	if (write_in_full(fd, buf, len) < 0)
--		return error_errno("file write error");
-+		return error_errno(_("file write error"));
- 	return 0;
- }
- 
-@@ -1566,7 +1566,7 @@ static void close_sha1_file(int fd)
- 	if (fsync_object_files)
- 		fsync_or_die(fd, "sha1 file");
- 	if (close(fd) != 0)
--		die_errno("error when closing sha1 file");
-+		die_errno(_("error when closing sha1 file"));
- }
- 
- /* Size of directory component, including the ending '/' */
-@@ -1632,9 +1632,9 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
- 	fd = create_tmpfile(&tmp_file, filename.buf);
- 	if (fd < 0) {
- 		if (errno == EACCES)
--			return error("insufficient permission for adding an object to repository database %s", get_object_directory());
-+			return error(_("insufficient permission for adding an object to repository database %s"), get_object_directory());
+@@ -409,7 +409,7 @@ static int fetch_with_fetch(struct transport *transport,
+ 		else if (!buf.len)
+ 			break;
  		else
--			return error_errno("unable to create temporary file");
-+			return error_errno(_("unable to create temporary file"));
+-			warning("%s unexpectedly said: '%s'", data->name, buf.buf);
++			warning(_("%s unexpectedly said: '%s'"), data->name, buf.buf);
  	}
+ 	strbuf_release(&buf);
+ 	return 0;
+@@ -476,7 +476,7 @@ static int fetch_with_import(struct transport *transport,
+ 	get_helper(transport);
  
- 	/* Set it up */
-@@ -1658,21 +1658,21 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
- 		ret = git_deflate(&stream, Z_FINISH);
- 		the_hash_algo->update_fn(&c, in0, stream.next_in - in0);
- 		if (write_buffer(fd, compressed, stream.next_out - compressed) < 0)
--			die("unable to write sha1 file");
-+			die(_("unable to write sha1 file"));
- 		stream.next_out = compressed;
- 		stream.avail_out = sizeof(compressed);
- 	} while (ret == Z_OK);
+ 	if (get_importer(transport, &fastimport))
+-		die("couldn't run fast-import");
++		die(_("couldn't run fast-import"));
  
- 	if (ret != Z_STREAM_END)
--		die("unable to deflate new object %s (%d)", oid_to_hex(oid),
-+		die(_("unable to deflate new object %s (%d)"), oid_to_hex(oid),
- 		    ret);
- 	ret = git_deflate_end_gently(&stream);
- 	if (ret != Z_OK)
--		die("deflateEnd on object %s failed (%d)", oid_to_hex(oid),
-+		die(_("deflateEnd on object %s failed (%d)"), oid_to_hex(oid),
- 		    ret);
- 	the_hash_algo->final_fn(parano_oid.hash, &c);
- 	if (oidcmp(oid, &parano_oid) != 0)
--		die("confused by unstable object source data for %s",
-+		die(_("confused by unstable object source data for %s"),
- 		    oid_to_hex(oid));
+ 	for (i = 0; i < nr_heads; i++) {
+ 		posn = to_fetch[i];
+@@ -499,7 +499,7 @@ static int fetch_with_import(struct transport *transport,
+ 	 */
  
- 	close_sha1_file(fd);
-@@ -1682,7 +1682,7 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
- 		utb.actime = mtime;
- 		utb.modtime = mtime;
- 		if (utime(tmp_file.buf, &utb) < 0)
--			warning_errno("failed utime() on %s", tmp_file.buf);
-+			warning_errno(_("failed utime() on %s"), tmp_file.buf);
+ 	if (finish_command(&fastimport))
+-		die("error while running fast-import");
++		die(_("error while running fast-import"));
+ 
+ 	/*
+ 	 * The fast-import stream of a remote helper that advertises
+@@ -528,7 +528,7 @@ static int fetch_with_import(struct transport *transport,
+ 			private = xstrdup(name);
+ 		if (private) {
+ 			if (read_ref(private, &posn->old_oid) < 0)
+-				die("could not read ref %s", private);
++				die(_("could not read ref %s"), private);
+ 			free(private);
+ 		}
  	}
+@@ -554,7 +554,7 @@ static int run_connect(struct transport *transport, struct strbuf *cmdbuf)
+ 	 */
+ 	duped = dup(helper->out);
+ 	if (duped < 0)
+-		die_errno("can't dup helper output fd");
++		die_errno(_("can't dup helper output fd"));
+ 	input = xfdopen(duped, "r");
+ 	setvbuf(input, NULL, _IONBF, 0);
  
- 	return finalize_object_file(tmp_file.buf, filename.buf);
-@@ -1757,7 +1757,7 @@ int force_object_loose(const struct object_id *oid, time_t mtime)
- 		return 0;
- 	buf = read_object(oid->hash, &type, &len);
- 	if (!buf)
--		return error("cannot read sha1_file for %s", oid_to_hex(oid));
-+		return error(_("cannot read sha1_file for %s"), oid_to_hex(oid));
- 	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %lu", type_name(type), len) + 1;
- 	ret = write_loose_object(oid, hdr, hdrlen, buf, len, mtime);
- 	free(buf);
-@@ -1802,7 +1802,7 @@ static void check_commit(const void *buf, size_t size)
- 	struct commit c;
- 	memset(&c, 0, sizeof(c));
- 	if (parse_commit_buffer(&c, buf, size, 0))
--		die("corrupt commit");
-+		die(_("corrupt commit"));
- }
- 
- static void check_tag(const void *buf, size_t size)
-@@ -1810,7 +1810,7 @@ static void check_tag(const void *buf, size_t size)
- 	struct tag t;
- 	memset(&t, 0, sizeof(t));
- 	if (parse_tag_buffer(&t, buf, size))
--		die("corrupt tag");
-+		die(_("corrupt tag"));
- }
- 
- static int index_mem(struct object_id *oid, void *buf, size_t size,
-@@ -1903,10 +1903,10 @@ static int index_core(struct object_id *oid, int fd, size_t size,
- 		char *buf = xmalloc(size);
- 		ssize_t read_result = read_in_full(fd, buf, size);
- 		if (read_result < 0)
--			ret = error_errno("read error while indexing %s",
-+			ret = error_errno(_("read error while indexing %s"),
- 					  path ? path : "<unknown>");
- 		else if (read_result != size)
--			ret = error("short read while indexing %s",
-+			ret = error(_("short read while indexing %s"),
- 				    path ? path : "<unknown>");
- 		else
- 			ret = index_mem(oid, buf, size, type, path, flags);
-@@ -1977,7 +1977,7 @@ int index_path(struct object_id *oid, const char *path, struct stat *st, unsigne
- 		if (fd < 0)
- 			return error_errno("open(\"%s\")", path);
- 		if (index_fd(oid, fd, st, OBJ_BLOB, path, flags) < 0)
--			return error("%s: failed to insert into database",
-+			return error(_("%s: failed to insert into database"),
- 				     path);
- 		break;
- 	case S_IFLNK:
-@@ -1986,13 +1986,13 @@ int index_path(struct object_id *oid, const char *path, struct stat *st, unsigne
- 		if (!(flags & HASH_WRITE_OBJECT))
- 			hash_object_file(sb.buf, sb.len, blob_type, oid);
- 		else if (write_object_file(sb.buf, sb.len, blob_type, oid))
--			rc = error("%s: failed to insert into database", path);
-+			rc = error(_("%s: failed to insert into database"), path);
- 		strbuf_release(&sb);
- 		break;
- 	case S_IFDIR:
- 		return resolve_gitlink_ref(path, "HEAD", oid);
- 	default:
--		return error("%s: unsupported file type", path);
-+		return error(_("%s: unsupported file type"), path);
- 	}
- 	return rc;
- }
-@@ -2016,9 +2016,9 @@ void assert_oid_type(const struct object_id *oid, enum object_type expect)
- {
- 	enum object_type type = oid_object_info(the_repository, oid, NULL);
- 	if (type < 0)
--		die("%s is not a valid object", oid_to_hex(oid));
-+		die(_("%s is not a valid object"), oid_to_hex(oid));
- 	if (type != expect)
--		die("%s is not a valid '%s' object", oid_to_hex(oid),
-+		die(_("%s is not a valid '%s' object"), oid_to_hex(oid),
- 		    type_name(expect));
- }
- 
-@@ -2045,7 +2045,7 @@ int for_each_file_in_obj_subdir(unsigned int subdir_nr,
- 	dir = opendir(path->buf);
- 	if (!dir) {
- 		if (errno != ENOENT)
--			r = error_errno("unable to open %s", path->buf);
-+			r = error_errno(_("unable to open %s"), path->buf);
- 		strbuf_setlen(path, origlen);
- 		return r;
- 	}
-@@ -2202,18 +2202,18 @@ static int check_stream_sha1(git_zstream *stream,
- 	git_inflate_end(stream);
- 
- 	if (status != Z_STREAM_END) {
--		error("corrupt loose object '%s'", sha1_to_hex(expected_sha1));
-+		error(_("corrupt loose object '%s'"), sha1_to_hex(expected_sha1));
- 		return -1;
- 	}
- 	if (stream->avail_in) {
--		error("garbage at end of loose object '%s'",
-+		error(_("garbage at end of loose object '%s'"),
- 		      sha1_to_hex(expected_sha1));
- 		return -1;
- 	}
- 
- 	the_hash_algo->final_fn(real_sha1, &c);
- 	if (hashcmp(expected_sha1, real_sha1)) {
--		error("sha1 mismatch for %s (expected %s)", path,
-+		error(_("sha1 mismatch for %s (expected %s)"), path,
- 		      sha1_to_hex(expected_sha1));
- 		return -1;
- 	}
-@@ -2237,18 +2237,18 @@ int read_loose_object(const char *path,
- 
- 	map = map_sha1_file_1(the_repository, path, NULL, &mapsize);
- 	if (!map) {
--		error_errno("unable to mmap %s", path);
-+		error_errno(_("unable to mmap %s"), path);
- 		goto out;
- 	}
- 
- 	if (unpack_sha1_header(&stream, map, mapsize, hdr, sizeof(hdr)) < 0) {
--		error("unable to unpack header of %s", path);
-+		error(_("unable to unpack header of %s"), path);
- 		goto out;
- 	}
- 
- 	*type = parse_sha1_header(hdr, size);
- 	if (*type < 0) {
--		error("unable to parse header of %s", path);
-+		error(_("unable to parse header of %s"), path);
- 		git_inflate_end(&stream);
- 		goto out;
- 	}
-@@ -2259,13 +2259,13 @@ int read_loose_object(const char *path,
+@@ -573,8 +573,8 @@ static int run_connect(struct transport *transport, struct strbuf *cmdbuf)
+ 			fprintf(stderr, "Debug: Falling back to dumb "
+ 				"transport.\n");
  	} else {
- 		*contents = unpack_sha1_rest(&stream, hdr, *size, expected_oid->hash);
- 		if (!*contents) {
--			error("unable to unpack contents of %s", path);
-+			error(_("unable to unpack contents of %s"), path);
- 			git_inflate_end(&stream);
- 			goto out;
- 		}
- 		if (check_object_signature(expected_oid, *contents,
- 					 *size, type_name(*type))) {
--			error("sha1 mismatch for %s (expected %s)", path,
-+			error(_("sha1 mismatch for %s (expected %s)"), path,
- 			      oid_to_hex(expected_oid));
- 			free(*contents);
- 			goto out;
+-		die("unknown response to connect: %s",
+-			cmdbuf->buf);
++		die(_(_("unknown response to connect: %s")),
++		    cmdbuf->buf);
+ 	}
+ 
+ 	fclose(input);
+@@ -595,9 +595,9 @@ static int process_connect_service(struct transport *transport,
+ 	if (strcmp(name, exec)) {
+ 		int r = set_helper_option(transport, "servpath", exec);
+ 		if (r > 0)
+-			warning("setting remote service path not supported by protocol");
++			warning(_("setting remote service path not supported by protocol"));
+ 		else if (r < 0)
+-			warning("invalid remote service path");
++			warning(_("invalid remote service path"));
+ 	}
+ 
+ 	if (data->connect) {
+@@ -640,10 +640,10 @@ static int connect_helper(struct transport *transport, const char *name,
+ 	/* Get_helper so connect is inited. */
+ 	get_helper(transport);
+ 	if (!data->connect)
+-		die("operation not supported by protocol");
++		die(_("operation not supported by protocol"));
+ 
+ 	if (!process_connect_service(transport, name, exec))
+-		die("can't connect to subservice %s", name);
++		die(_("can't connect to subservice %s"), name);
+ 
+ 	fd[0] = data->helper->out;
+ 	fd[1] = data->helper->in;
+@@ -707,7 +707,7 @@ static int push_update_ref_status(struct strbuf *buf,
+ 		status = REF_STATUS_REMOTE_REJECT;
+ 		refname = buf->buf + 6;
+ 	} else
+-		die("expected ok/error, helper said '%s'", buf->buf);
++		die(_("expected ok/error, helper said '%s'"), buf->buf);
+ 
+ 	msg = strchr(refname, ' ');
+ 	if (msg) {
+@@ -760,7 +760,7 @@ static int push_update_ref_status(struct strbuf *buf,
+ 	if (!*ref)
+ 		*ref = find_ref_by_name(remote_refs, refname);
+ 	if (!*ref) {
+-		warning("helper reported unexpected status of %s", refname);
++		warning(_("helper reported unexpected status of %s"), refname);
+ 		return 1;
+ 	}
+ 
+@@ -821,20 +821,20 @@ static void set_common_push_options(struct transport *transport,
+ {
+ 	if (flags & TRANSPORT_PUSH_DRY_RUN) {
+ 		if (set_helper_option(transport, "dry-run", "true") != 0)
+-			die("helper %s does not support dry-run", name);
++			die(_("helper %s does not support dry-run"), name);
+ 	} else if (flags & TRANSPORT_PUSH_CERT_ALWAYS) {
+ 		if (set_helper_option(transport, TRANS_OPT_PUSH_CERT, "true") != 0)
+-			die("helper %s does not support --signed", name);
++			die(_("helper %s does not support --signed"), name);
+ 	} else if (flags & TRANSPORT_PUSH_CERT_IF_ASKED) {
+ 		if (set_helper_option(transport, TRANS_OPT_PUSH_CERT, "if-asked") != 0)
+-			die("helper %s does not support --signed=if-asked", name);
++			die(_("helper %s does not support --signed=if-asked"), name);
+ 	}
+ 
+ 	if (flags & TRANSPORT_PUSH_OPTIONS) {
+ 		struct string_list_item *item;
+ 		for_each_string_list_item(item, transport->push_options)
+ 			if (set_helper_option(transport, "push-option", item->string) != 0)
+-				die("helper %s does not support 'push-option'", name);
++				die(_("helper %s does not support 'push-option'"), name);
+ 	}
+ }
+ 
+@@ -926,12 +926,12 @@ static int push_refs_with_export(struct transport *transport,
+ 	struct strbuf buf = STRBUF_INIT;
+ 
+ 	if (!data->rs.nr)
+-		die("remote-helper doesn't support push; refspec needed");
++		die(_("remote-helper doesn't support push; refspec needed"));
+ 
+ 	set_common_push_options(transport, data->name, flags);
+ 	if (flags & TRANSPORT_PUSH_FORCE) {
+ 		if (set_helper_option(transport, "force", "true") != 0)
+-			warning("helper %s does not support 'force'", data->name);
++			warning(_("helper %s does not support 'force'"), data->name);
+ 	}
+ 
+ 	helper = get_helper(transport);
+@@ -978,12 +978,12 @@ static int push_refs_with_export(struct transport *transport,
+ 	}
+ 
+ 	if (get_exporter(transport, &exporter, &revlist_args))
+-		die("couldn't run fast-export");
++		die(_("couldn't run fast-export"));
+ 
+ 	string_list_clear(&revlist_args, 1);
+ 
+ 	if (finish_command(&exporter))
+-		die("error while running fast-export");
++		die(_("error while running fast-export"));
+ 	if (push_update_refs_status(data, remote_refs, flags))
+ 		return 1;
+ 
+@@ -1007,8 +1007,9 @@ static int push_refs(struct transport *transport,
+ 	}
+ 
+ 	if (!remote_refs) {
+-		fprintf(stderr, "No refs in common and none specified; doing nothing.\n"
+-			"Perhaps you should specify a branch such as 'master'.\n");
++		fprintf(stderr,
++			_("No refs in common and none specified; doing nothing.\n"
++			  "Perhaps you should specify a branch such as 'master'.\n"));
+ 		return 0;
+ 	}
+ 
+@@ -1070,7 +1071,7 @@ static struct ref *get_refs_list(struct transport *transport, int for_push,
+ 
+ 		eov = strchr(buf.buf, ' ');
+ 		if (!eov)
+-			die("malformed response in ref list: %s", buf.buf);
++			die(_("malformed response in ref list: %s"), buf.buf);
+ 		eon = strchr(eov + 1, ' ');
+ 		*eov = '\0';
+ 		if (eon)
+@@ -1223,7 +1224,7 @@ static int udt_do_read(struct unidirectional_transfer *t)
+ 	bytes = read(t->src, t->buf + t->bufuse, BUFFERSIZE - t->bufuse);
+ 	if (bytes < 0 && errno != EWOULDBLOCK && errno != EAGAIN &&
+ 		errno != EINTR) {
+-		error_errno("read(%s) failed", t->src_name);
++		error_errno(_("read(%s) failed"), t->src_name);
+ 		return -1;
+ 	} else if (bytes == 0) {
+ 		transfer_debug("%s EOF (with %i bytes in buffer)",
+@@ -1250,7 +1251,7 @@ static int udt_do_write(struct unidirectional_transfer *t)
+ 	transfer_debug("%s is writable", t->dest_name);
+ 	bytes = xwrite(t->dest, t->buf, t->bufuse);
+ 	if (bytes < 0 && errno != EWOULDBLOCK) {
+-		error_errno("write(%s) failed", t->dest_name);
++		error_errno(_("write(%s) failed"), t->dest_name);
+ 		return -1;
+ 	} else if (bytes > 0) {
+ 		t->bufuse -= bytes;
+@@ -1299,11 +1300,11 @@ static int tloop_join(pthread_t thread, const char *name)
+ 	void *tret;
+ 	err = pthread_join(thread, &tret);
+ 	if (!tret) {
+-		error("%s thread failed", name);
++		error(_("%s thread failed"), name);
+ 		return 1;
+ 	}
+ 	if (err) {
+-		error("%s thread failed to join: %s", name, strerror(err));
++		error(_("%s thread failed to join: %s"), name, strerror(err));
+ 		return 1;
+ 	}
+ 	return 0;
+@@ -1322,11 +1323,11 @@ static int tloop_spawnwait_tasks(struct bidirectional_transfer_state *s)
+ 	err = pthread_create(&gtp_thread, NULL, udt_copy_task_routine,
+ 		&s->gtp);
+ 	if (err)
+-		die("can't start thread for copying data: %s", strerror(err));
++		die(_("can't start thread for copying data: %s"), strerror(err));
+ 	err = pthread_create(&ptg_thread, NULL, udt_copy_task_routine,
+ 		&s->ptg);
+ 	if (err)
+-		die("can't start thread for copying data: %s", strerror(err));
++		die(_("can't start thread for copying data: %s"), strerror(err));
+ 
+ 	ret |= tloop_join(gtp_thread, "Git to program copy");
+ 	ret |= tloop_join(ptg_thread, "Program to git copy");
+@@ -1363,11 +1364,11 @@ static int tloop_join(pid_t pid, const char *name)
+ {
+ 	int tret;
+ 	if (waitpid(pid, &tret, 0) < 0) {
+-		error_errno("%s process failed to wait", name);
++		error_errno(_("%s process failed to wait"), name);
+ 		return 1;
+ 	}
+ 	if (!WIFEXITED(tret) || WEXITSTATUS(tret)) {
+-		error("%s process failed", name);
++		error(_("%s process failed"), name);
+ 		return 1;
+ 	}
+ 	return 0;
+@@ -1385,7 +1386,7 @@ static int tloop_spawnwait_tasks(struct bidirectional_transfer_state *s)
+ 	/* Fork thread #1: git to program. */
+ 	pid1 = fork();
+ 	if (pid1 < 0)
+-		die_errno("can't start thread for copying data");
++		die_errno(_("can't start thread for copying data"));
+ 	else if (pid1 == 0) {
+ 		udt_kill_transfer(&s->ptg);
+ 		exit(udt_copy_task_routine(&s->gtp) ? 0 : 1);
+@@ -1394,7 +1395,7 @@ static int tloop_spawnwait_tasks(struct bidirectional_transfer_state *s)
+ 	/* Fork thread #2: program to git. */
+ 	pid2 = fork();
+ 	if (pid2 < 0)
+-		die_errno("can't start thread for copying data");
++		die_errno(_("can't start thread for copying data"));
+ 	else if (pid2 == 0) {
+ 		udt_kill_transfer(&s->gtp);
+ 		exit(udt_copy_task_routine(&s->ptg) ? 0 : 1);
 -- 
 2.18.0.rc2.476.g39500d3211
 
