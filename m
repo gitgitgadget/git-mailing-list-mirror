@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 464C81F597
-	for <e@80x24.org>; Wed, 18 Jul 2018 16:13:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C05E51F597
+	for <e@80x24.org>; Wed, 18 Jul 2018 16:13:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731856AbeGRQvr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jul 2018 12:51:47 -0400
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:44260 "EHLO
-        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731853AbeGRQvr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jul 2018 12:51:47 -0400
-Received: by mail-lf0-f67.google.com with SMTP id g6-v6so3851571lfb.11
-        for <git@vger.kernel.org>; Wed, 18 Jul 2018 09:13:10 -0700 (PDT)
+        id S1731739AbeGRQvw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jul 2018 12:51:52 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:43407 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730897AbeGRQvv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jul 2018 12:51:51 -0400
+Received: by mail-lj1-f196.google.com with SMTP id r13-v6so4595566ljg.10
+        for <git@vger.kernel.org>; Wed, 18 Jul 2018 09:13:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=WJ5ql7nSj52nKRnENwxV0j2kWupS+HndXS9ZRJ3T6+4=;
-        b=hTVKD9eoo7QnUzerc00xgitgmtvB9dru9SWh25V4NlnvAX23hdu0Uew+RGzQi8OdLY
-         q6EQDEePITCxTME385ann9fiRoVCT17l8T1sdvIUfO3xVOOY8zklILJj053SPkp0YyEJ
-         E2xxWhcAMEjmcaxcssYSeiuX1yWrM8f2f50n7sJYv97yHehP5lXCe/zGh3oxoPBGtbnv
-         xVG5SH9IdRIK7icVgsMTOzsDbSY4PRtFLB6PyXcSKKHiEh2o9ORapDDdtLRSfJhLxevS
-         b6AxCZM0yK0CkCKL/EfXZfYiSJROYcRxD67xukqJWvC8fCrmwc3JskqwdLBbmes2JSLW
-         ZhPw==
+        bh=6Hphiudg0/hIiCxvgg5BNB/n7TOBILXYAYs1Ebnbq5k=;
+        b=u9NBT3kuyxEy+W/Pw54EIxBqSX0YRgB8NSpFNgs+vnIIckkMyIKEzXolbkcCq4+LJw
+         4Kmagjl9RDmC963gvxOzifEuMlJvPIlPADwc4k2zJZFRRyy9mWmRgrJYKlTdmdz4siHG
+         tFCskV8FwPlFddnTig3lU3RW0xuDRIk9aSGf5sa7vBm2tj6AhJHynvCNOg8guSlNsVVj
+         XQhMQmLtrtzqJt3XlKIpTrfkjtR7Ry2mQkE6YmkSDaC9XFX0ofWJbjGLUkSismlakbAf
+         zkYc/2NoC+pLGU4lYzloMjIB86PhvItMRf6w0j78OU1xOyx9w2T1m9oCeYIsn6ik5sMj
+         dmXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=WJ5ql7nSj52nKRnENwxV0j2kWupS+HndXS9ZRJ3T6+4=;
-        b=h8nnJKxR7zUV/ODJ0DP+hmXGpnmMagoIaEJ590FvvRTNCKjWqDxp8cCo40F6xfAWf2
-         4SJxpCUA+GYw5fQ4RtQPF/0JldCUF/0BJizKu9b/LPgPmSZxL77OaKFrwHpHtTtGT8+I
-         e+4MSz4xJRXgPpvrDAWqeQVKFimjnWhJ/v3WeZ5+T7s+HBNGrqgPZHmXiztHilko3LSb
-         Uqdjf2vR2TM8cnwOzRZjBxjASqAe/4RTaQdt4qQLm48lGCfc3+kwAulNx/oqaNPucSM7
-         nVUWtIh/Z870ubWRXmWb9iiQ0Lt3e5N1BJypDB9H52NG0BW2V+wYFt3ObejdHywVsLPe
-         b+Ng==
-X-Gm-Message-State: AOUpUlF6AJQLuccNd39TgSFhN4jjWxQrboWdItTw7IQ27gvZ2WZMtv3g
-        XJvj005U+qCbEuqJEnQhhfGPNw==
-X-Google-Smtp-Source: AAOMgpddCloBl7nhlyLYu9CSMQ40MR+60T8IoTURGZ2tCoAIKs18+2I4AmpMOeh9JFY/5HE6nc+B4g==
-X-Received: by 2002:a19:a04c:: with SMTP id j73-v6mr4630495lfe.123.1531930389725;
-        Wed, 18 Jul 2018 09:13:09 -0700 (PDT)
+        bh=6Hphiudg0/hIiCxvgg5BNB/n7TOBILXYAYs1Ebnbq5k=;
+        b=F21/O1tP0vBaru4viYZLu6PvmWsYyFTr6VckAn9OJGijULXoyOkt8IjivekprqXo3k
+         zjbblV9QNEm+c+HLG4qE7SQOC0MDXqydANcZP5JAkSiXbcTcUTVry3hIyj39HD/XrjrM
+         xAGCvZ6TpByZFOs4rUp8bLEMEDcSABi9o6ndtVaTrl8bamHpL+HGkgJM5qb9WNSGvJXU
+         CqtPUPkgpyak/hhXbGRF7spXe0SaofBVJ8rTPZMLX50ivIjv6W6x9qaAmByKAgg1+zPc
+         Kf5WMdjqqKZb4HT09ZvaP1eB1CAJBAA9H+RBGz04xF9DVx2sZ2ZqfBtllWM/D2W7mpX2
+         e7tg==
+X-Gm-Message-State: AOUpUlHJVVquVDnllVUOO29XTdVH39L9zNkikVroI/svv27nwnkL/Ayk
+        hPVOBkgLySj9EATKCM72jnsdRw==
+X-Google-Smtp-Source: AAOMgpdtCsnlVSxgSudayWKum7ljXJvLKX0YaqHsXcrLfAouetzZ8r7lgKgMl6a55PLIaqzb0lekwA==
+X-Received: by 2002:a2e:3313:: with SMTP id d19-v6mr4913586ljc.25.1531930392665;
+        Wed, 18 Jul 2018 09:13:12 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id j26-v6sm689203ljc.54.2018.07.18.09.13.08
+        by smtp.gmail.com with ESMTPSA id j26-v6sm689203ljc.54.2018.07.18.09.13.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 18 Jul 2018 09:13:08 -0700 (PDT)
+        Wed, 18 Jul 2018 09:13:11 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 20/23] sequencer.c: mark more strings for translation
-Date:   Wed, 18 Jul 2018 18:10:58 +0200
-Message-Id: <20180718161101.19765-21-pclouds@gmail.com>
+Subject: [PATCH v2 22/23] transport.c: mark more strings for translation
+Date:   Wed, 18 Jul 2018 18:11:00 +0200
+Message-Id: <20180718161101.19765-23-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.rc2.476.g39500d3211
 In-Reply-To: <20180718161101.19765-1-pclouds@gmail.com>
 References: <20180718161101.19765-1-pclouds@gmail.com>
@@ -73,75 +73,85 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- sequencer.c | 26 ++++++++++++++------------
- 1 file changed, 14 insertions(+), 12 deletions(-)
+ transport.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index 6b6162d194..f7c2f2422d 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -716,7 +716,7 @@ static const char *read_author_ident(struct strbuf *buf)
- 	/* dequote values and construct ident line in-place */
- 	for (in = out = buf->buf; i < 3 && in - buf->buf < buf->len; i++) {
- 		if (!skip_prefix(in, keys[i], (const char **)&in)) {
--			warning("could not parse '%s' (looking for '%s'",
-+			warning(_("could not parse '%s' (looking for '%s'"),
- 				rebase_path_author_script(), keys[i]);
- 			return NULL;
- 		}
-@@ -738,7 +738,7 @@ static const char *read_author_ident(struct strbuf *buf)
- 	}
+diff --git a/transport.c b/transport.c
+index 9fcc33915a..516a83b7f6 100644
+--- a/transport.c
++++ b/transport.c
+@@ -139,7 +139,7 @@ static struct ref *get_refs_from_bundle(struct transport *transport,
+ 		close(data->fd);
+ 	data->fd = read_bundle_header(transport->url, &data->header);
+ 	if (data->fd < 0)
+-		die("could not read bundle '%s'", transport->url);
++		die(_("could not read bundle '%s'"), transport->url);
+ 	for (i = 0; i < data->header.references.nr; i++) {
+ 		struct ref_list_entry *e = data->header.references.list + i;
+ 		struct ref *ref = alloc_ref(e->name);
+@@ -654,7 +654,7 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
  
- 	if (i < 3) {
--		warning("could not parse '%s' (looking for '%s')",
-+		warning(_("could not parse '%s' (looking for '%s')"),
- 			rebase_path_author_script(), keys[i]);
- 		return NULL;
- 	}
-@@ -1444,7 +1444,7 @@ static const char *command_to_string(const enum todo_command command)
- {
- 	if (command < TODO_COMMENT)
- 		return todo_command_info[command].str;
--	die("unknown command: %d", command);
-+	die(_("unknown command: %d"), command);
+ 	switch (data->version) {
+ 	case protocol_v2:
+-		die("support for protocol v2 not implemented yet");
++		die(_("support for protocol v2 not implemented yet"));
+ 		break;
+ 	case protocol_v1:
+ 	case protocol_v0:
+@@ -780,7 +780,7 @@ static enum protocol_allow_config parse_protocol_config(const char *key,
+ 	else if (!strcasecmp(value, "user"))
+ 		return PROTOCOL_ALLOW_USER_ONLY;
+ 
+-	die("unknown value for config '%s': %s", key, value);
++	die(_("unknown value for config '%s': %s"), key, value);
  }
  
- static char command_to_char(const enum todo_command command)
-@@ -2600,15 +2600,17 @@ static int error_with_patch(struct commit *commit,
- 		if (intend_to_amend())
- 			return -1;
+ static enum protocol_allow_config get_protocol_config(const char *type)
+@@ -846,7 +846,7 @@ int is_transport_allowed(const char *type, int from_user)
+ void transport_check_allowed(const char *type)
+ {
+ 	if (!is_transport_allowed(type, -1))
+-		die("transport '%s' not allowed", type);
++		die(_("transport '%s' not allowed"), type);
+ }
  
--		fprintf(stderr, "You can amend the commit now, with\n"
--			"\n"
--			"  git commit --amend %s\n"
--			"\n"
--			"Once you are satisfied with your changes, run\n"
--			"\n"
--			"  git rebase --continue\n", gpg_sign_opt_quoted(opts));
-+		fprintf(stderr,
-+			_("You can amend the commit now, with\n"
-+			  "\n"
-+			  "  git commit --amend %s\n"
-+			  "\n"
-+			  "Once you are satisfied with your changes, run\n"
-+			  "\n"
-+			  "  git rebase --continue\n"),
-+			gpg_sign_opt_quoted(opts));
- 	} else if (exit_code)
--		fprintf_ln(stderr, "Could not apply %s... %.*s",
-+		fprintf_ln(stderr, _("Could not apply %s... %.*s"),
- 			short_commit_name(commit), subject_len, subject);
+ static struct transport_vtable bundle_vtable = {
+@@ -898,7 +898,7 @@ struct transport *transport_get(struct remote *remote, const char *url)
+ 	if (helper) {
+ 		transport_helper_init(ret, helper);
+ 	} else if (starts_with(url, "rsync:")) {
+-		die("git-over-rsync is no longer supported");
++		die(_("git-over-rsync is no longer supported"));
+ 	} else if (url_is_local_not_ssh(url) && is_file(url) && is_bundle(url, 1)) {
+ 		struct bundle_transport_data *data = xcalloc(1, sizeof(*data));
+ 		transport_check_allowed("file");
+@@ -1143,7 +1143,7 @@ int transport_push(struct transport *transport,
+ 						      transport->push_options,
+ 						      pretend)) {
+ 				oid_array_clear(&commits);
+-				die("failed to push all needed submodules!");
++				die(_("failed to push all needed submodules"));
+ 			}
+ 			oid_array_clear(&commits);
+ 		}
+@@ -1265,7 +1265,7 @@ int transport_connect(struct transport *transport, const char *name,
+ 	if (transport->vtable->connect)
+ 		return transport->vtable->connect(transport, name, exec, fd);
+ 	else
+-		die("operation not supported by protocol");
++		die(_("operation not supported by protocol"));
+ }
  
- 	return exit_code;
-@@ -2719,7 +2721,7 @@ static int do_label(const char *name, int len)
- 	struct object_id head_oid;
+ int transport_disconnect(struct transport *transport)
+@@ -1347,7 +1347,7 @@ static void read_alternate_refs(const char *path,
  
- 	if (len == 1 && *name == '#')
--		return error("illegal label name: '%.*s'", len, name);
-+		return error(_("illegal label name: '%.*s'"), len, name);
- 
- 	strbuf_addf(&ref_name, "refs/rewritten/%.*s", len, name);
- 	strbuf_addf(&msg, "rebase -i (label) '%.*s'", len, name);
+ 		if (get_oid_hex(line.buf, &oid) ||
+ 		    line.buf[GIT_SHA1_HEXSZ] != ' ') {
+-			warning("invalid line while parsing alternate refs: %s",
++			warning(_("invalid line while parsing alternate refs: %s"),
+ 				line.buf);
+ 			break;
+ 		}
 -- 
 2.18.0.rc2.476.g39500d3211
 
