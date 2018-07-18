@@ -2,97 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E8B941F597
-	for <e@80x24.org>; Wed, 18 Jul 2018 12:32:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C7901F597
+	for <e@80x24.org>; Wed, 18 Jul 2018 12:53:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730315AbeGRNKW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jul 2018 09:10:22 -0400
-Received: from mout.gmx.net ([212.227.15.18]:56167 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729281AbeGRNKW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jul 2018 09:10:22 -0400
-Received: from [192.168.0.129] ([37.201.195.94]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M9ra4-1fmLDC0DnM-00B390; Wed, 18
- Jul 2018 14:32:30 +0200
-Date:   Wed, 18 Jul 2018 14:32:12 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Eric Sunshine <sunshine@sunshineco.com>
-cc:     Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        gitgitgadget@gmail.com, Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/16] Consolidate reachability logic
-In-Reply-To: <CAPig+cQ0t8nDnE9fVbo_wgth_Y2yuYM1O9AD1y6kvyHTqD57Yg@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1807181429580.71@tvgsbejvaqbjf.bet>
-References: <pull.10.git.gitgitgadget@gmail.com> <6b7a50dc-6b71-0e31-030a-42dd1b26bde4@ramsayjones.plus.com> <20180716161821.GB18150@sigill.intra.peff.net> <CAPig+cTVP2kubTEZBms_x1FvnqjGcX3pjTRXfjBMfMtdpbJt=Q@mail.gmail.com> <20180716185618.GD22298@sigill.intra.peff.net>
- <CAPig+cQ0t8nDnE9fVbo_wgth_Y2yuYM1O9AD1y6kvyHTqD57Yg@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1730787AbeGRNax (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jul 2018 09:30:53 -0400
+Received: from mail-io0-f174.google.com ([209.85.223.174]:42823 "EHLO
+        mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730371AbeGRNax (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jul 2018 09:30:53 -0400
+Received: by mail-io0-f174.google.com with SMTP id g11-v6so3971611ioq.9
+        for <git@vger.kernel.org>; Wed, 18 Jul 2018 05:53:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=QmpntLyH0NeOJQM9q0uav/AM9S/Miir1cRsSsjGRPLY=;
+        b=ex7+7tVSLGg7myQpLbjtqjGiyDOdh3hcTu1mMkomqkSQLTv+9MUT14ooqtJtPDlHSL
+         5xnZljXWa7o4Wi1vpnHyAKj4FkXe4Q/ESJIln+fjSfk6u2vqOGC5OYEz15qrc+IQypdG
+         uT5K1xw5JjLUF7KEwtl8uuhm7y3hT45KMOI1G8o9/nSkVnkbLjt6v2P0h6n+3CTXD4jM
+         ajcq6froTUOy2M3TtFtXRXsJuWeQFESUVTSlznDIlMfeDWH/V8mKXhczczi0jIVg79XE
+         xlVKeUHNQSMj4d/9keYNmYWbazwFQt5aPNw5l9yUo77zH1eaCn9+lFjSuldwRZIGVwSm
+         u2bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=QmpntLyH0NeOJQM9q0uav/AM9S/Miir1cRsSsjGRPLY=;
+        b=NPV/Hshdpp/ElIogvp6SXhhMIuGX+D9OpGtE/RcfSXAQ9w05nHlNwG40+HTqxabLXN
+         Orpei86lyeAOIWUJcwd+Opr99qb6VHMCgDmIq8hdic8dLDCv+CH9vMitcX6adMIT61Y9
+         Mo/R1bRy6Bde3ildqo2ZvUMa9vG660xZ4Dp5LEZivZVyGuHOE45+j2tjsE82lldMF8Pa
+         QjTA5rvTxEs/87YzEf0vIuJ33XlygslxEyVSrF7uXoIfTe+nAhf/QNazz4zeAY2xWCyr
+         JHuwZUSvurup+GZ4WVGvlKuE7yqq33bCaJfRpIotD1sOHk2UuBw7lJHcE3Ybfk/DhtjS
+         w+fQ==
+X-Gm-Message-State: AOUpUlGOYEQw1Sbb+GUJMgtGuEvaHwzOniBR40vtdsV3PCf4A1nG2JrA
+        UpsW+hjbtKtQmHdGKavSjsURriR1A0DVCAwbqXHS+lJn
+X-Google-Smtp-Source: AAOMgpcskrT8xHWzbmaCxyLyeW3irhDVlRpxcjQ+69eWNgvOpTIn2WbbCI8GIb1ILD6HxwcLPg1m2OoDza11f06USqE=
+X-Received: by 2002:a6b:3042:: with SMTP id w63-v6mr4675916iow.223.1531918385631;
+ Wed, 18 Jul 2018 05:53:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:uwAoT3wFNF5iMeESZmzZqitd50cm2w5KGoONfF6bi4gNhXy3TSC
- TQ0ngFfEoTxDfp7k+Dqn6SfhAIFhus2AaLwiulQ7vbl0qSEJo2TpIVD80ykNCQDD9SLeSSe
- o5gXrsMM8FG4sS6YBdrZRq4eHtqNE8TGIRaNwz0r0gWvxBMWCSp75858d276RDY9HmUw/8p
- xv/67wcxotI2S28AJ2lXA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:vlpUBI5FrR8=:Did4pAXYxHE8fbFAUftg1A
- JA6nUEaMkWxR6wN5ouEIISpJJM5gENdmT+kIuBY4ztRdOFqOnCeY02Qth+rqp9V+VhkRAWRrl
- KLn8Po61haTMm0XaUZFlRKzDl91Msd2CEfv1FVPkgVFGT6IB8ZJLUqlwA/RRFlOxgS2GdIV/X
- +8xlYqpXxW9x4AbFROxpXXLoP3Yg6mMO5i1gYPckw0VvGcr7bGNOhWjprHt2FokKjXVmE1Dc0
- hTXum5eOqNHnKjK0ZbSbbuaGGVsBqDrAJRjKHQxI2ZGcHE94nSJA6kZLLoaAbLpm3e5zRcznL
- w24vT6r26OwA7NLoLhrhWIutEy6POC04TvVqmbB/ejTe7eik/FnALVRTOi9oDjlKODNf9VjR3
- ZVDHls1n8bPbiCkNxYDqQaH3v5YSIOFwl46GgunJihsHmaRxjyJmgPc+tU0BMCEwbqqXG5pBX
- zH0DtucsFNWRz+7vAKn6RV3OJuxeKgO3Rp9KxXidePeYr1cAMtNubklmyFQSTHcIzX6yMmdN6
- xL1ZfqX63FU0fqyqQMnhZ+6YA9Evvi1ZviHlxYgWqzNqwHNHNVWiehVT5trtiOlFhdFXPNudW
- janhlvKqSHHKJQr1G25s/Xd2xGO+FMwyj6HbBj0UeMWPHT0R21joppwiVXrElOgxAAgNJPq1V
- jr8ADtAqdIqlCERDQHzizNQzpl2ewWh8ILZWd3Luu+FpuJVeHgG2urwNyx6POlejqFFfO4oRO
- s6sdwJwTXmWga2V/Z+r+xM9w3jtmWMNKoyUcHYRp08HObplwnx1C4EZdv/oE3YQK+4Kx8p/G2
- VOG/SwB
+Received: by 2002:a4f:2293:0:0:0:0:0 with HTTP; Wed, 18 Jul 2018 05:53:04
+ -0700 (PDT)
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 18 Jul 2018 14:53:04 +0200
+Message-ID: <CAP8UFD1GDWVqD2pCOMpPog4N3XrvyRO_-dkUq2m1N4FvSSXsVw@mail.gmail.com>
+Subject: [ANNOUNCE] Git Rev News edition 41
+To:     git <git@vger.kernel.org>
+Cc:     lwn@lwn.net, Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        demerphq <demerphq@gmail.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Adam Langley <agl@google.com>,
+        Keccak Team <keccak@noekeon.org>,
+        Gilles Van Assche <gilles.van.assche@noekeon.org>,
+        Derrick Stolee <stolee@gmail.com>, David Lang <david@lang.hm>,
+        Luca Milanesio <luca.milanesio@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric & Peff,
+Hi everyone,
 
-On Mon, 16 Jul 2018, Eric Sunshine wrote:
+The 41th edition of Git Rev News is now published:
 
-> On Mon, Jul 16, 2018 at 2:56 PM Jeff King <peff@peff.net> wrote:
-> > On Mon, Jul 16, 2018 at 02:40:21PM -0400, Eric Sunshine wrote:
-> > > On Mon, Jul 16, 2018 at 12:18 PM Jeff King <peff@peff.net> wrote:
-> > > > git-send-email uses the current time minus an offset, and then
-> > > > monotonically increases for each patch:
-> > >
-> > > Junio pointed this out to gitgitgadget developers in [1], which led to
-> > > an issue being opened[2]. That issue was merged today.
-> > >
-> > > [1]: https://public-inbox.org/git/xmqq7em7gg3j.fsf@gitster-ct.c.googlers.com/
-> > > [2]: https://github.com/gitgitgadget/gitgitgadget/pull/15
-> >
-> > I was going to say "oh good, fixed", but it looks like it just merged
-> > adding that line to the TODO list. :)
-> 
-> Erm, right. I actually knew a couple days ago that that issue was just
-> a change to the TODO list but forgot that important tidbit when I
-> wrote the above "was merged today". Anyhow, at least it's on the
-> radar.
+  https://git.github.io/rev_news/2018/07/18/edition-41/
 
-It is always nice to get such active contributions.
+Thanks a lot to the contributors: Luca Milanesio and Derrick Stolee!
 
-Seriously again, do feel free to jump in and contribute improvements to
-GitGitGadget.
-
-We have a very time-consuming (read: time wasting) code contribution
-process, and it is an untenable situation, and GitGitGadget was designed
-to be able to address this huge problem.
-
-But I can't do it alone. And neither should you pretend that this is my
-problem alone. This problem is as much your problem as it is mine.
-(Whether you realize it or not.)
-
-Ciao,
-Dscho
+Enjoy,
+Christian, Jakub, Markus and Gabriel.
