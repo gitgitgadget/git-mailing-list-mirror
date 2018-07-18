@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 991141F597
-	for <e@80x24.org>; Wed, 18 Jul 2018 15:15:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E6D7E1F597
+	for <e@80x24.org>; Wed, 18 Jul 2018 15:15:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730663AbeGRPx7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jul 2018 11:53:59 -0400
-Received: from mail-pl0-f67.google.com ([209.85.160.67]:38658 "EHLO
-        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726613AbeGRPx7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jul 2018 11:53:59 -0400
-Received: by mail-pl0-f67.google.com with SMTP id b1-v6so2183166pls.5
-        for <git@vger.kernel.org>; Wed, 18 Jul 2018 08:15:37 -0700 (PDT)
+        id S1730798AbeGRPyA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jul 2018 11:54:00 -0400
+Received: from mail-pl0-f45.google.com ([209.85.160.45]:34369 "EHLO
+        mail-pl0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726613AbeGRPyA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jul 2018 11:54:00 -0400
+Received: by mail-pl0-f45.google.com with SMTP id f6-v6so2188898plo.1
+        for <git@vger.kernel.org>; Wed, 18 Jul 2018 08:15:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc:cc;
-        bh=UuxfqhCN9PR3lddejpzWUz8y1z7qJYRFpHP9dfAyALM=;
-        b=G5ppYltdinra4k6M2RZMeTY0zGabEoa8m3d3H89l0UluWKHfB9oKsicdd1g0WhLINd
-         SA0gG6mqFN7VTY375L+VRoAy56W9sgZzyoES/PIWkBbiWd9KGW/cdlTmUX+Ry3LB4y3x
-         2giVDlSKdu9Qu0m7oPNRIV0svcg9dvrIpoJTzedznXceaPjGlbHi+3BJnvaUt81VLuY7
-         eiU4Gzh9aQ2kFGABUaBy/oKbrSzYhkDnqp1ArlEGLm0B4AT+HwsLM15FCE9uCx54tYnT
-         KD0B1npWqttkoHvjCfcGD7IFS2rza8rR5EtcCSOA9pEjn9kGnWfoQCeyRI/CNjjsrpsD
-         8N2w==
+        bh=jyDpV5BzG8iBPDyeyLv1XOV43R7/1fm/0Hrqc+sjK9w=;
+        b=hzTZIoghPvECqWrzRiGPqdN2LQF1qt5svJTuV8jjzFqOGiTvex3C/ycFvcTvA4OOdB
+         4DwIKc16Tcn58saFvfH1Rq8TwEZKPKOjlPABPhOjy2mHdSaqZ/Gcp5i/vloelViKoUWM
+         PGmZl/PugsoUe1kXIDxlyqUSlogu5sFMwW0HdyS9LbkV79pwtD609CJHCIWDlt7J3sYj
+         51TXMg5lcLP3MwX77XEwKs4dQVJC42afSDKrsT1VG0mA5BAboyTIFhWCpltEHkr0XCDP
+         znz+sX3UBP5T1l7Po88Y/RjJ8qDnySWBA7kM4HXzxPwtamhWonBZoLSLutm1Cm6caG0q
+         J3Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc:cc;
-        bh=UuxfqhCN9PR3lddejpzWUz8y1z7qJYRFpHP9dfAyALM=;
-        b=h7ASZzCpjRDRPx4PoJhY5kdZgHjLTMZa1XOIegF4am+Pj/j+lgAg8JhbRaNcypeIxu
-         24F+vTjV7t8VN0IASDtsS9qQSNtHTHwswEol9313UlafbZ4feYRfAW+/Sl/wJnEfGWjT
-         2H4o1ZiMdrQp/6p++nReuvKLlBk3TsO/dv4BQq6iA+JDv5yQ9M67gVuy7tmzSXwGLWW/
-         odaJYWU8pVWmwcter/V3prQMBH9Oy1JyL+C1AXoEq94SuRrQhgiUIa34FT5kOkquUqFL
-         m7kvekAKraxMy/DLnaxTrayxnbmDP4tsRuhhJOOVKt+bRYiJ+vP6Grq/p/zj8V5vFzvX
-         yXWg==
-X-Gm-Message-State: AOUpUlF1uZyP8sUZ1ygZQjpuuzUQNAypqfGnWpIHQUIu2TJ5DE8kYYuD
-        1Q0ECTabLxE4gucZaI88z70Omw==
-X-Google-Smtp-Source: AAOMgpe+4U6wvRpYX6832b6JAB0uT4k4wyOWeDHClpUS7xxdmyDL82fkYHbq+T5iqqx20Pp0KZCd4w==
-X-Received: by 2002:a17:902:8215:: with SMTP id x21-v6mr6287626pln.175.1531926936730;
-        Wed, 18 Jul 2018 08:15:36 -0700 (PDT)
-Received: from [127.0.0.1] ([40.112.139.85])
-        by smtp.gmail.com with ESMTPSA id o21-v6sm6018812pfa.54.2018.07.18.08.15.35
+        bh=jyDpV5BzG8iBPDyeyLv1XOV43R7/1fm/0Hrqc+sjK9w=;
+        b=l2TXdQ/PdlCTs/pLv6dDNJjfwyIOEqwkhBnYS4hO8ylT7Z8cYkzaCwcdgvai67uwjP
+         GP9b+CoFUy1sQI6fOhm3LAquahFHvYwi2VxsC9Ww9szuBVzj2GoN5A07Pw62+YLPs1Vu
+         mIVe8hTV8uWoqVmqnAEG/kanTltchtqAcDWiW545Y7bwlubcj/T95smxNIABoDgCE6ak
+         SJNem4N4WK7JxVXC43vBJiDECYaQryNUb0fY4qY893hbGXnkZJuj2OHbetB1YkX4GPw3
+         Wr90ShAPratXl1+68ThU8qRIWqyVpXpNCLENdfQxP63xRI929YJgdGi58JD/uwj3TZoQ
+         fEwA==
+X-Gm-Message-State: AOUpUlGl+DPnj9goQNXHQr+vYXnVqOyi7F8WVYn0VyM9U5hwtPZoMnmW
+        QDAB7YIFeisfZ3uVvFCdoriTyA==
+X-Google-Smtp-Source: AAOMgpc66Gxrt/cvbgemE5XrofXj+VGJWVtMSOpb8iajOiw4zMXGQdS070HV+P/S9g8MCpZXzPPF3A==
+X-Received: by 2002:a17:902:22cc:: with SMTP id o12-v6mr6227579plg.68.1531926938212;
+        Wed, 18 Jul 2018 08:15:38 -0700 (PDT)
+Received: from [127.0.0.1] ([40.112.137.127])
+        by smtp.gmail.com with ESMTPSA id s195-v6sm11422186pgs.76.2018.07.18.08.15.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 18 Jul 2018 08:15:35 -0700 (PDT)
-Date:   Wed, 18 Jul 2018 08:15:35 -0700 (PDT)
-X-Google-Original-Date: Wed, 18 Jul 2018 15:15:24 GMT
-Message-Id: <43ddcc9ef9267d54fb521319175871e5bf7e4d12.1531926932.git.gitgitgadget@gmail.com>
+        Wed, 18 Jul 2018 08:15:37 -0700 (PDT)
+Date:   Wed, 18 Jul 2018 08:15:37 -0700 (PDT)
+X-Google-Original-Date: Wed, 18 Jul 2018 15:15:25 GMT
+Message-Id: <22dc9ce8364dd20876ab5eb626ecc6a7396d3b3e.1531926932.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.11.git.gitgitgadget@gmail.com>
 References: <pull.11.git.gitgitgadget@gmail.com>
 From:   "Stefan Beller via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/8] refs.c: migrate internal ref iteration to pass thru
- repository argument
+Subject: [PATCH 2/8] refs.c: upgrade for_each_replace_ref to be a
+ each_repo_ref_fn callback
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,162 +71,98 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Stefan Beller <sbeller@google.com>
 
-In 60ce76d3581 (refs: add repository argument to for_each_replace_ref,
-2018-04-11) and 0d296c57aec (refs: allow for_each_replace_ref to handle
-arbitrary repositories, 2018-04-11), for_each_replace_ref learned how
-to iterate over refs by a given arbitrary repository.
-New attempts in the object store conversion have shown that it is useful
-to have the repository handle available that the refs iteration is
-currently iterating over.
-
-To achieve this goal we will need to add a repository argument to
-each_ref_fn in refs.h. However as many callers rely on the signature
-such a patch would be too large.
-
-So convert the internals of the ref subsystem first to pass through a
-repository argument without exposing the change to the user. Assume
-the_repository for the passed through repository, although it is not
-used anywhere yet.
-
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- refs.c               | 39 +++++++++++++++++++++++++++++++++++++--
- refs.h               | 10 ++++++++++
- refs/iterator.c      |  6 +++---
- refs/refs-internal.h |  5 +++--
- 4 files changed, 53 insertions(+), 7 deletions(-)
+ builtin/replace.c | 8 ++++----
+ refs.c            | 9 ++++-----
+ refs.h            | 2 +-
+ replace-object.c  | 5 +++--
+ 4 files changed, 12 insertions(+), 12 deletions(-)
 
+diff --git a/builtin/replace.c b/builtin/replace.c
+index ef22d724b..d0b1cdb06 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -39,7 +39,8 @@ struct show_data {
+ 	enum replace_format format;
+ };
+ 
+-static int show_reference(const char *refname, const struct object_id *oid,
++static int show_reference(struct repository *r, const char *refname,
++			  const struct object_id *oid,
+ 			  int flag, void *cb_data)
+ {
+ 	struct show_data *data = cb_data;
+@@ -56,9 +57,8 @@ static int show_reference(const char *refname, const struct object_id *oid,
+ 			if (get_oid(refname, &object))
+ 				return error("Failed to resolve '%s' as a valid ref.", refname);
+ 
+-			obj_type = oid_object_info(the_repository, &object,
+-						   NULL);
+-			repl_type = oid_object_info(the_repository, oid, NULL);
++			obj_type = oid_object_info(r, &object, NULL);
++			repl_type = oid_object_info(r, oid, NULL);
+ 
+ 			printf("%s (%s) -> %s (%s)\n", refname, type_name(obj_type),
+ 			       oid_to_hex(oid), type_name(repl_type));
 diff --git a/refs.c b/refs.c
-index fcfd3171e..2513f77ac 100644
+index 2513f77ac..5700cd468 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1390,17 +1390,50 @@ struct ref_iterator *refs_ref_iterator_begin(
-  * non-zero value, stop the iteration and return that value;
-  * otherwise, return 0.
-  */
-+static int do_for_each_repo_ref(struct repository *r, const char *prefix,
-+				each_repo_ref_fn fn, int trim, int flags,
-+				void *cb_data)
-+{
-+	struct ref_iterator *iter;
-+	struct ref_store *refs = get_main_ref_store(r);
-+
-+	if (!refs)
-+		return 0;
-+
-+	iter = refs_ref_iterator_begin(refs, prefix, trim, flags);
-+
-+	return do_for_each_repo_ref_iterator(r, iter, fn, cb_data);
-+}
-+
-+struct do_for_each_ref_help {
-+	each_ref_fn *fn;
-+	void *cb_data;
-+};
-+
-+static int do_for_each_ref_helper(struct repository *r,
-+				  const char *refname,
-+				  const struct object_id *oid,
-+				  int flags,
-+				  void *cb_data)
-+{
-+	struct do_for_each_ref_help *hp = cb_data;
-+
-+	return hp->fn(refname, oid, flags, hp->cb_data);
-+}
-+
- static int do_for_each_ref(struct ref_store *refs, const char *prefix,
- 			   each_ref_fn fn, int trim, int flags, void *cb_data)
- {
- 	struct ref_iterator *iter;
-+	struct do_for_each_ref_help hp = { fn, cb_data };
- 
- 	if (!refs)
- 		return 0;
- 
- 	iter = refs_ref_iterator_begin(refs, prefix, trim, flags);
- 
--	return do_for_each_ref_iterator(iter, fn, cb_data);
-+	return do_for_each_repo_ref_iterator(the_repository, iter,
-+					do_for_each_ref_helper, &hp);
+@@ -1478,12 +1478,11 @@ int refs_for_each_fullref_in(struct ref_store *refs, const char *prefix,
+ 	return do_for_each_ref(refs, prefix, fn, 0, flag, cb_data);
  }
  
- int refs_for_each_ref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
-@@ -2029,10 +2062,12 @@ cleanup:
- int refs_for_each_reflog(struct ref_store *refs, each_ref_fn fn, void *cb_data)
+-int for_each_replace_ref(struct repository *r, each_ref_fn fn, void *cb_data)
++int for_each_replace_ref(struct repository *r, each_repo_ref_fn fn, void *cb_data)
  {
- 	struct ref_iterator *iter;
-+	struct do_for_each_ref_help hp = { fn, cb_data };
- 
- 	iter = refs->be->reflog_iterator_begin(refs);
- 
--	return do_for_each_ref_iterator(iter, fn, cb_data);
-+	return do_for_each_repo_ref_iterator(the_repository, iter,
-+					     do_for_each_ref_helper, &hp);
+-	return do_for_each_ref(get_main_ref_store(r),
+-			       git_replace_ref_base, fn,
+-			       strlen(git_replace_ref_base),
+-			       DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
++	return do_for_each_repo_ref(r, git_replace_ref_base, fn,
++				    strlen(git_replace_ref_base),
++				    DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
  }
  
- int for_each_reflog(each_ref_fn fn, void *cb_data)
+ int for_each_namespaced_ref(each_ref_fn fn, void *cb_data)
 diff --git a/refs.h b/refs.h
-index cc2fb4c68..80eec8bbc 100644
+index 80eec8bbc..a0a18223a 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -274,6 +274,16 @@ struct ref_transaction;
- typedef int each_ref_fn(const char *refname,
- 			const struct object_id *oid, int flags, void *cb_data);
+@@ -317,7 +317,7 @@ int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data,
+ int for_each_tag_ref(each_ref_fn fn, void *cb_data);
+ int for_each_branch_ref(each_ref_fn fn, void *cb_data);
+ int for_each_remote_ref(each_ref_fn fn, void *cb_data);
+-int for_each_replace_ref(struct repository *r, each_ref_fn fn, void *cb_data);
++int for_each_replace_ref(struct repository *r, each_repo_ref_fn fn, void *cb_data);
+ int for_each_glob_ref(each_ref_fn fn, const char *pattern, void *cb_data);
+ int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
+ 			 const char *prefix, void *cb_data);
+diff --git a/replace-object.c b/replace-object.c
+index 801b5c167..017f02f8e 100644
+--- a/replace-object.c
++++ b/replace-object.c
+@@ -6,7 +6,8 @@
+ #include "repository.h"
+ #include "commit.h"
  
-+/*
-+ * The same as each_ref_fn, but also with a repository argument that
-+ * contains the repository associated with the callback.
-+ */
-+typedef int each_repo_ref_fn(struct repository *r,
-+			     const char *refname,
-+			     const struct object_id *oid,
-+			     int flags,
-+			     void *cb_data);
-+
- /*
-  * The following functions invoke the specified callback function for
-  * each reference indicated.  If the function ever returns a nonzero
-diff --git a/refs/iterator.c b/refs/iterator.c
-index 2ac91ac34..629e00a12 100644
---- a/refs/iterator.c
-+++ b/refs/iterator.c
-@@ -407,15 +407,15 @@ struct ref_iterator *prefix_ref_iterator_begin(struct ref_iterator *iter0,
- 
- struct ref_iterator *current_ref_iter = NULL;
- 
--int do_for_each_ref_iterator(struct ref_iterator *iter,
--			     each_ref_fn fn, void *cb_data)
-+int do_for_each_repo_ref_iterator(struct repository *r, struct ref_iterator *iter,
-+				  each_repo_ref_fn fn, void *cb_data)
+-static int register_replace_ref(const char *refname,
++static int register_replace_ref(struct repository *r,
++				const char *refname,
+ 				const struct object_id *oid,
+ 				int flag, void *cb_data)
  {
- 	int retval = 0, ok;
- 	struct ref_iterator *old_ref_iter = current_ref_iter;
+@@ -25,7 +26,7 @@ static int register_replace_ref(const char *refname,
+ 	oidcpy(&repl_obj->replacement, oid);
  
- 	current_ref_iter = iter;
- 	while ((ok = ref_iterator_advance(iter)) == ITER_OK) {
--		retval = fn(iter->refname, iter->oid, iter->flags, cb_data);
-+		retval = fn(r, iter->refname, iter->oid, iter->flags, cb_data);
- 		if (retval) {
- 			/*
- 			 * If ref_iterator_abort() returns ITER_ERROR,
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index dd834314b..5c7414bf0 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -473,8 +473,9 @@ extern struct ref_iterator *current_ref_iter;
-  * adapter between the callback style of reference iteration and the
-  * iterator style.
-  */
--int do_for_each_ref_iterator(struct ref_iterator *iter,
--			     each_ref_fn fn, void *cb_data);
-+int do_for_each_repo_ref_iterator(struct repository *r,
-+				  struct ref_iterator *iter,
-+				  each_repo_ref_fn fn, void *cb_data);
+ 	/* Register new object */
+-	if (oidmap_put(the_repository->objects->replace_map, repl_obj))
++	if (oidmap_put(r->objects->replace_map, repl_obj))
+ 		die("duplicate replace ref: %s", refname);
  
- /*
-  * Only include per-worktree refs in a do_for_each_ref*() iteration.
+ 	return 0;
 -- 
 gitgitgadget
 
