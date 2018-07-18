@@ -7,138 +7,94 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 703371F597
-	for <e@80x24.org>; Wed, 18 Jul 2018 19:32:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A3541F597
+	for <e@80x24.org>; Wed, 18 Jul 2018 19:34:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730511AbeGRULs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jul 2018 16:11:48 -0400
-Received: from mail-qk0-f202.google.com ([209.85.220.202]:52014 "EHLO
-        mail-qk0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730490AbeGRULr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jul 2018 16:11:47 -0400
-Received: by mail-qk0-f202.google.com with SMTP id h67-v6so4452560qke.18
-        for <git@vger.kernel.org>; Wed, 18 Jul 2018 12:32:27 -0700 (PDT)
+        id S1729209AbeGRUOG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jul 2018 16:14:06 -0400
+Received: from mail-yb0-f196.google.com ([209.85.213.196]:34405 "EHLO
+        mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728929AbeGRUOG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jul 2018 16:14:06 -0400
+Received: by mail-yb0-f196.google.com with SMTP id e9-v6so2318560ybq.1
+        for <git@vger.kernel.org>; Wed, 18 Jul 2018 12:34:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=UB5bsxNAtE9LOfWRZ35VsahyWnHQK1EcvLSMudLLw24=;
-        b=nC54YfaVQutkw3fEkjedUVME5x+X7dg3T7G6WlLflbcYxUiVWUpBy63l//kgPd6AVy
-         OpWylbuVZxqzQ0fyrxmdE8XbcIac8qfln67HX97Fjo74JsTur/bj9hfoGvBb2d4yt7xT
-         70fE4IRELQPq89hcfR0X+iS1JqunLH/fkHtLFL+WvnfdPADM3YTkQqQiNSo8sAbLou0n
-         PSODhGMXn6srEFLManhl1z0I21Nc/J5UAfVBL7adizTvR1ReYF7BjvpqQaRaFdWtblF/
-         cgN+GeQ6b0ZPmyaPzr+J4C+bFOzl6qs+GFGxDVZmpG0uBdEQTalV2EWQKFITPsLmbY6V
-         iYFw==
+        bh=duuH141ZAEKiwbOhYXGYzl+BzCzhdXEdQ2zjgfQed8Y=;
+        b=hbPvr0yqw8RP6ext+KNkg/WLgoyInmEHxHHLdEIFHt1t9+piY33rP2FHis7f+1agKP
+         g2cRkYd6B5wkAD1w98Z/sKvmaGyT8YJyp9jIFxa8zFFp7WP8tarESZBr7/otPX942UMD
+         zGTXjvvEbKgjbSnI7l8Z+TxegzYFs1opPCKhpPRo5L40og9vn5OD2qzeLnpMLYPZOH9K
+         sht2Q40AYmpKy9WP5GYUAS/nRfKXWhjDsLKr06Remm54W2xROVdm8ioinmr87XsLi7Rn
+         3+RRCnuy1pjmyhZo7K+4xuedFhz6c6RVK+y5HyxBqXcOIxKiOaBjTgheKuU21urwBpws
+         Q7qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
-         :references:subject:from:to:cc;
-        bh=UB5bsxNAtE9LOfWRZ35VsahyWnHQK1EcvLSMudLLw24=;
-        b=lvCOIIeZMeKut0WtRXokxNEVovT5K0GgL4n2kvMSLzwrAgH4Drk6yooaPg5EU8C0Y2
-         F+MMmbJcd0AHzcq02BEC1t4uF/T3+Ks+kt8HFslY6vjNQYpxhxy3dQQ2eqRDB1NXWvyO
-         W/aZUHp1N+5jWaKivJcsKGqadiL6wwxyZfS2VF5vH14o2HptjXqn/QWhHxPsbGHHeLtJ
-         hh7ddSbfEq66XXDRR1jTOXX+o9uqMyf1IhGf4AWZFjjAx57a5YDF1mRGqvlLpuiTPwaS
-         FeHFxMpoASUCDKkD4ifh5CsrNBoAblOr9a/3SLJvApSrgiqFVGB9kUNeIyszM09NV6d4
-         zIxQ==
-X-Gm-Message-State: AOUpUlEJDKp+Q0MZppdQUE8rH81qjVNMq37ubkH9CpqXVYrevC8Wuec2
-        PQ5urmOnXhePBAhc2hg1KkFTZzm9UgHKRtZ3MZaCCgufSU0XeIf+z6DK/3pCNuZCRZryZbnQYui
-        hkRA7RWd5XmbXhWejtK+/ScdKHoLAjP2LrUrY8qWk/Vr7D76Bv7/iSuJtcpRH
-X-Google-Smtp-Source: AAOMgpco5mYiEPkFZC+IAUhZeuMYTAvP6SRbJht+uHPAgyQPa5HSjGQ2lJa1M8ZYNwN51PYAePh+pjSrSMao
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=duuH141ZAEKiwbOhYXGYzl+BzCzhdXEdQ2zjgfQed8Y=;
+        b=Cl7+7O2uQjsllGCADHaBnQyh/NGSjjfHcU9TFFGUujDYSyID+pUlHUW/5bEUVsR1QG
+         dhg+k0UWH5mNHNQo0VGK+ovyX6vX6q1B1VQ6Dm8wGWqB/0drhSnHY2qqLb010CvgZNSK
+         q8ZWH7XRxifeFgX8YPKhG8FGaT2af4UVfZG6YJ9T34sMIEeJ9pzV61ASkuGgc80sgwOl
+         0dojwCtblXVMUSkuFD5BwZLUPJy9S6o2u79zIgJtZSGhUeOOqsjJeERkEooGJONcraDL
+         sBcEWIZfkKb3dBnozq1bWXGt+cL2feVfCNjlr5lt2J1JoGUR7UvX6tLILGErBnWXYSNp
+         1sQg==
+X-Gm-Message-State: AOUpUlGJ9K9oXNvzF93CYg+4onLjNyb8SBc8sLKm1BhNNTCF0VO59xZZ
+        tbsWvBOrJteZyrT0TRhgFgFm97U8hgZkQvXh7ExgWhm9N0M=
+X-Google-Smtp-Source: AAOMgpeMNp2+1qE/keecJpvBsmX0Oi3oWT9Qb/vIk6keGSyfev1/JAhCLK/RmCcnTZitISEt9k3uJeaH47tbQq6YVkU=
+X-Received: by 2002:a25:dc47:: with SMTP id y68-v6mr3733130ybe.515.1531942485006;
+ Wed, 18 Jul 2018 12:34:45 -0700 (PDT)
 MIME-Version: 1.0
-X-Received: by 2002:a37:a647:: with SMTP id p68-v6mr3758584qke.7.1531942346945;
- Wed, 18 Jul 2018 12:32:26 -0700 (PDT)
-Date:   Wed, 18 Jul 2018 12:31:56 -0700
-In-Reply-To: <20180718193156.47365-1-sbeller@google.com>
-Message-Id: <20180718193156.47365-11-sbeller@google.com>
-References: <20180718193156.47365-1-sbeller@google.com>
-X-Mailer: git-send-email 2.18.0.233.g985f88cf7e-goog
-Subject: [PATCH 10/10] diff.c: offer config option to control ws handling in
- move detection
+References: <20180717002654.120375-1-sbeller@google.com> <xmqqmuupogei.fsf@gitster-ct.c.googlers.com>
+ <CAGZ79kZtrmjODGi1j-HRbchZYuALHnms22=wWBV1AF+zUBru_g@mail.gmail.com> <CAPig+cRx5-2TYOm_8oayFfbKGpmTJf=M0cNR3L5UJGGC6vHPDQ@mail.gmail.com>
+In-Reply-To: <CAPig+cRx5-2TYOm_8oayFfbKGpmTJf=M0cNR3L5UJGGC6vHPDQ@mail.gmail.com>
 From:   Stefan Beller <sbeller@google.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, rybak.a.v@gmail.com,
-        Stefan Beller <sbeller@google.com>
+Date:   Wed, 18 Jul 2018 12:34:34 -0700
+Message-ID: <CAGZ79kYCDR=m0C1Vmh5U2tsj5bTTpGUo1mKe0BMDKmO5riBLLw@mail.gmail.com>
+Subject: Re: [PATCH v2 0/6] git-submodule.sh: convert part of cmd_update to C
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- Documentation/config.txt       | 5 +++++
- Documentation/diff-options.txt | 7 +++++--
- diff.c                         | 9 +++++++++
- 3 files changed, 19 insertions(+), 2 deletions(-)
+Hi Eric,
+On Tue, Jul 17, 2018 at 11:59 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
+>
+> On Tue, Jul 17, 2018 at 2:53 PM Stefan Beller <sbeller@google.com> wrote:
+> > > A tangent.
+> > >
+> > > Because this "-- " is a conventional signature separator, MUAs like
+> > > Emacs message-mode seems to omit everything below it from the quote
+> > > while responding, making it cumbersome to comment on the tbdiff.
+> > >
+> > > Something to think about if somebody is contemplating on adding more
+> > > to format-patch's cover letter.
+> >
+> > +cc Eric who needs to think about this tangent, then.
+> > https://public-inbox.org/git/20180530080325.37520-1-sunshine@sunshineco.com/
+>
+> The "git-format-patch --range-diff" option implemented by that patch
+> series (and its upcoming re-roll) place the range-diff before the "--
+> " signature line, so this isn't a problem.
+>
+> I think Junio's tangent was targeted more at humans blindly plopping
+> the copy/pasted range-diff at the end of the cover letter without
+> taking the "-- " signature line into account. (Indeed, Gmail hides
+> everything below the "-- " line by default, as well.)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 2659153cb37..6ca7118b018 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1122,6 +1122,11 @@ diff.colorMoved::
- 	true the default color mode will be used. When set to false,
- 	moved lines are not colored.
- 
-+diff.colorMovedWS::
-+	When moved lines are colored using e.g. the `diff.colorMoved` setting,
-+	this option controls the `<mode>` how spaces are treated
-+	for details of valid modes see '--color-moved-ws' in linkgit:git-diff[1].
-+
- color.diff.<slot>::
- 	Use customized color for diff colorization.  `<slot>` specifies
- 	which part of the patch to use the specified color, and is one
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 143acd9417e..8da7fed4e22 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -294,8 +294,11 @@ dimmed_zebra::
- 
- --color-moved-ws=<modes>::
- 	This configures how white spaces are ignored when performing the
--	move detection for `--color-moved`. These modes can be given
--	as a comma separated list:
-+	move detection for `--color-moved`.
-+ifdef::git-diff[]
-+	It can be set by the `diff.colorMovedWS` configuration setting.
-+endif::git-diff[]
-+	These modes can be given as a comma separated list:
- +
- --
- ignore-space-at-eol::
-diff --git a/diff.c b/diff.c
-index 7810a4733f8..5089c6eb3a4 100644
---- a/diff.c
-+++ b/diff.c
-@@ -35,6 +35,7 @@ static int diff_rename_limit_default = 400;
- static int diff_suppress_blank_empty;
- static int diff_use_color_default = -1;
- static int diff_color_moved_default;
-+static int diff_color_moved_ws_default;
- static int diff_context_default = 3;
- static int diff_interhunk_context_default;
- static const char *diff_word_regex_cfg;
-@@ -332,6 +333,13 @@ int git_diff_ui_config(const char *var, const char *value, void *cb)
- 		diff_color_moved_default = cm;
- 		return 0;
- 	}
-+	if (!strcmp(var, "diff.colormovedws")) {
-+		int cm = parse_color_moved_ws(value);
-+		if (cm < 0)
-+			return -1;
-+		diff_color_moved_ws_default = cm;
-+		return 0;
-+	}
- 	if (!strcmp(var, "diff.context")) {
- 		diff_context_default = git_config_int(var, value);
- 		if (diff_context_default < 0)
-@@ -4327,6 +4335,7 @@ void diff_setup(struct diff_options *options)
- 	}
- 
- 	options->color_moved = diff_color_moved_default;
-+	options->color_moved_ws_handling = diff_color_moved_ws_default;
- }
- 
- void diff_setup_done(struct diff_options *options)
--- 
-2.18.0.233.g985f88cf7e-goog
+Awesome thanks! (I missed that hint given by Junio)
 
+Now that I grow more accustomed to range-diffs, I wonder
+if we want to have them even *before* the short stat in the
+cover letter. (I usually scroll over the short stat just to take it
+as a FYI on what to expect, whereas the range-diff can already
+be reviewed, hence seems more useful that the stats)
+
+Thanks,
+Stefan
