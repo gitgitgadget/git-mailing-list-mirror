@@ -2,98 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 25B341F597
-	for <e@80x24.org>; Wed, 18 Jul 2018 19:21:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 538B11F597
+	for <e@80x24.org>; Wed, 18 Jul 2018 19:32:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729296AbeGRUAs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jul 2018 16:00:48 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51478 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1729221AbeGRUAs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jul 2018 16:00:48 -0400
-Received: (qmail 14379 invoked by uid 109); 18 Jul 2018 19:21:30 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 18 Jul 2018 19:21:30 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2226 invoked by uid 111); 18 Jul 2018 19:21:34 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 18 Jul 2018 15:21:34 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Jul 2018 15:21:28 -0400
-Date:   Wed, 18 Jul 2018 15:21:28 -0400
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/16] Consolidate reachability logic
-Message-ID: <20180718192128.GB7778@sigill.intra.peff.net>
-References: <pull.10.git.gitgitgadget@gmail.com>
- <6b7a50dc-6b71-0e31-030a-42dd1b26bde4@ramsayjones.plus.com>
- <20180716161821.GB18150@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1807181420250.71@tvgsbejvaqbjf.bet>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1807181420250.71@tvgsbejvaqbjf.bet>
+        id S1730316AbeGRULY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jul 2018 16:11:24 -0400
+Received: from mail-io0-f201.google.com ([209.85.223.201]:40229 "EHLO
+        mail-io0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728929AbeGRULY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jul 2018 16:11:24 -0400
+Received: by mail-io0-f201.google.com with SMTP id j18-v6so4094800iog.7
+        for <git@vger.kernel.org>; Wed, 18 Jul 2018 12:32:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=wnARx41OE4mn/G72UQ1JlP2J5RsELwfwL+7EsOlXLNw=;
+        b=M1hvLUXrrOZ0u+hMLuhvl9SJNwMrxurWaVr0WHo1vNUAaMB6zyayvR0DPtIAlsUYXv
+         zI3EOydXuuLt3C/JDcZ0rMOjYsVyMZZFerofqFithz+UzDaRY567j49talYqKNTs5jnb
+         EXaXE+2gABcTusiIn4bDcCwEeC4j9Ulpa2erwn8Helxc/wK7ctn7Kerf91od0E5VVxMT
+         lp9vItzvMN9I4XnCFcQI3+wfvOO+nn0159foKiFQ9QkGJ8SnKRYnFckVfkmmwKsPKE/S
+         x0c76KLZZrSd89kHrZGlToUXJqTjEnBM0GnO+ZE5qOE0VxETbOkWf1FaD3AbYVJSoeTF
+         KPHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=wnARx41OE4mn/G72UQ1JlP2J5RsELwfwL+7EsOlXLNw=;
+        b=Zp9IOc/um2Ya8oN10fZA5VJk2zdhTQfXyVA+YTB7aRmNaGTcajdKyfiiJTtjiWPu0x
+         FUo5P49aLnQU4UUSHUIAoc6IItBPfVBCF2B1T8glCVc0FPhcwKeQAOc4Srj7bDODaSXN
+         VltQE9mgI5+Mb+or/JWFoHrhcwB57W7nb/lWyE+MyzTG/4MOIySHPusnRRJQ8O/WYNOM
+         06TqEQSmCGkFm9lSyks6sdhxS65bsX2y6qEaRSunvkuZaeXQkE2iDCzzJohBrbX2sgHy
+         AeI+TtcNYKqRFkq0bRyMCGtwXvwz88Rhq1POlvgtevYwBfcMR7yfjgycDzNapTAjQB03
+         FKkg==
+X-Gm-Message-State: AOUpUlGXzytn1/N46UKw+SlewbQMxobldxehd0ohwlr+5FBQP3aWoq42
+        SyD2B4WlCkx8XE0zEgPQ45e1SUXJ7xtOw6VDvQdUTkggd+XU76LAexgnZs67DJvtsPBA3H7FmyO
+        BUfnI33pekjnsP43BN1sbUbkzo+N2vszyvWQQ9/jr8bZLt8KQKQJTk+Yxmxx/
+X-Google-Smtp-Source: AAOMgpdlv5ruV/+ba3QIgG1SAMumnk/5Q7elZSx2SSgaRtaj5N/d7TZelZrSin5K56ZTH0ksWuuk7dtlzmHH
+X-Received: by 2002:a24:4643:: with SMTP id j64-v6mr1627789itb.18.1531942323731;
+ Wed, 18 Jul 2018 12:32:03 -0700 (PDT)
+Date:   Wed, 18 Jul 2018 12:31:46 -0700
+Message-Id: <20180718193156.47365-1-sbeller@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.18.0.233.g985f88cf7e-goog
+Subject: [PATCHv6 00/10] Reroll of sb/diff-color-move-more
+From:   Stefan Beller <sbeller@google.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, rybak.a.v@gmail.com,
+        Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 18, 2018 at 02:23:11PM +0200, Johannes Schindelin wrote:
+v6:
+* fixed issues hinted at by Andrei, thanks! (range-diff below)
+* incorporates the new config option, sent separately previously.
 
-> > Yeah, they're out of order in mutt's threaded display. And the
-> > back-dating means there's a much higher chance of them getting blocked
-> > as spam (e.g., some of the dates are from weeks ago).
-> > 
-> > git-send-email uses the current time minus an offset, and then
-> > monotonically increases for each patch:
-> > 
-> >   $time = time - scalar $#files;
-> >   ...
-> >   my $date = format_2822_time($time++);
-> > 
-> > which seems to work pretty well in practice. It does mean the original
-> > dates are lost. The committer date is not interesting at all (there will
-> > be a new committer via "git am" anyway). The original author date is
-> > potentially of interest, but could be included as an in-body header.
-> > AFAIK send-email doesn't have such an option, though, and people are
-> > fine with date-of-sending becoming the new author date.
-> > 
-> > +cc Johannes as the GitGitGadget author
-> 
-> Thanks for dumping even more work on my shoulders.
+v5:
+This is a resend of sb/diff-color-move-more
+https://public-inbox.org/git/20180629001958.85143-1-sbeller@google.com/
+that fixes an errornous squashing within the series; the end result is
+the same. range diff is below. (As the latest cooking email said
+this series is going to land in next soon, I hope this is not too late
+of a resend; otherwise just ignore it as the end result is the same)
 
-Wow. Here's my perspective on what I wrote.
+Thanks,
+Stefan
 
-Somebody pointed out an issue in the tool. I tried to add an additional
-data point (how other clients react, and that I've seen spam-related
-problems). And I tried to point to an existing solution in another tool,
-in case that was helpful. I thought cc-ing you would be a favor, since
-you obviously have an interest in the tool, and it is easy to miss
-discussions buried deep in a thread.
 
-So no, I didn't write the patch for you. But I tried to contribute
-positively to the process. And I got yelled at for it. That makes me a
-lot less inclined to try to help in the future.
+Stefan Beller (10):
+  xdiff/xdiff.h: remove unused flags
+  xdiff/xdiffi.c: remove unneeded function declarations
+  t4015: avoid git as a pipe input
+  diff.c: do not pass diff options as keydata to hashmap
+  diff.c: adjust hash function signature to match hashmap expectation
+  diff.c: add a blocks mode for moved code detection
+  diff.c: decouple white space treatment from move detection algorithm
+  diff.c: factor advance_or_nullify out of mark_color_as_moved
+  diff.c: add white space mode to move detection that allows indent
+    changes
+  diff.c: offer config option to control ws handling in move detection
 
-> Next time, I will ask you to jump in, instead of putting the onus on me.
->
-> I mean, seriously, what is this? "You can use *any* mail program to work
-> with the Git mailing list, *any* mailer. As long as it is mutt. And as
-> long as you spend hours and hours on tooling that oh BTW nobody else can
-> use."
+ Documentation/config.txt       |   5 +
+ Documentation/diff-options.txt |  33 ++++-
+ diff.c                         | 262 +++++++++++++++++++++++++++++----
+ diff.h                         |   9 +-
+ t/t4015-diff-whitespace.sh     | 243 +++++++++++++++++++++++++-----
+ xdiff/xdiff.h                  |   8 -
+ xdiff/xdiffi.c                 |  17 ---
+ 7 files changed, 489 insertions(+), 88 deletions(-)
 
-The irony here is that I actually _did_ look at the GitGitGadget
-repository, and thought about making a patch to be helpful. But as it is
-written in a language I'm not all that familiar with, using tools that I
-don't normally use, I didn't want to spend hours and hours in order to
-make what was probably going to be a one-line patch in software that I
-don't use myself.
 
--Peff
+1:  a512cd40cae ! 1:  aabbc4e8aff diff.c: add white space mode to move detection that allows indent changes
+    @@ -27,8 +27,8 @@
+         modes in the move detection.
+     
+         This patch brings some challenges, related to the detection of blocks.
+    -    We need a white net the catch the possible moved lines, but then need to
+    -    narrow down to check if the blocks are still in tact. Consider this
+    +    We need a wide net to catch the possible moved lines, but then need to
+    +    narrow down to check if the blocks are still intact. Consider this
+         example (ignoring block sizes):
+     
+          - A
+    @@ -254,7 +254,7 @@
+     +		}
+     +	}
+     +
+    -+	for (i = 0; i <pmb_nr; i++) {
+    ++	for (i = 0; i < pmb_nr; i++) {
+     +		if (got_match[i]) {
+     +			/* Carry the white space delta forward */
+     +			pmb[i]->next_line->wsd = pmb[i]->wsd;
+-:  ----------- > 2:  f80fbe78d9b diff.c: offer config option to control ws handling in move detection
