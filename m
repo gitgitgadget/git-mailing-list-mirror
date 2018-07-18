@@ -2,53 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 481C01F597
-	for <e@80x24.org>; Wed, 18 Jul 2018 06:38:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B2F11F597
+	for <e@80x24.org>; Wed, 18 Jul 2018 09:26:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726180AbeGRHOp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jul 2018 03:14:45 -0400
-Received: from wp232.webpack.hosteurope.de ([80.237.132.239]:60256 "EHLO
-        wp232.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726110AbeGRHOp (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 18 Jul 2018 03:14:45 -0400
-Received: from app01-neu.ox.hosteurope.de ([92.51.170.135] helo=null); authenticated
-        by wp232.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:ECDHE_RSA_AES_256_CBC_SHA1:256)
-        id 1ffg6V-0003I7-Cd; Wed, 18 Jul 2018 08:38:27 +0200
-Date:   Wed, 18 Jul 2018 08:38:27 +0200 (CEST)
-From:   Frank Wolf <webmaster@frank-wolf.org>
-To:     git@vger.kernel.org
-Message-ID: <1536686621.139255.1531895907281@ox.hosteurope.de>
-Subject: Receiving console output from GIT 10mins after abort/termination?
+        id S1730565AbeGRKC7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jul 2018 06:02:59 -0400
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:28947 "EHLO
+        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729095AbeGRKC6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jul 2018 06:02:58 -0400
+Received: from [192.168.2.240] ([92.22.19.104])
+        by smtp.talktalk.net with SMTP
+        id fiiafu9ahdJAefiiafFtNY; Wed, 18 Jul 2018 10:25:57 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1531905957;
+        bh=AbzE8yCN5uE8qExuhJH48gUfvouMxJNozd4DIo6lu6Y=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=duZw3v8lQDEEylxxmnAnm3S/Cvcqiim1yXeUobUuy6SGUFutFS2fxYdrURaelomFy
+         I4i9gjDpK87kUyJORm6e2V82sXygqR/YFcPryIXX1gaRotoKlKCAAmeKJEkq5PEUg/
+         jtlV/0ogyUcS0rpLGE9EPg0McrGBV39wkFMEmLKE=
+X-Originating-IP: [92.22.19.104]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=V8BTL9vi c=1 sm=1 tr=0 a=f/8ZdrXn5sPnqdHA06GUHw==:117
+ a=f/8ZdrXn5sPnqdHA06GUHw==:17 a=IkcTkHD0fZMA:10 a=cETuxoCwAAAA:8
+ a=i_EA8KvodolMb8miwMkA:9 a=QEXdDO2ut3YA:10 a=tb6VMGFFq-HsUJGUQiVL:22
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] sequencer.c: terminate the last line of author-script
+ properly
+To:     Akinori MUSHA <knu@iDaemons.org>, git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
+References: <86a7qwpt9g.knu@iDaemons.org>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <f5b56540-d26a-044e-5f46-1d975f889d06@talktalk.net>
+Date:   Wed, 18 Jul 2018 10:25:54 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <86a7qwpt9g.knu@iDaemons.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
 Content-Transfer-Encoding: 7bit
-X-Priority: 3
-Importance: Medium
-X-Originating-Client: open-xchange-appsuite
-X-Mailer: Open-Xchange Mailer v7.8.4-Rev24
-X-bounce-key: webpack.hosteurope.de;webmaster@frank-wolf.org;1531895908;0df45cd3;
-X-HE-SMSGID: 1ffg6V-0003I7-Cd
+X-CMAE-Envelope: MS4wfKgZ0acIwkO2yghmbhnXqhF1rH6k9Pz0yh+t0bWx60Zqtrrczz7lfrnkbcUmFe1oIx5IZamFkYZ/fEac1ABhKkOnlmGIqlqeonnK5TJ9FHL+fg1jP4Uq
+ xWzMG6r4yRlNUGFUShDwMNW5uR3AEOwQ9v62SEHXap9BaUlO/WnBAmYuSpQtSM2XsbRuEsec5ab+EwABPJgGnxeKcZsp3kkgUr78Xs9nh+hXMj7sI/ydmEuo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi @ll,
+Hi Akinori
 
-I hope I'm posting to the right group (not sure if it's Windows related) but I've got
-a weird problem using GIT:
+On 12/07/18 12:18, Akinori MUSHA wrote:
+> 
+> It looks like write_author_script() intends to write out a file in
+> Bourne shell syntax, but it doesn't put a closing single quote on the
+> last line.
+> 
+> This patch makes .git/rebase-merge/author-script actually parsable by
+> sh(1) by adding a single quote and a linefeed to terminate the line
+> properly.
+> 
+> Signed-off-by: Akinori MUSHA <knu@idaemons.org>
+> ---
+>   sequencer.c                   |  1 +
+>   t/t3404-rebase-interactive.sh | 13 +++++++++++++
+>   2 files changed, 14 insertions(+)
+> 
+> diff --git a/sequencer.c b/sequencer.c
+> index 4034c0461..5f32b6df1 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -651,6 +651,7 @@ static int write_author_script(const char *message)
+>   			strbuf_addch(&buf, *(message++));
+>   		else
+>   			strbuf_addf(&buf, "'\\\\%c'", *(message++));
+> +	strbuf_addstr(&buf, "'\n");
+>   	res = write_message(buf.buf, buf.len, rebase_path_author_script(), 1);
 
-By accident I've tried to push a repository (containing an already
-commited but not yet pushed submodule reference).
-This fails immediately with an error of course BUT
+The third parameter here means that write_message() will append a new 
+line (you can check this by looking at the file that's created) so 
+strictly speaking we only need to add "'" to the end of the message, 
+alternatively it would be more obvious to keep adding "'\n" and change 1 
+to 0 in the call to write_message()
 
-after 10 mins I get an output on the console though the command exited!?
-(... $Received disconnect from <GIT serverIP>: User session has timed out idling after 6000000 ms....)
+Best Wishes
 
-Does anyone have an explanation why I still get an output after the command was aborted?
+Phillip
 
-/Frank
+>   	strbuf_release(&buf);
+>   	return res;
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index 352a52e59..345b103eb 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -75,6 +75,19 @@ test_expect_success 'rebase --keep-empty' '
+>   	test_line_count = 6 actual
+>   '
+>   
+> +test_expect_success 'rebase -i writes out .git/rebase-merge/author-script in "edit" that sh(1) can parse' '
+> +	test_when_finished "git rebase --abort ||:" &&
+> +	git checkout master &&
+> +	set_fake_editor &&
+> +	FAKE_LINES="edit 1" git rebase -i HEAD^ &&
+> +	test -f .git/rebase-merge/author-script &&
+> +	unset GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_AUTHOR_DATE &&
+> +	eval "$(cat .git/rebase-merge/author-script)" &&
+> +	test "$(git show --quiet --pretty=format:%an)" = "$GIT_AUTHOR_NAME" &&
+> +	test "$(git show --quiet --pretty=format:%ae)" = "$GIT_AUTHOR_EMAIL" &&
+> +	test "$(git show --quiet --date=raw --pretty=format:@%ad)" = "$GIT_AUTHOR_DATE"
+> +'
+> +
+>   test_expect_success 'rebase -i with the exec command' '
+>   	git checkout master &&
+>   	(
+> 
+
