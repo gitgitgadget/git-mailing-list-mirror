@@ -2,108 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 96894208E9
-	for <e@80x24.org>; Wed, 18 Jul 2018 20:13:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9ADE1F597
+	for <e@80x24.org>; Wed, 18 Jul 2018 20:17:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729973AbeGRUwk (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jul 2018 16:52:40 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:37418 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729667AbeGRUwj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jul 2018 16:52:39 -0400
-Received: by mail-wr1-f65.google.com with SMTP id q10-v6so5867615wrd.4
-        for <git@vger.kernel.org>; Wed, 18 Jul 2018 13:13:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=p6E/a83+vld+rBpLodMqPLlab7Vjaz5FVuNHfQUKNHg=;
-        b=LKKYDf0asLqiQdKNzlx4yma0y0FnPvcFUGG8ieXUM2suwLDacPFaN3snNbKJgHfkJV
-         GyYUMb5VrrDlcnMWD+AJEnlQfJl69tDyzxleM6qlAJgMc7zdPjw+2EDmIXcAij7nS7kt
-         UUupUd/v7XtqTMAfelVOcYzVjymPlQtrL2MxbiaV37SY45jvVlFUKrNGA2B95tXqzXD+
-         KGEXhuNJ/9eP4UNhXy+mBkDGAgxjRLY5eNAWly39nnoIkjbCQsHRMIrCIfsdvmPBR1YL
-         0ZTDzAAHMR5Zc3HJAyQkdIn95PwAVBUowdiPShF+enab254D1BB5jczQaK20eI1bukwV
-         70QA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=p6E/a83+vld+rBpLodMqPLlab7Vjaz5FVuNHfQUKNHg=;
-        b=pjqZUjvs6xLK9kM+7cB2VjYH3kvr682DR8kD8f6SRkVhTM3bGZfSi9iy+SLTk69BTc
-         Ik/XxYsSJDYRINK8+bH04H8rPcEbIBXqEgYiv7X2AR3HrxCp6d+A5Dn/Gw4X3J7df7LK
-         uGBdpjN2AehxeF5WGPDRfLJbtoqEtvzd9Fx51/Mec+DZub+2xNNYEtoATIo2n8QX/wpS
-         4Utzu1ZNrNZ6tgaJzvAH8jY7o4q53aqrCNYl7dZ3E02XqPs58p79v+BQvclh9VJ+kTV6
-         TfWGdGvzERKrqtjnD0jigixD6W5RZxIy386zfbbpIW9sUXClA0bd+QXLL+e99jTZeWA4
-         54xA==
-X-Gm-Message-State: AOUpUlFFS5KrYmVWSuuLQ4upvcuzw98q+Oke24AMIl1Y4sMMyQHrAySr
-        ZZjLShvw/IIu9uofNp1NUyc=
-X-Google-Smtp-Source: AAOMgpdj/3WlC7L6ya+NbpOVT04QlhQOshfx+TkY2fLNFFhnH+9SnI05ZkHEmzZNPx9/MwSU08eZ9w==
-X-Received: by 2002:adf:ef03:: with SMTP id e3-v6mr5142886wro.182.1531944788684;
-        Wed, 18 Jul 2018 13:13:08 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id x7-v6sm6395271wrr.95.2018.07.18.13.13.07
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 18 Jul 2018 13:13:07 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     gitgitgadget@gmail.com, git <git@vger.kernel.org>,
-        Jakub =?utf-8?Q?N?= =?utf-8?Q?ar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: [PATCH 2/8] refs.c: upgrade for_each_replace_ref to be a each_repo_ref_fn callback
-References: <pull.11.git.gitgitgadget@gmail.com>
-        <22dc9ce8364dd20876ab5eb626ecc6a7396d3b3e.1531926932.git.gitgitgadget@gmail.com>
-        <xmqqd0vkjsx3.fsf@gitster-ct.c.googlers.com>
-        <CAGZ79kZ9oeqidNMppOx+PNfp-4RdDhLzvQHhm45Ceni=g1Q_7Q@mail.gmail.com>
-Date:   Wed, 18 Jul 2018 13:13:07 -0700
-In-Reply-To: <CAGZ79kZ9oeqidNMppOx+PNfp-4RdDhLzvQHhm45Ceni=g1Q_7Q@mail.gmail.com>
-        (Stefan Beller's message of "Wed, 18 Jul 2018 12:19:05 -0700")
-Message-ID: <xmqq4lgwjoa4.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1730693AbeGRU4e (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jul 2018 16:56:34 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51658 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1730253AbeGRU4e (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jul 2018 16:56:34 -0400
+Received: (qmail 16944 invoked by uid 109); 18 Jul 2018 20:17:04 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 18 Jul 2018 20:17:04 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3045 invoked by uid 111); 18 Jul 2018 20:17:08 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 18 Jul 2018 16:17:08 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Jul 2018 16:17:02 -0400
+Date:   Wed, 18 Jul 2018 16:17:02 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <dstolee@microsoft.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: [PATCH] add core.usereplacerefs config option
+Message-ID: <20180718201702.GA15306@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+We can already disable replace refs using a command line
+option or environment variable, but those are awkward to
+apply universally. Let's add a config option to do the same
+thing.
 
->>  - existing users of for_each_replace_ref() who were all happy
->>    working in the_repository have to pass it explicitly, even
->>    thought they do not have any need to.
->
-> All callbacks that are passed to for_each_replace_ref now
-> operate on 'r' instead of the_repository, and that actually fixes
-> a bug (commit message is lacking), but the cover letter hints at:
-> ...
->> In this case, even if you introduced for_each_replace_ref_in_repo(),
->> making for_each_replace_ref() a thin wrapper that always uses
->> the_repository is a bit more cumbersome than just a simple macro.
->
-> Yes, but such a callback would do the *wrong* subtle thing in some cases
-> as you really want to work in the correct repository for e.g. looking up
-> commits.
->
->> But it *is* doable (you'd need to use a wrapping structure around
->> cb_data), and a developer who case about maintainability during API
->> transition would have taken pains to do so.  A bit dissapointing.
->
-> My original patches were RFC-ish and a trade off as for the reflog only
-> there is nothing in flight to care about.
->
-> Given that we would want to upgrade all the ref callbacks, we have to
-> take this route, I think.
+That raises the question of why one might want to do so
+universally. The answer is that replace refs violate the
+immutability of objects. For instance, if you wanted to
+cache the diff between commit XYZ and its parent, then in
+theory that never changes; the hash XYZ represents the total
+state. But replace refs violate that; pushing up a new ref
+may create a completely new diff.
 
-Try to rebuild 'pu' on top of 'master' yoruself to realize how many
-in-flight topics you are hurting and causing unnecessary load on the
-maintainer with the "let's add the 'r' parameter without changing
-the function names; compiler would catch and cause breakages"
-approach.  
+The obvious "if it hurts, don't do it" answer is not to
+create replace refs if you're doing this kind of caching.
+But for a site hosting arbitrary repositories, they may want
+to allow users to share replace refs with each other, but
+not actually respect them on the site (because the caching
+is more important than the replace feature).
 
-Until that happens, I won't waste any more time trying to educate
-you on this further.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+We've been using this patch for about 4 years at GitHub. I'm not sure
+why I never sent it upstream until now, since it's pretty trivial.
 
+I think this should interact OK with Stefan's recent c3c36d7de2
+(replace-object: check_replace_refs is safe in multi repo environment,
+2018-04-11), because we still consider check_replace_refs before doing
+anything in lookup_replace_object(). So even if you accidentally
+_loaded_ the replace refs due to a timing issue (e.g., looking at them
+before reading config) we still wouldn't respect them as long as you've
+loaded config by the time you're actually looking at objects.
 
+I followed the existing style of t6050 here, but it looks like it could
+use some modernization (indent with spaces, and piping git command
+output losing the exit codes).
+
+ Documentation/config.txt | 5 +++++
+ config.c                 | 5 +++++
+ t/t6050-replace.sh       | 6 ++++++
+ 3 files changed, 16 insertions(+)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 1cc18a828c..92b277d27b 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -908,6 +908,11 @@ core.commitGraph::
+ 	Enable git commit graph feature. Allows reading from the
+ 	commit-graph file.
+ 
++core.useReplaceRefs::
++	If set to `false`, behave as if the `--no-replace-objects`
++	option was given on the command line. See linkgit:git[1] and
++	linkgit:git-replace[1] for more information.
++
+ core.sparseCheckout::
+ 	Enable "sparse checkout" feature. See section "Sparse checkout" in
+ 	linkgit:git-read-tree[1] for more information.
+diff --git a/config.c b/config.c
+index f4a208a166..ce103ebc20 100644
+--- a/config.c
++++ b/config.c
+@@ -1346,6 +1346,11 @@ static int git_default_core_config(const char *var, const char *value)
+ 					 var, value);
+ 	}
+ 
++	if (!strcmp(var, "core.usereplacerefs")) {
++		check_replace_refs = git_config_bool(var, value);
++		return 0;
++	}
++
+ 	/* Add other config variables here and to Documentation/config.txt. */
+ 	return 0;
+ }
+diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
+index aa3e249639..86374a9c52 100755
+--- a/t/t6050-replace.sh
++++ b/t/t6050-replace.sh
+@@ -113,6 +113,12 @@ test_expect_success 'test GIT_NO_REPLACE_OBJECTS env variable' '
+      GIT_NO_REPLACE_OBJECTS=1 git show $HASH2 | grep "A U Thor"
+ '
+ 
++test_expect_success 'test core.usereplacerefs config option' '
++	test_config core.usereplacerefs false &&
++	git cat-file commit $HASH2 | grep "author A U Thor" &&
++	git show $HASH2 | grep "A U Thor"
++'
++
+ cat >tag.sig <<EOF
+ object $HASH2
+ type commit
+-- 
+2.18.0.433.gb9621797ee
