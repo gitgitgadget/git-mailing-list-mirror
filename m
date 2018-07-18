@@ -7,61 +7,62 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA38C1F597
-	for <e@80x24.org>; Wed, 18 Jul 2018 23:03:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D44E1F597
+	for <e@80x24.org>; Wed, 18 Jul 2018 23:11:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729221AbeGRXnj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jul 2018 19:43:39 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:32781 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728929AbeGRXnj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jul 2018 19:43:39 -0400
-Received: by mail-wr1-f67.google.com with SMTP id g6-v6so6204959wrp.0
-        for <git@vger.kernel.org>; Wed, 18 Jul 2018 16:03:31 -0700 (PDT)
+        id S1729750AbeGRXwC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jul 2018 19:52:02 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:39847 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728467AbeGRXwB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jul 2018 19:52:01 -0400
+Received: by mail-wm0-f67.google.com with SMTP id h20-v6so4401826wmb.4
+        for <git@vger.kernel.org>; Wed, 18 Jul 2018 16:11:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=CWfjRMsLPQvz0lf97IRq7jyOOCmE/pQmo+m111gXumw=;
-        b=Ek1U110YkQTMvxGUtR2fFgD6arZmFy/mHWtyE5egj33Qh+HodxgoHe3IpS7cgAmyyg
-         iBsRXqU86WKVP1BJXFXmzOfbyx9BYTT21usjR2sy6YC9ladI2S/QT5tg22pWFFhdPYSB
-         kUeR1/oy1Q0NahfHlE9XOtivZUmUWjq3xa5nSDS3jMOeyqt+mDuucTb6nZX5z5D6Emzl
-         s3eKu3339MALr1dLXR6jU4cjBh5XJvZNk2ngeLVfgNB+BSU9JUQmbtJP2JKQyDBEeYTt
-         x9xBtm6WX2ie75oo1nOlo5nEw4ArjK+91oO6D5BgVx9H4lENuoltqpZqz8BzUVroXZhW
-         O5Yw==
+        bh=oiRzG9OPyn+VdLcvOj9cpcFXH96SZUhm9IHp6LsL5Dc=;
+        b=L4nUUU5v8qmnzXg1s2REZMQatiY+9jhVc3vAH581OwS5Zi+WM96vSB4ImaexDztJtW
+         lr4ovFKSiE3A3Vuw8wO41Q1MoQqPlIl/CdyWhNG1WwCqHLz81LISb/yv/aCfrKJ+rYKc
+         iCCrpckqa0Y08zYkjgvTHFJE3GbzZzvrROSDhefoQvR6zRm62mKz8YrNZ2iXU3rY+vju
+         NrIJICeZRMBrI7tiKlV2jDQFPvdtnvR9R9bg2dktyLgqOPwzQB1/MWBu05cYtvQvJOEB
+         mH1A11AJitEIyR+Q7vk3LsI5IEurniYllD3/ASCfDOUqa1huyPJfASmRU/uStmtH/Hc1
+         OYDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=CWfjRMsLPQvz0lf97IRq7jyOOCmE/pQmo+m111gXumw=;
-        b=jB3p94/INSH4W2IJjWnJputU6p6ciDNMtXCODBFXG6eFFkYPA99Da92TpmrF276u6K
-         JWzGCXkc1U7ULKOh/2VzpmB1e5uo2avSMq0kf0ufdkO5bw8fgM192yRoKVvAbncD3Qa9
-         u84Qoj1pCvoHMwvYHsFDU7aCBctI1BKK0SkdkynKHCc1PMVATBxzzAGlrPMLI25L14ni
-         6YTNduJUZmjB5MsHfM6eL5ePEyEO53xAw86Xi6j3eTHRmWORagBY4d7kC2JmLqMXe6Um
-         pIUtc7/FAN4S0lU1ApOI/g7M9qmRynR82/qoMTSk8SXceOSA5MhkbZdsYAfb/AXPuA21
-         I58Q==
-X-Gm-Message-State: AOUpUlErBilQXOjnAJjH1goUpKF0htCaxsnqdRudgCtqYj/Peb1KeGu4
-        rgSSQiZmzjCD1HKM9vKhoh2S2OFV
-X-Google-Smtp-Source: AAOMgpcUdYTJH8mRw2EiZ9ddiDcicDov0GrybceaIh5cEb6XRMm1McZKJQbne85L6uRGPwzBJ1lb1Q==
-X-Received: by 2002:adf:ebc3:: with SMTP id v3-v6mr5708848wrn.33.1531955010808;
-        Wed, 18 Jul 2018 16:03:30 -0700 (PDT)
+        bh=oiRzG9OPyn+VdLcvOj9cpcFXH96SZUhm9IHp6LsL5Dc=;
+        b=Z1p/zPZ0v7522E2XeTZmMTViV0ZKrkXD1zYo0cHFbld3YVRcwoLOhp5snwU2YAk56L
+         1wSVcpAPNbRO7ZaXvowVOUidaXkGgzay9l58AN/tRWmUVYLz6ADIvlBjqpmWy5g4iD1k
+         YTTBSbX+SGVo1Jb7GKDD0eeBoimSZ6zyqd77DPoX0yRleFjHltBNf5JIfWdduV7tjMSH
+         u13Vs3eSVUKbukhZu/xp6DzL9kyEjzErm/cj2yYxhbAAEKeGnDF0K1mKGguLXKFNK4T8
+         r5g0TvQ59SI6RBxd3I4fkfojEEQGWbXhH8Xu4R0LQVhGbGT0iieDzDP0jOc2pYI822Eg
+         kjtQ==
+X-Gm-Message-State: AOUpUlHcyw7jvIuFUN7o1bxr0HtRhQTA/SGZRT31+4KqLqpA1AOvJ4XI
+        /Bw318WXpWKWnXPMOdzndhedvMIl
+X-Google-Smtp-Source: AAOMgpdpPjDQDS4mfJXek8fCnFPSxFMi3iCevjzmbrHpcDYh6usHWNMIfum7AoRTW6UgwcI6KMzyCg==
+X-Received: by 2002:a1c:f906:: with SMTP id x6-v6mr2715802wmh.63.1531955511245;
+        Wed, 18 Jul 2018 16:11:51 -0700 (PDT)
 Received: from [192.168.0.137] ([82.78.255.161])
-        by smtp.gmail.com with ESMTPSA id m17-v6sm7615623wrg.65.2018.07.18.16.03.29
+        by smtp.gmail.com with ESMTPSA id 189-v6sm5031321wmd.17.2018.07.18.16.11.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 18 Jul 2018 16:03:30 -0700 (PDT)
-Subject: Re: [RFC PATCH 0/6] Add gentle alternative for `get_oid()`
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+        Wed, 18 Jul 2018 16:11:50 -0700 (PDT)
+Subject: Re: [RFC PATCH 2/6] tree-walk: Add three new gentle helpers
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
 References: <cover.1531778417.git.ungureanupaulsebastian@gmail.com>
- <CACsJy8AEDmyg1XpgXc5KgKdG33t2SeOHw56tEgL_VVXh1Bcprg@mail.gmail.com>
+ <b1f385105f790cafc65c26699282919a2735d4bd.1531778417.git.ungureanupaulsebastian@gmail.com>
+ <xmqqin5dofor.fsf@gitster-ct.c.googlers.com>
 From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-Message-ID: <8ebfad3c-7009-d0cc-2ef8-54ebac6783f9@gmail.com>
-Date:   Thu, 19 Jul 2018 02:03:29 +0300
+Message-ID: <ba38bdd0-c1c3-cded-0e18-f21e0d7fd9a8@gmail.com>
+Date:   Thu, 19 Jul 2018 02:11:49 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.9.1
 MIME-Version: 1.0
-In-Reply-To: <CACsJy8AEDmyg1XpgXc5KgKdG33t2SeOHw56tEgL_VVXh1Bcprg@mail.gmail.com>
+In-Reply-To: <xmqqin5dofor.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -72,26 +73,35 @@ X-Mailing-List: git@vger.kernel.org
 
 Hello,
 
-On 17.07.2018 20:45, Duy Nguyen wrote:
-> Since get_oid() callers must handle failure when it returns non-zero,
-> I would say "gently" is already implied by get_oid() and we could just
-> convert those die() to error() or warning(). Unless some of those
-> die() are very special that we need to choose which call sites should
-> go "even gentler" where some sites should still die()?
+On 17.07.2018 21:55, Junio C Hamano wrote:
+> I wonder if the GENTLY option should apply to update_tree_entry()
+> the same way as it would to the other codepaths that currently die
+> to express "we were handed this string by the caller and told to
+> give back object ID the string represents, and we found no good
+> answer".  In this one (and the "bad ref" one), the existing failures
+> in these two codepaths are not "we got a string and that does not
+> resolve to an object name", but "we didn't have the data to work on
+> to begin with (either a corrupt tree object or a corrupt ref").
+> 
+> In other words, it's not like "We were given HEAD:no-such-path and
+> there is no such path in that tree"; it is "We tried to read HEAD:
+> tree for no-such-path in it, but the tree was corrupt and we couldn't
+> even tell if such a path is or is not in it", no?
 
-Of course, "gently" is already implied by `get_oid()` to some extent.
+I can definitely say there is a clear difference between these
+two cases, but I am not entirely sure how `GENTLY` should apply to
+`update_tree_entry()`.
 
- From the beginning I tried to follow the safer method to do that.
-Changing `die()` into `error()` or `warning()` and handling the
-error in the caller function not only would mean a harder patch
-to read, but could also introduce some regressions since some of
-the functions in the call graph of `get_oid()` are used by other
-functions as well.
+On one side, even before this patch, there was the gentle version
+of this function, `update_tree_entry_gently()`, which could still die.
+And it makes sense. It should be ok to call `die()` when there was
+detected a "bigger" issue.
 
-I think that it might be a good idea, but I am not entirely sure.
-The codebase is pretty complex and this might make it harder to
-follow. I am not able to give a clear answer, but thank you for
-taking time to look over these patches!
+On the other side, in some cases like `read_ref_at()` I think that it
+could be useful if the caller could handle any error (which is what 
+patches 3/6 and 4/6 try to accomplish).
+
+I really do not know which way would be the best in this particular case.
 
 Best,
 Paul
