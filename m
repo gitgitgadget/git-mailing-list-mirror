@@ -2,75 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 957181F597
-	for <e@80x24.org>; Thu, 19 Jul 2018 19:13:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E3AB1F597
+	for <e@80x24.org>; Thu, 19 Jul 2018 19:17:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732922AbeGST5l convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 19 Jul 2018 15:57:41 -0400
-Received: from mail-yw0-f171.google.com ([209.85.161.171]:46281 "EHLO
-        mail-yw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732746AbeGST5l (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jul 2018 15:57:41 -0400
-Received: by mail-yw0-f171.google.com with SMTP id e23-v6so3477468ywe.13
-        for <git@vger.kernel.org>; Thu, 19 Jul 2018 12:13:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=t/j1Ietj841trKB2CIatPN6rBrGeDQPcM8BAfEaG3a8=;
-        b=UvdJjeHwGz4GPwq2CuD6Sn80K47Zi/2LU10Z9AixBkwk9F+HcANV3NmQVJrn/gZd5S
-         mPreprOfn5jxJooP3wyPGUeQo+kFpFCGx+QYJuIABPpgq/ftjXFIYfarxUps09txRlGt
-         4x0lONbM9xOwmWqKLwpg93pOkcqTQwj44DEF/D01HuoNE1ZbDjtMCIWaIU9vLCHYKLzo
-         fpPmjJRwyD5Os8Qrk8YE/UV4xxG9b+PsQQcqnPKCXNWV6jA3AlpzN18t+o2G7HHVRJOF
-         TVvN0Qjf7yQYJ2+3MDPX1BTAqcoSM27sfyXe0ZfPglDUGmkOgC2xfCGEUz0MjLf1rjJe
-         ZLxQ==
-X-Gm-Message-State: AOUpUlERXzDdMfl1GIJ39wYLRNzPu6gRPse5mgUJIqSe+L5SXqLkjQei
-        nFmB0aWpfnx6C2v4fFGMFLpVs0lUEgHJgRUCb2w=
-X-Google-Smtp-Source: AAOMgpeZ7LdLe5U8p9xFBtTvDimPkGbHh8v1ipubRbioULNeINS9cSUPH4CaU7Vz8/l21XodqVZZu7N6cmm9ckyAkOo=
-X-Received: by 2002:a81:4153:: with SMTP id f19-v6mr6110558ywk.418.1532027590238;
- Thu, 19 Jul 2018 12:13:10 -0700 (PDT)
+        id S1731839AbeGSUBx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jul 2018 16:01:53 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53054 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1731442AbeGSUBx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jul 2018 16:01:53 -0400
+Received: (qmail 5900 invoked by uid 109); 19 Jul 2018 19:17:22 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 19 Jul 2018 19:17:22 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14831 invoked by uid 111); 19 Jul 2018 19:17:26 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 19 Jul 2018 15:17:26 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Jul 2018 15:17:20 -0400
+Date:   Thu, 19 Jul 2018 15:17:20 -0400
+From:   Jeff King <peff@peff.net>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: 2.18.0 Regression: packing performance and effectiveness
+Message-ID: <20180719191719.GA22504@sigill.intra.peff.net>
+References: <20180718225110.17639-1-newren@gmail.com>
+ <20180719054424.GB23884@sigill.intra.peff.net>
+ <CACsJy8BNGboUb0F5NRR9tKj_P24j2ZgB48SCuLEphSHQAU2EUA@mail.gmail.com>
+ <20180719151640.GA24997@duynguyen.home>
+ <CABPp-BGE0yAgtOkSC0jUhq3M3ynX9pks5VnjVB_WMkYUVdirzA@mail.gmail.com>
+ <20180719172358.GD4868@sigill.intra.peff.net>
+ <20180719173135.GA24563@duynguyen.home>
+ <20180719182442.GA5796@duynguyen.home>
 MIME-Version: 1.0
-References: <D295145E-7596-4409-9681-D8ADBB9EBB0C@me.com>
-In-Reply-To: <D295145E-7596-4409-9681-D8ADBB9EBB0C@me.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 19 Jul 2018 15:12:58 -0400
-Message-ID: <CAPig+cT+Z-hN6WidMOUW2jRVNFovvv03LEFESXpr05NKmpnWAA@mail.gmail.com>
-Subject: Re: Gitk doesn't work on macOS Mojave
-To:     cherpake@me.com
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20180719182442.GA5796@duynguyen.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 19, 2018 at 2:48 PM Evgeny Cherpak <cherpake@me.com> wrote:
-> You have probably heard this by now already, but gitk doesn’t work on macOS 10.14 - because it uses Apple Events,
-> And apps on 10.14 require user to give them permissions to control other apps with Apple Events.
+On Thu, Jul 19, 2018 at 08:24:42PM +0200, Duy Nguyen wrote:
 
-This hasn't been reported, so thanks for bringing it up.
+> > > Looking at that output, my _guess_ is that we somehow end up with a
+> > > bogus delta_size value and write out a truncated entry. But I couldn't
+> > > reproduce the issue with smaller test cases.
+> > 
+> > Could it be a race condition?
+> 
+> I'm convinced my code is racy (between two writes). I created a broken
+> pack once with 32 threads. Elijah please try again with this new
+> patch. It should fix this (I only tried repack a few times so far but
+> will continue)
 
-> Here is what I get when I try running it on my machine with beta 4 installed:
->
-> Error in startup script: 58:102: execution error: Not authorized to send Apple events to System Events. (-1743)
->     while executing
-> "exec osascript -e [format {
->         tell application "System Events"
->             set frontmost of processes whose unix id is %d to true
->         end te..."
+Good thinking, it's definitely racy. And that's why my tiny reproduction
+didn't work. I even tried bumping it up to 10 blobs instead of 2, but
+that's not nearly enough.
 
-Fortunately, this feature is merely a convenience, not otherwise
-critical to gitk functioning. It would be ideal if someone running
-Mojave could devise up a patch to work around the problem (either by
-skipping this code on Mojave or discovering a different way to bring
-the application to the foreground). An alternative would be to revert
-76bf6ff93e (gitk: On OSX, bring the gitk window to front, 2013-04-24),
-which introduced this code.
+> The race is this
+> 
+> 1. Thread one sees a large delta size and NULL delta_size[] array,
+>    allocates the new array and in the middle of copying old delta
+>    sizes over.
+> 
+> 2. Thread two wants to write a new (large) delta size. It sees that
+>    delta_size[] is already allocated, it writes the correct size there
+>    (and truncated one in object_entry->delta_size_)
+> 
+> 3. Back to thread one, it now copies the truncated value in
+>    delta_size_ from step 2 to delta_size[] array, overwriting the good
+>    value that thread two wrote.
 
-(Note, however, that the gitk project is dormant, so it's not clear if
-such a patch will be picked up.)
+Right. Or we could even allocate two delta_size arrays, since the
+NULL-check and the allocation are not atomic.
+
+> There is also a potential read/write race where a read from
+> pack_size[] happens when the array is not ready. But I don't think it
+> can happen with current try_delta() code. I protect it anyway to be
+> safe.
+
+Hrm. That one's disappointing, because we read much more often than we
+write, and this introduces potential lock contention. It may not matter
+much in practice, though.
+
+> +static unsigned long oe_delta_size(struct packing_data *pack,
+> +				   const struct object_entry *e)
+> +{
+> +	unsigned long size;
+> +
+> +	read_lock();	 /* to protect access to pack->delta_size[] */
+> +	if (pack->delta_size)
+> +		size = pack->delta_size[e - pack->objects];
+> +	else
+> +		size = e->delta_size_;
+> +	read_unlock();
+> +	return size;
+> +}
+
+Yuck, we even have to pay the read_lock() cost when we don't overflow
+into the pack->delta_size array (but I agree we have to for
+correctness).
+
+Again, though, this amount of contention probably doesn't make a big
+difference, since we're holding the lock for such a short time
+(especially compared to all the work of computing the deltas).
+
+This could be separate from the read_lock(), though, since that one does
+block for much longer (e.g., while zlib inflating objects from disk).
+
+> +static void oe_set_delta_size(struct packing_data *pack,
+> +			      struct object_entry *e,
+> +			      unsigned long size)
+> +{
+> +	read_lock();	 /* to protect access to pack->delta_size[] */
+> +	if (!pack->delta_size && size < pack->oe_delta_size_limit) {
+> +		e->delta_size_ = size;
+> +		read_unlock();
+> +		return;
+> +	}
+
+And ditto for this one. I thought we could get away with the "fast case"
+skipping the lock, but we have to check pack->delta_size atomically to
+even use it.
+
+If each individual delta_size had an overflow bit that indicates "use me
+literally" or "look me up in the array", then I think the "quick" ones
+could avoid locking. It may not be worth the complexity though.
+
+> @@ -160,6 +162,8 @@ struct object_entry *packlist_alloc(struct packing_data *pdata,
+>  
+>  		if (!pdata->in_pack_by_idx)
+>  			REALLOC_ARRAY(pdata->in_pack, pdata->nr_alloc);
+> +		if (pdata->delta_size)
+> +			REALLOC_ARRAY(pdata->delta_size, pdata->nr_alloc);
+>  	}
+>  
+
+This realloc needs to happen under the lock, too, I think. It would be
+OK without locking for an in-place realloc, but if the chunk has to be
+moved, somebody in oe_set_delta_size() might write to the old memory.
+
+This is in a file that doesn't even know about read_lock(), of course.
+Probably you need a delta mutex as part of the "struct packing_data",
+and then it can just be handled inside pack-objects.c entirely.
+
+-Peff
