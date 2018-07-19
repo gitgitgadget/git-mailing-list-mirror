@@ -2,109 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6909F1F597
-	for <e@80x24.org>; Thu, 19 Jul 2018 05:34:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4865E1F597
+	for <e@80x24.org>; Thu, 19 Jul 2018 05:41:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727428AbeGSGPT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jul 2018 02:15:19 -0400
-Received: from cloud.peff.net ([104.130.231.41]:52178 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725934AbeGSGPT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jul 2018 02:15:19 -0400
-Received: (qmail 9128 invoked by uid 109); 19 Jul 2018 05:34:00 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 19 Jul 2018 05:34:00 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7413 invoked by uid 111); 19 Jul 2018 05:34:04 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 19 Jul 2018 01:34:04 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Jul 2018 01:33:58 -0400
-Date:   Thu, 19 Jul 2018 01:33:58 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scheibe <rene.scheibe@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: How to speedup git clone for big binary files (disable delta
- compression)
-Message-ID: <20180719053357.GA23884@sigill.intra.peff.net>
-References: <43b401ec-31fc-59dc-17c0-8dd7359726da@gmail.com>
+        id S1727421AbeGSGWv (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jul 2018 02:22:51 -0400
+Received: from mail-io0-f180.google.com ([209.85.223.180]:39221 "EHLO
+        mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726640AbeGSGWv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jul 2018 02:22:51 -0400
+Received: by mail-io0-f180.google.com with SMTP id o22-v6so5030848ioh.6
+        for <git@vger.kernel.org>; Wed, 18 Jul 2018 22:41:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=mIKAXz4EWAavR9C2ioTs3ch8HZklRI83W84UC85b/j0=;
+        b=ICkeuyU5SwMh94qbOy9Xfp3JTJFpkvjzwjpIwmDsj+Bls29LG7bafP1wEla8dQEMOq
+         3veLZ4CusLfHQFaonve6RLr+/sz8Cq2vKUq2GDY1g3Hcp151aLmne9oOO2CP4RXpppbt
+         D8PkisezU5JD1W5uaN0+JjyAU6+vzInUXGOIpIPPaSWFmRqKe/OlKVk66EiepoNIfYUH
+         D8TQPWeRnv+AZzwePhqJmKaO5bZNfouV4LqfIK4oWFSdcszs7sDr/vMsaFNoYdcnZZxk
+         X0XMhkmy/dC2yue6hsAgefXRWyg+Z8EMigTPAX93d+eW0t7VxBhr+9EcUBGKUczJTIA2
+         0NVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=mIKAXz4EWAavR9C2ioTs3ch8HZklRI83W84UC85b/j0=;
+        b=icEfHR9ZNcWG+u78SaAD6YwyXJp7F8Hn6+VVW1wIPZ0V8EbYCKktJANftuufbjsLLA
+         /KJGYVTU52cCGg+tkUdx+icxXTTa1Ec+aEI7bUGECOilZrirZdTEfZ2nxDEfm4phfZNh
+         sVjvfQhtjBB72UT90Tmom4xjMYMkyjXST+Pm/sA63Tkxyl66QoJAuTaYYSuKDWkAoC+U
+         5xry0/UHrhatoHdaZvFSHP7aLTTXIUrDqX+gp8Megb1O5uIgGPtgei/FBvdwVRwcmRu8
+         SvJbKmxsdtLrnb21+EN4LpR8N2noYzECPs3eTFByuKJbmpVpqAlDGo+3od+jfGMOAbeZ
+         hRIA==
+X-Gm-Message-State: AOUpUlE0aj9KZ/tYNpz4m87vsxuoHkNLf2NpACDpfvskyj/ne5o9+ufs
+        0gIZ+EmXtQL77erJeYlcIx02M3gJzwaotGWl4qA=
+X-Google-Smtp-Source: AA+uWPyZ5mK3rcJhDl80/l357pS4FpDBdIjJ0waKD1VaL3r7P/BM5iDFfPtwtnSYynIiKwXXZFpcR8ifntAkvqAt05Y=
+X-Received: by 2002:a6b:a2cf:: with SMTP id l198-v6mr6736645ioe.282.1531978889933;
+ Wed, 18 Jul 2018 22:41:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <43b401ec-31fc-59dc-17c0-8dd7359726da@gmail.com>
+References: <20180718225110.17639-1-newren@gmail.com>
+In-Reply-To: <20180718225110.17639-1-newren@gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 19 Jul 2018 07:41:03 +0200
+Message-ID: <CACsJy8Cc=h3ptDaW=oUGXqRZAvNU8-pUCe1cVFpRd0t8O1a0Gw@mail.gmail.com>
+Subject: Re: 2.18.0 Regression: packing performance and effectiveness
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 19, 2018 at 12:05:00AM +0200, René Scheibe wrote:
+On Thu, Jul 19, 2018 at 12:51 AM Elijah Newren <newren@gmail.com> wrote:
+>
+> I had a user report some poor behavior of 'git gc --aggressive' on a
+> certain repo (which I sadly cannot share).  Turns out that on this
+> repo, this operation takes about 60% longer and produces a pack
+> roughly twice the expected size.
 
-> Code:
-> ---------------------------------------------------------------------
-> #!/bin/bash
-> 
-> # setup repository
-> git init --quiet repo
-> cd repo
-> 
-> echo '*.bin binary -delta' > .gitattributes
-> git add .gitattributes
-> git commit --quiet -m 'attributes'
-> 
-> for i in $(seq 10); do
->     dd if=/dev/urandom of=data.bin bs=1MB count=10 status=none
->     git add data.bin
->     git commit --quiet -m "data $i"
-> done
-> cd ..
-> 
-> # create clone repository
-> time git clone --no-local repo clone
+The intention was to make life better for weaker machines but
+definitely should not slow down beefier ones, so yes this is
+definitely a regression.
 
-This clone won't respect those attributes, because we don't dig into
-in-repo attributes. There's actually some inconsistency in how Git
-handles attribute locations. Usually they're just read from the top of
-the working tree, but in some instances we read them from the tree
-itself (e.g., git-archive respects some attributes from the tree it's
-archiving).
-
-If you do:
-
-  echo "*.bin binary -delta" >repo/.git/info/attributes
-
-then that does work (we always respect repo-level attributes like that).
-
-> # repack original repository
-> cd repo
-> time git repack -a -d
-
-In this case we're reading the attributes from the working tree, and it
-does work. In theory the clone case could do so, too, but git-upload-pack,
-the server side of the clone, avoids looking at the working tree at all.
-That's something we _could_ address, but it doesn't really fix the
-general case, since most clones will be from a bare repository anyway.
-
-So in summary:
-
-  1. Depending on what you're trying to do, the .git/info/attributes
-     trick might be enough for you.
-
-  2. I do think it would be nice for more places to respect attributes
-     from in trees. There's a question of which tree, but I think in
-     general reading them from HEAD in a bare repository would do what
-     people want (it's a little funny if you're fetching branch "foo",
-     but HEAD points to "bar", but it's at least consistent with the
-     non-bare case). There's some prior art in the way we treat mailmaps
-     (in a bare repo, we read HEAD:.mailmap).
-
-     I suspect the patch may not be trivial, as I don't know how ready
-     the attributes code is to handle in-tree lookups (remember that it
-     is not just HEAD:.gitattributes we must care about, but other files
-     sprinkled through the repository, like "HEAD:subdir/.gitattributes".
-
--Peff
+Is it possible to share "verify-pack -v <pack file>" output of the
+pack produced by 2.17.0 and 2.18.0? The only sensitive info there is
+sha-1, which you can replace with just "SHA-1" if you want. I'm more
+interested in delta sizes and distribution.
+-- 
+Duy
