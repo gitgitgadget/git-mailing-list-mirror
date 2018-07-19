@@ -2,98 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 792461F597
-	for <e@80x24.org>; Thu, 19 Jul 2018 19:11:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 957181F597
+	for <e@80x24.org>; Thu, 19 Jul 2018 19:13:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733071AbeGSTzl (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jul 2018 15:55:41 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:33020 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732791AbeGSTzk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jul 2018 15:55:40 -0400
-Received: by mail-wm0-f67.google.com with SMTP id z6-v6so2486697wma.0
-        for <git@vger.kernel.org>; Thu, 19 Jul 2018 12:11:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=UJ8ycuGcexnCyJv08gXy5eSkiyUhStyVnZY2aUzRxQ4=;
-        b=r/h7TUEq3qMB3SevgA051kcGV1b9Ranfh2A4+/mAW2+6dglDNEb9H4uu/BMI76iBWP
-         Hqgd2V8bs7CAKVMF+teNupC5WYXkVZTYf9KCGr/uhxa/PDi0JfdEfOr1n02xatT1+amb
-         m4BSSoeIPaOZhqUk5ixHeN5yxSQeDIOlz7qYF/EgOJmve/xBntwGlRZiPVWzBAdT39fR
-         qTfTMUaReIvLzuKkoGv1KafyZbEufP92eXx/ZswVp2bh2dNd9u/LpWfY0TV6WS7VMNYT
-         0bfcu8KtbwYaSObumxa8lzMJHP8hz+CgZiqZDFSEfCUz5+rZ6tOMjA9R1jfALE73x2ix
-         jhFA==
+        id S1732922AbeGST5l convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 19 Jul 2018 15:57:41 -0400
+Received: from mail-yw0-f171.google.com ([209.85.161.171]:46281 "EHLO
+        mail-yw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732746AbeGST5l (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jul 2018 15:57:41 -0400
+Received: by mail-yw0-f171.google.com with SMTP id e23-v6so3477468ywe.13
+        for <git@vger.kernel.org>; Thu, 19 Jul 2018 12:13:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=UJ8ycuGcexnCyJv08gXy5eSkiyUhStyVnZY2aUzRxQ4=;
-        b=cqSBWZizJweH8RrN0H6/BB3G/lnsHMlhYMKmtDoLCbjEXobfYMJZw3qK8VPmwsCaZ5
-         iH9ydACIS1UPxgBmXokyLmEbewEfLuFDUAozW67YsgazWSedkO2vtIFc5jW28U1/xtHi
-         pFhS7+TsiInKyoB2R+085toEsmHbSy9/unWXkxCogy29bw5nvmoJSD/ohvFK+KFgZOyV
-         A6EMXER0TNKXKLA7l7mRfcRZ94UNTRiCGYr0qhK7DlEBBknaTh/oGYXsV7kFKdaNBZTV
-         yOjjDp9L1vXvNUsMirrw3XCS7jmorX1vnl+M0F+0qWgpHHKHEuQPlL7aHvunTS3ucf2j
-         LbrA==
-X-Gm-Message-State: AOUpUlGOcVtuwuGQjSqvmFmizTbMJCrUj/MXvx8RPMYP9yUvQKd5a/u1
-        3wJPttVtp0aupdQFUGHLeVA=
-X-Google-Smtp-Source: AAOMgpcJ8+m4DnCOgUfFQ2L9EBydNWjBUXX7GVqID7U2sZgj/XSySuK39k8kb49iBo88vSzQdaTrlg==
-X-Received: by 2002:a1c:d0ce:: with SMTP id h197-v6mr4827169wmg.97.1532027468933;
-        Thu, 19 Jul 2018 12:11:08 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id r1-v6sm7138845wrs.39.2018.07.19.12.11.08
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 19 Jul 2018 12:11:08 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Peart <Ben.Peart@microsoft.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH v1 1/3] add unbounded Multi-Producer-Multi-Consumer queue
-References: <20180718204458.20936-1-benpeart@microsoft.com>
-        <20180718204458.20936-2-benpeart@microsoft.com>
-Date:   Thu, 19 Jul 2018 12:11:07 -0700
-In-Reply-To: <20180718204458.20936-2-benpeart@microsoft.com> (Ben Peart's
-        message of "Wed, 18 Jul 2018 20:45:15 +0000")
-Message-ID: <xmqqsh4fdos4.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=t/j1Ietj841trKB2CIatPN6rBrGeDQPcM8BAfEaG3a8=;
+        b=UvdJjeHwGz4GPwq2CuD6Sn80K47Zi/2LU10Z9AixBkwk9F+HcANV3NmQVJrn/gZd5S
+         mPreprOfn5jxJooP3wyPGUeQo+kFpFCGx+QYJuIABPpgq/ftjXFIYfarxUps09txRlGt
+         4x0lONbM9xOwmWqKLwpg93pOkcqTQwj44DEF/D01HuoNE1ZbDjtMCIWaIU9vLCHYKLzo
+         fpPmjJRwyD5Os8Qrk8YE/UV4xxG9b+PsQQcqnPKCXNWV6jA3AlpzN18t+o2G7HHVRJOF
+         TVvN0Qjf7yQYJ2+3MDPX1BTAqcoSM27sfyXe0ZfPglDUGmkOgC2xfCGEUz0MjLf1rjJe
+         ZLxQ==
+X-Gm-Message-State: AOUpUlERXzDdMfl1GIJ39wYLRNzPu6gRPse5mgUJIqSe+L5SXqLkjQei
+        nFmB0aWpfnx6C2v4fFGMFLpVs0lUEgHJgRUCb2w=
+X-Google-Smtp-Source: AAOMgpeZ7LdLe5U8p9xFBtTvDimPkGbHh8v1ipubRbioULNeINS9cSUPH4CaU7Vz8/l21XodqVZZu7N6cmm9ckyAkOo=
+X-Received: by 2002:a81:4153:: with SMTP id f19-v6mr6110558ywk.418.1532027590238;
+ Thu, 19 Jul 2018 12:13:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <D295145E-7596-4409-9681-D8ADBB9EBB0C@me.com>
+In-Reply-To: <D295145E-7596-4409-9681-D8ADBB9EBB0C@me.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 19 Jul 2018 15:12:58 -0400
+Message-ID: <CAPig+cT+Z-hN6WidMOUW2jRVNFovvv03LEFESXpr05NKmpnWAA@mail.gmail.com>
+Subject: Re: Gitk doesn't work on macOS Mojave
+To:     cherpake@me.com
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Peart <Ben.Peart@microsoft.com> writes:
+On Thu, Jul 19, 2018 at 2:48 PM Evgeny Cherpak <cherpake@me.com> wrote:
+> You have probably heard this by now already, but gitk doesn’t work on macOS 10.14 - because it uses Apple Events,
+> And apps on 10.14 require user to give them permissions to control other apps with Apple Events.
 
-> +/*
-> + * struct mpmcq_entry is an opaque structure representing an entry in the
-> + * queue.
-> + */
-> +struct mpmcq_entry {
-> +	struct mpmcq_entry *next;
-> +};
-> +
-> +/*
-> + * struct mpmcq is the concurrent queue structure. Members should not be
-> + * modified directly.
-> + */
-> +struct mpmcq {
-> +	struct mpmcq_entry *head;
-> +	pthread_mutex_t mutex;
-> +	pthread_cond_t condition;
-> +	int cancel;
-> +};
+This hasn't been reported, so thanks for bringing it up.
 
-This calls itself a queue, but a new element goes to the beginning
-of a singly linked list, and the only way to take an element out is
-from near the beinning of the linked list, so it looks more like a
-LIFO stack to me.
+> Here is what I get when I try running it on my machine with beta 4 installed:
+>
+> Error in startup script: 58:102: execution error: Not authorized to send Apple events to System Events. (-1743)
+>     while executing
+> "exec osascript -e [format {
+>         tell application "System Events"
+>             set frontmost of processes whose unix id is %d to true
+>         end te..."
 
-I do not know how much it matters, as the name mpmcq is totally
-opaque to readers so perhaps readers are not even aware of various
-aspects of the service, e.g. how it works, what fairness it gives to
-the calling code, etc.
+Fortunately, this feature is merely a convenience, not otherwise
+critical to gitk functioning. It would be ideal if someone running
+Mojave could devise up a patch to work around the problem (either by
+skipping this code on Mojave or discovering a different way to bring
+the application to the foreground). An alternative would be to revert
+76bf6ff93e (gitk: On OSX, bring the gitk window to front, 2013-04-24),
+which introduced this code.
 
+(Note, however, that the gitk project is dormant, so it's not clear if
+such a patch will be picked up.)
