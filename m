@@ -2,85 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E3BEE1F597
-	for <e@80x24.org>; Thu, 19 Jul 2018 18:48:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F27471F597
+	for <e@80x24.org>; Thu, 19 Jul 2018 18:49:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732168AbeGSTdG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jul 2018 15:33:06 -0400
-Received: from st42p59im-ztdg12240501.me.com ([17.36.65.26]:42251 "EHLO
-        st42p59im-ztdg12240501.me.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727401AbeGSTdG (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 19 Jul 2018 15:33:06 -0400
-X-Greylist: delayed 2581 seconds by postgrey-1.27 at vger.kernel.org; Thu, 19 Jul 2018 15:33:05 EDT
-Received: from process-dkim-sign-daemon.st42p59im-ztdg12240501.me.com by
- st42p59im-ztdg12240501.me.com
- (Oracle Communications Messaging Server 8.0.1.2.20170607 64bit (built Jun  7
- 2017)) id <0PC400500KOSSQ00@st42p59im-ztdg12240501.me.com> for
- git@vger.kernel.org; Thu, 19 Jul 2018 18:05:46 +0000 (GMT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=04042017;
-        t=1532023546; bh=13koflLRWlaknOBZpxJ5MRyS0tIj2d3eR7gC0szGi/0=;
-        h=From:Content-type:MIME-version:Subject:Message-id:Date:To;
-        b=kyXlbVEF2T8AnX1Si5li0jsQsam7F+DjXdFDVmgy9s2x24kNgoIpf8zxAAgGcdqAf
- 6YqiF7Zt6wMApxAzjd+bNvzGq8uR5uCWuwCh6Q2YP/DkR+PuxrjHuo/PLxaHIepMqK
- qPByVUZCy98p9gu0Uk5jCt02WTUeodjmDGw5vRhktvW3BF+WcjU/uEYUW1k7+zji5E
- LtpmK3kxb1WotCiAxmj7/e1BjDZQNTJRTriCgYGewSWFr4u0DLP7NKjNSJMFF6xu71
- 5UtkyH7rnXCLN2vSpgATYmJXRy8Cf4fKamnMR3ihAKwBPoWQ7B0oWHziQooRjOq/45
- FksjgCrcPHnvw==
-Received: from icloud.com ([127.0.0.1]) by st42p59im-ztdg12240501.me.com
- (Oracle Communications Messaging Server 8.0.1.2.20170607 64bit (built Jun  7
- 2017)) with ESMTPSA id <0PC400JCBKXJJK10@st42p59im-ztdg12240501.me.com> for
- git@vger.kernel.org; Thu, 19 Jul 2018 18:05:46 +0000 (GMT)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,,
- definitions=2018-07-19_06:,, signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- clxscore=1011 suspectscore=1 malwarescore=0 phishscore=0 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.0.1-1707230000 definitions=main-1807190189
-From:   Evgeny Cherpak <cherpake@me.com>
-Content-type: text/plain; charset=utf-8
-Content-transfer-encoding: quoted-printable
-MIME-version: 1.0 (Mac OS X Mail 12.0 \(3445.100.17\))
-Subject: Gitk doesn't work on macOS Mojave
-Message-id: <D295145E-7596-4409-9681-D8ADBB9EBB0C@me.com>
-Date:   Thu, 19 Jul 2018 21:05:43 +0300
-To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3445.100.17)
+        id S1732179AbeGSTds (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jul 2018 15:33:48 -0400
+Received: from mail-it0-f68.google.com ([209.85.214.68]:51544 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727401AbeGSTds (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jul 2018 15:33:48 -0400
+Received: by mail-it0-f68.google.com with SMTP id h2-v6so11303370itj.1
+        for <git@vger.kernel.org>; Thu, 19 Jul 2018 11:49:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=iQbfkZDNe7kVE0zdk3Etba2RjZuxKaV/7p5rT3m92bw=;
+        b=E9jdtA9lqRLToKFo9fcBiWyip8oi2xxH3WIw3hwIo0NCYdcVE0OQGUB3XnwBUpWlOA
+         ijnwUOVm0sR8L/mEunei8+FED8BRHVcy/VDbVtwFdXb14qFUqi02QfD/wA4ovvXW9Jf0
+         kXHF/MOxSEvH90HVpKNIaIN5PDYQSMNRqwHpOW5iUvAmaiZW+wmBBEzaECrYtLDNeuRt
+         B3uFMoIvSvz0UdtZvuyyNlNfxW3t34dRumVQSF6M6Hnx0XbVVqSpwGHd4Hd6jYv1qIYL
+         oMLAeanRTJ2NriynobTm6l5ckAqFsvy+/OzH/x8bkkvIqEjs1279RRsOZfxcTRDaAB5k
+         mXnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=iQbfkZDNe7kVE0zdk3Etba2RjZuxKaV/7p5rT3m92bw=;
+        b=CqdmFW7fiSWSaFyBUgnjcRB1r6YwQjVtSlqV5WMldhettNenqBNDHKYJdZ3aIqydEQ
+         7ysGzGtz6HvNHVyMq/0ZEEnmqy+KqfqP9nE85WAXF68OrAXUSsn6GVR1Ue7bxNteXKvA
+         1QfLAs24ERLKQl49+JlCziq/G5kKjZt0g7jWpEoiQpAz6AvGLKaIzOt15XIVcnvNpTyS
+         LwLURY7sydwHOciXm5JBT8AByyUC6kMDIyoNfEnlCXp8OopVRPK56pnDV4OY5Jxx0Jd5
+         ze8c6doROnV5b2yhlxGw2ehqvmZ5xgTE7dBOE110fh1KPPwoGs5vkPpcwGlqH2H2C3zu
+         sC4w==
+X-Gm-Message-State: AOUpUlH6sU03UWkOHrBHi4NuV8K2FPBSQB/fLeOCm4UysfP9+w/Lps0u
+        skYylyyLJSJQWb7qct02qiwmZp8D+4Qca7hBX+s=
+X-Google-Smtp-Source: AAOMgpfICmhuc4y++si0b38jIfEFa8bV7+xjj8jLxMgc3YRyN/RY/exoh1MXhvUuHk7m5qhP3DcH4XVhtVIBkaery84=
+X-Received: by 2002:a24:610d:: with SMTP id s13-v6mr5379679itc.68.1532026162024;
+ Thu, 19 Jul 2018 11:49:22 -0700 (PDT)
+MIME-Version: 1.0
+References: <20180718161101.19765-1-pclouds@gmail.com> <20180718161101.19765-4-pclouds@gmail.com>
+ <xmqqin5bf5fp.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqin5bf5fp.fsf@gitster-ct.c.googlers.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 19 Jul 2018 20:48:55 +0200
+Message-ID: <CACsJy8BBwy_WBg5fduQvWdWRxSP__T8DofVZzKcPcYwPg2n3LA@mail.gmail.com>
+Subject: Re: [PATCH v2 03/23] archive-zip.c: mark more strings for translation
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi
+On Thu, Jul 19, 2018 at 8:26 PM Junio C Hamano <gitster@pobox.com> wrote:
+> > @@ -601,7 +601,7 @@ static void dos_time(timestamp_t *timestamp, int *dos_date, int *dos_time)
+> >       struct tm *t;
+> >
+> >       if (date_overflows(*timestamp))
+> > -             die("timestamp too large for this system: %"PRItime,
+> > +             die(_("timestamp too large for this system: %"PRItime),
+> >                   *timestamp);
+>
+> I suspect that this won't do the right "cross-platform" thing.  For
+> built-in PRItype formats gettext tool knows about, *.po files let
+> translators translate original with "%<PRItype>" into localized text
+> with the same "%<PRItype>" left, and the runtime does the right
+> thing, but for a custom format like PRItime there is no such
+> support.
+>
 
-You have probably heard this by now already, but gitk doesn=E2=80=99t =
-work on macOS 10.14 - because it uses Apple Events,
-And apps on 10.14 require user to give them permissions to control other =
-apps with Apple Events.
+It turns out gettext is smart! I got this in git.pot
 
-Here is what I get when I try running it on my machine with beta 4 =
-installed:
+msgid "timestamp too large for this system: %<PRIuMAX>"
 
-Error in startup script: 58:102: execution error: Not authorized to send =
-Apple events to System Events. (-1743)
-    while executing
-"exec osascript -e [format {
-        tell application "System Events"
-            set frontmost of processes whose unix id is %d to true
-        end te..."
-    invoked from within
-"if {[tk windowingsystem] eq "aqua"} {
-    exec osascript -e [format {
-        tell application "System Events"
-            set frontmost of processes ..."
-    (file "/usr/local/bin/gitk" line 12212)
+Your second half about the runtime does cause cross platform problems,
+luckily PRItime is always defined as PRIuMAX for all platforms, so
+gettext should be able to do the right thing.
 
-And Apple doesn=E2=80=99t allow to add apps to =E2=80=9CAutomation=E2=80=9D=
- :(=20
-
-Best regards.
-And thanks for git :)=20=
+Besides, PRItime has already been wrapped in _() and Q_() in many
+places. If people have not screamed now, they probably don't care
+about l10n on that platform.
+-- 
+Duy
