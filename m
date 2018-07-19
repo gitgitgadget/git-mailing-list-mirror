@@ -2,109 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8FFC81F597
-	for <e@80x24.org>; Thu, 19 Jul 2018 17:06:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 276301F597
+	for <e@80x24.org>; Thu, 19 Jul 2018 17:10:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731663AbeGSRuk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jul 2018 13:50:40 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:51473 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731442AbeGSRuk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jul 2018 13:50:40 -0400
-Received: by mail-wm0-f66.google.com with SMTP id h3-v6so6501374wmb.1
-        for <git@vger.kernel.org>; Thu, 19 Jul 2018 10:06:35 -0700 (PDT)
+        id S1732053AbeGSRyX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jul 2018 13:54:23 -0400
+Received: from mail-ua0-f181.google.com ([209.85.217.181]:35489 "EHLO
+        mail-ua0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731625AbeGSRyX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jul 2018 13:54:23 -0400
+Received: by mail-ua0-f181.google.com with SMTP id q12-v6so5682435ual.2
+        for <git@vger.kernel.org>; Thu, 19 Jul 2018 10:10:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=+zADDSjY+P9arq122/eJ6V7Z5HDCdr/pUAnmJU41Gfo=;
-        b=IJh1y7E9MPVW1WgVJaAvdeTnk00tdkHiyxrvkDk5rEMhZyy17+bZUI7S/LWjZtC2Qm
-         oKT4KTI6/1miDW4B4RNMFlkk3VDVxiadwUecK1W8IXQz8rB4NGgj0BNQta9r3duMQhY2
-         B2GZSpO55L4He8WaoR1776XnMjLbjylCeLw5FHRwZKX17xnWi/Qx33zOqY66t7XIJGmv
-         WWmCFxtymFfa/u0FJShD61oWePyEAs9Jn2eQhiGl3qNEDNRymkBCDkoHK96RISoKt+sR
-         XrsF5Pl6mpJbJylGeWR7kmHHnAjm5JncnPk9vqRuKjB1eXV+1vDbMiExYpybWUBF8YIj
-         3sUQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=H9mDgvnJpAWK1DnhBJkCx4j1Vnm4IMT1l9QWqIsHYmM=;
+        b=al9yfLsqfx+ORB1xBQi63eZdbqomqhMRETOaoM9d2a1yGR3jlqZ0kqlrXyGY9610YX
+         yL6UzjVZIGB4KOUePub5NSoZJHHfnsZCpOuRs2qRaj+ycxlwHWVQERaFi+WOnPQRo6Y4
+         sBksS44uotxfhW0tvxkkfo9elpiYMl3WYNjhBZHyfDOmN9tZR5u68hcGaeQTWXcZCyIE
+         RcR3D/QWHgIyadg7oiSHiXWaG29gPrpLtH6nUeurq1LkthdLsPR3PkW+dhVKmdVsXMfq
+         gPnYE5eoNIXaE1TCM96QRB7BInJBzbmRsBmK+qHDFfpS3AYHza2G4RWFLikjK17cp07T
+         PRww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=+zADDSjY+P9arq122/eJ6V7Z5HDCdr/pUAnmJU41Gfo=;
-        b=bmIlJZc7J3Ldb4fIw84x0tWesqlWx/8BTgf5z+EMs3rbiCuNkgcv9cTLruZ/7zM/H0
-         7Hazp03Erutdn1WeeyUg7tDkBtT/lRk1qeNgVsUm8Y5+j3vqibJxiAo3hoTXKzyOoALC
-         Q65u535ebziSEQD2BXmRWKCq8QXZeDn5/FWAS0gxPpNTjOrY5f9Sp59Lrm4zmyrkNI9H
-         UZdg0QnPBJCWXRGmX6bDCK7w3GTlMzYIyZRepviyOMoeVpaM90AnIftcVHmmCv1bKsu2
-         +lpMr4NGH2/FsIzsI0s8Wjv0yZbWkTbBIa9OMv1qZdWVJTnSS2N+Uw6eDECcjMDA+M4C
-         BOdA==
-X-Gm-Message-State: AOUpUlHU2fO74WA3C8qh5BzipZrNG7Lk7jQvLnS2EEBQNu+xhxKIPOuw
-        +bnx8jZoSOZhUH5CyeZjG0BAjKem
-X-Google-Smtp-Source: AAOMgpcTdYRztc6BQc4zZJ6kLGUszBywLwbL6aT6z6lDMy43DyEV54sIkw+xarFjUi+1I+uOV62bAw==
-X-Received: by 2002:a1c:9c56:: with SMTP id f83-v6mr4467506wme.135.1532019994240;
-        Thu, 19 Jul 2018 10:06:34 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id t13-v6sm7717055wrr.74.2018.07.19.10.06.33
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 19 Jul 2018 10:06:33 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: refs/notes/amlog problems, was Re: [PATCH v3 01/20] linear-assignment: a function to solve least-cost assignment problems
-References: <cover.1525448066.git.johannes.schindelin@gmx.de>
-        <pull.1.v3.git.gitgitgadget@gmail.com>
-        <39272eefcfe66de3ca1aa2ee43d6626ce558caae.1530617166.git.gitgitgadget@gmail.com>
-        <xmqqtvpcgf40.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1807071320110.75@tvgsbejvaqbjf.bet>
-        <xmqq7em7gg3j.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1807072116570.75@tvgsbejvaqbjf.bet>
-        <nycvar.QRO.7.76.6.1807080017160.75@tvgsbejvaqbjf.bet>
-        <nycvar.QRO.7.76.6.1807092342490.75@tvgsbejvaqbjf.bet>
-        <xmqqefg94uq1.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1807121720340.75@tvgsbejvaqbjf.bet>
-        <xmqq8t6gz8xz.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 19 Jul 2018 10:06:32 -0700
-In-Reply-To: <xmqq8t6gz8xz.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Thu, 12 Jul 2018 09:59:36 -0700")
-Message-ID: <xmqqa7qngnon.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=H9mDgvnJpAWK1DnhBJkCx4j1Vnm4IMT1l9QWqIsHYmM=;
+        b=k8Z/7Mn4LR4aVt36qp4kh00q1Q5u16PrtvctKzCmIA8PDAr0Gxh4uGpy+erLmnvtET
+         fDXSEAFltoYFsYK+64xc5sdihJZgIbll3sMG8xaNqf78ePw3VVfX44e2qCix5vcthXyM
+         BKV3XWoQT3zehLFlwu9+mmIF2/RhUaiwvCU8GLGqFCzHfZRZMnweSxqZeuRi0Y/ywAse
+         f1Cd8YIcfkqIfoC2lZVc+zwjAnCONHb4p21MDLKfYv7EgQmuemQHIQnt8UCJtg17G1A/
+         I3P1Vf7EXgjelAlV97ZCtZzxubbcNPcE+FH/1AlrQHnKhtJp40nw7mzcgVX+FKgCWx2W
+         JW4Q==
+X-Gm-Message-State: AOUpUlGQIUEcudJAWwqk2MLWogqPITYhHWfsD30TrLnB84Uhw1uJsg0P
+        +Nr+xhd23Wn9RES4dXLELzr0JVl9P97ct5xtJZsehA==
+X-Google-Smtp-Source: AAOMgpfw9Vg+8UV61FOTTaI6Tkh5WkmmQue9NsgF1eYZwdCDwwQiuNoHyWrfk0FzGYfQ5MMCLOBm5o5XspZpdbW9mm4=
+X-Received: by 2002:a9f:3666:: with SMTP id s35-v6mr7654926uad.94.1532020217385;
+ Thu, 19 Jul 2018 10:10:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 2002:ab0:21c7:0:0:0:0:0 with HTTP; Thu, 19 Jul 2018 10:10:16
+ -0700 (PDT)
+In-Reply-To: <xmqqtvowi4l3.fsf@gitster-ct.c.googlers.com>
+References: <xmqqtvowi4l3.fsf@gitster-ct.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 19 Jul 2018 10:10:16 -0700
+Message-ID: <CABPp-BFSh2KYuBAWZcMUZ6NS0VYc4NNGTaTS3jUGiWm+BO4+Wg@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jul 2018, #02; Wed, 18)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Jul 18, 2018 at 3:03 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> * en/rebase-i-microfixes (2018-06-27) 3 commits
+>   (merged to 'next' on 2018-07-11 at d913ca0f77)
+>  + git-rebase--merge: modernize "git-$cmd" to "git $cmd"
+>  + Fix use of strategy options with interactive rebases
+>  + t3418: add testcase showing problems with rebase -i and strategy options
 >
->> I would like to ask you to reinstate the post-rewrite hook, as it still
->> improves the situation over the current one.
+>  Will merge to 'master'.
+
+This series showed up in the "Graduated to master" section of your
+email and the series shows up on master; did you just forget to remove
+this last line?
+
+> * en/abort-df-conflict-fixes (2018-07-16) 2 commits
+>  - read-cache: fix directory/file conflict handling in read_index_unmerged()
+>  - t1015: demonstrate directory/file conflict recovery failures
 >
-> Without post-rewrite I seem to be getting correct amlog entries for
-> commits created by "git rebase"; do our rebase--am backend still
-> trigger post-applypatch hook in its "am" phase to apply the patches
-> created with "format-patch"?
+>  "git merge --abort" etc. did not clean things up properly when
+>  there were conflicted entries in certain order that are involved
+>  in D/F conflicts.  This has been corrected.
+>
+>  This may have to be rebased on an older maintenance track before
+>  moving forward.
 
-That was a wrong line of thought that led to a dead end.  format-patch
-won't recreate Message-Id to its output from notes/amlog, so even if
-the "format-patch --stdout | am" pipeline inside rebase-am triggered
-the post-applypatch hook, it would not have a chance to carry the
-notes forward that way.
+Would you like me to rebase on maint and resubmit?  Alternatively,
+  git cherry-pick -Xours master..en/abort-df-conflict-fixes
+will backport the fixes to maint, with the only downside that it
+leaves some unnecessary (but innocuous) double 'git reset --hard'
+invocations in t6042.
 
-What was really happening was I have
+Just let me know whatever is easiest for you.
 
-	$ git config --list | grep amlog
-	notes.rewriteref=refs/notes/amlog
+> * en/t6042-insane-merge-rename-testcases (2018-07-03) 3 commits
+>  - t6042: add testcase covering long chains of rename conflicts
+>  - t6042: add testcase covering rename/rename(2to1)/delete/delete conflict
+>  - t6042: add testcase covering rename/add/delete conflict type
+>
+>  Various glitches in the heuristics of merge-recursive strategy have
+>  been documented in new tests.
+>
+>  Will merge to 'next'.
+>
+>  I am not sure if there is a single "correct" answer everybody can
+>  agree on for each of these "insane" cases, though.
 
-and that ought to be sufficient to carry "commit-to-original-msg-id"
-entries across rebases.  And it seems to correctly work.  I however
-suspect that "cherry-pick A..B" may lose the notes, but I haven't
-checked.
-
-
-
-
+Yeah, I agree.  I was a little unsure about adding the expected
+"correct" answer in these testcases for fear I would just end up
+modifying it whenever I finally implement a fix.  However, it was
+clear that current handling for these testcases is suboptimal, and
+ultimately I decided it'd make sense to just take my best guess at
+"correct" for now and deal with any modifications later.  *shrug*  I'm
+not sure what, if any changes to make to this series because of this,
+though; for now, I think it's fine as-is.
