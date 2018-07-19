@@ -2,100 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 685E11F597
-	for <e@80x24.org>; Thu, 19 Jul 2018 17:50:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 99A231F597
+	for <e@80x24.org>; Thu, 19 Jul 2018 18:00:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732133AbeGSSei (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jul 2018 14:34:38 -0400
-Received: from mout.gmx.net ([212.227.17.21]:43993 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731832AbeGSSei (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jul 2018 14:34:38 -0400
-Received: from [192.168.0.129] ([37.201.195.94]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M4CB5-1fyQNE3Ugt-00rmrZ; Thu, 19
- Jul 2018 19:50:19 +0200
-Date:   Thu, 19 Jul 2018 19:50:03 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Duy Nguyen <pclouds@gmail.com>
-cc:     gitgitgadget@gmail.com, Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] repack -ad: prune the list of shallow commits
-In-Reply-To: <CACsJy8Cxp6Gtt3YdWvQ0=t4vqBAqNxrGPeY4B7mtjsiLNpG5TQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1807191949150.71@tvgsbejvaqbjf.bet>
-References: <pull.9.git.gitgitgadget@gmail.com> <b4e01a963fd16f50d12c1f67c6e64bec8b1e9673.1531513093.git.gitgitgadget@gmail.com> <CACsJy8Ce0kXTCzLf6jFq1QjY4Q4QePfk1JbgGUr-kQqQDCc7mA@mail.gmail.com>
- <CACsJy8Cxp6Gtt3YdWvQ0=t4vqBAqNxrGPeY4B7mtjsiLNpG5TQ@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2387897AbeGSSpC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jul 2018 14:45:02 -0400
+Received: from mail-yb0-f194.google.com ([209.85.213.194]:41331 "EHLO
+        mail-yb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732166AbeGSSpB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jul 2018 14:45:01 -0400
+Received: by mail-yb0-f194.google.com with SMTP id s8-v6so3607490ybe.8
+        for <git@vger.kernel.org>; Thu, 19 Jul 2018 11:00:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=EB8y02+cwxHYmAzlO4qxHYeasmVoBIsDUBZrnUhZ5Xk=;
+        b=mjpOaSi1lEGC1yLZiWAMeNngoH0T4iE30SAxH2Ij0uCLX0JJNtrOh9VTxX/22z9nvl
+         DyyPnd9TxYtQevxsI1V2Mwdlcmrj+9QMPOAmmQY1V5zmwKY16stgC1tHBJ0WJJCf+Pix
+         XHPktFaavFET7N3ncap59bLyO12exNfOXaC2wJSIFjhfClEmnooleNQGjWQE03wsLOld
+         7fRJ+MRnMXPrC7QUScueVdth5FhNq5Nun1qxw5/n/v78aVkTDs4vH4OJXm/H+UKrovDW
+         C/nZJW+3DTnrD5TPCBNjZQD+nDqGZ+t/8CqSMebBi7nkWn+5zsAzHxYya23ZeBH82ZVZ
+         93Sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=EB8y02+cwxHYmAzlO4qxHYeasmVoBIsDUBZrnUhZ5Xk=;
+        b=ApJLKdKEUH0sLosMciwVrAaLswQcMNjy/pZSdBYFzpCSmo/ykhaeX4PY1LleyHx1ZZ
+         W20nDbBmUBVgCq+XruaHW/3VgtrOvvFLj8DqNwqJVXHIOxZD372+rv3dvHfLfscGrW1g
+         SFrw/5W0Kx5W3togv+BioaGtYmcZVN3kZMMSmIQYucn8G/QF6r64PCW5XIJ/yeqzD5tr
+         ZX/NoE/C+BHxz0G37jmAfTGOKo8i0OwQ02LYgv9hUTHK8MJwd425pkGFMKE5RGEGcJL7
+         sesSw9CqzC92GkD2AwSj7KpbS4mNcHbDPrb3O6iqdVfy2jJFPQp1Ak6eYYMQMHvW/0a4
+         h7Ww==
+X-Gm-Message-State: AOUpUlGCYJyRZJmf9dtHnFWb0ivNT+G7APhr2POwyop7ByK7G+lpABwz
+        Yrf/+8MZHBTf/ne66ubDsRD1VXHogPXR+cnlvZOJaHMqdcReIA==
+X-Google-Smtp-Source: AAOMgpeWI2i4THgfMN0QIkSgSH6INMvUDRuHWsePQzSS6eaI1YUNXrr5YBmvC9gbw/Tk47bES1QBkOR86vxTsRJlF/8=
+X-Received: by 2002:a25:b091:: with SMTP id f17-v6mr5940430ybj.167.1532023245095;
+ Thu, 19 Jul 2018 11:00:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:/qj/q6xLaUdFmAwKcfjVuNzFy+8cNqr8+fgR+XqCqoQ+EP5INBi
- tHCTLDP3Y+UXQie64wVTACyInV2hQ61SBRhsKCwLJMGvRWYfxId0daqR/WG5TWrPvGq+7J1
- YtSVXo+M3D3uUKfcP17P6F8apgxmvF/hm4br28MPNYsFvxNNAxFjtokuokGLElL5PzxzNg8
- H8/j98s3jOZYToahvhBWQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:grl4hREprEo=:ejrLWG2sPcoskGDZZUYSS8
- 4deQ71Du1vVrQlUSlUXos9rZgVX3xaYYIO0IG3Ha3NjwLlyOVDyoDGQWYHDYm6kGnyHQSDw3B
- 00N0fp2HIdY5JLggMNyNtZaD7TJBU+eLpmGJgMlTjyETL6Zk4QfmzRDtSV0g864pHY4gkTjp7
- +kDHo6U0I2hdyUY/phQP8CwTA4DZToy+LdNl6f/ddArEamCDahVUyQsaUB5TWcTv3Ibu43OeB
- Fzv2NDvFgqdtN2PyM4RO+qDbLwkcCjT2WKJwdkYIpni0S8bu3HMNjhXlwRtBUQ0us4yoRNlLo
- HsOuE94Bv5L4CoJxyJspPQlV9CL2XTgBRU8wM+/BL0Hy66lN/cBP1wFpuEuhs8GFQ8w6BTxqa
- +9y5trvBWOEC+z9zLmx+fNfHIhodNL0L57dEPiroqz7Xq8dV0Gfep2SBwId3B8EbDCZEi0GGY
- QX8OQkvYjqjqSj8DYmWeweVl9BiZ8NtxdgdWbGqoStB//4brpf8vSdQK+aBwfRiMzXcFNoJ8D
- H++Va0EiFYzSqt+0jgKSWmLDq25wdJyPl8B+KdjPGggbqVnRkMCkfKTcUDhJ9OpPCe0a6hzYA
- Xf7WcAaD1cJWiZ6dM6UX8bmYPcsjC7goa9FTHlUxHoZ2fjorNHdiDRr0ayTmc48cIrS2LzCFG
- WXC8Xnekgww+Cth7R/fv8PlDbP5ItFO+gAyXS4c9ciQqIal5a1d2kj3wx81sMXIN6pMvFKy5d
- uZ+B8VveHUGAGTSWZ7MJbvJkwYASv0sWX9IciwUcY7YETgFfwALptDGXyWgB1LXBu8Q6zIGGc
- U9kdg1r
+References: <20180718005311.136329-1-sbeller@google.com> <xmqqy3e8jv4x.fsf@gitster-ct.c.googlers.com>
+ <CAGZ79kbOxD-GomEYGkOPe9bPT8sgik77hLaTHK1xN9Hk=g+BvA@mail.gmail.com>
+ <xmqqtvovgped.fsf@gitster-ct.c.googlers.com> <CAGZ79kZvHvMy6Lf-_Dtzbfaz2BFY2WonOfw-dDQVCOnS-a0=sA@mail.gmail.com>
+ <xmqq601bgmh3.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq601bgmh3.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 19 Jul 2018 11:00:34 -0700
+Message-ID: <CAGZ79kYo_zFfvX1LHod47BND=GbmzeaBfxhLbX_nmCPx0UATZQ@mail.gmail.com>
+Subject: Re: [PATCH] diff.c: offer config option to control ws handling in
+ move detection
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-On Tue, 17 Jul 2018, Duy Nguyen wrote:
-
-> On Tue, Jul 17, 2018 at 6:39 PM Duy Nguyen <pclouds@gmail.com> wrote:
+On Thu, Jul 19, 2018 at 10:32 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Stefan Beller <sbeller@google.com> writes:
+>
+> > "git format-patch HEAD^ --color" produces red/green output
+> > (like git log would), so I do not see why --color-moved should impact
+> > format-patch differently. (i.e. if the user requests format-patch with
+> > color-moved we can do it, otherwise, when colors are off, we do not
+> > spend cycles to compute the moves)
 > >
-> > On Fri, Jul 13, 2018 at 10:19 PM Johannes Schindelin via GitGitGadget
-> > <gitgitgadget@gmail.com> wrote:
-> > >
-> > > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > >
-> > > While it is true that we never add unreachable commits into pack files
-> > > intentionally (as `git repack`'s documentation states), we must not
-> > > forget that a `git fetch --prune` (or even a `git fetch` when a ref was
-> > > force-pushed in the meantime) can make a commit unreachable that was
-> > > reachable before.
-> > >
-> > > Therefore it is not safe to assume that a `git repack -adlf` will keep
-> > > unreachable commits alone (under the assumption that they had not been
-> > > packed in the first place).
-> > >
-> > > This is particularly important to keep in mind when looking at the
-> > > `.git/shallow` file: if any commits listed in that file become
-> > > unreachable, it is not a problem, but if they go missing, it *is* a
-> > > problem. One symptom of this problem is that a deepening fetch may now
-> > > fail with
-> > >
-> > >         fatal: error in object: unshallow <commit-hash>
-> > >
-> >
-> > Could you elaborate a bit more?
-> 
-> Never mind. The problem is described in another patch.. sigh.. I
-> understand you want to flip that "failure" to "success" but personally
-> I don't think it worth it to look back in history and have "what?"
-> moments like when I read this patch alone.
+> > Maybe I did not understand the gist of your question, still?
+>
+> "format-patch --color" done by end-user, especially when combined
+> with "--stdout", would be useful to show coloured output.  That is
+> what you are talking about in the above, but that is not what I was
+> asking about.
+>
+> The question was specifically about configuration.  You may say
+> "diff.colorwhatever = on", but "git format-patch" with no command
+> line override wouldn't want to be affected by that and produce a
+> patch that won't apply, I would think.
 
-The split was not meant for your benefit, but for the benefit of verifying
-that I indeed fixed a problem.
+The options introduced here (even the command line arguments)
+do *nothing* if no color is on, i.e.
 
-I don't think it is a wise idea to squash them together.
+    git diff --no-color --color-moved=blocks \
+        --color-moved-ws=allow-indentation-change
 
-Ciao,
-Dscho
+is the same as
+
+    git diff --no-color
+
+and as format-patch doesn't use colors by default giving
+color-moved settings (even via config) is a no-op, too?
+
+Stefan
