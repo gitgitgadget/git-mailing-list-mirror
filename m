@@ -7,114 +7,78 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 932341F597
-	for <e@80x24.org>; Thu, 19 Jul 2018 21:16:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 571CA1F597
+	for <e@80x24.org>; Thu, 19 Jul 2018 21:19:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730862AbeGSWBC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jul 2018 18:01:02 -0400
-Received: from mail-yb0-f173.google.com ([209.85.213.173]:43670 "EHLO
-        mail-yb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730816AbeGSWBC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jul 2018 18:01:02 -0400
-Received: by mail-yb0-f173.google.com with SMTP id x10-v6so3839333ybl.10
-        for <git@vger.kernel.org>; Thu, 19 Jul 2018 14:16:07 -0700 (PDT)
+        id S1730262AbeGSWEl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jul 2018 18:04:41 -0400
+Received: from mail-yw0-f175.google.com ([209.85.161.175]:37105 "EHLO
+        mail-yw0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727556AbeGSWEl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jul 2018 18:04:41 -0400
+Received: by mail-yw0-f175.google.com with SMTP id w76-v6so3619241ywg.4
+        for <git@vger.kernel.org>; Thu, 19 Jul 2018 14:19:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=B9LBub31PtXTF5yOgKGEsAn0Sip/FGWc1IyK0kFXwJY=;
-        b=K+kVxKiN3Vzwj9O5XxT2x9n4gpeOmLaoBsgAgmDO0fZl/qR1FCanYtj6OV7Rwi7gKG
-         dUOD32Z9yp7mpMlGqeZBmWtv0gxcYRZeigs2pqObJCNtxS/xjO0ZzOAM5Jt5NGCE4MN7
-         y04kAh6hmJS2ppntn8cvs8wmmPftfG/CYQRhzRmyTLlWGRZJtDSuCjpKjCGTBvaWPvLe
-         HOgcyCvVRQ63k+ekfKybHCmzbhhlWkVpKelx4SNnhkxxeV2lBENHYflYmUVDKnL/HIF4
-         6eyNxGusBMbLJtWobHdLN4yHu7F9ZPmQ/YsKqFPE/XHllq15PVqBHh/WKmMJv1rVW2C8
-         nnkA==
+        bh=k3alliS26v6ikhK2CB8LK1BGprEscFSUO9YhkWn/iQw=;
+        b=sQ3lsRZy7g8/UM3hDAhmXQHi0oTGcUulbatcpamAdIhhqZ0HNNfyOOMfPrKN2T+ixL
+         RMxnz/pHjlabfyEtbHeaFuu0QMRynyn9D71z/tyQeAxYCtnA08MtWe1SolG/BxBH0AZo
+         TdfdVP2xUskE9OsEPng/oBrFmgZU2RBZhXp7OQPmkonPZatwFDdLh+H++oCoxCa3br5e
+         TGLQ2El5IfM8NIS2RKiqzY3ZzT8W25NJKhlOPzG6rDLqZ4xrg1YrbdZrw0sYiZ6m2QUS
+         20A+eOKDzjGpfJkySGODTevuGURZy+rkWNM5xJ7X+vdsmv/cNqzTYsto3Vj2wLkG5Nhg
+         YYVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=B9LBub31PtXTF5yOgKGEsAn0Sip/FGWc1IyK0kFXwJY=;
-        b=dRc7LmsmzdXd4b1AIA6pkSW1UMUVTMJS0tB6LHXnC24FQlgCkT3UP5YWawZgvQrOcz
-         2rmq0opG76V/4JcBjMlx8E2Se33M3OUUBS46a+V58RZqUFqBkwGqqww+/aTcWieHzlq/
-         egzW9JU43ZiH+MPbhazgDjMKdF5AGgnOKK9Vix8B0xtsrS5gss9O+bEoOOT/br5ZkCR7
-         1z1MeQD52wvwgrkd7dkFrYjv1RwTAbzwoDnLElKKjhCEH4nAmu/NvXse11XMaMwf0wy7
-         OKkBhIa9jCZ6oiav4xzVVngOqq3GqwIY26JiJmfs+5DP27RHkkJE9ykG4Tn9ec7JZd/J
-         vNOQ==
-X-Gm-Message-State: AOUpUlF2KLsZljgq85BrjjkfZmanECIpCjWBYcHVvVsSMlTmb5aMss/5
-        UrB1ERaqoHKcWKLVdoh+vyPcnsEtdagdtBsbov+3rw==
-X-Google-Smtp-Source: AAOMgpeI1Tdv+p7fk1yt2Ngf2GR1n9wagC2+9HKOgpS2WnHdnMSXsNtDuxh+eYy3+zTj3FTnfcN2gkYTGxghewe7iWU=
-X-Received: by 2002:a25:560b:: with SMTP id k11-v6mr6497141ybb.292.1532034966661;
- Thu, 19 Jul 2018 14:16:06 -0700 (PDT)
+        bh=k3alliS26v6ikhK2CB8LK1BGprEscFSUO9YhkWn/iQw=;
+        b=FzGtcVer+iLVYgVtQP/J6MVx39gGUkpmFO+/pK0arJxQvc2ox4dX58lb8w1MxG+CnF
+         ATO4xm6iA6wnBvMwYC6Mg34nDvw+Wfd3fbBooVxQJtlICLHo7BAd8jKoTPW/3zF95+dv
+         A5CpC0D6Ja14x8n36zJQQqSkYUG0/n3SSrzsLrhDMxVeVUOO5gPDPeiQsHnzGM0qzxvy
+         q12YuWPkRW59h7oYhkUQQIMKonO4YpETdx+B48CtGQcgfMZOOZ3Pc3dVxbYpAnmaRcdD
+         WoVl+lGyc60tXDJ9YOlj4ab4GjnFtFJKEyC/CjR6N3XhlHkJUragCsUkAtWgRiKqb5BG
+         7FTA==
+X-Gm-Message-State: AOUpUlFaq91qQ/+zHVOaE7lXT8eH4FX/xpkNxkllqCMRtsrd0sMEI8kM
+        eYKb/rWbJQ15+1ZH/Xsp4v7klYS4fAGJID/dM7c27Q==
+X-Google-Smtp-Source: AAOMgpfBvlxahTY12AriRPF8dFgc6VquSU4kGXqzQ637Du55oJo1nBBzjs911yRAm4g+UKqkXPvVI+fnkH3BTRPcr/M=
+X-Received: by 2002:a81:af67:: with SMTP id x39-v6mr6162241ywj.33.1532035185144;
+ Thu, 19 Jul 2018 14:19:45 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180719203259.GA7869@sigill.intra.peff.net> <20180719203901.GA8079@sigill.intra.peff.net>
-In-Reply-To: <20180719203901.GA8079@sigill.intra.peff.net>
+References: <C00CED1F-D685-40E5-A5CC-4040BFD82886@gmail.com>
+In-Reply-To: <C00CED1F-D685-40E5-A5CC-4040BFD82886@gmail.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 19 Jul 2018 14:15:54 -0700
-Message-ID: <CAGZ79ka1yHb-485xc-sAK5iVkeyWJq4Q2g-7jzEgHuVUWLBXKg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] introduce "banned function" list
-To:     Jeff King <peff@peff.net>
-Cc:     git <git@vger.kernel.org>
+Date:   Thu, 19 Jul 2018 14:19:34 -0700
+Message-ID: <CAGZ79kbJnyRbeH8yMa=QaqNofA_Ek_SwmH5qRaCaq4cyQ26Kqg@mail.gmail.com>
+Subject: Re: Find commit that referenced a blob first
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        primetheus@github.com
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 19, 2018 at 1:39 PM Jeff King <peff@peff.net> wrote:
+On Thu, Jul 19, 2018 at 2:02 PM Lars Schneider <larsxschneider@gmail.com> wrote:
 >
-> There are a few standard C functions (like strcpy) which are
-> easy to misuse. We generally discourage these in reviews,
-> but we haven't put advice in CodingGuidelines, nor provided
-> any automated enforcement. The latter is especially
-> important because it's more consistent, and it can often
-> save a round-trip of review.
+> Hi,
+>
+> I have a blob hash and I would like to know what commit referenced
+> this blob first in a given Git repo.
 
-Thanks for writing these patches. I would think this is a
-good idea to have as I certainly would use banned functions
-if not told by the compiler not to.
+git describe <blob>
 
->  Documentation/CodingGuidelines |  3 +++
+If the given object refers to a blob, it will be described as
+<commit-ish>:<path>,
+such that the blob can be found at <path> in the <commit-ish>, which itself
+describes the first commit in which this blob occurs in a reverse
+revision walk from HEAD.
 
-I'd prefer to not add more text to our documentation
-(It is already long and in case you run into this problem
-the error message is clear enough IMHO)
+Since
+644eb60bd01 (builtin/describe.c: describe a blob, 2017-11-15)
+(included first in 2.16.0
 
-
-> @@ -0,0 +1,19 @@
-> +#ifndef BANNED_H
-> +#define BANNED_H
-> +
-> +/*
-> + * This header lists functions that have been banned from our code base,
-> + * because they're too easy to misuse (and even if used correctly,
-> + * complicate audits). Including this header turns them into compile-time
-> + * errors.
-> + */
-> +
-> +#define BANNED(func) sorry_##func##_is_a_banned_function()
-> +
-> +#define strcpy(x,y) BANNED(strcpy)
-> +
-> +#ifdef HAVE_VARIADIC_MACROS
-
-In a split second I thought you forgot sprintf that was
-mentioned in the commit message, but then I kept on reading
-just to find it here. I wonder if we want put this #ifdef at the
-beginning of the file (after the guard) as then we can have
-a uncluttered list of banned functions here. The downside is that
-the use of strcpy would not be banned in case you have no
-variadic macros, but we'd still catch it quickly as most people
-have them. Undecided.
-
-Regarding the introduction of the functions to this list,
-I would imagine people would find the commit that introduced
-a function to the ban list to look for a reason why.
-Can we include a link[1] to explain why we discourage
-strcpy and sprintf in this commit?
-
-
-[1] https://www.thegeekstuff.com/2013/06/buffer-overflow/?utm_source=feedly
-  This is the best I found. So not sure if it worth it.
-
-Thanks,
+You're welcome,
 Stefan
