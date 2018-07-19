@@ -2,89 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8696A1F597
-	for <e@80x24.org>; Thu, 19 Jul 2018 16:43:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 221D91F597
+	for <e@80x24.org>; Thu, 19 Jul 2018 16:47:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731810AbeGSR1S (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jul 2018 13:27:18 -0400
-Received: from mout.gmx.net ([212.227.17.20]:48997 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731625AbeGSR1S (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jul 2018 13:27:18 -0400
-Received: from [192.168.0.129] ([37.201.195.94]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MXDo1-1fUNfB3bOf-00WDfD; Thu, 19
- Jul 2018 18:43:12 +0200
-Date:   Thu, 19 Jul 2018 18:42:56 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Jeff King <peff@peff.net>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 2/2] repack -ad: prune the list of shallow commits
-In-Reply-To: <xmqqh8kxrfrf.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1807191840490.71@tvgsbejvaqbjf.bet>
-References: <pull.9.git.gitgitgadget@gmail.com> <b4e01a963fd16f50d12c1f67c6e64bec8b1e9673.1531513093.git.gitgitgadget@gmail.com> <20180713203140.GB17670@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1807142351100.75@tvgsbejvaqbjf.bet> <20180716173636.GA18636@sigill.intra.peff.net>
- <xmqqh8kxrfrf.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1732084AbeGSRbH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jul 2018 13:31:07 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52766 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1731661AbeGSRbG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jul 2018 13:31:06 -0400
+Received: (qmail 458 invoked by uid 109); 19 Jul 2018 16:47:06 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 19 Jul 2018 16:47:06 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12484 invoked by uid 111); 19 Jul 2018 16:47:11 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 19 Jul 2018 12:47:11 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Jul 2018 12:47:05 -0400
+Date:   Thu, 19 Jul 2018 12:47:05 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Basin Ilya <basinilya@gmail.com>, git@vger.kernel.org
+Subject: Re: Use different ssh keys for different github repos (per-url
+ sshCommand)
+Message-ID: <20180719164704.GB4868@sigill.intra.peff.net>
+References: <44d3c280-3fb2-2415-46b7-343983e76e0b@gmail.com>
+ <87zhynbd9z.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:2Q6L/f7Y3QO5jDptcs6KbCFjK7KzV2QyFmGSbal9yPnNLsqDX6G
- aVYOVdalR9RkY6VnkAP1A63lWvroIvwt4Jt59uOenpUzMcB6SsBw1ede1KUEt9Eqq9vAuMx
- dy1Kpb41oZ3YBancp7yTmX7/Vnp3dlcjOqBRsPKqdOl5kq0usMymW7lUyfO+8Pdfyml/aWP
- wmCGYH83G9X9TvN9cPaCw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:SDe7o2N+74k=:aMSY4cjCvWbjTpm5NtUv9f
- oHZLsxDstlt+tNdlNunuhQIMfPUq8s/dX5m+N8i3+qdAavtP5bibtHapJajcyttokM8U8QIl5
- pVrABQTXGDq5T55patuYVzqiIORA1ZZDvx2S2QIQte+iSgZzRRaDiY+R3w3xoWkg6pmE2vLs9
- 4ZoxhBb7zim3LYIK/CFbjSNoRASoYDaUsUAIhnuf7EBz49C8Wq48XlY5UFfvr5D4+xDiR3KWf
- TufZZby7bWvj6htud1A+MMxymfrLWWAiM6BN3lRE5wXiufLX1VoVv3nzKciIgrFnVXWY+k/jy
- U0v/QeimYQgL4irkozvl5D+/hDMRCEjdP8maUM9aMewv8muKpw6bcjlu4OvoWZSal+z3n6lzF
- m0S4gNdIXvhgmsZGzmSKa4lYriwPujDKt5SvJSOpK51sWSsZ7vYDj834QTF6fhScbz6MTLjTI
- msZhv0UF9YQQx4XTOnO2Z4C/EquKPrLuksQaDwH4/B7AbUPN0CSV53MZhufAfRs4ZwKc7knZV
- UgKiNEqpyz4ka6BIjmLoSKUoQDh3AbXmd9pWIXHIzqh0Z5enil9V25PxNaYgUqPifEt6eKU42
- +y2ACL21Z4ErqyoeS6Bm+urAMLH9s0vy1uoWmuqA/4sopd4riziPKtmh83t1x828pFGXBiRs0
- /T/F7N+mgJMTYvpQG120//HQGIUoOMWBzf0yxwyC4pOp4pljgFU370XevKpT2FGaYJvLWWXmZ
- I/Hg4uAqmbkbA0T6leoh4l2c0PNYAwhj5tioG9O2qqVhqlyNQUX1aPiuhjJLBR1UQtKTC9BYS
- BA0u7TY
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87zhynbd9z.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Thu, Jul 19, 2018 at 02:50:16PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-On Tue, 17 Jul 2018, Junio C Hamano wrote:
-
-> Jeff King <peff@peff.net> writes:
+> > I thought of writing a wrapper script to deduce the key from the arguments:
+> >
+> >     git@github.com git-upload-pack '/theorganization/privaterepo.git'
+> >
+> > Is this the only option?
 > 
-> > I'm OK with having a partial fix, or one that fixes immediate pain
-> > without doing a big cleanup, as long as it doesn't make anything _worse_
-> > in a user-visible way. And that's really my question: is pruning here
-> > going to bite people unexpectedly (not rhetorical -- I really don't
-> > know)?
+> Yes, I had a similar problem a while ago (which I sent an RFC patch for)
+> which shows a script you can use:
+> https://public-inbox.org/git/20180103102840.27897-1-avarab@gmail.com/
 > 
-> Yeah, that matches the general guideline I follow when reviewing a
-> patch that claims to make existing things better.  And I do not
-> think I can explain to a third person why pruning here is a good
-> idea and won't cause problems, after seeing these patches and
-> the discussion from the sideline.
+> It would be nice if this were configurable. Instead of the way you
+> suggested, it would be more general if we supported:
+> 
+>     [Include "remote:git@github.com:theorganization*"]
+>     path = theorganization.config
+> 
+> Although I'm sure we'd have some interesting chicken & egg problems
+> there when it comes to bootstrapping the config parsing.
 
-It is very easy to explain: `git repack` can drop unreachable commits
-without further warning, making the corresponding entries in
-`.git/shallow` invalid, which causes serious problems when deepening the
-branches.
+I don't think we'd ever support this via the include mechanism. The
+idea of "which remote are we looking at" is specific to a particular
+part of an operation. Whereas config parsing is generally process-wide,
+so it has to be based on a property of the whole process (like "which
+directory are we in"). Maybe that's what you meant by chicken and egg.
 
-The solution is easy: drop also the now-invalid entries in `.git/shallow`
-after dropping unreachable commits unceremoniously.
+If we were to make this more configurable, it would probably be more
+like existing http.* config, which loads all the config, but then does
+URL-specific matching when applying the config to a particular
+operation.
 
-While I am sympathetic to Peff's attempt to make this a bit more general,
-I think he overthinks it, and we do not even need to complexify the code
-for now.
-
-Ciao,
-Dscho
+-Peff
