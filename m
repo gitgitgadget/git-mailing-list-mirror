@@ -2,83 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 135AD1F597
-	for <e@80x24.org>; Thu, 19 Jul 2018 06:10:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0FD7E1F597
+	for <e@80x24.org>; Thu, 19 Jul 2018 07:45:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727217AbeGSGvg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jul 2018 02:51:36 -0400
-Received: from mail-wr1-f43.google.com ([209.85.221.43]:37829 "EHLO
-        mail-wr1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726857AbeGSGvg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jul 2018 02:51:36 -0400
-Received: by mail-wr1-f43.google.com with SMTP id q10-v6so6779269wrd.4
-        for <git@vger.kernel.org>; Wed, 18 Jul 2018 23:10:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=BLG6f+wGpqKFcqCGMhza4PsdUOBN0eUR619LJmOqj34=;
-        b=f+86FaRc/KhZFYwLPaGTxv7f/19WiTIPXDqLKE2/0y3ivpOhV3ywkqxkT/Cu8jdhxn
-         tblI/4TSoxsZ6NSKY8or2cZ2jB9qGx3uWpi1BsJ0wUL89LiFrDQ3X1GP7kn7tB9xSotN
-         7P0SjTflCkYzxArBFPGXnrAeas9uDg4dQ9hMnMRUJ1rHlghwK60DlFCPqIo5lngaS+G9
-         IjU2HZqEXvX5SDI1W+5umXKC3kEPkWZWwtXwzzh5eDgffeZwijaMysYznBQSO67T7o3P
-         mWR1CDQa7po+LR8tTwy87hjEUiEh9r4WRlrTha7KxT3rTfbIfBvxMqrBCBkeE9i94wc+
-         e/NQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=BLG6f+wGpqKFcqCGMhza4PsdUOBN0eUR619LJmOqj34=;
-        b=HaxmZN2xN6jOhuWCa4mitXADISPUYWDty9IR7vIcslcSfIyHMeiotTeR8xHb2j2Wes
-         lCRrh5bbqLXp+B1scc5ylSmavpjyyCl19aN22MKfl9fPak8Si0FQXflTFVSVue8BmWsM
-         ARW1jAuszamUUy7yv16hHqJHOH1L97mjBQpVw7kJoA0Q6U53LU3VYlahMxOL+fw8VHNk
-         bilEHPavHKq+I4D4eMmXvKSjZFzBUV3blO6OdIEXjXHxIb9/tprc5grXg2xekxBb5sPh
-         +v2JKBRlPuPVwiMmZ1nXrJ13WY5+vZqZiUXWhgtXzzYBAE6772lvUiu+ehv0wVn1EC68
-         /IRA==
-X-Gm-Message-State: AOUpUlGQain7YGwFJegsln1GmIwKcN2tKCu2WWiGnBmtB5oSomr4izuo
-        SctXeE6ekqW4l2gOPFOzWK+Gfeb0VsfN4e9TJ0EyNA==
-X-Google-Smtp-Source: AAOMgpdcxoJhOt3L/S88sGxlsPBRFd2dts282EwyQjET+U9ElZsnZC+KosigMZSDqDux0UONOEUNECasa6xUrWPVaCE=
-X-Received: by 2002:adf:dd07:: with SMTP id a7-v6mr6634757wrm.2.1531980609296;
- Wed, 18 Jul 2018 23:10:09 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:adf:e9c6:0:0:0:0:0 with HTTP; Wed, 18 Jul 2018 23:10:08
- -0700 (PDT)
-In-Reply-To: <xmqqtvowi4l3.fsf@gitster-ct.c.googlers.com>
-References: <xmqqtvowi4l3.fsf@gitster-ct.c.googlers.com>
-From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-Date:   Thu, 19 Jul 2018 09:10:08 +0300
-Message-ID: <CAL21BmmALPba5NEH-sq42mX5xS-CAPoupjftw390XWjJeQXoDA@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Jul 2018, #02; Wed, 18)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        id S1731270AbeGSI1H convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 19 Jul 2018 04:27:07 -0400
+Received: from rrzmta1.uni-regensburg.de ([194.94.155.51]:53498 "EHLO
+        rrzmta1.uni-regensburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731215AbeGSI1G (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jul 2018 04:27:06 -0400
+X-Greylist: delayed 392 seconds by postgrey-1.27 at vger.kernel.org; Thu, 19 Jul 2018 04:27:05 EDT
+Received: from rrzmta1.uni-regensburg.de (localhost [127.0.0.1])
+        by localhost (Postfix) with SMTP id 08ED4619A5
+        for <git@vger.kernel.org>; Thu, 19 Jul 2018 09:38:44 +0200 (CEST)
+Received: from gwsmtp1.uni-regensburg.de (gwsmtp1.uni-regensburg.de [132.199.5.51])
+        by rrzmta1.uni-regensburg.de (Postfix) with ESMTP id 627D45E8A0
+        for <git@vger.kernel.org>; Thu, 19 Jul 2018 09:38:27 +0200 (CEST)
+Received: from uni-regensburg-smtp1-MTA by gwsmtp1.uni-regensburg.de
+        with Novell_GroupWise; Thu, 19 Jul 2018 09:38:27 +0200
+Message-Id: <5B503FF0020000A10002C6B5@gwsmtp1.uni-regensburg.de>
+X-Mailer: Novell GroupWise Internet Agent 18.0.1 
+Date:   Thu, 19 Jul 2018 09:38:24 +0200
+From:   "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>
+To:     <git@vger.kernel.org>
+Subject: Q: Ignore ./foo, but not script/foo
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8BIT
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> * ot/ref-filter-object-info (2018-07-17) 5 commits
->  - ref-filter: use oid_object_info() to get object
->  - ref-filter: merge get_obj and get_object
->  - ref-filter: initialize eaten variable
->  - ref-filter: fill empty fields with empty values
->  - ref-filter: add info_source to valid_atom
->
->  A few atoms like %(objecttype) and %(objectsize) in the format
->  specifier of "for-each-ref --format=<format>" can be filled without
->  getting the full contents of the object, but just with the object
->  header.  These cases have been optimzied by calling
->  oid_object_info() API.
->
->  What's the doneness of this one?
->
+Hi!
 
-I fixed all known issues, I hope we can move forward with it.
-Thank you!
+I have a (simple) question I could not answer elegantly from the gitignore(5) manual page:
+
+A project produces a "foo" binary in the root directory that I want to ignore (So I put "foo" into .gitignore)
+Unfortunately I found out taht I cannot have a "script/foo" added while "foo" is in .gitignore.
+So I changed "foo" to "./foo" in .gitignore. I can could add "script/foo", but now "foo" is not ignored any more!
+
+Is there as solution other than:?
+--
+foo
+!script/foo
+!bla/foo
+#etc.
+--
+
+If "foo" is one exception to generally using foo elsewhere, it seems to be counterproductive to have to add exceptions for all the cases that are not exceptions, while "foo" is the only exception...
+
+Did I miss something? If so, maybe add it to a future manual page.
+
+Regards,
+Ulrich
+
+
