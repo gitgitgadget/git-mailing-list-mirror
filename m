@@ -2,83 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 571CA1F597
-	for <e@80x24.org>; Thu, 19 Jul 2018 21:19:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC3831F597
+	for <e@80x24.org>; Thu, 19 Jul 2018 21:27:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730262AbeGSWEl (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jul 2018 18:04:41 -0400
-Received: from mail-yw0-f175.google.com ([209.85.161.175]:37105 "EHLO
-        mail-yw0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727556AbeGSWEl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jul 2018 18:04:41 -0400
-Received: by mail-yw0-f175.google.com with SMTP id w76-v6so3619241ywg.4
-        for <git@vger.kernel.org>; Thu, 19 Jul 2018 14:19:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=k3alliS26v6ikhK2CB8LK1BGprEscFSUO9YhkWn/iQw=;
-        b=sQ3lsRZy7g8/UM3hDAhmXQHi0oTGcUulbatcpamAdIhhqZ0HNNfyOOMfPrKN2T+ixL
-         RMxnz/pHjlabfyEtbHeaFuu0QMRynyn9D71z/tyQeAxYCtnA08MtWe1SolG/BxBH0AZo
-         TdfdVP2xUskE9OsEPng/oBrFmgZU2RBZhXp7OQPmkonPZatwFDdLh+H++oCoxCa3br5e
-         TGLQ2El5IfM8NIS2RKiqzY3ZzT8W25NJKhlOPzG6rDLqZ4xrg1YrbdZrw0sYiZ6m2QUS
-         20A+eOKDzjGpfJkySGODTevuGURZy+rkWNM5xJ7X+vdsmv/cNqzTYsto3Vj2wLkG5Nhg
-         YYVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=k3alliS26v6ikhK2CB8LK1BGprEscFSUO9YhkWn/iQw=;
-        b=FzGtcVer+iLVYgVtQP/J6MVx39gGUkpmFO+/pK0arJxQvc2ox4dX58lb8w1MxG+CnF
-         ATO4xm6iA6wnBvMwYC6Mg34nDvw+Wfd3fbBooVxQJtlICLHo7BAd8jKoTPW/3zF95+dv
-         A5CpC0D6Ja14x8n36zJQQqSkYUG0/n3SSrzsLrhDMxVeVUOO5gPDPeiQsHnzGM0qzxvy
-         q12YuWPkRW59h7oYhkUQQIMKonO4YpETdx+B48CtGQcgfMZOOZ3Pc3dVxbYpAnmaRcdD
-         WoVl+lGyc60tXDJ9YOlj4ab4GjnFtFJKEyC/CjR6N3XhlHkJUragCsUkAtWgRiKqb5BG
-         7FTA==
-X-Gm-Message-State: AOUpUlFaq91qQ/+zHVOaE7lXT8eH4FX/xpkNxkllqCMRtsrd0sMEI8kM
-        eYKb/rWbJQ15+1ZH/Xsp4v7klYS4fAGJID/dM7c27Q==
-X-Google-Smtp-Source: AAOMgpfBvlxahTY12AriRPF8dFgc6VquSU4kGXqzQ637Du55oJo1nBBzjs911yRAm4g+UKqkXPvVI+fnkH3BTRPcr/M=
-X-Received: by 2002:a81:af67:: with SMTP id x39-v6mr6162241ywj.33.1532035185144;
- Thu, 19 Jul 2018 14:19:45 -0700 (PDT)
+        id S1730469AbeGSWL6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jul 2018 18:11:58 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53310 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1730057AbeGSWL6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jul 2018 18:11:58 -0400
+Received: (qmail 10823 invoked by uid 109); 19 Jul 2018 21:27:02 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 19 Jul 2018 21:27:02 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17094 invoked by uid 111); 19 Jul 2018 21:27:06 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 19 Jul 2018 17:27:06 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Jul 2018 17:27:00 -0400
+Date:   Thu, 19 Jul 2018 17:27:00 -0400
+From:   Jeff King <peff@peff.net>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 1/2] introduce "banned function" list
+Message-ID: <20180719212700.GA13151@sigill.intra.peff.net>
+References: <20180719203259.GA7869@sigill.intra.peff.net>
+ <20180719203901.GA8079@sigill.intra.peff.net>
+ <CAPig+cSErDoZ5XFjfJsqfEKZ6PSKfOos=9HW-7FDXU1XEtuktA@mail.gmail.com>
 MIME-Version: 1.0
-References: <C00CED1F-D685-40E5-A5CC-4040BFD82886@gmail.com>
-In-Reply-To: <C00CED1F-D685-40E5-A5CC-4040BFD82886@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 19 Jul 2018 14:19:34 -0700
-Message-ID: <CAGZ79kbJnyRbeH8yMa=QaqNofA_Ek_SwmH5qRaCaq4cyQ26Kqg@mail.gmail.com>
-Subject: Re: Find commit that referenced a blob first
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        primetheus@github.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAPig+cSErDoZ5XFjfJsqfEKZ6PSKfOos=9HW-7FDXU1XEtuktA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 19, 2018 at 2:02 PM Lars Schneider <larsxschneider@gmail.com> wrote:
->
-> Hi,
->
-> I have a blob hash and I would like to know what commit referenced
-> this blob first in a given Git repo.
+On Thu, Jul 19, 2018 at 05:11:15PM -0400, Eric Sunshine wrote:
 
-git describe <blob>
+> On Thu, Jul 19, 2018 at 4:39 PM Jeff King <peff@peff.net> wrote:
+> > [...]
+> > Let's start by banning strcpy() and sprintf(). It's not
+> > impossible to use these correctly, but it's easy to do so
+> > incorrectly, and there's always a better option.
+> > [...]
+> > Signed-off-by: Jeff King <peff@peff.net>
+> > ---
+> > diff --git a/banned.h b/banned.h
+> > @@ -0,0 +1,19 @@
+> > +/*
+> > + * This header lists functions that have been banned from our code base,
+> > + * because they're too easy to misuse (and even if used correctly,
+> > + * complicate audits). Including this header turns them into compile-time
+> > + * errors.
+> > + */
+> 
+> When the above talks about "including this header", the implication is
+> that it must be included _after_ the system header(s) which declare
+> the banned functions. I wonder if that requirement should be stated
+> here explicitly.
 
-If the given object refers to a blob, it will be described as
-<commit-ish>:<path>,
-such that the blob can be found at <path> in the <commit-ish>, which itself
-describes the first commit in which this blob occurs in a reverse
-revision walk from HEAD.
+Hmm, does it need to be? I had originally intended it to be included
+before, actually, though in the end I put it later.
 
-Since
-644eb60bd01 (builtin/describe.c: describe a blob, 2017-11-15)
-(included first in 2.16.0
+I guess it would yield declarations like strcpy_is_banned(), which would
+cause _different_ errors (probably link-time ones).
 
-You're welcome,
-Stefan
+> (Probably not worth a re-roll.)
+
+Yeah, I doubt it matters much either way, since the inclusion is done
+automatically in git-compat-util.h.
+
+I had also originally imagined this to be triggered via DEVELOPER=1,
+with something like "-include banned.h" in CFLAGS. But I think it
+probably is appropriate for everybody to run it, since it shouldn't
+cause any false positives or other compilation issues.
+
+The one I brainstormed (but forgot to mention) is that it might be
+possible for a platform to have strcpy as a macro already? In which case
+we'd need to #undef it or risk a compilation error (even if the macro
+isn't actually used).
+
+-Peff
