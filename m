@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6553C1F597
-	for <e@80x24.org>; Thu, 19 Jul 2018 18:56:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 820B71F597
+	for <e@80x24.org>; Thu, 19 Jul 2018 18:56:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732293AbeGSTkz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jul 2018 15:40:55 -0400
-Received: from mail-io0-f201.google.com ([209.85.223.201]:35484 "EHLO
-        mail-io0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732179AbeGSTkz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jul 2018 15:40:55 -0400
-Received: by mail-io0-f201.google.com with SMTP id y4-v6so634339iol.2
-        for <git@vger.kernel.org>; Thu, 19 Jul 2018 11:56:27 -0700 (PDT)
+        id S1732707AbeGSTk5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jul 2018 15:40:57 -0400
+Received: from mail-vk0-f74.google.com ([209.85.213.74]:45687 "EHLO
+        mail-vk0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732179AbeGSTk5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jul 2018 15:40:57 -0400
+Received: by mail-vk0-f74.google.com with SMTP id e127-v6so3200274vkg.12
+        for <git@vger.kernel.org>; Thu, 19 Jul 2018 11:56:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=O9zUoLTS/Y06IQSHdio4q7OIBngldd5L4C6pepVI0OQ=;
-        b=oe52KiepYZJBVOL0H4qgXu8dtpovOBKwmzNBTe/FyUrOapCFVFJRENBD/OjpcXvuYi
-         KnHugXyr3LZO7jUSeAszZsx+ctqOTef9eu2+a+e2iUdUmKbiBQvGYqbiZYygYZM2WnhY
-         na9N8kTvRE2BeKUhbqXuY/wH0xTdYd6Qn02m6RgVncFSup6+Osb0MiiwC51ZHufiYbbR
-         E0L9Fr2o8Q5p09e3A+KyVhgOJrwS/XhJSx1J7AeduIGWfScf3nke8SEBBU0sNztS+qOp
-         u/+75KdhjAsggyIt3hEw0MxJYk/Qj0nqsEtgnGMmrH9LpYtInFDXgh7G/DvrTMuA6etp
-         6AMQ==
+        bh=INimGi8gyfNsVTRJRKa4Df5qjKADbyVsYPPmLcWfaBY=;
+        b=EcghIyi1GIXfTJwMJwYsWhpdL9broKQ5x/oeZkMdMxfnYnaT47WK8efK8HyXDcv6wR
+         PSaygcOL5iLUEFVYOuxdCUcWBZfruvjLUUNQoKRrXj02YfVzuPQHXv8AZ3zU77yrBrgz
+         PZMKY3SJvayY36YTwDdxVHwovGzAc3ujK2YIlELkgrCr08/azGb/7hrQHAH+UqWrJWuW
+         bWz542m2K8jgpbDe3OkD82Y2bSW32ZuGdskRE9yU/k0P/4GlzgQrBqhUoxLjYDuU24or
+         es96iRy+nacBqdBxYnIVO97VfA4eGJNDYp8KWHMkzPxZTNZ2ILYPv4eVJAMEp+ThLp9U
+         Mb3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=O9zUoLTS/Y06IQSHdio4q7OIBngldd5L4C6pepVI0OQ=;
-        b=icf/Yh9JOzdDWsl0NXbwTgkIaedW85ki1j1D5OW2OCsWnIw3N+m+Ump3lT16s6Nxso
-         kh8or45rUWz8/oSaRlSG+WHmiBCq0r3ww1VjYABEXz2rllm/GkIAdF5clUkuZrcmgVE9
-         xJDvZtu+M+lfeeYIuXNC2rbLSdC49Q1SHz1BmA5mY5ENs6DpdMicfHsaDWBPyiB1P4vf
-         c0cf+0laYlsF69Cvh1Q05l6QXfYMFeNEf2lVxA3Aptoho7Q5znSIoTlNoKkIBiSN3d6D
-         0oeZiV27YBZKYglJK/GhsQ5gj3b8SHewDIzLJ0yVtkKZaTcd9/IY/W44DDUCcNDKT4El
-         q57Q==
-X-Gm-Message-State: AOUpUlHotzbNlL4RXbjHJHAshFQc10UVWFUTWqWnp53sDG/Qfew7Udit
-        iRi/u+CXyxVnaj2NqfIxguQKtGxOGf9IxE2BmyuP+9DNDx50ju46cji3G6kfJA3EfIPUmlfFkmm
-        V71A5haiAD2mUUW7LZjTnR5X7Xk4TfPROJ5gQUeIuckW61r/tTZYI3aByCDlx
-X-Google-Smtp-Source: AAOMgpcpzeIs4i7yIYdvPDxtauR/8acgUoP/F7DrpNAam5F4hpaCAg59cBmsDk9tKfQktjb2R6egNpiR2yQ6
+        bh=INimGi8gyfNsVTRJRKa4Df5qjKADbyVsYPPmLcWfaBY=;
+        b=oRo4SJRTQg2G2B+zRGRum+EdWnZ93ZdIqaxrD29dKxuICFQnDasxD9r+dl6l4h3FLL
+         CKmXv/CNU24ZgF9Tlv73YlcweM5ikZTC5gPkJCK3LPjyrosZDLilS6Hm09W1FrWXiXOv
+         sj3vqNcIYhKVBVUQ3RX2efklVWd+0gDUBpf0xMWsK9PWien9iqxMHnhxR1zhGAJDqjFS
+         iitlWMsi1B1VSKqypYbghjDoWNBxs11Nh/R6FecfOnUpmCby7Sf84tbxSDP9rCstkqN2
+         DEVI70gJsNPjL+i3R3cuPdjcILzGzAlXaWFdVm9p82aCfesbv3csbcr0u7NH5FjkkROX
+         65rA==
+X-Gm-Message-State: AOUpUlHyoL/YsCOikJtMtg+DIGE1SeB3XaAJ68OFzk9+rW26PBY4HOnf
+        CwCCeyuHYMA0X79j7jn/XiXbHR5LlUW5B9WMxMnzD2KpeT64YNcvlJOPDnN1zAPoUmjrkHgu5BM
+        YjeBs1YGx/n6P+cbIpRvGhHtKJIpPD+p7fsLli2ke7OcnhGgWdzPZNC3iRVwJ
+X-Google-Smtp-Source: AAOMgpfHBgnB+QzirZOGX0fs2RMDsdiGwARRh2Hw0fwAlqjc3rHD1lqLiWxD44NOcRu9lE24LjPs1yQWOgvU
 MIME-Version: 1.0
-X-Received: by 2002:a24:324d:: with SMTP id j74-v6mr3460435ita.26.1532026586943;
- Thu, 19 Jul 2018 11:56:26 -0700 (PDT)
-Date:   Thu, 19 Jul 2018 11:56:18 -0700
+X-Received: by 2002:ab0:175b:: with SMTP id k27-v6mr5403203uaf.53.1532026589321;
+ Thu, 19 Jul 2018 11:56:29 -0700 (PDT)
+Date:   Thu, 19 Jul 2018 11:56:19 -0700
 In-Reply-To: <20180719185620.124768-1-sbeller@google.com>
-Message-Id: <20180719185620.124768-2-sbeller@google.com>
+Message-Id: <20180719185620.124768-3-sbeller@google.com>
 References: <20180719185620.124768-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.233.g985f88cf7e-goog
-Subject: [PATCH 1/3] xdiff/xhistogram: pass arguments directly to fall_back_to_classic_diff
+Subject: [PATCH 2/3] xdiff/xhistogram: factor out memory cleanup into free_index()
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>
@@ -62,65 +62,45 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-By passing the 'xpp' and 'env' argument directly to the function
-'fall_back_to_classic_diff', we eliminate an occurrence of the 'index'
-in histogram_diff, which will prove useful in a bit.
-
-While at it, move it up in the file. This will make the diff of
-one of the next patches more legible.
+This will be useful in the next patch as we'll introduce multiple
+callers.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- xdiff/xhistogram.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ xdiff/xhistogram.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
 diff --git a/xdiff/xhistogram.c b/xdiff/xhistogram.c
-index 73210cb6f3f..6e20f75fe85 100644
+index 6e20f75fe85..5098b6c5021 100644
 --- a/xdiff/xhistogram.c
 +++ b/xdiff/xhistogram.c
-@@ -233,6 +233,16 @@ static int try_lcs(struct histindex *index, struct region *lcs, int b_ptr,
- 	return b_next;
+@@ -243,6 +243,14 @@ static int fall_back_to_classic_diff(xpparam_t const *xpp, xdfenv_t *env,
+ 				  line1, count1, line2, count2);
  }
  
-+static int fall_back_to_classic_diff(xpparam_t const *xpp, xdfenv_t *env,
-+		int line1, int count1, int line2, int count2)
++static inline void free_index(struct histindex *index)
 +{
-+	xpparam_t xpparam;
-+	xpparam.flags = xpp->flags & ~XDF_DIFF_ALGORITHM_MASK;
-+
-+	return xdl_fall_back_diff(env, &xpparam,
-+				  line1, count1, line2, count2);
++	xdl_free(index->records);
++	xdl_free(index->line_map);
++	xdl_free(index->next_ptrs);
++	xdl_cha_free(&index->rcha);
 +}
 +
  static int find_lcs(struct histindex *index, struct region *lcs,
  	int line1, int count1, int line2, int count2) {
  	int b_ptr;
-@@ -248,16 +258,6 @@ static int find_lcs(struct histindex *index, struct region *lcs,
- 	return index->has_common && index->max_chain_length < index->cnt;
+@@ -343,10 +351,7 @@ static int histogram_diff(xpparam_t const *xpp, xdfenv_t *env,
+ 	}
+ 
+ cleanup:
+-	xdl_free(index.records);
+-	xdl_free(index.line_map);
+-	xdl_free(index.next_ptrs);
+-	xdl_cha_free(&index.rcha);
++	free_index(&index);
+ 
+ 	return result;
  }
- 
--static int fall_back_to_classic_diff(struct histindex *index,
--		int line1, int count1, int line2, int count2)
--{
--	xpparam_t xpp;
--	xpp.flags = index->xpp->flags & ~XDF_DIFF_ALGORITHM_MASK;
--
--	return xdl_fall_back_diff(index->env, &xpp,
--				  line1, count1, line2, count2);
--}
--
- static int histogram_diff(xpparam_t const *xpp, xdfenv_t *env,
- 	int line1, int count1, int line2, int count2)
- {
-@@ -320,7 +320,7 @@ static int histogram_diff(xpparam_t const *xpp, xdfenv_t *env,
- 
- 	memset(&lcs, 0, sizeof(lcs));
- 	if (find_lcs(&index, &lcs, line1, count1, line2, count2))
--		result = fall_back_to_classic_diff(&index, line1, count1, line2, count2);
-+		result = fall_back_to_classic_diff(xpp, env, line1, count1, line2, count2);
- 	else {
- 		if (lcs.begin1 == 0 && lcs.begin2 == 0) {
- 			while (count1--)
 -- 
 2.18.0.233.g985f88cf7e-goog
 
