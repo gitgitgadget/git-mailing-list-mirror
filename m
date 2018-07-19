@@ -2,65 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 16D421F597
-	for <e@80x24.org>; Thu, 19 Jul 2018 09:23:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F24691F597
+	for <e@80x24.org>; Thu, 19 Jul 2018 09:30:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730440AbeGSKFW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jul 2018 06:05:22 -0400
-Received: from fallback9.mail.ru ([94.100.178.49]:56855 "EHLO
-        fallback9.mail.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726475AbeGSKFV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jul 2018 06:05:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
-        h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=3+ZjsMINKe7eVM7enWDFl44ip4dM1h31CRG7mQ+m+Mo=;
-        b=vXWBo8otWI5koYHwxs7xbuICHgM2wlwV59iwWzpBY09JnoStraUEyObzpESq/ztpeX2I6U7+cXyDGr/jLQnIE3nBgWc/izZfSkxnHYuVq/YP/imf6bBG401/xXjnUVKpgJUcoHfE03TbZfEI8qLmXDBlgA5zjFkaPTvRqs8aiDE=;
-Received: from [10.161.64.57] (port=57368 helo=smtp49.i.mail.ru)
-        by fallback9.m.smailru.net with esmtp (envelope-from <kostix@bswap.ru>)
-        id 1fg59K-0001k1-T7; Thu, 19 Jul 2018 12:23:03 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
-        h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=3+ZjsMINKe7eVM7enWDFl44ip4dM1h31CRG7mQ+m+Mo=;
-        b=vXWBo8otWI5koYHwxs7xbuICHgM2wlwV59iwWzpBY09JnoStraUEyObzpESq/ztpeX2I6U7+cXyDGr/jLQnIE3nBgWc/izZfSkxnHYuVq/YP/imf6bBG401/xXjnUVKpgJUcoHfE03TbZfEI8qLmXDBlgA5zjFkaPTvRqs8aiDE=;
-Received: by smtp49.i.mail.ru with esmtpa (envelope-from <kostix@bswap.ru>)
-        id 1fg59A-0001Jc-8u; Thu, 19 Jul 2018 12:22:52 +0300
-Date:   Thu, 19 Jul 2018 12:22:46 +0300
-From:   Konstantin Khomoutov <kostix@bswap.ru>
+        id S1727441AbeGSKM1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jul 2018 06:12:27 -0400
+Received: from mail-wr1-f49.google.com ([209.85.221.49]:44143 "EHLO
+        mail-wr1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727032AbeGSKM1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jul 2018 06:12:27 -0400
+Received: by mail-wr1-f49.google.com with SMTP id r16-v6so7329382wrt.11
+        for <git@vger.kernel.org>; Thu, 19 Jul 2018 02:30:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=3HnvtfJBv2+sUY/To6iHQgKMgCQpN713kZuUT0Iqf2I=;
+        b=HSsS7WE9ccLX+7GqpmmM+45Q6AGSgfC2ljBFbzovyUZLkcN6pVQvNEeAvNgsvo5B0y
+         PEgt8EPMq92GBRfIRUBPvH6KPeA3UAaPAMbubu+OVuPmEvacy8igqnguZtY7AkpHC1WM
+         c+QHK0uOSE5ydVbBoQgZDJUsdFx+sipYbzO+YXetSckmAnIQwa4azmhHoLcI/cdFd3us
+         FI+Ugl3BP1IupZ9dePYo1ryCROqgM4NrCv96C+u2ynbnvVTPxKzFuBjQzbkR0nQ2MR1a
+         D6vZXHa5ER6GXqIqXAzKeHO4uNZDGp5t0IobNSPxrIRi8OlrMpUhPNi2HJm6WuyiPu2D
+         rVIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=3HnvtfJBv2+sUY/To6iHQgKMgCQpN713kZuUT0Iqf2I=;
+        b=ixRCeHrYDCdmf/ps2kesHPErFqy4A7wtXAR8q4HQQ/G4H6HW3p6YzYIZFWoNN87cvE
+         seVK1cdRtSOUZw0062ZOIGmAtYZ5ja3AbMqheBPB+mWQeRBRJ/X+wNUdWDsjJqsc0znG
+         /N6sQ2zkYYHqKHbY4KTN1qmf/k+xLv5NHzDpsIqXeB+T8iBtGukXfnRq5JZUIR9bCIRH
+         BK0KDwuN96IWkXALlldTUlp/F9+DHR13h9aQE2St310cmUGMg/X+qYftC5T24XCuccqm
+         kG+vmq5uJu6mphq2SrHDe3HZbw/d5XRK5i21VIKibrYjfcQxc1jB5ggNWJc+pQk5ypOG
+         LGsg==
+X-Gm-Message-State: AOUpUlEm5oroK29rsHa8sRITpimImXpHaxR7PLfNC5eRnLZUQoOGzFim
+        1uoVUw9MzdzGgQ4RkJmWGnc=
+X-Google-Smtp-Source: AAOMgpd9FFyd5z8SrMl4pn25cSgheLnhv6POPQE0mVDNlVy6H88ThJjXxMkYNCfoYgNFcGha19/Adw==
+X-Received: by 2002:adf:9c91:: with SMTP id d17-v6mr6692202wre.11.1531992609534;
+        Thu, 19 Jul 2018 02:30:09 -0700 (PDT)
+Received: from evledraar (h98111.upc-h.chello.nl. [62.194.98.111])
+        by smtp.gmail.com with ESMTPSA id h7-v6sm4063363wrq.41.2018.07.19.02.30.08
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 19 Jul 2018 02:30:08 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Timothy Rice <timothy.rice@unimelb.edu.au>
-Cc:     =?iso-8859-1?Q?3=C6var_Arnfj=F6r=F0?= Bjarmason 
-        <avarab@gmail.com>,
-        Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
+Cc:     Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
         git@vger.kernel.org
 Subject: Re: Q: Ignore ./foo, but not script/foo
-Message-ID: <20180719092246.vtwfludt7gmk6gdz@tigra>
-References: <5B503FF0020000A10002C6B5@gwsmtp1.uni-regensburg.de>
- <8736wfd579.fsf@evledraar.gmail.com>
- <20180719090656.GA18624@sleipnir>
+References: <5B503FF0020000A10002C6B5@gwsmtp1.uni-regensburg.de> <8736wfd579.fsf@evledraar.gmail.com> <20180719090656.GA18624@sleipnir>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20180719090656.GA18624@sleipnir>
+Date:   Thu, 19 Jul 2018 11:30:08 +0200
+Message-ID: <871sbzd13z.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180719090656.GA18624@sleipnir>
-User-Agent: NeoMutt/20170306 (1.8.0)
-X-7FA49CB5: 0D63561A33F958A511E43B854D8350E4E28542B5DD9A3D18E99B2672D5AFDE3C0A6AB1C7CE11FEE3B2DECCBDF547A30576E601842F6C81A1F004C906525384306FED454B719173D6725E5C173C3A84C30A3B31C63366F725F6EC68623D42D9C8B58781B77DE60D36C4224003CC836476C0CAF46E325F83A50BF2EBBBDD9D6B0F05F538519369F3743B503F486389A921A5CC5B56E945C8DA
-X-Mailru-Sender: 3EA917A0E6524472E50B252446CEFEA4E8E4D330BE7EE41C4F3795587E7FFF3ACA1B0AE468EAC1C9FD27B1545737DED76F53C80213D1719CB3360D9C94DE366A1CC4A9B39F20364B73395D515EC5B64AAE208404248635DF
-X-Mras: OK
-X-7FA49CB5: 0D63561A33F958A5DE435CA34E60485A704D4FD47899C52FEFBAB37DE9B6F9B2462275124DF8B9C9DE2850DD75B2526BE5BFE6E7EFDEDCD789D4C264860C145E
-X-Mailru-Sender: A5480F10D64C9005989B929F85CCF0950046F413CEBE08AE2333BE36D32142C3A5946156EE097900FD27B1545737DED76F53C80213D1719CB3360D9C94DE366A1CC4A9B39F20364B73395D515EC5B64AAE208404248635DF
-X-Mras: OK
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 19, 2018 at 07:06:57PM +1000, Timothy Rice wrote:
 
-[...]
-> Most people do put "." in their PATH for convenience
-[...]
+On Thu, Jul 19 2018, Timothy Rice wrote:
 
-IMO this is a gross overstatement: personally, I know of no person using
-a Unix-like operation system who does this.
+>> How did you come up with this "./" syntax?
+>
+> It is a Unix thing: "./" or just "." refers to the current directory.
+>
+> When calling scripts or programs in the current directory from a Unix
+> command line, it is required to refer to them as, say, "./foo" (not just
+> "foo") -- unless "." is in your PATH.
+>
+> Most people do put "." in their PATH for convenience but it is considered a
+> little unsafe [1].
+>
+> Personally, I am surprised that gitignore does not understand this
+> notation. To me, OPs meaning was crystal clear: "./foo" should mean to only
+> ignore the foo in the repository's root directory.
+>
+> [1] https://superuser.com/questions/156582/why-is-not-in-the-path-by-default
 
+To clarify I was trying to fish for whether we'd accidentally documented
+"./" somewhere since OP was making references to the docs.
