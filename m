@@ -2,82 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8466F1F597
-	for <e@80x24.org>; Thu, 19 Jul 2018 21:11:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD0691F597
+	for <e@80x24.org>; Thu, 19 Jul 2018 21:12:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730524AbeGSV4U (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jul 2018 17:56:20 -0400
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:35746 "EHLO
-        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727743AbeGSV4U (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jul 2018 17:56:20 -0400
-Received: by mail-yw0-f196.google.com with SMTP id t18-v6so3616842ywg.2
-        for <git@vger.kernel.org>; Thu, 19 Jul 2018 14:11:27 -0700 (PDT)
+        id S1730955AbeGSV5r (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jul 2018 17:57:47 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:38183 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730749AbeGSV5q (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jul 2018 17:57:46 -0400
+Received: by mail-ed1-f66.google.com with SMTP id t2-v6so8117929edr.5
+        for <git@vger.kernel.org>; Thu, 19 Jul 2018 14:12:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=eI5zMmXmCd6ryaowk9m44+4OvtyiOiKlDLJ9guFPeTQ=;
+        b=CkeGf4nNf7XeaMEnPFxoOPJM5Nnh/BkWxgaKDJbw+AOSlqxM7QPD5tVFHYwpVusNOZ
+         3C/SlTO69YTqm9FStc1D05fLB7RA3qxvGb2t2jkaospkfUassBsdkhoVfKd4Tpc15tdl
+         XhRJ/KOgbyTP6h45kkl9YXERWQ6ZCncki0JS7iLvuyNEB9pj1Gkp4SsUidTc6YcRrlpt
+         xqFFJEHo1IBkQam/U9IgXdSEWu+pF4UOUwLyt+OEI2Sf1lJKY7nKIx2xaxpZHHBkMqkd
+         EDTK4+UtSVvkByuuOs5L6yAGy5Fd00qGITR17oZtVkV4SqyvccUkS5krts52bl6g2pRL
+         wFaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=llsqkIk9Qy4qvg/Qm0Hy/i5zlJYFnBcVuJrX6IERY0g=;
-        b=q8DDdcmlCYdfGzQR+kAD8ealiH++8hYY6wPfObNScAS5/6SWJFh4vYvXsf7VWO73BN
-         6VGyBefu9Ti7l7VesexiSRqjjLjq/hJnunUoz93ZZV99bqiHqLTOK5tiwH4SqvwtyJU/
-         czqddwxaAE3iXF63kL7nod96KmyhbFrk3bWowTUULzDTVeT64OGnBj+MUXJfR2hU3Om+
-         J4Zl1O4KlUYYMyNrAPXIT1nlWM5InyZGioCU0kLHb3osszcp/MEh789DR369PWmykFXf
-         P/QyQ+fRJqdSoM1B1XOFPwksrEmagJoNpH80Tn1ZH2B/ASUT+gDNdjoBbjDtE4BtUzHR
-         25YQ==
-X-Gm-Message-State: AOUpUlG4ZiDpUy5ImRCyRMRu4oKez7vci6z+/tH0/kZ+skGfk2jzzWJ/
-        pLuxw+MINvBD2k6LgEtS6Imw8Q0/L/CbQFuI5Zg=
-X-Google-Smtp-Source: AAOMgpde9k78viJXGxU9prVIQHoWflY6mkItg7Jqg2RhKaL5ypJdVaaD5NZFB+uIXzH96tJfMtW7dmailF7Y5CA+4uI=
-X-Received: by 2002:a81:ae66:: with SMTP id g38-v6mr6232401ywk.74.1532034686621;
- Thu, 19 Jul 2018 14:11:26 -0700 (PDT)
-MIME-Version: 1.0
-References: <20180719203259.GA7869@sigill.intra.peff.net> <20180719203901.GA8079@sigill.intra.peff.net>
-In-Reply-To: <20180719203901.GA8079@sigill.intra.peff.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 19 Jul 2018 17:11:15 -0400
-Message-ID: <CAPig+cSErDoZ5XFjfJsqfEKZ6PSKfOos=9HW-7FDXU1XEtuktA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] introduce "banned function" list
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=eI5zMmXmCd6ryaowk9m44+4OvtyiOiKlDLJ9guFPeTQ=;
+        b=A6xgH38rp61Fx7QBSvS7V8oAl4//j0A64mV1dS0Xpzdbgrn/0OO4R9/rHPvh0urALh
+         KW5Ei++Uai32V1hCBWBT2dG9ATnkaTQdYMxIoJ43CMi9s/nAzsrYOQQx4KAn+B1xpvNa
+         r2wb3jT9nB82imiBPrMC4pa67iDoqy1wPcmVLs0sHB7lpoPkNz/jj1HR5AnEJuCLbsaa
+         O7mTWt2tuasIPOIFyv5ba+1VCkmbo0qx7zSOrlfhUycvl+Rc/WIA+1r6xTVCpigP9TgZ
+         UIrcLCLwn5gYZZ26+UTer2RY0pxfMy8CzQQLMOYA0z+U/Biyon4WZ/+N6/cptRo1iPvL
+         yucg==
+X-Gm-Message-State: AOUpUlFFDI23ob64PGprjqb6O5xGZ4Cn2f70oe44ae2yCaznX4wOM/vD
+        cGF9mBkZLNBjlZt/wFxSBB/F3dd2
+X-Google-Smtp-Source: AAOMgpcStZcXGLaTiyyomz3NbY0w1zMcPZNMaXIubQpe/gMKXMJxSjvnAynnsbcfLFcVr6hOq5jRWQ==
+X-Received: by 2002:a50:97fc:: with SMTP id f57-v6mr12280830edb.21.1532034771099;
+        Thu, 19 Jul 2018 14:12:51 -0700 (PDT)
+Received: from evledraar (h98111.upc-h.chello.nl. [62.194.98.111])
+        by smtp.gmail.com with ESMTPSA id b2-v6sm243900edn.27.2018.07.19.14.12.50
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 19 Jul 2018 14:12:50 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 2/2] banned.h: mark strncpy as banned
+References: <20180719203259.GA7869@sigill.intra.peff.net> <20180719203934.GB8079@sigill.intra.peff.net>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20180719203934.GB8079@sigill.intra.peff.net>
+Date:   Thu, 19 Jul 2018 23:12:49 +0200
+Message-ID: <87y3e7aq0e.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 19, 2018 at 4:39 PM Jeff King <peff@peff.net> wrote:
-> [...]
-> Let's start by banning strcpy() and sprintf(). It's not
-> impossible to use these correctly, but it's easy to do so
-> incorrectly, and there's always a better option.
-> [...]
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> diff --git a/banned.h b/banned.h
-> @@ -0,0 +1,19 @@
-> +/*
-> + * This header lists functions that have been banned from our code base,
-> + * because they're too easy to misuse (and even if used correctly,
-> + * complicate audits). Including this header turns them into compile-time
-> + * errors.
-> + */
 
-When the above talks about "including this header", the implication is
-that it must be included _after_ the system header(s) which declare
-the banned functions. I wonder if that requirement should be stated
-here explicitly.
+On Thu, Jul 19 2018, Jeff King wrote:
 
-(Probably not worth a re-roll.)
+> Since this use of strncpy was verified by manual inspection
+> and since it doesn't trigger the automated ban-list, we're
+> better off leaving it to keep our divergence from glibc
+> minimal.
 
-> +#define BANNED(func) sorry_##func##_is_a_banned_function()
-> +
-> +#define strcpy(x,y) BANNED(strcpy)
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> @@ -1239,4 +1239,6 @@ extern void unleak_memory(const void *ptr, size_t len);
->  #define UNLEAK(var) do {} while (0)
->  #endif
->
-> +#include "banned.h"
+FWIW it's s/glibc/gawk/. It's originally from glibc, but gawk
+perma-forked it long ago, and an ancient copy of thath is the one we
+use.
