@@ -6,57 +6,63 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D40201F597
-	for <e@80x24.org>; Fri, 20 Jul 2018 18:58:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 82A441F597
+	for <e@80x24.org>; Fri, 20 Jul 2018 19:03:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388277AbeGTTrr (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Jul 2018 15:47:47 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:40883 "EHLO
+        id S2388110AbeGTTwp (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Jul 2018 15:52:45 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:33070 "EHLO
         mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388082AbeGTTrr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jul 2018 15:47:47 -0400
-Received: by mail-wm0-f65.google.com with SMTP id z13-v6so10747717wma.5
-        for <git@vger.kernel.org>; Fri, 20 Jul 2018 11:58:12 -0700 (PDT)
+        with ESMTP id S2387994AbeGTTwp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jul 2018 15:52:45 -0400
+Received: by mail-wm0-f65.google.com with SMTP id z6-v6so4915008wma.0
+        for <git@vger.kernel.org>; Fri, 20 Jul 2018 12:03:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=DjAPgtygzhwLxZa39u3m09wV9HVPWLL2X9C0Y0ngPU4=;
-        b=B8eal8RZcPMdgOPjbGWLdtdBTTr4dt2lKb+lOtwg++ZpeXgrJpnffGZkVA0dGa7RBu
-         Oo264RptpODbOFN4sMNdCDdSvr/jsXej/5qpuy0l+Lb8ZEnZm4gYdkXJPVXASaowDRLD
-         zVTf62w1qC8GD1fRmts4xsvl7B4TBLUycjgEMlKWlhZAxogdm6c4Dfyy/sZ3E8LUX7Xi
-         7O2tLx9ipNFNZZPwTYvtQAdSPokgbAo4A2JP7C+5znDCTR+54nFV691S72MD0riHigyx
-         fyfAGoMPIG2GwmQjPmpEBg2gQEjwp9uVnOEQsz09/hVbQ+hpnthYPTn4bnu/9xI7AIqC
-         t1hw==
+        bh=UMcSXuhpC5E4TYXmFswndkCZL+mnPm47Xxyixyek8ps=;
+        b=Iyv81DZN7Z/dPEZlPx0kzLu3d6w/5RXFTNzHUGIK8iWyWPv8j5CEpeapnAbhUGiz1R
+         SpI+b0nZmf2wJkKK9m3fwLermRwi3QpbDWwyGP96oIxE8+dXClEDOF2pkK4j6iZHOvbt
+         eIld/lXAZgQZR4eq2OHbxpKDXF/3Xorzmu9wfw3oJF9W5zLXrF190rLtcsnLLLr1VgFu
+         ppkdY4NBz6DENleazo38/2gh7VEA5pNikloqUm+EXHEQChhy98p979FTMkNBBfVBCXYI
+         PhlEJ1/w15mK7yuuNgWMS/uIdp3JH6wIOjytZ1XtXLsn5GEuJNGKmssjs7WDvIcKzNDQ
+         bsNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=DjAPgtygzhwLxZa39u3m09wV9HVPWLL2X9C0Y0ngPU4=;
-        b=RCZdUIfYTA3nn9RFdP8V4977BTMIvLh3LZbScJ+9Hf5mdRo4NvGQOzN67DYP+daJx8
-         jn+SAiyMFduMbyCxz4w7kxYhOvrGZVuZ+Va+7iccM5wORsbfl1XemvuljAbdRfRYDJkt
-         Vj+UgzoZdHeazbhqZlO1wrjox1iOMWfEIwN0fHdsXuP0yp23aG9QybmhKRMGLF3aGuNn
-         Zntv1vRbcmCqdTVvG65NFD1pFMbM+zRokSipBc8kqTIEderXekVEsII7f479aK4fFsK+
-         Epy70c8XUliC3y1jpx4UXwFWc4G5bd6o4TINHCMW2voBMOyqYcTRK015AfyRYH3DH12u
-         gX7A==
-X-Gm-Message-State: AOUpUlFKXbh8jiguIjqagBNI7YZU+DREoem2YSWDdFUfLL3gInV7X3K4
-        P4Gp5/37bxwFhHk6YJYZbapyWsLD
-X-Google-Smtp-Source: AAOMgpf2Ri9iv/sLQYfxlyXGEg8V873uv2v58NpnVUJH9IYlcDf2SDQxpDtlgBKUqvmVKz3LuphuQA==
-X-Received: by 2002:a1c:c7cb:: with SMTP id x194-v6mr2327540wmf.117.1532113091324;
-        Fri, 20 Jul 2018 11:58:11 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id f20-v6sm3785273wrh.89.2018.07.20.11.58.10
+        bh=UMcSXuhpC5E4TYXmFswndkCZL+mnPm47Xxyixyek8ps=;
+        b=GXE1xHiI4aQm/Sxpl8lcIihONlLXm5uLkp1abDaW1UQ3cE2TX+iIED4g32qkgv037g
+         a8iNi0Bk2Xy7pPnNfTd7cGBvyNJN0YxLy7nUep6eCGSqNeJsNn8OOxTnR9ZayMfIQnJf
+         rRppFyHTBVDFGmThsQSTJ+svxA4Ca+iI060+Z4/4JWLZJb86JnQZ+r6967Qqjou6KIAx
+         RmOkpIH871YRSJOiN8sHHG62l9Ge6cur46ODXL8VLIa9iTPVlyYSipzf0MU498RU5QC+
+         NFFDjQsy+Lbd+eyJpw647muUC6SPh8qrQONkBqxJiOuzPuLD7POwqOCvwrYzgXAeLj4G
+         ll1w==
+X-Gm-Message-State: AOUpUlG2VSICJ8fT+P9CCxRzzsWGc5JXousUEFU24MUcvA+3wZYgWvSI
+        v1b1pUdSgmIpcAyuEuVIrFc=
+X-Google-Smtp-Source: AAOMgpdpMsXOJyoZzbGUbZK0XB0nmI0thFcnPwFzGmTTtmKej+OV5cYgCXbQOm33sLERYOzcPUbj3g==
+X-Received: by 2002:a1c:f407:: with SMTP id z7-v6mr2128011wma.143.1532113388783;
+        Fri, 20 Jul 2018 12:03:08 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id w9-v6sm2883137wrr.77.2018.07.20.12.03.07
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 20 Jul 2018 11:58:10 -0700 (PDT)
+        Fri, 20 Jul 2018 12:03:07 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 0/2] fail compilation with strcpy
+Cc:     "Theodore Y. Ts'o" <tytso@mit.edu>, git@vger.kernel.org,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 1/2] introduce "banned function" list
 References: <20180719203259.GA7869@sigill.intra.peff.net>
-Date:   Fri, 20 Jul 2018 11:58:10 -0700
-In-Reply-To: <20180719203259.GA7869@sigill.intra.peff.net> (Jeff King's
-        message of "Thu, 19 Jul 2018 16:33:00 -0400")
-Message-ID: <xmqqo9f1bupp.fsf@gitster-ct.c.googlers.com>
+        <20180719203901.GA8079@sigill.intra.peff.net>
+        <xmqqmuumdetr.fsf@gitster-ct.c.googlers.com>
+        <20180720010808.GC2179@sigill.intra.peff.net>
+        <20180720132241.GN30706@thunk.org>
+        <20180720175602.GC22486@sigill.intra.peff.net>
+Date:   Fri, 20 Jul 2018 12:03:07 -0700
+In-Reply-To: <20180720175602.GC22486@sigill.intra.peff.net> (Jeff King's
+        message of "Fri, 20 Jul 2018 13:56:03 -0400")
+Message-ID: <xmqqk1ppbuhg.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,52 +73,27 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> This is a patch series to address the discussion in the thread at:
+> Thanks for an interesting (and exotic) counter-point. For strcpy(), you
+> always have to run strlen() anyway to know you're not going to overflow,
+> so you might as well memcpy() at that point. But if you really are OK
+> with truncation, then using strncpy() lets you copy while walking over
+> the string only once, which is more efficient.  On the other hand,
+> strncpy() fills out NULs to the end of the destination array, so you are
+> paying an extra cost for small strings.
 >
->   https://public-inbox.org/git/20180713204350.GA16999@sigill.intra.peff.net/
->
-> Basically, the question was: can we declare strcpy banned and have a
-> linter save us the trouble of finding it in review. The answer is yes,
-> the compiler is good at that. ;)
->
-> There are probably as many lists of banned functions as there are coding
-> style documents. I don't agree with every entry in the ones I've seen.
-> And in many cases coccinelle is a better choice, because the problem is
-> not "this function is so bad your patch should not even make it to the
-> list with it", but "don't do it like A; we prefer to do it like B
-> instead". And coccinelle does the latter more flexibly and
-> automatically.
->
-> So I tried to pick some obvious and uncontroversial candidates here.
-> gets() could be another one, but it's mostly banned already (it's out of
-> the standard, and most libcs mark it with a deprecated attribute).
->
-> Note that this needs to be applied on top of 022d2ac1f3 (blame: prefer
-> xsnprintf to strcpy for colors, 2018-07-13) or it will complain loudly. :)
->
->   [1/2]: introduce "banned function" list
->   [2/2]: banned.h: mark strncpy as banned
+>> So I used strncpy() advisedly, and I ignore people running Coccinelle
+>> scripts and blindly sending patches to "fix" ext4.
 
-Hmph, there is no use of any banned function in hex.c, but when
-this topic is merged to 'pu', I seem to get this:
+Given that strncpy() was invented in V7 days for specifically the
+purpose of filling the filename field, it is not surprising at all
+that it is the perfect tool for the same purpose in ext4 ;-)
 
-$ make DEVELOPER=1 hex.o
-GIT_VERSION = 2.18.0.758.g18f90b35b8
-    CC hex.o
-In file included from git-compat-util.h:1250:0,
-                 from cache.h:4,
-                 from hex.c:1:
-banned.h:14:0: error: "strncpy" redefined [-Werror]
- #define strncpy(x,y,n) BANNED(strncpy)
- 
-In file included from /usr/include/string.h:630:0,
-                 from git-compat-util.h:165,
-                 from cache.h:4,
-                 from hex.c:1:
-/usr/include/x86_64-linux-gnu/bits/string2.h:84:0: note: this is the location of the previous definition
- # define strncpy(dest, src, n) __builtin_strncpy (dest, src, n)
- 
-cc1: all warnings being treated as errors
-Makefile:2279: recipe for target 'hex.o' failed
-make: *** [hex.o] Error 1
+> We don't have any remaining calls to strncpy() in Git, so this lets us
+> punt on deciding if the ban is worth changing what's there. We can wait
+> for somebody to decide they _really_ need strncpy, and we can discuss it
+> then with a concrete case.
+
+Yes, and the plan (or at least your plan) is to limit the banned
+list to things that really has no reason to be used, the above
+sounds like a good approach.
 
