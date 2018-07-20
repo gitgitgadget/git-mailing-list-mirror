@@ -7,66 +7,63 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D9901F597
-	for <e@80x24.org>; Fri, 20 Jul 2018 19:09:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7CC721F597
+	for <e@80x24.org>; Fri, 20 Jul 2018 19:14:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388373AbeGTT6x (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Jul 2018 15:58:53 -0400
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:34808 "EHLO
-        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388006AbeGTT6x (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jul 2018 15:58:53 -0400
-Received: by mail-qk0-f193.google.com with SMTP id b66-v6so6821985qkj.1
-        for <git@vger.kernel.org>; Fri, 20 Jul 2018 12:09:17 -0700 (PDT)
+        id S2388203AbeGTUDm (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Jul 2018 16:03:42 -0400
+Received: from mail-qt0-f196.google.com ([209.85.216.196]:38058 "EHLO
+        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388108AbeGTUDm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jul 2018 16:03:42 -0400
+Received: by mail-qt0-f196.google.com with SMTP id y19-v6so11227067qto.5
+        for <git@vger.kernel.org>; Fri, 20 Jul 2018 12:14:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=54S6Gyr+nhe+/DbaF62F5os5HbkLLq8yT/+3GoQSsXU=;
-        b=EEYVHGrgdqQ784YuX8nUE52qEAktb7QIPp8rukF08ntJ6VLiKBVQlEJvyV5eJmfmME
-         bOK7uoCG8JCH1KD9XU47EuwHvviJ9gYc+4Ij2+myFIKLA0nUm0eU3WTV4ynA1lA1cLws
-         VwGtY5lNQs6cMM5xNbmX80fc6fQbAj75fOpY5V8qky+8NVVIUH7ZuM6K89QzqTKIWm59
-         1e585f+PAPZVR4y6jZPjOOhLwNQ7i8eVuNbnX2P233CjZsQx2vvO7ffFIjR5q0jK1R2V
-         BJpSSSA/+sFFwUbz/YxtM9btBhjaIMTeG2EUpnjIbzvDdkSYdAnVLZfH3ucyoq47zeaT
-         tbJw==
+        bh=CdpdSiXYXu1tLqICy902Zc0gb2upl72+n5LY7BtP9iI=;
+        b=lhzxo7qb8DVP2lgBQwq2/fimCkhrxnrAN+TPOXjZgk6X37/9v6u+cJs8oQ0hyRtvus
+         Z1sVqygH0Kd5TVnkvoJqCdtanyy4aztLmcpqB26hFtEqh2fMoow420p4ePT8QHDBSyxC
+         LtzXaCinFwgBCpwt367XkONLPJkj/5PvPUnClgiZrvS/+hOGFVFWEg/7Sfpn06G0lNtT
+         n/fMzGbBd0axSLtFiux1lnJb4I9E5lDXPdBD6FppVEsC86m0QYV/A9I7e6c1u6q3zCsy
+         mzxCXpg/ALxfL1D2m6Q1UDMaiu5+PUZ60KfWDQh4/L5HzCm6m3Ffm3M67UMljO47HHHX
+         HBtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding
          :content-language;
-        bh=54S6Gyr+nhe+/DbaF62F5os5HbkLLq8yT/+3GoQSsXU=;
-        b=eoZxSR1G939ajeFd//t9AkTJtuSmD+rQw7+NRlgX9QZEMAVYlRozfzUhRCVvdQ0Yjy
-         9YrvKLMkxpM4vsjws/fM8E+8dEXw/SoN9/TpUYnn89GfU7Kus0UqkpiEvifJme989VT6
-         PxmegrL1wDonUH0so2eplf9qHkiU24x5YfQjIIjlGz6BfCHeqTq2jzZF8B3X34PfR2Wz
-         VHw4hKEt6ZXHCQ466h9UCyRTn6xcCAvfNTj3tP6ibL8Ud9syRemXmcsyjQ6fxNQayFXr
-         qH5XpzpZFMf+VJyl0HDIrvDOS6p4/hWZ2DsmLvFbfpTpYLz9csKY+gc0h75GRxvT/zLY
-         CrJA==
-X-Gm-Message-State: AOUpUlG0Flptz2BWzvgJvYgWRCD5ISJI8DCFw/cvMINy83H/szy8hEZl
-        6DrR6BM9YkGS4KlSR8e66Y8=
-X-Google-Smtp-Source: AAOMgpenJJQpTuJmcP7l5pDXs43bC6+uo/aGjBkK7epn4XGzVcXH0OQROdy/wKqgeD8AY4D4tWZfJA==
-X-Received: by 2002:a37:a0c1:: with SMTP id j184-v6mr2974966qke.126.1532113756901;
-        Fri, 20 Jul 2018 12:09:16 -0700 (PDT)
+        bh=CdpdSiXYXu1tLqICy902Zc0gb2upl72+n5LY7BtP9iI=;
+        b=VzWZwO/G6tSoxuHLaWgtqG8xWqwiWsXkYlGG0AmNwMFnIHbY80DKNsu1RW+fdm/P4i
+         Y3/4FJk8FOwm+43J7Equ7s198SmHWECmiDE/8hFxPFxlqaBNyiKOqkbxqrN2zZYqHDVG
+         6SRgup+Ta+cSya+xmBCVW/ECDlvR6ivJIlBhrilGLEH/LHofoZnAYWQ9yTPkbSfZuTIg
+         7Mvn9B5DxvueTNn1rl18qdzifokRHHqQwDjd2NiG+m2sCjkHafpbm0LJKH9KJEcYyLvT
+         mokF7vEcFowSD373eN5Z3/9xdPnksB2RC88cjBMNtuG6O8QVVo1VxMrcr9+B4Ktuuhrj
+         OB0w==
+X-Gm-Message-State: AOUpUlGpNyhEboSLhSq2XdjufIrRg7Fw/x4NED6e/7ZlZ7bfK3PaM8Cc
+        cjglVr5TpIOoDZpGx9+sHO8=
+X-Google-Smtp-Source: AAOMgpc5rCuMShqmgUbKqk4kbTFmsmCweCoXeuh3MFvK85czAc+rB1nFoZoE1bftSjqsoOs/3PSwNw==
+X-Received: by 2002:ac8:1b4a:: with SMTP id p10-v6mr3162967qtk.221.1532114044976;
+        Fri, 20 Jul 2018 12:14:04 -0700 (PDT)
 Received: from [10.0.1.23] ([98.122.163.216])
-        by smtp.gmail.com with ESMTPSA id t11-v6sm2094002qkt.28.2018.07.20.12.09.15
+        by smtp.gmail.com with ESMTPSA id h4-v6sm1493675qtp.53.2018.07.20.12.14.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 20 Jul 2018 12:09:16 -0700 (PDT)
+        Fri, 20 Jul 2018 12:14:04 -0700 (PDT)
 Subject: Re: [PATCH v2 00/18] Consolidate reachability logic
-To:     Duy Nguyen <pclouds@gmail.com>,
+To:     Eric Sunshine <sunshine@sunshineco.com>,
         Derrick Stolee <dstolee@microsoft.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <pull.10.git.gitgitgadget@gmail.com>
- <20180720163227.105950-1-dstolee@microsoft.com>
- <CACsJy8CTPtxLsSoNO8xynHGoPqQ3k6N4mSykWTQ9Ceap3yV1hw@mail.gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>
+References: <20180720163227.105950-1-dstolee@microsoft.com>
+ <20180720171836.106091-1-dstolee@microsoft.com>
+ <CAPig+cRRa9gcvfu9jKy-+DK+Jjj6maCabuOyprVQMeGx4uJrRg@mail.gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <215c6ad7-a403-9173-5965-70f68e796d7a@gmail.com>
-Date:   Fri, 20 Jul 2018 15:09:15 -0400
+Message-ID: <0676494e-8f2d-77ed-acbf-3e082e9fddcb@gmail.com>
+Date:   Fri, 20 Jul 2018 15:14:03 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.0
 MIME-Version: 1.0
-In-Reply-To: <CACsJy8CTPtxLsSoNO8xynHGoPqQ3k6N4mSykWTQ9Ceap3yV1hw@mail.gmail.com>
+In-Reply-To: <CAPig+cRRa9gcvfu9jKy-+DK+Jjj6maCabuOyprVQMeGx4uJrRg@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Content-Language: en-US
@@ -75,39 +72,63 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/20/2018 1:41 PM, Duy Nguyen wrote:
-> On Fri, Jul 20, 2018 at 6:35 PM Derrick Stolee <dstolee@microsoft.com> wrote:
->> There are many places in Git that use a commit walk to determine
->> reachability between commits and/or refs. A lot of this logic is
->> duplicated.
+On 7/20/2018 2:09 PM, Eric Sunshine wrote:
+> On Fri, Jul 20, 2018 at 1:20 PM Derrick Stolee <dstolee@microsoft.com> wrote:
+>> Here is the diff between v1 and v2.
 >>
->> I wanted to achieve the following:
->>
->> Consolidate several different commit walks into one file
-> I'm surprised get_shallow_commits() in shallow.c didn't make the cut.
-> It's no problem though if you already considered it and decided it was
-> better left alone.
+>> diff --git a/t/t6600-test-reach.sh b/t/t6600-test-reach.sh
+>> @@ -67,142 +67,176 @@ test_three_modes () {
+>>   test_expect_success 'get_merge_bases_many' '
+>>          cat >input <<-\EOF &&
+>> +       A:commit-5-7
+>> +       X:commit-4-8
+>> +       X:commit-6-6
+>> +       X:commit-8-3
+>>          EOF
+>>          {
+>> -               printf "get_merge_bases_many(A,X):\n" &&
+>> -               git rev-parse commit-5-6 &&
+>> -               git rev-parse commit-4-7
+>> +               echo "get_merge_bases_many(A,X):" &&
+>> +               git rev-parse commit-5-6 \
+>> +                             commit-4-7 | sort
+> Pipes lose the exit code of the all upstream commands. When a Git
+> command is upstream, we'd usually recommend to dump its output to a
+> file, then use the file as input to the rest of the pipe so as not to
+> lose the Git command's exit code:
+>
+>      {
+>          ...
+>          git rev-parse ... >oids &&
+>          sort <oids
+>      } >expect &&
 
-Thanks for pointing this out. I didn't know about it. It would make an 
-excellent follow-up series.
+This approach seems fine to me. I'd hate to be in the case where 
+rev-parse reports an error, terminating early, resulting in an incorrect 
+expected file, and then having the test pass because the code is 
+similarly incorrect. No matter how slim the chances are, I want to avoid 
+a false positive there.
 
->> Reduce duplicate reachability logic
->> Increase testability (correctness and performance)
->> Improve performance of reachability queries
-> What's your recommendation on adding new commit reachability code? I
-> might have to add one to fix prune_shallow() if I don't find anything
-> fit. I guess the code should go to commit-reach.c too?
+> One could argue, in this case, that if git-rev-parse crashes, then it
+> won't have the expected output and the test will fail anyhow despite
+> not seeing its failed exit code. However, git-rev-parse might crash
+> _after_ emitting all the normal, expected output, and that crash would
+> be missed altogether, so avoiding git-rev-parse as a pipe upstream is
+> a good idea.
+>
+> However, one could argue that argument by saying that it isn't the job
+> of this particular test script to check git-rev-parse's behavior, so
+> crashy git-rev-parse ought to be caught elsewhere by some other test
+> script. Nevertheless, you'll likely encounter reviewers who don't want
+> to see git-rev-parse upstream, even with that argument.
+>
+> Anyhow, why is that 'sort' even there? It wasn't needed in the
+> original. Is git-rev-parse outputting the OID's in random order?
 
-In my opinion, new commit walks should go into commit-reach.c. Then, you 
-can justify why you are using a "new" walk instead of using an existing 
-walk. Further, you can probably think of the walk in more generic terms 
-than the specific application you need. Finally, you can use the 
-'test-tool reach <method>' pattern to test the specific walk you create 
-outside of the logic for which you needed it.
-
-I understand that while this patch is under review, you will probably 
-want to continue adding your walk where it is, then we can consolidate 
-the code after both have settled.
+Since the merge-base algorithms provide the commits in an order that 
+depends on the implementation (not the functional contract), we decided 
+to sort the output commit ids in the output of 'test-tool reach 
+<method>'. Thus, we sort the rev-parse output to match.
 
 Thanks,
 
