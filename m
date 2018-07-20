@@ -2,95 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A59A81F597
-	for <e@80x24.org>; Fri, 20 Jul 2018 22:16:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 893E41F597
+	for <e@80x24.org>; Fri, 20 Jul 2018 22:23:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730999AbeGTXGh (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Jul 2018 19:06:37 -0400
-Received: from mail-yb0-f172.google.com ([209.85.213.172]:46438 "EHLO
-        mail-yb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728329AbeGTXGh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jul 2018 19:06:37 -0400
-Received: by mail-yb0-f172.google.com with SMTP id c3-v6so5190145ybi.13
-        for <git@vger.kernel.org>; Fri, 20 Jul 2018 15:16:22 -0700 (PDT)
+        id S1728845AbeGTXNy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Jul 2018 19:13:54 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:46291 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728214AbeGTXNy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jul 2018 19:13:54 -0400
+Received: by mail-wr1-f66.google.com with SMTP id s11-v6so12500497wra.13
+        for <git@vger.kernel.org>; Fri, 20 Jul 2018 15:23:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=2vrhmHTmLpFI5akraaqpPVzFp0M5iIDoXZ8bNltRmRI=;
-        b=moiR53ATIyGd3Gb2Je+gD3AX+iQooiInDCdriU/38wSOlNeLPJPcKaSyZAUn7yxxHQ
-         CdtnCohhHzsekU70L36NUDEbSapiXtlz2k8Z1TSNQxIKBvzBjc333NdLUoUQPJaqxYuo
-         Xf3NJdgCuY53s8Ru7AjQ1ZxpSJDhWj+dIGZuCQPzlXcGfQIKRkfDhMf0kSygmggaNOAr
-         4TzJz2lfsTdneBJLVxkr741p6TIm16bOHjBhUV2Y5MU1o98cCORxmC4tXJxILXYDnBLO
-         tT6laJuLp9smIl/pb9j6c722NDmeJHwAZtR7Yv0TAjVKGn37mrevVvWSwH2oYNt8fkVt
-         7GXw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=bprodpY5hfFKEKSPIRswrTo+rFlPS2ueVirVur4k7KA=;
+        b=Cm10zPFDFYQeUuejyjIrPfTUUXebnKyCpGgrbRlnCAIOyHjSRI25pk/DBhLX9PKgC2
+         Z96n+mTYI+QVfXL8nOgOMqx0Qkp6OD8cHN2ROYIuFyMUVVEew+GW5HZzhzmUBjJAamC6
+         1TXSWDxzaIjRgQRuIZ9ueIb5hZzeUMnZ0ju0eCBT6BS8u4hMaJBWGuhz/AIIqGQ25N67
+         NLJV9wrjpO8upXVagmgxwrldrK0Rq2QznMhdbaubzT7HO2rR5bAn571llq0QwfKUIYHv
+         /erWxyV5hYWGM6d23hxR1WMZ15B/vPXEPQlaWV5fHzsf5eSb6t6cADdKcPng9GF4Q5KY
+         J5tQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=2vrhmHTmLpFI5akraaqpPVzFp0M5iIDoXZ8bNltRmRI=;
-        b=ADIe5iMakCDNHJW1hhGvOKJb3Fh9UUMmAdXe57udCdk79ptz8himmskV4C2PiW65uF
-         yhLpC54S3TH/Z630mMognr6myOhMEMThfoOGLdB6/efxn60HZlSCPE0QQpOvBu/W22ID
-         LTxWt7VpuHbpYN7T9wM5YgCR5Og7Yj33mxQfR3gm9QTysiYUh5cLKYRgJndUUhgQ/F/0
-         ybgvcxAi+UxWahqGnJJs+tIfT02Cefzb6iZBJMPpYIJVALO/Vf1cm5bgVTADmOmwvTUe
-         niXeRHeU+IhJkM7WoXFGmb0Argc2Em4fi3Phy8hqYbJGg9UJLT5/YJfXmu9wOffQ5cXi
-         JdmQ==
-X-Gm-Message-State: AOUpUlGMP5iqm0JF+6f7WBqqXpWCHgX6KKXg4RsUzYl9nDFT/XPYnVHy
-        Sfv8FDCxKP8iVPNXFx6BM5/Shwj8M8CYGVjonVna/nL8nZI=
-X-Google-Smtp-Source: AAOMgpceQHHLpL8mXfV0/ZjWBJtIgzWpJPNMQiK8JEqa/cyxpX4oAzUZFVySQCXC5C92j+Hh+jo180g4q2rNwA7OK1Q=
-X-Received: by 2002:a25:560b:: with SMTP id k11-v6mr945286ybb.292.1532124981840;
- Fri, 20 Jul 2018 15:16:21 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=bprodpY5hfFKEKSPIRswrTo+rFlPS2ueVirVur4k7KA=;
+        b=nuQrBtKNRXHdP2IMirne8ubeDLkGHdlHpxj1vsJ2zdyo4k4UEqrOkHYSE0ldTJ49/U
+         irhQj+qx5+mH80aDnpaWXOhqwX97YHdpaUF9xWRw5P6Y7Z+MeaM6ejUfiYajQrK8W0SU
+         huB920pGvuAeAgAWXQXXuGv/Oq2JP3KgmpmHCaJq/2ZwDapHSwnjqsv/TW5ABA5kyQ0H
+         e5aaefUP4WhWPOz89X+eG2h5dkL/XYxLZ1AAUGbmCNFL/dSQMPNseykUNuYMPqTdudAD
+         /5lwpwSN8VEJGQBC9hM3ImmcmXc4YPg2ZLWFOLinkWaVajNJGGXYbvMBJwqD7YpoaNfs
+         Q8WA==
+X-Gm-Message-State: AOUpUlF/tROjFiOsCpOh7IDJ1HiXv4eqTSXjt83uYGVPacRmuy+wY0I0
+        fafnyNfnbpLFyupVpsPIZnM=
+X-Google-Smtp-Source: AAOMgpcEvQ8a4GUM70WLgjkAlhC66XNqmet4+jO22IOcE+hSnYdQLnve8whOP/YN5Yz7bKO6aBUWqw==
+X-Received: by 2002:adf:b519:: with SMTP id a25-v6mr2709610wrd.273.1532125417354;
+        Fri, 20 Jul 2018 15:23:37 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 31-v6sm5207202wra.26.2018.07.20.15.23.36
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 20 Jul 2018 15:23:36 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH] Documentation/git-interpret-trailers: explain possible values
+References: <20180720215349.179542-1-sbeller@google.com>
+Date:   Fri, 20 Jul 2018 15:23:36 -0700
+In-Reply-To: <20180720215349.179542-1-sbeller@google.com> (Stefan Beller's
+        message of "Fri, 20 Jul 2018 14:53:49 -0700")
+Message-ID: <xmqq1sbxa6mv.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.10.git.gitgitgadget@gmail.com> <20180720163227.105950-1-dstolee@microsoft.com>
- <CAGZ79kY28vcs5TN9GtKd439vaTt38Qtwv8Lw0zanDaR1OmsTLg@mail.gmail.com> <833dea7f-b6dd-b3dd-6282-c0a5f939ecca@gmail.com>
-In-Reply-To: <833dea7f-b6dd-b3dd-6282-c0a5f939ecca@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 20 Jul 2018 15:16:10 -0700
-Message-ID: <CAGZ79kb7tWV=cmboA+nsChAUaiC+fVVM-GBCuWfsypC+-wyaVg@mail.gmail.com>
-Subject: Re: [PATCH v2 00/18] Consolidate reachability logic
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee <dstolee@microsoft.com>, git <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Derrick,
+Stefan Beller <sbeller@google.com> writes:
 
-> Sure! It's on my fork [1]
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
 >
-> [1] https://github.com/derrickstolee/git/tree/reach/refactor
+> Maybe we rather want to refer to the options that are described further
+> down in the document?
+
+I have no strong preference either way.
+
+The patch looks reasonable to me; Christian?
+
 >
-
-Thanks!
-
-> >> * Use single rev-parse commands in test output, and pipe the OIDs through 'sort'
-
-Why do we need to sort them? The order of the answers given by rev-parse
-is the same as the input given and we did not need to sort it before, i.e.
-the unit under test would not give sorted output but some deterministic(?)
-order, which we can replicate as input to rev-parse.
-Am I missing the obvious?
-
-> >> * Check output of parse_commit()
-> >>
-> >> * Update flag documentation in object.h
-> >>
-> >> * Add tests for commit_contains() including both algorithms.
-> >>
-> >> * Reduce size of "mixed-mode" commit-graph to ensure we start commit walks
-> >>    'above' the graph and then walk into the commits with generation numbers.
-
-Overall I like the series as-is, and have found
-no further issues in a quick read.
-
-Thanks,
-Stefan
+>  Documentation/git-interpret-trailers.txt | 9 ++++++---
+>  1 file changed, 6 insertions(+), 3 deletions(-)
+>
+> diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
+> index 9111c47a1bf..b8fafb1e8bd 100644
+> --- a/Documentation/git-interpret-trailers.txt
+> +++ b/Documentation/git-interpret-trailers.txt
+> @@ -88,7 +88,8 @@ OPTIONS
+>  	Specify where all new trailers will be added.  A setting
+>  	provided with '--where' overrides all configuration variables
+>  	and applies to all '--trailer' options until the next occurrence of
+> -	'--where' or '--no-where'.
+> +	'--where' or '--no-where'. Possible values are `after`, `before`,
+> +	`end` or `start`.
+>  
+>  --if-exists <action>::
+>  --no-if-exists::
+> @@ -96,7 +97,8 @@ OPTIONS
+>  	least one trailer with the same <token> in the message.  A setting
+>  	provided with '--if-exists' overrides all configuration variables
+>  	and applies to all '--trailer' options until the next occurrence of
+> -	'--if-exists' or '--no-if-exists'.
+> +	'--if-exists' or '--no-if-exists'. Possible actions are `addIfDifferent`,
+> +	`addIfDifferentNeighbor`, `add`, `replace` and `doNothing`.
+>  
+>  --if-missing <action>::
+>  --no-if-missing::
+> @@ -104,7 +106,8 @@ OPTIONS
+>  	trailer with the same <token> in the message.  A setting
+>  	provided with '--if-missing' overrides all configuration variables
+>  	and applies to all '--trailer' options until the next occurrence of
+> -	'--if-missing' or '--no-if-missing'.
+> +	'--if-missing' or '--no-if-missing'. Possible actions are `doNothing`
+> +	or `add`.
+>  
+>  --only-trailers::
+>  	Output only the trailers, not any other parts of the input.
