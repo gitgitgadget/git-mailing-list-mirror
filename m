@@ -7,29 +7,29 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 125F01F597
-	for <e@80x24.org>; Fri, 20 Jul 2018 16:33:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01C071F597
+	for <e@80x24.org>; Fri, 20 Jul 2018 16:33:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388089AbeGTRWq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Jul 2018 13:22:46 -0400
-Received: from mail-sn1nam02on0124.outbound.protection.outlook.com ([104.47.36.124]:17920
-        "EHLO NAM02-SN1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S2387858AbeGTRWp (ORCPT <rfc822;git@vger.kernel.org>);
+        id S2388084AbeGTRWp (ORCPT <rfc822;e@80x24.org>);
         Fri, 20 Jul 2018 13:22:45 -0400
+Received: from mail-cys01nam02on0116.outbound.protection.outlook.com ([104.47.37.116]:63941
+        "EHLO NAM02-CY1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S2388035AbeGTRWm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jul 2018 13:22:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=8/45HQNeN9lL89/QrDguuBavu7nt8Nvs3cNr4qSDIII=;
- b=R0N+duHYhD7qVI0ugSKymBWaVi6VLA14+9q3ilakllYUA0EazXlO4lL5906v9/wPf2gUpfnnDXx3K6EvgU6DwiqXSee7wzdYxXKzgOLuko7j53Vs7zz0Zew+Dy+R90BpJDZ9ni1Tjag+lC8Jg73Q4FC87SaU4Auh3Nsr0xa1jLQ=
+ bh=Dl9fwWnMoQHjWartrr5G1l/AK/OXIsUkG8XCZYBfRTA=;
+ b=BM0sZNG9tTCOUBWM8tR/Lr8qsZhuP/OhZmlkkwBM6p2Q95RuV3BxFSkV2uJaWPEF4qpe6Dl8LHW/d62t/0MDZEkLEOKrR7/JguBFFP5zdj66SZNvhYDxN7XuKrl/p123ER9utTm4wM1XBDK8sfP8A8BmCpcFZqn6Con9XbElAJw=
 Received: from BL0PR2101MB1011.namprd21.prod.outlook.com (52.132.24.10) by
- BL0PR2101MB0929.namprd21.prod.outlook.com (52.132.20.142) with Microsoft SMTP
+ BL0PR2101MB0963.namprd21.prod.outlook.com (52.132.20.156) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.995.1; Fri, 20 Jul 2018 16:33:30 +0000
+ 15.20.1017.1; Fri, 20 Jul 2018 16:33:02 +0000
 Received: from BL0PR2101MB1011.namprd21.prod.outlook.com
  ([fe80::5072:9195:b05b:ed05]) by BL0PR2101MB1011.namprd21.prod.outlook.com
  ([fe80::5072:9195:b05b:ed05%2]) with mapi id 15.20.0995.008; Fri, 20 Jul 2018
- 16:33:30 +0000
+ 16:33:02 +0000
 From:   Derrick Stolee <dstolee@microsoft.com>
 To:     "git@vger.kernel.org" <git@vger.kernel.org>
 CC:     "sbeller@google.com" <sbeller@google.com>,
@@ -37,11 +37,11 @@ CC:     "sbeller@google.com" <sbeller@google.com>,
         "jonathantanmy@google.com" <jonathantanmy@google.com>,
         "gitster@pobox.com" <gitster@pobox.com>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v2 18/18] commit-reach: use can_all_from_reach
-Thread-Topic: [PATCH v2 18/18] commit-reach: use can_all_from_reach
-Thread-Index: AQHUIEdkCcQNOzHhf0KVpLHDhhLxCg==
-Date:   Fri, 20 Jul 2018 16:33:30 +0000
-Message-ID: <20180720163227.105950-19-dstolee@microsoft.com>
+Subject: [PATCH v2 01/18] commit-reach: move walk methods from commit.c
+Thread-Topic: [PATCH v2 01/18] commit-reach: move walk methods from commit.c
+Thread-Index: AQHUIEdTtqnhXkVCPUG7hBzXaI5uoQ==
+Date:   Fri, 20 Jul 2018 16:33:02 +0000
+Message-ID: <20180720163227.105950-2-dstolee@microsoft.com>
 References: <pull.10.git.gitgitgadget@gmail.com>
  <20180720163227.105950-1-dstolee@microsoft.com>
 In-Reply-To: <20180720163227.105950-1-dstolee@microsoft.com>
@@ -55,195 +55,884 @@ x-clientproxiedby: BN6PR02CA0084.namprd02.prod.outlook.com
 x-ms-exchange-messagesentrepresentingtype: 1
 x-originating-ip: [2001:4898:8010:0:eb4a:5dff:fe0f:730f]
 x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;BL0PR2101MB0929;6:1ybRldO65Trbnvy+o27uLSCI/a54UiHL4vMWet890lelHuT4Rmyh+2vX3ZFZwABNgZoBcaoevxySEL3z/a0RsI44rtyvWDO88Qn/vrAuLPJSUDzT/TYYBXZrLLQEwmHhL4PjBSvcLv8QlUY+D+CFIYeGak5Zxk+iZzOdfLdHTQBT4G9k2+RA6/dHiQOZ5gXhRLIsuh7P14on38RKLErep0jr/1rsQEwDiB/o8Cg6xJuBwPwF5RSJrndj11zgzao0GqHFU/R/hNnFtfVRjy0QJjQZ7CNK6RqYWcBUPnzpA5OIiMVdB+jwX4ZNiaXjihTPfUHS+9ihOXKwpZy2IMFKuhUeIZ2ZWWp27tT1QD+09NtJtDF+sgbOyWDwRi/XUpzaqxx//eXZGMilcaF2UPmdeaiXgHWEcmsnh4PU074TjDiQKvujXw+9t5WvHsWKRieIPtfsW9rY16wMIGpVFLb0/Q==;5:LbnHhlHxUAO5rBFcf6b2TYbCVZ04B8V62CLSibx1yU54rqcBOVEEUrPLNgQrXMrqE806ml3z9B8EzyH9YaJjj4aE4Qz4wcmD0IDAYeGZVsJ0F3n+mt+9JEKG6OjP2qRrJh9UYiOrBuPxzsIzkWPV1L5n5uvDE5WVTaZf/VoiOjk=;7:PKUqH86XC9bxX+JWa3GXnSxTt02CSc6IHARnYkYL9naPEK3ZTvZi96ivvQIU8BriNGsn6wNRvj1KNyFcKdG8P/YgyLqt3hx81afr8gggwxx8XuOCnHwr+ArShdyORnXcN6rwn8Trw64YU8t5hNsEVOldg2hwGu5hNyrxNiXhEQOnZbDgCY4G/J39Nvn7wM4a5RVS+ldzGJ7LI/Rec3NOZUIHS5uEipmzzSwppudOwIlkLzPv11+xN+6Wm01W7pvS
-x-ms-office365-filtering-correlation-id: 488238b2-0625-4bd4-4b2a-08d5ee5e86d3
+x-microsoft-exchange-diagnostics: 1;BL0PR2101MB0963;6:PgoBylOJQ7k02O7TMJzxam5NTVkbo4CGj9fbnnwoCT+F6XsC4edBQPNq97d1NjV31LHDhlm7u0AtiVggJuDtoAgBkAx1WHYE5ukAy+e/OYk+bpOWHfxCsX7tMbZL/UvkSwErob8EyNPBzqtDC1NwJQS58AoMP+nPG2k0O3TMQ6REqG7FLqPlazFP6pA4LecwawD35X3hU6lbp48FwBBmMRqqFtRs+rysKIfw66tXL92R8OAu4/XAUMMTNQXN3Zsw30ubR39DtxHWlOqCy40G3dKNTX2B4H/8ups9C+YYOBrZSc/spCRbbhlW1tjYX8lHc30AFzWZkgY0sPJ/Gx65oIO2nZqQ/WMJIUDVpcdP+2LflDsGIk5ABWTPr4bDA43aADR6C+s0rJMSdqnSKju6Q3W+pEIlF4oUAAj2Rr7WjErLa11qLeNxnrrVV3nVno9bmlSkZ27uSziJH0TEHEerlw==;5:BWkndMROLfHqlUjSu5h7Y3wimvf1+swAHu1ybEtqJqzCW5PkAgiQkJ6rkntRO6WUtqOwSBDdpMIbFuhsHdp533eAf1nBoXqrYyYqXkgygDo3SG0kGrbpp8VTezRVn/oD5wO84lZgPZvcOXqsZ9bpAtJfi7KC+b/VmfHVpTdHcVc=;7:c2AW+fB7myZLTzDholeEEfNr8FX8Sm0IVc4Ez4W3qTFZrMRaFQK+34TJiO067nb1Hfzos87DuiI7h1268+jyCdamupkpgIHGIEBoBqvH0wh4aXQ36awf17gJLsZMM6DfE3nUwyNaec8TEM/oxnxStePt5/ig20483Syp/gg/CHQtcPUO3084Qg9NQH4IoCc98UGULzbW1j9BYxDiiv6ov4EwMI6sj7edgST2vHgHdm1F6XNg81Et0SuC9YByiG1A
+x-ms-office365-filtering-correlation-id: edd370be-c821-4725-dae6-08d5ee5e7622
 x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(7020095)(4652040)(8989117)(5600067)(711020)(4618075)(4534165)(4627221)(201703031133081)(201702281549075)(8990107)(2017052603328)(7193020);SRVR:BL0PR2101MB0929;
-x-ms-traffictypediagnostic: BL0PR2101MB0929:
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(7020095)(4652040)(8989117)(5600067)(711020)(4618075)(4534165)(4627221)(201703031133081)(201702281549075)(8990107)(2017052603328)(7193020);SRVR:BL0PR2101MB0963;
+x-ms-traffictypediagnostic: BL0PR2101MB0963:
 authentication-results: spf=none (sender IP is )
  smtp.mailfrom=dstolee@microsoft.com; 
-x-microsoft-antispam-prvs: <BL0PR2101MB09297CF6959E65AE09BB5124A1510@BL0PR2101MB0929.namprd21.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171);
+x-microsoft-antispam-prvs: <BL0PR2101MB0963A662C7D4F6DBA779D95BA1510@BL0PR2101MB0963.namprd21.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171)(131327999870524);
 x-ms-exchange-senderadcheck: 1
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(93006095)(93001095)(3231311)(944501410)(52105095)(2018427008)(3002001)(10201501046)(6055026)(149027)(150027)(6041310)(20161123564045)(20161123560045)(20161123562045)(20161123558120)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(6072148)(201708071742011)(7699016);SRVR:BL0PR2101MB0929;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB0929;
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(10201501046)(3002001)(93006095)(93001095)(3231311)(944501410)(52105095)(2018427008)(6055026)(149027)(150027)(6041310)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123560045)(20161123564045)(20161123562045)(20161123558120)(6072148)(201708071742011)(7699016);SRVR:BL0PR2101MB0963;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB0963;
 x-forefront-prvs: 073966E86B
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(1496009)(346002)(366004)(136003)(396003)(376002)(39860400002)(189003)(199004)(6512007)(305945005)(7736002)(14454004)(5640700003)(6116002)(6436002)(105586002)(54906003)(53936002)(25786009)(52116002)(76176011)(106356001)(2501003)(446003)(46003)(478600001)(68736007)(11346002)(6506007)(2900100001)(2906002)(5250100002)(386003)(186003)(102836004)(2351001)(10090500001)(97736004)(6916009)(8676002)(107886003)(8936002)(1730700003)(81156014)(6486002)(4326008)(486006)(81166006)(10290500003)(39060400002)(5660300001)(86362001)(575784001)(22452003)(1076002)(14444005)(316002)(2616005)(36756003)(256004)(476003)(86612001)(99286004)(309714004);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB0929;H:BL0PR2101MB1011.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(396003)(376002)(346002)(39860400002)(366004)(136003)(199004)(189003)(102836004)(446003)(11346002)(6116002)(7736002)(386003)(6506007)(105586002)(10290500003)(305945005)(97736004)(2616005)(476003)(106356001)(486006)(1076002)(53936002)(2501003)(186003)(81156014)(1730700003)(81166006)(8936002)(5250100002)(8676002)(86362001)(14444005)(256004)(86612001)(107886003)(46003)(53946003)(6436002)(5660300001)(68736007)(2906002)(99286004)(14454004)(6486002)(25786009)(10090500001)(4326008)(54906003)(36756003)(6916009)(39060400002)(2900100001)(22452003)(478600001)(76176011)(6512007)(5640700003)(316002)(2351001)(52116002)(579004);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB0963;H:BL0PR2101MB1011.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
 received-spf: None (protection.outlook.com: microsoft.com does not designate
  permitted sender hosts)
-x-microsoft-antispam-message-info: 8ITKdFTXuhIeBMA1wIaA8u5JCtwjC6hKELRdvOu6HJft3labZVkEUd7sfdrds+jadIpgjdgYk/GXFJcWElYKjj7eMqyYVV5fUDOCFcF+HGlAPJV8vHkWbuzAmGALkWp/dsyz0vJ9i+4dvGL8gj8TJXG/6BhQ8pdEKGYiBTMOBtjcSRUQ3Tm+Ks5n3QlFjFZRyw0UxIuaYCIBFH+mOq7x7PjIB9/MBrZW8pLCsnAi3hUxDtSPVH9DDt7q1YnqVTmgwSzX8TPjYUEqpATn1Rpan/1+01tiMQovqAYe2mbOvu3pP9DHZ75ljiX5D7BJFS5JdKGtJOmBSWFD5WwgbiLZLzY1hYeGH4q+95yeG/NJvr8=
+x-microsoft-antispam-message-info: g059yyehlhtYMEKvq75lnglJ0sk4o2KAbwJ+8ltwL3sLA4UtN5CYIYXO4IlWrWnGCSSP3ipHKJYGVSkV3lSUrrvT2uyoKeY5s5k9lpaL4GYjeY9O9TNax+FhitXMBJgkU/CoMl7coB4XR+6eBVwDxkwnfuvnwYhGD1atcK9XxhBgaAprdyioPc0AIZMX64XaAb1eWakLxMQHBKgjT9Eb9oggDyQjg/BE/WzG/DYtZA0mAiYO0o0xSR017wai6OyvwumstEhhjfJF2oUAEZa4z/WqRHR/+X1of1LEM/rUsgxd2zGNCVrQ3nTcLEzOMB3zjNWwN2F7uYrTjfZb22P8P0wqmd+c135TmLkwq8rQYmA=
 spamdiagnosticoutput: 1:99
 spamdiagnosticmetadata: NSPM
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 488238b2-0625-4bd4-4b2a-08d5ee5e86d3
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Jul 2018 16:33:30.4167
+X-MS-Exchange-CrossTenant-Network-Message-Id: edd370be-c821-4725-dae6-08d5ee5e7622
+X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Jul 2018 16:33:02.5299
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB0929
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB0963
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The is_descendant_of method previously used in_merge_bases() to check if
-the commit can reach any of the commits in the provided list. This had
-two performance problems:
+There are several commit walks in the codebase. Group them together into
+a new commit-reach.c file and corresponding header. After we group these
+walks into one place, we can reduce duplicate logic by calling
+equivalent methods.
 
-1. The performance is quadratic in worst-case.
-
-2. A single in_merge_bases() call requires walking beyond the target
-   commit in order to find the full set of boundary commits that may be
-   merge-bases.
-
-The can_all_from_reach method avoids this quadratic behavior and can
-limit the search beyond the target commits using generation numbers. It
-requires a small prototype adjustment to stop using commit-date as a
-cutoff, as that optimization is no longer appropriate here.
-
-Since in_merge_bases() uses paint_down_to_common(), is_descendant_of()
-naturally found cutoffs to avoid walking the entire commit graph. Since
-we want to always return the correct result, we cannot use the
-min_commit_date cutoff in can_all_from_reach. We then rely on generation
-numbers to provide the cutoff.
-
-Since not all repos will have a commit-graph file, nor will we always
-have generation numbers computed for a commit-graph file, create a new
-method, generation_numbers_enabled(), that checks for a commit-graph
-file and sees if the first commit in the file has a non-zero generation
-number. In the case that we do not have generation numbers, use the old
-logic for is_descendant_of().
-
-Performance was meausured on a copy of the Linux repository using the
-'test-tool reach is_descendant_of' command using this input:
-
-A:v4.9
-X:v4.10
-X:v4.11
-X:v4.12
-X:v4.13
-X:v4.14
-X:v4.15
-X:v4.16
-X:v4.17
-X.v3.0
-
-Note that this input is tailored to demonstrate the quadratic nature of
-the previous method, as it will compute merge-bases for v4.9 versus all
-of the later versions before checking against v4.1.
-
-Before: 0.26 s
- After: 0.21 s
-
-Since we previously used the is_descendant_of method in the ref_newer
-method, we also measured performance there using
-'test-tool reach ref_newer' with this input:
-
-A:v4.9
-B:v3.19
-
-Before: 0.10 s
- After: 0.08 s
-
-By adding a new commit with parent v3.19, we test the non-reachable case
-of ref_newer:
-
-Before: 0.09 s
- After: 0.08 s
+The method declarations in commit.h are not touched by this commit and
+will be moved in a following commit. Many consumers need to point to
+commit-reach.h and that would bloat this commit.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- commit-graph.c | 18 ++++++++++++++++++
- commit-graph.h |  6 ++++++
- commit-reach.c | 24 +++++++++++++++++-------
- 3 files changed, 41 insertions(+), 7 deletions(-)
+ Makefile       |   1 +
+ commit-reach.c | 360 +++++++++++++++++++++++++++++++++++++++++++++++++
+ commit-reach.h |  42 ++++++
+ commit.c       | 358 ------------------------------------------------
+ object.h       |   2 +-
+ 5 files changed, 404 insertions(+), 359 deletions(-)
+ create mode 100644 commit-reach.c
+ create mode 100644 commit-reach.h
 
-diff --git a/commit-graph.c b/commit-graph.c
-index b0a55ad128..e9786fa864 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -233,6 +233,24 @@ static int prepare_commit_graph(struct repository *r)
- 	return !!r->objects->commit_graph;
- }
-=20
-+int generation_numbers_enabled(struct repository *r)
+diff --git a/Makefile b/Makefile
+index bb8bd67201..59781f4bc3 100644
+--- a/Makefile
++++ b/Makefile
+@@ -829,6 +829,7 @@ LIB_OBJS +=3D column.o
+ LIB_OBJS +=3D combine-diff.o
+ LIB_OBJS +=3D commit.o
+ LIB_OBJS +=3D commit-graph.o
++LIB_OBJS +=3D commit-reach.o
+ LIB_OBJS +=3D compat/obstack.o
+ LIB_OBJS +=3D compat/terminal.o
+ LIB_OBJS +=3D config.o
+diff --git a/commit-reach.c b/commit-reach.c
+new file mode 100644
+index 0000000000..8ab6044414
+--- /dev/null
++++ b/commit-reach.c
+@@ -0,0 +1,360 @@
++#include "cache.h"
++#include "prio-queue.h"
++#include "commit.h"
++#include "commit-reach.h"
++
++/* Remember to update object flag allocation in object.h */
++#define PARENT1		(1u<<16)
++#define PARENT2		(1u<<17)
++#define STALE		(1u<<18)
++#define RESULT		(1u<<19)
++
++static const unsigned all_flags =3D (PARENT1 | PARENT2 | STALE | RESULT);
++
++static int queue_has_nonstale(struct prio_queue *queue)
 +{
-+	uint32_t first_generation;
-+	struct commit_graph *g;
-+	if (!prepare_commit_graph(r))
-+	       return 0;
-+
-+	g =3D r->objects->commit_graph;
-+
-+	if (!g->num_commits)
-+		return 0;
-+
-+	first_generation =3D get_be32(g->chunk_commit_data +
-+				    g->hash_len + 8) >> 2;
-+
-+	return !!first_generation;
++	int i;
++	for (i =3D 0; i < queue->nr; i++) {
++		struct commit *commit =3D queue->array[i].data;
++		if (!(commit->object.flags & STALE))
++			return 1;
++	}
++	return 0;
 +}
 +
- static void close_commit_graph(void)
- {
- 	free_commit_graph(the_repository->objects->commit_graph);
-diff --git a/commit-graph.h b/commit-graph.h
-index 76e098934a..0de8f88316 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -51,6 +51,12 @@ struct commit_graph {
-=20
- struct commit_graph *load_commit_graph_one(const char *graph_file);
-=20
-+/*
-+ * Return 1 if and only if the repository has a commit-graph
-+ * file and generation numbers are computed in that file.
-+ */
-+int generation_numbers_enabled(struct repository *r);
++/* all input commits in one and twos[] must have been parsed! */
++static struct commit_list *paint_down_to_common(struct commit *one, int n,
++						struct commit **twos,
++						int min_generation)
++{
++	struct prio_queue queue =3D { compare_commits_by_gen_then_commit_date };
++	struct commit_list *result =3D NULL;
++	int i;
++	uint32_t last_gen =3D GENERATION_NUMBER_INFINITY;
 +
- void write_commit_graph_reachable(const char *obj_dir, int append);
- void write_commit_graph(const char *obj_dir,
- 			struct string_list *pack_indexes,
-diff --git a/commit-reach.c b/commit-reach.c
-index bc522d6840..c996524032 100644
---- a/commit-reach.c
-+++ b/commit-reach.c
-@@ -277,15 +277,25 @@ int is_descendant_of(struct commit *commit, struct co=
-mmit_list *with_commit)
- {
- 	if (!with_commit)
- 		return 1;
++	one->object.flags |=3D PARENT1;
++	if (!n) {
++		commit_list_append(one, &result);
++		return result;
++	}
++	prio_queue_put(&queue, one);
++
++	for (i =3D 0; i < n; i++) {
++		twos[i]->object.flags |=3D PARENT2;
++		prio_queue_put(&queue, twos[i]);
++	}
++
++	while (queue_has_nonstale(&queue)) {
++		struct commit *commit =3D prio_queue_get(&queue);
++		struct commit_list *parents;
++		int flags;
++
++		if (commit->generation > last_gen)
++			BUG("bad generation skip %8x > %8x at %s",
++			    commit->generation, last_gen,
++			    oid_to_hex(&commit->object.oid));
++		last_gen =3D commit->generation;
++
++		if (commit->generation < min_generation)
++			break;
++
++		flags =3D commit->object.flags & (PARENT1 | PARENT2 | STALE);
++		if (flags =3D=3D (PARENT1 | PARENT2)) {
++			if (!(commit->object.flags & RESULT)) {
++				commit->object.flags |=3D RESULT;
++				commit_list_insert_by_date(commit, &result);
++			}
++			/* Mark parents of a found merge stale */
++			flags |=3D STALE;
++		}
++		parents =3D commit->parents;
++		while (parents) {
++			struct commit *p =3D parents->item;
++			parents =3D parents->next;
++			if ((p->object.flags & flags) =3D=3D flags)
++				continue;
++			if (parse_commit(p))
++				return NULL;
++			p->object.flags |=3D flags;
++			prio_queue_put(&queue, p);
++		}
++	}
++
++	clear_prio_queue(&queue);
++	return result;
++}
++
++static struct commit_list *merge_bases_many(struct commit *one, int n, str=
+uct commit **twos)
++{
++	struct commit_list *list =3D NULL;
++	struct commit_list *result =3D NULL;
++	int i;
++
++	for (i =3D 0; i < n; i++) {
++		if (one =3D=3D twos[i])
++			/*
++			 * We do not mark this even with RESULT so we do not
++			 * have to clean it up.
++			 */
++			return commit_list_insert(one, &result);
++	}
++
++	if (parse_commit(one))
++		return NULL;
++	for (i =3D 0; i < n; i++) {
++		if (parse_commit(twos[i]))
++			return NULL;
++	}
++
++	list =3D paint_down_to_common(one, n, twos, 0);
++
++	while (list) {
++		struct commit *commit =3D pop_commit(&list);
++		if (!(commit->object.flags & STALE))
++			commit_list_insert_by_date(commit, &result);
++	}
++	return result;
++}
++
++struct commit_list *get_octopus_merge_bases(struct commit_list *in)
++{
++	struct commit_list *i, *j, *k, *ret =3D NULL;
++
++	if (!in)
++		return ret;
++
++	commit_list_insert(in->item, &ret);
++
++	for (i =3D in->next; i; i =3D i->next) {
++		struct commit_list *new_commits =3D NULL, *end =3D NULL;
++
++		for (j =3D ret; j; j =3D j->next) {
++			struct commit_list *bases;
++			bases =3D get_merge_bases(i->item, j->item);
++			if (!new_commits)
++				new_commits =3D bases;
++			else
++				end->next =3D bases;
++			for (k =3D bases; k; k =3D k->next)
++				end =3D k;
++		}
++		ret =3D new_commits;
++	}
++	return ret;
++}
++
++static int remove_redundant(struct commit **array, int cnt)
++{
++	/*
++	 * Some commit in the array may be an ancestor of
++	 * another commit.  Move such commit to the end of
++	 * the array, and return the number of commits that
++	 * are independent from each other.
++	 */
++	struct commit **work;
++	unsigned char *redundant;
++	int *filled_index;
++	int i, j, filled;
++
++	work =3D xcalloc(cnt, sizeof(*work));
++	redundant =3D xcalloc(cnt, 1);
++	ALLOC_ARRAY(filled_index, cnt - 1);
++
++	for (i =3D 0; i < cnt; i++)
++		parse_commit(array[i]);
++	for (i =3D 0; i < cnt; i++) {
++		struct commit_list *common;
++		uint32_t min_generation =3D array[i]->generation;
++
++		if (redundant[i])
++			continue;
++		for (j =3D filled =3D 0; j < cnt; j++) {
++			if (i =3D=3D j || redundant[j])
++				continue;
++			filled_index[filled] =3D j;
++			work[filled++] =3D array[j];
++
++			if (array[j]->generation < min_generation)
++				min_generation =3D array[j]->generation;
++		}
++		common =3D paint_down_to_common(array[i], filled, work,
++					      min_generation);
++		if (array[i]->object.flags & PARENT2)
++			redundant[i] =3D 1;
++		for (j =3D 0; j < filled; j++)
++			if (work[j]->object.flags & PARENT1)
++				redundant[filled_index[j]] =3D 1;
++		clear_commit_marks(array[i], all_flags);
++		clear_commit_marks_many(filled, work, all_flags);
++		free_commit_list(common);
++	}
++
++	/* Now collect the result */
++	COPY_ARRAY(work, array, cnt);
++	for (i =3D filled =3D 0; i < cnt; i++)
++		if (!redundant[i])
++			array[filled++] =3D work[i];
++	for (j =3D filled, i =3D 0; i < cnt; i++)
++		if (redundant[i])
++			array[j++] =3D work[i];
++	free(work);
++	free(redundant);
++	free(filled_index);
++	return filled;
++}
++
++static struct commit_list *get_merge_bases_many_0(struct commit *one,
++						  int n,
++						  struct commit **twos,
++						  int cleanup)
++{
++	struct commit_list *list;
++	struct commit **rslt;
++	struct commit_list *result;
++	int cnt, i;
++
++	result =3D merge_bases_many(one, n, twos);
++	for (i =3D 0; i < n; i++) {
++		if (one =3D=3D twos[i])
++			return result;
++	}
++	if (!result || !result->next) {
++		if (cleanup) {
++			clear_commit_marks(one, all_flags);
++			clear_commit_marks_many(n, twos, all_flags);
++		}
++		return result;
++	}
++
++	/* There are more than one */
++	cnt =3D commit_list_count(result);
++	rslt =3D xcalloc(cnt, sizeof(*rslt));
++	for (list =3D result, i =3D 0; list; list =3D list->next)
++		rslt[i++] =3D list->item;
++	free_commit_list(result);
++
++	clear_commit_marks(one, all_flags);
++	clear_commit_marks_many(n, twos, all_flags);
++
++	cnt =3D remove_redundant(rslt, cnt);
++	result =3D NULL;
++	for (i =3D 0; i < cnt; i++)
++		commit_list_insert_by_date(rslt[i], &result);
++	free(rslt);
++	return result;
++}
++
++struct commit_list *get_merge_bases_many(struct commit *one,
++					 int n,
++					 struct commit **twos)
++{
++	return get_merge_bases_many_0(one, n, twos, 1);
++}
++
++struct commit_list *get_merge_bases_many_dirty(struct commit *one,
++					       int n,
++					       struct commit **twos)
++{
++	return get_merge_bases_many_0(one, n, twos, 0);
++}
++
++struct commit_list *get_merge_bases(struct commit *one, struct commit *two=
+)
++{
++	return get_merge_bases_many_0(one, 1, &two, 1);
++}
++
++/*
++ * Is "commit" a descendant of one of the elements on the "with_commit" li=
+st?
++ */
++int is_descendant_of(struct commit *commit, struct commit_list *with_commi=
+t)
++{
++	if (!with_commit)
++		return 1;
++	while (with_commit) {
++		struct commit *other;
++
++		other =3D with_commit->item;
++		with_commit =3D with_commit->next;
++		if (in_merge_bases(other, commit))
++			return 1;
++	}
++	return 0;
++}
++
++/*
++ * Is "commit" an ancestor of one of the "references"?
++ */
++int in_merge_bases_many(struct commit *commit, int nr_reference, struct co=
+mmit **reference)
++{
++	struct commit_list *bases;
++	int ret =3D 0, i;
++	uint32_t min_generation =3D GENERATION_NUMBER_INFINITY;
++
++	if (parse_commit(commit))
++		return ret;
++	for (i =3D 0; i < nr_reference; i++) {
++		if (parse_commit(reference[i]))
++			return ret;
++		if (reference[i]->generation < min_generation)
++			min_generation =3D reference[i]->generation;
++	}
++
++	if (commit->generation > min_generation)
++		return ret;
++
++	bases =3D paint_down_to_common(commit, nr_reference, reference, commit->g=
+eneration);
++	if (commit->object.flags & PARENT2)
++		ret =3D 1;
++	clear_commit_marks(commit, all_flags);
++	clear_commit_marks_many(nr_reference, reference, all_flags);
++	free_commit_list(bases);
++	return ret;
++}
++
++/*
++ * Is "commit" an ancestor of (i.e. reachable from) the "reference"?
++ */
++int in_merge_bases(struct commit *commit, struct commit *reference)
++{
++	return in_merge_bases_many(commit, 1, &reference);
++}
++
++struct commit_list *reduce_heads(struct commit_list *heads)
++{
++	struct commit_list *p;
++	struct commit_list *result =3D NULL, **tail =3D &result;
++	struct commit **array;
++	int num_head, i;
++
++	if (!heads)
++		return NULL;
++
++	/* Uniquify */
++	for (p =3D heads; p; p =3D p->next)
++		p->item->object.flags &=3D ~STALE;
++	for (p =3D heads, num_head =3D 0; p; p =3D p->next) {
++		if (p->item->object.flags & STALE)
++			continue;
++		p->item->object.flags |=3D STALE;
++		num_head++;
++	}
++	array =3D xcalloc(num_head, sizeof(*array));
++	for (p =3D heads, i =3D 0; p; p =3D p->next) {
++		if (p->item->object.flags & STALE) {
++			array[i++] =3D p->item;
++			p->item->object.flags &=3D ~STALE;
++		}
++	}
++	num_head =3D remove_redundant(array, num_head);
++	for (i =3D 0; i < num_head; i++)
++		tail =3D &commit_list_insert(array[i], tail)->next;
++	free(array);
++	return result;
++}
++
++void reduce_heads_replace(struct commit_list **heads)
++{
++	struct commit_list *result =3D reduce_heads(*heads);
++	free_commit_list(*heads);
++	*heads =3D result;
++}
+diff --git a/commit-reach.h b/commit-reach.h
+new file mode 100644
+index 0000000000..1ea2696e40
+--- /dev/null
++++ b/commit-reach.h
+@@ -0,0 +1,42 @@
++#ifndef __COMMIT_REACH_H__
++#define __COMMIT_REACH_H__
++
++struct commit;
++struct commit_list;
++
++struct commit_list *get_merge_bases_many(struct commit *one,
++					 int n,
++					 struct commit **twos);
++struct commit_list *get_merge_bases_many_dirty(struct commit *one,
++					       int n,
++					       struct commit **twos);
++struct commit_list *get_merge_bases(struct commit *one, struct commit *two=
+);
++struct commit_list *get_octopus_merge_bases(struct commit_list *in);
++
++/* To be used only when object flags after this call no longer matter */
++struct commit_list *get_merge_bases_many_dirty(struct commit *one, int n, =
+struct commit **twos);
++
++int is_descendant_of(struct commit *commit, struct commit_list *with_commi=
+t);
++int in_merge_bases_many(struct commit *commit, int nr_reference, struct co=
+mmit **reference);
++int in_merge_bases(struct commit *commit, struct commit *reference);
++
++
++/*
++ * Takes a list of commits and returns a new list where those
++ * have been removed that can be reached from other commits in
++ * the list. It is useful for, e.g., reducing the commits
++ * randomly thrown at the git-merge command and removing
++ * redundant commits that the user shouldn't have given to it.
++ *
++ * This function destroys the STALE bit of the commit objects'
++ * flags.
++ */
++struct commit_list *reduce_heads(struct commit_list *heads);
++
++/*
++ * Like `reduce_heads()`, except it replaces the list. Use this
++ * instead of `foo =3D reduce_heads(foo);` to avoid memory leaks.
++ */
++void reduce_heads_replace(struct commit_list **heads);
++
++#endif
+diff --git a/commit.c b/commit.c
+index 39b80bd21d..32d1234bd7 100644
+--- a/commit.c
++++ b/commit.c
+@@ -843,364 +843,6 @@ void sort_in_topological_order(struct commit_list **l=
+ist, enum rev_sort_order so
+ 		clear_author_date_slab(&author_date);
+ }
+=20
+-/* merge-base stuff */
+-
+-/* Remember to update object flag allocation in object.h */
+-#define PARENT1		(1u<<16)
+-#define PARENT2		(1u<<17)
+-#define STALE		(1u<<18)
+-#define RESULT		(1u<<19)
+-
+-static const unsigned all_flags =3D (PARENT1 | PARENT2 | STALE | RESULT);
+-
+-static int queue_has_nonstale(struct prio_queue *queue)
+-{
+-	int i;
+-	for (i =3D 0; i < queue->nr; i++) {
+-		struct commit *commit =3D queue->array[i].data;
+-		if (!(commit->object.flags & STALE))
+-			return 1;
+-	}
+-	return 0;
+-}
+-
+-/* all input commits in one and twos[] must have been parsed! */
+-static struct commit_list *paint_down_to_common(struct commit *one, int n,
+-						struct commit **twos,
+-						int min_generation)
+-{
+-	struct prio_queue queue =3D { compare_commits_by_gen_then_commit_date };
+-	struct commit_list *result =3D NULL;
+-	int i;
+-	uint32_t last_gen =3D GENERATION_NUMBER_INFINITY;
+-
+-	one->object.flags |=3D PARENT1;
+-	if (!n) {
+-		commit_list_append(one, &result);
+-		return result;
+-	}
+-	prio_queue_put(&queue, one);
+-
+-	for (i =3D 0; i < n; i++) {
+-		twos[i]->object.flags |=3D PARENT2;
+-		prio_queue_put(&queue, twos[i]);
+-	}
+-
+-	while (queue_has_nonstale(&queue)) {
+-		struct commit *commit =3D prio_queue_get(&queue);
+-		struct commit_list *parents;
+-		int flags;
+-
+-		if (commit->generation > last_gen)
+-			BUG("bad generation skip %8x > %8x at %s",
+-			    commit->generation, last_gen,
+-			    oid_to_hex(&commit->object.oid));
+-		last_gen =3D commit->generation;
+-
+-		if (commit->generation < min_generation)
+-			break;
+-
+-		flags =3D commit->object.flags & (PARENT1 | PARENT2 | STALE);
+-		if (flags =3D=3D (PARENT1 | PARENT2)) {
+-			if (!(commit->object.flags & RESULT)) {
+-				commit->object.flags |=3D RESULT;
+-				commit_list_insert_by_date(commit, &result);
+-			}
+-			/* Mark parents of a found merge stale */
+-			flags |=3D STALE;
+-		}
+-		parents =3D commit->parents;
+-		while (parents) {
+-			struct commit *p =3D parents->item;
+-			parents =3D parents->next;
+-			if ((p->object.flags & flags) =3D=3D flags)
+-				continue;
+-			if (parse_commit(p))
+-				return NULL;
+-			p->object.flags |=3D flags;
+-			prio_queue_put(&queue, p);
+-		}
+-	}
+-
+-	clear_prio_queue(&queue);
+-	return result;
+-}
+-
+-static struct commit_list *merge_bases_many(struct commit *one, int n, str=
+uct commit **twos)
+-{
+-	struct commit_list *list =3D NULL;
+-	struct commit_list *result =3D NULL;
+-	int i;
+-
+-	for (i =3D 0; i < n; i++) {
+-		if (one =3D=3D twos[i])
+-			/*
+-			 * We do not mark this even with RESULT so we do not
+-			 * have to clean it up.
+-			 */
+-			return commit_list_insert(one, &result);
+-	}
+-
+-	if (parse_commit(one))
+-		return NULL;
+-	for (i =3D 0; i < n; i++) {
+-		if (parse_commit(twos[i]))
+-			return NULL;
+-	}
+-
+-	list =3D paint_down_to_common(one, n, twos, 0);
+-
+-	while (list) {
+-		struct commit *commit =3D pop_commit(&list);
+-		if (!(commit->object.flags & STALE))
+-			commit_list_insert_by_date(commit, &result);
+-	}
+-	return result;
+-}
+-
+-struct commit_list *get_octopus_merge_bases(struct commit_list *in)
+-{
+-	struct commit_list *i, *j, *k, *ret =3D NULL;
+-
+-	if (!in)
+-		return ret;
+-
+-	commit_list_insert(in->item, &ret);
+-
+-	for (i =3D in->next; i; i =3D i->next) {
+-		struct commit_list *new_commits =3D NULL, *end =3D NULL;
+-
+-		for (j =3D ret; j; j =3D j->next) {
+-			struct commit_list *bases;
+-			bases =3D get_merge_bases(i->item, j->item);
+-			if (!new_commits)
+-				new_commits =3D bases;
+-			else
+-				end->next =3D bases;
+-			for (k =3D bases; k; k =3D k->next)
+-				end =3D k;
+-		}
+-		ret =3D new_commits;
+-	}
+-	return ret;
+-}
+-
+-static int remove_redundant(struct commit **array, int cnt)
+-{
+-	/*
+-	 * Some commit in the array may be an ancestor of
+-	 * another commit.  Move such commit to the end of
+-	 * the array, and return the number of commits that
+-	 * are independent from each other.
+-	 */
+-	struct commit **work;
+-	unsigned char *redundant;
+-	int *filled_index;
+-	int i, j, filled;
+-
+-	work =3D xcalloc(cnt, sizeof(*work));
+-	redundant =3D xcalloc(cnt, 1);
+-	ALLOC_ARRAY(filled_index, cnt - 1);
+-
+-	for (i =3D 0; i < cnt; i++)
+-		parse_commit(array[i]);
+-	for (i =3D 0; i < cnt; i++) {
+-		struct commit_list *common;
+-		uint32_t min_generation =3D array[i]->generation;
+-
+-		if (redundant[i])
+-			continue;
+-		for (j =3D filled =3D 0; j < cnt; j++) {
+-			if (i =3D=3D j || redundant[j])
+-				continue;
+-			filled_index[filled] =3D j;
+-			work[filled++] =3D array[j];
+-
+-			if (array[j]->generation < min_generation)
+-				min_generation =3D array[j]->generation;
+-		}
+-		common =3D paint_down_to_common(array[i], filled, work,
+-					      min_generation);
+-		if (array[i]->object.flags & PARENT2)
+-			redundant[i] =3D 1;
+-		for (j =3D 0; j < filled; j++)
+-			if (work[j]->object.flags & PARENT1)
+-				redundant[filled_index[j]] =3D 1;
+-		clear_commit_marks(array[i], all_flags);
+-		clear_commit_marks_many(filled, work, all_flags);
+-		free_commit_list(common);
+-	}
+-
+-	/* Now collect the result */
+-	COPY_ARRAY(work, array, cnt);
+-	for (i =3D filled =3D 0; i < cnt; i++)
+-		if (!redundant[i])
+-			array[filled++] =3D work[i];
+-	for (j =3D filled, i =3D 0; i < cnt; i++)
+-		if (redundant[i])
+-			array[j++] =3D work[i];
+-	free(work);
+-	free(redundant);
+-	free(filled_index);
+-	return filled;
+-}
+-
+-static struct commit_list *get_merge_bases_many_0(struct commit *one,
+-						  int n,
+-						  struct commit **twos,
+-						  int cleanup)
+-{
+-	struct commit_list *list;
+-	struct commit **rslt;
+-	struct commit_list *result;
+-	int cnt, i;
+-
+-	result =3D merge_bases_many(one, n, twos);
+-	for (i =3D 0; i < n; i++) {
+-		if (one =3D=3D twos[i])
+-			return result;
+-	}
+-	if (!result || !result->next) {
+-		if (cleanup) {
+-			clear_commit_marks(one, all_flags);
+-			clear_commit_marks_many(n, twos, all_flags);
+-		}
+-		return result;
+-	}
+-
+-	/* There are more than one */
+-	cnt =3D commit_list_count(result);
+-	rslt =3D xcalloc(cnt, sizeof(*rslt));
+-	for (list =3D result, i =3D 0; list; list =3D list->next)
+-		rslt[i++] =3D list->item;
+-	free_commit_list(result);
+-
+-	clear_commit_marks(one, all_flags);
+-	clear_commit_marks_many(n, twos, all_flags);
+-
+-	cnt =3D remove_redundant(rslt, cnt);
+-	result =3D NULL;
+-	for (i =3D 0; i < cnt; i++)
+-		commit_list_insert_by_date(rslt[i], &result);
+-	free(rslt);
+-	return result;
+-}
+-
+-struct commit_list *get_merge_bases_many(struct commit *one,
+-					 int n,
+-					 struct commit **twos)
+-{
+-	return get_merge_bases_many_0(one, n, twos, 1);
+-}
+-
+-struct commit_list *get_merge_bases_many_dirty(struct commit *one,
+-					       int n,
+-					       struct commit **twos)
+-{
+-	return get_merge_bases_many_0(one, n, twos, 0);
+-}
+-
+-struct commit_list *get_merge_bases(struct commit *one, struct commit *two=
+)
+-{
+-	return get_merge_bases_many_0(one, 1, &two, 1);
+-}
+-
+-/*
+- * Is "commit" a descendant of one of the elements on the "with_commit" li=
+st?
+- */
+-int is_descendant_of(struct commit *commit, struct commit_list *with_commi=
+t)
+-{
+-	if (!with_commit)
+-		return 1;
 -	while (with_commit) {
 -		struct commit *other;
-=20
+-
 -		other =3D with_commit->item;
 -		with_commit =3D with_commit->next;
 -		if (in_merge_bases(other, commit))
 -			return 1;
-+	if (generation_numbers_enabled(the_repository)) {
-+		struct commit_list *from_list =3D NULL;
-+		int result;
-+		commit_list_insert(commit, &from_list);
-+		result =3D can_all_from_reach(from_list, with_commit, 0);
-+		free_commit_list(from_list);
-+		return result;
-+	} else {
-+		while (with_commit) {
-+			struct commit *other;
-+
-+			other =3D with_commit->item;
-+			with_commit =3D with_commit->next;
-+			if (in_merge_bases(other, commit))
-+				return 1;
-+		}
-+		return 0;
- 	}
+-	}
 -	return 0;
- }
+-}
+-
+-/*
+- * Is "commit" an ancestor of one of the "references"?
+- */
+-int in_merge_bases_many(struct commit *commit, int nr_reference, struct co=
+mmit **reference)
+-{
+-	struct commit_list *bases;
+-	int ret =3D 0, i;
+-	uint32_t min_generation =3D GENERATION_NUMBER_INFINITY;
+-
+-	if (parse_commit(commit))
+-		return ret;
+-	for (i =3D 0; i < nr_reference; i++) {
+-		if (parse_commit(reference[i]))
+-			return ret;
+-		if (reference[i]->generation < min_generation)
+-			min_generation =3D reference[i]->generation;
+-	}
+-
+-	if (commit->generation > min_generation)
+-		return ret;
+-
+-	bases =3D paint_down_to_common(commit, nr_reference, reference, commit->g=
+eneration);
+-	if (commit->object.flags & PARENT2)
+-		ret =3D 1;
+-	clear_commit_marks(commit, all_flags);
+-	clear_commit_marks_many(nr_reference, reference, all_flags);
+-	free_commit_list(bases);
+-	return ret;
+-}
+-
+-/*
+- * Is "commit" an ancestor of (i.e. reachable from) the "reference"?
+- */
+-int in_merge_bases(struct commit *commit, struct commit *reference)
+-{
+-	return in_merge_bases_many(commit, 1, &reference);
+-}
+-
+-struct commit_list *reduce_heads(struct commit_list *heads)
+-{
+-	struct commit_list *p;
+-	struct commit_list *result =3D NULL, **tail =3D &result;
+-	struct commit **array;
+-	int num_head, i;
+-
+-	if (!heads)
+-		return NULL;
+-
+-	/* Uniquify */
+-	for (p =3D heads; p; p =3D p->next)
+-		p->item->object.flags &=3D ~STALE;
+-	for (p =3D heads, num_head =3D 0; p; p =3D p->next) {
+-		if (p->item->object.flags & STALE)
+-			continue;
+-		p->item->object.flags |=3D STALE;
+-		num_head++;
+-	}
+-	array =3D xcalloc(num_head, sizeof(*array));
+-	for (p =3D heads, i =3D 0; p; p =3D p->next) {
+-		if (p->item->object.flags & STALE) {
+-			array[i++] =3D p->item;
+-			p->item->object.flags &=3D ~STALE;
+-		}
+-	}
+-	num_head =3D remove_redundant(array, num_head);
+-	for (i =3D 0; i < num_head; i++)
+-		tail =3D &commit_list_insert(array[i], tail)->next;
+-	free(array);
+-	return result;
+-}
+-
+-void reduce_heads_replace(struct commit_list **heads)
+-{
+-	struct commit_list *result =3D reduce_heads(*heads);
+-	free_commit_list(*heads);
+-	*heads =3D result;
+-}
+-
+ static const char gpg_sig_header[] =3D "gpgsig";
+ static const int gpg_sig_header_len =3D sizeof(gpg_sig_header) - 1;
 =20
- /*
+diff --git a/object.h b/object.h
+index fa5ca97567..18c2b073e3 100644
+--- a/object.h
++++ b/object.h
+@@ -65,7 +65,7 @@ struct object_array {
+  * bisect.c:                                        16
+  * bundle.c:                                        16
+  * http-push.c:                                     16-----19
+- * commit.c:                                        16-----19
++ * commit-reach.c:                                  16-----19
+  * sha1-name.c:                                              20
+  * list-objects-filter.c:                                      21
+  * builtin/fsck.c:           0--3
 --=20
 2.18.0.118.gd4f65b8d14
 
