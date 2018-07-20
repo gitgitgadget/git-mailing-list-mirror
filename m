@@ -2,84 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 948AA1F597
-	for <e@80x24.org>; Fri, 20 Jul 2018 21:13:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 923621F597
+	for <e@80x24.org>; Fri, 20 Jul 2018 21:20:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728170AbeGTWDK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Jul 2018 18:03:10 -0400
-Received: from mail-wr1-f47.google.com ([209.85.221.47]:38457 "EHLO
-        mail-wr1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728125AbeGTWDK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jul 2018 18:03:10 -0400
-Received: by mail-wr1-f47.google.com with SMTP id v14-v6so12430918wro.5
-        for <git@vger.kernel.org>; Fri, 20 Jul 2018 14:13:08 -0700 (PDT)
+        id S1728263AbeGTWKT (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Jul 2018 18:10:19 -0400
+Received: from mail-yb0-f196.google.com ([209.85.213.196]:33748 "EHLO
+        mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728244AbeGTWKT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jul 2018 18:10:19 -0400
+Received: by mail-yb0-f196.google.com with SMTP id e84-v6so5158366ybb.0
+        for <git@vger.kernel.org>; Fri, 20 Jul 2018 14:20:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=z2XAZKqYryHf6l563lZfROkpuljYB+dkmd6ngEBur4Q=;
-        b=XRnl0d0E97lDCCpzpe6Vg5egXhcXklK2fr2LCNIwbd1BlTmQYU1vrIrWPgt2xnrA0z
-         BErej9qNB5YNAuEyubm7NmSX2rzKa32MuzjzVTfekqYghlAcV8ujPo2iaMiZ26YORW9X
-         J5z4fNeiiTbIJaDZs2M50th0ClfkJwfyNGVJ2e88rrAAalQRdIeMETO/0IuddgyyZDjJ
-         mlZ6z/U+H5iP64mHMY0X6VZCOKqRV3/E7tjMxoUhjddU7oQMDPyLxXNn7EOM9r14pYmQ
-         eXg4VrTTgU8Z8RrVcM12tFC7cjLYo1dD6SuuFrqx9JLK7ERpaHgSrpleTNVyROA4Ei7k
-         Cclg==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=4jqG2OJrKyJHlc48tq3D5ruaVsykwn6z+F80UVpjoIE=;
+        b=uxsmTPAVEapxqxSVFAR/nDGJICF2lqFyLQd1ZTt/kG+6bNuRW4vxrYY3vnW5T9C0gh
+         2qHuXa9TRXra708HwwHZmR1VtgQIXw1Dvtww8Gr0yT+I1kj+zzMqPFUyTIGXG72cmawW
+         8Kwb83wJtUnuhUzx6ENDJprjYwrSj/HDkNg3ihN62sWjEeUdRxPoHFXWkU4JWjTXvHqb
+         Q3Dy/fdeuOqgIdPzPwjvJp8/j122dKd9YcITTPF+n/jVk7KGpOy2yPgfSD3TA3W6hW0G
+         zXMIZwPd3qDNjgQH4+P48yHX8B8A1Zh0jnSjv2yp1LUt/diIrzlgxQCUmURYI6zL411m
+         8igA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=z2XAZKqYryHf6l563lZfROkpuljYB+dkmd6ngEBur4Q=;
-        b=PfWhfZXDzM4jWou2EE5z/ksXmS3zEgmD/c0KoqnFxxy2yHIE0eYnf9lCwDo8//2tZy
-         Zb7lYf8FbmxmAw80DzcTxF6Xz8ORSLbq5mRBJ7GwL2vhx87LiH0WVGzMgrWF+z3hpNW8
-         FzjLQn5HXaqm5NIR/+nHzwgM0G1r0O8U+wYPTOqLi1F+qeEk5sv6wdWDMudGrggdwDFs
-         6tcmIt+QwinyWFfAEoWFgMpUBRcac9Y8zHmK6mk6m3Xmd54ii10xjC17SC27zoRCgjb2
-         fsYfyv6D9dBrG3Yz8EV7WpyaPAk/PYOrVpPyiClYleF/7sdSHNi9KRq5iRcMrbuhXp54
-         ycVQ==
-X-Gm-Message-State: AOUpUlGR3gxrzAftpA2u4EVf4Z6w8nn6XEYOfqzsZUN1m/a9afcViBYl
-        yd4Ytav7904NobieBy4NGu4=
-X-Google-Smtp-Source: AAOMgpd2DXTKGU1WIXeGuWpipmh5yz8wP1izY9DPmruoWPWbRRJxSG7sn0pDjNs8zgg5tHChYDDx5A==
-X-Received: by 2002:adf:e90c:: with SMTP id f12-v6mr2496355wrm.126.1532121187571;
-        Fri, 20 Jul 2018 14:13:07 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id w9-v6sm3490634wrk.28.2018.07.20.14.13.06
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 20 Jul 2018 14:13:06 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Ben Peart <peartben@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Kevin Willford <kewillf@microsoft.com>,
-        Ben Peart <benpeart@microsoft.com>
-Subject: Re: [BUG] merge-recursive overly aggressive when skipping updating the working tree
-References: <5a8d1098-b4c5-64e1-da98-dac13521e7ba@gmail.com>
-        <CABPp-BF+Vx8YT2KAJQ+szbkYExv-_o5E-ZkywgvzsHWR0QvVEg@mail.gmail.com>
-Date:   Fri, 20 Jul 2018 14:13:06 -0700
-In-Reply-To: <CABPp-BF+Vx8YT2KAJQ+szbkYExv-_o5E-ZkywgvzsHWR0QvVEg@mail.gmail.com>
-        (Elijah Newren's message of "Fri, 20 Jul 2018 13:48:37 -0700")
-Message-ID: <xmqqsh4da9wd.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=4jqG2OJrKyJHlc48tq3D5ruaVsykwn6z+F80UVpjoIE=;
+        b=RoEWNNkz6gBpan0QflAJKh4OCgYuo4FzCdcXQB3FCz6bzkcHd8VebCKDJ4RCX2RyWQ
+         PbKd8OcS3oSTebB2oQ615P/vxi7RdM3QbcFgu3bgT1BZZH/EeDIHTqyX8szk50OSzEgT
+         9t/qeY1wb3YzhItBO7+CbYvAuQ1eHQkxts4rhe5oTSX8l07tka6l9D+PH8FgpgKNOeov
+         8ZTiR5G/jax/6UhkglGNQpx2HHECaKJz2Vdi/9j0OzwIcV9G084QVn8PkCyfW6M9BUTz
+         kxDH+v95+/W8WQ8+d9bw8ir8WDBTow3/Imf1Vz5/jU2n/m2H++wvn1tuiIJaNKm3mQVl
+         cVXA==
+X-Gm-Message-State: AOUpUlHKAkFj8wH6OxdRc5f5v33CWl9cquFMKpFddyqz435Z3ghULZQ3
+        9KBcqzq6fwDV6JqpfYP7j9x5bI+9oKEflAGj8PqWZg==
+X-Google-Smtp-Source: AAOMgpddOy9g6ossz1oMv+8qqsvWw7XlxV/ZEi47XAnH5wXQ7jg07bpIPWvbwo7g0G+y5JdMKEC1ON4iaijxpGozhvU=
+X-Received: by 2002:a25:84d0:: with SMTP id x16-v6mr2026674ybm.307.1532121615597;
+ Fri, 20 Jul 2018 14:20:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <cover.1525448066.git.johannes.schindelin@gmx.de>
+ <pull.1.v3.git.gitgitgadget@gmail.com> <39272eefcfe66de3ca1aa2ee43d6626ce558caae.1530617166.git.gitgitgadget@gmail.com>
+ <xmqqtvpcgf40.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1807071320110.75@tvgsbejvaqbjf.bet>
+ <xmqq7em7gg3j.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1807072116570.75@tvgsbejvaqbjf.bet>
+ <nycvar.QRO.7.76.6.1807080017160.75@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.1807092342490.75@tvgsbejvaqbjf.bet>
+ <xmqqefg94uq1.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1807121720340.75@tvgsbejvaqbjf.bet>
+ <xmqq8t6gz8xz.fsf@gitster-ct.c.googlers.com> <xmqqa7qngnon.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1807202049540.71@tvgsbejvaqbjf.bet> <xmqq1sbxbt0e.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq1sbxbt0e.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 20 Jul 2018 14:20:04 -0700
+Message-ID: <CAGZ79kaLTJDmWhS8Y8R1cQh9TRXLawdoWHEzVC6PLHBN+VQekg@mail.gmail.com>
+Subject: Re: refs/notes/amlog problems, was Re: [PATCH v3 01/20]
+ linear-assignment: a function to solve least-cost assignment problems
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        gitgitgadget@gmail.com, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+On Fri, Jul 20, 2018 at 12:35 PM Junio C Hamano <gitster@pobox.com> wrote:
 
-> But that brings up another interesting question.  What if a merge
-> *does* modify a file for which you have skip-worktree set?
-> Previously, it'd clear the bit and write the file to the working tree,
-> but that was by no means an explicit decision;
+> It is not like anybody (including me) needs realtime up-to-date
 
-At least in my mind, the "skip worktree" aka sparse checkout has
-always been "best effort" in that if Git needs to materialize a
-working tree file in order to carry out some operation (e.g. a merge
-needs conflict resolution, hence we need to give a working tree file
-with conflict markers to the end user) Git is free to do so.
+I thought the same for a long time, but contributing to other projects
+showed me that this is not necessarily the case. Having a real time
+update, even if it would be just "your patch is labeled 'under discussion'"
+is beneficial as I would know where it is "in the system".
 
-Isn't that what happens currently?
+In a way I'd compare our contribution process to having an
+incredible fine grained paper map. Most of the world moved
+on to digital maps, that zoom in on-demand.
+(C.f. spelling out "See banned.h for banned functions" in
+Documentation/CodingGuidelines is a fine grained detail
+that is not relevant for *most* of the contributions, but just
+burdens the bearer of the paper map with weight; if this hint
+is given dynamically by the compiler or build system at relevant
+times, it is much better;
+
+Regarding the real time aspect here, it is also very good
+comparison to maps: While I know how to read paper maps
+(or offline maps) and how to navigate my way, it sure is easier
+to just follow the online up-to-date navigation service, that
+tells me what to do. )
