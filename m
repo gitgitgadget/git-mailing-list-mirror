@@ -2,100 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 160931F597
-	for <e@80x24.org>; Fri, 20 Jul 2018 21:51:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E24321F597
+	for <e@80x24.org>; Fri, 20 Jul 2018 21:52:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728322AbeGTWl4 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Jul 2018 18:41:56 -0400
-Received: from mail-oi0-f65.google.com ([209.85.218.65]:35929 "EHLO
-        mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727412AbeGTWl4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jul 2018 18:41:56 -0400
-Received: by mail-oi0-f65.google.com with SMTP id n21-v6so8324326oig.3
-        for <git@vger.kernel.org>; Fri, 20 Jul 2018 14:51:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to;
-        bh=4GsVnwsCjNfkMfQwEA12NdOfbqvqlMb4Px193tEt+l8=;
-        b=rY1kBfEd2N+pEdP4UeDu4sqIFs/FGeKsyOkYyuwtOVN4mODvIuUMqP1EddNRynuqq/
-         hFEYz5jQAgOPqeI5TCih3CQ5UzAjXlfqlhzM+qMVPr0/wCecJ224Pc8VetYYNIywJ9IV
-         u+rKd1TlBr35vn1CaN524W9TsVDUGn3p4oCzGh1uKIQzONfzy+mjVJpVrkyB4L5AitLl
-         fZX0oJnSEIMZs8X9KfYGSyM31bcTHigvK5dfITyXopEap44i5jfg64+TDelqwY+VPSLY
-         PTbeaEAmL82GODwikCIwIR1qdFu7prgeKj9IeGkN/qm7moP9E91m+MzqC7lfmQf3V19Q
-         wfow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:in-reply-to:references
-         :from:date:message-id:subject:to;
-        bh=4GsVnwsCjNfkMfQwEA12NdOfbqvqlMb4Px193tEt+l8=;
-        b=hJROnmwACHHBtyLtAm9zBd+qUrvxISJuQSrot8c5TN8t4N5z3xq6bokVLyNEdFmoVm
-         fqp+UbASEP82TVoB4oOIfpwdy+9d5xho1AOK7LkX77hlnokOFxDAUdFeJs9Xi+oEdztH
-         qxH2e+dS+AknOVdw50wEt3f76/lcwF1fL2FequviJImGpnSDkofUuDXpqo/zTvk8lOqg
-         vh/0kxScd9/o4GF9DU8Tm2hToz7Io/+5fnUDn44hS5ukAvPlWyjA/Pkpes4hd8X1m1mx
-         YJk9Doc6f/XWDZmcpdVKlAfTnnY0oeh5G6TMAeUqiMZLdzmeNJ3Y24fYmvKoNGXgrUhD
-         YUcw==
-X-Gm-Message-State: AOUpUlEHBpDQYF+hKpWPnntpsNFZQx2rpXZxjdRq4U3p8GuaZ6gInt6R
-        2ZgYefrYS3G45WWmwLaVxoQ26z3usozp4MiHzSNlXQ==
-X-Google-Smtp-Source: AAOMgpeesPt3ojZHhtXYb3jdEjFfuNPD/8RioXrF0F5VKWBhmOPNjOuq0X1Yq5+NgNTD5L4L0rTtoMsGvEeF5MILaQY=
-X-Received: by 2002:aca:c78c:: with SMTP id x134-v6mr486833oif.8.1532123507314;
- Fri, 20 Jul 2018 14:51:47 -0700 (PDT)
+        id S1731794AbeGTWmf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Jul 2018 18:42:35 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:33846 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728342AbeGTWmf (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 20 Jul 2018 18:42:35 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:f1fc:eee3:60de:bdd8])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B1F5F60734;
+        Fri, 20 Jul 2018 21:52:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1532123545;
+        bh=UKOS8HfKk/8xgi52Vk0d4QurijDMMNwypAqIfZ+XOaI=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=kLG8fvw5lJrz4lvRLmkJ0us0Wb7PO1eTiWycb2z6InPXODzp6AZlcoxEP19QgSvQw
+         pirDznFXt85TWbhbOf9J6QBuyDiuM6NfUWkmDDrnMvbwf5aKdIXlHU8KGoK6BeLejH
+         qk8rylPuxog5mjGFefIbVAWVB7AiWz3tX5AjFUVb3U8Qiiup8KGpBy367P24ic2UhL
+         OjLmM/iUJ7Zwq/Nd9IhLnUanO2oqyBLgkXwoyoXnTry8deDICcn38a2ENFDzCtfQZS
+         HDwdrt5k6QZ6WtjsiDWD93s/oKoP8lVrGKADdv0xPPx22niMVZelRI5CsufKNx3428
+         /MkweF1L3gh7N0P4UM2wrJXCkuiKDindL2KUO4yuZYjlYF4zKmbSpkZaRPqq7oCGDP
+         WUg+pqj368mKZ1ptQMUxOihxhlswKjCKiQ1eVNCdKjSO+uetr/JbKu924d+X1CGk+4
+         hYfGwJJo8p7SeZsdAeKgzbD7Fjpbi06PcYlpOV5/REEzaNJ2TSd
+Date:   Fri, 20 Jul 2018 21:52:20 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        demerphq <demerphq@gmail.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Adam Langley <agl@google.com>,
+        The Keccak Team <keccak@noekeon.org>
+Subject: Re: Hash algorithm analysis
+Message-ID: <20180720215220.GB18502@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        demerphq <demerphq@gmail.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Adam Langley <agl@google.com>, The Keccak Team <keccak@noekeon.org>
+References: <20180609205628.GB38834@genre.crustytoothpaste.net>
+ <20180609224913.GC38834@genre.crustytoothpaste.net>
+ <20180611192942.GC20665@aiede.svl.corp.google.com>
 MIME-Version: 1.0
-Received: by 2002:a4a:c712:0:0:0:0:0 with HTTP; Fri, 20 Jul 2018 14:51:46
- -0700 (PDT)
-Reply-To: noloader@gmail.com
-In-Reply-To: <20180720210459.GA18502@genre.crustytoothpaste.net>
-References: <CAH8yC8=oruFBtkndQ0p9N4s23SMvjjrAC_E7zzKRSVbjEwL0FQ@mail.gmail.com>
- <20180720210459.GA18502@genre.crustytoothpaste.net>
-From:   Jeffrey Walton <noloader@gmail.com>
-Date:   Fri, 20 Jul 2018 17:51:46 -0400
-Message-ID: <CAH8yC8m7T8k8usGnV_OYp9G=2N4_jdzLT6frme2iBrLnt5iqnw@mail.gmail.com>
-Subject: Re: No rule to make target `git-daemon'
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeffrey Walton <noloader@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="5/uDoXvLw7AC5HRs"
+Content-Disposition: inline
+In-Reply-To: <20180611192942.GC20665@aiede.svl.corp.google.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.17.0-1-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 20, 2018 at 5:04 PM, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> On Thu, Jul 19, 2018 at 09:37:08PM -0400, Jeffrey Walton wrote:
->> Hi Everyone,
->>
->> I'm working from the 2.18 tarball on Solaris 11.3 x86_64. I'm catching
->> the following when building from sources. This appears to be a new
->> issue. It was not present in 2.17.1.
->>
->>     gmake: *** No rule to make target `git-daemon'.  Stop.
->>     gmake: *** Waiting for unfinished jobs....
->>     Failed to build Git
->>
->> There does not appear to be an option to control building the daemon:
->>
->>     $ ./configure --help | grep -i daemon
->>     $
->>
->> Any ideas on how to side-step it?
->
-> I also don't see this issue, and I didn't see anything between 2.17.1
-> and 2.18 that stood out to me as a potential cause of this problem.  Can
-> you tell us a bit more about what version of GNU make you're using and
-> the configuration you're trying to build (say, the config.mak.autogen)?
 
-Sorry about the late reply. I meant to reply this morning.
+--5/uDoXvLw7AC5HRs
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-My shell script to patch things on Solaris was the cause of the problem.
+On Mon, Jun 11, 2018 at 12:29:42PM -0700, Jonathan Nieder wrote:
+> My understanding of the discussion so far:
+>=20
+> Keccak team encourages us[1] to consider a variant like K12 instead of
+> SHA3.
+>=20
+> AGL explains[2] that the algorithms considered all seem like
+> reasonable choices and we should decide using factors like
+> implementation ease and performance.
+>=20
+> If we choose a Keccak-based function, AGL also[3] encourages using a
+> variant like K12 instead of SHA3.
+>=20
+> Dscho strongly prefers[4] SHA-256, because of
+> - wide implementation availability, including in future hardware
+> - has been widely analyzed
+> - is fast
+>=20
+> Yves Orton and Linus Torvalds prefer[5] SHA3 over SHA2 because of how
+> it is constructed.
 
-(If anyone is interested in first class Solaris support then I am
-happy to help. The patch set needed for the platform has been stable
-for the last couple of years).
+I know this discussion has sort of petered out, but I'd like to see if
+we can revive it.  I'm writing index v3 and having a decision would help
+me write tests for it.
 
-Jeff
+To summarize the discussion that's been had in addition to the above,
+=C3=86var has also stated a preference for SHA-256 and I would prefer BLAKE=
+2b
+over SHA-256 over SHA3-256, although any of them would be fine.
+
+Are there other contributors who have a strong opinion?  Are there
+things I can do to help us coalesce around an option?
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--5/uDoXvLw7AC5HRs
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.8 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAltSWZMACgkQv1NdgR9S
+9ouaZhAAh+e6JNTwnADiotVMIeTOTjk9OBhbO7mT0gwv/gd25OZHjGMBEuC+77Qv
+uYObBG57rcXzkr2C3CrYnijbNL1u18A1mpMhTUjt/xlUy8+hYtrTOHMbl5Iq42lT
+aS5mHjkFmlUdS5Cd5MVX+3XhPS7Mkb+tdQoE5qhkQLq3/zDXihQDzZyswwlofftW
+FT4o/6Kpz+MQmxQ4jcQzBBAzS6KorVTde51kqEhTgzw+WttZBVkzpttKQSNG+XG3
+C2o9O5FxxxVQ3pxP8cv51cEZ/quxMZVCsdk0nz3YKmFTTRuqQb6iXKVfaYSbGU0Z
+zKqoa2dRwMA8OlcCjzWmviHfWeZM4x6U0GsaMqYTwE68QeAuoxpLszJupxCrcDDL
+enGxnarDw6UZp/OSJHdSHNfP1RfwSza0OvDwyEoVJFA5uFafbJnWDt6QiffiJLDV
+nZ71xIXoVrQpjPNzyT66qOf1+jOQrQaB0DIXDEWeIv02qqKAvFB+WNM2liJyOD3c
+Vqk6g++31ekDLRmRizPuR6eby6LYLc6eca3CvWn4d8yFQcktkeeVTvoj7WTQSU2o
+J5q1fVck+ywGbD/VdEZH2Eovf90aF+S8bCe5TruY1CSK8seMhga5+6Vf8u3FA0RA
+Fw1xPwZ+VwpFDfsYLPGoyL2BBw0MZSJnRD+6s9LoQT+5qYwyGDI=
+=e/TI
+-----END PGP SIGNATURE-----
+
+--5/uDoXvLw7AC5HRs--
