@@ -2,85 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 738781F597
-	for <e@80x24.org>; Fri, 20 Jul 2018 17:48:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 56E2D1F597
+	for <e@80x24.org>; Fri, 20 Jul 2018 17:56:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388470AbeGTSh6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Jul 2018 14:37:58 -0400
-Received: from mail-ua0-f195.google.com ([209.85.217.195]:42804 "EHLO
-        mail-ua0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388126AbeGTSh5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jul 2018 14:37:57 -0400
-Received: by mail-ua0-f195.google.com with SMTP id w7-v6so7964085uan.9
-        for <git@vger.kernel.org>; Fri, 20 Jul 2018 10:48:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=GI2YyWybYyLBXFQ1wsSV9C8AXYEyLatILbR3sjhJJUM=;
-        b=RLEE2TWjoFmOqVXBBxuCl6fq1DjydV4kW2PUf2yPRBOWp2+4XdE2d2DtP8KSD/vRE+
-         +irRy95TSCCiMjNi0dNzEPb6QivRAH1LIknFiF+jSpukhKSyznSKieOnBGb/qK5pTZAp
-         Y9pT7sE8Axhn40ZmJ06F7fYfF5ulaQhyTVPczGIY5FneIojFNACSl/rcQ3dUzn2VYqzH
-         genWtZ+I51QZVqpGsfUQDGJ+lcXD8FIW2xN8PfdKBNy+yCps8U4WvGmegdEOYwgLQKB+
-         AN64v9FQyxiNBwhlCWL3ZWPOKzk9lHw9uAPw6HlGRvzrBgwYIVCGJl64ViJ/ncPi11OG
-         yxMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=GI2YyWybYyLBXFQ1wsSV9C8AXYEyLatILbR3sjhJJUM=;
-        b=NRLqq7JbymeAvigmOmRqA4Hs4QpU9Tzu8KubDH5lRKaFOKgw7QPsK+M6VM8XKz9HA8
-         CBGxiXYYN/oaQY6sU/XMkG8GXG2tX3mD6aSixFy0FvWWeUL4V3G/cIvFtQwhuvYX04GQ
-         xy1OxuR3C83UrRragFcUEJuurGla8CsZ85BLbrnVRAeJOCgkkr5gwdimhB7qictD79Uw
-         7pFAlRIHB/Mi3/RVy2o/CFNshld5Pb5yDWMvVLPiCAS1K83C0U11LDoZ6LfB8m8n6oLw
-         a+k2+XfCNWydKjzGcQynXjdRAF9wDOL4o6tQLQ9VnQxTl2k0y7S7szuXVW19+wkJlNr0
-         f8hg==
-X-Gm-Message-State: AOUpUlHuIQVhq+c0NVt6Go7ms8+1MP+d8nVTHpsCch1PEnKotjgGCOOc
-        VapYJDErP92QFVSuOHRw2yI0b9RXM1skk5JaeEA=
-X-Google-Smtp-Source: AAOMgpcq1f3hOHQRKofpyZzXBkoQ3rPB9fstj8JNG+nDx2/TH7JtJB/IIYBNAgAmw/j37Frtk3J4j3BDgMWLmd4REj0=
-X-Received: by 2002:ab0:66d4:: with SMTP id d20-v6mr2070625uaq.112.1532108917671;
- Fri, 20 Jul 2018 10:48:37 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:ab0:21c7:0:0:0:0:0 with HTTP; Fri, 20 Jul 2018 10:48:37
- -0700 (PDT)
-In-Reply-To: <CACsJy8BxXyY6h8iN-RExBHASB6FkFLKDkrE_h+gH0A1k2tVd6w@mail.gmail.com>
-References: <20180719203259.GA7869@sigill.intra.peff.net> <20180719203901.GA8079@sigill.intra.peff.net>
- <CACsJy8BxXyY6h8iN-RExBHASB6FkFLKDkrE_h+gH0A1k2tVd6w@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 20 Jul 2018 10:48:37 -0700
-Message-ID: <CABPp-BGt2EEW4aFt8TYyy1fATPRW2rnNxpMuGcS0YR_gqs3=ig@mail.gmail.com>
-Subject: Re: [PATCH 1/2] introduce "banned function" list
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
+        id S2388223AbeGTSpZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Jul 2018 14:45:25 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54324 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S2387950AbeGTSpZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jul 2018 14:45:25 -0400
+Received: (qmail 30234 invoked by uid 109); 20 Jul 2018 17:56:04 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 20 Jul 2018 17:56:04 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 30244 invoked by uid 111); 20 Jul 2018 17:56:09 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 20 Jul 2018 13:56:09 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Jul 2018 13:56:03 -0400
+Date:   Fri, 20 Jul 2018 13:56:03 -0400
+From:   Jeff King <peff@peff.net>
+To:     "Theodore Y. Ts'o" <tytso@mit.edu>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
         Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH 1/2] introduce "banned function" list
+Message-ID: <20180720175602.GC22486@sigill.intra.peff.net>
+References: <20180719203259.GA7869@sigill.intra.peff.net>
+ <20180719203901.GA8079@sigill.intra.peff.net>
+ <xmqqmuumdetr.fsf@gitster-ct.c.googlers.com>
+ <20180720010808.GC2179@sigill.intra.peff.net>
+ <20180720132241.GN30706@thunk.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20180720132241.GN30706@thunk.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 20, 2018 at 7:41 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Thu, Jul 19, 2018 at 10:40 PM Jeff King <peff@peff.net> wrote:
->>
->> There are a few standard C functions (like strcpy) which are
->> easy to misuse. We generally discourage these in reviews,
->> but we haven't put advice in CodingGuidelines, nor provided
->> any automated enforcement. The latter is especially
->> important because it's more consistent, and it can often
->> save a round-trip of review.
->>
->> Let's start by banning strcpy() and sprintf(). It's not
->> impossible to use these correctly, but it's easy to do so
->> incorrectly, and there's always a better option.
->
-> Is it possible to extend this to ban variables as well? I'm still
-> going to delete the_index from library code. Once that work is done I
+On Fri, Jul 20, 2018 at 09:22:41AM -0400, Theodore Y. Ts'o wrote:
 
-Or perhaps constants, such as PATH_MAX to avoid problems like this one
-from 2.18.0 timeframe:
-https://public-inbox.org/git/7d1237c7-5a83-d766-7d93-5f0d59166067@web.de/
+> On Thu, Jul 19, 2018 at 09:08:08PM -0400, Jeff King wrote:
+> > Ditto for sprintf, where you should _always_ be using at least xsnprintf
+> > (or some better tool, depending on the situation).  And for strncpy,
+> > strlcpy (or again, some better tool) is strictly an improvement.
+> 
+> Nitpick: this may be true for git, but it's not strictly true in all
+> cases.  I actually have a (non-git) case where strncpy *is* the right
+> tool.  And this is one where I'm copying a NUL-terminated string into
+> a fixed-length charater array (in the ext4 superblock) which is *not*
+> NUL-terminated.  In that case, strncpy works(); but strlcpy() does not
+> do what I want.
+
+Thanks for an interesting (and exotic) counter-point. For strcpy(), you
+always have to run strlen() anyway to know you're not going to overflow,
+so you might as well memcpy() at that point. But if you really are OK
+with truncation, then using strncpy() lets you copy while walking over
+the string only once, which is more efficient.  On the other hand,
+strncpy() fills out NULs to the end of the destination array, so you are
+paying an extra cost for small strings.
+
+> So I used strncpy() advisedly, and I ignore people running Coccinelle
+> scripts and blindly sending patches to "fix" ext4.
+
+Even after hearing your counter-point, I think I'm still OK with the
+ban. Because as you've noticed, even if the call is fine, it carries an
+ongoing maintenance cost. Every time you (or somebody else) audits, you
+have to skip over that known-good call. And you have to deal with
+well-meaning patches. So to me there's value in eliminating it even if
+it's an acceptable tool.
+
+We don't have any remaining calls to strncpy() in Git, so this lets us
+punt on deciding if the ban is worth changing what's there. We can wait
+for somebody to decide they _really_ need strncpy, and we can discuss it
+then with a concrete case.
+
+> But perhaps that's also a solution for git?  You don't have to
+> necessarily put them on a banned list; you could instead have some
+> handy, pre-set scripts that scan the entire code base looking for
+> "bad" functions with cleanups automatically suggested.  This could be
+> run at patch review time, and/or periodically (especially before a
+> release).
+
+We do this already with coccinelle for some transformations. But I think
+there's real value in linting that's always run, and is cheap. Catching
+these things early means we don't have to spend time on them in review,
+or dealing with follow-up patches.
+
+-Peff
