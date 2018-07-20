@@ -2,106 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B0A991F597
-	for <e@80x24.org>; Fri, 20 Jul 2018 12:49:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A5DD1F597
+	for <e@80x24.org>; Fri, 20 Jul 2018 13:12:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390124AbeGTNbH (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Jul 2018 09:31:07 -0400
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:34357 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389747AbeGTNbF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jul 2018 09:31:05 -0400
-Received: by mail-qt0-f194.google.com with SMTP id m13-v6so10102563qth.1
-        for <git@vger.kernel.org>; Fri, 20 Jul 2018 05:43:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=uHzIlHE+ZrFlzBrhdiQ0rDRUkvk13Z7afpdACiCbgpE=;
-        b=UOjwHOJN+S+sWGTivxDDVcX7WgUfYKsKCsl23sTGGbMBm+IcDrpfoC4h60B6cGUbK4
-         +g4Kkk8u5CXL9bujSsAc7cf9l86Sbgx/YbHlH3qsLThpsmGQ1Ic+0E96Xn6y1VVhIquu
-         0bwAFhlxWUM11iueQO3SubX+FUWeUOsvIEP5n/Qv9pqs3BJ/WAa93TU3CyGAvdrLqpgW
-         YbuUXzp4EOPd6PTEYtPDLIuyOHKcEpthOL/SfPmljHQ9epiJWWAWqx86fz+Mk5SLW+Sd
-         AKf0lnbC754BT2bzuya4hA+sHUS0pwh9yKMrJIFsvqwWVuFszdVbgBgIfUKNDHzfGCk1
-         sNJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=uHzIlHE+ZrFlzBrhdiQ0rDRUkvk13Z7afpdACiCbgpE=;
-        b=c95/SaZPTAAKdk2I393rQ/B3g4quh05Dpf1cJG+S56dQcKoOLzoo/DcXHTr37zz4Uu
-         dl/i3UNDGEjd6a05busvAO9qolcNenNhjGzASO99iFnloR8TYr5szf21Zz8GoDuBwyTX
-         /XNxxo79HM+xmLUeWyOBONn7krzQB7pZKbuCGz1opyAJ30SvrBj1ufK9KOyjclfKQNer
-         4F+TFHj7DdadCMy0mecpx7BSZ4eNgZzDM7nu0srfN7bdKltY8HOoZp4k8ukgPfh5+5GY
-         JYxdFEbgaLZi6hR/pntsFz6RYleHopwYPwb9YKEHfxXUkmIYHkvcpAgw0xKwVpLhyNOS
-         5JNw==
-X-Gm-Message-State: AOUpUlFjTO9b4oYWVOZ3LR5kEWSzqbplfhAFNumKdM6rZNyBa93RxnL5
-        CUr686po3aDtrhdlGBIx0Io=
-X-Google-Smtp-Source: AAOMgpezbWlAXsInSuj/u2H4wyVv37uQthnsE2fxXtI0c7Q6PgvajakL7N7avZuguYI7g7/I8+EKrg==
-X-Received: by 2002:ac8:42b:: with SMTP id v43-v6mr1592324qtg.319.1532090580085;
-        Fri, 20 Jul 2018 05:43:00 -0700 (PDT)
-Received: from [10.0.1.23] ([98.122.163.216])
-        by smtp.gmail.com with ESMTPSA id r4-v6sm993605qtm.10.2018.07.20.05.42.59
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 20 Jul 2018 05:42:59 -0700 (PDT)
-Subject: Re: [PATCH 1/2] introduce "banned function" list
-To:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>
-References: <20180719203259.GA7869@sigill.intra.peff.net>
- <20180719203901.GA8079@sigill.intra.peff.net>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <153e7256-cc45-c33e-d64a-27319b42a489@gmail.com>
-Date:   Fri, 20 Jul 2018 08:42:56 -0400
+        id S1731563AbeGTOBK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Jul 2018 10:01:10 -0400
+Received: from siwi.pair.com ([209.68.5.199]:24305 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731237AbeGTOBK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jul 2018 10:01:10 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 263733F401D;
+        Fri, 20 Jul 2018 09:12:56 -0400 (EDT)
+Received: from [192.168.1.6] (8.sub-174-231-162.myvzw.com [174.231.162.8])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 10DD13F4015;
+        Fri, 20 Jul 2018 09:12:54 -0400 (EDT)
+Subject: Re: [RFC] push: add documentation on push v2
+To:     Brandon Williams <bmwill@google.com>,
+        Stefan Beller <sbeller@google.com>
+Cc:     Derrick Stolee <stolee@gmail.com>, git <git@vger.kernel.org>
+References: <20180717210915.139521-1-bmwill@google.com>
+ <CAGZ79kZEpNLkXuEQEiMB_nc-MOOp-KOziHyONmr4SiajA5+F2g@mail.gmail.com>
+ <a7c43308-a388-e307-6bea-47e6df74b65c@gmail.com>
+ <CAGZ79kbLn-uwQOXfqhtO46v0EWevY43Tf4W5Rz9gDD9_qbmX=A@mail.gmail.com>
+ <20180718171512.GC17137@google.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <1dd6d9aa-0e96-bb8e-f7ae-873f619a2450@jeffhostetler.com>
+Date:   Fri, 20 Jul 2018 09:12:53 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.0
 MIME-Version: 1.0
-In-Reply-To: <20180719203901.GA8079@sigill.intra.peff.net>
+In-Reply-To: <20180718171512.GC17137@google.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
 Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/19/2018 4:39 PM, Jeff King wrote:
-> There are a few standard C functions (like strcpy) which are
-> easy to misuse. We generally discourage these in reviews,
-> but we haven't put advice in CodingGuidelines, nor provided
-> any automated enforcement. The latter is especially
-> important because it's more consistent, and it can often
-> save a round-trip of review.
->
-> Let's start by banning strcpy() and sprintf(). It's not
-> impossible to use these correctly, but it's easy to do so
-> incorrectly, and there's always a better option.
->
-> For enforcement, we can rely on the compiler and just
-> introduce code which breaks compilation when it sees these
-> functions. This has a few advantages:
->
->    1. We know it's run as part of a build cycle, so it's
->       hard to ignore. Whereas an external linter is an extra
->       step the developer needs to remember to do.
->
->    2. Likewise, it's basically free since the compiler is
->       parsing the code anyway.
->
->    3. We know it's robust against false positives (unlike a
->       grep-based linter).
 
-I know I'm late to the party, but I just wanted to chime in that I think 
-this is a great idea. The more checks we have as part of the developer 
-cycle means we have fewer checks that need to be caught manually in 
-review (or can be missed in review).
 
-Thanks,
+On 7/18/2018 1:15 PM, Brandon Williams wrote:
+> On 07/18, Stefan Beller wrote:
+>> On Wed, Jul 18, 2018 at 6:31 AM Derrick Stolee <stolee@gmail.com> wrote:
+>>>
+>>> On 7/17/2018 7:25 PM, Stefan Beller wrote:
+>>>> On Tue, Jul 17, 2018 at 2:09 PM Brandon Williams <bmwill@google.com> wrote:
+>>>>> Signed-off-by: Brandon Williams <bmwill@google.com>
+>>>>> ---
+>>>>>
+>>>>> Since introducing protocol v2 and enabling fetch I've been thinking
+>>>>> about what its inverse 'push' would look like.  After talking with a
+>>>>> number of people I have a longish list of things that could be done to
+>>>>> improve push and I think I've been able to distill the core features we
+>>>>> want in push v2.
+>>>> It would be nice to know which things you want to improve.
+>>>
+>>> Hopefully we can also get others to chime in with things they don't like
+>>> about the existing protocol. What pain points exist, and what can we do
+>>> to improve at the transport layer before considering new functionality?
+>>
+>> Another thing that I realized last night was the possibility to chunk requests.
+>> The web of today is driven by lots of small http(s) requests. I know our server
+>> team fights with the internal tools all the time because the communication
+>> involved in git-fetch is usually a large http request (large packfile).
+>> So it would be nice to have the possibility of chunking the request.
+>> But I think that can be added as a capability? (Not sure how)
+> 
+> Fetch and push requests/responses are already "chunked" when using the
+> http transport.  So I'm not sure what you mean by adding a capability
+> because the protocol doesn't care about which transport you're using.
+> This is of course unless you're talking about a different "chunking"
+> from what it means to chunk an http request/response.
+> 
 
--Stolee
+Internally, we've talked about wanting to have resumable pushes and
+fetches.  I realize this is difficult to do when the server is
+replicated and the repeated request might be talking to a different
+server instance.  And there's a problem with temp files littering the
+server as it waits for the repeated attempt.  But still, the packfile
+sent/received can be large and connections do get dropped.
 
+That is, if we think about sending 1 large packfile and just using a
+byte-range-like approach to resuming the transfer.
+
+If we allowed the request to send a series of packfiles, with each
+"chunk" being self-contained and usable.  So if a push connection was
+dropped the server could apply the successfully received packfile(s)
+(add the received objects and update the refs to the commits received so
+far).  And ignore the interrupted and unreceived packfile(s) and let the
+client retry later.  When/if the client retried the push, it would
+renegotiate haves/wants and send a new series of packfile(s).  With the
+assumption being that the server would have updated refs from the
+earlier aborted push, so the packfile(s) computed for the second attempt
+would not repeat the content successfully transmitted in the first
+attempt.
+
+This would require that the client build an ordered set of packfiles
+from oldest to newest so that the server can apply them in-order and
+the graph remain connected.  That may be outside your scope here.
+
+Also, we might have to add a few messages to the protocol after the
+negotiation, for the client to say that it is going to send the push
+content in 'n' packfiles and send 'n' messages with the intermediate
+ref values being updated in each packfile.
+
+Just thinking out loud here.
+Jeff
