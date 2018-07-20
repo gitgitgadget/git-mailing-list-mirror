@@ -2,126 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 29FDE1F597
-	for <e@80x24.org>; Fri, 20 Jul 2018 18:58:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D40201F597
+	for <e@80x24.org>; Fri, 20 Jul 2018 18:58:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388203AbeGTTrl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Jul 2018 15:47:41 -0400
-Received: from mout.gmx.net ([212.227.17.21]:38187 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388082AbeGTTrk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jul 2018 15:47:40 -0400
-Received: from [192.168.0.129] ([37.201.195.94]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MFctN-1fmJkY41Lx-00Eheq; Fri, 20
- Jul 2018 20:58:00 +0200
-Date:   Fri, 20 Jul 2018 20:57:43 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Stefan Beller <sbeller@google.com>
-cc:     Eric Sunshine <sunshine@sunshineco.com>, gitgitgadget@gmail.com,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 09/20] range-diff: adjust the output of the commit
- pairs
-In-Reply-To: <CAGZ79kaft-8pHGwyqAK0yNL3p5sP0VyKNn29dxoZ0wFGWGEHPA@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1807202052350.71@tvgsbejvaqbjf.bet>
-References: <cover.1525448066.git.johannes.schindelin@gmx.de> <pull.1.v3.git.gitgitgadget@gmail.com> <6b31cbf72c4752771965de333b3cb6e82cf90b2b.1530617166.git.gitgitgadget@gmail.com> <CAPig+cTnRi=HuyZy+bMKeU9qutZb3K5C4qTb7gCQz7GyGN=FRw@mail.gmail.com>
- <nycvar.QRO.7.76.6.1807171306380.71@tvgsbejvaqbjf.bet> <CAGZ79kaft-8pHGwyqAK0yNL3p5sP0VyKNn29dxoZ0wFGWGEHPA@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2388277AbeGTTrr (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Jul 2018 15:47:47 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:40883 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388082AbeGTTrr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jul 2018 15:47:47 -0400
+Received: by mail-wm0-f65.google.com with SMTP id z13-v6so10747717wma.5
+        for <git@vger.kernel.org>; Fri, 20 Jul 2018 11:58:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=DjAPgtygzhwLxZa39u3m09wV9HVPWLL2X9C0Y0ngPU4=;
+        b=B8eal8RZcPMdgOPjbGWLdtdBTTr4dt2lKb+lOtwg++ZpeXgrJpnffGZkVA0dGa7RBu
+         Oo264RptpODbOFN4sMNdCDdSvr/jsXej/5qpuy0l+Lb8ZEnZm4gYdkXJPVXASaowDRLD
+         zVTf62w1qC8GD1fRmts4xsvl7B4TBLUycjgEMlKWlhZAxogdm6c4Dfyy/sZ3E8LUX7Xi
+         7O2tLx9ipNFNZZPwTYvtQAdSPokgbAo4A2JP7C+5znDCTR+54nFV691S72MD0riHigyx
+         fyfAGoMPIG2GwmQjPmpEBg2gQEjwp9uVnOEQsz09/hVbQ+hpnthYPTn4bnu/9xI7AIqC
+         t1hw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=DjAPgtygzhwLxZa39u3m09wV9HVPWLL2X9C0Y0ngPU4=;
+        b=RCZdUIfYTA3nn9RFdP8V4977BTMIvLh3LZbScJ+9Hf5mdRo4NvGQOzN67DYP+daJx8
+         jn+SAiyMFduMbyCxz4w7kxYhOvrGZVuZ+Va+7iccM5wORsbfl1XemvuljAbdRfRYDJkt
+         Vj+UgzoZdHeazbhqZlO1wrjox1iOMWfEIwN0fHdsXuP0yp23aG9QybmhKRMGLF3aGuNn
+         Zntv1vRbcmCqdTVvG65NFD1pFMbM+zRokSipBc8kqTIEderXekVEsII7f479aK4fFsK+
+         Epy70c8XUliC3y1jpx4UXwFWc4G5bd6o4TINHCMW2voBMOyqYcTRK015AfyRYH3DH12u
+         gX7A==
+X-Gm-Message-State: AOUpUlFKXbh8jiguIjqagBNI7YZU+DREoem2YSWDdFUfLL3gInV7X3K4
+        P4Gp5/37bxwFhHk6YJYZbapyWsLD
+X-Google-Smtp-Source: AAOMgpf2Ri9iv/sLQYfxlyXGEg8V873uv2v58NpnVUJH9IYlcDf2SDQxpDtlgBKUqvmVKz3LuphuQA==
+X-Received: by 2002:a1c:c7cb:: with SMTP id x194-v6mr2327540wmf.117.1532113091324;
+        Fri, 20 Jul 2018 11:58:11 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id f20-v6sm3785273wrh.89.2018.07.20.11.58.10
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 20 Jul 2018 11:58:10 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 0/2] fail compilation with strcpy
+References: <20180719203259.GA7869@sigill.intra.peff.net>
+Date:   Fri, 20 Jul 2018 11:58:10 -0700
+In-Reply-To: <20180719203259.GA7869@sigill.intra.peff.net> (Jeff King's
+        message of "Thu, 19 Jul 2018 16:33:00 -0400")
+Message-ID: <xmqqo9f1bupp.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-2070311408-1532113080=:71"
-X-Provags-ID: V03:K1:69davifo1Cgwnn8B9DUbsq/QrWsnWnquuyfT62tiSiI4NL0RGzA
- Xn+MQssV3sbTyjPcesj2r2j7KLuJrJtT6AQeNC9Q3G9G8a5Kql+jU+yxzLc4HlF/9NDNJt0
- v2avRUSTwi75LwYhZzwJ9j1bViceL/i+fp1uMZngoztVnuyBEfvZnnKXHBpk0zIqkOECT93
- WWjWtvz4vTYr7r18alPjA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:pTR+2ekhNCE=:mZOu/bINkKx144abqCmb+q
- Vy8C6PRR6QDzB+UTW8f+Fu3q6TJbzaHtMxlOTnvSji8PiLNN140WwXQEDOUneVpDOVnwQEH8P
- EjMk3PMyPq3sBsBnYx5z4qIxt4Yy9fN3BLpfQeLbVx+XGAzn5IZqN8uHRh/wA78+PiDZEGnBK
- RyLwYOGV0sDKAJVQSB1TbAkaqcGHSqwck66Hgfjn/3rLpENyRLW379yYQyJbRS9wVdijRIGOt
- QsByxs7qs4MUpZphYAVFSy0JGOt1b48RCDxzlUsfkO3hIotfuhOeHKZtjkOlX149JSDtaB18U
- oSgAujDSHl9OI/aS900tD5lr4uN31IdWhxyKPbOSsei/uCcL4ogLos+sFh6EJ1oKWaSWMJXMB
- I9xst6GHvgJ2yIt32BhGiv8vf4z7O+lo3WI6Ps/h6ypbEoFL2dxDiU+Ro3T8gNKLEtXW4qDkp
- wPVq0VV9w+d74AxUGJKPtcI1Tcw/OrRmUDZ1D6w4kN+m7AyaEQaZcSQ1DS+2VD9A2QaCy3BlN
- oFJSA+el3ofR9drXTG1GMNPpc/cwLhiSApABCrCo6vloiSK0vf0wNYZItIwt1zc4a6HagBlWL
- A61zgxa0/frQurKRMCSTrsGuMKi9RM+mM2RCw3NLlQJ/NWXffjyQ3xXaIh4VuOh9GIVhzBJOE
- wGsNE9Lue0bvEn0X9J/kK/ZuUdesN4VBOEyyNRV1E0nsOBImYKBFbhywAp/74FxxKPGHSP0uk
- EWLEKo8ijghUgRQi/BEstjQVx0a5sJosDTxFcNEFZFQw0DWKMGaoQqVIrdZeu40xG19fMcQWx
- Zg8qbYE
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Jeff King <peff@peff.net> writes:
 
---8323328-2070311408-1532113080=:71
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+> This is a patch series to address the discussion in the thread at:
+>
+>   https://public-inbox.org/git/20180713204350.GA16999@sigill.intra.peff.net/
+>
+> Basically, the question was: can we declare strcpy banned and have a
+> linter save us the trouble of finding it in review. The answer is yes,
+> the compiler is good at that. ;)
+>
+> There are probably as many lists of banned functions as there are coding
+> style documents. I don't agree with every entry in the ones I've seen.
+> And in many cases coccinelle is a better choice, because the problem is
+> not "this function is so bad your patch should not even make it to the
+> list with it", but "don't do it like A; we prefer to do it like B
+> instead". And coccinelle does the latter more flexibly and
+> automatically.
+>
+> So I tried to pick some obvious and uncontroversial candidates here.
+> gets() could be another one, but it's mostly banned already (it's out of
+> the standard, and most libcs mark it with a deprecated attribute).
+>
+> Note that this needs to be applied on top of 022d2ac1f3 (blame: prefer
+> xsnprintf to strcpy for colors, 2018-07-13) or it will complain loudly. :)
+>
+>   [1/2]: introduce "banned function" list
+>   [2/2]: banned.h: mark strncpy as banned
 
-Hi Stefan,
+Hmph, there is no use of any banned function in hex.c, but when
+this topic is merged to 'pu', I seem to get this:
 
-On Tue, 17 Jul 2018, Stefan Beller wrote:
+$ make DEVELOPER=1 hex.o
+GIT_VERSION = 2.18.0.758.g18f90b35b8
+    CC hex.o
+In file included from git-compat-util.h:1250:0,
+                 from cache.h:4,
+                 from hex.c:1:
+banned.h:14:0: error: "strncpy" redefined [-Werror]
+ #define strncpy(x,y,n) BANNED(strncpy)
+ 
+In file included from /usr/include/string.h:630:0,
+                 from git-compat-util.h:165,
+                 from cache.h:4,
+                 from hex.c:1:
+/usr/include/x86_64-linux-gnu/bits/string2.h:84:0: note: this is the location of the previous definition
+ # define strncpy(dest, src, n) __builtin_strncpy (dest, src, n)
+ 
+cc1: all warnings being treated as errors
+Makefile:2279: recipe for target 'hex.o' failed
+make: *** [hex.o] Error 1
 
-> > > It's nice to see that the bulk of the range-diff functionality has
-> > > been libified in this re-roll (residing in range-diff.c rather than
-> >
-> > Can we *please* stop calling it "re-roll"? Thanks.
->=20
-> Fun fact of the day:
->=20
-> First appearance of "reroll" in the public archive is (09 Dec 2007)
-> https://public-inbox.org/git/7vy7c3ogu2.fsf@gitster.siamese.dyndns.org/
-> which is predated by "re-roll" (05 May 2006)
-> https://public-inbox.org/git/7vr738w8t4.fsf@assigned-by-dhcp.cox.net/
-
-Real fun fact of the day:
-
-https://en.wiktionary.org/wiki/reroll says
-
-Verb
-
-reroll (third-person singular simple present rerolls, present participle
-rerolling, simple past and past participle rerolled)
-
-    1. To roll again.
-
-        A player who rolls two sixes can reroll the dice for an additional
-=09turn.
-
-    2. (programming) To convert (an unrolled instruction sequence) back int=
-o
-       a loop. quotations =E2=96=BC
-
-Noun
-
-reroll (plural rerolls)
-
-    (dice games) A situation in the rules of certain dice games where a
-    player is given the option to reroll an undesirable roll of the dice.
-
-
-You will notice how this does not list *any* hint at referring to
-something that Junio calls "reroll".
-
-Likewise, I have to admit that Wiktionary's idea of an "iteration"
-disagrees with *my* use of the term.
-
-The correct term would be "revision"
-(https://en.wiktionary.org/wiki/revision). But we, the core Git
-contributors, in our collective infinite wisdom, chose to use that term
-as yet another way to refer to a commit [*1*].
-
-So we got it all wrong, believe it or not.
-
-Ciao,
-Dscho
-
-Footnote *1*: https://en.wiktionary.org/wiki/commit#Noun does not even
-bother to acknowledge our use of referring to a snapshot of a source code
-base as a "commit".
---8323328-2070311408-1532113080=:71--
