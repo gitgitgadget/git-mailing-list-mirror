@@ -2,98 +2,169 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 82A441F597
-	for <e@80x24.org>; Fri, 20 Jul 2018 19:03:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C3E061F597
+	for <e@80x24.org>; Fri, 20 Jul 2018 19:03:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388110AbeGTTwp (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Jul 2018 15:52:45 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:33070 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387994AbeGTTwp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jul 2018 15:52:45 -0400
-Received: by mail-wm0-f65.google.com with SMTP id z6-v6so4915008wma.0
-        for <git@vger.kernel.org>; Fri, 20 Jul 2018 12:03:09 -0700 (PDT)
+        id S2388305AbeGTTxV (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Jul 2018 15:53:21 -0400
+Received: from mail-vk0-f65.google.com ([209.85.213.65]:35515 "EHLO
+        mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731556AbeGTTxU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jul 2018 15:53:20 -0400
+Received: by mail-vk0-f65.google.com with SMTP id p12-v6so6555957vkf.2
+        for <git@vger.kernel.org>; Fri, 20 Jul 2018 12:03:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=UMcSXuhpC5E4TYXmFswndkCZL+mnPm47Xxyixyek8ps=;
-        b=Iyv81DZN7Z/dPEZlPx0kzLu3d6w/5RXFTNzHUGIK8iWyWPv8j5CEpeapnAbhUGiz1R
-         SpI+b0nZmf2wJkKK9m3fwLermRwi3QpbDWwyGP96oIxE8+dXClEDOF2pkK4j6iZHOvbt
-         eIld/lXAZgQZR4eq2OHbxpKDXF/3Xorzmu9wfw3oJF9W5zLXrF190rLtcsnLLLr1VgFu
-         ppkdY4NBz6DENleazo38/2gh7VEA5pNikloqUm+EXHEQChhy98p979FTMkNBBfVBCXYI
-         PhlEJ1/w15mK7yuuNgWMS/uIdp3JH6wIOjytZ1XtXLsn5GEuJNGKmssjs7WDvIcKzNDQ
-         bsNw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=yzCMC0EM4ti/m5G0KN0q4h+YqibUm4/Yv/kE3x2FxCU=;
+        b=S5x+tOc9ZVcAdRxmDAg6IZtAedMLqBTLAnlRgesiIp8fJ5WJfBpeimGEt9dg4reQbO
+         Bf0ZA2AWIWi9cuQEeDymvQEYPRqCLnMNIElklyZYkdR9iKYcaguQIQ9IB3Z+lCqXB9RG
+         MPwqYNP7xSyeZ12ooPySkYfU3LOFWhUhJKn01P3E9KG6BRAUPJEKsy5SyuT002aZOXfc
+         ASkjfHPorrb2hXe1k7zUQMyiWubZTckUrgp9s8vDlL6fZQkjZW+hAKI7f6CeHQk5HGm+
+         T7HLPKxQTBgrzyzCVpsvjVTyRmQpK+7tbhm7bVg8K9QnW/p3i92BtJLTzHYNB933n3AZ
+         y6gA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=UMcSXuhpC5E4TYXmFswndkCZL+mnPm47Xxyixyek8ps=;
-        b=GXE1xHiI4aQm/Sxpl8lcIihONlLXm5uLkp1abDaW1UQ3cE2TX+iIED4g32qkgv037g
-         a8iNi0Bk2Xy7pPnNfTd7cGBvyNJN0YxLy7nUep6eCGSqNeJsNn8OOxTnR9ZayMfIQnJf
-         rRppFyHTBVDFGmThsQSTJ+svxA4Ca+iI060+Z4/4JWLZJb86JnQZ+r6967Qqjou6KIAx
-         RmOkpIH871YRSJOiN8sHHG62l9Ge6cur46ODXL8VLIa9iTPVlyYSipzf0MU498RU5QC+
-         NFFDjQsy+Lbd+eyJpw647muUC6SPh8qrQONkBqxJiOuzPuLD7POwqOCvwrYzgXAeLj4G
-         ll1w==
-X-Gm-Message-State: AOUpUlG2VSICJ8fT+P9CCxRzzsWGc5JXousUEFU24MUcvA+3wZYgWvSI
-        v1b1pUdSgmIpcAyuEuVIrFc=
-X-Google-Smtp-Source: AAOMgpdpMsXOJyoZzbGUbZK0XB0nmI0thFcnPwFzGmTTtmKej+OV5cYgCXbQOm33sLERYOzcPUbj3g==
-X-Received: by 2002:a1c:f407:: with SMTP id z7-v6mr2128011wma.143.1532113388783;
-        Fri, 20 Jul 2018 12:03:08 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id w9-v6sm2883137wrr.77.2018.07.20.12.03.07
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 20 Jul 2018 12:03:07 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     "Theodore Y. Ts'o" <tytso@mit.edu>, git@vger.kernel.org,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 1/2] introduce "banned function" list
-References: <20180719203259.GA7869@sigill.intra.peff.net>
-        <20180719203901.GA8079@sigill.intra.peff.net>
-        <xmqqmuumdetr.fsf@gitster-ct.c.googlers.com>
-        <20180720010808.GC2179@sigill.intra.peff.net>
-        <20180720132241.GN30706@thunk.org>
-        <20180720175602.GC22486@sigill.intra.peff.net>
-Date:   Fri, 20 Jul 2018 12:03:07 -0700
-In-Reply-To: <20180720175602.GC22486@sigill.intra.peff.net> (Jeff King's
-        message of "Fri, 20 Jul 2018 13:56:03 -0400")
-Message-ID: <xmqqk1ppbuhg.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=yzCMC0EM4ti/m5G0KN0q4h+YqibUm4/Yv/kE3x2FxCU=;
+        b=DTh4MU5xTgtCoF/ff6mhsvmOfF+fApZCqy10ormmigWbJQWMBSkqP65ZaUCq5tgHNr
+         D+9C2OMpmX3G30FKtxNvtXmwvGRYCnwhss8ycwny3byhIG9Wvo4w7a7V0N2JXAa5r+2a
+         NLW9dmKN+YgHDp8nz/+xTznyym5eB7vnfAzVt24zWxZbGECCOoJhpGi4m4MJu2hWvTQr
+         oPJHU9F+//4wwryOqDKtxlupEUoPv81SM6jjkdcjtvp1p/sCruKFyPjQ8TV1E73bIYDi
+         GgkVZ+d0yq2juc/+Ayw4Lq0HG0Kvh4uapS97puPszkD4QeGfa0//DFmP6JoFAgudpWLv
+         8XRw==
+X-Gm-Message-State: AOUpUlGNu/dtk5XjM29Wu/1ZwS0IHVmTqKTpJBHEXkouzp3aXhXYORFH
+        J0VQpZ2lwtsxFk5fWPKhtbV53RJqHUdQYe2X931WeyJm
+X-Google-Smtp-Source: AAOMgpeT+j1wXXg8oASEpMiqSiTi+yE7eBgNgGI4/w2FrI0UUkzDvDBtICQtCHFE43n6M6qj3SjAlvAj/yHl5Sel0CQ=
+X-Received: by 2002:a1f:e1c7:: with SMTP id y190-v6mr1838702vkg.129.1532113424935;
+ Fri, 20 Jul 2018 12:03:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 2002:ab0:21c7:0:0:0:0:0 with HTTP; Fri, 20 Jul 2018 12:03:44
+ -0700 (PDT)
+In-Reply-To: <20180719222641.12152-1-szeder.dev@gmail.com>
+References: <20180719222641.12152-1-szeder.dev@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 20 Jul 2018 12:03:44 -0700
+Message-ID: <CABPp-BGko5_N7uX=AgTqjTyF2rSusR81FnSQpSNhXxi64uvY3A@mail.gmail.com>
+Subject: Re: [PATCH] t9300: wait for background fast-import process to die
+ after killing it
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Eric Rannaud <e@nanocritical.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> Thanks for an interesting (and exotic) counter-point. For strcpy(), you
-> always have to run strlen() anyway to know you're not going to overflow,
-> so you might as well memcpy() at that point. But if you really are OK
-> with truncation, then using strncpy() lets you copy while walking over
-> the string only once, which is more efficient.  On the other hand,
-> strncpy() fills out NULs to the end of the destination array, so you are
-> paying an extra cost for small strings.
+On Thu, Jul 19, 2018 at 3:26 PM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> w=
+rote:
+> The five new tests added to 't9300-fast-import.sh' in 30e215a65c
+> (fast-import: checkpoint: dump branches/tags/marks even if
+> object_count=3D=3D0, 2017-09-28), all with the prefix "V:" in their test
+> description, run 'git fast-import' in the background and then 'kill'
+> it as part of a 'test_when_finished' cleanup command.  When this test
+> script is executed with Bash, some or even all of these tests tend to
+> pollute the test script's stderr, and messages about terminated
+> processes end up on the terminal:
 >
->> So I used strncpy() advisedly, and I ignore people running Coccinelle
->> scripts and blindly sending patches to "fix" ext4.
+>   $ bash ./t9300-fast-import.sh
+>   <... snip ...>
+>   ok 179 - V: checkpoint helper does not get stuck with extra output
+>   /<...>/test-lib-functions.sh: line 388: 28383 Terminated              g=
+it fast-import $options 0<&8 1>&9
+>   ok 180 - V: checkpoint updates refs after reset
+>   ./t9300-fast-import.sh: line 3210: 28401 Terminated              git fa=
+st-import $options 0<&8 1>&9
+>   ok 181 - V: checkpoint updates refs and marks after commit
+>   ok 182 - V: checkpoint updates refs and marks after commit (no new obje=
+cts)
+>   ./test-lib.sh: line 634: line 3250: 28485 Terminated              git f=
+ast-import $options 0<&8 1>&9
+>   ok 183 - V: checkpoint updates tags after tag
+>   ./t9300-fast-import.sh: line 3264: 28510 Terminated              git fa=
+st-import $options 0<&8 1>&9
+>
+> After a background child process terminates, its parent Bash process
+> always outputs a message like those above to stderr, even when in
+> non-interactive mode.
+>
+> But how do some of these messages end up on the test script's stderr,
+> why don't we get them from all five tests, and why do they come from
+> different file/line locations?  Well, after sending the TERM signal to
+> the background child process, it takes a little while until that
+> process receives the signal and terminates, and then it takes another
+> while until the parent process notices it.  During this time the
+> parent Bash process is continuing execution, and by the time it
+> notices that its child terminated it might have already left
+> 'test_eval_inner_' and its stderr is not redirected to /dev/null
+> anymore.  That's why such a message can appear on the test script's
+> stderr, while other times, when the child terminates fast and/or the
+> parent shell is slow enough, the message ends up in /dev/null, just
+> like any other output of the test does.  Bash always adds the file
+> name and line number of the code location it was about to execute when
+> it notices the termination of its child process as a prefix to that
+> message, hence the varying and sometimes totally unrelated location
+> prefixes in those messages (e.g. line 388 in 'test-lib-functions.sh'
+> is 'test_verify_prereq', and I saw such a message pointing to
+> 'say_color' as well).
+>
+> Prevent these messages from appearing on the test script's stderr by
+> 'wait'-ing on the pid of the background 'git fast-import' process
+> after sending it the TERM signal.  This ensures that the executing
+> shell's stderr is still redirected when the shell notices the
+> termination of its child process in the background, and that these
+> messages get a consistent file/line location prefix.
+>
+> Note that this is not an issue when the test script is run with Bash
+> and '-v', because then these messages are supposed to go to the test
+> script's stderr anyway, and indeed all of them do; though the
+> sometimes seemingly random file/line prefixes could be confusing
+> still.  Similarly, it's not an issue with Bash and '--verbose-log'
+> either, because then all messages go to the log file as they should.
+> Finally, it's not an issue with some other shells (I tried dash, ksh,
+> ksh93 and mksh) even without any of the verbose options, because they
+> don't print messages like these in non-interactive mode in the first
+> place.
+>
+> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+> ---
+>  t/t9300-fast-import.sh | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+>
+> diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+> index 9e7f96223d..fac33e524c 100755
+> --- a/t/t9300-fast-import.sh
+> +++ b/t/t9300-fast-import.sh
+> @@ -3147,7 +3147,10 @@ background_import_then_checkpoint () {
+>         echo $! >V.pid
+>         # We don't mind if fast-import has already died by the time the t=
+est
+>         # ends.
+> -       test_when_finished "exec 8>&-; exec 9>&-; kill $(cat V.pid) || tr=
+ue"
+> +       test_when_finished "
+> +               exec 8>&-; exec 9>&-;
+> +               kill $(cat V.pid) && wait $(cat V.pid)
+> +               true"
+>
+>         # Start in the background to ensure we adhere strictly to (blocki=
+ng)
+>         # pipes writing sequence. We want to assume that the write below =
+could
+> --
+> 2.18.0.408.g42635c01bc
 
-Given that strncpy() was invented in V7 days for specifically the
-purpose of filling the filename field, it is not surprising at all
-that it is the perfect tool for the same purpose in ext4 ;-)
-
-> We don't have any remaining calls to strncpy() in Git, so this lets us
-> punt on deciding if the ban is worth changing what's there. We can wait
-> for somebody to decide they _really_ need strncpy, and we can discuss it
-> then with a concrete case.
-
-Yes, and the plan (or at least your plan) is to limit the banned
-list to things that really has no reason to be used, the above
-sounds like a good approach.
-
+Sweet, thanks for fixing this.  I got these messages nearly 100% of
+the time on a certain machine when running prove with a high enough
+parallel flag.  I was getting a little annoyed by them, but hadn't dug
+in yet.  Your patch squelches them up in my testing.
