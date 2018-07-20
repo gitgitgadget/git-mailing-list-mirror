@@ -2,123 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3EB9A1F597
-	for <e@80x24.org>; Fri, 20 Jul 2018 22:15:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A59A81F597
+	for <e@80x24.org>; Fri, 20 Jul 2018 22:16:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730691AbeGTXFn (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Jul 2018 19:05:43 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:33882 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728459AbeGTXFn (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 20 Jul 2018 19:05:43 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:f1fc:eee3:60de:bdd8])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 6149560734;
-        Fri, 20 Jul 2018 22:15:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1532124928;
-        bh=mta26nbC4T75e+flgZXkJCdIhzBaLVF3lY/279Nw/qk=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Y2sEPSTo4ZVh46taLgJOYOIQuBj6kUQyJsxEy7Mb34dHfGNhE0V8YQuGkj55jqtYV
-         2HhjJTWtUy5fP/wubzO2NQECLdjBQs6hbUAdEpaKNL/CaQG+oj65k+GgmXa2ILVwaF
-         lJT53lzmbNnmznChOlS3bGTzKq/BTx244GTHEaKjVqZakQJWBiEAvcibvZ32w1VkGi
-         Zmd/8enkhub1q9xjHAQVMXFdiXG8+i4L5vUSdQyO+DfL9vvT6HhNvG15rWe14gl6Fm
-         qDbmOagX8o7/VQYneJZfH6UK9uZo0GQA8meAjCq8fYeSsPt4evQs2OPLSFi3WLJKaS
-         b5mpRstlOzB6NAQ5K6R+X3iNM1fZeWl6M6jCY1cFBKWYWfbPFW36nNSd4lzfGvz2hs
-         q9FFWlrEomRKMvMZ0eAiwQphBnFyattwjkmepVTj5WiTuv25cD5kgI+wJU3ITHrmfa
-         tUk9fjHAt0dj2bxqNY98+r83/i08z6kZRNDMq9B1FM3kvO/lc3m
-Date:   Fri, 20 Jul 2018 22:15:22 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
-        dstolee@microsoft.com, sbeller@google.com, pclouds@gmail.com,
-        avarab@gmail.com, sunshine@sunshineco.com, szeder.dev@gmail.com
-Subject: Re: [PATCH v4 03/23] multi-pack-index: add builtin
-Message-ID: <20180720221522.GD18502@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
-        dstolee@microsoft.com, sbeller@google.com, pclouds@gmail.com,
-        avarab@gmail.com, sunshine@sunshineco.com, szeder.dev@gmail.com
-References: <20180706005321.124643-1-dstolee@microsoft.com>
- <20180712193940.21065-1-dstolee@microsoft.com>
- <20180712193940.21065-4-dstolee@microsoft.com>
- <xmqqva99bwdw.fsf@gitster-ct.c.googlers.com>
+        id S1730999AbeGTXGh (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Jul 2018 19:06:37 -0400
+Received: from mail-yb0-f172.google.com ([209.85.213.172]:46438 "EHLO
+        mail-yb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728329AbeGTXGh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jul 2018 19:06:37 -0400
+Received: by mail-yb0-f172.google.com with SMTP id c3-v6so5190145ybi.13
+        for <git@vger.kernel.org>; Fri, 20 Jul 2018 15:16:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=2vrhmHTmLpFI5akraaqpPVzFp0M5iIDoXZ8bNltRmRI=;
+        b=moiR53ATIyGd3Gb2Je+gD3AX+iQooiInDCdriU/38wSOlNeLPJPcKaSyZAUn7yxxHQ
+         CdtnCohhHzsekU70L36NUDEbSapiXtlz2k8Z1TSNQxIKBvzBjc333NdLUoUQPJaqxYuo
+         Xf3NJdgCuY53s8Ru7AjQ1ZxpSJDhWj+dIGZuCQPzlXcGfQIKRkfDhMf0kSygmggaNOAr
+         4TzJz2lfsTdneBJLVxkr741p6TIm16bOHjBhUV2Y5MU1o98cCORxmC4tXJxILXYDnBLO
+         tT6laJuLp9smIl/pb9j6c722NDmeJHwAZtR7Yv0TAjVKGn37mrevVvWSwH2oYNt8fkVt
+         7GXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=2vrhmHTmLpFI5akraaqpPVzFp0M5iIDoXZ8bNltRmRI=;
+        b=ADIe5iMakCDNHJW1hhGvOKJb3Fh9UUMmAdXe57udCdk79ptz8himmskV4C2PiW65uF
+         yhLpC54S3TH/Z630mMognr6myOhMEMThfoOGLdB6/efxn60HZlSCPE0QQpOvBu/W22ID
+         LTxWt7VpuHbpYN7T9wM5YgCR5Og7Yj33mxQfR3gm9QTysiYUh5cLKYRgJndUUhgQ/F/0
+         ybgvcxAi+UxWahqGnJJs+tIfT02Cefzb6iZBJMPpYIJVALO/Vf1cm5bgVTADmOmwvTUe
+         niXeRHeU+IhJkM7WoXFGmb0Argc2Em4fi3Phy8hqYbJGg9UJLT5/YJfXmu9wOffQ5cXi
+         JdmQ==
+X-Gm-Message-State: AOUpUlGMP5iqm0JF+6f7WBqqXpWCHgX6KKXg4RsUzYl9nDFT/XPYnVHy
+        Sfv8FDCxKP8iVPNXFx6BM5/Shwj8M8CYGVjonVna/nL8nZI=
+X-Google-Smtp-Source: AAOMgpceQHHLpL8mXfV0/ZjWBJtIgzWpJPNMQiK8JEqa/cyxpX4oAzUZFVySQCXC5C92j+Hh+jo180g4q2rNwA7OK1Q=
+X-Received: by 2002:a25:560b:: with SMTP id k11-v6mr945286ybb.292.1532124981840;
+ Fri, 20 Jul 2018 15:16:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="RhUH2Ysw6aD5utA4"
-Content-Disposition: inline
-In-Reply-To: <xmqqva99bwdw.fsf@gitster-ct.c.googlers.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.17.0-1-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+References: <pull.10.git.gitgitgadget@gmail.com> <20180720163227.105950-1-dstolee@microsoft.com>
+ <CAGZ79kY28vcs5TN9GtKd439vaTt38Qtwv8Lw0zanDaR1OmsTLg@mail.gmail.com> <833dea7f-b6dd-b3dd-6282-c0a5f939ecca@gmail.com>
+In-Reply-To: <833dea7f-b6dd-b3dd-6282-c0a5f939ecca@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 20 Jul 2018 15:16:10 -0700
+Message-ID: <CAGZ79kb7tWV=cmboA+nsChAUaiC+fVVM-GBCuWfsypC+-wyaVg@mail.gmail.com>
+Subject: Re: [PATCH v2 00/18] Consolidate reachability logic
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee <dstolee@microsoft.com>, git <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Derrick,
 
---RhUH2Ysw6aD5utA4
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Sure! It's on my fork [1]
+>
+> [1] https://github.com/derrickstolee/git/tree/reach/refactor
+>
 
-On Fri, Jul 20, 2018 at 11:22:03AM -0700, Junio C Hamano wrote:
-> Derrick Stolee <stolee@gmail.com> writes:
->=20
-> > diff --git a/Documentation/git-multi-pack-index.txt b/Documentation/git=
--multi-pack-index.txt
-> > new file mode 100644
-> > index 0000000000..ec9982cbfc
-> > --- /dev/null
-> > +++ b/Documentation/git-multi-pack-index.txt
-> > @@ -0,0 +1,36 @@
-> > +git-multi-pack-index(1)
-> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->=20
-> Isn't this underline too short by one column?  My copy of AsciiDoc
-> seems to be OK with it, but do other versions and reimplementations
-> groke this fine?
+Thanks!
 
-I believe AsciiDoc allows a two-character grace (either longer or
-shorter) and Asciidoctor allows one.  So this should work both places
-(although I haven't tested).
+> >> * Use single rev-parse commands in test output, and pipe the OIDs through 'sort'
 
-It might be nice to fix if a re-roll is needed, but it should be
-functional as-is.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+Why do we need to sort them? The order of the answers given by rev-parse
+is the same as the input given and we did not need to sort it before, i.e.
+the unit under test would not give sorted output but some deterministic(?)
+order, which we can replicate as input to rev-parse.
+Am I missing the obvious?
 
---RhUH2Ysw6aD5utA4
-Content-Type: application/pgp-signature; name="signature.asc"
+> >> * Check output of parse_commit()
+> >>
+> >> * Update flag documentation in object.h
+> >>
+> >> * Add tests for commit_contains() including both algorithms.
+> >>
+> >> * Reduce size of "mixed-mode" commit-graph to ensure we start commit walks
+> >>    'above' the graph and then walk into the commits with generation numbers.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.8 (GNU/Linux)
+Overall I like the series as-is, and have found
+no further issues in a quick read.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAltSXvoACgkQv1NdgR9S
-9otqgw/+IY2DGXURkgL3Xl85gYQleffJn9vmixEzeowHo1I6Rp+tzVMbjADgC4P0
-sU/3rGKGSoGcU9U0GmvyJw5L3PdsSCtdpCi7GlY+QXCalu4s50n3yOvQqs1GdtG/
-ya+vvwrtZ4AjZE/s5AYauoD57bfWP29NpQwfS/jJl+v/CwMxCfyYKEoCx2cPVr7A
-2ApiItmTC2pnURU7jdDfESrU9jecte30DswnE7ErdxgKk3IG7xyc7xNs+N46IvJ/
-vfT++5bv+EpaxRDbp6/haDkPaJQ6v1W+REHOfEJ8yjBM8X3xRoIYT++grUI1YIK/
-us3bQy4pcljWTyoNZ0hb6p5BFFC7/iP5G0hRTSi51AL3BdXKntijjWbKdliVDQoi
-Ulk0HzXEOb4LW8SzGBVjBA98leieI/ZmE6ROxj0dJjPxDM8mNvSpBhGLLBU+Xoia
-JHPjH6TKwnXf/nBlVXWNcocXGlaa1eTitBo6aRmRUjNFDsfKHNM+slYoDxwJuRxh
-lI+b2G9BNW+oje0KLl5dE5Lvm3i47FqlZv1Uq/ju1AcnEky2tCj+M1pUo5ADT317
-6e69hcv+hu4v/x8UM4RLp4irbjF4+osTeBrQ2cQ9KFxQKPHsLPnX5/SxgV+qyNGG
-unDHQGjcv5sG5bdk3vV4uL/QH8RVtD8iyT4uIEk9adFQYsLo1GA=
-=sWsk
------END PGP SIGNATURE-----
-
---RhUH2Ysw6aD5utA4--
+Thanks,
+Stefan
