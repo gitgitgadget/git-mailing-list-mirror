@@ -2,105 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E4981F597
-	for <e@80x24.org>; Fri, 20 Jul 2018 21:53:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F3811F597
+	for <e@80x24.org>; Fri, 20 Jul 2018 22:06:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731221AbeGTWoD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Jul 2018 18:44:03 -0400
-Received: from mail-yw0-f202.google.com ([209.85.161.202]:35268 "EHLO
-        mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728326AbeGTWoD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jul 2018 18:44:03 -0400
-Received: by mail-yw0-f202.google.com with SMTP id t189-v6so7116925ywg.2
-        for <git@vger.kernel.org>; Fri, 20 Jul 2018 14:53:53 -0700 (PDT)
+        id S1728214AbeGTW4M (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Jul 2018 18:56:12 -0400
+Received: from mail-wr1-f46.google.com ([209.85.221.46]:43234 "EHLO
+        mail-wr1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727671AbeGTW4M (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jul 2018 18:56:12 -0400
+Received: by mail-wr1-f46.google.com with SMTP id b15-v6so12504299wrv.10
+        for <git@vger.kernel.org>; Fri, 20 Jul 2018 15:06:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:date:message-id:subject:from:to:cc;
-        bh=fpqcQ2p/x0VN7nbouLHtV6pqz9WZ8mi4IA2tdA7n3qI=;
-        b=AF4LyXoXoSRQ4a/kdVoDTtXA4nlmQNruWypAiMK8qye7kdF8OglrhX9R8MJLlptLwo
-         SpsCVY09/RpvZ46sHAVJA0GuiAjdffarSsWQxpTqovCO0DvomrTRT/ZTdZ1E+XZ9quC4
-         FdwTNGMtTP8DuXPXpuZ/JDYOluowiEjpM89a1l4JVacPPAnzoe3TqzkFeuQ77Bl+Lw+h
-         x6BNUu8c2IPOhfSJfTiPNLi1VXobp5fX1UL8F8oYYVaZXNz5vGfQ0zjRE5W5pDbF752Y
-         yWC0qFrkQGgYLtwVW8R7sOkeRPJ2oDu01dAEC7RuW8oIJmmH5Jd1DNjcifjYPsvB74LK
-         EPkQ==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=SHkijcODI/R0o+hEFZZu6B+Rt/Uswhw4JC+ossoStAE=;
+        b=n7KqNBxfGiJjSLVIbAzgDdmTipiUh1brafN2mqbEEnP3Z3CFdCwGFZIr97E8UfN7Ma
+         jUtjbqc7j/iSwK+AYJGldTMPKA92RIcUcF4lWEGbaP04iv1xrOogtaEGvtTSyB4X712R
+         YyRBiW6DuKSbWMGx14V8Z/9OCx0m2C/U103FK7qnqokVL9a5XPLYImqXIriTaA7aYyNH
+         jumrFBxAQ8u2waxggs6IcH+VI+D0c8lEzkkoP8jF+81qm8twR2m972TqeDuHse17QvgE
+         g+X1QzoQxKjU8AHpgKkN308K53gaZrx9ldl5kjzm7boNilGxZKyEOfA7hvA+EzfIg64G
+         yH7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc;
-        bh=fpqcQ2p/x0VN7nbouLHtV6pqz9WZ8mi4IA2tdA7n3qI=;
-        b=b87nKrDduWUDrSnT2+L9KSLGmvcSP9fwCxjdU2PhZahMLGcH4kQ+Ey6EKEuGEP83sS
-         pBoKLbmK9WlwfhZL4UBpvSdJEDnzxxNiDzhzPlUZEEpVzbDPcUi0fOgn501Olelyi6I1
-         elgfdhdbSkxoPrutJSrFi7y9yjNt1zPleYJu/wjByx4RsflvqAfpzXVyqy9pOzNX5cG+
-         KnTFmmZ8cizhEjT2NqJdi0nfDqw33Ljm7ufpyxhKxjnDtBpZN4FB2sgMtSv+0Fkea1mg
-         RJ9IphwcrIs16w1oJBT0uvkJuwBKTcjrmyFbX6YTCiyleaq64VwUutz0rXQyiVFkxSCa
-         cKzg==
-X-Gm-Message-State: AOUpUlEX9yA0ombcGBDBOJtOLYclnsJq8dditwn6PVWsYJX4eoawoBO9
-        WaV/MV+iwIdgcNN+whduwv6hwgfkEQFw/iPd66cn3VwzOFQsZ7ShqnsVaqNMA+xVsYW6xwrk2kl
-        3uq9EYM+HT9Jwdv4c5TfAPrnGC4HhnovxRlcLT1KnXS8iZrGmHQ2bY7tKPOWi
-X-Google-Smtp-Source: AAOMgpdnpVjtGlbBiWdzdt+x6Z2GSUZLEfDQYPlBi+DzauIKnQyFEWjdGYrYwXf7rWrCeHGeIMGLJS3Z8Ha6
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=SHkijcODI/R0o+hEFZZu6B+Rt/Uswhw4JC+ossoStAE=;
+        b=JvYHYnPAwei6d/ObgpBIZa8IwepoJO1vYPIYOfSL5zlmc1qJ/oyK30UDbSrX2TWRcm
+         7Le+0kyHwfikxOXHfMWq3cdN/Taf9eGQUghs5zHEPEXdgfUiDebSRiZqsMODOR+nJ8XN
+         DSWUmWZwNut704HCq/RcuIm4lyHEheXhYvS8PRlB6SPGtt2+CdSdN0jyBgt1FbFnQ/Or
+         yuf0rmA8dfq/rJTPiTZahpksKv3ldtJjTJpoJ946Wiuk8feV/BzcmcNLDG0fb3JvGfGm
+         pGq8wNxXP4C2p3gRtrxXSkm3SN0sfJnmodzXC9plXEZ1JRd2Acc+7GUeGtq0KXFZp+xR
+         Yqsg==
+X-Gm-Message-State: AOUpUlGwJZ1pusIuxtantqvLCDDS+JV9RZuRPATZ3vuSsahA7D+dsWDQ
+        QCC+dmlMJD7gidpOo4G2y5k=
+X-Google-Smtp-Source: AAOMgpfgk+3sPW+lKiuhMSmiT6p0cWApQXfHc5p5ACzWONi8QDOXf2Vn3IbqvkAUlwtvifF6MAfOZA==
+X-Received: by 2002:adf:a211:: with SMTP id p17-v6mr2587667wra.196.1532124359176;
+        Fri, 20 Jul 2018 15:05:59 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id 185-v6sm3742312wmh.22.2018.07.20.15.05.58
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 20 Jul 2018 15:05:58 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Ben Peart <peartben@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Kevin Willford <kewillf@microsoft.com>,
+        Ben Peart <benpeart@microsoft.com>
+Subject: Re: [BUG] merge-recursive overly aggressive when skipping updating the working tree
+References: <5a8d1098-b4c5-64e1-da98-dac13521e7ba@gmail.com>
+        <CABPp-BF+Vx8YT2KAJQ+szbkYExv-_o5E-ZkywgvzsHWR0QvVEg@mail.gmail.com>
+        <xmqqsh4da9wd.fsf@gitster-ct.c.googlers.com>
+        <CABPp-BE_OHxMqmhJ8BisG6HFpGQjsPJ1AE4G9m5bpJWznkq-1Q@mail.gmail.com>
+Date:   Fri, 20 Jul 2018 15:05:57 -0700
+In-Reply-To: <CABPp-BE_OHxMqmhJ8BisG6HFpGQjsPJ1AE4G9m5bpJWznkq-1Q@mail.gmail.com>
+        (Elijah Newren's message of "Fri, 20 Jul 2018 14:42:35 -0700")
+Message-ID: <xmqqbmb1a7ga.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-X-Received: by 2002:a81:1786:: with SMTP id 128-v6mr1114855ywx.176.1532123633175;
- Fri, 20 Jul 2018 14:53:53 -0700 (PDT)
-Date:   Fri, 20 Jul 2018 14:53:49 -0700
-Message-Id: <20180720215349.179542-1-sbeller@google.com>
-X-Mailer: git-send-email 2.18.0.233.g985f88cf7e-goog
-Subject: [PATCH] Documentation/git-interpret-trailers: explain possible values
-From:   Stefan Beller <sbeller@google.com>
-To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+Elijah Newren <newren@gmail.com> writes:
 
-Maybe we rather want to refer to the options that are described further
-down in the document?
+> Ah, okay, that's helpful.  So, if there are conflicts, it should be
+> free to clear the skip_worktree flag.  Since merge-recursive calls
+> add_cacheinfo() for all entries it needs to update, which deletes the
+> old cache entry and just makes new ones, we get that for free.
 
- Documentation/git-interpret-trailers.txt | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+Correct.
 
-diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
-index 9111c47a1bf..b8fafb1e8bd 100644
---- a/Documentation/git-interpret-trailers.txt
-+++ b/Documentation/git-interpret-trailers.txt
-@@ -88,7 +88,8 @@ OPTIONS
- 	Specify where all new trailers will be added.  A setting
- 	provided with '--where' overrides all configuration variables
- 	and applies to all '--trailer' options until the next occurrence of
--	'--where' or '--no-where'.
-+	'--where' or '--no-where'. Possible values are `after`, `before`,
-+	`end` or `start`.
- 
- --if-exists <action>::
- --no-if-exists::
-@@ -96,7 +97,8 @@ OPTIONS
- 	least one trailer with the same <token> in the message.  A setting
- 	provided with '--if-exists' overrides all configuration variables
- 	and applies to all '--trailer' options until the next occurrence of
--	'--if-exists' or '--no-if-exists'.
-+	'--if-exists' or '--no-if-exists'. Possible actions are `addIfDifferent`,
-+	`addIfDifferentNeighbor`, `add`, `replace` and `doNothing`.
- 
- --if-missing <action>::
- --no-if-missing::
-@@ -104,7 +106,8 @@ OPTIONS
- 	trailer with the same <token> in the message.  A setting
- 	provided with '--if-missing' overrides all configuration variables
- 	and applies to all '--trailer' options until the next occurrence of
--	'--if-missing' or '--no-if-missing'.
-+	'--if-missing' or '--no-if-missing'. Possible actions are `doNothing`
-+	or `add`.
- 
- --only-trailers::
- 	Output only the trailers, not any other parts of the input.
--- 
-2.18.0.233.g985f88cf7e-goog
+> And conversely, if a file-level merge succeeds without conflicts then
+> it clearly doesn't "need to materialize a working tree file", so it
+> should NOT clear the skip_worktree flag for that path.
 
+That is not at all implied by what I wrote, though.
+
+If it can be done without too much effort, then it certainly is
+nicer to keep the sparseness when we do not have to materialize the
+working tree file.  But at least in my mind, if it needs too many
+special cases, hacks, and conditionals, then it is not worth the
+complexity---if it is easier to write a correct code by allowing Git
+to populate working tree files, it is perfectly fine to do so.  
+
+In a sense, the sparse checkout "feature" itself is a hack by
+itself, and that is why I think this part should be "best effort" as
+well.
