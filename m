@@ -7,29 +7,29 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B479D1F597
-	for <e@80x24.org>; Fri, 20 Jul 2018 16:33:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51C701F597
+	for <e@80x24.org>; Fri, 20 Jul 2018 16:33:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388009AbeGTRWe (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Jul 2018 13:22:34 -0400
-Received: from mail-sn1nam02on0124.outbound.protection.outlook.com ([104.47.36.124]:17920
-        "EHLO NAM02-SN1-obe.outbound.protection.outlook.com"
+        id S2388027AbeGTRWf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Jul 2018 13:22:35 -0400
+Received: from mail-eopbgr710104.outbound.protection.outlook.com ([40.107.71.104]:31488
+        "EHLO NAM05-BY2-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1731000AbeGTRWe (ORCPT <rfc822;git@vger.kernel.org>);
+        id S2387732AbeGTRWe (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 20 Jul 2018 13:22:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=iyzROlD+mp2gBOmjo8Mq1SvXToSGUnh7aW7JAQy90NM=;
- b=h/Ivm3ZUOxAM7+tHRwl07hkKMQiVu07D9hDEf2BtwTJ0JN/KMw3PuSf44fUmZsQXV+zRXlImb0P7J8McEpw50rVQcjtGqA4AOj6pyirjHHt5YmXFvA9v3JUKyNCcVuRUJjrZ/3OFcsEoK0G9LDqh31Ic7f55bdyqsXgBgGzP6Co=
+ bh=1aeIQiuAQnliLXwNlEbeFoFkFsc/DCfa4j1xlvOWYKs=;
+ b=SKosONTBFu0NFNmDqi0wqyhevloeQAk/Z9PYK8Ez4qRhiiOzu/1B0aqSeDe/gjcz+OYI5IActDzJ9SX3PMftJdSf4bZatmMcwk90yclNxxzRnH0aH3ti8l+wiCAMO5GpNNk7LKVvEdonoUsvPZ9mwBMv4+5vn0+MH5V7NZT3PPU=
 Received: from BL0PR2101MB1011.namprd21.prod.outlook.com (52.132.24.10) by
  BL0PR2101MB0929.namprd21.prod.outlook.com (52.132.20.142) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.995.1; Fri, 20 Jul 2018 16:33:15 +0000
+ 15.20.995.1; Fri, 20 Jul 2018 16:33:13 +0000
 Received: from BL0PR2101MB1011.namprd21.prod.outlook.com
  ([fe80::5072:9195:b05b:ed05]) by BL0PR2101MB1011.namprd21.prod.outlook.com
  ([fe80::5072:9195:b05b:ed05%2]) with mapi id 15.20.0995.008; Fri, 20 Jul 2018
- 16:33:15 +0000
+ 16:33:13 +0000
 From:   Derrick Stolee <dstolee@microsoft.com>
 To:     "git@vger.kernel.org" <git@vger.kernel.org>
 CC:     "sbeller@google.com" <sbeller@google.com>,
@@ -37,11 +37,12 @@ CC:     "sbeller@google.com" <sbeller@google.com>,
         "jonathantanmy@google.com" <jonathantanmy@google.com>,
         "gitster@pobox.com" <gitster@pobox.com>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v2 09/18] test-reach: create new test tool for ref_newer
-Thread-Topic: [PATCH v2 09/18] test-reach: create new test tool for ref_newer
-Thread-Index: AQHUIEdbE+78aNDOl0mkIEFPMFkbVg==
-Date:   Fri, 20 Jul 2018 16:33:15 +0000
-Message-ID: <20180720163227.105950-10-dstolee@microsoft.com>
+Subject: [PATCH v2 08/18] commit-reach: move can_all_from_reach_with_flags
+Thread-Topic: [PATCH v2 08/18] commit-reach: move
+ can_all_from_reach_with_flags
+Thread-Index: AQHUIEdaByDVN8eDJ06QMs/6kMURbg==
+Date:   Fri, 20 Jul 2018 16:33:13 +0000
+Message-ID: <20180720163227.105950-9-dstolee@microsoft.com>
 References: <pull.10.git.gitgitgadget@gmail.com>
  <20180720163227.105950-1-dstolee@microsoft.com>
 In-Reply-To: <20180720163227.105950-1-dstolee@microsoft.com>
@@ -55,14 +56,14 @@ x-clientproxiedby: BN6PR02CA0084.namprd02.prod.outlook.com
 x-ms-exchange-messagesentrepresentingtype: 1
 x-originating-ip: [2001:4898:8010:0:eb4a:5dff:fe0f:730f]
 x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;BL0PR2101MB0929;6:hdDwMvpAwRORVphieFfEe7L9f68WRYuxHp/8iZJFDqP0Yl4ELUFsLbqWnw/wXQNjirUvS4n8lQ//H67dPffP5MCcCYJgm6eU5PBJi4BYKcfVIN5/0G07BW+td3RVTvx63ReyESCZdCQJWC+YXAJkATGHTAFVdO/KmcdaPax1izYmnFnNeh0g1/oqgtKR3oukeJE5b8con+Zyk/fNDJgUeQBPn19C8qNTzoroIjeV9okUXeHeZF6uuPRLWd0rts2323C42ONRXv4LxtLolBV31au9Ef8slfFrTuUScFjj1ir42UqIwIYgOhBO3fhgUPG3bKfZkjGsHF10BbCleq0Z1Ma/f83HUN9Mvpvpn40cwp++ExUYjzZa8alvFCYdMlY2uTPTTT9vC3VZ6MbZy+Gc+OkRMog94C2+FyM7PfztQr3fVfga7AiZvxL+5JWXyAv8y51X6dALlk+gioMDPfB9Rw==;5:pGiPfIGtAKghYk2ReKAoua8iJc6qAjm2E/6V5ezFiQ7f958W+8gfa82BtIWTRz/jO1Upy7Pa4akxAyq6caVT3F3uek++jLuRqW7Jl4i+eyEkn0M6V6lPdcGdnployLP6NQAK3mSI7nYhDdXgS1KcPXTEsRVDKLWNxtgXr9GrnPQ=;7:7+V+0FIg3nNF4OGeAgyDpGQTtvEQ+B/XcnsYhzFdSEO+qLnmIf3csM7GkZB42qFarUR3aPOaA7deHjFycvsjohV0NKxBNLwkjI2B0xFlLim1Q6rtQFmW7s8lvO1TMlcvaujWd3jSyUkzP4fX72DVGr6MSmzrkfg209Dd8SvUzcKew+BXcOT4DJpB9zaaMVfSnxlVr/CYPzXXWawk/jJ7fppcAFciJ34ZuSvo5GMWZg566GB1DC82safK7EoVgDrO
-x-ms-office365-filtering-correlation-id: 0b815e74-32b5-49a6-08a4-08d5ee5e7ddd
+x-microsoft-exchange-diagnostics: 1;BL0PR2101MB0929;6:mGpFtiby7t5+52eh3ktejA+I8neL9tYfdEuqXTKx4ENHUr3lXp3b9ihYhp3DDpAHru2UoucEAEuiQo9KOWzr24iuQ1XgLJEWOgUQ50PnwZ/400FWSa11i+JFp5eQn/U3wNj5hJpTA42QVfKsIVuTs2b2W5WDYJNP9fjk+s29NOfroaPqoS3NZpa3JTemINmDab+v/bbXn+d1FPvvuUvVE0H4LhaaZ6VgBHyJCWFi1uqld4dU03aYWl0Kira4vGtrQE1DXMvFC/XiDDfB4mKk8m6XCb8QQ/d+r9ioVAkfVdhi1VpCw0KydrCaoiEZn/Lm+bmWGyY05ZGceaLSYX1XjcauHBZMOsb3Inm1WcPUSTp01bVPPQVVFdsUJD84DWfe75Hdv6M57DRUr2lV2YmID+HmlnYcpo4B00i7C+BcNSx7W0LEcfxUZeg5VGLw9vZkKUjh2QJThr2wNP6QT+J2bQ==;5:WUmrErWtZw6Nw9ZigqQMiR143v1rB7mj3nk98dWX316qHXr56zXIQprqG6e8zgI0s5Gw2NY35bMaJWuCDfbk8ckagD+mXtoU2igekg6kupQc+e2Z6eKjlrtTpieE46kE1vNdcmALLkmn1/aFlg/NcyaqvZlHHhOQD+CcRa1M6kY=;7:BSja+y4KqOadGGyS8c0kjYLp3nQiQJZ4z1raN3aAo6iRwouDgNHgNocULdYoOokvoAa2yGZhjmLQl3VivNMBInQDFRfFg8oxTI/joIhuNFXCNIZoH2nndF5j1vJIznwJ0RT6rAENM+rgdpHGqH7bEjW5XvLzdplU93OXxi71C+PLeRDN1xRbgYq9vBb+5bsfcITQy6XftCOD1EdwLKe/J+AgVWoKs2lWUCmsnTQIdSww8dmUyo0CAoStn/S2g//r
+x-ms-office365-filtering-correlation-id: cf1a7b85-a155-4eda-d7b6-08d5ee5e7cec
 x-ms-office365-filtering-ht: Tenant
 x-microsoft-antispam: BCL:0;PCL:0;RULEID:(7020095)(4652040)(8989117)(5600067)(711020)(4618075)(4534165)(4627221)(201703031133081)(201702281549075)(8990107)(2017052603328)(7193020);SRVR:BL0PR2101MB0929;
 x-ms-traffictypediagnostic: BL0PR2101MB0929:
 authentication-results: spf=none (sender IP is )
  smtp.mailfrom=dstolee@microsoft.com; 
-x-microsoft-antispam-prvs: <BL0PR2101MB0929F337D87118D67D501386A1510@BL0PR2101MB0929.namprd21.prod.outlook.com>
+x-microsoft-antispam-prvs: <BL0PR2101MB09293157F5CBD69F97172B8FA1510@BL0PR2101MB0929.namprd21.prod.outlook.com>
 x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171);
 x-ms-exchange-senderadcheck: 1
 x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(93006095)(93001095)(3231311)(944501410)(52105095)(2018427008)(3002001)(10201501046)(6055026)(149027)(150027)(6041310)(20161123564045)(20161123560045)(20161123562045)(20161123558120)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(6072148)(201708071742011)(7699016);SRVR:BL0PR2101MB0929;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB0929;
@@ -70,15 +71,15 @@ x-forefront-prvs: 073966E86B
 x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(346002)(366004)(136003)(396003)(376002)(39860400002)(189003)(199004)(6512007)(305945005)(7736002)(14454004)(5640700003)(6116002)(6436002)(105586002)(54906003)(53936002)(25786009)(52116002)(76176011)(106356001)(2501003)(446003)(46003)(478600001)(68736007)(11346002)(6506007)(2900100001)(2906002)(5250100002)(386003)(186003)(102836004)(2351001)(10090500001)(97736004)(6916009)(8676002)(107886003)(8936002)(1730700003)(81156014)(6486002)(4326008)(486006)(81166006)(10290500003)(39060400002)(5660300001)(86362001)(22452003)(1076002)(14444005)(316002)(2616005)(36756003)(256004)(476003)(86612001)(99286004);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB0929;H:BL0PR2101MB1011.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
 received-spf: None (protection.outlook.com: microsoft.com does not designate
  permitted sender hosts)
-x-microsoft-antispam-message-info: w1p6lMtrCN4B76gn+XEgA+TU4kdPnYZ9JpGaW9fyecEG4Gb1ATmqI9hdYCTDNpwVs9GjmwQp1q3x37PzmVqbQYRZqxVYhSqQoC9qfIa4PJ5+i/IrpVzTvfE4GIunw9srruD9arPuhj7uwMNIokl+RW0gVPDKi23AhG/5YK6vHD9TrDtshYlNgmXg71nPVWLRQbBMUH0l/AFxtv2Ptz0sEPrfg/23zNDSm26QcHJ4iKyOBqo8S3mBDy4l3QJiG67y45fLWPPWOkcPRNMb4GE/Y4t7iElZ22TNGUcBuqfN2TERYjbuYWPzSmFxl+gwzNe/vD1NkOEDl5AARToSdTFBtLVYQ9L8oxPK9TnZnRE3FWo=
+x-microsoft-antispam-message-info: /ooy+ukDK5EdVB0P1LXtWwkVutbkK7HQzHYwjsQUqm5fUotD4Gov0M/Wg2fQqlc8yAddX9NhpVHQz1qN0FZVRlHLJkYtXKQob0WYaV19x1setpsOYpDUbrFpt9XG00r90ibVf9730GHOKVuA2I0VPXti/lq4Hp9y7MFrAZlp8U3BnXBcqU7OUdYbYWhvhPV1O7u2jyEixt1yI7tlcu6JZxbuSmHag7kBb0ARgxU4acvAYJ2H8llr8rpjmOF0QrZ0j8dZ+y8gUDAjpP+d94wtTfIEyH8WfHvZEHlOCOlq957lgANAP+hgrMk8vpBm8eIAVPUQeBhR6CSQyZfNw4vaOD0p/q/Q7trmE5FLu3srj9A=
 spamdiagnosticoutput: 1:99
 spamdiagnosticmetadata: NSPM
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0b815e74-32b5-49a6-08a4-08d5ee5e7ddd
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Jul 2018 16:33:15.4071
+X-MS-Exchange-CrossTenant-Network-Message-Id: cf1a7b85-a155-4eda-d7b6-08d5ee5e7cec
+X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Jul 2018 16:33:13.8790
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
@@ -88,235 +89,241 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As we prepare to change the behavior of the algorithms in
-commit-reach.c, create a new test-tool subcommand 'reach' to test these
-methods on interesting commit-graph shapes.
+There are several commit walks in the codebase. Group them together into
+a new commit-reach.c file and corresponding header. After we group these
+walks into one place, we can reduce duplicate logic by calling
+equivalent methods.
 
-To use the new test-tool, use 'test-tool reach <method>' and provide
-input to stdin that describes the inputs to the method. Currently, we
-only implement the ref_newer method, which requires two commits. Use
-lines "A:<committish>" and "B:<committish>" for the two inputs. We will
-expand this input later to accommodate methods that take lists of
-commits.
-
-The test t6600-test-reach.sh creates a repo whose commits form a
-two-dimensional grid. This grid makes it easy for us to determine
-reachability because commit-A-B can reach commit-X-Y if and only if A is
-at least X and B is at least Y. This helps create interesting test cases
-for each result of the methods in commit-reach.c.
-
-We test all methods in three different states of the commit-graph file:
-Non-existent (no generation numbers), fully computed, and mixed (some
-commits have generation numbers and others do not).
+The can_all_from_reach_with_flags method is used in a stateful way by
+upload-pack.c. The parameters are very flexible, so we will be able to
+use its commit walking logic for many other callers.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Makefile              |  1 +
- t/helper/test-reach.c | 63 +++++++++++++++++++++++++++++++
- t/helper/test-tool.c  |  1 +
- t/helper/test-tool.h  |  1 +
- t/t6600-test-reach.sh | 86 +++++++++++++++++++++++++++++++++++++++++++
- 5 files changed, 152 insertions(+)
- create mode 100644 t/helper/test-reach.c
- create mode 100755 t/t6600-test-reach.sh
+ commit-reach.c | 63 +++++++++++++++++++++++++++++++++++++++++++++
+ commit-reach.h | 14 ++++++++++
+ object.h       |  4 +--
+ upload-pack.c  | 70 +-------------------------------------------------
+ 4 files changed, 80 insertions(+), 71 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 59781f4bc3..d69f9d415d 100644
---- a/Makefile
-+++ b/Makefile
-@@ -716,6 +716,7 @@ TEST_BUILTINS_OBJS +=3D test-mktemp.o
- TEST_BUILTINS_OBJS +=3D test-online-cpus.o
- TEST_BUILTINS_OBJS +=3D test-path-utils.o
- TEST_BUILTINS_OBJS +=3D test-prio-queue.o
-+TEST_BUILTINS_OBJS +=3D test-reach.o
- TEST_BUILTINS_OBJS +=3D test-read-cache.o
- TEST_BUILTINS_OBJS +=3D test-ref-store.o
- TEST_BUILTINS_OBJS +=3D test-regex.o
-diff --git a/t/helper/test-reach.c b/t/helper/test-reach.c
-new file mode 100644
-index 0000000000..620bb46041
---- /dev/null
-+++ b/t/helper/test-reach.c
-@@ -0,0 +1,63 @@
-+#include "test-tool.h"
-+#include "cache.h"
-+#include "commit.h"
-+#include "commit-reach.h"
-+#include "config.h"
-+#include "parse-options.h"
-+#include "tag.h"
+diff --git a/commit-reach.c b/commit-reach.c
+index 01d796f011..d806291d5d 100644
+--- a/commit-reach.c
++++ b/commit-reach.c
+@@ -10,6 +10,7 @@
+ #include "commit-reach.h"
+=20
+ /* Remember to update object flag allocation in object.h */
++#define REACHABLE       (1u<<15)
+ #define PARENT1		(1u<<16)
+ #define PARENT2		(1u<<17)
+ #define STALE		(1u<<18)
+@@ -532,3 +533,65 @@ int commit_contains(struct ref_filter *filter, struct =
+commit *commit,
+ 		return contains_tag_algo(commit, list, cache) =3D=3D CONTAINS_YES;
+ 	return is_descendant_of(commit, list);
+ }
 +
-+int cmd__reach(int ac, const char **av)
++int reachable(struct commit *from, unsigned int with_flag,
++	      unsigned int assign_flag, time_t min_commit_date)
 +{
-+	struct object_id oid_A, oid_B;
-+	struct strbuf buf =3D STRBUF_INIT;
-+	struct repository *r =3D the_repository;
++	struct prio_queue work =3D { compare_commits_by_commit_date };
 +
-+	setup_git_directory();
++	prio_queue_put(&work, from);
++	while (work.nr) {
++		struct commit_list *list;
++		struct commit *commit =3D prio_queue_get(&work);
 +
-+	if (ac < 2)
-+		exit(1);
-+
-+
-+	while (strbuf_getline(&buf, stdin) !=3D EOF) {
-+		struct object_id oid;
-+		struct object *o;
-+		struct commit *c;
-+		if (buf.len < 3)
++		if (commit->object.flags & with_flag) {
++			from->object.flags |=3D assign_flag;
++			break;
++		}
++		if (!commit->object.parsed)
++			parse_object(the_repository, &commit->object.oid);
++		if (commit->object.flags & REACHABLE)
 +			continue;
-+
-+		if (get_oid_committish(buf.buf + 2, &oid))
-+			die("failed to resolve %s", buf.buf + 2);
-+
-+		o =3D parse_object(r, &oid);
-+		o =3D deref_tag_noverify(o);
-+
-+		if (!o)
-+			die("failed to load commit for input %s resulting in oid %s\n",
-+			    buf.buf, oid_to_hex(&oid));
-+
-+		c =3D object_as_type(r, o, OBJ_COMMIT, 0);
-+
-+		if (!c)
-+			die("failed to load commit for input %s resulting in oid %s\n",
-+			    buf.buf, oid_to_hex(&oid));
-+
-+		switch (buf.buf[0]) {
-+			case 'A':
-+				oidcpy(&oid_A, &oid);
-+				break;
-+
-+			case 'B':
-+				oidcpy(&oid_B, &oid);
-+				break;
-+
-+			default:
-+				die("unexpected start of line: %c", buf.buf[0]);
++		commit->object.flags |=3D REACHABLE;
++		if (commit->date < min_commit_date)
++			continue;
++		for (list =3D commit->parents; list; list =3D list->next) {
++			struct commit *parent =3D list->item;
++			if (!(parent->object.flags & REACHABLE))
++				prio_queue_put(&work, parent);
 +		}
 +	}
-+	strbuf_release(&buf);
-+
-+	if (!strcmp(av[1], "ref_newer"))
-+		printf("%s(A,B):%d\n", av[1], ref_newer(&oid_A, &oid_B));
-+
-+	exit(0);
-+}
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index dafc91c240..582d02adfd 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -26,6 +26,7 @@ static struct test_cmd cmds[] =3D {
- 	{ "online-cpus", cmd__online_cpus },
- 	{ "path-utils", cmd__path_utils },
- 	{ "prio-queue", cmd__prio_queue },
-+	{ "reach", cmd__reach },
- 	{ "read-cache", cmd__read_cache },
- 	{ "ref-store", cmd__ref_store },
- 	{ "regex", cmd__regex },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index 80cbcf0857..a7e53c420e 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -20,6 +20,7 @@ int cmd__mktemp(int argc, const char **argv);
- int cmd__online_cpus(int argc, const char **argv);
- int cmd__path_utils(int argc, const char **argv);
- int cmd__prio_queue(int argc, const char **argv);
-+int cmd__reach(int argc, const char **argv);
- int cmd__read_cache(int argc, const char **argv);
- int cmd__ref_store(int argc, const char **argv);
- int cmd__regex(int argc, const char **argv);
-diff --git a/t/t6600-test-reach.sh b/t/t6600-test-reach.sh
-new file mode 100755
-index 0000000000..966309c6cf
---- /dev/null
-+++ b/t/t6600-test-reach.sh
-@@ -0,0 +1,86 @@
-+#!/bin/sh
-+
-+test_description=3D'basic commit reachability tests'
-+
-+. ./test-lib.sh
-+
-+# Construct a grid-like commit graph with points (x,y)
-+# with 1 <=3D x <=3D 10, 1 <=3D y <=3D 10, where (x,y) has
-+# parents (x-1, y) and (x, y-1), keeping in mind that
-+# we drop a parent if a coordinate is nonpositive.
-+#
-+#             (10,10)
-+#            /       \
-+#         (10,9)    (9,10)
-+#        /     \   /      \
-+#    (10,8)    (9,9)      (8,10)
-+#   /     \    /   \      /    \
-+#         ( continued...)
-+#   \     /    \   /      \    /
-+#    (3,1)     (2,2)      (1,3)
-+#        \     /    \     /
-+#         (2,1)      (2,1)
-+#              \    /
-+#              (1,1)
-+#
-+# We use branch 'commit-x-y' to refer to (x,y).
-+# This grid allows interesting reachability and
-+# non-reachability queries: (x,y) can reach (x',y')
-+# if and only if x' <=3D x and y' <=3D y.
-+test_expect_success 'setup' '
-+	for i in $(test_seq 1 10)
-+	do
-+		test_commit "1-$i" &&
-+		git branch -f commit-1-$i
-+	done &&
-+	for j in $(test_seq 1 9)
-+	do
-+		git reset --hard commit-$j-1 &&
-+		x=3D$(($j + 1)) &&
-+		test_commit "$x-1" &&
-+		git branch -f commit-$x-1 &&
-+
-+		for i in $(test_seq 2 10)
-+		do
-+			git merge commit-$j-$i -m "$x-$i" &&
-+			git branch -f commit-$x-$i
-+		done
-+	done &&
-+	git commit-graph write --reachable &&
-+	mv .git/objects/info/commit-graph commit-graph-full &&
-+	git show-ref -s commit-5-5 | git commit-graph write --stdin-commits &&
-+	mv .git/objects/info/commit-graph commit-graph-half &&
-+	git config core.commitGraph true
-+'
-+
-+test_three_modes () {
-+	test_when_finished rm -rf .git/objects/info/commit-graph &&
-+	test-tool reach $1 <input >actual &&
-+	test_cmp expect actual &&
-+	cp commit-graph-full .git/objects/info/commit-graph &&
-+	test-tool reach $1 <input >actual &&
-+	test_cmp expect actual &&
-+	cp commit-graph-half .git/objects/info/commit-graph &&
-+	test-tool reach $1 <input >actual &&
-+	test_cmp expect actual
++	from->object.flags |=3D REACHABLE;
++	clear_commit_marks(from, REACHABLE);
++	clear_prio_queue(&work);
++	return (from->object.flags & assign_flag);
 +}
 +
-+test_expect_success 'ref_newer:miss' '
-+	cat >input <<-\EOF &&
-+	A:commit-5-7
-+	B:commit-4-9
-+	EOF
-+	echo "ref_newer(A,B):0" >expect &&
-+	test_three_modes ref_newer
-+'
++int can_all_from_reach_with_flag(struct object_array *from,
++				 unsigned int with_flag,
++				 unsigned int assign_flag,
++				 time_t min_commit_date)
++{
++	int i;
 +
-+test_expect_success 'ref_newer:hit' '
-+	cat >input <<-\EOF &&
-+	A:commit-5-7
-+	B:commit-2-3
-+	EOF
-+	echo "ref_newer(A,B):1" >expect &&
-+	test_three_modes ref_newer
-+'
++	for (i =3D 0; i < from->nr; i++) {
++		struct object *from_one =3D from->objects[i].item;
 +
-+test_done
++		if (from_one->flags & assign_flag)
++			continue;
++		from_one =3D deref_tag(the_repository, from_one, "a from object", 0);
++		if (!from_one || from_one->type !=3D OBJ_COMMIT) {
++			/* no way to tell if this is reachable by
++			 * looking at the ancestry chain alone, so
++			 * leave a note to ourselves not to worry about
++			 * this object anymore.
++			 */
++			from->objects[i].item->flags |=3D assign_flag;
++			continue;
++		}
++		if (!reachable((struct commit *)from_one, with_flag, assign_flag,
++			       min_commit_date))
++			return 0;
++	}
++	return 1;
++}
+diff --git a/commit-reach.h b/commit-reach.h
+index 13dec25cee..b28bc22fcd 100644
+--- a/commit-reach.h
++++ b/commit-reach.h
+@@ -59,4 +59,18 @@ define_commit_slab(contains_cache, enum contains_result)=
+;
+ int commit_contains(struct ref_filter *filter, struct commit *commit,
+ 		    struct commit_list *list, struct contains_cache *cache);
+=20
++int reachable(struct commit *from, unsigned int with_flag,
++	      unsigned int assign_flag, time_t min_commit_date);
++
++/*
++ * Determine if every commit in 'from' can reach at least one commit
++ * that is marked with 'with_flag'. As we traverse, use 'assign_flag'
++ * as a marker for commits that are already visited. Do not walk
++ * commits with date below 'min_commit_date'.
++ */
++int can_all_from_reach_with_flag(struct object_array *from,
++				 unsigned int with_flag,
++				 unsigned int assign_flag,
++				 time_t min_commit_date);
++
+ #endif
+diff --git a/object.h b/object.h
+index 18c2b073e3..b132944c51 100644
+--- a/object.h
++++ b/object.h
+@@ -60,12 +60,12 @@ struct object_array {
+  * revision.h:               0---------10                                2=
+6
+  * fetch-pack.c:             0----5
+  * walker.c:                 0-2
+- * upload-pack.c:                4       11----------------19
++ * upload-pack.c:                4       11-----14  16-----19
+  * builtin/blame.c:                        12-13
+  * bisect.c:                                        16
+  * bundle.c:                                        16
+  * http-push.c:                                     16-----19
+- * commit-reach.c:                                  16-----19
++ * commit-reach.c:                                15-------19
+  * sha1-name.c:                                              20
+  * list-objects-filter.c:                                      21
+  * builtin/fsck.c:           0--3
+diff --git a/upload-pack.c b/upload-pack.c
+index 427de461d8..11c426685d 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -24,13 +24,13 @@
+ #include "quote.h"
+ #include "upload-pack.h"
+ #include "serve.h"
++#include "commit-reach.h"
+=20
+ /* Remember to update object flag allocation in object.h */
+ #define THEY_HAVE	(1u << 11)
+ #define OUR_REF		(1u << 12)
+ #define WANTED		(1u << 13)
+ #define COMMON_KNOWN	(1u << 14)
+-#define REACHABLE	(1u << 15)
+=20
+ #define SHALLOW		(1u << 16)
+ #define NOT_SHALLOW	(1u << 17)
+@@ -336,74 +336,6 @@ static int got_oid(const char *hex, struct object_id *=
+oid)
+ 	return 0;
+ }
+=20
+-static int reachable(struct commit *from, unsigned int with_flag,
+-		     unsigned int assign_flag, time_t min_commit_date)
+-{
+-	struct prio_queue work =3D { compare_commits_by_commit_date };
+-
+-	prio_queue_put(&work, from);
+-	while (work.nr) {
+-		struct commit_list *list;
+-		struct commit *commit =3D prio_queue_get(&work);
+-
+-		if (commit->object.flags & with_flag) {
+-			from->object.flags |=3D assign_flag;
+-			break;
+-		}
+-		if (!commit->object.parsed)
+-			parse_object(the_repository, &commit->object.oid);
+-		if (commit->object.flags & REACHABLE)
+-			continue;
+-		commit->object.flags |=3D REACHABLE;
+-		if (commit->date < min_commit_date)
+-			continue;
+-		for (list =3D commit->parents; list; list =3D list->next) {
+-			struct commit *parent =3D list->item;
+-			if (!(parent->object.flags & REACHABLE))
+-				prio_queue_put(&work, parent);
+-		}
+-	}
+-	from->object.flags |=3D REACHABLE;
+-	clear_commit_marks(from, REACHABLE);
+-	clear_prio_queue(&work);
+-	return (from->object.flags & assign_flag);
+-}
+-
+-/*
+- * Determine if every commit in 'from' can reach at least one commit
+- * that is marked with 'with_flag'. As we traverse, use 'assign_flag'
+- * as a marker for commits that are already visited. Do not walk
+- * commits with date below 'min_commit_date'.
+- */
+-static int can_all_from_reach_with_flag(struct object_array *from,
+-					unsigned int with_flag,
+-					unsigned int assign_flag,
+-					time_t min_commit_date)
+-{
+-	int i;
+-
+-	for (i =3D 0; i < from->nr; i++) {
+-		struct object *from_one =3D from->objects[i].item;
+-
+-		if (from_one->flags & assign_flag)
+-			continue;
+-		from_one =3D deref_tag(the_repository, from_one, "a from object", 0);
+-		if (!from_one || from_one->type !=3D OBJ_COMMIT) {
+-			/* no way to tell if this is reachable by
+-			 * looking at the ancestry chain alone, so
+-			 * leave a note to ourselves not to worry about
+-			 * this object anymore.
+-			 */
+-			from->objects[i].item->flags |=3D assign_flag;
+-			continue;
+-		}
+-		if (!reachable((struct commit *)from_one, with_flag, assign_flag,
+-			       min_commit_date))
+-			return 0;
+-	}
+-	return 1;
+-}
+-
+ static int ok_to_give_up(void)
+ {
+ 	if (!have_obj.nr)
 --=20
 2.18.0.118.gd4f65b8d14
 
