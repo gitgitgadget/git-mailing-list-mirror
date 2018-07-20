@@ -2,104 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CCC981F597
-	for <e@80x24.org>; Fri, 20 Jul 2018 17:48:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 738781F597
+	for <e@80x24.org>; Fri, 20 Jul 2018 17:48:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388193AbeGTShm (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Jul 2018 14:37:42 -0400
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:51507 "EHLO
-        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388183AbeGTShl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jul 2018 14:37:41 -0400
-Received: by mail-wm0-f49.google.com with SMTP id h3-v6so9773472wmb.1
-        for <git@vger.kernel.org>; Fri, 20 Jul 2018 10:48:21 -0700 (PDT)
+        id S2388470AbeGTSh6 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Jul 2018 14:37:58 -0400
+Received: from mail-ua0-f195.google.com ([209.85.217.195]:42804 "EHLO
+        mail-ua0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388126AbeGTSh5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jul 2018 14:37:57 -0400
+Received: by mail-ua0-f195.google.com with SMTP id w7-v6so7964085uan.9
+        for <git@vger.kernel.org>; Fri, 20 Jul 2018 10:48:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:openpgp:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=jRB1Ocnqdix0sAobkKLM9iLcbXjsQTiDFQgzYe2LTWM=;
-        b=vbis1h8UvixVKnuhjgLbV2Ed63wnOdoiEIKTao+/T+C1/lckXB9d+EJEn7S+yLYDwM
-         BGUpU4nX+qyJm7cV1Vd7F/GSzbHI7khvEAcvw1bmTwRiG0uFb09kfcuXlnKimXqoS27z
-         7cVxGh1jmpeGvFtu/eqqYGVz0viXsFXiLaggGTD6Yid82eNEFGXYqURQfh9IWuCvaobU
-         e6OUYKeSsQJF8s7tO2kvZbL0x9ErEnv88QEqQGRN10RsuE11Bder5GM9VX+WY/PVRmXV
-         kW4y34rthDQTPkUeUxgUSx+3rMHTB512uPPTXQE+qlPmBBoJmRkKaAld8gcXy4SA1G1P
-         ZyuA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=GI2YyWybYyLBXFQ1wsSV9C8AXYEyLatILbR3sjhJJUM=;
+        b=RLEE2TWjoFmOqVXBBxuCl6fq1DjydV4kW2PUf2yPRBOWp2+4XdE2d2DtP8KSD/vRE+
+         +irRy95TSCCiMjNi0dNzEPb6QivRAH1LIknFiF+jSpukhKSyznSKieOnBGb/qK5pTZAp
+         Y9pT7sE8Axhn40ZmJ06F7fYfF5ulaQhyTVPczGIY5FneIojFNACSl/rcQ3dUzn2VYqzH
+         genWtZ+I51QZVqpGsfUQDGJ+lcXD8FIW2xN8PfdKBNy+yCps8U4WvGmegdEOYwgLQKB+
+         AN64v9FQyxiNBwhlCWL3ZWPOKzk9lHw9uAPw6HlGRvzrBgwYIVCGJl64ViJ/ncPi11OG
+         yxMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:openpgp:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=jRB1Ocnqdix0sAobkKLM9iLcbXjsQTiDFQgzYe2LTWM=;
-        b=aMTojAuNOPDAn//yOZmyNhn2trUDWI+oyLtIaYQ2RUCSSUJ4noYo/2tvE/ZAuha588
-         qCIT2I+9t3Yc3Fm2zEFWEpDt/reu8Cw9SDff46Pij4j31co1K3jD5NoBERtlrngAsi7o
-         4kDQWxp5OVzN/TNQnFkmOzxVszVLC/561PAjgx3HiAKBBaiUCsRRFNDN5zwEspaEo26/
-         WcpBLsL/2O2JkNeSScAnXeUhoiOy5OsnSy5h60fW0E0DpNoEFvcjrSLs/fONCBspd+g9
-         XWiUcBIC2Ij82PMB5XGJL8qF/AJW9zwVpl6zYC1Ut8u/ErhJThjZ1I6wlf/WkrRwPEMe
-         eINA==
-X-Gm-Message-State: AOUpUlGGxz/02Ss0ghIpcUblUEnsNGrxBRamNnwTXXYozO3E24YRcd58
-        VE5wIX0+hIAGEftLWRNVUh6TFcv/
-X-Google-Smtp-Source: AAOMgpf1fnxIDPkEfdMuo3AzAGkpqApN1vJSHcf+AH20EvPgYSzXT04SdWMfOB2Qd5FiHnDK/XwqHA==
-X-Received: by 2002:a1c:168a:: with SMTP id 132-v6mr2260265wmw.13.1532108900510;
-        Fri, 20 Jul 2018 10:48:20 -0700 (PDT)
-Received: from [192.168.0.104] (AToulouse-658-1-75-221.w92-156.abo.wanadoo.fr. [92.156.127.221])
-        by smtp.gmail.com with ESMTPSA id l6-v6sm1694387wmh.41.2018.07.20.10.48.19
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 20 Jul 2018 10:48:19 -0700 (PDT)
-Subject: ag/rebase-i-in-c, was Re: What's cooking in git.git (Jul 2018, #02;
- Wed, 18)
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqtvowi4l3.fsf@gitster-ct.c.googlers.com>
-From:   Alban Gruin <alban.gruin@gmail.com>
-Openpgp: preference=signencrypt
-Message-ID: <e4aea192-2ed6-7715-6c66-63c873f5ce94@gmail.com>
-Date:   Fri, 20 Jul 2018 19:48:05 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=GI2YyWybYyLBXFQ1wsSV9C8AXYEyLatILbR3sjhJJUM=;
+        b=NRLqq7JbymeAvigmOmRqA4Hs4QpU9Tzu8KubDH5lRKaFOKgw7QPsK+M6VM8XKz9HA8
+         CBGxiXYYN/oaQY6sU/XMkG8GXG2tX3mD6aSixFy0FvWWeUL4V3G/cIvFtQwhuvYX04GQ
+         xy1OxuR3C83UrRragFcUEJuurGla8CsZ85BLbrnVRAeJOCgkkr5gwdimhB7qictD79Uw
+         7pFAlRIHB/Mi3/RVy2o/CFNshld5Pb5yDWMvVLPiCAS1K83C0U11LDoZ6LfB8m8n6oLw
+         a+k2+XfCNWydKjzGcQynXjdRAF9wDOL4o6tQLQ9VnQxTl2k0y7S7szuXVW19+wkJlNr0
+         f8hg==
+X-Gm-Message-State: AOUpUlHuIQVhq+c0NVt6Go7ms8+1MP+d8nVTHpsCch1PEnKotjgGCOOc
+        VapYJDErP92QFVSuOHRw2yI0b9RXM1skk5JaeEA=
+X-Google-Smtp-Source: AAOMgpcq1f3hOHQRKofpyZzXBkoQ3rPB9fstj8JNG+nDx2/TH7JtJB/IIYBNAgAmw/j37Frtk3J4j3BDgMWLmd4REj0=
+X-Received: by 2002:ab0:66d4:: with SMTP id d20-v6mr2070625uaq.112.1532108917671;
+ Fri, 20 Jul 2018 10:48:37 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqqtvowi4l3.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr-FR
-Content-Transfer-Encoding: 8bit
+Received: by 2002:ab0:21c7:0:0:0:0:0 with HTTP; Fri, 20 Jul 2018 10:48:37
+ -0700 (PDT)
+In-Reply-To: <CACsJy8BxXyY6h8iN-RExBHASB6FkFLKDkrE_h+gH0A1k2tVd6w@mail.gmail.com>
+References: <20180719203259.GA7869@sigill.intra.peff.net> <20180719203901.GA8079@sigill.intra.peff.net>
+ <CACsJy8BxXyY6h8iN-RExBHASB6FkFLKDkrE_h+gH0A1k2tVd6w@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 20 Jul 2018 10:48:37 -0700
+Message-ID: <CABPp-BGt2EEW4aFt8TYyy1fATPRW2rnNxpMuGcS0YR_gqs3=ig@mail.gmail.com>
+Subject: Re: [PATCH 1/2] introduce "banned function" list
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Fri, Jul 20, 2018 at 7:41 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Thu, Jul 19, 2018 at 10:40 PM Jeff King <peff@peff.net> wrote:
+>>
+>> There are a few standard C functions (like strcpy) which are
+>> easy to misuse. We generally discourage these in reviews,
+>> but we haven't put advice in CodingGuidelines, nor provided
+>> any automated enforcement. The latter is especially
+>> important because it's more consistent, and it can often
+>> save a round-trip of review.
+>>
+>> Let's start by banning strcpy() and sprintf(). It's not
+>> impossible to use these correctly, but it's easy to do so
+>> incorrectly, and there's always a better option.
+>
+> Is it possible to extend this to ban variables as well? I'm still
+> going to delete the_index from library code. Once that work is done I
 
-Le 19/07/2018 à 00:03, Junio C Hamano a écrit :
-> * ag/rebase-i-in-c (2018-07-10) 13 commits
->  - rebase -i: rewrite the rest of init_revisions_and_shortrevisions in C
->  - rebase -i: implement the logic to initialize the variable $revision in C
->  - rebase--interactive: remove unused modes and functions
->  - rebase--interactive: rewrite complete_action() in C
->  - sequencer: change the way skip_unnecessary_picks() returns its result
->  - sequencer: refactor append_todo_help() to write its message to a buffer
->  - rebase -i: rewrite checkout_onto() in C
->  - rebase -i: rewrite setup_reflog_action() in C
->  - sequencer: add a new function to silence a command, except if it fails
->  - rebase-interactive: rewrite the edit-todo functionality in C
->  - editor: add a function to launch the sequence editor
->  - rebase--interactive: rewrite append_todo_help() in C
->  - sequencer: make two functions and an enum from sequencer.c public
-> 
->  Piecemeal rewrite of the remaining "rebase -i" machinery in C.
-> 
->  Expecting a reroll.
-> 
->  The early parts of the series seem solidifying; perhaps with a
->  reroll or two, they become 'next' material?
-
-I am working on new changes (rewriting init_basic_state(), and making
-rebase--interactive a builtin), so it will probably need at least one
-more reroll before being trully ready for 'next'.  It’s not completely
-finished yet, I hope to send it Monday or Tuesday.
-
-Cheers,
-Alban
-
+Or perhaps constants, such as PATH_MAX to avoid problems like this one
+from 2.18.0 timeframe:
+https://public-inbox.org/git/7d1237c7-5a83-d766-7d93-5f0d59166067@web.de/
