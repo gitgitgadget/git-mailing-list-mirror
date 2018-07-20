@@ -2,102 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 74D2B1F597
-	for <e@80x24.org>; Fri, 20 Jul 2018 21:50:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 160931F597
+	for <e@80x24.org>; Fri, 20 Jul 2018 21:51:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728329AbeGTWkb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Jul 2018 18:40:31 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:53055 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728297AbeGTWkb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jul 2018 18:40:31 -0400
-Received: by mail-wm0-f66.google.com with SMTP id o11-v6so10660989wmh.2
-        for <git@vger.kernel.org>; Fri, 20 Jul 2018 14:50:22 -0700 (PDT)
+        id S1728322AbeGTWl4 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Jul 2018 18:41:56 -0400
+Received: from mail-oi0-f65.google.com ([209.85.218.65]:35929 "EHLO
+        mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727412AbeGTWl4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jul 2018 18:41:56 -0400
+Received: by mail-oi0-f65.google.com with SMTP id n21-v6so8324326oig.3
+        for <git@vger.kernel.org>; Fri, 20 Jul 2018 14:51:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=ZcUVECzSOMcfvGOPJ+s/SB0rosCtFfaAi50DBIyTezY=;
-        b=WPB7OTaLbc2A+CULzlqvFYrrsSz80AYJI5omw8D3mkwSM5ZMqzh0D21QRTQRVM7C0z
-         MPmHXmMpy8MM9IPVsvlCv9hLJcLRga9BcoPsMhMssSXrVFvSfTf+8RcnWL/xnxt97LEw
-         nqLnxtKI0gg+SQ5he5BFnOlGPQBwN5GcAxM3uzKNfaJW4bKmw2Va/TQsl/VgPqV0DSp8
-         wxeOj2WF65nfrO9iGfbAZ6ARGMDwofa/eKHkYMvQr71ZifwwseqIbYOrbrzZa7/BkWtG
-         Yw6rYeoIayY+54iDumcygQgxuoVRcd1BoCi8YsbovI2q9TC3SA/m+GG3QmWouEC9120P
-         6gTQ==
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to;
+        bh=4GsVnwsCjNfkMfQwEA12NdOfbqvqlMb4Px193tEt+l8=;
+        b=rY1kBfEd2N+pEdP4UeDu4sqIFs/FGeKsyOkYyuwtOVN4mODvIuUMqP1EddNRynuqq/
+         hFEYz5jQAgOPqeI5TCih3CQ5UzAjXlfqlhzM+qMVPr0/wCecJ224Pc8VetYYNIywJ9IV
+         u+rKd1TlBr35vn1CaN524W9TsVDUGn3p4oCzGh1uKIQzONfzy+mjVJpVrkyB4L5AitLl
+         fZX0oJnSEIMZs8X9KfYGSyM31bcTHigvK5dfITyXopEap44i5jfg64+TDelqwY+VPSLY
+         PTbeaEAmL82GODwikCIwIR1qdFu7prgeKj9IeGkN/qm7moP9E91m+MzqC7lfmQf3V19Q
+         wfow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=ZcUVECzSOMcfvGOPJ+s/SB0rosCtFfaAi50DBIyTezY=;
-        b=NIeXP0+g02/TUd4NWSgMDrdalJosjynld5I9wWkTqE+WbEY1FAzw04ZLqpBbFACJ7h
-         Ji1Y599VfeTRlWKfDAiGAv9LEuD7bgKQazX0PygBFshNfEftpRB7s0LphHgmBttxZXlF
-         XkFnDy/g682sEsQmzGOWq+GtJdkjx/Ns3EDEE86xdnrgZmJ96FzKfUxg1cUb0mEIQ75M
-         Dn2Xe635dXlk4CNKGP5GFYf2nfR1+hO1Y52GR6CrtfPyTIbCIJcLkG29iiG/vvkYfw6+
-         yxIoTjRDUrKgAHjniSUiUAWr8pA7ewml7gWB1npkjglyFA0NMrvuANwdmKo16mZuaGLZ
-         DQrA==
-X-Gm-Message-State: AOUpUlHEaKm/cUiIwnD/hcsa1K3xFni6ZpdQ2Hv3YVf3v4FafHjbyy6Q
-        8ZKF5fuUbHqXAHFOD/4DxgzvR49b
-X-Google-Smtp-Source: AAOMgpcstT0597MWtkPNkEdmyzt39ahaIPZoXZUi5s74RFzIPnwp39jgZu2nhepqmC/iKQjRfhDKcg==
-X-Received: by 2002:a1c:ed07:: with SMTP id l7-v6mr2597644wmh.139.1532123421388;
-        Fri, 20 Jul 2018 14:50:21 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id o4-v6sm4771239wra.3.2018.07.20.14.50.20
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 20 Jul 2018 14:50:20 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 0/2] fail compilation with strcpy
-References: <20180719203259.GA7869@sigill.intra.peff.net>
-        <xmqqo9f1bupp.fsf@gitster-ct.c.googlers.com>
-        <20180720191839.GB26403@sigill.intra.peff.net>
-Date:   Fri, 20 Jul 2018 14:50:20 -0700
-In-Reply-To: <20180720191839.GB26403@sigill.intra.peff.net> (Jeff King's
-        message of "Fri, 20 Jul 2018 15:18:40 -0400")
-Message-ID: <xmqqfu0da86b.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to;
+        bh=4GsVnwsCjNfkMfQwEA12NdOfbqvqlMb4Px193tEt+l8=;
+        b=hJROnmwACHHBtyLtAm9zBd+qUrvxISJuQSrot8c5TN8t4N5z3xq6bokVLyNEdFmoVm
+         fqp+UbASEP82TVoB4oOIfpwdy+9d5xho1AOK7LkX77hlnokOFxDAUdFeJs9Xi+oEdztH
+         qxH2e+dS+AknOVdw50wEt3f76/lcwF1fL2FequviJImGpnSDkofUuDXpqo/zTvk8lOqg
+         vh/0kxScd9/o4GF9DU8Tm2hToz7Io/+5fnUDn44hS5ukAvPlWyjA/Pkpes4hd8X1m1mx
+         YJk9Doc6f/XWDZmcpdVKlAfTnnY0oeh5G6TMAeUqiMZLdzmeNJ3Y24fYmvKoNGXgrUhD
+         YUcw==
+X-Gm-Message-State: AOUpUlEHBpDQYF+hKpWPnntpsNFZQx2rpXZxjdRq4U3p8GuaZ6gInt6R
+        2ZgYefrYS3G45WWmwLaVxoQ26z3usozp4MiHzSNlXQ==
+X-Google-Smtp-Source: AAOMgpeesPt3ojZHhtXYb3jdEjFfuNPD/8RioXrF0F5VKWBhmOPNjOuq0X1Yq5+NgNTD5L4L0rTtoMsGvEeF5MILaQY=
+X-Received: by 2002:aca:c78c:: with SMTP id x134-v6mr486833oif.8.1532123507314;
+ Fri, 20 Jul 2018 14:51:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 2002:a4a:c712:0:0:0:0:0 with HTTP; Fri, 20 Jul 2018 14:51:46
+ -0700 (PDT)
+Reply-To: noloader@gmail.com
+In-Reply-To: <20180720210459.GA18502@genre.crustytoothpaste.net>
+References: <CAH8yC8=oruFBtkndQ0p9N4s23SMvjjrAC_E7zzKRSVbjEwL0FQ@mail.gmail.com>
+ <20180720210459.GA18502@genre.crustytoothpaste.net>
+From:   Jeffrey Walton <noloader@gmail.com>
+Date:   Fri, 20 Jul 2018 17:51:46 -0400
+Message-ID: <CAH8yC8m7T8k8usGnV_OYp9G=2N4_jdzLT6frme2iBrLnt5iqnw@mail.gmail.com>
+Subject: Re: No rule to make target `git-daemon'
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeffrey Walton <noloader@gmail.com>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Fri, Jul 20, 2018 at 5:04 PM, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> On Thu, Jul 19, 2018 at 09:37:08PM -0400, Jeffrey Walton wrote:
+>> Hi Everyone,
+>>
+>> I'm working from the 2.18 tarball on Solaris 11.3 x86_64. I'm catching
+>> the following when building from sources. This appears to be a new
+>> issue. It was not present in 2.17.1.
+>>
+>>     gmake: *** No rule to make target `git-daemon'.  Stop.
+>>     gmake: *** Waiting for unfinished jobs....
+>>     Failed to build Git
+>>
+>> There does not appear to be an option to control building the daemon:
+>>
+>>     $ ./configure --help | grep -i daemon
+>>     $
+>>
+>> Any ideas on how to side-step it?
+>
+> I also don't see this issue, and I didn't see anything between 2.17.1
+> and 2.18 that stood out to me as a potential cause of this problem.  Can
+> you tell us a bit more about what version of GNU make you're using and
+> the configuration you're trying to build (say, the config.mak.autogen)?
 
-> I suspect it has more to do with system/libc differences between our
-> machines, anyway. There was discussion elsewhere in the thread about the
-> need to #undef before redefining. I guess this answers that question.
+Sorry about the late reply. I meant to reply this morning.
 
-Yes, that is it.  For now I can squash this in before pushing it out
-on 'pu'.
+My shell script to patch things on Solaris was the cause of the problem.
 
- banned.h | 6 ++++++
- 1 file changed, 6 insertions(+)
+(If anyone is interested in first class Solaris support then I am
+happy to help. The patch set needed for the platform has been stable
+for the last couple of years).
 
-diff --git a/banned.h b/banned.h
-index ae6aaaa4a9..d138f3ecf2 100644
---- a/banned.h
-+++ b/banned.h
-@@ -10,11 +10,17 @@
- 
- #define BANNED(func) sorry_##func##_is_a_banned_function()
- 
-+#undef strcpy
- #define strcpy(x,y) BANNED(strcpy)
-+
-+#undef strncpy
- #define strncpy(x,y,n) BANNED(strncpy)
- 
- #ifdef HAVE_VARIADIC_MACROS
-+
-+#undef sprintf
- #define sprintf(...) BANNED(sprintf)
-+
- #endif
- 
- #endif /* BANNED_H */
+Jeff
