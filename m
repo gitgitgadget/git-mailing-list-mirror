@@ -7,51 +7,57 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4146D1F597
-	for <e@80x24.org>; Fri, 20 Jul 2018 22:13:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3EB9A1F597
+	for <e@80x24.org>; Fri, 20 Jul 2018 22:15:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728469AbeGTXDV (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Jul 2018 19:03:21 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:33870 "EHLO
+        id S1730691AbeGTXFn (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Jul 2018 19:05:43 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:33882 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728364AbeGTXDU (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 20 Jul 2018 19:03:20 -0400
+        by vger.kernel.org with ESMTP id S1728459AbeGTXFn (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 20 Jul 2018 19:05:43 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:f1fc:eee3:60de:bdd8])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id ACFB260734;
-        Fri, 20 Jul 2018 22:13:04 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 6149560734;
+        Fri, 20 Jul 2018 22:15:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1532124784;
-        bh=uYnZr3hgflQ7Sgw0aaggyUXwxtueLbvD9sopGY+zV/I=;
+        s=default; t=1532124928;
+        bh=mta26nbC4T75e+flgZXkJCdIhzBaLVF3lY/279Nw/qk=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=p+9iR8BcPldnbE1z8SaImUFckIxTpPAyq6F/qeQO07I+M+yQx/Hzmk7EkTo4/WhdW
-         YqV7HX0rzM3so8MUl8L+oscIRWKzlMt7VQsqfJM2XzUo9P2+1CSTLCFQN5irc9JUsh
-         ple2l0HJn12TtmyjJoIr216JWj68tFqPSrFhy6QIGErAleWrqShldirTR0RhFR3ad1
-         3oiVEaxZY/jcDBhsW9ba3/NrU6Jom5OeXwBDS6fETS+donSm3MAEtOFPAxbL6q7CHL
-         huKYEkNnSVpdGHzraL6Pz0Kk8lzChLSc70oi2G7CCdWXYauUyyDYpQTpDZ8xMjs0r5
-         Z/qPyaWeLFPZkdDDdaNePnCzwdzfTmsNoDWO8cpc2MBvxH4HgojgdWGH5yRdIoNEjX
-         WM478NU8QbXVpvf9pW+wzIZIs1FBVXWp0G+y6uVLMOZmwGco2moSLVsftD14T4f6i8
-         Ph5OsMrZ5QYIE//U84iK7hrq1YDh45OBORm/sf1FQ9vhF08tzDd
-Date:   Fri, 20 Jul 2018 22:13:00 +0000
+        b=Y2sEPSTo4ZVh46taLgJOYOIQuBj6kUQyJsxEy7Mb34dHfGNhE0V8YQuGkj55jqtYV
+         2HhjJTWtUy5fP/wubzO2NQECLdjBQs6hbUAdEpaKNL/CaQG+oj65k+GgmXa2ILVwaF
+         lJT53lzmbNnmznChOlS3bGTzKq/BTx244GTHEaKjVqZakQJWBiEAvcibvZ32w1VkGi
+         Zmd/8enkhub1q9xjHAQVMXFdiXG8+i4L5vUSdQyO+DfL9vvT6HhNvG15rWe14gl6Fm
+         qDbmOagX8o7/VQYneJZfH6UK9uZo0GQA8meAjCq8fYeSsPt4evQs2OPLSFi3WLJKaS
+         b5mpRstlOzB6NAQ5K6R+X3iNM1fZeWl6M6jCY1cFBKWYWfbPFW36nNSd4lzfGvz2hs
+         q9FFWlrEomRKMvMZ0eAiwQphBnFyattwjkmepVTj5WiTuv25cD5kgI+wJU3ITHrmfa
+         tUk9fjHAt0dj2bxqNY98+r83/i08z6kZRNDMq9B1FM3kvO/lc3m
+Date:   Fri, 20 Jul 2018 22:15:22 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeffrey Walton <noloader@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: No rule to make target `git-daemon'
-Message-ID: <20180720221259.GC18502@genre.crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
+        dstolee@microsoft.com, sbeller@google.com, pclouds@gmail.com,
+        avarab@gmail.com, sunshine@sunshineco.com, szeder.dev@gmail.com
+Subject: Re: [PATCH v4 03/23] multi-pack-index: add builtin
+Message-ID: <20180720221522.GD18502@genre.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeffrey Walton <noloader@gmail.com>, Git List <git@vger.kernel.org>
-References: <CAH8yC8=oruFBtkndQ0p9N4s23SMvjjrAC_E7zzKRSVbjEwL0FQ@mail.gmail.com>
- <20180720210459.GA18502@genre.crustytoothpaste.net>
- <CAH8yC8m7T8k8usGnV_OYp9G=2N4_jdzLT6frme2iBrLnt5iqnw@mail.gmail.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
+        dstolee@microsoft.com, sbeller@google.com, pclouds@gmail.com,
+        avarab@gmail.com, sunshine@sunshineco.com, szeder.dev@gmail.com
+References: <20180706005321.124643-1-dstolee@microsoft.com>
+ <20180712193940.21065-1-dstolee@microsoft.com>
+ <20180712193940.21065-4-dstolee@microsoft.com>
+ <xmqqva99bwdw.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="xesSdrSSBC0PokLI"
+        protocol="application/pgp-signature"; boundary="RhUH2Ysw6aD5utA4"
 Content-Disposition: inline
-In-Reply-To: <CAH8yC8m7T8k8usGnV_OYp9G=2N4_jdzLT6frme2iBrLnt5iqnw@mail.gmail.com>
+In-Reply-To: <xmqqva99bwdw.fsf@gitster-ct.c.googlers.com>
 X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
  4.17.0-1-amd64)
 User-Agent: Mutt/1.10.1 (2018-07-13)
@@ -62,48 +68,57 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---xesSdrSSBC0PokLI
+--RhUH2Ysw6aD5utA4
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jul 20, 2018 at 05:51:46PM -0400, Jeffrey Walton wrote:
-> Sorry about the late reply. I meant to reply this morning.
+On Fri, Jul 20, 2018 at 11:22:03AM -0700, Junio C Hamano wrote:
+> Derrick Stolee <stolee@gmail.com> writes:
 >=20
-> My shell script to patch things on Solaris was the cause of the problem.
+> > diff --git a/Documentation/git-multi-pack-index.txt b/Documentation/git=
+-multi-pack-index.txt
+> > new file mode 100644
+> > index 0000000000..ec9982cbfc
+> > --- /dev/null
+> > +++ b/Documentation/git-multi-pack-index.txt
+> > @@ -0,0 +1,36 @@
+> > +git-multi-pack-index(1)
+> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>=20
+> Isn't this underline too short by one column?  My copy of AsciiDoc
+> seems to be OK with it, but do other versions and reimplementations
+> groke this fine?
 
-Glad to hear you got it figured out.
+I believe AsciiDoc allows a two-character grace (either longer or
+shorter) and Asciidoctor allows one.  So this should work both places
+(although I haven't tested).
 
-> (If anyone is interested in first class Solaris support then I am
-> happy to help. The patch set needed for the platform has been stable
-> for the last couple of years).
-
-I'd certainly be interested for you to send it to the list.  I'm not
-sure I can provide a helpful review, since I don't run Solaris, but
-having better support out of the box would definitely be nice.
+It might be nice to fix if a re-roll is needed, but it should be
+functional as-is.
 --=20
 brian m. carlson: Houston, Texas, US
 OpenPGP: https://keybase.io/bk2204
 
---xesSdrSSBC0PokLI
+--RhUH2Ysw6aD5utA4
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.8 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAltSXmsACgkQv1NdgR9S
-9osSDBAAxX31a6BsVLOc66jlreWDrxnxp9fiXHVJ4elOsIiP4nDqmr0iSomJMUcn
-yUXSuADihRjOjLPLDZ+wZw/BEhTj9g0VixjQB/hpKoFK3zypokIQQml5bJUIWreZ
-1Wyk7bFUo2ffEyqdXqBcIq7WAEf9yj1vfHEgT/JDClckg0AKEljuWvYght0hIcVy
-mqkiHjRC+q2YQdzubpqPT+WGeV6i2qG57l9HNKYUcd4f6/VdUDPgjnD2qcvaxdtQ
-Oh/WJmorSAHfdav0bMDAQBSng7Vw/Q0whooCAPntRc+l8mGBW+M+KhMyxWR5Ellz
-nbex2OAOtcdIUw6iGpqMio92qsm0REUXNh/fcLUbl5vaDYrIQIIy6PzM4yAGvVFY
-+HI9MXiIzQj2Hwq8BHhoLMxu/8UT0kNXAo7IWYNSwApQ03Iy9aLL9BDjCR9Yw6jf
-mrqTIJYomnwe5vZl7cRfRCsXNLjvG4zBPAd03v61XXyyG758Pf+5KJYDZP4twy4r
-PdpCAYXs54xX85Vpls5T4yLdtnW1CfdH3+xissrayQvxvp5R/gaRvcpyhpNv2Bi0
-tUtscrN06ZIHEJzy4OWuoAB3tIDq72ReqyMjyi1XnRz7yVh9IS0/RV3k8yEzjHX4
-nFveNUsGaCARKYNP9PfsB8IZjyf5curCMRXhjktEJDpWu824ttM=
-=KI6d
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAltSXvoACgkQv1NdgR9S
+9otqgw/+IY2DGXURkgL3Xl85gYQleffJn9vmixEzeowHo1I6Rp+tzVMbjADgC4P0
+sU/3rGKGSoGcU9U0GmvyJw5L3PdsSCtdpCi7GlY+QXCalu4s50n3yOvQqs1GdtG/
+ya+vvwrtZ4AjZE/s5AYauoD57bfWP29NpQwfS/jJl+v/CwMxCfyYKEoCx2cPVr7A
+2ApiItmTC2pnURU7jdDfESrU9jecte30DswnE7ErdxgKk3IG7xyc7xNs+N46IvJ/
+vfT++5bv+EpaxRDbp6/haDkPaJQ6v1W+REHOfEJ8yjBM8X3xRoIYT++grUI1YIK/
+us3bQy4pcljWTyoNZ0hb6p5BFFC7/iP5G0hRTSi51AL3BdXKntijjWbKdliVDQoi
+Ulk0HzXEOb4LW8SzGBVjBA98leieI/ZmE6ROxj0dJjPxDM8mNvSpBhGLLBU+Xoia
+JHPjH6TKwnXf/nBlVXWNcocXGlaa1eTitBo6aRmRUjNFDsfKHNM+slYoDxwJuRxh
+lI+b2G9BNW+oje0KLl5dE5Lvm3i47FqlZv1Uq/ju1AcnEky2tCj+M1pUo5ADT317
+6e69hcv+hu4v/x8UM4RLp4irbjF4+osTeBrQ2cQ9KFxQKPHsLPnX5/SxgV+qyNGG
+unDHQGjcv5sG5bdk3vV4uL/QH8RVtD8iyT4uIEk9adFQYsLo1GA=
+=sWsk
 -----END PGP SIGNATURE-----
 
---xesSdrSSBC0PokLI--
+--RhUH2Ysw6aD5utA4--
