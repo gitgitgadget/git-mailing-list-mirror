@@ -2,112 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 004DF1F597
-	for <e@80x24.org>; Fri, 20 Jul 2018 19:31:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC55F208E9
+	for <e@80x24.org>; Fri, 20 Jul 2018 19:35:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388420AbeGTUVd (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Jul 2018 16:21:33 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54476 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1733198AbeGTUVd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jul 2018 16:21:33 -0400
-Received: (qmail 2356 invoked by uid 109); 20 Jul 2018 19:31:52 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 20 Jul 2018 19:31:52 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31405 invoked by uid 111); 20 Jul 2018 19:31:57 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 20 Jul 2018 15:31:57 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Jul 2018 15:31:50 -0400
-Date:   Fri, 20 Jul 2018 15:31:50 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        id S2388420AbeGTUYl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Jul 2018 16:24:41 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:36615 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1733198AbeGTUYl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jul 2018 16:24:41 -0400
+Received: by mail-wr1-f65.google.com with SMTP id h9-v6so12274485wro.3
+        for <git@vger.kernel.org>; Fri, 20 Jul 2018 12:34:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=iGPyGnvwxrEQPVxhi4YK+3HNbLUMK1TkfO62id2XkVI=;
+        b=BsHpruQIb61TqvaV2Fpu7BbCeWDoOc6xfngFb4V4yMT96tUequmTRmstmKTDb1UZeg
+         NSsMpPNDEeH4OvWj5ipPcjqwomuqcEOnF3pDVFSbws3xPhniFv3b56Sm0qA3axiwKkle
+         PW67rBbVBnTLNMGe2k/DiA9R2JLANAiIE8OR546+R2LQ88LawU72aIJsnEPRMq9c1JrM
+         WT1m/yeZMM9ZR6OvsOQdy0eWX2o1Ob6vIY49wpvx1670l9RX182dA2g/0rvBFKiDGNu0
+         t0HT1dx8/tydywwxtdb0BvMcu+CkGevQq/tM9HZep5BCWUFhueUSLvi1dGjZfuPtAYDC
+         qncg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=iGPyGnvwxrEQPVxhi4YK+3HNbLUMK1TkfO62id2XkVI=;
+        b=luMKrFeY29ZvEszbg4oE39QLCCXEx5GK49uq+9S+yZAarkvfOS378rGY2BBzWfRICJ
+         MOZAybSskiXNpSHgexSgT9H4OXg06b4RD1MDDx6zNNg3UGh0HJg/lF8zC8gT9450eEdq
+         WLLbVFMJ6m2oabWIt0IkVvDVTkRKYNQOEsNI994VslCPW/d3IGeeEZbfTcx8bt0l9V3r
+         DEIhR8JB8YG0drJ3XUBNV6D/F+RE4Lkv6jjXAvlAd360+5hEhb04mRww4tTujD/qd3RY
+         9ucGOstI12Ckr5jcKJxLD4wfPCwESsxktqAI4HPJ4YB7COipfI0L8eQrTSYzZaI9Mqh9
+         /Bfg==
+X-Gm-Message-State: AOUpUlFl44uLqHVFR8RfaS7/JpibDTZSlDrjq3UH5TASPDJts/sV/1ZM
+        nehkY9aMTj7eOOcLvej5WAWuV++M
+X-Google-Smtp-Source: AAOMgpfi+7b7Im2RfiDf4jSqODms6grFtaOuAFHYljPQVjzbEzlq3MtXagztjOfpEACGkb7x3vCIIg==
+X-Received: by 2002:adf:e9c1:: with SMTP id l1-v6mr2280457wrn.14.1532115298345;
+        Fri, 20 Jul 2018 12:34:58 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id l10-v6sm2245230wrv.23.2018.07.20.12.34.57
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 20 Jul 2018 12:34:57 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Subject: Re: [PATCH 2/2] repack -ad: prune the list of shallow commits
-Message-ID: <20180720193150.GC26403@sigill.intra.peff.net>
-References: <pull.9.git.gitgitgadget@gmail.com>
- <b4e01a963fd16f50d12c1f67c6e64bec8b1e9673.1531513093.git.gitgitgadget@gmail.com>
- <20180713203140.GB17670@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1807142351100.75@tvgsbejvaqbjf.bet>
- <20180716173636.GA18636@sigill.intra.peff.net>
- <xmqqh8kxrfrf.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1807191840490.71@tvgsbejvaqbjf.bet>
- <xmqq7elrdk8x.fsf@gitster-ct.c.googlers.com>
- <xmqqeffycl00.fsf@gitster-ct.c.googlers.com>
+Subject: Re: refs/notes/amlog problems, was Re: [PATCH v3 01/20] linear-assignment: a function to solve least-cost assignment problems
+References: <cover.1525448066.git.johannes.schindelin@gmx.de>
+        <pull.1.v3.git.gitgitgadget@gmail.com>
+        <39272eefcfe66de3ca1aa2ee43d6626ce558caae.1530617166.git.gitgitgadget@gmail.com>
+        <xmqqtvpcgf40.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1807071320110.75@tvgsbejvaqbjf.bet>
+        <xmqq7em7gg3j.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1807072116570.75@tvgsbejvaqbjf.bet>
+        <nycvar.QRO.7.76.6.1807080017160.75@tvgsbejvaqbjf.bet>
+        <nycvar.QRO.7.76.6.1807092342490.75@tvgsbejvaqbjf.bet>
+        <xmqqefg94uq1.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1807121720340.75@tvgsbejvaqbjf.bet>
+        <xmqq8t6gz8xz.fsf@gitster-ct.c.googlers.com>
+        <xmqqa7qngnon.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1807202049540.71@tvgsbejvaqbjf.bet>
+Date:   Fri, 20 Jul 2018 12:34:57 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.1807202049540.71@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Fri, 20 Jul 2018 20:51:54 +0200 (DST)")
+Message-ID: <xmqq1sbxbt0e.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqeffycl00.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 20, 2018 at 02:30:23AM -0700, Junio C Hamano wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> > The entries in shallow file says that history behind them may not
-> > exist in the repository due to its shallowness but history after
-> > them are supposed to be traversable (otherwise we have a repository
-> > corruption).  It is true that an entry that itself no longer exists
-> > in this repository should not be in shallow file, as the presence of
-> > that entry breaks that promise the file is making---that commit
-> > ought to exist and it is safe to traverse down to it, so keeping the
-> > entry in the file is absolutely a wrong thing to do.
-> >
-> > But that does not automatically mean that just simply removing it
-> > makes the resulting repository good, does it?  Wouldn't the solution
-> > for that corruption be to set a new entry to stop history traversal
-> > before reaching that (now-missing) commit?
-> 
-> The above is overly pessimistic and worried about an impossible
-> situation, I would think.  The reason why a commit that used to be
-> in the shallow file is being pruned during a "repack" is because it
-> has become unreachable.  By definition, no future history traversal
-> that wants to enumerate reachable commits needs to be stopped from
-> finding that commits that are older than this commit being pruned
-> are missing by having this in the shallow list.  If there is a ref
-> or a reflog entry from which such a problematic traversal starts at,
-> we wouldn't be pruing this commit in the first place, because the
-> commit has not become unreachable yet.
-> 
-> So a repository does not become corrupt by pruning the commit *and*
-> removing it from the shallow file at the same time.
+> AFAICT there is at least one scenario where you run `rebase -i`, the notes
+> get updated, and of course the *reverse mapping* does *not* get updated:
 
-Right. I think a lot of this is rethinking how shallow pruning works,
-too, which is not something Dscho is trying to change. The simplest
-argument (which I think Dscho has made elsewhere, too) is: this is
-necessary in the current shallow code when dropping objects. We do it
-therefore from prune, but miss the case when git-repack is run itself
-outside of git-gc.
+It turns out that I never had a rewrite hook; the notes.rewriteref
+mechanism is the only thing that has been used to maintain amlog.
 
-I do still think the gc/prune architecture is a bit muddled, but at this
-point in the discussion I feel OK saying that people running "git repack
--ad" would not be upset to have their shallows pruned.
+I've stopped populating the reverse mapping, by the way.  The script
+that I feed a message from gmane or public-inbox when I need to
+learn the set of commits that resulted from the message instead uses
+"git grep $message-id notes/amlog".  And that is fast enough for my
+purpose.
 
-But the patch is still not OK as-is because prune_shallow() requires the
-SEEN flag on each reachable object struct, which we have not set in the
-repack process (hence the failing test I posted earlier).  So we need a
-solution for that, which may impact ideas about how the call works.
-E.g., some possible solutions are:
+There is no good reason to abuse the notes mechanism to map a random
+object-name looking string (i.e. hash result of message id), other
+than the ease of "quick access" when somebody is making a lot of
+inquiry, but that "database" does not have to be stored in notes.
+It certainly does not belong to cycles worth spending by me *while*
+I work during the say with various history reshaping tools to record
+and/or update the reverse mapping and that is why my post-applypatch
+hook no longer has the "reverse map" hack.
 
- - teach pack-objects to optionally trigger the shallow prune based on
-   its internal walk
+It is not like anybody (including me) needs realtime up-to-date
+reverse mapping from amlog while I run my "commit --amend", "rebase
+-i", etc. and the reverse map is constructable by reversing the
+forward map, obviously, with a postprocessing.  And I think that is
+a reasonably way forward if anybody wants to have a reverse mapping.
+The postprocessing can be done either by me before pushing out the
+amlog ref, or done by any consumer after fetching the amlog ref from
+me.  If I did the postprocessing and refuse to use rewrite hook you
+wouldn't even know ;-)
 
- - have repack use the just-completed pack as a hint about reachability
-
- - introduce a mechanism to trigger the shallow prune based on a
-   commit-only reachability check, and run that from repack (or from gc
-   and document that it must be run if you are using repack as a manual
-   gc replacement)
-
-I'm not advocating any particular solution there, but just showing that
-there's an array of them (and probably more that I didn't mention).
-
--Peff
