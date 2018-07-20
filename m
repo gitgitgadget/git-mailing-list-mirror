@@ -2,105 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A1AF51F597
-	for <e@80x24.org>; Fri, 20 Jul 2018 19:54:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 062F51F597
+	for <e@80x24.org>; Fri, 20 Jul 2018 19:57:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728132AbeGTUnx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Jul 2018 16:43:53 -0400
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:34421 "EHLO
-        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727805AbeGTUnx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jul 2018 16:43:53 -0400
-Received: by mail-pl0-f65.google.com with SMTP id f6-v6so5614599plo.1
-        for <git@vger.kernel.org>; Fri, 20 Jul 2018 12:54:07 -0700 (PDT)
+        id S1727758AbeGTUr3 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Jul 2018 16:47:29 -0400
+Received: from mail-yb0-f178.google.com ([209.85.213.178]:43134 "EHLO
+        mail-yb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727554AbeGTUr3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jul 2018 16:47:29 -0400
+Received: by mail-yb0-f178.google.com with SMTP id x10-v6so5066657ybl.10
+        for <git@vger.kernel.org>; Fri, 20 Jul 2018 12:57:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=QaQKw8H4eqwAfEWZY6W8FeRxf323pXr1ztLakEHuPUo=;
-        b=uQdhJokZXBM3nl5NYDUwmILtPa192KPHx1ZvNiDTp3x5qSgiGTK+vdBA38BCi4guJ6
-         u27TRkGAtsNeCwKewdL69gigLxnOK+IJtVa7npA+XQ6jeMFkg59nDKT+ZOQdNaRp1tVD
-         jejRrBgtMyWACAo7C92h+q4R9orD16CDtD2oy2o+16vVXo3rjwG/XWl2Gip+J33oPndh
-         7UJv81WfQjBjjzI+dBNSH5b+Lv5kzENIOJlepgGW2+OUJPrG4kQe1eMjeNAjbPmoyU0d
-         bDeHw+gHxIq3boR2zROxACZXuxUrvnnZeEaz+nKZg2ML2WvdC5RVE540yoldX7/IP4TF
-         WVeQ==
+        d=google.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=HZPX4/Q/DeRljVT20//Ag5oOamXqAftGP0pPGgfOFEE=;
+        b=WXl/IWUJ4lHbY/7ZPEyFo8iiTMp66uyUZpitYRqKo5GpfUGQfg/gSw27GzY0arAmIo
+         F6bt0B7lkJEHngrZLauiirOsgf7mWx9QTYOsz6xjWBoVBOyt3ejVft95yGaEleMJOCeR
+         mEJhXSES1thgpcIlsXIMmw3MmlbMCjvhdEidYoyUktFCsYvMrhUtLJlKXMN2nJNmzjja
+         +2g7RihUwciAh1FIcm0A9wXrVa/HGvS1Gp77OJk8lwvBwGff2nywrr429z1qbwez5lwg
+         c/7gTSyPySbAg9WO83VqY2d6+MbUY4fZJcgiQQLmT9ZAdkM51rmf8qUuwMpCRGg5Phag
+         sJ9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=QaQKw8H4eqwAfEWZY6W8FeRxf323pXr1ztLakEHuPUo=;
-        b=Cdgo98Lxd1AitDvni6PocaLjfzyXolXTmu045dEioKSHwWiFOKxpsV4rQA654ZdcY/
-         jM7F6yToSu29bhwcgd+3a3k8hXG4Zwi+7KAW0hzmm9LhIaiqLiCK3X1iOy9HKiQxDf4B
-         09pIN4xd1UWXU4kjL9dOdVAjmBo3inGo4ygPBPwysMEtaEskj//BkfPIYks5IiwzOOlB
-         lDsBwdlzz7J6CcPyZ3qBay4hw3A9aRp89eYExuETo8ii5MVD0djoE9rHPan57F75J2I6
-         tL+PCXyZNWsI1U5Dl8L0vrzQSuqKeqLIQ/em9A/ncvGfsL42AEGj1oxjhCHzj7LL3S2n
-         gffA==
-X-Gm-Message-State: AOUpUlErVLvKGFvFWwBJNXEOtLsBgOgr2YnSvN+C56h0P5U0OY6bKnLr
-        taU9P3SRpMQmIxzaYLpRjcA=
-X-Google-Smtp-Source: AAOMgpd5d1LfEoK1Chx/t2CBA2Kou28yetjiimJBBveedGYBm0SGAcw9j6VgnbnB+O2A81ehTN40vA==
-X-Received: by 2002:a17:902:8308:: with SMTP id bd8-v6mr3341257plb.329.1532116447500;
-        Fri, 20 Jul 2018 12:54:07 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id e24-v6sm3339693pfi.70.2018.07.20.12.54.06
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 20 Jul 2018 12:54:06 -0700 (PDT)
-Date:   Fri, 20 Jul 2018 12:54:01 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] clone: send ref-prefixes when using protocol v2
-Message-ID: <20180720195401.GA83654@aiede.svl.corp.google.com>
-References: <20180720192749.224284-1-bmwill@google.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=HZPX4/Q/DeRljVT20//Ag5oOamXqAftGP0pPGgfOFEE=;
+        b=KXORA7bDvYnMjomz41ZIQ4IBOq6yxbkLg3Hwzvg+eVu2jKonWy6P40nK0EYW0JXBmb
+         xqjqle6JfHnERQEhynPGyM6TMOBbZY1JHyYcjJZ/LvVEiPDwLKBtjOk0NzClOgykZgW7
+         aTeHO+qATe+jkJ86DRmOniV4T+0s4FQbLFpJTAYtoVu5KGU5HW1QNgoSb8ldgAdo+2zy
+         cfzO3xqI4N9ayR7tYrQYYliLa2+GuGpbLGhrlIyDXoV6fyiTX02OclwmUvbeD+foSjgB
+         tsQE6MbLN+b12p5FrvYFH99WSfwQj15eOirdjOgQW1ZSL654Z1aMsBNbYnI1eHXol4m2
+         t8CA==
+X-Gm-Message-State: AOUpUlEJ5XmyivmO6gwGLSv2myWKY0vrsFsB7dpkl6mY1qRekEedoonf
+        oDVZbjqIe5vybHtZG9fRBSf4U5imr2/lCv6Bv7eCIzCLAT7vDg==
+X-Google-Smtp-Source: AAOMgpcrEWTPhsl4aeI1XA2PteSuPnoCksMuOXwANV1UT07S2AD1PByuAKosqBZqK2jkLWx37PrcwFkUn6Pxj7og55A=
+X-Received: by 2002:a25:84d0:: with SMTP id x16-v6mr1898214ybm.307.1532116662506;
+ Fri, 20 Jul 2018 12:57:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180720192749.224284-1-bmwill@google.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 20 Jul 2018 12:57:31 -0700
+Message-ID: <CAGZ79kZYO6hHiAM8Sfp3J=VX11c=0-7YDSx3_EAKt5-uvvt-Ew@mail.gmail.com>
+Subject: FYI: histogram diff bug
+To:     git <git@vger.kernel.org>, jgit-dev@eclipse.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+  seq 1 100 >one
+  echo 99 > two
+  seq 1 2 98 >>two
+  git diff --no-index --histogram one two
 
-Brandon Williams wrote:
+In addition to the recent patches[1], I found another bug in the
+histogram algorithm,
+which can be produced with the instructions given above. At least I
+think it is a bug as
+the diff looks terrible to me. (It is a correct diff, but the output
+is just bad.)
 
-> Signed-off-by: Brandon Williams <bmwill@google.com>
-> ---
-> Noticed we miss out on server side filtering of refs when cloning using
-> protocol v2, this will enable that.
->
->  builtin/clone.c | 22 +++++++++++++++++-----
->  1 file changed, 17 insertions(+), 5 deletions(-)
+[1] https://public-inbox.org/git/20180719221942.179565-1-sbeller@google.com/
 
-Nice!  The implementation looks good.
+And I think the issue is in the algorithm, which is basically as follows:
 
-Can you add a test to ensure this filtering doesn't regress later?
+1) build up information about one side ("scanA()"), by putting each
+    line into a hashmap (and counting its occurrences, such that you
+    can make the histogram)
 
-[...]
-> +++ b/builtin/clone.c
-[...]
-> @@ -1134,10 +1135,20 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
->  	if (transport->smart_options && !deepen && !filter_options.choice)
->  		transport->smart_options->check_self_contained_and_connected = 1;
->  
-> -	refs = transport_get_remote_refs(transport, NULL);
-> +
-> +	argv_array_push(&ref_prefixes, "HEAD");
-> +	refspec_ref_prefixes(&rs, &ref_prefixes);
-> +	if (option_branch) {
-> +		expand_ref_prefix(&ref_prefixes, option_branch);
-> +	}
-> +	if (!option_no_tags) {
-> +		argv_array_push(&ref_prefixes, "refs/tags/");
-> +	}
+2) "find_LCS" on the other side (B) by trying low occurrence lines
+  and seeing how long the common consequential string match is.
+  (I think this LCS refers to [2], not to be confused with [3])
 
-nit: no need for braces around one-line "if" body
+3) The whole mental model of the difference
+    between both sides now look like:
 
-Thanks,
-Jonathan
+      stuff before the LCS
+      LCS
+      stuff after the LCS
+
+    As the LCS has no output associated with it, just call recursively
+    do_histogram on the remainders before and after.
+
+This is my rough understanding of the algorithm so far.
+    (I am unsure about the exact find_LCS part how and why to
+    pick certain candidates for finding the LCS).
+
+The big issue however is the count of LCS, so far we assumed
+there is only one! In the example given above there are many,
+i.e. lots of "longest" common continuous substrings of length 1.
+We are unfortunate to pick "99" as the LCS and recurse before
+and after; the other LCSs would be a better pick.
+
+So I think we would need to find "all LCS", which there can be
+more than one at the same time, and then fill the gaps between
+them using recursion.
+As the order of LCSs can be different in the two sides,
+we actually have to produce a diff of LCSs and those which are
+out of order need to be emitted as full edits (deletes or creates).
+In the example above we'd want to have "99" to be a full create
+and delete instead of being *the* anchor; all other LCSs ought to
+be anchors for the first (zero'th?) level of recursion.
+
+This bug is also present in JGit which this algorithm was ported
+from, hence jgit-dev is cc'd (and furthers my suspicion that the
+issue is not in the port but in the algorithm itself).
+
+[2] https://en.wikipedia.org/wiki/Longest_common_substring_problem
+[3] https://en.wikipedia.org/wiki/Longest_common_subsequence_problem
+
+I'll think about this and see if I can fix it properly,
+Thoughts or Opinions?
+
+Stefan
