@@ -2,121 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E9E31F597
-	for <e@80x24.org>; Fri, 20 Jul 2018 23:02:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE0541F597
+	for <e@80x24.org>; Fri, 20 Jul 2018 23:37:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728446AbeGTXwZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Jul 2018 19:52:25 -0400
-Received: from mail-ua0-f194.google.com ([209.85.217.194]:44317 "EHLO
-        mail-ua0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727648AbeGTXwZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jul 2018 19:52:25 -0400
-Received: by mail-ua0-f194.google.com with SMTP id k25-v6so8428424uao.11
-        for <git@vger.kernel.org>; Fri, 20 Jul 2018 16:02:02 -0700 (PDT)
+        id S1728144AbeGUA1z (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Jul 2018 20:27:55 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:52382 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727812AbeGUA1z (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jul 2018 20:27:55 -0400
+Received: by mail-wm0-f66.google.com with SMTP id o11-v6so10808455wmh.2
+        for <git@vger.kernel.org>; Fri, 20 Jul 2018 16:37:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=RzxBRwpUMuEI8PjWWcdfI5GpZolF/CgR7aW7B3yZGOU=;
-        b=gVQTPJEP/08FtcbWzEjDnJ3vGH1X+OZ/UR9s/APVBync2SK4CRS/B2mxkfZx6KPKPB
-         6rKAPzqBf3Irj4q8Gx30Fvrk8z3nScheVzyuDWLshmXMO5P+TeONuHThWyUw53jlwpVC
-         rf0oTASpzr+BhGZymEgmxYC/lrZs7iZYVIxm8Tw/j7uVuvRpahTgVwS2QasU7Pat8ELM
-         0TPxcAJEobgzYU2+QPw/pVOyTNPYbpA3plj1Z8N4/h6UwpLwxjPnRxOcij11SV2J3e+a
-         BG/Rkfec+TIdW87hM2egq2plw3uE+WEvaG+BzRFP9Qq+pyIltrgZdBST1yZXHQPSKAe5
-         NSVg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=lpnLJ64KLG2KxGKJVKubiNZhvMKp5UlrKSOCg5uiA64=;
+        b=HAYA4ahg0WmS7bd4el453wL+1OgIrJJWKDV4qDyNk+zU+jQyPETjJMXxUas496+Lhj
+         nyeXKvJOe5hS+RPS3I/GDmRcgwrsLEOdiI9bXDo7BKTa1pthJQYSd8JV3qNzDcpU2Xy7
+         4NuLdYjqDuVvMdrRrAvI4IWRWcUFP2K1Orc95OF2/VGxxd8weoZay9fPdR5HsjN9yMgs
+         WniQblWl0fFR+lf185J3pCW0yfs72oMmFMEHJG7FwaDjEnF5grNNBGJOt3w4BUPgT2xG
+         S7DVCb9AwG7uPLN928sioAuJzjtsj9AS2dGnZb37HsPM7ZvMgzyKg1Q5IuKsaTbTp1YS
+         9fVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=RzxBRwpUMuEI8PjWWcdfI5GpZolF/CgR7aW7B3yZGOU=;
-        b=JLsa6nr3EfIYKU4YqL8hBhsCJ/glE/o1/XnLvtK6BJTJo+zohDPMk43IXJ2u24vI4M
-         e8veYUWKQP8ZjH4CQINO2EwVDOkjg4WrbuFgqLNHTV2t/jn1QZmd9z0plfeg2b2whr+F
-         CNbAlCSp+74zAVjFBdo+y40wEROGnF0r+h1K9+p5V5vwXadLd0Jd8O4KIC3FuLjGs/TQ
-         PETl0RpRWzwgDXEJdoQUnGfTfB8dyb9ggUPRniqadV8m6E2tn7WMlnFZDh1adwO++NeR
-         aI1g2pt6AQtiH9ocg3BwJPSCM8KbDlKbTj6Um8BcN8PZSIDTYbKLBX15LFOb+ClRYrl2
-         Fpzg==
-X-Gm-Message-State: AOUpUlFyRjLzGRVteqP3cdVoPrPcGBapvmQm5BO5MLDgeVIvYDlvRKy1
-        N0cBLUmMaNC0nc8yidgS7gT+hfn7kddSNcKK6Xw=
-X-Google-Smtp-Source: AAOMgpcDhk6cAPbmGO4LzYJUpw/l37Ct94yhq6fGJQMI6rptnmFBADvhwkNcN1Lj+kOPRolmVAkXSrmVAKlF7l/8PGI=
-X-Received: by 2002:ab0:4c24:: with SMTP id l36-v6mr2678753uaf.199.1532127721482;
- Fri, 20 Jul 2018 16:02:01 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=lpnLJ64KLG2KxGKJVKubiNZhvMKp5UlrKSOCg5uiA64=;
+        b=Q9u0g7T/ofdfXSdn5IqhhnkUYfskhlorsOA5bbjaXSXQopzWDwxOULFpFc9z/xWz3E
+         RZmSGdfiZX8fjuPPyzqev2CfHrjcyzyuAU3RGpnhBTGBb5A6x/zmox60ygckEgHscwJi
+         BnLmlLIf5ZLqbSEH9M6c3iYYcngir8BRB8sb0Ea7uB1dpGd8XUsLy4ss/eohgYo0sMOx
+         zuoqXstiVXpNL6M1pYa3eRo5AonO16dDfdWow/XLEnaTclaLKyx6qScutVioVez1ypcZ
+         /sBrRPZp9ZEk1bBccFWt8buXqqLPLVqlonlZMhhKNdODfWAC18WDhx3wpiPLfQcHRyjK
+         SWqw==
+X-Gm-Message-State: AOUpUlHwBo0CYvQ17sfI+fUquFTTy0AUkmLJ5TSVML03+XrpPYAjFHlZ
+        VvF4lvm0g5m+Bjpl0pYdrUY=
+X-Google-Smtp-Source: AAOMgpelNDhkn/RrG1/9wHlwPeouIOd07yT+99sjWd0ujHIpQ7HMCd52yWjt77YUdOtzcw7L2Igx7g==
+X-Received: by 2002:a1c:ea9b:: with SMTP id g27-v6mr2423378wmi.152.1532129845348;
+        Fri, 20 Jul 2018 16:37:25 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id c124-v6sm3234183wma.47.2018.07.20.16.37.24
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 20 Jul 2018 16:37:24 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Jeff King <peff@peff.net>, Andrei Rybak <rybak.a.v@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] Documentation: fix --color option formatting
+References: <ccf73807-1856-1ce8-365a-0c4fb25ea7bf@gmail.com>
+        <20180718174944.GB3084@sigill.intra.peff.net>
+        <20180720223608.GE18502@genre.crustytoothpaste.net>
+Date:   Fri, 20 Jul 2018 16:37:24 -0700
+In-Reply-To: <20180720223608.GE18502@genre.crustytoothpaste.net> (brian
+        m. carlson's message of "Fri, 20 Jul 2018 22:36:08 +0000")
+Message-ID: <xmqqo9f18onf.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 2002:ab0:21c7:0:0:0:0:0 with HTTP; Fri, 20 Jul 2018 16:02:01
- -0700 (PDT)
-In-Reply-To: <xmqqbmb1a7ga.fsf@gitster-ct.c.googlers.com>
-References: <5a8d1098-b4c5-64e1-da98-dac13521e7ba@gmail.com>
- <CABPp-BF+Vx8YT2KAJQ+szbkYExv-_o5E-ZkywgvzsHWR0QvVEg@mail.gmail.com>
- <xmqqsh4da9wd.fsf@gitster-ct.c.googlers.com> <CABPp-BE_OHxMqmhJ8BisG6HFpGQjsPJ1AE4G9m5bpJWznkq-1Q@mail.gmail.com>
- <xmqqbmb1a7ga.fsf@gitster-ct.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 20 Jul 2018 16:02:01 -0700
-Message-ID: <CABPp-BGVtP4-_LYh7SjSSoTwcm+ZiKbCRSuK0MCo_wvUWBj3vg@mail.gmail.com>
-Subject: Re: [BUG] merge-recursive overly aggressive when skipping updating
- the working tree
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Ben Peart <peartben@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Kevin Willford <kewillf@microsoft.com>,
-        Ben Peart <benpeart@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 20, 2018 at 3:05 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Elijah Newren <newren@gmail.com> writes:
->
->> Ah, okay, that's helpful.  So, if there are conflicts, it should be
->> free to clear the skip_worktree flag.  Since merge-recursive calls
->> add_cacheinfo() for all entries it needs to update, which deletes the
->> old cache entry and just makes new ones, we get that for free.
->
-> Correct.
->
->> And conversely, if a file-level merge succeeds without conflicts then
->> it clearly doesn't "need to materialize a working tree file", so it
->> should NOT clear the skip_worktree flag for that path.
->
-> That is not at all implied by what I wrote, though.
->
-> If it can be done without too much effort, then it certainly is
-> nicer to keep the sparseness when we do not have to materialize the
-> working tree file.  But at least in my mind, if it needs too many
-> special cases, hacks, and conditionals, then it is not worth the
-> complexity---if it is easier to write a correct code by allowing Git
-> to populate working tree files, it is perfectly fine to do so.
->
-> In a sense, the sparse checkout "feature" itself is a hack by
-> itself, and that is why I think this part should be "best effort" as
-> well.
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-That's good to know, but I don't think we can back out easily:
-  - Clearing the skip_worktree bit: no big deal, as you mention above
-  - Avoiding working tree updates when merge doesn't change them: very
-desirable[1]
-  - Doing both: whoops
+> Both AsciiDoc 8.6.10 and Asciidoctor support SOURCE_DATE_EPOCH for
+> reproducible builds[0], which should reduce the date noise.  We could
+> also add a Makefile knob to set git_version to an empty string or an
+> --abbrev=0 equivalent for such a situation.
+>
+> [0] https://reproducible-builds.org/specs/source-date-epoch/
 
-[1] https://public-inbox.org/git/CA+55aFzLZ3UkG5svqZwSnhNk75=fXJRkvU1m_RHBG54NOoaZPA@mail.gmail.com/
+I probably should take advantage of this feature and update the
+install target of Documentation/Makefile, where I manually filter
+out these noise changes between what is installed and what is going
+to be.  That serves as my final sanity check before pushing out the
+result of an integration cycle that updates the 'master' branch, as
+that is when the pre-formatted html and man pages are updated, and
+as part of that, "make install" for these two formats are run to
+give me a chance to eyeball the differences.
 
+Being able to lose the (impricise) manual filtering would be great.
 
-I don't want to regress the bug Linus reported, so to fix Ben's issue,
-when we detect that a path's contents/mode won't be modified by the
-merge, we can either:
-  - Update the working tree file if the original cache entry had the
-skip_worktree flag set
-  - Mark the new cache entry as skip_worktree if the original cache
-entry had the skip_worktree flag set
-
-Both should be about the same amount of work; the first seems weird
-and confusing for future readers of the code.  The second makes sense,
-but probably should be accompanied with a note in the code about how
-there are other codepaths that could consider skip_worktree too.
-
-I'll see if I can put something together, but I have family flying in
-tomorrow, and then am out on vacation Mon-Sat next week, so...
