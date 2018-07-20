@@ -2,144 +2,172 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C1431F597
-	for <e@80x24.org>; Fri, 20 Jul 2018 16:34:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9DBAD1F597
+	for <e@80x24.org>; Fri, 20 Jul 2018 16:45:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387915AbeGTRXS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Jul 2018 13:23:18 -0400
-Received: from mail-eopbgr710104.outbound.protection.outlook.com ([40.107.71.104]:31488
-        "EHLO NAM05-BY2-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1731000AbeGTRXS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jul 2018 13:23:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=eZjsPpoP6inI0G10nqxX/aTM/ij/YbL6kwv9W2uBFDM=;
- b=i6FxT3sylvXnfvcJLehy3Gp96GbldzAo7H3ApAGyyHTKzVratrvzBSxPcJ5oBsWtFvZrN1+2apiAhyOuqcdRAAQLt1Jh9vcO8IebcDYg/a0a1uVytSoYIiTGdpOUDhm9GBKkNMnaTNr2jEvKQnihh/H51sBjc+jfbHk7JNf53TY=
-Received: from BL0PR2101MB1011.namprd21.prod.outlook.com (52.132.24.10) by
- BL0PR2101MB0929.namprd21.prod.outlook.com (52.132.20.142) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.995.1; Fri, 20 Jul 2018 16:33:22 +0000
-Received: from BL0PR2101MB1011.namprd21.prod.outlook.com
- ([fe80::5072:9195:b05b:ed05]) by BL0PR2101MB1011.namprd21.prod.outlook.com
- ([fe80::5072:9195:b05b:ed05%2]) with mapi id 15.20.0995.008; Fri, 20 Jul 2018
- 16:33:22 +0000
-From:   Derrick Stolee <dstolee@microsoft.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-CC:     "sbeller@google.com" <sbeller@google.com>,
-        "stolee@gmail.com" <stolee@gmail.com>,
-        "jonathantanmy@google.com" <jonathantanmy@google.com>,
-        "gitster@pobox.com" <gitster@pobox.com>,
+        id S2388025AbeGTReW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Jul 2018 13:34:22 -0400
+Received: from mail-qk0-f193.google.com ([209.85.220.193]:39826 "EHLO
+        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387805AbeGTReW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jul 2018 13:34:22 -0400
+Received: by mail-qk0-f193.google.com with SMTP id b5-v6so6559328qkg.6
+        for <git@vger.kernel.org>; Fri, 20 Jul 2018 09:45:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=Ug7qeqA05XO9D/WsHwCN3oqjH6AxL37vIBO6OZpZ22Q=;
+        b=feW9xMJNE5OlvkLGX26uxHWImyclNWgSNo/VYj3aOdhwCTjtPpPRtROPvgDNjsJ4CI
+         C7Yf9DB8SJV2UtoCtSP2BmL864Gfx7Y1OY39/kTwSpkbtC9pyJpmpua60/ucAncNA4Tr
+         PJy2xe61saMRPmJAq19TTc2usYkwxKugWT70XolSTyVXQJNEe4hTxjEaMD44Bd84Mdxx
+         n+3UXhFh+jwEPsP28Udde6NBxuImzKFreHj6Wcki1h1ALzRSF3z5DqmmI1JYyodWZrwD
+         flA0aqbIHL+eago6HrKfmvdr+KD6ZkOmYzgKyoIg5GIrpbXl5NhLoJMAp6vCpGXDgeZG
+         B2Lg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=Ug7qeqA05XO9D/WsHwCN3oqjH6AxL37vIBO6OZpZ22Q=;
+        b=ik168yIdVTez4PQB18uAr/l42aF2GpxPWnEYfYMyfLYKN4FJGeH9sQboTzdHguGjjx
+         hubInAy48Ns/rkjxx/fOAItpVGeLKdbb97HUV09tDJZrk0y3j/B4FCD6jUFTpHHRihfe
+         AM+bGk0byti2NHROpT2OE7jfxzRMLuKYHp/vC4SI3OIPWBS3VMX7KjKY7tJPMSMSDk2N
+         1AJw60eBRMENKCPkMXRFv5ddyanEFdPQhLU8o8jtnnWRvXSGGNJAJSDil4Ol+SsI5tNO
+         8Y57DNTxmcIhVLS1bVkZ1484kGSXq4Cy02ldp7hQTt8yoOFcORiqUlXiEcV5rP2Dnwjv
+         jbKQ==
+X-Gm-Message-State: AOUpUlGHuODsACVu/DpCEevFeGll+mLs1e1dRfCIqIKhQdENDjhB3t6l
+        9sJ9jPSo4c7Blo4ne/xG/Og=
+X-Google-Smtp-Source: AAOMgpcn6yyxPxoiXnerrzTd54+phjik1kKuR164/5R7+H2qfpAxGJGAEpeEi3UHVmyS6D9fdO5n2g==
+X-Received: by 2002:a37:30d5:: with SMTP id w204-v6mr2540108qkw.317.1532105115582;
+        Fri, 20 Jul 2018 09:45:15 -0700 (PDT)
+Received: from [10.0.1.23] ([98.122.163.216])
+        by smtp.gmail.com with ESMTPSA id 17-v6sm1973848qtm.18.2018.07.20.09.45.14
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 20 Jul 2018 09:45:15 -0700 (PDT)
+Subject: Re: [PATCH 5/8] commit-graph: not compatible with replace objects
+From:   Derrick Stolee <stolee@gmail.com>
+To:     Jeff King <peff@peff.net>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, jnareb@gmail.com,
+        Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v2 13/18] test-reach: test reduce_heads
-Thread-Topic: [PATCH v2 13/18] test-reach: test reduce_heads
-Thread-Index: AQHUIEdf58DhqORDLUK4eFAB+5Qn/w==
-Date:   Fri, 20 Jul 2018 16:33:22 +0000
-Message-ID: <20180720163227.105950-14-dstolee@microsoft.com>
-References: <pull.10.git.gitgitgadget@gmail.com>
- <20180720163227.105950-1-dstolee@microsoft.com>
-In-Reply-To: <20180720163227.105950-1-dstolee@microsoft.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-clientproxiedby: BN6PR02CA0084.namprd02.prod.outlook.com
- (2603:10b6:405:60::25) To BL0PR2101MB1011.namprd21.prod.outlook.com
- (2603:10b6:207:37::10)
-x-ms-exchange-messagesentrepresentingtype: 1
-x-originating-ip: [2001:4898:8010:0:eb4a:5dff:fe0f:730f]
-x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;BL0PR2101MB0929;6:PTwvwBu0+SlyxgbD0OBg95sLfVwDo2eZn0MAvwlrmdrS0tGL8wAJH51CHdTq4u667703fqI9HCtu5l8bYQtQPG82FfLifczTkEblr5hqbALx0TBLtCQReNYIqxl6YNbG3y55EOfIcoV9UXL5GW0WSH5xqaR6dfa2nKp1YaInXz2QIwE3atuZ5n6LqDkgiGg00CS7sWPUZaHgmHhYgS6D7CZdj9Yb54fgpoWxprbVaaBXJcuS9fVeN0tgFSarrjeDip+NRti1S/nuPaq5LgV6T9WkrVav+l74ddcEcm8tRApgrCLf7dFlCIQrQAvSkO3OPc9GDjkuSuELDcfSP5jZzw/epZub+Aaseci707onjDf+bzngXck7f3WfmlTaL0lSij56Q3HcXTba3C8LGr9AIgq+SC5J157Eug4O5cVDMDbNr5kZ0PPEcWMupvENB0DfoxUynfuv+w6e0PF5EesiGQ==;5:DlEToHebeeQ/6OzszvFYokOelTFQ0M0hYpOvZUU7c5Mgdlg8h9t7T8wv6rfQP5wr9aj0KMbG5N0C7/rAU9qLpnlY5shhk8Idgg72TuwAvZds4O7kSH4pagR32Wx16VACSvujDCMmyw1f7hRNXJvpxr1jKgxuu/UavT8jqCqbBfY=;7:RxoNdwsy9zdKjTpvau7FeekplI5Am67WURO3agTWVEUiMVbhtLN/mcHBJQx8DsLXgBe4WsbPRlWaNbGT6u6JxrAyFlREyJVAgjNjws9qhWaadQlIOHDkln/NIqb6061HUejPPoJZDLhr5vY48VZRDlacXqbzeD9/zq3p/+4qN/oUa6t7V1V5wxsX40XPcil5m/3CucPwiQ4yahu4Kq+bf5fmpLZJeMPBbNdsrOztFceMvUb7V/uvD7Ah0tNV+s1l
-x-ms-office365-filtering-correlation-id: f57a3d39-6cd7-428c-118d-08d5ee5e81e0
-x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(7020095)(4652040)(8989117)(5600067)(711020)(4618075)(4534165)(4627221)(201703031133081)(201702281549075)(8990107)(2017052603328)(7193020);SRVR:BL0PR2101MB0929;
-x-ms-traffictypediagnostic: BL0PR2101MB0929:
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=dstolee@microsoft.com; 
-x-microsoft-antispam-prvs: <BL0PR2101MB0929BA06211DE5C9371BE53AA1510@BL0PR2101MB0929.namprd21.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171);
-x-ms-exchange-senderadcheck: 1
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(93006095)(93001095)(3231311)(944501410)(52105095)(2018427008)(3002001)(10201501046)(6055026)(149027)(150027)(6041310)(20161123564045)(20161123560045)(20161123562045)(20161123558120)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(6072148)(201708071742011)(7699016);SRVR:BL0PR2101MB0929;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB0929;
-x-forefront-prvs: 073966E86B
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(1496009)(346002)(366004)(136003)(396003)(376002)(39860400002)(189003)(199004)(6512007)(305945005)(7736002)(14454004)(5640700003)(6116002)(6436002)(105586002)(54906003)(53936002)(25786009)(52116002)(76176011)(106356001)(2501003)(446003)(46003)(478600001)(68736007)(11346002)(6506007)(2900100001)(2906002)(5250100002)(386003)(186003)(102836004)(2351001)(10090500001)(97736004)(6916009)(8676002)(107886003)(8936002)(1730700003)(81156014)(6486002)(4326008)(486006)(81166006)(10290500003)(39060400002)(5660300001)(86362001)(22452003)(1076002)(316002)(2616005)(36756003)(256004)(476003)(86612001)(99286004);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB0929;H:BL0PR2101MB1011.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
-received-spf: None (protection.outlook.com: microsoft.com does not designate
- permitted sender hosts)
-x-microsoft-antispam-message-info: XaEic/69QGBAEUAmG9xuBlAnzIhOWOddlI3D1Ub6KUz3AAfbJykoAEY0+6ZYGhZcAT3CTcyfi+2drOEKlbYfkDpVTZOIDjDXpYwWmUcExIb4y6hRjDNX9XBxFH7YRjTJD6TOY8PXJbE0UFt5skLbsy+QquY503QjIjrCQdsqLTKTYfj9UJwRW/HXyGrBCGVmHR7b1IiNbUaKRji0yeGFfrs6ImnUtCQdpo6ERco38QfXTGzRRMtpt8BR03oU+mR+Eq7rxe3z20IdnBrglVHHI6Pp0jOvRxa2M8DCuwD9iIRvls0HMDDtw9+lveo4MX4ank3Yp+an0kxAwIEQXTLpoY5bPl6hKEg1Do198e/mDow=
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+References: <pull.11.git.gitgitgadget@gmail.com>
+ <7f596c1718d35539f02828edbf933c8e660f123b.1531926932.git.gitgitgadget@gmail.com>
+ <20180718194657.GC7778@sigill.intra.peff.net>
+ <f5d2f06d-1736-57e4-edbd-aa638ae34238@gmail.com>
+Message-ID: <a3640919-95cf-cca4-d552-4715a031dd7f@gmail.com>
+Date:   Fri, 20 Jul 2018 12:45:11 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f57a3d39-6cd7-428c-118d-08d5ee5e81e0
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Jul 2018 16:33:22.0408
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB0929
+In-Reply-To: <f5d2f06d-1736-57e4-edbd-aa638ae34238@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- t/helper/test-reach.c |  4 ++++
- t/t6600-test-reach.sh | 22 ++++++++++++++++++++++
- 2 files changed, 26 insertions(+)
+On 7/18/2018 3:52 PM, Derrick Stolee wrote:
+> On 7/18/2018 3:46 PM, Jeff King wrote:
+>> On Wed, Jul 18, 2018 at 08:15:41AM -0700, Derrick Stolee via 
+>> GitGitGadget wrote:
+>>
+>>> From: Derrick Stolee <dstolee@microsoft.com>
+>>>
+>>> Create new method commit_graph_compatible(r) to check if a given
+>>> repository r is compatible with the commit-graph feature. Fill the
+>>> method with a check to see if replace-objects exist. Test this
+>>> interaction succeeds, including ignoring an existing commit-graph and
+>>> failing to write a new commit-graph.
+>> I think this approach is sensible. These are optimizations, and it's not
+>> a big deal to just punt no cases we can't handle.
+>>
+>> I do have one complaint about the implementation, though:
+>>
+>>> +static int commit_graph_compatible(struct repository *r)
+>>> +{
+>>> +    prepare_replace_object(r);
+>>> +    if (hashmap_get_size(&r->objects->replace_map->map))
+>>> +        return 0;
+>>> +
+>>> +    return 1;
+>>> +}
+>> If I'm reading the code correctly, this will predicate the decision
+>> entirely on the presence of refs in refs/replace/. But you may have a
+>> situation where those refs exist, but you are not respecting them in
+>> this run.
+>>
+>> For instance, imagine[1] a server that hosts arbitrary repositories, but
+>> wants to use commit graphs to speed up server-side operations (e.g.,
+>> serving fetches, but also perhaps a web interface doing --contains,
+>> etc). If it runs all of the server-side commands with
+>> GIT_NO_REPLACE_OBJECTS=1, then there should be no problem. But if a user
+>> pushes anything to refs/replace (because they _do_ use replace refs
+>> locally, and want to share them with other clients), that would disable
+>> graphs on the server.
+>>
+>> So I think this should at least be loosened to:
+>>
+>>    if (check_replace_refs) {
+>>     prepare_replace_object(r);
+>>     if (...)
+>>    }
+>>
+>> which would make this case work. I'd even go so far as to say that for
+>> writing, we should just always ignore replace refs and generate the full
+>> graph (just like pack-objects does so when writing a pack). Then the
+>> resulting graph can be used selectively by disabling replace refs for
+>> particular commands. But for the scenario I described above, the
+>> distinction is mostly academic, as replacements would be disabled anyway
+>> during the write command anyway.
+>>
+>> -Peff
+>>
+>> [1] You can probably guess that this is how GitHub handles replace refs.
+>>      We ran into this long ago because replacements and grafts mess up
+>>      any other caches external to Git that rely on the immutability of
+>>      the hash.
+>>
+>>      We do it with a config option, though, which requires a trivial
+>>      patch. I'll post that momentarily.
+>
+> Thanks for the details! I never considered that someone would have 
+> these refs around, but would ignore them most of the time.
+>
+> The biggest reason I wanted to punt here was that it is easy to toggle 
+> between using replace refs and not using them. Writing and reading as 
+> long as we are ignoring those refs is a good idea, and I'll use that 
+> approach in v2.
 
-diff --git a/t/helper/test-reach.c b/t/helper/test-reach.c
-index 4df01187c9..e32e193b70 100644
---- a/t/helper/test-reach.c
-+++ b/t/helper/test-reach.c
-@@ -102,6 +102,10 @@ int cmd__reach(int ac, const char **av)
- 		struct commit_list *list =3D get_merge_bases_many(A, X_nr, X_array);
- 		printf("%s(A,X):\n", av[1]);
- 		print_sorted_commit_ids(list);
-+	} else if (!strcmp(av[1], "reduce_heads")) {
-+		struct commit_list *list =3D reduce_heads(X);
-+		printf("%s(X):\n", av[1]);
-+		print_sorted_commit_ids(list);
- 	}
-=20
- 	exit(0);
-diff --git a/t/t6600-test-reach.sh b/t/t6600-test-reach.sh
-index d43e1a61d5..17c6467988 100755
---- a/t/t6600-test-reach.sh
-+++ b/t/t6600-test-reach.sh
-@@ -138,4 +138,26 @@ test_expect_success 'get_merge_bases_many' '
- 	test_three_modes get_merge_bases_many
- '
-=20
-+test_expect_success 'reduce_heads' '
-+	cat >input <<-\EOF &&
-+	X:commit-1-10
-+	X:commit-2-8
-+	X:commit-3-6
-+	X:commit-4-4
-+	X:commit-1-7
-+	X:commit-2-5
-+	X:commit-3-3
-+	X:commit-5-1
-+	EOF
-+	{
-+		echo "reduce_heads(X):" &&
-+		git rev-parse commit-5-1 \
-+			      commit-4-4 \
-+			      commit-3-6 \
-+			      commit-2-8 \
-+			      commit-1-10 | sort
-+	} >expect &&
-+	test_three_modes reduce_heads
-+'
-+
- test_done
---=20
-2.18.0.118.gd4f65b8d14
+
+Thanks, Peff, for improving the check_replace_refs interaction [1].
+
+Since this series now has two dependencies (including Stefan's ref-store 
+fix [2] that I had included in my v1), I'll let those topics settle 
+before I send a new v2.
+
+If there are more comments about how I'm handling these cases, then 
+please jump in and tell me. I'll revisit this topic in a few weeks.
+
+Thanks,
+
+-Stolee
+
+[1] 
+https://public-inbox.org/git/20180718204449.GA31816@sigill.intra.peff.net/T/#u
+
+      [PATCH 1/3] check_replace_refs: fix outdated comment
+
+[2] 
+https://public-inbox.org/git/20180717224935.96397-1-sbeller@google.com/T/#u
+
+     [PATCH 0/2] RFC ref store to repository migration
 
