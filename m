@@ -2,114 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69D3A208E9
-	for <e@80x24.org>; Fri, 20 Jul 2018 21:05:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 948AA1F597
+	for <e@80x24.org>; Fri, 20 Jul 2018 21:13:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727833AbeGTVzH (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Jul 2018 17:55:07 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:33822 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727412AbeGTVzH (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 20 Jul 2018 17:55:07 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:f1fc:eee3:60de:bdd8])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id EBAB560734;
-        Fri, 20 Jul 2018 21:05:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1532120705;
-        bh=xMflttdBMQE/oIgB7z8C8j06xox/D0NcslweWkGQ3wU=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=x433oEb2VUAfV2yrpU55bUM8L0c2W4J/k6MzC15Z0lUYqYcFoWPfLXHiSV4EwEOPs
-         1uE5309zKb5qWXuKQcbvw3oXjVeUo6q3W/P7MDBTmheKsVk62FYp+/AiUIL0k8LfqQ
-         p+awqr1MwHSVzCearEweBBhhb/GE/ncFduRPZZHT2cM3i7vgJXkPqHCJ1EWUn9Dxkp
-         nvoOFWTB45f9NVKCUd2VLCfioqscPhhZLE2ydMFv1LjrilOIeihWWUdEFoGacKr/Iq
-         jg1HXnhLixkLlbsr530BhIki+P7QVtYX2i8CIs20CKeRMmNe7dtf1mt6X8kgQQQMN0
-         vqbJ5gZfrKhuX6NMJvLx8qqacIwHI/l9AB6q064cWk2FEh464VaYRDBRCBMOksGhiX
-         UbYdeX6kGccDcR7NLifPWqPrW1pvDsf5WWNAjSl5dxfZmC0VSKlLblrbyriUIEuBO1
-         GPbKFVHat5jM7X0TFcLukbjErzWqVqSp+m5L52rTSulXLK0q5x5
-Date:   Fri, 20 Jul 2018 21:04:59 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeffrey Walton <noloader@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: No rule to make target `git-daemon'
-Message-ID: <20180720210459.GA18502@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeffrey Walton <noloader@gmail.com>, Git List <git@vger.kernel.org>
-References: <CAH8yC8=oruFBtkndQ0p9N4s23SMvjjrAC_E7zzKRSVbjEwL0FQ@mail.gmail.com>
+        id S1728170AbeGTWDK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Jul 2018 18:03:10 -0400
+Received: from mail-wr1-f47.google.com ([209.85.221.47]:38457 "EHLO
+        mail-wr1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728125AbeGTWDK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jul 2018 18:03:10 -0400
+Received: by mail-wr1-f47.google.com with SMTP id v14-v6so12430918wro.5
+        for <git@vger.kernel.org>; Fri, 20 Jul 2018 14:13:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=z2XAZKqYryHf6l563lZfROkpuljYB+dkmd6ngEBur4Q=;
+        b=XRnl0d0E97lDCCpzpe6Vg5egXhcXklK2fr2LCNIwbd1BlTmQYU1vrIrWPgt2xnrA0z
+         BErej9qNB5YNAuEyubm7NmSX2rzKa32MuzjzVTfekqYghlAcV8ujPo2iaMiZ26YORW9X
+         J5z4fNeiiTbIJaDZs2M50th0ClfkJwfyNGVJ2e88rrAAalQRdIeMETO/0IuddgyyZDjJ
+         mlZ6z/U+H5iP64mHMY0X6VZCOKqRV3/E7tjMxoUhjddU7oQMDPyLxXNn7EOM9r14pYmQ
+         eXg4VrTTgU8Z8RrVcM12tFC7cjLYo1dD6SuuFrqx9JLK7ERpaHgSrpleTNVyROA4Ei7k
+         Cclg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=z2XAZKqYryHf6l563lZfROkpuljYB+dkmd6ngEBur4Q=;
+        b=PfWhfZXDzM4jWou2EE5z/ksXmS3zEgmD/c0KoqnFxxy2yHIE0eYnf9lCwDo8//2tZy
+         Zb7lYf8FbmxmAw80DzcTxF6Xz8ORSLbq5mRBJ7GwL2vhx87LiH0WVGzMgrWF+z3hpNW8
+         FzjLQn5HXaqm5NIR/+nHzwgM0G1r0O8U+wYPTOqLi1F+qeEk5sv6wdWDMudGrggdwDFs
+         6tcmIt+QwinyWFfAEoWFgMpUBRcac9Y8zHmK6mk6m3Xmd54ii10xjC17SC27zoRCgjb2
+         fsYfyv6D9dBrG3Yz8EV7WpyaPAk/PYOrVpPyiClYleF/7sdSHNi9KRq5iRcMrbuhXp54
+         ycVQ==
+X-Gm-Message-State: AOUpUlGR3gxrzAftpA2u4EVf4Z6w8nn6XEYOfqzsZUN1m/a9afcViBYl
+        yd4Ytav7904NobieBy4NGu4=
+X-Google-Smtp-Source: AAOMgpd2DXTKGU1WIXeGuWpipmh5yz8wP1izY9DPmruoWPWbRRJxSG7sn0pDjNs8zgg5tHChYDDx5A==
+X-Received: by 2002:adf:e90c:: with SMTP id f12-v6mr2496355wrm.126.1532121187571;
+        Fri, 20 Jul 2018 14:13:07 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id w9-v6sm3490634wrk.28.2018.07.20.14.13.06
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 20 Jul 2018 14:13:06 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Ben Peart <peartben@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Kevin Willford <kewillf@microsoft.com>,
+        Ben Peart <benpeart@microsoft.com>
+Subject: Re: [BUG] merge-recursive overly aggressive when skipping updating the working tree
+References: <5a8d1098-b4c5-64e1-da98-dac13521e7ba@gmail.com>
+        <CABPp-BF+Vx8YT2KAJQ+szbkYExv-_o5E-ZkywgvzsHWR0QvVEg@mail.gmail.com>
+Date:   Fri, 20 Jul 2018 14:13:06 -0700
+In-Reply-To: <CABPp-BF+Vx8YT2KAJQ+szbkYExv-_o5E-ZkywgvzsHWR0QvVEg@mail.gmail.com>
+        (Elijah Newren's message of "Fri, 20 Jul 2018 13:48:37 -0700")
+Message-ID: <xmqqsh4da9wd.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="k+w/mQv8wyuph6w0"
-Content-Disposition: inline
-In-Reply-To: <CAH8yC8=oruFBtkndQ0p9N4s23SMvjjrAC_E7zzKRSVbjEwL0FQ@mail.gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.17.0-1-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Elijah Newren <newren@gmail.com> writes:
 
---k+w/mQv8wyuph6w0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> But that brings up another interesting question.  What if a merge
+> *does* modify a file for which you have skip-worktree set?
+> Previously, it'd clear the bit and write the file to the working tree,
+> but that was by no means an explicit decision;
 
-On Thu, Jul 19, 2018 at 09:37:08PM -0400, Jeffrey Walton wrote:
-> Hi Everyone,
->=20
-> I'm working from the 2.18 tarball on Solaris 11.3 x86_64. I'm catching
-> the following when building from sources. This appears to be a new
-> issue. It was not present in 2.17.1.
->=20
->     gmake: *** No rule to make target `git-daemon'.  Stop.
->     gmake: *** Waiting for unfinished jobs....
->     Failed to build Git
->=20
-> There does not appear to be an option to control building the daemon:
->=20
->     $ ./configure --help | grep -i daemon
->     $
->=20
-> Any ideas on how to side-step it?
+At least in my mind, the "skip worktree" aka sparse checkout has
+always been "best effort" in that if Git needs to materialize a
+working tree file in order to carry out some operation (e.g. a merge
+needs conflict resolution, hence we need to give a working tree file
+with conflict markers to the end user) Git is free to do so.
 
-I also don't see this issue, and I didn't see anything between 2.17.1
-and 2.18 that stood out to me as a potential cause of this problem.  Can
-you tell us a bit more about what version of GNU make you're using and
-the configuration you're trying to build (say, the config.mak.autogen)?
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---k+w/mQv8wyuph6w0
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.8 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAltSTnsACgkQv1NdgR9S
-9ospGhAAn+LbVKagA2IbHpTRXREXXElC+UJCP0fvHUCJFLfmdGJatLwXRh0Kq+k7
-tunJmAoyaCyjjq5UOx+CM+c7fGID53pDL6LWAqO8wj9CcZslZ9dx5G9rZ5zL8kfO
-lWxi1oUH+1VytKCuz1TvTJtn7BQAB+hYsQRkgUxvxmxGo5bzLOrp3eJ/UY/Iwyh5
-FZQatZ6mJloCii7so23hzNeZ/5JrpcDMnUvWYPN0YUbVBAuJ5b3MT8YNLzliZX94
-DQsymmE4nqPGxsIM1EgOlKx1UEIELKspKb71RNLQR8dk3RMToFJKPsP8kIhizdWa
-EnGnBXXN/Im238ohMiSeoHGsOfbEbNd2L3HosLSD4V+q5iQ00X/mBIM3d0j7Ax1i
-yamXdfdcCXx5OQNSTEU6xqnbBW4oKiFXz4VpvNbQbAu6Dt/lUst9XD6JlfjTn7UU
-OdS5Q9dP0JDSN6O8XHQrPeo3wukr7040toQGepz1v2DIevHegFku5mOHOUzM5PVS
-AM3HyXhVpuqc8iFE1HAnHWMzDJ+3N8zhSwDoFs1O8td/s6hXOcBMGt5VRu7IXczh
-cq/QeNEUOFR109Jb41QkWbIR2Nk0ekK1jFi4Ac3wJHHiBycWpawuBcxKurLUdmUB
-dUg8fxpAxK4c1Ga+eXhY1BU4dfE4pvZG4oKKkO/Whir6vLTFjEk=
-=tAmE
------END PGP SIGNATURE-----
-
---k+w/mQv8wyuph6w0--
+Isn't that what happens currently?
