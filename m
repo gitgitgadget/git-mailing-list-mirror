@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 508BB1F597
-	for <e@80x24.org>; Sat, 21 Jul 2018 07:50:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4462F1F597
+	for <e@80x24.org>; Sat, 21 Jul 2018 07:50:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727838AbeGUImJ (ORCPT <rfc822;e@80x24.org>);
+        id S1727849AbeGUImJ (ORCPT <rfc822;e@80x24.org>);
         Sat, 21 Jul 2018 04:42:09 -0400
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:37615 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727755AbeGUImF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Jul 2018 04:42:05 -0400
-Received: by mail-lf1-f67.google.com with SMTP id j8-v6so3235538lfb.4
-        for <git@vger.kernel.org>; Sat, 21 Jul 2018 00:50:15 -0700 (PDT)
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:39047 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727630AbeGUImJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Jul 2018 04:42:09 -0400
+Received: by mail-lj1-f194.google.com with SMTP id l15-v6so12892907lji.6
+        for <git@vger.kernel.org>; Sat, 21 Jul 2018 00:50:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=bIBOJgIKBJW6QpyufbaPJU9KUw4OjtQhEx+Ax9LOY8Y=;
-        b=WxGgW2e6ZNlDam+i9wS3gOs1ivGFUNIwt3D3rDz8vceTP5NPsBirSZ9wlPnf/RtlLg
-         1033se+FS8GmxHR68wodI/m48KIyK5Ac2wsElDE114AR2BA/yS/J5K9WaoRDjA7woKJ/
-         9AD6aduQ695WcSjqwavjGbD1Yp1HGRLQY+C5qUQOrR6l0eg9ccRRlDdZiu/bzcMS3GKH
-         jUnb7eEB5ri1ijwaeHQ5vidXhyzt7tv6mLGC8Beg7m8+98PhhnTxMwc7SLfsw7X8iGGH
-         1ep05DdCsS1sZD9La+fMpSS03PCz3xaG00ZiggjppX2wrbxse1rsNCOwaJkv2Yqs2YP8
-         QEwg==
+        bh=+U1MHyi4igpgZ/6jGy0O3Lo6QMTZLuLTpDcSJLutjsc=;
+        b=Irqcji+CkLGIEor4SS8+FETFEp/91E0b3PKJQWVlFqJ+aYtGQo2B0YcvjkqqVavgf3
+         0mzPFzHPqiBA9Q9P6q1VRFXaJnhUhX2GP6n+kk5xXo6v6L83WtKD/2xr+EuFNz2xCqrI
+         Ao+abLQ6Bk+t/4rGK9EcABgYOG1HAXRgKlVAcEk0qs6WMVjYaFcc9LCQXd9hcIuDZAXw
+         E+eUWjeA5qaL8rKJMSXv48ENEgxLQKEtIjK5HpYv3ckUDtUwbu6WQwqMCMJOKGD+v45j
+         f0FX5JX9OBYZYd/nkSE10HL8kqNXVxZaGpMuju07d6/AMLaLZGiRey0DSVVuWIg+sKhy
+         mk+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=bIBOJgIKBJW6QpyufbaPJU9KUw4OjtQhEx+Ax9LOY8Y=;
-        b=GsZHZb2x5lEAO4g8dZ1JcUdJ4hZHfOvKQXUJfyI/ZjFaKYXcJ74LWbyH8DUiZzCgdz
-         FAAwgb1cL0zTz84fc8ObXbXkR7LSpt72NfXkssnptH3qmKETYr9Tj4Nt/ORKnOpLiLcJ
-         63Cper2YWqJgkMEAee9i+wcvFr/s2KeacxxXQEmVZuQS2KbJH66QKo9lXbKe8RZa/1os
-         b769x7bHmM0zsQ5ydQW5aOsodobjjnd9e/DZHWXuaVCgV8+YEpPwCILpY3rClb8nmiO3
-         LJ+So4hu52W0W4gzyh1DEhYDewTfU2xmqik4+pmcvxEY2gmWe7Fkn732QfLjzAEGzx9w
-         7GsA==
-X-Gm-Message-State: AOUpUlG3qOCadEXBMoQPo4q//0ENb2CR3TG7WnncSW/Hewbg4K8XIsOv
-        la8uiUWgJHmQYiWs5tyIOWw=
-X-Google-Smtp-Source: AAOMgpdnUsqAd3csww/ic77xfpgUmYnRTWXanFEpnQR5ZH/VzpL+JO2N80m2URCZWYpJpnXzpXd6lA==
-X-Received: by 2002:a19:8e5c:: with SMTP id q89-v6mr2942152lfd.35.1532159413815;
-        Sat, 21 Jul 2018 00:50:13 -0700 (PDT)
+        bh=+U1MHyi4igpgZ/6jGy0O3Lo6QMTZLuLTpDcSJLutjsc=;
+        b=s2be7ijnoI/27ufpRdCzCO7Ua3GYfwguKz3GNWp2ki0ETMbo6P7QBA7QG1KpbbMvsE
+         JQrkUxuhMmykaEIL+kH/S9GEg2gFzxzXiiV3+3zlFjrNLV5jKLOGQupYgPpn7OlDboLD
+         t4luGQDlTJJLGEttEnHGjq5h4+gSni0sfnXc+cYJKXjzelI5W3/bbEW3LtGowoxosvI3
+         hFOsxY1/72d4AHEhtsS82n6y7Df0W9AwzhaXUzRN6WdhcBDsjc4uar5EV9htFxJDOO3z
+         MDSPTQPs+wCDhFMughloBE1kfoLD95ny0g0DQxhqPNsWCiAOPQlt1qwleXEDQp0/z+jF
+         dUcg==
+X-Gm-Message-State: AOUpUlGPFaNJkhn+mkCijSnHI6yvqke47IXS4+OKtqfbQrYY1nUrfAlp
+        LIggvX7rQ0wUTGOtLY0A9OWjMg7U
+X-Google-Smtp-Source: AAOMgpcqvNdbW1Lhn6qJz5QLSQlmpd52nSMkoXdXybv4stYEkD8+Mik7uLBWUeAhceF/Pf8ygMVOKg==
+X-Received: by 2002:a2e:4701:: with SMTP id u1-v6mr3787628lja.54.1532159418442;
+        Sat, 21 Jul 2018 00:50:18 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id n3-v6sm759898lji.96.2018.07.21.00.50.12
+        by smtp.gmail.com with ESMTPSA id n3-v6sm759898lji.96.2018.07.21.00.50.17
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 21 Jul 2018 00:50:13 -0700 (PDT)
+        Sat, 21 Jul 2018 00:50:17 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, newren@gmail.com,
         stolee@gmail.com
-Subject: [PATCH v3 17/23] refs.c: mark more strings for translation
-Date:   Sat, 21 Jul 2018 09:49:35 +0200
-Message-Id: <20180721074941.14632-18-pclouds@gmail.com>
+Subject: [PATCH v3 21/23] sha1-file.c: mark more strings for translation
+Date:   Sat, 21 Jul 2018 09:49:39 +0200
+Message-Id: <20180721074941.14632-22-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.656.gda699b98b3
 In-Reply-To: <20180721074941.14632-1-pclouds@gmail.com>
 References: <20180718161101.19765-1-pclouds@gmail.com>
@@ -71,336 +71,399 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- refs.c                                | 40 +++++++++++++--------------
- t/t1400-update-ref.sh                 | 20 +++++++-------
- t/t1404-update-ref-errors.sh          |  4 +--
- t/t3210-pack-refs.sh                  |  2 +-
- t/t3310-notes-merge-manual-resolve.sh |  6 ++--
- t/t5505-remote.sh                     |  2 +-
- 6 files changed, 37 insertions(+), 37 deletions(-)
+ sha1-file.c | 104 ++++++++++++++++++++++++++--------------------------
+ 1 file changed, 52 insertions(+), 52 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index a033910353..becb78e441 100644
---- a/refs.c
-+++ b/refs.c
-@@ -188,7 +188,7 @@ int ref_resolves_to_object(const char *refname,
- 	if (flags & REF_ISBROKEN)
- 		return 0;
- 	if (!has_sha1_file(oid->hash)) {
--		error("%s does not point to a valid object!", refname);
-+		error(_("%s does not point to a valid object!"), refname);
- 		return 0;
- 	}
- 	return 1;
-@@ -567,9 +567,9 @@ int expand_ref(const char *str, int len, struct object_id *oid, char **ref)
- 			if (!warn_ambiguous_refs)
- 				break;
- 		} else if ((flag & REF_ISSYMREF) && strcmp(fullref.buf, "HEAD")) {
--			warning("ignoring dangling symref %s", fullref.buf);
-+			warning(_("ignoring dangling symref %s"), fullref.buf);
- 		} else if ((flag & REF_ISBROKEN) && strchr(fullref.buf, '/')) {
--			warning("ignoring broken ref %s", fullref.buf);
-+			warning(_("ignoring broken ref %s"), fullref.buf);
- 		}
- 	}
- 	strbuf_release(&fullref);
-@@ -673,7 +673,7 @@ static int write_pseudoref(const char *pseudoref, const struct object_id *oid,
- 	fd = hold_lock_file_for_update_timeout(&lock, filename, 0,
- 					       get_files_ref_lock_timeout_ms());
- 	if (fd < 0) {
--		strbuf_addf(err, "could not open '%s' for writing: %s",
-+		strbuf_addf(err, _("could not open '%s' for writing: %s"),
- 			    filename, strerror(errno));
- 		goto done;
- 	}
-@@ -683,18 +683,18 @@ static int write_pseudoref(const char *pseudoref, const struct object_id *oid,
+diff --git a/sha1-file.c b/sha1-file.c
+index ed7ac73fa9..92c27583db 100644
+--- a/sha1-file.c
++++ b/sha1-file.c
+@@ -378,8 +378,8 @@ static int alt_odb_usable(struct raw_object_store *o,
  
- 		if (read_ref(pseudoref, &actual_old_oid)) {
- 			if (!is_null_oid(old_oid)) {
--				strbuf_addf(err, "could not read ref '%s'",
-+				strbuf_addf(err, _("could not read ref '%s'"),
- 					    pseudoref);
- 				rollback_lock_file(&lock);
- 				goto done;
- 			}
- 		} else if (is_null_oid(old_oid)) {
--			strbuf_addf(err, "ref '%s' already exists",
-+			strbuf_addf(err, _("ref '%s' already exists"),
- 				    pseudoref);
- 			rollback_lock_file(&lock);
- 			goto done;
- 		} else if (oidcmp(&actual_old_oid, old_oid)) {
--			strbuf_addf(err, "unexpected object ID when writing '%s'",
-+			strbuf_addf(err, _("unexpected object ID when writing '%s'"),
- 				    pseudoref);
- 			rollback_lock_file(&lock);
- 			goto done;
-@@ -702,7 +702,7 @@ static int write_pseudoref(const char *pseudoref, const struct object_id *oid,
+ 	/* Detect cases where alternate disappeared */
+ 	if (!is_directory(path->buf)) {
+-		error("object directory %s does not exist; "
+-		      "check .git/objects/info/alternates",
++		error(_("object directory %s does not exist; "
++			"check .git/objects/info/alternates"),
+ 		      path->buf);
+ 		return 0;
+ 	}
+@@ -429,7 +429,7 @@ static int link_alt_odb_entry(struct repository *r, const char *entry,
+ 	strbuf_addstr(&pathbuf, entry);
+ 
+ 	if (strbuf_normalize_path(&pathbuf) < 0 && relative_base) {
+-		error("unable to normalize alternate object path: %s",
++		error(_("unable to normalize alternate object path: %s"),
+ 		      pathbuf.buf);
+ 		strbuf_release(&pathbuf);
+ 		return -1;
+@@ -500,14 +500,14 @@ static void link_alt_odb_entries(struct repository *r, const char *alt,
+ 		return;
+ 
+ 	if (depth > 5) {
+-		error("%s: ignoring alternate object stores, nesting too deep.",
++		error(_("%s: ignoring alternate object stores, nesting too deep"),
+ 				relative_base);
+ 		return;
  	}
  
- 	if (write_in_full(fd, buf.buf, buf.len) < 0) {
--		strbuf_addf(err, "could not write to '%s'", filename);
-+		strbuf_addf(err, _("could not write to '%s'"), filename);
+ 	strbuf_add_absolute_path(&objdirbuf, r->objects->objectdir);
+ 	if (strbuf_normalize_path(&objdirbuf) < 0)
+-		die("unable to normalize object directory: %s",
++		die(_("unable to normalize object directory: %s"),
+ 		    objdirbuf.buf);
+ 
+ 	while (*alt) {
+@@ -562,7 +562,7 @@ void add_to_alternates_file(const char *reference)
+ 	hold_lock_file_for_update(&lock, alts, LOCK_DIE_ON_ERROR);
+ 	out = fdopen_lock_file(&lock, "w");
+ 	if (!out)
+-		die_errno("unable to fdopen alternates lockfile");
++		die_errno(_("unable to fdopen alternates lockfile"));
+ 
+ 	in = fopen(alts, "r");
+ 	if (in) {
+@@ -580,14 +580,14 @@ void add_to_alternates_file(const char *reference)
+ 		fclose(in);
+ 	}
+ 	else if (errno != ENOENT)
+-		die_errno("unable to read alternates file");
++		die_errno(_("unable to read alternates file"));
+ 
+ 	if (found) {
  		rollback_lock_file(&lock);
- 		goto done;
+ 	} else {
+ 		fprintf_or_die(out, "%s\n", reference);
+ 		if (commit_lock_file(&lock))
+-			die_errno("unable to move new alternates file into place");
++			die_errno(_("unable to move new alternates file into place"));
+ 		if (the_repository->objects->alt_odb_tail)
+ 			link_alt_odb_entries(the_repository, reference,
+ 					     '\n', NULL, 0);
+@@ -778,7 +778,7 @@ static void mmap_limit_check(size_t length)
+ 			limit = SIZE_MAX;
  	}
-@@ -734,9 +734,9 @@ static int delete_pseudoref(const char *pseudoref, const struct object_id *old_o
- 			return -1;
+ 	if (length > limit)
+-		die("attempting to mmap %"PRIuMAX" over limit %"PRIuMAX,
++		die(_("attempting to mmap %"PRIuMAX" over limit %"PRIuMAX),
+ 		    (uintmax_t)length, (uintmax_t)limit);
+ }
+ 
+@@ -803,7 +803,7 @@ void *xmmap(void *start, size_t length,
+ {
+ 	void *ret = xmmap_gently(start, length, prot, flags, fd, offset);
+ 	if (ret == MAP_FAILED)
+-		die_errno("mmap failed");
++		die_errno(_("mmap failed"));
+ 	return ret;
+ }
+ 
+@@ -970,7 +970,7 @@ static void *map_sha1_file_1(struct repository *r, const char *path,
+ 			*size = xsize_t(st.st_size);
+ 			if (!*size) {
+ 				/* mmap() is forbidden on empty files */
+-				error("object file %s is empty", path);
++				error(_("object file %s is empty"), path);
+ 				return NULL;
+ 			}
+ 			map = xmmap(NULL, *size, PROT_READ, MAP_PRIVATE, fd, 0);
+@@ -1090,9 +1090,9 @@ static void *unpack_sha1_rest(git_zstream *stream, void *buffer, unsigned long s
+ 	}
+ 
+ 	if (status < 0)
+-		error("corrupt loose object '%s'", sha1_to_hex(sha1));
++		error(_("corrupt loose object '%s'"), sha1_to_hex(sha1));
+ 	else if (stream->avail_in)
+-		error("garbage at end of loose object '%s'",
++		error(_("garbage at end of loose object '%s'"),
+ 		      sha1_to_hex(sha1));
+ 	free(buf);
+ 	return NULL;
+@@ -1134,7 +1134,7 @@ static int parse_sha1_header_extended(const char *hdr, struct object_info *oi,
+ 	if ((flags & OBJECT_INFO_ALLOW_UNKNOWN_TYPE) && (type < 0))
+ 		type = 0;
+ 	else if (type < 0)
+-		die("invalid object type");
++		die(_("invalid object type"));
+ 	if (oi->typep)
+ 		*oi->typep = type;
+ 
+@@ -1216,19 +1216,19 @@ static int sha1_loose_object_info(struct repository *r,
+ 		*oi->disk_sizep = mapsize;
+ 	if ((flags & OBJECT_INFO_ALLOW_UNKNOWN_TYPE)) {
+ 		if (unpack_sha1_header_to_strbuf(&stream, map, mapsize, hdr, sizeof(hdr), &hdrbuf) < 0)
+-			status = error("unable to unpack %s header with --allow-unknown-type",
++			status = error(_("unable to unpack %s header with --allow-unknown-type"),
+ 				       sha1_to_hex(sha1));
+ 	} else if (unpack_sha1_header(&stream, map, mapsize, hdr, sizeof(hdr)) < 0)
+-		status = error("unable to unpack %s header",
++		status = error(_("unable to unpack %s header"),
+ 			       sha1_to_hex(sha1));
+ 	if (status < 0)
+ 		; /* Do nothing */
+ 	else if (hdrbuf.len) {
+ 		if ((status = parse_sha1_header_extended(hdrbuf.buf, oi, flags)) < 0)
+-			status = error("unable to parse %s header with --allow-unknown-type",
++			status = error(_("unable to parse %s header with --allow-unknown-type"),
+ 				       sha1_to_hex(sha1));
+ 	} else if ((status = parse_sha1_header_extended(hdr, oi, flags)) < 0)
+-		status = error("unable to parse %s header", sha1_to_hex(sha1));
++		status = error(_("unable to parse %s header"), sha1_to_hex(sha1));
+ 
+ 	if (status >= 0 && oi->contentp) {
+ 		*oi->contentp = unpack_sha1_rest(&stream, hdr,
+@@ -1419,19 +1419,19 @@ void *read_object_file_extended(const struct object_id *oid,
+ 		return data;
+ 
+ 	if (errno && errno != ENOENT)
+-		die_errno("failed to read object %s", oid_to_hex(oid));
++		die_errno(_("failed to read object %s"), oid_to_hex(oid));
+ 
+ 	/* die if we replaced an object with one that does not exist */
+ 	if (repl != oid)
+-		die("replacement %s not found for %s",
++		die(_("replacement %s not found for %s"),
+ 		    oid_to_hex(repl), oid_to_hex(oid));
+ 
+ 	if (!stat_sha1_file(the_repository, repl->hash, &st, &path))
+-		die("loose object %s (stored in %s) is corrupt",
++		die(_("loose object %s (stored in %s) is corrupt"),
+ 		    oid_to_hex(repl), path);
+ 
+ 	if ((p = has_packed_and_bad(repl->hash)) != NULL)
+-		die("packed object %s (stored in %s) is corrupt",
++		die(_("packed object %s (stored in %s) is corrupt"),
+ 		    oid_to_hex(repl), p->pack_name);
+ 
+ 	return NULL;
+@@ -1533,21 +1533,21 @@ int finalize_object_file(const char *tmpfile, const char *filename)
+ 	unlink_or_warn(tmpfile);
+ 	if (ret) {
+ 		if (ret != EEXIST) {
+-			return error_errno("unable to write sha1 filename %s", filename);
++			return error_errno(_("unable to write sha1 filename %s"), filename);
  		}
- 		if (read_ref(pseudoref, &actual_old_oid))
--			die("could not read ref '%s'", pseudoref);
-+			die(_("could not read ref '%s'"), pseudoref);
- 		if (oidcmp(&actual_old_oid, old_oid)) {
--			error("unexpected object ID when deleting '%s'",
-+			error(_("unexpected object ID when deleting '%s'"),
- 			      pseudoref);
- 			rollback_lock_file(&lock);
- 			return -1;
-@@ -871,13 +871,13 @@ static int read_ref_at_ent(struct object_id *ooid, struct object_id *noid,
- 		if (!is_null_oid(&cb->ooid)) {
- 			oidcpy(cb->oid, noid);
- 			if (oidcmp(&cb->ooid, noid))
--				warning("log for ref %s has gap after %s",
-+				warning(_("log for ref %s has gap after %s"),
- 					cb->refname, show_date(cb->date, cb->tz, DATE_MODE(RFC2822)));
- 		}
- 		else if (cb->date == cb->at_time)
- 			oidcpy(cb->oid, noid);
- 		else if (oidcmp(noid, cb->oid))
--			warning("log for ref %s unexpectedly ended on %s",
-+			warning(_("log for ref %s unexpectedly ended on %s"),
- 				cb->refname, show_date(cb->date, cb->tz,
- 						       DATE_MODE(RFC2822)));
- 		oidcpy(&cb->ooid, ooid);
-@@ -935,7 +935,7 @@ int read_ref_at(const char *refname, unsigned int flags, timestamp_t at_time, in
- 		if (flags & GET_OID_QUIETLY)
- 			exit(128);
+ 		/* FIXME!!! Collision check here ? */
+ 	}
+ 
+ out:
+ 	if (adjust_shared_perm(filename))
+-		return error("unable to set permission to '%s'", filename);
++		return error(_("unable to set permission to '%s'"), filename);
+ 	return 0;
+ }
+ 
+ static int write_buffer(int fd, const void *buf, size_t len)
+ {
+ 	if (write_in_full(fd, buf, len) < 0)
+-		return error_errno("file write error");
++		return error_errno(_("file write error"));
+ 	return 0;
+ }
+ 
+@@ -1566,7 +1566,7 @@ static void close_sha1_file(int fd)
+ 	if (fsync_object_files)
+ 		fsync_or_die(fd, "sha1 file");
+ 	if (close(fd) != 0)
+-		die_errno("error when closing sha1 file");
++		die_errno(_("error when closing sha1 file"));
+ }
+ 
+ /* Size of directory component, including the ending '/' */
+@@ -1632,9 +1632,9 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
+ 	fd = create_tmpfile(&tmp_file, filename.buf);
+ 	if (fd < 0) {
+ 		if (errno == EACCES)
+-			return error("insufficient permission for adding an object to repository database %s", get_object_directory());
++			return error(_("insufficient permission for adding an object to repository database %s"), get_object_directory());
  		else
--			die("log for %s is empty", refname);
-+			die(_("log for %s is empty"), refname);
+-			return error_errno("unable to create temporary file");
++			return error_errno(_("unable to create temporary file"));
  	}
- 	if (cb.found_it)
+ 
+ 	/* Set it up */
+@@ -1658,21 +1658,21 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
+ 		ret = git_deflate(&stream, Z_FINISH);
+ 		the_hash_algo->update_fn(&c, in0, stream.next_in - in0);
+ 		if (write_buffer(fd, compressed, stream.next_out - compressed) < 0)
+-			die("unable to write sha1 file");
++			die(_("unable to write sha1 file"));
+ 		stream.next_out = compressed;
+ 		stream.avail_out = sizeof(compressed);
+ 	} while (ret == Z_OK);
+ 
+ 	if (ret != Z_STREAM_END)
+-		die("unable to deflate new object %s (%d)", oid_to_hex(oid),
++		die(_("unable to deflate new object %s (%d)"), oid_to_hex(oid),
+ 		    ret);
+ 	ret = git_deflate_end_gently(&stream);
+ 	if (ret != Z_OK)
+-		die("deflateEnd on object %s failed (%d)", oid_to_hex(oid),
++		die(_("deflateEnd on object %s failed (%d)"), oid_to_hex(oid),
+ 		    ret);
+ 	the_hash_algo->final_fn(parano_oid.hash, &c);
+ 	if (oidcmp(oid, &parano_oid) != 0)
+-		die("confused by unstable object source data for %s",
++		die(_("confused by unstable object source data for %s"),
+ 		    oid_to_hex(oid));
+ 
+ 	close_sha1_file(fd);
+@@ -1682,7 +1682,7 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
+ 		utb.actime = mtime;
+ 		utb.modtime = mtime;
+ 		if (utime(tmp_file.buf, &utb) < 0)
+-			warning_errno("failed utime() on %s", tmp_file.buf);
++			warning_errno(_("failed utime() on %s"), tmp_file.buf);
+ 	}
+ 
+ 	return finalize_object_file(tmp_file.buf, filename.buf);
+@@ -1757,7 +1757,7 @@ int force_object_loose(const struct object_id *oid, time_t mtime)
  		return 0;
-@@ -1027,7 +1027,7 @@ int ref_transaction_update(struct ref_transaction *transaction,
- 	if ((new_oid && !is_null_oid(new_oid)) ?
- 	    check_refname_format(refname, REFNAME_ALLOW_ONELEVEL) :
- 	    !refname_is_safe(refname)) {
--		strbuf_addf(err, "refusing to update ref with bad name '%s'",
-+		strbuf_addf(err, _("refusing to update ref with bad name '%s'"),
- 			    refname);
+ 	buf = read_object(oid->hash, &type, &len);
+ 	if (!buf)
+-		return error("cannot read sha1_file for %s", oid_to_hex(oid));
++		return error(_("cannot read sha1_file for %s"), oid_to_hex(oid));
+ 	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %lu", type_name(type), len) + 1;
+ 	ret = write_loose_object(oid, hdr, hdrlen, buf, len, mtime);
+ 	free(buf);
+@@ -1802,7 +1802,7 @@ static void check_commit(const void *buf, size_t size)
+ 	struct commit c;
+ 	memset(&c, 0, sizeof(c));
+ 	if (parse_commit_buffer(&c, buf, size, 0))
+-		die("corrupt commit");
++		die(_("corrupt commit"));
+ }
+ 
+ static void check_tag(const void *buf, size_t size)
+@@ -1810,7 +1810,7 @@ static void check_tag(const void *buf, size_t size)
+ 	struct tag t;
+ 	memset(&t, 0, sizeof(t));
+ 	if (parse_tag_buffer(&t, buf, size))
+-		die("corrupt tag");
++		die(_("corrupt tag"));
+ }
+ 
+ static int index_mem(struct object_id *oid, void *buf, size_t size,
+@@ -1903,10 +1903,10 @@ static int index_core(struct object_id *oid, int fd, size_t size,
+ 		char *buf = xmalloc(size);
+ 		ssize_t read_result = read_in_full(fd, buf, size);
+ 		if (read_result < 0)
+-			ret = error_errno("read error while indexing %s",
++			ret = error_errno(_("read error while indexing %s"),
+ 					  path ? path : "<unknown>");
+ 		else if (read_result != size)
+-			ret = error("short read while indexing %s",
++			ret = error(_("short read while indexing %s"),
+ 				    path ? path : "<unknown>");
+ 		else
+ 			ret = index_mem(oid, buf, size, type, path, flags);
+@@ -1977,7 +1977,7 @@ int index_path(struct object_id *oid, const char *path, struct stat *st, unsigne
+ 		if (fd < 0)
+ 			return error_errno("open(\"%s\")", path);
+ 		if (index_fd(oid, fd, st, OBJ_BLOB, path, flags) < 0)
+-			return error("%s: failed to insert into database",
++			return error(_("%s: failed to insert into database"),
+ 				     path);
+ 		break;
+ 	case S_IFLNK:
+@@ -1986,13 +1986,13 @@ int index_path(struct object_id *oid, const char *path, struct stat *st, unsigne
+ 		if (!(flags & HASH_WRITE_OBJECT))
+ 			hash_object_file(sb.buf, sb.len, blob_type, oid);
+ 		else if (write_object_file(sb.buf, sb.len, blob_type, oid))
+-			rc = error("%s: failed to insert into database", path);
++			rc = error(_("%s: failed to insert into database"), path);
+ 		strbuf_release(&sb);
+ 		break;
+ 	case S_IFDIR:
+ 		return resolve_gitlink_ref(path, "HEAD", oid);
+ 	default:
+-		return error("%s: unsupported file type", path);
++		return error(_("%s: unsupported file type"), path);
+ 	}
+ 	return rc;
+ }
+@@ -2016,9 +2016,9 @@ void assert_oid_type(const struct object_id *oid, enum object_type expect)
+ {
+ 	enum object_type type = oid_object_info(the_repository, oid, NULL);
+ 	if (type < 0)
+-		die("%s is not a valid object", oid_to_hex(oid));
++		die(_("%s is not a valid object"), oid_to_hex(oid));
+ 	if (type != expect)
+-		die("%s is not a valid '%s' object", oid_to_hex(oid),
++		die(_("%s is not a valid '%s' object"), oid_to_hex(oid),
+ 		    type_name(expect));
+ }
+ 
+@@ -2045,7 +2045,7 @@ int for_each_file_in_obj_subdir(unsigned int subdir_nr,
+ 	dir = opendir(path->buf);
+ 	if (!dir) {
+ 		if (errno != ENOENT)
+-			r = error_errno("unable to open %s", path->buf);
++			r = error_errno(_("unable to open %s"), path->buf);
+ 		strbuf_setlen(path, origlen);
+ 		return r;
+ 	}
+@@ -2202,18 +2202,18 @@ static int check_stream_sha1(git_zstream *stream,
+ 	git_inflate_end(stream);
+ 
+ 	if (status != Z_STREAM_END) {
+-		error("corrupt loose object '%s'", sha1_to_hex(expected_sha1));
++		error(_("corrupt loose object '%s'"), sha1_to_hex(expected_sha1));
  		return -1;
  	}
-@@ -1103,7 +1103,7 @@ int refs_update_ref(struct ref_store *refs, const char *msg,
- 		}
+ 	if (stream->avail_in) {
+-		error("garbage at end of loose object '%s'",
++		error(_("garbage at end of loose object '%s'"),
+ 		      sha1_to_hex(expected_sha1));
+ 		return -1;
  	}
- 	if (ret) {
--		const char *str = "update_ref failed for ref '%s': %s";
-+		const char *str = _("update_ref failed for ref '%s': %s");
  
- 		switch (onerr) {
- 		case UPDATE_REFS_MSG_ON_ERR:
-@@ -1845,7 +1845,7 @@ int ref_update_reject_duplicates(struct string_list *refnames,
+ 	the_hash_algo->final_fn(real_sha1, &c);
+ 	if (hashcmp(expected_sha1, real_sha1)) {
+-		error("sha1 mismatch for %s (expected %s)", path,
++		error(_("sha1 mismatch for %s (expected %s)"), path,
+ 		      sha1_to_hex(expected_sha1));
+ 		return -1;
+ 	}
+@@ -2237,18 +2237,18 @@ int read_loose_object(const char *path,
  
- 		if (!cmp) {
- 			strbuf_addf(err,
--				    "multiple updates for ref '%s' not allowed",
-+				    _("multiple updates for ref '%s' not allowed"),
- 				    refnames->items[i].string);
- 			return 1;
- 		} else if (cmp > 0) {
-@@ -1973,13 +1973,13 @@ int refs_verify_refname_available(struct ref_store *refs,
- 			continue;
+ 	map = map_sha1_file_1(the_repository, path, NULL, &mapsize);
+ 	if (!map) {
+-		error_errno("unable to mmap %s", path);
++		error_errno(_("unable to mmap %s"), path);
+ 		goto out;
+ 	}
  
- 		if (!refs_read_raw_ref(refs, dirname.buf, &oid, &referent, &type)) {
--			strbuf_addf(err, "'%s' exists; cannot create '%s'",
-+			strbuf_addf(err, _("'%s' exists; cannot create '%s'"),
- 				    dirname.buf, refname);
- 			goto cleanup;
+ 	if (unpack_sha1_header(&stream, map, mapsize, hdr, sizeof(hdr)) < 0) {
+-		error("unable to unpack header of %s", path);
++		error(_("unable to unpack header of %s"), path);
+ 		goto out;
+ 	}
+ 
+ 	*type = parse_sha1_header(hdr, size);
+ 	if (*type < 0) {
+-		error("unable to parse header of %s", path);
++		error(_("unable to parse header of %s"), path);
+ 		git_inflate_end(&stream);
+ 		goto out;
+ 	}
+@@ -2259,13 +2259,13 @@ int read_loose_object(const char *path,
+ 	} else {
+ 		*contents = unpack_sha1_rest(&stream, hdr, *size, expected_oid->hash);
+ 		if (!*contents) {
+-			error("unable to unpack contents of %s", path);
++			error(_("unable to unpack contents of %s"), path);
+ 			git_inflate_end(&stream);
+ 			goto out;
  		}
- 
- 		if (extras && string_list_has_string(extras, dirname.buf)) {
--			strbuf_addf(err, "cannot process '%s' and '%s' at the same time",
-+			strbuf_addf(err, _("cannot process '%s' and '%s' at the same time"),
- 				    refname, dirname.buf);
- 			goto cleanup;
- 		}
-@@ -2003,7 +2003,7 @@ int refs_verify_refname_available(struct ref_store *refs,
- 		    string_list_has_string(skip, iter->refname))
- 			continue;
- 
--		strbuf_addf(err, "'%s' exists; cannot create '%s'",
-+		strbuf_addf(err, _("'%s' exists; cannot create '%s'"),
- 			    iter->refname, refname);
- 		ref_iterator_abort(iter);
- 		goto cleanup;
-@@ -2014,7 +2014,7 @@ int refs_verify_refname_available(struct ref_store *refs,
- 
- 	extra_refname = find_descendant_ref(dirname.buf, extras, skip);
- 	if (extra_refname)
--		strbuf_addf(err, "cannot process '%s' and '%s' at the same time",
-+		strbuf_addf(err, _("cannot process '%s' and '%s' at the same time"),
- 			    refname, extra_refname);
- 	else
- 		ret = 0;
-diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index 05e68a6671..7c8df20955 100755
---- a/t/t1400-update-ref.sh
-+++ b/t/t1400-update-ref.sh
-@@ -390,7 +390,7 @@ test_expect_success 'Query "master@{2005-05-26 23:33:01}" (middle of history wit
- 	test_when_finished "rm -f o e" &&
- 	git rev-parse --verify "master@{2005-05-26 23:33:01}" >o 2>e &&
- 	test $B = $(cat o) &&
--	test "warning: log for ref $m has gap after $gd" = "$(cat e)"
-+	test_i18ngrep -F "warning: log for ref $m has gap after $gd" e
- '
- test_expect_success 'Query "master@{2005-05-26 23:38:00}" (middle of history)' '
- 	test_when_finished "rm -f o e" &&
-@@ -408,7 +408,7 @@ test_expect_success 'Query "master@{2005-05-28}" (past end of history)' '
- 	test_when_finished "rm -f o e" &&
- 	git rev-parse --verify "master@{2005-05-28}" >o 2>e &&
- 	test $D = $(cat o) &&
--	test "warning: log for ref $m unexpectedly ended on $ld" = "$(cat e)"
-+	test_i18ngrep -F "warning: log for ref $m unexpectedly ended on $ld" e
- '
- 
- rm -f .git/$m .git/logs/$m expect
-@@ -462,7 +462,7 @@ test_expect_success 'git cat-file blob master@{2005-05-26 23:42}:F (expect OTHER
- test_expect_success 'given old value for missing pseudoref, do not create' '
- 	test_must_fail git update-ref PSEUDOREF $A $B 2>err &&
- 	test_path_is_missing .git/PSEUDOREF &&
--	grep "could not read ref" err
-+	test_i18ngrep "could not read ref" err
- '
- 
- test_expect_success 'create pseudoref' '
-@@ -483,7 +483,7 @@ test_expect_success 'overwrite pseudoref with correct old value' '
- test_expect_success 'do not overwrite pseudoref with wrong old value' '
- 	test_must_fail git update-ref PSEUDOREF $D $E 2>err &&
- 	test $C = $(cat .git/PSEUDOREF) &&
--	grep "unexpected object ID" err
-+	test_i18ngrep "unexpected object ID" err
- '
- 
- test_expect_success 'delete pseudoref' '
-@@ -495,7 +495,7 @@ test_expect_success 'do not delete pseudoref with wrong old value' '
- 	git update-ref PSEUDOREF $A &&
- 	test_must_fail git update-ref -d PSEUDOREF $B 2>err &&
- 	test $A = $(cat .git/PSEUDOREF) &&
--	grep "unexpected object ID" err
-+	test_i18ngrep "unexpected object ID" err
- '
- 
- test_expect_success 'delete pseudoref with correct old value' '
-@@ -512,7 +512,7 @@ test_expect_success 'do not overwrite pseudoref with old OID zero' '
- 	test_when_finished git update-ref -d PSEUDOREF &&
- 	test_must_fail git update-ref PSEUDOREF $B $Z 2>err &&
- 	test $A = $(cat .git/PSEUDOREF) &&
--	grep "already exists" err
-+	test_i18ngrep "already exists" err
- '
- 
- # Test --stdin
-@@ -650,7 +650,7 @@ test_expect_success 'stdin fails with duplicate refs' '
- 	create $a $m
- 	EOF
- 	test_must_fail git update-ref --stdin <stdin 2>err &&
--	grep "fatal: multiple updates for ref '"'"'$a'"'"' not allowed" err
-+	test_i18ngrep "fatal: multiple updates for ref '"'"'$a'"'"' not allowed" err
- '
- 
- test_expect_success 'stdin create ref works' '
-@@ -1052,7 +1052,7 @@ test_expect_success 'stdin -z fails option with unknown name' '
- test_expect_success 'stdin -z fails with duplicate refs' '
- 	printf $F "create $a" "$m" "create $b" "$m" "create $a" "$m" >stdin &&
- 	test_must_fail git update-ref -z --stdin <stdin 2>err &&
--	grep "fatal: multiple updates for ref '"'"'$a'"'"' not allowed" err
-+	test_i18ngrep "fatal: multiple updates for ref '"'"'$a'"'"' not allowed" err
- '
- 
- test_expect_success 'stdin -z create ref works' '
-@@ -1283,7 +1283,7 @@ test_expect_success 'fails with duplicate HEAD update' '
- 	update HEAD $B
- 	EOF
- 	test_must_fail git update-ref --stdin <stdin 2>err &&
--	grep "fatal: multiple updates for '\''HEAD'\'' (including one via its referent .refs/heads/target1.) are not allowed" err &&
-+	test_i18ngrep "fatal: multiple updates for '\''HEAD'\'' (including one via its referent .refs/heads/target1.) are not allowed" err &&
- 	echo "refs/heads/target1" >expect &&
- 	git symbolic-ref HEAD >actual &&
- 	test_cmp expect actual &&
-@@ -1300,7 +1300,7 @@ test_expect_success 'fails with duplicate ref update via symref' '
- 	update refs/heads/symref2 $B
- 	EOF
- 	test_must_fail git update-ref --stdin <stdin 2>err &&
--	grep "fatal: multiple updates for '\''refs/heads/target2'\'' (including one via symref .refs/heads/symref2.) are not allowed" err &&
-+	test_i18ngrep "fatal: multiple updates for '\''refs/heads/target2'\'' (including one via symref .refs/heads/symref2.) are not allowed" err &&
- 	echo "refs/heads/target2" >expect &&
- 	git symbolic-ref refs/heads/symref2 >actual &&
- 	test_cmp expect actual &&
-diff --git a/t/t1404-update-ref-errors.sh b/t/t1404-update-ref-errors.sh
-index 3a887b5113..2a42a589a4 100755
---- a/t/t1404-update-ref-errors.sh
-+++ b/t/t1404-update-ref-errors.sh
-@@ -27,7 +27,7 @@ test_update_rejected () {
- 	fi &&
- 	printf "create $prefix/%s $C\n" $create >input &&
- 	test_must_fail git update-ref --stdin <input 2>output.err &&
--	grep -F "$error" output.err &&
-+	test_i18ngrep -F "$error" output.err &&
- 	git for-each-ref $prefix >actual &&
- 	test_cmp unchanged actual
- }
-@@ -103,7 +103,7 @@ df_test() {
- 		printf "%s\n" "delete $delname" "create $addname $D"
- 	fi >commands &&
- 	test_must_fail git update-ref --stdin <commands 2>output.err &&
--	test_cmp expected-err output.err &&
-+	test_i18ncmp expected-err output.err &&
- 	printf "%s\n" "$C $delref" >expected-refs &&
- 	git for-each-ref --format="%(objectname) %(refname)" $prefix/r >actual-refs &&
- 	test_cmp expected-refs actual-refs
-diff --git a/t/t3210-pack-refs.sh b/t/t3210-pack-refs.sh
-index afa27ffe2d..7e95713f9e 100755
---- a/t/t3210-pack-refs.sh
-+++ b/t/t3210-pack-refs.sh
-@@ -186,7 +186,7 @@ test_expect_success 'notice d/f conflict with existing directory' '
- 
- test_expect_success 'existing directory reports concrete ref' '
- 	test_must_fail git branch foo 2>stderr &&
--	grep refs/heads/foo/bar/baz stderr
-+	test_i18ngrep refs/heads/foo/bar/baz stderr
- '
- 
- test_expect_success 'notice d/f conflict with existing ref' '
-diff --git a/t/t3310-notes-merge-manual-resolve.sh b/t/t3310-notes-merge-manual-resolve.sh
-index 9c1bf6eb3d..68436eed82 100755
---- a/t/t3310-notes-merge-manual-resolve.sh
-+++ b/t/t3310-notes-merge-manual-resolve.sh
-@@ -541,9 +541,9 @@ EOF
- 	test "$(git rev-parse refs/notes/y)" = "$(git rev-parse NOTES_MERGE_PARTIAL^1)" &&
- 	test "$(git rev-parse refs/notes/m)" != "$(git rev-parse NOTES_MERGE_PARTIAL^1)" &&
- 	# Mention refs/notes/m, and its current and expected value in output
--	grep -q "refs/notes/m" output &&
--	grep -q "$(git rev-parse refs/notes/m)" output &&
--	grep -q "$(git rev-parse NOTES_MERGE_PARTIAL^1)" output &&
-+	test_i18ngrep -q "refs/notes/m" output &&
-+	test_i18ngrep -q "$(git rev-parse refs/notes/m)" output &&
-+	test_i18ngrep -q "$(git rev-parse NOTES_MERGE_PARTIAL^1)" output &&
- 	# Verify that other notes refs has not changed (w, x, y and z)
- 	verify_notes w &&
- 	verify_notes x &&
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index a6c0178f3a..ca4c222743 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -876,7 +876,7 @@ test_expect_success 'remote prune to cause a dangling symref' '
- 		cd eight &&
- 		test_must_fail git branch nomore origin
- 	) 2>err &&
--	grep "dangling symref" err
-+	test_i18ngrep "dangling symref" err
- '
- 
- test_expect_success 'show empty remote' '
+ 		if (check_object_signature(expected_oid, *contents,
+ 					 *size, type_name(*type))) {
+-			error("sha1 mismatch for %s (expected %s)", path,
++			error(_("sha1 mismatch for %s (expected %s)"), path,
+ 			      oid_to_hex(expected_oid));
+ 			free(*contents);
+ 			goto out;
 -- 
 2.18.0.656.gda699b98b3
 
