@@ -8,104 +8,118 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39AC31F597
-	for <e@80x24.org>; Sat, 21 Jul 2018 19:41:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 35B551F597
+	for <e@80x24.org>; Sat, 21 Jul 2018 19:52:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728155AbeGUUf1 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 21 Jul 2018 16:35:27 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:35384 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727997AbeGUUf1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Jul 2018 16:35:27 -0400
-Received: by mail-ed1-f68.google.com with SMTP id e6-v6so229976edr.2
-        for <git@vger.kernel.org>; Sat, 21 Jul 2018 12:41:35 -0700 (PDT)
+        id S1727969AbeGUUqC (ORCPT <rfc822;e@80x24.org>);
+        Sat, 21 Jul 2018 16:46:02 -0400
+Received: from mail-ed1-f52.google.com ([209.85.208.52]:39035 "EHLO
+        mail-ed1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727767AbeGUUqC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Jul 2018 16:46:02 -0400
+Received: by mail-ed1-f52.google.com with SMTP id w14-v6so12350292eds.6
+        for <git@vger.kernel.org>; Sat, 21 Jul 2018 12:52:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=9B2LUKTysHzsxP3n0PoF/PmVV2d3hcaCVJTIrop0Z+Y=;
-        b=cAzSaUbAd+AErtNhz2gBcaN8MpMFmcElSuXyKdbaJ0QDvpQX62/v5f+NdfdN1wZi4h
-         tFB316OsYiJDonSx3qfAomTE1mrXByiZ8R8lcisIBpOzskl9LoGrQVAJVQ7JqW+90cRm
-         BZKnIxArmuPC9zMHjSvHYBiRIKE9znqMgh7c4zQtSqWwzYCjJcqrRGfN0EWJFglCTxQk
-         P3IxtfSJ4b0knwE4HfL7ZwFFjyNGisCDPgpUpixRcbXSHad1pMP3qS3AGhhGWmUue0F9
-         6zK3W13q5FOe/bq6rmNLJCbj7knr9Twa5PJ29pAn+oyv89ws9u2zGR/0GDryl/wdk0I+
-         yhRw==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=Jjt1ppVxqUFPv+GTlgkEIUQUBSCMnoCVnerEa7K2Nuc=;
+        b=IF2iiFmHPpHI+Ocbz3GJf5bThSFTnyr8JSPpivbsfBSBTWJMZ+rzZpwe5SSIg33+jb
+         uFYGYBeq0td5gfUaD3Fdz7lJK7Z2/ILi3EdwSi+yxeZ6uJBlxJTycVjh+hwNcTdwe/AR
+         q/gutOlc4ZoyW0k2sNGYskUTbncSQiuY6vPSAGmOVh7gnQRw9cL5g0Qkr9L/koHCIRdv
+         ik3dZwMrNGKAj2g0ae0YVE30HXprUw4uzumi57bki4/cPJ7HXoMsRsygRKzVwM+2WrOn
+         so9k3qTsOrDlR28OIGydPwR2NlSQtylfcmUdZGomW5+YPAgv8laldI1CLIIOYdfakBPY
+         LlIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=9B2LUKTysHzsxP3n0PoF/PmVV2d3hcaCVJTIrop0Z+Y=;
-        b=SP7BfDNHguTxBlIy3DBr1TqvaDlFnNOlY314ClW2lVEo/S9OpHXNZ++zdtACMNP23+
-         q76s1MPudCdfJ5HVxHoXckf+w8FdOo4Q6yE5yFLAKsysAY8ScLeEQEOoPXimeG89usc6
-         Ns3zv/S8P7GQ0FFd1QOw9fw0U1M9S+GvALSgC+FFVwRXTazwn87fE8Ow4jJeu+cYiYwf
-         DPmieS7GlYgaS2NSPVfAT8neYWVt/VlmFW7zY7TnIvot+WmIRIdtfkPwWGSWVuEvqG+4
-         x89YxUdZNLgZ4jndRQrprqAlbZCK1J/s2hEOdqh9nZawuO3RfDFFeAkJgs4YR9wnravF
-         SN6w==
-X-Gm-Message-State: AOUpUlEWvCcgqULT15g+dz9O352Pbk52auBHWJuI2TEpQep2sURCZSTc
-        2t7X3dzC0ZZGLxPjx04GOLw=
-X-Google-Smtp-Source: AAOMgpfn1ErSV4fIVjP2JVDjqoiJIzT7gTdcCPFqilqlpgKZfHKCA579ia5J3ZtMaZhwI/qxkniY8g==
-X-Received: by 2002:a50:eacb:: with SMTP id u11-v6mr7698917edp.7.1532202094418;
-        Sat, 21 Jul 2018 12:41:34 -0700 (PDT)
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=Jjt1ppVxqUFPv+GTlgkEIUQUBSCMnoCVnerEa7K2Nuc=;
+        b=jqmjxKUvpLxDcvE9n47+wFInqqkh4g6lN5nODxSwuJkdZD8LDh/gC+GW4LitrXhEWE
+         GUMjPszhQ2Z1shCYOjRlkWC7pUlvcnCBHlA6j9s03x7GjugX7aAiWmpZv1oGCJm19oyM
+         0rvf0OF0R147vRRqCAeTCnZNECMr+MT6TtM83FXBAVsHaUKFm93wxP8JQ+5kwoxQ1Nod
+         xZNud+QYvg7jH/Mn/AdTxDXOtBAqH1JZPaxzSkSyyimezzj1+diyqd5IjlVZXc94+t/Q
+         6khQc/DvJp8upAuvL7D7ngjprV6i8YeHE3cWGEosUeGpVQ836RpUJD1pS8iJDV1F3s8a
+         8Q4g==
+X-Gm-Message-State: AOUpUlEjWyKhfMG62HmVPkQ/vTJSK9C/rSEVW/9tVbxLPJnMwHD3KYVW
+        eJibpJ9byDp1RmPEQoo/RlY=
+X-Google-Smtp-Source: AAOMgpcNtduwQmHDVpI5OdNOZXd6dZLkPkqApBprxT4+R5ICQnDSqZ/0ZsFiaVIcUnAN4C2hp7hiRw==
+X-Received: by 2002:aa7:d588:: with SMTP id r8-v6mr2772717edq.130.1532202727154;
+        Sat, 21 Jul 2018 12:52:07 -0700 (PDT)
 Received: from evledraar (h98111.upc-h.chello.nl. [62.194.98.111])
-        by smtp.gmail.com with ESMTPSA id a13-v6sm7102088edf.84.2018.07.21.12.41.33
+        by smtp.gmail.com with ESMTPSA id p12-v6sm2066939eds.13.2018.07.21.12.52.06
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 21 Jul 2018 12:41:33 -0700 (PDT)
+        Sat, 21 Jul 2018 12:52:06 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Beat Bolli <dev+git@drbeat.li>
-Cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH] Makefile: add a DEVOPTS flag to get pedantic compilation
-References: <20180721185933.32377-1-dev+git@drbeat.li>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        demerphq <demerphq@gmail.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Adam Langley <agl@google.com>,
+        The Keccak Team <keccak@noekeon.org>
+Subject: Re: Hash algorithm analysis
+References: <20180609205628.GB38834@genre.crustytoothpaste.net>
+        <20180609224913.GC38834@genre.crustytoothpaste.net>
+        <20180611192942.GC20665@aiede.svl.corp.google.com>
+        <20180720215220.GB18502@genre.crustytoothpaste.net>
 User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180721185933.32377-1-dev+git@drbeat.li>
-Date:   Sat, 21 Jul 2018 21:41:32 +0200
-Message-ID: <87wotobclv.fsf@evledraar.gmail.com>
+In-reply-to: <20180720215220.GB18502@genre.crustytoothpaste.net>
+Date:   Sat, 21 Jul 2018 21:52:05 +0200
+Message-ID: <87va98bc4a.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Sat, Jul 21 2018, Beat Bolli wrote:
+On Fri, Jul 20 2018, brian m. carlson wrote:
 
-> In the interest of code hygiene, make it easier to compile Git with the
-> flag -pedantic.
+> On Mon, Jun 11, 2018 at 12:29:42PM -0700, Jonathan Nieder wrote:
+>> My understanding of the discussion so far:
+>>
+>> Keccak team encourages us[1] to consider a variant like K12 instead of
+>> SHA3.
+>>
+>> AGL explains[2] that the algorithms considered all seem like
+>> reasonable choices and we should decide using factors like
+>> implementation ease and performance.
+>>
+>> If we choose a Keccak-based function, AGL also[3] encourages using a
+>> variant like K12 instead of SHA3.
+>>
+>> Dscho strongly prefers[4] SHA-256, because of
+>> - wide implementation availability, including in future hardware
+>> - has been widely analyzed
+>> - is fast
+>>
+>> Yves Orton and Linus Torvalds prefer[5] SHA3 over SHA2 because of how
+>> it is constructed.
 >
-> Pure pedantic compilation results in one warning per use of the
-> translation macro `N_`, therefore also disable the parenthesising of
-> i18n strings with -DUSE_PARENS_AROUND_GETTEXT_N=0 to show only real
-> warnings.
+> I know this discussion has sort of petered out, but I'd like to see if
+> we can revive it.  I'm writing index v3 and having a decision would help
+> me write tests for it.
+>
+> To summarize the discussion that's been had in addition to the above,
+> Ævar has also stated a preference for SHA-256 and I would prefer BLAKE2b
+> over SHA-256 over SHA3-256, although any of them would be fine.
+>
+> Are there other contributors who have a strong opinion?  Are there
+> things I can do to help us coalesce around an option?
 
-I like this...
+I have a vague recollection of suggesting something similar in the past,
+but can't find that E-Mail (and maybe it never happened), but for
+testing purposes isn't in simplest if we just have some "test SHA-1"
+algorithm where we pretent that all inputs like "STRING" are really
+"PREFIX-STRING" for the purposes of hashing, or fake shortening /
+lengthening the hash to test arbitrary lenghts of N (just by repeating
+the hash from the beginning is probably good enough...).
 
-> diff --git a/Makefile b/Makefile
-> index 0cb6590f24..f800054379 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -484,6 +484,10 @@ all::
->  #        The DEVELOPER mode enables -Wextra with a few exceptions. By
->  #        setting this flag the exceptions are removed, and all of
->  #        -Wextra is used.
-> +#
-> +#    pedantic:
-> +#
-> +#        Enable -pedantic compilation.
-
-But let's mention that we toggle USE_PARENS_AROUND_GETTEXT_N implicitly
-when this is set here.
-
-> +CFLAGS += -pedantic
-> +# don't warn for each N_ use
-> +CFLAGS += -DUSE_PARENS_AROUND_GETTEXT_N=0
-> +endif
-
-...and set this to "no" not "0" since we document that that's the way to
-toggle it off in the Makefile, i.e. let's be consistent.
-
-Also, it would be helpful for future digging if the commit message
-mentioned which -W flag included in -Wpedantic is triggering this
-USE_PARENS_AROUND_GETTEXT_N condition that previously wasn't triggered,
-and on which compiler & version. 290c8e7a3f ("gettext.h: add parentheses
-around N_ expansion if supported", 2015-01-11) doesn't mention anything
-like that.
+That would make such patches easier to review, since we wouldn't need to
+carry hundreds/thousands of lines of dense hashing code, but a more
+trivial wrapper around SHA-1, and we could have some test mode where we
+could compile & run tests with an arbitrary hash length to make sure
+everything's future proof even after we move to NewHash.
