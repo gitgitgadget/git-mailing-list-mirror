@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D9C2A1F597
-	for <e@80x24.org>; Sat, 21 Jul 2018 07:50:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 28A471F597
+	for <e@80x24.org>; Sat, 21 Jul 2018 07:50:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727867AbeGUImK (ORCPT <rfc822;e@80x24.org>);
-        Sat, 21 Jul 2018 04:42:10 -0400
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:37229 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726920AbeGUImK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Jul 2018 04:42:10 -0400
-Received: by mail-lj1-f193.google.com with SMTP id v9-v6so12899526ljk.4
-        for <git@vger.kernel.org>; Sat, 21 Jul 2018 00:50:20 -0700 (PDT)
+        id S1727884AbeGUImN (ORCPT <rfc822;e@80x24.org>);
+        Sat, 21 Jul 2018 04:42:13 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:45305 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727630AbeGUImL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Jul 2018 04:42:11 -0400
+Received: by mail-lj1-f196.google.com with SMTP id q5-v6so12876639ljh.12
+        for <git@vger.kernel.org>; Sat, 21 Jul 2018 00:50:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=NLAzSI51PQYeRiy1Gk9Tcc5WQ3Bb4IRHzyTbtcKCoBI=;
-        b=CJOjLqXjMDIghEZQhUWjg5ymHRg9wNKG7aP3EXZry7Fg9nzXOtzHbiQbwkgcKW6Ubi
-         cDZn4GtOlIkWbK7Bvzo0o+G/Lwo+CbBAHfYpKyULNMgFkdcNfjmI8YLXc66XsVtwsPrd
-         jIGX/QgxyW410daCrPoLgaLzdHpv8wo8h8QkRVe9Zz6nShJsC0ZMtMP69u1BXjErGxla
-         Ia/3DaUwz9BAjlzfwl7und5HyQDdz+a5b3pjTq7ebkWYajO1MF2TrHGKcojQzAL4WQRD
-         kMYtqvkdRv5LhOLHjDDGCNchj4v0zocuS7qjkLMjcUlvbpabm7+usSGVA9u2J0+Ox+Ff
-         ezQw==
+        bh=JhZH4w0EJPXmVjK56zJuRsscXtUyZo4SG4gIyu55qI0=;
+        b=OyCff8zcaZALTjdgbGcFMpKbq2IwCCYVjSULJJW0FJZppG/zmHuxxlWQo2DRhJs+3l
+         YLCjtKkTJOS7+bO18PYogafaCaH3zdCQDjJrfnkWu59drRZtNz2RsbUgUdOQvkttrt1l
+         mDzCh3OnE3JX8+VlmkBTsp/MUs/MMJor4TCK1HzwDEx6bkI/S+98fIcmUIJ7kA5YqxLL
+         csXzEg2B9/yniznugOao/6/hpjWo4u8YjiPnL2AXt0brUZPM/ptj9HHhJ6p+qczCVQP6
+         ulXftoLAER8BupDLCmPie9ATqb+/2i+seT8wCYpqAgP8QQeLbNPryIG/APzB3AzYUlYY
+         RUjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=NLAzSI51PQYeRiy1Gk9Tcc5WQ3Bb4IRHzyTbtcKCoBI=;
-        b=kOQ3Nz8drnXtibbm8a4XkSE5m6ATWieLAs2vHA+UPxddZAmfnJhH2f9k2KvKRo13Q/
-         GLTAJfLAFCjlStkmvfjCgeTLGnGh0IvgbF4/Ic7rpAcxfxEA3VyTPgsA7/4YmdlfG9yg
-         GjYfzPfYkxj9wyuFSj2ygw+KTiRybwjQH3py+GgtS8bDuB1bUxKdi+dLatBE4dINiHcB
-         8MGxXm4Dy2GVwy92FV4WWzaiC7Q/DGaNtvbvr9PcMx5WMydz1qQzILODmg4IM+VFLmze
-         2SfI26cLaw8Ypr/2aK3rYL5HspuT8fFTORhTJ0y55/dsiQeL64OsMHxNmSoZr3RDuAWa
-         6rjQ==
-X-Gm-Message-State: AOUpUlEJXMxg5fgxfHfwOzT1R2i16Zjqwmud+NP7Gz2KMTIW1UDe5BtK
-        Y1mccqXh/FMRn2tZPWjUnEg=
-X-Google-Smtp-Source: AAOMgpffG6SUyZaxlz0C92Inp9EGEQEEiHEby6dMdz0IfEfGNCnoMKltF8MEWyjf7YiEGM7+UznutQ==
-X-Received: by 2002:a2e:94d5:: with SMTP id r21-v6mr3584571ljh.126.1532159419949;
-        Sat, 21 Jul 2018 00:50:19 -0700 (PDT)
+        bh=JhZH4w0EJPXmVjK56zJuRsscXtUyZo4SG4gIyu55qI0=;
+        b=mv4r3GOmIgJOi+VCXUGGO2i+KtlPIag2U+/haefaXWEPs7sy8VPhE5oi7+AwPyrDuc
+         HWKVxxwe9iZUlqGSCpkTpBiy2UlXNMj1Sn95BKhTIPCJnvogCElH1GnTtA7pKkJ8CyAl
+         XCklLZHcaeAo6pz30lnxQ/ktIZc6bk4BuqxfwLuc4i+63nK+My5b89GTEB4N4Ck4Gnfg
+         oihod8W/UL3B2ByPQPqAoRDAoFEMWUgR1pf9K/WI/LZ0uE/g6h4D19hipqMQD+2JI4t9
+         esNMfmuyGWVCvY9qdbfhnnc51dVaPLEzFp141lVUYre9f0wHLI8dPHim5Y/eJCKwu7l8
+         4KLg==
+X-Gm-Message-State: AOUpUlEyAsAD9EuVut8ZqM9guEEAIwLIxPciefWtYdjFC/0Q3vJgfLWp
+        zIRXg4vHq5jHKoMO7sA7AbM=
+X-Google-Smtp-Source: AAOMgpdKoTZjdiqHgct3I1VoPQ5UMLJstRlGfTZkwFo69Yu1cHv62dUJs9bsmlecjRl7yUHYwo78ZA==
+X-Received: by 2002:a2e:4242:: with SMTP id p63-v6mr3535526lja.83.1532159421073;
+        Sat, 21 Jul 2018 00:50:21 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id n3-v6sm759898lji.96.2018.07.21.00.50.18
+        by smtp.gmail.com with ESMTPSA id n3-v6sm759898lji.96.2018.07.21.00.50.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 21 Jul 2018 00:50:19 -0700 (PDT)
+        Sat, 21 Jul 2018 00:50:20 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, newren@gmail.com,
         stolee@gmail.com
-Subject: [PATCH v3 22/23] transport.c: mark more strings for translation
-Date:   Sat, 21 Jul 2018 09:49:40 +0200
-Message-Id: <20180721074941.14632-23-pclouds@gmail.com>
+Subject: [PATCH v3 23/23] transport-helper.c: mark more strings for translation
+Date:   Sat, 21 Jul 2018 09:49:41 +0200
+Message-Id: <20180721074941.14632-24-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.656.gda699b98b3
 In-Reply-To: <20180721074941.14632-1-pclouds@gmail.com>
 References: <20180718161101.19765-1-pclouds@gmail.com>
@@ -71,85 +71,378 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- transport.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ t/t5801-remote-helpers.sh |  8 ++--
+ transport-helper.c        | 87 ++++++++++++++++++++-------------------
+ 2 files changed, 48 insertions(+), 47 deletions(-)
 
-diff --git a/transport.c b/transport.c
-index 9fcc33915a..516a83b7f6 100644
---- a/transport.c
-+++ b/transport.c
-@@ -139,7 +139,7 @@ static struct ref *get_refs_from_bundle(struct transport *transport,
- 		close(data->fd);
- 	data->fd = read_bundle_header(transport->url, &data->header);
- 	if (data->fd < 0)
--		die("could not read bundle '%s'", transport->url);
-+		die(_("could not read bundle '%s'"), transport->url);
- 	for (i = 0; i < data->header.references.nr; i++) {
- 		struct ref_list_entry *e = data->header.references.list + i;
- 		struct ref *ref = alloc_ref(e->name);
-@@ -654,7 +654,7 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
+diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
+index 88c7f158ef..e3bc53b0c7 100755
+--- a/t/t5801-remote-helpers.sh
++++ b/t/t5801-remote-helpers.sh
+@@ -126,7 +126,7 @@ test_expect_success 'forced push' '
+ test_expect_success 'cloning without refspec' '
+ 	GIT_REMOTE_TESTGIT_REFSPEC="" \
+ 	git clone "testgit::${PWD}/server" local2 2>error &&
+-	grep "this remote helper should implement refspec capability" error &&
++	test_i18ngrep "this remote helper should implement refspec capability" error &&
+ 	compare_refs local2 HEAD server HEAD
+ '
  
- 	switch (data->version) {
- 	case protocol_v2:
--		die("support for protocol v2 not implemented yet");
-+		die(_("support for protocol v2 not implemented yet"));
- 		break;
- 	case protocol_v1:
- 	case protocol_v0:
-@@ -780,7 +780,7 @@ static enum protocol_allow_config parse_protocol_config(const char *key,
- 	else if (!strcasecmp(value, "user"))
- 		return PROTOCOL_ALLOW_USER_ONLY;
+@@ -134,7 +134,7 @@ test_expect_success 'pulling without refspecs' '
+ 	(cd local2 &&
+ 	git reset --hard &&
+ 	GIT_REMOTE_TESTGIT_REFSPEC="" git pull 2>../error) &&
+-	grep "this remote helper should implement refspec capability" error &&
++	test_i18ngrep "this remote helper should implement refspec capability" error &&
+ 	compare_refs local2 HEAD server HEAD
+ '
  
--	die("unknown value for config '%s': %s", key, value);
-+	die(_("unknown value for config '%s': %s"), key, value);
+@@ -146,7 +146,7 @@ test_expect_success 'pushing without refspecs' '
+ 	GIT_REMOTE_TESTGIT_REFSPEC="" &&
+ 	export GIT_REMOTE_TESTGIT_REFSPEC &&
+ 	test_must_fail git push 2>../error) &&
+-	grep "remote-helper doesn.t support push; refspec needed" error
++	test_i18ngrep "remote-helper doesn.t support push; refspec needed" error
+ '
+ 
+ test_expect_success 'pulling without marks' '
+@@ -246,7 +246,7 @@ test_expect_success 'proper failure checks for fetching' '
+ 	(cd local &&
+ 	test_must_fail env GIT_REMOTE_TESTGIT_FAILURE=1 git fetch 2>error &&
+ 	cat error &&
+-	grep -q "error while running fast-import" error
++	test_i18ngrep -q "error while running fast-import" error
+ 	)
+ '
+ 
+diff --git a/transport-helper.c b/transport-helper.c
+index 9f487cc905..84a10661cc 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -48,7 +48,7 @@ static void sendline(struct helper_data *helper, struct strbuf *buffer)
+ 	if (debug)
+ 		fprintf(stderr, "Debug: Remote helper: -> %s", buffer->buf);
+ 	if (write_in_full(helper->helper->in, buffer->buf, buffer->len) < 0)
+-		die_errno("full write to remote helper failed");
++		die_errno(_("full write to remote helper failed"));
  }
  
- static enum protocol_allow_config get_protocol_config(const char *type)
-@@ -846,7 +846,7 @@ int is_transport_allowed(const char *type, int from_user)
- void transport_check_allowed(const char *type)
- {
- 	if (!is_transport_allowed(type, -1))
--		die("transport '%s' not allowed", type);
-+		die(_("transport '%s' not allowed"), type);
+ static int recvline_fh(FILE *helper, struct strbuf *buffer)
+@@ -77,7 +77,7 @@ static void write_constant(int fd, const char *str)
+ 	if (debug)
+ 		fprintf(stderr, "Debug: Remote helper: -> %s", str);
+ 	if (write_in_full(fd, str, strlen(str)) < 0)
+-		die_errno("full write to remote helper failed");
++		die_errno(_("full write to remote helper failed"));
  }
  
- static struct transport_vtable bundle_vtable = {
-@@ -898,7 +898,7 @@ struct transport *transport_get(struct remote *remote, const char *url)
- 	if (helper) {
- 		transport_helper_init(ret, helper);
- 	} else if (starts_with(url, "rsync:")) {
--		die("git-over-rsync is no longer supported");
-+		die(_("git-over-rsync is no longer supported"));
- 	} else if (url_is_local_not_ssh(url) && is_file(url) && is_bundle(url, 1)) {
- 		struct bundle_transport_data *data = xcalloc(1, sizeof(*data));
- 		transport_check_allowed("file");
-@@ -1143,7 +1143,7 @@ int transport_push(struct transport *transport,
- 						      transport->push_options,
- 						      pretend)) {
- 				oid_array_clear(&commits);
--				die("failed to push all needed submodules!");
-+				die(_("failed to push all needed submodules"));
- 			}
- 			oid_array_clear(&commits);
+ static const char *remove_ext_force(const char *url)
+@@ -129,7 +129,7 @@ static struct child_process *get_helper(struct transport *transport)
+ 
+ 	code = start_command(helper);
+ 	if (code < 0 && errno == ENOENT)
+-		die("unable to find remote helper for '%s'", data->name);
++		die(_("unable to find remote helper for '%s'"), data->name);
+ 	else if (code != 0)
+ 		exit(code);
+ 
+@@ -145,7 +145,7 @@ static struct child_process *get_helper(struct transport *transport)
+ 	 */
+ 	duped = dup(helper->out);
+ 	if (duped < 0)
+-		die_errno("can't dup helper output fd");
++		die_errno(_("can't dup helper output fd"));
+ 	data->out = xfdopen(duped, "r");
+ 
+ 	write_constant(helper->in, "capabilities\n");
+@@ -196,13 +196,13 @@ static struct child_process *get_helper(struct transport *transport)
+ 		} else if (starts_with(capname, "no-private-update")) {
+ 			data->no_private_update = 1;
+ 		} else if (mandatory) {
+-			die("unknown mandatory capability %s; this remote "
+-			    "helper probably needs newer version of Git",
++			die(_("unknown mandatory capability %s; this remote "
++			      "helper probably needs newer version of Git"),
+ 			    capname);
  		}
-@@ -1265,7 +1265,7 @@ int transport_connect(struct transport *transport, const char *name,
- 	if (transport->vtable->connect)
- 		return transport->vtable->connect(transport, name, exec, fd);
- 	else
+ 	}
+ 	if (!data->rs.nr && (data->import || data->bidi_import || data->export)) {
+-		warning("this remote helper should implement refspec capability");
++		warning(_("this remote helper should implement refspec capability"));
+ 	}
+ 	strbuf_release(&buf);
+ 	if (debug)
+@@ -269,7 +269,7 @@ static int strbuf_set_helper_option(struct helper_data *data,
+ 	else if (!strcmp(buf->buf, "unsupported"))
+ 		ret = 1;
+ 	else {
+-		warning("%s unexpectedly said: '%s'", data->name, buf->buf);
++		warning(_("%s unexpectedly said: '%s'"), data->name, buf->buf);
+ 		ret = 1;
+ 	}
+ 	return ret;
+@@ -398,7 +398,7 @@ static int fetch_with_fetch(struct transport *transport,
+ 		if (starts_with(buf.buf, "lock ")) {
+ 			const char *name = buf.buf + 5;
+ 			if (transport->pack_lockfile)
+-				warning("%s also locked %s", data->name, name);
++				warning(_("%s also locked %s"), data->name, name);
+ 			else
+ 				transport->pack_lockfile = xstrdup(name);
+ 		}
+@@ -409,7 +409,7 @@ static int fetch_with_fetch(struct transport *transport,
+ 		else if (!buf.len)
+ 			break;
+ 		else
+-			warning("%s unexpectedly said: '%s'", data->name, buf.buf);
++			warning(_("%s unexpectedly said: '%s'"), data->name, buf.buf);
+ 	}
+ 	strbuf_release(&buf);
+ 	return 0;
+@@ -476,7 +476,7 @@ static int fetch_with_import(struct transport *transport,
+ 	get_helper(transport);
+ 
+ 	if (get_importer(transport, &fastimport))
+-		die("couldn't run fast-import");
++		die(_("couldn't run fast-import"));
+ 
+ 	for (i = 0; i < nr_heads; i++) {
+ 		posn = to_fetch[i];
+@@ -499,7 +499,7 @@ static int fetch_with_import(struct transport *transport,
+ 	 */
+ 
+ 	if (finish_command(&fastimport))
+-		die("error while running fast-import");
++		die(_("error while running fast-import"));
+ 
+ 	/*
+ 	 * The fast-import stream of a remote helper that advertises
+@@ -528,7 +528,7 @@ static int fetch_with_import(struct transport *transport,
+ 			private = xstrdup(name);
+ 		if (private) {
+ 			if (read_ref(private, &posn->old_oid) < 0)
+-				die("could not read ref %s", private);
++				die(_("could not read ref %s"), private);
+ 			free(private);
+ 		}
+ 	}
+@@ -554,7 +554,7 @@ static int run_connect(struct transport *transport, struct strbuf *cmdbuf)
+ 	 */
+ 	duped = dup(helper->out);
+ 	if (duped < 0)
+-		die_errno("can't dup helper output fd");
++		die_errno(_("can't dup helper output fd"));
+ 	input = xfdopen(duped, "r");
+ 	setvbuf(input, NULL, _IONBF, 0);
+ 
+@@ -573,8 +573,8 @@ static int run_connect(struct transport *transport, struct strbuf *cmdbuf)
+ 			fprintf(stderr, "Debug: Falling back to dumb "
+ 				"transport.\n");
+ 	} else {
+-		die("unknown response to connect: %s",
+-			cmdbuf->buf);
++		die(_(_("unknown response to connect: %s")),
++		    cmdbuf->buf);
+ 	}
+ 
+ 	fclose(input);
+@@ -595,9 +595,9 @@ static int process_connect_service(struct transport *transport,
+ 	if (strcmp(name, exec)) {
+ 		int r = set_helper_option(transport, "servpath", exec);
+ 		if (r > 0)
+-			warning("setting remote service path not supported by protocol");
++			warning(_("setting remote service path not supported by protocol"));
+ 		else if (r < 0)
+-			warning("invalid remote service path");
++			warning(_("invalid remote service path"));
+ 	}
+ 
+ 	if (data->connect) {
+@@ -640,10 +640,10 @@ static int connect_helper(struct transport *transport, const char *name,
+ 	/* Get_helper so connect is inited. */
+ 	get_helper(transport);
+ 	if (!data->connect)
 -		die("operation not supported by protocol");
 +		die(_("operation not supported by protocol"));
+ 
+ 	if (!process_connect_service(transport, name, exec))
+-		die("can't connect to subservice %s", name);
++		die(_("can't connect to subservice %s"), name);
+ 
+ 	fd[0] = data->helper->out;
+ 	fd[1] = data->helper->in;
+@@ -707,7 +707,7 @@ static int push_update_ref_status(struct strbuf *buf,
+ 		status = REF_STATUS_REMOTE_REJECT;
+ 		refname = buf->buf + 6;
+ 	} else
+-		die("expected ok/error, helper said '%s'", buf->buf);
++		die(_("expected ok/error, helper said '%s'"), buf->buf);
+ 
+ 	msg = strchr(refname, ' ');
+ 	if (msg) {
+@@ -760,7 +760,7 @@ static int push_update_ref_status(struct strbuf *buf,
+ 	if (!*ref)
+ 		*ref = find_ref_by_name(remote_refs, refname);
+ 	if (!*ref) {
+-		warning("helper reported unexpected status of %s", refname);
++		warning(_("helper reported unexpected status of %s"), refname);
+ 		return 1;
+ 	}
+ 
+@@ -821,20 +821,20 @@ static void set_common_push_options(struct transport *transport,
+ {
+ 	if (flags & TRANSPORT_PUSH_DRY_RUN) {
+ 		if (set_helper_option(transport, "dry-run", "true") != 0)
+-			die("helper %s does not support dry-run", name);
++			die(_("helper %s does not support dry-run"), name);
+ 	} else if (flags & TRANSPORT_PUSH_CERT_ALWAYS) {
+ 		if (set_helper_option(transport, TRANS_OPT_PUSH_CERT, "true") != 0)
+-			die("helper %s does not support --signed", name);
++			die(_("helper %s does not support --signed"), name);
+ 	} else if (flags & TRANSPORT_PUSH_CERT_IF_ASKED) {
+ 		if (set_helper_option(transport, TRANS_OPT_PUSH_CERT, "if-asked") != 0)
+-			die("helper %s does not support --signed=if-asked", name);
++			die(_("helper %s does not support --signed=if-asked"), name);
+ 	}
+ 
+ 	if (flags & TRANSPORT_PUSH_OPTIONS) {
+ 		struct string_list_item *item;
+ 		for_each_string_list_item(item, transport->push_options)
+ 			if (set_helper_option(transport, "push-option", item->string) != 0)
+-				die("helper %s does not support 'push-option'", name);
++				die(_("helper %s does not support 'push-option'"), name);
+ 	}
  }
  
- int transport_disconnect(struct transport *transport)
-@@ -1347,7 +1347,7 @@ static void read_alternate_refs(const char *path,
+@@ -926,12 +926,12 @@ static int push_refs_with_export(struct transport *transport,
+ 	struct strbuf buf = STRBUF_INIT;
  
- 		if (get_oid_hex(line.buf, &oid) ||
- 		    line.buf[GIT_SHA1_HEXSZ] != ' ') {
--			warning("invalid line while parsing alternate refs: %s",
-+			warning(_("invalid line while parsing alternate refs: %s"),
- 				line.buf);
- 			break;
- 		}
+ 	if (!data->rs.nr)
+-		die("remote-helper doesn't support push; refspec needed");
++		die(_("remote-helper doesn't support push; refspec needed"));
+ 
+ 	set_common_push_options(transport, data->name, flags);
+ 	if (flags & TRANSPORT_PUSH_FORCE) {
+ 		if (set_helper_option(transport, "force", "true") != 0)
+-			warning("helper %s does not support 'force'", data->name);
++			warning(_("helper %s does not support 'force'"), data->name);
+ 	}
+ 
+ 	helper = get_helper(transport);
+@@ -978,12 +978,12 @@ static int push_refs_with_export(struct transport *transport,
+ 	}
+ 
+ 	if (get_exporter(transport, &exporter, &revlist_args))
+-		die("couldn't run fast-export");
++		die(_("couldn't run fast-export"));
+ 
+ 	string_list_clear(&revlist_args, 1);
+ 
+ 	if (finish_command(&exporter))
+-		die("error while running fast-export");
++		die(_("error while running fast-export"));
+ 	if (push_update_refs_status(data, remote_refs, flags))
+ 		return 1;
+ 
+@@ -1007,8 +1007,9 @@ static int push_refs(struct transport *transport,
+ 	}
+ 
+ 	if (!remote_refs) {
+-		fprintf(stderr, "No refs in common and none specified; doing nothing.\n"
+-			"Perhaps you should specify a branch such as 'master'.\n");
++		fprintf(stderr,
++			_("No refs in common and none specified; doing nothing.\n"
++			  "Perhaps you should specify a branch such as 'master'.\n"));
+ 		return 0;
+ 	}
+ 
+@@ -1070,7 +1071,7 @@ static struct ref *get_refs_list(struct transport *transport, int for_push,
+ 
+ 		eov = strchr(buf.buf, ' ');
+ 		if (!eov)
+-			die("malformed response in ref list: %s", buf.buf);
++			die(_("malformed response in ref list: %s"), buf.buf);
+ 		eon = strchr(eov + 1, ' ');
+ 		*eov = '\0';
+ 		if (eon)
+@@ -1223,7 +1224,7 @@ static int udt_do_read(struct unidirectional_transfer *t)
+ 	bytes = read(t->src, t->buf + t->bufuse, BUFFERSIZE - t->bufuse);
+ 	if (bytes < 0 && errno != EWOULDBLOCK && errno != EAGAIN &&
+ 		errno != EINTR) {
+-		error_errno("read(%s) failed", t->src_name);
++		error_errno(_("read(%s) failed"), t->src_name);
+ 		return -1;
+ 	} else if (bytes == 0) {
+ 		transfer_debug("%s EOF (with %i bytes in buffer)",
+@@ -1250,7 +1251,7 @@ static int udt_do_write(struct unidirectional_transfer *t)
+ 	transfer_debug("%s is writable", t->dest_name);
+ 	bytes = xwrite(t->dest, t->buf, t->bufuse);
+ 	if (bytes < 0 && errno != EWOULDBLOCK) {
+-		error_errno("write(%s) failed", t->dest_name);
++		error_errno(_("write(%s) failed"), t->dest_name);
+ 		return -1;
+ 	} else if (bytes > 0) {
+ 		t->bufuse -= bytes;
+@@ -1299,11 +1300,11 @@ static int tloop_join(pthread_t thread, const char *name)
+ 	void *tret;
+ 	err = pthread_join(thread, &tret);
+ 	if (!tret) {
+-		error("%s thread failed", name);
++		error(_("%s thread failed"), name);
+ 		return 1;
+ 	}
+ 	if (err) {
+-		error("%s thread failed to join: %s", name, strerror(err));
++		error(_("%s thread failed to join: %s"), name, strerror(err));
+ 		return 1;
+ 	}
+ 	return 0;
+@@ -1322,11 +1323,11 @@ static int tloop_spawnwait_tasks(struct bidirectional_transfer_state *s)
+ 	err = pthread_create(&gtp_thread, NULL, udt_copy_task_routine,
+ 		&s->gtp);
+ 	if (err)
+-		die("can't start thread for copying data: %s", strerror(err));
++		die(_("can't start thread for copying data: %s"), strerror(err));
+ 	err = pthread_create(&ptg_thread, NULL, udt_copy_task_routine,
+ 		&s->ptg);
+ 	if (err)
+-		die("can't start thread for copying data: %s", strerror(err));
++		die(_("can't start thread for copying data: %s"), strerror(err));
+ 
+ 	ret |= tloop_join(gtp_thread, "Git to program copy");
+ 	ret |= tloop_join(ptg_thread, "Program to git copy");
+@@ -1363,11 +1364,11 @@ static int tloop_join(pid_t pid, const char *name)
+ {
+ 	int tret;
+ 	if (waitpid(pid, &tret, 0) < 0) {
+-		error_errno("%s process failed to wait", name);
++		error_errno(_("%s process failed to wait"), name);
+ 		return 1;
+ 	}
+ 	if (!WIFEXITED(tret) || WEXITSTATUS(tret)) {
+-		error("%s process failed", name);
++		error(_("%s process failed"), name);
+ 		return 1;
+ 	}
+ 	return 0;
+@@ -1385,7 +1386,7 @@ static int tloop_spawnwait_tasks(struct bidirectional_transfer_state *s)
+ 	/* Fork thread #1: git to program. */
+ 	pid1 = fork();
+ 	if (pid1 < 0)
+-		die_errno("can't start thread for copying data");
++		die_errno(_("can't start thread for copying data"));
+ 	else if (pid1 == 0) {
+ 		udt_kill_transfer(&s->ptg);
+ 		exit(udt_copy_task_routine(&s->gtp) ? 0 : 1);
+@@ -1394,7 +1395,7 @@ static int tloop_spawnwait_tasks(struct bidirectional_transfer_state *s)
+ 	/* Fork thread #2: program to git. */
+ 	pid2 = fork();
+ 	if (pid2 < 0)
+-		die_errno("can't start thread for copying data");
++		die_errno(_("can't start thread for copying data"));
+ 	else if (pid2 == 0) {
+ 		udt_kill_transfer(&s->gtp);
+ 		exit(udt_copy_task_routine(&s->ptg) ? 0 : 1);
 -- 
 2.18.0.656.gda699b98b3
 
