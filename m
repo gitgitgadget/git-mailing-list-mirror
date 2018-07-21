@@ -2,115 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 450241F597
-	for <e@80x24.org>; Sat, 21 Jul 2018 22:39:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2279E1F597
+	for <e@80x24.org>; Sat, 21 Jul 2018 23:09:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728253AbeGUXd1 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 21 Jul 2018 19:33:27 -0400
-Received: from mout.gmx.net ([212.227.17.20]:54775 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728068AbeGUXd1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Jul 2018 19:33:27 -0400
-Received: from [192.168.0.129] ([37.201.195.94]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LmrZY-1gExJ728dQ-00h7aU; Sun, 22
- Jul 2018 00:38:57 +0200
-Date:   Sun, 22 Jul 2018 00:38:41 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        demerphq <demerphq@gmail.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Adam Langley <agl@google.com>,
-        The Keccak Team <keccak@noekeon.org>
-Subject: Re: Hash algorithm analysis
-In-Reply-To: <20180720215220.GB18502@genre.crustytoothpaste.net>
-Message-ID: <nycvar.QRO.7.76.6.1807220036340.71@tvgsbejvaqbjf.bet>
-References: <20180609205628.GB38834@genre.crustytoothpaste.net> <20180609224913.GC38834@genre.crustytoothpaste.net> <20180611192942.GC20665@aiede.svl.corp.google.com> <20180720215220.GB18502@genre.crustytoothpaste.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728277AbeGVAES (ORCPT <rfc822;e@80x24.org>);
+        Sat, 21 Jul 2018 20:04:18 -0400
+Received: from mail-io0-f175.google.com ([209.85.223.175]:35590 "EHLO
+        mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728236AbeGVAES (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Jul 2018 20:04:18 -0400
+Received: by mail-io0-f175.google.com with SMTP id w11-v6so7208803iob.2
+        for <git@vger.kernel.org>; Sat, 21 Jul 2018 16:09:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=nYeI+PZlJuLv5E+Xv9eaXOQclR6rr8qolKduivZzKeQ=;
+        b=Sei1EChhkFoPudXp4t4kFGlF0v/7pPmxZa6LD6m2Q9E00cFAf2J22aI/uG7n+TiFY4
+         3xvQ94y4qFBa1NAU18CAtM+lD1Gn3SavAZ+2/JovjpCdzrTMho6/elnl+gsEIhUdVf2g
+         wW8Ax/v+b1Zwi8AIT1MbXGoTMrcgOj2R95NnA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=nYeI+PZlJuLv5E+Xv9eaXOQclR6rr8qolKduivZzKeQ=;
+        b=QpExJGN2GBYS63UnsJBb9U9n8ROfbQiBj9w9Ff///Psyo2A29JvHo+BCT12MpqR8Zf
+         Y66uO3nMxkD4Adk26+z0HXmu/aQey23PJzSp/uVqWnVcZGd2uJADI8C9suSR2FuV7snn
+         +1ioaNgp3IbjnM8rXcHGIp1yMo2EuHUxbXj1AnAVK97A9wWXRpmjVchGFb6sV5quimZ7
+         cjexgmqUpE1UOEbpUYKRKbSuSGu5rJbbqpzkf/xNwYguzCYLb+ubYrI2d1c/AgU6Tn+w
+         0ajaSsBJQMerQQqg78YUS4mHY9RGDilcYApOTepEVUH/MKyzi3frdi95OQv2PmhYV9+S
+         86Fw==
+X-Gm-Message-State: AOUpUlG0AFolJ6iSwOnyZ5W8tUDfPaYH+yoM9MrLVgi8Twx7fN2qt+Cd
+        MgrIsvubgVs0v/7oGymZtH2g+k29ePTxkmxLdU8=
+X-Google-Smtp-Source: AAOMgpd9QmjvzXqgMY+UW0vXN4jpQLChcmE978H+CAUafH3zsGEpzv6pobHwTQYUXlbTRbdycgFC1t+vwswxEbkyGqE=
+X-Received: by 2002:a6b:f612:: with SMTP id n18-v6mr6109463ioh.259.1532214592664;
+ Sat, 21 Jul 2018 16:09:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-680322618-1532212737=:71"
-X-Provags-ID: V03:K1:mK6CdoJicLM9Ok1xIXHnUNe/QPLX+Je5emyR1eNz5Lg0pUtMN0o
- usJLzCo6JmX5G+84J2HrmeUs4kvx73essZePQDOtMrkT4+xxhhTXenM/dYEjT0Q8oUoRTDk
- 5tVIk5wYhg3Op7to9n6sSyYWJvU6D8EEEqzcS7imAnSRb+Fub6PECqo/Ew5ox28J3VP65mJ
- W1vYgqz8pxNspjMiAmr5Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:gIM88+wFPZ0=:gbS1VcMMyT3DX6mrNfxfP+
- NetIISQfBT0fwh3+mGh6I8qlKMqGaVxnzculjp6ElQzgHnIiY+WNd1DlBnf8Qxj+brZ5UWVHc
- P7TctHEuoL92R2uwvWY2a6633jguOwEIZhMGDOlXVvDlmeEHB0DGyhgIb8m9hI2G4HZGpxG/V
- qM4RGafeCWpNf8PsSz6+tqb6qRKOMcJ+sR0xKRHRKIU8qlpaHAvUPuv6QIhVYYOtyo7AtskcJ
- UttJQt8pNv3YAhToXcB5XlDnvMs8cvJx9NzWW+E0yh+FctVPaodCg7YtZU6hU6CJXhyvDscN8
- 9Zu6MZYu7XQYEBMnywGdyJe9NH2DODSCm9NXydSWPdDaa4iMVlAL5NP9X4vOpHKPjYQlhvRyi
- qVE8QgJRor9zAGfEszXRc2pyiMxc4khQjfAdHiHFqjztiTC8SO8MDTFxWwHJSZH/o8Cw9g+rc
- Nv4gkUZ989lcU+v5pCraa21xXUwHuq2+Rs71gqXpYnIOacs4pHG2Al6k0vvZ+oL3pOgsLOSAH
- bbYdpwWMVR+T95KQYEUCFuMhCeGLZ5Bjc7k4O4qsuLu0m5Doq+yzgzE8XNcVMTRD+U3PRqgoS
- 7rb9MkFHbREOS73tu1+5XmEiN6O5f8o2rCYzbu8Fd4INr6KIzCgRKdXf5z/Q5jh93lD0GsUDC
- KYHfH5MoIi2KVdfEiAmvE0fjK5I7anDSOgOfmmyvsdy8hmqMSzgtINryoM9VoLa/+m+ongd9s
- z7fivMgCUHfssJ5mBabAjlHBOUrCA89rmGiv9fA1olQUYxtWoQmQXgfwWYbln+tdToGvO4nus
- 7g8XN2f
+References: <20180609205628.GB38834@genre.crustytoothpaste.net>
+ <20180609224913.GC38834@genre.crustytoothpaste.net> <20180611192942.GC20665@aiede.svl.corp.google.com>
+ <20180720215220.GB18502@genre.crustytoothpaste.net> <nycvar.QRO.7.76.6.1807220036340.71@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1807220036340.71@tvgsbejvaqbjf.bet>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Sat, 21 Jul 2018 16:09:41 -0700
+Message-ID: <CA+55aFy_OJPMFbzMfN9yKwdGsx-8FZ0v_zt-d+xCN3KSCqdB9w@mail.gmail.com>
+Subject: Re: Hash algorithm analysis
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        demerphq <demerphq@gmail.com>, Adam Langley <agl@google.com>,
+        keccak@noekeon.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Sat, Jul 21, 2018 at 3:39 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Do you really want to value contributors' opinion more than
+> cryptographers'? I mean, that's exactly what got us into this hard-coded
+> SHA-1 mess in the first place.
 
---8323328-680322618-1532212737=:71
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Don't be silly.
 
-Hi Brian,
+Other real cryptographers consider SHA256 to be a problem.
 
-On Fri, 20 Jul 2018, brian m. carlson wrote:
+Really. It's amenable to the same hack on the internal hash that made
+for the SHAttered break.
 
-> On Mon, Jun 11, 2018 at 12:29:42PM -0700, Jonathan Nieder wrote:
-> > My understanding of the discussion so far:
-> >=20
-> > Keccak team encourages us[1] to consider a variant like K12 instead of
-> > SHA3.
-> >=20
-> > AGL explains[2] that the algorithms considered all seem like
-> > reasonable choices and we should decide using factors like
-> > implementation ease and performance.
-> >=20
-> > If we choose a Keccak-based function, AGL also[3] encourages using a
-> > variant like K12 instead of SHA3.
-> >=20
-> > Dscho strongly prefers[4] SHA-256, because of
-> > - wide implementation availability, including in future hardware
-> > - has been widely analyzed
-> > - is fast
-> >=20
-> > Yves Orton and Linus Torvalds prefer[5] SHA3 over SHA2 because of how
-> > it is constructed.
->=20
-> I know this discussion has sort of petered out, but I'd like to see if
-> we can revive it.  I'm writing index v3 and having a decision would help
-> me write tests for it.
->=20
-> To summarize the discussion that's been had in addition to the above,
-> =C3=86var has also stated a preference for SHA-256 and I would prefer BLA=
-KE2b
-> over SHA-256 over SHA3-256, although any of them would be fine.
->=20
-> Are there other contributors who have a strong opinion?  Are there
-> things I can do to help us coalesce around an option?
+So your argument that "cryptographers prefer SHA256" is simply not true.
 
-Do you really want to value contributors' opinion more than
-cryptographers'? I mean, that's exactly what got us into this hard-coded
-SHA-1 mess in the first place.
+Your real argument is that know at least one cryptographer that you
+work with that prefers it.
 
-And to set the record straight: I do not have a strong preference of the
-hash algorithm. But cryprographers I have the incredible luck to have
-access to, by virtue of being a colleague, did mention their preference.
+Don't try to make that into some generic "cryptographers prefer it".
+It's not like cryptographers have issues with blake2b either, afaik.
 
-I see no good reason to just blow their advice into the wind.
+And blake2b really _does_ have very real advantages.
 
-Ciao,
-Dscho
---8323328-680322618-1532212737=:71--
+If you can actually point to some "a large percentage of
+cryptographers prefer it", you'd have a point.
+
+But as it is, you don't have data, you have an anecdote, and you try
+to use that anecdote to put down other peoples opinions.
+
+Intellectually dishonest, that is.
+
+           Linus
