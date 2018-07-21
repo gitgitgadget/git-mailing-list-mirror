@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EFBA21F597
-	for <e@80x24.org>; Sat, 21 Jul 2018 07:50:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E0E6F1F597
+	for <e@80x24.org>; Sat, 21 Jul 2018 07:50:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727698AbeGUIl5 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 21 Jul 2018 04:41:57 -0400
-Received: from mail-lj1-f177.google.com ([209.85.208.177]:42285 "EHLO
-        mail-lj1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727483AbeGUIl5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Jul 2018 04:41:57 -0400
-Received: by mail-lj1-f177.google.com with SMTP id f1-v6so11240250ljc.9
-        for <git@vger.kernel.org>; Sat, 21 Jul 2018 00:50:07 -0700 (PDT)
+        id S1727745AbeGUIl7 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 21 Jul 2018 04:41:59 -0400
+Received: from mail-lf1-f43.google.com ([209.85.167.43]:39424 "EHLO
+        mail-lf1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727483AbeGUIl7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Jul 2018 04:41:59 -0400
+Received: by mail-lf1-f43.google.com with SMTP id a134-v6so3239886lfe.6
+        for <git@vger.kernel.org>; Sat, 21 Jul 2018 00:50:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=zCORW1oXEoCb9tYu1OeEq79EcRv/J5QsL+/aKTa4wyo=;
-        b=DTY2wiF5wuYB+yab7jbpR1ygOSdYvCNnAHYpdq+N6KqbUf5ekPQwH3IuRTkA9H0zyQ
-         R5qpt7fDAjGVZbBPzZI/XTf8JN5o3XRRpXyqTiqRl6ZHkLqx3Mx2rD45JqCSJcAtHcR/
-         cKHtVbH3/TIALMxRYtcl66npYM024s+ghcnAcA57+Nhzd+ojQZmAyqvP0jU2jet1VVjv
-         HsEpbYSTIQeP+hnVhbjQkvO+vBdsynMhU3svu1dqqokpaDmTij4t7X/9c1x80A9M9Olx
-         bNdGkRuAIIf7MHMk4QwAgZpq3P4nLWTAzoq9lh/BJT86v8qhPiSsbA1aWu4NDlPiWCj0
-         HZRg==
+        bh=uZEOoQwmYt49HBmx2kz96deCilbvXo3jrYuV8AH1gUg=;
+        b=qqJ3n2Ok3PW2Qpf8kqs0UhS817NwoeGCMw0UG7fDbqXlpCvGhOYpwoeqONbRYXlt82
+         pISL3lNwJzGKx70EZMMqV3ejcHYz6a49KARv1fc2DTnelK77OEM2HP+V2InLll63tUMO
+         4ESQUSm3Gzk5ZT5pg7q1SvLIoPgTuepZi/N5AdM0JKNYNzt/0kOyCJBoPUghp1aHVZI1
+         4CwCgbPEyL4Kj1taxkiv6tQH01v1MWj1qJyJljod3RR5954lDmJzF8GX0aGEI4C/nMU1
+         UT2gLdGa/Oh2nKYCvPEB8pacjIko6ZoIy0HHnvyZNCltIcurH2VrPmodKMQdpPCg/VBV
+         7nAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=zCORW1oXEoCb9tYu1OeEq79EcRv/J5QsL+/aKTa4wyo=;
-        b=RvVFiJxdPX9Ssf37SRv0uOIH4Y3nrIKGyqloppd67wV2aV6dwQGGOq8Q9D0zQ9glan
-         S7TAZdYcatCk9I4VtXfiTq3pq24SGWkqowi3OPNeAEs3tZTctzFfKkPrSBqMlel+zqIo
-         c95R08tffw2Vqb61bFbmVsMheQfOHJNo/ilAB8+Y7u+GbhNhxVaFJME8IZQk9B2cRjFa
-         L2RF9yjgrPfYDI+0AaL/hOpbF1jrTUe7K5g0ElJPY9jMxsBpF+1zpK3gvAbnEx9Ol+UQ
-         mIYnukD7oCPFHKxX06LubP9ecOhbehh4fbmG2iveMHziYdCfLm770sP/yBQA+4GEBLxU
-         DbLg==
-X-Gm-Message-State: AOUpUlH5SSYuVU1R+COlsPOqoz31dextxP8CGnEa/n1pHVdpmTbFen1T
-        5Rx86j0vZvIO2AUfk0OSmS0=
-X-Google-Smtp-Source: AAOMgpeDkRhXfGvp3Bvmgmf3C0JwfNQYuAwod2cZYZqTozFyf4V8IgpJkALcbq2mvrI6IkAzPIT7Zg==
-X-Received: by 2002:a2e:47c8:: with SMTP id u191-v6mr3500259lja.58.1532159406308;
-        Sat, 21 Jul 2018 00:50:06 -0700 (PDT)
+        bh=uZEOoQwmYt49HBmx2kz96deCilbvXo3jrYuV8AH1gUg=;
+        b=VxQ3mlKEVmEeHYiwrqxrPpcl4cPTV67RVtuE4Dz+HQXxcPP0gN1qPBpokXXvhwykOa
+         iE1uQ+9DHJ9Di0kOWPPeMffPdfo6IUjU5MEl+j+eN68lwWE5ipoda/ZyOwVXWB9OmDpU
+         HUf3zaaVLNkecxoM/fJWkOLkAtdvsIms5xZyK9zDySc3oEyqAanNsrULGG04QHRdseJ5
+         yC1u2lHl3B1s8UgDbEGovQ4P083cpiRUgg/4kobURCmxMovKMXWWIXm0+Zi78l69OJSK
+         f270CqHrCWzumA5phR/ThHdLa4AU07qmZYq+0c/O2TeaID5H6n2zgqOo8tU8TjkTlsQu
+         dqHg==
+X-Gm-Message-State: AOUpUlH4Q19s7AMS8ZPpuWMaoHwVXdzCYdQ7x/lhNDay5+c/Z8bdubim
+        dAAq5zmlu0lIysic6p4T084=
+X-Google-Smtp-Source: AAOMgpcC5eL9JzyXFgYwVYfunWdm87doDs3ZQyHYw8To7Tz2ajYoGXEdvyukCAVXa5wvrA2SXyMShQ==
+X-Received: by 2002:a19:a04c:: with SMTP id j73-v6mr3180379lfe.123.1532159409520;
+        Sat, 21 Jul 2018 00:50:09 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id n3-v6sm759898lji.96.2018.07.21.00.50.05
+        by smtp.gmail.com with ESMTPSA id n3-v6sm759898lji.96.2018.07.21.00.50.08
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 21 Jul 2018 00:50:05 -0700 (PDT)
+        Sat, 21 Jul 2018 00:50:08 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, newren@gmail.com,
         stolee@gmail.com
-Subject: [PATCH v3 10/23] connect.c: mark more strings for translation
-Date:   Sat, 21 Jul 2018 09:49:28 +0200
-Message-Id: <20180721074941.14632-11-pclouds@gmail.com>
+Subject: [PATCH v3 13/23] environment.c: mark more strings for translation
+Date:   Sat, 21 Jul 2018 09:49:31 +0200
+Message-Id: <20180721074941.14632-14-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.656.gda699b98b3
 In-Reply-To: <20180721074941.14632-1-pclouds@gmail.com>
 References: <20180718161101.19765-1-pclouds@gmail.com>
@@ -71,308 +71,31 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- connect.c             | 74 +++++++++++++++++++++++--------------------
- t/t5570-git-daemon.sh |  6 ++--
- 2 files changed, 42 insertions(+), 38 deletions(-)
+ environment.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/connect.c b/connect.c
-index 308475b7eb..94547e5056 100644
---- a/connect.c
-+++ b/connect.c
-@@ -78,7 +78,7 @@ int server_supports_v2(const char *c, int die_on_error)
- 	}
- 
- 	if (die_on_error)
--		die("server doesn't support '%s'", c);
-+		die(_("server doesn't support '%s'"), c);
- 
- 	return 0;
+diff --git a/environment.c b/environment.c
+index 2a6de2330b..d129c4adc5 100644
+--- a/environment.c
++++ b/environment.c
+@@ -147,7 +147,7 @@ static char *expand_namespace(const char *raw_namespace)
+ 			strbuf_addf(&buf, "refs/namespaces/%s", (*c)->buf);
+ 	strbuf_list_free(components);
+ 	if (check_refname_format(buf.buf, 0))
+-		die("bad git namespace path \"%s\"", raw_namespace);
++		die(_("bad git namespace path \"%s\""), raw_namespace);
+ 	strbuf_addch(&buf, '/');
+ 	return strbuf_detach(&buf, NULL);
  }
-@@ -100,7 +100,7 @@ int server_supports_feature(const char *c, const char *feature,
- 	}
- 
- 	if (die_on_error)
--		die("server doesn't support feature '%s'", feature);
-+		die(_("server doesn't support feature '%s'"), feature);
- 
- 	return 0;
- }
-@@ -111,7 +111,7 @@ static void process_capabilities_v2(struct packet_reader *reader)
- 		argv_array_push(&server_capabilities_v2, reader->line);
- 
- 	if (reader->status != PACKET_READ_FLUSH)
--		die("expected flush after capabilities");
-+		die(_("expected flush after capabilities"));
- }
- 
- enum protocol_version discover_version(struct packet_reader *reader)
-@@ -230,7 +230,7 @@ static int process_dummy_ref(const char *line)
- static void check_no_capabilities(const char *line, int len)
+@@ -329,7 +329,7 @@ char *get_graft_file(void)
+ static void set_git_dir_1(const char *path)
  {
- 	if (strlen(line) != len)
--		warning("ignoring capabilities after first line '%s'",
-+		warning(_("ignoring capabilities after first line '%s'"),
- 			line + strlen(line));
+ 	if (setenv(GIT_DIR_ENVIRONMENT, path, 1))
+-		die("could not set GIT_DIR to '%s'", path);
++		die(_("could not set GIT_DIR to '%s'"), path);
+ 	setup_git_env(path);
  }
  
-@@ -249,7 +249,7 @@ static int process_ref(const char *line, int len, struct ref ***list,
- 	if (extra_have && !strcmp(name, ".have")) {
- 		oid_array_append(extra_have, &old_oid);
- 	} else if (!strcmp(name, "capabilities^{}")) {
--		die("protocol error: unexpected capabilities^{}");
-+		die(_("protocol error: unexpected capabilities^{}"));
- 	} else if (check_ref(name, flags)) {
- 		struct ref *ref = alloc_ref(name);
- 		oidcpy(&ref->old_oid, &old_oid);
-@@ -270,9 +270,9 @@ static int process_shallow(const char *line, int len,
- 		return 0;
- 
- 	if (get_oid_hex(arg, &old_oid))
--		die("protocol error: expected shallow sha-1, got '%s'", arg);
-+		die(_("protocol error: expected shallow sha-1, got '%s'"), arg);
- 	if (!shallow_points)
--		die("repository on the other end cannot be shallow");
-+		die(_("repository on the other end cannot be shallow"));
- 	oid_array_append(shallow_points, &old_oid);
- 	check_no_capabilities(line, len);
- 	return 1;
-@@ -307,13 +307,13 @@ struct ref **get_remote_heads(struct packet_reader *reader,
- 		case PACKET_READ_NORMAL:
- 			len = reader->pktlen;
- 			if (len > 4 && skip_prefix(reader->line, "ERR ", &arg))
--				die("remote error: %s", arg);
-+				die(_("remote error: %s"), arg);
- 			break;
- 		case PACKET_READ_FLUSH:
- 			state = EXPECTING_DONE;
- 			break;
- 		case PACKET_READ_DELIM:
--			die("invalid packet");
-+			die(_("invalid packet"));
- 		}
- 
- 		switch (state) {
-@@ -333,7 +333,7 @@ struct ref **get_remote_heads(struct packet_reader *reader,
- 		case EXPECTING_SHALLOW:
- 			if (process_shallow(reader->line, len, shallow_points))
- 				break;
--			die("protocol error: unexpected '%s'", reader->line);
-+			die(_("protocol error: unexpected '%s'"), reader->line);
- 		case EXPECTING_DONE:
- 			break;
- 		}
-@@ -441,11 +441,11 @@ struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
- 	/* Process response from server */
- 	while (packet_reader_read(reader) == PACKET_READ_NORMAL) {
- 		if (!process_ref_v2(reader->line, &list))
--			die("invalid ls-refs response: %s", reader->line);
-+			die(_("invalid ls-refs response: %s"), reader->line);
- 	}
- 
- 	if (reader->status != PACKET_READ_FLUSH)
--		die("expected flush after ref listing");
-+		die(_("expected flush after ref listing"));
- 
- 	return list;
- }
-@@ -544,7 +544,7 @@ static enum protocol get_protocol(const char *name)
- 		return PROTO_SSH;
- 	if (!strcmp(name, "file"))
- 		return PROTO_FILE;
--	die("protocol '%s' is not supported", name);
-+	die(_("protocol '%s' is not supported"), name);
- }
- 
- static char *host_end(char **hoststart, int removebrackets)
-@@ -595,7 +595,7 @@ static void enable_keepalive(int sockfd)
- 	int ka = 1;
- 
- 	if (setsockopt(sockfd, SOL_SOCKET, SO_KEEPALIVE, &ka, sizeof(ka)) < 0)
--		error_errno("unable to set SO_KEEPALIVE on socket");
-+		error_errno(_("unable to set SO_KEEPALIVE on socket"));
- }
- 
- #ifndef NO_IPV6
-@@ -635,14 +635,15 @@ static int git_tcp_connect_sock(char *host, int flags)
- 	hints.ai_protocol = IPPROTO_TCP;
- 
- 	if (flags & CONNECT_VERBOSE)
--		fprintf(stderr, "Looking up %s ... ", host);
-+		fprintf(stderr, _("Looking up %s ... "), host);
- 
- 	gai = getaddrinfo(host, port, &hints, &ai);
- 	if (gai)
--		die("unable to look up %s (port %s) (%s)", host, port, gai_strerror(gai));
-+		die(_("unable to look up %s (port %s) (%s)"), host, port, gai_strerror(gai));
- 
- 	if (flags & CONNECT_VERBOSE)
--		fprintf(stderr, "done.\nConnecting to %s (port %s) ... ", host, port);
-+		/* TRANSLATORS: this is the end of "Looking up %s ... " */
-+		fprintf(stderr, _("done.\nConnecting to %s (port %s) ... "), host, port);
- 
- 	for (ai0 = ai; ai; ai = ai->ai_next, cnt++) {
- 		sockfd = socket(ai->ai_family,
-@@ -664,12 +665,13 @@ static int git_tcp_connect_sock(char *host, int flags)
- 	freeaddrinfo(ai0);
- 
- 	if (sockfd < 0)
--		die("unable to connect to %s:\n%s", host, error_message.buf);
-+		die(_("unable to connect to %s:\n%s"), host, error_message.buf);
- 
- 	enable_keepalive(sockfd);
- 
- 	if (flags & CONNECT_VERBOSE)
--		fprintf_ln(stderr, "done.");
-+		/* TRANSLATORS: this is the end of "Connecting to %s (port %s) ... " */
-+		fprintf_ln(stderr, _("done."));
- 
- 	strbuf_release(&error_message);
- 
-@@ -696,22 +698,23 @@ static int git_tcp_connect_sock(char *host, int flags)
- 	get_host_and_port(&host, &port);
- 
- 	if (flags & CONNECT_VERBOSE)
--		fprintf(stderr, "Looking up %s ... ", host);
-+		fprintf(stderr, _("Looking up %s ... "), host);
- 
- 	he = gethostbyname(host);
- 	if (!he)
--		die("unable to look up %s (%s)", host, hstrerror(h_errno));
-+		die(_("unable to look up %s (%s)"), host, hstrerror(h_errno));
- 	nport = strtoul(port, &ep, 10);
- 	if ( ep == port || *ep ) {
- 		/* Not numeric */
- 		struct servent *se = getservbyname(port,"tcp");
- 		if ( !se )
--			die("unknown port %s", port);
-+			die(_("unknown port %s"), port);
- 		nport = se->s_port;
- 	}
- 
- 	if (flags & CONNECT_VERBOSE)
--		fprintf(stderr, "done.\nConnecting to %s (port %s) ... ", host, port);
-+		/* TRANSLATORS: this is the end of "Looking up %s ... " */
-+		fprintf(stderr, _("done.\nConnecting to %s (port %s) ... "), host, port);
- 
- 	for (cnt = 0, ap = he->h_addr_list; *ap; ap++, cnt++) {
- 		memset(&sa, 0, sizeof sa);
-@@ -739,12 +742,13 @@ static int git_tcp_connect_sock(char *host, int flags)
- 	}
- 
- 	if (sockfd < 0)
--		die("unable to connect to %s:\n%s", host, error_message.buf);
-+		die(_("unable to connect to %s:\n%s"), host, error_message.buf);
- 
- 	enable_keepalive(sockfd);
- 
- 	if (flags & CONNECT_VERBOSE)
--		fprintf_ln(stderr, "done.");
-+		/* TRANSLATORS: this is the end of "Connecting to %s (port %s) ... " */
-+		fprintf_ln(stderr, _("done."));
- 
- 	return sockfd;
- }
-@@ -841,9 +845,9 @@ static struct child_process *git_proxy_connect(int fd[2], char *host)
- 	get_host_and_port(&host, &port);
- 
- 	if (looks_like_command_line_option(host))
--		die("strange hostname '%s' blocked", host);
-+		die(_("strange hostname '%s' blocked"), host);
- 	if (looks_like_command_line_option(port))
--		die("strange port '%s' blocked", port);
-+		die(_("strange port '%s' blocked"), port);
- 
- 	proxy = xmalloc(sizeof(*proxy));
- 	child_process_init(proxy);
-@@ -853,7 +857,7 @@ static struct child_process *git_proxy_connect(int fd[2], char *host)
- 	proxy->in = -1;
- 	proxy->out = -1;
- 	if (start_command(proxy))
--		die("cannot start proxy %s", git_proxy_command);
-+		die(_("cannot start proxy %s"), git_proxy_command);
- 	fd[0] = proxy->out; /* read from proxy stdout */
- 	fd[1] = proxy->in;  /* write to proxy stdin */
- 	return proxy;
-@@ -920,7 +924,7 @@ static enum protocol parse_connect_url(const char *url_orig, char **ret_host,
- 		path = strchr(end, separator);
- 
- 	if (!path || !*path)
--		die("no path specified; see 'git help pull' for valid url syntax");
-+		die(_("no path specified; see 'git help pull' for valid url syntax"));
- 
- 	/*
- 	 * null-terminate hostname and point path to ~ for URL's like this:
-@@ -1115,7 +1119,7 @@ static void push_ssh_options(struct argv_array *args, struct argv_array *env,
- 		case VARIANT_AUTO:
- 			BUG("VARIANT_AUTO passed to push_ssh_options");
- 		case VARIANT_SIMPLE:
--			die("ssh variant 'simple' does not support -4");
-+			die(_("ssh variant 'simple' does not support -4"));
- 		case VARIANT_SSH:
- 		case VARIANT_PLINK:
- 		case VARIANT_PUTTY:
-@@ -1127,7 +1131,7 @@ static void push_ssh_options(struct argv_array *args, struct argv_array *env,
- 		case VARIANT_AUTO:
- 			BUG("VARIANT_AUTO passed to push_ssh_options");
- 		case VARIANT_SIMPLE:
--			die("ssh variant 'simple' does not support -6");
-+			die(_("ssh variant 'simple' does not support -6"));
- 		case VARIANT_SSH:
- 		case VARIANT_PLINK:
- 		case VARIANT_PUTTY:
-@@ -1144,7 +1148,7 @@ static void push_ssh_options(struct argv_array *args, struct argv_array *env,
- 		case VARIANT_AUTO:
- 			BUG("VARIANT_AUTO passed to push_ssh_options");
- 		case VARIANT_SIMPLE:
--			die("ssh variant 'simple' does not support setting port");
-+			die(_("ssh variant 'simple' does not support setting port"));
- 		case VARIANT_SSH:
- 			argv_array_push(args, "-p");
- 			break;
-@@ -1167,7 +1171,7 @@ static void fill_ssh_args(struct child_process *conn, const char *ssh_host,
- 	enum ssh_variant variant;
- 
- 	if (looks_like_command_line_option(ssh_host))
--		die("strange hostname '%s' blocked", ssh_host);
-+		die(_("strange hostname '%s' blocked"), ssh_host);
- 
- 	ssh = get_ssh_command();
- 	if (ssh) {
-@@ -1255,7 +1259,7 @@ struct child_process *git_connect(int fd[2], const char *url,
- 		child_process_init(conn);
- 
- 		if (looks_like_command_line_option(path))
--			die("strange pathname '%s' blocked", path);
-+			die(_("strange pathname '%s' blocked"), path);
- 
- 		strbuf_addstr(&cmd, prog);
- 		strbuf_addch(&cmd, ' ');
-@@ -1300,7 +1304,7 @@ struct child_process *git_connect(int fd[2], const char *url,
- 		argv_array_push(&conn->args, cmd.buf);
- 
- 		if (start_command(conn))
--			die("unable to fork");
-+			die(_("unable to fork"));
- 
- 		fd[0] = conn->out; /* read from child's stdout */
- 		fd[1] = conn->in;  /* write to child's stdin */
-diff --git a/t/t5570-git-daemon.sh b/t/t5570-git-daemon.sh
-index 0d4c52016b..a571f22bfd 100755
---- a/t/t5570-git-daemon.sh
-+++ b/t/t5570-git-daemon.sh
-@@ -7,9 +7,9 @@ test_description='test fetching over git protocol'
- start_git_daemon
- 
- check_verbose_connect () {
--	grep -F "Looking up 127.0.0.1 ..." stderr &&
--	grep -F "Connecting to 127.0.0.1 (port " stderr &&
--	grep -F "done." stderr
-+	test_i18ngrep -F "Looking up 127.0.0.1 ..." stderr &&
-+	test_i18ngrep -F "Connecting to 127.0.0.1 (port " stderr &&
-+	test_i18ngrep -F "done." stderr
- }
- 
- test_expect_success 'setup repository' '
 -- 
 2.18.0.656.gda699b98b3
 
