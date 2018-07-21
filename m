@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 28A471F597
-	for <e@80x24.org>; Sat, 21 Jul 2018 07:50:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB44E1F597
+	for <e@80x24.org>; Sat, 21 Jul 2018 07:50:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727884AbeGUImN (ORCPT <rfc822;e@80x24.org>);
-        Sat, 21 Jul 2018 04:42:13 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:45305 "EHLO
+        id S1727663AbeGUIl5 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 21 Jul 2018 04:41:57 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:35015 "EHLO
         mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727630AbeGUImL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Jul 2018 04:42:11 -0400
-Received: by mail-lj1-f196.google.com with SMTP id q5-v6so12876639ljh.12
-        for <git@vger.kernel.org>; Sat, 21 Jul 2018 00:50:21 -0700 (PDT)
+        with ESMTP id S1727314AbeGUIl5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Jul 2018 04:41:57 -0400
+Received: by mail-lj1-f196.google.com with SMTP id p10-v6so12893328ljg.2
+        for <git@vger.kernel.org>; Sat, 21 Jul 2018 00:50:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=JhZH4w0EJPXmVjK56zJuRsscXtUyZo4SG4gIyu55qI0=;
-        b=OyCff8zcaZALTjdgbGcFMpKbq2IwCCYVjSULJJW0FJZppG/zmHuxxlWQo2DRhJs+3l
-         YLCjtKkTJOS7+bO18PYogafaCaH3zdCQDjJrfnkWu59drRZtNz2RsbUgUdOQvkttrt1l
-         mDzCh3OnE3JX8+VlmkBTsp/MUs/MMJor4TCK1HzwDEx6bkI/S+98fIcmUIJ7kA5YqxLL
-         csXzEg2B9/yniznugOao/6/hpjWo4u8YjiPnL2AXt0brUZPM/ptj9HHhJ6p+qczCVQP6
-         ulXftoLAER8BupDLCmPie9ATqb+/2i+seT8wCYpqAgP8QQeLbNPryIG/APzB3AzYUlYY
-         RUjQ==
+        bh=QpSX3TriqPLjrIbqLvp+yvv+Gn+ztRYF08/P6CzRqjc=;
+        b=GnnnRJCBq3Hp6cr2Rl6cJ/4UoI/OvJPwlnDMV2tiptNQOPYoacVd0oaY2AIob+aXez
+         b/ZlTNK9JgStePr+DL6mzxhYkHOAzlcHzvrJsUJv3tM9rjEwJonIpelAmVWNA+SUL7my
+         /BFIOxctxAvJzKVeK4uK55riYL77oQip4anKjGKDDiLJbD73NNlbaWwKkTnG2nO/3Yjm
+         MnOQ8x4CCCRVFjEuSqW51iZjGbSnxZ45HY6LOLVOJN3y/t3Le4Ln6JqxvL5AUm0hLJIM
+         C9eQhanCWrzrOI4A76yG8RSYrRqxlYVmRNFntIhwnCC6QXc/UUZiefoiC4yxzKhIqlxY
+         Lvvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=JhZH4w0EJPXmVjK56zJuRsscXtUyZo4SG4gIyu55qI0=;
-        b=mv4r3GOmIgJOi+VCXUGGO2i+KtlPIag2U+/haefaXWEPs7sy8VPhE5oi7+AwPyrDuc
-         HWKVxxwe9iZUlqGSCpkTpBiy2UlXNMj1Sn95BKhTIPCJnvogCElH1GnTtA7pKkJ8CyAl
-         XCklLZHcaeAo6pz30lnxQ/ktIZc6bk4BuqxfwLuc4i+63nK+My5b89GTEB4N4Ck4Gnfg
-         oihod8W/UL3B2ByPQPqAoRDAoFEMWUgR1pf9K/WI/LZ0uE/g6h4D19hipqMQD+2JI4t9
-         esNMfmuyGWVCvY9qdbfhnnc51dVaPLEzFp141lVUYre9f0wHLI8dPHim5Y/eJCKwu7l8
-         4KLg==
-X-Gm-Message-State: AOUpUlEyAsAD9EuVut8ZqM9guEEAIwLIxPciefWtYdjFC/0Q3vJgfLWp
-        zIRXg4vHq5jHKoMO7sA7AbM=
-X-Google-Smtp-Source: AAOMgpdKoTZjdiqHgct3I1VoPQ5UMLJstRlGfTZkwFo69Yu1cHv62dUJs9bsmlecjRl7yUHYwo78ZA==
-X-Received: by 2002:a2e:4242:: with SMTP id p63-v6mr3535526lja.83.1532159421073;
-        Sat, 21 Jul 2018 00:50:21 -0700 (PDT)
+        bh=QpSX3TriqPLjrIbqLvp+yvv+Gn+ztRYF08/P6CzRqjc=;
+        b=dtZ/d3sj0geu5X4EJsf1u4GCDyZEtodubO1hSlYerrFqOpQZTJO68nyKGLZnlFYdm4
+         +5NZKRoAOXNgdo0bV54yse7mAL9oayXKCYiXjuqRwy2W9fFZGjqGkiQR4YkOVBsAiUMw
+         +fbEOe7DHlBRu1P+0GLs9aamLb3u8B3jUlIjWoqN+OL838EH3evouId1aipKywVr5Ddq
+         y4z1jAfop3Zch8VnrQjiyZ9bzje7pOBgrTAi3B74zLyFpUc/kizfp3lWv3RKzHmUXdWP
+         Dvmr/wFsipL+I17JHU4HAZZGxTo/tovUQoIS/caJm2aSezd1q2maRecaKnB3534y9rwz
+         r52w==
+X-Gm-Message-State: AOUpUlF/9oiCkXzYqviwPzgLG1k2Rg5n6+5X8OnQiEgWavNVf4YwZGjh
+        MQzFmk/sZrqognEncAhbaTg=
+X-Google-Smtp-Source: AAOMgpeSmjRZlbmpULoYWWSbHtWh78Tc8gNq4o8DP2Dg5lGQrbUXJt6Z4Eoz7+6XxX1/p0LN5rQDgw==
+X-Received: by 2002:a2e:610a:: with SMTP id v10-v6mr3523059ljb.39.1532159405342;
+        Sat, 21 Jul 2018 00:50:05 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id n3-v6sm759898lji.96.2018.07.21.00.50.19
+        by smtp.gmail.com with ESMTPSA id n3-v6sm759898lji.96.2018.07.21.00.50.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 21 Jul 2018 00:50:20 -0700 (PDT)
+        Sat, 21 Jul 2018 00:50:04 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, newren@gmail.com,
         stolee@gmail.com
-Subject: [PATCH v3 23/23] transport-helper.c: mark more strings for translation
-Date:   Sat, 21 Jul 2018 09:49:41 +0200
-Message-Id: <20180721074941.14632-24-pclouds@gmail.com>
+Subject: [PATCH v3 09/23] config.c: mark more strings for translation
+Date:   Sat, 21 Jul 2018 09:49:27 +0200
+Message-Id: <20180721074941.14632-10-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.656.gda699b98b3
 In-Reply-To: <20180721074941.14632-1-pclouds@gmail.com>
 References: <20180718161101.19765-1-pclouds@gmail.com>
@@ -71,378 +71,325 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- t/t5801-remote-helpers.sh |  8 ++--
- transport-helper.c        | 87 ++++++++++++++++++++-------------------
- 2 files changed, 48 insertions(+), 47 deletions(-)
+ config.c                  | 72 +++++++++++++++++++--------------------
+ t/t1305-config-include.sh |  2 +-
+ 2 files changed, 37 insertions(+), 37 deletions(-)
 
-diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
-index 88c7f158ef..e3bc53b0c7 100755
---- a/t/t5801-remote-helpers.sh
-+++ b/t/t5801-remote-helpers.sh
-@@ -126,7 +126,7 @@ test_expect_success 'forced push' '
- test_expect_success 'cloning without refspec' '
- 	GIT_REMOTE_TESTGIT_REFSPEC="" \
- 	git clone "testgit::${PWD}/server" local2 2>error &&
--	grep "this remote helper should implement refspec capability" error &&
-+	test_i18ngrep "this remote helper should implement refspec capability" error &&
- 	compare_refs local2 HEAD server HEAD
- '
- 
-@@ -134,7 +134,7 @@ test_expect_success 'pulling without refspecs' '
- 	(cd local2 &&
- 	git reset --hard &&
- 	GIT_REMOTE_TESTGIT_REFSPEC="" git pull 2>../error) &&
--	grep "this remote helper should implement refspec capability" error &&
-+	test_i18ngrep "this remote helper should implement refspec capability" error &&
- 	compare_refs local2 HEAD server HEAD
- '
- 
-@@ -146,7 +146,7 @@ test_expect_success 'pushing without refspecs' '
- 	GIT_REMOTE_TESTGIT_REFSPEC="" &&
- 	export GIT_REMOTE_TESTGIT_REFSPEC &&
- 	test_must_fail git push 2>../error) &&
--	grep "remote-helper doesn.t support push; refspec needed" error
-+	test_i18ngrep "remote-helper doesn.t support push; refspec needed" error
- '
- 
- test_expect_success 'pulling without marks' '
-@@ -246,7 +246,7 @@ test_expect_success 'proper failure checks for fetching' '
- 	(cd local &&
- 	test_must_fail env GIT_REMOTE_TESTGIT_FAILURE=1 git fetch 2>error &&
- 	cat error &&
--	grep -q "error while running fast-import" error
-+	test_i18ngrep -q "error while running fast-import" error
- 	)
- '
- 
-diff --git a/transport-helper.c b/transport-helper.c
-index 9f487cc905..84a10661cc 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -48,7 +48,7 @@ static void sendline(struct helper_data *helper, struct strbuf *buffer)
- 	if (debug)
- 		fprintf(stderr, "Debug: Remote helper: -> %s", buffer->buf);
- 	if (write_in_full(helper->helper->in, buffer->buf, buffer->len) < 0)
--		die_errno("full write to remote helper failed");
-+		die_errno(_("full write to remote helper failed"));
+diff --git a/config.c b/config.c
+index a57e3056ef..736b9f23f7 100644
+--- a/config.c
++++ b/config.c
+@@ -116,12 +116,12 @@ static long config_buf_ftell(struct config_source *conf)
  }
  
- static int recvline_fh(FILE *helper, struct strbuf *buffer)
-@@ -77,7 +77,7 @@ static void write_constant(int fd, const char *str)
- 	if (debug)
- 		fprintf(stderr, "Debug: Remote helper: -> %s", str);
- 	if (write_in_full(fd, str, strlen(str)) < 0)
--		die_errno("full write to remote helper failed");
-+		die_errno(_("full write to remote helper failed"));
- }
+ #define MAX_INCLUDE_DEPTH 10
+-static const char include_depth_advice[] =
++static const char include_depth_advice[] = N_(
+ "exceeded maximum include depth (%d) while including\n"
+ "	%s\n"
+ "from\n"
+ "	%s\n"
+-"Do you have circular includes?";
++"Do you have circular includes?");
+ static int handle_path_include(const char *path, struct config_include_data *inc)
+ {
+ 	int ret = 0;
+@@ -133,7 +133,7 @@ static int handle_path_include(const char *path, struct config_include_data *inc
  
- static const char *remove_ext_force(const char *url)
-@@ -129,7 +129,7 @@ static struct child_process *get_helper(struct transport *transport)
- 
- 	code = start_command(helper);
- 	if (code < 0 && errno == ENOENT)
--		die("unable to find remote helper for '%s'", data->name);
-+		die(_("unable to find remote helper for '%s'"), data->name);
- 	else if (code != 0)
- 		exit(code);
- 
-@@ -145,7 +145,7 @@ static struct child_process *get_helper(struct transport *transport)
- 	 */
- 	duped = dup(helper->out);
- 	if (duped < 0)
--		die_errno("can't dup helper output fd");
-+		die_errno(_("can't dup helper output fd"));
- 	data->out = xfdopen(duped, "r");
- 
- 	write_constant(helper->in, "capabilities\n");
-@@ -196,13 +196,13 @@ static struct child_process *get_helper(struct transport *transport)
- 		} else if (starts_with(capname, "no-private-update")) {
- 			data->no_private_update = 1;
- 		} else if (mandatory) {
--			die("unknown mandatory capability %s; this remote "
--			    "helper probably needs newer version of Git",
-+			die(_("unknown mandatory capability %s; this remote "
-+			      "helper probably needs newer version of Git"),
- 			    capname);
- 		}
- 	}
- 	if (!data->rs.nr && (data->import || data->bidi_import || data->export)) {
--		warning("this remote helper should implement refspec capability");
-+		warning(_("this remote helper should implement refspec capability"));
- 	}
- 	strbuf_release(&buf);
- 	if (debug)
-@@ -269,7 +269,7 @@ static int strbuf_set_helper_option(struct helper_data *data,
- 	else if (!strcmp(buf->buf, "unsupported"))
- 		ret = 1;
- 	else {
--		warning("%s unexpectedly said: '%s'", data->name, buf->buf);
-+		warning(_("%s unexpectedly said: '%s'"), data->name, buf->buf);
- 		ret = 1;
- 	}
- 	return ret;
-@@ -398,7 +398,7 @@ static int fetch_with_fetch(struct transport *transport,
- 		if (starts_with(buf.buf, "lock ")) {
- 			const char *name = buf.buf + 5;
- 			if (transport->pack_lockfile)
--				warning("%s also locked %s", data->name, name);
-+				warning(_("%s also locked %s"), data->name, name);
- 			else
- 				transport->pack_lockfile = xstrdup(name);
- 		}
-@@ -409,7 +409,7 @@ static int fetch_with_fetch(struct transport *transport,
- 		else if (!buf.len)
- 			break;
- 		else
--			warning("%s unexpectedly said: '%s'", data->name, buf.buf);
-+			warning(_("%s unexpectedly said: '%s'"), data->name, buf.buf);
- 	}
- 	strbuf_release(&buf);
- 	return 0;
-@@ -476,7 +476,7 @@ static int fetch_with_import(struct transport *transport,
- 	get_helper(transport);
- 
- 	if (get_importer(transport, &fastimport))
--		die("couldn't run fast-import");
-+		die(_("couldn't run fast-import"));
- 
- 	for (i = 0; i < nr_heads; i++) {
- 		posn = to_fetch[i];
-@@ -499,7 +499,7 @@ static int fetch_with_import(struct transport *transport,
- 	 */
- 
- 	if (finish_command(&fastimport))
--		die("error while running fast-import");
-+		die(_("error while running fast-import"));
+ 	expanded = expand_user_path(path, 0);
+ 	if (!expanded)
+-		return error("could not expand include path '%s'", path);
++		return error(_("could not expand include path '%s'"), path);
+ 	path = expanded;
  
  	/*
- 	 * The fast-import stream of a remote helper that advertises
-@@ -528,7 +528,7 @@ static int fetch_with_import(struct transport *transport,
- 			private = xstrdup(name);
- 		if (private) {
- 			if (read_ref(private, &posn->old_oid) < 0)
--				die("could not read ref %s", private);
-+				die(_("could not read ref %s"), private);
- 			free(private);
+@@ -144,7 +144,7 @@ static int handle_path_include(const char *path, struct config_include_data *inc
+ 		char *slash;
+ 
+ 		if (!cf || !cf->path)
+-			return error("relative config includes must come from files");
++			return error(_("relative config includes must come from files"));
+ 
+ 		slash = find_last_dir_sep(cf->path);
+ 		if (slash)
+@@ -155,7 +155,7 @@ static int handle_path_include(const char *path, struct config_include_data *inc
+ 
+ 	if (!access_or_die(path, R_OK, 0)) {
+ 		if (++inc->depth > MAX_INCLUDE_DEPTH)
+-			die(include_depth_advice, MAX_INCLUDE_DEPTH, path,
++			die(_(include_depth_advice), MAX_INCLUDE_DEPTH, path,
+ 			    !cf ? "<unknown>" :
+ 			    cf->name ? cf->name :
+ 			    "the command line");
+@@ -342,13 +342,13 @@ static int git_config_parse_key_1(const char *key, char **store_key, int *basele
+ 
+ 	if (last_dot == NULL || last_dot == key) {
+ 		if (!quiet)
+-			error("key does not contain a section: %s", key);
++			error(_("key does not contain a section: %s"), key);
+ 		return -CONFIG_NO_SECTION_OR_NAME;
+ 	}
+ 
+ 	if (!last_dot[1]) {
+ 		if (!quiet)
+-			error("key does not contain variable name: %s", key);
++			error(_("key does not contain variable name: %s"), key);
+ 		return -CONFIG_NO_SECTION_OR_NAME;
+ 	}
+ 
+@@ -372,13 +372,13 @@ static int git_config_parse_key_1(const char *key, char **store_key, int *basele
+ 			if (!iskeychar(c) ||
+ 			    (i == baselen + 1 && !isalpha(c))) {
+ 				if (!quiet)
+-					error("invalid key: %s", key);
++					error(_("invalid key: %s"), key);
+ 				goto out_free_ret_1;
+ 			}
+ 			c = tolower(c);
+ 		} else if (c == '\n') {
+ 			if (!quiet)
+-				error("invalid key (newline): %s", key);
++				error(_("invalid key (newline): %s"), key);
+ 			goto out_free_ret_1;
  		}
- 	}
-@@ -554,7 +554,7 @@ static int run_connect(struct transport *transport, struct strbuf *cmdbuf)
- 	 */
- 	duped = dup(helper->out);
- 	if (duped < 0)
--		die_errno("can't dup helper output fd");
-+		die_errno(_("can't dup helper output fd"));
- 	input = xfdopen(duped, "r");
- 	setvbuf(input, NULL, _IONBF, 0);
+ 		if (store_key)
+@@ -414,7 +414,7 @@ int git_config_parse_parameter(const char *text,
  
-@@ -573,8 +573,8 @@ static int run_connect(struct transport *transport, struct strbuf *cmdbuf)
- 			fprintf(stderr, "Debug: Falling back to dumb "
- 				"transport.\n");
- 	} else {
--		die("unknown response to connect: %s",
--			cmdbuf->buf);
-+		die(_(_("unknown response to connect: %s")),
-+		    cmdbuf->buf);
+ 	pair = strbuf_split_str(text, '=', 2);
+ 	if (!pair[0])
+-		return error("bogus config parameter: %s", text);
++		return error(_("bogus config parameter: %s"), text);
+ 
+ 	if (pair[0]->len && pair[0]->buf[pair[0]->len - 1] == '=') {
+ 		strbuf_setlen(pair[0], pair[0]->len - 1);
+@@ -426,7 +426,7 @@ int git_config_parse_parameter(const char *text,
+ 	strbuf_trim(pair[0]);
+ 	if (!pair[0]->len) {
+ 		strbuf_list_free(pair);
+-		return error("bogus config parameter: %s", text);
++		return error(_("bogus config parameter: %s"), text);
  	}
  
- 	fclose(input);
-@@ -595,9 +595,9 @@ static int process_connect_service(struct transport *transport,
- 	if (strcmp(name, exec)) {
- 		int r = set_helper_option(transport, "servpath", exec);
- 		if (r > 0)
--			warning("setting remote service path not supported by protocol");
-+			warning(_("setting remote service path not supported by protocol"));
- 		else if (r < 0)
--			warning("invalid remote service path");
-+			warning(_("invalid remote service path"));
+ 	if (git_config_parse_key(pair[0]->buf, &canonical_name, NULL)) {
+@@ -461,7 +461,7 @@ int git_config_from_parameters(config_fn_t fn, void *data)
+ 	envw = xstrdup(env);
+ 
+ 	if (sq_dequote_to_argv(envw, &argv, &nr, &alloc) < 0) {
+-		ret = error("bogus format in %s", CONFIG_DATA_ENVIRONMENT);
++		ret = error(_("bogus format in %s"), CONFIG_DATA_ENVIRONMENT);
+ 		goto out;
  	}
  
- 	if (data->connect) {
-@@ -640,10 +640,10 @@ static int connect_helper(struct transport *transport, const char *name,
- 	/* Get_helper so connect is inited. */
- 	get_helper(transport);
- 	if (!data->connect)
--		die("operation not supported by protocol");
-+		die(_("operation not supported by protocol"));
- 
- 	if (!process_connect_service(transport, name, exec))
--		die("can't connect to subservice %s", name);
-+		die(_("can't connect to subservice %s"), name);
- 
- 	fd[0] = data->helper->out;
- 	fd[1] = data->helper->in;
-@@ -707,7 +707,7 @@ static int push_update_ref_status(struct strbuf *buf,
- 		status = REF_STATUS_REMOTE_REJECT;
- 		refname = buf->buf + 6;
- 	} else
--		die("expected ok/error, helper said '%s'", buf->buf);
-+		die(_("expected ok/error, helper said '%s'"), buf->buf);
- 
- 	msg = strchr(refname, ' ');
- 	if (msg) {
-@@ -760,7 +760,7 @@ static int push_update_ref_status(struct strbuf *buf,
- 	if (!*ref)
- 		*ref = find_ref_by_name(remote_refs, refname);
- 	if (!*ref) {
--		warning("helper reported unexpected status of %s", refname);
-+		warning(_("helper reported unexpected status of %s"), refname);
- 		return 1;
- 	}
- 
-@@ -821,20 +821,20 @@ static void set_common_push_options(struct transport *transport,
- {
- 	if (flags & TRANSPORT_PUSH_DRY_RUN) {
- 		if (set_helper_option(transport, "dry-run", "true") != 0)
--			die("helper %s does not support dry-run", name);
-+			die(_("helper %s does not support dry-run"), name);
- 	} else if (flags & TRANSPORT_PUSH_CERT_ALWAYS) {
- 		if (set_helper_option(transport, TRANS_OPT_PUSH_CERT, "true") != 0)
--			die("helper %s does not support --signed", name);
-+			die(_("helper %s does not support --signed"), name);
- 	} else if (flags & TRANSPORT_PUSH_CERT_IF_ASKED) {
- 		if (set_helper_option(transport, TRANS_OPT_PUSH_CERT, "if-asked") != 0)
--			die("helper %s does not support --signed=if-asked", name);
-+			die(_("helper %s does not support --signed=if-asked"), name);
- 	}
- 
- 	if (flags & TRANSPORT_PUSH_OPTIONS) {
- 		struct string_list_item *item;
- 		for_each_string_list_item(item, transport->push_options)
- 			if (set_helper_option(transport, "push-option", item->string) != 0)
--				die("helper %s does not support 'push-option'", name);
-+				die(_("helper %s does not support 'push-option'"), name);
- 	}
- }
- 
-@@ -926,12 +926,12 @@ static int push_refs_with_export(struct transport *transport,
- 	struct strbuf buf = STRBUF_INIT;
- 
- 	if (!data->rs.nr)
--		die("remote-helper doesn't support push; refspec needed");
-+		die(_("remote-helper doesn't support push; refspec needed"));
- 
- 	set_common_push_options(transport, data->name, flags);
- 	if (flags & TRANSPORT_PUSH_FORCE) {
- 		if (set_helper_option(transport, "force", "true") != 0)
--			warning("helper %s does not support 'force'", data->name);
-+			warning(_("helper %s does not support 'force'"), data->name);
- 	}
- 
- 	helper = get_helper(transport);
-@@ -978,12 +978,12 @@ static int push_refs_with_export(struct transport *transport,
- 	}
- 
- 	if (get_exporter(transport, &exporter, &revlist_args))
--		die("couldn't run fast-export");
-+		die(_("couldn't run fast-export"));
- 
- 	string_list_clear(&revlist_args, 1);
- 
- 	if (finish_command(&exporter))
--		die("error while running fast-export");
-+		die(_("error while running fast-export"));
- 	if (push_update_refs_status(data, remote_refs, flags))
- 		return 1;
- 
-@@ -1007,8 +1007,9 @@ static int push_refs(struct transport *transport,
- 	}
- 
- 	if (!remote_refs) {
--		fprintf(stderr, "No refs in common and none specified; doing nothing.\n"
--			"Perhaps you should specify a branch such as 'master'.\n");
-+		fprintf(stderr,
-+			_("No refs in common and none specified; doing nothing.\n"
-+			  "Perhaps you should specify a branch such as 'master'.\n"));
+@@ -1154,7 +1154,7 @@ static int git_default_core_config(const char *var, const char *value)
+ 		else {
+ 			int abbrev = git_config_int(var, value);
+ 			if (abbrev < minimum_abbrev || abbrev > 40)
+-				return error("abbrev length out of range: %d", abbrev);
++				return error(_("abbrev length out of range: %d"), abbrev);
+ 			default_abbrev = abbrev;
+ 		}
+ 		return 0;
+@@ -1271,7 +1271,7 @@ static int git_default_core_config(const char *var, const char *value)
+ 			comment_line_char = value[0];
+ 			auto_comment_line_char = 0;
+ 		} else
+-			return error("core.commentChar should only be one character");
++			return error(_("core.commentChar should only be one character"));
  		return 0;
  	}
  
-@@ -1070,7 +1071,7 @@ static struct ref *get_refs_list(struct transport *transport, int for_push,
- 
- 		eov = strchr(buf.buf, ' ');
- 		if (!eov)
--			die("malformed response in ref list: %s", buf.buf);
-+			die(_("malformed response in ref list: %s"), buf.buf);
- 		eon = strchr(eov + 1, ' ');
- 		*eov = '\0';
- 		if (eon)
-@@ -1223,7 +1224,7 @@ static int udt_do_read(struct unidirectional_transfer *t)
- 	bytes = read(t->src, t->buf + t->bufuse, BUFFERSIZE - t->bufuse);
- 	if (bytes < 0 && errno != EWOULDBLOCK && errno != EAGAIN &&
- 		errno != EINTR) {
--		error_errno("read(%s) failed", t->src_name);
-+		error_errno(_("read(%s) failed"), t->src_name);
- 		return -1;
- 	} else if (bytes == 0) {
- 		transfer_debug("%s EOF (with %i bytes in buffer)",
-@@ -1250,7 +1251,7 @@ static int udt_do_write(struct unidirectional_transfer *t)
- 	transfer_debug("%s is writable", t->dest_name);
- 	bytes = xwrite(t->dest, t->buf, t->bufuse);
- 	if (bytes < 0 && errno != EWOULDBLOCK) {
--		error_errno("write(%s) failed", t->dest_name);
-+		error_errno(_("write(%s) failed"), t->dest_name);
- 		return -1;
- 	} else if (bytes > 0) {
- 		t->bufuse -= bytes;
-@@ -1299,11 +1300,11 @@ static int tloop_join(pthread_t thread, const char *name)
- 	void *tret;
- 	err = pthread_join(thread, &tret);
- 	if (!tret) {
--		error("%s thread failed", name);
-+		error(_("%s thread failed"), name);
- 		return 1;
+@@ -1384,7 +1384,7 @@ static int git_default_branch_config(const char *var, const char *value)
+ 		else if (!strcmp(value, "always"))
+ 			autorebase = AUTOREBASE_ALWAYS;
+ 		else
+-			return error("malformed value for %s", var);
++			return error(_("malformed value for %s"), var);
+ 		return 0;
  	}
- 	if (err) {
--		error("%s thread failed to join: %s", name, strerror(err));
-+		error(_("%s thread failed to join: %s"), name, strerror(err));
- 		return 1;
- 	}
- 	return 0;
-@@ -1322,11 +1323,11 @@ static int tloop_spawnwait_tasks(struct bidirectional_transfer_state *s)
- 	err = pthread_create(&gtp_thread, NULL, udt_copy_task_routine,
- 		&s->gtp);
- 	if (err)
--		die("can't start thread for copying data: %s", strerror(err));
-+		die(_("can't start thread for copying data: %s"), strerror(err));
- 	err = pthread_create(&ptg_thread, NULL, udt_copy_task_routine,
- 		&s->ptg);
- 	if (err)
--		die("can't start thread for copying data: %s", strerror(err));
-+		die(_("can't start thread for copying data: %s"), strerror(err));
  
- 	ret |= tloop_join(gtp_thread, "Git to program copy");
- 	ret |= tloop_join(ptg_thread, "Program to git copy");
-@@ -1363,11 +1364,11 @@ static int tloop_join(pid_t pid, const char *name)
+@@ -1410,9 +1410,9 @@ static int git_default_push_config(const char *var, const char *value)
+ 		else if (!strcmp(value, "current"))
+ 			push_default = PUSH_DEFAULT_CURRENT;
+ 		else {
+-			error("malformed value for %s: %s", var, value);
+-			return error("must be one of nothing, matching, simple, "
+-				     "upstream or current");
++			error(_("malformed value for %s: %s"), var, value);
++			return error(_("must be one of nothing, matching, simple, "
++				       "upstream or current"));
+ 		}
+ 		return 0;
+ 	}
+@@ -1589,10 +1589,10 @@ int git_config_from_blob_oid(config_fn_t fn,
+ 
+ 	buf = read_object_file(oid, &type, &size);
+ 	if (!buf)
+-		return error("unable to load config blob object '%s'", name);
++		return error(_("unable to load config blob object '%s'"), name);
+ 	if (type != OBJ_BLOB) {
+ 		free(buf);
+-		return error("reference '%s' does not point to a blob", name);
++		return error(_("reference '%s' does not point to a blob"), name);
+ 	}
+ 
+ 	ret = git_config_from_mem(fn, CONFIG_ORIGIN_BLOB, name, buf, size, data);
+@@ -1608,7 +1608,7 @@ static int git_config_from_blob_ref(config_fn_t fn,
+ 	struct object_id oid;
+ 
+ 	if (get_oid(name, &oid) < 0)
+-		return error("unable to resolve config blob '%s'", name);
++		return error(_("unable to resolve config blob '%s'"), name);
+ 	return git_config_from_blob_oid(fn, name, &oid, data);
+ }
+ 
+@@ -1638,7 +1638,7 @@ unsigned long git_env_ulong(const char *k, unsigned long val)
  {
- 	int tret;
- 	if (waitpid(pid, &tret, 0) < 0) {
--		error_errno("%s process failed to wait", name);
-+		error_errno(_("%s process failed to wait"), name);
- 		return 1;
+ 	const char *v = getenv(k);
+ 	if (v && !git_parse_ulong(v, &val))
+-		die("failed to parse %s", k);
++		die(_("failed to parse %s"), k);
+ 	return val;
+ }
+ 
+@@ -2372,7 +2372,7 @@ static int store_aux_event(enum config_event_t type,
+ 
+ 	if (type == CONFIG_EVENT_SECTION) {
+ 		if (cf->var.len < 2 || cf->var.buf[cf->var.len - 1] != '.')
+-			return error("invalid section name '%s'", cf->var.buf);
++			return error(_("invalid section name '%s'"), cf->var.buf);
+ 
+ 		/* Is this the section we were looking for? */
+ 		store->is_keys_section =
+@@ -2428,7 +2428,7 @@ static int store_aux(const char *key, const char *value, void *cb)
+ 
+ static int write_error(const char *filename)
+ {
+-	error("failed to write new configuration file %s", filename);
++	error(_("failed to write new configuration file %s"), filename);
+ 
+ 	/* Same error code as "failed to rename". */
+ 	return 4;
+@@ -2679,7 +2679,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
+ 	 */
+ 	fd = hold_lock_file_for_update(&lock, config_filename, 0);
+ 	if (fd < 0) {
+-		error_errno("could not lock config file %s", config_filename);
++		error_errno(_("could not lock config file %s"), config_filename);
+ 		ret = CONFIG_NO_LOCK;
+ 		goto out_free;
  	}
- 	if (!WIFEXITED(tret) || WEXITSTATUS(tret)) {
--		error("%s process failed", name);
-+		error(_("%s process failed"), name);
- 		return 1;
+@@ -2690,7 +2690,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
+ 	in_fd = open(config_filename, O_RDONLY);
+ 	if ( in_fd < 0 ) {
+ 		if ( ENOENT != errno ) {
+-			error_errno("opening %s", config_filename);
++			error_errno(_("opening %s"), config_filename);
+ 			ret = CONFIG_INVALID_FILE; /* same as "invalid config file" */
+ 			goto out_free;
+ 		}
+@@ -2725,7 +2725,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
+ 			store.value_regex = (regex_t*)xmalloc(sizeof(regex_t));
+ 			if (regcomp(store.value_regex, value_regex,
+ 					REG_EXTENDED)) {
+-				error("invalid pattern: %s", value_regex);
++				error(_("invalid pattern: %s"), value_regex);
+ 				FREE_AND_NULL(store.value_regex);
+ 				ret = CONFIG_INVALID_PATTERN;
+ 				goto out_free;
+@@ -2750,7 +2750,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
+ 		if (git_config_from_file_with_options(store_aux,
+ 						      config_filename,
+ 						      &store, &opts)) {
+-			error("invalid config file %s", config_filename);
++			error(_("invalid config file %s"), config_filename);
+ 			ret = CONFIG_INVALID_FILE;
+ 			goto out_free;
+ 		}
+@@ -2774,7 +2774,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
+ 		if (contents == MAP_FAILED) {
+ 			if (errno == ENODEV && S_ISDIR(st.st_mode))
+ 				errno = EISDIR;
+-			error_errno("unable to mmap '%s'", config_filename);
++			error_errno(_("unable to mmap '%s'"), config_filename);
+ 			ret = CONFIG_INVALID_FILE;
+ 			contents = NULL;
+ 			goto out_free;
+@@ -2783,7 +2783,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
+ 		in_fd = -1;
+ 
+ 		if (chmod(get_lock_file_path(&lock), st.st_mode & 07777) < 0) {
+-			error_errno("chmod on %s failed", get_lock_file_path(&lock));
++			error_errno(_("chmod on %s failed"), get_lock_file_path(&lock));
+ 			ret = CONFIG_NO_WRITE;
+ 			goto out_free;
+ 		}
+@@ -2868,7 +2868,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
  	}
- 	return 0;
-@@ -1385,7 +1386,7 @@ static int tloop_spawnwait_tasks(struct bidirectional_transfer_state *s)
- 	/* Fork thread #1: git to program. */
- 	pid1 = fork();
- 	if (pid1 < 0)
--		die_errno("can't start thread for copying data");
-+		die_errno(_("can't start thread for copying data"));
- 	else if (pid1 == 0) {
- 		udt_kill_transfer(&s->ptg);
- 		exit(udt_copy_task_routine(&s->gtp) ? 0 : 1);
-@@ -1394,7 +1395,7 @@ static int tloop_spawnwait_tasks(struct bidirectional_transfer_state *s)
- 	/* Fork thread #2: program to git. */
- 	pid2 = fork();
- 	if (pid2 < 0)
--		die_errno("can't start thread for copying data");
-+		die_errno(_("can't start thread for copying data"));
- 	else if (pid2 == 0) {
- 		udt_kill_transfer(&s->gtp);
- 		exit(udt_copy_task_routine(&s->ptg) ? 0 : 1);
+ 
+ 	if (commit_lock_file(&lock) < 0) {
+-		error_errno("could not write config file %s", config_filename);
++		error_errno(_("could not write config file %s"), config_filename);
+ 		ret = CONFIG_NO_WRITE;
+ 		goto out_free;
+ 	}
+@@ -2994,7 +2994,7 @@ static int git_config_copy_or_rename_section_in_file(const char *config_filename
+ 	memset(&store, 0, sizeof(store));
+ 
+ 	if (new_name && !section_name_is_ok(new_name)) {
+-		ret = error("invalid section name: %s", new_name);
++		ret = error(_("invalid section name: %s"), new_name);
+ 		goto out_no_rollback;
+ 	}
+ 
+@@ -3003,7 +3003,7 @@ static int git_config_copy_or_rename_section_in_file(const char *config_filename
+ 
+ 	out_fd = hold_lock_file_for_update(&lock, config_filename, 0);
+ 	if (out_fd < 0) {
+-		ret = error("could not lock config file %s", config_filename);
++		ret = error(_("could not lock config file %s"), config_filename);
+ 		goto out;
+ 	}
+ 
+@@ -3021,7 +3021,7 @@ static int git_config_copy_or_rename_section_in_file(const char *config_filename
+ 	}
+ 
+ 	if (chmod(get_lock_file_path(&lock), st.st_mode & 07777) < 0) {
+-		ret = error_errno("chmod on %s failed",
++		ret = error_errno(_("chmod on %s failed"),
+ 				  get_lock_file_path(&lock));
+ 		goto out;
+ 	}
+@@ -3118,7 +3118,7 @@ static int git_config_copy_or_rename_section_in_file(const char *config_filename
+ 	config_file = NULL;
+ commit_and_out:
+ 	if (commit_lock_file(&lock) < 0)
+-		ret = error_errno("could not write config file %s",
++		ret = error_errno(_("could not write config file %s"),
+ 				  config_filename);
+ out:
+ 	if (config_file)
+@@ -3161,7 +3161,7 @@ int git_config_copy_section(const char *old_name, const char *new_name)
+ #undef config_error_nonbool
+ int config_error_nonbool(const char *var)
+ {
+-	return error("missing value for '%s'", var);
++	return error(_("missing value for '%s'"), var);
+ }
+ 
+ int parse_config_key(const char *var,
+diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
+index f035ee40a3..635918505d 100755
+--- a/t/t1305-config-include.sh
++++ b/t/t1305-config-include.sh
+@@ -310,7 +310,7 @@ test_expect_success 'include cycles are detected' '
+ 	cycle
+ 	EOF
+ 	test_must_fail git config --get-all test.value 2>stderr &&
+-	grep "exceeded maximum include depth" stderr
++	test_i18ngrep "exceeded maximum include depth" stderr
+ '
+ 
+ test_done
 -- 
 2.18.0.656.gda699b98b3
 
