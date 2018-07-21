@@ -2,94 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E531C1F597
-	for <e@80x24.org>; Sat, 21 Jul 2018 06:18:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 354AF1F597
+	for <e@80x24.org>; Sat, 21 Jul 2018 06:34:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727137AbeGUHKM (ORCPT <rfc822;e@80x24.org>);
-        Sat, 21 Jul 2018 03:10:12 -0400
-Received: from mail-io0-f194.google.com ([209.85.223.194]:46219 "EHLO
-        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726905AbeGUHKM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Jul 2018 03:10:12 -0400
-Received: by mail-io0-f194.google.com with SMTP id i18-v6so11605360ioj.13
-        for <git@vger.kernel.org>; Fri, 20 Jul 2018 23:18:40 -0700 (PDT)
+        id S1727412AbeGUH0L (ORCPT <rfc822;e@80x24.org>);
+        Sat, 21 Jul 2018 03:26:11 -0400
+Received: from mail-yb0-f193.google.com ([209.85.213.193]:34254 "EHLO
+        mail-yb0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727379AbeGUH0L (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Jul 2018 03:26:11 -0400
+Received: by mail-yb0-f193.google.com with SMTP id e9-v6so5472602ybq.1
+        for <git@vger.kernel.org>; Fri, 20 Jul 2018 23:34:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=RYVypMVsMb6S+I2P0ISwesm4tPB+qfAzeuNmtN6fsp8=;
-        b=WLn7MFvu3VOpk3EmRj30Vs05nsXaWSXK4Iv1ux52aTXZfulU+6zLqKlcirhZtG6+RU
-         fzHoVaXqiI2au8aFsKI49hwhQrtOxBFyMM4fIcuuSeIlyGIA7hotQDEqACIJs4HIu/A8
-         6a3Ec4RJiOOtRwa7lh8ucDsr5KsaYTObQF5ik7YKgvB1wkr7WXFOiTNYH9EW1wXND9mg
-         3mjv75FdOWvkgR9LodxR2+sqtN9FtKQphLcbl0athjiEm5WseHCPP8ryXf0hPqkfYAd8
-         FIfEmWlQMWvQC/WyEERTTIRj4dyuoBJdpps8g/rSKu7lxxmHgPfFF74hM2QkVRQR+ydb
-         YgVw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=cd9Blh1jytQskkY6EAWWk6fk9oUbGU7dF6M2J02c9dA=;
+        b=T8pwRlAHWGNa+KLr6dSrhhnfSC0puSRO6gMylgeIICtGSBAFKof16gjw5qwpXXQIqp
+         9DmBYnB0STtqy6rGs9Y2xoxB+Mb73IkGPw+Usf+idJgXDA4/womqIH2y1FC3IBbgwr5I
+         Z0fMh48IMHLrZdsNSCN03BS9s6O7Ru4C0TA5SomyGu1Kbd3XaL00vVTXx7C4nZrNTwYC
+         QBLACty4NThAbhbcdFzHiY5Rb4wDRiQ4j6JJiF8eh0TBKa9g8TcCx5iBW/7VQJoUSnGu
+         3jQ6yE7fYhpE1V0fo23G1u9lDzx3y34l4dIDEKxAlsG9T1pS7Sc674zUVpSuhg8Rv/wU
+         hifg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=RYVypMVsMb6S+I2P0ISwesm4tPB+qfAzeuNmtN6fsp8=;
-        b=Ev0D1hsiqNhYYhUVFDxrfhSGm7m/vf5jm2hTMwulnkBpYyfbvP7H75JNBiZgkUCWdB
-         qZ573/yiaY9YanoO1LwcNBNjQ5V6IPElf4Rby79CDha4meFfBxJH88oDoTnuwBMRnGTO
-         XYNqM3kPIiVX1bbC1m7P6LZ4E1M1Ebfv1XKjrUYv97n/kgQFWjyHHgl01wScbx5xKfJ4
-         XyqPlaS2jhbHdkqolev4nfXAFacKNsqb55pax4GFJxQVNFf+rvLWQMOJV6weKwewnSwB
-         5BqsPq+jKZx070ZpcmanZUBlXqyOnaMLVRDK7gusvuDlhCWWh9EROiDpB6eREMiLekU3
-         ykNQ==
-X-Gm-Message-State: AOUpUlFxdSxrOAat74vKx0uTMhcFNNzBpLKnq00MxFBZPhckpm9ORWsr
-        +t0/uZw3kNi5l6sy6Znl94fV/XE/uC6KsWRmB+c=
-X-Google-Smtp-Source: AAOMgpebR5feKCkX7vMXUBYCKJ+/poBRwOTLaCHXBiPE18F9k0dVda6soBBGPblDXnbBLThUy+RUdw+wBlQtDC9gC6o=
-X-Received: by 2002:a6b:825e:: with SMTP id e91-v6mr3787643iod.118.1532153920602;
- Fri, 20 Jul 2018 23:18:40 -0700 (PDT)
-MIME-Version: 1.0
-References: <20180718161101.19765-1-pclouds@gmail.com> <20180718161101.19765-3-pclouds@gmail.com>
- <xmqqmuunf5ny.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqmuunf5ny.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 21 Jul 2018 08:18:14 +0200
-Message-ID: <CACsJy8CMJJ1xW1zfnngGXqhJpwL0_dw9o7rTfq-YRTfqKjt-7A@mail.gmail.com>
-Subject: Re: [PATCH v2 02/23] archive-tar.c: mark more strings for translation
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=cd9Blh1jytQskkY6EAWWk6fk9oUbGU7dF6M2J02c9dA=;
+        b=N0ZyuQgXeHlpaO2QI9e8VooOFKvspdFGd/kg4eVTjx9AkiHesrwdo/UogjZbPaawh7
+         ou33tSl+eBTrQ1DXlDoQPZEAwE8x4FJ6ZxQdsCjgb0TfR9zjx0jLJJrIvjhP7DOh+3u0
+         jRKaL5VbknirrX+N1H04/ixYn8QzrWbGB9i+OZ5w/P1eiGBF0lEAofTrstK6jeo7HvIz
+         TrWhajBHqmwKxODSn9zhe26Jc58vD11CL4uWoTcfZC7g6SHOZoIeNZm/HXGVRDtMKyRZ
+         1/yXyty07ny9+Db9ZYRMtlBz/rADMZTme9LnUrwUHHRVstmWsDfBP87Dw8qDOW1jT5ZQ
+         im9Q==
+X-Gm-Message-State: AOUpUlGAWCgHSHoeUHhooRXCEgCBijPagNd2QB84ZNuP4VvKFQGwJOFY
+        2sO5JYO+vzQk54aX0BXbRiooNS/X
+X-Google-Smtp-Source: AAOMgpdqbS57vN8Mt8FOxv5cy2hdf1kbXxLM3SxKSSp/IRoyCDWg8mIs1Je3fSCGOiq7X84aWm42xQ==
+X-Received: by 2002:a25:6806:: with SMTP id d6-v6mr2593623ybc.276.1532154876789;
+        Fri, 20 Jul 2018 23:34:36 -0700 (PDT)
+Received: from tiger.attlocal.net ([2602:30a:2c28:20f0:7c1a:85e3:2ea9:5d7e])
+        by smtp.gmail.com with ESMTPSA id w199-v6sm1739509ywd.104.2018.07.20.23.34.35
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 20 Jul 2018 23:34:36 -0700 (PDT)
+From:   Elijah Newren <newren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, benpeart@microsoft.com, kewillf@microsoft.com,
+        Elijah Newren <newren@gmail.com>
+Subject: [PATCH 0/2] Preserve skip_worktree bit in merges when necessary
+Date:   Fri, 20 Jul 2018 23:34:26 -0700
+Message-Id: <20180721063428.20518-1-newren@gmail.com>
+X-Mailer: git-send-email 2.18.0.234.g2d1e6cefb
+In-Reply-To: <5a8d1098-b4c5-64e1-da98-dac13521e7ba@gmail.com>
+References: <5a8d1098-b4c5-64e1-da98-dac13521e7ba@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 19, 2018 at 8:21 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
->
-> > @@ -256,7 +256,7 @@ static int write_tar_entry(struct archiver_args *ar=
-gs,
-> >               *header.typeflag =3D TYPEFLAG_REG;
-> >               mode =3D (mode | ((mode & 0100) ? 0777 : 0666)) & ~tar_um=
-ask;
-> >       } else {
-> > -             return error("unsupported file mode: 0%o (SHA1: %s)",
-> > +             return error(_("unsupported file mode: 0%o (SHA1: %s)"),
-> >                            mode, oid_to_hex(oid));
->
-> This is no longer sha1_to_hex(); the "SHA1" in the message should
-> probably have been updated when it happened.
->
-> Cleaning it up is outside the scope of this patch.
+merge-recursive used to update files in the working tree
+unnecessarily.  This was reported by Linus in the 2.18.0 cycle and
+fixed in commit 1de70dbd1 ("merge-recursive: fix check for skipability
+of working tree updates", 2018-04-19).  Unfortunately, this bug masked
+another one: that merge-recursive cleared the skip_worktree bit for any
+files marked as unmerged by unpack_trees(), even if a file-level merge
+was clean.
 
-Yeah. I also asked Brian [1] what to use here instead. I think it's
-much easier to go through git.pot then fix all at once. Whatever
-leftover after that could be fixed as we see them.
+This series fixes the clearing of the skip_worktree bit for files that
+merge cleanly and match HEAD.  A future possible improvement exists to
+also avoid clearing the skip_worktree bit for files that merge cleanly
+but do not match HEAD (for such cases we'd still want to write those
+files to the index, but stop updating them in the working tree).
 
-[1] https://public-inbox.org/git/20180603182724.GA288937@genre.crustytoothp=
-aste.net/
+This series applies cleanly to either maint or master (or next or pu).
 
-> #leftoverbits
---=20
-Duy
+Two important notes:
+  - Need a sign-off from Ben for the first patch
+  - I'm out on vacation next week, so I won't be able to respond to
+    feedback or handle any necessary re-rolls until I return.
+
+Ben Peart (1):
+  t3507: add a testcase showing failure with sparse checkout
+
+Elijah Newren (1):
+  merge-recursive: preserve skip_worktree bit when necessary
+
+ merge-recursive.c               | 16 ++++++++++++++++
+ t/t3507-cherry-pick-conflict.sh | 13 +++++++++++++
+ 2 files changed, 29 insertions(+)
+
+-- 
+2.18.0.234.g2d1e6cefb
