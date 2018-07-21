@@ -2,178 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 87D601F597
-	for <e@80x24.org>; Fri, 20 Jul 2018 23:52:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0A7761F597
+	for <e@80x24.org>; Sat, 21 Jul 2018 00:31:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728305AbeGUAmx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Jul 2018 20:42:53 -0400
-Received: from mail-ua0-f196.google.com ([209.85.217.196]:47046 "EHLO
-        mail-ua0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727224AbeGUAmx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jul 2018 20:42:53 -0400
-Received: by mail-ua0-f196.google.com with SMTP id r18-v6so8461881ual.13
-        for <git@vger.kernel.org>; Fri, 20 Jul 2018 16:52:21 -0700 (PDT)
+        id S1728398AbeGUBVn (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Jul 2018 21:21:43 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:45958 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728329AbeGUBVn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jul 2018 21:21:43 -0400
+Received: by mail-pg1-f193.google.com with SMTP id f1-v6so8100885pgq.12
+        for <git@vger.kernel.org>; Fri, 20 Jul 2018 17:31:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=CaUiR4h19VA+xvGzefCin1xtyvC4Z8aVzZN+tS1DPis=;
-        b=WocVLv7JxG5N/6pJw80IiZIOPZG/EazamqtZPQ0C5OXRbJloB09nZoL0wc8IRls67M
-         XYYenrLGEZsMhajnyF3ArGL/xm9/YQ7Ar2iz5ZyMPtatd+Sm8/PZPUKL99prugw2dPDH
-         k4yN8A58hNbJCQQEVICs0pnLw0b8VzGT7XjE0/YHohT0x03WEMfS992jRF4v21ldmfzG
-         Pq7ni6pF5Sz5iQAEZNLrTeKduttbhrAXjdzc164RCKrx4rsx0h5qzyqqmomwDgtnK5cy
-         EGAywPV1i8awEEr0+Aq9F044+rqNXI9tOHWzHH4q58OsQTyeTsvFhtLJBqQpBveYd1bB
-         ll+g==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=zBdrQkyNHdO7tdj0IHp11s723XR20fazXbAsB23b4Lo=;
+        b=UwFmCQDPFkETXv8EeueCUPHTd5w86Rk1o3G0LpKwXShVRQOp6ffi8I/Ry8AtIXbsEq
+         fH6uoB0bexSzWTWDjC4ZpIOn7Lc5QZWOW21I3Ngt888QSe5pRqKPJSAuGQMK6Bbr/Eme
+         13jxw3mKVqGYa7UXmAK1bwK0nSst7tp8hNXBk4cQtc6rfJ5sje8YArKclVPFeifLm+OP
+         bPETjeA8+pNDWXqC8syFcfuJNB5C3n1r1KLFirrhMbfGtdYuFN9tpbCqK/vGMz18JYcL
+         AHd7oAijzXRodpBhD3lNkol3ERX+8FQEDGDX8KxfQMqF0DgHF0BzcMs52Y/3AufLtN4i
+         QXyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=CaUiR4h19VA+xvGzefCin1xtyvC4Z8aVzZN+tS1DPis=;
-        b=n31E2KoTvRj0opP3jseHo5XbumeTu/xdwNeCwp/ZQSK0L49CknotzBsUKTOM9B+Ubf
-         MJn1hErCoRoxQZjKHgP8vbbbUQ8BJ9WErzBV58AXKSy078fDKVe9MQvXvmuDWAY2jEwA
-         TqGf5bRW2I2fqz+9kBWd7ohF+DCw8BOv9/ygmH+37kXalgb94fIz1MiBKLXGfx/si7/s
-         /0GK0M7EB8NhMg6LvV9vH8pxrRl2rZ4GXN3qLV5QsW19gQSwJv8/PURualND6Mj6BXrR
-         D60pr4MR50Nb4T5TKE8V+Be2qxIK3PufsiU79OjiIlS/npThtpLlURzMcoEmotZK5gnx
-         +xiA==
-X-Gm-Message-State: AOUpUlFFw6q7nAhFOSrkzMGh3osw7lNhNYI6icUmcYUkz8xIUKMWbuVo
-        x/JuMXhQc+Zmh1eutHDsYWwnBRl9IwZ9cxXPPXs=
-X-Google-Smtp-Source: AAOMgpcpjDJuGVqYMPt1jbGrmzt+L/Zf/R/exP8Vi12NWEYgUrfggMwE+0jWAXnoqlnKIhyhQ43TMKouah1unYO9rgw=
-X-Received: by 2002:a9f:3563:: with SMTP id o90-v6mr2819342uao.79.1532130740405;
- Fri, 20 Jul 2018 16:52:20 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=zBdrQkyNHdO7tdj0IHp11s723XR20fazXbAsB23b4Lo=;
+        b=A/ZMkVvHTFJCah8wDi7Axzrr+TghhlY9lHcVHfwlEmDRx0jOCke1hFkhN2sUEEqaYj
+         dtv/QFXbIO8r6x7CqkDsmeiRt4oPUssOe14oRZwEVNKOPSAdYSJdRQmLjwfcRH4Eo+bK
+         nuNjL7HBMMbApl22CB/IxsyM70mcY92oonAC37/NngU9mWKK9+XTIuvRgEeE0qEZroML
+         3WaPkg7LflwARqJ3pKhMIHfxh55n1oXVFbvLtvvS4xRcA+pG8SQ06ayy5326CjLyoz5d
+         FqGQKGsQwhXzmjBrfJNQiWooLiBV+UAIOEiBQaXimWzq49LQQPBSm7TBgKAx+Q953i/M
+         CErQ==
+X-Gm-Message-State: AOUpUlENlHHc/g9XCgVv12XP3qR2TUaCPHNAtnrj/Bq4w+ivcGeRy8od
+        7g7ztFPYGrfPgUXGBhYkkvA=
+X-Google-Smtp-Source: AAOMgpcMMJISPmrk9fdfaBVtrY3ERZxw/WtUn3DPtfrJeTy6uYmiED3xybF9zgeZ2QUY6k1fZNGRBQ==
+X-Received: by 2002:a63:6e08:: with SMTP id j8-v6mr3892367pgc.428.1532133064492;
+        Fri, 20 Jul 2018 17:31:04 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id r71-v6sm4516810pfg.43.2018.07.20.17.31.03
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 20 Jul 2018 17:31:03 -0700 (PDT)
+Date:   Fri, 20 Jul 2018 17:31:02 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        demerphq <demerphq@gmail.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Adam Langley <agl@google.com>,
+        The Keccak Team <keccak@noekeon.org>
+Subject: Re: Hash algorithm analysis
+Message-ID: <20180721003102.GB83654@aiede.svl.corp.google.com>
+References: <20180609205628.GB38834@genre.crustytoothpaste.net>
+ <20180609224913.GC38834@genre.crustytoothpaste.net>
+ <20180611192942.GC20665@aiede.svl.corp.google.com>
+ <20180720215220.GB18502@genre.crustytoothpaste.net>
 MIME-Version: 1.0
-Received: by 2002:ab0:21c7:0:0:0:0:0 with HTTP; Fri, 20 Jul 2018 16:52:19
- -0700 (PDT)
-In-Reply-To: <CABPp-BGJAWXOCPsej=fWWDJkh-7BAV9m8yEDiy2NVkGTRCmk4A@mail.gmail.com>
-References: <20180718225110.17639-1-newren@gmail.com> <20180720153943.575-1-pclouds@gmail.com>
- <CABPp-BGJAWXOCPsej=fWWDJkh-7BAV9m8yEDiy2NVkGTRCmk4A@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 20 Jul 2018 16:52:19 -0700
-Message-ID: <CABPp-BF5O2-DQMSjN67HYsHHYHP_VH-N-C=k796NwPTvtwf7gQ@mail.gmail.com>
-Subject: Re: [PATCH] pack-objects: fix performance issues on packing large deltas
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180720215220.GB18502@genre.crustytoothpaste.net>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 20, 2018 at 10:43 AM, Elijah Newren <newren@gmail.com> wrote:
-> On Fri, Jul 20, 2018 at 8:39 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Du=
-y <pclouds@gmail.com> wrote:
+Hi,
 
->> This patch provides a better fallback that is
->>
->> - cheaper in terms of cpu and io because we won't have to read
->>   existing pack files as much
->>
->> - better in terms of pack size because the pack heuristics is back to
->>   2.17.0 time, we do not drop large deltas at all
->>
->> If we encounter any delta (on-disk or created during try_delta phase)
->> that is larger than the 2MB limit, we stop using delta_size_ field for
->> this because it can't contain such size anyway. A new array of delta
->> size is dynamically allocated and can hold all the deltas that 2.17.0
->> can [1]. All current delta sizes are migrated over.
->>
->> With this, we do not have to drop deltas in try_delta() anymore. Of
->> course the downside is we use slightly more memory, even compared to
->> 2.17.0. But since this is considered an uncommon case, a bit more
->> memory consumption should not be a problem.
+brian m. carlson wrote:
 
-Is the increased memory only supposed to affect the uncommon case?  I
-was able to verify that 2.18.0 used less memory than 2.17.0 (for
-either my repo or linux.git), but I don't see nearly the same memory
-reduction relative to 2.17.0 for linux.git with your new patches.
+> I know this discussion has sort of petered out, but I'd like to see if
+> we can revive it.  I'm writing index v3 and having a decision would help
+> me write tests for it.
 
->> ---
->>  I'm optimistic that the slowness on linux repo is lock contention
->>  (because if it's not then I have no clue what is). So let's start
->>  doing proper patches.
+Nice!  That's awesome.
+
+> To summarize the discussion that's been had in addition to the above,
+> Ævar has also stated a preference for SHA-256 and I would prefer BLAKE2b
+> over SHA-256 over SHA3-256, although any of them would be fine.
 >
-> I'll be testing this shortly...
+> Are there other contributors who have a strong opinion?  Are there
+> things I can do to help us coalesce around an option?
 
-Using these definitions for versions:
+My advice would be to go with BLAKE2b.  If anyone objects, we can deal
+with their objection at that point (and I volunteer to help with
+cleaning up any mess in rewriting test cases that this advice causes).
 
-  fix-v5: https://public-inbox.org/git/20180720052829.GA3852@sigill.intra.p=
-eff.net/
-(plus what it depends on)
-  fix-v6: The patch I'm responding to
-  fix-v2: https://public-inbox.org/git/20180718225110.17639-3-newren@gmail.=
-com/
+Full disclosure: my preference order (speaking for myself and no one
+else) is
 
-and inspired by
-https://public-inbox.org/git/87po42cwql.fsf@evledraar.gmail.com/, I
-ran
+ K12 > BLAKE2bp-256 > SHA-256x16 > BLAKE2b > SHA-256 > SHA-512/256 > SHA3-256
 
-   /usr/bin/time -f 'MaxRSS:%M Time:%e' git gc --aggressive
+so I'm not just asking you to go with my favorite. ;-)
 
-three times on a beefy box (40 cores, 160GB ram, otherwise quiet
-system).  If I take the lowest MaxRSS, and the lowest time reported
-(regardless of whether from the same run), then the results are as
-follows for linux.git (all cases repacked down to 1279 MB, so removing
-that from the table):
-
-Version  MaxRSS(kB)  Time (s)
--------  ----------  --------
- 2.17.0   11413236    621.36
- 2.18.0   10987152    621.80
- fix-v5   11105564    836.29
- fix-v6   11357304    831.73
- fix-v2   10873348    619.96
-
-The runtime could swing up to 10 seconds between runs.  The memory use
-also had some variability, but all runs of fix-v2 had lower MaxRSS
-than any runs of 2.18.0 (which surprised me); all runs of 2.18.0 used
-less memory than any run of fix-v6, and all runs of fix-v6 used less
-memory than any run of 2.17.0.  fix-v5 had the most variabiilty in
-MaxRSS, ranging from as low as some 2.18.0 runs up to higher than any
-2.17.0 runs.
-
-...but maybe that'd change with more than 3 runs of each?
-
-Anyway, this is a lot better than the 1193.67 seconds I saw with
-fix-v4 (https://public-inbox.org/git/20180719182442.GA5796@duynguyen.home/,
-which Peff fixed up into fix-v5), suggesting it is lock contention,
-but we're still about 33% slower than 2.17.0 and we've lost almost all
-of the memory savings.  Somewhat surprisingly, the highly simplistic
-fix-v2 does a lot better on both measures.
-
-
-However, I'm just concentrating on a beefy machine; it may be that v6
-drastically outperforms v2 on weaker hardware?  Can others measure a
-lower memory usage for v6 than v2?
-
-
-Also, for the original repo with the huge deltas that started it all,
-the numbers are (only run once since it takes so long):
-
-Version  Pack (MB)  MaxRSS(kB)  Time (s)
--------  ---------  ----------  --------
- 2.17.0     5498     43513628    2494.85
- 2.18.0    10531     40449596    4168.94
- fix-v5     5500     42805716    2577.50
- fiv-v6     5509     42814836    2605.36
- fix-v2     5509     41644104    2468.25
-
-
->>  If we want a quick fix for 2.18.1. I suggest bumping up
->>  OE_DELTA_SIZE_BITS like Elijah did in his second option. I don't
->>  think it's safe to fast track this patch.
->
-> Okay, I'll submit that with a proper commit message then.  Since you
-> also bump OE_DELTA_SIZE_BITS in your patch (though to a different
-> value), it'll require a conflict resolution when merging maint into
-> master, but at least the change won't silently leak through.
-
-...except now I'm wondering if the commit message should mention that
-it's just a stopgap fix for 2.18.1, or whether it's actually the fix
-that we just want to use going forward as well.
+Jonathan
