@@ -7,222 +7,133 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE0F71F597
-	for <e@80x24.org>; Sat, 21 Jul 2018 21:45:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C91301F597
+	for <e@80x24.org>; Sat, 21 Jul 2018 21:56:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728156AbeGUWjf (ORCPT <rfc822;e@80x24.org>);
-        Sat, 21 Jul 2018 18:39:35 -0400
-Received: from mout.gmx.net ([212.227.17.20]:42423 "EHLO mout.gmx.net"
+        id S1728193AbeGUWul (ORCPT <rfc822;e@80x24.org>);
+        Sat, 21 Jul 2018 18:50:41 -0400
+Received: from mout.gmx.net ([212.227.17.20]:42845 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728121AbeGUWjf (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Jul 2018 18:39:35 -0400
-Received: from [192.168.0.129] ([37.201.195.94]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lip2P-1gJ4f0132D-00d0Rf; Sat, 21
- Jul 2018 23:45:15 +0200
-Date:   Sat, 21 Jul 2018 23:44:59 +0200 (DST)
+        id S1728163AbeGUWul (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Jul 2018 18:50:41 -0400
+Received: from [192.168.0.129] ([37.201.195.94]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LfC4q-1gMdDi1l04-00orMT; Sat, 21
+ Jul 2018 23:56:22 +0200
+Date:   Sat, 21 Jul 2018 23:56:06 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Stefan Beller <sbeller@google.com>
-cc:     Junio C Hamano <gitster@pobox.com>, gitgitgadget@gmail.com,
-        git <git@vger.kernel.org>
-Subject: Re: [PATCH v3 16/20] range-diff --dual-color: work around bogus
- white-space warning
-In-Reply-To: <CAGZ79kbG0QZZSstC85pqSPS1awXq44vsBSvn_gfgP=22fdpzcA@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1807212314390.71@tvgsbejvaqbjf.bet>
-References: <cover.1525448066.git.johannes.schindelin@gmx.de> <pull.1.v3.git.gitgitgadget@gmail.com> <dfa7b1e71f7a39dfa608e1e205579d3b95d8a34f.1530617166.git.gitgitgadget@gmail.com> <CAGZ79kYQTTjipfBn3oAbpjZGnszWNiTKN3Ai4Pp-QA+i_xigbg@mail.gmail.com>
- <xmqq601ocecs.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1807101149130.75@tvgsbejvaqbjf.bet> <CAGZ79kbG0QZZSstC85pqSPS1awXq44vsBSvn_gfgP=22fdpzcA@mail.gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: refs/notes/amlog problems, was Re: [PATCH v3 01/20] linear-assignment:
+ a function to solve least-cost assignment problems
+In-Reply-To: <xmqq1sbxbt0e.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1807212347330.71@tvgsbejvaqbjf.bet>
+References: <cover.1525448066.git.johannes.schindelin@gmx.de> <pull.1.v3.git.gitgitgadget@gmail.com> <39272eefcfe66de3ca1aa2ee43d6626ce558caae.1530617166.git.gitgitgadget@gmail.com> <xmqqtvpcgf40.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1807071320110.75@tvgsbejvaqbjf.bet>
+ <xmqq7em7gg3j.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1807072116570.75@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.1807080017160.75@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.1807092342490.75@tvgsbejvaqbjf.bet> <xmqqefg94uq1.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1807121720340.75@tvgsbejvaqbjf.bet> <xmqq8t6gz8xz.fsf@gitster-ct.c.googlers.com> <xmqqa7qngnon.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1807202049540.71@tvgsbejvaqbjf.bet> <xmqq1sbxbt0e.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Wyqcxr7fVXvi7HkYpW6b6oQ9rc6dgLtEwIi9Eji8nwrvM/meHpX
- nhnysZAz0JnzahpRY23N187giYM9G8i0nSIqZgSbnn0H9yTCDewpqVdvXtM4szDf1BnHcTE
- SKmBisEVrIpOO067V4pbTGh0RYwnN4Dc7xyXokirpONzvI4MDSay6qWoHbcOgYh0O1ZdC4o
- RiEQv8Oxr7fGvjVpvHCsg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:gZNxGs7G4n8=:gEVFTvSPI/eGm8Fm0Elk2C
- RPKt7LNnd2A/kolklWXZEJ++R7JV48ACddCjfGEqXsRD8J1eVyzH3X4x5jbTcDeRyrEuwjZFV
- hrY9Cv7YXi4eqwwO2x0EUqP9AfwIKj0YW5pYmKMg0mwUzBBTbbiPybtxpDTgjUqV1RxubwptL
- VmEs90GALVLJkTjIatdmc7XOm5/h1qncqZRbGkRUO94rnmWV3/haWo3xlPSnxsqBtKYehfGxk
- U3Gm6APClH8G1sxWPAqEKdg5urK0iduQnf+4mThILNYNmE1rIZqLoGri5LGxMaEX7i8Nz+6hd
- 1Wrad+mCul3M2XuJMmObs0tm8Qh97YYkgdhQdWd75/xJR84gXOIyc78r1ri/oYm/zxTusNlGz
- Ks5Uohx+4BehYtHL9n8D3EMVbG9pHfYLMOst+Y9gqbRpOaQhZume8ZHxHkDp3aTk0SquXaqaV
- kTLideBD7rCl4qwVvhcq8wqCoMF3u2qkeyJlj2F9VzLs5qj1lwQtGsu/Klieh0KTh7z+pdZa0
- hReRuwfrd/J0aVimmL3EFQ/AtcMImaxa4uohMx5cBSabMDzbKJ2nJBPvrR2WNQluvX1NpZ5fO
- SZkgqKQ6nTB3xLN5AyTZ1uljU/Tc0+cdkcqPw2YucGSlvBZ9QIPWzvfhtVcLon2LKFLdZJpjU
- 2oyrlWaiYxIH6991zmk2nIPFs/OilYfr9yAsqt89n8s0FmCFKPCAP3irRdasF2y6yT2owZLUO
- MR6OUa1d1HEZ9i/JjAniOvUKMnBMU5BnfdTkUSvYcoopzxa/HPra5HMAhFkshRCh1AdD+i5WK
- KTdiNm7
+X-Provags-ID: V03:K1:VKAA3DarYwZXvdCvkgFDhK9nLXTmJANLFROm4sSKXKjqlvdMDd4
+ adpE0DB/2ssLlk+BWx29c2udQzwec/tGYnhfTosazijwQ7+HZ+JHOxfZ12TY65fUCbIwuSH
+ xHgJNgupnNltawiMVN1/3KvaRBc3t/Jm3RmQZDeyS1Rs1bvqr12pzHNh7PHxDQX0bQEYPMh
+ 0M1exOG1l2FLnCxMzwsuA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Q244dGwAWH8=:41VDDD02WK+q0nzDYCNPAJ
+ 3tiE5wrtXIKoO7Za1fjtqhabJJuo6KxqJ0uuAUXM9ppmtuJ14xOI5a6caRBrE/kyIwAX0ozkG
+ erZ7QdX652Q8GOflVC4bz8Ns85erUgFgJ9nHMmRko17xQS7seGE4l9NLPG75hcQlU4pIFlJ5m
+ wJiaO/RMl8DRcowZnAEtVijZ2ViPTePKtDjoteDNRElcwjX8CSVI5ZFNAm6YlIal8S7sHoBSD
+ YDgh0SJFgs/AhgtZaM786QzpwTeQPf0sFfRMxu8DkPRRHp2qDGnT85A6r3tlsFV14i53PEwCr
+ tfcdXLDdqlcE8WAoDggmnU/HbJn8Jh9J/mNmnK66JmoWiStDcXuAAZ8JESFU35ZrTAMWHCUCf
+ QZZYSerkw1T/NaivP+EPQDQIQkbbOBsbHgCgtcYisRAs+exmbd0tbfXMoxXUlV1hbwhdGutiS
+ 77R58umRzzOeN39rz1dc3fQ+iaum/vsHMNyx45bdMB7Ncoj8yq8dCmcT4WLE8ie2U9ltqemty
+ utAuLI6s/h7yCJkqaZWPdz5FqUBblI3POPj059oqGyAJ6Jh/bc5ajM5QY+GtpBBLVIWu2ArvO
+ AcdO5XyyjxWYG5l5Ud3Af6mbu44v0FDJANQshIDdprfRS3tI8dzi0WC6xWCRDiu0ZZSGP8S0S
+ UD3d7RhphXT/V7wVyLzWS97537j8zj9jHRYoYUpK6Cs+99BRf8IITmUoPIG6HbzXFKWVdiiPI
+ 5zmu2kuvjpTm8868qYuPE7kAhFgwvHctuRrAudmFBkW0iAF7pUS0W7R9AsPxlYpjONPs1a5KU
+ aGFRfLh
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan,
+Hi Junio,
 
-On Tue, 10 Jul 2018, Stefan Beller wrote:
+On Fri, 20 Jul 2018, Junio C Hamano wrote:
 
-> On Tue, Jul 10, 2018 at 3:08 AM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > On Mon, 9 Jul 2018, Junio C Hamano wrote:
-> >
-> > > I also wonder if we should be feeding the context lines to ws.c
-> > > machinery in the first place though.
-> >
-> > It *is* confusing, I know. The entire "diff of diffs" concept *is*
-> > confusing. I just don't know about a better alternative.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> I agree, but I am sure we'll get used to it quickly.
-
-Maybe you. Not me, though, I use range-diff extensively, and I still got
-confused quite a bit.
-
-Until, that is, I implemented the change where the "old-only" changes are
-dimmed and the "new-only" changes are displayed in bold.
-
-(The colors stay the same, it's just that the brightness indicates whether
-this is a change that was made obsolete, a change that stayed the same, or
-a change that was introduced in the latest iteration.)
-
-With this change, I am quite confident that I read the range-diffs
-correctly all the time.
-
-> > So hear me out, because there is a big misconception here: there are
-> > *two* levels of diffs. The outer one and the inner one.
+> > AFAICT there is at least one scenario where you run `rebase -i`, the notes
+> > get updated, and of course the *reverse mapping* does *not* get updated:
 > 
-> Yes, the inner diff is just input that was generated before because it
-> is so convenient to generate. Recently when using this too (back then
-> when it was called branch-diff), I came across the following:
+> It turns out that I never had a rewrite hook; the notes.rewriteref
+> mechanism is the only thing that has been used to maintain amlog.
 > 
-> Patch 1 looked like:
-> 
->     line 1
-> +    new line
->     line 2
->     line 3
-> 
-> and in the next iteration it looked like:
->     line 1
->     line 2
-> +    new line
->     line 3
-> 
-> such that the diff of diffs showed the move correctly, but as the inner diffs
-> had different context ranges, other lines looked like added/removed
-> in the outer diff, though it was both context.
-> So I wonder if eventually (not in this series) we want to tweak the context
-> lines, generate more than needed in the inner diffs and cut them off in
-> the outer diff "at the same line".
+> I've stopped populating the reverse mapping, by the way.
 
-That would be a welcome improvement, although I fear that it will be
-relatively intrusive. For one, you can forget about using different
-diff consumers (such as word-diff) if you hack up the diff of diffs
-generation at *such* a low level.
+That's just great. I ask you to make my life easier by keeping the
+information correct, and now you just drop it altogether? Just great.
 
-> I digress again w.r.t. white space.
+Seriously, I am trying to *improve* something here, because I really do
+care about contributors, and how hard we make it on them. I would not have
+expected such a backlash against that.
+
+> The script that I feed a message from gmane or public-inbox when I need
+> to learn the set of commits that resulted from the message instead uses
+> "git grep $message-id notes/amlog".  And that is fast enough for my
+> purpose.
+
+Awesome. You might want to make sure that Peff stops advertising the amlog
+notes, then, though.
+
+> There is no good reason to abuse the notes mechanism to map a random
+> object-name looking string (i.e. hash result of message id), other
+> than the ease of "quick access" when somebody is making a lot of
+> inquiry, but that "database" does not have to be stored in notes.
+
+Right. And it does not have to be stored anywhere, because nobody used it
+anyway, right?
+
+Well, I hate to break it to you: I just found a really excellent use case,
+and you are making it very, very hard for me. Deliberately so. I don't
+know how I deserve that.
+
+> It certainly does not belong to cycles worth spending by me *while*
+> I work during the say with various history reshaping tools to record
+> and/or update the reverse mapping and that is why my post-applypatch
+> hook no longer has the "reverse map" hack.
 > 
-> > Context lines of the outer diffs have no problem [*1*].
-> >
-> > The problem arises when the outer diff shows a - or + line (i.e. the line
-> > is present *either* in the old patch set or in the new patch set, but not
-> > both), *and* that line is *not* a context line of the inner diff.
-> 
-> So an actual change in the patches; an incremental reviewer would want
-> to spend most care on these.
+> It is not like anybody (including me) needs realtime up-to-date
+> reverse mapping from amlog while I run my "commit --amend", "rebase
+> -i", etc. and the reverse map is constructable by reversing the
+> forward map, obviously, with a postprocessing.  And I think that is
+> a reasonably way forward if anybody wants to have a reverse mapping.
+> The postprocessing can be done either by me before pushing out the
+> amlog ref, or done by any consumer after fetching the amlog ref from
+> me.  If I did the postprocessing and refuse to use rewrite hook you
+> wouldn't even know ;-)
 
-Precisely.
+The idea that you publish the amlog notes just for your own use cases,
+sounds a bit strange to me.
 
-With above-mentioned dimming/brightening, there is a strong visual cue to
-focus on those parts.
+So to reiterate: the information you have in amlog is useful, if faulty.
+Rather than "fixing" it by stopping the useful reverse-mapping, it would
+make a ton more sense to instate that post-rewrite hook I already drafted
+for you.
 
-> > Let's illustrate this via an example. Let's assume that both the old patch
-> > set and the new patch set add a comment to a statement, and that the
-> > context of that statement changed between old and new patch set. Something
-> > like this would be in the old patch set:
-> >
-> > ```diff
-> >         int quiet = 0;
-> > +       /* This is only needed for the reflog message */
-> >         const char *branch = "HEAD";
-> > ```
-> >
-> > And this would be in the new patch set:
-> >
-> > ```diff
-> >         int quiet = 0, try_harder = 0;
-> > +       /* This is only needed for the reflog message */
-> >         const char *branch = "HEAD";
-> > ```
-> >
-> > So as you see, both old and new revision of the same patch add that
-> > comment, and it is just a context line that changed, which a regular
-> > reviewer would want to *not* consider a "real" change between the patch
-> > set iterations.
-> >
-> > Now, let's look at the "diff of diffs":
-> >
-> > ```diff
-> > -       int quiet = 0;
-> > +       int quiet = 0, try_harder = 0;
-> >  +      /* This is only needed for the reflog message */
-> >         const char *branch = "HEAD";
-> > ```
-> >
-> > Please understand that in the dual color mode:
-> >
-> > - The first line's `-` would have a red background color, the rest of that
-> >   line would be uncolored (because it is a context line of the inner
-> >   diff),
-> >
-> > - the second line's `+` would have a green background color, the rest
-> >   would be just as uncolored as the rest of the first line,
-> >
-> > - the third line would be a context line of the outer diff, but a `+` line
-> >   of the inner diff, therefore that rest of the line would be green, and
-> >
-> > - the fourth line is completely uncolored; It is a context line both of
-> >   the inner and the outer diff.
-> >
-> > That's it for the diff colors. Now for the white space: The first two
-> > lines start with a `-` and a `+` respectively (outer diff marker), and
-> > then most crucially continue with a space to indicate the inner diff's
-> > context line, *and then continue with a horizontal tab*.
-> >
-> > As far as the inner diff is concerned, this *is* a context line.
-> >
-> > As far as the outer diff is concerned, this is *not* a context line.
-> >
-> > And that is the conundrum: the whitespace checker is called because the
-> > outer diff claims that the second line is a `+` line and the whitespace
-> > checker has no idea that it should treat it as a context line instead.
-> 
-> Spelled out this way, we might want to add more symbols to
-> enum diff_symbol, such as
->     DIFF_SYMBOL_DUAL_DIFF_PLUS_PLUS
->     DIFF_SYMBOL_DUAL_DIFF_PLUS_MINUS
->     DIFF_SYMBOL_PLUS_MINUS
-> or so.
-> 
-> These would need to get generated when we create the diff of diffs
-> in emit_{del,add,context}_line or even fn_out_consume; and then have
-> their own treatment regarding white spaces in emit_diff_symbol_from_struct.
-> 
-> I am not sure if that would help for the series as-is, as I am thinking
-> already how to move these diff-diffs in-core (as that would help a lot
-> with the context line cutting mentioned above).
+Besides, while you spent all of that time to make things harder for me,
+you still did not look into the most worrisome of my findings: there are
+apparently Message-Id mappings where *none* of the commits returned by
+said `git grep` you mentioned above are valid. Not a single one. I will
+dig out the mail for you on Monday, because I care that much, where I
+provided one example of a Message-Id with two commits that match in amlog,
+none of which is actually reachable from any of your public branches, and
+I also provided the commit that *actually* corresponds to that Message-Id,
+and it is not annotated.
 
-I settled on _DIM and _BOLD versions for CONTEXT, FILE_OLD and FILE_NEW.
+So at least in this case *even you* should have a vested interest in
+figuring out what goes wrong because even your own use case is affected by
+it.
 
-> > I'll try to find some time this afternoon to study Stefan's reply, as I
-> > have a hunch that there is a deep insight hidden that helps me to figure
-> > out the proper path ahead (because I do not want to uglify the `diff.c`
-> > code the way my current iteration does, and I'd rather have a way to color
-> > the diff more intelligently myself, in a function in `range-diff.c`).
-> 
-> I considered trying a cleanup on top of your series as I had the impression
-> the move detection added some ugliness as well.
-
-I will be glad to review the patches after this coming week. Should I
-forget, please remind me.
-
-Thanks,
+Ciao,
 Dscho
