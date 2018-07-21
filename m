@@ -2,92 +2,253 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B12101F597
-	for <e@80x24.org>; Sat, 21 Jul 2018 07:38:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 329EF1F597
+	for <e@80x24.org>; Sat, 21 Jul 2018 07:50:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727341AbeGUI3q (ORCPT <rfc822;e@80x24.org>);
-        Sat, 21 Jul 2018 04:29:46 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:40301 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727041AbeGUI3q (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Jul 2018 04:29:46 -0400
-Received: by mail-it0-f67.google.com with SMTP id 188-v6so17435456ita.5
-        for <git@vger.kernel.org>; Sat, 21 Jul 2018 00:38:01 -0700 (PDT)
+        id S1727304AbeGUIlq (ORCPT <rfc822;e@80x24.org>);
+        Sat, 21 Jul 2018 04:41:46 -0400
+Received: from mail-lj1-f179.google.com ([209.85.208.179]:38809 "EHLO
+        mail-lj1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727205AbeGUIlq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Jul 2018 04:41:46 -0400
+Received: by mail-lj1-f179.google.com with SMTP id p6-v6so12886563ljc.5
+        for <git@vger.kernel.org>; Sat, 21 Jul 2018 00:49:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=RBGaoubwccIdOV5HyY9u+j+iowi89g84a0J1wg3p440=;
-        b=dppg2rHFTTe+PTxTJ3rJweGNUY8sTTy71r59vGtCotEP5Zif9K6uk4KCylr1D3XB/v
-         BEswOT6e1WqQv2wXwpIjqgYaM1LCY3dXG0fzDfHHtJKKXOJyNOLwDufFx/puKhQiwJf6
-         u958XahaMBmhVvMIYtb1oCBqir0Dnlzk9us8Q9FqxN/aV6CnZTUmGhD3IKyz5YimL4dm
-         fzPUm5cAT2vNcbiS64yrnSmZE6vfUuK56VdDKQJDr+M03FPRjlRj5mX2rM+cZFnF8jUy
-         Km6jdmdhX8Uh38yd4/OcWt1e96G+rMYZCBzfr80E/z0SvG9z8unoVsHzYnk1bChe3bnq
-         +UAw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=XPeuFC1z0dbWgeXysEkM4MZw2g6xAy837A3dNwjHWMU=;
+        b=jIX9WQnxC8LqgEifW5Xyj9vSNGGG3J07XavQ7815HqeREA72vjTJF2M6e0qVjj6mq6
+         q77mysjjiXpddQsvqcHbAjKnVcShmFuD+UgEf8wnzAVN99cQ/kPijCgBSIdUfJNtZG5l
+         YRyuy5tV8bEqm1XTjQA3maDc/XHpyi2+MqmuauKV539Uhbzqjp/7VyBn4XF76K3SZrXS
+         3eiCDdut/xi1eKw8EaNvuhJDRudNVotIzKTyLXTzsg/Axz3WTViWr2hEDwKo3XcRjIrw
+         DSH/14mLYrFcgsmGnWoriAa27ZmHJd8qvESsS2/LlIu9l8OGUy25Xs+uG3UXPjJY2RLx
+         7/2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=RBGaoubwccIdOV5HyY9u+j+iowi89g84a0J1wg3p440=;
-        b=V0YuXzber8sK0UQQtA1qXr2WsAj3FtJjYviN3JWEh2I8D53WpKRvHQgqGeh7FmbbyF
-         VZxnGnNIO2Gf76hos/3apuxM2jhjtOQ+2ZgbPrjgtygXxeSvAp4fPjbwZos/O4LwJF/q
-         4NBNB1QVdRQ8Iu/m0cHoTHtD+0dV6QtZ5e1FXf5M9EamLGzkW+1DLpMB087H2fX2CRKE
-         Y1EjYRafRyBIq9M47Y2sRrfCXt3K70iMCtTC01Uo3JH37uawuW2Fp5+Fy8F9xTS6OAqM
-         aOkF32UabgUlyb93y83eNpw+YIEI4uJQ2Mx63JWnOd62DRmBpB3QcB5cL/pgy3kKbTrs
-         dwbA==
-X-Gm-Message-State: AOUpUlHT+YQRv8mMXPTutiwep+gAvpIIoxeUtUkg1kZm50AS0Hps0v9F
-        qrHNzBxJBh2lEscsfzWvfYfCYgUnUJKYHdzQlow=
-X-Google-Smtp-Source: AAOMgpfaaQ2uXsB4jEPgcrtMlzF1rf9suwkjxxU7bxBQRcgsp2U4jmBvcB858wBZk0rm33YCK4MYXxV5V9rT+WlfD1M=
-X-Received: by 2002:a24:c888:: with SMTP id w130-v6mr4601803itf.78.1532158680866;
- Sat, 21 Jul 2018 00:38:00 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=XPeuFC1z0dbWgeXysEkM4MZw2g6xAy837A3dNwjHWMU=;
+        b=eS81U2ffSkpLuEikZcamVB904uKb1WehGXMzCbskhJzYP6XVDpuAiMMPEXlIblpGSM
+         +UjqBS7uuSwtv18Q2VhK6etKbLV23tILULCoDJSi2NJ+0XOQkkNYjjSi+h42q1ubWpM5
+         bYcgfyxIu7RJu1sHU7riyR/RdCj1RWAUN834UT5xp9yN1XLgLlATdQOivn7NSydoE/C8
+         0ZJsjBahvo1L/TiJjFMmsgK1/jw9/aLe5uHHugdhRb07Fr9x9nUODNrNNjRnAuDXZ8fO
+         2M9zKUiJDsVCr1bwJBslloZokvnClrXOMkRZEIbJlOmeOS8PiiJN7MbUAuQIPojq/q0F
+         1zuA==
+X-Gm-Message-State: AOUpUlHnG3d5AYHJ+MQLlzd26cwpU5WHmESfSgLVet+92DzL+6ndRYFW
+        UX501Wt7/d1+k2Tb0OeOdgM=
+X-Google-Smtp-Source: AAOMgpcQQCgpmLo3M/6Mhse5XPXn0qGP22vvutvpTEYvo8CD/VRnt91GIZivxEvboP3zRFh2XpYXBg==
+X-Received: by 2002:a2e:10ca:: with SMTP id 71-v6mr3690080ljq.59.1532159395447;
+        Sat, 21 Jul 2018 00:49:55 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id n3-v6sm759898lji.96.2018.07.21.00.49.54
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 21 Jul 2018 00:49:54 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     pclouds@gmail.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, newren@gmail.com,
+        stolee@gmail.com
+Subject: [PATCH v3 00/23] Mark more strings for translation
+Date:   Sat, 21 Jul 2018 09:49:18 +0200
+Message-Id: <20180721074941.14632-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.18.0.656.gda699b98b3
+In-Reply-To: <20180718161101.19765-1-pclouds@gmail.com>
+References: <20180718161101.19765-1-pclouds@gmail.com>
 MIME-Version: 1.0
-References: <20180718161101.19765-1-pclouds@gmail.com> <20180718161101.19765-2-pclouds@gmail.com>
- <xmqqr2jzf5rk.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqr2jzf5rk.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 21 Jul 2018 09:37:34 +0200
-Message-ID: <CACsJy8Dcby0tX4gS9+mM9W09187LZDksfhyAZTZYk10bJhL8eQ@mail.gmail.com>
-Subject: Re: [PATCH v2 01/23] Update messages in preparation for i18n
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 19, 2018 at 8:18 PM Junio C Hamano <gitster@pobox.com> wrote:
-> > --- a/config.c
-> > +++ b/config.c
-> > @@ -461,7 +461,7 @@ int git_config_from_parameters(config_fn_t fn, void *data)
-> >       envw = xstrdup(env);
-> >
-> >       if (sq_dequote_to_argv(envw, &argv, &nr, &alloc) < 0) {
-> > -             ret = error("bogus format in " CONFIG_DATA_ENVIRONMENT);
-> > +             ret = error("bogus format in %s", CONFIG_DATA_ENVIRONMENT);
-> >               goto out;
-> >       }
-> >
->
-> Good job spotting that the original wanted to say, but failed to
-> say, that CONFIG_DATA_ENVIRONMENT as the source of broken data we
-> detected.  But I am not sure CONFIG_DATA_ENVIRONMENT is what we want
-> to report as the source of bad data to the end users.  One-shot
-> configuration we get form "git -c VAR=VAL" are placed in the
-> environment as an internal implementation detail, so from their
-> point of view, the place we saw broken data coming from is their
-> command line "git -c VAR=VAL" one-shot configuration.
+v3 fixes up some other things that Junio spotted. branch-diff 
 
-I think I'll leave this one out for future follow up. The change here
-is needed because otherwise we can't wrap the string in _(). This
-patch, as you noted, is already big and getting more complicated than
-it should be.
+diff --git a/builtin/config.c b/builtin/config.c
+index 3c26df6c48..5761a2c4ac 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -626,7 +626,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 			 * location; error out even if XDG_CONFIG_HOME
+ 			 * is set and points at a sane location.
+ 			 */
+-			die(_("$HOME is not set"));
++			die(_("$HOME not set"));
+ 
+ 		if (access_or_warn(user_config, R_OK, 0) &&
+ 		    xdg_config && !access_or_warn(xdg_config, R_OK, 0)) {
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 6b778b0a82..37d63f6721 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -148,8 +148,13 @@ static void *get_delta(struct object_entry *entry)
+ 		    oid_to_hex(&DELTA(entry)->idx.oid));
+ 	delta_buf = diff_delta(base_buf, base_size,
+ 			       buf, size, &delta_size, 0);
++	/*
++	 * We succesfully computed this delta once but dropped it for
++	 * memory reasons. Something is very wrong if this time we
++	 * recompute and create a different delta.
++	 */
+ 	if (!delta_buf || delta_size != DELTA_SIZE(entry))
+-		die(_("delta size changed"));
++		BUG("delta size changed");
+ 	free(buf);
+ 	free(base_buf);
+ 	return delta_buf;
+diff --git a/builtin/replace.c b/builtin/replace.c
+index c77b325aa1..e879ace277 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -456,10 +456,10 @@ static int create_graft(int argc, const char **argv, int force, int gentle)
+ 		return -1;
+ 	}
+ 
+-	if (remove_signature(&buf))
+-		warning(_("the original commit '%s' has a gpg signature.\n"
+-			  "The signature will be removed in the replacement commit!"),
+-			old_ref);
++	if (remove_signature(&buf)) {
++		warning(_("the original commit '%s' has a gpg signature"), old_ref);
++		warning(_("the signature will be removed in the replacement commit!"));
++	}
+ 
+ 	if (check_mergetags(commit, argc, argv)) {
+ 		strbuf_release(&buf);
+diff --git a/config.c b/config.c
+index 58d076e833..736b9f23f7 100644
+--- a/config.c
++++ b/config.c
+@@ -1409,11 +1409,11 @@ static int git_default_push_config(const char *var, const char *value)
+ 			push_default = PUSH_DEFAULT_UPSTREAM;
+ 		else if (!strcmp(value, "current"))
+ 			push_default = PUSH_DEFAULT_CURRENT;
+-		else
+-			return error(_("malformed value for %s: %s\n"
+-				       "Must be one of nothing, matching, simple, "
+-				       "upstream or current."),
+-				     var, value);
++		else {
++			error(_("malformed value for %s: %s"), var, value);
++			return error(_("must be one of nothing, matching, simple, "
++				       "upstream or current"));
++		}
+ 		return 0;
+ 	}
+ 
+diff --git a/connect.c b/connect.c
+index 70b97cfef6..94547e5056 100644
+--- a/connect.c
++++ b/connect.c
+@@ -641,11 +641,9 @@ static int git_tcp_connect_sock(char *host, int flags)
+ 	if (gai)
+ 		die(_("unable to look up %s (port %s) (%s)"), host, port, gai_strerror(gai));
+ 
+-	if (flags & CONNECT_VERBOSE) {
++	if (flags & CONNECT_VERBOSE)
+ 		/* TRANSLATORS: this is the end of "Looking up %s ... " */
+-		fprintf_ln(stderr, _("done."));
+-		fprintf(stderr, _("Connecting to %s (port %s) ... "), host, port);
+-	}
++		fprintf(stderr, _("done.\nConnecting to %s (port %s) ... "), host, port);
+ 
+ 	for (ai0 = ai; ai; ai = ai->ai_next, cnt++) {
+ 		sockfd = socket(ai->ai_family,
+@@ -714,11 +712,9 @@ static int git_tcp_connect_sock(char *host, int flags)
+ 		nport = se->s_port;
+ 	}
+ 
+-	if (flags & CONNECT_VERBOSE) {
++	if (flags & CONNECT_VERBOSE)
+ 		/* TRANSLATORS: this is the end of "Looking up %s ... " */
+-		fprintf_ln(stderr, _("done."));
+-		fprintf(stderr, _("Connecting to %s (port %s) ... "), host, port);
+-	}
++		fprintf(stderr, _("done.\nConnecting to %s (port %s) ... "), host, port);
+ 
+ 	for (cnt = 0, ap = he->h_addr_list; *ap; ap++, cnt++) {
+ 		memset(&sa, 0, sizeof sa);
+
+Nguyễn Thái Ngọc Duy (23):
+  Update messages in preparation for i18n
+  archive-tar.c: mark more strings for translation
+  archive-zip.c: mark more strings for translation
+  builtin/config.c: mark more strings for translation
+  builtin/grep.c: mark strings for translation
+  builtin/pack-objects.c: mark more strings for translation
+  builtin/replace.c: mark more strings for translation
+  commit-graph.c: mark more strings for translation
+  config.c: mark more strings for translation
+  connect.c: mark more strings for translation
+  convert.c: mark more strings for translation
+  dir.c: mark more strings for translation
+  environment.c: mark more strings for translation
+  exec-cmd.c: mark more strings for translation
+  object.c: mark more strings for translation
+  pkt-line.c: mark more strings for translation
+  refs.c: mark more strings for translation
+  refspec.c: mark more strings for translation
+  replace-object.c: mark more strings for translation
+  sequencer.c: mark more strings for translation
+  sha1-file.c: mark more strings for translation
+  transport.c: mark more strings for translation
+  transport-helper.c: mark more strings for translation
+
+ archive-tar.c                         |  12 +--
+ archive-zip.c                         |  14 ++--
+ builtin/blame.c                       |   2 +-
+ builtin/checkout.c                    |   4 +-
+ builtin/commit.c                      |   6 +-
+ builtin/config.c                      |  50 +++++------
+ builtin/fast-export.c                 |  42 +++++-----
+ builtin/fmt-merge-msg.c               |   2 +-
+ builtin/grep.c                        |  12 +--
+ builtin/log.c                         |   6 +-
+ builtin/merge.c                       |   2 +-
+ builtin/pack-objects.c                | 115 ++++++++++++++------------
+ builtin/replace.c                     |  84 +++++++++----------
+ builtin/rm.c                          |   2 +-
+ commit-graph.c                        |  20 ++---
+ config.c                              |  72 ++++++++--------
+ connect.c                             |  77 ++++++++---------
+ convert.c                             |  42 +++++-----
+ diff.c                                |   4 +-
+ dir.c                                 |   8 +-
+ environment.c                         |   4 +-
+ exec-cmd.c                            |   2 +-
+ object.c                              |  10 +--
+ pkt-line.c                            |  26 +++---
+ reflog-walk.c                         |   4 +-
+ refs.c                                |  40 ++++-----
+ refspec.c                             |   2 +-
+ replace-object.c                      |   6 +-
+ sequencer.c                           |  28 ++++---
+ sha1-file.c                           | 110 ++++++++++++------------
+ t/t0021-conversion.sh                 |   2 +-
+ t/t1305-config-include.sh             |   2 +-
+ t/t1308-config-set.sh                 |   2 +-
+ t/t1400-update-ref.sh                 |  20 ++---
+ t/t1404-update-ref-errors.sh          |   4 +-
+ t/t1450-fsck.sh                       |   2 +-
+ t/t3005-ls-files-relative.sh          |   8 +-
+ t/t3210-pack-refs.sh                  |   2 +-
+ t/t3310-notes-merge-manual-resolve.sh |   6 +-
+ t/t5500-fetch-pack.sh                 |   2 +-
+ t/t5505-remote.sh                     |   2 +-
+ t/t5570-git-daemon.sh                 |   6 +-
+ t/t5801-remote-helpers.sh             |   8 +-
+ t/t7063-status-untracked-cache.sh     |   2 +-
+ t/t7400-submodule-basic.sh            |   2 +-
+ transport-helper.c                    |  89 ++++++++++----------
+ transport.c                           |  18 ++--
+ 47 files changed, 502 insertions(+), 483 deletions(-)
+
 -- 
-Duy
+2.18.0.656.gda699b98b3
+
