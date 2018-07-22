@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 576361F597
-	for <e@80x24.org>; Sun, 22 Jul 2018 08:52:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1745F1F597
+	for <e@80x24.org>; Sun, 22 Jul 2018 08:56:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728209AbeGVJrV (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Jul 2018 05:47:21 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:33127 "EHLO
-        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728177AbeGVJrU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Jul 2018 05:47:20 -0400
-Received: by mail-io0-f196.google.com with SMTP id z20-v6so13216537iol.0
-        for <git@vger.kernel.org>; Sun, 22 Jul 2018 01:51:22 -0700 (PDT)
+        id S1728091AbeGVJwQ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Jul 2018 05:52:16 -0400
+Received: from mail-it0-f68.google.com ([209.85.214.68]:39996 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728047AbeGVJwQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Jul 2018 05:52:16 -0400
+Received: by mail-it0-f68.google.com with SMTP id h23-v6so363993ita.5
+        for <git@vger.kernel.org>; Sun, 22 Jul 2018 01:56:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=9DXNIhU1LC/s6aZ4SWFpDslpjUvHK8/ALRBNQtnXbMQ=;
-        b=jdNgHr/U8BESXpl5S46T/mgJiEYFMQQU6IUE3PTx75BqMIM3q+BfEeyAWCTx/HM32V
-         E2RybFU+RlD49uuTlC5tMLLaOFXsU117AasMnSLlke2RqH6hNSqyXOJOwZ5VLpn3tkMI
-         7yIQAqNY2j4LN7lWEGrg2UWlMUlJj1yYFM5Zrnw1Tldz+4yMKFQqW5HI9jO+3vVCwDkV
-         CAeWisXTuQPxBBBXaKLYgXRJWRqwmruVVsCUdljA5xIFjynK7/kbAvz5XvtzAy0jjpmN
-         +VeMc4vFl6N6Pn4ETMWlngBtOL4j9Qcy/XOAa5vGVE1bZTmVVEVHnR4qMHRkfEIR8FPw
-         Cs5w==
+        bh=NXKHF7a4rkF5f66PMQuxZbfNGY7tPvIkcWVIcbVKZIs=;
+        b=MJkg4Uisc10zYelvdgYQj1FdBufA0NqNF8YPcXjw1rag4HfsEZNMJ0Z0EgTh2IIDeq
+         PAXSiFrWJOgnK0C8k5pgqPiqVR0C5y+TRTmEHJUpLKsa3O6bU5CF+Thu6hwQDxotE31X
+         UHZc5vqOZ5SHgwBacgzvvgcuJbxp+zjw2YkaNGERrg2XGPWUiSefSkDpUN0cOMgAp3eF
+         rpTrbkqX3tF5gmbRUsaQRWfwCI2/aperQ6IP7l1eJj1aLrWTJkI6mm7rdj0adtaqVeRc
+         fefBTLBsO/G3v5UGPG99u0ZGhDnd4tt1VSHgWAFyA15F2tjeXd36igL9z3uAMJyry4Xe
+         mmZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=9DXNIhU1LC/s6aZ4SWFpDslpjUvHK8/ALRBNQtnXbMQ=;
-        b=twfGBdelGoP20IHsDoiZzq/dZVIrtGPq+OX5mgPD1BO6I0t9twILykAOrBJDsBceMI
-         fADgu4AIE8AsOyhokolimpOgOYl0PRfVRSnGpfBCKIAiTC2gBLZ+NE7xBGuR5Qdt+zme
-         LmxJsqDqe0IxmB6QdhesMM3csK+QV/+AQV3FTmT73k4LZpiSLl+SL4w36rn37YYvLQMT
-         CWfiIamPSL5CQ540rbCYQshZ+51lHjrjgSFzZg2u/ldbw4ZBepIIfsymhV/ZDGtPDgB1
-         EnP++1GJ50+3GvTdDJKXdwC3GA6xNnO4hio5NtzDu/g6ZTR4DcwF3V6PK/DW+jiTvjod
-         emaw==
-X-Gm-Message-State: AOUpUlEZYFBjDFjsuSIzBE+xJJpxIE/737J3AQOCiOG5R0Dd7h0Vio32
-        mDzri/CMo2mTm9+ZzMb6PGy7khJmYlgghXgtrjw=
-X-Google-Smtp-Source: AAOMgpfFg91fTbXHmdbZI9dfB4IAUblrkoiz+xGNvaNRtziNtNxQE+HvP8W1j5OePW5EVwJ4jXtwJep8WL0G92KHFZ4=
-X-Received: by 2002:a6b:825e:: with SMTP id e91-v6mr6547380iod.118.1532249482461;
- Sun, 22 Jul 2018 01:51:22 -0700 (PDT)
+        bh=NXKHF7a4rkF5f66PMQuxZbfNGY7tPvIkcWVIcbVKZIs=;
+        b=j4e6b4tXZGD5vzTbxYZ8nQ8JpCK0lcCXOwB88ZFSOqkvUcq5rjYMPrcg1yH0R4ARMZ
+         c/dt0OnhetmP7xBOCcog3HAC4Unr6VFNHrhe0qgCbxrrhMQTk7yO1lTN1+o4slym7tHZ
+         aMzoQgn3VaP9CZcPTLmyQ8nsLxpqynfJ5nIgUQ2r3pFi+/O9qA1aI1SyHMCa0NX++PU5
+         p8FU+8YKXgUoSc9YFQfJ/d40nmzvE6BX5yLKvLCcMuXv08Bpet+HrY2S7hmQIMaZtVgy
+         lALBo9W4596qfDCLOGpS8xfoK2x023K8YnUva65f4m2ZAA3bUomt+2cHd86lQ+Snl2xI
+         4KZQ==
+X-Gm-Message-State: AOUpUlHyMfxNYgKW8IkiWNWFMsf25mkU9FL33ksa+h1hteyVB/ObbXyV
+        wbAUqybeQqn0z942euli2sAwkQfAwsf/n2CtBvk=
+X-Google-Smtp-Source: AAOMgpcQI5JVNsM8ng/agHVZV3AdOLYTTTtnbn16UMLPBsrCvS0RpgL6P/+Y7KxLK5ldrxBK+LWIdC9+VfX87cXUjo0=
+X-Received: by 2002:a24:b101:: with SMTP id o1-v6mr6604136itf.121.1532249777680;
+ Sun, 22 Jul 2018 01:56:17 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180722054836.28935-1-chriscool@tuxfamily.org> <20180722054836.28935-3-chriscool@tuxfamily.org>
-In-Reply-To: <20180722054836.28935-3-chriscool@tuxfamily.org>
+References: <20180722054836.28935-1-chriscool@tuxfamily.org> <20180722054836.28935-4-chriscool@tuxfamily.org>
+In-Reply-To: <20180722054836.28935-4-chriscool@tuxfamily.org>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sun, 22 Jul 2018 10:50:56 +0200
-Message-ID: <CACsJy8AzksB=rfaX_dfboMXHjqj6gj+erdF6eRFAKmWA1-3PUg@mail.gmail.com>
-Subject: Re: [RFC PATCH 2/5] Add delta-islands.{c,h}
+Date:   Sun, 22 Jul 2018 10:55:51 +0200
+Message-ID: <CACsJy8CmJt1Wj=e4TNUUxY-Czn+h0BTVAWLY0ujJhgUKC+Y6yw@mail.gmail.com>
+Subject: Re: [RFC PATCH 3/5] pack-objects: add delta-islands support
 To:     Christian Couder <christian.couder@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
@@ -63,83 +63,66 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jul 22, 2018 at 7:51 AM Christian Couder
+On Sun, Jul 22, 2018 at 7:52 AM Christian Couder
 <christian.couder@gmail.com> wrote:
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index a32172a43c..f682e92a1a 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -2542,6 +2542,10 @@ Note that changing the compression level will not automatically recompress
->  all existing objects. You can force recompression by passing the -F option
->  to linkgit:git-repack[1].
+> @@ -700,51 +705,58 @@ static struct object_entry **compute_write_order(void)
+>          */
+>         for_each_tag_ref(mark_tagged, NULL);
 >
-> +pack.island::
-> +       A regular expression configuring a set of delta islands. See
-> +       "DELTA ISLANDS" in linkgit:git-pack-objects[1] for details.
+> -       /*
+> -        * Give the objects in the original recency order until
+> -        * we see a tagged tip.
+> -        */
+> +       if (use_delta_islands)
+> +               max_layers = compute_pack_layers(&to_pack);
 > +
+>         ALLOC_ARRAY(wo, to_pack.nr_objects);
+> -       for (i = wo_end = 0; i < to_pack.nr_objects; i++) {
+> -               if (objects[i].tagged)
+> -                       break;
+> -               add_to_write_order(wo, &wo_end, &objects[i]);
+> -       }
+> -       last_untagged = i;
+> +       wo_end = 0;
+>
+> -       /*
+> -        * Then fill all the tagged tips.
+> -        */
+> -       for (; i < to_pack.nr_objects; i++) {
+> -               if (objects[i].tagged)
+> +       for (; write_layer < max_layers; ++write_layer) {
+> +               /*
+> +                * Give the objects in the original recency order until
+> +                * we see a tagged tip.
+> +                */
+> +               for (i = 0; i < to_pack.nr_objects; i++) {
+> +                       if (objects[i].tagged)
+> +                               break;
+>                         add_to_write_order(wo, &wo_end, &objects[i]);
+> -       }
+> +               }
+> +               last_untagged = i;
+>
+> -       /*
+> -        * And then all remaining commits and tags.
+> -        */
+> -       for (i = last_untagged; i < to_pack.nr_objects; i++) {
+> -               if (oe_type(&objects[i]) != OBJ_COMMIT &&
+> -                   oe_type(&objects[i]) != OBJ_TAG)
+> -                       continue;
+> -               add_to_write_order(wo, &wo_end, &objects[i]);
+> -       }
+> +               /*
+> +                * Then fill all the tagged tips.
+> +                */
 
-That section is not added until 3/5 though.
+If we move the code in this loop to a separate function, in a separate
+patch, first, would it produce a better diff? I think all the
+indentation change here makes it a bit hard to read.
 
-> diff --git a/delta-islands.c b/delta-islands.c
-> new file mode 100644
-> index 0000000000..645fe966c5
-> --- /dev/null
-> +++ b/delta-islands.c
-> @@ -0,0 +1,490 @@
-> +#include "builtin.h"
-
-A bit weird that builtin.h would be needed...
-
-> +void resolve_tree_islands(int progress, struct packing_data *to_pack)
-> +{
-> +       struct progress *progress_state = NULL;
-> +       struct object_entry **todo;
-> +       int nr = 0;
-> +       int i;
-> +
-> +       if (!island_marks)
-> +               return;
-> +
-> +       /*
-> +        * We process only trees, as commits and tags have already been handled
-> +        * (and passed their marks on to root trees, as well. We must make sure
-> +        * to process them in descending tree-depth order so that marks
-> +        * propagate down the tree properly, even if a sub-tree is found in
-> +        * multiple parent trees.
-> +        */
-> +       todo = xmalloc(to_pack->nr_objects * sizeof(*todo));
-> +       for (i = 0; i < to_pack->nr_objects; i++) {
-> +               if (oe_type(&to_pack->objects[i]) == OBJ_TREE)
-> +                       todo[nr++] = &to_pack->objects[i];
-> +       }
-> +       qsort(todo, nr, sizeof(*todo), cmp_tree_depth);
-> +
-> +       if (progress)
-> +               progress_state = start_progress("Propagating island marks", nr);
-
-_() (same comment for other strings too)
-
-> diff --git a/pack-objects.h b/pack-objects.h
-> index edf74dabdd..8eecd67991 100644
-> --- a/pack-objects.h
-> +++ b/pack-objects.h
-> @@ -100,6 +100,10 @@ struct object_entry {
->         unsigned type_:TYPE_BITS;
->         unsigned no_try_delta:1;
->         unsigned in_pack_type:TYPE_BITS; /* could be delta */
-> +
-> +       unsigned int tree_depth; /* should be repositioned for packing? */
-> +       unsigned char layer;
-> +
-
-This looks very much like an optional feature. To avoid increasing
-pack-objects memory usage for common case, please move this to struct
-packing_data.
-
->         unsigned preferred_base:1; /*
->                                     * we do not pack this, but is available
->                                     * to be used as the base object to delta
-> --
-> 2.18.0.237.gffdb1dbdaa
+> +               for (; i < to_pack.nr_objects; i++) {
+> +                       if (objects[i].tagged)
+> +                               add_to_write_order(wo, &wo_end, &objects[i]);
+> +               }
 -- 
 Duy
