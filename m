@@ -2,83 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 84A001F597
-	for <e@80x24.org>; Sun, 22 Jul 2018 09:23:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8EE261F597
+	for <e@80x24.org>; Sun, 22 Jul 2018 09:57:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728249AbeGVKTx (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Jul 2018 06:19:53 -0400
-Received: from mail-it0-f48.google.com ([209.85.214.48]:39653 "EHLO
-        mail-it0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728022AbeGVKTx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Jul 2018 06:19:53 -0400
-Received: by mail-it0-f48.google.com with SMTP id g141-v6so17508195ita.4
-        for <git@vger.kernel.org>; Sun, 22 Jul 2018 02:23:49 -0700 (PDT)
+        id S1728323AbeGVKyG (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Jul 2018 06:54:06 -0400
+Received: from mail-it0-f46.google.com ([209.85.214.46]:38237 "EHLO
+        mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728082AbeGVKyG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Jul 2018 06:54:06 -0400
+Received: by mail-it0-f46.google.com with SMTP id v71-v6so19914437itb.3
+        for <git@vger.kernel.org>; Sun, 22 Jul 2018 02:57:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=BKiYBY0+dA6s5yKk0tHllvL5oI3Jvq8WjldaXrysKmo=;
-        b=B0cu+jHwyRWvYm9AgdKBcpcyaQGSJqaRLg9e6Xfso6BijTw1KjRviokSRveMCi5CZR
-         crNIOGHJCmzeHw9uo3/3q7ak69XisGlLf23O16t/wXGAty89cN/05YoqKQcyhYudBdc6
-         Y+1+DtBQYK4wo5QlRNYD2rdl0IXQ8C2IHltxS8HduzyZgCAe/4TM/XURmdFdf1Yy/8LK
-         HycYKevFUR6EiZkAlILJSyGyPvCm1TgmIc7KfcjfouvQTVJA289DGOduWN+7iSSqxV9A
-         i0HpVlwX7+t6i5H6hJhS6fUfz49i5yCrDpH/Il9RQpIENDJeKLrhdyxYKXOA7PChdlmN
-         mV0A==
+        h=sender:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=bntMYbNgG9AB1/olWv69W5xB1NIWxvaD+WLasYLzUo4=;
+        b=qftyGCtJnbgqb83IGepO0a8buNteDDLkld3Yf9Z1MhA3Am7B7xDDMz8ZHw+LJdS9IB
+         i4eBhn8GGcXNe+FuFx5PKWMdMyUYFiMWTe8v9BSRu3zLUW9zPJHKM0X89JaLEuLLewWO
+         z9S0v4UG1lnAbV2WIXqb/DnUY0sQmENoPVQ3Anl9nRHXosLqjYtOvDvaRVvQussOWX56
+         Sk9mFe9Byaq7CvgexKxQH5CUCh/4D02qQml5PO8ZC5u6F8TN/DZySPvHUhuk0lLOrRlw
+         qZx/UhP6H7290QU9OQu7yurMcV7M6NYOVLnELkA9sGxBVQpWH1Y9AGQnuC8l3zqCJhSP
+         x0Nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=BKiYBY0+dA6s5yKk0tHllvL5oI3Jvq8WjldaXrysKmo=;
-        b=RzRofi2thajU8XxRRZL6eruH8PyPm5wCk1Y46gRaq54PhCBQuhgoDmB+m0+LosHxu3
-         Ynjf9jeSIzck1zAAvPTH+37AeqvzLgLegxiTBu3TbKO2SHL+a6vifO04nID8ZOVLV/4s
-         p2ThnTGKt7oB4HB0MXF6N6InD4EKgTjc/JM+4ISvAfuJiYL1dj8UFNulN+pZoqNIW2B/
-         k/FrcTKcGh1TI8MBl40oPfndV1D8Iy8+TcenJ+sDZFl9IUDWRqwRnX177GoiIIeKAGY1
-         OFY7XOQQCj4zQDt+XFn1LEGCLtP9fzzkRNiQrbpz4eET2n9ICkLb3bvXQZw0ZNyrWjfC
-         1kbQ==
-X-Gm-Message-State: AOUpUlGP7tl3UWC4X7HnpR7S6EWqkVfGgfQVxw+Z/5XWazkVadmZyhhp
-        o5yZCUEqcUn7rjg+xWfiJ9zuRQGDrHm3a0nsWQ8=
-X-Google-Smtp-Source: AAOMgpcaw8c52n9d0uz9EU2BUZnfAXLPbd1PuI5rcYvoqQiytFdd2NGxWVsYoX9Bt2U91NtmnOzpEEV1apWa+D1D3o4=
-X-Received: by 2002:a02:c50b:: with SMTP id s11-v6mr7776599jam.61.1532251429336;
- Sun, 22 Jul 2018 02:23:49 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :mime-version:content-transfer-encoding;
+        bh=bntMYbNgG9AB1/olWv69W5xB1NIWxvaD+WLasYLzUo4=;
+        b=N5TpJ9x8WMo50owq4iOFKzlTDGfTTr41JOYotAJaURvW21tDQU3X8O4SkJz4oZFA3r
+         fnBrsZyFfZTNdMIRlvrXy95tVguT98u7/mmiXeNOdzr+3fwt6Ooh4QHBe0idY1A22EPf
+         xSe77zSUOC3j5J/8RvJF/z6igSspnIFU5xCJ+G9BbbcGS6h+oGVrsk/RquDxPEdqGNn3
+         seRYnFcgesQjxbtUoLOTrm7y/J8DQcQRqgvuFkEbS2rgnynhvfX6SOIUTcpz48ke8pMS
+         2ybIaHyRWmPPtPw8+Z4mMilg/PKFx9sOE5MxBkFPbNdbAWEekxds5GXQTGmJeMSyhlJu
+         /8LQ==
+X-Gm-Message-State: AOUpUlHuXhkXZxn2AxCLarw40bO9MMzMJkEgg1eyT6rSfeKh+sjqmbiQ
+        sS7Gjc5T/PrV5bqYk/v4XmBRFCxx
+X-Google-Smtp-Source: AAOMgpeUnWQ5SNDm+SCqlSVENYD1+fT5ITFfLLPQvWwLoOerm1dEs0KIK8aMwFwC5cQK618B7fA4Vg==
+X-Received: by 2002:a24:35c8:: with SMTP id k191-v6mr6888842ita.81.1532253476235;
+        Sun, 22 Jul 2018 02:57:56 -0700 (PDT)
+Received: from localhost.localdomain (user-12l2cs3.cable.mindspring.com. [69.81.51.131])
+        by smtp.gmail.com with ESMTPSA id w13-v6sm3681298itb.29.2018.07.22.02.57.54
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Sun, 22 Jul 2018 02:57:55 -0700 (PDT)
+From:   Eric Sunshine <sunshine@sunshineco.com>
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Duy Nguyen <pclouds@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Stefan Beller <sbeller@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH 00/14] format-patch: add --interdiff and --range-diff options
+Date:   Sun, 22 Jul 2018 05:57:03 -0400
+Message-Id: <20180722095717.17912-1-sunshine@sunshineco.com>
+X-Mailer: git-send-email 2.18.0.345.g5c9ce644c3
 MIME-Version: 1.0
-References: <20180628135932.225288-1-jamill@microsoft.com> <20180702193745.8940-1-jamill@microsoft.com>
- <20180702193745.8940-4-jamill@microsoft.com>
-In-Reply-To: <20180702193745.8940-4-jamill@microsoft.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sun, 22 Jul 2018 11:23:23 +0200
-Message-ID: <CACsJy8DfK=QaNsYRNBH8r0JJERAK0ppn4v6jZK03T22VfZA9Aw@mail.gmail.com>
-Subject: Re: [PATCH v6 3/8] block alloc: add lifecycle APIs for cache_entry structs
-To:     Jameson Miller <jamill@microsoft.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Ben Peart <peartben@gmail.com>, Jeff King <peff@peff.net>,
-        Stefan Beller <sbeller@google.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 2, 2018 at 9:49 PM Jameson Miller <jamill@microsoft.com> wrote:
-> +struct cache_entry *make_transient_cache_entry(unsigned int mode, const struct object_id *oid,
-> +                                              const char *path, int stage)
-> +{
-> +       struct cache_entry *ce;
-> +       int len;
-> +
-> +       if (!verify_path(path, mode)) {
-> +               error("Invalid path '%s'", path);
+When re-submitting a patch series, it is often helpful (for reviewers)
+to include an interdiff or range-diff against the previous version.
+Doing so requires manually running git-diff or git-range-diff and
+copy/pasting the result into the cover letter of the new version.
 
-Please wrap all new user-visible strings in _().
+This series automates the process by introducing git-format-patch
+options --interdiff and --range-diff which insert such a diff into the
+cover-letter or into the commentary section of the lone patch of a
+1-patch series. In the latter case, the interdiff or range-diff is
+indented to avoid confusing git-am and human readers.
 
-> +               return NULL;
-> +       }
+Patches 1-6 add --interdiff and can apply directly on 'master'.
+Patches 7-14 add --range-diff and apply atop js/range-diff v4[1].
+
+An earlier RFC[2] implemented only --range-diff, and only for the
+cover-letter.
+
+Changes since the RFC:
+
+* add --interdiff option for cover-letter and lone patch
+
+* based on js/range-diff v4[1]
+
+* --range-diff works with lone patch (no longer limited to cover
+  letter)
+
+* --range-diff colors output when used with --stdout, just as patches
+  themselves are already colored
+
+* --range-diff takes advantage of libified range-diff mechanism in v4
+  rather than invoking git-range-diff command
+
+No interdiff or range-diff is included in this cover-letter since the
+implementation changed dramatically.
+
+[1]: https://public-inbox.org/git/pull.1.v4.git.gitgitgadget@gmail.com/
+[2]: https://public-inbox.org/git/20180530080325.37520-1-sunshine@sunshineco.com/
+
+Eric Sunshine (14):
+  format-patch: allow additional generated content in
+    make_cover_letter()
+  format-patch: add --interdiff option to embed diff in cover letter
+  format-patch: teach --interdiff to respect -v/--reroll-count
+  interdiff: teach show_interdiff() to indent interdiff
+  log-tree: show_log: make commentary block delimiting reusable
+  format-patch: allow --interdiff to apply to a lone-patch
+  range-diff: respect diff_option.file rather than assuming 'stdout'
+  range-diff: publish default creation factor
+  range-diff: relieve callers of low-level configuration burden
+  format-patch: add --range-diff option to embed diff in cover letter
+  format-patch: extend --range-diff to accept revision range
+  format-patch: teach --range-diff to respect -v/--reroll-count
+  format-patch: add --creation-factor tweak for --range-diff
+  format-patch: allow --range-diff to apply to a lone-patch
+
+ Documentation/git-format-patch.txt |  29 ++++++
+ Makefile                           |   1 +
+ builtin/log.c                      | 139 ++++++++++++++++++++++++-----
+ builtin/range-diff.c               |  25 ++----
+ interdiff.c                        |  28 ++++++
+ interdiff.h                        |   8 ++
+ log-tree.c                         |  52 +++++++++--
+ range-diff.c                       |  26 +++++-
+ range-diff.h                       |   5 +-
+ revision.h                         |  11 +++
+ t/t3206-range-diff.sh              |  12 +++
+ t/t4014-format-patch.sh            |  34 +++++++
+ 12 files changed, 319 insertions(+), 51 deletions(-)
+ create mode 100644 interdiff.c
+ create mode 100644 interdiff.h
+
 -- 
-Duy
+2.18.0.345.g5c9ce644c3
+
