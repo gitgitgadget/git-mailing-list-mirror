@@ -6,48 +6,48 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 01F351F597
-	for <e@80x24.org>; Sun, 22 Jul 2018 09:58:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 745C41F597
+	for <e@80x24.org>; Sun, 22 Jul 2018 09:58:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728596AbeGVKyS (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Jul 2018 06:54:18 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:45019 "EHLO
-        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728558AbeGVKyR (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1728605AbeGVKyW (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Jul 2018 06:54:22 -0400
+Received: from mail-io0-f195.google.com ([209.85.223.195]:36485 "EHLO
+        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728533AbeGVKyR (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 22 Jul 2018 06:54:17 -0400
-Received: by mail-io0-f196.google.com with SMTP id q19-v6so13256334ioh.11
-        for <git@vger.kernel.org>; Sun, 22 Jul 2018 02:58:08 -0700 (PDT)
+Received: by mail-io0-f195.google.com with SMTP id r15-v6so7034980ioa.3
+        for <git@vger.kernel.org>; Sun, 22 Jul 2018 02:58:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=/U5thiL9fmFGnG5zS9F0+oVPxKbIDYYXF0dmEHcQ2UQ=;
-        b=NOgeuFS16S+uJ4NphHEdWHagd/Jw5D8IQLE6vwDNpRMH8yXcS3cxbZhxDQN0o58aT1
-         gC0S14kEECaiVH0swwG0FUD/qAGfalAmUjMoAYcOcstr8VNrLHn5PfFXRiYUNYvmkWI5
-         qtpZMfLQNZLRlS/r79DX2umhzhW3SQZLzJEw6WsKNB0Iaeyn4c/324LqlkW9sGrVho+c
-         +wKZq/t4hWiTszht5oHq9RPW+xo1nVSr8U8QDmGL8XmTS0nNIrU2OSCRPjHoyLQxdLbj
-         jLFp3o9iqVcmjZeYxD/mnmmkciZCRAIZOj07PbUAaXyoA1M+35GOmvWNFQFt2YQXXMnt
-         Pwyg==
+        bh=o8ehJGdX3+z6ZbWCQMszTyVpHO+ZIFO8DL0VGALrflA=;
+        b=RfJVyDCxj54iX+B5Z/RdEsycT7Gx7sQtiBH6Stxlw0QH+6qWTl46NHgAqVeNm6U1nJ
+         HE6J1m0cSuU7Msa7rRd0P1aX/FNdGt8KLReSDJXrxWfycYDEbpW3xp16uJnHcrBYOeaT
+         PU3tpC4l7KuD+1hKDoCAoGpVsNBv5KlaMeu+tAZh436Wk0HUBnFvSEVLP9KiNs2miQO+
+         1OvbBIdZlutbECOiv0NM5brJ8GmC6wGar1Dunu8mBg4RK1CQPLf/CPXbEN7AlQh3uKzf
+         NFTQ5A1NmGJ2Hgr8LoGltS5AvUY2WDWLQA5F4tqFY49ssxjkZta27dTQjcK7VsmBHAo3
+         Hq4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=/U5thiL9fmFGnG5zS9F0+oVPxKbIDYYXF0dmEHcQ2UQ=;
-        b=Vce17H2ptTjBWquFPicrPLsDMbzi7lBRY6N3djamWcUuahp2pBVENN3kKOhkA0S/6/
-         9P84ZvdkLi4vHuqKGkTGonhEihpTKtF9UoU9mjgr9NrGyaDuVM67xZr3AQDkkQPnKGXi
-         7f391Zn1SeymMMufGy4BCGNBPMVa6m2VcO02ajmVbY6f2O3R7j5tEADF1cw+MVEtAk1P
-         oJhtOsdwK/MDTTz6mf9CNK7jSIrkMY8l77auekZsBSCG9LlgyJIEHkYsAE/4kH+WD374
-         7SpfYFojV4zx9D07ZumZs5uDf6wXxCpnklZfAFM8zAmetsIHfR9BRRDbTxmnOfDpVS3K
-         ORMQ==
-X-Gm-Message-State: AOUpUlEswb2ZseklNYYauHet4J60ZV2JiejUt8NP6N/LBIpYu3vT0BOQ
-        zAG6KzYs3ZMUI/cofUHKxMcvRcC2
-X-Google-Smtp-Source: AAOMgpcD24pc8bwrBKgVLymkFBDV9myWIEq6aMrK2V0LFIkVIuCLfkZjEXNA1Pc+eFmTJ1Rgs9F/iw==
-X-Received: by 2002:a6b:103:: with SMTP id 3-v6mr7226974iob.78.1532253488023;
-        Sun, 22 Jul 2018 02:58:08 -0700 (PDT)
+        bh=o8ehJGdX3+z6ZbWCQMszTyVpHO+ZIFO8DL0VGALrflA=;
+        b=Aguhl+a0Z8qFzJBELIl8B+I/ZRN98RXrKTIDmKj5rTSIvbA/gedECQrr7TYud3xLRE
+         1lKawAFUvmkCLqknCu0/wHSjVorG1+sBh5ddHO1jtVHbwDnflQz1cQhtRc1GyZs37j6a
+         SRwYUAPOoulQGozINaNWAYAgabOsuF27e3FqMis/KlY0//6Dx4OxgkWGBubEDnes5o95
+         xH6N1FoqgXRF5rDxBRVQ/UWLR8piawJc2gWdjOSkn4vh0MldVPHm3YNvpkPT9xe79SDi
+         oF9u4dWzIbiwmK9Y4i7jMjaRlRuYXhrmbU//mSRVBc8N41DMnZatlOagBL317yFL5fAL
+         c4OA==
+X-Gm-Message-State: AOUpUlHMTWPPL9bmojEiZ+ChZCle6ktiwQvD/hj39bDmcWHjjm6L4NfI
+        tsn3lh7U/SwTUJX2wKf4HCzRwb0K
+X-Google-Smtp-Source: AAOMgpdwv40Z9dAahPK0wCBRATXoMDQg18EhaS0WEmmf6+fQvE/MvCFkOxtgLvT8s7ece3QK8ZoPuA==
+X-Received: by 2002:a6b:f612:: with SMTP id n18-v6mr7100463ioh.259.1532253486377;
+        Sun, 22 Jul 2018 02:58:06 -0700 (PDT)
 Received: from localhost.localdomain (user-12l2cs3.cable.mindspring.com. [69.81.51.131])
-        by smtp.gmail.com with ESMTPSA id w13-v6sm3681298itb.29.2018.07.22.02.58.07
+        by smtp.gmail.com with ESMTPSA id w13-v6sm3681298itb.29.2018.07.22.02.58.05
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Sun, 22 Jul 2018 02:58:07 -0700 (PDT)
+        Sun, 22 Jul 2018 02:58:05 -0700 (PDT)
 From:   Eric Sunshine <sunshine@sunshineco.com>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -55,9 +55,9 @@ Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Stefan Beller <sbeller@google.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 13/14] format-patch: add --creation-factor tweak for --range-diff
-Date:   Sun, 22 Jul 2018 05:57:16 -0400
-Message-Id: <20180722095717.17912-14-sunshine@sunshineco.com>
+Subject: [PATCH 11/14] format-patch: extend --range-diff to accept revision range
+Date:   Sun, 22 Jul 2018 05:57:14 -0400
+Message-Id: <20180722095717.17912-12-sunshine@sunshineco.com>
 X-Mailer: git-send-email 2.18.0.345.g5c9ce644c3
 In-Reply-To: <20180722095717.17912-1-sunshine@sunshineco.com>
 References: <20180722095717.17912-1-sunshine@sunshineco.com>
@@ -68,86 +68,97 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When generating a range-diff, matching up commits between two version of
-a patch series involves heuristics, thus may give unexpected results.
-git-range-diff allows tweaking the heuristic via --creation-factor.
-Follow suit by accepting --creation-factor in combination with
---range-diff when generating a range-diff for a cover-letter.
+When submitting a revised a patch series, the --range-diff option embeds
+a range-diff in the cover letter showing changes since the previous
+version of the patch series. The argument to --range-diff is a simple
+revision naming the tip of the previous series, which works fine if the
+previous and current versions of the patch series share a common base.
+
+However, it fails if the revision ranges of the old and new versions of
+the series are disjoint. To address this shortcoming, extend
+--range-diff to also accept an explicit revision range for the previous
+series. For example:
+
+    git format-patch --cover-letter --range-diff=v1~3..v1 -3 v2
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- Documentation/git-format-patch.txt |  8 +++++++-
- builtin/log.c                      | 10 +++++++++-
- 2 files changed, 16 insertions(+), 2 deletions(-)
+ Documentation/git-format-patch.txt |  8 +++++---
+ builtin/log.c                      | 16 +++++++++++++---
+ t/t3206-range-diff.sh              |  2 +-
+ 3 files changed, 19 insertions(+), 7 deletions(-)
 
 diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index 425145f536..9b2e172159 100644
+index e7f404be3d..425145f536 100644
 --- a/Documentation/git-format-patch.txt
 +++ b/Documentation/git-format-patch.txt
-@@ -24,7 +24,7 @@ SYNOPSIS
- 		   [--to=<email>] [--cc=<email>]
- 		   [--[no-]cover-letter] [--quiet] [--notes[=<ref>]]
- 		   [--interdiff=<previous>]
--		   [--range-diff=<previous>]
-+		   [--range-diff=<previous> [--creation-factor=<percent>]]
- 		   [--progress]
- 		   [<common diff options>]
- 		   [ <since> | <revision range> ]
-@@ -250,6 +250,12 @@ feeding the result to `git send-email`.
- 	disjoint (for example `git format-patch --cover-letter
- 	--range-diff=feature/v1~3..feature/v1 -3 feature/v2`).
+@@ -243,10 +243,12 @@ feeding the result to `git send-email`.
+ 	As a reviewer aid, insert a range-diff (see linkgit:git-range-diff[1])
+ 	into the cover letter showing the differences between the previous
+ 	version of the patch series and the series currently being formatted.
+-	`previous` is a single revision naming the tip of the previous
+-	series which shares a common base with the series being formatted (for
++	`previous` can be a single revision naming the tip of the previous
++	series if it shares a common base with the series being formatted (for
+ 	example `git format-patch --cover-letter --range-diff=feature/v1 -3
+-	feature/v2`).
++	feature/v2`), or a revision range if the two versions of the series are
++	disjoint (for example `git format-patch --cover-letter
++	--range-diff=feature/v1~3..feature/v1 -3 feature/v2`).
  
-+--creation-factor=<percent>::
-+	Used with `--range-diff`, tweak the heuristic which matches up commits
-+	between the previous and current series of patches by adjusting the
-+	creation/deletion cost fudge factor. See linkgit:git-range-diff[1])
-+	for details.
-+
  --notes[=<ref>]::
  	Append the notes (see linkgit:git-notes[1]) for the commit
- 	after the three-dash line.
 diff --git a/builtin/log.c b/builtin/log.c
-index fdb2180d7e..10c3801ceb 100644
+index d6e57e8b04..4f937aad15 100644
 --- a/builtin/log.c
 +++ b/builtin/log.c
-@@ -1497,6 +1497,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	struct strbuf rdiff1 = STRBUF_INIT;
- 	struct strbuf rdiff2 = STRBUF_INIT;
- 	struct strbuf rdiff_title = STRBUF_INIT;
-+	int creation_factor = -1;
+@@ -1447,12 +1447,21 @@ static const char *diff_title(struct strbuf *sb, int reroll_count,
+ static void infer_range_diff_ranges(struct strbuf *r1,
+ 				    struct strbuf *r2,
+ 				    const char *prev,
++				    struct commit *origin,
+ 				    struct commit *head)
+ {
+ 	const char *head_oid = oid_to_hex(&head->object.oid);
  
- 	const struct option builtin_format_patch_options[] = {
- 		{ OPTION_CALLBACK, 'n', "numbered", &numbered, NULL,
-@@ -1575,6 +1576,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 			     parse_opt_object_name),
- 		OPT_STRING(0, "range-diff", &rdiff_prev, N_("refspec"),
- 			   N_("show changes against <refspec> in cover letter")),
-+		OPT_INTEGER(0, "creation-factor", &creation_factor,
-+			    N_("percentage by which creation is weighted")),
- 		OPT_END()
- 	};
+-	strbuf_addf(r1, "%s..%s", head_oid, prev);
+-	strbuf_addf(r2, "%s..%s", prev, head_oid);
++	if (!strstr(prev, "..")) {
++		strbuf_addf(r1, "%s..%s", head_oid, prev);
++		strbuf_addf(r2, "%s..%s", prev, head_oid);
++	} else if (!origin) {
++		die(_("failed to infer range-diff ranges"));
++	} else {
++		strbuf_addstr(r1, prev);
++		strbuf_addf(r2, "%s..%s",
++			    oid_to_hex(&origin->object.oid), head_oid);
++	}
+ }
  
-@@ -1807,6 +1810,11 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 					     _("Interdiff against v%d:"));
- 	}
- 
-+	if (creation_factor < 0)
-+		creation_factor = RANGE_DIFF_CREATION_FACTOR_DEFAULT;
-+	else if (!rdiff_prev)
-+		die(_("--creation-factor requires --range-diff"));
-+
- 	if (rdiff_prev) {
+ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+@@ -1801,7 +1810,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
  		if (!cover_letter)
  			die(_("--range-diff requires --cover-letter"));
-@@ -1815,7 +1823,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 					origin, list[0]);
+ 
+-		infer_range_diff_ranges(&rdiff1, &rdiff2, rdiff_prev, list[0]);
++		infer_range_diff_ranges(&rdiff1, &rdiff2, rdiff_prev,
++					origin, list[0]);
  		rev.rdiff1 = rdiff1.buf;
  		rev.rdiff2 = rdiff2.buf;
--		rev.creation_factor = RANGE_DIFF_CREATION_FACTOR_DEFAULT;
-+		rev.creation_factor = creation_factor;
- 		rev.rdiff_title = diff_title(&rdiff_title, reroll_count,
- 					     _("Range-diff:"),
- 					     _("Range-diff against v%d:"));
+ 		rev.creation_factor = RANGE_DIFF_CREATION_FACTOR_DEFAULT;
+diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+index dd854b6ebc..3d7a2d8a4d 100755
+--- a/t/t3206-range-diff.sh
++++ b/t/t3206-range-diff.sh
+@@ -142,7 +142,7 @@ test_expect_success 'changed message' '
+ 	test_cmp expected actual
+ '
+ 
+-for prev in topic
++for prev in topic master..topic
+ do
+ 	test_expect_success "format-patch --range-diff=$prev" '
+ 		git format-patch --stdout --cover-letter --range-diff=$prev \
 -- 
 2.18.0.345.g5c9ce644c3
 
