@@ -2,122 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 52FCC1F597
-	for <e@80x24.org>; Sun, 22 Jul 2018 13:57:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 658811F597
+	for <e@80x24.org>; Sun, 22 Jul 2018 14:25:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728635AbeGVOyL (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Jul 2018 10:54:11 -0400
-Received: from mail-it0-f66.google.com ([209.85.214.66]:55295 "EHLO
-        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728034AbeGVOyL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Jul 2018 10:54:11 -0400
-Received: by mail-it0-f66.google.com with SMTP id s7-v6so20532700itb.4
-        for <git@vger.kernel.org>; Sun, 22 Jul 2018 06:57:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Svia0sYSeU6oeJsLfnvj4PgC4Yw3a0GVLo0BAmnyDPU=;
-        b=JKoklTcraT2DlUiWP0BDN79K4AnXgz12G6NhXXCAaObFmBTlHQzK6KS9aJFyOFY8h0
-         ZNAl/VaOG4Rfd7u76TyrBznVtMWMJ1pvsDT3XxeLwymN7HhQWi0xUbqnbYlfHGCvickc
-         cCWbY5jJi52VBiUDRuWjbhNdn4lmCCKXavi8NfTlySykFF4t+xLFLLsN7wCA9SchAypY
-         KoUsap0+r88GICU5W5AB4iwpUD2JHorqRsnUY5cIKGbEafoFcjUvcFa7LqkQLB3OBwFs
-         Xi9ukpbHzPG4nRtV7tPOC266G8j/EGcwBgBtOUaihOpd1GQpCdEA2eS18m0eXuf2kput
-         oc4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Svia0sYSeU6oeJsLfnvj4PgC4Yw3a0GVLo0BAmnyDPU=;
-        b=OnsvlBxFje872mtMlgl77I4E6ejyeoh1UUG7It/yvQIqJz+oc9q1fybQiYzl+kXDpn
-         7McNR4k5nS1IFwzL8DTYZP+tcuEQ1L5nQ9jqkCezgYOiG/SnnxRBf0hcS19MVBJqpD+S
-         uMkawKqYdgG9zX3MU2Djof7V5r0n1Zhpi8OKJKYeFqkURaMtcT/d20i74n1a5Rf5gMCW
-         YT20LHa5B30Rafc9L8MFBP2L1r0Ym4NXSVbAyVLY0y4ojvd4OuH/jpy4da0jRsijf1/B
-         ual0uCqh37HiQtV7mEe0SlKNdwgXdCeV30g9LG1YLyXVsP/7MYgpZq+UEOx6GVD84xqL
-         NyGQ==
-X-Gm-Message-State: AOUpUlE8qeqXEkc5CzQHSqqKPrvn24cDrSOgVFaCU8Jia6aXOT0mmKeg
-        mvEXJYO66GG+miRM54DNBdpTcBuGaw+ANM9iWoU=
-X-Google-Smtp-Source: AAOMgpfpsJTrydHBVNsocrXYAXjZWunSpeZ5e9VKC8z0v5LsQwTeGBDl1oRZPbsYKwsE9lrg3jq4hr0Btu1c86kgJsc=
-X-Received: by 2002:a24:54d:: with SMTP id 74-v6mr7144451itl.96.1532267844187;
- Sun, 22 Jul 2018 06:57:24 -0700 (PDT)
+        id S1729605AbeGVPSq (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Jul 2018 11:18:46 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:34942 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729291AbeGVPSq (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 22 Jul 2018 11:18:46 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:f1fc:eee3:60de:bdd8])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9FF6660739;
+        Sun, 22 Jul 2018 14:21:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1532269314;
+        bh=Ftj0x+ouX0tXqmNs4v1a69mvTI+QSPPA1ECHrQxPFFA=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=yfq+fIbFvbbUIZxUIbUVKPL5frqio+7MaFMzH1urQgjgrheH6WjO9Z/L1waxIJNs1
+         OU371fTGYm0e7clpXUE/VmihLobgSWKWBSJC2kjQaNt2b3sbrEHhgowDmkCEOfLReW
+         boDzzPzICeJNji3VxJsLsnulY1pEGNe/a+MqN4WwivxuCwCSb+o/0MXjCKfqI3C9cv
+         jV3GJJICZq/uA/Jm2DSlttW2VMJhQ8APh54WhdLxEnkaFnydAclopqOvUJ8YONodAH
+         j0j4rjP5gSe1Of+U9/eaNwHXs4cREF11p6CLW7BurpuzwyL7GrLUKa3JgxencwTe+f
+         g1M5hY6rzbFilK8yQBUub246gnXopMBb2pLg9wU03UKnAXKhk0+J9C52z3VtV7xzBD
+         UWSeWnPHOmgBat+pxngrMPGeWREfQw7vGj+N2WLbo0c8pPed96NQXlMrWOyTHfSguc
+         32/TvHXh+HHHDjIj1fBfCGvcXxTIUrrbjTeGRJATF71nBA7ZYA/
+Date:   Sun, 22 Jul 2018 14:21:48 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Eric Deplagne <Eric@Deplagne.name>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+        demerphq <demerphq@gmail.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Adam Langley <agl@google.com>,
+        The Keccak Team <keccak@noekeon.org>
+Subject: Re: Hash algorithm analysis
+Message-ID: <20180722142148.GH18502@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Eric Deplagne <Eric@Deplagne.name>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+        demerphq <demerphq@gmail.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Adam Langley <agl@google.com>, The Keccak Team <keccak@noekeon.org>
+References: <20180609205628.GB38834@genre.crustytoothpaste.net>
+ <20180609224913.GC38834@genre.crustytoothpaste.net>
+ <20180611192942.GC20665@aiede.svl.corp.google.com>
+ <20180720215220.GB18502@genre.crustytoothpaste.net>
+ <nycvar.QRO.7.76.6.1807220036340.71@tvgsbejvaqbjf.bet>
+ <20180721235941.GG18502@genre.crustytoothpaste.net>
+ <20180722093442.GK11431@mail.eric.deplagne.name>
 MIME-Version: 1.0
-Received: by 2002:a4f:2293:0:0:0:0:0 with HTTP; Sun, 22 Jul 2018 06:57:23
- -0700 (PDT)
-In-Reply-To: <CACsJy8AzksB=rfaX_dfboMXHjqj6gj+erdF6eRFAKmWA1-3PUg@mail.gmail.com>
-References: <20180722054836.28935-1-chriscool@tuxfamily.org>
- <20180722054836.28935-3-chriscool@tuxfamily.org> <CACsJy8AzksB=rfaX_dfboMXHjqj6gj+erdF6eRFAKmWA1-3PUg@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sun, 22 Jul 2018 15:57:23 +0200
-Message-ID: <CAP8UFD0K+F5D2q5UY-aX9tmtkqvgMiKf=bq+wE+yZuxzyQst_g@mail.gmail.com>
-Subject: Re: [RFC PATCH 2/5] Add delta-islands.{c,h}
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="FLPM4o+7JoHGki3m"
+Content-Disposition: inline
+In-Reply-To: <20180722093442.GK11431@mail.eric.deplagne.name>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.17.0-1-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jul 22, 2018 at 10:50 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Sun, Jul 22, 2018 at 7:51 AM Christian Couder
-> <christian.couder@gmail.com> wrote:
 
->> +pack.island::
->> +       A regular expression configuring a set of delta islands. See
->> +       "DELTA ISLANDS" in linkgit:git-pack-objects[1] for details.
->> +
->
-> That section is not added until 3/5 though.
+--FLPM4o+7JoHGki3m
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yeah, so I guess it is better to move this hunk to 3/5 and keep
-pack.island undocumented until the delta islands code is actually used
-by pack-objects.
+On Sun, Jul 22, 2018 at 11:34:42AM +0200, Eric Deplagne wrote:
+> On Sat, 21 Jul 2018 23:59:41 +0000, brian m. carlson wrote:
+> > I don't know your colleagues, and they haven't commented here.  One
+> > person that has commented here is Adam Langley.  It is my impression
+> > (and anyone is free to correct me if I'm incorrect) that he is indeed a
+> > cryptographer.  To quote him[0]:
+> >=20
+> >   I think this group can safely assume that SHA-256, SHA-512, BLAKE2,
+> >   K12, etc are all secure to the extent that I don't believe that making
+> >   comparisons between them on that axis is meaningful. Thus I think the
+> >   question is primarily concerned with performance and implementation
+> >   availability.
+> >=20
+> >   [=E2=80=A6]
+> >=20
+> >   So, overall, none of these choices should obviously be excluded. The
+> >   considerations at this point are not cryptographic and the tradeoff
+> >   between implementation ease and performance is one that the git
+> >   community would have to make.
+>=20
+>   Am I completely out of the game, or the statement that
+>     "the considerations at this point are not cryptographic"
+>   is just the wrongest ?
+>=20
+>   I mean, if that was true, would we not be sticking to SHA1 ?
 
->> diff --git a/delta-islands.c b/delta-islands.c
->> new file mode 100644
->> index 0000000000..645fe966c5
->> --- /dev/null
->> +++ b/delta-islands.c
->> @@ -0,0 +1,490 @@
->> +#include "builtin.h"
->
-> A bit weird that builtin.h would be needed...
+I snipped a portion of the context, but AGL was referring to the
+considerations involved in choosing from the proposed ones for NewHash.
+In context, he meant that the candidates for NewHash =E2=80=9Care all secur=
+e=E2=80=9D
+and are therefore a better choice than SHA-1.
 
-Yeah, I will get rid of that include in the next iteration.
+I think we can all agree that SHA-1 is weak and should be replaced.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
->> +       if (progress)
->> +               progress_state = start_progress("Propagating island marks", nr);
->
-> _() (same comment for other strings too)
+--FLPM4o+7JoHGki3m
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Ok, the strings will be marked for translation in the next iteration.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.8 (GNU/Linux)
 
->> diff --git a/pack-objects.h b/pack-objects.h
->> index edf74dabdd..8eecd67991 100644
->> --- a/pack-objects.h
->> +++ b/pack-objects.h
->> @@ -100,6 +100,10 @@ struct object_entry {
->>         unsigned type_:TYPE_BITS;
->>         unsigned no_try_delta:1;
->>         unsigned in_pack_type:TYPE_BITS; /* could be delta */
->> +
->> +       unsigned int tree_depth; /* should be repositioned for packing? */
->> +       unsigned char layer;
->> +
->
-> This looks very much like an optional feature. To avoid increasing
-> pack-objects memory usage for common case, please move this to struct
-> packing_data.
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAltUkvwACgkQv1NdgR9S
+9osE3hAAvWWm/gwob35NvuZobr0tWYLD9kL4C7eJ+wSvRxzna5CbvRjjB0ORo2/a
+c0lMpO3CU4g20CcWg9wl3i1t0kqfTa2n6U38eJ3Y0wHv+nj5/5NW/cY9cHGtV14a
+0f10Z154nYWWh8lpruCTjlfxHRg2JKjmUq7QALEKvA7cFsPorGjASzHJ+Jep3c9W
+xeQ5/wtHTEHelhM77wWFjsZ+/Z0weOjna1Jao/vZadGUZOak+qau4WOz4YgkNWBx
+mb1ZvpJr3TID+132eu+V7+n9Y9KeFbfiQDuqhs5fAfFasQzt9QK8R9ZM/p1awR8x
+Gw8ltz/r49HpxCKnx2JrXml4OPYzIP1lhdW6vU2YMKh1URQB+TwCS57C1KieCqaZ
+Rq0+akEORGRIYLNQMMtpK0M/uvKzd7OEDT/UWlZgo/w5PrXMNb/k7bk8XL9Jgmqu
+cJjoeEs7BUt5S0L6fgQjffxUo9hnjTcCnYM7ZKCXvYAKiS7LAeSKi56zVSr/SjLB
+rEXIaugaQT9UsUv15XEpC5zqOyzaFgCCQoxZzvG1o09FfcVzy5WDu5GAd0+iF4/s
+BPHjcCk9FnGQzU2y7SpOrh/97mrDmg6zfgivdq6C+MfqMPey4LzD5U8KMoc3AHDO
+fPwQz1sh4ZaYYsZbVfwpe6gP97JBeYxB3+nNa19TJr/KttlHtkk=
+=RqY5
+-----END PGP SIGNATURE-----
 
-Ok, I will take a look at that.
-
-Thanks for the review,
-Christian.
+--FLPM4o+7JoHGki3m--
