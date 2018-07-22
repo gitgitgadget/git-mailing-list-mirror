@@ -2,109 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B36E208E9
-	for <e@80x24.org>; Sun, 22 Jul 2018 18:54:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9D2F1F597
+	for <e@80x24.org>; Sun, 22 Jul 2018 21:05:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730627AbeGVTw3 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Jul 2018 15:52:29 -0400
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:37273 "EHLO
-        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730506AbeGVTw2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Jul 2018 15:52:28 -0400
-Received: by mail-wm0-f50.google.com with SMTP id n11-v6so3217043wmc.2
-        for <git@vger.kernel.org>; Sun, 22 Jul 2018 11:54:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ghx8PkbDWIrVp9bwzBDFXErvPxKG09VcnKmeY1+iXFY=;
-        b=i4In1R3Pn3k4ry0x7oALjBg3ypJm2Lg2euLsKGjoM95AUoEdzmXDYP2Aqjp8t5DSSz
-         kJ9ph17Kyw15KCsmhmfJFzMwCvqdqg6GgPfw/1+wTgO5WwHbxfZj12DYH6acyihs58tP
-         Qf7EXHtwVfGMIfuwOaTk3B2mfVbDqFMeom0fG5vYLCL0NCQj3zpshUCiBFhukO6htJ5l
-         aV+NLlKD9YqWhDPJKot+87tjnKH5QTeCryD7n0RQwPtmpiJKJvFcQ52c2T+YH4aAspw7
-         +tkABu+DRkxG+x7YOurKegXsiiQH1LPx+xUW3ersinHiea7oRaE7cBpmbpRug1hQ9Gix
-         vdBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ghx8PkbDWIrVp9bwzBDFXErvPxKG09VcnKmeY1+iXFY=;
-        b=lit8a8Qxf1sby12AASiG6hfcb+Fx34b/PVHvsDMg8sv1dh0KG4BfSWTSveC4ep2vwQ
-         1AfAmDnBFU9H/RKm3cDbrJZXRguygj1fbH0MXhgjXAGCPVs84YAnzcxR/cUoCrK+csl7
-         FA6lbIve4b+Mq9thh3dakZj07YBrAvqMdRr1M/jCVhOJ4xAJ9lo+WuCy6dI4Ah730GKt
-         2Z7/xeP4KsF3vaqPUGB92EJ8mBv54NCSFdiFW91OO7BxA9IUgQ10jsi2Fijg8sIAqzdT
-         NB2Q6TYN257uag/gnJJsys0sjxEJ/r1/VFUe3Abu23jUEQtGfAPVj0fO7+qIsWNS4z/I
-         OktA==
-X-Gm-Message-State: AOUpUlEZjvhmpgiUAxNp9r2g4+74Ei/DlaFw6cJ4lXFpf7Pk2/h2ZVPF
-        O9Y7O05QRcdKgddPX4vl1e2e1qznLThdAFFPaQDzIQ==
-X-Google-Smtp-Source: AAOMgpexQlFmrP/e5/EppaNsLcDIBXj36abg9Bug2JqvYIxkOjTFIqh9JCd+fWxpLr/H6CoQfitVFRlBATRQaDoYn4c=
-X-Received: by 2002:a1c:e146:: with SMTP id y67-v6mr5587375wmg.108.1532285689451;
- Sun, 22 Jul 2018 11:54:49 -0700 (PDT)
+        id S1730170AbeGVWDT (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Jul 2018 18:03:19 -0400
+Received: from mout.web.de ([212.227.17.12]:40867 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730081AbeGVWDT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Jul 2018 18:03:19 -0400
+Received: from [192.168.209.18] ([195.198.252.176]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LfiuU-1gNVzi1UHi-00pNUU for
+ <git@vger.kernel.org>; Sun, 22 Jul 2018 23:05:19 +0200
+To:     Git Mailing List <git@vger.kernel.org>
+From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: t7406-submodule-update shaky ?
+Message-ID: <208b2ede-4833-f062-16f2-f35b8a8ce099@web.de>
+Date:   Sun, 22 Jul 2018 23:05:02 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-References: <20180609205628.GB38834@genre.crustytoothpaste.net>
- <20180609224913.GC38834@genre.crustytoothpaste.net> <20180611192942.GC20665@aiede.svl.corp.google.com>
- <20180720215220.GB18502@genre.crustytoothpaste.net> <nycvar.QRO.7.76.6.1807220036340.71@tvgsbejvaqbjf.bet>
- <20180721235941.GG18502@genre.crustytoothpaste.net> <f5bb91e8-5189-7f61-e018-91447c42845e@noekeon.org>
-In-Reply-To: <f5bb91e8-5189-7f61-e018-91447c42845e@noekeon.org>
-From:   Adam Langley <agl@google.com>
-Date:   Sun, 22 Jul 2018 11:54:36 -0700
-Message-ID: <CAL9PXLyNVLCCqV1ftRa3r4kuoamDZOF29HJEhv2JXrbHj1nirA@mail.gmail.com>
-Subject: Re: Hash algorithm analysis
-To:     jda@noekeon.org
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>, demerphq@gmail.com,
-        Linus Torvalds <torvalds@linux-foundation.org>, all@keccak.team
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-Provags-ID: V03:K1:2uYSEs7s6/m27URdlME0khgm1mH0BpmH/s4fInmAIayZAbxhuJV
+ FQUdm80KhFsywXk2n6Eqkw3EKSShQVUi+m79UqQRp+nvUn+J+b5vZfryGoewAy947fku9JJ
+ Xhh3WrPMXRy4pxBhwwBGGPVwOKUcQcPudLTRlZ3OoG9Xj1q4OAjhGF6qLFiPfKQ7kjC9bEc
+ FLXsgi/Sr8d3lcsgXanAQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:H5Y6/DI3xHc=:ftXjULFs2axITZFkLyw/Vp
+ O3g1njwmF87SxbTgmXyeTXmKv+dibxI86cjBlDcuUY4jXK/6rUagBcH1YNNnl/yFU72RE4taB
+ 91sJIQ94jpjH2aNeTychhElvh1kcuAacGpo+GHHvJiMkkrj4P7XXP9lz4oPe6tiE2Klb23Uc9
+ hpQPROnf3miJb++lVe+5sve9uWYv33iteNYM7xYMNGk+bLak/MlxRVpkllg5vbP5zXOaFiEh1
+ 3FvwqNTsfCvKttCa21RabuWMRFKb26MpaDqa2zUAgMMNbS4Wes69l1Jm8PqsU8VqkufjNrUgF
+ psuO7KZaNj/r07CDhS+IEA3qetIYclfWlAWK1gRrrtbQYPvtxSI5LAKijKVs0ciM4xcFWjryj
+ IeNW0ls2J/1AQthbcB8eJYoHLT6czhXzEqs63R4hOSILmGXYQXUUVfHX8uDXUvcBnTitU5rWG
+ XXIuI0zpnd0rd7Ywllz8W12MV7G4R37miob+Gv/xf32i7Li8gg+JT9qjli67kphixrfog8OW5
+ yD7Ou+LrQY8bXZepHK9v2tKAohSLPFahCoyBeRCs9Pf+6svQsvV0xyWWHK8gUAVHMwqT2y2AC
+ +AH01J+xOWiFZ42oJqA4oWhMg2mG7cqX5OEDDopAu0DnSFLGEYZCz6TnOl7usTvCAIYBaUlM5
+ xt9RBpHnd5wQH4qVWquR76g7B4BZgZauoAYGFXUzjhafT7/5vfFBW/TEF5riTRvuBGdOQ1IB+
+ ydfoQeNbSrGNqljbdMnIQFwTDP8LXRGKzYLfbOIjp1mIB4Ae+U1EJR7LDhfw1WuhdAMrwqbIG
+ 1GHhai0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Somewhere upthread, Brian refers to me as a cryptographer. That's
-flattering (thank you), but probably not really true even on a good
-day. And certainly not true next to Joan Daemen. I do have experience
-with crypto at scale and in ecosystems, though.
+It seems that t7406 is sometimes shaky - when checking stderr in test 
+case 4.
 
-Joan's count of cryptanalysis papers is a reasonable way to try and
-bring some quantitative clarity to an otherwise subjective topic. But
-still, despite lacking any counterpoint to it, I find myself believing
-that practical concerns are a stronger differentiater here.
+The order of the submodules may vary, sorting the stderr output makes it
 
-But the world is in a position where a new, common hash function might
-crystalise, and git could be the start of that. What that means for
-the ecosystem is is that numerous libraries need to grow
-implementations optimised for 3+ platforms and those platforms (esp
-Intel) often need multiple versions (e.g. for different vector widths)
-with code-size concerns pushing back at the same time. Intrinsics
-still don't cut it, so that means hand-assembly and thus dealing with
-gas vs Windows, CFI metadata, etc. Licensing differences mean that
-code-sharing doesn't work nearly as well as one might hope.
+more reliable (and somewhat funny to read).
 
-Then complexity spreads upwards as testing matrices expand with the
-combination of each signature algorithm with the new hash function,
-options in numerous protocols etc.
-
-In short, picking just one would be lovely.
-
-For that reason, I've held back from SHA3 (which I consider distinct
-from K12) because I didn't feel that it relieved enough pressure:
-people who wanted more performance weren't going to be satisfied.
-Other than that, I don't have strong feelings and, to be clear, K12
-seems like a fine option.
-
-But it does seem that a) there is probably not any more information to
-discover that is going to alter your decision and b) waiting a short
-to medium amount of time is probably not going to bring any definitive
-developments either.
+Does anybody have a better idea ?
 
 
-Cheers
+[]
 
-AGL
+cat <<EOF >expect2
+Cloning into '/Users/tb/NoBackup/projects/git/git.pu/t/trash 
+directory.t7406-submodule-update/recursivesuper/super/merging'...
+Cloning into '/Users/tb/NoBackup/projects/git/git.pu/t/trash 
+directory.t7406-submodule-update/recursivesuper/super/none'...
+Cloning into '/Users/tb/NoBackup/projects/git/git.pu/t/trash 
+directory.t7406-submodule-update/recursivesuper/super/rebasing'...
+Cloning into '/Users/tb/NoBackup/projects/git/git.pu/t/trash 
+directory.t7406-submodule-update/recursivesuper/super/submodule'...
+Submodule 'merging' (/Users/tb/NoBackup/projects/git/git.pu/t/trash 
+directory.t7406-submodule-update/merging) registered for path 
+'../super/merging'
+Submodule 'none' (/Users/tb/NoBackup/projects/git/git.pu/t/trash 
+directory.t7406-submodule-update/none) registered for path '../super/none'
+Submodule 'rebasing' (/Users/tb/NoBackup/projects/git/git.pu/t/trash 
+directory.t7406-submodule-update/rebasing) registered for path 
+'../super/rebasing'
+Submodule 'submodule' (/Users/tb/NoBackup/projects/git/git.pu/t/trash 
+directory.t7406-submodule-update/submodule) registered for path 
+'../super/submodule'
+done.
+done.
+done.
+done.
+EOF
+
+test_expect_success 'submodule update --init --recursive from 
+subdirectory' '
+     git -C recursivesuper/super reset --hard HEAD^ &&
+     (cd recursivesuper &&
+      mkdir tmp &&
+      cd tmp &&
+      git submodule update --init --recursive ../super >../../actual 
+2>../../actual2U &&
+      sort <../../actual2U >../../actual2
+     ) &&
+     test_i18ncmp expect actual &&
+     test_i18ncmp expect2 actual2
+'
+
+
