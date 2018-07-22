@@ -6,48 +6,48 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B2DE61F597
-	for <e@80x24.org>; Sun, 22 Jul 2018 09:58:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E5F11F597
+	for <e@80x24.org>; Sun, 22 Jul 2018 09:58:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728438AbeGVKyJ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Jul 2018 06:54:09 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:36472 "EHLO
-        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728342AbeGVKyJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Jul 2018 06:54:09 -0400
-Received: by mail-io0-f193.google.com with SMTP id r15-v6so7034853ioa.3
-        for <git@vger.kernel.org>; Sun, 22 Jul 2018 02:58:00 -0700 (PDT)
+        id S1728486AbeGVKyK (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Jul 2018 06:54:10 -0400
+Received: from mail-io0-f194.google.com ([209.85.223.194]:46537 "EHLO
+        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728082AbeGVKyK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Jul 2018 06:54:10 -0400
+Received: by mail-io0-f194.google.com with SMTP id i18-v6so13242311ioj.13
+        for <git@vger.kernel.org>; Sun, 22 Jul 2018 02:58:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=CYQZ73MY67faggMP2u1nDTZEYAO461FBJJdHNJqAsU0=;
-        b=HtvDVJ9SK6X98F4k273FOJrKAb8Ee2I1hn1baJkqesBgE7FqEHsKfiZ4v4Uyanc2HZ
-         j05/XdyqGw81xygYJjcKhudAgeBo6150JkhitoUUE85qL8XZN3vPYxzEdZSwJizGYFIL
-         qg0UXa6fwEeqaXXDaEk3bQxcXjvAu2dD+PzgdXIIyqHbM8c/5PT0qtIt3t/Wn0KN09f2
-         Muk1h9f6Tchf1xTxcn7K3pvbzR+ldwu0IumZwUnap4sIcNI2czj84W+7LGF7DnfgFcR2
-         yGd0sQOuWS65mMcjG1ifPYahmK0C42mBVSBMtPN1zRZsQNlAU0RX6S1L4f7st3HkiRR2
-         oMTQ==
+        bh=PQTm+g4tUgwPCEkcwGldFxOEqHYeT+2ynmROpr8Q3mQ=;
+        b=f8ouc3tNvV0XMhtxr448zWODsg0euk759VYw1l/+eJzctdI5MscxhPVpxEVfRT3x5u
+         OmLW/5OmZbEBVKRkU0fo0xgoe64q5AXB+DynJbJ8HvhdJbZE41EnLeJJ5MBN9u+2eYjE
+         Vw6ebEuR+kDgDggq06KxJyYN5HiYTP127E1vw2qiFadJrk5UppCTJJu0fiWm5h6UEhDv
+         xfH9E+iA2N/rJWuye/xNChzrlAxseoI6SZMT8L5hQoMniVi0NmpnpGbWzjlTgxwT5LO5
+         1RugiY2tJND3ZcQr8GJeVaPZPN5lHKqoXwFALs8nYnWmUzjAQB44v8/+EuSqmkl1mpTz
+         8AyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=CYQZ73MY67faggMP2u1nDTZEYAO461FBJJdHNJqAsU0=;
-        b=PQDcHzEpiYAcu7YlWZ/zeiu57Xd9/Br94IfDqnX4zIJQxW3xNxgHwseIl4i/kcuat+
-         joZHthzYWsIwgJi72i98t3JWSEm646aXD1CT5wKf+zvU/9xH0PMtk89A7yL3LYp7bOIa
-         2O5gq8VoKdw2KuNFDS04KfGla9JyxsiAgrzk3hlf5gC457Qrw4GiYEaIpdxORu6xU+RN
-         GFC80DUMia6zvaJfJDolRpiQnU2fsXBsdo1vg+4MGgdzT0LlUYUkD8dAE0vd88vV3gNN
-         QDa3t6vz0P/uF6emixOf8KztGpqhANQAmE+eKOr4OTs231yehSC0oLHZ6PftSGTmH1Qk
-         KtSQ==
-X-Gm-Message-State: AOUpUlGFD22dsX3BBRuxgHUlUAoLzDheksixBsItGWycBQJwgRgh5pEZ
-        tOXOg96Sv7N/oL2HNi1b5rMiuw5a
-X-Google-Smtp-Source: AAOMgpeSxmXmAu6ZIHt4tKttv/fV/xK16oQPsFp9r7ZWBYooLc+RKwNaSJpBxN5rmkmPiiojKiNguA==
-X-Received: by 2002:a6b:4a15:: with SMTP id w21-v6mr6253216iob.277.1532253479948;
-        Sun, 22 Jul 2018 02:57:59 -0700 (PDT)
+        bh=PQTm+g4tUgwPCEkcwGldFxOEqHYeT+2ynmROpr8Q3mQ=;
+        b=lBRWrJpfhL9oHHw9O9mpGZt32oTUUY2oDpsO5SO6ZOtL86IT4py+ZRtnsYnqgt/fpu
+         UzyDVgAMV5dOSHQl+UaGHCpaiWBVaX+GO3xiMCZiQ617fA4yDIwaaQzyJ8NTvu5sRZfg
+         5HITkRncqxa/OjHArf71KaRbboH6/VnqwwZuD3m4VekRTQE8dffQ01vGpa6Fv2goU6zP
+         TVRG+FhJm+7Jidpw5ddg2zO2TTx4/T7ndykknGzHTAUIVkGaebZpoTPWF8hsCYIb4RXh
+         6O4ZxIEroINa4MpTxGR+rG1FHq/mbcB41qXQJm1ifJa8VpOl4Fi2wMNfIqaes8VWX7HC
+         30rQ==
+X-Gm-Message-State: AOUpUlHYcrF/l4lKZk21hPOPk18MT9teX59xKKwBqxMTZH0cicLH19w7
+        w12DmueK2Oyca+lowesHJwoFtXRa
+X-Google-Smtp-Source: AAOMgpdaeqQ+dbVhIt4wXCxuljmU9kg3+duqY7ICvKr9USxF8NP3FrGiXZUgDhN2ge7DfNdAwPyvOw==
+X-Received: by 2002:a5e:c60c:: with SMTP id f12-v6mr7136241iok.108.1532253480753;
+        Sun, 22 Jul 2018 02:58:00 -0700 (PDT)
 Received: from localhost.localdomain (user-12l2cs3.cable.mindspring.com. [69.81.51.131])
         by smtp.gmail.com with ESMTPSA id w13-v6sm3681298itb.29.2018.07.22.02.57.59
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Sun, 22 Jul 2018 02:57:59 -0700 (PDT)
+        Sun, 22 Jul 2018 02:58:00 -0700 (PDT)
 From:   Eric Sunshine <sunshine@sunshineco.com>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -55,9 +55,9 @@ Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Stefan Beller <sbeller@google.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 04/14] interdiff: teach show_interdiff() to indent interdiff
-Date:   Sun, 22 Jul 2018 05:57:07 -0400
-Message-Id: <20180722095717.17912-5-sunshine@sunshineco.com>
+Subject: [PATCH 05/14] log-tree: show_log: make commentary block delimiting reusable
+Date:   Sun, 22 Jul 2018 05:57:08 -0400
+Message-Id: <20180722095717.17912-6-sunshine@sunshineco.com>
 X-Mailer: git-send-email 2.18.0.345.g5c9ce644c3
 In-Reply-To: <20180722095717.17912-1-sunshine@sunshineco.com>
 References: <20180722095717.17912-1-sunshine@sunshineco.com>
@@ -68,76 +68,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A future change will allow "git format-patch --interdiff=<prev> -1" to
-insert an interdiff into the commentary section of the lone patch of a
-1-patch series. However, to prevent the inserted interdiff from
-confusing git-am, as well as human readers, it needs to be indented.
-Therefore, teach show_interdiff() how to indent.
+In patches generated by git-format-patch, the area below the "---" line
+following the commit message and before the actual 'diff' can be used
+for commentary which the patch author wants to convey to readers of the
+patch itself but not include in the commit message proper.
+
+By default, the commentary area is empty, however, the --notes option
+causes it to be populated with notes associated with the commit. In the
+future, other options may be added which also insert content into the
+commentary section.
+
+To accommodate this, factor out the logic which delimits commentary
+blocks from the commit message so that it can be re-used for upcoming
+optional inserted content.
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- builtin/log.c |  2 +-
- interdiff.c   | 13 ++++++++++++-
- interdiff.h   |  2 +-
- 3 files changed, 14 insertions(+), 3 deletions(-)
+ log-tree.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 99ddfe8bb0..8078a43d14 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1086,7 +1086,7 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
- 
- 	if (rev->idiff_oid1) {
- 		fprintf_ln(rev->diffopt.file, "%s", rev->idiff_title);
--		show_interdiff(rev);
-+		show_interdiff(rev, 0);
- 	}
+diff --git a/log-tree.c b/log-tree.c
+index 4a3907fea0..9d38f1cf79 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -541,6 +541,16 @@ static int show_mergetag(struct rev_info *opt, struct commit *commit)
+ 	return for_each_mergetag(show_one_mergetag, commit, opt);
  }
  
-diff --git a/interdiff.c b/interdiff.c
-index d0fac10c7c..c81d680a6c 100644
---- a/interdiff.c
-+++ b/interdiff.c
-@@ -3,15 +3,26 @@
- #include "revision.h"
- #include "interdiff.h"
- 
--void show_interdiff(struct rev_info *rev)
-+static struct strbuf *idiff_prefix_cb(struct diff_options *opt, void *data)
++static void next_commentary_block(struct rev_info *opt, struct strbuf *sb)
 +{
-+	return data;
++	const char *x = opt->shown_dashes ? "\n" : "---\n";
++	if (sb)
++		strbuf_addstr(sb, x);
++	else
++		fputs(x, opt->diffopt.file);
++	opt->shown_dashes = 1;
 +}
 +
-+void show_interdiff(struct rev_info *rev, int indent)
+ void show_log(struct rev_info *opt)
  {
- 	struct diff_options opts;
-+	struct strbuf prefix = STRBUF_INIT;
+ 	struct strbuf msgbuf = STRBUF_INIT;
+@@ -698,10 +708,8 @@ void show_log(struct rev_info *opt)
  
- 	memcpy(&opts, &rev->diffopt, sizeof(opts));
- 	opts.output_format = DIFF_FORMAT_PATCH;
-+	opts.output_prefix = idiff_prefix_cb;
-+	strbuf_addchars(&prefix, ' ', indent);
-+	opts.output_prefix_data = &prefix;
- 	diff_setup_done(&opts);
+ 	if ((ctx.fmt != CMIT_FMT_USERFORMAT) &&
+ 	    ctx.notes_message && *ctx.notes_message) {
+-		if (cmit_fmt_is_mail(ctx.fmt)) {
+-			strbuf_addstr(&msgbuf, "---\n");
+-			opt->shown_dashes = 1;
+-		}
++		if (cmit_fmt_is_mail(ctx.fmt))
++			next_commentary_block(opt, &msgbuf);
+ 		strbuf_addstr(&msgbuf, ctx.notes_message);
+ 	}
  
- 	diff_tree_oid(rev->idiff_oid1, rev->idiff_oid2, "", &opts);
- 	diffcore_std(&opts);
- 	diff_flush(&opts);
-+
-+	strbuf_release(&prefix);
- }
-diff --git a/interdiff.h b/interdiff.h
-index 793c0144fe..01c730a5c9 100644
---- a/interdiff.h
-+++ b/interdiff.h
-@@ -3,6 +3,6 @@
+@@ -765,9 +773,10 @@ int log_tree_diff_flush(struct rev_info *opt)
  
- struct rev_info;
- 
--void show_interdiff(struct rev_info *);
-+void show_interdiff(struct rev_info *, int indent);
- 
- #endif
+ 			/*
+ 			 * We may have shown three-dashes line early
+-			 * between notes and the log message, in which
+-			 * case we only want a blank line after the
+-			 * notes without (an extra) three-dashes line.
++			 * between generated commentary (notes, etc.)
++			 * and the log message, in which case we only
++			 * want a blank line after the commentary
++			 * without (an extra) three-dashes line.
+ 			 * Otherwise, we show the three-dashes line if
+ 			 * we are showing the patch with diffstat, but
+ 			 * in that case, there is no extra blank line
 -- 
 2.18.0.345.g5c9ce644c3
 
