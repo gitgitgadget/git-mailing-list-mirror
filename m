@@ -7,77 +7,78 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 195061F597
-	for <e@80x24.org>; Sun, 22 Jul 2018 09:20:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 84A001F597
+	for <e@80x24.org>; Sun, 22 Jul 2018 09:23:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728175AbeGVKQl (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Jul 2018 06:16:41 -0400
-Received: from mail-io0-f177.google.com ([209.85.223.177]:37776 "EHLO
-        mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727865AbeGVKQl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Jul 2018 06:16:41 -0400
-Received: by mail-io0-f177.google.com with SMTP id z19-v6so13215881ioh.4
-        for <git@vger.kernel.org>; Sun, 22 Jul 2018 02:20:38 -0700 (PDT)
+        id S1728249AbeGVKTx (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Jul 2018 06:19:53 -0400
+Received: from mail-it0-f48.google.com ([209.85.214.48]:39653 "EHLO
+        mail-it0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728022AbeGVKTx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Jul 2018 06:19:53 -0400
+Received: by mail-it0-f48.google.com with SMTP id g141-v6so17508195ita.4
+        for <git@vger.kernel.org>; Sun, 22 Jul 2018 02:23:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=29oZo85On2K2H/iRaSPTPrhHKmNw/hblzvgn0olNXTU=;
-        b=Oz4xhalXUZ1FFJn8hs/l3o5x9On/DHqJquz39SRVgjSTE9bcJQErSSWPuNwtK0JAgh
-         Tj8Vmngo2CayjX/IgYU0Sx6QqFqA82QZEKwMjoLvbfl/GkKiU+NNRvwOduYPPyNOPu+h
-         bTPjw1CXKONIx92oTvqJomK8rK7rjA0bxrKW5SCVDFWgUFOG0SRNYHEKXshY8gyd2a9s
-         90PRYn+Jrd60E/4lzVnxGggVOXcds9CQywGzWGgTF3/7GYke7C5wgF95mCF8lBXcCahi
-         RNw5YrHEugujtJyYPUhjJYzNqAH2TQfHEqy3/R1gnoX51y5NkyYaPizKr6brklVJH1sU
-         Mp/Q==
+        bh=BKiYBY0+dA6s5yKk0tHllvL5oI3Jvq8WjldaXrysKmo=;
+        b=B0cu+jHwyRWvYm9AgdKBcpcyaQGSJqaRLg9e6Xfso6BijTw1KjRviokSRveMCi5CZR
+         crNIOGHJCmzeHw9uo3/3q7ak69XisGlLf23O16t/wXGAty89cN/05YoqKQcyhYudBdc6
+         Y+1+DtBQYK4wo5QlRNYD2rdl0IXQ8C2IHltxS8HduzyZgCAe/4TM/XURmdFdf1Yy/8LK
+         HycYKevFUR6EiZkAlILJSyGyPvCm1TgmIc7KfcjfouvQTVJA289DGOduWN+7iSSqxV9A
+         i0HpVlwX7+t6i5H6hJhS6fUfz49i5yCrDpH/Il9RQpIENDJeKLrhdyxYKXOA7PChdlmN
+         mV0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=29oZo85On2K2H/iRaSPTPrhHKmNw/hblzvgn0olNXTU=;
-        b=l207rZYjRLhu2TFkulJipbZGrZRz3vSZNaiQUey4MuSaJPvgJJ8zdqG1khldAlVsum
-         4mX9XPyMc/UCAVbPDwmBmtD3D+T29gCXRv/LzOXahDIfp8EWtL7uVoW1Q6ut326mXqd+
-         3sZ5ZkOk35gIlC4vPNmbm2+FgGrpI0JRH+TSFhEqzhqTYxEsOhFbHWuQcPyCGSEtz+A6
-         V4UbIQisH/o3ycg2u08w7F58wCORZddmQcWmN6C4QzoRsr/gB+m/nwMSe+wGKSKtRSqa
-         dRg80e6v1Bf790fCqjI9Ghdl2SqcNC0PkCVRLFf3biVfceQZQbYxUU9iZ/FFtRe+NWUD
-         5zcQ==
-X-Gm-Message-State: AOUpUlEWCTLg9OKsigvHwvBCyR+QEAZuudopt1NZBQ6WVVh8jhYVI6HQ
-        xwFRZzwlgdT8RGjGLwPf5BU9gTs2oUIOtEQavF8=
-X-Google-Smtp-Source: AAOMgpeI5iLGq2hTr7029C87rqc7727i0dP2A6WqGMno4Zl2hLylYVvgxOaWkA6lchRejIOymT2KtlD9Fvge8VYC+60=
-X-Received: by 2002:a6b:a2cf:: with SMTP id l198-v6mr6069878ioe.282.1532251237860;
- Sun, 22 Jul 2018 02:20:37 -0700 (PDT)
+        bh=BKiYBY0+dA6s5yKk0tHllvL5oI3Jvq8WjldaXrysKmo=;
+        b=RzRofi2thajU8XxRRZL6eruH8PyPm5wCk1Y46gRaq54PhCBQuhgoDmB+m0+LosHxu3
+         Ynjf9jeSIzck1zAAvPTH+37AeqvzLgLegxiTBu3TbKO2SHL+a6vifO04nID8ZOVLV/4s
+         p2ThnTGKt7oB4HB0MXF6N6InD4EKgTjc/JM+4ISvAfuJiYL1dj8UFNulN+pZoqNIW2B/
+         k/FrcTKcGh1TI8MBl40oPfndV1D8Iy8+TcenJ+sDZFl9IUDWRqwRnX177GoiIIeKAGY1
+         OFY7XOQQCj4zQDt+XFn1LEGCLtP9fzzkRNiQrbpz4eET2n9ICkLb3bvXQZw0ZNyrWjfC
+         1kbQ==
+X-Gm-Message-State: AOUpUlGP7tl3UWC4X7HnpR7S6EWqkVfGgfQVxw+Z/5XWazkVadmZyhhp
+        o5yZCUEqcUn7rjg+xWfiJ9zuRQGDrHm3a0nsWQ8=
+X-Google-Smtp-Source: AAOMgpcaw8c52n9d0uz9EU2BUZnfAXLPbd1PuI5rcYvoqQiytFdd2NGxWVsYoX9Bt2U91NtmnOzpEEV1apWa+D1D3o4=
+X-Received: by 2002:a02:c50b:: with SMTP id s11-v6mr7776599jam.61.1532251429336;
+ Sun, 22 Jul 2018 02:23:49 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180626205438.110764-1-bmwill@google.com> <20180627223023.49659-1-bmwill@google.com>
- <20180627223023.49659-9-bmwill@google.com>
-In-Reply-To: <20180627223023.49659-9-bmwill@google.com>
+References: <20180628135932.225288-1-jamill@microsoft.com> <20180702193745.8940-1-jamill@microsoft.com>
+ <20180702193745.8940-4-jamill@microsoft.com>
+In-Reply-To: <20180702193745.8940-4-jamill@microsoft.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sun, 22 Jul 2018 11:20:12 +0200
-Message-ID: <CACsJy8CJG5RCL40vCbNnQMHmtjQmch9qntxeh_Pt6ZUfnRN9uA@mail.gmail.com>
-Subject: Re: [PATCH v6 8/8] fetch-pack: implement ref-in-want
-To:     Brandon Williams <bmwill@google.com>
+Date:   Sun, 22 Jul 2018 11:23:23 +0200
+Message-ID: <CACsJy8DfK=QaNsYRNBH8r0JJERAK0ppn4v6jZK03T22VfZA9Aw@mail.gmail.com>
+Subject: Re: [PATCH v6 3/8] block alloc: add lifecycle APIs for cache_entry structs
+To:     Jameson Miller <jamill@microsoft.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>,
         Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Ben Peart <peartben@gmail.com>, Jeff King <peff@peff.net>,
         Stefan Beller <sbeller@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 28, 2018 at 12:33 AM Brandon Williams <bmwill@google.com> wrote:
-> +static void receive_wanted_refs(struct packet_reader *reader, struct ref *refs)
+On Mon, Jul 2, 2018 at 9:49 PM Jameson Miller <jamill@microsoft.com> wrote:
+> +struct cache_entry *make_transient_cache_entry(unsigned int mode, const struct object_id *oid,
+> +                                              const char *path, int stage)
 > +{
-> +       process_section_header(reader, "wanted-refs", 0);
-> +       while (packet_reader_read(reader) == PACKET_READ_NORMAL) {
-> +               struct object_id oid;
-> +               const char *end;
-> +               struct ref *r = NULL;
+> +       struct cache_entry *ce;
+> +       int len;
 > +
-> +               if (parse_oid_hex(reader->line, &oid, &end) || *end++ != ' ')
-> +                       die("expected wanted-ref, got '%s'", reader->line);
+> +       if (!verify_path(path, mode)) {
+> +               error("Invalid path '%s'", path);
 
-Could you do a follow and wrap all these strings in _() since this one
-is already in 'next'?
+Please wrap all new user-visible strings in _().
+
+> +               return NULL;
+> +       }
 -- 
 Duy
