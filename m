@@ -7,54 +7,57 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE7431F597
-	for <e@80x24.org>; Sun, 22 Jul 2018 09:09:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E85901F597
+	for <e@80x24.org>; Sun, 22 Jul 2018 09:14:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728112AbeGVKFu (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Jul 2018 06:05:50 -0400
-Received: from mail-it0-f66.google.com ([209.85.214.66]:40877 "EHLO
-        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728004AbeGVKFu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Jul 2018 06:05:50 -0400
-Received: by mail-it0-f66.google.com with SMTP id h23-v6so383760ita.5
-        for <git@vger.kernel.org>; Sun, 22 Jul 2018 02:09:48 -0700 (PDT)
+        id S1728177AbeGVKKy (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Jul 2018 06:10:54 -0400
+Received: from mail-it0-f68.google.com ([209.85.214.68]:54248 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728151AbeGVKKy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Jul 2018 06:10:54 -0400
+Received: by mail-it0-f68.google.com with SMTP id 72-v6so20129656itw.3
+        for <git@vger.kernel.org>; Sun, 22 Jul 2018 02:14:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=j3h+y/DLWEymQPP9Ck8fdAHHN4xdyHbid88Fmy4E3Ng=;
-        b=LwvvYtqbief+yRiSDlbH5U4wOeUCgr/A+gQeOpnAmtyndXzu8lkPXxWXk1R5iyQQ3k
-         RWhTlq0c/Z5gwtw7lQxAo2ksjfCMXY2aQdVzgg+tg42nWUz62+QJ1y6o1h/GaX/UH37h
-         c2lfaGC1PgSmB7v+ZEoHTEhXrZHirxoRFStySC4BjlyHkbFYrsbHJbnolY18KIVcSRaZ
-         uh/0xnc/2kiu//pqxLFlIIP/7wBkJmVatwGBv9ifu9nJHAha0YG7DKKuFbwDeMw7wPHl
-         VSDriJYKbBX3B/UJBEuMCKYXOHXcM4eiqaX0d+v4UfQrPouyE9SrmISIMCG5xQLjYhRS
-         J19w==
+        bh=kQV+WXvkaGcDTOdGuu6kSjkPXE6Pog4NtnZSzzc50sU=;
+        b=kvFmG0vTTE70oQP/rn+EbooEQIgTwfI/WKBO7+L/DpmouO3zu4hQi6MfqRQq2V6OsR
+         WueFM5jnMLcJU02pEhkafRhBXHyD0AUkKdQL4g9/ezx6kPURmcQIMtzlZRqTEodyWiF8
+         10bSZFtJX7q/6DrRperqQEgW91MlKq2CU2DTOuao1mLb9T00QuafTBntNk0BHJAYVuTH
+         EEGV6eGI35GSX1W1Ifks20AT7apNELwrbTuGAcm67EdFXAP2EmTQnDU6VJpSWT7WInvI
+         JYI6ewGS+0z/FZeNZ4QYj106OFnbiLrAb0gCGN6UvCCUBTXNuwAxLuHlXzB9iSSpoKNY
+         YQnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=j3h+y/DLWEymQPP9Ck8fdAHHN4xdyHbid88Fmy4E3Ng=;
-        b=oPVcVEg417+pADobp5zATDQvtfrM57VP5WbZTV66W1BPej/cXrjS2A7Tt3ngNKiruX
-         0l90D1SxqxMrGG0EyafaDKDIMLWqHiPkR6up5MSY6+69pEtYZx2Kmrxz7mKscY8Nia5w
-         m2Gx8VUHxbsRhsVDhUaElfyB+MYxMgohbhnAuMCKqN7MoSTBQUExcgzkQYetmV6GCmyq
-         NZQegD4mV8r3LhVPdNQ1XTsMX+VnKfwH2I2ZoNBh1b7HccTJT8lfBlVyoc3/S3XUByB0
-         vIpcopwMjBG1j8NQP8awBVEqNmoTAcdDiIxyM6agoQhxjOCm6zCG+T7u7EyB0A6ds29M
-         KqMA==
-X-Gm-Message-State: AOUpUlEDnS2WdtN28HiC6Lo8Hl+EjQpU/i9bFblJLlMDFp2UQHYoOKtL
-        C2wn6Z/qXjQn1kS2nTjPQRhB/TNvKMgcrO1Yg9L7fg==
-X-Google-Smtp-Source: AAOMgpe5DOWDZAWCuLp1IzGqYDFpdwOkyy0PaK1QVt+HVNGtyt+YUcxFS/GlTARiVECJMbFNAXDY3m4mwWjypMOkpGk=
-X-Received: by 2002:a24:b101:: with SMTP id o1-v6mr6631275itf.121.1532250588275;
- Sun, 22 Jul 2018 02:09:48 -0700 (PDT)
+        bh=kQV+WXvkaGcDTOdGuu6kSjkPXE6Pog4NtnZSzzc50sU=;
+        b=m6zUb6/7y9FfOePEtsjPskzEP1cz2/crjWtfTCxjse2IfFeoWkkpA1D2QduQLfQgB6
+         yIskrTjn6zRC0U3dBVfWI4clb9fEaNBBSDorUltgz0H5TJ9gF+gwTi/IC+LbOOTD3Cf4
+         iwlQhBOxvTZY6iRaXsGu3+ThcbU7lcj0Sum5ywQ4/mceBBddE5JsMLhtwnLQXYl34zGB
+         BVvZG+twj1Cf3clVVXRzvs/jI3Qnkrv3aNvZassbAX72fbUwGZztYkNjmKIcVX1in2Un
+         RFcEwQcPIbmpnckyzEleOsbvKtzX5NLuOOR+fxyY1Xkf1BDPFCTor8TzZsD+aDfUXOP+
+         8FcA==
+X-Gm-Message-State: AOUpUlGaScFt3209Y+O+1V5TGPoz+t4nC1kr8/vOabYbdXcHxIS5FGR9
+        uCMltPuF8/nabMMlNZfMx0M6YZu0AGL0CxVgh0A=
+X-Google-Smtp-Source: AAOMgpdgUI7INoDWXCbILX3f0AoJ9YFVICreg9WuDg1I0/czDt9DXPGgeSnbS6kP7YlNAwtVdBMUwGoAFTyCBWX7Cpg=
+X-Received: by 2002:a24:610d:: with SMTP id s13-v6mr7029804itc.68.1532250892381;
+ Sun, 22 Jul 2018 02:14:52 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180625193752.255319-1-jonathantanmy@google.com> <20180702223944.224755-1-jonathantanmy@google.com>
-In-Reply-To: <20180702223944.224755-1-jonathantanmy@google.com>
+References: <20180628074655.5756-1-predatoramigo@gmail.com>
+ <20180708180104.17921-1-predatoramigo@gmail.com> <20180708180104.17921-2-predatoramigo@gmail.com>
+In-Reply-To: <20180708180104.17921-2-predatoramigo@gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sun, 22 Jul 2018 11:09:22 +0200
-Message-ID: <CACsJy8A02Au1ROU3_B1EmPnAHaRSBDJKNr9UeBSn0D7g=o4mZA@mail.gmail.com>
-Subject: Re: [PATCH v4] fetch-pack: support negotiation tip whitelist
-To:     Jonathan Tan <jonathantanmy@google.com>
+Date:   Sun, 22 Jul 2018 11:14:26 +0200
+Message-ID: <CACsJy8D9mX4imSgQUdPgQEuj_CsuPwSUc9zLKjDTp4-q+Jnwkg@mail.gmail.com>
+Subject: Re: [PATCH v4 1/4] rebase: start implementing it as a builtin
+To:     predatoramigo@gmail.com
 Cc:     Git Mailing List <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Stefan Beller <sbeller@google.com>, alban.gruin@gmail.com,
         Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
@@ -62,48 +65,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 3, 2018 at 12:41 AM Jonathan Tan <jonathantanmy@google.com> wrote:
-> +static void add_negotiation_tips(struct git_transport_options *smart_options)
+On Sun, Jul 8, 2018 at 8:03 PM Pratik Karki <predatoramigo@gmail.com> wrote:
+> +int cmd_rebase(int argc, const char **argv, const char *prefix)
 > +{
-> +       struct oid_array *oids = xcalloc(1, sizeof(*oids));
-> +       int i;
+> +       /*
+> +        * NEEDSWORK: Once the builtin rebase has been tested enough
+> +        * and git-legacy-rebase.sh is retired to contrib/, this preamble
+> +        * can be removed.
+> +        */
 > +
-> +       for (i = 0; i < negotiation_tip.nr; i++) {
-> +               const char *s = negotiation_tip.items[i].string;
-> +               int old_nr;
-> +               if (!has_glob_specials(s)) {
-> +                       struct object_id oid;
-> +                       if (get_oid(s, &oid))
-> +                               die("%s is not a valid object", s);
-
-Please _() this string and the warning() below
-
-> +                       oid_array_append(oids, &oid);
-> +                       continue;
-> +               }
-> +               old_nr = oids->nr;
-> +               for_each_glob_ref(add_oid, s, oids);
-> +               if (old_nr == oids->nr)
-> +                       warning("Ignoring --negotiation-tip=%s because it does not match any refs",
-> +                               s);
-> +       }
-> +       smart_options->negotiation_tips = oids;
-> +}
+> +       if (!use_builtin_rebase()) {
+> +               const char *path = mkpath("%s/git-legacy-rebase",
+> +                                         git_exec_path());
 > +
->  static struct transport *prepare_transport(struct remote *remote, int deepen)
->  {
->         struct transport *transport;
-> @@ -1075,6 +1112,12 @@ static struct transport *prepare_transport(struct remote *remote, int deepen)
->                            filter_options.filter_spec);
->                 set_option(transport, TRANS_OPT_FROM_PROMISOR, "1");
->         }
-> +       if (negotiation_tip.nr) {
-> +               if (transport->smart_options)
-> +                       add_negotiation_tips(transport->smart_options);
+> +               if (sane_execvp(path, (char **)argv) < 0)
+> +                       die_errno("could not exec %s", path);
+
+Please wrap all user visible strings in thi series in _().
+
 > +               else
-> +                       warning("Ignoring --negotiation-tip because the protocol does not support it.");
-> +       }
->         return transport;
->  }
+> +                       die("sane_execvp() returned???");
+
+or if it's definitely a bug in the code, go with BUG()
 -- 
 Duy
