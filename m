@@ -2,102 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 63FC21F597
-	for <e@80x24.org>; Mon, 23 Jul 2018 21:37:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19C9F1F597
+	for <e@80x24.org>; Mon, 23 Jul 2018 21:49:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388145AbeGWWlC (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Jul 2018 18:41:02 -0400
-Received: from cloud.peff.net ([104.130.231.41]:56690 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S2388088AbeGWWlC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jul 2018 18:41:02 -0400
-Received: (qmail 12988 invoked by uid 109); 23 Jul 2018 21:37:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 23 Jul 2018 21:37:54 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21592 invoked by uid 111); 23 Jul 2018 21:37:53 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 23 Jul 2018 17:37:53 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 23 Jul 2018 17:37:52 -0400
-Date:   Mon, 23 Jul 2018 17:37:52 -0400
-From:   Jeff King <peff@peff.net>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH] pack-objects: fix performance issues on packing large
- deltas
-Message-ID: <20180723213752.GB7870@sigill.intra.peff.net>
-References: <20180718225110.17639-1-newren@gmail.com>
- <20180720153943.575-1-pclouds@gmail.com>
- <20180720174004.GA22486@sigill.intra.peff.net>
- <CACsJy8AcDqNtV1VfHB+ZD=wvOxRyhobacreaNpjSm3NcLCMKWA@mail.gmail.com>
+        id S2388466AbeGWWw0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Jul 2018 18:52:26 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:34979 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388175AbeGWWw0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jul 2018 18:52:26 -0400
+Received: by mail-wm0-f65.google.com with SMTP id o18-v6so552856wmc.0
+        for <git@vger.kernel.org>; Mon, 23 Jul 2018 14:49:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=mpQd7LAxRa1ONQUNAqTBh0hgsTVouIfrA1uyitmTNC0=;
+        b=ZL9eMuduzyw2l13unhnRT1fgB6i4uIoVg4EkUjhFjVIV+ytKuCpPznugkjzGbMOOve
+         UBQCcHq9KhW/b2O85CjWqcRn1iBLvm6jN9oNx/H0agWLgUsSbFhSDLziK2Vc18+JKnbg
+         x2lZBLka/suSewZqnIIln5BSsGNrDX5jcuZ0tOpQRyNEhUMDZ/zMuMTUwSHZpYzgXTfF
+         SciTpYR7yQ6mpCdoER1GqoquZhLKH3vT/66/uGj0Ozfx5irQmTOrviuD9/SA0CdeGDCd
+         gVUrHJVlWxHTpIdQzlAG1vSyWDryzxl7xX+QujzdzQ1XXjsNv/C4zIGaT9Yx2SFq/41x
+         RTyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=mpQd7LAxRa1ONQUNAqTBh0hgsTVouIfrA1uyitmTNC0=;
+        b=c6OdS287pXkPB3SMWUs2eGynN9f/Vfoudj1JH458v2kESdDz80gp3+caqsrcdiHKfG
+         QA75zq/vQ8RmIHpunv+KPG/CpEBUfZ2qF6A5zD5M2zsPF13s0PmMYPzc2fK599zuzcvt
+         J1bY7zC7jBzT/xlcwfxH/Hwppi4w+7ZcsuLeZqYakw9krni7GPSmMg1zyMBzzqSAZlZ/
+         RcHCmu3TKCRwY0IWbrFgAc6Duv6gDyoAQvivPdaFNpomEKHjl+eeHm5/pTxWb5pKEB2A
+         RzGhwmMHsm5rHLk/v6UIxJn/1W+iCrG6FCM86bH/WnwmgCdTysJ9TtET+JEsYd9+jjLR
+         9ovQ==
+X-Gm-Message-State: AOUpUlEV0k/J3ahTTPLX6Um6L1xliItW9Pz8QbdlLAoUnkjXrHqK8RcR
+        WNAH4bk6HElwszmsVJbNeG8=
+X-Google-Smtp-Source: AAOMgpfIhDulU9VSEm/Ywyod9iaw4VkNTrAn8UWdiEJNUnNvdhtxHkPNGFstt58oD7pbH49N8LCj1A==
+X-Received: by 2002:a1c:b143:: with SMTP id a64-v6mr412312wmf.114.1532382553509;
+        Mon, 23 Jul 2018 14:49:13 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id h14-v6sm7321701wro.15.2018.07.23.14.49.12
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 23 Jul 2018 14:49:12 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     gitgitgadget@gmail.com, git <git@vger.kernel.org>
+Subject: Re: [PATCH v4 00/21] Add `range-diff`, a `tbdiff` lookalike
+References: <pull.1.v3.git.gitgitgadget@gmail.com>
+        <pull.1.v4.git.gitgitgadget@gmail.com>
+        <CAGZ79kb4ki0cXLnJHeqzRvWaGWki1_epWOdCy49s_v9cy_tJ2A@mail.gmail.com>
+Date:   Mon, 23 Jul 2018 14:49:12 -0700
+In-Reply-To: <CAGZ79kb4ki0cXLnJHeqzRvWaGWki1_epWOdCy49s_v9cy_tJ2A@mail.gmail.com>
+        (Stefan Beller's message of "Mon, 23 Jul 2018 14:03:38 -0700")
+Message-ID: <xmqq36w94o87.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CACsJy8AcDqNtV1VfHB+ZD=wvOxRyhobacreaNpjSm3NcLCMKWA@mail.gmail.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jul 21, 2018 at 06:23:32AM +0200, Duy Nguyen wrote:
+Stefan Beller <sbeller@google.com> writes:
 
-> > I'm not sure I completely agree with this. While 4GB deltas should be
-> > pretty rare, the nice thing about 64-bit is that you never have to even
-> > think about whether the variable is large enough. I think the 2^32
-> > limitations on Windows are something we should be fixing in the long
-> > term (though there it is even worse because it is not just deltas, but
-> > entire objects).
-> 
-> I guess that means we stick to uint64_t then? It does increase more
-> memory on 32-bit architecture (and probably processing cost as well
-> because 64-bit uses up 2 registers).
+> On Sat, Jul 21, 2018 at 3:04 PM Johannes Schindelin via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>
+>> Side note: I work on implementing range-diff not only to make life easier for reviewers who have to suffer through v2, v3, ... of my patch series, but also to verify my changes before submitting a new iteration. And also, maybe even more importantly, I plan to use it to verify my merging-rebases of Git for
+>> Windows (for which I previously used to redirect the pre-rebase/post-rebase diffs vs upstream and then compare them using `git diff --no-index`). And of course any interested person can see what changes were necessary e.g. in the merging-rebase of Git for Windows onto v2.17.0 by running a command like:
+>
+> Thanks for making tools that makes the life of a Git developer easier!
+> (Just filed https://github.com/gitgitgadget/gitgitgadget/issues/26
+> which asks to break lines for this cover letter)
 
-Yes, but if we switch away from an array to a hash, then we get the best
-of both worlds: we are using 64-bits to store the size, but we only need
-an entry for deltas that are actually big.
-
-Then the common small-delta case remains efficient in both CPU and
-memory, and we pay the costs only in proportion to the number of large
-deltas (though the hash is a slightly higher cost for those large deltas
-than an array).
-
-> > This is new in this iteration. I guess this is to cover the case where
-> > we are built with pthread support, but --threads=1?
-> 
-> If you mean the "lock_initialized" variable, not really. the other
-> _lock() macros in builtin/ call pthread_mutex_lock() unconditionally,
-> which is fine. But I feel a bit uncomfortable doing the same in
-> pack-objects.h which technically is library code (but yes practically
-> is a long arm of builtin/pack-objects.c), so lock_initialized is there
-> to make sure we don't touch uninitialized locks if somebody forgets to
-> init them first.
-
-I think the ones in builtin/ check threads_active to avoid actually
-locking. And that's set in init_thread(), which we do not call if we are
-using a single thread. So I think this is basically doing the same
-thing, but with a separate flag (since the library code does not know
-about threads_active).
-
-> > Your original patch had to copy the oe_* helpers into the file to handle
-> > that. But I think we're essentially just locking the whole functions:
-> 
-> I'll try to avoid this lock when deltas are small and see if it helps
-> the linux.git case on Elijah's machine. So we may end up locking just
-> a part of these functions.
-
-Yeah, I think my suggestion doesn't work once we start doing more
-complex locking logic. Let's just forget it. I think the
-"lock_initialized" thing is probably the right approach.
-
-It might be worth getting rid of builtin/pack-objects.c's local
-threads_active variable, and just using to_pack.threads_active. The two
-flag would always want to match.
-
--Peff
+Thanks.  These cover letters are unreadable without W Q
+(gnus-article-fill-long-lines)
