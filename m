@@ -2,88 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E2B711F597
-	for <e@80x24.org>; Mon, 23 Jul 2018 18:57:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 25CB51F597
+	for <e@80x24.org>; Mon, 23 Jul 2018 19:10:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388106AbeGWUAX convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 23 Jul 2018 16:00:23 -0400
-Received: from mail-yb0-f195.google.com ([209.85.213.195]:45792 "EHLO
-        mail-yb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387970AbeGWUAX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jul 2018 16:00:23 -0400
-Received: by mail-yb0-f195.google.com with SMTP id h127-v6so657665ybg.12
-        for <git@vger.kernel.org>; Mon, 23 Jul 2018 11:57:49 -0700 (PDT)
+        id S2388096AbeGWUNE (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Jul 2018 16:13:04 -0400
+Received: from mail-wr1-f53.google.com ([209.85.221.53]:38732 "EHLO
+        mail-wr1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388077AbeGWUNE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jul 2018 16:13:04 -0400
+Received: by mail-wr1-f53.google.com with SMTP id v14-v6so1765069wro.5
+        for <git@vger.kernel.org>; Mon, 23 Jul 2018 12:10:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=wNl6ii9cIYu4HxpQ4um9tXngwBA0Nq/WZqYHRIhGnzc=;
+        b=qF5dmnwrQcyxNTpUy0nlDR/BZL1l2qNrtRGMFnpDn1vwEVzr99/+XAgmtB4Y9jchzD
+         1fnUqUqqAwW/qFqrdBMqut7OmtB8Bh2GFJ98/Zz6ltfvxUPTsl4S/n5NnyRb/VZrSpMD
+         xjtgsJdZg63Nq8xkqZP2cdwVQNQNuytZrV6cktNdZ6ML57lpoN9TIrsAD0f/bun2jz1r
+         tnNPJOQT4Rzj/oiBiECYzoh9x9NRkD+PCc8Rfz4LNyY7Ra+5SUUgiIdNmMUKNgs0Tdpg
+         TOeH7gZXqaYw6kG4AkV2PkHBDsXBKVdzprCJCvTpU+u8WFyKpc8vTlAsoHQZo1jL2Tbo
+         NG0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=I3XOCbLecvYiEyE0w1Mq6E/xouwFKGXgvAlaeMBKtxU=;
-        b=byrvzd8LUgHeWAQmhYjIPwdFS9y57fI7uXeT0zj0ddB4WhUY8cS7a7hzeHETo6kOvO
-         fE/UoSeU14ceLMkTNkvNghvAe+Nk//73L1RbNG/f2QgYhds7zUeQag6pG5V4iRjzg2Ad
-         pxS2V4uJOeu1Z4NdYjIMaGTC8M0gLrs6vE9P5rIU/pGRyYsRYxiQDwPtFto8CQBjN7ms
-         AumpMbugZbmRFKHO4ccVN8zYtH4P3vGWEQdIGJhIvAqXr+XGDHZ32gqA5LzMj4lwiFpd
-         azRDcFZ5WuVy0qb07iDgm0lTxbi0QhR7ywKCulrhfY37OerL5RIrlrY3TpGDz++6978m
-         pu2A==
-X-Gm-Message-State: AOUpUlFFWNvuj/fxGn9nwySOW+PsnMb2Ig4ITDY6GBIh0EVIpL8wPTkf
-        ohEa0j5U6o+GZSeyqK8exNQkwWRAyiq7iRNTyXc=
-X-Google-Smtp-Source: AAOMgpeMtMAjBU7kUV6qH2wEHseCmiUMDv2NGKaegNFWSgIOWMl9iU28e7WhRQeuO08N97TTADh+la54WONuwykjvrU=
-X-Received: by 2002:a25:8b04:: with SMTP id i4-v6mr7620247ybl.12.1532372268666;
- Mon, 23 Jul 2018 11:57:48 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=wNl6ii9cIYu4HxpQ4um9tXngwBA0Nq/WZqYHRIhGnzc=;
+        b=Bxfr77cqfkakO4MGaFDIIJZPgLFWH3w41AEcUQnj/Nzt22Uti8vQpu9MGMTnyoFWAx
+         v9FhIjXmY4AL38+RsEDwZmvgHSgyp30GfMpnYGMS4dBnbl6uI5WEXA0xFQiY9/NeSTFo
+         8pXekWbvuLmylKePyMmUhaeBsExnAeZxwnsRdkRA5o0YAzw8/pKWINXao/gM8esN2iKO
+         +Wb3tHTj2t0ptn76Qanj6TXh7ETaX4ZB+hVZqsQGY+g7lv81bmDlLElffvIyc8DSf44X
+         1Y40X6ftCXl/8NxkoAnlaKrAuXmQCQF+a3sGpGwRJGoLW/EjXX+gar6FZ3C9mvGvEOUU
+         9WZQ==
+X-Gm-Message-State: AOUpUlEet5GFpkSl+FvkP7sYAUb2h3Hn0kKWW60AEWRWague93Pp22Y6
+        1jEitOOF+2oPehynRNxMA3s3Cabq
+X-Google-Smtp-Source: AAOMgpdq5dKbfLAlKIrL4WNVtNYV3861qIJMdkVZNZm0PDfMOQI67Wq+oRMaIsIprXbtoQG4FS+oiQ==
+X-Received: by 2002:adf:9546:: with SMTP id 64-v6mr9114984wrs.257.1532373025887;
+        Mon, 23 Jul 2018 12:10:25 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id j8-v6sm9311661wru.41.2018.07.23.12.10.24
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 23 Jul 2018 12:10:25 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     git@vger.kernel.org,
+        "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: Re: [PATCH 0/1] t7406: avoid failures solely due to timing issues
+References: <pull.12.git.gitgitgadget@gmail.com>
+Date:   Mon, 23 Jul 2018 12:10:24 -0700
+In-Reply-To: <pull.12.git.gitgitgadget@gmail.com> (Johannes Schindelin via
+        GitGitGadget's message of "Mon, 23 Jul 2018 06:39:40 -0700 (PDT)")
+Message-ID: <xmqqr2jt6a5b.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20180723135100.24288-1-szeder.dev@gmail.com> <20180723135100.24288-4-szeder.dev@gmail.com>
- <CAPig+cSOZd+t17j7FSCYAydS34ZtfcRFZyE6E9fz=u7xB-01Mg@mail.gmail.com> <CAM0VKjkJoqRFmXdnuujSaiZ=hvz6MeAmgoUQNAkZ+82ZrKtotw@mail.gmail.com>
-In-Reply-To: <CAM0VKjkJoqRFmXdnuujSaiZ=hvz6MeAmgoUQNAkZ+82ZrKtotw@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 23 Jul 2018 14:57:37 -0400
-Message-ID: <CAPig+cQM-hdXXe6uZ768HbJ5T5QqJNKo9kuz6F=i7D+9Q-M90Q@mail.gmail.com>
-Subject: Re: [PATCH 3/5] coccinelle: exclude sha1dc source files from static analysis
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 23, 2018 at 2:44 PM SZEDER Gábor <szeder.dev@gmail.com> wrote:
-> On Mon, Jul 23, 2018 at 8:28 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > On Mon, Jul 23, 2018 at 9:51 AM SZEDER Gábor <szeder.dev@gmail.com> wrote:
-> > > +ifdef DC_SHA1_SUBMODULE
-> > > +COCCI_SOURCES = $(filter-out sha1collisiondetection/%,$(C_SOURCES))
-> > > +else
-> > > +COCCI_SOURCES = $(filter-out sha1dc/%,$(C_SOURCES))
-> > > +endif
-> >
-> > Can't you just filter out both of these unconditionally without
-> > worrying about DC_SHA1_SUBMODULE?
->
-> I'm not sure what you mean by that.  Like this perhaps?
->
->   COCCI_SOURCES = $(filter-out sha1collisiondetection/%,$(filter-out
-> sha1dc/%,$(C_SOURCES)))
->
-> While it's only a single line, I don't think it's any easier on the
-> eyes.
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-I wasn't worried about readability or one or two lines (indeed, you
-could still do the filtering over two statements).
+> This fixes a regression test that produces false positives occasionally: https://git-for-windows.visualstudio.com/git/_build/results?buildId=14035&view=logs
+>
 
-What I meant was that sha1dc/ contains files whether DC_SHA1_SUBMODULE
-is defined or not. If the idea of this change is that there's no point
-in having Coccinelle check those foreign, imported files (and waste
-time in the process), then I was thinking that you'd want to omit
-sha1dc/* regardless of whether DC_SHA1_SUBMODULE is defined.
+[jc: forwrding to Torsten for <208b2ede-4833-f062-16f2-f35b8a8ce099@web.de>]
 
-Looking more closely at the Makefile, however, I see that C_SOURCES
-holds only one or the other of sha1dc/* or
-sha1collisiondetection/lib/*, so my concern is unfounded, which
-explains why my question confused you.
+> Johannes Schindelin (1):
+>   t7406: avoid failures solely due to timing issues
+>
+>  t/t7406-submodule-update.sh | 11 ++++++-----
+>  1 file changed, 6 insertions(+), 5 deletions(-)
+>
+>
+> base-commit: b7bd9486b055c3f967a870311e704e3bb0654e4f
+> Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-12%2Fdscho%2Fmore-robust-t7406-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-12/dscho/more-robust-t7406-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/12
