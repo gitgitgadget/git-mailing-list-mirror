@@ -7,133 +7,142 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C6281F597
-	for <e@80x24.org>; Mon, 23 Jul 2018 17:56:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC3E01F597
+	for <e@80x24.org>; Mon, 23 Jul 2018 17:57:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388197AbeGWS7C (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Jul 2018 14:59:02 -0400
-Received: from mail-io0-f202.google.com ([209.85.223.202]:40330 "EHLO
-        mail-io0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388105AbeGWS7B (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jul 2018 14:59:01 -0400
-Received: by mail-io0-f202.google.com with SMTP id j18-v6so893287iog.7
-        for <git@vger.kernel.org>; Mon, 23 Jul 2018 10:56:40 -0700 (PDT)
+        id S2388385AbeGWTAU (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Jul 2018 15:00:20 -0400
+Received: from mail-yw0-f196.google.com ([209.85.161.196]:41920 "EHLO
+        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387981AbeGWTAU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jul 2018 15:00:20 -0400
+Received: by mail-yw0-f196.google.com with SMTP id q129-v6so545615ywg.8
+        for <git@vger.kernel.org>; Mon, 23 Jul 2018 10:57:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=4CPFd1f7ioHJEgUO+8tjFpdOyDL5LEN1Kd1egMHqIbQ=;
-        b=DRvY5U+77JMRJi7b/fw69097s/dQEdtxerhfINgoHI/A/raUKVJDB48unfrtuGwqS1
-         YezwGk3RHok5f1LzFvILliv+jQ9wKOvSF7HekQZKnB7qAHdnVSwdUqM9rcrLGISJDay7
-         776+eYr6TD6y+BKsgvGDldDzNjVHJD+buUG53K/YOP0Dkt1w6P8a0a6RcvvbN9nMZFS5
-         Daoql/Z6VKli6kPhjf6iP0cLjhgoG51x5kA3n9F2jWFC3NlLNFg27dogV6Z8LHhpYX08
-         Wne8jSKlW6SJiN4tAibXT82GeNpzMj6FKZwrlX6X7IU5khtpisTBCguJY1XxGyGVcrUB
-         axHw==
+        bh=sguquI4Nj1TCZuACwiiOccd/cEPap+HILj279YUGx7s=;
+        b=shxTGgBsl9nVbSEICg/z6G/JGB+avMq0r18dGq43Jt0kv87mZRoSglkxr679yxKQ0g
+         0m9BQcH1ybkzVaXxtteaGvmXxJJP1umOzTchzyLNnQBPWCGuP1cG5qjXhOE3dkGzuz8n
+         d2hpye/q7wihbsZ31Y1VWdo/F7qCWvAE3zuWAhDBiSyvx0pwdGlUk8qpIWsB725DEUZI
+         AhM3k143EOUCB7cSL51Kmaac4lQ27Iss1fkz412SKK6LyAPJuoCAnKIPLn/y7QwxkXT2
+         5xv0nxhEYEsyZj2cU/24sZ8nMbYMY8ahgMk0h9aR+lzxt9fDJiMWEkAWwmxn5ciiBqHb
+         FOYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
-         :references:subject:from:to:cc;
-        bh=4CPFd1f7ioHJEgUO+8tjFpdOyDL5LEN1Kd1egMHqIbQ=;
-        b=S+enhdg+QP62JnleWgkqH0k8mBoLLC0hi/1WUQsGWwY3q/bAHxLQ0pZHLSKl4O7rA0
-         ZJ2L/fsUp2vHUv5DDAOwcrYnRpjS2JOMOMjHGQ+ekcjzCI/mFdDiczoe1tsmGP68Neq2
-         O/Gw97iXCl30z1sdV+MtjNOCZPVz9srxcDZzkrYHZFj13ApempzHU6p/X3MrFrVl5TjT
-         WND1pxSpFDBK/WU6zq+WH/GVVOTClUebrJT6J1V+NWLNzFNKqZUI4qfm0RevI3AbUrrq
-         rzADAeLA8Hwh31f3WPY/3YM+67RpMdvFZsTZlbj+VbtHpTbMT1NZUEFTectGeWNNKMY0
-         BLyg==
-X-Gm-Message-State: AOUpUlHEIwt996hnPGn+Y0DAbIQltCq4qXQYTo5971tlgxitJoXXrnaw
-        iYs/QsMwXdGkp3N1/aIG8ozO3U/OVLFQGi9M6+fXX40Q3IQdlPOzXqxmA7xA9hbETpN8Nn9bxgH
-        WnumCN5OEeABYYOsUat+vGBsdr29M62825HyeIle2CkN6KknmpD4m3zkXnQ==
-X-Google-Smtp-Source: AAOMgpddZ297ZWHw6nkhwvdjnPAw7f2OLkgFnkeB+bCDyzg5IHKegVol6UnHSGAT9hv1y4KD6PT6X6tFgwU=
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=sguquI4Nj1TCZuACwiiOccd/cEPap+HILj279YUGx7s=;
+        b=C1q834VfLihYYIps6niB+toyHo0lrh1+lEYeAmaCAAXRPUUrEDI8WMwAnX14PzWyHe
+         XWjQBKdvIAxeIqR80GPu+GoE9XKCZwolhJJjacUoyAe2HOPiD6a52ZqfmU8bwJKOLJYd
+         7KkMVeFMoGd8jzkklIYW4v7ysnlBHSXVS/qIYDleY4HfcI09yMrE7kgcZF0uFOokECsZ
+         OaHVKNfT43rXNBEPI/1qUashU/+ORktyH2s0Dc3umxBcwMRh4Uqiwa4Qexqa/j471RGS
+         l+QIIPo65JxZsYcX4ehlSPgHBnOEaSUqT42Bz9fH/foLl4Ab8hz53j4d5e39sjRczgJi
+         wq1w==
+X-Gm-Message-State: AOUpUlEx4nCG8OzquEASSDq3/zCdIyJ0geh8lRext2suBDSbfTh/fKKw
+        Z0uTawGN0GPnTVt41/SXfhV7hue0gKVp7ZC78+3Nag==
+X-Google-Smtp-Source: AAOMgpdrXLMcULuKjfT6Be7A4j76z3bIXMDMlue59wKjbs33BIJUfOOh3j3HRIWKbs0IHiESayeukVkNUdSg9RVwyvs=
+X-Received: by 2002:a0d:d342:: with SMTP id v63-v6mr7241406ywd.500.1532368677122;
+ Mon, 23 Jul 2018 10:57:57 -0700 (PDT)
 MIME-Version: 1.0
-X-Received: by 2002:a24:b30f:: with SMTP id e15-v6mr6517itf.48.1532368599848;
- Mon, 23 Jul 2018 10:56:39 -0700 (PDT)
-Date:   Mon, 23 Jul 2018 10:56:35 -0700
-In-Reply-To: <CACsJy8CJG5RCL40vCbNnQMHmtjQmch9qntxeh_Pt6ZUfnRN9uA@mail.gmail.com>
-Message-Id: <20180723175635.31323-1-bmwill@google.com>
-References: <CACsJy8CJG5RCL40vCbNnQMHmtjQmch9qntxeh_Pt6ZUfnRN9uA@mail.gmail.com>
-X-Mailer: git-send-email 2.18.0.233.g985f88cf7e-goog
-Subject: [PATCH] fetch-pack: mark die strings for translation
-From:   Brandon Williams <bmwill@google.com>
-To:     git@vger.kernel.org
-Cc:     Brandon Williams <bmwill@google.com>
+References: <20180609205628.GB38834@genre.crustytoothpaste.net>
+ <20180609224913.GC38834@genre.crustytoothpaste.net> <20180611192942.GC20665@aiede.svl.corp.google.com>
+ <20180720215220.GB18502@genre.crustytoothpaste.net> <nycvar.QRO.7.76.6.1807220036340.71@tvgsbejvaqbjf.bet>
+ <20180721235941.GG18502@genre.crustytoothpaste.net> <CANgJU+X39NoEoMyLu+FX38=x19LrRqatz_dUpUAc+WFV+Uw+=A@mail.gmail.com>
+In-Reply-To: <CANgJU+X39NoEoMyLu+FX38=x19LrRqatz_dUpUAc+WFV+Uw+=A@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 23 Jul 2018 10:57:46 -0700
+Message-ID: <CAGZ79kYT0S6H1mTqUAhgq5CKx3Gd5FfY3MALcOSbq48OVsY6dw@mail.gmail.com>
+Subject: Re: Hash algorithm analysis
+To:     demerphq <demerphq@gmail.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        git <git@vger.kernel.org>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Adam Langley <agl@google.com>, keccak@noekeon.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Brandon Williams <bmwill@google.com>
----
- fetch-pack.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+On Mon, Jul 23, 2018 at 5:41 AM demerphq <demerphq@gmail.com> wrote:
+>
+> On Sun, 22 Jul 2018 at 01:59, brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+> > I will admit that I don't love making this decision by myself, because
+> > right now, whatever I pick, somebody is going to be unhappy.  I want to
+> > state, unambiguously, that I'm trying to make a decision that is in the
+> > interests of the Git Project, the community, and our users.
+> >
+> > I'm happy to wait a few more days to see if a consensus develops; if so,
+> > I'll follow it.  If we haven't come to one by, say, Wednesday, I'll make
+> > a decision and write my patches accordingly.  The community is free, as
+> > always, to reject my patches if taking them is not in the interest of
+> > the project.
+>
+> Hi Brian.
+>
+> I do not envy you this decision.
+>
+> Personally I would aim towards pushing this decision out to the git
+> user base and facilitating things so we can choose whatever hash
+> function (and config) we wish, including ones not invented yet.
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 0b4a9f288f..51abee6181 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1245,13 +1245,13 @@ static int process_section_header(struct packet_reader *reader,
- 	int ret;
- 
- 	if (packet_reader_peek(reader) != PACKET_READ_NORMAL)
--		die("error reading section header '%s'", section);
-+		die(_("error reading section header '%s'"), section);
- 
- 	ret = !strcmp(reader->line, section);
- 
- 	if (!peek) {
- 		if (!ret)
--			die("expected '%s', received '%s'",
-+			die(_("expected '%s', received '%s'"),
- 			    section, reader->line);
- 		packet_reader_read(reader);
- 	}
-@@ -1289,12 +1289,12 @@ static int process_acks(struct packet_reader *reader, struct oidset *common)
- 			continue;
- 		}
- 
--		die("unexpected acknowledgment line: '%s'", reader->line);
-+		die(_("unexpected acknowledgment line: '%s'"), reader->line);
- 	}
- 
- 	if (reader->status != PACKET_READ_FLUSH &&
- 	    reader->status != PACKET_READ_DELIM)
--		die("error processing acks: %d", reader->status);
-+		die(_("error processing acks: %d"), reader->status);
- 
- 	/* return 0 if no common, 1 if there are common, or 2 if ready */
- 	return received_ready ? 2 : (received_ack ? 1 : 0);
-@@ -1331,7 +1331,7 @@ static void receive_shallow_info(struct fetch_pack_args *args,
- 
- 	if (reader->status != PACKET_READ_FLUSH &&
- 	    reader->status != PACKET_READ_DELIM)
--		die("error processing shallow info: %d", reader->status);
-+		die(_("error processing shallow info: %d"), reader->status);
- 
- 	setup_alternate_shallow(&shallow_lock, &alternate_shallow_file, NULL);
- 	args->deepen = 1;
-@@ -1346,7 +1346,7 @@ static void receive_wanted_refs(struct packet_reader *reader, struct ref *refs)
- 		struct ref *r = NULL;
- 
- 		if (parse_oid_hex(reader->line, &oid, &end) || *end++ != ' ')
--			die("expected wanted-ref, got '%s'", reader->line);
-+			die(_("expected wanted-ref, got '%s'"), reader->line);
- 
- 		for (r = refs; r; r = r->next) {
- 			if (!strcmp(end, r->name)) {
-@@ -1356,11 +1356,11 @@ static void receive_wanted_refs(struct packet_reader *reader, struct ref *refs)
- 		}
- 
- 		if (!r)
--			die("unexpected wanted-ref: '%s'", reader->line);
-+			die(_("unexpected wanted-ref: '%s'"), reader->line);
- 	}
- 
- 	if (reader->status != PACKET_READ_DELIM)
--		die("error processing wanted refs: %d", reader->status);
-+		die(_("error processing wanted refs: %d"), reader->status);
- }
- 
- enum fetch_state {
--- 
-2.18.0.233.g985f88cf7e-goog
+By Git user base you actually mean millions of people?
+(And they'll have different opinions and needs)
 
+One of the goals of the hash transition is to pick a hash function
+such that git repositories are compatible.
+If users were to pick their own hashes, we would need to not just give
+a SHA-1 -> <newhash> transition plan, but we'd have to make sure the
+full matrix of possible hashes is interchangeable as we have no idea
+of what the user would think of "safer". For example one server operator
+might decide to settle on SHA2 and another would settle on blake2,
+whereas a user that uses both servers as remotes settles with k12.
+
+Then there would be a whole lot of conversion going on (you cannot talk
+natively to a remote with a different hash; checking pgp signatures is
+also harder as you have an abstraction layer in between).
+
+I would rather just have the discussion now and then provide only one
+conversion tool which might be easy to adapt, but after the majority
+converted, it is rather left to bitrot instead of needing to support ongoing
+conversions.
+
+On the other hand, even if we'd provide a "different hashes are fine"
+solution, I would think the network effect would make sure that eventually
+most people end up with one hash.
+
+One example of using different hashes successfully are transports,
+like TLS, SSH. The difference there is that it is a point-to-point communication
+whereas a git repository needs to be read by many parties involved; also
+a communication over TLS/SSH is ephemeral unlike objects in Git.
+
+> Failing that I would aim towards a hashing strategy which has the most
+> flexibility. Keccak for instance has the interesting property that its
+> security level is tunable, and that it can produce aribitrarily long
+> hashes.  Leaving aside other concerns raised elsewhere in this thread,
+> these two features alone seem to make it a superior choice for an
+> initial implementation. You can find bugs by selecting unusual hash
+> sizes, including very long ones, and you can provide ways to tune the
+> function to peoples security and speed preferences.  Someone really
+> paranoid can specify an unusually large round count and a very long
+> hash.
+
+I do not object to this in theory, but I would rather not want to burden
+the need to write code for this on the community.
+
+> I am not a cryptographer.
+
+Same here. My personal preference would be blake2b
+as that is the fastest IIRC.
+
+Re-reading brians initial mail, I think we should settle on
+SHA-256, as that is a conservative choice for security and
+the winner in HW accelerated setups, and not to shabby in
+a software implementation; it is also widely available.
+
+Stefan
