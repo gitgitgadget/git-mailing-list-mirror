@@ -2,60 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E6E3A1F597
-	for <e@80x24.org>; Mon, 23 Jul 2018 18:39:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE6091F597
+	for <e@80x24.org>; Mon, 23 Jul 2018 18:44:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388169AbeGWTl5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Jul 2018 15:41:57 -0400
-Received: from mail-it0-f42.google.com ([209.85.214.42]:53497 "EHLO
-        mail-it0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387982AbeGWTl5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jul 2018 15:41:57 -0400
-Received: by mail-it0-f42.google.com with SMTP id 72-v6so218843itw.3
-        for <git@vger.kernel.org>; Mon, 23 Jul 2018 11:39:26 -0700 (PDT)
+        id S2388077AbeGWTqp (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Jul 2018 15:46:45 -0400
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:41131 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388017AbeGWTqo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jul 2018 15:46:44 -0400
+Received: by mail-lf1-f65.google.com with SMTP id v22-v6so1193816lfe.8
+        for <git@vger.kernel.org>; Mon, 23 Jul 2018 11:44:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=BXWuWFyQj8JCUK3tFQAyieRlGJv0g4cLXN4RuVmwXhY=;
-        b=Yepb/bzzH/64BKWDZb7mJBp/O8gf2jr4z32hY+E9BGDngZbhD4ncdR8RCUmrgBFTCH
-         uMrOiwkqmEUOTBv9lE1BQB1lK085as0Xa7LqO0+Y/+UZN+pNei0lNJXG4oJZ16PltEG0
-         6qo0VH8seDmhNFgFp0kkS+l2yLQCTSjozCKKNdCyPlQc8yMfnERIB14crypzPsby6Smi
-         d7adPbTpq1U/s8jhfAedipTszhhNj/O9eZ7MecGJMWU24kUUTqpJtfNYjEeb1ITYEyjq
-         xkLraivHvWsDORruM3DB5he3uKqjcIcgLdwr6QlrR6VPqkWgfSdI3Lh4JW7uvjGH0KdF
-         TfiA==
+        bh=kqtVZaGFkq1QFUd9MF1QykreTTRbtGCNFZNR9w5MSR8=;
+        b=JOQSkG2IqAozuSO8eJFnd/4FNfTNwdiISkW2/6IpHqgoyOLAVjD7FmkIZo+TUS+jP2
+         2ZlIwIKcMXP0hpYlS4oFpHSaW5M1w5IeF/JZ5UMKq2QvoqY6gQEd9hlyN9b1lNcymRLe
+         gXp1k0S7xqUBJTZ7gsYG618QslPbgogwZLKDUBjt1JDvvePPQFo8tMDATvFkUVLIeynS
+         pYp6T4fMHJYO/XRThHrT+XVlWOxEQlQFVppFU6EJuX72Ff2ZX//pS4n4+CttTUT6d/lB
+         fDEv0ZYjhVY7Ic10vvDdQ4u6WGcj7bmApb/AXtnNrj3dj5gwulTruThTCHOtpebVxxax
+         wuGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=BXWuWFyQj8JCUK3tFQAyieRlGJv0g4cLXN4RuVmwXhY=;
-        b=ChfSr+cyytbHzLJpkvOpk9Qw6K3+ZUOFoT85eVuCt2evqR9CsfOUxyH7d8VsWtYB02
-         hs7BVMexzTfMy18oPNQkmXg8vWJd7tU5Dyk0isswVXJDYG4nEFO13DTU3WqTaYsDLyeP
-         7AyLTxNZY/UkOllwnbH6c74iXMhIkh0w96hwJ1pOZzpp/d0gDj21ApBMFOaMVgiGKL7t
-         HSKZ5/y073XC5ugG208wqC938XN1HikFzRLOzMYJ4A/Q0CEQ+oKgL3Mo4qn0QzR3vCf9
-         P1SipO/vA38QfQa+K2rmw6oE1oPe4d6d57PdyivOyCp9lRsAfFfkEHcVFEY+bYtTRma7
-         VyNw==
-X-Gm-Message-State: AOUpUlEv5Vf6F8VtrI3nicTnqfa7UHuFF0JJTbxtbAmj0WMwWKdn3LAZ
-        0yxMDT4oTK8IJTDkFStBam68eoxtgkzHRRH4fMs=
-X-Google-Smtp-Source: AAOMgpdg0AUwHxlbQpUbDi52nUQoJMfy2fIYJNrXPpVH1872neum2vO8nmsaZyGzPhQRBdMB3sksTGvxpaaUGVTWxF4=
-X-Received: by 2002:a02:7e45:: with SMTP id h66-v6mr12730690jac.97.1532371166106;
- Mon, 23 Jul 2018 11:39:26 -0700 (PDT)
+        bh=kqtVZaGFkq1QFUd9MF1QykreTTRbtGCNFZNR9w5MSR8=;
+        b=f80VeheNPCLLinSTAqbvjNEr/whhB0sZnWHBFw1qZALflBb9U0x+BF30s6RChnrAOE
+         neN14XfLoRbQd8MCE82/WCHs5vcVeOCLoSqyRO7oynRa+//VnBh6ySZjTFtVuFknTc/P
+         d3sLjgpKCBIMhKQDnGesmylD1lFP6reOFc0mZd2VOYMj/7VMDtqCxnoPxVYEs39wK8mA
+         LRs8LBzUF6krt/QS+PTXpel+kItEyfgr4iMN8nCfelBK3cPyoDwEilHzGCtIvz/eigk3
+         TtW35FDK+UBHvTpdBnr0kSWYdSF9D0MfBc+ZtYzFVV9gzS5Q2P2IPj80GBVVw8lGKcRs
+         LGuw==
+X-Gm-Message-State: AOUpUlFB80q7O1vY9a/J18jGHo+tkOR1EX3s52LA5XBwUk1EOWM8xbb8
+        uI/AgpxnvSVja5uROS/1iijQZu1U2qTDeRdlw6+nhzI5
+X-Google-Smtp-Source: AAOMgpcetcZCFsncB929rvJtdRgXMcmx32LZhhZcy+1vxMg9WNeHuvHciRIfWj3uQYfS1ekTyrsYlfHgFi2wP9btyG0=
+X-Received: by 2002:a19:501e:: with SMTP id e30-v6mr7920733lfb.71.1532371451289;
+ Mon, 23 Jul 2018 11:44:11 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180720153943.575-1-pclouds@gmail.com> <20180722080421.12887-1-pclouds@gmail.com>
- <xmqq8t617rqv.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq8t617rqv.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 23 Jul 2018 20:38:59 +0200
-Message-ID: <CACsJy8BskYdANe9HnuLj8sqa8hRqzSAQ+q11C8faJ-YBtA3Xeg@mail.gmail.com>
-Subject: Re: [PATCH v2] pack-objects: fix performance issues on packing large deltas
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>
+References: <20180723135100.24288-1-szeder.dev@gmail.com> <20180723135100.24288-4-szeder.dev@gmail.com>
+ <CAPig+cSOZd+t17j7FSCYAydS34ZtfcRFZyE6E9fz=u7xB-01Mg@mail.gmail.com>
+In-Reply-To: <CAPig+cSOZd+t17j7FSCYAydS34ZtfcRFZyE6E9fz=u7xB-01Mg@mail.gmail.com>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Mon, 23 Jul 2018 20:43:59 +0200
+Message-ID: <CAM0VKjkJoqRFmXdnuujSaiZ=hvz6MeAmgoUQNAkZ+82ZrKtotw@mail.gmail.com>
+Subject: Re: [PATCH 3/5] coccinelle: exclude sha1dc source files from static analysis
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -63,36 +67,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 23, 2018 at 8:04 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Mon, Jul 23, 2018 at 8:28 PM Eric Sunshine <sunshine@sunshineco.com> wro=
+te:
 >
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+> On Mon, Jul 23, 2018 at 9:51 AM SZEDER G=C3=A1bor <szeder.dev@gmail.com> =
+wrote:
+> > sha1dc is an external library, that we carry in-tree for convenience
+> > or grab as a submodule, so there is no use in applying our semantic
+> > patches to its source files.
+> >
+> > Therefore, exclude sha1dc's source files from Coccinelle's static
+> > analysis.
+> >
+> > Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+> > ---
+> > diff --git a/Makefile b/Makefile
+> > @@ -2666,10 +2666,16 @@ check: command-list.h
+> > +ifdef DC_SHA1_SUBMODULE
+> > +COCCI_SOURCES =3D $(filter-out sha1collisiondetection/%,$(C_SOURCES))
+> > +else
+> > +COCCI_SOURCES =3D $(filter-out sha1dc/%,$(C_SOURCES))
+> > +endif
 >
-> > Access to e->delta_size_ (and by extension
-> > pack->delta_size[e - pack->objects]) is unprotected as before, the
-> > thread scheduler in pack-objects must make sure "e" is never updated
-> > by two different threads.
->
-> OK.  Do we need to worry about "e" (e.g. "e->delta_size_valid")
-> being accessed while/before it is set by another thread?
+> Can't you just filter out both of these unconditionally without
+> worrying about DC_SHA1_SUBMODULE?
 
-I left some details out because I think it's getting to a gray area.
-We already do this
+I'm not sure what you mean by that.  Like this perhaps?
 
-        if (!DELTA(trg_entry)) {
-                max_size =3D trg_size/2 - the_hash_algo->rawsz;
-                ref_depth =3D 1;
-        } else {
-                max_size =3D DELTA_SIZE(trg_entry);
-        ...
-        SET_DELTA(trg_entry, src_entry);
-        SET_DELTA_SIZE(trg_entry, delta_size);
+  COCCI_SOURCES =3D $(filter-out sha1collisiondetection/%,$(filter-out
+sha1dc/%,$(C_SOURCES)))
 
-if the bottom half is running on one thread and stopped in the middle
-while the top half is running in another thread, we have a problem.
-But perhaps max_size is not that big a deal because incorrect max_size
-may produce a bad pack but can't corrupt it.
-
-I will have to study the thread dispatch code more to have a better
-answer, unfortunately.
---
-Duy
+While it's only a single line, I don't think it's any easier on the
+eyes.
