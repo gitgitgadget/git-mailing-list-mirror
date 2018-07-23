@@ -7,76 +7,92 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 185BF1F597
-	for <e@80x24.org>; Mon, 23 Jul 2018 15:51:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E6761F597
+	for <e@80x24.org>; Mon, 23 Jul 2018 16:03:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388234AbeGWQxO (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Jul 2018 12:53:14 -0400
-Received: from mail-io0-f195.google.com ([209.85.223.195]:44236 "EHLO
-        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387995AbeGWQxO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jul 2018 12:53:14 -0400
-Received: by mail-io0-f195.google.com with SMTP id q19-v6so920402ioh.11
-        for <git@vger.kernel.org>; Mon, 23 Jul 2018 08:51:24 -0700 (PDT)
+        id S2388194AbeGWRFQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Jul 2018 13:05:16 -0400
+Received: from mail-it0-f67.google.com ([209.85.214.67]:51075 "EHLO
+        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388144AbeGWRFP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jul 2018 13:05:15 -0400
+Received: by mail-it0-f67.google.com with SMTP id w16-v6so2298772ita.0
+        for <git@vger.kernel.org>; Mon, 23 Jul 2018 09:03:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=pKHndRBOsak34+8dietjmNPOVC5qzC5+lzMlT2jynfs=;
-        b=rAygBqPHLaNbPC/vGeN9oD6Q4cw0nufjBZtDAS+p73Ti+xxNv6QDF9ddJucbQFB3Bu
-         xryX6Yqtb9NE+IN9NUFGrbo+29fgNommcJCPyUAaNbuAuAmknHfVnyCkTBPCYDzOFwRb
-         b4YDDygsaxrWASeOIzOo3EjbkY3ax6+55Cewkxvey2gi3pNLqV364Na7+AHb2WP/SlnZ
-         JAoYCJSxkUg7/tP1JKQu5yetoK9qcKGv+SwL9vaDsXSqIpMNErAkhZnyKGq3ubV1Hzi4
-         xnjykMKwVbrS+ig3DvJhPicLG2EOod96BQXNTMrQ/WuVSIaMK399YHGIogZwmk4p5EPK
-         JzsA==
+        bh=wd5+KOFe3RNybLNctH29mVaBDADsl2esis1TDWpWzb4=;
+        b=C8HAJNE2IE95xzQxvvqJMtcUruQ6O92AYHY4N5PmPd8fdHKCqZMZ0PntmfVyRRvCIZ
+         UtdNKHY/G1pVZRat+DWni12DzF3dPVKdeGEt7NXDZe9WK/aqxDC7uWqfn7DFQw1cNPUF
+         4F5HfMJiLti+4gD1WU6zoQSrz8MbPrXNdB1DYc9DFHoZE3nHezSUDjFJyNXm1ZQvToMX
+         9ADEJDrLiD3yHNPe8v6K27/7slGFuEI40q2gcrUjcnRFDbe74q7NATSVkTS2xzG7GwOh
+         ZxNgGK0YZt2niZ/dyVK5qHRveGNuaql7gu5O91pPyv6BFM8PPXuFa9/KxUdK6Tv59mYG
+         louw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=pKHndRBOsak34+8dietjmNPOVC5qzC5+lzMlT2jynfs=;
-        b=Wb1+D1vixsy+3J/lNqdoV1f70AGcB16ZzknN/LMA+mTerSSbYR3KfrKNJa6kBGn+qA
-         d9habD6ir/zxeZ7hKLADBS4bXUS5cAPmqMBmpV2o8XUcqJENsjyaxXLToyveuNn+4W/0
-         F/8aC3kXUnJfDDrHJ2I8ZP8D7Lc9UmurpZhOxUP46EhbpMrvzlF/rf6JHg35/gqQAV6M
-         Q3dqKrDKmah76x+FroaJunEVOG9gYIZtTzxZIRdw8ZP0aocgwrTI7WCFqZ8ZNVtZRMTl
-         O1HzX5Cqm3kXI9hH6AFu+QEn8pJ2MvBL7rldQbcmId/h/3wiKt5AKriwAUfZESo/FmYj
-         cIww==
-X-Gm-Message-State: AOUpUlHW+4VKvlsBDIvrxpi4vSWL2oiQevCVIwZz0MfPTNxTAqCsfS+w
-        7jTWbaD7yU9mlEmtlxPoC9yfVG/6uw7PdiBYMOE=
-X-Google-Smtp-Source: AAOMgpfAUoWC4/Gy09PABQ5OULS4TD+iYuxtJib3d6XWgx+RvHMSj5TaTm6I9RmVJgAhwbHKXmYXsUwVyehPlmvoh+w=
-X-Received: by 2002:a6b:a2cf:: with SMTP id l198-v6mr9515086ioe.282.1532361083781;
- Mon, 23 Jul 2018 08:51:23 -0700 (PDT)
+        bh=wd5+KOFe3RNybLNctH29mVaBDADsl2esis1TDWpWzb4=;
+        b=Crtosv7PNu9LG2DINcVqMjQtB2LHveXGvXLpNZcB81hyIYWEPciGssu8vhjEbNPyMn
+         1piuFji86IoQhDlmDUNnkfEqe6JvmiaAMd/edZEa8RiH1OJXB9tbwSNeHTOxPkMcuoOf
+         SstChGe6x27F0RDWxmNTBzBPoAfoxk/4W3QU2Wc+yPC84T5UId7Cgcw/BubAL0RoG8U7
+         OwS2x4AfVgYzrohso3yCKZCO36fXihUaK5dbspKdi0aAUsxtDC58S1aEnzzRLgvcL85I
+         qZ7RMNxsGjosP05nWXcN7MXFr23mMw/kZjDhjW5WeYyHXz9aFfNfH9xLjo3om4q9OhQC
+         Lgmw==
+X-Gm-Message-State: AOUpUlH3diHCBN+iREPUQImc33jdqxfGkAWzXDVtTRcOPoGoj8vDWOse
+        Gvu9+3zyfxr3MnEBbPArf2rITCw2SMkRsNlJrOi4cA==
+X-Google-Smtp-Source: AAOMgpfv0FjPKh2/WHqNAd1BfL/PCRzjCit9isZ04rVKlJaDkTbjbZ2JD5cOX1U/vMqwuG4i3K+rNIz6rqu3UQZ3//o=
+X-Received: by 2002:a24:b101:: with SMTP id o1-v6mr10332088itf.121.1532361801695;
+ Mon, 23 Jul 2018 09:03:21 -0700 (PDT)
 MIME-Version: 1.0
-References: <CABPp-BGJAWXOCPsej=fWWDJkh-7BAV9m8yEDiy2NVkGTRCmk4A@mail.gmail.com>
- <20180723123423.32186-1-newren@gmail.com>
-In-Reply-To: <20180723123423.32186-1-newren@gmail.com>
+References: <20180722095717.17912-1-sunshine@sunshineco.com> <20180722095717.17912-3-sunshine@sunshineco.com>
+In-Reply-To: <20180722095717.17912-3-sunshine@sunshineco.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 23 Jul 2018 17:50:57 +0200
-Message-ID: <CACsJy8BxKoHOk7xPkSv1ibTSrtf1Km6hkx+TCeDJUjH2=SUORA@mail.gmail.com>
-Subject: Re: [PATCH] pack-objects: fix performance issues on packing large deltas
-To:     Elijah Newren <newren@gmail.com>
+Date:   Mon, 23 Jul 2018 18:02:55 +0200
+Message-ID: <CACsJy8C8RK6HkfoEYJGZg=sgtJS0WksHD3=7Souw3jYebRo=Sg@mail.gmail.com>
+Subject: Re: [PATCH 02/14] format-patch: add --interdiff option to embed diff
+ in cover letter
+To:     Eric Sunshine <sunshine@sunshineco.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Stefan Beller <sbeller@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 23, 2018 at 2:34 PM Elijah Newren <newren@gmail.com> wrote:
-> This patch provides a stop-gap improvement for maint that increases the
-> delta size back up to 32 bits (still an improvement over the 64 bit size
-> of the original).
+On Sun, Jul 22, 2018 at 11:57 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
 
-The "still an improvement" is actually not true. Due to padding and
-stuff, struct object_entry's size is increased by 8 bytes, even though
-you don't use all of it. It's possible to maybe shuffle fields around
-a bit to keep this struct smaller. But it's not really worth it since
-this is temporary anyway.
+> diff --git a/interdiff.c b/interdiff.c
+> new file mode 100644
+> index 0000000000..d0fac10c7c
+> --- /dev/null
+> +++ b/interdiff.c
+> @@ -0,0 +1,17 @@
+> +#include "cache.h"
+> +#include "commit.h"
+> +#include "revision.h"
+> +#include "interdiff.h"
+> +
+> +void show_interdiff(struct rev_info *rev)
+> +{
+> +       struct diff_options opts;
+> +
+> +       memcpy(&opts, &rev->diffopt, sizeof(opts));
+> +       opts.output_format = DIFF_FORMAT_PATCH;
+> +       diff_setup_done(&opts);
+> +
+> +       diff_tree_oid(rev->idiff_oid1, rev->idiff_oid2, "", &opts);
+> +       diffcore_std(&opts);
+> +       diff_flush(&opts);
+> +}
 
-> I think Duy's comment that I'm responding to suggests he Acks this
-> patch for maint, but there is that little 'if' he put in his statement.
-
-Yep. Ack'd by me. It's up to Junio to decide if it's worth doing this
-or not, of course.
+Is it worth adding a new file just for a single function? I haven't
+read the rest of the series, but the cover letter's diffstat suggests
+this is it. Is interdiff intended to become a lot more complicated in
+the future? If not maybe just add this function in diff-lib.c
 -- 
 Duy
