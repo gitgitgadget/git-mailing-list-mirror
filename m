@@ -7,51 +7,52 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D1791F597
-	for <e@80x24.org>; Mon, 23 Jul 2018 16:22:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D58E81F597
+	for <e@80x24.org>; Mon, 23 Jul 2018 16:28:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388574AbeGWRY0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Jul 2018 13:24:26 -0400
-Received: from mail-it0-f68.google.com ([209.85.214.68]:56058 "EHLO
-        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388443AbeGWRY0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jul 2018 13:24:26 -0400
-Received: by mail-it0-f68.google.com with SMTP id 16-v6so2367897itl.5
-        for <git@vger.kernel.org>; Mon, 23 Jul 2018 09:22:28 -0700 (PDT)
+        id S2388857AbeGWRam (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Jul 2018 13:30:42 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:53951 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388193AbeGWRam (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jul 2018 13:30:42 -0400
+Received: by mail-it0-f66.google.com with SMTP id 72-v6so2404175itw.3
+        for <git@vger.kernel.org>; Mon, 23 Jul 2018 09:28:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=qXvzWFLfxmy1jpsCKQMPed5h3vm/kPQm0gNPJVSXRKg=;
-        b=bkm9Lk/v7UVAxb9XBm0gqinVWGfQKTba6UGC5pz0OULgWfr8B+6vrxwOkh+ed2pc6U
-         e7M89IUcjUsirhQIvJW3xb1+NFWJgOklc1F3bzzX+VJ/ASrx1v+lbxj50VkMu8MWeVRy
-         hxqzno5bPPRm9jqdPPCtiZHuc8HSd04czDLZVSu7/ptKioz4gaK+9AeRiGpvPqiNXaRL
-         hYb8CNyyn7g442+Pd5QWuQ2jSXd7hirXPB3CROYSquEARPCDACi26y0LoOB+wy+9iEFD
-         31l3dXn0lKM9P4v6CN2Z3RZY97McfHvCa1rQYx4Fguui4Z42Y9H3rhjXP+6qSjkMY2G+
-         mgAA==
+        bh=ENs05SsSA/IYNkrm6JE8/Vp84qFYnXgdcdq7oDwJSR8=;
+        b=cWWwehiguqgQVgoysBOz5JAbkU82WmWtjexaNinGkrUDTVlpPsbR8U4x/AP713Xe08
+         CHEJag2jDMpca+n4BolKNvg+sEr65Aog6vao22/lZR0zB47+eqyxjd9IV+AQ9EO6n5FS
+         gkWEbxT9VianPlrOMAwkrd4z0K+sCwrXI4kcRteoQS22f8ItjQMWV0MQYYGPb1lS1pmJ
+         Jb7XPXggxKWB1f6HsjL1bl6t66ePAnE6VHbqvIVbR5zx2ZKPl7YrTosfUs0CpXGzJgq1
+         Gddlwrn4MeQayrz7LdjyFgc2BCe9vsVBeBnPYt/Q0nXKiz6PQq9/qnisbbtMA/p7gQBN
+         70dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=qXvzWFLfxmy1jpsCKQMPed5h3vm/kPQm0gNPJVSXRKg=;
-        b=pW6ao3fnMf2QQPhOOtWST0kCVIwMfpu8xUjCltvPN3S6xsHYxAHN7XrZaUeKzm4Cb4
-         FlpZ/J03FN+9FVCCDx1aRZdeIR+aEdUKBKFKj8GcFayUb39lU6EidsnMTFSKgXk9rUw2
-         aZrj87tatKLHSld9P4oA7TaFCYR7QZ6JcTQoFYOmEGu+OpZjX3ushC6F0oT4701Z1Mc/
-         cOsMoxoxe0EZ8Zzf+PSlLYDzNTu8uiPUvo6ewa4KN8FTgD6QMgjmiJ4SfoDUbP0+COCA
-         VWWIPIKg7ymLMSmq7HWxzY0/8I8zqr2Kz9ek/VGkRsEWK7z8RtMf0rPrL8qdXTceVDss
-         Horg==
-X-Gm-Message-State: AOUpUlF2GbgkdcnAwWdAANWduqa+JhhbwtT4tch7ePRulPfGAdI/3Pa4
-        rHcsdvGm7fQriThLR4CCcvtF5E/whMk4t0Op35o=
-X-Google-Smtp-Source: AAOMgpcdulj5qsVm53Yz1hTsMq7MZZgkMzLB6bsWlnbXPaZ9oM1E7ULy32kjGP5yYbynarY6zxH4baidArKl6DD4ioM=
-X-Received: by 2002:a24:610d:: with SMTP id s13-v6mr10973871itc.68.1532362946803;
- Mon, 23 Jul 2018 09:22:26 -0700 (PDT)
+        bh=ENs05SsSA/IYNkrm6JE8/Vp84qFYnXgdcdq7oDwJSR8=;
+        b=l32OQItBoOPCTfiGrLHyHO8wfxU4LhYcSRAq9x+o6OkOCKr7s1YyjlXQf73dtmFXsG
+         HdZ4/FKBbk/BA6hstLZJtFO0csQAh8buC9tJ/HEhjyLNEQN0O88vS1GncADuM1JDm4qp
+         WHwRPrEl+TpaNBpIJO0cHoa2MByNhBm4OlDu9JXlCYiWlp4kokELZ9YusKJZaUW/feqd
+         wKn5IY3wx4XJs7fRtB6rNFKu4+/MgIOC9xCBFV14imoSbrBlH8Z7yM0ABGUdg4fJIRsC
+         +gUDIcBBPDRtl2cqvXJMhKpxQWw2UBIBzcBsTOjlgBjEpUO09fIDTmB0NnMJ+jHR5FLT
+         Wl3g==
+X-Gm-Message-State: AOUpUlFAaz5UhouNmbuZO3lgZvh85z3/2Bj5wwZwBFEBe4rzzFjBhtO/
+        Ar5THSXsCJLAvue9W4VSTruAAHISvBZi1k8+kww=
+X-Google-Smtp-Source: AAOMgpee/u/HM9rvEEKFP7zTNsm9M1vMU3lJ8bOtKtgOnm1YTANlDQChQi0aBD0crygC/JH5RhEsNelRHEQ9hEwdv/s=
+X-Received: by 2002:a24:b101:: with SMTP id o1-v6mr10416671itf.121.1532363322910;
+ Mon, 23 Jul 2018 09:28:42 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180722095717.17912-1-sunshine@sunshineco.com> <20180722095717.17912-7-sunshine@sunshineco.com>
-In-Reply-To: <20180722095717.17912-7-sunshine@sunshineco.com>
+References: <20180722095717.17912-1-sunshine@sunshineco.com> <20180722095717.17912-11-sunshine@sunshineco.com>
+In-Reply-To: <20180722095717.17912-11-sunshine@sunshineco.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 23 Jul 2018 18:22:00 +0200
-Message-ID: <CACsJy8Aw6R8-3kDfhCqunXziajCg9O_1WrEYc4rfKa+-=m1D5g@mail.gmail.com>
-Subject: Re: [PATCH 06/14] format-patch: allow --interdiff to apply to a lone-patch
+Date:   Mon, 23 Jul 2018 18:28:16 +0200
+Message-ID: <CACsJy8AOeiKp2JnG0h9mw40TdsNft80vUu573ORtqKMor7B+vw@mail.gmail.com>
+Subject: Re: [PATCH 10/14] format-patch: add --range-diff option to embed diff
+ in cover letter
 To:     Eric Sunshine <sunshine@sunshineco.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -64,42 +65,19 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Sun, Jul 22, 2018 at 11:58 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> diff --git a/log-tree.c b/log-tree.c
-> index 9d38f1cf79..56513fa83d 100644
-> --- a/log-tree.c
-> +++ b/log-tree.c
-> @@ -14,6 +14,7 @@
->  #include "sequencer.h"
->  #include "line-log.h"
->  #include "help.h"
-> +#include "interdiff.h"
->
->  static struct decoration name_decoration = { "object names" };
->  static int decoration_loaded;
-> @@ -736,6 +737,19 @@ void show_log(struct rev_info *opt)
->
->         strbuf_release(&msgbuf);
->         free(ctx.notes_message);
-> +
-> +       if (cmit_fmt_is_mail(ctx.fmt) && opt->idiff_oid1) {
+> diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+> index f8a061794d..e7f404be3d 100644
+> --- a/Documentation/git-format-patch.txt
+> +++ b/Documentation/git-format-patch.txt
+> @@ -24,6 +24,7 @@ SYNOPSIS
+>                    [--to=<email>] [--cc=<email>]
+>                    [--[no-]cover-letter] [--quiet] [--notes[=<ref>]]
+>                    [--interdiff=<previous>]
+> +                  [--range-diff=<previous>]
 
-OK putting idiff stuff in rev_info is probably the right choice. But
-we all three fields prefixed with idiff_, maybe you could just add a
-new struct "idiff_options" to contain them and add a pointer to that
-struct in rev_info. Then "opt->idiff" is enough to know if idiff is
-requested instead of relying on idiff_oid1 (seems too random).
-
-> +               struct diff_queue_struct dq;
-> +
-> +               memcpy(&dq, &diff_queued_diff, sizeof(diff_queued_diff));
-> +               DIFF_QUEUE_CLEAR(&diff_queued_diff);
-> +
-> +               next_commentary_block(opt, NULL);
-> +               fprintf_ln(opt->diffopt.file, "%s", opt->idiff_title);
-> +               show_interdiff(opt, 2);
-> +
-> +               memcpy(&diff_queued_diff, &dq, sizeof(diff_queued_diff));
-> +       }
->  }
+I wonder if people will use both --interdiff=<rev> and
+--range-diff=<rev> often enough to justify a shortcut
+"--all-kinds-of-diff=<rev>" so that we don't have to type <previous>
+twice. But I guess we don't have to worry about this right now.
 -- 
 Duy
