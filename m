@@ -2,131 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0FEE7208E8
-	for <e@80x24.org>; Mon, 23 Jul 2018 18:53:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2B711F597
+	for <e@80x24.org>; Mon, 23 Jul 2018 18:57:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388070AbeGWT4Q (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Jul 2018 15:56:16 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:37263 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388038AbeGWT4Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jul 2018 15:56:16 -0400
-Received: by mail-wr1-f65.google.com with SMTP id q10-v6so1719327wrd.4
-        for <git@vger.kernel.org>; Mon, 23 Jul 2018 11:53:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=SEXGXD5qc/VpYnQ1WM0/nttKfgrbFYKWO40CQx3Uw44=;
-        b=sVWTBohq8m0JOCKQf3pN5Km7kHbVGW0I5i8+snpfd0U00stRW+secertGAv0gVy2/r
-         ajNJbLhMoEZG5CJFrSOTgoo6W+CqIGRhYPwkxqA9lRPkmhTiOdY25z3+sm+ohz7gcooq
-         JganXsiITMi2lZwfaKbXES7r0Qssa59illUK+2eHaVC6vhRUp8NR4GuaaKNLvYMlViM0
-         2OTAK9S2pfcDGQH7QKA2zjzoWP7MHkTkAsFZNKxKiuOAiavZEpr7Nlda4o5hFung2VyY
-         aMvLq5Ox1T2CEqKVgZUZvuA0L7OA7pJpBp/YStTNDEJql8h2CPYn93hKvcm3qLnJLInF
-         D1xw==
+        id S2388106AbeGWUAX convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 23 Jul 2018 16:00:23 -0400
+Received: from mail-yb0-f195.google.com ([209.85.213.195]:45792 "EHLO
+        mail-yb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387970AbeGWUAX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jul 2018 16:00:23 -0400
+Received: by mail-yb0-f195.google.com with SMTP id h127-v6so657665ybg.12
+        for <git@vger.kernel.org>; Mon, 23 Jul 2018 11:57:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=SEXGXD5qc/VpYnQ1WM0/nttKfgrbFYKWO40CQx3Uw44=;
-        b=iiPE8E0TktNsPocdxdvEBFlcatl/GeWnPfdig4zFdaNLQeNSEvefei2FFOXaY7AGme
-         yBMAlEK6CafhysjMFvQrUYT524LzwIaxJIing5Haop10yk9JchGhg0O0R3uS+RGg1nV/
-         /niNsUNUAEBoiiOU5S1pSwDhUFRIIJ8II2Zn0LiBy4bEx3MZ54d4dJ58d2Oaq7thxRGw
-         F3IfXDU5aDrncRu8X+O3olhZ+sIDQWQngWCzSX5mBGCCN3PhAcSKrZSrA1V/BCVJ9Bj/
-         G+3SXnYNECOvFegMGgXvXJxxs2BNlYfsWa6HiO9N2HpluuaAVxj2AsjJPU1ZcSJAR7fk
-         uOOw==
-X-Gm-Message-State: AOUpUlHZPSKaXc3wK51vLeFZeAJV3qY6s1zLGGP9pyqdj9wNJm/Ktxgu
-        CfPeB94sIEG5RKOKvUzU8cQ=
-X-Google-Smtp-Source: AAOMgpc00trlRLZyvKWZzyRTjO46adjFW3ziXfmWvR65uBw/7Vn+4z33a3P1cRQFf/2zVdhVdwa05g==
-X-Received: by 2002:a5d:6a03:: with SMTP id m3-v6mr9126254wru.192.1532372020718;
-        Mon, 23 Jul 2018 11:53:40 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id v5-v6sm10774535wrp.87.2018.07.23.11.53.39
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 23 Jul 2018 11:53:40 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Beat Bolli <dev+git@drbeat.li>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2] Makefile: add a DEVOPTS flag to get pedantic compilation
-References: <20180721203647.2619-1-dev+git@drbeat.li>
-Date:   Mon, 23 Jul 2018 11:53:39 -0700
-In-Reply-To: <20180721203647.2619-1-dev+git@drbeat.li> (Beat Bolli's message
-        of "Sat, 21 Jul 2018 22:36:47 +0200")
-Message-ID: <xmqqva956ax8.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=I3XOCbLecvYiEyE0w1Mq6E/xouwFKGXgvAlaeMBKtxU=;
+        b=byrvzd8LUgHeWAQmhYjIPwdFS9y57fI7uXeT0zj0ddB4WhUY8cS7a7hzeHETo6kOvO
+         fE/UoSeU14ceLMkTNkvNghvAe+Nk//73L1RbNG/f2QgYhds7zUeQag6pG5V4iRjzg2Ad
+         pxS2V4uJOeu1Z4NdYjIMaGTC8M0gLrs6vE9P5rIU/pGRyYsRYxiQDwPtFto8CQBjN7ms
+         AumpMbugZbmRFKHO4ccVN8zYtH4P3vGWEQdIGJhIvAqXr+XGDHZ32gqA5LzMj4lwiFpd
+         azRDcFZ5WuVy0qb07iDgm0lTxbi0QhR7ywKCulrhfY37OerL5RIrlrY3TpGDz++6978m
+         pu2A==
+X-Gm-Message-State: AOUpUlFFWNvuj/fxGn9nwySOW+PsnMb2Ig4ITDY6GBIh0EVIpL8wPTkf
+        ohEa0j5U6o+GZSeyqK8exNQkwWRAyiq7iRNTyXc=
+X-Google-Smtp-Source: AAOMgpeMtMAjBU7kUV6qH2wEHseCmiUMDv2NGKaegNFWSgIOWMl9iU28e7WhRQeuO08N97TTADh+la54WONuwykjvrU=
+X-Received: by 2002:a25:8b04:: with SMTP id i4-v6mr7620247ybl.12.1532372268666;
+ Mon, 23 Jul 2018 11:57:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20180723135100.24288-1-szeder.dev@gmail.com> <20180723135100.24288-4-szeder.dev@gmail.com>
+ <CAPig+cSOZd+t17j7FSCYAydS34ZtfcRFZyE6E9fz=u7xB-01Mg@mail.gmail.com> <CAM0VKjkJoqRFmXdnuujSaiZ=hvz6MeAmgoUQNAkZ+82ZrKtotw@mail.gmail.com>
+In-Reply-To: <CAM0VKjkJoqRFmXdnuujSaiZ=hvz6MeAmgoUQNAkZ+82ZrKtotw@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 23 Jul 2018 14:57:37 -0400
+Message-ID: <CAPig+cQM-hdXXe6uZ768HbJ5T5QqJNKo9kuz6F=i7D+9Q-M90Q@mail.gmail.com>
+Subject: Re: [PATCH 3/5] coccinelle: exclude sha1dc source files from static analysis
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Beat Bolli <dev+git@drbeat.li> writes:
+On Mon, Jul 23, 2018 at 2:44 PM SZEDER Gábor <szeder.dev@gmail.com> wrote:
+> On Mon, Jul 23, 2018 at 8:28 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+> > On Mon, Jul 23, 2018 at 9:51 AM SZEDER Gábor <szeder.dev@gmail.com> wrote:
+> > > +ifdef DC_SHA1_SUBMODULE
+> > > +COCCI_SOURCES = $(filter-out sha1collisiondetection/%,$(C_SOURCES))
+> > > +else
+> > > +COCCI_SOURCES = $(filter-out sha1dc/%,$(C_SOURCES))
+> > > +endif
+> >
+> > Can't you just filter out both of these unconditionally without
+> > worrying about DC_SHA1_SUBMODULE?
+>
+> I'm not sure what you mean by that.  Like this perhaps?
+>
+>   COCCI_SOURCES = $(filter-out sha1collisiondetection/%,$(filter-out
+> sha1dc/%,$(C_SOURCES)))
+>
+> While it's only a single line, I don't think it's any easier on the
+> eyes.
 
-> In the interest of code hygiene, make it easier to compile Git with the
-> flag -pedantic.
->
-> Pure pedantic compilation with GCC 7.3 results in one warning per use of
-> the translation macro `N_`:
->
->     warning: array initialized from parenthesized string constant [-Wpedantic]
->
-> Therefore also disable the parenthesising of i18n strings with
-> -DUSE_PARENS_AROUND_GETTEXT_N=no.
->
-> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
-> ---
->
-> This is the convenience knob for all developers that led to the series
-> bb/pedantic[1]. It does not depend on this series, though.
+I wasn't worried about readability or one or two lines (indeed, you
+could still do the filtering over two statements).
 
-Yup, but "make DEVELOPER=Yes" build won't pass unless this patch is
-queued after those clean-up ;-)
+What I meant was that sha1dc/ contains files whether DC_SHA1_SUBMODULE
+is defined or not. If the idea of this change is that there's no point
+in having Coccinelle check those foreign, imported files (and waste
+time in the process), then I was thinking that you'd want to omit
+sha1dc/* regardless of whether DC_SHA1_SUBMODULE is defined.
 
-Remind me if I forget to tweak =no back to =0 before pushing the
-result out.
-
-Thanks.
-
-> [1] https://public-inbox.org/git/20180708144342.11922-1-dev+git@drbeat.li/T/#u
->
->  Makefile       | 6 ++++++
->  config.mak.dev | 5 +++++
->  2 files changed, 11 insertions(+)
->
-> diff --git a/Makefile b/Makefile
-> index 0cb6590f24..2bfc051652 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -484,6 +484,12 @@ all::
->  #        The DEVELOPER mode enables -Wextra with a few exceptions. By
->  #        setting this flag the exceptions are removed, and all of
->  #        -Wextra is used.
-> +#
-> +#    pedantic:
-> +#
-> +#        Enable -pedantic compilation. This also disables
-> +#        USE_PARENS_AROUND_GETTEXT_N to produce only relevant warnings.
->  
->  GIT-VERSION-FILE: FORCE
->  	@$(SHELL_PATH) ./GIT-VERSION-GEN
-> diff --git a/config.mak.dev b/config.mak.dev
-> index 2d244ca470..e11dd94741 100644
-> --- a/config.mak.dev
-> +++ b/config.mak.dev
-> @@ -1,6 +1,11 @@
->  ifeq ($(filter no-error,$(DEVOPTS)),)
->  CFLAGS += -Werror
->  endif
-> +ifneq ($(filter pedantic,$(DEVOPTS)),)
-> +CFLAGS += -pedantic
-> +# don't warn for each N_ use
-> +CFLAGS += -DUSE_PARENS_AROUND_GETTEXT_N=no
-> +endif
->  CFLAGS += -Wdeclaration-after-statement
->  CFLAGS += -Wno-format-zero-length
->  CFLAGS += -Wold-style-definition
+Looking more closely at the Makefile, however, I see that C_SOURCES
+holds only one or the other of sha1dc/* or
+sha1collisiondetection/lib/*, so my concern is unfounded, which
+explains why my question confused you.
