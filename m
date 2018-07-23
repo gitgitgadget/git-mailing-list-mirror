@@ -2,94 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D0B11F597
-	for <e@80x24.org>; Mon, 23 Jul 2018 13:06:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ABFA21F597
+	for <e@80x24.org>; Mon, 23 Jul 2018 13:12:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388137AbeGWOH0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Jul 2018 10:07:26 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:36259 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388076AbeGWOH0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jul 2018 10:07:26 -0400
-Received: by mail-ed1-f68.google.com with SMTP id k15-v6so908098edr.3
-        for <git@vger.kernel.org>; Mon, 23 Jul 2018 06:06:16 -0700 (PDT)
+        id S2388097AbeGWOOE (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Jul 2018 10:14:04 -0400
+Received: from mail-qk0-f193.google.com ([209.85.220.193]:33977 "EHLO
+        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388091AbeGWOOE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jul 2018 10:14:04 -0400
+Received: by mail-qk0-f193.google.com with SMTP id b66-v6so344401qkj.1
+        for <git@vger.kernel.org>; Mon, 23 Jul 2018 06:12:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=o4exuKTq/6+DxaMXUWeBqrzx7EF4ogoBJvwIUSjK4/c=;
-        b=FPQJLjZzKNFz5naba63enF/XC/7NqhglCJDEb3ggg1U/OhCLr4b4/H6lSdtoLBXVU8
-         e4OER6BWfyfgpBDIa6or3SYJ6kkge0bUZnh+Qk/w5xpKOKCM/BFPDbAvh4FZnQBINeNc
-         LEx9SWPQLPz3ed32qSDB4w12f9qiCAo4wVBsF9S+M+YoTQk99BLbyRu3rzdIxp1BF9Dk
-         ttd5hXXUVv/YhF8nsrOfQf0sA0fTUBWGsZ1w4O/HsHDfU+WaZ4kcymT9d9kox4PWuKFX
-         tppAXYQtNgTu18Kxz+SKUjLeK8IBNg1ZhAFHFeYEoV6EwO6ScIknJRLZid/YVP/6lLRn
-         Zpvw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=BrUw1CoxPf3L7Skp3y39XTwejtSwmJ4oqftgGhNXIjw=;
+        b=sEZ3SqmsHXyR58pfCKCXVmynfyFmHuqTVs4vYKerwLzLqC/aY1awIp0SWhXlWLL8YD
+         H5rAa2xRcC/9GL7pKYFw5fPaoLnKA91cj269WKDilxOMT05Otj0+vmfYUXVHc4ar1T2p
+         I0zX86B3mF31WxCFo0xjqA5HjqBgCY/kYWU6KY0FUlXYgjziVs6UZ9VGSd1oKWwrNMoj
+         jf20Gw8mmR8V/zrlrzez0Y+rAXaESvkaoXG8JJzg+aivi6/lO9zLY8+x3lvTkrjv76R8
+         r8OT8YEuKa77H7/Fw7cm0qgHk6pjtrxy7+8hjFbZm2MZicOzx6k/z3oy7jXNseEHaded
+         meJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=o4exuKTq/6+DxaMXUWeBqrzx7EF4ogoBJvwIUSjK4/c=;
-        b=tMgeICYnl+aDv9/FYJ64aG+YNsoGnZLUDN4RcuIFcuLFDa5hO9JxJs+3WKIF+mByx/
-         7YlLAOYRbX4qYl+Q4D2SrG3lnvC5JiiU4+gxaRL/OC6gbqpQhAeiuyU0+aqHkjuk1LPN
-         amPKWTZDm+OQVohornQdtA0Vi36LVTv97yFgY1LARMUsANczy5cC2uRC/LQZfUncMdfZ
-         vj0MeK4EUqqI0wJztVzplX2tSXSwCu4dfb64/lRpZ/MK4fT9mV9f9oa2T+wqDInlsrEj
-         VdGObv3Moxyaj6vpbhRlvo5zs6pKHSUk7bPBczL09IF+2nsGXyJMuoQvDr6Cmz024G6j
-         BTbg==
-X-Gm-Message-State: AOUpUlFt4fDJogN039Dd+fKUvuOYrl4Ud6RgfOMDuPkK+oDSCacN9Dkd
-        6mGrMQ+58DtlqRMzt3yqT1I=
-X-Google-Smtp-Source: AAOMgpdUcvleSKBMp6mCqvdYZFwyCVGACLHQC0/MUoG04norHVmir5NVap5InkryIyV6idh481uOlA==
-X-Received: by 2002:a50:8ca9:: with SMTP id q38-v6mr14175583edq.2.1532351176026;
-        Mon, 23 Jul 2018 06:06:16 -0700 (PDT)
-Received: from localhost.localdomain (x590d0011.dyn.telefonica.de. [89.13.0.17])
-        by smtp.gmail.com with ESMTPSA id a2-v6sm4518704ede.21.2018.07.23.06.06.14
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 23 Jul 2018 06:06:14 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 3/2 for pb/bisect-helper-2] squash! bisect--helper: `bisect_start` shell function partially in C
-Date:   Mon, 23 Jul 2018 15:06:03 +0200
-Message-Id: <20180723130603.22703-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.18.0.408.g42635c01bc
-In-Reply-To: <20180723130230.22491-1-szeder.dev@gmail.com>
-References: <20180723130230.22491-1-szeder.dev@gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=BrUw1CoxPf3L7Skp3y39XTwejtSwmJ4oqftgGhNXIjw=;
+        b=nBqWGaAxO61MrDMPwhznl4k4UKMDI85EmOYNo1NJ5dwbkZc54qujSpEJrDIvKpZANc
+         EfKAiMuFhIdUw68tN1SuYza1AWh0Kw+SGcDKBxlmXdzHBF0rS5/zI9NtCpBrQGnecYjQ
+         NZW8w4zXYbIcEO9qwlPjeyXr0HZ84FMo55uK0zWbPMLgBPGi2+yEv2PgzN1DUwb4iATA
+         VlQ+Yi+FwqmgEg0I7p4y406yW7tb4fEBlNx47b5y/C9RqIifImOM7f6xRa/jIqPoQRFN
+         ArjZlDxngjouMmSr4x9viEkXCwChusadWzrcsh3+gMlUmky4hfr3lDCSOIKav2KzKpYM
+         7/yA==
+X-Gm-Message-State: AOUpUlG+WeglmFFTuqTWYMiHXpqA9I1Ut2h6bl/CZiMT9no6OSMB2Yfo
+        YJGBcXi9Hb826tBz+XBdQXY=
+X-Google-Smtp-Source: AAOMgpccKFSlj5BFRIqJAuGrga0NBLiqDQHKGiAWhCKR/g1wg8Yj9BCr9pW2Nnr5EcDCHhpktmCKaQ==
+X-Received: by 2002:a37:1f5e:: with SMTP id f91-v6mr11045178qkf.234.1532351572821;
+        Mon, 23 Jul 2018 06:12:52 -0700 (PDT)
+Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id t3-v6sm7110324qtj.36.2018.07.23.06.12.51
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 23 Jul 2018 06:12:51 -0700 (PDT)
+Subject: Re: [PATCH 1/2] t3507: add a testcase showing failure with sparse
+ checkout
+To:     Eric Sunshine <sunshine@sunshineco.com>,
+        Elijah Newren <newren@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <benpeart@microsoft.com>, kewillf@microsoft.com
+References: <5a8d1098-b4c5-64e1-da98-dac13521e7ba@gmail.com>
+ <20180721063428.20518-1-newren@gmail.com>
+ <20180721063428.20518-2-newren@gmail.com>
+ <CAPig+cTjQ74gOt8gJbYUBaTRsHBvqtcmucoVdiudFt2TrhCn+g@mail.gmail.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <b56598a1-e543-500a-a39b-cee07fe1e533@gmail.com>
+Date:   Mon, 23 Jul 2018 09:12:51 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPig+cTjQ74gOt8gJbYUBaTRsHBvqtcmucoVdiudFt2TrhCn+g@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-bisect--helper: use oid_to_hex()
 
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
- builtin/bisect--helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index fc02f889e6..eac4c27787 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -547,7 +547,7 @@ static int bisect_start(struct bisect_terms *terms, int no_checkout,
- 		if (!get_oid(head, &head_oid) &&
- 		    !starts_with(head, "refs/heads/")) {
- 			strbuf_reset(&start_head);
--			strbuf_addstr(&start_head, sha1_to_hex(head_oid.hash));
-+			strbuf_addstr(&start_head, oid_to_hex(&head_oid));
- 		} else if (!get_oid(head, &head_oid) &&
- 			   skip_prefix(head, "refs/heads/", &head)) {
- 			/*
--- 
-2.18.0.408.g42635c01bc
+On 7/21/2018 3:21 AM, Eric Sunshine wrote:
+> On Sat, Jul 21, 2018 at 2:34 AM Elijah Newren <newren@gmail.com> wrote:
+>> diff --git a/t/t3507-cherry-pick-conflict.sh b/t/t3507-cherry-pick-conflict.sh
+>> @@ -392,4 +392,17 @@ test_expect_success 'commit --amend -s places the sign-off at the right place' '
+>> +test_expect_failure 'failed cherry-pick with sparse-checkout' '
+>> +       pristine_detach initial &&
+>> +       git config core.sparseCheckout true &&
+> 
+> Should this be test_config()?
+> 
 
+I think using test_config() here is fine but...
+
+>> +       echo /unrelated >.git/info/sparse-checkout &&
+>> +       git read-tree --reset -u HEAD &&
+>> +       test_must_fail git cherry-pick -Xours picked>actual &&
+>> +       test_i18ngrep ! "Changes not staged for commit:" actual &&
+>> +       echo "/*" >.git/info/sparse-checkout &&
+>> +       git read-tree --reset -u HEAD &&
+>> +       git config core.sparseCheckout false &&
+> 
+> See question above.
+> 
+>> +       rm .git/info/sparse-checkout
+> 
+> Should this cleanup be done by test_when_finished()?
+> 
+
+I think trying to use test_when_finished() for this really degrades the 
+readability of the test.  See below:
+
+test_expect_success 'failed cherry-pick with sparse-checkout' '
+	pristine_detach initial &&
+	test_config core.sparsecheckout true &&
+	echo /unrelated >.git/info/sparse-checkout &&
+	git read-tree --reset -u HEAD &&
+	test_when_finished "echo \"/*\" >.git/info/sparse-checkout && git 
+read-tree --reset -u HEAD && rm .git/info/sparse-checkout" &&
+	test_must_fail git cherry-pick -Xours picked>actual &&
+	test_i18ngrep ! "Changes not staged for commit:" actual
+'
+
+Given it takes multiple commands, I'd prefer to keep the setup and 
+cleanup of the sparse checkout settings symmetrical.
