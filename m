@@ -2,112 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42EC21F597
-	for <e@80x24.org>; Mon, 23 Jul 2018 22:39:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9C8E1F597
+	for <e@80x24.org>; Mon, 23 Jul 2018 22:48:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388195AbeGWXmx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Jul 2018 19:42:53 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:53931 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388140AbeGWXmx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jul 2018 19:42:53 -0400
-Received: by mail-wm0-f65.google.com with SMTP id s9-v6so614121wmh.3
-        for <git@vger.kernel.org>; Mon, 23 Jul 2018 15:39:28 -0700 (PDT)
+        id S2388189AbeGWXwC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Jul 2018 19:52:02 -0400
+Received: from mail-yw0-f180.google.com ([209.85.161.180]:41655 "EHLO
+        mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388088AbeGWXwC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jul 2018 19:52:02 -0400
+Received: by mail-yw0-f180.google.com with SMTP id q129-v6so845362ywg.8
+        for <git@vger.kernel.org>; Mon, 23 Jul 2018 15:48:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=zNbxA1n8KScZZVn6cGorEuJEnJIWl4cKftnglpp3LwY=;
-        b=RqsbKKHCcE9Q5roWCD61+nIhYWZMy7OVt319KG3bMvG94kVrB20KE54gxN4TsRiVTE
-         QuT2abZu4LrZN4dbyKWAoanH2PbH0E9eVexYnlLmVNKmFmQE2zijW0quoHMJXv2PdDHn
-         8VOisg08J7It2OfeWYOVowF9M03MB3NoB8HhJ+p9HVk+gaGyxmw36vchV+YW5EWHx3XA
-         l0IpYzEMqC6dToVvcXf43MYzOV7eJPrGYY+Aqn8ANpfLnDHOTpakzptaHAd7ZX/Rqf4h
-         jIkkUZh1v36y2lWYf7YznKgGfHMEeHqDXx1WTwd8ZADwrlMvps7KBtOSFqBYJMfIReen
-         X6bA==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=k+pLZ6hr8NfPfjPCHboWfGZnv/aYMnkclQhNXpFhVV0=;
+        b=qVYtXfMf3o/K2/fDJJpWb/Yr0u3qLB99/t4R1MUTgEfoA0ZupQTmvfAnHXWwvO8wdR
+         PtUI9IT2wsBe9YhDfy9iVGwBDXW1fme5ifZ+KcZ8iEXb8Kq0UBGf6u+DEb0DXn3P7JB7
+         NQwVqcZnHQbFEYArS7ei5/b/tzD+QGfzct22T7raXyRCg6ciGu01ROQjs/Sgl72M/KaV
+         aixw4pq/0H0Bax/UZZEqjVud50eRHL1rWWw1eZ6w961vYSv6wmhiiljMu7L49jxp8DVV
+         LAP4lVKYHh9VHQhFWnbkR2D53PlW6OzWOCveZ+r+tgU8a5V4LE9C9fJdbp7WmB/Alnqi
+         jmSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=zNbxA1n8KScZZVn6cGorEuJEnJIWl4cKftnglpp3LwY=;
-        b=D/NjX92PXDDYAAt8YxU48kAkzKrTzGS7cxW2IL8lRLu0LDhYs/T9O1+dd46LZC39/W
-         5l5iAZBe8EF3B8dnr/4hNMPYKsjQaxEIZ37sTxS91xad6djEHfyuCMBOgBZfw+OUOET6
-         D9O2O28OOLp1NlEzTIcMYA1fT8Yd4qUUnWoReysqF7bMJC1G8n3KlciiYnzsDZ+kJRWb
-         otHbl4njATWIWs47fkDAN2tm+QbWaeJUdlktaF5Qb1aio1ds08Ia9t3InoKSjb0UAU49
-         o2WTKJJyusN0x1wrns7RB4+NW94zxv99jdiuQNzCRkpBIOXRg7oRspxklQZjEY7eHJ+A
-         TyfQ==
-X-Gm-Message-State: AOUpUlFf5qGuDFYSdobItgj9h9ifq2Sc2mtRTmHKF1KquIcif84Nmr+q
-        SR5sscGwT9caJnrGDbehfJI=
-X-Google-Smtp-Source: AAOMgpcrLP6ySr96/U63IALXupKCBnBytHufOHqlXnL/j+3/oMvTSKicPAEO9xXFBiayCS6aLOUXQQ==
-X-Received: by 2002:a1c:7e92:: with SMTP id z140-v6mr425646wmc.48.1532385567777;
-        Mon, 23 Jul 2018 15:39:27 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id h14-v6sm7395171wro.15.2018.07.23.15.39.26
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 23 Jul 2018 15:39:27 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v4 16/21] range-diff --dual-color: fix bogus white-space warning
-References: <pull.1.v3.git.gitgitgadget@gmail.com>
-        <pull.1.v4.git.gitgitgadget@gmail.com>
-        <f4252f2b2198cf13d5b0a21c54098e2a1d8158dd.1532210683.git.gitgitgadget@gmail.com>
-Date:   Mon, 23 Jul 2018 15:39:26 -0700
-In-Reply-To: <f4252f2b2198cf13d5b0a21c54098e2a1d8158dd.1532210683.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Sat, 21 Jul 2018
-        15:05:07 -0700 (PDT)")
-Message-ID: <xmqqtvop37c1.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=k+pLZ6hr8NfPfjPCHboWfGZnv/aYMnkclQhNXpFhVV0=;
+        b=KYItA7Q5EcSprIa3SGh21VlEa55E2QV4b3g9bSoElJGAPDPBbhCi3mgH4uj9/g0BD6
+         I1eoZbkzFSYBJNCF2b1vaEE3WXP4r9W7Wf/p/jkD6O68/wbl17cWvTOaX3R9V5i3M7v3
+         3AVxsAiv2dwZUhsHoWaohCgSKx56Zm0wfxY6xP1KEJe7GMx1F/W0VSIeQzkr6nvk0U1s
+         HvusmpBb1vqMr9t5aYA9d2ueAFk2DrzAFWyGTJ/xFTJfv/r7Nh8kN/6Gx+q6KddHDQCw
+         fCmN5LAci2Y+GR+fXI/cHcCHtyJCdUZQeT9wzF6v+TX/WJHHHiKoHBszVj+0I2cy9w9A
+         EuWg==
+X-Gm-Message-State: AOUpUlFd2TKDRCPDkXO2u+cRP7VfxLod0ff52KRDTsrZ4frzyfk8cOEy
+        SxuawmciRokPIDzfJbv4MdNuMyPgvoPhCYDYHb6kcg==
+X-Google-Smtp-Source: AAOMgpcipQO+99xf+tR3PkBq1QOgN5EFz2IUwk1nalLiGbQKyrcxYaCj05g74ELELaHCrOnMLbbisY4b0Ao/KKYzI88=
+X-Received: by 2002:a81:3758:: with SMTP id e85-v6mr7902036ywa.340.1532386115615;
+ Mon, 23 Jul 2018 15:48:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1.v3.git.gitgitgadget@gmail.com> <pull.1.v4.git.gitgitgadget@gmail.com>
+ <9de5bd2299eedbc78494cadc9dd8bda59430b2df.1532210683.git.gitgitgadget@gmail.com>
+ <xmqqy3e137wd.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqy3e137wd.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 23 Jul 2018 15:48:24 -0700
+Message-ID: <CAGZ79kZrJRQWPzojjhQJGRZWSNvLnZ0C++9XggMVp2wuFNnnLQ@mail.gmail.com>
+Subject: Re: [PATCH v4 14/21] diff: add an internal option to dual-color diffs
+ of diffs
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     gitgitgadget@gmail.com, git <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+> > -     fputs(diff_line_prefix(o), file);
+> > +     if (first)
+> > +             fputs(diff_line_prefix(o), file);
+> > +     else if (!len)
+> > +             return;
+>
+> Can you explain this hunk in the log message?  I am not sure how the
+> description in the log message relates to this change.  Is the idea
+> of this change essentially "all the existing callers that aren't
+> doing the diff-of-diffs send a non-NUL first character, and for them
+> this change is a no-op.  New callers share most of the remainder of
+> emit_line_0() logic but do not want to show the prefix, so the
+> support for it is piggy-backing by a special case where first could
+> be NUL"?
 
-> @@ -177,8 +178,16 @@ static unsigned ws_check_emit_1(const char *line, int len, unsigned ws_rule,
->  	if (trailing_whitespace == -1)
->  		trailing_whitespace = len;
->  
-> +	if ((ws_rule & WS_IGNORE_FIRST_SPACE) && len && line[0] == ' ') {
-> +		if (stream)
-> +			fwrite(line, 1, 1, stream);
-> +		written++;
-> +		if (!trailing_whitespace)
-> +			trailing_whitespace++;
-> +	}
-> +
->  	/* Check indentation */
-> -	for (i = 0; i < trailing_whitespace; i++) {
-> +	for (i = written; i < trailing_whitespace; i++) {
+All but two caller have 'reverse' set to 0, using the arguments as before.
 
-It is pleasing to see that with a surprisingly clean and small
-change like this we can exempt the initial space byte from
-SP-before-HT check and from Indent-with-non-tab at the same time.
+The other two callers are using the function twice to get the prefix
+and set sign going, and then the second call to get the rest of the
+line going (which needs to omit the prefix as that was done in the
+first call) :
 
-Very nice.
++               /* Emit just the prefix, then the rest. */
++               emit_line_0(o, set_sign ? set_sign : set, !!set_sign, reset,
++                           sign, "", 0);
++               emit_line_0(o, set, 0, reset, 0, line, len);
 
-One reason why a surprisingly small special case is required is
-perhaps because we are blessed with the original code being clean
-[*1*], and the fact that a line[0] that is not ' ' will not trigger
-any indentation related whitespace errors without this special case,
-I guess.
+I attempted to clean it up on top, but likely got it wrong as we have
+no tests for colored range diffs, yet.
+https://public-inbox.org/git/20180710174552.30123-3-sbeller@google.com/
+My suggestion would be to first clarify emit_line_0 and have its arguments
+and its execution map better to each other, (and as a result only needing to
+have one call of emit_line_0 instead of two)
 
->  		if (line[i] == ' ')
->  			continue;
->  		if (line[i] != '\t')
+That is my understanding of the situation.
 
-
-[Footnote]
-
-*1* ws.c used to be almost all my code long time ago, but most of
-    the shape of the current whitespace_error checking code comes from
-    c1795bb08aa which is not mine, and I can say good things about it
-    without feeling embarrassingly boasty ;-)
+Thanks,
+Stefan
