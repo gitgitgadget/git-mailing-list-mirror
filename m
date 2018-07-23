@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-0.4 required=3.0 tests=BAYES_00,DATE_IN_PAST_96_XX,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 518C11F597
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E95F1F597
 	for <e@80x24.org>; Sun, 29 Jul 2018 00:43:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731761AbeG2CLF (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Jul 2018 22:11:05 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:44263 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731752AbeG2CLF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Jul 2018 22:11:05 -0400
-Received: by mail-pg1-f194.google.com with SMTP id r1-v6so5265593pgp.11
-        for <git@vger.kernel.org>; Sat, 28 Jul 2018 17:42:40 -0700 (PDT)
+        id S1731735AbeG2CLD (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Jul 2018 22:11:03 -0400
+Received: from mail-pl0-f68.google.com ([209.85.160.68]:33298 "EHLO
+        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731550AbeG2CLC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Jul 2018 22:11:02 -0400
+Received: by mail-pl0-f68.google.com with SMTP id 6-v6so3884773plb.0
+        for <git@vger.kernel.org>; Sat, 28 Jul 2018 17:42:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=2V4npggnB1JGWSzxeT4YSon3VdTvSjH/gf1XvKbK9l4=;
-        b=aJldZyAzhmrFii5UrxiTRrYdqBv/3BdaY83sRTAHY8gcnXzpgl19vZ2bctCD14tTE0
-         jqYBffN7ENIYg4pOEvbzP0ji08KKFVDxRJdtla2mJiDbH+J4EvVabw7sd1/9d3J67GCD
-         DIF4Cc9hto2/6M3ApfVAQ0Jb3TP+rskoz8bI8rXExPM3djPw9WYyOm4jJEd9cbiMlvjH
-         n0fV6E+IyGc9QnhoaxCqkVNjQ4c/zBzbjhPg7JlXB8h9rZ/Gqkkb8GEFVjOEdeSpnxWM
-         E+FjZo5sXYpokh2KWgvU6eZc1I9MI/bkMwQWvhMauhSeI0o+h6Q6eXSDEop+fiPXp+dP
-         8qEw==
+        bh=P5YYQZKspC9mQQUqpgUyTQwmB9I9nDSjEKDFeVUaOAk=;
+        b=Ar3Bj3gQh0VB43i44GRVuE4tcWmQOPhKXbfk4TRqtAxXGB+l205VazC1/9S7E9ylhH
+         453ZX5Hg1rzNjZQPL3OSL7sJqSlnet/LLKggFRYei21v6j3yAnKpzLNdBg4sLpROOZOK
+         T3q9KU4/msAlDM7Bgj7ZhwUVFe7JcE1lrbBaHqX9+MBZ836+3T/SHPBgilTcQ8gb4uLW
+         uOY+S2AvmBejOwDcK1o84u/+NfArjLeMceIQj8hjdREDRCReKd0p2+uuhnboF3loPa4K
+         yUT768HKEQk2pur9N1+HLCHHl/IDk7YMFflsLMKfx5678Ajgi05FczKZurdslvBFHYHD
+         v3xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=2V4npggnB1JGWSzxeT4YSon3VdTvSjH/gf1XvKbK9l4=;
-        b=D3gUp19nieelVXJQngeFUGvW/r4OX/pS3AxidCC7YMxaIJFocf9iyVBhIRvq2HmQSh
-         V4ELDv9VvQk0DME3bsuf4mYlx7KsaJZdo6vyOadKZsdTX0OO1p4SPRFM0OYyc2Pb0gwB
-         y19Ma1oXBavNhA7d2VgC2ziUkXO8qfNgh87OkqFkos+uOzTnqXxCB65iASf6iUPQvpuZ
-         NjC++3IXnt5YKTpegm+u0EFHgzEKu7tiD3Dg+ko047iT+eD0Ccyt4gk1LSAyg7UgWLhE
-         fb9LI/X3VrGhdMBToedKBgjNpV3xJlwxjsizBy2nRT/E6lSP+X4t2BXHieTszOkm57NG
-         ZY4A==
-X-Gm-Message-State: AOUpUlGlkhgn4ezZUQP3zDAEGpScFV5TD3NvEpvKe1YfnEBHlZO+vBbV
-        oAsNeasMeiqdRif4Bnl9DFIsqxjN
-X-Google-Smtp-Source: AAOMgpeonBR5uDsOZFGl9y8Mp5Nb7TuK5ZbSHSs1fzOEE0GL+uRcdKsuTPuHsDDLUsG435DMvAaM3Q==
-X-Received: by 2002:a63:7a0a:: with SMTP id v10-v6mr11059746pgc.444.1532824960163;
-        Sat, 28 Jul 2018 17:42:40 -0700 (PDT)
+        bh=P5YYQZKspC9mQQUqpgUyTQwmB9I9nDSjEKDFeVUaOAk=;
+        b=Dh+D3Kc4n4VdDjmwiqx3SFjbJ1FIIlSvQQcNkqT1ErSTncZoxMOVBr6Iw+Nw4vUmZy
+         pCjnnQbdh7Sr7Vnid/xPSijMRO+sM4k73ulXgfTVEDAUWJezReqeuGdy6dkWAIwRoD+y
+         FUSsJWWvos6UbHRC03sMAPSsz3U9eLwjI5tslC5XDoeSqSWOmU9PmC1rCGT+TRplIedQ
+         NnYt/Pt/3R6PavN0awIjPVZxrl91bueowfluY2rur8Ag6WxvNPX2xJ81Od1crsULDpfU
+         LCCKvplJdYPpctJbOnCO+Rdro0sgZWHKlkLOwClYlqJFTrTy6c8qWl27W0eaYMdFSisX
+         I5nA==
+X-Gm-Message-State: AOUpUlFvKaIZ3IGFacPrbm39DKV6ouZKapAxH3gzdvzCbrgCqM/Ds4gn
+        Mymz0JdYpp3vh00njIddQyG9VOT1
+X-Google-Smtp-Source: AAOMgpcUSnhHxq0eOp+30QrIIefyFRTW0PmSkJQcT3DAZ9aPob1lVfbwOxCLH/roeB+WGv26T8NSEQ==
+X-Received: by 2002:a17:902:262:: with SMTP id 89-v6mr11138535plc.221.1532824957623;
+        Sat, 28 Jul 2018 17:42:37 -0700 (PDT)
 Received: from localhost.localdomain ([104.132.11.104])
-        by smtp.gmail.com with ESMTPSA id a17-v6sm13034856pfg.106.2018.07.28.17.42.38
+        by smtp.gmail.com with ESMTPSA id a17-v6sm13034856pfg.106.2018.07.28.17.42.36
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 28 Jul 2018 17:42:39 -0700 (PDT)
+        Sat, 28 Jul 2018 17:42:37 -0700 (PDT)
 From:   Samuel Lijin <sxlijin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Samuel Lijin <sxlijin@gmail.com>
-Subject: [PATCH v4 4/4] commit: fix exit code when doing a dry run
-Date:   Sun, 22 Jul 2018 22:09:03 -0400
-Message-Id: <20180723020903.22435-5-sxlijin@gmail.com>
+Subject: [PATCH v4 2/4] wt-status: rename commitable to committable
+Date:   Sun, 22 Jul 2018 22:09:01 -0400
+Message-Id: <20180723020903.22435-3-sxlijin@gmail.com>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20180715110807.25544-1-sxlijin@gmail.com>
 References: <20180715110807.25544-1-sxlijin@gmail.com>
@@ -62,241 +62,152 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In wt-status.c, the s->committable bit is set only in the call tree of
-wt_longstatus_print(), and it is not always set correctly. This means
-that in normal cases, if there are changes to be committed, or if there
-is a merge in progress and all conflicts have been resolved, `--dry-run`
-and `--long` return the correct exit code but `--short` and
-`--porcelain` do not, even though all four flags imply dry run.
-Moreover, if there is a merge in progress and some but not all conflicts
-have been resolved, `--short` and `--porcelain` only return the correct
-exit code by coincidence (because the codepaths they follow never touch
-the committable bit), whereas `--dry-run` and `--long` return the wrong
-exit code.
-
-Teach wt_status_collect() to set s->committable correctly (if a merge is
-in progress, committable should be set iff there are no unmerged
-changes; otherwise, committable should be set iff there are changes in
-the index) so that all four flags which imply dry runs return the
-correct exit code in the above described situations and mark the
-documenting tests as fixed.
-
-Use the index_status field in the wt_status_change_data structs in
-has_unmerged() to determine whether or not there are unmerged paths,
-instead of the stagemask field, to improve readability.
-
-Also stop setting s->committable in wt_longstatus_print_updated() and
-show_merge_in_progress(), and const-ify wt_status_state in the method
-signatures in those callpaths.
+Fix a typo in the name of the committable bit in wt_status_state.
 
 Signed-off-by: Samuel Lijin <sxlijin@gmail.com>
 ---
- t/t7501-commit.sh | 12 +++----
- wt-status.c       | 80 +++++++++++++++++++++++++++++------------------
- 2 files changed, 55 insertions(+), 37 deletions(-)
+ builtin/commit.c | 18 +++++++++---------
+ wt-status.c      | 10 +++++-----
+ wt-status.h      |  2 +-
+ 3 files changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
-index e49dfd0a2..6dba526e6 100755
---- a/t/t7501-commit.sh
-+++ b/t/t7501-commit.sh
-@@ -99,12 +99,12 @@ test_expect_success '--dry-run with stuff to commit returns ok' '
- 	git commit -m next -a --dry-run
- '
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 158e3f843..32f9db33b 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -507,7 +507,7 @@ static int run_status(FILE *fp, const char *index_file, const char *prefix, int
+ 	wt_status_collect(s);
+ 	wt_status_print(s);
  
--test_expect_failure '--short with stuff to commit returns ok' '
-+test_expect_success '--short with stuff to commit returns ok' '
- 	echo bongo bongo bongo >>file &&
- 	git commit -m next -a --short
- '
+-	return s->commitable;
++	return s->committable;
+ }
  
--test_expect_failure '--porcelain with stuff to commit returns ok' '
-+test_expect_success '--porcelain with stuff to commit returns ok' '
- 	echo bongo bongo bongo >>file &&
- 	git commit -m next -a --porcelain
- '
-@@ -714,7 +714,7 @@ test_expect_success '--long with only unresolved merge conflicts' '
- 	test_cmp expected actual
- '
+ static int is_a_merge(const struct commit *current_head)
+@@ -653,7 +653,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ {
+ 	struct stat statbuf;
+ 	struct strbuf committer_ident = STRBUF_INIT;
+-	int commitable;
++	int committable;
+ 	struct strbuf sb = STRBUF_INIT;
+ 	const char *hook_arg1 = NULL;
+ 	const char *hook_arg2 = NULL;
+@@ -870,7 +870,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
  
--test_expect_failure '--dry-run with resolved and unresolved merge conflicts' '
-+test_expect_success '--dry-run with resolved and unresolved merge conflicts' '
- 	git reset --hard commit-2 &&
- 	test_must_fail git merge --no-commit commit-1 &&
- 	echo "resolve one merge conflict" >test-file1 &&
-@@ -747,7 +747,7 @@ test_expect_success '--porcelain with resolved and unresolved merge conflicts' '
- 	test_cmp expected actual
- '
+ 		saved_color_setting = s->use_color;
+ 		s->use_color = 0;
+-		commitable = run_status(s->fp, index_file, prefix, 1, s);
++		committable = run_status(s->fp, index_file, prefix, 1, s);
+ 		s->use_color = saved_color_setting;
+ 	} else {
+ 		struct object_id oid;
+@@ -888,7 +888,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 			for (i = 0; i < active_nr; i++)
+ 				if (ce_intent_to_add(active_cache[i]))
+ 					ita_nr++;
+-			commitable = active_nr - ita_nr > 0;
++			committable = active_nr - ita_nr > 0;
+ 		} else {
+ 			/*
+ 			 * Unless the user did explicitly request a submodule
+@@ -904,7 +904,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 			if (ignore_submodule_arg &&
+ 			    !strcmp(ignore_submodule_arg, "all"))
+ 				flags.ignore_submodules = 1;
+-			commitable = index_differs_from(parent, &flags, 1);
++			committable = index_differs_from(parent, &flags, 1);
+ 		}
+ 	}
+ 	strbuf_release(&committer_ident);
+@@ -916,7 +916,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 	 * explicit --allow-empty. In the cherry-pick case, it may be
+ 	 * empty due to conflict resolution, which the user should okay.
+ 	 */
+-	if (!commitable && whence != FROM_MERGE && !allow_empty &&
++	if (!committable && whence != FROM_MERGE && !allow_empty &&
+ 	    !(amend && is_a_merge(current_head))) {
+ 		s->display_comment_prefix = old_display_comment_prefix;
+ 		run_status(stdout, index_file, prefix, 0, s);
+@@ -1186,14 +1186,14 @@ static int parse_and_validate_options(int argc, const char *argv[],
+ static int dry_run_commit(int argc, const char **argv, const char *prefix,
+ 			  const struct commit *current_head, struct wt_status *s)
+ {
+-	int commitable;
++	int committable;
+ 	const char *index_file;
  
--test_expect_failure '--long with resolved and unresolved merge conflicts' '
-+test_expect_success '--long with resolved and unresolved merge conflicts' '
- 	git reset --hard commit-2 &&
- 	test_must_fail git merge --no-commit commit-1 &&
- 	echo "resolve one merge conflict" >test-file1 &&
-@@ -769,7 +769,7 @@ test_expect_success '--dry-run with only resolved merge conflicts' '
- 	test_cmp expected actual
- '
+ 	index_file = prepare_index(argc, argv, prefix, current_head, 1);
+-	commitable = run_status(stdout, index_file, prefix, 0, s);
++	committable = run_status(stdout, index_file, prefix, 0, s);
+ 	rollback_index_files();
  
--test_expect_failure '--short with only resolved merge conflicts' '
-+test_expect_success '--short with only resolved merge conflicts' '
- 	git reset --hard commit-2 &&
- 	test_must_fail git merge --no-commit commit-1 &&
- 	echo "resolve all merge conflicts" | tee test-file1 test-file2 &&
-@@ -780,7 +780,7 @@ test_expect_failure '--short with only resolved merge conflicts' '
- 	test_cmp expected actual
- '
+-	return commitable ? 0 : 1;
++	return committable ? 0 : 1;
+ }
  
--test_expect_failure '--porcelain with only resolved merge conflicts' '
-+test_expect_success '--porcelain with only resolved merge conflicts' '
- 	git reset --hard commit-2 &&
- 	test_must_fail git merge --no-commit commit-1 &&
- 	echo "resolve all merge conflicts" | tee test-file1 test-file2 &&
+ define_list_config_array_extra(color_status_slots, {"added"});
 diff --git a/wt-status.c b/wt-status.c
-index af83fae68..fc239f61c 100644
+index 8827a256d..18ea333a5 100644
 --- a/wt-status.c
 +++ b/wt-status.c
-@@ -724,6 +724,38 @@ static void wt_status_collect_untracked(struct wt_status *s)
- 		s->untracked_in_ms = (getnanotime() - t_begin) / 1000000;
- }
- 
-+static int has_unmerged(const struct wt_status *s)
-+{
-+	int i;
-+
-+	for (i = 0; i < s->change.nr; i++) {
-+		struct wt_status_change_data *d = (s->change.items[i]).util;
-+		if (d->index_status == DIFF_STATUS_UNMERGED)
-+			return 1;
-+	}
-+	return 0;
-+}
-+
-+static void wt_status_mark_committable(
-+		struct wt_status *s, const struct wt_status_state *state)
-+{
-+	int i;
-+
-+	if (state->merge_in_progress) {
-+		s->committable = !has_unmerged(s);
-+		return;
-+	}
-+
-+	for (i = 0; i < s->change.nr; i++) {
-+		struct wt_status_change_data *d = (s->change.items[i]).util;
-+
-+		if (d->index_status) {
+@@ -773,7 +773,7 @@ static void wt_longstatus_print_updated(struct wt_status *s)
+ 			continue;
+ 		if (!shown_header) {
+ 			wt_longstatus_print_cached_header(s);
+-			s->commitable = 1;
 +			s->committable = 1;
-+			return;
-+		}
-+	}
-+}
-+
- void wt_status_collect(struct wt_status *s, const struct wt_status_state *state)
- {
- 	wt_status_collect_changes_worktree(s);
-@@ -734,6 +766,8 @@ void wt_status_collect(struct wt_status *s, const struct wt_status_state *state)
- 		wt_status_collect_changes_index(s);
- 
- 	wt_status_collect_untracked(s);
-+
-+	wt_status_mark_committable(s, state);
- }
- 
- static void wt_longstatus_print_unmerged(const struct wt_status *s)
-@@ -759,28 +793,27 @@ static void wt_longstatus_print_unmerged(const struct wt_status *s)
- 
- }
- 
--static void wt_longstatus_print_updated(struct wt_status *s)
-+static void wt_longstatus_print_updated(const struct wt_status *s)
- {
--	int shown_header = 0;
- 	int i;
- 
-+	if (!s->committable)
-+		return;
-+
-+	wt_longstatus_print_cached_header(s);
-+
- 	for (i = 0; i < s->change.nr; i++) {
- 		struct wt_status_change_data *d;
- 		struct string_list_item *it;
- 		it = &(s->change.items[i]);
- 		d = it->util;
--		if (!d->index_status ||
--		    d->index_status == DIFF_STATUS_UNMERGED)
--			continue;
--		if (!shown_header) {
--			wt_longstatus_print_cached_header(s);
--			s->committable = 1;
--			shown_header = 1;
-+		if (d->index_status &&
-+		    d->index_status != DIFF_STATUS_UNMERGED) {
-+			wt_longstatus_print_change_data(s, WT_STATUS_UPDATED, it);
+ 			shown_header = 1;
  		}
--		wt_longstatus_print_change_data(s, WT_STATUS_UPDATED, it);
+ 		wt_longstatus_print_change_data(s, WT_STATUS_UPDATED, it);
+@@ -1008,7 +1008,7 @@ static void wt_longstatus_print_verbose(struct wt_status *s)
+ 		rev.diffopt.use_color = 0;
+ 		wt_status_add_cut_line(s->fp);
  	}
--	if (shown_header)
--		wt_longstatus_print_trailer(s);
-+
-+	wt_longstatus_print_trailer(s);
- }
- 
- /*
-@@ -1064,21 +1097,7 @@ static void wt_longstatus_print_tracking(const struct wt_status *s)
- 	strbuf_release(&sb);
- }
- 
--static int has_unmerged(const struct wt_status *s)
--{
--	int i;
--
--	for (i = 0; i < s->change.nr; i++) {
--		struct wt_status_change_data *d;
--		d = s->change.items[i].util;
--		if (d->stagemask)
--			return 1;
--	}
--	return 0;
--}
--
--static void show_merge_in_progress(struct wt_status *s,
--				const struct wt_status_state *state,
-+static void show_merge_in_progress(const struct wt_status *s,
- 				const char *color)
- {
- 	if (has_unmerged(s)) {
-@@ -1090,7 +1109,6 @@ static void show_merge_in_progress(struct wt_status *s,
+-	if (s->verbose > 1 && s->commitable) {
++	if (s->verbose > 1 && s->committable) {
+ 		/* print_updated() printed a header, so do we */
+ 		if (s->fp != stdout)
+ 			wt_longstatus_print_trailer(s);
+@@ -1089,7 +1089,7 @@ static void show_merge_in_progress(struct wt_status *s,
  					 _("  (use \"git merge --abort\" to abort the merge)"));
  		}
  	} else {
--		s-> committable = 1;
+-		s-> commitable = 1;
++		s-> committable = 1;
  		status_printf_ln(s, color,
  			_("All conflicts fixed but you are still merging."));
  		if (s->hints)
-@@ -1584,12 +1602,12 @@ void wt_status_clear_state(struct wt_status_state *state)
- 	free(state->detached_from);
- }
+@@ -1665,14 +1665,14 @@ static void wt_longstatus_print(struct wt_status *s)
+ 					   "new files yourself (see 'git help status')."),
+ 					 s->untracked_in_ms / 1000.0);
+ 		}
+-	} else if (s->commitable)
++	} else if (s->committable)
+ 		status_printf_ln(s, GIT_COLOR_NORMAL, _("Untracked files not listed%s"),
+ 			s->hints
+ 			? _(" (use -u option to show untracked files)") : "");
  
--static void wt_longstatus_print_state(struct wt_status *s,
-+static void wt_longstatus_print_state(const struct wt_status *s,
- 				      const struct wt_status_state *state)
- {
- 	const char *state_color = color(WT_STATUS_HEADER, s);
- 	if (state->merge_in_progress)
--		show_merge_in_progress(s, state, state_color);
-+		show_merge_in_progress(s, state_color);
- 	else if (state->am_in_progress)
- 		show_am_in_progress(s, state, state_color);
- 	else if (state->rebase_in_progress || state->rebase_interactive_in_progress)
-@@ -1602,7 +1620,7 @@ static void wt_longstatus_print_state(struct wt_status *s,
- 		show_bisect_in_progress(s, state, state_color);
- }
+ 	if (s->verbose)
+ 		wt_longstatus_print_verbose(s);
+-	if (!s->commitable) {
++	if (!s->committable) {
+ 		if (s->amend)
+ 			status_printf_ln(s, GIT_COLOR_NORMAL, _("No changes"));
+ 		else if (s->nowarn)
+diff --git a/wt-status.h b/wt-status.h
+index 1673d146f..937b2c352 100644
+--- a/wt-status.h
++++ b/wt-status.h
+@@ -96,7 +96,7 @@ struct wt_status {
+ 	unsigned char sha1_commit[GIT_MAX_RAWSZ]; /* when not Initial */
  
--static void wt_longstatus_print(struct wt_status *s, const struct wt_status_state *state)
-+static void wt_longstatus_print(const struct wt_status *s, const struct wt_status_state *state)
- {
- 	const char *branch_color = color(WT_STATUS_ONBRANCH, s);
- 	const char *branch_status_color = color(WT_STATUS_HEADER, s);
+ 	/* These are computed during processing of the individual sections */
+-	int commitable;
++	int committable;
+ 	int workdir_dirty;
+ 	const char *index_file;
+ 	FILE *fp;
 -- 
 2.18.0
 
