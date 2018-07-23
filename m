@@ -2,92 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 62C941F597
-	for <e@80x24.org>; Mon, 23 Jul 2018 12:56:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 812311F597
+	for <e@80x24.org>; Mon, 23 Jul 2018 13:02:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388090AbeGWN5e (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Jul 2018 09:57:34 -0400
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:38466 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387898AbeGWN5e (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jul 2018 09:57:34 -0400
-Received: by mail-lf1-f67.google.com with SMTP id a4-v6so392652lff.5
-        for <git@vger.kernel.org>; Mon, 23 Jul 2018 05:56:26 -0700 (PDT)
+        id S2388005AbeGWODz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Jul 2018 10:03:55 -0400
+Received: from mail-ed1-f51.google.com ([209.85.208.51]:44852 "EHLO
+        mail-ed1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387937AbeGWODz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jul 2018 10:03:55 -0400
+Received: by mail-ed1-f51.google.com with SMTP id f23-v6so877099edr.11
+        for <git@vger.kernel.org>; Mon, 23 Jul 2018 06:02:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=FbcimXtonw/KtYwCTuoj6BqZqdVpmp3RC8xP3WP/vA0=;
-        b=mIdyZQ9AoLktAsCpL42h8zj/rn4IVaXLXSotYL9hpxpa7x+y5D9SkIA12ekd56BHKe
-         pGzBpfcDwkOxtPQ6783lNhzqKpanWKezPKCBDNb611CiyRUuu7BUgCyGnIkUzZn9aMzt
-         MuyvtVLT1CKLVeQjgRKj4cxmr7LsjBJ7weGR9VPS7QLIMO5mC1SutER/lrHE06KCy7Nq
-         UnAFxIO/sY9XDrcvRl8pekwvamPUKvbG/ZOJljUOenFdpbmskWnVAs0fxlZm8RR4wJOu
-         mCGzTVkZAR7Wi1YO3Df0Sd39pbYqY0+8WTn32LzzG4T9Q5iqFkDxOcHt0U05LTXTLnwc
-         8VOw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=id3AdUaCI2c8/r7i7Z4T+KAabIMijJ7aMPowI2Mr1Gc=;
+        b=pD/4fqHLphw0VnpY8S3G1BWd0FrXTLeZpeMpHe2EKcP2QIXB2QTEQDYvFqOs1KSCpK
+         DgPe5pNwwScnQTLr/FIqw/HSE7W8bN09XgWyS+QMPQC3M5cYwAfdqxXXCnUvkBE5yXZu
+         w17KGWX1iTF4fTj5seNN1BHf9I25XG7GlU7x8rNS9si+PfG14fedZe4u/61apOYq6pnE
+         XZjj4HmAhlCCUpii7ovZ/M3sGR3QGDPKV6/XK+ypD6mfiqJFPNNYWGam44giVZjiUc4p
+         kQIzAhPRgT3w2mSj+FuWwh4TxgkGBpVhVQaTo0dcqHa1oduhM1wDULyn9uN+SAf3p0cQ
+         Eunw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=FbcimXtonw/KtYwCTuoj6BqZqdVpmp3RC8xP3WP/vA0=;
-        b=DOwmieZbkdoYYkdKDWu4luyjMiFv9sU1SAs5L2mACWhRVWj/PY6OsZDAzoXP5YMsiq
-         pEqeJxyNjMxMrAZYPZhmduCEVJCY+/6ZgvISG6o+XhQgKLMap2Fv4PsbHNCyqQYcLN2R
-         dXbent59sbhEpyUnwamJK/9JF/aJ/RbWMpjkbl5cLyyYzjRX9YRPPueuC8hTIeoyvOL7
-         b6Qdtbtv0rHH+NrkHGWIKqWZIvJwJdfbTA6GDeyKWMldV1GEWtC4tGZ7KVx/0w2wwSwW
-         d4FMeY5S4RgWv5zBxzAybBKa03VaPWy4FaiDrVIpDxn5c2qW1VynmQxWQGx+eycyqWV8
-         5gWQ==
-X-Gm-Message-State: AOUpUlGrd4/87Wz7GRpCFqYC5jKo/uQq5MrC61PX7/yYuYEGZ3jm1AD+
-        piqn6yq1hNfpU6UheFlI79smUM1Z0asXPQYhfrzTIQ==
-X-Google-Smtp-Source: AAOMgpdYBQ9lxHRljDDi3jHtKYx95/sYgt8km3Z8AU/TY7AjNBSIV+30Z+ET8jeHM82YDes5O1iWOXDlzw+IzdCzl3Y=
-X-Received: by 2002:a19:a04c:: with SMTP id j73-v6mr7708387lfe.123.1532350585910;
- Mon, 23 Jul 2018 05:56:25 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=id3AdUaCI2c8/r7i7Z4T+KAabIMijJ7aMPowI2Mr1Gc=;
+        b=WNANWXUs3+I3R9Ja71pUNooInVyMTtn7VDZioZtMZ5U7w1FxL7JFf09smA4+I0Wrn9
+         1dNOyKyJQzXW0FbYO9sJ+5cRniaoW6Cdqt6Capt5RgjdR7QU9RufPjkbTWwQEJMOP+Bk
+         HC4BdCYoz60LQ7s+m14C9yvj9qWXSLmli5k/S+FWvHZY6Qet6a5c9fSMDRPlZmDz14Ey
+         /fZBLRW8YcO3hfb63+qYHmImBnPpfP8nT8Uw7gHXzftv6mO3mxTgnBujdfP+Rb0paAXI
+         LX8chhmQ10Kj72asMk5WP2bIoJf+AwyruoTp4AdHjxjQRBHsnJqcKVWIpoElLKUMEi/9
+         DYEw==
+X-Gm-Message-State: AOUpUlFN/8nO8SH4QMeZu1NjUOytGHtkTEbiizPiRSf/ZMZ9oVaslAYg
+        P0vaJ7HtUroi8ciq4pjFmWc=
+X-Google-Smtp-Source: AAOMgpfGPt0k/0KVALArj5936VV5f29SM1ZLEJGSxdxRJ90J54L3zpdOWPaob+JvE9zBkxZIRaBfyw==
+X-Received: by 2002:aa7:d717:: with SMTP id t23-v6mr14298762edq.102.1532350965405;
+        Mon, 23 Jul 2018 06:02:45 -0700 (PDT)
+Received: from localhost.localdomain (x590d0011.dyn.telefonica.de. [89.13.0.17])
+        by smtp.gmail.com with ESMTPSA id a5-v6sm8834263edr.1.2018.07.23.06.02.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 23 Jul 2018 06:02:44 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH 0/2] travis-ci: fail if Coccinelle found something to transform
+Date:   Mon, 23 Jul 2018 15:02:28 +0200
+Message-Id: <20180723130230.22491-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.18.0.408.g42635c01bc
 MIME-Version: 1.0
-References: <a7e0bcd5-5bef-097e-f032-d152d51515aa@gmail.com>
- <20180619114143.206568-1-dstolee@microsoft.com> <CACsJy8AkUyU+yECMSoNUm=SSNn+zXN5QbWEvYjkcngp0PzJ9PA@mail.gmail.com>
- <d5511564-ef51-7e6c-521d-b9ccc2af1773@gmail.com>
-In-Reply-To: <d5511564-ef51-7e6c-521d-b9ccc2af1773@gmail.com>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Mon, 23 Jul 2018 14:56:14 +0200
-Message-ID: <CAM0VKj=CuhY1VB6Hepe0an5pJvTufinewZrLkR2ofHc=HU962A@mail.gmail.com>
-Subject: Re: [PATCH 01/15] contrib: add cocci script to replace index compat macros
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 19, 2018 at 5:21 PM Derrick Stolee <stolee@gmail.com> wrote:
->
-> On 6/19/2018 10:51 AM, Duy Nguyen wrote:
+The first patch makes the static analysis build job on Travis CI
+faster by running it with 'make -j2'.
 
-> > Do we run 'make coccicheck'
-> > automatically somewhere? If true, I need to move this script elsewhere
-> > because it's meant to run manually. You run it when you intend to do
-> > more manual fixups afterwards. For builtin/, I think I'll wait until
-> > 'struct repository *' conversion is complete then maybe fix them one
-> > by one.
->
-> I don't think it is part of the CI runs, but some community members run
-> this themselves on 'next' and 'master'.
+The second patch makes it more more useful by failing the build job if
+Coccinelle finds something to transform, thereby drawing our attention
+to undesired code patterns trying to enter the codebase.
 
-Travis CI does run 'make coccicheck' already, that's the
-"StaticAnalysis" build job.
 
-Alas, it's not particularly useful as it is, because Coccinelle's and
-in turn 'make coccicheck's exit code only indicates that Coccinelle
-managed to finish its analysis without any errors (e.g. no unknown
---options, no missing files, no syntax errors in the semantic patches,
-etc.), but it doesn't indicate whether it found any undesired code
-patterns to transform or not.
+With these patches applied, the static analysis build job would fail
+on current 'pu' because of two small issues on two branches:
 
-I have been sitting on two patches implementing two different
-approaches to improve this situation for several months now (sorry :)
-I think I'll just pick the shorter-simpler of the two, and submit it
-shortly.
+  - js/range-diff: Dscho has sent out v4 of this series over the
+    weekend, which already incorporates Coccinelle's suggestion, so
+    it's basically done.
+  
+  - pb/bisect-helper-2: this topic has not seen an update in about 9
+    months, so I'll send a followup patch 3/2 to be applied on top or
+    squashed in, whichever is deemed better.
+
+
+SZEDER Gábor (2):
+  travis-ci: run Coccinelle static analysis with two parallel jobs
+  travis-ci: fail if Coccinelle static analysis found something to
+    transform
+
+ ci/run-static-analysis.sh | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
+
+-- 
+2.18.0.408.g42635c01bc
+
