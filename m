@@ -2,147 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 53CF81F597
-	for <e@80x24.org>; Mon, 23 Jul 2018 12:34:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA68C1F597
+	for <e@80x24.org>; Mon, 23 Jul 2018 12:40:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388440AbeGWNfb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Jul 2018 09:35:31 -0400
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:36690 "EHLO
-        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387965AbeGWNfa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jul 2018 09:35:30 -0400
-Received: by mail-yw0-f194.google.com with SMTP id v197-v6so146343ywg.3
-        for <git@vger.kernel.org>; Mon, 23 Jul 2018 05:34:30 -0700 (PDT)
+        id S2388187AbeGWNls (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Jul 2018 09:41:48 -0400
+Received: from mail-io0-f174.google.com ([209.85.223.174]:32890 "EHLO
+        mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387989AbeGWNls (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jul 2018 09:41:48 -0400
+Received: by mail-io0-f174.google.com with SMTP id z20-v6so409259iol.0
+        for <git@vger.kernel.org>; Mon, 23 Jul 2018 05:40:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=K7aI7i+5hgdToGt6HQ5IfTpHiLgLtXmlNSvlQQ4A4Rc=;
-        b=SGvE5VH3MEBMWvvAR1WAAAzBgCJnFP3zQdBr21JhCtZFsK91p0iBsOuGesOM7ottsS
-         04DCmRkobkd7pM1kMQlitnJUtFacb6xcQR3o4blpkhPbvLwsoo+luzXE0W1cz5afXbYP
-         bT1RUpdRWdvnGyTxVU0bbXkWjI1VaUz6waKtbRdCw5Mgcxj90BFlTunQcEGWwgJCwyCA
-         eUtJQKHWl0qMISCrn4KRpi/z+PTTvLFi0tOm9291i7OZKZ8L6c8gAZ+LzuZD0jO9Q8mF
-         UWM8tQ2NEbRMwFwedSMfbyTopzRktJ6SeshhtshfaCvjzSXlpDVuyKpea8Ia0DuhUBFi
-         +nnw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=pIxc5b2CnKReIsGcUG6U/O6i9zUC4iX4TxOX7zQes+A=;
+        b=Qk9KyaxVhM0y4QOY9gEjJhnJtuaWzNdtIVMFUBXcdnedsGqQPeX9GPns0Go9Di+FXk
+         ohSekptCXgx1vQc4MjMFHRtswQYHlLVpFHCrXugh52fVaN5hKXUSyuCtoZoTVfjG0PnY
+         fl1KCTilzWxQm5cxDnv8qm5oqgTA9XJZ+0ttf8uiKob0geaWYOk/uvKlHfOpSC7N6oy6
+         YOARXMNDQ7t1GODXMxYbbnjSFzLqGTdHnlngKp8wDvHU+Zap5H+NzjxmN+zso7VeJ9za
+         ZeVXaB9ZIpe90KQ0EF6rnDNr/Ucm/enSU7Z0pHqFUi1JDp9aoVvngV47k1byH3J4g+rH
+         BnUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=K7aI7i+5hgdToGt6HQ5IfTpHiLgLtXmlNSvlQQ4A4Rc=;
-        b=gMk6OTDYeUKhU7LAT3ZmhAPcje4NlryLsIKoTiOMzuFrU0UEOssyOGkQGc09y7lCPE
-         i6mYoU0Ei5vJNfjCoQE1MVs8K7iIcMYVlStQvyTGK8xpjiCzPVey+Fy0xgfYgWaYRq8u
-         WCNZKRQzflu3ZKfQXbYz12bOV7rmstQDJclzEyjUcELt+PwXAFZaNWJXB/nGoUmPz490
-         VvbTks1ImTOX6na9fHW2jd5gdepvQ83bxZciOz9doDrDBbD9P3twxFAtDk6sjP8NIHRE
-         NQ8b8vmm6+x56H0loTm42SN+IGrJj9FfmQbLDTGa0ZBEwABscJBoq/j1+jeyqm0o6AT/
-         JuwA==
-X-Gm-Message-State: AOUpUlGC4kjVPkpWWG4szS0uUdxgyMQMRVS8Rq8Y78Kv50dHJ1g53gTx
-        h/K6jtkTDKKPVFCaRTV45NdbCd0E
-X-Google-Smtp-Source: AAOMgpcmLL5bZMj6987mwAtstC57jqKna84jnySM9uRtOqUSg6U37Wpi8etKaSE4LFYFNCxCxQsoGA==
-X-Received: by 2002:a81:a1c3:: with SMTP id y186-v6mr6272268ywg.351.1532349269822;
-        Mon, 23 Jul 2018 05:34:29 -0700 (PDT)
-Received: from tiger.attlocal.net ([2602:30a:2c28:20f0:7c1a:85e3:2ea9:5d7e])
-        by smtp.gmail.com with ESMTPSA id x69-v6sm7230624ywx.105.2018.07.23.05.34.27
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 23 Jul 2018 05:34:28 -0700 (PDT)
-From:   Elijah Newren <newren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, pclouds@gmail.com, peff@peff.net,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH] pack-objects: fix performance issues on packing large deltas
-Date:   Mon, 23 Jul 2018 05:34:23 -0700
-Message-Id: <20180723123423.32186-1-newren@gmail.com>
-X-Mailer: git-send-email 2.18.0.234.g2d1e6cefb
-In-Reply-To: <CABPp-BGJAWXOCPsej=fWWDJkh-7BAV9m8yEDiy2NVkGTRCmk4A@mail.gmail.com>
-References: <CABPp-BGJAWXOCPsej=fWWDJkh-7BAV9m8yEDiy2NVkGTRCmk4A@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=pIxc5b2CnKReIsGcUG6U/O6i9zUC4iX4TxOX7zQes+A=;
+        b=XhqtxdjfdeujFr8ldIm2OwUjICN9OUXWQB9j6/vtxxNV1C6rrp4Gl9yT10A79rF1sC
+         m8+GcG2Yg64WJuYEubOgttIF/NAWDWjdsf06wKVVMOtxglbadLvso1T3FpJvoGBeCXrv
+         OZJNwTbcSj61kgZcTR7ijbCCJ5ksyNJC7E0O28hIMXX/hJslB2VDbNIbQBvjArgDchsk
+         MTV98qbcuETeQ+8UCZUR/TJYE8AWbtTfw130Sx4Pg0V5pLeTKLcUXh5yNVPPjsUz/kHZ
+         lUJhbs0MikPFPzLQd49yGR1Se5wctVleDEW2+6Qtrr9yQsxyHaSJ6Rj30OhUOUHwcaSI
+         RuLw==
+X-Gm-Message-State: AOUpUlEriWRpa1fgL2PWNRnGkwVnxigp1uOkxVrpoTbxqgEOmhbf0dAj
+        JV7Cz5CZ/0hOV5kIJOMo3B0r1+bbtiSFDQj8Yr8=
+X-Google-Smtp-Source: AAOMgpftsAEEL3oeSourRX04WjJpaSWGZOjOC9gHNtPsPozVw/vaXii7+hOYy7UThh+T8j3oL7vkps48XbQzeMMPuSU=
+X-Received: by 2002:a6b:cb06:: with SMTP id b6-v6mr9725089iog.128.1532349645798;
+ Mon, 23 Jul 2018 05:40:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20180609205628.GB38834@genre.crustytoothpaste.net>
+ <20180609224913.GC38834@genre.crustytoothpaste.net> <20180611192942.GC20665@aiede.svl.corp.google.com>
+ <20180720215220.GB18502@genre.crustytoothpaste.net> <nycvar.QRO.7.76.6.1807220036340.71@tvgsbejvaqbjf.bet>
+ <20180721235941.GG18502@genre.crustytoothpaste.net>
+In-Reply-To: <20180721235941.GG18502@genre.crustytoothpaste.net>
+From:   demerphq <demerphq@gmail.com>
+Date:   Mon, 23 Jul 2018 14:40:33 +0200
+Message-ID: <CANgJU+X39NoEoMyLu+FX38=x19LrRqatz_dUpUAc+WFV+Uw+=A@mail.gmail.com>
+Subject: Re: Hash algorithm analysis
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Git <git@vger.kernel.org>,
+        Linus Torvalds <torvalds@linux-foundation.org>, agl@google.com,
+        keccak@noekeon.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 20, 2018 at 10:43 AM, Elijah Newren <newren@gmail.com> wrote:
-> On Fri, Jul 20, 2018 at 8:39 AM, Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
-
->>  If we want a quick fix for 2.18.1. I suggest bumping up
->>  OE_DELTA_SIZE_BITS like Elijah did in his second option. I don't
->>  think it's safe to fast track this patch.
+On Sun, 22 Jul 2018 at 01:59, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> I will admit that I don't love making this decision by myself, because
+> right now, whatever I pick, somebody is going to be unhappy.  I want to
+> state, unambiguously, that I'm trying to make a decision that is in the
+> interests of the Git Project, the community, and our users.
 >
-> Okay, I'll submit that with a proper commit message then.  Since you
-> also bump OE_DELTA_SIZE_BITS in your patch (though to a different
-> value), it'll require a conflict resolution when merging maint into
-> master, but at least the change won't silently leak through.
+> I'm happy to wait a few more days to see if a consensus develops; if so,
+> I'll follow it.  If we haven't come to one by, say, Wednesday, I'll make
+> a decision and write my patches accordingly.  The community is free, as
+> always, to reject my patches if taking them is not in the interest of
+> the project.
 
-And here's the re-submitted patch, with commit message...
+Hi Brian.
 
--- 8< --
-Subject: [PATCH] pack-objects: fix repacking of repositories with some large
- deltas
+I do not envy you this decision.
 
-Commit 0aca34e826 (pack-objects: shrink delta_size field in struct
-object_entry - 2018-04-14) reduced 'struct object_entry' size, by dropping
-the delta size field to 20 bits (max delta size 1MB).  There was a
-fallback to reference existing pack files that already had large deltas,
-but when aggressively repacking, it drops the deltas on the floor,
-resulting in much worse packs.
+Personally I would aim towards pushing this decision out to the git
+user base and facilitating things so we can choose whatever hash
+function (and config) we wish, including ones not invented yet.
 
-For comparison, the following measurements were made for running 'git gc
---aggressive' for one particular repo:
+Failing that I would aim towards a hashing strategy which has the most
+flexibility. Keccak for instance has the interesting property that its
+security level is tunable, and that it can produce aribitrarily long
+hashes.  Leaving aside other concerns raised elsewhere in this thread,
+these two features alone seem to make it a superior choice for an
+initial implementation. You can find bugs by selecting unusual hash
+sizes, including very long ones, and you can provide ways to tune the
+function to peoples security and speed preferences.  Someone really
+paranoid can specify an unusually large round count and a very long
+hash.
 
-    Version  Pack (MB)  MaxRSS(kB)  Time (s)
-    -------  ---------  ----------  --------
-     2.17.0     5498     43513628    2494.85
-     2.18.0    10531     40449596    4168.94
+Also frankly I keep thinking that the ability to arbitrarily extend
+the hash size has to be useful /somewhere/ in git.
 
-This patch provides a stop-gap improvement for maint that increases the
-delta size back up to 32 bits (still an improvement over the 64 bit size
-of the original).  A better fix preserving the memory savings for most
-repos that do not have large deltas is being prepared for 2.19.0.
-
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
-I think Duy's comment that I'm responding to suggests he Acks this
-patch for maint, but there is that little 'if' he put in his statement.
-
-I'll be on vacation until the end of the week, so I apologize in advance
-for not responding quickly...
-
- builtin/pack-objects.c | 2 +-
- pack-objects.h         | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 71056d8294..49b7af295d 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -2023,7 +2023,7 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
- 	delta_buf = create_delta(src->index, trg->data, trg_size, &delta_size, max_size);
- 	if (!delta_buf)
- 		return 0;
--	if (delta_size >= (1U << OE_DELTA_SIZE_BITS)) {
-+	if (delta_size >= (1UL << OE_DELTA_SIZE_BITS)) {
- 		free(delta_buf);
- 		return 0;
- 	}
-diff --git a/pack-objects.h b/pack-objects.h
-index edf74dabdd..26021328aa 100644
---- a/pack-objects.h
-+++ b/pack-objects.h
-@@ -14,7 +14,7 @@
-  * above this limit. Don't lower it too much.
-  */
- #define OE_SIZE_BITS		31
--#define OE_DELTA_SIZE_BITS	20
-+#define OE_DELTA_SIZE_BITS	32
- 
- /*
-  * State flags for depth-first search used for analyzing delta cycles.
+cheers,
+Yves
+I am not a cryptographer.
 -- 
-2.18.0.2.gf4c50c7885
-
+perl -Mre=debug -e "/just|another|perl|hacker/"
