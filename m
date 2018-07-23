@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 812311F597
-	for <e@80x24.org>; Mon, 23 Jul 2018 13:02:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 238DD1F597
+	for <e@80x24.org>; Mon, 23 Jul 2018 13:02:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388005AbeGWODz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Jul 2018 10:03:55 -0400
-Received: from mail-ed1-f51.google.com ([209.85.208.51]:44852 "EHLO
-        mail-ed1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387937AbeGWODz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jul 2018 10:03:55 -0400
-Received: by mail-ed1-f51.google.com with SMTP id f23-v6so877099edr.11
-        for <git@vger.kernel.org>; Mon, 23 Jul 2018 06:02:46 -0700 (PDT)
+        id S2388054AbeGWOEB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Jul 2018 10:04:01 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:35267 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388022AbeGWOEA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jul 2018 10:04:00 -0400
+Received: by mail-ed1-f68.google.com with SMTP id e6-v6so894336edr.2
+        for <git@vger.kernel.org>; Mon, 23 Jul 2018 06:02:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=id3AdUaCI2c8/r7i7Z4T+KAabIMijJ7aMPowI2Mr1Gc=;
-        b=pD/4fqHLphw0VnpY8S3G1BWd0FrXTLeZpeMpHe2EKcP2QIXB2QTEQDYvFqOs1KSCpK
-         DgPe5pNwwScnQTLr/FIqw/HSE7W8bN09XgWyS+QMPQC3M5cYwAfdqxXXCnUvkBE5yXZu
-         w17KGWX1iTF4fTj5seNN1BHf9I25XG7GlU7x8rNS9si+PfG14fedZe4u/61apOYq6pnE
-         XZjj4HmAhlCCUpii7ovZ/M3sGR3QGDPKV6/XK+ypD6mfiqJFPNNYWGam44giVZjiUc4p
-         kQIzAhPRgT3w2mSj+FuWwh4TxgkGBpVhVQaTo0dcqHa1oduhM1wDULyn9uN+SAf3p0cQ
-         Eunw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=oVlV/dCgSvWBvP7TOCoQtc+hKdhqgOZni0uqd6mmCDo=;
+        b=IoJQg9wsgvv0DzJmEHSpCRD9DpERS9MjQi7T1ZAM7IjrCTX8GSdQVWIEGj1jjffjP3
+         wiomfKlXlj2NRJIu9w0HzVpQ2+uH2i3cpIDs42WD7zy9nJPareAkJ6cb+z2nmZTXgc/P
+         VsF0D9yAqLvlEWYIRn3Ut3ThQobRRowPaMzSPctetkEn1PX4PIoNut5jkV9GVHIyO+vQ
+         z0xMiftiybYiSUMppIVzB88TfvStX/mLEctXgxBRytjWiv064zTutw1aQejXcp3Z8S3E
+         lj5s9MtNKsGEauqXQSPVs88Yvoy6QyHk9o1glNdgZ/6vniRrpVRwMm4rdvrj6U26Tzg4
+         1dJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=id3AdUaCI2c8/r7i7Z4T+KAabIMijJ7aMPowI2Mr1Gc=;
-        b=WNANWXUs3+I3R9Ja71pUNooInVyMTtn7VDZioZtMZ5U7w1FxL7JFf09smA4+I0Wrn9
-         1dNOyKyJQzXW0FbYO9sJ+5cRniaoW6Cdqt6Capt5RgjdR7QU9RufPjkbTWwQEJMOP+Bk
-         HC4BdCYoz60LQ7s+m14C9yvj9qWXSLmli5k/S+FWvHZY6Qet6a5c9fSMDRPlZmDz14Ey
-         /fZBLRW8YcO3hfb63+qYHmImBnPpfP8nT8Uw7gHXzftv6mO3mxTgnBujdfP+Rb0paAXI
-         LX8chhmQ10Kj72asMk5WP2bIoJf+AwyruoTp4AdHjxjQRBHsnJqcKVWIpoElLKUMEi/9
-         DYEw==
-X-Gm-Message-State: AOUpUlFN/8nO8SH4QMeZu1NjUOytGHtkTEbiizPiRSf/ZMZ9oVaslAYg
-        P0vaJ7HtUroi8ciq4pjFmWc=
-X-Google-Smtp-Source: AAOMgpfGPt0k/0KVALArj5936VV5f29SM1ZLEJGSxdxRJ90J54L3zpdOWPaob+JvE9zBkxZIRaBfyw==
-X-Received: by 2002:aa7:d717:: with SMTP id t23-v6mr14298762edq.102.1532350965405;
-        Mon, 23 Jul 2018 06:02:45 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=oVlV/dCgSvWBvP7TOCoQtc+hKdhqgOZni0uqd6mmCDo=;
+        b=Dx3NWOBfW84ZocCqyUKBebhnGyMEakeLi6zpdh1PvhaYN1ar4h+jLhIm0H0MZiIFKT
+         Qj+LLgfmtABGcESgByLv/jKhTPaUXEbVDHG0IZ1XHdRV7yHi3SO79SJJO8a3vcZY60hy
+         SpFKWBIDsK9nWKLCj+jRXqDiLOtdJ88zo0luT2Kyn/WOujBAjBWHBYgeyYm4op2a8/3i
+         m9SoZ/pNLiRtzjLdvLE03IuPU6/9+2F+imI1kdSlMZCnOxepRJoYzmNb7U4q2h3T6nr7
+         eoPKPXFg5Et3UBVmgOk7dSzGjiGnf5W1DXpyt9uR0DsXDqCVsHa9r14LbXzSanmEATYk
+         pZOw==
+X-Gm-Message-State: AOUpUlENiBu99kGtXQlG1AqhcuxVCniY6q17o39vE9bvpSaqCvblwkpK
+        lkYqFUYlvaWPp69Va1E4wVotyr9W
+X-Google-Smtp-Source: AAOMgpfw0KYSovoFZyMxMz+e0hhbqdkPknbU/cVb1Lzgil/6m3+L3WSrBZUVyIBB2Ao3IDKGO+O89g==
+X-Received: by 2002:aa7:d4c1:: with SMTP id t1-v6mr14361142edr.121.1532350971110;
+        Mon, 23 Jul 2018 06:02:51 -0700 (PDT)
 Received: from localhost.localdomain (x590d0011.dyn.telefonica.de. [89.13.0.17])
-        by smtp.gmail.com with ESMTPSA id a5-v6sm8834263edr.1.2018.07.23.06.02.44
+        by smtp.gmail.com with ESMTPSA id a5-v6sm8834263edr.1.2018.07.23.06.02.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 23 Jul 2018 06:02:44 -0700 (PDT)
+        Mon, 23 Jul 2018 06:02:50 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
@@ -56,10 +56,12 @@ Cc:     git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 0/2] travis-ci: fail if Coccinelle found something to transform
-Date:   Mon, 23 Jul 2018 15:02:28 +0200
-Message-Id: <20180723130230.22491-1-szeder.dev@gmail.com>
+Subject: [PATCH 1/2] travis-ci: run Coccinelle static analysis with two parallel jobs
+Date:   Mon, 23 Jul 2018 15:02:29 +0200
+Message-Id: <20180723130230.22491-2-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.18.0.408.g42635c01bc
+In-Reply-To: <20180723130230.22491-1-szeder.dev@gmail.com>
+References: <20180723130230.22491-1-szeder.dev@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,34 +70,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The first patch makes the static analysis build job on Travis CI
-faster by running it with 'make -j2'.
+Currently the static analysis build job runs Coccinelle using a single
+'make' job.  Using two parallel jobs cuts down the build job's run
+time from around 10-12mins to 6-7mins, sometimes even under 6mins
+(there is quite large variation between build job runtimes).  More
+than two parallel jobs don't seem to bring further runtime benefits.
 
-The second patch makes it more more useful by failing the build job if
-Coccinelle finds something to transform, thereby drawing our attention
-to undesired code patterns trying to enter the codebase.
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ ci/run-static-analysis.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-With these patches applied, the static analysis build job would fail
-on current 'pu' because of two small issues on two branches:
-
-  - js/range-diff: Dscho has sent out v4 of this series over the
-    weekend, which already incorporates Coccinelle's suggestion, so
-    it's basically done.
-  
-  - pb/bisect-helper-2: this topic has not seen an update in about 9
-    months, so I'll send a followup patch 3/2 to be applied on top or
-    squashed in, whichever is deemed better.
-
-
-SZEDER Gábor (2):
-  travis-ci: run Coccinelle static analysis with two parallel jobs
-  travis-ci: fail if Coccinelle static analysis found something to
-    transform
-
- ci/run-static-analysis.sh | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
-
+diff --git a/ci/run-static-analysis.sh b/ci/run-static-analysis.sh
+index fe4ee4e06b..fa719c9ef9 100755
+--- a/ci/run-static-analysis.sh
++++ b/ci/run-static-analysis.sh
+@@ -5,6 +5,6 @@
+ 
+ . ${0%/*}/lib-travisci.sh
+ 
+-make coccicheck
++make --jobs=2 coccicheck
+ 
+ save_good_tree
 -- 
 2.18.0.408.g42635c01bc
 
