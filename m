@@ -7,52 +7,51 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E6761F597
-	for <e@80x24.org>; Mon, 23 Jul 2018 16:03:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F46E1F597
+	for <e@80x24.org>; Mon, 23 Jul 2018 16:12:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388194AbeGWRFQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Jul 2018 13:05:16 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:51075 "EHLO
+        id S2388397AbeGWROg (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Jul 2018 13:14:36 -0400
+Received: from mail-it0-f67.google.com ([209.85.214.67]:55716 "EHLO
         mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388144AbeGWRFP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jul 2018 13:05:15 -0400
-Received: by mail-it0-f67.google.com with SMTP id w16-v6so2298772ita.0
-        for <git@vger.kernel.org>; Mon, 23 Jul 2018 09:03:22 -0700 (PDT)
+        with ESMTP id S2388161AbeGWROg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jul 2018 13:14:36 -0400
+Received: by mail-it0-f67.google.com with SMTP id 16-v6so2319160itl.5
+        for <git@vger.kernel.org>; Mon, 23 Jul 2018 09:12:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=wd5+KOFe3RNybLNctH29mVaBDADsl2esis1TDWpWzb4=;
-        b=C8HAJNE2IE95xzQxvvqJMtcUruQ6O92AYHY4N5PmPd8fdHKCqZMZ0PntmfVyRRvCIZ
-         UtdNKHY/G1pVZRat+DWni12DzF3dPVKdeGEt7NXDZe9WK/aqxDC7uWqfn7DFQw1cNPUF
-         4F5HfMJiLti+4gD1WU6zoQSrz8MbPrXNdB1DYc9DFHoZE3nHezSUDjFJyNXm1ZQvToMX
-         9ADEJDrLiD3yHNPe8v6K27/7slGFuEI40q2gcrUjcnRFDbe74q7NATSVkTS2xzG7GwOh
-         ZxNgGK0YZt2niZ/dyVK5qHRveGNuaql7gu5O91pPyv6BFM8PPXuFa9/KxUdK6Tv59mYG
-         louw==
+        bh=nq0XZa6VR1q0lyMwYtFUCuWUHRtlFj5FjqPwHUkLxD0=;
+        b=Gi2m7CjW4gtUZZufvXbpAErga2isU79Xbc1n3aOyXlPw1t5mEq3J7ibwCZ8UmDtZVj
+         MEofoDRLyvJUgKgrL5/PB2gQuU/JgX3oHgABq7R8Rm4pkOb3vFEC7gZmrqtJI6WvsOpl
+         tf/zOQLlBE27oLtIkL0O02AnSBpEMvt+WsqnZC7A+eu9Msj52YoCUALHnH2mzts+2pSj
+         R8X7YwS/7LTRX9b8fFZzuWQTdHbFyBplMkRBRN6HLEHOlRRfXtV/4bTjoNyXpPf1uPHw
+         477qPcxPLuEzL0KDuMiVObL5ZBT9tZNs91CSgoKC4Cu5dhygXHctA+2v/987Ez9mY2t0
+         VBSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=wd5+KOFe3RNybLNctH29mVaBDADsl2esis1TDWpWzb4=;
-        b=Crtosv7PNu9LG2DINcVqMjQtB2LHveXGvXLpNZcB81hyIYWEPciGssu8vhjEbNPyMn
-         1piuFji86IoQhDlmDUNnkfEqe6JvmiaAMd/edZEa8RiH1OJXB9tbwSNeHTOxPkMcuoOf
-         SstChGe6x27F0RDWxmNTBzBPoAfoxk/4W3QU2Wc+yPC84T5UId7Cgcw/BubAL0RoG8U7
-         OwS2x4AfVgYzrohso3yCKZCO36fXihUaK5dbspKdi0aAUsxtDC58S1aEnzzRLgvcL85I
-         qZ7RMNxsGjosP05nWXcN7MXFr23mMw/kZjDhjW5WeYyHXz9aFfNfH9xLjo3om4q9OhQC
-         Lgmw==
-X-Gm-Message-State: AOUpUlH3diHCBN+iREPUQImc33jdqxfGkAWzXDVtTRcOPoGoj8vDWOse
-        Gvu9+3zyfxr3MnEBbPArf2rITCw2SMkRsNlJrOi4cA==
-X-Google-Smtp-Source: AAOMgpfv0FjPKh2/WHqNAd1BfL/PCRzjCit9isZ04rVKlJaDkTbjbZ2JD5cOX1U/vMqwuG4i3K+rNIz6rqu3UQZ3//o=
-X-Received: by 2002:a24:b101:: with SMTP id o1-v6mr10332088itf.121.1532361801695;
- Mon, 23 Jul 2018 09:03:21 -0700 (PDT)
+        bh=nq0XZa6VR1q0lyMwYtFUCuWUHRtlFj5FjqPwHUkLxD0=;
+        b=FgzeCiJsirb375DsFhXRefQf4Ve//JwtfFa0Q3Pj1TtaKyEhvV02cVtkZnBtTNyB5x
+         1pCHHcYlJMWujcjMH6QJ3apsRPfUnpwCwpI3SFep9kF2spJwV1fwZbuipnKPW5bsFj8W
+         qwq7oh9Q9W65lhehbBMajiKTUhC9g6+xWRqluDDobBGGfOuo1wCezSHmvnT14FGEBwVb
+         sddKFG2r3W2Btftks+F4yw1RCdibXhgFtKLmsvPueErN4Kcpfqkdh9BDiex6FI2/m1+i
+         Qj4i5q873tOXE4L+BDovvzR5uShxM9NlRyUNLmMLCvuhZe4l2k+4yc2n41mcoarfrDKt
+         ZVNA==
+X-Gm-Message-State: AOUpUlEHfEkPEVU4mG58iqFsRtrJVESeK6NCKlo36q0rcy/EcvnLUTTF
+        Q+vU9a+Zjmi/MaI28JlMaFxHbjer9ZjdoV2qAJQ=
+X-Google-Smtp-Source: AAOMgpe5C0HJ6SC0tBiVqq5vOZjQ83FlR6Xg/sSQq1nJBL+lLyqZX4hJXYelEQCwV1h3LzIxtN+Ia+ySqT20ZjKhevg=
+X-Received: by 2002:a24:610d:: with SMTP id s13-v6mr10940691itc.68.1532362360171;
+ Mon, 23 Jul 2018 09:12:40 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180722095717.17912-1-sunshine@sunshineco.com> <20180722095717.17912-3-sunshine@sunshineco.com>
-In-Reply-To: <20180722095717.17912-3-sunshine@sunshineco.com>
+References: <20180722095717.17912-1-sunshine@sunshineco.com> <20180722095717.17912-4-sunshine@sunshineco.com>
+In-Reply-To: <20180722095717.17912-4-sunshine@sunshineco.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 23 Jul 2018 18:02:55 +0200
-Message-ID: <CACsJy8C8RK6HkfoEYJGZg=sgtJS0WksHD3=7Souw3jYebRo=Sg@mail.gmail.com>
-Subject: Re: [PATCH 02/14] format-patch: add --interdiff option to embed diff
- in cover letter
+Date:   Mon, 23 Jul 2018 18:12:14 +0200
+Message-ID: <CACsJy8AGwbrEFU2bTynXyQi1DmEYtwHrtmefMz+jD13GQs=9HQ@mail.gmail.com>
+Subject: Re: [PATCH 03/14] format-patch: teach --interdiff to respect -v/--reroll-count
 To:     Eric Sunshine <sunshine@sunshineco.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -65,34 +64,28 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Sun, Jul 22, 2018 at 11:57 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
+>
+> The --interdiff option introduces the embedded interdiff generically as
+> "Interdiff:", however, we can do better when --reroll-count is specified
 
-> diff --git a/interdiff.c b/interdiff.c
-> new file mode 100644
-> index 0000000000..d0fac10c7c
-> --- /dev/null
-> +++ b/interdiff.c
-> @@ -0,0 +1,17 @@
-> +#include "cache.h"
-> +#include "commit.h"
-> +#include "revision.h"
-> +#include "interdiff.h"
-> +
-> +void show_interdiff(struct rev_info *rev)
-> +{
-> +       struct diff_options opts;
-> +
-> +       memcpy(&opts, &rev->diffopt, sizeof(opts));
-> +       opts.output_format = DIFF_FORMAT_PATCH;
-> +       diff_setup_done(&opts);
-> +
-> +       diff_tree_oid(rev->idiff_oid1, rev->idiff_oid2, "", &opts);
-> +       diffcore_std(&opts);
-> +       diff_flush(&opts);
-> +}
+Oh boy. --reroll-count was added in 2012 and here I am typing
+--subject-prefix='PATCH vX' everyday, thinking that somebody should
+really do something about it. I've learned --reroll-count today!
 
-Is it worth adding a new file just for a single function? I haven't
-read the rest of the series, but the cover letter's diffstat suggests
-this is it. Is interdiff intended to become a lot more complicated in
-the future? If not maybe just add this function in diff-lib.c
+> diff --git a/revision.h b/revision.h
+> index 61931fbac5..ffeadc261a 100644
+> --- a/revision.h
+> +++ b/revision.h
+> @@ -215,6 +215,7 @@ struct rev_info {
+>         /* interdiff */
+>         const struct object_id *idiff_oid1;
+>         const struct object_id *idiff_oid2;
+> +       const char *idiff_title;
+
+I feel we're abusing struct rev_info a bit for this since this
+interdiff thing is very builtin/log.c's business and not at all
+related to rev walk. Is it possible (and easy) to just pass
+idfff_title from cmd_format_patch to make_cover_letter()? If it's a
+lot of code, then I guess we can just leave it here.
 -- 
 Duy
