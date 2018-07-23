@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 828A81F597
-	for <e@80x24.org>; Mon, 23 Jul 2018 13:03:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D0B11F597
+	for <e@80x24.org>; Mon, 23 Jul 2018 13:06:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388060AbeGWOEH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Jul 2018 10:04:07 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:38018 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387998AbeGWOEH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jul 2018 10:04:07 -0400
-Received: by mail-ed1-f66.google.com with SMTP id t2-v6so891264edr.5
-        for <git@vger.kernel.org>; Mon, 23 Jul 2018 06:02:58 -0700 (PDT)
+        id S2388137AbeGWOH0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Jul 2018 10:07:26 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:36259 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388076AbeGWOH0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jul 2018 10:07:26 -0400
+Received: by mail-ed1-f68.google.com with SMTP id k15-v6so908098edr.3
+        for <git@vger.kernel.org>; Mon, 23 Jul 2018 06:06:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=KmfyXNf/EFFxXWV337g+MoNXqlX24oyJc/dWf6RzE5Y=;
-        b=Ap08Cl2tjzEu7sEbAAPeSWK/Gc1DdCbeEHd4WDanq8p6pAOPePl07/5adW+JhAfoRx
-         2GfYoAQFj/DoIrvE89l5PveLV71EHKi4DOv1bInAsleLoxgnY0wm7pVrSp+JeyvAesPA
-         ZtSX1/yUe2z9Kydt1bAePjnnoPKGAn0YWH9g6WbkW+UN5DxgOpVt3KlTYX3Olc3/1E8V
-         5MBiRc1JEnxk5ZCJFkjHnyFMxnadCXGMVh0Y8QJUvwSeyr9MXR3WZp2Yo14CXBxtdVIV
-         NrN8w/X7iobCD/mjakwcc2qJ0XD7GDkJTfx1AyPQkpdbG9eJ1vhUS9Lnz7Z6y/z/QrJg
-         ZGcQ==
+        bh=o4exuKTq/6+DxaMXUWeBqrzx7EF4ogoBJvwIUSjK4/c=;
+        b=FPQJLjZzKNFz5naba63enF/XC/7NqhglCJDEb3ggg1U/OhCLr4b4/H6lSdtoLBXVU8
+         e4OER6BWfyfgpBDIa6or3SYJ6kkge0bUZnh+Qk/w5xpKOKCM/BFPDbAvh4FZnQBINeNc
+         LEx9SWPQLPz3ed32qSDB4w12f9qiCAo4wVBsF9S+M+YoTQk99BLbyRu3rzdIxp1BF9Dk
+         ttd5hXXUVv/YhF8nsrOfQf0sA0fTUBWGsZ1w4O/HsHDfU+WaZ4kcymT9d9kox4PWuKFX
+         tppAXYQtNgTu18Kxz+SKUjLeK8IBNg1ZhAFHFeYEoV6EwO6ScIknJRLZid/YVP/6lLRn
+         Zpvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=KmfyXNf/EFFxXWV337g+MoNXqlX24oyJc/dWf6RzE5Y=;
-        b=jS24nCMr0jaua3M45eSbw8M/sBwoxbywnLh5Q7tulyRbynlTZonn68IzmbXYNI5kpl
-         dblVykQcZsFdMP9vYuTHj5h0maoyaEYsdiRQFJL2RhESEWl+fGcJwTZLrMHxoCOOIT56
-         nbf0jaH6KMbnn72oPnyHgRYnz3/NH1tsb3WdhfQw8asuzfruvtnUheaE2nXxh9rar+UA
-         y3uXRYYmOHn7544E3/V2PlSx7xA/sMSD9XU1qUaNJdg86fCBaGCCE59PEkejIZ4tDosx
-         QpjrmvEe4rOyKFo/MKC28E6vvCYm3Bf/ecbadS6WRNyzlPSajCxtgfoRQdsF/m0zC+oI
-         k1LQ==
-X-Gm-Message-State: AOUpUlFVJ1pCPvt5MymjtVTXFC0MpgjwTdxdSTHq5KZ8GeCkL27JArzE
-        dFin8E6jxAzh6BdeMQgVZv8=
-X-Google-Smtp-Source: AAOMgpeM+LyRiJBExlJy2D3dUxI8jsnis/Jwy5GqHA70kD1csr/k6PFDNQ+ePOt3GTniB10lPmBZgw==
-X-Received: by 2002:a50:a762:: with SMTP id h89-v6mr14273932edc.261.1532350977919;
-        Mon, 23 Jul 2018 06:02:57 -0700 (PDT)
+        bh=o4exuKTq/6+DxaMXUWeBqrzx7EF4ogoBJvwIUSjK4/c=;
+        b=tMgeICYnl+aDv9/FYJ64aG+YNsoGnZLUDN4RcuIFcuLFDa5hO9JxJs+3WKIF+mByx/
+         7YlLAOYRbX4qYl+Q4D2SrG3lnvC5JiiU4+gxaRL/OC6gbqpQhAeiuyU0+aqHkjuk1LPN
+         amPKWTZDm+OQVohornQdtA0Vi36LVTv97yFgY1LARMUsANczy5cC2uRC/LQZfUncMdfZ
+         vj0MeK4EUqqI0wJztVzplX2tSXSwCu4dfb64/lRpZ/MK4fT9mV9f9oa2T+wqDInlsrEj
+         VdGObv3Moxyaj6vpbhRlvo5zs6pKHSUk7bPBczL09IF+2nsGXyJMuoQvDr6Cmz024G6j
+         BTbg==
+X-Gm-Message-State: AOUpUlFt4fDJogN039Dd+fKUvuOYrl4Ud6RgfOMDuPkK+oDSCacN9Dkd
+        6mGrMQ+58DtlqRMzt3yqT1I=
+X-Google-Smtp-Source: AAOMgpdUcvleSKBMp6mCqvdYZFwyCVGACLHQC0/MUoG04norHVmir5NVap5InkryIyV6idh481uOlA==
+X-Received: by 2002:a50:8ca9:: with SMTP id q38-v6mr14175583edq.2.1532351176026;
+        Mon, 23 Jul 2018 06:06:16 -0700 (PDT)
 Received: from localhost.localdomain (x590d0011.dyn.telefonica.de. [89.13.0.17])
-        by smtp.gmail.com with ESMTPSA id a5-v6sm8834263edr.1.2018.07.23.06.02.56
+        by smtp.gmail.com with ESMTPSA id a2-v6sm4518704ede.21.2018.07.23.06.06.14
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 23 Jul 2018 06:02:57 -0700 (PDT)
+        Mon, 23 Jul 2018 06:06:14 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
@@ -56,9 +56,9 @@ Cc:     git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 2/2] travis-ci: fail if Coccinelle static analysis found something to transform
-Date:   Mon, 23 Jul 2018 15:02:30 +0200
-Message-Id: <20180723130230.22491-3-szeder.dev@gmail.com>
+Subject: [PATCH 3/2 for pb/bisect-helper-2] squash! bisect--helper: `bisect_start` shell function partially in C
+Date:   Mon, 23 Jul 2018 15:06:03 +0200
+Message-Id: <20180723130603.22703-1-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.18.0.408.g42635c01bc
 In-Reply-To: <20180723130230.22491-1-szeder.dev@gmail.com>
 References: <20180723130230.22491-1-szeder.dev@gmail.com>
@@ -70,66 +70,26 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Coccinelle's and in turn 'make coccicheck's exit code only indicates
-that Coccinelle managed to finish its analysis without any errors
-(e.g. no unknown --options, no missing files, no syntax errors in the
-semantic patches, etc.), but it doesn't indicate whether it found any
-undesired code patterns to transform or not.  To find out the latter,
-one has to look closer at 'make coccicheck's standard output and look
-for lines like:
-
-  SPATCH result: contrib/coccinelle/<something>.cocci.patch
-
-And this only indicates that there is something to transform, but to
-see what the suggested transformations are one has to actually look
-into those '*.cocci.patch' files.
-
-This makes the automated static analysis build job on Travis CI not
-particularly useful, because it neither draws our attention to
-Coccinelle's findings, nor shows the actual findings.  Consequently,
-new topics introducing undesired code patterns graduated to master
-on several occasions without anyone noticing.
-
-The only way to draw attention in such an automated setting is to fail
-the build job.  Therefore, modify the 'ci/run-static-analysis.sh'
-build script to check all the resulting '*.cocci.patch' files, and
-fail the build job if any of them turns out to be not empty.  Include
-those files' contents, i.e. Coccinelle's suggested transformations, in
-the build job's trace log, so we'll know why it failed.
+bisect--helper: use oid_to_hex()
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- ci/run-static-analysis.sh | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ builtin/bisect--helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/ci/run-static-analysis.sh b/ci/run-static-analysis.sh
-index fa719c9ef9..5688f261d0 100755
---- a/ci/run-static-analysis.sh
-+++ b/ci/run-static-analysis.sh
-@@ -7,4 +7,23 @@
- 
- make --jobs=2 coccicheck
- 
-+set +x
-+
-+fail=
-+for cocci_patch in contrib/coccinelle/*.patch
-+do
-+	if test -s "$cocci_patch"
-+	then
-+		echo "$(tput setaf 1)Coccinelle suggests the following changes in '$cocci_patch':$(tput sgr0)"
-+		cat "$cocci_patch"
-+		fail=UnfortunatelyYes
-+	fi
-+done
-+
-+if test -n "$fail"
-+then
-+	echo "$(tput setaf 1)error: Coccinelle suggested some changes$(tput sgr0)"
-+	exit 1
-+fi
-+
- save_good_tree
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index fc02f889e6..eac4c27787 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -547,7 +547,7 @@ static int bisect_start(struct bisect_terms *terms, int no_checkout,
+ 		if (!get_oid(head, &head_oid) &&
+ 		    !starts_with(head, "refs/heads/")) {
+ 			strbuf_reset(&start_head);
+-			strbuf_addstr(&start_head, sha1_to_hex(head_oid.hash));
++			strbuf_addstr(&start_head, oid_to_hex(&head_oid));
+ 		} else if (!get_oid(head, &head_oid) &&
+ 			   skip_prefix(head, "refs/heads/", &head)) {
+ 			/*
 -- 
 2.18.0.408.g42635c01bc
 
