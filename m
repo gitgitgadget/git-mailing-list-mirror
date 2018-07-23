@@ -2,106 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 760A01F597
-	for <e@80x24.org>; Mon, 23 Jul 2018 18:14:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 56AD41F597
+	for <e@80x24.org>; Mon, 23 Jul 2018 18:14:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388381AbeGWTQc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Jul 2018 15:16:32 -0400
-Received: from mail-it0-f51.google.com ([209.85.214.51]:35111 "EHLO
-        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387873AbeGWTQc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jul 2018 15:16:32 -0400
-Received: by mail-it0-f51.google.com with SMTP id q20-v6so109282ith.0
-        for <git@vger.kernel.org>; Mon, 23 Jul 2018 11:14:06 -0700 (PDT)
+        id S2388265AbeGWTRB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Jul 2018 15:17:01 -0400
+Received: from mail-yw0-f193.google.com ([209.85.161.193]:40944 "EHLO
+        mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387873AbeGWTRB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jul 2018 15:17:01 -0400
+Received: by mail-yw0-f193.google.com with SMTP id z143-v6so566663ywa.7
+        for <git@vger.kernel.org>; Mon, 23 Jul 2018 11:14:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=XT5GIjLDjJk/mYMV/mbYVEbH5Z9SUxtJpJ49XC+i8GY=;
-        b=To+7Oe2H9MJwpaFOY4GFi00kwVMayF99AbHDQmwC/vj6Ydo/AuQc/OHf6kdNxk3iVz
-         lcu1dAF1Qyqdg1xVhss0i56rYNmeT8qoIJbpq7ZkKciR4CoxmSdE4EeZVFPUhSXl+Xzv
-         wJjN2tQXOO0xT2AQkZjzDop76kGAootFU8VcQ7pbWBJG8O4v/BZIm3sJMBZAOzu8K9UM
-         Qt1tX58ezR+ubikBnHg40W/DLHVgZ+opB7eau+a/6W3KIA28PbGkuEwOGZt8uMvWqldy
-         M6F+TIeCprFUBxSafI4/zZnXr3BSRoWqGLT7jUSqDggYjdfhzW0akmgBhwFjCMWR+Ygi
-         9seA==
+        bh=iBvXa5QfTkzFv6IL7AlM55eDgTC4xEMygmmp+2yAfBM=;
+        b=iz598U3Od0kwIM+IzzM1Z4JujnZpkvzeEFcp3NZv1e+TFS/X7tT/mXj/Tf1ll4y8wl
+         18VUfq4nd21QSAHWhVfdFaG31yBAk40jVm0TwWHXqNJ9x7f2kUYs0peAFKC/RLSc8dJw
+         49G8Bqn5lU9+fdHWnTyrS9U7NisqLqOpT4yFOpdQMD6s3BwbQ3pEVzScx82Ir3gh0os3
+         whbJhMmk7IU/ZWRpXINn4b9IFKAnq3HBTg7ry2G5qwfPLl69Hnrb00b2VErc7sqo8Euq
+         5+VBMrHlgngpwHsTfCEidl4LrJArLaUfyUos79IyFdeb4kBQNEz1fXotZM4NhsM+ubMD
+         0OPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=XT5GIjLDjJk/mYMV/mbYVEbH5Z9SUxtJpJ49XC+i8GY=;
-        b=SB138YumPUouEo9BAqGcyg45BTUFzdLqCIpL3NYcuFPQASL/2r+ZZlVNt24YNtnBB8
-         HlAqfqsur14AH4blZSGr9BtlPCnNeJMj/qlCJ8303coYF0a0Hog2B8FmIB8CDfp0bIQX
-         3aTRq/ViuwQ5xKQSXDQbrlu9YMhx/pOFCglaThM5lmIRnRSnn1ulaQp5UUxedXkm9QOf
-         3xfFoSh7FhDhgKq/4WTSKOL63T7Yal0H97PWMOZhWTzc/aaOg9Ip7Yjvxplvh1lNZcz+
-         WPEUDIfv0tMxTIYffIC4Njw5xfnK3T2NxRiNsc0uNuzZHodMz9MWe5yGPvyFgVqz/dZh
-         E16g==
-X-Gm-Message-State: AOUpUlGF3JntNJA6hAaM2eGPlxCRMDRGEO/cfUqImzVQ+im9ACeNipli
-        qgAAreifggExy3lr64PIIsD1xHOqWxleXaHgqvn9OA==
-X-Google-Smtp-Source: AAOMgpdJuF/gqkllTVIb232eTE/zP/ft0+qy4yLabA/DMKA1KmpmtgQLRdtyMyv2X845WAyeuS/5Rc1X/o05A6IRVbc=
-X-Received: by 2002:a24:c888:: with SMTP id w130-v6mr92940itf.78.1532369646020;
- Mon, 23 Jul 2018 11:14:06 -0700 (PDT)
+        bh=iBvXa5QfTkzFv6IL7AlM55eDgTC4xEMygmmp+2yAfBM=;
+        b=JycKFvktvbQ2m1M6zU/QUNru/MRTQPYvK4AV3dAiGqjc+JysmlJqrJkd7gVjSa5gIz
+         JqtTUOl+/c7wUX6VwIGLchGGLCL1Qwe8A939DcNiVGhi+epQd+5i6IlrjRe4rShWUkeb
+         qkeWOIx5tywG/MF23lM7TnNxEHHnEf/XwSTLmTSvVpJmWfNR7i3ep9/UZfdU9rD+cPTa
+         6naRHeRjsOLQ1A1/mWr04UGN0V3Eb7D7vwhBlWWId2pscuIFt0SszSgUTSI+ejvKtQLh
+         g7kNqCHDSBLEYiJfvn7mxzvYoR6dp5Pj3UNr43NbaFACVjlNiEOvexCQfeHDGnmojv5I
+         DC2A==
+X-Gm-Message-State: AOUpUlENSQaTBU8LHACYf6mWyAoofBIwllY2RUo4mtxBAK5NNViGHGLt
+        +u2z7GHl7ntCH5uDr9xZ0p1sdPICXRUiF4E2SSoHCDvFA8A=
+X-Google-Smtp-Source: AAOMgpcoIieZIi1Xxgh80qFuUOBDWVm9QuzIFa0KHghzaLBb8/H9yhBKJIhAL2Iu84yZaEX/2Et1NiDXT7SMcsnfL8M=
+X-Received: by 2002:a0d:c5c7:: with SMTP id h190-v6mr7639159ywd.421.1532369674500;
+ Mon, 23 Jul 2018 11:14:34 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180626205438.110764-1-bmwill@google.com> <20180627223023.49659-1-bmwill@google.com>
- <20180627223023.49659-9-bmwill@google.com> <CACsJy8CJG5RCL40vCbNnQMHmtjQmch9qntxeh_Pt6ZUfnRN9uA@mail.gmail.com>
- <20180723175318.GB25435@google.com>
-In-Reply-To: <20180723175318.GB25435@google.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 23 Jul 2018 20:13:39 +0200
-Message-ID: <CACsJy8COu2zmWWuodww=ZdURZBw6CVx9ibbfeAJ0Q4pQ-ng_uA@mail.gmail.com>
-Subject: Re: [PATCH v6 8/8] fetch-pack: implement ref-in-want
+References: <CACsJy8CJG5RCL40vCbNnQMHmtjQmch9qntxeh_Pt6ZUfnRN9uA@mail.gmail.com>
+ <20180723175635.31323-1-bmwill@google.com>
+In-Reply-To: <20180723175635.31323-1-bmwill@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 23 Jul 2018 11:14:23 -0700
+Message-ID: <CAGZ79kbVk=FHp3RQ3WKsG-_crGkJV32R4gfnJ_ys7tmyvFfiew@mail.gmail.com>
+Subject: Re: [PATCH] fetch-pack: mark die strings for translation
 To:     Brandon Williams <bmwill@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 23, 2018 at 7:53 PM Brandon Williams <bmwill@google.com> wrote:
+On Mon, Jul 23, 2018 at 10:56 AM Brandon Williams <bmwill@google.com> wrote:
 >
-> On 07/22, Duy Nguyen wrote:
-> > On Thu, Jun 28, 2018 at 12:33 AM Brandon Williams <bmwill@google.com> wrote:
-> > > +static void receive_wanted_refs(struct packet_reader *reader, struct ref *refs)
-> > > +{
-> > > +       process_section_header(reader, "wanted-refs", 0);
-> > > +       while (packet_reader_read(reader) == PACKET_READ_NORMAL) {
-> > > +               struct object_id oid;
-> > > +               const char *end;
-> > > +               struct ref *r = NULL;
-> > > +
-> > > +               if (parse_oid_hex(reader->line, &oid, &end) || *end++ != ' ')
-> > > +                       die("expected wanted-ref, got '%s'", reader->line);
-> >
-> > Could you do a follow and wrap all these strings in _() since this one
-> > is already in 'next'?
+
+fetch-pack is listed as a plumbing command, which means its prime consumer
+is supposedly a machine; But fetch-pack is also used by git-fetch that
+is invoked
+by a human, who prefers translations.
+
+.. goes reads code...
+
+This translates protocol v2 messages, and p0 messages are translated already,
+so this just aligns the new protocol to the old protocol w.r.t. i18n.
+
+Sounds good,
+
+Thanks,
+Stefan
+
+[ This message is a gentle hint for better commit messages. ;-) ]
+
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+> ---
+>  fetch-pack.c | 16 ++++++++--------
+>  1 file changed, 8 insertions(+), 8 deletions(-)
 >
-> What criteria is used to determine if something should be translated?
-> To me, this looks like a wire-protocol error which would benefit from
-> not being translated because it would be easier to grep for if it
-> occurs.  That and if a user sees this sort of error I don't think that
-> they could really do anything about it anyway.
-
-Devs are users too and for me, even if I can read English just fine, I
-prefer fully translated interface, not a mix of non-English and
-English. Users can still google around and find out about wanted-ref
-(at least linux users 10 years ago did). If they show up here asking
-for support, we can ask them to translate back if needed (or look into
-.po files). We have the same problem anyway if their bug reports
-contain other non-English strings.
-
-Besides drawing the line "benefit from (not) being translated" varies
-from one developer to another. I think it's just easier and more
-consistent to stick to "if it's not machine-readable (or really meant
-for devs, like BUG()), translate it" and leave it to translators to
-decide.
--- 
-Duy
+> diff --git a/fetch-pack.c b/fetch-pack.c
+> index 0b4a9f288f..51abee6181 100644
+> --- a/fetch-pack.c
+> +++ b/fetch-pack.c
+> @@ -1245,13 +1245,13 @@ static int process_section_header(struct packet_reader *reader,
+>         int ret;
+>
+>         if (packet_reader_peek(reader) != PACKET_READ_NORMAL)
+> -               die("error reading section header '%s'", section);
+> +               die(_("error reading section header '%s'"), section);
+>
+>         ret = !strcmp(reader->line, section);
+>
+>         if (!peek) {
+>                 if (!ret)
+> -                       die("expected '%s', received '%s'",
+> +                       die(_("expected '%s', received '%s'"),
+>                             section, reader->line);
+>                 packet_reader_read(reader);
+>         }
+> @@ -1289,12 +1289,12 @@ static int process_acks(struct packet_reader *reader, struct oidset *common)
+>                         continue;
+>                 }
+>
+> -               die("unexpected acknowledgment line: '%s'", reader->line);
+> +               die(_("unexpected acknowledgment line: '%s'"), reader->line);
+>         }
+>
+>         if (reader->status != PACKET_READ_FLUSH &&
+>             reader->status != PACKET_READ_DELIM)
+> -               die("error processing acks: %d", reader->status);
+> +               die(_("error processing acks: %d"), reader->status);
+>
+>         /* return 0 if no common, 1 if there are common, or 2 if ready */
+>         return received_ready ? 2 : (received_ack ? 1 : 0);
+> @@ -1331,7 +1331,7 @@ static void receive_shallow_info(struct fetch_pack_args *args,
+>
+>         if (reader->status != PACKET_READ_FLUSH &&
+>             reader->status != PACKET_READ_DELIM)
+> -               die("error processing shallow info: %d", reader->status);
+> +               die(_("error processing shallow info: %d"), reader->status);
+>
+>         setup_alternate_shallow(&shallow_lock, &alternate_shallow_file, NULL);
+>         args->deepen = 1;
+> @@ -1346,7 +1346,7 @@ static void receive_wanted_refs(struct packet_reader *reader, struct ref *refs)
+>                 struct ref *r = NULL;
+>
+>                 if (parse_oid_hex(reader->line, &oid, &end) || *end++ != ' ')
+> -                       die("expected wanted-ref, got '%s'", reader->line);
+> +                       die(_("expected wanted-ref, got '%s'"), reader->line);
+>
+>                 for (r = refs; r; r = r->next) {
+>                         if (!strcmp(end, r->name)) {
+> @@ -1356,11 +1356,11 @@ static void receive_wanted_refs(struct packet_reader *reader, struct ref *refs)
+>                 }
+>
+>                 if (!r)
+> -                       die("unexpected wanted-ref: '%s'", reader->line);
+> +                       die(_("unexpected wanted-ref: '%s'"), reader->line);
+>         }
+>
+>         if (reader->status != PACKET_READ_DELIM)
+> -               die("error processing wanted refs: %d", reader->status);
+> +               die(_("error processing wanted refs: %d"), reader->status);
+>  }
+>
+>  enum fetch_state {
+> --
+> 2.18.0.233.g985f88cf7e-goog
+>
