@@ -7,135 +7,87 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6A131F597
-	for <e@80x24.org>; Mon, 23 Jul 2018 12:55:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62C941F597
+	for <e@80x24.org>; Mon, 23 Jul 2018 12:56:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388235AbeGWN4k (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Jul 2018 09:56:40 -0400
-Received: from mail-it0-f54.google.com ([209.85.214.54]:51547 "EHLO
-        mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387883AbeGWN4k (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jul 2018 09:56:40 -0400
-Received: by mail-it0-f54.google.com with SMTP id g14-v6so1306066iti.1
-        for <git@vger.kernel.org>; Mon, 23 Jul 2018 05:55:33 -0700 (PDT)
+        id S2388090AbeGWN5e (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Jul 2018 09:57:34 -0400
+Received: from mail-lf1-f67.google.com ([209.85.167.67]:38466 "EHLO
+        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387898AbeGWN5e (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jul 2018 09:57:34 -0400
+Received: by mail-lf1-f67.google.com with SMTP id a4-v6so392652lff.5
+        for <git@vger.kernel.org>; Mon, 23 Jul 2018 05:56:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=G+1n/CEEGzZjfOLWoQuQMXm/06lfsXmbsLMJzFNGz7o=;
-        b=o7jPK/QQRGjZ/+72PAsQetAIaoE6qAQbvcqINDA+t5qc4o8mo7RQg+1BO/l+x/H3Aq
-         PGDQ74yPe25nADtWQ4CJfko5UuPTMMU1fK7+y6bB1UEti/q1GLGYjkCZQrhov3KhfE7m
-         4iQZyRJ+pD1oN6TfqD0JVViTjlprF8oYWjYsPJXOCPcZ7haIJ6sqkLR9ByFnVy+M45c3
-         DgJ7l0Dhe14e4Gv8I/ItHrq0tm+tiRDOE7C2Rd9FHNdCODQVfIb5leIWPl1NfcduVx5Q
-         IV+OrK5q+FbmZQu51EBjmCEakunsGqkPDyieetZhaZsu9rtvNGn2w3pGQ7aj7hc9dFpX
-         AALQ==
+        bh=FbcimXtonw/KtYwCTuoj6BqZqdVpmp3RC8xP3WP/vA0=;
+        b=mIdyZQ9AoLktAsCpL42h8zj/rn4IVaXLXSotYL9hpxpa7x+y5D9SkIA12ekd56BHKe
+         pGzBpfcDwkOxtPQ6783lNhzqKpanWKezPKCBDNb611CiyRUuu7BUgCyGnIkUzZn9aMzt
+         MuyvtVLT1CKLVeQjgRKj4cxmr7LsjBJ7weGR9VPS7QLIMO5mC1SutER/lrHE06KCy7Nq
+         UnAFxIO/sY9XDrcvRl8pekwvamPUKvbG/ZOJljUOenFdpbmskWnVAs0fxlZm8RR4wJOu
+         mCGzTVkZAR7Wi1YO3Df0Sd39pbYqY0+8WTn32LzzG4T9Q5iqFkDxOcHt0U05LTXTLnwc
+         8VOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=G+1n/CEEGzZjfOLWoQuQMXm/06lfsXmbsLMJzFNGz7o=;
-        b=KOOZsvdRA6mwOeJo8/R13EAe5WbqJm/gdlOg5vm/SBxsH4Q3vhcKXaveb38HEowP8M
-         FpaWtJk8uX9XWDMjN6TnUmie8ZM4BGAtKmZ3XyMLPqwuTlWIcl1ZjDfnTY95dZnlMUis
-         vpnNTsTjfbjQtQJNM66gdRltefTEZ02kPeNC83+eegyptn8St2yZzP8EgQHL3lAQZ3bk
-         wQwz5UQX+Xa2P2aNqYzFKOJvIZ6nLRrZVlwP/nJU/IDJ8dET1fi4SCy9rU0LHRbpknIs
-         qQ1EEn/6xRJ5ceRtBqXV0NlFEG7LVlSf4NyOmbs8AAPH12iGLOAtzMyRmToisWV31zD3
-         Ca2w==
-X-Gm-Message-State: AOUpUlEC64PNHtsz9tnXQDPvM0tD0bpwGfeRKc8zwjpXY3CLRzbCL1mc
-        6L0fZtsnYixtfp4aLiydxxbx6SwFPcFhgMzo1Ms=
-X-Google-Smtp-Source: AAOMgpfwQoMvfMm659VILnqCGJqQAfWUUVhWddQKXb9TD5KTDtFDuAFpooknklVu6qeO++akaKEiCqIuUbH6l1yejF4=
-X-Received: by 2002:a24:2143:: with SMTP id e64-v6mr10728346ita.66.1532350532595;
- Mon, 23 Jul 2018 05:55:32 -0700 (PDT)
+        bh=FbcimXtonw/KtYwCTuoj6BqZqdVpmp3RC8xP3WP/vA0=;
+        b=DOwmieZbkdoYYkdKDWu4luyjMiFv9sU1SAs5L2mACWhRVWj/PY6OsZDAzoXP5YMsiq
+         pEqeJxyNjMxMrAZYPZhmduCEVJCY+/6ZgvISG6o+XhQgKLMap2Fv4PsbHNCyqQYcLN2R
+         dXbent59sbhEpyUnwamJK/9JF/aJ/RbWMpjkbl5cLyyYzjRX9YRPPueuC8hTIeoyvOL7
+         b6Qdtbtv0rHH+NrkHGWIKqWZIvJwJdfbTA6GDeyKWMldV1GEWtC4tGZ7KVx/0w2wwSwW
+         d4FMeY5S4RgWv5zBxzAybBKa03VaPWy4FaiDrVIpDxn5c2qW1VynmQxWQGx+eycyqWV8
+         5gWQ==
+X-Gm-Message-State: AOUpUlGrd4/87Wz7GRpCFqYC5jKo/uQq5MrC61PX7/yYuYEGZ3jm1AD+
+        piqn6yq1hNfpU6UheFlI79smUM1Z0asXPQYhfrzTIQ==
+X-Google-Smtp-Source: AAOMgpdYBQ9lxHRljDDi3jHtKYx95/sYgt8km3Z8AU/TY7AjNBSIV+30Z+ET8jeHM82YDes5O1iWOXDlzw+IzdCzl3Y=
+X-Received: by 2002:a19:a04c:: with SMTP id j73-v6mr7708387lfe.123.1532350585910;
+ Mon, 23 Jul 2018 05:56:25 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180609205628.GB38834@genre.crustytoothpaste.net>
- <20180609224913.GC38834@genre.crustytoothpaste.net> <20180611192942.GC20665@aiede.svl.corp.google.com>
- <20180720215220.GB18502@genre.crustytoothpaste.net> <nycvar.QRO.7.76.6.1807220036340.71@tvgsbejvaqbjf.bet>
- <20180721235941.GG18502@genre.crustytoothpaste.net> <CANgJU+X39NoEoMyLu+FX38=x19LrRqatz_dUpUAc+WFV+Uw+=A@mail.gmail.com>
- <98111891-a605-1cfd-e92b-a3b5b4186ac2@gmail.com>
-In-Reply-To: <98111891-a605-1cfd-e92b-a3b5b4186ac2@gmail.com>
-From:   demerphq <demerphq@gmail.com>
-Date:   Mon, 23 Jul 2018 14:55:21 +0200
-Message-ID: <CANgJU+U+XEpBLQAZKkNTqcAKTfKqMStNBk2pr7wjLq2q+BELww@mail.gmail.com>
-Subject: Re: Hash algorithm analysis
-To:     Sitaram Chamarty <sitaramc@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Git <git@vger.kernel.org>,
-        Linus Torvalds <torvalds@linux-foundation.org>, agl@google.com,
-        keccak@noekeon.org
+References: <a7e0bcd5-5bef-097e-f032-d152d51515aa@gmail.com>
+ <20180619114143.206568-1-dstolee@microsoft.com> <CACsJy8AkUyU+yECMSoNUm=SSNn+zXN5QbWEvYjkcngp0PzJ9PA@mail.gmail.com>
+ <d5511564-ef51-7e6c-521d-b9ccc2af1773@gmail.com>
+In-Reply-To: <d5511564-ef51-7e6c-521d-b9ccc2af1773@gmail.com>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Mon, 23 Jul 2018 14:56:14 +0200
+Message-ID: <CAM0VKj=CuhY1VB6Hepe0an5pJvTufinewZrLkR2ofHc=HU962A@mail.gmail.com>
+Subject: Re: [PATCH 01/15] contrib: add cocci script to replace index compat macros
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Git mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 23 Jul 2018 at 14:48, Sitaram Chamarty <sitaramc@gmail.com> wrote:
-> On 07/23/2018 06:10 PM, demerphq wrote:
-> > On Sun, 22 Jul 2018 at 01:59, brian m. carlson
-> > <sandals@crustytoothpaste.net> wrote:
-> >> I will admit that I don't love making this decision by myself, because
-> >> right now, whatever I pick, somebody is going to be unhappy.  I want to
-> >> state, unambiguously, that I'm trying to make a decision that is in the
-> >> interests of the Git Project, the community, and our users.
-> >>
-> >> I'm happy to wait a few more days to see if a consensus develops; if so,
-> >> I'll follow it.  If we haven't come to one by, say, Wednesday, I'll make
-> >> a decision and write my patches accordingly.  The community is free, as
-> >> always, to reject my patches if taking them is not in the interest of
-> >> the project.
-> >
-> > Hi Brian.
-> >
-> > I do not envy you this decision.
-> >
-> > Personally I would aim towards pushing this decision out to the git
-> > user base and facilitating things so we can choose whatever hash
-> > function (and config) we wish, including ones not invented yet.
-> >
-> > Failing that I would aim towards a hashing strategy which has the most
-> > flexibility. Keccak for instance has the interesting property that its
-> > security level is tunable, and that it can produce aribitrarily long
-> > hashes.  Leaving aside other concerns raised elsewhere in this thread,
-> > these two features alone seem to make it a superior choice for an
-> > initial implementation. You can find bugs by selecting unusual hash
-> > sizes, including very long ones, and you can provide ways to tune the
-> > function to peoples security and speed preferences.  Someone really
-> > paranoid can specify an unusually large round count and a very long
-> > hash.
-> >
-> > Also frankly I keep thinking that the ability to arbitrarily extend
-> > the hash size has to be useful /somewhere/ in git.
+On Tue, Jun 19, 2018 at 5:21 PM Derrick Stolee <stolee@gmail.com> wrote:
 >
-> I would not suggest arbitrarily long hashes.  Not only would it
-> complicate a lot of code, it is not clear that it has any real benefit.
+> On 6/19/2018 10:51 AM, Duy Nguyen wrote:
 
-It has the benefit of armoring the code for the *next* hash change,
-and making it clear that such decisions are arbitrary and should not
-be depended on.
+> > Do we run 'make coccicheck'
+> > automatically somewhere? If true, I need to move this script elsewhere
+> > because it's meant to run manually. You run it when you intend to do
+> > more manual fixups afterwards. For builtin/, I think I'll wait until
+> > 'struct repository *' conversion is complete then maybe fix them one
+> > by one.
+>
+> I don't think it is part of the CI runs, but some community members run
+> this themselves on 'next' and 'master'.
 
-> Plus, the code contortions required to support arbitrarily long hashes
-> would be more susceptible to potential bugs and exploits, simply by
-> being more complex code.  Why take chances?
+Travis CI does run 'make coccicheck' already, that's the
+"StaticAnalysis" build job.
 
-I think the benefits would outweight the risks.
+Alas, it's not particularly useful as it is, because Coccinelle's and
+in turn 'make coccicheck's exit code only indicates that Coccinelle
+managed to finish its analysis without any errors (e.g. no unknown
+--options, no missing files, no syntax errors in the semantic patches,
+etc.), but it doesn't indicate whether it found any undesired code
+patterns to transform or not.
 
-> I would suggest (a) hash size of 256 bits and (b) choice of any hash
-> function that can produce such a hash.  If people feel strongly that 256
-> bits may also turn out to be too small (really?) then a choice of 256 or
-> 512, but not arbitrary sizes.
-
-I am aware of too many systems that cannot change their size and are
-locked into woefully bad decisions that were made long ago to buy
-this.
-
-Making it a per-repo option, would eliminate assumptions and make for
-a more secure and flexible tool.
-
-Anyway, I am not going to do the work so my opinion is worth the price
-of the paper I sent it on. :-)
-
-cheers,
-Yves
-
--- 
-perl -Mre=debug -e "/just|another|perl|hacker/"
+I have been sitting on two patches implementing two different
+approaches to improve this situation for several months now (sorry :)
+I think I'll just pick the shorter-simpler of the two, and submit it
+shortly.
