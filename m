@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-0.4 required=3.0 tests=BAYES_00,DATE_IN_PAST_96_XX,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 70FC01F597
-	for <e@80x24.org>; Sun, 29 Jul 2018 00:42:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01F2C1F597
+	for <e@80x24.org>; Sun, 29 Jul 2018 00:43:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731615AbeG2CLA (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Jul 2018 22:11:00 -0400
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:46367 "EHLO
+        id S1731655AbeG2CLC (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Jul 2018 22:11:02 -0400
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:36722 "EHLO
         mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731550AbeG2CLA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Jul 2018 22:11:00 -0400
-Received: by mail-pl0-f65.google.com with SMTP id t17-v6so3876625ply.13
-        for <git@vger.kernel.org>; Sat, 28 Jul 2018 17:42:36 -0700 (PDT)
+        with ESMTP id S1731550AbeG2CLB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Jul 2018 22:11:01 -0400
+Received: by mail-pl0-f65.google.com with SMTP id e11-v6so3882424plb.3
+        for <git@vger.kernel.org>; Sat, 28 Jul 2018 17:42:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=yOWBdqj3t5ZQgZHlcAPCTbE8ji5jfCxq91HtdWE3WDQ=;
-        b=RmMKx7nNT8Iygyqiswp1Vmb+6mryeaS7cmGbw8dmRLP6AxRlMFub9dRbHyzMMdwhfJ
-         8r2fiJ3rVR4qzrr4SqJHPDN1GmkOWB+wfijz9zq2So5BoP5YPwIThO/FNneR2kI8MwFH
-         zwRqRF5LgnyWzaH3YDqV11Y7ebthVv8eiqPOMbJlHrIsDRa2zP3nPZ/39B6JycGPS4Bh
-         +LyNCgeJlmymY3sKqEF/grEOHcQo6fFKM6RfGeBskGA6LuJc7BfOsn6zi0x2/n/a7k9E
-         BgPoVOM8unX1E+5k8e1RzRXWx+OVS3yDe6Xmy77KVJG1nmawCF3xIqJlm2D5xzQbvv6f
-         o5HQ==
+        bh=YavvN6EoC+BK4WCPpt04NcCxhIVwJ5TEvqWsRz+dVqU=;
+        b=Fl5VFShWu+D0lrBxtP13Uxvo42A8vl9/0fRz2NVnDHe/+SrmV3cQiZuqUN5ZWM4umw
+         Nzrcccmqbnb4PDaPMiU4ivonOcC9SofmUL8ZKeRgPcrE8FCfbPHWTjZncBcZr8agPYoL
+         FWYvM3R4xzruyU5MQwt5qcZMZu9F0ZKiuPq5BO2ZHsRdnmHXuVFBS439ueT8EhCnffVt
+         tqhOiqRYvZN+OKDlrpMVVmnlPXdVyqD8mMgq3ipA78XUiI9imiVh9MphaN3gHeVtokhq
+         XQLGtbMJN/FKvZSBwsL8wTUbmOVh48g8LKmSzx+EXQ0VVEJ5uJ/8lggYQYazhsUFCK3e
+         prbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=yOWBdqj3t5ZQgZHlcAPCTbE8ji5jfCxq91HtdWE3WDQ=;
-        b=kleCgk5EytxJ7KUe7p4NeTQStWLR1pmNMXRlaFJ7vuyw5FwG0tKwFL7pLXwfwxIQ0I
-         5y65/f+O3NwGvf9PJC/dpKVFOjk08XD8YOpqhm8z5BTb0Dgjre6gXCej9NrgckQPYnYh
-         3MLktIhw0cpVDxkmexiQF3d6yPsmekzrJouHlDqFQJPpcem1O2To8BvztL87/wCIBR9v
-         Y9OAg6kAwGd5YXDZfE4hG98ek9jSaF60zzzv3cCxjYQgVsnWUAAR4evYC1JaPAL+ji6O
-         uVYHTcPITyhpuTwxjjWOpoIBP654KiwJwN3qJu9UaXWrC+RiMW11ZQgQcWbHRcIGUx9Q
-         vaPQ==
-X-Gm-Message-State: AOUpUlFEhMWNk/FhrXPN4c/E/BStYRjnGUS3abMDUE0PKu5GeKNYzrJg
-        W8wp3uJvi8BhyfwfPI+stNoAiYj5
-X-Google-Smtp-Source: AAOMgpc5jCOvh2FzWhvAmBYqW9XYios1dgPhe/NvbyjUpOP+8wu4ocxag/Zov6qs9eUjMVrjsc0pvA==
-X-Received: by 2002:a17:902:b608:: with SMTP id b8-v6mr11362860pls.312.1532824955804;
-        Sat, 28 Jul 2018 17:42:35 -0700 (PDT)
+        bh=YavvN6EoC+BK4WCPpt04NcCxhIVwJ5TEvqWsRz+dVqU=;
+        b=qiNXOYktHDek2mqcLrvLQ9XrwRvcqTOdG2Q1cIpo66sHdXgcpjw0Mio4gCdqqD7+o3
+         3MbEs+p00CzL5umFMGfAr7BKdpYbG9+beH8exDGIMkiju7MR27JS95Gtc6GWbhRLJ4zF
+         hXe1C7++x4WPla8EUoHgk8sktlHemhxiCaxXr2fSbxUjkdVJpSbLL4mZ2vW99GKjvXuF
+         3UjmywmvpxVou82qbwZDJmFSP2LcYUMuKXxMjTKwkHxxzaSLq6hSR+ggtBQbvKOfXJjF
+         a1csXPHGg9W4xM5bWuJYVRddJCoHOoQvUW4ZZv4Nx1wzv0OrxeKpjsyaPfYuqIm2NhN9
+         RHDw==
+X-Gm-Message-State: AOUpUlGjCA5eKAxdB0Oe+yojndsDfWGDr7otU79t9LEauMUfN//8V5aL
+        GmgmXuS6BssAn5xmeAeL3HJzRERd
+X-Google-Smtp-Source: AAOMgpcRICFxOhp+iNx+Us4WLGh2iDyzB5+qMs1ygIT5oMxbP4Y9AAi0q4tptLjrA2hrEvjSoaCORw==
+X-Received: by 2002:a17:902:740a:: with SMTP id g10-v6mr11321310pll.204.1532824956694;
+        Sat, 28 Jul 2018 17:42:36 -0700 (PDT)
 Received: from localhost.localdomain ([104.132.11.104])
         by smtp.gmail.com with ESMTPSA id a17-v6sm13034856pfg.106.2018.07.28.17.42.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 28 Jul 2018 17:42:35 -0700 (PDT)
+        Sat, 28 Jul 2018 17:42:36 -0700 (PDT)
 From:   Samuel Lijin <sxlijin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Samuel Lijin <sxlijin@gmail.com>
-Subject: [PATCH v4 0/4] Rerolling patch series to fix t7501
-Date:   Sun, 22 Jul 2018 22:08:59 -0400
-Message-Id: <20180723020903.22435-1-sxlijin@gmail.com>
+Subject: [PATCH v4 1/4] t7501: add coverage for flags which imply dry runs
+Date:   Sun, 22 Jul 2018 22:09:00 -0400
+Message-Id: <20180723020903.22435-2-sxlijin@gmail.com>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20180715110807.25544-1-sxlijin@gmail.com>
 References: <20180715110807.25544-1-sxlijin@gmail.com>
@@ -62,21 +62,193 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Following up on Junio's review from last time.
+The behavior of git commit, when doing a dry run, changes if there are
+unresolved/resolved merge conflicts, but the test suite currently only
+asserts that `git commit --dry-run` succeeds when all merge conflicts
+are resolved.
 
-Samuel Lijin (4):
-  t7501: add coverage for flags which imply dry runs
-  wt-status: rename commitable to committable
-  wt-status: teach wt_status_collect about merges in progress
-  commit: fix exit code when doing a dry run
+Add tests to document the behavior of all flags (i.e. `--dry-run`,
+`--short`, `--porcelain`, and `--long`) which imply a dry run when (1)
+there are only unresolved merge conflicts, (2) when there are both
+unresolved and resolved merge conflicts, and (3) when all merge
+conflicts are resolved.
 
- builtin/commit.c  |  32 +++---
- ref-filter.c      |   3 +-
- t/t7501-commit.sh | 150 ++++++++++++++++++++++++---
- wt-status.c       | 258 ++++++++++++++++++++++++----------------------
- wt-status.h       |  13 +--
- 5 files changed, 298 insertions(+), 158 deletions(-)
+When testing behavior involving resolved merge conflicts, resolve merge
+conflicts by replacing each merge conflict with completely new contents,
+rather than choosing the contents associated with one of the parent
+commits, since the latter decision has no bearing on the behavior of a
+dry run commit invocation.
 
+Verify that a dry run invocation of git commit does not create a new
+commit by asserting that HEAD has not changed, instead of by crafting
+the commit.
+
+Signed-off-by: Samuel Lijin <sxlijin@gmail.com>
+---
+ t/t7501-commit.sh | 146 +++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 132 insertions(+), 14 deletions(-)
+
+diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
+index 9dbbd01fc..e49dfd0a2 100755
+--- a/t/t7501-commit.sh
++++ b/t/t7501-commit.sh
+@@ -664,24 +664,142 @@ test_expect_success '--only works on to-be-born branch' '
+ 	test_cmp expected actual
+ '
+ 
+-test_expect_success '--dry-run with conflicts fixed from a merge' '
+-	# setup two branches with conflicting information
+-	# in the same file, resolve the conflict,
+-	# call commit with --dry-run
+-	echo "Initial contents, unimportant" >test-file &&
+-	git add test-file &&
++test_expect_success 'prepare commits that can be used to trigger a merge conflict' '
++	# setup two branches with conflicting contents in two paths
++	echo "Initial contents, unimportant" | tee test-file1 test-file2 &&
++	git add test-file1 test-file2 &&
+ 	git commit -m "Initial commit" &&
+-	echo "commit-1-state" >test-file &&
+-	git commit -m "commit 1" -i test-file &&
++	echo "commit-1-state" | tee test-file1 test-file2 &&
++	git commit -m "commit 1" -i test-file1 test-file2 &&
+ 	git tag commit-1 &&
+ 	git checkout -b branch-2 HEAD^1 &&
+-	echo "commit-2-state" >test-file &&
+-	git commit -m "commit 2" -i test-file &&
+-	! $(git merge --no-commit commit-1) &&
+-	echo "commit-2-state" >test-file &&
+-	git add test-file &&
++	echo "commit-2-state" | tee test-file1 test-file2 &&
++	git commit -m "commit 2" -i test-file1 test-file2 &&
++	git tag commit-2
++'
++
++test_expect_success '--dry-run with only unresolved merge conflicts' '
++	git reset --hard commit-2 &&
++	test_must_fail git merge --no-commit commit-1 &&
++	test_must_fail git commit --dry-run &&
++	git rev-parse commit-2 >expected &&
++	git rev-parse HEAD >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success '--short with only unresolved merge conflicts' '
++	git reset --hard commit-2 &&
++	test_must_fail git merge --no-commit commit-1 &&
++	test_must_fail git commit --short &&
++	git rev-parse commit-2 >expected &&
++	git rev-parse HEAD >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success '--porcelain with only unresolved merge conflicts' '
++	git reset --hard commit-2 &&
++	test_must_fail git merge --no-commit commit-1 &&
++	test_must_fail git commit --porcelain &&
++	git rev-parse commit-2 >expected &&
++	git rev-parse HEAD >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success '--long with only unresolved merge conflicts' '
++	git reset --hard commit-2 &&
++	test_must_fail git merge --no-commit commit-1 &&
++	test_must_fail git commit --long &&
++	git rev-parse commit-2 >expected &&
++	git rev-parse HEAD >actual &&
++	test_cmp expected actual
++'
++
++test_expect_failure '--dry-run with resolved and unresolved merge conflicts' '
++	git reset --hard commit-2 &&
++	test_must_fail git merge --no-commit commit-1 &&
++	echo "resolve one merge conflict" >test-file1 &&
++	git add test-file1 &&
++	test_must_fail git commit --dry-run &&
++	git rev-parse commit-2 >expected &&
++	git rev-parse HEAD >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success '--short with resolved and unresolved merge conflicts' '
++	git reset --hard commit-2 &&
++	test_must_fail git merge --no-commit commit-1 &&
++	echo "resolve one merge conflict" >test-file1 &&
++	git add test-file1 &&
++	test_must_fail git commit --short &&
++	git rev-parse commit-2 >expected &&
++	git rev-parse HEAD >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success '--porcelain with resolved and unresolved merge conflicts' '
++	git reset --hard commit-2 &&
++	test_must_fail git merge --no-commit commit-1 &&
++	echo "resolve one merge conflict" >test-file1 &&
++	git add test-file1 &&
++	test_must_fail git commit --porcelain &&
++	git rev-parse commit-2 >expected &&
++	git rev-parse HEAD >actual &&
++	test_cmp expected actual
++'
++
++test_expect_failure '--long with resolved and unresolved merge conflicts' '
++	git reset --hard commit-2 &&
++	test_must_fail git merge --no-commit commit-1 &&
++	echo "resolve one merge conflict" >test-file1 &&
++	git add test-file1 &&
++	test_must_fail git commit --long &&
++	git rev-parse commit-2 >expected &&
++	git rev-parse HEAD >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success '--dry-run with only resolved merge conflicts' '
++	git reset --hard commit-2 &&
++	test_must_fail git merge --no-commit commit-1 &&
++	echo "resolve all merge conflicts" | tee test-file1 test-file2 &&
++	git add test-file1 test-file2 &&
+ 	git commit --dry-run &&
+-	git commit -m "conflicts fixed from merge."
++	git rev-parse commit-2 >expected &&
++	git rev-parse HEAD >actual &&
++	test_cmp expected actual
++'
++
++test_expect_failure '--short with only resolved merge conflicts' '
++	git reset --hard commit-2 &&
++	test_must_fail git merge --no-commit commit-1 &&
++	echo "resolve all merge conflicts" | tee test-file1 test-file2 &&
++	git add test-file1 test-file2 &&
++	git commit --short &&
++	git rev-parse commit-2 >expected &&
++	git rev-parse HEAD >actual &&
++	test_cmp expected actual
++'
++
++test_expect_failure '--porcelain with only resolved merge conflicts' '
++	git reset --hard commit-2 &&
++	test_must_fail git merge --no-commit commit-1 &&
++	echo "resolve all merge conflicts" | tee test-file1 test-file2 &&
++	git add test-file1 test-file2 &&
++	git commit --porcelain &&
++	git rev-parse commit-2 >expected &&
++	git rev-parse HEAD >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success '--long with only resolved merge conflicts' '
++	git reset --hard commit-2 &&
++	test_must_fail git merge --no-commit commit-1 &&
++	echo "resolve all merge conflicts" | tee test-file1 test-file2 &&
++	git add test-file1 test-file2 &&
++	git commit --long &&
++	git rev-parse commit-2 >expected &&
++	git rev-parse HEAD >actual &&
++	test_cmp expected actual
+ '
+ 
+ test_done
 -- 
 2.18.0
 
