@@ -2,82 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4973A1F597
-	for <e@80x24.org>; Mon, 23 Jul 2018 16:32:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF4661F597
+	for <e@80x24.org>; Mon, 23 Jul 2018 16:57:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388722AbeGWRep (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Jul 2018 13:34:45 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:55364 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388147AbeGWReo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jul 2018 13:34:44 -0400
-Received: by mail-it0-f67.google.com with SMTP id 16-v6so2420953itl.5
-        for <git@vger.kernel.org>; Mon, 23 Jul 2018 09:32:44 -0700 (PDT)
+        id S2388744AbeGWR7c (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Jul 2018 13:59:32 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:33449 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388236AbeGWR7c (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jul 2018 13:59:32 -0400
+Received: by mail-pf1-f196.google.com with SMTP id b17-v6so210599pfi.0
+        for <git@vger.kernel.org>; Mon, 23 Jul 2018 09:57:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=I3hwTIu3ZWgfzECC7+hTKa7J41mpD+xRgFuM6dIlmuo=;
-        b=J5IF4weKozT0NO/zECqITVWdF2EITdPyxlRHFYC+Iq6NaN1jn+tnmhwL/j+A1DA++A
-         jqMWu5drOR9rTJnDZwAu3p8TOiFVa6OAOKSjSQ80ws15IZm+YMmkdsemm7cr7B9gwtA6
-         aOqq8553VyEbbEgcWI9cDXeDMfjAv3W6S/cMjKUC2GyGgy1kXvSRTB8G/2fJEBREFqGq
-         gQeMWsDLZUIiy9WUcEbi/OKZAvUcfDiNS8gatE9qSZTEhJXJmPunPV79FuSvsbp4lwcR
-         cb9i33XWQtAQE9l62OdnlUwKHGV+aiEkKxLmBtOWvD8ozMZnczMfGyZv2PkWyvyIUOr6
-         5qtg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=NwGoIz2cSDcnYAAPj9loM6/tO1lCeZHY8qvDyIoDA4k=;
+        b=WR9ffq9Alk583HyX6oSuU8i2WoaTZVXg/gz161dg/4u5MHm6HI07hRu/pOhRY2TgA2
+         LQD90gRHZ9JZFJBg1QTO59QFKeViDbwhgX2DsEWeGB9fTEFD12jP4ZRJiSqO+BrDDpdp
+         tn/C9wISbIGicqRUqMY5TxvWNEzPXIDUEA9dhVsoM611zkA3zlYSrJkferUdtDNgishq
+         KB3XkDB5RU9fGC0lqACZ9fuaEGqvdkEW2fRm3zA8y7zCX/GE0YPeYiFgiObC7tzf+4Lq
+         mihQw5Gl3bbIzzgtXT0khRz4pkS1RqlwMmU1qiChrbPyX8yf9fjgGe09HAjqsiDAMY7t
+         Li/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=I3hwTIu3ZWgfzECC7+hTKa7J41mpD+xRgFuM6dIlmuo=;
-        b=n5+CL4Vz/OoF5ukK3Yyk4arDPVlr81VL2RUTM4LzdgzVIKreVjGRu3n/qpmcnsrPB5
-         uEXu1Nts/wRD90AHWVFTxEG1RtIAiMcWz0pqbwjsKzDkOHEeVuGNWDtxVCSwNCqUe3Xy
-         /HGStJO9lTVkPMOgTHBvlD89DB/gJ8CNNNK1VCMkQiITp2ElJKvG86tZTc/SCUQaE5+S
-         v3f2YZZoB4HEVLrV0yv1cl9/w99pCut6BENDukNYtZKaR8ttiHYM0Wkdh4gSX0JM9fmg
-         ilp1dSJBVdZqToHSExIK6UFz7c8TBp5wR5dNw6RsuJTYwGJfK4+wSv8Fykzh9Ekt1Gc5
-         yXtw==
-X-Gm-Message-State: AOUpUlHDJW7HHS+e1n7LlaehhYbVh2aaDI1mYZyHMSVY90vv5JyCjey7
-        4DSGf/JOJbxYnqUPJmUarzscMaynxX8P74yhEJhVLA==
-X-Google-Smtp-Source: AAOMgpfqJlBlxvOBjhfGP9pZwzJkHxlMuzrk8NAq6fWwsWqV58k3iqNKj51+V9FqWp+fkNzVHcG38ecSMKGCgQBCjgU=
-X-Received: by 2002:a24:610d:: with SMTP id s13-v6mr11006440itc.68.1532363563881;
- Mon, 23 Jul 2018 09:32:43 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=NwGoIz2cSDcnYAAPj9loM6/tO1lCeZHY8qvDyIoDA4k=;
+        b=EDyLyLhMyBaBeGVS3V38+sc8Y9oA+6MQxlyuVGQEg8j3LL/CfRnEKA3dodSFV1Njoe
+         +/aO5iQgNGPjhypys83WkIwR9fGytgF8ROjqWGoaDYCl4noN3g/FDOvTDftY+oWsSXLZ
+         KbIqjIpYORy8Hnfustiv0q0CL0Y2W6oygRnDR8qObD5TgJC7qodAG4CUOK4LMa6tUdzO
+         GAthznYSqYrdKIkD9XTlJI9crVPBs6v1dGnfR7VQfx7k2ULwyuwiIOORDMNj8HOBSHjU
+         Wu7Ydv8wrqIxdaoZdZCROEyiAjkOjvvHon43eyStWacJNn17vNZMxJ/YhT5zDhdeRRea
+         0Kbg==
+X-Gm-Message-State: AOUpUlFaKGpqz93H17XAUKL7x+lWvrszQ+HY1h8o60PHkY8o7iY5xfkQ
+        Xq4EeWYWAcNHpplEoKqpoNDpnJBB
+X-Google-Smtp-Source: AAOMgpfej8sHMa6R9DhgWBEud8I25AI/bDE1dqtwiO5UOI4rjvomr2N63QHVPtITEcGG8EdwWjfztw==
+X-Received: by 2002:aa7:82c3:: with SMTP id f3-v6mr13959647pfn.136.1532365045720;
+        Mon, 23 Jul 2018 09:57:25 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id e8-v6sm13280891pgi.24.2018.07.23.09.57.24
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 23 Jul 2018 09:57:25 -0700 (PDT)
+Date:   Mon, 23 Jul 2018 09:57:19 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/9] contrib: add a script to initialize VS Code
+ configuration
+Message-ID: <20180723165719.GA16420@aiede.svl.corp.google.com>
+References: <pull.2.git.gitgitgadget@gmail.com>
+ <e2e449a00385531d326d6811a871dde59624b818.1532353966.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-References: <20180722095717.17912-1-sunshine@sunshineco.com>
-In-Reply-To: <20180722095717.17912-1-sunshine@sunshineco.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 23 Jul 2018 18:32:18 +0200
-Message-ID: <CACsJy8BgAMYykkNOJc5NgMj-X6SMyskU3iCzTKnL0CLRTdF2oA@mail.gmail.com>
-Subject: Re: [PATCH 00/14] format-patch: add --interdiff and --range-diff options
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e2e449a00385531d326d6811a871dde59624b818.1532353966.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jul 22, 2018 at 11:57 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
->
-> When re-submitting a patch series, it is often helpful (for reviewers)
-> to include an interdiff or range-diff against the previous version.
-> Doing so requires manually running git-diff or git-range-diff and
-> copy/pasting the result into the cover letter of the new version.
->
-> This series automates the process by introducing git-format-patch
-> options --interdiff and --range-diff which insert such a diff into the
-> cover-letter or into the commentary section of the lone patch of a
-> 1-patch series. In the latter case, the interdiff or range-diff is
-> indented to avoid confusing git-am and human readers.
+Hi,
 
-I gave up after 10/14. But what I've seen is nice (yes I have a couple
-comments here and there but you probably won't need to update
-anything).
--- 
-Duy
+Thanks for working on this.
+
+Johannes Schindelin via GitGitGadget wrote:
+
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> VS Code is a lightweight but powerful source code editor which runs on
+> your desktop and is available for Windows, macOS and Linux. Among other
+> languages, it has support for C/C++ via an extension.
+
+This doesn't really seem relevant to the change.  The relevant bits
+are that (1) VS Code is a popular source code editor, and that (2)
+it's one worth recommending to newcomers.
+
+> To start developing Git with VS Code, simply run the Unix shell script
+> contrib/vscode/init.sh, which creates the configuration files in
+> .vscode/ that VS Code consumes.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+
+This doesn't tell me what the patch will actually do.
+
+VSCode is an editor.  Is the idea that this will help configure the
+editor to do the right thing with whitespace or something?  Or does it
+configure IDE features to build git?
+
+Thanks,
+Jonathan
