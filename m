@@ -2,154 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A28B31F597
-	for <e@80x24.org>; Mon, 23 Jul 2018 18:22:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BAB3F1F597
+	for <e@80x24.org>; Mon, 23 Jul 2018 18:23:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388247AbeGWTYg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Jul 2018 15:24:36 -0400
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:43792 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388026AbeGWTYg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jul 2018 15:24:36 -0400
-Received: by mail-qt0-f195.google.com with SMTP id f18-v6so1586269qtp.10
-        for <git@vger.kernel.org>; Mon, 23 Jul 2018 11:22:08 -0700 (PDT)
+        id S2388265AbeGWT0O (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Jul 2018 15:26:14 -0400
+Received: from mail-io0-f175.google.com ([209.85.223.175]:44759 "EHLO
+        mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388096AbeGWT0O (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jul 2018 15:26:14 -0400
+Received: by mail-io0-f175.google.com with SMTP id q19-v6so1331571ioh.11
+        for <git@vger.kernel.org>; Mon, 23 Jul 2018 11:23:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=/TjuROWhAQVgLktLA+T4BOezgAEAYx6A7fZQem5LwGk=;
-        b=ibxeDs3YtemSTe+0KEpSWt/enPnjtjDQ1wS/28faW7pK26S+BnGAwMaWfgqptcetfO
-         E0dmOMe7aGdA2m9oxARImWgIH6fTuraAkGGSSQ7Upmqm2ZlZaor5A5go1VVTUjScQMdn
-         dzMQvKxh/ZeCsJ8wZaAhEQnWtJtdaUM7w8izqJbDD2pnqcCIqliKnuJE3jv+g8AjfkId
-         kpleAbFKpaSIA1ndmYKPsfp/0IZyFBoLbvlT44gx9U/ZdSRNWCBOT9cZlBd2ILqJKYOl
-         dp5TzgDszVRcXhs3HXUXnT7N36b4fikUMTLO0hDzcxfyFJN7Z01vryJV5hXevroOcD+a
-         wf9Q==
+        d=linux-foundation.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Aq/kjFxYTyvecbPu1RP6pjsxwuF570Gh94smZp9FkOM=;
+        b=D709h+WE/X7jDpi7HymeNuUQDzd+IuRgc0YQo4pzzXVjvtPSrn1iAcINp49KpPvFKk
+         7oyZ2G1YDhu6bPfXoYZ09fQIRlrgOUiTrPt5l82CHp8YNfwKVJ72iWOMTARKxKJRnh8+
+         1vA/0r8qO5UFGDeEJyuAMrTNBmGU24Iz/DU3A=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=/TjuROWhAQVgLktLA+T4BOezgAEAYx6A7fZQem5LwGk=;
-        b=YS//iSQyUuscF9DvtHWPeQiFHIJ8ZSZLGxQOT+negJn5pAt3uxqshct0OgI/9WJPc5
-         lQ1gyoZq3STExoDuCP7qi7pnBeInp1uI82uGeoFaZF/a26CW0aGfJZaf2CegllZd8xMd
-         AopSkDT2ztdj5RyyOPYmmuQS3zou4TV2NO/MqK/dCzVu2ncdydpUZ/Ae8TBeA3EyKNwS
-         Peizzs81SPfUBhZuRVCgSFSMduqBWlxvdC8c5i1DiTlPK/onj37ZYoC7yvRcrwNg+ImG
-         Q1ED0RXki3hDjFvYL03b6L4c/1eYwk/nNIQ+G5Gs5lsRMDa3V+re+1PNTQv0LAav4S3C
-         IQsw==
-X-Gm-Message-State: AOUpUlGmtwNmscy4SErmdGvUkYCshpJnEtTvRT/qWdHrshuRiAS3e2pA
-        wKboGWRMyRVC1KKug7tIkzI=
-X-Google-Smtp-Source: AAOMgpfX9bCO+s2aTT/18v8mv2BQ648HIUmnLujr7nGqxyqNyIO+0+zDBnXleZ3+8SfKRN9ShMBCBg==
-X-Received: by 2002:ac8:2798:: with SMTP id w24-v6mr13262172qtw.51.1532370128383;
-        Mon, 23 Jul 2018 11:22:08 -0700 (PDT)
-Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id v71-v6sm7394924qkl.42.2018.07.23.11.22.07
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 23 Jul 2018 11:22:07 -0700 (PDT)
-Subject: Re: [PATCH 1/2] t3507: add a testcase showing failure with sparse
- checkout
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Elijah Newren <newren@gmail.com>, Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <benpeart@microsoft.com>, kewillf@microsoft.com
-References: <5a8d1098-b4c5-64e1-da98-dac13521e7ba@gmail.com>
- <20180721063428.20518-1-newren@gmail.com>
- <20180721063428.20518-2-newren@gmail.com>
- <CAPig+cTjQ74gOt8gJbYUBaTRsHBvqtcmucoVdiudFt2TrhCn+g@mail.gmail.com>
- <b56598a1-e543-500a-a39b-cee07fe1e533@gmail.com>
- <CAPig+cR3ic5OAAhNNaSu3YXMnpm=zw6XjspYSU4jouH6po05gg@mail.gmail.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <795b0bbc-c9d3-f627-4798-80d0e25bfade@gmail.com>
-Date:   Mon, 23 Jul 2018 14:22:07 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Aq/kjFxYTyvecbPu1RP6pjsxwuF570Gh94smZp9FkOM=;
+        b=reTuPKhemdnhItYYeQowcwdmCi2Npd6p+Tp/MP1d74RzxNnsDrIZmlQbiP48PjLBaV
+         0VJmcq7mEbanB/m8gsX6DruJIAsvUGyq7MoYbo51TJ624d6XcBm9h2+mNBtX+Y6xFkII
+         fRM3QXYIdCvbyBAV9074VbH0kSZcpw3r3BOcAQZXJnhsZfjNuwlvZ/QzB6ELseeWnoyg
+         ei4t4x/KyeiKY/hBRtSTyrl0RYwJWwebW39e2MBauGRTbjzs7Vgh5Si9+xh2ZAvrymSh
+         +7VZFHqbp4pRs2ODFIhffAnolHEqwzYSefk2sEjR6kTDA4Cwxlkp8jP8pvNQhxxK8/La
+         HFng==
+X-Gm-Message-State: AOUpUlGbym9haG0ZkAu8kH+q8MfDBAtBN5y/Q0NU1P7kOW7Lc0zzIWmt
+        P1kkzTY1jUh+blRn7IXGtKBXZXNhWrgtY7VRAlE=
+X-Google-Smtp-Source: AAOMgpdhHT3avkJaH2wVBiTCfo4YBjM4x3KPUC5jJJZ9yNNsYLKpO4L4ZXXTMzbOsYQEPYhim6MwiHK1NL3ffP9BcJU=
+X-Received: by 2002:a6b:7a05:: with SMTP id h5-v6mr11391380iom.238.1532370225987;
+ Mon, 23 Jul 2018 11:23:45 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAPig+cR3ic5OAAhNNaSu3YXMnpm=zw6XjspYSU4jouH6po05gg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20180609205628.GB38834@genre.crustytoothpaste.net>
+ <20180609224913.GC38834@genre.crustytoothpaste.net> <20180611192942.GC20665@aiede.svl.corp.google.com>
+ <20180720215220.GB18502@genre.crustytoothpaste.net> <nycvar.QRO.7.76.6.1807220036340.71@tvgsbejvaqbjf.bet>
+ <20180721235941.GG18502@genre.crustytoothpaste.net> <CANgJU+X39NoEoMyLu+FX38=x19LrRqatz_dUpUAc+WFV+Uw+=A@mail.gmail.com>
+ <98111891-a605-1cfd-e92b-a3b5b4186ac2@gmail.com>
+In-Reply-To: <98111891-a605-1cfd-e92b-a3b5b4186ac2@gmail.com>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Mon, 23 Jul 2018 11:23:34 -0700
+Message-ID: <CA+55aFx876XPwdSqRsKDk+Vo4pD-0wVRx=E+SAN6JiZKWUMrHg@mail.gmail.com>
+Subject: Re: Hash algorithm analysis
+To:     Sitaram Chamarty <sitaramc@gmail.com>
+Cc:     demerphq <demerphq@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Adam Langley <agl@google.com>, keccak@noekeon.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Jul 23, 2018 at 5:48 AM Sitaram Chamarty <sitaramc@gmail.com> wrote:
+>
+> I would suggest (a) hash size of 256 bits and (b) choice of any hash
+> function that can produce such a hash.  If people feel strongly that 256
+> bits may also turn out to be too small (really?) then a choice of 256 or
+> 512, but not arbitrary sizes.
 
+Honestly, what's the expected point of 512-bit hashes?
 
-On 7/23/2018 2:09 PM, Eric Sunshine wrote:
-> On Mon, Jul 23, 2018 at 9:12 AM Ben Peart <peartben@gmail.com> wrote:
->> On 7/21/2018 3:21 AM, Eric Sunshine wrote:
->>> On Sat, Jul 21, 2018 at 2:34 AM Elijah Newren <newren@gmail.com> wrote:
->>>> +       rm .git/info/sparse-checkout
->>>
->>> Should this cleanup be done by test_when_finished()?
->>
->> I think trying to use test_when_finished() for this really degrades the
->> readability of the test.  See below:
->>
->> test_expect_success 'failed cherry-pick with sparse-checkout' '
->>          pristine_detach initial &&
->>          test_config core.sparsecheckout true &&
->>          echo /unrelated >.git/info/sparse-checkout &&
->>          git read-tree --reset -u HEAD &&
->>          test_when_finished "echo \"/*\" >.git/info/sparse-checkout && git
->> read-tree --reset -u HEAD && rm .git/info/sparse-checkout" &&
->>          test_must_fail git cherry-pick -Xours picked>actual &&
->>          test_i18ngrep ! "Changes not staged for commit:" actual
->> '
->>
->> Given it takes multiple commands, I'd prefer to keep the setup and
->> cleanup of the sparse checkout settings symmetrical.
-> 
-> Some observations:
-> 
-> The test_when_finished() ought to be called before the initial
-> git-read-tree, otherwise you risk leaving a .git/info/sparse-checkout
-> sitting around if git-read-tree fails.
-> 
-> The tear-down code could be moved to a function, in which case,
-> test_when_finished() would simply call that function.
-> 
-> Multi-line quoted strings are valid, so you don't need to string out
-> all the tear-down steps on a single line like that, and instead spread
-> them across multiple lines to improve readability.
-> 
-> test_when_finished() doesn't expect just a single quoted string as
-> argument. In fact, it can take many (unquoted) arguments, which also
-> allows you to spread the tear-down steps over multiple lines to
-> improve readability.
-> 
-> Multiple test_when_finished() invocations are allowed, so you could
-> spread out the tear-down commands that way (though they'd have to be
-> in reverse order, which would be bad for readability in this case,
-> thus not recommended).
-> 
-> Correctness ought to trump readability, not the other way around.
-> 
-> So, one possibility, which seems pretty readable to me:
-> 
->      test_expect_failure 'failed cherry-pick with sparse-checkout' '
->         pristine_detach initial &&
->         test_config core.sparseCheckout true &&
->         test_when_finished "
->             echo \"/*\" >.git/info/sparse-checkout
->             git read-tree --reset -u HEAD
->             rm .git/info/sparse-checkout" &&
->         echo /unrelated >.git/info/sparse-checkout &&
->         git read-tree --reset -u HEAD &&
->         test_must_fail git cherry-pick -Xours picked>actual &&
->         test_i18ngrep ! "Changes not staged for commit:" actual &&
->      '
-> 
+The _only_ point of a 512-bit hash is that it's going to grow objects
+in incompressible ways, and use more memory. Just don't do it.
 
-Minus the trailing && on the last line, that works for me.  Thank you - 
-readability and correctness.
+If somebody can break a 256-bit hash, you have two choices:
 
-> Notice that I dropped the internal &&-chain in test_when_finish() to
-> ensure that the final 'rm' is invoked even if the cleanup
-> git-read-tree fails (though all bets are probably off, anyhow, if it
-> does fail).
-> 
+ (a) the hash function itself was broken, and 512 bits isn't the
+solution to it anyway, even if it can certainly hide the problem
+
+ (b) you had some "new math" kind of unexpected breakthrough, which
+means that 512 bits might not be much  better either.
+
+Honestly, the number of particles in the observable universe is on the
+order of 2**256. It's a really really big number.
+
+Don't make the code base more complex than it needs to be. Make a
+informed technical decision, and say "256 bits is a *lot*".
+
+The difference between engineering and theory is that engineering
+makes trade-offs. Good software is well *engineered*, not theorized.
+
+Also, I would suggest that git default to "abbrev-commit=40", so that
+nobody actually *sees* the new bits by default. So the perl scripts
+etc that use "[0-9a-f]{40}" as a hash pattern would just silently
+continue to work.
+
+Because backwards compatibility is important (*)
+
+                     Linus
+
+(*) And 2**160 is still a big big number, and hasn't really been a
+practical problem, and SHA1DC is likely a good hash for the next
+decade or longer.
