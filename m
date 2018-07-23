@@ -2,147 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC3E01F597
-	for <e@80x24.org>; Mon, 23 Jul 2018 17:57:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 04E0D1F597
+	for <e@80x24.org>; Mon, 23 Jul 2018 18:05:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388385AbeGWTAU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Jul 2018 15:00:20 -0400
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:41920 "EHLO
-        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387981AbeGWTAU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jul 2018 15:00:20 -0400
-Received: by mail-yw0-f196.google.com with SMTP id q129-v6so545615ywg.8
-        for <git@vger.kernel.org>; Mon, 23 Jul 2018 10:57:58 -0700 (PDT)
+        id S2388136AbeGWTHY (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Jul 2018 15:07:24 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:35993 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387995AbeGWTHX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jul 2018 15:07:23 -0400
+Received: by mail-wm0-f68.google.com with SMTP id s14-v6so38634wmc.1
+        for <git@vger.kernel.org>; Mon, 23 Jul 2018 11:04:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=sguquI4Nj1TCZuACwiiOccd/cEPap+HILj279YUGx7s=;
-        b=shxTGgBsl9nVbSEICg/z6G/JGB+avMq0r18dGq43Jt0kv87mZRoSglkxr679yxKQ0g
-         0m9BQcH1ybkzVaXxtteaGvmXxJJP1umOzTchzyLNnQBPWCGuP1cG5qjXhOE3dkGzuz8n
-         d2hpye/q7wihbsZ31Y1VWdo/F7qCWvAE3zuWAhDBiSyvx0pwdGlUk8qpIWsB725DEUZI
-         AhM3k143EOUCB7cSL51Kmaac4lQ27Iss1fkz412SKK6LyAPJuoCAnKIPLn/y7QwxkXT2
-         5xv0nxhEYEsyZj2cU/24sZ8nMbYMY8ahgMk0h9aR+lzxt9fDJiMWEkAWwmxn5ciiBqHb
-         FOYA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=lHxJVFE9rimtw+Ldm8Q5jEvbTz51eQudsi2EEb8qRJU=;
+        b=GxZBH3SbmPG9KOoF1NLaeuTf+INXPPU2SGvF4eOveiLm9/dLS0t/VvXDrqPTSXcdmP
+         MdfwOZvaie9Dgz/qz+c4hT+5QkKGqCPBgkgbY+Keol7h4Vnb24HpKiWMCoU/KTHJ5gSd
+         tq7pRRv/w64Kza1njNgtXdqD5LU6Tu3EFyvNFEeRbwohbCnf4z5Vx00IslYdR7qaRhyG
+         4fWVYa1L/z98GNPgH8Di/dtQFeDi5VN5QlFdY91d9mM+t1V566oqdsrtzbtYYX2r2/76
+         2jzGTWqA6djA9QzvCfrOaG45E162qOjbDnWLafHV0/0pYJ3gOGi/2WjkXnp7HwAexw5X
+         /gZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=sguquI4Nj1TCZuACwiiOccd/cEPap+HILj279YUGx7s=;
-        b=C1q834VfLihYYIps6niB+toyHo0lrh1+lEYeAmaCAAXRPUUrEDI8WMwAnX14PzWyHe
-         XWjQBKdvIAxeIqR80GPu+GoE9XKCZwolhJJjacUoyAe2HOPiD6a52ZqfmU8bwJKOLJYd
-         7KkMVeFMoGd8jzkklIYW4v7ysnlBHSXVS/qIYDleY4HfcI09yMrE7kgcZF0uFOokECsZ
-         OaHVKNfT43rXNBEPI/1qUashU/+ORktyH2s0Dc3umxBcwMRh4Uqiwa4Qexqa/j471RGS
-         l+QIIPo65JxZsYcX4ehlSPgHBnOEaSUqT42Bz9fH/foLl4Ab8hz53j4d5e39sjRczgJi
-         wq1w==
-X-Gm-Message-State: AOUpUlEx4nCG8OzquEASSDq3/zCdIyJ0geh8lRext2suBDSbfTh/fKKw
-        Z0uTawGN0GPnTVt41/SXfhV7hue0gKVp7ZC78+3Nag==
-X-Google-Smtp-Source: AAOMgpdrXLMcULuKjfT6Be7A4j76z3bIXMDMlue59wKjbs33BIJUfOOh3j3HRIWKbs0IHiESayeukVkNUdSg9RVwyvs=
-X-Received: by 2002:a0d:d342:: with SMTP id v63-v6mr7241406ywd.500.1532368677122;
- Mon, 23 Jul 2018 10:57:57 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=lHxJVFE9rimtw+Ldm8Q5jEvbTz51eQudsi2EEb8qRJU=;
+        b=aeT160euAUGhD5Wn98xCZVAnYWQupd+7jeESptYHHKC09yiV8q/Z06xZtMp2Ak6e3F
+         d1wDnUMqbP0oY2NeWrZITEfaaBkdUcVHkPVn8GO0tn+DuFasitB0j/2+VmJyzlv7zZXB
+         fqvPpC9IzNE76KvV6EAQLEEzQBTZUMRzxZVJLu2MF/XFziBg9AOOr+NKHsO4BtshlP5b
+         FTPz1DAuHfber0QXd12hQZR3zDPBzT53Fc5kagtPmer9LOhLz5cU14+UmWBWyOCwRBY9
+         CmEk+j8RRsyueU+WO/nCm/WfKcRC1hqNLxqZOqJIwbndzya/evfiU8MQlxuv88kkgtI6
+         thbw==
+X-Gm-Message-State: AOUpUlE/d6tAtlN2x8k+nAuz/HW4d0KF6wehCon3lFwvNOYH1Dfl9lfs
+        RT3KjpjaeZPLxdrZ3QGyJYs=
+X-Google-Smtp-Source: AAOMgpc6Su5dsUU2DW1aqdQGRlT22+5JmW4nrLECzulvctPjN0lJQBnWULz7XLvSlhi4KGIGO3XbCw==
+X-Received: by 2002:a1c:93d2:: with SMTP id v201-v6mr20964wmd.77.1532369097893;
+        Mon, 23 Jul 2018 11:04:57 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id j131-v6sm10203178wmb.25.2018.07.23.11.04.56
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 23 Jul 2018 11:04:56 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] pack-objects: fix performance issues on packing large deltas
+References: <20180720153943.575-1-pclouds@gmail.com>
+        <20180722080421.12887-1-pclouds@gmail.com>
+Date:   Mon, 23 Jul 2018 11:04:56 -0700
+In-Reply-To: <20180722080421.12887-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Sun, 22 Jul 2018 10:04:21 +0200")
+Message-ID: <xmqq8t617rqv.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20180609205628.GB38834@genre.crustytoothpaste.net>
- <20180609224913.GC38834@genre.crustytoothpaste.net> <20180611192942.GC20665@aiede.svl.corp.google.com>
- <20180720215220.GB18502@genre.crustytoothpaste.net> <nycvar.QRO.7.76.6.1807220036340.71@tvgsbejvaqbjf.bet>
- <20180721235941.GG18502@genre.crustytoothpaste.net> <CANgJU+X39NoEoMyLu+FX38=x19LrRqatz_dUpUAc+WFV+Uw+=A@mail.gmail.com>
-In-Reply-To: <CANgJU+X39NoEoMyLu+FX38=x19LrRqatz_dUpUAc+WFV+Uw+=A@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 23 Jul 2018 10:57:46 -0700
-Message-ID: <CAGZ79kYT0S6H1mTqUAhgq5CKx3Gd5FfY3MALcOSbq48OVsY6dw@mail.gmail.com>
-Subject: Re: Hash algorithm analysis
-To:     demerphq <demerphq@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        git <git@vger.kernel.org>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Adam Langley <agl@google.com>, keccak@noekeon.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 23, 2018 at 5:41 AM demerphq <demerphq@gmail.com> wrote:
->
-> On Sun, 22 Jul 2018 at 01:59, brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
-> > I will admit that I don't love making this decision by myself, because
-> > right now, whatever I pick, somebody is going to be unhappy.  I want to
-> > state, unambiguously, that I'm trying to make a decision that is in the
-> > interests of the Git Project, the community, and our users.
-> >
-> > I'm happy to wait a few more days to see if a consensus develops; if so,
-> > I'll follow it.  If we haven't come to one by, say, Wednesday, I'll make
-> > a decision and write my patches accordingly.  The community is free, as
-> > always, to reject my patches if taking them is not in the interest of
-> > the project.
->
-> Hi Brian.
->
-> I do not envy you this decision.
->
-> Personally I would aim towards pushing this decision out to the git
-> user base and facilitating things so we can choose whatever hash
-> function (and config) we wish, including ones not invented yet.
+Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-By Git user base you actually mean millions of people?
-(And they'll have different opinions and needs)
+> Access to e->delta_size_ (and by extension
+> pack->delta_size[e - pack->objects]) is unprotected as before, the
+> thread scheduler in pack-objects must make sure "e" is never updated
+> by two different threads.
 
-One of the goals of the hash transition is to pick a hash function
-such that git repositories are compatible.
-If users were to pick their own hashes, we would need to not just give
-a SHA-1 -> <newhash> transition plan, but we'd have to make sure the
-full matrix of possible hashes is interchangeable as we have no idea
-of what the user would think of "safer". For example one server operator
-might decide to settle on SHA2 and another would settle on blake2,
-whereas a user that uses both servers as remotes settles with k12.
+OK.  Do we need to worry about "e" (e.g. "e->delta_size_valid")
+being accessed while/before it is set by another thread?
 
-Then there would be a whole lot of conversion going on (you cannot talk
-natively to a remote with a different hash; checking pgp signatures is
-also harder as you have an abstraction layer in between).
+oe_delta_size() makes unprotected accesses to .delta_size_ and
+pack->delta_size[e - pack->objects], so we apparently do not, and
+oe_set_delta_size() only protects the allocation call and does not
+prevent a reader in oe_delta_size() from first reading the _valid
+field, noticing that it is 0 as initialized, and goes on to read the
+pack->delta_size[] slot for the entry, while the writer is setting
+the size to .delta_size_ field and flipping _valid bit, without ever
+storing the size in the pack->delta_size[] array.
 
-I would rather just have the discussion now and then provide only one
-conversion tool which might be easy to adapt, but after the majority
-converted, it is rather left to bitrot instead of needing to support ongoing
-conversions.
+> @@ -130,6 +131,7 @@ struct packing_data {
+>  	uint32_t index_size;
+>  
+>  	unsigned int *in_pack_pos;
+> +	unsigned long *delta_size;
+>  
+>  	/*
+>  	 * Only one of these can be non-NULL and they have different
+> @@ -140,10 +142,29 @@ struct packing_data {
+>  	struct packed_git **in_pack_by_idx;
+>  	struct packed_git **in_pack;
+>  
+> +#ifndef NO_PTHREADS
+> +	pthread_mutex_t lock;
 
-On the other hand, even if we'd provide a "different hashes are fine"
-solution, I would think the network effect would make sure that eventually
-most people end up with one hash.
+I am wondering if we want the variable to say what data it is
+protecting from simultaneous accesses, or leave it as generic so
+that any new caller that wants to lock any (new) thing that is
+associated with a packing_data structure can grab it for other
+purposes.  The design of this patch clearly is the latter, which is
+OK for now, I think.
 
-One example of using different hashes successfully are transports,
-like TLS, SSH. The difference there is that it is a point-to-point communication
-whereas a git repository needs to be read by many parties involved; also
-a communication over TLS/SSH is ephemeral unlike objects in Git.
-
-> Failing that I would aim towards a hashing strategy which has the most
-> flexibility. Keccak for instance has the interesting property that its
-> security level is tunable, and that it can produce aribitrarily long
-> hashes.  Leaving aside other concerns raised elsewhere in this thread,
-> these two features alone seem to make it a superior choice for an
-> initial implementation. You can find bugs by selecting unusual hash
-> sizes, including very long ones, and you can provide ways to tune the
-> function to peoples security and speed preferences.  Someone really
-> paranoid can specify an unusually large round count and a very long
-> hash.
-
-I do not object to this in theory, but I would rather not want to burden
-the need to write code for this on the community.
-
-> I am not a cryptographer.
-
-Same here. My personal preference would be blake2b
-as that is the fastest IIRC.
-
-Re-reading brians initial mail, I think we should settle on
-SHA-256, as that is a conservative choice for security and
-the winner in HW accelerated setups, and not to shabby in
-a software implementation; it is also widely available.
-
-Stefan
+> @@ -332,18 +353,34 @@ static inline unsigned long oe_delta_size(struct packing_data *pack,
+>  {
+>  	if (e->delta_size_valid)
+>  		return e->delta_size_;
+> -	return oe_size(pack, e);
+> +
+> +	/*
+> +	 * pack->detla_size[] can't be NULL because oe_set_delta_size()
+> +	 * must have been called when a new delta is saved with
+> +	 * oe_set_delta().
+> +	 * If oe_delta() returns NULL (i.e. default state, which means
+> +	 * delta_size_valid is also false), then the caller must never
+> +	 * call oe_delta_size().
+> +	 */
+> +	return pack->delta_size[e - pack->objects];
+>  }
+>  
+>  static inline void oe_set_delta_size(struct packing_data *pack,
+>  				     struct object_entry *e,
+>  				     unsigned long size)
+>  {
+> -	e->delta_size_ = size;
+> -	e->delta_size_valid = e->delta_size_ == size;
+> -	if (!e->delta_size_valid && size != oe_size(pack, e))
+> -		BUG("this can only happen in check_object() "
+> -		    "where delta size is the same as entry size");
+> +	if (size < pack->oe_delta_size_limit) {
+> +		e->delta_size_ = size;
+> +		e->delta_size_valid = 1;
+> +	} else {
+> +		packing_data_lock(pack);
+> +		if (!pack->delta_size)
+> +			ALLOC_ARRAY(pack->delta_size, pack->nr_alloc);
+> +		packing_data_unlock(pack);
+> +
+> +		pack->delta_size[e - pack->objects] = size;
+> +		e->delta_size_valid = 0;
+> +	}
+>  }
