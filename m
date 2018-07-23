@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D2B71F597
-	for <e@80x24.org>; Mon, 23 Jul 2018 13:53:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D3611F597
+	for <e@80x24.org>; Mon, 23 Jul 2018 13:53:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388223AbeGWOyW (ORCPT <rfc822;e@80x24.org>);
+        id S2388230AbeGWOyX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Jul 2018 10:54:23 -0400
+Received: from mail-pl0-f68.google.com ([209.85.160.68]:38360 "EHLO
+        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388091AbeGWOyW (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 23 Jul 2018 10:54:22 -0400
-Received: from mail-pf1-f173.google.com ([209.85.210.173]:44178 "EHLO
-        mail-pf1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388091AbeGWOyV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jul 2018 10:54:21 -0400
-Received: by mail-pf1-f173.google.com with SMTP id k21-v6so108196pff.11
-        for <git@vger.kernel.org>; Mon, 23 Jul 2018 06:53:00 -0700 (PDT)
+Received: by mail-pl0-f68.google.com with SMTP id b1-v6so264451pls.5
+        for <git@vger.kernel.org>; Mon, 23 Jul 2018 06:53:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=KlMtgF1IH2oiPCp9ADDE1Am8iT3Etv6Hu1IZajDIE2U=;
-        b=Fn2sQo8W6OUlSMff1hXRkIkA4jV0z1Jxiapg0v/eFNArhKRmWFgpmjUImQJi+S9quc
-         G2RNpY8TbscQSrp0e3W97JmZxiWZaBjBivk3d+71P1QViIQ2iEXrHcc7OhnB5097pDXJ
-         UsxTKCH2cXkVfWbCPnEF/Co3PVRZLktTWRgGATNzpwoXC5o5UMp9lutjUxaE/fppe+ys
-         A3PdfDwpPHyz0G20NklLybRgag+UW5UIsTmVh16HACdBaZinWTI+haoFZt2B82M6321F
-         kqlefBhRaQTKZd3GTIeWqXlWdpEsXnknwqy2KvLxEgVnAIUPUvB0NZedIju+i5PoOeq/
-         Cz8w==
+        bh=ZdGlRTIF/tEl6bFcfsOFLA7EHnv1sdO4j4SRHze+fts=;
+        b=YfIyGBhIeFgZpZPo9annSqWGGMCE/lN08k4ai7z5fCLy/MCcScDm0taefRnBZKxAiw
+         AovuIWePBJeESxA2uWdeevIhHstzk33y0jcOLoMJqTV+hPLGL8dVgZ+4Tv1AIlEqYtcW
+         pBwlW4gop/z2qa5+gMqTZdNzPC4Tiqibcz4CmdZYyOs5r0nZA7hlE2mb713HuTuQZGzM
+         26UX4Uu82xwhwolWIRXSQwO0AWsTV/LWyW/NDqJryVZKKkyQ1KpAJW78IXOlFLneeGeV
+         NKqI6E43tII45tCQz8xfa3vSXRevVHW17ITX+O/CQ5imz3PpdqAwJ+XaT8FYGA7gz9vx
+         4+2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=KlMtgF1IH2oiPCp9ADDE1Am8iT3Etv6Hu1IZajDIE2U=;
-        b=MrGUNh8DoTcOlrxvUTlhBTcTmJQNkLmMYd3uKIUzW/d3WfSCcH8l7iLQ3KWstcOtrN
-         jcCLj57PTavzlgf8AHfz74Qy4cGA64HAKxgGYyonbIMTbidKmrd/bozwWYdh8MJR8EXb
-         aanIMyQ2SP+COt8ha0QVYvaoNYSGRP8GEoUpA6+ZLGZTDvtBafA5a+ADq55g7AjBqIYD
-         K8hs8twAIrQ8w6QIZEIlnGViyjFGN8bC03gjip6bgx7ouWwsC6g8Ng7gAV83KXwBq1CG
-         eawkTdh+SWSS387f/n0T4eiUM4VwDbxmLv6AuFkEsUQZt+wc5FkN/69J3/VEHEiHRKmd
-         /w4Q==
-X-Gm-Message-State: AOUpUlHfCHDyI87HvNg0Ctz+m0p/iXFQPkVeJfutyztLU2ZUOp54Vkei
-        /gHJHnKz1ETtSrpYRTbPkpFXIZ6h
-X-Google-Smtp-Source: AAOMgpdcDk3bcJHfj2rywl6UzDhBK7JhTFzyn3d41VWSknVHavpf5RnU8qTRHyjd1YH14k6ZvubAjg==
-X-Received: by 2002:a63:5d09:: with SMTP id r9-v6mr12250821pgb.303.1532353979527;
-        Mon, 23 Jul 2018 06:52:59 -0700 (PDT)
-Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id q26-v6sm12564369pff.9.2018.07.23.06.52.58
+        bh=ZdGlRTIF/tEl6bFcfsOFLA7EHnv1sdO4j4SRHze+fts=;
+        b=ZkZvj4VKj6jfYtD8BgiuGlPSxjYzX7V9ctGm43KiUKbvucHD/vl52NsE6YNwQHT2l+
+         oELw29CXPFc11DzKWpOUdQsD4OcXrMK178JOmifhSGTlGEiagscIJ7w4SkOM15697000
+         QDyjkqFLTB9/RbUtDmMA76KzCyWBiR2e3eY3ZiparAN4CeRgGJ1OBcVSRpdem+LxzriK
+         a7W3bDH/peAtiLafY88o3U/BDxzpUqZvevv6aYjDEt7w8KqtcyAaQu3wbtn8q8BTpxX3
+         +m0u03arrdq/hV6/G2EmC8UQILOyv8honIZq+G1wpAbe6I9TNuuQ9ZHNKrRDciAV6eAc
+         tSxA==
+X-Gm-Message-State: AOUpUlG/nUthzUuqOdjBh3m4JWoH306FMv0pL6V6rFekdI1lq4tGkBf/
+        1rZIfKX4vkL15ZMXWhULpQWy+Oal
+X-Google-Smtp-Source: AAOMgpdNrkDR/XCInp7xA8U3NIn64CzaZ6blxmEAFQPJqgAhRr6o2PMgZscEmKsCqgR+H2IQ118BQQ==
+X-Received: by 2002:a17:902:342:: with SMTP id 60-v6mr13029136pld.311.1532353980848;
+        Mon, 23 Jul 2018 06:53:00 -0700 (PDT)
+Received: from [127.0.0.1] ([40.112.139.85])
+        by smtp.gmail.com with ESMTPSA id i3-v6sm8273415pgq.35.2018.07.23.06.52.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 23 Jul 2018 06:52:58 -0700 (PDT)
-Date:   Mon, 23 Jul 2018 06:52:58 -0700 (PDT)
-X-Google-Original-Date: Mon, 23 Jul 2018 13:52:44 GMT
-Message-Id: <ce216cf431935a3e5fc00cd67090042578c32e65.1532353966.git.gitgitgadget@gmail.com>
+        Mon, 23 Jul 2018 06:53:00 -0700 (PDT)
+Date:   Mon, 23 Jul 2018 06:53:00 -0700 (PDT)
+X-Google-Original-Date: Mon, 23 Jul 2018 13:52:45 GMT
+Message-Id: <4c2aa015a444e87db7242a436b99f02bf3d331f4.1532353966.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2.git.gitgitgadget@gmail.com>
 References: <pull.2.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 8/9] vscode: add a dictionary for cSpell
+Subject: [PATCH 9/9] vscode: let cSpell work on commit messages, too
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,199 +70,33 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The quite useful cSpell extension allows VS Code to have "squiggly"
-lines under spelling mistakes. By default, this would add too much
-clutter, though, because so much of Git's source code uses words that
-would trigger cSpell.
+By default, the cSpell extension ignores all files under .git/. That
+includes, unfortunately, COMMIT_EDITMSG, i.e. commit messages. However,
+spell checking is *quite* useful when writing commit messages... And
+since the user hardly ever opens any file inside .git (apart from commit
+messages, the config, and sometimes interactive rebase's todo lists),
+there is really not much harm in *not* ignoring .git/.
 
-Let's add a few words to make the spell checking more useful by reducing
-the number of false positives.
+The default also ignores `node_modules/`, but that does not apply to
+Git, so let's skip ignoring that, too.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/vscode/init.sh | 169 ++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 168 insertions(+), 1 deletion(-)
+ contrib/vscode/init.sh | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/contrib/vscode/init.sh b/contrib/vscode/init.sh
-index 29f2a729d..a134cb4c5 100755
+index a134cb4c5..27de94994 100755
 --- a/contrib/vscode/init.sh
 +++ b/contrib/vscode/init.sh
-@@ -32,7 +32,174 @@ cat >.vscode/settings.json.new <<\EOF ||
-     "files.associations": {
+@@ -33,6 +33,8 @@ cat >.vscode/settings.json.new <<\EOF ||
          "*.h": "c",
          "*.c": "c"
--    }
-+    },
-+    "cSpell.words": [
-+        "DATAW",
-+        "DBCACHED",
-+        "DFCHECK",
-+        "DTYPE",
-+        "Hamano",
-+        "HCAST",
-+        "HEXSZ",
-+        "HKEY",
-+        "HKLM",
-+        "IFGITLINK",
-+        "IFINVALID",
-+        "ISBROKEN",
-+        "ISGITLINK",
-+        "ISSYMREF",
-+        "Junio",
-+        "LPDWORD",
-+        "LPPROC",
-+        "LPWSTR",
-+        "MSVCRT",
-+        "NOARG",
-+        "NOCOMPLETE",
-+        "NOINHERIT",
-+        "RENORMALIZE",
-+        "STARTF",
-+        "STARTUPINFOEXW",
-+        "Schindelin",
-+        "UCRT",
-+        "YESNO",
-+        "argcp",
-+        "beginthreadex",
-+        "committish",
-+        "contentp",
-+        "cpath",
-+        "cpidx",
-+        "ctim",
-+        "dequote",
-+        "envw",
-+        "ewah",
-+        "fdata",
-+        "fherr",
-+        "fhin",
-+        "fhout",
-+        "fragp",
-+        "fsmonitor",
-+        "hnsec",
-+        "idents",
-+        "includeif",
-+        "interpr",
-+        "iprog",
-+        "isexe",
-+        "iskeychar",
-+        "kompare",
-+        "mksnpath",
-+        "mktag",
-+        "mktree",
-+        "mmblob",
-+        "mmbuffer",
-+        "mmfile",
-+        "noenv",
-+        "nparents",
-+        "ntpath",
-+        "ondisk",
-+        "ooid",
-+        "oplen",
-+        "osdl",
-+        "pnew",
-+        "pold",
-+        "ppinfo",
-+        "pushf",
-+        "pushv",
-+        "rawsz",
-+        "rebasing",
-+        "reencode",
-+        "repo",
-+        "rerere",
-+        "scld",
-+        "sharedrepo",
-+        "spawnv",
-+        "spawnve",
-+        "spawnvpe",
-+        "strdup'ing",
-+        "submodule",
-+        "submodules",
-+        "topath",
-+        "topo",
-+        "tpatch",
-+        "unexecutable",
-+        "unhide",
-+        "unkc",
-+        "unkv",
-+        "unmark",
-+        "unmatch",
-+        "unsets",
-+        "unshown",
-+        "untracked",
-+        "untrackedcache",
-+        "unuse",
-+        "upos",
-+        "uval",
-+        "vreportf",
-+        "wargs",
-+        "wargv",
-+        "wbuffer",
-+        "wcmd",
-+        "wcsnicmp",
-+        "wcstoutfdup",
-+        "wdeltaenv",
-+        "wdir",
-+        "wenv",
-+        "wenvblk",
-+        "wenvcmp",
-+        "wenviron",
-+        "wenvpos",
-+        "wenvsz",
-+        "wfile",
-+        "wfilename",
-+        "wfopen",
-+        "wfreopen",
-+        "wfullpath",
-+        "which'll",
-+        "wlink",
-+        "wmain",
-+        "wmkdir",
-+        "wmktemp",
-+        "wnewpath",
-+        "wotype",
-+        "wpath",
-+        "wpathname",
-+        "wpgmptr",
-+        "wpnew",
-+        "wpointer",
-+        "wpold",
-+        "wpos",
-+        "wputenv",
-+        "wrmdir",
-+        "wship",
-+        "wtarget",
-+        "wtemplate",
-+        "wunlink",
-+        "xcalloc",
-+        "xgetcwd",
-+        "xmallocz",
-+        "xmemdupz",
-+        "xmmap",
-+        "xopts",
-+        "xrealloc",
-+        "xsnprintf",
-+        "xutftowcs",
-+        "xutftowcsn",
-+        "xwcstoutf"
+     },
++    "cSpell.ignorePaths": [
 +    ],
-+    "cSpell.ignoreRegExpList": [
-+        "\\\"(DIRC|FSMN|REUC|UNTR)\\\"",
-+        "\\\\u[0-9a-fA-Fx]{4}\\b",
-+        "\\b(filfre|frotz|xyzzy)\\b",
-+        "\\bCMIT_FMT_DEFAULT\\b",
-+        "\\bde-munge\\b",
-+        "\\bGET_OID_DISAMBIGUATORS\\b",
-+        "\\bHASH_RENORMALIZE\\b",
-+        "\\bTREESAMEness\\b",
-+        "\\bUSE_STDEV\\b",
-+        "\\Wchar *\\*\\W*utfs\\W",
-+        "cURL's",
-+        "nedmalloc'ed",
-+        "ntifs\\.h",
-+    ],
- }
- EOF
- die "Could not write settings.json"
+     "cSpell.words": [
+         "DATAW",
+         "DBCACHED",
 -- 
 gitgitgadget
-
