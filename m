@@ -2,77 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3FA021F597
-	for <e@80x24.org>; Mon, 23 Jul 2018 23:20:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A1AE31F597
+	for <e@80x24.org>; Tue, 24 Jul 2018 00:36:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388087AbeGXAX6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Jul 2018 20:23:58 -0400
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:43206 "EHLO
-        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387975AbeGXAX6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jul 2018 20:23:58 -0400
-Received: by mail-yw0-f196.google.com with SMTP id l189-v6so868302ywb.10
-        for <git@vger.kernel.org>; Mon, 23 Jul 2018 16:20:27 -0700 (PDT)
+        id S2388219AbeGXBkJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Jul 2018 21:40:09 -0400
+Received: from mail-yb0-f201.google.com ([209.85.213.201]:37920 "EHLO
+        mail-yb0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388188AbeGXBkJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jul 2018 21:40:09 -0400
+Received: by mail-yb0-f201.google.com with SMTP id g6-v6so1260635ybc.5
+        for <git@vger.kernel.org>; Mon, 23 Jul 2018 17:36:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=r7UWFCR8x1cDvnlo2yhIrNKLKHGMN9GrchrgUtH9AQk=;
+        b=o1XOJp4fInQQJoyFOFLocntBsFzp4HAsw5Pn6YpMPfBuBXfpjytA+DdD4lSrM5802s
+         RYjPufD0mA4meAu3Q8ujgCHmTUu2kIg+ebUzmUB/nDwBx7zCmjcTKVY6uy4MXIE83xSw
+         LKJeaWiarJZBhGbKRpM7p2R+7Ddue6em4DHyGEiYg1+FV0uzenbZ4byfvlXGf6XNdGas
+         87rPIDWwB3fNocCi+6htw0MUjbPrXFJwjBNv1icq/ntqTF3eGMdykds6KylcnrvfT0vf
+         g/39iuFT4cIjlEPCl3DU7AD8wvY+3qn0txVzl58RJnDUjuXWUTpZJ6OmF0aQs6EqLet2
+         9wfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+NRZA0DG3q2I+9FoAc3NH7KySfyBSIchTldQiQL/sN8=;
-        b=i2y88qwwDcJIjrmCpUY6yP27a4eFaP4jsygvIsFFpFjXZSfNvgpEtVCQDtKYI2QThi
-         x7kNIvn0OZVbtxj6l0NSxpaCt9Ua/dfLuWW0yf8IMKw9EoVkaHV0roa9AKvgJKXcJBU3
-         /y86NgvixjsfB4aZXBy0RyrTZVH77DPEHdF2UChKibYEg45Q3dvkjKUkO0PJHOyrv0TD
-         NiT3mijlPYBY4RF4V3HfbDfi2ZljhxOkZoFolzSNVX6ennybjcxbQHCjRejB+Sop8dJh
-         vWthhD35w/kCzmD4mBXBOm3ChB10buL5Ax+k/TLCR7KVmaAwfRWAZj2yO3zJg5OdV6n3
-         THXQ==
-X-Gm-Message-State: AOUpUlF4+1LcZfCKhD1uBOQ/bP0tVk1mjwNj+SlTS4mb3SvqekpybNhm
-        TwdHKtWb1YqkCjoCqT+9m9nsUAtZ3CDW5SanWsY=
-X-Google-Smtp-Source: AAOMgpeoukmaX0YcnJI2wDiQTClxtEtP0ox7a+mEAakJDCDCDy4ct3GpescdUt5BqhAFYbHaniq/kFn6jdef5hWuXdg=
-X-Received: by 2002:a0d:c105:: with SMTP id c5-v6mr7736310ywd.131.1532388026720;
- Mon, 23 Jul 2018 16:20:26 -0700 (PDT)
-MIME-Version: 1.0
-References: <20180722095717.17912-1-sunshine@sunshineco.com>
- <20180722095717.17912-8-sunshine@sunshineco.com> <CAGZ79kZ0OMrU_O5_rPdG7bNHRWQxVV1RguEg3g-pOa+kkgPCaA@mail.gmail.com>
-In-Reply-To: <CAGZ79kZ0OMrU_O5_rPdG7bNHRWQxVV1RguEg3g-pOa+kkgPCaA@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 23 Jul 2018 19:20:15 -0400
-Message-ID: <CAPig+cQtzs5ENzOR2sJVkZu13OF7iMnEcf4GG1jKGrzRhE0AUg@mail.gmail.com>
-Subject: Re: [PATCH 07/14] range-diff: respect diff_option.file rather than
- assuming 'stdout'
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=r7UWFCR8x1cDvnlo2yhIrNKLKHGMN9GrchrgUtH9AQk=;
+        b=iBJo7F9rzNGDxi3EBPfxXdiTwZ8beEnSVNg7zOPF7sWdYiqmBcQSckhN26bh9ncrwE
+         CbNpjXTJR8tFVwALjGd7Y/liBWCW75mlY7JlZSrGI0wDehoVGUv2iwZObQkeacL48ahq
+         nZRpVQLpqP6FT/ZkXxyC6t6yncA6IVtkkGYGbFAYhanH37VzkODIVEp9dqdHO8u9v2SH
+         9t8IEyfnkiNg1Lp4YMfkpI5CnlXKws4gs1u2Otp/uEJIBF1Lva6ZRdrHxkiGfcUxFY5z
+         f2zVY2utpeJTTbBJb31xGtpOccDPNWxm4AMgLKFCH0mlcZ9c1QbveCdcwv07ZiPoUBK+
+         +r5w==
+X-Gm-Message-State: AOUpUlGRPKwvT6Zksv8W8cibAQvXfTzdYDWfshTMdnBwBbBd2N/AS+SJ
+        ePt866jN0qMUzR30ZRrbnAg2GeETzUchpyt4JmOGxwGpVOUsA9+PTGQhz1tAt+sk4bBcFZYYQYm
+        4uLQyLqhz2qvaG12L5goYhA9MshvILLIShHnz8qgvytQ4Q4sD+p8rczBf6Z21
+X-Google-Smtp-Source: AAOMgpfKrDywZw2pGHhXq2Sg5vzpPr++QB5cWNZPKtY2VXPlkA9mIvOwSTWjg5OZtKtL1zk5mKrSaUSPi6Et
+X-Received: by 2002:a81:328f:: with SMTP id y137-v6mr4686081ywy.148.1532392583166;
+ Mon, 23 Jul 2018 17:36:23 -0700 (PDT)
+Date:   Mon, 23 Jul 2018 17:36:19 -0700
+Message-Id: <20180724003619.185290-1-sbeller@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.18.0.345.g5c9ce644c3-goog
+Subject: [PATCH] Documentation/diff-options: explain different diff algorithms
+From:   Stefan Beller <sbeller@google.com>
+To:     git@vger.kernel.org
+Cc:     Stefan Beller <sbeller@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 23, 2018 at 6:59 PM Stefan Beller <sbeller@google.com> wrote:
-> On Sun, Jul 22, 2018 at 2:58 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > The actual diffs output by range-diff respect diff_option.file, which
-> > range-diff passes down the call-chain, thus are destination-agnostic.
-> > However, output_pair_header() is hard-coded to emit to 'stdout'. Fix
-> > this by making output_pair_header() respect diff_option.file, as well.
-> >
-> > Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
->
-> Depending how much the range diff series has progressed
-> already, it might make sense to squash it there?
+As a user I wondered what the diff algorithms are about. Offer at least
+a basic explanation on the differences of the diff algorithms.
 
-It could be done that way, though it would be nice for Dscho's
-range-diff series to land without another re-roll, and it looks like
-I'll probably be re-rolling this series, anyhow, to move
-show_interdiff() to diff-lib.c and to fix its signature. Junio could
-manage it as a "squash", but that's probably more work for him than
-for me to retain it in this series. *And*, this change _is_ required
-for this series, whereas it doesn't really matter for Dscho's series,
-even though it's an obvious "fix".
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ Documentation/diff-options.txt | 32 +++++++++++++++++++++++++-------
+ 1 file changed, 25 insertions(+), 7 deletions(-)
 
-Anyhow, whichever way Junio and Dscho would like to play it is fine with me.
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index f466600972f..0d765482027 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -94,16 +94,34 @@ diff" algorithm internally.
+ 	Choose a diff algorithm. The variants are as follows:
+ +
+ --
+-`default`, `myers`;;
+-	The basic greedy diff algorithm. Currently, this is the default.
+ `minimal`;;
+-	Spend extra time to make sure the smallest possible diff is
+-	produced.
++	A diff as produced by the basic greedy algorithm described in
++	link:http://www.xmailserver.org/diff2.pdf[An O(ND) Difference Algorithm and its Variations]
++`default`, `myers`;;
++	The same algorithm as `minimal`, extended with a heuristic to
++	reduce extensive searches. Currently, this is the default.
+ `patience`;;
+-	Use "patience diff" algorithm when generating patches.
++	Use "patience diff" algorithm when generating patches. This
++	matches the longest common subsequence of unique lines on
++	both sides, recursively. It obtained its name by the way the
++	longest subsequence is found, as that is a byproduct of the
++	patience sorting algorithm. If there are no unique lines left
++	it falls back to `myers`. Empirically this algorithm produces
++	a more readable output for code, but it does not garantuee
++	the shortest output.
+ `histogram`;;
+-	This algorithm extends the patience algorithm to "support
+-	low-occurrence common elements".
++	This algorithm re-implements the `patience` algorithm with
++	"support of low-occurrence common elements" and only picks
++	one element of the LCS for the recursion. It is often the
++	fastest, but in cornercases (when there are many longest
++	common subsequences of the same length) it produces bad
++	results as seen in:
++
++		seq 1 100 >one
++		echo 99 > two
++		seq 1 2 98 >>two
++		git diff --no-index --histogram one two
++
+ --
+ +
+ For instance, if you configured diff.algorithm variable to a
+-- 
+2.18.0.345.g5c9ce644c3-goog
+
