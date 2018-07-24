@@ -6,29 +6,29 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B17541F597
-	for <e@80x24.org>; Tue, 24 Jul 2018 10:51:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 879761F597
+	for <e@80x24.org>; Tue, 24 Jul 2018 10:52:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388448AbeGXL5c (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Jul 2018 07:57:32 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57320 "HELO cloud.peff.net"
+        id S2388370AbeGXL6W (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Jul 2018 07:58:22 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57326 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S2388426AbeGXL5c (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jul 2018 07:57:32 -0400
-Received: (qmail 10967 invoked by uid 109); 24 Jul 2018 10:51:41 -0000
+        id S2388319AbeGXL6W (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jul 2018 07:58:22 -0400
+Received: (qmail 10973 invoked by uid 109); 24 Jul 2018 10:52:31 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 24 Jul 2018 10:51:41 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 24 Jul 2018 10:52:31 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26462 invoked by uid 111); 24 Jul 2018 10:51:41 -0000
+Received: (qmail 26478 invoked by uid 111); 24 Jul 2018 10:52:30 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 24 Jul 2018 06:51:41 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 24 Jul 2018 06:52:30 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Jul 2018 06:51:39 -0400
-Date:   Tue, 24 Jul 2018 06:51:39 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Jul 2018 06:52:29 -0400
+Date:   Tue, 24 Jul 2018 06:52:29 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 5/6] pass st.st_size as hint for strbuf_readlink()
-Message-ID: <20180724105139.GE17165@sigill.intra.peff.net>
+Subject: [PATCH 6/6] strbuf_humanise: use unsigned variables
+Message-ID: <20180724105229.GF17165@sigill.intra.peff.net>
 References: <20180724104852.GA14638@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -39,58 +39,45 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we initially added the strbuf_readlink() function in
-b11b7e13f4 (Add generic 'strbuf_readlink()' helper function,
-2008-12-17), the point was that we generally have a _guess_
-as to the correct size based on the stat information, but we
-can't necessarily trust it.
-
-Over the years, a few callers have grown up that simply pass
-in 0, even though they have the stat information. Let's have
-them pass in their hint for consistency (and in theory
-efficiency, since it may avoid an extra resize/syscall loop,
-but neither location is probably performance critical).
-
-Note that st.st_size is actually an off_t, so in theory we
-need xsize_t() here. But none of the other callsites use it,
-and since this is just a hint, it doesn't matter either way
-(if we wrap we'll simply start with a too-small hint and
-then eventually complain when we cannot allocate the
-memory).
+All of the numeric formatting done by this function uses
+"%u", but we pass in a signed "int". The actual range
+doesn't matter here, since the conditional makes sure we're
+always showing reasonably small numbers. And even gcc's
+format-checker does not seem to mind. But it's potentially
+confusing to a reader of the code to see the mismatch.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/init-db.c    | 3 ++-
- refs/files-backend.c | 2 +-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ strbuf.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 4ecf909368..12ddda7e7b 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -73,7 +73,8 @@ static void copy_templates_1(struct strbuf *path, struct strbuf *template_path,
- 			continue;
- 		else if (S_ISLNK(st_template.st_mode)) {
- 			struct strbuf lnk = STRBUF_INIT;
--			if (strbuf_readlink(&lnk, template_path->buf, 0) < 0)
-+			if (strbuf_readlink(&lnk, template_path->buf,
-+					    st_template.st_size) < 0)
- 				die_errno(_("cannot readlink '%s'"), template_path->buf);
- 			if (symlink(lnk.buf, path->buf))
- 				die_errno(_("cannot symlink '%s' '%s'"),
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index a9a066dcfb..c110c2520c 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -363,7 +363,7 @@ static int files_read_raw_ref(struct ref_store *ref_store,
- 	/* Follow "normalized" - ie "refs/.." symlinks by hand */
- 	if (S_ISLNK(st.st_mode)) {
- 		strbuf_reset(&sb_contents);
--		if (strbuf_readlink(&sb_contents, path, 0) < 0) {
-+		if (strbuf_readlink(&sb_contents, path, st.st_size) < 0) {
- 			if (errno == ENOENT || errno == EINVAL)
- 				/* inconsistent with lstat; retry */
- 				goto stat_ref;
+diff --git a/strbuf.c b/strbuf.c
+index db9069c937..54f29bbb23 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -734,18 +734,18 @@ void strbuf_humanise_bytes(struct strbuf *buf, off_t bytes)
+ {
+ 	if (bytes > 1 << 30) {
+ 		strbuf_addf(buf, "%u.%2.2u GiB",
+-			    (int)(bytes >> 30),
+-			    (int)(bytes & ((1 << 30) - 1)) / 10737419);
++			    (unsigned)(bytes >> 30),
++			    (unsigned)(bytes & ((1 << 30) - 1)) / 10737419);
+ 	} else if (bytes > 1 << 20) {
+-		int x = bytes + 5243;  /* for rounding */
++		unsigned x = bytes + 5243;  /* for rounding */
+ 		strbuf_addf(buf, "%u.%2.2u MiB",
+ 			    x >> 20, ((x & ((1 << 20) - 1)) * 100) >> 20);
+ 	} else if (bytes > 1 << 10) {
+-		int x = bytes + 5;  /* for rounding */
++		unsigned x = bytes + 5;  /* for rounding */
+ 		strbuf_addf(buf, "%u.%2.2u KiB",
+ 			    x >> 10, ((x & ((1 << 10) - 1)) * 100) >> 10);
+ 	} else {
+-		strbuf_addf(buf, "%u bytes", (int)bytes);
++		strbuf_addf(buf, "%u bytes", (unsigned)bytes);
+ 	}
+ }
+ 
 -- 
 2.18.0.542.g2bf2fc4f7e
-
