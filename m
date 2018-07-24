@@ -6,61 +6,67 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 229811F597
-	for <e@80x24.org>; Tue, 24 Jul 2018 01:27:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D0B11F597
+	for <e@80x24.org>; Tue, 24 Jul 2018 01:50:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388316AbeGXCbJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Jul 2018 22:31:09 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:50365 "EHLO
+        id S2388316AbeGXCyt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Jul 2018 22:54:49 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:35657 "EHLO
         mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388263AbeGXCbI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jul 2018 22:31:08 -0400
-Received: by mail-wm0-f65.google.com with SMTP id v25-v6so843731wmc.0
-        for <git@vger.kernel.org>; Mon, 23 Jul 2018 18:27:13 -0700 (PDT)
+        with ESMTP id S2388291AbeGXCyt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jul 2018 22:54:49 -0400
+Received: by mail-wm0-f65.google.com with SMTP id o18-v6so889219wmc.0
+        for <git@vger.kernel.org>; Mon, 23 Jul 2018 18:50:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=RzT1JWBiciuBMGhyu01GLgPAFsg75eKlC6s6MT09RAY=;
-        b=TLUyADeLbCwWnuOeu//41NMHMhUvolEuJoOYl2iNyAei4PIuYDz+enZuWJq7mfhNeX
-         yFKHAce5+7zqod/tqPt0mQhaFF7dAMzXbhSDpjej7nAx2hR7QDtYb+aFf05uZJKt8pOT
-         PJH5LJQJvleY2cFF+96cfeqmKOAWSOtWOoJBAIZ2WbS6ZQWQC/wEJIt+Oc+0oaOssmgL
-         Psi/oHPpV0eX1GXIKyGCNOXTV0C4EA7tJrImE8f06+qxrNCgYRrCnz5na4riF9lWMvhP
-         HaZb+GhoMOMkJBJUWsw1Lg8MwetIXbWYtOhpUt66AIk7ZJigwge/gyEaW1lzEinhSHfT
-         APEw==
+        h=sender:from:to:cc:subject:references:date:message-id:user-agent
+         :mime-version;
+        bh=dsRSDeqNboT2DnWBxQ6CDUAdWBpSyIkV8VQNsv45dcQ=;
+        b=t0ibczqgrYT6WtL6AYxi+p18XZMiybDws1uj+SpSA5cAcOhhkUzM0uV29UK7AI40nf
+         1WlWCQ+/NLk+hptRwO+dZoqVIR23gDk0mA9E+DGZlASaFFELZXVFamkh1wl550Dh56li
+         hOjqUgHiajWhbJ7D24617kAdcBA5itxhAeqrtfAExJFXQJ1tMJXJDJ4vNH7dKmXRGQMO
+         6T+CaEg8+uFcYNKD7R62jJg2s7+20bkY8KDyMa/sVBzX2uOqkTQljRIaW+q4TOEM/+Ez
+         LDW/MwlKnXNjvtnAT1GblC/2l20YkeXDM+2SJtys8kxo5YWZcttupHtzBtED/TZvqXz2
+         h44w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=RzT1JWBiciuBMGhyu01GLgPAFsg75eKlC6s6MT09RAY=;
-        b=flZ/BpeMwY9erXY4dHnAXU+trNnnbkQz9T4Y80cBh1f2f3UHEBu6/cb3NUTZBeBgB/
-         mYKQorxqacFYojCc5J/V1U4admRrEEtcS6s0h5KefZsansQaT8vp9JvRvofYoXDD7qo1
-         3TpA64npyIywMF6XXxJ5FJF32wtWohIaC6W6SCb1bhJFWu/gF0MbY8m2ALWm+LfjIw6M
-         Rl75CPGbqE1VgjF2KOvWXWxpeYHg5CKJst/2ORl6W9WhIozsQGLs9gwQ1wbMHnt1JHt3
-         DGv5US/V3utGCVly8LEMIfWAx7Rzcub7BXaKQrEMSRYivgR4T0LmF/7EZBz7nObmVQqR
-         0LkQ==
-X-Gm-Message-State: AOUpUlEV3wd1p8ZBqWNkpHOrtYzD0VViC6ZfvD68zC/wiVfpv2oBsV/U
-        EXo1R4CtPVidsVzBFQA5v0g=
-X-Google-Smtp-Source: AAOMgpdPMmPkWnUEe4FZlrQFS7MQO0xN47+H6sBlYPnW0QqCYW4GsX9ZTdZbmYsQ+w9FmQrulGgzhQ==
-X-Received: by 2002:a1c:f703:: with SMTP id v3-v6mr606996wmh.48.1532395632202;
-        Mon, 23 Jul 2018 18:27:12 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id w4-v6sm8074396wrt.40.2018.07.23.18.27.10
+         :message-id:user-agent:mime-version;
+        bh=dsRSDeqNboT2DnWBxQ6CDUAdWBpSyIkV8VQNsv45dcQ=;
+        b=VGUtYKyUzjPkhmwIHOQBJrH/Qaxk0Qga7syt3zCVnMcxwtT4OGr970q6vyAGQE50u5
+         M/lGSp28oSK9zYBUnl2siR5RCElczzNGP8oAgXX3wMHd3ctrUNerXp3nFc0hdz3QYaOB
+         WvlWckvcTuRMxWWwUvwRsbqgYIsm9ecrXqzTmDkTn8wac+1AnisdZXHKMWp8tytSFdzK
+         egmITOSHJKsJvzgyYcsMYRpvtkZ93GY9jCM90dMhKmDiG/QJlB4xbnZJuIREPW5S6Sga
+         jLZNhyFxGxZr9IHxmOOCGVJEJSMTaPBYvIimoMbBr6iXrLSG4Hi+5bc4ONFfatTf/lMg
+         s3Bw==
+X-Gm-Message-State: AOUpUlEcS+U9gIzWM788vDgRyLBfT28t21ohBW+MkhFOSpIbf+04nS+B
+        17LrZI92Q0mhcOYiT+MTptrMmWor
+X-Google-Smtp-Source: AAOMgpfEDgaiZgfBJYObRS+yyhRGg9b1Izu+VOk+qklYvfBpq0ekVn/m9coajAq4Yka0vO5llwbpyw==
+X-Received: by 2002:a1c:ee5d:: with SMTP id m90-v6mr663067wmh.107.1532397048159;
+        Mon, 23 Jul 2018 18:50:48 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id b11-v6sm582460wma.34.2018.07.23.18.50.47
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 23 Jul 2018 18:27:11 -0700 (PDT)
+        Mon, 23 Jul 2018 18:50:47 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v4 16/21] range-diff --dual-color: fix bogus white-space warning
-References: <pull.1.v3.git.gitgitgadget@gmail.com>
-        <pull.1.v4.git.gitgitgadget@gmail.com>
-        <f4252f2b2198cf13d5b0a21c54098e2a1d8158dd.1532210683.git.gitgitgadget@gmail.com>
-        <xmqqtvop37c1.fsf@gitster-ct.c.googlers.com>
-Date:   Mon, 23 Jul 2018 18:27:10 -0700
-In-Reply-To: <xmqqtvop37c1.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Mon, 23 Jul 2018 15:39:26 -0700")
-Message-ID: <xmqq7ell2zkh.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: refs/notes/amlog problems, was Re: [PATCH v3 01/20] linear-assignment: a function to solve least-cost assignment problems
+References: <nycvar.QRO.7.76.6.1807072116570.75@tvgsbejvaqbjf.bet>
+        <nycvar.QRO.7.76.6.1807080017160.75@tvgsbejvaqbjf.bet>
+        <nycvar.QRO.7.76.6.1807092342490.75@tvgsbejvaqbjf.bet>
+        <xmqqefg94uq1.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1807121720340.75@tvgsbejvaqbjf.bet>
+        <xmqq8t6gz8xz.fsf@gitster-ct.c.googlers.com>
+        <xmqqa7qngnon.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1807202049540.71@tvgsbejvaqbjf.bet>
+        <xmqq1sbxbt0e.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1807212347330.71@tvgsbejvaqbjf.bet>
+        <20180723012552.GA26886@sigill.intra.peff.net>
+Date:   Mon, 23 Jul 2018 18:50:46 -0700
+Message-ID: <xmqqlga11jwp.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,148 +75,123 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> It is pleasing to see that with a surprisingly clean and small
-> change like this we can exempt the initial space byte from
-> SP-before-HT check and from Indent-with-non-tab at the same time.
->
-> Very nice.
->
-> One reason why a surprisingly small special case is required is
-> perhaps because we are blessed with the original code being clean
-> [*1*], and the fact that a line[0] that is not ' ' will not trigger
-> any indentation related whitespace errors without this special case,
-> I guess.
+> If I understand the situation correctly, Junio is saying that he will
+> continue to produce the amlog mapping, and that it contains sufficient
+> information to produce the reverse mapping (which, as an aside, I did
+> not even know existed -- I mostly want to go the other way, from digging
+> in history to a mailing list conversation).
 
-Having said good things about the patch, I unfortunately realized
-that we weren't that lucky.  As we do want to see whitespace errors
-on lines with line[0] != ' ' to be flagged.  So "... will not
-trigger" in the above is not a blessing, but something that further
-needs to be fixed.  The special case should also be made for line[0]
-that is '+' and possibly '-' (and I also suspect that the changes in
-this patch may mostly be reusable with little tweaks if any).
+Yes, the reverse mapping in amlog was an experiment that did not
+work well in the end.
 
-Imagine we start from this commit that "git show" shows us like so:
+When I use "git am" to make a commit out of a message, a
+post-applypatch hook picks up the "Message-Id:" from the original
+message and adds a git note to the resulting commit.  This is in
+line with how the notes are meant to be used.  We have a commit
+object, and a piece of information that we want to associate with
+the commit object, which is not recorded as a part of the commit
+object.  So we say "git notes add -m 'that piece of info' $commit"
+(the message-id happens to be that piece of info in this example).
 
-	 int main(int ac, char **av)
-	 {
-	 ________  printf("Hello");
-	+________  putchar(',');
-	+          putchar(' ');
-	           printf("World\n");
-	           return 0;
-	 }
+And with notes.rewriteRef, "git commit --amend" etc. would copy the
+piece of info about the original commit to the rewritten commit.
 
-I've drawn a horizontal-tab as long underscore to clarify in the
-above picture.  If you have "core.whitespace=indent-with-non-tab"
-"git show" would paint the line that adds " " as violating (as it
-types 10 SPs, when it could have been a tab and 2 SPs), but it does
-not highlight the line with "World" or "return", which is sensible
-as they are pre-existing violations.
+	Side Note: there are a few workflow elements I do want to
+	keep using but they currently *lose* the mapping info.  An
+	obvious one is
 
-Then imagine we did "git commit --amend" and "git show" would give
-this instead:
+	  $ git checkout -b to/pic master &&
+	  ... review in MUA and then ...
+	  $ git am -s mbox &&
+	  ... review in tree, attempt to build, tweak, etc.
+          $ git format-patch --stdout master..to/pic >P &&
+          $ edit P &&
+          $ git reset --hard master &&
+          $ git am P
 
-	 int main(int ac, char **av)
-	 {
-	 ________  printf("Hello");
-	+          putchar(',');
-	+________  putchar(' ');
-	           printf("World\n");
-	           return 0;
-	 }
+	which is far more versatile and efficient when doing certain
+	transformations on the series than running "rebase -i" and
+	reopening and editing the target files of the patches one by
+	one in each step.  But because format-patch does not
+	generate Message-Id header of the original one out of the
+	commit, the post-applypatch hook run by "am" at the end of
+	the steps would not have a chance to record that for the
+	newly created commit.
 
-That is, relative to the previous attempt, we stopped introducing
-new indent-with-non-tab violation to the line that adds " ", but
-added a new violation to the line that adds ",".
+	For this one, I think I can use "format-patch --notes=amlog"
+	to produce the patch file and then teach post-applypatch
+	script to pay attention to the Notes annotation without
+	changing anything else to record the message id of the
+	original.  Other workflow elements that lose the notes need
+	to be identified and either a fix implemented or a
+	workaround found for each of them.  For example, I suspect
+	there is no workaround for "cherry-pick" and it would take a
+	real fix.
 
-After such "git commit --amend", what do we want to see in the
-output from "git range-diff @{1}..."?
+A reverse mapping entry used to get created by post-applypatch to
+map the blob that represents the notes text added to the $commit to
+another text blob that contains the 40-hex of the commit object.
+This is the experiment that did not work well.  As none of the later
+integrator's work e.g. "commit --amend", "rebase", "cherry-pick",
+etc. is about rewriting that blob, notes.rewriteRef mechanism would
+not kick in, and that is understandasble.
 
-My quick test of the current code does not show any whitespace
-breakage for either versions.  I *think* what we want to actually
-see is
+And these (incomplete) reverse mapping entries get in the way to
+maintain and correct the forward mapping.  When a commit that got
+unreachable gets expired, I want "git notes prune" to remove notes
+on them, and I do not want to even think about what should happen to
+the entries in the notes tree that abuse the mechanism to map blobs
+that are otherwise *not* even reachable from the main history.
 
- - just like WS_IGNORE_FIRST_SPACE logic shifted the column by
-   incrementing written (and final condition) for the loop in your
-   patch for line[0]==' ', detect the overlong run of SP correctly
-   by ignoring the first column that is '+', and complaining that
-   the new commit is typing 10 SPs before putchar(',').
+A much more important task is to make sure that the forward mapping
+that annotates invidual commits reachable from 'pu' and/or 'master' 
+is maintained correctly by various tools.  From a correctly maintained
+forward mapping, it should be straight forward to get a reverse mapping
+if needed.
 
- - Earlier I thought that lines with '-' in the outer diff should
-   become exempt from whitespace-error highlighting, but I think
-   that is a mistake.  If a line in diff-of-diff that begins with
-   "-+" has whitespace violation (e.g "-+" followed by 10 SPs), that
-   is "the old version of the patch used to introduce whitespace
-   violation", which is a useful piece of information when we look
-   at the corresponding line in the same diff-of-diff that begins
-   with "++".  We could either say "and you cleaned that mistake up
-   in your newer patch", or "and you still have that mistake in your
-   newer patch" (another possibility is there is no whitespace error
-   on a "-+" line, and the corresponding "++" line has one---"you
-   got it right in the previous round, but you somehow made it
-   worse").
+> Though personally, I do not know if there is much point in pushing it
+> out, given that receivers can reverse the mapping themselves.
 
-Here is the reproduction of the sample data I based on the above
-thought experiment on.
+Before this thread, I was planning to construct and publish the
+reverse mapping at the end of the day, but do so on a separate notes
+ref (see above---the hacky abuse gets in the way of maintaining and
+debugging the forward mapping, but a separate notes-ref that only
+contains hacks is less worrysome).  But I have changed my mind and
+decided not to generate or publish one.  It is sort of similar to
+the way the pack .idx is constructed only by the receiver [*1*].
 
-diff --git a/script.sh b/script.sh
-new file mode 100755
-index 0000000..0090661
---- /dev/null
-+++ b/script.sh
-@@ -0,0 +1,48 @@
-+#!/bin/sh
-+
-+git init
-+git config core.whitespace indent-with-non-tab
-+
-+tr _ '\011' <<\EOF >hello.c
-+int main(int ac, char **av)
-+{
-+_  printf("Hello");
-+          printf("World\n");
-+          return 0;
-+}
-+EOF
-+
-+git add hello.c && git commit -m initial
-+
-+tr _ '\011' <<\EOF >hello.c
-+int main(int ac, char **av)
-+{
-+_  printf("Hello");
-+          putchar(',');
-+_  putchar(' ');
-+          printf("World\n");
-+          return 0;
-+}
-+EOF
-+
-+git commit -a -m second
-+
-+tr _ '\011' <<\EOF >hello.c
-+int main(int ac, char **av)
-+{
-+_  printf("Hello");
-+_  putchar(',');
-+          putchar(' ');
-+          printf("World\n");
-+          return 0;
-+}
-+EOF
-+
-+git commit -a --amend -m third
-+
-+
-+git show @{1}
-+git show HEAD
-+
-+git range-diff ..@{1} @{1}..
-+
--- 
-2.18.0-232-gb7bd9486b0
+> Or is there some argument that there is information in the reverse map
+> that _cannot_ be generated from the forward map?
+
+I know there is no information loss (after all I was the only one
+who ran that experimental hack), but there is one objection that is
+still possible, even though I admit that is a weak argument.
+
+If a plumbing "diff-{files,tree,index}" family had a sibling
+"diff-notes" to compare two notes-shaped trees while pretending that
+the object-name fan-out did not exist (i.e. instead, the trees being
+compared is without a subtree and full of 40-hex filenames), then it
+would be less cumbersome to incrementally update the reverse mapping
+by reading forward mapping with something like:
+
+	git diff-notes --raw amlog@{1} amlog
+
+to learn the commits whose notes have changed.  But without such a
+plumbing, it is cumbersome to do so correctly.  "git diff-tree -r"
+could serve as a rough substitute, until the note tree grows and get
+rebalanced by reorganizing the fan-out, and on the day it happens
+the reverse mapper needs to read and discard ghost changes that are
+only due to tree reorganizing [*2*].
 
 
+[Footnotes]
 
+*1* Even if the sender could give one when it creates a .pack, the
+    receiver would not trust that it is matches the corresponding
+    .pack before using it, and the cost to validate is similar to
+    the cost to generate.
+
+*2* That makes it less efficient on that day (which hopefully would
+    happen once in a blue moon) but would not affect correctness.
