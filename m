@@ -2,98 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 874491F597
-	for <e@80x24.org>; Tue, 24 Jul 2018 21:13:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6AEE11F597
+	for <e@80x24.org>; Tue, 24 Jul 2018 21:14:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388560AbeGXWVb (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Jul 2018 18:21:31 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:42159 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388494AbeGXWVb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jul 2018 18:21:31 -0400
-Received: by mail-wr1-f67.google.com with SMTP id e7-v6so5423746wrs.9
-        for <git@vger.kernel.org>; Tue, 24 Jul 2018 14:13:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Lc4AtqcuV8eoUhFKf+2UD665DBhl0coQXxqL6EYKs8s=;
-        b=GithagpRyZSvwK8xuSLXYfkEAwhg23wy3oTiENXNzimxu50gknFWAmu7zmTmq1QGJp
-         lmzWsKYZOSfkosPHB+BthMS5Ldobn0JRBSDpoYrvhSqyaijiX6CoPqkgYTRut1n46URm
-         5Mnoj6CD55hw2xtOq9uxs0b3AlggJ2t3WfWfwQwuMxOuweKxkTm1HTU8/YaVk1GH0xUx
-         JsyT4VNuoGdoNXS5uSVtIe930LoDl5j8k3bLZYTiCJKvAhcfqmNyVIhODLx9Ue7O54CR
-         3BthFm2UlVzm9rHWXsafblIv7gD8KO+8k3YUUPalXA0XW2wWn3ifsdsOYYvZ7W6sxpnj
-         K4ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Lc4AtqcuV8eoUhFKf+2UD665DBhl0coQXxqL6EYKs8s=;
-        b=I6TPEG3Wp2MZuiE+1GD/uR9aYhcBypLa1AwO+DWG+/K8N90Fl3wJOJBWXsVPvsAq9u
-         9pNbNSWE5D0egkUHoaz8PM99VnTkHIUEFiS19YmiHw/WmdwOHwM8PWXHfggw2MPfL6CX
-         +tPi2DEH8PJcuYe/7IbPHLkG4E6//9jpCEjXZtR24IpsfKFabY4lZdoaGEo9065D8EDg
-         9ogwU+OB3/JwDcIKvieZvU0KJn3j/VVu0eq7G3+0qLbJQXFw5f/9m5tX3tkqlfTLuPgl
-         7rhRworQnwopER6a6YaFd9b8ltE1hlaksGyPvGu4IrZza/QsgAFo7chIp6nN+3/CpWye
-         PEzQ==
-X-Gm-Message-State: AOUpUlEJyUh/5Sz5TBNLnadl2lU+Kqqu8ofG3BJarNOy/lRTAixvwL8U
-        mxVEeS7ziISUBDKVTzX947I=
-X-Google-Smtp-Source: AAOMgpc5TFvPVdYN71ondghT+ckAk4PCv6mklVidqB1GE68Q8kSSQS/YyuGbf/UiNlpqAlc7by9MZA==
-X-Received: by 2002:adf:df07:: with SMTP id y7-v6mr11853068wrl.117.1532466788957;
-        Tue, 24 Jul 2018 14:13:08 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id z7-v6sm8927793wrh.85.2018.07.24.14.13.08
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 24 Jul 2018 14:13:08 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Edward Thomson <ethomson@edwardthomson.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        demerphq <demerphq@gmail.com>, Adam Langley <agl@google.com>,
-        keccak@noekeon.org
-Subject: Re: Hash algorithm analysis
-References: <20180609205628.GB38834@genre.crustytoothpaste.net>
-        <20180609224913.GC38834@genre.crustytoothpaste.net>
-        <20180611192942.GC20665@aiede.svl.corp.google.com>
-        <20180720215220.GB18502@genre.crustytoothpaste.net>
-        <20180724190136.GA5@0f3cdde9c159>
-        <CA+55aFwSe9BF8e0hLk9pp3FVD5LaVY5GRdsV3fbNtgzekJadyA@mail.gmail.com>
-Date:   Tue, 24 Jul 2018 14:13:07 -0700
-In-Reply-To: <CA+55aFwSe9BF8e0hLk9pp3FVD5LaVY5GRdsV3fbNtgzekJadyA@mail.gmail.com>
-        (Linus Torvalds's message of "Tue, 24 Jul 2018 13:31:00 -0700")
-Message-ID: <xmqqzhygwd5o.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S2388495AbeGXWXS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Jul 2018 18:23:18 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58316 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S2388466AbeGXWXS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jul 2018 18:23:18 -0400
+Received: (qmail 1341 invoked by uid 109); 24 Jul 2018 21:14:58 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 24 Jul 2018 21:14:58 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1247 invoked by uid 111); 24 Jul 2018 21:14:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 24 Jul 2018 17:14:57 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Jul 2018 17:14:56 -0400
+Date:   Tue, 24 Jul 2018 17:14:56 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [RFC PATCH 0/5] Add delta islands support
+Message-ID: <20180724211455.GA17803@sigill.intra.peff.net>
+References: <20180722054836.28935-1-chriscool@tuxfamily.org>
+ <20180724101627.GC3578@sigill.intra.peff.net>
+ <xmqqa7qgzh6c.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqa7qgzh6c.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+On Tue, Jul 24, 2018 at 10:18:03AM -0700, Junio C Hamano wrote:
 
-> On Tue, Jul 24, 2018 at 12:01 PM Edward Thomson
-> <ethomson@edwardthomson.com> wrote:
->>
->> Switching gears, if I look at this from the perspective of the libgit2
->> project, I would also prefer SHA-256 or SHA3 over blake2b.  To support
->> blake2b, we'd have to include - and support - that code ourselves.  But
->> to support SHA-256, we would simply use the system's crypto libraries
->> that we already take a dependecy on (OpenSSL, mbedTLS, CryptoNG, or
->> SecureTransport).
->
-> I think this is probably the single strongest argument for sha256.
-> "It's just there".
+> Jeff King <peff@peff.net> writes:
+> 
+> >    I think this is inherent in the scheme (we're losing some delta
+> >    opportunities). But I think it's also made worse because the delta
+> >    window gets clogged with candidates that are forbidden by the island
+> >    config.
+> 
+> Hmph, and the reason why objects that do not even belong to the same
+> island to be usable as a base are in the object list in the first
+> place is...?
 
-Yup.  I actually was leaning toward saying "all of them are OK in
-practice, so the person who is actually spear-heading the work gets
-to choose", but if we picked SHA-256 now, that would not be a choice
-that Brian has to later justify for choosing against everybody
-else's wishes, which makes it the best choice ;-)
+Because we are doing a "git repack -ad" here. So we are considering
+_all_ of the objects, but avoiding making deltas between some of them.
 
+During an actual fetch, the islands are not used at all (but the delta
+relationships left on disk are important for letting us reuse those
+deltas as-is).
+
+> >    Repacking with a big --window helps (and doesn't take as long
+> >    as it otherwise might because we can reject some object pairs based
+> >    on islands before doing any computation on the content).
+> 
+> Ah, then yes, a large window with early culling based on the delta
+> island criteria definitely sounds like the right solution to that
+> problem.
+
+I try to account for this somewhat by looking at islands in the sort we
+do of the delta candidates.  But to be honest, I am not sure how much
+sense that makes (but I did verify experimentally that it helps). Again,
+this is one of the reasons I had not sent this previously: I am not at
+all confident that it is doing the right thing in all places.
+
+-Peff
