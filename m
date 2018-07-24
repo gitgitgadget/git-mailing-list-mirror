@@ -2,86 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 189441F597
-	for <e@80x24.org>; Tue, 24 Jul 2018 19:56:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3719D1F597
+	for <e@80x24.org>; Tue, 24 Jul 2018 19:57:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388597AbeGXVEn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Jul 2018 17:04:43 -0400
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:34180 "EHLO
-        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388466AbeGXVEn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jul 2018 17:04:43 -0400
-Received: by mail-yw0-f194.google.com with SMTP id j68-v6so2005221ywg.1
-        for <git@vger.kernel.org>; Tue, 24 Jul 2018 12:56:40 -0700 (PDT)
+        id S2388651AbeGXVF4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Jul 2018 17:05:56 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:40165 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388597AbeGXVF4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jul 2018 17:05:56 -0400
+Received: by mail-wr1-f67.google.com with SMTP id t6-v6so5260909wrn.7
+        for <git@vger.kernel.org>; Tue, 24 Jul 2018 12:57:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=from:date:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=wHe/b1YrBw0FFPE4PPB7G2x8gb6v7NvKsExFfxclXM4=;
-        b=hiIeOH5Rm+joD3ItHdD1wDrWx53ujyJ/TlG3ve9Bl0dX0fa8Z8g26XNBXkIrTkmaY9
-         xeAabeI0NBvv3lnOKOO3LTXuGXaa1K487yKIBaZaBxsdvpY77LrEl5s7R4mMVpZ9MJjE
-         ACx3vIjd0ZmPybjh0PnIz5Xe1D/K332+sE8RIdAjV2wClUKeUi/1jot77vgHbbl9PoW0
-         rTSHrtQ7I2IUDAoWQyQPnWbDml2XSFD2g4lm9GNFS4dvGNuvs9pfEVY887+0k8OOaNeW
-         T5U1F8n1w27TfRsDtDjTMpemaZ8JJoSLfx7yD1PkfP5hAPDQbdpBmZvyrwMrH6GBiMmA
-         vlpg==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=/J7v3o2fX78iT6aBi3NZUoLgsHKs8Qp9rCunVkZCvZE=;
+        b=tTZgpxBComYvxMBPYfM5h0SIoeoWnSXWWmCSxAg7LpEJd//ZHuA/p27a11MIdtaNNt
+         b1kJehlIESrgzdaW+x/wRHI9rafqtBHdU97ymC8utxzo0Iotg2BXdsqCkWZvbLbQmz3q
+         77r04D79hH1dpPJug7epHgM5N1kqEB3W+y1L68pnBVeNL5A/d7FqvZa92PNPHwqgZtbg
+         ijIgqJdARdBBDFeW6pNqOZp2fcLfhXcLK+Sly/KeqFVP810tgXWALKUkjMTG7834WgOB
+         BGc3ukUV0ECLIBgGGnKylGBmLk8LYDzw6u+7XluYxlwNtL1QQH13V4MY7oFt7dsk3K7b
+         xeaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=wHe/b1YrBw0FFPE4PPB7G2x8gb6v7NvKsExFfxclXM4=;
-        b=QPssTXJEBtny/J4AJ8tCVi4TilmRzNB8OAT/Rq45907DPQqhFpinumAxq++Kq/jDop
-         nINBhBmTS21K9PdPZ/mTlatcE+e5m7jrcCd5MGDKEE1L/g0jlpbVRblwqixak3dtCrv2
-         OZfQBxq/hbQ6GtebgWhzBNgFQPYyFcqm58gwFO2Vra/7AfRfRA95kdXqMx+bQDxbcUlZ
-         eT7pmB0vgRLI3FEKYL3x/aZt9rfhWXjUyuneRe4yVFAjNYG5gcG7isA/nkCx6JLmYMeK
-         xdGuryhgxwstBGvLNWKRhdNEc59/NdsN/2lIn9uhsz/0WgodJBIXOEss+qSpWC8R4cVk
-         CrlA==
-X-Gm-Message-State: AOUpUlFFH8HI4Zq5J2lgk7lq90Wn736xi971DUIVwU23ExtwtwMVli2w
-        mPeZTZyMjSATPZHaa+9cQrAXFQ==
-X-Google-Smtp-Source: AAOMgpcqECfbOZllHQoF2HuZ4DMPMlHE1zQzPL3K6zFyEgpZW2Cj1xP3Tqv5WsxBBxjNu/K/Gnh4MA==
-X-Received: by 2002:a81:2ec8:: with SMTP id u191-v6mr9651834ywu.430.1532462199743;
-        Tue, 24 Jul 2018 12:56:39 -0700 (PDT)
-Received: from localhost ([107.217.158.181])
-        by smtp.gmail.com with ESMTPSA id i125-v6sm5500450ywd.92.2018.07.24.12.56.37
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 24 Jul 2018 12:56:38 -0700 (PDT)
-From:   Taylor Blau <me@ttaylorr.com>
-X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
-Date:   Tue, 24 Jul 2018 14:56:37 -0500
-To:     git@jeffhostetler.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        me@ttaylorr.com, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v1] config.c: fix msvc compile error
-Message-ID: <20180724195637.GA97109@syl.attlocal.net>
-References: <20180724153010.6693-1-git@jeffhostetler.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=/J7v3o2fX78iT6aBi3NZUoLgsHKs8Qp9rCunVkZCvZE=;
+        b=JVLul3fpxVCsJnnqi4pZqb1kCjyr22k28FpdJ+FtLNIPKURXXea3OMqAi2POf60Vvo
+         JDKR0uH7S/czcihwH5i2IgYEdEq4y9SdrMRz1SOIapJK2t1X9qEEMPT4GPKU4pM054+Y
+         jREfATNaGTkI9OXIm9Zn4nM1PY3MV+znGjwCDZYks0njMxYJYZEmbhnX1RPcp5yHBCLe
+         3OIfGK7+0NXjES5cidBOu+PYZyf9n18uP7zQtQYqH6jsKMZM1zvq5yTwrxkom3DKREYS
+         XKzcQBa9bm5RxmvOz03tuoRFRjflffRIh/8o1H2VV7LpTq7LfZZvbEIET+6ra3EAYJgS
+         ECeA==
+X-Gm-Message-State: AOUpUlGd5VGHSCNsmVl4GBeDkXVO7qspz6r4ielS2ZmflAbFPJZ6VpsD
+        Tn3DwuvD9J0n6FpCvBu1HL0=
+X-Google-Smtp-Source: AAOMgpeAUOoMz3ytjItal5I1Por5vPZNBTI0yHTIeq39zWTIKLmu1yHXvuTYpZ8AXs7OttOzGmwUEA==
+X-Received: by 2002:adf:a541:: with SMTP id j1-v6mr13616446wrb.155.1532462271752;
+        Tue, 24 Jul 2018 12:57:51 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id i14-v6sm9039684wro.11.2018.07.24.12.57.51
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 24 Jul 2018 12:57:51 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] pack-protocol: mention and point to docs for protocol v2
+References: <20180723174807.28903-1-bmwill@google.com>
+        <20180724045233.GB208393@aiede.svl.corp.google.com>
+        <20180724181913.GA225275@google.com>
+Date:   Tue, 24 Jul 2018 12:57:50 -0700
+In-Reply-To: <20180724181913.GA225275@google.com> (Brandon Williams's message
+        of "Tue, 24 Jul 2018 11:19:13 -0700")
+Message-ID: <xmqq8t60xv7l.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180724153010.6693-1-git@jeffhostetler.com>
-User-Agent: Mutt/1.9.5 (2018-04-13)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 24, 2018 at 03:30:10PM +0000, git@jeffhostetler.com wrote:
-> From: Jeff Hostetler <jeffhost@microsoft.com>
+Brandon Williams <bmwill@google.com> writes:
+
+>> Not about this patch, but I wonder if an organization along the
+>> following lines would make sense?
+>> 
+>>  1. Rename pack-protocol.txt to protocol-v1.txt.  Rename
+>>     protocol-v2.txt to pack-protocol.txt.
+>> 
+>>  2. Make pack-protocol.txt self-contained, and remove any redundant
+>>     sections from protocol-v1.txt.
+>> 
+>>  3. Add a new protocol-v2.txt that briefly describes the benefits and
+>>     highlights of protocol v2, referring to pack-protocol.txt for
+>>     details.
+>> 
+>> That way, newcomers of the future could read pack-protocol.txt and
+>> quickly glean the main protocol in (then) current use.
+>> 
+>> What do you think?
 >
-> In commit fb0dc3bac135e9f6243bd6d293e8c9293c73b9cd code was added
-> to builtin/config.c to define a new function and a forward declaration
-> for an array of unknown size.  This causes a compile error under MSVC.
+> I dislike the idea of renaming protocol-v2.txt to pack-protocol.txt.  I
+> agree that we should probably have protocol-v1 broken out into its own
+> file, taking the parts from pack-protocol.txt, but what really should
+> happen is that pack-protocol.txt could describe the basics of the wire
+> protocol (pkt-lines, the format of the various transports, etc) and then
+> refer to the protocol-v{1,2}.txt documents themselves.
 
-Thanks for spending time fixing that. fb0dc3bac1 (builtin/config.c:
-support `--type=<type>` as preferred alias for `--<type>`, 2018-04-18)
-is from me, so I owe you an extra thanks for patching up mistakes :-).
-
-As others have noted in this thread, another patch was sent into similar
-effect, which has already been queued, and I agree that we should prefer
-that, since it's further along.
-
-
-Thanks,
-Taylor
+WRT the naming, are we happy with the idea of (1) pretending that
+when we say 'protocol', there is nothing but the on-the-wire
+pkt-line protocol (i.e. that is why we call "protocol-v2" without
+giving any other adjective---are we sure we won't have need for any
+other kind of protocol?) and (2) tying the "pack" ness to the name of
+on-the-wire pkt-line protocol (i.e. that is where the name of the
+original pack-protocol.txt came from, as it started only for the
+packfile transfer---are we happy to keep newer protocols tied to
+"pack" the same way)?
