@@ -2,95 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 845B21F597
-	for <e@80x24.org>; Tue, 24 Jul 2018 17:18:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A2741F597
+	for <e@80x24.org>; Tue, 24 Jul 2018 17:20:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388502AbeGXSZe (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Jul 2018 14:25:34 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:56119 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388413AbeGXSZe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jul 2018 14:25:34 -0400
-Received: by mail-wm0-f68.google.com with SMTP id f21-v6so3297266wmc.5
-        for <git@vger.kernel.org>; Tue, 24 Jul 2018 10:18:05 -0700 (PDT)
+        id S2388447AbeGXS1r (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Jul 2018 14:27:47 -0400
+Received: from mail-yb0-f196.google.com ([209.85.213.196]:44069 "EHLO
+        mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388393AbeGXS1q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jul 2018 14:27:46 -0400
+Received: by mail-yb0-f196.google.com with SMTP id l16-v6so1917420ybk.11
+        for <git@vger.kernel.org>; Tue, 24 Jul 2018 10:20:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=4K9n0kLcDk2az0uFljqlj7M0g0N0DDcKJesvQ2Ufhx0=;
-        b=raJsWgY9kHAynnL/EP252sMTLPWBIj3jSyaIjhpKSBUM0ANC2NTJ8o4SJgvjguI49W
-         0ZwN5AKnkBT0loLnG+f4YGYV4O3bVc+BKQNca0yHYOJQS2I3r3ybVCEVih+c7Hm1rRGT
-         WUdXg36s8jZcUFEsLKN1Ohr0obs5T4bDb49JN1KARbrBwj7KfhMHIBZzbHhNUHf3V5mu
-         fU2j8aWzE6O1vPWiA3As1VPrthRKQdOAIOJk+Ps+z6U5bpNZ9ctfqvnr8g0LKEvoMQOv
-         aGZ4Fd0jzucgUpOSfkL3mHfaW6/QBC21VbQyk0B2Gcey20EOqmkZO+VuISG9vGkhn3py
-         NByQ==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=dp5LkLHGnRZtsnIxirL8gJNxTrxOcB/chyAi1CBcMak=;
+        b=YEeStSKoApP9dQrwBimhGiOMk5+T12LSKiIOeC13dfyeDkoaV6NJ9K7Xn8lysyhGZn
+         g4r/UduLHudFnB+8xZM8sjKhT6ywarUhWRFJRykgYH3Ms009wj86f59N5O8T+6W5E8DG
+         mPdzs5S23kvS8Gkr5in/RYbSB5c+b1KfXsWctOB8jy9H3VfTTtEnKoykqwiwtNvw7OS0
+         8c0UucXEX7FBr8WIRmLClL8sixJQ7V1/F0I+voktHtHdCUiYWK4Sifw5Aahzm5zMIYQu
+         N986cCYGDzcloDbJ6P3gbzr9WFchXGw2dd/itKBQC5FtDmEE/IwSo2mX5mCDWmiqBk4a
+         ieXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=4K9n0kLcDk2az0uFljqlj7M0g0N0DDcKJesvQ2Ufhx0=;
-        b=f08u4WVCxsSjMpzicDhdU5+rgSdPGP7osrs7ak0EWKC08nNRBDIzHmh3QG7E6iQhWD
-         kEHfNvytnDA6kFr4Ob45xWmWeeX4/kA6BX7N3q9imCCvI8JdjKOBUXqjZ1tjKG3Ie/9U
-         TxBDOjoAs1Szc66KfRq2Qi3BV6khm311a+Oa7CNRqzjHtnLBnPIGuZtP3hvxvCo5l5K1
-         /44jHSgX9iGgZqZK/v9X9M9qvTvBkzcTjEqcUPSjRoRWGMgfzwuv9AvgDuxH9u1fMS91
-         vFJC7Aw8MgwdJG39fTKQMi9muZu/XAx13jzFfOLU9QOaU92qVFeOqX1NmtzpsO0FqooV
-         aiVg==
-X-Gm-Message-State: AOUpUlFejkDtMrv2C8MC2PVfUMzDG5Ez9dFj3WVlw1OuFN9miuzOFlFl
-        CgrZWiZY+mcH3mmHwBJhu80=
-X-Google-Smtp-Source: AAOMgpfdTRaC1OjdHT/T+1sDN/ktbatl+deMo5rvymavX4VNegJVYEbYLa7j1bqNliCZVLSexzLZuA==
-X-Received: by 2002:a1c:dcf:: with SMTP id 198-v6mr2535192wmn.131.1532452684328;
-        Tue, 24 Jul 2018 10:18:04 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id z3-v6sm10488470wru.27.2018.07.24.10.18.03
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 24 Jul 2018 10:18:03 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [RFC PATCH 0/5] Add delta islands support
-References: <20180722054836.28935-1-chriscool@tuxfamily.org>
-        <20180724101627.GC3578@sigill.intra.peff.net>
-Date:   Tue, 24 Jul 2018 10:18:03 -0700
-In-Reply-To: <20180724101627.GC3578@sigill.intra.peff.net> (Jeff King's
-        message of "Tue, 24 Jul 2018 06:16:28 -0400")
-Message-ID: <xmqqa7qgzh6c.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=dp5LkLHGnRZtsnIxirL8gJNxTrxOcB/chyAi1CBcMak=;
+        b=YfvnO/icGHqwKDOol5YFs9FC76iTV3mUFZeizD/dQySA03lLoQlXyB8jA7N1GKHili
+         Z+7Mq891xLqQhlpXzLEBnkak+iQiT8n99Gclgc6YqyaD3i1dWwMyuCfKL31L8AswZwEG
+         lw9ESopMCLKWdkK6QOvLH/tJIEIq4N8Spo8aNCwbUflzgyV0Cq9qxm19p20TWtmX7QWP
+         ywMQmoH1z4cdXwlFjNYMJVBfjB7vRGGKhfMKbCHPerQlXth7KgOcpkJpr2jFstfVaqs1
+         CbQWcUZFQa76Bfc1ziL/bnSmN8TuM78qRV/HdE5BBPafAsi4FP635e5qXmRg1KlcRvAr
+         /g5g==
+X-Gm-Message-State: AOUpUlELVL6ffF9QQZ6fQ1YuToKe0FcJYjfwxlYUGahDnCfI28kwVT5b
+        DNAg5yLB0NPRTeFVZ7LSlNKhtBc4iWDuVJmfW/kML26B460=
+X-Google-Smtp-Source: AAOMgpfGwAa9HQBWthN973+Bxh14losfqApLvfT5TCuLUc0XKemiJPg2iCG2jplh97J7TP4LlbsUof804bGGBE7y6UA=
+X-Received: by 2002:a25:a263:: with SMTP id b90-v6mr8591629ybi.247.1532452816681;
+ Tue, 24 Jul 2018 10:20:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20180722054836.28935-1-chriscool@tuxfamily.org>
+ <20180722054836.28935-4-chriscool@tuxfamily.org> <CAGZ79kbF7g3E4hBa0VqMqBoovbAb2dHaGFNRL=+f7Lce1AduVg@mail.gmail.com>
+ <20180724095843.GB3578@sigill.intra.peff.net>
+In-Reply-To: <20180724095843.GB3578@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 24 Jul 2018 10:20:05 -0700
+Message-ID: <CAGZ79kZkagveB+jG9iLQ2ohaSfAzY5YtWC=BTdD1o9OQUrw90Q@mail.gmail.com>
+Subject: Re: [RFC PATCH 3/5] pack-objects: add delta-islands support
+To:     Jeff King <peff@peff.net>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Tue, Jul 24, 2018 at 2:58 AM Jeff King <peff@peff.net> wrote:
+>
+> On Mon, Jul 23, 2018 at 11:52:49AM -0700, Stefan Beller wrote:
+>
+> > > +DELTA ISLANDS
+> > > +-------------
+> > [...]
+> >
+> > I had to read all of this [background information] to understand the
+> > concept and I think it is misnamed, as my gut instinct first told me
+> > to have deltas only "within an island and no island hopping is allowed".
+> > (This message reads a bit like a commit message, not as documentation
+> > as it is long winded, too).
+>
+> I'm not sure if I'm parsing your sentence correctly, but the reason I
+> called them "islands" is exactly that you'd have deltas within an island
+> and want to forbid island hopping. So I wasn't sure if you were saying
+> "that's what I think, but not how the feature works".
 
->    I think this is inherent in the scheme (we're losing some delta
->    opportunities). But I think it's also made worse because the delta
->    window gets clogged with candidates that are forbidden by the island
->    config.
+Yeah, you want to avoid island hopping, but still want the sea bed to be
+useful for all islands (i.e. to have the largest possible base pack, that all
+islands can share without being overexposed with objects they should
+not see). And that is the main feature IMHO. It is not so much about
+island separation (as you could use its own physically separated repo
+for these separation tasks), but the main selling point of this feature
+is that it enables a base pack that can be shared across all islands
+without violating ACLs for example or making one island "too big"
+(having unneeded objects on the island).
 
-Hmph, and the reason why objects that do not even belong to the same
-island to be usable as a base are in the object list in the first
-place is...?
+So metaphorically speaking I assumed the sea bed to support
+all islands, which themselves are independent from each other.
 
->    Repacking with a big --window helps (and doesn't take as long
->    as it otherwise might because we can reject some object pairs based
->    on islands before doing any computation on the content).
+> There _is_ a tricky thing, which is that a given object is going to
+> appear in many islands. So the rule is really "you cannot hop to a base
+> that is not in all of your islands".
 
-Ah, then yes, a large window with early culling based on the delta
-island criteria definitely sounds like the right solution to that
-problem.
+Yes, if islands were numbers, we'd be looking for the Greatest common
+common divisor for all of them, as all islands have to have access to
+all objects in the base pack.
 
->    I have replacement code (which we have been running in production)
->    that is more clever about the threshold, and also can handle gaps in
->    the continuity (so we might realize we need to send objects 1-5000,
->    then skip a few, then 5037-8000, and so on).
+>
+> > What about renaming this feature to
+> >
+> > [pack]
+> >     excludePartialReach = refs/virtual/[0-9]]+/tags/
+> >
+> >   "By setting `pack.excludePartialReach`, object deltafication is
+> >   prohibited for objects that are not reachable from all
+> >   manifestations of the given regex"
+> >
+> > Cryptic, but it explains it in my mind in a shorter, more concise way. ;-)
+>
+> So I'm hopelessly biased at this point, having developed and worked with
+> the feature under the "island" name for several years. But I find your
+> name and explanation pretty confusing. :)
 
-That vaguely sounds similar to what folks at $DAYJOB runs in their
-Gerrit/jgit thing.
+Ok.
 
+>
+> Worse, though, it does not have any noun to refer to the reachable set.
+> The regex capture and the island names are an important part of the
+> feature, because it lets you make a single island out of:
+>
+>   refs/virtual/([0-9]+)/heads
+>   refs/virtual/([0-9]+)/tags
+>
+> but exclude:
+>
+>   refs/virtual/([0-9]+)/(foo)
+>
+> which goes into its own island ("123-foo" instead of "123"). So what's
+> the equivalent nomenclature to "island name"?
+
+So in my understanding we have a "common base pack" and specific
+packs on top for each "island".
+
+Regarding naming I find islands interesting and well fitting here, I don't
+know of any better name.
+
+I was just confused in the beginning as the name indicates that we care
+about the islands, but we rather care about *not* hopping them.
+
+Do you envision to have "groups of islands" (an atoll) for say all
+open source clones of linux.git, such that you can layer the packs?
+You would not just have the base pack + island pack, but have one
+pack that is common to most islands?
+
+Sorry if the initial email came off as a rant; I think the islands
+metaphor is very good.
+
+Thanks,
+Stefan
