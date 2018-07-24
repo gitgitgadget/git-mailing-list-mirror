@@ -2,133 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C3D91F597
-	for <e@80x24.org>; Tue, 24 Jul 2018 18:19:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD0C51F597
+	for <e@80x24.org>; Tue, 24 Jul 2018 18:22:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388488AbeGXT06 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Jul 2018 15:26:58 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:42912 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388409AbeGXT06 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jul 2018 15:26:58 -0400
-Received: by mail-pg1-f195.google.com with SMTP id y4-v6so3450668pgp.9
-        for <git@vger.kernel.org>; Tue, 24 Jul 2018 11:19:15 -0700 (PDT)
+        id S2388593AbeGXT35 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Jul 2018 15:29:57 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:32847 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388589AbeGXT35 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jul 2018 15:29:57 -0400
+Received: by mail-wr1-f66.google.com with SMTP id g6-v6so5083185wrp.0
+        for <git@vger.kernel.org>; Tue, 24 Jul 2018 11:22:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=bwAtMv73hTm+XIC0S4Eiocb6CN4fA/Fb5JTSAEcDEP4=;
-        b=d77m1QMo3ecxruYxTpE2T1jlEr2B4kuzEf21ioSqrhCUY6WMwNMY2aeJrtsD0kfnZO
-         J8R+QDdLElLxjeFnqbaDMv2jdCwO5d80iRmNXX5kGinO77MPAQ7pE71JaVEtWgfjpHwe
-         fPsw0MFrRGPcBdbwnj1eZUnVzJnHZ9UNErqnCM8gsZjKmEZKoULwy0IjDp1eQLhQR+cM
-         Cxt4ZLDUNMfXcCFgzTQwJ4PYwk7VZDy6Y1J3A6+35ahdMezuXIXxqTbXTsQA4xHAwPH/
-         my811SvmxxMvmvJ0JPtW0b9gfji32Zdrq2Pmjy55gnQQbb217fEBkSg/upFDrlBFtcgD
-         5npQ==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=9yzvfnAxgzkq/2fpC78zKLWIbJWo9FEgZytZXcREoEE=;
+        b=fA108J0TIsbazSPiaG/0G3B1H1cpC6iocG3aIwuDQriB8Oevr3xbGWwlCJH/TB7ng7
+         a/1FFC1aoPr/9gn893u8puYQtg/HrzuhgAt8OEIKr2dBeaIYaiLrZd4tiIIcF/AcrvNi
+         YKkkFrdMViHipA7nLyNxPRpDq+eu3lVF7VhEyU+zzOV+qlkvzXzumkp/sWdEZL9F+GOV
+         WwTub7+acVfV1cwP3qz7cJLH0MXh7NQsK56VDRv7apm7wEBlMO3c+96XqEZ6a7lRBHPB
+         zkJ5ztBoCafSXuBgQXkhprfM/2/fG9EFkhY9dQnv++Ei2szPbkHVEeS3gwoe0C9jNyGJ
+         F5oA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=bwAtMv73hTm+XIC0S4Eiocb6CN4fA/Fb5JTSAEcDEP4=;
-        b=kjkn71kUCWcmDS+Xbt0NvSinzEtCKDbmvoEcnh2FD0LJGqpXhq6D3UgzaX42slOW2F
-         dpgKWRI9vZuxzNoim3Ks38UqHmPu9b363I/jIcCIQMhGii03Q0iM/9GkV81DAwTilO8Q
-         XY/FS0z+kWx+n+3NDlXYMIZjD2mRsA5X+JlZ/kRr8PT3sypmKZJNXYR1noD2Ryu1a9/p
-         HEcDjglsKsRM1i0tjIuuoMwh0f8NWrmBasJMHfaopQB8YjdSBHysNTVlHfbgWcPNqT5y
-         wPe2TUh5DJ38pR2a9+tz2rY6p8QpxAolxX2UH3zlML9+1QNcNi4RSiqxn1OKj0cw8qZD
-         jUvw==
-X-Gm-Message-State: AOUpUlFQctM5viX9sD+7FH5FxCjezgYhrFdbmT1dd7a4aqRVgyj6jWNV
-        GV8XXQmRlC8y+Plbz/u3mRVAHQ==
-X-Google-Smtp-Source: AAOMgpeZQdp26G483hwqNsiPe7a3O/RcuTeeZxI013LgT8C1Tcaxfkta0rMcGVeZwFHFQA7Nhmr+Fg==
-X-Received: by 2002:a63:d309:: with SMTP id b9-v6mr17277504pgg.163.1532456355237;
-        Tue, 24 Jul 2018 11:19:15 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id f184-v6sm16755485pfc.88.2018.07.24.11.19.13
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=9yzvfnAxgzkq/2fpC78zKLWIbJWo9FEgZytZXcREoEE=;
+        b=Z9rvXgZjOJbim+Al9MbiupY2FpcLWWepT3WarwYbdRhlPGRl8nK3cabkOfJmBTgmPm
+         Fibn84CE5Ujj51M8E5zO12QymVpDHTEqcGXAjAddWJiv6n408D41y+SWq6eD1FaYwvK2
+         JEm8RlErCUxACxUnxRA4XJ4XXDAVMHeBkcEVHkrCxhRYGEdQothQ224rmPdY63DQw+t/
+         Uof69G17195jBt/OkxNWBBBtUywU7KSVmMkQn3cVqwIXNqJP72Ipkf7QNkiKWgjXgjod
+         Yel8T2Ka8HHXWyJmwZk+AmnTH2Y1K7N+j9uZlHrxMdD7rwDkZ2uTwROGS78Vv1b/2Nf0
+         zPrg==
+X-Gm-Message-State: AOUpUlGPU53/GSaJIbjz8Q4kJhs698vw6b6gnf0vO93kU+cDHG0mburb
+        cK7K1xml7nTxq3aWGiCfbg0=
+X-Google-Smtp-Source: AAOMgpd/D7qUA5Cl27pgMnjhw+vNpypmEXH2rutOJTOfzEg1YIbjKC7jEnmg/5IcV1EoSA4+mx/6UA==
+X-Received: by 2002:a5d:4acc:: with SMTP id y12-v6mr11561767wrs.132.1532456532719;
+        Tue, 24 Jul 2018 11:22:12 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id b13-v6sm20376876wrn.17.2018.07.24.11.22.11
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 24 Jul 2018 11:19:13 -0700 (PDT)
-Date:   Tue, 24 Jul 2018 11:19:13 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] pack-protocol: mention and point to docs for protocol v2
-Message-ID: <20180724181913.GA225275@google.com>
-References: <20180723174807.28903-1-bmwill@google.com>
- <20180724045233.GB208393@aiede.svl.corp.google.com>
+        Tue, 24 Jul 2018 11:22:12 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Beat Bolli <dev+git@drbeat.li>
+Cc:     git@jeffhostetler.com, git@vger.kernel.org, peff@peff.net,
+        me@ttaylorr.com, Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v1] config.c: fix msvc compile error
+References: <20180724153010.6693-1-git@jeffhostetler.com>
+        <235ae68c-f764-ba3a-c641-ef5f99507564@drbeat.li>
+Date:   Tue, 24 Jul 2018 11:22:11 -0700
+In-Reply-To: <235ae68c-f764-ba3a-c641-ef5f99507564@drbeat.li> (Beat Bolli's
+        message of "Tue, 24 Jul 2018 20:16:45 +0200")
+Message-ID: <xmqqwotkxzn0.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180724045233.GB208393@aiede.svl.corp.google.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07/23, Jonathan Nieder wrote:
-> Hi,
-> 
-> Brandon Williams wrote:
-> 
-> > --- a/Documentation/technical/pack-protocol.txt
-> > +++ b/Documentation/technical/pack-protocol.txt
-> > @@ -50,7 +50,8 @@ Each Extra Parameter takes the form of `<key>=<value>` or `<key>`.
-> >  
-> >  Servers that receive any such Extra Parameters MUST ignore all
-> >  unrecognized keys. Currently, the only Extra Parameter recognized is
-> > -"version=1".
-> > +"version" with a vlue of '1' or '2'.  See protocol-v2.txt for more
-> 
-> value?
+Beat Bolli <dev+git@drbeat.li> writes:
 
-yep, missed a letter.
+> Hi Jeff
+>
+> On 24.07.18 17:30, git@jeffhostetler.com wrote:
+>> From: Jeff Hostetler <jeffhost@microsoft.com>
+>> 
+>> In commit fb0dc3bac135e9f6243bd6d293e8c9293c73b9cd code was added
+>> to builtin/config.c to define a new function and a forward declaration
+>> for an array of unknown size.  This causes a compile error under MSVC.
+>> 
+>> Reorder the code to forward declare the function instead of the array.
+>
+> This was already fixed (differently) in
+> <20180705183445.30901-1-dev+git@drbeat.li>.
 
-> 
-> > +information on protocol version 2.
-> 
-> Thanks.  Some thoughts on other parts of this document that may need
-> updating:
-> 
-> - the whole document assumes that 0 and 1 are the only protocol
->   versions.  E.g. the discussion of the version number line in the
->   response when "version=1" is sent as an Extra Paramter should probably
->   apply to version 2, too.
-> 
-> - because the document was written before protocol v2, it describes the
->   more complicated v1 that many readers shouldn't have to care about
-> 
-> - there is no one document that describes v2 in a self contained way,
->   since protocol-v2.txt makes reference to protocol v1.
-> 
-> - the description of pkt-line format in protocol-common.txt is missing
->   a discussion of delim-pkt.
-> 
-> Not about this patch, but I wonder if an organization along the
-> following lines would make sense?
-> 
->  1. Rename pack-protocol.txt to protocol-v1.txt.  Rename
->     protocol-v2.txt to pack-protocol.txt.
-> 
->  2. Make pack-protocol.txt self-contained, and remove any redundant
->     sections from protocol-v1.txt.
-> 
->  3. Add a new protocol-v2.txt that briefly describes the benefits and
->     highlights of protocol v2, referring to pack-protocol.txt for
->     details.
-> 
-> That way, newcomers of the future could read pack-protocol.txt and
-> quickly glean the main protocol in (then) current use.
-> 
-> What do you think?
-
-I dislike the idea of renaming protocol-v2.txt to pack-protocol.txt.  I
-agree that we should probably have protocol-v1 broken out into its own
-file, taking the parts from pack-protocol.txt, but what really should
-happen is that pack-protocol.txt could describe the basics of the wire
-protocol (pkt-lines, the format of the various transports, etc) and then
-refer to the protocol-v{1,2}.txt documents themselves.
-
--- 
-Brandon Williams
+Thanks for saving me from having to dig the list archive myself.
+Yes, it is already applied to the tip of the topic that originally
+caused the breakage.
