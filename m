@@ -2,121 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4476C1F597
-	for <e@80x24.org>; Tue, 24 Jul 2018 16:19:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA4391F597
+	for <e@80x24.org>; Tue, 24 Jul 2018 16:34:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388457AbeGXR0n (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Jul 2018 13:26:43 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:45302 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388422AbeGXR0n (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jul 2018 13:26:43 -0400
-Received: by mail-wr1-f67.google.com with SMTP id t13-v6so4719189wrv.12
-        for <git@vger.kernel.org>; Tue, 24 Jul 2018 09:19:29 -0700 (PDT)
+        id S2388561AbeGXRl2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Jul 2018 13:41:28 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:42324 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388432AbeGXRl2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jul 2018 13:41:28 -0400
+Received: by mail-wr1-f68.google.com with SMTP id e7-v6so4771737wrs.9
+        for <git@vger.kernel.org>; Tue, 24 Jul 2018 09:34:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=eVepxz103zdLjvd9ib1X/WWE8mrGx5/gk03HFGZfDWU=;
-        b=B0t++zYplRYk72neZjkJBBQn/PPiZbGYfgnUe9tFQxH2c5giaOeaEIWy+6gmeG58HQ
-         X8tEh9yGzefJLXk4eFtjbB/NzDVPxzNvNg9+a2BRtqlL/iwz2poJ2ExJtwaWBF9iFONV
-         JEcp9bag3Sri+KFdqstpC633grhx2b4voN5QCJeNwwfET2z4HMVUVUBMZuv+fjBmZaDr
-         A90mWGv7wTZ6bmV7nf/+ICDzc3700xSSYd4kUT3+HcQ09NsL4bQgFeTjWtSeg4G+Vosv
-         MhK9OMQ4rH4ZHNcJUgn0b4SK5LQjKzKi0muxaCx/wkFq8ga/+nuKh/kqOoOATB0xRmZd
-         njLw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=axNUVeOqHMSHCXbJAA8Ghu1F9/4sbj8AsUc4xQYqw2Y=;
+        b=IQp0LB37C5r7tRUxdnXlrjgUjMuugSq98LeIeEWUqALAJm1wkEj9HFFJ97SiQeai7+
+         JVc8LCk/PbvIFdIovIArRpvayQntpT0NOQMXr5ituRQ9Xmv5reGFmHCMdfd7P/cZI23Q
+         Rvkpq7oyDQ25FiwOHXkRPgCOqd04dTNYa/YJzKVNbC3Fl56t9BpuEG8DFZRh55MlXGr6
+         bY+quCrGZDIc5j9FdMKVPDn+D5GizMZXehght7XrYS149woXgAEeIm5/DoigYTeXVH3x
+         ynhREjUNvkCG7lv25P0nT01y61dyodC4DAzDXmORHpdwvjB7ecaC8BSOauaAHhHY9WDT
+         7O3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=eVepxz103zdLjvd9ib1X/WWE8mrGx5/gk03HFGZfDWU=;
-        b=eD+0KqqvCSq2Ba7zszGHHDKzpAxwgkEA89Q5dDXT6KGlV4xRVEWJJ3bQyOfXJYwro2
-         PkfoK43jpoizXV0dLEgP+bxrutlandQb4jlwEKxQfp/LVsWNHRi66m4CNRzX6yBt4+f3
-         QZpGalYDkrlBebwEkp8/rl4VV8UFPVYkOHSh57LBNoLVgi+j7PJlqFHmaaQCsx4UShTW
-         Zzc7bs1TnDLJKwpbHoCcoOOJJqdFwu/PcNrwCA19Q3XG1XPTepxYoIIkuZqAXFS5BYSs
-         rTCMYYhaCrNJ1noorQAoEzskPmtUczmFhRKn11QAsuv1dSII1dMSMsvQgV3cYnEEeUMw
-         a+fg==
-X-Gm-Message-State: AOUpUlE8kJ+uQ3VUScHNzS4bFEsWqsqlLQzCyf+mtebVQTn/N/CJH/99
-        zbHId3H5gOqKOlWloUG4S84=
-X-Google-Smtp-Source: AAOMgpftotpMfLFpO9dutZ3eoXCFtBIg7ie1wtyMBtwN5fBdKRo9oCMpk7nOFEqBxZ2Thl/oqmNDWw==
-X-Received: by 2002:adf:9c12:: with SMTP id f18-v6mr12278921wrc.93.1532449168894;
-        Tue, 24 Jul 2018 09:19:28 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id w9-v6sm19146414wrk.28.2018.07.24.09.19.27
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 24 Jul 2018 09:19:27 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [RFC PATCH 1/5] packfile: make get_delta_base() non static
-References: <20180722054836.28935-1-chriscool@tuxfamily.org>
-        <20180722054836.28935-2-chriscool@tuxfamily.org>
-Date:   Tue, 24 Jul 2018 09:19:27 -0700
-In-Reply-To: <20180722054836.28935-2-chriscool@tuxfamily.org> (Christian
-        Couder's message of "Sun, 22 Jul 2018 07:48:32 +0200")
-Message-ID: <xmqqy3e0zjw0.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=axNUVeOqHMSHCXbJAA8Ghu1F9/4sbj8AsUc4xQYqw2Y=;
+        b=NRaIAQa9McYzXwLlq+sZRf3K2B9QXhpINvmFE5MKOyYWKnkClbCeWtxj6LdtPxHWHT
+         zu4pFqUvTjqnqZ8jEA/O2LiU+mMY1cir3FW/Tr0UOpYy1kJhfWvOFhKvHo7IHnLv4YtI
+         qjtmvgQY31pgeBfMoWWDQ0pscH6LYSGgbcLDixZnZUYbD0l2CWZfY/1oov0sfTP0vJ0n
+         2mGNEe3aN1YfMaH7/NQFE1QqgIyiuYtgwkuN81icCStbLEJhpG3edb2VNLc8uM8tq8RO
+         VOCuvmVsF4fZ5hCN775t2qgD4bVSpBVxLHdcDh+Rt7PBuB5x3WhU2Sk92qSX2AEbr9jr
+         djXw==
+X-Gm-Message-State: AOUpUlHAY9UKKc8ZCeydk0rXNoeoSTXbJrSXbks6FWadLzFedv0E9fJk
+        Zffb0Xlujag8/5oaMMgpxwiblqvQ
+X-Google-Smtp-Source: AAOMgpfof2H7ScU+opjE9XEHHNRehmsd3QUEVmfxhrSUwX2NYD6YmvO3nd2zNrll0soxdUXiiVH2Kg==
+X-Received: by 2002:adf:f8c7:: with SMTP id f7-v6mr3381095wrq.237.1532450049531;
+        Tue, 24 Jul 2018 09:34:09 -0700 (PDT)
+Received: from localhost.localdomain (AToulouse-658-1-75-221.w92-156.abo.wanadoo.fr. [92.156.127.221])
+        by smtp.googlemail.com with ESMTPSA id x124-v6sm1899091wmg.38.2018.07.24.09.34.07
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 24 Jul 2018 09:34:08 -0700 (PDT)
+From:   Alban Gruin <alban.gruin@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Stefan Beller <sbeller@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        phillip.wood@dunelm.org.uk, gitster@pobox.com,
+        Alban Gruin <alban.gruin@gmail.com>
+Subject: [GSoC][PATCH v4 00/20] rebase -i: rewrite in C
+Date:   Tue, 24 Jul 2018 18:32:01 +0200
+Message-Id: <20180724163221.15201-1-alban.gruin@gmail.com>
+X-Mailer: git-send-email 2.18.0
+In-Reply-To: <20180710121557.6698-1-alban.gruin@gmail.com>
+References: <20180710121557.6698-1-alban.gruin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+This patch series rewrite the interactive rebase from shell to C.
 
-> From: Jeff King <peff@peff.net>
->
-> As get_delta_base() will be used outside 'packfile.c' in
-> a following commit, let's make it non static and let's
-> declare it in 'packfile.h'.
+It is based on master (as of 2018-07-24).
 
-As a public function in *.h, don't we want a bit of comment there to
-help those who want to use it from outside packfile.c?
+Changes since v3:
 
+ - The `--verbose` option is stored directly into opts.verbose
 
-> Signed-off-by: Jeff King <peff@peff.net>
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->  packfile.c | 10 +++++-----
->  packfile.h |  3 +++
->  2 files changed, 8 insertions(+), 5 deletions(-)
->
-> diff --git a/packfile.c b/packfile.c
-> index 7cd45aa4b2..4646bff5ff 100644
-> --- a/packfile.c
-> +++ b/packfile.c
-> @@ -1037,11 +1037,11 @@ const struct packed_git *has_packed_and_bad(const unsigned char *sha1)
->  	return NULL;
->  }
->  
-> -static off_t get_delta_base(struct packed_git *p,
-> -				    struct pack_window **w_curs,
-> -				    off_t *curpos,
-> -				    enum object_type type,
-> -				    off_t delta_obj_offset)
-> +off_t get_delta_base(struct packed_git *p,
-> +		     struct pack_window **w_curs,
-> +		     off_t *curpos,
-> +		     enum object_type type,
-> +		     off_t delta_obj_offset)
->  {
->  	unsigned char *base_info = use_pack(p, w_curs, *curpos, NULL);
->  	off_t base_offset;
-> diff --git a/packfile.h b/packfile.h
-> index cc7eaffe1b..30f0811382 100644
-> --- a/packfile.h
-> +++ b/packfile.h
-> @@ -125,6 +125,9 @@ extern void *unpack_entry(struct repository *r, struct packed_git *, off_t, enum
->  extern unsigned long unpack_object_header_buffer(const unsigned char *buf, unsigned long len, enum object_type *type, unsigned long *sizep);
->  extern unsigned long get_size_from_delta(struct packed_git *, struct pack_window **, off_t);
->  extern int unpack_object_header(struct packed_git *, struct pack_window **, off_t *, unsigned long *);
-> +extern off_t get_delta_base(struct packed_git *p, struct pack_window **w_curs,
-> +			    off_t *curpos, enum object_type type,
-> +			    off_t delta_obj_offset);
->  
->  extern void release_pack_memory(size_t);
+ - Drop includes in rebase-interactive.h
+
+ - skip_unnecessary_picks() now returns an object_id instead of a string
+
+ - Add a test case to ensure interactive rebase aborts when the todo
+   list only has commented-out commands
+
+ - complete_action() aborts when the todo list only has commented-out
+   commands
+
+ - Drop the `keep_empty` parameter of complete_action()
+
+ - Don’t remove the modes `--shorten-oids` and `--expand-oids` from
+   git-rebase--helper
+
+ - Replace `ret = !!x(); return ret` by `ret = x(); return !!ret`
+
+ - Fail if `--make-script` is provided with two arguments instead of
+   one
+
+ - Rewrite write_basic_state() and init_basic_state() in C
+
+ - Rewrite git-rebase--interactive.sh as a builtin
+
+Alban Gruin (20):
+  sequencer: make two functions and an enum from sequencer.c public
+  rebase -i: rewrite append_todo_help() in C
+  editor: add a function to launch the sequence editor
+  rebase -i: rewrite the edit-todo functionality in C
+  sequencer: add a new function to silence a command, except if it fails
+  rebase -i: rewrite setup_reflog_action() in C
+  rebase -i: rewrite checkout_onto() in C
+  sequencer: refactor append_todo_help() to write its message to a
+    buffer
+  sequencer: change the way skip_unnecessary_picks() returns its result
+  t3404: todo list with commented-out commands only aborts
+  rebase -i: rewrite complete_action() in C
+  rebase -i: remove unused modes and functions
+  rebase -i: implement the logic to initialize $revisions in C
+  rebase -i: rewrite the rest of init_revisions_and_shortrevisions() in
+    C
+  rebase -i: rewrite write_basic_state() in C
+  rebase -i: rewrite init_basic_state() in C
+  rebase -i: implement the main part of interactive rebase as a builtin
+  rebase--interactive2: rewrite the submodes of interactive rebase in C
+  rebase -i: remove git-rebase--interactive.sh
+  rebase -i: move rebase--helper modes to rebase--interactive
+
+ .gitignore                     |   1 -
+ Makefile                       |   5 +-
+ builtin.h                      |   1 +
+ builtin/rebase--helper.c       |  88 ----------
+ builtin/rebase--interactive.c  | 264 ++++++++++++++++++++++++++++
+ cache.h                        |   1 +
+ editor.c                       |  27 ++-
+ git-rebase--interactive.sh     | 283 ------------------------------
+ git-rebase--preserve-merges.sh |  10 +-
+ git-rebase.sh                  |  47 ++++-
+ git.c                          |   2 +-
+ rebase-interactive.c           |  96 ++++++++++
+ rebase-interactive.h           |   8 +
+ sequencer.c                    | 311 +++++++++++++++++++++++++++------
+ sequencer.h                    |  19 +-
+ strbuf.h                       |   2 +
+ t/t3404-rebase-interactive.sh  |  10 ++
+ 17 files changed, 729 insertions(+), 446 deletions(-)
+ delete mode 100644 builtin/rebase--helper.c
+ create mode 100644 builtin/rebase--interactive.c
+ delete mode 100644 git-rebase--interactive.sh
+ create mode 100644 rebase-interactive.c
+ create mode 100644 rebase-interactive.h
+
+-- 
+2.18.0
+
