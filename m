@@ -2,150 +2,162 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 656101F597
-	for <e@80x24.org>; Tue, 24 Jul 2018 15:30:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B12CB1F597
+	for <e@80x24.org>; Tue, 24 Jul 2018 15:31:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388289AbeGXQhY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Jul 2018 12:37:24 -0400
-Received: from siwi.pair.com ([209.68.5.199]:16899 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726864AbeGXQhY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jul 2018 12:37:24 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 23AA93F401D;
-        Tue, 24 Jul 2018 11:30:23 -0400 (EDT)
-Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 9A4D33F401C;
-        Tue, 24 Jul 2018 11:30:22 -0400 (EDT)
-From:   git@jeffhostetler.com
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, me@ttaylorr.com,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v1] config.c: fix msvc compile error
-Date:   Tue, 24 Jul 2018 15:30:10 +0000
-Message-Id: <20180724153010.6693-1-git@jeffhostetler.com>
-X-Mailer: git-send-email 2.9.3
+        id S2388374AbeGXQin (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Jul 2018 12:38:43 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:40814 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388365AbeGXQin (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jul 2018 12:38:43 -0400
+Received: by mail-wm0-f65.google.com with SMTP id y9-v6so2146244wma.5
+        for <git@vger.kernel.org>; Tue, 24 Jul 2018 08:31:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=qRD32Huu3KaHuhQ5xyDkamcJq3NoKKvKumDd8XgmJAA=;
+        b=ZoZeAShZBgmsmpZgbP0CAZgvVoSy3kXoWhmhqFCuZSRXTpAirqNNdYsG2348N4rqoj
+         ftoW6X4GuWTY/uG4FjZ3bDSf8F2xc2CJft2ePMG15owich6xwLOEjZiKQLSkTi2dmP6o
+         qn45V5s56/8uxpzf1M8wpSOz31laM1A82Tv1RWG9ZJtTygBxi+I0BhC7XAspCBPAIQfZ
+         wxDKYkUks/IV33HYYV6guxocFMZ1u9mZO9n4Lq4sjfqG4OslATV1ESfmz67ZyWm2mj+P
+         Zjn/XNf0Ef5cpq7L7MEoQXyWGOnXgmbBmsPbMWoGVBryJCpZ8Zb4IYOyXx9amqttYrly
+         kfwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=qRD32Huu3KaHuhQ5xyDkamcJq3NoKKvKumDd8XgmJAA=;
+        b=jrhule0oHfN/tskPmuuDkYtoQae/JXBIIIQ90yclK1ZuR/qEMGzkOfy38CuxD00HfH
+         ACWez16pmBFSrEAzLMf6nttq4RDY0g42iU+YWKfyvD429GHxXjf5ykx5y70wVccClY8H
+         4ZaSufWvWhijJPAuxV+MdyzybyINbzd+qv/pnDdif2AGdivYNTKl9uEcViSG/NhlVTmP
+         1by9akS5rVK1+MgbEI8ls/EuIoM78W82DWt6ybzukufKU9o5gDOj2x0ndZ829Trwv+6/
+         an7v8ElHrsX0ZSj1HCcRie2glqRsMguRZyKsKPzQVFbXuLEMJYWRGgoG/0g+aWjtG5i1
+         dlqA==
+X-Gm-Message-State: AOUpUlF3azPXr8NG/Jp2l/k4kxDoEanAAoMtKeOY4Sx+mSLDpVmKxqZJ
+        sBKeWuAtcrO+97z/xU+tj28=
+X-Google-Smtp-Source: AAOMgpe3lJbni22Q5Xx27/7bOM63Bxr+q3dmpqaYeaOEPl5m39YA+SlimcXPY6cTlfkeobjbRdyf/A==
+X-Received: by 2002:a1c:6709:: with SMTP id b9-v6mr2172829wmc.30.1532446299780;
+        Tue, 24 Jul 2018 08:31:39 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id a145-v6sm2890124wmd.39.2018.07.24.08.31.38
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 24 Jul 2018 08:31:39 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@talktalk.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Akinori MUSHA <knu@iDaemons.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [RFC PATCH] sequencer: fix quoting in write_author_script
+References: <eb295aea-dae5-5e1c-bacf-2c77d3ce0195@talktalk.net>
+        <20180718155518.1025-1-phillip.wood@talktalk.net>
+Date:   Tue, 24 Jul 2018 08:31:38 -0700
+In-Reply-To: <20180718155518.1025-1-phillip.wood@talktalk.net> (Phillip Wood's
+        message of "Wed, 18 Jul 2018 16:55:18 +0100")
+Message-ID: <xmqq36w81wh1.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+Phillip Wood <phillip.wood@talktalk.net> writes:
 
-In commit fb0dc3bac135e9f6243bd6d293e8c9293c73b9cd code was added
-to builtin/config.c to define a new function and a forward declaration
-for an array of unknown size.  This causes a compile error under MSVC.
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+> Single quotes should be escaped as \' not \\'. Note that this only
+> affects authors that contain a single quote and then only external
+> scripts that read the author script and users whose git is upgraded from
+> the shell version of rebase -i while rebase was stopped. This is because
+> the parsing in read_env_script() expected the broken version and for
+> some reason sq_dequote() called by read_author_ident() seems to handle
+> the broken quoting correctly.
+>
+> Ideally write_author_script() would be rewritten to use
+> split_ident_line() and sq_quote_buf() but this commit just fixes the
+> immediate bug.
+>
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+>
+> This is untested, unfortuantely I don't have really have time to write a test or
+> follow this up at the moment, if someone else want to run with it then please
+> do.
 
-Reorder the code to forward declare the function instead of the array.
+Any follow-up on this?
 
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
----
- builtin/config.c | 79 ++++++++++++++++++++++++++++----------------------------
- 1 file changed, 40 insertions(+), 39 deletions(-)
+Dscho, I do agree with Phillip that the author-script this code
+produces does not quote single quotes correctly (if we consider that
+the author-script is meant to be compatible with shell script
+version and what "git am" uses, that is), and Phillip's fix looks
+like a reasonable first step going forward (the next step would
+remove the transitional band-aid from the reading code, also added
+by this patch).
 
-diff --git a/builtin/config.c b/builtin/config.c
-index b29d26d..564f18f 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -67,7 +67,46 @@ static int show_origin;
- 	{ OPTION_CALLBACK, (s), (l), (v), NULL, (h), PARSE_OPT_NOARG | \
- 	PARSE_OPT_NONEG, option_parse_type, (i) }
- 
--static struct option builtin_config_options[];
-+static int option_parse_type(const struct option *opt, const char *arg,
-+			     int unset);
-+
-+static struct option builtin_config_options[] = {
-+	OPT_GROUP(N_("Config file location")),
-+	OPT_BOOL(0, "global", &use_global_config, N_("use global config file")),
-+	OPT_BOOL(0, "system", &use_system_config, N_("use system config file")),
-+	OPT_BOOL(0, "local", &use_local_config, N_("use repository config file")),
-+	OPT_STRING('f', "file", &given_config_source.file, N_("file"), N_("use given config file")),
-+	OPT_STRING(0, "blob", &given_config_source.blob, N_("blob-id"), N_("read config from given blob object")),
-+	OPT_GROUP(N_("Action")),
-+	OPT_BIT(0, "get", &actions, N_("get value: name [value-regex]"), ACTION_GET),
-+	OPT_BIT(0, "get-all", &actions, N_("get all values: key [value-regex]"), ACTION_GET_ALL),
-+	OPT_BIT(0, "get-regexp", &actions, N_("get values for regexp: name-regex [value-regex]"), ACTION_GET_REGEXP),
-+	OPT_BIT(0, "get-urlmatch", &actions, N_("get value specific for the URL: section[.var] URL"), ACTION_GET_URLMATCH),
-+	OPT_BIT(0, "replace-all", &actions, N_("replace all matching variables: name value [value_regex]"), ACTION_REPLACE_ALL),
-+	OPT_BIT(0, "add", &actions, N_("add a new variable: name value"), ACTION_ADD),
-+	OPT_BIT(0, "unset", &actions, N_("remove a variable: name [value-regex]"), ACTION_UNSET),
-+	OPT_BIT(0, "unset-all", &actions, N_("remove all matches: name [value-regex]"), ACTION_UNSET_ALL),
-+	OPT_BIT(0, "rename-section", &actions, N_("rename section: old-name new-name"), ACTION_RENAME_SECTION),
-+	OPT_BIT(0, "remove-section", &actions, N_("remove a section: name"), ACTION_REMOVE_SECTION),
-+	OPT_BIT('l', "list", &actions, N_("list all"), ACTION_LIST),
-+	OPT_BIT('e', "edit", &actions, N_("open an editor"), ACTION_EDIT),
-+	OPT_BIT(0, "get-color", &actions, N_("find the color configured: slot [default]"), ACTION_GET_COLOR),
-+	OPT_BIT(0, "get-colorbool", &actions, N_("find the color setting: slot [stdout-is-tty]"), ACTION_GET_COLORBOOL),
-+	OPT_GROUP(N_("Type")),
-+	OPT_CALLBACK('t', "type", &type, "", N_("value is given this type"), option_parse_type),
-+	OPT_CALLBACK_VALUE(0, "bool", &type, N_("value is \"true\" or \"false\""), TYPE_BOOL),
-+	OPT_CALLBACK_VALUE(0, "int", &type, N_("value is decimal number"), TYPE_INT),
-+	OPT_CALLBACK_VALUE(0, "bool-or-int", &type, N_("value is --bool or --int"), TYPE_BOOL_OR_INT),
-+	OPT_CALLBACK_VALUE(0, "path", &type, N_("value is a path (file or directory name)"), TYPE_PATH),
-+	OPT_CALLBACK_VALUE(0, "expiry-date", &type, N_("value is an expiry date"), TYPE_EXPIRY_DATE),
-+	OPT_GROUP(N_("Other")),
-+	OPT_BOOL('z', "null", &end_null, N_("terminate values with NUL byte")),
-+	OPT_BOOL(0, "name-only", &omit_values, N_("show variable names only")),
-+	OPT_BOOL(0, "includes", &respect_includes_opt, N_("respect include directives on lookup")),
-+	OPT_BOOL(0, "show-origin", &show_origin, N_("show origin of config (file, standard input, blob, command line)")),
-+	OPT_STRING(0, "default", &default_value, N_("value"), N_("with --get, use default value when missing entry")),
-+	OPT_END(),
-+};
- 
- static int option_parse_type(const struct option *opt, const char *arg,
- 			     int unset)
-@@ -119,44 +158,6 @@ static int option_parse_type(const struct option *opt, const char *arg,
- 	return 0;
- }
- 
--static struct option builtin_config_options[] = {
--	OPT_GROUP(N_("Config file location")),
--	OPT_BOOL(0, "global", &use_global_config, N_("use global config file")),
--	OPT_BOOL(0, "system", &use_system_config, N_("use system config file")),
--	OPT_BOOL(0, "local", &use_local_config, N_("use repository config file")),
--	OPT_STRING('f', "file", &given_config_source.file, N_("file"), N_("use given config file")),
--	OPT_STRING(0, "blob", &given_config_source.blob, N_("blob-id"), N_("read config from given blob object")),
--	OPT_GROUP(N_("Action")),
--	OPT_BIT(0, "get", &actions, N_("get value: name [value-regex]"), ACTION_GET),
--	OPT_BIT(0, "get-all", &actions, N_("get all values: key [value-regex]"), ACTION_GET_ALL),
--	OPT_BIT(0, "get-regexp", &actions, N_("get values for regexp: name-regex [value-regex]"), ACTION_GET_REGEXP),
--	OPT_BIT(0, "get-urlmatch", &actions, N_("get value specific for the URL: section[.var] URL"), ACTION_GET_URLMATCH),
--	OPT_BIT(0, "replace-all", &actions, N_("replace all matching variables: name value [value_regex]"), ACTION_REPLACE_ALL),
--	OPT_BIT(0, "add", &actions, N_("add a new variable: name value"), ACTION_ADD),
--	OPT_BIT(0, "unset", &actions, N_("remove a variable: name [value-regex]"), ACTION_UNSET),
--	OPT_BIT(0, "unset-all", &actions, N_("remove all matches: name [value-regex]"), ACTION_UNSET_ALL),
--	OPT_BIT(0, "rename-section", &actions, N_("rename section: old-name new-name"), ACTION_RENAME_SECTION),
--	OPT_BIT(0, "remove-section", &actions, N_("remove a section: name"), ACTION_REMOVE_SECTION),
--	OPT_BIT('l', "list", &actions, N_("list all"), ACTION_LIST),
--	OPT_BIT('e', "edit", &actions, N_("open an editor"), ACTION_EDIT),
--	OPT_BIT(0, "get-color", &actions, N_("find the color configured: slot [default]"), ACTION_GET_COLOR),
--	OPT_BIT(0, "get-colorbool", &actions, N_("find the color setting: slot [stdout-is-tty]"), ACTION_GET_COLORBOOL),
--	OPT_GROUP(N_("Type")),
--	OPT_CALLBACK('t', "type", &type, "", N_("value is given this type"), option_parse_type),
--	OPT_CALLBACK_VALUE(0, "bool", &type, N_("value is \"true\" or \"false\""), TYPE_BOOL),
--	OPT_CALLBACK_VALUE(0, "int", &type, N_("value is decimal number"), TYPE_INT),
--	OPT_CALLBACK_VALUE(0, "bool-or-int", &type, N_("value is --bool or --int"), TYPE_BOOL_OR_INT),
--	OPT_CALLBACK_VALUE(0, "path", &type, N_("value is a path (file or directory name)"), TYPE_PATH),
--	OPT_CALLBACK_VALUE(0, "expiry-date", &type, N_("value is an expiry date"), TYPE_EXPIRY_DATE),
--	OPT_GROUP(N_("Other")),
--	OPT_BOOL('z', "null", &end_null, N_("terminate values with NUL byte")),
--	OPT_BOOL(0, "name-only", &omit_values, N_("show variable names only")),
--	OPT_BOOL(0, "includes", &respect_includes_opt, N_("respect include directives on lookup")),
--	OPT_BOOL(0, "show-origin", &show_origin, N_("show origin of config (file, standard input, blob, command line)")),
--	OPT_STRING(0, "default", &default_value, N_("value"), N_("with --get, use default value when missing entry")),
--	OPT_END(),
--};
--
- static void check_argc(int argc, int min, int max) {
- 	if (argc >= min && argc <= max)
- 		return;
--- 
-2.9.3
+Thanks.
 
+>
+> sequencer.c | 18 +++++++++++++-----
+>  1 file changed, 13 insertions(+), 5 deletions(-)
+>
+> diff --git a/sequencer.c b/sequencer.c
+> index 5354d4d51e..0b78d1f100 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -638,21 +638,21 @@ static int write_author_script(const char *message)
+>  		else if (*message != '\'')
+>  			strbuf_addch(&buf, *(message++));
+>  		else
+> -			strbuf_addf(&buf, "'\\\\%c'", *(message++));
+> +			strbuf_addf(&buf, "'\\%c'", *(message++));
+>  	strbuf_addstr(&buf, "'\nGIT_AUTHOR_EMAIL='");
+>  	while (*message && *message != '\n' && *message != '\r')
+>  		if (skip_prefix(message, "> ", &message))
+>  			break;
+>  		else if (*message != '\'')
+>  			strbuf_addch(&buf, *(message++));
+>  		else
+> -			strbuf_addf(&buf, "'\\\\%c'", *(message++));
+> +			strbuf_addf(&buf, "'\\%c'", *(message++));
+>  	strbuf_addstr(&buf, "'\nGIT_AUTHOR_DATE='@");
+>  	while (*message && *message != '\n' && *message != '\r')
+>  		if (*message != '\'')
+>  			strbuf_addch(&buf, *(message++));
+>  		else
+> -			strbuf_addf(&buf, "'\\\\%c'", *(message++));
+> +			strbuf_addf(&buf, "'\\%c'", *(message++));
+>  	res = write_message(buf.buf, buf.len, rebase_path_author_script(), 1);
+>  	strbuf_release(&buf);
+>  	return res;
+> @@ -666,13 +666,21 @@ static int read_env_script(struct argv_array *env)
+>  {
+>  	struct strbuf script = STRBUF_INIT;
+>  	int i, count = 0;
+> -	char *p, *p2;
+> +	const char *p2;
+> +	char *p;
+>  
+>  	if (strbuf_read_file(&script, rebase_path_author_script(), 256) <= 0)
+>  		return -1;
+>  
+>  	for (p = script.buf; *p; p++)
+> -		if (skip_prefix(p, "'\\\\''", (const char **)&p2))
+> +		/*
+> +		 * write_author_script() used to escape "'" incorrectly as
+> +		 * "'\\\\''" rather than "'\\''" so we check for the correct
+> +		 * version the incorrect version in case git was upgraded while
+> +		 * rebase was stopped.
+> +		 */
+> +		if (skip_prefix(p, "'\\''", &p2) ||
+> +		    skip_prefix(p, "'\\\\''", &p2))
+>  			strbuf_splice(&script, p - script.buf, p2 - p, "'", 1);
+>  		else if (*p == '\'')
+>  			strbuf_splice(&script, p-- - script.buf, 1, "", 0);
