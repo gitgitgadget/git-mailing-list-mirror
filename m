@@ -2,119 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-8.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D45121F597
-	for <e@80x24.org>; Tue, 24 Jul 2018 19:26:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 584BD208E8
+	for <e@80x24.org>; Tue, 24 Jul 2018 19:28:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388538AbeGXUew (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Jul 2018 16:34:52 -0400
-Received: from s019.cyon.net ([149.126.4.28]:38012 "EHLO s019.cyon.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388470AbeGXUew (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jul 2018 16:34:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=drbeat.li;
-         s=default; h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
-        Sender:Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:
-        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-        Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=Ds3ZjXVSIoEeyzJEH/gYkbvDXrXkIOZluro8KbvkP0Q=; b=ZAlwsTZxdQu06XKhi7tfNMNVqg
-        M7IHxBQVjyllIujfs9yDk756aGtbKO5KPGLQ2ZwZ66EvPYANtTRZV5fr0RPAJOWEiAXxvOfSXZ339
-        Y4PecoTKamAsvGcaJnu6jvZUABTPExHgwElalLrkCFO4p12SeY5Ku8vykk02/N+AFOnNZGjczZ/m+
-        pPktnIzQT/Sxo6eC/jxf0m2/Tl3IwYm/kmp7IfZ4H4p0QoWEVKyS1lcXPSHBAgOSBQYgtiGLkxrsF
-        mU0ZJ4huFT7SDRUhzoiN1ACajyiknlkt+RS6E1Xfvazl6XIVTNsU0s7WpfOEXVCdv5zHP59aAGrP5
-        t6ENaW6Q==;
-Received: from [10.20.10.233] (port=23446 helo=mail.cyon.ch)
-        by s019.cyon.net with esmtpa (Exim 4.91)
-        (envelope-from <bb@drbeat.li>)
-        id 1fi2xN-00AOEj-KE; Tue, 24 Jul 2018 21:26:54 +0200
-Received: by drbeat.li (Postfix, from userid 1000)
-        id 5867020F1D; Tue, 24 Jul 2018 21:26:49 +0200 (CEST)
-From:   Beat Bolli <dev+git@drbeat.li>
+        id S2388681AbeGXUgL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Jul 2018 16:36:11 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:34040 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388677AbeGXUgK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jul 2018 16:36:10 -0400
+Received: by mail-pg1-f194.google.com with SMTP id y5-v6so3580614pgv.1
+        for <git@vger.kernel.org>; Tue, 24 Jul 2018 12:28:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ERAyh0E9ftG1bvboGYVYCIf8RFrZ8fUMm8MDeIfSmQM=;
+        b=jfhhFPI1uQNx+EFSY9lqD17cBjKqL+g7rNqzPuAHWn8Mr1TFv/lrQvVT/cv7qqm4Si
+         DNu1I1qb4wt414QzaZ6Qol8WN7JGI7Qmq9oI0QmNJ+PN9WUwbTkBsowZPGgBk/hGL574
+         Y0GursKhCSh//S71PljGYlbd1hU155VHeIxRGwt/vBDHqJB5u5K7AHKwLa2ICFX6eYEG
+         hZEleGOqbwKW2fOXiLIecIQMju/TEC0WvQhsESDotr2E56yoGHJlmH5dhWRvsr8yDrG7
+         o6PEBK+BQso35E63n8I1RjfJv5WTQ88AMyJpXY1goY5Ql9IF9vprnfchJ/8eh1PDuMAM
+         9EgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ERAyh0E9ftG1bvboGYVYCIf8RFrZ8fUMm8MDeIfSmQM=;
+        b=TDcnoMRfwqjfh+1ejIS0CQoanlJTZZ4uInYeOivmwuXTSg1Vi3bSwsdI2YLqCQZHsU
+         L1Iaxk38RFw4XtmguFfoZUGxSpp554eCOxORpXulMWxrTeuQAK0no+Jr1lIZHMtbXe+R
+         kHM35uEkiOsgB8mqT12Q/eWFh7Rv2AFSJhhK+7vxqlKcqR0mJAMbCXJMJBlQHDb9zigh
+         NKvUV22rVCStU7lGxI74O6huplQPuPGskzU3jqboC3kVerLS4H5GSOf0qFk5m9aXLku1
+         +RmdChFDz477QYpTIefFwmaHkAudEHlWnpvyaGccOtkXuSsumgdCndkRPhz5Y6g3KNsZ
+         ZA7w==
+X-Gm-Message-State: AOUpUlFSg+Eo/SmbY2xJxEwjuCe63Xczm4S6jq6yD2aWzqvQVZOLs6fF
+        zzjvGzQRp1mnnTRomLOfjyOK2PpG/00=
+X-Google-Smtp-Source: AAOMgpelSQcZkuJoBPNAgN9kQrl1f5YulYB7ycfuT6IDz/S9mM8UP8RcqTPKC/mS7fulZL+4K0baSw==
+X-Received: by 2002:a63:144b:: with SMTP id 11-v6mr17894686pgu.219.1532460493193;
+        Tue, 24 Jul 2018 12:28:13 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id p66-v6sm31407599pfd.65.2018.07.24.12.28.11
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 24 Jul 2018 12:28:12 -0700 (PDT)
+Date:   Tue, 24 Jul 2018 12:28:11 -0700
+From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, Beat Bolli <dev+git@drbeat.li>
-Subject: [PATCH v4] Makefile: add a DEVOPTS flag to get pedantic compilation
-Date:   Tue, 24 Jul 2018 21:26:43 +0200
-Message-Id: <20180724192643.21505-1-dev+git@drbeat.li>
-X-Mailer: git-send-email 2.18.0.203.gfac676dfb9
-In-Reply-To: <20180724171339.18983-1-dev+git@drbeat.li>
-References: <20180724171339.18983-1-dev+git@drbeat.li>
-X-OutGoing-Spam-Status: No, score=-1.0
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - s019.cyon.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - drbeat.li
-X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
-X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Subject: Re: [RFC] push: add documentation on push v2
+Message-ID: <20180724192811.GC225275@google.com>
+References: <20180717210915.139521-1-bmwill@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180717210915.139521-1-bmwill@google.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the interest of code hygiene, make it easier to compile Git with the
-flag -pedantic.
+On 07/17, Brandon Williams wrote:
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+> ---
+> 
+> Since introducing protocol v2 and enabling fetch I've been thinking
+> about what its inverse 'push' would look like.  After talking with a
+> number of people I have a longish list of things that could be done to
+> improve push and I think I've been able to distill the core features we
+> want in push v2.  Thankfully (due to the capability system) most of the
+> other features/improvements can be added later with ease.
+> 
+> What I've got now is a rough design for a more flexible push, more
+> flexible because it allows for the server to do what it wants with the
+> refs that are pushed and has the ability to communicate back what was
+> done to the client.  The main motivation for this is to work around
+> issues when working with Gerrit and other code-review systems where you
+> need to have Change-Ids in the commit messages (now the server can just
+> insert them for you and send back new commits) and you need to push to
+> magic refs to get around various limitations (now a Gerrit server should
+> be able to communicate that pushing to 'master' doesn't update master
+> but instead creates a refs/changes/<id> ref).
+> 
+> Before actually moving to write any code I'm hoping to get some feedback
+> on if we think this is an acceptable base design for push (other
+> features like atomic-push, signed-push, etc can be added as
+> capabilities), so any comments are appreciated.
+> 
+>  Documentation/technical/protocol-v2.txt | 76 +++++++++++++++++++++++++
+>  1 file changed, 76 insertions(+)
 
-Pure pedantic compilation with GCC 7.3 results in one warning per use of
-the translation macro `N_`:
+Pinging this thread again to hopefully reach some more people for
+commentary.  Looking back through the comments so far there are concerns
+that a server shouldn't be trusted rewriting my local changes, so to
+address that we could have the be a config option which is defaulted to
+not take changes from a server.
 
-    warning: array initialized from parenthesized string constant [-Wpedantic]
+Apart from that I didn't see any other major concerns.  I'm hoping to
+get a bit more discussion going before actually beginning work on this.
 
-Therefore also disable the parenthesising of i18n strings with
--DUSE_PARENS_AROUND_GETTEXT_N=0.
-
-Signed-off-by: Beat Bolli <dev+git@drbeat.li>
----
-
-Now with -DUSE_PARENS_AROUND_GETTEXT_N=0 instead of =No.
-
-This is the convenience knob for all developers that led to the series
-bb/pedantic[1]. It does not depend on this series, though.
-
-[1] https://public-inbox.org/git/20180708144342.11922-1-dev+git@drbeat.li/T/#u
-
- Makefile       | 6 ++++++
- config.mak.dev | 5 +++++
- 2 files changed, 11 insertions(+)
-
-diff --git a/Makefile b/Makefile
-index 0cb6590f24..2bfc051652 100644
---- a/Makefile
-+++ b/Makefile
-@@ -484,6 +484,12 @@ all::
- #        The DEVELOPER mode enables -Wextra with a few exceptions. By
- #        setting this flag the exceptions are removed, and all of
- #        -Wextra is used.
-+#
-+#    pedantic:
-+#
-+#        Enable -pedantic compilation. This also disables
-+#        USE_PARENS_AROUND_GETTEXT_N to produce only relevant warnings.
- 
- GIT-VERSION-FILE: FORCE
- 	@$(SHELL_PATH) ./GIT-VERSION-GEN
-diff --git a/config.mak.dev b/config.mak.dev
-index 2d244ca470..e11dd94741 100644
---- a/config.mak.dev
-+++ b/config.mak.dev
-@@ -1,6 +1,11 @@
- ifeq ($(filter no-error,$(DEVOPTS)),)
- CFLAGS += -Werror
- endif
-+ifneq ($(filter pedantic,$(DEVOPTS)),)
-+CFLAGS += -pedantic
-+# don't warn for each N_ use
-+CFLAGS += -DUSE_PARENS_AROUND_GETTEXT_N=0
-+endif
- CFLAGS += -Wdeclaration-after-statement
- CFLAGS += -Wno-format-zero-length
- CFLAGS += -Wold-style-definition
 -- 
-2.18.0.203.gfac676dfb9
-
+Brandon Williams
