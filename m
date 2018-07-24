@@ -6,75 +6,69 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6AEE11F597
-	for <e@80x24.org>; Tue, 24 Jul 2018 21:14:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D9181F597
+	for <e@80x24.org>; Tue, 24 Jul 2018 21:21:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388495AbeGXWXS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Jul 2018 18:23:18 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58316 "HELO cloud.peff.net"
+        id S2388560AbeGXW3u (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Jul 2018 18:29:50 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58358 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S2388466AbeGXWXS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jul 2018 18:23:18 -0400
-Received: (qmail 1341 invoked by uid 109); 24 Jul 2018 21:14:58 -0000
+        id S2388471AbeGXW3u (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jul 2018 18:29:50 -0400
+Received: (qmail 1600 invoked by uid 109); 24 Jul 2018 21:21:28 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 24 Jul 2018 21:14:58 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 24 Jul 2018 21:21:28 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1247 invoked by uid 111); 24 Jul 2018 21:14:57 -0000
+Received: (qmail 1431 invoked by uid 111); 24 Jul 2018 21:21:27 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 24 Jul 2018 17:14:57 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 24 Jul 2018 17:21:27 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Jul 2018 17:14:56 -0400
-Date:   Tue, 24 Jul 2018 17:14:56 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Jul 2018 17:21:26 -0400
+Date:   Tue, 24 Jul 2018 17:21:26 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [RFC PATCH 0/5] Add delta islands support
-Message-ID: <20180724211455.GA17803@sigill.intra.peff.net>
-References: <20180722054836.28935-1-chriscool@tuxfamily.org>
- <20180724101627.GC3578@sigill.intra.peff.net>
- <xmqqa7qgzh6c.fsf@gitster-ct.c.googlers.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Ben Peart <peartben@gmail.com>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v1 0/3] [RFC] Speeding up checkout (and merge, rebase,
+ etc)
+Message-ID: <20180724212126.GB17803@sigill.intra.peff.net>
+References: <20180718204458.20936-1-benpeart@microsoft.com>
+ <20180718213420.GA17291@sigill.intra.peff.net>
+ <a2ad0044-f317-69f7-f2bb-488111c626fb@gmail.com>
+ <CACsJy8D-3sSnoyQZKxeLK-2RmpJSGkziAp5Gf4QpUnxwnhchSQ@mail.gmail.com>
+ <6ff6fbdc-d9cf-019f-317c-7fdba31105c6@gmail.com>
+ <20180724151336.GA1957@duynguyen.home>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqa7qgzh6c.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <20180724151336.GA1957@duynguyen.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 24, 2018 at 10:18:03AM -0700, Junio C Hamano wrote:
+On Tue, Jul 24, 2018 at 05:13:36PM +0200, Duy Nguyen wrote:
 
-> Jeff King <peff@peff.net> writes:
+> I guess you have the starting points you need after Jeff's and Junio's
+> explanation (and it would be great if cache-tree could actually be for
+> for this two-way merge). But to make it easier for new people in
+> future, maybe we should add this?
 > 
-> >    I think this is inherent in the scheme (we're losing some delta
-> >    opportunities). But I think it's also made worse because the delta
-> >    window gets clogged with candidates that are forbidden by the island
-> >    config.
+> This is basically a ripoff of Junio's explanation with starting points
+> (write-tree and index-format.txt). I wanted to incorporate some pieces
+> from Jeff's too but I think Junio's already covered it well.
 > 
-> Hmph, and the reason why objects that do not even belong to the same
-> island to be usable as a base are in the object list in the first
-> place is...?
+> -- 8< --
+> Subject: [PATCH] cache-tree.h: more description of what it is and what's it used for
 
-Because we are doing a "git repack -ad" here. So we are considering
-_all_ of the objects, but avoiding making deltas between some of them.
+There is some discussion of this extension in
+Documentation/technical/index-format.txt. But it's mostly the mechanical
+bits, not how or why you would use it.
 
-During an actual fetch, the islands are not used at all (but the delta
-relationships left on disk are important for letting us reuse those
-deltas as-is).
-
-> >    Repacking with a big --window helps (and doesn't take as long
-> >    as it otherwise might because we can reject some object pairs based
-> >    on islands before doing any computation on the content).
-> 
-> Ah, then yes, a large window with early culling based on the delta
-> island criteria definitely sounds like the right solution to that
-> problem.
-
-I try to account for this somewhat by looking at islands in the sort we
-do of the delta candidates.  But to be honest, I am not sure how much
-sense that makes (but I did verify experimentally that it helps). Again,
-this is one of the reasons I had not sent this previously: I am not at
-all confident that it is doing the right thing in all places.
+I like the idea of putting this explanation into the repo, though a lot
+of it is pretty specific to "diff-index --cached", which could
+potentially grow stale.
 
 -Peff
