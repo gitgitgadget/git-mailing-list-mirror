@@ -2,136 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 146351F597
-	for <e@80x24.org>; Tue, 24 Jul 2018 06:51:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 162321F597
+	for <e@80x24.org>; Tue, 24 Jul 2018 09:00:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388323AbeGXH4u (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Jul 2018 03:56:50 -0400
-Received: from mail-it0-f66.google.com ([209.85.214.66]:32941 "EHLO
-        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388264AbeGXH4u (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jul 2018 03:56:50 -0400
-Received: by mail-it0-f66.google.com with SMTP id d16-v6so5006800itj.0
-        for <git@vger.kernel.org>; Mon, 23 Jul 2018 23:51:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=GOxx7BWvPKTPhJyByHhB2G/Pw6Kx3DWPa1281wQFCA0=;
-        b=iy30LzQq4vLErO459iHOOK44zAJCajtW3fnVWmjkmamKvfp4T7de7IxLga8YX32RWa
-         pfUYv6gWJN1D6AMcuolkTFTVEW9Z8LjJWGHUYwbq9D04kQq3pGOQQPkg9+pccM7BiSgu
-         M6nAng6EnT7YhuKSSyU9IwGkrrYjye4Ag2w9EIFi7DIz4Cfx7iVguJr790EuabubjBuw
-         U1N4CwjjaVT/9TPozMeF7WV9aM7s+3/N3Q49uBh44UofkMchtDY9dkNkGUo/jZ60JKrr
-         VW5riHg3Gl1wgxx/lKI7iUZf8wDRAOGqUWNrGntU5q1Mtpv0K61bVrTzaLThN8W1DZlB
-         BJlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=GOxx7BWvPKTPhJyByHhB2G/Pw6Kx3DWPa1281wQFCA0=;
-        b=eZt1Max8zSB7N2lx3PtYjckIOoV0J/T40v+9FVg8fL1Eq5L1u+XjwIMCvSi/XKmlr7
-         Fyys20Ps5FmQQtRWMtoAZtVT5QK6GgKpmbJeZz95YuZ37/FWrrwvTjLuCejxFsYCQHQX
-         3CFJfQK9R7ge/cK5y2WFqMdHJUNxlR3236C3p8Z37MYb1CwAFY1b2ECFC2UHs+w++mOb
-         7XpsvOY2ss+zxKmg7x8uEtuzoUe+A3ZT+1s9D5ZyUmysI/HcHLdh0rHMhO1SCDNsH2YQ
-         p9Rz52E1xJBDSMCZ3z2XLd1Q5kgWBU9PTRH+EaYzieKX7WqKzf/NIYXkEFOL+1UFIcNb
-         NSUQ==
-X-Gm-Message-State: AOUpUlEzGQpSM2rfuEcsn5bFB8W50eRKtN4opiIXkEQBCJvhodI+IOhN
-        Rsya0zgtA7YQsGUEnrKdpcefKq+i
-X-Google-Smtp-Source: AAOMgpe9Y5BRIARlAJVBO9h7MVdvNbhmevPgXtpg7FYI/epjzQpTt0SBNs3h5Iv6Nkd1lzSji6pefA==
-X-Received: by 2002:a02:6901:: with SMTP id e1-v6mr14321741jac.62.1532415113807;
-        Mon, 23 Jul 2018 23:51:53 -0700 (PDT)
-Received: from localhost.localdomain (user-12l2cs3.cable.mindspring.com. [69.81.51.131])
-        by smtp.gmail.com with ESMTPSA id e21-v6sm3474482iob.20.2018.07.23.23.51.52
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Mon, 23 Jul 2018 23:51:52 -0700 (PDT)
-From:   Eric Sunshine <sunshine@sunshineco.com>
-To:     git@vger.kernel.org
-Cc:     Paul Mackerras <paulus@ozlabs.org>,
-        Evgeny Cherpak <cherpake@me.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH] gitk: fix MacOS 10.14 "Mojave" crash on launch
-Date:   Tue, 24 Jul 2018 02:51:20 -0400
-Message-Id: <20180724065120.7664-1-sunshine@sunshineco.com>
-X-Mailer: git-send-email 2.18.0.345.g5c9ce644c3
-In-Reply-To: <CAPig+cTJvJLMe4CFOb-yxqwF4udvs4G-BUiT=Kp-NZcfAWAyiQ@mail.gmail.com>
-References: <CAPig+cTJvJLMe4CFOb-yxqwF4udvs4G-BUiT=Kp-NZcfAWAyiQ@mail.gmail.com>
+        id S2388199AbeGXKFj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Jul 2018 06:05:39 -0400
+Received: from mout.web.de ([212.227.17.12]:51421 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2388182AbeGXKFj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jul 2018 06:05:39 -0400
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LZeVM-1gQoFX1SkW-00lZKd; Tue, 24
+ Jul 2018 11:00:07 +0200
+Date:   Tue, 24 Jul 2018 11:00:05 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Subject: Re: [PATCH 0/1] t7406: avoid failures solely due to timing issues
+Message-ID: <20180724090005.GA25260@tor.lan>
+References: <pull.12.git.gitgitgadget@gmail.com>
+ <xmqqr2jt6a5b.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqr2jt6a5b.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K1:Zb8HqqCe1Fp57OOhA8JM+fdAZk7DsV6OHDuTALJLNDoloznXGo2
+ Y9g2NYVdcN6/vznThuBObUYgnANHVyu/SqNRt00SCXtrkEXsjY6caIfZfMg+IhZi8birAG2
+ X+rDsI8UKCSGxam6bG7riL+Ej58i9CBaO+wvsTJVqDDwrRHuMV/GBsTF9MKnkY6N/PGYODh
+ yd451jTnLBIp+2TJgi7bw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:+lHNYi1Rx8w=:bKJrJo9GledMQGQs6smQl4
+ Tfn0/vf95dMnKeea56OTypAeRjzz9dyFtLslygQ8Zy/6vzYHW9aKCbQkNm0paGQ/xYPnh1iqC
+ H7BSJZx3NtGSorKNFLv+CaDwqNDNR6DOiS3vI4oG2pLa9pi2HOZSJnryLvU4a4faRfegGYVJC
+ TjxBPk0weJE7vrcjYt2JWw94gS/l3pslaq6mRkjybbcn6qva7gVvp1pL0vyj/vqphmX/sMxp8
+ JV6wGWf08XgQ2jzDt3k80v1zDEwdrLurIql3InwAxV8LLP2HIe7zhplwJlg19nG7ZN4cfiV1a
+ Ax9gJvSp0QJ6DcDa/9tuJ6EKco/9J+DubMpn+Lp5rdLBJxMthDGaeLHI6Nk0M+YmpEqkMsZDu
+ IdrnBVj6IPAHwb2ZSKnfmOfJ7j4t8/gSPruKCkNGf7fD87etP7108p+7lSTHx4usMiUmxXkni
+ s+jP4FXAgK85+ofK7KCksNPTZNjA8MrP2TzgCPly8iPVtkxdyhMQQmIvIf03cQJXQuSff+Wrt
+ QKXQbCn5+xYCtj4FAyIT/mB+5dwvhmQvZix6zluVEuiZkGY5YqjiABWHU4pK/cPCD+w9FThqv
+ qHDak+XEJ+d3okaU9rw/g7UE/ZPyjv5vUoXEbAdCIoVresH8Z5x5JdVUaeWXHlJJzx23BjwQ8
+ lnq0LHRBW6A+XdI6vk+kKrS8xwDpYwEpv1wLwKz3SI18WvhI9F3U/Z358J+DCnQPVV/jpV2Ww
+ FNTee1bu8ZNx8uMwuveQcwJ6lAd+gFPGJRzibDRe9/NAqaVUMAv32XI53JA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On MacOS, a "wish" application started from the terminal opens in the
-background, thus doesn't match user expectation that a newly-launched
-application ought to be placed in the foreground. To address this
-shortcoming, both gitk and git-gui use Apple Events to send a message to
-"System Events" instructing it to foreground the "wish" application by
-PID.
+On Mon, Jul 23, 2018 at 12:10:24PM -0700, Junio C Hamano wrote:
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+> 
+> > This fixes a regression test that produces false positives occasionally: https://git-for-windows.visualstudio.com/git/_build/results?buildId=14035&view=logs
+> >
+> 
+> [jc: forwrding to Torsten for <208b2ede-4833-f062-16f2-f35b8a8ce099@web.de>]
 
-Unfortunately, MacOS 10.14 tightens restrictions on Apple Events,
-requiring explicit granting of permission to control applications in
-this fashion, and apparently such granting for "Automation" is not
-allowed at all[1]. As a consequence gitk crashes outright at launch time
-with a "Not authorized to send Apple events to System Events" error,
-thus is entirely unusable on "Mojave".
+Yes,
+thanks for a "fantastic fast fix" and the integration.
 
-In contrast, git-gui does not crash since it deliberately[2] catches and
-ignores Apple Events errors. This does mean that git-gui will not
-automatically become the foreground application on "Mojave", which is a
-minor inconvenience but far better than crashing outright as gitk does.
-
-Update gitk to catch and ignore Apple Events errors, mirroring git-gui's
-behavior, to avoid this crash.
-
-(Finding and implementing an alternate approach to foregrounding the
-"wish" application on "Mojave" may be desirable but is outside the scope
-of this crash fix.)
-
-[1]: https://public-inbox.org/git/D295145E-7596-4409-9681-D8ADBB9EBB0C@me.com/
-[2]: https://public-inbox.org/git/CABNJ2G+h3zh+=wLA0KHjUn8TsfhqUK1Kn-1_=6hnXVRJUPhuuA@mail.gmail.com/
-
-Reported-by: Evgeny Cherpak <cherpake@me.com>
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
-
-Lack of 'catch' in the 'osascript' invocation in gitk was recognized as
-a potential problem as far back as June 2013 [3,4]; now it's biting
-"Mojave" users, making gitk unusable.
-
-[3]: https://public-inbox.org/git/7vk3m7yukc.fsf@alter.siamese.dyndns.org/
-[4]: https://public-inbox.org/git/1l424u5.uk987q18u3oxfM%25lists@haller-berlin.de/
-
- gitk-git/gitk | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
-
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index a14d7a16b2..f13d1807bb 100755
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -12210,11 +12210,13 @@ if {[catch {package require Tk 8.4} err]} {
- 
- # on OSX bring the current Wish process window to front
- if {[tk windowingsystem] eq "aqua"} {
--    exec osascript -e [format {
--        tell application "System Events"
--            set frontmost of processes whose unix id is %d to true
--        end tell
--    } [pid] ]
-+    catch {
-+	exec osascript -e [format {
-+	    tell application "System Events"
-+		set frontmost of processes whose unix id is %d to true
-+	    end tell
-+	} [pid] ]
-+    }
- }
- 
- # Unset GIT_TRACE var if set
--- 
-2.18.0.345.g5c9ce644c3
-
+I downloaded and tested it OK (under MacOS) this morning.
