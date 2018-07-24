@@ -2,93 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 829051F597
-	for <e@80x24.org>; Tue, 24 Jul 2018 22:19:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B96291F597
+	for <e@80x24.org>; Tue, 24 Jul 2018 22:43:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388719AbeGXX2P (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Jul 2018 19:28:15 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:37309 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388632AbeGXX2P (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jul 2018 19:28:15 -0400
-Received: by mail-pg1-f194.google.com with SMTP id n7-v6so3843292pgq.4
-        for <git@vger.kernel.org>; Tue, 24 Jul 2018 15:19:40 -0700 (PDT)
+        id S2388681AbeGXXvk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Jul 2018 19:51:40 -0400
+Received: from mail-yb0-f194.google.com ([209.85.213.194]:45884 "EHLO
+        mail-yb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388543AbeGXXvk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jul 2018 19:51:40 -0400
+Received: by mail-yb0-f194.google.com with SMTP id h127-v6so2272957ybg.12
+        for <git@vger.kernel.org>; Tue, 24 Jul 2018 15:42:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=eLDFVQQYJdvRfKXXg7NdaiyanISjjN/kSFc/xVHPFVc=;
-        b=bbEUOVrFbCWnnXiwdl3Q6CRaVS7MkWmhdhU6myMhhKzv8X7JoQRI9PALpxJwkO5F6x
-         oV3sWT2yu4OB65xxFbhsE0L9BdMabC+j2aF6VbVKnVhBuQ+kQyZdiQQSUdLABdC2DbRw
-         a3jhHvhDRBtrhgH0u3dhYldw5nlES1bJzBL6vbT5plEGRVRyFNwxVUtBWMfUs4egFTqU
-         3LHcF7DmTBh7zpqiWn65QIrSVMNIL63lAbEHJqnVptyidSSwCwS4g6Ol4kLGfG1xm0D0
-         V6nmH9153p9EwTtNZyGWjE8W5R1vamBHpJldY+Qv8hp6wPL+miETDjShdLYTdwa0roQs
-         5c+w==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=FKRFF4HCf1a8AhDCTn9ZvoHOqTsQ/jFDvuc9fVwZAY0=;
+        b=ImfI7OaRnpdtBRNX+JpYEpBgwQgcKrOMX4sh/n71LUcJo7crPh7arT1A7Xoi4tJRIl
+         muaYKg2Qm1iT23ebPuIGDsBVwWwSFCQqTMX3d3p/Nv3c6ohZxTQRMviV80Cwa9jV9u01
+         m5TzIeE42T0cN32n9Qua0VkUOSyp3Ehq48UP+nmsJpE440XTTAbcYvPLqy/TQIXK1Fse
+         qkCdnafx85wl4s2k2vV+AZMMHxd8GKJvYzSbGLVxAK2E0JMGvxTpwbeG6dSwaz+JMkeN
+         s6jJpV82kayctrofocnRQbuDQDXzvWwK36f2+W8RUyaREHOk9iPFvIbXYmhWQz0Ypr8e
+         Wlbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=eLDFVQQYJdvRfKXXg7NdaiyanISjjN/kSFc/xVHPFVc=;
-        b=QTKkMHAWmUAk4dAI/AA3joUoa0tGQyFSCDlELnma3hFOHO01ebe/Rgtl5txDgA31vC
-         vOrRVdcm15y+0DklpYSMmPkSth1BgYXKWFfcebaTO0yuOvqN+MpaCnLWIk7j/TYwhUnn
-         6o+GIJyiA8uRU6R6Bbw9BZQJ00NvXOEenaX06frJpZIFXOezizkPlU1AkxiuPo/G+hoY
-         iN1R8Yt0OE9IYIx8T99pjeKRvzJem+8D7+1N6C/ywTx70mh6Hebt4xhthl6qJF1z1CTm
-         +ZqwjtEz4bDe6Va0JzmJBrGRL4iGrVcdkqeX5iHnjrZhzU9WYyWgtxjzb6oRqnTcKDBP
-         UO8g==
-X-Gm-Message-State: AOUpUlFslBrep/UZK3DBA0ak3z5uB9FE6ksDpvKhmbR+eA5Tver0KO1l
-        FpHud7jpumxWRma+uHbShFs=
-X-Google-Smtp-Source: AAOMgpeiIouQ91RSQDR3HRaHDqtz7Y346j7gqhMyMm9JvclssrTO6dG/CCdRyizQZ/3AD8tl7bnhtg==
-X-Received: by 2002:aa7:8591:: with SMTP id w17-v6mr19504138pfn.77.1532470780412;
-        Tue, 24 Jul 2018 15:19:40 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id k12-v6sm20202276pfj.30.2018.07.24.15.19.39
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 24 Jul 2018 15:19:39 -0700 (PDT)
-Date:   Tue, 24 Jul 2018 15:19:38 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] pack-protocol: mention and point to docs for protocol v2
-Message-ID: <20180724221938.GF136514@aiede.svl.corp.google.com>
-References: <20180723174807.28903-1-bmwill@google.com>
- <20180724045233.GB208393@aiede.svl.corp.google.com>
- <20180724181913.GA225275@google.com>
- <xmqq8t60xv7l.fsf@gitster-ct.c.googlers.com>
- <20180724204733.GE225275@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=FKRFF4HCf1a8AhDCTn9ZvoHOqTsQ/jFDvuc9fVwZAY0=;
+        b=AmGqnkbykNDzQrjspCqPmsUkk1+qGJs2oqcLsRay/u0m8yxhlEMEpgQdi1wpQYmN88
+         bthkD1sDwerA+NPBsoHssrCEq+YfZR82olh1bwo3jDhc/DjXT9SFkFDJ1Dh5g2c9knb3
+         kgwrSnkx403utHBYIsRQyKDlAq7m0ki3Lwypb9q+ZnUbPQWa/Gff1ptjrncIWWZ9/f+x
+         /xI+3cGFfPXq9XS2QKcviCGY7JCs+DUVChvyPtm6z929zbOyWW1/idZR17gv/Kb+Heck
+         woyigIAb4yLeIWcBXJP1r3j8fqN/hZeGwJsFvewvo7GJ8JxWkR2uHLbwW99Wj3Y99GcZ
+         LIkg==
+X-Gm-Message-State: AOUpUlEDLXx2gDjMZ4u0hJAlgDjWLrU8jsxr6LRJkbWHQIG30CKPzu/u
+        gLgJkuj6vY1xT6pUsozit6R00Y3YRa5WCt+ivgeNDg==
+X-Google-Smtp-Source: AAOMgpea5N7DNv/FzeNLzqnNHlav6dw1QtJFlvNg2VqeTD3Rarzj625CtxyJUja4oDgQFKsOMRPofry1/INQVOIUqyo=
+X-Received: by 2002:a5b:307:: with SMTP id j7-v6mr10341700ybp.352.1532472179104;
+ Tue, 24 Jul 2018 15:42:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180724204733.GE225275@google.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+References: <20180724215845.7137-1-sunshine@sunshineco.com> <20180724220928.GE136514@aiede.svl.corp.google.com>
+In-Reply-To: <20180724220928.GE136514@aiede.svl.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 24 Jul 2018 15:42:48 -0700
+Message-ID: <CAGZ79kbL2mHK9TzH6guRjJkzmaVSbMiPr5M47RPMtYzp782iFQ@mail.gmail.com>
+Subject: Re: [PATCH] diff: --color-moved: rename "dimmed_zebra" to "dimmed-zebra"
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams wrote:
+On Tue, Jul 24, 2018 at 3:09 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Hm.  Looks like dimmed_zebra was introduced in v2.15.0-rc0~16^2~2
+> (2017-06-30), so it has been around for a while (about a year).  But I
+> would like to be able to simplify by getting rid of it.
+>
+> https://codesearch.debian.net/search?q=dimmed_zebra doesn't find any
+> instances of it being used outside Git itself.
+>
+> https://twitter.com/kornelski/status/982247477020508162 (found with a
+> web search) shows that some people may have it in configuration.
 
-> If so I suggest we move away from the term "pack" protocol.  Mostly
-> because maybe at some future date we don't only want to communicate to
-> transfer packs.  So at the risk of bikeshedding (and because naming is
-> hard) I think we should begin talking about the over the wire protocol
-> as just that, the "wire protocol" or if we need to be more explicit the
-> "git wire protocol". Thoughts?
+Thanks for the searches.
 
-Sounds fine to me.
+>
+> I don't have any good ideas about deprecating more aggressively, and
+> the patch looks good, so
+>
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-<bikeshed>You can call it Documentation/technical/git-protocol.txt,
-since from the context it's clear that this is going over the
-wire.</bikeshed>
+Same here. I wonder if we actually ever want to deprecate it further than
+this patch, as the additional code to support it is only 2 lines.
+So the effort to deprecate it (more than this patch) is more than
+keeping the misnamed version around forever.
 
-The main point of what Junio said is that it means the docs should
-treat "git upload-archive" instead same way as "git upload-pack" and
-"git receive-pack", instead of artifically separating the archive
-file-oriented and the pack-oriented parts of the protocol.
-
-Thanks,
-Jonathan
+Thanks!
+Stefan
