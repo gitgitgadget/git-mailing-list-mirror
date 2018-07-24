@@ -2,163 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76EE5208E8
-	for <e@80x24.org>; Tue, 24 Jul 2018 19:00:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D85E1F597
+	for <e@80x24.org>; Tue, 24 Jul 2018 19:02:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388471AbeGXUH5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Jul 2018 16:07:57 -0400
-Received: from mail-pg1-f175.google.com ([209.85.215.175]:38334 "EHLO
-        mail-pg1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388429AbeGXUH5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jul 2018 16:07:57 -0400
-Received: by mail-pg1-f175.google.com with SMTP id k3-v6so3525074pgq.5
-        for <git@vger.kernel.org>; Tue, 24 Jul 2018 12:00:06 -0700 (PDT)
+        id S2388491AbeGXUJu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Jul 2018 16:09:50 -0400
+Received: from mail-wr1-f46.google.com ([209.85.221.46]:33888 "EHLO
+        mail-wr1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388463AbeGXUJu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jul 2018 16:09:50 -0400
+Received: by mail-wr1-f46.google.com with SMTP id c13-v6so5166115wrt.1
+        for <git@vger.kernel.org>; Tue, 24 Jul 2018 12:01:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=XcEdkb2ZwQomsBOm3j1OIfleqwDaVD9Z+m8uOCALRZQ=;
-        b=g/67kXfYXdb6aOsm7z2bidizklqyJuKAkzY+YFhc0UWhaMNoRqUytwZ3dLKSMgBxtG
-         Ca7ZZDR0ELayldvJeEeIsZuYcozUcAnKkBEt+OUXHVqkdSNKTOyErQiPq14mY6jcCZ1/
-         ko7gJOotPvpe8i7OA4prX49wTEd+Kx06T0fjdOmprQK5hDuj/N10IjYzzLSISII1i2Zi
-         TdGyU9Z3u3qweSvbymgVUXh7WdDOvG/DAK0BCtCeIwhC7/yNVgXeL4cmqW7AIrts2jWy
-         SQSzGBnRy9l5/h7Og+cfcw/CnwnPEHNiKwxbhGEmwxqfceZxLZmZvpm9C0CtYgu+Xe0X
-         +BVQ==
+        d=edwardthomson-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=P4teshoR8xse+7beDnjxIz20cSJNLJoJymWnuLXaxP4=;
+        b=vZxTlB87tRYb1RvDmXECFXoa/B+43gjAslXILcJHVeU2bnQhzAbqzQuyOHqEhK1cDz
+         ZeF4v2emGtEDFyg9uFkrIT1yLs9u/6AgsJoqEVUUAKSH48ZOa1UV+XQed+wGjkHyma6L
+         /kqxZgQGiqCdV1KuxMzY6HXgplPqtqw5+QxahhFhR3C2znPfwz5ttKj8eoupaE+u8SYG
+         0bWZbgMZZEXP2bMNh1A4LhBuyydY9Qv55ZLhL4TenXAukLbhmLiVKnTVoUoYbvh3Jftm
+         Q8OXQ6F6t73odUWKdrMKtjZ9br7H1bgcdRCFQTbuCZFt+QbXW+MSagCxUhRL0xo3EwW8
+         zs6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=XcEdkb2ZwQomsBOm3j1OIfleqwDaVD9Z+m8uOCALRZQ=;
-        b=o636pUKj0kFeAIBCetz8Hh343bNl7ve/MqxOoUUYccV19sYo3Sj1RUqx3MNMFx2gVl
-         LBfRaP7WhP/kdPxTrCMKJXeOGOXbDXLuChnEX5VoSv2QasUUkfqu7dxEdgBuEEjVdOkN
-         2fKuoJgnoA//5kJAFMbTEA5h1vzr4YKKceETSiaOvumg6sNZA0gwgvqv2CpokUwcvCU5
-         gvdtqyVPuTiSHUzT+4IsAAUChKy9tK+nZib9J6sJiRzaDiP9mGD+NmX5VC5FJl7tXcks
-         BKuXZhaSH/TjQYC6Y7b7IlDh8p4f8le3xyLW3Z0DhV3cZhz4kp4lCfjDFphMvnakCPK2
-         WjFQ==
-X-Gm-Message-State: AOUpUlHtay3VUqduYsA/OJXIJdvwJEh5YUVh+Rw38nqRDnG+tCYpc5wS
-        fqZZje93hGWZG8ZzccDrhzfihA==
-X-Google-Smtp-Source: AAOMgpdFy/qBej6iPZ8EyG/N81Vzpn0BMMwY6jURxHnmazIUW+ts7zt98W0o++XpRQDHKU7zL4AlIw==
-X-Received: by 2002:a63:9619:: with SMTP id c25-v6mr17318828pge.75.1532458805370;
-        Tue, 24 Jul 2018 12:00:05 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id q21-v6sm21279048pfl.156.2018.07.24.12.00.03
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=P4teshoR8xse+7beDnjxIz20cSJNLJoJymWnuLXaxP4=;
+        b=tnfH9OOvaT4bHtc3XLB6QM7Fn7eCLOLi3CbT+r4rcBwQABm17IrtlKrOXTVU61vzjd
+         LW0FGEKno+Z+RBVO9rDIGrHb23Ooja/GRgaHMa0+5BlRw9YQLyalMIWogKKlv+Uw5TOY
+         SKcNxtYjDyTAgCWmyBYQhFdmSFMKVKTbE7PThtFO05GoTJLFId7Lod5wb4bSJQPJEP3m
+         p2gCnJBWsgPriHbpBp3CW1R/xMEnIsdsEXWJdK9Im1qVq9iuTqmuZda7kmlEw9uiyVRw
+         CuN6RMlyJlW6NPUeyUTBMVvSLosZFaIQQ8QRTmgwrND1J2mqL9tlTwmicPsYhYorZRsh
+         2g7g==
+X-Gm-Message-State: AOUpUlFR8ph5v2pQc++lsqvm1Fr3xUbxCIAAlPiLnWCrVlIJduq8UPrh
+        U49F2P2aPNWzTHsCx8y+UTLcDg==
+X-Google-Smtp-Source: AAOMgpcqpIrg7xODjQOhaUdJJ0KTbxrx3oSn/TFiqfEG+lwMDd+7SN8sdXLV/mSMz7M8dxDjfToAqA==
+X-Received: by 2002:adf:be0f:: with SMTP id n15-v6mr13001072wrh.267.1532458917644;
+        Tue, 24 Jul 2018 12:01:57 -0700 (PDT)
+Received: from 0f3cdde9c159 (80-248-185-253.newhall.nsdsl.net. [80.248.185.253])
+        by smtp.gmail.com with ESMTPSA id r18-v6sm1421524wmh.28.2018.07.24.12.01.52
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 24 Jul 2018 12:00:04 -0700 (PDT)
-Date:   Tue, 24 Jul 2018 12:00:03 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Derrick Stolee <stolee@gmail.com>, git <git@vger.kernel.org>
-Subject: Re: [RFC] push: add documentation on push v2
-Message-ID: <20180724190003.GB225275@google.com>
-References: <20180717210915.139521-1-bmwill@google.com>
- <CAGZ79kZEpNLkXuEQEiMB_nc-MOOp-KOziHyONmr4SiajA5+F2g@mail.gmail.com>
- <a7c43308-a388-e307-6bea-47e6df74b65c@gmail.com>
- <CAGZ79kbLn-uwQOXfqhtO46v0EWevY43Tf4W5Rz9gDD9_qbmX=A@mail.gmail.com>
- <20180718171512.GC17137@google.com>
- <1dd6d9aa-0e96-bb8e-f7ae-873f619a2450@jeffhostetler.com>
+        Tue, 24 Jul 2018 12:01:56 -0700 (PDT)
+Date:   Tue, 24 Jul 2018 19:01:36 +0000
+From:   Edward Thomson <ethomson@edwardthomson.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        demerphq <demerphq@gmail.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Adam Langley <agl@google.com>,
+        The Keccak Team <keccak@noekeon.org>
+Subject: Re: Hash algorithm analysis
+Message-ID: <20180724190136.GA5@0f3cdde9c159>
+References: <20180609205628.GB38834@genre.crustytoothpaste.net>
+ <20180609224913.GC38834@genre.crustytoothpaste.net>
+ <20180611192942.GC20665@aiede.svl.corp.google.com>
+ <20180720215220.GB18502@genre.crustytoothpaste.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <1dd6d9aa-0e96-bb8e-f7ae-873f619a2450@jeffhostetler.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180720215220.GB18502@genre.crustytoothpaste.net>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07/20, Jeff Hostetler wrote:
+On Fri, Jul 20, 2018 at 09:52:20PM +0000, brian m. carlson wrote:
 > 
+> To summarize the discussion that's been had in addition to the above,
+> Ævar has also stated a preference for SHA-256 and I would prefer BLAKE2b
+> over SHA-256 over SHA3-256, although any of them would be fine.
 > 
-> On 7/18/2018 1:15 PM, Brandon Williams wrote:
-> > On 07/18, Stefan Beller wrote:
-> > > On Wed, Jul 18, 2018 at 6:31 AM Derrick Stolee <stolee@gmail.com> wrote:
-> > > > 
-> > > > On 7/17/2018 7:25 PM, Stefan Beller wrote:
-> > > > > On Tue, Jul 17, 2018 at 2:09 PM Brandon Williams <bmwill@google.com> wrote:
-> > > > > > Signed-off-by: Brandon Williams <bmwill@google.com>
-> > > > > > ---
-> > > > > > 
-> > > > > > Since introducing protocol v2 and enabling fetch I've been thinking
-> > > > > > about what its inverse 'push' would look like.  After talking with a
-> > > > > > number of people I have a longish list of things that could be done to
-> > > > > > improve push and I think I've been able to distill the core features we
-> > > > > > want in push v2.
-> > > > > It would be nice to know which things you want to improve.
-> > > > 
-> > > > Hopefully we can also get others to chime in with things they don't like
-> > > > about the existing protocol. What pain points exist, and what can we do
-> > > > to improve at the transport layer before considering new functionality?
-> > > 
-> > > Another thing that I realized last night was the possibility to chunk requests.
-> > > The web of today is driven by lots of small http(s) requests. I know our server
-> > > team fights with the internal tools all the time because the communication
-> > > involved in git-fetch is usually a large http request (large packfile).
-> > > So it would be nice to have the possibility of chunking the request.
-> > > But I think that can be added as a capability? (Not sure how)
-> > 
-> > Fetch and push requests/responses are already "chunked" when using the
-> > http transport.  So I'm not sure what you mean by adding a capability
-> > because the protocol doesn't care about which transport you're using.
-> > This is of course unless you're talking about a different "chunking"
-> > from what it means to chunk an http request/response.
-> > 
-> 
-> Internally, we've talked about wanting to have resumable pushes and
-> fetches.  I realize this is difficult to do when the server is
-> replicated and the repeated request might be talking to a different
-> server instance.  And there's a problem with temp files littering the
-> server as it waits for the repeated attempt.  But still, the packfile
-> sent/received can be large and connections do get dropped.
-> 
-> That is, if we think about sending 1 large packfile and just using a
-> byte-range-like approach to resuming the transfer.
-> 
-> If we allowed the request to send a series of packfiles, with each
-> "chunk" being self-contained and usable.  So if a push connection was
-> dropped the server could apply the successfully received packfile(s)
-> (add the received objects and update the refs to the commits received so
-> far).  And ignore the interrupted and unreceived packfile(s) and let the
-> client retry later.  When/if the client retried the push, it would
-> renegotiate haves/wants and send a new series of packfile(s).  With the
-> assumption being that the server would have updated refs from the
-> earlier aborted push, so the packfile(s) computed for the second attempt
-> would not repeat the content successfully transmitted in the first
-> attempt.
-> 
-> This would require that the client build an ordered set of packfiles
-> from oldest to newest so that the server can apply them in-order and
-> the graph remain connected.  That may be outside your scope here.
-> 
-> Also, we might have to add a few messages to the protocol after the
-> negotiation, for the client to say that it is going to send the push
-> content in 'n' packfiles and send 'n' messages with the intermediate
-> ref values being updated in each packfile.
-> 
-> Just thinking out loud here.
-> Jeff
+> Are there other contributors who have a strong opinion?  Are there
+> things I can do to help us coalesce around an option?
 
-We've talked about working on resumable fetch/push (both of which are
-out of the scope of this work), but we haven't started working on
-anything just yet.
+Overall, I prefer SHA-256.
 
-There's a couple different ways to do this like you've pointed out, we
-can either have the server redirect the client to fetch from a CDN
-(where its put the packfile) and then the client can use ranged requests
-to fetch until the server decides to remove it from the CDN.  This can
-be tricky because every fetch can produce a unique packfile so maybe you
-don't want to put a freshly constructed, unique packfile for each client
-request up on a CDN somewhere.
+I mentioned this at the contributor summit - so this may have been
+captured in the notes.  But if not, when I look at this from the
+perspective of my day job at Notorious Big Software Company, we would
+prefer SHA-256 due to its performance characteristics and the
+availability of hardware acceleration.  We think about git object ids
+in a few different ways:
 
-Breaking up a response into multiple packfiles and small ref-updates
-could work, that way as long as some of the smaller packs/updates are
-applied then the client is making headway towards being up to date with
-the server.
+Obviously we use git as a version control system - we have a significant
+investment in hosting repositories (for both internal Microsoft teams
+and our external customers).  What may be less obvious is that often,
+git blob ids are used as fingerprints: on a typical Windows machine,
+you don't have the command-line hash functions (md5sum and friends),
+but every developer has git installed.  So we end up calculating git
+object ids in places within the development pipeline that are beyond the
+scope of just version control.  Not to dwell too much on implementation
+details, but this is especially advantageous for us in (say) labs where
+we can ensure that particular hardware is available to speed this up as
+necessary.
 
--- 
-Brandon Williams
+Switching gears, if I look at this from the perspective of the libgit2
+project, I would also prefer SHA-256 or SHA3 over blake2b.  To support
+blake2b, we'd have to include - and support - that code ourselves.  But
+to support SHA-256, we would simply use the system's crypto libraries
+that we already take a dependecy on (OpenSSL, mbedTLS, CryptoNG, or
+SecureTransport).  All of those support SHA-256 and none of them include
+support for blake2b.  That means if there's a problem with (say)
+OpenSSL's SHA-256 implementation, then it will be fixed by their vendor.
+If there's a problem with libb2, then that's now my responsibility.
+
+This is not to suggest that one library is of higher or lower quality
+than another.  And surely we would try to use the same blake2b library
+that git itself is using to minimize some of this risk (so that at least
+we're all in the same boat and can leverage each other's communications
+to users) but even then, there will be inevitable drift between our
+vendored dependencies and the upstream code.  You can see this in action
+in xdiff: git's xdiff has deviated from upstream, and libgit2 has taken
+git's and ours has deviated from that.
+
+Cheers-
+-ed
