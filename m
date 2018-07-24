@@ -7,48 +7,47 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D7961F597
-	for <e@80x24.org>; Tue, 24 Jul 2018 16:34:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3EA551F597
+	for <e@80x24.org>; Tue, 24 Jul 2018 16:34:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388594AbeGXRlj (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Jul 2018 13:41:39 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:42336 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388546AbeGXRlj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jul 2018 13:41:39 -0400
-Received: by mail-wr1-f65.google.com with SMTP id e7-v6so4772202wrs.9
-        for <git@vger.kernel.org>; Tue, 24 Jul 2018 09:34:20 -0700 (PDT)
+        id S2388623AbeGXRln (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Jul 2018 13:41:43 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:55377 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388614AbeGXRln (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jul 2018 13:41:43 -0400
+Received: by mail-wm0-f68.google.com with SMTP id f21-v6so3169005wmc.5
+        for <git@vger.kernel.org>; Tue, 24 Jul 2018 09:34:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=uwv0Z2Hyk9flKPfWzi9BXbnt04CqzzIzB93c4mSu+eU=;
-        b=Bi5n2zQLHXFEMAWh4dusGtV/BGGI4dS1ONzT0HgKy8eK3IXfquElDfjhUay6uvvgeQ
-         gMqG76l9TTA8yKm8B+O+pfaXY1hh+PyygS3js76tPBYKQ6FQ5fRkYEqERFPsdM/lDpUD
-         xr8CgQOCHpoJPQ++AFJhPv0VLB1wCkx1wfzp7w3mT1twjySnz9LxGwrmO7i8xet7ukt5
-         is3GKKOPeH4y3qksPbEVua6Se55HB+XYDPurlPkpxx7/9NOV1m4YeRBELmy2B5eanQaJ
-         vvENFGmkA4SzNwhRvYhBOOsYcZxQIRHFGkNFhm9NnGDEpI3fyPIF/hwR1rpmBFkmwXS+
-         3ddg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=kNaWXPNbcvzK5+fAClAyofcVMZR1ucMDKT5iy0YFjy0=;
+        b=OX57fU9EwUuqa4i40nFRlohLlYOscCVKD8Zyy0GgVMsT1KdmkTWwkBWlG/tiInEzkq
+         /Vis+9BpEgHXMyKIVMaq/tEjGxCPuLuOCX3pqL9URnwZkx7g9b3D73zmTzVDh3i01stb
+         KTZ9nE/YtbaQpD/YGjFu37zQAH9QtneggtGwGx/tFZeSX2Wg9Y5ymPhygtRKYrUC8K9V
+         1fwab4ILIO/wUww+49eR/Uc1kg4MojAZg4F0shsl/VgYtxuzAS5Qh00k52891ow70Fvb
+         YS0POkNwFwL80wV0JS9b9kUAHJ9n6MelcQJDonaXPl0F0oGAY++jZp8JLxQD++b62cWg
+         X0+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=uwv0Z2Hyk9flKPfWzi9BXbnt04CqzzIzB93c4mSu+eU=;
-        b=ZWUtHGjVLuZgzlHBAoaKqhl0uADWf9ae3mSB/HYXO1nTxw+zfMq4PQ3CFRpyOM/xSc
-         v7rnC3RbwE2clrMisxNMlG2vvn0QYBwJFU758iYI1LDhuknztA/KdrNPlxjbT23Yb1gz
-         OZv8sD9LsFvZBX3wBn+mGn16hHpXqQF4EhDQQn44WouaeTtCX3s6PBzqUrR7AHKXNmNA
-         7cwE9Qrgzf9G8CowMDKkQKCoM6O9ZBL2+6vpwMJAqrmkrbRGe6gjMbNeo9PInJ0DV18O
-         PeMpH4gTEXYThGx1EuUjRUssyP3JT5nYM//cthY3Th/cQ9Rq8YOzeXDxvwWoyTNeld3Q
-         EHUQ==
-X-Gm-Message-State: AOUpUlHGXJqsnG+hxQsJ7vYBZJ/fz8MW2ZX7LKpt9CRngWdP+7lhG+7b
-        dRd9FDrj2QzjkBSsqMj3U0Gm+a8x
-X-Google-Smtp-Source: AAOMgpche8ZqbnElUpwM+mKyms7n5wHZM7rcvyYWiVy7ZvayuvyWjvQjjSBS97aL6pap472y8uQl1Q==
-X-Received: by 2002:adf:9485:: with SMTP id 5-v6mr12805484wrr.82.1532450059866;
-        Tue, 24 Jul 2018 09:34:19 -0700 (PDT)
+         :references;
+        bh=kNaWXPNbcvzK5+fAClAyofcVMZR1ucMDKT5iy0YFjy0=;
+        b=McHs6OGkD00exuTBMpDPkQWJQV12DBM+v4YZIXfstTBpBXNn1HqDGMWzJKzfLo1uvB
+         SBx7pBvXDWL0tJ00UZAAL/Lgn6XvV/KOphvSDkM6PP5IAXXPtclQhTnFYaoOQKFT6xAZ
+         fa5Ev6o+tdwEysn0ZYzu5uJDgmn+e+oIkva7gGQyqu9hfYeGmttU/x6M/NgRl60WFnSz
+         dgxE4CpQmQNT0dTvyvpLAS3EFe+u59c3Y82KguarBUBNEOpiXAOR6BgH339LUi5J8SmI
+         O496/PVxMaexOMI+Ob4pwstGmIQE1fgKTBm3pqmSCsifnxToLyK/SZEmwlWSNoLP1Qn7
+         yqoQ==
+X-Gm-Message-State: AOUpUlH0c/cEPZIc8NJ+pUwQnuf1lU/oeOL7hh5lZvk4YzNdxMbwAF1U
+        iHEnjju4jCgTl5erBSv/Pocn4g8u
+X-Google-Smtp-Source: AAOMgpejLZWOpXOloVUP+PRtaQhZkbxXz1ZUqERguSyhOg9JWoCHqZCoK3hGfOg43AlXbX1xvFyzYw==
+X-Received: by 2002:a1c:d942:: with SMTP id q63-v6mr2556793wmg.78.1532450064506;
+        Tue, 24 Jul 2018 09:34:24 -0700 (PDT)
 Received: from localhost.localdomain (AToulouse-658-1-75-221.w92-156.abo.wanadoo.fr. [92.156.127.221])
-        by smtp.googlemail.com with ESMTPSA id x124-v6sm1899091wmg.38.2018.07.24.09.34.18
+        by smtp.googlemail.com with ESMTPSA id x124-v6sm1899091wmg.38.2018.07.24.09.34.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 24 Jul 2018 09:34:18 -0700 (PDT)
+        Tue, 24 Jul 2018 09:34:23 -0700 (PDT)
 From:   Alban Gruin <alban.gruin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
@@ -57,180 +56,115 @@ Cc:     Stefan Beller <sbeller@google.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         phillip.wood@dunelm.org.uk, gitster@pobox.com,
         Alban Gruin <alban.gruin@gmail.com>
-Subject: [GSoC][PATCH v4 06/20] rebase -i: rewrite setup_reflog_action() in C
-Date:   Tue, 24 Jul 2018 18:32:07 +0200
-Message-Id: <20180724163221.15201-7-alban.gruin@gmail.com>
+Subject: [GSoC][PATCH v4 09/20] sequencer: change the way skip_unnecessary_picks() returns its result
+Date:   Tue, 24 Jul 2018 18:32:10 +0200
+Message-Id: <20180724163221.15201-10-alban.gruin@gmail.com>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20180724163221.15201-1-alban.gruin@gmail.com>
 References: <20180710121557.6698-1-alban.gruin@gmail.com>
  <20180724163221.15201-1-alban.gruin@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This rewrites (the misnamed) setup_reflog_action() from shell to C. The
-new version is called prepare_branch_to_be_rebased().
+Instead of skip_unnecessary_picks() printing its result to stdout, it
+returns it into a struct object_id, as the rewrite of complete_action()
+(to come in the next commit) will need it.
 
-A new command is added to rebase--helper.c, “checkout-base”, as well as
-a new flag, “verbose”, to avoid silencing the output of the checkout
-operation called by checkout_base_commit().
-
-The function `run_git_checkout()` will also be used in the next commit,
-therefore its code is not part of `checkout_base_commit()`.
-
-The shell version is then stripped in favour of a call to the helper.
-
-As $GIT_REFLOG_ACTION is no longer set at the first call of
-checkout_onto(), a call to comment_for_reflog() is added at the
-beginning of this function.
+rebase--helper then is modified to fit this change.
 
 Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
 ---
-Dropped the `verbose` variable.
-
- builtin/rebase--helper.c   |  7 ++++++-
- git-rebase--interactive.sh | 16 ++--------------
- sequencer.c                | 30 ++++++++++++++++++++++++++++++
- sequencer.h                |  2 ++
- 4 files changed, 40 insertions(+), 15 deletions(-)
+ builtin/rebase--helper.c | 10 ++++++++--
+ sequencer.c              | 13 ++++++-------
+ sequencer.h              |  2 +-
+ 3 files changed, 15 insertions(+), 10 deletions(-)
 
 diff --git a/builtin/rebase--helper.c b/builtin/rebase--helper.c
-index 731a64971d..0e76dadba6 100644
+index 313092c465..bed3dd2b95 100644
 --- a/builtin/rebase--helper.c
 +++ b/builtin/rebase--helper.c
-@@ -18,7 +18,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
- 	enum {
- 		CONTINUE = 1, ABORT, MAKE_SCRIPT, SHORTEN_OIDS, EXPAND_OIDS,
- 		CHECK_TODO_LIST, SKIP_UNNECESSARY_PICKS, REARRANGE_SQUASH,
--		ADD_EXEC, APPEND_TODO_HELP, EDIT_TODO
-+		ADD_EXEC, APPEND_TODO_HELP, EDIT_TODO, PREPARE_BRANCH
- 	} command = 0;
- 	struct option options[] = {
- 		OPT_BOOL(0, "ff", &opts.allow_ff, N_("allow fast-forward")),
-@@ -28,6 +28,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL(0, "rebase-merges", &rebase_merges, N_("rebase merge commits")),
- 		OPT_BOOL(0, "rebase-cousins", &rebase_cousins,
- 			 N_("keep original branch points of cousins")),
-+		OPT__VERBOSE(&opts.verbose, N_("be verbose")),
- 		OPT_CMDMODE(0, "continue", &command, N_("continue rebase"),
- 				CONTINUE),
- 		OPT_CMDMODE(0, "abort", &command, N_("abort rebase"),
-@@ -51,6 +52,8 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
- 		OPT_CMDMODE(0, "edit-todo", &command,
- 			    N_("edit the todo list during an interactive rebase"),
- 			    EDIT_TODO),
-+		OPT_CMDMODE(0, "prepare-branch", &command,
-+			    N_("prepare the branch to be rebased"), PREPARE_BRANCH),
- 		OPT_END()
- 	};
- 
-@@ -94,5 +97,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
- 		return !!append_todo_help(0, keep_empty);
- 	if (command == EDIT_TODO && argc == 1)
- 		return !!edit_todo_list(flags);
-+	if (command == PREPARE_BRANCH && argc == 2)
-+		return !!prepare_branch_to_be_rebased(&opts, argv[1]);
- 	usage_with_options(builtin_rebase_helper_usage, options);
- }
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 2defe607f4..77e972bb6c 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -72,6 +72,7 @@ collapse_todo_ids() {
- 
- # Switch to the branch in $into and notify it in the reflog
- checkout_onto () {
-+	comment_for_reflog start
- 	GIT_REFLOG_ACTION="$GIT_REFLOG_ACTION: checkout $onto_name"
- 	output git checkout $onto || die_abort "$(gettext "could not detach HEAD")"
- 	git update-ref ORIG_HEAD $orig_head
-@@ -119,19 +120,6 @@ initiate_action () {
- 	esac
- }
- 
--setup_reflog_action () {
--	comment_for_reflog start
--
--	if test ! -z "$switch_to"
--	then
--		GIT_REFLOG_ACTION="$GIT_REFLOG_ACTION: checkout $switch_to"
--		output git checkout "$switch_to" -- ||
--			die "$(eval_gettext "Could not checkout \$switch_to")"
--
--		comment_for_reflog start
--	fi
--}
--
- init_basic_state () {
- 	orig_head=$(git rev-parse --verify HEAD) || die "$(gettext "No HEAD?")"
- 	mkdir -p "$state_dir" || die "$(eval_gettext "Could not create temporary \$state_dir")"
-@@ -211,7 +199,7 @@ git_rebase__interactive () {
- 		return 0
- 	fi
- 
--	setup_reflog_action
-+	git rebase--helper --prepare-branch "$switch_to" ${verbose:+--verbose}
- 	init_basic_state
- 
- 	init_revisions_and_shortrevisions
+@@ -90,8 +90,14 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+ 		return !!transform_todos(flags);
+ 	if (command == CHECK_TODO_LIST && argc == 1)
+ 		return !!check_todo_list();
+-	if (command == SKIP_UNNECESSARY_PICKS && argc == 1)
+-		return !!skip_unnecessary_picks();
++	if (command == SKIP_UNNECESSARY_PICKS && argc == 1) {
++		struct object_id oid;
++		int ret = skip_unnecessary_picks(&oid);
++
++		if (!ret)
++			puts(oid_to_hex(&oid));
++		return !!ret;
++	}
+ 	if (command == REARRANGE_SQUASH && argc == 1)
+ 		return !!rearrange_squash();
+ 	if (command == ADD_EXEC && argc == 2)
 diff --git a/sequencer.c b/sequencer.c
-index 274cddd13f..0bc53e009e 100644
+index c7d01d60b3..238c534049 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -3139,6 +3139,36 @@ static const char *reflog_message(struct replay_opts *opts,
- 	return buf.buf;
+@@ -4416,17 +4416,17 @@ static int rewrite_file(const char *path, const char *buf, size_t len)
  }
  
-+static int run_git_checkout(struct replay_opts *opts, const char *commit,
-+			    const char *action)
-+{
-+	struct child_process cmd = CHILD_PROCESS_INIT;
-+
-+	cmd.git_cmd = 1;
-+
-+	argv_array_push(&cmd.args, "checkout");
-+	argv_array_push(&cmd.args, commit);
-+	argv_array_pushf(&cmd.env_array, GIT_REFLOG_ACTION "=%s", action);
-+
-+	if (opts->verbose)
-+		return run_command(&cmd);
-+	else
-+		return run_command_silent_on_success(&cmd);
-+}
-+
-+int prepare_branch_to_be_rebased(struct replay_opts *opts, const char *commit)
-+{
-+	const char *action;
-+
-+	if (commit && *commit) {
-+		action = reflog_message(opts, "start", "checkout %s", commit);
-+		if (run_git_checkout(opts, commit, action))
-+			return error(_("could not checkout %s"), commit);
-+	}
-+
-+	return 0;
-+}
-+
- static const char rescheduled_advice[] =
- N_("Could not execute the todo command\n"
- "\n"
+ /* skip picking commits whose parents are unchanged */
+-int skip_unnecessary_picks(void)
++int skip_unnecessary_picks(struct object_id *output_oid)
+ {
+ 	const char *todo_file = rebase_path_todo();
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct todo_list todo_list = TODO_LIST_INIT;
+-	struct object_id onto_oid, *oid = &onto_oid, *parent_oid;
++	struct object_id *parent_oid;
+ 	int fd, i;
+ 
+ 	if (!read_oneliner(&buf, rebase_path_onto(), 0))
+ 		return error(_("could not read 'onto'"));
+-	if (get_oid(buf.buf, &onto_oid)) {
++	if (get_oid(buf.buf, output_oid)) {
+ 		strbuf_release(&buf);
+ 		return error(_("need a HEAD to fixup"));
+ 	}
+@@ -4456,9 +4456,9 @@ int skip_unnecessary_picks(void)
+ 		if (item->commit->parents->next)
+ 			break; /* merge commit */
+ 		parent_oid = &item->commit->parents->item->object.oid;
+-		if (hashcmp(parent_oid->hash, oid->hash))
++		if (hashcmp(parent_oid->hash, output_oid->hash))
+ 			break;
+-		oid = &item->commit->object.oid;
++		oidcpy(output_oid, &item->commit->object.oid);
+ 	}
+ 	if (i > 0) {
+ 		int offset = get_item_line_offset(&todo_list, i);
+@@ -4487,11 +4487,10 @@ int skip_unnecessary_picks(void)
+ 
+ 		todo_list.current = i;
+ 		if (is_fixup(peek_command(&todo_list, 0)))
+-			record_in_rewritten(oid, peek_command(&todo_list, 0));
++			record_in_rewritten(output_oid, peek_command(&todo_list, 0));
+ 	}
+ 
+ 	todo_list_release(&todo_list);
+-	printf("%s\n", oid_to_hex(oid));
+ 
+ 	return 0;
+ }
 diff --git a/sequencer.h b/sequencer.h
-index ffab798f1e..93da713fe2 100644
+index 11a5334612..f11dabfd65 100644
 --- a/sequencer.h
 +++ b/sequencer.h
-@@ -106,6 +106,8 @@ int update_head_with_reflog(const struct commit *old_head,
- void commit_post_rewrite(const struct commit *current_head,
- 			 const struct object_id *new_head);
+@@ -88,7 +88,7 @@ int sequencer_add_exec_commands(const char *command);
+ int transform_todos(unsigned flags);
+ enum missing_commit_check_level get_missing_commit_check_level(void);
+ int check_todo_list(void);
+-int skip_unnecessary_picks(void);
++int skip_unnecessary_picks(struct object_id *output_oid);
+ int rearrange_squash(void);
  
-+int prepare_branch_to_be_rebased(struct replay_opts *opts, const char *commit);
-+
- #define SUMMARY_INITIAL_COMMIT   (1 << 0)
- #define SUMMARY_SHOW_AUTHOR_DATE (1 << 1)
- void print_commit_summary(const char *prefix, const struct object_id *oid,
+ extern const char sign_off_header[];
 -- 
 2.18.0
 
