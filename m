@@ -2,152 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ABAE91F597
-	for <e@80x24.org>; Tue, 24 Jul 2018 18:42:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E55B1F597
+	for <e@80x24.org>; Tue, 24 Jul 2018 18:50:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388515AbeGXTt7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Jul 2018 15:49:59 -0400
-Received: from mail-yb0-f194.google.com ([209.85.213.194]:45814 "EHLO
-        mail-yb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388429AbeGXTt7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jul 2018 15:49:59 -0400
-Received: by mail-yb0-f194.google.com with SMTP id h127-v6so2013831ybg.12
-        for <git@vger.kernel.org>; Tue, 24 Jul 2018 11:42:12 -0700 (PDT)
+        id S2388520AbeGXT6i (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Jul 2018 15:58:38 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:54388 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388366AbeGXT6i (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jul 2018 15:58:38 -0400
+Received: by mail-wm0-f67.google.com with SMTP id c14-v6so3551335wmb.4
+        for <git@vger.kernel.org>; Tue, 24 Jul 2018 11:50:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=t5saW+90+LsvA1/7fUMrNVRsiWfCcJcfO2HLI8Vrlmo=;
+        b=O+f43Caun3L3vPU2cg83LqA+p6RGpUNsezqmBqyNsWlC01uie6NG24AUZ24NBMiASg
+         FqvjYxCMSPf061l9AAcCpvpJD9CgLrbPEZsFTe4v2JliUBEzsMTcLpY13dcE/yA7i5xS
+         TewhrcwWa9dFkjPV+FT9iI1mkjka8Nk6poKevjVYm5akNRwEXatYXV16LZIoYROIraVQ
+         tSShU2fXZC3bWF4Q6ZqR+o0VOipxxIh7WIuBnqtQLPgCt1rVXBUexJKctpnK0Y5PlB50
+         7gDtBC2toT1C3H5WEr4IOAfmfGqtw67V6Wy+kaLJDISaOjPPZmB96WY90ac33S/dWLBU
+         9p2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=id/yuyw9XmOfijcjQLanl8ewwy2mR2rfdTA9ljl3KdA=;
-        b=mX9Kfu1oBfTNBf8nr9B/lhqQ2ftOrbLm0le8mu0U6ZLtCY4AUYCs0fYxuxQ6VWhV1P
-         jwkN6schv+dCNDiJstL2S8NIDetdIf9EvHvG7KMkiKcLvdDFXuj3wYPIoGmTwkckTj4+
-         m5/O1/GDYz0BTOXB2P/6g0g3w7sX7lhYrKgzzEszWPudbyP9I4UpLa367KeAeE42Epkm
-         dlsY21pUQ8kPWgFrBhFaTyPMlZAI8UJVGJ39IjWGQjHF5t8OUbDRl+mSNB/TFHV2G09d
-         /5ryUi+XmLZmns5RSTkSbcIs10Gpb8kZRzDK9DaN5oV30+5ILQU0A7zhmfmEpLAg1j/u
-         ewkA==
-X-Gm-Message-State: AOUpUlH4OyUVZClmI3RuyojadgyrCP/stUoVqiNWBY9G2cQk3yaJqkIo
-        USAafDCO0PmjgDhg2WsDtZwlSH2Bsq7e1qyHvaI=
-X-Google-Smtp-Source: AAOMgpeGVkGLlPapRPLr0QZH+0qdqNsvPyD56tIQChPx8p2iSIeozc0ubXUbQ5axaKA1Ukf5PpGUyS8NfnQURxUe/u0=
-X-Received: by 2002:a5b:601:: with SMTP id d1-v6mr9829865ybq.295.1532457731858;
- Tue, 24 Jul 2018 11:42:11 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=t5saW+90+LsvA1/7fUMrNVRsiWfCcJcfO2HLI8Vrlmo=;
+        b=SjC1KVIlOFLFfnroj3c/7U1LoIHdI9DQE7A2t9kKgNij4Dqw8WOpzVvR5WOF+d2bfw
+         MtTh+GP6IxdIFKzH96AM7RK9EzqVGg//++bJOUFwwVCaj06Yc+zTwoN3hJr5j0NV23LG
+         A6+fq2QH8snrNs8UsEp6nvr4UMR9XCn/T7dZ+NOcBuUovsQy2/9LNV2fX3OvDSmt/hlK
+         Bnk4rmCaECcXfAketHgcx9ZmGNrlKPACQ8q3CBFYvGUXQ+JSzYDXVuWL32Xv6tVMF5yx
+         YOPHpmLohHHVIt0hBbEy8cSTDQiRgR5WYlO0pk7YGW5khoQvdNz0cHyYlXJqWXIT7NGI
+         8t3Q==
+X-Gm-Message-State: AOUpUlHQLDQytldPdMXCFJyn48bzzoHxJGLKxuK5oO61uEsIS9WgvXTv
+        FHqWvpc1yf/hr+Edzy2/IfE=
+X-Google-Smtp-Source: AAOMgpcH3VeuyqavlhiUj81R/Frenm6GhSti0tz+tMYHcL+FpHGMKC/8Hltbc3Xsw3j2hHkVGZOGtQ==
+X-Received: by 2002:a1c:b9cf:: with SMTP id j198-v6mr2777238wmf.93.1532458247618;
+        Tue, 24 Jul 2018 11:50:47 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id m207-v6sm3153123wma.31.2018.07.24.11.50.46
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 24 Jul 2018 11:50:46 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Beat Bolli <dev+git@drbeat.li>
+Cc:     git@jeffhostetler.com, git@vger.kernel.org, peff@peff.net,
+        me@ttaylorr.com, Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v1] config.c: fix msvc compile error
+References: <20180724153010.6693-1-git@jeffhostetler.com>
+        <235ae68c-f764-ba3a-c641-ef5f99507564@drbeat.li>
+        <xmqqwotkxzn0.fsf@gitster-ct.c.googlers.com>
+        <8fd2fe53-ff42-5e21-a485-a38c97331b9c@drbeat.li>
+Date:   Tue, 24 Jul 2018 11:50:46 -0700
+In-Reply-To: <8fd2fe53-ff42-5e21-a485-a38c97331b9c@drbeat.li> (Beat Bolli's
+        message of "Tue, 24 Jul 2018 20:26:50 +0200")
+Message-ID: <xmqqr2jsxybd.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20180724180122.29212-1-benpeart@microsoft.com>
-In-Reply-To: <20180724180122.29212-1-benpeart@microsoft.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 24 Jul 2018 14:42:00 -0400
-Message-ID: <CAPig+cQZ4g-6uT3zB0n2XWb-68DUUBZdaimTb6_Y4DNZrLUdyQ@mail.gmail.com>
-Subject: Re: [PATCH v1] checkout: optionally speed up "git checkout -b foo"
-To:     Ben Peart <Ben.Peart@microsoft.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 24, 2018 at 2:01 PM Ben Peart <Ben.Peart@microsoft.com> wrote:
-> If the new core.optimizecheckout config setting is set to true, speed up
+Beat Bolli <dev+git@drbeat.li> writes:
 
-Maybe:
-
-    Add core.optimizeCheckout config setting which, when true, speeds up
-
-> "git checkout -b foo" by avoiding the work to merge the working tree.  This
-> is valid because no merge needs to occur - only creating the new branch/
-> updating the refs. Any other options force it through the old code path.
+> On 24.07.18 20:22, Junio C Hamano wrote:
 >
-> This change in behavior is off by default and behind the config setting so
-> that users have to opt-in to the optimized behavior.
+>>> This was already fixed (differently) in
+>>> <20180705183445.30901-1-dev+git@drbeat.li>.
+>> 
+>> Thanks for saving me from having to dig the list archive myself.
+>> Yes, it is already applied to the tip of the topic that originally
+>> caused the breakage.
+>> 
+> Just a general question:
 >
-> We've been running with this patch internally for a long time but it was
-> rejected when I submitted it to the mailing list before because it
-> implicitly changes the behavior of checkout -b. Trying it again configured
-> behind a config setting as a potential solution for other optimizations to
-> checkout that could change the behavior as well.
+> Is it OK to refer to patches on pu with the Message-ID, or would you
+> prefer the commit hash? The hash changes whenever you recreate pu,
+> doesn't it?
 
-This paragraph is mere commentary which probably belongs below the
-"---" line following your sign-off.
+Either is fine in practice.  The commits themselves on a topic
+branch that is not yet in 'next' usually stay the same once the tip
+of 'pu' that contains them gets published.  Even though I often use
+"git rebase -i", "git commit --amend", etc. to fix up posted patches
+while turning them into commits on topic branches, I usually stop
+doing so once I push out day's integration result.
 
-> https://public-inbox.org/git/20180724042740.GB13248@sigill.intra.peff.net/T/#m75afe3ab318d23f36334cf3a6e3d058839592469
+Until a new version of the series is posted to replace them on the
+topic branch, that is.  But at that point we are talking about new
+patches with different message-ids that got turned into different
+commit objects, so either commit object name or message id that
+refer to older iteration would still name the same old version, and
+new names would refer to the same new version.
 
-Is this link meant to reference the previous attempt of optimizing
-"checkout -b"? Although there's a single mention of "checkout -b" in
-that discussion, it doesn't seem to be the previous attempt or explain
-why it was rejected.
-
-It would be quite nice to see a discussion in both the commit message
-and the documentation about the pros and cons of enabling this
-optimization. That it was previously rejected suggests that there may
-be serious or unexpected consequences. How will a typical user know
-whether its use is desirable or not?
-
-> Signed-off-by: Ben Peart <Ben.Peart@microsoft.com>
-> ---
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> @@ -911,6 +911,12 @@ core.commitGraph::
-> +core.optimizedCheckout
-> +       Speed up "git checkout -b foo" by skipping much of the work of a
-> +       full checkout command.  This changs the behavior as it will skip
-
-s/changs/changes/
-
-> +       merging the trees and updating the index and instead only create
-> +       and switch to the new ref.
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> @@ -471,6 +475,88 @@ static void setup_branch_path(struct branch_info *branch)
-> +static int needs_working_tree_merge(const struct checkout_opts *opts,
-> +       const struct branch_info *old_branch_info,
-> +       const struct branch_info *new_branch_info)
-> +{
-> +       /*
-> +        * We must do the merge if we are actually moving to a new
-> +        * commit tree.
-> +        */
-> +       if (!old_branch_info->commit || !new_branch_info->commit ||
-> +               oidcmp(&old_branch_info->commit->object.oid, &new_branch_info->commit->object.oid))
-> +               return 1;
-> +       [...]
-> +       return 0;
-> +}
-
-This long list of special-case checks doesn't leave me too enthused,
-however, that aside, this approach seems backward. Rather than erring
-on the side of safety by falling back to the merging behavior, it errs
-in the other direction, which may be a problem if this list of
-special-case checks ever gets out of sync with 'checkout_opts'. That
-is, if someone adds a new option which ought to employ the merging
-behavior, but forgets to update this function, then this function will
-incorrectly default to using the optimization.
-
-A safer approach would be the inverse, namely:
-
-    static int skip_worktree_merge(...)
-    {
-        if (...meets all criteria for optimization...)
-            return 1;
-        return 0;
-    }
-
->  static int merge_working_tree(const struct checkout_opts *opts,
->                               struct branch_info *old_branch_info,
->                               struct branch_info *new_branch_info,
-> {
-> +       /*
-> +        * Skip merging the trees, updating the index, and work tree only if we
-> +        * are simply creating a new branch via "git checkout -b foo."  Any
-> +        * other options or usage will continue to do all these steps.
-> +        */
-> +       if (core_optimize_checkout && !needs_working_tree_merge(opts, old_branch_info, new_branch_info))
-> +               return 0;
-
-This seems a somewhat odd place to hook in this optimization,
-especially as there is only a single caller of this function. Instead,
-one might expect the caller itself to make this judgment and avoid
-trying the merge in the first place if not needed. That is, in
-switch_branches:
-
-    if (!skip_worktree_merge(...))
-        ret = merge_working_tree(...);
