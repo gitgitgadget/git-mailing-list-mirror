@@ -7,47 +7,48 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D94741F597
-	for <e@80x24.org>; Tue, 24 Jul 2018 16:34:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 83F2E1F597
+	for <e@80x24.org>; Tue, 24 Jul 2018 16:34:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388598AbeGXRlt (ORCPT <rfc822;e@80x24.org>);
+        id S2388536AbeGXRlu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Jul 2018 13:41:50 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:35277 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388350AbeGXRlt (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 24 Jul 2018 13:41:49 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:34519 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388519AbeGXRls (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jul 2018 13:41:48 -0400
-Received: by mail-wr1-f65.google.com with SMTP id c13-v6so4796133wrt.1
-        for <git@vger.kernel.org>; Tue, 24 Jul 2018 09:34:30 -0700 (PDT)
+Received: by mail-wr1-f66.google.com with SMTP id a3-v6so4791625wrt.2
+        for <git@vger.kernel.org>; Tue, 24 Jul 2018 09:34:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=6tdIb6eDYOMorb4T0a0EKjlW2wglW4xLv9NDSjolXOQ=;
-        b=QP3K9WS41BIW15MP4bVldwT2Z1e/3NqIvx1V5iWWkX0JC8NEgMnQB+zan3Ig7Gev+5
-         BoqISQIyOYXcC4cED8++P4USflaMO4ZAMqYQqlqwnsR8dZsGFLoeT/m+g23mF1L4oaMf
-         Rnf5FBacdDLrEltgExX4BGlCtnXKk5nduTgtyx7FZXnLv2I4SChOGIEBi9ZQQzvzIPQ+
-         OYvbYccyxHExLfIgqdVWj1r8M0qh7hHkaR2NUJy7yn8I4HvXQ/j0m0Xq/qT+I131Pxsn
-         TlyMM67yAxJY7TfJLxl0G2p0/nFMjm0lPqrOzybZRnD1YVVCusJSocO2p/BEbr6aXfvH
-         iw+Q==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=TFDrXMmRQILdRcaz8X4+ZjVWNvoxc9a/bLBp5v7Hf/0=;
+        b=qCMGbPua/bZ+hOFDxP47xsqG9xneekg9L2nx7blGUgsI3IyKKXEuN4xDk4uCBvfcfH
+         FeSfqgNJWQX2fE3Uk6czyHfUuNvGClxgH0Snjzh6EXh7UHfZaZKZe9B5sOhYxvcsLHa9
+         B2AZkYfhPcb6nqA3glJo/no9GIRKWQwG0zOOk6HgMl30qe6j2Y3cLiiLEF8nr3tQZJ/c
+         vFarMBaD9OoHSwd4vefnfnRdPKN3bLmxhxf29cip/IML6QtPuIHcCN6sRQ4p0I4BneDu
+         NIXoO+kKE4uMBA6FNneWK2J3Z+Ol/Cynkm9fvTM6Q0bBpEY1cAoTPxnqPwcogaa89zzw
+         oUSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=6tdIb6eDYOMorb4T0a0EKjlW2wglW4xLv9NDSjolXOQ=;
-        b=tnK15YAQcG4CL6ToVH5XVGo3FExSbq8hHCwNSEqNs8d0hdTn4h5+SD7bQT2VGmJbDw
-         7jBQWwJzIwodr6z+0us6ZY6Zt2wjL6Sx+ouYCMvne1WFNyFqHhH7R2yDyJp+O3Oymqeg
-         cuBihU0tboRHzPXHkAvZBE5uU5PqCuSkZ4Vsm4FVctmRbXw2yTRaPQBPx6cPyyWcwajA
-         iNmF35tDgdImaRMUBxc40CGumvBHT48PDEszByzRr0/L4XOUF0Jp165u6dQzUAVerju/
-         dA01kLoNCGE0f4+F+oqp9sWHAK1Va/1kdkY9umKgZViuarRhyK6G8I6j5OH7YcfoWGNP
-         RmpA==
-X-Gm-Message-State: AOUpUlFbuHc4OHv9R/qvzBU5N4wCrCtplAAphtuLj8ncyIH187I8ndhb
-        5cHx+chucDVEBeBYIMc5jnkMSkkj
-X-Google-Smtp-Source: AAOMgpdUrapu5TfTOvb/vYHfwH7G+YTtxTMQL6IRMhNZdfVg5xNRWN4KXjUqAT1qUyn8zS7wu1tntw==
-X-Received: by 2002:adf:ba12:: with SMTP id o18-v6mr12781574wrg.249.1532450069601;
-        Tue, 24 Jul 2018 09:34:29 -0700 (PDT)
+         :references:mime-version:content-transfer-encoding;
+        bh=TFDrXMmRQILdRcaz8X4+ZjVWNvoxc9a/bLBp5v7Hf/0=;
+        b=boRyvxtoM0zOMtqPgPgbc7nCWKvZqMZLwAnJbHNAmNPaMVJWZMP2YjDaYuBMopkhEY
+         LVGt7TgU7ECxGIy3nYeJo4/J3zqLFPC4T7aTcuImYVMZww6WckPc8sovd+2Ub0qIlqJ3
+         3a2a+oqk8M93dz55WCj9lY+LTkG7Bp0jdlCLwazK1sqEterd8ABZGstd/wlZUtiilXV7
+         h+/2NXvklBe/uKnQcSr7N/XtAwaMOensY7ODU1Bw4f8yfUYmJtNq0YFajDvi1QQi5qEt
+         AZ2wbTIuNEVONhQTG/HjhkWlLXpCC1Og9Jhx0IPaeFYQpdD1Ok4BGIq6Gpks068odhcj
+         OxXA==
+X-Gm-Message-State: AOUpUlGuhceERprA55qVDO2WBTCwVHouOswMW9sw/yd5/kyAUlmxNFnj
+        wTV7GaarDegnEBXene3lzD+Tj2kX
+X-Google-Smtp-Source: AAOMgpd8EE1iRB4fuNEGeWxlicJzHgBmgVZcKheTcZjUQpEODxNv4fY8aJRpo+gaZshoWdaXiKmqjg==
+X-Received: by 2002:adf:deca:: with SMTP id i10-v6mr11488013wrn.163.1532450071084;
+        Tue, 24 Jul 2018 09:34:31 -0700 (PDT)
 Received: from localhost.localdomain (AToulouse-658-1-75-221.w92-156.abo.wanadoo.fr. [92.156.127.221])
-        by smtp.googlemail.com with ESMTPSA id x124-v6sm1899091wmg.38.2018.07.24.09.34.27
+        by smtp.googlemail.com with ESMTPSA id x124-v6sm1899091wmg.38.2018.07.24.09.34.29
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 24 Jul 2018 09:34:28 -0700 (PDT)
+        Tue, 24 Jul 2018 09:34:30 -0700 (PDT)
 From:   Alban Gruin <alban.gruin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
@@ -56,256 +57,143 @@ Cc:     Stefan Beller <sbeller@google.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         phillip.wood@dunelm.org.uk, gitster@pobox.com,
         Alban Gruin <alban.gruin@gmail.com>
-Subject: [GSoC][PATCH v4 12/20] rebase -i: remove unused modes and functions
-Date:   Tue, 24 Jul 2018 18:32:13 +0200
-Message-Id: <20180724163221.15201-13-alban.gruin@gmail.com>
+Subject: [GSoC][PATCH v4 13/20] rebase -i: implement the logic to initialize $revisions in C
+Date:   Tue, 24 Jul 2018 18:32:14 +0200
+Message-Id: <20180724163221.15201-14-alban.gruin@gmail.com>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20180724163221.15201-1-alban.gruin@gmail.com>
 References: <20180710121557.6698-1-alban.gruin@gmail.com>
  <20180724163221.15201-1-alban.gruin@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This removes the modes `--skip-unnecessary-picks`, `--append-todo-help`,
-and `--checkout-onto` from rebase--helper.c, the functions of
-git-rebase--interactive.sh that were rendered useless by the rewrite of
-complete_action(), and append_todo_help_to_file() from
-rebase-interactive.c.
+This rewrites the part of init_revisions_and_shortrevisions() needed by
+`--make-script` from shell to C.  The new version is called
+get_revision_ranges(), and is a static function inside of
+rebase--helper.c.  As this does not initialize $shortrevision, the
+original shell version is not yet stripped.
 
-skip_unnecessary_picks() and checkout_onto() becomes static, as they are
-only used inside of the sequencer.
+Unlike init_revisions_and_shortrevisions(), get_revision_ranges()
+doesn’t write $squash_onto to the state directory, it’s done by the
+handler of `--make-script` instead.
+
+Finally, this drops the $revision argument passed to `--make-script` in
+git-rebase--interactive.sh, and rebase--helper is changed accordingly.
 
 Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
 ---
- builtin/rebase--helper.c   | 23 ++----------------
- git-rebase--interactive.sh | 50 --------------------------------------
- rebase-interactive.c       | 22 -----------------
- rebase-interactive.h       |  1 -
- sequencer.c                |  8 +++---
- sequencer.h                |  4 ---
- 6 files changed, 6 insertions(+), 102 deletions(-)
+ builtin/rebase--helper.c   | 56 ++++++++++++++++++++++++++++++++++++--
+ git-rebase--interactive.sh |  4 ++-
+ 2 files changed, 56 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/rebase--helper.c b/builtin/rebase--helper.c
-index d7fa5a5062..6085527b2b 100644
+index 6085527b2b..15fa556f65 100644
 --- a/builtin/rebase--helper.c
 +++ b/builtin/rebase--helper.c
-@@ -17,9 +17,8 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
- 	int abbreviate_commands = 0, rebase_cousins = -1;
+@@ -4,6 +4,25 @@
+ #include "parse-options.h"
+ #include "sequencer.h"
+ #include "rebase-interactive.h"
++#include "argv-array.h"
++
++static GIT_PATH_FUNC(path_squash_onto, "rebase-merge/squash-onto")
++
++static int get_revision_ranges(const char *upstream, const char *onto,
++			       const char **head_hash,
++			       char **revisions)
++{
++	const char *base_rev = upstream ? upstream : onto;
++	struct object_id orig_head;
++
++	if (get_oid("HEAD", &orig_head))
++		return error(_("no HEAD?"));
++
++	*head_hash = find_unique_abbrev(&orig_head, GIT_MAX_HEXSZ);
++	*revisions = xstrfmt("%s...%s", base_rev, *head_hash);
++
++	return 0;
++}
+ 
+ static const char * const builtin_rebase_helper_usage[] = {
+ 	N_("git rebase--helper [<options>]"),
+@@ -14,7 +33,9 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+ {
+ 	struct replay_opts opts = REPLAY_OPTS_INIT;
+ 	unsigned flags = 0, keep_empty = 0, rebase_merges = 0, autosquash = 0;
+-	int abbreviate_commands = 0, rebase_cousins = -1;
++	int abbreviate_commands = 0, rebase_cousins = -1, ret;
++	const char *head_hash = NULL, *onto = NULL, *restrict_revision = NULL,
++		*squash_onto = NULL, *upstream = NULL;
  	enum {
  		CONTINUE = 1, ABORT, MAKE_SCRIPT, SHORTEN_OIDS, EXPAND_OIDS,
--		CHECK_TODO_LIST, SKIP_UNNECESSARY_PICKS, REARRANGE_SQUASH,
--		ADD_EXEC, APPEND_TODO_HELP, EDIT_TODO, PREPARE_BRANCH,
--		CHECKOUT_ONTO, COMPLETE_ACTION
-+		CHECK_TODO_LIST, REARRANGE_SQUASH, ADD_EXEC, EDIT_TODO, PREPARE_BRANCH,
-+		COMPLETE_ACTION
- 	} command = 0;
- 	struct option options[] = {
- 		OPT_BOOL(0, "ff", &opts.allow_ff, N_("allow fast-forward")),
-@@ -44,21 +43,15 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
- 			N_("expand commit ids in the todo list"), EXPAND_OIDS),
- 		OPT_CMDMODE(0, "check-todo-list", &command,
- 			N_("check the todo list"), CHECK_TODO_LIST),
--		OPT_CMDMODE(0, "skip-unnecessary-picks", &command,
--			N_("skip unnecessary picks"), SKIP_UNNECESSARY_PICKS),
- 		OPT_CMDMODE(0, "rearrange-squash", &command,
- 			N_("rearrange fixup/squash lines"), REARRANGE_SQUASH),
- 		OPT_CMDMODE(0, "add-exec-commands", &command,
- 			N_("insert exec commands in todo list"), ADD_EXEC),
--		OPT_CMDMODE(0, "append-todo-help", &command,
--			    N_("insert the help in the todo list"), APPEND_TODO_HELP),
- 		OPT_CMDMODE(0, "edit-todo", &command,
- 			    N_("edit the todo list during an interactive rebase"),
- 			    EDIT_TODO),
- 		OPT_CMDMODE(0, "prepare-branch", &command,
+ 		CHECK_TODO_LIST, REARRANGE_SQUASH, ADD_EXEC, EDIT_TODO, PREPARE_BRANCH,
+@@ -54,6 +75,13 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
  			    N_("prepare the branch to be rebased"), PREPARE_BRANCH),
--		OPT_CMDMODE(0, "checkout-onto", &command,
--			    N_("checkout a commit"), CHECKOUT_ONTO),
  		OPT_CMDMODE(0, "complete-action", &command,
  			    N_("complete the action"), COMPLETE_ACTION),
++		OPT_STRING(0, "onto", &onto, N_("onto"), N_("onto")),
++		OPT_STRING(0, "restrict-revision", &restrict_revision,
++			   N_("restrict-revision"), N_("restrict revision")),
++		OPT_STRING(0, "squash-onto", &squash_onto, N_("squash-onto"),
++			   N_("squash onto")),
++		OPT_STRING(0, "upstream", &upstream, N_("upstream"),
++			   N_("the upstream commit")),
  		OPT_END()
-@@ -94,26 +87,14 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+ 	};
+ 
+@@ -81,8 +109,30 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+ 		return !!sequencer_continue(&opts);
+ 	if (command == ABORT && argc == 1)
+ 		return !!sequencer_remove_state(&opts);
+-	if (command == MAKE_SCRIPT && argc > 1)
+-		return !!sequencer_make_script(stdout, argc, argv, flags);
++	if (command == MAKE_SCRIPT && argc == 1) {
++		char *revisions = NULL;
++		struct argv_array make_script_args = ARGV_ARRAY_INIT;
++
++		if (!upstream && squash_onto)
++			write_file(path_squash_onto(), "%s\n", squash_onto);
++
++		ret = get_revision_ranges(upstream, onto, &head_hash, &revisions);
++		if (ret)
++			return ret;
++
++		argv_array_pushl(&make_script_args, "", revisions, NULL);
++		if (restrict_revision)
++			argv_array_push(&make_script_args, restrict_revision);
++
++		ret = sequencer_make_script(stdout,
++					    make_script_args.argc, make_script_args.argv,
++					    flags);
++
++		free(revisions);
++		argv_array_clear(&make_script_args);
++
++		return !!ret;
++	}
+ 	if ((command == SHORTEN_OIDS || command == EXPAND_OIDS) && argc == 1)
  		return !!transform_todos(flags);
  	if (command == CHECK_TODO_LIST && argc == 1)
- 		return !!check_todo_list();
--	if (command == SKIP_UNNECESSARY_PICKS && argc == 1) {
--		struct object_id oid;
--		int ret = skip_unnecessary_picks(&oid);
--
--		if (!ret)
--			puts(oid_to_hex(&oid));
--		return !!ret;
--	}
- 	if (command == REARRANGE_SQUASH && argc == 1)
- 		return !!rearrange_squash();
- 	if (command == ADD_EXEC && argc == 2)
- 		return !!sequencer_add_exec_commands(argv[1]);
--	if (command == APPEND_TODO_HELP && argc == 1)
--		return !!append_todo_help_to_file(0, keep_empty);
- 	if (command == EDIT_TODO && argc == 1)
- 		return !!edit_todo_list(flags);
- 	if (command == PREPARE_BRANCH && argc == 2)
- 		return !!prepare_branch_to_be_rebased(&opts, argv[1]);
--	if (command == CHECKOUT_ONTO && argc == 4)
--		return !!checkout_onto(&opts, argv[1], argv[2], argv[3]);
- 	if (command == COMPLETE_ACTION && argc == 6)
- 		return !!complete_action(&opts, flags, argv[1], argv[2], argv[3],
- 					 argv[4], argv[5], autosquash);
 diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 59dc4888a6..0d66c0f8b8 100644
+index 0d66c0f8b8..4ca47aed1e 100644
 --- a/git-rebase--interactive.sh
 +++ b/git-rebase--interactive.sh
-@@ -16,56 +16,6 @@ todo="$state_dir"/git-rebase-todo
- GIT_CHERRY_PICK_HELP="$resolvemsg"
- export GIT_CHERRY_PICK_HELP
+@@ -92,7 +92,9 @@ git_rebase__interactive () {
+ 	git rebase--helper --make-script ${keep_empty:+--keep-empty} \
+ 		${rebase_merges:+--rebase-merges} \
+ 		${rebase_cousins:+--rebase-cousins} \
+-		$revisions ${restrict_revision+^$restrict_revision} >"$todo" ||
++		${upstream:+--upstream "$upstream"} ${onto:+--onto "$onto"} \
++		${squash_onto:+--squash-onto "$squash_onto"} \
++		${restrict_revision:+--restrict-revision ^"$restrict_revision"} >"$todo" ||
+ 	die "$(gettext "Could not generate todo list")"
  
--comment_char=$(git config --get core.commentchar 2>/dev/null)
--case "$comment_char" in
--'' | auto)
--	comment_char="#"
--	;;
--?)
--	;;
--*)
--	comment_char=$(echo "$comment_char" | cut -c1)
--	;;
--esac
--
--die_abort () {
--	apply_autostash
--	rm -rf "$state_dir"
--	die "$1"
--}
--
--has_action () {
--	test -n "$(git stripspace --strip-comments <"$1")"
--}
--
--git_sequence_editor () {
--	if test -z "$GIT_SEQUENCE_EDITOR"
--	then
--		GIT_SEQUENCE_EDITOR="$(git config sequence.editor)"
--		if [ -z "$GIT_SEQUENCE_EDITOR" ]
--		then
--			GIT_SEQUENCE_EDITOR="$(git var GIT_EDITOR)" || return $?
--		fi
--	fi
--
--	eval "$GIT_SEQUENCE_EDITOR" '"$@"'
--}
--
--expand_todo_ids() {
--	git rebase--helper --expand-ids
--}
--
--collapse_todo_ids() {
--	git rebase--helper --shorten-ids
--}
--
--get_missing_commit_check_level () {
--	check_level=$(git config --get rebase.missingCommitsCheck)
--	check_level=${check_level:-ignore}
--	# Don't be case sensitive
--	printf '%s' "$check_level" | tr 'A-Z' 'a-z'
--}
--
- # Initiate an action. If the cannot be any
- # further action it  may exec a command
- # or exit and not return.
-diff --git a/rebase-interactive.c b/rebase-interactive.c
-index d8b9465597..f99e596d28 100644
---- a/rebase-interactive.c
-+++ b/rebase-interactive.c
-@@ -52,28 +52,6 @@ void append_todo_help(unsigned edit_todo, unsigned keep_empty,
- 	}
- }
- 
--int append_todo_help_to_file(unsigned edit_todo, unsigned keep_empty)
--{
--	struct strbuf buf = STRBUF_INIT;
--	FILE *todo;
--	int ret;
--
--	todo = fopen_or_warn(rebase_path_todo(), "a");
--	if (!todo)
--		return 1;
--
--	append_todo_help(edit_todo, keep_empty, &buf);
--
--	ret = fputs(buf.buf, todo);
--	if (ret < 0)
--		error_errno(_("could not append help text to '%s'"), rebase_path_todo());
--
--	fclose(todo);
--	strbuf_release(&buf);
--
--	return ret;
--}
--
- int edit_todo_list(unsigned flags)
- {
- 	struct strbuf buf = STRBUF_INIT;
-diff --git a/rebase-interactive.h b/rebase-interactive.h
-index d33f3176b7..971da03776 100644
---- a/rebase-interactive.h
-+++ b/rebase-interactive.h
-@@ -3,7 +3,6 @@
- 
- void append_todo_help(unsigned edit_todo, unsigned keep_empty,
- 		      struct strbuf *buf);
--int append_todo_help_to_file(unsigned edit_todo, unsigned keep_empty);
- int edit_todo_list(unsigned flags);
- 
- #endif
-diff --git a/sequencer.c b/sequencer.c
-index 28082fe13e..1c035ceec7 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -3173,9 +3173,9 @@ int prepare_branch_to_be_rebased(struct replay_opts *opts, const char *commit)
- 	return 0;
- }
- 
--int checkout_onto(struct replay_opts *opts,
--		  const char *onto_name, const char *onto,
--		  const char *orig_head)
-+static int checkout_onto(struct replay_opts *opts,
-+			 const char *onto_name, const char *onto,
-+			 const char *orig_head)
- {
- 	struct object_id oid;
- 	const char *action = reflog_message(opts, "start", "checkout %s", onto_name);
-@@ -4420,7 +4420,7 @@ static int rewrite_file(const char *path, const char *buf, size_t len)
- }
- 
- /* skip picking commits whose parents are unchanged */
--int skip_unnecessary_picks(struct object_id *output_oid)
-+static int skip_unnecessary_picks(struct object_id *output_oid)
- {
- 	const char *todo_file = rebase_path_todo();
- 	struct strbuf buf = STRBUF_INIT;
-diff --git a/sequencer.h b/sequencer.h
-index 3ab3791c8a..de9d4cf430 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -88,7 +88,6 @@ int sequencer_add_exec_commands(const char *command);
- int transform_todos(unsigned flags);
- enum missing_commit_check_level get_missing_commit_check_level(void);
- int check_todo_list(void);
--int skip_unnecessary_picks(struct object_id *output_oid);
- int complete_action(struct replay_opts *opts, unsigned flags,
- 		    const char *shortrevisions, const char *onto_name,
- 		    const char *onto, const char *orig_head, const char *cmd,
-@@ -111,9 +110,6 @@ void commit_post_rewrite(const struct commit *current_head,
- 			 const struct object_id *new_head);
- 
- int prepare_branch_to_be_rebased(struct replay_opts *opts, const char *commit);
--int checkout_onto(struct replay_opts *opts,
--		  const char *onto_name, const char *onto,
--		  const char *orig_head);
- 
- #define SUMMARY_INITIAL_COMMIT   (1 << 0)
- #define SUMMARY_SHOW_AUTHOR_DATE (1 << 1)
+ 	exec git rebase--helper --complete-action "$shortrevisions" "$onto_name" \
 -- 
 2.18.0
 
