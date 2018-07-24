@@ -2,124 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-8.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3FD9A1F597
-	for <e@80x24.org>; Tue, 24 Jul 2018 20:31:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E42DA1F597
+	for <e@80x24.org>; Tue, 24 Jul 2018 20:47:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388640AbeGXVjW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Jul 2018 17:39:22 -0400
-Received: from mail-io0-f172.google.com ([209.85.223.172]:36859 "EHLO
-        mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388476AbeGXVjW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jul 2018 17:39:22 -0400
-Received: by mail-io0-f172.google.com with SMTP id r15-v6so4530001ioa.3
-        for <git@vger.kernel.org>; Tue, 24 Jul 2018 13:31:12 -0700 (PDT)
+        id S2388974AbeGXVzu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Jul 2018 17:55:50 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:33738 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388765AbeGXVzu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jul 2018 17:55:50 -0400
+Received: by mail-pg1-f195.google.com with SMTP id r5-v6so3701660pgv.0
+        for <git@vger.kernel.org>; Tue, 24 Jul 2018 13:47:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=aRGLrcT3TYAqM7lFCuM1omSZCPS7Vgt4olMbj2kstVY=;
-        b=fo1xc712WZZVCjZu/9yGTZuVSBioay5dr6SFncwdsMjNVC3GLOWON6ow5pVUWno9Ec
-         oFnod1w+te3+TPgh9TpPlXZTXk7eZ/sVA/2CPQlwdEQDPol1ZqTfnz0H0+691eHHS/0B
-         ws5Ehgn/lU3qx1T1u80PAMWysySgY0PJ8hUEk=
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=VTFakPJKHxiCmjECZ6FUeIFumDFCPisWDWjWHPITxR8=;
+        b=gZng0jFLX0jTetH6XEFSHG0baweDQwMwkGU4Pua7j4aS4JLvdM9rjBVbvvhqcC9qlV
+         /AfdNmc130gX2jf9J8FJLE7d275VibBNX9A4wpVC8EQzSKNXinPWOMKi/8b6nzXL1O93
+         CV+ILOb78wX7T32klkm/vbmSLLGklSmzza0UPgvKebnfsZEij3DF92vhC55t6lu2fWH3
+         yQjl8CtqoE2h+SQe1WdEzK4ukD7EMHfCsTuGrhjd5PWMyknIaHOVhaEr+xbspWGHn+KE
+         G7HORLGPv1e82gg6IIVhMGHMIuC6zEtoNYsm7ZL3ObaY9wHc/CzpUFRD3iqYgqKKOMFE
+         GE1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=aRGLrcT3TYAqM7lFCuM1omSZCPS7Vgt4olMbj2kstVY=;
-        b=SLCf+TDKmcORfcEGM89wDS5hv9CbZ60GUSZruzfSBt2r+LwyG+27H9imMm4iG6DrLp
-         tvAEpJCnOQdv6v0Ienhc5Ca2HnjDgj1hlxrizU6h0tz+H4bHY4rIRKA1jH829AuexKVV
-         nL5Awg53p3NCXmo1eXJu+KnBOCn+gN6JNp8Z56nEgwVazD8D/wlldEuRWUdNG62I/l6m
-         DsuGHaaNpVlzPnp6SxISDOqn/tumuwaGzMxFkfPSFRKsjEBn16cW/kRjwc2j5kNzuxsP
-         KLqAcCYJz0KctoPk2d09DY7ThmrqI62G86W022hhOzJcc6GB/At7MOcIxyyFXbjEPMCR
-         FwBg==
-X-Gm-Message-State: AOUpUlEiSL8ACcqHG6NqHoS2vGtvlD8bzbb/LyA2/JM/8Jwb32GFxhYe
-        lnCryC0Fvoy4jn5PmCZc4vcUofNr1mpcydN0rRY=
-X-Google-Smtp-Source: AAOMgpe88W44DAYGetqPC7OrPAdGQvNKANuhIiHF6Zfh5NZlNZETooLYIwclgN9rTNc8ycsPkJviorSCFKGJvrBHjwU=
-X-Received: by 2002:a6b:7a05:: with SMTP id h5-v6mr15285950iom.238.1532464271666;
- Tue, 24 Jul 2018 13:31:11 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=VTFakPJKHxiCmjECZ6FUeIFumDFCPisWDWjWHPITxR8=;
+        b=EjvsVLT1JS7HPb9Bj5kehV+SqgqWzrKsE1BBMQ11bcgS2gyPhup/TwInpVyg6v1BLY
+         mOUbnDD9HU3WbuIg/8L6foT4xZlvZFCkqcn7J2nUoupY/XCvfwrNG+YvFQGDZc5yjg8V
+         3Cmh7xnvHIf29GKygXOIGI76hJJIzyCnLBx9YEUVsFNiOM2LdeuQ7KkKwrpZCQog0Gjg
+         6O6jyb6vJ44dO2XuzkP89XSHRIxl6/m0WHRfp7KHU96ejg7xoGWLvXjjAXEvqBoFgYE1
+         bCMEL6PxQSTSlxJhFVlAv/ODnqnNoiwppw7UNokWUGF72SM4okYATQ3unGZmjmyTTxx7
+         I2gQ==
+X-Gm-Message-State: AOUpUlGglbo7QaImS36HYJ8V6Qxih1RUF+vE/6VD5SYD0V/yeqq8H2NG
+        o7LUB97lk3A7iNNyQd9V2YlhaA==
+X-Google-Smtp-Source: AAOMgpcAHUapXTc0amCLCr7AwNm9bxrTRUt5rHhFWCLXzPiCwmhTQzn4wwYW+fnhFawUhSGOhi41Ug==
+X-Received: by 2002:a62:87ce:: with SMTP id i197-v6mr19237945pfe.62.1532465255565;
+        Tue, 24 Jul 2018 13:47:35 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id t76-v6sm20647753pfe.109.2018.07.24.13.47.34
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 24 Jul 2018 13:47:34 -0700 (PDT)
+Date:   Tue, 24 Jul 2018 13:47:33 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] pack-protocol: mention and point to docs for protocol v2
+Message-ID: <20180724204733.GE225275@google.com>
+References: <20180723174807.28903-1-bmwill@google.com>
+ <20180724045233.GB208393@aiede.svl.corp.google.com>
+ <20180724181913.GA225275@google.com>
+ <xmqq8t60xv7l.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <20180609205628.GB38834@genre.crustytoothpaste.net>
- <20180609224913.GC38834@genre.crustytoothpaste.net> <20180611192942.GC20665@aiede.svl.corp.google.com>
- <20180720215220.GB18502@genre.crustytoothpaste.net> <20180724190136.GA5@0f3cdde9c159>
-In-Reply-To: <20180724190136.GA5@0f3cdde9c159>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Tue, 24 Jul 2018 13:31:00 -0700
-Message-ID: <CA+55aFwSe9BF8e0hLk9pp3FVD5LaVY5GRdsV3fbNtgzekJadyA@mail.gmail.com>
-Subject: Re: Hash algorithm analysis
-To:     Edward Thomson <ethomson@edwardthomson.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        demerphq <demerphq@gmail.com>, Adam Langley <agl@google.com>,
-        keccak@noekeon.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq8t60xv7l.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 24, 2018 at 12:01 PM Edward Thomson
-<ethomson@edwardthomson.com> wrote:
->
-> Switching gears, if I look at this from the perspective of the libgit2
-> project, I would also prefer SHA-256 or SHA3 over blake2b.  To support
-> blake2b, we'd have to include - and support - that code ourselves.  But
-> to support SHA-256, we would simply use the system's crypto libraries
-> that we already take a dependecy on (OpenSSL, mbedTLS, CryptoNG, or
-> SecureTransport).
+On 07/24, Junio C Hamano wrote:
+> Brandon Williams <bmwill@google.com> writes:
+> 
+> >> Not about this patch, but I wonder if an organization along the
+> >> following lines would make sense?
+> >> 
+> >>  1. Rename pack-protocol.txt to protocol-v1.txt.  Rename
+> >>     protocol-v2.txt to pack-protocol.txt.
+> >> 
+> >>  2. Make pack-protocol.txt self-contained, and remove any redundant
+> >>     sections from protocol-v1.txt.
+> >> 
+> >>  3. Add a new protocol-v2.txt that briefly describes the benefits and
+> >>     highlights of protocol v2, referring to pack-protocol.txt for
+> >>     details.
+> >> 
+> >> That way, newcomers of the future could read pack-protocol.txt and
+> >> quickly glean the main protocol in (then) current use.
+> >> 
+> >> What do you think?
+> >
+> > I dislike the idea of renaming protocol-v2.txt to pack-protocol.txt.  I
+> > agree that we should probably have protocol-v1 broken out into its own
+> > file, taking the parts from pack-protocol.txt, but what really should
+> > happen is that pack-protocol.txt could describe the basics of the wire
+> > protocol (pkt-lines, the format of the various transports, etc) and then
+> > refer to the protocol-v{1,2}.txt documents themselves.
+> 
+> WRT the naming, are we happy with the idea of (1) pretending that
+> when we say 'protocol', there is nothing but the on-the-wire
+> pkt-line protocol (i.e. that is why we call "protocol-v2" without
+> giving any other adjective---are we sure we won't have need for any
+> other kind of protocol?) and (2) tying the "pack" ness to the name of
+> on-the-wire pkt-line protocol (i.e. that is where the name of the
+> original pack-protocol.txt came from, as it started only for the
+> packfile transfer---are we happy to keep newer protocols tied to
+> "pack" the same way)?
 
-I think this is probably the single strongest argument for sha256.
-"It's just there".
+If so I suggest we move away from the term "pack" protocol.  Mostly
+because maybe at some future date we don't only want to communicate to
+transfer packs.  So at the risk of bikeshedding (and because naming is
+hard) I think we should begin talking about the over the wire protocol
+as just that, the "wire protocol" or if we need to be more explicit the
+"git wire protocol". Thoughts?
 
-The hardware acceleration hasn't become nearly as ubiquitous as I
-would have hoped, and honestly, sha256 _needs_ hw acceleration more
-than some of the alternatives in the first place.
-
-But sha256 does have the big advantage of just having been around and
-existing in pretty much every single crypto library.
-
-So I'm not a huge fan of sha256, partly because of my disappointment
-in lack of hw acceleration in releant markets (sure, it's fairly
-common in ARM, but nobody sane uses ARM for development because of
-_other_ reasons). And partly because I don't like how the internal
-data size is the same as the final hash. But that second issue is an
-annoyance with it, not a real issue - in the absence of weaknesses
-it's a non-issue, and any future weaknesses might affect any other
-choice too.
-
-So hey, if people are actually at the point where the lack of choice
-holds up development, we should just pick one. And despite what I've
-said in this discussion, sha256 would have been my first choice, just
-because it's the "obvious" choice. The exact same way that SHA1 was
-the obvious choice (for pretty much the same infrastructure reasons)
-back in 2005.
-
-And maybe the hw acceleration landscape will actually improve. I think
-AMD actually does do the SHA extensions in Zen/TR.
-
-So I think Junio should just pick one. And I'll stand up and say
-
- "Let's just pick one.
-
-  And sha256 is certainly the safe choice in that it won't strike
-  anybody as being the _wrong_ choice per se, even if not everybody will
-  necessarily agree it's the _bext_ choice".
-
-but in the end I think Junio should be the final arbiter. I think all
-of the discussed choices are perfectly fine in practice.
-
-Btw, the one thing I *would* suggest is that the git community just
-also says that the current hash is not SHA1, but SHA1DC.
-
-Support for "plain" SHA1 should be removed entirely. If we add a lot
-of new infrastructure to support a new more secure hash, we should not
-have the old fallback for the known-weak one. Just make SHA1DC the
-only one git can be built with.
-
-               Linus
+-- 
+Brandon Williams
