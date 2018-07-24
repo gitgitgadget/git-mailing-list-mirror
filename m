@@ -2,97 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 90B591F597
-	for <e@80x24.org>; Tue, 24 Jul 2018 17:11:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F4311F597
+	for <e@80x24.org>; Tue, 24 Jul 2018 17:14:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388486AbeGXSTC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Jul 2018 14:19:02 -0400
-Received: from mail-wr1-f50.google.com ([209.85.221.50]:39825 "EHLO
-        mail-wr1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388429AbeGXSTC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jul 2018 14:19:02 -0400
-Received: by mail-wr1-f50.google.com with SMTP id h10-v6so4886347wre.6
-        for <git@vger.kernel.org>; Tue, 24 Jul 2018 10:11:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=7301O0vLjDQjw9v5N4tunQXBC7r1QZ2x/7CbZkObpNM=;
-        b=RWCHMWG2dz586Jt8zYH5BPN8nzfb1ZlTFunsy/AyFyPueToxm6OT7NUymBLkrA+vSY
-         SYaT5Q7/UnWbLkqd0WWweZGJtSW9gzYer5h36UNOiro8gGa1Gr92ZMq2vsP/dW/j5tr5
-         VFgm8SmNHy3TF+wiCSLuRJaoI4mtid8lg71O/1iOiRV3VA7em4Z/4Rey1x03mRcWF0Yz
-         WEUgZ5VxAnyiT6+iH+TADLgo/ZF3+6C358kFwn2IDtQs/b1cOgbXYmta/BwANdh5aBwn
-         DtGXB4cLfPMLuYywVp3il01waPlzzAf6UXJjpko7xCydSbbt6OQ5C67CWGHmoOiHMu4D
-         Ji8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=7301O0vLjDQjw9v5N4tunQXBC7r1QZ2x/7CbZkObpNM=;
-        b=WU1wbjecOvs0PAOdQkaQb+PcyveVZcv3INGRWRkD7ZaSHoeR1MN9Z2OkBOnH922nQs
-         Sn3dlFG8pC/QI0vk4q6+JkymnxzDVhueihUq3lhogVJoTjeluRTkEZKRYbfTeBXU7Sbp
-         LnXgyoFAjm+eT8XhQ7H0J/Iz7EUKP6ZM3DKgVA9VZPGCh1MBDxTe1UeAra6WiMP1/VNi
-         no47YFsR7XQXb1IPRzLeaIv8ur5m2W5eLw+KE9YHKdqepwYXtblbaHwWrvAJDEfWF9mM
-         4jhKYG50QngZNvj9BZCnu3Udo0T59GvSDStdz2cZPzwBC/uo85dXwwYX0JvhKLLbozSe
-         hQ2Q==
-X-Gm-Message-State: AOUpUlG17Rjq2ErEJUQ92U5PBUaH+VZRfqa2vRuYCytoNjDKlIYyyHQA
-        CNeWjEwVRspUnc7JHUR5fxUxYZat
-X-Google-Smtp-Source: AAOMgpeNc0Px//ZMxkdjSH/Z+jMRtt8gd0NCYCJtFVCY4OqadDQ7NAQZBYn9k1H7OktyIDt63HWNAA==
-X-Received: by 2002:adf:cc0a:: with SMTP id x10-v6mr11556545wrh.242.1532452293748;
-        Tue, 24 Jul 2018 10:11:33 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id b10-v6sm10860517wrp.49.2018.07.24.10.11.32
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 24 Jul 2018 10:11:32 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [RFC PATCH 3/5] pack-objects: add delta-islands support
-References: <20180722054836.28935-1-chriscool@tuxfamily.org>
-        <20180722054836.28935-4-chriscool@tuxfamily.org>
-        <xmqqk1pkzhuo.fsf@gitster-ct.c.googlers.com>
-Date:   Tue, 24 Jul 2018 10:11:32 -0700
-In-Reply-To: <xmqqk1pkzhuo.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Tue, 24 Jul 2018 10:03:27 -0700")
-Message-ID: <xmqqfu08zhh7.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        id S2388419AbeGXSV2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Jul 2018 14:21:28 -0400
+Received: from s019.cyon.net ([149.126.4.28]:44044 "EHLO s019.cyon.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2388408AbeGXSV2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jul 2018 14:21:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=drbeat.li;
+         s=default; h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
+        Sender:Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:
+        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+        Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=P9AhAsLuClj9g17q6qTpnUNJQzGXVr9HNhhZHDu4ooQ=; b=h+tBfjDfWT9HDmBDhwssTfAAmM
+        JLWE03T1i/jPTw7WIVJxRbWQJZem9BnjcqHMepR1ZRt8iExaNFKubTJwflRn6QOJ3WY5p+BJmsgxd
+        uYK72VOLibBZuvZiWpZv5qEpKoTVWJkHL9t/f4iSLUsloKP5fubLCYZ/rO9sGf52pzN2/TMqJ/UpO
+        ekFzLJM0mFCe3BzY1Cdcvo+7dRARU7NookO8bbxsGOPK15eIVvFyugtdEAoE2TgsnuCs92bSpYB/I
+        FEJlD/QEY3COBqBAvEYnEfcG93x4e2UFJIk3hJamkQkpos7mZAmuNSC8MS7hvR6J6IR+gBHlrCcHn
+        nCNvfFpA==;
+Received: from [10.20.10.233] (port=46904 helo=mail.cyon.ch)
+        by s019.cyon.net with esmtpa (Exim 4.91)
+        (envelope-from <bb@drbeat.li>)
+        id 1fi0se-009e0p-M7; Tue, 24 Jul 2018 19:13:52 +0200
+Received: by drbeat.li (Postfix, from userid 1000)
+        id 65D1D20F1D; Tue, 24 Jul 2018 19:13:48 +0200 (CEST)
+From:   Beat Bolli <dev+git@drbeat.li>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, Beat Bolli <dev+git@drbeat.li>
+Subject: [PATCH v3] Makefile: add a DEVOPTS flag to get pedantic compilation
+Date:   Tue, 24 Jul 2018 19:13:39 +0200
+Message-Id: <20180724171339.18983-1-dev+git@drbeat.li>
+X-Mailer: git-send-email 2.18.0.203.gfac676dfb9
+In-Reply-To: <xmqqa7qg22he.fsf@gitster-ct.c.googlers.com>
+References: <xmqqa7qg22he.fsf@gitster-ct.c.googlers.com>
+X-OutGoing-Spam-Status: No, score=-1.0
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - s019.cyon.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - drbeat.li
+X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
+X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+In the interest of code hygiene, make it easier to compile Git with the
+flag -pedantic.
 
->> +-------------------------------------------
->> +[pack]
->> +island = refs/virtual/([0-9]+)/heads/
->> +island = refs/virtual/([0-9]+)/tags/
->> +island = refs/virtual/([0-9]+)/(pull)/
->> +-------------------------------------------
->
-> It becomes clear only from this example that what the feature calls
-> (and documented in patch 2/5) "regexp" is not BRE but ERE.  Update
-> 2/5 so that it is clear to readers of "git config --help" who looks
-> for "pack.island" in the output.
->
->> +That puts the heads and tags for each fork in their own island (named
->> +"1234" or similar), and the pull refs for each go into their own
->> +"1234-pull".
->
-> "by concatenating any capture groups" made me imagine that the last
-> one would be "1234pull" without dash.  The actual rule should be
-> mentioned in that paragraph (i.e.  "concatenating any capture groups
-> from the regex, with a '-' dash in between" or something like that).
+Pure pedantic compilation with GCC 7.3 results in one warning per use of
+the translation macro `N_`:
 
-Another thing I noticed from 2/5 is that you can have up to 7 such
-capture groups.  I do not have any opinion if 7 is too few or too
-many, but we would want the number to be documented, and end-user
-input diagnosed when it requires more captures than we support (if
-we are not already checking, that is).
+    warning: array initialized from parenthesized string constant [-Wpedantic]
+
+Therefore also disable the parenthesising of i18n strings with
+-DUSE_PARENS_AROUND_GETTEXT_N=no.
+
+Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+---
+
+Now with -DUSE_PARENS_AROUND_GETTEXT_N=0 instead of =No.
+
+This is the convenience knob for all developers that led to the series
+bb/pedantic[1]. It does not depend on this series, though.
+
+[1] https://public-inbox.org/git/20180708144342.11922-1-dev+git@drbeat.li/T/#u
+
+ Makefile       | 6 ++++++
+ config.mak.dev | 5 +++++
+ 2 files changed, 11 insertions(+)
+
+diff --git a/Makefile b/Makefile
+index 0cb6590f24..2bfc051652 100644
+--- a/Makefile
++++ b/Makefile
+@@ -484,6 +484,12 @@ all::
+ #        The DEVELOPER mode enables -Wextra with a few exceptions. By
+ #        setting this flag the exceptions are removed, and all of
+ #        -Wextra is used.
++#
++#    pedantic:
++#
++#        Enable -pedantic compilation. This also disables
++#        USE_PARENS_AROUND_GETTEXT_N to produce only relevant warnings.
+ 
+ GIT-VERSION-FILE: FORCE
+ 	@$(SHELL_PATH) ./GIT-VERSION-GEN
+diff --git a/config.mak.dev b/config.mak.dev
+index 2d244ca470..e11dd94741 100644
+--- a/config.mak.dev
++++ b/config.mak.dev
+@@ -1,6 +1,11 @@
+ ifeq ($(filter no-error,$(DEVOPTS)),)
+ CFLAGS += -Werror
+ endif
++ifneq ($(filter pedantic,$(DEVOPTS)),)
++CFLAGS += -pedantic
++# don't warn for each N_ use
++CFLAGS += -DUSE_PARENS_AROUND_GETTEXT_N=0
++endif
+ CFLAGS += -Wdeclaration-after-statement
+ CFLAGS += -Wno-format-zero-length
+ CFLAGS += -Wold-style-definition
+-- 
+2.18.0.203.gfac676dfb9
+
