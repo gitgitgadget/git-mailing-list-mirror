@@ -2,99 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7F90C1F597
-	for <e@80x24.org>; Tue, 24 Jul 2018 21:11:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 874491F597
+	for <e@80x24.org>; Tue, 24 Jul 2018 21:13:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388607AbeGXWUK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Jul 2018 18:20:10 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:39706 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388597AbeGXWUJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jul 2018 18:20:09 -0400
-Received: by mail-pg1-f194.google.com with SMTP id g2-v6so3731894pgs.6
-        for <git@vger.kernel.org>; Tue, 24 Jul 2018 14:11:49 -0700 (PDT)
+        id S2388560AbeGXWVb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Jul 2018 18:21:31 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:42159 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388494AbeGXWVb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jul 2018 18:21:31 -0400
+Received: by mail-wr1-f67.google.com with SMTP id e7-v6so5423746wrs.9
+        for <git@vger.kernel.org>; Tue, 24 Jul 2018 14:13:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=b9NMkcTpyTjVtKvbUu7FVs+xQ+EgKQmKw/2/OevvWWc=;
-        b=ZL66R8vCgkLKsPQgAAuaNipILJ1RkD4GrqMzVj0a/8JOQZMDL5fUnl7xTztSAESwDK
-         toeXR5OZ7sinVcxLxES2OQZ+XBurPSDhS1MKttpZDtKubANY/gfr8uziHhWniUXv8w4i
-         Q9trtuGQVkGtzWuIwmrS4wicAZB0qQ5BX4Yi9+AXYbwRp1SKYUeEAfnF4MtjUP+mo98l
-         /yUsLgsBa2uDpMl9v2TG4chozxzBFsUl27yffa6p4smOjCJ1q1lfZB2cpGrqnIc/AyGS
-         PEAiF1ue7xThBDBzHiWyVly9slMYpRpqXKU68CF9yIwJZ7Ne+XDdt1XrrZVConQMG9eE
-         L9bw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=Lc4AtqcuV8eoUhFKf+2UD665DBhl0coQXxqL6EYKs8s=;
+        b=GithagpRyZSvwK8xuSLXYfkEAwhg23wy3oTiENXNzimxu50gknFWAmu7zmTmq1QGJp
+         lmzWsKYZOSfkosPHB+BthMS5Ldobn0JRBSDpoYrvhSqyaijiX6CoPqkgYTRut1n46URm
+         5Mnoj6CD55hw2xtOq9uxs0b3AlggJ2t3WfWfwQwuMxOuweKxkTm1HTU8/YaVk1GH0xUx
+         JsyT4VNuoGdoNXS5uSVtIe930LoDl5j8k3bLZYTiCJKvAhcfqmNyVIhODLx9Ue7O54CR
+         3BthFm2UlVzm9rHWXsafblIv7gD8KO+8k3YUUPalXA0XW2wWn3ifsdsOYYvZ7W6sxpnj
+         K4ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=b9NMkcTpyTjVtKvbUu7FVs+xQ+EgKQmKw/2/OevvWWc=;
-        b=oHodk1tsaU3kIjbtEGN0FRXzdBeh9HaMXL93bTL54UOhUzpyjp548hZESehLB4ZhA/
-         BtUUVAh6pd0RhTWGEl8T28CHshg0XHM6VjLEk8fAn34eEDuMDP/XT6jXfXZCpW6YYlgA
-         HuTIpK3urqa6JFK0d1IyCSxn/I/KoDiE0qi80K4uR3X0/r9wUvBioF2GzxUGccaTvFHG
-         Q3UDh1vc4DA1uH3pKROWehw7Fp/DT2gYufiUNUFQE0fiTdtdYBBDatap9ohgsjHbR5HB
-         1AFExIGNSU9iHSOwMXyrkU/I79c2YG2lOfI5mv3LEF9OZnv/qkTYNBqQzGZCp62cQM55
-         lTWQ==
-X-Gm-Message-State: AOUpUlEwIpegANBOSKgZTNWXmvUN/7x1ERCt7iYLAg3blxU+eexe4UBZ
-        yr6GxEMCy11XBUut/aLroQ7Hjn08
-X-Google-Smtp-Source: AAOMgpeAmcyTNfdn1j+kL6fF5GRoMUzrAnFwKwclv/yabl07URN22XhZWb1kgJbAq0QjLtqhn/fdGA==
-X-Received: by 2002:a62:8b0f:: with SMTP id j15-v6mr19566904pfe.33.1532466708566;
-        Tue, 24 Jul 2018 14:11:48 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id e21-v6sm35235133pfl.187.2018.07.24.14.11.47
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Lc4AtqcuV8eoUhFKf+2UD665DBhl0coQXxqL6EYKs8s=;
+        b=I6TPEG3Wp2MZuiE+1GD/uR9aYhcBypLa1AwO+DWG+/K8N90Fl3wJOJBWXsVPvsAq9u
+         9pNbNSWE5D0egkUHoaz8PM99VnTkHIUEFiS19YmiHw/WmdwOHwM8PWXHfggw2MPfL6CX
+         +tPi2DEH8PJcuYe/7IbPHLkG4E6//9jpCEjXZtR24IpsfKFabY4lZdoaGEo9065D8EDg
+         9ogwU+OB3/JwDcIKvieZvU0KJn3j/VVu0eq7G3+0qLbJQXFw5f/9m5tX3tkqlfTLuPgl
+         7rhRworQnwopER6a6YaFd9b8ltE1hlaksGyPvGu4IrZza/QsgAFo7chIp6nN+3/CpWye
+         PEzQ==
+X-Gm-Message-State: AOUpUlEJyUh/5Sz5TBNLnadl2lU+Kqqu8ofG3BJarNOy/lRTAixvwL8U
+        mxVEeS7ziISUBDKVTzX947I=
+X-Google-Smtp-Source: AAOMgpc5TFvPVdYN71ondghT+ckAk4PCv6mklVidqB1GE68Q8kSSQS/YyuGbf/UiNlpqAlc7by9MZA==
+X-Received: by 2002:adf:df07:: with SMTP id y7-v6mr11853068wrl.117.1532466788957;
+        Tue, 24 Jul 2018 14:13:08 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id z7-v6sm8927793wrh.85.2018.07.24.14.13.08
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 24 Jul 2018 14:11:48 -0700 (PDT)
-Date:   Tue, 24 Jul 2018 14:11:46 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     frederik@ofb.net
-Cc:     Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
-        "Robert P. J. Day" <rpjday@crashcourse.ca>
-Subject: Re: de-alphabetizing the documentation
-Message-ID: <20180724211146.GB136514@aiede.svl.corp.google.com>
-References: <20180706213239.GA867@flurp.local>
- <20180706211828.GC6195@aiede.svl.corp.google.com>
- <20180706232147.GF6343@ofb.net>
- <20180706234715.GA81694@aiede.svl.corp.google.com>
- <20180708010926.GK6343@ofb.net>
- <20180724195217.GA9366@ofb.net>
+        Tue, 24 Jul 2018 14:13:08 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Edward Thomson <ethomson@edwardthomson.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        demerphq <demerphq@gmail.com>, Adam Langley <agl@google.com>,
+        keccak@noekeon.org
+Subject: Re: Hash algorithm analysis
+References: <20180609205628.GB38834@genre.crustytoothpaste.net>
+        <20180609224913.GC38834@genre.crustytoothpaste.net>
+        <20180611192942.GC20665@aiede.svl.corp.google.com>
+        <20180720215220.GB18502@genre.crustytoothpaste.net>
+        <20180724190136.GA5@0f3cdde9c159>
+        <CA+55aFwSe9BF8e0hLk9pp3FVD5LaVY5GRdsV3fbNtgzekJadyA@mail.gmail.com>
+Date:   Tue, 24 Jul 2018 14:13:07 -0700
+In-Reply-To: <CA+55aFwSe9BF8e0hLk9pp3FVD5LaVY5GRdsV3fbNtgzekJadyA@mail.gmail.com>
+        (Linus Torvalds's message of "Tue, 24 Jul 2018 13:31:00 -0700")
+Message-ID: <xmqqzhygwd5o.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180724195217.GA9366@ofb.net>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-frederik@ofb.net wrote:
+> On Tue, Jul 24, 2018 at 12:01 PM Edward Thomson
+> <ethomson@edwardthomson.com> wrote:
+>>
+>> Switching gears, if I look at this from the perspective of the libgit2
+>> project, I would also prefer SHA-256 or SHA3 over blake2b.  To support
+>> blake2b, we'd have to include - and support - that code ourselves.  But
+>> to support SHA-256, we would simply use the system's crypto libraries
+>> that we already take a dependecy on (OpenSSL, mbedTLS, CryptoNG, or
+>> SecureTransport).
+>
+> I think this is probably the single strongest argument for sha256.
+> "It's just there".
 
-> Next week I should have time to send you a patch with the manual page
-> reordered...
+Yup.  I actually was leaning toward saying "all of them are OK in
+practice, so the person who is actually spear-heading the work gets
+to choose", but if we picked SHA-256 now, that would not be a choice
+that Brian has to later justify for choosing against everybody
+else's wishes, which makes it the best choice ;-)
 
-Yay!
-
->               although, unless you have a special 'diff' which can
-> detect when text has been moved from one place to another, I'm
-> guessing it would take you even longer to check the validity of the
-> patch than it would for me to create it.
-
-Fortunately we have "git diff --color-moved".
-
-> However, I'm happy to do this or whatever other small projects you
-> would like to delegate as far as improving readability of your
-> documentation. I just need to know what is likely to be accepted.
-
-Starting with this one seems fine.  Maybe people on list will have
-ideas for followups on top, or maybe you'll have ideas for ways others
-can help you, or both. ;-)
-
-Thanks again,
-Jonathan
