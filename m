@@ -2,114 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AC2441F597
-	for <e@80x24.org>; Tue, 24 Jul 2018 05:54:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 071361F597
+	for <e@80x24.org>; Tue, 24 Jul 2018 06:04:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388275AbeGXG7c (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Jul 2018 02:59:32 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:34416 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388202AbeGXG7c (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jul 2018 02:59:32 -0400
-Received: by mail-wr1-f68.google.com with SMTP id c13-v6so2823641wrt.1
-        for <git@vger.kernel.org>; Mon, 23 Jul 2018 22:54:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:message-id:user-agent
-         :mime-version;
-        bh=loQyNE8YgbUuwnAFYq5O3vQKndRepEg0cwO7fEAf04w=;
-        b=GbXfkJpvHHzeddss/m/VuU/MhzIQDQPIDtldNwErhj7wngxLNZiusoP6N9y/BgEctC
-         NhxevsOpkilF4Tmfw/goGSHfSXtZ+wbGHs9jXtNHvkMlbCFXWalblx4ofWXIR97dzKb2
-         fMMuj2v5SDsCpUzdbeIgtH32yaFaYMILOqk/IEm9ZZ8KnDPGv8YnMYzgA4QELs1uCpm2
-         Ax6G6IIhboJrLgpOARRe3shV3n80C16rLxuSgxs8s4XI44aU5SOm/azrRuKXSZXwThpi
-         oD/0XMSrPRLQolyAfxM2a0rjAHCyjfdIjY5DbOcfOhy862fyaiM7usjguaAVFLRL+7KO
-         qbSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :message-id:user-agent:mime-version;
-        bh=loQyNE8YgbUuwnAFYq5O3vQKndRepEg0cwO7fEAf04w=;
-        b=hFaaQi8Ve7Qsw/fwUtMdWK5Y41zVdsdpuZymxSq+xpPGn0nOpXwAKFnn7HVCnrgvEy
-         b+KC1FM8aD+HmNQyehiYkJfpgTXtnO6iotrpDuajGTyZ0k93uLxuj37qEhGDriqb4qz6
-         mm7zRNOFTFOuqeN/b7FBDhrx7smqNEUQWMS+eHOktc5jP748LCL2nyj0W3sqUiRc1gRM
-         cUb3PbEP4Fi8uL+etKU/71HBZBan202olBW1EFSsL246vnANH3vx2wTbz+gytxuT4y4P
-         xwSiFYTtuwNxSLMdRiqI97jCiXBTbuScJEXA6gZANQZKtgPzxPpRqHYyEtjgUjnJa3NU
-         PsqA==
-X-Gm-Message-State: AOUpUlG81S7/DofbOkpUhaXeiv/8HTViaPckrHPvBQdoI8F2fIifH9bB
-        Uz2ttoTnKKQQgJzg4CBrGAE=
-X-Google-Smtp-Source: AAOMgpc/tUuj7k3PAuROwg2XTDfjsHJ7i3aedY25o2z0DS+yWgS8ERQbtNbYRzLPekwIR1JfAI6crg==
-X-Received: by 2002:adf:a0f3:: with SMTP id n48-v6mr10885476wrn.23.1532411685400;
-        Mon, 23 Jul 2018 22:54:45 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id m207-v6sm800212wma.31.2018.07.23.22.54.44
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 23 Jul 2018 22:54:44 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v1 0/3] [RFC] Speeding up checkout (and merge, rebase, etc)
-References: <20180718204458.20936-1-benpeart@microsoft.com>
-        <20180718213420.GA17291@sigill.intra.peff.net>
-        <a2ad0044-f317-69f7-f2bb-488111c626fb@gmail.com>
-        <CACsJy8D-3sSnoyQZKxeLK-2RmpJSGkziAp5Gf4QpUnxwnhchSQ@mail.gmail.com>
-        <6ff6fbdc-d9cf-019f-317c-7fdba31105c6@gmail.com>
-Date:   Mon, 23 Jul 2018 22:54:44 -0700
-Message-ID: <xmqqefft18m3.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S2388247AbeGXHJW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Jul 2018 03:09:22 -0400
+Received: from s019.cyon.net ([149.126.4.28]:49460 "EHLO s019.cyon.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2388207AbeGXHJW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jul 2018 03:09:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=drbeat.li;
+         s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:MIME-Version
+        :Date:Message-ID:From:References:Cc:To:Subject:Sender:Reply-To:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=W/SggYFKmSLjQuPMgFvxCiu0PnRcDEbln5cvT6GMlHc=; b=ZVApWakhErH5QHHw+FLz6LENP/
+        yfcoia3Zek9OgvnHjReMuqQwdqtPdeYRKJekvc3iwe6CKeKKh35+eS/yseDyLUcc1Mpwcx5mhOsiB
+        U1g7Ebt7R3Fgf3bj8DelF6UgwG7Ou+K2yfiN70iitmywIQzP0Bi7p0htXkHsqdSVK37uBhXPb+53+
+        c3TTFChfZ8s39JcyiF/ggQ7kOkYsSmNHXp10rHXnjssEWR87w4ZLcLWp157dLTS5zBSHrUn/XvOG+
+        dghYbJwL5z50zwllTIrOF8thw0EFQX0yOkCetEDOcO6zz9VMDNMzPZ4BF/Wz7FTKNP/BVGb0C06rm
+        QndYKKRg==;
+Received: from [10.20.10.232] (port=22670 helo=mail.cyon.ch)
+        by s019.cyon.net with esmtpa (Exim 4.91)
+        (envelope-from <dev+git@drbeat.li>)
+        id 1fhqQp-005m1W-FY; Tue, 24 Jul 2018 08:04:29 +0200
+Subject: Re: [PATCH v2] Makefile: add a DEVOPTS flag to get pedantic
+ compilation
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <20180721203647.2619-1-dev+git@drbeat.li>
+ <xmqqva956ax8.fsf@gitster-ct.c.googlers.com>
+From:   Beat Bolli <dev+git@drbeat.li>
+Message-ID: <7666172f-3113-109c-29cf-f1598195b100@drbeat.li>
+Date:   Tue, 24 Jul 2018 08:04:23 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:52.0)
+ Gecko/20100101 Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <xmqqva956ax8.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-OutGoing-Spam-Status: No, score=-1.0
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - s019.cyon.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - drbeat.li
+X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
+X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Peart <peartben@gmail.com> writes:
-
->> Hmm.. this means cache-tree is fully valid, unless you have changes in
->> index. We're quite aggressive in repairing cache-tree since aecf567cbf
->> (cache-tree: create/update cache-tree on checkout - 2014-07-05). If we
->> have very good cache-tree records and still spend 33s on
->> traverse_trees, maybe there's something else.
+On 23.07.18 20:53, Junio C Hamano wrote:
+> Beat Bolli <dev+git@drbeat.li> writes:
+> 
+>> In the interest of code hygiene, make it easier to compile Git with the
+>> flag -pedantic.
 >>
->
-> I'm not at all familiar with the cache-tree and couldn't find any
-> documentation on it other than index-format.txt which says "it helps
-> speed up tree object generation for a new commit."  In this particular
-> case, no new commit is being created so I don't know that the
-> cache-tree would help.
+>> Pure pedantic compilation with GCC 7.3 results in one warning per use of
+>> the translation macro `N_`:
+>>
+>>     warning: array initialized from parenthesized string constant [-Wpedantic]
+>>
+>> Therefore also disable the parenthesising of i18n strings with
+>> -DUSE_PARENS_AROUND_GETTEXT_N=no.
+>>
+>> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+>> ---
+>>
+>> This is the convenience knob for all developers that led to the series
+>> bb/pedantic[1]. It does not depend on this series, though.
+> 
+> Yup, but "make DEVELOPER=Yes" build won't pass unless this patch is
+> queued after those clean-up ;-)
 
-cache-tree is an index extension that records tree object names for
-subdirectories you see in the index.  Every time you write the
-contents of the index as a tree object, we need to collect the
-object name for each top-level paths and write a new top-level tree
-object out, after doing the same recursively for any modified
-subdirectory.  Whenever you add, remove or modify a path in the
-index, the cache-tree entry for enclosing directories are
-invalidated, so a cache-tree entry that is still valid means that
-all the paths in the index under that directory match the contents
-of the tree object that the cache-tree entry holds.
+Then there's a bug in this patch. It should only have an effect if we
+"make DEVELOPER=Yes DEVOPTS=pedantic". Did you try this?
 
-And that property is used by "diff-index --cached $TREE" that is run
-internally.  When we find that the subdirectory "D"'s cache-tree
-entry is valid in the index, and the tree object recorded in the
-cache-tree for that subdirectory matches the subtree D in the tree
-object $TREE, then "diff-index --cached" ignores the entire
-subdirectory D (which saves relatively little in the index as it
-only needs to scan what is already in the memory forward, but on the
-$TREE traversal side, it does not have to even open a subtree, that
-can save a lot), and with a well-populated cache-tree, it can save a
-significant processing.
+> Remind me if I forget to tweak =no back to =0 before pushing the
+> result out.
 
-I think that is what Duy meant to refer to while looking at the
-numbers.
+No problem, I can send a v3 with this change reverted.
 
-> After a quick look at the code, the only place I can find that tries
-> to use cache_tree_matches_traversal() is in unpack_callback() and that
-> only happens if n == 1 and in the "git checkout" case, n == 2. Am I
-> missing something?
+Beat
+
+> 
+> Thanks.
+> 
+>> [1] https://public-inbox.org/git/20180708144342.11922-1-dev+git@drbeat.li/T/#u
+>>
+>>  Makefile       | 6 ++++++
+>>  config.mak.dev | 5 +++++
+>>  2 files changed, 11 insertions(+)
+>>
+>> diff --git a/Makefile b/Makefile
+>> index 0cb6590f24..2bfc051652 100644
+>> --- a/Makefile
+>> +++ b/Makefile
+>> @@ -484,6 +484,12 @@ all::
+>>  #        The DEVELOPER mode enables -Wextra with a few exceptions. By
+>>  #        setting this flag the exceptions are removed, and all of
+>>  #        -Wextra is used.
+>> +#
+>> +#    pedantic:
+>> +#
+>> +#        Enable -pedantic compilation. This also disables
+>> +#        USE_PARENS_AROUND_GETTEXT_N to produce only relevant warnings.
+>>  
+>>  GIT-VERSION-FILE: FORCE
+>>  	@$(SHELL_PATH) ./GIT-VERSION-GEN
+>> diff --git a/config.mak.dev b/config.mak.dev
+>> index 2d244ca470..e11dd94741 100644
+>> --- a/config.mak.dev
+>> +++ b/config.mak.dev
+>> @@ -1,6 +1,11 @@
+>>  ifeq ($(filter no-error,$(DEVOPTS)),)
+>>  CFLAGS += -Werror
+>>  endif
+>> +ifneq ($(filter pedantic,$(DEVOPTS)),)
+>> +CFLAGS += -pedantic
+>> +# don't warn for each N_ use
+>> +CFLAGS += -DUSE_PARENS_AROUND_GETTEXT_N=no
+>> +endif
+>>  CFLAGS += -Wdeclaration-after-statement
+>>  CFLAGS += -Wno-format-zero-length
+>>  CFLAGS += -Wold-style-definition
+
