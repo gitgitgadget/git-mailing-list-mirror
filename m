@@ -7,47 +7,48 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 337E41F597
-	for <e@80x24.org>; Tue, 24 Jul 2018 16:34:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D7961F597
+	for <e@80x24.org>; Tue, 24 Jul 2018 16:34:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388588AbeGXRlg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Jul 2018 13:41:36 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:34507 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388546AbeGXRlg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jul 2018 13:41:36 -0400
-Received: by mail-wr1-f66.google.com with SMTP id c13-v6so4795625wrt.1
-        for <git@vger.kernel.org>; Tue, 24 Jul 2018 09:34:19 -0700 (PDT)
+        id S2388594AbeGXRlj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Jul 2018 13:41:39 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:42336 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388546AbeGXRlj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jul 2018 13:41:39 -0400
+Received: by mail-wr1-f65.google.com with SMTP id e7-v6so4772202wrs.9
+        for <git@vger.kernel.org>; Tue, 24 Jul 2018 09:34:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=uuUjMSxM8yYIc16krVWYQqkBASS4YZx6H6mx/DgJzD8=;
-        b=ROJR2CFMSpY09a2Ef5tC0N8DvvUXN9jP3vzAw4g2LmEBNBk44iYoscj7yXzJgSbYti
-         /X8dC3yVTqFrYxfw3oq1svoDVFvppmvVUaW/CJ1yGCeHItXEYmWdZ+S/uKZIR0Otu/Bt
-         0aqJ9VDrGkFOyrWiMN4NjmLKtfp85In+eUjuZ81HkKtpvPnss7rhq4wAwjsVZhmcwNkh
-         U3uSxDfkN74CDuCVfqxJ+gjfS+FCC0NGLJh8jidHZ4Qf+0p3QvHhynRTidbrO6YGx/Fz
-         LE3eWEcLDfgorbVbzY+XOJjObteKSSBYu3IsFrED4YH4eZq42CWcGNNs2CD/eFuLXg6q
-         haEw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=uwv0Z2Hyk9flKPfWzi9BXbnt04CqzzIzB93c4mSu+eU=;
+        b=Bi5n2zQLHXFEMAWh4dusGtV/BGGI4dS1ONzT0HgKy8eK3IXfquElDfjhUay6uvvgeQ
+         gMqG76l9TTA8yKm8B+O+pfaXY1hh+PyygS3js76tPBYKQ6FQ5fRkYEqERFPsdM/lDpUD
+         xr8CgQOCHpoJPQ++AFJhPv0VLB1wCkx1wfzp7w3mT1twjySnz9LxGwrmO7i8xet7ukt5
+         is3GKKOPeH4y3qksPbEVua6Se55HB+XYDPurlPkpxx7/9NOV1m4YeRBELmy2B5eanQaJ
+         vvENFGmkA4SzNwhRvYhBOOsYcZxQIRHFGkNFhm9NnGDEpI3fyPIF/hwR1rpmBFkmwXS+
+         3ddg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=uuUjMSxM8yYIc16krVWYQqkBASS4YZx6H6mx/DgJzD8=;
-        b=ZYP6HAoJaeENJXDM5y54K1ersCnSwgtwicF8F86o8Nj1gSIHz35e6wLaw+lB9KOEuw
-         qLsZ10Fkpo25DjWYaTqesik8Lgr7BillQ2udcsNvlKSeeqLOMMIWKYvWPsL+9zHTL5of
-         k7Ygi6qp4UyIJtpvNEwuywf676hQkQiyEK9Z+nCG5c0RsV6pLcSbKirHqQ5QFLB/zaSK
-         ByUZC+Vyaay+bnvd4AjMbIKrGX20eqdlCO7L8KoqpA0GPG3/rffRydfke83YotVhbYk7
-         /pDvA4A8EJGvlNcaRizHNr6PhutmDmvzBbID4lAeWylIyq8NHklRKSKTCCUpgC/RUXyD
-         D2eQ==
-X-Gm-Message-State: AOUpUlF6goTPXTlbDAPNrXkBrnAwE5VBmQxvqmaI/jKxVCIFS5ow37mf
-        mZSkstWtcBTPioFAPrR1zjxewTAs
-X-Google-Smtp-Source: AAOMgpeAkl4mdUZBEx8t02SQ74R7E7PyShHBcxInNsXRhuxI+hjdReIRefGuc5wL3xKlaoE+KbCbdQ==
-X-Received: by 2002:adf:d4c4:: with SMTP id w4-v6mr11633957wrk.185.1532450058273;
-        Tue, 24 Jul 2018 09:34:18 -0700 (PDT)
+         :references:mime-version:content-transfer-encoding;
+        bh=uwv0Z2Hyk9flKPfWzi9BXbnt04CqzzIzB93c4mSu+eU=;
+        b=ZWUtHGjVLuZgzlHBAoaKqhl0uADWf9ae3mSB/HYXO1nTxw+zfMq4PQ3CFRpyOM/xSc
+         v7rnC3RbwE2clrMisxNMlG2vvn0QYBwJFU758iYI1LDhuknztA/KdrNPlxjbT23Yb1gz
+         OZv8sD9LsFvZBX3wBn+mGn16hHpXqQF4EhDQQn44WouaeTtCX3s6PBzqUrR7AHKXNmNA
+         7cwE9Qrgzf9G8CowMDKkQKCoM6O9ZBL2+6vpwMJAqrmkrbRGe6gjMbNeo9PInJ0DV18O
+         PeMpH4gTEXYThGx1EuUjRUssyP3JT5nYM//cthY3Th/cQ9Rq8YOzeXDxvwWoyTNeld3Q
+         EHUQ==
+X-Gm-Message-State: AOUpUlHGXJqsnG+hxQsJ7vYBZJ/fz8MW2ZX7LKpt9CRngWdP+7lhG+7b
+        dRd9FDrj2QzjkBSsqMj3U0Gm+a8x
+X-Google-Smtp-Source: AAOMgpche8ZqbnElUpwM+mKyms7n5wHZM7rcvyYWiVy7ZvayuvyWjvQjjSBS97aL6pap472y8uQl1Q==
+X-Received: by 2002:adf:9485:: with SMTP id 5-v6mr12805484wrr.82.1532450059866;
+        Tue, 24 Jul 2018 09:34:19 -0700 (PDT)
 Received: from localhost.localdomain (AToulouse-658-1-75-221.w92-156.abo.wanadoo.fr. [92.156.127.221])
-        by smtp.googlemail.com with ESMTPSA id x124-v6sm1899091wmg.38.2018.07.24.09.34.16
+        by smtp.googlemail.com with ESMTPSA id x124-v6sm1899091wmg.38.2018.07.24.09.34.18
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 24 Jul 2018 09:34:17 -0700 (PDT)
+        Tue, 24 Jul 2018 09:34:18 -0700 (PDT)
 From:   Alban Gruin <alban.gruin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
@@ -56,110 +57,180 @@ Cc:     Stefan Beller <sbeller@google.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         phillip.wood@dunelm.org.uk, gitster@pobox.com,
         Alban Gruin <alban.gruin@gmail.com>
-Subject: [GSoC][PATCH v4 05/20] sequencer: add a new function to silence a command, except if it fails
-Date:   Tue, 24 Jul 2018 18:32:06 +0200
-Message-Id: <20180724163221.15201-6-alban.gruin@gmail.com>
+Subject: [GSoC][PATCH v4 06/20] rebase -i: rewrite setup_reflog_action() in C
+Date:   Tue, 24 Jul 2018 18:32:07 +0200
+Message-Id: <20180724163221.15201-7-alban.gruin@gmail.com>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20180724163221.15201-1-alban.gruin@gmail.com>
 References: <20180710121557.6698-1-alban.gruin@gmail.com>
  <20180724163221.15201-1-alban.gruin@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This adds a new function, run_command_silent_on_success(), to
-redirect the stdout and stderr of a command to a strbuf, and then to run
-that command. This strbuf is printed only if the command fails. It is
-functionnaly similar to output() from git-rebase.sh.
+This rewrites (the misnamed) setup_reflog_action() from shell to C. The
+new version is called prepare_branch_to_be_rebased().
 
-run_git_commit() is then refactored to use of
-run_command_silent_on_success().
+A new command is added to rebase--helper.c, “checkout-base”, as well as
+a new flag, “verbose”, to avoid silencing the output of the checkout
+operation called by checkout_base_commit().
+
+The function `run_git_checkout()` will also be used in the next commit,
+therefore its code is not part of `checkout_base_commit()`.
+
+The shell version is then stripped in favour of a call to the helper.
+
+As $GIT_REFLOG_ACTION is no longer set at the first call of
+checkout_onto(), a call to comment_for_reflog() is added at the
+beginning of this function.
 
 Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
 ---
-No changes since v3.
+Dropped the `verbose` variable.
 
- sequencer.c | 51 +++++++++++++++++++++++++--------------------------
- 1 file changed, 25 insertions(+), 26 deletions(-)
+ builtin/rebase--helper.c   |  7 ++++++-
+ git-rebase--interactive.sh | 16 ++--------------
+ sequencer.c                | 30 ++++++++++++++++++++++++++++++
+ sequencer.h                |  2 ++
+ 4 files changed, 40 insertions(+), 15 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index 0fc03dfe48..274cddd13f 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -769,6 +769,23 @@ N_("you have staged changes in your working tree\n"
- #define VERIFY_MSG  (1<<4)
- #define CREATE_ROOT_COMMIT (1<<5)
+diff --git a/builtin/rebase--helper.c b/builtin/rebase--helper.c
+index 731a64971d..0e76dadba6 100644
+--- a/builtin/rebase--helper.c
++++ b/builtin/rebase--helper.c
+@@ -18,7 +18,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+ 	enum {
+ 		CONTINUE = 1, ABORT, MAKE_SCRIPT, SHORTEN_OIDS, EXPAND_OIDS,
+ 		CHECK_TODO_LIST, SKIP_UNNECESSARY_PICKS, REARRANGE_SQUASH,
+-		ADD_EXEC, APPEND_TODO_HELP, EDIT_TODO
++		ADD_EXEC, APPEND_TODO_HELP, EDIT_TODO, PREPARE_BRANCH
+ 	} command = 0;
+ 	struct option options[] = {
+ 		OPT_BOOL(0, "ff", &opts.allow_ff, N_("allow fast-forward")),
+@@ -28,6 +28,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOL(0, "rebase-merges", &rebase_merges, N_("rebase merge commits")),
+ 		OPT_BOOL(0, "rebase-cousins", &rebase_cousins,
+ 			 N_("keep original branch points of cousins")),
++		OPT__VERBOSE(&opts.verbose, N_("be verbose")),
+ 		OPT_CMDMODE(0, "continue", &command, N_("continue rebase"),
+ 				CONTINUE),
+ 		OPT_CMDMODE(0, "abort", &command, N_("abort rebase"),
+@@ -51,6 +52,8 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+ 		OPT_CMDMODE(0, "edit-todo", &command,
+ 			    N_("edit the todo list during an interactive rebase"),
+ 			    EDIT_TODO),
++		OPT_CMDMODE(0, "prepare-branch", &command,
++			    N_("prepare the branch to be rebased"), PREPARE_BRANCH),
+ 		OPT_END()
+ 	};
  
-+static int run_command_silent_on_success(struct child_process *cmd)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	int rc;
-+
-+	cmd->stdout_to_stderr = 1;
-+	rc = pipe_command(cmd,
-+			  NULL, 0,
-+			  NULL, 0,
-+			  &buf, 0);
-+
-+	if (rc)
-+		fputs(buf.buf, stderr);
-+	strbuf_release(&buf);
-+	return rc;
-+}
-+
- /*
-  * If we are cherry-pick, and if the merge did not result in
-  * hand-editing, we will hit this commit and inherit the original
-@@ -823,18 +840,11 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
+@@ -94,5 +97,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+ 		return !!append_todo_help(0, keep_empty);
+ 	if (command == EDIT_TODO && argc == 1)
+ 		return !!edit_todo_list(flags);
++	if (command == PREPARE_BRANCH && argc == 2)
++		return !!prepare_branch_to_be_rebased(&opts, argv[1]);
+ 	usage_with_options(builtin_rebase_helper_usage, options);
+ }
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 2defe607f4..77e972bb6c 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -72,6 +72,7 @@ collapse_todo_ids() {
  
- 	cmd.git_cmd = 1;
- 
--	if (is_rebase_i(opts)) {
--		if (!(flags & EDIT_MSG)) {
--			cmd.stdout_to_stderr = 1;
--			cmd.err = -1;
--		}
--
--		if (read_env_script(&cmd.env_array)) {
--			const char *gpg_opt = gpg_sign_opt_quoted(opts);
-+	if (is_rebase_i(opts) && read_env_script(&cmd.env_array)) {
-+		const char *gpg_opt = gpg_sign_opt_quoted(opts);
- 
--			return error(_(staged_changes_advice),
--				     gpg_opt, gpg_opt);
--		}
-+		return error(_(staged_changes_advice),
-+			     gpg_opt, gpg_opt);
- 	}
- 
- 	argv_array_push(&cmd.args, "commit");
-@@ -864,21 +874,10 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
- 	if (opts->allow_empty_message)
- 		argv_array_push(&cmd.args, "--allow-empty-message");
- 
--	if (cmd.err == -1) {
--		/* hide stderr on success */
--		struct strbuf buf = STRBUF_INIT;
--		int rc = pipe_command(&cmd,
--				      NULL, 0,
--				      /* stdout is already redirected */
--				      NULL, 0,
--				      &buf, 0);
--		if (rc)
--			fputs(buf.buf, stderr);
--		strbuf_release(&buf);
--		return rc;
--	}
--
--	return run_command(&cmd);
-+	if (is_rebase_i(opts) && !(flags & EDIT_MSG))
-+		return run_command_silent_on_success(&cmd);
-+	else
-+		return run_command(&cmd);
+ # Switch to the branch in $into and notify it in the reflog
+ checkout_onto () {
++	comment_for_reflog start
+ 	GIT_REFLOG_ACTION="$GIT_REFLOG_ACTION: checkout $onto_name"
+ 	output git checkout $onto || die_abort "$(gettext "could not detach HEAD")"
+ 	git update-ref ORIG_HEAD $orig_head
+@@ -119,19 +120,6 @@ initiate_action () {
+ 	esac
  }
  
- static int rest_is_empty(const struct strbuf *sb, int start)
+-setup_reflog_action () {
+-	comment_for_reflog start
+-
+-	if test ! -z "$switch_to"
+-	then
+-		GIT_REFLOG_ACTION="$GIT_REFLOG_ACTION: checkout $switch_to"
+-		output git checkout "$switch_to" -- ||
+-			die "$(eval_gettext "Could not checkout \$switch_to")"
+-
+-		comment_for_reflog start
+-	fi
+-}
+-
+ init_basic_state () {
+ 	orig_head=$(git rev-parse --verify HEAD) || die "$(gettext "No HEAD?")"
+ 	mkdir -p "$state_dir" || die "$(eval_gettext "Could not create temporary \$state_dir")"
+@@ -211,7 +199,7 @@ git_rebase__interactive () {
+ 		return 0
+ 	fi
+ 
+-	setup_reflog_action
++	git rebase--helper --prepare-branch "$switch_to" ${verbose:+--verbose}
+ 	init_basic_state
+ 
+ 	init_revisions_and_shortrevisions
+diff --git a/sequencer.c b/sequencer.c
+index 274cddd13f..0bc53e009e 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -3139,6 +3139,36 @@ static const char *reflog_message(struct replay_opts *opts,
+ 	return buf.buf;
+ }
+ 
++static int run_git_checkout(struct replay_opts *opts, const char *commit,
++			    const char *action)
++{
++	struct child_process cmd = CHILD_PROCESS_INIT;
++
++	cmd.git_cmd = 1;
++
++	argv_array_push(&cmd.args, "checkout");
++	argv_array_push(&cmd.args, commit);
++	argv_array_pushf(&cmd.env_array, GIT_REFLOG_ACTION "=%s", action);
++
++	if (opts->verbose)
++		return run_command(&cmd);
++	else
++		return run_command_silent_on_success(&cmd);
++}
++
++int prepare_branch_to_be_rebased(struct replay_opts *opts, const char *commit)
++{
++	const char *action;
++
++	if (commit && *commit) {
++		action = reflog_message(opts, "start", "checkout %s", commit);
++		if (run_git_checkout(opts, commit, action))
++			return error(_("could not checkout %s"), commit);
++	}
++
++	return 0;
++}
++
+ static const char rescheduled_advice[] =
+ N_("Could not execute the todo command\n"
+ "\n"
+diff --git a/sequencer.h b/sequencer.h
+index ffab798f1e..93da713fe2 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -106,6 +106,8 @@ int update_head_with_reflog(const struct commit *old_head,
+ void commit_post_rewrite(const struct commit *current_head,
+ 			 const struct object_id *new_head);
+ 
++int prepare_branch_to_be_rebased(struct replay_opts *opts, const char *commit);
++
+ #define SUMMARY_INITIAL_COMMIT   (1 << 0)
+ #define SUMMARY_SHOW_AUTHOR_DATE (1 << 1)
+ void print_commit_summary(const char *prefix, const struct object_id *oid,
 -- 
 2.18.0
 
