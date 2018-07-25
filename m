@@ -2,216 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F01C81F597
-	for <e@80x24.org>; Wed, 25 Jul 2018 22:56:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 265331F597
+	for <e@80x24.org>; Wed, 25 Jul 2018 22:56:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731700AbeGZAKU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jul 2018 20:10:20 -0400
-Received: from mail-yb0-f196.google.com ([209.85.213.196]:45741 "EHLO
-        mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731526AbeGZAKU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jul 2018 20:10:20 -0400
-Received: by mail-yb0-f196.google.com with SMTP id h127-v6so3643518ybg.12
-        for <git@vger.kernel.org>; Wed, 25 Jul 2018 15:56:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=PQO4Mj25R0ezQPtGFNRgT9IwyT/64R/2sPQTkx6it40=;
-        b=QqeEK/b9SZ+e/xv8O1DEB5ELRxIHqjg36fJAlbrOA6kU+mOOXvK7YI1VDiD/5rOI/N
-         qNMKZq3yIBxPh6FNM5AULZwfBFx2E8GFcYHWqjh5nDGmBdGADBG+DsRH5Tx+psHvR2w5
-         P96T5VcepYrUKsrFR8+J82X2Oq5NFuTtKbPCXOROoM99wcw2OCTqpET9UGqrwkIHKbvv
-         A4WfmTvESHcx5p33LvBX6qkXuC99FQJujk0mefNiSiAXUozoveFP8/MThiQrUHbxls6c
-         Vq64OKiIAqfpRPC8Gu7ORsaTcdh+yOlOvna6WAnGK++rV8+MpXSrgV+s3gBncmj80NRK
-         c7Kg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=PQO4Mj25R0ezQPtGFNRgT9IwyT/64R/2sPQTkx6it40=;
-        b=Zqs3OMEmOOTVE9zxgmPRYQlD9m+WFTisewP8D2DJzivRbOz7+IiRcZyycKNn+WuUZG
-         hlV2TNAoU5e+Ex4rEHgeq1e+iDB/SL/5QuEIRBknA2eNAKB5+lt9mkticuNye4qJWE+h
-         LZHnHqLH4oIHWpTlnIKarD1thN9YypT38RzdYCfShhgqlWhn8VIcXnBFr7GHjPV3qam/
-         BB/j3GtLfv0XOAdnD0BuXlfdqSAGE6c2VQfRNhjfHJ0xSLyXuytGFIRkhTfeRczL8PFn
-         vfXU6nXyGC2Qz8U5EONEyG9EVt0wW2oVBbwX1wwhASHY2OYTIt5YCy4UH9lx21sDwhzS
-         WOOw==
-X-Gm-Message-State: AOUpUlGQLpnjE8kZNlS9gToiH8Ock1+2lyVdMa5nqY3wFJEYop7S+bK4
-        ifyEJHeJrS94yDONQy4wU+1zDRgYcJ+KMoyVe+/W0r++JdtoQQ==
-X-Google-Smtp-Source: AAOMgpdtFw+hqwhRIXZUfHubfsbVcXD/viKamIdeuj4+jYN83kdJtPX9Z1B4Tfk1ElFx18BWSeKvR0WGfL+yxTuPW1Y=
-X-Received: by 2002:a25:dc47:: with SMTP id y68-v6mr12078161ybe.515.1532559388063;
- Wed, 25 Jul 2018 15:56:28 -0700 (PDT)
-MIME-Version: 1.0
-References: <xmqqd0vbt14e.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqd0vbt14e.fsf@gitster-ct.c.googlers.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 25 Jul 2018 15:56:17 -0700
-Message-ID: <CAGZ79kbO1KOfDgjT5duEd49MZ=EaYLtTDeg2efVO5kkO9QFx7g@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Jul 2018, #03; Wed, 25)
+        id S1731736AbeGZAKp (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jul 2018 20:10:45 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:37024 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1731526AbeGZAKp (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 25 Jul 2018 20:10:45 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:f1fc:eee3:60de:bdd8])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 91C276046C;
+        Wed, 25 Jul 2018 22:56:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1532559411;
+        bh=PtiWozK485gOYoKjOSP+DB7MpSR+BGZyJmTUf/dcHlQ=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=HR4B42c6FTHBqIt3YkZRM/WZYEDei8KtZ1H5I4fEn38ltX+pg/73QSp8WIXks1dW6
+         m9RogSzlka56PkBnTY2JUslYwRfrYyKxB1ujSzyz5Tli0jQMh37cA1s+9ziqumuMmq
+         PE1MehQ6ZHG49pzYDahNAZT3alsB6Hh7HgLliKczPmb99G1D5AlzdrqhPZlN8mWQoL
+         OOnnnrM9YJRbZT/z8oGa85ZMIGDWIKO1qKqrzTURGaylvVIZ7+fZZC9roKYMEYh1m5
+         FwTKSaEAs3lhh78CLfrCfek2iE1eDzl9IvSwzsX5MvekWUqGCRSPVcD/iUZu9r+GkA
+         zRbTI+/nxo+Z/bUaqql4yEU6TrFOh8/T7X8SAP04qHSXdjeqVNgk8tJc/CVSxbZM8/
+         t6cZvtz/ldp+DBWHlK+hmUcaJhbNsIZS025nSrCFvIL/MZhax21CJQ4cSKMGWYzze0
+         l85nJSBb0E1Xwg+eZMabaqHFi0dIVNQoDVa/uS4p4dBY/FQSiUa
+Date:   Wed, 25 Jul 2018 22:56:45 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Edward Thomson <ethomson@edwardthomson.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        demerphq <demerphq@gmail.com>, Adam Langley <agl@google.com>,
+        keccak@noekeon.org
+Subject: Re: [PATCH 2/2] doc hash-function-transition: pick SHA-256 as NewHash
+Message-ID: <20180725225645.GK18502@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>,
+        Edward Thomson <ethomson@edwardthomson.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        demerphq <demerphq@gmail.com>, Adam Langley <agl@google.com>,
+        keccak@noekeon.org
+References: <20180725083024.16131-1-avarab@gmail.com>
+ <xmqqzhygwd5o.fsf@gitster-ct.c.googlers.com>
+ <20180725083024.16131-3-avarab@gmail.com>
+ <xmqq4lgnw9fj.fsf@gitster-ct.c.googlers.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="6TC23+W66xmFESAX"
+Content-Disposition: inline
+In-Reply-To: <xmqq4lgnw9fj.fsf@gitster-ct.c.googlers.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.17.0-1-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 25, 2018 at 3:13 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Here are the topics that have been cooking.  Commits prefixed with
-> '-' are only in 'pu' (proposed updates) while commits prefixed with
-> '+' are in 'next'.  The ones marked with '.' do not appear in any of
-> the integration branches, but I am still holding onto them.
->
-> Many topics have moved to 'master' and 'next' from 'next' to 'pu'
-> respectively.
->
-> You can find the changes described here in the integration branches
-> of the repositories listed at
 
-(using an alias to fetch all using protocol v2)
-Fetching o
-From https://github.com/gitster/git
- - [deleted]                 (none)     -> origin/ab/fetch-tags-noclobber
- - [deleted]                 (none)     -> origin/nd/use-the-index-compat-less
- - [deleted]                 (none)     -> origin/sb/diff-color-move
-remote: Counting objects: 830, done.
-remote: Compressing objects: 100% (379/379), done.
-remote: Total 830 (delta 404), reused 777 (delta 404), pack-reused 47
-Receiving objects: 100% (830/830), 470.12 KiB | 9.04 MiB/s, done.
-Resolving deltas: 100% (404/404), completed with 58 local objects.
-fatal: Couldn't find remote ref refs/notes/amlog
-error: Could not fetch o
-...
-(goes and pastes this into the email, what if I try again?)
+--6TC23+W66xmFESAX
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-$ git -c protocol.version=0 fetch --all
-Fetching o
-From https://github.com/gitster/git
- * [new branch]              ab/newhash-is-sha256       ->
-origin/ab/newhash-is-sha256
- + 6da893ab657...729b3925ed9 bb/make-developer-pedantic ->
-origin/bb/make-developer-pedantic  (forced update)
- * [new branch]              bb/redecl-enum-fix         ->
-origin/bb/redecl-enum-fix
- * [new branch]              es/diff-color-move-fix     ->
-origin/es/diff-color-move-fix
- + 165e30f8529...d63a0b5e393 es/format-patch-rangediff  ->
-origin/es/format-patch-rangediff  (forced update)
- + 1ac17a46fab...bb4a134ae84 jch                        -> origin/jch
-(forced update)
- * [new branch]              jh/structured-logging      ->
-origin/jh/structured-logging
- + 816325b2109...c255a588bcd js/range-diff              ->
-origin/js/range-diff  (forced update)
-   b7bd9486b05..ffc6fa0e396  master                     -> origin/master
-   5c9ce644c39..a71716f1ade  next                       -> origin/next
- + 8a589a4fc91...838143aa5c0 pu                         -> origin/pu
-(forced update)
- + 0041456f5f1...16d09ff91a2 refs/notes/amlog           ->
-refs/notes/amlog  (forced update)
-Fetching googlesource
-...
+On Wed, Jul 25, 2018 at 09:45:52AM -0700, Junio C Hamano wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+>=20
+> > @@ -125,19 +122,19 @@ Detailed Design
+> >  ---------------
+> >  Repository format extension
+> >  ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> > -A NewHash repository uses repository format version `1` (see
+> > +A SHA-256 repository uses repository format version `1` (see
+> >  Documentation/technical/repository-version.txt) with extensions
+> >  `objectFormat` and `compatObjectFormat`:
+> > =20
+> >  	[core]
+> >  		repositoryFormatVersion =3D 1
+> >  	[extensions]
+> > -		objectFormat =3D newhash
+> > +		objectFormat =3D sha256
+> >  		compatObjectFormat =3D sha1
+>=20
+> Whenever we said SHA1, somebody came and told us that the name of
+> the hash is SHA-1 (with dash).  Would we be nitpicker-prone in the
+> same way with "sha256" here?
 
+I actually have a patch to make the names "sha1" and "sha256".  My
+rationale is that it's shorter and easier to type.  People can quibble
+about it when I send it to the list, but that's what I'm proposing at
+least.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-> * jh/structured-logging (2018-07-25) 25 commits
-[...]
->  - structured-logging: design document
->  (this branch uses jh/json-writer.)
->
->  X-Gah.
+--6TC23+W66xmFESAX
+Content-Type: application/pgp-signature; name="signature.asc"
 
-I am not sure what to make of this comment?
-Does it need review or is the design/intent to be
-discussed?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.9 (GNU/Linux)
 
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAltZAC0ACgkQv1NdgR9S
+9osPpg/+N1BNaP7n4vkPBn3WnhNGjci70olWX5mW62Gpb49VSKEMw25ag4LHEvPx
+Jq+es2Ij+IQ5fPNcLdzW9H2tFNLxunLdv5whWqQpvykSRDQHK9vKfFQthptdwkfY
+6t3Qhd7NAz/1wlVDvJVKZEZCwGIGOqmpwXMoGl8FFgpFrGWVyjFlXMQtAU4hUagU
+S1l1soEerRQrhG7jOeS2oVsDzGEMd3Rn3MKnRCaBV/DX5lS6q0TyosGVCN7pqsts
+gV6JshIEPY2s8FWZ+Gteak4XQ+4ax/7j9qw72jKMFuhjEfPDh6T59Yeqi7Jo7l2h
+/iRh6ibiVeMNOfN+pBtKz32aeybNKzuf5IfF+HCypSbfZmhFpy9sw4NgANmD04F5
+mrJCadcy90M4xNzRb7Nn1zgjiBEGoOmy2YLUN5vzCVioDbOCqdWRy5U+UME9iioC
+lyDApBEiGXcuhXh6qXC4KY/thVhi1f7hn2OVafG1N+KO8Y8FRIh8KsKGBkEoCNE0
+W2C6BXo2oV38JYodTRcYN3pz0MJydF4TsY0NVCxPKefqiTrRj1POqRClmEifhUIC
+cU5b9Hm10wuI4bNKjMIvL6jqw5YCbAwga30Tl1ACw0VJMzSSNc94rtSbKY4pv4Ls
+LpuIwqHPwmDD+xMgt9+NPa6y2k05bZtxjKfM0TMrqXCPa4JVGRI=
+=yM50
+-----END PGP SIGNATURE-----
 
-> [Cooking]
-[...]
-> * sb/submodule-update-in-c (2018-07-18) 6 commits
->  - submodule--helper: introduce new update-module-mode helper
->  - builtin/submodule--helper: factor out method to update a single submodule
->  - builtin/submodule--helper: store update_clone information in a struct
->  - builtin/submodule--helper: factor out submodule updating
->  - git-submodule.sh: rename unused variables
->  - git-submodule.sh: align error reporting for update mode to use path
->
->  "git submodule update" is getting rewritten piece-by-piece into C.
->
->  It seems to pass its own self-tests standalone, but seems to break
->  horribly when merged to 'pu'.
-
-I need to redo this, please eject from pu if that is easier for us.
-
-> * ag/rebase-i-in-c (2018-07-10) 13 commits
-[...]
->
->  Piecemeal rewrite of the remaining "rebase -i" machinery in C.
->
->  A reroll (which is rumored to be quite good) exists, but hasn't
->  been picked up yet.
-
-Forgot to state so on either the mailing list (or Github or IRC),
-but I read the tip of the reroll and I think it is good.
-
-> * sb/object-store-lookup (2018-06-29) 33 commits
-[...]
->
->  Will merge to 'master'.
-
-Finally. Hooray! I am currently writing its successor in a
-"less confrontational (but needing more work)"-kind-of way,
-which converts the ref store to take repository objects.
-
-Given this series (and how it was done/reviewed and yet
-caused so much trouble), I'd like to spark a discussion on
-how the community wants to see large scale refactorings
-and eventually document it.
-
-> * js/range-diff (2018-07-25) 21 commits
-[...]
->  (this branch is used by es/format-patch-rangediff.)
->
->  "git tbdiff" that lets us compare individual patches in two
->  iterations of a topic has been rewritten and made into a built-in
->  command.
->
->  Undecided.
->
->  Many "The feature is useful" comments without much real review; we
->  know the feature is great as this mimicks tbdiff already so that is
->  not news.
-
-It has also seen reviews regarding its non-coloring side in previous rounds,
-which I think is mature by now. I suggested to submit the range-diff
-without coloring on IRC, but it was not quite well received as colors
-were seen as "the main benefit of range-diff" by DScho.
-(http://colabti.org/irclogger/irclogger_log/git-devel?date=2018-07-25#l72)
-
->  I've squashed an obvious documentation fix in before rebasing the
->  other topic that depends on it.  I _think_ we would probably be
->  better off to _disable_ whitespace-error coloring altogether when
->  showing diff-of-diff, and get rid of the workaround that only is
->  applicable to the context lines of the outer diff (unless we first
->  define how whitespace errors in diff-of-diff should be colored and
->  implement it correctly, that is, but after seeing these two
->  attempts, it seems that is harder than it is worth).
-
-I think the current coloring is good enough to ship, but it still has
-errors around corners, for example introduction of new files,
-having lines in the inner diff as:
-
-     diff --git a/Makefile b/Makefile
-     --- a/Makefile
-     +++ b/Makefile
-
-will be colored white/red/green (in that order), but in the outer diff
-these are all "context", but as these specific context lines happen
-to start with +/- we color them.
-If we want to be perfect, we rather need to parse&understand
-the inner diff on a more detailed level, but I would argue to leave
-that to a later stage for another volunteer to step in and cleanup.
+--6TC23+W66xmFESAX--
