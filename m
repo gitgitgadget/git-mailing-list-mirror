@@ -2,122 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2FE901F597
-	for <e@80x24.org>; Wed, 25 Jul 2018 17:38:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B5BE1F597
+	for <e@80x24.org>; Wed, 25 Jul 2018 17:39:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729418AbeGYSv1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jul 2018 14:51:27 -0400
-Received: from s019.cyon.net ([149.126.4.28]:39598 "EHLO s019.cyon.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729337AbeGYSv0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jul 2018 14:51:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=drbeat.li;
-         s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:MIME-Version
-        :Date:Message-ID:From:References:Cc:To:Subject:Sender:Reply-To:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-        List-Post:List-Owner:List-Archive;
-        bh=iAl1PC3a0/F571Dnx4V7filE58CVI4cqTEsiDirGc5Y=; b=wJKzxB4b3CbYV5jw/M6Oogf1+t
-        NQv/wISNy9ZZ4eSCyAIBJ06Kt0XKW3IHN89NdfVYokLysKVkdwEeIOdd3V67/w7oFHkRZVp3h9gOU
-        vrIlbiXymPv60/mnaZKxshH0t1yOxDhjH3XOwb3ntMIp8+a3iuLBepm4S/jsk4eIoytOj3PEjkXyL
-        Nh2HDYWfFrjMMN8vKRPvuhE0nxbN5xUgr8ZW7U8vU+uGpA2AcRD0AxvUnK99tJQ5SKHV+42uvyEHS
-        BoZWA74J6RUjAMPbj5XiubO3Ya6GQgpUzhA7vHw54bSLH6uzbxUYdmsOr4dziWz7Kw5kcBW/QkL/1
-        aKOCznaw==;
-Received: from [10.20.10.232] (port=45652 helo=mail.cyon.ch)
-        by s019.cyon.net with esmtpa (Exim 4.91)
-        (envelope-from <dev+git@drbeat.li>)
-        id 1fiNkE-00Guxo-7R; Wed, 25 Jul 2018 19:38:42 +0200
-Subject: Re: [PATCH v4] Makefile: add a DEVOPTS flag to get pedantic
- compilation
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Newsgroups: gmane.comp.version-control.git
-References: <20180724171339.18983-1-dev+git@drbeat.li>
- <20180724192643.21505-1-dev+git@drbeat.li>
- <xmqqzhyfuub6.fsf@gitster-ct.c.googlers.com>
-From:   Beat Bolli <dev+git@drbeat.li>
-Message-ID: <504f6cfe-f869-97f6-248d-642ae1e6dfc0@drbeat.li>
-Date:   Wed, 25 Jul 2018 19:38:37 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:52.0)
- Gecko/20100101 Thunderbird/52.9.1
+        id S1729885AbeGYSvz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jul 2018 14:51:55 -0400
+Received: from mail-it0-f68.google.com ([209.85.214.68]:40920 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729379AbeGYSvz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jul 2018 14:51:55 -0400
+Received: by mail-it0-f68.google.com with SMTP id h23-v6so9777746ita.5
+        for <git@vger.kernel.org>; Wed, 25 Jul 2018 10:39:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=yeVKQAm6yuSXR83ICvKdUEseT6p/YRcKtWx6/pqIJ9s=;
+        b=dO0/r3i7sAYTN2KwFSRxP8vpTyfk90zRARRFaXLDVkuRVhRNPfy5ZnTb168CQaYAlX
+         MbRY32Bz2vQrrNXnf2BaL7b1voAHmWMt98iQHGghbUQ8adcuKQ0odlpx7DgaXaUbBXKD
+         e8Z4fvC+tj0OwUPVlVSNAe5lrx5JXBGHvxL1MnXUu5faReNCngmr+zcwVSjSK+OKKGWp
+         0l0o0FCrvl7/7ONecVXbo5a5tmibvqsaU6yj2OFkXnUzpK9jaghAWG4s/MFRrAoE393g
+         IN0MowF/5WF+S6X64FXoz773l349bfJ9EyV3gCzjbGoyjEeyASIY/qp4jAXSqd389cze
+         uU5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=yeVKQAm6yuSXR83ICvKdUEseT6p/YRcKtWx6/pqIJ9s=;
+        b=seXum5QqcLrAiaaPkynlo4YAX9oVH+cKOnaOt77vZGRLq9IXF6928LM72yevdrw/Sl
+         dovhwRa3sz7gC2/WECQDwkzZWu60v0ai02+WWkCbq1ITFU+C/OhYayZ8h+7yzKzsYrxM
+         XeI7D4WWBoic/+4tEK4rJf4QxVYoWvxDxVl/MjGROXZwpgn9+kpOOUg9ZE5smZem5kcW
+         V1TBlYIA9ripn2uVT561Ai9Yl1H8MuWjcLfWjopHD2mD/Yup3CuQG5rAmdGRs/mC0ChV
+         JnGI+8cx97uPahyYbZJ2RPeF4hNBngKIMzh8EbYZc9tqr1sDDrCWMxesA1znZ1ULnBL0
+         vU8A==
+X-Gm-Message-State: AOUpUlGNKqp3RUWrTzXXZ7A4gvvvxmeiVwJNsEN1THgSNiFHuxTk8bjg
+        pkAg4UfkwSx+AD9Z5EsDMqumEFKJt48oY/cd10U=
+X-Google-Smtp-Source: AAOMgpe4aJ7lob8egR/0RyoQG5pJ9CVn3Yal3EMybOzh5ipOGKicgVamyb5hsGGJHLTeW4SO2p7gG6FcOEpePeo8fbQ=
+X-Received: by 2002:a24:b101:: with SMTP id o1-v6mr6803482itf.121.1532540354082;
+ Wed, 25 Jul 2018 10:39:14 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqqzhyfuub6.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-OutGoing-Spam-Status: No, score=-1.0
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - s019.cyon.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - drbeat.li
-X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
-X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+References: <20180722095717.17912-1-sunshine@sunshineco.com>
+ <20180722095717.17912-11-sunshine@sunshineco.com> <CACsJy8AOeiKp2JnG0h9mw40TdsNft80vUu573ORtqKMor7B+vw@mail.gmail.com>
+ <CAPig+cT_7eDyY6xGev4=dwpJnKufpMevO-+hGnXVt4ec0xhEiA@mail.gmail.com>
+In-Reply-To: <CAPig+cT_7eDyY6xGev4=dwpJnKufpMevO-+hGnXVt4ec0xhEiA@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 25 Jul 2018 19:38:47 +0200
+Message-ID: <CACsJy8BKa0WXGUo0LXF7fGGfHJMFmS_5YTT_QpOmGjdRBuYHog@mail.gmail.com>
+Subject: Re: [PATCH 10/14] format-patch: add --range-diff option to embed diff
+ in cover letter
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 25.07.18 18:57, Junio C Hamano wrote:
-> Beat Bolli <dev+git@drbeat.li> writes:
-> 
->> In the interest of code hygiene, make it easier to compile Git with the
->> flag -pedantic.
->>
->> Pure pedantic compilation with GCC 7.3 results in one warning per use of
->> the translation macro `N_`:
->>
->>     warning: array initialized from parenthesized string constant [-Wpedantic]
->>
->> Therefore also disable the parenthesising of i18n strings with
->> -DUSE_PARENS_AROUND_GETTEXT_N=0.
->>
->> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
->> ---
-> 
-> Hmph, what did you change between v3 and v4?
+On Mon, Jul 23, 2018 at 9:59 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+>
+> On Mon, Jul 23, 2018 at 12:28 PM Duy Nguyen <pclouds@gmail.com> wrote:
+> > On Sun, Jul 22, 2018 at 11:58 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
+> > > diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+> > > index f8a061794d..e7f404be3d 100644
+> > > --- a/Documentation/git-format-patch.txt
+> > > +++ b/Documentation/git-format-patch.txt
+> > > @@ -24,6 +24,7 @@ SYNOPSIS
+> > >                    [--to=<email>] [--cc=<email>]
+> > >                    [--[no-]cover-letter] [--quiet] [--notes[=<ref>]]
+> > >                    [--interdiff=<previous>]
+> > > +                  [--range-diff=<previous>]
+> >
+> > I wonder if people will use both --interdiff=<rev> and
+> > --range-diff=<rev> often enough to justify a shortcut
+> > "--all-kinds-of-diff=<rev>" so that we don't have to type <previous>
+> > twice. But I guess we don't have to worry about this right now.
+>
+> My original thought was that --interdiff and --range-diff would be
+> mutually exclusive, however, I quickly realized that some people might
+> like to use both options together since each format has its strengths
+> and weaknesses. (I've used both types of diffs together when preparing
+> rerolls of my own series and found that, together, they provided a
+> better picture of the reroll than either would have alone.)
 
-Just the commit text. In v3, it still said =No instead of =0.
+I actually had another question that I answered myself: how do I know
+which one to choose? There's no preview option (and I'm lazy, I don't
+want to do separate diff commands myself). So my answer was "choose
+both, then delete the one that does not look good (and explain it in
+the cover too when I delete it)"
 
->> diff --git a/Makefile b/Makefile
->> index 0cb6590f24..2bfc051652 100644
->> --- a/Makefile
->> +++ b/Makefile
->> @@ -484,6 +484,12 @@ all::
-> 
-> The postimage of this hunk is supposed to be 11 lines long, as you
-> have five additional line in the middle of 6 original context lines.
-> Where did this 12 come from?  I am only interested in finding out if
-> our patch generation tool(s) have some bugs with this question.
-> 
-> If this is only because you hand-edit your patch, then we have no
-> tool breakage to worry about, but please refrain from doing so in
-> the future (instead always go back to the commit, amend it, and
-> re-run format-patch).
-> 
-> Thanks.
+> And, as you note, it's something that can be added later if
+> warranted (plus, this series is already long and I'd like to avoid
+> making it longer for something like this whose value is only
+> speculative).
 
-You got me there :-/
-
-Won't happen again, sorry.
-
->>  #        The DEVELOPER mode enables -Wextra with a few exceptions. By
->>  #        setting this flag the exceptions are removed, and all of
->>  #        -Wextra is used.
->> +#
->> +#    pedantic:
->> +#
->> +#        Enable -pedantic compilation. This also disables
->> +#        USE_PARENS_AROUND_GETTEXT_N to produce only relevant warnings.
->>  
->>  GIT-VERSION-FILE: FORCE
->>  	@$(SHELL_PATH) ./GIT-VERSION-GEN
-> 
-
+Yes of course. We can revisit this later.
+-- 
+Duy
