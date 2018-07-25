@@ -2,107 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B5BE1F597
-	for <e@80x24.org>; Wed, 25 Jul 2018 17:39:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6BA931F597
+	for <e@80x24.org>; Wed, 25 Jul 2018 17:44:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729885AbeGYSvz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jul 2018 14:51:55 -0400
-Received: from mail-it0-f68.google.com ([209.85.214.68]:40920 "EHLO
-        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729379AbeGYSvz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jul 2018 14:51:55 -0400
-Received: by mail-it0-f68.google.com with SMTP id h23-v6so9777746ita.5
-        for <git@vger.kernel.org>; Wed, 25 Jul 2018 10:39:14 -0700 (PDT)
+        id S1729939AbeGYS53 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jul 2018 14:57:29 -0400
+Received: from mail-yb0-f193.google.com ([209.85.213.193]:33268 "EHLO
+        mail-yb0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729486AbeGYS53 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jul 2018 14:57:29 -0400
+Received: by mail-yb0-f193.google.com with SMTP id e84-v6so3311283ybb.0
+        for <git@vger.kernel.org>; Wed, 25 Jul 2018 10:44:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=yeVKQAm6yuSXR83ICvKdUEseT6p/YRcKtWx6/pqIJ9s=;
-        b=dO0/r3i7sAYTN2KwFSRxP8vpTyfk90zRARRFaXLDVkuRVhRNPfy5ZnTb168CQaYAlX
-         MbRY32Bz2vQrrNXnf2BaL7b1voAHmWMt98iQHGghbUQ8adcuKQ0odlpx7DgaXaUbBXKD
-         e8Z4fvC+tj0OwUPVlVSNAe5lrx5JXBGHvxL1MnXUu5faReNCngmr+zcwVSjSK+OKKGWp
-         0l0o0FCrvl7/7ONecVXbo5a5tmibvqsaU6yj2OFkXnUzpK9jaghAWG4s/MFRrAoE393g
-         IN0MowF/5WF+S6X64FXoz773l349bfJ9EyV3gCzjbGoyjEeyASIY/qp4jAXSqd389cze
-         uU5w==
+         :cc:content-transfer-encoding;
+        bh=rY10CjKLFK3hsCFtbcgQ6AX0H+kgM5lcuZ2wHaZtdfg=;
+        b=XFq+wmLRTf0HsSg1Q1/gU3FRozdnCSGlW/jKe2G92vp309YpGV4WPwMhGRT7CzHPSW
+         Z2DrQaqEfVkjGmuAhiS3Uc2JiVA2+eea6d4oAKA8tGN+3EnfaJ5WWXemX4S5mh0BAH+m
+         lgt5fH8V/SwdWfp2yVkLJM2c4JB+tBOxXG/CTy5awztXE6/oRuubTHyiAJ0bjsf6c/Xf
+         J3PQINWvfIDohsL5BtblsIqVUcYVAConbdhUAO9Zv4w0Rx+7udjd6fOaDFt2Qt+XPy/3
+         TeoWbUPmkdItH0DXAnhXmCJHkP9d16/IrfDuhD4HTpnjXycYkj3gFJju66E9KAa6k+UY
+         3u0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=yeVKQAm6yuSXR83ICvKdUEseT6p/YRcKtWx6/pqIJ9s=;
-        b=seXum5QqcLrAiaaPkynlo4YAX9oVH+cKOnaOt77vZGRLq9IXF6928LM72yevdrw/Sl
-         dovhwRa3sz7gC2/WECQDwkzZWu60v0ai02+WWkCbq1ITFU+C/OhYayZ8h+7yzKzsYrxM
-         XeI7D4WWBoic/+4tEK4rJf4QxVYoWvxDxVl/MjGROXZwpgn9+kpOOUg9ZE5smZem5kcW
-         V1TBlYIA9ripn2uVT561Ai9Yl1H8MuWjcLfWjopHD2mD/Yup3CuQG5rAmdGRs/mC0ChV
-         JnGI+8cx97uPahyYbZJ2RPeF4hNBngKIMzh8EbYZc9tqr1sDDrCWMxesA1znZ1ULnBL0
-         vU8A==
-X-Gm-Message-State: AOUpUlGNKqp3RUWrTzXXZ7A4gvvvxmeiVwJNsEN1THgSNiFHuxTk8bjg
-        pkAg4UfkwSx+AD9Z5EsDMqumEFKJt48oY/cd10U=
-X-Google-Smtp-Source: AAOMgpe4aJ7lob8egR/0RyoQG5pJ9CVn3Yal3EMybOzh5ipOGKicgVamyb5hsGGJHLTeW4SO2p7gG6FcOEpePeo8fbQ=
-X-Received: by 2002:a24:b101:: with SMTP id o1-v6mr6803482itf.121.1532540354082;
- Wed, 25 Jul 2018 10:39:14 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=rY10CjKLFK3hsCFtbcgQ6AX0H+kgM5lcuZ2wHaZtdfg=;
+        b=GR0iMdA6mJ9+SmaPrUdFZT0Q5rlCfvqlnLn763A8PKitLZH/GaTlhMdWvKay8mrjhN
+         TtFIWSuL/PC6+csFzJVqM653ENRwcmJWQMNzkLzAKhJ6oE+zxQC+wtCiaFatk1a4yTGY
+         qVut2lMhH8eKI2bLVHsS7V82D4CxYfd02yPacPw1MZsbXYboynHe/yXyzfSt+fG184OC
+         5u+xEwewP3JcgjD5aLZgWuTJJV7RRYdA1ubj422Cbk7lHLJZGf29j/3MIMca7FfGNqPL
+         lJOZEnnHbtDDtYAMMSrN8+NWYBPFMCYuGi6W4+dpMIim9nede4LbeQ4G6eSXHLJB6adH
+         5GMQ==
+X-Gm-Message-State: AOUpUlFc7Qfq8r33ElOPVRd1fshdn6EvCQn8jSSmgHFeJcSql0QCDXxp
+        xUGUEKd/B3vH/uDjVwHxhNF2+J0AGgHGsHzRJyjutQ==
+X-Google-Smtp-Source: AAOMgpfGa5JqJ2qe8d/5uK4dLxMYoMxPa8gaOI8JeGrBz8GqrS3X49XOGN0mTXT31Gync7/h21T4ScNgyuu7X9P2hSs=
+X-Received: by 2002:a25:cc97:: with SMTP id l145-v6mr11928303ybf.334.1532540686799;
+ Wed, 25 Jul 2018 10:44:46 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180722095717.17912-1-sunshine@sunshineco.com>
- <20180722095717.17912-11-sunshine@sunshineco.com> <CACsJy8AOeiKp2JnG0h9mw40TdsNft80vUu573ORtqKMor7B+vw@mail.gmail.com>
- <CAPig+cT_7eDyY6xGev4=dwpJnKufpMevO-+hGnXVt4ec0xhEiA@mail.gmail.com>
-In-Reply-To: <CAPig+cT_7eDyY6xGev4=dwpJnKufpMevO-+hGnXVt4ec0xhEiA@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 25 Jul 2018 19:38:47 +0200
-Message-ID: <CACsJy8BKa0WXGUo0LXF7fGGfHJMFmS_5YTT_QpOmGjdRBuYHog@mail.gmail.com>
-Subject: Re: [PATCH 10/14] format-patch: add --range-diff option to embed diff
- in cover letter
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Stefan Beller <sbeller@google.com>
+References: <pull.1.v3.git.gitgitgadget@gmail.com> <pull.1.v4.git.gitgitgadget@gmail.com>
+ <CAGZ79kb4ki0cXLnJHeqzRvWaGWki1_epWOdCy49s_v9cy_tJ2A@mail.gmail.com> <xmqq36w94o87.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq36w94o87.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 25 Jul 2018 10:44:35 -0700
+Message-ID: <CAGZ79kZVQZkriu8d9WwYjm01qwb89ntf2dpK_jxRqDHgL1Eq6Q@mail.gmail.com>
+Subject: Re: [PATCH v4 00/21] Add `range-diff`, a `tbdiff` lookalike
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     gitgitgadget@gmail.com, git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 23, 2018 at 9:59 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+On Mon, Jul 23, 2018 at 2:49 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> On Mon, Jul 23, 2018 at 12:28 PM Duy Nguyen <pclouds@gmail.com> wrote:
-> > On Sun, Jul 22, 2018 at 11:58 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > > diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-> > > index f8a061794d..e7f404be3d 100644
-> > > --- a/Documentation/git-format-patch.txt
-> > > +++ b/Documentation/git-format-patch.txt
-> > > @@ -24,6 +24,7 @@ SYNOPSIS
-> > >                    [--to=<email>] [--cc=<email>]
-> > >                    [--[no-]cover-letter] [--quiet] [--notes[=<ref>]]
-> > >                    [--interdiff=<previous>]
-> > > +                  [--range-diff=<previous>]
+> Stefan Beller <sbeller@google.com> writes:
+>
+> > On Sat, Jul 21, 2018 at 3:04 PM Johannes Schindelin via GitGitGadget
+> > <gitgitgadget@gmail.com> wrote:
 > >
-> > I wonder if people will use both --interdiff=<rev> and
-> > --range-diff=<rev> often enough to justify a shortcut
-> > "--all-kinds-of-diff=<rev>" so that we don't have to type <previous>
-> > twice. But I guess we don't have to worry about this right now.
+> >> Side note: I work on implementing range-diff not only to make life eas=
+ier for reviewers who have to suffer through v2, v3, ... of my patch series=
+, but also to verify my changes before submitting a new iteration. And also=
+, maybe even more importantly, I plan to use it to verify my merging-rebase=
+s of Git for
+> >> Windows (for which I previously used to redirect the pre-rebase/post-r=
+ebase diffs vs upstream and then compare them using `git diff --no-index`).=
+ And of course any interested person can see what changes were necessary e.=
+g. in the merging-rebase of Git for Windows onto v2.17.0 by running a comma=
+nd like:
+> >
+> > Thanks for making tools that makes the life of a Git developer easier!
+> > (Just filed https://github.com/gitgitgadget/gitgitgadget/issues/26
+> > which asks to break lines for this cover letter)
 >
-> My original thought was that --interdiff and --range-diff would be
-> mutually exclusive, however, I quickly realized that some people might
-> like to use both options together since each format has its strengths
-> and weaknesses. (I've used both types of diffs together when preparing
-> rerolls of my own series and found that, together, they provided a
-> better picture of the reroll than either would have alone.)
+> Thanks.  These cover letters are unreadable without W Q
+> (gnus-article-fill-long-lines)
 
-I actually had another question that I answered myself: how do I know
-which one to choose? There's no preview option (and I'm lazy, I don't
-want to do separate diff commands myself). So my answer was "choose
-both, then delete the one that does not look good (and explain it in
-the cover too when I delete it)"
+While I had some comments on how I dislike some aspects of the
+implementation, I think it proves its usefulness by my usage, so I
+would suggest to merge it down to next as-is (and as soon as possible);
+deferring the issues in the implementation to later.
 
-> And, as you note, it's something that can be added later if
-> warranted (plus, this series is already long and I'd like to avoid
-> making it longer for something like this whose value is only
-> speculative).
+I found running the range-diff on origin/pu to be a pleasant
+experience, although that still highlights the issues of
+in-exact coloring (the colors are chosen by the first two
+characters of the diff, which leads to mis-coloring of
+diff headers of the inner diff in the outer diff.
 
-Yes of course. We can revisit this later.
--- 
-Duy
+But despite the imperfection, I strongly urge to consider
+the series as-is as good enough for inclusion.
+
+Thanks,
+Stefan
+
+Thanks,
+Stefan
