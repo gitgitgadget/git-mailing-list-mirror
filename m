@@ -2,125 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F27091F597
-	for <e@80x24.org>; Wed, 25 Jul 2018 17:29:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FE901F597
+	for <e@80x24.org>; Wed, 25 Jul 2018 17:38:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729352AbeGYSmM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jul 2018 14:42:12 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:46288 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729110AbeGYSmM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jul 2018 14:42:12 -0400
-Received: by mail-wr1-f68.google.com with SMTP id h14-v6so8137023wrw.13
-        for <git@vger.kernel.org>; Wed, 25 Jul 2018 10:29:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=lRi8kYbUTnJBZLo8/jMXqxWBPkgyaqfL6zuE/dL+WG0=;
-        b=e8xM15lo/XaGzAu8kenRRUnYUHN7R1poS2yiYp5CECpngvw2qvOjCoNWqzgieuJqgq
-         9r7nC6bPd6goxfpJjm+wComY/UyXuDswNxR0BqU7qeks7tmERopfJDrtFTI3Ax9BMAhe
-         aSA2Pk3jQdlgVqYfsV5vqgAJVIxZ413w4KlXyAMzQwV87Wx4U59lOmLg2pKRZHx/sdpK
-         AcT41TnfFNZHf2uohmTmD8blA5PvdjXVypolsK09SfhvOEp2Mu9QXNyAVzclu0vg8hXb
-         tC9J1uuyvuYDgmkMcmSuYXX/ZfxSuG3hW0BVpNecfxMqn8A4ZpD0QxwdQNYEfdAbtDLw
-         h9xA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=lRi8kYbUTnJBZLo8/jMXqxWBPkgyaqfL6zuE/dL+WG0=;
-        b=UvDiGc1tHWOWkN+WsMtEO/kJPukh0Ylvx+Y7xLZR61BDqhM0NHeLRIy8VcF+TRjQSE
-         dzz0lntzhWOMUfm4LYTARmgWzWu6k0JJPvDcgnYcSrucaSpte8vPtzrtjadbk7hun46S
-         qvwHedIU0+jds44P/cW3oLuJKR1A37N3+1bMYgcblbew0tnzoV01mJvvADfNNaNJd4Tq
-         LmNM5sCWl2ApUJFGk17MH8KeZHLrMeo2PX/2NNNKquoXmxbXUsNza5oB183f5rrQ+92B
-         h14YxlZVhhY9WfLFNMyMPp4fDXe5etWig8Lwd1jQJ4RBuTKzq6p2uAs/81xuF1R3dDaL
-         12Vg==
-X-Gm-Message-State: AOUpUlEyCSCqlRhBzywHc3fIWqB70/AGsUWxJvLpqizWWo2Ti1F6Hyj3
-        MqAdn4Yl6Dk9J8quqV1FKc4=
-X-Google-Smtp-Source: AAOMgpftjTNG4dKd064YzOCdHYK9CSiNcD6eOS4jOrFYiRMEb6PabuxWh74W2HtAtf4pdejDVaCHNA==
-X-Received: by 2002:a5d:4410:: with SMTP id z16-v6mr15536060wrq.272.1532539772175;
-        Wed, 25 Jul 2018 10:29:32 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id j3-v6sm18675893wrt.70.2018.07.25.10.29.31
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 25 Jul 2018 10:29:31 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 10/14] format-patch: add --range-diff option to embed diff in cover letter
-References: <20180722095717.17912-1-sunshine@sunshineco.com>
-        <20180722095717.17912-11-sunshine@sunshineco.com>
-        <CACsJy8AOeiKp2JnG0h9mw40TdsNft80vUu573ORtqKMor7B+vw@mail.gmail.com>
-        <CAPig+cT_7eDyY6xGev4=dwpJnKufpMevO-+hGnXVt4ec0xhEiA@mail.gmail.com>
-Date:   Wed, 25 Jul 2018 10:29:30 -0700
-In-Reply-To: <CAPig+cT_7eDyY6xGev4=dwpJnKufpMevO-+hGnXVt4ec0xhEiA@mail.gmail.com>
-        (Eric Sunshine's message of "Mon, 23 Jul 2018 15:58:49 -0400")
-Message-ID: <xmqqva93usud.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1729418AbeGYSv1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jul 2018 14:51:27 -0400
+Received: from s019.cyon.net ([149.126.4.28]:39598 "EHLO s019.cyon.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729337AbeGYSv0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jul 2018 14:51:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=drbeat.li;
+         s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:MIME-Version
+        :Date:Message-ID:From:References:Cc:To:Subject:Sender:Reply-To:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=iAl1PC3a0/F571Dnx4V7filE58CVI4cqTEsiDirGc5Y=; b=wJKzxB4b3CbYV5jw/M6Oogf1+t
+        NQv/wISNy9ZZ4eSCyAIBJ06Kt0XKW3IHN89NdfVYokLysKVkdwEeIOdd3V67/w7oFHkRZVp3h9gOU
+        vrIlbiXymPv60/mnaZKxshH0t1yOxDhjH3XOwb3ntMIp8+a3iuLBepm4S/jsk4eIoytOj3PEjkXyL
+        Nh2HDYWfFrjMMN8vKRPvuhE0nxbN5xUgr8ZW7U8vU+uGpA2AcRD0AxvUnK99tJQ5SKHV+42uvyEHS
+        BoZWA74J6RUjAMPbj5XiubO3Ya6GQgpUzhA7vHw54bSLH6uzbxUYdmsOr4dziWz7Kw5kcBW/QkL/1
+        aKOCznaw==;
+Received: from [10.20.10.232] (port=45652 helo=mail.cyon.ch)
+        by s019.cyon.net with esmtpa (Exim 4.91)
+        (envelope-from <dev+git@drbeat.li>)
+        id 1fiNkE-00Guxo-7R; Wed, 25 Jul 2018 19:38:42 +0200
+Subject: Re: [PATCH v4] Makefile: add a DEVOPTS flag to get pedantic
+ compilation
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Newsgroups: gmane.comp.version-control.git
+References: <20180724171339.18983-1-dev+git@drbeat.li>
+ <20180724192643.21505-1-dev+git@drbeat.li>
+ <xmqqzhyfuub6.fsf@gitster-ct.c.googlers.com>
+From:   Beat Bolli <dev+git@drbeat.li>
+Message-ID: <504f6cfe-f869-97f6-248d-642ae1e6dfc0@drbeat.li>
+Date:   Wed, 25 Jul 2018 19:38:37 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:52.0)
+ Gecko/20100101 Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <xmqqzhyfuub6.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-OutGoing-Spam-Status: No, score=-1.0
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - s019.cyon.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - drbeat.li
+X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
+X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
-
-> On Mon, Jul 23, 2018 at 12:28 PM Duy Nguyen <pclouds@gmail.com> wrote:
->> On Sun, Jul 22, 2018 at 11:58 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
->> > diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
->> > index f8a061794d..e7f404be3d 100644
->> > --- a/Documentation/git-format-patch.txt
->> > +++ b/Documentation/git-format-patch.txt
->> > @@ -24,6 +24,7 @@ SYNOPSIS
->> >                    [--to=<email>] [--cc=<email>]
->> >                    [--[no-]cover-letter] [--quiet] [--notes[=<ref>]]
->> >                    [--interdiff=<previous>]
->> > +                  [--range-diff=<previous>]
+On 25.07.18 18:57, Junio C Hamano wrote:
+> Beat Bolli <dev+git@drbeat.li> writes:
+> 
+>> In the interest of code hygiene, make it easier to compile Git with the
+>> flag -pedantic.
 >>
->> I wonder if people will use both --interdiff=<rev> and
->> --range-diff=<rev> often enough to justify a shortcut
->> "--all-kinds-of-diff=<rev>" so that we don't have to type <previous>
->> twice. But I guess we don't have to worry about this right now.
->
-> My original thought was that --interdiff and --range-diff would be
-> mutually exclusive, however, I quickly realized that some people might
-> like to use both options together since each format has its strengths
-> and weaknesses. (I've used both types of diffs together when preparing
-> rerolls of my own series and found that, together, they provided a
-> better picture of the reroll than either would have alone.)
->
-> Based upon experience on this mailing list, I'd guess that most people
-> would use only one or the other, though that doesn't speak for other
-> projects. And, as you note, it's something that can be added later if
-> warranted (plus, this series is already long and I'd like to avoid
-> making it longer for something like this whose value is only
-> speculative).
+>> Pure pedantic compilation with GCC 7.3 results in one warning per use of
+>> the translation macro `N_`:
+>>
+>>     warning: array initialized from parenthesized string constant [-Wpedantic]
+>>
+>> Therefore also disable the parenthesising of i18n strings with
+>> -DUSE_PARENS_AROUND_GETTEXT_N=0.
+>>
+>> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+>> ---
+> 
+> Hmph, what did you change between v3 and v4?
 
-A few random thoughts.
+Just the commit text. In v3, it still said =No instead of =0.
 
- * I find it somewhat disturbing that use of dash is inconsistent
-   between "--interdiff=<arg>" and "--range-diff=<arg>".
+>> diff --git a/Makefile b/Makefile
+>> index 0cb6590f24..2bfc051652 100644
+>> --- a/Makefile
+>> +++ b/Makefile
+>> @@ -484,6 +484,12 @@ all::
+> 
+> The postimage of this hunk is supposed to be 11 lines long, as you
+> have five additional line in the middle of 6 original context lines.
+> Where did this 12 come from?  I am only interested in finding out if
+> our patch generation tool(s) have some bugs with this question.
+> 
+> If this is only because you hand-edit your patch, then we have no
+> tool breakage to worry about, but please refrain from doing so in
+> the future (instead always go back to the commit, amend it, and
+> re-run format-patch).
+> 
+> Thanks.
 
- * Perhaps "--interdiff=<previous> --range-diff" may be a possible
-   way to say "use the same <previous> and show both"?  Do we want
-   "--range-diff=<previous> --interdiff" to mean the same two
-   meta-diff but shown in different order?
+You got me there :-/
 
- * Do we expect that we may find a third-kind of "meta-diff" that
-   sits next to interdiff and range-diff in the future?  I *think*
-   two separate options "--interdiff=..." and "--range-diff=..." is
-   still a good way forward, and we'd add "--frotzdiff=..." when
-   such a third-kind of "meta-diff" turns out to be useful, without
-   fearing proliferation of options, and that would be OK, but I am
-   just thinking aloud to see if other people have better ideas.
+Won't happen again, sorry.
 
+>>  #        The DEVELOPER mode enables -Wextra with a few exceptions. By
+>>  #        setting this flag the exceptions are removed, and all of
+>>  #        -Wextra is used.
+>> +#
+>> +#    pedantic:
+>> +#
+>> +#        Enable -pedantic compilation. This also disables
+>> +#        USE_PARENS_AROUND_GETTEXT_N to produce only relevant warnings.
+>>  
+>>  GIT-VERSION-FILE: FORCE
+>>  	@$(SHELL_PATH) ./GIT-VERSION-GEN
+> 
 
