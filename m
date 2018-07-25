@@ -6,62 +6,62 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F6C91F597
-	for <e@80x24.org>; Wed, 25 Jul 2018 21:07:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1ECC61F597
+	for <e@80x24.org>; Wed, 25 Jul 2018 21:17:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731268AbeGYWVE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jul 2018 18:21:04 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:33331 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730014AbeGYWVD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jul 2018 18:21:03 -0400
-Received: by mail-wr1-f65.google.com with SMTP id g6-v6so8687713wrp.0
-        for <git@vger.kernel.org>; Wed, 25 Jul 2018 14:07:34 -0700 (PDT)
+        id S1731397AbeGYWad (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jul 2018 18:30:33 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:42529 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731248AbeGYWac (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jul 2018 18:30:32 -0400
+Received: by mail-wr1-f68.google.com with SMTP id e7-v6so8676191wrs.9
+        for <git@vger.kernel.org>; Wed, 25 Jul 2018 14:17:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=oPnz0tO9NuKRBYbIZtDwJMNbq8M5k+wM2YuCocnw4pA=;
-        b=o+v1Z7n0d82T6A8AkBCHG/iuQQqLA6/j+QZhODeGKGFyo48vJEZUGCTNh/cfPu6Nv4
-         7D5dEU+TjUr4JNGJlldFq/H6DpbKL0IPM4za9HNuHcYtbWBBK0zbf7wl3xnGd0d6i/NJ
-         4M+QQZBL2mxdC1AcUn9M0bZbxIjc8n4vsI5cbBcViwmMrJ9lpRHWBUd7CURjOTJSjLMW
-         Fdex5cx4RBi/U3JhVWgF3htrA9J9EU8ScwTmHWvgD8JiHBz11OU0CBVCWH3oIpp008pQ
-         zd+dPnsVbszZGMZydQWMYL/x3niUBPeUF7w0LIiqTPFGazYzeS8HGdv/oeUixDo1TATe
-         JtFQ==
+        bh=T+/q5jW1AdXi1UO/MYK46CzDlTdgL8JAqM5tVjW11mY=;
+        b=Nt876n4ImuKBBMnXyDZwM+lRdWFFULPbJmoXT39bBT/4w7Bm4duwhaxkfzWxkPAZ3M
+         kj6wHoCRqKzVx98Grix/1B2+KxU0+WR80DnWJelOV6OsWCL3M6KsPUF0iaijaWnMzikC
+         I2iSJrAy5yrmi4LJx0njfUlJnIZhOUjM0irZvQ5/Jbxgl27PFt67mq4da5uWFFxj6wZq
+         tpvADEaxEmKOwlK4Lc6Cjkm0u9RBpvR8MJfyU13OsJBF5hITezv8CVBTeYKTj+VIcmvt
+         Vlq9uJptO/nQbl+3EvgYkDnukG1moxSaYIylps1LSAHl+2bXT1DsD9AwfF0vdPO9SHKC
+         JTnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=oPnz0tO9NuKRBYbIZtDwJMNbq8M5k+wM2YuCocnw4pA=;
-        b=o/Fztnkj2uq4w5lr+KmU8kg+j9DT3y+xPoQfxVlSRo+ASZrYqk0h1HmCiSmQP2somv
-         4wRALQBPdD3JHlIPd2MC2tx1I5GIUjsHup+KklhGRp7zOXWAJ+XIU8Cr1bXyjyGsls5R
-         UVMUdTDSfQ/jIPrxBL+Pukk2UljmsnlPEqPwb74+JYR4krAVzQ31hR4bLtBcyioOzl/P
-         cv8khu3G4WhDBrFz14oE2tCnrrccfgCNheEMmJ0Yc4SBlncynkMNVqYW1ZEzgvVjhtp+
-         Z8fmJUsSfdNF6eL+CB36kGk43eWejvdOjLOEQLrYBFmdgZ+n6AslZnR//W3MH/8ie1cv
-         OYZw==
-X-Gm-Message-State: AOUpUlELixwxY7eK4eIec7dHjWP3G0ybffkOvIPYOPzWhejUQTvSyCea
-        G72JEDOIg/RFKD5YzqUYQi8=
-X-Google-Smtp-Source: AAOMgpcuOd/NuPvuBFgAKLVYzd6zt/QCxGlmjEc5xGh7Lx3eK/Rnwm6eZxcO0uJOrELGnE4qyGaQYQ==
-X-Received: by 2002:adf:f390:: with SMTP id m16-v6mr15118362wro.279.1532552853573;
-        Wed, 25 Jul 2018 14:07:33 -0700 (PDT)
+        bh=T+/q5jW1AdXi1UO/MYK46CzDlTdgL8JAqM5tVjW11mY=;
+        b=s1BZVUXbMJaLDvwUdWRdhjiHe2DWFKHoQy84fsIca63BMHo8l1CNB7LUxYwwv/l1qO
+         k1s0tfoTFXdlRfKuaxvf858KvJ5MpyE+OHvhUriK8mctb25FpLBiUtpMLyUU81cuatXE
+         7zFIBpLOz7L1tSdYiIHGVibYIzkV2ha50tcLe7vx2PXaqK8Wnih1s4xcG6ULSEeQGlwi
+         /CDJN8Wrzs/xJ7OANQOd8O+13JL4+c0lWQynP3nxVdTg8GQtaXlYOC5uZn6oprGclcCg
+         59W3yxJnaqkqHEJ4A9CkVjodsTbP4jVA0XQsDeUgiIWe4iaTC7G5FYRdA/ifVDZPQW7m
+         mavw==
+X-Gm-Message-State: AOUpUlGlo3OFtLtngzwGJ6G9uatajn1SykkAUZDBxQ5DDIlcbSurQ5Gr
+        +qE5ohpNUw82ABErxXZAbCM=
+X-Google-Smtp-Source: AAOMgpdQghy9pCLRrQITpb9P5EnWWio/piRPKIM5+kWeDqnfrykunepjFQB8/dXXezIXPq7lACxieg==
+X-Received: by 2002:adf:e190:: with SMTP id k16-v6mr15773961wri.36.1532553420978;
+        Wed, 25 Jul 2018 14:17:00 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id i125-v6sm10704299wmd.23.2018.07.25.14.07.32
+        by smtp.gmail.com with ESMTPSA id q140-v6sm9492830wmb.35.2018.07.25.14.17.00
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 25 Jul 2018 14:07:32 -0700 (PDT)
+        Wed, 25 Jul 2018 14:17:00 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Duy Nguyen <pclouds@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 14/14] format-patch: allow --range-diff to apply to a lone-patch
-References: <20180722095717.17912-1-sunshine@sunshineco.com>
-        <20180722095717.17912-15-sunshine@sunshineco.com>
-Date:   Wed, 25 Jul 2018 14:07:32 -0700
-In-Reply-To: <20180722095717.17912-15-sunshine@sunshineco.com> (Eric
-        Sunshine's message of "Sun, 22 Jul 2018 05:57:17 -0400")
-Message-ID: <xmqqr2jrt46j.fsf@gitster-ct.c.googlers.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Beat Bolli <dev+git@drbeat.li>,
+        Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>
+Subject: Re: [PATCH 2/2] remote-odb: un-inline function remote_odb_reinit
+References: <20180724215223.27516-1-dev+git@drbeat.li>
+        <20180724215223.27516-3-dev+git@drbeat.li>
+        <20180724215953.GD136514@aiede.svl.corp.google.com>
+        <cf9889ba-89c5-dc97-d888-aa42aa9dee68@drbeat.li>
+        <CAP8UFD2PxA4s=Gb-6paUAdWpmqMWpis3mn0Zz9nzqQhHt1EEBg@mail.gmail.com>
+Date:   Wed, 25 Jul 2018 14:16:59 -0700
+In-Reply-To: <CAP8UFD2PxA4s=Gb-6paUAdWpmqMWpis3mn0Zz9nzqQhHt1EEBg@mail.gmail.com>
+        (Christian Couder's message of "Wed, 25 Jul 2018 09:29:06 +0200")
+Message-ID: <xmqqmuuft3qs.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,34 +70,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> @@ -750,6 +751,20 @@ void show_log(struct rev_info *opt)
->  
->  		memcpy(&diff_queued_diff, &dq, sizeof(diff_queued_diff));
->  	}
-> +
-> +	if (cmit_fmt_is_mail(ctx.fmt) && opt->rdiff1) {
-> +		struct diff_queue_struct dq;
-> +
-> +		memcpy(&dq, &diff_queued_diff, sizeof(diff_queued_diff));
-> +		DIFF_QUEUE_CLEAR(&diff_queued_diff);
-> +
-> +		next_commentary_block(opt, NULL);
-> +		fprintf_ln(opt->diffopt.file, "%s", opt->rdiff_title);
-> +		show_range_diff(opt->rdiff1, opt->rdiff2,
-> +				opt->creation_factor, 1, &opt->diffopt);
-> +
-> +		memcpy(&diff_queued_diff, &dq, sizeof(diff_queued_diff));
-> +	}
->  }
->  
->  int log_tree_diff_flush(struct rev_info *opt)
+> Hi,
+>
+> On Wed, Jul 25, 2018 at 12:03 AM, Beat Bolli <dev+git@drbeat.li> wrote:
+>>
+>> On 24.07.18 23:59, Jonathan Nieder wrote:
+>>>
+>>> Beat Bolli wrote:
+>
+>>>> -inline void remote_odb_reinit(void)
+>>>> +void remote_odb_reinit(void)
+>>>
+>>> This looks like an oversight in
+>>> https://public-inbox.org/git/20180713174959.16748-6-chriscool@tuxfamily.org/:
+>>> there isn't any reason for this function to be inline.
+>>>
+>>> Christian, can you squash it in on your next reroll?
+>>
+>> That would probably make sense. I didn't check how mature the topics
+>> were that caused errors.
+>
+> Ok, it is in the next version I will send.
 
-This essentially repeats what is already done for "interdiff".
-
-Does the global diff_queued_diff gets cleaned up when
-show_interdiff() and show_range_diff() return, like diff_flush()
-does?  Otherwise we'd be leaking the filepairs accumulated in the
-diff_queued_diff.
-
+OK, then I'll ignore this one for now.
