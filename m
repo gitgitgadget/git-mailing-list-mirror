@@ -6,152 +6,110 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1DF031F597
-	for <e@80x24.org>; Wed, 25 Jul 2018 16:45:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E0F571F597
+	for <e@80x24.org>; Wed, 25 Jul 2018 16:57:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729121AbeGYR6Z (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jul 2018 13:58:25 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:33667 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728637AbeGYR6Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jul 2018 13:58:25 -0400
-Received: by mail-wr1-f65.google.com with SMTP id g6-v6so8072227wrp.0
-        for <git@vger.kernel.org>; Wed, 25 Jul 2018 09:45:55 -0700 (PDT)
+        id S1729345AbeGYSKZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jul 2018 14:10:25 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:51458 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729216AbeGYSKZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jul 2018 14:10:25 -0400
+Received: by mail-wm0-f67.google.com with SMTP id y2-v6so6158673wma.1
+        for <git@vger.kernel.org>; Wed, 25 Jul 2018 09:57:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=VwIkAo5N9nfRq6v/fxraWbnP4tI8fKryGpM8Pvq1k/Y=;
-        b=WIARXAbue53D3GpcdsHNVjiDnV3xlRrSoy+rNVuDt07x+QPT0LOp3otNCbC13/DXLk
-         SprDtKBbhGkxWqIxuRSsiA3cQQx69BWiYWB2Qpe1aIc+7IQ6qPlnmhDkeIPi1I1Pm4p1
-         vRPakS5ro9VhPm9gqOI1ai9hTrq5PsRACyKJulmkbXKIAI2ElztFig1Dc9B3Va461OaS
-         duHE3jVQfwOb2D4gPuqwuee/JDCG8fUyDQuk/DedyBPyxT1VO/UA+0O+fmM9QmvNzFpi
-         Fg+P6CowfiZPKZBbZW4gOYwJHQyaGnSdeD/HM/gp7LpCA33TVRDQe+lBKXT0ZLIrUMMQ
-         1m7A==
+         :user-agent:mime-version;
+        bh=//4DnfEo8AbIf81mYT/KBlViXmgS7VbpCbzkLp5tvGk=;
+        b=CXkS3oZhPX5MAEFJY6RmRDpl6LYCRrwLVkj7Fwnx18YBpl5VD/LTviY8M6l+IPPhQ8
+         963K2iWsrHglFNPUzJo6zz34MXDZn1qHyBsfBEXWp/PHHjbgasxnSI4TCkkxg9mAM84M
+         PY1Mh7IRXDQ4+SxJOKxI6g9ZJC3qsRwgxxp+5eljLrrjGA6ePxK6LMonGIF3U2AfK4nC
+         za3UGLzwXOgy4G3MX6J+CcvWpcCeszGdsTvJ14eHIxHR4/YDX96vW8D4NvcG5oWMfJsj
+         Ir46ILgIqb01ZdXTCXf2V16IBk8jhIBwArMH7N4U6WKwAeEZJz0AHun/APEYVS9MojrQ
+         vsSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=VwIkAo5N9nfRq6v/fxraWbnP4tI8fKryGpM8Pvq1k/Y=;
-        b=PBc5Dbu1sp3N+VjPVlGQO2TOLoZfseeuNunAwnTyMtjgzxffxZDsbM46pXeL1vyyPb
-         tajg+bWnDLrtsU6Mk4pRmpirGryc6lgjrAWFWPAaf6t123VPt44472OlD4YTIijlHXxa
-         JsG2pqL+QBuweEaLkvTavl67QaTRrv7NWw27O0N1x06AnwStLTQHigBV+03nPiZcgrya
-         lwoyppjXdmLz6PxeBP8Qo/oFiEN4jBXqcNcqSeoqJq60UWhG9hbmyl+g89PjOs+k8/1M
-         uXxai84E3soplblN2GAW8ZCpkDLBOwkwT6gbuTH5HeSMHLvb9nQOrUj+VNWpth2oA1wY
-         f4eQ==
-X-Gm-Message-State: AOUpUlG7C09WZbP6cKkHo0V7M8BkM13I0kvpe6UOx8xifg/SvJvCh5eu
-        +pfRRH5/ngYznkr2LcPuCPo=
-X-Google-Smtp-Source: AAOMgpdTTcnnPo2PB8Nq8xABzn8m1nQYsCWXlOzvPWpNueIDnuNY4E4FKAkAKjzkPDlSb8+vhO4XCA==
-X-Received: by 2002:a5d:5043:: with SMTP id h3-v6mr14439438wrt.186.1532537154443;
-        Wed, 25 Jul 2018 09:45:54 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id e12-v6sm9228056wru.89.2018.07.25.09.45.53
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=//4DnfEo8AbIf81mYT/KBlViXmgS7VbpCbzkLp5tvGk=;
+        b=h+amTR+9I3AMAp16VE74sKUvjvjbqQ79hCqwinWtmv/ysBA+ZK8bFZagCk9fG0ue+J
+         6o2KqqCJEKVL6F+fWJYWbqDVWAVFz7jXNhtRK0viosHrKKJfZy0AU9T/7Blh5eqpH5gr
+         sVzdLoSLuhasvrYoU0ZDnuYAbRTXSS3QMzRFCf0Ush3yhQFNHI7f9TxkngHWviZ7g23p
+         qAhhi+4P0Jyjg39qlgoDrO3gXJsHsLxBJc/lAhVr+Povyzy87AOgSDSpLtJXBrygqTvf
+         3DSRckipubhTFIRS1OjUWtX4Q2nk01FBrezH1GEXYhLdr5oNpLO0NhcphqdL7SUOmZAd
+         pXdQ==
+X-Gm-Message-State: AOUpUlHSTkTcKEMduJIymspCFYzm1LOn0UnNECM5wc1zLyzunWjux15O
+        R+42V50MfS127E0tGcRNA0o=
+X-Google-Smtp-Source: AAOMgpeEqbCbEkjvKEclJ+UkLRKX3Ibt5JBqN7nwURALBfsbikGzHWbpNxH3oUUk9deOBEp5WQpO3Q==
+X-Received: by 2002:a1c:888e:: with SMTP id k136-v6mr5381036wmd.6.1532537871235;
+        Wed, 25 Jul 2018 09:57:51 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id t70-v6sm6836229wmt.30.2018.07.25.09.57.50
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 25 Jul 2018 09:45:53 -0700 (PDT)
+        Wed, 25 Jul 2018 09:57:50 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Edward Thomson <ethomson@edwardthomson.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        demerphq <demerphq@gmail.com>, Adam Langley <agl@google.com>,
-        keccak@noekeon.org
-Subject: Re: [PATCH 2/2] doc hash-function-transition: pick SHA-256 as NewHash
-References: <20180725083024.16131-1-avarab@gmail.com>
-        <xmqqzhygwd5o.fsf@gitster-ct.c.googlers.com>
-        <20180725083024.16131-3-avarab@gmail.com>
-Date:   Wed, 25 Jul 2018 09:45:52 -0700
-In-Reply-To: <20180725083024.16131-3-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Wed, 25 Jul 2018 08:30:24 +0000")
-Message-ID: <xmqq4lgnw9fj.fsf@gitster-ct.c.googlers.com>
+To:     Beat Bolli <dev+git@drbeat.li>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v4] Makefile: add a DEVOPTS flag to get pedantic compilation
+References: <20180724171339.18983-1-dev+git@drbeat.li>
+        <20180724192643.21505-1-dev+git@drbeat.li>
+Date:   Wed, 25 Jul 2018 09:57:49 -0700
+In-Reply-To: <20180724192643.21505-1-dev+git@drbeat.li> (Beat Bolli's message
+        of "Tue, 24 Jul 2018 21:26:43 +0200")
+Message-ID: <xmqqzhyfuub6.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+Beat Bolli <dev+git@drbeat.li> writes:
 
-> @@ -125,19 +122,19 @@ Detailed Design
->  ---------------
->  Repository format extension
->  ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> -A NewHash repository uses repository format version `1` (see
-> +A SHA-256 repository uses repository format version `1` (see
->  Documentation/technical/repository-version.txt) with extensions
->  `objectFormat` and `compatObjectFormat`:
+> In the interest of code hygiene, make it easier to compile Git with the
+> flag -pedantic.
+>
+> Pure pedantic compilation with GCC 7.3 results in one warning per use of
+> the translation macro `N_`:
+>
+>     warning: array initialized from parenthesized string constant [-Wpedantic]
+>
+> Therefore also disable the parenthesising of i18n strings with
+> -DUSE_PARENS_AROUND_GETTEXT_N=0.
+>
+> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+> ---
+
+Hmph, what did you change between v3 and v4?
+
+> diff --git a/Makefile b/Makefile
+> index 0cb6590f24..2bfc051652 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -484,6 +484,12 @@ all::
+
+The postimage of this hunk is supposed to be 11 lines long, as you
+have five additional line in the middle of 6 original context lines.
+Where did this 12 come from?  I am only interested in finding out if
+our patch generation tool(s) have some bugs with this question.
+
+If this is only because you hand-edit your patch, then we have no
+tool breakage to worry about, but please refrain from doing so in
+the future (instead always go back to the commit, amend it, and
+re-run format-patch).
+
+Thanks.
+
+>  #        The DEVELOPER mode enables -Wextra with a few exceptions. By
+>  #        setting this flag the exceptions are removed, and all of
+>  #        -Wextra is used.
+> +#
+> +#    pedantic:
+> +#
+> +#        Enable -pedantic compilation. This also disables
+> +#        USE_PARENS_AROUND_GETTEXT_N to produce only relevant warnings.
 >  
->  	[core]
->  		repositoryFormatVersion = 1
->  	[extensions]
-> -		objectFormat = newhash
-> +		objectFormat = sha256
->  		compatObjectFormat = sha1
-
-Whenever we said SHA1, somebody came and told us that the name of
-the hash is SHA-1 (with dash).  Would we be nitpicker-prone in the
-same way with "sha256" here?
-
-> @@ -155,36 +152,36 @@ repository extensions.
->  Object names
->  ~~~~~~~~~~~~
->  Objects can be named by their 40 hexadecimal digit sha1-name or 64
-> -hexadecimal digit newhash-name, plus names derived from those (see
-> +hexadecimal digit sha256-name, plus names derived from those (see
->  gitrevisions(7)).
-
-Seeing this hunk makes me respond to the above question with another
-question: "having to write sha-256-name, sha-1-name, gpgsig-sha-256,
-and sha-256-content is sort of ugly, no?"
-
-I guess names with two dashes are not _too_ bad, so I dunno.
-
->  Selection of a New Hash
->  -----------------------
-> @@ -611,6 +608,10 @@ collisions in 2^69 operations. In August they published details.
->  Luckily, no practical demonstrations of a collision in full SHA-1 were
->  published until 10 years later, in 2017.
->  
-> +It was decided that Git needed to transition to a new hash
-> +function. Initially no decision was made as to what function this was,
-> +the "NewHash" placeholder name was picked to describe it.
-> +
->  The hash function NewHash to replace SHA-1 should be stronger than
->  SHA-1 was: we would like it to be trustworthy and useful in practice
->  for at least 10 years.
-
-This sentence needs a bit of updating to match the new paragraph
-inserted above.  "should be stronger" is something said by those
-who are still looking for one and/or trying to decide.  Perhaps
-something like this?
-
-	...
-	the "NewHash" placeholder name was used to describe it.
-
-	We wanted to choose a hash function to replace SHA-1 that is
-	stronger than SHA-1 was, and would like it to be trustworthy
-	and useful in practice for at least 10 years.
-
-	Some other relevant properties we wanted in NewHash are:
-
-> @@ -630,14 +631,19 @@ Some other relevant properties:
->  4. As a tiebreaker, the hash should be fast to compute (fortunately
->     many contenders are faster than SHA-1).
->  
-> -Some hashes under consideration are SHA-256, SHA-512/256, SHA-256x16,
-> +Some hashes under consideration were SHA-256, SHA-512/256, SHA-256x16,
->  K12, and BLAKE2bp-256.
->  
-> +Eventually in July 2018 SHA-256 was chosen to be the NewHash. See the
-> +thread starting at <20180609224913.GC38834@genre.crustytoothpaste.net>
-> +for the discussion
-> +(https://public-inbox.org/git/20180609224913.GC38834@genre.crustytoothpaste.net/)
-> +
-
+>  GIT-VERSION-FILE: FORCE
+>  	@$(SHELL_PATH) ./GIT-VERSION-GEN
