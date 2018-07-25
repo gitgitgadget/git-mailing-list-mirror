@@ -2,171 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3FE7B1F597
-	for <e@80x24.org>; Wed, 25 Jul 2018 16:09:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1DF031F597
+	for <e@80x24.org>; Wed, 25 Jul 2018 16:45:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729496AbeGYRWH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jul 2018 13:22:07 -0400
-Received: from mail-qk0-f194.google.com ([209.85.220.194]:35025 "EHLO
-        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728444AbeGYRWG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jul 2018 13:22:06 -0400
-Received: by mail-qk0-f194.google.com with SMTP id u21-v6so5245079qku.2
-        for <git@vger.kernel.org>; Wed, 25 Jul 2018 09:09:45 -0700 (PDT)
+        id S1729121AbeGYR6Z (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jul 2018 13:58:25 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:33667 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728637AbeGYR6Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jul 2018 13:58:25 -0400
+Received: by mail-wr1-f65.google.com with SMTP id g6-v6so8072227wrp.0
+        for <git@vger.kernel.org>; Wed, 25 Jul 2018 09:45:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=60w8UBCk6ggLkdPFsKz/eHhW0aP3J0XxgrccxjgCjno=;
-        b=HTAMaVXjDTsCR2+B2dtQVL2y/3lEnTrihFNJZUoYJzbJvo4NXDZJkHwXB9mHpfiCXG
-         cAe30KuWYz6Pp9WWBmWlrmwquF7vwv266Rq/9CPOZvZzVSrg5LV/TvUnojEe+yIiVpm9
-         pzVbC9IguN7b2YlfBNja0pfUhicmP2p1snlKWYX1E28JNF5E9M8n95M8f8E6XjYcx79K
-         k+8jj1O+qjHk9Uzv5UJNRi4pa3tKhgmdLnpR+Ah/vQE/enjS6pca+IX0oijNshunVJGL
-         cjcM902zTh7NCu1OU4qeHC6QVEj2Be3AlJ8z8Nh5Vy7ApA67DtW/FAWVMP93mGCMrLGA
-         1iPg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=VwIkAo5N9nfRq6v/fxraWbnP4tI8fKryGpM8Pvq1k/Y=;
+        b=WIARXAbue53D3GpcdsHNVjiDnV3xlRrSoy+rNVuDt07x+QPT0LOp3otNCbC13/DXLk
+         SprDtKBbhGkxWqIxuRSsiA3cQQx69BWiYWB2Qpe1aIc+7IQ6qPlnmhDkeIPi1I1Pm4p1
+         vRPakS5ro9VhPm9gqOI1ai9hTrq5PsRACyKJulmkbXKIAI2ElztFig1Dc9B3Va461OaS
+         duHE3jVQfwOb2D4gPuqwuee/JDCG8fUyDQuk/DedyBPyxT1VO/UA+0O+fmM9QmvNzFpi
+         Fg+P6CowfiZPKZBbZW4gOYwJHQyaGnSdeD/HM/gp7LpCA33TVRDQe+lBKXT0ZLIrUMMQ
+         1m7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=60w8UBCk6ggLkdPFsKz/eHhW0aP3J0XxgrccxjgCjno=;
-        b=oH6TEg83fFnjKWOpAGyF5eZ3p0w9Gbqpocb0DOnjFrtg/XJ2JBwShuhCkjd4gzFq5T
-         4OKDBSx5mTOihjb1Gi3GkxzODW9E/arVcCrw/JJJkxQEJqXXAriuzue8Wn3jh6RYKZPj
-         vDUyuOXdQdmjqhxHk9wlN9CJQlkkKdcFufCiXjXqsX4C5N1S0FkuhlSIQDLgf9/gyVzo
-         jcT6Jc85nAM6fn1z0XZTL/jXcxdZt6HgKpOly8TL5Bw5H3CBcp/66ClqtE0ogwn6jNRv
-         dbPES8SSqqRv+oRqbQPmYTlFE0ER6QBq98xQpcCaC/ZJQZJQfje2GYqyE/lvde6kkbTo
-         +O+Q==
-X-Gm-Message-State: AOUpUlEZ8aTVvsXpWbYv1iu80EZGT6VyxYezCIhB3JVYvtADeiOyM+v2
-        lJT7PK8gT4P8Blm5B1pz0Ik=
-X-Google-Smtp-Source: AAOMgpdHxVdSSVaDAQT86REAjfPA/nlnCUjJ+wpVYPJ7iYQOv0ZEyjglrVKiHEFmrfNXBd0/zXmULw==
-X-Received: by 2002:a37:1348:: with SMTP id d69-v6mr19226876qkh.253.1532534985172;
-        Wed, 25 Jul 2018 09:09:45 -0700 (PDT)
-Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id j86-v6sm14675267qkh.60.2018.07.25.09.09.43
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 25 Jul 2018 09:09:44 -0700 (PDT)
-Subject: Re: [PATCH v1 0/3] [RFC] Speeding up checkout (and merge, rebase,
- etc)
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20180718204458.20936-1-benpeart@microsoft.com>
- <20180718213420.GA17291@sigill.intra.peff.net>
- <a2ad0044-f317-69f7-f2bb-488111c626fb@gmail.com>
- <CACsJy8D-3sSnoyQZKxeLK-2RmpJSGkziAp5Gf4QpUnxwnhchSQ@mail.gmail.com>
- <6ff6fbdc-d9cf-019f-317c-7fdba31105c6@gmail.com>
- <20180724151336.GA1957@duynguyen.home>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <93bf2b44-fd05-cb39-cbf2-16a0736f0561@gmail.com>
-Date:   Wed, 25 Jul 2018 12:09:43 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        bh=VwIkAo5N9nfRq6v/fxraWbnP4tI8fKryGpM8Pvq1k/Y=;
+        b=PBc5Dbu1sp3N+VjPVlGQO2TOLoZfseeuNunAwnTyMtjgzxffxZDsbM46pXeL1vyyPb
+         tajg+bWnDLrtsU6Mk4pRmpirGryc6lgjrAWFWPAaf6t123VPt44472OlD4YTIijlHXxa
+         JsG2pqL+QBuweEaLkvTavl67QaTRrv7NWw27O0N1x06AnwStLTQHigBV+03nPiZcgrya
+         lwoyppjXdmLz6PxeBP8Qo/oFiEN4jBXqcNcqSeoqJq60UWhG9hbmyl+g89PjOs+k8/1M
+         uXxai84E3soplblN2GAW8ZCpkDLBOwkwT6gbuTH5HeSMHLvb9nQOrUj+VNWpth2oA1wY
+         f4eQ==
+X-Gm-Message-State: AOUpUlG7C09WZbP6cKkHo0V7M8BkM13I0kvpe6UOx8xifg/SvJvCh5eu
+        +pfRRH5/ngYznkr2LcPuCPo=
+X-Google-Smtp-Source: AAOMgpdTTcnnPo2PB8Nq8xABzn8m1nQYsCWXlOzvPWpNueIDnuNY4E4FKAkAKjzkPDlSb8+vhO4XCA==
+X-Received: by 2002:a5d:5043:: with SMTP id h3-v6mr14439438wrt.186.1532537154443;
+        Wed, 25 Jul 2018 09:45:54 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id e12-v6sm9228056wru.89.2018.07.25.09.45.53
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 25 Jul 2018 09:45:53 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Edward Thomson <ethomson@edwardthomson.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        demerphq <demerphq@gmail.com>, Adam Langley <agl@google.com>,
+        keccak@noekeon.org
+Subject: Re: [PATCH 2/2] doc hash-function-transition: pick SHA-256 as NewHash
+References: <20180725083024.16131-1-avarab@gmail.com>
+        <xmqqzhygwd5o.fsf@gitster-ct.c.googlers.com>
+        <20180725083024.16131-3-avarab@gmail.com>
+Date:   Wed, 25 Jul 2018 09:45:52 -0700
+In-Reply-To: <20180725083024.16131-3-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Wed, 25 Jul 2018 08:30:24 +0000")
+Message-ID: <xmqq4lgnw9fj.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20180724151336.GA1957@duynguyen.home>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
+> @@ -125,19 +122,19 @@ Detailed Design
+>  ---------------
+>  Repository format extension
+>  ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> -A NewHash repository uses repository format version `1` (see
+> +A SHA-256 repository uses repository format version `1` (see
+>  Documentation/technical/repository-version.txt) with extensions
+>  `objectFormat` and `compatObjectFormat`:
+>  
+>  	[core]
+>  		repositoryFormatVersion = 1
+>  	[extensions]
+> -		objectFormat = newhash
+> +		objectFormat = sha256
+>  		compatObjectFormat = sha1
 
-On 7/24/2018 11:13 AM, Duy Nguyen wrote:
-> On Mon, Jul 23, 2018 at 04:51:38PM -0400, Ben Peart wrote:
->>>>> What's the current state of the index before this checkout?
->>>>
->>>> This was after running "git checkout" multiple times so there was really
->>>> nothing for git to do.
->>>
->>> Hmm.. this means cache-tree is fully valid, unless you have changes in
->>> index. We're quite aggressive in repairing cache-tree since aecf567cbf
->>> (cache-tree: create/update cache-tree on checkout - 2014-07-05). If we
->>> have very good cache-tree records and still spend 33s on
->>> traverse_trees, maybe there's something else.
->>>
->>
->> I'm not at all familiar with the cache-tree and couldn't find any
->> documentation on it other than index-format.txt which says "it helps
->> speed up tree object generation for a new commit."
-> 
-> I guess you have the starting points you need after Jeff's and Junio's
-> explanation (and it would be great if cache-tree could actually be for
-> for this two-way merge). But to make it easier for new people in
-> future, maybe we should add this?
-> 
-> This is basically a ripoff of Junio's explanation with starting points
-> (write-tree and index-format.txt). I wanted to incorporate some pieces
-> from Jeff's too but I think Junio's already covered it well.
-> 
+Whenever we said SHA1, somebody came and told us that the name of
+the hash is SHA-1 (with dash).  Would we be nitpicker-prone in the
+same way with "sha256" here?
 
-I definitely like capturing this in the code or documentation somewhere. 
-  Given I checked the header file for any hints on the design, I think 
-that is a reasonable place to put it.
+> @@ -155,36 +152,36 @@ repository extensions.
+>  Object names
+>  ~~~~~~~~~~~~
+>  Objects can be named by their 40 hexadecimal digit sha1-name or 64
+> -hexadecimal digit newhash-name, plus names derived from those (see
+> +hexadecimal digit sha256-name, plus names derived from those (see
+>  gitrevisions(7)).
 
-> -- 8< --
-> Subject: [PATCH] cache-tree.h: more description of what it is and what's it used for
-> 
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->   cache-tree.h | 29 +++++++++++++++++++++++++++++
->   1 file changed, 29 insertions(+)
-> 
-> diff --git a/cache-tree.h b/cache-tree.h
-> index cfd5328cc9..d25a800a72 100644
-> --- a/cache-tree.h
-> +++ b/cache-tree.h
-> @@ -5,6 +5,35 @@
->   #include "tree.h"
->   #include "tree-walk.h"
->   
-> +/*
-> + * cache-tree is an index extension that records tree object names for
-> + * subdirectories you see in the index. It is mainly used for
-> + * generating trees from the index before you create a new commit (see
-> + * builtin/write-tree.c as starting point) but it's also used in "git
-> + * diff-index --cached $TREE" as an optimization. See index-format.txt
-> + * for on-disk format.
-> + *
-> + * Every time you write the contents of the index as a tree object, we
+Seeing this hunk makes me respond to the above question with another
+question: "having to write sha-256-name, sha-1-name, gpgsig-sha-256,
+and sha-256-content is sort of ugly, no?"
 
-I had to read this a couple of times to figure out what was meant by 
-"write the contents of the index as a tree object."  Maybe it was just 
-me but how about something like:
+I guess names with two dashes are not _too_ bad, so I dunno.
 
-"Every time you write a new tree object from the index you need to 
-collect the object name for each top-level path and write a new 
-top-level tree object out and then do the same recursively for any 
-subdirectory."
-
-> + * need to collect the object name for each top-level paths and write
-> + * a new top-level tree object out, after doing the same recursively
-> + * for any modified subdirectory. Whenever you add, remove or modify a
-> + * path in the index, the cache-tree entry for enclosing directories
-> + * are invalidated, so a cache-tree entry that is still valid means
-> + * that all the paths in the index under that directory match the
-> + * contents of the tree object that the cache-tree entry holds.
-> + *
-> + * And that property is used by "diff-index --cached $TREE" that is
-> + * run internally.  When we find that the subdirectory "D"'s
-> + * cache-tree entry is valid in the index, and the tree object
-> + * recorded in the cache-tree for that subdirectory matches the
-> + * subtree D in the tree object $TREE, then "diff-index --cached"
-> + * ignores the entire subdirectory D (which saves relatively little in
-> + * the index as it only needs to scan what is already in the memory
-> + * forward, but on the $TREE traversal side, it does not have to even
-> + * open a subtree, that can save a lot), and with a well-populated
-> + * cache-tree, it can save a significant processing.
-> + */
+>  Selection of a New Hash
+>  -----------------------
+> @@ -611,6 +608,10 @@ collisions in 2^69 operations. In August they published details.
+>  Luckily, no practical demonstrations of a collision in full SHA-1 were
+>  published until 10 years later, in 2017.
+>  
+> +It was decided that Git needed to transition to a new hash
+> +function. Initially no decision was made as to what function this was,
+> +the "NewHash" placeholder name was picked to describe it.
 > +
->   struct cache_tree;
->   struct cache_tree_sub {
->   	struct cache_tree *cache_tree;
-> 
+>  The hash function NewHash to replace SHA-1 should be stronger than
+>  SHA-1 was: we would like it to be trustworthy and useful in practice
+>  for at least 10 years.
+
+This sentence needs a bit of updating to match the new paragraph
+inserted above.  "should be stronger" is something said by those
+who are still looking for one and/or trying to decide.  Perhaps
+something like this?
+
+	...
+	the "NewHash" placeholder name was used to describe it.
+
+	We wanted to choose a hash function to replace SHA-1 that is
+	stronger than SHA-1 was, and would like it to be trustworthy
+	and useful in practice for at least 10 years.
+
+	Some other relevant properties we wanted in NewHash are:
+
+> @@ -630,14 +631,19 @@ Some other relevant properties:
+>  4. As a tiebreaker, the hash should be fast to compute (fortunately
+>     many contenders are faster than SHA-1).
+>  
+> -Some hashes under consideration are SHA-256, SHA-512/256, SHA-256x16,
+> +Some hashes under consideration were SHA-256, SHA-512/256, SHA-256x16,
+>  K12, and BLAKE2bp-256.
+>  
+> +Eventually in July 2018 SHA-256 was chosen to be the NewHash. See the
+> +thread starting at <20180609224913.GC38834@genre.crustytoothpaste.net>
+> +for the discussion
+> +(https://public-inbox.org/git/20180609224913.GC38834@genre.crustytoothpaste.net/)
+> +
+
