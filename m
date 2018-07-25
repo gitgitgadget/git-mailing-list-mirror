@@ -6,58 +6,58 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C0AA31F597
-	for <e@80x24.org>; Wed, 25 Jul 2018 23:44:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E22721F597
+	for <e@80x24.org>; Wed, 25 Jul 2018 23:47:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731513AbeGZA6F (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jul 2018 20:58:05 -0400
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:34510 "EHLO
-        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731401AbeGZA6E (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jul 2018 20:58:04 -0400
-Received: by mail-wm0-f54.google.com with SMTP id l2-v6so735894wme.1
-        for <git@vger.kernel.org>; Wed, 25 Jul 2018 16:44:02 -0700 (PDT)
+        id S1731889AbeGZBBP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jul 2018 21:01:15 -0400
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:38541 "EHLO
+        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731805AbeGZBBP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jul 2018 21:01:15 -0400
+Received: by mail-wm0-f47.google.com with SMTP id t25-v6so159920wmi.3
+        for <git@vger.kernel.org>; Wed, 25 Jul 2018 16:47:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=aeXvCV65f2RuR0p/ixCGY6FWk8IRvXJK/mb8VCwYlM0=;
-        b=gSgddzT0AKEz4szRCaohq1y8K9lpqY/OP2pwd9oJ57fvPQ/ZQUoEMarOwcdjuSt/TX
-         FV35UdQpZAVPTxkXrOcS6m/F589ry7WqYRDybwmWTDCSS9zrLb5hy1jMbLiNvudizwtw
-         QKvcwWGeJKFoSdDqSMHmA4bTtHR0eFBuHDDLvmWCajFKxuYLK2946edF5/Is9qtmOFgS
-         jbbfYpz8IbhQ90K6cy0jnQR6v5LpA/awP2ItthL7VfFtPEsOibpeihoxalJEEXz6Ci6f
-         ATXYOc6JPoVBZlrPgnDNhQ/4J5S9BjrpRFo5laIo7q0makRGHrKuyjQlTaBsDF9wLt6k
-         Avng==
+        bh=RhocosnWQLefWP7N0DO3ZU4K+aTnePe6cGbnC+t7Gog=;
+        b=fi6Zy43VdL/PBQj2pR9Rl29Irdfsw/w1e6YBSINQbWiucplWuX5RhaGhLGR/nTddQa
+         4+vadASjVAkOPltc4oLF2/dI5LZrTH6nkhxJAaGmuzDz9+70dXLtEikey2PS+e74zfeg
+         B4snVaFB5dNbcRnrKjq5UPIECwH8KtRzTBu0aKHIVmUhIACYXvIalTs1ZpkWg0l0zygc
+         5dgXgS6PjiVKsPOFrR3ae8CTGOis5004oLn/sNFnox9bj39TpQ2Urr6/E/1aRmGH2zni
+         0/wqgXy9FYMU86cfcUjZQflby3yrkOm7J7M6V7DEw2mlVdSz9sCdBx/berBq6asFHllz
+         obJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=aeXvCV65f2RuR0p/ixCGY6FWk8IRvXJK/mb8VCwYlM0=;
-        b=FnvDwAsYs8qfncew2iUR+Q9CIxP/tHTKnwSwBn2SnSyQ6lp19/EVvn2f8soFRtZxqV
-         vPKp7N30Y6QKvfT4omoKccYJJrc645+1aSiUzn/309/gKl5XffNAQi58J8ewhu8vd2D6
-         M77WbjvzmtyFc8O7C0nJFohTRwZFYqhSg3jXpL5ZiANJ39FXR0+WP15Z4MqG2ylF4x1L
-         oaFd4wF2rcIjfTnv3Jf9/L2NrvDKswMbVlKCi+Byjta1IRTuXxsmcxbkbLWdaaamFWdk
-         sPjD6f3a6LpuaX0goarokOiTxGMkhY3P5DrgIxy3QYNZ/mgHwJxv+ClepR3yQnqW3JOo
-         i/pw==
-X-Gm-Message-State: AOUpUlFwT4wuQ3U4jjaMO+HMx2LWzLFy70pBR97bJXupgOq6cRSjeF57
-        AGySRN/wzDEh7Zgg0dm83s4=
-X-Google-Smtp-Source: AAOMgpdz7EI8WDv53Cn5RvPnpCKNZNUqS/m5z3xyHaHF7xIQonp3NSwjHrzkzLD18YcQEpB2WvVijg==
-X-Received: by 2002:a1c:8313:: with SMTP id f19-v6mr49664wmd.144.1532562241776;
-        Wed, 25 Jul 2018 16:44:01 -0700 (PDT)
+        bh=RhocosnWQLefWP7N0DO3ZU4K+aTnePe6cGbnC+t7Gog=;
+        b=XIHl5TFk/zGLi/RON7zZJbwGGcFRRjYWXigPSif5OL3vQYU/6/CnY6ib78i0ODwxth
+         5c1DYVM0R+/oUjsKELnN7jQNljUiYDYDuMk1JM0Qc+C5tl/DKl9ldtjjntGFHS0dRU+Z
+         h/eWzY4aNrW05bejlZ98/ZlZ0htQlx6WtVJ8OisKMGvUjQPZT4bvvChXNUb3E7KkA7fw
+         yDuJC21Rql5/rr1Rci3RVmhLz3sf19CNrcdegkNnVQYG46LbKNbV4zFCh/4UdQ+tNwvD
+         Jhr7zWq4fpy5NfyqrfL7LGY3Qdc0yuTu9d/nS8+zRnQZfl0Bt/y7OoxQ5mJukBz3Dgog
+         xvjA==
+X-Gm-Message-State: AOUpUlEtmT+TkUuWh7bpXHfptJa+Lku88JVCYF/PRp5t17Jymfh7eG/j
+        Mx8L8V0CEaKFNO4YO88lMMQ=
+X-Google-Smtp-Source: AAOMgpdnrx4iP3ewSCVnNum1ofQE1/oaq+fpzpU2NN0yTOP//w2c182ylrCgLa97XrLpX2PQsBLqSA==
+X-Received: by 2002:a1c:8f50:: with SMTP id r77-v6mr67934wmd.44.1532562431685;
+        Wed, 25 Jul 2018 16:47:11 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id v15-v6sm61045wmc.16.2018.07.25.16.43.59
+        by smtp.gmail.com with ESMTPSA id b2-v6sm69782wmh.20.2018.07.25.16.47.10
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 25 Jul 2018 16:44:00 -0700 (PDT)
+        Wed, 25 Jul 2018 16:47:11 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Stefan Beller <sbeller@google.com>
 Cc:     git <git@vger.kernel.org>
 Subject: Re: What's cooking in git.git (Jul 2018, #03; Wed, 25)
 References: <xmqqd0vbt14e.fsf@gitster-ct.c.googlers.com>
         <CAGZ79kbO1KOfDgjT5duEd49MZ=EaYLtTDeg2efVO5kkO9QFx7g@mail.gmail.com>
-Date:   Wed, 25 Jul 2018 16:43:59 -0700
+Date:   Wed, 25 Jul 2018 16:47:10 -0700
 In-Reply-To: <CAGZ79kbO1KOfDgjT5duEd49MZ=EaYLtTDeg2efVO5kkO9QFx7g@mail.gmail.com>
         (Stefan Beller's message of "Wed, 25 Jul 2018 15:56:17 -0700")
-Message-ID: <xmqq4lgmubi8.fsf@gitster-ct.c.googlers.com>
+Message-ID: <xmqqzhyeswsh.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,35 +68,22 @@ X-Mailing-List: git@vger.kernel.org
 
 Stefan Beller <sbeller@google.com> writes:
 
->> * js/range-diff (2018-07-25) 21 commits
-
-> I think the current coloring is good enough to ship, but it still has
-> errors around corners, for example introduction of new files,
-> having lines in the inner diff as:
+>> * jh/structured-logging (2018-07-25) 25 commits
+> [...]
+>>  - structured-logging: design document
+>>  (this branch uses jh/json-writer.)
+>>
+>>  X-Gah.
 >
->      diff --git a/Makefile b/Makefile
->      --- a/Makefile
->      +++ b/Makefile
->
-> will be colored white/red/green (in that order), but in the outer diff
-> these are all "context", but as these specific context lines happen
-> to start with +/- we color them.
-> If we want to be perfect, we rather need to parse&understand
-> the inner diff on a more detailed level, but I would argue to leave
-> that to a later stage for another volunteer to step in and cleanup.
+> I am not sure what to make of this comment?
 
-I think the primary part of coloring i.e. "white is common, green is
-added, red is removed" together with "bold is new, dimmed is old" is
-quite usable and not broken.  
+That's just a line/editor noise.
 
-The non-coloring part, like patch matching and driving diff over a
-pair of "git show" output, looked reasonably solid when I read it
-(even though I admit I did not audit for leaks).
+> Does it need review or is the design/intent to be
+> discussed?
 
-The only thing I think we would be better off without is the
-coloring of whitespace errors (at least in the current shape).  I
-cannot shake the feeling that temporarily setting core.whitespace to
-nothing (i.e. we do not detect any whitespace errors and hence we do
-not show any) while running diff-of-diff may be a workaround that is
-less damaging to the code base than piling band-aid on the codepath
-that is shared with plain diff (not diff-of-diff).
+The topic certainy needs serious reviews and response with updated
+patches (when reviews come, that is), I think.  I also agree with
+somebody who said slog is not a good way to present it in the doc
+that are to be used by non git developers.
+
