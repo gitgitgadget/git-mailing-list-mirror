@@ -2,164 +2,358 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 628561F597
-	for <e@80x24.org>; Wed, 25 Jul 2018 11:10:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7036C1F597
+	for <e@80x24.org>; Wed, 25 Jul 2018 12:02:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728693AbeGYMVh (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jul 2018 08:21:37 -0400
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:39878 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728660AbeGYMVh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jul 2018 08:21:37 -0400
-Received: by mail-lj1-f193.google.com with SMTP id l15-v6so6328650lji.6
-        for <git@vger.kernel.org>; Wed, 25 Jul 2018 04:10:25 -0700 (PDT)
+        id S1728867AbeGYNNv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jul 2018 09:13:51 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:42201 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728757AbeGYNNu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jul 2018 09:13:50 -0400
+Received: by mail-ed1-f68.google.com with SMTP id r4-v6so6981328edp.9
+        for <git@vger.kernel.org>; Wed, 25 Jul 2018 05:02:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=7I9txWYVQj1Ma2h4XFXwtK1qzX6ONovLvOoxi7A9od4=;
-        b=pT2znktlvWynfPVhYF2PSESprmsrjtgiSQrqwFGZfKslqRvTjZYYesa81t1aJHjbMG
-         6e1dG7mTlq8fgd06IJg0xRmHV2vpT+NrzVirc5/n8XmPCNMCkY+fQNGs2NpL4/RdEtYz
-         jE4dtA11mSxsZ6aTDKL0kL+6Vd6e0Buc7FblJsJE9lAVSiaNtWoUav93BAk8lLF4iD4d
-         tlNnA0grEZteSocJw7U73eA5M0jh14MdIT3di7CRrSoHkeFfRjigCYTIE9rNGXxehV5O
-         eHWqZezYn+iEUdVJvf0BZdlwdUYB/MQtloaBFpYz7ccVkXZ3BMMHantUJWpsvc94MAkt
-         Be5w==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=LiYYFS5KcgT3YxgadgccXtOJG1byvY9KnZhQgOv6Ml8=;
+        b=DWneJ/YdLrkVBChtJ69J+IESkzSOrhrZECsfG0dqhvgNmOzQPUU3KxeKNUY4TddEfF
+         4U50r/LMNfLgdjhvK5XcbCD4VKodpV2CprzMryNiZcvZrRwt64E8JwVHv+wrHrY92O34
+         CZRf39SLnz6wwla+o6yIJUgT4XbW/gIf8fYy0spXi+vIaTqlzB4PBIHHPvZQWq3V6fIw
+         2ObNsyAlxHMXMIevlKbio83ZgiUfiV1Ptw9tTzEA3YvsERISeYCvLEV9Ik1BJNFnKYeb
+         5gnMqnPaWe65utHFliFVVznCO48ZolRCGMp+x7EEzuuDV3uZ/657F9Z/NM3R8O0Jd4qs
+         tKnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=7I9txWYVQj1Ma2h4XFXwtK1qzX6ONovLvOoxi7A9od4=;
-        b=ExvYWKRjR2Vm7tvgaQLCRvAuX73RZ1psAPiZ3MnOtRt5tTkoiOTJXmkndfF1/epRYE
-         kzPQI/FmnT0qTh+nHWBlT61ObvqCJGVrk+p56ji3tKySCyA/q14K9Mm222cFuu/rGupQ
-         Xf8cQIYzAsY65caQTO/S93Ljvhs64DZjYbh33W83u9I3NkafE3/+bkuOvLByYlUqUhth
-         uG++pxIcmZJD/lp7D7G2ziUvSVVJljAdvlw3zLNE7KqiYvN/MbPkc4xZwgHPltCEDccT
-         oCs5DVYbT/Qwx6YR3ndhQ471+ne4X9U3/BlgOZ1CnbAg66cgETofh5lbDFfq24WQdFbw
-         19AQ==
-X-Gm-Message-State: AOUpUlHHFVmzd1CPIg/3riOLR/yUKF2uKLPgZTlhNjYYHwbV5u6VRb+R
-        HU//CwKCmui5HQq20J0M2ZYZAbaLtJU6ugJE4xAl/g==
-X-Google-Smtp-Source: AAOMgpcLQD36QK9uEhuwGhjD6OhTITPCJcUYC/jx6L/NuUWWbSIhGYOit43igrsd9O2Zgo0g5yte9ebmecsPqj8dMKM=
-X-Received: by 2002:a2e:9854:: with SMTP id e20-v6mr431767ljj.143.1532517024925;
- Wed, 25 Jul 2018 04:10:24 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=LiYYFS5KcgT3YxgadgccXtOJG1byvY9KnZhQgOv6Ml8=;
+        b=IFU/e72UeHXNJjmI7Z0Zlfl/wFxsBpXSwqUD0KHcRo3QdC/GSEXvtVPsk1HXMOi7MA
+         0D+o51KlqmVx9WLMv/bqfCruIG8iTh6xE/BPDAbgnvtK8FAccMODlxBjEKwiW4dxt1Wo
+         q4BWBvEFhcHXOw3KZMtZXE0jB+cY4l34JX0gSt6LYOwu1yzWW450n02+GvVqLBh2YL9E
+         ZX2h666tnA+jJSmCGo+QIoHX9HejIOo9wJq2qomQhuYHY8dvvbKTeAlUlsMV7+HqphJZ
+         WICqyrH8F+V9uF/iIsGF7LVsqzcC0aDcLW8ZDm0qIb5JTjDulMStVgdVOopcvP+XQgjn
+         X3wA==
+X-Gm-Message-State: AOUpUlHqThKbOhYBsW0bFV5ZZ+EAwObCQO46VeLirW85Ly0byxjnYI83
+        QUOgOp6fkZQSVSBZmnkFfXY=
+X-Google-Smtp-Source: AAOMgpd7oDrUpE7sJ79bff664pw/m48bT1MO39H66VsfgGdK3/10umRKNatZbhyauuaI4R/kvsTAFA==
+X-Received: by 2002:a50:aa43:: with SMTP id p3-v6mr22765273edc.233.1532520146439;
+        Wed, 25 Jul 2018 05:02:26 -0700 (PDT)
+Received: from localhost.localdomain (x590e43f2.dyn.telefonica.de. [89.14.67.242])
+        by smtp.gmail.com with ESMTPSA id h1-v6sm6351218edr.86.2018.07.25.05.02.24
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 25 Jul 2018 05:02:25 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Max Kirillov <max@max630.net>
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff King <peff@peff.net>,
+        Florian Manschwetus <manschwetus@cs-software-gmbh.de>,
+        Chris Packham <judge.packham@gmail.com>,
+        Konstantin Khomoutov <kostix+git@007spb.ru>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH v8 3/3] http-backend: respect CONTENT_LENGTH for receive-pack
+Date:   Wed, 25 Jul 2018 14:02:06 +0200
+Message-Id: <20180725120206.19810-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.18.0.408.g42635c01bc
 MIME-Version: 1.0
-Received: by 2002:a2e:88d7:0:0:0:0:0 with HTTP; Wed, 25 Jul 2018 04:10:24
- -0700 (PDT)
-In-Reply-To: <87tvonbrso.fsf@evledraar.gmail.com>
-References: <20180723112736.15088-1-chenbin.sh@gmail.com> <CAE5ih79ndEbnEeV_muQyZwG+01_8Kg0J74rZtOoK1_V40E0z7g@mail.gmail.com>
- <87tvonbrso.fsf@evledraar.gmail.com>
-From:   chen bin <chenbin.sh@gmail.com>
-Date:   Wed, 25 Jul 2018 21:10:24 +1000
-Message-ID: <CAAE-R+9sUUz4eYySDqc-B4RZhVZ_4NoZkvVHsc0T3RSePFsvKw@mail.gmail.com>
-Subject: Re: [PATCH 1/1] add hook pre-p4-submit
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Luke Diamand <luke@diamand.org>, Git ML <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for you review. I will update documentation asap.
-
-On Wed, Jul 25, 2018 at 7:14 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> On Wed, Jul 25 2018, Luke Diamand wrote:
->
->> On 23 July 2018 at 12:27, Chen Bin <chenbin.sh@gmail.com> wrote:
->>> Hook pre-p4-submit is executed before git-p4 actually submits code.
->>> If the hook exits with non-zero value, submit process will abort.
->>
->>
->> Looks good to me - could you add some documentation please
->> (Documentation/git-p4.txt).
->>
->> Thanks!
->> Luke
->
-> This looks correct (and you'd know better), but I was surprised that we
-> wouldn't just document this in githooks(5), but looking at git-p4 I see
-> that we have its config documented there, not in git-config(1) (ditto
-> some git-svn config stuff).
->
-> Shouldn't we at least update githooks & git-config to say that the
-> config / hooks documentation for these utilities can be found there?
->
->>>
->>> Signed-off-by: Chen Bin <chenbin.sh@gmail.com>
->>> ---
->>>  git-p4.py               |  6 ++++++
->>>  t/t9800-git-p4-basic.sh | 22 ++++++++++++++++++++++
->>>  2 files changed, 28 insertions(+)
->>>
->>> diff --git a/git-p4.py b/git-p4.py
->>> index b449db1cc..69ee9ce41 100755
->>> --- a/git-p4.py
->>> +++ b/git-p4.py
->>> @@ -2303,6 +2303,12 @@ def run(self, args):
->>>              sys.exit("number of commits (%d) must match number of shel=
-ved changelist (%d)" %
->>>                       (len(commits), num_shelves))
->>>
->>> +        # locate hook at `.git/hooks/pre-p4-submit`
->>> +        hook_file =3D os.path.join(read_pipe("git rev-parse --git-dir"=
-).strip(), "hooks", "pre-p4-submit")
->>> +        # Execute hook. If it exit with non-zero value, do NOT continu=
-e.
->>> +        if os.path.isfile(hook_file) and os.access(hook_file, os.X_OK)=
- and subprocess.call([hook_file]) !=3D 0:
->>> +            sys.exit(1)
->>> +
->>>          #
->>>          # Apply the commits, one at a time.  On failure, ask if should
->>>          # continue to try the rest of the patches, or quit.
->>> diff --git a/t/t9800-git-p4-basic.sh b/t/t9800-git-p4-basic.sh
->>> index 4849edc4e..48b768fa7 100755
->>> --- a/t/t9800-git-p4-basic.sh
->>> +++ b/t/t9800-git-p4-basic.sh
->>> @@ -261,6 +261,28 @@ test_expect_success 'unresolvable host in P4PORT s=
-hould display error' '
->>>         )
->>>  '
->>>
->>> +# Test following scenarios:
->>> +#   - Without hook ".git/hooks/pre-p4-submit", submit should continue
->>> +#   - With hook returning 0, submit should continue
->>> +#   - With hook returning 1, submit should abort
->>> +test_expect_success 'run hook pre-p4-submit before submit' '
->>> +       test_when_finished cleanup_git &&
->>> +       git p4 clone --dest=3D"$git" //depot &&
->>> +       (
->>> +               cd "$git" &&
->>> +               echo "hello world" >hello.txt &&
->>> +               git add hello.txt &&
->>> +               git commit -m "add hello.txt" &&
->>> +               git config git-p4.skipSubmitEdit true &&
->>> +               git p4 submit --dry-run | grep "Would apply" &&
->>> +               mkdir -p .git/hooks &&
->>> +               : >.git/hooks/pre-p4-submit && chmod +x .git/hooks/pre-=
-p4-submit &&
->>> +               git p4 submit --dry-run | grep "Would apply" &&
->>> +               echo #!/bin/sh && echo exit 1 >.git/hooks/pre-p4-submit=
- &&
->>> +               git p4 submit --dry-run | grep "Would apply" || echo "A=
-bort submit"
->>> +       )
->>> +'
->>> +
->>>  test_expect_success 'submit from detached head' '
->>>         test_when_finished cleanup_git &&
->>>         git p4 clone --dest=3D"$git" //depot &&
->>> --
->>> 2.18.0
->>>
+> Push passes to another commands, as described in
+> https://public-inbox.org/git/20171129032214.GB32345@sigill.intra.peff.net/
+> 
+> As it gets complicated to correctly track the data length, instead transfer
+> the data through parent process and cut the pipe as the specified length is
+> reached. Do it only when CONTENT_LENGTH is set, otherwise pass the input
+> directly to the forked commands.
+> 
+> Add tests for cases:
+> 
+> * CONTENT_LENGTH is set, script's stdin has more data, with all combinations
+>   of variations: fetch or push, plain or compressed body, correct or truncated
+>   input.
+> 
+> * CONTENT_LENGTH is specified to a value which does not fit into ssize_t.
+> 
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Max Kirillov <max@max630.net>
+> ---
+>  help.c                                 |   1 +
+>  http-backend.c                         |  32 ++++-
+>  t/t5562-http-backend-content-length.sh | 169 +++++++++++++++++++++++++
+>  t/t5562/invoke-with-content-length.pl  |  37 ++++++
+>  4 files changed, 237 insertions(+), 2 deletions(-)
+>  create mode 100755 t/t5562-http-backend-content-length.sh
+>  create mode 100755 t/t5562/invoke-with-content-length.pl
 
 
+> diff --git a/t/t5562-http-backend-content-length.sh b/t/t5562-http-backend-content-length.sh
+> new file mode 100755
+> index 0000000000..8040d80e04
+> --- /dev/null
+> +++ b/t/t5562-http-backend-content-length.sh
+> @@ -0,0 +1,169 @@
+> +#!/bin/sh
+> +
+> +test_description='test git-http-backend respects CONTENT_LENGTH'
+> +. ./test-lib.sh
+> +
+> +test_lazy_prereq GZIP 'gzip --version'
+> +
+> +verify_http_result() {
+> +	# sometimes there is fatal error buit the result is still 200
 
---=20
-help me, help you.
+s/buit/but/
+
+> +	if grep 'fatal:' act.err
+> +	then
+> +		return 1
+> +	fi
+
+I just happened to stumble upon a failure because of 'fatal: the
+remote end hung up unexpectedly' in the test 'push plain'.
+
+What does that "sometimes" in the above comment mean, and how often
+does such a failure happen?  I see these patches are in 'pu' for over
+a month now, so based on the number of reflog entries since then it
+happened once from about 30-35 builds on Travis CI so far.
+
+I don't really like the idea of adding a bunch of flaky test cases...
+we have enough of them already, unfortunately.
+
+> +
+> +	if ! grep "Status" act.out >act
+> +	then
+> +		printf "Status: 200 OK\r\n" >act
+> +	fi
+> +	printf "Status: $1\r\n" >exp &&
+> +	test_cmp exp act
+> +}
+> +
+> +test_http_env() {
+> +	handler_type="$1"
+> +	shift
+> +	env \
+> +		CONTENT_TYPE="application/x-git-$handler_type-pack-request" \
+> +		QUERY_STRING="/repo.git/git-$handler_type-pack" \
+> +		PATH_TRANSLATED="$PWD/.git/git-$handler_type-pack" \
+> +		GIT_HTTP_EXPORT_ALL=TRUE \
+> +		REQUEST_METHOD=POST \
+> +		"$@"
+> +}
+> +
+> +ssize_b100dots() {
+> +	# hardcoded ((size_t) SSIZE_MAX) + 1
+> +	case "$(build_option sizeof-size_t)" in
+> +	8) echo 9223372036854775808;;
+> +	4) echo 2147483648;;
+> +	*) die "Unexpected ssize_t size: $(build_option sizeof-size_t)";;
+> +	esac
+> +}
+> +
+> +test_expect_success 'setup' '
+> +	git config http.receivepack true &&
+> +	test_commit c0 &&
+> +	test_commit c1 &&
+> +	hash_head=$(git rev-parse HEAD) &&
+> +	hash_prev=$(git rev-parse HEAD~1) &&
+> +	printf "want %s" "$hash_head" | packetize >fetch_body &&
+> +	printf 0000 >>fetch_body &&
+> +	printf "have %s" "$hash_prev" | packetize >>fetch_body &&
+> +	printf done | packetize >>fetch_body &&
+> +	test_copy_bytes 10 <fetch_body >fetch_body.trunc &&
+> +	hash_next=$(git commit-tree -p HEAD -m next HEAD^{tree}) &&
+> +	printf "%s %s refs/heads/newbranch\\0report-status\\n" "$_z40" "$hash_next" | packetize >push_body &&
+> +	printf 0000 >>push_body &&
+> +	echo "$hash_next" | git pack-objects --stdout >>push_body &&
+> +	test_copy_bytes 10 <push_body >push_body.trunc &&
+> +	: >empty_body
+> +'
+> +
+> +test_expect_success GZIP 'setup, compression related' '
+> +	gzip -k fetch_body &&
+> +	test_copy_bytes 10 <fetch_body.gz >fetch_body.gz.trunc &&
+> +	gzip -k push_body &&
+> +	test_copy_bytes 10 <push_body.gz >push_body.gz.trunc
+> +'
+> +
+> +test_expect_success 'fetch plain' '
+> +	test_http_env upload \
+> +		"$TEST_DIRECTORY"/t5562/invoke-with-content-length.pl fetch_body git http-backend >act.out 2>act.err &&
+
+Don't save the standard error of the whole shell function.
+When running the test with /bin/sh and '-x' tracing, then the trace of
+commands executed in the function will be included in the standard
+error as well, which may interfere with later verification (though in
+this case it doesn't seem like it would cause any issues).
+
+Please limit the redirections to the relevant command's output.  AFAICT
+all invocations of 'test_http_env' in these tests have their stdout and
+stderr redirected to the same pair of files, so perhaps you could
+simply move all these redirections inside the function.
+
+> +	verify_http_result "200 OK"
+> +'
+> +
+> +test_expect_success 'fetch plain truncated' '
+> +	test_http_env upload \
+> +		"$TEST_DIRECTORY"/t5562/invoke-with-content-length.pl fetch_body.trunc git http-backend >act.out 2>act.err &&
+
+If this command were to print a "fatal: ..." message to its standard
+error, then ...
+
+> +	! verify_http_result "200 OK"
+
+... this function would return error (because of that 'if grep fatal:
+...' statement) without even looking at the status, but the test would
+still succeed.  Is that really the desired behavior here?
+
+> +'
+> +
+> +test_expect_success 'fetch plain empty' '
+> +	test_http_env upload \
+> +		"$TEST_DIRECTORY"/t5562/invoke-with-content-length.pl empty_body git http-backend >act.out 2>act.err &&
+> +	! verify_http_result "200 OK"
+> +'
+> +
+> +test_expect_success GZIP 'fetch gzipped' '
+> +	test_http_env upload \
+> +		HTTP_CONTENT_ENCODING="gzip" \
+> +		"$TEST_DIRECTORY"/t5562/invoke-with-content-length.pl fetch_body.gz git http-backend >act.out 2>act.err &&
+> +	verify_http_result "200 OK"
+> +'
+> +
+> +test_expect_success GZIP 'fetch gzipped truncated' '
+> +	test_http_env upload \
+> +		HTTP_CONTENT_ENCODING="gzip" \
+> +		"$TEST_DIRECTORY"/t5562/invoke-with-content-length.pl fetch_body.gz.trunc git http-backend >act.out 2>act.err &&
+> +	! verify_http_result "200 OK"
+> +'
+> +
+> +test_expect_success GZIP 'fetch gzipped empty' '
+> +	test_http_env upload \
+> +		HTTP_CONTENT_ENCODING="gzip" \
+> +		"$TEST_DIRECTORY"/t5562/invoke-with-content-length.pl empty_body git http-backend >act.out 2>act.err &&
+> +	! verify_http_result "200 OK"
+> +'
+> +
+> +test_expect_success GZIP 'push plain' '
+> +	test_when_finished "git branch -D newbranch" &&
+> +	test_http_env receive \
+> +		"$TEST_DIRECTORY"/t5562/invoke-with-content-length.pl push_body git http-backend >act.out 2>act.err &&
+> +	verify_http_result "200 OK" &&
+> +	git rev-parse newbranch >act.head &&
+> +	echo "$hash_next" >exp.head &&
+> +	test_cmp act.head exp.head
+> +'
+> +
+> +test_expect_success 'push plain truncated' '
+> +	test_http_env receive \
+> +		"$TEST_DIRECTORY"/t5562/invoke-with-content-length.pl push_body.trunc git http-backend >act.out 2>act.err &&
+> +	! verify_http_result "200 OK"
+> +'
+> +
+> +test_expect_success 'push plain empty' '
+> +	test_http_env receive \
+> +		"$TEST_DIRECTORY"/t5562/invoke-with-content-length.pl empty_body git http-backend >act.out 2>act.err &&
+> +	! verify_http_result "200 OK"
+> +'
+> +
+> +test_expect_success GZIP 'push gzipped' '
+> +	test_when_finished "git branch -D newbranch" &&
+> +	test_http_env receive \
+> +		HTTP_CONTENT_ENCODING="gzip" \
+> +		"$TEST_DIRECTORY"/t5562/invoke-with-content-length.pl push_body.gz git http-backend >act.out 2>act.err &&
+> +	verify_http_result "200 OK" &&
+> +	git rev-parse newbranch >act.head &&
+> +	echo "$hash_next" >exp.head &&
+> +	test_cmp act.head exp.head
+> +'
+> +
+> +test_expect_success GZIP 'push gzipped truncated' '
+> +	test_http_env receive \
+> +		HTTP_CONTENT_ENCODING="gzip" \
+> +		"$TEST_DIRECTORY"/t5562/invoke-with-content-length.pl push_body.gz.trunc git http-backend >act.out 2>act.err &&
+> +	! verify_http_result "200 OK"
+> +'
+> +
+> +test_expect_success GZIP 'push gzipped empty' '
+> +	test_http_env receive \
+> +		HTTP_CONTENT_ENCODING="gzip" \
+> +		"$TEST_DIRECTORY"/t5562/invoke-with-content-length.pl empty_body git http-backend >act.out 2>act.err &&
+> +	! verify_http_result "200 OK"
+> +'
+> +
+> +test_expect_success 'CONTENT_LENGTH overflow ssite_t' '
+> +	NOT_FIT_IN_SSIZE=$(ssize_b100dots) &&
+> +	env \
+> +		CONTENT_TYPE=application/x-git-upload-pack-request \
+> +		QUERY_STRING=/repo.git/git-upload-pack \
+> +		PATH_TRANSLATED="$PWD"/.git/git-upload-pack \
+> +		GIT_HTTP_EXPORT_ALL=TRUE \
+> +		REQUEST_METHOD=POST \
+> +		CONTENT_LENGTH="$NOT_FIT_IN_SSIZE" \
+> +		git http-backend </dev/zero >/dev/null 2>err &&
+> +	grep "fatal:.*CONTENT_LENGTH" err
+> +'
+> +
+> +test_done
+> diff --git a/t/t5562/invoke-with-content-length.pl b/t/t5562/invoke-with-content-length.pl
+> new file mode 100755
+> index 0000000000..6c2aae7692
+> --- /dev/null
+> +++ b/t/t5562/invoke-with-content-length.pl
+> @@ -0,0 +1,37 @@
+> +#!/usr/bin/perl
+> +use 5.008;
+> +use strict;
+> +use warnings;
+> +
+> +my $body_filename = $ARGV[0];
+> +my @command = @ARGV[1 .. $#ARGV];
+> +
+> +# read data
+> +my $body_size = -s $body_filename;
+> +$ENV{"CONTENT_LENGTH"} = $body_size;
+> +open(my $body_fh, "<", $body_filename) or die "Cannot open $body_filename: $!";
+> +my $body_data;
+> +defined read($body_fh, $body_data, $body_size) or die "Cannot read $body_filename: $!";
+> +close($body_fh);
+> +
+> +my $exited = 0;
+> +$SIG{"CHLD"} = sub {
+> +        $exited = 1;
+> +};
+> +
+> +# write data
+> +my $pid = open(my $out, "|-", @command);
+> +{
+> +        # disable buffering at $out
+> +        my $old_selected = select;
+> +        select $out;
+> +        $| = 1;
+> +        select $old_selected;
+> +}
+> +print $out $body_data or die "Cannot write data: $!";
+> +
+> +sleep 60; # is interrupted by SIGCHLD
+> +if (!$exited) {
+> +        close($out);
+> +        die "Command did not exit after reading whole body";
+> +}
+> -- 
+> 2.17.0.1185.g782057d875
+> 
+> 
