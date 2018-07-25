@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7036C1F597
-	for <e@80x24.org>; Wed, 25 Jul 2018 12:02:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D8BD1F597
+	for <e@80x24.org>; Wed, 25 Jul 2018 12:14:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728867AbeGYNNv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jul 2018 09:13:51 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:42201 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728757AbeGYNNu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jul 2018 09:13:50 -0400
-Received: by mail-ed1-f68.google.com with SMTP id r4-v6so6981328edp.9
-        for <git@vger.kernel.org>; Wed, 25 Jul 2018 05:02:27 -0700 (PDT)
+        id S1728926AbeGYN0I (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jul 2018 09:26:08 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:42936 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728762AbeGYN0I (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jul 2018 09:26:08 -0400
+Received: by mail-ed1-f67.google.com with SMTP id r4-v6so7014312edp.9
+        for <git@vger.kernel.org>; Wed, 25 Jul 2018 05:14:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=LiYYFS5KcgT3YxgadgccXtOJG1byvY9KnZhQgOv6Ml8=;
-        b=DWneJ/YdLrkVBChtJ69J+IESkzSOrhrZECsfG0dqhvgNmOzQPUU3KxeKNUY4TddEfF
-         4U50r/LMNfLgdjhvK5XcbCD4VKodpV2CprzMryNiZcvZrRwt64E8JwVHv+wrHrY92O34
-         CZRf39SLnz6wwla+o6yIJUgT4XbW/gIf8fYy0spXi+vIaTqlzB4PBIHHPvZQWq3V6fIw
-         2ObNsyAlxHMXMIevlKbio83ZgiUfiV1Ptw9tTzEA3YvsERISeYCvLEV9Ik1BJNFnKYeb
-         5gnMqnPaWe65utHFliFVVznCO48ZolRCGMp+x7EEzuuDV3uZ/657F9Z/NM3R8O0Jd4qs
-         tKnw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Fyg6p/7euzbu9fI5Pk1FMktYAex9KXC3uJDYMZadGmE=;
+        b=prcbKKmp4btyrjagUptgCC+fiDViFLPQbEhHQzpuW6vq1+/t+rAM3CoFoWtAOQctqK
+         iq+pd5UUY1n8aqWFPxYWMyZflo+VpMqtlGUCUaz3lnltXp8aGhn5o6Fu8L8lXnDqMxm7
+         2vGdfYXEeBPzGF7nS3kcanPzpxMs+KzRFHz7wQqGWttFCNTvnSBVQy2xAeh12RhvIu+9
+         pQvOgjtLQOJrqQMMg52tDCQwPQqu/mamX5slClWJDlSn0TvSHSQ9B5HYZbl08nSe0iP9
+         y0e2YuGIk/0CzYWjFX3ON5EQxbIzkyq2gTs9T+REGS3vqW1mSTRmnGJ6yLSSLCrf8Vkp
+         +VTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=LiYYFS5KcgT3YxgadgccXtOJG1byvY9KnZhQgOv6Ml8=;
-        b=IFU/e72UeHXNJjmI7Z0Zlfl/wFxsBpXSwqUD0KHcRo3QdC/GSEXvtVPsk1HXMOi7MA
-         0D+o51KlqmVx9WLMv/bqfCruIG8iTh6xE/BPDAbgnvtK8FAccMODlxBjEKwiW4dxt1Wo
-         q4BWBvEFhcHXOw3KZMtZXE0jB+cY4l34JX0gSt6LYOwu1yzWW450n02+GvVqLBh2YL9E
-         ZX2h666tnA+jJSmCGo+QIoHX9HejIOo9wJq2qomQhuYHY8dvvbKTeAlUlsMV7+HqphJZ
-         WICqyrH8F+V9uF/iIsGF7LVsqzcC0aDcLW8ZDm0qIb5JTjDulMStVgdVOopcvP+XQgjn
-         X3wA==
-X-Gm-Message-State: AOUpUlHqThKbOhYBsW0bFV5ZZ+EAwObCQO46VeLirW85Ly0byxjnYI83
-        QUOgOp6fkZQSVSBZmnkFfXY=
-X-Google-Smtp-Source: AAOMgpd7oDrUpE7sJ79bff664pw/m48bT1MO39H66VsfgGdK3/10umRKNatZbhyauuaI4R/kvsTAFA==
-X-Received: by 2002:a50:aa43:: with SMTP id p3-v6mr22765273edc.233.1532520146439;
-        Wed, 25 Jul 2018 05:02:26 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Fyg6p/7euzbu9fI5Pk1FMktYAex9KXC3uJDYMZadGmE=;
+        b=t4whMsQdixHhh0chbHXZ1laNNw0DW0SZ2d2DcdBwta48mse7LHtGBBWoECtcD6PVMx
+         u4FIAF1uMRmUZno8z3rQGp9xKpYdrAPUFHVr0jl3KaOJoaYMVRNVY9EXQFsqd8/lgdfA
+         45iXj+9ey2e1gqIUzlLwPVstye3gkczt40nVpF7fDFo0qIUPW6gRBp9S7N70U0Vyj/2T
+         UrfOZwZthx7jjeyUA4WA8oz/yVY2BW72sIyno6J2pPfakQAILb61wz4tEAStC1A+jfLz
+         xErZAPva4uze+tclQJzK3P4DmXIp2hRx5mjrmAZTWJSG6KRn6QbJIovJHA9VGACXtOtq
+         Pm4w==
+X-Gm-Message-State: AOUpUlH5ABO7BXhvD7Zf19kSCZF7CTaERrKa2HMyCMLwgGlR+p4QC1iS
+        23+I6TyHr0w/d79hhK/N7Yw=
+X-Google-Smtp-Source: AAOMgpf+tQLxCtZ3Dec2pDIbNCV+GyDxbaZZu6W3I2jRH2GYF14D0PZPtqxQb6KMAyaTH4SLof06bA==
+X-Received: by 2002:aa7:da16:: with SMTP id r22-v6mr22940798eds.54.1532520881373;
+        Wed, 25 Jul 2018 05:14:41 -0700 (PDT)
 Received: from localhost.localdomain (x590e43f2.dyn.telefonica.de. [89.14.67.242])
-        by smtp.gmail.com with ESMTPSA id h1-v6sm6351218edr.86.2018.07.25.05.02.24
+        by smtp.gmail.com with ESMTPSA id x40-v6sm8862459ede.23.2018.07.25.05.14.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 25 Jul 2018 05:02:25 -0700 (PDT)
+        Wed, 25 Jul 2018 05:14:40 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Max Kirillov <max@max630.net>
 Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
@@ -60,9 +60,11 @@ Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Konstantin Khomoutov <kostix+git@007spb.ru>,
         "git@vger.kernel.org" <git@vger.kernel.org>
 Subject: Re: [PATCH v8 3/3] http-backend: respect CONTENT_LENGTH for receive-pack
-Date:   Wed, 25 Jul 2018 14:02:06 +0200
-Message-Id: <20180725120206.19810-1-szeder.dev@gmail.com>
+Date:   Wed, 25 Jul 2018 14:14:35 +0200
+Message-Id: <20180725121435.20519-1-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.18.0.408.g42635c01bc
+In-Reply-To: <20180610150521.9714-4-max@max630.net>
+References: <20180610150521.9714-1-max@max630.net> <20180610150521.9714-4-max@max630.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,6 +72,11 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+
+
+[Hrm, this time with hopefully proper In-Reply-To: header.
+ Sorry for the double post.]
+
 
 > Push passes to another commands, as described in
 > https://public-inbox.org/git/20171129032214.GB32345@sigill.intra.peff.net/
