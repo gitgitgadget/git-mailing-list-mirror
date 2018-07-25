@@ -2,223 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E7D4E1F597
-	for <e@80x24.org>; Wed, 25 Jul 2018 17:25:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F27091F597
+	for <e@80x24.org>; Wed, 25 Jul 2018 17:29:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729341AbeGYSiX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jul 2018 14:38:23 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:39629 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729027AbeGYSiW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jul 2018 14:38:22 -0400
-Received: by mail-pg1-f193.google.com with SMTP id a11-v6so1019107pgw.6
-        for <git@vger.kernel.org>; Wed, 25 Jul 2018 10:25:45 -0700 (PDT)
+        id S1729352AbeGYSmM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jul 2018 14:42:12 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:46288 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729110AbeGYSmM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jul 2018 14:42:12 -0400
+Received: by mail-wr1-f68.google.com with SMTP id h14-v6so8137023wrw.13
+        for <git@vger.kernel.org>; Wed, 25 Jul 2018 10:29:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=gRsijP/zdPgWdagTyVUfXjTMGvt/dMPhMoH71hdkCpU=;
-        b=ntYG0L23HENQK90nWMTUERxkrOGiCX/oKzTePNRACh+4Efdu+XS7DCJgNyv3ukpthY
-         6tKIIRyCxR5FFi4xgcnG00guRxngNypYnnSLw5vFLoSXgajng294+XNlnOcDpJhSOQ74
-         z+Ge8jLsgi8pU0Snc38Fk260yzFuM5mUcV/08zA9CxzDphDM3rNuUmsTu40f4UhnjyVE
-         +Vwb9pLAXL0W1c0XV+7IRCPlkys9vn7rAaZIpEXolQ9nb+euEwCnXoL+iqFK1CwcHPzN
-         vLU6/gY6tPwWdhrpxq4LYR/Fq1e9YS1lQBW31U/cuvQkmFxshACUuxe62kyONBlH3pzZ
-         atqA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=lRi8kYbUTnJBZLo8/jMXqxWBPkgyaqfL6zuE/dL+WG0=;
+        b=e8xM15lo/XaGzAu8kenRRUnYUHN7R1poS2yiYp5CECpngvw2qvOjCoNWqzgieuJqgq
+         9r7nC6bPd6goxfpJjm+wComY/UyXuDswNxR0BqU7qeks7tmERopfJDrtFTI3Ax9BMAhe
+         aSA2Pk3jQdlgVqYfsV5vqgAJVIxZ413w4KlXyAMzQwV87Wx4U59lOmLg2pKRZHx/sdpK
+         AcT41TnfFNZHf2uohmTmD8blA5PvdjXVypolsK09SfhvOEp2Mu9QXNyAVzclu0vg8hXb
+         tC9J1uuyvuYDgmkMcmSuYXX/ZfxSuG3hW0BVpNecfxMqn8A4ZpD0QxwdQNYEfdAbtDLw
+         h9xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=gRsijP/zdPgWdagTyVUfXjTMGvt/dMPhMoH71hdkCpU=;
-        b=qqRH2803edn6pDc3+S9vTlclGND7jUO1I5qFkbK3GkuxxNpw8pDWL3QJCPsAn0FKzh
-         GhOBohr28Q2X+YvG0spJT3BEZGemsDLStG9vIbc9fFBCceltvvc6ZphLFwDgBj9/Gpqr
-         BgBsHMMJpICRHq7i22a84ICd8RytN2BB/d+cjAGalXmH9zUaQrqdc+P9N5ibhYXep3gO
-         zpzVtDmXlBL8ulwTlkHScjmgG2mV3VOsZazAb0tF8bTRwJjefrppypNWV/R8LxVymvL2
-         VBkNWj6T341G61/YKiDfTTO46Am96K9dGxtlRezdtNgC6uw+0AvxLudBc3ADnxJ6IiFk
-         xvkw==
-X-Gm-Message-State: AOUpUlE4rz99qN6Z4mIanqAs4MbetNnMFT8Kulq1bRyN31b2wu6Lcxkt
-        Bp/03xTCHkm4HYj23yFao9A=
-X-Google-Smtp-Source: AAOMgpfXdB2Gji1y6Wwwvk21LDMVVgw14C54Y5HBcIfQe93sLM/N3IxbqQXIKqONACHIDWHQMqtc3A==
-X-Received: by 2002:a65:5284:: with SMTP id y4-v6mr20541650pgp.283.1532539544551;
-        Wed, 25 Jul 2018 10:25:44 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id l79-v6sm39803413pfj.179.2018.07.25.10.25.43
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=lRi8kYbUTnJBZLo8/jMXqxWBPkgyaqfL6zuE/dL+WG0=;
+        b=UvDiGc1tHWOWkN+WsMtEO/kJPukh0Ylvx+Y7xLZR61BDqhM0NHeLRIy8VcF+TRjQSE
+         dzz0lntzhWOMUfm4LYTARmgWzWu6k0JJPvDcgnYcSrucaSpte8vPtzrtjadbk7hun46S
+         qvwHedIU0+jds44P/cW3oLuJKR1A37N3+1bMYgcblbew0tnzoV01mJvvADfNNaNJd4Tq
+         LmNM5sCWl2ApUJFGk17MH8KeZHLrMeo2PX/2NNNKquoXmxbXUsNza5oB183f5rrQ+92B
+         h14YxlZVhhY9WfLFNMyMPp4fDXe5etWig8Lwd1jQJ4RBuTKzq6p2uAs/81xuF1R3dDaL
+         12Vg==
+X-Gm-Message-State: AOUpUlEyCSCqlRhBzywHc3fIWqB70/AGsUWxJvLpqizWWo2Ti1F6Hyj3
+        MqAdn4Yl6Dk9J8quqV1FKc4=
+X-Google-Smtp-Source: AAOMgpftjTNG4dKd064YzOCdHYK9CSiNcD6eOS4jOrFYiRMEb6PabuxWh74W2HtAtf4pdejDVaCHNA==
+X-Received: by 2002:a5d:4410:: with SMTP id z16-v6mr15536060wrq.272.1532539772175;
+        Wed, 25 Jul 2018 10:29:32 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id j3-v6sm18675893wrt.70.2018.07.25.10.29.31
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 25 Jul 2018 10:25:43 -0700 (PDT)
-Date:   Wed, 25 Jul 2018 10:25:37 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Edward Thomson <ethomson@edwardthomson.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Wed, 25 Jul 2018 10:29:31 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Git List <git@vger.kernel.org>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        demerphq <demerphq@gmail.com>, Adam Langley <agl@google.com>,
-        keccak@noekeon.org
-Subject: Re: [PATCH 2/2] doc hash-function-transition: pick SHA-256 as NewHash
-Message-ID: <20180725172537.GA176329@aiede.svl.corp.google.com>
-References: <20180725083024.16131-1-avarab@gmail.com>
- <xmqqzhygwd5o.fsf@gitster-ct.c.googlers.com>
- <20180725083024.16131-3-avarab@gmail.com>
- <xmqq4lgnw9fj.fsf@gitster-ct.c.googlers.com>
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 10/14] format-patch: add --range-diff option to embed diff in cover letter
+References: <20180722095717.17912-1-sunshine@sunshineco.com>
+        <20180722095717.17912-11-sunshine@sunshineco.com>
+        <CACsJy8AOeiKp2JnG0h9mw40TdsNft80vUu573ORtqKMor7B+vw@mail.gmail.com>
+        <CAPig+cT_7eDyY6xGev4=dwpJnKufpMevO-+hGnXVt4ec0xhEiA@mail.gmail.com>
+Date:   Wed, 25 Jul 2018 10:29:30 -0700
+In-Reply-To: <CAPig+cT_7eDyY6xGev4=dwpJnKufpMevO-+hGnXVt4ec0xhEiA@mail.gmail.com>
+        (Eric Sunshine's message of "Mon, 23 Jul 2018 15:58:49 -0400")
+Message-ID: <xmqqva93usud.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq4lgnw9fj.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Junio C Hamano wrote:
-> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
-
->> The consensus on the mailing list seems to be that SHA-256 should be
->> picked as our NewHash, see the "Hash algorithm analysis" thread as of
->> [1]. Linus has come around to this choice and suggested Junio make the
->> final pick, and he's endorsed SHA-256 [3].
-
-I think this commit message focuses too much on the development
-process, in a way that makes it not necessary useful to the target
-audience that would be finding it with "git blame" or "git log".  It's
-also not self-contained, which makes it less useful in the same way.
-
-In other words, the commit message should be speaking for the project,
-not speaking about the project.  I would be tempted to say something as
-simple as
-
- hash-function-transition: pick SHA-256 as NewHash
-
- The project has decided.
-
- Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-
-and let any Acked-bys on the message speak for themselves.
-Alternatively, the commit message could include a summary of the
-discussion:
-
- From a security perspective, it seems that SHA-256, BLAKE2, SHA3-256,
- K12, and so on are all believed to have similar security properties.
- All are good options from a security point of view.
-
- SHA-256 has a number of advantages:
-
- * It has been around for a while, is widely used, and is supported by
-   just about every single crypto library (OpenSSL, mbedTLS, CryptoNG,
-   SecureTransport, etc).
-
- * When you compare against SHA1DC, most vectorized SHA-256
-   implementations are indeed faster, even without acceleration.
-
- * If we're doing signatures with OpenPGP (or even, I suppose, CMS),
-   we're going to be using SHA-2, so it doesn't make sense to have our
-   security depend on two separate algorithms when either one of them
-   alone could break the security when we could just depend on one.
-
- So SHA-256 it is.
-
-[...]
->> @@ -125,19 +122,19 @@ Detailed Design
->>  ---------------
->>  Repository format extension
->>  ~~~~~~~~~~~~~~~~~~~~~~~~~~~
->> -A NewHash repository uses repository format version `1` (see
->> +A SHA-256 repository uses repository format version `1` (see
->>  Documentation/technical/repository-version.txt) with extensions
->>  `objectFormat` and `compatObjectFormat`:
->>  
->>  	[core]
->>  		repositoryFormatVersion = 1
->>  	[extensions]
->> -		objectFormat = newhash
->> +		objectFormat = sha256
->>  		compatObjectFormat = sha1
+> On Mon, Jul 23, 2018 at 12:28 PM Duy Nguyen <pclouds@gmail.com> wrote:
+>> On Sun, Jul 22, 2018 at 11:58 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> > diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+>> > index f8a061794d..e7f404be3d 100644
+>> > --- a/Documentation/git-format-patch.txt
+>> > +++ b/Documentation/git-format-patch.txt
+>> > @@ -24,6 +24,7 @@ SYNOPSIS
+>> >                    [--to=<email>] [--cc=<email>]
+>> >                    [--[no-]cover-letter] [--quiet] [--notes[=<ref>]]
+>> >                    [--interdiff=<previous>]
+>> > +                  [--range-diff=<previous>]
+>>
+>> I wonder if people will use both --interdiff=<rev> and
+>> --range-diff=<rev> often enough to justify a shortcut
+>> "--all-kinds-of-diff=<rev>" so that we don't have to type <previous>
+>> twice. But I guess we don't have to worry about this right now.
 >
-> Whenever we said SHA1, somebody came and told us that the name of
-> the hash is SHA-1 (with dash).  Would we be nitpicker-prone in the
-> same way with "sha256" here?
-
-Regardless of how we spell it in prose, I think `sha256` as an
-identifier in configuration is the spelling people will expect.  For
-example, gpg ("gpg --version") calls it SHA256.
-
-[...]
->>  Selection of a New Hash
->>  -----------------------
->> @@ -611,6 +608,10 @@ collisions in 2^69 operations. In August they published details.
->>  Luckily, no practical demonstrations of a collision in full SHA-1 were
->>  published until 10 years later, in 2017.
->>  
->> +It was decided that Git needed to transition to a new hash
->> +function. Initially no decision was made as to what function this was,
->> +the "NewHash" placeholder name was picked to describe it.
->> +
->>  The hash function NewHash to replace SHA-1 should be stronger than
->>  SHA-1 was: we would like it to be trustworthy and useful in practice
->>  for at least 10 years.
+> My original thought was that --interdiff and --range-diff would be
+> mutually exclusive, however, I quickly realized that some people might
+> like to use both options together since each format has its strengths
+> and weaknesses. (I've used both types of diffs together when preparing
+> rerolls of my own series and found that, together, they provided a
+> better picture of the reroll than either would have alone.)
 >
-> This sentence needs a bit of updating to match the new paragraph
-> inserted above.  "should be stronger" is something said by those
-> who are still looking for one and/or trying to decide.
+> Based upon experience on this mailing list, I'd guess that most people
+> would use only one or the other, though that doesn't speak for other
+> projects. And, as you note, it's something that can be added later if
+> warranted (plus, this series is already long and I'd like to avoid
+> making it longer for something like this whose value is only
+> speculative).
 
-For what it's worth, I would be in favor of modifying the section
-more heavily.  For example:
+A few random thoughts.
 
- Choice of Hash
- --------------
- In early 2005, around the time that Git was written,  Xiaoyun Wang,
- Yiqun Lisa Yin, and Hongbo Yu announced an attack finding SHA-1
- collisions in 2^69 operations. In August they published details.
- Luckily, no practical demonstrations of a collision in full SHA-1 were
- published until 10 years later, in 2017.
+ * I find it somewhat disturbing that use of dash is inconsistent
+   between "--interdiff=<arg>" and "--range-diff=<arg>".
 
- Git v2.13.0 and later subsequently moved to a hardened SHA-1
- implementation by default that mitigates the SHAttered attack, but
- SHA-1 is still believed to be weak.
+ * Perhaps "--interdiff=<previous> --range-diff" may be a possible
+   way to say "use the same <previous> and show both"?  Do we want
+   "--range-diff=<previous> --interdiff" to mean the same two
+   meta-diff but shown in different order?
 
- The hash to replace this hardened SHA-1 should be stronger than SHA-1
- was: we would like it to be trustworthy and useful in practice
- for at least 10 years.
+ * Do we expect that we may find a third-kind of "meta-diff" that
+   sits next to interdiff and range-diff in the future?  I *think*
+   two separate options "--interdiff=..." and "--range-diff=..." is
+   still a good way forward, and we'd add "--frotzdiff=..." when
+   such a third-kind of "meta-diff" turns out to be useful, without
+   fearing proliferation of options, and that would be OK, but I am
+   just thinking aloud to see if other people have better ideas.
 
- Some other relevant properties:
 
- 1. A 256-bit hash (long enough to match common security practice; not
-    excessively long to hurt performance and disk usage).
-
- 2. High quality implementations should be widely available (e.g., in
-    OpenSSL and Apple CommonCrypto).
-
- 3. The hash function's properties should match Git's needs (e.g. Git
-    requires collision and 2nd preimage resistance and does not require
-    length extension resistance).
-
- 4. As a tiebreaker, the hash should be fast to compute (fortunately
-    many contenders are faster than SHA-1).
-
- We choose SHA-256.
-
-Changes:
-
-- retitled since the hash function has already been selected
-- added some notes about sha1dc
-- when discussing wide implementation availability, mentioned
-  CommonCrypto too, as an example of a non-OpenSSL library that the
-  libgit2 authors care about
-- named which function is chosen
-
-We could put the runners up in the "alternatives considered" section,
-but I don't think there's much to say about them here so I wouldn't.
-
-Thanks and hope that helps,
-Jonathan
