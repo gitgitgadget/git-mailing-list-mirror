@@ -2,107 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AED301F597
-	for <e@80x24.org>; Wed, 25 Jul 2018 18:45:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F6F91F597
+	for <e@80x24.org>; Wed, 25 Jul 2018 19:30:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730435AbeGYT6f (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jul 2018 15:58:35 -0400
-Received: from mail-yb0-f194.google.com ([209.85.213.194]:33488 "EHLO
-        mail-yb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729170AbeGYT6f (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jul 2018 15:58:35 -0400
-Received: by mail-yb0-f194.google.com with SMTP id e84-v6so3388397ybb.0
-        for <git@vger.kernel.org>; Wed, 25 Jul 2018 11:45:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ObWHzLvqhtYI31u5NntvjY1vtpLPHB9bKa0l4qpj1Gg=;
-        b=T09LMN8ztkj4tcRPsPBDof59kjMV6ozl9sz0T3Tubxvr7YWh9KGr/t/jcR+dNXsFXv
-         1EtmitHhkzQrvCAe903cLPLsVDs/btCoy+CFUe6QADK+FMZt0sbVkeAYm+S8+B2LQDqv
-         BK7R1IZm5fbdtb1Krl5rQaqMLUbIQtNsCWvgAUI6E1HJXduk+nuy3xQQZruHaCAU06HP
-         Djg2iyU2tkPAVmJqJdDNg2XuLRioiwGyWYeLG4vPMMDwNzMpJC/2v0nFfSU3R0QQLDyJ
-         PVfsTbaKgpDaeMkWpZYlu1ankqXc8KLv3RwDs3XArq80tLuBNi1pxPr4Aa1JZM1BW/Su
-         RHfQ==
+        id S1730014AbeGYUoB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jul 2018 16:44:01 -0400
+Received: from mail-yb0-f193.google.com ([209.85.213.193]:40486 "EHLO
+        mail-yb0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729821AbeGYUoA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jul 2018 16:44:00 -0400
+Received: by mail-yb0-f193.google.com with SMTP id y11-v6so3436791ybm.7
+        for <git@vger.kernel.org>; Wed, 25 Jul 2018 12:30:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ObWHzLvqhtYI31u5NntvjY1vtpLPHB9bKa0l4qpj1Gg=;
-        b=J7smxvBpysi2ohVguLNvRg0MgY5VPAkZgWxuFxozhnd/YKtX6ip4IYgtQtTJ+UUB13
-         zK2fh8q8sCV8FipPEtoD6wu3l8W0NbmoSus1YI3zMKKANWTE2eujAdZxi7NMh/22fV6/
-         azzzIbatJv9ikMX06qHTzW+nl8KJz7kEGqPKpTlD5T2nHI+89FbICq8gXllqo8jGCRb8
-         VG2YLF1ZKVo22j39qC+spHOcvR5CjJqj0J/v2a306QG76BAJ7l8aNygFoTfS3D8pperN
-         lnTDiEPCay31wjGmqF7Zm/q0G0kyUVlV2ytXtECn8VSRWevl72q2E0zkmOPZwn2nYGIa
-         NsAg==
-X-Gm-Message-State: AOUpUlGzXBuX7KQtY8clTfcPOxC6qIkj9iw8l96qE9Yu8KaOLgPMVONT
-        wmkcHR0yB4HKlw198E7ShoiVxA2sWN9tE5Kfjr0j1Q==
-X-Google-Smtp-Source: AAOMgpdgawUH4+qluH9ih+CRLoTaqU5djlHzlXiv8XW3kjHpdW0T2u5wER+EA4MuFthDdAVcC61elkWxI+lzFuI3pqM=
-X-Received: by 2002:a25:7144:: with SMTP id m65-v6mr1814258ybc.352.1532544339208;
- Wed, 25 Jul 2018 11:45:39 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=2h6q9qgtV4/8piGPHxkbTce2Syte2EFLJOf7JG7LInA=;
+        b=emnrDsts4ukM7lhbAh/uwmULa4R/dOFxPDygRzprzMFsemP680IrTwHIPe6Zrx0+7E
+         5GY7+Nz30Bbm7cWqDa5JTx7FuI4z87x1J87iz90EtEf4iUa1rEXttF8DxqAYGfe9rNex
+         nUfnktuWxpeHGjkEx5XYs+ANr1g1iVEVJBgwff3KSqv82Dal5wDRkcbHpH7AmNSj5u70
+         146ethf610Yy69uh9TDoVkWABT3aA+BiO7TK6dhwookCsYe/4xYIKX48qGIoOj+2YcUg
+         qW2HveVOT0V1a3z2ULSHZetYvhtx2YpxyQFHFnIjH6oebuz31EwJ/U90frJjhLC2PmEU
+         vykQ==
+X-Gm-Message-State: AOUpUlFGHaAsKdNm1Y+iTPoXnvLtXFGZvkpk6o/zeFjkGZ0C5kD2Y635
+        1Df2op+R7S/F3YUH026OnbQL5E3ioFQhN2tu1WA=
+X-Google-Smtp-Source: AAOMgpczri0AuqAS2kpzF9Tsbby5ICo8CZEdgyEDXhodzVmO2omBWAC/3kHJSLTfdt1Yzp4byABQkzAdxA7gbTkIe6c=
+X-Received: by 2002:a25:9b03:: with SMTP id y3-v6mr12213735ybn.194.1532547055192;
+ Wed, 25 Jul 2018 12:30:55 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180710121557.6698-1-alban.gruin@gmail.com> <20180724163221.15201-1-alban.gruin@gmail.com>
-In-Reply-To: <20180724163221.15201-1-alban.gruin@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 25 Jul 2018 11:45:28 -0700
-Message-ID: <CAGZ79kbjy5aXbtThLU7odd15Gf5WZ3c3RGDgxfpcBEh7UnJqoA@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v4 00/20] rebase -i: rewrite in C
-To:     Alban Gruin <alban.gruin@gmail.com>
-Cc:     git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Pratik Karki <predatoramigo@gmail.com>,
+References: <20180722095717.17912-1-sunshine@sunshineco.com>
+ <20180722095717.17912-11-sunshine@sunshineco.com> <CACsJy8AOeiKp2JnG0h9mw40TdsNft80vUu573ORtqKMor7B+vw@mail.gmail.com>
+ <CAPig+cT_7eDyY6xGev4=dwpJnKufpMevO-+hGnXVt4ec0xhEiA@mail.gmail.com> <xmqqva93usud.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqva93usud.fsf@gitster-ct.c.googlers.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 25 Jul 2018 15:30:44 -0400
+Message-ID: <CAPig+cS-haNwJha44gncB9PrXRPcEPuqDVGLgKii29h=abq6sA@mail.gmail.com>
+Subject: Re: [PATCH 10/14] format-patch: add --range-diff option to embed diff
+ in cover letter
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Git List <git@vger.kernel.org>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Junio C Hamano <gitster@pobox.com>
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Stefan Beller <sbeller@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 24, 2018 at 9:34 AM Alban Gruin <alban.gruin@gmail.com> wrote:
+On Wed, Jul 25, 2018 at 1:29 PM Junio C Hamano <gitster@pobox.com> wrote:
+> A few random thoughts.
 >
-> This patch series rewrite the interactive rebase from shell to C.
->
-> It is based on master (as of 2018-07-24).
->
-> Changes since v3:
->
->  - The `--verbose` option is stored directly into opts.verbose
->
->  - Drop includes in rebase-interactive.h
->
->  - skip_unnecessary_picks() now returns an object_id instead of a string
->
->  - Add a test case to ensure interactive rebase aborts when the todo
->    list only has commented-out commands
->
->  - complete_action() aborts when the todo list only has commented-out
->    commands
->
->  - Drop the `keep_empty` parameter of complete_action()
->
->  - Don=E2=80=99t remove the modes `--shorten-oids` and `--expand-oids` fr=
-om
->    git-rebase--helper
->
->  - Replace `ret =3D !!x(); return ret` by `ret =3D x(); return !!ret`
->
->  - Fail if `--make-script` is provided with two arguments instead of
->    one
->
->  - Rewrite write_basic_state() and init_basic_state() in C
->
->  - Rewrite git-rebase--interactive.sh as a builtin
->
+>  * I find it somewhat disturbing that use of dash is inconsistent
+>    between "--interdiff=<arg>" and "--range-diff=<arg>".
 
-I gave that series a read and I think it looks good.
+I went with the common spellings we've seen on the mailing lists.
+"Interdiff", in particular, seems well established. "Range-diff" is
+new, so we don't have much data other than what we saw during the
+discussion when renaming git-branch-diff, and, of course,
+git-branch-diff itself is hyphenated. Another consideration: "inter"
+is a prefix, whereas "range" stands on its own.
 
-Thanks,
-Stefan
+I don't have a super strong opinion, as I'm used to both the
+hyphenated name (from discussion and the command name itself), and the
+unhyphenated name ("rangediff" was my local branch name). I'm open to
+opinions.
+
+We probably wouldn't want to do so, but another possibility is to
+recognize both --range-diff and --rangediff.
+
+>  * Perhaps "--interdiff=<previous> --range-diff" may be a possible
+>    way to say "use the same <previous> and show both"?  Do we want
+>    "--range-diff=<previous> --interdiff" to mean the same two
+>    meta-diff but shown in different order?
+
+That's not at all a bad shorthand. I like it better than the
+"--all-kinds-of-diff=<rev>" mentioned earlier. We don't need to make a
+decision for this series since such functionality can be added later.
+
+The order of specification of the two options affecting the order of
+output is also an interesting idea. We may want to decide that before
+graduating this topic.
+
+>  * Do we expect that we may find a third-kind of "meta-diff" that
+>    sits next to interdiff and range-diff in the future?  I *think*
+>    two separate options "--interdiff=..." and "--range-diff=..." is
+>    still a good way forward, and we'd add "--frotzdiff=..." when
+>    such a third-kind of "meta-diff" turns out to be useful, without
+>    fearing proliferation of options, and that would be OK, but I am
+>    just thinking aloud to see if other people have better ideas.
+
+I did consider other approaches, such as a more generic option. For
+example, --embed=range-diff:<prev>. I also considered supporting more
+complex use-cases. For instance, git-range-diff itself accepts the two
+ranges in several formats ("a..b c..d" or "x...z" or "i j k"), plus
+the creation-factor can be tweaked, so I weighed ways of incorporating
+all that detail into the single argument to --range-diff.
+
+However, those are all difficult to use (onerous to type and remember)
+and difficult to document. Thus, I opted for simplicity of individual,
+straight-forward options (--interdiff, --range-diff,
+--creation-factor), which are easy to type, remember, and document.
+
+We may want to revisit this later if git-format-patch grows additional
+similar options.
