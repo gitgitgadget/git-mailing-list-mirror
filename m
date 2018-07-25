@@ -2,65 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F4191F597
-	for <e@80x24.org>; Wed, 25 Jul 2018 18:41:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AED301F597
+	for <e@80x24.org>; Wed, 25 Jul 2018 18:45:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729456AbeGYTyj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jul 2018 15:54:39 -0400
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:40764 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729354AbeGYTyj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jul 2018 15:54:39 -0400
-Received: by mail-lj1-f195.google.com with SMTP id j19-v6so7557417ljc.7
-        for <git@vger.kernel.org>; Wed, 25 Jul 2018 11:41:43 -0700 (PDT)
+        id S1730435AbeGYT6f (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jul 2018 15:58:35 -0400
+Received: from mail-yb0-f194.google.com ([209.85.213.194]:33488 "EHLO
+        mail-yb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729170AbeGYT6f (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jul 2018 15:58:35 -0400
+Received: by mail-yb0-f194.google.com with SMTP id e84-v6so3388397ybb.0
+        for <git@vger.kernel.org>; Wed, 25 Jul 2018 11:45:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=+4zR+CBh4BG+bsVT+ZcQSwTiFRR/pIXKGj31YRBI9KY=;
-        b=j1o3x5uedbH9/4BPxzdYA77/jlKQbrJX9ew5pfUHUcuymmRgRNPOINv1TvrUK0YYFB
-         0YKb9KUPJ4clna+WwYLDBxAucoHOupDhmwfgTIVGWzZZyHM5ER56xhm5EvzAQcw3G5tS
-         9gli80SuoypI//nmGlbK3q8frKJYq5HoHNTUaMlTo5oE81T9LN7nVOUwZ7+70j+GvxTw
-         wpy9Ef8h8A7Vfx9l9TQpZn91u0vuKN0DVQW9ymBn9SfsTf0GL99+4H26ASNYdmgcJlZB
-         iH5xz200dRZCCxX5Wbt03o5/JB4wmwHTFhSE8THdHLl/3KMulXeOifA+34XTXcxB+71w
-         SFjw==
+        bh=ObWHzLvqhtYI31u5NntvjY1vtpLPHB9bKa0l4qpj1Gg=;
+        b=T09LMN8ztkj4tcRPsPBDof59kjMV6ozl9sz0T3Tubxvr7YWh9KGr/t/jcR+dNXsFXv
+         1EtmitHhkzQrvCAe903cLPLsVDs/btCoy+CFUe6QADK+FMZt0sbVkeAYm+S8+B2LQDqv
+         BK7R1IZm5fbdtb1Krl5rQaqMLUbIQtNsCWvgAUI6E1HJXduk+nuy3xQQZruHaCAU06HP
+         Djg2iyU2tkPAVmJqJdDNg2XuLRioiwGyWYeLG4vPMMDwNzMpJC/2v0nFfSU3R0QQLDyJ
+         PVfsTbaKgpDaeMkWpZYlu1ankqXc8KLv3RwDs3XArq80tLuBNi1pxPr4Aa1JZM1BW/Su
+         RHfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=+4zR+CBh4BG+bsVT+ZcQSwTiFRR/pIXKGj31YRBI9KY=;
-        b=OvDXErzW7kC5RjUGaztKSMe+hMkp+U5iTbRRaKajf2zXhbes2ynTLcuAwo3lzRJVj2
-         W5pYZZBeyungMuUELi14/azkRLlB35dXdQ0yxvQrR30meuiLTU2W2TP2PLpfKB6thHw9
-         fuLm/ltWus2vwBAJIlrr2NUgOLha7l1Ou1BBXbCVTH8LmPloGbR9fNNvJ3Fp3HwVzK4y
-         /CrB8XIHLxSde69pO+9AzYZjfcyguGjcWzCUp5P/eTwf1IdugMlNCFm/lIJoPeBnZ/1N
-         o1BVnvfdPbZ4D3WvIICUanVxhKboAxQaPuobL1rdZBtun/o9C1i80X2hghel6eYzOG6h
-         Mn+A==
-X-Gm-Message-State: AOUpUlHDoBh9/DfCju6HarHIGjP10yAgHoRyrnQs0b0mMlia0xNKV+sj
-        QXz2tSxiRMynSnN6wTMAQwaxd7Lv3jeH5ukInWQ=
-X-Google-Smtp-Source: AAOMgpehybQOtVhMrFtIk4PaCYxB8G81jDROXi7w1eABroWYkBYR1AC21PbR85ReX1/6mt3X3/TfeLOl0Hv2FJlefSI=
-X-Received: by 2002:a2e:8807:: with SMTP id x7-v6mr15742464ljh.98.1532544102841;
- Wed, 25 Jul 2018 11:41:42 -0700 (PDT)
+        bh=ObWHzLvqhtYI31u5NntvjY1vtpLPHB9bKa0l4qpj1Gg=;
+        b=J7smxvBpysi2ohVguLNvRg0MgY5VPAkZgWxuFxozhnd/YKtX6ip4IYgtQtTJ+UUB13
+         zK2fh8q8sCV8FipPEtoD6wu3l8W0NbmoSus1YI3zMKKANWTE2eujAdZxi7NMh/22fV6/
+         azzzIbatJv9ikMX06qHTzW+nl8KJz7kEGqPKpTlD5T2nHI+89FbICq8gXllqo8jGCRb8
+         VG2YLF1ZKVo22j39qC+spHOcvR5CjJqj0J/v2a306QG76BAJ7l8aNygFoTfS3D8pperN
+         lnTDiEPCay31wjGmqF7Zm/q0G0kyUVlV2ytXtECn8VSRWevl72q2E0zkmOPZwn2nYGIa
+         NsAg==
+X-Gm-Message-State: AOUpUlGzXBuX7KQtY8clTfcPOxC6qIkj9iw8l96qE9Yu8KaOLgPMVONT
+        wmkcHR0yB4HKlw198E7ShoiVxA2sWN9tE5Kfjr0j1Q==
+X-Google-Smtp-Source: AAOMgpdgawUH4+qluH9ih+CRLoTaqU5djlHzlXiv8XW3kjHpdW0T2u5wER+EA4MuFthDdAVcC61elkWxI+lzFuI3pqM=
+X-Received: by 2002:a25:7144:: with SMTP id m65-v6mr1814258ybc.352.1532544339208;
+ Wed, 25 Jul 2018 11:45:39 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180610150521.9714-1-max@max630.net> <20180610150521.9714-4-max@max630.net>
- <20180725121435.20519-1-szeder.dev@gmail.com> <20180725145100.GA1959@jessie.local>
-In-Reply-To: <20180725145100.GA1959@jessie.local>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Wed, 25 Jul 2018 20:41:31 +0200
-Message-ID: <CAM0VKjkSMqPy=N3_0HUNxpCFwusrD_XE5j7kMsE4L-79g2t_VA@mail.gmail.com>
-Subject: Re: [PATCH v8 3/3] http-backend: respect CONTENT_LENGTH for receive-pack
-To:     Max Kirillov <max@max630.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff King <peff@peff.net>,
-        Florian Manschwetus <manschwetus@cs-software-gmbh.de>,
-        Chris Packham <judge.packham@gmail.com>,
-        Konstantin Khomoutov <kostix+git@007spb.ru>,
-        Git mailing list <git@vger.kernel.org>
+References: <20180710121557.6698-1-alban.gruin@gmail.com> <20180724163221.15201-1-alban.gruin@gmail.com>
+In-Reply-To: <20180724163221.15201-1-alban.gruin@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 25 Jul 2018 11:45:28 -0700
+Message-ID: <CAGZ79kbjy5aXbtThLU7odd15Gf5WZ3c3RGDgxfpcBEh7UnJqoA@mail.gmail.com>
+Subject: Re: [GSoC][PATCH v4 00/20] rebase -i: rewrite in C
+To:     Alban Gruin <alban.gruin@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -68,63 +66,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 25, 2018 at 4:51 PM Max Kirillov <max@max630.net> wrote:
+On Tue, Jul 24, 2018 at 9:34 AM Alban Gruin <alban.gruin@gmail.com> wrote:
 >
-> On Wed, Jul 25, 2018 at 02:14:35PM +0200, SZEDER G=C3=A1bor wrote:
-> >> +    # sometimes there is fatal error buit the result is still 200
-
-> >> +    if grep 'fatal:' act.err
-> >> +    then
-> >> +            return 1
-> >> +    fi
-> >
-> > I just happened to stumble upon a failure because of 'fatal: the
-> > remote end hung up unexpectedly' in the test 'push plain'.
+> This patch series rewrite the interactive rebase from shell to C.
 >
-> Did it happen once or repeated? It is rather strange, that
-> one shoud not fail. Which OS it was?
-
-Only once, so far.  It was one of my OSX build jobs on Travis CI, but
-I don't know what OSX version is used.
-
-'act.err' contained this (which will get line-wrapped, I'm afraid):
-
-++handler_type=3Dreceive
-++shift
-++env CONTENT_TYPE=3Dapplication/x-git-receive-pack-request
-QUERY_STRING=3D/repo.git/git-receive-pack
-'PATH_TRANSLATED=3D/Users/travis/t/trash
-dir.t5562/.git/git-receive-pack' GIT_HTTP_EXPORT_ALL=3DTRUE
-REQUEST_METHOD=3DPOST
-/Users/travis/build/szeder/git-cooking-topics-for-travis-ci/t/t5562/invoke-=
-with-content-length.pl
-push_body git http-backend
-<...128 zero bytes...>fatal: the remote end hung up unexpectedly
-
-I couldn't reproduce it on my Linux box.
-
-> There have been doubds that a random incoming signal can
-> trigger such a failure.
+> It is based on master (as of 2018-07-24).
 >
-> > What does that "sometimes" in the above comment mean, and how often
-> > does such a failure happen?  I see these patches are in 'pu' for over
-> > a month now, so based on the number of reflog entries since then it
-> > happened once from about 30-35 builds on Travis CI so far.
+> Changes since v3:
 >
-> "sometimes" here means "for some kinds of fatal error
-> failure", there is nothing random in it.
-
-> >> +    ! verify_http_result "200 OK"
-> >
-> > ... this function would return error (because of that 'if grep fatal:
-> > ...' statement) without even looking at the status, but the test would
-> > still succeed.  Is that really the desired behavior here?
+>  - The `--verbose` option is stored directly into opts.verbose
 >
-> Yes, it is a desired behavior. A failure is expected here,
-> and the failure does not show up as non-200 status, as
-> described above.
+>  - Drop includes in rebase-interactive.h
+>
+>  - skip_unnecessary_picks() now returns an object_id instead of a string
+>
+>  - Add a test case to ensure interactive rebase aborts when the todo
+>    list only has commented-out commands
+>
+>  - complete_action() aborts when the todo list only has commented-out
+>    commands
+>
+>  - Drop the `keep_empty` parameter of complete_action()
+>
+>  - Don=E2=80=99t remove the modes `--shorten-oids` and `--expand-oids` fr=
+om
+>    git-rebase--helper
+>
+>  - Replace `ret =3D !!x(); return ret` by `ret =3D x(); return !!ret`
+>
+>  - Fail if `--make-script` is provided with two arguments instead of
+>    one
+>
+>  - Rewrite write_basic_state() and init_basic_state() in C
+>
+>  - Rewrite git-rebase--interactive.sh as a builtin
+>
 
-OK, then I misunderstood that comment.
+I gave that series a read and I think it looks good.
 
-Perhaps a different wording could make it slightly better?  E.g. "In
-some of these tests ..." instead of that "sometimes".  Dunno.
+Thanks,
+Stefan
