@@ -2,136 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 265331F597
-	for <e@80x24.org>; Wed, 25 Jul 2018 22:56:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C0AA31F597
+	for <e@80x24.org>; Wed, 25 Jul 2018 23:44:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731736AbeGZAKp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jul 2018 20:10:45 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37024 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1731526AbeGZAKp (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 25 Jul 2018 20:10:45 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:f1fc:eee3:60de:bdd8])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 91C276046C;
-        Wed, 25 Jul 2018 22:56:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1532559411;
-        bh=PtiWozK485gOYoKjOSP+DB7MpSR+BGZyJmTUf/dcHlQ=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=HR4B42c6FTHBqIt3YkZRM/WZYEDei8KtZ1H5I4fEn38ltX+pg/73QSp8WIXks1dW6
-         m9RogSzlka56PkBnTY2JUslYwRfrYyKxB1ujSzyz5Tli0jQMh37cA1s+9ziqumuMmq
-         PE1MehQ6ZHG49pzYDahNAZT3alsB6Hh7HgLliKczPmb99G1D5AlzdrqhPZlN8mWQoL
-         OOnnnrM9YJRbZT/z8oGa85ZMIGDWIKO1qKqrzTURGaylvVIZ7+fZZC9roKYMEYh1m5
-         FwTKSaEAs3lhh78CLfrCfek2iE1eDzl9IvSwzsX5MvekWUqGCRSPVcD/iUZu9r+GkA
-         zRbTI+/nxo+Z/bUaqql4yEU6TrFOh8/T7X8SAP04qHSXdjeqVNgk8tJc/CVSxbZM8/
-         t6cZvtz/ldp+DBWHlK+hmUcaJhbNsIZS025nSrCFvIL/MZhax21CJQ4cSKMGWYzze0
-         l85nJSBb0E1Xwg+eZMabaqHFi0dIVNQoDVa/uS4p4dBY/FQSiUa
-Date:   Wed, 25 Jul 2018 22:56:45 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Edward Thomson <ethomson@edwardthomson.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        demerphq <demerphq@gmail.com>, Adam Langley <agl@google.com>,
-        keccak@noekeon.org
-Subject: Re: [PATCH 2/2] doc hash-function-transition: pick SHA-256 as NewHash
-Message-ID: <20180725225645.GK18502@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>,
-        Edward Thomson <ethomson@edwardthomson.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        demerphq <demerphq@gmail.com>, Adam Langley <agl@google.com>,
-        keccak@noekeon.org
-References: <20180725083024.16131-1-avarab@gmail.com>
- <xmqqzhygwd5o.fsf@gitster-ct.c.googlers.com>
- <20180725083024.16131-3-avarab@gmail.com>
- <xmqq4lgnw9fj.fsf@gitster-ct.c.googlers.com>
+        id S1731513AbeGZA6F (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jul 2018 20:58:05 -0400
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:34510 "EHLO
+        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731401AbeGZA6E (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jul 2018 20:58:04 -0400
+Received: by mail-wm0-f54.google.com with SMTP id l2-v6so735894wme.1
+        for <git@vger.kernel.org>; Wed, 25 Jul 2018 16:44:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=aeXvCV65f2RuR0p/ixCGY6FWk8IRvXJK/mb8VCwYlM0=;
+        b=gSgddzT0AKEz4szRCaohq1y8K9lpqY/OP2pwd9oJ57fvPQ/ZQUoEMarOwcdjuSt/TX
+         FV35UdQpZAVPTxkXrOcS6m/F589ry7WqYRDybwmWTDCSS9zrLb5hy1jMbLiNvudizwtw
+         QKvcwWGeJKFoSdDqSMHmA4bTtHR0eFBuHDDLvmWCajFKxuYLK2946edF5/Is9qtmOFgS
+         jbbfYpz8IbhQ90K6cy0jnQR6v5LpA/awP2ItthL7VfFtPEsOibpeihoxalJEEXz6Ci6f
+         ATXYOc6JPoVBZlrPgnDNhQ/4J5S9BjrpRFo5laIo7q0makRGHrKuyjQlTaBsDF9wLt6k
+         Avng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=aeXvCV65f2RuR0p/ixCGY6FWk8IRvXJK/mb8VCwYlM0=;
+        b=FnvDwAsYs8qfncew2iUR+Q9CIxP/tHTKnwSwBn2SnSyQ6lp19/EVvn2f8soFRtZxqV
+         vPKp7N30Y6QKvfT4omoKccYJJrc645+1aSiUzn/309/gKl5XffNAQi58J8ewhu8vd2D6
+         M77WbjvzmtyFc8O7C0nJFohTRwZFYqhSg3jXpL5ZiANJ39FXR0+WP15Z4MqG2ylF4x1L
+         oaFd4wF2rcIjfTnv3Jf9/L2NrvDKswMbVlKCi+Byjta1IRTuXxsmcxbkbLWdaaamFWdk
+         sPjD6f3a6LpuaX0goarokOiTxGMkhY3P5DrgIxy3QYNZ/mgHwJxv+ClepR3yQnqW3JOo
+         i/pw==
+X-Gm-Message-State: AOUpUlFwT4wuQ3U4jjaMO+HMx2LWzLFy70pBR97bJXupgOq6cRSjeF57
+        AGySRN/wzDEh7Zgg0dm83s4=
+X-Google-Smtp-Source: AAOMgpdz7EI8WDv53Cn5RvPnpCKNZNUqS/m5z3xyHaHF7xIQonp3NSwjHrzkzLD18YcQEpB2WvVijg==
+X-Received: by 2002:a1c:8313:: with SMTP id f19-v6mr49664wmd.144.1532562241776;
+        Wed, 25 Jul 2018 16:44:01 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id v15-v6sm61045wmc.16.2018.07.25.16.43.59
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 25 Jul 2018 16:44:00 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Jul 2018, #03; Wed, 25)
+References: <xmqqd0vbt14e.fsf@gitster-ct.c.googlers.com>
+        <CAGZ79kbO1KOfDgjT5duEd49MZ=EaYLtTDeg2efVO5kkO9QFx7g@mail.gmail.com>
+Date:   Wed, 25 Jul 2018 16:43:59 -0700
+In-Reply-To: <CAGZ79kbO1KOfDgjT5duEd49MZ=EaYLtTDeg2efVO5kkO9QFx7g@mail.gmail.com>
+        (Stefan Beller's message of "Wed, 25 Jul 2018 15:56:17 -0700")
+Message-ID: <xmqq4lgmubi8.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="6TC23+W66xmFESAX"
-Content-Disposition: inline
-In-Reply-To: <xmqq4lgnw9fj.fsf@gitster-ct.c.googlers.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.17.0-1-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Stefan Beller <sbeller@google.com> writes:
 
---6TC23+W66xmFESAX
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> * js/range-diff (2018-07-25) 21 commits
 
-On Wed, Jul 25, 2018 at 09:45:52AM -0700, Junio C Hamano wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
->=20
-> > @@ -125,19 +122,19 @@ Detailed Design
-> >  ---------------
-> >  Repository format extension
-> >  ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> > -A NewHash repository uses repository format version `1` (see
-> > +A SHA-256 repository uses repository format version `1` (see
-> >  Documentation/technical/repository-version.txt) with extensions
-> >  `objectFormat` and `compatObjectFormat`:
-> > =20
-> >  	[core]
-> >  		repositoryFormatVersion =3D 1
-> >  	[extensions]
-> > -		objectFormat =3D newhash
-> > +		objectFormat =3D sha256
-> >  		compatObjectFormat =3D sha1
->=20
-> Whenever we said SHA1, somebody came and told us that the name of
-> the hash is SHA-1 (with dash).  Would we be nitpicker-prone in the
-> same way with "sha256" here?
+> I think the current coloring is good enough to ship, but it still has
+> errors around corners, for example introduction of new files,
+> having lines in the inner diff as:
+>
+>      diff --git a/Makefile b/Makefile
+>      --- a/Makefile
+>      +++ b/Makefile
+>
+> will be colored white/red/green (in that order), but in the outer diff
+> these are all "context", but as these specific context lines happen
+> to start with +/- we color them.
+> If we want to be perfect, we rather need to parse&understand
+> the inner diff on a more detailed level, but I would argue to leave
+> that to a later stage for another volunteer to step in and cleanup.
 
-I actually have a patch to make the names "sha1" and "sha256".  My
-rationale is that it's shorter and easier to type.  People can quibble
-about it when I send it to the list, but that's what I'm proposing at
-least.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+I think the primary part of coloring i.e. "white is common, green is
+added, red is removed" together with "bold is new, dimmed is old" is
+quite usable and not broken.  
 
---6TC23+W66xmFESAX
-Content-Type: application/pgp-signature; name="signature.asc"
+The non-coloring part, like patch matching and driving diff over a
+pair of "git show" output, looked reasonably solid when I read it
+(even though I admit I did not audit for leaks).
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.9 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAltZAC0ACgkQv1NdgR9S
-9osPpg/+N1BNaP7n4vkPBn3WnhNGjci70olWX5mW62Gpb49VSKEMw25ag4LHEvPx
-Jq+es2Ij+IQ5fPNcLdzW9H2tFNLxunLdv5whWqQpvykSRDQHK9vKfFQthptdwkfY
-6t3Qhd7NAz/1wlVDvJVKZEZCwGIGOqmpwXMoGl8FFgpFrGWVyjFlXMQtAU4hUagU
-S1l1soEerRQrhG7jOeS2oVsDzGEMd3Rn3MKnRCaBV/DX5lS6q0TyosGVCN7pqsts
-gV6JshIEPY2s8FWZ+Gteak4XQ+4ax/7j9qw72jKMFuhjEfPDh6T59Yeqi7Jo7l2h
-/iRh6ibiVeMNOfN+pBtKz32aeybNKzuf5IfF+HCypSbfZmhFpy9sw4NgANmD04F5
-mrJCadcy90M4xNzRb7Nn1zgjiBEGoOmy2YLUN5vzCVioDbOCqdWRy5U+UME9iioC
-lyDApBEiGXcuhXh6qXC4KY/thVhi1f7hn2OVafG1N+KO8Y8FRIh8KsKGBkEoCNE0
-W2C6BXo2oV38JYodTRcYN3pz0MJydF4TsY0NVCxPKefqiTrRj1POqRClmEifhUIC
-cU5b9Hm10wuI4bNKjMIvL6jqw5YCbAwga30Tl1ACw0VJMzSSNc94rtSbKY4pv4Ls
-LpuIwqHPwmDD+xMgt9+NPa6y2k05bZtxjKfM0TMrqXCPa4JVGRI=
-=yM50
------END PGP SIGNATURE-----
-
---6TC23+W66xmFESAX--
+The only thing I think we would be better off without is the
+coloring of whitespace errors (at least in the current shape).  I
+cannot shake the feeling that temporarily setting core.whitespace to
+nothing (i.e. we do not detect any whitespace errors and hence we do
+not show any) while running diff-of-diff may be a workaround that is
+less damaging to the code base than piling band-aid on the codepath
+that is shared with plain diff (not diff-of-diff).
