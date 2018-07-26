@@ -2,65 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1608F1F597
-	for <e@80x24.org>; Thu, 26 Jul 2018 07:24:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5982D1F597
+	for <e@80x24.org>; Thu, 26 Jul 2018 08:12:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728620AbeGZIkB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jul 2018 04:40:01 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59744 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727742AbeGZIkB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jul 2018 04:40:01 -0400
-Received: (qmail 21879 invoked by uid 109); 26 Jul 2018 07:24:31 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 26 Jul 2018 07:24:31 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14211 invoked by uid 111); 26 Jul 2018 07:24:31 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 26 Jul 2018 03:24:31 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Jul 2018 03:24:29 -0400
-Date:   Thu, 26 Jul 2018 03:24:29 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jul 2018, #03; Wed, 25)
-Message-ID: <20180726072429.GA7625@sigill.intra.peff.net>
-References: <xmqqd0vbt14e.fsf@gitster-ct.c.googlers.com>
+        id S1728825AbeGZJ2Z (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jul 2018 05:28:25 -0400
+Received: from bsmtp7.bon.at ([213.33.87.19]:34855 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728584AbeGZJ2Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jul 2018 05:28:25 -0400
+Received: from [192.168.1.181] (unknown [185.39.175.184])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 41blFk0JQxz5tlT;
+        Thu, 26 Jul 2018 10:12:41 +0200 (CEST)
+Subject: Re: [PATCH v2] pack-objects: fix performance issues on packing large
+ deltas
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>
+References: <20180720153943.575-1-pclouds@gmail.com>
+ <20180722080421.12887-1-pclouds@gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <c872c664-a078-853d-4ce9-631dfd110c94@kdbg.org>
+Date:   Thu, 26 Jul 2018 10:12:40 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqd0vbt14e.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <20180722080421.12887-1-pclouds@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 25, 2018 at 03:13:37PM -0700, Junio C Hamano wrote:
+Am 22.07.2018 um 10:04 schrieb Nguyễn Thái Ngọc Duy:
+> +	if (size < pack->oe_delta_size_limit) {
+> +		e->delta_size_ = size;
+> +		e->delta_size_valid = 1;
+> +	} else {
+> +		packing_data_lock(pack);
+> +		if (!pack->delta_size)
+> +			ALLOC_ARRAY(pack->delta_size, pack->nr_alloc);
+> +		packing_data_unlock(pack);
+> +
+> +		pack->delta_size[e - pack->objects] = size;
 
-> * jk/banned-function (2018-07-24) 5 commits
->  - banned.h: mark strncpy() as banned
->  - banned.h: mark sprintf() as banned
->  - banned.h: mark strcat() as banned
->  - automatically ban strcpy()
->  - Merge branch 'sb/blame-color' into jk/banned-function
-> 
->  It is too easy to misuse system API functions such as strcat();
->  these selected functions are now forbidden in this codebase and
->  will cause a compilation failure.
-> 
->  Will merge to 'next'.
+My first thought was that this is wrong (falling prey to the same 
+mistake as the double-checked locking pattern). But after thinking twice 
+over it again, I think that this unprotected access of pack->delta_size 
+is thread-safe.
 
-Eric nudged me over the fence to use a slightly different mechanism to
-generate the error. See:
+Of course, I'm assuming that different threads never assign to the same 
+array index.
 
-  https://public-inbox.org/git/20180726072105.GA6057@sigill.intra.peff.net/
+> +		e->delta_size_valid = 0;
+> +	}
+>   }
 
-It looks like sb/blame-color graduated, so this could also just be
-applied directly on master now to avoid the funky merge.
-
--Peff
+-- Hannes
