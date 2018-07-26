@@ -7,30 +7,31 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C7B41F597
-	for <e@80x24.org>; Thu, 26 Jul 2018 16:06:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 086461F597
+	for <e@80x24.org>; Thu, 26 Jul 2018 16:06:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731997AbeGZRXy (ORCPT <rfc822;e@80x24.org>);
+        id S1729801AbeGZRXy (ORCPT <rfc822;e@80x24.org>);
         Thu, 26 Jul 2018 13:23:54 -0400
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:42670 "EHLO
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:50460 "EHLO
         smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730781AbeGZRXy (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1731819AbeGZRXy (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 26 Jul 2018 13:23:54 -0400
 Received: from lindisfarne.localdomain ([89.242.182.230])
         by smtp.talktalk.net with SMTP
-        id iimGfHvLPoI6LiimUfsrya; Thu, 26 Jul 2018 17:06:23 +0100
+        id iimGfHvLPoI6LiimVfsryf; Thu, 26 Jul 2018 17:06:24 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1532621183;
-        bh=B3SCemmWv5Axyh2LZ/IIW4+YedjmQ7y4nbWg0glx+WQ=;
+        s=cmr1711; t=1532621184;
+        bh=BSVw2pDtIOEQ/I7M0SQm1cqxScObtCRXeDXwbP0UGrE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
-        b=FnzeezVkTZIuBJlxANcnLa5yy6jK3JmJKNAB/w6h0xwB6ILeOT6A/FKumhmLv6aZl
-         dDSkFsoTbIT4h0Fsnax+MGSPeCGnx5e/cmZ/1audmItnNG+sQF0HQ2ptdI4/o5/AgO
-         tKY3OS89NTdwh1rio/01m93M2WCVZPFdIWTWnKeQ=
+        b=hv/x19yoIIDzsFnyXKnB75wBwz1QgISxI7bz/MgkitFJHt38CwSxBIQEGQDBYDsZ0
+         9wo0FxPSROrzLMYVorrAr5IaL8foIGgBr4bHR+vkESWMMi64Bdgs435omDf0mHqU6O
+         4iSAcG6gCCqI9qkNkROQEVhz03rHpEQbdolUxg5c=
 X-Originating-IP: [89.242.182.230]
 X-Spam: 0
 X-OAuthority: v=2.3 cv=FOE1Odgs c=1 sm=1 tr=0 a=tQBg3IHG1C6KDs2Ec9TG5Q==:117
- a=tQBg3IHG1C6KDs2Ec9TG5Q==:17 a=evINK-nbAAAA:8 a=1W4N-_JYX9s5umQv8zsA:9
- a=7Zwj6sZBwVKJAoWSPKxL6X1jA+E=:19 a=a98qYcV3JrzpHg4G:21 a=YJhMPCpDgCEJ4KJW:21
+ a=tQBg3IHG1C6KDs2Ec9TG5Q==:17 a=IkcTkHD0fZMA:10 a=evINK-nbAAAA:8
+ a=pGLkceISAAAA:8 a=resyGrhQf7wFeiYf0FEA:9 a=7Zwj6sZBwVKJAoWSPKxL6X1jA+E=:19
+ a=X2cK4bkTbIObvAAj:21 a=0TmrHpo6DV2DRuWS:21 a=QEXdDO2ut3YA:10
  a=RfR_gqz1fSpA9VikTjo0:22
 From:   Phillip Wood <phillip.wood@talktalk.net>
 To:     Git Mailing List <git@vger.kernel.org>,
@@ -39,17 +40,20 @@ To:     Git Mailing List <git@vger.kernel.org>,
 Cc:     Igor Djordjevic <igor.d.djordjevic@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v5 1/4] add -p: select individual hunk lines
-Date:   Thu, 26 Jul 2018 16:58:51 +0100
-Message-Id: <20180726155854.20832-2-phillip.wood@talktalk.net>
+Subject: [RFC PATCH v5 2/4] add -p: select modified lines correctly
+Date:   Thu, 26 Jul 2018 16:58:52 +0100
+Message-Id: <20180726155854.20832-3-phillip.wood@talktalk.net>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20180726155854.20832-1-phillip.wood@talktalk.net>
 References: <20180219113619.26566-1-phillip.wood@talktalk.net>
  <20180726155854.20832-1-phillip.wood@talktalk.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-X-CMAE-Envelope: MS4wfIN3nXlPW3id6KETuPSsX0d6cLgUAB06Z7YDSHyscEk6p+4mU+MsWAovENOaTcr/oh+GvHQ71zJ8A5pz7etaXiHIYSiovNkrWlhPrcABp8SqZXnpVKIK
- 9vnE+5a/LME7pRIxN9L1jCarQvm4/V/yuQsQgt7Y1cNMIQR2+mberbJjEY1VAeKZhcL1qIJicTftq5jOWL/qortJMeByJ6g34RkovSdCKFtIQlJdAsPaFBij
- x7DDi5LVB4ZuscHaFepAqW7Dva5JaW0rRj/YL460+BfdXn9NwRGWdAJrvDp0i2j7DK9+6HoZ7K0FcLWc364ONKrkV5PhUBejArP/pnvYnh0=
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfETtKrC4aUFTmSgqhS+nIthsSi4Kqj8RNt5bg2otOFzguMJqMWOkzZdrUk775fFGONGaG5hOE8mS5E8OsrCGRHvW/xQ4dLUG+R2uDf47Yb4eFv58qlJb
+ WNJzqwgU85mu3r75JRWzXf8r3k2mZT8qqF5wFP4pEX37g/nN50g/vTlB/2JJc9s2Amaw0TPSo5Y4Ra0mUkgP7GAazopgtmGA2XVJnf7Vjh5XRDdoDiiqkrOA
+ oS4T6VTI8qcRdGxeUFf72bf5qZWMLk3O9jCwiYlCX1qJ+eH8gQyrqNfZeF+dY2R2mKdy5grZQavvF7GuM8f3zieREc/OfzQvXIP+OzlY2Y8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -57,302 +61,323 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-When I end up editing hunks it is almost always because I want to
-stage a subset of the lines in the hunk. Doing this by editing the
-hunk is inconvenient and error prone (especially so if the patch is
-going to be reversed before being applied). Instead offer an option
-for add -p to stage individual lines. When the user presses 'l' the
-hunk is redrawn with labels by the insertions and deletions and they
-are prompted to enter a list of the lines they wish to stage. Ranges
-of lines may be specified using 'a-b' where 'b' may be omitted to mean
-all lines from 'a' to the end of the hunk. Modified lines are not
-handled correctly, that will be fixed in the next commit.
+When a set of lines is modified the hunk contains deletions followed
+by insertions. To correctly stage a subset of the modified lines we
+need to match up the selected deletions with the selected insertions
+otherwise we end up with deletions and context lines followed by
+insertions which is not what we want.
 
+For example given the hunk
+      1 -* a longer description of the
+      2 -  first item
+      3 -* second
+      4 -* third
+      5 +* first
+      6 +  second item
+      7 +* the third item
+
+If the user selects 1,2,4–5,7 then we should generate
+	-* a longer description of the
+	-  first item
+	+* first
+	 * second
+	-* third
+	+* the third item
+
+not
+	-* a longer description of the
+	-  first item
+	 * second
+	-* third
+	+* first
+	+* the third item
+
+Currently the code can only cope with selections that contain the same
+number of groups of insertions and deletions, though each group need
+not contain the same number of insertions and deletions. If the user
+wants to stage an unpaired deletion or insertion in a hunk where they
+also want to stage modified lines they have to do it with two
+invocations of 'git add -p'.
+
+It would be possible to add some syntax to allow lines to be excluded
+from groups to allow the user to stage such changes in a single
+go. It may also be useful to allow users to explicitly group lines. If
+in the example above the second item is deleted we have
+
+      1 -* a longer description of the
+      2 - first item
+      3 -* second
+      4 -* third
+      5 +* first
+      6 +* the third item
+
+Selecting 1,2,4–6 will give an error. If lines could be grouped
+explicitly then it would be possible to type something like
+1,2,4,[5],6 to indicate that there are two groups of insertions giving
+
+	-* a longer description of the
+	- first item
+	+* first
+	 * second
+	-* third
+	+* the third item
+
+We may want to be able to stage an insertion before an unselected
+deletion to allow the user to stage a new paragraph before the
+unmodified original in
+
+      1 -original
+      2 +a new paragraph before
+      3 +original
+      4 +
+      5 +modified original
+
+by specifying something like ^2-4 to give
+
+	+a new paragraph before
+	+original
+	+
+	 original
+
+I'm not sure how common these cases are in real life and how much
+effort it's worth putting into handling them at the moment when the
+user can edit the hunk if need be. Perhaps it would be better to leave
+it for future extensions when it becomes clearer what would be most
+useful.
+
+Reported-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- Documentation/git-add.txt  |   8 ++
- git-add--interactive.perl  | 181 +++++++++++++++++++++++++++++++++++++
- t/t3701-add-interactive.sh | 103 +++++++++++++++++++++
- 3 files changed, 292 insertions(+)
+ git-add--interactive.perl  | 147 ++++++++++++++++++++++++++++++++++---
+ t/t3701-add-interactive.sh | 108 ++++++++++++++++++++++++++-
+ 2 files changed, 242 insertions(+), 13 deletions(-)
 
-diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-index d50fa339dc..965e192a09 100644
---- a/Documentation/git-add.txt
-+++ b/Documentation/git-add.txt
-@@ -332,10 +332,18 @@ patch::
-        J - leave this hunk undecided, see next hunk
-        k - leave this hunk undecided, see previous undecided hunk
-        K - leave this hunk undecided, see previous hunk
-+       l - select hunk lines to use
-        s - split the current hunk into smaller hunks
-        e - manually edit the current hunk
-        ? - print help
- +
-+If you press "l" then the hunk will be reprinted with each insertion or
-+deletion labelled with a number and you will be prompted to enter which
-+lines you wish to select. Individual line numbers should be separated by
-+a space or comma, to specify a range of lines use a dash between
-+them. If the upper bound of a range of lines is omitted it defaults to
-+the last line.
-++
- After deciding the fate for all hunks, if there is any hunk
- that was chosen, the index is updated with the selected hunks.
- +
 diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 8361ef45e7..cbc9e5698a 100755
+index cbc9e5698a..7e4daee2fc 100755
 --- a/git-add--interactive.perl
 +++ b/git-add--interactive.perl
-@@ -1013,6 +1013,171 @@ sub color_diff {
- 	} @_;
+@@ -1015,26 +1015,47 @@ sub color_diff {
+ 
+ use constant {
+ 	NO_NEWLINE => 1,
++	LAST_ADD_DEL => 2,
++	FIRST_ADD => 4
+ };
+ 
+ sub label_hunk_lines {
+ 	my $hunk = shift;
+ 	my $text = $hunk->{TEXT};
+-	my (@line_flags, @lines);
++	# A block contains the insertions and deletions occurring context
++	# lines.
++	my (@blocks, @line_flags, @lines, @modes);
+ 	my ($block, $label, $last_mode) = (0, 0, '');
+ 	for my $line (1..$#{$text}) {
+ 		$line_flags[$line] = 0;
+ 		my $mode = substr($text->[$line], 0, 1);
+ 		if ($mode eq '\\') {
+ 			$line_flags[$line - 1] |= NO_NEWLINE;
+ 		}
++		if ($mode ne '-' and $last_mode eq '-' or
++		    $mode ne '+' and $last_mode eq '+') {
++			$line_flags[$line - 1] |= LAST_ADD_DEL;
++		}
++		if ($mode eq '+' and $last_mode ne '+') {
++			$line_flags[$line] |= FIRST_ADD;
++		}
+ 		if ($mode eq '-' or $mode eq '+') {
+-			$lines[++$label] = $line;
++			$blocks[++$label] = $block;
++			$lines[$label] = $line;
++			$modes[$label] = $mode;
++		} elsif ($mode eq ' ' and $last_mode ne ' ') {
++			$block++;
+ 		}
++		$last_mode = $mode;
++	}
++	if ($last_mode eq '-' or $last_mode eq '+') {
++		$line_flags[-1] |= LAST_ADD_DEL;
+ 	}
+ 	if ($label > 1) {
+ 		$hunk->{LABELS} = {
++			BLOCKS => \@blocks,
+ 			LINES => \@lines,
++			MODES => \@modes
+ 		};
+ 		$hunk->{LINE_FLAGS} = \@line_flags;
+ 		return 1;
+@@ -1061,11 +1082,14 @@ sub select_hunk_lines {
+ 		}
+ 	};
+ 
+-	my ($lo, $hi) = splice(@$selected, 0, 2);
++	my ($lo, $hi, $pre_insert, $post_insert) = splice(@$selected, 0, 4);
+ 	# Lines with this mode will become context lines if they are
+ 	# not selected
+ 	my $context_mode = $patch_mode_flavour{IS_REVERSE} ? '+' : '-';
+ 	for $i (1..$#{$text}) {
++		if ($i == $lo and defined($pre_insert)) {
++			$select_lines->(@$pre_insert);
++		}
+ 		if ($lo <= $i and $i <= $hi) {
+ 			$select_lines->($i);
+ 		} else {
+@@ -1080,8 +1104,12 @@ sub select_hunk_lines {
+ 			}
+ 		}
+ 		if ($i == $hi) {
++			if (defined($post_insert)) {
++				$select_lines->(@$post_insert);
++			}
+ 			if (@$selected) {
+-				($lo, $hi) = splice(@$selected, 0, 2);
++				($lo, $hi, $pre_insert, $post_insert) =
++						splice(@$selected, 0, 4);
+ 			}
+ 		}
+ 	}
+@@ -1104,6 +1132,108 @@ sub select_hunk_lines {
+ 	return $newhunk;
  }
  
-+use constant {
-+	NO_NEWLINE => 1,
-+};
-+
-+sub label_hunk_lines {
-+	my $hunk = shift;
-+	my $text = $hunk->{TEXT};
-+	my (@line_flags, @lines);
-+	my ($block, $label, $last_mode) = (0, 0, '');
-+	for my $line (1..$#{$text}) {
-+		$line_flags[$line] = 0;
-+		my $mode = substr($text->[$line], 0, 1);
-+		if ($mode eq '\\') {
-+			$line_flags[$line - 1] |= NO_NEWLINE;
-+		}
-+		if ($mode eq '-' or $mode eq '+') {
-+			$lines[++$label] = $line;
-+		}
-+	}
-+	if ($label > 1) {
-+		$hunk->{LABELS} = {
-+			LINES => \@lines,
-+		};
-+		$hunk->{LINE_FLAGS} = \@line_flags;
-+		return 1;
-+	}
-+	return 0;
-+}
-+
-+sub select_hunk_lines {
-+	my ($hunk, $selected) = @_;
-+	my ($line_flags, $text) = @{$hunk}{qw(LINE_FLAGS TEXT)};
-+	my ($i, $o_cnt, $n_cnt) = (0, 0, 0);
-+	my @newtext;
-+
-+	my $select_lines = sub {
-+		for my $i (@_) {
-+			my $line = $text->[$i];
-+			my $mode = substr($line, 0, 1);
-+			push @newtext, $line;
-+			if ($mode eq '+') {
-+				$n_cnt++;
-+			} elsif ($mode eq '-') {
-+				$o_cnt++;
-+			}
-+		}
-+	};
-+
-+	my ($lo, $hi) = splice(@$selected, 0, 2);
-+	# Lines with this mode will become context lines if they are
-+	# not selected
-+	my $context_mode = $patch_mode_flavour{IS_REVERSE} ? '+' : '-';
-+	for $i (1..$#{$text}) {
-+		if ($lo <= $i and $i <= $hi) {
-+			$select_lines->($i);
-+		} else {
-+			my $line = $text->[$i];
-+			my $mode = substr($line, 0, 1);
-+			if ($mode eq ' ' or $mode eq $context_mode) {
-+				push @newtext, ' ' . substr($line, 1);
-+				$o_cnt++; $n_cnt++;
-+				if ($line_flags->[$i] & NO_NEWLINE) {
-+					push @newtext, $text->[$i + 1];
++sub pair_hunk_selection {
++	my $line_flags = shift;
++	my @ret;
++	my $reverse = $patch_mode_flavour{IS_REVERSE};
++	for my $sel (@_) {
++		my $i = 0;
++		my ($del, $add) = @$sel;
++		my $ndel = @$del / 2;
++		my $nadd = @$add / 2;
++		# If there the same number of insertion and deletion
++		# groups then pair up in insertions and deletions.
++		if ($nadd == $ndel) {
++			while ($i < @{$del}) {
++				my ($ra, $rb) = $reverse ? ($add, $del) :
++							   ($del, $add);
++				my ($starta, $enda) = @{$ra}[$i, $i + 1];
++				my ($startb, $endb) = @{$rb}[$i, $i + 1];
++				if ($line_flags->[$enda] & LAST_ADD_DEL and
++				    $line_flags->[$endb] & NO_NEWLINE) {
++					$endb++;
 +				}
++				if ($line_flags->[$enda] & NO_NEWLINE) {
++					$enda++;
++				}
++				push @ret, $reverse ?
++					($starta, $enda,
++					 [ $startb..$endb ], undef) :
++					($starta, $enda,
++					 undef, [ $startb..$endb ]);
++				$i += 2;
 +			}
-+		}
-+		if ($i == $hi) {
-+			if (@$selected) {
-+				($lo, $hi) = splice(@$selected, 0, 2);
++		# If there are only deletions or only insertions or
++		# a) we're adding to the index and there is a single group
++		#    of insertions starting at the first inserted line
++		# or
++		# b) we're resetting the index and there is a single group
++		#    of deletions finishing with the last deleted line
++		# then it is okay just to have deletions followed by
++		# insertions.
++		} elsif (!$nadd or !$ndel or
++			 (!$reverse and $ndel == 1 and
++			  $line_flags->[$del->[1]] & LAST_ADD_DEL) or
++			 ($reverse and $nadd == 1 and
++			  $line_flags->[$add->[0]] & FIRST_ADD)) {
++			while ($i < @$del) {
++				my ($start, $end) = @{$del}[$i, $i + 1];
++				if ($line_flags->[$end] & NO_NEWLINE) {
++					$end++;
++				}
++				push @ret, $start, $end, undef, undef;
++				$i += 2;
 +			}
-+		}
-+	}
-+	my ($o_ofs, $orig_o_cnt, $n_ofs, $orig_n_cnt) =
-+					parse_hunk_header($text->[0]);
-+	unshift @newtext, format_hunk_header($o_ofs, $o_cnt, $n_ofs, $n_cnt);
-+	my $newhunk = {
-+		TEXT => \@newtext,
-+		DISPLAY => [ color_diff(@newtext) ],
-+		OFS_DELTA => $orig_o_cnt - $orig_n_cnt - $o_cnt + $n_cnt,
-+		TYPE => $hunk->{TYPE},
-+		USE => 1,
-+	};
-+	# If this hunk has previously been edited add the offset delta
-+	# of the old hunk to get the real delta from the original
-+	# hunk.
-+	if ($hunk->{OFS_DELTA}) {
-+		$newhunk->{OFS_DELTA} += $hunk->{OFS_DELTA};
-+	}
-+	return $newhunk;
-+}
-+
-+sub check_hunk_label {
-+	my ($max_label, $label) = @_;
-+	if ($label < 1 or $label > $max_label) {
-+		error_msg sprintf(__("invalid hunk line '%d'\n"), $label);
-+		return 0;
-+	}
-+	return 1;
-+}
-+
-+sub parse_hunk_selection {
-+	my ($hunk, $line) = @_;
-+	my $lines = $hunk->{LABELS}->{LINES};
-+	my $max_label = $#{$lines};
-+	my %selected;
-+	my @fields = split(/[,\s]+/, $line);
-+	for my $f (@fields) {
-+		if (my ($lo, $hi) = ($f =~ /^([0-9]+)-([0-9]*)$/)) {
-+			if ($hi eq '') {
-+				$hi = $max_label;
++			$i = 0;
++			while ($i < @$add) {
++				my ($start, $end) = @{$add}[$i, $i + 1];
++				if ($line_flags->[$end] & NO_NEWLINE) {
++					$end++;
++				}
++				push @ret, $start, $end, undef, undef;
++				$i += 2;
 +			}
-+			check_hunk_label($max_label, $lo) or return undef;
-+			check_hunk_label($max_label, $hi) or return undef;
-+			if ($hi < $lo) {
-+				($lo, $hi) = ($hi, $lo);
-+			}
-+			undef @selected{$lo..$hi};
-+		} elsif (my ($label) = ($f =~ /^([0-9]+)$/)) {
-+			check_hunk_label($max_label, $label) or return undef;
-+			undef $selected{$label};
 +		} else {
-+			error_msg sprintf(__("invalid hunk line '%s'\n"), $f);
++			printf STDERR __("unable to pair up insertions and deletions\n");
 +			return undef;
 +		}
 +	}
-+	[ map {
-+		my $line = $lines->[$_];
-+		if ($hunk->{LINE_FLAGS}->[$line] & NO_NEWLINE) {
-+			($line, $line + 1);
-+		} else {
-+			($line, $line);
-+		}
-+	} sort { $a <=> $b } keys(%selected) ];
++	return \@ret;
 +}
 +
-+sub display_hunk_lines {
-+	my $hunk = shift;
-+	my ($display, $lines) = ($hunk->{DISPLAY}, $hunk->{LABELS}->{LINES});
-+	my $max_label = $#{$lines};
-+	my $width = int(log($max_label) / log(10)) + 1;
-+	my $padding = ' ' x ($width + 1);
-+	my $label = 1;
-+	for my $line (0..$#{$display}) {
-+		if ($lines->[$label] == $line) {
-+			printf '%*d %s', $width, $label, $display->[$line];
-+			$label++ if ($label < $max_label);
-+		} else {
-+			print $padding . $display->[$line];
-+		}
++sub process_hunk_selection {
++	my ($labels, $line_flags) = @{shift()}{qw(LABELS LINE_FLAGS)};
++	my ($blocks, $lines, $modes) =
++				@{$labels}{qw(BLOCKS LINES MODES)};
++	my @selection = sort { $a <=> $b } @_;
++	unless (@selection) {
++		return [];
 +	}
-+}
-+
-+sub select_lines_loop {
-+	my $hunk = shift;
-+	display_hunk_lines($hunk);
-+	my $selection = undef;
-+	until (defined $selection) {
-+		print colored $prompt_color, __("select lines? ");
-+		my $text = <STDIN>;
-+		defined $text and $text =~ /\S/ or return undef;
-+		$selection = parse_hunk_selection($hunk, $text);
-+	}
-+	return select_hunk_lines($hunk, $selection);
-+}
-+
- my %edit_hunk_manually_modes = (
- 	stage => N__(
- "If the patch applies cleanly, the edited hunk will immediately be
-@@ -1255,6 +1420,7 @@ j - leave this hunk undecided, see next undecided hunk
- J - leave this hunk undecided, see next hunk
- k - leave this hunk undecided, see previous undecided hunk
- K - leave this hunk undecided, see previous hunk
-+l - select hunk lines to use
- s - split the current hunk into smaller hunks
- e - manually edit the current hunk
- ? - print help
-@@ -1471,6 +1637,9 @@ sub patch_update_file {
- 		if ($hunk[$ix]{TYPE} eq 'hunk') {
- 			$other .= ',e';
- 		}
-+		if (label_hunk_lines($hunk[$ix])) {
-+			$other .= ',l';
++	my $last_label = shift @selection;
++	my ($last_block, $last_line, $last_mode) =
++	    ($blocks->[$last_label], $lines->[$last_label], $modes->[$last_label]);
++	my ($del, $add) = ([], []);
++	push @{$last_mode eq '-' ? $del : $add}, $last_line;
++	my @sel;
++	for my $label (@selection) {
++		my ($block, $line, $mode) =
++			($blocks->[$label], $lines->[$label], $modes->[$label]);
++		if ($block != $last_block) {
++			push @{$last_mode eq '-' ? $del : $add}, $last_line;
++			push @sel, [ $del, $add ];
++			($del, $add) = ([], []);
++			push @{$mode eq '-' ? $del : $add}, $line;
++		} elsif ($line != $last_line + 1 or $mode ne $last_mode) {
++			push @{$last_mode eq '-' ? $del : $add}, $last_line;
++			push @{$mode eq '-' ? $del : $add}, $line;
 +		}
- 		for (@{$hunk[$ix]{DISPLAY}}) {
- 			print;
++		($last_block, $last_line, $last_mode) = ($block, $line, $mode);
++	}
++	push @{$last_mode eq '-' ? $del : $add}, $last_line;
++	push @sel, [ $del, $add ];
++	pair_hunk_selection($line_flags, @sel);
++}
++
+ sub check_hunk_label {
+ 	my ($max_label, $label) = @_;
+ 	if ($label < 1 or $label > $max_label) {
+@@ -1138,14 +1268,7 @@ sub parse_hunk_selection {
+ 			return undef;
  		}
-@@ -1610,6 +1779,18 @@ sub patch_update_file {
- 					next;
- 				}
- 			}
-+			elsif ($line =~ /^l/) {
-+				unless ($other =~ /l/) {
-+					error_msg __("Cannot select line by line\n");
-+					next;
-+				}
-+				my $newhunk = select_lines_loop($hunk[$ix]);
-+				if ($newhunk) {
-+					splice @hunk, $ix, 1, $newhunk;
-+				} else {
-+					next;
-+				}
-+			}
- 			elsif ($other =~ /s/ && $line =~ /^s/) {
- 				my @split = split_hunk($hunk[$ix]{TEXT}, $hunk[$ix]{DISPLAY});
- 				if (1 < @split) {
+ 	}
+-	[ map {
+-		my $line = $lines->[$_];
+-		if ($hunk->{LINE_FLAGS}->[$line] & NO_NEWLINE) {
+-			($line, $line + 1);
+-		} else {
+-			($line, $line);
+-		}
+-	} sort { $a <=> $b } keys(%selected) ];
++	return process_hunk_selection($hunk, keys(%selected));
+ }
+ 
+ sub display_hunk_lines {
 diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index f1bb879ea4..5b535a22d5 100755
+index 5b535a22d5..1d917ad018 100755
 --- a/t/t3701-add-interactive.sh
 +++ b/t/t3701-add-interactive.sh
-@@ -403,6 +403,101 @@ test_expect_failure 'split hunk "add -p (no, yes, edit)"' '
- 	! grep "^+31" actual
+@@ -489,7 +489,7 @@ test_expect_success 'setup expected diff' '
+ 	EOF
  '
  
-+test_expect_success 'setup test file' '
-+	test_write_lines 10 31 32 33 60 >test &&
-+	printf 61 >>test
-+'
-+
-+test_expect_success 'setup expected diff' '
-+	cat >expected <<-\EOF
-+	diff --git a/test b/test
-+	index 0889435..341cc6b 100644
-+	--- a/test
-+	+++ b/test
-+	@@ -1,6 +1,6 @@
-+	 10
-+	 20
-+	-30
-+	-40
-+	-50
-+	+31
-+	+33
-+	 60
-+	+61
-+	\ No newline at end of file
-+	EOF
-+'
-+
-+test_expect_success 'can stage individual lines of patch' '
-+	git reset &&
-+	printf "%s\n" l "5-2,7-" |
-+	EDITOR=: git add -p 2>error &&
-+	test_must_be_empty error &&
-+	git diff --cached HEAD >actual &&
-+	diff_cmp expected actual
-+'
-+
+-test_expect_failure 'can stage modified lines of patch (1)' '
++test_expect_success 'can stage modified lines of patch (1)' '
+ 	git reset &&
+ 	printf "%s\n" l "1,3 7-9 12" |
+ 	EDITOR=: git add -p 2>error &&
+@@ -498,6 +498,112 @@ test_expect_failure 'can stage modified lines of patch (1)' '
+ 	diff_cmp expected actual
+ '
+ 
 +test_expect_success 'setup expected diff' '
 +	cat >expected <<-\EOF
 +	diff --git a/test b/test
@@ -361,28 +386,42 @@ index f1bb879ea4..5b535a22d5 100755
 +	+++ b/test
 +	@@ -1,6 +1,7 @@
 +	 10
-+	 20
++	-20
++	+twenty
++	+thirty
 +	 30
-+	-40
++	 40
 +	 50
-+	+33
-+	 60
-+	+61
++	-60
++	+sixty
 +	\ No newline at end of file
 +	EOF
 +'
 +
-+test_expect_success 'can reset individual lines of patch' '
-+	printf "%s\n" l 4,1,3 |
-+	EDITOR=: git reset -p 2>error &&
++test_expect_success 'can stage modified lines of patch (2)' '
++	git reset &&
++	printf "%s\n" l "2,6,8,9,12" |
++	EDITOR=: git add -p 2>error &&
 +	test_must_be_empty error &&
 +	git diff --cached HEAD >actual &&
 +	diff_cmp expected actual
 +'
 +
-+test_expect_success 'setup file' '
-+	test_write_lines ten twenty thirty forty fifty >test &&
-+	printf sixty >>test
++test_expect_success 'setup HEAD' '
++	git reset &&
++	git apply --cached <<-\EOF &&
++	diff --git a/test b/test
++	--- a/test
++	+++ b/test
++	@@ -3,4 +3,4 @@
++	 30
++	 40
++	 50
++	-60
++	+60
++	\ No newline at end of file
++	EOF
++	git commit
 +'
 +
 +test_expect_success 'setup expected diff' '
@@ -398,16 +437,47 @@ index f1bb879ea4..5b535a22d5 100755
 +	+thirty
 +	 20
 +	-30
-+	+sixty
++	+fifty
 +	 40
 +	 50
 +	 60
++	\ No newline at end of file
 +	EOF
 +'
 +
-+test_expect_failure 'can stage modified lines of patch (1)' '
++test_expect_success 'can stage modified lines of patch (3)' '
 +	git reset &&
-+	printf "%s\n" l "1,3 7-9 12" |
++	printf "%s\n" l "11,1,3 7-9" |
++	EDITOR=: git add -p 2>error &&
++	test_must_be_empty error &&
++	git diff --cached HEAD >actual &&
++	diff_cmp expected actual
++'
++
++test_expect_success 'setup expected diff' '
++	cat >expected <<-\EOF
++	diff --git a/test b/test
++	index 0889435..cc6163b 100644
++	--- a/test
++	+++ b/test
++	@@ -1,6 +1,8 @@
++	-10
++	+ten
++	+twenty
++	+thirty
++	 20
++	 30
++	 40
++	 50
++	-60
++	\ No newline at end of file
++	+fifty
++	EOF
++'
++
++test_expect_success 'can stage modified lines of patch (4)' '
++	git reset &&
++	printf "%s\n" l "9-6 11,1" |
 +	EDITOR=: git add -p 2>error &&
 +	test_must_be_empty error &&
 +	git diff --cached HEAD >actual &&
@@ -417,19 +487,6 @@ index f1bb879ea4..5b535a22d5 100755
  test_expect_success 'patch mode ignores unmerged entries' '
  	git reset --hard &&
  	test_commit conflict &&
-@@ -571,4 +666,12 @@ test_expect_success 'add -p patch editing works with pathological context lines'
- 	test_cmp expected-2 actual
- '
- 
-+test_expect_success 'add -p selecting lines works with pathological context lines' '
-+	git reset &&
-+	printf "%s\n" l 2 y |
-+	GIT_EDITOR=./editor git add -p &&
-+	git cat-file blob :a >actual &&
-+	test_cmp expected-2 actual
-+'
-+
- test_done
 -- 
 2.18.0
 
