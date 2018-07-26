@@ -2,153 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 078CA1F597
-	for <e@80x24.org>; Thu, 26 Jul 2018 10:05:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 531D51F597
+	for <e@80x24.org>; Thu, 26 Jul 2018 10:22:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729265AbeGZLV2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jul 2018 07:21:28 -0400
-Received: from mout.gmx.net ([212.227.17.22]:46917 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729152AbeGZLV2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jul 2018 07:21:28 -0400
-Received: from [192.168.0.129] ([37.201.195.94]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MWCKz-1fT2Cm0gqv-00XKRq; Thu, 26
- Jul 2018 12:05:05 +0200
-Date:   Thu, 26 Jul 2018 12:05:03 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Eric Deplagne <Eric@Deplagne.name>
-cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        demerphq <demerphq@gmail.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Adam Langley <agl@google.com>,
-        The Keccak Team <keccak@noekeon.org>
-Subject: Re: Hash algorithm analysis
-In-Reply-To: <20180722145506.GL11431@mail.eric.deplagne.name>
-Message-ID: <nycvar.QRO.7.76.6.1807261157560.71@tvgsbejvaqbjf.bet>
-References: <20180609205628.GB38834@genre.crustytoothpaste.net> <20180609224913.GC38834@genre.crustytoothpaste.net> <20180611192942.GC20665@aiede.svl.corp.google.com> <20180720215220.GB18502@genre.crustytoothpaste.net> <nycvar.QRO.7.76.6.1807220036340.71@tvgsbejvaqbjf.bet>
- <20180721235941.GG18502@genre.crustytoothpaste.net> <20180722093442.GK11431@mail.eric.deplagne.name> <20180722142148.GH18502@genre.crustytoothpaste.net> <20180722145506.GL11431@mail.eric.deplagne.name>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729277AbeGZLir (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jul 2018 07:38:47 -0400
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:50317 "EHLO
+        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729077AbeGZLir (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jul 2018 07:38:47 -0400
+Received: from lindisfarne.localdomain ([92.22.19.104])
+        by smtp.talktalk.net with SMTP
+        id idPhfHPXuoI6LidPlfsjbO; Thu, 26 Jul 2018 11:22:34 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1532600554;
+        bh=pCCcaIxh7XX7xaXSqbGXouYV8HIBcqQaOCyZyEfL0yU=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
+        b=arCejRiSWazAOaCXnqp//UErTnlcZZ16Fjr+kV1VSWlJCkxP97agNqh6x0YEsEnIq
+         ldrWrtFh/X6OdFiktBnqCbCbl94xBg9lkpKf2ovqMdnQc899ePPmbR07yhMFIfXu5x
+         OLYIkvXSrHYpfaP0CLzzdoaL3Rz4gSbAOHkqEYgg=
+X-Originating-IP: [92.22.19.104]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=FOE1Odgs c=1 sm=1 tr=0 a=f/8ZdrXn5sPnqdHA06GUHw==:117
+ a=f/8ZdrXn5sPnqdHA06GUHw==:17 a=IkcTkHD0fZMA:10 a=evINK-nbAAAA:8
+ a=tGVuKMeZVuHrdcQMkpMA:9 a=7Zwj6sZBwVKJAoWSPKxL6X1jA+E=:19 a=QEXdDO2ut3YA:10
+ a=RfR_gqz1fSpA9VikTjo0:22
+From:   Phillip Wood <phillip.wood@talktalk.net>
+To:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Cc:     Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [RFC PATCH v4 0/4]  add -p: select individual hunk lines
+Date:   Thu, 26 Jul 2018 11:22:23 +0100
+Message-Id: <20180726102227.997-1-phillip.wood@talktalk.net>
+X-Mailer: git-send-email 2.18.0
+In-Reply-To: <20180219113619.26566-1-phillip.wood@talktalk.net>
+References: <20180219113619.26566-1-phillip.wood@talktalk.net>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-67212671-1532599505=:71"
-X-Provags-ID: V03:K1:JgdJ/xIXrGXM68MVar5XudK+nqB2fsrvs7zcmIyIO9MX8EbASWQ
- 8Pr0//kha7DplHfGF8iwbYhjS2mWpivHS9BGP5GovZzi9dviHB6MXeWvBaFcY6YEQXfbL6e
- APkqqD1vcDspEOLK7Pr3xVaB3x5JyXkffhMjgCQ6pZ5DVN0caCqm7XEb2rqsl5BpR50df37
- DogodUdLetoMyYxCRb3xQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ls9KYJJTjSs=:Hu3BJ4p4KtGEW//cG0esqe
- dNgkiPsUoj9JjLSxP+RKgoYYPSx5EQLLpHVSiX9nkuIh6vNDhgw6dGeuMaWSegqfvNp4DAf0f
- rrD9dlrv7Cg7gpD0+LUKCIJYHrht3zLTCwamvxg1NfmHtTiYEUuZOJJiKbH45OmalTyiqCgVt
- gGY2awEf3e390M9piWVP2TO9MSdyLbA0IFpVpxmojJyj3AuspKoVMAt40ItVPAI8Bl1EWPoX/
- wDNDn+swBs0uUqtRzxFaopCm0NWHkRhEgO4yqOLsN2jk/8hSA8iqEs2Po3JqkTdLc+WQUEqNo
- z8SVnp1IJXgyqlG+pMpl31PCEtRS+9iNY3FT4vg2wTYZVmm0dIcPa56Uce0K32YrtDOD67Zfx
- seqOW5KU/k1yce7MhTWI+/3XnOt7lkWEkkOUeDY+293DyIPaZSg0bXxecuA1Cqgl0XH1AovbI
- agXBiTGi6OdIRMhQW2/yczMa0u/irYMYOljuigltLsSp2AVaZqxoJbFNpW5LvwR29wu5SuUWJ
- gYuYaTQmapRWqyGsFJbtPivZo8PCg2ExtDR/Ud5qHlv9gQiYdylJbOudrD+X7pbVwkedwR44r
- EL8MuNqV3UIekCHMOjlZFNTrc/4vCK4jPsJjd1mBf62MnVhH1s2zH5jDYsBE12jdjRnDJ1OfI
- wSvxbmOhXJn1Cm41lkCRHAuM/oTqW8W2jMXmyMJV7iSL7KnzmQw3jkXCq6nNWMstwsmvxehVi
- e24TYp+WpdeQa2Sc+Ko3dHzH0Nye/7zW00t5HISMkq2eJhbIyx8pRw1jKseu662lBSAtIaiL9
- AqDNK17
+Content-Type: text/plain; charset=UTF-8
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfHNIjCO39PGSPYq4HW2g3Xtj8edSkxFo4YFu9A0X+T8oQteDcfNZ8i4+RLPVWEFZdx4PI1mPzu87U5vZW28/wX56U860Vzs7ERfddy2qOFDtYHbNEqku
+ eJqdvgjzp1wjchMCyt+tQy9D+2fD2rowpTwxJtnp0wz+ZI8KlUd60MN3IjFEcIR60OdGAFxcbNvcpQqSeFc0oByMoaO0k29UvM/gNsroiAPlszgSCGB+l7io
+ 7u3EIFjPGcEyO4Gk78D/7kKT4jfZCsud0Gv0r0QI/l/8I0FmPDUgnKEEPWmZgNAIUiXmIgOeufaHlResOVMekT0tclxbWd7jfI9nvO1jpBE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
---8323328-67212671-1532599505=:71
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+I've updated this series based on Ævar's feedback on v3 (to paraphrase
+stop using '$_' so much and fix staging modified lines.). The first
+patch is functionally equivalent to the previous version but with a
+reworked implementation. Patch 2 is new, it implements correctly
+staging modified lines with a couple of limitations - see the commit
+message for more details, I'm keen to get some feedback on it. Patches
+3 and 4 are essentially rebased and tweaked versions of patches 2 and
+3 from the previous version.
 
-Hi Eric,
+This series is based on pw/add-p-recount (f4d35a6b49 "add -p: fix
+counting empty context lines in edited patches")
 
-On Sun, 22 Jul 2018, Eric Deplagne wrote:
+The motivation for this series is summed up in the first commit
+message:
 
-> On Sun, 22 Jul 2018 14:21:48 +0000, brian m. carlson wrote:
-> > On Sun, Jul 22, 2018 at 11:34:42AM +0200, Eric Deplagne wrote:
-> > > On Sat, 21 Jul 2018 23:59:41 +0000, brian m. carlson wrote:
-> > > > I don't know your colleagues, and they haven't commented here.  One
-> > > > person that has commented here is Adam Langley.  It is my impressio=
-n
-> > > > (and anyone is free to correct me if I'm incorrect) that he is inde=
-ed a
-> > > > cryptographer.  To quote him[0]:
-> > > >=20
-> > > >   I think this group can safely assume that SHA-256, SHA-512, BLAKE=
-2,
-> > > >   K12, etc are all secure to the extent that I don't believe that m=
-aking
-> > > >   comparisons between them on that axis is meaningful. Thus I think=
- the
-> > > >   question is primarily concerned with performance and implementati=
-on
-> > > >   availability.
-> > > >=20
-> > > >   [=E2=80=A6]
-> > > >=20
-> > > >   So, overall, none of these choices should obviously be excluded. =
-The
-> > > >   considerations at this point are not cryptographic and the tradeo=
-ff
-> > > >   between implementation ease and performance is one that the git
-> > > >   community would have to make.
-> > >=20
-> > >   Am I completely out of the game, or the statement that
-> > >     "the considerations at this point are not cryptographic"
-> > >   is just the wrongest ?
-> > >=20
-> > >   I mean, if that was true, would we not be sticking to SHA1 ?
-> >=20
-> > I snipped a portion of the context, but AGL was referring to the
-> > considerations involved in choosing from the proposed ones for NewHash.
-> > In context, he meant that the candidates for NewHash =E2=80=9Care all s=
-ecure=E2=80=9D
-> > and are therefore a better choice than SHA-1.
->=20
->   Maybe a little bit sensitive, but I really did read
->     "we don't care if it's weak or strong, that's not the matter".
+"When I end up editing hunks it is almost always because I want to
+stage a subset of the lines in the hunk. Doing this by editing the
+hunk is inconvenient and error prone (especially so if the patch is
+going to be reversed before being applied). Instead offer an option
+for add -p to stage individual lines. When the user presses 'l' the
+hunk is redrawn with labels by the insertions and deletions and they
+are prompted to enter a list of the lines they wish to stage. Ranges
+of lines may be specified using 'a-b' where either 'a' or 'b' may be
+omitted to mean all lines from 'a' to the end of the hunk or all lines
+from 1 upto and including 'b'."
 
-Thank you for your concern. I agree that we need to be careful in
-considering the security implications. We made that mistake before (IIRC
-there was a cryptographer who was essentially shouted off the list when he
-suggested *not* to hard-code SHA-1), and we should absolutely refrain from
-making that same mistake again.
+Phillip Wood (4):
+  add -p: select individual hunk lines
+  add -p: select modified lines correctly
+  add -p: allow line selection to be inverted
+  add -p: optimize line selection for short hunks
 
-> > I think we can all agree that SHA-1 is weak and should be replaced.
+ Documentation/git-add.txt  |  10 ++
+ git-add--interactive.perl  | 350 +++++++++++++++++++++++++++++++++++++
+ t/t3701-add-interactive.sh | 209 ++++++++++++++++++++++
+ 3 files changed, 569 insertions(+)
 
-Indeed.
+-- 
+2.18.0
 
-So at this point, we already excluded pretty much all the unsafe options
-(although it does concern me that BLAKE2b has been weakened purposefully,
-I understand the reasoning, but still).
-
-Which means that by now, considering the security implications of the
-cipher is no longer a criterion that helps us whittle down the candidates
-further.
-
-So from my point of view, there are two criterions that can help us
-further:
-
-- Which cipher is the least likely to be broken (or just weakened by new
-  attacks)?
-
-- As energy considerations not only ecologically inspired, but also in
-  terms of money for elecricity: which cipher is most likely to get decent
-  hardware support any time soon?
-
-Even if my original degree (prime number theory) is closer to
-cryptanalysis than pretty much all other prolific core Git contributors, I
-do not want you to trust *my* word on answering those questions.
-
-Therefore, I will ask my colleagues to enter the hornet's nest that is
-this mailing list.
-
-Ciao,
-Dscho
---8323328-67212671-1532599505=:71--
