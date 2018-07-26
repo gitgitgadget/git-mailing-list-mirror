@@ -2,102 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E329B1F597
-	for <e@80x24.org>; Thu, 26 Jul 2018 16:56:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA8D91F597
+	for <e@80x24.org>; Thu, 26 Jul 2018 16:57:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388496AbeGZSOR (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jul 2018 14:14:17 -0400
-Received: from mail-wr1-f45.google.com ([209.85.221.45]:45528 "EHLO
-        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388525AbeGZSOR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jul 2018 14:14:17 -0400
-Received: by mail-wr1-f45.google.com with SMTP id t13-v6so2390899wrv.12
-        for <git@vger.kernel.org>; Thu, 26 Jul 2018 09:56:36 -0700 (PDT)
+        id S2388531AbeGZSOw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jul 2018 14:14:52 -0400
+Received: from mail-wr1-f43.google.com ([209.85.221.43]:41050 "EHLO
+        mail-wr1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388502AbeGZSOv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jul 2018 14:14:51 -0400
+Received: by mail-wr1-f43.google.com with SMTP id j5-v6so2394448wrr.8
+        for <git@vger.kernel.org>; Thu, 26 Jul 2018 09:57:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=d5aCrUR9qhNp5nxFl5qJxEu0EcXpGFMcAFa0J/viGdM=;
-        b=WHhZJCQ1IR80UaQjfvs4Vs98JmbFdd5uRNgYPgLFEqj4FjzEp5EOlgVSsCQgvHOmw8
-         YvCsl6lfTnVk9Ks61gdqV+XslDv537T2HPDhyxiLiKAVPkY6RFpgAqgw3CN2s/YriYGT
-         MNcbQScAKTY5d2AEMOk/uxQTGGcXmg0JpqDrprpuEKaqKX0LUKBmq9yAxXx0Egx19h7g
-         4i0X55QzB3JfJLuUf/jSXdtky/tNRCsvbd+S+fTwLs/VCYnCTTvSBGK8Gc37TSrWELzP
-         LphW8PiqRV+4TfEaHQXGCTtDpyOtEzbBSjdYQqqBcnj9Yvr+5A7VgmQAsyVLb5wLygSQ
-         pjWg==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=0aU4HskWgPdmmLv9k/NdrFHJ7x9ZWVlOEU3KuUY+znk=;
+        b=dqO83xx4U588ygV5AsZos5ZbIKGM8T4SuC9UKCO3rNXbLTblciZzzQkPC5tI+ngFof
+         dS+HdbNF1OAjq0TVjUWQnpmm2Q3gTvt2Sphn6q43uSTEfjUDtVDdoyN7qQis3vehypNN
+         d9h3PiLJCS3Zujkuq/cqT80KkgzRLG/aRVryPGcuH4B45WY18nOjZS3EF1RsOAQnS+V3
+         lAwsyvEQSGSd4AUfHVBHD9flRDvGuP889zuNQbSCmBNlmJKc4bRhDac+4Agm4zcgjG0A
+         5wE2He5bzvmQbWok4fX1CUrtuRAOLYgzx4k+W2YIh4S1VR08hMdEa1u81UvzybhtTSJp
+         9zgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=d5aCrUR9qhNp5nxFl5qJxEu0EcXpGFMcAFa0J/viGdM=;
-        b=eitT4OgvHZBoRblKRB9kW4ngK9+FqxFFfdkdu2nExhuqG8LzCDVXhLqPnnmJD98WV8
-         8lMRYWBNwck5VI2As2Yfrb0k+Uby7va4eDieYodjXl8leF4oDYG6ZG2WBPsEliv3EHC8
-         Vpc8359aqRcPFPkeSn7v0ONW2vK2qvVUGnhQPqGn50d+2AcCxtV4FSOM55OwayjO5u1r
-         RQmPRr8CegorlB4W4ajJqZevsCZiBGMH2I79B5F9X+8UWY9xPdbPJvob0siMm45RiQDv
-         LuLQiaw23AX7BDh9yCAX5iR+8xibcRkyaVTqApyd7WNt6zt1rS3kTJppX1RPOznT85SH
-         H1tQ==
-X-Gm-Message-State: AOUpUlEj3m2Usn9YBp8rAEBb/knA4cddF1sxj/LPN5b6CW0Xz19OpRf7
-        sq1keMpdRhY1Gw3l06L8jag6ZH0+
-X-Google-Smtp-Source: AAOMgpfVHIkIz1HHntmI2FyombElYY6c0B0DWB6eYZycCBuAYxPlzy/l+/SzkQaBpR3mGqGcKewhaw==
-X-Received: by 2002:adf:c78e:: with SMTP id l14-v6mr2218954wrg.230.1532624195554;
-        Thu, 26 Jul 2018 09:56:35 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=0aU4HskWgPdmmLv9k/NdrFHJ7x9ZWVlOEU3KuUY+znk=;
+        b=pggqrWRKjG38Basb3Y6MMet/kRb9My9FSHuqwyCi/5c2qXUfDZ8AA6YAvKHqIQyNyB
+         EyNev+Xt75ORATM68mFld2j/TjIA1CeKqeNik9IZd10xCDpYj6kPilVDCrBVbb1dSp4b
+         LX4pXR5pelZrHkFJKuYUjkzq6dWBWMAw2aLywBEdGvtyKMNaJy9szF139/Nt+FgZhE0Y
+         yF9aYiMif4IA1G8TC6bVxWVAPwC7pgMM8HuXTDAUm3SbY6G7vAcEnx5H7h+TS9vayihT
+         NE02B4FVIJtwyGL2c3y1FMp6KB+Fj5j455FntbfKzKEHUbtkkd9PbU4e53BjHHEE3T3+
+         NOMQ==
+X-Gm-Message-State: AOUpUlGRQ/MvSXUYthCBvI3xEDt5Db9SlBKmKotP2g+MY/739MMFAjBr
+        9jD+FtDqAy5BYFYRkxipKnQ=
+X-Google-Smtp-Source: AAOMgpfs/GcmDRIG5ck9By5ffIq9aSkoo7kAfRvY+SstJrSmSK5HN+VwGqSMsubxBKZph3rmJLcKkQ==
+X-Received: by 2002:adf:fa45:: with SMTP id y5-v6mr2345207wrr.138.1532624229697;
+        Thu, 26 Jul 2018 09:57:09 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id r18-v6sm1301830wmh.28.2018.07.26.09.56.34
+        by smtp.gmail.com with ESMTPSA id p14-v6sm1964399wru.0.2018.07.26.09.57.09
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 26 Jul 2018 09:56:34 -0700 (PDT)
+        Thu, 26 Jul 2018 09:57:09 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     =?utf-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>
+Cc:     git <git@vger.kernel.org>
 Subject: Re: What's cooking in git.git (Jul 2018, #03; Wed, 25)
 References: <xmqqd0vbt14e.fsf@gitster-ct.c.googlers.com>
-        <CAGZ79kbO1KOfDgjT5duEd49MZ=EaYLtTDeg2efVO5kkO9QFx7g@mail.gmail.com>
-        <xmqq4lgmubi8.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 26 Jul 2018 09:56:34 -0700
-In-Reply-To: <xmqq4lgmubi8.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Wed, 25 Jul 2018 16:43:59 -0700")
-Message-ID: <xmqqtvomq6kd.fsf@gitster-ct.c.googlers.com>
+        <CAL21BmkmxmjVmi3JUaW7vK5yGyzzZDxeMGNSSYV0nzEzWKcs+A@mail.gmail.com>
+Date:   Thu, 26 Jul 2018 09:57:08 -0700
+In-Reply-To: <CAL21BmkmxmjVmi3JUaW7vK5yGyzzZDxeMGNSSYV0nzEzWKcs+A@mail.gmail.com>
+        (=?utf-8?B?ItCe0LvRjyDQotC10LvQtdC20L3QsNGPIidz?= message of "Thu, 26 Jul
+ 2018 09:07:03
+        +0300")
+Message-ID: <xmqqpnzaq6jf.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Оля Тележная  <olyatelezhnaya@gmail.com> writes:
 
-> Stefan Beller <sbeller@google.com> writes:
->
->>> * js/range-diff (2018-07-25) 21 commits
->
->> I think the current coloring is good enough to ship, but it still has
->> errors around corners, for example introduction of new files,
->> having lines in the inner diff as:
+> 2018-07-26 1:13 GMT+03:00 Junio C Hamano <gitster@pobox.com>:
 >>
->>      diff --git a/Makefile b/Makefile
->>      --- a/Makefile
->>      +++ b/Makefile
+>> * ot/ref-filter-object-info (2018-07-17) 5 commits
+>>  - ref-filter: use oid_object_info() to get object
+>>  - ref-filter: merge get_obj and get_object
+>>  - ref-filter: initialize eaten variable
+>>  - ref-filter: fill empty fields with empty values
+>>  - ref-filter: add info_source to valid_atom
 >>
->> will be colored white/red/green (in that order), but in the outer diff
->> these are all "context", but as these specific context lines happen
->> to start with +/- we color them.
->> If we want to be perfect, we rather need to parse&understand
->> the inner diff on a more detailed level, but I would argue to leave
->> that to a later stage for another volunteer to step in and cleanup.
+>>  A few atoms like %(objecttype) and %(objectsize) in the format
+>>  specifier of "for-each-ref --format=<format>" can be filled without
+>>  getting the full contents of the object, but just with the object
+>>  header.  These cases have been optimzied by calling
+>>  oid_object_info() API.
+>>
+>>  What's the doneness of this one?
+>>
 >
-> I think the primary part of coloring i.e. "white is common, green is
-> added, red is removed" together with "bold is new, dimmed is old" is
-> quite usable and not broken.  
+> It is ready. Thanks.
 
-I just compared the output from the original tbdiff and the dual
-color mode of range-diff; especially with that "new round is bold,
-old round is dimmed", I find that the coloring makes it easier to
-spot what kind of each line is than what tbdiff did.
-
-Dscho, good job on that.
-
-
+Thanks, the question was meant more to the reviewers and mentors
+than the original author, though ;-)
