@@ -2,432 +2,226 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIM_INVALID shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 85AAE1F597
-	for <e@80x24.org>; Thu, 26 Jul 2018 12:13:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2453D1F597
+	for <e@80x24.org>; Thu, 26 Jul 2018 12:34:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729944AbeGZNaY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jul 2018 09:30:24 -0400
-Received: from mail-yb0-f194.google.com ([209.85.213.194]:36947 "EHLO
-        mail-yb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729894AbeGZNaY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jul 2018 09:30:24 -0400
-Received: by mail-yb0-f194.google.com with SMTP id r3-v6so534073ybo.4
-        for <git@vger.kernel.org>; Thu, 26 Jul 2018 05:13:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=xl4a35BOhviTrjQ3B63T/e0stPIhJrIJUiRjq+bwGmE=;
-        b=Otuupi5pQUG7eAN2wspLD+XzqC7si090OLihYemHCPy7cktDwcbqUOAN2FdtuwBwvN
-         +siGWHJdF6g8xu0A8xU2M2nQOUreUU1jtwaP8bTat35LYWKntjt9XjvFTbNOd7cwpFCp
-         loPRud28peIxNKGY+DL886AnAiV64HTAc//qM/81sipjYOjjyJZkZeIA22YHc1W9uZOi
-         yVx6Z759r3IQjwB+15OFR6bC0CwUXMdLLUVnoy1jvb04PCSiPAOW9f962n6EqIbKk4iw
-         JyRBgHfvPXGa/Nm1h9ccDBaII1aIw8akRQOPz7bgVxrUNyX+bAQ150QGGoMwTbS5AAr/
-         AZGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :mime-version:content-disposition:user-agent;
-        bh=xl4a35BOhviTrjQ3B63T/e0stPIhJrIJUiRjq+bwGmE=;
-        b=SoeYPkhrxLxn9xM413m1mmkZc0hrnSadqiRuaiVQndvgt29YBoL9CxObyGhgL0y3MI
-         QreDiiBnVTq9jxcLPMCN8Npb/1Vz/20LCLHAxsQbgdcD96CMDcPfOxyNuDMT8lAk2GMZ
-         V9B8LIOy/Eo940bghkNfPZHmZytWyr+WgRg8q7Tx1m16t8mB1Bj3R1zRw+i6UqMdbyqC
-         B+gNSL6mp2h7Y2K93VsLFbm60VK4oNZA3YIupLvTXYNQg1ETYzxnbA0yLEqMyrklTuio
-         jWr/jQNJyzE3qepjCvTWfhjTPwGesCw6I9EcBYRGBkES7LLlevbaQdEgabXgl8ehdPHo
-         pD8Q==
-X-Gm-Message-State: AOUpUlHm/IFcQ+mfzhv+muoXdptu9sC9daLPZtUxDZyBywn0yP5u1Fsa
-        NYlTqXYyGpw5oLkzasMsD6PfugBV
-X-Google-Smtp-Source: AAOMgpchConaBaA/30cYwI2iR+GQrL3XRUKodd5s52Vbuntc6TjV+HaV8qb/CZnOTnuwPGo2R8hxOg==
-X-Received: by 2002:a25:67d6:: with SMTP id b205-v6mr858458ybc.243.1532607229667;
-        Thu, 26 Jul 2018 05:13:49 -0700 (PDT)
-Received: from localhost ([2620:10d:c091:180::1:fb45])
-        by smtp.gmail.com with ESMTPSA id w6-v6sm463374ywg.23.2018.07.26.05.13.48
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Jul 2018 05:13:48 -0700 (PDT)
-Date:   Thu, 26 Jul 2018 05:13:46 -0700
-From:   Tejun Heo <tj@kernel.org>
-To:     git@vger.kernel.org
-Cc:     kernel-team@fb.com
-Subject: [PATCH] name_rev: add support for --cherry-picks
-Message-ID: <20180726121346.GT1934745@devbig577.frc2.facebook.com>
+        id S1730162AbeGZNuk (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jul 2018 09:50:40 -0400
+Received: from mout.gmx.net ([212.227.15.15]:53189 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729937AbeGZNuk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jul 2018 09:50:40 -0400
+Received: from [192.168.0.129] ([37.201.195.94]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LrNE4-1g7qk60Z9o-013AOJ; Thu, 26
+ Jul 2018 14:33:50 +0200
+Date:   Thu, 26 Jul 2018 14:33:46 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Akinori MUSHA <knu@iDaemons.org>
+Subject: Re: [RFC PATCH] sequencer: fix quoting in write_author_script
+In-Reply-To: <20180718155518.1025-1-phillip.wood@talktalk.net>
+Message-ID: <nycvar.QRO.7.76.6.1807261332130.71@tvgsbejvaqbjf.bet>
+References: <eb295aea-dae5-5e1c-bacf-2c77d3ce0195@talktalk.net> <20180718155518.1025-1-phillip.wood@talktalk.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:oBz32VFL3qNBzn2pP+Cvr2dGWAH3jtzEHGhKMVWzASxp4+QB81b
+ Uy3Ya44bCl6P2MtJNeiYbR2/zem9wNqMMueCQjaSVuw9cxGS+FoqPswc5OJWC+fIxLbYmAg
+ EIZ6UN5LqZBxYA3+1qriO4T+CIHxwpCv8aKXQ9EtFYvoZ20vr7y5e2cntBviL5C8CShvxwF
+ sYV0Cfsx2Q6xzC2lP3aEA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:4cvyJviaPTQ=:Dt199sOO83ASzSXxHiOq2m
+ WSaXIyBpnhGN+68ssNnQbKyWpKpPdvKdKeoO28EcjdWzb2pO04l/yTpbycJlFJPORw8s+g6K8
+ /MuIcv9SORRCvyqHS/iGMob3uq8ZllBxu1re0YnVtZvad7ZCwG2qzsAMH2i7+h4MVS8wDlWVS
+ QWsPxZtUDR8Bp1IBFAJfh5efZNaZVOJh5ZIwiQFBzdYWdh8r5/dy4f3htQADyVsWwjetudeAV
+ z45GHhh65PyHTPKKY3us0tuzI+Vby3GEfTFCxSLJKaU2M9FM+1HCMDxExfKvBfE3y+3maoFzI
+ EDlOaG1oDHkpC4P+XbMrPHgBiWoEbg90rFT58+WKngyVOJRzwFh2TPMwl4un7okumsLNVMHJw
+ dTY5t5/vDJf8Cn/0jGe1XRLdO5nJ2EZXA0CYhcXTtotGyxRM10+/sa/faNvxolm0PUw0HuQGT
+ c6QZbZwgFTKfuocl2sLNa3zvIOBwE1+X9KWDxyJARK8+XYc6EgbuMMs+/c/3FhIrABzRO2pPQ
+ 3KLJtLVgocnO6h2KFp0pOyvf/F/69191sERx3LCkb304u8y/Af/QcPVTsByfYbolmg5AOStxy
+ XvgNLemuMsEvbQo+Ab+7c0QqvdfeJDrhL1nXj6MF31Y8s330KBUUxUp712pdMM79M7VmTx8Xm
+ PpX6fT89wWRiqO+SW3BC3IkxBoxhJlAcJI3VH6gUo0WziY+pzxtwtHrk5hnGEUa0qt1/Gm0mj
+ 2HJu+Fn33wbV46uQ9/x1gaDTbQ0+5LQ00muMQYM5J0iSsacJGKdv/sKxlE5JOCHMj4BKBDb2n
+ dwFiy3H
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From aefa07bc66bb4a116eb84eb46d7f070f9632c990 Mon Sep 17 00:00:00 2001
-From: Tejun Heo <tj@kernel.org>
-Date: Thu, 26 Jul 2018 04:14:52 -0700
+Hi Phillip,
 
-It's often useful to track cherry-picks of a given commit.  Add
---cherry-picks support to git-name-rev.  When specified, name_rev also
-shows the commits cherry-picked from the listed target commits with
-indentations.
+On Wed, 18 Jul 2018, Phillip Wood wrote:
 
-  $ git name-rev --cherry-picks 10f7ce0a0e524279f022
-  10f7ce0a0e524279f022 master~1
-    d433e3b4d5a19b3d29e2c8349fe88ceade5f6190 branch1
-      82cddd79f962de0bb1e7cdd95d48b48633335816 branch2
-    58a8d36b2532feb0a14b4fc2a50d587e64f38324 branch3
-    fa8b79edc5dfff21753c2ccfc1a1828336c4c070 branch4~1
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> 
+> Single quotes should be escaped as \' not \\'. Note that this only
+> affects authors that contain a single quote and then only external
+> scripts that read the author script and users whose git is upgraded from
+> the shell version of rebase -i while rebase was stopped. This is because
+> the parsing in read_env_script() expected the broken version and for
+> some reason sq_dequote() called by read_author_ident() seems to handle
+> the broken quoting correctly.
+> 
+> Ideally write_author_script() would be rewritten to use
+> split_ident_line() and sq_quote_buf() but this commit just fixes the
+> immediate bug.
+> 
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
 
-Note that branch2 is further indented because it's a nested cherry
-pick from d433e3b4d5a1.
+Good catch.
 
-"git-describe --contains" is a wrapper around git-name-rev.  Also add
---cherry-picks support to git-describe.
+> This is untested, unfortuantely I don't have really have time to write a test or
+> follow this up at the moment, if someone else want to run with it then please
+> do.
 
-Signed-off-by: Tejun Heo <tj@kernel.org>
----
- Documentation/git-describe.txt   |   5 ++
- Documentation/git-name-rev.txt   |   4 ++
- builtin/describe.c               |   7 +-
- builtin/name-rev.c               | 117 +++++++++++++++++++++++++++++--
- t/t6121-describe-cherry-picks.sh |  63 +++++++++++++++++
- 5 files changed, 190 insertions(+), 6 deletions(-)
- create mode 100755 t/t6121-describe-cherry-picks.sh
+I modified the test that was added by Akinori. As it was added very early,
+and as there is still a test case *after* Akinori's that compares a
+hard-coded SHA-1, I refrained from using `test_commit` (which would change
+that SHA-1). See below.
 
-diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
-index e027fb8c4..13a229bd7 100644
---- a/Documentation/git-describe.txt
-+++ b/Documentation/git-describe.txt
-@@ -60,6 +60,11 @@ OPTIONS
- 	the tag that comes after the commit, and thus contains it.
- 	Automatically implies --tags.
- 
-+--cherry-picks::
-+	Also show the commits cherry-picked from the target commits.
-+	Cherry-picks are shown indented below their from-commmits.
-+	Can only be used with --contains.
-+
- --abbrev=<n>::
- 	Instead of using the default 7 hexadecimal digits as the
- 	abbreviated object name, use <n> digits, or as many digits
-diff --git a/Documentation/git-name-rev.txt b/Documentation/git-name-rev.txt
-index 5cb0eb085..df16c4a89 100644
---- a/Documentation/git-name-rev.txt
-+++ b/Documentation/git-name-rev.txt
-@@ -61,6 +61,10 @@ OPTIONS
- --always::
- 	Show uniquely abbreviated commit object as fallback.
- 
-+--cherry-picks::
-+	Also show the commits cherry-picked from the target commits.
-+	Cherry-picks are shown indented below their from-commmits.
-+
- EXAMPLES
- --------
- 
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 1e87f68d5..94c84004d 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -528,9 +528,10 @@ static void describe(const char *arg, int last_one)
- 
- int cmd_describe(int argc, const char **argv, const char *prefix)
+> diff --git a/sequencer.c b/sequencer.c
+> index 5354d4d51e..0b78d1f100 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -638,21 +638,21 @@ static int write_author_script(const char *message)
+>  		else if (*message != '\'')
+>  			strbuf_addch(&buf, *(message++));
+>  		else
+> -			strbuf_addf(&buf, "'\\\\%c'", *(message++));
+> +			strbuf_addf(&buf, "'\\%c'", *(message++));
+>  	strbuf_addstr(&buf, "'\nGIT_AUTHOR_EMAIL='");
+>  	while (*message && *message != '\n' && *message != '\r')
+>  		if (skip_prefix(message, "> ", &message))
+>  			break;
+>  		else if (*message != '\'')
+>  			strbuf_addch(&buf, *(message++));
+>  		else
+> -			strbuf_addf(&buf, "'\\\\%c'", *(message++));
+> +			strbuf_addf(&buf, "'\\%c'", *(message++));
+>  	strbuf_addstr(&buf, "'\nGIT_AUTHOR_DATE='@");
+>  	while (*message && *message != '\n' && *message != '\r')
+>  		if (*message != '\'')
+>  			strbuf_addch(&buf, *(message++));
+>  		else
+> -			strbuf_addf(&buf, "'\\\\%c'", *(message++));
+> +			strbuf_addf(&buf, "'\\%c'", *(message++));
+>  	res = write_message(buf.buf, buf.len, rebase_path_author_script(), 1);
+
+I resolved the merge conflict with Akinori's patch. FWIW I pushed all of
+this, including the fixup to Junio's fixup to the
+`fix-t3404-author-script-test` branch at https://github.com/dscho/git.
+
+>  	strbuf_release(&buf);
+>  	return res;
+> @@ -666,13 +666,21 @@ static int read_env_script(struct argv_array *env)
+>  {
+>  	struct strbuf script = STRBUF_INIT;
+>  	int i, count = 0;
+> -	char *p, *p2;
+> +	const char *p2;
+> +	char *p;
+>  
+>  	if (strbuf_read_file(&script, rebase_path_author_script(), 256) <= 0)
+>  		return -1;
+>  
+>  	for (p = script.buf; *p; p++)
+> -		if (skip_prefix(p, "'\\\\''", (const char **)&p2))
+> +		/*
+> +		 * write_author_script() used to escape "'" incorrectly as
+> +		 * "'\\\\''" rather than "'\\''" so we check for the correct
+> +		 * version the incorrect version in case git was upgraded while
+> +		 * rebase was stopped.
+> +		 */
+> +		if (skip_prefix(p, "'\\''", &p2) ||
+> +		    skip_prefix(p, "'\\\\''", &p2))
+
+I think in this form, it is possibly unsafe because it assumes that the
+new code cannot generate output that would trigger that same code path.
+Although I have to admit that I did not give this a great deal of thought.
+
+In any case, if you have to think long and hard about some fix, it might
+be better to go with something that is easier to reason about. So how
+about this: we already know that the code is buggy, Akinori fixed the bug,
+where the author-script missed its trailing single-quote. We can use this
+as a tell-tale for *this* bug. Assuming that Junio will advance both your
+and Akinori's fix in close proximity.
+
+Again, this is pushed to the `fix-t3404-author-script-test` branch at
+https://github.com/dscho/git; My fixup on top of your patch looks like
+this (feel free to drop the sq_bug part and only keep the test part):
+
+-- snipsnap --
+diff --git a/sequencer.c b/sequencer.c
+index 46c0b3e720f..7abe78dc78e 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -573,13 +573,14 @@ static int write_author_script(const char *message)
+ static int read_env_script(struct argv_array *env)
  {
--	int contains = 0;
-+	int contains = 0, cherry_picks = 0;
- 	struct option options[] = {
- 		OPT_BOOL(0, "contains",   &contains, N_("find the tag that comes after the commit")),
-+		OPT_BOOL(0, "cherry-picks", &cherry_picks, N_("also include cherry-picks with --contains")),
- 		OPT_BOOL(0, "debug",      &debug, N_("debug search strategy on stderr")),
- 		OPT_BOOL(0, "all",        &all, N_("use any ref")),
- 		OPT_BOOL(0, "tags",       &tags, N_("use any tag, even unannotated")),
-@@ -570,6 +571,8 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
+ 	struct strbuf script = STRBUF_INIT;
+-	int i, count = 0;
++	int i, count = 0, sq_bug;
+ 	const char *p2;
+ 	char *p;
  
- 	if (longformat && abbrev == 0)
- 		die(_("--long is incompatible with --abbrev=0"));
-+	if (cherry_picks && !contains)
-+		die(_("--cherry-picks can only be used with --contains"));
+ 	if (strbuf_read_file(&script, rebase_path_author_script(), 256) <= 0)
+ 		return -1;
  
- 	if (contains) {
- 		struct string_list_item *item;
-@@ -579,6 +582,8 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
- 		argv_array_pushl(&args, "name-rev",
- 				 "--peel-tag", "--name-only", "--no-undefined",
- 				 NULL);
-+		if (cherry_picks)
-+			argv_array_push(&args, "--cherry-picks");
- 		if (always)
- 			argv_array_push(&args, "--always");
- 		if (!all) {
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index 0eb440359..7b21556ad 100644
---- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -7,9 +7,13 @@
- #include "parse-options.h"
- #include "sha1-lookup.h"
- #include "commit-slab.h"
-+#include "trailer.h"
-+#include "object-store.h"
++	sq_bug = script.len && script.buf[script.len - 1] != '\'';
+ 	for (p = script.buf; *p; p++)
+ 		/*
+ 		 * write_author_script() used to escape "'" incorrectly as
+@@ -587,8 +588,9 @@ static int read_env_script(struct argv_array *env)
+ 		 * version the incorrect version in case git was upgraded while
+ 		 * rebase was stopped.
+ 		 */
+-		if (skip_prefix(p, "'\\''", &p2) ||
+-		    skip_prefix(p, "'\\\\''", &p2))
++		if (sq_bug && skip_prefix(p, "'\\\\''", &p2))
++			strbuf_splice(&script, p - script.buf, p2 - p, "'", 1);
++		else if (skip_prefix(p, "'\\''", &p2))
+ 			strbuf_splice(&script, p - script.buf, p2 - p, "'", 1);
+ 		else if (*p == '\'')
+ 			strbuf_splice(&script, p-- - script.buf, 1, "", 0);
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 97f0b4bf881..dd726ff4dc4 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -75,16 +75,18 @@ test_expect_success 'rebase --keep-empty' '
+ 	test_line_count = 6 actual
+ '
  
- #define CUTOFF_DATE_SLOP 86400 /* one day */
++SQ="'"
+ test_expect_success 'rebase -i writes correct author-script' '
+ 	test_when_finished "test_might_fail git rebase --abort" &&
+-	git checkout master &&
++	git checkout -b author-with-sq master &&
++	GIT_AUTHOR_NAME="Auth O$SQ R" git commit --allow-empty -m with-sq &&
+ 	set_fake_editor &&
+-	FAKE_LINES="edit 1" git rebase -i HEAD^ &&
++	FAKE_LINES="edit 1" git rebase -ki HEAD^ &&
+ 	(
+ 		sane_unset GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_AUTHOR_DATE &&
+ 		. .git/rebase-merge/author-script &&
+ 		test "$(git show -s --date=raw --format=%an,%ae,@%ad)" = \
+-			"$GIT_AUTHOR_NAME,$GIT_AUTHOR_EMAIL,$GIT_AUTHOR_DATE"
++			"Auth O$SQ R,$GIT_AUTHOR_EMAIL,$GIT_AUTHOR_DATE"
+ 	)
+ '
  
-+static const char cherry_picked_prefix[] = "(cherry picked from commit ";
-+
- typedef struct rev_name {
- 	const char *tip_name;
- 	timestamp_t taggerdate;
-@@ -19,9 +23,12 @@ typedef struct rev_name {
- } rev_name;
+@@ -1347,7 +1349,6 @@ test_expect_success 'editor saves as CR/LF' '
+ 	)
+ '
  
- define_commit_slab(commit_rev_name, struct rev_name *);
-+define_commit_slab(commit_cherry_picks, struct object_array *);
- 
- static timestamp_t cutoff = TIME_MAX;
- static struct commit_rev_name rev_names;
-+static struct commit_cherry_picks cherry_picks;
-+static int do_cherry_picks = 0;
- 
- /* How many generations are maximally preferred over _one_ merge traversal? */
- #define MERGE_TRAVERSAL_WEIGHT 65535
-@@ -38,6 +45,26 @@ static void set_commit_rev_name(struct commit *commit, struct rev_name *name)
- 	*commit_rev_name_at(&rev_names, commit) = name;
- }
- 
-+static struct object_array *get_commit_cherry_picks(struct commit *commit)
-+{
-+	struct object_array **slot =
-+		commit_cherry_picks_peek(&cherry_picks, commit);
-+
-+	return slot ? *slot : NULL;
-+}
-+
-+static struct object_array *get_create_commit_cherry_picks(struct commit *commit)
-+{
-+	struct object_array **slot =
-+		commit_cherry_picks_at(&cherry_picks, commit);
-+
-+	if (!*slot) {
-+		*slot = xmalloc(sizeof(struct object_array));
-+		**slot = (struct object_array)OBJECT_ARRAY_INIT;
-+	}
-+	return *slot;
-+}
-+
- static int is_better_name(struct rev_name *name,
- 			  const char *tip_name,
- 			  timestamp_t taggerdate,
-@@ -76,6 +103,47 @@ static int is_better_name(struct rev_name *name,
- 	return 0;
- }
- 
-+static void record_cherry_pick(struct commit *commit)
-+{
-+	enum object_type type;
-+	unsigned long size;
-+	void *buffer;
-+	struct trailer_info info;
-+	int i;
-+
-+	buffer = read_object_file(&commit->object.oid, &type, &size);
-+	trailer_info_get(&info, buffer);
-+
-+	/* when nested, the last trailer describes the latest cherry-pick */
-+	for (i = info.trailer_nr - 1; i >= 0; i--) {
-+		const int prefix_len = sizeof(cherry_picked_prefix) - 1;
-+		char *line = info.trailers[i];
-+
-+		if (!strncmp(line, cherry_picked_prefix, prefix_len)) {
-+			struct object_id from_oid;
-+			struct object *from_object;
-+			struct commit *from_commit;
-+			struct object_array *from_cps;
-+
-+			if (get_oid_hex(line + prefix_len, &from_oid)) {
-+				fprintf(stderr, "Could not get sha1 from %s", line);
-+				break;
-+			}
-+
-+			from_object = parse_object(&from_oid);
-+			if (!from_object || from_object->type != OBJ_COMMIT)
-+				break;
-+
-+			from_commit = (struct commit *)from_object;
-+			from_cps = get_create_commit_cherry_picks(from_commit);
-+			add_object_array(&commit->object, NULL, from_cps);
-+			break;
-+		}
-+	}
-+
-+	free(buffer);
-+}
-+
- static void name_rev(struct commit *commit,
- 		const char *tip_name, timestamp_t taggerdate,
- 		int generation, int distance, int from_tag,
-@@ -91,6 +159,10 @@ static void name_rev(struct commit *commit,
- 	if (commit->date < cutoff)
- 		return;
- 
-+	/* if a cherry pick we see for the first time, remember it */
-+	if (do_cherry_picks && !name)
-+		record_cherry_pick(commit);
-+
- 	if (deref) {
- 		tip_name = to_free = xstrfmt("%s^0", tip_name);
- 
-@@ -402,6 +474,32 @@ static void name_rev_line(char *p, struct name_ref_data *data)
- 	strbuf_release(&buf);
- }
- 
-+static void show_cherry_picks(struct object *obj, int always,
-+			      int allow_undefined, int name_only, int level)
-+{
-+	struct object_array *cps;
-+	int i;
-+
-+	if (obj->type != OBJ_COMMIT)
-+		return;
-+
-+	cps = get_commit_cherry_picks((struct commit *)obj);
-+	if (!cps)
-+		return;
-+
-+	for (i = 0; i < cps->nr; i++) {
-+		struct object *cherry_pick = cps->objects[i].item;
-+		int j;
-+
-+		for (j = 0; j < level; j++)
-+			fputs("  ", stdout);
-+
-+		show_name(cherry_pick, NULL, always, allow_undefined, name_only);
-+		show_cherry_picks(cherry_pick, always, allow_undefined,
-+				  name_only, level + 1);
-+	}
-+}
-+
- int cmd_name_rev(int argc, const char **argv, const char *prefix)
- {
- 	struct object_array revs = OBJECT_ARRAY_INIT;
-@@ -420,6 +518,7 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL(0, "undefined", &allow_undefined, N_("allow to print `undefined` names (default)")),
- 		OPT_BOOL(0, "always",     &always,
- 			   N_("show abbreviated commit object as fallback")),
-+		OPT_BOOL(0, "cherry-picks", &do_cherry_picks, N_("include cherry-picked commits")),
- 		{
- 			/* A Hidden OPT_BOOL */
- 			OPTION_SET_INT, 0, "peel-tag", &peel_tag, NULL,
-@@ -430,6 +529,7 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
- 	};
- 
- 	init_commit_rev_name(&rev_names);
-+	init_commit_cherry_picks(&cherry_picks);
- 	git_config(git_default_config, NULL);
- 	argc = parse_options(argc, argv, prefix, opts, name_rev_usage, 0);
- 	if (all + transform_stdin + !!argc > 1) {
-@@ -464,10 +564,9 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
- 			continue;
- 		}
- 
--		if (commit) {
-+		if (commit)
- 			if (cutoff > commit->date)
- 				cutoff = commit->date;
--		}
- 
- 		if (peel_tag) {
- 			if (!commit) {
-@@ -506,9 +605,17 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
- 		}
- 	} else {
- 		int i;
--		for (i = 0; i < revs.nr; i++)
--			show_name(revs.objects[i].item, revs.objects[i].name,
--				  always, allow_undefined, data.name_only);
-+		for (i = 0; i < revs.nr; i++) {
-+			struct object *obj = revs.objects[i].item;
-+			const char *name = revs.objects[i].name;
-+
-+			show_name(obj, name, always, allow_undefined,
-+				  data.name_only);
-+
-+			if (do_cherry_picks)
-+				show_cherry_picks(obj, always, allow_undefined,
-+						  data.name_only, 1);
-+		}
- 	}
- 
- 	UNLEAK(revs);
-diff --git a/t/t6121-describe-cherry-picks.sh b/t/t6121-describe-cherry-picks.sh
-new file mode 100755
-index 000000000..838e0acc0
---- /dev/null
-+++ b/t/t6121-describe-cherry-picks.sh
-@@ -0,0 +1,63 @@
-+#!/bin/sh
-+
-+test_description='git describe should show cherry-picks correctly
-+
-+           C
-+ o----o----x
-+      |\ 
-+      | .--o
-+      |\  C1
-+      | .--o
-+       \  C2
-+        .--o
-+          C3
-+
-+C1 and C3 are cherry-picks from C, and C2 from C1.  Verify git desribe
-+handles c and its cherry-picks correctly.
-+'
-+. ./test-lib.sh
-+
-+GIT_AUTHOR_EMAIL=bogus_email_address
-+export GIT_AUTHOR_EMAIL
-+
-+test_expect_success \
-+    'prepare repository with topic branches with cherry-picks' \
-+    'test_tick &&
-+     echo First > A &&
-+     git update-index --add A &&
-+     git commit -m "Add A." &&
-+
-+     test_tick &&
-+     git checkout -b T1 master &&
-+     git checkout -b T2 master &&
-+     git checkout -b T3 master &&
-+     git checkout master &&
-+
-+     test_tick &&
-+     echo Second > B &&
-+     git update-index --add B &&
-+     git commit -m "Add B." &&
-+
-+     test_tick &&
-+     git checkout -f T1 &&
-+     rm -f B &&
-+     git cherry-pick -x master &&
-+
-+     test_tick &&
-+     git checkout -f T2 &&
-+     rm -f B &&
-+     git cherry-pick -x T1 &&
-+
-+     test_tick &&
-+     git checkout -f T3 &&
-+     rm -f B &&
-+     git cherry-pick -x master
-+'
-+
-+test_expect_success 'Verify describing cherry-picks' '
-+     git describe --contains --all --cherry-picks master >actual &&
-+     echo -e "master\n  T1\n    T2\n  T3" >expect &&
-+     test_cmp expect actual
-+'
-+
-+test_done
--- 
-2.17.1
-
+-SQ="'"
+ test_expect_success 'rebase -i --gpg-sign=<key-id>' '
+ 	set_fake_editor &&
+ 	FAKE_LINES="edit 1" git rebase -i --gpg-sign="\"S I Gner\"" HEAD^ \
