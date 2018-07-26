@@ -2,160 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-1.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,HTML_IMAGE_ONLY_24,HTML_MESSAGE,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,URIBL_GREY
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8EC411F597
-	for <e@80x24.org>; Thu, 26 Jul 2018 12:07:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C0491F597
+	for <e@80x24.org>; Thu, 26 Jul 2018 12:08:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729939AbeGZNXy (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jul 2018 09:23:54 -0400
-Received: from mout.gmx.net ([212.227.15.18]:33671 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729531AbeGZNXy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jul 2018 09:23:54 -0400
-Received: from [192.168.0.129] ([37.201.195.94]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MSuMn-1faivy0YvF-00RmYv; Thu, 26
- Jul 2018 14:07:11 +0200
-Date:   Thu, 26 Jul 2018 14:07:07 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     knu@idaemons.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] sequencer.c: terminate the last line of author-script
- properly
-In-Reply-To: <xmqqpnzlla1p.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1807261347040.71@tvgsbejvaqbjf.bet>
-References: <86a7qwpt9g.knu@iDaemons.org>        <xmqqa7qww6uk.fsf@gitster-ct.c.googlers.com>        <CAPig+cQWA+sE3iH89kQGWgS+0HQDK-V5++S0+F6_dpfOCfXxDg@mail.gmail.com> <xmqqpnzlla1p.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:SX/5gvkgWOr1SeufELYTd+WQAAoaDWl1ioX6zY92QWyfPbjySsS
- RW0KydhOovuK+A3Fcmi79dfHbPQv/othfZZBV8zVRfdZ8xrLpZMU3z0UZYh3uVZrQVuVSbi
- DgF/8gVM8M3SqtReQeOs1VKgiQYsP4ZE9owOpdQntuMS1a+cARqZwDBLHoNWxfHA6E1UufV
- oPnzboCQ0GGeYGgnTpBCA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:LspROmp54QE=:hzLvbAWzvJcywFQjdGXZfx
- 2+oTT7+wglbpyqtD9V/KHhiISqRX5r6Qm0kSl75Kq2KdplYrTBgnYCIcQlokXrHWQkew3klHC
- E5wf1ynRD3FQphnGpH0NM4eY4RSp/Rvg3SCLsPSx7r1PcW1recdj1zTv5mOFwD1a1pza9sFD2
- 3dzqQUtNn+FtpaWk7edV71L42o1H7vSzhjT2EZmp0JhliPHiM+9gOYoXksCw3EDo+79DOM2cK
- 99PgX9reJePffDXhATyjWDdB5vMSHo0Zqk0dU0UlSG+dF326VXKYXR+HBquCuUK/+60GuPyrM
- d22az8W2fUXMtcjOd2PgP1L2Js/JvAhzAMmrqT/tJ8isZYeDVlI9FsNR0c3gSmHRTbihfHM9b
- yhAfoMk9ajGYcDcyTffzCRKdnKbBdVGlS1VWt5FHgFVO3piomDNw18upE0KcJOUQlIbqR5Wwx
- w++I+VrKFislPd+u6lBJ/81OVq/+jFut4JXsQuf91fVY3mUWiZZdfKV0W7KAgfpDpu+LJQcyP
- UFwKisyB5fgCqDwLTZrWu/495Sh6JELHNkjqxVYesZ88ak+a4odkimsRP3ur3iNDjgi+HRxH2
- RsVDLWv7cLCiw4GqzzESi3+e+pRQ0pvjLhNW+0BxvWkxz1xca9QrEAZOAa9YF/uZC4ezpnj/2
- blH+tMl71oLmjZnrpdB4RgwfyHP+EQzsdDhBvBucsNcLdm9X2NgDoYPNy0WbpSl+KO9AmTfsG
- enok5D4KkDo1XHVO5gl8Lh4r91lUjXqadJjEkkKs+Z6mWHFMCKrBWesfXt0HDYeaBfi3GkPBM
- mOCjvuw
+        id S1729852AbeGZNZI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jul 2018 09:25:08 -0400
+Received: from o1.office.mobisystems.com ([198.37.146.154]:52569 "EHLO
+        o1.office.mobisystems.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729531AbeGZNZH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jul 2018 09:25:07 -0400
+X-Greylist: delayed 320 seconds by postgrey-1.27 at vger.kernel.org; Thu, 26 Jul 2018 09:25:07 EDT
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=sendgrid.net; 
+        h=from:content-type:mime-version:subject:to; s=smtpapi; 
+        bh=tq1s9fbsneuui9qTUXhWI9SidNU=; b=Q4+J0nytSCb6+TQfICn9h3X2e5uyM
+        OyS7lQrlYESc4hYHVhJqytKBS3q7nLYCtN9xcJBcEFsKhFVYxKQ2cM7kawMtDNvD
+        GrVyFXN8Fxl0hC6N56UJYof2zWfoW0NsdDuD1Jc4doFWwXugmTe+23dRpTlJv5yU
+        NYr29tHbjMgvj4=
+Received: by filter0056p3las1.sendgrid.net with SMTP id filter0056p3las1-15074-5B59B844-21
+        2018-07-26 12:02:12.291186777 +0000 UTC m=+49224.762336488
+Received: from mail.ferryfair.com (113.73.230.35.bc.googleusercontent.com [35.230.73.113])
+        by ismtpd0005p1las1.sendgrid.net (SG) with ESMTP id Ywirlr6ySqiBx7RbBfi12Q
+        for <git@vger.kernel.org>; Thu, 26 Jul 2018 12:02:12.205 +0000 (UTC)
+Received: from [192.168.2.21] (unknown [123.201.171.189])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.ferryfair.com (Postfix) with ESMTPSA id E8C9A45154
+        for <git@vger.kernel.org>; Thu, 26 Jul 2018 17:32:09 +0530 (IST)
+From:   NeckTwi <necktwi@ferryfair.com>
+Content-Type: multipart/alternative;
+        boundary="Apple-Mail=_79DC19C6-6E9F-4EBE-A834-593F8A6C51C3"
+Mime-Version: 1.0 (Mac OS X Mail 12.0 \(3445.100.17\))
+Subject: fatal: could not read '': No such file or directory
+Message-Id: <3D0FDBE2-469B-41A7-B27F-4A8706FD4473@ferryfair.com>
+Date:   Thu, 26 Jul 2018 12:03:12 +0000 (UTC)
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3445.100.17)
+X-SG-EID: YUhPsKA0VKt4kiGI+qrcaW2qjx7tU7rsf8gtpxAAA90tqlKwS9xtzc8Mmdkwu/SCYNTDVc5zYDvz/q
+ 1f5kEEdPTsgHHsBjATNsimX1yWWGdd4z6HO2lQ3NJbaKQQwvvT6l8micI8/B6sFvdvFaRkY4iiVKzZ
+ hn5lemt1O646Kh3jzqnJ4woZun6gsikRwEcce4hi0Pn6/SjmAvACmXiJkw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+--Apple-Mail=_79DC19C6-6E9F-4EBE-A834-593F8A6C51C3
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
 
-On Tue, 17 Jul 2018, Junio C Hamano wrote:
+While committing a repo I get the error "fatal: could not read '': No such =
+file or directory=E2=80=9D.
+The git repo is a samba share mounted with smb vers=3D1.0 in linux using ci=
+fs-utils.
 
-> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-> index 2d189da2f1..b0cef509ab 100755
-> --- a/t/t3404-rebase-interactive.sh
-> +++ b/t/t3404-rebase-interactive.sh
-> @@ -81,11 +81,13 @@ test_expect_success 'rebase -i writes out .git/rebase-merge/author-script in "ed
+I tried git rm =E2=80=94cached ./* && git add =E2=80=94all && git commit -a=
+ -m =E2=80=9Ccommit msg=E2=80=9D
+It gives the error.
 
-You missed a very long line here.
+I suppose it's a bug.
 
->  	set_fake_editor &&
->  	FAKE_LINES="edit 1" git rebase -i HEAD^ &&
->  	test -f .git/rebase-merge/author-script &&
+=E2=80=A6 NeckTwi
 
-Why do we need this, if we already have an `eval` later on?
 
-> -	unset GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_AUTHOR_DATE &&
-> -	eval "$(cat .git/rebase-merge/author-script)" &&
-> -	test "$(git show --quiet --pretty=format:%an)" = "$GIT_AUTHOR_NAME" &&
-> -	test "$(git show --quiet --pretty=format:%ae)" = "$GIT_AUTHOR_EMAIL" &&
-> -	test "$(git show --quiet --date=raw --pretty=format:@%ad)" = "$GIT_AUTHOR_DATE"
-> +	(
-> +		sane_unset GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_AUTHOR_DATE &&
-> +		eval "$(cat .git/rebase-merge/author-script)" &&
 
-Why not
 
-	. .git/rebase-merge/author-script
+--Apple-Mail=_79DC19C6-6E9F-4EBE-A834-593F8A6C51C3
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
 
-instead? Less roundabout, easier to read, I think.
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; charset=
+=3Dutf-8"></head><body style=3D"word-wrap: break-word; -webkit-nbsp-mode: s=
+pace; line-break: after-white-space;" class=3D"">While committing a repo I =
+get the error "fatal: could not read '': No such file or directory=E2=80=9D=
+.<div class=3D"">The git repo is a samba share mounted with smb vers=3D1.0 =
+in linux using cifs-utils.</div><div class=3D""><br class=3D""></div><div c=
+lass=3D"">I tried git rm =E2=80=94cached ./* &amp;&amp; git add =E2=80=94al=
+l &amp;&amp; git commit -a -m =E2=80=9Ccommit msg=E2=80=9D</div><div class=
+=3D"">It gives the error.</div><div class=3D""><br class=3D""></div><div cl=
+ass=3D"">I suppose it's a bug.</div><div class=3D""><br class=3D""><div cla=
+ss=3D"">
+<div style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: normal; =
+font-weight: normal; letter-spacing: normal; orphans: auto; text-align: sta=
+rt; text-indent: 0px; text-transform: none; white-space: normal; widows: au=
+to; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-=
+width: 0px; text-decoration: none;">=E2=80=A6 NeckTwi</div><div style=3D"ca=
+ret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: Helvetica; font-=
+size: 12px; font-style: normal; font-variant-caps: normal; font-weight: nor=
+mal; letter-spacing: normal; orphans: auto; text-align: start; text-indent:=
+ 0px; text-transform: none; white-space: normal; widows: auto; word-spacing=
+: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text=
+-decoration: none;" class=3D""><br class=3D""></div><br class=3D"Apple-inte=
+rchange-newline">
+</div>
 
-> +		test "$(git show --quiet --pretty=format:%an)" = "$GIT_AUTHOR_NAME" &&
+<br class=3D""></div>
+<img src=3D"https://u7535577.ct.sendgrid.net/wf/open?upn=3DOwJOUSI1LxmyLIHA=
+Tw8GP3etY9Ae5g91tIgtCC9UpG4L46WSupmV6nOpP07ck3e-2BSzC0Qc1Y2UFj95fGe6FHkjmUe=
+HpbqD7FERl0JOwLiamBcur-2BohWlO3PoeS1cQT3m9C2O2Ah2i6mdhKvAaNccv6NBmrwstwe4iN=
+hEaxQqiptY9FyPH6S5H9EUuMF7XaKTkOjWsE2V9XOHSSMgWF0KaUtmXLb6oEWSAw85Z9Y3LMg-3=
+D" alt=3D"" width=3D"1" height=3D"1" border=3D"0" style=3D"height:1px !impo=
+rtant;width:1px !important;border-width:0 !important;margin-top:0 !importan=
+t;margin-bottom:0 !important;margin-right:0 !important;margin-left:0 !impor=
+tant;padding-top:0 !important;padding-bottom:0 !important;padding-right:0 !=
+important;padding-left:0 !important;"/>
+</body></html>
 
-How is this even working without `-s`?
-
-*clicketyclick*
-
-Ah, --quiet does this. Wait. `git show --quiet` is not even documented.
-
-All of those lines are too long, though. I am surprised you did not catch
-that.
-
-Besides, this would be more compact, less repetitive, *and* more readable
-as
-
-	test "$(git show -s --date=raw --format=%an,%ae,@%ad)" = \
-		"$GIT_AUTHOR_NAME,$GIT_AUTHOR_EMAIL,$GIT_AUTHOR_DATE"
-
-t3404-rebase-interactive.sh already takes 8 minutes (last I checked,
-anyway) to run on a *fast* machine. There is absolutely no need to
-introduce even more spawning, not when it is so easily avoided.
-
-> +		test "$(git show --quiet --pretty=format:%ae)" = "$GIT_AUTHOR_EMAIL" &&
-> +		test "$(git show --quiet --date=raw --pretty=format:@%ad)" = "$GIT_AUTHOR_DATE"
-
-It is a shame that we cannot use %at directly here.
-
-> +	)
->  '
->  
->  test_expect_success 'rebase -i with the exec command' '
-
-Note: this is not a criticism of the original patch. It is a criticism of
-the review which could really have been better.
-
-I also saw that the test_when_finished uses a shell construct that shell
-script aficionados might like, but these days it is a lot better to use
-`test_might_fail` instead. Let's do this, then.
-
-So here goes, the clean-up patch on top of your 843654e435e (why does it
-have to be so darned tedious to get from a mail to the corresponding
-commit in `pu`), in all its glory:
-
--- snipsnap --
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index b0cef509ab7..97f0b4bf881 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -75,18 +75,16 @@ test_expect_success 'rebase --keep-empty' '
- 	test_line_count = 6 actual
- '
- 
--test_expect_success 'rebase -i writes out .git/rebase-merge/author-script in "edit" that sh(1) can parse' '
--	test_when_finished "git rebase --abort ||:" &&
-+test_expect_success 'rebase -i writes correct author-script' '
-+	test_when_finished "test_might_fail git rebase --abort" &&
- 	git checkout master &&
- 	set_fake_editor &&
- 	FAKE_LINES="edit 1" git rebase -i HEAD^ &&
--	test -f .git/rebase-merge/author-script &&
- 	(
- 		sane_unset GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_AUTHOR_DATE &&
--		eval "$(cat .git/rebase-merge/author-script)" &&
--		test "$(git show --quiet --pretty=format:%an)" = "$GIT_AUTHOR_NAME" &&
--		test "$(git show --quiet --pretty=format:%ae)" = "$GIT_AUTHOR_EMAIL" &&
--		test "$(git show --quiet --date=raw --pretty=format:@%ad)" = "$GIT_AUTHOR_DATE"
-+		. .git/rebase-merge/author-script &&
-+		test "$(git show -s --date=raw --format=%an,%ae,@%ad)" = \
-+			"$GIT_AUTHOR_NAME,$GIT_AUTHOR_EMAIL,$GIT_AUTHOR_DATE"
- 	)
- '
- 
+--Apple-Mail=_79DC19C6-6E9F-4EBE-A834-593F8A6C51C3--
