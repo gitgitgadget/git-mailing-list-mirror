@@ -2,93 +2,176 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C8D971F597
-	for <e@80x24.org>; Thu, 26 Jul 2018 16:57:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E64A81F597
+	for <e@80x24.org>; Thu, 26 Jul 2018 17:18:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388502AbeGZSP0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jul 2018 14:15:26 -0400
-Received: from mail-wr1-f54.google.com ([209.85.221.54]:44125 "EHLO
-        mail-wr1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732155AbeGZSP0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jul 2018 14:15:26 -0400
-Received: by mail-wr1-f54.google.com with SMTP id r16-v6so2390530wrt.11
-        for <git@vger.kernel.org>; Thu, 26 Jul 2018 09:57:44 -0700 (PDT)
+        id S2388812AbeGZSfz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jul 2018 14:35:55 -0400
+Received: from mail-yb0-f202.google.com ([209.85.213.202]:48612 "EHLO
+        mail-yb0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730085AbeGZSfz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jul 2018 14:35:55 -0400
+Received: by mail-yb0-f202.google.com with SMTP id v1-v6so1178182ybm.15
+        for <git@vger.kernel.org>; Thu, 26 Jul 2018 10:18:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=el9CyyJ1oCw744xQdEAAF9kenrZsDc/UJCKxJwd2Ddg=;
-        b=I1wGgL7azfOk5Fd84N5a1sBEvZDQ2R+kcZoI6vGiPVGvalBVnzBzYCfHP+pGCrU218
-         +GSgCY3Wj+w0pz99kU+B+etOMvQia+Zj706fCt1r506iZd1TzeLoNBbLmKOdmpRwFUaH
-         SA1/02o1PidtENNMZtkmRV/wYYjzIIeKwXvIi4lwjBchTTw7UTbYisj9S1V5R0AuOgm/
-         So97P40Vo88tA/ZAKjevsD9JOGJ+yA2QApC+RtsZ2WbhGYXl1DSHhc/0Fm4bXOyLSxZ0
-         A58AvNchyk0OupD9bDxNlNX0T2GzrixWc4O+TYA9o/KWxzFeG+Fh/UJtFHZk7mLKKyVJ
-         WopA==
+        d=google.com; s=20161025;
+        h=mime-version:date:message-id:subject:from:to:cc;
+        bh=sQYx5hk70oV7ONVJBzBKSxP88XYCmg32V3z8SttEaPA=;
+        b=frcEEuMp0q+YxqUcqjN6SynQnchpcyyVX+8dbETv2pzHtiCP5BfI7Emanum9XUSbHP
+         b7X4p7wG4lxuOwkUEcVh+UsShuKDSxvw7/PtUQFvytKG4CnPsbmGLaICs6l4vbETrZ3g
+         LSa8A3UrBY9v8wlb8GHueXsOF94/SizKI9DYs3Q4wKj25LJav+1yLp2kIy4mNfahgKLO
+         XI4MpXCOmo9eRt4hFb1MHaN5iygjzP7/K+U87FY9SSMXHjUVWY8H5vCKUbdvBPpmS+9j
+         17n1OEyoyfvYiyBodq3WgDni0pdVlv2QZO+nBJQg/BOhonZ2M2AXftTlHv+8iBltnDZV
+         87Pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=el9CyyJ1oCw744xQdEAAF9kenrZsDc/UJCKxJwd2Ddg=;
-        b=fW1QjJJr8kF+/CQrYoJnHl44eh4ipyedJzV0YG60wDJaic89r9etQAXL8T6DvnGSr1
-         WLj/2x50MGOvnBHAzaiowqe4haLz7FVpLSs43YGlMFi9rdgoQxvUS5FU67p/Vjzqf3SR
-         dP46kLiLDcSjH3U7ihytPuCWAnKlkxCvUeimfd8UnJWK5QRYIlZVOWEWJNycRU8truzA
-         kF0bqKBr7o0eSLq2Pfm9SkCZlXRDfTVfeBKKScPzxMXOxKNJMyBd23W5holEfUtERnaF
-         Ff3pAQfUGS7PJUM0flMZxD80YPTskpS2fWGvYb/xLWa3sPSye4Gzdk6VK+6h9r8pbgWv
-         Erkg==
-X-Gm-Message-State: AOUpUlGCCNB4NuphIxqXuysWZLqUDHQhZkrReeJ1wQN/v57ey7oEH4zk
-        ROkfvIBfQatZlFqlmBIoGvw4kvuW
-X-Google-Smtp-Source: AAOMgpdggG5OO+K6uT72DpjFh+9lWE9zZRtgGOge1/meEKRV3uPzpMbleVtuNbNcRG/7zJnKmk8kIA==
-X-Received: by 2002:adf:e287:: with SMTP id v7-v6mr2321154wri.139.1532624263689;
-        Thu, 26 Jul 2018 09:57:43 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id k3-v6sm2593393wme.44.2018.07.26.09.57.42
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 26 Jul 2018 09:57:43 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jul 2018, #03; Wed, 25)
-References: <xmqqd0vbt14e.fsf@gitster-ct.c.googlers.com>
-        <20180726072429.GA7625@sigill.intra.peff.net>
-Date:   Thu, 26 Jul 2018 09:57:42 -0700
-In-Reply-To: <20180726072429.GA7625@sigill.intra.peff.net> (Jeff King's
-        message of "Thu, 26 Jul 2018 03:24:29 -0400")
-Message-ID: <xmqqlg9yq6ih.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc;
+        bh=sQYx5hk70oV7ONVJBzBKSxP88XYCmg32V3z8SttEaPA=;
+        b=hNeHyn8sJRF0YDmPQVag7uHAAWtzgy4x/0YMox3X+s2YVqY7SRHv1lRbJpKEi79UY4
+         +WjZOi5Czfs3/LTfi4AkyYZDcNz5vZtiCQ4svCBkeehPzKtnN60uJwMW6ugRiE0ysLVx
+         Uqpczm429zgw+H1r+B2z3QpTULBMKK/t3ohBeJ3Qsob9hTR1WDcKAaiU+Is4a9UxoTVJ
+         LZ/1dLr0tr3MYJLhPNdfeUt8AcZr47tW2pM5WIHmoNa8g6fu41ARP7BSG1jH9LhHOqx2
+         6ixKl+qa/U8Ub/NwN+ktBRodvzzVpakas4jYZL6ftIItxOWK6L+oJiekzKgd2zW8L2Wv
+         8BkA==
+X-Gm-Message-State: AOUpUlHi3pTgwycZpzNijbUm3DN7xK/hRfz47RhjF7iqzS/pNfnMTdIF
+        LnolcfbjkUgYjAqcm+rg2ZhDUNfZiVwo6tVFxPWfTv4nvW0ZGkHwzeM7IlTprh67Tl9CSzEQS5L
+        ZQnWjGW7Vv90j9CpTC6CKmi6MFhC+N7hrOZyzEhXZFrRIidvZex0/bWJywA==
+X-Google-Smtp-Source: AAOMgpfuleTBCVs5RCDqg0eK+qaOpcruQ0Ttkf8g0rBxKtmiESgHe7TevvPberf9jcNcfQrK9CbRN+5Ku/o=
 MIME-Version: 1.0
-Content-Type: text/plain
+X-Received: by 2002:a5b:444:: with SMTP id s4-v6mr843336ybp.58.1532625489362;
+ Thu, 26 Jul 2018 10:18:09 -0700 (PDT)
+Date:   Thu, 26 Jul 2018 19:17:51 +0200
+Message-Id: <20180726171751.178616-1-hanwen@google.com>
+X-Mailer: git-send-email 2.18.0.233.g985f88cf7e-goog
+Subject: [PATCH] RFC Highlight keywords in remote sideband output.
+From:   Han-Wen Nienhuys <hanwen@google.com>
+To:     git@vger.kernel.org
+Cc:     Han-Wen Nienhuys <hanwen@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Supported keywords are "error", "warning", "hint" and "success".
 
-> On Wed, Jul 25, 2018 at 03:13:37PM -0700, Junio C Hamano wrote:
->
->> * jk/banned-function (2018-07-24) 5 commits
->>  - banned.h: mark strncpy() as banned
->>  - banned.h: mark sprintf() as banned
->>  - banned.h: mark strcat() as banned
->>  - automatically ban strcpy()
->>  - Merge branch 'sb/blame-color' into jk/banned-function
->> 
->>  It is too easy to misuse system API functions such as strcat();
->>  these selected functions are now forbidden in this codebase and
->>  will cause a compilation failure.
->> 
->>  Will merge to 'next'.
->
-> Eric nudged me over the fence to use a slightly different mechanism to
-> generate the error. See:
->
->   https://public-inbox.org/git/20180726072105.GA6057@sigill.intra.peff.net/
->
-> It looks like sb/blame-color graduated, so this could also just be
-> applied directly on master now to avoid the funky merge.
+TODO:
+ * make the coloring optional? What variable to use?
+ * doc for the coloring option.
+ * how to test?
 
-OK.  Is it that "you cannot call a variable" thing?
+Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+Change-Id: I090412a1288bc2caef0916447e28c2d0199da47d
+---
+ sideband.c | 69 +++++++++++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 60 insertions(+), 9 deletions(-)
+
+diff --git a/sideband.c b/sideband.c
+index 325bf0e97..c8b7cb6dd 100644
+--- a/sideband.c
++++ b/sideband.c
+@@ -1,6 +1,53 @@
+ #include "cache.h"
+ #include "pkt-line.h"
+ #include "sideband.h"
++#include "color.h"
++
++/*
++ * Optionally highlight some keywords in remote output if they appear at the
++ * start of the line.
++ */
++void emit_sideband(struct strbuf *dest, const char *src, int n) {
++        // NOSUBMIT - maybe use transport.color property?
++        int want_color = want_color_stderr(GIT_COLOR_AUTO);
++
++        if (!want_color) {
++                strbuf_add(dest, src, n);
++                return;
++        }
++
++        struct kwtable {
++                const char* keyword;
++                const char* color;
++        } keywords[] = {
++                {"hint", GIT_COLOR_YELLOW},
++                {"warning", GIT_COLOR_BOLD_YELLOW},
++                {"success", GIT_COLOR_BOLD_GREEN},
++                {"error", GIT_COLOR_BOLD_RED},
++                {},
++        };
++
++        while (isspace(*src)) {
++                strbuf_addch(dest, *src);
++                src++;
++                n--;
++        }
++
++        for (struct kwtable* p = keywords; p->keyword; p++) {
++                int len = strlen(p->keyword);
++                if (!strncasecmp(p->keyword, src, len) && !isalnum(src[len])) {
++                        strbuf_addstr(dest, p->color);
++                        strbuf_add(dest, src, len);
++                        strbuf_addstr(dest, GIT_COLOR_RESET);
++                        n -= len;
++                        src += len;
++                        break;
++                }
++        }
++
++        strbuf_add(dest, src, n);
++}
++
+ 
+ /*
+  * Receive multiplexed output stream over git native protocol.
+@@ -48,8 +95,10 @@ int recv_sideband(const char *me, int in_stream, int out)
+ 		len--;
+ 		switch (band) {
+ 		case 3:
+-			strbuf_addf(&outbuf, "%s%s%s", outbuf.len ? "\n" : "",
+-				    DISPLAY_PREFIX, buf + 1);
++			strbuf_addf(&outbuf, "%s%s", outbuf.len ? "\n" : "",
++				    DISPLAY_PREFIX);
++                        emit_sideband(&outbuf, buf+1, len);
++
+ 			retval = SIDEBAND_REMOTE_ERROR;
+ 			break;
+ 		case 2:
+@@ -69,20 +118,22 @@ int recv_sideband(const char *me, int in_stream, int out)
+ 				if (!outbuf.len)
+ 					strbuf_addstr(&outbuf, DISPLAY_PREFIX);
+ 				if (linelen > 0) {
+-					strbuf_addf(&outbuf, "%.*s%s%c",
+-						    linelen, b, suffix, *brk);
+-				} else {
+-					strbuf_addch(&outbuf, *brk);
++                                        emit_sideband(&outbuf, b, linelen);
++                                        strbuf_addstr(&outbuf, suffix);
+ 				}
++
++                                strbuf_addch(&outbuf, *brk);
+ 				xwrite(2, outbuf.buf, outbuf.len);
+ 				strbuf_reset(&outbuf);
+ 
+ 				b = brk + 1;
+ 			}
+ 
+-			if (*b)
+-				strbuf_addf(&outbuf, "%s%s", outbuf.len ?
+-					    "" : DISPLAY_PREFIX, b);
++			if (*b) {
++				strbuf_addstr(&outbuf, outbuf.len ?
++					    "" : DISPLAY_PREFIX);
++                                emit_sideband(&outbuf, b, strlen(b));
++                        }
+ 			break;
+ 		case 1:
+ 			write_or_die(out, buf + 1, len);
+-- 
+2.18.0.233.g985f88cf7e-goog
+
