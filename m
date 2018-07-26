@@ -2,92 +2,203 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B1C0D1F597
-	for <e@80x24.org>; Thu, 26 Jul 2018 17:44:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2D8F1F597
+	for <e@80x24.org>; Thu, 26 Jul 2018 17:53:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388528AbeGZTCK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jul 2018 15:02:10 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:33985 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732036AbeGZTCJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jul 2018 15:02:09 -0400
-Received: by mail-wr1-f65.google.com with SMTP id c13-v6so2541320wrt.1
-        for <git@vger.kernel.org>; Thu, 26 Jul 2018 10:44:18 -0700 (PDT)
+        id S2388827AbeGZTLX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jul 2018 15:11:23 -0400
+Received: from mail-yw0-f194.google.com ([209.85.161.194]:37042 "EHLO
+        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730198AbeGZTLX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jul 2018 15:11:23 -0400
+Received: by mail-yw0-f194.google.com with SMTP id w76-v6so885651ywg.4
+        for <git@vger.kernel.org>; Thu, 26 Jul 2018 10:53:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=1quPanXw5xMS2vZfpFisU9pgnNnT0kpq3dRcH7PIkOY=;
-        b=hhWmhrjSp1FqztDqNj4EcmpcE1Z8U1CstTKLW8J0fwaC3+G8KPHiNjwagDj4h47yMU
-         sJ3G3DUlmq6JkN1EEJ7/1Jb6Au9vA2Ru+fye3uVOhl0+K9xVBcnaBxaj8qZ1+PThfBpu
-         0PK1lxMLinYkIm3NwOwtIDv0nEbbvjwo9OndvzDK3FgtYFkrfn0WFTB8f+MWWSI4UDTx
-         R/XNlFI6b6KOTGY4OAXWGQozPegJ2EDeUxJ8ijfRPEy1RrdaL267eyzaEjdq+B75AuMW
-         Rh8ymnrtbE7Z7bxl+VER1qyGC9y6BJDTAfaklf/PIiWrnrbyFpxDyEX5f8mB9R3cETZK
-         HHRg==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Tnf9H4L9ySr6Up/4b/QlZ/3hV9Hsxfbk4NiISH70svs=;
+        b=LPXJDkxs6QeM0Hc9iIXVcJP0MMXvP93rhO8XHdTTZSro7st5xQhknQeZxhYid8n9cc
+         729ijCy29VdslZh2eKqUYhjNWoN6kL+iCxq39kL0vCPHnlq6Wb+YtSRWNhl8R3tHHkiq
+         Lg//gojUvKqkInf8EUuViBboeXNMG1snlM5OWvIESzRS6goN0zfRNq8tk29XyozElGUK
+         BYpzwiUfcVz0m/TI2O28NunVEKV14ja2OAv3m9nxRdtcUtU32TU63w4yIK4Hm3vNPppl
+         Ma8sCSNvs5/TbVk6Tsr2qs+MqIEnI2vP25Td4RTRNlz5IwPJ5tkdUrPumnghZZZyQy8v
+         Xz0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=1quPanXw5xMS2vZfpFisU9pgnNnT0kpq3dRcH7PIkOY=;
-        b=bNdeVx/Rm3JcGFsMqNZ/JP7Kp09HC8Iu7ADqffKvjcbMQ6cMyujnh7hRPq3H+zz7qH
-         ZanHhvnCnWyu1np/S9hnNAWiE8okLaabEiXeeQ45GyR69tEcd4/L31Kyvd3jZbABRJg/
-         ZvLSW4bAoQ/qLt+uqXsvOqFUklqRXPkvh/ZcccsWbkArOA3mf9HualR3m8y47/NKfDeU
-         /GyWC0XpJ6/e0cZZTrXpdqnUrLm6VEDvPzkrHI5UmuSpfZej3IQymhmwxRKG5rKfH05H
-         hBvoU5kFHZ9voxauFJ/7Cfd6Gx57vvD5UBPKH21zKNW7lWIXogvWVdf0XD5rpDiqWQnu
-         6/WA==
-X-Gm-Message-State: AOUpUlEF7dKW+hEsvcSYNRMG/zVnQUPmvPmrOiL8HKA2b0xiQrURVq/2
-        TLnSeSjId5lZFXfHovudD30=
-X-Google-Smtp-Source: AAOMgpf2m2j6qpRmHrxptF1UVegeblGFf+NugsSUl8Of7qV43sygJoM3/B1kzHXtON6QVsZpB5yOIw==
-X-Received: by 2002:adf:fa45:: with SMTP id y5-v6mr2475879wrr.138.1532627057245;
-        Thu, 26 Jul 2018 10:44:17 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id x184-v6sm2710235wmg.24.2018.07.26.10.44.16
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 26 Jul 2018 10:44:16 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     knu@idaemons.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] sequencer.c: terminate the last line of author-script properly
-References: <86a7qwpt9g.knu@iDaemons.org>
-        <xmqqa7qww6uk.fsf@gitster-ct.c.googlers.com>
-        <CAPig+cQWA+sE3iH89kQGWgS+0HQDK-V5++S0+F6_dpfOCfXxDg@mail.gmail.com>
-        <xmqqpnzlla1p.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1807261347040.71@tvgsbejvaqbjf.bet>
-Date:   Thu, 26 Jul 2018 10:44:15 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.1807261347040.71@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Thu, 26 Jul 2018 14:07:07 +0200 (DST)")
-Message-ID: <xmqqbmatrixc.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Tnf9H4L9ySr6Up/4b/QlZ/3hV9Hsxfbk4NiISH70svs=;
+        b=cVgBkOQOSufFp47Afz+bKwhV+JAi8uoktZL/BPJlPY7Vr+4tRDVBldCFfguJRMMuZh
+         LAJgAIRPypEYKME11LfcyFn3A0zQfU/TC6g7GPuPfH1PD8Pq9RWVLlX22pYZWYjgq+ZO
+         PQAdw7r0TkwkSTkd25brlkenePAAU8+CJepsJffZUOvr8+zhYpkOSyX/KZBkljiRZMo7
+         Y3SgCqguR4jdl14BUWuhcziQGOyD/ZI/A97h8hrkO3K2OKL2UlozlwzJRvaEtdJ4Rl0l
+         JeBFOItMTaDuTybunQWyDzC+fdLmTuJ919Ve6KBhGxSQ0WRRgP8chUO5E5zczK66au/h
+         jMOw==
+X-Gm-Message-State: AOUpUlGJgafyMuzundwjvsy0gxwJS1xDXqTu8rZ9WGTIieKyAwcb8Ry3
+        IAkc/nAEctDCPVhPmuAxloBZQNOj+38r8TCHzs3yBQ==
+X-Google-Smtp-Source: AAOMgpfymg16R0w2brKcxhfb2bOXU/CTcYS6QIQ/x8Fmm7lW7iHaCuziJcy/aw9IjonXAIuACzglszoO5ErzGt7uXpM=
+X-Received: by 2002:a81:af67:: with SMTP id x39-v6mr1487621ywj.33.1532627608847;
+ Thu, 26 Jul 2018 10:53:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20180726171751.178616-1-hanwen@google.com>
+In-Reply-To: <20180726171751.178616-1-hanwen@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 26 Jul 2018 10:53:17 -0700
+Message-ID: <CAGZ79kaj3ptbSrWfrZhRjcz1fsCmO_sR5qCfL=F1ZYwwJRBaMA@mail.gmail.com>
+Subject: Re: [PATCH] RFC Highlight keywords in remote sideband output.
+To:     Han-Wen Nienhuys <hanwen@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        ryandammrose@gmail.com
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Thu, Jul 26, 2018 at 10:18 AM Han-Wen Nienhuys <hanwen@google.com> wrote:
+>
+> Supported keywords are "error", "warning", "hint" and "success".
 
-> Hi Junio,
->
-> On Tue, 17 Jul 2018, Junio C Hamano wrote:
->
->> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
->> index 2d189da2f1..b0cef509ab 100755
->> --- a/t/t3404-rebase-interactive.sh
->> +++ b/t/t3404-rebase-interactive.sh
->> @@ -81,11 +81,13 @@ test_expect_success 'rebase -i writes out .git/rebase-merge/author-script in "ed
->
-> You missed a very long line here.
->
->>  	set_fake_editor &&
->>  	FAKE_LINES="edit 1" git rebase -i HEAD^ &&
->>  	test -f .git/rebase-merge/author-script &&
->
-> Why do we need this, if we already have an `eval` later on?
+Thanks for taking this upstream. :-)
 
-You are commenting on a wrong version.  Comment on the original.
+>
+> TODO:
+>  * make the coloring optional? What variable to use?
+
+This is the natural extension of the topic merged at a56fb3dcc09
+(Merge branch 'js/colored-push-errors', 2018-05-08), which was merged
+rather recently, so I'd think extending the color.transport option would be
+useful here. (cc'd the authors of that series)
+
+>  * doc for the coloring option.
+
+
+
+>  * how to test?
+
+I think the best way to get started with a test is to be inspired by
+8301266afa4 (push: test to verify that push errors are colored,
+2018-04-21) from that series.
+
+> Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+> Change-Id: I090412a1288bc2caef0916447e28c2d0199da47d
+
+We do not do Change-Ids in git upstream. :/
+As different workflows have different edges, everyone has their own
+little script to deal with those. For example Brandon has
+https://github.com/bmwill/dotfiles/blob/master/bin/check-patch
+that contains a section to remove change ids
+
+    # Remove Change-Id from patch
+    sed -i "/Change-Id:/d" "$f"
+
+> +void emit_sideband(struct strbuf *dest, const char *src, int n) {
+
+Coding style: we start the brace in the next line for new functions
+(but not after if/while/for)
+
+Also I did not think hard enough in the internal review, as this function
+is not emitting to the sideband. that is solely done by the xwrite
+call in recv_sideband. So maybe prepare_sideband would be a better
+name?
+
+
+> +        // NOSUBMIT - maybe use transport.color property?
+
+Yes, that would be my suggestion (note that we do not use // comments)
+
+> +        int want_color = want_color_stderr(GIT_COLOR_AUTO);
+> +
+> +        if (!want_color) {
+> +                strbuf_add(dest, src, n);
+> +                return;
+> +        }
+> +
+> +        struct kwtable {
+> +                const char* keyword;
+> +                const char* color;
+> +        } keywords[] = {
+> +                {"hint", GIT_COLOR_YELLOW},
+> +                {"warning", GIT_COLOR_BOLD_YELLOW},
+> +                {"success", GIT_COLOR_BOLD_GREEN},
+> +                {"error", GIT_COLOR_BOLD_RED},
+> +                {},
+> +        };
+> +
+> +        while (isspace(*src)) {
+> +                strbuf_addch(dest, *src);
+> +                src++;
+> +                n--;
+> +        }
+> +
+> +        for (struct kwtable* p = keywords; p->keyword; p++) {
+> +                int len = strlen(p->keyword);
+> +                if (!strncasecmp(p->keyword, src, len) && !isalnum(src[len])) {
+> +                        strbuf_addstr(dest, p->color);
+> +                        strbuf_add(dest, src, len);
+> +                        strbuf_addstr(dest, GIT_COLOR_RESET);
+> +                        n -= len;
+> +                        src += len;
+> +                        break;
+> +                }
+> +        }
+> +
+> +        strbuf_add(dest, src, n);
+> +}
+> +
+>
+>  /*
+>   * Receive multiplexed output stream over git native protocol.
+> @@ -48,8 +95,10 @@ int recv_sideband(const char *me, int in_stream, int out)
+>                 len--;
+>                 switch (band) {
+>                 case 3:
+> -                       strbuf_addf(&outbuf, "%s%s%s", outbuf.len ? "\n" : "",
+> -                                   DISPLAY_PREFIX, buf + 1);
+> +                       strbuf_addf(&outbuf, "%s%s", outbuf.len ? "\n" : "",
+> +                                   DISPLAY_PREFIX);
+> +                        emit_sideband(&outbuf, buf+1, len);
+> +
+>                         retval = SIDEBAND_REMOTE_ERROR;
+>                         break;
+>                 case 2:
+> @@ -69,20 +118,22 @@ int recv_sideband(const char *me, int in_stream, int out)
+>                                 if (!outbuf.len)
+>                                         strbuf_addstr(&outbuf, DISPLAY_PREFIX);
+>                                 if (linelen > 0) {
+> -                                       strbuf_addf(&outbuf, "%.*s%s%c",
+> -                                                   linelen, b, suffix, *brk);
+> -                               } else {
+> -                                       strbuf_addch(&outbuf, *brk);
+> +                                        emit_sideband(&outbuf, b, linelen);
+> +                                        strbuf_addstr(&outbuf, suffix);
+>                                 }
+> +
+> +                                strbuf_addch(&outbuf, *brk);
+>                                 xwrite(2, outbuf.buf, outbuf.len);
+>                                 strbuf_reset(&outbuf);
+>
+>                                 b = brk + 1;
+>                         }
+>
+> -                       if (*b)
+> -                               strbuf_addf(&outbuf, "%s%s", outbuf.len ?
+> -                                           "" : DISPLAY_PREFIX, b);
+> +                       if (*b) {
+> +                               strbuf_addstr(&outbuf, outbuf.len ?
+> +                                           "" : DISPLAY_PREFIX);
+> +                                emit_sideband(&outbuf, b, strlen(b));
+> +                        }
+>                         break;
+>                 case 1:
+>                         write_or_die(out, buf + 1, len);
+> --
+> 2.18.0.233.g985f88cf7e-goog
+>
