@@ -2,139 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 184061F597
-	for <e@80x24.org>; Thu, 26 Jul 2018 10:56:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8E741F597
+	for <e@80x24.org>; Thu, 26 Jul 2018 12:03:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729273AbeGZMMQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jul 2018 08:12:16 -0400
-Received: from mout.gmx.net ([212.227.15.18]:50699 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729097AbeGZMMQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jul 2018 08:12:16 -0400
-Received: from [192.168.0.129] ([37.201.195.94]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LcSAg-1gS7kz0TLS-00jrvb; Thu, 26
- Jul 2018 12:55:55 +0200
-Date:   Thu, 26 Jul 2018 12:55:53 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Eric Sunshine <sunshine@sunshineco.com>
-cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Stefan Beller <sbeller@google.com>
-Subject: Re: [RFC PATCH 2/5] format-patch: add --range-diff option to embed
- diff in cover letter
-In-Reply-To: <CAPig+cTKGd8N78XvW-rmBEZC7ykcJsE+na1V_vCVXTUhGrFe4Q@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1807261249490.71@tvgsbejvaqbjf.bet>
-References: <20180530080325.37520-1-sunshine@sunshineco.com> <20180530080325.37520-3-sunshine@sunshineco.com> <nycvar.QRO.7.76.6.1807171219480.71@tvgsbejvaqbjf.bet> <CAPig+cTKGd8N78XvW-rmBEZC7ykcJsE+na1V_vCVXTUhGrFe4Q@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729991AbeGZNUY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jul 2018 09:20:24 -0400
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:37838 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729895AbeGZNUX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jul 2018 09:20:23 -0400
+Received: by mail-lf1-f68.google.com with SMTP id j8-v6so1018216lfb.4
+        for <git@vger.kernel.org>; Thu, 26 Jul 2018 05:03:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=L+n2hFeDuq90kKT2VX3fGToaAEnDYx/6iStZCiVx+3A=;
+        b=I+SdPtai/lCyiIE34fQ3s0/QbRx8fcLHsMc4t75RZEtbA41gDw1qd83egePVi3TI5h
+         cWFzhaga9bsFxJZW6etpwGT9HHEdjmaBtkZ8/UfIOQ8eH3CHVA0oMkDTziUUm+UCN9yn
+         kVmw0hDM9/GWASsLv+hs2Xi3Jvvk/L//0pTj77j6bPqBQq+V4FrZyUFO0km1Yni0Hxzo
+         7zEzywviG4NEg9nTW01AwvVPIL1LarubtVKv7YaXi/V6xfewywWkJR/+iUpZnQ5qfFaq
+         bKWs08DBRTAnVXSW6op7hc2/jhzgjl/4uCOGIGBAaTNarBkiLdP4qOSip0JcKGXQfr9q
+         PY9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=L+n2hFeDuq90kKT2VX3fGToaAEnDYx/6iStZCiVx+3A=;
+        b=Ss89G6qGu0NMwOvqwuxWC9GMqpt4Ekw9r4BUpyHUP4LNWIJVKOuxcdhcisx9BWukeI
+         lh0yR23N3CTwZGvAT6Z7Ucej5/5H/dTqSQRg61YI7q3se7jmkeO+ifbOCn/OTrWgoGQP
+         JODan1S6bR6n5UhhQeXb9xDQCshv9fh4rSHm1FwlJ/SgIZpoInSXURPQA6yNBOVfqw1Z
+         nqG/SVikown0e256EhL86OfIMkXKuHYVHIIGyEFg3TEZLnzCnpBoHNsdkvUaoUj9Q1vd
+         BqHu6F+/JwSYNeDnztFZ3/gDNesIDMzdmXAaCE0s3qGzQoBYcZOJjH7z3l/PEPKajjXa
+         tn0g==
+X-Gm-Message-State: AOUpUlFqt1mzCkZcnJLTxc/5lMUHF2zvC7BUplFJF8MVcxtSNL6G6Bk7
+        pWpVdLAZiXsdwTteurtaGZI=
+X-Google-Smtp-Source: AAOMgpfs6g3iVFvQYClAqL9unmvWpFVf/wQzqLYceJKIwFfSj2qSnwM2RFiVRZAdGlFfpdG9rf80mA==
+X-Received: by 2002:a19:518a:: with SMTP id g10-v6mr1221871lfl.78.1532606630949;
+        Thu, 26 Jul 2018 05:03:50 -0700 (PDT)
+Received: from [192.168.221.164] ([185.79.217.61])
+        by smtp.gmail.com with ESMTPSA id m129-v6sm158911lfe.50.2018.07.26.05.03.49
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 26 Jul 2018 05:03:50 -0700 (PDT)
+Subject: Re: [RFC PATCH 0/5] format-patch: automate cover letter range-diff
+To:     Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+References: <20180530080325.37520-1-sunshine@sunshineco.com>
+From:   Andrei Rybak <rybak.a.v@gmail.com>
+Message-ID: <b8c65df5-d150-1bc6-1858-c2c042ae4bb2@gmail.com>
+Date:   Thu, 26 Jul 2018 14:03:48 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:grgON8WoQwxnQTajiLd7mh6wqSeVDXQP8pNN2+gKXtzSZ3b8B9e
- ZXJ37G6LkdsUvHChcyYa3xoapcXaLj2Vm3aTYXxMXxCmAf6e5qs4Q4ooxvB9jp37dsSL/8q
- RCCToaxuyrDzDOBdxb9GQ7ENv/UzpQK6NqDFljgpq87NchA5M/1RfDUlKpaNdWjNb8J+JX2
- Pg5qk+a21+e9cLfQVsnjA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:0+UaB1+4ifE=:Je6X0QwGbadDP3G/feow7a
- M7mof+nCTw9ZI7Ij2jlm1EFO8Oh1B4N8+p4TGaNw0ErtGT+sZTR9zJC5gGcJe0URqsJEMIRQL
- 0XLMbp9fxAxO/Tkvl/gD3HWsxy8ZWE0h5iDGFAN5KYZ3Gea+3o/PPL/QmJIJGPL/nGuhGMSAW
- JJXH43e4FTUG11BCcalnjz1o9Nla9Xms0NiuAAdXc8rozSfrCDbxAOd/R2kFRHIOMAtmUCw9G
- xcbPi6IAtTml7UrHoVftyJz/mHiZ+Hu1jNqV+xl8HiBi2FEMgbsuKEEDaRppT6hEhFbxJJWhv
- uXS2mh+mr91M7G4gJlmPLRSnc8Io7qpy5KoIK/+lgk4OEn+xCR/NlSTOJdnmjbInqaQUWMYny
- +BT3oqUgZ5fOR5nOYmOyBqUTVL/Alfn7cCosPn25VBdZ+cFGQwe3YwhY7fIYe7N+btntnMQCy
- hYHUBgOiNZEBPsTQ2piavUP4O3i3oIeZ0uEwMCwdalYRSMUtasdh1vq3w4cwpLNVFmiOEHN5F
- rjaM6KcZEqmhpy+c/OfO9T3wAd6xumKPsW9ygR7k7j0Nj51KlbvBeHxX83gYKDEWToZHpXqNG
- KZX9oeyjq38l5u+HgsBHPMArz1YAG8Gi3jSKbF8Tr62uZgINcpHpmJ9fgOPOHjc/uMtzU7sK6
- HHtC3yEExs53wwuyp9lpRdCOJIE0DiRzrQJ764w+a6+rnWh5FxbJroOs9LMVbEL3WFFxTzwb9
- WyWaKvU6DBwx1RkNGfwf8yHyAF/vXm0nbKTLdaGJ/0N7M1hlF4VM1exVKtwcaZAaGEio7fr2r
- RYCrf4M
+In-Reply-To: <20180530080325.37520-1-sunshine@sunshineco.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
-
-On Tue, 17 Jul 2018, Eric Sunshine wrote:
-
-> On Tue, Jul 17, 2018 at 6:31 AM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > On Wed, 30 May 2018, Eric Sunshine wrote:
+On 2018-05-30 10:03, Eric Sunshine wrote:
+> Dscho recently implemented a 'tbdiff' replacement as a Git builtin named
+> git-branch-diff[1] which computes differences between two versions of a
+> patch series. Such a diff can be a useful aid for reviewers when
+> inserted into a cover letter. However, doing so requires manual
+> generation (invoking git-branch-diff) and copy/pasting the result into
+> the cover letter.
 > 
-> > > +     if (range_diff) {
-> > > +             struct argv_array ranges = ARGV_ARRAY_INIT;
-> > > +             infer_diff_ranges(&ranges, range_diff, head);
-> > > +             if (get_range_diff(&diff, &ranges))
-> > > +                     die(_("failed to generate range-diff"));
-> >
-> > BTW I like to have an extra space in front of all the range-diff lines, to
-> > make it easier to discern them from the rest.
+> This series fully automates the process by adding a --range-diff option
+> to git-format-patch. 
+
+[...]
+
 > 
-> I'm not sure what you mean. Perhaps I'm misreading your comment.
-
-Sorry, I was really unclear.
-
-In the cover letters sent out by GitGitGadget (or earlier, my
-mail-patch-series.sh command), I took pains to indent the entire
-range-diff (or interdiff) with a single space. That is, the footer
-"Range-diff vs v<n>:" is not indented at all, but all subsequent lines of
-the range-diff have a leading space.
-
-The original reason was to stop confusing `git apply` when sending an
-interdiff as part of a single patch without a cover letter (in which case
-mail-patch-series.sh inserted the interdiff below the `---` marker, and
-the interdiff would have looked like the start of the real diff
-otherwise).
-
-In the meantime, I got used to this indentation so much that I do not want
-to miss it, it is a relatively easy and intuitive visual marker.
-
-This, however, will be harder to achieve now that you are using the
-libified range-diff.
-
-> > > @@ -1438,6 +1480,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
-> > > +     const char *range_diff = NULL;
-> >
-> > Maybe `range_diff_opt`? It's not exactly the range diff that is contained
-> > in this variable.
+> Eric Sunshine (5):
+>   format-patch: allow additional generated content in
+>     make_cover_letter()
+>   format-patch: add --range-diff option to embed diff in cover letter
+>   format-patch: extend --range-diff to accept revision range
+>   format-patch: teach --range-diff to respect -v/--reroll-count
+>   format-patch: add --creation-weight tweak for --range-diff
 > 
-> I could, though I was trying to keep it shorter rather than longer.
-> This is still the same in the re-roll, but I can rename it if you
-> insist.
+>  Documentation/git-format-patch.txt |  18 +++++
+>  builtin/log.c                      | 119 ++++++++++++++++++++++++-----
+>  t/t7910-branch-diff.sh             |  16 ++++
+>  3 files changed, 132 insertions(+), 21 deletions(-)
 
-I think it will confuse me in the future if I read `range_diff` and even
-the data type suggests that it could hold the output of a `git range-diff
-<options>` run.
+Would it make sense to mention new option in the cover letter section of
+Documentation/SubmittingPatches?
 
-So I would like to insist.
-
-> > > +format_patch () {
-> > > +     title=$1 &&
-> > > +     range=$2 &&
-> > > +     test_expect_success "format-patch --range-diff ($title)" '
-> > > +             git format-patch --stdout --cover-letter --range-diff=$range \
-> > > +                     master..unmodified >actual &&
-> > > +             grep "= 1: .* s/5/A" actual &&
-> > > +             grep "= 2: .* s/4/A" actual &&
-> > > +             grep "= 3: .* s/11/B" actual &&
-> > > +             grep "= 4: .* s/12/B" actual
-> >
-> > I guess this might make sense if `format_patch` was not a function, but it
-> > is specifically marked as a function... so... shouldn't these `grep`s also
-> > be using function parameters?
-> 
-> A later patch adds a second test which specifies the same ranges but
-> in a different way, so the result will be the same, hence the
-> hard-coded grep'ing. The function avoids repetition across the two
-> tests. I suppose I could do this a bit differently, though, to avoid
-> pretending it's a general-purpose function.
-
-If you can think of a way that would make this easier to read for, say,
-myself if I ever find myself debugging a regression caught by this test, I
-would appreciate that.
-
-Ciao,
-Dscho
+--
+Best regards, Andrei Rybak
