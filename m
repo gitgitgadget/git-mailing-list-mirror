@@ -2,71 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 620D81F597
-	for <e@80x24.org>; Thu, 26 Jul 2018 19:08:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 150571F597
+	for <e@80x24.org>; Thu, 26 Jul 2018 19:16:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731233AbeGZU0y (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jul 2018 16:26:54 -0400
-Received: from mail-yb0-f193.google.com ([209.85.213.193]:35255 "EHLO
-        mail-yb0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730068AbeGZU0y (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jul 2018 16:26:54 -0400
-Received: by mail-yb0-f193.google.com with SMTP id x15-v6so1073402ybm.2
-        for <git@vger.kernel.org>; Thu, 26 Jul 2018 12:08:43 -0700 (PDT)
+        id S1731504AbeGZUe2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jul 2018 16:34:28 -0400
+Received: from mail-vk0-f73.google.com ([209.85.213.73]:56400 "EHLO
+        mail-vk0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730221AbeGZUe1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jul 2018 16:34:27 -0400
+Received: by mail-vk0-f73.google.com with SMTP id k74-v6so1029606vkk.23
+        for <git@vger.kernel.org>; Thu, 26 Jul 2018 12:16:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=yg14MtC1KL1H7VKWToXVwgncmvYd2dBy3wTj+ihZWGw=;
+        b=rEcDfT3mRXa+iQQsCYOCAB83nCAlIb9EacO+1xvatDhR2mRfyBYCin08zGAibVHNpp
+         iady4CFPu7VSfC6SxdfDKArQGhtvRLAjsW352hYly2vuKxmRkldSt2beSFspZzlH7Xb3
+         I9N93JsXzhttrRUSq0L83Fx3a17BjhITrEWrkaEJ0tujJUCdltFB/NPDtBJi8ATOspxd
+         a1L71kkDbyLBn7vakIkyiemW6zclsYiEfxgkez9PUSTZ5pQDe+TebLn+Aq8vWcIEbHbL
+         i6htmoe4FYilhu+TNstwYuctcIBZ1fnHwXtjIS7vCnqVm5PTcQfjeLnF5BBxh5tJ2HEW
+         IRkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=26a40Xx0v8UAxr2VWUWpJo7cYGF0ZbJPUnbNtuwaCAM=;
-        b=KD2kQRUOh9smnes/WLXQLI3kvcF0pPsl4g+f0GygmHl/0V1dDGrnMBsqCjnxMo3NwZ
-         BiqGW/3QoQDra8PO80R/bHYfP2Bb0UTyi9sZK5kZkCkBBGliDzgFxrs8ANaIviUJ9s2g
-         tEonVt96eqeWkKDHOVw+Jo6uCuDQm7Q7ts++d1BJ8QDXVWALxsXSAWkAQy0o2QJd6+fW
-         oR7M4Wu2xKhCffrJdq71oATFUUnlBVGPDRTyeLHAHI+MxUJgX6jkflIJ0+X6olUgUq9E
-         BhaN+LC7NE1CD8NCMiDni9deZbFXwJFouGpTU20YvPCgSrGEujrVh4VuWyaZgMs/zQBq
-         Ao/g==
-X-Gm-Message-State: AOUpUlEvPpI0nETzolef6k0hMbTBcmYo1zhkdvcfogWtTMMZXhbAJbq4
-        dori0pODYk8uwUfagzhzu/vh37CIJ8BLt4KoieQ=
-X-Google-Smtp-Source: AAOMgpelHTPGVU3ponj37l3+J57o6OYre82Obv4HTHvYK9AdM3H8pLqNBOzwhGls6+OqOK3ePVO1yoiJUTtCHtWvxNQ=
-X-Received: by 2002:a25:9d81:: with SMTP id v1-v6mr1801913ybp.76.1532632122844;
- Thu, 26 Jul 2018 12:08:42 -0700 (PDT)
-MIME-Version: 1.0
-References: <20180724180122.29212-1-benpeart@microsoft.com>
- <CAPig+cQZ4g-6uT3zB0n2XWb-68DUUBZdaimTb6_Y4DNZrLUdyQ@mail.gmail.com>
- <960c32c0-5b10-6854-73c9-392814dddbb3@gmail.com> <xmqqeffqrqb3.fsf@gitster-ct.c.googlers.com>
- <CAPig+cRtUeSCUnUFw0xgXEV7nyBiORZSLfLYfhKWjXxcgHvQmg@mail.gmail.com>
-In-Reply-To: <CAPig+cRtUeSCUnUFw0xgXEV7nyBiORZSLfLYfhKWjXxcgHvQmg@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 26 Jul 2018 15:08:32 -0400
-Message-ID: <CAPig+cRgJh2+1wdQS3a8Vd+D0VDPwLO8HXGYZ6MhkCK3ww47sA@mail.gmail.com>
-Subject: Re: [PATCH v1] checkout: optionally speed up "git checkout -b foo"
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Ben Peart <peartben@gmail.com>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Git List <git@vger.kernel.org>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=yg14MtC1KL1H7VKWToXVwgncmvYd2dBy3wTj+ihZWGw=;
+        b=MjqAQb7iIfizqOu6sT8bVw/QBealE+mjkeUUzWeZ5GMjuUMj5gZtUTcweKyoqgp56i
+         8zpkA5FzWtCleOOf5gy7p+9HfFYWMfPorvm6CQCg6A1tGdQBJS72pqZwTpV2JO+i41qB
+         woxDWP3dhZtC1aUcTq68QhDZWI5/HDhDmxq3+H0YzYw1EEmTy4K+caYIV2OafBZPCNSU
+         xWINhwGlhIATawMtCqKEVRphYBjtuTPd/ar2XqJRVQrPxVabCtxU+ohTJ6zKDrd6kPJy
+         Ix/hXabeIQrWzvWXFw7l8k7iuO5vaBxd0WU08YDCFrXHKwwfdOwfZD5ewFP5KnVdwrTm
+         elYw==
+X-Gm-Message-State: AOUpUlF9EtdKsUnFK0i5UXNRLgQiJacch/DYT2Gt0kEzB67bPBYV1mv1
+        VLl6ueEbzqnVkiB7WpHyW4FFGLZcEAQoKYD2dqMg
+X-Google-Smtp-Source: AAOMgpfnTXxUAPvcFFUcPis5lEMSpj86AefrU1hKdXtKbyIsYsRRawHN5W2eU6NTkSMYQb1eCWzTdcyF5epHbZ0KNqtk
+X-Received: by 2002:ab0:2044:: with SMTP id g4-v6mr1442594ual.15.1532632574334;
+ Thu, 26 Jul 2018 12:16:14 -0700 (PDT)
+Date:   Thu, 26 Jul 2018 12:16:09 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.1807261233300.71@tvgsbejvaqbjf.bet>
+Message-Id: <20180726191609.176343-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <nycvar.QRO.7.76.6.1807261233300.71@tvgsbejvaqbjf.bet>
+X-Mailer: git-send-email 2.18.0.345.g5c9ce644c3-goog
+Subject: Re: [PATCH] negotiator/skipping: skip commits during fetch
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Johannes.Schindelin@gmx.de
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 26, 2018 at 2:59 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Thu, Jul 26, 2018 at 11:04 AM Junio C Hamano <gitster@pobox.com> wrote:
-> > If there were a simple and futureproof way to tell the option
-> > parsing loop to notice any feature other than "-b newbranch" was
-> > used, then such a whitelisting may be a viable way [...]
->
-> I'm wondering if a two-stage parse-options invocations could make this
-> potential maintenance problem more manageable by altogether
-> eliminating needs_working_tree_merge().
+> Hi Jonathan,
+> 
+> On Mon, 16 Jul 2018, Jonathan Tan wrote:
+> 
+> >  t/t5552-skipping-fetch-negotiator.sh | 179 +++++++++++++++++++
+> 
+> This test seems to be failing consistently in the recent `pu` builds:
+> 
+> https://git-for-windows.visualstudio.com/git/_build/results?buildId=14337&view=logs
+> 
+> Could you have a look, please?
 
-A downside of this approach is that it too becomes a nightmare if
-git-checkout grows additional special cases like the proposed "-b", in
-which case multi-stage or disjoint or intersecting parse-options
-invocations might arise. Another downside is that this parse-options
-idea is somewhat invasive, whereas, needs_working_tree_merge(),
-despite its ugliness, is at least is self-contained and not at all
-invasive.
+Hmm...on my Linux computer, this test passes on both pu (as of the time
+of writing) and 838143aa5c ("Merge branch 'ab/newhash-is-sha256' into
+pu", 2018-07-25) (pu at the time of that build, according to the website
+you linked above). If you could rerun that test with additional code,
+could you add a "cat trace" and show me what the client sends? When I do
+that, the relevant parts are:
+
+  packet:        fetch> have 9ab46928dc282aa09f4dbf96893a252e058e7e8e
+  packet:        fetch> have dc824fafb05f3229aedf1f320bbe572e35364dfe
+  packet:        fetch> have caef059de69917b9119176a11b88afcef769331d
+  packet:        fetch> have 41bd8dc092ee110ba80e350a346ec507ab2e42a0
+  packet:        fetch> have e9a2c092a8e911567a377c881a7f6031e7f892ea
+  packet:        fetch> done
+
+which is exactly as I (and the test) expect.
+
+Two possible reasons for the discrepancy that I can think of offhand are
+that (1) my computer generates different commits from your test system,
+and (2) the priority queue pops commits in a different order. For (1),
+that's not possible because the SHA-1s are the same (as can be seen by
+comparing your link and the "have" lines I quoted above), and for (2),
+the code seems OK:
+
+  static int compare(const void *a_, const void *b_, void *unused)
+  {
+  	const struct entry *a = a_;
+  	const struct entry *b = b_;
+  	return compare_commits_by_commit_date(a->commit, b->commit, NULL);
+  }
+
+Let me know if you can observe the output of "cat trace" or if you have
+any other ideas.
