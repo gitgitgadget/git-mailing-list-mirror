@@ -2,106 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 150571F597
-	for <e@80x24.org>; Thu, 26 Jul 2018 19:16:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 454391F597
+	for <e@80x24.org>; Thu, 26 Jul 2018 19:30:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731504AbeGZUe2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jul 2018 16:34:28 -0400
-Received: from mail-vk0-f73.google.com ([209.85.213.73]:56400 "EHLO
-        mail-vk0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730221AbeGZUe1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jul 2018 16:34:27 -0400
-Received: by mail-vk0-f73.google.com with SMTP id k74-v6so1029606vkk.23
-        for <git@vger.kernel.org>; Thu, 26 Jul 2018 12:16:14 -0700 (PDT)
+        id S1731082AbeGZUs6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jul 2018 16:48:58 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:55822 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730392AbeGZUs6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jul 2018 16:48:58 -0400
+Received: by mail-wm0-f67.google.com with SMTP id f21-v6so3030635wmc.5
+        for <git@vger.kernel.org>; Thu, 26 Jul 2018 12:30:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=yg14MtC1KL1H7VKWToXVwgncmvYd2dBy3wTj+ihZWGw=;
-        b=rEcDfT3mRXa+iQQsCYOCAB83nCAlIb9EacO+1xvatDhR2mRfyBYCin08zGAibVHNpp
-         iady4CFPu7VSfC6SxdfDKArQGhtvRLAjsW352hYly2vuKxmRkldSt2beSFspZzlH7Xb3
-         I9N93JsXzhttrRUSq0L83Fx3a17BjhITrEWrkaEJ0tujJUCdltFB/NPDtBJi8ATOspxd
-         a1L71kkDbyLBn7vakIkyiemW6zclsYiEfxgkez9PUSTZ5pQDe+TebLn+Aq8vWcIEbHbL
-         i6htmoe4FYilhu+TNstwYuctcIBZ1fnHwXtjIS7vCnqVm5PTcQfjeLnF5BBxh5tJ2HEW
-         IRkQ==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=vcd9IqFUB/no21ifKIdFx0TqKr2aqh+QIeI6nIKRE9s=;
+        b=a8n7Y6fJQtw+f+a09c5EUD106n7mnm9E3vWPNk2DakkdUpRtXzHyXsYQgWr1IjNX7Q
+         EfkbmWxsw3x3tdiOjYp/JtYinkv41G3TkSzcO3qRDq3rnCNY22f1mIUMlqH0eLuWKqEb
+         cazPZDagoWfiP2/UVJLRjyqkQ3hlKfSLcOhonBA60YRBI1Ep+9ui85X8tJZbDdgdmP5M
+         mghdUOiDOF1dnTbRITR4o8z7fXeXjjnVK2jWdDrze5VadGHVLdlQCYDuj0kL1Vx1kbGL
+         UBdS8apQThxHVYZfxB6/ADKk6Y0ZZ8LcZz5GslFj6e8vp5M1ae6e8K1YbIItnixNVtBN
+         +KBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=yg14MtC1KL1H7VKWToXVwgncmvYd2dBy3wTj+ihZWGw=;
-        b=MjqAQb7iIfizqOu6sT8bVw/QBealE+mjkeUUzWeZ5GMjuUMj5gZtUTcweKyoqgp56i
-         8zpkA5FzWtCleOOf5gy7p+9HfFYWMfPorvm6CQCg6A1tGdQBJS72pqZwTpV2JO+i41qB
-         woxDWP3dhZtC1aUcTq68QhDZWI5/HDhDmxq3+H0YzYw1EEmTy4K+caYIV2OafBZPCNSU
-         xWINhwGlhIATawMtCqKEVRphYBjtuTPd/ar2XqJRVQrPxVabCtxU+ohTJ6zKDrd6kPJy
-         Ix/hXabeIQrWzvWXFw7l8k7iuO5vaBxd0WU08YDCFrXHKwwfdOwfZD5ewFP5KnVdwrTm
-         elYw==
-X-Gm-Message-State: AOUpUlF9EtdKsUnFK0i5UXNRLgQiJacch/DYT2Gt0kEzB67bPBYV1mv1
-        VLl6ueEbzqnVkiB7WpHyW4FFGLZcEAQoKYD2dqMg
-X-Google-Smtp-Source: AAOMgpfnTXxUAPvcFFUcPis5lEMSpj86AefrU1hKdXtKbyIsYsRRawHN5W2eU6NTkSMYQb1eCWzTdcyF5epHbZ0KNqtk
-X-Received: by 2002:ab0:2044:: with SMTP id g4-v6mr1442594ual.15.1532632574334;
- Thu, 26 Jul 2018 12:16:14 -0700 (PDT)
-Date:   Thu, 26 Jul 2018 12:16:09 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.1807261233300.71@tvgsbejvaqbjf.bet>
-Message-Id: <20180726191609.176343-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <nycvar.QRO.7.76.6.1807261233300.71@tvgsbejvaqbjf.bet>
-X-Mailer: git-send-email 2.18.0.345.g5c9ce644c3-goog
-Subject: Re: [PATCH] negotiator/skipping: skip commits during fetch
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Johannes.Schindelin@gmx.de
-Cc:     jonathantanmy@google.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=vcd9IqFUB/no21ifKIdFx0TqKr2aqh+QIeI6nIKRE9s=;
+        b=Z7oaqIyU7P/JG6gvvJ79e1SmKV91p/twODwMfgKhAcvqGbg2waSMbJOnR0PB8h3v58
+         a73LiA89WUFDChia3P1gflMBjLycEOxUo6H5HsKil8OWSE4WZuMGN74VuaR3hKHquMex
+         yDUmCPlWR/8pvIrJFSRS4rsjQcvv66eFaq1Jy8tBsUGB2EO8ZVzICNyr6w1UrCExhH6D
+         2pYpxWiafWok3F2F9nx6OdEZXRugBiNqE8Ez1iT47gS9I9pvPXplhpD+PILjUbGGRu9g
+         igtWt26bOHk8ku6wCTufIMgjfgp4vG2LphGTpp0ls0OUiOBj4nF8nlTI1UlRm1rTTwse
+         jhPg==
+X-Gm-Message-State: AOUpUlGwD2ez8sl0u7NMKF2YTG50A3wxQVPgnYSEljq7f6rRrx2menNx
+        JLyYYxUDK6poZO3dq8s189Q=
+X-Google-Smtp-Source: AAOMgpeYrkrI5pdgRowF+Z/Wi0GXVvB3wL0AJcNZdvmwvSFuDRgwyl4bs7ChMr1FXaZ4p0rLTlg2hA==
+X-Received: by 2002:a1c:ea53:: with SMTP id i80-v6mr2588920wmh.113.1532633439704;
+        Thu, 26 Jul 2018 12:30:39 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id a82-v6sm4640258wmi.37.2018.07.26.12.30.38
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 26 Jul 2018 12:30:39 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood@talktalk.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason 
+        <avarab@gmail.com>, Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [RFC PATCH v5 2/4] add -p: select modified lines correctly
+References: <20180219113619.26566-1-phillip.wood@talktalk.net>
+        <20180726155854.20832-1-phillip.wood@talktalk.net>
+        <20180726155854.20832-3-phillip.wood@talktalk.net>
+Date:   Thu, 26 Jul 2018 12:30:38 -0700
+In-Reply-To: <20180726155854.20832-3-phillip.wood@talktalk.net> (Phillip
+        Wood's message of "Thu, 26 Jul 2018 16:58:52 +0100")
+Message-ID: <xmqqmuudpzfl.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Hi Jonathan,
-> 
-> On Mon, 16 Jul 2018, Jonathan Tan wrote:
-> 
-> >  t/t5552-skipping-fetch-negotiator.sh | 179 +++++++++++++++++++
-> 
-> This test seems to be failing consistently in the recent `pu` builds:
-> 
-> https://git-for-windows.visualstudio.com/git/_build/results?buildId=14337&view=logs
-> 
-> Could you have a look, please?
+Phillip Wood <phillip.wood@talktalk.net> writes:
 
-Hmm...on my Linux computer, this test passes on both pu (as of the time
-of writing) and 838143aa5c ("Merge branch 'ab/newhash-is-sha256' into
-pu", 2018-07-25) (pu at the time of that build, according to the website
-you linked above). If you could rerun that test with additional code,
-could you add a "cat trace" and show me what the client sends? When I do
-that, the relevant parts are:
+An interesting problem you are solving ;-)
 
-  packet:        fetch> have 9ab46928dc282aa09f4dbf96893a252e058e7e8e
-  packet:        fetch> have dc824fafb05f3229aedf1f320bbe572e35364dfe
-  packet:        fetch> have caef059de69917b9119176a11b88afcef769331d
-  packet:        fetch> have 41bd8dc092ee110ba80e350a346ec507ab2e42a0
-  packet:        fetch> have e9a2c092a8e911567a377c881a7f6031e7f892ea
-  packet:        fetch> done
+> For example given the hunk
+>       1 -* a longer description of the
+>       2 -  first item
+>       3 -* second
+>       4 -* third
+>       5 +* first
+>       6 +  second item
+>       7 +* the third item
+>
+> If the user selects 1,2,4–5,7 then we should generate
+> 	-* a longer description of the
+> 	-  first item
+> 	+* first
+> 	 * second
+> 	-* third
+> 	+* the third item
 
-which is exactly as I (and the test) expect.
+I understood this example as "3 that is removal and 6 that is
+addition are excluded---we consider that these two lines (one in the
+pre-image and the other in the post-image) are _matching".  As we
+are excluding a deletion, it becomes the common context line, and
+any removal or addition that appear before that must stay to happen
+before the common context line (i.e. removal of 1 and 2, and
+addition of 5, both precede common context line "second") and any
+removal or addition that appear after that must stay after the
+common context (i.e. removal of "third" and addition of "the third
+item" come after "second").
 
-Two possible reasons for the discrepancy that I can think of offhand are
-that (1) my computer generates different commits from your test system,
-and (2) the priority queue pops commits in a different order. For (1),
-that's not possible because the SHA-1s are the same (as can be seen by
-comparing your link and the "have" lines I quoted above), and for (2),
-the code seems OK:
+But then it is not clear to me what you mean by "group" below.  What
+groups does the above example have?  Ones before the retained
+"second" (i.e. removal 1, 2, 4 and addition 5) form one group and
+ones after it (i.e. removal 4 and addition 7) form another group?
 
-  static int compare(const void *a_, const void *b_, void *unused)
-  {
-  	const struct entry *a = a_;
-  	const struct entry *b = b_;
-  	return compare_commits_by_commit_date(a->commit, b->commit, NULL);
-  }
+> Reported-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 
-Let me know if you can observe the output of "cat trace" or if you have
-any other ideas.
+Is this fixing any bug?  I usually see "Reported-by" only for a
+bugfix patch but this seems to be adding a new feature (and lack of
+feature is usually not a bug).
