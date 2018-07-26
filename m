@@ -2,176 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E64A81F597
-	for <e@80x24.org>; Thu, 26 Jul 2018 17:18:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 879C61F597
+	for <e@80x24.org>; Thu, 26 Jul 2018 17:33:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388812AbeGZSfz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jul 2018 14:35:55 -0400
-Received: from mail-yb0-f202.google.com ([209.85.213.202]:48612 "EHLO
-        mail-yb0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730085AbeGZSfz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jul 2018 14:35:55 -0400
-Received: by mail-yb0-f202.google.com with SMTP id v1-v6so1178182ybm.15
-        for <git@vger.kernel.org>; Thu, 26 Jul 2018 10:18:09 -0700 (PDT)
+        id S1731646AbeGZSvS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jul 2018 14:51:18 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:44678 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731388AbeGZSvS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jul 2018 14:51:18 -0400
+Received: by mail-wr1-f66.google.com with SMTP id r16-v6so2496912wrt.11
+        for <git@vger.kernel.org>; Thu, 26 Jul 2018 10:33:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:date:message-id:subject:from:to:cc;
-        bh=sQYx5hk70oV7ONVJBzBKSxP88XYCmg32V3z8SttEaPA=;
-        b=frcEEuMp0q+YxqUcqjN6SynQnchpcyyVX+8dbETv2pzHtiCP5BfI7Emanum9XUSbHP
-         b7X4p7wG4lxuOwkUEcVh+UsShuKDSxvw7/PtUQFvytKG4CnPsbmGLaICs6l4vbETrZ3g
-         LSa8A3UrBY9v8wlb8GHueXsOF94/SizKI9DYs3Q4wKj25LJav+1yLp2kIy4mNfahgKLO
-         XI4MpXCOmo9eRt4hFb1MHaN5iygjzP7/K+U87FY9SSMXHjUVWY8H5vCKUbdvBPpmS+9j
-         17n1OEyoyfvYiyBodq3WgDni0pdVlv2QZO+nBJQg/BOhonZ2M2AXftTlHv+8iBltnDZV
-         87Pg==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=qQJ/PB1edl5C7lpV1lzwg1JvDlaoEZR8CZzjTKlSXhA=;
+        b=vTL6IIcM/EJMZI0JFzaNVJTTJAHebOcXqcgO2/Mkz78qRFytktXqmqot6FxPqMAJ9f
+         083UlWQ3SC71RB4YMs3U2VM+JpZZja/5HHtovqEQM0dsCozVJY0TT+8l5vlPYZPuxW+l
+         ptDlg2FRcv7O6iN3bYal4HMCdsylYz5FI9A8TJEzePcRbz3xJRay+TM6OHuHkAU3MnyX
+         OoeMn/kUlXQ8RjTK72JceIfILtzPGiT5LDqLLyIb5rjJKnHeCTCG2+pUQxgfEKb4ul9/
+         oCKTCjgrsjqSzFVpBPDPcCjojxnDG6WU0JziXjzIQ/SVy3Pmt9dgUHm5nk0cGecEb7/D
+         +uVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc;
-        bh=sQYx5hk70oV7ONVJBzBKSxP88XYCmg32V3z8SttEaPA=;
-        b=hNeHyn8sJRF0YDmPQVag7uHAAWtzgy4x/0YMox3X+s2YVqY7SRHv1lRbJpKEi79UY4
-         +WjZOi5Czfs3/LTfi4AkyYZDcNz5vZtiCQ4svCBkeehPzKtnN60uJwMW6ugRiE0ysLVx
-         Uqpczm429zgw+H1r+B2z3QpTULBMKK/t3ohBeJ3Qsob9hTR1WDcKAaiU+Is4a9UxoTVJ
-         LZ/1dLr0tr3MYJLhPNdfeUt8AcZr47tW2pM5WIHmoNa8g6fu41ARP7BSG1jH9LhHOqx2
-         6ixKl+qa/U8Ub/NwN+ktBRodvzzVpakas4jYZL6ftIItxOWK6L+oJiekzKgd2zW8L2Wv
-         8BkA==
-X-Gm-Message-State: AOUpUlHi3pTgwycZpzNijbUm3DN7xK/hRfz47RhjF7iqzS/pNfnMTdIF
-        LnolcfbjkUgYjAqcm+rg2ZhDUNfZiVwo6tVFxPWfTv4nvW0ZGkHwzeM7IlTprh67Tl9CSzEQS5L
-        ZQnWjGW7Vv90j9CpTC6CKmi6MFhC+N7hrOZyzEhXZFrRIidvZex0/bWJywA==
-X-Google-Smtp-Source: AAOMgpfuleTBCVs5RCDqg0eK+qaOpcruQ0Ttkf8g0rBxKtmiESgHe7TevvPberf9jcNcfQrK9CbRN+5Ku/o=
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=qQJ/PB1edl5C7lpV1lzwg1JvDlaoEZR8CZzjTKlSXhA=;
+        b=Tk0fCw/ooryaj2b52T001veBs1EBa400z6Cdyw/4r0z842iTxfP+/uu+FiTM9gnxMt
+         u1CtsgydzimAcwsQlQX71NjeLO8fVq7PGrIB29SJ6+Ioqx1Uhtpg4I7ldij+Azd2JvKN
+         nW3GqBu2H7UNYxKylsi5gcz8j9S7d3HdHn0ofqBG3n702hR0WP1c2zuUE7nl1Www+7UX
+         CLXWZhQmS23flW3DCUtzCLpi4ta0imaDMZaSVpfY2ovX5A0qFPd2Wv3uJAlTV/ynauy4
+         JpzmHuVWoCHsoCGqLnzsto59igT7xuaiYu9TcLADhhymieFNfTPty5ryhGrlFYI80vp5
+         ljJg==
+X-Gm-Message-State: AOUpUlGpTm7SSCSqiqeat0dgncl2raqDl0Hl5Cuazj9olMGNnjLDnEYq
+        jV8VGxAumWlzaHcva8ZlYjUO8y8E
+X-Google-Smtp-Source: AAOMgpcgmT+HQfUYX1pX5Jvb0HVv5BSjAP4tCknHCgEHmDhwp9E5EtKHZ97pmDeG0GTc6PzhJ4l7fQ==
+X-Received: by 2002:adf:f74d:: with SMTP id z13-v6mr2418741wrp.85.1532626408462;
+        Thu, 26 Jul 2018 10:33:28 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id l5-v6sm1178415wrq.86.2018.07.26.10.33.27
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 26 Jul 2018 10:33:27 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v3 1/4] automatically ban strcpy()
+References: <20180724092329.GA24250@sigill.intra.peff.net>
+        <20180724092618.GA3288@sigill.intra.peff.net>
+        <CAPig+cRpcUOA5+k7v3Gy3WsLohedEb=j-a_fCGc3g0ktDfsDVA@mail.gmail.com>
+        <20180726065840.GA27349@sigill.intra.peff.net>
+        <20180726072105.GA6057@sigill.intra.peff.net>
+Date:   Thu, 26 Jul 2018 10:33:27 -0700
+In-Reply-To: <20180726072105.GA6057@sigill.intra.peff.net> (Jeff King's
+        message of "Thu, 26 Jul 2018 03:21:05 -0400")
+Message-ID: <xmqqfu05rjfc.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-X-Received: by 2002:a5b:444:: with SMTP id s4-v6mr843336ybp.58.1532625489362;
- Thu, 26 Jul 2018 10:18:09 -0700 (PDT)
-Date:   Thu, 26 Jul 2018 19:17:51 +0200
-Message-Id: <20180726171751.178616-1-hanwen@google.com>
-X-Mailer: git-send-email 2.18.0.233.g985f88cf7e-goog
-Subject: [PATCH] RFC Highlight keywords in remote sideband output.
-From:   Han-Wen Nienhuys <hanwen@google.com>
-To:     git@vger.kernel.org
-Cc:     Han-Wen Nienhuys <hanwen@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Supported keywords are "error", "warning", "hint" and "success".
+Jeff King <peff@peff.net> writes:
 
-TODO:
- * make the coloring optional? What variable to use?
- * doc for the coloring option.
- * how to test?
+> So here's a replacement for just patch 1 (I'm assuming this creates less
+> work than re-posting them all, but it may not be if Junio prefers
+> dealing with a whole new mbox rather than a "rebase -i", "reset --hard
+> HEAD^", "git am" -- let me know if you'd prefer it the other way).
 
-Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
-Change-Id: I090412a1288bc2caef0916447e28c2d0199da47d
----
- sideband.c | 69 +++++++++++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 60 insertions(+), 9 deletions(-)
+A single patch replacement that is clearly marked which one to
+replace and which other ones to keep, like you did here, is fine.
+The amount of work is about the same either way.
 
-diff --git a/sideband.c b/sideband.c
-index 325bf0e97..c8b7cb6dd 100644
---- a/sideband.c
-+++ b/sideband.c
-@@ -1,6 +1,53 @@
- #include "cache.h"
- #include "pkt-line.h"
- #include "sideband.h"
-+#include "color.h"
-+
-+/*
-+ * Optionally highlight some keywords in remote output if they appear at the
-+ * start of the line.
-+ */
-+void emit_sideband(struct strbuf *dest, const char *src, int n) {
-+        // NOSUBMIT - maybe use transport.color property?
-+        int want_color = want_color_stderr(GIT_COLOR_AUTO);
-+
-+        if (!want_color) {
-+                strbuf_add(dest, src, n);
-+                return;
-+        }
-+
-+        struct kwtable {
-+                const char* keyword;
-+                const char* color;
-+        } keywords[] = {
-+                {"hint", GIT_COLOR_YELLOW},
-+                {"warning", GIT_COLOR_BOLD_YELLOW},
-+                {"success", GIT_COLOR_BOLD_GREEN},
-+                {"error", GIT_COLOR_BOLD_RED},
-+                {},
-+        };
-+
-+        while (isspace(*src)) {
-+                strbuf_addch(dest, *src);
-+                src++;
-+                n--;
-+        }
-+
-+        for (struct kwtable* p = keywords; p->keyword; p++) {
-+                int len = strlen(p->keyword);
-+                if (!strncasecmp(p->keyword, src, len) && !isalnum(src[len])) {
-+                        strbuf_addstr(dest, p->color);
-+                        strbuf_add(dest, src, len);
-+                        strbuf_addstr(dest, GIT_COLOR_RESET);
-+                        n -= len;
-+                        src += len;
-+                        break;
-+                }
-+        }
-+
-+        strbuf_add(dest, src, n);
-+}
-+
- 
- /*
-  * Receive multiplexed output stream over git native protocol.
-@@ -48,8 +95,10 @@ int recv_sideband(const char *me, int in_stream, int out)
- 		len--;
- 		switch (band) {
- 		case 3:
--			strbuf_addf(&outbuf, "%s%s%s", outbuf.len ? "\n" : "",
--				    DISPLAY_PREFIX, buf + 1);
-+			strbuf_addf(&outbuf, "%s%s", outbuf.len ? "\n" : "",
-+				    DISPLAY_PREFIX);
-+                        emit_sideband(&outbuf, buf+1, len);
-+
- 			retval = SIDEBAND_REMOTE_ERROR;
- 			break;
- 		case 2:
-@@ -69,20 +118,22 @@ int recv_sideband(const char *me, int in_stream, int out)
- 				if (!outbuf.len)
- 					strbuf_addstr(&outbuf, DISPLAY_PREFIX);
- 				if (linelen > 0) {
--					strbuf_addf(&outbuf, "%.*s%s%c",
--						    linelen, b, suffix, *brk);
--				} else {
--					strbuf_addch(&outbuf, *brk);
-+                                        emit_sideband(&outbuf, b, linelen);
-+                                        strbuf_addstr(&outbuf, suffix);
- 				}
-+
-+                                strbuf_addch(&outbuf, *brk);
- 				xwrite(2, outbuf.buf, outbuf.len);
- 				strbuf_reset(&outbuf);
- 
- 				b = brk + 1;
- 			}
- 
--			if (*b)
--				strbuf_addf(&outbuf, "%s%s", outbuf.len ?
--					    "" : DISPLAY_PREFIX, b);
-+			if (*b) {
-+				strbuf_addstr(&outbuf, outbuf.len ?
-+					    "" : DISPLAY_PREFIX);
-+                                emit_sideband(&outbuf, b, strlen(b));
-+                        }
- 			break;
- 		case 1:
- 			write_or_die(out, buf + 1, len);
--- 
-2.18.0.233.g985f88cf7e-goog
+0) I would first do these to make sure that I can replace:
+
+ $ git checkout jk/banned-functions
+ $ git log --first-parent --oneline master..
+ $ git log --first-parent --oneline next..
+
+If 'next' has some patches that are not in 'master' from the topic,
+I must refrain from replacing them (in this case, there is no such
+issue).
+
+1-a) With a wholesale replacement,
+
+ $ git checkout master...	;# try to keep the same base
+ $ git am -s mbox		;# on detached HEAD
+ $ git tbdiff ..@{-1} @{-1}..	;# or range-diff
+
+If the range-/tbdiff tells me that earlier N patches are the same,
+the above is followed by something like (pardon off-by-one)
+
+ $ git rebase --onto @{-1}~N HEAD~N
+
+to preserve as many original commits as possible.
+
+1-b) With a single patch replacement, it is quite different.
+
+ $ git checkout HEAD~4	        ;# we are replacing 1/4 of the original
+ $ git am -s mbox               ;# that single patch
+ $ git show-branch HEAD @{-1}
+
+That would give me something like this
+
+    * [HEAD] automatically ban strcpy()
+     ! [@{-1}] banned.h: mark strncpy() as banned
+    --
+    *  [HEAD] automatically ban strcpy()
+     + [@{-1}] banned.h: mark strncpy() as banned
+     + [@{-1}^] banned.h: mark sprintf() as banned
+     + [@{-1}~2] banned.h: mark strcat() as banned
+     + [@{-1}~3] automatically ban strcpy()
+    -- [HEAD^] Merge branch 'sb/blame-color' into jk/banned-function
+
+The most natural thing to do at this point is
+
+ $ git cherry-pick -3 @{-1}
+
+But we know range-pick is buggy and loses core.rewriteref, so
+instead I did this, which I know carries the notes forward:
+
+ $ git rebase --onto HEAD @{-1}~3 @{-1}^0
+
+    Side note: The point of last "^0" is that I do not want to lose
+    the topic branch jk/banned-functions not just yet.
+
+If I need to re-apply separate pieces of the original history, it
+becomes very painful to emulate these multiple cherry-picks with
+multiple "rebase --onto", though.  That is where "the amount of work
+is about the same" comes from.  If cherry-pick worked correctly,
+selective replacement should be less work for me.
+
+Anyway, we already preserved as many original commits, but unlike
+1-a, did so manually when we decided to replace selective patches.
+So there is no further rebasing with this approach.
+
+2) I now have two diverged histories in HEAD and @{-1} that I can
+compare with range-/tbdiff in either case: 
+
+ $ git tbdiff ..@{-1} @{-1}..
+
+After the usual inspection and testing, replacement is concluded by
+
+ $ git checkout -B @{-1}
+
+which takes me back to (an updated) jk/banned-functions topic.
 
