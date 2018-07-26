@@ -2,83 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A9881F597
-	for <e@80x24.org>; Wed, 25 Jul 2018 23:48:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8AC0C208E8
+	for <e@80x24.org>; Thu, 26 Jul 2018 00:44:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731770AbeGZBCo (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jul 2018 21:02:44 -0400
-Received: from mail-wr1-f48.google.com ([209.85.221.48]:40558 "EHLO
-        mail-wr1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731370AbeGZBCo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jul 2018 21:02:44 -0400
-Received: by mail-wr1-f48.google.com with SMTP id h15-v6so386538wrs.7
-        for <git@vger.kernel.org>; Wed, 25 Jul 2018 16:48:41 -0700 (PDT)
+        id S1728486AbeGZB6Z (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jul 2018 21:58:25 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:37731 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728485AbeGZB6Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jul 2018 21:58:25 -0400
+Received: by mail-pg1-f195.google.com with SMTP id n7-v6so6378021pgq.4
+        for <git@vger.kernel.org>; Wed, 25 Jul 2018 17:44:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=5SGd8GjNDfSOXhOzR3P5H6N4rWkIdIdpr/MKKbwCCBM=;
-        b=Fvd9d87HThi1+MHsGVjHgeU9RNKAF9CusmsDj/++ZRYfDtbghOf2TO4hz11Sh1xT/m
-         dp1Td+V5yrqPQU9dPwdwMjE/zbNNXnWHX/xZkm1qMlf1SLXjoLbWTr9fGjv4UUUhfvXx
-         0NgqwUnp4EDaVh3HR+GiIakLs1lQJ5xnMYcS3YHH49Z+9YiqR8eJj/Xqpst0GuG9eIcL
-         4lYzgBzY/Q8Fk2vyD6o1cXDkQF9mof9xmfnq7SF2fsNt8MaUplJd+rDGwz2yLbNZx5yw
-         UPjXxiWmXFFO44VRHfB/K5qtKglPbMzyF8TrQvaCiLDpUFPLBQf1NoC9Rj1y525B5teV
-         kxeQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=jNyiX3ciB+wUrDwOBi6lCg1/LIoD9Bt82EOo+I2jCss=;
+        b=Yuj27PEj750cuhYquxLrhW5TNlxYRRMxTuqJswb+n5AoijM/ZOyISClF2SR5B2Fo1A
+         cg96hmi44mgWzMd9pY9PRnVNgXq9Q/1+xBUk9tba8oVQQ+BRCs+zNPeAzF2qZDY0cV3U
+         bcnh20H60b/oCyFimhSvP8Hw2arldjalFENRmy0AsT735GGRlQOzz0Aa2EgPLs8/Bek5
+         roWoCE8fK5TveBODbdOOxm79BVrhhpnIyGTOw+Hsit+S1RfwEgm/Ab4ac+HSU1FMYcdM
+         bU4uN4OxxwSsr8IWhqDeIXtRH/JeUsdOmhH60220Pbmcn7qdrV9k9kF7rDo/oWPk4cdo
+         mKPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=5SGd8GjNDfSOXhOzR3P5H6N4rWkIdIdpr/MKKbwCCBM=;
-        b=b9oNdrKFkoZ5r5yJCCHMyRF794mOgYiv1dV9lUKHEgEj9jcxeGNlmk4MByZxbkOkBM
-         A9ss0acoHh+Djn+T2Cs/CVDwZxYAySitr3SQV5beipS+D8EuohJcYSUH4fPdjn/gxlA5
-         x5n/n3BW+FdOt3nMx/kAgPzKDSbh91kxI+EaBhJ544kkxzhijOePVfoQepgrVxCjpWJd
-         i8JNblagd+uGmsHx3P23uEFRK+GyW2sXO/oaDQ2J38SXBVi9hFYaUWW/ajif8Ll14PzJ
-         2tvNknZi6oQyOXWYhyeXsSpntRgs4yEBhOCRzQfKE9qkhKDb1bb2j89otQnI5Niholxt
-         9oZg==
-X-Gm-Message-State: AOUpUlGniErCoCzXytoS3I4B5ELbvZATgVjVRrR+2fntp0Z6U2HASLiE
-        9YWieWTQIZdTHdwH7l0bOE4=
-X-Google-Smtp-Source: AAOMgpcdHsauabnTztos47SKvj3KTqaEOcvCyTYQRj4jjPN4GhxCx957vSfiScdcDZumHYd8JD+TRQ==
-X-Received: by 2002:adf:aadb:: with SMTP id i27-v6mr15671020wrc.149.1532562520955;
-        Wed, 25 Jul 2018 16:48:40 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id j6-v6sm21958543wrs.91.2018.07.25.16.48.40
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=jNyiX3ciB+wUrDwOBi6lCg1/LIoD9Bt82EOo+I2jCss=;
+        b=n2aLcnzqP913F9n3Gd8j5CxcTQJYiFcrP7UtQoZqk3xEIQQjQrZcVF14Abutxyd/AK
+         uvsah1Sc7v7bnNbgaLYrqh4Jzygz6eAeDzMYfFwuqwJ527V89iEsfqqazeL/hJ2m3o4H
+         WXxBnAnV+txXObZmzmcWn9Yt6PTfP0KJAZRZQ6L6bbTMoGOTVYLPepVLttqmbgnBP5l6
+         ETb6+Qr13DLQDX5EKlGsyFZvgXwlcTFMKBxLdR15mTjdOTAKEzZiY8nDkm+EGM5lK9+S
+         q0liOPGi8rTqp803WTWTdA30Gc+msDWhi01sZkglewLOeV+a313I/QwCbdPGQlP0/fbt
+         kQuA==
+X-Gm-Message-State: AOUpUlHV6po6ZeCnl+pU5p2qCyfTaDZhCFydQgb+dJBHuucCgaUpRje+
+        nD41yaQbxl0bqwuASzQyC4oZW4Bc
+X-Google-Smtp-Source: AAOMgpfmlp3+J9KMsC5dvqx+QZsAW+UGEh7lygvEYcQhc5k671B3bmT0J99q8AC79KgpBIk3bgy7Bg==
+X-Received: by 2002:a62:4a41:: with SMTP id x62-v6mr24399780pfa.45.1532565852243;
+        Wed, 25 Jul 2018 17:44:12 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id i20-v6sm26057078pfj.82.2018.07.25.17.44.11
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 25 Jul 2018 16:48:40 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Jul 2018, #03; Wed, 25)
-References: <xmqqd0vbt14e.fsf@gitster-ct.c.googlers.com>
-        <CAGZ79kbO1KOfDgjT5duEd49MZ=EaYLtTDeg2efVO5kkO9QFx7g@mail.gmail.com>
-Date:   Wed, 25 Jul 2018 16:48:40 -0700
-In-Reply-To: <CAGZ79kbO1KOfDgjT5duEd49MZ=EaYLtTDeg2efVO5kkO9QFx7g@mail.gmail.com>
-        (Stefan Beller's message of "Wed, 25 Jul 2018 15:56:17 -0700")
-Message-ID: <xmqqva92swpz.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Wed, 25 Jul 2018 17:44:11 -0700 (PDT)
+Date:   Wed, 25 Jul 2018 17:44:00 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Beat Bolli <dev+git@drbeat.li>
+Cc:     git@vger.kernel.org, gitster@pobox.com,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v2] packfile: ensure that enum object_type is defined
+Message-ID: <20180726004400.GA217613@aiede.svl.corp.google.com>
+References: <20180725215607.19910-1-dev+git@drbeat.li>
+ <20180725215607.19910-2-dev+git@drbeat.li>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180725215607.19910-2-dev+git@drbeat.li>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Beat Bolli wrote:
 
->> * ag/rebase-i-in-c (2018-07-10) 13 commits
-> [...]
->>
->>  Piecemeal rewrite of the remaining "rebase -i" machinery in C.
->>
->>  A reroll (which is rumored to be quite good) exists, but hasn't
->>  been picked up yet.
+> When compiling under Apple LLVM version 9.1.0 (clang-902.0.39.2) with
+> "make DEVELOPER=1 DEVOPTS=pedantic", the compiler says
 >
-> Forgot to state so on either the mailing list (or Github or IRC),
-> but I read the tip of the reroll and I think it is good.
+>     error: redeclaration of already-defined enum 'object_type' is a GNU
+>     extension [-Werror,-Wgnu-redeclared-enum]
+>
+> According to https://en.cppreference.com/w/c/language/declarations
+> (section "Redeclaration"), a repeated declaration after the definition
+> is only legal for structs and unions, but not for enums.
+>
+> Drop the belated declaration of enum object_type and include cache.h
+> instead to make sure the enum is defined.
+>
+> Helped-by: Jonathan Nieder <jrnieder@gmail.com>
+> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+> ---
+>  packfile.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-No, you did not forget (otherwise I wouldn't have said anything
-about the rumor).  Skimming "git diff master..." is not a review
-X-<.
+Thanks!  I had run into this using clang on Linux, too, but hadn't
+spent the time to track it down and write a patch.
+
+Running
+
+	git grep -e 'enum [^ ]*;'
+
+doesn't find any other instances of this error.  Thanks for fixing it.
+
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+By the way, not about this patch:
+
+[...]
+> +++ b/packfile.h
+> @@ -1,12 +1,12 @@
+>  #ifndef PACKFILE_H
+>  #define PACKFILE_H
+>  
+> +#include "cache.h"
+>  #include "oidset.h"
+>  
+>  /* in object-store.h */
+>  struct packed_git;
+>  struct object_info;
+> -enum object_type;
+
+This '/* in object-store.h */' comment can easily go stale since
+nothing enforces that it stays accurate.  I don't think it's a useful
+comment to have anyway, since it's straightforward to grep for where
+the struct is defined.  I think we should remove the comment.
+
+Thanks,
+Jonathan
