@@ -2,96 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA8D91F597
-	for <e@80x24.org>; Thu, 26 Jul 2018 16:57:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C8D971F597
+	for <e@80x24.org>; Thu, 26 Jul 2018 16:57:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388531AbeGZSOw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jul 2018 14:14:52 -0400
-Received: from mail-wr1-f43.google.com ([209.85.221.43]:41050 "EHLO
-        mail-wr1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388502AbeGZSOv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jul 2018 14:14:51 -0400
-Received: by mail-wr1-f43.google.com with SMTP id j5-v6so2394448wrr.8
-        for <git@vger.kernel.org>; Thu, 26 Jul 2018 09:57:10 -0700 (PDT)
+        id S2388502AbeGZSP0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jul 2018 14:15:26 -0400
+Received: from mail-wr1-f54.google.com ([209.85.221.54]:44125 "EHLO
+        mail-wr1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732155AbeGZSP0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jul 2018 14:15:26 -0400
+Received: by mail-wr1-f54.google.com with SMTP id r16-v6so2390530wrt.11
+        for <git@vger.kernel.org>; Thu, 26 Jul 2018 09:57:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=0aU4HskWgPdmmLv9k/NdrFHJ7x9ZWVlOEU3KuUY+znk=;
-        b=dqO83xx4U588ygV5AsZos5ZbIKGM8T4SuC9UKCO3rNXbLTblciZzzQkPC5tI+ngFof
-         dS+HdbNF1OAjq0TVjUWQnpmm2Q3gTvt2Sphn6q43uSTEfjUDtVDdoyN7qQis3vehypNN
-         d9h3PiLJCS3Zujkuq/cqT80KkgzRLG/aRVryPGcuH4B45WY18nOjZS3EF1RsOAQnS+V3
-         lAwsyvEQSGSd4AUfHVBHD9flRDvGuP889zuNQbSCmBNlmJKc4bRhDac+4Agm4zcgjG0A
-         5wE2He5bzvmQbWok4fX1CUrtuRAOLYgzx4k+W2YIh4S1VR08hMdEa1u81UvzybhtTSJp
-         9zgQ==
+         :user-agent:mime-version;
+        bh=el9CyyJ1oCw744xQdEAAF9kenrZsDc/UJCKxJwd2Ddg=;
+        b=I1wGgL7azfOk5Fd84N5a1sBEvZDQ2R+kcZoI6vGiPVGvalBVnzBzYCfHP+pGCrU218
+         +GSgCY3Wj+w0pz99kU+B+etOMvQia+Zj706fCt1r506iZd1TzeLoNBbLmKOdmpRwFUaH
+         SA1/02o1PidtENNMZtkmRV/wYYjzIIeKwXvIi4lwjBchTTw7UTbYisj9S1V5R0AuOgm/
+         So97P40Vo88tA/ZAKjevsD9JOGJ+yA2QApC+RtsZ2WbhGYXl1DSHhc/0Fm4bXOyLSxZ0
+         A58AvNchyk0OupD9bDxNlNX0T2GzrixWc4O+TYA9o/KWxzFeG+Fh/UJtFHZk7mLKKyVJ
+         WopA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=0aU4HskWgPdmmLv9k/NdrFHJ7x9ZWVlOEU3KuUY+znk=;
-        b=pggqrWRKjG38Basb3Y6MMet/kRb9My9FSHuqwyCi/5c2qXUfDZ8AA6YAvKHqIQyNyB
-         EyNev+Xt75ORATM68mFld2j/TjIA1CeKqeNik9IZd10xCDpYj6kPilVDCrBVbb1dSp4b
-         LX4pXR5pelZrHkFJKuYUjkzq6dWBWMAw2aLywBEdGvtyKMNaJy9szF139/Nt+FgZhE0Y
-         yF9aYiMif4IA1G8TC6bVxWVAPwC7pgMM8HuXTDAUm3SbY6G7vAcEnx5H7h+TS9vayihT
-         NE02B4FVIJtwyGL2c3y1FMp6KB+Fj5j455FntbfKzKEHUbtkkd9PbU4e53BjHHEE3T3+
-         NOMQ==
-X-Gm-Message-State: AOUpUlGRQ/MvSXUYthCBvI3xEDt5Db9SlBKmKotP2g+MY/739MMFAjBr
-        9jD+FtDqAy5BYFYRkxipKnQ=
-X-Google-Smtp-Source: AAOMgpfs/GcmDRIG5ck9By5ffIq9aSkoo7kAfRvY+SstJrSmSK5HN+VwGqSMsubxBKZph3rmJLcKkQ==
-X-Received: by 2002:adf:fa45:: with SMTP id y5-v6mr2345207wrr.138.1532624229697;
-        Thu, 26 Jul 2018 09:57:09 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id p14-v6sm1964399wru.0.2018.07.26.09.57.09
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=el9CyyJ1oCw744xQdEAAF9kenrZsDc/UJCKxJwd2Ddg=;
+        b=fW1QjJJr8kF+/CQrYoJnHl44eh4ipyedJzV0YG60wDJaic89r9etQAXL8T6DvnGSr1
+         WLj/2x50MGOvnBHAzaiowqe4haLz7FVpLSs43YGlMFi9rdgoQxvUS5FU67p/Vjzqf3SR
+         dP46kLiLDcSjH3U7ihytPuCWAnKlkxCvUeimfd8UnJWK5QRYIlZVOWEWJNycRU8truzA
+         kF0bqKBr7o0eSLq2Pfm9SkCZlXRDfTVfeBKKScPzxMXOxKNJMyBd23W5holEfUtERnaF
+         Ff3pAQfUGS7PJUM0flMZxD80YPTskpS2fWGvYb/xLWa3sPSye4Gzdk6VK+6h9r8pbgWv
+         Erkg==
+X-Gm-Message-State: AOUpUlGCCNB4NuphIxqXuysWZLqUDHQhZkrReeJ1wQN/v57ey7oEH4zk
+        ROkfvIBfQatZlFqlmBIoGvw4kvuW
+X-Google-Smtp-Source: AAOMgpdggG5OO+K6uT72DpjFh+9lWE9zZRtgGOge1/meEKRV3uPzpMbleVtuNbNcRG/7zJnKmk8kIA==
+X-Received: by 2002:adf:e287:: with SMTP id v7-v6mr2321154wri.139.1532624263689;
+        Thu, 26 Jul 2018 09:57:43 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id k3-v6sm2593393wme.44.2018.07.26.09.57.42
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 26 Jul 2018 09:57:09 -0700 (PDT)
+        Thu, 26 Jul 2018 09:57:43 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-Cc:     git <git@vger.kernel.org>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
 Subject: Re: What's cooking in git.git (Jul 2018, #03; Wed, 25)
 References: <xmqqd0vbt14e.fsf@gitster-ct.c.googlers.com>
-        <CAL21BmkmxmjVmi3JUaW7vK5yGyzzZDxeMGNSSYV0nzEzWKcs+A@mail.gmail.com>
-Date:   Thu, 26 Jul 2018 09:57:08 -0700
-In-Reply-To: <CAL21BmkmxmjVmi3JUaW7vK5yGyzzZDxeMGNSSYV0nzEzWKcs+A@mail.gmail.com>
-        (=?utf-8?B?ItCe0LvRjyDQotC10LvQtdC20L3QsNGPIidz?= message of "Thu, 26 Jul
- 2018 09:07:03
-        +0300")
-Message-ID: <xmqqpnzaq6jf.fsf@gitster-ct.c.googlers.com>
+        <20180726072429.GA7625@sigill.intra.peff.net>
+Date:   Thu, 26 Jul 2018 09:57:42 -0700
+In-Reply-To: <20180726072429.GA7625@sigill.intra.peff.net> (Jeff King's
+        message of "Thu, 26 Jul 2018 03:24:29 -0400")
+Message-ID: <xmqqlg9yq6ih.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Оля Тележная  <olyatelezhnaya@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> 2018-07-26 1:13 GMT+03:00 Junio C Hamano <gitster@pobox.com>:
->>
->> * ot/ref-filter-object-info (2018-07-17) 5 commits
->>  - ref-filter: use oid_object_info() to get object
->>  - ref-filter: merge get_obj and get_object
->>  - ref-filter: initialize eaten variable
->>  - ref-filter: fill empty fields with empty values
->>  - ref-filter: add info_source to valid_atom
->>
->>  A few atoms like %(objecttype) and %(objectsize) in the format
->>  specifier of "for-each-ref --format=<format>" can be filled without
->>  getting the full contents of the object, but just with the object
->>  header.  These cases have been optimzied by calling
->>  oid_object_info() API.
->>
->>  What's the doneness of this one?
->>
+> On Wed, Jul 25, 2018 at 03:13:37PM -0700, Junio C Hamano wrote:
 >
-> It is ready. Thanks.
+>> * jk/banned-function (2018-07-24) 5 commits
+>>  - banned.h: mark strncpy() as banned
+>>  - banned.h: mark sprintf() as banned
+>>  - banned.h: mark strcat() as banned
+>>  - automatically ban strcpy()
+>>  - Merge branch 'sb/blame-color' into jk/banned-function
+>> 
+>>  It is too easy to misuse system API functions such as strcat();
+>>  these selected functions are now forbidden in this codebase and
+>>  will cause a compilation failure.
+>> 
+>>  Will merge to 'next'.
+>
+> Eric nudged me over the fence to use a slightly different mechanism to
+> generate the error. See:
+>
+>   https://public-inbox.org/git/20180726072105.GA6057@sigill.intra.peff.net/
+>
+> It looks like sb/blame-color graduated, so this could also just be
+> applied directly on master now to avoid the funky merge.
 
-Thanks, the question was meant more to the reviewers and mentors
-than the original author, though ;-)
+OK.  Is it that "you cannot call a variable" thing?
