@@ -7,150 +7,134 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 66ABF1F597
-	for <e@80x24.org>; Thu, 26 Jul 2018 10:48:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 184061F597
+	for <e@80x24.org>; Thu, 26 Jul 2018 10:56:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729074AbeGZMEZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jul 2018 08:04:25 -0400
-Received: from mout.gmx.net ([212.227.17.21]:44695 "EHLO mout.gmx.net"
+        id S1729273AbeGZMMQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jul 2018 08:12:16 -0400
+Received: from mout.gmx.net ([212.227.15.18]:50699 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728998AbeGZMEZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jul 2018 08:04:25 -0400
-Received: from [192.168.0.129] ([37.201.195.94]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LlV4F-1gJ4QZ2s7D-00bLEw; Thu, 26
- Jul 2018 12:48:00 +0200
-Date:   Thu, 26 Jul 2018 12:47:57 +0200 (DST)
+        id S1729097AbeGZMMQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jul 2018 08:12:16 -0400
+Received: from [192.168.0.129] ([37.201.195.94]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LcSAg-1gS7kz0TLS-00jrvb; Thu, 26
+ Jul 2018 12:55:55 +0200
+Date:   Thu, 26 Jul 2018 12:55:53 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Stefan Beller <sbeller@google.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        git <git@vger.kernel.org>
-Subject: Re: [PATCH v2 0/6] git-submodule.sh: convert part of cmd_update to
- C
-In-Reply-To: <CAGZ79kZtrmjODGi1j-HRbchZYuALHnms22=wWBV1AF+zUBru_g@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1807261238160.71@tvgsbejvaqbjf.bet>
-References: <20180717002654.120375-1-sbeller@google.com> <xmqqmuupogei.fsf@gitster-ct.c.googlers.com> <CAGZ79kZtrmjODGi1j-HRbchZYuALHnms22=wWBV1AF+zUBru_g@mail.gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC PATCH 2/5] format-patch: add --range-diff option to embed
+ diff in cover letter
+In-Reply-To: <CAPig+cTKGd8N78XvW-rmBEZC7ykcJsE+na1V_vCVXTUhGrFe4Q@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1807261249490.71@tvgsbejvaqbjf.bet>
+References: <20180530080325.37520-1-sunshine@sunshineco.com> <20180530080325.37520-3-sunshine@sunshineco.com> <nycvar.QRO.7.76.6.1807171219480.71@tvgsbejvaqbjf.bet> <CAPig+cTKGd8N78XvW-rmBEZC7ykcJsE+na1V_vCVXTUhGrFe4Q@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:VA7nqEGA5QkjDvXLu3Lj8QXlgtKg1UPA913/JT8kKUjH2zmP41z
- GNZOU/wGeNfiaJsDWfU+Vzkjv4ImOpqhj8GyWYC+ZisTH8VYDUIvlZGJXgFZnHeAKEbTTab
- l61wTMxzSRnhPLO2l5aqBLW03SI1L6wekOVmPZUwzeBAeNVrgebrBwCBaO/YGcpjZWmOVyo
- /OrQOVhR9TKAGsV2oq+CQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:1wC8k9tNR34=:DP6b7vjDMx9YCK/8+LElBF
- RuOez2gG5sdLGiktnc9wGqNJSN0CwuPCdoSf7CHk35quqL12VRxQXNVLBQgnb2jwIv/EMZv3O
- xGLgglYgCm5mJ5Keu+hff4SPfDQ2XqqdPuWbTMj0t/ic0JKGPK/LUDD2tNhfVvGWnqtlCZ2aM
- 7B3gXaz3AQ4++FV/AqoDvC6A6XdsDj+XRk8jzrxvZJUYPuGSZEYH7vyLlQVPKEQP1M1hWxjy0
- 4zwcLzDK+fqYhrwFakP+RkLdlG20NH62VRmb7COz1p6WB6lOlJU8Cw7nqGPG0gWJv/QpO9IaF
- oyj2pn9AOwRC9COG1+8q78+OeW3Yau7JD7ZCgVPYUTdzswhndMwFCZbxHTyHG68n/gBsbyPz/
- i39LUpzSUBt4lucmFl+wevqqzDlMpx8zxsTt21ugl3YSX4QMd9f3zcdn0HahL8UwSVmDhPuR5
- soRJUc+6Zclls7OQuMtjQLZoYcQ4Dwlokl1eBrJ3bYZHmBmP5l+tbl/WF+WDC5pQ0HcMlFGKi
- CH0ThwN5mYjuSt/1deFm0/UaWYdzHpTHFlVJDLVcD7E7YYf+y51/5ebBJ+Div0Oglb2okDnsq
- uC46mpFgXrur1mUrvWnudUZIHOywsqKgIlHoBXspNYwvBNUawu0KBdW3rrlMyhqGdpqo37h2H
- 03j5gROOMMjTXk7y3fCNEFZ2pYeXGU5YCJsta/tzq7zOqf/lkIVRch586z+w2+o9mizS9O+4G
- 6n/qA3LPNUXPtd95hXwJsz53PX5eZJpyDcTP5Y2ySjHFVDSnCjrt+kertME+QR8nMX0vM+Stn
- 9DtQ2Sh
+X-Provags-ID: V03:K1:grgON8WoQwxnQTajiLd7mh6wqSeVDXQP8pNN2+gKXtzSZ3b8B9e
+ ZXJ37G6LkdsUvHChcyYa3xoapcXaLj2Vm3aTYXxMXxCmAf6e5qs4Q4ooxvB9jp37dsSL/8q
+ RCCToaxuyrDzDOBdxb9GQ7ENv/UzpQK6NqDFljgpq87NchA5M/1RfDUlKpaNdWjNb8J+JX2
+ Pg5qk+a21+e9cLfQVsnjA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:0+UaB1+4ifE=:Je6X0QwGbadDP3G/feow7a
+ M7mof+nCTw9ZI7Ij2jlm1EFO8Oh1B4N8+p4TGaNw0ErtGT+sZTR9zJC5gGcJe0URqsJEMIRQL
+ 0XLMbp9fxAxO/Tkvl/gD3HWsxy8ZWE0h5iDGFAN5KYZ3Gea+3o/PPL/QmJIJGPL/nGuhGMSAW
+ JJXH43e4FTUG11BCcalnjz1o9Nla9Xms0NiuAAdXc8rozSfrCDbxAOd/R2kFRHIOMAtmUCw9G
+ xcbPi6IAtTml7UrHoVftyJz/mHiZ+Hu1jNqV+xl8HiBi2FEMgbsuKEEDaRppT6hEhFbxJJWhv
+ uXS2mh+mr91M7G4gJlmPLRSnc8Io7qpy5KoIK/+lgk4OEn+xCR/NlSTOJdnmjbInqaQUWMYny
+ +BT3oqUgZ5fOR5nOYmOyBqUTVL/Alfn7cCosPn25VBdZ+cFGQwe3YwhY7fIYe7N+btntnMQCy
+ hYHUBgOiNZEBPsTQ2piavUP4O3i3oIeZ0uEwMCwdalYRSMUtasdh1vq3w4cwpLNVFmiOEHN5F
+ rjaM6KcZEqmhpy+c/OfO9T3wAd6xumKPsW9ygR7k7j0Nj51KlbvBeHxX83gYKDEWToZHpXqNG
+ KZX9oeyjq38l5u+HgsBHPMArz1YAG8Gi3jSKbF8Tr62uZgINcpHpmJ9fgOPOHjc/uMtzU7sK6
+ HHtC3yEExs53wwuyp9lpRdCOJIE0DiRzrQJ764w+a6+rnWh5FxbJroOs9LMVbEL3WFFxTzwb9
+ WyWaKvU6DBwx1RkNGfwf8yHyAF/vXm0nbKTLdaGJ/0N7M1hlF4VM1exVKtwcaZAaGEio7fr2r
+ RYCrf4M
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan,
+Hi Eric,
 
-On Tue, 17 Jul 2018, Stefan Beller wrote:
+On Tue, 17 Jul 2018, Eric Sunshine wrote:
 
-> > A tangent.
+> On Tue, Jul 17, 2018 at 6:31 AM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > On Wed, 30 May 2018, Eric Sunshine wrote:
+> 
+> > > +     if (range_diff) {
+> > > +             struct argv_array ranges = ARGV_ARRAY_INIT;
+> > > +             infer_diff_ranges(&ranges, range_diff, head);
+> > > +             if (get_range_diff(&diff, &ranges))
+> > > +                     die(_("failed to generate range-diff"));
 > >
-> > Because this "-- " is a conventional signature separator, MUAs like
-> > Emacs message-mode seems to omit everything below it from the quote
-> > while responding, making it cumbersome to comment on the tbdiff.
+> > BTW I like to have an extra space in front of all the range-diff lines, to
+> > make it easier to discern them from the rest.
+> 
+> I'm not sure what you mean. Perhaps I'm misreading your comment.
+
+Sorry, I was really unclear.
+
+In the cover letters sent out by GitGitGadget (or earlier, my
+mail-patch-series.sh command), I took pains to indent the entire
+range-diff (or interdiff) with a single space. That is, the footer
+"Range-diff vs v<n>:" is not indented at all, but all subsequent lines of
+the range-diff have a leading space.
+
+The original reason was to stop confusing `git apply` when sending an
+interdiff as part of a single patch without a cover letter (in which case
+mail-patch-series.sh inserted the interdiff below the `---` marker, and
+the interdiff would have looked like the start of the real diff
+otherwise).
+
+In the meantime, I got used to this indentation so much that I do not want
+to miss it, it is a relatively easy and intuitive visual marker.
+
+This, however, will be harder to achieve now that you are using the
+libified range-diff.
+
+> > > @@ -1438,6 +1480,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+> > > +     const char *range_diff = NULL;
 > >
-> > Something to think about if somebody is contemplating on adding more
-> > to format-patch's cover letter.
+> > Maybe `range_diff_opt`? It's not exactly the range diff that is contained
+> > in this variable.
 > 
-> +cc Eric who needs to think about this tangent, then.
-> https://public-inbox.org/git/20180530080325.37520-1-sunshine@sunshineco.com/
+> I could, though I was trying to keep it shorter rather than longer.
+> This is still the same in the re-roll, but I can rename it if you
+> insist.
 
-I think this is just a natural fall-out from the users' choice of mail
-program. Personally, I have no difficulty commenting on anything below the
-`--` separator.
+I think it will confuse me in the future if I read `range_diff` and even
+the data type suggests that it could hold the output of a `git range-diff
+<options>` run.
 
-FWIW GitGitGadget follows the example of the `base-commit` footer and
-places this information *above* the `--` separator.
+So I would like to insist.
 
-> > >> 1:  d4e1ec45740 ! 1:  bbc8697a8ca git-submodule.sh: align error reporting for update mode to use path
-> > >>     @@ -6,7 +6,6 @@
-> > >>          on its path, so let's do that for invalid update modes, too.
-> > >>
-> > >>          Signed-off-by: Stefan Beller <sbeller@google.com>
-> > >>     -    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> > >>
-> > >>      diff --git a/git-submodule.sh b/git-submodule.sh
-> > >>      --- a/git-submodule.sh
+> > > +format_patch () {
+> > > +     title=$1 &&
+> > > +     range=$2 &&
+> > > +     test_expect_success "format-patch --range-diff ($title)" '
+> > > +             git format-patch --stdout --cover-letter --range-diff=$range \
+> > > +                     master..unmodified >actual &&
+> > > +             grep "= 1: .* s/5/A" actual &&
+> > > +             grep "= 2: .* s/4/A" actual &&
+> > > +             grep "= 3: .* s/11/B" actual &&
+> > > +             grep "= 4: .* s/12/B" actual
 > >
-> > This is quite unfortunate.  I wonder if it is easy to tell
-> > range-diff that certain differences in the log message are to be
-> > ignored so that we can show that the first patch is unchanged in a
-> > case like this.  This series has 4 really changed ones with 2
-> > otherwise unchanged ones shown all as changed, which is not too bad,
-> > but for a series like sb/diff-colro-move-more reroll that has 9
-> > patches, out of only two have real updated patches, showing
-> > otherwise unchanged 7 as changed like this hunk does would make the
-> > cover letter useless.  It is a shame that adding range-diff to the
-> > cover does have so much potential.
+> > I guess this might make sense if `format_patch` was not a function, but it
+> > is specifically marked as a function... so... shouldn't these `grep`s also
+> > be using function parameters?
 > 
-> Actually I thought it was really cool, i.e. when using your queued branch
-> instead of my last sent branch, I can see any edits *you* did
-> (including fixing up typos or applying at slightly different bases).
+> A later patch adds a second test which specifies the same ranges but
+> in a different way, so the result will be the same, hence the
+> hard-coded grep'ing. The function avoids repetition across the two
+> tests. I suppose I could do this a bit differently, though, to avoid
+> pretending it's a general-purpose function.
 
-This is probably a good indicator that the practice on insisting on signing
-off on every patch, rather than just the merge commit, is something to
-re-think.
-
-Those are real changes relative to the original commit, after all, and if
-they are not desired, they should not be made.
-
-> The sign offs are a bit unfortunate as they are repetitive.
-> I have two conflicting points of view on that:
-> 
-> (A) This sign off is inherent to the workflow. So we could
-> change the workflow, i.e. you pull series instead of applying them.
-> I think this "more in git, less in email" workflow would find supporters,
-> such as DScho (cc'd).
-> 
-> The downside is that (1) you'd have to change your
-> workflow, i.e. instead of applying the patches at the base you think is
-> best for maintenance you'd have to tell the author "please rebase to $X";
-> but that also has upsides, such as "If you want to have your series integrated
-> please merge with $Y and $Z" (looking at the object store stuff).
-> 
-> The other (2) downside is that everyone else (authors, reviewers) have
-> to adapt as well. For authors this might be easy to adapt (push instead
-> of sending email sounds like a win). For reviewers we'd need to have
-> an easy way to review things "stored in git" and not exposed via email,
-> which is not obvious how to do.
-> 
-> (B) The other point of view that I can offer is that we teach range-diff
-> to ignore certain patterns. Maybe in combination with interpret-trailers
-> this can be an easy configurable thing, or even a default to ignore
-> all sign offs?
-
-I thought about that myself.
-
-The reason: I was surprised, a couple of times, when I realized long after
-the fact, that some of my patches were changed without my knowledge nor
-blessing before being merged into `master`.
-
-To allow me to protest in a timely manner, I wanted to teach GitGitGadget
-(which is the main reason I work on range-diff, as you undoubtedly suspect
-by now) to warn me about such instances.
-
-The range-diff patch series has simmered too long at this stage, though,
-and I did not try to address such a "ignore <regex>" feature
-*specifically* so that the range-diff command could be available sooner
-than later. I already missed one major version, please refrain from
-forcing me to miss another one.
+If you can think of a way that would make this easier to read for, say,
+myself if I ever find myself debugging a regression caught by this test, I
+would appreciate that.
 
 Ciao,
 Dscho
