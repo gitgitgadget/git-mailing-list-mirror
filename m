@@ -2,84 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 772C61F597
-	for <e@80x24.org>; Thu, 26 Jul 2018 06:07:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2AEED1F597
+	for <e@80x24.org>; Thu, 26 Jul 2018 06:09:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728509AbeGZHWU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jul 2018 03:22:20 -0400
-Received: from mail-wr1-f42.google.com ([209.85.221.42]:46090 "EHLO
-        mail-wr1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725955AbeGZHWT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jul 2018 03:22:19 -0400
-Received: by mail-wr1-f42.google.com with SMTP id h14-v6so427979wrw.13
-        for <git@vger.kernel.org>; Wed, 25 Jul 2018 23:07:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=N4JPRtz5tlGXzfOSj24TeXUZRfY6HhuUzmPa6PDkMnc=;
-        b=B0LHOlDZyi2zrDkfgaRy8Sy+2QOjCgsH9MbuahyupCojUnWguZzgb3SNMhIcYdIknf
-         FRUQhkY9NZBplsOlnkVIlln17ety1HwdE0cueYNGRamSweuMGlLx2uhh9yHm4/bl1aqe
-         Zka6t2j5dpxB7FbDFlpI4tTNLRmmVun3BPN+/XDJRvikoubv4SSKA5UD/zMkDpc4Yvai
-         ZTp8bcbZH6R6kfqmegv4c/A/IH7XtRsf9DSHP2t/tzRazx9U0Z7uCbVOHyBVNVLt+mlF
-         xpbfc+cLu40sWhbRaBQMogFZpEbzYCadrKYTUZ1l+GsZBZDqgTQuAlE0ojh1TcCPCYct
-         PuzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=N4JPRtz5tlGXzfOSj24TeXUZRfY6HhuUzmPa6PDkMnc=;
-        b=pMNZn79/IP2FymfC3nZCeVzE12c8FRB4r7iK2PHRyIX0rpyFjnjWdqhNTnzGBDTWni
-         UUmHP+DoIxvx6tN3KReosXY6VbOivjbmKN+wKpBno8ELClW1kpCC6DAZYeMKHtyEQJdq
-         zQenxy1dHAIURuLWwwWBf5vRzbLlJBryrtCbs7HmxsDaGvG4+hPvEHYgHji5JCsKzPDZ
-         dqKygkdh/u9caoVCNZi5WsXFLLjcgc7armoMDn/yLD/cqwOWttoZW2Ty0WhNWlAPo4Uz
-         5Mi15vR3NTu6QFo+TFXUNtvkyA5+59KqcPEwsdR5PMIvX+AxfLx0AptPJGEhLyoqsLQ4
-         XROA==
-X-Gm-Message-State: AOUpUlHhbWw536gCKxZ+kTv/x2QOTt80MGGFImgLTN7zrGu3KQBQkfSd
-        +4KGzlTeQXqv3vWbKfx6n9u+HdLqX1WHBKC+tasTrB88
-X-Google-Smtp-Source: AAOMgpdiaZ4VNmwH2c2z5AX7FcbirDV5TBJNqE/wYHVJ/asVH0ZxljbTUyiufSP3H+mWlt0ukoaJhf0LGkT2WMnaCnc=
-X-Received: by 2002:adf:8919:: with SMTP id s25-v6mr417693wrs.89.1532585224685;
- Wed, 25 Jul 2018 23:07:04 -0700 (PDT)
+        id S1727593AbeGZHZH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jul 2018 03:25:07 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59670 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726560AbeGZHZH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jul 2018 03:25:07 -0400
+Received: (qmail 19073 invoked by uid 109); 26 Jul 2018 06:09:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 26 Jul 2018 06:09:54 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13815 invoked by uid 111); 26 Jul 2018 06:09:53 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 26 Jul 2018 02:09:53 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Jul 2018 02:09:51 -0400
+Date:   Thu, 26 Jul 2018 02:09:51 -0400
+From:   Jeff King <peff@peff.net>
+To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 5/6] pass st.st_size as hint for strbuf_readlink()
+Message-ID: <20180726060951.GA25386@sigill.intra.peff.net>
+References: <20180724104852.GA14638@sigill.intra.peff.net>
+ <20180724105139.GE17165@sigill.intra.peff.net>
+ <20180725184100.GA30961@tor.lan>
 MIME-Version: 1.0
-Received: by 2002:adf:e9c6:0:0:0:0:0 with HTTP; Wed, 25 Jul 2018 23:07:03
- -0700 (PDT)
-In-Reply-To: <xmqqd0vbt14e.fsf@gitster-ct.c.googlers.com>
-References: <xmqqd0vbt14e.fsf@gitster-ct.c.googlers.com>
-From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-Date:   Thu, 26 Jul 2018 09:07:03 +0300
-Message-ID: <CAL21BmkmxmjVmi3JUaW7vK5yGyzzZDxeMGNSSYV0nzEzWKcs+A@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Jul 2018, #03; Wed, 25)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180725184100.GA30961@tor.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2018-07-26 1:13 GMT+03:00 Junio C Hamano <gitster@pobox.com>:
->
-> * ot/ref-filter-object-info (2018-07-17) 5 commits
->  - ref-filter: use oid_object_info() to get object
->  - ref-filter: merge get_obj and get_object
->  - ref-filter: initialize eaten variable
->  - ref-filter: fill empty fields with empty values
->  - ref-filter: add info_source to valid_atom
->
->  A few atoms like %(objecttype) and %(objectsize) in the format
->  specifier of "for-each-ref --format=<format>" can be filled without
->  getting the full contents of the object, but just with the object
->  header.  These cases have been optimzied by calling
->  oid_object_info() API.
->
->  What's the doneness of this one?
->
+On Wed, Jul 25, 2018 at 08:41:00PM +0200, Torsten Bögershausen wrote:
 
-It is ready. Thanks.
+> On Tue, Jul 24, 2018 at 06:51:39AM -0400, Jeff King wrote:
+> > When we initially added the strbuf_readlink() function in
+> > b11b7e13f4 (Add generic 'strbuf_readlink()' helper function,
+> > 2008-12-17), the point was that we generally have a _guess_
+> > as to the correct size based on the stat information, but we
+> > can't necessarily trust it.
+> > 
+> > Over the years, a few callers have grown up that simply pass
+> > in 0, even though they have the stat information. Let's have
+> > them pass in their hint for consistency (and in theory
+> > efficiency, since it may avoid an extra resize/syscall loop,
+> > but neither location is probably performance critical).
+> > 
+> > Note that st.st_size is actually an off_t, so in theory we
+> > need xsize_t() here. But none of the other callsites use it,
+> > and since this is just a hint, it doesn't matter either way
+> > (if we wrap we'll simply start with a too-small hint and
+> > then eventually complain when we cannot allocate the
+> > memory).
+> 
+> Thanks a lot for the series.
+> 
+>  For the last paragraph I would actually vote the other way around -
+>  how about something like this ?
+>  Note that st.st_size is actually an off_t, so we should use
+>  xsize_t() here. In pratise we don't expect links to be large like that,
+>  but let's give a good example in the source code and use xsize_t()
+>  whenever an off_t is converted into size_t.
+>  This will make live easier whenever someones diggs into 32/64 bit
+>  "conversion safetyness"
+
+I actually don't mind using xsize_t(), but if we're going into I think
+we should do it consistently. I.e., as a patch on top with that
+explanation.
+
+-Peff
