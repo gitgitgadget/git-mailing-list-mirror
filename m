@@ -6,78 +6,66 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2AEED1F597
-	for <e@80x24.org>; Thu, 26 Jul 2018 06:09:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B69E81F597
+	for <e@80x24.org>; Thu, 26 Jul 2018 06:58:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727593AbeGZHZH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jul 2018 03:25:07 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59670 "HELO cloud.peff.net"
+        id S1728509AbeGZIOF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jul 2018 04:14:05 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59716 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726560AbeGZHZH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jul 2018 03:25:07 -0400
-Received: (qmail 19073 invoked by uid 109); 26 Jul 2018 06:09:54 -0000
+        id S1726763AbeGZIOF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jul 2018 04:14:05 -0400
+Received: (qmail 20944 invoked by uid 109); 26 Jul 2018 06:58:42 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 26 Jul 2018 06:09:54 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 26 Jul 2018 06:58:42 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13815 invoked by uid 111); 26 Jul 2018 06:09:53 -0000
+Received: (qmail 14114 invoked by uid 111); 26 Jul 2018 06:58:42 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 26 Jul 2018 02:09:53 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 26 Jul 2018 02:58:42 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Jul 2018 02:09:51 -0400
-Date:   Thu, 26 Jul 2018 02:09:51 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Jul 2018 02:58:40 -0400
+Date:   Thu, 26 Jul 2018 02:58:40 -0400
 From:   Jeff King <peff@peff.net>
-To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 5/6] pass st.st_size as hint for strbuf_readlink()
-Message-ID: <20180726060951.GA25386@sigill.intra.peff.net>
-References: <20180724104852.GA14638@sigill.intra.peff.net>
- <20180724105139.GE17165@sigill.intra.peff.net>
- <20180725184100.GA30961@tor.lan>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/4] automatically ban strcpy()
+Message-ID: <20180726065840.GA27349@sigill.intra.peff.net>
+References: <20180724092329.GA24250@sigill.intra.peff.net>
+ <20180724092618.GA3288@sigill.intra.peff.net>
+ <CAPig+cRpcUOA5+k7v3Gy3WsLohedEb=j-a_fCGc3g0ktDfsDVA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180725184100.GA30961@tor.lan>
+In-Reply-To: <CAPig+cRpcUOA5+k7v3Gy3WsLohedEb=j-a_fCGc3g0ktDfsDVA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 25, 2018 at 08:41:00PM +0200, Torsten Bögershausen wrote:
+On Tue, Jul 24, 2018 at 01:20:58PM -0400, Eric Sunshine wrote:
 
-> On Tue, Jul 24, 2018 at 06:51:39AM -0400, Jeff King wrote:
-> > When we initially added the strbuf_readlink() function in
-> > b11b7e13f4 (Add generic 'strbuf_readlink()' helper function,
-> > 2008-12-17), the point was that we generally have a _guess_
-> > as to the correct size based on the stat information, but we
-> > can't necessarily trust it.
-> > 
-> > Over the years, a few callers have grown up that simply pass
-> > in 0, even though they have the stat information. Let's have
-> > them pass in their hint for consistency (and in theory
-> > efficiency, since it may avoid an extra resize/syscall loop,
-> > but neither location is probably performance critical).
-> > 
-> > Note that st.st_size is actually an off_t, so in theory we
-> > need xsize_t() here. But none of the other callsites use it,
-> > and since this is just a hint, it doesn't matter either way
-> > (if we wrap we'll simply start with a too-small hint and
-> > then eventually complain when we cannot allocate the
-> > memory).
+> On Tue, Jul 24, 2018 at 5:26 AM Jeff King <peff@peff.net> wrote:
+> >   1. We'll only trigger with -Wimplicit-function-declaration
+> >      (and only stop compilation with -Werror). These are
+> >      generally enabled by DEVELOPER=1. If you _don't_ have
+> >      that set, we'll still catch the problem, but only at
+> >      link-time, with a slightly less useful message:
+> >
+> >      If instead we convert this to a reference to an
+> >      undefined variable, that always dies immediately. But
+> >      gcc seems to print the set of errors twice, which
+> >      clutters things up.
 > 
-> Thanks a lot for the series.
-> 
->  For the last paragraph I would actually vote the other way around -
->  how about something like this ?
->  Note that st.st_size is actually an off_t, so we should use
->  xsize_t() here. In pratise we don't expect links to be large like that,
->  but let's give a good example in the source code and use xsize_t()
->  whenever an off_t is converted into size_t.
->  This will make live easier whenever someones diggs into 32/64 bit
->  "conversion safetyness"
+> The above does a pretty good job of convincing me that this ought to
+> be implemented via an undefined variable rather than undefined
+> function, exactly because it is the newcomer or casual contributor who
+> is most likely to trip over a banned function, and almost certainly
+> won't have DEVELOPER=1 set. The gcc clutter seems a minor point
+> against the benefit this provides to that audience.
 
-I actually don't mind using xsize_t(), but if we're going into I think
-we should do it consistently. I.e., as a patch on top with that
-explanation.
+OK. I was on the fence, but it should be pretty trivial to switch. Let
+me see if I can just make a replacement for patch 1, or if the whole
+thing needs to be rebased on top.
 
 -Peff
