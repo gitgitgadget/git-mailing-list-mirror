@@ -2,104 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A8E741F597
-	for <e@80x24.org>; Thu, 26 Jul 2018 12:03:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8EC411F597
+	for <e@80x24.org>; Thu, 26 Jul 2018 12:07:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729991AbeGZNUY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jul 2018 09:20:24 -0400
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:37838 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729895AbeGZNUX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jul 2018 09:20:23 -0400
-Received: by mail-lf1-f68.google.com with SMTP id j8-v6so1018216lfb.4
-        for <git@vger.kernel.org>; Thu, 26 Jul 2018 05:03:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=L+n2hFeDuq90kKT2VX3fGToaAEnDYx/6iStZCiVx+3A=;
-        b=I+SdPtai/lCyiIE34fQ3s0/QbRx8fcLHsMc4t75RZEtbA41gDw1qd83egePVi3TI5h
-         cWFzhaga9bsFxJZW6etpwGT9HHEdjmaBtkZ8/UfIOQ8eH3CHVA0oMkDTziUUm+UCN9yn
-         kVmw0hDM9/GWASsLv+hs2Xi3Jvvk/L//0pTj77j6bPqBQq+V4FrZyUFO0km1Yni0Hxzo
-         7zEzywviG4NEg9nTW01AwvVPIL1LarubtVKv7YaXi/V6xfewywWkJR/+iUpZnQ5qfFaq
-         bKWs08DBRTAnVXSW6op7hc2/jhzgjl/4uCOGIGBAaTNarBkiLdP4qOSip0JcKGXQfr9q
-         PY9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=L+n2hFeDuq90kKT2VX3fGToaAEnDYx/6iStZCiVx+3A=;
-        b=Ss89G6qGu0NMwOvqwuxWC9GMqpt4Ekw9r4BUpyHUP4LNWIJVKOuxcdhcisx9BWukeI
-         lh0yR23N3CTwZGvAT6Z7Ucej5/5H/dTqSQRg61YI7q3se7jmkeO+ifbOCn/OTrWgoGQP
-         JODan1S6bR6n5UhhQeXb9xDQCshv9fh4rSHm1FwlJ/SgIZpoInSXURPQA6yNBOVfqw1Z
-         nqG/SVikown0e256EhL86OfIMkXKuHYVHIIGyEFg3TEZLnzCnpBoHNsdkvUaoUj9Q1vd
-         BqHu6F+/JwSYNeDnztFZ3/gDNesIDMzdmXAaCE0s3qGzQoBYcZOJjH7z3l/PEPKajjXa
-         tn0g==
-X-Gm-Message-State: AOUpUlFqt1mzCkZcnJLTxc/5lMUHF2zvC7BUplFJF8MVcxtSNL6G6Bk7
-        pWpVdLAZiXsdwTteurtaGZI=
-X-Google-Smtp-Source: AAOMgpfs6g3iVFvQYClAqL9unmvWpFVf/wQzqLYceJKIwFfSj2qSnwM2RFiVRZAdGlFfpdG9rf80mA==
-X-Received: by 2002:a19:518a:: with SMTP id g10-v6mr1221871lfl.78.1532606630949;
-        Thu, 26 Jul 2018 05:03:50 -0700 (PDT)
-Received: from [192.168.221.164] ([185.79.217.61])
-        by smtp.gmail.com with ESMTPSA id m129-v6sm158911lfe.50.2018.07.26.05.03.49
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Jul 2018 05:03:50 -0700 (PDT)
-Subject: Re: [RFC PATCH 0/5] format-patch: automate cover letter range-diff
-To:     Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Stefan Beller <sbeller@google.com>
-References: <20180530080325.37520-1-sunshine@sunshineco.com>
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-Message-ID: <b8c65df5-d150-1bc6-1858-c2c042ae4bb2@gmail.com>
-Date:   Thu, 26 Jul 2018 14:03:48 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        id S1729939AbeGZNXy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jul 2018 09:23:54 -0400
+Received: from mout.gmx.net ([212.227.15.18]:33671 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729531AbeGZNXy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jul 2018 09:23:54 -0400
+Received: from [192.168.0.129] ([37.201.195.94]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MSuMn-1faivy0YvF-00RmYv; Thu, 26
+ Jul 2018 14:07:11 +0200
+Date:   Thu, 26 Jul 2018 14:07:07 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     knu@idaemons.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] sequencer.c: terminate the last line of author-script
+ properly
+In-Reply-To: <xmqqpnzlla1p.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1807261347040.71@tvgsbejvaqbjf.bet>
+References: <86a7qwpt9g.knu@iDaemons.org>        <xmqqa7qww6uk.fsf@gitster-ct.c.googlers.com>        <CAPig+cQWA+sE3iH89kQGWgS+0HQDK-V5++S0+F6_dpfOCfXxDg@mail.gmail.com> <xmqqpnzlla1p.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <20180530080325.37520-1-sunshine@sunshineco.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:SX/5gvkgWOr1SeufELYTd+WQAAoaDWl1ioX6zY92QWyfPbjySsS
+ RW0KydhOovuK+A3Fcmi79dfHbPQv/othfZZBV8zVRfdZ8xrLpZMU3z0UZYh3uVZrQVuVSbi
+ DgF/8gVM8M3SqtReQeOs1VKgiQYsP4ZE9owOpdQntuMS1a+cARqZwDBLHoNWxfHA6E1UufV
+ oPnzboCQ0GGeYGgnTpBCA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:LspROmp54QE=:hzLvbAWzvJcywFQjdGXZfx
+ 2+oTT7+wglbpyqtD9V/KHhiISqRX5r6Qm0kSl75Kq2KdplYrTBgnYCIcQlokXrHWQkew3klHC
+ E5wf1ynRD3FQphnGpH0NM4eY4RSp/Rvg3SCLsPSx7r1PcW1recdj1zTv5mOFwD1a1pza9sFD2
+ 3dzqQUtNn+FtpaWk7edV71L42o1H7vSzhjT2EZmp0JhliPHiM+9gOYoXksCw3EDo+79DOM2cK
+ 99PgX9reJePffDXhATyjWDdB5vMSHo0Zqk0dU0UlSG+dF326VXKYXR+HBquCuUK/+60GuPyrM
+ d22az8W2fUXMtcjOd2PgP1L2Js/JvAhzAMmrqT/tJ8isZYeDVlI9FsNR0c3gSmHRTbihfHM9b
+ yhAfoMk9ajGYcDcyTffzCRKdnKbBdVGlS1VWt5FHgFVO3piomDNw18upE0KcJOUQlIbqR5Wwx
+ w++I+VrKFislPd+u6lBJ/81OVq/+jFut4JXsQuf91fVY3mUWiZZdfKV0W7KAgfpDpu+LJQcyP
+ UFwKisyB5fgCqDwLTZrWu/495Sh6JELHNkjqxVYesZ88ak+a4odkimsRP3ur3iNDjgi+HRxH2
+ RsVDLWv7cLCiw4GqzzESi3+e+pRQ0pvjLhNW+0BxvWkxz1xca9QrEAZOAa9YF/uZC4ezpnj/2
+ blH+tMl71oLmjZnrpdB4RgwfyHP+EQzsdDhBvBucsNcLdm9X2NgDoYPNy0WbpSl+KO9AmTfsG
+ enok5D4KkDo1XHVO5gl8Lh4r91lUjXqadJjEkkKs+Z6mWHFMCKrBWesfXt0HDYeaBfi3GkPBM
+ mOCjvuw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2018-05-30 10:03, Eric Sunshine wrote:
-> Dscho recently implemented a 'tbdiff' replacement as a Git builtin named
-> git-branch-diff[1] which computes differences between two versions of a
-> patch series. Such a diff can be a useful aid for reviewers when
-> inserted into a cover letter. However, doing so requires manual
-> generation (invoking git-branch-diff) and copy/pasting the result into
-> the cover letter.
-> 
-> This series fully automates the process by adding a --range-diff option
-> to git-format-patch. 
+Hi Junio,
 
-[...]
+On Tue, 17 Jul 2018, Junio C Hamano wrote:
 
-> 
-> Eric Sunshine (5):
->   format-patch: allow additional generated content in
->     make_cover_letter()
->   format-patch: add --range-diff option to embed diff in cover letter
->   format-patch: extend --range-diff to accept revision range
->   format-patch: teach --range-diff to respect -v/--reroll-count
->   format-patch: add --creation-weight tweak for --range-diff
-> 
->  Documentation/git-format-patch.txt |  18 +++++
->  builtin/log.c                      | 119 ++++++++++++++++++++++++-----
->  t/t7910-branch-diff.sh             |  16 ++++
->  3 files changed, 132 insertions(+), 21 deletions(-)
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index 2d189da2f1..b0cef509ab 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -81,11 +81,13 @@ test_expect_success 'rebase -i writes out .git/rebase-merge/author-script in "ed
 
-Would it make sense to mention new option in the cover letter section of
-Documentation/SubmittingPatches?
+You missed a very long line here.
 
---
-Best regards, Andrei Rybak
+>  	set_fake_editor &&
+>  	FAKE_LINES="edit 1" git rebase -i HEAD^ &&
+>  	test -f .git/rebase-merge/author-script &&
+
+Why do we need this, if we already have an `eval` later on?
+
+> -	unset GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_AUTHOR_DATE &&
+> -	eval "$(cat .git/rebase-merge/author-script)" &&
+> -	test "$(git show --quiet --pretty=format:%an)" = "$GIT_AUTHOR_NAME" &&
+> -	test "$(git show --quiet --pretty=format:%ae)" = "$GIT_AUTHOR_EMAIL" &&
+> -	test "$(git show --quiet --date=raw --pretty=format:@%ad)" = "$GIT_AUTHOR_DATE"
+> +	(
+> +		sane_unset GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_AUTHOR_DATE &&
+> +		eval "$(cat .git/rebase-merge/author-script)" &&
+
+Why not
+
+	. .git/rebase-merge/author-script
+
+instead? Less roundabout, easier to read, I think.
+
+> +		test "$(git show --quiet --pretty=format:%an)" = "$GIT_AUTHOR_NAME" &&
+
+How is this even working without `-s`?
+
+*clicketyclick*
+
+Ah, --quiet does this. Wait. `git show --quiet` is not even documented.
+
+All of those lines are too long, though. I am surprised you did not catch
+that.
+
+Besides, this would be more compact, less repetitive, *and* more readable
+as
+
+	test "$(git show -s --date=raw --format=%an,%ae,@%ad)" = \
+		"$GIT_AUTHOR_NAME,$GIT_AUTHOR_EMAIL,$GIT_AUTHOR_DATE"
+
+t3404-rebase-interactive.sh already takes 8 minutes (last I checked,
+anyway) to run on a *fast* machine. There is absolutely no need to
+introduce even more spawning, not when it is so easily avoided.
+
+> +		test "$(git show --quiet --pretty=format:%ae)" = "$GIT_AUTHOR_EMAIL" &&
+> +		test "$(git show --quiet --date=raw --pretty=format:@%ad)" = "$GIT_AUTHOR_DATE"
+
+It is a shame that we cannot use %at directly here.
+
+> +	)
+>  '
+>  
+>  test_expect_success 'rebase -i with the exec command' '
+
+Note: this is not a criticism of the original patch. It is a criticism of
+the review which could really have been better.
+
+I also saw that the test_when_finished uses a shell construct that shell
+script aficionados might like, but these days it is a lot better to use
+`test_might_fail` instead. Let's do this, then.
+
+So here goes, the clean-up patch on top of your 843654e435e (why does it
+have to be so darned tedious to get from a mail to the corresponding
+commit in `pu`), in all its glory:
+
+-- snipsnap --
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index b0cef509ab7..97f0b4bf881 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -75,18 +75,16 @@ test_expect_success 'rebase --keep-empty' '
+ 	test_line_count = 6 actual
+ '
+ 
+-test_expect_success 'rebase -i writes out .git/rebase-merge/author-script in "edit" that sh(1) can parse' '
+-	test_when_finished "git rebase --abort ||:" &&
++test_expect_success 'rebase -i writes correct author-script' '
++	test_when_finished "test_might_fail git rebase --abort" &&
+ 	git checkout master &&
+ 	set_fake_editor &&
+ 	FAKE_LINES="edit 1" git rebase -i HEAD^ &&
+-	test -f .git/rebase-merge/author-script &&
+ 	(
+ 		sane_unset GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_AUTHOR_DATE &&
+-		eval "$(cat .git/rebase-merge/author-script)" &&
+-		test "$(git show --quiet --pretty=format:%an)" = "$GIT_AUTHOR_NAME" &&
+-		test "$(git show --quiet --pretty=format:%ae)" = "$GIT_AUTHOR_EMAIL" &&
+-		test "$(git show --quiet --date=raw --pretty=format:@%ad)" = "$GIT_AUTHOR_DATE"
++		. .git/rebase-merge/author-script &&
++		test "$(git show -s --date=raw --format=%an,%ae,@%ad)" = \
++			"$GIT_AUTHOR_NAME,$GIT_AUTHOR_EMAIL,$GIT_AUTHOR_DATE"
+ 	)
+ '
+ 
