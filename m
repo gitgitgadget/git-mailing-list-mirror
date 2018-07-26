@@ -2,677 +2,194 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 835A61F597
-	for <e@80x24.org>; Thu, 26 Jul 2018 13:41:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 412B51F597
+	for <e@80x24.org>; Thu, 26 Jul 2018 13:41:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731394AbeGZO6i (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jul 2018 10:58:38 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:36133 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730881AbeGZO6h (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jul 2018 10:58:37 -0400
-Received: by mail-wr1-f66.google.com with SMTP id h9-v6so1778136wro.3
-        for <git@vger.kernel.org>; Thu, 26 Jul 2018 06:41:40 -0700 (PDT)
+        id S1731490AbeGZO6u (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jul 2018 10:58:50 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:33669 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730030AbeGZO6t (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jul 2018 10:58:49 -0400
+Received: by mail-pg1-f195.google.com with SMTP id r5-v6so1207884pgv.0
+        for <git@vger.kernel.org>; Thu, 26 Jul 2018 06:41:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=c7ScVPIZjNDc/alJ8rMDjbxJu8t6MO3aGICVAsbIXoI=;
-        b=HyDUQoEe+hws6aY/2mn8le6gN14D/HtOAnLwL2DaDed3HFKlBYsqKztxsxRxx967n3
-         O2dnGbSsG1ksJDshFh1F0YCJnorTlQSzHa/ZVyaqnIOyHJ3S41LazPz/rtJSpvxMjDkJ
-         Sz5jr6xRUW4v0bTCo3V8o03fPGtW5x/vLCG2dAkKhbkv/Jljl9wkP8iBjednCf+NRHH0
-         y7uF8FvZF099Te57bx8f9u3soPaDHP4Ta27/qFdnmAvgkGmo9StgAo4is9rG8sLdsgPt
-         viCEJect82oeJY+KgRwe5AyMoaUAWO4xbiJelXI0VsUz+kOViBftaV1H+OV/16/l/+Kh
-         yubQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=RJ1C9nz9El2rb58Zh4QFeK+xNChnmKgEEoUhcJtP1dk=;
+        b=coF5+6elpQrP9QABnh+46wQ3YZIAnYNh5WqWcr0b2mSRq86J9LNX1rO8pqC+fTN6p3
+         f1ntd6ajPYgQzycqg0Eo4iZkUoQmJ9KeLl19RnbUzbq15K7rx+XNoA5E5cFT8qBzKWd8
+         h9s+mUA/hQK3fMl5Qhrh0KSS2pznic5OmG6oy9Sxj0rZSSX5moQpLlDM50o5zrsjZQZn
+         epOZ9ES8PnDdC+1G+2IwRNS2eZfWaJyKAB1st1/h2529iuFo3wnldsSXZC4AyzkLfuiu
+         RSZzX2CwaS3ywl5ASZk7Wm/q8ifxM/WiMdrSHIx+3Q7jzFBPv2iGIQVAJM/jNHBLmcUR
+         AeSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=c7ScVPIZjNDc/alJ8rMDjbxJu8t6MO3aGICVAsbIXoI=;
-        b=Z+57Ji5J+5ZLKBZ3UwzgUe318T2EQ8UsQw6iCuIZ4vO7tz1GEmewW6ZgRlj5IIhaBS
-         fyCbZEDO51LEYLkONMquDRMVtdciSKTUVK2YkBfzYehiAwUBiidbj8B1NArHXIdbTZMU
-         3+C7thYMvwT9S3yYuEO6R6KnyvepgMAoaefi3BmMRmiM+8IIHUvj90oiZhREqSe7M8H+
-         xnok24a5ZGU8tqRbD1aaaRB5mgj5ungtJ/2i+wz3tvrzliWdAWxtVbCHPK0tWWzdXjyK
-         5UGEiMqo68ABe/Yno1dljUcvpX0II06ZOETLzZzTW8C529UE68x/Xh9kiWTqlH1xbEir
-         6dDg==
-X-Gm-Message-State: AOUpUlG5XHKDoozmFNQKDgOw22WoX31xjoIPvZblhP0eiMwSGZqXqfLc
-        Grco42iUOrXC0uYBJsGev9TRd2NkZNo=
-X-Google-Smtp-Source: AAOMgpfDXbB8jNTyUR6sSjAqMJqlIO97yh6TVN/+PPWt8wJKaX9Ynto/3gAeKFNaxMQs6pqvbkOG8A==
-X-Received: by 2002:adf:deca:: with SMTP id i10-v6mr1584387wrn.163.1532612498761;
-        Thu, 26 Jul 2018 06:41:38 -0700 (PDT)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id j8-v6sm2125002wrn.50.2018.07.26.06.41.37
+         :references;
+        bh=RJ1C9nz9El2rb58Zh4QFeK+xNChnmKgEEoUhcJtP1dk=;
+        b=OABLhlKZlmphDwxyhZS+IRqM++T0Y/pgG09J1fHJxE/HQVqqUJ4Y1kwGCqEt24RtLH
+         cWAKvOlrW1onPGTXHb/UUxTZkuWGh5e+9aRG4TkGIxUyEZTucsiXQyGFGy0wPD6ZJhmq
+         jZG0C1Rjevy1txeWITqqX+HztGTO6v62qiamIKD01GjUS4rsJIQaA85TJQZs5TF5KvJb
+         PYE8OwWe592/1fyKnh7xg0ZaSONeJz7Ct83J9u8Lw3GSiYpAbK1u3KJ//GIqrEZNiQY4
+         s/IVUqKSsyBhXrwBq4YzPyvPU1a2O+MqPpjPMC4iHrdDaXd8bCWOmL62detE9ZJ9PUMM
+         TiVQ==
+X-Gm-Message-State: AOUpUlHmhYqJ1GmnZp79Dpc0wXiFtYR2Qax5ZJjNSqTCawGUcxLUtxF7
+        375sAIEx/1/HhXgQ+eRjZLoe6oHr
+X-Google-Smtp-Source: AAOMgpdg2zrFXDGo8dgarHvJ1wcApzsRjerFzEwmpGmDB7Oe8m1rkSCNCdblZjAdR2I/NTte1fsHTA==
+X-Received: by 2002:a62:3a5b:: with SMTP id h88-v6mr2188556pfa.61.1532612512649;
+        Thu, 26 Jul 2018 06:41:52 -0700 (PDT)
+Received: from localhost.localdomain ([110.175.42.185])
+        by smtp.gmail.com with ESMTPSA id n18-v6sm4191592pfa.50.2018.07.26.06.41.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Jul 2018 06:41:37 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
+        Thu, 26 Jul 2018 06:41:51 -0700 (PDT)
+From:   Chen Bin <chenbin.sh@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Edward Thomson <ethomson@edwardthomson.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        demerphq <demerphq@gmail.com>, Adam Langley <agl@google.com>,
-        keccak@noekeon.org,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 2/2] doc hash-function-transition: pick SHA-256 as NewHash
-Date:   Thu, 26 Jul 2018 13:41:11 +0000
-Message-Id: <20180726134111.17623-1-avarab@gmail.com>
-X-Mailer: git-send-email 2.18.0.345.g5c9ce644c3
-In-Reply-To: <xmqqin53t30d.fsf@gitster-ct.c.googlers.com>
-References: <xmqqin53t30d.fsf@gitster-ct.c.googlers.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Cc:     Chen Bin <chenbin.sh@gmail.com>
+Subject: [PATCH 1/1] add hook pre-p4-submit
+Date:   Thu, 26 Jul 2018 23:41:38 +1000
+Message-Id: <20180726134138.12183-1-chenbin.sh@gmail.com>
+X-Mailer: git-send-email 2.18.0
+In-Reply-To: <20180725134345.8631-1-chenbin.sh@gmail.com>
+References: <20180725134345.8631-1-chenbin.sh@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From a security perspective, it seems that SHA-256, BLAKE2, SHA3-256,
-K12, and so on are all believed to have similar security properties.
-All are good options from a security point of view.
+Hook pre-p4-submit is executed before git-p4 actually submits code.
+If the hook exits with non-zero value, submit process will abort.
 
-SHA-256 has a number of advantages:
-
-* It has been around for a while, is widely used, and is supported by
-  just about every single crypto library (OpenSSL, mbedTLS, CryptoNG,
-  SecureTransport, etc).
-
-* When you compare against SHA1DC, most vectorized SHA-256
-  implementations are indeed faster, even without acceleration.
-
-* If we're doing signatures with OpenPGP (or even, I suppose, CMS),
-  we're going to be using SHA-2, so it doesn't make sense to have our
-  security depend on two separate algorithms when either one of them
-  alone could break the security when we could just depend on one.
-
-So SHA-256 it is. See the "Hash algorithm analysis" thread as of
-[1]. Linus has come around to this choice and suggested Junio make the
-final pick, and he's endorsed SHA-256 [3].
-
-This follow-up change changes occurrences of "NewHash" to
-"SHA-256" (or "sha256", depending on the context). The "Selection of a
-New Hash" section has also been changed to note that historically we
-used the the "NewHash" name while we didn't know what the new hash
-function would be.
-
-This leaves no use of "NewHash" anywhere in git.git except in the
-aforementioned section (and as a variable name in t/t9700/test.pl, but
-that use from 2008 has nothing to do with this transition plan).
-
-1. https://public-inbox.org/git/20180720215220.GB18502@genre.crustytoothpaste.net/
-2. https://public-inbox.org/git/CA+55aFwSe9BF8e0hLk9pp3FVD5LaVY5GRdsV3fbNtgzekJadyA@mail.gmail.com/
-3. https://public-inbox.org/git/xmqqzhygwd5o.fsf@gitster-ct.c.googlers.com/
-
-Helped-by: Jonathan Nieder <jrnieder@gmail.com>
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Signed-off-by: Chen Bin <chenbin.sh@gmail.com>
 ---
+ Documentation/git-p4.txt   | 12 ++++++++++++
+ Documentation/githooks.txt |  7 +++++++
+ git-p4.py                  | 21 ++++++++++++++++++++-
+ t/t9800-git-p4-basic.sh    | 26 ++++++++++++++++++++++++++
+ 4 files changed, 65 insertions(+), 1 deletion(-)
 
-On Wed, Jul 25 2018, Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
-> [...]
-> All interesting ideas and good suggestions.  I'll leave 2/2 in the
-> mail archive and take only 1/2 for now.  I'd expect the final
-> version, not too soon after mulling over the suggestions raised
-> here, but not in too distant future to prevent us from forgetting
-> ;-)
-
-Here's a v2 which uses the suggestions for both the commit message &
-documentation from Jonathan and yourself. Thanks!
-
- .../technical/hash-function-transition.txt    | 196 +++++++++---------
- 1 file changed, 99 insertions(+), 97 deletions(-)
-
-diff --git a/Documentation/technical/hash-function-transition.txt b/Documentation/technical/hash-function-transition.txt
-index 5ee4754adb..5041e57273 100644
---- a/Documentation/technical/hash-function-transition.txt
-+++ b/Documentation/technical/hash-function-transition.txt
-@@ -59,14 +59,11 @@ that are believed to be cryptographically secure.
+diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
+index f0de3b891..f5d428ddf 100644
+--- a/Documentation/git-p4.txt
++++ b/Documentation/git-p4.txt
+@@ -374,6 +374,18 @@ These options can be used to modify 'git p4 submit' behavior.
+     been submitted. Implies --disable-rebase. Can also be set with
+     git-p4.disableP4Sync. Sync with origin/master still goes ahead if possible.
  
- Goals
- -----
--Where NewHash is a strong 256-bit hash function to replace SHA-1 (see
--"Selection of a New Hash", below):
--
--1. The transition to NewHash can be done one local repository at a time.
-+1. The transition to SHA-256 can be done one local repository at a time.
-    a. Requiring no action by any other party.
--   b. A NewHash repository can communicate with SHA-1 Git servers
-+   b. A SHA-256 repository can communicate with SHA-1 Git servers
-       (push/fetch).
--   c. Users can use SHA-1 and NewHash identifiers for objects
-+   c. Users can use SHA-1 and SHA-256 identifiers for objects
-       interchangeably (see "Object names on the command line", below).
-    d. New signed objects make use of a stronger hash function than
-       SHA-1 for their security guarantees.
-@@ -79,7 +76,7 @@ Where NewHash is a strong 256-bit hash function to replace SHA-1 (see
- 
- Non-Goals
- ---------
--1. Add NewHash support to Git protocol. This is valuable and the
-+1. Add SHA-256 support to Git protocol. This is valuable and the
-    logical next step but it is out of scope for this initial design.
- 2. Transparently improving the security of existing SHA-1 signed
-    objects.
-@@ -87,26 +84,26 @@ Non-Goals
-    repository.
- 4. Taking the opportunity to fix other bugs in Git's formats and
-    protocols.
--5. Shallow clones and fetches into a NewHash repository. (This will
--   change when we add NewHash support to Git protocol.)
--6. Skip fetching some submodules of a project into a NewHash
--   repository. (This also depends on NewHash support in Git
-+5. Shallow clones and fetches into a SHA-256 repository. (This will
-+   change when we add SHA-256 support to Git protocol.)
-+6. Skip fetching some submodules of a project into a SHA-256
-+   repository. (This also depends on SHA-256 support in Git
-    protocol.)
- 
- Overview
- --------
- We introduce a new repository format extension. Repositories with this
--extension enabled use NewHash instead of SHA-1 to name their objects.
-+extension enabled use SHA-256 instead of SHA-1 to name their objects.
- This affects both object names and object content --- both the names
- of objects and all references to other objects within an object are
- switched to the new hash function.
- 
--NewHash repositories cannot be read by older versions of Git.
-+SHA-256 repositories cannot be read by older versions of Git.
- 
--Alongside the packfile, a NewHash repository stores a bidirectional
--mapping between NewHash and SHA-1 object names. The mapping is generated
-+Alongside the packfile, a SHA-256 repository stores a bidirectional
-+mapping between SHA-256 and SHA-1 object names. The mapping is generated
- locally and can be verified using "git fsck". Object lookups use this
--mapping to allow naming objects using either their SHA-1 and NewHash names
-+mapping to allow naming objects using either their SHA-1 and SHA-256 names
- interchangeably.
- 
- "git cat-file" and "git hash-object" gain options to display an object
-@@ -116,7 +113,7 @@ object database so that they can be named using the appropriate name
- (using the bidirectional hash mapping).
- 
- Fetches from a SHA-1 based server convert the fetched objects into
--NewHash form and record the mapping in the bidirectional mapping table
-+SHA-256 form and record the mapping in the bidirectional mapping table
- (see below for details). Pushes to a SHA-1 based server convert the
- objects being pushed into sha1 form so the server does not have to be
- aware of the hash function the client is using.
-@@ -125,19 +122,19 @@ Detailed Design
- ---------------
- Repository format extension
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~
--A NewHash repository uses repository format version `1` (see
-+A SHA-256 repository uses repository format version `1` (see
- Documentation/technical/repository-version.txt) with extensions
- `objectFormat` and `compatObjectFormat`:
- 
- 	[core]
- 		repositoryFormatVersion = 1
- 	[extensions]
--		objectFormat = newhash
-+		objectFormat = sha256
- 		compatObjectFormat = sha1
- 
- The combination of setting `core.repositoryFormatVersion=1` and
- populating `extensions.*` ensures that all versions of Git later than
--`v0.99.9l` will die instead of trying to operate on the NewHash
-+`v0.99.9l` will die instead of trying to operate on the SHA-256
- repository, instead producing an error message.
- 
- 	# Between v0.99.9l and v2.7.0
-@@ -155,36 +152,36 @@ repository extensions.
- Object names
- ~~~~~~~~~~~~
- Objects can be named by their 40 hexadecimal digit sha1-name or 64
--hexadecimal digit newhash-name, plus names derived from those (see
-+hexadecimal digit sha256-name, plus names derived from those (see
- gitrevisions(7)).
- 
- The sha1-name of an object is the SHA-1 of the concatenation of its
- type, length, a nul byte, and the object's sha1-content. This is the
- traditional <sha1> used in Git to name objects.
- 
--The newhash-name of an object is the NewHash of the concatenation of its
--type, length, a nul byte, and the object's newhash-content.
-+The sha256-name of an object is the SHA-256 of the concatenation of its
-+type, length, a nul byte, and the object's sha256-content.
- 
- Object format
- ~~~~~~~~~~~~~
- The content as a byte sequence of a tag, commit, or tree object named
--by sha1 and newhash differ because an object named by newhash-name refers to
--other objects by their newhash-names and an object named by sha1-name
-+by sha1 and sha256 differ because an object named by sha256-name refers to
-+other objects by their sha256-names and an object named by sha1-name
- refers to other objects by their sha1-names.
- 
--The newhash-content of an object is the same as its sha1-content, except
--that objects referenced by the object are named using their newhash-names
-+The sha256-content of an object is the same as its sha1-content, except
-+that objects referenced by the object are named using their sha256-names
- instead of sha1-names. Because a blob object does not refer to any
--other object, its sha1-content and newhash-content are the same.
-+other object, its sha1-content and sha256-content are the same.
- 
--The format allows round-trip conversion between newhash-content and
-+The format allows round-trip conversion between sha256-content and
- sha1-content.
- 
- Object storage
- ~~~~~~~~~~~~~~
- Loose objects use zlib compression and packed objects use the packed
- format described in Documentation/technical/pack-format.txt, just like
--today. The content that is compressed and stored uses newhash-content
-+today. The content that is compressed and stored uses sha256-content
- instead of sha1-content.
- 
- Pack index
-@@ -255,10 +252,10 @@ network byte order):
-   up to and not including the table of CRC32 values.
- - Zero or more NUL bytes.
- - The trailer consists of the following:
--  - A copy of the 20-byte NewHash checksum at the end of the
-+  - A copy of the 20-byte SHA-256 checksum at the end of the
-     corresponding packfile.
- 
--  - 20-byte NewHash checksum of all of the above.
-+  - 20-byte SHA-256 checksum of all of the above.
- 
- Loose object index
- ~~~~~~~~~~~~~~~~~~
-@@ -266,7 +263,7 @@ A new file $GIT_OBJECT_DIR/loose-object-idx contains information about
- all loose objects. Its format is
- 
-   # loose-object-idx
--  (newhash-name SP sha1-name LF)*
-+  (sha256-name SP sha1-name LF)*
- 
- where the object names are in hexadecimal format. The file is not
- sorted.
-@@ -292,8 +289,8 @@ To remove entries (e.g. in "git pack-refs" or "git-prune"):
- Translation table
- ~~~~~~~~~~~~~~~~~
- The index files support a bidirectional mapping between sha1-names
--and newhash-names. The lookup proceeds similarly to ordinary object
--lookups. For example, to convert a sha1-name to a newhash-name:
-+and sha256-names. The lookup proceeds similarly to ordinary object
-+lookups. For example, to convert a sha1-name to a sha256-name:
- 
-  1. Look for the object in idx files. If a match is present in the
-     idx's sorted list of truncated sha1-names, then:
-@@ -301,8 +298,8 @@ lookups. For example, to convert a sha1-name to a newhash-name:
-        name order mapping.
-     b. Read the corresponding entry in the full sha1-name table to
-        verify we found the right object. If it is, then
--    c. Read the corresponding entry in the full newhash-name table.
--       That is the object's newhash-name.
-+    c. Read the corresponding entry in the full sha256-name table.
-+       That is the object's sha256-name.
-  2. Check for a loose object. Read lines from loose-object-idx until
-     we find a match.
- 
-@@ -318,25 +315,25 @@ for all objects in the object store.
- 
- Reading an object's sha1-content
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--The sha1-content of an object can be read by converting all newhash-names
--its newhash-content references to sha1-names using the translation table.
-+The sha1-content of an object can be read by converting all sha256-names
-+its sha256-content references to sha1-names using the translation table.
- 
- Fetch
- ~~~~~
- Fetching from a SHA-1 based server requires translating between SHA-1
--and NewHash based representations on the fly.
-+and SHA-256 based representations on the fly.
- 
- SHA-1s named in the ref advertisement that are present on the client
--can be translated to NewHash and looked up as local objects using the
-+can be translated to SHA-256 and looked up as local objects using the
- translation table.
- 
- Negotiation proceeds as today. Any "have"s generated locally are
- converted to SHA-1 before being sent to the server, and SHA-1s
--mentioned by the server are converted to NewHash when looking them up
-+mentioned by the server are converted to SHA-256 when looking them up
- locally.
- 
- After negotiation, the server sends a packfile containing the
--requested objects. We convert the packfile to NewHash format using
-+requested objects. We convert the packfile to SHA-256 format using
- the following steps:
- 
- 1. index-pack: inflate each object in the packfile and compute its
-@@ -351,12 +348,12 @@ the following steps:
-    (This list only contains objects reachable from the "wants". If the
-    pack from the server contained additional extraneous objects, then
-    they will be discarded.)
--3. convert to newhash: open a new (newhash) packfile. Read the topologically
-+3. convert to sha256: open a new (sha256) packfile. Read the topologically
-    sorted list just generated. For each object, inflate its
--   sha1-content, convert to newhash-content, and write it to the newhash
--   pack. Record the new sha1<->newhash mapping entry for use in the idx.
-+   sha1-content, convert to sha256-content, and write it to the sha256
-+   pack. Record the new sha1<->sha256 mapping entry for use in the idx.
- 4. sort: reorder entries in the new pack to match the order of objects
--   in the pack the server generated and include blobs. Write a newhash idx
-+   in the pack the server generated and include blobs. Write a sha256 idx
-    file
- 5. clean up: remove the SHA-1 based pack file, index, and
-    topologically sorted list obtained from the server in steps 1
-@@ -388,16 +385,16 @@ send-pack.
- 
- Signed Commits
- ~~~~~~~~~~~~~~
--We add a new field "gpgsig-newhash" to the commit object format to allow
-+We add a new field "gpgsig-sha256" to the commit object format to allow
- signing commits without relying on SHA-1. It is similar to the
--existing "gpgsig" field. Its signed payload is the newhash-content of the
--commit object with any "gpgsig" and "gpgsig-newhash" fields removed.
-+existing "gpgsig" field. Its signed payload is the sha256-content of the
-+commit object with any "gpgsig" and "gpgsig-sha256" fields removed.
- 
- This means commits can be signed
- 1. using SHA-1 only, as in existing signed commit objects
--2. using both SHA-1 and NewHash, by using both gpgsig-newhash and gpgsig
-+2. using both SHA-1 and SHA-256, by using both gpgsig-sha256 and gpgsig
-    fields.
--3. using only NewHash, by only using the gpgsig-newhash field.
-+3. using only SHA-256, by only using the gpgsig-sha256 field.
- 
- Old versions of "git verify-commit" can verify the gpgsig signature in
- cases (1) and (2) without modifications and view case (3) as an
-@@ -405,24 +402,24 @@ ordinary unsigned commit.
- 
- Signed Tags
- ~~~~~~~~~~~
--We add a new field "gpgsig-newhash" to the tag object format to allow
-+We add a new field "gpgsig-sha256" to the tag object format to allow
- signing tags without relying on SHA-1. Its signed payload is the
--newhash-content of the tag with its gpgsig-newhash field and "-----BEGIN PGP
-+sha256-content of the tag with its gpgsig-sha256 field and "-----BEGIN PGP
- SIGNATURE-----" delimited in-body signature removed.
- 
- This means tags can be signed
- 1. using SHA-1 only, as in existing signed tag objects
--2. using both SHA-1 and NewHash, by using gpgsig-newhash and an in-body
-+2. using both SHA-1 and SHA-256, by using gpgsig-sha256 and an in-body
-    signature.
--3. using only NewHash, by only using the gpgsig-newhash field.
-+3. using only SHA-256, by only using the gpgsig-sha256 field.
- 
- Mergetag embedding
- ~~~~~~~~~~~~~~~~~~
- The mergetag field in the sha1-content of a commit contains the
- sha1-content of a tag that was merged by that commit.
- 
--The mergetag field in the newhash-content of the same commit contains the
--newhash-content of the same tag.
-+The mergetag field in the sha256-content of the same commit contains the
-+sha256-content of the same tag.
- 
- Submodules
- ~~~~~~~~~~
-@@ -497,7 +494,7 @@ Caveats
- -------
- Invalid objects
- ~~~~~~~~~~~~~~~
--The conversion from sha1-content to newhash-content retains any
-+The conversion from sha1-content to sha256-content retains any
- brokenness in the original object (e.g., tree entry modes encoded with
- leading 0, tree objects whose paths are not sorted correctly, and
- commit objects without an author or committer). This is a deliberate
-@@ -516,7 +513,7 @@ allow lifting this restriction.
- 
- Alternates
- ~~~~~~~~~~
--For the same reason, a newhash repository cannot borrow objects from a
-+For the same reason, a sha256 repository cannot borrow objects from a
- sha1 repository using objects/info/alternates or
- $GIT_ALTERNATE_OBJECT_REPOSITORIES.
- 
-@@ -524,20 +521,20 @@ git notes
- ~~~~~~~~~
- The "git notes" tool annotates objects using their sha1-name as key.
- This design does not describe a way to migrate notes trees to use
--newhash-names. That migration is expected to happen separately (for
-+sha256-names. That migration is expected to happen separately (for
- example using a file at the root of the notes tree to describe which
- hash it uses).
- 
- Server-side cost
- ~~~~~~~~~~~~~~~~
--Until Git protocol gains NewHash support, using NewHash based storage
-+Until Git protocol gains SHA-256 support, using SHA-256 based storage
- on public-facing Git servers is strongly discouraged. Once Git
--protocol gains NewHash support, NewHash based servers are likely not
-+protocol gains SHA-256 support, SHA-256 based servers are likely not
- to support SHA-1 compatibility, to avoid what may be a very expensive
- hash reencode during clone and to encourage peers to modernize.
- 
- The design described here allows fetches by SHA-1 clients of a
--personal NewHash repository because it's not much more difficult than
-+personal SHA-256 repository because it's not much more difficult than
- allowing pushes from that repository. This support needs to be guarded
- by a configuration option --- servers like git.kernel.org that serve a
- large number of clients would not be expected to bear that cost.
-@@ -547,7 +544,7 @@ Meaning of signatures
- The signed payload for signed commits and tags does not explicitly
- name the hash used to identify objects. If some day Git adopts a new
- hash function with the same length as the current SHA-1 (40
--hexadecimal digit) or NewHash (64 hexadecimal digit) objects then the
-+hexadecimal digit) or SHA-256 (64 hexadecimal digit) objects then the
- intent behind the PGP signed payload in an object signature is
- unclear:
- 
-@@ -562,7 +559,7 @@ Does this mean Git v2.12.0 is the commit with sha1-name
- e7e07d5a4fcc2a203d9873968ad3e6bd4d7419d7 or the commit with
- new-40-digit-hash-name e7e07d5a4fcc2a203d9873968ad3e6bd4d7419d7?
- 
--Fortunately NewHash and SHA-1 have different lengths. If Git starts
-+Fortunately SHA-256 and SHA-1 have different lengths. If Git starts
- using another hash with the same length to name objects, then it will
- need to change the format of signed payloads using that hash to
- address this issue.
-@@ -574,24 +571,24 @@ supports four different modes of operation:
- 
-  1. ("dark launch") Treat object names input by the user as SHA-1 and
-     convert any object names written to output to SHA-1, but store
--    objects using NewHash.  This allows users to test the code with no
-+    objects using SHA-256.  This allows users to test the code with no
-     visible behavior change except for performance.  This allows
-     allows running even tests that assume the SHA-1 hash function, to
-     sanity-check the behavior of the new mode.
- 
-- 2. ("early transition") Allow both SHA-1 and NewHash object names in
-+ 2. ("early transition") Allow both SHA-1 and SHA-256 object names in
-     input. Any object names written to output use SHA-1. This allows
-     users to continue to make use of SHA-1 to communicate with peers
-     (e.g. by email) that have not migrated yet and prepares for mode 3.
- 
-- 3. ("late transition") Allow both SHA-1 and NewHash object names in
--    input. Any object names written to output use NewHash. In this
-+ 3. ("late transition") Allow both SHA-1 and SHA-256 object names in
-+    input. Any object names written to output use SHA-256. In this
-     mode, users are using a more secure object naming method by
-     default.  The disruption is minimal as long as most of their peers
-     are in mode 2 or mode 3.
- 
-  4. ("post-transition") Treat object names input by the user as
--    NewHash and write output using NewHash. This is safer than mode 3
-+    SHA-256 and write output using SHA-256. This is safer than mode 3
-     because there is less risk that input is incorrectly interpreted
-     using the wrong hash function.
- 
-@@ -601,18 +598,22 @@ The user can also explicitly specify which format to use for a
- particular revision specifier and for output, overriding the mode. For
- example:
- 
--git --output-format=sha1 log abac87a^{sha1}..f787cac^{newhash}
-+git --output-format=sha1 log abac87a^{sha1}..f787cac^{sha256}
- 
--Selection of a New Hash
-------------------------
-+Choice of Hash
-+--------------
- In early 2005, around the time that Git was written,  Xiaoyun Wang,
- Yiqun Lisa Yin, and Hongbo Yu announced an attack finding SHA-1
- collisions in 2^69 operations. In August they published details.
- Luckily, no practical demonstrations of a collision in full SHA-1 were
- published until 10 years later, in 2017.
- 
--The hash function NewHash to replace SHA-1 should be stronger than
--SHA-1 was: we would like it to be trustworthy and useful in practice
-+Git v2.13.0 and later subsequently moved to a hardened SHA-1
-+implementation by default that mitigates the SHAttered attack, but
-+SHA-1 is still believed to be weak.
++Hook for submit
++~~~~~~~~~~~~~~~
++Hook `p4-pre-submit` is executed if it exists and is executable.
++The hook takes no parameter and nothing from standard input. Exiting with
++non-zero status from this script prevents `git-p4 submit` from launching.
++So nothing is touched when it exits with non-zero status.
 +
-+The hash to replace this hardened SHA-1 should be stronger than SHA-1
-+was: we would like it to be trustworthy and useful in practice
- for at least 10 years.
++One usage scenario is to run unit tests in the hook.
++
++By default the hooks directory is `$GIT_DIR/hooks`, but that can be changed.
++See githooks(5) manpage for details about hooks.
++
+ Rebase options
+ ~~~~~~~~~~~~~~
+ These options can be used to modify 'git p4 rebase' behavior.
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index e3c283a17..22fcabbe2 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -485,6 +485,13 @@ The exit status determines whether git will use the data from the
+ hook to limit its search.  On error, it will fall back to verifying
+ all files and folders.
  
- Some other relevant properties:
-@@ -620,8 +621,8 @@ Some other relevant properties:
- 1. A 256-bit hash (long enough to match common security practice; not
-    excessively long to hurt performance and disk usage).
++p4-pre-submit
++~~~~~~~~~~~~~
++
++This hook is invoked by `git-p4 submit`. It takes no parameter and nothing
++from standard input. Exiting with non-zero status from this script prevent
++`git-p4 submit` from launching. Run `git-p4 submit --help` for details.
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+diff --git a/git-p4.py b/git-p4.py
+index b449db1cc..f147a2d2f 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -1494,7 +1494,17 @@ def __init__(self):
+                 optparse.make_option("--disable-p4sync", dest="disable_p4sync", action="store_true",
+                                      help="Skip Perforce sync of p4/master after submit or shelve"),
+         ]
+-        self.description = "Submit changes from git to the perforce depot."
++        self.description = """Submit changes from git to the perforce depot.\n
++    Hook `p4-pre-submit` is executed if it exists and is executable.
++    The hook takes no parameter and nothing from standard input. Exiting with
++    non-zero status from this script prevents `git-p4 submit` from launching.
++    So nothing is touched when it exits with non-zero status.
++
++    One usage scenario is to run unit tests in the hook.
++
++    By default the hooks directory is `$GIT_DIR/hooks`, but that can be changed.
++    See githooks(5) manpage for details about hooks."""
++
+         self.usage += " [name of git branch to submit into perforce depot]"
+         self.origin = ""
+         self.detectRenames = False
+@@ -2303,6 +2313,15 @@ def run(self, args):
+             sys.exit("number of commits (%d) must match number of shelved changelist (%d)" %
+                      (len(commits), num_shelves))
  
--2. High quality implementations should be widely available (e.g. in
--   OpenSSL).
-+2. High quality implementations should be widely available (e.g., in
-+   OpenSSL and Apple CommonCrypto).
++        hooks_path = gitConfig("core.hooksPath")
++        if len(hooks_path) > 0:
++            hook_file = os.path.join(hooks_path, "p4-pre-submit")
++        else:
++            hook_file = os.path.join(read_pipe("git rev-parse --git-dir").strip(), "hooks", "p4-pre-submit")
++
++        if os.path.isfile(hook_file) and os.access(hook_file, os.X_OK) and subprocess.call([hook_file]) != 0:
++            sys.exit(1)
++
+         #
+         # Apply the commits, one at a time.  On failure, ask if should
+         # continue to try the rest of the patches, or quit.
+diff --git a/t/t9800-git-p4-basic.sh b/t/t9800-git-p4-basic.sh
+index 4849edc4e..8457ff617 100755
+--- a/t/t9800-git-p4-basic.sh
++++ b/t/t9800-git-p4-basic.sh
+@@ -261,6 +261,32 @@ test_expect_success 'unresolvable host in P4PORT should display error' '
+ 	)
+ '
  
- 3. The hash function's properties should match Git's needs (e.g. Git
-    requires collision and 2nd preimage resistance and does not require
-@@ -630,14 +631,15 @@ Some other relevant properties:
- 4. As a tiebreaker, the hash should be fast to compute (fortunately
-    many contenders are faster than SHA-1).
- 
--Some hashes under consideration are SHA-256, SHA-512/256, SHA-256x16,
--K12, and BLAKE2bp-256.
-+We choose SHA-256. See the thread starting at
-+<20180609224913.GC38834@genre.crustytoothpaste.net> for the discussion
-+(https://public-inbox.org/git/20180609224913.GC38834@genre.crustytoothpaste.net/)
- 
- Transition plan
- ---------------
- Some initial steps can be implemented independently of one another:
- - adding a hash function API (vtable)
--- teaching fsck to tolerate the gpgsig-newhash field
-+- teaching fsck to tolerate the gpgsig-sha256 field
- - excluding gpgsig-* from the fields copied by "git commit --amend"
- - annotating tests that depend on SHA-1 values with a SHA1 test
-   prerequisite
-@@ -664,7 +666,7 @@ Next comes introduction of compatObjectFormat:
- - adding appropriate index entries when adding a new object to the
-   object store
- - --output-format option
--- ^{sha1} and ^{newhash} revision notation
-+- ^{sha1} and ^{sha256} revision notation
- - configuration to specify default input and output format (see
-   "Object names on the command line" above)
- 
-@@ -672,7 +674,7 @@ The next step is supporting fetches and pushes to SHA-1 repositories:
- - allow pushes to a repository using the compat format
- - generate a topologically sorted list of the SHA-1 names of fetched
-   objects
--- convert the fetched packfile to newhash format and generate an idx
-+- convert the fetched packfile to sha256 format and generate an idx
-   file
- - re-sort to match the order of objects in the fetched packfile
- 
-@@ -680,30 +682,30 @@ The infrastructure supporting fetch also allows converting an existing
- repository. In converted repositories and new clones, end users can
- gain support for the new hash function without any visible change in
- behavior (see "dark launch" in the "Object names on the command line"
--section). In particular this allows users to verify NewHash signatures
-+section). In particular this allows users to verify SHA-256 signatures
- on objects in the repository, and it should ensure the transition code
- is stable in production in preparation for using it more widely.
- 
- Over time projects would encourage their users to adopt the "early
- transition" and then "late transition" modes to take advantage of the
--new, more futureproof NewHash object names.
-+new, more futureproof SHA-256 object names.
- 
- When objectFormat and compatObjectFormat are both set, commands
--generating signatures would generate both SHA-1 and NewHash signatures
-+generating signatures would generate both SHA-1 and SHA-256 signatures
- by default to support both new and old users.
- 
--In projects using NewHash heavily, users could be encouraged to adopt
-+In projects using SHA-256 heavily, users could be encouraged to adopt
- the "post-transition" mode to avoid accidentally making implicit use
- of SHA-1 object names.
- 
- Once a critical mass of users have upgraded to a version of Git that
--can verify NewHash signatures and have converted their existing
-+can verify SHA-256 signatures and have converted their existing
- repositories to support verifying them, we can add support for a
--setting to generate only NewHash signatures. This is expected to be at
-+setting to generate only SHA-256 signatures. This is expected to be at
- least a year later.
- 
- That is also a good moment to advertise the ability to convert
--repositories to use NewHash only, stripping out all SHA-1 related
-+repositories to use SHA-256 only, stripping out all SHA-1 related
- metadata. This improves performance by eliminating translation
- overhead and security by avoiding the possibility of accidentally
- relying on the safety of SHA-1.
-@@ -742,16 +744,16 @@ using the old hash function.
- 
- Signed objects with multiple hashes
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--Instead of introducing the gpgsig-newhash field in commit and tag objects
--for newhash-content based signatures, an earlier version of this design
--added "hash newhash <newhash-name>" fields to strengthen the existing
-+Instead of introducing the gpgsig-sha256 field in commit and tag objects
-+for sha256-content based signatures, an earlier version of this design
-+added "hash sha256 <sha256-name>" fields to strengthen the existing
- sha1-content based signatures.
- 
- In other words, a single signature was used to attest to the object
- content using both hash functions. This had some advantages:
- * Using one signature instead of two speeds up the signing process.
- * Having one signed payload with both hashes allows the signer to
--  attest to the sha1-name and newhash-name referring to the same object.
-+  attest to the sha1-name and sha256-name referring to the same object.
- * All users consume the same signature. Broken signatures are likely
-   to be detected quickly using current versions of git.
- 
-@@ -760,11 +762,11 @@ However, it also came with disadvantages:
-   objects it references, even after the transition is complete and
-   translation table is no longer needed for anything else. To support
-   this, the design added fields such as "hash sha1 tree <sha1-name>"
--  and "hash sha1 parent <sha1-name>" to the newhash-content of a signed
-+  and "hash sha1 parent <sha1-name>" to the sha256-content of a signed
-   commit, complicating the conversion process.
- * Allowing signed objects without a sha1 (for after the transition is
-   complete) complicated the design further, requiring a "nohash sha1"
--  field to suppress including "hash sha1" fields in the newhash-content
-+  field to suppress including "hash sha1" fields in the sha256-content
-   and signed payload.
- 
- Lazily populated translation table
-@@ -772,7 +774,7 @@ Lazily populated translation table
- Some of the work of building the translation table could be deferred to
- push time, but that would significantly complicate and slow down pushes.
- Calculating the sha1-name at object creation time at the same time it is
--being streamed to disk and having its newhash-name calculated should be
-+being streamed to disk and having its sha256-name calculated should be
- an acceptable cost.
- 
- Document History
++# Test following scenarios:
++#   - Without hook ".git/hooks/p4-pre-submit", submit should continue
++#   - With hook returning 0, submit should continue
++#   - With hook returning 1, submit should abort
++test_expect_success 'run hook p4-pre-submit before submit' '
++	test_when_finished cleanup_git &&
++	git p4 clone --dest="$git" //depot &&
++	(
++		cd "$git" &&
++		echo "hello world" >hello.txt &&
++		git add hello.txt &&
++		git commit -m "add hello.txt" &&
++		git config git-p4.skipSubmitEdit true &&
++		git p4 submit --dry-run | grep "Would apply" &&
++		mkdir -p .git/hooks &&
++		write_script .git/hooks/p4-pre-submit <<-\EOF &&
++		exit 0
++		EOF
++		git p4 submit --dry-run >out &&  grep "Would apply" out &&
++		write_script .git/hooks/p4-pre-submit <<-\EOF &&
++		exit 1
++		EOF
++		git p4 submit --dry-run >out && grep "Would apply" out || echo "Abort submit"
++	)
++'
++
+ test_expect_success 'submit from detached head' '
+ 	test_when_finished cleanup_git &&
+ 	git p4 clone --dest="$git" //depot &&
 -- 
-2.18.0.345.g5c9ce644c3
+2.18.0
 
