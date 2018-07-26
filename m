@@ -2,407 +2,439 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIM_INVALID shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 802251F597
-	for <e@80x24.org>; Thu, 26 Jul 2018 14:14:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 490E31F597
+	for <e@80x24.org>; Thu, 26 Jul 2018 14:39:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730445AbeGZPb0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jul 2018 11:31:26 -0400
-Received: from mout.gmx.net ([212.227.15.15]:58841 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729892AbeGZPbZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jul 2018 11:31:25 -0400
-Received: from [192.168.0.129] ([37.201.195.94]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MRGPP-1fZ2GL26E3-00UdJs; Thu, 26
- Jul 2018 16:14:18 +0200
-Date:   Thu, 26 Jul 2018 16:14:17 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jonathan Tan <jonathantanmy@google.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH] negotiator/skipping: skip commits during fetch
-In-Reply-To: <nycvar.QRO.7.76.6.1807261233300.71@tvgsbejvaqbjf.bet>
-Message-ID: <nycvar.QRO.7.76.6.1807261613420.71@tvgsbejvaqbjf.bet>
-References: <20180716184401.168576-1-jonathantanmy@google.com> <nycvar.QRO.7.76.6.1807261233300.71@tvgsbejvaqbjf.bet>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1730363AbeGZP4n (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jul 2018 11:56:43 -0400
+Received: from mail-yw0-f193.google.com ([209.85.161.193]:45321 "EHLO
+        mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730030AbeGZP4m (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jul 2018 11:56:42 -0400
+Received: by mail-yw0-f193.google.com with SMTP id 139-v6so649410ywg.12
+        for <git@vger.kernel.org>; Thu, 26 Jul 2018 07:39:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=70LQcyHQ9ua6qp2a96C03BHLH4iKvojcszMD2lVKM/w=;
+        b=QvLmUG7hmhP2Bxc18l/T53lKyEYpS8c7fHzw7OtetbSsroGVKZTu/k85WU/eb+879/
+         t5aA5RUNRgRJWt7t2loLwlfOZjL6WvDKnqmGI7b6y9h+z25TTIt6bCycTu0bmlr8Ru0A
+         f8qrtDcayDQJueFu3RcQ8co3pbycMALo2pPOTkuewPJeVHC/0eLL3xQ4td3R5tPGH7NS
+         DhPItw1X2TPnjyB/PDzPaFI+QvjmQP6jgnv4gK41ICcbj+wzMJ0T6i+KWVsH7dVPB9v+
+         AZEpvbxTcSdeK0Lac1MMK9V8TbZWqIzOUimuhSWw9KP0XtIfzUvg5V4RPC3+WewAnWb+
+         dNXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=70LQcyHQ9ua6qp2a96C03BHLH4iKvojcszMD2lVKM/w=;
+        b=eG58kbcxHXKPHDI6JMOaGMz4Hi2mB95OgdsuXd+yS5xmNLw8KQE6VMLmqHItwBDgqr
+         t8QVJb5AOaLaDumMdJTi3eaRKHkzft8WgZ9FIgkyBJIPFYgriug++6O2Z096uueIDoOr
+         lrlQ9cHTPKI6hOc0BjpwyBMk1X99vQeKl7KgJnbGg0WOUMtmC7TvF+k3CrNGhmbDoJB2
+         +3AfBRS7R7kW3rcPh04GEE5PmDbLY2nWuHq3n2NzWfqAug4PFTlNvP7lGHumFBpZtwss
+         5DcA936Vnaa8yx0awr/d1G7a5ZB2tb8IqVfrtFeIa0F1Yvs6rpi0PKrCW0sCqXBRAW9T
+         7s3Q==
+X-Gm-Message-State: AOUpUlFlFuXD7z9Y0q9vUWLDlE+oVNV7dbVm06Z7JjuobQgLkDe0C/+1
+        l1cQrUq3tv+LQA3Tzyj6fiZxlZYk
+X-Google-Smtp-Source: AAOMgpcDPzg7+7QTpAEkRLQlhgRJj9FhS/BxKYy37jwW64xQOUFox8Z9D0qq2Id30cqsG3vateAaGQ==
+X-Received: by 2002:a81:4a07:: with SMTP id x7-v6mr1039899ywa.281.1532615972237;
+        Thu, 26 Jul 2018 07:39:32 -0700 (PDT)
+Received: from localhost ([2620:10d:c091:200::d338])
+        by smtp.gmail.com with ESMTPSA id k9-v6sm1240462ywh.33.2018.07.26.07.39.31
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 26 Jul 2018 07:39:31 -0700 (PDT)
+Date:   Thu, 26 Jul 2018 07:39:30 -0700
+From:   Tejun Heo <tj@kernel.org>
+To:     git@vger.kernel.org
+Cc:     kernel-team@fb.com
+Subject: [PATCH v2] name_rev: add support for --cherry-picks
+Message-ID: <20180726143930.GW1934745@devbig577.frc2.facebook.com>
+References: <20180726121346.GT1934745@devbig577.frc2.facebook.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:RXxiBDGpa9PKoaMr6Oz1n4vTRDoZGIZWXPK3mjX2DKkHlqZXyiM
- d5Bmm0//UmmwEGjPtlhG75PeMlFoGMH9CAI+6oU6afn3euHfAWvKJenI0hXweYFhYGMtZ25
- nAWQMHNqqH6Vl8SQec6H0gh7p8PjYDcSHytfJKZZTAq3bXz+qCu5ut/HPMOoEz2QYBFZ8aL
- PgYCZK3kL36+ippVLrwbw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:XaeC6Cdc0wg=:UcqNKYRvZDhIwakKR4nvke
- D1adNAYyNOojWvG1yf7UqGAYHSU0nga9yQywwSprzpUit/nn3Cp2MPkuk6/aIz43xeeMJEwY0
- LCJ0mpjrdhbGj8va+YZ5VbMdzxy/lofGAfqHXMGw8YCImSpE1WX6XPWr+7fLxwM+p14X8gNM8
- +hu7in4iDBnmvTfAr3cKPyGdQbgZUF5aZpkVoCcYzVNP6DxkDvi0QaECopOZFfZdON3tIKNM4
- UigteikqZkZNYnz3W4ACTuMJ8YoBsB2hxUrG1VnqUqNrfzThsnAFybPiqMmFO/Ij6NDdkuOaH
- d8+yUgoBOZzKgcrCaDAGMSoZz4XgKWxRq82p1oqjjXLsWfJqIC8QEt/DIyob1cF5oCR86TbxN
- mypIvAWRq3Kv248G6pLtmWv9WhZaJL9FI/45glZ9foJdDAN2ZFLARolJU7kzN8FYk+DlbOPe+
- 6RhfMCBqa28al5GKZaM9fjEkNpzAmRHD5E0cjGFLmVcan1KTeu+/hd0ESl3fCRzC3rxGclid2
- RmWQy3l+Jznl2zS4JJeQYI42PhJmWFd5c8VMAM/0MKnJJuXvBv56muv8zC14AVDv6r+B0MABX
- yI30smJ52ZdrfJpycFbqePfFAwFVoMveYN3P/5tTWF4eqbke8h1VgbXrNn46TbLOBaRlBxQP/
- h9in8oe2N9hDDVWVfZOGTkpGKSzYZ0XwdW+J0ch34Tg10UV0SEw5qbPFjuA3+81KhpYnrgBsB
- yVR8E6XT/17NNMCrR5JMK+hxVorjVPOBGmUU/s5yw9iW5UcF3Y+c37pilbgKpZTUHmNMokmPG
- QNsjWCj
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180726121346.GT1934745@devbig577.frc2.facebook.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+From a6a88c3da252d69547ac8b463098fc4f4c03f322 Mon Sep 17 00:00:00 2001
+From: Tejun Heo <tj@kernel.org>
+Date: Thu, 26 Jul 2018 04:14:52 -0700
+Subject: [PATCH] name_rev: add support for --cherry-picks
 
-On Thu, 26 Jul 2018, Johannes Schindelin wrote:
+It's often useful to track cherry-picks of a given commit.  Add
+--cherry-picks support to git-name-rev.  When specified, name_rev also
+shows the commits cherry-picked from the listed target commits with
+indentations.
 
-> On Mon, 16 Jul 2018, Jonathan Tan wrote:
-> 
-> >  t/t5552-skipping-fetch-negotiator.sh | 179 +++++++++++++++++++
-> 
-> This test seems to be failing consistently in the recent `pu` builds:
-> 
-> https://git-for-windows.visualstudio.com/git/_build/results?buildId=14337&view=logs
+  $ git name-rev --cherry-picks 10f7ce0a0e524279f022
+  10f7ce0a0e524279f022 master~1
+    d433e3b4d5a19b3d29e2c8349fe88ceade5f6190 branch1
+      82cddd79f962de0bb1e7cdd95d48b48633335816 branch2
+    58a8d36b2532feb0a14b4fc2a50d587e64f38324 branch3
+    fa8b79edc5dfff21753c2ccfc1a1828336c4c070 branch4~1
 
-It now also causes `next` builds to fail:
+Note that branch2 is further indented because it's a nested cherry
+pick from d433e3b4d5a1.
 
-https://git-for-windows.visualstudio.com/git/_build/results?buildId=14345&view=logs
+"git-describe --contains" is a wrapper around git-name-rev.  Also add
+--cherry-picks support to git-describe.
 
-Please have a look,
-Dscho
+v2: - Remove a warning message for a malformed cherry-picked tag.
+      There isn't much user can do about it.
+    - Continue scanning cherry-pick tags until a working one is found
+      instead of aborting after trying the last one.  It might miss
+      nesting but still better to show than miss the commit entirely.
 
-> Could you have a look, please?
-> 
-> Ciao,
-> Dscho
-> 
-> P.S.: For your convenience, I will paste the last part of the output with
-> `-i -v -x` here:
-> 
-> -- snipsnap --
-> 2018-07-26T08:18:39.7864833Z expecting success: 
-> 2018-07-26T08:18:39.7868553Z 	rm -rf server client trace &&
-> 2018-07-26T08:18:39.7869403Z 	git init server &&
-> 2018-07-26T08:18:39.7869606Z 	test_commit -C server to_fetch &&
-> 2018-07-26T08:18:39.7870066Z 
-> 2018-07-26T08:18:39.7870281Z 	git init client &&
-> 2018-07-26T08:18:39.7870403Z 
-> 2018-07-26T08:18:39.7870579Z 	# 2 regular commits
-> 2018-07-26T08:18:39.7870779Z 	test_tick=2000000000 &&
-> 2018-07-26T08:18:39.7870943Z 	test_commit -C client c1 &&
-> 2018-07-26T08:18:39.7871103Z 	test_commit -C client c2 &&
-> 2018-07-26T08:18:39.7871228Z 
-> 2018-07-26T08:18:39.7871419Z 	# 4 old commits
-> 2018-07-26T08:18:39.7871575Z 	test_tick=1000000000 &&
-> 2018-07-26T08:18:39.7871734Z 	git -C client checkout c1 &&
-> 2018-07-26T08:18:39.7871916Z 	test_commit -C client old1 &&
-> 2018-07-26T08:18:39.7872081Z 	test_commit -C client old2 &&
-> 2018-07-26T08:18:39.7872396Z 	test_commit -C client old3 &&
-> 2018-07-26T08:18:39.7872598Z 	test_commit -C client old4 &&
-> 2018-07-26T08:18:39.7872743Z 
-> 2018-07-26T08:18:39.7872918Z 	# "c2" and "c1" are popped first, then "old4" to "old1". "old1" would
-> 2018-07-26T08:18:39.7873114Z 	# normally be skipped, but is treated as a commit without a parent here
-> 2018-07-26T08:18:39.7873329Z 	# and sent, because (due to clock skew) its only parent has already been
-> 2018-07-26T08:18:39.7873524Z 	# popped off the priority queue.
-> 2018-07-26T08:18:39.7873700Z 	test_config -C client fetch.negotiationalgorithm skipping &&
-> 2018-07-26T08:18:39.7873908Z 	GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch "$(pwd)/server" &&
-> 2018-07-26T08:18:39.7874091Z 	have_sent c2 c1 old4 old2 old1 &&
-> 2018-07-26T08:18:39.7874262Z 	have_not_sent old3
-> 2018-07-26T08:18:39.7874383Z 
-> 2018-07-26T08:18:39.8353323Z ++ rm -rf server client trace
-> 2018-07-26T08:18:40.3404166Z ++ git init server
-> 2018-07-26T08:18:40.3756394Z Initialized empty Git repository in D:/a/1/s/t/trash directory.t5552-skipping-fetch-negotiator/server/.git/
-> 2018-07-26T08:18:40.3769512Z ++ test_commit -C server to_fetch
-> 2018-07-26T08:18:40.3776271Z ++ notick=
-> 2018-07-26T08:18:40.3777103Z ++ signoff=
-> 2018-07-26T08:18:40.3777282Z ++ indir=
-> 2018-07-26T08:18:40.3777465Z ++ test 3 '!=' 0
-> 2018-07-26T08:18:40.3777648Z ++ case "$1" in
-> 2018-07-26T08:18:40.3777801Z ++ indir=server
-> 2018-07-26T08:18:40.3777948Z ++ shift
-> 2018-07-26T08:18:40.3778093Z ++ shift
-> 2018-07-26T08:18:40.3778493Z ++ test 1 '!=' 0
-> 2018-07-26T08:18:40.3778921Z ++ case "$1" in
-> 2018-07-26T08:18:40.3779072Z ++ break
-> 2018-07-26T08:18:40.3779241Z ++ indir=server/
-> 2018-07-26T08:18:40.3779431Z ++ file=to_fetch.t
-> 2018-07-26T08:18:40.3779603Z ++ echo to_fetch
-> 2018-07-26T08:18:40.3779923Z ++ git -C server/ add to_fetch.t
-> 2018-07-26T08:18:40.4072248Z ++ test -z ''
-> 2018-07-26T08:18:40.4072727Z ++ test_tick
-> 2018-07-26T08:18:40.4072948Z ++ test -z set
-> 2018-07-26T08:18:40.4073113Z ++ test_tick=1112913673
-> 2018-07-26T08:18:40.4073758Z ++ GIT_COMMITTER_DATE='1112913673 -0700'
-> 2018-07-26T08:18:40.4074001Z ++ GIT_AUTHOR_DATE='1112913673 -0700'
-> 2018-07-26T08:18:40.4074178Z ++ export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
-> 2018-07-26T08:18:40.4074357Z ++ git -C server/ commit -m to_fetch
-> 2018-07-26T08:18:40.4485364Z [master (root-commit) ff85695] to_fetch
-> 2018-07-26T08:18:40.4485997Z  Author: A U Thor <author@example.com>
-> 2018-07-26T08:18:40.4486201Z  1 file changed, 1 insertion(+)
-> 2018-07-26T08:18:40.4486414Z  create mode 100644 to_fetch.t
-> 2018-07-26T08:18:40.4499970Z ++ git -C server/ tag to_fetch
-> 2018-07-26T08:18:40.4809208Z ++ git init client
-> 2018-07-26T08:18:40.5139949Z Initialized empty Git repository in D:/a/1/s/t/trash directory.t5552-skipping-fetch-negotiator/client/.git/
-> 2018-07-26T08:18:40.5158270Z ++ test_tick=2000000000
-> 2018-07-26T08:18:40.5158466Z ++ test_commit -C client c1
-> 2018-07-26T08:18:40.5159077Z ++ notick=
-> 2018-07-26T08:18:40.5159492Z ++ signoff=
-> 2018-07-26T08:18:40.5159697Z ++ indir=
-> 2018-07-26T08:18:40.5159855Z ++ test 3 '!=' 0
-> 2018-07-26T08:18:40.5160010Z ++ case "$1" in
-> 2018-07-26T08:18:40.5160209Z ++ indir=client
-> 2018-07-26T08:18:40.5160362Z ++ shift
-> 2018-07-26T08:18:40.5160507Z ++ shift
-> 2018-07-26T08:18:40.5160657Z ++ test 1 '!=' 0
-> 2018-07-26T08:18:40.5160831Z ++ case "$1" in
-> 2018-07-26T08:18:40.5161289Z ++ break
-> 2018-07-26T08:18:40.5161582Z ++ indir=client/
-> 2018-07-26T08:18:40.5161764Z ++ file=c1.t
-> 2018-07-26T08:18:40.5161916Z ++ echo c1
-> 2018-07-26T08:18:40.5162231Z ++ git -C client/ add c1.t
-> 2018-07-26T08:18:40.5456318Z ++ test -z ''
-> 2018-07-26T08:18:40.5460548Z ++ test_tick
-> 2018-07-26T08:18:40.5461417Z ++ test -z set
-> 2018-07-26T08:18:40.5463657Z ++ test_tick=2000000060
-> 2018-07-26T08:18:40.5464369Z ++ GIT_COMMITTER_DATE='2000000060 -0700'
-> 2018-07-26T08:18:40.5464617Z ++ GIT_AUTHOR_DATE='2000000060 -0700'
-> 2018-07-26T08:18:40.5464805Z ++ export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
-> 2018-07-26T08:18:40.5464988Z ++ git -C client/ commit -m c1
-> 2018-07-26T08:18:40.5857440Z [master (root-commit) dc824fa] c1
-> 2018-07-26T08:18:40.5858031Z  Author: A U Thor <author@example.com>
-> 2018-07-26T08:18:40.5858251Z  1 file changed, 1 insertion(+)
-> 2018-07-26T08:18:40.5858451Z  create mode 100644 c1.t
-> 2018-07-26T08:18:40.5872839Z ++ git -C client/ tag c1
-> 2018-07-26T08:18:40.6174770Z ++ test_commit -C client c2
-> 2018-07-26T08:18:40.6175120Z ++ notick=
-> 2018-07-26T08:18:40.6175398Z ++ signoff=
-> 2018-07-26T08:18:40.6175583Z ++ indir=
-> 2018-07-26T08:18:40.6175737Z ++ test 3 '!=' 0
-> 2018-07-26T08:18:40.6175925Z ++ case "$1" in
-> 2018-07-26T08:18:40.6176079Z ++ indir=client
-> 2018-07-26T08:18:40.6176246Z ++ shift
-> 2018-07-26T08:18:40.6176415Z ++ shift
-> 2018-07-26T08:18:40.6176569Z ++ test 1 '!=' 0
-> 2018-07-26T08:18:40.6176738Z ++ case "$1" in
-> 2018-07-26T08:18:40.6176905Z ++ break
-> 2018-07-26T08:18:40.6177052Z ++ indir=client/
-> 2018-07-26T08:18:40.6177200Z ++ file=c2.t
-> 2018-07-26T08:18:40.6177369Z ++ echo c2
-> 2018-07-26T08:18:40.6177525Z ++ git -C client/ add c2.t
-> 2018-07-26T08:18:40.6474943Z ++ test -z ''
-> 2018-07-26T08:18:40.6479175Z ++ test_tick
-> 2018-07-26T08:18:40.6479861Z ++ test -z set
-> 2018-07-26T08:18:40.6482344Z ++ test_tick=2000000120
-> 2018-07-26T08:18:40.6483064Z ++ GIT_COMMITTER_DATE='2000000120 -0700'
-> 2018-07-26T08:18:40.6483243Z ++ GIT_AUTHOR_DATE='2000000120 -0700'
-> 2018-07-26T08:18:40.6483412Z ++ export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
-> 2018-07-26T08:18:40.6483597Z ++ git -C client/ commit -m c2
-> 2018-07-26T08:18:40.6883597Z [master 9ab4692] c2
-> 2018-07-26T08:18:40.6884552Z  Author: A U Thor <author@example.com>
-> 2018-07-26T08:18:40.6884902Z  1 file changed, 1 insertion(+)
-> 2018-07-26T08:18:40.6885078Z  create mode 100644 c2.t
-> 2018-07-26T08:18:40.6898418Z ++ git -C client/ tag c2
-> 2018-07-26T08:18:40.7214970Z ++ test_tick=1000000000
-> 2018-07-26T08:18:40.7215737Z ++ git -C client checkout c1
-> 2018-07-26T08:18:40.7537971Z Note: checking out 'c1'.
-> 2018-07-26T08:18:40.7538294Z 
-> 2018-07-26T08:18:40.7538485Z You are in 'detached HEAD' state. You can look around, make experimental
-> 2018-07-26T08:18:40.7538901Z changes and commit them, and you can discard any commits you make in this
-> 2018-07-26T08:18:40.7539153Z state without impacting any branches by performing another checkout.
-> 2018-07-26T08:18:40.7539288Z 
-> 2018-07-26T08:18:40.7539455Z If you want to create a new branch to retain commits you create, you may
-> 2018-07-26T08:18:40.7539646Z do so (now or later) by using -b with the checkout command again. Example:
-> 2018-07-26T08:18:40.7539799Z 
-> 2018-07-26T08:18:40.7539979Z   git checkout -b <new-branch-name>
-> 2018-07-26T08:18:40.7540099Z 
-> 2018-07-26T08:18:40.7540264Z HEAD is now at dc824fa c1
-> 2018-07-26T08:18:40.7552832Z ++ test_commit -C client old1
-> 2018-07-26T08:18:40.7559118Z ++ notick=
-> 2018-07-26T08:18:40.7559789Z ++ signoff=
-> 2018-07-26T08:18:40.7559966Z ++ indir=
-> 2018-07-26T08:18:40.7560066Z ++ test 3 '!=' 0
-> 2018-07-26T08:18:40.7565193Z ++ case "$1" in
-> 2018-07-26T08:18:40.7565286Z ++ indir=client
-> 2018-07-26T08:18:40.7565373Z ++ shift
-> 2018-07-26T08:18:40.7565456Z ++ shift
-> 2018-07-26T08:18:40.7566662Z ++ test 1 '!=' 0
-> 2018-07-26T08:18:40.7566796Z ++ case "$1" in
-> 2018-07-26T08:18:40.7566879Z ++ break
-> 2018-07-26T08:18:40.7566961Z ++ indir=client/
-> 2018-07-26T08:18:40.7567066Z ++ file=old1.t
-> 2018-07-26T08:18:40.7567150Z ++ echo old1
-> 2018-07-26T08:18:40.7567238Z ++ git -C client/ add old1.t
-> 2018-07-26T08:18:40.7962371Z ++ test -z ''
-> 2018-07-26T08:18:40.7962668Z ++ test_tick
-> 2018-07-26T08:18:40.7963247Z ++ test -z set
-> 2018-07-26T08:18:40.7963453Z ++ test_tick=1000000060
-> 2018-07-26T08:18:40.7963649Z ++ GIT_COMMITTER_DATE='1000000060 -0700'
-> 2018-07-26T08:18:40.7963832Z ++ GIT_AUTHOR_DATE='1000000060 -0700'
-> 2018-07-26T08:18:40.7964000Z ++ export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
-> 2018-07-26T08:18:40.7964164Z ++ git -C client/ commit -m old1
-> 2018-07-26T08:18:40.8356576Z [detached HEAD e9a2c09] old1
-> 2018-07-26T08:18:40.8357378Z  Author: A U Thor <author@example.com>
-> 2018-07-26T08:18:40.8357554Z  1 file changed, 1 insertion(+)
-> 2018-07-26T08:18:40.8357652Z  create mode 100644 old1.t
-> 2018-07-26T08:18:40.8372002Z ++ git -C client/ tag old1
-> 2018-07-26T08:18:40.8671359Z ++ test_commit -C client old2
-> 2018-07-26T08:18:40.8676749Z ++ notick=
-> 2018-07-26T08:18:40.8677398Z ++ signoff=
-> 2018-07-26T08:18:40.8679262Z ++ indir=
-> 2018-07-26T08:18:40.8679957Z ++ test 3 '!=' 0
-> 2018-07-26T08:18:40.8680150Z ++ case "$1" in
-> 2018-07-26T08:18:40.8680305Z ++ indir=client
-> 2018-07-26T08:18:40.8680447Z ++ shift
-> 2018-07-26T08:18:40.8680587Z ++ shift
-> 2018-07-26T08:18:40.8680798Z ++ test 1 '!=' 0
-> 2018-07-26T08:18:40.8680949Z ++ case "$1" in
-> 2018-07-26T08:18:40.8681143Z ++ break
-> 2018-07-26T08:18:40.8681311Z ++ indir=client/
-> 2018-07-26T08:18:40.8681458Z ++ file=old2.t
-> 2018-07-26T08:18:40.8681604Z ++ echo old2
-> 2018-07-26T08:18:40.8681789Z ++ git -C client/ add old2.t
-> 2018-07-26T08:18:40.8990053Z ++ test -z ''
-> 2018-07-26T08:18:40.8990392Z ++ test_tick
-> 2018-07-26T08:18:40.8990953Z ++ test -z set
-> 2018-07-26T08:18:40.8991246Z ++ test_tick=1000000120
-> 2018-07-26T08:18:40.8991421Z ++ GIT_COMMITTER_DATE='1000000120 -0700'
-> 2018-07-26T08:18:40.8991585Z ++ GIT_AUTHOR_DATE='1000000120 -0700'
-> 2018-07-26T08:18:40.8991771Z ++ export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
-> 2018-07-26T08:18:40.8991936Z ++ git -C client/ commit -m old2
-> 2018-07-26T08:18:40.9402744Z [detached HEAD 41bd8dc] old2
-> 2018-07-26T08:18:40.9403286Z  Author: A U Thor <author@example.com>
-> 2018-07-26T08:18:40.9403510Z  1 file changed, 1 insertion(+)
-> 2018-07-26T08:18:40.9403678Z  create mode 100644 old2.t
-> 2018-07-26T08:18:40.9418122Z ++ git -C client/ tag old2
-> 2018-07-26T08:18:40.9736807Z ++ test_commit -C client old3
-> 2018-07-26T08:18:40.9737058Z ++ notick=
-> 2018-07-26T08:18:40.9737152Z ++ signoff=
-> 2018-07-26T08:18:40.9737238Z ++ indir=
-> 2018-07-26T08:18:40.9737327Z ++ test 3 '!=' 0
-> 2018-07-26T08:18:40.9737600Z ++ case "$1" in
-> 2018-07-26T08:18:40.9737690Z ++ indir=client
-> 2018-07-26T08:18:40.9737776Z ++ shift
-> 2018-07-26T08:18:40.9737860Z ++ shift
-> 2018-07-26T08:18:40.9737964Z ++ test 1 '!=' 0
-> 2018-07-26T08:18:40.9738054Z ++ case "$1" in
-> 2018-07-26T08:18:40.9738140Z ++ break
-> 2018-07-26T08:18:40.9738248Z ++ indir=client/
-> 2018-07-26T08:18:40.9738338Z ++ file=old3.t
-> 2018-07-26T08:18:40.9738445Z ++ echo old3
-> 2018-07-26T08:18:40.9738540Z ++ git -C client/ add old3.t
-> 2018-07-26T08:18:41.0035565Z ++ test -z ''
-> 2018-07-26T08:18:41.0036056Z ++ test_tick
-> 2018-07-26T08:18:41.0036299Z ++ test -z set
-> 2018-07-26T08:18:41.0036467Z ++ test_tick=1000000180
-> 2018-07-26T08:18:41.0036638Z ++ GIT_COMMITTER_DATE='1000000180 -0700'
-> 2018-07-26T08:18:41.0037189Z ++ GIT_AUTHOR_DATE='1000000180 -0700'
-> 2018-07-26T08:18:41.0037403Z ++ export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
-> 2018-07-26T08:18:41.0037574Z ++ git -C client/ commit -m old3
-> 2018-07-26T08:18:41.0429238Z [detached HEAD 4ff0db5] old3
-> 2018-07-26T08:18:41.0429619Z  Author: A U Thor <author@example.com>
-> 2018-07-26T08:18:41.0429799Z  1 file changed, 1 insertion(+)
-> 2018-07-26T08:18:41.0429965Z  create mode 100644 old3.t
-> 2018-07-26T08:18:41.0443795Z ++ git -C client/ tag old3
-> 2018-07-26T08:18:41.0752553Z ++ test_commit -C client old4
-> 2018-07-26T08:18:41.0752824Z ++ notick=
-> 2018-07-26T08:18:41.0752936Z ++ signoff=
-> 2018-07-26T08:18:41.0753905Z ++ indir=
-> 2018-07-26T08:18:41.0754193Z ++ test 3 '!=' 0
-> 2018-07-26T08:18:41.0754374Z ++ case "$1" in
-> 2018-07-26T08:18:41.0754531Z ++ indir=client
-> 2018-07-26T08:18:41.0754682Z ++ shift
-> 2018-07-26T08:18:41.0754828Z ++ shift
-> 2018-07-26T08:18:41.0755007Z ++ test 1 '!=' 0
-> 2018-07-26T08:18:41.0755162Z ++ case "$1" in
-> 2018-07-26T08:18:41.0755340Z ++ break
-> 2018-07-26T08:18:41.0755491Z ++ indir=client/
-> 2018-07-26T08:18:41.0755664Z ++ file=old4.t
-> 2018-07-26T08:18:41.0755814Z ++ echo old4
-> 2018-07-26T08:18:41.0755971Z ++ git -C client/ add old4.t
-> 2018-07-26T08:18:41.1064316Z ++ test -z ''
-> 2018-07-26T08:18:41.1064885Z ++ test_tick
-> 2018-07-26T08:18:41.1065169Z ++ test -z set
-> 2018-07-26T08:18:41.1065432Z ++ test_tick=1000000240
-> 2018-07-26T08:18:41.1065637Z ++ GIT_COMMITTER_DATE='1000000240 -0700'
-> 2018-07-26T08:18:41.1065820Z ++ GIT_AUTHOR_DATE='1000000240 -0700'
-> 2018-07-26T08:18:41.1066008Z ++ export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
-> 2018-07-26T08:18:41.1066212Z ++ git -C client/ commit -m old4
-> 2018-07-26T08:18:41.1488203Z [detached HEAD caef059] old4
-> 2018-07-26T08:18:41.1488670Z  Author: A U Thor <author@example.com>
-> 2018-07-26T08:18:41.1489153Z  1 file changed, 1 insertion(+)
-> 2018-07-26T08:18:41.1489370Z  create mode 100644 old4.t
-> 2018-07-26T08:18:41.1502887Z ++ git -C client/ tag old4
-> 2018-07-26T08:18:41.1824546Z ++ test_config -C client fetch.negotiationalgorithm skipping
-> 2018-07-26T08:18:41.1825670Z ++ config_dir=
-> 2018-07-26T08:18:41.1826072Z ++ test -C = -C
-> 2018-07-26T08:18:41.1826299Z ++ shift
-> 2018-07-26T08:18:41.1826528Z ++ config_dir=client
-> 2018-07-26T08:18:41.1826809Z ++ shift
-> 2018-07-26T08:18:41.1827079Z ++ test_when_finished 'test_unconfig -C '\''client'\'' '\''fetch.negotiationalgorithm'\'''
-> 2018-07-26T08:18:41.1827289Z ++ test 0 = 0
-> 2018-07-26T08:18:41.1827561Z ++ test_cleanup='{ test_unconfig -C '\''client'\'' '\''fetch.negotiationalgorithm'\''
-> 2018-07-26T08:18:41.1827751Z 		} && (exit "$eval_ret"); eval_ret=$?; :'
-> 2018-07-26T08:18:41.1827930Z ++ git -C client config fetch.negotiationalgorithm skipping
-> 2018-07-26T08:18:41.2196451Z +++ pwd
-> 2018-07-26T08:18:41.2196831Z +++ builtin pwd -W
-> 2018-07-26T08:18:41.2274040Z +++ pwd
-> 2018-07-26T08:18:41.2274458Z +++ builtin pwd -W
-> 2018-07-26T08:18:41.2285081Z ++ GIT_TRACE_PACKET='D:/a/1/s/t/trash directory.t5552-skipping-fetch-negotiator/trace'
-> 2018-07-26T08:18:41.2285515Z ++ git -C client fetch 'D:/a/1/s/t/trash directory.t5552-skipping-fetch-negotiator/server'
-> 2018-07-26T08:18:41.3054360Z warning: no common commits
-> 2018-07-26T08:18:41.3264762Z From D:/a/1/s/t/trash directory.t5552-skipping-fetch-negotiator/server
-> 2018-07-26T08:18:41.3265204Z  * branch            HEAD       -> FETCH_HEAD
-> 2018-07-26T08:18:41.3362819Z ++ have_sent c2 c1 old4 old2 old1
-> 2018-07-26T08:18:41.3370525Z ++ test 5 -ne 0
-> 2018-07-26T08:18:41.3423124Z +++ git -C client rev-parse c2
-> 2018-07-26T08:18:41.3756643Z ++ grep 'fetch> have 9ab46928dc282aa09f4dbf96893a252e058e7e8e' trace
-> 2018-07-26T08:18:41.3878403Z packet:        fetch> have 9ab46928dc282aa09f4dbf96893a252e058e7e8e
-> 2018-07-26T08:18:41.3883984Z ++ test 0 -ne 0
-> 2018-07-26T08:18:41.3884900Z ++ shift
-> 2018-07-26T08:18:41.3885199Z ++ test 4 -ne 0
-> 2018-07-26T08:18:41.3938298Z +++ git -C client rev-parse c1
-> 2018-07-26T08:18:41.4243782Z ++ grep 'fetch> have dc824fafb05f3229aedf1f320bbe572e35364dfe' trace
-> 2018-07-26T08:18:41.4375402Z packet:        fetch> have dc824fafb05f3229aedf1f320bbe572e35364dfe
-> 2018-07-26T08:18:41.4383803Z ++ test 0 -ne 0
-> 2018-07-26T08:18:41.4384733Z ++ shift
-> 2018-07-26T08:18:41.4385018Z ++ test 3 -ne 0
-> 2018-07-26T08:18:41.4436622Z +++ git -C client rev-parse old4
-> 2018-07-26T08:18:41.4749084Z ++ grep 'fetch> have caef059de69917b9119176a11b88afcef769331d' trace
-> 2018-07-26T08:18:41.4888266Z ++ test 1 -ne 0
-> 2018-07-26T08:18:41.4941092Z +++ git -C client rev-parse old4
-> 2018-07-26T08:18:41.5253206Z ++ echo 'No have caef059de69917b9119176a11b88afcef769331d (old4)'
-> 2018-07-26T08:18:41.5253602Z ++ return 1
-> 2018-07-26T08:18:41.5254746Z error: last command exited with $?=1
-> 2018-07-26T08:18:41.5254865Z No have caef059de69917b9119176a11b88afcef769331d (old4)
-> 2018-07-26T08:18:41.5260970Z not ok 4 - handle clock skew
-> 2018-07-26T08:18:41.5441990Z #	
-> 2018-07-26T08:18:41.5442184Z #		rm -rf server client trace &&
-> 2018-07-26T08:18:41.5442422Z #		git init server &&
-> 2018-07-26T08:18:41.5448007Z #		test_commit -C server to_fetch &&
-> 2018-07-26T08:18:41.5448223Z #	
-> 2018-07-26T08:18:41.5448357Z #		git init client &&
-> 2018-07-26T08:18:41.5448466Z #	
-> 2018-07-26T08:18:41.5448661Z #		# 2 regular commits
-> 2018-07-26T08:18:41.5448810Z #		test_tick=2000000000 &&
-> 2018-07-26T08:18:41.5449231Z #		test_commit -C client c1 &&
-> 2018-07-26T08:18:41.5449393Z #		test_commit -C client c2 &&
-> 2018-07-26T08:18:41.5449509Z #	
-> 2018-07-26T08:18:41.5449679Z #		# 4 old commits
-> 2018-07-26T08:18:41.5449859Z #		test_tick=1000000000 &&
-> 2018-07-26T08:18:41.5450017Z #		git -C client checkout c1 &&
-> 2018-07-26T08:18:41.5450220Z #		test_commit -C client old1 &&
-> 2018-07-26T08:18:41.5450343Z #		test_commit -C client old2 &&
-> 2018-07-26T08:18:41.5450449Z #		test_commit -C client old3 &&
-> 2018-07-26T08:18:41.5450667Z #		test_commit -C client old4 &&
-> 2018-07-26T08:18:41.5450821Z #	
-> 2018-07-26T08:18:41.5450954Z #		# "c2" and "c1" are popped first, then "old4" to "old1". "old1" would
-> 2018-07-26T08:18:41.5451133Z #		# normally be skipped, but is treated as a commit without a parent here
-> 2018-07-26T08:18:41.5451392Z #		# and sent, because (due to clock skew) its only parent has already been
-> 2018-07-26T08:18:41.5451547Z #		# popped off the priority queue.
-> 2018-07-26T08:18:41.5451675Z #		test_config -C client fetch.negotiationalgorithm skipping &&
-> 2018-07-26T08:18:41.5451829Z #		GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch "$(pwd)/server" &&
-> 2018-07-26T08:18:41.5451961Z #		have_sent c2 c1 old4 old2 old1 &&
-> 2018-07-26T08:18:41.5452091Z #		have_not_sent old3
-> 2018-07-26T08:18:41.5452186Z #	
-> 
+Signed-off-by: Tejun Heo <tj@kernel.org>
+---
+ Documentation/git-describe.txt   |   5 ++
+ Documentation/git-name-rev.txt   |   4 ++
+ builtin/describe.c               |   7 +-
+ builtin/name-rev.c               | 115 +++++++++++++++++++++++++++++--
+ t/t6121-describe-cherry-picks.sh |  63 +++++++++++++++++
+ 5 files changed, 188 insertions(+), 6 deletions(-)
+ create mode 100755 t/t6121-describe-cherry-picks.sh
+
+diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
+index e027fb8c4..13a229bd7 100644
+--- a/Documentation/git-describe.txt
++++ b/Documentation/git-describe.txt
+@@ -60,6 +60,11 @@ OPTIONS
+ 	the tag that comes after the commit, and thus contains it.
+ 	Automatically implies --tags.
+ 
++--cherry-picks::
++	Also show the commits cherry-picked from the target commits.
++	Cherry-picks are shown indented below their from-commmits.
++	Can only be used with --contains.
++
+ --abbrev=<n>::
+ 	Instead of using the default 7 hexadecimal digits as the
+ 	abbreviated object name, use <n> digits, or as many digits
+diff --git a/Documentation/git-name-rev.txt b/Documentation/git-name-rev.txt
+index 5cb0eb085..df16c4a89 100644
+--- a/Documentation/git-name-rev.txt
++++ b/Documentation/git-name-rev.txt
+@@ -61,6 +61,10 @@ OPTIONS
+ --always::
+ 	Show uniquely abbreviated commit object as fallback.
+ 
++--cherry-picks::
++	Also show the commits cherry-picked from the target commits.
++	Cherry-picks are shown indented below their from-commmits.
++
+ EXAMPLES
+ --------
+ 
+diff --git a/builtin/describe.c b/builtin/describe.c
+index 1e87f68d5..94c84004d 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -528,9 +528,10 @@ static void describe(const char *arg, int last_one)
+ 
+ int cmd_describe(int argc, const char **argv, const char *prefix)
+ {
+-	int contains = 0;
++	int contains = 0, cherry_picks = 0;
+ 	struct option options[] = {
+ 		OPT_BOOL(0, "contains",   &contains, N_("find the tag that comes after the commit")),
++		OPT_BOOL(0, "cherry-picks", &cherry_picks, N_("also include cherry-picks with --contains")),
+ 		OPT_BOOL(0, "debug",      &debug, N_("debug search strategy on stderr")),
+ 		OPT_BOOL(0, "all",        &all, N_("use any ref")),
+ 		OPT_BOOL(0, "tags",       &tags, N_("use any tag, even unannotated")),
+@@ -570,6 +571,8 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
+ 
+ 	if (longformat && abbrev == 0)
+ 		die(_("--long is incompatible with --abbrev=0"));
++	if (cherry_picks && !contains)
++		die(_("--cherry-picks can only be used with --contains"));
+ 
+ 	if (contains) {
+ 		struct string_list_item *item;
+@@ -579,6 +582,8 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
+ 		argv_array_pushl(&args, "name-rev",
+ 				 "--peel-tag", "--name-only", "--no-undefined",
+ 				 NULL);
++		if (cherry_picks)
++			argv_array_push(&args, "--cherry-picks");
+ 		if (always)
+ 			argv_array_push(&args, "--always");
+ 		if (!all) {
+diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+index 0eb440359..adffae0fe 100644
+--- a/builtin/name-rev.c
++++ b/builtin/name-rev.c
+@@ -7,9 +7,13 @@
+ #include "parse-options.h"
+ #include "sha1-lookup.h"
+ #include "commit-slab.h"
++#include "trailer.h"
++#include "object-store.h"
+ 
+ #define CUTOFF_DATE_SLOP 86400 /* one day */
+ 
++static const char cherry_picked_prefix[] = "(cherry picked from commit ";
++
+ typedef struct rev_name {
+ 	const char *tip_name;
+ 	timestamp_t taggerdate;
+@@ -19,9 +23,12 @@ typedef struct rev_name {
+ } rev_name;
+ 
+ define_commit_slab(commit_rev_name, struct rev_name *);
++define_commit_slab(commit_cherry_picks, struct object_array *);
+ 
+ static timestamp_t cutoff = TIME_MAX;
+ static struct commit_rev_name rev_names;
++static struct commit_cherry_picks cherry_picks;
++static int do_cherry_picks = 0;
+ 
+ /* How many generations are maximally preferred over _one_ merge traversal? */
+ #define MERGE_TRAVERSAL_WEIGHT 65535
+@@ -38,6 +45,26 @@ static void set_commit_rev_name(struct commit *commit, struct rev_name *name)
+ 	*commit_rev_name_at(&rev_names, commit) = name;
+ }
+ 
++static struct object_array *get_commit_cherry_picks(struct commit *commit)
++{
++	struct object_array **slot =
++		commit_cherry_picks_peek(&cherry_picks, commit);
++
++	return slot ? *slot : NULL;
++}
++
++static struct object_array *get_create_commit_cherry_picks(struct commit *commit)
++{
++	struct object_array **slot =
++		commit_cherry_picks_at(&cherry_picks, commit);
++
++	if (!*slot) {
++		*slot = xmalloc(sizeof(struct object_array));
++		**slot = (struct object_array)OBJECT_ARRAY_INIT;
++	}
++	return *slot;
++}
++
+ static int is_better_name(struct rev_name *name,
+ 			  const char *tip_name,
+ 			  timestamp_t taggerdate,
+@@ -76,6 +103,45 @@ static int is_better_name(struct rev_name *name,
+ 	return 0;
+ }
+ 
++static void record_cherry_pick(struct commit *commit)
++{
++	enum object_type type;
++	unsigned long size;
++	void *buffer;
++	struct trailer_info info;
++	int i;
++
++	buffer = read_object_file(&commit->object.oid, &type, &size);
++	trailer_info_get(&info, buffer);
++
++	/* when nested, the last trailer describes the latest cherry-pick */
++	for (i = info.trailer_nr - 1; i >= 0; i--) {
++		const int prefix_len = sizeof(cherry_picked_prefix) - 1;
++		char *line = info.trailers[i];
++
++		if (!strncmp(line, cherry_picked_prefix, prefix_len)) {
++			struct object_id from_oid;
++			struct object *from_object;
++			struct commit *from_commit;
++			struct object_array *from_cps;
++
++			if (get_oid_hex(line + prefix_len, &from_oid))
++				continue;
++
++			from_object = parse_object(&from_oid);
++			if (!from_object || from_object->type != OBJ_COMMIT)
++				continue;
++
++			from_commit = (struct commit *)from_object;
++			from_cps = get_create_commit_cherry_picks(from_commit);
++			add_object_array(&commit->object, NULL, from_cps);
++			break;
++		}
++	}
++
++	free(buffer);
++}
++
+ static void name_rev(struct commit *commit,
+ 		const char *tip_name, timestamp_t taggerdate,
+ 		int generation, int distance, int from_tag,
+@@ -91,6 +157,10 @@ static void name_rev(struct commit *commit,
+ 	if (commit->date < cutoff)
+ 		return;
+ 
++	/* if a cherry pick we see for the first time, remember it */
++	if (do_cherry_picks && !name)
++		record_cherry_pick(commit);
++
+ 	if (deref) {
+ 		tip_name = to_free = xstrfmt("%s^0", tip_name);
+ 
+@@ -402,6 +472,32 @@ static void name_rev_line(char *p, struct name_ref_data *data)
+ 	strbuf_release(&buf);
+ }
+ 
++static void show_cherry_picks(struct object *obj, int always,
++			      int allow_undefined, int name_only, int level)
++{
++	struct object_array *cps;
++	int i;
++
++	if (obj->type != OBJ_COMMIT)
++		return;
++
++	cps = get_commit_cherry_picks((struct commit *)obj);
++	if (!cps)
++		return;
++
++	for (i = 0; i < cps->nr; i++) {
++		struct object *cherry_pick = cps->objects[i].item;
++		int j;
++
++		for (j = 0; j < level; j++)
++			fputs("  ", stdout);
++
++		show_name(cherry_pick, NULL, always, allow_undefined, name_only);
++		show_cherry_picks(cherry_pick, always, allow_undefined,
++				  name_only, level + 1);
++	}
++}
++
+ int cmd_name_rev(int argc, const char **argv, const char *prefix)
+ {
+ 	struct object_array revs = OBJECT_ARRAY_INIT;
+@@ -420,6 +516,7 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOL(0, "undefined", &allow_undefined, N_("allow to print `undefined` names (default)")),
+ 		OPT_BOOL(0, "always",     &always,
+ 			   N_("show abbreviated commit object as fallback")),
++		OPT_BOOL(0, "cherry-picks", &do_cherry_picks, N_("include cherry-picked commits")),
+ 		{
+ 			/* A Hidden OPT_BOOL */
+ 			OPTION_SET_INT, 0, "peel-tag", &peel_tag, NULL,
+@@ -430,6 +527,7 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
+ 	};
+ 
+ 	init_commit_rev_name(&rev_names);
++	init_commit_cherry_picks(&cherry_picks);
+ 	git_config(git_default_config, NULL);
+ 	argc = parse_options(argc, argv, prefix, opts, name_rev_usage, 0);
+ 	if (all + transform_stdin + !!argc > 1) {
+@@ -464,10 +562,9 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
+ 			continue;
+ 		}
+ 
+-		if (commit) {
++		if (commit)
+ 			if (cutoff > commit->date)
+ 				cutoff = commit->date;
+-		}
+ 
+ 		if (peel_tag) {
+ 			if (!commit) {
+@@ -506,9 +603,17 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
+ 		}
+ 	} else {
+ 		int i;
+-		for (i = 0; i < revs.nr; i++)
+-			show_name(revs.objects[i].item, revs.objects[i].name,
+-				  always, allow_undefined, data.name_only);
++		for (i = 0; i < revs.nr; i++) {
++			struct object *obj = revs.objects[i].item;
++			const char *name = revs.objects[i].name;
++
++			show_name(obj, name, always, allow_undefined,
++				  data.name_only);
++
++			if (do_cherry_picks)
++				show_cherry_picks(obj, always, allow_undefined,
++						  data.name_only, 1);
++		}
+ 	}
+ 
+ 	UNLEAK(revs);
+diff --git a/t/t6121-describe-cherry-picks.sh b/t/t6121-describe-cherry-picks.sh
+new file mode 100755
+index 000000000..838e0acc0
+--- /dev/null
++++ b/t/t6121-describe-cherry-picks.sh
+@@ -0,0 +1,63 @@
++#!/bin/sh
++
++test_description='git describe should show cherry-picks correctly
++
++           C
++ o----o----x
++      |\ 
++      | .--o
++      |\  C1
++      | .--o
++       \  C2
++        .--o
++          C3
++
++C1 and C3 are cherry-picks from C, and C2 from C1.  Verify git desribe
++handles c and its cherry-picks correctly.
++'
++. ./test-lib.sh
++
++GIT_AUTHOR_EMAIL=bogus_email_address
++export GIT_AUTHOR_EMAIL
++
++test_expect_success \
++    'prepare repository with topic branches with cherry-picks' \
++    'test_tick &&
++     echo First > A &&
++     git update-index --add A &&
++     git commit -m "Add A." &&
++
++     test_tick &&
++     git checkout -b T1 master &&
++     git checkout -b T2 master &&
++     git checkout -b T3 master &&
++     git checkout master &&
++
++     test_tick &&
++     echo Second > B &&
++     git update-index --add B &&
++     git commit -m "Add B." &&
++
++     test_tick &&
++     git checkout -f T1 &&
++     rm -f B &&
++     git cherry-pick -x master &&
++
++     test_tick &&
++     git checkout -f T2 &&
++     rm -f B &&
++     git cherry-pick -x T1 &&
++
++     test_tick &&
++     git checkout -f T3 &&
++     rm -f B &&
++     git cherry-pick -x master
++'
++
++test_expect_success 'Verify describing cherry-picks' '
++     git describe --contains --all --cherry-picks master >actual &&
++     echo -e "master\n  T1\n    T2\n  T3" >expect &&
++     test_cmp expect actual
++'
++
++test_done
+-- 
+2.17.1
+
