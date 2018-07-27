@@ -2,102 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A21DD1F597
-	for <e@80x24.org>; Fri, 27 Jul 2018 17:28:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C08701F597
+	for <e@80x24.org>; Fri, 27 Jul 2018 17:31:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388879AbeG0SvY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jul 2018 14:51:24 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:45810 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388886AbeG0SvY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jul 2018 14:51:24 -0400
-Received: by mail-wr1-f66.google.com with SMTP id t13-v6so5782132wrv.12
-        for <git@vger.kernel.org>; Fri, 27 Jul 2018 10:28:32 -0700 (PDT)
+        id S2388507AbeG0SyC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jul 2018 14:54:02 -0400
+Received: from mail-yw0-f194.google.com ([209.85.161.194]:33600 "EHLO
+        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730852AbeG0SyC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jul 2018 14:54:02 -0400
+Received: by mail-yw0-f194.google.com with SMTP id c135-v6so2142888ywa.0
+        for <git@vger.kernel.org>; Fri, 27 Jul 2018 10:31:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=+wi2B4fZo+v5T28we8P6eAG4tbunyhEi3J026H57Vrw=;
-        b=D/5zaF7K47blZJB6Qjx49dVIgty9gDQ7UEGijtYP1Fl4hp2xkq43TZtuWwkP9I2UBC
-         V9aruR8BkYlmTrvLi49fxA1ORKWmeHS86BFyphZ7uv+hMnf4bYtNgeZwTZMZHbmYnJrG
-         f31XF447GK857ab+zEwu4ZjyYM01iij4UCkiAqW5m1ea0kiXCpob8qA4d6eGJ10Ecm79
-         LMMpSA9ED/3EpmZDR4Vrxvtgwe9tu6kO9fs3o8w3SpPqYAjQt2AwzWNE6JehzLh9A3Oh
-         7pF+DnRQdGQ+ozbuQ4fYcHxFXdRX5Qe2Au/PfGtke3Y1g/Cnp3NCw3FltUq6xrUakm8B
-         rZAw==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=pBAvifPE1k5sDlhTfLMN3zdxA+LOrWLyB1U9Yog9EJE=;
+        b=h/PeLS3jLlao8c70J6HDiZH0Gg6oCO8BKEZ4u9uSPD27fVb1r1uDCqTvBfi5VpokXm
+         WaR51NJdFf2l/7d3GvZ7fG8/ZZpiIm3gJ6krowYMfV7QYk0zcyaIEcJEt1CdI6dPa0BG
+         Nfyvmhl6Frdq5xpSGg9Arb2rhk5+O4jEMlYlG+tr1DXbiysAwRb0HxNz3/64Hi82LC6d
+         UR/0nhPwptkbw4gmLFxeyJ94NGzKGZP9bJ0xpqg931oetlg4nwj0IrL/UchxOy1i5lu1
+         JHz40JRTcu3ywcWcaK1x2k9o/UEYUJNM+9crAVwXfjdXGV+AQqbJbYLbmmTqY/zYhFf+
+         qhgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=+wi2B4fZo+v5T28we8P6eAG4tbunyhEi3J026H57Vrw=;
-        b=i1P5KAZ4FVM5tr6h1RA/v+zz3bh09ge5H7jMq4eiGuLjxhdid4ADUSYo0eGLGQUY5v
-         hlWObvSLZCmgFkv7AyielX6G2EFHN72rZShiEmpXLOkHBMwPF8RtgB9b/kYYBkWziwrc
-         mPEA86cEY3kNOtpE8Rr2ccMOFGqM/xFKtc6+7fehnnIR+1iCk9j4YfKMO8ETurOkTU1K
-         KAftqZ4Wo42z3QokQR6YaX9IPO2r2tI5imWyG7PbLtdpNmxmzC7JkGtC/QEkCD/M2vAI
-         /i/9rvUS/tDtiZ5eKu4HP3vXZuCFl/KM9MeYy/vFgBI5A7T//tUkIWgUOAIe8baIwWSS
-         ByJQ==
-X-Gm-Message-State: AOUpUlGD2XVZP15DuoSbdXuTnBdGpHVt2Sw9PoA0E8NnvfT+Db67sHk7
-        fVGY6PsNJt3pZPDJvlVDsxs8K884
-X-Google-Smtp-Source: AAOMgpdEeXmRiM7J7eB2r3XtVerzQxa6hymMiOEyQ5zrqOq5zk50glQn6tC/3aakV+1zk4gv97AeJQ==
-X-Received: by 2002:adf:f28c:: with SMTP id k12-v6mr5324069wro.263.1532712511238;
-        Fri, 27 Jul 2018 10:28:31 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 133-v6sm7297594wmh.27.2018.07.27.10.28.30
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 27 Jul 2018 10:28:30 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's cooking in git.git (Jul 2018, #03; Wed, 25)
-References: <xmqqd0vbt14e.fsf@gitster-ct.c.googlers.com>
-        <87fu0469d1.fsf@evledraar.gmail.com>
-Date:   Fri, 27 Jul 2018 10:28:30 -0700
-In-Reply-To: <87fu0469d1.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Fri, 27 Jul 2018 16:28:42 +0200")
-Message-ID: <xmqqd0v8oaf5.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=pBAvifPE1k5sDlhTfLMN3zdxA+LOrWLyB1U9Yog9EJE=;
+        b=Mc7ci8mktJBt3gah9ZlhOA3C20U/2+/vfIidVxDnAg30ZgOP/hPNvre1hoPmoNjujV
+         WgZMpomy2UJxersUMZd77+4kXxMh4iar+QZwSzmF8in2fsCL2rWK+lXXOEv/GJ8QWLNH
+         nyt0G3V+58dKfA0ASO6Xvw698FBKaGGtuAcCgpDuBTb68FaKRLGj31HFRVsx4doMMBAZ
+         21G3kAVL3HXhaJxt+yYXkHqHvS05mXZaX5egxQLaZEbdf6RUj7GJeIxbTvGmMT/aPDbH
+         ixafVONIyX0bF3avV5kS5fcmH3maBD5EnGiE3sDEt9C4KoCMb5ZDO4nR6W9uENmrVtq0
+         0B9Q==
+X-Gm-Message-State: AOUpUlFkbTuixK5HwfBvwMd9GfwJeQpdwZ4gbhWwCLAczEQfuDDwCld7
+        xYk9dS8uzO4Sgl7YxFcFskkP6MViqOmoUQ39fK7MLA==
+X-Google-Smtp-Source: AAOMgpdOXEhtTeQuOC4eC96LrgVKwkvC5NDMa+MD3pMiF5w0M5x41PgtLIpyk7SkGjjGsfDz8/OKUPTwZwZhaEm+BHE=
+X-Received: by 2002:a81:af67:: with SMTP id x39-v6mr3779711ywj.33.1532712668978;
+ Fri, 27 Jul 2018 10:31:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <20180727003640.16659-1-sbeller@google.com> <20180727003640.16659-3-sbeller@google.com>
+ <CACsJy8Ae3sZvOQ3irQM+hv0fCRchGi8995kvLZBadbaphRo-3A@mail.gmail.com> <20180727171941.GA109508@google.com>
+In-Reply-To: <20180727171941.GA109508@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 27 Jul 2018 10:30:58 -0700
+Message-ID: <CAGZ79kZfhSwtNgNk-GRDb6f4Uq7y6fi21HVO7xHv1YiuQoaSvA@mail.gmail.com>
+Subject: Re: [PATCH 2/3] refs: introduce new API, wrap old API shallowly
+ around new API
+To:     Brandon Williams <bmwill@google.com>,
+        Derrick Stolee <stolee@gmail.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>, git <git@vger.kernel.org>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+On Fri, Jul 27, 2018 at 10:19 AM Brandon Williams <bmwill@google.com> wrote:
+>
+> On 07/27, Duy Nguyen wrote:
+> > On Fri, Jul 27, 2018 at 2:40 AM Stefan Beller <sbeller@google.com> wrote:
+> > >
+> > > Currently the refs API takes a 'ref_store' as an argument to specify
+> > > which ref store to iterate over; however it is more useful to specify
+> > > the repository instead (or later a specific worktree of a repository).
+> >
+> > There is no 'later'. worktrees.c already passes a worktree specific
+> > ref store. If you make this move you have to also design a way to give
+> > a specific ref store now.
+> >
+> > Frankly I still dislike the decision to pass repo everywhere,
+> > especially when refs code already has a nice ref-store abstraction.
+> > Some people frown upon back pointers. But I think adding a back
+> > pointer in ref-store, pointing back to the repository is the right
+> > move.
+>
+> I don't quite understand why the refs code would need a whole repository
+> and not just the ref-store it self.  I thought the refs code was self
+> contained enough that all its state was based on the passed in
+> ref-store.  If its not, then we've done a terrible job at avoiding
+> layering violations (well actually we're really really bad at this in
+> general, and I *think* we're trying to make this better though the
+> object store/index refactoring).
+>
+> If anything I would expect that the actual ref-store code would remain
+> untouched by any refactoring and that instead the higher-level API that
+> hasn't already been converted to explicitly use a ref-store (and instead
+> just calls the underlying impl with get_main_ref_store()).  Am I missing
+> something here?
 
-> Count me in the "this is useful" camp, but also I did look at the latest
-> submission this time around, but had nothing to say, so I didn't say
-> anything :)
+Then I think we might want to go with the original in Stolees proposal
+https://github.com/gitgitgadget/git/pull/11/commits/300db80140dacc927db0d46c804ca0ef4dcc1be1
+but there the call to for_each_replace_ref just looks ugly, as it takes the
+repository as both the repository where to obtain the ref store from
+as well as the back pointer.
 
-Please make it a habit to do say something to show that you did
-carefully review the series especially in such a case, which helps
-to differentiate a change that is interesting to nobody, and one
-that is so obviously well done that there is nothing to add.  
-
-What I have been doing from time to time, when I think there is
-nothing bad in particular to point out, is to quote a part that is
-especially tricky to get right and think it aloud to show how I
-would reason why the result of the change is correct.  This type of
-review helps in two and a half ways:
-
- (1) We can see a correction to what the reviewer said, which could
-     lead to further improvement ("no, the code does not quite work
-     that way, so it is still buggy", or "no, the code does not work
-     that way, but triggering that bug is impossible because the
-     caller high above will not call us in that case", etc.),
-
- (2) The reviewer can demonstrate to others that s/he understands
-     the area being touched well enough to explain how it works
-     correctly, and a "looks good to me" comment from the reviewer
-     on that change becomes more credible than a mere "looked good
-     and I have nothing else to add".
-
-Thanks.
-
+I anticipate that we need to have a lot of back pointers to the repository
+in question, hence I think we should have the repository pointer promoted
+to not just a back pointer.
