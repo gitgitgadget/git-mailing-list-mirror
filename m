@@ -2,76 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F18621F597
-	for <e@80x24.org>; Fri, 27 Jul 2018 09:40:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F0901F597
+	for <e@80x24.org>; Fri, 27 Jul 2018 09:59:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730488AbeG0LBb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jul 2018 07:01:31 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60870 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1729568AbeG0LBb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jul 2018 07:01:31 -0400
-Received: (qmail 18445 invoked by uid 109); 27 Jul 2018 09:40:28 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 27 Jul 2018 09:40:28 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24197 invoked by uid 111); 27 Jul 2018 09:40:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 27 Jul 2018 05:40:28 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 27 Jul 2018 05:40:26 -0400
-Date:   Fri, 27 Jul 2018 05:40:26 -0400
-From:   Jeff King <peff@peff.net>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [RFC PATCH 2/5] Add delta-islands.{c,h}
-Message-ID: <20180727094026.GA17155@sigill.intra.peff.net>
-References: <20180722054836.28935-1-chriscool@tuxfamily.org>
- <20180722054836.28935-3-chriscool@tuxfamily.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180722054836.28935-3-chriscool@tuxfamily.org>
+        id S1730568AbeG0LUp (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jul 2018 07:20:45 -0400
+Received: from mail-lf1-f52.google.com ([209.85.167.52]:45652 "EHLO
+        mail-lf1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730244AbeG0LUp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jul 2018 07:20:45 -0400
+Received: by mail-lf1-f52.google.com with SMTP id j143-v6so3141012lfj.12
+        for <git@vger.kernel.org>; Fri, 27 Jul 2018 02:59:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:content-transfer-encoding:mime-version:date:subject:message-id
+         :to;
+        bh=Z3oVN3Nj9dMCBYuir3gAbrOu7I0o14pXf7tdI5xKPy0=;
+        b=ctRj4uYqNkPmCMkfVFIXQLCzX8uxkiQr/ncIqi3Ne/UDVhpsTEBVmuOTU6oAIG3JP+
+         c6i+qgfcFCbwMVYRagFo3dPIJNuPB2fztA8QPN0n0XVecWeQdCbWmldMxdf39MpSs3jw
+         qyn3uZAr5YX6yX+HcP6FmDxqHfaxJcHd0kQcT3z6DwFG3ixPwUXfdRm2G05uYcwizLgQ
+         0U1YJPQGUoPt06lCkFSPNJvZYHmVUvfcr+kRsLbD+5XvXxmf8k45ABKp0+S3jRvCkF9r
+         7XS5fcFXMTRg98TgkJZnVL/109FPLz6fbxTH6PBvfAhp0mN/pft/Y4KqqhMnQyPGqh+Q
+         YvwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version:date
+         :subject:message-id:to;
+        bh=Z3oVN3Nj9dMCBYuir3gAbrOu7I0o14pXf7tdI5xKPy0=;
+        b=jI/1xP2HW/9ekNNEcccwfKZSl3HGJHK9mWpJf/Bi12zcZiU59ctvZ8rtpRCX0RG926
+         +bEYElaS8JyBvOx4u6lTcIUmRENxDNvljUUac5QpkiwCyMdDVnkS32ZzCHT85aqDQmXC
+         ATLNlziSAD4cQ9eJGDdyVOUD2EXzGcNL+BMi3//qBgAQEwlr5bHCHm9nk0z5iL4W8GED
+         Tz1CngEPe/hkk854yPkefN5ycBw+LSAyWmMfKNrXGyElsRfVRoZ1a6+6JkF+FL6zeUJu
+         LqX9rJ5XDuXTomWNKY5vMGqLh4TKh32hIFy1Cw3cUFi8ZT/xZ8RNBDRzgPNMlrTi70JE
+         Xw8Q==
+X-Gm-Message-State: AOUpUlGBDQQoSv/ZrVd17NYTDiW8XvX5lbw6znCN07TMXrolo0qYicgk
+        B/S4nwR7rVDJjkehyOlwangR+3R2
+X-Google-Smtp-Source: AAOMgpcZmrT8pGxomx89JMu0kPFlTJY/BBSx1PBe8oUUbrT8qWx4wDUDdgHbi/SMDgwn0dUuPSJjRg==
+X-Received: by 2002:a19:6902:: with SMTP id e2-v6mr3440117lfc.70.1532685574943;
+        Fri, 27 Jul 2018 02:59:34 -0700 (PDT)
+Received: from [10.95.176.192] (user-94-254-149-103.play-internet.pl. [94.254.149.103])
+        by smtp.gmail.com with ESMTPSA id i15-v6sm483183lfb.94.2018.07.27.02.59.34
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 27 Jul 2018 02:59:34 -0700 (PDT)
+From:   =?utf-8?Q?Pawe=C5=82_Paruzel?= <pawelparuzel95@gmail.com>
+Content-Type: text/plain;
+        charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (1.0)
+Date:   Fri, 27 Jul 2018 11:59:33 +0200
+Subject: Git clone and case sensitivity
+Message-Id: <24A09B73-B4D4-4C22-BC1B-41B22CB59FE6@gmail.com>
+To:     git@vger.kernel.org
+X-Mailer: iPhone Mail (15E302)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jul 22, 2018 at 07:48:33AM +0200, Christian Couder wrote:
+Hi,
 
-> +	/*
-> +	 * We process only trees, as commits and tags have already been handled
-> +	 * (and passed their marks on to root trees, as well. We must make sure
-> +	 * to process them in descending tree-depth order so that marks
-> +	 * propagate down the tree properly, even if a sub-tree is found in
-> +	 * multiple parent trees.
-> +	 */
-> +	todo = xmalloc(to_pack->nr_objects * sizeof(*todo));
+Lately, I have been wondering why my test files in repo are modified after I=
+ clone it. It turned out to be two files: boolStyle_t_f and boolStyle_T_F.
+The system that pushed those files was case sensitive while my mac after Hig=
+h Sierra update had APFS which is by default case-insensitive. I highly sugg=
+est that git clone threw an exception when files are case sensitive and bein=
+g cloned to a case insensitive system. This has caused problems with overrid=
+ing files for test cases without any warning.
 
-I was fiddling with "make coccicheck", and it looks like this code could
-stand some modernization. This could use ALLOC_ARRAY().
-
-> +	for (i = 0; i < to_pack->nr_objects; i++) {
-> +		if (oe_type(&to_pack->objects[i]) == OBJ_TREE)
-> +			todo[nr++] = &to_pack->objects[i];
-> +	}
-> +	qsort(todo, nr, sizeof(*todo), cmp_tree_depth);
-
-And this QSORT().
-
-There are a few others, I won't list them all. The only tricky one I see
-is:
-
-> +		free(tree->buffer);
-> +		tree->buffer = NULL;
-> +		tree->object.parsed = 0;
-
-This suggests FREE_AND_NULL(), but I think it actually the whole block
-should become a call to free_tree_buffer().
-
--Peff
+Thanks in advance.
+Regards,
+Pawel Paruzel=
