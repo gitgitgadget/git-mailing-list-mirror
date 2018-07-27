@@ -6,18 +6,18 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F41A81F597
-	for <e@80x24.org>; Fri, 27 Jul 2018 03:49:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32B4F1F597
+	for <e@80x24.org>; Fri, 27 Jul 2018 03:49:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725846AbeG0FI7 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jul 2018 01:08:59 -0400
+        id S1725964AbeG0FJB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jul 2018 01:09:01 -0400
 Received: from p3plsmtpa12-02.prod.phx3.secureserver.net ([68.178.252.231]:60337
         "EHLO p3plsmtpa12-02.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725829AbeG0FI6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 27 Jul 2018 01:08:58 -0400
+        by vger.kernel.org with ESMTP id S1725829AbeG0FJB (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 27 Jul 2018 01:09:01 -0400
 Received: from jessie.local ([212.149.203.197])
         by :SMTPAUTH: with ESMTPSA
-        id itkTfU4KgK5J2itkXflkuJ; Thu, 26 Jul 2018 20:49:08 -0700
+        id itkTfU4KgK5J2itkaflkuY; Thu, 26 Jul 2018 20:49:10 -0700
 From:   Max Kirillov <max@max630.net>
 To:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
@@ -29,39 +29,72 @@ Cc:     Max Kirillov <max@max630.net>,
         Chris Packham <judge.packham@gmail.com>,
         Konstantin Khomoutov <kostix+git@007spb.ru>,
         "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: [PATCH v9 0/3] http-backend: respect CONTENT_LENGTH as specified by rfc3875
-Date:   Fri, 27 Jul 2018 06:48:56 +0300
-Message-Id: <20180727034859.15769-1-max@max630.net>
+Subject: [PATCH v9 1/3] http-backend: cleanup writing to child process
+Date:   Fri, 27 Jul 2018 06:48:57 +0300
+Message-Id: <20180727034859.15769-2-max@max630.net>
 X-Mailer: git-send-email 2.17.0.1185.g782057d875
-in-reply-to: <20180610150521.9714-1-max@max630.net>
-X-CMAE-Envelope: MS4wfPGkj4hac/O2tF7VZNS3nXGm61Kam37BqOFqwfsvTQTv/nOFw7IvILcvN/cG81z65bFXwZHalX2/gGGdkUnEPh1yjbCPu0Ctu6C73DHVadewa9SdjrR0
- rbcgZQRpzfFii5e79yLwZddplIWlJu8RYCBplGBCwd3OPzuAr9DWvZpbHMDWkRtQ05jznawuOF5dA0jzF90dInsAQYyq9MTBPT6Uw+gY2rCpr/YSSaZDJg6Z
- eE6VOozZrN9fg7HcdR4DovqOejbjFpz5DAHSbWJrvVR8FCNjL04Y1yV9EFB7i1f+UBF6PQROnkuYTyT8NhxxWuuvL9d7dAUwb5WNbmYNx08T8OP7Gpp2PnGx
- egqTLOFhH9ArtE1eNX0rIz2FRZJGcTQj3mrGB261KsAN96TcIHkiQJQHFUrY2013mtOne4lGra1nQ1q1xMZpwThAQnCqpg==
+In-Reply-To: <20180727034859.15769-1-max@max630.net>
+References: <20180727034859.15769-1-max@max630.net>
+X-CMAE-Envelope: MS4wfOH/pmyXlUmYh2mlgfNGEntV8Xp7o7fEGGwY6pWRVOiJaYreJT0/qd0KPFkXu3NzCOgreRN8JtWiRer18GLuY4woun81UHwP3UTJm8mPcO6/vQ+Gjt9l
+ JcgnrTCQgIZEJ+W/Yf6EvVY+IkZAEsj/k6OK5srjKA0R8eA7xtLKKeKsXla1r+zy0Tgzqg058CEwLWNsTCl8KFKJMjbHkz2J6whvmy1fMycPOdP2L8HXyPso
+ 0WPDZnship4rpNs+Fz8Gw0T9J9El+sPaHCTyYwvNbWkGVRCYWDF4qsiuJ6/5Gxot/3Y4vVzcaOGxffqpuAP0q2eBwX2crXQ7MGK/zloG4W9sX5ov9mevqkRj
+ bodsXYXx7kTxMTsWpm2DDj0aQulsBpDjWn2xEmZ+CfQoTgKY5WUO4jU6ceL/aKnvaCGbwNnOAgszb5BCDQhLHOtL9Y7jxQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-* fix the gzip usage as suggested in https://public-inbox.org/git/xmqqk1quvegh.fsf@gitster-ct.c.googlers.com/
-* better explanation of why status check is needed
-* redirect only the helper call, not the whole shell function, also move more into the shell function
+As explained in [1], we should not assume the reason why the writing has
+failed, and even if the reason is that child has existed not the reason
+why it have done so. So instead just say that writing has failed.
 
-Max Kirillov (3):
-  http-backend: cleanup writing to child process
-  http-backend: respect CONTENT_LENGTH as specified by rfc3875
-  http-backend: respect CONTENT_LENGTH for receive-pack
+[1] https://public-inbox.org/git/20180604044408.GD14451@sigill.intra.peff.net/
 
- config.c                               |   2 +-
- config.h                               |   1 +
- help.c                                 |   1 +
- http-backend.c                         | 100 +++++++++++++---
- t/t5562-http-backend-content-length.sh | 155 +++++++++++++++++++++++++
- t/t5562/invoke-with-content-length.pl  |  37 ++++++
- 6 files changed, 281 insertions(+), 15 deletions(-)
- create mode 100755 t/t5562-http-backend-content-length.sh
- create mode 100755 t/t5562/invoke-with-content-length.pl
+Signed-off-by: Max Kirillov <max@max630.net>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ http-backend.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
+diff --git a/http-backend.c b/http-backend.c
+index adaef16fad..cefdfd6fc6 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -279,6 +279,12 @@ static struct rpc_service *select_service(struct strbuf *hdr, const char *name)
+ 	return svc;
+ }
+ 
++static void write_to_child(int out, const unsigned char *buf, ssize_t len, const char *prog_name)
++{
++	if (write_in_full(out, buf, len) < 0)
++		die("unable to write to '%s'", prog_name);
++}
++
+ /*
+  * This is basically strbuf_read(), except that if we
+  * hit max_request_buffer we die (we'd rather reject a
+@@ -361,9 +367,8 @@ static void inflate_request(const char *prog_name, int out, int buffer_input)
+ 				die("zlib error inflating request, result %d", ret);
+ 
+ 			n = stream.total_out - cnt;
+-			if (write_in_full(out, out_buf, n) < 0)
+-				die("%s aborted reading request", prog_name);
+-			cnt += n;
++			write_to_child(out, out_buf, stream.total_out - cnt, prog_name);
++			cnt = stream.total_out;
+ 
+ 			if (ret == Z_STREAM_END)
+ 				goto done;
+@@ -382,8 +387,7 @@ static void copy_request(const char *prog_name, int out)
+ 	ssize_t n = read_request(0, &buf);
+ 	if (n < 0)
+ 		die_errno("error reading request body");
+-	if (write_in_full(out, buf, n) < 0)
+-		die("%s aborted reading request", prog_name);
++	write_to_child(out, buf, n, prog_name);
+ 	close(out);
+ 	free(buf);
+ }
 -- 
 2.17.0.1185.g782057d875
 
