@@ -2,307 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D47891F597
-	for <e@80x24.org>; Fri, 27 Jul 2018 15:42:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F1371F597
+	for <e@80x24.org>; Fri, 27 Jul 2018 15:49:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388585AbeG0RFP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jul 2018 13:05:15 -0400
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:44827 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731160AbeG0RFP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jul 2018 13:05:15 -0400
-Received: by mail-lj1-f195.google.com with SMTP id q127-v6so4794777ljq.11
-        for <git@vger.kernel.org>; Fri, 27 Jul 2018 08:42:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=VB3UZSd/7dn6R2TbwXsxFw4OpTpWhfdY58/YCv/FCFQ=;
-        b=rRR4z8nPysZDqZn6GbrnUoTB0aHgGLMRvJdVSFGLwnZubMvo/4uascblvY8sLxkwzU
-         hIcszfGSaS6F7CjOLRXzOLOQlhO7LKw7DJdAy2oG4hVK79hQqGtbBgyLr6GVhkfqQ859
-         1AeW3nUSGhUMFWEmFFpc3myFaQ5n8qoAzqjtGs/aHweHXmDssjMQojZ3KGMB45/L3gRL
-         0oBjC+zvCdgBb5eU8p8ZvWPBp0/KImzMpfzjF40n2Ca44S2RhWKMJMfp4oBgAvnBBth7
-         lT84NP6GWs/sMU2pvOeAhd6QY5c69xbUmLC6cJ/zv6on3wgAzL/ilFdLQUBpX051AfPz
-         UGPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=VB3UZSd/7dn6R2TbwXsxFw4OpTpWhfdY58/YCv/FCFQ=;
-        b=Ospw8CcDRyojKf0d+15muVaqG0DACWGMRd3B/FbwiZg2TzeBCJL1O58yUBImJAK7UU
-         Db5IwRFh5xQLweVMuubKO9F8A+NQlMYzPWSeCIHD+qUrRBa7mzC65W8fFBG75EUp+ROB
-         1GztF7hzEAp2PpUJhKELAM0xmsXWE8HvKpME9gkdTxNdv8g2eQk6D9aCUHoztzNr2ecx
-         i4C3U690AWBBkJ3D4gU+YKqIcXLbKSl5R3oHaIcQhtKyIeOiSlP0l1MC0AFAGOv/Nqbp
-         XSasQPrIBpnMxRKdv/IZfb2w5z5Wa+WJUo9zStVK3AweTraD2ZZM3PxgK6Ak5v8YxAAt
-         5C6w==
-X-Gm-Message-State: AOUpUlHY5nZPB5CY4+Z8A9aGp861j7pGA67OcmhjHacL/F6/i6isTYLJ
-        hQKtUZHaD7liAqaokm1+TB4=
-X-Google-Smtp-Source: AAOMgpfoVFMCKgV/8Ip/CiEBnNCv+wcRPZ/5XGqROdNBuFUAZzNG+XTs53Zqt2Xfz9hNkjPwwIXnCQ==
-X-Received: by 2002:a2e:291c:: with SMTP id u28-v6mr5185532lje.70.1532706165052;
-        Fri, 27 Jul 2018 08:42:45 -0700 (PDT)
-Received: from duynguyen.home (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id x65-v6sm576089lfa.77.2018.07.27.08.42.43
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 27 Jul 2018 08:42:43 -0700 (PDT)
-Date:   Fri, 27 Jul 2018 17:42:41 +0200
-From:   Duy Nguyen <pclouds@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>, Ben Peart <peartben@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v1 0/3] [RFC] Speeding up checkout (and merge, rebase,
- etc)
-Message-ID: <20180727154241.GA21288@duynguyen.home>
-References: <20180718213420.GA17291@sigill.intra.peff.net>
- <a2ad0044-f317-69f7-f2bb-488111c626fb@gmail.com>
- <CACsJy8D-3sSnoyQZKxeLK-2RmpJSGkziAp5Gf4QpUnxwnhchSQ@mail.gmail.com>
- <6ff6fbdc-d9cf-019f-317c-7fdba31105c6@gmail.com>
- <20180724042017.GA13248@sigill.intra.peff.net>
- <CACsJy8Du28jMyfdyhxpVxyw5+Xh+9eX==3x8YJSnmw6GAoRhTA@mail.gmail.com>
- <0102d204-8be7-618a-69f4-9f924c4e6731@gmail.com>
- <CACsJy8AWcHVYNBZGRUTdcg8FmwOGz3MSUHH+3uVSGrg6MMZMng@mail.gmail.com>
- <20180726163049.GA15572@duynguyen.home>
- <xmqqd0v9pyzu.fsf@gitster-ct.c.googlers.com>
+        id S2388156AbeG0RLb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jul 2018 13:11:31 -0400
+Received: from mout.gmx.net ([212.227.15.18]:33493 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1732059AbeG0RLb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jul 2018 13:11:31 -0400
+Received: from [192.168.0.129] ([37.201.193.59]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lcjgd-1gRRsc3nrb-00k7FT; Fri, 27
+ Jul 2018 17:48:57 +0200
+Date:   Fri, 27 Jul 2018 17:48:57 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jonathan Tan <jonathantanmy@google.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH] negotiator/skipping: skip commits during fetch
+In-Reply-To: <20180726191609.176343-1-jonathantanmy@google.com>
+Message-ID: <nycvar.QRO.7.76.6.1807271737470.10478@tvgsbejvaqbjf.bet>
+References: <nycvar.QRO.7.76.6.1807261233300.71@tvgsbejvaqbjf.bet> <20180726191609.176343-1-jonathantanmy@google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqd0v9pyzu.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:YJESwaOzbFk3cLD28wd04xc7C57LeqnM2MSi9LxcM61RG0QvkR8
+ dYbjJjNYhRhKqy79KY8eWUDawosUUZgiUrSD/XHXIxivrEObfjcfw5Sk1G9x555tGhidarB
+ Wy4yibhRgE6HYN1S3pYvM8t1m/Ix2VMcCWojWNz7+cc5YbH62jKtz5cwZ0EkjIfYEhf4Q32
+ ylUcOWxvHneJlW3QGnI+w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:svsLdxEhYmE=:ovQLVNdCk0lztG30BSV/e6
+ cIXLmMIwxGM0AlIP+3+U0p3gPoRJ4AhhAGA+aEFGtZXAWH8CaBtNjUASOMZsSspwMBsBPWW7Z
+ YNKunguRY7jN280G23L2iGAZyE98+FNA48nSNY+88VTaM2TUqR1UDxi+fxFYQTqQU7+9WJ6Xp
+ PCyYzUKNxRpJmfYNmhKSnK/+FbVylb94Mxi7msAi67DZ0iyU/2+0BoZ8puWg2nU43P0mZWQax
+ cYe0YqxaIMGqzOE5Z/SVZd7L5mmaT3yuIydQvjHacGzYGsrsZKy8xBb9+SaPFmT/3QgxVxsUX
+ i7D0P34PrOla2ytldZ2Anw9NZ9NpTzGKz+RBTjb4l62QR0Kcy41T9HVNBuRjqJmLavOVwJ7ZB
+ T7k1EEk13ETirzfbjdx7ZJcD3wQgr1Keb1UOFdCGYjQ1tRBnvGPEfJAr4FJyz3SEs4W+daXhB
+ DsuX/GJYN8zMWkTuu5KKzWhDYj1Q4Dyha3Mab/T4IUX/9TIvR1sjIRvfn3Z46WnNVIT0jwjqd
+ q13sXcc/Hhyms7qzAVzLoMGHdBss2eQ/tbsGDt++Bp8TJgIoPA2KBDFCsOR0MnB8/1Mf5O4ao
+ 5Zv2QUFP6kQzwJeHuRBneeMSyUOC3/UDt9dV6dHiW62rfOM/pu68c7yHYkEX5pA3Ib5aetL7u
+ UianbNzldYxz12X/rFHeaRL/otLhakOrZMKPuzFNDTxYHtV9u7dtxp90J783aN5eJGM2n8t13
+ 5+k0G9/chEk/ey+lS42ica1EPLdaHipIGWADF58GqSwr1ftNTI7gr5+IXn6zMBBRrFFJ7Oh6U
+ E9WeWpA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 26, 2018 at 12:40:05PM -0700, Junio C Hamano wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
+Hi Jonathan,
+
+On Thu, 26 Jul 2018, Jonathan Tan wrote:
+
+> > On Mon, 16 Jul 2018, Jonathan Tan wrote:
+> > 
+> > >  t/t5552-skipping-fetch-negotiator.sh | 179 +++++++++++++++++++
+> > 
+> > This test seems to be failing consistently in the recent `pu` builds:
+> > 
+> > https://git-for-windows.visualstudio.com/git/_build/results?buildId=14337&view=logs
+> > 
+> > Could you have a look, please?
 > 
-> > I'm excited so I decided to try out anyway. This is what I've come up
-> > with. Switching trees on git.git shows it could skip plenty entries,
-> > so promising. It's ugly and it fails at t6020 though, there's still
-> > work ahead. But I think it'll stop here.
+> Hmm...on my Linux computer, this test passes on both pu (as of the time
+> of writing) and 838143aa5c ("Merge branch 'ab/newhash-is-sha256' into
+> pu", 2018-07-25) (pu at the time of that build, according to the website
+> you linked above). If you could rerun that test with additional code,
+> could you add a "cat trace" and show me what the client sends?
+
+I can give you something even better: a playground. Just open a PR at
+https://github.com/gitgitgadget/git (all of the branches on gitster/git ar
+mirrored, including yours, I am sure, so you can target that branch
+specifically).
+
+Once you open a Pull Request, it will automatically build and run the test
+suite on Windows, macOS and Linux. You will see it in the "checks" section
+on the bottom. Example for my range-diff series:
+
+https://git-for-windows.visualstudio.com/git/_build/results?buildId=14279
+
+For a quicker turnaround, you could add a commit that forces the `all`
+target in `t/Makefile` to run only your test.
+
+> When I do that, the relevant parts are:
 > 
-> We are extremely shallow compared to projects like the kernel and
-> stuff from java land, so that is quite an interesting find.
+>   packet:        fetch> have 9ab46928dc282aa09f4dbf96893a252e058e7e8e
+>   packet:        fetch> have dc824fafb05f3229aedf1f320bbe572e35364dfe
+>   packet:        fetch> have caef059de69917b9119176a11b88afcef769331d
+>   packet:        fetch> have 41bd8dc092ee110ba80e350a346ec507ab2e42a0
+>   packet:        fetch> have e9a2c092a8e911567a377c881a7f6031e7f892ea
+>   packet:        fetch> done
 > 
+> which is exactly as I (and the test) expect.
+> 
+> Two possible reasons for the discrepancy that I can think of offhand are
+> that (1) my computer generates different commits from your test system,
+> and (2) the priority queue pops commits in a different order. For (1),
+> that's not possible because the SHA-1s are the same (as can be seen by
+> comparing your link and the "have" lines I quoted above), and for (2),
+> the code seems OK:
+> 
+>   static int compare(const void *a_, const void *b_, void *unused)
+>   {
+>   	const struct entry *a = a_;
+>   	const struct entry *b = b_;
+>   	return compare_commits_by_commit_date(a->commit, b->commit, NULL);
+>   }
+> 
+> Let me know if you can observe the output of "cat trace" or if you have
+> any other ideas.
 
-Yeah. I've got a more or less complete patch now with full test suite
-passed and even with linux.git, the numbers look pretty good.
+Like I said, you can use those "CI" builds, I think that would be more
+effective than if you waited for me to react, I am quite overwhelmed these
+days.
 
-Ben, is it possible for you to try this one out? I don't suppose it
-will be that good on a real big repo. But I'm curious how much faster
-could this patch does.
-
-I'm quite happy that I don't have to make specific code for twoway
-merge, which means this patch would also help real merges (3way)
-too. Interestingly this also helps reduce traverse_trees() when
-diff_index_cached optimization is on. I have no idea how but
-well.. can't complain.
-
--- 8< --
-Subject: [PATCH] unpack-trees: optimize walking same trees with cache-tree
-
-In order to merge one or many trees with the index, unpack-trees code
-walk multiple trees in parallel with the index and perform n-way
-merge. If we find out at start of a directory that all trees are the
-same (by comparing OID) and cache-tree happens to be available for
-that directory as well, we could avoid walking the trees.
-
-One nice attribute of cache-tree (and the index) is that the tree is
-only flattened (and it's called "the index") and we know how many
-files that directory has. With this information, we could avoid
-accessing object database to walk tree objects and just take the
-entries from the index instead.
-
-The upside is of course a lot less I/O since we can potentially skip
-lots of trees (think subtrees). We also save CPU because we don't have
-to inflate and the apply deltas. The downside is of course more
-fragile code since the logic in some functions are now duplicated
-elsewhere.
-
-WIth this patch, switching between two trees on linux.git where
-there's only one file changed (toplevel Makefile) seems sped up pretty
-good. Total checkout time goes down from 0.543 to 0.352 (35%).
-traverse_trees() one twoway merge (the big one in unpack_trees()) goes
-from 0.157s to 0.036 (70%).
-
-Note that compared to diff_index_cached optimization (which is very
-similar to this) we do more work here. This is because diff_index_cached
-only cares about side effect, it does not modify the index, so we can
-quickly jump through a big chunk of cache entries. For n-way merge, we
-need to add entries and verify stuff, so more CPU cycles.
-
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- unpack-trees.c | 125 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 125 insertions(+)
-
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 66741130ae..9c791b55b2 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -642,6 +642,110 @@ static inline int are_same_oid(struct name_entry *name_j, struct name_entry *nam
- 	return name_j->oid && name_k->oid && !oidcmp(name_j->oid, name_k->oid);
- }
- 
-+static int all_trees_same_as_cache_tree(int n, unsigned long dirmask,
-+					struct name_entry *names,
-+					struct traverse_info *info)
-+{
-+	struct unpack_trees_options *o = info->data;
-+	int i;
-+
-+	if (dirmask != ((1 << n) - 1) || !S_ISDIR(names->mode) || !o->merge)
-+		return 0;
-+
-+	for (i = 1; i < n; i++)
-+		if (!are_same_oid(names, names + i))
-+			return 0;
-+
-+	return cache_tree_matches_traversal(o->src_index->cache_tree, names, info);
-+}
-+
-+/*
-+ * Fast path if we detect that all trees are the same as cache-tree at this
-+ * path. We'll walk these trees recursively using cache-tree/index instead of
-+ * ODB since already know what these trees contain.
-+ */
-+static int traverse_by_cache_tree(int pos, int nr_entries, int nr_names,
-+				  struct name_entry *names,
-+				  struct traverse_info *info)
-+{
-+	struct cache_entry *src[MAX_UNPACK_TREES + 1] = { NULL, };
-+	struct unpack_trees_options *o = info->data;
-+	int i, d;
-+
-+	/*
-+	 * Do what unpack_callback() and unpack_nondirectories() normally
-+	 * do. But we do it in one function call (for even nested trees)
-+	 * instead.
-+	 *
-+	 * D/F conflicts and staged entries are not a concern because cache-tree
-+	 * would be invalidated and we would never get here in the first place.
-+	 */
-+	for (i = 0; i < nr_entries; i++) {
-+		struct cache_entry *tree_ce;
-+		int len, rc;
-+
-+		src[0] = o->src_index->cache[pos + i];
-+
-+		/* Do what unpack_nondirectories() normally does */
-+		len = ce_namelen(src[0]);
-+		tree_ce = xcalloc(1, cache_entry_size(len));
-+
-+		tree_ce->ce_mode = src[0]->ce_mode;
-+		tree_ce->ce_flags = create_ce_flags(0);
-+		tree_ce->ce_namelen = len;
-+		oidcpy(&tree_ce->oid, &src[0]->oid);
-+		memcpy(tree_ce->name, src[0]->name, len + 1);
-+
-+		for (d = 1; d <= nr_names; d++)
-+			src[d] = tree_ce;
-+
-+		rc = call_unpack_fn((const struct cache_entry * const *)src, o);
-+		free(tree_ce);
-+		if (rc < 0)
-+			return rc;
-+
-+		mark_ce_used(src[0], o);
-+	}
-+	trace_printf("Quick traverse over %d entries from %s to %s\n",
-+		     nr_entries,
-+		     o->src_index->cache[pos]->name,
-+		     o->src_index->cache[pos + nr_entries - 1]->name);
-+	return 0;
-+}
-+
-+static int index_pos_by_traverse_info(struct name_entry *names,
-+				      struct traverse_info *info)
-+{
-+	struct unpack_trees_options *o = info->data;
-+	int len = traverse_path_len(info, names);
-+	char *name = xmalloc(len + 1);
-+	int pos;
-+
-+	make_traverse_path(name, info, names);
-+	pos = index_name_pos(o->src_index, name, len);
-+	if (pos >= 0)
-+		BUG("This is so wrong. This is a directory and should not exist in index");
-+	pos = -pos - 1;
-+	/*
-+	 * There's no guarantee that pos points to the first entry of the
-+	 * directory. If the directory name is "letters" and there's another
-+	 * file named "letters.txt" in the index, pos will point to that file
-+	 * instead.
-+	 */
-+	while (pos < o->src_index->cache_nr) {
-+		const struct cache_entry *ce = o->src_index->cache[pos];
-+		if (ce_namelen(ce) > len &&
-+		    ce->name[len] == '/' &&
-+		    !memcmp(ce->name, name, len))
-+			break;
-+		pos++;
-+	}
-+	if (pos == o->src_index->cache_nr)
-+		BUG("This is still wrong");
-+	free(name);
-+	return pos;
-+}
-+
- static int traverse_trees_recursive(int n, unsigned long dirmask,
- 				    unsigned long df_conflicts,
- 				    struct name_entry *names,
-@@ -653,6 +757,17 @@ static int traverse_trees_recursive(int n, unsigned long dirmask,
- 	void *buf[MAX_UNPACK_TREES];
- 	struct traverse_info newinfo;
- 	struct name_entry *p;
-+	int nr_entries;
-+
-+	nr_entries = all_trees_same_as_cache_tree(n, dirmask, names, info);
-+	if (nr_entries > 0) {
-+		struct unpack_trees_options *o = info->data;
-+		int pos = index_pos_by_traverse_info(names, info);
-+
-+		if (!o->merge || df_conflicts)
-+			BUG("Wrong condition to get here buddy");
-+		return traverse_by_cache_tree(pos, nr_entries, n, names, info);
-+	}
- 
- 	p = names;
- 	while (!p->mode)
-@@ -812,6 +927,11 @@ static struct cache_entry *create_ce_entry(const struct traverse_info *info, con
- 	return ce;
- }
- 
-+/*
-+ * Note that traverse_by_cache_tree() duplicates some logic in this funciton
-+ * without actually calling it. If you change the logic here you may need to
-+ * check and change there as well.
-+ */
- static int unpack_nondirectories(int n, unsigned long mask,
- 				 unsigned long dirmask,
- 				 struct cache_entry **src,
-@@ -996,6 +1116,11 @@ static void debug_unpack_callback(int n,
- 		debug_name_entry(i, names + i);
- }
- 
-+/*
-+ * Note that traverse_by_cache_tree() duplicates some logic in this funciton
-+ * without actually calling it. If you change the logic here you may need to
-+ * check and change there as well.
-+ */
- static int unpack_callback(int n, unsigned long mask, unsigned long dirmask, struct name_entry *names, struct traverse_info *info)
- {
- 	struct cache_entry *src[MAX_UNPACK_TREES + 1] = { NULL, };
--- 
-2.18.0.656.gda699b98b3
-
--- 8< --
---
-Duy
+Ciao,
+Dscho
