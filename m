@@ -7,44 +7,44 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E70E1F597
-	for <e@80x24.org>; Fri, 27 Jul 2018 17:53:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D4FA1F597
+	for <e@80x24.org>; Fri, 27 Jul 2018 18:01:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388967AbeG0TQB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jul 2018 15:16:01 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:39702 "EHLO
+        id S2389167AbeG0TX6 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jul 2018 15:23:58 -0400
+Received: from mail-io0-f193.google.com ([209.85.223.193]:36822 "EHLO
         mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388739AbeG0TQA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jul 2018 15:16:00 -0400
-Received: by mail-io0-f193.google.com with SMTP id o22-v6so4804346ioh.6
-        for <git@vger.kernel.org>; Fri, 27 Jul 2018 10:53:02 -0700 (PDT)
+        with ESMTP id S2389064AbeG0TX6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jul 2018 15:23:58 -0400
+Received: by mail-io0-f193.google.com with SMTP id r15-v6so4817286ioa.3
+        for <git@vger.kernel.org>; Fri, 27 Jul 2018 11:00:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=KIv7jHC95FqAb+7flLGW0uxIaskvsLBhLGAECxDKAYA=;
-        b=GwuUaAYLsuUeffrKtravGP3HWO8Hyrg/EaotpMSue0/VeVgVpUfY3kS/lRCJz0hodF
-         7BgUqwQraD6cnhcHcFsPuPmdncvSaWqvxz7CIhI1eK1Wl6e/kiHTXZnNBCYh4IaCpNkK
-         O895251EA56Wx74YTy+EiiwXvav/+M64ssJMozJMKDdXWNnUsw4jV/uzjx6MS3kYuAoT
-         fSvq9xFVvTXS8mYzOiK1q2RO7O/jj24ryFjK6IaAovJ0LAQDDkf7YRoT90EvSBkY7JAd
-         2a891BClQk7x9/zQFzpgNA7+meTUzfyc+3ms2S0Nf5ZUKBqcC4T7UAxEB97RkFFw47uC
-         S0bw==
+        bh=8lktsVcOpPSPiG0M8HeQCQsiyuwvFfhKyuWDlegdbCI=;
+        b=YRSd6EgYr7eIUtLP1IokS71eUjKcwtwJYW/k6asxc8/HJBGPnkcDizvU0SjAe7/fOU
+         Cnlle/BCgyxmZnsw3cWG8kDeQTMnF0zKIMZOMGfTnCek2hUUSxuMQb23zKSfwGNkpnGU
+         /oF2qC8WuiG2wwUm9mtRcDGsmc7w65uQoaYaG2pmooOR58NggWroYeYc/XN6vUxP3z3l
+         3VqZfb0gZdO0moCpgftYUIO2jIRIF9AoAJVisBdhmgpmXM+zXGPEL4yOZQRYxIcwH6j4
+         Q+czGjcJ1MCzJo1FPj6UIvaX5RBaZBS47PBPrImYNIDRSrqNk+9qBgm4nAgx11qLKGDM
+         17IA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=KIv7jHC95FqAb+7flLGW0uxIaskvsLBhLGAECxDKAYA=;
-        b=JI4KbnMzmwZhTI4aSIiFt6/4GBAZvH7z6ZlTodQVNVSOX7veyoTZoAHXv248UgSmPc
-         r+87fpuxo8pMlIr7p2/+g0ZrqelTb7eXaeEMgWTn4h3npL0uW/nV+xdY5HJ5xE/s8Mrm
-         aEqCXJ/NC+V4/uzYuazYa15zWLNeKWB2worleWfvKOiupgkNkd/B0+iUXP3HvQDx7GX5
-         hFrL0dLjsJ2DFYYXbEbgE0a7dT1KiYuFl0K/b0a04arG0cNoTrpNc9XSSUmbjyC5Bb2M
-         ffHSLbHyb3TRm5YCkZzjPNjw09a3sZ4OT2fI+7LZyn+T1nTDHLWy+yj0Vq3RBmUkkIJw
-         d/cQ==
-X-Gm-Message-State: AOUpUlGP/sAYAWqwbx8TL1qEhARzWKZjYNXBTQy+IL1OoYT6PUd1ETQn
-        0YhtSg6ove5lHDZ3l5GlPbM+qfBTuVQQ3yksi70=
-X-Google-Smtp-Source: AAOMgpfGCHGfiUpbeWzSF4fgTTYmwm6HelombfgrpMG+Z9uNA54VUztJ3e9cTFKW8yHzTkQ2NUetU9fkJsCfPuBnFLY=
-X-Received: by 2002:a6b:a2cf:: with SMTP id l198-v6mr5499929ioe.282.1532713981603;
- Fri, 27 Jul 2018 10:53:01 -0700 (PDT)
+        bh=8lktsVcOpPSPiG0M8HeQCQsiyuwvFfhKyuWDlegdbCI=;
+        b=G2xY2K5Su9f9iHPWqymvANWwcPBo0lz2htGwB/Y7o29tkqdun42M6kFt0vhaleKbe2
+         y+vfcdJL+r+z4lIxAgbSPusSuhuThRGKwtjN1hDjMrzt38yKZQa44PhRoKMwyuAUlQLI
+         IdI+2IdHzlLelrzgvdnPp/tT2tS+zyW7W23gyP75LVWWXbOdccKjA7QDGVjVTuVZaAnP
+         diKq/+CcuQPAuUFaQcn+S9E8YO8PgCxVZV5cSkR1X9/oeVlUWCKyzUrjK47ci6aAdWB5
+         XyhCz8S+W7yTJSc8TEmRrJzmN6zUn3SZTZw+ooFur+7Xum9ztZKYB5z46CWUEM8zAF55
+         0iQQ==
+X-Gm-Message-State: AOUpUlHwQAoo9RTwWEunOKM+ebmwYXeb44AWH7msnHv8u1D6j073iRQl
+        fRNoV7zqJ6oTSfv0dtDZy7YE5Ysl4s4+6SNrJhA=
+X-Google-Smtp-Source: AAOMgpfCHR6c12T9cWlHrGfYiUDun5poN8T9yxpuo72ntk8sQ/bjvJ2b4bnu5EMtjGRxEmR6OACw3KyxFDtwf8oan+o=
+X-Received: by 2002:a6b:a2cf:: with SMTP id l198-v6mr5520421ioe.282.1532714458097;
+ Fri, 27 Jul 2018 11:00:58 -0700 (PDT)
 MIME-Version: 1.0
 References: <20180718213420.GA17291@sigill.intra.peff.net> <a2ad0044-f317-69f7-f2bb-488111c626fb@gmail.com>
  <CACsJy8D-3sSnoyQZKxeLK-2RmpJSGkziAp5Gf4QpUnxwnhchSQ@mail.gmail.com>
@@ -52,14 +52,14 @@ References: <20180718213420.GA17291@sigill.intra.peff.net> <a2ad0044-f317-69f7-f
  <CACsJy8Du28jMyfdyhxpVxyw5+Xh+9eX==3x8YJSnmw6GAoRhTA@mail.gmail.com>
  <0102d204-8be7-618a-69f4-9f924c4e6731@gmail.com> <CACsJy8AWcHVYNBZGRUTdcg8FmwOGz3MSUHH+3uVSGrg6MMZMng@mail.gmail.com>
  <20180726163049.GA15572@duynguyen.home> <xmqqd0v9pyzu.fsf@gitster-ct.c.googlers.com>
- <20180727154241.GA21288@duynguyen.home> <xmqqpnz8ob2x.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqpnz8ob2x.fsf@gitster-ct.c.googlers.com>
+ <20180727154241.GA21288@duynguyen.home> <434074a8-1045-8c8f-da0c-873436acf40e@gmail.com>
+In-Reply-To: <434074a8-1045-8c8f-da0c-873436acf40e@gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 27 Jul 2018 19:52:33 +0200
-Message-ID: <CACsJy8CeF53pA8jfVcY+50-Y_HLm0KkzWvDcTgGV0692hsTHZA@mail.gmail.com>
+Date:   Fri, 27 Jul 2018 20:00:31 +0200
+Message-ID: <CACsJy8DOhfjMWAb4hP6aoBS6i6DyPuJqj7w2qC3hndo=gy5=zg@mail.gmail.com>
 Subject: Re: [PATCH v1 0/3] [RFC] Speeding up checkout (and merge, rebase, etc)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Ben Peart <peartben@gmail.com>, Jeff King <peff@peff.net>,
+To:     Ben Peart <peartben@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Ben Peart <Ben.Peart@microsoft.com>,
         Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
@@ -68,184 +68,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 27, 2018 at 7:14 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Fri, Jul 27, 2018 at 6:22 PM Ben Peart <peartben@gmail.com> wrote:
 >
-> Duy Nguyen <pclouds@gmail.com> writes:
 >
-> > diff --git a/unpack-trees.c b/unpack-trees.c
-> > index 66741130ae..9c791b55b2 100644
-> > --- a/unpack-trees.c
-> > +++ b/unpack-trees.c
-> > @@ -642,6 +642,110 @@ static inline int are_same_oid(struct name_entry *name_j, struct name_entry *nam
-> >       return name_j->oid && name_k->oid && !oidcmp(name_j->oid, name_k->oid);
-> >  }
+>
+> On 7/27/2018 11:42 AM, Duy Nguyen wrote:
+> > On Thu, Jul 26, 2018 at 12:40:05PM -0700, Junio C Hamano wrote:
+> >> Duy Nguyen <pclouds@gmail.com> writes:
+> >>
+> >>> I'm excited so I decided to try out anyway. This is what I've come up
+> >>> with. Switching trees on git.git shows it could skip plenty entries,
+> >>> so promising. It's ugly and it fails at t6020 though, there's still
+> >>> work ahead. But I think it'll stop here.
+> >>
+> >> We are extremely shallow compared to projects like the kernel and
+> >> stuff from java land, so that is quite an interesting find.
+> >>
 > >
-> > +static int all_trees_same_as_cache_tree(int n, unsigned long dirmask,
-> > +                                     struct name_entry *names,
-> > +                                     struct traverse_info *info)
-> > +{
-> > +     struct unpack_trees_options *o = info->data;
-> > +     int i;
-> > +
-> > +     if (dirmask != ((1 << n) - 1) || !S_ISDIR(names->mode) || !o->merge)
-> > +             return 0;
+> > Yeah. I've got a more or less complete patch now with full test suite
+> > passed and even with linux.git, the numbers look pretty good.
+> >
+> > Ben, is it possible for you to try this one out? I don't suppose it
+> > will be that good on a real big repo. But I'm curious how much faster
+> > could this patch does.
+> >
 >
-> In other words, punt if (1) not all are directories, (2) the first
-> name entry given by the caller in names[] is not ISDIR(), or (3) we
-> are not merging i.e. not "Are we supposed to look at the index too?"
-> in unpack_callback().
+> Thanks Duy.  I'm super excited about this so did a quick and dirty
+> manual perf test.
 >
-> I am not sure if the second one is doing us any good.  When
-> S_ISDIR(names->mode) is not true, then the bit in dirmask that
-> corresponds to the one in the entry[] traverse_trees() filled and
-> passed to us must be zero, so the dirmask check would reject such a
-> case anyway, no?
-
-You're right. This code kinda evolved from the diff_index_cached and I
-forgot about this.
-
-> > +     for (i = 0; i < nr_entries; i++) {
-> > +             struct cache_entry *tree_ce;
-> > +             int len, rc;
-> > +
-> > +             src[0] = o->src_index->cache[pos + i];
-> > +
-> > +             /* Do what unpack_nondirectories() normally does */
-> > +             len = ce_namelen(src[0]);
-> > +             tree_ce = xcalloc(1, cache_entry_size(len));
+> I ran "git checkout" 5 times, discarded the first 2 runs and averaged
+> the last 3 with and without this patch on top of VFSForGit in a large repo.
 >
-> unpack_nondirectories() uses create_ce_entry() here.  Any reason why
-> we shouldn't use it and tell it to make a transient one?
-
-That one takes a struct name_entry to recreate the path, which will
-not be correct since we will go deep in subdirs in this loop as well.
-
-Side note. I notice that I allocate/free (and memcpy even) more than I
-should. The directory part in ce->name for example will never change.
-And if the old tree_ce is large enough, we could avoid reallocation
-too.
-
-> > +             tree_ce->ce_mode = src[0]->ce_mode;
-> > +             tree_ce->ce_flags = create_ce_flags(0);
-> > +             tree_ce->ce_namelen = len;
-> > +             oidcpy(&tree_ce->oid, &src[0]->oid);
-> > +             memcpy(tree_ce->name, src[0]->name, len + 1);
-> > +
-> > +             for (d = 1; d <= nr_names; d++)
-> > +                     src[d] = tree_ce;
-> > +
-> > +             rc = call_unpack_fn((const struct cache_entry * const *)src, o);
-> > +             free(tree_ce);
-> > +             if (rc < 0)
-> > +                     return rc;
-> > +
-> > +             mark_ce_used(src[0], o);
-> > +     }
-> > +     trace_printf("Quick traverse over %d entries from %s to %s\n",
-> > +                  nr_entries,
-> > +                  o->src_index->cache[pos]->name,
-> > +                  o->src_index->cache[pos + nr_entries - 1]->name);
-> > +     return 0;
-> > +}
+> Without this patch average times were 16.97
+> With this patch average times were 10.55
 >
-> When I invented the cache-tree originally, primarily to speed up
-> writing of deeply nested trees, I had the "diff-index --cached"
-> optimization where a subtree with contents known to be the same as
-> the corresponding span in the index is entirely skipped without
-> getting even looked at.  I didn't realize this (now obvious)
-> optimization that scanning the index is faster than opening and
-> traversing trees (I was more focused on not even scanning, which
-> is what "diff-index --cached" optimization was about).
->
-> Nice.
+> That is a significant improvement!
 
-I would still love to take this further. We should have cache-tree for
-like 90% of HEAD, and even if we do 2 or 3 merge where the other trees
-are very different, we should be able to just "recreate" HEAD from the
-index by using cache-tree.
+Meh! Junio cut down time to like 1/5th in b65982b608 (Optimize
+"diff-index --cached" using cache-tree - 2009-05-20). This is not
+enough!
 
-This is hard though, much trickier than dealing with this case. And I
-guess that the benefit will be much smaller so probably not worth the
-complexity.
-
-> > +static int index_pos_by_traverse_info(struct name_entry *names,
-> > +                                   struct traverse_info *info)
-> > +{
-> > +     struct unpack_trees_options *o = info->data;
-> > +     int len = traverse_path_len(info, names);
-> > +     char *name = xmalloc(len + 1);
-> > +     int pos;
-> > +
-> > +     make_traverse_path(name, info, names);
-> > +     pos = index_name_pos(o->src_index, name, len);
-> > +     if (pos >= 0)
-> > +             BUG("This is so wrong. This is a directory and should not exist in index");
-> > +     pos = -pos - 1;
-> > +     /*
-> > +      * There's no guarantee that pos points to the first entry of the
-> > +      * directory. If the directory name is "letters" and there's another
-> > +      * file named "letters.txt" in the index, pos will point to that file
-> > +      * instead.
-> > +      */
->
-> Is this trying to address the issue o->cache_bottom,
-> next_cache_entry(), etc. are trying to address?  i.e. an entry
-> "letters" appears at a different place relative to other entries in
-> a tree, depending on the type of the entry itself, so linear and
-> parallel scan of the index and the trees may miss matching entries
-> without backtracking?  If so, I am not sure if the loop below is
-> sufficient.
-
-No it's because index_name_pos does not necessarily give us the right
-starting point. This is why t6020 fails, where the index has "letters"
-and "letters/foo" when the cache-tree for "letters" is valid. -pos-1
-would give me the position of "letters", not "letters/foo". Ideally we
-should be able to get this starting index from cache-tree code since
-we're searching for it in there anyway. Then this code could be gone.
-
-The cache_bottom stuff still scares me though. I reuse mark_ce_used()
-with hope that it deals with cache_bottom correctly. And as you note,
-the lookahead code to deal with D/F conflicts could probably mess up
-here too. You're probably the best one to check this ;-)
-
-> > +     while (pos < o->src_index->cache_nr) {
-> > +             const struct cache_entry *ce = o->src_index->cache[pos];
-> > +             if (ce_namelen(ce) > len &&
-> > +                 ce->name[len] == '/' &&
-> > +                 !memcmp(ce->name, name, len))
-> > +                     break;
-> > +             pos++;
-> > +     }
-> > +     if (pos == o->src_index->cache_nr)
-> > +             BUG("This is still wrong");
-> > +     free(name);
-> > +     return pos;
-> > +}
-> > +
->
-> In anycase, nice progress.
-
-Just FYI I'm still trying to reduce execution time further and this
-change happens to half traverse_trees() time (which is a huge deal)
-
-diff --git a/unpack-trees.c b/unpack-trees.c
-index f0be9f298d..a2e63ad5bf 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -201,7 +201,7 @@ static int do_add_entry(struct
-unpack_trees_options *o, struct cache_entry *ce,
-
-        ce->ce_flags = (ce->ce_flags & ~clear) | set;
-        return add_index_entry(&o->result, ce,
--                              ADD_CACHE_OK_TO_ADD | ADD_CACHE_OK_TO_REPLACE);
-+                              ADD_CACHE_JUST_APPEND |
-ADD_CACHE_OK_TO_ADD | ADD_CACHE_OK_TO_REPLACE);
- }
-
- static struct cache_entry *dup_entry(const struct cache_entry *ce)
-
-It's probably not the right thing to do of course. But perhaps we
-could do something in that direction (e.g. validate everything at the
-end of traverse_by_cache_tree...)
+OK i'm kidding :) I'd like to see you measure traverse_trees like in
+your first mail though. Total checkout number is nice and all but I
+still like to see exactly how much time is reduced in traverse_trees()
+alone (or unpack_trees() to be precise). That would give me a much
+better picture of this unpacking business.
 -- 
 Duy
