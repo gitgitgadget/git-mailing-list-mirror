@@ -2,105 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C82C21F597
-	for <e@80x24.org>; Fri, 27 Jul 2018 17:19:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 64A341F597
+	for <e@80x24.org>; Fri, 27 Jul 2018 17:22:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731568AbeG0Sme (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jul 2018 14:42:34 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:40071 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728650AbeG0Smd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jul 2018 14:42:33 -0400
-Received: by mail-pg1-f193.google.com with SMTP id x5-v6so3599841pgp.7
-        for <git@vger.kernel.org>; Fri, 27 Jul 2018 10:19:43 -0700 (PDT)
+        id S2388332AbeG0SpM (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jul 2018 14:45:12 -0400
+Received: from mail-yw0-f196.google.com ([209.85.161.196]:40087 "EHLO
+        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728650AbeG0SpL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jul 2018 14:45:11 -0400
+Received: by mail-yw0-f196.google.com with SMTP id z143-v6so2128297ywa.7
+        for <git@vger.kernel.org>; Fri, 27 Jul 2018 10:22:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=soFJ3mfSrtbrtiVktAdEkXumO7pjnhNjEmsvD9LjGEM=;
-        b=cM+8fSOGs/eHwV2byhsuZ7ZV/KRyldemLfJkrk8jR9QsC4m3p5ZdsvzYyFTrBRUBck
-         MoVFroLFipNKph6ctq788RnKJp8DywUVd1kcde13pWU9f2Wfw0tC/7lyVskpqn7v+8GF
-         T697Ab4o5DGwcE0tKos+3L8wbgRxHjccVCtRq4ulYNQ9LRFcLn1CnEMTvwSOTCBcUK+S
-         kLwPTdqtsS1XlOMlaZUR8HUrM3m5TXV8RBotOtBWWq36RbSNeVTHjasx6wwdS55I3RMP
-         a2xDbEZWHpD+BcquyKy2Yly9pj9iWULDnPd/+vkfvBy/cuaGNWC6aWdRUxVvKdv+ZIBG
-         vczg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=NCk9OBE0aok5bmSfKQqXbdaaftwcxy/CeYoZP5C3sTQ=;
+        b=mQcdmdD/0H8t3hmrRyc4ENgo6FTdEiHIpMkj5N5Gh0SRVrBFTHuIQJDVVkSjAj5o1Y
+         gXKb0W3ynN8vcnY9VUkI37aEL7hPT3z7j7cT4bX2IwiDKVSXPQ1S3gv9Tq1xGC1ZRLqM
+         71zcFsUmR8Bg9Tgdr+/oMpy8QqJuTVCeYmQ2mMHul+OKAY+nvnbxlp/DFfzvhrDxAKHL
+         g5ZmNaKqqslO3vR4xcPj3yFlWu/NIRLARCGWBmJPDbxsc+AUd480uM6XKydwiN+QzUWr
+         NQk5PltsxeizUx0B3KaU90/h53ywYGuWPj2aOdjDEueOF8wdJS+d0MvxESMDLu8CKHuY
+         4wqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=soFJ3mfSrtbrtiVktAdEkXumO7pjnhNjEmsvD9LjGEM=;
-        b=mOMjd5I/rg5Tscdj9dldE+S+VKvjwK7MPsd7TK7sYBV5XA5xSh7EQ5k5CU4QPki+r0
-         5kPlVUtu4hVOhbLv9/zO+7DLYM6xEpboIxGA88bYavsqnxA1qWcyyQgtPFuqUpFVGvWv
-         rphWFyImgVb8e5zPiX6jxOQeoDI4EhPn2xl2tV4c+3k5It3S6tsietoNVWKYbhBmM6zV
-         rdBZl1yL+ISzgWvpz/52BG2Uag+fJ9i/vwNdyNa1SjxNtTwZ4YUgaL15FKrhPbdkgexn
-         cBiyqwwNneH+bZSpj0zv9sXg9wFwgVRDoGvH094pfIPbmhIoNRtbSvtAhzMXRvw03Ojn
-         ZWPg==
-X-Gm-Message-State: AOUpUlHcq4pY4DLI1iTQq1aoR9ilrM6muTIaIfiZ1OYQHMdFrsQjc5MS
-        V5lAqaMm2bqiD6vM+8FOp8bAFA==
-X-Google-Smtp-Source: AAOMgpcldRQa8ZTz8dH0HmoukHnCRZQstnhNS/9uhVl+lFMqICWqB2LhhjEF6E10vkQqW6E9CjM6LQ==
-X-Received: by 2002:a62:ccd0:: with SMTP id j77-v6mr7532969pfk.22.1532711983178;
-        Fri, 27 Jul 2018 10:19:43 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id r22-v6sm8699104pfl.112.2018.07.27.10.19.41
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 27 Jul 2018 10:19:42 -0700 (PDT)
-Date:   Fri, 27 Jul 2018 10:19:41 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 2/3] refs: introduce new API, wrap old API shallowly
- around new API
-Message-ID: <20180727171941.GA109508@google.com>
-References: <20180727003640.16659-1-sbeller@google.com>
- <20180727003640.16659-3-sbeller@google.com>
- <CACsJy8Ae3sZvOQ3irQM+hv0fCRchGi8995kvLZBadbaphRo-3A@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=NCk9OBE0aok5bmSfKQqXbdaaftwcxy/CeYoZP5C3sTQ=;
+        b=AEz5/n7A9zi/j/t95106feHHzw37N6boTt2x9auONWhyg42ifu2LtzY/4wdlYD4inE
+         XGEZ0xPhtJKMAcn4fyg6SDVaWJdA1V+vVy+He84Q9f5LwvYtlqACsmWJKl6n48wppoam
+         eQXjdf+cEm8xyITuGSwmytVM6bpd2dkkPOWNXSCfI6iqfdRoLXScfgq/UwZFaPy204G4
+         0kj+4bIEEbXFGZcZlQ1QLLDUKu8DdWi1WgxyE+QgewzFaj+f8x8xYLOYR1nsX0c81TbQ
+         Xxrtbdx06ZHzchhg3+WrDoGYkGzaCpDvwsjanAi9AEbV/4tl+25CLgimvFJ9vvHZdoHB
+         LJ/Q==
+X-Gm-Message-State: AOUpUlHS6iTb40LociTrXBRMWQXwhcFt/WN6PFhAiKdwxotKBa75UGjB
+        Hn4V+NCVgS3hxBtOjhEyeI6s6LoBavmriPjbiWqtOD6E6dw=
+X-Google-Smtp-Source: AAOMgpeeiFgm8eaKOxLi/O2XnoEWyck1WhmiDXsEWhnsfVuuqjC6qFhoEZmfQNeb73Npt+jG/06I3GhPRyx3Sic2Bp8=
+X-Received: by 2002:a0d:c5c7:: with SMTP id h190-v6mr3923007ywd.421.1532712140281;
+ Fri, 27 Jul 2018 10:22:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACsJy8Ae3sZvOQ3irQM+hv0fCRchGi8995kvLZBadbaphRo-3A@mail.gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+References: <20180722054836.28935-1-chriscool@tuxfamily.org>
+ <20180722054836.28935-4-chriscool@tuxfamily.org> <CAGZ79kbF7g3E4hBa0VqMqBoovbAb2dHaGFNRL=+f7Lce1AduVg@mail.gmail.com>
+ <20180724095843.GB3578@sigill.intra.peff.net> <CAGZ79kZkagveB+jG9iLQ2ohaSfAzY5YtWC=BTdD1o9OQUrw90Q@mail.gmail.com>
+ <20180727131333.GC18599@sigill.intra.peff.net>
+In-Reply-To: <20180727131333.GC18599@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 27 Jul 2018 10:22:09 -0700
+Message-ID: <CAGZ79kYK3QkaSEinuq_Js5thVgY2-MyrN60W-Dws1p4eK73hHw@mail.gmail.com>
+Subject: Re: [RFC PATCH 3/5] pack-objects: add delta-islands support
+To:     Jeff King <peff@peff.net>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07/27, Duy Nguyen wrote:
-> On Fri, Jul 27, 2018 at 2:40 AM Stefan Beller <sbeller@google.com> wrote:
-> >
-> > Currently the refs API takes a 'ref_store' as an argument to specify
-> > which ref store to iterate over; however it is more useful to specify
-> > the repository instead (or later a specific worktree of a repository).
-> 
-> There is no 'later'. worktrees.c already passes a worktree specific
-> ref store. If you make this move you have to also design a way to give
-> a specific ref store now.
-> 
-> Frankly I still dislike the decision to pass repo everywhere,
-> especially when refs code already has a nice ref-store abstraction.
-> Some people frown upon back pointers. But I think adding a back
-> pointer in ref-store, pointing back to the repository is the right
-> move.
+On Fri, Jul 27, 2018 at 6:13 AM Jeff King <peff@peff.net> wrote:
+>
+> On Tue, Jul 24, 2018 at 10:20:05AM -0700, Stefan Beller wrote:
+>
+> > So in my understanding we have a "common base pack" and specific
+> > packs on top for each "island".
+>
+> Sort of. This is another hacky part. The islands themselves are
+> generally just about forbidding deltas, and not any particular kind of
+> layering.
+>
+> But there's some magic layering only for the "core" island, which gets
+> to go first (and makes a sort of pseudo-pack at the front of the one
+> pack). And then everything else is written willy nilly. This is a hack
+> to try to make the "blit the pack bytes out" code path for cloning fast.
 
-I don't quite understand why the refs code would need a whole repository
-and not just the ref-store it self.  I thought the refs code was self
-contained enough that all its state was based on the passed in
-ref-store.  If its not, then we've done a terrible job at avoiding
-layering violations (well actually we're really really bad at this in
-general, and I *think* we're trying to make this better though the
-object store/index refactoring).
+yup, I do understand its purpose; we had the same discussions here
+for the JGit based hosting.
 
-If anything I would expect that the actual ref-store code would remain
-untouched by any refactoring and that instead the higher-level API that
-hasn't already been converted to explicitly use a ref-store (and instead
-just calls the underlying impl with get_main_ref_store()).  Am I missing
-something here?
+So you are saying island hopping is disallowed, but the core island
+has an airport using the spokes system to reach all other islands?
+(I described the core island as sea bed before). Sounds reasonable.
 
--- 
-Brandon Williams
+> So no, we don't really layer in any sane way. If pack-objects were fed
+> the topological relationships between the forks, in theory we could
+> create a layered packfile that respects that.
+>
+> But even that is not quite enough. At the time of forking, you might
+> imagine that torvalds/linux has the base pack, and then somebody forks
+> from them and contains all of those objects plus more, and somebody
+> forks from them, and so on. But that's just a snapshot. Later
+> torvalds/linux will get a bunch of new objects pushed to it. And some of
+> its forks will merge those objects, too. But some of them will just rot,
+> abandoned, as nobody ever touches them again.
+>
+> So I don't think there's much to be gained by paying attention to the
+> external forking relationships. We have to discover afresh the
+> relationships between objects, and which refs (and thus which islands)
+> point to them.
+>
+> One thing I don't think we ever tried was doubling down on the
+> islandCore concept and making the "root" fork as tightly packed as it
+> could be (with the assumption that _most_ people grab that). And then
+> just respect the islands for all the other objects (remember this is an
+> optimization, so the worst case is somebody asks for an object during a
+> fetch and we have to throw away its on-disk delta).
+>
+> That would solve the problem that fetching torvalds/linux from GitHub
+> yields a bigger pack than fetching it from kernel.org. But again, it's
+> making that root fork weirdly magical. People who fetch solely from
+> other forks won't get any benefit (and may even see worse packs).
+
+Thanks for the explanation.
+I think this discussion just hints at me being dense reading the
+documentation. After all I like the concept.
+
+Thanks,
+Stefan
