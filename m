@@ -7,59 +7,59 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4DB851F597
-	for <e@80x24.org>; Fri, 27 Jul 2018 21:57:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32F0F208E9
+	for <e@80x24.org>; Fri, 27 Jul 2018 22:00:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389879AbeG0XVU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jul 2018 19:21:20 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:44464 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389770AbeG0XVU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jul 2018 19:21:20 -0400
-Received: by mail-pg1-f195.google.com with SMTP id r1-v6so3948595pgp.11
-        for <git@vger.kernel.org>; Fri, 27 Jul 2018 14:57:28 -0700 (PDT)
+        id S2389750AbeG0XYQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jul 2018 19:24:16 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:45684 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389719AbeG0XYQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jul 2018 19:24:16 -0400
+Received: by mail-pg1-f193.google.com with SMTP id f1-v6so3947644pgq.12
+        for <git@vger.kernel.org>; Fri, 27 Jul 2018 15:00:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to
          :user-agent;
-        bh=e62zQrQ1jPf50CSQMlRngXgGBTmyLHCLkDMPtQoeOxE=;
-        b=DnV119z7G3ooWjZCFHaeg1ft1k1pNjAJLALLWhFs+sZASG2ZQM+uX9Jqw/BsxJIkxH
-         g4dnWJ4zOPAdGJwMOMdpbCusrZB+IOYTzlBA4PAUVGIR8kyC2RMoOotDvqXAXFYg+NyA
-         /yY3ZoFPAU5xzHBBzHS1ycxIXJvEBRhNyo7E/jgNzu4/zupNSBFpECv29nMrxd0Pk1mz
-         NyMe6Ka1rtwaA9SLieU4B5MU+ZFCaPoSbLi/X8DNY4p7I3wWgZvBdcvyPQsYHjLNxPNX
-         AbD26tWmWMS059bcVWTwkHhcDyb4ekjy+OoLO9eepLPNCBb7Ve66Uss2qM4mmaIkEm4i
-         5Yeg==
+        bh=iZwGJg82erMf4UmY2+0aSog1kwuacp3Gzgk9P2Z96sc=;
+        b=NDPcxTCd+B5SplkGiaJWbl2ilOJkD3sWEGeZ7guWehKyp+Y8qSFUwtpBs3HboAd9N4
+         iO+0mzS2uP4Nlu1VqYh/llTprWXdQMyUvD3YS1ImfrcPNQQpGgMqZic7DbqcdGcBtZE7
+         uenZZzafHKSLHIqOHn7GTr8SI0KPLEPKOYXTBWlt6ko+RzaA4fLFGIXzzM607VNcZj6/
+         m1xKPsVQdg0fxQVpRDCZQ5wjyTKhb4rXbH1Rd7KQs+4kvMOzfao/MFQb2hiBja8kwx+j
+         RzT42yYkwlhrYLDy7FRAdEBpdbp94wcQuE0gFe+8v4NGYEFHYOZSxpbXL5JXeVeNYe+b
+         YWnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        bh=e62zQrQ1jPf50CSQMlRngXgGBTmyLHCLkDMPtQoeOxE=;
-        b=QIa5/43St2se6tCxEq7M4EJeh+WcCBghq7jDCCKofgOoDLBCokkQzLBBktPtm2b9oF
-         NOhEuD2eJY4GlTEC+DFpw0f2w7tebW7yp61SZZ4kgt/zmRg0KcRpjkP9XMIOI8bt28U4
-         Nsmxw0M+iUFj3WNUCUcE1wPt00nGx4MSaVkkPzzHjgBjIOcAQNSy0irnL2P1uYJhNMnH
-         gEz7K55li9FmKD119G+dAvT703wdkAhQ9X6GCLhx7cCEvE8Ndk7fGVhRlXm15V04lESZ
-         JpV0GtLcuHL3PX5oYpUjElc6aOocsuTj2qCWV+mC5gwlI4BPaTHGy+oUjAvJfkYri2Rr
-         9YMQ==
-X-Gm-Message-State: AOUpUlF9XQTPmBvQ7b/caU1OzdRS93V5Oi1nL3Q2vlE5ktIbHKArPSC7
-        ekMsQ+Vyv7h7zw2+BKC8EXo=
-X-Google-Smtp-Source: AAOMgpdLy5EOeTUgqQL2wC2XwPd89hO7v7CJZP/qqgTVx9DrxU+o3J2S6IXWnPfyKbXOtPdbgbXiNA==
-X-Received: by 2002:a62:3e1a:: with SMTP id l26-v6mr8296676pfa.214.1532728648466;
-        Fri, 27 Jul 2018 14:57:28 -0700 (PDT)
+        bh=iZwGJg82erMf4UmY2+0aSog1kwuacp3Gzgk9P2Z96sc=;
+        b=bhyDizxGOn5MMraeJ58MUD/2BTFTYXmwYI6rg34M69D0cKD6sl/+cHX8vs6dNMucet
+         e68tvt+Ba2UYhq61VPwRs4gEqyNsC3jVtHbPHlwXhuXwA8lpCdfDNto6tqIOkZGbClsc
+         8TkA0kQdkpl0hdXukC++EQ4CpG8pghZ0ZB4A1Om/k06dfwAvq3cU/jPQDiFWxLhgWAiP
+         p3VHaBlmvgeqzROa0G7yvGAgWXoWmZml2npdH/5hsHr5lz26yfpLi08+3sOuu95QW6NQ
+         +LJOhmCaiielHZKCeEjLL/ZcHQU6WabzDWPG0ALBqL57bo1ykz9xHEBNIwm8l3NIPo8f
+         BOsQ==
+X-Gm-Message-State: AOUpUlF71dDqhUqcBREeOkKJ/GUVAeXcNPPtOgSjKqGoGXubYeUPLxrB
+        77iabX2oWWK6yzbKYCRFRZyB67vD
+X-Google-Smtp-Source: AAOMgpcNBvqdgyJiWGM/1ew2cYL6Nc7JZYB2adeI4CRRVITSUPrwnpR4cYuYBNkay8HNyCDCdLdjPw==
+X-Received: by 2002:a63:4663:: with SMTP id v35-v6mr7402871pgk.178.1532728823857;
+        Fri, 27 Jul 2018 15:00:23 -0700 (PDT)
 Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id j27-v6sm7607181pfe.48.2018.07.27.14.57.27
+        by smtp.gmail.com with ESMTPSA id e126-v6sm10423162pfg.31.2018.07.27.15.00.22
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 27 Jul 2018 14:57:27 -0700 (PDT)
-Date:   Fri, 27 Jul 2018 14:56:44 -0700
+        Fri, 27 Jul 2018 15:00:23 -0700 (PDT)
+Date:   Fri, 27 Jul 2018 15:00:21 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Josh Steadmon <steadmon@google.com>
 Cc:     git@vger.kernel.org,
-        =?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+        =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
         Jeff King <peff@peff.net>, Frack Bui-Huu <fbui@suse.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
 Subject: Re: Proposed approaches to supporting HTTP remotes in "git archive"
-Message-ID: <20180727215644.GA223387@aiede.svl.corp.google.com>
+Message-ID: <20180727220021.GB223387@aiede.svl.corp.google.com>
 References: <CANq=j3tK7QeBJOC7VNWkh4+WBNibMJJp5YUkd9te5NaYwukAow@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
@@ -73,7 +73,10 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 (just cc-ing René Scharfe, archive expert; Peff; Dscho; Franck Bui-Huu
-to see how his creation is evolving)
+to see how his creation is evolving.
+
+Using the correct address for René this time. Sorry for the noise.)
+
 Josh Steadmon wrote:
 
 > # Supporting HTTP remotes in "git archive"
