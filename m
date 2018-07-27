@@ -2,106 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0AE791F597
-	for <e@80x24.org>; Fri, 27 Jul 2018 20:18:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6044C1F597
+	for <e@80x24.org>; Fri, 27 Jul 2018 20:21:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389377AbeG0Vlh (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jul 2018 17:41:37 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:42986 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389341AbeG0Vlh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jul 2018 17:41:37 -0400
-Received: by mail-wr1-f65.google.com with SMTP id e7-v6so6194989wrs.9
-        for <git@vger.kernel.org>; Fri, 27 Jul 2018 13:18:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=znrvRseIc4a8MmfOjUdEAdFuVLfcM1AtbpMR7bYf8qk=;
-        b=OGI87FvqnG0MGTDRpTg0sQ/awklfjmrWZ9HCccvDRj7TUVZoFyFdQbKeZ4v+5Vboaw
-         AeJaa28tCOicj9U+DdKT5MANfJ2yC4pFAayh5g8McGswqdfRpObQ4NtjHY4VsWnmzogJ
-         WdAIUFZsCyDi1F1iTeP7DmIMYXWMxjDQ3/R/lUUS5kOxNtflr6/kNPiY86pSECyJPlSa
-         HEMl1giN87ftgx4HSDlR4fcN9M8vIlyr572+4arLw0Dfcahsogo7oyQjhpEM6AowO8F/
-         x2KRx1qCmwlQqcrDy+UNwFABy40AWVz33LYD1eTrwZtNzF6mrfznaYRfY04D68h9Z6JR
-         mkkA==
+        id S2389434AbeG0Voh (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jul 2018 17:44:37 -0400
+Received: from mail-oi0-f68.google.com ([209.85.218.68]:44284 "EHLO
+        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389206AbeG0Voh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jul 2018 17:44:37 -0400
+Received: by mail-oi0-f68.google.com with SMTP id s198-v6so11213363oih.11
+        for <git@vger.kernel.org>; Fri, 27 Jul 2018 13:21:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=znrvRseIc4a8MmfOjUdEAdFuVLfcM1AtbpMR7bYf8qk=;
-        b=G4o+3lgzuQ6m5ANTWoyl411z+7jJKenoU672SLH2N4R5ZgzgHBT3Hex4YQGVO3ZUJ7
-         CDYFOWE2bgASRe0/TjmEMVdDGtgnPk5CvM5kaTnvVxwNEvw556KBTTCzSe1tpaDsvI/t
-         PuO+BHWe06+lEALhBYU+jbx3FIxkTrF3U1TvcyYTVb22dqMUtS7Zrp+tY7wHwDG8iAIW
-         /hg4FSS+28Cn+f2ubOlc6zVwTFgh39rCbg68XdnTAKQ5xcFmxFzQcT1PKKXXbhoDHfnE
-         2OTa15W6mqck+X0R0V4oMzJ/UivBigu9GHLBIpBfQMvO28dbkWVteJMZnpnNQPe7Z3Au
-         Sbmg==
-X-Gm-Message-State: AOUpUlH2h2YaXZJlOVoVNMPrfnbB6rQKLPl/5sCeCyzbknkq2XdRih5q
-        zbj3wUwYTS2zx6F7B3v8o7g=
-X-Google-Smtp-Source: AAOMgpep0CmwENp1YdUFr6FhByuZqRTdYNz76xEs2suAMYcIFCu5khvnb1I84p4yZSHcGT7T6P64dw==
-X-Received: by 2002:adf:8325:: with SMTP id 34-v6mr6118587wrd.67.1532722686762;
-        Fri, 27 Jul 2018 13:18:06 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id h7-v6sm5139517wrs.8.2018.07.27.13.18.04
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 27 Jul 2018 13:18:05 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v3 07/10] fetch: implement fetch.fsck.*
-References: <20180525192811.25680-1-avarab@gmail.com>
-        <20180727143720.14948-8-avarab@gmail.com>
-Date:   Fri, 27 Jul 2018 13:18:04 -0700
-In-Reply-To: <20180727143720.14948-8-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Fri, 27 Jul 2018 14:37:17 +0000")
-Message-ID: <xmqq6010mo03.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=XoWsdUSy0yggxz2gBVFxIVwjVV4dpjXAWJewD5vq1xw=;
+        b=PGngINuuu3vFhJt34fPKyDlLWH6ibcxVLgh7VXlrGw2JoCK+jrtC/Ffgnt2ZE9xx2O
+         WwaNXNTSaF72AQJbuwZzgT2xOzeJl12ItTnHaBJ++O66/RaEc7keTDfiAz6HZQ7Z0/t/
+         /COTseXudwILttRYE7QIRjeZujHYoMeM1868tOaGFKUdNwdx222C9mj07FHt9NTjTlrN
+         G9EwKHnjk3s0WvxvnKoZ9H6ab9YwWYYsFuaUg8kaivC4JVUpCQ9H5VJsgo5zBDghUs1a
+         jG/88FV+qdJntQCtntiyFWv/No44XPXFTPeWXvq7dqJX0jwYFXfadXwTWMQMUAvJZhRT
+         rMsg==
+X-Gm-Message-State: AOUpUlExYMqfxdfkUv43M4plibfC+QUe4R9Iv5XU9g1hlzgbiRrsMrLA
+        LqZZDHBJpKgP28sfMDbNuJw2fh9vkVjoXj7Zkus+UD1+
+X-Google-Smtp-Source: AAOMgpeZvOt5OD0aiJKJv6tDbAppA/gf/R/ChKv1nGIORec2qbQGWqfIKTywTFqY+0jqvtnhV++Ymk+W9lUps+SV350=
+X-Received: by 2002:aca:1c04:: with SMTP id c4-v6mr8421347oic.173.1532722867661;
+ Fri, 27 Jul 2018 13:21:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+From:   Drew Noakes <drew@drewnoakes.com>
+Date:   Fri, 27 Jul 2018 21:20:54 +0100
+Message-ID: <CAJd66x7ZHn=6AHFRXo5E4MhzEiW98Mpf37JRWv_18U5eYFeVJg@mail.gmail.com>
+Subject: Multiple consecutive null bytes with log -z --name-only
+To:     git@vger.kernel.org
+Content-Type: multipart/alternative; boundary="00000000000010f135057200da2e"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+--00000000000010f135057200da2e
+Content-Type: text/plain; charset="UTF-8"
 
->  +
->  Setting `fsck.<msg-id>` will be picked up by linkgit:git-fsck[1], but
-> -to accept pushes of such data set `receive.fsck.<msg-id>` instead.
-> +to accept pushes of such data set `receive.fsck.<msg-id>` instead, or
+Hi all,
 
-Inherited from the original, but I find it a lot more readable to
-write "to accept pushes of such data, set X" with a comma, given
-especially that "data set" is a noun that has little to do with what
-this sentence wants to talk about.
+I'm a developer on the Git Extensions project [1] and am looking at an
+issue parsing the output of `git log` in that application.
 
-I'd suggest doing s/instead/& to loosen the error checking/ or
-something, as you are only talking about "to accept" (iow, the
-target audience is not those who want to reject more by promoting
-"warn" to "error"---you are talking to those who are only interested
-in demoting "error" to "warn" or "ignore").
+Some investigation suggests that a certain combination of arguments causes
+multiple consecutive null bytes between rows, where I would ordinarily
+expect one.
 
-> +to clone or fetch it set `fetch.fsck.<msg-id>`.
+Passing -z with --name-only causes double nulls.
 
-It is unclear to me what "it" in the last sentence refers to.  
+$ git log -z --pretty=format:"%H" --name-only | grep -obUaP "\x00\x00" | wc
+-l
+8994
+$ git log -z --pretty=format:"%H" | grep -obUaP "\x00\x00" | wc -l
+0
 
-The best rewrite I came up with is "... to clone or fetch from a
-repository with such data" but that is not an exact counterpart to
-"to accept pushes of such data", so I am hesitant to suggest it.
+We can work around this issue, but I would like to understand if it's a bug
+or if there's some information to be gleaned here.
 
-"... to accept such data when fetching or cloning" might be a better
-counterpart, but repeated "to accept" in this single sentence bothers
-me somewhat.  I dunno.
+$ git --version
+git version 2.18.0.windows.1
 
-I'll comment on the implementation part of this patch after lunch.
-Thanks for working on this.
+Many thanks,
+
+Drew
+
+[1] https://github.com/gitextensions/gitextensions
+
+--00000000000010f135057200da2e
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Hi all,</div><div><br></div><div>I&#39;m a developer =
+on the Git Extensions project [1] and am looking at an issue parsing the ou=
+tput of `git log` in that application.</div><div><br></div><div>Some invest=
+igation suggests that a certain combination of arguments causes multiple co=
+nsecutive null bytes between rows, where I would ordinarily expect one.</di=
+v><div><br></div><div>Passing -z with --name-only causes double nulls.<br><=
+/div><div><br></div><div>$ git log -z --pretty=3Dformat:&quot;%H&quot; --na=
+me-only | grep -obUaP &quot;\x00\x00&quot; | wc -l<br>8994<br>$ git log -z =
+--pretty=3Dformat:&quot;%H&quot; | grep -obUaP &quot;\x00\x00&quot; | wc -l=
+<br>0<br></div><div><br></div><div>We can work around this issue, but I wou=
+ld like to understand if it&#39;s a bug or if there&#39;s some information =
+to be gleaned here.<br></div><div><br></div><div>$ git --version<br>git ver=
+sion 2.18.0.windows.1<br></div><div><br></div><div>Many thanks,<br></div><d=
+iv><br></div><div>Drew</div><div><br></div><div>[1] <a href=3D"https://gith=
+ub.com/gitextensions/gitextensions">https://github.com/gitextensions/gitext=
+ensions</a><br></div></div>
+
+--00000000000010f135057200da2e--
