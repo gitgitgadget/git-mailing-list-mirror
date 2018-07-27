@@ -2,141 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A9831F597
-	for <e@80x24.org>; Fri, 27 Jul 2018 00:37:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D0EFC1F597
+	for <e@80x24.org>; Fri, 27 Jul 2018 01:32:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731974AbeG0B4j (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jul 2018 21:56:39 -0400
-Received: from mail-qk0-f202.google.com ([209.85.220.202]:53050 "EHLO
-        mail-qk0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731922AbeG0B4i (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jul 2018 21:56:38 -0400
-Received: by mail-qk0-f202.google.com with SMTP id b185-v6so2949054qkg.19
-        for <git@vger.kernel.org>; Thu, 26 Jul 2018 17:37:22 -0700 (PDT)
+        id S1731936AbeG0Cv1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jul 2018 22:51:27 -0400
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:46798 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731737AbeG0Cv0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jul 2018 22:51:26 -0400
+Received: by mail-lf1-f66.google.com with SMTP id l16-v6so2458048lfc.13
+        for <git@vger.kernel.org>; Thu, 26 Jul 2018 18:32:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=ty/S5m1rjcc4vBnYwokcMwrEFF1B1wIy8v0pPgEMwDI=;
-        b=hSNMuetbJkG44sgFixjEbYVzJGnAHnw9081HkwMpsN4qgdpwWGzCCbHF35bJeXJG/p
-         x7RfF/2qgwci8dRylRONsivrDtbWa9EHXRVnCGp+BaJ2brdj6nn4ZL2kWd/LBXJ40QLk
-         m0x5+/S3NDmwXOS0L/O/7xT+W1MqA0wTqk4pgxhZYORtMtUoH5ElynyeCTaR4RsHQ29D
-         hms/188i0qLQ42zcpozB50wdRhvPY+aNph7nOJlLo0oUSox1X1zVBe25b/8Ltwner2m8
-         QPrEprmJa0yLAcbT6GBvWznAT2dpAOUPsdwLg6SLihwewwW55afvKn9Aawo0NjMViFgh
-         i0dQ==
+        bh=KOZ+bWOIT05g2u9xWhb1J6LhHy3sdqxj9607n58sNAQ=;
+        b=NnuO2Rf2bEBuH6IjilgO/wKAqsoN9mtZTRAeXxaSCZ82GEFS++NSGn8vjhFSFCEHKU
+         V6xMOBciruWoqBnQ6/0owvLje2Og8RywDikmwpzn6l1tOCrE9bkmUOc7oomMrm6CA7W5
+         9RncxSpA/NId/Ti0PAhp+NZlCYeQ/lVRYzxLkPMf0t1oUiSeJbYVbs9l6xbQw2L9Rc29
+         r7Zbixdoe1TVITTAVsWVQoYcOLPOx6IVHTU9uW3fXBYnP32oBovQrTLcKwAQzgt0r/ut
+         Ty//SuV4wFsw8GtJWRhYBSvbvEBfvBZC6O4/gWS/CzgVzuTaPEnLxjTALNyHkNHtUlOU
+         hdbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=ty/S5m1rjcc4vBnYwokcMwrEFF1B1wIy8v0pPgEMwDI=;
-        b=dy6Kuhz0VPU2Ek3gJGG15Tvwctylzgq7S/cNDeYHmci1Q0eE0v/hlcq8Ou0RQQxQPJ
-         9qCWaDX/N47GdNj82lVdfTOPvWzhJv8he3l3nyottgm0+pPDowHW0Zz77vYZCvhgb/Ch
-         4ydbLX9kNfkm8gTfP7YK0KwTZ4xAc9Kk5TqPanWfGCDybT0qyIl6hXDwrQ3e0QjNRib2
-         0ej6JeWkCeHVMb+pphXLlAkEP6pxXxQxiPAoqJi7c2bHHl+OM6COy6646TPJ8OC0oGPt
-         z9L3mIBkbAGcCNSmfTjFZA9+A5l/RinFB8OPLCmx83ul8Tmv4owtZFoef01AKuemg6cb
-         72mQ==
-X-Gm-Message-State: AOUpUlEjcIyHjQGPEFL9ikCZLbqHrGyA+e9Tt3OHHCMq83xumm/U959E
-        u/kSj/5a+28335JvCR5cW/Zuoo06X82gzUeVi7NXHsisJM3JtYooQW/wUHovo/JJueAWkK2L8fj
-        m7zTXq9LnenuYaurjLnQHdl9PseT3NF5BqCHpRwphzT6PAV8b3LbETTqzpF3s
-X-Google-Smtp-Source: AAOMgpeiDPmvMqjO60GIOgzbFwmvtJXGQqyJqPoBNhN6d9lFVEismjSyAYcqrxykdW7oir6oE/JKSyfSo4F7
-X-Received: by 2002:ae9:c004:: with SMTP id u4-v6mr2260047qkk.40.1532651842359;
- Thu, 26 Jul 2018 17:37:22 -0700 (PDT)
-Date:   Thu, 26 Jul 2018 17:36:40 -0700
-In-Reply-To: <20180727003640.16659-1-sbeller@google.com>
-Message-Id: <20180727003640.16659-4-sbeller@google.com>
-Mime-Version: 1.0
-References: <20180727003640.16659-1-sbeller@google.com>
-X-Mailer: git-send-email 2.18.0.345.g5c9ce644c3-goog
-Subject: [PATCH 3/3] replace: migrate to for_each_replace_repo_ref
-From:   Stefan Beller <sbeller@google.com>
-To:     git@vger.kernel.org
-Cc:     mhagger@alum.mit.edu, Stefan Beller <sbeller@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=KOZ+bWOIT05g2u9xWhb1J6LhHy3sdqxj9607n58sNAQ=;
+        b=kI/o0NThBcMd9jQZH4EqEjK5t0L0sE9ZUCd7MAhrht/uSjuJe2i1QPkAw3LwLVULHq
+         gFdWQkRUOYu/Xb0ykc/Qof76IWjslcZ2nE1o6aH4CqOYDD5clLcqJMpv0VLb8z3mo/Yq
+         EySumhpGw1nWag4xH7EGxdHqWfl0gn5Sr4Y5eE4770trb203/WZkS0LsG4dYdyQFRjPW
+         XRhI59GyzD7OTqGgGmIEiBytyzGNAmFiCmIXcT7D5dTQobmQ7/Vu6cy5v2GHaOC2N3jQ
+         7UBemr1as8Hj8OU5hGH7YGhx94wOaeEMgzFEzP61ggUqxdpDZpPU7Z3FzJ4TnkLYmjWv
+         o5tQ==
+X-Gm-Message-State: AOUpUlHszbpqk1nw7QN8hjQSJmXgjtPHTrjH5Ql/SnW2wv+QQdp7aN9V
+        DIrTryuJt67SbJ0J9SshtCvZuzYHI/T0XhJvfnEt+SRz
+X-Google-Smtp-Source: AAOMgpfOPq3qdNPhv/dQqDtqvyJS135aWj6C5oUbaJQaem+yyGK/7GJ4HkDSJmrlEbtMQmLVpu/LnYg4Ir9ZrR/PTzc=
+X-Received: by 2002:a19:c1c4:: with SMTP id r187-v6mr194252lff.90.1532655119113;
+ Thu, 26 Jul 2018 18:31:59 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 2002:a2e:88d7:0:0:0:0:0 with HTTP; Thu, 26 Jul 2018 18:31:58
+ -0700 (PDT)
+In-Reply-To: <CAE5ih7-DatojdaOYZSEKfgG+FeR9+CWiEcf0veHfz89W7Vhx=Q@mail.gmail.com>
+References: <CAE5ih79ndEbnEeV_muQyZwG+01_8Kg0J74rZtOoK1_V40E0z7g@mail.gmail.com>
+ <20180725134345.8631-1-chenbin.sh@gmail.com> <CAPig+cR2gYEwOTVBMRde35rn9oVsixeerbm5iJV+FmnOiBWxqQ@mail.gmail.com>
+ <CAAE-R+_BWJAB3zsZUZ+=Zn6SiSkzrWG0EYwBF_OcX_V+2idCww@mail.gmail.com>
+ <CAPig+cQ80DrYJjYgJEvfcpeNEscgNBvj7ydwxMMVRf6kBfpaqQ@mail.gmail.com> <CAE5ih7-DatojdaOYZSEKfgG+FeR9+CWiEcf0veHfz89W7Vhx=Q@mail.gmail.com>
+From:   chen bin <chenbin.sh@gmail.com>
+Date:   Fri, 27 Jul 2018 11:31:58 +1000
+Message-ID: <CAAE-R+_04wHwtKYEYn-iQz5r1hNp0_GCg0ba7LhjSsayQWSuAQ@mail.gmail.com>
+Subject: Re: [PATCH 1/1] add hook pre-p4-submit
+To:     Luke Diamand <luke@diamand.org>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-By upgrading the replace mechanism works well for all repositories
+Hi, Luke,
+Running the hook after applying changes to P4 shadow repo might not be
+a good idea.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- builtin/replace.c | 9 +++++----
- replace-object.c  | 7 ++++---
- 2 files changed, 9 insertions(+), 7 deletions(-)
+When the hook is running *before* the changes are applied, I'm 100% sure it's
+*only* my code's problem if the hook fails.
 
-diff --git a/builtin/replace.c b/builtin/replace.c
-index ef22d724bbc..fd8a935eb77 100644
---- a/builtin/replace.c
-+++ b/builtin/replace.c
-@@ -39,7 +39,8 @@ struct show_data {
- 	enum replace_format format;
- };
- 
--static int show_reference(const char *refname, const struct object_id *oid,
-+static int show_reference(struct repository *r, const char *refname,
-+			  const struct object_id *oid,
- 			  int flag, void *cb_data)
- {
- 	struct show_data *data = cb_data;
-@@ -56,9 +57,9 @@ static int show_reference(const char *refname, const struct object_id *oid,
- 			if (get_oid(refname, &object))
- 				return error("Failed to resolve '%s' as a valid ref.", refname);
- 
--			obj_type = oid_object_info(the_repository, &object,
-+			obj_type = oid_object_info(r, &object,
- 						   NULL);
--			repl_type = oid_object_info(the_repository, oid, NULL);
-+			repl_type = oid_object_info(r, oid, NULL);
- 
- 			printf("%s (%s) -> %s (%s)\n", refname, type_name(obj_type),
- 			       oid_to_hex(oid), type_name(repl_type));
-@@ -87,7 +88,7 @@ static int list_replace_refs(const char *pattern, const char *format)
- 			     "valid formats are 'short', 'medium' and 'long'\n",
- 			     format);
- 
--	for_each_replace_ref(the_repository, show_reference, (void *)&data);
-+	for_each_replace_repo_ref(the_repository, show_reference, (void *)&data);
- 
- 	return 0;
- }
-diff --git a/replace-object.c b/replace-object.c
-index 801b5c16789..c0457b8048c 100644
---- a/replace-object.c
-+++ b/replace-object.c
-@@ -6,7 +6,8 @@
- #include "repository.h"
- #include "commit.h"
- 
--static int register_replace_ref(const char *refname,
-+static int register_replace_ref(struct repository *r,
-+				const char *refname,
- 				const struct object_id *oid,
- 				int flag, void *cb_data)
- {
-@@ -25,7 +26,7 @@ static int register_replace_ref(const char *refname,
- 	oidcpy(&repl_obj->replacement, oid);
- 
- 	/* Register new object */
--	if (oidmap_put(the_repository->objects->replace_map, repl_obj))
-+	if (oidmap_put(r->objects->replace_map, repl_obj))
- 		die("duplicate replace ref: %s", refname);
- 
- 	return 0;
-@@ -40,7 +41,7 @@ static void prepare_replace_object(struct repository *r)
- 		xmalloc(sizeof(*r->objects->replace_map));
- 	oidmap_init(r->objects->replace_map, 0);
- 
--	for_each_replace_ref(r, register_replace_ref, NULL);
-+	for_each_replace_repo_ref(r, register_replace_ref, NULL);
- }
- 
- /* We allow "recursive" replacement. Only within reason, though */
+One reason we need this hook is sometimes developer is over confident
+when applying
+some quick one line fix.
+
+The quick fix could be required by business guy before demo to senior
+managers or customers.
+So we might not want our fix being blocked by upstream commits.
+
+Not everyone is our team is perforce/git expert. Someone only use
+`git-p4 submit` and never use
+ `git-p4 rebase`. If unit test fails and he could not submit code, he
+would come to me for help. But I
+want to reduce my workload.
+
+
+Regards,
+Chen
+
+
+On Fri, Jul 27, 2018 at 7:09 AM, Luke Diamand <luke@diamand.org> wrote:
+> On 26 July 2018 at 10:21, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> On Wed, Jul 25, 2018 at 10:08 PM chen bin <chenbin.sh@gmail.com> wrote:
+>>> The hook does not receive any information or input from git. The
+>>> original requirement
+>>> comes from my colleague. He want to run unit test automatically before
+>>> submitting code
+>>> to remote repository. Or else CI server will send the blame mail to the manager.
+>>
+>> Okay, that seems in line with a hook such as pre-commit. Please do
+>> update the documentation to mention that the hook takes no arguments
+>> and nothing on standard input, and perhaps describe in the
+>> documentation an example use-case (as you did here).
+>>
+>> I'm not a p4 or git-p4 user, but, out of curiosity, would there be any
+>> information which could be supplied to the hook as arguments or
+>> standard input (or both) which would help the hook author implement
+>> the hook more easily? Perhaps such information would be fodder for a
+>> future enhancement (not necessarily needed for this patch).
+>
+>
+> I tried to think of a use-case for a hook requiring any more
+> information, but I can't think of any. You're already chdir()'d to the
+> P4 shadow repo which is what you really need.
+>
+> Anything where you just need the commit hash (e.g. checking the commit
+> message) can already be done with one of the existing git hooks; I
+> don't think git-p4 needs to duplicate that.
+>
+> And we can't write a commit hook that can know about the Perforce
+> changelist, because we don't know what it is yet.
+>
+> However, looking at the code, it runs the hook at the point just
+> *before* the changes are applied to the P4 shadow repo. Would it make
+> more sense to run the hook *after* they have been applied (but before
+> being P4 submitted) ?
+>
+> That way you can run your tests on the checked-out P4 shadow directory
+> with your changes - as it stands, you can only run them on your git
+> repo at this point, which might not be in sync with Perforce (and
+> could be quite a long way out in fact).
+>
+> Luke
+>
+>
+>>
+>>> The hook actually stops the submit process from start instead of abort
+>>> submit in midway.
+>>> So nothing is touched when hook exits with status 1.
+>>
+>> This might be a good thing to add to the documentation, as well.
+>>
+>>> I'm not sure whether `git-p4` should print some "hook rejection" message.
+>>> Current implementation is same as other hooks (`pre-commit`, for example).
+>>> Only hook itself is responsible to print error messages.
+>>>
+>>> Personally I don't have opinion whether we should print out hook
+>>> related message inside
+>>> `git-p4.py`. I just try to following existing convention of git.
+>>>
+>>> What you guys think?
+>>
+>> Following existing practice makes sense. It can always be revisited
+>> later if needed.
+>>
+>> Thanks.
+
+
+
 -- 
-2.18.0.345.g5c9ce644c3-goog
-
+help me, help you.
