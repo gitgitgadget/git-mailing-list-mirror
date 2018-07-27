@@ -7,111 +7,114 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D4FA1F597
-	for <e@80x24.org>; Fri, 27 Jul 2018 18:01:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D8E71F597
+	for <e@80x24.org>; Fri, 27 Jul 2018 18:05:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389167AbeG0TX6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jul 2018 15:23:58 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:36822 "EHLO
-        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389064AbeG0TX6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jul 2018 15:23:58 -0400
-Received: by mail-io0-f193.google.com with SMTP id r15-v6so4817286ioa.3
-        for <git@vger.kernel.org>; Fri, 27 Jul 2018 11:00:58 -0700 (PDT)
+        id S2388727AbeG0T2Y (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jul 2018 15:28:24 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:36016 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388344AbeG0T2X (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jul 2018 15:28:23 -0400
+Received: by mail-it0-f66.google.com with SMTP id p81-v6so8549063itp.1
+        for <git@vger.kernel.org>; Fri, 27 Jul 2018 11:05:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=8lktsVcOpPSPiG0M8HeQCQsiyuwvFfhKyuWDlegdbCI=;
-        b=YRSd6EgYr7eIUtLP1IokS71eUjKcwtwJYW/k6asxc8/HJBGPnkcDizvU0SjAe7/fOU
-         Cnlle/BCgyxmZnsw3cWG8kDeQTMnF0zKIMZOMGfTnCek2hUUSxuMQb23zKSfwGNkpnGU
-         /oF2qC8WuiG2wwUm9mtRcDGsmc7w65uQoaYaG2pmooOR58NggWroYeYc/XN6vUxP3z3l
-         3VqZfb0gZdO0moCpgftYUIO2jIRIF9AoAJVisBdhmgpmXM+zXGPEL4yOZQRYxIcwH6j4
-         Q+czGjcJ1MCzJo1FPj6UIvaX5RBaZBS47PBPrImYNIDRSrqNk+9qBgm4nAgx11qLKGDM
-         17IA==
+        bh=fOM7aQ8nZCyPZLLhU8FGlbcovvGTR6BRvATBgWQBKnM=;
+        b=aqCJOIKYRFGkatzMeECArL7jarb5TuccmWoAdlzFtnxbFcASet9q5r3JTyZQbfNaLI
+         6Pw07eMsoh+/Q/57wqS+wXVGAlgQZlNrFFpuwNWum2/c8zqAc3Avbn4Ruar5cl0iwwqQ
+         wirlGqK7aLBYYPBiRWx3dwejq+JOQcNWdVta5iDbwfjkoa/MocggkFnBw5NXCA0EK3jr
+         2cW2Wzui5oGZ2wdpw638GJ1ajHvrjzWTg7Wo10+sxXa8KZSNHs0WgijLSC0ACk4m/vll
+         TiEv2MDXOOgKg1iLA11wo2++n5KZ+DyLscY4AVBCJAq8rf01pyWm0eACnNH9RpPTWSlk
+         ll0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=8lktsVcOpPSPiG0M8HeQCQsiyuwvFfhKyuWDlegdbCI=;
-        b=G2xY2K5Su9f9iHPWqymvANWwcPBo0lz2htGwB/Y7o29tkqdun42M6kFt0vhaleKbe2
-         y+vfcdJL+r+z4lIxAgbSPusSuhuThRGKwtjN1hDjMrzt38yKZQa44PhRoKMwyuAUlQLI
-         IdI+2IdHzlLelrzgvdnPp/tT2tS+zyW7W23gyP75LVWWXbOdccKjA7QDGVjVTuVZaAnP
-         diKq/+CcuQPAuUFaQcn+S9E8YO8PgCxVZV5cSkR1X9/oeVlUWCKyzUrjK47ci6aAdWB5
-         XyhCz8S+W7yTJSc8TEmRrJzmN6zUn3SZTZw+ooFur+7Xum9ztZKYB5z46CWUEM8zAF55
-         0iQQ==
-X-Gm-Message-State: AOUpUlHwQAoo9RTwWEunOKM+ebmwYXeb44AWH7msnHv8u1D6j073iRQl
-        fRNoV7zqJ6oTSfv0dtDZy7YE5Ysl4s4+6SNrJhA=
-X-Google-Smtp-Source: AAOMgpfCHR6c12T9cWlHrGfYiUDun5poN8T9yxpuo72ntk8sQ/bjvJ2b4bnu5EMtjGRxEmR6OACw3KyxFDtwf8oan+o=
-X-Received: by 2002:a6b:a2cf:: with SMTP id l198-v6mr5520421ioe.282.1532714458097;
- Fri, 27 Jul 2018 11:00:58 -0700 (PDT)
+        bh=fOM7aQ8nZCyPZLLhU8FGlbcovvGTR6BRvATBgWQBKnM=;
+        b=ge/RSIH9cjDSYm49Y4SCyl/kQH76A8xTVBafpYN7tCqX9fXCdKpaMHI0p9V/Ue5mmT
+         NY0i4Y0DIhZyOcsrxy3qyC/7OYtMn8/xarlSAfRpAzjKnvxUMBd9Gso5I2EAcVLffhkk
+         m/c3Rpm0tlmyqXZqUhyKQPFzlxmXejgVSvwaSoe7fTqKxeMI82TVIJQbtYxQmaN6PgrA
+         pX68/go9rl60g7xe8FCacsByp320aMglbjXyQTyhA9BfEIgeE1w1tupRhKijwrMKBej2
+         qqFwS3Ee/tye8eTdWQ91sWbmDQmHE48se2uy8E2Czd6Mrt6HjxSohaR1e9/WYD3hKMOh
+         Q9OA==
+X-Gm-Message-State: AOUpUlGGifDAp+i9Da33Gv/RkuYApD2eMB+gJ9G8tyIS9vnNc1JTcEoF
+        6jno8DUOnFf2hC7PDwKSooqcazrDVjqqdJ7SMI21gw==
+X-Google-Smtp-Source: AAOMgpdzXwHlkjOz65dTr6JCwX50g78avKfp1d8j/9akEiN9KGKhSOq5/OLMFs3vGmtr4MLSIaJORt3EKOor1nixxjk=
+X-Received: by 2002:a02:7e45:: with SMTP id h66-v6mr7239186jac.97.1532714722414;
+ Fri, 27 Jul 2018 11:05:22 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180718213420.GA17291@sigill.intra.peff.net> <a2ad0044-f317-69f7-f2bb-488111c626fb@gmail.com>
- <CACsJy8D-3sSnoyQZKxeLK-2RmpJSGkziAp5Gf4QpUnxwnhchSQ@mail.gmail.com>
- <6ff6fbdc-d9cf-019f-317c-7fdba31105c6@gmail.com> <20180724042017.GA13248@sigill.intra.peff.net>
- <CACsJy8Du28jMyfdyhxpVxyw5+Xh+9eX==3x8YJSnmw6GAoRhTA@mail.gmail.com>
- <0102d204-8be7-618a-69f4-9f924c4e6731@gmail.com> <CACsJy8AWcHVYNBZGRUTdcg8FmwOGz3MSUHH+3uVSGrg6MMZMng@mail.gmail.com>
- <20180726163049.GA15572@duynguyen.home> <xmqqd0v9pyzu.fsf@gitster-ct.c.googlers.com>
- <20180727154241.GA21288@duynguyen.home> <434074a8-1045-8c8f-da0c-873436acf40e@gmail.com>
-In-Reply-To: <434074a8-1045-8c8f-da0c-873436acf40e@gmail.com>
+References: <20180727003640.16659-1-sbeller@google.com> <20180727003640.16659-3-sbeller@google.com>
+ <CACsJy8Ae3sZvOQ3irQM+hv0fCRchGi8995kvLZBadbaphRo-3A@mail.gmail.com>
+ <20180727171941.GA109508@google.com> <CAGZ79kZfhSwtNgNk-GRDb6f4Uq7y6fi21HVO7xHv1YiuQoaSvA@mail.gmail.com>
+In-Reply-To: <CAGZ79kZfhSwtNgNk-GRDb6f4Uq7y6fi21HVO7xHv1YiuQoaSvA@mail.gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 27 Jul 2018 20:00:31 +0200
-Message-ID: <CACsJy8DOhfjMWAb4hP6aoBS6i6DyPuJqj7w2qC3hndo=gy5=zg@mail.gmail.com>
-Subject: Re: [PATCH v1 0/3] [RFC] Speeding up checkout (and merge, rebase, etc)
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Git Mailing List <git@vger.kernel.org>
+Date:   Fri, 27 Jul 2018 20:04:56 +0200
+Message-ID: <CACsJy8Cx7u5YtK6sPJ=HbAOUBXCrP7VOgMyoQ58SB6q_s4N7Gg@mail.gmail.com>
+Subject: Re: [PATCH 2/3] refs: introduce new API, wrap old API shallowly
+ around new API
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Michael Haggerty <mhagger@alum.mit.edu>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 27, 2018 at 6:22 PM Ben Peart <peartben@gmail.com> wrote:
+On Fri, Jul 27, 2018 at 7:31 PM Stefan Beller <sbeller@google.com> wrote:
 >
->
->
-> On 7/27/2018 11:42 AM, Duy Nguyen wrote:
-> > On Thu, Jul 26, 2018 at 12:40:05PM -0700, Junio C Hamano wrote:
-> >> Duy Nguyen <pclouds@gmail.com> writes:
-> >>
-> >>> I'm excited so I decided to try out anyway. This is what I've come up
-> >>> with. Switching trees on git.git shows it could skip plenty entries,
-> >>> so promising. It's ugly and it fails at t6020 though, there's still
-> >>> work ahead. But I think it'll stop here.
-> >>
-> >> We are extremely shallow compared to projects like the kernel and
-> >> stuff from java land, so that is quite an interesting find.
-> >>
+> On Fri, Jul 27, 2018 at 10:19 AM Brandon Williams <bmwill@google.com> wrote:
 > >
-> > Yeah. I've got a more or less complete patch now with full test suite
-> > passed and even with linux.git, the numbers look pretty good.
+> > On 07/27, Duy Nguyen wrote:
+> > > On Fri, Jul 27, 2018 at 2:40 AM Stefan Beller <sbeller@google.com> wrote:
+> > > >
+> > > > Currently the refs API takes a 'ref_store' as an argument to specify
+> > > > which ref store to iterate over; however it is more useful to specify
+> > > > the repository instead (or later a specific worktree of a repository).
+> > >
+> > > There is no 'later'. worktrees.c already passes a worktree specific
+> > > ref store. If you make this move you have to also design a way to give
+> > > a specific ref store now.
+> > >
+> > > Frankly I still dislike the decision to pass repo everywhere,
+> > > especially when refs code already has a nice ref-store abstraction.
+> > > Some people frown upon back pointers. But I think adding a back
+> > > pointer in ref-store, pointing back to the repository is the right
+> > > move.
 > >
-> > Ben, is it possible for you to try this one out? I don't suppose it
-> > will be that good on a real big repo. But I'm curious how much faster
-> > could this patch does.
+> > I don't quite understand why the refs code would need a whole repository
+> > and not just the ref-store it self.  I thought the refs code was self
+> > contained enough that all its state was based on the passed in
+> > ref-store.  If its not, then we've done a terrible job at avoiding
+> > layering violations (well actually we're really really bad at this in
+> > general, and I *think* we're trying to make this better though the
+> > object store/index refactoring).
 > >
+> > If anything I would expect that the actual ref-store code would remain
+> > untouched by any refactoring and that instead the higher-level API that
+> > hasn't already been converted to explicitly use a ref-store (and instead
+> > just calls the underlying impl with get_main_ref_store()).  Am I missing
+> > something here?
 >
-> Thanks Duy.  I'm super excited about this so did a quick and dirty
-> manual perf test.
+> Then I think we might want to go with the original in Stolees proposal
+> https://github.com/gitgitgadget/git/pull/11/commits/300db80140dacc927db0d46c804ca0ef4dcc1be1
+> but there the call to for_each_replace_ref just looks ugly, as it takes the
+> repository as both the repository where to obtain the ref store from
+> as well as the back pointer.
 >
-> I ran "git checkout" 5 times, discarded the first 2 runs and averaged
-> the last 3 with and without this patch on top of VFSForGit in a large repo.
->
-> Without this patch average times were 16.97
-> With this patch average times were 10.55
->
-> That is a significant improvement!
+> I anticipate that we need to have a lot of back pointers to the repository
+> in question, hence I think we should have the repository pointer promoted
+> to not just a back pointer.
 
-Meh! Junio cut down time to like 1/5th in b65982b608 (Optimize
-"diff-index --cached" using cache-tree - 2009-05-20). This is not
-enough!
-
-OK i'm kidding :) I'd like to see you measure traverse_trees like in
-your first mail though. Total checkout number is nice and all but I
-still like to see exactly how much time is reduced in traverse_trees()
-alone (or unpack_trees() to be precise). That would give me a much
-better picture of this unpacking business.
+I will probably need more time to study that commit and maybe the mail
+archive for the history of this series. But if I remember correctly
+some of these for_each_ api is quite a pain (perhaps it's the for_each
+version of reflog?) and it's probably better to redesign it (again
+talking without real understanding of the problem).
 -- 
 Duy
