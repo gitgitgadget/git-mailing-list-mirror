@@ -2,144 +2,171 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-8.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B02A61F597
-	for <e@80x24.org>; Fri, 27 Jul 2018 21:08:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA2EC1F597
+	for <e@80x24.org>; Fri, 27 Jul 2018 21:21:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389459AbeG0WcU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jul 2018 18:32:20 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:55003 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389211AbeG0WcU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jul 2018 18:32:20 -0400
-Received: by mail-wm0-f67.google.com with SMTP id c14-v6so6582568wmb.4
-        for <git@vger.kernel.org>; Fri, 27 Jul 2018 14:08:39 -0700 (PDT)
+        id S2389731AbeG0WpZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jul 2018 18:45:25 -0400
+Received: from mail-pl0-f68.google.com ([209.85.160.68]:40688 "EHLO
+        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389718AbeG0WpZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jul 2018 18:45:25 -0400
+Received: by mail-pl0-f68.google.com with SMTP id s17-v6so2827320plp.7
+        for <git@vger.kernel.org>; Fri, 27 Jul 2018 14:21:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=G6FhFNM/IDqd1EYCj2b9dmee1OX66p8edPG/az/NGEk=;
-        b=EUc3wwVhxROu6UeenSAKfa2IgJRYvGCT6JJ+gvF3j1Gtimatc3fr0XvkU1j3oG/LOq
-         hF9VW9DoVu0HgRQIc8ivqOfFJBFatewq5x2RY/UWqYkyB21iKX9HPGKD1+81oYuwhjo/
-         Ncy4RIKFIpV3Ib5OWwn8InOVYlEmB102tK6CT4XsenMDwSQYm1bud6z9D+XQOy5LjUj7
-         gXybHsc08mEFaOVco1ATdK+o93LruKxiSGj/RxFrKASMBiUwpwY+DnSRB5jJOiNJpCVH
-         GF8a0dd7ujPaFvy3fT4vzSYRJL5+Qx/ixkrur4n0CvoMGJgn5Au6seTVPXVqWUPkwuNO
-         8eaA==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=7xV//cApyjmq5+YQ6QLNxKyVjhvOD5G547uH8Uk/6z8=;
+        b=haRNDHu803EB1bkvdQ3MW80bhGEl6LDdxYL6RM0ufsCSF3113MVKVErxYZupI09l92
+         zAy4qMwPFM6/Vq0eVZiZsGZkCZTAnClei4bco0014Fy+bUyv3xM9Vdo+uTcnA+d/I8c9
+         w3x4RV9gQLQFDya81IB3RDrSF9QU6yM8ZzPBWOhNK7bqfZtD9FOgHoj/dood54GZjLYV
+         aO0Xb+G+hyiKy+CVUdVoesqO+zf32TZ9jFeBhtwPCNrde/gM5Z3xg61lOaFckJqMZ6hu
+         /MOEUMLBthIooVlJUQYv+UR6qm0znygny1bA8tMsl7/80NJSL8bXyOiAiO3xTOvFlZbz
+         R1YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=G6FhFNM/IDqd1EYCj2b9dmee1OX66p8edPG/az/NGEk=;
-        b=XgcL+YvB9fKZQBvi8kSjDkovT9yyzvdQh2W/+mzhd8UzyK3ymYqTLaSKnCXFiqo4+K
-         HXokA1WeZhkhI49HO6VouQ5Dw5A41cZ9B2B4R5rDN9zLrkMOBwuhDt08mLKTPxkJwjPw
-         Pej43sDXExN0n0rty20loqua5oFC8eJ+d+dY5MFwqtOdJ1yplFoot4WCUxa5biltJN77
-         2D5G7PJNvszGIG+WaFEg/BeffWyP0W+dCXx2HuN1JigmnHjfYj/o19VFYDTLKBSlFOV1
-         UYjeQJTpJfJNvQoGnzfwfLJp4NbllPkXqaj7bqLlLFkGzI6IMQPn3Glg5G1THvoKeaTA
-         TR7w==
-X-Gm-Message-State: AOUpUlEKnrVtCXL7XlHEotb4RQ2U5f281sHsbVZ2KG+tAoh+cVbIbOa/
-        pUn51mVMBQt3ysLk2YtMSFA=
-X-Google-Smtp-Source: AAOMgpePIbP9evy8IHfAA0ZA09xOOyzW7vLqHlaF4Oto2wmaw4m6xp7FHPFEjnjj3ohYonIcp7pe9A==
-X-Received: by 2002:a1c:700a:: with SMTP id l10-v6mr5747164wmc.90.1532725718598;
-        Fri, 27 Jul 2018 14:08:38 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id w62-v6sm5904442wmg.46.2018.07.27.14.08.37
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=7xV//cApyjmq5+YQ6QLNxKyVjhvOD5G547uH8Uk/6z8=;
+        b=uG/xqbIkAel4l1rQwuQXStCVfPsuHCBYnTfHAX3qgXodaZgh7wwqMjrfS6L4GrE5m8
+         dRjux3GPK74xTfGbVendu1l4cOx2cvSyEYqeJVH83J/cQVYSSR8WHVprtKelklFz5mmd
+         nciplNPva8dwwnkem7YtwunwdGh/Xf/jRo8nUhqWxoNW8Av4ngKfPRHgoZbLQmp6JI7E
+         x3rhnXXNRBE4avFlA6+62M1R4t73xRF5O6mDQfRkfku9qrrXeKMeKAJV63Fn/ZhpP3ec
+         jBjHNDHbvNq2ud3xgor3TGce6gEmjU2lJXAs/inQBV/L/Q7euqaC4tblO8EAU2qrGGS4
+         tbsA==
+X-Gm-Message-State: AOUpUlGNBe+R3ReAw4WyKMvafrVssEvZb6X+dOQbq3BxNz//YoRc6+MW
+        jPc8T+oXdBZTw4bk8KzYBiCwPg==
+X-Google-Smtp-Source: AAOMgpd2+Fgua86tekd7eY7ZSBMEyuY7FX3JdXELPiJEFefQzmFS1tz8WRHb0qdA7vihsvazZRqHJA==
+X-Received: by 2002:a17:902:7106:: with SMTP id a6-v6mr7638037pll.28.1532726502083;
+        Fri, 27 Jul 2018 14:21:42 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id v30-v6sm8794254pgn.80.2018.07.27.14.21.40
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 27 Jul 2018 14:08:37 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v3 07/10] fetch: implement fetch.fsck.*
-References: <20180525192811.25680-1-avarab@gmail.com>
-        <20180727143720.14948-8-avarab@gmail.com>
-Date:   Fri, 27 Jul 2018 14:08:37 -0700
-In-Reply-To: <20180727143720.14948-8-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Fri, 27 Jul 2018 14:37:17 +0000")
-Message-ID: <xmqqva90l73e.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Fri, 27 Jul 2018 14:21:41 -0700 (PDT)
+Date:   Fri, 27 Jul 2018 14:21:40 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] config: fix case sensitive subsection names on writing
+Message-ID: <20180727212140.GA54208@google.com>
+References: <20180727205117.243770-1-sbeller@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180727205117.243770-1-sbeller@google.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+On 07/27, Stefan Beller wrote:
+> A use reported a submodule issue regarding strange case indentation
+> issues, but it could be boiled down to the following test case:
+> 
+>   $ git init test  && cd test
+>   $ git config foo."Bar".key test
+>   $ git config foo."bar".key test
+>   $ tail -n 3 .git/config
+>   [foo "Bar"]
+>         key = test
+>         key = test
+> 
+> Sub sections are case sensitive and we have a test for correctly reading
+> them. However we do not have a test for writing out config correctly with
+> case sensitive subsection names, which is why this went unnoticed in
+> 6ae996f2acf (git_config_set: make use of the config parser's event
+> stream, 2018-04-09)
+> 
+> Make the subsection case sensitive and provide a test for both reading
+> and writing.
+> 
+> Reported-by: JP Sugarbroad <jpsugar@google.com>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  config.c          |  2 +-
+>  t/t1300-config.sh | 18 ++++++++++++++++++
+>  2 files changed, 19 insertions(+), 1 deletion(-)
+> 
+> diff --git a/config.c b/config.c
+> index 3aacddfec4b..3ded92b678b 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -2374,7 +2374,7 @@ static int store_aux_event(enum config_event_t type,
+>  		store->is_keys_section =
+>  			store->parsed[store->parsed_nr].is_keys_section =
+>  			cf->var.len - 1 == store->baselen &&
+> -			!strncasecmp(cf->var.buf, store->key, store->baselen);
+> +			!strncmp(cf->var.buf, store->key, store->baselen);
 
-> -			argv_array_push(&cmd.args, "--strict");
-> +			argv_array_pushf(&cmd.args, "--strict%s",
-> +					 fsck_msg_types.buf);
-> ...
-> +		if (git_config_pathname(&path, var, value))
-> +			return 1;
-> +		strbuf_addf(&fsck_msg_types, "%cskiplist=%s",
-> +			fsck_msg_types.len ? ',' : '=', path);
-> ...
-> +		if (is_valid_msg_type(var, value))
-> +			strbuf_addf(&fsck_msg_types, "%c%s=%s",
-> +				fsck_msg_types.len ? ',' : '=', var, value);
-> +		else
-> +			warning("Skipping unknown msg id '%s'", var);
+I've done some work in the config part of our codebase but I don't
+really know whats going on here due to two things: this is a callback
+function and it relies on global state...
 
-This follows quite familiar pattern found in receive_pack_config();
-looking good.
+I can say though that we might want to be careful about completely
+converting this to a case sensitive compare.  Our config is a key
+value store with the following format: 'section.subsection.key'.  IIRC
+both section and key are always compared case insensitively.  The
+subsection can be case sensitive or insensitive based on how its
+stored in the config files itself:
 
-> diff --git a/t/t5504-fetch-receive-strict.sh b/t/t5504-fetch-receive-strict.sh
-> index 57ff78c201..004bfebe98 100755
-> --- a/t/t5504-fetch-receive-strict.sh
-> +++ b/t/t5504-fetch-receive-strict.sh
-> @@ -145,6 +145,20 @@ test_expect_success 'push with receive.fsck.skipList' '
->  	git push --porcelain dst bogus
+  # Case insensitive
+  [section.subsection]
+      key = value
+
+  # Case sensitive 
+  [section "subsection"]
+      key = value
+
+But I don't know how you distinguish between these cases when a config
+is specified on a single line (section.subsection.key).  Do we always
+assume the sensitive version because the insensitive version is
+documented to be deprecated?
+
+Either way you're probably going to need to be careful about how you do
+string comparison against the different parts.
+
+>  		if (store->is_keys_section) {
+>  			store->section_seen = 1;
+>  			ALLOC_GROW(store->seen, store->seen_nr + 1,
+> diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+> index 03c223708eb..8325d4495f4 100755
+> --- a/t/t1300-config.sh
+> +++ b/t/t1300-config.sh
+> @@ -1218,6 +1218,24 @@ test_expect_success 'last one wins: three level vars' '
+>  	test_cmp expect actual
 >  '
 >  
-> +test_expect_success 'fetch with fetch.fsck.skipList' '
-> +	commit="$(git hash-object -t commit -w --stdin <bogus-commit)" &&
-> +	refspec=refs/heads/bogus:refs/heads/bogus &&
-> +	git push . $commit:refs/heads/bogus &&
+> +test_expect_success 'setting different case subsections ' '
+> +	test_when_finished "rm -f caseSens caseSens_actual caseSens_expect" &&
+> +
+> +	# v.a.r and v.A.r are not the same variable, as the middle
+> +	# level of a three-level configuration variable name is
+> +	# case sensitive.
+> +	git config -f caseSens v."A".r VAL &&
+> +	git config -f caseSens v."a".r val &&
+> +
+> +	echo VAL >caseSens_expect &&
+> +	git config -f caseSens v."A".r >caseSens_actual &&
+> +	test_cmp caseSens_expect caseSens_actual &&
+> +
+> +	echo val >caseSens_expect &&
+> +	git config -f caseSens v."a".r >caseSens_actual &&
+> +	test_cmp caseSens_expect caseSens_actual
+> +'
+> +
+>  for VAR in a .a a. a.0b a."b c". a."b c".0d
+>  do
+>  	test_expect_success "git -c $VAR=VAL rejects invalid '$VAR'" '
+> -- 
+> 2.18.0.345.g5c9ce644c3-goog
+> 
 
-I see this used in the previous test for receive.fsck.skipList, but
-it is an interesting implementation of "git update-ref" that could
-be affected by potential fsck error in push-to-receive-pack transport.
-As we are interested in transport into "dst" and we want this creation
-of our 'bogus' branch to succeed no matter what, it probably is not
-a good idea to use "git push ." like this in the context of this test.
-
-Perhaps leave a 'leftoverbits' comment to force us remember to update
-all these uses of local push from the script in the future?
-
-> +	rm -rf dst &&
-> +	git init dst &&
-> +	git --git-dir=dst/.git config fetch.fsckObjects true &&
-> +	test_must_fail git --git-dir=dst/.git fetch "file://$(pwd)" $refspec &&
-
-We see that by default fetch.fsckObjects errors out when it notices
-the bogus commit object.
-
-> +	git --git-dir=dst/.git config fetch.fsck.skipList dst/.git/SKIP &&
-> +	echo $commit >dst/.git/SKIP &&
-
-And then we set up a skip to see ...
-
-> +	git --git-dir=dst/.git fetch "file://$(pwd)" $refspec
-
-... if that is ignored.  Looks great.
-
-Would this second attempt succeed _without_ the SKIP list, I wonder,
-though?  
-
-After the initial attempt that transferred the object, inspected it
-and then aborted before pointing a ref to make the object reachable,
-wouldn't it be possible for the quickfetch codepath to say "ah, we
-locally have that object, so let's see it is a descendant of the tip
-of one of our refs *and* all the objects it points at (recursively)
-are all available in this repository", as we do not quarantine on
-the fetch side?
+-- 
+Brandon Williams
