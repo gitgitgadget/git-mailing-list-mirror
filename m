@@ -7,117 +7,82 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F1371F597
-	for <e@80x24.org>; Fri, 27 Jul 2018 15:49:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2FF91F597
+	for <e@80x24.org>; Fri, 27 Jul 2018 15:50:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388156AbeG0RLb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jul 2018 13:11:31 -0400
-Received: from mout.gmx.net ([212.227.15.18]:33493 "EHLO mout.gmx.net"
+        id S2388634AbeG0RM2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jul 2018 13:12:28 -0400
+Received: from mout.gmx.net ([212.227.17.20]:52219 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732059AbeG0RLb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jul 2018 13:11:31 -0400
-Received: from [192.168.0.129] ([37.201.193.59]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lcjgd-1gRRsc3nrb-00k7FT; Fri, 27
- Jul 2018 17:48:57 +0200
-Date:   Fri, 27 Jul 2018 17:48:57 +0200 (DST)
+        id S1732059AbeG0RM2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jul 2018 13:12:28 -0400
+Received: from [192.168.0.129] ([37.201.193.59]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Ma2Lr-1fPbnw0WNz-00LjC6; Fri, 27
+ Jul 2018 17:49:47 +0200
+Date:   Fri, 27 Jul 2018 17:49:43 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Jonathan Tan <jonathantanmy@google.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH] negotiator/skipping: skip commits during fetch
-In-Reply-To: <20180726191609.176343-1-jonathantanmy@google.com>
-Message-ID: <nycvar.QRO.7.76.6.1807271737470.10478@tvgsbejvaqbjf.bet>
-References: <nycvar.QRO.7.76.6.1807261233300.71@tvgsbejvaqbjf.bet> <20180726191609.176343-1-jonathantanmy@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     knu@idaemons.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] sequencer.c: terminate the last line of author-script
+ properly
+In-Reply-To: <xmqqbmatrixc.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1807271749290.10478@tvgsbejvaqbjf.bet>
+References: <86a7qwpt9g.knu@iDaemons.org> <xmqqa7qww6uk.fsf@gitster-ct.c.googlers.com> <CAPig+cQWA+sE3iH89kQGWgS+0HQDK-V5++S0+F6_dpfOCfXxDg@mail.gmail.com> <xmqqpnzlla1p.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1807261347040.71@tvgsbejvaqbjf.bet>
+ <xmqqbmatrixc.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:YJESwaOzbFk3cLD28wd04xc7C57LeqnM2MSi9LxcM61RG0QvkR8
- dYbjJjNYhRhKqy79KY8eWUDawosUUZgiUrSD/XHXIxivrEObfjcfw5Sk1G9x555tGhidarB
- Wy4yibhRgE6HYN1S3pYvM8t1m/Ix2VMcCWojWNz7+cc5YbH62jKtz5cwZ0EkjIfYEhf4Q32
- ylUcOWxvHneJlW3QGnI+w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:svsLdxEhYmE=:ovQLVNdCk0lztG30BSV/e6
- cIXLmMIwxGM0AlIP+3+U0p3gPoRJ4AhhAGA+aEFGtZXAWH8CaBtNjUASOMZsSspwMBsBPWW7Z
- YNKunguRY7jN280G23L2iGAZyE98+FNA48nSNY+88VTaM2TUqR1UDxi+fxFYQTqQU7+9WJ6Xp
- PCyYzUKNxRpJmfYNmhKSnK/+FbVylb94Mxi7msAi67DZ0iyU/2+0BoZ8puWg2nU43P0mZWQax
- cYe0YqxaIMGqzOE5Z/SVZd7L5mmaT3yuIydQvjHacGzYGsrsZKy8xBb9+SaPFmT/3QgxVxsUX
- i7D0P34PrOla2ytldZ2Anw9NZ9NpTzGKz+RBTjb4l62QR0Kcy41T9HVNBuRjqJmLavOVwJ7ZB
- T7k1EEk13ETirzfbjdx7ZJcD3wQgr1Keb1UOFdCGYjQ1tRBnvGPEfJAr4FJyz3SEs4W+daXhB
- DsuX/GJYN8zMWkTuu5KKzWhDYj1Q4Dyha3Mab/T4IUX/9TIvR1sjIRvfn3Z46WnNVIT0jwjqd
- q13sXcc/Hhyms7qzAVzLoMGHdBss2eQ/tbsGDt++Bp8TJgIoPA2KBDFCsOR0MnB8/1Mf5O4ao
- 5Zv2QUFP6kQzwJeHuRBneeMSyUOC3/UDt9dV6dHiW62rfOM/pu68c7yHYkEX5pA3Ib5aetL7u
- UianbNzldYxz12X/rFHeaRL/otLhakOrZMKPuzFNDTxYHtV9u7dtxp90J783aN5eJGM2n8t13
- 5+k0G9/chEk/ey+lS42ica1EPLdaHipIGWADF58GqSwr1ftNTI7gr5+IXn6zMBBRrFFJ7Oh6U
- E9WeWpA
+X-Provags-ID: V03:K1:1L0xopHafNFbtKDufxb+DyTnxCX0VXLS6CshhHnSkxbj831J7oS
+ R6kIA558kFsE2ZdEWaRTGLl5ZPnIAGG6F1jG7IsOMOLjgaSs5CMJCCCByypOgf/Ajvj1JAb
+ t3lQMXSzO93aSkzFzLd6soPTuDi/60d/FCAQuF3stV9IcyvM+hGn2ve3OcuCD9skxkqdsEx
+ kJs3S6Rhk5xeAhCiPDy6g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:wKNP5A0UYLU=:6/G7kmqzyo8YwA4XpAbyJc
+ HE60+mUjn1dTnO3IQnrQntISmo6TUl1ieFHmbI96SWux/LFE3iw0pKlRVyPxIjmk7Sg99NUJ7
+ OB6ufoM3M9C7VjJN/cdrDKQxg0YuF3Xsop6z4AoGeIDGRPSwWPBzKcaDswf42AiB9RkcwS50u
+ jiwIc1ThbUt/aT/RzA66cwvcMebbYrb80Y61Z1YbMqEbK0aEgqVebmdGMhOjgWQiudtHHrgWd
+ +9wBqrwiVBzu5U29qg2rZZA/0n88woHvFgLFkOiNCj+lWZp7UE0OKGwesGpTmJQpkx/Wag3dU
+ +DKa4wb2El5sW8O1gmyQApwx6Tw/kAb3b4Qp5gXyYkWcyavhqUJZw/cdLTYgdj6v4cjb+mvsh
+ nbNHtk0CYC8HqWiHswFri/jBO5U4H32w3sAfJEI9T32eLFGpKCiWiyCJ4RdiFBc1Jf4ksmQ4M
+ OIMuNSUCuDktm5jjowRNUAUgmFsuEWNeQDawLtwIgqJH5Yq4P8lYtPL1Yp13XikuudXI9kdtZ
+ y6wpyL7S4zoPgjXrP9fCNeKKNKsawhnZKHpxoz8uIDH5r63N8WjG3b+WqRTINKfrOgnkPHD6j
+ a4ObiajCl8ToKTasmTRSM+dGKX1BjVUeA1iVNLbg7kY2/6wuNS82wrxXKG68oqAKdNqXGX4AD
+ MYSWiZd2Ek4kelCJOGwndzS+2Ujpd3aFOMOf4Wr5yoGbWyf3dPxqZbeUfkGBRbEItDE/4z4PC
+ G/WcMqpNqGc4bsZBLIpINFQRE+lkF7NTeGrCZeEevM+AaRjSNPQziiOdwNlPN47zwnnj7nFmB
+ pPBKig3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+Hi Junio,
 
-On Thu, 26 Jul 2018, Jonathan Tan wrote:
+On Thu, 26 Jul 2018, Junio C Hamano wrote:
 
-> > On Mon, 16 Jul 2018, Jonathan Tan wrote:
-> > 
-> > >  t/t5552-skipping-fetch-negotiator.sh | 179 +++++++++++++++++++
-> > 
-> > This test seems to be failing consistently in the recent `pu` builds:
-> > 
-> > https://git-for-windows.visualstudio.com/git/_build/results?buildId=14337&view=logs
-> > 
-> > Could you have a look, please?
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> Hmm...on my Linux computer, this test passes on both pu (as of the time
-> of writing) and 838143aa5c ("Merge branch 'ab/newhash-is-sha256' into
-> pu", 2018-07-25) (pu at the time of that build, according to the website
-> you linked above). If you could rerun that test with additional code,
-> could you add a "cat trace" and show me what the client sends?
-
-I can give you something even better: a playground. Just open a PR at
-https://github.com/gitgitgadget/git (all of the branches on gitster/git ar
-mirrored, including yours, I am sure, so you can target that branch
-specifically).
-
-Once you open a Pull Request, it will automatically build and run the test
-suite on Windows, macOS and Linux. You will see it in the "checks" section
-on the bottom. Example for my range-diff series:
-
-https://git-for-windows.visualstudio.com/git/_build/results?buildId=14279
-
-For a quicker turnaround, you could add a commit that forces the `all`
-target in `t/Makefile` to run only your test.
-
-> When I do that, the relevant parts are:
+> > Hi Junio,
+> >
+> > On Tue, 17 Jul 2018, Junio C Hamano wrote:
+> >
+> >> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> >> index 2d189da2f1..b0cef509ab 100755
+> >> --- a/t/t3404-rebase-interactive.sh
+> >> +++ b/t/t3404-rebase-interactive.sh
+> >> @@ -81,11 +81,13 @@ test_expect_success 'rebase -i writes out .git/rebase-merge/author-script in "ed
+> >
+> > You missed a very long line here.
+> >
+> >>  	set_fake_editor &&
+> >>  	FAKE_LINES="edit 1" git rebase -i HEAD^ &&
+> >>  	test -f .git/rebase-merge/author-script &&
+> >
+> > Why do we need this, if we already have an `eval` later on?
 > 
->   packet:        fetch> have 9ab46928dc282aa09f4dbf96893a252e058e7e8e
->   packet:        fetch> have dc824fafb05f3229aedf1f320bbe572e35364dfe
->   packet:        fetch> have caef059de69917b9119176a11b88afcef769331d
->   packet:        fetch> have 41bd8dc092ee110ba80e350a346ec507ab2e42a0
->   packet:        fetch> have e9a2c092a8e911567a377c881a7f6031e7f892ea
->   packet:        fetch> done
-> 
-> which is exactly as I (and the test) expect.
-> 
-> Two possible reasons for the discrepancy that I can think of offhand are
-> that (1) my computer generates different commits from your test system,
-> and (2) the priority queue pops commits in a different order. For (1),
-> that's not possible because the SHA-1s are the same (as can be seen by
-> comparing your link and the "have" lines I quoted above), and for (2),
-> the code seems OK:
-> 
->   static int compare(const void *a_, const void *b_, void *unused)
->   {
->   	const struct entry *a = a_;
->   	const struct entry *b = b_;
->   	return compare_commits_by_commit_date(a->commit, b->commit, NULL);
->   }
-> 
-> Let me know if you can observe the output of "cat trace" or if you have
-> any other ideas.
+> You are commenting on a wrong version.  Comment on the original.
 
-Like I said, you can use those "CI" builds, I think that would be more
-effective than if you waited for me to react, I am quite overwhelmed these
-days.
+Sorry, no time. Take this review, or leave it.
 
 Ciao,
 Dscho
