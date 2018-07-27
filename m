@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C6F21F597
-	for <e@80x24.org>; Fri, 27 Jul 2018 14:37:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B537C1F597
+	for <e@80x24.org>; Fri, 27 Jul 2018 14:37:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732706AbeG0P74 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jul 2018 11:59:56 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:38795 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730714AbeG0P74 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jul 2018 11:59:56 -0400
-Received: by mail-wm0-f65.google.com with SMTP id t25-v6so5684541wmi.3
-        for <git@vger.kernel.org>; Fri, 27 Jul 2018 07:37:42 -0700 (PDT)
+        id S1733151AbeG0P75 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jul 2018 11:59:57 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:51255 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732267AbeG0P75 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jul 2018 11:59:57 -0400
+Received: by mail-wm0-f68.google.com with SMTP id y2-v6so5498271wma.1
+        for <git@vger.kernel.org>; Fri, 27 Jul 2018 07:37:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=6DIaVVvI6SAnyhXpXxNP7XdH0mlx+6+UJogQnUjfzP0=;
-        b=hnqRQy08Qzi0eXn2ptbhc8ZE9o9WBvFLEuaMGEo8kwWgy5gSyI/WjHSFy8olP6uhTB
-         +VV4c2MQkA89HFMqn04xU8lybmdgV8bmK1zSS4+deRpct3RiFs4AZuRaU4GYmPJZ48rd
-         M9YwrL31gEK6oI+N/jrHcbs/hDrmZxlJPRXbeWxl3ZTZLH0TYAzBxOenHhxo6S7nGYID
-         kqXJKmJcHXn7sPPNRyDCJG1+zrJqtnPMxLMW8J2IO0wr8tK19fwGqx5TUFIQKKp2wYdI
-         u/SAvwXhBb8RjX8na7Y8gejZ/8kPULgcTAwI5iZF+1x7VUlscFN4dq2EgCBSHKugWjmu
-         EtnA==
+        bh=0ssnyfDDdH4/Omirje8rtX1p6o9GYQRALJg5YodrQlM=;
+        b=RpiWOLyjRQcd8mtYlhagnn0MR26hmawEOV8uHQcgFBL/PtpmdDdRSoLVM/9FTTJy9l
+         Y+v1lFAXc9gh21CSM8vpgMUMPoFhJjst20aDbuz6b6oUTjVIUegMPFZNcsv7V3jLJv+u
+         gHxjur74jcfz/fcJwgWkBjQ9iVHVCwR8rcWQfa7Z0OgxUiuQTFEquJAJUuUtzXo4FDJ6
+         IvQf2qf/0EJC/a73FhLg0xF4fBOcTlf1RKtXoGdWkkzNaOudL0wo3mJRPCIiPbcsuU5M
+         KlYlr9OPQq1EMskeTVjkftg+sGDMBT81SF/s98DFN6S2PAYKTMxsiuC1y/qDnoIG6EYD
+         nHEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=6DIaVVvI6SAnyhXpXxNP7XdH0mlx+6+UJogQnUjfzP0=;
-        b=oKcmo6qDLA+S25GLSbwah5R4rRiMDRv1FNUw/QIKO8ncifR2sLNQ3LFSdLb6z4jC7w
-         9U+cjE3iaNfrXto7rkl+hj4EwnkYlsxz/r9RDX4NOTi9PEShZHUKIr8OpAgEktCj2Qbr
-         6kH05awNYl5NPICOKn/RcuyeZT49J7ZIG5hC+kjRcWf3qP7wQZxlJuowrfRbCxmWx0ZG
-         4CSM2wtj9RmdILK7jfw/3n1/080sYe2nsauB9pFjBwK2bqYCLOH8SnuRMGRrt7Gkc1D4
-         eb8R/WW9+z8Mr5eMXukzcrgxU5hcsZYnirqfeAJ7s1gdGCHgEAcQK2k1ysfQfAHiHfr7
-         iPKg==
-X-Gm-Message-State: AOUpUlEgq3uSC2Pl6ooC8ayVrErjbblcOg99nqodTKZFrtuviPlOescF
-        tKVGMhDkg/CgLRqLXtzI239nuuE6Qt4=
-X-Google-Smtp-Source: AAOMgpdhPjW1lO2zMsK32dAqnPOXkhYhdfZktYFlfTIb9PS8j+xteO7ID1H7B48PsmILTBKSLGGPKA==
-X-Received: by 2002:a1c:4885:: with SMTP id v127-v6mr4378683wma.161.1532702261134;
-        Fri, 27 Jul 2018 07:37:41 -0700 (PDT)
+        bh=0ssnyfDDdH4/Omirje8rtX1p6o9GYQRALJg5YodrQlM=;
+        b=noOpo89D9siLipZBCBg/u1tG1h1Gud7OhwoPvd5ZcjZi3oYO2IwONbMhBRep7esQzR
+         HjOjhCJ5mDILdzwFdDvY/M6HmVOzJTLRUztO6ywppmOVa8Ko8VRGh0/HuSZE+zhTGouu
+         fgEpqrCqqJuRGAQarY27asgbvOh7f6GO5FrqC6AAgealVz7e2REoHXz5ydFntXfptGxG
+         CMdXn3HCsr7bvuLkAk2DW/GCyVGCGUisXiiikX5IwI8uyOpIKINGGDk4X0LRUEj4KVEc
+         lRQHEPVRm03weyFevFYRhRZOw4aOZLXYk2Rs8QyrzQosZM5UAzYDvI75MKBVnZuEYlNq
+         vesQ==
+X-Gm-Message-State: AOUpUlFajvzi3ir5CwbjxnJ6m9iZeU7yCVO/H+dFJYOZ88ommLw9yEc4
+        sV8AfBXqnI8MrTrnBL5u6uszmJfaZIY=
+X-Google-Smtp-Source: AAOMgpdVOP8CvCIs5zhjrLI7MRupSQ1+J+9vh10LcIdB227bfzxIQfoNQonqpIyHMee167xvNb/WKQ==
+X-Received: by 2002:a1c:1188:: with SMTP id 130-v6mr4471982wmr.138.1532702262936;
+        Fri, 27 Jul 2018 07:37:42 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id j16-v6sm3005479wme.8.2018.07.27.07.37.39
+        by smtp.gmail.com with ESMTPSA id j16-v6sm3005479wme.8.2018.07.27.07.37.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 27 Jul 2018 07:37:40 -0700 (PDT)
+        Fri, 27 Jul 2018 07:37:42 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Christian Couder <christian.couder@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 03/10] config doc: unify the description of fsck.* and receive.fsck.*
-Date:   Fri, 27 Jul 2018 14:37:13 +0000
-Message-Id: <20180727143720.14948-4-avarab@gmail.com>
+Subject: [PATCH v3 04/10] config doc: elaborate on what transfer.fsckObjects does
+Date:   Fri, 27 Jul 2018 14:37:14 +0000
+Message-Id: <20180727143720.14948-5-avarab@gmail.com>
 X-Mailer: git-send-email 2.18.0.345.g5c9ce644c3
 In-Reply-To: <20180525192811.25680-1-avarab@gmail.com>
 References: <20180525192811.25680-1-avarab@gmail.com>
@@ -73,118 +73,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The documentation for the fsck.<msg-id> and receive.fsck.<msg-id>
-variables was mostly duplicated in two places, with fsck.<msg-id>
-making no mention of the corresponding receive.fsck.<msg-id>, and the
-same for fsck.skipList.
+The existing documentation led the user to believe that all we were
+doing were basic reachability sanity checks, but that hasn't been true
+for a very long time. Update the description to match reality, and
+note the caveat that there's a quarantine for accepting pushes, but
+not for fetching.
 
-I spent quite a lot of time today wondering why setting the
-fsck.<msg-id> variant wasn't working to clone a legacy repository (not
-that that would have worked anyway, but a subsequent patch implements
-fetch.fsck.<msg-id>).
-
-Rectify this situation by describing the feature in general terms
-under the fsck.* documentation, and make the receive.fsck.*
-documentation refer to those variables instead.
-
-This documentation was initially added in 2becf00ff7 ("fsck: support
-demoting errors to warnings", 2015-06-22) and 4b55b9b479 ("fsck:
-document the new receive.fsck.<msg-id> options", 2015-06-22).
+Also mention that the fsck checks for security issues, which was my
+initial motivation for writing this fetch.fsck.* series.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/config.txt | 62 +++++++++++++++++++++++-----------------
- 1 file changed, 35 insertions(+), 27 deletions(-)
+ Documentation/config.txt | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 6b99cf8d71..8d08250a5b 100644
+index 8d08250a5b..291b4f3c57 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -1595,15 +1595,30 @@ filter.<driver>.smudge::
- 	linkgit:gitattributes[5] for details.
- 
- fsck.<msg-id>::
--	Allows overriding the message type (error, warn or ignore) of a
--	specific message ID such as `missingEmail`.
--+
--For convenience, fsck prefixes the error/warning with the message ID,
--e.g.  "missingEmail: invalid author/committer line - missing email" means
--that setting `fsck.missingEmail = ignore` will hide that issue.
--+
--This feature is intended to support working with legacy repositories
--which cannot be repaired without disruptive changes.
-+	During fsck git may find issues with legacy data which
-+	wouldn't be generated by current versions of git, and which
-+	wouldn't be sent over the wire if `transfer.fsckObjects` was
-+	set. This feature is intended to support working with legacy
-+	repositories containing such data.
+@@ -3397,8 +3397,17 @@ transfer.fsckObjects::
+ 	Defaults to false.
+ +
+ When set, the fetch or receive will abort in the case of a malformed
+-object or a broken link. The result of an abort are only dangling
+-objects.
++object or a link to a nonexistent object. In addition, various other
++issues are checked for, including legacy issues (see `fsck.<msg-id>`),
++and potential security issues like the existence of a `.GIT` directory
++or a malicious `.gitmodules` file (see the release notes for v2.2.1
++and v2.17.1 for details). Other sanity and security checks may be
++added in future releases.
 ++
-+Setting `fsck.<msg-id>` will be picked up by linkgit:git-fsck[1], but
-+to accept pushes of such data set `receive.fsck.<msg-id>` instead.
-++
-+The rest of the documentation discusses `fsck.*` for brevity, but the
-+same applies for the corresponding `receive.fsck.*` variables.
-++
-+When `fsck.<msg-id>` is set, errors can be switched to warnings and
-+vice versa by configuring the `fsck.<msg-id>` setting where the
-+`<msg-id>` is the fsck message ID and the value is one of `error`,
-+`warn` or `ignore`. For convenience, fsck prefixes the error/warning
-+with the message ID, e.g. "missingEmail: invalid author/committer line
-+- missing email" means that setting `fsck.missingEmail = ignore` will
-+hide that issue.
-++
-+In general, it is better to enumerate existing objects with problems
-+with `fsck.skipList`, instead of listing the kind of breakages these
-+problematic objects share to be ignored, as doing the latter will
-+allow new instances of the same breakages go unnoticed.
++On the receiving side, failing fsckObjects will make those objects
++unreachable, see "QUARANTINE ENVIRONMENT" in
++linkgit:git-receive-pack[1]. On the fetch side, malformed objects will
++instead be left unreferenced in the repository.
  
- fsck.skipList::
- 	The path to a sorted list of object names (i.e. one SHA-1 per
-@@ -1612,6 +1627,9 @@ fsck.skipList::
- 	should be accepted despite early commits containing errors that
- 	can be safely ignored such as invalid committer email addresses.
- 	Note: corrupt objects cannot be skipped with this setting.
-++
-+Like `fsck.<msg-id>` this variable has a corresponding
-+`receive.fsck.skipList` variant.
- 
- gc.aggressiveDepth::
- 	The depth parameter used in the delta compression
-@@ -2893,26 +2911,16 @@ receive.fsckObjects::
- 	`transfer.fsckObjects` is used instead.
- 
- receive.fsck.<msg-id>::
--	When `receive.fsckObjects` is set to true, errors can be switched
--	to warnings and vice versa by configuring the `receive.fsck.<msg-id>`
--	setting where the `<msg-id>` is the fsck message ID and the value
--	is one of `error`, `warn` or `ignore`. For convenience, fsck prefixes
--	the error/warning with the message ID, e.g. "missingEmail: invalid
--	author/committer line - missing email" means that setting
--	`receive.fsck.missingEmail = ignore` will hide that issue.
--+
--This feature is intended to support working with legacy repositories
--which would not pass pushing when `receive.fsckObjects = true`, allowing
--the host to accept repositories with certain known issues but still catch
--other issues.
-+	Acts like `fsck.<msg-id>`, but is used by
-+	linkgit:git-receive-pack[1] instead of
-+	linkgit:git-fsck[1]. See the `fsck.<msg-id>` documentation for
-+	details.
- 
- receive.fsck.skipList::
--	The path to a sorted list of object names (i.e. one SHA-1 per
--	line) that are known to be broken in a non-fatal way and should
--	be ignored. This feature is useful when an established project
--	should be accepted despite early commits containing errors that
--	can be safely ignored such as invalid committer email addresses.
--	Note: corrupt objects cannot be skipped with this setting.
-+	Acts like `fsck.skipList`, but is used by
-+	linkgit:git-receive-pack[1] instead of
-+	linkgit:git-fsck[1]. See the `fsck.skipList` documentation for
-+	details.
- 
- receive.keepAlive::
- 	After receiving the pack from the client, `receive-pack` may
+ transfer.hideRefs::
+ 	String(s) `receive-pack` and `upload-pack` use to decide which
 -- 
 2.18.0.345.g5c9ce644c3
 
