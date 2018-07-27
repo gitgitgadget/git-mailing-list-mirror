@@ -2,103 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7746F1F597
-	for <e@80x24.org>; Fri, 27 Jul 2018 13:13:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8BA5A1F597
+	for <e@80x24.org>; Fri, 27 Jul 2018 14:28:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732090AbeG0Of2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jul 2018 10:35:28 -0400
-Received: from cloud.peff.net ([104.130.231.41]:32824 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1730766AbeG0Of2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jul 2018 10:35:28 -0400
-Received: (qmail 26722 invoked by uid 109); 27 Jul 2018 13:13:35 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 27 Jul 2018 13:13:35 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26122 invoked by uid 111); 27 Jul 2018 13:13:36 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 27 Jul 2018 09:13:36 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 27 Jul 2018 09:13:34 -0400
-Date:   Fri, 27 Jul 2018 09:13:34 -0400
-From:   Jeff King <peff@peff.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [RFC PATCH 3/5] pack-objects: add delta-islands support
-Message-ID: <20180727131333.GC18599@sigill.intra.peff.net>
-References: <20180722054836.28935-1-chriscool@tuxfamily.org>
- <20180722054836.28935-4-chriscool@tuxfamily.org>
- <CAGZ79kbF7g3E4hBa0VqMqBoovbAb2dHaGFNRL=+f7Lce1AduVg@mail.gmail.com>
- <20180724095843.GB3578@sigill.intra.peff.net>
- <CAGZ79kZkagveB+jG9iLQ2ohaSfAzY5YtWC=BTdD1o9OQUrw90Q@mail.gmail.com>
+        id S1730953AbeG0Pu4 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jul 2018 11:50:56 -0400
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:50446 "EHLO
+        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730771AbeG0Pu4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jul 2018 11:50:56 -0400
+Received: by mail-wm0-f45.google.com with SMTP id s12-v6so5474409wmc.0
+        for <git@vger.kernel.org>; Fri, 27 Jul 2018 07:28:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=+J+4ZnoutJ4JZOCR6qHxIlncBILExdDk0BuWxHkbCmI=;
+        b=RAd1PzxPMIcf4ad+lxGN0AGIRNpumCgNalUqYL44849WfgYpjN63tSwQ7oYvkCRUx0
+         7HeYu4LsOfyl1oadKhLZsrZVPyin+i520bURYKY76K2Rx3m8HC+p4kR+mmcUu7WTaxHm
+         HkuvxMZSgTeZlDXPmEKgiOYPDw8iSTmUFOUkQmPn5dPdXGCRlGMYSsxY9m+u1BrZ4UFg
+         FupFF7ugK7INPOo2SE0oRjKYpewfDZcoEwVXoJv24woFcCK6+Lrudr4QfMZtTX8Tg7tv
+         6qBKXXZgiPO3DxYfl5bJ7DGV7VE7OYT3Jv6vd0eHNh7BSoekwo8FH4myaAr5Pijz8Dml
+         eqBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=+J+4ZnoutJ4JZOCR6qHxIlncBILExdDk0BuWxHkbCmI=;
+        b=U2eXFmefa2eqCdVPxeOBZdgTpx7bBSgKwBA1vSUCoKVS0RfB3b76/06afVDcNAXJyS
+         ZfqUqXIlqPGhwm9QjxssHFZ7N2Lv8qvidoYngjPNpj/pEAijOWeQQ3SAMDoreEvwj6bt
+         WadixzflmKwaYPpv4oChFVrvZTsF+YXYel4Ka8L5fPaiuREv9KN0d5yFEcl7ysjvw4RR
+         xXzuhUBuVQgIDydKkAiY6hkPwPQu1ky5xOP/bDfjM3AstxbN6DJuJtJ28euwJ6PG+tZE
+         72mBNWDpz0xlrJX7HOBLhWYRSOSRbXPv23pagDI5Q5q2wWpJKk7VqMzA/s2C190vzKhE
+         ZNlw==
+X-Gm-Message-State: AOUpUlH2Lt2ZqWKNVR/ZOx1gwigAijg9Eu5cThVawbqHfI7UYDRNnh+d
+        JuSP720hzDSY9tbiQ0Imiew=
+X-Google-Smtp-Source: AAOMgpeP91Z54y4ZlDdWICDjJHeQ3Ucp78ZpQguRmKyG5+uQbVVyBKFIlAgjeNxwLDTuVZQV/AcHrA==
+X-Received: by 2002:a1c:8682:: with SMTP id i124-v6mr4679087wmd.77.1532701724372;
+        Fri, 27 Jul 2018 07:28:44 -0700 (PDT)
+Received: from evledraar ([5.57.20.50])
+        by smtp.gmail.com with ESMTPSA id m207-v6sm6523769wma.31.2018.07.27.07.28.43
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 27 Jul 2018 07:28:43 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: What's cooking in git.git (Jul 2018, #03; Wed, 25)
+References: <xmqqd0vbt14e.fsf@gitster-ct.c.googlers.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <xmqqd0vbt14e.fsf@gitster-ct.c.googlers.com>
+Date:   Fri, 27 Jul 2018 16:28:42 +0200
+Message-ID: <87fu0469d1.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kZkagveB+jG9iLQ2ohaSfAzY5YtWC=BTdD1o9OQUrw90Q@mail.gmail.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 24, 2018 at 10:20:05AM -0700, Stefan Beller wrote:
 
-> So in my understanding we have a "common base pack" and specific
-> packs on top for each "island".
+On Wed, Jul 25 2018, Junio C Hamano wrote:
 
-Sort of. This is another hacky part. The islands themselves are
-generally just about forbidding deltas, and not any particular kind of
-layering.
+> * js/range-diff (2018-07-25) 21 commits
+> [...]
+>
+>  "git tbdiff" that lets us compare individual patches in two
+>  iterations of a topic has been rewritten and made into a built-in
+>  command.
+>
+>  Undecided.
+>
+>  Many "The feature is useful" comments without much real review; we
+>  know the feature is great as this mimicks tbdiff already so that is
+>  not news.
 
-But there's some magic layering only for the "core" island, which gets
-to go first (and makes a sort of pseudo-pack at the front of the one
-pack). And then everything else is written willy nilly. This is a hack
-to try to make the "blit the pack bytes out" code path for cloning fast.
-And that has to pick _one_ winner, so ideally you'd point it at the
-thing that gets cloned the most, and everybody else gets to be a loser.
-
-Again, this was designed for the current pack-reuse code we have
-upstream, which we (GitHub) found to be pretty crappy (which I feel
-justified in saying as one of the authors). I need to clean up and share
-the alternative strategy we ended up with.
-
-> Do you envision to have "groups of islands" (an atoll) for say all
-> open source clones of linux.git, such that you can layer the packs?
-> You would not just have the base pack + island pack, but have one
-> pack that is common to most islands?
-
-So no, we don't really layer in any sane way. If pack-objects were fed
-the topological relationships between the forks, in theory we could
-create a layered packfile that respects that.
-
-But even that is not quite enough. At the time of forking, you might
-imagine that torvalds/linux has the base pack, and then somebody forks
-from them and contains all of those objects plus more, and somebody
-forks from them, and so on. But that's just a snapshot. Later
-torvalds/linux will get a bunch of new objects pushed to it. And some of
-its forks will merge those objects, too. But some of them will just rot,
-abandoned, as nobody ever touches them again.
-
-So I don't think there's much to be gained by paying attention to the
-external forking relationships. We have to discover afresh the
-relationships between objects, and which refs (and thus which islands)
-point to them.
-
-One thing I don't think we ever tried was doubling down on the
-islandCore concept and making the "root" fork as tightly packed as it
-could be (with the assumption that _most_ people grab that). And then
-just respect the islands for all the other objects (remember this is an
-optimization, so the worst case is somebody asks for an object during a
-fetch and we have to throw away its on-disk delta).
-
-That would solve the problem that fetching torvalds/linux from GitHub
-yields a bigger pack than fetching it from kernel.org. But again, it's
-making that root fork weirdly magical. People who fetch solely from
-other forks won't get any benefit (and may even see worse packs).
-
--Peff
+Count me in the "this is useful" camp, but also I did look at the latest
+submission this time around, but had nothing to say, so I didn't say
+anything :) The latest round was about renaming the command itself,
+which was good, but the actual functionality was hashed out in previous
+rounds.
