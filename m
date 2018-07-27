@@ -2,96 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B77971F597
-	for <e@80x24.org>; Fri, 27 Jul 2018 15:56:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B3B21F597
+	for <e@80x24.org>; Fri, 27 Jul 2018 16:08:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388752AbeG0RSb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jul 2018 13:18:31 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:37010 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388556AbeG0RSa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jul 2018 13:18:30 -0400
-Received: by mail-wr1-f65.google.com with SMTP id q10-v6so5531736wrd.4
-        for <git@vger.kernel.org>; Fri, 27 Jul 2018 08:55:59 -0700 (PDT)
+        id S2388739AbeG0Rau (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jul 2018 13:30:50 -0400
+Received: from mail-it0-f68.google.com ([209.85.214.68]:55856 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388568AbeG0Rau (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jul 2018 13:30:50 -0400
+Received: by mail-it0-f68.google.com with SMTP id 16-v6so8231466itl.5
+        for <git@vger.kernel.org>; Fri, 27 Jul 2018 09:08:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=zqbLBiIytcqeuYHwR4i6EzSewx1q5VywOJItgCr4S74=;
-        b=Y6xV+mVtw1QaRMov5C57rLzMvFK0v3l8yXAmNC/w0XJczIU2kGDh7Tx9uefo7vbLWK
-         K9mXLKWGKzZTGArggREuUZmKc+9478iyUXokVFukVYcejTnbbWND1WaZ1g79ptry92Df
-         COfeqWvuRhUBkQ0kbBNyq8UA7g2Yk2gu93zwh8ypH8J6fiBlLTAav31PqJm7GDm6oKqw
-         QpaYoC2W7Mm8u7PPEUPhw1zOTbKh1H/FnGEF87ZMXw0LwH1gdSa31y31krbLL5cZ6F1K
-         W0gelijh2dd3eetV77m8GnHdJmA+BIVRECfcN6f6WLsz91fpTVUlsBfAj3tQIme9dNGQ
-         t+Xw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=7bi4qlEi4C6lbFqAKk71u2Dpld/aoPo9GHkopgQASng=;
+        b=h5adQT52ztRKyfZNeknMVMVxGNoOtmUCoMXL8up9f/UZ+WQ52vUqDD3v71SgxPIwAl
+         2rbbSjUpkDqNXIYmaHazrnQy+QGvn9jKNhMTIKiMYGh6XSD1RqBbdjuL1Q+FXsA581j+
+         TDnz+yBmVUz6fCiL9h72YPL/WoHCb8mk1ZeD7HLRMJDKx5JCBjJ6SA/LX18Ux+0tCao9
+         lcTjTnnprYv9zV4Pk7Y/fVCbNPEreFpQPrqUCDfqM/8PDfojwzhFtpEL6UQCAUnSlRxW
+         wN6cFBbeA1WFwZrQXbgokDzkZcDqDJs/AB9F1GqvqDbVmoZmbQ7T4gsnpYkiGCc4ra4m
+         nuJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=zqbLBiIytcqeuYHwR4i6EzSewx1q5VywOJItgCr4S74=;
-        b=V/AlLuYeNM30tyHPIAIGpBQrfVq6iENnVv04j9OvfKg1apquFPmXGy8i8tf4GMMeox
-         jxG8nXFE7m9tmnA37fS8kQ9gF2EFxfCWNON+xyIvTETdJ6TplYOJdOgrW4rsGXMRCHkx
-         q0ObvRbWgh8RGVvLyv/e2tcM4YtC0r1j4l3126CtBG2tL1XgUi3FePtfw7PLqHQWihgI
-         cD6ez9LhrKoRSL+Gfi40o/H2his4FsSi43ONMJNjXMoa+xDcsxzZUjW0mkR8RQm0d733
-         5thqpLFGGy/ezKkbqsouA4I0VP+Lm342VQ+pL+cpeWwnhyiQrG0/3tn3NZCsgyFsMl/x
-         yVuQ==
-X-Gm-Message-State: AOUpUlGmJ9UwEo4O5b/9FAsf4RZ++P6/Ndsyz1rKH02/tspEwMTuOfSs
-        l25pqMx6chq545BgZezoY/g=
-X-Google-Smtp-Source: AAOMgpeuCD97KWwqztBESfjtvDi8UV46zrKhm/nQOyF+kiaYLl0AAibspRviho98M33sh1hfT6CIog==
-X-Received: by 2002:adf:a541:: with SMTP id j1-v6mr5692735wrb.155.1532706958409;
-        Fri, 27 Jul 2018 08:55:58 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id v5-v6sm8307730wrp.87.2018.07.27.08.55.57
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 27 Jul 2018 08:55:57 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Tejun Heo <tj@kernel.org>
-Cc:     peff@peff.net, git@vger.kernel.org,
-        kernel-team <kernel-team@fb.com>
-Subject: Re: [PATCH v2] name_rev: add support for --cherry-picks
-References: <20180726121346.GT1934745@devbig577.frc2.facebook.com>
-        <20180726143930.GW1934745@devbig577.frc2.facebook.com>
-        <xmqqa7qerpxu.fsf@gitster-ct.c.googlers.com>
-        <20180726153714.GX1934745@devbig577.frc2.facebook.com>
-        <xmqqr2jpq0s1.fsf@gitster-ct.c.googlers.com>
-        <20180727084039.GB11932@sigill.intra.peff.net>
-        <CAOS58YNjyLLDLpoDDB=oAKn3P_FLLD2WZrygBy6J+TV=E480NQ@mail.gmail.com>
-Date:   Fri, 27 Jul 2018 08:55:57 -0700
-In-Reply-To: <CAOS58YNjyLLDLpoDDB=oAKn3P_FLLD2WZrygBy6J+TV=E480NQ@mail.gmail.com>
-        (Tejun Heo's message of "Fri, 27 Jul 2018 10:47:25 -0400")
-Message-ID: <xmqq8t5wpt9u.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=7bi4qlEi4C6lbFqAKk71u2Dpld/aoPo9GHkopgQASng=;
+        b=Z3Gs77Zvt3ftOiV2DdHQJISKGdpfeo1xirx3C1cRnawcKg+pEK1RRpkrBsdIGb836k
+         tE60OckZ0umbPa2sPPmP9ciV20BWxLLB81evq+q+NodEx8Fv/EdevfEo1T8M1Unwx2dS
+         SB965KapIG1QqMGCQ+6+Sq5q2XHy7nrbl20zNUeHUwkmIRtO8CxcZyX/jjAR89AP+IMy
+         YCX4stzEnLBOMjIVVEjd4Gz7z6Lpjccc/FehqhKV3yKR4Uwni/AqYuCV8DUm0ZDpnGUB
+         58DIWvTC3hfeq+MXUJYY6lfRS73G1kbtHacAerUsTMQ/YiDSvWBd9pheQMxcSipz112W
+         +ASA==
+X-Gm-Message-State: AOUpUlHPHeEkKnk9bZUXP+/aLBIyGxGUwp+QI13fYjjxWiKpnDuyGKfK
+        71WQCWJRCgfUd0f3+BNAjJew8iT9w9XEL3h7A5o=
+X-Google-Smtp-Source: AAOMgpdjjWi8sIkBe3AuQgP7SuUMPuDxUyO+p7xms0Wyl4zMmxHvZasj7jbA8CQnD9pxZoqzgjN/xHT55llxtquCpq8=
+X-Received: by 2002:a24:b101:: with SMTP id o1-v6mr5844443itf.121.1532707696757;
+ Fri, 27 Jul 2018 09:08:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20180727003640.16659-1-sbeller@google.com> <20180727003640.16659-3-sbeller@google.com>
+In-Reply-To: <20180727003640.16659-3-sbeller@google.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Fri, 27 Jul 2018 18:07:50 +0200
+Message-ID: <CACsJy8Ae3sZvOQ3irQM+hv0fCRchGi8995kvLZBadbaphRo-3A@mail.gmail.com>
+Subject: Re: [PATCH 2/3] refs: introduce new API, wrap old API shallowly
+ around new API
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Tejun Heo <tj@kernel.org> writes:
+On Fri, Jul 27, 2018 at 2:40 AM Stefan Beller <sbeller@google.com> wrote:
+>
+> Currently the refs API takes a 'ref_store' as an argument to specify
+> which ref store to iterate over; however it is more useful to specify
+> the repository instead (or later a specific worktree of a repository).
 
-> ... After all, calling the program twice isn't all that
-> difficult.
+There is no 'later'. worktrees.c already passes a worktree specific
+ref store. If you make this move you have to also design a way to give
+a specific ref store now.
 
-As long as we all agree on that, I think we can move forward.
-Because I think this ...
-
->> ... But it feels like
->> "reverse-map the cherry-picks" is orthogonal to the idea of name-rev.
-
-... is a better way of saying what I've been feeling (i.e. the
-feature indeed is useful, but does it belong to "name-rev"?), and
-none among three of us would mind running "name-rev" to see the
-simplest way to reach the primary commit you are interested in from
-tags, and another "reverse-map the cherry-picks" command (and in
-"git show -s --notes=reverse-cherry-pick" may be that command) to
-get the data from that orthogonal feature.
-
-And obviously, "git log --notes=reverse-cherry-pick" would give the
-information if we take that "use notes to record reverse map for
-cherry-picks" route; adding support for "name-rev --cherry-pick"
-would not help such a use case.
+Frankly I still dislike the decision to pass repo everywhere,
+especially when refs code already has a nice ref-store abstraction.
+Some people frown upon back pointers. But I think adding a back
+pointer in ref-store, pointing back to the repository is the right
+move.
+-- 
+Duy
