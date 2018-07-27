@@ -2,124 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 64A341F597
-	for <e@80x24.org>; Fri, 27 Jul 2018 17:22:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A21DD1F597
+	for <e@80x24.org>; Fri, 27 Jul 2018 17:28:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388332AbeG0SpM (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jul 2018 14:45:12 -0400
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:40087 "EHLO
-        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728650AbeG0SpL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jul 2018 14:45:11 -0400
-Received: by mail-yw0-f196.google.com with SMTP id z143-v6so2128297ywa.7
-        for <git@vger.kernel.org>; Fri, 27 Jul 2018 10:22:21 -0700 (PDT)
+        id S2388879AbeG0SvY (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jul 2018 14:51:24 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:45810 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388886AbeG0SvY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jul 2018 14:51:24 -0400
+Received: by mail-wr1-f66.google.com with SMTP id t13-v6so5782132wrv.12
+        for <git@vger.kernel.org>; Fri, 27 Jul 2018 10:28:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=NCk9OBE0aok5bmSfKQqXbdaaftwcxy/CeYoZP5C3sTQ=;
-        b=mQcdmdD/0H8t3hmrRyc4ENgo6FTdEiHIpMkj5N5Gh0SRVrBFTHuIQJDVVkSjAj5o1Y
-         gXKb0W3ynN8vcnY9VUkI37aEL7hPT3z7j7cT4bX2IwiDKVSXPQ1S3gv9Tq1xGC1ZRLqM
-         71zcFsUmR8Bg9Tgdr+/oMpy8QqJuTVCeYmQ2mMHul+OKAY+nvnbxlp/DFfzvhrDxAKHL
-         g5ZmNaKqqslO3vR4xcPj3yFlWu/NIRLARCGWBmJPDbxsc+AUd480uM6XKydwiN+QzUWr
-         NQk5PltsxeizUx0B3KaU90/h53ywYGuWPj2aOdjDEueOF8wdJS+d0MvxESMDLu8CKHuY
-         4wqg==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=+wi2B4fZo+v5T28we8P6eAG4tbunyhEi3J026H57Vrw=;
+        b=D/5zaF7K47blZJB6Qjx49dVIgty9gDQ7UEGijtYP1Fl4hp2xkq43TZtuWwkP9I2UBC
+         V9aruR8BkYlmTrvLi49fxA1ORKWmeHS86BFyphZ7uv+hMnf4bYtNgeZwTZMZHbmYnJrG
+         f31XF447GK857ab+zEwu4ZjyYM01iij4UCkiAqW5m1ea0kiXCpob8qA4d6eGJ10Ecm79
+         LMMpSA9ED/3EpmZDR4Vrxvtgwe9tu6kO9fs3o8w3SpPqYAjQt2AwzWNE6JehzLh9A3Oh
+         7pF+DnRQdGQ+ozbuQ4fYcHxFXdRX5Qe2Au/PfGtke3Y1g/Cnp3NCw3FltUq6xrUakm8B
+         rZAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=NCk9OBE0aok5bmSfKQqXbdaaftwcxy/CeYoZP5C3sTQ=;
-        b=AEz5/n7A9zi/j/t95106feHHzw37N6boTt2x9auONWhyg42ifu2LtzY/4wdlYD4inE
-         XGEZ0xPhtJKMAcn4fyg6SDVaWJdA1V+vVy+He84Q9f5LwvYtlqACsmWJKl6n48wppoam
-         eQXjdf+cEm8xyITuGSwmytVM6bpd2dkkPOWNXSCfI6iqfdRoLXScfgq/UwZFaPy204G4
-         0kj+4bIEEbXFGZcZlQ1QLLDUKu8DdWi1WgxyE+QgewzFaj+f8x8xYLOYR1nsX0c81TbQ
-         Xxrtbdx06ZHzchhg3+WrDoGYkGzaCpDvwsjanAi9AEbV/4tl+25CLgimvFJ9vvHZdoHB
-         LJ/Q==
-X-Gm-Message-State: AOUpUlHS6iTb40LociTrXBRMWQXwhcFt/WN6PFhAiKdwxotKBa75UGjB
-        Hn4V+NCVgS3hxBtOjhEyeI6s6LoBavmriPjbiWqtOD6E6dw=
-X-Google-Smtp-Source: AAOMgpeeiFgm8eaKOxLi/O2XnoEWyck1WhmiDXsEWhnsfVuuqjC6qFhoEZmfQNeb73Npt+jG/06I3GhPRyx3Sic2Bp8=
-X-Received: by 2002:a0d:c5c7:: with SMTP id h190-v6mr3923007ywd.421.1532712140281;
- Fri, 27 Jul 2018 10:22:20 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=+wi2B4fZo+v5T28we8P6eAG4tbunyhEi3J026H57Vrw=;
+        b=i1P5KAZ4FVM5tr6h1RA/v+zz3bh09ge5H7jMq4eiGuLjxhdid4ADUSYo0eGLGQUY5v
+         hlWObvSLZCmgFkv7AyielX6G2EFHN72rZShiEmpXLOkHBMwPF8RtgB9b/kYYBkWziwrc
+         mPEA86cEY3kNOtpE8Rr2ccMOFGqM/xFKtc6+7fehnnIR+1iCk9j4YfKMO8ETurOkTU1K
+         KAftqZ4Wo42z3QokQR6YaX9IPO2r2tI5imWyG7PbLtdpNmxmzC7JkGtC/QEkCD/M2vAI
+         /i/9rvUS/tDtiZ5eKu4HP3vXZuCFl/KM9MeYy/vFgBI5A7T//tUkIWgUOAIe8baIwWSS
+         ByJQ==
+X-Gm-Message-State: AOUpUlGD2XVZP15DuoSbdXuTnBdGpHVt2Sw9PoA0E8NnvfT+Db67sHk7
+        fVGY6PsNJt3pZPDJvlVDsxs8K884
+X-Google-Smtp-Source: AAOMgpdEeXmRiM7J7eB2r3XtVerzQxa6hymMiOEyQ5zrqOq5zk50glQn6tC/3aakV+1zk4gv97AeJQ==
+X-Received: by 2002:adf:f28c:: with SMTP id k12-v6mr5324069wro.263.1532712511238;
+        Fri, 27 Jul 2018 10:28:31 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 133-v6sm7297594wmh.27.2018.07.27.10.28.30
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 27 Jul 2018 10:28:30 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: What's cooking in git.git (Jul 2018, #03; Wed, 25)
+References: <xmqqd0vbt14e.fsf@gitster-ct.c.googlers.com>
+        <87fu0469d1.fsf@evledraar.gmail.com>
+Date:   Fri, 27 Jul 2018 10:28:30 -0700
+In-Reply-To: <87fu0469d1.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Fri, 27 Jul 2018 16:28:42 +0200")
+Message-ID: <xmqqd0v8oaf5.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20180722054836.28935-1-chriscool@tuxfamily.org>
- <20180722054836.28935-4-chriscool@tuxfamily.org> <CAGZ79kbF7g3E4hBa0VqMqBoovbAb2dHaGFNRL=+f7Lce1AduVg@mail.gmail.com>
- <20180724095843.GB3578@sigill.intra.peff.net> <CAGZ79kZkagveB+jG9iLQ2ohaSfAzY5YtWC=BTdD1o9OQUrw90Q@mail.gmail.com>
- <20180727131333.GC18599@sigill.intra.peff.net>
-In-Reply-To: <20180727131333.GC18599@sigill.intra.peff.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 27 Jul 2018 10:22:09 -0700
-Message-ID: <CAGZ79kYK3QkaSEinuq_Js5thVgY2-MyrN60W-Dws1p4eK73hHw@mail.gmail.com>
-Subject: Re: [RFC PATCH 3/5] pack-objects: add delta-islands support
-To:     Jeff King <peff@peff.net>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 27, 2018 at 6:13 AM Jeff King <peff@peff.net> wrote:
->
-> On Tue, Jul 24, 2018 at 10:20:05AM -0700, Stefan Beller wrote:
->
-> > So in my understanding we have a "common base pack" and specific
-> > packs on top for each "island".
->
-> Sort of. This is another hacky part. The islands themselves are
-> generally just about forbidding deltas, and not any particular kind of
-> layering.
->
-> But there's some magic layering only for the "core" island, which gets
-> to go first (and makes a sort of pseudo-pack at the front of the one
-> pack). And then everything else is written willy nilly. This is a hack
-> to try to make the "blit the pack bytes out" code path for cloning fast.
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-yup, I do understand its purpose; we had the same discussions here
-for the JGit based hosting.
+> Count me in the "this is useful" camp, but also I did look at the latest
+> submission this time around, but had nothing to say, so I didn't say
+> anything :)
 
-So you are saying island hopping is disallowed, but the core island
-has an airport using the spokes system to reach all other islands?
-(I described the core island as sea bed before). Sounds reasonable.
+Please make it a habit to do say something to show that you did
+carefully review the series especially in such a case, which helps
+to differentiate a change that is interesting to nobody, and one
+that is so obviously well done that there is nothing to add.  
 
-> So no, we don't really layer in any sane way. If pack-objects were fed
-> the topological relationships between the forks, in theory we could
-> create a layered packfile that respects that.
->
-> But even that is not quite enough. At the time of forking, you might
-> imagine that torvalds/linux has the base pack, and then somebody forks
-> from them and contains all of those objects plus more, and somebody
-> forks from them, and so on. But that's just a snapshot. Later
-> torvalds/linux will get a bunch of new objects pushed to it. And some of
-> its forks will merge those objects, too. But some of them will just rot,
-> abandoned, as nobody ever touches them again.
->
-> So I don't think there's much to be gained by paying attention to the
-> external forking relationships. We have to discover afresh the
-> relationships between objects, and which refs (and thus which islands)
-> point to them.
->
-> One thing I don't think we ever tried was doubling down on the
-> islandCore concept and making the "root" fork as tightly packed as it
-> could be (with the assumption that _most_ people grab that). And then
-> just respect the islands for all the other objects (remember this is an
-> optimization, so the worst case is somebody asks for an object during a
-> fetch and we have to throw away its on-disk delta).
->
-> That would solve the problem that fetching torvalds/linux from GitHub
-> yields a bigger pack than fetching it from kernel.org. But again, it's
-> making that root fork weirdly magical. People who fetch solely from
-> other forks won't get any benefit (and may even see worse packs).
+What I have been doing from time to time, when I think there is
+nothing bad in particular to point out, is to quote a part that is
+especially tricky to get right and think it aloud to show how I
+would reason why the result of the change is correct.  This type of
+review helps in two and a half ways:
 
-Thanks for the explanation.
-I think this discussion just hints at me being dense reading the
-documentation. After all I like the concept.
+ (1) We can see a correction to what the reviewer said, which could
+     lead to further improvement ("no, the code does not quite work
+     that way, so it is still buggy", or "no, the code does not work
+     that way, but triggering that bug is impossible because the
+     caller high above will not call us in that case", etc.),
 
-Thanks,
-Stefan
+ (2) The reviewer can demonstrate to others that s/he understands
+     the area being touched well enough to explain how it works
+     correctly, and a "looks good to me" comment from the reviewer
+     on that change becomes more credible than a mere "looked good
+     and I have nothing else to add".
+
+Thanks.
+
