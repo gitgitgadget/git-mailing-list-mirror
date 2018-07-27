@@ -7,48 +7,53 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0FAE31F597
-	for <e@80x24.org>; Fri, 27 Jul 2018 00:37:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C5E8B1F597
+	for <e@80x24.org>; Fri, 27 Jul 2018 00:37:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731937AbeG0B4b (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jul 2018 21:56:31 -0400
-Received: from mail-qk0-f201.google.com ([209.85.220.201]:36771 "EHLO
-        mail-qk0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731922AbeG0B4b (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jul 2018 21:56:31 -0400
-Received: by mail-qk0-f201.google.com with SMTP id c27-v6so2968603qkj.3
-        for <git@vger.kernel.org>; Thu, 26 Jul 2018 17:37:15 -0700 (PDT)
+        id S1731949AbeG0B4e (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jul 2018 21:56:34 -0400
+Received: from mail-io0-f202.google.com ([209.85.223.202]:42805 "EHLO
+        mail-io0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731922AbeG0B4e (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jul 2018 21:56:34 -0400
+Received: by mail-io0-f202.google.com with SMTP id t23-v6so2456404ioa.9
+        for <git@vger.kernel.org>; Thu, 26 Jul 2018 17:37:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=3t5Tufo9DNzkuxl0VKRTCVxQMcKwmiVsuLamrfY3T48=;
-        b=glBAFaRIQ7ftzMKygN/zxmCIFqJU2Za196aZfeRb06n2ElvW5HIEvpyUO4SIMYm+ey
-         zKY8NEB3tZ3Li2izwl7LnFUirFvl+j1RWFqZcI+8F3aPdshTDJ4YR7C3nMb4Dp94yQmv
-         3yOwKN8ddaQ8HCZPHXNUUQDlTAmNKUpKzvISaKSBUT6Ct3bSsE54e19ELcPV/wHUSDOO
-         AWTSBIO5ltbVL9zZQbBGfwJhbLF3LzA6Wd8x2I5UOIOiZSZzCnOK9cDDkclk8Kl5Fygx
-         VMPYxZXXUmGlHsotl6QP5rbnQJsuQ4fkAkNwtU3klcmMqaCx9RbJjpSa2uVWYRpBBRNo
-         sR/Q==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=9MhBdZfZuF2iMBcbLN1/uhB3Muq/pk52TemnrKRoy/4=;
+        b=U41seZJ6qD8TMg5AFU1VBM1f9aWmNo8qRqlvDmx2f5XKPtRJkbQrRF6LzHVUVFtgvE
+         Ih234mvG3BtB3Uswn4paSJoCGnR0w/u4YLFwXBR6Ze88BL415ZJO9F3ZpJDRu1xZajkk
+         1nwrcKL5eAlO7Q2zW1Fw54Uu8Ewijs82rCbdWB8rgfAzIAPGGGeXwR19Od57I3GaLTri
+         7Kipm77EY/00hfLpcRNdCfKiK6dQNp1Ot4JgwrAlGIKycetzKVFhadmmgkNp35pXGT02
+         2Hajp6NXns+ckVjsG0p9WlXuZ1nK6sQK7Pd4jgAfgRI+ik/PQAHnCP/zplfmxQxl6JgQ
+         EzDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=3t5Tufo9DNzkuxl0VKRTCVxQMcKwmiVsuLamrfY3T48=;
-        b=khF0EtLcGtuuj3pRMZXXRJEpo/P2N/okdmu0kNjMjy1sz6EUY/q4bc58Wbt6lFQDXM
-         JVolhTkRqHdyvhOhxr6ZEO374Evb0O5IOXq+G3l8XavnhP28/FGSjMCZGdJJM5e0N6+x
-         WyVPmvOboXrGf1qdqaSZHvBwAtAlCOEfuQKEMNgqYvGqoyuWx3lqfIlOVwEFPCEFBDR7
-         9JmFInWkPw87yV65wQTBj2oRZbgGNDRzhgA2YkKsIT+Qw+m55Stivnl2/+bWr7+in6qj
-         5QGKE1NULjh8gQS6U6jYGJUEhi5pdpwe2R/SmJh4jzNHmvk1GNXTjuuKkvl9223Q+rvN
-         aHag==
-X-Gm-Message-State: AOUpUlEOg9R1vGbanKexkTN5MGsX8T7/VAxyZ9x6EAe61y1kWa6YZpYN
-        swP/lad8JrBGZ2RZjp8aZ24uSlC2ZRYOF6x8AN33y4yadey8fLNc7ooKU6GUYyIinvAuRKIzPzP
-        SIU9W7svtCwG/nmm+w6IMPrlW2HAnb5Ke/c/Pe0arkVsdVGkwCCVzaDrymc9S
-X-Google-Smtp-Source: AAOMgpceJAFlmDehR+kck9akLhI3x50GN+ZjfjZLnhiUPv5iCjKTvO/nBNMeqQCU++UEqC9hS8vVhewDeuDu
-X-Received: by 2002:a0c:b0e1:: with SMTP id p30-v6mr2166427qvc.58.1532651835396;
- Thu, 26 Jul 2018 17:37:15 -0700 (PDT)
-Date:   Thu, 26 Jul 2018 17:36:37 -0700
-Message-Id: <20180727003640.16659-1-sbeller@google.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=9MhBdZfZuF2iMBcbLN1/uhB3Muq/pk52TemnrKRoy/4=;
+        b=II3DwtTzHl6qN+Sb2D+gWFcgQ4nOcDFZkgtmWAeVitwnU+8RtBZDspXysSX1fa3fOm
+         jno759hGIQ2QJDZ0ppJJYWFnfe+7Z0cSTdU7jJhbK0UC/XK28QA9HaXR4XfXj5LA3r+Y
+         RvDKHhXrkE5OE9Df/3qsvn6SMdZgo1qMjMgnIBEl99QDm9fP92NgaPJLudWQmcbaBV1a
+         xVTsuEWzLIZ3ORR4hqxeABgEoqbPGaTD/sst9jgRT+q4swNfs3ZWp7JNfSERDIk++lwS
+         vpkmoRkJBgGkU3SONvqdWQNUIqPtH1tCqXk73rL6c1WGl5iBwXQXXyiTOzBVKgny8Oj8
+         TZIA==
+X-Gm-Message-State: AOUpUlGhpz+L4VezGaqRAP/ZC5/3+ERqifd9h042PBvn4410R7QbU5uz
+        HLxn+g2R5C6qPSf1bDh+mTDbz7vTH0NiwSZe5oxXxxakmk26LCh4ZjYEzXrtfmv+ctz7gAiCMDM
+        yx9cos2oEW5MijEQcpugOjfFr+FxEDUAGZD33w2z/EVmIn2f+QH+M4JUpwx9f
+X-Google-Smtp-Source: AAOMgpcBI0pEfa+JuM0QxgiXVcHNTDyYfDqvUdZ6AK8M1FgG8gW1ZzLfeldQkKr0AAh0o+Ilha7KjMtMiyUS
+X-Received: by 2002:a6b:3384:: with SMTP id z126-v6mr1632608ioz.61.1532651837580;
+ Thu, 26 Jul 2018 17:37:17 -0700 (PDT)
+Date:   Thu, 26 Jul 2018 17:36:38 -0700
+In-Reply-To: <20180727003640.16659-1-sbeller@google.com>
+Message-Id: <20180727003640.16659-2-sbeller@google.com>
 Mime-Version: 1.0
+References: <20180727003640.16659-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.345.g5c9ce644c3-goog
-Subject: [RFC PATCH 0/3] Migrate the refs API to take the repository argument
+Subject: [PATCH 1/3] refs.c: migrate internal ref iteration to pass thru
+ repository argument
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     mhagger@alum.mit.edu, Stefan Beller <sbeller@google.com>
@@ -58,54 +63,161 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The second patch is the real API proposal.
-Unlike the lookup_* series, which caused a lot of integration pain to Junio,
-I plan to structure this in a different way, by having multiple steps:
+In 60ce76d3581 (refs: add repository argument to for_each_replace_ref,
+2018-04-11) and 0d296c57aec (refs: allow for_each_replace_ref to handle
+arbitrary repositories, 2018-04-11), for_each_replace_ref learned how
+to iterate over refs by a given arbitrary repository.
+New attempts in the object store conversion have shown that it is useful
+to have the repository handle available that the refs iteration is
+currently iterating over.
 
- (1) in this (later to be non-RFC) series, add the new API that passes thru
-     the repository; for now do not replace refs_store argument by
-     struct repository.
- (2) the last patch is a demo of converting one of the callers over
-     to the new API; this would need to be done for all of them
-     
- (3) After some time do a cleanup series to remove callers of the
-     old API fromly introduced series that are currently in flight.
- (4) Remove the old API.
+To achieve this goal we will need to add a repository argument to
+each_ref_fn in refs.h. However as many callers rely on the signature
+such a patch would be too large.
 
- (5) Introduce the final API removing the refs_store
- (6) convert all callers to the final API, using this same dual step approach
- (7) remove this API
+So convert the internals of the ref subsystem first to pass through a
+repository argument without exposing the change to the user. Assume
+the_repository for the passed through repository, although it is not
+used anywhere yet.
+
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ refs.c               | 39 +++++++++++++++++++++++++++++++++++++--
+ refs.h               | 10 ++++++++++
+ refs/iterator.c      |  6 +++---
+ refs/refs-internal.h |  5 +++--
+ 4 files changed, 53 insertions(+), 7 deletions(-)
+
+diff --git a/refs.c b/refs.c
+index fcfd3171e83..2513f77acb3 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1390,17 +1390,50 @@ struct ref_iterator *refs_ref_iterator_begin(
+  * non-zero value, stop the iteration and return that value;
+  * otherwise, return 0.
+  */
++static int do_for_each_repo_ref(struct repository *r, const char *prefix,
++				each_repo_ref_fn fn, int trim, int flags,
++				void *cb_data)
++{
++	struct ref_iterator *iter;
++	struct ref_store *refs = get_main_ref_store(r);
++
++	if (!refs)
++		return 0;
++
++	iter = refs_ref_iterator_begin(refs, prefix, trim, flags);
++
++	return do_for_each_repo_ref_iterator(r, iter, fn, cb_data);
++}
++
++struct do_for_each_ref_help {
++	each_ref_fn *fn;
++	void *cb_data;
++};
++
++static int do_for_each_ref_helper(struct repository *r,
++				  const char *refname,
++				  const struct object_id *oid,
++				  int flags,
++				  void *cb_data)
++{
++	struct do_for_each_ref_help *hp = cb_data;
++
++	return hp->fn(refname, oid, flags, hp->cb_data);
++}
++
+ static int do_for_each_ref(struct ref_store *refs, const char *prefix,
+ 			   each_ref_fn fn, int trim, int flags, void *cb_data)
+ {
+ 	struct ref_iterator *iter;
++	struct do_for_each_ref_help hp = { fn, cb_data };
  
-Steps 1,2 will be done in this series (2 is done only as demo here
-for one function, but the non-RFC would do it all)
-
-Steps 3,4 would be done once there are no more series in flight using
-the old API.
-
-Before continuing on step (2), I would want to ask for your thoughts
-of (1).
-
-Also note that after step (1) before (4) refs.h looks messy as well as
-between (5) and (7).
-
-Thanks,
-Stefan
-
-
-Stefan Beller (3):
-  refs.c: migrate internal ref iteration to pass thru repository
-    argument
-  refs: introduce new API, wrap old API shallowly around new API
-  replace: migrate to for_each_replace_repo_ref
-
- builtin/replace.c    |   9 +-
- refs.c               | 187 ++++++++++++++--------
- refs.h               | 362 ++++++++++++++++++++++++++++++++++++++-----
- refs/iterator.c      |   6 +-
- refs/refs-internal.h |   5 +-
- replace-object.c     |   7 +-
- 6 files changed, 464 insertions(+), 112 deletions(-)
-
+ 	if (!refs)
+ 		return 0;
+ 
+ 	iter = refs_ref_iterator_begin(refs, prefix, trim, flags);
+ 
+-	return do_for_each_ref_iterator(iter, fn, cb_data);
++	return do_for_each_repo_ref_iterator(the_repository, iter,
++					do_for_each_ref_helper, &hp);
+ }
+ 
+ int refs_for_each_ref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
+@@ -2029,10 +2062,12 @@ int refs_verify_refname_available(struct ref_store *refs,
+ int refs_for_each_reflog(struct ref_store *refs, each_ref_fn fn, void *cb_data)
+ {
+ 	struct ref_iterator *iter;
++	struct do_for_each_ref_help hp = { fn, cb_data };
+ 
+ 	iter = refs->be->reflog_iterator_begin(refs);
+ 
+-	return do_for_each_ref_iterator(iter, fn, cb_data);
++	return do_for_each_repo_ref_iterator(the_repository, iter,
++					     do_for_each_ref_helper, &hp);
+ }
+ 
+ int for_each_reflog(each_ref_fn fn, void *cb_data)
+diff --git a/refs.h b/refs.h
+index cc2fb4c68c0..80eec8bbc68 100644
+--- a/refs.h
++++ b/refs.h
+@@ -274,6 +274,16 @@ struct ref_transaction;
+ typedef int each_ref_fn(const char *refname,
+ 			const struct object_id *oid, int flags, void *cb_data);
+ 
++/*
++ * The same as each_ref_fn, but also with a repository argument that
++ * contains the repository associated with the callback.
++ */
++typedef int each_repo_ref_fn(struct repository *r,
++			     const char *refname,
++			     const struct object_id *oid,
++			     int flags,
++			     void *cb_data);
++
+ /*
+  * The following functions invoke the specified callback function for
+  * each reference indicated.  If the function ever returns a nonzero
+diff --git a/refs/iterator.c b/refs/iterator.c
+index 2ac91ac3401..629e00a122a 100644
+--- a/refs/iterator.c
++++ b/refs/iterator.c
+@@ -407,15 +407,15 @@ struct ref_iterator *prefix_ref_iterator_begin(struct ref_iterator *iter0,
+ 
+ struct ref_iterator *current_ref_iter = NULL;
+ 
+-int do_for_each_ref_iterator(struct ref_iterator *iter,
+-			     each_ref_fn fn, void *cb_data)
++int do_for_each_repo_ref_iterator(struct repository *r, struct ref_iterator *iter,
++				  each_repo_ref_fn fn, void *cb_data)
+ {
+ 	int retval = 0, ok;
+ 	struct ref_iterator *old_ref_iter = current_ref_iter;
+ 
+ 	current_ref_iter = iter;
+ 	while ((ok = ref_iterator_advance(iter)) == ITER_OK) {
+-		retval = fn(iter->refname, iter->oid, iter->flags, cb_data);
++		retval = fn(r, iter->refname, iter->oid, iter->flags, cb_data);
+ 		if (retval) {
+ 			/*
+ 			 * If ref_iterator_abort() returns ITER_ERROR,
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index dd834314bd8..5c7414bf099 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -473,8 +473,9 @@ extern struct ref_iterator *current_ref_iter;
+  * adapter between the callback style of reference iteration and the
+  * iterator style.
+  */
+-int do_for_each_ref_iterator(struct ref_iterator *iter,
+-			     each_ref_fn fn, void *cb_data);
++int do_for_each_repo_ref_iterator(struct repository *r,
++				  struct ref_iterator *iter,
++				  each_repo_ref_fn fn, void *cb_data);
+ 
+ /*
+  * Only include per-worktree refs in a do_for_each_ref*() iteration.
 -- 
 2.18.0.345.g5c9ce644c3-goog
 
