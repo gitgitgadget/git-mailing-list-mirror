@@ -2,79 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F0901F597
-	for <e@80x24.org>; Fri, 27 Jul 2018 09:59:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8FB2B1F597
+	for <e@80x24.org>; Fri, 27 Jul 2018 10:05:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730568AbeG0LUp (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jul 2018 07:20:45 -0400
-Received: from mail-lf1-f52.google.com ([209.85.167.52]:45652 "EHLO
-        mail-lf1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730244AbeG0LUp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jul 2018 07:20:45 -0400
-Received: by mail-lf1-f52.google.com with SMTP id j143-v6so3141012lfj.12
-        for <git@vger.kernel.org>; Fri, 27 Jul 2018 02:59:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:content-transfer-encoding:mime-version:date:subject:message-id
-         :to;
-        bh=Z3oVN3Nj9dMCBYuir3gAbrOu7I0o14pXf7tdI5xKPy0=;
-        b=ctRj4uYqNkPmCMkfVFIXQLCzX8uxkiQr/ncIqi3Ne/UDVhpsTEBVmuOTU6oAIG3JP+
-         c6i+qgfcFCbwMVYRagFo3dPIJNuPB2fztA8QPN0n0XVecWeQdCbWmldMxdf39MpSs3jw
-         qyn3uZAr5YX6yX+HcP6FmDxqHfaxJcHd0kQcT3z6DwFG3ixPwUXfdRm2G05uYcwizLgQ
-         0U1YJPQGUoPt06lCkFSPNJvZYHmVUvfcr+kRsLbD+5XvXxmf8k45ABKp0+S3jRvCkF9r
-         7XS5fcFXMTRg98TgkJZnVL/109FPLz6fbxTH6PBvfAhp0mN/pft/Y4KqqhMnQyPGqh+Q
-         YvwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version:date
-         :subject:message-id:to;
-        bh=Z3oVN3Nj9dMCBYuir3gAbrOu7I0o14pXf7tdI5xKPy0=;
-        b=jI/1xP2HW/9ekNNEcccwfKZSl3HGJHK9mWpJf/Bi12zcZiU59ctvZ8rtpRCX0RG926
-         +bEYElaS8JyBvOx4u6lTcIUmRENxDNvljUUac5QpkiwCyMdDVnkS32ZzCHT85aqDQmXC
-         ATLNlziSAD4cQ9eJGDdyVOUD2EXzGcNL+BMi3//qBgAQEwlr5bHCHm9nk0z5iL4W8GED
-         Tz1CngEPe/hkk854yPkefN5ycBw+LSAyWmMfKNrXGyElsRfVRoZ1a6+6JkF+FL6zeUJu
-         LqX9rJ5XDuXTomWNKY5vMGqLh4TKh32hIFy1Cw3cUFi8ZT/xZ8RNBDRzgPNMlrTi70JE
-         Xw8Q==
-X-Gm-Message-State: AOUpUlGBDQQoSv/ZrVd17NYTDiW8XvX5lbw6znCN07TMXrolo0qYicgk
-        B/S4nwR7rVDJjkehyOlwangR+3R2
-X-Google-Smtp-Source: AAOMgpcZmrT8pGxomx89JMu0kPFlTJY/BBSx1PBe8oUUbrT8qWx4wDUDdgHbi/SMDgwn0dUuPSJjRg==
-X-Received: by 2002:a19:6902:: with SMTP id e2-v6mr3440117lfc.70.1532685574943;
-        Fri, 27 Jul 2018 02:59:34 -0700 (PDT)
-Received: from [10.95.176.192] (user-94-254-149-103.play-internet.pl. [94.254.149.103])
-        by smtp.gmail.com with ESMTPSA id i15-v6sm483183lfb.94.2018.07.27.02.59.34
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 27 Jul 2018 02:59:34 -0700 (PDT)
-From:   =?utf-8?Q?Pawe=C5=82_Paruzel?= <pawelparuzel95@gmail.com>
-Content-Type: text/plain;
-        charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (1.0)
-Date:   Fri, 27 Jul 2018 11:59:33 +0200
-Subject: Git clone and case sensitivity
-Message-Id: <24A09B73-B4D4-4C22-BC1B-41B22CB59FE6@gmail.com>
-To:     git@vger.kernel.org
-X-Mailer: iPhone Mail (15E302)
+        id S2389099AbeG0L0s (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jul 2018 07:26:48 -0400
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:4661 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388964AbeG0L0S (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jul 2018 07:26:18 -0400
+Received: from [192.168.2.201] ([92.22.29.59])
+        by smtp.talktalk.net with SMTP
+        id izcOfahmqVlGZizcPfo0V9; Fri, 27 Jul 2018 11:05:05 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1532685906;
+        bh=M95C1kTJTFYAHyzcx1IKljigO+xsz0tKFEZeyQ09JQI=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=OriFYEq3Q3dUJbFVhsAAbNv0wfWtrslKVuKC5ynm7ncpDAw79W6eMvH7PEfxJ9Ici
+         3YRRbCa3Uy8XfLzRlnlZE+AfD2MnC7HZ4I+Dwype+MvxtCRO9E9D/wagLghPjoDPT5
+         Cv7IDojTHnWl9oruDKCt+PSsC7N+JF2KQ3HamZLk=
+X-Originating-IP: [92.22.29.59]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=JcuSU3CV c=1 sm=1 tr=0 a=OmzqbFWWvC/aSYX+a7e/kQ==:117
+ a=OmzqbFWWvC/aSYX+a7e/kQ==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
+ a=3CcSZ-WtEhYkJEVimD8A:9 a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v5 1/4] add -p: select individual hunk lines
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <20180219113619.26566-1-phillip.wood@talktalk.net>
+ <20180726155854.20832-1-phillip.wood@talktalk.net>
+ <20180726155854.20832-2-phillip.wood@talktalk.net>
+ <xmqqin51pz5u.fsf@gitster-ct.c.googlers.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <b28e1f88-bc87-2f57-ba41-cc4a67c9a5b0@talktalk.net>
+Date:   Fri, 27 Jul 2018 11:05:04 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
+MIME-Version: 1.0
+In-Reply-To: <xmqqin51pz5u.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfFFXgbnwzQktpwduAJTHqxr+fAy5N544GV4rEOgZ2nIzuquLcCl+mqn7e6P3Xe63KaLccFYBCVK7dtvrZecYo2VQrkm1PNvWpEbiF0Kb4ItJ4AttObu8
+ 50NuqQlF79qeDxUxH5MVXTph7iBIIIOjWlnSSVZiEnk9s6cPtcSYb8RPZdHwXHJapGJXtQOu32uZ2xemWtsxjhxn2XetqEFW0LCUcNJQD9BofrpsUN7XAIbZ
+ MiVKdeVAqe2DMi9vIYMQjsUQRLMvARjQgv+ae3Uvk7LcToc5nusvXEr/Nmx1X84NZeWR40urnb2BdKMcoEdubw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On 26/07/18 20:36, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood@talktalk.net> writes:
+> 
+>> +sub label_hunk_lines {
+>> +	my $hunk = shift;
+>> +	my $text = $hunk->{TEXT};
+>> +	my (@line_flags, @lines);
+>> +	my ($block, $label, $last_mode) = (0, 0, '');
+>> +	for my $line (1..$#{$text}) {
+> 
+> $text is a ref to an array so @$text is the whole thing, $#{$text}
+> is the index of the last item in that array, and $text->[0] is the
+> first element of that array.  This for loop runs with $line == 1
+> thru $line == $#{$text}, so we are somehow excluding the very first
+> element?
 
-Lately, I have been wondering why my test files in repo are modified after I=
- clone it. It turned out to be two files: boolStyle_t_f and boolStyle_T_F.
-The system that pushed those files was case sensitive while my mac after Hig=
-h Sierra update had APFS which is by default case-insensitive. I highly sugg=
-est that git clone threw an exception when files are case sensitive and bein=
-g cloned to a case insensitive system. This has caused problems with overrid=
-ing files for test cases without any warning.
+Yes that's right, $text->[0] contains the hunk header
 
-Thanks in advance.
-Regards,
-Pawel Paruzel=
+>> +		$line_flags[$line] = 0;
+>> +		my $mode = substr($text->[$line], 0, 1);
+>> +		if ($mode eq '\\') {
+>> +			$line_flags[$line - 1] |= NO_NEWLINE;
+>> +		}
+>> +		if ($mode eq '-' or $mode eq '+') {
+>> +			$lines[++$label] = $line;
+>> +		}
+>> +	}
+>> +	if ($label > 1) {
+
