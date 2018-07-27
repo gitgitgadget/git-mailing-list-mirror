@@ -2,260 +2,188 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 902BA1F597
-	for <e@80x24.org>; Fri, 27 Jul 2018 10:36:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B942B1F597
+	for <e@80x24.org>; Fri, 27 Jul 2018 11:22:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731071AbeG0L6Q (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jul 2018 07:58:16 -0400
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:53365 "EHLO
-        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730026AbeG0L6P (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jul 2018 07:58:15 -0400
-Received: from [192.168.2.201] ([92.22.29.59])
-        by smtp.talktalk.net with SMTP
-        id j079faknBVlGZj079fo1nN; Fri, 27 Jul 2018 11:36:52 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1532687812;
-        bh=j4nFHrOZOftKlcMdw5lbPMLKzJAQxWYA+Mc9DUcMMKk=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=mwCz1ZsHnPCuAU/wR8TIzZ/g9pPEaMIpVrdxpDlO8X7Twt1OnN+e7S8dhhIyFRNvY
-         253aeKXA/WaD36gLZHhWUdiX3R7xACtpzMLqQmTlEOrvjYNrOxeULCuvfVQo+QqD3Y
-         U2BFJehIf0N9e21XVwChKZnZNnsuUEn0J1+Yob8E=
-X-Originating-IP: [92.22.29.59]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=JcuSU3CV c=1 sm=1 tr=0 a=OmzqbFWWvC/aSYX+a7e/kQ==:117
- a=OmzqbFWWvC/aSYX+a7e/kQ==:17 a=IkcTkHD0fZMA:10 a=evINK-nbAAAA:8
- a=NEAV23lmAAAA:8 a=F2ugIi3ErqxBLyvY5lMA:9 a=0lv490x5G0jFPDSd:21
- a=DzjcY7t-wsgbAbP1:21 a=QEXdDO2ut3YA:10 a=RfR_gqz1fSpA9VikTjo0:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [RFC PATCH] sequencer: fix quoting in write_author_script
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Akinori MUSHA <knu@iDaemons.org>
-References: <eb295aea-dae5-5e1c-bacf-2c77d3ce0195@talktalk.net>
- <20180718155518.1025-1-phillip.wood@talktalk.net>
- <nycvar.QRO.7.76.6.1807261332130.71@tvgsbejvaqbjf.bet>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <dae25f9d-5fde-a9c5-2178-9e06f3150885@talktalk.net>
-Date:   Fri, 27 Jul 2018 11:36:51 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
-MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.1807261332130.71@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfPdKluoo6MVJzLXQYkXUZKRrw7prtqt7PO7Fwps60ZoemXvGwsboKbdFBPOp146XxJAhH0SoywTxtUErRs0FnmKFu8Nr+3fNHfUj6nBqgkhdAICAPS7u
- WLkZz2IA6EgML08rlEra11nDkR+6Sm11PqeH9KtPFcS+RlHRqKB4vkh9JCkNvn+JottWV/EaAFvmtwcGsihHMLFq0jl4ivJy5krSCBU+mN3yZcC7yo1Nnq8q
- G5VpPmrV+2c0D4ixfHz9KbRlZHEEaWPZInwkk8DIPTaCJP5kgy6hkYvLfDtuK2VfEdChHCPVp+SIdQMbTytSbg==
+        id S1730596AbeG0MoA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jul 2018 08:44:00 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:42293 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730515AbeG0Mn7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jul 2018 08:43:59 -0400
+Received: by mail-pf1-f195.google.com with SMTP id l9-v6so1639984pff.9
+        for <git@vger.kernel.org>; Fri, 27 Jul 2018 04:22:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=yCpXZ0ppOzym3lQ902+y4mErexZb5czgVp/lTG1Bvcg=;
+        b=gUCCVySyNZwVUxmVFtypl6j3HZn5mpz+Hr817bYE76GTkpw9q9/SZWKIpg0ItHqAPW
+         j7LtIte/WwV08K/RytZOY6aZe9//kmHa0D9hAeqCN0D9PGhS64dfZVW3fVLTtTj58Wsz
+         EJ1IzG5nQQxEM5v6sZIKjLd1weVNLAdnQJ0WNSA8OAC5iNAyddOo/9M98WA/EEQZ/1Ue
+         UFTXKkfkClbrl2+rJ5vqJLOIpMkAyV77fBiVdnKrNOKHe24ct6NCpc5I9gqqLK1+35zQ
+         ATlxcHg2LtLRixn5+UZRWD/nUucVcDKQ+Jq9t0hkKbXWIgC/Ncse3ULSoJAby9AujwQx
+         CDcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=yCpXZ0ppOzym3lQ902+y4mErexZb5czgVp/lTG1Bvcg=;
+        b=mOvOjyWteBI42IitnJs4DxJj0yVG6wdYyV1vCYw2jA71vK3mF/qEOrj1W6DYNVSX9e
+         IMyAqLqT2h/LGcsjGiSS0tg/XwUvPIA82r2EtUheK+3VDpRLiYtAzHXAxWo1hJ5Hd0T7
+         XrgRGsD0ZpNFLTecPPinE2NHkoRw5HyhNyoQO2618liE4/Z+aumugbfuQ5Bh76MqI42x
+         u46Tw+klcAWo22MlkAUMoUa/oAmS5peSK0Prbnx7/4hn9z7+cYsTqeVnUOIqU7pkworW
+         SeSIHuvFV8YL9e/5AQ0vfucxd/NqrgFtOdJNQ7KoQe13E+tHzqxCR4tFATm5xMUyYMtW
+         YaVg==
+X-Gm-Message-State: AOUpUlHcoPjsPYleN/bgiOk60YvbdOuDm89s172n4oBqX7vJskSrRMZ0
+        6OfwQJTWRCgq36e3/WAWU3JhgOsa
+X-Google-Smtp-Source: AAOMgpftbBA8QMhKk83XqWYP5kLcbYEu0UtmnHSItnpQo3cucRkSY8qM7Nc+gMNHWjSVYW+HeIbXqg==
+X-Received: by 2002:a65:5bc4:: with SMTP id o4-v6mr5679200pgr.448.1532690550615;
+        Fri, 27 Jul 2018 04:22:30 -0700 (PDT)
+Received: from localhost.localdomain ([110.175.42.185])
+        by smtp.gmail.com with ESMTPSA id r71-v6sm6428447pfg.43.2018.07.27.04.22.27
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 27 Jul 2018 04:22:29 -0700 (PDT)
+From:   Chen Bin <chenbin.sh@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Chen Bin <chenbin.sh@gmail.com>
+Subject: [PATCH 1/1] Add the `p4-pre-submit` hook
+Date:   Fri, 27 Jul 2018 21:22:22 +1000
+Message-Id: <20180727112222.19061-1-chenbin.sh@gmail.com>
+X-Mailer: git-send-email 2.18.0
+In-Reply-To: <xmqq36w6rlh7.fsf@gitster-ct.c.googlers.com>
+References: <xmqq36w6rlh7.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes
-On 26/07/18 13:33, Johannes Schindelin wrote:
-> Hi Phillip,
-> 
-> On Wed, 18 Jul 2018, Phillip Wood wrote:
-> 
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> Single quotes should be escaped as \' not \\'. Note that this only
->> affects authors that contain a single quote and then only external
->> scripts that read the author script and users whose git is upgraded from
->> the shell version of rebase -i while rebase was stopped. This is because
->> the parsing in read_env_script() expected the broken version and for
->> some reason sq_dequote() called by read_author_ident() seems to handle
->> the broken quoting correctly.
->>
->> Ideally write_author_script() would be rewritten to use
->> split_ident_line() and sq_quote_buf() but this commit just fixes the
->> immediate bug.
->>
->> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->> ---
-> 
-> Good catch.
-> 
->> This is untested, unfortuantely I don't have really have time to write a test or
->> follow this up at the moment, if someone else want to run with it then please
->> do.
-> 
-> I modified the test that was added by Akinori. As it was added very early,
-> and as there is still a test case *after* Akinori's that compares a
-> hard-coded SHA-1, I refrained from using `test_commit` (which would change
-> that SHA-1). See below.
+The `p4-pre-submit` hook is executed before git-p4 submits code.
+If the hook exits with non-zero value, submit process not start.
 
-Thanks for adding a test, that sounds like sensible approach, however
-having thought about it I wonder if we should just be writing a plain
-text file (e.g rebase-merge/author-data) and fixing the reader to read
-that if it exists and only then fall back to reading the legacy
-rebase-merge/author-script with a fix to correctly handle the script
-written by the shell version - what do you think? The author-script
-really should be just an implementation detail. If anyone really wants
-to read it they can still do 'read -r l' and split the lines with
-${l%%=*} and ${l#*=}
+Signed-off-by: Chen Bin <chenbin.sh@gmail.com>
+---
+ Documentation/git-p4.txt   |  8 ++++++++
+ Documentation/githooks.txt |  7 +++++++
+ git-p4.py                  | 16 +++++++++++++++-
+ t/t9800-git-p4-basic.sh    | 29 +++++++++++++++++++++++++++++
+ 4 files changed, 59 insertions(+), 1 deletion(-)
 
->> diff --git a/sequencer.c b/sequencer.c
->> index 5354d4d51e..0b78d1f100 100644
->> --- a/sequencer.c
->> +++ b/sequencer.c
->> @@ -638,21 +638,21 @@ static int write_author_script(const char *message)
->>  		else if (*message != '\'')
->>  			strbuf_addch(&buf, *(message++));
->>  		else
->> -			strbuf_addf(&buf, "'\\\\%c'", *(message++));
->> +			strbuf_addf(&buf, "'\\%c'", *(message++));
->>  	strbuf_addstr(&buf, "'\nGIT_AUTHOR_EMAIL='");
->>  	while (*message && *message != '\n' && *message != '\r')
->>  		if (skip_prefix(message, "> ", &message))
->>  			break;
->>  		else if (*message != '\'')
->>  			strbuf_addch(&buf, *(message++));
->>  		else
->> -			strbuf_addf(&buf, "'\\\\%c'", *(message++));
->> +			strbuf_addf(&buf, "'\\%c'", *(message++));
->>  	strbuf_addstr(&buf, "'\nGIT_AUTHOR_DATE='@");
->>  	while (*message && *message != '\n' && *message != '\r')
->>  		if (*message != '\'')
->>  			strbuf_addch(&buf, *(message++));
->>  		else
->> -			strbuf_addf(&buf, "'\\\\%c'", *(message++));
->> +			strbuf_addf(&buf, "'\\%c'", *(message++));
->>  	res = write_message(buf.buf, buf.len, rebase_path_author_script(), 1);
-> 
-> I resolved the merge conflict with Akinori's patch. FWIW I pushed all of
-> this, including the fixup to Junio's fixup to the
-> `fix-t3404-author-script-test` branch at https://github.com/dscho/git.
-> 
->>  	strbuf_release(&buf);
->>  	return res;
->> @@ -666,13 +666,21 @@ static int read_env_script(struct argv_array *env)
->>  {
->>  	struct strbuf script = STRBUF_INIT;
->>  	int i, count = 0;
->> -	char *p, *p2;
->> +	const char *p2;
->> +	char *p;
->>  
->>  	if (strbuf_read_file(&script, rebase_path_author_script(), 256) <= 0)
->>  		return -1;
->>  
->>  	for (p = script.buf; *p; p++)
->> -		if (skip_prefix(p, "'\\\\''", (const char **)&p2))
->> +		/*
->> +		 * write_author_script() used to escape "'" incorrectly as
->> +		 * "'\\\\''" rather than "'\\''" so we check for the correct
->> +		 * version the incorrect version in case git was upgraded while
->> +		 * rebase was stopped.
->> +		 */
->> +		if (skip_prefix(p, "'\\''", &p2) ||
->> +		    skip_prefix(p, "'\\\\''", &p2))
-> 
-> I think in this form, it is possibly unsafe because it assumes that the
-> new code cannot generate output that would trigger that same code path.
-> Although I have to admit that I did not give this a great deal of thought.
-
-Hm, I not sure that it can. If the Author begins \\' then this will be
-written as the C string "'\\\\'\\''...". If \\' comes at the end then I
-think this will be written as "\\\\'\\'''", in the middle of the name it
-will be "\\\\'\\''..."
-
-> In any case, if you have to think long and hard about some fix, it might
-> be better to go with something that is easier to reason about. So how
-> about this: we already know that the code is buggy, Akinori fixed the bug,
-> where the author-script missed its trailing single-quote. We can use this
-> as a tell-tale for *this* bug. Assuming that Junio will advance both your
-> and Akinori's fix in close proximity.
-
-That sounds like a good approach
-> Again, this is pushed to the `fix-t3404-author-script-test` branch at
-> https://github.com/dscho/git; My fixup on top of your patch looks like
-> this (feel free to drop the sq_bug part and only keep the test part):
-> 
-> -- snipsnap --
-> diff --git a/sequencer.c b/sequencer.c
-> index 46c0b3e720f..7abe78dc78e 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -573,13 +573,14 @@ static int write_author_script(const char *message)
->  static int read_env_script(struct argv_array *env)
->  {
->  	struct strbuf script = STRBUF_INIT;
-> -	int i, count = 0;
-> +	int i, count = 0, sq_bug;
->  	const char *p2;
->  	char *p;
->  
->  	if (strbuf_read_file(&script, rebase_path_author_script(), 256) <= 0)
->  		return -1;
->  
-> +	sq_bug = script.len && script.buf[script.len - 1] != '\'';
->  	for (p = script.buf; *p; p++)
->  		/*
->  		 * write_author_script() used to escape "'" incorrectly as
-> @@ -587,8 +588,9 @@ static int read_env_script(struct argv_array *env)
->  		 * version the incorrect version in case git was upgraded while
->  		 * rebase was stopped.
->  		 */
-
-We probably want the change the comment slightly to explain sq_bug
-
-> -		if (skip_prefix(p, "'\\''", &p2) ||
-> -		    skip_prefix(p, "'\\\\''", &p2))
-> +		if (sq_bug && skip_prefix(p, "'\\\\''", &p2))
-> +			strbuf_splice(&script, p - script.buf, p2 - p, "'", 1);
-> +		else if (skip_prefix(p, "'\\''", &p2))
->  			strbuf_splice(&script, p - script.buf, p2 - p, "'", 1);
->  		else if (*p == '\'')
->  			strbuf_splice(&script, p-- - script.buf, 1, "", 0);
-> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-> index 97f0b4bf881..dd726ff4dc4 100755
-> --- a/t/t3404-rebase-interactive.sh
-> +++ b/t/t3404-rebase-interactive.sh
-> @@ -75,16 +75,18 @@ test_expect_success 'rebase --keep-empty' '
->  	test_line_count = 6 actual
->  '
->  
-> +SQ="'"
->  test_expect_success 'rebase -i writes correct author-script' '
->  	test_when_finished "test_might_fail git rebase --abort" &&
-> -	git checkout master &&
-> +	git checkout -b author-with-sq master &&
-> +	GIT_AUTHOR_NAME="Auth O$SQ R" git commit --allow-empty -m with-sq &&
->  	set_fake_editor &&
-> -	FAKE_LINES="edit 1" git rebase -i HEAD^ &&
-> +	FAKE_LINES="edit 1" git rebase -ki HEAD^ &&
->  	(
->  		sane_unset GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_AUTHOR_DATE &&
->  		. .git/rebase-merge/author-script &&
->  		test "$(git show -s --date=raw --format=%an,%ae,@%ad)" = \
-> -			"$GIT_AUTHOR_NAME,$GIT_AUTHOR_EMAIL,$GIT_AUTHOR_DATE"
-> +			"Auth O$SQ R,$GIT_AUTHOR_EMAIL,$GIT_AUTHOR_DATE"
->  	)
->  '
-
-Testing all three variables together is nice.
-
-Best Wishes
-
-Phillip
-
-> @@ -1347,7 +1349,6 @@ test_expect_success 'editor saves as CR/LF' '
->  	)
->  '
->  
-> -SQ="'"
->  test_expect_success 'rebase -i --gpg-sign=<key-id>' '
->  	set_fake_editor &&
->  	FAKE_LINES="edit 1" git rebase -i --gpg-sign="\"S I Gner\"" HEAD^ \
-> 
+diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
+index f0de3b891..a7aac1b92 100644
+--- a/Documentation/git-p4.txt
++++ b/Documentation/git-p4.txt
+@@ -374,6 +374,14 @@ These options can be used to modify 'git p4 submit' behavior.
+     been submitted. Implies --disable-rebase. Can also be set with
+     git-p4.disableP4Sync. Sync with origin/master still goes ahead if possible.
+ 
++Hook for submit
++~~~~~~~~~~~~~~~
++The `p4-pre-submit` hook is executed if it exists and is executable.
++The hook takes no parameter and nothing from standard input. Exiting with
++non-zero status from this script prevents `git-p4 submit` from launching.
++
++One usage scenario is to run unit tests in the hook.
++
+ Rebase options
+ ~~~~~~~~~~~~~~
+ These options can be used to modify 'git p4 rebase' behavior.
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index e3c283a17..22fcabbe2 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -485,6 +485,13 @@ The exit status determines whether git will use the data from the
+ hook to limit its search.  On error, it will fall back to verifying
+ all files and folders.
+ 
++p4-pre-submit
++~~~~~~~~~~~~~
++
++This hook is invoked by `git-p4 submit`. It takes no parameter and nothing
++from standard input. Exiting with non-zero status from this script prevent
++`git-p4 submit` from launching. Run `git-p4 submit --help` for details.
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+diff --git a/git-p4.py b/git-p4.py
+index b449db1cc..879abfd2b 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -1494,7 +1494,13 @@ def __init__(self):
+                 optparse.make_option("--disable-p4sync", dest="disable_p4sync", action="store_true",
+                                      help="Skip Perforce sync of p4/master after submit or shelve"),
+         ]
+-        self.description = "Submit changes from git to the perforce depot."
++        self.description = """Submit changes from git to the perforce depot.\n
++    The `p4-pre-submit` hook is executed if it exists and is executable.
++    The hook takes no parameter and nothing from standard input. Exiting with
++    non-zero status from this script prevents `git-p4 submit` from launching.
++
++    One usage scenario is to run unit tests in the hook."""
++
+         self.usage += " [name of git branch to submit into perforce depot]"
+         self.origin = ""
+         self.detectRenames = False
+@@ -2303,6 +2309,14 @@ def run(self, args):
+             sys.exit("number of commits (%d) must match number of shelved changelist (%d)" %
+                      (len(commits), num_shelves))
+ 
++        hooks_path = gitConfig("core.hooksPath")
++        if len(hooks_path) <= 0:
++            hooks_path = os.path.join(os.environ.get("GIT_DIR", ".git"), "hooks")
++
++        hook_file = os.path.join(hooks_path, "p4-pre-submit")
++        if os.path.isfile(hook_file) and os.access(hook_file, os.X_OK) and subprocess.call([hook_file]) != 0:
++            sys.exit(1)
++
+         #
+         # Apply the commits, one at a time.  On failure, ask if should
+         # continue to try the rest of the patches, or quit.
+diff --git a/t/t9800-git-p4-basic.sh b/t/t9800-git-p4-basic.sh
+index 4849edc4e..2b7baa95d 100755
+--- a/t/t9800-git-p4-basic.sh
++++ b/t/t9800-git-p4-basic.sh
+@@ -261,6 +261,35 @@ test_expect_success 'unresolvable host in P4PORT should display error' '
+ 	)
+ '
+ 
++# Test following scenarios:
++#   - Without ".git/hooks/p4-pre-submit" , submit should continue
++#   - With the hook returning 0, submit should continue
++#   - With the hook returning 1, submit should abort
++test_expect_success 'run hook p4-pre-submit before submit' '
++	test_when_finished cleanup_git &&
++	git p4 clone --dest="$git" //depot &&
++	(
++		cd "$git" &&
++		echo "hello world" >hello.txt &&
++		git add hello.txt &&
++		git commit -m "add hello.txt" &&
++		git config git-p4.skipSubmitEdit true &&
++		git-p4 submit --dry-run >out &&
++		grep "Would apply" out &&
++		mkdir -p .git/hooks &&
++		write_script .git/hooks/p4-pre-submit <<-\EOF &&
++		exit 0
++		EOF
++		git-p4 submit --dry-run >out &&
++		grep "Would apply" out &&
++		write_script .git/hooks/p4-pre-submit <<-\EOF &&
++		exit 1
++		EOF
++		test_must_fail git-p4 submit --dry-run >errs 2>&1 &&
++		! grep "Would apply" err
++	)
++'
++
+ test_expect_success 'submit from detached head' '
+ 	test_when_finished cleanup_git &&
+ 	git p4 clone --dest="$git" //depot &&
+-- 
+2.18.0
 
