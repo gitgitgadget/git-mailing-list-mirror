@@ -6,109 +6,151 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 044CE1F597
-	for <e@80x24.org>; Fri, 27 Jul 2018 21:39:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 272531F597
+	for <e@80x24.org>; Fri, 27 Jul 2018 21:43:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389723AbeG0XDZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jul 2018 19:03:25 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:34991 "EHLO
+        id S2389790AbeG0XHF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jul 2018 19:07:05 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:41761 "EHLO
         mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389583AbeG0XDZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jul 2018 19:03:25 -0400
-Received: by mail-wr1-f65.google.com with SMTP id a3-v6so6372727wrt.2
-        for <git@vger.kernel.org>; Fri, 27 Jul 2018 14:39:37 -0700 (PDT)
+        with ESMTP id S2389703AbeG0XHE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jul 2018 19:07:04 -0400
+Received: by mail-wr1-f65.google.com with SMTP id j5-v6so6380863wrr.8
+        for <git@vger.kernel.org>; Fri, 27 Jul 2018 14:43:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=KuQKBG/lprvf0uqBkiXKNiMCnZDX9ZB4gc2psHA5zGY=;
-        b=QBTedpa/cGE1lZiaOpVlbJFcXCf3/A2yAB3JIJ50qVmj8LbbTBSzwBeITynRgN3Wwv
-         Gq8r6Ij9h4X7DnQjAJLau/xGx92QhZ9CvB5ATV9m3rs00AP26TwVwjg0sSBKwX9FIAgk
-         SQyBMgwvbp+qTjhMT2k7GdjMFkXFsv+3FE/phHVq6pxIkDsc7tE+jqy8skUAUeXq8L0l
-         rethDNXj7PrEiD7b5UKMXR0Ir5FZdG1KCgSilxWDCRMZ0AThRHPo9sVI3akb/RzUJYps
-         ISVc9bSjWuExUJCloj70XmCobSzsVEq1b54WknOIo+1EPPYx54O6WFaDbcI2XN+PJp98
-         +avw==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=8uDiyqWkYyd6oTJxx5tthrgGQEA2X9hU1LM1LDOkcr0=;
+        b=cny7YNJtSXllnrQOWZot6isStw0FmV0GIHUUoOWg1kvZY+QLxBGuh/AV/dYA7F3auM
+         VNnwe65bBo3za45QwYwcwgaxKgKs0UUw58dP2NUCnm4KMsz/gKWE80vwmPbSw5CtGvcv
+         unSXvff9nF580IoS8gYgeCWZeSGUZjzqRsrm+yGZGIGj+ihf7gjbr6NFVtKLBXx1BER0
+         Z9m7mXDDZ2rkoRGXXxegzMxCSVpecSNGKLvhOtu0tPnmWui2jnoqhaQnx7eDuRtQ+43s
+         j7FyPAvlTsWt/7R5s55wGbB8aKqLNfKYyjfm4Q9nk6GF2bGef+z6dP+45J8JDk64Rq3+
+         xpjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=KuQKBG/lprvf0uqBkiXKNiMCnZDX9ZB4gc2psHA5zGY=;
-        b=Ugz0FUSXf7856RqVhYqTBWExgiNS0uhwsel446+GQoqBzmKLuT6pW3id87lLldTvuN
-         RvW4xhKpPBOdfOB8Ww0fCgSinMSmlubtllbgY8Wx0d9Uq3t0xQXE5GJSpCMI7kpt6YkH
-         aWwYc4Rc46+E3tkk24q303tdZ27n5uvxlzlF7JtneykkAN3+uYxIXBy1Zuu3AOm9hNaP
-         ygiwCscJ2WBg/FExeZ3XaY/P6SGl52PdzIWOD926Rn6khtT/Gsw0TUfN/LlrTcfNkHRs
-         qyLRD5KwJOs2+cqexB6lrae2gbyxm7dPNSd3ZZZh7E/xIlcvt+oChdmAm3YpJ8I9VxYO
-         qZeQ==
-X-Gm-Message-State: AOUpUlFzhAB7+DHM87FvhzeQsvDCeZSk50lqaQTAtcH1vlfns7Y43mma
-        eQW2I7JujKAHAJT/vvtAokfMMs0A
-X-Google-Smtp-Source: AAOMgpenXpw+ALg/MamaSrcDu5fPOkT6IOAHGxdE+SX/992sPfSs3k8RAHPQfcwr+LNOFjdoN/m50w==
-X-Received: by 2002:a5d:6a03:: with SMTP id m3-v6mr6315166wru.192.1532727576801;
-        Fri, 27 Jul 2018 14:39:36 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=8uDiyqWkYyd6oTJxx5tthrgGQEA2X9hU1LM1LDOkcr0=;
+        b=JriXH/RmZj2T5MH0uem0wrK9fwuXrWtpDZaGW/XxaVSPpy6f3bftUKX04pf//ElB8U
+         nN4WBT0sOFu3U9IqcpRJMGMBaXHAgyqNo8XAwRVAgH8azmQfsrK/kSXaZskThBoDRo9u
+         jBZWg9MtEKJCzDIIuVwVAUsq0Rbq52SkwNnHAOGz6D0w6AjyivE6DAvS/XfR+LaCI69K
+         KkC0VnI+LkC1vz/L87yHhB/l3TJHyA6IyVAc1Qts88XznCn/fXRNBYpfSBARLuArXYUa
+         ghbJZ65yu8kWcUJ5T0U7r2d3txI8aKg5eB+0uL8udHfEImuD/6k1YOcHZq11O/ThINAB
+         RVQw==
+X-Gm-Message-State: AOUpUlHJ7Imaiiv31YobQbit7U/BL27aS7CERXWFCg87fbs+NMS/u7Tf
+        ALv59HM6++p/ToDC79Sr6os=
+X-Google-Smtp-Source: AAOMgpcLc+QuWyiQ8jm7nxGzT7JMtJ83DFnCKc0DbeYEF2vTIK1gDeC/PRNYRPxEJn6xALq9scEhUg==
+X-Received: by 2002:adf:f28c:: with SMTP id k12-v6mr6076411wro.263.1532727795007;
+        Fri, 27 Jul 2018 14:43:15 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id j131-v6sm6075306wmb.35.2018.07.27.14.39.35
+        by smtp.gmail.com with ESMTPSA id q3-v6sm4642822wmf.21.2018.07.27.14.43.13
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 27 Jul 2018 14:39:35 -0700 (PDT)
+        Fri, 27 Jul 2018 14:43:14 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH] config: fix case sensitive subsection names on writing
-References: <20180727205117.243770-1-sbeller@google.com>
-        <20180727212140.GA54208@google.com>
-Date:   Fri, 27 Jul 2018 14:39:35 -0700
-In-Reply-To: <20180727212140.GA54208@google.com> (Brandon Williams's message
-        of "Fri, 27 Jul 2018 14:21:40 -0700")
-Message-ID: <xmqqfu04l5ns.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v3 10/10] fsck: test and document unknown fsck.<msg-id> values
+References: <20180525192811.25680-1-avarab@gmail.com>
+        <20180727143720.14948-11-avarab@gmail.com>
+Date:   Fri, 27 Jul 2018 14:43:13 -0700
+In-Reply-To: <20180727143720.14948-11-avarab@gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Fri, 27 Jul 2018 14:37:20 +0000")
+Message-ID: <xmqqbmasl5hq.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-> Either way you're probably going to need to be careful about how you do
-> string comparison against the different parts.
+> When fsck.<msg-id> is set to an unknown value it'll cause "fsck" to
+> die, but the same is not rue of the "fetch" and "receive"
+> variants. Document this and test for it.
 
-Good suggestion.
+Interesting.  Before documenting and adding a test to cast the
+current behaviour in stone, do we need to see if the discrepancy is
+desired and designed one, or something we may want to fix?
 
->> diff --git a/t/t1300-config.sh b/t/t1300-config.sh
->> index 03c223708eb..8325d4495f4 100755
->> --- a/t/t1300-config.sh
->> +++ b/t/t1300-config.sh
->> @@ -1218,6 +1218,24 @@ test_expect_success 'last one wins: three level vars' '
->>  	test_cmp expect actual
->>  '
->>  
->> +test_expect_success 'setting different case subsections ' '
->> +	test_when_finished "rm -f caseSens caseSens_actual caseSens_expect" &&
->> +
->> +	# v.a.r and v.A.r are not the same variable, as the middle
->> +	# level of a three-level configuration variable name is
->> +	# case sensitive.
 
-In other words, perhaps add
 
-	# "V.a.r" and "v.a.R" are the same variable, though
-
-and corresponding test here?
-
->> +	git config -f caseSens v."A".r VAL &&
->> +	git config -f caseSens v."a".r val &&
->> +
->> +	echo VAL >caseSens_expect &&
->> +	git config -f caseSens v."A".r >caseSens_actual &&
->> +	test_cmp caseSens_expect caseSens_actual &&
->> +
->> +	echo val >caseSens_expect &&
->> +	git config -f caseSens v."a".r >caseSens_actual &&
->> +	test_cmp caseSens_expect caseSens_actual
->> +'
->> +
->>  for VAR in a .a a. a.0b a."b c". a."b c".0d
->>  do
->>  	test_expect_success "git -c $VAR=VAL rejects invalid '$VAR'" '
->> -- 
->> 2.18.0.345.g5c9ce644c3-goog
->> 
+>
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  Documentation/config.txt        |  4 ++++
+>  t/t5504-fetch-receive-strict.sh | 14 ++++++++++++++
+>  2 files changed, 18 insertions(+)
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 57c463c6e2..4cead6119a 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -1637,6 +1637,10 @@ In general, it is better to enumerate existing objects with problems
+>  with `fsck.skipList`, instead of listing the kind of breakages these
+>  problematic objects share to be ignored, as doing the latter will
+>  allow new instances of the same breakages go unnoticed.
+> ++
+> +Setting an unknown `fsck.<msg-id>` value will cause fsck to die, but
+> +doing the same for `receive.fsck.<msg-id>` and `fetch.fsck.<msg-id>`
+> +will only cause git to warn.
+>  
+>  fsck.skipList::
+>  	The path to a sorted list of object names (i.e. one SHA-1 per
+> diff --git a/t/t5504-fetch-receive-strict.sh b/t/t5504-fetch-receive-strict.sh
+> index 7f06b537d3..62f3569891 100755
+> --- a/t/t5504-fetch-receive-strict.sh
+> +++ b/t/t5504-fetch-receive-strict.sh
+> @@ -198,6 +198,10 @@ test_expect_success 'fetch with fetch.fsck.skipList' '
+>  	git --git-dir=dst/.git fetch "file://$(pwd)" $refspec
+>  '
+>  
+> +test_expect_success 'fsck.<unknownmsg-id> dies' '
+> +	test_must_fail git -c fsck.whatEver=ignore fsck 2>err &&
+> +	test_i18ngrep "Unhandled message id: whatever" err
+> +'
+>  
+>  test_expect_success 'push with receive.fsck.missingEmail=warn' '
+>  	commit="$(git hash-object -t commit -w --stdin <bogus-commit)" &&
+> @@ -211,10 +215,15 @@ test_expect_success 'push with receive.fsck.missingEmail=warn' '
+>  	git --git-dir=dst/.git config fsck.missingEmail warn &&
+>  	test_must_fail git push --porcelain dst bogus &&
+>  
+> +	# receive.fsck.<unknownmsg-id> warns
+> +	git --git-dir=dst/.git config \
+> +		receive.fsck.whatEver error &&
+> +
+>  	git --git-dir=dst/.git config \
+>  		receive.fsck.missingEmail warn &&
+>  	git push --porcelain dst bogus >act 2>&1 &&
+>  	grep "missingEmail" act &&
+> +	test_i18ngrep "Skipping unknown msg id.*whatever" act &&
+>  	git --git-dir=dst/.git branch -D bogus &&
+>  	git --git-dir=dst/.git config --add \
+>  		receive.fsck.missingEmail ignore &&
+> @@ -235,10 +244,15 @@ test_expect_success 'fetch with fetch.fsck.missingEmail=warn' '
+>  	git --git-dir=dst/.git config fsck.missingEmail warn &&
+>  	test_must_fail git --git-dir=dst/.git fetch "file://$(pwd)" $refspec &&
+>  
+> +	# receive.fsck.<unknownmsg-id> warns
+> +	git --git-dir=dst/.git config \
+> +		fetch.fsck.whatEver error &&
+> +
+>  	git --git-dir=dst/.git config \
+>  		fetch.fsck.missingEmail warn &&
+>  	git --git-dir=dst/.git fetch "file://$(pwd)" $refspec >act 2>&1 &&
+>  	grep "missingEmail" act &&
+> +	test_i18ngrep "Skipping unknown msg id.*whatever" act &&
+>  	rm -rf dst &&
+>  	git init dst &&
+>  	git --git-dir=dst/.git config fetch.fsckobjects true &&
