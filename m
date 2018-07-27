@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B537C1F597
-	for <e@80x24.org>; Fri, 27 Jul 2018 14:37:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A2521F597
+	for <e@80x24.org>; Fri, 27 Jul 2018 14:37:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733151AbeG0P75 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jul 2018 11:59:57 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:51255 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732267AbeG0P75 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jul 2018 11:59:57 -0400
-Received: by mail-wm0-f68.google.com with SMTP id y2-v6so5498271wma.1
-        for <git@vger.kernel.org>; Fri, 27 Jul 2018 07:37:43 -0700 (PDT)
+        id S2388309AbeG0P77 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jul 2018 11:59:59 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:43645 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730714AbeG0P77 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jul 2018 11:59:59 -0400
+Received: by mail-wr1-f66.google.com with SMTP id b15-v6so5271840wrv.10
+        for <git@vger.kernel.org>; Fri, 27 Jul 2018 07:37:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=0ssnyfDDdH4/Omirje8rtX1p6o9GYQRALJg5YodrQlM=;
-        b=RpiWOLyjRQcd8mtYlhagnn0MR26hmawEOV8uHQcgFBL/PtpmdDdRSoLVM/9FTTJy9l
-         Y+v1lFAXc9gh21CSM8vpgMUMPoFhJjst20aDbuz6b6oUTjVIUegMPFZNcsv7V3jLJv+u
-         gHxjur74jcfz/fcJwgWkBjQ9iVHVCwR8rcWQfa7Z0OgxUiuQTFEquJAJUuUtzXo4FDJ6
-         IvQf2qf/0EJC/a73FhLg0xF4fBOcTlf1RKtXoGdWkkzNaOudL0wo3mJRPCIiPbcsuU5M
-         KlYlr9OPQq1EMskeTVjkftg+sGDMBT81SF/s98DFN6S2PAYKTMxsiuC1y/qDnoIG6EYD
-         nHEQ==
+        bh=gHDaanWZKS5puBGNSoLJr2xDH5QF1XS+T2PlaqHhaoo=;
+        b=ftca7wMzDQRNCGdfv5g/Vu3dgFuwgo3sBfUiIY0bK3ZKfgtesp8wXohiW6W7JO7Uh3
+         2u/2rgJDbR9ayZ/tDQbQl1sw4f9pCnvsQ7oWUFUJg6rCoGIGxGTYLt1AmfbvUbzMVKLQ
+         8Epz01UU4TZT2Lbwfu6pSe2x95E7Lxov5oGqf9mnFKzPtM9u86wrC4PCBCRto4YIoFEB
+         /SnW3veeAlgluvHxrp7+Lm8hSM5jkGrd/WLrXr9hDVXXSKVK43Sp4C1jHIyjg/XKRGEC
+         Ba9TVsrCSgUMoIfdf5rBg9pusOaOCLk87zXfVVsYQhHNZbWdI2gDU62P9AjUKHlBaiQH
+         rTXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=0ssnyfDDdH4/Omirje8rtX1p6o9GYQRALJg5YodrQlM=;
-        b=noOpo89D9siLipZBCBg/u1tG1h1Gud7OhwoPvd5ZcjZi3oYO2IwONbMhBRep7esQzR
-         HjOjhCJ5mDILdzwFdDvY/M6HmVOzJTLRUztO6ywppmOVa8Ko8VRGh0/HuSZE+zhTGouu
-         fgEpqrCqqJuRGAQarY27asgbvOh7f6GO5FrqC6AAgealVz7e2REoHXz5ydFntXfptGxG
-         CMdXn3HCsr7bvuLkAk2DW/GCyVGCGUisXiiikX5IwI8uyOpIKINGGDk4X0LRUEj4KVEc
-         lRQHEPVRm03weyFevFYRhRZOw4aOZLXYk2Rs8QyrzQosZM5UAzYDvI75MKBVnZuEYlNq
-         vesQ==
-X-Gm-Message-State: AOUpUlFajvzi3ir5CwbjxnJ6m9iZeU7yCVO/H+dFJYOZ88ommLw9yEc4
-        sV8AfBXqnI8MrTrnBL5u6uszmJfaZIY=
-X-Google-Smtp-Source: AAOMgpdVOP8CvCIs5zhjrLI7MRupSQ1+J+9vh10LcIdB227bfzxIQfoNQonqpIyHMee167xvNb/WKQ==
-X-Received: by 2002:a1c:1188:: with SMTP id 130-v6mr4471982wmr.138.1532702262936;
-        Fri, 27 Jul 2018 07:37:42 -0700 (PDT)
+        bh=gHDaanWZKS5puBGNSoLJr2xDH5QF1XS+T2PlaqHhaoo=;
+        b=W+I8H90nPasMpw1d+/cr8K8bGWDqMzP3sPr9oaIZ0N8m6lvwjsMvx+txNu2VIPcSW+
+         nbbMRE1UnA1gxNr7DS2BvdsjSL1+MfVFkwPvnApcy1uQ1MYKVqx3d4orncndjWwohDZA
+         GDGL7bz40voOgf9yU2SYJxB6YRtC1WLQ7VVllVWhJfsb57h9CRMNGgNtEWFaONNZn73E
+         cmoL8YP0k+qV/dua2bej1HAK+4/weXL4GRl1BTZe8T2K8Hv6vOZkgpli0b6/TJhD5eHF
+         X2dv5AQ5JeXVLFjc4UGhIXNu0W9WJlIig73iWItSY/mIiHUQ9PgDSGQW7Tr5SzhTY1Z1
+         o8aA==
+X-Gm-Message-State: AOUpUlFe+37fj5hhLySQL2saLKdFdokKe1EC+a9XJpKwLeQmCK/6pjgh
+        PaUYeRQsrVmopPsN5CpL1DKIq7Ug7yw=
+X-Google-Smtp-Source: AAOMgpc+Q3Cb3c/Cw57RU6Ep2GZdwmejDpjsKR1ZPZrIh9JymrvpVOmU0bwsr4lewx2key1iGETuqw==
+X-Received: by 2002:adf:e0cc:: with SMTP id e12-v6mr4934820wri.199.1532702264372;
+        Fri, 27 Jul 2018 07:37:44 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id j16-v6sm3005479wme.8.2018.07.27.07.37.42
+        by smtp.gmail.com with ESMTPSA id j16-v6sm3005479wme.8.2018.07.27.07.37.43
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 27 Jul 2018 07:37:42 -0700 (PDT)
+        Fri, 27 Jul 2018 07:37:43 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Christian Couder <christian.couder@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 04/10] config doc: elaborate on what transfer.fsckObjects does
-Date:   Fri, 27 Jul 2018 14:37:14 +0000
-Message-Id: <20180727143720.14948-5-avarab@gmail.com>
+Subject: [PATCH v3 05/10] config doc: elaborate on fetch.fsckObjects security
+Date:   Fri, 27 Jul 2018 14:37:15 +0000
+Message-Id: <20180727143720.14948-6-avarab@gmail.com>
 X-Mailer: git-send-email 2.18.0.345.g5c9ce644c3
 In-Reply-To: <20180525192811.25680-1-avarab@gmail.com>
 References: <20180525192811.25680-1-avarab@gmail.com>
@@ -73,41 +73,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The existing documentation led the user to believe that all we were
-doing were basic reachability sanity checks, but that hasn't been true
-for a very long time. Update the description to match reality, and
-note the caveat that there's a quarantine for accepting pushes, but
-not for fetching.
+Change the transfer.fsckObjects documentation to explicitly note the
+unique security and/or corruption issues fetch.fsckObjects suffers
+from, since it doesn't have a quarantine environment.
 
-Also mention that the fsck checks for security issues, which was my
-initial motivation for writing this fetch.fsck.* series.
+This was already alluded to in the existing documentation, but let's
+spell it out so there's no confusion here, and give a concrete example
+of how to work around this limitation.
+
+Let's also prominently note that this is considered to be a limitation
+of the current implementation, rather than something that's intended
+and by design, since we might change this in the future.
+
+See
+https://public-inbox.org/git/20180531060259.GE17344@sigill.intra.peff.net/
+for further details.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/config.txt | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ Documentation/config.txt | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 8d08250a5b..291b4f3c57 100644
+index 291b4f3c57..7ff453c53b 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -3397,8 +3397,17 @@ transfer.fsckObjects::
- 	Defaults to false.
- +
- When set, the fetch or receive will abort in the case of a malformed
--object or a broken link. The result of an abort are only dangling
--objects.
-+object or a link to a nonexistent object. In addition, various other
-+issues are checked for, including legacy issues (see `fsck.<msg-id>`),
-+and potential security issues like the existence of a `.GIT` directory
-+or a malicious `.gitmodules` file (see the release notes for v2.2.1
-+and v2.17.1 for details). Other sanity and security checks may be
-+added in future releases.
+@@ -3408,6 +3408,27 @@ On the receiving side, failing fsckObjects will make those objects
+ unreachable, see "QUARANTINE ENVIRONMENT" in
+ linkgit:git-receive-pack[1]. On the fetch side, malformed objects will
+ instead be left unreferenced in the repository.
 ++
-+On the receiving side, failing fsckObjects will make those objects
-+unreachable, see "QUARANTINE ENVIRONMENT" in
-+linkgit:git-receive-pack[1]. On the fetch side, malformed objects will
-+instead be left unreferenced in the repository.
++Due to the non-quarantine nature of the `fetch.fsckObjects`
++implementation it can not be relied upon to leave the object store
++clean like `receive.fsckObjects` can.
+++
++As objects are unpacked they're written to the object store, so there
++can be cases where malicious objects get introduced even though the
++"fetch" failed, only to have a subsequent "fetch" succeed because only
++new incoming objects are checked, not those that have already been
++written to the object store. That difference in behavior should not be
++relied upon. In the future, such objects may be quarantined for
++"fetch" as well.
+++
++For now, the paranoid need to find some way to emulate the quarantine
++environment if they'd like the same protection as "push". E.g. in the
++case of an internal mirror do the mirroring in two steps, one to fetch
++the untrusted objects, and then do a second "push" (which will use the
++quarantine) to another internal repo, and have internal clients
++consume this pushed-to repository, or embargo internal fetches and
++only allow them once a full "fsck" has run (and no new fetches have
++happened in the meantime).
  
  transfer.hideRefs::
  	String(s) `receive-pack` and `upload-pack` use to decide which
