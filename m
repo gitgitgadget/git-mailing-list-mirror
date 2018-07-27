@@ -2,96 +2,187 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 120B31F597
-	for <e@80x24.org>; Fri, 27 Jul 2018 14:47:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B9EF71F597
+	for <e@80x24.org>; Fri, 27 Jul 2018 15:18:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732143AbeG0QJw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jul 2018 12:09:52 -0400
-Received: from mail-pl0-f68.google.com ([209.85.160.68]:42014 "EHLO
-        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730709AbeG0QJv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jul 2018 12:09:51 -0400
-Received: by mail-pl0-f68.google.com with SMTP id z7-v6so2407671plo.9
-        for <git@vger.kernel.org>; Fri, 27 Jul 2018 07:47:37 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7NSBp6lBGASjn90YWX1IzxlrFnP/omTbE4W/TjYjO5E=;
-        b=fh8QdQXpsl4OCtVQ/INdD7nl7Ptfq0qSbM+9q6Iw/cw6kn4esDR7ZrKN/w57jeMWbH
-         Ja/mKr9xTkTs8OsBX359s/lrYvKhU46H1m8qrP6Uj/v7Y/NYZmJzDXpqUKIHGO6QngoV
-         Xj8ZpBkQqEAIla5pYz6/xKshDNc9pt0sE0FufO579nI7Yc7R/KvPe4trv+eiH5JRJWVe
-         cBHcgI7/o29DiJEcB2RA0j9d4G7cpvLKMZKZjl99UGj96XVcgqwD4wtR+3vOzQme6xbS
-         9y1J84TR5Ek7eCYt6htuxyABFR6mhFY0CW4ri2Z47AE0BTvv9/Yet+Vq6cEnDOIo5ekY
-         qCSA==
-X-Gm-Message-State: AOUpUlGAopCc1Q8kA0HtELi6cI8DAzQOIZHZh2s7TS0jl/mRhfmBWYwy
-        2uumkN9ErE8+IgIFR+4zZasIKs0RnOJQxZAOTiQ=
-X-Google-Smtp-Source: AAOMgpfKVT+8N2Enc6ig81/d7uEuDvQoCYCfOjSy5FHrxbwW/b7GBljRzQj3JLUU4fcyGONLNKJNF12VeCHnv2VKmCU=
-X-Received: by 2002:a17:902:b785:: with SMTP id e5-v6mr6305181pls.339.1532702856676;
- Fri, 27 Jul 2018 07:47:36 -0700 (PDT)
+        id S2388156AbeG0QlI (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jul 2018 12:41:08 -0400
+Received: from mout.gmx.net ([212.227.15.15]:56781 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730395AbeG0QlI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jul 2018 12:41:08 -0400
+Received: from [192.168.0.129] ([37.201.193.59]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MhAAr-1fMqf33BY1-00MMoA; Fri, 27
+ Jul 2018 17:18:40 +0200
+Date:   Fri, 27 Jul 2018 17:18:39 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Eric Sunshine <sunshine@sunshineco.com>
+cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC PATCH 2/5] format-patch: add --range-diff option to embed
+ diff in cover letter
+In-Reply-To: <CAPig+cSYXYrEdJMpkC_emi3u5PY2GFmZw0nsn5EbEBtU28ZXtw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1807271717020.10478@tvgsbejvaqbjf.bet>
+References: <20180530080325.37520-1-sunshine@sunshineco.com> <20180530080325.37520-3-sunshine@sunshineco.com> <nycvar.QRO.7.76.6.1807171219480.71@tvgsbejvaqbjf.bet> <CAPig+cTKGd8N78XvW-rmBEZC7ykcJsE+na1V_vCVXTUhGrFe4Q@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1807261249490.71@tvgsbejvaqbjf.bet> <CAPig+cSYXYrEdJMpkC_emi3u5PY2GFmZw0nsn5EbEBtU28ZXtw@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20180726121346.GT1934745@devbig577.frc2.facebook.com>
- <20180726143930.GW1934745@devbig577.frc2.facebook.com> <xmqqa7qerpxu.fsf@gitster-ct.c.googlers.com>
- <20180726153714.GX1934745@devbig577.frc2.facebook.com> <xmqqr2jpq0s1.fsf@gitster-ct.c.googlers.com>
- <20180727084039.GB11932@sigill.intra.peff.net>
-In-Reply-To: <20180727084039.GB11932@sigill.intra.peff.net>
-From:   Tejun Heo <tj@kernel.org>
-Date:   Fri, 27 Jul 2018 10:47:25 -0400
-Message-ID: <CAOS58YNjyLLDLpoDDB=oAKn3P_FLLD2WZrygBy6J+TV=E480NQ@mail.gmail.com>
-Subject: Re: [PATCH v2] name_rev: add support for --cherry-picks
-To:     peff@peff.net
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        kernel-team <kernel-team@fb.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:VlYgzClJ5jvNbuvBkPPyDmDnEu19eycrVjJzz9/fQenAPdUsSy8
+ e4hcA2tCOUwt0W9g/LfXz73s6+etUD5FoFcsJH3kGKviua5u0dO8sdUGNMUgCNafV6v3FIq
+ Z3wT91gEDXwrz67ipfs1cH41KGI7pmGTtBWbt8LvhVL4Jat/OgyH1B53CFDmuqMOP9ozjmB
+ x26jfM1q26mFVknYFfqsQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:kGGwBdbwDwQ=:sK97/rX7UDLSdV7muoIcR5
+ 0Eohfs5w95WtYYoDL4Q/o1aSYyWUUCTNa05m7s9YV2m8RPVf2uSF+nQtGHr061pERQkruS5GZ
+ m6MFnknRJ8xJXFwlPOoiEKop5v7StOEYiGHhq5u8z0MACuM5QcIjhNvyKhO0YloE+nTM268kQ
+ I2Xbv51fIbS0XJlXzf+jodMJTyFp3r5Cx3oql1nxBeMq5Bekdp+1xfhf1nVZqAgWRqqECesHl
+ AcGCDyVSy6OsVtIQSv1TnQAJOahlHgwYhwCMuLVr87UQe3F+zh/dWYFETOHhxB+x1rpnVDNV8
+ MSXqJlm667omiVJED0HE3ueU5VejXpIkUPhf5c0sJsuHaK84XIdli0E+hToFyeu+yMQMDxNfO
+ W29LGS+Yx1dqP8/ZJXlJvvUU4Nn04/5TANTuBbN/4i8DHyIXtf6/+9n63KsxmRlqD3nANB7FY
+ QxIv2J177DTYawLzdXnfhBjVsEp6TAbDS00WcXJw2kp6bLv1uzrLPuHFe6i4dnbu9RS2jj316
+ OGSn3Cg1gNuYDsQom5/WEFQmJcQiEPbhc5GEOg7OwEkiX6y7BOTay2sQWtDKwJ7YFw2yrGb6k
+ mj/C9OXj85UBpTEvr34azDmrbxHYjcRro7fNCeO0NAeB97ZHGLRDeWqd61T5NM7vPasXy0Fur
+ lscfHZUXFBuXX5neDpe4dWlp5vZUTjvDLfuMIKHSaTceBHglfL192YmFLitpGYLUOZ1I3R6nf
+ wIMEWuKCnUkDwMrEgUv80/qrAfNBqyBZTikQPr5w7xX6ajjn0ef1QP2WY4VnQQVpGmxVgXEG+
+ VKJuUiz+oFSohTrAXT16lrsxM7av6Z3VC8zZJCjU/21ILOXvPjrNQmlNPB+KSPFNjP9BUd12+
+ EL5D1lGAgmue6bAUHDEZkh7kgI56Lfbwk3ZDLAs+MpegdaDHZfV4ThXNOwTZLKV/gyV173HCe
+ OvxP1MNF48rMmxPWhzeRToXdFQxETuTO7yQiM6zL97Po5HQOa/p5d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello, Jeff.
+Hi Eric,
 
-On Fri, Jul 27, 2018 at 4:47 AM Jeff King <peff@peff.net> wrote:
->  - the set of names might be distinct from the set of commits you'd want
->    to traverse.  For instance, you might want to use "name-rev --tags",
->    but find cherry-picks even on untagged branches (e.g., "--all").
+On Thu, 26 Jul 2018, Eric Sunshine wrote:
 
-Hmm... maybe but when I'm using --tags, I'm usually asking "when did
-this get released?" and --cherry-picks seems to logically extend that
-and fits such scenarios pretty well. ie. "Give me the release name and
-all the aliases for this commit". We can play with the options to
-support combinations of tagged/untagged but I'm not quite sure about
-the usefulness. After all, calling the program twice isn't all that
-difficult.
+> On Thu, Jul 26, 2018 at 6:56 AM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > On Tue, 17 Jul 2018, Eric Sunshine wrote:
+> > > On Tue, Jul 17, 2018 at 6:31 AM Johannes Schindelin
+> > > <Johannes.Schindelin@gmx.de> wrote:
+> > > > BTW I like to have an extra space in front of all the range-diff
+> > > > lines, to make it easier to discern them from the rest.
+> > >
+> > > I'm not sure what you mean. Perhaps I'm misreading your comment.
+> >
+> > Sorry, I was really unclear.
+> >
+> > In the cover letters sent out by GitGitGadget (or earlier, my
+> > mail-patch-series.sh command), I took pains to indent the entire
+> > range-diff (or interdiff) with a single space. That is, the footer
+> > "Range-diff vs v<n>:" is not indented at all, but all subsequent lines
+> > of the range-diff have a leading space.
+> >
+> > The original reason was to stop confusing `git apply` when sending an
+> > interdiff as part of a single patch without a cover letter (in which
+> > case mail-patch-series.sh inserted the interdiff below the `---`
+> > marker, and the interdiff would have looked like the start of the real
+> > diff otherwise).
+> 
+> The new version[1] likewise indents the interdiff to avoid confusing
+> git-am / git-apply.
+> 
+> [1]: https://public-inbox.org/git/20180722095717.17912-1-sunshine@sunshineco.com/
 
->  - instead of naming commits, you might want to see the information as
->    you are viewing git-log output ("by the way, this was cherry-picked
->    elsewhere, too")
+Great!
 
-name-rev --stdin sort of does this for commit names. I thought about
-adding the support for --cherry-picks too but wasn't sure how to weave
-in the result, but if we can figure that out this should work, right?
+> > In the meantime, I got used to this indentation so much that I do not
+> > want to miss it, it is a relatively easy and intuitive visual marker.
+> >
+> > This, however, will be harder to achieve now that you are using the
+> > libified range-diff.
+> 
+> I toyed with indenting the range-diff in both the cover letter and
+> below the "---" line in a patch. With the libified range-diff, doing
+> so involves modifying the range-diff implementation (rather than
+> having the consumer of the range-diff manage the indentation locally),
+> so it adds a bit of complexity to show_range_diff(), though perhaps
+> not too much.
+> 
+> However, I opted against it for a few reasons. First, "header" lines
+> apart, all lines of the range-diff are already indented, and the
+> existing indentation was sufficient (for me, at least) as a visual
+> marker. Second, range-diffs tend to be _wide_, especially the header
+> lines, and I was loath to make it wider by indenting more. Third, due
+> to the existing indentation of the diff proper, a range-diff won't
+> confuse git-am / git-apply, nor will the unindented header lines, so
+> extra indentation seemed superfluous.
 
-> So I kind of wonder if it would be more useful to have a command which
-> incrementally updates a git-notes tree to hold the mapping, and then
-> learn to consult it in various places. "git log --notes=reverse-cherry"
-> would show it, though it might be worth teaching the notes-display code
-> that certain types of notes contain object ids (so it would be
-> interesting to recursively show their notes, or format them nicely,
-> etc).
->
-> I dunno. That is perhaps over-engineering. But it feels like
-> "reverse-map the cherry-picks" is orthogonal to the idea of name-rev.
+Totally understandable. For some reason, I never thought about that fact
+(a range-diff is *not* a diff) when changing mail-patch-series.ts to use
+range-diffs instead of interdiffs.
 
-Hmm... to me, it makes logical sense because "name this commit" and
-"also include aliases" seem to be a natural combination both in
-semantics and use cases, but if there are better ways of tracking down
-cherry-picks, I'm all ears.
+> > > > > @@ -1438,6 +1480,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+> > > > > +     const char *range_diff = NULL;
+> > > >
+> > > > Maybe `range_diff_opt`? It's not exactly the range diff that is
+> > > > contained in this variable.
+> > >
+> > > I could, though I was trying to keep it shorter rather than longer.
+> > > This is still the same in the re-roll, but I can rename it if you
+> > > insist.
+> >
+> > I think it will confuse me in the future if I read `range_diff` and
+> > even the data type suggests that it could hold the output of a `git
+> > range-diff <options>` run.
+> >
+> > So I would like to insist.
+> 
+> In the new version[1], this variable is named 'rdiff_prev' (the
+> "previous" version against which the range-diff is to be generated).
 
-Thanks.
+Thank you.
 
--- 
-tejun
+> > > > > +format_patch () {
+> > > > > +     title=$1 &&
+> > > > > +     range=$2 &&
+> > > > > +     test_expect_success "format-patch --range-diff ($title)" '
+> > > > > +             git format-patch --stdout --cover-letter --range-diff=$range \
+> > > > > +                     master..unmodified >actual &&
+> > > > > +             grep "= 1: .* s/5/A" actual &&
+> > > > > +             grep "= 2: .* s/4/A" actual &&
+> > > > > +             grep "= 3: .* s/11/B" actual &&
+> > > > > +             grep "= 4: .* s/12/B" actual
+> > > >
+> > > > I guess this might make sense if `format_patch` was not a
+> > > > function, but it is specifically marked as a function... so...
+> > > > shouldn't these `grep`s also be using function parameters?
+> > >
+> > > A later patch adds a second test which specifies the same ranges but
+> > > in a different way, so the result will be the same, hence the
+> > > hard-coded grep'ing. The function avoids repetition across the two
+> > > tests. I suppose I could do this a bit differently, though, to avoid
+> > > pretending it's a general-purpose function.
+> >
+> > If you can think of a way that would make this easier to read for,
+> > say, myself if I ever find myself debugging a regression caught by
+> > this test, I would appreciate that.
+> 
+> In the new version, the function is gone; it looks like this:
+> 
+> --- >8 ---
+> for prev in topic master..topic
+> do
+>     test_expect_success "format-patch --range-diff=$prev" '
+>         git format-patch --stdout --cover-letter --range-diff=$prev \
+>             master..unmodified >actual &&
+>         grep "= 1: .* s/5/A" actual &&
+>         grep "= 2: .* s/4/A" actual &&
+>         grep "= 3: .* s/11/B" actual &&
+>         grep "= 4: .* s/12/B" actual
+>     '
+> done
+> --- >8 ---
+
+Looks good.
+
+Thank you so much!
+Dscho
