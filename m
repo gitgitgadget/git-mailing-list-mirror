@@ -2,107 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A45EB1F597
-	for <e@80x24.org>; Fri, 27 Jul 2018 22:19:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 717671F597
+	for <e@80x24.org>; Fri, 27 Jul 2018 22:24:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388871AbeG0Xnf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jul 2018 19:43:35 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:36623 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388563AbeG0Xnf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jul 2018 19:43:35 -0400
-Received: by mail-wr1-f65.google.com with SMTP id h9-v6so6466891wro.3
-        for <git@vger.kernel.org>; Fri, 27 Jul 2018 15:19:38 -0700 (PDT)
+        id S2388556AbeG0XsF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jul 2018 19:48:05 -0400
+Received: from mail-vk0-f74.google.com ([209.85.213.74]:53862 "EHLO
+        mail-vk0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730953AbeG0XsE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jul 2018 19:48:04 -0400
+Received: by mail-vk0-f74.google.com with SMTP id x78-v6so2522520vkd.20
+        for <git@vger.kernel.org>; Fri, 27 Jul 2018 15:24:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=5CpcB/u8Bm1eSHM/i8pzCPVzgl2l6oXI0x2j2vb9CPs=;
-        b=kOOOqRFCOIul/Fy/Ev26+kzu3exuAjumiyyaBpMOGZmKcwMkWbAAwy74vuPB2ZbeOD
-         9zDN/cU0rS3zUFlIuFdnDqoeAjT+ApcjKor4aFn1T0SOPrPQrsWHDHA6FAG7ytByFGOz
-         60H3BEkJ9iyueiOMlTXk6y0qrEHL7fveum+kfoRvXUW2gbP4CXq4po/0zML70LFramYz
-         GUE1cPUOBVlpXBDKqqeXFd5hjNR8RFUW7xFNwBdz186Ywa/TtxvPmANXKZ1cuAi7Zt1/
-         mnkH6RTrdm4Lw7ScaZtzLL+jWItJciO+S3lHxknXixj0bF6XqJ8hPL0IcW/c5mq6/0IE
-         ePTg==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=f31ZkYQTAmhn9MZ3KlEBBluRBRvB34b0H0c1Evv7HBo=;
+        b=NZVnIVa8jldVdg1Cx3b/obdffghvN98jmA8MLtv75Q1ir/TDTyGlTcJ4+GsgawXli+
+         7sWyQp/b9caHJNoZsOYMHUW7IHoplgkmMM/bay74TF7Pw8nqzBXQ3O4oEmA/oVr+tQco
+         qMxQWZdpqfBSGSTt034VAl/aqNRJfipVexMs9Xc4f7RU7YKxRRRXLHBwfjQgYvjXIxLp
+         chEsVpCaQvHDhpYlw2cG6mpTfJ9CPrUAy/Px47ealTlQsRBz7DZ3v33P9iOSvvUzgMKw
+         KYq1VTAYaclfFcGllJ19y3d0QzjLA6z5pLX5loEF7LcIdzIFQX8LEOpKAe2mmvwigGFP
+         5QpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=5CpcB/u8Bm1eSHM/i8pzCPVzgl2l6oXI0x2j2vb9CPs=;
-        b=OTKZY8xSCnsJhkk5vepvvOuXNiX871yXMANsfAfi2krhcf+wcbj6S176UAqHYusCLg
-         qG1NDwQtUK3y45e8f0dCdOVlxhkRz7iwrDuLsuQ2/EPyUKG95WhG0UcAL099H2ugFPRj
-         D9wl9ejkCQeobHEtZn7ZrV6v71YI2P6Zz+rlC0eJKJDAti+FsHa1X3y63ybSIkZCVCXN
-         Hju1Fh223NuiiozIdn6pvKFLupBZ4xk78J2uE90ZhVfJo56Pf6OMornFvOJZi5ZFeLgT
-         GKj0wyEZtuvisw8Vc1B1EWsUJByaHJWReJEkFB7OXvLPJpOEBnXG3yu6KYuSls/yWvYQ
-         T7XQ==
-X-Gm-Message-State: AOUpUlFJlpOi27wyQ8KK6Dxx0/0BKk7T98X33GuyfWwvegpAL3Hka8TN
-        V2RoAVylhs+F4zaKdJLKt8M=
-X-Google-Smtp-Source: AAOMgpeEJdovIjMEWB3Q282s/0yM2bGu6hxAIDuXYF+3f4spMAT5QavBrWrelM9CgPYSjRXMH/iyvA==
-X-Received: by 2002:adf:c44c:: with SMTP id a12-v6mr6766421wrg.20.1532729977522;
-        Fri, 27 Jul 2018 15:19:37 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id h7-v6sm4138613wmb.48.2018.07.27.15.19.36
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 27 Jul 2018 15:19:36 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v3 01/10] receive.fsck.<msg-id> tests: remove dead code
-References: <20180525192811.25680-1-avarab@gmail.com>
-        <20180727143720.14948-2-avarab@gmail.com>
-        <xmqqva90mr2l.fsf@gitster-ct.c.googlers.com>
-        <87d0v85uoy.fsf@evledraar.gmail.com>
-Date:   Fri, 27 Jul 2018 15:19:36 -0700
-In-Reply-To: <87d0v85uoy.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Fri, 27 Jul 2018 21:45:33 +0200")
-Message-ID: <xmqqy3dwjp8n.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=f31ZkYQTAmhn9MZ3KlEBBluRBRvB34b0H0c1Evv7HBo=;
+        b=jqNW05T7xg2UVkqmvr0zhrouJnghFVFkQAfe0ElqC7WpIj3Yv724QhhpKBNPUWo3T4
+         UyHXLMk1dMqvygw1hAgOvp09H1Pp8M5L9oURRYFFukucmdG6RlBUqVCGr48QKc6ekHYr
+         /PylwvKGZ6t0XAf9U0ZLsQIqZWfBWdjW5lkltTuI4s/ODW7mF8OEF0nXNU4/P3BVUyOd
+         vDpzBm3NXhWxxWxJXHX1nMZABiLIFNS3OLtl/FmeshHipxjeDL4js/Zm2hFlUGCKT41o
+         B109j5UifV8nTocpeeKCnq6+YmGKB+jICxkRLOF+P9rr3CzB2FaWjWKRXX6JyOyF1aBW
+         ZMBg==
+X-Gm-Message-State: AOUpUlG9rg+EzlQFM+lsiKAhucFBgPMr4AITqmDWl79jk68RuUtSZSD8
+        KBWUdhMxmxl+cSktkZ+jT/5+dMQbbe8a
+X-Google-Smtp-Source: AAOMgpe7V+vVPLOxDO8hrO/wVKAEHrc9hW04PZOai68HsFfqVSWQaEVtQQFiPpXz5LtaXEOyAVR5np1xOsRG
+X-Received: by 2002:a1f:b3c3:: with SMTP id c186-v6mr3815534vkf.7.1532730247582;
+ Fri, 27 Jul 2018 15:24:07 -0700 (PDT)
+Date:   Fri, 27 Jul 2018 15:23:56 -0700
+In-Reply-To: <CAMy9T_HUdszkq8c545puzCpjvh1pKAL7MWtnrZFagNndyyxK7A@mail.gmail.com>
+Message-Id: <20180727222356.96396-1-sbeller@google.com>
+Mime-Version: 1.0
+References: <CAMy9T_HUdszkq8c545puzCpjvh1pKAL7MWtnrZFagNndyyxK7A@mail.gmail.com>
+X-Mailer: git-send-email 2.18.0.345.g5c9ce644c3-goog
+Subject: [PATCH] xdiff: reduce indent heuristic overhead
+From:   Stefan Beller <sbeller@google.com>
+To:     mhagger@alum.mit.edu
+Cc:     git@vger.kernel.org, jamill@microsoft.com, mh@glandium.org,
+        quark@fb.com, sbeller@google.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+Skip searching for better indentation heuristics if we'd slide a hunk more
+than its size. This is the easiest fix proposed in the analysis[1] in
+response to a patch that mercurial took for xdiff to limit searching
+by a constant. Using a performance test as:
 
->>
->>     author Bugs Bunny 1234567890 +0000
->>     committer Bugs Bunny <bugs@bun.ni> 1234567890 +0000
->
-> This is covered by the "missingEmail" part of the test, but there's
-> nothing wrong with the timestamp itself.
+     #!python
+     open('a', 'w').write(" \n" * 1000000)
+     open('b', 'w').write(" \n" * 1000001)
 
-I think you didn't get what I meant.  
+This patch reduces the execution of "git diff --no-index a b" from
+0.70s to 0.31s. However limiting the sliding to the size of the diff hunk,
+which was proposed as a solution (that I found easiest to implement for
+now) is not optimal for cases like
 
-What makes you think "1234567890 +0000" on the first line is a
-timestamp in the first place?  The parser could be updated and split
-that malformed string (as it lacks <...> thing we expect, which is
-what missing Email is about) differently from what you are
-expecting, causing the line to be broken in two ways, i.e. missing
-email and badly formatted timestamp.
+     open('a', 'w').write(" \n" * 1000000)
+     open('b', 'w').write(" \n" * 2000000)
 
-But we know for certain that the line is wrong not to have email in
-either parser (the current one, or a possibly updated one).  So it
-is defensive to doubt your preconception that there is nothing wrong
-with the timestamp, and demote possible timestamp errors to warning,
-as that is not what we are interested in here.
+as then we'd still slide 1000000 times.
 
-> I still think it makes sense to remove this particular thing. Let's add
-> exhaustive tests for all this fsck.* stuff in another series, but no
-> point in testing for arbitrary fsck errors that aren't going to be
-> triggered in unrelated tests.
+In addition to limiting the sliding to size of the hunk, also limit by a
+constant. Choose 100 lines as the constant as that fits more than a screen,
+which really means that the diff sliding is probably not providing a lot
+of benefit anyway.
 
-That is exactly what I am saying with "being defensive".  Your
-change starts testing for arbitrary errors that are not relevant.
+[1] https://public-inbox.org/git/72ac1ac2-f567-f241-41d6-d0f83072e0b3@alum.mit.edu/
+
+Reported-by: Jun Wu <quark@fb.com>
+Analysis-by: Michael Haggerty <mhagger@alum.mit.edu>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+
+> Plus, it should always give the right answer.
+
+I was tempted to do just that, but I caved. The diff is correct,
+and the hunk sliding is purely to appease the visual aspect of
+humans looking at diffs. If your diff can slide more than a
+monitor height, you're not interested in the best slided diff,
+but something else is going on.
+
+> There are cases where it will be
+> more expensive than a fixed `MAX_BORING`, but I bet on average it will
+> be faster.
+
+So I did both, settling for performance as the utmost desire. ;-)
+
+ xdiff/xdiffi.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
+
+diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
+index 0de1ef463bf..91e98ee9869 100644
+--- a/xdiff/xdiffi.c
++++ b/xdiff/xdiffi.c
+@@ -591,6 +591,11 @@ static void measure_split(const xdfile_t *xdf, long split,
+  */
+ #define INDENT_WEIGHT 60
+ 
++/*
++ * How far do we slide a hunk at most?
++ */
++#define INDENT_HEURISTIC_MAX_SLIDING 100
++
+ /*
+  * Compute a badness score for the hypothetical split whose measurements are
+  * stored in m. The weight factors were determined empirically using the tools and
+@@ -903,7 +908,12 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ 			long shift, best_shift = -1;
+ 			struct split_score best_score;
+ 
+-			for (shift = earliest_end; shift <= g.end; shift++) {
++			shift = earliest_end;
++			if (g.end - groupsize - 1 > shift)
++				shift = g.end - groupsize - 1;
++			if (g.end - INDENT_HEURISTIC_MAX_SLIDING > shift)
++				shift = g.end - INDENT_HEURISTIC_MAX_SLIDING;
++			for (; shift <= g.end; shift++) {
+ 				struct split_measurement m;
+ 				struct split_score score = {0, 0};
+ 
+-- 
+2.18.0.345.g5c9ce644c3-goog
+
