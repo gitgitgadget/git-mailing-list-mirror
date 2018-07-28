@@ -2,82 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79BDF1F597
-	for <e@80x24.org>; Sat, 28 Jul 2018 01:38:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 87CA61F597
+	for <e@80x24.org>; Sat, 28 Jul 2018 03:04:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389202AbeG1DC3 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jul 2018 23:02:29 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:34967 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389016AbeG1DC3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jul 2018 23:02:29 -0400
-Received: by mail-wr1-f66.google.com with SMTP id a3-v6so6725808wrt.2
-        for <git@vger.kernel.org>; Fri, 27 Jul 2018 18:37:58 -0700 (PDT)
+        id S1725993AbeG1E3i (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Jul 2018 00:29:38 -0400
+Received: from mail-it0-f74.google.com ([209.85.214.74]:36928 "EHLO
+        mail-it0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725962AbeG1E3i (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Jul 2018 00:29:38 -0400
+Received: by mail-it0-f74.google.com with SMTP id r10-v6so7166166itc.2
+        for <git@vger.kernel.org>; Fri, 27 Jul 2018 20:04:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=2SKpHDDJwa7vAQ3vIxRZsNDA99XYBOxMNZzxVHgOEtM=;
-        b=KJAuPbd2CNtCMjKfwRraJX2b7HCltas6lJKQb40qOSfFndjYXAuQWNC9LiVLl8tE9j
-         5ytI51ysam2Qg6c6AVlpq/CF8iieKLpkC9nVHAy0r6YoVRrDalQV5v949c2dXIUtxFQF
-         Lfp8iWBuD7PpDFUR+shAxzi8BjSEJEGf5ZZ7I/QoptxknDh05H7IoR2deZDjRh559XQL
-         euLxk5o5S3JVxTaBsUwOh15m2qZrR/WX10PmNF6qEbtSkbt/aruiruAj9BvCxvbeLlGg
-         /pRiB8ICLh590T37zZIL0n/AIKgExmAqD99TA2DZhg7Q4Cj7ZEWYe7ZmW86pX4RnhAQi
-         QwZQ==
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=qLjm1oAbKlhyLW1PtFDY7HQxUWCnwZnF+WJwJce7NnQ=;
+        b=f9zZfMk89lsTjljWosSESHfd3hLxmma7ZjFjoSbp0Di3ZKPtL0TaizAnrtiJdhvbpR
+         bZtXJfMSebL0zqkyta6S0RmYz/aW3OYhGTlRpa91pVwJZGjwfm3MjWQ5ss0K5+3Gun5l
+         Xd7BRiJHSy7ZGCEx0kdiD/v03yAOcNfvJKn2koc/gvWfAbVZpxqtPnCnLbuclB/CRTP/
+         0BJkdP5hzhpaT0HDctV2RVTKPiTEhZ2RU89GtKeg1pkRVKRxfbFLtfmhjgmpl9r1sFQ7
+         IufJ+6cT9r0MJ2kefzL2DJ+1gpdV81ZAvsZ4bbzodqKeIJAVWp9EmO03TE0eKCFIRsMR
+         z1qQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=2SKpHDDJwa7vAQ3vIxRZsNDA99XYBOxMNZzxVHgOEtM=;
-        b=F+q1thrEOtfAqloEX3usTTwG3w5YEhR0XpPf4ZUO+zK31c505vLKmTHFVRDnvJ1d6Q
-         CSlRVLLp3VWeIo2aPsUQoiBneEltoSRqMB4/dRSDqRqJ8Vq9/zx0Q79ByCHaXWvIk9s4
-         n14tv1vqva1juxCVQHOV4koDfGeddIqUYjzbdRTj+VOcmI/29fa1n3haqzqKjSQH699F
-         ydw48E8InttiTvfuxdrwwfJw2PjjwEniRPo8CzQCb5OwYj7MUA4rYj1Cprp6aBWdjg74
-         Gm+Jf+OPscXoIPkfJpOeEPAoB3rJJp7gv51TXJnisS4wVrk+KcmW5Bh0aQ50tk9Tb3Ai
-         uRjA==
-X-Gm-Message-State: AOUpUlGErP5nLyBoEI0jOm2R6CCKt4sAbn7hIZ/gsdSsETy0AI9AyPLI
-        vImrAimP+86UbtA7Bb4gYCU=
-X-Google-Smtp-Source: AAOMgpfA9gv0BpYuWv2udNV4igWeWueFSZU3fhUzhDJqIUj4QjqVA4tYTalqyaIFulffDrdn/Sa1lQ==
-X-Received: by 2002:adf:f9c9:: with SMTP id w9-v6mr7047513wrr.105.1532741877932;
-        Fri, 27 Jul 2018 18:37:57 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id h14-v6sm4290550wro.15.2018.07.27.18.37.57
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 27 Jul 2018 18:37:57 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, bmwill@google.com, peff@google.com,
-        Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH] config: fix case sensitive subsection names on writing
-References: <CAGZ79kaVS96_K-G-_hEnRecBS843tjn7=Am0xZQjZABCdC7L0A@mail.gmail.com>
-        <20180727233606.179965-1-sbeller@google.com>
-Date:   Fri, 27 Jul 2018 18:37:56 -0700
-In-Reply-To: <20180727233606.179965-1-sbeller@google.com> (Stefan Beller's
-        message of "Fri, 27 Jul 2018 16:36:06 -0700")
-Message-ID: <xmqqh8kkjg23.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=qLjm1oAbKlhyLW1PtFDY7HQxUWCnwZnF+WJwJce7NnQ=;
+        b=XNdgVNQ7U94dZArlrm2+7JqhnUAbtFYgFpIeNjUqUhN97xCUsuNnsfmSBhvgHu/4sZ
+         V1NPpUNSTdzAg4FWuAzun8Z0TKH1xnmbERTZEQ59s8+hZXK9sUNYagKSWvjhA3Ibelnl
+         CgknYxXzO6lItLq+Ze72ZOrRi0CLMdpEg0HepHdiFwgjuYhPq88Xo1Rgnz+yvBT6+dic
+         snaHMQQ3KpKkw8aWcNADQMFI1Ag5haLxFBbfkXc8Qv/LgoMDbzRP/D7YDKorojWzdPob
+         tQXV4NofzCZO17nX62+8Uf9p57Cu5G9P3SUn0+kU09zpM1lWm19+mGWsvR0nugM6ztt4
+         HUhg==
+X-Gm-Message-State: AOUpUlGlXBesk0tj6ZN05MCNdlt7djS+eMHpTpWei3XJrNu/2ycrUvgc
+        pez0S1q7mrmCLKBCpOemrcg2mKQeDM6N9ZgNipeyHi5PV5JSe7SylS7xpgnAYytrvveFhe4kY11
+        dcfruUfHXrRRr1UqUEPXIrze6YhX3pozDhxFU3JumHFBj3rkJQI99zhU53z/K
+X-Google-Smtp-Source: AAOMgpf4Y5MAgzl33Irvay3+qHKKoX73NDqLAz2lq0W4AeNMI+IB6scggksO/ZuyUq1CbU9dBcAcY2SoZwhl
+X-Received: by 2002:a24:ed87:: with SMTP id r129-v6mr4100746ith.32.1532747093128;
+ Fri, 27 Jul 2018 20:04:53 -0700 (PDT)
+Date:   Fri, 27 Jul 2018 20:04:40 -0700
+Message-Id: <20180728030448.192177-1-sbeller@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.18.0.345.g5c9ce644c3-goog
+Subject: [PATCH 0/8] Add color test for range-diff, simplify diff.c
+From:   Stefan Beller <sbeller@google.com>
+To:     git@vger.kernel.org
+Cc:     Johannes.Schindelin@gmx.de, Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+This is based on origin/js/range-diff (c255a588bcd) and is also available
+via
+  git fetch https://github.com/stefanbeller/git ws_cleanup-ontop-range-diff-2 
 
-> I really appreciate the work by DScho (and Peff as I recall him as an active
-> reviewer there) on 4f4d0b42bae (Merge branch 'js/empty-config-section-fix',
-> 2018-05-08), as the corner cases are all correct, modulo the one line fix
-> in this patch.
+This adds some color testing to range-diff and then attempts to make the code
+in diff.c around emit_line_0 more readable.
 
-Amen to the early part of that ;--) Even though it was merely
-cosmetic, and did not affect correctness, that longstandng bug was
-very annoying bug to a lot of people.  I too am very happy to see it
-disappear.
+I think we can go further bit more (by e.g. cherry-picking 
+"ws: do not reset and set color twice" found at [1]), but that would be feature
+work. This series doesn't change any existing tests!
 
-I would still hold the judgment on "all except only this one"
-myself.  That's a bit too early in my mind.
+[1] https://github.com/stefanbeller/git/tree/ws_cleanup-ontop-range-diff
+
+Thanks,
+Stefan
+
+Stefan Beller (8):
+  test_decode_color: understand FAINT and ITALIC
+  t3206: add color test for range-diff --dual-color
+  diff.c: simplify caller of emit_line_0
+  diff.c: reorder arguments for emit_line_ws_markup
+  diff.c: add set_sign to emit_line_0
+  diff: use emit_line_0 once per line
+  diff.c: compute reverse locally in emit_line_0
+  diff.c: rewrite emit_line_0 more understandably
+
+ diff.c                  | 94 +++++++++++++++++++++++------------------
+ t/t3206-range-diff.sh   | 39 +++++++++++++++++
+ t/test-lib-functions.sh |  2 +
+ 3 files changed, 93 insertions(+), 42 deletions(-)
+
+-- 
+2.18.0.345.g5c9ce644c3-goog
+
