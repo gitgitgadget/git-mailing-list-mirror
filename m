@@ -2,126 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 704881F597
-	for <e@80x24.org>; Sat, 28 Jul 2018 14:09:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF2511F597
+	for <e@80x24.org>; Sat, 28 Jul 2018 18:05:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728890AbeG1PgZ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Jul 2018 11:36:25 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:37604 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728844AbeG1PgZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Jul 2018 11:36:25 -0400
-Received: by mail-wm0-f65.google.com with SMTP id n11-v6so8626807wmc.2
-        for <git@vger.kernel.org>; Sat, 28 Jul 2018 07:09:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=/DGrjkaZOuL2qoWjcZVg2ORtB6KKPdvae8wK9hG8Z68=;
-        b=GKQ/BZRZborLsto7LTr10LA6nqBR6ryxICMluvBkP+QZwUkZ/8Vh1TNpi4UXJPHH0M
-         +c4MGCO2zxjfjCR3Bi40HmwxHI3pTlrMrs51WwxIo9DNbJvQUciMu9+C5a5GGVVwIp5n
-         NE06sl4VdKW4PSjBLaMfn387yudIiIxtQTc4+RHyNDFAOXJU2VASBFiy84y9lpiEFvPc
-         JSkVGl/dP99uiaRW+O27MGHpS2i8OKe+UQOnltKCYOgHF6sH5BBHOhtx3qVN7zvY9P7d
-         Is5laicIDnJf1HLisqreRr1GwH+ul44qid9BhcWS2P9FrOaegLyzt0mb+8v1XWpMplNM
-         i8LQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=/DGrjkaZOuL2qoWjcZVg2ORtB6KKPdvae8wK9hG8Z68=;
-        b=MZuFKhqX9R2PUKOVEmjCV/blde19uXgOqfpbEdSdVW/ff9ShxqhN2iPWVFcHqDmi9h
-         7jJ+NriFrI4urHRay/NL8DZpYFb4Ns2+t5riI7ujz7jaeX1O4zi+Tisc58xQwSh5H/Ec
-         7/ZRkh+WvQ9DOPHg0Aj8lLajIBUPhRTKZLGEpOHkMmH6JzyW3mrVBsXYpp7okl0nmgKU
-         x+gFEWM2TZBULPKsS2WvhkYcfDM/52BJniI6HAnmDa5sZ5T2h+rNHoE5uUoG3K9PzW+W
-         ArQ29NPlF5WxUwWfg5tfnCWedDVyG9MoJX3TkqINR0YyInooWz7v6BdmxVdHD70bX78y
-         5mZg==
-X-Gm-Message-State: AOUpUlGTIVKS3C7dVyvCdFoxepl+Hqr+IoSX/Fz7nUXpVCeY91HWaO+A
-        hyThE0pPGn552eldau9nwKo=
-X-Google-Smtp-Source: AAOMgpd+Hk6W9tU1/1wQNKQTAITBlik0GmdGtXVS6/AF12tcKQ4QIUClkmbUnQqDkl459O2TKU03aQ==
-X-Received: by 2002:a1c:dc89:: with SMTP id t131-v6mr8659740wmg.50.1532786985581;
-        Sat, 28 Jul 2018 07:09:45 -0700 (PDT)
-Received: from evledraar (h98111.upc-h.chello.nl. [62.194.98.111])
-        by smtp.gmail.com with ESMTPSA id m200-v6sm8127323wma.32.2018.07.28.07.09.43
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 28 Jul 2018 07:09:44 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v3 05/10] config doc: elaborate on fetch.fsckObjects security
-References: <20180525192811.25680-1-avarab@gmail.com> <20180727143720.14948-6-avarab@gmail.com> <xmqqeffomphy.fsf@gitster-ct.c.googlers.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <xmqqeffomphy.fsf@gitster-ct.c.googlers.com>
-Date:   Sat, 28 Jul 2018 16:09:43 +0200
-Message-ID: <871sbnv4d4.fsf@evledraar.gmail.com>
+        id S1729951AbeG1Tck (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Jul 2018 15:32:40 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:38730 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729939AbeG1Tcj (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 28 Jul 2018 15:32:39 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:f1fc:eee3:60de:bdd8])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id DE38B6046C;
+        Sat, 28 Jul 2018 18:05:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1532801119;
+        bh=5QFST7D2J9nGTizQAD+y5yVyBRmaLjO0tvhDNL2belc=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=yaymU8o7JplrVyEN/ZCvkUxP+fJEIjMEcvydG1eNXFMldFaNx77RqEBbI5SrW+LNV
+         KJwzk8kG7z86VJ25+7ZVOKEJwuYf0IUpysTgWPbixNgLZVl9sdMDX8GhfNH/fdBFHG
+         kjH5adic0y/Sbu7q7tzqfCme6GpqNaJA32mbO+wZeC3ArDkL/z22KzCqpPtOxJsN25
+         gvR8aIB5Drm/zrEZjEkiBN0lT3ZomqfVrcbjI6OVxuh7GVxOskE4IY6Sf78eY7KsCC
+         maf61ktohauhbV7/SIJNC8SXWbqd7Wc9QtixIUOcb4goSXAkwkJtatfSPeFPldP8KD
+         MuNR9iRylsDrFLHK33zcUtmGJ7mUSGLaRnGnDakdAG7qlYIjZb7Vpd3Ie0b7X/LKe0
+         MAjeoWxpyRixPiwFIW2xueMsOBAnta1C//Ss9MROLQFFsQDVwlDr6smd+DOb8iyYNw
+         aYgiEqZSDxEBWW0zlg5WjeHtCUHcowbU2dm9rB02MHp/nPI/0eq
+Date:   Sat, 28 Jul 2018 18:05:14 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Jeff King <peff@peff.net>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        =?utf-8?B?UGF3ZcWC?= Paruzel <pawelparuzel95@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Git clone and case sensitivity
+Message-ID: <20180728180514.GA945730@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
+        =?utf-8?B?UGF3ZcWC?= Paruzel <pawelparuzel95@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+References: <24A09B73-B4D4-4C22-BC1B-41B22CB59FE6@gmail.com>
+ <20180727205909.GC376343@genre.crustytoothpaste.net>
+ <20180728043559.GA29185@duynguyen.home>
+ <CACsJy8A3pd85fDrbak8TCnmkMb_FDmmpaNd5tBSCKBGkGswKCg@mail.gmail.com>
+ <20180728044857.GA10444@sigill.intra.peff.net>
+ <20180728051105.GA32243@duynguyen.home>
+ <20180728095659.GA21450@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="AhhlLboLdkugWU4S"
+Content-Disposition: inline
+In-Reply-To: <20180728095659.GA21450@sigill.intra.peff.net>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.17.0-1-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Jul 27 2018, Junio C Hamano wrote:
+--AhhlLboLdkugWU4S
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
->
->> +For now, the paranoid need to find some way to emulate the quarantine
->> +environment if they'd like the same protection as "push". E.g. in the
->
-> We probably should mention that you can immediately prune, as these
-> unwanted crufts are unreferenced.  That would probably be a lot easier
-> workaround for the intended readers of this document than "find some
-> way to emulate".
+On Sat, Jul 28, 2018 at 05:56:59AM -0400, Jeff King wrote:
+> strcasecmp() will only catch a subset of the cases. We really need to
+> follow the same folding rules that the filesystem would.
+>=20
+> For the case of clone, I actually wonder if we could detect during the
+> checkout step that a file already exists. Since we know that the
+> directory we started with was empty, then if it does, either:
+>=20
+>   - there's some funny case-folding going on that means two paths in the
+>     repository map to the same name in the filesystem; or
+>=20
+>   - somebody else is writing to the directory at the same time as us
+>=20
+> Either of which I think would be worth warning about. I'm not sure if we
+> already lstat() the paths we're writing anyway as part of the checkout,
+> so we might even get the feature "for free".
 
-I'll mention that as well in v6 that "git prune" will get rid of these
-objects.
+This is possible to do.  From the bug I accidentally introduced in 2.16,
+we know that on clone, there is a code path that is only traversed when
+we hit this case and only on case-insensitive file systems.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-For what it's worth I was imagining something like a system where you're
-mirroring every push to some unpatched-git-host.com repo in-house, by
-doing a local "git fetch" when you see new data, and you're paranoid
-that someone's trying to introduce something like the .gitmodules
-security issue to your local mirror, even if you have
-transfer.fsckObjects set.
+--AhhlLboLdkugWU4S
+Content-Type: application/pgp-signature; name="signature.asc"
 
-In a case like that, relying on "git prune" is much more fragile. You'd
-need to implement your mirror as some loop that does (pseudocode):
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.9 (GNU/Linux)
 
-    while ref = poll_new_refs()
-        git fetch upstream
-        git prune --expire=now
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAltcsFkACgkQv1NdgR9S
+9oswPA/+Ly7yp8mdG7Yd0/Yf5JRhyzncxa2tHChiVWTJ3jBSUMW1+VNVGw9JVfMp
+j9+/Sy7PfYDh7ZKx4bEaAyJFIv7bfOnUFQSGRfEJ5066i/GiQdYQHabALDFdw0p2
+AdQGi3rE01qGQeLP4x3gzWKD6InjWjVJwHC6H6K2NZmXKyfeLQLUZyi1WmPAgw7I
+NBqXQ5bcdVvDcuCYvxyZG02BVWlmPr/2ZgkFDeDMTgDLUFuEBM05zquAr7i0yMFX
+wpgUFSiccs3bjqY7g7WrGvnhkxefGEMQOQwQTOMdWaWbtA4VxFBPaMSFzxpgqRoT
+WYWlKkuBayZUWAmf2FtesP+hCv/FBRij7D9Ot/KWW6NuJaETHhpUAu+T0WqApQUs
+eQ343jDPsOTxgiw8APIcSulljNR9CH7zmk4caoPi7a708zpYXz/G+CLzdJG+29L2
+f+tw98xewsAOQczy0WqHiEnm7SKTtpj+1W4zgxdR+txRKXS0PdblWmwcJy1CeqT+
+/4Qrl23oDZv7Dr4VdFh8yHiWiPLOsxHPrlLCQfJarpmtBc7Yxf4/7WJ7M2xD4yxD
+g6FbScmSBxAlEGUCER2AG8sJiEUrh146/iXgcjstqsprfuQUagVRs5fkUSighuha
+3E0KGS/0n8CDeMovItg46adw3zp1fb4jah1jw1CCOdIUEXoKmhE=
+=bIT9
+-----END PGP SIGNATURE-----
 
-As opposed to:
-
-    while ref = poll_new_refs()
-        (git fetch upstream && git prune --expire=now) &
-
-As you might find in some event-based system. I.e. every time you fetch
-you need to stop the world and run a full prune, because the potentially
-malicious upstream can craft a series of ref updates where one ref
-update (which you'll refuse) contains the bad data, but at that point
-you have some of those blobs/trees/commits it in your object store, and
-then a second ref update references that already existing data and
-causes you to update the ref.
-
-It's also much slower and I/O heavy, on an already-pruned linux.git
-running 'git prune --expire=now' takes 40 seconds on my machine, as
-opposed to:
-
-    while ref = poll_new_refs()
-        (git fetch && git push internal-mirror --mirror) &
-
-Which could take as little time as a second for the whole operation, can
-safely be run in parallel, and would be protected because the actually
-published internal mirror gets its refs via receive-pack, which uses the
-quarantine.
+--AhhlLboLdkugWU4S--
