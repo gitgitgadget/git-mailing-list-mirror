@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19A8E1F597
-	for <e@80x24.org>; Sat, 28 Jul 2018 03:05:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EECBC1F597
+	for <e@80x24.org>; Sat, 28 Jul 2018 03:05:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726157AbeG1E3p (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Jul 2018 00:29:45 -0400
-Received: from mail-it0-f74.google.com ([209.85.214.74]:53643 "EHLO
-        mail-it0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725962AbeG1E3p (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Jul 2018 00:29:45 -0400
-Received: by mail-it0-f74.google.com with SMTP id e5-v6so6838769itf.3
-        for <git@vger.kernel.org>; Fri, 27 Jul 2018 20:05:00 -0700 (PDT)
+        id S1726183AbeG1E3s (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Jul 2018 00:29:48 -0400
+Received: from mail-yb0-f201.google.com ([209.85.213.201]:56480 "EHLO
+        mail-yb0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725962AbeG1E3s (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Jul 2018 00:29:48 -0400
+Received: by mail-yb0-f201.google.com with SMTP id e6-v6so3475472ybk.23
+        for <git@vger.kernel.org>; Fri, 27 Jul 2018 20:05:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=QcRn02+ViiELc/jhfuBzo79LVOh64NkAkaLVCae9gyE=;
-        b=tHLpvu81cj9qoLYX3KVSwYtLjK3WANY/Q+IYT0vq5GNP9iBGDxfWDpW75beZ9U3wxM
-         CoRvojS4V3/qTdFUDJmh+t0F0iOeFH2K0OJNiyEnUVmQrzVMjg7oPegfkw9rxEaEjQM4
-         +OGDHRntYuS1HlncIO8Xen1DaJxdWo4/Z2fWgW9mVKC9o/MD0xt/v29eyrSqZrPfxpYJ
-         6J0y36K8xeyu4ZGNedIjcdU4DguBTAuqO6yFmTDiaY+FVeTDAHxbkvnXLoKbgGPB82cq
-         Q7tumSdTGNJ0tlLdut8ymMKWanfAVKylm7jXIj00WFGKQZNdYVcNPvDTuqECjbABRKMC
-         loaw==
+        bh=HTvfVXzmYRO0ga3wnWW8Zh8lJXJzNWiSP5Km1N36WIE=;
+        b=jGxes+Snl3qBLUQoVwNhwMu9b80JDR16TLN5nTP42Z25RNwpDtWedm0tVn3Sa6d83M
+         kymA8VFi507GZGyFiJmQAmcSrXtAEKZPMn8xJW61UAhN9/inMDsjJsS0x+etUAz4Vpkr
+         v8ab4HKGCtaQDT9txOqfccQRq0uBEdbsE6Pdx5MDtEXGjHQMHZkdQlBpbvF8W0xBkRLr
+         us+XXlOQhObwUnqXeQq59G7eoQnNyFkprLH63+nxVCndO5hbL9SLMLFsXOiJnIdnHsD3
+         2G2ys1sqVQmhSrnkp2lljhSSOoK/CXqXa02k9dRH7dYQzFMMoTqM62vADK5wtgJSla0L
+         NvAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=QcRn02+ViiELc/jhfuBzo79LVOh64NkAkaLVCae9gyE=;
-        b=QjMjM6fXirq/ZBnk6DHnUOc74Zmf/Fks7oe/dQlbZPLvh/ZVraBk1UWPe/NhyA/oYH
-         Hva0hc6yDZPfYf/AwY5KZAVng6eIpCqL5A1tn+lsDG/4mtqIzkRQWpoNlNxAl73a9FH3
-         GaxZ2ypZB2VqqL6aCHsTmF90Rp0FbCVHj73rZQbMzzl/q8tnsT6nk+0sO8uin3CtdMcO
-         TYfkb6i+c0zIN8iHX8GuogyDnW/6Vr/B6E+LLzjP4VqmrKxZdXMQhH7RtWECIGGvnGTm
-         /DG/eNUz8rF6IImo8y5SXh8UvTi8j0DAZDGceYWvHI3/ea3DzlWHurgG5pw3erPk5L/N
-         Pj2w==
-X-Gm-Message-State: AOUpUlFzoOUsP69t87paddOPlYlhAZGOgLnIpxBAN6aQpocklbT3C45k
-        uTxJ+PBd4MOW5aA9Hn796+ZBALJU/aPW2mrSZEhJWyoUrVKpQ9/HVJG7v8WBuYkD/QP5P+KfnKh
-        mBQwzwEYY0YY08AWzlKVy0go/lnLxyiphYte04/QOtopGBVokJ35Q62432UM/
-X-Google-Smtp-Source: AAOMgpex9uq8balVcC2ps3W/ybV8yThp9Qngvvw8t/K7WL1KhjtMeCf6BrEdmRbBPM7XGImx4u+xu4S9lk1g
-X-Received: by 2002:a6b:88a0:: with SMTP id s32-v6mr3212466ioi.45.1532747099830;
- Fri, 27 Jul 2018 20:04:59 -0700 (PDT)
-Date:   Fri, 27 Jul 2018 20:04:43 -0700
+        bh=HTvfVXzmYRO0ga3wnWW8Zh8lJXJzNWiSP5Km1N36WIE=;
+        b=kQciCL1DxHMRgVZiwRWaQbjv53w07SG4sSyveYDWWQtMwDGBhtZUkq4aHwsj4LEglZ
+         t0lA9TeMnpm3gvsAUo5oSrcFTdnYH9I8oGS6WgFgnUoWoYNF2wwL+OvwGvguMYxY8rXx
+         VMSMjYtMbyZ8Pr3QfWfUG2mLQ+/AupAtjBLyXMlChM9Lkag7bUonexX5MXtNEyBbUxvc
+         45KkS7/VYbz4Mp9cG0TfGLrG9Bylz387+AA8dZHWLl0Zq+EXYKQ4K2u4wV9clLVJLcXI
+         rKPj2kRf1e75s3LHzEElqW02No8aWuzFOOuecgUZxigRYUmXbqJMmg9DHRXtovs3cszR
+         IuiQ==
+X-Gm-Message-State: AOUpUlGkHljRK6nyU/xLNGNYfwzZNQpc/O/r1rcGpE9gQ7/juqMZFuMx
+        JsOs0wUAOS3EkoCt+DGGeJ345MiAH6FwUKUTPzWJnobnBByPbqaKzreTWCNGkGJ6rmQdScVBLRq
+        1iLMssEiDBorofgaC78OQrp0nGe+kfDWBzNUjbYWI5foHwp0Anpu4sH+qXkPi
+X-Google-Smtp-Source: AAOMgpc0BMz6rHD1/AXKDtzNgyp0LshAhIpW2iR+8lqtTkaiHD5IAeLX7LhEwQ75Z/ljqoX0oQea1E0nP6TN
+X-Received: by 2002:a81:4fce:: with SMTP id d197-v6mr2667696ywb.178.1532747102248;
+ Fri, 27 Jul 2018 20:05:02 -0700 (PDT)
+Date:   Fri, 27 Jul 2018 20:04:44 -0700
 In-Reply-To: <20180728030448.192177-1-sbeller@google.com>
-Message-Id: <20180728030448.192177-4-sbeller@google.com>
+Message-Id: <20180728030448.192177-5-sbeller@google.com>
 Mime-Version: 1.0
 References: <20180728030448.192177-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.345.g5c9ce644c3-goog
-Subject: [PATCH 3/8] diff.c: simplify caller of emit_line_0
+Subject: [PATCH 4/8] diff.c: reorder arguments for emit_line_ws_markup
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Johannes.Schindelin@gmx.de, Stefan Beller <sbeller@google.com>
@@ -62,27 +62,58 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Due to the previous condition we know "set_sign != NULL" at that point.
+The order shall be all colors first, then the content, flags at the end.
+The colors are in order.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- diff.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ diff.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index 272b0b93834..f7251c89cbb 100644
+index f7251c89cbb..8fd2171d808 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -997,8 +997,7 @@ static void emit_line_ws_markup(struct diff_options *o,
- 		emit_line_0(o, set, 0, reset, sign, line, len);
- 	else if (!ws) {
- 		/* Emit just the prefix, then the rest. */
--		emit_line_0(o, set_sign ? set_sign : set, !!set_sign, reset,
--			    sign, "", 0);
-+		emit_line_0(o, set_sign, !!set_sign, reset, sign, "", 0);
- 		emit_line_0(o, set, 0, reset, 0, line, len);
- 	} else if (blank_at_eof)
- 		/* Blank line at EOF - paint '+' as well */
+@@ -980,9 +980,9 @@ static void dim_moved_lines(struct diff_options *o)
+ }
+ 
+ static void emit_line_ws_markup(struct diff_options *o,
+-				const char *set, const char *reset,
+-				const char *line, int len,
+-				const char *set_sign, char sign,
++				const char *set_sign, const char *set,
++				const char *reset,
++				char sign, const char *line, int len,
+ 				unsigned ws_rule, int blank_at_eof)
+ {
+ 	const char *ws = NULL;
+@@ -1066,7 +1066,7 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+ 			else if (c == '-')
+ 				set = diff_get_color_opt(o, DIFF_FILE_OLD);
+ 		}
+-		emit_line_ws_markup(o, set, reset, line, len, set_sign, ' ',
++		emit_line_ws_markup(o, set_sign, set, reset, ' ', line, len,
+ 				    flags & (DIFF_SYMBOL_CONTENT_WS_MASK), 0);
+ 		break;
+ 	case DIFF_SYMBOL_PLUS:
+@@ -1109,7 +1109,7 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+ 				set = diff_get_color_opt(o, DIFF_CONTEXT_BOLD);
+ 			flags |= WS_IGNORE_FIRST_SPACE;
+ 		}
+-		emit_line_ws_markup(o, set, reset, line, len, set_sign, '+',
++		emit_line_ws_markup(o, set_sign, set, reset, '+', line, len,
+ 				    flags & DIFF_SYMBOL_CONTENT_WS_MASK,
+ 				    flags & DIFF_SYMBOL_CONTENT_BLANK_LINE_EOF);
+ 		break;
+@@ -1152,7 +1152,7 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+ 			else
+ 				set = diff_get_color_opt(o, DIFF_CONTEXT_DIM);
+ 		}
+-		emit_line_ws_markup(o, set, reset, line, len, set_sign, '-',
++		emit_line_ws_markup(o, set_sign, set, reset, '-', line, len,
+ 				    flags & DIFF_SYMBOL_CONTENT_WS_MASK, 0);
+ 		break;
+ 	case DIFF_SYMBOL_WORDS_PORCELAIN:
 -- 
 2.18.0.345.g5c9ce644c3-goog
 
