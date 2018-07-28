@@ -6,40 +6,40 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0ECA91F597
-	for <e@80x24.org>; Sat, 28 Jul 2018 06:30:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 997031F597
+	for <e@80x24.org>; Sat, 28 Jul 2018 06:34:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726155AbeG1H4E (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Jul 2018 03:56:04 -0400
-Received: from mail-yb0-f193.google.com ([209.85.213.193]:44544 "EHLO
-        mail-yb0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726061AbeG1H4E (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Jul 2018 03:56:04 -0400
-Received: by mail-yb0-f193.google.com with SMTP id l16-v6so2872568ybk.11
-        for <git@vger.kernel.org>; Fri, 27 Jul 2018 23:30:44 -0700 (PDT)
+        id S1726331AbeG1H7b (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Jul 2018 03:59:31 -0400
+Received: from mail-yb0-f195.google.com ([209.85.213.195]:35267 "EHLO
+        mail-yb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726266AbeG1H7b (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Jul 2018 03:59:31 -0400
+Received: by mail-yb0-f195.google.com with SMTP id x15-v6so2877772ybm.2
+        for <git@vger.kernel.org>; Fri, 27 Jul 2018 23:34:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=g86hSJbSsTzD9Q/uxrFQIi06Gt5cp3rnHpX5lY0lbUE=;
-        b=ox0RoolpdeYR1Rjd/d5j/kLCEiYx3bJdreBf8e0L3z6376cht4+EjjdIREkXuf5fxu
-         W8QEO6xj5aLqnSYUpBqArpRuQWO5CkFuY1hncQ6xneKAZfkoZWqwYEIsnBzrpK+5Csxq
-         REjSKdv/ey4gVP2LKHHqQF5wo+Yd+jE3my0AfmWgzHB0lDMmMKhQs4stwrtL8c5HH+aN
-         cFrzRqXz2hp3YlIe2WJXnCrJm6ViNpHSMsBLowBj3PmgurPGiayQhS/GsyThSnqJGhTg
-         Int5BPkWRJRbhDAD23kTwagOXQ25xkpVZ1tm4Dc0qRilwHtH6u05dIfbvSRukKHMSCVK
-         ryZg==
-X-Gm-Message-State: AOUpUlHlP9paVsEPC+1hYqgLv1fMmjfdwzkxYH0prbI3aMtC6trpCLnZ
-        XCSCfM0C8gXJvj75g1YONIqwKNuPHSqfIjsU0ekKEg==
-X-Google-Smtp-Source: AAOMgpdEA5iSdbEbpCN8tlRrzBqWGgfLAB6jBczU9kynpEK7ILhtfuJUNEk2hok6xX/vFYRTvjYl9B3lXq2mk0QZEjk=
-X-Received: by 2002:a25:d38f:: with SMTP id e137-v6mr4845553ybf.287.1532759444089;
- Fri, 27 Jul 2018 23:30:44 -0700 (PDT)
+        bh=wGdr5pEvqlb5K3RlrhtVZrnoDRw1HNyMxC0YiCejJp8=;
+        b=Efpg5z3YAe7lqi7h/MJvjKKyvisOaHwHDrDseR6lkIHu3gvUjpm2bKeosq8nTnHwiu
+         5BQRWwKAKBZpOD4QzPzpb1WDNZuFhDa1R+1QZTiebhQ7hje5epMokPiXRJ4CV6DnXqng
+         qmzak4VeTHoHPdaTWCLUtH+tr8VqYO8KVgNjlOMEh2S4jMV4J7DqurHUYY65ysyMXBeD
+         pQQNLba4c04ZoplsRkkVSrTRyqxoLAky8nSedueCfcMiwEMtw+VKFPp18dUF0KdBLVkM
+         wOCw/SudDAzDcmb/orgsF5whbIG80wvwq4+AxBtLEOX9nJlO3TCeJdJ/1ZGusNL98Z3R
+         bITg==
+X-Gm-Message-State: AOUpUlFkvnUZQ9NbU7cHdHa9C9Y+Gi5Sp0RLBcch9qdWeJUjsrn9zFp4
+        leuoe4v7EmUv///tYTgf9Rv8Yzaf5tQqJ4JtLe4=
+X-Google-Smtp-Source: AAOMgpdqFU2ldRKkhCUw9cG2x75lwYYCawes0pCb1Bt3CEc/6oATSTNplC6ETVWLl1IOc9lEYNHluN3Ca+0iqeSEYPE=
+X-Received: by 2002:a25:8b04:: with SMTP id i4-v6mr5012867ybl.12.1532759650674;
+ Fri, 27 Jul 2018 23:34:10 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180728030448.192177-1-sbeller@google.com> <20180728030448.192177-6-sbeller@google.com>
-In-Reply-To: <20180728030448.192177-6-sbeller@google.com>
+References: <20180728030448.192177-1-sbeller@google.com> <20180728030448.192177-9-sbeller@google.com>
+In-Reply-To: <20180728030448.192177-9-sbeller@google.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 28 Jul 2018 02:30:32 -0400
-Message-ID: <CAPig+cR2Q2k6Dy6gvkpGt4_YtVVhFN1_nrJrkrHuEFD6zpWeew@mail.gmail.com>
-Subject: Re: [PATCH 5/8] diff.c: add set_sign to emit_line_0
+Date:   Sat, 28 Jul 2018 02:33:58 -0400
+Message-ID: <CAPig+cQHPCeOigVoe1jOMuvKGTV-UgdNCTk+OyD1sBuGQJADRg@mail.gmail.com>
+Subject: Re: [PATCH 8/8] diff.c: rewrite emit_line_0 more understandably
 To:     Stefan Beller <sbeller@google.com>
 Cc:     Git List <git@vger.kernel.org>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
@@ -50,11 +50,21 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Fri, Jul 27, 2018 at 11:05 PM Stefan Beller <sbeller@google.com> wrote:
-> For now just change the signature, we'll reason about the actual
-> change in a follow up patch.
+> emit_line_0 has no nested conditions, but puts out all its arguments
+> (if set) in order. There is still a slight confusion with set
+> and set_sign, but let's defer that to a later patch.
 >
-> Pass set_sign (which is output before the sign) and set that is setting
-> the color after the sign. Hence, promote any 'set's to set_sign as
-> we want to have color before the sign for now.
+> 'first' used be output always no matter if it was 0, but that got lost
+> got lost at e8c285c4f9c (diff: add an internal option to dual-color
+> diffs of diffs, 2018-07-21), as there we broadened the meaning of 'first'
+> to also signal an early return.
 
-ECANTPARSE: "and set that is setting"
+s/used be/used to be/
+
+redundant "got lost"
+
+> The change in 'emit_line' makes sure that 'first' is never content, but
+> always under our control, a sign or special character in the beginning
+> of the line (or 0, in which case we ignore it).
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
