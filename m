@@ -2,104 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B48B51F597
-	for <e@80x24.org>; Sat, 28 Jul 2018 09:57:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7FFF21F597
+	for <e@80x24.org>; Sat, 28 Jul 2018 10:08:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728319AbeG1LW4 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Jul 2018 07:22:56 -0400
-Received: from cloud.peff.net ([104.130.231.41]:34032 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727644AbeG1LW4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Jul 2018 07:22:56 -0400
-Received: (qmail 11032 invoked by uid 109); 28 Jul 2018 09:57:01 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 28 Jul 2018 09:57:01 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2128 invoked by uid 111); 28 Jul 2018 09:57:02 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 28 Jul 2018 05:57:02 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 28 Jul 2018 05:56:59 -0400
-Date:   Sat, 28 Jul 2018 05:56:59 -0400
-From:   Jeff King <peff@peff.net>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?UGF3ZcWC?= Paruzel <pawelparuzel95@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: Git clone and case sensitivity
-Message-ID: <20180728095659.GA21450@sigill.intra.peff.net>
-References: <24A09B73-B4D4-4C22-BC1B-41B22CB59FE6@gmail.com>
- <20180727205909.GC376343@genre.crustytoothpaste.net>
- <20180728043559.GA29185@duynguyen.home>
- <CACsJy8A3pd85fDrbak8TCnmkMb_FDmmpaNd5tBSCKBGkGswKCg@mail.gmail.com>
- <20180728044857.GA10444@sigill.intra.peff.net>
- <20180728051105.GA32243@duynguyen.home>
+        id S1726711AbeG1LeO (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Jul 2018 07:34:14 -0400
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:50475 "EHLO
+        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726155AbeG1LeO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Jul 2018 07:34:14 -0400
+Received: from [192.168.2.201] ([92.22.29.59])
+        by smtp.talktalk.net with SMTP
+        id jM90fBQ1XdJAejM90fMpCa; Sat, 28 Jul 2018 11:08:15 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1532772495;
+        bh=tnMGFLV5vRw12/ZkjKOycOhVlE/GJegn7+xGUVUYjbg=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=eFomCiWcCx47mfIuEtfKTK+SpKJeDFEveMPVTnVM4xRPdvIcoXKAYopKtXEmGOtkX
+         cJbMH4eNlWDh8g89asKL4h58FKjw8QZ3n7ZXvTZKBYb8GSJo0Be/qSTZr71KFXMaiH
+         oknS89goJoxPyAM0DqNqmyX+p42WPh5jGKMloQxo=
+X-Originating-IP: [92.22.29.59]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=V8BTL9vi c=1 sm=1 tr=0 a=OmzqbFWWvC/aSYX+a7e/kQ==:117
+ a=OmzqbFWWvC/aSYX+a7e/kQ==:17 a=IkcTkHD0fZMA:10 a=evINK-nbAAAA:8
+ a=NEAV23lmAAAA:8 a=CaKN4qTwRLajUGutG8kA:9 a=QEXdDO2ut3YA:10
+ a=RfR_gqz1fSpA9VikTjo0:22
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [RFC PATCH v5 0/4] add -p: select individual hunk lines
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20180219113619.26566-1-phillip.wood@talktalk.net>
+ <20180726155854.20832-1-phillip.wood@talktalk.net>
+ <87effo5ybv.fsf@evledraar.gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <e3d5f5a7-b173-5fa3-d007-f07013d554c8@talktalk.net>
+Date:   Sat, 28 Jul 2018 11:08:14 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
+In-Reply-To: <87effo5ybv.fsf@evledraar.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180728051105.GA32243@duynguyen.home>
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfBDxtJrKYioCgP7nEUcMPV30z5Knj+MS5fAAXzxNs69dfEg3mAXolb98nIfBzzI7yN8hhEvbF+qE1YxprFP7/5ojUR089c/L0pbjOaC6uAI1umpzDh6+
+ gp0cvBFVjlQkm8Zjo8tbIJvRiS3BrgtEedXErbiNyq6ZMzj0TQFjS9KqjQeYTFQsiWDi3koYxRvKmNtFkkhVxZJZrBI+8IPUQh/MV1shNG+f+ah77YG9E66y
+ fVMH4FSp9L8FbGSiIu9lsprLDPLVNzcQz/Eyn7qO4Tr+N1FCFecHqrnLXBNM2/PTyIYnnEc3QfER+OPkD8QvaA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jul 28, 2018 at 07:11:05AM +0200, Duy Nguyen wrote:
-
-> > It might be enough to just issue a warning and give an advise() hint
-> > that tells the user what's going on. Then they can decide what to do
-> > (hide both paths, or just work in the index, or move to a different fs,
-> > or complain to upstream).
+On 27/07/18 19:27, Ævar Arnfjörð Bjarmason wrote:
 > 
-> Yeah that may be the best option. Something like this perhaps? Not
-> sure how much detail the advice should be here.
+> On Thu, Jul 26 2018, Phillip Wood wrote:
+> 
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>
+>> Unfortuantely v4 had test failures due to a suprious brace from a last
+>> minute edit to a comment that I forgot to test. This version fixes
+>> that, my applogies for the patch churn.
+>>
+>> I've updated this series based on Ævar's feedback on v3 (to paraphrase
+>> stop using '$_' so much and fix staging modified lines.). The first
+>> patch is functionally equivalent to the previous version but with a
+>> reworked implementation. Patch 2 is new, it implements correctly
+>> staging modified lines with a couple of limitations - see the commit
+>> message for more details, I'm keen to get some feedback on it. Patches
+>> 3 and 4 are essentially rebased and tweaked versions of patches 2 and
+>> 3 from the previous version.
+> 
+> I was going to review this, but can't find what it's based on, I can't
+> apply 1/4 to master, next or pu. It seems to be based on some older
+> version of master, e.g. 1/4 has this hunk:
+> 
+>     +			elsif ($line =~ /^l/) {
+>     +				unless ($other =~ /l/) {
+>     +					error_msg __("Cannot select line by line\n");
+>     +					next;
+>     +				}
+>     +				my $newhunk = select_lines_loop($hunk[$ix]);
+>     +				if ($newhunk) {
+>     +					splice @hunk, $ix, 1, $newhunk;
+>     +				} else {
+>     +					next;
+>     +				}
+>     +			}
+>      			elsif ($other =~ /s/ && $line =~ /^s/) {
+> 
+> Which seems to conflict with your 4bdd6e7ce3 ("add -p: improve error
+> messages", 2018-02-13). I could have tried to manually apply this, but
+> figured I'd bounce this back to you...
 
-Yeah, something along these lines.  I agree with Simon's comment
-elsewhere that this should probably mention the names. I don't know if
-we'd want to offer advice pointing them to using the sparse feature to
-work around it.
+Yes, I wasn't sure whether to rebase or not and in the end I didn't. The
+line below where you cut the cover letter message says it is based on
+f4d35a6b49 "add -p: fix counting empty context lines in edited patches".
+So you could just apply it there and test it. You can fetch it with
 
-> +static int has_duplicate_icase_entries(struct index_state *istate)
-> +{
-> +	struct string_list list = STRING_LIST_INIT_NODUP;
-> +	int i;
-> +	int found = 0;
-> +
-> +	for (i = 0; i < istate->cache_nr; i++)
-> +		string_list_append(&list, istate->cache[i]->name);
-> +
-> +	list.cmp = strcasecmp;
-> +	string_list_sort(&list);
-> +
-> +	for (i = 1; i < list.nr; i++) {
-> +		if (strcasecmp(list.items[i-1].string,
-> +			       list.items[i].string))
-> +			continue;
-> +		found = 1;
-> +		break;
-> +	}
-> +	string_list_clear(&list, 0);
-> +
-> +	return found;
-> +}
+git fetch https://github.com/phillipwood/git add-i-select-lines-v5
 
-strcasecmp() will only catch a subset of the cases. We really need to
-follow the same folding rules that the filesystem would.
+> Having just skimmed through the patches themselves I agree with this
+> approach of handling the simple case (as discussed before) and leaving
+> the rest for some future change, but let's see about the details once I
+> have this running.
 
-For the case of clone, I actually wonder if we could detect during the
-checkout step that a file already exists. Since we know that the
-directory we started with was empty, then if it does, either:
+Thanks
 
-  - there's some funny case-folding going on that means two paths in the
-    repository map to the same name in the filesystem; or
+Phillip
 
-  - somebody else is writing to the directory at the same time as us
 
-Either of which I think would be worth warning about. I'm not sure if we
-already lstat() the paths we're writing anyway as part of the checkout,
-so we might even get the feature "for free".
-
--Peff
