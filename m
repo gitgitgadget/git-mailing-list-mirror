@@ -2,93 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F2AAD1F597
-	for <e@80x24.org>; Sat, 28 Jul 2018 21:16:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 44F701F597
+	for <e@80x24.org>; Sat, 28 Jul 2018 22:53:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731100AbeG1Woa (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Jul 2018 18:44:30 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:34731 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730551AbeG1Woa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Jul 2018 18:44:30 -0400
-Received: by mail-pf1-f196.google.com with SMTP id k19-v6so2923233pfi.1
-        for <git@vger.kernel.org>; Sat, 28 Jul 2018 14:16:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=7gWEO30ZKzgTmd77axeW3GLF6F6gEZnOHmXbrDYUfzQ=;
-        b=FKQTvBTFUGvumejipXUXPdILsb3QYcmrKUtp2NOpNZqGYhF50+rLQNdAZWi7dOX46t
-         SpEnv5rAGSF2u2giOmctUZ6fZNdKpw1vJxjRugDVr6H9q0mvyn22Jgatf2Nb7VYF9YTP
-         XQkYVthmVmJmEpICWxOJLTrO/F09/MJcGZdZEfoZSm2XXu6uYFD5e8/qyU9G+JQ8uTw6
-         dPc8feeEd4Wn+cMnXCZmaK3G9ZuQte2tHgUJtVhG+KoOpXrPv3AYoijzFbfOS1+tDeGL
-         FU40tc4KlloT8EuoRXLf68adevW3PzWhzSAG4raBtIf8h/XFlGQe+ANDKoBbJi7N5MQJ
-         1ySQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=7gWEO30ZKzgTmd77axeW3GLF6F6gEZnOHmXbrDYUfzQ=;
-        b=SiCgLeSiDRiVFiPuT91B/AZcj2wTPsUgvYzxeeXrREwu755Tg/Wwb2k96R3T3cqaFN
-         WRLdttL56qVgUvSRTFJ/pEtGY9dxX4fAxbnN1jjKXEIygVlIhj1Jf+lfMJRUMgACyrVm
-         G6kbfGMPcgeCGx3QaDKPvVQVsVET286mamrDrChNokqMTn8dWOg+3uC4ozvoTV3OWiqD
-         nVee2wd2Dxm4KiP+BVo9W7G7p6MfRbSmuGReJnhMJWB3aNjQLhemMYGMb2mZ1IrslpFd
-         RuyrgI8srqa7H1nwXtdH/CN2jXXhBXcmcSpJkbZnsGFRCAWvaOdGSmmSk2PTdPhM082I
-         3Isg==
-X-Gm-Message-State: AOUpUlHWrL+SKpL77dw+pSO/1a3ZTLIF3zHqWIlrS5sZ85NrLbgnRHoA
-        mVAvGTvziZMZnLen5ssixSdwq4FZ
-X-Google-Smtp-Source: AAOMgpflj/W7afKqWagie3LWie1z350XNy45y3p/0BiXkspIiX5/0sheYOzsip97YhdtTe2G1sRCHA==
-X-Received: by 2002:a62:2b4c:: with SMTP id r73-v6mr11938641pfr.134.1532812600354;
-        Sat, 28 Jul 2018 14:16:40 -0700 (PDT)
-Received: from localhost (c-73-223-63-143.hsd1.ca.comcast.net. [73.223.63.143])
-        by smtp.gmail.com with ESMTPSA id y3-v6sm9835400pge.29.2018.07.28.14.16.38
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 28 Jul 2018 14:16:39 -0700 (PDT)
-From:   Masaya Suzuki <draftcode@gmail.com>
-X-Google-Original-From: Masaya Suzuki <masayasuzuki@google.com>
-Received: by localhost (sSMTP sendmail emulation); Sat, 28 Jul 2018 14:16:37 -0700
-To:     git@vger.kernel.org
-Cc:     Masaya Suzuki <masayasuzuki@google.com>
-Subject: [PATCH] doc: fix want-capability separator
-Date:   Sat, 28 Jul 2018 14:16:30 -0700
-Message-Id: <20180728211630.29573-1-masayasuzuki@google.com>
-X-Mailer: git-send-email 2.18.0
+        id S1731474AbeG2ATg (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Jul 2018 20:19:36 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:53495 "EHLO
+        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730656AbeG2ATg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Jul 2018 20:19:36 -0400
+Received: from [10.0.2.15] ([80.189.70.183])
+        by smtp with ESMTPA
+        id jY3cfsa1fjlDzjY3dfbQSd; Sat, 28 Jul 2018 23:51:30 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=GrdsBH9C c=1 sm=1 tr=0
+ a=6SF67mWK+VR8hB1Kjo6y2g==:117 a=6SF67mWK+VR8hB1Kjo6y2g==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=fH4NDmGawRt_UCpQ4W8A:9
+ a=xr3qR-x9rYoJdFWt:21 a=49vK5Fv617wMwUlC:21 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     GIT Mailing-list <git@vger.kernel.org>,
+        Max Kirillov <max@max630.net>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] t5562: avoid non-portable "export FOO=bar" construct
+Message-ID: <c5b2a072-5058-0d3e-8fb0-52b84bfcdfa9@ramsayjones.plus.com>
+Date:   Sat, 28 Jul 2018 23:51:28 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfIfnlTjSHU8ajpCgN4RRRbHiwuPpCCyejqJSOZ2fzhyVsmiZY6Oo7ED7Fu9T1KNEPfzMg6lG1bT9Owb4kWB5ZoT1+LOZCWvrJzr15cdCfxxR7L2/Id/w
+ rpc+Q4IKAJEQZAloecHExWtRLGVr5nMvF78H/zvWzshIf4rNvqgMHMg8TwlCbunFxSw8np/mgw+ZXQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Unlike ref advertisement, client capabilities and the first want are
-separated by SP, not NUL, in the implementation. Fix the documentation
-to align with the implementation. pack-protocol.txt is already fixed.
 
-Signed-off-by: Masaya Suzuki <masayasuzuki@google.com>
+Commit 6c213e863a ("http-backend: respect CONTENT_LENGTH for
+receive-pack", 2018-07-27) adds a test which uses the non-portable
+export construct. Replace it with "FOO=bar && export FOO" instead.
+
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 ---
- Documentation/technical/http-protocol.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/technical/http-protocol.txt b/Documentation/technical/http-protocol.txt
-index 64f49d0bb..9c5b6f0fa 100644
---- a/Documentation/technical/http-protocol.txt
-+++ b/Documentation/technical/http-protocol.txt
-@@ -338,11 +338,11 @@ server advertises capability `allow-tip-sha1-in-want` or
- 		       request_end
-   request_end       =  "0000" / "done"
+Hi Junio,
+
+Could you please put this on top of the 'mk/http-backend-content-length'
+branch. This test tickles the new "export FOO=bar" check, so the test
+suite does not run otherwise.
+
+[If Max needs to re-roll that patch series, then he can squash this in.]
+
+BTW, t3404.#4 fails for me, but I think you are already aware of that
+test failure, right?
+
+Thanks!
+
+ATB,
+Ramsay Jones
+
+ t/t5562-http-backend-content-length.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/t/t5562-http-backend-content-length.sh b/t/t5562-http-backend-content-length.sh
+index 057dcb85d6..43570ce120 100755
+--- a/t/t5562-http-backend-content-length.sh
++++ b/t/t5562-http-backend-content-length.sh
+@@ -45,7 +45,8 @@ ssize_b100dots() {
+ }
  
--  want_list         =  PKT-LINE(want NUL cap_list LF)
-+  want_list         =  PKT-LINE(want SP cap_list LF)
- 		       *(want_pkt)
-   want_pkt          =  PKT-LINE(want LF)
-   want              =  "want" SP id
--  cap_list          =  *(SP capability) SP
-+  cap_list          =  capability *(SP capability)
- 
-   have_list         =  *PKT-LINE("have" SP id LF)
- 
+ test_expect_success 'setup' '
+-	export HTTP_CONTENT_ENCODING="identity" &&
++	HTTP_CONTENT_ENCODING="identity" &&
++	export HTTP_CONTENT_ENCODING &&
+ 	git config http.receivepack true &&
+ 	test_commit c0 &&
+ 	test_commit c1 &&
 -- 
 2.18.0
-
