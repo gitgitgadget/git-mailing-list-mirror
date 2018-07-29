@@ -2,91 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4000208EB
-	for <e@80x24.org>; Sun, 29 Jul 2018 21:33:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9EC02208E9
+	for <e@80x24.org>; Sun, 29 Jul 2018 21:40:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731852AbeG2XFY (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Jul 2018 19:05:24 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:44019 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731776AbeG2XFX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Jul 2018 19:05:23 -0400
-Received: by mail-wr1-f65.google.com with SMTP id b15-v6so10630036wrv.10
-        for <git@vger.kernel.org>; Sun, 29 Jul 2018 14:33:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=NAOi7PPQdhfa31kDAyTfcKQp26w/ie91YACV3FBhIT8=;
-        b=SQQ6QebtJU0YXFndpb/1bXFLjo+c0LJHxO5/UcfzOHl6dcLcs6lLzv/37RK6+kIS2f
-         LawiAskwEK4OWrNEzDzV+NmPh4cDJVe9rM12Wkn88CB1/74h0kpkDDlD3VBS04xwaNLk
-         Txvyx6vZOpqaeg6Q2ZKdKc4LiInO3uoUMj50DbfatrJgklP7Uqu4RnC3EDsOt6PImEbc
-         XACUBMhLu9b/8fOwpb9rvAyERfsoaiG0jw9LEeejrKdnmo2zunm7n2n8/M+34mbmGA8y
-         JbA8Ci6lEedakCxAUfmx/0Q1cumPDqAPO04FMD9hgYqXSl1crbkiP/oMei/p7x59Vm+8
-         jLkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=NAOi7PPQdhfa31kDAyTfcKQp26w/ie91YACV3FBhIT8=;
-        b=Y/MoHOc/ajsVGcnzn+1/rhUIX4uVQU3T/9ELJUd+jchrVMP41ECi+5ZhEUzapNDGMu
-         zHpgvCcoLmt74pJEzfdlyfhZ+M6kZaLPTUZVAfGIGlpvgtcLEexG75nT42Ici5+ugwyg
-         qFEydzjOUNvGMpW+ukxibzbDwIUrAmntMlTCQXjxJSGf40jrNuQb2mLBd8AzrIryqeVI
-         pTKmHhwAo03XFIzxiuF/02OI7pjwGa9IYgZCI3BJl9WZRejCVYU0TtvKJ8/hDvn3G1nu
-         lvoY0MQvcdprx3QV8UQCylRpqvWPC5LLDbh8cn3+cXeiCCJOplymteXMX+pevidUf0yW
-         etNA==
-X-Gm-Message-State: AOUpUlH+s2nYRnPh6Q6mSnaQZLf/rZWMe+DTqxf8xzdMgV1vf9OX9IDB
-        xb/SSLdy+bBD17mjWzgDSh1NJvPp
-X-Google-Smtp-Source: AAOMgpf+1OFKhO8fjxyuZSw+WYm0gutVg+RSA1hPv1yunugS+BLqC1/5vwBzNzqv5nhGs6otKJS5Kw==
-X-Received: by 2002:adf:9465:: with SMTP id 92-v6mr15814216wrq.283.1532900007107;
-        Sun, 29 Jul 2018 14:33:27 -0700 (PDT)
-Received: from localhost ([2.30.88.37])
-        by smtp.gmail.com with ESMTPSA id d7-v6sm11317548wro.92.2018.07.29.14.33.25
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 29 Jul 2018 14:33:26 -0700 (PDT)
-Date:   Sun, 29 Jul 2018 22:33:25 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v4 20/21] range-diff: make --dual-color the default mode
-Message-ID: <20180729213325.GC9955@hank.intra.tgummerer.com>
-References: <pull.1.v3.git.gitgitgadget@gmail.com>
- <pull.1.v4.git.gitgitgadget@gmail.com>
- <b370468e71af2b8c7ffa0e31f3a3910d15897ab4.1532210683.git.gitgitgadget@gmail.com>
+        id S1731697AbeG2XMm (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Jul 2018 19:12:42 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:59349 "EHLO
+        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730476AbeG2XMm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Jul 2018 19:12:42 -0400
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+        by mail-out.m-online.net (Postfix) with ESMTP id 41dx2g4lTTz1qvBl;
+        Sun, 29 Jul 2018 23:40:43 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
+        by mail.m-online.net (Postfix) with ESMTP id 41dx2g3wRtz1qqkP;
+        Sun, 29 Jul 2018 23:40:43 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
+        with ESMTP id ksyj05PyaK2t; Sun, 29 Jul 2018 23:40:42 +0200 (CEST)
+X-Auth-Info: v3wvRX0cZBReF06ZNB7zPl6nvqovhRknxvo+EyrugGmTcrYkVG2qOGE6S8ecT3BW
+Received: from igel.home (ppp-188-174-147-237.dynamic.mnet-online.de [188.174.147.237])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.mnet-online.de (Postfix) with ESMTPSA;
+        Sun, 29 Jul 2018 23:40:42 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 1000)
+        id E62B12C126A; Sun, 29 Jul 2018 23:40:41 +0200 (CEST)
+From:   Andreas Schwab <schwab@linux-m68k.org>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Michael <aixtools@felt.demon.nl>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Subject: Re: git broken for AIX somewhere between 2.13.2 and 2.13.3
+References: <fb935882-25b1-db5f-d765-50dab297f733@felt.demon.nl>
+        <20180729181006.GC945730@genre.crustytoothpaste.net>
+        <466c7a59-0535-e72c-6c90-5288a53b59a0@felt.demon.nl>
+        <87zhy9u7rz.fsf@evledraar.gmail.com>
+X-Yow:  Are you guys lined up for the METHADONE PROGRAM or FOOD STAMPS??
+Date:   Sun, 29 Jul 2018 23:40:41 +0200
+In-Reply-To: <87zhy9u7rz.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Sun, 29 Jul 2018 22:05:52 +0200")
+Message-ID: <87in4x4t5y.fsf@igel.home>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b370468e71af2b8c7ffa0e31f3a3910d15897ab4.1532210683.git.gitgitgadget@gmail.com>
-User-Agent: Mutt/1.10.0 (2018-05-17)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07/21, Johannes Schindelin via GitGitGadget wrote:
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> 
-> After using this command extensively for the last two months, this
-> developer came to the conclusion that even if the dual color mode still
-> leaves a lot of room for confusion about what was actually changed, the
-> non-dual color mode is substantially worse in that regard.
-> 
-> Therefore, we really want to make the dual color mode the default.
+On Jul 29 2018, Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
 
-Ah and here we're making it default, so I wouldn't need a
-`rangeDiff.dualColor` config variable anymore.  Even better!
+> Also, to you and anyone else with access to AIX: I'd be happy to figure
+> these issues out pro-actively if you give me a login to an AIX
+> machine. I promise not to do anything except compile/debug/test git on
+> it.
 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  Documentation/git-range-diff.txt       | 32 +++++++++++++++-----------
->  builtin/range-diff.c                   | 10 ++++----
->  contrib/completion/git-completion.bash |  2 +-
->  3 files changed, 25 insertions(+), 19 deletions(-)
-> 
-> [...]
+The GCC compile farm <http://gcc.gnu.org/wiki/CompileFarm> has a machine
+running AIX, and is free to use for anyone working on free software.
+
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
+"And now for something completely different."
