@@ -2,90 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D8B40208E9
-	for <e@80x24.org>; Sun, 29 Jul 2018 15:33:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E14A9208E9
+	for <e@80x24.org>; Sun, 29 Jul 2018 15:36:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726385AbeG2RDw (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Jul 2018 13:03:52 -0400
-Received: from avasout06.plus.net ([212.159.14.18]:46745 "EHLO
-        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726354AbeG2RDw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Jul 2018 13:03:52 -0400
-Received: from [10.0.2.15] ([80.189.70.183])
-        by smtp with ESMTPA
-        id jngpfYZj3WLW2jngqfC0HJ; Sun, 29 Jul 2018 16:33:01 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=fJUXI6Se c=1 sm=1 tr=0
- a=6SF67mWK+VR8hB1Kjo6y2g==:117 a=6SF67mWK+VR8hB1Kjo6y2g==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=5rxgeBVgAAAA:8 a=BCjA09oAAAAA:8
- a=QxYYmKw9cizZgx1knY8A:9 a=lxSSdP6VzNgZo_c9:21 a=VNVQsAW917523ZzG:21
- a=QEXdDO2ut3YA:10 a=yJM6EZoI5SlJf8ks9Ge_:22 a=PwKx63F5tFurRwaNxrlG:22
- a=jYKBPJSq9nmHKCndOPe9:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH] t5562: avoid non-portable "export FOO=bar" construct
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        Max Kirillov <max@max630.net>
-References: <c5b2a072-5058-0d3e-8fb0-52b84bfcdfa9@ramsayjones.plus.com>
- <CAPig+cSCsOXi4e8idXwLo41rjDREvvtG5P_bNtEWybUbAZj9Hg@mail.gmail.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <da1bba33-b2c4-08b4-60f9-d545da56882a@ramsayjones.plus.com>
-Date:   Sun, 29 Jul 2018 16:32:59 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        id S1726394AbeG2RHB (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Jul 2018 13:07:01 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:41989 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726385AbeG2RHA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Jul 2018 13:07:00 -0400
+Received: by mail-lj1-f194.google.com with SMTP id f1-v6so8312075ljc.9
+        for <git@vger.kernel.org>; Sun, 29 Jul 2018 08:36:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=58V7BUNPvVxVshGdg6jHU9EF6b4y61bcDLWlA7sjQhQ=;
+        b=pqnqaB31AWuDSWIU4T3LXOBQrUqv9+V/S4EpXZqd/HTXUcPkX6DaN1rrI71tihXIPN
+         u/Zor4doS5PopuPjZaakXZv+x9HrPSCpU7Ll86JS4kOggRJEZMlFEVqNBiRSUm1F7o8w
+         aJXpteRYhv01nzNGexUSAhca+HZuDjYAZfSkXVIrJFHQ2bAx7LvwYu+Mry7Q7D8Wzqdc
+         6aH11g6azj70rKnXZ384GO+YZ0LnhinqiRwDgMH5s6PeUZYcL4yl/wEfRMPzCKIBxKxc
+         yX7E0fNwCa0Ckws5hfMg2sUpSnx9lbnnk+RIk7HeyO0KS4WVxu82NPf2ep40UY/qa+Mk
+         ZMag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=58V7BUNPvVxVshGdg6jHU9EF6b4y61bcDLWlA7sjQhQ=;
+        b=OGheNUiu7nHB3wRmsnggRGo6SI+yOsq5PeMaMNX4eoDEyPlUxxg49EJuq4RPzFCgij
+         SNHmpCpmxUZ7yu4A7eNSrA2k00jtiEk6QIoZlG0dTY18n+YgdoyH9h/ry1gdynzYRUyA
+         Syf9EVgopJhl6RSYUceZA5ZAnljIhut+uO79YTqOGexWl9dIE/sR6AJImn+UoyoUzaxX
+         1irBuj8AO/hL/v9HQxYXDn/VgHPdpIKtOD/gvw/KZq4CZyP95qkcLVcN71hxwCSHI9Ji
+         YEkXYXeCkrRcV+HF1+4vbqRm9H6A+CatJONjJKJ0uQVSR3u8vgA3xgtMc3VFdPEPAXkY
+         YKvg==
+X-Gm-Message-State: AOUpUlHO/CRsGtBOfg5/vIPgwbStDOvE9ZCavtVoLldYWTDxFIeitYJC
+        0tAj8dzy/y9odZ1Ewv/1LHboF3WZ
+X-Google-Smtp-Source: AAOMgpdN05IWq2YiyyqfuOOXydkVBWZ3CSv3NmarQNnEuu7FgjXAlH7mXgzpdHf7QDwzCdehG4oStw==
+X-Received: by 2002:a2e:9c4d:: with SMTP id t13-v6mr9901930ljj.153.1532878569481;
+        Sun, 29 Jul 2018 08:36:09 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id x65-v6sm1231294lfb.60.2018.07.29.08.36.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 29 Jul 2018 08:36:08 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH] pack-objects: document about thread synchronization
+Date:   Sun, 29 Jul 2018 17:36:05 +0200
+Message-Id: <20180729153605.27298-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.18.0.656.gda699b98b3
 MIME-Version: 1.0
-In-Reply-To: <CAPig+cSCsOXi4e8idXwLo41rjDREvvtG5P_bNtEWybUbAZj9Hg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfD/JzLeamvashh/jb1afoJh2TM35inh8W39swFVplt60cGcil0Ctg0AFDdb48wDM8XdxvZYQhp11XQPOBaoi/qZA1uxZRk3fdyL2SvxEYSBNpJv3dymQ
- J0aQFbgFr9Kq8SglHP0CB3jJp9aVSCFWovpY92SC7gHymQT2CAc+UoI2e6U1ZWhFoGk6EIMPbcaUDw==
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+These extra comments should be make it easier to understand how to use
+locks in pack-objects delta search code. For reference, see
 
+8ecce684a3 (basic threaded delta search - 2007-09-06)
+384b32c09b (pack-objects: fix threaded load balancing - 2007-12-08)
+50f22ada52 (threaded pack-objects: Use condition... - 2007-12-16)
 
-On 29/07/18 04:13, Eric Sunshine wrote:
-> On Sat, Jul 28, 2018 at 6:51 PM Ramsay Jones
-> <ramsay@ramsayjones.plus.com> wrote:
->> Commit 6c213e863a ("http-backend: respect CONTENT_LENGTH for
->> receive-pack", 2018-07-27) adds a test which uses the non-portable
->> export construct. Replace it with "FOO=bar && export FOO" instead.
->>
->> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
->> ---
->> Could you please put this on top of the 'mk/http-backend-content-length'
->> branch. This test tickles the new "export FOO=bar" check, so the test
->> suite does not run otherwise.
-> 
-> The "export FOO=bar" check comes from 9968ffff0d (test-lint: detect
-> 'export FOO=bar', 2013-07-08), so is not exactly new.
-> 
-> Perhaps you were thinking of [1] a0a630192d
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ builtin/pack-objects.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-Heh, yes you are obviously correct. Although 'thinking' might
-be being too generous! ;-)
-
-[I can't even claim that it was late ... midnight is actually
-quite early for me!]
-
-> (t/check-non-portable-shell: detect "FOO=bar shell_func", 2018-07-13),
-> when you wrote this, though it is not related to "export FOO=bar"
-> detection.
-> 
-> The patch itself looks fine, by the way.
-> 
-> [1]: https://public-inbox.org/git/20180713055205.32351-5-sunshine@sunshineco.com/
-> 
-
-Thanks!
-
-ATB,
-Ramsay Jones
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index ebc8cefb53..6270f74c0b 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1852,18 +1852,30 @@ static int delta_cacheable(unsigned long src_size, unsigned long trg_size,
+ 
+ #ifndef NO_PTHREADS
+ 
++/* Protect access to object database */
+ static pthread_mutex_t read_mutex;
+ #define read_lock()		pthread_mutex_lock(&read_mutex)
+ #define read_unlock()		pthread_mutex_unlock(&read_mutex)
+ 
++/* Protect delta_cache_size */
+ static pthread_mutex_t cache_mutex;
+ #define cache_lock()		pthread_mutex_lock(&cache_mutex)
+ #define cache_unlock()		pthread_mutex_unlock(&cache_mutex)
+ 
++/*
++ * Protect object list partitioning (e.g. struct thread_param) and
++ * progress_state
++ */
+ static pthread_mutex_t progress_mutex;
+ #define progress_lock()		pthread_mutex_lock(&progress_mutex)
+ #define progress_unlock()	pthread_mutex_unlock(&progress_mutex)
+ 
++/*
++ * Access to struct object_entry is unprotected since each thread owns
++ * a portion of the main object list. Just don't access object entries
++ * ahead in the list because they can be stolen and would need
++ * progress_mutex for protection.
++ */
+ #else
+ 
+ #define read_lock()		(void)0
+@@ -2245,12 +2257,19 @@ static void try_to_free_from_threads(size_t size)
+ static try_to_free_t old_try_to_free_routine;
+ 
+ /*
++ * The main object list is split into smaller lists, each is handed to
++ * one worker.
++ *
+  * The main thread waits on the condition that (at least) one of the workers
+  * has stopped working (which is indicated in the .working member of
+  * struct thread_params).
++ *
+  * When a work thread has completed its work, it sets .working to 0 and
+  * signals the main thread and waits on the condition that .data_ready
+  * becomes 1.
++ *
++ * The main thread steals half of the work from the worker that has
++ * most work left to hand it to the idle worker.
+  */
+ 
+ struct thread_params {
+-- 
+2.18.0.656.gda699b98b3
 
