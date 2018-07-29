@@ -2,222 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C135C1F597
-	for <e@80x24.org>; Sun, 29 Jul 2018 10:33:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE8481F597
+	for <e@80x24.org>; Sun, 29 Jul 2018 11:54:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726478AbeG2MDP (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Jul 2018 08:03:15 -0400
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:37917 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726170AbeG2MDP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Jul 2018 08:03:15 -0400
-Received: by mail-lj1-f193.google.com with SMTP id p6-v6so7974709ljc.5
-        for <git@vger.kernel.org>; Sun, 29 Jul 2018 03:33:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=j3Ia5LhPtqmebOAxcPgCSJh8rs68nL74JRb9eHnwa28=;
-        b=jPxS0TIab8FtSXYOHcvR0RU0grwJJ2hNTrZDQtAxQPXowFA0I7LRnXJc9wNNPI7vaO
-         XyKz02Lpm21MWoel5k89XdXZTv84hkYPD0OKy2Csf7Q77NT4xB/4RhDq94/MN+DcHbmQ
-         tX43LI0B51z3SzMsxR/u7Twi7aiiyHhw9VQzuvqnmMrujce+Js8/7fUPe3r2aJLIlvt5
-         ahWhcVNWObHRvq7LruH7Hy6g+l/iQDh3JAlAtM8y9/Cjv4Rkfdd/bwm6LkDn8kUOIH0a
-         qjgJEoq8EI/Omh0P2ls5q2YWRp3ROtPeX4P6hRJiZyY/PDvvOPGgVM18nL6is89WhoQ8
-         2Hrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=j3Ia5LhPtqmebOAxcPgCSJh8rs68nL74JRb9eHnwa28=;
-        b=mEwmXnFddqo/i8fY/nHFPNdj5dLZAsYADW98RbumjI5pHTu6V0TF3VXQYzrQOjOcig
-         aRS4FjNRpEuM+o/cTQvENxyKtjmH2MBjhrP5haaVkMfYkw8XoRILzOL2TLtP2ovRzHhd
-         xB7JTTjEzOiCs/zdiYBfEsjP/BH961nkhF/CfHk/hEvFPa8POvUCbzg0D/m+rm/66391
-         FeK9j9Kdd/dt1ggorG0e+gOdLERtFOHoDQ1BBATnkdCViBr3z3HWmoRrPJmK3CCgQMd0
-         pyV1B8JMFhfjfgkpFOWWYE9cYELUUru/diuRuNfdzacNTHC+xTaQQGd86nyt6WLygsXW
-         XFtg==
-X-Gm-Message-State: AOUpUlHbBYsUy+Hqeh3W+FVwtfrVwWRCj0qKjmYqrjvtDdD5eK6wFP3x
-        yMKMScOphLtmuKlyfIqMSEU=
-X-Google-Smtp-Source: AAOMgpcHVEQW2p0t6Zzlwx3OP353YJyt040lj5KgDLYzYw9YvtG947x41XYq06rOGdEfPGazTozmXA==
-X-Received: by 2002:a2e:6a04:: with SMTP id f4-v6mr10153408ljc.109.1532860394733;
-        Sun, 29 Jul 2018 03:33:14 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id q72-v6sm1529212lja.6.2018.07.29.03.33.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 29 Jul 2018 03:33:14 -0700 (PDT)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     pclouds@gmail.com
-Cc:     Ben.Peart@microsoft.com, git@vger.kernel.org, gitster@pobox.com,
-        peartben@gmail.com, peff@peff.net
-Subject: [PATCH v2 4/4] unpack-trees: cheaper index update when walking by cache-tree
-Date:   Sun, 29 Jul 2018 12:33:06 +0200
-Message-Id: <20180729103306.16403-5-pclouds@gmail.com>
-X-Mailer: git-send-email 2.18.0.656.gda699b98b3
-In-Reply-To: <20180729103306.16403-1-pclouds@gmail.com>
-References: <20180727154241.GA21288@duynguyen.home>
- <20180729103306.16403-1-pclouds@gmail.com>
+        id S1726324AbeG2NZA (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Jul 2018 09:25:00 -0400
+Received: from mout.web.de ([212.227.15.4]:33095 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726203AbeG2NY7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Jul 2018 09:24:59 -0400
+Received: from [192.168.178.36] ([79.237.249.67]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LsQDw-1g7pii1Ttg-01226r; Sun, 29
+ Jul 2018 13:54:40 +0200
+Subject: Re: Proposed approaches to supporting HTTP remotes in "git archive"
+To:     Junio C Hamano <gitster@pobox.com>,
+        Josh Steadmon <steadmon@google.com>
+Cc:     git@vger.kernel.org
+References: <CANq=j3tK7QeBJOC7VNWkh4+WBNibMJJp5YUkd9te5NaYwukAow@mail.gmail.com>
+ <xmqqtvokjonm.fsf@gitster-ct.c.googlers.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <e769cd31-49cb-c49b-7653-5692e065f097@web.de>
+Date:   Sun, 29 Jul 2018 13:54:37 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <xmqqtvokjonm.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:T+rhXnvUXkaOz6poNhlfOS1BK9pCJ7lpUWE9d9W9kOMIXzt2cV6
+ D0YNwMHa4j53quEXVuYZJ8nuVg8lDZx9OOlrC0nJP3mxr2p13iMhnMvbwU4LuqYwAWborLh
+ 33d7yOWfE/9QkHgFM3XubWElCt9gJ9QO3Poqjuhcj7mu2mR/T8H2gATokUp5FuhfkY/YmI8
+ BEpbLJyfzhWQNvzg5k9rA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Jck5Es65BTM=:IxYlvpsKFtDcutIIKK76bX
+ EpVybtlBW27ygecpaSoh0bMVbpDUofO2OznLrWYI/VWelv0uw/SRjzQR1e7jEzwFPqAXEpQN5
+ KXUR1b0Xe6BB641JDlw9dG4E7tYR2Z6FHm7n9/jvXRFp0ljbtCRzFFv3BXS77a8FKRe7NBOxl
+ mur5mAB85lECVb3ccchhAaAePxgKzjCdEdGM28bv6KQaF2HwB9LZUtsCK3xTg7jJFzQeTG21Y
+ NwzvwjqOxlzCZjwlgF7Jgc73hqvIT1V9d9r59jRS8rg1r+VwTkShcQXB2VT0mI6NkGuBYmMLA
+ eXM6iA5VKczpgVDQyV1SxfJJHaAhUsDEhd/oCtlTxer8zciyKo37K4dEEsgv9XE2y9axo52Ss
+ cCxW3vRojw2TWw8ZPbXk6DFeNJq3GD9Pefd1nPZeZzGxiTHe+E0g9iSlPHtEgGWAtUNNXZlZF
+ RDFSD0BCCXu5Y+XF+lOX/AtcaV0OJRbbe3x3dg4m/5tCgHpNNcNNi+TKPnNhv1+oaAmECE6sO
+ J8It6gCGxSSorLeOEEmrjiOuQctg+FTRLBCSI9poYH4DAyKTAY7dolOCS0Wv/TZNzRIq2KEP8
+ GsMRCwtJeLIEYlBspYywcpg6d4ZSBmd0cGd2iqSTIdsDEfEYEONQ3IzbPE+abXxwHBuYMufzp
+ gVElCYWLOIJyHuUTtG+DtuS86EwnvUNs1HADKbCX2lw9+gxVEMr789LOQ5hZGD1M4N8FulpPD
+ /wia24vSdSdcqtkZpmrbskITRVzHhdUI0AYtcP1Dj+k2i+DA+9ul2PyN+uSeXNKDoT3MhPD9e
+ 3m6aw1g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-With the new cache-tree, we could mostly avoid I/O (due to odb access)
-the code mostly becomes a loop of "check this, check that, add the
-entry to the index". We could skip a couple checks in this giant loop
-to go faster:
+Am 28.07.2018 um 00:32 schrieb Junio C Hamano:
+> Josh Steadmon <steadmon@google.com> writes:
+> 
+>> # Supporting HTTP remotes in "git archive"
+>>
+>> We would like to allow remote archiving from HTTP servers. There are a
+>> few possible implementations to be discussed:
+>>
+>> ## Shallow clone to temporary repo
+>>
+>> This approach builds on existing endpoints. Clients will connect to the
+>> remote server's git-upload-pack service and fetch a shallow clone of the
+>> requested commit into a temporary local repo. The write_archive()
+>> function is then called on the local clone to write out the requested
+>> archive.
 
-- We know here that we're copying entries from the source index to the
-  result one. All paths in the source index must have been validated
-  at load time already (and we're not taking strange paths from tree
-  objects) which means we can skip verify_path() without compromise.
+A prototype would require just a few lines of shell script, I guess..
 
-- We also know that D/F conflicts can't happen for all these entries
-  (since cache-tree and all the trees are the same) so we can skip
-  that as well.
+A downside that was only stated implicitly: This method needs temporary
+disk space for the clone, while the existing archive modes only ever
+write out the resulting file.  I guess the required space is in the same
+order as the compressed archive.  This shouldn't be a problem if we
+assume the user would eventually want to extract its contents, right?
 
-This gives rather nice speedups for "unpack trees" rows where "unpack
-trees" time is now cut in half compared to when
-traverse_by_cache_tree() is added, or 1/7 of the original "unpack
-trees" time.
+>> ## Summary
+>>
+>> Personally, I lean towards the first approach. It could give us an
+>> opportunity to remove server-side complexity; there is no reason that
+>> the shallow-clone approach must be restricted to the HTTP transport, and
+>> we could re-implement other transports using this method.  Additionally,
+>> it would allow clients to pull archives from remotes that would not
+>> otherwise support it.
+> 
+> I consider the first one (i.e. make a shallow clone and tar it up
+> locally) a hack that does *not* belong to "git archive --remote"
+> command, especially when it is only done to "http remotes".  The
+> only reason HTTP remotes are special is because there is no ready
+> "http-backend" equivalent that passes the "git archive" traffic over
+> smart-http transport, unlike the one that exists for "git
+> upload-pack".
+> 
+> It however still _is_ attractive to drive such a hack from "git
+> archive" at the UI level, as the end users do not care how ugly the
+> hack is ;-)  As you mentioned, the approach would work for any
+> transport that allows one-commit shallow clone, so it might become
+> more palatable if it is designed as a different _mode_ of operation
+> of "git archive" that is orthogonal to the underlying transport,
+> i.e.
+> 
+>    $ git archive --remote=<repo> --shallow-clone-then-local-archive-hack master
+> 
+> or
+> 
+>    $ git config archive.<repo>.useShallowCloneThenLocalArchiveHack true
+>    $ git archive --remote=<repo> master
 
-   baseline      cache-tree    this patch
- --------------------------------------------------------------------
-   0.018239226   0.019365414   0.020519621 s: read cache .git/index
-   0.052541655   0.049605548   0.048814384 s: preload index
-   0.001537598   0.001571695   0.001575382 s: refresh index
-   0.168167768   0.049677212   0.024719308 s: unpack trees
-   0.002897186   0.002845256   0.002805555 s: update worktree after a merge
-   0.131661745   0.136597522   0.134891617 s: repair cache-tree
-   0.075389117   0.075422517   0.074832291 s: write index, changed mask = 2a
-   0.111702023   0.032813253   0.008616479 s: unpack trees
-   0.000023245   0.000022002   0.000026630 s: update worktree after a merge
-   0.111793866   0.032933140   0.008714071 s: diff-index
-   0.587933288   0.398924370   0.380452871 s: git command: /home/pclouds/w/git/git
+Archive-via-clone would also work with full clones (if shallow ones are
+not available), but that would be wasteful and a bit cruel, of course.
 
-Total saving of this new patch looks even less impressive, now that
-time spent in unpacking trees is so small. Which is why the next
-attempt should be on that "repair cache-tree" line.
+Anyway, I think we should find a better (shorter) name for that option;
+that could turn out to be the hardest part. :)
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- cache.h        |  1 +
- read-cache.c   |  3 ++-
- unpack-trees.c | 27 +++++++++++++++++++++++++++
- unpack-trees.h |  1 +
- 4 files changed, 31 insertions(+), 1 deletion(-)
+> It might turn out that it may work better than the native "git
+> archive" access against servers that offer both shallow clone
+> and native archive access.  I doubt a single-commit shallow clone
+> would benefit from reusing of premade deltas and compressed bases
+> streamed straight out of packfiles from the server side that much,
+> but you'd never know until you measure ;-)
 
-diff --git a/cache.h b/cache.h
-index 8b447652a7..e6f7ee4b64 100644
---- a/cache.h
-+++ b/cache.h
-@@ -673,6 +673,7 @@ extern int index_name_pos(const struct index_state *, const char *name, int name
- #define ADD_CACHE_JUST_APPEND 8		/* Append only; tree.c::read_tree() */
- #define ADD_CACHE_NEW_ONLY 16		/* Do not replace existing ones */
- #define ADD_CACHE_KEEP_CACHE_TREE 32	/* Do not invalidate cache-tree */
-+#define ADD_CACHE_SKIP_VERIFY_PATH 64	/* Do not verify path */
- extern int add_index_entry(struct index_state *, struct cache_entry *ce, int option);
- extern void rename_index_entry_at(struct index_state *, int pos, const char *new_name);
- 
-diff --git a/read-cache.c b/read-cache.c
-index e865254bea..b0b5df5de7 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1170,6 +1170,7 @@ static int add_index_entry_with_check(struct index_state *istate, struct cache_e
- 	int ok_to_add = option & ADD_CACHE_OK_TO_ADD;
- 	int ok_to_replace = option & ADD_CACHE_OK_TO_REPLACE;
- 	int skip_df_check = option & ADD_CACHE_SKIP_DFCHECK;
-+	int skip_verify_path = option & ADD_CACHE_SKIP_VERIFY_PATH;
- 	int new_only = option & ADD_CACHE_NEW_ONLY;
- 
- 	if (!(option & ADD_CACHE_KEEP_CACHE_TREE))
-@@ -1210,7 +1211,7 @@ static int add_index_entry_with_check(struct index_state *istate, struct cache_e
- 
- 	if (!ok_to_add)
- 		return -1;
--	if (!verify_path(ce->name, ce->ce_mode))
-+	if (!skip_verify_path && !verify_path(ce->name, ce->ce_mode))
- 		return error("Invalid path '%s'", ce->name);
- 
- 	if (!skip_df_check &&
-diff --git a/unpack-trees.c b/unpack-trees.c
-index c33ebaf001..dc62afd968 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -201,6 +201,7 @@ static int do_add_entry(struct unpack_trees_options *o, struct cache_entry *ce,
- 
- 	ce->ce_flags = (ce->ce_flags & ~clear) | set;
- 	return add_index_entry(&o->result, ce,
-+			       o->extra_add_index_flags |
- 			       ADD_CACHE_OK_TO_ADD | ADD_CACHE_OK_TO_REPLACE);
- }
- 
-@@ -701,6 +702,24 @@ static int traverse_by_cache_tree(int pos, int nr_entries, int nr_names,
- 	if (!o->merge)
- 		BUG("We need cache-tree to do this optimization");
- 
-+	/*
-+	 * Try to keep add_index_entry() as fast as possible since
-+	 * we're going to do a lot of them.
-+	 *
-+	 * Skipping verify_path() should totally be safe because these
-+	 * paths are from the source index, which must have been
-+	 * verified.
-+	 *
-+	 * Skipping D/F and cache-tree validation checks is trickier
-+	 * because it assumes what n-merge code would do when all
-+	 * trees and the index are the same. We probably could just
-+	 * optimize those code instead (e.g. we don't invalidate that
-+	 * many cache-tree, but the searching for them is very
-+	 * expensive).
-+	 */
-+	o->extra_add_index_flags = ADD_CACHE_SKIP_DFCHECK;
-+	o->extra_add_index_flags |= ADD_CACHE_SKIP_VERIFY_PATH;
-+
- 	/*
- 	 * Do what unpack_callback() and unpack_nondirectories() normally
- 	 * do. But we walk all paths recursively in just one loop instead.
-@@ -742,6 +761,7 @@ static int traverse_by_cache_tree(int pos, int nr_entries, int nr_names,
- 
- 		mark_ce_used(src[0], o);
- 	}
-+	o->extra_add_index_flags = 0;
- 	free(tree_ce);
- 	if (o->debug_unpack)
- 		printf("Unpacked %d entries from %s to %s using cache-tree\n",
-@@ -1561,6 +1581,13 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 		if (!ret) {
- 			if (!o->result.cache_tree)
- 				o->result.cache_tree = cache_tree();
-+			/*
-+			 * TODO: Walk o.src_index->cache_tree, quickly check
-+			 * if o->result.cache has the exact same content for
-+			 * any valid cache-tree in o.src_index, then we can
-+			 * just copy the cache-tree over instead of hashing a
-+			 * new tree object.
-+			 */
- 			if (!cache_tree_fully_valid(o->result.cache_tree))
- 				cache_tree_update(&o->result,
- 						  WRITE_TREE_SILENT |
-diff --git a/unpack-trees.h b/unpack-trees.h
-index c2b434c606..94e1b14078 100644
---- a/unpack-trees.h
-+++ b/unpack-trees.h
-@@ -80,6 +80,7 @@ struct unpack_trees_options {
- 	struct index_state result;
- 
- 	struct exclude_list *el; /* for internal use */
-+	unsigned int extra_add_index_flags;
- };
- 
- extern int unpack_trees(unsigned n, struct tree_desc *t,
--- 
-2.18.0.656.gda699b98b3
+It could benefit from GIT_ALTERNATE_OBJECT_DIRECTORIES, but I guess
+typical users of git archive --remote won't have any good ones lying
+around.
 
+René
