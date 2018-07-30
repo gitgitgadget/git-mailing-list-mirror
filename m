@@ -2,96 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 06D521F597
-	for <e@80x24.org>; Mon, 30 Jul 2018 14:47:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B78CA1F597
+	for <e@80x24.org>; Mon, 30 Jul 2018 14:48:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730953AbeG3QXN (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jul 2018 12:23:13 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:45341 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729224AbeG3QXN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jul 2018 12:23:13 -0400
-Received: by mail-wr1-f68.google.com with SMTP id f12-v6so3284277wrv.12
-        for <git@vger.kernel.org>; Mon, 30 Jul 2018 07:47:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=1BR4xcwatqaAn+ogU7FN+eAxxUG50v1PCQ7vSTiiHx8=;
-        b=kQ/Vc0c834tU3pMKaQbaD6M/49GZOffbSG3ZJDKU/sNq+SEluO6r4xl/rx2gjM3TQJ
-         6VnxXjkv22bdH/8ZAFE8J3Em7vxu6OkW6p5dwaqQj38LKjZuWJpT34NLPQ9rCjBcOk+P
-         uyk3lfT0+JvcXWKK9sjZ3j2fXL/v0HSoFs1Mxsm9PTL4rFHt3MzNB5FpJhZ3HMiX7d3P
-         DpseFyCY2AoPLiHapjHu8JJbrXhoDLOCQHYla9mERJ++QXdbv72JrCRRasuv5pjzN4/c
-         /nKXf/iRomDLm75zu13AxZCINuG8MdNWftsdUmcoQiS9IGZmDqOI7klYS4OE1HPgYupI
-         GOTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=1BR4xcwatqaAn+ogU7FN+eAxxUG50v1PCQ7vSTiiHx8=;
-        b=VI1q0pVB8CIAqs9L5cvrD3Nd8VfLizv7viM6bzdZxsFTs2fAAmfZhQbvPgUf4NvSXT
-         H18KGpXfrd7Hd8HpcwKvAdpIzIwChkhflx63KWac9SOdIOEPXQKMW918kRVnmoeFUa1b
-         9wMeHY6ZifbDGLI57Fx5aoPv2OEvKSW8IWBgpjcmpsEwA4Nf8AUjwDNmaUewYr1KwM5m
-         z/dJhb2A4qZIHNhqJlAVdyDf/PGvrQdR8eF4tjOcbMx3ulbOg+OqwRO76U8w9Re79k2n
-         pd3GbrRjrdwFFA6/RaxDMhtCHvgj3phHLxOwKySxp5PHBAM49Ut+I6Nf0w5itasM7GgJ
-         pr2Q==
-X-Gm-Message-State: AOUpUlH/oCKjJWS+Pqx1rS4GK3FS4re7Ce/PjZ3drBNZlCQtzGETAHhR
-        64Rsfc0lj1gX1n4VwKkMWNs=
-X-Google-Smtp-Source: AAOMgpdmpVQmZV+JouKtv8IFaVjT6P9fRke3Kb/uKQFYLijBrsWxJwncuyDrNK+6cINA4Ce5wDZNPw==
-X-Received: by 2002:a5d:4d8d:: with SMTP id b13-v6mr17552736wru.80.1532962071398;
-        Mon, 30 Jul 2018 07:47:51 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id h5-v6sm14423185wrr.19.2018.07.30.07.47.50
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 30 Jul 2018 07:47:50 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v3 10/10] fsck: test and document unknown fsck.<msg-id> values
-References: <20180525192811.25680-1-avarab@gmail.com>
-        <20180727143720.14948-11-avarab@gmail.com>
-        <xmqqbmasl5hq.fsf@gitster-ct.c.googlers.com>
-        <8736w3v51a.fsf@evledraar.gmail.com>
-Date:   Mon, 30 Jul 2018 07:47:50 -0700
-In-Reply-To: <8736w3v51a.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Sat, 28 Jul 2018 15:55:13 +0200")
-Message-ID: <xmqqd0v4kcfd.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1731914AbeG3QXd (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jul 2018 12:23:33 -0400
+Received: from mout.gmx.net ([212.227.15.19]:39791 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731799AbeG3QXd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jul 2018 12:23:33 -0400
+Received: from [192.168.0.129] ([37.201.193.26]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LvE2c-1gAAtW2c1S-010IDF; Mon, 30
+ Jul 2018 16:48:08 +0200
+Date:   Mon, 30 Jul 2018 16:48:07 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Johannes Sixt <j6t@kdbg.org>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 7/9] vscode: use 8-space tabs, no trailing ws, etc for
+ Git's source code
+In-Reply-To: <88952ba5-9de4-9b32-2129-1cc83999db78@kdbg.org>
+Message-ID: <nycvar.QRO.7.76.6.1807301646360.10478@tvgsbejvaqbjf.bet>
+References: <pull.2.git.gitgitgadget@gmail.com> <2e880b6f1c6d37d0f94598db408511e0e216a51f.1532353966.git.gitgitgadget@gmail.com> <88952ba5-9de4-9b32-2129-1cc83999db78@kdbg.org>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:2saYFbehVtji6KeNnr5nC2BBwoSx93iK9aRmCTacoT+8D+6Sscv
+ 4sX7aa2CsAh88DnXluL4ge+BDDGStBjOrXfwxUez/0VqeFq81tcwl95ml3PBynQNvRAwXfp
+ a03mvp5lgzc4QEt/BpFGCdUydL16sQ3gj2pPNCT0W56T1Jpz7IAbhn9c6vQxCLB9n/WRuWH
+ IDXiikBO1m7nZhAcIfEfw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:RUgP3VYVBWE=:eY8o3Ht4p8K6AqkXuwiTNF
+ 0ranZ416nT6zxD3CWs1NAvvuYC6JIATWQwpEua42fBjUoSPV2oWVHbkSGBgtIhX+s3rwVAANG
+ JKD8k0NU1SY1EgeS5opuCWlnM2t1lXWsDqsqOIbHuha6GHX09wxxgOu62snb8B5AZL+lr/2AP
+ OgfoZbFNsH5OrpSLm/+nIPdfWvG9gnJTfRK/0GVlGRgH30WBTGLDlKR8Wj051ylOyWFzR3yHH
+ 2BUgqEONKL8OlNc3aDvlM97mDaoTTp9Mv0F+kpKcSyojNQA+sdXKcssdJpjwCQU1VCT5iOfjI
+ D/xpOe20/NF/TUs+qdBIMRpMRcDTKF5X2BJvc9wA2H+hTDBLM1kc0A2XIPCBmFUOY01WwO5Oj
+ a5F4+SNWiPjsSCbJmpvS81RB0C3vFvS8D6XscRX1XzlP2+bXuS48uZx2ntISZo+bQHkdnI8py
+ h2soY4SdTQ4xwbSqfIxPthW809qZ1+/bLsNsdr1CFPOfnnKEk/CQzIoyy9+KfUs5DikDzYuaD
+ PaX1w9f0XTQMGnX/uLVw99KQ87baqUxh6CWCe8Yfnx7wZHADyIjadnxywpp+REpEoqUPsRqRC
+ s1W+qWlRK5WtzEPJBM6QSXhfqpd0FIFe2Gb4qfKOBAw+IzxkKgrpgOVZbi0YTFyEcdJ6KHymL
+ YNmUiz0RNWMhlDo2DE6u7PbEMYDD7LOsxDn7UYiOaxxB6k/r8py+AS+LTXzCuh9NFCmKmIDgd
+ DnvCa7OeGXukruEz99RLTkOnBL7uDSgc9DdtvOb6PEZQLnuKoHcRMevDp/LgcokwTpI/RAEid
+ oC7b+d5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+Hi Hannes,
 
->>> When fsck.<msg-id> is set to an unknown value it'll cause "fsck" to
->>> die, but the same is not rue of the "fetch" and "receive"
->>> variants. Document this and test for it.
-> ...
-> We could change it. This is just something I ran into and figured it
-> should be tested / documented, and didn't feel any need to change it
-> myself.
->
-> The current behavior is probably more of an organically grown
-> accident. Maybe we should make all of these warn.
+On Wed, 25 Jul 2018, Johannes Sixt wrote:
 
-Or die.  I do agree with your assessment that the discrepancy was
-not designed, and my inclination for a correctness-centered feature
-like fsck is to err on the side of caution, rather than letting a
-misconfiguration pass unintended kinds of breakages through.
+> Am 23.07.2018 um 15:52 schrieb Johannes Schindelin via GitGitGadget:
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > 
+> > This adds a couple settings for the .c/.h files so that it is easier to
+> > conform to Git's conventions while editing the source code.
+> > 
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >   contrib/vscode/init.sh | 8 ++++++++
+> >   1 file changed, 8 insertions(+)
+> > 
+> > diff --git a/contrib/vscode/init.sh b/contrib/vscode/init.sh
+> > index face115e8..29f2a729d 100755
+> > --- a/contrib/vscode/init.sh
+> > +++ b/contrib/vscode/init.sh
+> > @@ -21,6 +21,14 @@ cat >.vscode/settings.json.new <<\EOF ||
+> >           "editor.wordWrap": "wordWrapColumn",
+> >           "editor.wordWrapColumn": 72
+> >       },
+> > +    "[c]": {
+> > +        "editor.detectIndentation": false,
+> > +        "editor.insertSpaces": false,
+> > +        "editor.tabSize": 8,
+> > +        "editor.wordWrap": "wordWrapColumn",
+> > +        "editor.wordWrapColumn": 80,
+> > +        "files.trimTrailingWhitespace": true
+> > +    },
+> 
+> I am a VS Code user, but I haven't used these settings before.
+> 
+> With these settings, does the editor break lines while I am typing? Or does it
+> just insert a visual cue that tells where I should insert a line break? If the
+> former, it would basically make the editor unusable for my taste. I want to
+> have total control over the code I write. The 80 column limit is just a
+> recommendation, not a hard requirement.
 
-Thanks.
+Fear not. It is giving you a very clear visual cue, but that's all. It
+does show the line wrapped, but the line number column quite clearly shows
+that it did not insert a new-line.
 
+Ciao,
+Dscho
+
+> 
+> >       "files.associations": {
+> >           "*.h": "c",
+> >           "*.c": "c"
+> > 
+> 
+> -- Hannes
+> 
+> 
