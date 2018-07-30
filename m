@@ -2,109 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC1A11F597
-	for <e@80x24.org>; Mon, 30 Jul 2018 19:55:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A6B21F597
+	for <e@80x24.org>; Mon, 30 Jul 2018 20:03:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731597AbeG3VcE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jul 2018 17:32:04 -0400
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:34285 "EHLO
-        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729331AbeG3VcE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jul 2018 17:32:04 -0400
-Received: by mail-yw0-f196.google.com with SMTP id j68-v6so4846500ywg.1
-        for <git@vger.kernel.org>; Mon, 30 Jul 2018 12:55:30 -0700 (PDT)
+        id S1731288AbeG3Vjn (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jul 2018 17:39:43 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:33400 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727456AbeG3Vjn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jul 2018 17:39:43 -0400
+Received: by mail-wm0-f67.google.com with SMTP id r24-v6so9204023wmh.0
+        for <git@vger.kernel.org>; Mon, 30 Jul 2018 13:03:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=k2YKBw+/V51Qya2IWiqt1KBpgAtROaFuUGgaUIux77k=;
-        b=RAz2DvSRtZVsIbW8+0PS18GqHs0H1pMA8Qg7SijyCYq6T1h0uKGnrkNXr9QDl0o6a5
-         8VsJ3skJstx8fdVjYxKy6ngCX8BtMCnu6kj8Nj9sagAYD6gqPBcHtQzl7fjR4eqk/5in
-         LVnS3O5k7znDOa22H+vm/BYIpWeqmGVtrpHqakcjIzKab+BrUo2moww5leN+QdLHMiqN
-         62ZGXAruhGdha7V1vE9/va2vFAH8hm326AajimIJ5PNdZsy8vKkVcmOzGfj0YfzK/qDt
-         Ot1nFL5iAZ1ndIadfvFoJ2kquE67VMMon8ftXYBIVi/3rUoPJlWfTY19ZO0pazHDtJE7
-         rWaw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=1ZOH7M2Z7O7Y/R78ZovZVVzGYPYobKDMH3zvlxpFllk=;
+        b=piKZXM4JdGxYznCDHGL6ehybaT9L42IpNg8m2J1GHzWIxuu4OH/WVgEod2dYNQmsom
+         S2vrsJSl7Em00JQesE29PyFy6O+QpIIeCVeP4sRq3dcHew0wJy8Z4RMeNtQtbTZLxL/t
+         tSQonBa+4K1bgJ4ARX3RbrRKmE78fMseXFhfFoQzHjuc00RvqKrIckkt2WSd47DjmnUl
+         MclJYCmG0ARwjquqq4vLg2O7MD/e/GW06IsriP6ppBhEDUa9s6FI/jEQbWUWYcZiH/eu
+         74fDoF0X5k8uYiznkAcck28MpoSBBvnRG9Q9P25FvM1/RwWXTrSLj03skruov3z2estC
+         pSYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=k2YKBw+/V51Qya2IWiqt1KBpgAtROaFuUGgaUIux77k=;
-        b=hxwOM4cvz2IZ0Pdjr8pTv2j3/rPIODOx0J331HJyKiPAEgxk9AQMhV3BIxtBFMV/Rx
-         WSghNXAW+J+7omAZMTYigcGHTi94x4kTT6wVpEPU7y3sw2JG4gxexe+CQWs3klN9tHsk
-         M7ZAa/jzIpFrqy8Im56DRiHISqlYN044NFnpn42vcuD99iCx3DHAjdRxHi9iW+c+zvvY
-         GbDAikwj7awL/MzRaf3gmdX+1/UOuwIpeMZLwTPlq7ZtgAqCloin8lhTZJSydk5z94Lk
-         /YCzgu8A8N9q7TGcGYsOU5FsnFnpkElvDR/sIq6Nynq0HKOD/aK/D00Ayf69x98tQDlk
-         svxA==
-X-Gm-Message-State: AOUpUlE+IBfjQz4/Fb8DcU4FTiwZdVCtcDGLlvUDWmOI4WMnDUDpOb4l
-        Ks1FjSOshFxWbdfD2cGQgaRFQ/m7hzQW7Qkp/PAXcQ==
-X-Google-Smtp-Source: AAOMgpdO29m2aPvhAQlk7gLj5gorH6IImAFcQXnshqEo7QfBQrxxtt7cEw215aId/uMyHKSDEkQt8f3+BE8ed02pOJE=
-X-Received: by 2002:a0d:d342:: with SMTP id v63-v6mr9460272ywd.500.1532980529209;
- Mon, 30 Jul 2018 12:55:29 -0700 (PDT)
-MIME-Version: 1.0
-References: <20180728030448.192177-1-sbeller@google.com> <20180728030448.192177-3-sbeller@google.com>
- <CAPig+cRgfeSTFLdGpUkzH5PuKE39W9CFxx--yarF_27q1c=yCw@mail.gmail.com>
-In-Reply-To: <CAPig+cRgfeSTFLdGpUkzH5PuKE39W9CFxx--yarF_27q1c=yCw@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 30 Jul 2018 12:55:17 -0700
-Message-ID: <CAGZ79kbw_Ps85qbgRbDji5pmRjpJkRhqqXvthdDbfkCO7Gqjxg@mail.gmail.com>
-Subject: Re: [PATCH 2/8] t3206: add color test for range-diff --dual-color
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=1ZOH7M2Z7O7Y/R78ZovZVVzGYPYobKDMH3zvlxpFllk=;
+        b=kJSi5cL9Oa7jj5Ezc8rqnf+w03hTfYhZ3ignQe9Ux43xBZDHETXyfnq6PAxcm/blCe
+         NTeBsBfVbb15otrOmXsjIzyfDnTsOIK9iS8qBircKw39vtA15C9ioTljEMGS496FJsal
+         Z0f1lvnXCM+MtVhQh2UgkpAQt8L5QL4yrHp9AHBfF+gZTGpnYsHJiGT6jcfkyMSvcT7z
+         y9/7j7s7iKEAR3HBnlBQpHpN9GtfCe6mcmjI8xOxdYaidobWGNq3RiTL58qU3BRSSfFW
+         RTwLeu3ogRR1S+UHTVFG1OcOVjDNAGTEpxtjKXDUnCAZ3/w8V8WUBaz0mMn7HVDi+cqd
+         1c+Q==
+X-Gm-Message-State: AOUpUlGHRuUG35kb4u1GzTlifzobzSARsR4crZVlY8cUPwBVj3cEC6cb
+        d0gG9hEFMybjUEFp+3xDhC9Q3voS
+X-Google-Smtp-Source: AAOMgpfqRaenmjTh0V7XleIhQgWz7YaIkiU7OotfrAEX+5dRGF8Ly5R99Iy8mqai93CtZgzQTjq4FQ==
+X-Received: by 2002:a1c:c019:: with SMTP id q25-v6mr417862wmf.148.1532980985543;
+        Mon, 30 Jul 2018 13:03:05 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id r1-v6sm13832925wrs.39.2018.07.30.13.03.04
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 30 Jul 2018 13:03:04 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     git <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Han-Wen Nienhuys <hanwen@google.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 1/2] Document git config getter return value.
+References: <20180730122609.57058-1-hanwen@google.com>
+        <CAPig+cQkFHtOw=gJ1Y5vjQipeAgRon214tUs09o3k3LkevHu4g@mail.gmail.com>
+Date:   Mon, 30 Jul 2018 13:03:04 -0700
+In-Reply-To: <CAPig+cQkFHtOw=gJ1Y5vjQipeAgRon214tUs09o3k3LkevHu4g@mail.gmail.com>
+        (Eric Sunshine's message of "Mon, 30 Jul 2018 14:48:00 -0400")
+Message-ID: <xmqqd0v4fq4n.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 27, 2018 at 11:28 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+Eric Sunshine <sunshine@sunshineco.com> writes:
+
+> On Mon, Jul 30, 2018 at 8:26 AM Han-Wen Nienhuys <hanwen@google.com> wrote:
+>> ---
+>>  config.h | 10 ++++++++--
+>>  1 file changed, 8 insertions(+), 2 deletions(-)
 >
-> On Fri, Jul 27, 2018 at 11:05 PM Stefan Beller <sbeller@google.com> wrote:
-> > The 'expect'ed outcome is taken by running the 'range-diff |decode';
-> > it is not meant as guidance, rather as a documentation of the current
-> > situation.
->
-> I'm not really sure what this is trying to say. It seems _too_ brief.
->
-> Did you want a space after the vertical bar before "decode"?
+> Missing sign-off.
 
-I am trying to say that this patch was generated by inserting
-a "true && test_pause" first and then inside that paused test,
-I just run
-
-  source <path>/t/test-lib-functions.sh
-  git range-diff changed...changed-message --color --dual-color \
-    | test_decode_color
-
-and saved that as the expected outcome, I was prepared to
-massage it gently by s/<TAB>/Q/ but that was not needed,
-but I forgot the q_to_tab in place.
-
-By adding the test this way, I just want to state "I observed
-the functionality as produced in this patch". I do not want
-to endorse the coloring scheme or claim it is good (it is,
-but I also still have nits to pick). So I tried to briefly say
-that the test is essentially "autogenerated" by just observing
-output at that point in time.
-
->
-> > Signed-off-by: Stefan Beller <sbeller@google.com>
-> > ---
-> > diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-> > +test_expect_success 'simple coloring' '
-> > +       q_to_tab >expect <<-EOF &&
->
-> Why 'q_to_tab'? I don't see any "q"'s in the body.
->
-> I also don't see any variable interpolation in the body, so maybe you
-> want -\EOF instead?
-
-All good suggestions! Thanks for the review, I'll incorporate them.
-
-Thanks,
-Stefan
+Besides, the patch is corrupt in that it miscounts both preimage and
+postimage lines and claims it applies to a 11-line block even though
+there are only 10 lines there.
