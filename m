@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B097F1F597
-	for <e@80x24.org>; Mon, 30 Jul 2018 15:42:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8914F1F597
+	for <e@80x24.org>; Mon, 30 Jul 2018 15:42:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727474AbeG3RS2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jul 2018 13:18:28 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:40133 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726872AbeG3RS1 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1727037AbeG3RS1 (ORCPT <rfc822;e@80x24.org>);
         Mon, 30 Jul 2018 13:18:27 -0400
-Received: by mail-pf1-f196.google.com with SMTP id e13-v6so4707063pff.7
-        for <git@vger.kernel.org>; Mon, 30 Jul 2018 08:42:55 -0700 (PDT)
+Received: from mail-pl0-f49.google.com ([209.85.160.49]:34332 "EHLO
+        mail-pl0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726651AbeG3RSZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jul 2018 13:18:25 -0400
+Received: by mail-pl0-f49.google.com with SMTP id f6-v6so5741137plo.1
+        for <git@vger.kernel.org>; Mon, 30 Jul 2018 08:42:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ddTE0Ok7IMDD6KirZv1dBgWyO62hw+FW9ALu7L8iRUQ=;
-        b=qXMHr8kqUT6RsxtvmrfktHPJAF/YL+lUeauDu8bPlQG9Vkpf64EvtZFbiOFFvZYzkx
-         kZv4+58hGCT/8Uvf4ChMPkxa3j6QcbeNpjl9PLYwS5WdR8G3+Fbyi1jPf/qvTgzzw9Mn
-         Yq7osD62e2Bvk2Z3b1eJWpO2xZIpYqyDHWOv7RMomteqOUIeJ7Nrd5RTok1jJTvKr5Jr
-         nxMHFxhns0+XdfRI2giBgsZFprP6G9SWYCNuarVBBWQyxjdzJMuGbANhEaqGDWiWhQaC
-         3AIErfRsyjyDoO5O0nLz8tdVoISx5M7vHKhZmhBhUQa2/goV7l78ux4dBHddpNAHOMgE
-         5cZg==
+        bh=VueOAmOgRUvHgNEc4qFJVjXHocplKMGlsfnTDD0z7SY=;
+        b=YRB9FQvpa0K95C7NOKe9Rxsakl37BA50miREY8pQTlM3Zlx19JCjr37Hhg8so394vL
+         yY7VfdStzQ0v52AzUZGLS0l0lj3wED8a/XCN7mbG0g+c55ZKIRVJTwK+6eWYyzmNe7We
+         3WKiJwyoiUHj8FAb+7goyc60QKBmUQw8O7N1PdKiFTYfwxswSGaDzsC0mSfFTJ7PPD9Y
+         kd14pJzODX8Qy+ek5YFGxnaKR30RdsiASzeR8pPzzB6Mu08E3uqgivnDlGVWMUrdOvfY
+         Pz2brdPxVAcrs7dU1VrMGg2eUgR7Np97Z15ojHHyrADeFdch5r62/LmgiBncbIaqAYnD
+         1D3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ddTE0Ok7IMDD6KirZv1dBgWyO62hw+FW9ALu7L8iRUQ=;
-        b=SMGJTK7GvrJRvVt+pNknHi2EkS/j3KbJgcHP3DNMWmjLoOx+UgGnXSMxNeNx2QExdZ
-         NG5xcK3yHRc+1VO3lyK7jg0UTbcGx+WAb/ADlCbGl5FD4DUXKL2GLRL++UBmFBW9YKjq
-         Zdcoy9y1NDgIk7SziF2f0tfB84qavG02QxkqMeJ/jhegp2rhQd8UttLUrOgbSNgG3zop
-         sEmR08jq6EKVo9NMfPtv9ZadKr26P9uNtHzKqoY2opRS9oDqc+cMyEaWwNR4uMz6eoYX
-         ZwyTvUPkBL9DgFFdErJFgZ3ZU0SZS+9D/AdfIrPnEu8JGncq7gaCg/GhqQntKoLt7L62
-         DYwA==
-X-Gm-Message-State: AOUpUlHnZPiUVsF2PaLgh+E/QmsMy5T4566AF8ARabaOYTzj03y+xyPD
-        Dl22Bnc2dpefi7RoFNqdhHAcaRUX
-X-Google-Smtp-Source: AAOMgpfMadUn6kooJpDzpUyHPy2vbTV/qs23EFnDnHDKom4nLJy+yvIk1y41TuXroeSLImeQhUDf4Q==
-X-Received: by 2002:a65:5a49:: with SMTP id z9-v6mr17058616pgs.244.1532965374976;
-        Mon, 30 Jul 2018 08:42:54 -0700 (PDT)
+        bh=VueOAmOgRUvHgNEc4qFJVjXHocplKMGlsfnTDD0z7SY=;
+        b=GrB6+dWUGuWl7pyiQPjakxpEhyaV2dlkSnC2AFlmw3v4cZxzTgmAeFn/V6iJjCQgZL
+         yq3++7zJsBRWKp0W2kQUJsP+RevcXUWewvuvB75vb9ofCTcqHHsmAcG+0jhVFTEF6mT1
+         hzgB7g6rICC+gFmErRl6rwvJI1oW7jEguwEAzW/jWwvzwxvTJFyIXor18C883MZ0AhXk
+         DqKsBSBWIC/9JUQqdxM2FQQdBal6FeJJWyRLq3BkIoF5AGDixbM2BBH0+6EMm+8hocjv
+         XFN7NvX7+SuF7lFi+GOD+ntTMUN2dHykPDwc/wM41EZ5j5p4qh41/XDWdyxVRWI2Heok
+         9pUA==
+X-Gm-Message-State: AOUpUlE6QibbC4WdqCXEbRV0mgkNNz3S4W6ss3Mn26FfHMf/csv/qgIw
+        rBex1q79qTLlBZzzqJVgylT3rAYB
+X-Google-Smtp-Source: AAOMgpcWnFDfAw6vGxiquZZHMknD7ejxe70nSwOQObRsbxi3eUjUGpijCZtlv0GeO0ecJvmz3W3rpw==
+X-Received: by 2002:a17:902:24e:: with SMTP id 72-v6mr16838197plc.74.1532965372095;
+        Mon, 30 Jul 2018 08:42:52 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id j1-v6sm32829048pfk.125.2018.07.30.08.42.53
+        by smtp.gmail.com with ESMTPSA id 85-v6sm38091852pgd.81.2018.07.30.08.42.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 30 Jul 2018 08:42:54 -0700 (PDT)
-Date:   Mon, 30 Jul 2018 08:42:54 -0700 (PDT)
-X-Google-Original-Date: Mon, 30 Jul 2018 15:42:39 GMT
-Message-Id: <384b08836390e32e71842d6d547c13500b963d0d.1532965363.git.gitgitgadget@gmail.com>
+        Mon, 30 Jul 2018 08:42:51 -0700 (PDT)
+Date:   Mon, 30 Jul 2018 08:42:51 -0700 (PDT)
+X-Google-Original-Date: Mon, 30 Jul 2018 15:42:37 GMT
+Message-Id: <4b95b1e2a3eb3d3c26dc3fdc5cd880792a5f048e.1532965363.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2.v2.git.gitgitgadget@gmail.com>
 References: <pull.2.git.gitgitgadget@gmail.com>
         <pull.2.v2.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 6/9] vscode: wrap commit messages at column 72 by default
+Subject: [PATCH v2 4/9] mingw: define WIN32 explicitly
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,29 +71,28 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When configuring VS Code as core.editor (via `code --wait`), we really
-want to adhere to the Git conventions of wrapping commit messages.
+This helps VS Code's intellisense to figure out that we want to include
+windows.h, and that we want to define the minimum target Windows version
+as Windows Vista/2008R2.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/vscode/init.sh | 4 ++++
- 1 file changed, 4 insertions(+)
+ config.mak.uname | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/contrib/vscode/init.sh b/contrib/vscode/init.sh
-index ba9469226..face115e8 100755
---- a/contrib/vscode/init.sh
-+++ b/contrib/vscode/init.sh
-@@ -17,6 +17,10 @@ cat >.vscode/settings.json.new <<\EOF ||
- {
-     "C_Cpp.intelliSenseEngine": "Default",
-     "C_Cpp.intelliSenseEngineFallback": "Disabled",
-+    "[git-commit]": {
-+        "editor.wordWrap": "wordWrapColumn",
-+        "editor.wordWrapColumn": 72
-+    },
-     "files.associations": {
-         "*.h": "c",
-         "*.c": "c"
+diff --git a/config.mak.uname b/config.mak.uname
+index 684fc5bf0..2be2f1981 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -528,7 +528,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+ 	COMPAT_OBJS += compat/mingw.o compat/winansi.o \
+ 		compat/win32/pthread.o compat/win32/syslog.o \
+ 		compat/win32/dirent.o
+-	BASIC_CFLAGS += -DPROTECT_NTFS_DEFAULT=1
++	BASIC_CFLAGS += -DWIN32 -DPROTECT_NTFS_DEFAULT=1
+ 	EXTLIBS += -lws2_32
+ 	GITLIBS += git.res
+ 	PTHREAD_LIBS =
 -- 
 gitgitgadget
 
