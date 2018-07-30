@@ -2,53 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42E351F597
-	for <e@80x24.org>; Mon, 30 Jul 2018 12:18:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 418301F597
+	for <e@80x24.org>; Mon, 30 Jul 2018 12:18:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728729AbeG3Nwv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jul 2018 09:52:51 -0400
-Received: from mail-oi0-f74.google.com ([209.85.218.74]:49751 "EHLO
-        mail-oi0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726670AbeG3Nwv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jul 2018 09:52:51 -0400
-Received: by mail-oi0-f74.google.com with SMTP id u74-v6so10708194oie.16
-        for <git@vger.kernel.org>; Mon, 30 Jul 2018 05:18:08 -0700 (PDT)
+        id S1728782AbeG3Nw7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jul 2018 09:52:59 -0400
+Received: from mail-oi0-f73.google.com ([209.85.218.73]:53792 "EHLO
+        mail-oi0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726670AbeG3Nw7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jul 2018 09:52:59 -0400
+Received: by mail-oi0-f73.google.com with SMTP id v205-v6so10743867oie.20
+        for <git@vger.kernel.org>; Mon, 30 Jul 2018 05:18:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=ewtBdLlFstyXu2rzv/9mOhAvT2zhsnePDQJRGRvSnD0=;
-        b=nXEuM4SzS3hhGoSQB/fm5ZHNlc2pR/fZkdIyZheulErQ3ad9jGo5ICpbmvxP4DO+8U
-         mobsp65khnbL4ICWAHt3AhA+XxkxWl+GZSMBjQwXVRoajrxSpUFIJwiuuiczSpdoBN+y
-         E7M418B3OZH+Y0grU+leA+p9djgDx4ej4spKWYSZjZsQNzZKmG72Zy7AFSU1nn3kN/83
-         eULX6KYjkdlNcMqsuQNydgYP+6tN/iQRSd+fRW33B/mk/H/6qVzt9L0vGDf/CibKy+3f
-         GRKEMnz1nhl0nRloHx2KJHneX3haZNfL+7Bhgzr2yUuUNwMN4+dTxtxH5ZBNpARRUZBS
-         KPEA==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=/piUim2p74jw0sV4LsKseKpof8P1UZipdUBv4srb7rg=;
+        b=C6OKhf5oqZEXVhpfCscwxRSLUuoqA2V3t9HHArRlJgR/Q1ifevtat4C0MfSZepg8lI
+         yH3ZJNiE4erQFetG4iAnLE1S4Ws8f8ytyIBC6UFGEb+4/2tFuHGnyGTVTilBTlaZcgE9
+         fbo9utBrKMpICcsTaQ1z964N+hDhfeE15SeD+nJIAyLSzC8fFKWKVNHDOF9zchkb7CD/
+         GYOnJdSag7CC1uWk1+Z0wprLSURvkD/qcsyw38y7k6WBYNeaE7FVufB11TXsZ8vsQ394
+         liihnQDfC9owgNHFzwnFpDow3aQb0tE6BD1kVvEnbfkU2CojaE5k1jLBcHqO+bu2qsuD
+         Lgcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=ewtBdLlFstyXu2rzv/9mOhAvT2zhsnePDQJRGRvSnD0=;
-        b=FIQdSmp0+JP9BcF8za0NMj6zUMQBoI2M1OKq1HdS6HDj5oErwHBb3Twxa66g47XZAc
-         Gf0lp70rR0geRFarwHf/tsAAAHkg4yqtYak5kUIuDANaDG8VxXg95hkiRHlN5MiT9XKe
-         7ppNcKSHdbEYQTV5lLmqJZy8/IzgxYDWTGDgze5UCzrnBNXKFJzqCRYZC78tmb1VlPWF
-         mYvK7jKcBDxsxWGj4iZ8sFnVdWVV6DdJbFhLWZDrXTOuUSTT1TEawtK9QF96Y80QMGrX
-         Ug0GTL8VCX31EQ8Q8WXwHC2olOY86CVHvyiFwm3d7GOYMLJoFqNkKRltxXhAN5tcb4OB
-         STQQ==
-X-Gm-Message-State: AOUpUlHQhDZ1+61d2eD4Uo53pHAXeUFFxyDmSPnW4Rh5NOguzY8nIAuV
-        njdR4uRnvNHJVe/CYBLdR/dZQeHmexs4ENwaXd0I2bZJuN6V8Pys88KH7WoOlU4iLtxWuAy40rH
-        lA6lR6w+XyNJ2Oy1/agKIUl5ILqDGhzkTEcCISV4ociu2kGIrcw+ftxuSYg==
-X-Google-Smtp-Source: AAOMgpd73UjqCf8TnyVG0K0g6vMS9YrHcWHwXZen30yVsvilX0sK7JPKdJ4YHJbRQnUDDvaAoPhGrSCb+Xw=
-X-Received: by 2002:aca:570c:: with SMTP id l12-v6mr11469154oib.106.1532953087966;
- Mon, 30 Jul 2018 05:18:07 -0700 (PDT)
-Date:   Mon, 30 Jul 2018 14:18:00 +0200
-Message-Id: <20180730121801.53727-1-hanwen@google.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=/piUim2p74jw0sV4LsKseKpof8P1UZipdUBv4srb7rg=;
+        b=lc06RCudgTWAbVRU3TBC476QiP4J01JYvuX8MpyZ75mb7aT5gFBbgqSvGEgZ9SIq5o
+         /cgFg9F9GfF3OctliovahSxWDWIUtqTmkQvLJBkRucIaJwOqV+aunp9ZOm/iw8+JwdiY
+         2BoBAIB/zE6zmYOhQdMrDzs7KhD9oQqcQ1agVdoV0Yl7XrJ8x7rCaygkcTY2hsj9C4PY
+         0L6MCXUJ+G2MTIyyAoEV5q+95lcwFPZ84OgspCZ1m/NWUfYvdVacakZtTa7wiHJfeRpO
+         p8cFyAv/D1miqMzD7q013Pajdg3in8p3xBmDYFQYrgynO0p0cJ0dcCxBPPb1YhTO3eCE
+         Z79Q==
+X-Gm-Message-State: AOUpUlEJolPphCoDWuURTVtiHl0FlqVJ5yujKDtzZdcJsgjbLMn5RDuS
+        08gGVcEhVh/Spr2P05qmJV3G6s05LkcFlolbmj8GJ4jhHu9X+5Jt1kbVDaGNAQpn2iaP8Ob9HR8
+        Ro9SjEDc4r5sQaqwHaS3O4zm5BapZ3ycY/uc3Mt1+l5/Zl6u3cNPAzWDRpg==
+X-Google-Smtp-Source: AAOMgpdDg66EyPPKWOF48N829aWDuvBEqVsXZ17Ewm3XW7XSFMTZABSYdlCZMEwNO4ifVvp17XIqq2UouD0=
+X-Received: by 2002:aca:b8d5:: with SMTP id i204-v6mr11685492oif.46.1532953095849;
+ Mon, 30 Jul 2018 05:18:15 -0700 (PDT)
+Date:   Mon, 30 Jul 2018 14:18:01 +0200
+In-Reply-To: <20180730121801.53727-1-hanwen@google.com>
+Message-Id: <20180730121801.53727-2-hanwen@google.com>
 Mime-Version: 1.0
+References: <20180730121801.53727-1-hanwen@google.com>
 X-Mailer: git-send-email 2.18.0.345.g5c9ce644c3-goog
-Subject: [PATCH 1/2] Document git config getter return value.
+Subject: [PATCH 2/2] Highlight keywords in remote sideband output.
 From:   Han-Wen Nienhuys <hanwen@google.com>
 To:     git@vger.kernel.org
 Cc:     Han-Wen Nienhuys <hanwen@google.com>
@@ -58,32 +62,170 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The highlighting is done on the client-side. Supported keywords are
+"error", "warning", "hint" and "success".
+
+The colorization is controlled with the config setting "color.remote".
+
+Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+Change-Id: I090412a1288bc2caef0916447e28c2d0199da47d
 ---
- config.h | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ sideband.c                          | 79 +++++++++++++++++++++++++----
+ t/t5409-colorize-remote-messages.sh | 34 +++++++++++++
+ 2 files changed, 104 insertions(+), 9 deletions(-)
+ create mode 100644 t/t5409-colorize-remote-messages.sh
 
-diff --git a/config.h b/config.h
-index b95bb7649..d39256eb1 100644
---- a/config.h
-+++ b/config.h
-@@ -178,11 +178,16 @@ struct config_set {
- };
-
- extern void git_configset_init(struct config_set *cs);
--extern int git_configset_add_file(struct config_set *cs, const char *filename);
--extern int git_configset_get_value(struct config_set *cs, const char *key, const char **value);
+diff --git a/sideband.c b/sideband.c
+index 325bf0e97..15213a7c1 100644
+--- a/sideband.c
++++ b/sideband.c
+@@ -1,6 +1,63 @@
+ #include "cache.h"
+ #include "pkt-line.h"
+ #include "sideband.h"
++#include "color.h"
 +
- extern const struct string_list *git_configset_get_value_multi(struct config_set *cs, const char *key);
- extern void git_configset_clear(struct config_set *cs);
++static int sideband_use_color = -1;
 +
 +/*
-+ * The int return values in these functions is 1 if not found, 0 if found, leaving
-+ * the found value in the 'dest' pointer.
++ * Optionally highlight some keywords in remote output if they appear at the
++ * start of the line.
 + */
-+extern int git_configset_add_file(struct config_set *cs, const char *filename);
-+extern int git_configset_get_value(struct config_set *cs, const char *key, const char **dest);
- extern int git_configset_get_string_const(struct config_set *cs, const char *key, const char **dest);
- extern int git_configset_get_string(struct config_set *cs, const char *key, char **dest);
- extern int git_configset_get_int(struct config_set *cs, const char *key, int *dest);
---
++void maybe_colorize_sideband(struct strbuf *dest, const char *src, int n)
++{
++	if (sideband_use_color < 0) {
++		const char *key = "color.remote";
++		char *value = NULL;
++		if (!git_config_get_string(key, &value))
++			sideband_use_color = git_config_colorbool(key, value);
++	}
++
++	int want_color = want_color_stderr(sideband_use_color);
++	int i;
++
++	if (!want_color) {
++		strbuf_add(dest, src, n);
++		return;
++	}
++
++	struct kwtable {
++		const char *keyword;
++		const char *color;
++	} keywords[] = {
++		{"hint", GIT_COLOR_YELLOW},
++		{"warning", GIT_COLOR_BOLD_YELLOW},
++		{"success", GIT_COLOR_BOLD_GREEN},
++		{"error", GIT_COLOR_BOLD_RED},
++	};
++
++	while (isspace(*src)) {
++		strbuf_addch(dest, *src);
++		src++;
++		n--;
++	}
++
++	for (i = 0; i < ARRAY_SIZE(keywords); i++) {
++		struct kwtable* p = keywords + i;
++		int len = strlen(p->keyword);
++		if (!strncasecmp(p->keyword, src, len) && !isalnum(src[len])) {
++			strbuf_addstr(dest, p->color);
++			strbuf_add(dest, src, len);
++			strbuf_addstr(dest, GIT_COLOR_RESET);
++			n -= len;
++			src += len;
++			break;
++		}
++	}
++
++	strbuf_add(dest, src, n);
++}
++
+ 
+ /*
+  * Receive multiplexed output stream over git native protocol.
+@@ -48,8 +105,10 @@ int recv_sideband(const char *me, int in_stream, int out)
+ 		len--;
+ 		switch (band) {
+ 		case 3:
+-			strbuf_addf(&outbuf, "%s%s%s", outbuf.len ? "\n" : "",
+-				    DISPLAY_PREFIX, buf + 1);
++			strbuf_addf(&outbuf, "%s%s", outbuf.len ? "\n" : "",
++				    DISPLAY_PREFIX);
++			maybe_colorize_sideband(&outbuf, buf + 1, len);
++
+ 			retval = SIDEBAND_REMOTE_ERROR;
+ 			break;
+ 		case 2:
+@@ -69,20 +128,22 @@ int recv_sideband(const char *me, int in_stream, int out)
+ 				if (!outbuf.len)
+ 					strbuf_addstr(&outbuf, DISPLAY_PREFIX);
+ 				if (linelen > 0) {
+-					strbuf_addf(&outbuf, "%.*s%s%c",
+-						    linelen, b, suffix, *brk);
+-				} else {
+-					strbuf_addch(&outbuf, *brk);
++					maybe_colorize_sideband(&outbuf, b, linelen);
++					strbuf_addstr(&outbuf, suffix);
+ 				}
++
++				strbuf_addch(&outbuf, *brk);
+ 				xwrite(2, outbuf.buf, outbuf.len);
+ 				strbuf_reset(&outbuf);
+ 
+ 				b = brk + 1;
+ 			}
+ 
+-			if (*b)
+-				strbuf_addf(&outbuf, "%s%s", outbuf.len ?
+-					    "" : DISPLAY_PREFIX, b);
++			if (*b) {
++				strbuf_addstr(&outbuf, outbuf.len ?
++					    "" : DISPLAY_PREFIX);
++				maybe_colorize_sideband(&outbuf, b, strlen(b));
++			}
+ 			break;
+ 		case 1:
+ 			write_or_die(out, buf + 1, len);
+diff --git a/t/t5409-colorize-remote-messages.sh b/t/t5409-colorize-remote-messages.sh
+new file mode 100644
+index 000000000..1620cffbe
+--- /dev/null
++++ b/t/t5409-colorize-remote-messages.sh
+@@ -0,0 +1,34 @@
++#!/bin/sh
++
++test_description='remote messages are colorized on the client'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	mkdir .git/hooks &&
++        cat << EOF > .git/hooks/update &&
++#!/bin/sh
++echo error: error
++echo hint: hint
++echo success: success
++echo warning: warning
++exit 0
++EOF
++	chmod +x .git/hooks/update &&
++	echo 1 >file &&
++	git add file &&
++	git commit -m 1 &&
++        git clone . child &&
++        cd child &&
++        echo 2 > file &&
++        git commit -a -m 2
++'
++
++test_expect_success 'push' 'git -c color.remote push origin HEAD:refs/heads/newbranch 2>output &&
++  test_decode_color < output > decoded &&
++  test_i18ngrep "<BOLD;RED>error<RESET>:" decoded &&
++  test_i18ngrep "<YELLOW>hint<RESET>:" decoded &&
++  test_i18ngrep "<BOLD;GREEN>success<RESET>:" decoded &&
++  test_i18ngrep "<BOLD;YELLOW>warning<RESET>:" decoded'
++
++test_done
+-- 
 2.18.0.345.g5c9ce644c3-goog
+
