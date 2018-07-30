@@ -2,109 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 245EA1F597
-	for <e@80x24.org>; Mon, 30 Jul 2018 23:04:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC3881F597
+	for <e@80x24.org>; Mon, 30 Jul 2018 23:15:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732089AbeGaAmI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jul 2018 20:42:08 -0400
-Received: from mail-it0-f73.google.com ([209.85.214.73]:44640 "EHLO
-        mail-it0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727063AbeGaAmI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jul 2018 20:42:08 -0400
-Received: by mail-it0-f73.google.com with SMTP id z8-v6so933329itc.9
-        for <git@vger.kernel.org>; Mon, 30 Jul 2018 16:04:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
-         :cc;
-        bh=fLesSD7TtjNkbVOoPtrLiCucHaAd5TEMADhPsASofug=;
-        b=bbhTUWgG7fq4SdJzfpnqeAd85/GVGmeAF7okum4fWs4lLUP/0i+mM2t5MScg6NFPGb
-         oVCXMjo/lr5c6IPlI/briTr6F4XyWb2TZp+QaBAvjknynI20wqCFAdXyIWMKcYPHMwZq
-         JhqymQwJaUuv1fP15/jzxx668zO0fJyHRysjXdq1KwJ0hJVi/7do+qayxyhDYjpJJUbb
-         7GhjnQ2wyHq3tuMMYZSN2WYRg9tJXy/cGdYgcrHAdrvt2/sI/3qrOoWtvx/Jepbu1iBu
-         Rb2sJ4IeijJD313GfP00IT5WM1/5uJF+P9RQjuFQjB5p0Ftsnw79VvVWDkJWsbNLEfQQ
-         UzmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
-         :references:subject:from:to:cc;
-        bh=fLesSD7TtjNkbVOoPtrLiCucHaAd5TEMADhPsASofug=;
-        b=M/IywQoj7Fu4oAJ5HG/49UwaK16ozGNt5v0VPVDSRSUWYaQSgrA6T0sxXzfsEy4OJS
-         6oMidpR2KqVXVVmzJEyjrYfFlpISH131kOlvf9t3Fx9SWPW8Wld+nQvqGlpLP7cK1//B
-         AauPYnYpx08NTdDuj4TmNMxd0E2V/b9kWT5BCIdmWMkv5veq3LwEEEdiaTaNuJfLoFsN
-         v+YaMe92aHfMwBSNdag94tbszvl6bIaobAcR7ycIGgsZn00lZkbkKhbDaDbcHpo/p65C
-         HBtpFCaQKF38Q5OqkEsBW//y6gUhefyHWX/RTUItfAag53o4oSHmcKmSeHGurqyXW+uP
-         fRWA==
-X-Gm-Message-State: AOUpUlEMzBu0LP+OZFnp4I9aePMZ4WShdfQhhhO117zpH0k8s4Pe5v4j
-        Fo4h4NCVb5KEpXL8NTl3gQwBRDa0Cd7d
-X-Google-Smtp-Source: AAOMgpf9VPMdHuJrGtKFStj1HMRVEEM0QnutWAq5+EqMsy3egBkBIOgbadPuF/GrVolErkhqrTsSSb7crG1B
+        id S1732133AbeGaAwR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jul 2018 20:52:17 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40108 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1732027AbeGaAwR (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 30 Jul 2018 20:52:17 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b423:857:b27f:2f08])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 26A9C6046C;
+        Mon, 30 Jul 2018 23:14:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1532992496;
+        bh=/UczbVkfim9NJdfFOeLNduNa+N7OyRLFaPYK2vjXhKg=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=Utu4rVopeHPDChEkIB7w9z52wPKOEVFxo/MRLJ8GzyAI07XaSIYUote+/Ap1PjTmd
+         yVYW+qK2/POSsjicug+3UvG++P8+vmJYdyHThcMe4oiIoTOLlm1Ivcl5tCaZT2XMN8
+         0wstnLPxGb71tepanTD3NambryrmMfZOFwjRDmY2s+Osky9HhA+6KsUqD9H6tswDH5
+         VO0DEUdE78C0wV7jO8K+kazTN99OJyVU1oZmlZtbPWcIDgYCtKyD0E+R/sajWor7+I
+         hfqk2CyN0ReZHXkhgSXx2nRGlsERMSruZ2u5ZePQ8SUTr4+mkI1QdS22368FIHnY54
+         FkvsNcM6wQ+p04ZlE26Jb4x+A1/MwCPslFm64AMYfH2m2YspIgnFKBVpc1O3vYA459
+         wScUerSj8IKuwCyRbcKIETjAWR/xIos6sZd7dlYM0LQpegae/j2tQQvkmXZwX+wFIv
+         kPdQ9dVGBCDwgTP0F7AbbUPKzeAFI2ycqsOJGNtB72nOWO+KMJW
+Date:   Mon, 30 Jul 2018 23:14:51 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH] refspec: allow @ on the left-hand side of refspecs
+Message-ID: <20180730231451.GG945730@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+References: <20180729192803.1047050-1-sandals@crustytoothpaste.net>
+ <20180730175051.GA154732@google.com>
 MIME-Version: 1.0
-X-Received: by 2002:a5e:d811:: with SMTP id l17-v6mr7132047iok.91.1532991894030;
- Mon, 30 Jul 2018 16:04:54 -0700 (PDT)
-Date:   Mon, 30 Jul 2018 16:04:43 -0700
-In-Reply-To: <20180730230443.74416-1-sbeller@google.com>
-Message-Id: <20180730230443.74416-4-sbeller@google.com>
-References: <nycvar.QRO.7.76.6.1807301438440.10478@tvgsbejvaqbjf.bet> <20180730230443.74416-1-sbeller@google.com>
-X-Mailer: git-send-email 2.18.0.132.g195c49a2227
-Subject: [PATCH 3/3] config: treat section case insensitive in store_aux_event
-From:   Stefan Beller <sbeller@google.com>
-To:     johannes.schindelin@gmx.de
-Cc:     bmwill@google.com, git@vger.kernel.org, gitster@pobox.com,
-        peff@google.com, sbeller@google.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="gvF4niNJ+uBMJnEh"
+Content-Disposition: inline
+In-Reply-To: <20180730175051.GA154732@google.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.17.0-1-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a no-op because the section names are lower-cased already in
-get_base_var, this is purely for demonstration that we do not need to
-care about case issues in this part of the code.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- config.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+--gvF4niNJ+uBMJnEh
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/config.c b/config.c
-index de646d2c56f..c247164ad17 100644
---- a/config.c
-+++ b/config.c
-@@ -2355,14 +2355,28 @@ static int store_aux_event(enum config_event_t type,
- 	store->parsed[store->parsed_nr].type = type;
- 
- 	if (type == CONFIG_EVENT_SECTION) {
-+		char *p;
-+		int slen; /* section length */
- 		if (cf->var.len < 2 || cf->var.buf[cf->var.len - 1] != '.')
- 			return error("invalid section name '%s'", cf->var.buf);
- 
-+		p = strchr(cf->var.buf, '.');
-+		if (!p)
-+			/* no subsection, so treat all as section: */
-+			slen = store->baselen;
-+		else
-+			slen = p - cf->var.buf;
-+
-+		if (slen > store->baselen)
-+			slen = store->baselen;
-+
- 		/* Is this the section we were looking for? */
- 		store->is_keys_section =
- 			store->parsed[store->parsed_nr].is_keys_section =
- 			cf->var.len - 1 == store->baselen &&
--			!strncmp(cf->var.buf, store->key, store->baselen);
-+			!strncasecmp(cf->var.buf, store->key, slen) &&
-+			!strncmp(cf->var.buf + slen, store->key + slen,
-+				 store->baselen - slen);
- 		if (store->is_keys_section) {
- 			store->section_seen = 1;
- 			ALLOC_GROW(store->seen, store->seen_nr + 1,
--- 
-2.18.0.132.g195c49a2227
+On Mon, Jul 30, 2018 at 10:50:51AM -0700, Brandon Williams wrote:
+> On 07/29, brian m. carlson wrote:
+> > The object ID parsing machinery is aware of "@" as a synonym for "HEAD"
+> > and this is documented accordingly in gitrevisions(7).  The push
+> > documentation describes the source portion of a refspec as "any
+> > arbitrary 'SHA-1 expression'"; however, "@" is not allowed on the
+> > left-hand side of a refspec, since we attempt to check for it being a
+> > valid ref name and fail (since it is not).
+> >=20
+> > Teach the refspec machinery about this alias and silently substitute
+> > "HEAD" when we see "@".  This handles the fact that HEAD is a symref and
+> > preserves its special behavior.  We need not handle other arbitrary
+> > object ID expressions (such as "@^") when pushing because the revision
+> > machinery already handles that for us.
+>=20
+> So this claims that using "@^" should work despite not accounting for it
+> explicitly or am I misreading?  Unless I'm mistaken, it looks like we
+> don't really support arbitrary rev syntax in refspecs since "HEAD^"
+> doesn't work either.
 
+Correct, it does indeed work, at least for me:
+
+genre ok % git push castro HEAD^:refs/heads/temp
+Total 0 (delta 0), reused 0 (delta 0)
+To https://git.crustytoothpaste.net/git/bmc/git.git
+ * [new branch]            HEAD^ -> temp
+
+genre ok % git push castro @^:refs/heads/temp
+Total 0 (delta 0), reused 0 (delta 0)
+To https://git.crustytoothpaste.net/git/bmc/git.git
+ * [new branch]            @^ -> temp
+
+Note that in this case, I had to specify a full ref since it didn't
+exist on the remote and the left side wasn't a ref name.
+
+Now it doesn't work for fetches, only pushes.  Only the left side of a
+push refspec can be an arbitrary expression.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--gvF4niNJ+uBMJnEh
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.9 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAltfm+oACgkQv1NdgR9S
+9ostoQ//SR4D+DPHXeJdReQeoP9RerwS5bVZ+toe/dX/XN2A2+XOALZtMotG0jKG
+e1f31TKAItiovyLTI55o7xZDLZlIux6MlUdaPIxLNpmQBtT2IxDtLtNMLQ7RQ83J
+4oVunoMjAQFfiVqlMppl+ydTaI79Yt8ML12PaQk4F2quSTc8AQXIlWe6wyigTzGB
+RRiBrjUe4KraTTi7vF11tk8bTFnP0JSbydqFMA4j9yAKKnbgvDjIjzYjOoTPOq8a
+QCHrZqsgEam9D0KkoE0hm/kZWthTCtz9RQKHLi1s8o2R4aqVoMZ80r9Yx8z6DXUx
+YCKDQHgI+boPLCz0gm1cU0abTQ07Oh1JeRKRCCCrdcouTm9ifKajecJJQr2qkocH
+KnQxgUEq6ka0LuTjymlqX/36mNn/IO811TlwZgfeno/s6leVZkLDP4fGYwjNjFb0
+q9ZgdjxvRsVk30vH8ethm+MoS3s6dA4oxyfw5RUbjLTjDjgVyRAOQLCE5DlFHN9o
+OcSCxeTSLsJaZPppqIlpcZK6O4MHIpiAVEFECTMaiJQ6gTVArD1jBzPLxyiYR9nK
+N7BDw5ZqYgieTK5ZxhQANDDn+FIUpWB3a12FVlKBaOklmEVb00/DOhi+ZZGzFGkg
+UjNyxk8/D9WhnbyHikRFrBoYG3FmlahPbJqKONiHFKB80gR6Rk0=
+=zBay
+-----END PGP SIGNATURE-----
+
+--gvF4niNJ+uBMJnEh--
