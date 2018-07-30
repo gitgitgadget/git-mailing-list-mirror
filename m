@@ -2,125 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 10EFE1F597
-	for <e@80x24.org>; Mon, 30 Jul 2018 21:01:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E09E1F597
+	for <e@80x24.org>; Mon, 30 Jul 2018 21:04:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731597AbeG3Wim (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jul 2018 18:38:42 -0400
-Received: from mail-wr1-f52.google.com ([209.85.221.52]:34114 "EHLO
-        mail-wr1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730613AbeG3Wim (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jul 2018 18:38:42 -0400
-Received: by mail-wr1-f52.google.com with SMTP id c13-v6so14309312wrt.1
-        for <git@vger.kernel.org>; Mon, 30 Jul 2018 14:01:53 -0700 (PDT)
+        id S1731418AbeG3WlA (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jul 2018 18:41:00 -0400
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:36491 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728799AbeG3WlA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jul 2018 18:41:00 -0400
+Received: by mail-qk0-f194.google.com with SMTP id a132-v6so8824259qkg.3
+        for <git@vger.kernel.org>; Mon, 30 Jul 2018 14:04:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=TtMfgmiXvk6y5z9iKOq3eR8YsPV6c4K/WUV4eGOlPDM=;
-        b=d7LkPTkYk81x3poQWx2nde72QOpd9VMCa6q4VUfMRnb2slA832GUoYzSn150GiXUNT
-         aqjZJnb0mwcTxI7DD+xdktRxWGgiIU6HlZR6x3p35KWb3tRM8arZAh6YqDC00LzA5Vtn
-         kns7wDiqy2aQNmc+5dDdaudk8be/+Am97FEzrA3ws3KKry3VaG5O6JoRDvjVb19XA6Zd
-         L4C7rj07rr7SLOd9y1V81tXPHt8M8ZDlRJd29l9HEOI/l1hyfsWv1TE6HdXMzr9w/Te8
-         UlurCYbH4YGA+FaREEhPgLh1Gc9D+JoKis5KsDLkqSGPbsst81uC4OGcklRjktGBoaSp
-         P/mA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=MSS3N57dzv40SPe4yulD1K5WHOBemwvYktsvtfJ4zgY=;
+        b=ckyzNTetrUpFX574awTBUnJw3WXQx3VPMeyB6MucCPG2uMzt+6lKPSvhKjAjNeFXpK
+         mYBu+z4QtXmXqCkgZlL+EZyHyjI4Z/qp/wlUFqZ74OsJEtZuDxbnuJyjEJc/ZvzwO+eP
+         7vEj7O4XDB9Krumh9b8SIGCjknjJn35gdBVrMUDaSOSMNV2CQpO7dTdmmkz2YzEjQcKj
+         dWdhyeIipolaPMrmBy59SfT1HEqCb0wbWLDYs8onNvFlWR8jsp+9TewApbkYX2Mx+re7
+         l4uuhZKf2f4N173priRbPPJ5BUOIxsUrfyR1FKqNlXnAHOQfzMCNH/PVjklT22AcIguF
+         JimA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=TtMfgmiXvk6y5z9iKOq3eR8YsPV6c4K/WUV4eGOlPDM=;
-        b=gU9DBtXsYonywxJkuNN1xeIQJNs4Fxw4HZRaLaYWiHGYyyVpJDPeHfTCLtfxZYOfsL
-         SBDbAtHv/5YXpwFXs3jjRAxDhuo0UiDJavHNjglifbTKzuCFz0IXIOc3Lwyo/hC7LSb6
-         B3juujykL8e8yGF7ffXUVv8HKw9071yrWrZDFNbszCLDYmFAtHXXe9WDNN3CKFqTuPTT
-         7Ipi69l6Ax2XM2ZNnaUBJ/TY/ifwe9tnmTcPUNi3By+r4pDTNeWERM4G4ZRTpjbp2Qhc
-         oC0MXBxIMWo182UXm9JHB9c/1EE/euewp10HuDrzjL3YIrDfFvcPaCFuJ7oZKHyEREvF
-         UGIQ==
-X-Gm-Message-State: AOUpUlFifluKBLGD2v6VN1Gt7JfrOGB5WYceDpQiAhNlcg16YCFQb+l2
-        ToipC3mihbs2qIem25/IxGU=
-X-Google-Smtp-Source: AAOMgpeqLog8s2q7nsvKtW52NbjhQncXJdtveBCvi8rlNxuCTylCu5uCqFlCH8MM9D/jzSVyqAYDyg==
-X-Received: by 2002:adf:a197:: with SMTP id u23-v6mr19907553wru.50.1532984512527;
-        Mon, 30 Jul 2018 14:01:52 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id b13-v6sm20497093wrn.17.2018.07.30.14.01.51
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 30 Jul 2018 14:01:51 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Luke Diamand <luke@diamand.org>
-Cc:     Git Users <git@vger.kernel.org>, Chen Bin <chenbin.sh@gmail.com>
-Subject: Re: [PATCH 1/1] Add the `p4-pre-submit` hook
-References: <xmqq36w6rlh7.fsf@gitster-ct.c.googlers.com>
-        <20180727112222.19061-1-chenbin.sh@gmail.com>
-        <xmqqlg9sfvgr.fsf@gitster-ct.c.googlers.com>
-        <CAE5ih7_-Bd6fUhTL-Yxopc-kaUq0jY9ydx_COqDdN02aXz69Sg@mail.gmail.com>
-Date:   Mon, 30 Jul 2018 14:01:51 -0700
-In-Reply-To: <CAE5ih7_-Bd6fUhTL-Yxopc-kaUq0jY9ydx_COqDdN02aXz69Sg@mail.gmail.com>
-        (Luke Diamand's message of "Mon, 30 Jul 2018 20:48:48 +0200")
-Message-ID: <xmqq1sbkfneo.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=MSS3N57dzv40SPe4yulD1K5WHOBemwvYktsvtfJ4zgY=;
+        b=FAktfVU2eaUzFbhEnMynZhpSL6lR56A9Bw3rO8KpucTpRgNAMxFiADdOYm6LIfTQ25
+         kpINjA3ulEcMqSERYeBFS7oQqLvW5VQm/DRZp/tL/SXyoV2UEfPDJ5Wv8sg64QnTO2Vh
+         VwZyzgG171GhpCiVz84FJeyUfKsbomga65fccMGSK6kN4zX6TU9X5GRCuRROsHcDaf5i
+         4jpRBsdfNfXKH+KsdUrRR/OrU4SqxAu87modbCPAyltjXee8RSCVc98qqV+dYJftSQhx
+         aPAtghiEHz0niFBZ8BnqM+BUHdgjU3mPBVyOWsSUG3PpoiP3UiI1DQWKEM+8vuoJkmqL
+         MMdQ==
+X-Gm-Message-State: AOUpUlEtAgYFQ9v0dqXq/VPdLDKmlfzawvIK5VPs8fe0QvB8aJ/f+oOQ
+        w7zQ8JYOdvaeJuG4A2Nj/w8=
+X-Google-Smtp-Source: AAOMgpe4s0/1JYG2fM0llAuoG9uplbuMhMFjzFzvdzVOZtI6D7UAJiLb8UHEqSQNLwlZ+Uhhm+fGFA==
+X-Received: by 2002:a37:1113:: with SMTP id b19-v6mr17808886qkh.242.1532984651566;
+        Mon, 30 Jul 2018 14:04:11 -0700 (PDT)
+Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id o18-v6sm6491503qtm.84.2018.07.30.14.04.10
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 30 Jul 2018 14:04:10 -0700 (PDT)
+Subject: Re: [PATCH v2 0/4] Speed up unpack_trees()
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     Ben.Peart@microsoft.com, git@vger.kernel.org, gitster@pobox.com,
+        peff@peff.net
+References: <20180727154241.GA21288@duynguyen.home>
+ <20180729103306.16403-1-pclouds@gmail.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <dfe67a11-8b0b-682e-ff6c-4341808339bc@gmail.com>
+Date:   Mon, 30 Jul 2018 17:04:10 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <20180729103306.16403-1-pclouds@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Luke Diamand <luke@diamand.org> writes:
 
-> Possibly it should say "it takes no parameters" rather than "it takes
-> no parameter"; it is confusing that in English, zero takes the plural
-> rather than the singular. There's a PhD in linguistics there for
-> someone!
 
-I count three instances.  Will squash in the following while queuing
-with your Reviewed-by.
+On 7/29/2018 6:33 AM, Nguyễn Thái Ngọc Duy wrote:
+> This series speeds up unpack_trees() a bit by using cache-tree.
+> unpack-trees could bit split in three big parts
+> 
+> - the actual tree unpacking and running n-way merging
+> - update worktree, which could be expensive depending on how much I/O
+>    is involved
+> - repair cache-tree
+> 
+> This series focuses on the first part alone and could give 700%
+> speedup (best case possible scenario, real life ones probably not that
+> impressive).
+> 
+> It also shows that the reparing cache-tree is kinda expensive. I have
+> an idea of reusing cache-tree from the original index, but I'll leave
+> that to Ben or others to try out and see if it helps at all.
+> 
+> v2 fixes the comments from Junio, adds more performance tracing and
+> reduces the cost of adding index entries.
+> 
+> Nguyễn Thái Ngọc Duy (4):
+>    unpack-trees.c: add performance tracing
+>    unpack-trees: optimize walking same trees with cache-tree
+>    unpack-trees: reduce malloc in cache-tree walk
+>    unpack-trees: cheaper index update when walking by cache-tree
+> 
+>   cache-tree.c   |   2 +
+>   cache.h        |   1 +
+>   read-cache.c   |   3 +-
+>   unpack-trees.c | 161 ++++++++++++++++++++++++++++++++++++++++++++++++-
+>   unpack-trees.h |   1 +
+>   5 files changed, 166 insertions(+), 2 deletions(-)
+> 
 
-Thanks.
+I have a limited understanding of this code path so I'm not the best 
+person to review this but I didn't see any issues that concerned me.  I 
+also was able to run our internal functional and performance tests in 
+addition to the git tests and the results were positive.
 
- Documentation/git-p4.txt   | 2 +-
- Documentation/githooks.txt | 2 +-
- git-p4.py                  | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
-index a7aac1b920..41780a5aa9 100644
---- a/Documentation/git-p4.txt
-+++ b/Documentation/git-p4.txt
-@@ -377,7 +377,7 @@ These options can be used to modify 'git p4 submit' behavior.
- Hook for submit
- ~~~~~~~~~~~~~~~
- The `p4-pre-submit` hook is executed if it exists and is executable.
--The hook takes no parameter and nothing from standard input. Exiting with
-+The hook takes no parameters and nothing from standard input. Exiting with
- non-zero status from this script prevents `git-p4 submit` from launching.
- 
- One usage scenario is to run unit tests in the hook.
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 22fcabbe21..959044347e 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -488,7 +488,7 @@ all files and folders.
- p4-pre-submit
- ~~~~~~~~~~~~~
- 
--This hook is invoked by `git-p4 submit`. It takes no parameter and nothing
-+This hook is invoked by `git-p4 submit`. It takes no parameters and nothing
- from standard input. Exiting with non-zero status from this script prevent
- `git-p4 submit` from launching. Run `git-p4 submit --help` for details.
- 
-diff --git a/git-p4.py b/git-p4.py
-index 879abfd2b1..7fab255584 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -1496,7 +1496,7 @@ def __init__(self):
-         ]
-         self.description = """Submit changes from git to the perforce depot.\n
-     The `p4-pre-submit` hook is executed if it exists and is executable.
--    The hook takes no parameter and nothing from standard input. Exiting with
-+    The hook takes no parameters and nothing from standard input. Exiting with
-     non-zero status from this script prevents `git-p4 submit` from launching.
- 
-     One usage scenario is to run unit tests in the hook."""
+Ben
