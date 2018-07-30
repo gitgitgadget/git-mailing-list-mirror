@@ -2,86 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C6EB1F597
-	for <e@80x24.org>; Mon, 30 Jul 2018 14:46:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 06D521F597
+	for <e@80x24.org>; Mon, 30 Jul 2018 14:47:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731728AbeG3QV0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jul 2018 12:21:26 -0400
-Received: from mout.gmx.net ([212.227.17.22]:39141 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727082AbeG3QV0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jul 2018 12:21:26 -0400
-Received: from [192.168.0.129] ([37.201.193.26]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LrrRi-1g6sTN04n0-013dfx; Mon, 30
- Jul 2018 16:46:03 +0200
-Date:   Mon, 30 Jul 2018 16:46:01 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jonathan Nieder <jrnieder@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/9] vscode: hard-code a couple defines
-In-Reply-To: <20180723174108.GA9285@aiede.svl.corp.google.com>
-Message-ID: <nycvar.QRO.7.76.6.1807301643200.10478@tvgsbejvaqbjf.bet>
-References: <pull.2.git.gitgitgadget@gmail.com> <3770bd855c6f3e69acfe418ea7fe5b40454e4dfb.1532353966.git.gitgitgadget@gmail.com> <20180723174108.GA9285@aiede.svl.corp.google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1730953AbeG3QXN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jul 2018 12:23:13 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:45341 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729224AbeG3QXN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jul 2018 12:23:13 -0400
+Received: by mail-wr1-f68.google.com with SMTP id f12-v6so3284277wrv.12
+        for <git@vger.kernel.org>; Mon, 30 Jul 2018 07:47:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=1BR4xcwatqaAn+ogU7FN+eAxxUG50v1PCQ7vSTiiHx8=;
+        b=kQ/Vc0c834tU3pMKaQbaD6M/49GZOffbSG3ZJDKU/sNq+SEluO6r4xl/rx2gjM3TQJ
+         6VnxXjkv22bdH/8ZAFE8J3Em7vxu6OkW6p5dwaqQj38LKjZuWJpT34NLPQ9rCjBcOk+P
+         uyk3lfT0+JvcXWKK9sjZ3j2fXL/v0HSoFs1Mxsm9PTL4rFHt3MzNB5FpJhZ3HMiX7d3P
+         DpseFyCY2AoPLiHapjHu8JJbrXhoDLOCQHYla9mERJ++QXdbv72JrCRRasuv5pjzN4/c
+         /nKXf/iRomDLm75zu13AxZCINuG8MdNWftsdUmcoQiS9IGZmDqOI7klYS4OE1HPgYupI
+         GOTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=1BR4xcwatqaAn+ogU7FN+eAxxUG50v1PCQ7vSTiiHx8=;
+        b=VI1q0pVB8CIAqs9L5cvrD3Nd8VfLizv7viM6bzdZxsFTs2fAAmfZhQbvPgUf4NvSXT
+         H18KGpXfrd7Hd8HpcwKvAdpIzIwChkhflx63KWac9SOdIOEPXQKMW918kRVnmoeFUa1b
+         9wMeHY6ZifbDGLI57Fx5aoPv2OEvKSW8IWBgpjcmpsEwA4Nf8AUjwDNmaUewYr1KwM5m
+         z/dJhb2A4qZIHNhqJlAVdyDf/PGvrQdR8eF4tjOcbMx3ulbOg+OqwRO76U8w9Re79k2n
+         pd3GbrRjrdwFFA6/RaxDMhtCHvgj3phHLxOwKySxp5PHBAM49Ut+I6Nf0w5itasM7GgJ
+         pr2Q==
+X-Gm-Message-State: AOUpUlH/oCKjJWS+Pqx1rS4GK3FS4re7Ce/PjZ3drBNZlCQtzGETAHhR
+        64Rsfc0lj1gX1n4VwKkMWNs=
+X-Google-Smtp-Source: AAOMgpdmpVQmZV+JouKtv8IFaVjT6P9fRke3Kb/uKQFYLijBrsWxJwncuyDrNK+6cINA4Ce5wDZNPw==
+X-Received: by 2002:a5d:4d8d:: with SMTP id b13-v6mr17552736wru.80.1532962071398;
+        Mon, 30 Jul 2018 07:47:51 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id h5-v6sm14423185wrr.19.2018.07.30.07.47.50
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 30 Jul 2018 07:47:50 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v3 10/10] fsck: test and document unknown fsck.<msg-id> values
+References: <20180525192811.25680-1-avarab@gmail.com>
+        <20180727143720.14948-11-avarab@gmail.com>
+        <xmqqbmasl5hq.fsf@gitster-ct.c.googlers.com>
+        <8736w3v51a.fsf@evledraar.gmail.com>
+Date:   Mon, 30 Jul 2018 07:47:50 -0700
+In-Reply-To: <8736w3v51a.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Sat, 28 Jul 2018 15:55:13 +0200")
+Message-ID: <xmqqd0v4kcfd.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ADU2bnPEEsK+hcTACMMEgEtrrYHBwEkyiOrBvbGSxAR17o6bA5j
- LqFHUUdAZedXrufNjPG53AheTEm28UZFNAU1UyTPVTUK1JudzJCm/pCx/lEHS0Kvlq5tcJC
- B+vrlfIiYnwTohqcd/23g6RTA07W406Q6E46lySTvxcttWmiLYMzrDd37eBgOck8NIGiWWo
- YlztVtEvoiNCkH5u36nFQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:MtHazdW6iVg=:U4yE30zKKs4vsLPnKEozH2
- add6O3D3Y0vhphKhPQOcMcgJR4fyR1Vzl88wtQAFDAJQRzKcqQvH+zDcvfW+yKVQ9CeUURZY/
- XjXDsRoV3O1j2qyAtl2CqVNDtolPwBY22r6zWO9N8ijFL4BOr/XbcvWdk9TVYKb3YhTC3HiXV
- YoseaWUH1n06NJvFKn1Voc52mXu32DuC4vmuiL1yQa8KT08Ifk+8SkTRRP9uZFu+X2+/2meYi
- 6yGx6sHxLSIZNcz6zdKexH69GYxND0ntglDLoXleUWj01cG2NqPhzMPyk04GSFJLawd/hZVbu
- GDL7FK6oJzPm2XA+jVxRpN9X6i0TypXFrZLi6gYL4qB4JkwQugr7HKzSm1A0mcAH7lwei7JR9
- Oh2JPvc4P00PtZKPdhTTpvMLCrdzbDL8Bkk+ZyxmH9Y/skYZaKla5EuRtXzP+PfrhTo6fkHLf
- TRm18JWPKJuKUhb42JxFaWOtSp3cMhTw3foM8ynB9xV8/vBwPfjrne6dN0Zk5kn++Gou82UU3
- nS6nT5gND7JdXcvMCym+F6SfSn9+HKmAglRU/33qrqnBytwY4IcLfshkke9qoOrCD0Hl2P5AM
- /t6lRrFdSfzhve+UjVozzFRnQkF7kYDK1xbAlYyctho+GbaTNFetkr+HjID1mSVorYMq2l8fD
- TZtUZ72e5ZX5b3FtgdvtTHKPKvNQ/oFdKRolOjWzWz9ueY8gwdbnElTH7HkvfCoDlsdsijp0k
- 9G4zh9dMfAnn9AIayJC7tbefSwfzRbnxY3P2zRMUXUpe44oYZOnCH2Hhg7faUjJzpE2+/h2PU
- PXW6r3v
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-On Mon, 23 Jul 2018, Jonathan Nieder wrote:
+>>> When fsck.<msg-id> is set to an unknown value it'll cause "fsck" to
+>>> die, but the same is not rue of the "fetch" and "receive"
+>>> variants. Document this and test for it.
+> ...
+> We could change it. This is just something I ran into and figured it
+> should be tested / documented, and didn't feel any need to change it
+> myself.
+>
+> The current behavior is probably more of an organically grown
+> accident. Maybe we should make all of these warn.
 
-> Johannes Schindelin via GitGitGadget wrote:
-> 
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > Sadly, we do not get all of the definitions via ALL_CFLAGS. Some defines
-> > are passed to GCC *only* when compiling specific files, such as git.o.
-> >
-> > Let's just hard-code them into the script for the time being.
-> 
-> Could we move these to ALL_CFLAGS?  Is there any downside other than
-> increased rebuilds when options change?
+Or die.  I do agree with your assessment that the discrepancy was
+not designed, and my inclination for a correctness-centered feature
+like fsck is to err on the side of caution, rather than letting a
+misconfiguration pass unintended kinds of breakages through.
 
-I assumed that it gives us a bit more liberty at using names for constants
-that might otherwise be too general.
+Thanks.
 
-I did not even consider the rebuild time, but that's a good point.
-
-The idea to move those definitions to ALL_CFLAGS sounds good to me, yet I
-am loathe to introduce this into a patch series that is not about
-far-reaching design decisions at all, but merely about making a decent
-tool available to the finger tips of all Git contributors.
-
-Read: I think this would make for a pretty good micro-project, maybe in next
-year's GSoC (assuming that it happens and that we're accepted again).
-
-Ciao,
-Dscho
