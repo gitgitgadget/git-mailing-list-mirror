@@ -2,115 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E7F5E1F597
-	for <e@80x24.org>; Mon, 30 Jul 2018 20:21:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0697A1F597
+	for <e@80x24.org>; Mon, 30 Jul 2018 20:25:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731799AbeG3V6X (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jul 2018 17:58:23 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:42908 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728714AbeG3V6X (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jul 2018 17:58:23 -0400
-Received: by mail-wr1-f67.google.com with SMTP id e7-v6so14203488wrs.9
-        for <git@vger.kernel.org>; Mon, 30 Jul 2018 13:21:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=kJbJHB+ygPGvpI8UOCJZGy39tr7Fd6dhQ9MABzhi4DE=;
-        b=G1DFxHq2vWfrnP4gBP23F7f1RBXt1Vs98DA5oyZjmGz6GIfwC5XdjAQb3Oiu4EwNVH
-         ldB4JNAOADeuwy5SXAYJiFvb6NzZUjxSPfcDYKw6YiVOmBPM56LKBvRdvJ+DafSYuNlS
-         qUunZWZPA2DvBcsDQMChfgnuaBZbVUmIOBssJlu5qUEW3GbZZy6gqqs0NNkBZ4W1ySRm
-         WqEUo74YjCQ5+2V6KBeF6NK9mOdXQRFyo4v9zaM6hD3MpUcjm5s14FuGhEYMBO2Kq9Qk
-         yex6emOn0aWNL90pGX0l17yJ2cw+lSK4+LjB56fJWi/xAMgk4dA3tmV1xF/0nN37iuMy
-         owfw==
+        id S1730303AbeG3WC1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jul 2018 18:02:27 -0400
+Received: from mail-yw0-f170.google.com ([209.85.161.170]:36974 "EHLO
+        mail-yw0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727175AbeG3WC1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jul 2018 18:02:27 -0400
+Received: by mail-yw0-f170.google.com with SMTP id w76-v6so4884627ywg.4
+        for <git@vger.kernel.org>; Mon, 30 Jul 2018 13:25:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=kJbJHB+ygPGvpI8UOCJZGy39tr7Fd6dhQ9MABzhi4DE=;
-        b=UiCoCHTNV/NoO3yC2Fzf61TN7cy54+liP1kqdIgO1PETSBrtUpXUYF2G0w5Non9U+k
-         0ysEtYnKAbhSwsCsuDCQBMG76kpSdq2dwPSNF9D2fHuVi2OB4GQS6LJlH62EcJO5zgOJ
-         zGN0oeX5cFst1ABpjKfl0dqeIdXT3NlE74iccnhZ5jqdqfM/Kn6tQLRAixFwP+beU992
-         30mIDpqV/AkiLnTlpEhO9vSPvGNCfnxPN4OPRGD8WsAU3EFw7ORRDVoffXcVvHPOlDNb
-         wDUvKji2Eem11WTHRXGfgkTAM/BkkemsDVK7kUZuFvUqRWNdj/dujZe90xiTnIFPND2A
-         AwmA==
-X-Gm-Message-State: AOUpUlH8Vh5fX04+HJS5hzduvwuZKf+bAov8pnKXv12L7bOJwkKW7DK9
-        tuHkVMrcT8rDI1E2hTidNHY=
-X-Google-Smtp-Source: AAOMgpfcLJzdu4QznTl7L1w2nPuEvq9EfefvuC+lZ37yjx1l12SZgi/RzylcytbDCkMfz9zYqG5qSQ==
-X-Received: by 2002:a5d:6a03:: with SMTP id m3-v6mr18589855wru.192.1532982102001;
-        Mon, 30 Jul 2018 13:21:42 -0700 (PDT)
-Received: from localhost ([2.30.88.37])
-        by smtp.gmail.com with ESMTPSA id s124-v6sm304367wmf.47.2018.07.30.13.21.40
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 30 Jul 2018 13:21:41 -0700 (PDT)
-Date:   Mon, 30 Jul 2018 21:21:40 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 05/11] rerere: add documentation for conflict
- normalization
-Message-ID: <20180730202140.GG9955@hank.intra.tgummerer.com>
-References: <20180605215219.28783-1-t.gummerer@gmail.com>
- <20180714214443.7184-1-t.gummerer@gmail.com>
- <20180714214443.7184-6-t.gummerer@gmail.com>
- <xmqqin4whatr.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=sNvZ7IeKpkzbzzmAWKBVPiRq4UX48s8JU339QqgHJFk=;
+        b=jPD05u5zcCqfHr71lIAB/U4zZAbTMqRGaA6eGbm4+Jud/jdbl7kUlHPoanmbagVaZj
+         B1v9GuF+saqIvI6Bk3bJMvWaSfR8Seabmm6hOwRjPOxxHS3QuduSqWQ5arokzM8imevC
+         iDQGKXEB2Ty4q4QrSLk27G3kwev/k6SieLNXVA6slxWQeA96gPwFXDzMZWp3HxUGrfEX
+         Dve4uD3CwDqMLrfG3NDH6NU9T79aQawlAhqCG3xK7osisQijgQR386GiuOVwplZxS7jQ
+         kEQgo6RkB566T0K8jGMvSsYMI99+AehkfEHzpJWg7NhEscnn8L4Yhw+62tOEcslnZNfI
+         pu5A==
+X-Gm-Message-State: AOUpUlFc5Xbnh926MhKv+3Go0avaf4AdNdySBzcdtF6Ercy4GP+dwrbU
+        X8l7Oje7Zj5fA0zT1l64HUmQHapyRxy7Yfa8D6U=
+X-Google-Smtp-Source: AAOMgpf0/gGBAqkaLNWMngeA1F2KVnCtd/2ACuL0koS4A47NAu4OSb/kgtRE3dW6PL7IF8EwpjZPnghZLV0vIs7GSvs=
+X-Received: by 2002:a81:4153:: with SMTP id f19-v6mr9748720ywk.418.1532982346320;
+ Mon, 30 Jul 2018 13:25:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqin4whatr.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.0 (2018-05-17)
+References: <20180626073001.6555-1-sunshine@sunshineco.com>
+ <20180711064642.6933-1-sunshine@sunshineco.com> <20180711064642.6933-2-sunshine@sunshineco.com>
+ <20180730181356.GA156463@aiede.svl.corp.google.com>
+In-Reply-To: <20180730181356.GA156463@aiede.svl.corp.google.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 30 Jul 2018 16:25:34 -0400
+Message-ID: <CAPig+cRFMKBQVVYjhS6-Yyy-aQCYXGiqG6XoqucJoedCvAzheQ@mail.gmail.com>
+Subject: Re: [PATCH v2 01/10] t/test-lib: teach --chain-lint to detect broken
+ &&-chains in subshells
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Luke Diamand <luke@diamand.org>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07/30, Junio C Hamano wrote:
-> Thomas Gummerer <t.gummerer@gmail.com> writes:
-> 
-> > +Different conflict styles and branch names are normalized by stripping
-> > +the labels from the conflict markers, and removing extraneous
-> > +information from the `diff3` conflict style. Branches that are merged
-> 
-> s/extraneous information/commmon ancestor version/ perhaps, to be
-> fact-based without passing value judgment?
+On Mon, Jul 30, 2018 at 2:14 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Eric Sunshine wrote:
+> > Address this shortcoming by feeding the body of the test to a
+> > lightweight "linter" which can peer inside subshells and identify broken
+> > &&-chains by pure textual inspection.
+>
+> This is causing contrib/subtree tests to fail for me: running "make -C
+> contrib/subtree test" produces
 
-Yeah I meant "extraneous information for rerere", but common ancester
-version is better.
+Thanks, I forgot that some of 'contrib' had bundled tests. (In fact, I
+just checked the other 'contrib' tests and found that a MediaWiki test
+has a broken top-level &&-chain.)
 
-> We drop the common ancestor version only because we cannot normalize
-> from `merge` style to `diff3` style by adding one, and not because
-> it is extraneous.  It does help humans understand the conflict a lot
-> better to have that section.
-> 
-> > +By extension, this means that rerere should recognize that the above
-> > +conflicts are the same.  To do this, the labels on the conflict
-> > +markers are stripped, and the diff3 output is removed.  The above
-> 
-> s/diff3 output/common ancestor version/, as "diff3 output" would
-> mean the whole thing between <<< and >>> to readers.
+> The problematic test code looks like this:
+>
+>         (
+>                 chks_sub=$(cat <<TXT | sed '\''s,^,sub dir/,'\''
+> $chks
+> TXT
+> ) &&
+>
+> Ugly quoting, useless use of "cat", etc, aside, I don't think it's
+> missing any &&.  Hints?
 
-Makes sense, will fix in the re-roll, thanks!
+Yes, it's a false positive.
 
-> > diff --git a/rerere.c b/rerere.c
-> > index be98c0afcb..da1ab54027 100644
-> > --- a/rerere.c
-> > +++ b/rerere.c
-> > @@ -394,10 +394,6 @@ static int is_cmarker(char *buf, int marker_char, int marker_size)
-> >   * and NUL concatenated together.
-> >   *
-> >   * Return the number of conflict hunks found.
-> > - *
-> > - * NEEDSWORK: the logic and theory of operation behind this conflict
-> > - * normalization may deserve to be documented somewhere, perhaps in
-> > - * Documentation/technical/rerere.txt.
-> >   */
-> >  static int handle_path(unsigned char *sha1, struct rerere_io *io, int marker_size)
-> >  {
-> 
-> Thanks for finally removing this age-old NEEDSWORK comment.
+The subshell linter would normally fold out the here-doc content, but
+'sed' isn't a proper programming language, so the linter can't
+recognize arbitrary here-doc tags. Instead it has hard-coded knowledge
+of the tags commonly used in the Git tests, specifically EOF, EOT, and
+INPUT_END.
+
+The linter also deals with multi-line $(...) expressions, however, it
+currently only recognizes them when the $( is on its own line.
+
+Had this test used one of the common here-doc tags _or_ had it
+formatted the $(...) as described, then it wouldn't have misfired.
+
+I could try to update the linter to not trip over this sort of input,
+however, this test code is indeed ugly and difficult to understand,
+and your rewrite[1] of it makes it far easier to grok, so I'm not sure
+the effort would be worthwhile. What do you think?
+
+[1]: https://public-inbox.org/git/20180730190738.GD156463@aiede.svl.corp.google.com/
