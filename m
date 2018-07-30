@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E0DD1F597
-	for <e@80x24.org>; Mon, 30 Jul 2018 15:42:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F4851F597
+	for <e@80x24.org>; Mon, 30 Jul 2018 15:42:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726961AbeG3RSY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jul 2018 13:18:24 -0400
-Received: from mail-pl0-f47.google.com ([209.85.160.47]:44948 "EHLO
-        mail-pl0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726651AbeG3RSY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jul 2018 13:18:24 -0400
-Received: by mail-pl0-f47.google.com with SMTP id m16-v6so5723223pls.11
-        for <git@vger.kernel.org>; Mon, 30 Jul 2018 08:42:51 -0700 (PDT)
+        id S1726790AbeG3RSX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jul 2018 13:18:23 -0400
+Received: from mail-pg1-f179.google.com ([209.85.215.179]:46038 "EHLO
+        mail-pg1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726651AbeG3RSV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jul 2018 13:18:21 -0400
+Received: by mail-pg1-f179.google.com with SMTP id f1-v6so7459916pgq.12
+        for <git@vger.kernel.org>; Mon, 30 Jul 2018 08:42:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=/gK+7vB63iu3xbqyNOcBljPoPjsz8CnoZH1JDiH8aVY=;
-        b=nsn1DNVvRmYEzXRyn6U85SN37vXT94b2GBHqLGIcw5jPWQfLGVMfTxjif3BwDw2t77
-         LjwUNrjYNN+O92yNF21ylOaBy/Zq+kLG8+vZD0yMG2kvqpg6RZN5jkRksKnBpPVmQd38
-         D1UqnOa+3ggCVqXYmlecwPm2aK/VAlP4Sb84mQOeUsVjtaSD5uoHlWxZXcvzemufFgLB
-         7VMndfH9Kv11sNmtYIgyrp4qAsEnfKIGuAgEC4u+FwndF4HYE+Q0TL48x9Vb/IfA0+ZU
-         tN1OH7H4SMe5PDihfG4LL/GRhA5r1DNEYp1ngoVzLsQfgAg/cNrp4SII+Gb7Jn/i59zv
-         Uk3Q==
+        bh=M1o44EZHEeIhuiY6YyRnD/SbimisWm4v7vdKTl7ZnPU=;
+        b=uenktQgm4mzL8kAtBkVhZZ9yX9okRiV+lCDvLK0s2Sf+7bWfeuvLQ0DHXDf8TNY9q9
+         p42dlbkhcujtT3gtpqf511Od/GQEFeKpV7ic00ItlrFPNR7yZVyHUgN30p6RKohGtKLp
+         ubKMgCpsWgotwG0H0UxgTpsjdbZx8RXFMMS+/9DwT889UtCe08QGDOLPT/OzyPWxORx9
+         BDqMlfoVY0nsUAVxfpKHff3+GvHnbOFVykE+99Vmy2IiFthXghmocXb3WQ4wkKSTiaIB
+         Tq9liAyVRoafTLoUSHRktPIxB7tEivIF3tYBN9Dxmf9KHPyrvQXdLjyrHz0+jcI7C1kF
+         le4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=/gK+7vB63iu3xbqyNOcBljPoPjsz8CnoZH1JDiH8aVY=;
-        b=LaNP96A2pKi2g0UWhx1AsM/Sb/4WMyL2zlriK4V/v/lDDgedtwf0euQYNeV7h8BMLY
-         aJi3QY7qcruLdzA0Q9WWdwPoBYFJoLaQ+q0h9rvjR+HcIiuh129N32tOAs24FONqhjX3
-         YhOEGTgYwK0o3kI2Pkt/AHI+bjAgQi6HlHfBh1Jf1FJpor0jv9OApwwdi4EKSpy5RY1k
-         pU970+BDQ5otNnAPit08wYf5W91zI3Mc2IRU2IWsh80N35MGwrVTUzSwcVY6WSRMc8wv
-         a0ByphbcyB9iAXDYaMkPgPSWN9GMInDy9MBtQplzYycS6o1tJ1xT5g8/hKAaPE6pn4Pc
-         wnnA==
-X-Gm-Message-State: AOUpUlH0Ld9g3Hq4q7L97dzToi9r5FPkZhJsVTCXpHz4DTn4MF9XilCv
-        dbHTKjjgsuVbJo0K4JZq6y113QQ3
-X-Google-Smtp-Source: AAOMgpfj5yqxGrRcePEi+4Ege0d5wNuklibqQ39plg9ts3J8WZ82h96nYsiR+tcxzNqEsyX0KkPqGw==
-X-Received: by 2002:a17:902:4906:: with SMTP id u6-v6mr10860401pld.44.1532965370628;
-        Mon, 30 Jul 2018 08:42:50 -0700 (PDT)
+        bh=M1o44EZHEeIhuiY6YyRnD/SbimisWm4v7vdKTl7ZnPU=;
+        b=smo3z888M1f8B5YfgnBYXVVlm3CRW5sBsfeIartJ4MaiT1oeM4XS6qIDh5djdfwxKT
+         AS6pmibavxtOhc1Bd5SqTPkB9ZDdXjpsr2gQRrwwm1kAwHLnHJuxOcYYtCnXCvtc73+l
+         PP2x7GvoXpuQYtWiYmLOAc5pQVqKYMt6kZJPapW5U7yadTHCdsYnThDcZwjJUj6Yc1a5
+         c/Zr2POfTpRP6RlnlhYqjTHDWJJCBSDxhTeY19kn6DptZwnGif3qkCIF6L+D1azpoXgc
+         ifwOldiof6plYsmwuUIHm70tEeyXI3m/7AWc35ai63wtWrJajK9hPjNJLFfDwQZAKv/D
+         dX4w==
+X-Gm-Message-State: AOUpUlE+TeK3hR8hzzPvYBY8z2njeXcFf1hpt8gB+rjghU7tIpi4dL2B
+        8NIbI5RtJvZeF1ZrMNnerf0HFKgm
+X-Google-Smtp-Source: AAOMgpdtYHiUMOPKjFclBvvUirmpOi2PhdnSKoKraMydg0SACSrUd6GIDjYXZi2n4AER2sWxj8mNbw==
+X-Received: by 2002:a63:a502:: with SMTP id n2-v6mr17063485pgf.263.1532965367727;
+        Mon, 30 Jul 2018 08:42:47 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id p26-v6sm21065791pfi.183.2018.07.30.08.42.49
+        by smtp.gmail.com with ESMTPSA id l84-v6sm19461209pfg.3.2018.07.30.08.42.46
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 30 Jul 2018 08:42:49 -0700 (PDT)
-Date:   Mon, 30 Jul 2018 08:42:49 -0700 (PDT)
-X-Google-Original-Date: Mon, 30 Jul 2018 15:42:36 GMT
-Message-Id: <105b50c62667640d0ed45cba1cf730bc3f2237da.1532965363.git.gitgitgadget@gmail.com>
+        Mon, 30 Jul 2018 08:42:46 -0700 (PDT)
+Date:   Mon, 30 Jul 2018 08:42:46 -0700 (PDT)
+X-Google-Original-Date: Mon, 30 Jul 2018 15:42:34 GMT
+Message-Id: <bbf13e40a501b6d46766cbf69fd6022b9c0b47b3.1532965363.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2.v2.git.gitgitgadget@gmail.com>
 References: <pull.2.git.gitgitgadget@gmail.com>
         <pull.2.v2.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 3/9] cache.h: extract enum declaration from inside a struct
- declaration
+Subject: [PATCH v2 1/9] contrib: add a script to initialize VS Code
+ configuration
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,50 +72,238 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-While it is technically possible, it is confusing. Not only the user,
-but also VS Code's intellisense.
+VS Code is a lightweight but powerful source code editor which runs on
+your desktop and is available for Windows, macOS and Linux. Among other
+languages, it has support for C/C++ via an extension, which offers to
+not only build and debug the code, but also Intellisense, i.e.
+code-aware completion and similar niceties.
+
+This patch adds a script that helps set up the environment to work
+effectively with VS Code: simply run the Unix shell script
+contrib/vscode/init.sh, which creates the relevant files, and open the
+top level folder of Git's source code in VS Code.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- cache.h | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ .gitignore                    |   1 +
+ contrib/vscode/.gitattributes |   1 +
+ contrib/vscode/README.md      |  14 +++
+ contrib/vscode/init.sh        | 165 ++++++++++++++++++++++++++++++++++
+ 4 files changed, 181 insertions(+)
+ create mode 100644 contrib/vscode/.gitattributes
+ create mode 100644 contrib/vscode/README.md
+ create mode 100755 contrib/vscode/init.sh
 
-diff --git a/cache.h b/cache.h
-index 89a107a7f..2380136f6 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1425,18 +1425,20 @@ extern void *read_object_with_reference(const struct object_id *oid,
- extern struct object *peel_to_type(const char *name, int namelen,
- 				   struct object *o, enum object_type);
- 
-+enum date_mode_type {
-+	DATE_NORMAL = 0,
-+	DATE_RELATIVE,
-+	DATE_SHORT,
-+	DATE_ISO8601,
-+	DATE_ISO8601_STRICT,
-+	DATE_RFC2822,
-+	DATE_STRFTIME,
-+	DATE_RAW,
-+	DATE_UNIX
-+};
+diff --git a/.gitignore b/.gitignore
+index 388cc4bee..592e8f879 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -206,6 +206,7 @@
+ /config.mak.autogen
+ /config.mak.append
+ /configure
++/.vscode/
+ /tags
+ /TAGS
+ /cscope*
+diff --git a/contrib/vscode/.gitattributes b/contrib/vscode/.gitattributes
+new file mode 100644
+index 000000000..e89f2236e
+--- /dev/null
++++ b/contrib/vscode/.gitattributes
+@@ -0,0 +1 @@
++init.sh whitespace=-indent-with-non-tab
+diff --git a/contrib/vscode/README.md b/contrib/vscode/README.md
+new file mode 100644
+index 000000000..8202d6203
+--- /dev/null
++++ b/contrib/vscode/README.md
+@@ -0,0 +1,14 @@
++Configuration for VS Code
++=========================
 +
- struct date_mode {
--	enum date_mode_type {
--		DATE_NORMAL = 0,
--		DATE_RELATIVE,
--		DATE_SHORT,
--		DATE_ISO8601,
--		DATE_ISO8601_STRICT,
--		DATE_RFC2822,
--		DATE_STRFTIME,
--		DATE_RAW,
--		DATE_UNIX
--	} type;
-+	enum date_mode_type type;
- 	const char *strftime_fmt;
- 	int local;
- };
++[VS Code](https://code.visualstudio.com/) is a lightweight but powerful source
++code editor which runs on your desktop and is available for
++[Windows](https://code.visualstudio.com/docs/setup/windows),
++[macOS](https://code.visualstudio.com/docs/setup/mac) and
++[Linux](https://code.visualstudio.com/docs/setup/linux). Among other languages,
++it has [support for C/C++ via an extension](https://github.com/Microsoft/vscode-cpptools).
++
++To start developing Git with VS Code, simply run the Unix shell script called
++`init.sh` in this directory, which creates the configuration files in
++`.vscode/` that VS Code consumes. `init.sh` needs access to `make` and `gcc`,
++so run the script in a Git SDK shell if you are using Windows.
+diff --git a/contrib/vscode/init.sh b/contrib/vscode/init.sh
+new file mode 100755
+index 000000000..3cc93243f
+--- /dev/null
++++ b/contrib/vscode/init.sh
+@@ -0,0 +1,165 @@
++#!/bin/sh
++
++die () {
++	echo "$*" >&2
++	exit 1
++}
++
++cd "$(dirname "$0")"/../.. ||
++die "Could not cd to top-level directory"
++
++mkdir -p .vscode ||
++die "Could not create .vscode/"
++
++# General settings
++
++cat >.vscode/settings.json <<\EOF ||
++{
++    "C_Cpp.intelliSenseEngine": "Default",
++    "C_Cpp.intelliSenseEngineFallback": "Disabled",
++    "files.associations": {
++        "*.h": "c",
++        "*.c": "c"
++    }
++}
++EOF
++die "Could not write settings.json"
++
++# Infer some setup-specific locations/names
++
++GCCPATH="$(which gcc)"
++GDBPATH="$(which gdb)"
++MAKECOMMAND="make -j5 DEVELOPER=1"
++OSNAME=
++X=
++case "$(uname -s)" in
++MINGW*)
++	GCCPATH="$(cygpath -am "$GCCPATH")"
++	GDBPATH="$(cygpath -am "$GDBPATH")"
++	MAKE_BASH="$(cygpath -am /git-cmd.exe) --command=usr\\\\bin\\\\bash.exe"
++	MAKECOMMAND="$MAKE_BASH -lc \\\"$MAKECOMMAND\\\""
++	OSNAME=Win32
++	X=.exe
++	;;
++Linux)
++	OSNAME=Linux
++	;;
++Darwin)
++	OSNAME=macOS
++	;;
++esac
++
++# Default build task
++
++cat >.vscode/tasks.json <<EOF ||
++{
++    // See https://go.microsoft.com/fwlink/?LinkId=733558
++    // for the documentation about the tasks.json format
++    "version": "2.0.0",
++    "tasks": [
++        {
++            "label": "make",
++            "type": "shell",
++            "command": "$MAKECOMMAND",
++            "group": {
++                "kind": "build",
++                "isDefault": true
++            }
++        }
++    ]
++}
++EOF
++die "Could not install default build task"
++
++# Debugger settings
++
++cat >.vscode/launch.json <<EOF ||
++{
++    // Use IntelliSense to learn about possible attributes.
++    // Hover to view descriptions of existing attributes.
++    // For more information, visit:
++    // https://go.microsoft.com/fwlink/?linkid=830387
++    "version": "0.2.0",
++    "configurations": [
++        {
++            "name": "(gdb) Launch",
++            "type": "cppdbg",
++            "request": "launch",
++            "program": "\${workspaceFolder}/git$X",
++            "args": [],
++            "stopAtEntry": false,
++            "cwd": "\${workspaceFolder}",
++            "environment": [],
++            "externalConsole": true,
++            "MIMode": "gdb",
++            "miDebuggerPath": "$GDBPATH",
++            "setupCommands": [
++                {
++                    "description": "Enable pretty-printing for gdb",
++                    "text": "-enable-pretty-printing",
++                    "ignoreFailures": true
++                }
++            ]
++        }
++    ]
++}
++EOF
++die "Could not write launch configuration"
++
++# C/C++ extension settings
++
++make -f - OSNAME=$OSNAME GCCPATH="$GCCPATH" vscode-init \
++	>.vscode/c_cpp_properties.json <<\EOF ||
++include Makefile
++
++vscode-init:
++	@mkdir -p .vscode && \
++	incs= && defs= && \
++	for e in $(ALL_CFLAGS); do \
++		case "$$e" in \
++		-I.) \
++			incs="$$(printf '% 16s"$${workspaceRoot}",\n%s' \
++				"" "$$incs")" \
++			;; \
++		-I/*) \
++			incs="$$(printf '% 16s"%s",\n%s' \
++				"" "$${e#-I}" "$$incs")" \
++			;; \
++		-I*) \
++			incs="$$(printf '% 16s"$${workspaceRoot}/%s",\n%s' \
++				"" "$${e#-I}" "$$incs")" \
++			;; \
++		-D*) \
++			defs="$$(printf '% 16s"%s",\n%s' \
++				"" "$$(echo "$${e#-D}" | sed 's/"/\\&/g')" \
++				"$$defs")" \
++			;; \
++		esac; \
++	done && \
++	echo '{' && \
++	echo '    "configurations": [' && \
++	echo '        {' && \
++	echo '            "name": "$(OSNAME)",' && \
++	echo '            "intelliSenseMode": "clang-x64",' && \
++	echo '            "includePath": [' && \
++	echo "$$incs" | sort | sed '$$s/,$$//' && \
++	echo '            ],' && \
++	echo '            "defines": [' && \
++	echo "$$defs" | sort | sed '$$s/,$$//' && \
++	echo '            ],' && \
++	echo '            "browse": {' && \
++	echo '                "limitSymbolsToIncludedHeaders": true,' && \
++	echo '                "databaseFilename": "",' && \
++	echo '                "path": [' && \
++	echo '                    "$${workspaceRoot}"' && \
++	echo '                ]' && \
++	echo '            },' && \
++	echo '            "cStandard": "c11",' && \
++	echo '            "cppStandard": "c++17",' && \
++	echo '            "compilerPath": "$(GCCPATH)"' && \
++	echo '        }' && \
++	echo '    ],' && \
++	echo '    "version": 4' && \
++	echo '}'
++EOF
++die "Could not write settings for the C/C++ extension"
 -- 
 gitgitgadget
 
