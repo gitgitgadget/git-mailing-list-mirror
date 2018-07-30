@@ -2,80 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 28D7B208E9
-	for <e@80x24.org>; Mon, 30 Jul 2018 14:53:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 585831F597
+	for <e@80x24.org>; Mon, 30 Jul 2018 14:54:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727016AbeG3Q23 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jul 2018 12:28:29 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:38234 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726720AbeG3Q23 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jul 2018 12:28:29 -0400
-Received: by mail-it0-f67.google.com with SMTP id v71-v6so34359itb.3
-        for <git@vger.kernel.org>; Mon, 30 Jul 2018 07:53:08 -0700 (PDT)
+        id S1728666AbeG3Q3q (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jul 2018 12:29:46 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:36059 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727474AbeG3Q3q (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jul 2018 12:29:46 -0400
+Received: by mail-wm0-f66.google.com with SMTP id s14-v6so48404wmc.1
+        for <git@vger.kernel.org>; Mon, 30 Jul 2018 07:54:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=cEc9F9+VuBaEzFs5pueNt7i1W4s/l+qq4TEEt8ADS9k=;
-        b=VQVblT0smpz9mErYWu2yBgiqsyTQrjkI/x+vi7MsbcM5wv9F//5HdichRf0WRg0fpr
-         6X3XedWscZUMQ6DUpnxo0z3TAOR4Uomvl0OHYa5lF2ezu3torZlA4cvDiBAn0Hsg/vFB
-         wTq58fNFPt/jdv9aECKGpaMgQ9LC72nCuQcuYaCNwf2WsF9GpcvowbQwdFAAYN/A5w5K
-         3UknmIycem2iX7aZH9DUkKaAI/LKIqN+KjvjZDDc7pGdCcPf/La4wGnDduiBXMtv39RW
-         jDj5AwS/jXCNg5RwKbS1c/UIjZ7jSdG6HBVVi11Ohzv4U3wq7WywFYDIFJ21jCUsVJ2b
-         UqzQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=uu+cAEzaJwJTQuK60kN+rehdSx2BxZOnv5IYK6TRsTw=;
+        b=nOdLFl+7ucVMZWEL4V/zmA34StAQU29QBWJbLzY3nWrqQIUXIluXBWIOCFejia8yPa
+         CBjKugus+ePU4Zf1rTWdghJMOUCbtcmTqnWFwxhFG+TD1riAWHS4uvqhlNn1wETNt17V
+         +Ff/axTeMWzZbddwA6OFCRmQB01d8FZTEhBvmxgVlQYOAJSYcvNhcwfTyQRbwuRPGI2p
+         opoVEIFA9sW03w/R+ILctB0s3Vplp2h5IDvPBy7VGQCBsfhy1QHko8bqKjhYos/wbIdT
+         5vVYhv3dNvJgj1MV3pogiAr0yAU5UgY3tFFIWOhUu0Gf+l0w/gnf061etIikn13k+pPQ
+         PACw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=cEc9F9+VuBaEzFs5pueNt7i1W4s/l+qq4TEEt8ADS9k=;
-        b=FJCnDloANniqc2EPhQIxijEJo5MIzmvX9K/enbLGV9EbBdOZya31I30oNjr4FXlwgq
-         mg2dF3/3lQktl3TwJaoDsNZ+TvwOpAkn8N+mTHsL5+TtUXmrZ4avTwoZ0KdSkIZuT7ha
-         JbKkZWCiDodfPd03hAu2fpT2/Yh4/6mI9y5sfSQ5RvcjQDKpDgXq1q1rs33EevxLO2lG
-         2Ety1qS85okZZyyn+Ltcg0hxZ+061sZZBO6DJk8R0KxM3lHqDkU48iwz9OSSfqXxTL8F
-         oYWULmLBwAczlWzQ3x2aha5JPFwbApZggpmtNT2kN5jygmMPHBoKndx7DqVIgb7SsRYM
-         naEQ==
-X-Gm-Message-State: AOUpUlG+DuzQCWbW1Vn3bNURTYI6vv+aMIyS4LtAMvyVjKu+4ZSY/rsi
-        GaAZ0p29gOH/IGCoDgDQywcc8N2SWFy7A3cdQK4=
-X-Google-Smtp-Source: AAOMgpf5I+YQ+Oe5emsglb4yOfYYIa/iAXheHIID4BFEyDYW+lgGwDyznrF+gaZEyvYVeg26SWdwOXgKPbDF+1cjidA=
-X-Received: by 2002:a24:b101:: with SMTP id o1-v6mr13832373itf.121.1532962387713;
- Mon, 30 Jul 2018 07:53:07 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=uu+cAEzaJwJTQuK60kN+rehdSx2BxZOnv5IYK6TRsTw=;
+        b=kO5W84tRZzAJ9Sn1d+qjWa0m7b+IH+eZuj4WqGpv+QhVLNaQOF/Wrvsxrb9m9Gq0xa
+         wmrO/VbVbtDS87RY+l6e0pBKBI+nc8qBEh4iRibnp3rkSFBVOaT3yGai57Bm56RxNc26
+         tes7z/swiMbnC/Mwntkk451bAYtquyOgIRfU2ck0/4DEux7Jyv3DvJy7JrvotVpLlCRv
+         96p3zg1Uc3NnO7J+FAbl9tBPW4OZkwY+h2/T87rlBCYEGxRE5jn33nLm5yNTvkak94M1
+         ufnQoKfvGd9O1mZnwcAr9OpTEq5JCGV/t+oKzks2sd94ZsB+SNEUVqa8VVhYMti/KNqL
+         I0lA==
+X-Gm-Message-State: AOUpUlE+S11dGhsBk6b7i9bZI7L1xSgpG6vHxRRYgCFJ4+AcoF2wZDBw
+        Zf30Daox/edysKvLd+s08TQ=
+X-Google-Smtp-Source: AAOMgpc+lCwFCKPWmuD+DDXP6HRgMUhVDbBeJgPeP29pZlyKrnwTlTrHfOH7SPV8lwj8vKepi+nU2w==
+X-Received: by 2002:a1c:d702:: with SMTP id o2-v6mr15447053wmg.115.1532962462308;
+        Mon, 30 Jul 2018 07:54:22 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id j9-v6sm27344734wrv.5.2018.07.30.07.54.21
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 30 Jul 2018 07:54:21 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Michael <aixtools@felt.demon.nl>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, Dan Shumow <shumow@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: Is detecting endianness at compile-time unworkable?
+References: <fb935882-25b1-db5f-d765-50dab297f733@felt.demon.nl>
+        <20180729181006.GC945730@genre.crustytoothpaste.net>
+        <2309fa7f-c2d8-ee57-aff5-b9e32d2da609@felt.demon.nl>
+        <20180729192753.GD945730@genre.crustytoothpaste.net>
+        <dfe374bf-d9de-8dad-6ec9-4edfa3e9b12b@felt.demon.nl>
+        <20180729200623.GF945730@genre.crustytoothpaste.net>
+        <701d9f4b-efbd-c584-4bec-bddb51b11d96@felt.demon.nl>
+        <87wotdt649.fsf@evledraar.gmail.com>
+Date:   Mon, 30 Jul 2018 07:54:21 -0700
+In-Reply-To: <87wotdt649.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Mon, 30 Jul 2018 11:39:18 +0200")
+Message-ID: <xmqq600wkc4i.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20180730123334.65186-1-hanwen@google.com> <20180730123334.65186-2-hanwen@google.com>
-In-Reply-To: <20180730123334.65186-2-hanwen@google.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 30 Jul 2018 16:52:40 +0200
-Message-ID: <CACsJy8CSh5uqWepdY7wCzP024WYcRFM719uXoKzJ4oziHHxwjw@mail.gmail.com>
-Subject: Re: [PATCH 1/1] Highlight keywords in remote sideband output.
-To:     hanwen@google.com
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 30, 2018 at 2:34 PM Han-Wen Nienhuys <hanwen@google.com> wrote:
-> +       struct kwtable {
-> +               const char *keyword;
-> +               const char *color;
-> +       } keywords[] = {
-> +               {"hint", GIT_COLOR_YELLOW},
-> +               {"warning", GIT_COLOR_BOLD_YELLOW},
-> +               {"success", GIT_COLOR_BOLD_GREEN},
-> +               {"error", GIT_COLOR_BOLD_RED},
-> +       };
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-Please let me customize these colors. "grep color.*slot
-Documentation/config.txt help.c" could give you a few examples.
+> And, as an aside, the reason we can't easily make it better ourselves is
+> because the build process for git.git doesn't have a facility to run
+> code to detect this type of stuff (the configure script is always
+> optional). So we can't just run this test ourselves.
 
-I think we also add a space after { and before } in most places (there
-are a few places that don't do that, but personally I'd prefer spaces
-to make it a bit easier to read).
--- 
-Duy
+It won't help those who cross-compile anyway.  I thought we declared
+"we make a reasonable effort to guess the target endianness from the
+system header by inspecting usual macros, but will not aim to cover
+every system on the planet---instead there is a knob to tweak it for
+those on exotic platforms" last time we discussed this?
