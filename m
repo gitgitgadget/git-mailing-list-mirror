@@ -2,87 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 350DA1F597
-	for <e@80x24.org>; Mon, 30 Jul 2018 09:07:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F6241F597
+	for <e@80x24.org>; Mon, 30 Jul 2018 09:30:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726601AbeG3KlD (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jul 2018 06:41:03 -0400
-Received: from mout.gmx.net ([212.227.15.18]:45289 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726565AbeG3KlD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jul 2018 06:41:03 -0400
-Received: from [192.168.0.129] ([37.201.193.26]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lgql4-1gLtK44BqI-00oEfd; Mon, 30
- Jul 2018 11:06:47 +0200
-Date:   Mon, 30 Jul 2018 11:06:44 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Dan Shumow <danshu@microsoft.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Edward Thomson <ethomson@edwardthomson.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        demerphq <demerphq@gmail.com>, Adam Langley <agl@google.com>,
-        keccak@noekeon.org
-Subject: Re: Hash algorithm analysis
-In-Reply-To: <20180724221008.GI18502@genre.crustytoothpaste.net>
-Message-ID: <nycvar.QRO.7.76.6.1807301058560.10478@tvgsbejvaqbjf.bet>
-References: <20180609205628.GB38834@genre.crustytoothpaste.net> <20180609224913.GC38834@genre.crustytoothpaste.net> <20180611192942.GC20665@aiede.svl.corp.google.com> <20180720215220.GB18502@genre.crustytoothpaste.net> <20180724190136.GA5@0f3cdde9c159>
- <CA+55aFwSe9BF8e0hLk9pp3FVD5LaVY5GRdsV3fbNtgzekJadyA@mail.gmail.com> <xmqqzhygwd5o.fsf@gitster-ct.c.googlers.com> <20180724221008.GI18502@genre.crustytoothpaste.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726709AbeG3LEO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jul 2018 07:04:14 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:52643 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726604AbeG3LEO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jul 2018 07:04:14 -0400
+Received: by mail-it0-f66.google.com with SMTP id d9-v6so16098147itf.2
+        for <git@vger.kernel.org>; Mon, 30 Jul 2018 02:30:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=PCju3bVaexDwAnpqHU3MRlJixBmUZbaAuc8M7FKOsJc=;
+        b=T3GW7Yu8hUtvuDrFieiitLs9dM7bpp0nSr5NYPKG1l9NsWFeQToL1e6P4CZqBo8ZKX
+         Xg3kVVeGm7Vz1kyiK+9rJFbHHgf+ywHO0ZsleDD2nJdi/TfyFco/YNMW7G9cxMh9cfW4
+         yiBJhOAVsQV6oh4cAkIj8weUR5PUzlovGjysps+Q4X9Y1RYiG6n/hQl3GN+HdrUtBc6G
+         nlYAxzS3UENrmlBjrwHjjWmCbY1KxhzRYd35+b8JEyGbEv5z+r6tTeS6TKyBvIcls40J
+         x8tl82OKZTBFOSKbE/ELAiyQIwUdMyklu3zQXGDtqEkVJPOejQm9jR4aajJoYBsA5XBH
+         AshQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :mime-version:content-transfer-encoding;
+        bh=PCju3bVaexDwAnpqHU3MRlJixBmUZbaAuc8M7FKOsJc=;
+        b=q2sPZ7vgQCQz/TILap0TX/by/WPdD0y3s+9BQ9Mc/Ji5d3bTndJHcg86EayHru8m2R
+         U3tJ964j7nFcHvvd8erTs8XHaOCmJuT0FSo5OWxPWGvxAeb8wL+xFU4uA2CzDLM6FhIc
+         6hRWqmGYt9qQzBdqw2n4a0aUNyyMdIadRJzYo8H9fnlOZw8Tcp+koXYqre8kNdhB0qic
+         nEM/QHQmtsWn5dDFUlPEeCdwXdXt/LWZGu7IV5cU7iz5EGmibxvcO9a6KYeBE6kZ9tIq
+         uStFekpZZwn5yMSoqacNwFbKzTmWUPPUI3xElUHzgRHSiW7jyfuTY6jtPh9CULU5uaps
+         JWeA==
+X-Gm-Message-State: AOUpUlFA85aJD6kzACyl3Q3ljuPGP6WEzB13pULjH5HQBaOqdJSx6Kqd
+        yzbiPwAYmwipPbFa2gKWmxwIQOji
+X-Google-Smtp-Source: AAOMgpf8o3OxeVIaayi/Lxq1I3nXvevOQyk8JUw4M1/mihole/KriY3wUp4mXv/gEboIydASh5SLxQ==
+X-Received: by 2002:a24:cb03:: with SMTP id u3-v6mr13534185itg.15.1532943006568;
+        Mon, 30 Jul 2018 02:30:06 -0700 (PDT)
+Received: from localhost.localdomain (user-12l2cs3.cable.mindspring.com. [69.81.51.131])
+        by smtp.gmail.com with ESMTPSA id d10-v6sm3341105iob.4.2018.07.30.02.30.05
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Mon, 30 Jul 2018 02:30:05 -0700 (PDT)
+From:   Eric Sunshine <sunshine@sunshineco.com>
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@talktalk.net>,
+        Akinori MUSHA <knu@iDaemons.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH 0/2] fix "rebase -i --root" corrupting root commit
+Date:   Mon, 30 Jul 2018 05:29:27 -0400
+Message-Id: <20180730092929.71114-1-sunshine@sunshineco.com>
+X-Mailer: git-send-email 2.18.0.597.ga71716f1ad
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:kqNrAJEE0NOq0Y3y3JOlySjcy8Bd/3bxLRCMxAzJO1kxXVXkWe0
- cimiK730g1H2ghelG0D9DCt3Wym96vTA+1kxvnU5RfHkKHMBzt2WEkRe2l1So5DuijlMsR+
- XqVI0yVFbuf5qTz+Qd3i6e9CJg2om67tORrUBob7xuB++dyhGbnpob2oSlEDHDfCECH+hCK
- QFsYDzg0C4ubYc02XShlQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:kGd9LjYKYVk=:/Ldy29scVk+mGRnyRO/KUT
- w8c9LfIrXf+D9YB4EnbORvWsLENnCeehDd9EvPmvVfMtT5Ln5ceXVx6DHy6zT1LK+bGuwZVep
- /zG23CjlcFtzfLVuEkSsADelYQfAiAKY97hsAp5ISqlvyjet7OxDCCO6dvCDzHT7FnzTSmMgt
- pTkiPIApC751359WhLfts0JYKHr8YK4sX5bpbkOldqujD3n7f2sNOo79UgXHPMNmnSkS46dn/
- tfiOzrSTcmFFZAflTDIs4coDoQmOnEjnrHK627sBsNfks0+gf2DL0GtPF/Uo8YDGh3fggD+5x
- UVuaIJokNx/Q1SttTjKPINxgDAZFLOAJ/yJH6MrzOzRbyjdB1RHQu7wxJMW73WfwzCmkDtHv7
- ztlfTdKTvELVO2f/6agB65Uav919WGNFe/jQS8h4hRcdaeobBnZku1E9ce4aUyi6zkDrjXRZ7
- gQ6NhbfzBu8bJ5bM6ioLHAe+MkGd21Qk5Dl523GaTs2YG4s25ghliRvntTm3N+HmUPqUd+/lY
- /d1fWq/u+vyxD0QIJNqqEG1UkOjQSdEEGtes61Z4ZClJRpJn3bilNO+bwHewwjQxvvy39SRCW
- Ay2Le8MiHixaDTWKAAtjoh4qBumOZQ+C5KqCS9dk3QyoXYB9JWMc+174gVoTVL0FKmCi2ly1U
- /VEPS1Mt4AF21Gk41Db4gdH++hCMyKAuQJGUkMSYDbQjIxnQsuGP9ZPy+6hSawx2L31IR2B4M
- EE1BsnXPVx57Mue3KyqdJMTvLQox34E6aUJE4g0iGr9WfKMv/wJgBCp3f9uFQZACzmAbvX7Sf
- 3yO6nQK
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Brian,
+This series fixes bugs causing corruption of the root commit when
+"rebase -i --root" is used to swap in a new root commit. In particular,
+the "author" header has trailing garbage. Some tools handle the
+corruption somewhat gracefully by showing a bogus date, but others barf
+on it (gitk, for instance). git-fsck correctly identifies the
+corruption. I discovered this after git-rebase corrupted one of my own
+projects.
 
-On Tue, 24 Jul 2018, brian m. carlson wrote:
+Unfortunately, these bugs (from js/sequencer-and-root-commits) made it
+into the v2.18.0 release. It's worrying that a released Git can be
+creating corrupt commits, but fortunately "rebase -i --root" is not
+likely used often (especially on well-established projects).
+Nevertheless, it may be 'maint' worthy and applies cleanly there.
 
-> On Tue, Jul 24, 2018 at 02:13:07PM -0700, Junio C Hamano wrote:
-> > Yup.  I actually was leaning toward saying "all of them are OK in
-> > practice, so the person who is actually spear-heading the work gets to
-> > choose", but if we picked SHA-256 now, that would not be a choice that
-> > Brian has to later justify for choosing against everybody else's
-> > wishes, which makes it the best choice ;-)
-> 
-> This looks like a rough consensus.
+It was only after I diagnosed and fixed these bugs that I thought to
+check 'pu' and discovered that Akinori MUSHA already made a stab[1] at
+fixing one of the three bugs which this series fixes. Akinori's fix has
+the somewhat undesirable property that it adds an extra blank line to
+the end of the script, as Phillip correctly pointed out in review[2].
+Patch 2/2 of this series has the more "correct" fix, in addition to
+fixing another bug.
 
-As I grew really uncomfortable with having a decision that seems to be
-based on hunches by non-experts (we rejected the preference of the only
-cryptographer who weighed in, after all, precisely like we did over a
-decade ago), I asked whether I could loop in one of our in-house experts
-with this public discussion.
+Moreover, patch 2/2 of this series provides a more thorough fix overall
+than Akinori, so it may make sense to replace his patch with this
+series, though perhaps keep the test his patch adds to augment the
+strict test of the "author" header added by this series.
 
-Y'all should be quite familiar with his work: Dan Shumow.
+[1]: https://public-inbox.org/git/86a7qwpt9g.knu@iDaemons.org/
+[2]: https://public-inbox.org/git/f5b56540-d26a-044e-5f46-1d975f889d06@talktalk.net/
 
-Dan, thank you for agreeing to chime in publicly.
+Eric Sunshine (2):
+  sequencer: fix "rebase -i --root" corrupting author header
+  sequencer: fix "rebase -i --root" corrupting author header timezone
 
-Ciao,
-Dscho
+ sequencer.c                   |  9 +++++++--
+ t/t3404-rebase-interactive.sh | 10 +++++++++-
+ 2 files changed, 16 insertions(+), 3 deletions(-)
+
+-- 
+2.18.0.597.ga71716f1ad
+
