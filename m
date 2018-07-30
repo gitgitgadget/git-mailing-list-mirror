@@ -2,99 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 117841F597
-	for <e@80x24.org>; Mon, 30 Jul 2018 20:16:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB9151F597
+	for <e@80x24.org>; Mon, 30 Jul 2018 20:18:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729315AbeG3Vwq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jul 2018 17:52:46 -0400
-Received: from mail-qk0-f194.google.com ([209.85.220.194]:33002 "EHLO
-        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727019AbeG3Vwp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jul 2018 17:52:45 -0400
-Received: by mail-qk0-f194.google.com with SMTP id 27-v6so8725040qkv.0
-        for <git@vger.kernel.org>; Mon, 30 Jul 2018 13:16:06 -0700 (PDT)
+        id S1731047AbeG3Vys (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jul 2018 17:54:48 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:35918 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727019AbeG3Vys (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jul 2018 17:54:48 -0400
+Received: by mail-wm0-f66.google.com with SMTP id s14-v6so717086wmc.1
+        for <git@vger.kernel.org>; Mon, 30 Jul 2018 13:18:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=0ShDFDLAuPyhdkl7fhri8Uac+0weAIFNkXS4C2ydmzI=;
-        b=l7pQHsUemjTmv+yentqSsji5s1zEw0FK8GKqXPteXP76gZgoyWwcN/BfvwWw1CYkFU
-         YUySn6LK9y7KxQFffO8Pqd6McI5+awKL6Gy0Mml1dySybhTuQh0/nO+6OZgw1vocP1d7
-         gEZEjjjDlvigKOXusXBPWpOSuMjog+Us4yjJmrfblHzkDxIjdlm6iVm33AD7ZAMJHVM5
-         dtEGdg4TqFkvUKW8zvNiipDJ4sSCGA/hYlP6d+JhiqXL+lfOvKfN7D1ec/PVNZjruJwT
-         ZOZrWT0gtfeG/1nNYowlRi/FOWhv2fQc2BUdraSrcPmVIuX4juWPToztIvOUBbCzyGz2
-         IQmg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=9PKKEU6xMNH8RUhR8rbhGSeKPiDik232yEnyevuH/MQ=;
+        b=JngzayKwb2SHQB+cPGvE/mnexHTSh1tcJPz8wArV4+1hQoAkr60+LAdliG9SNXakwC
+         AONxMsYGb5NPbWTz2IX9LbGOosAHN2mIglglDmg8dkkCeCm4JYBiEoQxEAkEJXdwKbLF
+         zZANDr3PztU84q1UzmV1CBq2zxiZ2l8bBuZS+BTnx/mTxKsHODwQQfdoHy3go8kHomoH
+         IhNjtcpnuXE9T2xQ3iRXmbqZ7JPQN8ZEtibG1GRRSBnRMX3mLa3TgAii8sNclBYsO9y+
+         tWNETy6rl5ZNKGk/QGrKPe7LVhXZyhxjxIkjFC2lA0Hlv/LCydRwTlgCUoaKBk0PGyDL
+         u6jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=0ShDFDLAuPyhdkl7fhri8Uac+0weAIFNkXS4C2ydmzI=;
-        b=WOwEXaDQoAkNU9FmB1lr9BqhnhjCb/P8F5P8BqThNeJpEzQY7eBguVf9QVNMvw1XTA
-         kocPMw/9r5vvoQd3eUChDUkTLzLSGQer4bZ6NgNIviXM+BeNArJXoPXj4bzsxEstO7nb
-         tWMHMptDLWkJs1FkqA2QkJhzREBk0V4zhW1rcP65ESneAoqF4oC/+omw+H4CPtiVva9/
-         zKlK0qWBQHQzuzKO+L839fOVUlBaHjSa5USMOlc3MzD4VJYxN6QcL8rugWuK4Otcco+0
-         uMeaf8yF5oh8157qCYhZTnBQcuBIc4zGmUuqv9VLnwF23cxgbnY3mCizaczZvnz/E9iZ
-         DVfA==
-X-Gm-Message-State: AOUpUlGsBjdcDiIcgCivFz7u+FkwJucr6FwmEKPoVinQkiTWDK5hS0HP
-        BAWypECkLJVyL2Kxlm44hxkDKZSr
-X-Google-Smtp-Source: AAOMgpe4Pp48VVVR8K6HNK3IsF+u/kGTNUD9AijCmoG0li/ZVSVNaxM1PvyXePZxZ8h44Uh1YglB9Q==
-X-Received: by 2002:a37:2b89:: with SMTP id r9-v6mr17151307qkr.389.1532981766043;
-        Mon, 30 Jul 2018 13:16:06 -0700 (PDT)
-Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id w13-v6sm9248555qtc.88.2018.07.30.13.16.04
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 30 Jul 2018 13:16:04 -0700 (PDT)
-Subject: Re: [PATCH v2 1/4] unpack-trees.c: add performance tracing
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     Ben.Peart@microsoft.com, git@vger.kernel.org, gitster@pobox.com,
-        peff@peff.net
-References: <20180727154241.GA21288@duynguyen.home>
- <20180729103306.16403-1-pclouds@gmail.com>
- <20180729103306.16403-2-pclouds@gmail.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <cae996fc-38d7-a691-3b66-b0b504513f75@gmail.com>
-Date:   Mon, 30 Jul 2018 16:16:03 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=9PKKEU6xMNH8RUhR8rbhGSeKPiDik232yEnyevuH/MQ=;
+        b=KnjLxcwN3EzXDleMXnImdo2KtvUroheL81poq/a7Hv7aULOy/4BHyoGEmsdudtj+uZ
+         lJSA8uikjFTB8FcfIxKI6tkfLhav0ZfoCzJOChHr8J2/7jjXDc86+HWv9s5LITxA6/MI
+         bxvSanMW+kE25DteqvsLEOmAT0grQFVlIghdsbaydoK6gSy3IDWWvtViDWTkW+jZVW5W
+         88tvIWDCFyritWrLb6vCPlmvwIFDFTE0MJ97ZZLJymwgUzXH6FYV7uc3W5/xtj82Qi26
+         yCHeidCIExfrtEqz+j9LgYxiuouRe7gWq/zjZCHa+JQTp7ChQ0ubkXJFmWAfQqlzm8hP
+         ERqA==
+X-Gm-Message-State: AOUpUlGpUlPXNUDwQRkwYSA7jsFuajJpVM5bRqEWQNLOj1W71sKG0RLQ
+        nx1rh735eXzaE4Jv/P3kJ4resoSM
+X-Google-Smtp-Source: AAOMgpf4ga3LxJUhe631UFHAI/YSBYeMqs8TIqI/B/635ViuNgogTNK750ydNGm6cO1FEj/M7QhaCw==
+X-Received: by 2002:a1c:30d2:: with SMTP id w201-v6mr422218wmw.47.1532981887612;
+        Mon, 30 Jul 2018 13:18:07 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id u18-v6sm27040842wrm.80.2018.07.30.13.18.06
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 30 Jul 2018 13:18:06 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>, gitgitgadget@gmail.com,
+        Git List <git@vger.kernel.org>, Thomas Rast <tr@thomasrast.ch>
+Subject: Re: [PATCH v4 11/21] range-diff: add tests
+References: <pull.1.v3.git.gitgitgadget@gmail.com>
+        <pull.1.v4.git.gitgitgadget@gmail.com>
+        <2b8d09020fff0ac220c1878c65b47290c5245cb9.1532210683.git.gitgitgadget@gmail.com>
+        <CAPig+cRd2V_hN0BVCcevXhu1v_QpL76mhqTGQmWPLK7sAD4Ytw@mail.gmail.com>
+        <nycvar.QRO.7.76.6.1807301830330.10478@tvgsbejvaqbjf.bet>
+Date:   Mon, 30 Jul 2018 13:18:06 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.1807301830330.10478@tvgsbejvaqbjf.bet>
+        (Johannes Schindelin's message of "Mon, 30 Jul 2018 18:30:55 +0200
+        (DST)")
+Message-ID: <xmqq600wfpfl.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20180729103306.16403-2-pclouds@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
+> On Sun, 22 Jul 2018, Eric Sunshine wrote:
+>
+>> On Sat, Jul 21, 2018 at 6:05 PM Thomas Rast via GitGitGadget
+>> <gitgitgadget@gmail.com> wrote:
+>> > These are essentially lifted from https://github.com/trast/tbdiff, with
+>> > light touch-ups to account for the command now being names `git
+>> 
+>> s/names/named/
+>
+> Thanks.
+>
+> I already pushed an update to https://github.com/gitgitgadget/git/pull/1.
 
-On 7/29/2018 6:33 AM, Nguyễn Thái Ngọc Duy wrote:
-> We're going to optimize unpack_trees() a bit in the following
-> patches. Let's add some tracing to measure how long it takes before
-> and after. This is the baseline ("git checkout -" on gcc.git, 80k
-> files on worktree)
-> 
->      0.018239226 s: read cache .git/index
->      0.052541655 s: preload index
->      0.001537598 s: refresh index
->      0.168167768 s: unpack trees
->      0.002897186 s: update worktree after a merge
->      0.131661745 s: repair cache-tree
->      0.075389117 s: write index, changed mask = 2a
->      0.111702023 s: unpack trees
->      0.000023245 s: update worktree after a merge
->      0.111793866 s: diff-index
->      0.587933288 s: git command: /home/pclouds/w/git/git checkout -
-> 
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-
-I've reviewed this patch and it looks good to me.  Nice to see the 
-additional breakdown on where time is being spent.
-
+Should I take "pushed to ... GGG" to mean "do not merge what you
+have to 'next' yet, as there will be an updated series (not
+incremental) being prepared"?
