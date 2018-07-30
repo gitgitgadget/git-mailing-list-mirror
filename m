@@ -2,134 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA5DA1F597
-	for <e@80x24.org>; Mon, 30 Jul 2018 17:50:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA6F01F597
+	for <e@80x24.org>; Mon, 30 Jul 2018 17:50:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731542AbeG3T1A (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jul 2018 15:27:00 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:46067 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727019AbeG3T1A (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jul 2018 15:27:00 -0400
-Received: by mail-pg1-f196.google.com with SMTP id f1-v6so7637820pgq.12
-        for <git@vger.kernel.org>; Mon, 30 Jul 2018 10:50:54 -0700 (PDT)
+        id S1731791AbeG3T1E (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jul 2018 15:27:04 -0400
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:52522 "EHLO
+        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727077AbeG3T1D (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jul 2018 15:27:03 -0400
+Received: by mail-wm0-f45.google.com with SMTP id o11-v6so283266wmh.2
+        for <git@vger.kernel.org>; Mon, 30 Jul 2018 10:50:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=BhUHkhz3yTwsROxtSHqWxM4dK+t/fuoUZ1OcuFRolgU=;
-        b=c2D/LexSbQTY6GI3Rmt3G07bjtLLo7h1cds/+2fGJv9oeqzsj54eD5RciaWp2JYaeg
-         WcMTksBZc5J1xQWXCBPYs+0LZskCTrNm/+5z+cXn5fuSqJKSjPQ9g1uDfMCgJsDUyjAX
-         ZT4ioOho/bmOFEn+flcAEPWlTbx57nq4GILortv08XuWH26clB6PHbV1dlVfL/wb9L4V
-         l5lZOMwnq+vUlRqWjKeWxvmdKQKqlGVwyT4CdP1wFaMaS/ukkKXG9ZAo0Tq3pzif2mbN
-         +0eqpzFbc2rG1VlM14UhA8xYGE/HUSYR73AXPQRAK4DhqafvZ3nL8GLsia2tQEmIs5cR
-         hZfw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:message-id:user-agent
+         :mime-version;
+        bh=rDbMAEztlh9cEq+32fQZttuHAujO9qF/j4/WXDbqMuA=;
+        b=Er04Xq53gJqU+ILscS6U9WFlujYwub6g6Gkb9AkfhT1bY91hg7Pt4nbl5EQlVXkqqX
+         fJYoHz5asrnw4BWwGezCO4BBjMFJbCh8Wvzu7UDzCJ9GpoTwqR1ANjthjmLW9AikFZHQ
+         oUscWQ3UhcrAaSjSPkQ9I7i+X2/NPgMbPbbTXtQRY+YQHAGdQiP6tuKV6FRsAh/sgF2n
+         IWHnhiPTE7ekfEpWEAy3J5W0rqMTHYy/Oxbbsp9o9OJlp7KqwJkVak7e8nPzq+m89Cpv
+         PWWc3ml8eGHSr5nl0amZkctSc8obqhdANbOfHEb3yKV5PoFMkuI8kiCPejXnq9tiqfb/
+         Ze6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=BhUHkhz3yTwsROxtSHqWxM4dK+t/fuoUZ1OcuFRolgU=;
-        b=stTiWzvzNhpHgUs27+31bgdvZSgvS35Tk0IVruaSZnc/bZStDbMLg5kJcIhe36Uwh4
-         ZnmlPJcgjvYfcZr95f0QGleNcSxkrEHkYIq62JjpbVU7Set4ZwxPt6zegSaOdSUUzkj3
-         xW/SDQAanqZeI0Ez4Wz/YCnI6MAR6LzrAtnfMhgNoHCoUC+H2GauhDxdfk9C8V3WjGks
-         jd7pD2TmfskFnJf+n4SepfuZwBMNmrJLPR6TG4zrcr8F0wW9X69nmnjNNILpzfa3715/
-         rcENdb2vl4DunlrZlldc7d+HjPkaKbK9eFDsldxdheYdL8BN9xJSqsnyNu5Lpi1RLTY+
-         h+Og==
-X-Gm-Message-State: AOUpUlE6Ss0JATz/3qz20KVbyeNPKcdZO53wZEe+KR8/IvMb9oV3VK1G
-        DSGaRXYdXC/Kwy+fvFVjSPE2VA==
-X-Google-Smtp-Source: AAOMgpfYufop34PSDFxhV3MiujJ8rYQjHPmSGWbN0aaITLS9RDB8H2e4CksU4nCHPudJOTLHG/H41A==
-X-Received: by 2002:a63:7f16:: with SMTP id a22-v6mr17275733pgd.255.1532973053736;
-        Mon, 30 Jul 2018 10:50:53 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id 75-v6sm21136884pfr.115.2018.07.30.10.50.52
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :message-id:user-agent:mime-version;
+        bh=rDbMAEztlh9cEq+32fQZttuHAujO9qF/j4/WXDbqMuA=;
+        b=mBoc/KkpYPccRYDjSvtvDF2n2vRrB15ORWKbwDwLlVWwTKQakKOe4nW1RM6VDXRFA2
+         kYGYn+o9HKq+5qM+0V+tcEWQFEWYKJh0v5NiJvv0v+yp25cml0KQYD8wMk83cTftjF+V
+         5vYwK41HJHfwIOS5J27hSZeDNZheZkwD7Lc06JbeALIVm5kq9n/PMjMW6lPgHxNNrkHc
+         Eotu7gZ7wrhQcnhXBADmaWkyzwTLjY2/hIoNmDW3lx/fiQu3Nw3j/JC2+Zcgm47y1e4C
+         LY0ek3oJU8yj0bLYLvjLn5dI2OyamzieURHuwr1Biqz0tkr3Bze07S4IoWaLxtPnqk0j
+         6rbg==
+X-Gm-Message-State: AOUpUlFqElIeb4n+WeFRTVlJprvfHYgA9KtIRlUD+4mmYGH4EXSKTJj1
+        hEh19SIss7nNCVafTunYQYYjHb77
+X-Google-Smtp-Source: AAOMgpcSBme7GeZytl9/1zb+2I8eX+YB/lahrhQNCpYD4hwVj1iYTDp/PIqS1RcJc6c5VHxWr0dupg==
+X-Received: by 2002:a1c:10d4:: with SMTP id 203-v6mr174760wmq.158.1532973056507;
+        Mon, 30 Jul 2018 10:50:56 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id b22-v6sm149823wme.48.2018.07.30.10.50.55
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 30 Jul 2018 10:50:52 -0700 (PDT)
-Date:   Mon, 30 Jul 2018 10:50:51 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH] refspec: allow @ on the left-hand side of refspecs
-Message-ID: <20180730175051.GA154732@google.com>
-References: <20180729192803.1047050-1-sandals@crustytoothpaste.net>
+        Mon, 30 Jul 2018 10:50:55 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v3 07/11] rerere: only return whether a path has conflicts or not
+References: <20180605215219.28783-1-t.gummerer@gmail.com>
+        <20180714214443.7184-1-t.gummerer@gmail.com>
+        <20180714214443.7184-8-t.gummerer@gmail.com>
+Date:   Mon, 30 Jul 2018 10:50:55 -0700
+Message-ID: <xmqq4lgghatc.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180729192803.1047050-1-sandals@crustytoothpaste.net>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07/29, brian m. carlson wrote:
-> The object ID parsing machinery is aware of "@" as a synonym for "HEAD"
-> and this is documented accordingly in gitrevisions(7).  The push
-> documentation describes the source portion of a refspec as "any
-> arbitrary 'SHA-1 expression'"; however, "@" is not allowed on the
-> left-hand side of a refspec, since we attempt to check for it being a
-> valid ref name and fail (since it is not).
-> 
-> Teach the refspec machinery about this alias and silently substitute
-> "HEAD" when we see "@".  This handles the fact that HEAD is a symref and
-> preserves its special behavior.  We need not handle other arbitrary
-> object ID expressions (such as "@^") when pushing because the revision
-> machinery already handles that for us.
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-So this claims that using "@^" should work despite not accounting for it
-explicitly or am I misreading?  Unless I'm mistaken, it looks like we
-don't really support arbitrary rev syntax in refspecs since "HEAD^"
-doesn't work either.
-
-> 
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> We currently return the exact number of conflict hunks a certain path
+> has from the 'handle_paths' function.  However all of its callers only
+> care whether there are conflicts or not or if there is an error.
+> Return only that information, and document that only that information
+> is returned.  This will simplify the code in the subsequent steps.
+>
+> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 > ---
-> I probably type "git push upstream HEAD" from five to thirty times a
-> day, many of those where I typo "HEAD", so I decided to implement the
-> shorter form.  This design handles @ as HEAD in both fetch and push,
-> whereas alternate solutions would not.
+>  rerere.c | 23 ++++++++++++-----------
+>  1 file changed, 12 insertions(+), 11 deletions(-)
 
-I'm always a fan of finding shortcuts and reducing how much I type, so
-thank you :)
+I do recall writing this code without knowing if the actual number
+of conflicts would be useful by callers, but it is apparent that it
+wasn't.  I won't mind losing that bit of info at all.  Besides, we
+won't risk mistaking a file with 2 billion conflicts with a file
+whose conflicts cannot be parsed ;-).
 
-> 
-> check_refname_format explicitly rejects "@"; I tried at first to simply
-> ignore that with a flag, but we end up calling that from several other
-> places in the codebase and rejecting it and all of those places would
-> have needed updating.
-> 
-> I thought about putting the if/else logic in a function, but since it's
-> just four lines, I decided not to.  However, if people think it would be
-> tidier, I can do so.
-> 
-> Note that the test portion of the patch is best read with git diff -w;
-> the current version is very noisy.
-> 
->  refspec.c             |   6 ++-
->  t/t5516-fetch-push.sh | 104 +++++++++++++++++++++---------------------
->  2 files changed, 58 insertions(+), 52 deletions(-)
-> 
-> diff --git a/refspec.c b/refspec.c
-> index e8010dce0c..57c2f65104 100644
-> --- a/refspec.c
-> +++ b/refspec.c
-> @@ -62,8 +62,12 @@ static int parse_refspec(struct refspec_item *item, const char *refspec, int fet
->  		return 0;
->  	}
->  
-> +	if (llen == 1 && lhs[0] == '@')
-> +		item->src = xstrdup("HEAD");
-> +	else
-> +		item->src = xstrndup(lhs, llen);
-> +
-
-This is probably the easiest place to put the aliasing logic so I don't
-have any issue with including it here.
-
--- 
-Brandon Williams
+The patch looks good.  Thanks.
