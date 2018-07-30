@@ -7,58 +7,59 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69D2F1F597
-	for <e@80x24.org>; Mon, 30 Jul 2018 15:47:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 596311F597
+	for <e@80x24.org>; Mon, 30 Jul 2018 15:49:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726787AbeG3RWu (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jul 2018 13:22:50 -0400
-Received: from mout.gmx.net ([212.227.17.22]:52329 "EHLO mout.gmx.net"
+        id S1726777AbeG3RZ1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jul 2018 13:25:27 -0400
+Received: from mout.gmx.net ([212.227.15.19]:33369 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726668AbeG3RWu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jul 2018 13:22:50 -0400
-Received: from [192.168.0.129] ([37.201.193.26]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M24Vr-1fyxBD3NMp-00txSg; Mon, 30
- Jul 2018 17:47:04 +0200
-Date:   Mon, 30 Jul 2018 17:47:01 +0200 (DST)
+        id S1726668AbeG3RZ1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jul 2018 13:25:27 -0400
+Received: from [192.168.0.129] ([37.201.193.26]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MePcd-1fK6ah2C59-00QBDc; Mon, 30
+ Jul 2018 17:49:40 +0200
+Date:   Mon, 30 Jul 2018 17:49:36 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Eric Sunshine <sunshine@sunshineco.com>
-cc:     Git List <git@vger.kernel.org>, phillip.wood@talktalk.net,
-        knu@idaemons.org, Junio C Hamano <gitster@pobox.com>
+To:     phillip.wood@dunelm.org.uk
+cc:     Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
+        Akinori MUSHA <knu@iDaemons.org>,
+        Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 0/2] fix "rebase -i --root" corrupting root commit
-In-Reply-To: <CAPig+cSYPEqapdQ=7zjW-RsM6XxCw2vPzZzV32uh_SgO4cQSog@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1807301746190.10478@tvgsbejvaqbjf.bet>
-References: <20180730092929.71114-1-sunshine@sunshineco.com> <CAPig+cSYPEqapdQ=7zjW-RsM6XxCw2vPzZzV32uh_SgO4cQSog@mail.gmail.com>
+In-Reply-To: <1f172fc1-4b51-cdf7-e841-5ca41e209be4@talktalk.net>
+Message-ID: <nycvar.QRO.7.76.6.1807301747330.10478@tvgsbejvaqbjf.bet>
+References: <20180730092929.71114-1-sunshine@sunshineco.com> <1f172fc1-4b51-cdf7-e841-5ca41e209be4@talktalk.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:zG3f8y7L+ta79nffzOtWk7MxL61w11NRrdzEGGZHgCJYLDVmRc+
- qeuQQZnJscAelXe0K1hkqRsNMiF5HolJwOgeLvkAFowRwd5QunpvRXYyQMXQhmO6TYjkvVv
- XRmczBvBhLRi7YjZ366tP6H7hkUHtwSz2ACx61xKv6XufRwv+FfAL762CHQQSWhQEpinE8W
- HBR3i/m57eCb44GAEwUUA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:dQKPmeSJOjk=:7fRKUNpvnF1lQhYnI3aEvY
- HyAvUfWxuz5TT9epzI0YruTLjOxRLtvUn23X+qbiSXbi1SlaxAUEt4vw4KnYuwjOphs0RjdkT
- 13oPgDjVI0OXUUX950ag3eb3ydo9JuiND7CQKChdeqqooGvizqb77zqzjXAwRKQkOwOFYThvK
- 9pOVR3kc5JC1yVIlFZL4aWlA3Ni+BDgoPubqtOv2ziyp6V1hz0U/fO2MWvwgfx6y7m5BkjYQA
- k1kG0letruZFkq3Mfht92mssE3HRjp0HvXG/j78tduLRt5ZRtIKEHtKKI0+tjsQxQe9hkvLSd
- jlob7EHyNbYeKxYZD5LRQb8/tTKkBU0mQIuE8AeZP2I9a+MxF8BCOTwCXX9gwmzyzhYRhC3h2
- YndiO/dgfGMpoIoqZT5xxZioICoTkV6LHv/rRBSMmwBghREAZT9nLqfCqfMT+PLJs3Zl57FOR
- ddYvKow6u1JsXTrKH+E0UlVAJBz4JKNbE+0A+7BtffKJ6phakMPnG7x0U6NL3V7v7Y5+feWvm
- rWqAwUZWTJHEdj007YGaERgtFaZq/rgWONK8rB7vm0AtwKllOAYrCrsMMuC+Uo7Z4xyZJKbeE
- LJbIDxXJ6y8IsTOeHk6zKbUyvus+pxtQ4SdfTuyL76enVp4aYJ70V6Q4k9uw3h+Fp45viVClI
- waZN3hLXsnpg2yvImtL0sMhi/vaku0obe6XGuSj5thG5sOGV16zd/RAQDmm7bFdbTsLpi11ot
- 11mEAwKmAAniElkT33oMQP6iL0H72y7aljYZpWFXch/Y0UF2Yz6Rp0dLLsVwiAdb5HnrmDrc7
- eog6PBq
+X-Provags-ID: V03:K1:zFeb4OK57+9a5ZqZsaALahMP9/DNbNwlETQFAk3H/AnkuWG8fSx
+ wFc9lhBRq+ptC3fgTHHbfjfofwK6GE/TzJrtXSi4Km2ZOzRq6LmLLrvPXkWKrbsOR4/SBYq
+ sehgj9F5KvdLYNbGQu13HFfoK2tC+/kTXC3GZXQG+RY8gBsoEec0NZ4Ncy+I6MUD0CcCIF9
+ BdyAWqbOApd8TyJuQYCww==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:myrapwdCWxE=:XNtfauUqrRe1s6i+G94lAi
+ MydDgUpt7yGH0MWz0ugAytDdJW3rt0okIqHHv7UpkNjcwJE5XAX50NM5uVN03np2sZHlTdZJ+
+ 3X2SPIZQBrlGDABg8XnxHFMU8ETTHYFnvZ2AW0CvqpPdBrwVqmZliYjd2JHTUBMO0Kgrpdhpf
+ wKD8Qht6B8YBVQoQuixY+9wbLm+Bo3trPXcCPR2yOA0hx83W4z7uJ8X+VkN54dK1aFXcgbL0n
+ CkNhu5PT2rVC2d9z7ZK+DhGuTdKU2QbKvkpTZMXrU5RUpN99RtLIBAdVHGle90+XmFtQcD5R8
+ fIK9myNL6NNosRMG1O/E55bHkAWNquNY6yeFumHZMa/MHEao13cjf9oL5ARRLxb9WPTLcStT9
+ WNffx8wSGMe50ph7Y9hDhJ6I5jcmH/5EZQ+se7rUa0VWvo4i0yT2pq4EvBzPEFHHmU3YVKNem
+ wWlS+4o8clYBXtoKTo1k9dWPNQ24RkIBO1kd8nqyVldofRHy8srvChSeOXEjKSCraVrRHGM+k
+ SgMLVHprGDTSiehPhTYMEzlFV8WRfrT2dgykN+9aVgeQ2+ljsr3OhoQ9zHhvUNn5Q9qzQEPEh
+ MB4sQdXWUKKTJ9bRqAj3oYfZjb7Zj1ooNnWsdEw01vnUcegJsDhsGhoS0zR0a6ESR5JTmvgqa
+ GKPF/Iy/Y7dhJgaUFwWgWlN+IJOY7GPo6D2+ZFE8E1+cNyDFSXb/De4Bfk+o2lZ5jNwj01L6F
+ mdabV31K01PNRw+yd7G0KoxbXQDTalYIQiCeV4uTg//QcNVs7w8RnIgYy8ah3oOHzexZvJn+G
+ uRph8D5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
+Hi Phillip,
 
-On Mon, 30 Jul 2018, Eric Sunshine wrote:
+On Mon, 30 Jul 2018, Phillip Wood wrote:
 
-> On Mon, Jul 30, 2018 at 5:30 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On 30/07/18 10:29, Eric Sunshine wrote:
 > > This series fixes bugs causing corruption of the root commit when
 > > "rebase -i --root" is used to swap in a new root commit. In particular,
 > > the "author" header has trailing garbage. Some tools handle the
@@ -66,14 +67,66 @@ On Mon, 30 Jul 2018, Eric Sunshine wrote:
 > > on it (gitk, for instance). git-fsck correctly identifies the
 > > corruption. I discovered this after git-rebase corrupted one of my own
 > > projects.
+> > 
+> > Unfortunately, these bugs (from js/sequencer-and-root-commits) made it
+> > into the v2.18.0 release. It's worrying that a released Git can be
+> > creating corrupt commits, but fortunately "rebase -i --root" is not
+> > likely used often (especially on well-established projects).
+> > Nevertheless, it may be 'maint' worthy and applies cleanly there.
+> > 
+> > It was only after I diagnosed and fixed these bugs that I thought to
+> > check 'pu' and discovered that Akinori MUSHA already made a stab[1] at
+> > fixing one of the three bugs which this series fixes. Akinori's fix has
+> > the somewhat undesirable property that it adds an extra blank line to
+> > the end of the script, as Phillip correctly pointed out in review[2].
+> > Patch 2/2 of this series has the more "correct" fix, in addition to
+> > fixing another bug.
+> > 
+> > Moreover, patch 2/2 of this series provides a more thorough fix overall
+> > than Akinori, so it may make sense to replace his patch with this
+> > series, though perhaps keep the test his patch adds to augment the
+> > strict test of the "author" header added by this series.
 > 
-> Unfortunately, after sending this series, I see that there is
-> additional corruption that needs to be addressed. In particular, the
-> "author" header time is incorrectly prefixed with "@", so this series
-> is going to need a re-roll to fix that, as well.
+> Johannes and I have some fixups for Akinori's patch on the branch
+> fix-t3403-author-script-test at https://github.com/phillipwood/git
+> 
+> That branch also contains a fix for the bad quoting of names with "'" in
+> them. I think it would be good to somehow try and combine this series
+> with those patches.
 
-AFAIR the `@` was not an oversight, but required so that we could pass in
-the Unix epoch.
+I would like that, too.
+
+> I'd really like to see a single function to read and another to write
+> the author script that is shared by 'git am' and 'git rebase -i', rather
+> than the two writers and three readers we have at the moment. I was
+> thinking of doing that in the longer term, but given the extra bug
+> you've found in read_author_script() maybe we should do that sooner
+> rather than later.
+
+You are at least the second person (after Junio) with that wish.
+
+Please note, however, that the purpose of author-script reading/writing is
+very different in git-am vs rebase -i, or at least it used to be:
+read_env_script() in sequencer.c very specifically wants to construct an
+env parameter for use in run_command().
+
+Don't let me stop you from trying to consolidate the two different code
+paths, though.
 
 Ciao,
 Dscho
+
+> 
+> > [1]: https://public-inbox.org/git/86a7qwpt9g.knu@iDaemons.org/
+> > [2]: https://public-inbox.org/git/f5b56540-d26a-044e-5f46-1d975f889d06@talktalk.net/
+> > 
+> > Eric Sunshine (2):
+> >   sequencer: fix "rebase -i --root" corrupting author header
+> >   sequencer: fix "rebase -i --root" corrupting author header timezone
+> > 
+> >  sequencer.c                   |  9 +++++++--
+> >  t/t3404-rebase-interactive.sh | 10 +++++++++-
+> >  2 files changed, 16 insertions(+), 3 deletions(-)
+> > 
+> 
+> 
