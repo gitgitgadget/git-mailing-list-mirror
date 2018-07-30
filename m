@@ -2,114 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D730D1F597
-	for <e@80x24.org>; Mon, 30 Jul 2018 18:26:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 333CB1F597
+	for <e@80x24.org>; Mon, 30 Jul 2018 18:32:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728746AbeG3UCs (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jul 2018 16:02:48 -0400
-Received: from mail-yb0-f195.google.com ([209.85.213.195]:34099 "EHLO
-        mail-yb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726919AbeG3UCr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jul 2018 16:02:47 -0400
-Received: by mail-yb0-f195.google.com with SMTP id e9-v6so5138261ybq.1
-        for <git@vger.kernel.org>; Mon, 30 Jul 2018 11:26:33 -0700 (PDT)
+        id S1731704AbeG3UJA (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jul 2018 16:09:00 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:34092 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730671AbeG3UJA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jul 2018 16:09:00 -0400
+Received: by mail-wm0-f68.google.com with SMTP id l2-v6so9056796wme.1
+        for <git@vger.kernel.org>; Mon, 30 Jul 2018 11:32:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=k+ETCjBdcH6O68UqeWfkK9sS5W2je6g7oWTie60J/Y0=;
-        b=cngDtp80SqoYcCfcal4KBXniBTuhtHlxOnKhkM9hthPFEAzKGdolNK0sIBeIqylKht
-         TSmz1pVZI2G7PHHG433GzlC1wtYjR7vX5uIeMuQFfVXFAf/JsFGoiylVzjtMruddOoyS
-         susgpQR8ZiGuY7cRQ685kjjGuqB0rXcOyGTBhDnk0MXjhkQt+gUpXYetXVR9y0MpvhJs
-         uZK+15nKfexqbtLLXr9TNPm/9uY8l4pf7T3FcSbweK12pFSOHdzegd6VJQxyplftR26B
-         VTAlNqZc08sZzQZTJjX0bIhe1GoiTsrENvOPPWxR4vU2R9Bv7wkqtr3DuMTb0Ee8Co39
-         8xOQ==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=xzj//z7eJuCm/tJw0KXWGu6xiXHdWDbmfSmEIJdmqvg=;
+        b=KwNlKgAFY47mrwPjTYJ5TO3cxFXv8IBLAJuUqWZtlkwx3XmBax8AZiZgoW2Y0zR9pL
+         R6qon/N51+rtyMCx8QR60VOPmt68lMwrFnLnU/ghaX6jtq16BTMQ08SSPM9UpEeTTxO6
+         BqC1WveeyjBbKzM+I9Bap+2PZHF6PgiL/cZ9r8c4xIIC71Nn33e203l4K8cS2jTZ8Ckn
+         KpEplE9jVuSsWHztlGmJg9TtX4xqMJMwbwKJTCwdnib3fd6uV4i7WTsnOaKfEbULMVri
+         kmULbyC+iXzCfQj+r6gwuUxWxjjx+WNOYxYB621rHAcYSmYSY1358osPBiqsP+Bbf+V6
+         Mx/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=k+ETCjBdcH6O68UqeWfkK9sS5W2je6g7oWTie60J/Y0=;
-        b=HfN/8kjhmMUI3NoVT8XCrJqMYz/f9kNG3fNQVYGllUlCB2XCQsfWvbOxr/PPMdlbu6
-         /ek+IYL7YsDJioOTAEy2Z4ztYYhB2G0Lj4wO1DmOR0pOg+ZBd+A45pNPPwA8QNCZUNPe
-         StKuqPxSmv/KuPSsq40bA+hWR5yRyMST8RHSZwJw5se/V0bXg3Nldpy2qYT23nTveFJf
-         D7dCs7GcwyBf1veyDIxG2Uqvgo3lLW1kiU+RqYM7xiTew7oleFPmiNZ/qc+76pWiqSEw
-         JTRtCMQxeY8WKywFFU9eQY8LFbWCUBi5HDZ7gx5MWRLHHxlpswzjRv5MsEW4VH6L0EBP
-         4eMg==
-X-Gm-Message-State: AOUpUlG2mlAMh2b/vnRGWLOBAegLkTIaayEliw0Pr4YaYz677hBGuCRq
-        A/9zuaRiIfHOiDhBove0k+8367RJfUxMnsVGQ3W07drieqKr6w==
-X-Google-Smtp-Source: AAOMgpdjMTZdsV8G0rLNP0VtNRB/8sRkH958BsId+MWChuW4ehk6+5dew5Oloakqeboge3/TuHgqLbxAbrnHo4cgDNI=
-X-Received: by 2002:a25:a263:: with SMTP id b90-v6mr10083874ybi.247.1532975192224;
- Mon, 30 Jul 2018 11:26:32 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=xzj//z7eJuCm/tJw0KXWGu6xiXHdWDbmfSmEIJdmqvg=;
+        b=E73ED3ieSbEBt03xwnqTSyFHWmDUe7X9Ho0jGI0aRJp9L7/l1vYG37Wg75SNX/g6qH
+         2dKou00IknP/XsEq6KSHP5XrYIBqQmQuLRWevmyD06GsUQfF7J9Z6TM79yaQkNV5PIaZ
+         lIdAwrzKxJERbDSpGReV1SzKZfa0tQca5oShDYEazx5klLjmvtOBDTTJw7B2wfmigtx4
+         kbDTHouycKj3aSMHKMlv9cF3VDdiLB9xmnCtdwsYRwlOPx+gO9Dh0+qeARDLmCVqZKKb
+         pE1PYPgkmaavoHDlBR/JtTOwjycqUafcD6Ki0zAy2r4hzGB83lvfjZPAGwUFA/VgTSgx
+         tQLg==
+X-Gm-Message-State: AOUpUlEyM9BFd3F1G4CJAU9mLlQPOhjHPrCwcKOSNZ3TJ7WqZ2Lrzvp+
+        eDPvZI/Oi7LON/XriO3p8vIp1May
+X-Google-Smtp-Source: AAOMgpeyq4iRdDBGon1+3r7W18rAxaRg134+0tNkrap1ik6HrDQcIxN3rSAScoEiBRHhILue++bQ2g==
+X-Received: by 2002:a1c:5e48:: with SMTP id s69-v6mr258210wmb.19.1532975562966;
+        Mon, 30 Jul 2018 11:32:42 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id e7-v6sm25203374wrm.14.2018.07.30.11.32.41
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 30 Jul 2018 11:32:41 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Michael <aixtools@felt.demon.nl>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, Dan Shumow <shumow@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: Is detecting endianness at compile-time unworkable?
+References: <fb935882-25b1-db5f-d765-50dab297f733@felt.demon.nl>
+        <20180729181006.GC945730@genre.crustytoothpaste.net>
+        <2309fa7f-c2d8-ee57-aff5-b9e32d2da609@felt.demon.nl>
+        <20180729192753.GD945730@genre.crustytoothpaste.net>
+        <dfe374bf-d9de-8dad-6ec9-4edfa3e9b12b@felt.demon.nl>
+        <20180729200623.GF945730@genre.crustytoothpaste.net>
+        <701d9f4b-efbd-c584-4bec-bddb51b11d96@felt.demon.nl>
+        <87wotdt649.fsf@evledraar.gmail.com>
+        <xmqq600wkc4i.fsf@gitster-ct.c.googlers.com>
+Date:   Mon, 30 Jul 2018 11:32:41 -0700
+In-Reply-To: <xmqq600wkc4i.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Mon, 30 Jul 2018 07:54:21 -0700")
+Message-ID: <xmqqh8kgfuba.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20180728211630.29573-1-masayasuzuki@google.com>
-In-Reply-To: <20180728211630.29573-1-masayasuzuki@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 30 Jul 2018 11:26:21 -0700
-Message-ID: <CAGZ79kYOqP-8t1r_-NVLA025UP+_Zi5SXHWfc7HxRo9gemWDpQ@mail.gmail.com>
-Subject: Re: [PATCH] doc: fix want-capability separator
-To:     draftcode@gmail.com
-Cc:     git <git@vger.kernel.org>, Masaya Suzuki <masayasuzuki@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jul 28, 2018 at 2:16 PM Masaya Suzuki <draftcode@gmail.com> wrote:
-> Signed-off-by: Masaya Suzuki <masayasuzuki@google.com>
+Junio C Hamano <gitster@pobox.com> writes:
 
-The email addresses mismatch?
-
-> Unlike ref advertisement, client capabilities and the first want are
-> separated by SP, not NUL, in the implementation. Fix the documentation
-> to align with the implementation.
-
-Makes sense! Thanks for the fix!
-
-> pack-protocol.txt is already fixed.
-
-which has
-
-  capability-list  =  capability *(SP capability)
-
-since b31222cfb7f (Update packfile transfer protocol
-documentation, 2009-11-03), which is the first to mention
-the capability line, so I'd claim it was always correct?
-
+> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 >
-> ---
->  Documentation/technical/http-protocol.txt | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>> And, as an aside, the reason we can't easily make it better ourselves is
+>> because the build process for git.git doesn't have a facility to run
+>> code to detect this type of stuff (the configure script is always
+>> optional). So we can't just run this test ourselves.
 >
-> diff --git a/Documentation/technical/http-protocol.txt b/Documentation/technical/http-protocol.txt
-> index 64f49d0bb..9c5b6f0fa 100644
-> --- a/Documentation/technical/http-protocol.txt
-> +++ b/Documentation/technical/http-protocol.txt
-> @@ -338,11 +338,11 @@ server advertises capability `allow-tip-sha1-in-want` or
->                        request_end
->    request_end       =  "0000" / "done"
->
-> -  want_list         =  PKT-LINE(want NUL cap_list LF)
-> +  want_list         =  PKT-LINE(want SP cap_list LF)
->                        *(want_pkt)
->    want_pkt          =  PKT-LINE(want LF)
->    want              =  "want" SP id
-> -  cap_list          =  *(SP capability) SP
-> +  cap_list          =  capability *(SP capability)
->
->    have_list         =  *PKT-LINE("have" SP id LF)
+> It won't help those who cross-compile anyway.  I thought we declared
+> "we make a reasonable effort to guess the target endianness from the
+> system header by inspecting usual macros, but will not aim to cover
+> every system on the planet---instead there is a knob to tweak it for
+> those on exotic platforms" last time we discussed this?
 
-Just after these context lines we have
+Well, having said all that, I do not think I personally mind if
+./configure learned to include a "compile small program and run it
+to determine byte order on the build machine" as part of "we make a
+reasonable effort" as long as it cleanly excludes cross building
+case (and the result is made overridable just in case we misdetect
+the "cross-ness" of the build).
 
-  TODO: Document this further.
-
-which is a good hint that the existing documentation
-can benefit from patches like these.
-
-Thanks,
-Stefan
