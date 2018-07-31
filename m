@@ -2,171 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE1251F597
-	for <e@80x24.org>; Tue, 31 Jul 2018 21:31:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1026B1F597
+	for <e@80x24.org>; Tue, 31 Jul 2018 21:38:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732119AbeGaXOC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Jul 2018 19:14:02 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:41048 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727076AbeGaXOC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jul 2018 19:14:02 -0400
-Received: by mail-pg1-f196.google.com with SMTP id z8-v6so9699681pgu.8
-        for <git@vger.kernel.org>; Tue, 31 Jul 2018 14:31:44 -0700 (PDT)
+        id S1732374AbeGaXUs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Jul 2018 19:20:48 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:37015 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732325AbeGaXUs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jul 2018 19:20:48 -0400
+Received: by mail-wr1-f66.google.com with SMTP id q10-v6so18089078wrd.4
+        for <git@vger.kernel.org>; Tue, 31 Jul 2018 14:38:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Gmhywn1jennHXuFOuPaOUte9SqGFsEin4afAM7lZK8g=;
-        b=KzSPealMRRaS0xe6RqPd4JI00kcV1qqX6lp7yC+dxrhrys+NcydEvjMFwAuodDyR+I
-         OlMCOr4OVF/g5v4C55Q8LlxlW3qyf21Xqn+iw5nNYDCF1OLxdYr10Am4+iwfFHUcqlb4
-         j09j0OCNkQ6YdIwbk2UoOUIKAbhuljfthdgX4lPY0hapHEY+ZNmFNU1fEiTYsK3UNI5p
-         9ji0KkWcIghac+pxx209zq+PYp1tp4DYtE3EPLHte4SuUjZ+Q0o0nNlwfReCe7nl7YhZ
-         wJSrgzOyfo4/7IBS7Vl8WMpl24+H2ZnACX5dayqjaQMTE/U4CcfOHG/Yotw3ZLsF0ZQr
-         JPaQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=790sClIbXqMxFlMGgTl/bMFlpv8YaFbMYx4VKX08DeE=;
+        b=nD2hR0rM4GlxnW3UtXkk6xSMmYNMxlQ90yn6grhVkIEyB0JpX9ayObGyjQqzwS+3TZ
+         d9gdG2dai2BmH5EihL3jP+ZFjb/QHc+ASoQEHw8abfV/t4H4Gp/Dzj0DAnRYczLmodnB
+         7HKWnoupJrAlNHl/UktjrYDe8hEDblEJWaBxYum3wk/XIRqkIjpfr7j0Kjvre3JS9U+C
+         KLMv9nTSn4P5/wRe+/ipxVSLjjf4Ctvi6mRms2wmbO5Yr9TAHwiNgfqG3dGhMgx2Xt43
+         ZfmM2bvx/dfGsyGzS6s6lfAZRvxNN+aOnoOIqbu4gOkXWYEDG6dyTGUVrkqNx//0CMTC
+         41FQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Gmhywn1jennHXuFOuPaOUte9SqGFsEin4afAM7lZK8g=;
-        b=Wm5Cz2gtMtqf0Ucwq8aoYRGNFohoyMcQjq54BG5qbOO7mBXnIxT7bEmKga3E7QLoMO
-         hvHHBMa+awg2gKll1kO3M0aJmbrntHxvCEIgZ2mckjD2fwFDIwuYcA84BQexcYKQmfEm
-         j3UU6fhVh1ACPMwF6YhRj7xx4mSARqMkcmYziBKIkd0SRUPMjKX2a3CBm8Lf2LTihNV2
-         qUqdMezOIGQ7TrwNnz5PrdlrSvQYBGID/39fd38VkVGSt8daQdiINHSsu5RBhxpI8Ppm
-         KsFDd89/Z8ReSvMB8eUzQE2iHrGQrm34XQlQI+KHfjlt2Wj43flmyJeQolKOysYlVXs7
-         0JDw==
-X-Gm-Message-State: AOUpUlGyAmPJH9Cd4rLf8Y9sDZSUHf4vi/7nwhLiVqi5g6y3jXpDXt9L
-        QzvxvxD0d1DhN1rYLYQK5qt0/L8d
-X-Google-Smtp-Source: AAOMgpcPXg82+RhuxISfVwxnlXIGnyFYMzmdzMH3CFD9rKHeIAgJ68vlJ6q+oVxODkAvBFx/acnZIQ==
-X-Received: by 2002:a62:234d:: with SMTP id j74-v6mr81146pfj.106.1533072703622;
-        Tue, 31 Jul 2018 14:31:43 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id r71-v6sm25823517pfg.43.2018.07.31.14.31.42
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=790sClIbXqMxFlMGgTl/bMFlpv8YaFbMYx4VKX08DeE=;
+        b=R9aX5P3aT/iKRu76AK9GsT6LqC3p06MNOOVZDWHuVYxDdyVmOjNxujWjEVOaQeKy7E
+         f/6csi5Uz6omejLd3MNkfXIGsMUzE5bwebLbdP1OYrOdPUXLa+perm6NLOynq/7hGYTN
+         mO4XvscKvWZP9PHk8s5n2AKOOiAEgp2oZHvLMvST3lAErwKEH1GkFiZUprD9m4ZNXICS
+         zp/gTxfbmMngsoD2NBfhyRxXnHqHVayeh1yMQw3l444DjPhCLVF7aiu2RPm3saL9R/zI
+         GT0Q0OqdmpspHUkBzF7rJZhKs7fL4PmjkJNMrd7ISnm9jRh8+VEFWp1Aq6zkNvcXCIcd
+         bKkA==
+X-Gm-Message-State: AOUpUlEP+kf0b2DEFOAzAAJjnxMev48Wj8Mxa4n3YrCHe8O80feVx+SL
+        JHRDkyhYaekAWzAQyZHM4uQS6crI
+X-Google-Smtp-Source: AAOMgpf0jW/YSZU8u1gR/+JorOsUFlfV7sdBGz33VlWmgZMg5/6JxzHbtlzFWb6mMFhcv2ZnpeSWnA==
+X-Received: by 2002:adf:b726:: with SMTP id l38-v6mr22709849wre.115.1533073107392;
+        Tue, 31 Jul 2018 14:38:27 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id a5-v6sm2244805wmf.3.2018.07.31.14.38.25
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 31 Jul 2018 14:31:42 -0700 (PDT)
-Date:   Tue, 31 Jul 2018 14:31:20 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, Dana Dahlstrom <dahlstrom@google.com>
-Subject: Re: [PATCH] remote: prefer exact matches when using refspecs
-Message-ID: <20180731213120.GA113554@aiede.svl.corp.google.com>
-References: <20180731211832.142014-1-jonathantanmy@google.com>
+        Tue, 31 Jul 2018 14:38:25 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH] transport: report refs only if transport does
+References: <20180729121900.GA16770@sigill.intra.peff.net>
+        <20180730225601.107502-1-jonathantanmy@google.com>
+        <20180731192415.GC3372@sigill.intra.peff.net>
+Date:   Tue, 31 Jul 2018 14:38:24 -0700
+In-Reply-To: <20180731192415.GC3372@sigill.intra.peff.net> (Jeff King's
+        message of "Tue, 31 Jul 2018 15:24:15 -0400")
+Message-ID: <xmqqa7q79jcf.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180731211832.142014-1-jonathantanmy@google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Jeff King <peff@peff.net> writes:
 
-Jonathan Tan wrote:
-
-> When matching a non-wildcard LHS of a refspec against a list of refs,
-> find_ref_by_name_abbrev() returns the first ref that matches using the
-> DWIM rules used by refname_match() in refs.c, even if an exact match
-> occurs later in the list of refs.
+> On Mon, Jul 30, 2018 at 03:56:01PM -0700, Jonathan Tan wrote:
 >
-> This causes unexpected behavior when (for example) fetching using the
-> refspec "refs/heads/s:<something>" from a remote with both
-> "refs/heads/refs/heads/s" and "refs/heads/s". (Even if the former was
-> inadvertently created, one would still expect the latter to be fetched.)
+>> Commit 989b8c4452 ("fetch-pack: put shallow info in output parameter",
+>> 2018-06-28) allows transports to report the refs that they have fetched
+>> in a new out-parameter "fetched_refs". If they do so,
+>> transport_fetch_refs() makes this information available to its caller.
+>> 
+>> Because transport_fetch_refs() filters the refs sent to the transport,
+>> it cannot just report the transport's result directly, but first needs
+>> to readd the excluded refs, pretending that they are fetched. However,
+>> this results in a wrong result if the transport did not report the refs
+>> that they have fetched in "fetched_refs" - the excluded refs would be
+>> added and reported, presenting an incomplete picture to the caller.
 >
-> This problem has only been observed when the desired ref comes after the
-> undesired ref in alphabetical order. However, for completeness, the test
-> in this patch also checks what happens when the desired ref comes first
-> alphabetically.
->
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
->  remote.c         |  7 +++++--
->  t/t5510-fetch.sh | 28 ++++++++++++++++++++++++++++
->  2 files changed, 33 insertions(+), 2 deletions(-)
+> This part leaves me confused. If we are not fetching them, then why do
+> we need to pretend that they are fetched?
 
-Very clear analysis --- thank you.
+What leaves me even more confused is that the entire log message
+does not make it clear what the end-user observable problem the
+patch is trying to solve.
 
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -1687,12 +1687,15 @@ static struct ref *get_expanded_map(const struct ref *remote_refs,
->  
->  static const struct ref *find_ref_by_name_abbrev(const struct ref *refs, const char *name)
->  {
-> +	const struct ref *best_match = NULL;
->  	const struct ref *ref;
->  	for (ref = refs; ref; ref = ref->next) {
-> -		if (refname_match(name, ref->name))
-> +		if (!strcmp(name, ref->name))
->  			return ref;
-> +		if (refname_match(name, ref->name))
+Is this "we sometimes follow and sometimes fail to follow refs while
+fetching"?  Does it affect all protocol versions and transports, or
+only just selected few (and if so which ones)?
 
-Should this check be
+In minds of those who reported an issue and wrote the fix, the issue
+may be fresh, but let's write the commit log message for ourselves 6
+months down the road.
 
-		if (!best_match && refname_match(name, ref->name))
-
-?  Otherwise, this would make us prefer the last ref instead of the
-first (which probably doesn't matter but would be an unintended
-behavior change).
-
-> +			best_match = ref;
->  	}
-> -	return NULL;
-> +	return best_match;
->  }
->  
->  struct ref *get_remote_ref(const struct ref *remote_refs, const char *name)
-> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-> index e402aee6a..da88f35f0 100755
-> --- a/t/t5510-fetch.sh
-> +++ b/t/t5510-fetch.sh
-> @@ -535,6 +535,34 @@ test_expect_success "should be able to fetch with duplicate refspecs" '
->  	)
->  '
->  
-> +test_expect_success 'LHS of refspec prefers exact matches' '
-
-Nice.
-
-With or without the suggested tweak,
-
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
-Thanks for a pleasant read.
-
-> +	mkdir lhs-exact &&
-> +	(
-> +		cd lhs-exact &&
-> +		git init server &&
-> +		test_commit -C server unwanted &&
-> +		test_commit -C server wanted &&
-> +
-> +		git init client &&
-> +
-> +		# Check a name coming after "refs" alphabetically ...
-> +		git -C server update-ref refs/heads/s wanted &&
-> +		git -C server update-ref refs/heads/refs/heads/s unwanted &&
-> +		git -C client fetch ../server refs/heads/s:refs/heads/checkthis &&
-> +		git -C server rev-parse wanted >expect &&
-> +		git -C client rev-parse checkthis >actual &&
-> +		test_cmp expect actual &&
-> +
-> +		# ... and one before.
-> +		git -C server update-ref refs/heads/q wanted &&
-> +		git -C server update-ref refs/heads/refs/heads/q unwanted &&
-> +		git -C client fetch ../server refs/heads/q:refs/heads/checkthis &&
-> +		git -C server rev-parse wanted >expect &&
-> +		git -C client rev-parse checkthis >actual &&
-> +		test_cmp expect actual
-> +	)
-> +'
-> +
->  # configured prune tests
->  
->  set_config_tristate () {
+Thanks.
