@@ -2,142 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A68141F597
-	for <e@80x24.org>; Tue, 31 Jul 2018 20:48:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FED81F597
+	for <e@80x24.org>; Tue, 31 Jul 2018 20:51:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732207AbeGaWaL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Jul 2018 18:30:11 -0400
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:33954 "EHLO
-        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727006AbeGaWaL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jul 2018 18:30:11 -0400
-Received: by mail-yw0-f196.google.com with SMTP id j68-v6so6327877ywg.1
-        for <git@vger.kernel.org>; Tue, 31 Jul 2018 13:48:03 -0700 (PDT)
+        id S1732180AbeGaWdo (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Jul 2018 18:33:44 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:35249 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732147AbeGaWdo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jul 2018 18:33:44 -0400
+Received: by mail-wm0-f68.google.com with SMTP id o18-v6so4618404wmc.0
+        for <git@vger.kernel.org>; Tue, 31 Jul 2018 13:51:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=FrbpjhnvK/E33qMuzxxBxdQyxYgB5pL0cHKJF7eRrtg=;
+        b=X1p1ToMA9TGxuJC4z0tP6eJoEauu4VTHBcx0cmaqvdpNwLL/66AKOTdwVL6lM+e+oS
+         E/yP08e7gRVy5HTAj8yqpq1vuJMjLYfdDZJ+ugC3CBIeRaeHZLqbuSncPZJ/eY2mhJl/
+         xd62eN1ILsOpl3yy+yhDUKk3h7JwHq1fAyfk83z/JSv0B2dU1rBWm9uGwLwbQFKzbEMr
+         3mcKD3XDuOH2XxXHT6nTgGB3O5z6vojvqpgFtzafw37m6SQ5DOxFqshEFhBmIvXFv1ex
+         qba4wT/mBX07kt681rgb9Sbzq3t/kWIuBu7tAULDn8SAj4+tDTF3UnMI/wTkYPkoPiJb
+         mBHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Sk2Q1OoY8siNwKdr1IUwFTqPgi2vWOpYp1cyQMHhoiU=;
-        b=uSGD2sta8jdBdT+YunwSwcvsKPzDNytETrOlpE+WUAVor5iXpbRjYCugRVJ5kCaagv
-         Ii+PGe9eshbjSUHIZuLBIY6G+pYfkA0ZaegBMCoc4ed7OJ6mHlsQRRK/pIBYuW/ZlwbF
-         oZjWNDcAGX7HwYY02lmG2IZWxlxAuXLt7TT921UfdCGp0YsgKAgLO6B8GG9rzzMN7YdY
-         2yfcNXbbWA/yiWgUyWyvoTHj1EhgCT2E8mU0IRPseERzCC06Xayb5t/9jdGsGzw1rMsz
-         ZAR8RgeMXxHArU8IPbMhugjZGRVhGiQrrAN03Or0kOnJLfvtKDo20zknIOhYYe1alyu7
-         jXRA==
-X-Gm-Message-State: AOUpUlEmVRCnt08d7D/ri3ayuF819c4py1jLgLxUWOBylVcTQQamvJuE
-        nx9eq4IaQkcuo89w0Ai+ZSnD0lnPJZOJ5j3EHAcsHnoM
-X-Google-Smtp-Source: AAOMgpfXul8qHnrSVcfzsS0VckSDg3gNhBWQH8Wrafsv76WPViAi6y2N8+jPe0GO+cnTNXvzDMW25aDe4Lp74Rqdyjc=
-X-Received: by 2002:a81:1001:: with SMTP id 1-v6mr11976982ywq.120.1533070083421;
- Tue, 31 Jul 2018 13:48:03 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=FrbpjhnvK/E33qMuzxxBxdQyxYgB5pL0cHKJF7eRrtg=;
+        b=mFYZy4G1o+OqWE2yWjX13kMEfF9CC3KvZTOIrS7ps22KX6NhXezO9AzTfQ8AvkfOgW
+         QDSCoW0jkrJcxIWgAmblDyZesYaXlsSpDBojD5Swv3sHIMzpqGebdzkrzsYrZDj2n/x+
+         cGztPxIVlMGhTML5iaV5JV6YFroZAMt5Oj44wkFAA0U/JTrWKmj/P8uLtLGzwpA2hsXM
+         lPPy1k0nBx1Qt/S9U8IxPqjyyXzj9aeTH/k1QLQxKc+QQ4kGpGQ7XP5cobCpaqkbygXL
+         IclafasSJaTElq+B38igvYExwQzOCHHDXgpo1lYmTWFFQRjhxRbsYU/3/B7pVznXwZJt
+         8/Zg==
+X-Gm-Message-State: AOUpUlGuSMAn5jJRUWNCncKkkNZCLxVJZxW1r//1qz9Xc8jG+vDKbk9d
+        B69bY1T4qfyNMGBA9GPnIj8=
+X-Google-Smtp-Source: AAOMgpexFxErO2nh3bLuQ5mB0bsIspciQN+LZitVd1d52VoOnLYuYYyIsHz6IqmRQ3qNMpWj94FAkA==
+X-Received: by 2002:a1c:6a0b:: with SMTP id f11-v6mr762819wmc.107.1533070294148;
+        Tue, 31 Jul 2018 13:51:34 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id w3-v6sm9306602wrn.16.2018.07.31.13.51.33
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 31 Jul 2018 13:51:33 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org,
+        sunshine@sunshineco.com
+Subject: Re: [PATCH 2/8] t3206: add color test for range-diff --dual-color
+References: <20180728030448.192177-1-sbeller@google.com>
+        <20180731003141.105192-1-sbeller@google.com>
+        <20180731003141.105192-3-sbeller@google.com>
+Date:   Tue, 31 Jul 2018 13:51:33 -0700
+In-Reply-To: <20180731003141.105192-3-sbeller@google.com> (Stefan Beller's
+        message of "Mon, 30 Jul 2018 17:31:35 -0700")
+Message-ID: <xmqqmuu79lii.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20180731073331.40007-1-sunshine@sunshineco.com>
- <20180731111532.9358-1-phillip.wood@talktalk.net> <20180731111532.9358-2-phillip.wood@talktalk.net>
-In-Reply-To: <20180731111532.9358-2-phillip.wood@talktalk.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 31 Jul 2018 16:47:52 -0400
-Message-ID: <CAPig+cT15a-QTTAjC61td4h_YhHz0WSa8iT_3XqUUc6LZHWC=A@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] sequencer: handle errors in read_author_ident()
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 31, 2018 at 7:15 AM Phillip Wood <phillip.wood@talktalk.net> wrote:
-> The calling code treated NULL as a valid return value, so fix this by
-> returning and integer and passing in a parameter to receive the author.
+Stefan Beller <sbeller@google.com> writes:
 
-It might be difficult for future readers (those who didn't follow the
-discussion) to understand how/why NULL is not sufficient to signal an
-error. Perhaps incorporating the explanation from your email[1] which
-discussed that the author name, email, and/or date might change
-unexpectedly would be sufficient. This excerpt from [1] might be a
-good starting point:
-
-    ... the caller does not treat NULL as an error, so this will
-    change the date and potentially the author of the commit
-    ... [which] does corrupt the author data compared to its
-    expected value.
-
-[1]: https://public-inbox.org/git/c80cf729-1bbe-10f5-6837-b074d371b91c@talktalk.net/
-
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> The 'expect'ed outcome has been taken by running the 'range-diff | decode'.
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
 > ---
-> diff --git a/sequencer.c b/sequencer.c
-> @@ -701,57 +701,58 @@ static char *get_author(const char *message)
-> -static const char *read_author_ident(struct strbuf *buf)
-> +static int read_author_ident(char **author)
-
-So, the caller is now responsible for freeing the string placed in
-'author'. Okay.
-
->  {
-> -       if (strbuf_read_file(buf, rebase_path_author_script(), 256) <= 0)
-> -               return NULL;
-> +       if (strbuf_read_file(&buf, rebase_path_author_script(), 256) <= 0)
-> +               return -1;
-
-I think you need to strbuf_release(&buf) in this error path since
-strbuf_read_file() doesn't guarantee that the strbuf hasn't been
-partially populated when it returns an error. (That is, this is
-leaking.)
-
->         /* dequote values and construct ident line in-place */
-
-Ugh, this comment should have been adjusted in my series. A minor
-matter, though, which can be tweaked later.
-
->         /* validate date since fmt_ident() will die() on bad value */
->         if (parse_date(val[2], &out)){
-> -               warning(_("invalid date format '%s' in '%s'"),
-> +               error(_("invalid date format '%s' in '%s'"),
->                         val[2], rebase_path_author_script());
->                 strbuf_release(&out);
-> -               return NULL;
-> +               strbuf_release(&buf);
-> +               return -1;
-
-You were careful to print the error, which references a value from
-'buf', before destroying 'buf'. Good.
-
-(A simplifying alternative would have been to not print the actual
-value and instead say generally that "the date" was bad. Not a big
-deal.)
-
->         }
-> -       strbuf_swap(buf, &out);
-> -       strbuf_release(&out);
-> -       return buf->buf;
-> +       *author = strbuf_detach(&out, NULL);
-
-And, 'author' is only assigned when 0 is returned, so the caller only
-has to free(author) upon success. Fine.
-
-> +       strbuf_release(&buf);
-> +       return 0;
->  }
+>  t/t3206-range-diff.sh | 39 +++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 39 insertions(+)
 >
->  static const char staged_changes_advice[] =
-> @@ -794,12 +795,14 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
-> -               struct strbuf msg = STRBUF_INIT, script = STRBUF_INIT;
-> -               const char *author = is_rebase_i(opts) ?
-> -                       read_author_ident(&script) : NULL;
-> +               struct strbuf msg = STRBUF_INIT;
-> +               char *author = NULL;
->                 struct object_id root_commit, *cache_tree_oid;
->                 int res = 0;
->
-> +               if (is_rebase_i(opts) && read_author_ident(&author))
-> +                       return -1;
+> diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+> index 2237c7f4af9..019724e61a0 100755
+> --- a/t/t3206-range-diff.sh
+> +++ b/t/t3206-range-diff.sh
+> @@ -142,4 +142,43 @@ test_expect_success 'changed message' '
+>  	test_cmp expected actual
+>  '
+>  
+> +test_expect_success 'dual-coloring' '
+> +	cat >expect <<-\EOF &&
 
-Logic looks correct, and it's nice to see that you went with 'return
--1' rather than die(), especially since the caller of run_git_commit()
-is already able to handle -1.
+It is a good idea to use something like "sed -e 's/^|//'" instead of
+"cat" here; that way allows you to mark the left-edge of the data
+with "|", for a test vector like this one that has a line that would
+otherwise violate the whitespace style rules.  
+
+An inferiour alternative would be to add .gitaddtibute entry to make
+this file exempt from indent-with-tab rule, but even in this 40-line
+block there only is one line that requires such a workaround, and it
+won't help the initial application of this patch to get modified
+when applied with "am --whitespace=fix".
+
+> +	<YELLOW>1:  a4b3333 = 1:  f686024 s/5/A/<RESET>
+> +	<RED>2:  f51d370 <RESET><YELLOW>!<RESET><GREEN> 2:  4ab067d<RESET><YELLOW> s/4/A/<RESET>
+> +	    <REVERSE><CYAN>@@ -2,6 +2,8 @@<RESET>
+> +	     <RESET>
+> +	         s/4/A/<RESET>
+> +	     <RESET>
+> +	    <REVERSE><GREEN>+<RESET> <BOLD>   Also a silly comment here!<RESET>
+> +	    <REVERSE><GREEN>+<RESET>
+> +	     diff --git a/file b/file<RESET>
+> +	    <RED> --- a/file<RESET>
+> +	    <GREEN> +++ b/file<RESET>
+> +	<RED>3:  0559556 <RESET><YELLOW>!<RESET><GREEN> 3:  b9cb956<RESET><YELLOW> s/11/B/<RESET>
+> +	    <REVERSE><CYAN>@@ -10,7 +10,7 @@<RESET>
+> +	      9<RESET>
+> +	      10<RESET>
+> +	    <RED> -11<RESET>
+> +	    <REVERSE><RED>-<RESET><FAINT;GREEN>+BB<RESET>
+> +	    <REVERSE><GREEN>+<RESET><BOLD;GREEN>+B<RESET>
+> +	      12<RESET>
+> +	      13<RESET>
+> +	      14<RESET>
+> +	<RED>4:  d966c5c <RESET><YELLOW>!<RESET><GREEN> 4:  8add5f1<RESET><YELLOW> s/12/B/<RESET>
+> +	    <REVERSE><CYAN>@@ -8,7 +8,7 @@<RESET>
+> +	    <CYAN> @@<RESET>
+> +	      9<RESET>
+> +	      10<RESET>
+> +	    <REVERSE><RED>-<RESET><FAINT> BB<RESET>
+> +	    <REVERSE><GREEN>+<RESET> <BOLD>B<RESET>
+> +	    <RED> -12<RESET>
+> +	    <GREEN> +B<RESET>
+> +	      13<RESET>
+> +	EOF
+> +	git range-diff changed...changed-message --color --dual-color >actual.raw &&
+> +	test_decode_color >actual <actual.raw &&
+> +	test_cmp expect actual
+> +'
+> +
+>  test_done
